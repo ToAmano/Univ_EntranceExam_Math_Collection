@@ -33,25 +33,25 @@
 
 
 <!-- 東工大 後期-->
-[tkka90]: ./_pages/ent-ex/solutions/東工大_後期/1990.pdf
-[tkka91]: ./_pages/ent-ex/solutions/東工大_後期/1991.pdf
-[tkka92]: ./_pages/ent-ex/solutions/東工大_後期/1992.pdf
-[tkka93]: ./_pages/ent-ex/solutions/東工大_後期/1993.pdf
-[tkka94]: ./_pages/ent-ex/solutions/東工大_後期/1994.pdf
-[tkka95]: ./_pages/ent-ex/solutions/東工大_後期/1995.pdf
-[tkka96]: ./_pages/ent-ex/solutions/東工大_後期/1996.pdf
-[tkka97]: ./_pages/ent-ex/solutions/東工大_後期/1997.pdf
-[tkka98]: ./_pages/ent-ex/solutions/東工大_後期/1998.pdf
-[tkka99]: ./_pages/ent-ex/solutions/東工大_後期/1999.pdf
-[tkka00]: ./_pages/ent-ex/solutions/東工大_後期/2000.pdf
-[tkka01]: ./_pages/ent-ex/solutions/東工大_後期/2001.pdf
-[tkka02]: ./_pages/ent-ex/solutions/東工大_後期/2002.pdf
-[tkka03]: ./_pages/ent-ex/solutions/東工大_後期/2003.pdf
-[tkka04]: ./_pages/ent-ex/solutions/東工大_後期/2004.pdf
-[tkka05]: ./_pages/ent-ex/solutions/東工大_後期/2005.pdf
-[tkka06]: ./_pages/ent-ex/solutions/東工大_後期/2006.pdf
-[tkka07]: ./_pages/ent-ex/solutions/東工大_後期/2007.pdf
-[tkka08]: ./_pages/ent-ex/solutions/東工大_後期/2008.pdf
-[tkka09]: ./_pages/ent-ex/solutions/東工大_後期/2009.pdf
-[tkka10]: ./_pages/ent-ex/solutions/東工大_後期/2010.pdf
-[tkka11]: ./_pages/ent-ex/solutions/東工大_後期/2011.pdf
+[tkka90]: ./東工大_後期/1990.pdf
+[tkka91]: ./東工大_後期/1991.pdf
+[tkka92]: ./東工大_後期/1992.pdf
+[tkka93]: ./東工大_後期/1993.pdf
+[tkka94]: ./東工大_後期/1994.pdf
+[tkka95]: ./東工大_後期/1995.pdf
+[tkka96]: ./東工大_後期/1996.pdf
+[tkka97]: ./東工大_後期/1997.pdf
+[tkka98]: ./東工大_後期/1998.pdf
+[tkka99]: ./東工大_後期/1999.pdf
+[tkka00]: ./東工大_後期/2000.pdf
+[tkka01]: ./東工大_後期/2001.pdf
+[tkka02]: ./東工大_後期/2002.pdf
+[tkka03]: ./東工大_後期/2003.pdf
+[tkka04]: ./東工大_後期/2004.pdf
+[tkka05]: ./東工大_後期/2005.pdf
+[tkka06]: ./東工大_後期/2006.pdf
+[tkka07]: ./東工大_後期/2007.pdf
+[tkka08]: ./東工大_後期/2008.pdf
+[tkka09]: ./東工大_後期/2009.pdf
+[tkka10]: ./東工大_後期/2010.pdf
+[tkka11]: ./東工大_後期/2011.pdf
