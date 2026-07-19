@@ -100,8 +100,14 @@ Math-Solutions/
 * **コアコンバータ**: **Pandoc**
   * `pandoc [file].tex -t markdown --mathjax -o [file].md` のように変換。
 * **前処理・後処理スクリプト (Python)**:
-  * LaTeXの独自マクロ（`\bm`, `\R` など）を、MathJax/KaTeXが認識できる標準的な数式表記（`\mathbf`, `\mathbb` など）に事前に置換する。
+  * LaTeXの独自マクロ（`\bm`, `\R` など）を、MathJax/KaTeXが認識できる標準的な数式表記に事前に置換する。
   * Astro用のフロントマター（タイトル、年度、大学名など）をMarkdownの先頭に自動挿入する。
+  * **TikZ環境の自動画像化 (SVG)**:
+    1. LaTeXソース内から `\begin{tikzpicture}` 〜 `\end{tikzpicture}` を正規表現で抽出。
+    2. 抽出したコードを `standalone` クラスを用いた一時的なTeXファイルにラップしてコンパイル。
+    3. `pdftocairo -svg` を用いて、PDFから拡大しても画質が落ちない **SVG形式の画像** に変換。
+    4. 生成したSVGを `web/public/images/tikz/` 以下に配置。
+    5. Markdown内では、元のTikZブロックを `![図](/Math-Solutions/images/tikz/[ファイル名].svg)` の画像タグに自動で置換する。
 
 ---
 
@@ -112,15 +118,17 @@ GitHub Actionsを用いて自動ビルドを構成します。
 ### 4.1 deploy-pages.yml (GitHub Pagesデプロイ)
 1. **トリガー**: `src/` 以下の更新が `main` ブランチにプッシュされた時。
 2. **ステップ**:
-   * Pythonスクリプトによる LaTeX ➔ Markdown (Frontmatter付き) への一括変換。
+   * TeX Liveおよび `poppler-utils` (`pdftocairo`) のセットアップ。
+   * Pythonスクリプトによる LaTeX ➔ Markdown (Frontmatter付き & TikZのSVG画像化) への一括変換。
    * 生成されたMarkdownファイルを `web/src/content/solutions/` に格納。
-   * Node.js環境をセットアップし、Astroビルド (`npm run build`) を実行。数式がHTMLにプリコンパイルされる。
+   * Node.js環境をセットアップし、Astroビルド (`npm run build`) を実行。
    * `github-pages` アクションを使用してビルド結果 (`dist/` フォルダ) をデプロイ。
 
 ### 4.2 build-pdf.yml (PDF書籍ビルド & リリース)
 1. **トリガー**: リリースタグ（例: `v1.0.0`）がプッシュされた時。
 2. **ステップ**:
    * TeX Live環境を立ち上げ、`src/` 以下の各 `main.tex` または `book_template.tex` をLuaLaTeXでコンパイル。
+   * **改ページの保証**: 大問ごとのレイアウトが崩れないよう、一括ビルド用のマスターファイル（`main.tex`）において、各大問（`problem.tex` / `solution.tex`）を読み込む直前・直後に `\clearpage` または `\newpage` を挿入し、確実に大問ごとに改ページが走るようにします。
    * 生成されたPDFファイルを GitHub Release に自動アタッチし、ユーザーが直接ダウンロードできるようにする。
 
 ---

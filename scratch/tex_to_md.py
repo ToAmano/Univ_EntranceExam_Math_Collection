@@ -69,9 +69,9 @@ def render_tikz_to_svg(content, base_name):
                 # 失敗時はプレースホルダー画像を配置するか、元のコードのままとする
                 continue
 
-        # LaTeXのincludegraphicsに置換
+        # Markdown/LaTeX画像タグに置換 (最初の1箇所のみ置換)
         latex_image_tag = f"\\includegraphics{{/Math-Solutions/images/tikz/{svg_filename}}}"
-        content = content.replace(full_tikz, latex_image_tag)
+        content = content.replace(full_tikz, latex_image_tag, 1)
         
     return content
 
