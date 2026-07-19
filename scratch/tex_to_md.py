@@ -2,16 +2,17 @@
 import os
 import re
 import subprocess
+import sys
 
 def preprocess_latex(content):
     # \bm{x} ➔ \mathbf{x}
     content = re.sub(r'\\bm\{([^}]+)\}', r'\\mathbf{\1}', content)
     # \R ➔ \mathbb{R}
-    content = content.replace(r'\R', r'\mathbb{R}')
-    content = content.replace(r'\C', r'\mathbb{C}')
-    content = content.replace(r'\N', r'\mathbb{N}')
-    content = content.replace(r'\Z', r'\mathbb{Z}')
-    content = content.replace(r'\Q', r'\mathbb{Q}')
+    content = re.sub(r'\\R(?![a-zA-Z])', r'\\mathbb{R}', content)
+    content = re.sub(r'\\C(?![a-zA-Z])', r'\\mathbb{C}', content)
+    content = re.sub(r'\\N(?![a-zA-Z])', r'\\mathbb{N}', content)
+    content = re.sub(r'\\Z(?![a-zA-Z])', r'\\mathbb{Z}', content)
+    content = re.sub(r'\\Q(?![a-zA-Z])', r'\\mathbb{Q}', content)
     return content
 
 def convert_tex_to_md(tex_path, output_md_path, frontmatter):
@@ -68,7 +69,11 @@ def process_all_src():
                         "title": f"{uni.upper()} {year} {category} Q{q_num} ({type_str})"
                     }
                     
-                    convert_tex_to_md(os.path.join(root, file), output_path, fm)
+                    tex_file_path = os.path.join(root, file)
+                    try:
+                        convert_tex_to_md(tex_file_path, output_path, fm)
+                    except Exception as e:
+                        print(f"Error converting {tex_file_path} to {output_path}: {e}", file=sys.stderr)
 
 if __name__ == "__main__":
     process_all_src()
