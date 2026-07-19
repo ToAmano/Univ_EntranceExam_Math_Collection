@@ -48,6 +48,7 @@ def convert_tex_to_md(tex_path, output_md_path, frontmatter):
 def process_all_src():
     src_root = "src"
     dest_root = "web/src/content/solutions"
+    has_errors = False
     
     for root, _, files in os.walk(src_root):
         for file in files:
@@ -74,6 +75,10 @@ def process_all_src():
                         convert_tex_to_md(tex_file_path, output_path, fm)
                     except Exception as e:
                         print(f"Error converting {tex_file_path} to {output_path}: {e}", file=sys.stderr)
+                        has_errors = True
+
+    if has_errors:
+        sys.exit(1)
 
 if __name__ == "__main__":
     process_all_src()
