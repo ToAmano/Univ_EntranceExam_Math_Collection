@@ -1,0 +1,38 @@
+name: Build PDF Books
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install TeX Live
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-lang-japanese texlive-luatex latexmk
+
+      - name: Build PDFs
+        run: |
+          # 各年度の main.tex をビルドする例
+          find src -name "main.tex" | while read main_tex; do
+            dir=$(dirname "$main_tex")
+            echo "Building $main_tex..."
+            (cd "$dir" && latexmk -lualatex main.tex)
+          done
+
+      - name: Create Release and Upload PDFs
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            src/**/*.pdf
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
