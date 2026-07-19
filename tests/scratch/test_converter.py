@@ -78,5 +78,21 @@ class TestConverter(unittest.TestCase):
         self.assertEqual(preprocess_latex(r"\\Z"), r"\\Z")
         self.assertEqual(preprocess_latex(r"\\Q"), r"\\Q")
 
+    def test_tikz_extraction_and_replacement(self):
+        latex = r"""
+        問題文です。
+        \begin{figure}[H]
+          \begin{tikzpicture}
+            \draw (0,0) -- (1,1);
+          \end{tikzpicture}
+          \caption{図}
+        \end{figure}
+        """
+        # 置換後のテキストに markdown 画像タグが含まれているか検証
+        processed = preprocess_latex(latex, "test_prefix") # 実装側でTikZ置換ロジックを呼び出す
+        self.assertIn("![TikZ図](", processed)
+        self.assertIn("test_prefix_tikz_1.svg", processed)
+
 if __name__ == '__main__':
     unittest.main()
+
