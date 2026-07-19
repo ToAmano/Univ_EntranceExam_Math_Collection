@@ -16,204 +16,65 @@
 
 ---
 
-### Task 1: マイグレーションスクリプトの実装と実行
+### Task 1: テスト用ダミーデータの作成
 
 **Files:**
-* Create: `scratch/migrate.py` (マイグレーションPythonスクリプト)
-* Test: `tests/scratch/test_migrate.py` (移行ロジックの単体テスト)
+* Create: `src/sample_todai/zenki/1990/1/problem.tex` (検証用のダミー問題TeX)
+* Create: `src/sample_todai/zenki/1990/1/solution.tex` (検証用のダミー解答TeX)
 
 **Interfaces:**
-* Consumes: `/Users/amano/works/research/titech_kouki`, `/Users/amano/works/research/homepage/docs/_pages/ent-ex/solutions`
-* Produces: `src/[todai|kyodai|titech]/[zenki|kouki]/[年度]/[大問]/[problem.tex|solution.tex]` の配置構造
+* Consumes: なし
+* Produces: テスト検証用のLaTeXフォルダ構造 (`src/sample_todai/zenki/1990/1/`)
 
-- [ ] **Step 1: 移行テスト用のテストコードを書く**
+- [ ] **Step 1: ダミー問題ファイル `src/sample_todai/zenki/1990/1/problem.tex` を作成する**
 
-移行のパス変換ロジックが正しいかを検証するテストコードを `tests/scratch/test_migrate.py` に作成する。
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{bm}
 
-```python
-# tests/scratch/test_migrate.py
-import unittest
-from scratch.migrate import parse_homepage_path, parse_titech_path
+\begin{document}
+東大 1990年 前期 理系数学 第1問の問題文です。
 
-class TestMigration(unittest.TestCase):
-    def test_parse_titech_path(self):
-        # titech_koukiのパスから新構造へのパス変換を検証
-        src_path = "/Users/amano/works/research/titech_kouki/KyotoUKouki/manuscript/docs/problems/1989/1/problem.tex"
-        dest = parse_titech_path(src_path)
-        self.assertEqual(dest, "src/kyodai/kouki/1989/1/problem.tex")
-
-    def test_parse_homepage_path(self):
-        # homepageのパスから新構造へのパス変換を検証
-        src_path = "/Users/amano/works/research/homepage/docs/_pages/ent-ex/solutions/todai/todai-zenki/1961/61-1/ut-61-1.tex"
-        dest = parse_homepage_path(src_path)
-        self.assertEqual(dest, "src/todai/zenki/1961/1/solution.tex")
-
-if __name__ == '__main__':
-    unittest.main()
+ベクトル $\bm{a} = (1, 2)$ と実数の集合 $\R$ について考えます。
+\end{document}
 ```
 
-- [ ] **Step 2: テストを実行して失敗することを確認する**
+- [ ] **Step 2: ダミー解答ファイル `src/sample_todai/zenki/1990/1/solution.tex` を作成する**
 
-Run: `python3 -m unittest tests/scratch/test_migrate.py`
-Expected: `ModuleNotFoundError: No module named 'scratch.migrate'` またはテスト失敗。
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{bm}
 
-- [ ] **Step 3: 移行スクリプト `scratch/migrate.py` を実装する**
+\begin{document}
+東大 1990年 前期 理系数学 第1問の解答文です。
 
-```python
-# scratch/migrate.py
-import os
-import re
-import shutil
-
-def parse_titech_path(path):
-    # KyotoUKouki, TitechKouki, UtokyoKouki の変換
-    path = os.path.normpath(path)
-    parts = path.split(os.sep)
-    
-    # 大学名マッピング
-    uni_map = {"KyotoUKouki": "kyodai", "TitechKouki": "titech", "UtokyoKouki": "todai"}
-    uni = None
-    for k, v in uni_map.items():
-        if k in parts:
-            uni = v
-            break
-    
-    # 区分はすべてkouki
-    category = "kouki"
-    
-    # 年度と大問の抽出
-    # partsからproblems/solutionsのインデックスを探す
-    idx = -1
-    for i, part in enumerate(parts):
-        if part in ("problems", "solutions"):
-            idx = i
-            break
-            
-    if idx == -1:
-        return None
-        
-    year = parts[idx + 1]
-    q_num = parts[idx + 2]
-    filename = parts[-1]
-    
-    # ファイル名標準化
-    if "problem" in filename or "problems" in filename:
-        target_file = "problem.tex"
-    else:
-        target_file = "solution.tex"
-        
-    return f"src/{uni}/{category}/{year}/{q_num}/{target_file}"
-
-def parse_homepage_path(path):
-    path = os.path.normpath(path)
-    parts = path.split(os.sep)
-    
-    # 大学と区分の特定
-    if "todai-zenki" in parts:
-        uni, category = "todai", "zenki"
-    elif "todai-kouki" in parts:
-        uni, category = "todai", "kouki"
-    elif "kyodai" in parts and "zenki" in parts:
-        uni, category = "kyodai", "zenki"
-    elif "toukou" in parts and "toukou-zenki" in parts:
-        uni, category = "titech", "zenki"
-    elif "toukou-kouki" in parts:
-        uni, category = "titech", "kouki"
-    else:
-        return None
-        
-    # 年度の特定 (4桁の数字)
-    year = None
-    for part in parts:
-        if part.isdigit() and len(part) == 4:
-            year = part
-            break
-        elif part.startswith("t") and part[1:].isdigit() and len(part) == 5:
-            year = part[1:]
-            break
-            
-    if not year:
-        return None
-        
-    # 大問番号の特定
-    # 末尾のフォルダが "61-1" や "t79-1" などの形になっている
-    last_folder = parts[-2]
-    q_match = re.search(r'-(\d+)$', last_folder)
-    if not q_match:
-        # 大問フォルダがないフラット配置の場合
-        filename = parts[-1]
-        fn_match = re.search(r'-(\d+)\.tex$', filename)
-        q_num = fn_match.group(1) if fn_match else "1"
-    else:
-        q_num = q_match.group(1)
-        
-    filename = parts[-1]
-    # ファイル名標準化
-    if "p.tex" in filename or "prob" in filename:
-        target_file = "problem.tex"
-    else:
-        target_file = "solution.tex"
-        
-    return f"src/{uni}/{category}/{year}/{q_num}/{target_file}"
-
-def execute_migration(dry_run=True):
-    titech_root = "/Users/amano/works/research/titech_kouki"
-    homepage_root = "/Users/amano/works/research/homepage/docs/_pages/ent-ex/solutions"
-    dest_root = "/Users/amano/works/research/Math-Solutions"
-    
-    # 1. titech_kouki の走査と移行
-    for root, _, files in os.walk(titech_root):
-        for file in files:
-            if file.endswith(".tex") and not file.startswith("."):
-                src_path = os.path.join(root, file)
-                # manuscript/docs以下のものだけ対象
-                if "manuscript" in src_path and "docs" in src_path:
-                    dest_rel = parse_titech_path(src_path)
-                    if dest_rel:
-                        dest_abs = os.path.join(dest_root, dest_rel)
-                        if dry_run:
-                            print(f"[DRY RUN] Copy: {src_path} -> {dest_abs}")
-                        else:
-                            os.makedirs(os.path.dirname(dest_abs), exist_ok=True)
-                            shutil.copy2(src_path, dest_abs)
-
-    # 2. homepage_solutions の走査と移行
-    for root, _, files in os.walk(homepage_root):
-        for file in files:
-            if file.endswith(".tex") and not file.startswith("."):
-                src_path = os.path.join(root, file)
-                dest_rel = parse_homepage_path(src_path)
-                if dest_rel:
-                    dest_abs = os.path.join(dest_root, dest_rel)
-                    if dry_run:
-                        print(f"[DRY RUN] Copy: {src_path} -> {dest_abs}")
-                    else:
-                        os.makedirs(os.path.dirname(dest_abs), exist_ok=True)
-                        shutil.copy2(src_path, dest_abs)
-
-if __name__ == "__main__":
-    import sys
-    dry = "--run" not in sys.argv
-    if dry:
-        print("--- Dry Run Mode ---")
-    execute_migration(dry_run=dry)
+求める値は次の通りです：
+\[
+\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+\]
+\end{document}
 ```
 
-- [ ] **Step 4: テストを実行して成功することを確認する**
+- [ ] **Step 3: ディレクトリ構造が正しく作成されたか確認する**
 
-Run: `python3 -m unittest tests/scratch/test_migrate.py`
-Expected: `OK` (テストがすべてパス)
+Run: `find src/sample_todai`
+Expected:
+```
+src/sample_todai
+src/sample_todai/zenki
+src/sample_todai/zenki/1990
+src/sample_todai/zenki/1990/1
+src/sample_todai/zenki/1990/1/problem.tex
+src/sample_todai/zenki/1990/1/solution.tex
+```
 
-- [ ] **Step 5: マイグレーションを実行する**
-
-Run: `python3 scratch/migrate.py --run`
-Expected: データが本リポジトリの `src/` 以下にコピーされる。
-
-- [ ] **Step 6: コミット**
+- [ ] **Step 4: コミット**
 
 ```bash
-git add scratch/migrate.py tests/scratch/test_migrate.py
-git commit -m "feat: add migration script and run migration"
+git add src/sample_todai/
+git commit -m "feat: add dummy TeX files for testing"
 ```
 
 ---
@@ -619,20 +480,12 @@ git commit -m "feat: add CI/CD workflows for GitHub Pages and PDF builds"
 
 ---
 
-### Task 5: 重複PDFのクリーンアップとREADME.mdのアップデート
+### Task 5: README.mdのアップデート
 
 **Files:**
 * Modify: `README.md`
-* Create: `raw_handwriting_archive/`
-* Modify: 重複している手書きPDFファイルを削除・退避
 
-- [ ] **Step 1: 手書きPDFの重複ファイルをアーカイブフォルダに退避・整理する**
-
-* `homepage_solutions/京都前期_整理完了/` ➔ `raw_handwriting_archive/kyodai/zenki/` へコピー
-* `homepage_solutions/東大前期_整理完了/` ➔ `raw_handwriting_archive/todai/zenki/` へコピー
-* 重複している京大・東工大・東大後期の手書きPDFのハッシュ値やファイルサイズを確認し、不要な方を削除・クリーンアップ。
-
-- [ ] **Step 2: リポジトリの `README.md` を最新化する**
+- [ ] **Step 1: リポジトリの `README.md` を最新化する**
 
 ```markdown
 # 東大・京大・東工大 数学過去問解答ライブラリ
@@ -647,10 +500,6 @@ git commit -m "feat: add CI/CD workflows for GitHub Pages and PDF builds"
 
 * `src/`: LaTeXによる解答ソース（マスターデータ）。大問フォルダ一体型で管理。
 * `web/`: AstroによるWebサイトプロジェクト。
-* `raw_handwriting_archive/`: 高校時代に作成した手書き答案PDFのオリジナルデータ。
-  * `todai/`: 東大（前期・後期）
-  * `kyodai/`: 京大（前期・後期）
-  * `titech/`: 東工大（前期・後期）
 
 ## 🛠️ ローカルでのビルド方法
 
@@ -663,12 +512,12 @@ npm run dev
 
 ### 2. PDF書籍のビルド (LuaLaTeX)
 ```bash
-cd src/todai/zenki/1990
-latexmk -lualatex main.tex
+cd src/sample_todai/zenki/1990/1
+# 個別ビルドは各フォルダにて行えます。
 ```
 ```
 
-- [ ] **Step 3: コミット**
+- [ ] **Step 2: コミット**
 
 ```bash
 git add README.md
