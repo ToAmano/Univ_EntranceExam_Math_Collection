@@ -1,7 +1,18 @@
+import os
+import shutil
 import unittest
 from scratch.tex_to_md import preprocess_latex
 
 class TestConverter(unittest.TestCase):
+    def setUp(self):
+        self.test_svg_path = "web/public/images/tikz/test_prefix_tikz_1.svg"
+        if os.path.exists(self.test_svg_path):
+            os.remove(self.test_svg_path)
+
+    def tearDown(self):
+        if os.path.exists(self.test_svg_path):
+            os.remove(self.test_svg_path)
+
     def test_preprocess_latex(self):
         # 独自マクロの置換を検証
         latex = r"ベクトル $\bm{a}$ と実数集合 $\R$, 複素数 $\C$, 自然数 $\N$, 整数 $\Z$, 有理数 $\Q$"
@@ -78,6 +89,7 @@ class TestConverter(unittest.TestCase):
         self.assertEqual(preprocess_latex(r"\\Z"), r"\\Z")
         self.assertEqual(preprocess_latex(r"\\Q"), r"\\Q")
 
+    @unittest.skipUnless(shutil.which("pdflatex") and shutil.which("pdftocairo"), "pdflatex or pdftocairo not available")
     def test_tikz_extraction_and_replacement(self):
         latex = r"""
         問題文です。
@@ -88,9 +100,9 @@ class TestConverter(unittest.TestCase):
           \caption{図}
         \end{figure}
         """
-        # 置換後のテキストに markdown 画像タグが含まれているか検証
+        # 置換後のテキストに LaTeX の \includegraphics が含まれているか検証
         processed = preprocess_latex(latex, "test_prefix") # 実装側でTikZ置換ロジックを呼び出す
-        self.assertIn("![TikZ図](", processed)
+        self.assertIn(r"\includegraphics{", processed)
         self.assertIn("test_prefix_tikz_1.svg", processed)
 
 if __name__ == '__main__':
