@@ -59,5 +59,24 @@ class TestConverter(unittest.TestCase):
             r"A \\R B \mathbf{\bar{y}}"
         )
 
+    def test_backslash_escaping_for_blackboard_macros(self):
+        # Odd number of backslashes (1, 3, 5) -> converts
+        self.assertEqual(preprocess_latex(r"\R"), r"\mathbb{R}")
+        self.assertEqual(preprocess_latex(r"\\\R"), r"\\\mathbb{R}")
+        self.assertEqual(preprocess_latex(r"\\\\\R"), r"\\\\\mathbb{R}")
+        self.assertEqual(preprocess_latex(r"\\\C"), r"\\\mathbb{C}")
+        self.assertEqual(preprocess_latex(r"\\\N"), r"\\\mathbb{N}")
+        self.assertEqual(preprocess_latex(r"\\\Z"), r"\\\mathbb{Z}")
+        self.assertEqual(preprocess_latex(r"\\\Q"), r"\\\mathbb{Q}")
+
+        # Even number of backslashes (2, 4, 6) -> does not convert
+        self.assertEqual(preprocess_latex(r"\\R"), r"\\R")
+        self.assertEqual(preprocess_latex(r"\\\\R"), r"\\\\R")
+        self.assertEqual(preprocess_latex(r"\\\\\\R"), r"\\\\\\R")
+        self.assertEqual(preprocess_latex(r"\\C"), r"\\C")
+        self.assertEqual(preprocess_latex(r"\\N"), r"\\N")
+        self.assertEqual(preprocess_latex(r"\\Z"), r"\\Z")
+        self.assertEqual(preprocess_latex(r"\\Q"), r"\\Q")
+
 if __name__ == '__main__':
     unittest.main()

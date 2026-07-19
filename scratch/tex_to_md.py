@@ -7,12 +7,12 @@ import sys
 def preprocess_latex(content):
     # \bm{x} ➔ \mathbf{x} (allowing 1 level of nested braces)
     content = re.sub(r'\\bm\{((?:[^{}]|\{[^{}]*\})*)\}', r'\\mathbf{\1}', content)
-    # \R ➔ \mathbb{R} (assuring no preceding backslash, e.g. from \\R)
-    content = re.sub(r'(?<!\\)\\R(?![a-zA-Z])', r'\\mathbb{R}', content)
-    content = re.sub(r'(?<!\\)\\C(?![a-zA-Z])', r'\\mathbb{C}', content)
-    content = re.sub(r'(?<!\\)\\N(?![a-zA-Z])', r'\\mathbb{N}', content)
-    content = re.sub(r'(?<!\\)\\Z(?![a-zA-Z])', r'\\mathbb{Z}', content)
-    content = re.sub(r'(?<!\\)\\Q(?![a-zA-Z])', r'\\mathbb{Q}', content)
+    # \R ➔ \mathbb{R} (assuring no preceding backslash, e.g. from \\R, but allowing even number of backslashes)
+    content = re.sub(r'(?<!\\)((?:\\\\)*)\\R(?![a-zA-Z])', r'\1\\mathbb{R}', content)
+    content = re.sub(r'(?<!\\)((?:\\\\)*)\\C(?![a-zA-Z])', r'\1\\mathbb{C}', content)
+    content = re.sub(r'(?<!\\)((?:\\\\)*)\\N(?![a-zA-Z])', r'\1\\mathbb{N}', content)
+    content = re.sub(r'(?<!\\)((?:\\\\)*)\\Z(?![a-zA-Z])', r'\1\\mathbb{Z}', content)
+    content = re.sub(r'(?<!\\)((?:\\\\)*)\\Q(?![a-zA-Z])', r'\1\\mathbb{Q}', content)
     return content
 
 def convert_tex_to_md(tex_path, output_md_path, frontmatter):
