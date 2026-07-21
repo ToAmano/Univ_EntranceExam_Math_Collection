@@ -27,22 +27,35 @@ def render_tikz_to_svg(content, uni, category, year, q_num):
 
     # TikZ環境の抽出
     pattern = re.compile(r'\\begin\{tikzpicture\}(.*?)\\end\{tikzpicture\}', re.DOTALL)
-    matches = pattern.findall(content)
+    matches = list(pattern.finditer(content))
     
-    for i, tikz_code in enumerate(matches):
+    for i, m in enumerate(matches):
+        tikz_code = m.group(1)
         full_tikz = f"\\begin{{tikzpicture}}{tikz_code}\\end{{tikzpicture}}"
         fig_name = f"fig_{i+1}.svg"
         svg_dest_path = os.path.join(public_tikz_dir, fig_name)
         rel_svg_path = f"/Math-Solutions/{rel_tikz_dir}/{fig_name}"
         
+        start_pos = m.start()
+        preceding = content[:start_pos]
+        fig_start = preceding.rfind(r"\begin{figure}")
+        preamble = ""
+        if fig_start != -1 and fig_start > content.rfind(r"\end{figure}", 0, start_pos):
+            fig_block = preceding[fig_start:start_pos]
+            for line in fig_block.splitlines():
+                if any(k in line for k in [r"\def", r"\pgfmath", r"\tdplot"]):
+                    preamble += line + "\n"
+
         # 1. 最小限の standalone LaTeX ドキュメントを作成
         standalone_latex = f"""\\documentclass{{standalone}}
 \\usepackage{{tikz}}
+\\usepackage{{tikz-3dplot}}
 \\usepackage{{pgfplots}}
 \\pgfplotsset{{compat=1.18}}
 \\usetikzlibrary{{angles,quotes,intersections,patterns,calc,arrows.meta,decorations.pathmorphing,decorations.pathreplacing}}
 \\usepgfplotslibrary{{fillbetween}}
 \\begin{{document}}
+{preamble}
 {full_tikz}
 \\end{{document}}
 """
