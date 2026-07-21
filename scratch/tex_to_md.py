@@ -137,7 +137,12 @@ def process_all_src():
                 # 深さ制限チェック（5番目の要素まで）
                 if len(parts) == 5: 
                     uni, category, year, q_num = parts[1], parts[2], parts[3], parts[4]
-                    type_str = "problem" if file == "problem.tex" else "solution"
+                    if q_num == "0":
+                        type_str = "summary"
+                        title_str = f"{year}年 全体サマリ"
+                    else:
+                        type_str = "problem" if file == "problem.tex" else "solution"
+                        title_str = f"{uni.upper()} {year} {category} Q{q_num} ({type_str})"
                     
                     base_name = f"{uni}-{category}-{year}-{q_num}"
                     output_name = f"{base_name}-{type_str}.md"
@@ -149,7 +154,7 @@ def process_all_src():
                         "year": year,
                         "question": q_num,
                         "type": type_str,
-                        "title": f"{uni.upper()} {year} {category} Q{q_num} ({type_str})"
+                        "title": title_str
                     }
                     
                     try:
