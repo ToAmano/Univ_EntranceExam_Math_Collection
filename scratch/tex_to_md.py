@@ -115,6 +115,9 @@ def convert_tex_to_md(tex_path, output_md_path, frontmatter, uni, category, year
         if os.path.exists(temp_tex):
             os.remove(temp_tex)
 
+    # Markdown後処理 (KaTeXの二重$$囲み、Pandoc参照属性、非標準:::コンテナの修正)
+    md_body = postprocess_markdown(md_body)
+
     # Frontmatterを付与して保存
     fm_str = "---\n"
     for k, v in frontmatter.items():
@@ -126,6 +129,36 @@ def convert_tex_to_md(tex_path, output_md_path, frontmatter, uni, category, year
     os.makedirs(os.path.dirname(output_md_path), exist_ok=True)
     with open(output_md_path, 'w', encoding='utf-8') as f:
         f.write(fm_str + md_body)
+
+def postprocess_markdown(md_body):
+    # 1. $$\begin{align} ... \end{align}$$ の二重$$囲みを修正 (\begin{align} / \begin{aligned} は単体で動く)
+    md_body = re.sub(r'\$\$\s*(\\begin\{(?:align|align\*|aligned|aligned\*|gather|gather\*|eqnarray|eqnarray\*)\})', r'\1', md_body)
+    md_body = re.sub(r'(\\end\{(?:align|align\*|aligned|aligned\*|gather|gather\*|eqnarray|eqnarray\*)\})\s*\$\$', r'\1', md_body)
+
+    # 2. \label{...} と \nonumber の除去 (KaTeXパースエラーの防止)
+    md_body = re.sub(r'\\label\{[^}]+\}', '', md_body)
+    md_body = re.sub(r'\\nonumber\b', '', md_body)
+
+    # 3. Pandocの生参照属性記号やラベル残骸 (例: \(1990-1:eq:1\)) の除去・式番号整形
+    md_body = re.sub(r'\\\([a-zA-Z0-9_-]+:eq:(\d+)\\\)', r'(式\1)', md_body)
+    md_body = re.sub(r'\([a-zA-Z0-9_-]+:eq:(\d+)\\?\)', r'(式\1)', md_body)
+    md_body = re.sub(r'\[\\?\[([^\]]+)\\?\]\]\([^)]+\)\{reference-type="[^"]*"[^}]*\}', r'(\1)', md_body)
+    md_body = re.sub(r'\[([^\]]+)\]\([^)]+\)\{reference-type="[^"]*"[^}]*\}', r'\1', md_body)
+    md_body = re.sub(r'\{reference-type="[^"]*"[^}]*\}', '', md_body)
+
+    # 4. Pandoc ::: コンテナ (oframed, multicols) のクリーンアップ
+    md_body = re.sub(r'^:::\s*(?:oframed|multicols.*)?\s*$', '', md_body, flags=re.MULTILINE)
+
+    # 5. 冒頭の「2 **\[解\]**」などの不要な数字とエスケープブラケットの整形
+    md_body = re.sub(r'^\s*\d+\s*\*\*\\?\[解\\?\]\*\*', r'**【解】**', md_body, flags=re.MULTILINE)
+    md_body = re.sub(r'\*\*\\?\[解\\?\]\*\*', r'**【解】**', md_body)
+    md_body = re.sub(r'\*\*\\?\[解説\\?\]\*\*', r'**【解説】**', md_body)
+    md_body = re.sub(r'\*\*\\?\[方針\\?\]\*\*', r'**【方針】**', md_body)
+
+    # 6. \bm{...} の残骸等の処理
+    md_body = re.sub(r'\\bm\{((?:[^{}]|\{[^{}]*\})*)\}', r'\\mathbf{\1}', md_body)
+    
+    return md_body
 
 def process_all_src():
     src_root = "src"

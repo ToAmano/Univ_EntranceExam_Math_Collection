@@ -7,11 +7,7 @@ type: "solution"
 title: "SAMPLE_TODAI 1992 zenki Q2 (solution)"
 ---
 
-::: oframed
-:::
-
-::: multicols
-2 **\[解\]**
+**【解】**
 
 \(1\)
 
@@ -27,29 +23,29 @@ $H_2$が$z \geqq 0$になるように空間座標をおく．
 $H_1$と$H_2$のなす角を$\theta$とおく．
 $C$から$L$に下ろした垂足を$C'$とし，その座標をC'($p, 0, 0$)とする．
 
-$CC' = q (q>0)$ とおくと， $$\begin{align*}
+$CC' = q (q>0)$ とおくと， \begin{align*}
     C(p, q\cos\theta, q\sin\theta)
-\end{align*}$$ とおける．
+\end{align*} とおける．
 
 さらに A($a, b, 0$) ($b>0$) とおくと，$\overline{AC}$の長さは
-$$\begin{align*}
+\begin{align*}
     \overline{AC}^2
      & = (a-p)^2 + (b-q\cos\theta)^2 + q^2\sin^2\theta \\
      & = -2bq\cos\theta + q^2+b^2+(a-p)^2
-\end{align*}$$ と書ける．
+\end{align*} と書ける．
 
 さて，$\angle ABC=\alpha\, (0 \le \alpha \le \pi)$とおいて$\triangle ABC$に余弦定理を用いると
-$$\begin{align*}
+\begin{align*}
     \cos\alpha
      & = \frac{\overline{AB}^2+\overline{BC}^2-\overline{AC}^2}{2\overline{AB} \cdot \overline{BC}}                                                              \\
      & = \frac{\overline{AB}^2+\overline{BC}^2}{2\overline{AB} \cdot \overline{BC}} + \frac{2bq\cos\theta - q^2-b^2-(a-p)^2}{2\overline{AB} \cdot \overline{BC}}
-\end{align*}$$ と書ける．
+\end{align*} と書ける．
 
 $\theta$の変化によって$\overline{AB}, \overline{BC}$は変化しないから，
-$$\begin{align*}
+\begin{align*}
     \cos\alpha
      & = (\text{定数})  + \frac{bq}{\overline{AB} \cdot \overline{BC}} \cos\theta
-\end{align*}$$ と書ける．
+\end{align*} と書ける．
 
 従って，$0 \leqq \theta \leqq \pi$で$\cos\theta$は単調減少で，$\frac{bq}{AB \cdot BC} > 0$から
 $\cos\alpha$は$\theta$の単調減少関数である．
@@ -68,10 +64,9 @@ src="/Math-Solutions/images/tikz/sample_todai/zenki/1992/2/fig_2.svg" />
 <figcaption>1° A,B,C,Dが同一直線上の時</figcaption>
 </figure>
 
-対称性から[2](#1992-2:fig:2){reference-type="ref+label"
-reference="1992-2:fig:2"}の時だけ考える． $$\begin{align*}
+対称性から2の時だけ考える． \begin{align*}
     \angle ABC + \angle BCD + \angle CDA + \angle DAB = 2\pi
-\end{align*}$$ だから与式は成立する．
+\end{align*} だから与式は成立する．
 
 **2° AからDのうち3つが同一直線上の時**
 
@@ -81,9 +76,9 @@ src="/Math-Solutions/images/tikz/sample_todai/zenki/1992/2/fig_3.svg" />
 <figcaption>2° AからDのうち3つが同一直線上の時</figcaption>
 </figure>
 
-対称性から図の時だけ考える． $$\begin{align*}
+対称性から図の時だけ考える． \begin{align*}
     \angle ABC + \angle BCD + \angle CDA + \angle DAB = \pi + \pi = 2\pi
-\end{align*}$$ だから与式は成立する．
+\end{align*} だから与式は成立する．
 
 **3° どの3点も同一直線上にない時**
 
@@ -103,8 +98,7 @@ $\angle BCD$は$\theta$の単調増加関数だから
 $\angle ABC + \angle BCD + \angle CDA + \angle DAB$は$\theta=\pi$で最大値をとる．
 この時4点A,B,C,Dはどの3点も同一直線上にないことから四角形ABCDを構成する．
 この時直線ACに関してB,
-Dが反対側にあることから各点の関係は[5](#1992-2:fig:5){reference-type="ref+label"
-reference="1992-2:fig:5"}のようになる．
+Dが反対側にあることから各点の関係は5のようになる．
 
 <figure id="1992-2:fig:5" data-latex-placement="H">
 <img
@@ -113,11 +107,10 @@ src="/Math-Solutions/images/tikz/sample_todai/zenki/1992/2/fig_5.svg" />
 </figure>
 
 よって条件をみたすもとでA〜Dをうごかしても，四角形の内角の和は$2\pi$で一定だから
-$$\begin{align*}
+\begin{align*}
     \angle ABC + \angle BCD + \angle CDA + \angle DAB = 2\pi
-\end{align*}$$ よって与式は成立する．
+\end{align*} よって与式は成立する．
 
 以上1°〜3°で全ての場合は尽くされ，題意は示された．$\cdots$(答)
 
-**\[解説\]**
-:::
+**【解説】**
