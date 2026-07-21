@@ -22,5 +22,5 @@ $P$ の軌 跡を考える．
 
 <figure data-latex-placement="H">
 <img
-src="/Math-Solutions/images/tikz/sample_todai-zenki-1994-2_tikz_1.svg" />
+src="/Math-Solutions/images/tikz/sample_todai/zenki/1994/2/fig_1.svg" />
 </figure>

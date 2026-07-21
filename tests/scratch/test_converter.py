@@ -5,7 +5,7 @@ from scratch.tex_to_md import preprocess_latex
 
 class TestConverter(unittest.TestCase):
     def setUp(self):
-        self.test_svg_path = "web/public/images/tikz/test_prefix_tikz_1.svg"
+        self.test_svg_path = "web/public/images/tikz/test_uni/test_cat/2026/1/fig_1.svg"
         if os.path.exists(self.test_svg_path):
             os.remove(self.test_svg_path)
 
@@ -101,9 +101,9 @@ class TestConverter(unittest.TestCase):
         \end{figure}
         """
         # 置換後のテキストに LaTeX の \includegraphics が含まれているか検証
-        processed = preprocess_latex(latex, "test_prefix") # 実装側でTikZ置換ロジックを呼び出す
+        processed = preprocess_latex(latex, "test_uni", "test_cat", "2026", "1")
         self.assertIn(r"\includegraphics{", processed)
-        self.assertIn("test_prefix_tikz_1.svg", processed)
+        self.assertIn("/Math-Solutions/images/tikz/test_uni/test_cat/2026/1/fig_1.svg", processed)
 
 if __name__ == '__main__':
     unittest.main()

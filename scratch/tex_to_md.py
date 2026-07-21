@@ -19,9 +19,10 @@ def preprocess_latex_macros(content):
     return content
 
 # TikZを抽出し、SVG画像化してMarkdownの画像タグに置換する
-def render_tikz_to_svg(content, base_name):
+def render_tikz_to_svg(content, uni, category, year, q_num):
     # Astro公開ディレクトリ
-    public_tikz_dir = "web/public/images/tikz"
+    rel_tikz_dir = f"images/tikz/{uni}/{category}/{year}/{q_num}"
+    public_tikz_dir = os.path.join("web/public", rel_tikz_dir)
     os.makedirs(public_tikz_dir, exist_ok=True)
 
     # TikZ環境の抽出
@@ -30,9 +31,9 @@ def render_tikz_to_svg(content, base_name):
     
     for i, tikz_code in enumerate(matches):
         full_tikz = f"\\begin{{tikzpicture}}{tikz_code}\\end{{tikzpicture}}"
-        fig_id = f"{base_name}_tikz_{i+1}"
-        svg_filename = f"{fig_id}.svg"
-        svg_dest_path = os.path.join(public_tikz_dir, svg_filename)
+        fig_name = f"fig_{i+1}.svg"
+        svg_dest_path = os.path.join(public_tikz_dir, fig_name)
+        rel_svg_path = f"/Math-Solutions/{rel_tikz_dir}/{fig_name}"
         
         # 1. 最小限の standalone LaTeX ドキュメントを作成
         standalone_latex = f"""\\documentclass{{standalone}}
@@ -65,26 +66,26 @@ def render_tikz_to_svg(content, base_name):
                     check=True
                 )
             except Exception as e:
-                sys.stderr.write(f"Warning: Failed to compile TikZ for {fig_id}: {e}\n")
+                sys.stderr.write(f"Warning: Failed to compile TikZ for {uni}/{category}/{year}/{q_num} {fig_name}: {e}\n")
                 continue
 
         # Markdown/LaTeX画像タグに置換 (最初の1箇所のみ置換)
-        latex_image_tag = f"\\includegraphics{{/Math-Solutions/images/tikz/{svg_filename}}}"
+        latex_image_tag = f"\\includegraphics{{{rel_svg_path}}}"
         content = content.replace(full_tikz, latex_image_tag, 1)
         
     return content
 
-def preprocess_latex(content, base_name="test"):
+def preprocess_latex(content, uni="test", category="test", year="test", q_num="test"):
     content = preprocess_latex_macros(content)
-    content = render_tikz_to_svg(content, base_name)
+    content = render_tikz_to_svg(content, uni, category, year, q_num)
     return content
 
-def convert_tex_to_md(tex_path, output_md_path, frontmatter, base_name):
+def convert_tex_to_md(tex_path, output_md_path, frontmatter, uni, category, year, q_num):
     with open(tex_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
     # マクロ置換 & TikZ置換
-    processed_content = preprocess_latex(content, base_name)
+    processed_content = preprocess_latex(content, uni, category, year, q_num)
     
     # テンポラリファイルを作成してPandocで変換
     temp_tex = tex_path + ".temp.tex"
@@ -139,7 +140,7 @@ def process_all_src():
                     }
                     
                     try:
-                        convert_tex_to_md(os.path.join(root, file), output_path, fm, base_name)
+                        convert_tex_to_md(os.path.join(root, file), output_path, fm, uni, category, year, q_num)
                     except Exception as e:
                         sys.stderr.write(f"Error converting {os.path.join(root, file)}: {e}\n")
                         has_errors = True
