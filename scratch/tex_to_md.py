@@ -89,16 +89,20 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     # 3. tabular 環境の pypandoc による完全自動 Markdown 表変換
     def convert_tabular_block(match):
         tab_str = match.group(0)
-        # cases / dcases 内の \\ が tabular の行区切りと衝突しないよう保護
-        tab_clean = re.sub(r'(\\begin\{(?:dcases|cases)\}.*?\\end\{(?:dcases|cases)\})', lambda m: m.group(1).replace(r'\\', r'\cr '), tab_str, flags=re.DOTALL)
+        # cases / dcases 内の物理改行 \n をスペースに置換して 1 行にフラット化
+        tab_clean = re.sub(r'(\\begin\{(?:dcases|cases)\}.*?\\end\{(?:dcases|cases)\})', lambda m: m.group(1).replace('\n', ' ').replace('\r', ' '), tab_str, flags=re.DOTALL)
         # Pandoc が HTML <table> にエスケープする原因となる multirow / multicolumn マクロの展開
         tab_clean = re.sub(r'\\multirow\{[^}]*\}\{[^}]*\}', '', tab_clean)
         tab_clean = re.sub(r'\\multicolumn\{[^}]*\}\{[^}]*\}', '', tab_clean)
         try:
             md_table = pypandoc.convert_text(tab_clean, 'markdown_strict+pipe_tables+tex_math_dollars', format='latex')
-            # hline 行等の除去
-            lines = [l for l in md_table.splitlines() if 'hline' not in l]
-            return "\n\n" + "\n".join(lines).strip() + "\n\n"
+            # 表セル内の改行を除去して純粋な 1 行の Markdown 表構造を維持
+            clean_table_lines = []
+            for line in md_table.splitlines():
+                if 'hline' in line:
+                    continue
+                clean_table_lines.append(line)
+            return "\n\n" + "\n".join(clean_table_lines).strip() + "\n\n"
         except Exception as e:
             print(f"Pandoc table conversion warning: {e}")
             return tab_str
