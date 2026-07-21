@@ -7,58 +7,80 @@ type: "summary"
 title: "1990年 全体サマリ"
 ---
 
-::: center
-**1990年度**
+% \documentclass[a4paper,12pt]{article}
+% \usepackage[utf8]{inputenc}
+% \usepackage[japanese]{babel}
+% \usepackage{xeCJK}
+% \usepackage{geometry}
+% \usepackage{array}
+% \usepackage{booktabs}
+% \usepackage{fancybox}
 
-**出題テーマと難易度**
+% % ページ設定
+% \geometry{top=25mm, bottom=25mm, left=20mm, right=20mm}
+% \pagestyle{empty}
 
-::: center
-| **問題番号** | **テーマ**     | **難易度** |
-|:------------:|:---------------|:----------:|
-|    第1問     | 二次関数       |     易     |
-|    第2問     | 三角関数，数列 |     普     |
+% % フォント設定
+% \setCJKmainfont{Noto Sans CJK JP}
 
-**解答**
+% \begin{document}
 
-::: center
-<table>
-<thead>
-<tr>
-<th style="text-align: center;"><strong>問題番号</strong></th>
-<th style="text-align: center;"><strong>小問</strong></th>
-<th style="text-align: left;"><strong>答え</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">第1問</td>
-<td style="text-align: center;">-</td>
-<td style="text-align: left;"><span class="math inline">\(\displaystyle
-x = \frac{32}{5}, -\frac{2}{5}\)</span></td>
-</tr>
-<tr>
-<td rowspan="3" style="text-align: center;">第2問</td>
-<td style="text-align: center;">$1$</td>
-<td style="text-align: left;">証明問題</td>
-</tr>
-<tr>
-<td style="text-align: center;">$2$</td>
-<td style="text-align: left;">証明問題</td>
-</tr>
-<tr>
-<td style="text-align: center;">$3$</td>
-<td style="text-align: left;">証明問題</td>
-</tr>
-</tbody>
-</table>
+% 年度の大きな表示
+\begin{center}{\fontsize{48pt}{58pt}\selectfont \textbf{1990}\normalsize\textbf{年度}}
+\end{center}
 
-**試験形態**
+% 本文
+
+% 出題テーマと難易度の表
+\noindent\textbf{出題テーマと難易度}
+
+\begin{center}
+  \shadowbox{%
+    \begin{tabular}{|c|p{8cm}|c|}
+      \hline
+      \textbf{問題番号} & \textbf{テーマ} & \textbf{難易度} \\
+      \hline
+      第1問           & 二次関数         & 易            \\
+      \hline
+      第2問           & 三角関数，数列      & 普            \\
+      \hline
+    \end{tabular}%
+  }
+\end{center}
+
+% 解答
+\noindent\textbf{解答}
+
+\begin{center}
+  \shadowbox{%
+    \renewcommand{\arraystretch}{1.6}
+    \begin{tabular}{|c|c|p{8cm}|}
+      \hline
+      \textbf{問題番号}        & \textbf{小問} & \textbf{答え}                                    \\
+      \hline
+      第1問                  & -           & $\displaystyle x = \frac{32}{5}, -\frac{2}{5}$ \\
+      \hline
+      \multirow{3}{*}{第2問} & (1)         & 証明問題                                           \\
+      \cline{2-3}
+                           & (2)         & 証明問題                                           \\
+      \cline{2-3}
+                           & (3)         & 証明問題                                           \\
+      \hline
+    \end{tabular}%
+    \renewcommand{\arraystretch}{1.0}
+  }
+\end{center}
+
+% 解答時間
+\noindent\textbf{試験形態}
 
 東工大の後期はしばらく2問で60分という形態で実施された．
 前期の問題は4問で150分であり，それより1問あたりにかけられる時間がタイトになっている．
 その分問題が簡単かというとそういうわけもなく，純粋に時間が短い分だけ前期より難度が上がっていると考えて良いだろう．
-
-::: center
-|         |
-|:--------|
-| 2問60分 |
+\begin{center}
+  \shadowbox{%
+    \begin{tabular}{p{8cm}}
+      2問60分
+    \end{tabular}%
+  }
+\end{center}
