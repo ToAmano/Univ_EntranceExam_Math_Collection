@@ -9,7 +9,7 @@ title: "SAMPLE_TITECH 1990 kouki Q1 (solution)"
 
 **【解】**
 
-実数 $x$ に対して $f$x$ = $x+1$$x-2$$, $g$x$ = 1+5x$ とおく．題意から，
+実数 $x$ に対して $f$x$ = $x+1$x-2$, $g$x$ = 1+5x$ とおく．題意から，
 
 
 $$
@@ -21,7 +21,7 @@ $$
 
  をみたす $x \in \mathbb{R}$ をもとめればよい．
 $g$x$ \in \mathbb{Z}$ から
-$5x \in \mathbb{Z}$．つまり，$x = \frac{t}{5}$ $$t \in \mathbb{Z}$$
+$5x \in \mathbb{Z}$．つまり，$x = \frac{t}{5}$ $t \in \mathbb{Z}$
 とかける．$\eqref{1990-1:eq:1}$に代入して$t$の条件式を求めると，
 
 
@@ -48,7 +48,7 @@ $$
 
 だから，$\eqref{1990-1:eq:2}$を満たすような$t \in \mathbb{Z}$は $t=-2, 32$
 である．したがって求めるべき$x=t/5$は$x = \frac{32}{5}, -\frac{2}{5}$
-である． $\cdots$$答$
+である． $\cdots$(答)
 
 <figure id="1990-1:fig:1" data-latex-placement="H">
 <img
@@ -59,7 +59,7 @@ src="/Math-Solutions/images/tikz/sample_titech/kouki/1990/1/fig_1.svg" />
 
 **【解説】**
 二次関数の問題．条件を素直に式に落としていけば解ける比較的容易な問題である．
-二次関数 $$x+1$$x-2$$ と一次関数 $1+5x$
+二次関数 $x+1$x-2$$ と一次関数 $1+5x$
 がほぼ等しくなるような条件なので，解はこれらの交点に近くなるだろうというのが予想できる．
 実際にこれを解いてみると 
 

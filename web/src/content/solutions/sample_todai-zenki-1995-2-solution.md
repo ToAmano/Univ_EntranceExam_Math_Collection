@@ -9,7 +9,7 @@ title: "SAMPLE_TODAI 1995 zenki Q2 (solution)"
 
 **【解】**
 
-$1$
+$1\$
 
 <figure id="1995-2:fig:1" data-latex-placement="H">
 <img
@@ -17,9 +17,9 @@ src="/Math-Solutions/images/tikz/sample_todai/zenki/1995/2/fig_1.svg" />
 <figcaption>点ABCの様子</figcaption>
 </figure>
 
-$\mathrm{PQ}=1$ だから， $\mathrm{P}$0,0$$, $\mathrm{Q}$1,0$$ とし,
+$\mathrm{PQ}=1$ だから， $\mathrm{P}$0,0$, $\mathrm{Q}$1,0$ とし,
 $\triangle \mathrm{ABC}$ が $xy$ 平面にあるとする.
-$条件$をみたす時,$A,B,C$ は$\ref{1}$の斜線部分内にある.
+(条件)をみたす時,$A,B,C$ は$\ref{1}$の斜線部分内にある.
 
 もし $A,B,C$ が$\ref{1}$で斜線部で, 境界を含まない部分にあるとすると
 $C$ から $AB$ に下ろした垂線と $E,F$ との交点のうち, 垂足 $H$ との距離が
@@ -28,9 +28,9 @@ $\triangle \mathrm{ABC} < \triangle \mathrm{ABC'}$ となる. したがって,
 $\triangle \mathrm{ABC}$ が最大の時, $C$ は $E$ 又は $F$ にある.
 他の頂点についても同様のことがいえるから題意は示された.
 
-$\cdots$$答$
+$\cdots$(答)
 
-$2$ Pを固定した時, ABにPから下した垂足をHとする. Hは $x^2+y^2=p^2$
+$2\$ Pを固定した時, ABにPから下した垂足をHとする. Hは $x^2+y^2=p^2$
 上を動く. この時三角形PAHを考えると 
 
 $$
@@ -118,16 +118,16 @@ $$
  である．
 
 この時，$\cos\theta=-1$より$\theta=\pi$となって，確かに$\mathrm{PQ} \perp \mathrm{AB}$
-である． よって題意は示された． $\cdots$$答$
+である． よって題意は示された． $\cdots$(答)
 
-$3$ $2$の結果から $p$を固定した時に $S$を最大にするのは
+$3\$ $2$の結果から $p$を固定した時に $S$を最大にするのは
 $\ref{3}$のようにHが$x$軸上に存在する時である．
 
 <figure id="1995-2:fig:3" data-latex-placement="H">
 <img
 src="/Math-Solutions/images/tikz/sample_todai/zenki/1995/2/fig_3.svg" />
 <figcaption><span
-class="math inline">$p$</span>を固定した時，三角形ABCの面積が最大になるような場合．</figcaption>
+class="math inline">$p\$</span>を固定した時，三角形ABCの面積が最大になるような場合．</figcaption>
 </figure>
 
 この時の面積$S$p$$として， 
@@ -143,7 +143,7 @@ S$p$
 $$
 
  である． 以下この最大値を求める．
-$f$p$$が最大の時$S$p$$も最大だから，$f$p$$の増減表を書く． 一階微分は
+$f$p$が最大の時$S$p$も最大だから，$f$p$$の増減表を書く． 一階微分は
 
 
 $$
@@ -187,4 +187,4 @@ $$
 
 $\overline{AB}=\text{const}, p=\text{const}$から,
 $\triangle \mathrm{ABC}$が最大になるとき $h$が最大で $\theta = \pi/2$.
-$了$
+(了)

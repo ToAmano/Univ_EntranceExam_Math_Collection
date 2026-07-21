@@ -9,7 +9,7 @@ title: "SAMPLE_TODAI 1993 zenki Q3 (solution)"
 
 **【解】** $xy$平面で切断してかんがえる．
 対称性から球の中心は$y$軸上にある．
-そこで、円の中心をP$$0, t$$として，この円Cを 
+そこで、円の中心をP$0, t$として，この円Cを 
 
 $$
 \begin{align}
@@ -29,7 +29,7 @@ $$
  である．
 
 円の半径に応じて，以下の3パターンの場合がありうる．
-一つ目は円が大きくて$$\pm 2,4$$で放物線の容器と交わる場合である．
+一つ目は円が大きくて$\pm 2,4$で放物線の容器と交わる場合である．
 二つ目は円と放物線が$-2 \le x \le 2$で二つの接点を持つ場合である．
 最後に三つ目は円と放物線が$x=0$でのみ接点を持つ場合である．
 
@@ -37,25 +37,25 @@ $$
 <img
 src="/Math-Solutions/images/tikz/sample_todai/zenki/1993/3/fig_1.svg" />
 <figcaption><span
-class="math inline">$1^{\circ}$</span>の場合．</figcaption>
+class="math inline">$1^{\circ}\$</span>の場合．</figcaption>
 </figure>
 
 <figure id="1993-3:fig:2" data-latex-placement="H">
 <img
 src="/Math-Solutions/images/tikz/sample_todai/zenki/1993/3/fig_2.svg" />
 <figcaption><span
-class="math inline">$2^{\circ}$</span>の場合．</figcaption>
+class="math inline">$2^{\circ}\$</span>の場合．</figcaption>
 </figure>
 
 <figure id="1993-3:fig:3" data-latex-placement="H">
 <img
 src="/Math-Solutions/images/tikz/sample_todai/zenki/1993/3/fig_3.svg" />
 <figcaption><span
-class="math inline">$3^{\circ}$</span>の場合．</figcaption>
+class="math inline">$3^{\circ}\$</span>の場合．</figcaption>
 </figure>
 
 まず$2^{\circ}, 3^{\circ}$について考える．
-$0\le x \le 2$での$C$と$y=x^2$の接点Qの座標を$$u,u^2$$とすると，これら二曲線の$u$での接線が一致するので、$$x^2$'=2x$から
+$0\le x \le 2$での$C$と$y=x^2$の接点Qの座標を$u,u^2$とすると，これら二曲線の$u$での接線が一致するので、$$x^2$'=2x$から
 
 
 $$
@@ -81,7 +81,7 @@ $$
 $$
 
 
-である．対称性から円は放物線と$$u,u^2$, $-u,u^2$$のみで共通点を持たないといけないから，
+である．対称性から円は放物線と$u,u^2$, $-u,u^2$のみで共通点を持たないといけないから，
 $\eqref{1993-3:eq:3}$が実数解として重解のみを持てば良い．
 
 **$1^{\circ}$ $0<t \le \frac{1}{2}$ の時**
@@ -208,7 +208,7 @@ t \ge \frac{9}{2} \label{1993-3:eq:7}
 \end{align}
 $$
 
- であって，また円$C$が$$\pm2, 4$$を通るから
+ であって，また円$C$が$\pm2, 4$を通るから
 
 
 $$
@@ -271,9 +271,9 @@ s & =
 \end{align*}
 $$
 
- である．$\cdots$$答$
+ である．$\cdots$(答)
 
-$2$
+$2\$
 あふれ出る水の体積$V$r$$は$xy$平面で$0 \le y \le 4$とCの共通部分Tとして，
 Tを$y$軸まわりに回転した立体の体積に等しい． 円$C$の上端の$y$座標$y_0$は
 
@@ -392,6 +392,6 @@ r=\frac{-1+2\sqrt{5}}{2}
 \end{align*}
 $$
 
- の時である．$\cdots$$答$
+ の時である．$\cdots$(答)
 
 **【解説】**

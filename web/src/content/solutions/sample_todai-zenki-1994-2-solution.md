@@ -13,7 +13,7 @@ title: "SAMPLE_TODAI 1994 zenki Q2 (solution)"
 <img
 src="/Math-Solutions/images/tikz/sample_todai/zenki/1994/2/fig_1.svg" />
 <figcaption>一辺の長さ<span
-class="math inline">$l$</span>の正方形と点Pの様子</figcaption>
+class="math inline">$l\$</span>の正方形と点Pの様子</figcaption>
 </figure>
 
 Pは円が1周する間$4$l-2$$だけ転がる．円の半径が$1$だから，
@@ -39,9 +39,9 @@ $$
 \end{align*}
 $$
 
- と書ける．$\cdots$$答$
+ と書ける．$\cdots$(答)
 
-$2$ 題意の条件$l>2$から，$1$をみたす$l$の最小値は$n=1$の時の
+$2\$ 題意の条件$l>2$から，$1$をみたす$l$の最小値は$n=1$の時の
 
 
 $$
@@ -68,7 +68,7 @@ $$
 <img
 src="/Math-Solutions/images/tikz/sample_todai/zenki/1994/2/fig_2.svg" />
 <figcaption>一辺の長さ<span
-class="math inline">$l$</span>の正方形ABCDと点Pの様子</figcaption>
+class="math inline">$l\$</span>の正方形ABCDと点Pの様子</figcaption>
 </figure>
 
 まず辺$AB$上を動く時を考える．
@@ -231,8 +231,8 @@ $$
 src="/Math-Solutions/images/tikz/sample_todai/zenki/1994/2/fig_3.svg" />
 <figcaption><span class="math inline">\(y=8|\sin t|+8|\cos
 t|\)</span>の概形と<span
-class="math inline">$L$</span>を面積と見立てた際の領域（<span
-class="math inline">$p=\pi/8$</span>の場合の例）．</figcaption>
+class="math inline">$L\$</span>を面積と見立てた際の領域（<span
+class="math inline">$p=\pi/8\$</span>の場合の例）．</figcaption>
 </figure>
 
 ここで$L$は、$y=8|\sin t|+8|\cos t|, t=p, t=p+\frac{\pi}{4}$
@@ -302,6 +302,6 @@ $$
 \end{align*}
 $$
 
- である．$\cdots$$答$
+ である．$\cdots$(答)
 
 **【解説】**

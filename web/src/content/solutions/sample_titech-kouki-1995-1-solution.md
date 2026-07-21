@@ -9,7 +9,7 @@ title: "SAMPLE_TITECH 1995 kouki Q1 (solution)"
 
 **【解】**
 
-$1$ $\ref{1}$のように，立方体の頂点A, B, C, D, E, F, G,
+$1\$ $\ref{1}$のように，立方体の頂点A, B, C, D, E, F, G,
 Hに対し題意の3面を ABCD, AEFB, AEHDとする. 各球の中心は
 立方体及び球の対称性から対角線AG上にある．
 $S_n$の中心を$O_n$，半径を$r_n$とおく．
@@ -44,7 +44,7 @@ src="/Math-Solutions/images/tikz/sample_titech/kouki/1995/1/fig_2.svg" />
 <img
 src="/Math-Solutions/images/tikz/sample_titech/kouki/1995/1/fig_3.svg" />
 <figcaption>$S_n$と<span
-class="math inline">$S_{n+1}$</span>の関係</figcaption>
+class="math inline">$S_{n+1}\$</span>の関係</figcaption>
 </figure>
 
 $O_n$から$AC$に引いた垂線と$AC$との交点を$T_n$と置くと，その定義より$O_nT_n$の長さは$r_n$に等しい．
@@ -83,9 +83,9 @@ r_{n}
 $$
 
 
-となる．ただし，$\eqref{1995-1:eq:1}$を用いた．$\cdots$$答$
+となる．ただし，$\eqref{1995-1:eq:1}$を用いた．$\cdots$(答)
 
-$2$ 立方体 $C$ の中でどの $S_k$ $$k=0,1,\ldots, n$$
+$2\$ 立方体 $C$ の中でどの $S_k$ $k=0,1,\ldots, n$
 にも含まれない部分の体積を$V_n$とする．
 求めるべき値は$\displaystyle V = \lim_{n\to\infty}V_n$である．
 $S_k\, $k=0,1,\cdots,n$$同士は互いに体積を共有することはないから，
@@ -112,7 +112,7 @@ V & = \lim_{n \to \infty} V_n                       \\
 \end{align*}
 $$
 
- である．$\cdots$$答$
+ である．$\cdots$(答)
 
 **【解説】**
 

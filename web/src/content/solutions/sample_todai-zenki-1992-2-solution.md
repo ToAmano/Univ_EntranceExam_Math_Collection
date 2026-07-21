@@ -9,19 +9,19 @@ title: "SAMPLE_TODAI 1992 zenki Q2 (solution)"
 
 **【解】**
 
-$1$
+$1\$
 
 <figure id="1992-2:fig:1" data-latex-placement="H">
 <img
 src="/Math-Solutions/images/tikz/sample_todai/zenki/1992/2/fig_1.svg" />
 <figcaption>平面<span
-class="math inline">$H_1,H_2$</span>の様子．</figcaption>
+class="math inline">$H_1,H_2\$</span>の様子．</figcaption>
 </figure>
 
 $L$を$x$軸, $H_1$を$xy$平面, Bを原点とし,
 $H_2$が$z \geqq 0$になるように空間座標をおく．
 $H_1$と$H_2$のなす角を$\theta$とおく．
-$C$から$L$に下ろした垂足を$C'$とし，その座標をC'$$p, 0, 0$$とする．
+$C$から$L$に下ろした垂足を$C'$とし，その座標をC'$p, 0, 0$とする．
 
 $CC' = q $q>0$$ とおくと， 
 
@@ -33,7 +33,7 @@ $$
 
  とおける．
 
-さらに A$$a, b, 0$$ $$b>0$$ とおくと，$\overline{AC}$の長さは
+さらに A$a, b, 0$ $b>0$ とおくと，$\overline{AC}$の長さは
 
 
 $$
@@ -65,7 +65,7 @@ $\theta$の変化によって$\overline{AB}, \overline{BC}$は変化しないか
 $$
 \begin{align*}
 \cos\alpha
-     & = $\text{定数}$  + \frac{bq}{\overline{AB} \cdot \overline{BC}} \cos\theta
+     & = (\text{定数})  + \frac{bq}{\overline{AB} \cdot \overline{BC}} \cos\theta
 \end{align*}
 $$
 
@@ -74,9 +74,9 @@ $$
 従って，$0 \leqq \theta \leqq \pi$で$\cos\theta$は単調減少で，$\frac{bq}{AB \cdot BC} > 0$から
 $\cos\alpha$は$\theta$の単調減少関数である．
 $0 \leqq \alpha \leqq \pi$とあわせて$\alpha$は$\theta$の単調増加関数である．
-よって題意は示された．$\cdots$$答$
+よって題意は示された．$\cdots$(答)
 
-$2$
+$2\$
 
 どの点が同一直線上にあるかで場合分けして考える．
 
@@ -153,6 +153,6 @@ $$
 
  よって与式は成立する．
 
-以上1°〜3°で全ての場合は尽くされ，題意は示された．$\cdots$$答$
+以上1°〜3°で全ての場合は尽くされ，題意は示された．$\cdots$(答)
 
 **【解説】**

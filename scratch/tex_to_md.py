@@ -108,7 +108,7 @@ def convert_tex_to_md(tex_path, output_md_path, frontmatter, uni, category, year
         f.write(processed_content)
         
     try:
-        cmd = ["pandoc", temp_tex, "-t", "markdown-grid_tables-simple_tables-multiline_tables-raw_attribute", "--mathjax"]
+        cmd = ["pandoc", temp_tex, "-t", "markdown-grid_tables-simple_tables-multiline_tables+tex_math_dollars", "--mathjax"]
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
         md_body = result.stdout
     finally:
@@ -179,9 +179,9 @@ def postprocess_markdown(md_body):
 
     # 5. 生の \( ... \) インライン数式・小設問の置換
     # (小設問の \(1\) や \(2\) などの数字単体は (1) (2) に変換)
-    md_body = re.sub(r'\\?\(([0-9a-zA-Z]{1,2})\\?\)', r'(\1)', md_body)
-    # それ以外の \( ... \) 数式は $ ... $ に変換
-    md_body = re.sub(r'\\?\((.*?)\\?\)', r'$\1$', md_body)
+    md_body = re.sub(r'\\?\(([0-9a-zA-Z]{1,2})\)', r'(\1)', md_body)
+    # 日本語・改行を含まない純粋なTeX数式のみ $...$ に変換
+    md_body = re.sub(r'\\?\(([^\u3000-\u30fe\u4e00-\u9fa5\n\r]*?)\)', r'$\1$', md_body)
 
     # 6. Pandoc ::: コンテナ (oframed, multicols) のクリーンアップ
     md_body = re.sub(r'^:::\s*(?:oframed|multicols.*)?\s*$', '', md_body, flags=re.MULTILINE)
@@ -195,7 +195,8 @@ def postprocess_markdown(md_body):
     # 8. \bm{...} の残骸等の処理
     md_body = re.sub(r'\\bm\{((?:[^{}]|\{[^{}]*\})*)\}', r'\\mathbf{\1}', md_body)
 
-    # 9. エスケープされた $`math`$ や末尾 \} や \left$ のクリーンアップ
+    # 9. 文中に誤って埋め込まれた二重 $$...$$ を $...$ に修復し、エスケープされた $`math`$ や末尾 \} をクリーンアップ
+    md_body = re.sub(r'\$\$([^\n\r]+?)\$\$', r'$\1$', md_body)
     md_body = re.sub(r'\\left\\?\$', r'\\left(', md_body)
     md_body = re.sub(r'\\right\\?\$', r'\\right)', md_body)
     md_body = re.sub(r'\$`([^`]+)`\$', r'$\1$', md_body)

@@ -7,7 +7,7 @@ type: "problem"
 title: "SAMPLE_TODAI 1993 zenki Q2 (problem)"
 ---
 
-$xy$平面において，直線$l$と点$\mathrm{A}$の距離を$d$l,\mathrm{A}$$と書くことにする．さらに，相異なる$3$点$\mathrm{A}=$x_1,y_1$$，$\mathrm{B}=$x_2,y_2$$，$\mathrm{C}=$x_3,y_3$$が与えられたとき，
+$xy$平面において，直線$l$と点$\mathrm{A}$の距離を$d$l,\mathrm{A}$と書くことにする．さらに，相異なる$3$点$\mathrm{A}=$x_1,y_1$，$\mathrm{B}=$x_2,y_2$，$\mathrm{C}=$x_3,y_3$が与えられたとき，
 
 
 $$

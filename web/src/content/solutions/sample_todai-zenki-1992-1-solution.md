@@ -9,7 +9,7 @@ title: "SAMPLE_TODAI 1992 zenki Q1 (solution)"
 
 **【解】**
 
-$1$ 題意の関数 
+$1\$ 題意の関数 
 
 $$
 \begin{align*}
@@ -71,9 +71,9 @@ a_0 = \frac{1}{2}
 \end{align*}
 $$
 
- である．$\cdots$$答$
+ である．$\cdots$(答)
 
-$2$
+$2\$
 $1$から，$y=f_{a_0}$x$$は常に$y=x$の下側にあって，グラフの概形は$\ref{1}$のようになる．
 
 <figure id="1992-1:fig:1" data-latex-placement="H">
@@ -129,9 +129,9 @@ V$\theta$
 \end{align*}
 $$
 
- である．$\cdots$$答$
+ である．$\cdots$(答)
 
-$3$ $t=\frac{\pi}{2}-\theta$ とおくと，$\theta \to \pi/2-0$
+$3\$ $t=\frac{\pi}{2}-\theta$ とおくと，$\theta \to \pi/2-0$
 の時，$t \to +0$ である． $2$ から，$V$\theta$$を$t$を使って書き直すと，
 
 
@@ -155,6 +155,6 @@ $$
 \end{align*}
 $$
 
- である．$\cdots$$答$
+ である．$\cdots$(答)
 
 **【解説】**
