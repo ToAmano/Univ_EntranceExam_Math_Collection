@@ -67,3 +67,16 @@ latexmk -lualatex main.tex
 cd src/sample_todai/zenki
 latexmk -lualatex main.tex
 ```
+
+---
+
+## 📄 ライセンス (License)
+
+本リポジトリは、コンテンツとプログラムコードでデュアルライセンスを採用しています。詳細な規定は [LICENSE](LICENSE) をご参照ください。
+
+* **解答解説文章・TeXソース・TikZ画像 (コンテンツ)**: 
+  **[CC BY-NC-SA 4.0 (Creative Commons 表示-非営利-継承 4.0 国際)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja)**
+  * クレジット表示を行い、非営利目的に限って自由にご利用・学習・共有・改変いただけます。
+* **プログラムコード (`web/`, `scratch/`, 設定ファイル)**: 
+  **[MIT License](LICENSE)**
+  * 商用・非営利問わず自由に利用・改変いただけます。
