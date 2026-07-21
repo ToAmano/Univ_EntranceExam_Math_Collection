@@ -89,9 +89,14 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     # 3. tabular 環境の pypandoc による完全自動 Markdown 表変換
     def convert_tabular_block(match):
         tab_str = match.group(0)
+        # Pandoc が HTML <table> にエスケープする原因となる multirow / multicolumn マクロの展開
+        tab_clean = re.sub(r'\\multirow\{[^}]*\}\{[^}]*\}', '', tab_str)
+        tab_clean = re.sub(r'\\multicolumn\{[^}]*\}\{[^}]*\}', '', tab_clean)
         try:
-            md_table = pypandoc.convert_text(tab_str, 'gfm', format='latex')
-            return "\n\n" + md_table.strip() + "\n\n"
+            md_table = pypandoc.convert_text(tab_clean, 'markdown_strict+pipe_tables+tex_math_dollars', format='latex')
+            # hline 行等の除去
+            lines = [l for l in md_table.splitlines() if 'hline' not in l]
+            return "\n\n" + "\n".join(lines).strip() + "\n\n"
         except Exception as e:
             print(f"Pandoc table conversion warning: {e}")
             return tab_str
