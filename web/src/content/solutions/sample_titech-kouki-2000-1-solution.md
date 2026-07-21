@@ -10,20 +10,24 @@ title: "SAMPLE_TITECH 2000 kouki Q1 (solution)"
 **【解】**
 
 $1$ $f$-a$=0$より，$f$x$$は$$x+a$$を因数に持ち， 
+
 $$
 \begin{align*}
 f$x$=$x+a$$x^2+(1-a$x+b)
 \end{align*}
 $$
 
+
 と書ける．これ以上の分解はできないため，これが答えである． $\cdots$$答$
 
 $2$ 新しく 
+
 $$
 \begin{align*}
 g$x$ = x^2+$1-a$x+b
 \end{align*}
 $$
+
 
 とおく．$f$x$$の三次の係数が正だから，$g$x$$の解の数によって関数$f$x$$の概形が\ref{1}の4パターンに変化する．
 
@@ -52,27 +56,34 @@ alt="image" /></p>
 </figure>
 
 $g$x$$の判別式$D$は 
+
 $$
 \begin{align*}
 D=$a-1$^2-4b
 \end{align*}
 $$
+
  である．$D\ge0$の時 $f$x$=0$は2実解 $\alpha, \beta$
 $重解を含む$をもつ．これらの解が$-a$と等しい場合があるかを調べる．
 この時の解は 
+
 $$
 \begin{align}
 x = \frac{a-1 \pm \sqrt{$a-1$^2-4b}}{2}\label{2000-1:eq:2}
 \end{align}
 $$
+
  である．これが$-a$と等しいとき， 
+
 $$
 \begin{align*}
 -a      & = \frac{a-1 \pm \sqrt{$a-1$^2-4b}}{2} \\
     -3a + 1 & = \pm \sqrt{$a-1$^2-4b}
 \end{align*}
 $$
+
  両辺二乗して 
+
 $$
 \begin{align}
 & $-3a+1$^2 = $a-1$^2-4b   \nonumber \\
@@ -80,21 +91,26 @@ $$
      & b = - 2a^2+a \label{2000-1:eq:3}
 \end{align}
 $$
+
  である．$D=0$との関係では，常に 
+
 $$
 \begin{align*}
 \frac{1}{4}$a-1$^2 \ge -2a^2+a
 \end{align*}
 $$
+
  が成り立つ．等号成立は$a=1/3$のときであり，
 この時，$b=1/9$であり， 
+
 $$
 \begin{align*}
 g$x$
      & = x^2+\frac{2}{3}x+\frac{1}{9} \\
-     & = \left$x+\frac{1}{3}\right$^2
+     & = \left(x+\frac{1}{3}\right)^2
 \end{align*}
 $$
+
  と$x=-a$を重解を持つ．
 それ以外の時は，$g$x$$は$-a$およびそれと異なる解を持つ．
 以上の事実を念頭に以下場合わけを行う．
@@ -123,21 +139,26 @@ class="math inline">$g(x$\)</span>の解の個数分布</figcaption>
 1.  $f$x$$が異なる三つの実数解を持つとき．\
     この時は，$g$x$$が異なる二つの実数解を持つ，つまり$D>0$である．
     この時は$g$x$$の解が$-a$ではあり得ない． 従って 
+
 $$
 \begin{align*}
 $a-1$^2-4b > 0 \\
 \end{align*}
 $$
+
  の時である．
     このもとで題意の条件を満たすには，$f$x$$の最も大きい解が$0$以下であれば良い．
     
+
 $$
 \begin{align*}
 & \max$-a, \alpha, \beta$ \le 0
 \end{align*}
 $$
 
+
     \eqref{2000-1:eq:2}より，求める条件は 
+
 $$
 \begin{align*}
 & \begin{dcases}
@@ -164,17 +185,21 @@ $$
 $$
 
 
+
 2.  $f$x$$が異なる二つの実数解を持つとき．\
     この時は，$D=0$で$g$x$$の解が$-a$でないときか，$D>0$で$g$x$$の一つの解が$-a$となる$$-a$が$f$の重解となる$ときである．
     前者の時は$D=0$より 
+
 $$
 \begin{align*}
 D = $a-1$^2 -4b = 0
 \end{align*}
 $$
+
  であり，この時の重解は
     $x = \frac{a-1}{2}$である．これが$-a$と一致しないことにより$a\neq 1/3$が必要．
     題意の条件は 
+
 $$
 \begin{align*}
 & -a \le 0 \\
@@ -182,9 +207,11 @@ $$
                  & a \ge 0
 \end{align*}
 $$
+
  である．
 
     後者の条件は，\eqref{2000-1:eq:3}より 
+
 $$
 \begin{align*}
 b & = - 2a^2+a        \\
@@ -192,27 +219,33 @@ b & = - 2a^2+a        \\
 \end{align*}
 $$
 
+
     であり，この時$g$x$$のもう一つの解は解と係数の関係から
     
+
 $$
 \begin{align*}
 x = 2a - 1
 \end{align*}
 $$
+
  である．題意の条件はこれが$0$以下であることで
     
+
 $$
 \begin{align*}
 & 2a-1 \le 0        \\
                  & a \le \frac{1}{2}
 \end{align*}
 $$
+
  である．
 
 3.  $f$x$$がただ一つの実数解を持つとき．\
     これは$f$x$$が三重解を持つか，または$D<0$の時のときである．
     前者の時は$a=1/3$であり，この元で題意の条件は$-a \le 0$であるから，
     
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -221,9 +254,11 @@ $$
                 \end{dcases}
 \end{align*}
 $$
+
  となる．
 
     後者の時は$D<0$かつ$-a \le 0$であればよく， 
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -234,7 +269,9 @@ $$
 $$
 
 
+
 以上をまとめると，以下の4つの条件となる． 
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -245,7 +282,9 @@ $$
     \end{dcases}
 \end{align*}
 $$
+
  これを整理して 
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -255,6 +294,7 @@ $$
     \end{dcases}
 \end{align*}
 $$
+
  である．
 $ab$平面にこの条件を図示すれば，\ref{2}の斜線部が求める答えである．
 ただし，実線部および境界を含む．

@@ -15,12 +15,14 @@ Hに対し題意の3面を ABCD, AEFB, AEHDとする. 各球の中心は
 $S_n$の中心を$O_n$，半径を$r_n$とおく．
 断面AEGCを\ref{2}に示す．$AC=2\sqrt{2}$,$AE=2$より，$\angle\mathrm{GAC}=\theta$と置くと
 
+
 $$
 \begin{align}
 \sin\theta & = \frac{\mathrm{AE}}{\mathrm{AG}} = \frac{1}{\sqrt{3}} \label{1995-1:eq:1}        \\
     \cos\theta & = \frac{\mathrm{AC}}{\mathrm{AG}} = \frac{\sqrt{2}}{\sqrt{3}} \label{1995-1:eq:2}
 \end{align}
 $$
+
  が成り立つことに注意する．
 
 <figure id="1995-1:fig:1" data-latex-placement="H">
@@ -48,15 +50,18 @@ class="math inline">$S_{n+1}$</span>の関係</figcaption>
 $O_n$から$AC$に引いた垂線と$AC$との交点を$T_n$と置くと，その定義より$O_nT_n$の長さは$r_n$に等しい．
 一方で，$O_{n+1}$から$O_nT_n$に引いた垂線と$O_nT_n$の交点を$R_n$と置くと，
 
+
 $$
 \begin{align*}
 O_nT_n
      & =O_{n+1}T_{n+1}+O_nR_n                        \\
      & =O_{n+1}+O_nO_{n+1}\sin\theta                 \\
-     & =r_{n+1}+\left$r_{n}+r_{n+1}\sin\theta\right$
+     & =r_{n+1}+\left(r_{n}+r_{n+1}\sin\theta\right)
 \end{align*}
 $$
+
  と表されるので，$r_n$と$r_{n+1}$の関係は 
+
 $$
 \begin{align}
 r_{n}
@@ -65,15 +70,18 @@ r_{n}
     r_{n+1} & = \frac{1-\sin\theta}{1+\sin\theta} r_{n}
 \end{align}
 $$
+
  となる．$r_0=1$と合わせると，この等比級数の解は
+
 
 $$
 \begin{align}
 r_{n}
-     & = \left$\frac{1-\sin\theta}{1+\sin\theta}\right$^n \\
+     & = \left(\frac{1-\sin\theta}{1+\sin\theta}\right)^n \\
      & = $2-\sqrt{3}$^n
 \end{align}
 $$
+
 
 となる．ただし，\eqref{1995-1:eq:1}を用いた．$\cdots$$答$
 
@@ -83,6 +91,7 @@ $2$ 立方体 $C$ の中でどの $S_k$ $$k=0,1,\ldots, n$$
 $S_k\, $k=0,1,\cdots,n$$同士は互いに体積を共有することはないから，
 体積$V_n$は立方体$C$の体積から，$S_k\, $k=0,1,\cdots,n$$の体積を減じたものに等しく，
 
+
 $$
 \begin{align*}
 V_n & = 8 - \frac{4}{3}\pi \sum_{k=0}^{n} r_k^3                             \\
@@ -90,9 +99,11 @@ V_n & = 8 - \frac{4}{3}\pi \sum_{k=0}^{n} r_k^3                             \\
         & = 8 - \frac{4}{3}\pi \frac{1-$2-\sqrt{3}$^{3$n+1$}}{1-$2-\sqrt{3}$^3}
 \end{align*}
 $$
+
  となる．
 
 $0<$2-\sqrt{3}$^3 < 1$ だから求める体積$V$は 
+
 $$
 \begin{align*}
 V & = \lim_{n \to \infty} V_n                       \\
@@ -100,6 +111,7 @@ V & = \lim_{n \to \infty} V_n                       \\
       & = 8 - \frac{6\sqrt{3}+10}{15}\pi
 \end{align*}
 $$
+
  である．$\cdots$$答$
 
 **【解説】**

@@ -131,11 +131,21 @@ def convert_tex_to_md(tex_path, output_md_path, frontmatter, uni, category, year
         f.write(fm_str + md_body)
 
 def postprocess_markdown(md_body):
-    # 1. \begin{align} / \begin{align*} などの環境を $$ \begin{align} ... \end{align} $$ にブロックで包む
-    # (MathJax の AMS モード tags: 'ams' により自動ナンバリングと \label / \ref / \eqref 相互参照が機能する)
+    # 0. \left$ / \right$ や \left\( などの括弧誤変換を真っ先に修復
+    md_body = re.sub(r'\\left\\?\$', r'\\left(', md_body)
+    md_body = re.sub(r'\\right\\?\$', r'\\right)', md_body)
+    md_body = re.sub(r'\\left\\?\(', r'\\left(', md_body)
+    md_body = re.sub(r'\\right\\?\)', r'\\right)', md_body)
+
+    # 1. \begin{align} / \begin{align*} などの環境を $$ \begin{align} ... \end{align} $$ にブロックで包み、内部の不要な $ を除去
     def preserve_align_env(match):
         env_type = match.group(1)
         body = match.group(2)
+        body = re.sub(r'\\left\\?\$', r'\\left(', body)
+        body = re.sub(r'\\right\\?\$', r'\\right)', body)
+        body = re.sub(r'\\left\\?\(', r'\\left(', body)
+        body = re.sub(r'\\right\\?\)', r'\\right)', body)
+        body = re.sub(r'(?<!\\)\$', '', body)
         body = re.sub(r'\\\}', '}', body)
         return f"\n$$\n\\begin{{{env_type}}}\n{body.strip()}\n\\end{{{env_type}}}\n$$\n"
 
@@ -146,15 +156,25 @@ def postprocess_markdown(md_body):
         flags=re.DOTALL
     )
 
-    # 2. HTMLタグ内の <span class="math inline">\(...\)</span> や \(...\) インライン数式のクリーンアップ
+    # 2. $$ ... $$ ディスプレイ数式内部に混入した不要な $ や \left$ の除去
+    def fix_display_math(match):
+        content = match.group(1)
+        content = re.sub(r'\\left\\?\$', r'\\left(', content)
+        content = re.sub(r'\\right\\?\$', r'\\right)', content)
+        clean_content = re.sub(r'(?<!\\)\$', '', content)
+        return f"\n$$\n{clean_content.strip()}\n$$\n"
+
+    md_body = re.sub(r'\$\$(.*?)\$\$', fix_display_math, md_body, flags=re.DOTALL)
+
+    # 3. HTMLタグ内の <span class="math inline">\(...\)</span> や \(...\) インライン数式のクリーンアップ
     md_body = re.sub(r'<span class="math inline">\\?\((.*?)\\?\)</span>', r'$\1$', md_body)
 
-    # 3. Pandocの生参照属性記号を \eqref{...} や \ref{...} に復元
+    # 4. Pandocの生参照属性記号を \eqref{...} や \ref{...} に復元
     md_body = re.sub(r'\[\\?\[([^\]]+)\\?\]\]\([^)]+\)\{reference-type="[^"]*"[^}]*\}', r'\\eqref{\1}', md_body)
     md_body = re.sub(r'\[([^\]]+)\]\([^)]+\)\{reference-type="[^"]*"[^}]*\}', r'\\ref{\1}', md_body)
     md_body = re.sub(r'\{reference-type="[^"]*"[^}]*\}', '', md_body)
 
-    # 4. 生の \( ... \) インライン数式・小設問の置換
+    # 5. 生の \( ... \) インライン数式・小設問の置換
     # (小設問の \(1\) や \(2\) などの数字単体は (1) (2) に変換)
     md_body = re.sub(r'\\?\(([0-9a-zA-Z]{1,2})\\?\)', r'(\1)', md_body)
     # それ以外の \( ... \) 数式は $ ... $ に変換
@@ -172,7 +192,9 @@ def postprocess_markdown(md_body):
     # 8. \bm{...} の残骸等の処理
     md_body = re.sub(r'\\bm\{((?:[^{}]|\{[^{}]*\})*)\}', r'\\mathbf{\1}', md_body)
 
-    # 9. エスケープされた $`math`$ や末尾 \} のクリーンアップ
+    # 9. エスケープされた $`math`$ や末尾 \} や \left$ のクリーンアップ
+    md_body = re.sub(r'\\left\\?\$', r'\\left(', md_body)
+    md_body = re.sub(r'\\right\\?\$', r'\\right)', md_body)
     md_body = re.sub(r'\$`([^`]+)`\$', r'$\1$', md_body)
     md_body = re.sub(r'\\\}', '}', md_body)
     
