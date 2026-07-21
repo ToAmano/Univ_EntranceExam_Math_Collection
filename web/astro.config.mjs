@@ -4,7 +4,7 @@ import rehypeKatex from 'rehype-katex';
 
 export default defineConfig({
   site: 'https://toamano.github.io',
-  base: '/Math-Solutions',
+  base: '/Univ_EntranceExam_Math_Collection',
   markdown: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],
