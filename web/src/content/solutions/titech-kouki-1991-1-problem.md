@@ -1,0 +1,14 @@
+---
+university: "titech"
+category: "kouki"
+year: "1991"
+question: "1"
+type: "problem"
+title: "TITECH 1991 kouki Q1 (problem)"
+---
+
+10進表示の$n$桁の正の整数で，隣り合う桁の数字が互いに相異なるような数の個数 を$a_n$とするとき，次の問いに答えよ．
+
+1.  $a_n$を求めよ．
+
+2.  上の数のうちで，1の位の数字が0である数の個数を$b_n$とするとき，$ \lim_{n \to \infty} \frac{b_n}{a_n}$を求めよ．

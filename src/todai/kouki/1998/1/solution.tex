@@ -1,0 +1,309 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{東京大学後期$1998$年$1$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/1998/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+    (1)
+    $C_1,C_2$の方程式は
+    \begin{align*}
+        \begin{dcases}
+            C_1 : x^2 + (y-10)^2=1 \\
+            C_2 : x^2 + y^2 = 4
+        \end{dcases}
+    \end{align*}
+    で与えられる．
+
+    点 Q が円 $C_1$ 上を動き, 点 R が円 $C_2$ 上を動くとき，$0 \le \alpha, \beta < 2\pi$ をみたす $\alpha, \beta$ によって，
+    $Q(\cos\alpha, 10+\sin\alpha)$, $R(2\cos\beta, 2\sin\beta)$ と書ける．
+    この時$S(X, Y)$ とおいて，$S$の軌跡を求める．
+    まず，
+    \begin{align}
+        \overrightarrow{RQ} & = \begin{pmatrix} \cos\alpha - 2\cos\beta \\ \sin\alpha +10 - 2\sin\beta \end{pmatrix}\label{1998-1:eq:2} \\
+        \overrightarrow{RS} & = \begin{pmatrix} X-2\cos\beta \\ Y-2\sin\beta \end{pmatrix} \label{1998-1:eq:3}
+    \end{align}
+    と書ける．
+
+    三角形QRSが二等辺三角形になる条件より，
+    \begin{align*}
+        \begin{dcases}
+            RQ \cdot RS = 0 \\
+            |QR|^2 = |RS|^2
+        \end{dcases}
+    \end{align*}
+    であるが，\cref{1998-1:eq:2}より
+    \begin{align*}
+        \overrightarrow{RS} = \pm \begin{pmatrix} \sin\alpha - 2\sin\beta + 10 \\ -(\cos\alpha - 2\cos\beta) \end{pmatrix}
+    \end{align*}
+    が従う．
+
+    \cref{1998-1:eq:3}と比較して
+    \begin{align*}
+        \begin{pmatrix} X \\ Y \end{pmatrix}
+         & = 2\begin{pmatrix} \cos\beta \\ \sin\beta \end{pmatrix} \pm \begin{pmatrix} \sin\alpha - 2\sin\beta + 10 \\ -\cos\alpha + 2\cos\beta \end{pmatrix}                                             \\
+         & = \pm\begin{pmatrix} \sin\alpha \\ -\cos\alpha \end{pmatrix} + 2\begin{pmatrix} \cos\beta \mp \sin\beta \\ \sin\beta \pm \cos\beta \end{pmatrix} \pm \begin{pmatrix} 10 \\ 0 \end{pmatrix}     \\
+         & = \pm\begin{pmatrix} \sin\alpha \\ -\cos\alpha \end{pmatrix} + 2\sqrt{2}\begin{pmatrix} \cos(\beta \pm \pi/4) \\ \sin(\beta \pm \pi/4) \end{pmatrix} \pm \begin{pmatrix} 10 \\ 0 \end{pmatrix}
+    \end{align*}
+    を得る．ただし複合同順である．
+
+    複合正の時，$(X, Y)$はドーナツ型の領域
+    \begin{align*}
+        (2\sqrt{2}-1)^2 \le (x-10)^2+y^2 \le (1+2\sqrt{2})^2
+    \end{align*}
+    の内部を動く．
+
+    複合負の時，$(X, Y)$はドーナツ型の領域
+    \begin{align*}
+        (2\sqrt{2}-1)^2 \le (x+10)^2+y^2 \le (1-2\sqrt{2})^2
+    \end{align*}
+    の内部を動く．
+
+    以上二つの領域をまとめると
+    \begin{align}
+        \begin{dcases}
+            (2\sqrt{2}-1)^2 \le (x-10)^2+y^2 \le (1+2\sqrt{2})^2 \\
+            (2\sqrt{2}-1)^2 \le (x+10)^2+y^2 \le (1-2\sqrt{2})^2
+        \end{dcases} \label{1998-1:eq:5}
+    \end{align}
+    であり，図示して\cref{1998-1:fig:1}の斜線部分(境界線含む)となる．
+    $\cdots$(答)
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    xmin=-15, xmax=15,
+                    ymin=-4, ymax=4,
+                    axis lines=middle,
+                    axis equal,
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xtick={-10, 0, 10},
+                    xticklabels={-10, 0, 10},
+                    ytick={\empty},
+                    clip=false,
+                    axis on top,
+                ]
+
+                % The left circles
+                \draw[dashed, pattern=vertical lines, pattern color=gray, opacity=0.5] (axis cs:-10,0) circle [radius={2*sqrt(2)+1}];
+                \draw[] (axis cs:-10,0) circle [radius={2*sqrt(2)}];
+                \draw[white, opacity=1, fill=white] (axis cs:-10,0) circle [radius=2*sqrt(2)-1];
+                \draw[black] (axis cs:-10,0) circle [radius=2*sqrt(2)+1];
+                \draw[black] (axis cs:-10,0) circle [radius=2*sqrt(2)-1];
+
+                % The right circles
+                \draw[dashed, pattern=vertical lines, pattern color=gray, opacity=0.5] (axis cs:10,0) circle [radius={2*sqrt(2)+1}];
+                \draw[] (axis cs:10,0) circle [radius={2*sqrt(2)}];
+                \draw[white, opacity=1, fill=white] (axis cs:10,0) circle [radius=2*sqrt(2)-1];
+                \draw[black] (axis cs:10,0) circle [radius=2*sqrt(2)+1];
+                \draw[black] (axis cs:10,0) circle [radius=2*sqrt(2)-1];
+
+                % Labels for the x-axis
+                \node[pin=below:$ -11+2\sqrt{2} $] at (axis cs:{-10-2*sqrt(2)-1}, 0) {};
+                \node[pin=above right:$ -9+2\sqrt{2} $] at (axis cs:{-10-2*sqrt(2)+1}, 0) {};
+                \node[pin=above right:$ 9+2\sqrt{2} $] at (axis cs:{10-2*sqrt(2)+1}, 0) {};
+                \node[pin=below:$ 11+2\sqrt{2} $] at (axis cs:{10+2*sqrt(2)+1}, 0) {};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$S$の存在領域は斜線部境界を含む．}
+        \label{1998-1:fig:1}
+    \end{figure}
+
+    \vspace{10pt}
+    (2)
+    (1)の領域の境界の円の方程式は複合任意で
+    \begin{align}
+        (X \pm 10)^2+Y^2 = (2\sqrt{2} \pm 1)^2 \label{1998-1:eq:4}
+    \end{align}
+    の合計四つである．
+
+    $Q, R$ が一意に定まる，つまり $\alpha, \beta$ が一意に定まるような $C_3$ の軌跡は，
+    (1)の領域の境界\cref{1998-1:eq:4}である．
+
+    したがって，\cref{1998-1:eq:5}の領域と円 $C_3$ がただ1つ共有点を持つ（この時の共有点は\cref{1998-1:eq:4}上になる）ように円の中心 $P_3$ を定めればよい．
+
+    ここで\cref{1998-1:eq:4}の四つの円のうち，中心を$(-10,0)$とする二つの円
+    \begin{align*}
+        (X+10)^2+Y^2 = (2\sqrt{2}\pm 1)^2
+    \end{align*}
+    について，題意の直線
+    \begin{align*}
+        \ell: x+2y=10
+    \end{align*}
+    との距離は点と直線の距離公式より
+    \begin{align*}
+        L = \frac{|-10+10|}{\sqrt{1^2+2^2}}=4\sqrt{5}
+    \end{align*}
+    であり，これは$C_3$とこれらの円の半径の合計
+    \begin{align*}
+        \left(2\sqrt{2}\pm 1\right) + \sqrt{2} = 3\sqrt{2}\pm 1
+    \end{align*}
+    よりも大きいから，これらの円と$C_3$が交点を持つことはない．
+
+    従って，残りの$E(10,0)$を中心とする二つの円
+    \begin{align*}
+        \begin{dcases}
+            C_{+} : (X-10)^2+Y^2=(2\sqrt{2}+1)^2 \\
+            C_{-} : (X-10)^2+Y^2=(2\sqrt{2}-1)^2
+        \end{dcases}
+    \end{align*}
+    について考える．$\ell$は点Eを通る直線だから，この二つの円は\cref{1998-1:fig:2}のように直線$\ell$と合計$4$つの交点を持つ．
+    これらを$x$座標の小さい順にA，B，C，Dとおく．
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    xmin=-3, xmax=15,
+                    ymin=-5, ymax=10,
+                    axis lines=middle,
+                    axis equal,
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xtick={0, 10},
+                    xticklabels={0, 10},
+                    ytick={5},
+                    yticklabels={5},
+                    clip=false,
+                ]
+
+                % The circles
+                \draw[black] (axis cs:10,0) circle [radius={2*sqrt(2)+1}];
+                \draw[black] (axis cs:10,0) circle [radius={2*sqrt(2)-1}];
+                \draw[fill=black] (axis cs:10,0) circle [radius=0.1];
+
+                % The line x+2y=10, or y = -0.5x + 5
+                \addplot[domain=-3:15, blue, samples=100] {-0.5*x + 5};
+                \node[above, xshift=1cm] at (axis cs:0,5) {$\ell$ (方向ベクトル $\begin{pmatrix} 2 \\ -1 \end{pmatrix}$)};
+
+                % Points for inner circle (B and C)
+                % xB = 10 - (2*sqrt(2)-1) * (2/sqrt(5)) approx 10 - 1.82 * 0.89 = 10-1.62 = 8.38
+                % yB = 0 + (2*sqrt(2)-1) * (1/sqrt(5)) approx 1.82 * 0.45 = 0.82
+                \coordinate (B) at ({10 - (2*sqrt(2)-1)*2/sqrt(5)}, {(2*sqrt(2)-1)/sqrt(5)});
+                % xC = 10 + (2*sqrt(2)-1) * (2/sqrt(5)) approx 10 + 1.62 = 11.62
+                % yC = 0 - (2*sqrt(2)-1) * (1/sqrt(5)) approx -0.82
+                \coordinate (C) at ({10 + (2*sqrt(2)-1)*2/sqrt(5)}, {-(2*sqrt(2)-1)/sqrt(5)});
+
+                % Points for outer circle (A and D)
+                % xA = 10 - (2*sqrt(2)+1) * (2/sqrt(5)) approx 10 - 3.82*0.89 = 10-3.4 = 6.6
+                % yA = 0 + (2*sqrt(2)+1) * (1/sqrt(5)) approx 3.82*0.45 = 1.7
+                \coordinate (A) at ({10 - (2*sqrt(2)+1)*2/sqrt(5)}, {(2*sqrt(2)+1)/sqrt(5)});
+                % xD = 10 + (2*sqrt(2)+1) * (2/sqrt(5)) approx 10 + 3.4 = 13.4
+                % yD = 0 - (2*sqrt(2)+1) * (1/sqrt(5)) approx -1.7
+                \coordinate (D) at ({10 + (2*sqrt(2)+1)*2/sqrt(5)}, {-(2*sqrt(2)+1)/sqrt(5)});
+
+                % Draw the intersection points and labels
+                \draw[fill=black] (A) circle [radius=0.1];
+                \node[above left] at (A) {A};
+                \draw[fill=black] (B) circle [radius=0.1];
+                \node[above left] at (B) {B};
+                \draw[fill=black] (C) circle [radius=0.1];
+                \node[below right] at (C) {C};
+                \draw[fill=black] (D) circle [radius=0.1];
+                \node[below right] at (D) {D};
+
+                \node[above right] at (axis cs:10,0) {E};
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{直線$l$と円$C_{\pm}$の様子．}
+        \label{1998-1:fig:2}
+    \end{figure}
+
+    $\ell$上の点$P_3$を中心とする円$C_3$が$C_{\pm}$と唯一交点を持つのは
+    \begin{enumerate}
+        \item 点BまたはCで$C_3$と$C_{-}$が内接する \\
+        \item 点AまたはDで$C_3$と$C_{+}$が外接する
+    \end{enumerate}
+    二つのパターンである．
+
+    \textbf{$B$ 又は $C$ で $C_3, C_5$ が内接する時}
+
+    $\overline{BC}=2(\sqrt{2}-1) > 2$ だから，この時，他の交点は存在せず条件に適する．
+    よって，$B, C$ からの距離が $\sqrt{2}$ ，すなわちEからの距離が
+    \begin{align*}
+        \left(2\sqrt{2}-1\right) - \sqrt{2} = \sqrt{2}-1
+    \end{align*}
+    となるような $\ell$ 上の点が$P_3$であり，
+    \begin{align*}
+        \overrightarrow{EP_3}
+         & = (\sqrt{2}-1)\frac{\pm}{\sqrt{5}}\begin{pmatrix} 2 \\ -1 \end{pmatrix}                                         \\
+        \overrightarrow{OP_3}
+         & = \begin{pmatrix} 10 \\ 0 \end{pmatrix} + (\sqrt{2}-1)\frac{\pm}{\sqrt{5}}\begin{pmatrix} 2 \\ -1 \end{pmatrix} \\
+    \end{align*}
+    だから，求める$P_3$は
+    \begin{align*}
+        P_3\left(10\pm\frac{2\sqrt{5}(\sqrt{2}-1)}{5}, \mp\frac{\sqrt{5}(\sqrt{2}-1)}{5}\right)
+    \end{align*}
+    である（複合同順）．
+
+    \vspace{5pt}
+    \textbf{$A$ 又は $D$ で $C_3, C_4$ が外接する時}
+
+    この時，他の交点は存在せず条件に適する．
+    よって，$A, D$ からの距離が $\sqrt{2}$ ，すなわちEからの距離が
+    \begin{align*}
+        \left(2\sqrt{2}+1\right) + \sqrt{2} = 3\sqrt{2}+1
+    \end{align*}
+    となるような $\ell$ 上の点が$P_3$であり，
+    \begin{align*}
+        \overrightarrow{EP_3}
+         & = (3\sqrt{2}+1)\frac{\pm}{\sqrt{5}}\begin{pmatrix} 2 \\ -1 \end{pmatrix}                                          \\
+        \overrightarrow{OP_3}
+         & = \begin{pmatrix} 10 \\ 0 \end{pmatrix} + (3\sqrt{2}+1)\frac{\pm}{\sqrt{5}}\begin{pmatrix} 2 \\  -1 \end{pmatrix}
+    \end{align*}
+    より
+    \begin{align*}
+        P_3\left(10\pm\frac{2\sqrt{5}(3\sqrt{2}+1)}{5}, \mp\frac{\sqrt{5}(3\sqrt{2}+1)}{5}\right)
+    \end{align*}
+    となる（複合同順）．
+
+    \vspace{5pt}
+    以上で全ての場合が尽くされ，求める点は複号同順として
+    \begin{align*}
+         & P_3\left(10\pm\frac{2\sqrt{5}(\sqrt{2}-1)}{5}, \mp\frac{\sqrt{5}(\sqrt{2}-1)}{5}\right)   \\
+         & P_3\left(10\pm\frac{2\sqrt{5}(3\sqrt{2}+1)}{5}, \mp\frac{\sqrt{5}(3\sqrt{2}+1)}{5}\right)
+    \end{align*}
+    の四つである．$\cdots$(答)
+
+    \vspace{10pt}
+
+
+
+    {\bf[解説]}
+    % TODO :: 実際にC3が接している状態の図を追加
+    % TODO :: 問題の設定の様子の図を追加
+
+    \newpage
+\end{multicols}
+\end{document}

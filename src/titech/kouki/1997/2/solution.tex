@@ -1,0 +1,95 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+\rhead{東工大後期$1997$年$2$番}
+\setcounter{equation}{0}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\begin{oframed}
+  \input{../../../problems/1997/2/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1,tdplot_main_coords]
+      % Define coordinates
+      \coordinate (O) at (0,0,3);
+      \coordinate (A) at (-2,-2,0);
+      \coordinate (B) at (2,-2,0);
+      \coordinate (C) at (2,2,0);
+      \coordinate (D) at (-2,2,0);
+
+      % Draw base (dashed for back edges)
+      \draw[dashed] (A) -- (D);
+      \draw[dashed] (A) -- (B);
+      \draw (B) -- (C) -- (D);
+
+      % Draw edges to apex
+      \draw[dashed] (O) -- (A);
+      \draw (O) -- (B);
+      \draw (O) -- (C);
+      \draw (O) -- (D);
+
+      % Label vertices
+      \node at (O) [above] {O};
+      \node at (A) [below] {A};
+      \node at (B) [below] {B};
+      \node at (C) [below] {C};
+      \node at (D) [below] {D};
+    \end{tikzpicture}
+    \caption{四角錐OABCD}
+  \end{figure}
+
+  対称性から、$X_n$がAに一致する確率を$q_n$とおくと、$X_n$がB,C,Dに一致する確率も$q_n$にひとしい．
+  $X_n$がOに一致する確率を$p_n$とおく．$X_n$はO,A,B,C,Dのうちいずれかに一致するから，全体の確率が$1$となることより
+  \begin{align}
+    p_n + 4q_n = 1 \label{1997-2:eq:1}
+  \end{align}
+  を満たす．
+
+  次に$p_n$の漸化式を求める．$n+1$で$X_n$が$O$に等しい時，$n$では$X_n$はA,B,C,Dのいずれかに存在し，そこから確率$1/3$で$O$に移動する．したがって漸化式は
+  \begin{align*}
+    p_{n+1} = \frac{4}{3}q_n
+  \end{align*}
+  である．\cref{1997-2:eq:1}を代入して$q_n$を消去して
+  \begin{align}
+    p_{n+1} & = \frac{1}{3}(1-p_n)
+  \end{align}
+  を得る．
+  特性方程式$x = (1-x)/3$の解は$x = 1/4$だから，漸化式を変形すると
+  \begin{align*}
+    p_{n+1}-\frac{1}{4} & = \frac{-1}{3}\left(p_n-\frac{1}{4}\right)
+  \end{align*}
+  だから，これと$p_1=0$から
+  \begin{align}
+    p_n
+     & = \left(-\frac{1}{3}\right)^{n-1}\left(0-\frac{1}{4}\right)+\frac{1}{4} \\
+     & = \frac{1}{4}\left\{1-\left(-\frac{1}{3}\right)^{n-1}\right\}
+  \end{align}
+  となる．$\cdots$(答)
+
+  \vspace{10pt}
+  {\bf[解説]}
+
+  かなり容易な確率漸化式の問題である．
+  問題のポイントとしては，特に確率をどのように指定するか明示がないので自分でうまいこと設定する必要があるところだろう．
+  四角錐OABCDの中で点Oだけが特別であり，他のABCDは対称であることを使うと，解答のように二つの変数で漸化式を導ける．
+
+  数列の一般項が出てくる問題では，$n\to\infty$での極限の振る舞いがそれらしいかを確かめたい．
+  実際今回の場合は
+  \begin{align*}
+     & \lim_{n\to\infty} p_n = \frac{1}{4}  \\
+     & \lim_{n\to\infty} q_n = \frac{3}{16}
+  \end{align*}
+  となる．この数値自体が正確かはすぐにはわからないが，
+  \begin{align*}
+    \lim_{n\to\infty} p_n \neq \lim_{n\to\infty} q_n
+  \end{align*}
+  となっていることは，点Oの特殊性を考えるとそれらしいだろう．
+
+  \newpage
+\end{multicols}
+\end{document}

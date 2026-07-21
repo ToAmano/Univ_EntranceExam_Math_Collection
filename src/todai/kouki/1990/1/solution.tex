@@ -1,0 +1,610 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{東京大学後期$1990$年$1$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/1990/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+
+    まずはPの存在する領域を求める．そのために排反事象である
+    「点$P'$を通って，$Q$ の面積$4$を$1$と$3$に切り分けるような直線$l$を引くことができる」
+    ような点$P'$の領域を求める．
+
+    以下の2パターンを考えれば良い．
+    \begin{itemize}
+        \item $l$が隣り合う二辺を通る．
+        \item $l$が向かい合う二辺を通る．
+    \end{itemize}
+
+    対称性から，前者の代表として
+    「1. OA,OCを通る」
+    場合を，後者の代表として
+    「2. OC,ABを通る」
+    ものを調べる．あとはこうして求めた領域に平行移動，回転等の操作をすることによって$P'$の領域を求める．
+
+    \vspace{5pt}
+    \textbf{1. OA,OCを通る時（隣り合う二辺）}
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,
+                    xmin=-0.5, xmax=2.5,
+                    ymin=-0.5, ymax=2.5,
+                    xlabel=$x$, ylabel=$y$,
+                    xtick={0,2}, ytick={0,2},
+                    xticklabels={0,$A$},
+                    yticklabels={0,$C$},
+                    axis equal
+                ]
+                \draw (0,0) -- (2,0) -- (2,2) -- (0,2) -- cycle;
+                \node at (2.2,2) {$B$};
+
+                \coordinate (a) at (1.5,0);
+                \coordinate (b) at (0,1);
+                \coordinate (o) at (0,0);
+
+                \draw (a) -- (b);
+                \node[below] at (a) {$a$};
+                \node[left] at (b) {$b$};
+                \node[below left] at (o) {$O$};
+                \fill (a) circle (1.5pt);
+                \fill (b) circle (1.5pt);
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{OA,OCを通る時（隣り合う二辺）}
+        \label{1990-1:fig:1}
+    \end{figure}
+
+    $l$の$x$切片，$y$切片を$S(a,0)$，$T(0,b)$とおく．ただし
+    \begin{align}
+        0<a,b \le 2 \label{1990-1:eq:1}
+    \end{align}
+    とする．
+    この時、三角形OSTの面積は$2$以下なので，これが$1$になれば条件を満たす．
+    よって
+    \begin{align}
+         & \frac{ab}{2} = 1         \\
+         & ab=2 \label{1990-1:eq:2}
+    \end{align}
+    である．
+    この元で直線$l$
+    \begin{align*}
+        l: \frac{x}{a}+\frac{y}{b}=1
+    \end{align*}
+    の通過領域を求める．
+
+    以下$a$を消去して計算を進める．
+    \cref{1990-1:eq:2}から$b=2/a$だから$l$の方程式は
+    \begin{align}
+        y
+         & = b\left(1-\frac{x}{a}\right)              \\
+         & = \frac{-b^2}{2}x + b  \label{1990-1:eq:3} \\
+         & \equiv f(b)
+    \end{align}
+    であり，\cref{1990-1:eq:1}より$b$のとりうる値は
+    \begin{align}
+         & 0<b \le 2, 0<\frac{2}{b} \le 2    \\
+        \therefore
+         & 1 \le b \le 2 \label{1990-1:eq:4}
+    \end{align}
+    である．
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,
+                    xlabel=$x$,
+                    ylabel=$b$,
+                    xmin=0, xmax=3,
+                    ymin=0, ymax=3,
+                    xtick={0, 0.5, 1},
+                    xticklabels={0, $\frac{1}{2}$, 1}, % x軸の目盛りを分数で表示
+                    ytick={0, 1, 2},
+                    axis equal image, % 軸のスケールを等しくして見た目を整える
+                    clip=false        % 描画領域外のラベル表示を許可
+                ]
+
+                % --- 補助の破線を描画 ---
+                % 縦の破線
+                \draw[dashed, gray] (axis cs:0.5, 0) -- (axis cs:0.5, 2);
+                \draw[dashed, gray] (axis cs:1, 0) -- (axis cs:1, 1);
+                % 横の破線
+                \addplot[dashed, gray, domain=-2:3] {1};
+                \addplot[dashed, gray, domain=-2:3] {2};
+
+                % --- y=1/x のグラフを描画 ---
+                % 第1象限のグラフ（細線）
+                \addplot[domain=0.3:3, samples=100, dashed] {1/x}
+                node[pos=0.25, anchor=south west] {$y=\frac{1}{x}$}; % ラベルを追加
+
+                % 強調する部分（1/2 < x < 1）を太線で上描き
+                \addplot[domain=0.5:1, samples=50, very thick] {1/x};
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$x$の値による$b$の端点と$f(b)$の軸の関係．}
+        \label{1990-1:fig:2}
+    \end{figure}
+
+    \cref{1990-1:eq:3}の\cref{1990-1:eq:4}の元での最大最小を求めればよい．
+    $x=0$の時は$f(0) = b$であり，$x\neq 0$の時は
+    \begin{align*}
+        f(b)
+         & =- \frac{x}{2}\left(b-\frac{1}{x}\right)^2 +\frac{1}{2x}
+    \end{align*}
+    だから，\cref{1990-1:fig:2}より
+    \begin{align*}
+         & \begin{dcases}
+               x = 0 \text{の時}                   & 1 \le y \le 2                         \\
+               0 < x \le \frac{1}{2} \text{の時}   & f(b=1) \le y \le f(b=2)               \\
+               \frac{1}{2} \le x \le 1 \text{の時} & \min(f(b=1),f(b=2)) \le y \le f(1/2x) \\
+               1 \le x \le 2 \text{の時}           & f(b=2) \le y \le f(b=1)
+           \end{dcases} \\
+        \therefore
+         & \begin{dcases}
+               1-\frac{x}{2} \le y \le 2(1-x)       & 0 \le x \le \frac{1}{2}           \\
+               1-\frac{x}{2} \le y \le \frac{1}{2x} & \frac{1}{2} \le x \le \frac{2}{3} \\
+               2(1-x)  \le y \le \frac{1}{2x}       & \frac{2}{3} \le x \le 1           \\
+               2(1-x) \le y \le 1-\frac{x}{2}       & 1 \le x \le 2
+           \end{dcases}
+    \end{align*}
+    が求める$l$の存在領域である．この様子を\cref{1990-1:fig:3}に示す．
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xmin=-0.2, xmax=2.5,
+                    ymin=-0.2, ymax=2.5,
+                    xtick={0, 1/2, 2/3, 1},
+                    xticklabels={0, $\frac{1}{2}$, $\frac{2}{3}$, 1}, % 分数でラベル表示
+                    ytick={1},
+                    legend pos=outer north east, % 凡例の位置
+                    clip=false
+                ]
+
+                % --- 境界となる関数を定義 ---
+                % y = 1 - x/2
+                \addplot[domain=0:2, samples=2, thick, name path=F1] {1-x/2};
+                % y = 2(1-x)
+                \addplot[domain=0:1, samples=2, thick, name path=F2] {2*(1-x)};
+                % y = 1/(2x)
+                \addplot[domain=0.25:2.2, samples=100, thick, name path=F3] {1/(2*x)} node[pos=0.3, anchor=south west] {$y=\frac{1}{2x}$};
+
+
+                % --- 4つの領域をそれぞれ塗りつぶす ---
+
+                % Region 1: 0 <= x <= 1/2
+                \addplot+ [pattern=north east lines, pattern color=gray] fill between[
+                        of=F1 and F2, soft clip={domain=0:0.5}
+                    ];
+
+                % Region 2: 1/2 <= x <= 2/3
+                \addplot+ [pattern=north east lines, pattern color=gray] fill between[
+                        of=F1 and F3, soft clip={domain=0.5:2/3}
+                    ];
+
+                % Region 3: 2/3 <= x <= 1
+                \addplot+ [pattern=north east lines, pattern color=gray] fill between[
+                        of=F2 and F3, soft clip={domain=2/3:1}
+                    ];
+
+                % Region 4: 1 <= x <= 2
+                \addplot+ [pattern=north east lines, pattern color=gray] fill between[
+                        of=F2 and F1, soft clip={domain=1:2}
+                    ];
+
+                \fill (0,2) circle (1.5pt);
+                \fill (0,1) circle (1.5pt);
+                \fill (2,0) circle (1.5pt);
+                \fill (1,0) circle (1.5pt);
+                \fill (1,0.5) circle (1.5pt);
+                \fill (1/2,1) circle (1.5pt);
+                \fill (2/3,2/3) circle (1.5pt);
+                \draw[dashed] (0,0) -- (2,0) -- (2,2) -- (0,2) -- cycle;
+                \draw[dashed] (1/2,0) -- (1/2,1) -- (0,1);
+                \draw[dashed] (1,0) -- (1,1/2);
+                \draw[dashed] (2/3,0) -- (2/3,2/3);
+
+
+                \coordinate (a) at (2,0);
+                \coordinate (b) at (2,2);
+                \coordinate (c) at (0,2);
+                \coordinate (o) at (0,0);
+
+                \node[below left] at (o) {$O$};
+                \node[below] at (a) {$A$};
+                \node[above] at (b) {$B$};
+                \node[left] at (c) {$C$};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$P'$の存在領域は斜線部（境界含む）．}
+        \label{1990-1:fig:3}
+    \end{figure}
+
+
+    \vspace{5pt}
+    \textbf{2. OC,ABを通る時（向かい合う二辺）}
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,
+                    xmin=-0.5, xmax=2.5,
+                    ymin=-0.5, ymax=2.5,
+                    xlabel=$x$, ylabel=$y$,
+                    xtick={0,2}, ytick={0,2},
+                    xticklabels={0,$A$},
+                    yticklabels={0,$C$},
+                    axis equal
+                ]
+                \draw (0,0) -- (2,0) -- (2,2) -- (0,2) -- cycle;
+                \node at (2.2,2) {$B$};
+
+                \coordinate (a) at (0, 0.5);
+                \coordinate (b) at (2,1.5);
+                \coordinate (o) at (0,0);
+
+                \draw (a) -- (b);
+                \node[left] at (a) {$a$};
+                \node[right] at (b) {$b$};
+                \node[below left] at (o) {$O$};
+                \fill (a) circle (1.5pt);
+                \fill (b) circle (1.5pt);
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{OC,ABを通る時（向かい合う二辺）}
+        \label{1990-1:fig:4}
+    \end{figure}
+
+    $l$とOC,ABの交点を各々$S(0,a)$,$T(2,b)$とする．
+    ただし
+    \begin{align}
+        0 \le a,b \le 2 \label{1990-1:eq:5}
+    \end{align}
+    である．
+    この時、Qのうち$l$の下側の部分の面積は，
+    \begin{align*}
+        \frac{1}{2} \cdot 2 \cdot (a+b) = a+b
+    \end{align*}
+    である．
+
+    対称性から
+    \begin{align}
+        a+b \le 2 \label{1990-1:eq:6}
+    \end{align}
+    の時のみ考える．
+
+    この時題意の条件は
+    \begin{align}
+        a+b=1 \label{1990-1:eq:7}
+    \end{align}
+    である．
+    直線$l$の方程式は
+    \begin{align}
+        l: y
+         & = \frac{b-a}{2}x+a \label{1990-1:eq:8}
+    \end{align}
+    とかける．
+
+    以下$b$を消去して計算を進める．
+    \cref{1990-1:eq:7}を\cref{1990-1:eq:5,1990-1:eq:8}に代入して
+    \begin{align*}
+        \begin{dcases}
+            y = \frac{1-a-a}{2}x+a = (1-x)a + \frac{x}{2} \equiv g(a) \\
+            0 \le a \le 1
+        \end{dcases}
+    \end{align*}
+    であるから$x = 1$の時は$y=1/2$である．
+    $x\neq 1$の時は$y$は$a$の一次関数で
+    \begin{align*}
+         & \begin{dcases}
+               0 \le x < 1 \text{の時}   & g(a=0) \le y \le g(a=1) \\
+               x = 1 \text{の時}         & y = 1/2                 \\
+               1 \le x \le 2 \text{の時} & g(a=1) \le y \le g(a=0)
+           \end{dcases}   \\
+        \therefore
+         & \begin{dcases}
+               \frac{x}{2} \le y \le 1-\frac{x}{2} & 0 \le x \le 1 \\
+               1-\frac{x}{2} \le y \le \frac{x}{2} & 1 \le x \le 2
+           \end{dcases}
+    \end{align*}
+    となる．この様子を\cref{1990-1:fig:5}に示す．
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,   % 軸を中央に配置
+                    xlabel=$x$,          % x軸ラベル
+                    ylabel=$y$,          % y軸ラベル
+                    xmin=-0.2, xmax=2.5, % x軸の範囲
+                    ymin=-0.2, ymax=2.5, % y軸の範囲
+                    xtick={\empty},       % x軸の目盛り
+                    ytick={\empty},     % y軸の目盛り
+                    clip=false,           % 描画領域外の注釈を許可
+                    axis equal,
+                ]
+
+                % 1本目の直線 y=x/2 をプロット (塗りつぶしのための名前: A)
+                \addplot[
+                    domain=0:2,
+                    samples=2,
+                    thick,
+                    name path=A
+                ] {x/2} node[pos=0.8, above] {$y=\frac{1}{2}x$};
+
+                % 2本目の直線 y=1-x/2 をプロット (塗りつぶしのための名前: B)
+                \addplot[
+                    domain=0:2,
+                    samples=2,
+                    thick,
+                    name path=B
+                ] {1-x/2} node[pos=0.8, above] {$y=1-\frac{1}{2}x$};
+
+                % パスAとBの間を縦線パターンで塗りつぶす
+                \addplot[pattern=vertical lines, pattern color=gray!80] fill between[of=A and B];
+
+                \draw[thick] (0,0) -- (0,1);
+                \draw[thick] (2,0) -- (2,1);
+                \fill (0,0) circle (1.5pt);
+                \fill (0,1) circle (1.5pt);
+                \fill (2,0) circle (1.5pt);
+                \fill (2,1) circle (1.5pt);
+                \fill (1,0.5) circle (1.5pt);
+                \draw[dashed] (0,0) -- (2,0) -- (2,2) -- (0,2) -- cycle;
+
+                \coordinate (a) at (2,0);
+                \coordinate (b) at (2,2);
+                \coordinate (c) at (0,2);
+                \coordinate (o) at (0,0);
+
+                \node[below left] at (o) {$O$};
+                \node[below] at (a) {$A$};
+                \node[above] at (b) {$B$};
+                \node[left] at (c) {$C$};
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$P'$の存在領域は斜線部（境界含む）．}
+        \label{1990-1:fig:5}
+    \end{figure}
+
+    \vspace{5pt}
+    対称性から他のパターンについても考えると，\cref{1990-1:fig:6}の斜線部（境界含む）が$P'$の存在領域である．
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xmin=-0.2, xmax=2.5,
+                    ymin=-0.2, ymax=2.2,
+                    xtick={0, 0.5, 1, 1.5, 2},
+                    xticklabels={0, $\frac{1}{2}$, 1, $\frac{3}{2}$, 2},
+                    ytick={0, 1, 2},
+                    axis equal image, % 軸のスケールを等しくする
+                    clip=false
+                ]
+
+                % 1辺2の正方形を背景に描画
+                \draw[thick] (0,0) rectangle (2,2);
+
+                % x軸
+                \addplot[domain=0:2, samples=100, thick, name path=X] {0};
+                % y=2
+                \addplot[domain=0:2, samples=100, thick, name path=X2] {2};
+
+                % y = 1/(2x)
+                \addplot[domain=0.5:1, samples=100, thick, name path=F1] {1/(2*x)};
+
+                % y = 1/(2x)
+                \addplot[domain=0.5:1, samples=100, thick, name path=F2] {2-1/(2*x)};
+
+                % y = 1/(2x)
+                \addplot[domain=1:1.5, samples=100, thick, name path=F3] {1/(2*(2-x))};
+
+                % y = 1/(2x)
+                \addplot[domain=1:1.5, samples=100, thick, name path=F4] {2-1/(2*(2-x))};
+
+
+                % 背景の点線の直線を描画
+                \addplot[domain=0:2, samples=2, dashed] {1-x/2};
+                \addplot[domain=0:2, samples=2, dashed] {x/2};
+                \addplot[domain=0:2, samples=2, dashed] {2-x/2};
+                \addplot[domain=0:2, samples=2, dashed] {1+x/2};
+                \addplot[domain=0:1, samples=2, dashed] {2*x};
+                \addplot[domain=0:1, samples=2, dashed] {2*(1-x)};
+                \addplot[domain=1:2, samples=2, dashed] {2*(x-1)};
+                \addplot[domain=1:2, samples=2, dashed] {2*(2-x)};
+
+                % 背景の曲線を表示
+                \addplot[domain=0.2:2, dashed,blue] {1/2/x};
+                \addplot[domain=0:1.8, dashed,blue] {1/2/(2-x)};
+                \addplot[domain=0.2:2, dashed,blue] {2-1/2/x};
+                \addplot[domain=0:1.8, dashed,blue] {2-1/2/(2-x)};
+
+                % % --- 外側の塗りつぶし領域の境界線を定義 ---
+                % % y = 1 - x/2
+                % \addplot[domain=0:2.2, samples=2, thick, name path=F1] {1-x/2};
+                % % y = 2(1-x)
+                % \addplot[domain=0:2.2, samples=2, thick, name path=F2] {2*(1-x)};
+                % % y = 1/(2x)
+                % \addplot[domain=0.25:2.2, samples=100, thick, name path=F3] {1/(2*x)} node[pos=0.3, anchor=south west, fill=white, inner sep=1pt] {$y=\frac{1}{2x}$};
+
+                % % --- 内側のX字の破線を定義 ---
+                % \addplot[domain=0:2, dashed, thick] {x/2};
+                % \addplot[domain=0:2, dashed, thick] {1-x/2};
+
+
+                % % --- 4つの外側領域をそれぞれ塗りつぶす ---
+
+                % % Region 1: 0 <= x <= 1/2
+                \addplot+ [pattern=north east lines, pattern color=gray] fill between[
+                        of=X and F1, soft clip={domain=0.5:1}
+                    ];
+                \addplot+ [pattern=north east lines, pattern color=gray] fill between[
+                        of=X2 and F2, soft clip={domain=0.5:1}
+                    ];
+                \addplot+ [pattern=north east lines, pattern color=gray] fill between[
+                        of=X and F3, soft clip={domain=1:1.5}
+                    ];
+                \addplot+ [pattern=north east lines, pattern color=gray] fill between[
+                        of=X2 and F4, soft clip={domain=1:1.5}
+                    ];
+
+
+                % % Region 1: 0 <= x <= 1/2
+                \addplot+ [pattern=north east lines, pattern color=gray] fill between[
+                        of=X and X2, soft clip={domain=0:0.5}
+                    ];
+                \addplot+ [pattern=north east lines, pattern color=gray] fill between[
+                        of=X and X2, soft clip={domain=1.5:2}
+                    ];
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{点P'の存在条件は斜線部（境界含む）}
+        \label{1990-1:fig:6}
+    \end{figure}
+
+
+    従って，$P'$が存在しない部分が$P$の存在領域であり，図示すると\cref{1990-1:fig:7}となる．
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xmin=-0.2, xmax=2.5,
+                    ymin=-0.2, ymax=2.2,
+                    xtick={0, 0.5, 1, 1.5, 2},
+                    xticklabels={0, $\frac{1}{2}$, 1, $\frac{3}{2}$, 2},
+                    ytick={0, 1, 2},
+                    axis equal image, % 軸のスケールを等しくする
+                    clip=false
+                ]
+
+                % 1辺2の正方形を背景に描画
+                \draw[thick] (0,0) rectangle (2,2);
+
+                % x軸
+                \addplot[domain=0:2, samples=100, thick, name path=X] {0};
+                % y=2
+                \addplot[domain=0:2, samples=100, thick, name path=X2] {2};
+
+                % y = 1/(2x)
+                \addplot[domain=0.5:1, samples=100, dashed, red, thick, name path=F1] {1/(2*x)};
+
+                % y = 1/(2x)
+                \addplot[domain=0.5:1, samples=100, dashed, red, thick, name path=F2] {2-1/(2*x)};
+
+                % y = 1/(2x)
+                \addplot[domain=1:1.5, samples=100, dashed, red, thick, name path=F3] {1/(2*(2-x))};
+
+                % y = 1/(2x)
+                \addplot[domain=1:1.5, samples=100, dashed, red, thick, name path=F4] {2-1/(2*(2-x))};
+
+
+                % 背景の点線の直線を描画
+                \addplot[domain=0:2, samples=2, dashed] {1-x/2};
+                \addplot[domain=0:2, samples=2, dashed] {x/2};
+                \addplot[domain=0:2, samples=2, dashed] {2-x/2};
+                \addplot[domain=0:2, samples=2, dashed] {1+x/2};
+                \addplot[domain=0:1, samples=2, dashed] {2*x};
+                \addplot[domain=0:1, samples=2, dashed] {2*(1-x)};
+                \addplot[domain=1:2, samples=2, dashed] {2*(x-1)};
+                \addplot[domain=1:2, samples=2, dashed] {2*(2-x)};
+
+                % 背景の曲線を表示
+                \addplot[domain=0.2:2, dashed,blue] {1/2/x};
+                \addplot[domain=0:1.8, dashed,blue] {1/2/(2-x)};
+                \addplot[domain=0.2:2, dashed,blue] {2-1/2/x};
+                \addplot[domain=0:1.8, dashed,blue] {2-1/2/(2-x)};
+
+                % % --- 外側の塗りつぶし領域の境界線を定義 ---
+                % % y = 1 - x/2
+                % \addplot[domain=0:2.2, samples=2, thick, name path=F1] {1-x/2};
+                % % y = 2(1-x)
+                % \addplot[domain=0:2.2, samples=2, thick, name path=F2] {2*(1-x)};
+                % % y = 1/(2x)
+                % \addplot[domain=0.25:2.2, samples=100, thick, name path=F3] {1/(2*x)} node[pos=0.3, anchor=south west, fill=white, inner sep=1pt] {$y=\frac{1}{2x}$};
+
+                % % --- 内側のX字の破線を定義 ---
+                % \addplot[domain=0:2, dashed, thick] {x/2};
+                % \addplot[domain=0:2, dashed, thick] {1-x/2};
+
+
+                % % --- 4つの外側領域をそれぞれ塗りつぶす ---
+
+                % % Region 1: 0 <= x <= 1/2
+                \addplot+ [pattern=north east lines, pattern color=gray] fill between[
+                        of=F2 and F1, soft clip={domain=0.5:1}
+                    ];
+
+                \addplot+ [pattern=north east lines, pattern color=gray] fill between[
+                        of=F3 and F4, soft clip={domain=1:1.5}
+                    ];
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{点Pの存在条件は斜線部（境界含まず）}
+        \label{1990-1:fig:7}
+    \end{figure}
+
+    以上で点Pの存在領域がもとまったので，以下その面積$V$を求める．
+    対称性から，$V$のうち$x,y \le 1$の領域の面積の4倍が$V$であるから
+    \begin{align*}
+        V
+         & = 4 \int_{\frac{1}{2}}^{1} (1-\frac{1}{2x}) dx \\
+         & = [x - \frac{1}{2} \log x]_{\frac{1}{2}}^2     \\
+         & = 2(1-\log 2)
+    \end{align*}
+    と求まる．$\cdots$(答)
+
+    {\bf[解説]}
+
+    \newpage
+\end{multicols}
+\end{document}

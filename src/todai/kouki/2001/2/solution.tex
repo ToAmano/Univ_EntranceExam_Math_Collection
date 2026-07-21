@@ -1,0 +1,557 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{東京大学後期$2001$年$2$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/2001/2/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  (1)
+
+  \begin{figure}[H]
+    \centering
+    \tikzset{
+      % axis/.style={very thick, ->, >=stealth'},
+      dashed_line/.style={dashed, thin},
+    }
+    \begin{tikzpicture}
+      \draw [thick, ->] (-0.5, 0) -- (4.5, 0) node [right] {$x$};
+      \draw [thick, ->] (0, -0.5) -- (0, 4.5) node [above] {$y$};
+      \foreach \i in {0,...,4} {
+          % Horizontal lines
+          \draw (-0.3, {\i}) -- (4.3, {\i});
+          \draw ({\i}, -0.3) -- ({\i}, 4.3);
+
+        }
+      \coordinate (A) at (1,0);
+      \node[below right] at (A) {$h$};
+      \coordinate (B) at (0,1);
+      \node[below left] at (B) {$h$};
+    \end{tikzpicture}
+    \caption{座標系と格子}
+    \label{2001-2:fig:1}
+  \end{figure}
+
+
+  \cref{2001-2:fig:1}のように座標を定めて円の中心を$P(X,Y)$とおく．
+  ここで格子の方程式が
+  \begin{align*}
+     & x=kh, y=kh & (k \in \mathbb{Z})
+  \end{align*}
+  となっている．
+
+  格子の間隔が$x,y$軸方向に等しいことから，円が2直線とのみ交わるときx軸平行及びy軸平行と1本ずつ交わる．
+  また，$h<1$の時は必ず3本以上の直線と交わるため以下
+  \begin{align}
+    1 \le h \label{2001-2:eq:0}
+  \end{align}
+  として考える．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \def\h{1.2} % パラメータhの値を定義
+      \begin{axis}[
+          axis lines=middle,
+          xmin=-1.5, xmax=1.5,
+          ymin=-1.5, ymax=1.5,
+          xlabel=$x$, ylabel=$y$,
+          xtick={-\h,\h},
+          ytick={-\h,\h},
+          xticklabels={$−h$, $h$},
+          yticklabels={$−h$, $h$},
+          domain=-1:1,
+          samples=2,
+          thick,
+          axis equal,
+        ]
+        % 外側の正方形
+        \draw [thick] (-\h,-\h) rectangle (\h,\h);
+
+        % 内側の正方形
+        \draw [dashed] (-\h/2,-\h/2) rectangle (\h/2,\h/2);
+
+        % h/2のラベル
+        \node[below right] at (axis cs:0,\h/2) {$h/2$};
+        \node[below left] at (axis cs:\h/2,0) {$h/2$};
+
+        % y=h, y=-h, x=h, x=-h のラベル
+        % \node at (axis cs:\h,0) [anchor=west] {$x=h$};
+        % \node at (axis cs:-\h,0) [anchor=east] {$x=−h$};
+        % \node at (axis cs:0,\h) [anchor=south west] {$y=h$};
+        % \node at (axis cs:0,-\h) [anchor=north west] {$y=−h$};
+        % \node at (axis cs:\h,-0.1) [anchor=north] {$h$};
+        % \node at (axis cs:-\h,-0.1) [anchor=north] {$−h$};
+        % \node at (axis cs:-0.1,\h) [anchor=east] {$h$};
+        % \node at (axis cs:-0.1,-\h) [anchor=east] {$−h$};
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{考える領域$D_{0,0}$の様子}
+    \label{2001-2:fig:2}
+  \end{figure}
+
+  格子は$k, l \in \mathbb{Z}$ として
+  \begin{align}
+    D_{k,l} =
+    \begin{dcases}
+      (k-\frac{1}{2})h \le x \le (k+\frac{1}{2})h \\
+      (l-\frac{1}{2})h \le y \le (l+\frac{1}{2})h
+    \end{dcases} \label{2001-2:eq:1}
+  \end{align}
+  なる領域（いずれも合同）の集合とみなせるから，このうちの一つ $D_{0,0}$ 中に円の中心$P(X,Y)$がある時のみを考えれば良い．
+  この時円が$x=0, y=0$ の２本の格子と交わり，$x=\pm h, y=\pm h$ の格子と交わらなければ良い．
+  このようなX,Yの条件は，円の半径が$1$だから，
+  \begin{align}
+     & \begin{dcases}
+         -h < X-1 \le 0 \le X+1 < h \\
+         -h < Y-1 \le 0 \le Y+1 < h
+       \end{dcases} \\
+    \therefore
+     & 1-h < X,Y < 1+h \land
+    -1 \le X,Y \le 1
+    \label{2001-2:eq:2}
+  \end{align}
+  となる．
+
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis lines=middle,
+          xlabel=$h$,
+          ylabel=$t$,
+          xmin=-0.5, xmax=2.5,
+          ymin=-1.5, ymax=1.5,
+          xtick={-1, 0, 1, 2},
+          ytick={-1, 0, 1},
+          grid=major,
+          legend pos=outer north east,
+          samples=2, % For straight lines
+          clip=false,
+          axis equal,
+          axis on top,
+        ]
+
+        % --- 直線の描画 ---
+        \addplot[domain=-0.5:2.5, blue, thick, samples=2, forget plot] {x/2};
+        \node[above] at (axis cs:2.5, 1.25) {$t=\frac{1}{2}h$};
+
+        \addplot[domain=-0.5:2.5, blue, thick, samples=2, forget plot] {-x/2};
+        \node[below] at (axis cs:2.5, -1.25) {$t=-\frac{1}{2}h$};
+
+        \addplot[domain=-0.5:2.5, red, thick, samples=2, forget plot] {x-1};
+        \node[above] at (axis cs:2.5, 1.5) {$t=h-1$};
+
+        \addplot[domain=-0.5:2.5, red, thick, samples=2, forget plot] {-x+1};
+        \node[above] at (axis cs:-0.5, 1.5) {$t=-h+1$};
+
+        % --- 領域の塗りつぶし ---
+        % 上側の領域 (h-1 <= t <= h/2) for 1<=h<=2
+        \addplot[
+          domain=1:2,
+          samples=20,
+          gray,
+          fill=gray!30,
+          fill opacity=0.5,
+          forget plot
+        ] {x-1} \closedcycle;
+
+        \addplot[
+          domain=2:2.5,
+          samples=20,
+          gray,
+          fill=gray!30,
+          fill opacity=0.5,
+          forget plot
+        ] {1} \closedcycle;
+
+
+        % 下側の領域 (-h/2 <= t <= -h+1) for 1<=h<=2
+        \addplot[
+          domain=1:2,
+          samples=20,
+          gray,
+          fill=gray!30,
+          fill opacity=0.5,
+          forget plot
+        ] {-x+1} \closedcycle;
+
+        \addplot[
+          domain=2:2.5,
+          samples=20,
+          gray,
+          fill=gray!30,
+          fill opacity=0.5,
+          forget plot
+        ] {-1} \closedcycle;
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$h$のとりうる領域}
+    \label{2001-2:fig:3}
+    % TODO :: 塗りつぶしをpatternへ
+  \end{figure}
+
+  \cref{2001-2:eq:1}と合わせて，
+  $1 \le h$での$h$の挙動を示した図から，この条件は
+  \begin{align}
+    \begin{dcases}
+      1-h < X,Y < h-1  & 1 \le h \le 2 \\
+      -1 \le X,Y \le 1 & 2 \le h
+    \end{dcases} \label{2001-2:eq:3}
+  \end{align}
+  である．
+
+  $D_{0,0}$の面積$h^2$に対する\cref{2001-2:eq:3}の領域の面積が求める確率$P(h)$であって，\cref{2001-2:eq:0}と合わせて
+  \begin{align*}
+    P(h) =
+     & \begin{dcases}
+         0                             & (0 < h \le 1)   \\
+         \frac{\{(h-1)-(1-h)\}^2}{h^2} & (1 \le h \le 2) \\
+         (\frac{2}{h})^2               & (2 \le h)
+       \end{dcases} \\
+     & \begin{dcases}
+         0                    & (0 < h \le 1)   \\
+         \frac{4(h-1)^2}{h^2} & (1 \le h \le 2) \\
+         (\frac{2}{h})^2      & (2 \le h)
+       \end{dcases}
+  \end{align*}
+  である．$\cdots$(答)
+  \vspace{10pt}
+
+  (2)
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \clip (-0.4,-0.4) rectangle (8,4.5);
+      \draw [thick, ->] (-0.5, 0) -- (4, 0) node [right] {$x$};
+      \draw [thick, ->] (0, -0.5) -- (0, 4) node [above] {$y$};
+      \foreach \i in {-2,...,5} {
+          \draw[circle] ({2*\i}, 0 ) circle (1);
+          \draw[circle] ({2*\i}, {2*sqrt(3)} ) circle (1);
+          \draw[circle] ({2*\i+1}, {sqrt(3)} ) circle (1);
+        }
+      \draw[thick, <->] (5,{sqrt(3)}) -- (5,{sqrt(3)+1}) node[midway, right] {$\sqrt{2}+1$};
+    \end{tikzpicture}
+    \caption{座標平面に半径$\sqrt{2}+1$の円を敷き詰めた様子．}
+    \label{2001-2:fig:4}
+  \end{figure}
+
+  (1)と同様に一つの円の中心が原点となるように座標平面をおく．
+  この円と隣り合う円のうち，一部が第一章限にある二つの円の中心までの位置ベクトルを$\vec{a},\vec{b}$とすると
+  \begin{align*}
+    \vec{a} = \mqty(2(\sqrt{2}+1) \\ 0), \quad \vec{b} = (\sqrt{2}+1)\mqty(1 \\ \sqrt{3})
+  \end{align*}
+  である．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+
+      % --- 変数の定義 ---
+      % 半径 r = sqrt(2) + 2
+      \pgfmathsetmacro{\r}{sqrt(2) + 1}
+      % 円の中心間距離 d = 2 * (1 + sqrt(2))
+      \pgfmathsetmacro{\d}{2 * (1 + sqrt(2))}
+      % 円Bの中心のy座標 y_b = sqrt(3) * (1 + sqrt(2))
+      \pgfmathsetmacro{\yb}{sqrt(3) * (1 + sqrt(2))}
+
+      \begin{axis}[
+          axis lines=middle,
+          xlabel=$x$,
+          ylabel=$y$,
+          xmin=-2, xmax={\d + 2},
+          ymin=-2, ymax={\yb + 2},
+          ticks=none,
+          axis equal image,
+          enlarge y limits={upper, value=0.1},
+          enlarge x limits={upper, value=0.1},
+          clip=false,
+        ]
+
+        % --- 円の中心座標の定義 ---
+        \coordinate (O) at (axis cs:0, 0);
+        \coordinate (A) at (axis cs:{\d}, 0);
+        \coordinate (B) at (axis cs:{\d/2}, {\yb});
+
+        % --- ラベルの追加 ---
+        \node[below left] at (O) {O};
+        \node[below right] at (A) {A};
+        \node[above] at (B) {B};
+
+        % --- 3つの円の輪郭を描画 ---
+        \draw[thick] (O) circle (\r);
+        \draw[thick] (A) circle (\r);
+        \draw[thick] (B) circle (\r);
+
+        % --- 図中の補助的な線とラベル ---
+        \draw[dashed] (O) -- (B);
+        \draw[dashed] (A) -- (B);
+        \node[above, rotate=60] at (axis cs:{\d/4}, {\yb/2}) {$2\sqrt{2}+2$};
+        \node[above, rotate=-60] at (axis cs:{3*\d/4}, {\yb/2}) {$2\sqrt{2}+2$};
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$D$は三角形OABの内部である．}
+    \label{2001-2:fig:5}
+  \end{figure}
+
+  (1)と同じく，座標平面は$\vec{a},\vec{b}$の張る三角形によって埋め尽くすことができるから，
+  その一つである領域$D$
+  \begin{align*}
+    D: \{m\vec{a} + n\vec{b} \mid 0 \le m, n, m+n \le 1\}
+  \end{align*}
+  の内部に円$C$の中心 $P(X,Y)$ がある時のみを考えれば良い．
+  この時Cの半径が$1$だから，Cは\cref{2001-2:fig:5}の3円とのみ交わりうる．
+  したがって，Cが3円とのみ交わることはこれら全ての円と交わることと同値である．
+  3円の中心をO，A，Bとして，中心同士の距離を
+  \begin{align*}
+    PO=l_1, PA=l_2, PB=l_3
+  \end{align*}
+  とおくと，このような条件は
+  \begin{align*}
+     & \left((\sqrt{2}+1)-1\right) \le l_k \le \left((\sqrt{2}+1)+1\right) & (k=1,2,3) \\
+    \therefore
+     & \sqrt{2} \le l_k \le \sqrt{2}+2                                     & (k=1,2,3)
+  \end{align*}
+  である．
+  各辺正だから2乗してよく，
+  \begin{align*}
+     & 2 \le l_k^2 \le 6+4\sqrt{2} & (k=1,2,3)
+  \end{align*}
+  を得る．
+  これをみたす$P(X,Y)$の領域は\cref{2001-2:fig:6}の斜線部である．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+
+      % --- 変数の定義 ---
+      % 半径 r = sqrt(2) + 2
+      \pgfmathsetmacro{\r}{sqrt(2) + 2}
+      % 円の中心間距離 d = 2 * (1 + sqrt(2))
+      \pgfmathsetmacro{\d}{2 * (1 + sqrt(2))}
+      % 円Bの中心のy座標 y_b = sqrt(3) * (1 + sqrt(2))
+      \pgfmathsetmacro{\yb}{sqrt(3) * (1 + sqrt(2))}
+
+      \begin{axis}[
+          axis lines=middle,
+          xlabel=$x$,
+          ylabel=$y$,
+          xmin=-1,
+          xmax={\d + 1},
+          ymin=-1,
+          ymax={\yb + 1},
+          ticks=none,
+          axis equal image,
+          enlarge y limits={upper, value=0.1},
+          enlarge x limits={upper, value=0.1},
+        ]
+
+        % --- 円の中心座標の定義 ---
+        \coordinate (O) at (axis cs:0, 0);
+        \coordinate (A) at (axis cs:{\d}, 0);
+        \coordinate (B) at (axis cs:{\d/2}, {\yb});
+
+        % --- ラベルの追加 ---
+        \node[below left] at (O) {O};
+        \node[below right] at (A) {A};
+        \node[above] at (B) {B};
+
+        % --- 3つの円の輪郭を描画 ---
+        \draw[dashed] (O) circle (\r);
+        \addplot[samples=100,very thick,domain=15:45, name path=A] ({\r*cos(x)}, {\r*sin(x)});
+        \draw[dashed] (A) circle (\r);
+        \addplot[samples=100,very thick,domain=135:165, name path=B] ({\r*cos(x)+\d}, {\r*sin(x)});
+        \draw[dashed] (B) circle (\r);
+        \addplot[samples=100,very thick,domain=255:285, name path=C] ({\r*cos(x)+\d/2}, {\r*sin(x)+\yb});
+
+        \addplot[pattern=north west lines,pattern color=gray] fill between [of=A and C];
+        \addplot[pattern=north west lines,pattern color=gray] fill between [of=B and C];
+
+        % 交点座標を設定(TODO: T,Sの交点計算)
+        \coordinate (S) at (axis cs:{\d/2}, {\d/2});
+        \coordinate (T) at (axis cs:{\r*cos(165)+\d}, {\r*sin(165)});
+        \coordinate (U) at (axis cs:{\r*cos(15)}, {\r*sin(15)});
+
+        \node[above] at (S) {S};
+        \node[left] at (T) {T};
+        \node[right] at (U) {U};
+        \fill (S) circle (1.5pt);
+        \fill (T) circle (1.5pt);
+        \fill (U) circle (1.5pt);
+        \draw[thick, dashed] (S)--(T)--(U)--cycle;
+
+        % --- 図中の補助的な線とラベル ---
+        \draw[dashed] (O) -- (B);
+        \draw[dashed] (A) -- (B);
+        \node[above, rotate=60] at (axis cs:{\d/4}, {\yb/2}) {$2\sqrt{2}+2$};
+        \node[above, rotate=-60] at (axis cs:{3*\d/4}, {\yb/2}) {$2\sqrt{2}+2$};
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$P(X,Y)$の領域は斜線部}
+    \label{2001-2:fig:6}
+  \end{figure}
+
+
+  この領域の面積$S$は
+  \begin{align}
+    S = 3 \times \text{図形}SU + \triangle STU \label{2001-2:eq:4}
+  \end{align}
+  と書ける．そこでこれらの扇形SUと正三角形STUの面積を求める．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+
+      % --- 変数の定義 ---
+      % 半径 r = 2 + sqrt(2)
+      \pgfmathsetmacro{\r}{2+sqrt(2)}
+      % x軸とy軸の最大値
+      \pgfmathsetmacro{\xmax}{\r + 0.5}
+      \pgfmathsetmacro{\ymax}{\r * sin(60) + 0.5}
+
+      \begin{axis}[
+          axis lines=middle,
+          xlabel=$x$,
+          ylabel=$y$,
+          xmin=0, xmax=\xmax,
+          ymin=0, ymax=\ymax,
+          ticks=none, % 軸の目盛りを非表示
+          axis equal image, % 軸のスケールを等しくする
+          enlarge y limits={upper, value=0.1},
+          enlarge x limits={upper, value=0.1},
+          clip=false,
+        ]
+
+        % --- 座標の定義 ---
+        \coordinate (O) at (axis cs:0,0);
+        \coordinate (P0) at (axis cs:{\r},0);
+        \coordinate (P15) at (axis cs:{\r*cos(15)},{\r*sin(15)});
+        \coordinate (P30) at (axis cs:{\r*cos(30)},{\r*sin(30)});
+        \coordinate (P45) at (axis cs:{\r*cos(45)},{\r*sin(45)});
+        \coordinate (P60) at (axis cs:{\r*cos(60)},{\r*sin(60)});
+
+        % --- 扇形の描画と塗りつぶし ---
+        \draw[
+          draw=black,
+          thick
+        ] (O) -- (P0) arc (0:60:{\r}) -- cycle;
+
+        % % \filldrawで扇形全体を薄い色で塗りつぶし
+        % \filldraw[
+        %   draw=black,
+        %   fill=blue!10,
+        %   thick
+        % ] (O) -- (P0) arc (0:60:{\r}) -- cycle;
+
+        % --- 補助線の描画 ---
+        \draw[gray] (O) -- (P15);
+        \draw[gray] (O) -- (P45);
+
+        % --- 弓形部分の塗りつぶし ---
+        % 15度から45度の部分を斜線で塗りつぶし
+        \fill[
+          pattern=north east lines,
+          pattern color=gray
+        ] (P15) -- (P45) arc (45:15:{\r}) -- cycle;
+        \draw (P15) -- (P45); % 弦を描画
+
+        % --- ラベルの追加 ---
+        % 角度のラベル
+        \pic[draw, "15$^\circ$", angle eccentricity=1.3, angle radius=1cm] {angle = P0--O--P15};
+        \pic[draw, "30$^\circ$", angle eccentricity=1.3, angle radius=1.2cm] {angle = P15--O--P45};
+        \pic[draw, "15$^\circ$", angle eccentricity=1.3, angle radius=1cm] {angle = P45--O--P60};
+
+        % 軸上の点のラベル
+        \node[below] at (P0) {$2+\sqrt{2}$};
+        \node[left] at (axis cs:0, {\r*sin(60)}) {$\sqrt{3}(\sqrt{2}+1)$}; % y座標の正確な値
+        \node[below left] at (O) {O};
+        \draw[dashed] (axis cs:0, {\r*sin(60)}) -- (axis cs:{\r*cos(60)}, {\r*sin(60)});
+        \fill (axis cs:{\r*cos(60)}, {\r*sin(60)}) circle (1.5pt);
+
+        \node[below] at (axis cs:{\r*cos(45)}, 0) {$\sqrt{2}+1$};
+        \node[left] at (axis cs:0,{\r*sin(45)}) {$\sqrt{2}+1$};
+        \draw[dashed] (axis cs:0, {\r*sin(45)}) -- (axis cs:{\r*cos(45)}, {\r*sin(45)}) -- (axis cs:{\r*cos(45)}, 0);
+        \fill (axis cs:{\r*cos(45)}, {\r*sin(45)}) circle (1.5pt);
+      \end{axis}
+    \end{tikzpicture}
+    \caption{扇形SUの様子}
+    \label{2001-2:fig:7}
+  \end{figure}
+
+
+  簡単のため
+  \begin{align}
+    r=\sqrt{2}+2 \label{2001-2:eq:8}
+  \end{align}
+  とおく．
+  点Sの座標は$S(\sqrt{2}+1,\sqrt{2}+1)$だから$\angle AOS=\frac{\pi}{4}$であり，
+  対称性から扇形SUの見込む角度は$\frac{\pi}{4}-\frac{\pi}{12}=\frac{\pi}{3}$である．
+
+  従って
+  \begin{align}
+    \text{図形}SU
+     & = \triangle OSU - \text{扇形}OSU                                   \\
+     & = \frac{\pi}{12}r^2 - \frac{1}{2}r^2\sin\frac{\pi}{6}            \\
+     & = \left(\frac{\pi}{12}-\frac{1}{4}\right)r^2 \label{2001-2:eq:5}
+  \end{align}
+  である．
+
+  次に正三角形の一辺の長さ$\alpha$とおくと
+  \begin{align*}
+    \alpha = 2r \sin\frac{\pi}{12}
+  \end{align*}
+  だから，この面積は
+  \begin{align}
+    \triangle
+     & = \frac{\sqrt{3}}{4}\alpha^2                                         \\
+     & = \sqrt{3}r^2\sin^2\frac{\pi}{12}                                    \\
+     & = \sqrt{3}r^2\frac{1-\cos\frac{\pi}{12}}{2}                          \\
+     & = \frac{\sqrt{3}}{2}\left(1-\frac{\sqrt{3}}{2}\right)r^2             \\
+     & = \left(\frac{\sqrt{3}}{2}-\frac{3}{4}\right)r^2 \label{2001-2:eq:6}
+  \end{align}
+  である．
+
+  \cref{2001-2:eq:5,2001-2:eq:6}を\cref{2001-2:eq:4}に代入して
+  \begin{align}
+    S
+     & = 3\left(\frac{\pi}{12}-\frac{1}{4}\right)r^2 +\left(\frac{\sqrt{3}}{2}-\frac{3}{4}\right)r^2 \\
+     & = \left(\frac{\pi}{4} + \frac{\sqrt{3}}{2}-\frac{3}{2}\right)r^2 \label{2001-2:eq:7}
+  \end{align}
+  を得る．
+
+  一方で領域$D$の面積は
+  \begin{align*}
+    D\text{の面積}
+     & = \triangle OAB                              \\
+     & = \frac{\sqrt{3}}{4}(2(\sqrt{2}+1))^2        \\
+     & = \frac{\sqrt{3}}{4}(\sqrt{2}(\sqrt{2}+2))^2 \\
+     & = \frac{\sqrt{3}}{2}r^2
+  \end{align*}
+  である．ただしし最終行で\cref{2001-2:eq:8}を用いた．
+
+  問題文で与えられている確率の求め方を利用して，求める確率$q$は領域$D$の面積に対する$S$の比率であって，
+  \begin{align*}
+    q
+     & = \frac{S}{D\text{の面積}}                                                                          \\
+     & = \frac{\left(\frac{\pi}{4} + \frac{\sqrt{3}}{2} - \frac{3}{2}\right)r^2}{\frac{\sqrt{3}}{2}r^2} \\
+     & = \frac{2}{\sqrt{3}} \left(\frac{\pi}{4} + \frac{\sqrt{3}}{2} - \frac{3}{2}\right)               \\
+     & = \frac{\sqrt{3}}{3}\left(\frac{1}{2}\pi + \sqrt{3} - 3\right)
+  \end{align*}
+  である．$\cdots$(答)
+  \vspace{10pt}
+
+  {\bf[解説]}
+
+  \newpage
+\end{multicols}
+\end{document}

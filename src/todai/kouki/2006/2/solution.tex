@@ -1,0 +1,383 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{東京大学後期$2006$年$2$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/2006/2/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  (1)
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis lines=middle,
+          xmin=0, xmax=7,
+          ymin=0, ymax=6,
+          xlabel=$x$,
+          ylabel=$z$,
+          xtick={4, 6},
+          xticklabels={$a$, $a+\cos\theta$},
+          ytick={5},
+          yticklabels={$\sin\theta$},
+          axis equal image,
+          clip=false
+        ]
+        \pgfmathsetmacro{\a}{3}
+        \pgfmathsetmacro{\c}{2}
+        \pgfmathsetmacro{\s}{5}
+
+        \addplot [very thick, black] coordinates {(\a, 0) (\a+\c, \s)};
+        \draw [dashed] (\a+\c, 0) -- (\a+\c, \s);
+        \draw [dashed] (0, \s) -- (\a+\c, \s);
+      \end{axis}
+    \end{tikzpicture}
+    \caption{題意の線分}
+    \label{2006-2:fig:0}
+  \end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis lines=middle,
+          xmin=0, xmax=3,
+          ymin=-0.4, ymax=0.4,
+          zmin=-0.4, zmax=0.4,
+          xlabel=$x$,
+          ylabel=$y$,
+          zlabel=$z$,
+          axis equal,
+          view={100}{10},
+          ztick=\empty,
+          ytick={0,3,5},
+          yticklabels={0,$t$,$s$},
+          xtick={0,4,6},
+          xticklabels={0,$a$,$a+c$},
+        ]
+
+        \pgfmathsetmacro{\a}{1}
+        \pgfmathsetmacro{\thetaVal}{deg(pi/6)}
+        \pgfmathsetmacro{\tVal}{0.3}
+        \pgfmathsetmacro{\sVal}{sin(\thetaVal)}
+        \pgfmathsetmacro{\cVal}{cos(\thetaVal)}
+        \pgfmathsetmacro{\radius}{sin(\thetaVal)}
+        \pgfmathsetmacro{\numsegments}{36}
+        \pgfmathsetmacro{\xminplot}{\a + \tVal/tan(\thetaVal)}
+        \pgfmathsetmacro{\xmaxplot}{\a + cos(\thetaVal)}
+
+        % Base circle (approximation with line segments)
+        \foreach \i in {0,1,...,\numsegments}{
+            \pgfmathsetmacro{\angle}{\i * 360 / \numsegments}
+            \addplot3 [black, thin] coordinates {
+                (\a+\cVal, {\radius * cos(\angle)}, {\radius * sin(\angle)})
+                (\a+\cVal, {\radius * cos((\i+1) * 360 / \numsegments)}, {\radius * sin((\i+1) * 360 / \numsegments)})
+              };
+            % Cone surface (lines from base to conceptual apex)
+            \addplot3 [gray, thin] coordinates {
+                (\a+\cVal, {\radius * cos(\angle)}, {\radius * sin(\angle)})
+                ({\a}, {0}, {0}) % Conceptual apex
+              };
+          }
+
+        % Cutting plane y=t (approximation with lines)
+        \addplot3 [blue, thick, domain=0:{\a+\cVal}, samples=100] ({x}, {\tVal}, {0});
+        \addplot3 [blue, thick, domain=0:{\a+\cVal}, samples=100] ({x}, {\sVal}, {0});
+        \addplot3 [blue, thick, domain=0:{\a+\cVal}, samples=100] ({x}, {0}, {\sVal});
+
+        % % Intersection curve (hyperbola - approximated)
+        \addplot3[
+          domain=\xminplot:\xmaxplot,
+          samples=100,
+          thick,
+          red,
+        ] ({x}, {\tVal}, {sqrt((tan(\thetaVal))^2*(x-\a)^2 - \tVal^2)});
+        \addplot3[
+          domain=\xminplot:\xmaxplot,
+          samples=100,
+          thick,
+          red,
+        ] ({x}, {\tVal}, {-sqrt((tan(\thetaVal))^2*(x-\a)^2 - \tVal^2)});
+
+        % \addplot3 [domain=0:360, samples=80, thick, red]
+        % ({\a + sqrt((\tVal*\tVal)/(deg(tan(\thetaVal))^2) + 0.5*cos(x))}, {\tVal}, {sqrt(0.5*sin(x))});
+        % \addplot3 [domain=0:360, samples=80, thick, red]
+        % ({\a + sqrt((\tVal*\tVal)/(deg(tan(\thetaVal))^2) + 0.5*cos(x))}, {\tVal}, {-sqrt(0.5*sin(x))});
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{題意の円錐面$S$}
+    \label{2006-2:fig:3}
+  \end{figure}
+
+  まずは$S$の方程式を求める．
+  原点$O(0,0,0)$，$A(a,0,0)$，$S$上の点$P(X,Y,Z)$，Pの$x$軸への射影$P'(X,0,0)$とする．
+  題意の条件から，$\vec{AP}$と$x$軸のなす角が$\theta$である．
+  従って
+  \begin{align*}
+    \tan\theta
+     & = \frac{|\vec{AP'}|}{|\vec{P'P}|} \\
+     & = \frac{(X-a)}{\sqrt{Y^2+Z^2}}
+  \end{align*}
+  を得る．$X-a>0$だから両辺 2乗して整理すると
+  \begin{align}
+     & Y^2+Z^2 = (X-a)^2\tan^2\theta & (a<X)  \label{2006-2:eq:1}
+  \end{align}
+  なる円錐側面の方程式を得る．
+
+  従って，この図形$S$を$y$軸周りに一回転してできる立体の体積を求めれば良い．
+  図形の対称性から，$S$のうち$0\le y$の部分を$y$軸周りに回転してできる立体の体積$V'$とすると
+  \begin{align}
+    V = 2V' \label{2006-2:eq:2}
+  \end{align}
+  である．
+  そこで$y=t\, (0 \le t \le \sin\theta)$における切断面を考えると
+  \cref{2006-2:eq:1}に$Y=t$を代入して
+  \begin{align}
+     & \tan^2\theta(X-a)^2-Z^2 = t^2 & (a<X)
+  \end{align}
+  を得る．これは双曲線の方程式であり，図示すると\cref{2006-2:fig:1}となる．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis lines=middle,
+          xmin=0, xmax=2,
+          ymin=-0.5, ymax=0.5,
+          xtick={\empty},
+          % xticklabels={0, $a$, $a+c$},
+          ytick={\empty},
+          % yticklabels={$-\sqrt{s^2-t^2}$, $\sqrt{s^2-t^2}$},
+          xlabel=$x$,
+          ylabel=$z$,
+          % axis equal image,
+          %every axis x label/.style={at={(current axis.right of south east)}, anchor=west},
+          %every axis y label/.style={at={(current axis.north west)}, anchor=south},
+          clip=false
+        ]
+        \pgfmathsetmacro{\thetaVal}{deg(pi/8)}
+        \pgfmathsetmacro{\aVal}{0.5}
+        \pgfmathsetmacro{\tVal}{sin(\thetaVal)/3} % < s
+        \pgfmathsetmacro{\sVal}{sqrt((\aVal)^2*cos(\thetaVal)^2+sin(\thetaVal)^2)}
+        \pgfmathsetmacro{\cVal}{cos(\thetaVal)}
+        \pgfmathsetmacro{\svalsq}{\sVal*\sVal}
+        \pgfmathsetmacro{\tvalsq}{\tVal*\tVal}
+
+        \pgfmathsetmacro{\xminplot}{\aVal + \tVal/tan(\thetaVal)}
+        \pgfmathsetmacro{\xmaxplot}{\aVal + cos(\thetaVal)}
+
+        \addplot[
+          domain=\xminplot:\xmaxplot,
+          samples=1000,
+          thick,
+        ] ({x}, {sqrt((tan(\thetaVal))^2*(x-\aVal)^2 - \tVal^2)});
+
+        \addplot[
+          domain=\xminplot:\xmaxplot,
+          samples=1000,
+          thick,
+        ] ({x}, {-sqrt((tan(\thetaVal))^2*(x-\aVal)^2 - \tVal^2)});
+
+        \pgfmathsetmacro{\xCoord}{\aVal + cos(\thetaVal)}
+        \pgfmathsetmacro{\yCoord}{sqrt(sin(\thetaVal)^2 - \tVal^2))}
+
+        \draw[dashed] (\xCoord, -\yCoord) -- (\xCoord, \yCoord);
+        \draw[dashed] (0, \yCoord) -- (\xCoord, \yCoord);
+        \draw[dashed] (0, -\yCoord) -- (\xCoord, -\yCoord);
+        \draw[dashed] (0, 0) -- (\xCoord, \yCoord);
+        \node[above] at (\xCoord, \yCoord) {$A$};
+
+        \node[below] at (\xminplot, 0) {$a+\frac{\cos\theta}{\sin\theta}t$};
+        \node[below] at (\xCoord, 0) {$a+\cos\theta$};
+        \node[left] at (0, \yCoord) {$\sqrt{\sin^2\theta-t^2}$};
+
+        \node[above left] at (\xminplot, 0) {$B$};
+        \draw[fill=black] (\xCoord, 0) circle[circle=1.5];
+        \fill[black] (\xminplot, 0) circle[radius=1.5pt];
+        \fill[black] (\xCoord, \yCoord) circle[radius=1.5pt];
+        \fill[black] (\xCoord, -\yCoord) circle[radius=1.5pt];
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$y=t$における立体の断面}
+    \label{2006-2:fig:1}
+  \end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis lines=middle,
+          xmin=-2, xmax=2,
+          ymin=-2, ymax=2,
+          xtick={\empty},
+          ytick={\empty},
+          xlabel=$x$,
+          ylabel=$z$,
+          axis equal,
+          clip=false
+        ]
+        \pgfmathsetmacro{\thetaVal}{deg(pi/8)}
+        \pgfmathsetmacro{\aVal}{0.5}
+        \pgfmathsetmacro{\tVal}{sin(\thetaVal)/3} % < s
+        \pgfmathsetmacro{\sVal}{sqrt((\aVal)^2*cos(\thetaVal)^2+sin(\thetaVal)^2)}
+        \pgfmathsetmacro{\cVal}{cos(\thetaVal)}
+        \pgfmathsetmacro{\svalsq}{\sVal*\sVal}
+        \pgfmathsetmacro{\tvalsq}{\tVal*\tVal}
+
+        \pgfmathsetmacro{\xminplot}{\aVal + \tVal/tan(\thetaVal)}
+        \pgfmathsetmacro{\xmaxplot}{\aVal + cos(\thetaVal)}
+
+        \addplot[
+          domain=0:360,
+          samples=100,
+          thick,
+          name path=A,
+        ] ({\xminplot*cos(x)}, {\xminplot*sin(x)});
+
+        \addplot[
+          domain=0:360,
+          samples=100,
+          thick,
+          name path=B,
+        ] ({sqrt(1+2*\aVal*\cVal+(\aVal)^2-(\tVal)^2)*cos(x)}, {sqrt(1+2*\aVal*\cVal+(\aVal)^2-(\tVal)^2)*sin(x)});
+
+        \addplot[pattern=north west lines, opacity=0.3] fill between [of=A and B];
+
+
+        \addplot[
+          domain=\xminplot:\xmaxplot,
+          samples=1000,
+          thick,
+          red,
+        ] ({x}, {sqrt((tan(\thetaVal))^2*(x-\aVal)^2 - \tVal^2)});
+
+        \addplot[
+          domain=\xminplot:\xmaxplot,
+          samples=1000,
+          thick,
+          red,
+        ] ({x}, {-sqrt((tan(\thetaVal))^2*(x-\aVal)^2 - \tVal^2)});
+
+        \pgfmathsetmacro{\xCoord}{\aVal + cos(\thetaVal)}
+        \pgfmathsetmacro{\yCoord}{sqrt(sin(\thetaVal)^2 - \tVal^2))}
+
+        \draw[dashed] (\xCoord, -\yCoord) -- (\xCoord, \yCoord);
+        \draw[dashed] (0, \yCoord) -- (\xCoord, \yCoord);
+        \draw[dashed] (0, -\yCoord) -- (\xCoord, -\yCoord);
+        \draw[dashed] (0, 0) -- (\xCoord, \yCoord);
+        \node[above] at (\xCoord, \yCoord) {$A$};
+
+        % \node[below] at (\xminplot, 0) {$a+\frac{\cos\theta}{\sin\theta}t$};
+        % \node[below] at (\xCoord, 0) {$a+\cos\theta$};
+        % \node[left] at (0, \yCoord) {$\sqrt{\sin^2\theta-t^2}$};
+
+        \node[above left] at (\xminplot, 0) {$B$};
+        \draw[fill=black] (\xCoord, 0) circle[circle=1.5];
+        \fill[black] (\xminplot, 0) circle[radius=1.5pt];
+        \fill[black] (\xCoord, \yCoord) circle[radius=1.5pt];
+        \fill[black] (\xCoord, -\yCoord) circle[radius=1.5pt];
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$y=t$における回転体の面積}
+    \label{2006-2:fig:2}
+  \end{figure}
+
+
+  この図形は$x$軸に関して対称である．また，図形の端点を
+  \begin{align*}
+     & A(a+\cos\theta,t, \sqrt{\sin^2\theta-t^2}) \\
+     & B(a+\frac{\cos\theta |t|}{\sin\theta},t,0)
+  \end{align*}
+  とおくと，この図形を$y$軸周りに回転した図形は，外側を半径$|OA|$，内側を半径$|OB|$とする二つの円で囲まれば部分である．
+  この面積$f(t)$とすると
+  \begin{align*}
+    f(t)
+     & = \pi\left(|OA|^2-|OB|^2\right)                                                                                                                            \\
+     & = \pi\left\{(a+\cos\theta)^2+(\sin^2\theta-t^2) - (a+\frac{\cos\theta |t|}{\sin\theta})^2\right\}                                                          \\
+     & = \pi \left\{ -\left(1+\frac{\cos^2\theta}{\sin^2\theta}\right)t^2 - 2a\frac{\cos\theta}{\sin\theta}t + \cos^2\theta + \sin^2\theta +2a\cos\theta \right\}
+  \end{align*}
+  となる．$\sin^2\theta+\cos^2\theta=1$を利用してさらに整理すると
+  \begin{align*}
+    f(t)
+     & = \pi \left\{ \frac{-1}{\sin^2\theta}t^2 -  2a\frac{\cos\theta}{\sin\theta}t + 1 + 2a\cos\theta \right\}
+  \end{align*}
+  となる．
+
+  従って，$V'$は
+  \begin{align*}
+    V'
+     & = \pi \int_0^{\sin\theta} f(t) dt                                                                                      \\
+     & = \pi\left[ -\frac{1}{3\sin^2\theta}t^3 - a\frac{\cos\theta}{\sin\theta}t^2 + (1+2a\cos\theta)t \right]_0^{\sin\theta} \\
+     & = \pi\left(\frac{2}{3}\sintheta + a\cos\theta\sin\theta\right)
+  \end{align*}
+  となり，\cref{2006-2:eq:2}に代入して
+  \begin{align}
+    V = 2\pi\left(\frac{2}{3}\sintheta + a\cos\theta\sin\theta\right) \label{2006-2:eq:3}
+  \end{align}
+  を得る．$\cdots$(答)
+  \vspace{10pt}
+
+  (2)
+  $a=4$を\cref{2006-2:eq:3}に代入して，これを$f(\theta)$とおくと
+  \begin{align*}
+    f(\theta)
+     & = 2\pi(4\cos\theta\sin\theta+\frac{2}{3}\sin\theta) \\
+     & = \frac{4}{3}\pi (6\cos\theta+1)\sin\theta
+  \end{align*}
+  だから，一階微分は変形すると$\cos\theta$のみでかけて，
+  \begin{align*}
+    f'(\theta)
+     & = \frac{4}{3}\pi (6\cos^2\theta - 6\sin^2\theta + \cos\theta)         \\
+     & = \frac{4}{3}\pi(12\cos^2\theta+\cos\theta-6)                         \\
+     & = \frac{4}{3}\pi \left(3\cos\theta-2\right)\left(4\cos\theta+3\right)
+  \end{align*}
+  となる．従って，$0 \le \theta_0 \le \frac{\pi}{2}$の範囲で
+  \begin{align*}
+    \cos \theta_0 = \frac{2}{3}
+  \end{align*}
+  を満たすような$\theta_0$を用いて，$f(\theta)$の増減表は\cref{2006-2:table:1}となる．
+  \begin{table}[H]
+    \centering
+    \caption{$f(\theta)$の増減表}
+    \label{2006-2:table:1}
+    \begin{tabular}{|c||c|c|c|c|c|} \hline
+      $\theta$     & $0$ &            & $\theta_0$ &            & $\pi/2$ \\ \hline
+      $\cos\theta$ & $1$ &            & $2/3$      &            & $0$     \\ \hline
+      $f'$         &     & $+$        & $0$        & $-$        &         \\ \hline
+      $f$          &     & $\nearrow$ &            & $\searrow$ &         \\ \hline
+    \end{tabular}
+  \end{table}
+  したがって$f(\theta)$が最大値を取るのは$\theta=\theta_0$の時で，この時
+  \begin{align*}
+    \max V
+     & = f(\theta_0)                                             \\
+     & = \frac{4}{3}\pi (6\cos\theta_0+1)\sin\theta_0            \\
+     & = \frac{4}{3}\pi (6\cos\theta_0+1)\sqrt{1-\cos^2\theta_0} \\
+     & =\frac{20\sqrt{5}\pi}{3}
+  \end{align*}
+  である．$\cdots$(答)
+  \vspace{10pt}
+
+
+  {\bf[解説]}
+
+  解答中では律儀に円錐の方程式を求めたが，実際にはここまでしなくても良いだろうと思う．
+  $y=t$の切断面の概形がわかっていれば，回転した時の面積は$\pi(|OA|^2-|OB|^2)$と図から判断が着くのでその程度の記述でも大丈夫だと思われる．
+  この場合，$A$および$B$の座標は幾何学的あるいは座標計算から求まるため，わざわざ円錐の方程式は不要，というわけだ．
+
+  また，円錐側面の方程式は，以下のような導出の方が簡単だろう．
+  すなわち，$S$の方程式は$x=a+k$と固定した時，半径$k \tan \theta$の円が現れるから，
+  \begin{align*}
+    y^2+z^2 = (x-a)^2\tan^2\theta
+  \end{align*}
+  となる．
+
+  \newpage
+\end{multicols}
+\end{document}

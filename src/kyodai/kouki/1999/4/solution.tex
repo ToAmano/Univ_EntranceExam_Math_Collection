@@ -1,0 +1,168 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{京都大学後期$1999$年$4$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/1999/4/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+    $\triangle ABC$の$3$辺の長さを$a,b,c$とする ($a,b,c > 0$)．
+    $\triangle ABC$が鋭角三角形だから，余弦定理より
+    \begin{align*}
+        c^2 = a^2+b^2 - 2ab\cos\angle\mathrm{ABC} < a^2+b^2
+    \end{align*}
+    のような式が成り立つから，
+    \begin{align*}
+        \begin{cases}
+            x^2 = \frac{a^2+b^2-c^2}{2} > 0 \\
+            y^2 = \frac{a^2-b^2+c^2}{2} > 0 \\
+            z^2 = \frac{-a^2+b^2+c^2}{2} > 0
+        \end{cases}
+    \end{align*}
+    となる$x,y,z \in \mathbb{R}^+$が存在する．
+    従って，これら$x,y,z$を$3$辺の長さとする直方体が存在する．
+    この時図のように四面体$ABCD$をとると各面が相似になっているから題意は示された．$\cdots$(答)
+
+    \begin{figure}[H]
+        \centering
+        \tdplotsetmaincoords{70}{120} % Adjust viewing angle to match the provided image
+
+        \begin{tikzpicture}[tdplot_main_coords]
+            % Define the dimensions of the cuboid
+            % We use arbitrary lengths for visualization purposes,
+            % as the problem asks for a reproduction of the figure,
+            % not a precise drawing with calculated lengths from a,b,c.
+            \pgfmathsetmacro{\Lx}{6} % length along x-axis
+            \pgfmathsetmacro{\Ly}{4} % length along y-axis
+            \pgfmathsetmacro{\Lz}{5} % length along z-axis
+
+            % Define the vertices of the cuboid
+            % (x,y,z) coordinates
+            \coordinate (O) at (0,0,0);
+            \coordinate (X) at (\Lx,0,0);
+            \coordinate (Y) at (0,\Ly,0);
+            \coordinate (Z) at (0,0,\Lz);
+            \coordinate (XY) at (\Lx,\Ly,0);
+            \coordinate (XZ) at (\Lx,0,\Lz);
+            \coordinate (YZ) at (0,\Ly,\Lz);
+            \coordinate (XYZ) at (\Lx,\Ly,\Lz);
+
+            % Draw the cuboid
+            % Back face (hidden lines)
+            \draw[dashed] (O) -- (X);
+            \draw[dashed] (O) -- (Y);
+            \draw[dashed] (O) -- (Z);
+            \draw[dashed] (X) -- (XZ);
+            \draw[dashed] (Y) -- (YZ);
+            \draw[dashed] (Z) -- (XZ); % This should be (Z) -- (YZ) and (XZ) -- (XYZ) for the back top edge
+
+            % Corrected hidden lines
+            \draw[dashed] (O) -- (X);
+            \draw[dashed] (O) -- (Y);
+            \draw[dashed] (O) -- (Z);
+            \draw[dashed] (X) -- (XZ);
+            \draw[dashed] (Y) -- (YZ);
+            \draw[dashed] (Z) -- (YZ); % Back left top edge
+            \draw[dashed] (XZ) -- (XYZ); % Back right top edge
+            \draw[dashed] (YZ) -- (XYZ); % Back left top edge
+
+            % Visible lines (front faces)
+            \draw (XY) -- (X) -- (XZ); % Right face
+            \draw (XY) -- (Y) -- (YZ); % Front face
+            \draw (XY) -- (XYZ); % Front top edge
+
+            % Corrected visible lines
+            \draw (XY) -- (X); % Front right bottom edge
+            \draw (XY) -- (Y); % Front left bottom edge
+            \draw (XY) -- (XYZ); % Front top edge (connects to A)
+            \draw (X) -- (XZ); % Right front vertical edge
+            \draw (Y) -- (YZ); % Left front vertical edge
+            \draw (XZ) -- (XYZ); % Right top back edge
+            \draw (YZ) -- (XYZ); % Left top back edge
+
+            % Draw the four vertices of the tetrahedron A, B, C, D
+            \coordinate (A) at (XYZ);
+            \coordinate (B) at (Z);
+            \coordinate (C) at (Y);
+            \coordinate (D) at (X);
+
+            % Draw the edges of the tetrahedron
+            \draw[line width=0.8pt] (A) -- (B); % AB
+            \draw[line width=0.8pt] (A) -- (C); % AC
+            \draw[line width=0.8pt] (A) -- (D); % AD
+            \draw[line width=0.8pt] (B) -- (C); % BC
+            \draw[line width=0.8pt] (B) -- (D); % BD
+            \draw[line width=0.8pt] (C) -- (D); % CD
+
+            % Add labels for the vertices
+            \node at ($(A)+(0.2,0.2,0)$) {\bfseries A};
+            \node at ($(B)+(-0.2,-0.2,0)$) {\bfseries B}; % Adjusted for better placement for B
+            \node at ($(C)+(-0.2,-0.2,0)$) {\bfseries C};
+            \node at ($(D)+(0.2,-0.2,0)$) {\bfseries D};
+
+            % Let's place these labels visually as in the input image.
+            % The 'x' label seems to be on the left edge, approximately at the middle height.
+            \node at ($(O)!0.5!(YZ) + (-0.3,0,0)$) {$x$}; % Left vertical edge
+
+            % The 'y' label seems to be on the back top edge, near B.
+            \node at ($(B)!0.5!(YZ) + (0,0.3,0)$) {$y$}; % Back top edge
+
+            % The 'z' label is inside, a vertical dashed line.
+            % This 'z' represents the height of the B vertex from the base.
+            % Let's draw a dashed line from B to the plane (0,0,0)-(Lx,Ly,0)
+            % The point directly below B is (0,0,0) in our current setup for B=(0,0,Lz)
+            % So it's the Z axis.
+            \draw[dashed] (B) -- (O); % This is the Z axis itself
+            \node at ($(B)!0.5!(O) + (0.1,0.1,0)$) {$z$};
+
+            % Add labels for tetrahedron edge lengths (a, b, c)
+            % AD = a
+            \node at ($(A)!0.5!(D) + (0.2,0,0)$) {$a$};
+            % AC = b
+            \node at ($(A)!0.5!(C) + (0.1,0.2,0)$) {$b$};
+            % AB = c
+            \node at ($(A)!0.5!(B) + (-0.2,0.2,0)$) {$c$};
+            % CD = c
+            \node at ($(C)!0.5!(D) + (0,-0.2,0)$) {$c$};
+            \node at ($(B)!0.5!(D) + (0,-0.2,0.1)$) {$b$}; % BD
+            \node at ($(B)!0.5!(C) + (-0.1,-0.1,0.1)$) {$a$}; % BC
+
+        \end{tikzpicture}
+        \caption{題意を満たす直方体と四面体}
+        \label{1999-4:fig:1}
+    \end{figure}
+
+    \vspace{10pt}
+    {\bf[解説]}
+    % TODO :: 図のブラッシュアップ
+
+    \newpage
+\end{multicols}
+\end{document}

@@ -1,0 +1,16 @@
+---
+university: "kyodai"
+category: "kouki"
+year: "2004"
+question: "4"
+type: "problem"
+title: "KYODAI 2004 kouki Q4 (problem)"
+---
+
+水平面$V$上の$3$点を$\mathrm{O}$，$\mathrm{A}$，$\mathrm{B}$とする．
+$\mathrm{A}$は線分$\mathrm{OB}$上にあり，線分$\mathrm{AB}$の長さは1メートルであるとする．
+$\mathrm{O}$から，$V$と垂直に棒が立っている．
+棒の先端$\mathrm{X}$を$\mathrm{A}$，$\mathrm{B}$から見た時の仰角がそれぞれ$45^{\circ}$，$44^{\circ}$であったという．
+棒の長さは何メートルか．小数点以下を四捨五入して答えよ．
+
+ただし，$0.01745<\tan 1^{\circ} < 0.01746$である．

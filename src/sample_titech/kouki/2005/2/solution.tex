@@ -1,0 +1,555 @@
+\documentclass[../../main.tex]{subfiles}
+
+\begin{document}
+\rhead{東工大後期$2005$年$2$番}
+\setcounter{equation}{0}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\begin{oframed}
+  \input{../../../problems/2005/2/problem.tex}
+\end{oframed}
+
+
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+  座標平面で考える．
+  円$C$を原点中心とし，$x^2+y^2=1$とおく．
+  $P(1,0)$, $Q(\cos\theta, \sin \theta)$とおく．
+  対称性より
+  \begin{align*}
+    0 \le \theta \le \pi
+  \end{align*}
+  で考える．
+
+  \vspace{10pt}
+  (1)
+  円 $A,B$ の半径 $r_A, r_B$，中心 $O_A, O_B$ とする．
+  まず，点$P$で$A$と$C$が接するから，$O_A$は線分OP上にある．
+  同様に点$Q$で$B$と$C$が接するから，$O_B$は線分OQ上にある．
+  従って，これらの円の概要は図のようになる．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=2.0]
+      % Define the coordinates for centers and radii based on the derived values
+      % Outer circle radius R = 1, center O = (0,0)
+      % Circle A: radius r_A = 0.5, center O_A = (0.5,0)
+      % Circle B: radius r_B = 1/3, center O_B = (0, 2/3)
+
+      % Draw the axes
+      \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$};
+      \draw[->] (0,-1.5) -- (0,1.5) node[above] {$y$};
+
+      % Draw the outer circle (x^2+y^2=1)
+      \draw[thick] (0,0) circle (1);
+
+      % Draw Circle A
+      \coordinate (OA) at (0.6,0);
+      \node[below right] at (OA) {$O_A$};
+      \draw[thick] (OA) circle (0.4);
+      \node[above right, xshift=0.2cm, yshift=0.2cm] at (0.5,0) {A}; % Label for circle A
+
+      % Draw Circle B
+      % \theta=3pi/4のとき
+      % r_B = (1-r_A)/(1+tr_A)
+      % ただしt = (2-sqrt(2))/(2+sqrt(2))= 0.1716
+      % r_A = 0.4とすると
+      % r_B = 0.5615
+      \coordinate (OB) at (-0.707*0.4385, 0.707*0.4385);
+      \node[below left] at (OB) {$O_B$};
+      \draw[thick] (OB) circle (0.5615);
+      \node[above left, xshift=-0.2cm, yshift=0.2cm] at (0, 0.5) {B}; % Label for circle B
+      \node[] at (0.1, 0.1) {$\theta$};
+
+      % Mark points P and Q
+      \coordinate (P) at (1,0);
+      \fill (P) circle (1pt) node[right] {P};
+
+      % Q is the tangency point of circle B with the outer circle.
+      % Since O_B is (0, 2/3) and r_B = 1/3, Q is (0, 2/3 + 1/3) = (0,1)
+      % theta = 3\pi/4 
+      \coordinate (Q) at (-0.707,0.707); % 1/sqrt(2)
+      \fill (Q) circle (1pt) node[above left] {Q};
+
+      % Draw the centers of the small circles
+      \fill (OA) circle (1pt);
+      \fill (OB) circle (1pt);
+
+      % Draw dashed lines
+      \draw[dashed] (0,0) -- (OA);
+      \draw[dashed] (0,0) -- (OB);
+      \draw[dashed] (OA) -- (OB);
+      \draw[dashed] (Q) -- (OB); % Line from Q to O_B
+
+      % Draw the angle theta (from x-axis to O_B)
+      % Since O_B is on the y-axis in this specific diagram, theta is 90 degrees.
+      % The diagram shows an arc for theta, so let's draw it from x-axis to O_B line
+      \draw[dashed] (P) -- (OA); % Tangency line to P from O_A
+
+      % \pic ["$\theta$", draw=black, angle eccentricity=1.2, angle radius=0.7cm] {angle = (1,0)-- (0,0) -- (0,1)};
+
+    \end{tikzpicture}
+    \caption{円$A,B,C$の概形}
+  \end{figure}
+
+  以下，円$A$と$B$が接することから，$r_A$および$r_B$に関する条件を導く．
+  まず，
+  \begin{align*}
+    0 < r_A, r_B < 1
+  \end{align*}
+  のもとで，題意の条件より
+  \begin{align}
+    \begin{dcases}
+      \overline{OO_A}    = 1-r_A \\
+      \overline{OO_B}    = 1-r_B \\
+      \overline{O_AO_B} = r_A+r_B
+    \end{dcases}\label{2005-2:eq:1}
+  \end{align}
+  である．
+  $\theta\neq\pi$ の時 $\triangle O_A O O_B$ に余弦定理を用いて，\cref{2005-2:eq:1}から
+  \begin{align}
+               & \overline{O_A O_B}^2 = \overline{OO_A}^2 + \overline{OO_B}^2 -2 \overline{OO_A}\overline{OO_B}\cos\theta \nonumber \\
+    \therefore & (r_A+r_B)^2 = (1-r_A)^2 + (1-r_B)^2 - 2(1-r_A)(1-r_B)\cos\theta                                          \nonumber \\
+    \therefore & 2r_A r_B = -2(r_A+r_B) + 2 - 2(1-r_A)(1-r_B)\cos\theta       \nonumber                                             \\
+    \therefore & r_A r_B = -(r_A+r_B) + 1 - (1-r_A)(1-r_B)\cos\theta    \label{2005-2:eq:2}
+  \end{align}
+  を得る．
+  一方$\theta=\pi$のとき，$O,O_A,O_B$は$x$軸上にあり，
+  \begin{align*}
+    r_A+r_B = 1
+  \end{align*}
+  となるが，これは\cref{2005-2:eq:2}に内包される．そこで以下，$0<\theta\le\pi$で\cref{2005-2:eq:2}を考える．
+
+  新しい変数$\alpha,\beta$を
+  \begin{align*}
+    \alpha & =r_A+r_B \\
+    \beta  & =r_A r_B
+  \end{align*}
+  とおくと，\cref{2005-2:eq:2}は
+  \begin{align}
+     & \beta               = -\alpha+1 - (1+\beta-\alpha)\cos\theta \nonumber \\
+    \therefore
+     & (1+\cos\theta)\beta = (1-\cos\theta)(1-\alpha) \label{2005-2:eq:3}
+  \end{align}
+  となる．
+
+  また，$r_A, r_B$ は $x$ の2次方程式 $f(x)=x^2-\alpha x+\beta=0$ の $0<x<1$ をみたす2実解(重解含む)だから，
+  このような$r_A,r_B$が存在するような$\alpha,\beta$の条件として
+  \begin{align}
+     & \begin{dcases}
+         \text{端点:}  & f(0)>0, f(1)>0           \\
+         \text{判別式:} & D\ge 0                   \\
+         \text{軸:}   & 0 < \frac{\alpha}{2} < 1
+       \end{dcases}       \nonumber          \\
+    \therefore
+     & \begin{dcases}
+         \text{端点:}  & \beta \ge 0, 1-\alpha+\beta \ge 0 \\
+         \text{判別式:} & \alpha^2-4\beta \ge 0             \\
+         \text{軸:}   & 0 < \frac{\alpha}{2} < 1
+       \end{dcases} \nonumber \\
+    \therefore
+     & \begin{dcases}
+          & 0 < \beta, \alpha-1 < \beta   \\
+          & \beta \le \frac{1}{4}\alpha^2 \\
+          & 0 < \alpha < 2
+       \end{dcases} \label{2005-2:eq:4}
+  \end{align}
+  が課せられる．
+
+  \cref{2005-2:eq:3,2005-2:eq:4}を$\alpha\beta$平面に図示すると，
+  \cref{2005-2:fig:2,2005-2:fig:3}の太線部となる．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          xlabel={$\alpha$}, % x軸ラベル
+          ylabel={$\beta$}, % y軸ラベル
+          xmin=0, xmax=2.5, % x軸の表示範囲
+          ymin=-0.2, ymax=1.5, % y軸の表示範囲 (少し0以下も表示)
+          axis lines=middle, % 軸を中央に配置
+          axis on top, % 軸の線をプロットの上に表示
+          enlargelimits={0.1,0.1}, % 軸の表示範囲に少し余白を追加
+          xtick={0,1,2}, % x軸の目盛り
+          ytick={0,1}, % y軸の目盛り
+          clip=false
+        ]
+
+        % 放物線 beta = 1/4 * alpha^2 を描画
+        \addplot[
+          domain=0:2.5, % 描画範囲
+          samples=100, % サンプル数 (滑らかな曲線のため)
+          thick,       % 線の太さ
+          blue,        % 線の色
+        ] {0.25*x^2};
+
+        % 直線 beta = alpha - 1 を描画
+        \addplot[
+          domain=0.5:2.5, % 描画範囲
+          samples=2,   % 直線なので2点でも十分
+          thick,       % 線の太さ
+          red,         % 線の色
+        ] {x-1};
+
+        % 指定された領域（太線部）を塗りつぶす
+        % 境界は (0,0), (1,0), (2,1) の直線部分と、
+        % (2,1) から (0,0) へ向かう放物線 beta = 1/4 * alpha^2 の曲線部分で構成される
+        \addplot[
+          fill=gray!30, % 塗りつぶしの色 (薄い灰色)
+          draw=black,   % 塗りつぶされた領域の輪郭線
+          thick,        % 輪郭線の太さ
+          line cap=round, % 線の端のスタイル
+          line join=round, % 線の結合部のスタイル
+        ] coordinates {(0,0) (1,0) (2,1)} % (0,0) -> (1,0) -> (2,1) へ直線を描画
+        -- plot[domain=2:0, samples=50] (\x, {0.25*\x^2}) % (2,1) から (0,0) へ放物線を描画（逆順にプロット）
+        -- cycle; % パスを閉じて塗りつぶしを完了
+
+        % 領域の主要な交点をマーク
+        \fill (axis cs:0,0) circle (2pt); %node[below left] {(0,0)};
+        \fill (axis cs:1,0) circle (2pt); %node[below] {(1,0)};
+        \fill (axis cs:2,1) circle (2pt); %node[above right] {(2,1)};
+        \fill (axis cs:0.828,0.172) circle (2pt); %node[above right] {(2,1)};
+
+        % 直線 beta = tan^2(theta/2) * (1-alpha) の例を描画
+        % ケース1: theta = pi/2 の場合 -> tan^2(pi/4) = 1 -> beta = 1-alpha
+        \addplot[
+          domain=0:1.5, % この直線は(0,1)から(1,0)を通る
+          samples=2,
+          dashed,
+          thick,  % 太さ
+        ] {1-x};
+
+        \addplot[
+          domain=0.828:1, % 2(\sqrt(2)-1):1
+          samples=2,
+          ultra thick,  % 太さ
+        ] {1-x};
+        % 直線上にラベルを配置 
+        \node[] at (axis cs:1.0, 0.8) {$\beta=t^2(1-\alpha)$};
+
+        \draw[dashed] (2,0) -- (2,1) -- (0,1);
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$\theta\neq \pi$の時に$r_A,r_B$が存在するための$\alpha,\beta$の条件}
+    \label{2005-2:fig:2}
+  \end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          xlabel={$\alpha$}, % x軸ラベル
+          ylabel={$\beta$}, % y軸ラベル
+          xmin=0, xmax=2.5, % x軸の表示範囲
+          ymin=-0.2, ymax=1.5, % y軸の表示範囲 (少し0以下も表示)
+          axis lines=middle, % 軸を中央に配置
+          axis on top, % 軸の線をプロットの上に表示
+          enlargelimits={0.1,0.1}, % 軸の表示範囲に少し余白を追加
+          xtick={0,1,2}, % x軸の目盛り
+          ytick={0,1}, % y軸の目盛り
+          clip=false
+        ]
+
+        % 放物線 beta = 1/4 * alpha^2 を描画
+        \addplot[
+          domain=0:2.5, % 描画範囲
+          samples=100, % サンプル数 (滑らかな曲線のため)
+          thick,       % 線の太さ
+          blue,        % 線の色
+        ] {0.25*x^2};
+
+        % 直線 beta = alpha - 1 を描画
+        \addplot[
+          domain=0.5:2.5, % 描画範囲
+          samples=2,   % 直線なので2点でも十分
+          thick,       % 線の太さ
+          red,         % 線の色
+        ] {x-1};
+
+        % 指定された領域（太線部）を塗りつぶす
+        % 境界は (0,0), (1,0), (2,1) の直線部分と、
+        % (2,1) から (0,0) へ向かう放物線 beta = 1/4 * alpha^2 の曲線部分で構成される
+        \addplot[
+          fill=gray!30, % 塗りつぶしの色 (薄い灰色)
+          draw=black,   % 塗りつぶされた領域の輪郭線
+          thick,        % 輪郭線の太さ
+          line cap=round, % 線の端のスタイル
+          line join=round, % 線の結合部のスタイル
+        ] coordinates {(0,0) (1,0) (2,1)} % (0,0) -> (1,0) -> (2,1) へ直線を描画
+        -- plot[domain=2:0, samples=50] (\x, {0.25*\x^2}) % (2,1) から (0,0) へ放物線を描画（逆順にプロット）
+        -- cycle; % パスを閉じて塗りつぶしを完了
+
+        % 領域の主要な交点をマーク
+        \fill (axis cs:0,0) circle (2pt); %node[below left] {(0,0)};
+        \fill (axis cs:1,0) circle (2pt); %node[below] {(1,0)};
+        \fill (axis cs:2,1) circle (2pt); %node[above right] {(2,1)};
+        \fill (axis cs:1,1/4) circle (2pt); %node[above right] {(2,1)};
+
+        \draw[dashed] (2,0) -- (2,1) -- (0,1);
+        \draw[dashed] (1,-0.2) -- (1,1);
+        \draw[ultra thick] (1,0) -- (1,1/4);
+        \node[] at (axis cs:1.0, 0.8) {$\alpha=1$};
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$\theta=\pi$の時に$r_A,r_B$が存在するための$\alpha,\beta$の条件}
+    \label{2005-2:fig:3}
+  \end{figure}
+
+  これは数式に起こすと$t = \tan\frac{\theta}{2}$,$c=\cos\frac{\theta}{2}$, $s=\sin\frac{\theta}{2}$ として， として
+  \begin{align}
+    \begin{dcases}
+      0 < \theta < \pi \text{の時．} & \beta = t^2(1-\alpha) \quad \left(2\frac{(1-s)t}{c} \le \alpha < 1\right) \\
+      \theta = \pi \text{の時．}     & \alpha=1, 0 < \beta \le \frac{1}{4}
+    \end{dcases}\label{2005-2:eq:6}
+  \end{align}
+  である．
+
+
+  さて，$A$ と $B$ の面積和を $T$ として，
+  \begin{align}
+    T = \pi(r_A^2+r_B^2) = \pi(\alpha^2-2\beta) \label{2005-2:eq:5}
+  \end{align}
+  だから，\cref{2005-2:eq:6}の条件のもとで，\cref{2005-2:eq:5}を最小化する．
+
+  \vspace{5pt}
+  \underline{\textbf{$0 < \theta < \pi$ の時}}
+
+  \cref{2005-2:eq:5}に\cref{2005-2:eq:6}を代入して$\beta$を除去すると
+  \begin{align*}
+    \frac{T}{\pi}
+     & = \alpha^2-2\beta          \\
+     & = \alpha^2-2t^2(1-\alpha)  \\
+     & = \alpha^2+2t^2\alpha-2t^2 \\
+     & = (\alpha+t^2)^2-t^4-2t^2
+  \end{align*}
+  で $t>0$ と\cref{2005-2:eq:6}から
+  \begin{align*}
+    \alpha = \frac{2(1-s)t}{c}
+  \end{align*}
+  で $T$ は最小で，この時の最小値は
+  \begin{align}
+    \frac{\min T}{\pi}
+     & = \left[ 4\frac{(1-s)^2}{c^2} + 4\frac{s(1-s)}{c^2} - 2 \right] t^2 \nonumber \\
+     & = \frac{2(s-1)^2 s^2}{c^4}                                          \nonumber \\
+     & = \frac{2(1-s)^2 s^2}{(1-s^2)^2}                                    \nonumber \\
+     & = \frac{2s^2}{(1+s)^2} \label{2005-2:eq:7}
+  \end{align}
+  を得る．
+
+  \vspace{5pt}
+  \underline{\textbf{$\theta=\pi$ の時}}
+
+  \cref{2005-2:eq:6}から$\min T$ は
+  $(\alpha,\beta)=(1,\frac{1}{4})$ の時の $\frac{1}{2}$ で，この時も\cref{2005-2:eq:7}で良い．
+
+  \vspace{5pt}
+  又，$\pi \le \theta \le 2\pi$ の時も対称性よりこれで良いので，($0 \to 2\pi-\theta$ ととりかえて同じになる)
+  求める最小値は$0<\theta<2\pi$に対して
+  \begin{align*}
+    S_\theta
+     & = 2\pi \left(\frac{\sin\frac{\theta}{2}}{1+\sin\frac{\theta}{2}}\right)^2
+  \end{align*}
+  である．$\cdots$(答)
+
+  \vspace{10pt}
+  (2) $x=1+\sin\frac{\theta}{2}$ とすると，$0\le x < 2\pi$で$0 \le x \le 2$ であり，
+  \begin{align*}
+    S_\theta
+     & = 2\pi \left(\frac{x-1}{x}\right)^2 \\
+     & = 2\pi \left(1-\frac{1}{x}\right)^2
+  \end{align*}
+  で．これば $x=2$ すなわち $\theta=\pi$ の時最大値
+  \begin{align*}
+    S_\theta = \frac{\pi}{2}
+  \end{align*}
+  をとる．$\cdots$(答)
+
+
+  \vspace{10pt}
+  {\bf[解説]}
+  平面図形の問題．立式できればあとは多変数関数の最小を求める問題に帰着する．
+
+  (1)がこの問題のポイントで，$\theta$を固定した時の二つの円の半径をどのように設定すれば面積の和が最小化するか？を考えれば良い．
+  最大となるのは片方の円の半径が$0$（従ってもう片方の半径が$C$と同じ$1$）の時なので，その逆パターンとして両方の円の半径が等しい時だろうと想像がつく．
+  それを数式で示していけばよい．
+  答案では二つの円の半径を変数で設定して，$S_{\theta}$を計算して最小化した．
+  二つの半径は対称なので，このような場合は対称式を導入して解いていくのが王道のやり方だ．
+
+  実際，二つの円を同じ半径にするのが最も大きい$S$を与えることは
+  \cref{2005-2:eq:6}を見ればわかる．なぜならば$(\alpha,\beta)$が重解を持つ曲線(判別式$D=0$)
+  \begin{align*}
+    \beta = \frac{\alpha^2}{4}
+  \end{align*}
+  上で$S_{\theta}$が最大になることを\cref{2005-2:eq:7}の導出過程で示しているからである．
+
+  さて，以上のような議論を考えると，$r_{A}=r_{B}$の時に$S_{\theta}$が最小になることがもっとわかりやすいように答案を作ることも考えられる．
+  今回の答案では対称式を$\alpha=r_{A}+r_{B},\beta=r_{A}r_{B}$で定義したのでこの事実が分かりにくくなっている．
+
+  そこで，$\beta$の代わりに$\gamma=r_{A}-r_{B}$を用いると，$\gamma=0$が明確に$S_{\theta}$の最小値を与えるはずである．
+  $\beta$との関係は
+  \begin{align*}
+    \beta = \frac{\alpha^2 -\gamma^2}{4}
+  \end{align*}
+  だから，条件\cref{2005-2:eq:3,2005-2:eq:4,2005-2:eq:5}は（簡単のため$\theta\neq\pi$の時のみ考えると）
+  \begin{align*}
+     & \begin{dcases}
+         S_{\theta} = \frac{\pi}{2}\left(\alpha^2+\gamma^2\right)              \\
+         (1+\cos\theta)\frac{\alpha^2 -\gamma^2}{4} = (1-\cos\theta)(1-\alpha) \\
+         0 < \frac{\alpha^2 -\gamma^2}{4}                                      \\
+         \alpha-1 < \frac{\alpha^2 -\gamma^2}{4}                               \\
+         \frac{\alpha^2 -\gamma^2}{4} \le \frac{1}{4}\alpha^2                  \\
+         0 < \alpha < 2
+       \end{dcases}                \\
+    \therefore
+     & \begin{dcases}
+         \frac{2S_{\theta}}{\pi} = \left(\alpha^2+\gamma^2\right)           \\
+         \gamma^2 = \alpha^2 + 4\frac{1-\cos\theta}{1+\cos\theta}(\alpha-1) \\
+         \gamma^2 < \alpha^2                                                \\
+         \gamma^2 < (2-\alpha)^2                                            \\
+         0 < \alpha < 2
+       \end{dcases}
+  \end{align*}
+  となる．ここで，$\alpha\gamma$平面にこの条件を図示すると\cref{2005-2:fig:4}の赤線部（端点含む）となる．
+  $\sqrt{\frac{2S_{\theta}}{\pi}}$は平面上の円の半径と解釈できる．
+  よって，とりうる$S_{\theta}$の範囲は，赤線部の双曲線と円が交点を持つ範囲で規定される．
+  図から$S_{\theta}$が最小になるのは
+  円が双曲線と$\alpha$軸の交点$(\sqrt{\frac{4(1-\cos\theta)}{1+\cos\theta}},0)$を通る時である．
+  よって明確に$\gamma=0$であることが示された．
+
+  \begin{figure}[H]
+    \centering
+    \pgfmathsetmacro{\ThetaVal}{60}
+    \pgfmathsetmacro{\Coeff}{(1-cos(\ThetaVal))/(1+cos(\ThetaVal))}
+    \pgfmathsetmacro{\MaxTheta}{atan(1/sqrt(4*\Coeff^2+4*\Coeff))}
+    \begin{tikzpicture}
+      \begin{axis}[
+          xlabel={$\alpha$}, % x軸ラベル
+          ylabel={$\gamma$}, % y軸ラベル
+          xmin=0, xmax=2.5, % x軸の表示範囲
+          ymin=-2.5, ymax=2.5, % y軸の表示範囲 (少し0以下も表示)
+          axis lines=middle, % 軸を中央に配置
+          axis on top, % 軸の線をプロットの上に表示
+          enlargelimits={0.1,0.1}, % 軸の表示範囲に少し余白を追加
+          xtick={0,1,2}, % x軸の目盛り
+          ytick={-2,-1,1,2}, % y軸の目盛り
+          clip=false,
+          axis equal image,
+        ]
+
+        \addplot[
+          domain=0:2, % 描画範囲
+          samples=2,   % 直線なので2点でも十分
+          thick,       % 線の太さ
+          dashed,
+        ] {2-x};
+        \addplot[
+          domain=0:2, % 描画範囲
+          samples=2,   % 直線なので2点でも十分
+          thick,       % 線の太さ
+          dashed,
+        ] {x-2};
+        \addplot[
+          domain=0:2, % 描画範囲
+          samples=2,   % 直線なので2点でも十分
+          thick,       % 線の太さ
+          dashed,
+        ] {-x};
+        \addplot[
+          domain=0:2, % 描画範囲
+          samples=2,   % 直線なので2点でも十分
+          thick,       % 線の太さ
+          dashed,
+        ] {x};
+
+        \addplot[
+          domain=-60:60, % 描画範囲
+          samples=100,   % 直線なので2点でも十分
+          thick,       % 線の太さ
+          red,        % 線の色
+          dashed,
+        ] ({sqrt(4*\Coeff^2+4*\Coeff)/cos(x)-2*\Coeff}, {sqrt(4*\Coeff^2+4*\Coeff)*tan(x)});
+
+        \addplot[
+          domain=-\MaxTheta:\MaxTheta, % 描画範囲
+          samples=100,   % 直線なので2点でも十分
+          ultra thick,       % 線の太さ
+          red,        % 線の色
+        ] ({sqrt(4*\Coeff^2+4*\Coeff)/cos(x)-2*\Coeff}, {sqrt(4*\Coeff^2+4*\Coeff)*tan(x)});
+
+        \addplot[
+          domain=-90:90, % 描画範囲
+          samples=100,   % 直線なので2点でも十分
+          thick,       % 線の太さ
+          blue,        % 線の色
+        ] ({0.8*cos(x)}, {0.8*sin(x)});
+
+
+        % % 指定された領域（太線部）を塗りつぶす
+        % % 境界は (0,0), (1,0), (2,1) の直線部分と、
+        % % (2,1) から (0,0) へ向かう放物線 beta = 1/4 * alpha^2 の曲線部分で構成される
+        % \addplot[
+        %   fill=gray!30, % 塗りつぶしの色 (薄い灰色)
+        %   draw=black,   % 塗りつぶされた領域の輪郭線
+        %   thick,        % 輪郭線の太さ
+        %   line cap=round, % 線の端のスタイル
+        %   line join=round, % 線の結合部のスタイル
+        % ] coordinates {(0,0) (1,0) (2,1)} % (0,0) -> (1,0) -> (2,1) へ直線を描画
+        % -- plot[domain=2:0, samples=50] (\x, {0.25*\x^2}) % (2,1) から (0,0) へ放物線を描画（逆順にプロット）
+        % -- cycle; % パスを閉じて塗りつぶしを完了
+
+        % 領域の主要な交点をマーク
+        \fill (axis cs:0,0) circle (2pt); %node[below left] {(0,0)};
+        \fill (axis cs:1,1) circle (2pt); %node[below] {(1,0)};
+        \fill (axis cs:1,-1) circle (2pt); %node[above right] {(2,1)};
+        \fill (axis cs:2,0) circle (2pt); %node[above right] {(2,1)};
+        % \fill (axis cs:0.828,0.172) circle (2pt); %node[above right] {(2,1)};
+
+        \addplot[
+          pattern=north west lines,
+          opacity=0.5,
+        ] coordinates {(0,0) (1,1) (2,0) (1,-1)}
+        -- cycle; % パスを閉じて塗りつぶしを完了
+
+        % 直線上にラベルを配置 
+        % \node[] at (axis cs:1.0, 0.8) {$\beta=t^2(1-\alpha)$};
+
+        \draw[dashed] (0,-2) -- (2,-2) -- (2,2) -- (0,2);
+        \fill (axis cs:{2*\Coeff},0) circle (2pt); %node[above right] {(2,1)};
+
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$\theta\neq \pi$の時に$r_A,r_B$が存在するための$\alpha,\gamma$の条件は赤字太線部．$S_{\theta}$は図形的に$\alpha\gamma$平面の円である．}
+    \label{2005-2:fig:4}
+  \end{figure}
+
+  従って，求めるべき$S_{\theta}$は
+  \begin{align*}
+    S_{\theta}
+     & = \frac{\pi}{2}\left[\left(\sqrt{\frac{4(1-\cos\theta)}{1+\cos\theta}}\right)^2+0^2\right] \\
+     & = \frac{2\pi(1-\cos\theta)}{(1+\cos\theta)}                                                \\
+     & = \frac{2\pi\sin\frac{\pi}{2}}{1+\sin\frac{\pi}{2}}
+  \end{align*}
+  となり，答案と一致する．こちらの解法の方が図形的に分かり易く，問題の構造も明確になるため優れている．
+  問題の裏側がわかると答案に工夫ができる良い例である．
+
+  \vspace{10pt}
+  (2)は正真正銘のボーナス問題で，$S_{\theta}$が出ていれば一撃でその最大値が求まる．
+  この手の形は解答中で実演しているように，分母が綺麗になるように変数変換すると見通しが良くなることが多い．
+
+  答えも$\theta=\pi$の時で，これは直感的にも一番円の半径を大きくできそうである．
+  この時\cref{2005-2:eq:2}から$r_A+r_B=1$を保ちながら，
+  \begin{align*}
+    S_{\theta} = \pi\left(r_A^2+r_B^2\right)
+  \end{align*}
+  を最大化すれば良いが，$y=x^2$が下に凸なことからイェンゼンの不等式を利用すると
+  \begin{align*}
+    S_{\theta} = \pi\left(r_A^2+r_B^2\right) \le 2\pi \left(\frac{r_A+r_B}{2}\right)^2 = \frac{\pi}{2}
+  \end{align*}
+  を得る．等号成立条件は$r_A=r_B$の時で，二つの円の半径が$1/2$の時である．
+
+  \newpage
+\end{multicols}
+\end{document}

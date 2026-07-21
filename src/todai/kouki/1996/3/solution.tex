@@ -1,0 +1,238 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{東京大学後期$1996$年$3$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/1996/3/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis equal image,
+          view={-140}{25},  % 3Dの視点角度
+          axis lines=none,  % 軸を非表示に
+          xmin=-1, xmax=11, % 描画範囲
+          ymin=-4, ymax=4,
+          zmin=-4, zmax=4,
+        ]
+
+        % --- パラメータ定義 ---
+        \def\R{3}    % 円柱の半径
+        \def\L{10}   % 円柱の長さ
+        \def\h{2.2}  % 底面からの高さ
+
+        % --- 自動計算される値 ---
+        % 水面のz座標 (円柱の中心軸がz=0)
+        \pgfmathsetmacro{\zwater}{\h-\R}
+        % 水面の半分の幅
+        \pgfmathsetmacro{\ywidth}{sqrt(\R*\R - \zwater*\zwater)}
+
+        % 1. 奥の底面 (灰色で塗りつぶし)
+        \addplot3[
+          surf,
+          gray!50,
+          opacity=0.5,
+          domain=0:\R,
+          y domain=0:360,
+          samples=20,
+          z buffer=sort,
+        ] (0, {x*cos(y)}, {x*sin(y)});
+
+        % 2. 円柱の側面 (半透明)
+        \addplot3[
+          surf,
+          gray,
+          shader=flat,
+          variable=\x,
+          variable y=\t,
+          domain=0:\L,
+          y domain=0:360,
+          samples=30,
+          samples y=40,
+          z buffer=sort,
+          opacity=0.25,
+        ] ({\x}, {\R*cos(\t)}, {\R*sin(\t)});
+
+        % 3. 水面 (長方形にパターンを適用)
+        \addplot3[
+          % patch,
+          pattern=north east lines, % 斜線パターン
+          pattern color=blue,
+          % z buffer=sort,
+          opacity=0.8,
+        ] coordinates {
+            (0, -\ywidth, \zwater)
+            (0, \ywidth, \zwater)
+            (\L, \ywidth, \zwater)
+            (\L, -\ywidth, \zwater)
+          };
+        % ラベル 'S' を水面に追加
+        \node at (axis cs:{\L*0.7}, 0, {\zwater}) [pin={[pin distance=1cm]110:$S$}] {};
+
+        % 4. 手前の底面 (輪郭線とラベル)
+        % % 輪郭線
+        % \addplot3[
+        %   thick,
+        %   domain=0:360,
+        %   samples=40,
+        %   z buffer=sort,
+        % ] (0, {\R*cos(x)}, {\R*sin(x)});
+
+        % 中心点
+        \node at (axis cs: 0,0,0) {$\bullet$};
+
+        % 水面の高さを示す線 (点線)
+        \draw[dashed] (axis cs: 0, -\ywidth, \zwater) -- (axis cs: 0, \ywidth, \zwater);
+        % ラベル 'h' とその補助線
+        \draw[<->, thick] (axis cs: 0, 0, -\R) -- (axis cs: 0, 0, \zwater) node[midway, right] {$h$};
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{タンクの様子}
+    \label{1996-3:fig:1}
+  \end{figure}
+
+  タンクの半径$R$, 長さ$L$, 流出開始を$t=0$として、
+  時刻$t$における水面の高さ$h$,
+  水面の面積$S$, 流出速度$v$とする。
+  題意から $v$ は 比例
+  定数$k$として
+  \begin{align}
+    v = k\sqrt{h} \label{1996-3:eq:1}
+  \end{align}
+  とおける．
+
+  一方流出する水に関して
+  \begin{align}
+    v = -S \frac{dh}{dt} \label{1996-3:eq:2}
+  \end{align}
+  が成り立つ．
+
+  \begin{figure}[H]
+    \centering
+
+    \begin{tikzpicture}[>=stealth]
+      % 変数の定義 (お好みで値を変更してください)
+      \def\R{3}  % 円の半径
+      \def\h{2}  % 下からの高さ
+
+      % 円と中心点
+      \draw (0,0) circle (\R);
+      \fill (0,0) circle (2pt) node[below left] {$O$};
+
+      % 水面
+      % y座標は中心からの距離なので h-R とする
+      \coordinate (H) at (0, {\h-\R});
+      % 水面の半分の幅を計算
+      \pgfmathsetmacro{\halfwidth}{sqrt(\R*\R - (\h-\R)*(\h-\R))}
+      \draw[blue, thick] (-\halfwidth, \h-\R) -- (\halfwidth, \h-\R);
+
+      % --- ラベルと補助線 ---
+
+      % 半径 R
+      \draw[<->] (0,0) -- (0,\R) node[midway, right] {$R$};
+
+      % 高さ h
+      \draw[<->] (0, {-\R}) -- (0, {\h-\R}) node[midway, left] {$h$};
+      \draw[dashed] (0, \h-\R) -- (-\R, \h-\R);
+      \draw[dashed] (0, {-\R}) -- (-\R, {-\R});
+      \draw[dashed] (H) -- (0,0);
+
+      % 水面の半幅
+      \draw[<->, red] (0, \h-\R) -- (\halfwidth, \h-\R) node[midway, below, black] {$\sqrt{R^2 - (R-h)^2}$};
+      % \node[anchor=center] at (0, {\h-\R-1}) {$= \sqrt{2Rh - h^2}$};
+
+    \end{tikzpicture}
+    \caption{高さ$h$での円の切断線}
+    \label{1996-3:fig:2}
+  \end{figure}
+
+
+  さらに，タンクの高さ$h$での切断面は奥行き$L$，幅
+  \begin{align*}
+    2\sqrt{R^2-(h-R)^2} = 2\sqrt{2Rh-h^2}
+  \end{align*}
+  の長方形だから
+  \begin{align}
+    S = 2L\sqrt{2Rh - h^2} \label{1996-3:eq:3}
+  \end{align}
+  である．
+
+  \cref{1996-3:eq:1,1996-3:eq:3}を\cref{1996-3:eq:2}に代入して
+  \begin{align*}
+    k\sqrt{h} = -2L\sqrt{2Rh - h^2} \frac{dh}{dt}
+  \end{align*}
+  という微分方程式を得る．
+
+  両辺$\sqrt{h}$で割って整理して
+  \begin{align*}
+    k\,dt = -2L \sqrt{2R-h} \,dh
+  \end{align*}
+  だから，積分して
+  \begin{align*}
+    -\frac{k}{2L} t = -\frac{2}{3}(2R-h)^{\frac{3}{2}} + C
+  \end{align*}
+  ただし、$C$は初期条件による定数である．
+
+  初期条件は $t=0$ で $h=2R$ だから，$C=0$ が従う．
+  \begin{align*}
+    -\frac{k}{2L} t = -\frac{2}{3}(2R-h)^{\frac{3}{2}}
+  \end{align*}
+  さらに題意の条件より$t=1\text{[h]}$で$h=R$だから
+  \begin{align*}
+    \frac{k}{2L} = -\frac{2}{3} R^{\frac{3}{2}} \quad \cdots ⑤
+  \end{align*}
+  であるから
+  \begin{align*}
+     & -\frac{2}{3} R^{\frac{3}{2}} t = -\frac{2}{3}(2R-h)^{\frac{3}{2}} \\
+    \therefore
+     & t = \left(2-\frac{h}{R}\right)^{\frac{3}{2}}
+  \end{align*}
+
+  $h=0$ になる時の $t=t_0$ をもとめるため
+  $h=0$を代入すると
+  \begin{align*}
+    t_0 = 2^{\frac{3}{2}} = 2\sqrt{2}
+  \end{align*}
+  である．
+
+  よって，現在$t=1$から$h=0$になるまでの時間$T$は
+  \begin{align}
+    T
+     & = t_0 -1                            \\
+     & = 2\sqrt{2} -1  \label{1996-3:eq:4}
+  \end{align}
+  である．
+
+  ここで
+  \begin{align*}
+     & (1.414)^2 = 1.999396 < 2\, (1.415)^2 = 2.002225 > 2 \\
+    \therefore
+     & 1.414 < \sqrt{2} < 1.415
+  \end{align*}
+  だから，\cref{1996-3:eq:4}に代入して
+  \begin{align*}
+     & 1.828 < T_0 < 1.83                                         \\
+    \therefore
+     & 1\text{時間}\,49.68\text{分} < T_o < 1\text{時間}\,49.8\text{分}
+  \end{align*}
+  である．従って，1分以下を切り捨てて
+  \begin{align*}
+    T_0 = 1\text{時間}\,49\text{分}
+  \end{align*}
+  である．$\cdots$(答)
+
+  \vspace{10pt}
+  {\bf[解説]}
+
+
+
+  \newpage
+\end{multicols}
+\end{document}

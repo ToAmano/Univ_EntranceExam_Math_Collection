@@ -1,0 +1,255 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{京都大学後期$2002$年$3$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/2002/3/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[]
+            \begin{axis}[
+                    axis background/.style={fill=white},
+                    view={-45}{30}, % 俯瞰図のための視点（azimuth, elevation）
+                    xlabel={$x$},
+                    ylabel={$y$},
+                    zlabel={$z$},
+                    xmin=-1, xmax=7,
+                    ymin=-1, ymax=6,
+                    zmin=0, zmax=6,
+                    grid=none,
+                    axis lines=none,
+                    xtick={0,2,4,6},
+                    ytick={0,2,4,6},
+                    ztick={0,2,4,6},
+                    unit vector ratio=1 1 1, % 各軸のスケールを均等にする
+                    clip=false,
+                    % hide axis, % 軸を非表示にする場合はコメントを外す
+                ]
+
+                % Define coordinates
+                \coordinate (A) at (0,0,0);
+                \coordinate (B) at (6,0,0);
+                \coordinate (C) at (2,5,0);
+                % Dの座標はD'を重心とし、高さを5と仮定
+                \coordinate (D) at (2.6667, 1.6667, 5); % (8/3, 5/3, 5)
+                \coordinate (Dprime) at (2.6667, 1.6667, 0); % (8/3, 5/3, 0)
+
+
+                \draw[fill opacity=0.8, fill=gray!20, draw=black, thick] (A) -- (B) -- (C) -- cycle;
+
+                \draw[thick] (A) -- (D);
+                \draw[thick] (B) -- (D);
+                \draw[thick] (C) -- (D);
+                \draw[dashed] (Dprime) -- (D);
+
+
+                % Label the vertices
+                \node at (A) [below left] {$A$};
+                \node at (B) [below right] {$B$};
+                \node at (C) [above left] {$C$};
+                \node at (D) [above] {$D$};
+                \node at (Dprime) [below] {$D'$};
+
+                \addplot3[
+                    thick,black,
+                    domain=-1:6,
+                    samples=100,
+                ](0 , x , 0);
+                \addplot3[
+                    thick,black,
+                    domain=-1:6,
+                    samples=100,
+                ](6 , x , 0);
+            \end{axis}
+        \end{tikzpicture}
+        \caption{四面体ABCDの様子}
+        \label{2002-3:fig:1}
+    \end{figure}
+
+
+    平面$\alpha$が平面ABCに一致する時，C'はCと一致するが，
+    各角が鋭角三角形だから，D'は平面ABC上でAを通り
+    辺ABに垂直な直線$l_1$と，Bを通り辺ABに垂直な直線$l_2$の
+    間の領域にある．
+
+    同様のことを辺BC，CAに対しても考えると，
+    D'は下図のように3組の平行直線 $(l_1, l_2)$, $(m_1, m_2)$, $(n_1, n_2)$
+    で囲まれた領域内にある．
+    $m_1$と$n_2$， $n_2$と$l_2$， $l_1$と$m_2$ の交点を各々P, Q, Rとすると，
+    $D'$は六角形APBQCRの内部に存在する．
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=none, % 軸を中央に配置
+                    xmin=-1, xmax=8,
+                    ymin=-1, ymax=7,
+                    grid=none, % グリッドを表示
+                    xtick={\empty},
+                    ytick={\empty},
+                    clip=false,
+                    % axis equal, % x軸とy軸のスケールを同じにする
+                ]
+
+                \coordinate (A) at (0,0);
+                \coordinate (B) at (6,0);
+                \coordinate (C) at (2,5);
+
+                % 頂点A, B, Cをプロット
+                \node[below left] at (A) {A};
+                \node[below right] at (B) {B};
+                \node[above] at (C) {C};
+                \fill (A) circle (1.5pt);
+                \fill (B) circle (1.5pt);
+                \fill (C) circle (1.5pt);
+                \draw (A) -- (B) -- (C) -- cycle;
+
+
+                % 垂直二等分線
+                % l1 (ABの垂直二等分線): x=3
+                \addplot[blue, thick, dashed, domain=-1:7] coordinates {(0, -1) (0, 7)} node[right, pos=0.9] {$l_1$};
+                \addplot[blue, thick, dashed, domain=-1:7] coordinates {(6, -1) (6, 7)} node[right, pos=0.9] {$l_2$};
+                % \addplot[blue, thick, dashed, domain=-1:7] coordinates {(3, -1) (3, 7)} node[right, pos=0.9] {$l_1$};
+                % \node[label={[blue]90:$l_1$}] at (3, 6.5) {}; % ラベルの位置調整
+
+                % m1 (BCの垂直二等分線): y = 0.8x - 0.7
+                \addplot[orange, thick, dashed, domain=-1:8] {0.8*x - 4.8} node[right, pos=0.9] {$m_1$};
+                \addplot[orange, thick, dashed, domain=-1:8] {0.8*x + 3.4} node[right, pos=0.9] {$m_2$};
+                % \addplot[orange, thick, dashed, domain=-1:8] {0.8*x - 0.7} node[right, pos=0.9] {$m_1$};
+
+                % \node[label={[green]0:$m_1$}] at (7.5, 5.3) {}; % ラベルの位置調整
+
+                % m2 (ACの垂直二等分線): y = -0.4x + 2.9
+                \addplot[purple, thick, dashed, domain=-1:8] {-0.4*x + 5.8} node[left, pos=0.9] {$n_1$};
+                \addplot[purple, thick, dashed, domain=-1:8] {-0.4*x} node[left, pos=0.9] {$n_2$};
+                % \node[label={[red]180:$m_2$}] at (-0.5, 3.1) {}; % ラベルの位置調整
+
+                % 外心Pをプロット
+                % \addplot[only marks, mark=*, mark size=2pt, color=purple] coordinates {(3, 1.7)}; % node[below] {P}
+
+                % 垂線
+                % AからBCへの垂線: y = 0.8x
+                % addplot[black!50!orange, domain=-0.5:6] {0.8*x};
+                %\node[right, black!50!orange] at (6, 4.8) {}; % 適当な位置にラベル
+
+                % BからACへの垂線: y = -0.4x + 2.4
+                % \addplot[black!50!orange, domain=0:7] {-0.4*x + 2.4};
+                % \node[right, black!50!orange] at (0, 2.4) {}; % 適当な位置にラベル
+
+                % CからABへの垂線: x = 2
+                % \addplot[black!50!orange, domain=-1:7] coordinates {(2, -1) (2, 7)};
+                % \node[right, black!50!orange] at (2, 6.5) {}; % 適当な位置にラベル
+
+                % 各辺と垂線の交点に直角マーク
+                % CからABへの垂線とABの交点 (2,0)
+                % \draw[black!50!orange] (2,0.5) -- (2.5,0.5) -- (2.5,0); % 直角マーク
+
+                % BからACへの垂線とACの交点 (x,y)
+                % y = -0.4x + 2.4 と y = 2.5x (ACの式) の交点
+                % -0.4x + 2.4 = 2.5x => 2.9x = 2.4 => x = 2.4/2.9 = 0.827...
+                % y = 2.5 * (2.4/2.9) = 6/2.9 = 2.068...
+                % 図のAの近くにある直角マークをそれっぽく描く
+                % A(0,0), C(2,5)
+                \coordinate (AC) at (2,5);
+                \coordinate (BL) at (0.827, 2.068); % BからACへの垂線の足
+                \draw[black!50!orange] ($(BL)!0.2cm!90:(AC)$) -- ($(BL)!0.2cm!(AC)$) -- ($(BL)!0.2cm!-90:(AC)$); % 直角マーク
+
+                % AからBCへの垂線とBCの交点 (x,y)
+                % y = 0.8x と y - 0 = (-5/4)(x - 6) => y = -1.25x + 7.5 (BCの式) の交点
+                % 0.8x = -1.25x + 7.5 => 2.05x = 7.5 => x = 7.5/2.05 = 3.658...
+                % y = 0.8 * (7.5/2.05) = 2.926...
+                % 図のBの近くにある直角マークをそれっぽく描く
+                % B(6,0), C(2,5)
+                \coordinate (BC) at (6,0);
+                \coordinate (AL) at (3.658, 2.926); % AからBCへの垂線の足
+                \draw[black!50!orange] ($(AL)!0.2cm!90:(BC)$) -- ($(AL)!0.2cm!(BC)$) -- ($(AL)!0.2cm!-90:(BC)$); % 直角マーク
+
+                % % 図中の他の点 (N, Q, Rなど) をプロット
+                % % N: CからABへの垂線 (x=2) とm2 (y=-0.4x+2.9) の交点
+                % % x=2 をm2に代入: y = -0.4(2) + 2.9 = -0.8 + 2.9 = 2.1
+                % \addplot[only marks, mark=*, mark size=1.5pt] coordinates {(2, 2.1) node[above left] {N}};
+
+                % % Q: BからACへの垂線 (y=-0.4x+2.4) とm1 (y=0.8x-0.7) の交点
+                % % -0.4x + 2.4 = 0.8x - 0.7 => 1.2x = 3.1 => x = 3.1/1.2 = 2.583...
+                % % y = 0.8*(3.1/1.2) - 0.7 = 0.8*2.583 - 0.7 = 2.066 - 0.7 = 1.366...
+                % \addplot[only marks, mark=*, mark size=1.5pt] coordinates {(2.583, 1.366) node[above right] {Q}};
+
+                % % R: AからBCへの垂線 (y=0.8x) とl1 (x=3) の交点
+                % % x=3 をy=0.8xに代入: y = 0.8*3 = 2.4
+                % \addplot[only marks, mark=*, mark size=1.5pt] coordinates {(3, 2.4) node[above right] {R}};
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{六角形APBQCRの様子}
+        \label{2002-3:fig:2}
+    \end{figure}
+
+
+    $l,m,n$の直線の定義から
+    \begin{align*}
+         & \angle \text{CAP} = \angle \text{CBP} = \frac{\pi}{2} \\
+         & \angle \text{ABQ} = \angle \text{ACQ} = \frac{\pi}{2} \\
+         & \angle \text{BCR} = \angle \text{BAR} = \frac{\pi}{2}
+    \end{align*}
+    だから，六角形APBQCRは同一円周上にある．
+    この円は三角形ABCの外接円である．
+
+    従って，点D'は三角形ABCの外接円の内側にある．
+    よって円周角の定理から
+    \begin{align}
+        \angle \text{ACB} = \angle \text{ACB} < \angle \text{AD'B} \label{2002-3:eq:1}
+    \end{align}
+    である．
+
+    次に平面$\alpha$が平面ABDに一致するまで回転させることを考える．
+    この時$\angle \text{AC'B}$と$\angle \text{AD'B}$は連続的に変化する．
+    条件から辺ABと辺CDが垂直でないので，C'とD'は一致しないことに注意する．
+    最終的に平面$\alpha$が平面ABDに一致するとき，\cref{2002-3:eq:1}と同じく
+    \begin{align}
+        \angle \text{AC'B} > \angle \text{ADB} = \angle \text{AD'B}\label{2002-3:eq:2}
+    \end{align}
+    である．
+
+    従って，\cref{2002-3:eq:1,2002-3:eq:2}から，
+    平面$\alpha$を動かす間に$\angle \text{AC'B}$と$\angle \text{AD'B}$の大小関係が逆転する．
+    これらの角度は連続的に変化するので，$\angle \text{AC'B}=\angle \text{AD'B}$となるような$\alpha$が絶対に存在する．
+    この時円周角の定理より，異なる4点A, B, C', D'が同一円周上に存在する．
+    よって題意は示された．$\cdots$(答)
+
+    \vspace{10pt}
+    {\bf[解説]}
+
+    \newpage
+\end{multicols}
+\end{document}

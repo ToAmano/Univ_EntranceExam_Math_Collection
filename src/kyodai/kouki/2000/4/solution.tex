@@ -1,0 +1,440 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{京都大学後期$2000$年$4$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/2000/4/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  (1)
+  $C'$を原点とする座標空間で考える．
+  四角形A'B'C'D'を$z=0$の平面上に配置して，
+  A'$(\sqrt{2},1,0)$，B'$(\sqrt{2},0,0)$，C'$(0,0,0)$，D'$(0,1,0)$とする．
+  四角形ABCDを$z=1$平面に配置して，
+  A$(\sqrt{2},1,1)$，B$(\sqrt{2},0,1)$，C$(0,0,1)$，D$(0,1,1)$とする．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.2]
+      \begin{axis}[
+          axis lines=center, % Draws axes from origin
+          xlabel={$x$},
+          ylabel={$y$},
+          zlabel={$z$},
+          % View angle to approximate the drawing
+          view={45}{30}, % Azimuth and Elevation
+          xmin=0, xmax=2,
+          ymin=0, ymax=2,
+          zmin=0, zmax=2,
+          xtick=\empty, ytick=\empty, ztick=\empty, % Hide ticks
+          grid=none, % Hide grid
+          clip=false, % Allow labels to go outside axis box
+          % Use transparent background for the plot area itself if needed
+          % axis background/.style={fill=none}
+        ]
+
+        % Define coordinates
+        \coordinate (Aprime) at ({sqrt(2)},1,0);
+        \coordinate (Bprime) at ({sqrt(2)},0,0);
+        \coordinate (Cprime) at (0,0,0);
+        \coordinate (Dprime) at (0,1,0);
+
+        \coordinate (A) at ({sqrt(2)},1,1);
+        \coordinate (B) at ({sqrt(2)},0,1);
+        \coordinate (C) at (0,0,1);
+        \coordinate (D) at (0,1,1);
+
+        % Draw the edges of the rectangular prism
+        % All lines are solid as per the image
+        \draw[thick] (Aprime) -- (Bprime)-- (Cprime);
+        \draw[dashed] (Cprime) -- (Dprime) -- (Aprime);
+
+        \draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;
+
+        \draw[dashed] (Dprime) -- (D); %node[midway, left]{$1$};
+        \draw[thick] (Aprime) -- (A); %node[midway, below left]{$1$}; % Adjust position
+        \draw[thick] (Bprime) -- (B); %node[midway, right]{$1$};
+        \draw[thick] (Cprime) -- (C); %node[midway, right]{$1$};
+
+        \draw[red,thick] (Cprime) -- (A);
+        % Label the vertices
+        \node[below] at (Aprime) {$A'$}; % Adjust angle for better placement
+        \node[below] at (Bprime)  {$B'$};
+        \node[below] at (Cprime)  {$C'$};
+        \node[below] at (Dprime) {$D'$};
+
+        \node[above] at (A) {$A$};
+        \node[above] at (B) {$B$};
+        \node[above] at (C) {$C$};
+        \node[above] at (D) {$D$}; % Adjust angle for better placement
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{直方体ABCD-A'B'C'D'を座標空間に置いた様子．}
+    \label{2000-4:fig:1}
+  \end{figure}
+
+  題意の直線AC'に垂直で，AC'上の点Pを通る切断面を$\pi(P)$とおく．
+  $\pi(P)$の法線ベクトル$n$はACと平行で
+  \begin{align*}
+    n \parallel \vec{\text{C'A}} \parallel \mqty(\sqrt{2} \\ 1 \\ 1 )
+  \end{align*}
+  を満たす．
+
+  線分$AP$の長さを$t\, (0\le t\le 2)$と置くと，
+  Pの座標は$P(\frac{\sqrt{2}t}{2},\frac{t}{2},\frac{t}{2})$である．
+
+  以上から，$\pi(P)$の方程式は
+  \begin{align}
+     & \sqrt{2}\left(x - \frac{\sqrt{2}t}{2} \right) + \left(y - \frac{t}{2}\right) + \left(z - \frac{t}{2}\right) = 0 \\
+    \therefore
+     & \sqrt{2}x + y + z - 2t = 0 \label{2000-4:eq:1}
+  \end{align}
+  である．
+
+  さて，題意のように点PがAC'の中点である時，APの長さは
+  \begin{align*}
+    |AP|
+     & = \frac{1}{2}|AC'| \\
+     & = 1
+  \end{align*}
+  だから，$t=1$を\cref{2000-4:eq:1}に代入すると
+  \begin{align*}
+    \pi(t=1): \sqrt{2}x + y + z - 2 = 0
+  \end{align*}
+  となり，この方程式は
+  B'$(\sqrt{2},0,0)$, D$(0,1,1)$を通る．
+  以上から題意は示された．$\cdots$(答)
+  \vspace{10pt}
+
+  (2)
+  (1)と同様に各頂点が$\pi$(P)を通る時以下の方になる．
+
+  従って，切り口の形状は
+  \begin{align*}
+    \begin{dcases}
+      0 \le t \le \frac{1}{2} \\
+      \frac{1}{2} \le t \le 1 \\
+      1 \le t \le \frac{3}{2} \\
+      \frac{3}{2} \le t \le 2 \\
+    \end{dcases}
+  \end{align*}
+  の四つの場合わけで記述できる．
+  対称性から，前者二つを考えれば後者二つは$t\to 2-t$の置換で求まる．
+
+  \vspace{1em}
+  \textbf{$1^{\circ} \ 0 \le t \le \frac{1}{2}$ の時}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.2]
+      \begin{axis}[
+          axis lines=center, % Draws axes from origin
+          xlabel={$x$},
+          ylabel={$y$},
+          zlabel={$z$},
+          % View angle to approximate the drawing
+          view={45}{30}, % Azimuth and Elevation
+          xmin=0, xmax=2,
+          ymin=0, ymax=2,
+          zmin=0, zmax=2,
+          xtick=\empty, ytick=\empty, ztick=\empty, % Hide ticks
+          grid=none, % Hide grid
+          clip=false, % Allow labels to go outside axis box
+          % Use transparent background for the plot area itself if needed
+          % axis background/.style={fill=none}
+        ]
+
+        % Define coordinates
+        \coordinate (Aprime) at ({sqrt(2)},1,0);
+        \coordinate (Bprime) at ({sqrt(2)},0,0);
+        \coordinate (Cprime) at (0,0,0);
+        \coordinate (Dprime) at (0,1,0);
+
+        \coordinate (A) at ({sqrt(2)},1,1);
+        \coordinate (B) at ({sqrt(2)},0,1);
+        \coordinate (C) at (0,0,1);
+        \coordinate (D) at (0,1,1);
+
+        % Draw the edges of the rectangular prism
+        % All lines are solid as per the image
+        \draw[thick] (Aprime) -- (Bprime)-- (Cprime);
+        \draw[dashed] (Cprime) -- (Dprime) -- (Aprime);
+
+        \draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;
+
+        \draw[dashed] (Dprime) -- (D); %node[midway, left]{$1$};
+        \draw[thick] (Aprime) -- (A); %node[midway, below left]{$1$}; % Adjust position
+        \draw[thick] (Bprime) -- (B); %node[midway, right]{$1$};
+        \draw[thick] (Cprime) -- (C); %node[midway, right]{$1$};
+
+        \draw[red,thick] (Cprime) -- (A);
+        % Label the vertices
+        \node[below] at (Aprime) {$A'$}; % Adjust angle for better placement
+        \node[below] at (Bprime)  {$B'$};
+        \node[below] at (Cprime)  {$C'$};
+        \node[below] at (Dprime) {$D'$};
+
+        \node[above] at (A) {$A$};
+        \node[above] at (B) {$B$};
+        \node[above] at (C) {$C$};
+        \node[above] at (D) {$D$}; % Adjust angle for better placement
+
+        \pgfmathsetmacro{\t}{1/3}
+        \coordinate (X) at ({sqrt(2)*\t},0,0);
+        \coordinate (Y) at (0,{2*\t},0);
+        \coordinate (Z) at (0,0,{2*\t});
+        \draw[red, thick] (X) --(Z) ;
+        \draw[red, thick,dashed] (X) -- (Y) -- (Z);
+        \fill (X) circle (1.5pt);
+        \fill (Y) circle (1.5pt);
+        \fill (Z) circle (1.5pt);
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$\ 0 \le t \le \frac{1}{2}$の時の切断面は三角形になる．}
+  \end{figure}
+
+
+  $\pi$(P)は辺C'B'，C'D'，CC'，と交わるから，各々の交点をX, Y, Zとする．
+  すると切断面の面積は$\triangle XYZ$の面積に等しい．
+  \begin{align*}
+    S(t) = (\triangle \text{XYZ} \text{の面積})
+  \end{align*}
+  である．
+  \cref{2000-4:eq:1}から，
+  \begin{align*}
+     & X(\sqrt{2}t,0,0) \\
+     & Y(0,2t,0)        \\
+     & Z(0,0,2t)
+  \end{align*}
+  だから，三角形の面積公式から
+  \begin{align*}
+    S(t)
+     & = \frac{1}{2}\sqrt{|\vec{XY}|^2|\vec{XZ}|^2-(\vec{XY}\cdot\vec{XZ})^2} \\
+     & = \frac{1}{2}\sqrt{(2t^2+4t^2)(2t^2+4t^2)-(2t^2)^2}                    \\
+     & = \frac{1}{2}\sqrt{32t^4}                                              \\
+     & = 2\sqrt{2}t^2
+  \end{align*}
+  である．
+  \vspace{1em}
+  \textbf{$2^\circ \ \frac{1}{2} \le t \le 1$ の時}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.2]
+      \begin{axis}[
+          axis lines=center, % Draws axes from origin
+          xlabel={$x$},
+          ylabel={$y$},
+          zlabel={$z$},
+          % View angle to approximate the drawing
+          view={45}{30}, % Azimuth and Elevation
+          xmin=0, xmax=2,
+          ymin=0, ymax=2,
+          zmin=0, zmax=2,
+          xtick=\empty, ytick=\empty, ztick=\empty, % Hide ticks
+          grid=none, % Hide grid
+          clip=false, % Allow labels to go outside axis box
+          % Use transparent background for the plot area itself if needed
+          % axis background/.style={fill=none}
+        ]
+
+        % Define coordinates
+        \coordinate (Aprime) at ({sqrt(2)},1,0);
+        \coordinate (Bprime) at ({sqrt(2)},0,0);
+        \coordinate (Cprime) at (0,0,0);
+        \coordinate (Dprime) at (0,1,0);
+
+        \coordinate (A) at ({sqrt(2)},1,1);
+        \coordinate (B) at ({sqrt(2)},0,1);
+        \coordinate (C) at (0,0,1);
+        \coordinate (D) at (0,1,1);
+
+        % Draw the edges of the rectangular prism
+        % All lines are solid as per the image
+        \draw[thick] (Aprime) -- (Bprime)-- (Cprime);
+        \draw[dashed] (Cprime) -- (Dprime) -- (Aprime);
+
+        \draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;
+
+        \draw[dashed] (Dprime) -- (D); %node[midway, left]{$1$};
+        \draw[thick] (Aprime) -- (A); %node[midway, below left]{$1$}; % Adjust position
+        \draw[thick] (Bprime) -- (B); %node[midway, right]{$1$};
+        \draw[thick] (Cprime) -- (C); %node[midway, right]{$1$};
+
+        \draw[red,thick] (Cprime) -- (A);
+        % Label the vertices
+        \node[below] at (Aprime) {$A'$}; % Adjust angle for better placement
+        \node[below] at (Bprime)  {$B'$};
+        \node[below] at (Cprime)  {$C'$};
+        \node[below] at (Dprime) {$D'$};
+
+        \node[above] at (A) {$A$};
+        \node[above] at (B) {$B$};
+        \node[above] at (C) {$C$};
+        \node[above] at (D) {$D$}; % Adjust angle for better placement
+
+        \pgfmathsetmacro{\t}{3/4}
+        \coordinate (X) at ({sqrt(2)*\t},0,0);
+        \coordinate (Y) at (0,{2*\t},0);
+        \coordinate (Z) at (0,0,{2*\t});
+        \coordinate (XX) at ({(2*\t-1)/sqrt(2)},0,1);
+        \coordinate (XY) at ({(2*\t-1)/sqrt(2)},1,0);
+        \coordinate (YY) at (0,{2*\t-1},1);
+        \coordinate (YYY) at (0,1,{2*\t-1});
+
+
+
+        \draw[red,thick] (X) -- (XX) -- (YY);
+        \draw[red,thick,dashed] (X) -- (XY) -- (YYY) -- (YY);
+        \fill (X) circle (1.5pt);
+        \fill (XX) circle (1.5pt);
+        \fill (XY) circle (1.5pt);
+        \fill (YY) circle (1.5pt);
+        \fill (YYY) circle (1.5pt);
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$\ \frac{1}{2} \le t \le 1$の時の切断面は五角形になる．}
+    \label{2000-4:fig:3}
+  \end{figure}
+  切り口は\cref{2000-4:fig:3}のような五角形になる．
+  これは，四角形から三角形を切り抜いた形として計算できる．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.2]
+      \begin{axis}[
+          axis lines=center, % Draws axes from origin
+          xlabel={$x$},
+          ylabel={$y$},
+          zlabel={$z$},
+          % View angle to approximate the drawing
+          view={120}{30}, % Azimuth and Elevation
+          xmin=0, xmax=2,
+          ymin=0, ymax=2,
+          zmin=0, zmax=2,
+          xtick=\empty, ytick=\empty, ztick=\empty, % Hide ticks
+          grid=none, % Hide grid
+          clip=false, % Allow labels to go outside axis box
+          % Use transparent background for the plot area itself if needed
+          % axis background/.style={fill=none}
+        ]
+
+        % Define coordinates
+        \coordinate (Aprime) at ({sqrt(2)},1,0);
+        \coordinate (Bprime) at ({sqrt(2)},0,0);
+        \coordinate (Cprime) at (0,0,0);
+        \coordinate (Dprime) at (0,1,0);
+
+        \coordinate (A) at ({sqrt(2)},1,1);
+        \coordinate (B) at ({sqrt(2)},0,1);
+        \coordinate (C) at (0,0,1);
+        \coordinate (D) at (0,1,1);
+
+        % Draw the edges of the rectangular prism
+        % All lines are solid as per the image
+        \draw[dashed] (Aprime) -- (Bprime)-- (Cprime);
+        \draw[dashed] (Cprime) -- (Dprime) -- (Aprime);
+        \draw[dashed] (A) -- (B) -- (C) -- (D) -- cycle;
+
+        \draw[dashed] (Dprime) -- (D); %node[midway, left]{$1$};
+        \draw[dashed] (Aprime) -- (A); %node[midway, below left]{$1$}; % Adjust position
+        \draw[dashed] (Bprime) -- (B); %node[midway, right]{$1$};
+        \draw[dashed] (Cprime) -- (C); %node[midway, right]{$1$};
+
+        \draw[red,thick] (Cprime) -- (A);
+        % Label the vertices
+        \node[below] at (Aprime) {$A'$}; % Adjust angle for better placement
+        \node[below] at (Bprime)  {$B'$};
+        \node[below] at (Cprime)  {$C'$};
+        \node[below] at (Dprime) {$D'$};
+
+        \node[above] at (A) {$A$};
+        \node[above] at (B) {$B$};
+        \node[above] at (C) {$C$};
+        \node[above] at (D) {$D$};
+
+        \pgfmathsetmacro{\t}{3/4}
+        \coordinate (X) at ({sqrt(2)*\t},0,0);
+        \coordinate (Y) at (0,{2*\t},0);
+        \coordinate (Z) at (0,0,{2*\t});
+        \coordinate (XX) at ({(2*\t-1)/sqrt(2)},0,1);
+        \coordinate (XY) at ({(2*\t-1)/sqrt(2)},1,0);
+        \coordinate (YY) at (0,{2*\t-1},1);
+        \coordinate (YYY) at (0,1,{2*\t-1});
+        \coordinate (P) at ({sqrt(2)*(\t-1)},1,1);
+
+        \draw[red,thick] (X) -- (XX) -- (YY) -- (P) -- (YYY) -- (XY);
+        \draw[red,thick,dashed] (X) -- (XY);
+        \draw[red,thick,dashed] (YYY) -- (YY);
+        \draw[red,dashed] (XX) -- (XY);
+        \fill (X) circle (1.5pt);
+        \fill (XX) circle (1.5pt);
+        \fill (XY) circle (1.5pt);
+        \fill (YY) circle (1.5pt);
+        \fill (YYY) circle (1.5pt);
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$\ \frac{1}{2} \le t \le 1$の時，切断面は四角形から三角形の部分を切り抜くことで計算できる．}
+    \label{2000-4:fig:4}
+  \end{figure}
+
+  四角形の面積は，\cref{2000-4:fig:4}より$t$によらず$S(1/2)$の2倍である．
+  一方切り取る三角形の面積は，$z$座標に注目すると$S(1/2)$の三角形と$1:2(1-t)$の比率だから
+  \begin{align*}
+    (2-2t)^2S(1/2)
+  \end{align*}
+  となる．また$1^{\circ}$より$S(1/2)=\frac{\sqrt{2}}{2}$である．
+  以上より
+  \begin{align*}
+    S(t)
+     & = 2S(1/2) - 4(1-t)^2S(1/2)                  \\
+     & = \frac{\sqrt{2}}{2}\left(2-4(1-t)^2\right) \\
+     & = \sqrt{2}\left(1-2(1-t)^2\right)
+  \end{align*}
+  である．
+
+  \vspace{1em}
+  \textbf{$3^\circ \ 1 \le t \le \frac{3}{2}$ の時}
+
+  対称性から$3^\circ$の$t$を$2-t$でおきかえて
+  \begin{align*}
+    S(t) = \sqrt{2}\left(1-2(t-1)^2\right)
+  \end{align*}
+  である．これは$3^\circ$の時と同じ表現である．
+
+  \vspace{1em} % Add some vertical space
+  \textbf{$4^\circ \ \frac{3}{2} \le t \le 2$ の時}
+
+  対称性から1$^\circ$の$t$を$2-t$で置きかえて
+  \begin{align*}
+    S(t) = 2\sqrt{2}(2-t)^2
+  \end{align*}
+  である．
+
+  \vspace{1em} % Add some vertical space
+  以上まとめて$t$を$x$でおきかえて
+  \begin{align*}
+    S(x)
+    = \begin{dcases}
+        2\sqrt{2}x^2           & (0 \le x \le \frac{1}{2})                      \\
+        \sqrt{2}\{1-2(x-1)^2\} & \left(\frac{1}{2} \le x \le \frac{3}{2}\right) \\
+        2\sqrt{2}(2-x)^2       & (\frac{3}{2} \le x \le 2)
+      \end{dcases}
+  \end{align*}
+  が求める答えである．$\cdots$(答)
+
+  \vspace{10pt}
+
+  受験上の検算テクニックとして，この手の場合わけが生じた場合は境界での値が一致していることを確認したい．
+
+
+
+  \newpage
+\end{multicols}
+\end{document}

@@ -1,0 +1,231 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{京都大学後期$2000$年$1$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/2000/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  (1)
+  複素数平面上で複素数$x$を点$X$と表す．
+  \begin{align*}
+    \frac{\beta-z}{\alpha-z} = r(\cos \theta + i \sin\theta) & (r>0, 0 < \theta < 2\pi)
+  \end{align*}
+  とおくと，$\theta$は線分$ZA$から線分$ZB$への角度である．
+  題意より，この虚数部分$r\sin\theta$が正だから，
+  \begin{align*}
+    0 < \theta < \pi
+  \end{align*}
+  だから，$z$の存在する部分は下図斜線部 (境界含まず)である．
+  点$A$から点$B$を見て，向かって左側の領域である．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          xmin=-1, xmax=5,
+          ymin=-1, ymax=5,
+          axis lines=none, % Hide axes for a cleaner look as in the image
+          clip=true,
+        ]
+
+        % Define points alpha and beta
+        \coordinate (alpha) at (3,1);
+        \coordinate (beta) at (1,4);
+
+        % Draw the line connecting alpha and beta, extending beyond them
+        \draw (beta) -- (alpha); % Draw line segment first
+
+        % Extend the line from alpha in the direction of (alpha - beta)
+        % And from beta in the direction of (beta - alpha)
+        \draw ($(alpha)!-2cm!(beta)$) -- ($(beta)!-2cm!(alpha)$); % Extend the line
+
+        % Define points to form a polygon that covers the "left" side
+        % Extend the line in both directions
+        \coordinate (p1) at ($(beta)!-2cm!(alpha)$); % Point on extended line towards top-left
+        \coordinate (p2) at ($(alpha)!-2cm!(beta)$); % Point on extended line towards bottom-right
+
+        \draw[pattern=north west lines, pattern color=lightgray]
+        ($(beta)!-3cm!(alpha)$) -- % Extend from beta towards top-left
+        ($(beta)!-3cm!(alpha) + (-20,0)$) -- % Further left and up
+        ($(alpha)!-3cm!(beta) + (-20,0)$) -- % Further left and down
+        ($(alpha)!-3cm!(beta)$) -- cycle; % Extend from alpha towards bottom-right
+        % This approach creates a parallelogram. We need to define a large polygon.
+
+        % Draw points alpha and beta
+        \fill (alpha) circle (2pt) node[right] {$\alpha$};
+        \fill (beta) circle (2pt) node[right] {$\beta$};
+
+        % Draw the L-shaped arrow
+        % Assuming the origin is roughly in the bottom left of the shaded area in the original image.
+        \draw[->] (0.5, 0.5) -- (0.5, 1.5);
+        \draw[->] (0.5, 0.5) -- (1.5, 0.5);
+        \node[above,fill=white] at (1.5,0.5) {$x$};
+        \node[right,fill=white] at (0.5,1.5) {$y$};
+      \end{axis}
+    \end{tikzpicture}
+    \caption{点$z$の存在する領域は，$\alpha$ から $\beta$ を見て左側}
+  \end{figure}
+
+  \vspace{10pt}
+  (2)
+  本題に入る前に(1)と似た状況として，
+  \begin{align*}
+    \frac{\beta-z}{\alpha-z}
+  \end{align*}
+  の虚部が$0$，すなわち実数の場合を考える．
+  この時，ある実数$r$を用いて
+  \begin{align*}
+     & \beta - z = r(\alpha-z) \\
+  \end{align*}
+  と書けるから，$\alpha,\beta,z$は同一直線上にある．
+
+  さて，以下題意を示す．
+  与式から
+  \begin{align*}
+    \begin{dcases}
+      1 + \frac{z-\gamma}{z-\alpha} + \frac{z-\gamma}{z-\beta} = 0 \\
+      1 + \frac{z-\alpha}{z-\gamma} + \frac{z-\alpha}{z-\beta} = 0 \\
+      1 + \frac{z-\beta}{z-\gamma} + \frac{z-\beta}{z-\alpha}  = 0
+    \end{dcases}
+  \end{align*}
+  であるから，両辺の虚部をとると
+  \begin{align}
+    \begin{dcases}
+      \Im \frac{z-\gamma}{z-\alpha} + \Im \frac{z-\gamma}{z-\beta} = 0 \\
+      \Im \frac{z-\alpha}{z-\gamma} + \Im \frac{z-\alpha}{z-\beta} = 0 \\
+      \Im \frac{z-\beta}{z-\gamma} +  \Im \frac{z-\beta}{z-\alpha}  = 0
+    \end{dcases} \label{2000-1:eq:1}
+  \end{align}
+  を得る．
+  まずこの第一式に注目すると，
+  $\frac{z-\gamma}{z-\alpha}$, $\frac{z-\gamma}{z-\beta}$ の虚部は共に $0$ か, 互いに異符号である．
+  虚部が共に$0$の場合は$\alpha,\beta,\gamma,z$が同一直線上にあって題意に反するから，互いに異符号であることが必要．
+  $\alpha,\beta,\gamma$に関しての対称性から
+  \begin{align}
+    \begin{dcases}
+      \Im \frac{z-\gamma}{z-\alpha} > 0 \\
+      \Im \frac{z-\gamma}{z-\beta} < 0
+    \end{dcases} \label{2000-1:eq:2}
+  \end{align}
+  とおいて良い．
+  ここで，実数でない複素数$x$に対して$1/x$の虚部は符号が逆であることに注意すると，
+  \begin{align*}
+    \Im \frac{z-\beta}{z-\gamma} > 0
+  \end{align*}
+  だから\cref{2000-1:eq:1}より
+  \begin{align}
+    \Im \frac{z-\beta}{z-\alpha} < 0  \label{2000-1:eq:3}
+  \end{align}
+  である．以上\cref{2000-1:eq:2,2000-1:eq:3}から
+  \begin{align*}
+    \Im \frac{z-\gamma}{z-\alpha} > 0 \\
+    \Im \frac{z-\beta}{z-\gamma} > 0  \\
+    \Im \frac{z-\alpha}{z-\beta} > 0
+  \end{align*}
+  となる．
+
+  従って（1）から，$z$の存在する範囲は直線$A\Gamma$，$\Gamma B$，$BA$によって規定される．
+  これは点$\Gamma$がベクトルBAの向かって左手にあるか右手にあるかで異なる．
+  向かって左手にある場合は$z$は三角形ABC内に存在し，向かって右手にある場合はそのような$z$は存在しない．
+  \cref{2000-1:eq:2}で逆の符号を採用した場合は逆の結果になる．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          xmin=-1, xmax=5,
+          ymin=-1, ymax=5,
+          axis lines=none, % Hide axes for a cleaner look as in the image
+          clip=true,
+        ]
+
+        % Define points alpha and beta
+        \coordinate (beta) at (3,1);
+        \coordinate (alpha) at (1,4);
+        \coordinate (gamma) at (0.5,3);
+
+        % Draw the line connecting alpha and beta, extending beyond them
+        \draw (beta) -- (alpha) -- (gamma) -- cycle;
+
+        % Extend the line from alpha in the direction of (alpha - beta)
+        % And from beta in the direction of (beta - alpha)
+        \draw ($(alpha)!-2cm!(beta)$) -- ($(beta)!-2cm!(alpha)$); % Extend the line
+        \draw ($(alpha)!-2cm!(gamma)$) -- ($(gamma)!-2cm!(alpha)$); % Extend the line
+        \draw ($(beta)!-2cm!(gamma)$) -- ($(gamma)!-2cm!(beta)$); % Extend the line
+
+
+        \draw[pattern=north west lines, pattern color=lightgray]
+        (alpha) -- (beta) -- (gamma) -- cycle;
+
+        % Draw points alpha and beta
+        \fill (alpha) circle (2pt) node[right] {$\alpha$};
+        \fill (beta) circle (2pt) node[right] {$\beta$};
+        \fill (gamma) circle (2pt) node[left] {$\gamma$};
+
+        % Draw the L-shaped arrow
+        % Assuming the origin is roughly in the bottom left of the shaded area in the original image.
+        \draw[->] (0.5, 0.5) -- (0.5, 1.5);
+        \draw[->] (0.5, 0.5) -- (1.5, 0.5);
+        \node[above,fill=white] at (1.5,0.5) {$x$};
+        \node[right,fill=white] at (0.5,1.5) {$y$};
+      \end{axis}
+    \end{tikzpicture}
+    \caption{ベクトル$BA$から見て$\Gamma$が左手にある場合は，点$z$は三角形$AB\Gamma$の内部に存在する}
+  \end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          xmin=-1, xmax=5,
+          ymin=-1, ymax=5,
+          axis lines=none, % Hide axes for a cleaner look as in the image
+          clip=true,
+        ]
+
+        % Define points alpha and beta
+        \coordinate (beta) at (3,1);
+        \coordinate (alpha) at (1,4);
+        \coordinate (gamma) at (3.5,3);
+
+        % Draw the line connecting alpha and beta, extending beyond them
+        \draw (beta) -- (alpha) -- (gamma) -- cycle;
+
+        % Extend the line from alpha in the direction of (alpha - beta)
+        % And from beta in the direction of (beta - alpha)
+        \draw ($(alpha)!-2cm!(beta)$) -- ($(beta)!-2cm!(alpha)$); % Extend the line
+        \draw ($(alpha)!-2cm!(gamma)$) -- ($(gamma)!-2cm!(alpha)$); % Extend the line
+        \draw ($(beta)!-2cm!(gamma)$) -- ($(gamma)!-2cm!(beta)$); % Extend the line
+
+        % Draw points alpha and beta
+        \fill (alpha) circle (2pt) node[right] {$\alpha$};
+        \fill (beta) circle (2pt) node[right] {$\beta$};
+        \fill (gamma) circle (2pt) node[left] {$\gamma$};
+
+        % Draw the L-shaped arrow
+        % Assuming the origin is roughly in the bottom left of the shaded area in the original image.
+        \draw[->] (0.5, 0.5) -- (0.5, 1.5);
+        \draw[->] (0.5, 0.5) -- (1.5, 0.5);
+        \node[above,fill=white] at (1.5,0.5) {$x$};
+        \node[right,fill=white] at (0.5,1.5) {$y$};
+      \end{axis}
+    \end{tikzpicture}
+    \caption{ベクトル$BA$から見て$\Gamma$が右手にある場合は，そのような点$z$は存在しない．}
+  \end{figure}
+
+
+
+  以上から，確かに複素数$z$が存在して題意の方程式を満たす時，$z$は三角形$AB\Gamma$の内部にある．
+  よって示された．$\cdots$(答)
+
+  \vspace{10pt}
+  {\bf[解説]}
+
+  \newpage
+\end{multicols}
+\end{document}

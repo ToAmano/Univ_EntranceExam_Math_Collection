@@ -1,0 +1,216 @@
+---
+university: "todai"
+category: "kouki"
+year: "2002"
+question: "2"
+type: "solution"
+title: "TODAI 2002 kouki Q2 (solution)"
+---
+
+## 【解】
+
+### (1)
+
+  三角形の面積公式を用いる．三角形$P_1P_2P_3$をなすベクトルは
+  
+$$
+\begin{align*}
+\vec{\text{P}_1\text{P}_2} = \mqty( a  \\ a-b \\ b ) \\\vec{\text{P}_1\text{P}_3} = \mqty(b-a \\ -b \\ a)
+\end{align*}
+$$
+
+  だから，これらの内積は
+  
+$$
+\begin{align*}
+\vec{\text{P}_1\text{P}_2}\cdot\vec{\text{P}_1\text{P}_3}& = (a)(b-a) - (a-b)(b) + ab \\& = (b-a)^2 + ab
+\end{align*}
+$$
+
+  であり，三角形$P_1P_2P_3$の面積は
+  
+$$
+\begin{align*}
+\triangle\text{P}_1\text{P}_2\text{P}_3
+     & = \frac{1}{2}\sqrt{|\vec{\text{P}_1\text{P}_2}|^2 |\vec{\text{P}_1\text{P}_3}|^2 - (\vec{\text{P}_1\text{P}_2} \cdot \vec{\text{P}_1\text{P}_3})^2}\\& = \frac{1}{2}\sqrt{\left(a^2+b^2+(b-a)^2\right)^2 - \left(ab+(b-a)^2\right)}\\& = \frac{1}{2}\sqrt{3(a^2+b^2-ab)^2}\\& = \frac{\sqrt{3}}{2}\left(a^2+b^2-ab\right)\\
+\end{align*}
+$$
+
+  である．ただし，$a,b>0$より$a^2+b^2-ab=(a-b)^2+ab\ge 0$であることを用いた．
+
+  次に，平面$P_1P_2P_3$の法線ベクトルの一つに
+  
+$$
+\begin{align*}
+\vec{n} = \mqty(1 \\ 1 \\ 1 )
+\end{align*}
+$$
+
+  があるから，O からこの平面への垂線 H として，正射影ベクトルを考えると
+  
+$$
+\begin{align*}
+|\vec{\text{OH}}|
+     & = \frac{|\vec{\text{OP}_1} \cdot \vec{n}|}{|\vec{n}|}\\& = \frac{|a+b|}{\sqrt{3}}\\& = \frac{a+b}{\sqrt{3}}
+\end{align*}
+$$
+
+  である．ただし最終行で$a,b>0$より絶対値を外した．
+
+  以上まとめて
+  
+$$
+\begin{align*}
+\triangle\text{P}_1\text{P}_2\text{P}_3 & = \frac{\sqrt{3}}{2}\left(a^2+b^2-ab\right)\\
+    |\vec{\text{OH}}|                        & = \frac{a+b}{\sqrt{3}}
+\end{align*}
+$$
+
+  である．$\cdots$(答)
+
+### (2)
+
+  まず四面体$OP_1P_2P_3$については(1)から，
+  
+$$
+\begin{align*}
+(\text{四面体}\text{OP}_1\text{P}_2\text{P}_3)
+     & = \frac{1}{3} |\vec{\text{OH}}| \cdot\triangle\text{P}_1\text{P}_2\text{P}_3 \\& = \frac{1}{6}\left(a+b\right)\left(a^2-ab+b^2\right)
+\end{align*}
+$$
+
+  である．
+
+  一方四面体$OP_1S_2P_2$は，三角形$OP_2S_2$が$yz$平面にあってこの面積が$ab$であり，
+  三角形$OP_2S_2$を底面と見るなら$P_1$への高さは$a$だから，
+  
+$$
+\begin{align*}
+(\text{四面体}\text{OP}_1\text{P}_2\text{S}_2)
+     & = \frac{1}{3}\cdot(\text{面積 }\triangle\text{OP}_1\text{P}_2) \cdot a \\& = \frac{1}{3}\cdot ab \cdot a                                           \\& = \frac{1}{3} a^2b
+\end{align*}
+$$
+
+  である．
+
+  以上まとめて
+  
+$$
+\begin{align*}
+(\text{四面体}\text{OP}_1\text{P}_2\text{P}_3) & =\frac{1}{6}(a+b)\left(a^2-ab+b^2\right)\\(\text{四面体}\text{OP}_1\text{P}_2\text{S}_2) & = \frac{1}{3} a^2b
+\end{align*}
+$$
+
+  である．$\cdots$(答)
+
+### (3)
+
+  題意のように三角形を作る時，$\triangle \text{P}_1\text{P}_2\text{P}_3$ と合同な三角形が $8$ 個，
+  $\triangle \text{P}_1\text{P}_2\text{S}_2$ に合同な三角形が $12$ 個出来るから，
+  立体$D$の体積$V$は，四面体$\text{O}\text{P}_1\text{P}_2\text{P}_3$の体積$8$個と四面体$\text{O}\text{P}_1\text{P}_2\text{S}_2$の体積$12$個分に等しい．
+  従って（2）の結果から
+  
+$$
+\begin{align*}
+V & = 8(\text{四面体}\text{OP}_1\text{P}_2\text{P}_3) + 12(\text{四面体}\text{OP}_1\text{P}_2\text{S}_2) \\& = \frac{4}{3}(a+b)(a^2-b^2) + 4a^2b
+\end{align*}
+$$
+
+  である．ここに$a=\cos\theta,b=\sin\theta$を代入して，$t=\tan \theta$ とすると，
+  
+$$
+\begin{align*}
+V & = \frac{4}{3} a^3 (1+t)(t^2-t+1) + 4a^3t \\& = \frac{4}{3} a^3 \left(t^3+3t+1\right)
+\end{align*}
+$$
+
+  である．ここで$a>0$より
+  
+$$
+\begin{align*}
+a = \cos\theta = \frac{1}{1+t^2}
+\end{align*}
+$$
+
+  を代入して
+  
+$$
+\begin{align*}
+V
+     & = \frac{4}{3}\frac{(t^3+3t+1)}{(1+t^2)\sqrt{1+t^2}}
+\end{align*}
+$$
+
+  が求める体積である．$\cdots$(答)
+
+### (4)
+
+  $V$を$f(t)$とおき，増減表を書くことで最大値を求める．
+  
+$$
+\begin{align*}
+& f(t) = \frac{t^3+3t+1}{(1+t^2)^{3/2}}& (0<t<1)
+\end{align*}
+$$
+
+  $f(t)>0$ だからから自然対数をとって，
+  
+$$
+\begin{align*}
+\log f(t) & = \log(t^3+3t+1) - \frac{3}{2}\log(t^2+1) \\
+\end{align*}
+$$
+
+  である．両辺を$t$で微分して
+  
+$$
+\begin{align*}
+\frac{f'(t)}{f(t)}& = \frac{3t^2+3}{t^3+3t+1} - \frac{3}{2}\frac{2t}{t^2+1}\\& = \frac{3(t^2+1)}{t^3+3t+1} - \frac{3t}{t^2+1}\\& = 3\frac{(t^2+1)^2 - t(t^3+3t+1)}{(t^3+3t+1)(t^2+1)}\\& = 3\frac{(t^4+2t^2+1) - (t^4+3t^2+t)}{(t^3+3t+1)(t^2+1)}\\& = 3\frac{-t^2-t+1}{(t^3+3t+1)(t^2+1)}\\
+\end{align*}
+$$
+
+  だから，$f'(t)=0$となる時，この分子が$0$で
+  
+$$
+\begin{align*}
+t^2+t-1=0 \iff t=\frac{-1\pm\sqrt{5}}{2}
+\end{align*}
+$$
+
+  となる．
+  従って$f(t)$の増減表は$\eqref{2002-2:table:1}$となる．
+
+  \begin{table}[H]
+    \centering
+    \caption{$f(t)$の増減表．}
+    \label{2002-2:table:1}
+    
+
+| $t$ | $0$ | $\cdots$ | $\frac{-1+\sqrt{5}}{2}$ | $\cdots$ | $1$ |
+|:----:|:---:|:----------:|:-----------------------:|:----------:|:---:|
+| $f'$ | | $+$ | $0$ | $-$ | |
+| $f$ | | $\nearrow$ | | $\searrow$ | |
+
+  \end{table}
+  したがって，$t=\frac{-1+\sqrt{5}}{2}$ の時$V$は最大値をとる．$\cdots$(答)
+  
+
+  
+
+## 【解説】
+
+  $t=\frac{-1+\sqrt{5}}{2}$の時，立体$D$は正二十面体になる．
+  正二十面体は黄金比$\psi=\frac{1+\sqrt{5}}{2}$を用いて，
+  \begin{itemize}
+    \item $xy$ 平面上の $(\pm 1, \pm \psi, 0)$ \\
+    \item $yz$ 平面上の $(0, \pm 1, \pm \psi)$ \\
+    \item $xz$ 平面上の $(\pm \psi, 0, \pm 1)$
+  \end{itemize}
+  に頂点を置いたものである．
+
+  
+
+<figure id="2002-2:fig:1">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/todai/kouki/2002/2/fig_1.svg" alt="図 1" />
+  <figcaption>図 1: 正二十面体を$xy$平面から投影してみた様子．</figcaption>
+</figure>

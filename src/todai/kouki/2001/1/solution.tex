@@ -1,0 +1,364 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{東京大学後期$2001$年$1$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/2001/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+    表現の簡潔さのため
+    \begin{align*}
+         & f(n) = \sum_{k=2}^{n}\frac{k}{\sqrt{k^2-1}}         \\
+         & g(x) = \frac{x}{\sqrt{x^2-1}}               & (x>1)
+    \end{align*}
+    とおくと，
+    \begin{align}
+        f(n) = \sum_{k=2}^{n} g(k) \label{2001-1:eq:2}
+    \end{align}
+    である．さらに
+    \begin{align*}
+        A(n) = n-f(n)
+    \end{align*}
+    とおく．
+    $A(n)$の評価をすることで，題意の不等式が成り立つ$i$を求める．
+
+    まず$y=g(x)$のグラフの概形を調べる．
+    一階，二階微分は
+    \begin{align*}
+        g'(x)
+         & = -1(x^2-1)^{-3/2} < 0 \\
+        g''(x)
+         & =3x(x^2-1)^{-5/2} > 0
+    \end{align*}
+    だから，$g(x)$は下に凸で，
+    \begin{align*}
+         & \lim_{x\to 1} g(x) \to \infty \\
+         & \lim_{x\to \infty} g(x) \to 1
+    \end{align*}
+    だから，$y=g(x)$のグラフは\cref{2001-1:fig:1}のようになる．
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    xmin=0, xmax=12,
+                    ymin=0, ymax=3,
+                    axis lines=middle,
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xtick={1},
+                    ytick={1},
+                    grid=none,
+                    domain=1.2:10,
+                    samples=200,
+                    no markers,
+                    clip=false,
+                ]
+
+                % Draw the function y=x/sqrt(x^2-1)
+                \addplot[thick, smooth, blue] {x/sqrt(x^2-1)} node[above, pos=0.5, yshift=5mm, black] {$y=\frac{x}{\sqrt{x^2-1}}$};
+
+                % Draw the vertical line at x=1
+                \draw[dashed, red] (axis cs:1, 0) -- (axis cs:1, 3);
+
+                % Draw the horizontal line at y=1
+                \draw[dashed, red] (axis cs:0, 1) -- (axis cs:5, 1);
+
+                % Add a label for the origin
+                \node[below left] at (axis cs:0, 0) {$O$};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$y=g(x)$のグラフの概形．}
+        \label{2001-1:fig:1}
+    \end{figure}
+
+
+    面積を比較するため，
+    \begin{align}
+        S_n = \int_{3}^{n}g(x) dx \label{2001-1:eq:3}
+    \end{align}
+    とおくと，\cref{2001-1:eq:2}に注意して$S_n,f(n)$の示す面積は\cref{2001-1:fig:2}の斜線部である．
+    以下$n \ge 3$として考える．
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    xmin=0, xmax=60,
+                    ymin=0, ymax=2.0,
+                    axis lines=middle,
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xtick={1,3,50},
+                    xticklabels={1,3,$n$},
+                    ytick={1},
+                    grid=none,
+                    samples=500,
+                    no markers,
+                    clip=false,
+                ]
+
+                % Draw the function y=x/sqrt(x^2-1)
+                \addplot[thick, smooth, blue,domain=2.5:60,samples=500] {1+1/(x-1)} node[above, pos=0.5, yshift=5mm, black] {$y=\frac{x}{\sqrt{x^2-1}}$};
+                \addplot[draw=none, domain=3:50, name path=A] {1+1/(x-1)} ;
+                \addplot[draw=none, domain=3:50, name path=line]{0};
+                % Draw the vertical line at x=1
+                \draw[dashed, red] (axis cs:1, 0) -- (axis cs:1, 2);
+                % Draw the horizontal line at y=1
+                \draw[dashed, red] (axis cs:0, 1) -- (axis cs:50, 1);
+                % Add a label for the origin
+                \node[below left] at (axis cs:0, 0) {$O$};
+                \draw[dashed, red] (axis cs:50, 0) -- (axis cs:50, 1);
+
+                \addplot[fill=gray, opacity=0.6] fill between [of=A and line];
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$S_n$の面積を図示したもの．}
+        \label{2001-1:fig:2}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \pgfmathsetmacro\maxx{15}
+        \pgfmathsetmacro\maxn{10}
+        \begin{tikzpicture}
+            \begin{axis}[
+                    xmin=0, xmax=15,
+                    ymin=0, ymax=15.0,
+                    axis lines=middle,
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xtick={1,3,\maxn},
+                    xticklabels={1,3,$n$},
+                    ytick={1},
+                    grid=none,
+                    samples=500,
+                    no markers,
+                    clip=false,
+                ]
+
+                % Draw the function y=x/sqrt(x^2-1)
+                \addplot[thick, smooth, blue,domain=1.9:\maxx,samples=500] {1+1/(0.1*(x-1))} node[above, pos=0.5, yshift=5mm, black] {$y=\frac{x}{\sqrt{x^2-1}}$};
+                \addplot[draw=none, domain=3:\maxn, name path=A] {1+1/(0.1*(x-1))} ;
+                \addplot[draw=none, domain=3:\maxn, name path=line]{0};
+                % Draw the vertical line at x=1
+                \draw[dashed, red] (axis cs:1, 0) -- (axis cs:1, 2);
+                % Draw the horizontal line at y=1
+                \draw[dashed, red] (axis cs:0, 1) -- (axis cs:\maxn, 1);
+                % Add a label for the origin
+                \node[below left] at (axis cs:0, 0) {$O$};
+                \draw[dashed, red] (axis cs:\maxn, 0) -- (axis cs:\maxn, 1);
+
+                \addplot[fill=gray, opacity=0.3] fill between [of=A and line];
+
+                \draw [pattern=north east lines] (2-1,0) rectangle (2,{1+1/(0.1*(2-1))});
+                \draw [pattern=north east lines] (3-1,0) rectangle (3,{1+1/(0.1*(3-1))});
+                \draw [pattern=north east lines] (4-1,0) rectangle (4,{1+1/(0.1*(4-1))});
+
+                \draw [pattern=north east lines] (\maxn-2-1,0) rectangle (\maxn-2,{1+1/(0.1*(8-1))});
+                \draw [pattern=north east lines] (\maxn-1-1,0) rectangle (\maxn-1,{1+1/(0.1*(9-1))});
+                \draw [pattern=north east lines] (\maxn-1,0) rectangle   (\maxn,{1+1/(0.1*(10-1))});
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$f_n$の上からの評価．斜線部の面積が$f_n$を表し，グレーアウトの部分が$S_n$を表す．}
+        \label{2001-1:fig:3}
+    \end{figure}
+
+    従って，まず\cref{2001-1:fig:3}から，$f(n)$を上から評価すると
+    \begin{align}
+        f(n) < S_n + g(2) + g(3) \label{2001-1:eq:4}
+    \end{align}
+    である．
+
+    \begin{figure}[H]
+        \centering
+        \pgfmathsetmacro\maxx{15}
+        \pgfmathsetmacro\maxn{10}
+        \begin{tikzpicture}
+            \begin{axis}[
+                    xmin=0, xmax=15,
+                    ymin=0, ymax=15.0,
+                    axis lines=middle,
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xtick={1,2,3,\maxn},
+                    xticklabels={1,2,3,$n$},
+                    ytick={1},
+                    grid=none,
+                    samples=500,
+                    no markers,
+                    clip=false,
+                ]
+
+                % Draw the function y=x/sqrt(x^2-1)
+                \addplot[thick, smooth, blue,domain=1.9:\maxx,samples=500] {1+1/(0.1*(x-1))} node[above, pos=0.5, yshift=10mm, black] {$y=\frac{x}{\sqrt{x^2-1}}$};
+                \addplot[draw=none, domain=3:\maxn, name path=A] {1+1/(0.1*(x-1))} ;
+                \addplot[draw=none, domain=3:\maxn, name path=line]{0};
+                % Draw the vertical line at x=1
+                \draw[dashed, red] (axis cs:1, 0) -- (axis cs:1, 2);
+                % Draw the horizontal line at y=1
+                \draw[dashed, red] (axis cs:0, 1) -- (axis cs:\maxn, 1);
+                % Add a label for the origin
+                \node[below left] at (axis cs:0, 0) {$O$};
+                \draw[dashed, red] (axis cs:\maxn, 0) -- (axis cs:\maxn, 1);
+
+                \addplot[fill=gray, opacity=0.3] fill between [of=A and line];
+
+                \draw [pattern=north east lines,opacity=0.5] (2,0) rectangle (2+1,{1+1/(0.1*(2-1))});
+                \draw [fill=gray, opacity=0.3] (2,{1+1/(0.1*(2-1))}) -- (3,{1+1/(0.1*(2-1))}) -- (3,{1+1/(0.1*(3-1))}) -- cycle;
+                \draw [pattern=north east lines,opacity=0.5] (3,0) rectangle (3+1,{1+1/(0.1*(3-1))});
+                \draw [fill=gray, opacity=0.3] (3,{1+1/(0.1*(3-1))}) -- (4,{1+1/(0.1*(3-1))}) -- (4,{1+1/(0.1*(4-1))}) -- cycle;
+                \draw [pattern=north east lines,opacity=0.5] (4,0) rectangle (4+1,{1+1/(0.1*(4-1))});
+                \draw [fill=gray, opacity=0.3] (4,{1+1/(0.1*(4-1))}) -- (5,{1+1/(0.1*(4-1))}) -- (5,{1+1/(0.1*(5-1))}) -- cycle;
+
+
+                \draw [pattern=north east lines,opacity=0.5] (\maxn-2,0) rectangle (\maxn-1,{1+1/(0.1*(8-1))});
+                \draw [pattern=north east lines,opacity=0.5] (\maxn-1,0) rectangle (\maxn,{1+1/(0.1*(9-1))});
+                \draw [pattern=north east lines,opacity=0.5] (\maxn,0)   rectangle (\maxn+1,{1+1/(0.1*(10-1))});
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$f_n$の下からの評価．斜線部の面積が$f_n$を表し，グレーアウトの部分が$S_n$を表す．厳しく評価をするため，$f_n$の上の三角形部分も評価に含める．}
+        \label{2001-1:fig:4}
+    \end{figure}
+
+    次に\cref{2001-1:fig:4}で$y \ge g(x)$の三角形部分の面積が
+    \begin{align*}
+         & \frac{g(3)-g(4)}{2} + \frac{g(4)-g(5)}{2} + \cdots + \frac{g(n-1)-g(n)}{2} \\
+         & = \frac{g(3)-g(n)}{2}
+    \end{align*}
+    だから，
+    \begin{align}
+         & S_n + g(2) + g(n) + \frac{g(3)-g(n)}{2} < f(n)                           \\
+         & S_n + g(2) + \frac{g(3)}{2} + \frac{g(n)}{2} < f(n)  \label{2001-1:eq:5}
+    \end{align}
+    である．
+
+    以上\cref{2001-1:eq:4,2001-1:eq:5}をまとめて
+    \begin{align*}
+        S_n + g(2) + \frac{g(3)}{2} + \frac{g(n)}{2} < f(n) < S_n + g(2) + g(3)
+    \end{align*}
+    である．よって$A(n) = n-f(n)$より
+    \begin{align*}
+        n-S_n - \left(g(2) + g(3)\right) < A(n) < n - S_n - \frac{g(n)}{2} - \left(g(2) + \frac{g(3)}{2}\right)
+    \end{align*}
+    である．以下これを評価する．
+    まず$S_n$は
+    \begin{align*}
+        S_n = [\sqrt{x^2-1}]_3^{n} = \sqrt{n^2-1} - 2\sqrt{2}
+    \end{align*}
+    だから，
+    \begin{align}
+        n-\sqrt{n^2-1} + \left(2\sqrt{2}-g(2)-g(3)\right) < A(n) < n - \sqrt{n^2-1} - \frac{n}{2\sqrt{n^2-1}} + \left(2\sqrt{2}-g(2)-\frac{g(3)}{2}\right) \label{2001-1:eq:6}
+    \end{align}
+    となる．
+
+    ここで新しく
+    \begin{align*}
+        h(x) = x -\sqrt{x^2-1}
+    \end{align*}
+    とおくと，
+    \begin{align*}
+        h(x) = \frac{1}{x+\sqrt{x^2-1}}
+    \end{align*}
+    より$2 \le x$では$h(x)$は単調減少である．
+    そこで$n\to\infty$での\cref{2001-1:eq:6}の両辺の振る舞いを考えると，
+    \begin{align*}
+        \lim_{n\to\infty}\left[n-\sqrt{n^2-1}\right]
+         & = \lim_{n\to\infty} \frac{1}{n+\sqrt{n^2-1}} \\
+         & = 0                                          \\
+        \lim_{n\to\infty}\left[n - \sqrt{n^2-1} - \frac{n}{2\sqrt{n^2-1}}\right]
+         & = \frac{-1}{2}
+    \end{align*}
+    だから，
+
+    \begin{align*}
+        \left(2\sqrt{2}-g(2)-g(3)\right) < \lim_{n\to\infty}A(n) < \frac{-1}{2}+ \left(2\sqrt{2}-g(2)-\frac{1}{2}g(3)\right)
+    \end{align*}
+    である．ここに
+    \begin{align*}
+        g(2) & = \frac{2\sqrt{3}}{3} \\
+        g(3) & = \frac{3\sqrt{2}}{4}
+    \end{align*}
+    を代入して
+    \begin{align*}
+        \frac{5\sqrt{2}}{4} - \frac{2\sqrt{3}}{3} < \lim_{n\to\infty}A(n) < \frac{-1}{2} + \frac{13\sqrt{2}}{8} - \frac{2\sqrt{3}}{3}
+    \end{align*}
+    である．
+    \begin{align*}
+        \sqrt{2} & = 1.414... \\
+        \sqrt{3} & = 1.732...
+    \end{align*}
+    だから，
+    \begin{align*}
+        \frac{5\sqrt{2}}{4} - \frac{2\sqrt{3}}{3}
+         & >  \frac{5\cdot 1.414}{4} - \frac{2\cdot 1.733}{3} \\
+         & = 0.612...
+    \end{align*}
+    および
+    \begin{align*}
+        \frac{-1}{2} + \frac{13\sqrt{2}}{8} - \frac{2\sqrt{3}}{3}
+         & < \frac{-1}{2} + \frac{13\cdot 1.415}{8} - \frac{2\cdot 1.732}{3} \\
+         & = 0.644...
+    \end{align*}
+    だから，
+    \begin{align*}
+        0.612 < \lim_{n\to\infty}A(n) < 0.645
+    \end{align*}
+    である．
+
+    従って，任意の自然数$n$で$A_n \ge i/10$を満たすためには，
+    \begin{align*}
+        i\le 6
+    \end{align*}
+    が必要．
+
+    また，$h(x)$の単調減少性から，
+    \begin{align*}
+        A(n)
+         & > h(n) + \left(2\sqrt{2}-g(2)-g(3)\right)                  \\
+         & > \lim_{n\to\infty}h(n) + \left(2\sqrt{2}-g(2)-g(3)\right) \\
+         & = \left(2\sqrt{2}-g(2)-g(3)\right)                         \\
+         & > 0.612...
+    \end{align*}
+    だから，$i\le 6$であれば常に$A(n) \ge i/10$を満たし十分である．
+    以上から求める最大の$i$は
+    \begin{align*}
+        i=6
+    \end{align*}
+    である．$\cdots$(答)
+
+    \vspace{10pt}
+    {\bf[解説]}
+
+    \newpage
+\end{multicols}
+\end{document}

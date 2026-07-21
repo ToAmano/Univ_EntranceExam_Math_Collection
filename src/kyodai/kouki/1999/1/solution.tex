@@ -1,0 +1,198 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{京都大学後期$1999$年$1$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/1999/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+
+    表現の簡潔さのため
+    \begin{align*}
+        f(x)     & = x|x+2|  \\
+        f_{+}(x) & = x(x+2)  \\
+        f_{-}(x) & = -x(x+2)
+    \end{align*}
+    とおくと，$y=f(x)$ のグラフは\cref{1999-1:fig:1}のようになる.
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,
+                    xmin=-4, xmax=2,
+                    ymin=-3, ymax=3,
+                    xlabel=$x$, ylabel=$y$,
+                    xtick={-2},
+                    ytick={\empty},
+                    xticklabels={$−2$},
+                    extra x ticks={-2.5,-1.5},
+                    extra x tick labels={$\alpha$,$\beta$},
+                    samples=100,
+                ]
+
+                \addplot [dashed, domain=-4:2] {x*(x+2)};
+                \addplot [dashed, domain=-4:2] {-x*(x+2)};
+
+                \addplot [thick, domain=-3:-2,name path=A] {-x*(x+2)};
+                \addplot [thick, domain=-2:0,name path=B] {x*(x+2)};
+                \addplot [thick, domain=0:2,name path=C] {x*(x+2)};
+
+                \addplot [thick, domain=-4:2, name path=line] {x/2};
+                \addplot [dashed, domain=-4:2] {2*x};
+
+                % \addplot [pattern=north west lines, domain=0:1] {x/2} |- (axis cs:0,0);
+                % \addplot [pattern=north west lines, domain=-2.5:-2] {x*(x+2)} |- (axis cs:-2,0);
+                % \addplot [pattern=north west lines, domain=-2:-1] {-x*(x+2)} |- (axis cs:-2,0);
+
+                % fill between
+                \addplot [pattern=north west lines] fill between [of=line and B, soft clip={domain=-1.5:0}];
+                \addplot [pattern=north west lines] fill between [of=line and A, soft clip={domain=-2.5:-2}];
+                \addplot [pattern=north west lines] fill between [of=line and B, soft clip={domain=-2:-1.5}];
+
+
+                \node at (axis cs:-1,1.2) {$y=f_{-}(x)$};
+                \node at (axis cs:-2,2) {$y=f_{+}(x)$};
+                \node at (axis cs:1.2,1.2) {$y=f(x)$};
+
+
+                % https://tex.stackexchange.com/questions/104062/label-a-single-coordinate-pgfplots
+                \addplot[mark=none] coordinates {(-1,-0.8)} node[pin=-70:{$S_1$}]{} ;
+                \addplot[mark=none] coordinates {(-2,-0.8)} node[pin=-70:{$S_2$}]{} ;
+
+
+                \fill (axis cs:0,0) circle (1.5pt);
+                \fill (axis cs:-5/2,-5/4) circle (1.5pt); % alpha=-5/2
+                \fill (axis cs:-3/2,-3/4) circle (1.5pt); % beta=-3/2
+
+                \draw[dashed] (-5/2,0) -- (-5/2,-5/4);
+                \draw[dashed] (-3/2,0) -- (-3/2,-3/4);
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$y=f(x)$と題意の領域$S_1,S_2$の様子．}
+        \label{1999-1:fig:1}
+    \end{figure}
+
+    $y=f(x)$ と3点で交わり,かつ原点を通る直線は\cref{1999-1:fig:1}から明らかに$y$軸平行でないから,
+    \begin{align*}
+        y=g(x) = mx
+    \end{align*}
+    とおける.
+    $y=f(x)$と$y=g(x)$は原点$(0,0)$でまじわっているから，残りの二点の$x$座標を$\alpha,\beta\, (\alpha<\beta)$とおく．
+    図から，これらの交点は
+    \begin{align*}
+        \alpha < -2 \\
+        -2 < \beta < 0
+    \end{align*}
+    を満たすから，それぞれ
+    \begin{align*}
+         & f_{-}(x) = mx \\
+         & f_{+}(x) = mx
+    \end{align*}
+    の解であり，
+    \begin{align}
+        \begin{dcases}
+            \alpha & = -2 -m \\
+            \beta  & = -2 +m
+        \end{dcases} \label{1999-1:eq:4}
+    \end{align}
+    である．
+
+    また，$m$ の条件は，$y=f_{+}(x)$ での $x=0$ での傾きが$2$だから
+    \begin{align}
+        0   < m < 2 \label{1999-1:eq:5}
+    \end{align}
+    である．
+
+    以上の条件を元に，$S_1$および$S_2$を求める．
+    まず$S_1$は$y=g(x)$と$y=f_{+}(x)$の囲む面積であり，$1/6$公式から
+    \begin{align}
+        S_1
+         & = \int_{\beta}{0} \left(mx - f_{+}(x)\right) dx \\
+         & = \frac{1}{6}(-\beta)^3\label{1999-1:eq:1}
+    \end{align}
+    となる．
+
+    次に$S_2$は，
+    $y=g(x)$と$y=f_{-}(x)$の囲む面積$S_3$，
+    $y=g(x)$と$y=f_{+}(x)$の囲む面積$S_1$，
+    $y=0$と$y=f_{-}(x)$の囲む面積$S_4$
+    を用いて図形的に
+    \begin{align}
+        S_2 & = S_3+S_1 - 2S_4 \label{1999-1:eq:2}
+    \end{align}
+    と書ける．$S_3,S_4$も$1/6$公式により
+    \begin{align*}
+        S_3
+         & = \int_{\alpha}{0} \left(f_{-}-mx \right) dx \\
+         & = \frac{1}{6}(-\alpha)^3                     \\
+        S_4
+         & = \int_{-2}{0} f_{-} dx                      \\
+         & = \frac{1}{6}(2)^3                           \\
+         & = \frac{4}{3}
+    \end{align*}
+    だから，\cref{1999-1:eq:2}に代入して
+    \begin{align}
+        S_2 = \frac{1}{6}(-\alpha)^3 + S_1 -\frac{8}{3} \label{1999-1:eq:3}
+    \end{align}
+    である．
+
+    題意の通り$S_1 : S_2 = 9:8$となるとき，$S_1 : S_2 - S_1 = 9:-1$ より，
+    \cref{1999-1:eq:1,1999-1:eq:3}を代入して
+    \begin{align*}
+         & \frac{1}{6}(-\beta)^3 : \left( \frac{1}{6}(-\alpha)^3 - \frac{8}{3} \right)  = 9:-1 \\
+        \therefore
+         & -(-\beta)^3 = 9\left\{ (-\alpha)^3 - 16 \right\}                                    \\
+         & \beta^3  = -9(\alpha^3 + 16)
+    \end{align*}
+    となる．
+    \cref{1999-1:eq:4}を代入して
+    \begin{align*}
+         & (m-2)^3                  = -9\{ -(m+2)^3 + 16 \}             \\
+         & m^3 - 6m^2 + 12m - 8     = -9[ -(m^3 + 6m^2 + 12m + 8) + 16] \\
+         & m^3 - 6m^2 + 12m - 8     = 9m^3 + 54m^2 + 108m - 72          \\
+         & 2m^3 + 15m^2 + 24m - 16  = 0                                 \\
+         & (m+4)^2 (2m-1)           = 0                                 \\
+         & m = -4, \frac{1}{2}
+    \end{align*}
+    となる．
+    このうち\cref{1999-1:eq:5}の条件を満たすのは
+    \begin{align*}
+        m=\frac{1}{2}
+    \end{align*}
+    である．$\cdots$(答)
+
+    \vspace{10pt}
+    {\bf[解説]}
+    % TODO :: S1-S4を表すグラフを追加したい
+
+    \newpage
+\end{multicols}
+\end{document}

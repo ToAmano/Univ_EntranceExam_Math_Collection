@@ -1,0 +1,157 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{京都大学後期$1999$年$6$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/1999/6/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+
+    (1)
+    $f(x)$の原始関数$F(x)$とすると，与えられた方程式は
+    \begin{align*}
+        \frac{F(b)-F(a)}{b-a} = F'(c)
+    \end{align*}
+    であるが，これは平均値の定理そのものである．よって示された．$\cdots$(答)
+
+    \vspace{10pt}
+    (2)
+    \begin{align}
+         & f(x) = \sin x & 0 \le x \le \frac{\pi}{2} \label{1999-6:eq:1}
+    \end{align}
+    とおき，$f(x)$ の逆関数 $g(x)$ とおく．
+    \begin{align*}
+        x=g(y) \iff y=f(x) \quad \dots \text{①}
+    \end{align*}
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle, % 軸を中央に配置
+                    xlabel=$x$, % x軸のラベル
+                    ylabel=$y$, % y軸のラベル
+                    xmin=-2.07,
+                    xmax=2.07,
+                    ymin=-0.2, % y軸の最小値
+                    ymax=1.5, % y軸の最大値
+                    xtick={-1.57,0,1.57},
+                    xticklabels={$-\pi/2$, $0$, $\pi/2$}, % x軸の目盛りラベル
+                    ytick={1}, % y軸の目盛り
+                    yticklabels={$1$}, % y軸の目盛りラベル
+                    % domain=-\pgfmathparse{pi/2}\pgfmathprintnumber{\pgfmathresult}:\pgfmathparse{pi/2}\pgfmathprintnumber{\pgfmathresult}, % プロット範囲
+                    samples=100, % サンプル数
+                    enlargelimits=false, % 軸の限界を拡張しない
+                    clip=false, % プロットエリア外の描画を許可
+                    axis on top % 軸をプロットの上に表示
+                ]
+                % y=sin(x) のプロット
+                \addplot [blue, thick, smooth, domain=0:1.57 ] {sin(deg(x))};
+                \node [font=\small] at (axis cs: 0.8, 1.2) {$y=f(x)$};
+
+                % y=-sin(x) のプロット (画像にはないが、元の数学問題の文脈を考慮して追加)
+                \addplot [blue, thick, smooth, domain=-1.57:0 ] {-sin(deg(x))};
+                \node [font=\small] at (axis cs: -0.8, 1.2) {$y=-f(x)$};
+
+                % Y_n の位置を示す破線とラベル
+                % Y_n の実際の値は図から読み取れないため、視覚的に近い位置に配置
+                \draw [dashed] (axis cs: 1.57, 0) -- (axis cs: 1.57, 1) -- (axis cs: -1.57, 1) -- (axis cs: -1.57, 0);
+                \draw [dashed] (axis cs: -1.57, 0.8) -- (axis cs: 1.57, 0.8);
+
+                \node [left, font=\small] at (axis cs: 0, 0.8) {$Y_n$};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{回転させる図形の様子}
+        \label{1999-6:fig:1}
+    \end{figure}
+
+    題意の立体の体積 $V$ は
+    \begin{align}
+        V = \pi \int_{0}^{1} \{g(y)\}^2 dy \label{1999-6:eq:2}
+    \end{align}
+    と書ける．$x=g(y)$とおくと
+    \begin{align}
+        \int_{0}^{1} \{g(y)\}^2 dy
+         & = \int_{0}^{\pi/2} x^2 \frac{dy}{dx} dx                              \\
+         & = \int_{0}^{\pi/2} x^2 f'(x) dx \quad (\because x=f(y))              \\
+         & = \int_{0}^{\pi/2} x^2 \cos x dx \quad (\because \cref{1999-6:eq:2}) \\
+         & = \left[ x^2 \sin x + 2x \cos x - 2\sin x \right]_{0}^{\pi/2}        \\
+         & = \frac{\pi^2}{4} - 2
+    \end{align}
+    となるから，\cref{1999-6:eq:2}に代入して
+    \begin{align}
+        V = \pi \left(\frac{\pi^2}{4} - 2\right) \label{1999-6:eq:3}
+    \end{align}
+    である．
+
+    次に体積$V$を$n$等分する点$y_n$について
+    \begin{align}
+        \frac{V}{n} = \pi \int_{y_n}^{1} \{g(x)\}^2 dx \label{1999-6:eq:4}
+    \end{align}
+    が成立する．
+    ここで(1)から
+    \begin{align*}
+        (1-y_n) \cdot \{g(c)\}^2 = \int_{y_n}^{1} \{g(x)\}^2 dx \quad (y_n < c < 1)
+    \end{align*}
+    をみたす $c$ が存在する．
+    \cref{1999-6:eq:4}に代入して
+    \begin{align}
+        \frac{V}{n} = \pi (1-y_n) \{g(c)\}^2 \label{1999-6:eq:5}
+    \end{align}
+    である．
+    ここで，$n \to \infty$ の時 $y_n \to 1$．だから，はさみうちから $c \to 1$，つまり
+    \begin{align*}
+        \lim_{n\to\infty} \{g(c)\}^2
+         & = \left\{g(1) \right\}^2       \\
+         & = \left(\frac{\pi}{2}\right)^2
+    \end{align*}
+    である．したがって，\cref{1999-6:eq:3,1999-6:eq:5}より
+    \begin{align*}
+        n(1-y_n)
+         & = \frac{V}{\pi\{g(c)\}^2}                                                         \\
+         & = \frac{\frac{\pi^2}{4} - 2}{\{g(c)\}^2}                                          \\
+         & \xrightarrow{n\to\infty} \frac{\frac{\pi^2}{4} - 2}{\left(\frac{\pi}{2}\right)^2} \\
+         & = 1 -  \frac{8}{\pi^2}
+    \end{align*}
+    を得る．従って求める極限値は
+    \begin{align*}
+        \lim_{n\to\infty} n(1-y_n) = 1 -  \frac{8}{\pi^2}
+    \end{align*}
+    である．$\cdots$(答)
+
+    \vspace{10pt}
+    {\bf[解説]}
+    (1)は，平均値の定理自体は認めてしまって良いと思われる．
+    ただ，せっかくの良い機会なので，平均値の定理の証明をここで復習しよう．
+    % TODO :: 平均値の定理の証明
+
+    \newpage
+\end{multicols}
+\end{document}

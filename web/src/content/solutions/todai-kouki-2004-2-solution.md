@@ -1,0 +1,200 @@
+---
+university: "todai"
+category: "kouki"
+year: "2004"
+question: "2"
+type: "solution"
+title: "TODAI 2004 kouki Q2 (solution)"
+---
+
+## 【解】
+
+### (1)
+
+  $A$ の 1 つの要素に対し $0, 1$ の $2$ 通りの写像のつくり方があるから$2^7$ 通りである．$\cdots$(答)
+
+### (2)
+
+  題意の$b_{k}$は$k$が偶数で$0$，奇数で$1$なる数列
+  
+$$
+\begin{align*}
+b_{k} =
+    \begin{dcases}
+      0 & (k \in \text{odd})  \\
+      1 & (k \in \text{even})
+    \end{dcases}
+\end{align*}
+$$
+
+  である．
+
+  まず，$k=1,2$で成立する条件を調べる．
+  与式の漸化式より
+  
+$$
+\begin{align*}
+\begin{dcases}
+      b_{1} = 0 =  f(a_{1}) \\
+      b_{2} = 1 = f(2a_{1}+a_{2})
+    \end{dcases}
+\end{align*}
+$$
+
+  であり，$f$は題意より
+  
+$$
+\begin{align*}
+\begin{dcases}
+      f(0) = f(3) = f(4) = f(7) = 0 \\
+      f(1) = f(2) = f(5) = f(6) = 1
+    \end{dcases}
+\end{align*}
+$$
+
+  だから，
+  
+$$
+\begin{align}
+& \begin{dcases}
+         a_{1} = 0,3,4,7 \\
+         2a_{1}+ a_{2} = 1,2,5,6
+       \end{dcases}\\\therefore& (a_1,a_2) = (0,1) \label{2004-2:eq:1}
+\end{align}
+$$
+
+  と初項が定まる．
+
+  漸化式は$k$の偶奇に応じて
+  
+$$
+\begin{align}
+\begin{dcases}
+      k = 2n \ (n \in \mathbb{N}, n \ge 1) \text{ ならば } 4a_{2n} + 2a_{2n+1} + a_{2n+2} \in \{1, 2, 5, 6\} \\
+      k = 2n-1 \ (n \in \mathbb{N}, n \ge 1) \text{ ならば } 4a_{2n-1} + 2a_{2n} + a_{2n+1} \in \{0, 3, 4, 7\}
+    \end{dcases}\label{2004-2:eq:3}
+\end{align}
+$$
+
+  をみたす．
+
+  従って，$n=1$を代入して$\eqref{2004-2:eq:1}$より
+  
+$$
+\begin{align*}
+& \begin{dcases}
+         4a_1 + 2a_2 + a_3 = \{0,3,4,7\} \\
+         4a_2 + 2a_3 + a_4 = \{1,2,5,6\}
+       \end{dcases}\\& \begin{dcases}
+         2 + a_3 = \{0,3,4,7\} \\
+         4 + 2a_3 + a_4 = \{1,2,5,6\}
+       \end{dcases}
+\end{align*}
+$$
+
+  であり，$a_3,a_4$は$0$または$1$だから
+  
+$$
+\begin{align}
+\begin{dcases}
+      a_3 = 1 \\
+      a_4 = 0
+    \end{dcases}\label{2004-2:eq:2}
+\end{align}
+$$
+
+  である．
+
+  以下，帰納的に
+  
+$$
+\begin{align*}
+a_n =
+    \begin{dcases}
+      0 & (n\equiv 0,1, \mod 4) \\
+      1 & (n\equiv 2,3, \mod 4)
+    \end{dcases}
+\end{align*}
+$$
+
+  であることを示す．
+
+  $n=1,2,3,4$の時は$\eqref{2004-2:eq:1,2004-2:eq:2}$より成立するから，
+  以下$m$を自然数として$n=4m-3,4m-2,4m-1,4m$での成立を仮定して，
+  $n=4m+1,4m+2,4m+3,4m+4$での成立を示す．
+
+  $\eqref{2004-2:eq:3}$の漸化式より
+  
+$$
+\begin{align*}
+\begin{dcases}
+      a_{4m+1} = \{0, 3, 4, 7\} - 0 - 4 = 0 & (\because a_{4m+1} = 0, 1) \\
+      a_{4m+2} = \{1, 2, 5, 6\} - 0 - 0 = 1 & (\because a_{4m+2} = 0, 1) \\
+      a_{4m+3} = \{0, 3, 4, 7\} - 2 - 0 = 1 & (\because a_{4m+3} = 0, 1) \\
+      a_{4m+4} = \{1, 2, 5, 6\} - 2 - 4 = 0 & (\because a_{4m+4} = 0, 1)
+    \end{dcases}
+\end{align*}
+$$
+
+  となりたしかに成立する．
+
+  以上から，数学的帰納法によって$a_n$の一般項は
+  
+$$
+\begin{align*}
+a_n =
+    \begin{dcases}
+      0 & (n\equiv 0, 1, \mod 4) \\
+      1 & (n\equiv 2, 3, \mod 4)
+    \end{dcases}
+\end{align*}
+$$
+
+  である．  $\cdots$(答)
+
+### (3)
+
+  $B$ の要素は $2$ つだけだから、各 $m$ に対し、$f(2m)$, $f(2m+1)$ の定め方は $2$ 通りである．
+  従って，求める場合の数は$m=0,1,2,3$に対して$2$通りづつで
+  
+$$
+\begin{align*}
+2^4 = 16
+\end{align*}
+$$
+
+  通りである．  $\cdots$(答)
+
+### (4)
+
+  $N$ についての数学的帰納法で示す．
+
+  $N=1$ での成立は明らかなので，以下 $N=k \in \mathbb{N}$ での成立を仮定して$N=k+1$ での成立を示す．
+  この時仮定から任意の01数列$b_{1},b_{2},\cdots, b_{k}$ はある01数列$a_{1},a_{2},\cdots, a_{k}$に写像$f$を適用して作ることができる．
+
+  そして $k+1$ 項目について漸化式より
+  
+$$
+\begin{align*}
+b_{k+1} = f(4a_{k-1} + 2a_{k} + a_{k+1})
+\end{align*}
+$$
+
+  であり，法$2$の合同式で考えると
+  
+$$
+\begin{align*}
+& 4a_{k-1} + 2a_{k} + a_{k+1}\equiv a_{k+1}& (\mod 2)
+\end{align*}
+$$
+
+  である．
+  条件(P)より$f$は引数の偶奇によって$0$も$1$もとることができるから，
+  $a_{k}, a_{k-1}$の値によらず$a_{k+1}$を$0$か$1$で調整すれば欲しい$b_{k+1}$が得られる．
+  よって$N=k+1$の場合でも題意は成立する．
+
+  以上より，数学的帰納法によって題意は示された．$\cdots$(答)
+  
+  
+
+## 【解説】

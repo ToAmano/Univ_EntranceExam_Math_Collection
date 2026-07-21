@@ -1,0 +1,68 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+\rhead{東工大後期$1991$年$1$番}
+\setcounter{equation}{0}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\begin{oframed}
+  \input{../../../problems/1991/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  (1) 最高位の選び方は$1$から$9$のなかから一つえらぶ$9$通り，それ以下の位は$0$から$9$のうち一つ上の位で使われた以外の一つを選ぶ$9$通りなので，結局すべての桁について$9$通りの選び方があるから，答えは $a_n=9^n$ 通り．$\cdots$(答)
+
+  \vspace{10pt}
+  (2)
+  $a_n$通りの整数のうち，1の位が$0$のものを$b_n$個，1の位が$1$であるものを$c_n$個とする．対称性から，$1$位が$2,3,\dots,9$であるものも$c_n$個ずつあり，これらは排反だから
+  \begin{align}\label{1991-1:eq:1}
+    b_n+9c_n & = a_n
+  \end{align}
+  が成り立つ．
+
+  次に，$b_{n+1}$を考える．$n+1$桁の正整数の下$2$桁に注目すると，$1$の位は$0$であるから，$10$の位は$1,2,\dots,9$のうち一つを選ぶことができる．このような$1$から$n+1$の位の選び方は$9c_n$に等しいので，
+  \begin{align*}
+    b_{n+1} & = 9c_n = a_n-b_n \quad (\because \text{\cref{1991-1:eq:1}})
+  \end{align*}
+  となる．両辺を$a_n$で割ると
+  \begin{align*}
+    \frac{b_{n+1}}{a_n} & = 1-\frac{b_n}{a_n}
+  \end{align*}
+  ここで(1)から$a_n=9^n$だから$a_{n+1}=9 a_{n}$となることを利用して
+  \begin{align*}
+    9\frac{b_{n+1}}{a_{n+1}} & = 1-\frac{b_n}{a_n}
+  \end{align*}
+  を得る．$d_n=b_{n}/a_{n}$とおくと，$d_n$に関する漸化式
+  \begin{align*}
+    9d_{n+1} & = 1-d_n
+  \end{align*}
+  を得る．$d_n$の初期条件は$b_1=0$から$d_1=0$である．したがってこの漸化式は
+  \begin{align*}
+    d_{n+1}-\frac{1}{10} & = -\frac{1}{9}\left(d_n-\frac{1}{10}\right)                      \\
+    d_n                  & = \frac{1}{10} \left\{-\left(\frac{-1}{9}\right)^{n-1}+1\right\}
+  \end{align*}
+  と解ける．したがって求めるべき極限値は
+  \begin{align*}
+    \lim_{n \to \infty} \frac{b_n}{a_n} & = \lim_{n \to \infty} d_n                                                           \\
+                                        & = \lim_{n \to \infty} \frac{1}{10}\left\{-\left(\frac{-1}{9}\right)^{n-1}+1\right\} \\
+                                        & = \frac{1}{10}
+  \end{align*}
+  である．$\cdots$(答)
+
+  {\bf[解説]}
+
+  (1)は一般的な場合の数の問題である．
+
+  (2)が本題で，$b_n$の漸化式が立つかどうかがポイント．
+  補助的に$c_n$を1の位が$1$であるものの個数とおいて漸化式を立式した．
+  このように問題文中で与えられていない補助的な量を設定して漸化式を立てる方法は東工大に限らず頻出である．
+  その補助的な量は，およそ全体の場合の数(や確率)が一定となることで追加で一つ式を立てて消せる，というのが王道のパターンだ．
+
+  (2)の解答の確からしさについて，極限値の$1/10$が意味することは，桁数が増えてくれば$1$の位の値がほぼランダムに分布することを意味している．
+  これは直感的にもわかりやすく，非常にそれらしい値になっている．
+
+  \newpage
+\end{multicols}
+\end{document}

@@ -1,0 +1,208 @@
+\documentclass[../../main.tex]{subfiles}
+
+\begin{document}
+\rhead{東工大後期$2005$年$1$番}
+\setcounter{equation}{0}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\begin{oframed}
+  \input{../../../problems/2005/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  (1)
+  $0 < r < 1$ の時，$r = \frac{1}{t} (t>1)$ とおける．
+  一般化二項定理より
+  \begin{align*}
+    t^n
+    = & \{1+(t-1)\}^n                                  \\
+    = & 1 + (t-1) + \frac{n(n-1)}{2!}(t-1)^2+\cdots    \\
+      & +\frac{n(n-1)\cdots(n-k+1)}{k!}(t-1)^k +\cdots \\
+    > & \frac{n(n-1)\cdots(n-k+1)}{k!}(t-1)^k
+  \end{align*}
+  だから，$n > 0$ の時
+  \begin{align}
+    0 < n^k \cdot r^n = \frac{n^k}{t^n} < \frac{n^k}{\frac{n(n-1)\cdots(n-k+1)}{k!}(t-1)^k} \nonumber \\
+    = \frac{n^k}{n(n-1)\cdots(n-k)}\frac{(k+1)!}{(t-1)^{k+1}}\label{2005-1:eq:1}
+  \end{align}
+  であり，
+  \begin{align*}
+    \frac{n^k }{n(n-1)\cdots(n-k+1)} = \frac{1}{\left(1-\frac{1}{n}\right)\cdots\left(1-\frac{k-1}{n}\right) } \xrightarrow{n\to\infty} 0
+  \end{align*}
+  となるから，\cref{2005-1:eq:1}の右辺は$0$に収束する．したがってはさみうちの定理から，
+  \begin{align*}
+    \lim_{n\to\infty} n^k \cdot r^n = 0
+  \end{align*}
+  である．$k=1,2$として題意は示された．$\cdots$(答)
+
+  \vspace{10pt}
+  (2)
+  まず，
+  \begin{align*}
+    b_n = \frac{n(n+1)}{2}
+  \end{align*}
+  である．題意より
+  \begin{align*}
+    S_m & = \sum_{k=1}^m k \cdot r^k                 \\
+    T_n & = \frac{1}{2}\sum_{k=1}^n k(k+1) \cdot r^k
+  \end{align*}
+  である．
+  まず$r=1$の時
+  \begin{align*}
+    S_m = \sum_{k=1}^m k = \frac{m(m+1)}{2} \xrightarrow[m\to\infty] 1 \\
+    T_n = \frac{1}{2}\sum_{k=1}^n k(k+1) = \frac{n(n+1)(n+2)}{6} \xrightarrow[n\to\infty] 1
+  \end{align*}
+  である．
+
+  以下$r\neq 1$として考える．
+  先に$S_m$から考える．
+  $S_m - rS_m$を計算すると
+  \begin{align*}
+    S_m - rS_m
+     & =  \sum_{k=1}^m k \cdot r^k -  \sum_{k=1}^m k \cdot r^{k+1}               \\
+     & =  \sum_{k=1}^m k \cdot r^k -  \sum_{k=2}^{m+1} (k-1) \cdot r^{k}         \\
+     & =  \sum_{k=1}^m k \cdot r^k -  \sum_{k=1}^{m} (k-1) \cdot r^{k} -mr^{m+1} \\
+     & =  \sum_{k=1}^m r^k -mr^{m+1}                                             \\
+     & =  \frac{r(1-r^m)}{1-r} -mr^{m+1}
+  \end{align*}
+  と書けるから，
+  \begin{align*}
+    S_m  = \frac{1}{1-r}\left[\frac{r(1-r^m)}{1-r} -mr^{m+1}\right]
+  \end{align*}
+  を得る．$r=1$の時と(1)の結果を用いて$m\to\infty$の極限では，
+  \begin{align}
+    \lim_{m\to\infty}S_m =
+    \begin{dcases}
+      \infty            & (|r| \ge 1) \\
+      \frac{r}{(1-r)^2} & (|r| < 1)
+    \end{dcases}\label{2005-1:eq:2}
+  \end{align}
+  となる．$\cdots$(答)
+
+  \vspace{10pt}
+  次に，$T_n$を考える．
+  $T_n-rT_n$を計算すると
+  \begin{align*}
+    T_n -rT_n
+     & = \frac{1}{2}\sum_{k=1}^n k(k+1) \cdot r^k - \frac{1}{2}\sum_{k=1}^n k(k+1) \cdot r^{k+1}                       \\
+     & = \frac{1}{2}\sum_{k=1}^n k(k+1) \cdot r^k - \frac{1}{2}\sum_{k=2}^{n+1} (k-1)k \cdot r^{k}                     \\
+     & = \frac{1}{2}\sum_{k=1}^n k(k+1) \cdot r^k - \frac{1}{2}\sum_{k=1}^{n} (k-1)k \cdot r^{k} - \frac{n(n+1)}{2}r^n \\
+     & = \frac{1}{2}\sum_{k=1}^n \left[k(k+1)- (k-1)k \right] \cdot r^k - \frac{n(n+1)}{2}r^n                          \\
+     & = \sum_{k=1}^n k \cdot r^k - \frac{n(n+1)}{2}r^n                                                                \\
+     & = S_n - \frac{n(n+1)}{2}r^n
+  \end{align*}
+  だから，
+  \begin{align*}
+    T_n = \frac{1}{1-r}\left[ S_n - \frac{n(n+1)}{2}r^n  \right]
+  \end{align*}
+  である．(1)から，二項目は$|r|<1$の時$n\to\infty$で$0$に収束する．
+  従って，$|r|<1$の時は\cref{2005-1:eq:2}から
+  \begin{align*}
+    \lim_{n\to\infty}T_n
+     & = \frac{1}{1-r}\lim_{n\to\infty}S_n \\
+     & = \frac{r}{(1-r)^3}
+  \end{align*}
+  である．$r=1$の時も合わせて
+  \begin{align*}
+    \lim_{n\to\infty}T_n =
+    \begin{dcases}
+      \infty            & (|r|\ge 1) \\
+      \frac{r}{(1-r)^3} & (|r| < 1)
+    \end{dcases}
+  \end{align*}
+  が求める極限値である．$\cdots$(答)
+
+  \vspace{10pt}
+  {\bf[解説]}
+
+  (1)は「指数関数は任意の多項式よりも速く減少する」という直観的にあたり前の事実を実際に証明せよという問題である．
+  評価自体はそこまで厳しくないので，いくつか解法が考えられる．
+
+  最もよく知られたものが解答で用いた一般化二項定理を利用したものである．
+  この方法は$nr^n$や$n^2r^n$のような簡単な形だけでなく，もっと一般の$n^{k}r^n$についても同時に示せるので(2)が楽というのが大きなメリットである．
+  一般化二項定理とは
+
+
+  一般化二項定理は高校範囲をはみ出しているので，あくまで通常の二項定理を用いて証明したい場合，
+  まず$n^{k}r^{n}$で$n$が自然数の場合は一般化二項定理の時と全く同様に$0$に収束することが示せる．
+  さらに，$f(x)=x^{k}r^x$が$x$が十分大きいところで単調減少であることを用いて
+  \begin{align*}
+     & f(n) \ge f(x) \ge f(n+1) & (n\le x \le n+1)
+  \end{align*}
+  となるから，両辺が$n\to\infty$で$0$に収束することから，挟み撃ちの定理より一般の実数$x$に対して
+  \begin{align*}
+    \lim_{x\to\infty} x^{k}r^{x} = 0
+  \end{align*}
+  であることが示せる．
+
+  別の解法として，ロピタルの定理を用いることもできる．
+  $t=1/r$とおくと$t>1$であって，
+  \begin{align*}
+    xr^{x} = \frac{x}{t^{x}}
+  \end{align*}
+  は分子も分母も発散する不定形であるから，ロピタルの定理が使えて
+  \begin{align*}
+    \lim_{x\to\infty}\frac{x}{t^{x}}
+     & = \lim_{x\to\infty}\frac{x'}{(t^{x})'}   \\
+     & = \lim_{x\to\infty}\frac{1}{log t t^{x}} \\
+     & = 0
+  \end{align*}
+  より示された．一般に$x^{k}r^{x}$の形の場合もロピタルの定理を$k$回利用すれば求められる．数学的帰納法を用いてもよい．
+
+  より初等的な方法としては，挟み撃ちの定理を利用して$x^{k}r^{x}$を上から評価することも考えられる．
+  $f(x) = x^{k}r^{x}$とおいて両辺自然対数を取ると
+  \begin{align*}
+    \log f(x) = k\log x + x log r
+  \end{align*}
+  である．$\log x$は連続で単調増加だから，$\log f(x)$が$x\to\infty$で$-\infty$に発散することを示れば良い．
+  普段ならば$\log x << x$であることを利用したくなるが，それでは循環論法になってしまうので，ここではそれはできない．
+  そこで，$x$の十分大きいところで$\log x$を上から接線で抑えよう．
+  $x=x_0$での接線の評価から
+  \begin{align*}
+    \log x \le \frac{1}{x_0}\left(x-x_0\right) + \log x_0
+  \end{align*}
+  だから，代入して
+  \begin{align*}
+    \log f(x)
+     & \le k\left[\frac{1}{x_0}\left(x-x_0\right) + \log x_0 \right] + x \log r \\
+     & \le \left[\frac{k}{x_0}+ \log r\right] x - k + k\log x_0
+  \end{align*}
+  だから，あとは$k/x_0 + \log r < 0$となるように$x_0$を選べば，右辺は傾きが負の一次関数になって$x\to\infty$で$-\infty$に発散する．
+  これは単に
+  \begin{align*}
+    x_0 > \frac{k}{- \log r}
+  \end{align*}
+  となるように$x_0$を取れば良いだけなので，このような$x_0$は必ず存在する．
+  よって題意は証明された．
+
+  さて，(1)の別解はこれくらいにして，次に(2)について考える．
+  定番のテクニックではあるが
+  \begin{align*}
+    S_m & = \sum_{k=1}^m k \cdot r^k
+  \end{align*}
+  のような形を考える時は$r$を余分にかけた$rS_m$との差分を取ると解が求まる．
+
+  また，これは高校数学で使って良いかグレーだが，以下のように微分を用いた変形も知識としては知っておいて損はない．
+  \begin{align*}
+    S_m & = \sum_{k=1}^m (k+1) \cdot r^k - \sum_{k=1}^m r^k      \\
+        & = \sum_{k=1}^m \frac{d r^{k+1}}{dr} - \sum_{k=1}^m r^k \\
+        & = \frac{d}{dr}\sum_{k=1}^m r^{k+1} - \sum_{k=1}^m r^k
+  \end{align*}
+  このように和記号と微分記号を置き換えて良いかは本来は厳密な議論が必要だが，ここでは認めてしまって変形を続ける．
+  \begin{align*}
+    S_m
+     & = \frac{d}{dr}\sum_{k=1}^m r\cdot r^{k} - \sum_{k=1}^m r^k                \\
+     & = \sum_{k=1}^m r^{k} + r\frac{d}{dr}\sum_{k=1}^m r^{k} - \sum_{k=1}^m r^k \\
+     & = r\frac{d}{dr}\sum_{k=1}^m r^{k}                                         \\
+     & = r\frac{d}{dr}\left[\frac{r-r^{m+1}}{1-r}\right]                         \\
+     & = r\left[\frac{(1-(m+1)r^{m})(1-r) + (r-r^{m+1})}{(1-r)^2}\right]         \\
+     & = r\left[\frac{1-(m+1)r^{m}+mr^{m+1}}{(1-r)^2}\right]                     \\
+     & = \frac{r-(m+1)r^{m+1}+mr^{m+2}}{(1-r)^2}
+  \end{align*}
+  を得る．これは解答中の値と合致する．
+
+  \newpage
+\end{multicols}
+\end{document}

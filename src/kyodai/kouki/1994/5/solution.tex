@@ -1,0 +1,264 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{京都大学後期$1994$年$5$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/1994/5/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis equal,
+          xmin=-1.5, xmax=1.5,
+          ymin=-1.5, ymax=1.5,
+          axis lines=middle,
+          xlabel=$x$, ylabel=$y$,
+          xtick={-1,1}, ytick={-1,1},
+          xticklabels={$-r$,$r$},
+          yticklabels={$-r$,$r$},
+          unit vector ratio*=1 1 1,
+        ]
+        % Unit circle
+        \draw (0,0) circle (1);
+        % Point P
+        \node (P) at (1,0) [circle, fill=black, inner sep=1.5pt, label=above right:$P$] {};
+        % Point Q
+        \node (Q) at ({cos(60)}, {sin(60)}) [circle, fill=black, inner sep=1.5pt, label=above left:$Q$] {};
+        % Radius to Q
+        \draw (0,0) -- (Q);
+        % Angle theta
+        \draw (0.3,0) arc (0:60:0.3);
+        \node at (0.5,0.2) {$\theta$};
+        % Arc PQ
+        \draw [thick] (P) arc (0:60:1);
+      \end{axis}
+    \end{tikzpicture}
+    \caption{座標平面上の半径$r$の円と点P,Qの様子}
+    \label{1994-5:fig:1}
+  \end{figure}
+
+  座標平面で原点Oを中心とする半径$r$の円を置く．
+  P$(r,0)$として考えて良い．
+  線分OPから線分OQに向かう角度を$\theta$とおく．
+  弧PQの長さが$1$だから，
+  \begin{align}
+    r\theta = 1 \label{1994-5:eq:1}
+  \end{align}
+  を満たす．ここで題意より$1<2\pi r$だから，
+  \begin{align}
+    0 < \theta < 2\pi  \label{1994-5:eq:2}
+  \end{align}
+  が成り立っていることに注意する．
+
+  $\theta$の値によって場合分けして$S(r)$を考える．
+
+  \textbf{1$^\circ$ $0 < \theta \leq \pi$ の時 (①から$r \leq 1$) }
+
+  $S(\theta)$は\cref{1994-5:fig:2}の斜線部の面積に等しく，
+  \begin{align*}
+    S(\theta)
+     & = \text{扇形}OPQ - \triangle OPQ                        \\
+     & = \frac{1}{2} \theta r^2 - \frac{1}{2} r^2 \sin\theta
+  \end{align*}
+  となる．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis equal,
+          xmin=-1.5, xmax=1.5,
+          ymin=-1.5, ymax=1.5,
+          axis lines=middle,
+          xlabel=$x$, ylabel=$y$,
+          xtick={-1,1}, ytick={-1,1},
+          xticklabels={$-r$,$r$},
+          yticklabels={$-r$,$r$},
+          unit vector ratio*=1 1 1,
+        ]
+        % Unit circle
+        \draw (0,0) circle (1);
+        \addplot[domain=0:60, draw=none, name path=circle] ({cos(x)}, {sin(x)});
+        \addplot[thick, name path = line] coordinates {(1,0) ({cos(60)}, {sin(60)})};
+        \addplot[pattern=north west lines] fill between [of=circle and line];
+        % Point P
+        \node (P) at (1,0) [circle, fill=black, inner sep=1.5pt, label=above right:$P$] {};
+        % Point Q
+        \node (Q) at ({cos(60)}, {sin(60)}) [circle, fill=black, inner sep=1.5pt, label=above left:$Q$] {};
+        % Radius to Q
+        \draw (0,0) -- (Q);
+        % Angle theta
+        \draw (0.3,0) arc (0:60:0.3);
+        \node at (0.5,0.2) {$\theta$};
+        % Arc PQ
+        \draw [thick] (P) arc (0:60:1);
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$0<\theta \le \pi$の時の領域の様子}
+    \label{1994-5:fig:2}
+  \end{figure}
+
+  \vspace{5pt}
+  \textbf{2$^\circ$ $\pi < \theta < 2\pi$ の時}
+
+  $S(\theta)$は\cref{1994-5:fig:3}の斜線部の面積に等しく，
+  \begin{align*}
+    S(\theta)
+     & = \text{扇形}OPQ + \triangle OPQ
+     & = \frac{1}{2} \theta r^2 + \frac{1}{2} r^2 \sin(2\pi - \theta) \\
+     & = \frac{1}{2} \theta r^2 - \frac{1}{2} r^2 \sin\theta
+  \end{align*}
+  となる．
+
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis equal,
+          xmin=-1.5, xmax=1.5,
+          ymin=-1.5, ymax=1.5,
+          axis lines=middle,
+          xlabel=$x$, ylabel=$y$,
+          xtick={-1,1}, ytick={-1,1},
+          xticklabels={$-r$,$r$},
+          yticklabels={$-r$,$r$},
+          unit vector ratio*=1 1 1,
+        ]
+        % Unit circle
+        \draw (0,0) circle (1);
+        \addplot[domain=0:280, draw=none, name path=circle] ({cos(x)}, {sin(x)});
+        \addplot[thick, name path = line] coordinates {(1,0) ({cos(280)}, {sin(280)})};
+        \addplot[pattern=north west lines] fill between [of=circle and line];
+        % Point P
+        \node (P) at (1,0) [circle, fill=black, inner sep=1.5pt, label=above right:$P$] {};
+        % Point Q
+        \node (Q) at ({cos(280)}, {sin(280)}) [circle, fill=black, inner sep=1.5pt, label=below:$Q$] {};
+        % Radius to Q
+        \draw (0,0) -- (Q);
+        % Angle theta
+        \draw (0.3,0) arc (0:280:0.3);
+        \node[fill=white] at (0.5,0.2) {$\theta$};
+        % Arc PQ
+        \draw [thick] (P) arc (0:280:1);
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$\pi \le \theta < 2 \pi$の時の領域の様子}
+    \label{1994-5:fig:3}
+  \end{figure}
+
+  \vspace{5pt}
+  以上から，全ての場合で
+  \begin{align*}
+    S(\theta) = \frac{1}{2}\theta r^2 - \frac{1}{2}r^2\sin\theta
+  \end{align*}
+  と書ける．
+  \cref{1994-5:eq:1}を代入して変数を$\theta$に取り替えると
+  \begin{align*}
+    S(\theta) = \frac{1}{2}\frac{1}{\theta} - \frac{1}{2} \frac{1}{\theta^2}\sin\theta
+  \end{align*}
+  である．この\cref{1994-5:eq:2}での最大値を求めれば良い．
+  一階微分は
+  \begin{align*}
+    \frac{dS}{d\theta}
+     & = -\frac{1}{2\theta^2} - \frac{1}{2} \frac{1}{\theta^4} (\cos\theta \cdot \theta^2 - \sin\theta \cdot 2\theta)     \\
+     & = -\frac{1}{2\theta^3} [\theta + \theta\cos\theta - 2\sin\theta]                                                   \\
+     & = -\frac{1}{2\theta^3} [\theta(1+\cos\theta) - 2\sin\theta]                                                        \\
+     & = -\frac{1}{2\theta^3} [2\theta\cos^2\frac{\theta}{2} - 4\sin\frac{\theta}{2}\cos\frac{\theta}{2}]                 \\
+     & = -\frac{2\cos\frac{\theta}{2}}{\theta^3} \left[\frac{\theta}{2}\cos\frac{\theta}{2} - \sin\frac{\theta}{2}\right]
+  \end{align*}
+  ここで，$\theta=\pi$を代入すると$dS/d\theta=0$であり，それ以外の時は
+  \begin{align*}
+    \frac{dS}{d\theta}= -\frac{2\cos^2\frac{\theta}{2}}{\theta^3} \left[\frac{\theta}{2} - \tan\frac{\theta}{2}\right]
+  \end{align*}
+  となり，これは$0<\theta<\pi$で正，$\pi<\theta<2\pi$で負だから，
+  $S(\theta)$の増減表は\cref{1994-5:table:1}のようになる．
+
+  \begin{table}[H]
+    \centering
+    \caption{$S(\theta)$の増減表}
+    \label{1994-5:table:1}
+    \begin{tabular}{|c||c|c|c|c|c|}
+      \hline
+      $\theta$ & $0$   &            & $\pi$ &            & $2\pi$     \\
+      \hline
+      $S'$     &       & $+$        & $0$   & $-$        &            \\
+      \hline
+      $S$      & $(0)$ & $\nearrow$ &       & $\searrow$ & $(1/4\pi)$ \\
+      \hline
+    \end{tabular}
+  \end{table}
+
+  よって$S$は$\theta=\pi$で最大値をとり，その最大値は
+  \begin{align*}
+    \max S(\theta)
+     & = S(\theta)      \\
+     & = \frac{1}{2\pi}
+  \end{align*}
+  である．$\cdots$(答)
+  \vspace{10pt}
+
+  {\bf[解説]}
+
+
+  解答中では半角，倍角公式をうまく使って$dS/d\theta$の正負を判定したが，
+  普通にもう一度微分することでも増減表を求められる．
+  計算量はこちらの方が多くなるが，一般的な方法でテクニックが不要なので採用しやすいだろう．
+  $dS/d\theta$の式において，正負は分子
+  \begin{align*}
+    f(\theta) = -(\theta + \theta\cos\theta - 2\sin\theta)
+  \end{align*}
+  の正負と等しい．そこで$f(\theta)$の一階，二階微分から$f$の正負を求める．
+  \begin{align*}
+    f'(\theta)
+     & = -(1+\cos\theta - \theta\sin\theta - 2\cos\theta) \\
+     & = -(1 - \theta\sin\theta - \cos\theta)             \\
+    f''(\theta)
+     & = \theta\cos\theta
+  \end{align*}
+  より，まず$f'$の増減表は\cref{1994-5:table:2}となる．
+
+  \begin{table}[H]
+    \centering
+    \caption{$f'(\theta)$の増減表}
+    \label{1994-5:table:2}
+    \begin{tabular}{|c||c|c|c|c|c|c|c|}
+      \hline
+      $\theta$ & $0$ &            & $\pi/2$ &            & $3\pi/2$ &            & $2\pi$ \\
+      \hline
+      $f''$    &     & $+$        & $0$     & $-$        & $0$      & $+$        &        \\
+      \hline
+      $f'$     & $0$ & $\nearrow$ & |       & $\searrow$ & |        & $\nearrow$ & $0$    \\
+      \hline
+    \end{tabular}
+  \end{table}
+
+  増減表より，$\pi/2 < \alpha < 3\pi/2$で$f'(\alpha)=0$をみたす$\alpha$が唯一つある．
+  従って$f(\theta)$の増減表は\cref{1994-5:table:3}となる．ただし，$f(\pi)=0$に注意する．
+
+  \begin{table}[H]
+    \centering
+    \caption{$f(\theta)$の増減表}
+    \label{1994-5:table:3}
+    \begin{tabular}{|c||c|c|c|c|c|c|c|}
+      \hline
+      $\theta$ & $0$ &            & $\alpha$ &            & $\pi$ &            & $2\pi$  \\
+      \hline
+      $f'$     & $0$ & $+$        & $0$      & $-$        &       & $-$        &         \\
+      \hline
+      $f$      & $0$ & $\nearrow$ &          & $\searrow$ & $0$   & $\searrow$ & $-2\pi$ \\
+      \hline
+    \end{tabular}
+  \end{table}
+
+  従って，$f(\theta)$は$0<\theta<\pi$で正，$\pi<\theta<2\pi$で負であり，解答中の増減表に一致する．
+
+  \newpage
+\end{multicols}
+\end{document}

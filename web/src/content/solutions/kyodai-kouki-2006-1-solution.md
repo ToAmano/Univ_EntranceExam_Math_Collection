@@ -1,0 +1,100 @@
+---
+university: "kyodai"
+category: "kouki"
+year: "2006"
+question: "1"
+type: "solution"
+title: "KYODAI 2006 kouki Q1 (solution)"
+---
+
+## 【解】
+
+    $A,B,C$が全て一次式なので
+    
+$$
+\begin{align*}
+\begin{dcases}
+            A(x) = a_1(x + b_1)                                 \\
+            B(x) = a_2(x + b_2)                                 \\
+            C(x) = a_3(x + b_3) & \qquad (a_1, a_2, a_3 \neq 0)
+        \end{dcases}
+\end{align*}
+$$
+
+    とおく．題意を示すには$b_1=b_2=b_3$が示れば良い．
+
+    与式から
+    
+$$
+\begin{align*}
+A^2(x)              & = (C(x) + B(x))(C(x) - B(x))                                     \\
+        a^2_1(a_1x + b_1)^2 & = (a_3x + a_3b_3 + a_2x + a_2b_2)(a_3x + a_3b_3 - a_2x - a_2b_2) \\
+        a^2_1(a_1x + b_1)^2 & = ((a_2+a_3)x + (a_2b_2+a_3b_3))((a_3-a_2)x + (a_3b_3-a_2b_2))
+\end{align*}
+$$
+
+    ここで，$(a_2+a_3)(a_2-a_3)=0$となると左辺の$a_1=0$となり矛盾するから
+    
+$$
+\begin{align*}
+(a_2+a_3)(a_2-a_3) \neq 0
+\end{align*}
+$$
+
+    である．この元でさらに式を整理すると
+    
+$$
+\begin{align*}
+a^2_1(a_1x + b_1)^2 & = (a_2+a_3)(a_3-a_2)\left(x+\frac{a_2b_2+a_3b_3}{a_2+a_3}\right)\left(x+\frac{a_3b_3-a_2b_2}{a_3-a_2}\right)
+\end{align*}
+$$
+
+    である．これが恒等式であるから，$x$の各次数の係数が等しい．
+    係数比較すると
+    
+$$
+\begin{align}
+a^2_1 & = (a_2+a_3)(a_3-a_2)                               \label{2006-1:eq:1}\\
+        b_1   & = \frac{a_2b_2+a_3b_3}{a_2+a_3} = \frac{a_3b_3-a_2b_2}{a_3-a_2}\label{2006-1:eq:2}
+\end{align}
+$$
+
+    $\eqref{2006-1:eq:2}$から，
+    
+$$
+\begin{align*}
+& \begin{dcases}
+               (a_2+a_3)b_1 = a_2b_2+a_3b_3 \\
+               (a_3-a_2)b_1 = a_3b_3-a_2b_2
+           \end{dcases}\therefore& \begin{dcases}
+               a_2(b_1-b_2) = a_3(b_3-b_1) \\
+               a_2(b_1-b_2) = a_3(b_1-b_3)
+           \end{dcases}
+\end{align*}
+$$
+
+    である．辺々足し引きすると
+    
+$$
+\begin{align*}
+\begin{dcases}
+            a_2(b_1-b_2) = 0 \\
+            a_3(b_3-b_1) = 0
+        \end{dcases}
+\end{align*}
+$$
+
+    であり，$a_2a_3\neq 0$より
+    
+$$
+\begin{align*}
+b_1=b_2=b_3
+\end{align*}
+$$
+
+    となる．
+    従って，たしかに $A(x), B(x), C(x)$ は $C(x)$ の定数倍である． $\cdots$(答)
+
+    
+
+## 【解説】

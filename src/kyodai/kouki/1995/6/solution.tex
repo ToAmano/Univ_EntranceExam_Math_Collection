@@ -1,0 +1,283 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{京都大学後期$1995$年$6$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/1995/6/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+    (1)
+
+    \begin{figure}[H]
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xmin=0, xmax=5,
+                    ymin=0, ymax=4.5,
+                    xtick={0, 4}, % Only show 0 and 4 on x-axis
+                    ytick={0, 2}, % Only show 0 and 2 on y-axis
+                    xticklabel style={below}, % Position x-axis labels
+                    yticklabel style={left}, % Position y-axis labels
+                    xlabel style={at={(current axis.right of origin)}, anchor=west},
+                    ylabel style={at={(current axis.above origin)}, anchor=south},
+                    grid=none,
+                    tick style={draw=none}, % Hide the tick marks themselves, just keep labels
+                    declare function={
+                            a_val=1.5; % Define 'a' for the x-intercept of the tangent, adjust as needed
+                        }
+                ]
+
+                % Plot the function y = 1/x
+                \addplot[
+                    domain=0.2:5, % Adjust domain to prevent issues near x=0
+                    samples=100,
+                    thick,
+                    blue, % You can change the color
+                ] {1/x};
+                \node[above right] at (axis cs:2, 1) {$y=\frac{1}{x}$}; % Label for the curve
+
+                % Plot the line passing through Q(0,2) and R(4,0)
+                \addplot[
+                    domain=0:4, % From x=0 to x=4
+                    thick,
+                    red, % You can change the color
+                ] {2 - 0.5*x}; % Equation of the line: y = -0.5x + 2
+
+                % Mark point Q(0,2)
+                \node[circle, fill, inner sep=1.5pt, label={above left:$Q$}] at (axis cs:0,2) {};
+                \node[left] at (axis cs:0,2) {$2$}; % Label '2' on y-axis
+
+                % Mark point R(4,0)
+                \node[circle, fill, inner sep=1.5pt, label={below right:$R$}] at (axis cs:4,0) {};
+                \node[below] at (axis cs:4,0) {$4$}; % Label '4' on x-axis
+
+                % The tangent line (represented by the image with A, B, M)
+                % We need to find the specific 'a' value from the first document.
+                % From the first document, A = 2t. The tangent is y = -1/t^2 x + 2/t.
+                % If the tangent passes through A(a,0), then 0 = -1/t^2 * a + 2/t => a = 2t.
+                % So the tangent is y = -4/a^2 x + 4/a.
+                % Let's pick an 'a' value that visually matches the image, e.g., a=1.5 or 1.6
+                \addplot[
+                    domain=0:a_val, % x-range for the tangent line
+                    thick,
+                    purple, % Color for the tangent line
+                ] {-4/(a_val^2) * x + 4/a_val};
+
+                % Mark point A (x-intercept of the tangent)
+                \node[circle, fill, inner sep=1.5pt, label={below:$A$}] at (axis cs:a_val,0) {};
+                \node[below left] at (axis cs:a_val,0) {$a$}; % Label 'a' on x-axis
+
+                % Mark point B (y-intercept of the tangent)
+                \pgfmathparse{4/a_val}
+                \let\yintercept\pgfmathresult
+                \node[circle, fill, inner sep=1.5pt, label={left:$B$}] at (axis cs:0,\yintercept) {};
+                \node[left] at (axis cs:0,\yintercept) {$\frac{4}{a}$}; % Label '4/a' on y-axis
+
+                % Intersection point M between the hyperbola and the tangent
+                % The tangent point is (t, 1/t). Since a=2t, t=a/2.
+                % So the tangent point M is (a/2, 2/a).
+                \pgfmathparse{a_val/2}
+                \let\xM\pgfmathresult
+                \pgfmathparse{2/a_val}
+                \let\yM\pgfmathresult
+                \node[circle, fill, inner sep=1.5pt, label={above right:$M$}] at (axis cs:\xM,\yM) {};
+
+                % Dashed lines from M to axes
+                \draw[dashed, gray] (axis cs:\xM,0) -- (axis cs:\xM,\yM);
+                \draw[dashed, gray] (axis cs:0,\yM) -- (axis cs:\xM,\yM);
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{題意の状況}
+        \label{1995-6:fig:1}
+    \end{figure}
+
+    $x=t\,(t>0)$の$C$の接線は
+    \begin{align}
+        y=-\frac{1}{t^2}x+\frac{2}{t} \label{1995-6:eq:1}
+    \end{align}
+    である．
+    これが$A$を通る時，
+    \begin{align*}
+         & 0 = -\frac{1}{t^2}a+\frac{2}{t}      \\
+        \therefore
+         & t = \frac{a}{2} \quad (\because t>0)
+    \end{align*}
+    を満たすから，
+    \cref{1995-6:eq:1}に代入して
+    \begin{align*}
+        L_a : y
+         & = f_{a}                       \\
+         & = -\frac{4}{a^2}x+\frac{4}{a}
+    \end{align*}
+    である．
+
+    次に，直線RQの方程式は
+    \begin{align}
+         & RQ:y=-\frac{1}{2}x+2  \label{1995-6:eq:2}
+    \end{align}
+    と表せるから，RQと$L_a$の交点の$x$座標$x_0$は
+    \begin{align*}
+         & -\frac{4}{a^2}x_0+\frac{4}{a} = -\frac{1}{2}x_0+2 \\
+         & (\frac{1}{2}-\frac{4}{a^2})x = 2-\frac{4}{a}
+    \end{align*}
+    の解である．$a \neq 2\sqrt{2}$のもとでこれを解いて
+    \begin{align}
+        x_0 & = \frac{2-4/a}{1/2-4/a^2}                    \\
+            & = \frac{4a(a-2)}{a^2-8}  \label{1995-6:eq:3}
+    \end{align}
+    を得る．この時$y$座標は
+    \begin{align}
+        y_0  =  \frac{4(a-4)}{a^2-8}  \label{1995-6:eq:4}
+    \end{align}
+    である．
+
+    従って，$0<a<4$および$a \neq 2\sqrt{2}$のもとで，
+    題意の条件は
+    \begin{align*}
+        \begin{dcases}
+            x_0 > 0 \\
+            y_0 > 0
+        \end{dcases}             \\
+        \therefore
+        \begin{dcases}
+            \frac{4a(a-2)}{a^2-8} > 0 \\
+            \frac{4(a-4)}{a^2-8} > 0
+        \end{dcases} \\
+        \therefore
+        0 < a < 2
+    \end{align*}
+    である．$\cdots$(答)
+
+    \vspace{10pt}
+
+
+    (2)
+    (1)で求めた条件$0<a<2$のもとでとかんがえる．
+    $T,S_1,S_2$は
+    \begin{align*}
+        T+S_1 & = \triangle ORQ = \frac{1}{2} \cdot 2 \cdot 4 = 4           \\
+        T+S_2 & = \triangle OAB = \frac{1}{2} \cdot a \cdot \frac{4}{a} = 2
+    \end{align*}
+    と書けるから，
+    $S_1 = 4-T$, $S_2 = 2-T$なので，$r$および$m$は$T$を用いて
+    \begin{align}
+        r
+         & = S_1+S_2                     \\
+         & = (4-T)+(2-T)                 \\
+         & = 6-2T    \label{1995-6:eq:5} \\
+        m
+         & = S_1S_2                      \\
+         & = (4-T)(2-T)                  \\
+    \end{align}
+    となる．
+    ここから$T$を除去して
+    \begin{align}
+        m
+         & = \frac{1}{4}(r+2)(r-2)                  \\
+         & = \frac{1}{4}(r^2-4) \label{1995-6:eq:6}
+    \end{align}
+    である．
+
+    以下$T$の値域を求めることで$r$の値域を求める．
+    図および \cref{1995-6:eq:3,1995-6:eq:4}から
+    \begin{align*}
+        T
+         & = \triangle OAM + \triangle OQM              \\
+         & = \frac{1}{2}a y_0 + \frac{1}{2} \cdot 2 x_0 \\
+         & = \frac{2 x_0 + ay_0 }{2}                    \\
+         & = \frac{4a(3a-8)}{2(a^2-8)}                  \\
+         & = 2\left[3 + \frac{8(-3+a)}{8-a^2}\right]
+    \end{align*}
+    である．
+    分母は$a$について単調減少，分子は$a$について単調増加だから，
+    全体として$T$は$a$について単調増加であり，$0<a<2$のもとで
+    \begin{align*}
+         & \lim_{a\to 0}T <T <\lim_{a\to 2} T \\
+         & 0<T<2
+    \end{align*}
+    であり，この時\cref{1995-6:eq:5}より
+    \begin{align}
+        2<r<6 \label{1995-6:eq:7}
+    \end{align}
+    である．
+
+    従って求めるべき条件は\cref{1995-6:eq:6,1995-6:eq:7}であり，
+    図示して\cref{1995-6:fig:2}となる．$\cdots$(答)
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,
+                    xlabel=$r$,
+                    ylabel=$m$,
+                    xmin=0, xmax=7,
+                    ymin=-1, ymax=9,
+                    xtick={2,6},
+                    ytick={8},
+                    extra x ticks={6}, % For the dashed line
+                    extra y ticks={8}, % For the dashed line
+                    extra x tick style={grid=major, dashed}, % Style for dashed grid lines
+                    extra y tick style={grid=major, dashed}, % Style for dashed grid lines
+                    grid=none, % Disable standard grid
+                    tick label style={font=\footnotesize},
+                    clip=false % Allows drawing outside the axis boundaries if needed
+                ]
+
+                % Plot the function m = 1/4(r^2-4)
+                \addplot[
+                    domain=2:6, % The range of r values
+                    samples=100,
+                    thick,
+                    blue, % You can change the color
+                ] {1/4 * (x^2 - 4)};
+
+                \addplot[only marks, mark=o] coordinates {(2,0)};
+                \addplot[only marks, mark=o] coordinates {(6,8)};
+
+                % Add the label for the function
+                \node[right, align=left] at (axis cs:6,4) {$m = \frac{1}{4}(r^2-4)$};
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$(r,m)$の存在領域．白丸点は含まず．}
+        \label{1995-6:fig:2}
+    \end{figure}
+
+    \vspace{10pt}
+    {\bf[解説]}
+    % TODO :: 図1の綺麗化
+
+    \newpage
+\end{multicols}
+\end{document}

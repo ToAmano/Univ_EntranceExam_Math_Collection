@@ -1,0 +1,140 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+\rhead{東工大後期$2004$年$1$番}
+\setcounter{equation}{0}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\begin{oframed}
+  \input{../../../problems/2004/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+  $n$個のものを数字の$1$から$n$であらわし，一つの並べ方を$n$桁の整数で表す．
+  場所$i$をこの整数の$i$桁目に対応させる．
+  わかりやすさのため$i$桁目の数字を$A_i$とする．
+  よって一つの並べ方は$A_nA_{n-1}\cdots A_{2}A_{1}$となる．
+  最初の並べ方は場所$i$に整数$i$が置いてあるパターンとする．
+  例えば，$n=4$のとき，最初の並べ方は$4321$であるとする．
+
+  \vspace{10pt}
+  (1)
+  $n=4$の時，$4$つのものを$1,2,3,4$の整数であらわして，全ての並べ方をリストアップすると
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{ccc}
+      $3412$ & $2413$ & $3214$ \\
+      $3142$ & $2143$ & $2134$ \\
+      $1432$ & $1243$ & $1234$ \\
+    \end{tabular}
+  \end{table}
+  の$9$通りだから，$D(4)=9$である．$\cdots$(答)
+
+  \vspace{10pt}
+  (2)
+  $n\ge 4$とする．
+  対称性から$A_1=2,3,\dots,n$となる並べ方は等しいので、以下$A_1=2$として考える．
+  $A_2,A_3, A_4, \dots, A_n$に$1,3,4,\cdots n$を題意を満たすように並べれば良い．
+
+  \vspace{5pt}
+  \underline{\textbf{$1^{\circ}$ $A_2=1$の時．}}
+
+  $A_3, A_4, \dots, A_n$に$3,4,\dots,n$を題意をみたすように並べれば良く，$D(n-2)$通りある．
+
+  \vspace{5pt}
+  \underline{\textbf{$2^{\circ}$ $A_2\neq 1$の時．}}
+
+  $1$は$A_3$から$A_n$のどこへでも配置できる．
+  $1$を$2$で置き換えれば，$2$を$A_3$から$A_n$のどこかに配置することになり，$2$は$A_2$には置けないから，
+  これは要するに$2,3,\cdots,n$を$A_2,A_3,\cdots, A_n$に条件を満たして配置することと同じである．
+  従って場合の数は$D(n-1)$通りである．
+
+  \vspace{5pt}
+  以上で全ての場合が尽くされているから，求める場合の数は$A_1=2,3,\cdots, n$を動かして$n-1$倍した
+  \begin{align*}
+    D(n) = (n-1) \{ D(n-1) + D(n-2) \}
+  \end{align*}
+  である．よって題意は示された．$\cdots$(答)
+
+  \vspace{10pt}
+  {\bf[解説]}
+
+  場合の数の問題で，ものを並べていくという意味では1991年の第一問の類題と言えるだろう．
+  (1)は書き下せば良く，(2)は$1$個目（または$n$個目）を固定して考えればそこまで難しくはないだろう．
+
+  (1)の検算として，$n=2,3$の時の$D(n)$を計算して(2)の漸化式に代入することが挙げられる．
+  まず，$n=2$の時は$21$の一通りだから
+  \begin{align*}
+    D(2) = 1
+  \end{align*}
+  である．
+
+  $n=3$の時は実際に書き下すと，
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{cc}
+      $132$ & $213$
+    \end{tabular}
+  \end{table}
+  のふた通りで
+  \begin{align*}
+    D(3) = 2
+  \end{align*}
+  である．
+  よって，(2)の漸化式で$n=4$とすると
+  \begin{align*}
+    D(4) = 3\left(2+1\right) = 9
+  \end{align*}
+  となって(1)の結果と合致しているので検算できた．
+
+  \vspace{5pt}
+  さてここからが本題である．
+  この問題で扱った「n個の要素の順列で、どの要素も元の位置にない順列」のことを，完全順列と呼ぶ．
+  今回の問題では$n\ge 2$から定義されていたが，もちろん$n=1$の時は$D(1)=0$である．
+
+  さて，漸化式から一般項を求める．この漸化式は以下のように変形できる．
+  \begin{align*}
+    D(n) - nD(n-1) = -\left[D(n-1)-(n-1)D(n-2)\right]
+  \end{align*}
+  従って漸化式を繰り返し用いて$D(1)=0, D(2)=1$を用いると
+  \begin{align*}
+    D(n) - nD(n-1)
+     & = (-1)^{n}\left[D(2)-2D(1)\right] \\
+     & = (-1)^{n}
+  \end{align*}
+  である．次にこの式の辺々を$n!$で割って
+  \begin{align*}
+    \frac{D(n)}{n!} = \frac{D(n-1)}{(n-1)!} + \frac{(-1)^n}{n!}
+  \end{align*}
+  だから，漸化式を繰り返し用いて$n \ge 2$の時
+  \begin{align*}
+    \frac{D(n)}{n!} = \sum_{k=2}^{n}\frac{(-1)^{k}}{k!} + \frac{D(1)}{1!}
+  \end{align*}
+  $D(1)=0$だから第二項は$0$であり
+  \begin{align*}
+    \frac{D(n)}{n!} = \sum_{k=2}^{n}\frac{(-1)^{k}}{k!}
+  \end{align*}
+  となる．右辺が$k=0$のとき$1$, $k=1$の時$-1$を与えることを用いて，和の範囲を$k=0$からに変更できる．
+  \begin{align*}
+     & \frac{D(n)}{n!} = \sum_{k=0}^{n}\frac{(-1)^{k}}{k!} \\
+     & D(n)= \sum_{k=0}^{n}\frac{(-1)^{k}n!}{k!}           \\
+  \end{align*}
+  これが一般項である．
+  標準的には$n=0$の時にも$D(0)=1$として拡張する．
+
+  大学に入ってテイラー展開を習うと，この一般項は以下の指数関数のテイラー展開に酷似している．
+  \begin{align*}
+    e^{x} = \sum_{n=0}^{\infty}\frac{x^n}{n!}
+  \end{align*}
+  実際ここに$x=-1$を代入すると$D(n)/n!$に一致するので，$n\to\infty$での極限は
+  \begin{align*}
+    \lim_{n\to\infty}\frac{D(n)}{n!} = e^{-1}
+  \end{align*}
+  となる．
+  $n!$は制約なく$n$個のものを並べた時の場合の数だから，全体の場合の数のうち完全順列の場合の数が$1/e\sim 37\%$であることがわかる．
+
+
+  \newpage
+\end{multicols}
+\end{document}

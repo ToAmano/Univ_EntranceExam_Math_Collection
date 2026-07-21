@@ -1,0 +1,111 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{京都大学後期$1991$年$3$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/1991/3/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=2]
+      % 座標軸
+      \coordinate (O) at (0,0);
+
+      % ベクトルa
+      \coordinate (A) at (1,0);
+      \draw[-stealth] (O) -- (A) node [right] {a};
+
+      % ベクトルb
+      \coordinate (B) at ({cos(30)},{sin(30)});
+      \draw[-stealth] (O) -- (B) node [above right] {b};
+
+      % ベクトルc
+      \coordinate (C) at ({cos(135)},{sin(135)});
+      \draw[-stealth] (O) -- (C) node [above left] {c};
+
+      % 角度の表示
+      \draw (0.3,0) arc (0:30:0.2) node [midway, right] {$\gamma$};
+      \draw (0.3,0) arc (0:135:0.3) node [midway, below left] {$\beta$};
+      \draw (0.3,{sin(30)/cos(30)*0.3}) arc ({atan2(sin(30),cos(30))}:{atan2(sin(135),cos(135))}:0.3) node [midway, left] {$\alpha$};
+    \end{tikzpicture}
+    \caption{$\vec{a},\vec{b},\vec{c}$の様子}
+    \label{1991-3:fig:1}
+  \end{figure}
+
+  対称性から，$\vec{a}$を
+  \begin{align*}
+    \vec{a} = \mqty(1 \\ 0 \\ 0)
+  \end{align*}
+  と固定して考えて良い．
+  次に$\vec{b}$を$xy$平面においてもよく，
+  題意の条件$\vec{a}\cdot\vec{b}=\cos\gamma$より，
+  \begin{align*}
+    \vec{b} = \mqty( \cos\gamma \\ \sin \gamma \\ 0)
+  \end{align*}
+  とおける．残りの$\vec{c}$を一般性を保って
+  \begin{align}
+     & \vec{c} = \mqty( p                    \\ q \\ r) \\
+     & p^2 q^2 + r^2 = 1 \label{1991-3:eq:1}
+  \end{align}
+  とおく．
+
+  題意の残りの条件，$\vec{b}\cdot\vec{c}=\cos\alpha$, $\vec{a}\cdot\vec{c}=\cos\beta$に
+  これらの座標を代入して
+  \begin{align*}
+    \cos \alpha = \vec{b} \cdot \vec{c} = pc + q \sin r \quad \cdots \textcircled{2} \\
+    \cos \beta = \vec{a} \cdot \vec{c} = p \quad \cdots \textcircled{3}
+  \end{align*}
+  となる．従って，
+  \begin{align*}
+    A = \cos^2 \alpha+ \cos^2 \beta + \cos^2 \gamma - 2\cos \alpha \cos \beta \cos \gamma
+  \end{align*}
+  とおくと，
+  \begin{align*}
+    A & = (p\cos\gamma + q \sin\gamma)^2 + p^2 + \cos^2 \gamma - 2(p\cos\gamma + q \sin \gamma) p \cos\gamma \\
+      & = (p\cos\gamma + q \sin \gamma)(q \sin \gamma - p\cos\gamma) + p^2 + \cos^2\gamma                    \\
+      & = q^2 \sin^2 \gamma - p^2 \cos^2\gamma + p^2 + \cos^2 \gamma
+      & = (p^2 + q^2) \sin^2 r + c^2 r^2
+  \end{align*}
+  と計算できる．\cref{1991-3:eq:1}より
+  \begin{align*}
+    0 \le A \le (p^2 + q^2 + r^2) \sin^2 \gamma + \cos^2 \gamma = \sin^2 \gamma + \cos^2 \gamma = 1 \\
+    \therefore
+    0 \le A \le 1
+  \end{align*}
+  となり，題意の不等式は示された．$\cdots$(答)
+
+  \vspace{10pt}
+  次に等号成立条件について考える．
+  まず左側の等号が成立するのは，$A$の形から
+  \begin{align*}
+    (p^2+q^2) \sin^2 r = 0 \land \cos^2 \gamma = 0
+  \end{align*}
+  の時だが，$\sin^2 \gamma = \cos^2 \gamma = 0$ となることはないから，
+  $\cos\gamma, q, p$が全て$0$の時に等号が成立する．
+  この時，$\vec{a} \perp \vec{b} \perp \vec{c}$ である．$\cdots$(答)
+
+  \vspace{10pt}
+  最後に右側の等号が成立するのは，
+  \begin{align*}
+    r^2 = 0 \iff r=0
+  \end{align*}
+  の時で，この時$\vec{a}, \vec{b}, \vec{c}$ は同平面上にある．$\cdots$(答)
+
+  \vspace{10pt}
+  {\bf[解説]}
+  % TODO :: あまり綺麗な解法ではないのでもっと綺麗に解きたい．
+  % ab = cos \gamma, bc = cos \alpha, ca = cos \beta
+  % であることを利用して，もっとベクトルを使ったまま解けないか検討したい．
+  % (ab)^2+(bc)^2+(ca)^2-2(ab)(bc)(ca)
+  % 下側の評価はそう下相乗平均でいける．
+  % 上側の評価がわからん．全てが同一平面上にある
+  % |a+b+c|^2 = a^2+b^2+c^2 + 2(ab+bc+ca)
+
+  \newpage
+\end{multicols}
+\end{document}

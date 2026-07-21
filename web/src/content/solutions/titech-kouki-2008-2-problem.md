@@ -1,0 +1,18 @@
+---
+university: "titech"
+category: "kouki"
+year: "2008"
+question: "2"
+type: "problem"
+title: "TITECH 2008 kouki Q2 (problem)"
+---
+
+自然数 $n$ に対して
+
+$$
+\begin{align*}
+I_n = \int_0^1 x^2 |\sin n\pi x| dx
+\end{align*}
+$$
+
+とおく．極限値 $\displaystyle \lim_{n \to \infty} I_n$ を求めよ．

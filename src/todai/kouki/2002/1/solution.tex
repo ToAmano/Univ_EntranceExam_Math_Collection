@@ -1,0 +1,232 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{東京大学後期$2002$年$1$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/2002/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+
+    (1)
+    $f(x)=xe^{-x^3}$の一階および二階微分は
+    \begin{align*}
+        f'(x)  & =e^{-x^3}(1-3x^3)          \\
+        f''(x) & =e^{-x^3}(-9x^2-3x^2+9x^5) \\
+               & =e^{-x^3}3x^2(3x^3-4)
+    \end{align*}
+    だから，増減表は\cref{2002-1:table:1}となる．
+    % TODO :: 矢印の修正
+    \begin{table}[H]
+        \centering
+        \caption{$f(x)$の増減表}
+        \label{2002-1:table:1}
+        \begin{tabular}{|c||c|c|c|c|c|c|c|c|c|}
+            \hline
+            $x$   & $-\infty$ &     & 0   &                 & $\sqrt[3]{\frac{1}{3}}$ &                 & $\sqrt[3]{\frac{4}{3}}$ &     & $\infty$ \\
+            \hline
+            $f'$  &           & $+$ & $+$ & $+$             & $0$                     & $-$             & $-$                     & $-$ &          \\
+            \hline
+            $f''$ &           & $+$ & $0$ & $-$             & $-$                     & $-$             & $0$                     & $+$ &          \\
+            \hline
+            $f$   & $-\infty$ &     & $0$ & \curvearrowleft &                         & \curvearrowleft & \curvearrowright        &     & $0$      \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    また，極限値および極値は以下のとおりである．
+    \begin{align*}
+         & f\left(\sqrt[3]{1/3}\right) = \sqrt[3]{1/3}e^{-1/3} \\
+         & f\left(\sqrt[3]{4/3}\right) = \sqrt[3]{4/3}e^{-4/3} \\
+         & \lim_{x\to -\infty}f(x) = -\infty                   \\
+         & \lim_{x\to \infty}f(x) = 0
+    \end{align*}
+
+    従って，グラフの概形は\cref{2002-1:fig:1}である．$\cdots$(答)
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xmin=-0.3, xmax=2,
+                    ymin=-0.5, ymax=0.8,
+                    xtick={\empty},
+                    ytick={\empty},
+                    grid=none,
+                    samples=100,
+                    smooth,
+                    clip=false
+                ]
+                \addplot [blue, thick,domain=-0.2:2] {x*exp(-x^3)};
+
+                % パラメータ
+                \pgfmathsetmacro{\maxx}{pow(1/3,1/3)}
+                \pgfmathsetmacro{\maxy}{\maxx*exp(-1/3)}
+                \pgfmathsetmacro{\xinflection}{pow(4/3,1/3)}
+                \pgfmathsetmacro{\yinflection}{\xinflection*exp(-4/3)}
+
+
+                \coordinate (max) at (\maxx, \maxy);
+                \coordinate (infl1) at (0, 0);
+                \coordinate (infl2) at (\xinflection, \yinflection);
+
+                \fill [black] (max) circle (2pt) node [above right] {$\left(\sqrt[3]{\frac{1}{3}}, \sqrt[3]{\frac{1}{3}}e^{-1/3}\right)$};
+                \fill [black] (infl1) circle (2pt) node [below] {};
+                \fill [black] (infl2) circle (2pt) node [above right]{$\left(\sqrt[3]{\frac{4}{3}}, \sqrt[3]{\frac{4}{3}}e^{-4/3}\right)$};
+                \draw[dashed] (\maxx,0) -- (max) -- (0,\maxy);
+                \draw[dashed] (\xinflection,0) -- (infl2) -- (0,\yinflection);
+
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$f(x)$のグラフの概形}
+        \label{2002-1:fig:1}
+    \end{figure}
+
+
+    \vspace{10pt}
+    (2)
+    題意より
+    \begin{align*}
+        V_1(C) = \pi \int_0^c \{f(x)\}^2 dx
+    \end{align*}
+    であり，積分部分を評価して
+    \begin{align*}
+        V_1(C)
+         & = \pi \int_0^c \{f(x)\}^2 dx          \\
+         & = \int_0^c x^2 e^{-2x^3} dx           \\
+         & = [-\frac{1}{6}e^{-2x^3}]_0^c         \\
+         & = \frac{1}{6}\left(1-e^{-2c^3}\right)
+    \end{align*}
+    だから、$C\to\infty$の極限を取って
+    \begin{align*}
+        \lim_{C\to\infty} V_1(C)
+         & = \lim_{C\to\infty}\frac{\pi}{6}(1-e^{-2c^3}) \\
+         & = \frac{\pi}{6}
+    \end{align*}
+    が求める極限値である．$\cdots$(答)
+
+    \vspace{10pt}
+    (3)
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xmin=-0.3, xmax=2,
+                    ymin=-0.5, ymax=0.8,
+                    xtick={\empty},
+                    ytick={\empty},
+                    grid=none,
+                    samples=100,
+                    smooth,
+                    clip=false
+                ]
+                \addplot [blue, thick,domain=-0.2:2] {x*exp(-x^3)};
+
+                % パラメータ
+                \pgfmathsetmacro{\maxx}{pow(1/3,1/3)}
+                \pgfmathsetmacro{\maxy}{\maxx*exp(-1/3)}
+                \pgfmathsetmacro{\xinflection}{pow(4/3,1/3)}
+                \pgfmathsetmacro{\yinflection}{\xinflection*exp(-4/3)}
+
+
+                \coordinate (max) at (\maxx, \maxy);
+                \coordinate (infl1) at (0, 0);
+                \coordinate (infl2) at (\xinflection, \yinflection);
+
+                \fill [black] (max) circle (2pt) node [above right] {$\left(\sqrt[3]{\frac{1}{3}}, \sqrt[3]{\frac{1}{3}}e^{-1/3}\right)$};
+                \fill [black] (infl1) circle (2pt) node [below] {};
+                \fill [black] (infl2) circle (2pt) node [above right]{$\left(\sqrt[3]{\frac{4}{3}}, \sqrt[3]{\frac{4}{3}}e^{-4/3}\right)$};
+                \draw[dashed] (\maxx,0) -- (max) -- (0,\maxy);
+                \draw[dashed] (\xinflection,0) -- (infl2) -- (0,\yinflection);
+                \node[left] at (0,\maxy) {$M$};
+                \node[below] at (\maxx,0) {$p$};
+
+                % 塗りつぶし
+                \addplot [draw=none,domain=0:\maxx,name path=f] {x*exp(-x^3)};
+                \addplot [draw=none,domain=0:\maxx,name path=m] {\maxy};
+                \addplot[pattern=north west lines] fill between [of=f and m];
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{斜線部が回転する領域}
+        \label{2002-1:fig:2}
+    \end{figure}
+
+    (1)より，
+    \begin{align}
+        p=\sqrt[3]{\frac{1}{3}}  \label{2002-1:eq:0}
+    \end{align}
+    とおくと
+    \begin{align}
+        M = p e^{-\frac{1}{3}} \label{2002-1:eq:1}
+    \end{align}
+    である．
+    $f(x)$の$x \sim x+\Delta x \, (\Delta x << 1)$の部分をy軸まわりに回転した立体の体積は、
+    幅$\Delta x$、高さ$f(x)$、長さ$2\pi x$の直方体の体積で近似できるから（バームクーヘン公式），
+    $p=\sqrt[3]{\frac{1}{3}}$が積分区間の上端だから，
+    \begin{align}
+        V_2
+         & = \int_0^p 2\pi x(M-f(x))dx                                        \\
+         & = 2\pi M\int_0^p x dx - 2\pi \int_0^p xf(x) dx \label{2002-1:eq:2}
+    \end{align}
+    である．各項積分すると
+    \begin{align*}
+        \int_0^p xf(x)dx
+                     & = \int_0^p x^2 e^{-x^3} dx              \\
+                     & = \left[-\frac{1}{3}e^{-x^3}\right]_0^p \\
+                     & = \frac{1}{3}\left(1-e^{-p^3}\right)    \\
+        \int_0^p xdx & = \frac{1}{2}p^2
+    \end{align*}
+    だから，\cref{2002-1:eq:2}に代入して
+    \begin{align*}
+        V_2
+         & = 2\pi \left[\frac{1}{2}Mp^2 - \frac{1}{3} + \frac{1}{3}e^{-p^3}\right]
+    \end{align*}
+    ここに\cref{2002-1:eq:0,2002-1:eq:1}を代入すると
+    \begin{align*}
+        V_2
+         & = 2\pi \left[\frac{p^3}{2} e^{-\frac{1}{3}} - \frac{1}{3} + \frac{1}{3}e^{-p^3}\right]        \\
+         & = 2\pi \left[\frac{1}{6} e^{-\frac{1}{3}}  - \frac{1}{3} + \frac{1}{3}e^{-\frac{1}{3}}\right] \\
+         & = 2\pi \left[\frac{1}{2} e^{-\frac{1}{3}}  - \frac{1}{3} \right]
+    \end{align*}
+    が求める体積である．$\cdots$(答)
+
+    {\bf[解説]}
+
+    \newpage
+\end{multicols}
+\end{document}

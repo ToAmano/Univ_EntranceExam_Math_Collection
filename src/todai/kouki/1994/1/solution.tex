@@ -1,0 +1,242 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{東京大学後期$1994$年$1$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/1994/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+
+    (1)
+    数学的帰納法で
+    \begin{align}
+         & [m, m-1, \dots, 1]_m = [1, 0, \dots, 0]_{m+1} - 1     \\
+        \therefore
+         & [m, m-1, \dots, 1]_m = (m+1)! - 1 \label{1994-1:eq:1} \\
+    \end{align}
+    を示す．
+
+    まず$m=1$のとき，\cref{1994-1:eq:1}の左辺は
+    \begin{align*}
+        [1]_{1} = 1
+    \end{align*}
+    であり，\cref{1994-1:eq:1}の右辺は
+    \begin{align*}
+        [1,0]_{2}-1 = 2! -1 = 1
+    \end{align*}
+    だから両辺ともに$1$で\cref{1994-1:eq:1}は成立する．
+
+    そこで$m=l \in \mathbb{N}$での成立を仮定して$m=l+1$での成立を示す．
+    \cref{1994-1:eq:1}の左辺は
+    \begin{align*}
+        [l+1, l, \dots, 1]_{l+1}
+         & = (l+1)(l+1)! + [l, l-1, \dots, 1]_{l}                        \\
+         & = (l+1)(l+1)! + \left\{(l+1)! - 1\right\} \quad (\because 仮定) \\
+         & = (l+2)! - 1
+    \end{align*}
+    より、$m=l+1$でも成立する．
+
+    以上から，数学的帰納法により\cref{1994-1:eq:1}が示された．
+
+    $\cdots$(答)
+    \vspace{10pt}
+
+    (2)
+    表現の簡潔さのため
+    \begin{align*}
+        B_m = [a_m, \dots, a_1]_m
+    \end{align*}
+    と置く．
+
+    題意を示すには，任意の$m$について以下の二点を証明すれば良い．
+    \begin{itemize}
+        \item[a] $B_m$が$m!$以上$(m+1)!-1$以下の全ての整数を表すことが出来る
+        \item[b] 異なる$B_m$が同じ値をとることはない
+    \end{itemize}
+
+    まずは(a)を数学的帰納法により示す．
+    $m=1$の時は
+    \begin{align*}
+        B_1 = [1]_{1} = 1
+    \end{align*}
+    であり，題意は成立する．
+
+    そこで$m=l$での成立を仮定し，$m=l+1$での成立を示す．
+    \begin{align}
+         & B_{l+1} = a_{l+1}(l+1)! + B_{k} & (k=1,2,\cdots,l) \label{1994-1:eq:2}
+    \end{align}
+    と書ける．また，題意より$a_{l+1}=1, 2, \dots, l+1$である．
+    仮定より$B_{k}$は
+    \begin{align*}
+        k! \le B_{k} \le (k+1)! -1
+    \end{align*}
+    なる全ての整数を取るから，$k=1,2,\cdots,l$と動かすと
+    \begin{align*}
+        1 \le B_{k} \le (l+1)! -1
+    \end{align*}
+    なる全ての整数をとる．従って\cref{1994-1:eq:2}は
+    \begin{align*}
+        a_{l+1}(l+1)! + 1 \le B_{l+1} \le a_{l+1}(l+1)! + (l+1)! -1
+    \end{align*}
+    である．
+    $a_{l+1}=1, 2,\dots, l+1$と$a_{l+1}$を動かすと
+    \begin{align*}
+         & (l+1)! + 1 \le B_{l+1} \le (l+1)! + (l+1)! -1  = 2(l+1)! -1 \\
+         & 2(l+1)! + 1 \le B_{l+1} \le 2(l+1)! + (l+1)! -1= 3(l+1)! -1 \\
+         & 3(l+1)! + 1 \le B_{l+1} \le 3(l+1)! + (l+1)! -1= 4(l+1)! -1 \\
+         & \cdots
+    \end{align*}
+    となり，
+    \begin{align*}
+        (l+1)! + 1 \le B_{l+1} \le (l+2)! -1
+    \end{align*}
+    なる全ての整数をとる．よって$m=l+1$でも(a)は成立する．
+
+    以上から，数学的帰納法により(a)の成立が示された．
+
+    そこで次に(b)について考える．(a)が成立することから，異なる$m\neq m'$に対して
+    \begin{align*}
+        B_m \neq B_{m'}
+    \end{align*}
+    となる．よって$m$が同じ時に同一の値を与える$\{a_k\}, \{a'_k\}$がないことを示せば良い．
+    証明は背理法による．異なる$\{a_k\}, \{a'_k\}$に対して，$B_m$が同一の値となると仮定する．
+    \begin{align*}
+         & [a_m, \dots, a_1]_m = [a'_m, \dots, a'_1]_m                                                                                   \\
+        \therefore
+         & a_m \cdot m! + a_{m-1} \cdot (m-1)! + \cdots + a_1 \cdot 1! =  a'_m \cdot m! + a'_{m-1} \cdot (m-1)! + \cdots + a'_1 \cdot 1! \\
+        \therefore
+         & (a_m-a'_m) \cdot m! + (a_{m-1}-a'_{m-1}) \cdot (m-1)! + \cdots + (a_1-a'_1) \cdot 1! = 0
+    \end{align*}
+    ここで，$0 \le a_{k},a'_{k} \le k$より，第二項目以降は
+    \begin{align*}
+        |(a_{m-1}-a'_{m-1}) \cdot (m-1)! + \cdots + (a_1-a'_1) \cdot 1!|
+         & \le (m-1)(m-1)! + (m-2)(m-2)! \cdots 1\cdot 1!                                          \\
+         & = \left(m! - (m-1)!\right) + \left((m-1)! - (m-2)!\right) \cdots + \left(2! - 1!\right) \\
+         & = m! - 1                                                                                \\
+    \end{align*}
+    だから，$a_m-a'_m \neq 0$の時には第一項目より大きくなることはなく等式が成立しない．
+    よって$a_m=a'_m$であることが必要である．
+    以下同様の議論を繰り返せば，$\{a_k\} = \{a'_k\}$となるが，これは当初の仮定に反する．
+    以上より背理法によって(b)が示された．
+
+    従って(a)，(b)が成立し，題意は示された．$\cdots$(答)
+    \vspace{10pt}
+
+    (3)
+
+
+    % $\frac{n!}{5} = 4!(5+1)\dots(n-1+1)$である。$n=5$の時、$\frac{5!}{5} = [1,0,0,0]_4$である。
+    % $n \ge 6$の時を考える。そこで、$m \in \mathbb{N} \ge 1$とすく。
+
+
+    $n$を$5$で割ったあまりによって場合分けする．
+    そこで$l \in \mathbb{N} \ge 1$とする．
+
+    \vspace{5pt}
+    \textbf{$1^{\circ} \ n=5l$の時}
+
+    この時は$n/5$が自然数で$n-1$より小さいから，
+    \begin{align*}
+        \frac{n!}{5}
+         & = \frac{n}{5}\cdot (n-1)!                     \\
+         & = \left[\frac{n}{5}, 0, 0, \dots\right]_{n-1}
+    \end{align*}
+    である．
+
+    \vspace{5pt}
+    \textbf{$2^{\circ} \ n=5l+1$の時}
+
+    この時は$(n-1)/5$が自然数で，かつ$n-2$より小さいから，
+    \begin{align*}
+        \frac{n!}{5}
+         & = n\frac{n-1}{5}(n-2)!                                      \\
+         & = \frac{n-1}{5} \left\{(n-1)! + (n-2)!\right\}              \\
+         & = \left[\frac{n-1}{5}, \frac{n-1}{5}, 0, \dots\right]_{n-1}
+    \end{align*}
+    である．
+
+
+    \vspace{5pt}
+    \textbf{$3^{\circ} \ n=5m+2$の時}
+
+    $n!/5$を$m$で表して変形すると
+    \begin{align*}
+        \frac{n!}{5}
+         & = (5m+2)(5m+1) \cdot m \cdot (5m-1)!                                             \\
+         & = m(5m+1)! + 2m(5m)! + 2m(5m-1)!                                                 \\
+         & = \left[\frac{n-2}{5}, \frac{2(n-2)}{5}, \frac{2(n-2)}{5}, 0, \dots\right]_{n-1}
+    \end{align*}
+    である．
+
+    \vspace{5pt}
+    \textbf{$4^{\circ} \ n=5m+3$の時}
+
+    $n!/5$を$m$で表して変形すると
+    \begin{align*}
+        \frac{n!}{5}
+         & = (5m+3)(5m+2)(5m+1)m(5m-1)!                                                               \\
+         & = m(5m+2)! + 3m(5m+1)! + m(5m)! + m(5m-1)!                                                 \\
+         & = \left[\frac{n-3}{5}, \frac{3n-4}{5}, \frac{n-3}{5}, \frac{n-3}{5}, 0, \dots\right]_{n-1}
+    \end{align*}
+    である．
+
+    \vspace{5pt}
+    \textbf{$5^{\circ} \ n=5m+4$の時}
+
+    $n!/5$を$m$で表して変形すると
+    \begin{align*}
+        \frac{n!}{5} & = (5m+4)(5m+3)(5m+2)(5m+1)m(5m-1)!                                                                            \\
+                     & = m(5m+3)! + (4m+2)(5m+2)! + 2m(5m+1)! + 4m(5m)! + 4m(5m-1)!                                                  \\
+                     & = \left[\frac{n-4}{5}, \frac{4n-6}{5}, \frac{2n-8}{5}, \frac{4n-16}{5}, \frac{4n-16}{5},0,\dots \right]_{n-1}
+    \end{align*}
+    である．
+
+
+    以上で全ての場合が尽くされ，いずれの場合も表示が可能であることが示された．
+    結果をまとめると，法を$5$とする合同式を用いて
+    \begin{align*}
+        \frac{n!}{5}
+         & =
+        \begin{dcases}
+            \left[\frac{n}{5}, 0, 0, \dots\right]_{n-1}                                                                 & (n \equiv 0) \\
+            \left[\frac{n-1}{5}, \frac{n-1}{5}, 0, \dots\right]_{n-1}                                                   & (n \equiv 1) \\
+            \left[\frac{n-2}{5}, \frac{2(n-2)}{5}, \frac{2(n-2)}{5}, 0, \dots\right]_{n-1}                              & (n \equiv 2) \\
+            \left[\frac{n-3}{5}, \frac{3n-4}{5}, \frac{n-3}{5}, \frac{n-3}{5}, 0, \dots\right]_{n-1}                    & (n \equiv 3) \\
+            \left[\frac{n-4}{5}, \frac{4n-6}{5}, \frac{2n-8}{5}, \frac{4n-16}{5}, \frac{4n-16}{5},0,\dots \right]_{n-1} & (n \equiv 4)
+        \end{dcases}
+    \end{align*}
+    である．$\cdots$(答)
+    \vspace{10pt}
+
+    {\bf[解説]}
+
+    \newpage
+\end{multicols}
+\end{document}

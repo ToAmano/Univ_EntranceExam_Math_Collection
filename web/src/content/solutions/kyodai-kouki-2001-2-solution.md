@@ -1,0 +1,63 @@
+---
+university: "kyodai"
+category: "kouki"
+year: "2001"
+question: "2"
+type: "solution"
+title: "KYODAI 2001 kouki Q2 (solution)"
+---
+
+## 【解】
+
+  与えられた漸化式と初期条件の両辺に$1-x$をかけて整理すると，
+  
+$$
+\begin{align*}
+g_{n+1}(x) & =g_n(x^2) \\
+    g_1(x)     & =1-x
+\end{align*}
+$$
+
+  である．従って，漸化式を繰り返し用いることで，$g_n(x)$の一般項は
+  
+$$
+\begin{align}
+g_n(x)=1-x^{2^{n-1}}\label{2001-2:eq:1}
+\end{align}
+$$
+
+  となる．$\cdots$(答)
+
+  
+  次に，$f_n(x)$が収束する条件を考える．$f_n(x)$は$\eqref{2001-2:eq:1}$より
+  
+$$
+\begin{align*}
+f_n(x)=\dfrac{1-x^{2^{n-1}}}{1-x}
+\end{align*}
+$$
+
+  だから，これが収束するのは$x\neq 1$のもとで
+  
+$$
+\begin{align*}
+& |x^2| \le 1    \\\therefore& -1 \le x \le 1
+\end{align*}
+$$
+
+  の時．従って求める条件は
+  
+$$
+\begin{align*}
+-1 \le x < 1
+\end{align*}
+$$
+
+  である．$\cdots$(答)
+
+  
+  
+
+## 【解説】
+
+  $x=1$の時、$f_{n+1}(1)=2f_n(1)$ から、$f_n(1)=2^{n-1}$ となり発散する．

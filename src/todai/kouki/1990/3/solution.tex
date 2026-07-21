@@ -1,0 +1,222 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{東京大学後期$1990$年$3$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/1990/3/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  % triangle (Q1)
+  \newcommand{\drawTriangle}[3]{
+    % 三角形 #1: 左下, #2: 右下, #3: 上
+    \draw (#1) -- (#2) -- (#3) -- cycle;
+  }
+
+  \newcommand{\recursiveTriangleQTwo}[4]{% #1, #2, #3: 座標名; #4: 深さ; #5: 識別子
+    \ifnum#4=0
+      \drawTriangle{#1}{#2}{#3};
+    \else
+      % 中点を計算して名前を付ける - 一意な識別子を使用
+      \path let
+      \p1 = (#1), \p2 = (#2), \p3 = (#3)
+      in
+      coordinate (MAB2) at ($ (\p1)!0.5!(\p2) $)
+      coordinate (MBC2) at ($ (\p2)!0.5!(\p3) $)
+      coordinate (MCA2) at ($ (\p3)!0.5!(\p1) $);
+      \drawTriangle{#1}{#2}{#3};
+      \drawTriangle{MAB2}{MBC2}{MCA2};
+    \fi
+  }
+
+
+  (1)
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=4]
+      \coordinate (A) at (0,0);
+      \coordinate (B) at (1,0);
+      \coordinate (C) at (0.5,{sqrt(3)/2});
+      \coordinate (Acenter) at ($(B)!0.5!(C)$);
+      \coordinate (Bcenter) at ($(A)!0.5!(B)$);
+      \coordinate (Ccenter) at ($(A)!0.5!(C)$);
+      \coordinate (Qone) at (1/4,{sqrt(3)/8});
+      \coordinate (Qtwo) at (3/4,{sqrt(3)/8});
+      \coordinate (Qthree) at (1/2, {3*sqrt(3)/8});
+      \recursiveTriangleQTwo{A}{B}{C}{1};
+      \node[below left] at (A) {$A_2$};
+      \node[below right] at (B) {$B_2$};
+      \node[above] at (C) {$C_2$};
+      \node[below] at (Bcenter) {$B_1(1)$};
+      \node[left] at (Ccenter) {$C_1(1)$};
+      \node[right] at (Acenter) {$C_1(2)$};
+      \node at (Qone) {$Q_1(1)$};
+      \node at (Qtwo) {$Q_1(2)$};
+      \node at (Qthree) {$Q_1(3)$};
+    \end{tikzpicture}
+    \caption{図形$Q_2$}
+    \label{1990-3:fig:1}
+  \end{figure}
+
+  まず$y_2$について，$C_2$を通る時，$A_2$ から $C_1(1) \to C_2 \to C_1(2)$ を経由して $B_2$ に行くルートだから，
+  \begin{itemize}
+    \item $A_2 \to C_1(1) \to C_2 \to C_1(2) \to B_2 $
+    \item $A_2 \to C_1(1) \to C_2 \to C_1(2) \to B_1(1) \to B_2 $
+    \item $A_2 \to B_1(1) \to C_1(1) \to C_2 \to C_1(2) \to B_2 $
+  \end{itemize}
+  の3通りである．よって$y_2 = 3$である．
+
+  一方$x_2$について，$C_2$ を通らない時はパターンを列挙すると
+  \begin{itemize}
+    \item $B_1(1)$から$Q_1(2)$へ移動する場合
+          \begin{itemize}
+            \item $A_2 \to B_1(1) \to C_1(2) \to B_2 $
+            \item $A_2 \to B_1(1) \to B_2 $
+            \item $A_2 \to C_1(1) \to B_1(1) \to B_2 $
+            \item $A_2 \to C_1(1) \to B_1(1) \to  C_1(2) \to B_2 $
+          \end{itemize}
+    \item $C_1(2)$から$Q_1(2)$へ移動する場合
+          \begin{itemize}
+            \item $A_2 \to B_1(1) \to C_1(1) \to C_1(2) \to B_2 $
+            \item $A_2 \to C_1(1) \to C_1(2) \to B_2 $
+            \item $A_2 \to C_1(1) \to C_1(2) \to B_1(1) \to B_2 $
+          \end{itemize}
+  \end{itemize}
+  の合計$7$通りなので$x_2=7$である．
+
+  以上まとめて
+  \begin{align*}
+    \begin{dcases}
+      x_2 = 7 \\
+      y_2 = 3
+    \end{dcases}
+  \end{align*}$\cdots$(答)
+
+  \vspace{10pt}
+  (2)
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=4]
+      \coordinate (A) at (0,0);
+      \coordinate (B) at (1,0);
+      \coordinate (C) at (0.5,{sqrt(3)/2});
+      \coordinate (Acenter) at ($(B)!0.5!(C)$);
+      \coordinate (Bcenter) at ($(A)!0.5!(B)$);
+      \coordinate (Ccenter) at ($(A)!0.5!(C)$);
+      \coordinate (Qone) at (1/4,{sqrt(3)/8});
+      \coordinate (Qtwo) at (3/4,{sqrt(3)/8});
+      \coordinate (Qthree) at (1/2, {3*sqrt(3)/8});
+      \recursiveTriangleQTwo{A}{B}{C}{1};
+      \node[below left] at (A) {$A_{n+1}$};
+      \node[below right] at (B) {$B_{n+1}$};
+      \node[above] at (C) {$C_{n+1}$};
+      \node[below] at (Bcenter) {$B_n(1)$};
+      \node[left] at (Ccenter) {$C_n(1)$};
+      \node[right] at (Acenter) {$C_n(2)$};
+      \node at (Qone) {$Q_n(1)$};
+      \node at (Qtwo) {$Q_n(2)$};
+      \node at (Qthree) {$Q_n(3)$};
+    \end{tikzpicture}
+    \caption{図形$Q_{n+1}$}
+    \label{1990-3:fig:2}
+  \end{figure}
+
+  まず$x_{n+1}$ をもとめる．
+  すなわち $C_n$ を通らない時はパターンを考える．
+  これは以下のように場合分けできる．
+
+  \begin{enumerate}
+    \item[$1^\circ$] $Q_n(1)$ を $B_n(1)$ から脱出する
+    \item[$2^\circ$] $Q_n(1)$ を $C_n(1)$ から脱出する
+  \end{enumerate}
+
+  \vspace{5pt}
+  \textbf{$1^\circ$ の時}
+
+  $Q_n(1)$ を出た後は $Q_n(2)$ 内を通って $B_{n+1}$ へ行く．
+  よって$Q_n(1)$を脱出するのに$x_n+y_n$通り，さらに$Q_n(2)$を通るのに$x_n+y_n$通りで，合計
+  \begin{align*}
+    (x_n+y_n)^2
+  \end{align*}
+  通りである．
+
+  \vspace{5pt}
+  \textbf{$2^\circ$ の時}
+
+  $Q_n(1)$ を出たあと，$Q_n(3)$を経由して $Q_n(2)$ 内を通って $B_{n+1}$ へ行く．
+  この時，$Q_n(1)$ 内を通過中，$B_n(1)$ を通るか否かで場合分けして考える．
+
+  \begin{itemize}
+    \item[（ア）] $Q_n(1)$ 内を通過中に $B_n(1)$ を通る時．\\
+          $C_n(2)$ を通過中，$B_n(1)$ を通ることができないことに注意すると，
+          対称性から，$A_{n+1} \to C_n(1)$ が $y_n$ 通り，
+          $C_n(1) \to C_n(2)$ が $x_n$ 通り，
+          $C_n(2) \to B_{n+1}$ が $x_n$ 通りある．
+          よってあわせて $y_n \cdot x_n^2$ 通りである．
+    \item[（イ）] $Q_n(1)$ を通過中，$B_n(1)$ を通らない時．\\
+          （ア）と同様に考えて $x_n \cdot x_n \cdot (x_n+y_n)$ 通りある．
+  \end{itemize}
+
+  以上から
+  \begin{align*}
+    x_{n+1}
+     & = (x_n+y_n)^2 + y_nx^2_n + x^2_n(x_n+y_n) \\
+     & = (x_n+y_n)^2 + 2x_n^2y_n + x_n^3
+  \end{align*}
+  である．
+
+  \vspace{0.5cm}
+
+  次に，$y_{n+1}$ をもとめる．
+  これは $Q_n(1) \to Q_n(3) \to Q_n(2)$ と行く経路のみである．
+  $x_{n+1}$ の時と同様に，$B_n(1)$を通るかどうかで場合分けして考える．
+  $B_n(1)$を通る場合は$y_ny_nx_n$通り，通らない場合は$x_ny_n(x_n+y_n)$通りだから，
+  \begin{align*}
+    y_{n+1}
+     & = x_ny_n(x_n+y_n) + x_ny_n^2 \\
+     & = 2x_n y_n^2 + x_n^2 y_n
+  \end{align*}
+  である．
+
+  以上まとめて
+  \begin{align*}
+    \begin{dcases}
+      x_{n+1} = (x_n+y_n)^2 + 2x_n^2y_n + x_n^3
+      y_{n+1} = 2x_n y_n^2 + x_n^2 y_n
+    \end{dcases}
+  \end{align*}
+  である．$\cdots$(答)
+
+  \vspace{10pt}
+  (3)
+  (2)の漸化式で$n=2$として，(1)の結果を代入すれば
+  \begin{align*}
+    x_3 & = 10^2 + 2 \cdot 49 \cdot 3 + 49 \cdot 7 = 737 \\
+    y_3 & = 2 \cdot 7 \cdot 9 + 49 \cdot 3 = 273
+  \end{align*}
+  より
+  \begin{align*}
+    \begin{dcases}
+      x_3 = 737 \\
+      y_3 = 273
+    \end{dcases}
+  \end{align*}
+  である．
+
+
+
+  $\cdots$(答)
+
+  \vspace{10pt}
+  {\bf[解説]}
+  % TODO :: x_n+y_n = 10^{**}になってる？ n=2で10, n=3で1000．
+
+
+
+  \newpage
+\end{multicols}
+\end{document}

@@ -1,0 +1,157 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{京都大学後期$1991$年$1$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/1991/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+    (1)
+    条件1で$y=f(x)$とおくと，
+    \begin{align}
+         & x = \pm \sqrt{1-\sin y} & ( \because -1 \le \sin y \le 1 ) \label{1991-1:eq:1}
+    \end{align}
+    である．$\cdots$(答)
+
+    次に，グラフは$y$軸対称なので，複号正の部分を考えて$x\ge 0$に折り返せば良い．
+    \cref{1991-1:eq:1}の複号正を両辺を$x$で微分すると
+    \begin{align*}
+         & 1 = \frac{-\cos y}{2\sqrt{1-\sin y}} \frac{dy}{dx}     \\
+        \therefore
+         & \frac{dy}{dx} = \frac{-2\sqrt{1-\sin y}}{\cos y} \le 0
+    \end{align*}
+    だから，$0\le x , 0 \le y\le \pi/2$の区間で$y$は単調減少である．
+    端点での値は
+    \begin{align*}
+        f(0) & =\pi/2 \\
+        f(1) & =0
+    \end{align*}
+    だから，グラフは\cref{1991-1:fig:1}のようになる．$\cdots$(答)
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xmin=-1.5, xmax=1.5,
+                    ymin=0, ymax=2,
+                    xtick={-1,1}, % x-coordinate for s
+                    xticklabels={$-1$,$1$},
+                    ytick={1.57}, % s=2
+                    yticklabels={$\pi/2$},
+                    grid=none,
+                    clip=false, % Allow labels to go outside the axis boundaries
+                    samples=100
+                ]
+
+                \addplot[black, solid, thick, domain=-1:1] {asin(1-x^2)*(pi/180)};
+
+                % https://tex.stackexchange.com/questions/104062/label-a-single-coordinate-pgfplots
+                \addplot[mark=none] coordinates {(0.5,0.667)} node[pin=30:{$x=\sqrt{1-\sin y}$}]{} ;
+
+                % % Mark point 
+                \addplot[only marks, mark=*] coordinates {(1,0)};
+                \addplot[only marks, mark=*] coordinates {(-1,0)};
+                \addplot[only marks, mark=*] coordinates {(0,{pi/2})};
+
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{曲線$y=f(x)$の様子}
+        \label{1991-1:fig:1}
+    \end{figure}
+
+    \vspace{10pt}
+    (2)
+    題意の面積 $S$ は\cref{1991-1:fig:2}の斜線部の面積 $S'$ として，対称性より
+    \begin{align}
+        S = 2S' \label{1991-1:eq:2}
+    \end{align}
+    で与えられる．
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xmin=-1.5, xmax=1.5,
+                    ymin=0, ymax=2,
+                    xtick={-1,1}, % x-coordinate for s
+                    xticklabels={$-1$,$1$},
+                    ytick={1.57}, % s=2
+                    yticklabels={$\pi/2$},
+                    grid=none,
+                    clip=false, % Allow labels to go outside the axis boundaries
+                    samples=100
+                ]
+
+                \addplot[black, solid, thick, domain=-1:1, name path=A] {asin(1-x^2)*(pi/180)};
+                \addplot[draw=none, domain=-1:1, name path=B] coordinates {(-1,0) (1,0)};
+
+                % https://tex.stackexchange.com/questions/104062/label-a-single-coordinate-pgfplots
+                \addplot[mark=none] coordinates {(0.5,0.667)} node[pin=30:{$x=\sqrt{1-\sin y}$}]{} ;
+
+                % % fill betweenの実行
+                \addplot[pattern=north west lines] fill between [of=A and B];
+
+                % % Mark point 
+                \addplot[only marks, mark=*] coordinates {(1,0)};
+                \addplot[only marks, mark=*] coordinates {(-1,0)};
+                \addplot[only marks, mark=*] coordinates {(0,{pi/2})};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{曲線$y=f(x)$と$x$軸で囲まれた部分}
+        \label{1991-1:fig:2}
+    \end{figure}
+
+    $S'$は$y$軸方向の積分とみなすことで，
+    \begin{align*}
+        S'
+         & = \int_0^{\pi/2} \sqrt{1-\sin y} \, dy                \\
+         & = \int_0^{\pi/2} \frac{\cos y}{\sqrt{1+\sin y}} \, dy \\
+         & = \left[ 2(1+\sin y)^{1/2} \right]_0^{\pi/2}          \\
+         & = 2(\sqrt{2}-1)
+    \end{align*}
+    だから\cref{1991-1:eq:2}に代入して
+    \begin{align*}
+        S = 4(\sqrt{2}-1)
+    \end{align*}
+    が求める面積である．$\cdots$(答)
+
+    \vspace{10pt}
+    {\bf[解説]}
+
+    \newpage
+\end{multicols}
+\end{document}

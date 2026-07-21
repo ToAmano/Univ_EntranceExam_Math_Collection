@@ -1,0 +1,44 @@
+\documentclass[tikz,border=2pt]{standalone}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{tikz,pgfplots}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{arrows.meta,calc,intersections,patterns,patterns.meta,angles,quotes,through,positioning,decorations.pathmorphing,decorations.markings}
+\usepgfplotslibrary{fillbetween,colormaps}
+\pgfplotsset{compat=1.18}
+
+
+
+\begin{document}
+\begin{tikzpicture}
+      \begin{axis}[
+          axis lines=middle,
+          xlabel=$\Re \alpha$,
+          ylabel=$\Im \alpha$,
+          xmin=-4, xmax=4,
+          ymin=-3, ymax=6,
+          xtick= {\empty},
+          ytick= {\empty},
+          grid=both,
+          grid style={line width=.1pt, draw=gray!10},
+          major grid style={line width=.2pt,draw=gray!50},
+          axis on top,
+          axis line style={-stealth} 
+        ]
+
+        \addplot[name path=upper, domain=-4:4, blue]{x + 1 + sqrt(2)};
+        \addplot[name path=lower, domain=-4:4, blue]{x + 1 - sqrt(2)};
+
+        \addplot[gray!20, pattern=north east lines] fill between[of=lower and upper];
+
+        \node[above right, blue] at (axis cs: -2, 4) {$\Im \alpha= \Re\alpha+1+\sqrt{2}$};
+        \node[below right, blue] at (axis cs: -1, -1) {$\Im \alpha = \Re\alpha+1-\sqrt{2}$};
+
+        \draw[dashed, gray] (axis cs:0, {1+sqrt(2)}) -- (axis cs:0, {1+sqrt(2)});
+        \draw[dashed, gray] (axis cs:0, {1-sqrt(2)}) -- (axis cs:0, {1-sqrt(2)});
+
+        \node[left] at (axis cs:0, {1+sqrt(2)}) {$1+\sqrt{2}$};
+        \node[left] at (axis cs:0, {1-sqrt(2)}) {$1-\sqrt{2}$};
+
+      \end{axis}
+    \end{tikzpicture}
+\end{document}

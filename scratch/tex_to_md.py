@@ -9,6 +9,7 @@ from TexSoup import TexSoup
 def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs=""):
     """
     TikZコードと大問レベルのマクロ定義を組み合わせてスタンドアロンSVG画像を生成する
+    pdftocairo (Poppler) を最優先で使用し、完璧なベクトル描画を行う
     """
     temp_dir = os.path.join("scratch", "tikz_build")
     os.makedirs(temp_dir, exist_ok=True)
@@ -19,7 +20,8 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs=""):
 \\usepackage{{amsmath,amssymb,amsfonts,amsthm}}
 \\usepackage{{tikz,pgfplots}}
 \\usepackage{{tikz-3dplot}}
-\\usetikzlibrary{{arrows.meta,calc,intersections,patterns,angles,quotes,through}}
+\\usetikzlibrary{{arrows.meta,calc,intersections,patterns,patterns.meta,angles,quotes,through,positioning,decorations.pathmorphing,decorations.markings}}
+\\usepgfplotslibrary{{fillbetween,colormaps}}
 \\pgfplotsset{{compat=1.18}}
 
 {macro_defs}
@@ -33,19 +35,35 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs=""):
         f.write(full_tex)
 
     try:
-        cmd_compile = ["latexmk", "-lualatex", "-interaction=batchmode", "-output-directory=" + temp_dir, tex_filename]
-        res_compile = subprocess.run(cmd_compile, capture_output=True, text=True)
-        if res_compile.returncode != 0:
-            cmd_compile_pdf = ["pdflatex", "-interaction=batchmode", "-output-directory=" + temp_dir, tex_filename]
-            subprocess.run(cmd_compile_pdf, capture_output=True, text=True)
+        # 1. LuaLaTeX または pdflatex で高品質 PDF の作成
+        cmd_compile_pdf = ["lualatex", "-interaction=batchmode", "-output-directory=" + temp_dir, tex_filename]
+        subprocess.run(cmd_compile_pdf, capture_output=True, text=True)
+
+        if not os.path.exists(pdf_filename):
+            cmd_pdflatex = ["pdflatex", "-interaction=batchmode", "-output-directory=" + temp_dir, tex_filename]
+            subprocess.run(cmd_pdflatex, capture_output=True, text=True)
 
         if not os.path.exists(pdf_filename):
             print(f"Failed to produce PDF for TikZ figure at {output_svg_path}")
             return False
 
-        cmd_svg = ["dvisvgm", "--pdf", "--no-fonts", "-o", output_svg_path, pdf_filename]
-        res_svg = subprocess.run(cmd_svg, capture_output=True, text=True)
-        return res_svg.returncode == 0
+        # 2. pdftocairo (Poppler) による完璧な SVG 変換
+        pdftocairo_bin = shutil.which("pdftocairo") or "/opt/homebrew/bin/pdftocairo"
+        if os.path.exists(pdftocairo_bin):
+            cmd_svg = [pdftocairo_bin, "-svg", pdf_filename, output_svg_path]
+            subprocess.run(cmd_svg, capture_output=True, text=True)
+
+        # 3. pdf2svg フォールバック
+        if not os.path.exists(output_svg_path) and shutil.which("pdf2svg"):
+            cmd_svg = ["pdf2svg", pdf_filename, output_svg_path]
+            subprocess.run(cmd_svg, capture_output=True, text=True)
+
+        # 4. dvisvgm フォールバック
+        if not os.path.exists(output_svg_path) and shutil.which("dvisvgm"):
+            cmd_svg = ["dvisvgm", "--pdf", "--no-fonts", "-o", output_svg_path, pdf_filename]
+            subprocess.run(cmd_svg, capture_output=True, text=True)
+
+        return os.path.exists(output_svg_path)
     except Exception as e:
         print(f"Error compiling TikZ to SVG: {e}")
         return False
@@ -113,11 +131,15 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
 
     raw_tex = re.sub(r'\\begin\{tabular\}.*?\\end\{tabular\}', convert_tabular_block, raw_tex, flags=re.DOTALL)
 
+    fig_count = 1
+    fig_map = {}
+
     try:
         soup = TexSoup(raw_tex, tolerance=1)
 
         # 4. figure 環境の SVG ビルドと HTML <figure> ノード置換
-        for fig in list(soup.find_all('figure')):
+        figs = list(soup.find_all('figure'))
+        for fig in figs:
             caption_node = fig.find('caption')
             label_node = fig.find('label')
             
@@ -131,6 +153,7 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
                 tikz_code = str(tikz_node)
                 svg_filename = f"fig_{fig_count}.svg"
                 svg_dest_path = os.path.join(output_svg_dir, svg_filename)
+                os.makedirs(output_svg_dir, exist_ok=True)
                 compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs)
 
                 web_img_src = f"{public_img_dir_rel}/{svg_filename}"
@@ -168,25 +191,53 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
             math_env.replace_with(f'\n$$\n\\begin{{{env_name}}}\n{align_str}\n\\end{{{env_name}}}\n$$\n')
 
         md_body = str(soup)
-    except Exception:
+    except Exception as e:
+        print(f"TexSoup warning for {tex_path}: {e}")
         # TexSoup が不整合な TeX をパース失敗した際のフォールバック
         md_body = raw_tex
+        
+        # フォールバック処理でも figure / tikzpicture の SVG 生成を試みる
+        def replace_figure_fallback(match):
+            nonlocal fig_count
+            fig_content = match.group(0)
+            m_tikz = re.search(r'\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}', fig_content, re.DOTALL)
+            m_cap = re.search(r'\\caption\{([^}]+)\}', fig_content)
+            m_lbl = re.search(r'\\label\{([^}]+)\}', fig_content)
+
+            cap_text = m_cap.group(1) if m_cap else ''
+            lbl_id = m_lbl.group(1) if m_lbl else f'fig_{fig_count}'
+
+            if m_tikz:
+                tikz_code = m_tikz.group(0)
+                svg_filename = f"fig_{fig_count}.svg"
+                svg_dest_path = os.path.join(output_svg_dir, svg_filename)
+                os.makedirs(output_svg_dir, exist_ok=True)
+                compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs)
+
+                web_img_src = f"{public_img_dir_rel}/{svg_filename}"
+                caption_label = f"図 {fig_count}" + (f": {cap_text}" if cap_text else "")
+                fig_html = f'\n\n<figure id="{lbl_id}">\n  <img src="{web_img_src}" alt="図 {fig_count}" />\n  <figcaption>{caption_label}</figcaption>\n</figure>\n\n'
+                fig_count += 1
+                return fig_html
+            return fig_content
+
+        md_body = re.sub(r'\\begin\{figure\}.*?\\end\{figure\}', replace_figure_fallback, md_body, flags=re.DOTALL)
         md_body = re.sub(r'\\begin\{(align\*?|gather\*?)\}(.*?)\\end\{\1\}', r'\n$$\n\\begin{\1}\2\\end{\1}\n$$\n', md_body, flags=re.DOTALL)
 
     # 見出しと見映えの最終整頓
-    md_body = re.sub(r'\\begin\{center\}|\\end\{center\}|\\shadowbox\{|\\endtabular', '', md_body)
-    md_body = re.sub(r'\\renewcommand\{[^}]*\}\{[^}]*\}', '', md_body)
-    md_body = re.sub(r'\\textbf\{([^{}]+)\}', r'**\1**', md_body)
-    md_body = re.sub(r'\\normalsize', '', md_body)
-    md_body = re.sub(r'\{\\bf\s*\\?\[解\\?\]\}|\[解\]', r'**【解】**', md_body)
-    md_body = re.sub(r'\{\\bf\s*\\?\[解説\\?\]\}|\[解説\]', r'**【解説】**', md_body)
-    md_body = re.sub(r'\{\\bf\s*\\?\[方針\\?\]\}|\[方針\]', r'**【方針】**', md_body)
+    md_content = re.sub(r'\\begin\{center\}|\\end\{center\}|\\shadowbox\{|\\endtabular', '', md_body)
+    md_content = re.sub(r'\\renewcommand\{[^}]*\}\{[^}]*\}', '', md_content)
+    md_content = re.sub(r'\\textbf\{([^{}]+)\}', r'**\1**', md_content)
+    md_content = re.sub(r'\\normalsize', '', md_content)
+    md_content = re.sub(r'\{\\bf\s*\\?\[解\\?\]\}|\*\*\[解\]\*\*|\\\[解\\\]|(?<!#)\s*【解】', r'\n\n## 【解】\n\n', md_content)
+    md_content = re.sub(r'\{\\bf\s*\\?\[解説\\?\]\}|\*\*\[解説\]\*\*|\\\[解説\\\]|(?<!#)\s*【解説】', r'\n\n## 【解説】\n\n', md_content)
+    md_content = re.sub(r'\{\\bf\s*\\?\[方針\\?\]\}|\*\*\[方針\]\*\*|\\\[方針\\\]|(?<!#)\s*【方針】', r'\n\n## 【方針】\n\n', md_content)
 
     # 小設問 (1), (2) などの見出し化
-    md_body = re.sub(r'^\s*\(([0-9]+)\)', r'\n### (\1)\n', md_body, flags=re.MULTILINE)
+    md_content = re.sub(r'^\s*\(([0-9]+)\)', r'\n### (\1)\n', md_content, flags=re.MULTILINE)
 
     # 連続する空行を縮小
-    md_body = re.sub(r'\n{3,}', '\n\n', md_body).strip()
+    md_content = re.sub(r'\n{3,}', '\n\n', md_content).strip()
 
     fm_str = "---\n"
     for k, v in frontmatter.items():
@@ -196,7 +247,7 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
 
     os.makedirs(os.path.dirname(output_md_path), exist_ok=True)
     with open(output_md_path, 'w', encoding='utf-8') as f:
-        f.write(fm_str + md_body)
+        f.write(fm_str + md_content)
 
 def process_all_src():
     src_root = "src"

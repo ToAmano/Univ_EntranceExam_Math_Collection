@@ -1,0 +1,234 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{東京大学後期$2001$年$3$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/2001/3/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      % --- 円弧の長さLをここで設定します (0 < L < 2*pi) ---
+      % 例として L = 2/3 * pi (120度) を設定
+      \pgfmathsetmacro{\arcL}{2*pi/3}
+
+      % ラジアンから度数法に変換
+      \pgfmathsetmacro{\endAngleDeg}{\arcL * 180 / pi}
+
+      \begin{axis}[
+          axis lines=middle,
+          xlabel=$x$,
+          ylabel=$y$,
+          xlabel style={anchor=north east},
+          ylabel style={anchor=north west},
+          axis equal, % 円が正円になるようにアスペクト比を1:1に
+          xmin=-1.5, xmax=1.5,
+          ymin=-1.5, ymax=1.5,
+          xtick={-1, 1},
+          ytick={-1, 1},
+          trig format=deg, % tikzのarcコマンドは度数法を使うため
+          clip=false,
+        ]
+
+        % 1. 全体の円を描画 (細線)
+        \draw[gray] (axis cs:0,0) circle [radius=1];
+
+        % 2. 指定した長さLの円弧を太線で描画
+        %    開始点を (1,0) (角度0度) とし、L (ラジアン) = endAngleDeg (度) まで描画
+        \draw[ultra thick, blue] (axis cs:1,0) arc(0:\endAngleDeg:1);
+
+        % 3. (オプション) 円弧の長さを視覚的に示すラベルを追加
+        \draw[->, {Stealth[]}-{Stealth[]}] (axis cs:1.2,0) arc(0:\endAngleDeg:1.2);
+        \node[blue] at (axis cs:{1.4*cos(\endAngleDeg/2)}, {1.4*sin(\endAngleDeg/2)}) {$L$};
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{円周とその上の長さ$L$の円弧}
+    \label{2001-3:fig:0}
+  \end{figure}
+
+  $[k, k+1]$ の部分集合 $D_k$ を
+  \begin{align}
+    D_k = \left\{x | k \le x \le k+1, P(x) \in I\right\} \label{2001-3:eq:1}
+  \end{align}
+  によって定める．
+
+  以下，
+  \begin{align}
+    f(x) = Ax^2+Bx+C \label{2001-3:eq:2}
+  \end{align}
+  とおく．題意より
+  \begin{align}
+    A \in \mathbb{N}, B, C \in \mathbb{Z} \label{2001-3:eq:3}
+  \end{align}
+  とおいて良い．
+  $f''(x) = 2A > 0$ だから $f$ は下に凸である．
+
+  $f(x)$は二次の係数が正の二次関数だから，$f(x)$ の $k \le x \le k+1$ の部分は$k \to \infty$ とすれば区間内で単調増加として良い．
+
+  ここで一般に連続，微分可能，単調増加かつ下に凸な関数$g(x)$の
+  $a \le x \le b$ の部分の$y$軸への正射影の長さを $a_y$, $x$軸への正射影
+  の長さを $a_x=b-a$として，区間内での平均変化率 $\Delta$ を
+  \begin{align}
+    \Delta = \frac{a_y}{a_x} \label{2001-3:eq:4}
+  \end{align}
+  とおく．
+
+  % 以下は画像内の図をTikZで再現したものです。
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.2]
+      % 曲線
+      \draw[thick] (0.5, 0.8) .. controls (1.5, 1.2) and (2.5, 2.2) .. (3.2, 3.2);
+
+      % 軸と区間
+      \draw[->] (0,0) -- (4,0) node[below] {$x$};
+      \draw[->] (0,0) -- (0,3.5) node[left] {$y$};
+      \draw[dashed] (1,0) node[below] {$a$} -- (1, 1.05);
+      \draw[dashed] (2.8,0) node[below] {$b$} -- (2.8, 2.65);
+      \draw[dashed] (0, 1.05) -- (1, 1.05);
+      \draw[dashed] (0, 2.65) -- (2.8, 2.65);
+
+      % ax, ay ラベル
+      \draw[<->] (1,-0.5) -- (2.8,-0.5) node[midway, below] {$a_x$};
+      \draw[<->] (-0.5,1.05) -- (-0.5,2.65) node[midway, left] {$a_y$};
+
+      % 割線と補助線
+      \draw (1, 1.05) -- (2.8, 2.65);
+
+      \node[] at (1.9,2.2) {$\Delta$};
+      \node[] at (2.8,3.5) {$y=f(x)$};
+      \fill[] (1, 1.05) circle (1.5pt);
+      \fill[] (2.8, 2.65) circle (1.5pt);
+
+    \end{tikzpicture}
+    \caption{関数$y=f(x)$の平均変化率の定義}
+    \label{2001-3:fig:1}
+  \end{figure}
+
+  さて\cref{2001-3:eq:3}より$f(k), f(k+1) \in \mathbb{Z}$ だから，$f(k) \le y \le f(k+1)$ の間には $f(k+1)-f(k)$ 個の
+  整数で区切られた区間
+  \begin{align*}
+    [f(k),f(k)+1], [f(k)+1,f(k)+2], \cdots, [f(k+1)-1,f(k+1)]
+  \end{align*}
+  が存在する．対応して各区間において，$P(x)$の角度の範囲は
+  \begin{align*}
+     & 2\pi f(k)     \le 2\pi f(x) \le 2\pi (f(k)+1) \\
+     & 2\pi (f(k)+1) \le 2\pi f(x) \le 2\pi (f(k)+2) \\
+     & 2\pi (f(k)+2) \le 2\pi f(x) \le 2\pi (f(k)+3) \\
+     & \cdots                                        \\
+     & 2\pi (f(k+1)-1) \le 2\pi f(x) \le 2\pi f(k+1)
+  \end{align*}
+  のように$2\pi$ずつ回転するから，各区間に$I$に含まれる部分の割合は
+  \begin{align}
+    \frac{L}{2\pi} \label{2001-3:eq:5}
+  \end{align}
+  である．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      % --- 左側の図 ---
+      \begin{axis}[
+          axis lines=none, % 軸線は非表示にして、手書きの図の雰囲気に近づける
+          width=7cm,
+          height=8cm,
+          xmin=0, xmax=3,
+          ymin=0, ymax=10,
+          clip=false, % 描画が軸の範囲外にはみ出ることを許可
+        ]
+        % --- パラメータ設定 ---
+        \pgfmathsetmacro{\mVal}{2}      % y軸区間の開始値 m
+        \pgfmathsetmacro{\ratioL}{0.7}  % L/(2π) の値 (区間長1に対する割合)
+        % --- 関数の定義と描画 ---
+        % 関数 f(x) = x^2 を定義
+        % \pgfplotsset{declare function={f(\x)=\x*\x;}}
+        % メインの曲線を描画
+        \addplot[domain=1:2.1, samples=100, smooth, black] {x^2};
+
+        % --- 区間とハイライト部分の計算 ---
+        % 水平線と曲線との交点のx座標
+        \pgfmathsetmacro{\xLower}{sqrt(\mVal)}
+        \pgfmathsetmacro{\xUpper}{sqrt(\mVal+1)}
+        % 太線部分のy座標範囲
+        \pgfmathsetmacro{\yThickStart}{\mVal + 1 - \ratioL}
+        \pgfmathsetmacro{\yThickEnd}{\mVal + 1}
+        % 太線部分のx座標範囲
+        \pgfmathsetmacro{\xThickStart}{sqrt(\yThickStart)}
+        \pgfmathsetmacro{\xThickEnd}{sqrt(\yThickEnd)}
+
+        % --- 補助線の描画 ---
+        % 水平な点線
+        \draw[dashed] (axis cs:0, \mVal) node[left] {$m$} -- (axis cs:\xLower, \mVal);
+        \draw[dashed] (axis cs:0, \mVal+1) node[left] {$m+1$} -- (axis cs:\xUpper, \mVal+1);
+
+        % --- 太線部分の描画 ---
+        % 太線の部分を上書き描画
+        \addplot[domain={\xThickStart}:{\xThickEnd}, samples=50, ultra thick, blue] {x*x};
+        % 図中の「塗りつぶされた微小部分」を表現
+        \fill[blue!50, opacity=0.7] (axis cs:{\xThickStart+0.01}, {(\xThickStart+0.01)^2}) -- (axis cs:{\xThickEnd-0.01}, {(\xThickEnd-0.01)^2}) -- (axis cs:{\xThickEnd-0.01+0.05}, {(\xThickEnd-0.01)^2-0.05}) -- cycle;
+
+        % --- ラベルの描画 ---
+        \draw[<->, {Latex[]}-{Latex[]}] (axis cs:{\xUpper+0.2}, \yThickStart) -- (axis cs:{\xUpper+0.2}, \yThickEnd) node[midway, right] {$\frac{L}{2\pi}$};
+      \end{axis}
+
+    \end{tikzpicture}
+    \caption{$y$軸方向に長さ$1$の区間があれば，そのうち$L/2\pi$の部分が$I$に含まれる．}
+    % TODO :: Lの区間が連続しない場合の図を作りたい
+    \label{2001-3:fig:3}
+  \end{figure}
+
+
+  以上の考察から$f(k) \le y \le f(k+1)$の範囲に含まれる$I$の範囲は
+  \begin{align}
+    P_{k} = \frac{L}{2\pi}\left(f(k+1)-f(k)\right) \label{2001-3:eq:6}
+  \end{align}
+  である．これが$y=f(x)$のグラフにおいて，$T_k$の部分の$y$軸への正射影の長さに他ならない．
+  従って，この$T_k$の区間における$f(x)$の平均変化率$\Delta_{k}$を
+  \begin{align}
+    \Delta_{k} = \frac{P_{k}}{T_{k}} \label{2001-3:eq:7}
+  \end{align}
+  と定義しよう．
+
+  $f$は下に凸だから，$k \le x \le k+1$においては$f'$は単調増加なので
+  \begin{align}
+    f'(k) \le \Delta_{k} \le f'(k+1) \label{2001-3:eq:8}
+  \end{align}
+  が成り立つ．\cref{2001-3:eq:7}を代入して$k$が十分大きい時$f'>0$に注意して
+  \begin{align*}
+     & f'(k) \le \frac{P_{k}}{T_{k}}  \le f'(k+1)        \\
+    \therefore
+     & \frac{P_k}{f'(k+1)} \le T_k \le \frac{P_k}{f'(k)}
+  \end{align*}
+  となる．
+
+  ここに$f'(x) = 2Ax+B$および\cref{2001-3:eq:6}を代入して
+  \begin{align*}
+    \frac{2Ak+A+B}{2Ak+2A+B} \frac{L}{2\pi} \le T_k \le \frac{2Ak+A+B}{2Ak+B} \frac{L}{2\pi}
+  \end{align*}
+  を得る．$k\to\infty$の極限を取ると
+  \begin{align*}
+     & \lim_{k\to\infty} \frac{2Ak+A+B}{2Ak+2A+B} \frac{L}{2\pi} = \frac{L}{2\pi} \\
+     & \lim_{k\to\infty}  \frac{2Ak+A+B}{2Ak+B} \frac{L}{2\pi}   = \frac{L}{2\pi}
+  \end{align*}
+  だから，挟み撃ちの定理より
+  \begin{align*}
+    \lim_{k\to\infty} T_{k} = \frac{L}{2\pi}
+  \end{align*}
+  である．$\cdots$(答)
+
+
+
+  \vspace{10pt}
+  {\bf[解説]}
+
+
+
+  \newpage
+\end{multicols}
+\end{document}

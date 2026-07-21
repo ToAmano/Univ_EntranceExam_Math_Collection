@@ -1,0 +1,119 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{京都大学後期$2005$年$6$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/2005/6/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+  表の出た100円玉の枚数$X$, 500円玉の枚数$Y$とする.
+  $X \le Y-1$ となる確率$P(X \le Y-1)$を求めれば良い.
+  この時，裏の出た枚数は100円玉$n-X$枚，500円玉は$n+1-Y$である．
+  「表の出た $100$ 円玉の枚数より表の出た $500$ 円玉の枚
+  数の方が多い」とはすなわち「裏の出た $100$ 円玉の枚数より裏の出た $500$ 円玉の枚数が少ない」
+  ということだから，
+  \begin{align}
+    P(X \le Y-1)
+     & = P(n-X+1 \ge n+1-Y)             \\
+     & = P(Y \le X) \label{2005-6:eq:1}
+  \end{align}
+  である．
+  ここで，これら二つのパターンは枚数に関して全てのパターンを尽くしており，
+  \begin{align}
+    P(X \le Y-1) + P(Y \le X) = 1 \label{2005-6:eq:2}
+  \end{align}
+  である．この様子を\cref{2005-6:fig:1}に示す．
+
+  \cref{2005-6:eq:1,2005-6:eq:2}より
+  \begin{align*}
+    P(X+1 \le Y) = \frac{1}{2}
+  \end{align*}
+  が求める答えである．
+
+  \begin{figure}[H]
+    \centering
+    \caption{$X$と$Y$のとりうるパターンを平面上に図示した様子．}
+    \label{2005-6:fig:1}
+    \begin{tikzpicture}
+      \draw[->] (0,0) -- (4,0) node[right] {$x$};
+      \draw[->] (0,0) -- (0,4) node[above] {$y$};
+
+      \foreach \x in {1,2,3} \draw (\x,0) -- (\x,0.1);
+      \foreach \y in {1,2,3} \draw (0,\y) -- (0.1,\y);
+
+      \node at (3,-0.3) {$n$};
+      \node at (-0.3,3) {$n$};
+      \node at (4,-0.3) {$n+1$};
+      \node at (-0.3,4) {$n+1$};
+
+      \draw (0,1) -- (1,0);
+      \draw (0,0) rectangle (3,3);
+
+      \draw[thick, dashed] (0,0) -- (3,3) node[above right] {$Y=X$};
+      \draw[thick, dashed] (0,1) -- (2,3) node[above right] {$Y=X+1$};
+
+      \fill[gray, opacity=0.3] (0,1) -- (0,3) -- (2,3) -- cycle; % Y>=X+1 region
+      \fill[gray, opacity=0.3] (0,0) -- (3,0) -- (3,3) -- cycle; % X>=Y region (incorrectly drawn in original, this should be below Y=X line)
+
+      % Redrawing the region based on the text explanation, not the original image's shading
+      % The text says P(X+1 <= Y) which is the region Y >= X+1 (above Y=X+1 line)
+      % And P(X >= Y) which is the region X >= Y (below Y=X line)
+      % The image shows two shaded regions, one for Y>=X+1 and another for X>=Y
+
+      % Let's try to replicate the two shaded regions in the image based on Y=X+1 and Y=X
+      % Region 1: Y >= X+1 (top left triangle)
+      \draw[fill=gray!50, opacity=0.7] (0,1) -- (0,3) -- (2,3) -- cycle;
+
+      % Region 2: X >= Y (bottom right triangle) - This means Y <= X
+      \draw[fill=gray!50, opacity=0.7] (1,0) -- (3,0) -- (3,2) -- cycle; % Adjusted to be within the square and represent X>=Y
+    \end{tikzpicture}
+  \end{figure}
+
+
+
+  \textbf{[解2]}
+  1玉の500円玉に注目し, その表裏で場合分けする.
+  残り$n$枚ずつの$100$円玉，$500$円玉の表の枚数をそれぞれ $X, Y$ とする.
+
+  \textbf{$1^\circ$ 表の時}
+  残り$n$枚ずつ投げて, $X \le Y$ となれば良く, 確率 $P(X \le Y)$
+
+  \textbf{$2^\circ$ 裏の時}
+  残り$n$枚ずつ投げて, $X < Y$ となれば良く, 確率 $P(X < Y)$
+
+  コインが$n$枚ずつあるため対称性から $P(X < Y) = P(X > Y)$ だから
+  \[ \frac{1}{2} \left( P(X \le Y) + P(X \not< Y) \right) = \frac{1}{2} \left( P(X \le Y) + P(X \ge Y) \right) = \frac{1}{2} \]
+
+
+  \textbf{[解3]}
+  500円が$k$枚表である確率を$P_k$とおくと,
+  100円が$j$枚表である確率を$q_j$とおくと,
+  \begin{align*}
+    P_k & = {}_{n+1}\mathrm{C}_k \left(\frac{1}{2}\right)^{n+1} \\
+    q_j & = {}_{n}\mathrm{C}_j \left(\frac{1}{2}\right)^{n}
+  \end{align*}
+  で，
+  \begin{align*}
+    P & = \sum_{k=1}^{n+1} P_k (q_0 + \dots + q_{k-1})                                                                                                 \\
+      & = \left(\frac{1}{2}\right)^{2n+1} \sum_{k=1}^{n+1} {}_{n+1}\mathrm{C}_k ({}_n\mathrm{C}_0 + \dots + {}_n\mathrm{C}_{k-1}) \quad \dots \text{①}
+  \end{align*}
+  ここで, $A = \sum_{k=1}^{n+1} {}_{n+1}\mathrm{C}_k ({}_n\mathrm{C}_0 + \dots + {}_n\mathrm{C}_{k-1})$ とおくと, $A$ は $(1+x)^n (1+x)^{n+1}$ の展開項のうち, $x^{n+1}$ 次以上
+  のもの和である.
+  \[ (x+1)^{2n+1} = {}_{2n+1}\mathrm{C}_0 x^0 + \dots + {}_{2n+1}\mathrm{C}_n x^n + {}_{2n+1}\mathrm{C}_{n+1} x^{n+1} + \dots + {}_{2n+1}\mathrm{C}_{2n+1} x^{2n+1} \]
+  として, ${}_{2n+1}\mathrm{C}_{2n+1-k} = {}_{2n+1}\mathrm{C}_k$ だから.
+  \[ 2^{2n+1} = 2 \left( {}_{2n+1}\mathrm{C}_0 + \dots + {}_{2n+1}\mathrm{C}_n \right) = 2A \]
+  \[ \therefore A = 2^{2n} \quad \dots \text{②} \]
+  ①②から,
+  \[ P = \left(\frac{1}{2}\right)^{2n+1} 2^{2n} = \frac{1}{2} \]
+
+  $\cdots$(答)
+
+  \vspace{10pt}
+  {\bf[解説]}
+
+  \newpage
+\end{multicols}
+\end{document}

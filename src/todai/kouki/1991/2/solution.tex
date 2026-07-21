@@ -1,0 +1,278 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{東京大学後期$1991$年$2$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/1991/2/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  (1)
+  xy平面で考える．
+  \begin{align*}
+     & C_1: x^2+y^2=1                                      \\
+     & C_2: (x-a)^2+y^2=r_1^2              & a> 0, r_1 > 0 \\
+     & C_3: (x-\alpha)^2+(y-\beta)^2=r_2^2 & r_2 >0
+  \end{align*}
+  とおいて一般性を失わない．$k=1,2,3$に対して$C_k$の中心を$O_k$と置く．
+  $y>0$にある$C_1$と$C_2$の交点をA，$y<0$にあるものをBとおく．
+
+  $C_1, C_2$が2交点を持つので
+  \begin{align*}
+    -1 < a-r_1 < 1
+  \end{align*}
+  である．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      % --- マクロパラメータの定義 ---
+      \def\a{2}      % 円2の中心のx座標
+      \def\rTwo{1.5} % 円2の半径
+
+      % --- 交点の座標を計算 ---
+      % x座標
+      \pgfmathsetmacro{\xIntersect}{(\a*\a + 1 - \rTwo*\rTwo) / (2*\a)}
+      % y座標の絶対値
+      \pgfmathsetmacro{\yIntersect}{sqrt(1 - \xIntersect*\xIntersect)}
+
+      \begin{axis}[
+          axis equal,
+          xmin=-1.5, xmax=4,
+          ymin=-2., ymax=3,
+          xlabel=$x$,
+          ylabel=$y$,
+          axis lines=middle,
+          xtick={1},
+          ytick={1},
+          domain=0:360, % 描画範囲を全周に
+          samples=200,  % 滑らかにするためのサンプル点数
+          % legend pos=north,
+          legend cell align={left}
+        ]
+
+        % 円1: x^2 + y^2 = 1
+        \addplot [thick, blue, dashed] ({cos(x)}, {sin(x)});
+        \addlegendentry{$x^2+y^2=1$}
+
+        % 円2: (x-a)^2 + y^2 = r_2^2
+        \addplot [thick, red, dashed] ({\a + \rTwo*cos(x)}, {\rTwo*sin(x)});
+        \addlegendentry{$(x-\a)^2+y^2=\rTwo^2$}
+
+        % --- 中心点 ---
+        \fill (0,0) circle (1.5pt) node[below left] {$O_1$};
+        \fill (\a,0) circle (1.5pt) node[below right] {$O_2$};
+
+        % --- 交点と直線AB ---
+        \coordinate (A) at (axis cs:\xIntersect, \yIntersect);
+        \coordinate (B) at (axis cs:\xIntersect, -\yIntersect);
+        \coordinate (O) at (axis cs:0,0);
+        \coordinate (Otwo) at (axis cs:\a, 0);
+
+        % --- 定義した座標を使って点と直線を描画 ---
+        \fill (A) circle (1.5pt) node[above] {A};
+        \fill (B) circle (1.5pt) node[below] {B};
+        \draw [thick, black] (A) -- (B);
+        \draw [dashed] (O) -- (A) -- (Otwo) -- (B) -- cycle;
+
+        \draw [thick, black] (axis cs:\xIntersect, -\yIntersect) -- (axis cs:\xIntersect, \yIntersect);
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{円$C_1,C_2$の様子．}
+    \label{1991-2:fig:1}
+  \end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      % --- マクロパラメータの定義 ---
+      \def\a{2}      % 円2の中心のx座標
+      \def\rTwo{1.5} % 円2の半径
+      \def\rThree{1.2} % 円3の半径 (値を調整可能)
+
+      % --- 座標の計算 ---
+      % 円1,2の交点x座標 (\alphaに相当)
+      \pgfmathsetmacro{\xIntersect}{(\a*\a + 1 - \rTwo*\rTwo) / (2*\a)}
+      % 円1,2の交点y座標
+      \pgfmathsetmacro{\yIntersect}{sqrt(1 - \xIntersect*\xIntersect)}
+      % 円3の中心y座標 (\beta)
+      \pgfmathsetmacro{\betaVal}{sqrt(1 + \rThree*\rThree - \xIntersect*\xIntersect)}
+
+      \begin{axis}[
+          axis equal,
+          xmin=-1.5, xmax=3,
+          ymin=-1.5, ymax=4,
+          xlabel=$x$,
+          ylabel=$y$,
+          axis lines=middle,
+          axis equal,
+          xtick={\empty},
+          ytick={\empty},
+          domain=0:360, % 描画範囲を全周に
+          samples=200,  % 滑らかにするためのサンプル点数
+          % legend pos=north,
+          legend cell align={left}
+        ]
+
+        % 円1: x^2 + y^2 = 1
+        \addplot [thick, blue, dashed] ({cos(x)}, {sin(x)});
+        \addlegendentry{$C_1$}
+
+        % 円2: (x-a)^2 + y^2 = r_2^2
+        \addplot [thick, red, dashed] ({\a + \rTwo*cos(x)}, {\rTwo*sin(x)});
+        \addlegendentry{$C_2$}
+
+        % 円3: (x-α)^2 + (y-β)^2 = r_3^2
+        \addplot [thick, green!60!black, dashed] ({\xIntersect + \rThree*cos(x)}, {\betaVal + \rThree*sin(x)});
+        \addlegendentry{$C_3$}
+
+        % --- 中心点 ---
+        \fill (0,0) circle (1.5pt) node[below left] {$O_1$};
+        \fill (\a,0) circle (1.5pt) node[below right] {$O_2$};
+        \fill (\xIntersect, \betaVal) circle (1.5pt) node[above right=2pt] {$O_3$};
+
+        % --- 交点と直線AB ---
+        \coordinate (A) at (axis cs:\xIntersect, \yIntersect);
+        \coordinate (B) at (axis cs:\xIntersect, -\yIntersect);
+        \coordinate (O) at (axis cs:0,0);
+        \coordinate (Otwo) at (axis cs:\a, 0);
+        \coordinate (Othree) at (axis cs:\xIntersect, \betaVal);
+        \fill (A) circle (1.5pt) node[above] {A};
+        \fill (B) circle (1.5pt) node[below] {B};
+        \draw [thick, black] (A) -- (B);
+        \draw [dashed] (A) -- (Othree);
+        \draw [dashed] (O) -- (Othree) -- (Otwo);
+        % TODO C_1とC_3，C_2とC_3の交点を追加
+      \end{axis}
+    \end{tikzpicture}
+    \caption{円$C_3$の様子．}
+    \label{1991-2:fig:2}
+  \end{figure}
+
+
+  A，$O_3$から$x$軸に下ろした垂線の足をH$(h,0)$，R$(\alpha,0)$とすると，題意を示すには
+  \begin{align*}
+     & H=R & \therefore h = \alpha
+  \end{align*}
+  を示せば良い．
+
+  $C_1$と$C_3$, $C_2$と$C_3$の交点の1つをP，Qとする．
+  題意より三角形$O_1PO_3$と$O_2QO_3$は直角三角形であり，三平方の定理から
+  \begin{align}
+     & \begin{dcases}
+         |PO_1|^2 + |PO_3|^2 = |O_1O_3|^2 \\
+         |QO_2|^2 + |QO_3|^2 = |O_2O_3|^2
+       \end{dcases} \\
+    \therefore
+     & \begin{dcases}
+         1 + r_2^2     = |O_1O_3|^2 \\
+         r_1^2 + r_2^2 = |O_2O_3|^2
+       \end{dcases} \label{1991-2:eq:1}
+  \end{align}
+  である．
+
+  点$R$の情報について，同様に直角三角形$O_1RO_3$，$O_2RO_3$にも三平方の定理を用いて
+  \begin{align*}
+     & \begin{dcases}
+         |O_1R|^2 + |RO_3|^2 = |O_1O_3|^2 \\
+         |O_2R|^2 + |RO_3|^2 = |O_2O_3|^2
+       \end{dcases}
+  \end{align*}
+  である．\cref{1991-2:eq:1}を代入して右辺を書き直すと
+  \begin{align*}
+    \begin{dcases}
+      \alpha^2     + \beta^2 =  1 + r_2^2 \\
+      |a-\alpha|^2 + \beta^2 = r_1^2 + r_2^2
+    \end{dcases}
+  \end{align*}
+  二つの式を引いて
+  \begin{align}
+    2a\alpha -a ^2 = 1 - r_1^2 \\
+    \therefore
+    \alpha = \frac{1+a^2-r_1^2}{2a} \label{1991-2:eq:2}
+  \end{align}
+  を得る．
+
+
+  一方で，点$H$については直角三角形$O_1HA$，$O_2HA$にも三平方の定理を用いて
+  \begin{align*}
+     & \begin{dcases}
+         |O_1H|^2 + |HA|^2 = |O_1A|^2 \\
+         |O_2H|^2 + |HA|^2 = |O_2A|^2
+       \end{dcases} \\
+     & \begin{dcases}
+         h^2 + |RA|^2 = 1 \\
+         |a-h|^2 + |RA|^2 = r_1^2
+       \end{dcases}      \\
+  \end{align*}
+  二つの式を引いて
+  \begin{align}
+    2a h -a^2 = 1 -r_1^2 \\
+    \therefore
+    h = \frac{1+a^2-r_1^2}{2a} \label{1991-2:eq:3}
+  \end{align}
+  である．
+
+  以上\cref{1991-2:eq:2,1991-2:eq:3}から$\alpha=h$すなわち$R=H$だから，
+  題意は示され，$C_3$の中心は直線AB上に存在する．$\cdots$(答)
+  \vspace{10pt}
+
+  (2)
+  $C_1, C_2$のx軸に関する対称性から$C_3$の中心が$y \ge 0$にあるとして良い．
+  よって$\beta \ge 0$とする．
+
+  新しく，$\angle AO_1R=\theta\, (0 <\theta < \pi/2)$とおくと，(1)より$R=H$であること\cref{1991-2:eq:1}より
+  \begin{align*}
+    \alpha & = |O_1A|\cos\theta = \cos\theta   \\
+    \beta  & = \sqrt{|O_1O_3|^2 - |O_1R|^2}    \\
+           & = \sqrt{1 + r_2^2 - \cos^2\theta} \\
+           & = \sqrt{r_2^2 + \sin^2\theta}
+  \end{align*}
+  である．
+
+  また点A，Bの座標は
+  \begin{align*}
+     & A(\cos\theta,\sin\theta)  \\
+     & B(\cos\theta,-\sin\theta)
+  \end{align*}
+  である．
+
+  ここで，円$C_3$の方程式は
+  \begin{align*}
+     & f(x,y) = (x-\alpha)^2+(y-\beta)^2 - r_2^2 = 0                              \\
+    \therefore
+     & f(x,y) = (x-\cos\theta)^2 + (y - \sqrt{r_2^2 + \sin^2\theta})^2 -r_2^2 = 0
+  \end{align*}
+  とおける．
+  点$(X,Y)$について$f(X,Y)>0$ならばこの点は$C_3$の外側，
+  $f(X,Y)<0$ならば$C_3$の内側になる．
+
+  実際に点A，Bの座標を代入すると
+  \begin{align*}
+    f(A)
+     & = f(\cos\theta,\sin\theta)                                         \\
+     & = (\sin\theta - \sqrt{r_2^2 + \sin^2\theta})^2 - r_2^2             \\
+     & = 2\sin^2\theta - 2\sin\theta \sqrt{r_2^2 + \sin^2\theta}          \\
+     & = 2\sin\theta\left(\sin\theta - \sqrt{r_2^2 + \sin^2\theta}\right) \\
+     & < 0                                                                \\
+    f(B)
+     & = f(\cos\theta,-\sin\theta)                                        \\
+     & = \left(-\sin\theta - \sqrt{r_2^2 + \sin^2\theta}\right)^2 - r_2^2 \\
+     & = 2\sin^2\theta + 2\sin\theta \sqrt{r_2^2 + \sin^2\theta}          \\
+     & = 2\sin\theta\left(\sin\theta + \sqrt{r_2^2 + \sin^2\theta}\right) \\
+     & > 0
+  \end{align*}
+  だから，確かに点Aは円$C_3$の内側にあり，Bは円$C_3$の外側にある．
+  よって題意は示された．$\cdots$(答)
+
+  \vspace{10pt}
+
+  {\bf[解説]}
+
+  \newpage
+\end{multicols}
+\end{document}

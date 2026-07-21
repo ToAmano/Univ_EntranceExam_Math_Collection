@@ -1,0 +1,381 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{東京大学後期$1991$年$3$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/1991/3/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  (1)
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          % 描画エリアの設定
+          axis equal,      % 軸のスケールを等しくする
+          axis lines=none, % 軸、目盛り、ラベルを非表示
+          xmin=-1.3, xmax=1.3,
+          ymin=-0.3, ymax=1.3,
+        ]
+
+        % --- 座標の定義 ---
+        \coordinate (A) at (-1,0);
+        \coordinate (B) at (1,0);
+        \coordinate (O) at (0,0);
+
+        % 半円上の点RとQの角度を定義（図の見た目に近づける）
+        \def\angleR{135} % 点Rの角度
+        \def\angleQ{40}  % 点Qの角度
+
+        \coordinate (R) at ({cos(\angleR)}, {sin(\angleR)});
+        \coordinate (Q) at ({cos(\angleQ)}, {sin(\angleQ)});
+
+        % --- 図形の描画 ---
+        % 半円と直径
+        \addplot[domain=0:180, samples=101, smooth, black, thick] ({cos(x)}, {sin(x)});
+        \draw (A) -- (B);
+
+        % 線分AQとBRを定義し、交点Pを求める
+        \path[name path=AQ, thick] (A) -- (Q);
+        \path[name path=BR, thick] (B) -- (R);
+        \path[name intersections={of=AQ and BR, by=P}];
+
+        % 線分AQとBRを実際に描画
+        \draw[thick] (A) -- (Q);
+        \draw[thick] (B) -- (R);
+
+        % 中心OからR, Qへの補助線（破線）
+        \draw[dashed, gray] (O) -- (R);
+        \draw[dashed, gray] (O) -- (Q);
+
+        % 直角を示すための補助線（タレスの定理より∠ARB=∠AQB=90°）
+        % 元の図で薄く描かれている線に対応
+        \draw[thin, gray] (A) -- (R);
+        \draw[thin, gray] (B) -- (Q);
+
+        % --- ラベルと注釈 ---
+        % 点のラベル
+        \node[below left] at (A) {$A$};
+        \node[below right] at (B) {$B$};
+        \node[below=2pt] at (O) {$O$};
+        \node[above=2pt] at (P) {$P$};
+        \node[above right] at (Q) {$Q$};
+        \node[above left] at (R) {$R$};
+
+        % 線分x, yのラベル
+        \node[above left, inner sep=2pt] at ($(A)!0.5!(P)$) {$x$};
+        \node[above right, inner sep=2pt] at ($(B)!0.5!(P)$) {$y$};
+
+        % 角度θと直角の記号
+        \pic[draw, "$\theta$", angle eccentricity=1.4, angle radius=0.2cm] {angle = A--P--B};
+        \pic[draw, angle eccentricity=1.1, line width=0.4pt] {right angle = A--R--B};
+        \pic[draw, angle eccentricity=1.1, line width=0.4pt] {right angle = A--Q--B};
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{五角形ARPQBの様子}
+    \label{1991-1:fig:1}
+  \end{figure}
+
+  $AP = x, BP = y$ とおく($0<x,y<2$)．
+  $\triangle ABP$に余弦定理を用いて
+  \begin{align}
+    4 = x^2 + y^2 - 2xy\cos\theta \label{1991-3:eq:1}
+  \end{align}
+  である．
+
+  三角形APR，APB，PBQの面積は
+  \begin{align*}
+    \triangle APR
+     & = \frac{1}{2}|AR|RP|                             \\
+     & = \frac{1}{2}x^2\sin(\pi-\theta)\cos(\pi-\theta) \\
+     & = -\frac{1}{2}x^2\sin\theta\cos\theta            \\
+    \triangle APB
+     & = \frac{1}{2}|AP||BP|                            \\
+     & = \frac{1}{2}xy\sin\theta                        \\
+    \triangle PBQ
+     & = \frac{1}{2}|PQ||QB|                            \\
+     & = \frac{-1}{2}y^2\sin\theta\cos\theta
+  \end{align*}
+  だから，五角形ARPQBの面積はこれら3つの面積の和で
+  \begin{align}
+    S
+     & = \triangle APR + \triangle APB + \triangle PBQ                                                 \\
+     & = \frac{1}{2}\left(-x^2\sin\theta \cos\theta + \sin\theta xy - \sin\theta \cos\theta y^2\right) \\
+     & = \frac{1}{2}\sin\theta\left(-\cos\theta x^2+xy-\cos\theta y^2\right) \label{1991-3:eq:2}
+  \end{align}
+  である．
+
+  よって\cref{1991-3:eq:2}の元での\cref{1991-3:eq:1}のとりうる範囲を求めれば良い．
+  \cref{1991-3:eq:1}を\cref{1991-3:eq:2}に代入して$xy$だけを残すと
+  \begin{align}
+    S
+     & =\frac{1}{2}\sin\theta\left[xy-\cos\theta \left(4 + 2xy\cos\theta\right)\right]            \\
+     & =\frac{1}{2}\sin\theta\left[xy-\cos\theta \left(4 + 2xy\cos\theta\right)\right]            \\
+     & =\frac{1}{2}\sin\theta\left[-4\cos\theta + (1-2\cos^2\theta)xy \right] \label{1991-3:eq:3}
+  \end{align}
+  となる．これを$f(xy)$と置く．
+
+  ここで$\alpha=x+y, \beta=xy$とすると、まず$x,y$は$t$の2次方程式 $t^2 - \alpha t + \beta = 0$ の $0<t<2$ をみたす
+  2実解(重解含む)だから
+  \begin{align}
+     & \begin{dcases}
+         \text{端点}: \beta > 0, 4-2\alpha+\beta>0 \\
+         \text{判別式}: \alpha^2-4\beta \ge 0       \\
+         \text{軸}: 0 < \frac{\alpha}{2} < 2
+       \end{dcases} \\
+    \iff
+     & \begin{dcases}
+         \beta > 0                     \\
+         \beta > 2\alpha-4             \\
+         \beta \le \frac{1}{4}\alpha^2 \\
+         0 < \alpha < 4
+       \end{dcases} \label{1991-3:eq:4}
+  \end{align}
+  である．
+
+  また，\cref{1991-3:eq:1}を$\alpha,\beta$で書き換えると
+  \begin{align}
+    4 = \alpha^2 - 2(1+\cos\theta)\beta \label{1991-3:eq:5}
+  \end{align}
+  である．
+
+  \cref{1991-3:eq:4,1991-3:eq:5}を図示すると下図太線部(境界含む)だから
+  \begin{align*}
+    0 < \beta \le \frac{\alpha^2-4}{2(1+c)} \\
+    \therefore
+    0 < \beta \le \frac{2}{1-\cos\theta}
+  \end{align*}
+  となる．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      % --- パラメータと座標の事前計算 ---
+      % グラフの形状を決めるパラメータcの値を設定
+      % c = cos(θ) であり、元の問題の文脈から -1 < c < 0
+      \def\cval{-0.5}
+
+      % 強調表示する曲線の終点のα座標を計算
+      \pgfmathsetmacro{\alphaEnd}{2*sqrt(2/(1-\cval))}
+      % 終点のβ座標を計算 (β = α²/4 の経路上にあるため)
+      \pgfmathsetmacro{\betaEnd}{\alphaEnd^2/4}
+
+      \begin{axis}[
+          % --- グラフの全体設定 ---
+          width=10cm, height=10cm,
+          axis lines=middle, % 軸を中央に配置
+          axis line style={->},
+          xlabel={$\alpha$},
+          ylabel={$\beta$},
+          % 軸の範囲
+          xmin=-0.5, xmax=5.5,
+          ymin=-0.5, ymax=5.5,
+          % 目盛りの設定
+          xtick={2, 4},
+          ytick={4},
+          ticklabel style={font=\small},
+          clip=false,
+          % プロットの共通スタイル
+          every axis plot/.append style={smooth, samples=101, no markers},
+        ]
+
+        % --- 境界線となる関数をプロット ---
+        % 放物線 β = α²/4
+        \addplot[domain=0:4.2, thin, black] {0.25*x^2}
+        node[pos=0.9, anchor=south east] {$\beta = \frac{1}{4}\alpha^2$};
+
+        % 直線 β = 2α-4
+        \addplot[domain=1.5:4.5, thin, black] {2*x-4}
+        node[pos=0.9, anchor=west] {$\beta = 2\alpha-4$};
+
+        % --- メインの曲線群を描画 ---
+        % 強調表示する曲線 β = (α²-4)/(2(1+c))
+        \addplot[domain=2:3.2, thin, black] {(x^2-4)/(2*(1+\cval))}
+        node[pos=0.15, anchor=north] {$\beta = \frac{\alpha^2-4}{2(1+\cos\theta)}$};
+
+        % --- 特定の区間を太線で強調表示 ---
+        \addplot[domain=2:\alphaEnd, ultra thick, black] {(x^2-4)/(2*(1+\cval))};
+
+        % --- 点と補助線の描画 ---
+        % 終点から軸への破線
+        \draw[dashed, gray] (axis cs:0, \betaEnd) -- (axis cs:\alphaEnd, \betaEnd);
+        \draw[dashed, gray] (axis cs:\alphaEnd, 0) -- (axis cs:\alphaEnd, \betaEnd);
+
+        % 始点と終点のマーカー
+        \addplot[only marks, mark=o, mark size=3pt, thick, black, fill=white] coordinates {(2,0)};
+        \addplot[only marks, mark=*, mark size=3pt, black] coordinates {(\alphaEnd, \betaEnd)};
+
+        % --- 図中のラベルを手動で配置 ---
+        % 元の図のy軸にあるラベルを再現
+        % (数学的にはこの式の値はα座標ですが、図の見た目を忠実に再現)
+        \node[left] at (axis cs:0, \betaEnd) {$2\sqrt{\frac{2}{1-c}}$};
+        \node[below] at (axis cs:2, 0) {$2$};
+
+        \draw[dashed] (4,0) -- (4,4) -- (0,4);
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$\alpha,\beta$の存在領域}
+    \label{1991-3:fig:2}
+  \end{figure}
+
+  \cref{1991-3:eq:3}は$\beta=xy$についての一次式だから，とりうる範囲は$\frac{\pi}{2} < \theta < \pi$より
+  \begin{align*}
+    \begin{dcases}
+      \frac{\pi}{2} < \theta < \frac{3\pi}{4} \text{の時, } f(0) < S \le f\left(\frac{2}{1-\cos\theta}\right) \\
+      \theta = \frac{3\pi}{4} \text{の時, } S=1                                                               \\
+      \frac{3\pi}{4} < \theta < \pi \text{の時, } f\left(\frac{2}{1-\cos\theta}\right) \le S < f(0)
+    \end{dcases}
+  \end{align*}
+  である．
+
+  ここで
+  \begin{align*}
+    f(0)
+     & = -2\sin\theta\cos\theta = -2\sin 2\theta                                                     \\
+    f\left(\frac{2}{1-\cos\theta}\right)
+     & = \frac{1}{2}\sin\theta\left[-4\cos\theta + (1-2\cos^2\theta)\frac{2}{1-\cos\theta} \right]   \\
+     & = \frac{\sin\theta}{1-\cos\theta}\left[-2\cos\theta(1-\cos\theta) + (1-2\cos^2\theta) \right] \\
+     & = \frac{\sin\theta(1-2\cos\theta)}{1-\cos\theta}
+  \end{align*}
+  だから，
+  \begin{align*}
+    \begin{dcases}
+      -\sin2\theta < S \le \frac{\sin\theta(1-2\cos\theta)}{1-\cos\theta} & (\frac{\pi}{2} < \theta < \frac{3\pi}{4}) \\
+      S=1                                                                 & (\theta = \frac{3\pi}{4})                 \\
+      \frac{\sin\theta(1-2\cos\theta)}{1-\cos\theta} \le S < -\sin2\theta & (\frac{3\pi}{4} < \theta < \pi)
+    \end{dcases}
+  \end{align*}
+  となる．$\cdots$(答)
+
+  \vspace{10pt}
+  (2)
+  $\theta$が$\frac{\pi}{2}<\theta<\pi$を満たして動く時の$S$の範囲を求めれば良い．
+  そこで，$S$の上限下限を表す関数を
+  \begin{align*}
+    g(\theta) & = \frac{\sin\theta(1-2\cos\theta)}{1-c-\theta} \\
+    h(\theta) & = -\sin 2\theta
+  \end{align*}
+  とする．
+
+  $g(\theta)$の概形を求めるため，一階微分を計算すると
+  \begin{align*}
+    g'(\theta)
+     & = \frac{(1-\cos\theta)(\cos\theta-2\cos^2\theta+2\sin^2\theta)-\sin^2\theta(1-2\cos\theta)}{(1-\cos\theta)^2} \\
+     & = \frac{(1-\cos\theta)(2+\cos\theta-4\cos^2\theta)-(1-\cos^2\theta)(1-2\cos\theta)}{(1-\cos\theta)^2}         \\
+     & = \frac{-2\cos^2\theta+2\cos\theta+1}{1-\cos\theta}
+  \end{align*}
+  だから，$\theta_0 $を $\frac{\pi}{2}<\theta_0<\pi $かつ$ \cos\theta_0 = \frac{1-\sqrt{3}}{2} $をみたすようにとって
+  $g(\theta)$の増減表は\cref{1991-3:table:1}となる．
+
+  \begin{table}[H]
+    \centering
+    \caption{$g(\theta)$の増減表}
+    \label{1991-3:table:1}
+    \begin{tabular}{c||c|c|c|c|c|c|c|}
+      $\theta$ & $\frac{\pi}{2}$ &            & $\theta_0$ &            & $\frac{3\pi}{4}$ &            & $\pi$ \\ \hline
+      $c$      & $0$             & $+$        & $0$        & $-$        & $-$              & $-$        & $-1$  \\ \hline
+      $g'$     &                 & $+$        & $0$        & $-$        & $-$              & $-$        &       \\ \hline
+      $g$      & $(1)$           & $\nearrow$ &            & $\searrow$ & $\searrow$       & $\searrow$ & $(0)$
+    \end{tabular}
+  \end{table}
+
+  したがって$g(\theta)$は$\theta = \theta_0$で最大である．
+  この時$\sin\theta_0 = \sqrt{1 - \left(\frac{1-\sqrt{3}}{2}\right)^2} = \frac{\sqrt{3}}{2}$だから
+  \begin{align*}
+    g(\theta_0)
+     & = \frac{\frac{\sqrt{3}}{2}(1-1+\sqrt{3})}{1-\frac{1-\sqrt{3}}{2}} \\
+     & = \frac{2\sqrt{3}\frac{\sqrt{3}}{2}}{1+\sqrt{3}}                  \\
+     & = 2^{-\frac{1}{2}} \cdot 3^{\frac{3}{4}}(3^{\frac{1}{2}}-1)
+  \end{align*}
+  である．
+
+  よってSのとりうる領域は\cref{1991-3:fig:3}の斜線部である(境界は実線部含む．白点は含まず．)．
+  \begin{align*}
+    0 < S \le 2^{-\frac{1}{2}} \cdot 3^{\frac{3}{4}}\left(3^{\frac{1}{2}}-1\right)
+  \end{align*}
+  が求める$S$の範囲である．$\cdots$(答)
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      % --- 定数と関数の事前計算・定義 ---
+      % θ₀ を計算 (cos(θ₀) = (1-sqrt(3))/2 となる角度)
+      \pgfmathsetmacro{\thZero}{(acos((1-sqrt(3))/2))}
+
+      % g(θ₀) の最大値を計算
+      \pgfmathsetmacro{\gMax}{pow(2,-1/2)*pow(3,3/4)*(pow(3,1/2)-1)}
+
+      \begin{axis}[
+          % --- グラフの全体設定 ---
+          width=12cm, height=8cm,
+          axis lines=middle,
+          axis line style={->},
+          xlabel={$\theta$},
+          ylabel={$S$},
+          % x軸とy軸の範囲
+          xmin=85, xmax=185,
+          ymin=0, ymax=1.5,
+          % 目盛りの設定
+          xtick={90, \thZero, 135, 180},
+          xticklabels={$\frac{\pi}{2}$, $\theta_0$, $\frac{3\pi}{4}$, $\pi$},
+          ytick={1, \gMax},
+          yticklabels={$1$, $g(\theta_0)$},
+          grid=none,
+          clip=false,
+        ]
+
+        % --- 2つの関数をプロット ---
+        % g(θ) = sin(θ)(1-2cos(θ))/(1-cos(θ))
+        \addplot[name path=g, domain=90:180, blue] {sin(x)*(1-2*cos(x))/(1-cos(x))};
+
+        % h(θ) = -sin(2θ)
+        \addplot[name path=h, domain=90:180, red] {-sin(2*x)};
+
+        % --- 2関数の間の領域を塗りつぶし ---
+        % 'split'を使い、大小関係が入れ替わる点で自動的にスタイルを分割
+        \addplot[draw=none] fill between[
+            of=g and h,
+            split,
+            % 最初のセグメント（π/2 < θ < 3π/4）のスタイル
+            every segment no 0/.style={
+                pattern=vertical lines, % 垂直の斜線
+                pattern color=gray
+              },
+            % 2番目のセグメント（3π/4 < θ < π）のスタイル
+            every segment no 1/.style={
+                pattern=north east lines, % 右上がりの斜線
+                pattern color=gray
+              }
+          ];
+
+        % --- 特定の点をプロット ---
+        % 開いた円
+        \addplot[only marks, mark=o, mark size=2.5pt, black, thick] coordinates {(90,1) (90,0) (180,0)};
+        % 閉じた円
+        \addplot[only marks, mark=*, mark size=2.5pt, black] coordinates {(135,1)};
+        \addplot[only marks, mark=*, mark size=2.5pt, black] coordinates {(\thZero,\gMax)};
+
+        \draw[dashed] (135,0) -- (135,1) -- (85,1);
+        \draw[dashed] (\thZero,0) -- (\thZero,\gMax) -- (85,\gMax);
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$S$のとりうる領域}
+    \label{1991-3:fig:3}
+  \end{figure}
+
+  \vspace{10pt}
+
+  {\bf[解説]}
+
+
+
+  \newpage
+\end{multicols}
+\end{document}

@@ -1,0 +1,107 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{京都大学後期$2004$年$2$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/2004/2/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  与式の両辺$0$以上なのでを二乗して，
+  \begin{align}
+     & |\alpha+(it+t+1)|^2 \leq 1                                                                                            \\
+     & |\alpha|^2 + (it+t+1)\overline{\alpha} + (-it+t+1)\alpha + |it+t+1|^2                      \leq 1                     \\
+     & |\alpha|^2 + (\overline{\alpha}-\alpha)it + (\alpha+\overline{\alpha})(t+1) + (t+1)^2+t^2  \leq 1                     \\
+     & 2t^2 + 2t + (\overline{\alpha}-\alpha)it + (\alpha+\overline{\alpha})(t+1)  + |\alpha|^2   \leq 0 \label{2004-2:eq:1}
+  \end{align}
+  である．この不等式を満たすような実数$t$が存在する条件を考える．
+
+  まず，
+  \begin{align*}
+    \Re(\alpha) & =X \in \mathbb{R} \\
+    \Im(\alpha) & =Y \in \mathbb{R}
+  \end{align*}
+  とおくと
+  \begin{align*}
+     & \alpha+\overline{\alpha}=2X    \\
+     & i(\overline{\alpha}-\alpha)=2Y \\
+     & |\alpha|^2=X^2+Y^2
+  \end{align*}
+  だから,\cref{2004-2:eq:1}に代入して
+  \begin{align}
+    2t^2+2(X+Y+1)t + X^2+2X+Y^2 \le 0 \label{2004-2:eq:2}
+  \end{align}
+  なる実数係数の$t$の二次式を得る．
+  左辺を $f(t)$ とすると，\label{2004-2:eq:2}を満たす$t \in \mathbb{R}$ の存在条件は
+  $f(t)=0$ の判別式 $D$ が0以上であることで，
+  \begin{align*}
+     & D/4 = (X+Y+1)^2 - 2(X^2+2X+Y^2) \geq 0  \\
+    \therefore
+     & (X-Y+1-\sqrt{2})(X-Y+1+\sqrt{2}) \leq 0
+  \end{align*}
+  である．
+  $\alpha=X+Yi$ だから, このような$\alpha$の条件を複素数平面上に図示すると\cref{2004-2:fig:1}の斜線部 (境界含む)になる．$\cdots$(答)
+
+  \begin{figure}[H]
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis lines=middle,
+          xlabel=$\Re \alpha$,
+          ylabel=$\Im \alpha$,
+          xmin=-4, xmax=4,
+          ymin=-3, ymax=6,
+          xtick= {\empty},
+          ytick= {\empty},
+          %xtick distance=1,
+          %ytick distance=1,
+          grid=both,
+          grid style={line width=.1pt, draw=gray!10},
+          major grid style={line width=.2pt,draw=gray!50},
+          % Disable ticks on the axis lines themselves
+          axis on top,
+          axis line style={-stealth} % Add arrows to the axes
+        ]
+
+        % Define the two lines
+        \addplot[name path=upper, domain=-4:4, blue] {x + 1 + sqrt(2)};
+        \addplot[name path=lower, domain=-4:4, blue] {x + 1 - sqrt(2)};
+
+        % Fill the region between the lines
+        \addplot[gray!20, pattern=north east lines] fill between[of=lower and upper];
+
+        % Add labels for the lines
+        \node[above right, blue] at (axis cs: -2, 4) {$\Im \alpha= \Re\alpha+1+\sqrt{2}$};
+        \node[below right, blue] at (axis cs: -1, -1) {$\Im \alpha = \Re\alpha+1-\sqrt{2}$};
+
+        % Mark the y-intercepts
+        \draw[dashed, gray] (axis cs:0, {1+sqrt(2)}) -- (axis cs:0, {1+sqrt(2)});
+        \draw[dashed, gray] (axis cs:0, {1-sqrt(2)}) -- (axis cs:0, {1-sqrt(2)});
+
+        \node[left] at (axis cs:0, {1+sqrt(2)}) {$1+\sqrt{2}$};
+        \node[left] at (axis cs:0, {1-sqrt(2)}) {$1-\sqrt{2}$};
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$\alpha$の領域}
+    \label{2004-2:fig:1}
+  \end{figure}
+
+  \vspace{10pt}
+  {\bf[解説]}
+  検算の例として，境界線上の点$\alpha=\sqrt{2}-1$で実際に$t$が存在するかをチェックしてみよう．
+  \begin{align*}
+    |(1+i)t+\sqrt{2}|^2             & \leq 1 \\
+    |it+t+\sqrt{2}|^2               & \leq 1 \\
+    t^2 + \left(t+\sqrt{2}\right)^2 & \leq 1 \\
+    2t^2 + 2\sqrt{2}t + 1           & \leq 0
+  \end{align*}
+  これはしっかりと実数解が存在するので大丈夫そうである．
+  このように，実際に何点か取って検算してみると，答えがもっともらしいかどうかがわかるので
+  受験で点を落とさないためには大事な作業である．
+
+  \newpage
+\end{multicols}
+\end{document}

@@ -1,0 +1,365 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{京都大学後期$1996$年$5$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/1996/5/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  （1）
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.5]
+      \begin{axis}[
+          view={60}{30},
+          axis equal,
+          xlabel=$x$,
+          ylabel=$y$,
+          zlabel=$z$,
+          axis lines=middle,
+          xmin=-1.5, xmax=1.5,
+          ymin=-1.5, ymax=1.5,
+          zmin=0, zmax=3,
+          xtick={\empty},
+          ytick={\empty},
+          ztick={\empty},
+          grid=none,
+          clip=false,
+        ]
+
+        % xy平面の単位円 (z=0)
+        \addplot3[
+          domain=0:360,
+          samples=100,
+          thick,
+          blue
+        ] ({cos(x)}, {sin(x)}, {0});
+        \pgfmathsetmacro{\Qx}{0.6} % QのX座標 (図では左手前の軸)
+        \pgfmathsetmacro{\Qy}{0.8} % QのY座標 (図では右手前の軸)
+        \coordinate (P) at (\Qx,-\Qy,0); % Pの座標
+        \coordinate (Q) at (\Qx,\Qy,0); % Qの座標
+
+        \pgfmathsetmacro{\Rz}{2 * \Qy * sqrt(3)/2} % 正三角形の高さ
+        % RのXY座標はPQの中点。
+        \pgfmathsetmacro{\Rx}{\Qx}
+        \pgfmathsetmacro{\Ry}{0}
+        \coordinate (R) at (\Rx, \Ry, \Rz); % Rの座標
+
+        % 正三角形の辺を描画
+        \draw[thick] (P) -- (Q) -- (R) -- cycle;
+
+        % 各点にラベルを付ける
+        \node[label={[anchor=north east]P}] at (P) {};
+        \node[label={[anchor=north west]Q}] at (Q) {};
+        \node[label={[anchor=south]R}] at (R) {};
+      \end{axis}
+    \end{tikzpicture}
+    \caption{三角形PQRの様子}
+    \label{1996-5:fig:0}
+  \end{figure}
+
+
+  直線 PQ と原点の距離 $r$ とおく．
+  辺 PQの長さが$2a$だから，辺 PQが単位円の中を動く時
+  \begin{align}
+    0 \le r \le \sqrt{1-a^2} \label{1996-5:eq:1}
+  \end{align}
+  である．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis lines=middle,
+          xmin=-1.5, xmax=1.5,
+          ymin=-1.5, ymax=1.5,
+          xlabel=$x$,
+          ylabel=$y$,
+          xtick={1},
+          ytick={\empty},
+          unit vector ratio=1 1, % Ensures the circle is round
+          grid=none,
+          clip=false, % Allow drawing outside the axis limits if needed
+        ]
+
+        % Draw the unit circle
+        \addplot[domain=0:360, samples=100, blue, thick] ({cos(x)}, {sin(x)});
+
+        \pgfmathsetmacro{\aval}{0.5} % Define a specific value for 'a' for drawing
+        \pgfmathsetmacro{\rval}{0.4} % Define a specific value for 'a' for drawing
+        \pgfmathsetmacro{\yval}{sqrt(1-\rval*\rval)} % Define a specific value for 'a' for drawing
+        \pgfmathsetmacro{\maxrval}{sqrt(1-\aval*\aval)} % Calculate r based on 'a'
+
+        \draw[thick]   (\rval, -\yval) -- (\rval, \yval);
+        \draw[dashed]  (0, -\yval) -- (\rval, -\yval);
+        \draw[dashed]  (\rval, \yval) -- (0, \yval);
+        \addplot[only marks,mark=*] coordinates {(\rval, -\yval) (\rval, \yval)};
+        \node[above right] at (\rval,0) {$r$};
+
+        % Draw the line x=r
+        \draw[red, thick, dashed] (\maxrval, {-sqrt(1-\maxrval*\maxrval)}) -- (\maxrval, {sqrt(1-\maxrval*\maxrval)}) node[above right] {$r=\sqrt{1-a^2}$};
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{辺$PQ$が$y$軸に平行な場合のイメージ図．$r$は\cref{1996-5:eq:1}の範囲で動く．}
+    \label{1996-5:fig:1}
+  \end{figure}
+
+  また，点$R$の$z$座標は$\sqrt{3}$である．
+
+  求める領域は$z$軸を中心に軸対称だから，
+  辺 PQ が$y$軸に平行な場合を考えて，
+  その領域を $z$ 軸まわりに回転した立体の体積を考えれば良い．
+  $r$を固定して三角形PQRをこの条件で動かすと，
+  三角形PQRの動く領域は\cref{1996-5:fig:2}のような底辺$2\sqrt{1-r^2}$，
+  上辺$\sqrt{1-r^2}-2a$，高さ$\sqrt{3}a$の台形になる．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.2]
+      \begin{axis}[
+          axis lines=middle,
+          xmin=-1.5, xmax=1.5,
+          ymin=0, ymax=1.5,
+          xlabel=$y$,
+          ylabel=$z$,
+          xtick={\empty},
+          ytick={\empty},
+          unit vector ratio=1 1, % Ensures the circle is round
+          grid=none,
+          clip=false, % Allow drawing outside the axis limits if needed
+        ]
+
+        \pgfmathsetmacro{\aval}{0.5} % Define a specific value for 'a' for drawing
+        \pgfmathsetmacro{\rval}{0.4} % Define a specific value for 'a' for drawing
+        \pgfmathsetmacro{\yval}{sqrt(1-\rval*\rval)} % Define a specific value for 'a' for drawing
+        \pgfmathsetmacro{\maxrval}{sqrt(1-\aval*\aval)} % Calculate r based on 'a'
+
+        % 底辺
+        \draw[thick]   (-\yval,0) -- (\yval,0) -- ({\yval-\aval},{sqrt(3)*\aval}) -- ({-\yval+\aval},{sqrt(3)*\aval}) -- cycle;
+        \addplot[only marks,mark=*] coordinates {(-\yval,0) (\yval,0)};
+        \node[below right,font=\footnotesize] at (\yval,0) {$\sqrt{1-r^2}$};
+        \node[below left,font=\footnotesize] at (-\yval,0) {$-\sqrt{1-r^2}$};
+
+        % 上辺
+        \addplot[only marks,mark=*] coordinates {({-\yval+\aval},{sqrt(3)*\aval}) ({\yval-\aval},{sqrt(3)*\aval})};
+        \node[above right,font=\footnotesize] at (0,{sqrt(3)*\aval}) {$\sqrt{3}a$};
+
+        % 垂線
+        \draw[dashed] ({-\yval+\aval},{sqrt(3)*\aval}) -- ({-\yval+\aval},0);
+        \draw[dashed] ({\yval-\aval},{sqrt(3)*\aval}) -- ({\yval-\aval},0);
+        \node[below,font=\footnotesize] at ({-\yval+\aval},0) {$-\sqrt{1-r^2}+a$};
+        \node[below,font=\footnotesize] at ({\yval-\aval},0) {$\sqrt{1-r^2}-a$};
+
+        % 正三角形
+        \draw[dashed] ({-\yval+\aval},{sqrt(3)*\aval}) -- ({-\yval+2*\aval},0);
+        \draw[dashed] ({\yval-\aval},{sqrt(3)*\aval}) -- ({\yval-2*\aval},0);
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{辺$PQ$が$y$軸に平行な場合のイメージ図．$r$は\cref{1996-5:eq:1}の範囲で動く．}
+    \label{1996-5:fig:2}
+  \end{figure}
+
+  従って，この立体を$z=k\, (0 \le k \le \sqrt{3}a) $で切断した切り口は\cref{1996-5:fig:3}の線分BCである．
+  この図で正三角形ABCの垂線の長さは$\sqrt{3(1-r^2)}-k$だから，
+  \begin{align*}
+    |BC| = \frac{2}{\sqrt{3}}\left(\sqrt{3(1-r^2)}-k\right)
+  \end{align*}
+  となる．従ってこれは
+  \begin{align}
+    -\frac{\sqrt{3(1-r^2)}-k}{\sqrt{3}} \le y \le \frac{\sqrt{3(1-r^2)}-k}{\sqrt{3}} \label{1996-5:eq:2}
+  \end{align}
+  となり，$x=r$を動かして$z=k$平面に図示すると\cref{1996-5:fig:4}のようになる．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.2]
+      \begin{axis}[
+          axis lines=middle,
+          xmin=-1.5, xmax=1.5,
+          ymin=0, ymax=2,
+          xlabel=$y$,
+          ylabel=$z$,
+          xtick={\empty},
+          ytick={\empty},
+          unit vector ratio=1 1, % Ensures the circle is round
+          grid=none,
+          clip=false, % Allow drawing outside the axis limits if needed
+        ]
+        \pgfmathsetmacro{\aval}{0.3} % Define a specific value for 'a' for drawing
+        \pgfmathsetmacro{\rval}{0.4} % Define a specific value for 'a' for drawing
+        \pgfmathsetmacro{\yval}{sqrt(1-\rval*\rval)} % Define a specific value for 'a' for drawing
+        \pgfmathsetmacro{\maxzval}{sqrt(3*(1-\rval*\rval))} % Define a specific value for 'a' for drawing
+
+        % 底辺
+        \coordinate (A) at (-\yval,0);
+        \coordinate (B) at (\yval,0);
+        \coordinate (C) at ({\yval-\aval},{sqrt(3)*\aval});
+        \coordinate (D) at ({-\yval+\aval},{sqrt(3)*\aval});
+        \coordinate (E) at (0,\maxzval);
+
+        \draw[thick]   (A) -- (B) -- (C) -- (D) -- cycle;
+        \draw[dashed] (A) to [out=-20,in=200] (B);
+        \node[below=6pt,fill=white, font=\tiny] at ($0.5*(A)+0.5*(B)$) {$2\sqrt{1-r^2}$};
+        \draw[dashed] (C) -- (E) -- (D);
+        \fill (A) circle (1.5pt);
+        \fill (B) circle (1.5pt);
+        \fill (C) circle (1.5pt);
+        \fill (D) circle (1.5pt);
+        \fill (E) circle (1.5pt);
+
+        % % 上辺
+        % \draw[dashed] (D) to [out=20,in=160] (C);
+        \node[above right=5pt,font=\tiny] at (0,{sqrt(3)*\aval}) {$\sqrt{3}a$};
+        \node[above right,font=\tiny] at (E) {$\sqrt{3(1-r^2)}$};
+        \node[above left,font=\tiny] at (E) {A};
+        % \node[above=2pt, fill=white, font=\tiny] at ($0.5*(C)+0.5*(D)$) {$2(\sqrt{1-r^2}-a)$};
+
+        % % 垂線
+        \draw[dashed] (D) -- ({-\yval+\aval},0);
+        \draw[dashed] (C) -- ({\yval-\aval},0);
+
+        % % z = kでの点
+        \pgfmathsetmacro{\zval}{0.3}
+        \coordinate (F) at ({(\maxzval-\zval)/sqrt(3)},\zval);
+        \coordinate (G) at ({-(\maxzval-\zval)/sqrt(3)},\zval);
+        \fill[red] (F) circle (1.5pt);
+        \fill[red] (G) circle (1.5pt);
+        \node[above right,font=\tiny] at (F) {B};
+        \node[above left,font=\tiny] at (G) {C};
+        \draw[dashed,red] (-1.2,\zval) -- (1.2,\zval);
+        \node[below right=1pt,font=\tiny] at (0,\zval) {$k$};
+        \draw[dashed] (G) to [out=20,in=160] (F);
+        \node[above=0.1pt, fill=white, font=\tiny] at ($0.5*(G)+0.5*(F)$) {$\frac{2(\sqrt{3(1-r^2)}-k)}{\sqrt{3}}$};
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{台形の$z=k$での切断面は線分BCである．正三角形ABCの垂線の長さから，BCの長さが求まる．}
+    \label{1996-5:fig:3}
+  \end{figure}
+
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.2]
+      \begin{axis}[
+          axis lines=middle,
+          xmin=0, xmax=1.5,
+          ymin=-1.5, ymax=1.5,
+          xlabel=$x$,
+          ylabel=$y$,
+          xtick={\empty},
+          ytick={\empty},
+          unit vector ratio=1 1, % Ensures the circle is round
+          grid=none,
+          clip=false, % Allow drawing outside the axis limits if needed
+        ]
+        \pgfmathsetmacro{\aval}{0.5} % パラメータ a の値 (例: 0.5)
+        \pgfmathsetmacro{\kval}{0.2} % パラメータ k の値 (例: 0.2)
+        \pgfmathsetmacro{\xmaxval}{sqrt(1-\aval*\aval)}
+        \pgfmathsetmacro{\ymaxval}{(sqrt(3)*\aval-\kval)/sqrt(3)}
+        \pgfmathsetmacro{\xlimitval}{sqrt(1-\kval*\kval/3)}
+
+        \pgfplotsset{
+          declare function={
+              y_upper(\x) = (max(0, sqrt(3*(1-\x*\x)) - \kval)) / sqrt(3);
+              y_lower(\x) = -(max(0, sqrt(3*(1-\x*\x)) - \kval)) / sqrt(3);
+              % もし sqrt(3*(1-x^2)) - k が負の場合も描画したいなら
+              % y_upper_alt(\x) = (sqrt(3*(1-\x*\x)) - \kval) / sqrt(3);
+              % y_lower_alt(\x) = -(sqrt(3*(1-\x*\x)) - \kval) / sqrt(3);
+            },
+          samples=100
+        }
+        % 描画範囲 (x軸) を明示的に設定
+        \addplot[name path=upper, thick,domain=0:\xmaxval] {sqrt(3*(1-\x*\x)) - \kval) / sqrt(3)};
+        \addplot[name path=lower, thick,domain=0:\xmaxval] {-sqrt(3*(1-\x*\x)) + \kval) / sqrt(3)};
+        \addplot[dashed,domain=\xmaxval:\xlimitval] {sqrt(3*(1-\x*\x)) - \kval) / sqrt(3)};
+        \addplot[dashed,domain=\xmaxval:\xlimitval] {-sqrt(3*(1-\x*\x)) + \kval) / sqrt(3)};
+        % 領域の塗りつぶし
+        \addplot[pattern=north west lines, fill opacity=0.4] fill between[of=upper and lower];
+
+
+        \coordinate (O) at (0,0);
+        \coordinate (A) at (\xmaxval,\ymaxval);
+        \coordinate (B) at (\xmaxval,-\ymaxval);
+        \coordinate (C) at (\xmaxval,0);
+        \coordinate (D) at (0,\ymaxval);
+
+        \draw[thick, dashed] (O) -- (A) ;
+        \draw[thick, dashed] (C) -- (A) -- (D) ;
+        \fill (O) circle (1.5pt);
+        \fill (A) circle (1.5pt);
+        \fill (B) circle (1.5pt);
+
+        \node[left,font=\tiny] at (D) {$a - k/\sqrt{3}$};
+        \node[below left,fill=white, font=\tiny] at (C) {$\sqrt{1-a^2}$};
+        \node[above,fill=white, font=\tiny] at ($0.5*(O)+0.5*(A)$) {$r(k)$};
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$z=k$での切断面の様子．これをz軸周りに一回転したものが求める図形の断面に等しい．
+      計算すると，$r(k)$を半径とする円になる．}
+    \label{1996-5:fig:4}
+  \end{figure}
+
+  従ってこれを$z$軸周りに一回転させたものが求める立体の$z=k$での切り口である．
+  境界の曲線\cref{1996-5:eq:2}上の点$(X,Y)$とすると，原点からの距離の二乗は
+  \begin{align*}
+    X^2+Y^2
+     & = X^2 + \frac{1}{3}\left(\sqrt{3(1-X^2)}-k\right)^2          \\
+     & = X^2 + (1-X^2) -\frac{2k}{3}\sqrt{3(1-X^2)} + \frac{k^2}{3} \\
+     & = 1 -\frac{2k}{3}\sqrt{3(1-X^2)} + \frac{k^2}{3}
+  \end{align*}
+  でこれは$X$の単調増加関数だから，$X=\sqrt{1-a^2}$で最大値
+  \begin{align*}
+    r(k)                                                  \\
+     & = \max (X^2+Y^2)
+     & =  (1-a^2) + \frac{1}{3}\left(\sqrt{3}a-k\right)^2
+  \end{align*}
+  をとる．
+  従って回転した領域は半径$r(k)$の円だから，
+  この面積$S(k)$として，
+  \begin{align*}
+    S(k)
+     & = \pi r^2(k)                                                          \\
+     & = \pi \left( (1-a^2) + \frac{1}{3} \left(\sqrt{3}a-k\right)^2 \right)
+  \end{align*}
+  だから，求める体積$V$はこれを$0\le z\le \sqrt{3}a$で積分したもので
+  \begin{align*}
+    V
+     & = \int_0^{\sqrt{3}a} S(k) dk                                                         \\
+     & = \pi \left[ (1-a^2)k + \frac{1}{9} \left(k-\sqrt{3}a\right)^3 \right]_0^{\sqrt{3}a} \\
+     & = \pi \left[ \sqrt{3}a(1-a^2) + \frac{\sqrt{3}}{3}a^3 \right]                        \\
+     & = \frac{\sqrt{3}\pi}{3}(3a-2a^3)
+  \end{align*}
+  が求める体積である．$\cdots$(答)
+
+  \vspace{10pt}
+  (2) $\frac{dV}{da}\frac{1}{\pi} = \sqrt{3} (1 - 2a^2)$ から下表を得る
+  \begin{tabular}{|c||c|c|c|c|c|}
+    \hline
+    $a$  & $0$ & $\dots$    & $\frac{1}{\sqrt{2}}$ & $\dots$    & $1$ \\
+    \hline
+    $V'$ &     & $+$        & $0$                  & $-$        &     \\
+    \hline
+    $V$  &     & $\nearrow$ &                      & $\searrow$ &     \\
+    \hline
+  \end{tabular}
+
+  従って V は $a=\frac{1}{\sqrt{2}}$ の時，max $\frac{1}{3}\sqrt{6}\pi$ をとる．
+
+  \vspace{10pt}
+  {\bf[解説]}
+  解答ではかなり丁寧に$z=k$での断面図を求めたが，
+  対称性からPQの中点が$x$軸にある場合だけを考えれば良いので，
+  実践的にはそれで十分だと思われる．
+  % TODO この場合の回答
+
+  \newpage
+\end{multicols}
+\end{document}

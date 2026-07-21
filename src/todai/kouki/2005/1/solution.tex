@@ -1,0 +1,563 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{東京大学後期$2005$年$1$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/2005/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+
+    (1)
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle, % Draw axes through the origin
+                    % Set custom limits for the plotting area
+                    xmin=-1.2, xmax=1.2,
+                    ymin=-0.1, ymax=1.2,
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    axis equal, % Ensures that units on both axes are scaled equally, making the circle look circular
+                    xtick={-1, 0, 1}, % Explicit x-axis tick marks
+                    ytick={0, 1}, % Explicit y-axis tick marks
+                    xticklabels={-1, 0, 1}, % Labels for x-axis ticks
+                    yticklabels={0, 1}, % Labels for y-axis ticks
+                    grid=none, % No grid lines
+                    clip=false,
+                ]
+                % Define the angle theta for point P in degrees
+                % This value is chosen to visually match the provided diagram.
+                \pgfmathsetmacro{\thetaVal}{60} % theta = 60 degrees
+
+                % Define coordinates for key points based on the problem description
+                \coordinate (O) at (0,0); % Origin
+                \coordinate (P) at ({cos(\thetaVal)}, {sin(\thetaVal)}); % P(cos(theta), sin(theta))
+                \coordinate (Q) at (1,0); % Q(1,0)
+
+                % Define parameters 'a' and 'b' from the problem context to position A and B.
+                % In the original problem, A is A(1-aS, aC) and B is B(1-b,0)
+                % where S = sin(theta/2) and C = cos(theta/2).
+                % These values are chosen to visually represent the points as in the diagram.
+                \pgfmathsetmacro{\Ssmall}{sin(\thetaVal/2)} % S = sin(30 deg) = 0.5
+                \pgfmathsetmacro{\Csmall}{cos(\thetaVal/2)} % C = cos(30 deg) approx 0.866
+                \pgfmathsetmacro{\parama}{0.5} % Example value for parameter 'a'
+                \pgfmathsetmacro{\paramb}{0.7} % Example value for parameter 'b'
+
+                \coordinate (B) at ({1-\paramb}, 0); % B(1-b, 0)
+                \coordinate (A) at ({1-\parama*\Ssmall}, {\parama*\Csmall}); % A(1-aS, aC)
+
+                % Draw the semi-circle (upper half of the unit circle)
+                \addplot[domain=0:180, samples=100, thick] ({cos(x)}, {sin(x)});
+
+                % Draw the line segments OP, PQ, and AB
+                \draw[thick] (O) -- (P) -- (Q);
+                \draw[thick] (A) -- (B); % Segment AB
+
+                % Mark points O, P, Q, A, B with small filled circles
+                \fill (O) circle (1.5pt);
+                \fill (P) circle (1.5pt);
+                \fill (Q) circle (1.5pt);
+                \fill (A) circle (1.5pt);
+                \fill (B) circle (1.5pt);
+
+                % Add labels for the points
+                \node[above right] at (P) {$P$};
+                \node[below right] at (Q) {$Q$};
+                \node[below left] at (O) {$O$};
+                \node[above left] at (A) {$A$};
+                \node[below right] at (B) {$B$};
+
+                % Draw the angle theta at the origin
+                \pic[draw, "$\theta$", angle radius=0.8cm] {angle = Q--O--P};
+
+                % Add labels for lengths 'a' (on AQ) and 'b' (on QB)
+                % Use the 'calc' library to find midpoints for label placement
+                \path ($(A)!0.5!(Q)$) node[above right, xshift=2pt, yshift=2pt] {$a$};
+                \path ($(Q)!0.5!(B)$) node[below] {$b$};
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{三角形OPQと点ABの様子}
+        \label{2005-1:fig:1}
+    \end{figure}
+
+    線分$PQ$の長さの二乗は
+    \begin{align*}
+        |PQ|^2
+         & = (1-\cos\theta)^2 + \sin^2\theta \\
+         & = 2(1-\cos\theta)                 \\
+         & = 4\sin^2\frac{\theta}{2}
+    \end{align*}
+    である．
+    $0 < \theta < \pi$ より $\sin^2(\theta/2) > 0$ だから，
+    両辺ルートをとって
+    \begin{align*}
+        |PQ| = 2\sin\frac{\theta}{2}
+    \end{align*}
+    である．
+    ここで，$\angle PQO = \frac{\pi-\theta}{2}$だから，
+    三角形$OPQ$および$ABQ$の面積は，$|PO|=1$より
+    \begin{align*}
+        (\triangle OPQ)
+         & = \frac{1}{2}|PQ||PO|\sin\frac{\pi-\theta}{2}                \\
+         & = \frac{1}{2} 2\sin\frac{\theta}{2} \sin\frac{\pi-\theta}{2} \\
+        (\triangle ABQ)
+         & = \frac{1}{2}|AQ||BQ|\sin\frac{\pi-\theta}{2}                \\
+         & = \frac{1}{2} ab \sin\frac{\pi-\theta}{2}
+    \end{align*}
+    である．題意の条件より$\triangle ABQ$の面積が$\triangle OPQ$の半分だから
+    \begin{align*}
+        \frac{1}{2} \sin\frac{\theta}{2} \sin\frac{\pi-\theta}{2} =  \frac{1}{2} ab \sin\frac{\pi-\theta}{2}
+    \end{align*}
+    $0<\theta<\pi$より$\sin\frac{\pi-\theta}{2}\neq 0$だから
+    \begin{align}
+        ab = \sin\frac{\theta}{2} \label{2005-1:eq:1}
+    \end{align}
+    である．よって題意は示された．$\cdots$(答)
+
+    \vspace{10pt}
+    (2)
+    $\angle PQO=\frac{\pi-\theta}{2}$だから，$\triangle ABQ$に余弦定理を用いて
+    \begin{align*}
+         & |AB|^2 = |AQ|^2 + |BQ|^2 -2 |AQ||BQ|\cos \frac{\pi-\theta}{2} \\
+        \therefore
+         & |AB|^2 = a^2 + b^2 -2ab\sin\frac{\theta}{2}
+    \end{align*}
+    を得る．$\theta$を固定して$a,b$を動かしたときの$|AB|^2$の最小値が$f(\theta)$を与える．
+
+    そこで，新しく$T=a+b$とおいて\cref{2005-1:eq:1}を代入して
+    \begin{align}
+        |AB|^2
+         & = (a+b)^2 - 2ab -2ab\sin\frac{\theta}{2}                                            \\
+         & = T^2 -2\sin\frac{\theta}{2}\left(1+\sin\frac{\theta}{2}\right) \label{2005-1:eq:2}
+    \end{align}
+    である．
+
+    以下，\cref{2005-1:eq:1}のもとでの$T$の最小値を求めれば良い．
+    まず，Aが線分PQ上にあり，Bが線分QOにあることから
+    \begin{align*}
+        \begin{dcases}
+            0 \le a \le 2\sin\frac{\theta}{2} \\
+            0 \le b \le 1
+        \end{dcases}
+    \end{align*}
+    を満たすことに注意すると，以下の二つの場合わけが必要になる．
+
+    \vspace{5pt}
+    \textbf{$1^\circ \sqrt{\sin(\theta/2)} \le 2\sin(\theta/2) \iff \sin(\theta/2) \ge \frac{1}{4} \iff \overline{PQ} \ge \frac{1}{2}$ の時}
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[scale=0.9]
+            % Define the value of S and related calculated values
+            \pgfmathsetmacro{\Svalue}{2/3} % S = 2/3 as specified by the user
+            \pgfmathsetmacro{\sqrtS}{sqrt(\Svalue)} % sqrt(2/3)
+            \pgfmathsetmacro{\twoS}{2*\Svalue} % 2 * 2/3 = 4/3
+
+            % Calculated y-values for specific x-points on the hyperbola
+            \pgfmathsetmacro{\bAtOne}{\Svalue/1} % b when a=1 (equals S)
+            \pgfmathsetmacro{\bAtTwoS}{\Svalue/\twoS} % b when a=2S (equals 1/2)
+            \pgfmathsetmacro{\aAtOneB}{\Svalue/1} % a when b=1 (equals S)
+
+            \begin{axis}[
+                    axis lines=middle, % Draw axes through the origin
+                    xlabel=$a$, % Label for the x-axis
+                    ylabel=$b$, % Label for the y-axis
+                    xlabel style={at={(axis description cs:1,0)},anchor=north west}, % Position x-label
+                    ylabel style={at={(axis description cs:0,1)},anchor=south east}, % Position y-label
+                    xmin=0, xmax=1.8, % Set x-axis limits, slightly beyond 2S for labels
+                    ymin=0, ymax=1.3, % Set y-axis limits, slightly beyond 1 for labels
+                    xtick=\empty, ytick=\empty, % Do not draw default ticks, we will draw them manually
+                    axis equal image,
+                    clip=false,
+                ]
+
+                % % Draw the axes manually with custom arrow tips (Stealth)
+                % \draw[->, >=Stealth] (axis cs:0,0) -- (axis cs:\pgfkeysvalueof{/pgfplots/xmax},0) node[anchor=north west] {$a$};
+                % \draw[->, >=Stealth] (axis cs:0,0) -- (axis cs:0,\pgfkeysvalueof{/pgfplots/ymax}) node[anchor=south east] {$b$};
+
+                % Plot the full hyperbola (thin gray line)
+                \addplot[domain=0.4:1.8, samples=100, smooth, gray!60] {\Svalue/x}
+                node[pos=0.8, above right, black] {$ab=S$}; % Label the hyperbola
+
+                % Plot the bold segment of the hyperbola: from a=1 to a=2S
+                \addplot[domain=\Svalue:\twoS, samples=100, line width=1.2pt, black] {\Svalue/x};
+
+                % Plot the auxiliary line b=a (dashed gray line)
+                \addplot[domain=0:\pgfkeysvalueof{/pgfplots/xmax}, dashed, black] {x};
+                \addplot[domain=0.4:2, dashed, black] {1.7-x};
+
+                % --- Mark specific points with filled circles and draw dashed lines to axes ---
+                % Point (sqrt(S), sqrt(S)) - Intersection of b=a and ab=S
+                \fill (axis cs:\sqrtS, \sqrtS) circle (2pt);
+                \draw[dashed, gray] (axis cs:\sqrtS,0) -- (axis cs:\sqrtS, \sqrtS) -- (axis cs:0,\sqrtS);
+
+                % % Point (1, bAtOne) = (1, S) - Start of the bold segment
+                % \fill (axis cs:1, \bAtOne) circle (2pt);
+                % \draw[dashed, gray] (axis cs:1,0) -- (axis cs:1, \bAtOne);
+                % \draw[dashed, gray] (axis cs:0, \bAtOne) -- (axis cs:1, \bAtOne);
+
+                % Point (2S, bAtTwoS) = (2S, 1/2) - End of the bold segment
+                \fill (axis cs:\twoS, \bAtTwoS) circle (2pt);
+                \draw[dashed, gray] (axis cs:\twoS,0) -- (axis cs:\twoS, \bAtTwoS);
+                \draw[dashed, gray] (axis cs:0,\bAtTwoS) -- (axis cs:\twoS, \bAtTwoS);
+
+                % Point (aAtOneB, 1) = (S, 1) - Corresponding to b=1
+                \fill (axis cs:\aAtOneB, 1) circle (2pt);
+                \draw[dashed, gray] (axis cs:\aAtOneB,0) -- (axis cs:\aAtOneB, 1);
+                \draw[dashed, gray] (axis cs:0,1) -- (axis cs:\aAtOneB, 1);
+
+                % --- Labels for axis ticks and the origin ---
+                % Origin label
+                \node at (axis cs:0,0) [anchor=north east] {$0$};
+
+                % 
+                \node[above] at (axis cs:\Svalue, 0) {$\sin(\theta/2)$};
+                \node[below] at (axis cs:\sqrtS, 0)  {$\sqrt{\sin(\theta/2)}$};
+                \node[below] at (axis cs:\twoS, 0)   {$2\sin(\theta/2)$};
+                \node[left] at (axis cs:0, 1/2)      {$1/2$};
+                \node[left] at (axis cs:0,\sqrtS)    {$\sqrt{\sin(\theta/2)}$};
+                \node[left] at (axis cs:0,1)         {$1$};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$t=a+b$の存在範囲は，太線部分と直線$b=-a+t$との交点が存在するような$t$である．}
+        \label{2005-1:fig:2}
+    \end{figure}
+
+    $(a,b)$ の存在範囲は上図太線部 (境界含む)だから，
+    \begin{align*}
+        (a,b)=(2\sin(\theta/2), \frac{1}{2})\text{の時 } t                 & =2\sin(\theta/2)+\frac{1}{2} \\
+        (a,b)=(\frac{1}{2}, 2\sin(\theta/2))\text{の時 } t                 & =\frac{1}{2}+2\sin(\theta/2) \\
+        (a,b)=(\sqrt{\sin(\theta/2)}, \sqrt{\sin(\theta/2)})\text{の時 } t & =2\sqrt{\sin(\theta/2)}
+    \end{align*}
+    であることに注意すると，$T=a+b$の下限は
+    \begin{align*}
+        2\sqrt{\sin(\theta/2)} \le t
+    \end{align*}
+    だから，\cref{2005-1:eq:2}から
+    \begin{align*}
+        2\sin\left(\theta/2\right) - 2\sin^2\left(\theta/2\right) \le \overline{AB}^2
+    \end{align*}
+    であり，$f(\theta)$は
+    \begin{align}
+        f(\theta) = 2\sin\left(\theta/2\right) - 2\sin^2\left(\theta/2\right) \label{2005-1:eq:3}
+    \end{align}
+    である．
+
+
+
+    \noindent
+    \textbf{$2^\circ 2\sin(\theta/2) \le \sqrt{\sin(\theta/2)} \iff \overline{PQ} le \frac{1}{2} \iff \sin(\theta/2) \le \frac{1}{4}$ の時}
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            % Define the value of S and related calculated values
+            \pgfmathsetmacro{\Svalue}{1/5} % S = 2/3 as specified by the user
+            \pgfmathsetmacro{\sqrtS}{sqrt(\Svalue)} % sqrt(2/3)
+            \pgfmathsetmacro{\twoS}{2*\Svalue} % 2 * 2/3 = 4/3
+
+            % Calculated y-values for specific x-points on the hyperbola
+            \pgfmathsetmacro{\bAtOne}{\Svalue/1} % b when a=1 (equals S)
+            \pgfmathsetmacro{\bAtTwoS}{\Svalue/\twoS} % b when a=2S (equals 1/2)
+            \pgfmathsetmacro{\aAtOneB}{\Svalue/1} % a when b=1 (equals S)
+
+            \begin{axis}[
+                    axis lines=middle, % Draw axes through the origin
+                    xlabel=$a$, % Label for the x-axis
+                    ylabel=$b$, % Label for the y-axis
+                    xlabel style={at={(axis description cs:1,0)},anchor=north west}, % Position x-label
+                    ylabel style={at={(axis description cs:0,1)},anchor=south east}, % Position y-label
+                    xmin=0, xmax=1.2, % Set x-axis limits, slightly beyond 2S for labels
+                    ymin=0, ymax=1.2, % Set y-axis limits, slightly beyond 1 for labels
+                    xtick=\empty, ytick=\empty, % Do not draw default ticks, we will draw them manually
+                    axis equal image,
+                    clip=false,
+                ]
+                % Plot the full hyperbola (thin gray line)
+                \addplot[domain=0.15:1.2, samples=100, smooth, gray!60] {\Svalue/x}
+                node[pos=0.8, above right,black] {$ab=S$}; % Label the hyperbola
+
+                % Plot the bold segment of the hyperbola: from a=1 to a=2S
+                \addplot[domain=\Svalue:\twoS, samples=50, line width=1.2pt, black] {\Svalue/x};
+
+                % Plot the auxiliary line b=a (dashed gray line)
+                \addplot[domain=0:\pgfkeysvalueof{/pgfplots/xmax}, dashed, gray] {x};
+
+                % --- Mark specific points with filled circles and draw dashed lines to axes ---
+                % Point (sqrt(S), sqrt(S)) - Intersection of b=a and ab=S
+                \fill (axis cs:\sqrtS, \sqrtS) circle (2pt);
+                \draw[dashed, gray] (axis cs:\sqrtS,0) -- (axis cs:\sqrtS, \sqrtS) -- (axis cs:0,\sqrtS);
+
+                % % Point (1, bAtOne) = (1, S) - Start of the bold segment
+                % \fill (axis cs:1, \bAtOne) circle (2pt);
+                % \draw[dashed, gray] (axis cs:1,0) -- (axis cs:1, \bAtOne);
+                % \draw[dashed, gray] (axis cs:0, \bAtOne) -- (axis cs:1, \bAtOne);
+
+                % Point (2S, bAtTwoS) = (2S, 1/2) - End of the bold segment
+                \fill (axis cs:\twoS, \bAtTwoS) circle (2pt);
+                \draw[dashed, gray] (axis cs:\twoS,0) -- (axis cs:\twoS, \bAtTwoS);
+                \draw[dashed, gray] (axis cs:0,\bAtTwoS) -- (axis cs:\twoS, \bAtTwoS);
+
+                % Point (aAtOneB, 1) = (S, 1) - Corresponding to b=1
+                \fill (axis cs:\aAtOneB, 1) circle (2pt);
+                \draw[dashed, gray] (axis cs:\aAtOneB,0) -- (axis cs:\aAtOneB, 1);
+                \draw[dashed, gray] (axis cs:0,1) -- (axis cs:\aAtOneB, 1);
+
+                % --- Labels for axis ticks and the origin ---
+                % Origin label
+                \node at (axis cs:0,0) [anchor=north east] {$0$};
+
+                % 
+                \node[above] at (axis cs:\Svalue, 0) {$\sin(\theta/2)$};
+                %\node[below] at (axis cs:\sqrtS, 0)  {$\sqrt{\sin(\theta/2)}$};
+                \node[below] at (axis cs:\twoS, 0)   {$2\sin(\theta/2)$};
+                \node[left] at (axis cs:0, 1/2)      {$1/2$};
+                \node[left] at (axis cs:0,\sqrtS)    {$\sqrt{\sin(\theta/2)}$};
+                \node[left] at (axis cs:0,1)         {$1$};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$t=a+b$の存在範囲は，太線部分と直線$b=-a+t$との交点が存在するような$t$である．}
+        \label{2005-1:fig:3}
+    \end{figure}
+
+    $(a,b)$ の存在範囲は上図太線部(境界含む)だから，
+    $1^\circ$ と同様に考えて
+    \begin{align*}
+        2\sin\left(\theta/2\right)+\frac{1}{2} \le t
+    \end{align*}
+    だから，\cref{2005-1:eq:2}から
+    \begin{align*}
+        2\sin^2\left(\theta/2\right)+\frac{1}{4} \le \overline{AB}^2
+    \end{align*}
+    であり，$f(\theta)$は
+    \begin{align}
+        f(\theta) = 2\sin^2\left(\theta/2\right)+\frac{1}{4} \label{2005-1:eq:4}
+    \end{align}
+    である．
+
+    \vspace{5pt}
+    以上\label{2005-1:eq:3,2005-1:eq:4}より
+    \begin{align*}
+        \begin{dcases}
+            \overline{PQ} \ge \frac{1}{2} \text{ の時 } f(\theta) = 2\sin\frac{\theta}{2} - 2\sin^2\frac{\theta}{2} \quad (\sin\frac{\theta}{2} \ge \frac{1}{4}) \quad (\equiv g(\theta)) \\
+            \overline{PQ} < \frac{1}{2} \text{ の時 } f(\theta) = 2\sin^2\frac{\theta}{2} + \frac{1}{4} \quad (\sin\frac{\theta}{2} < \frac{1}{4}) \quad (\equiv h(\theta))
+        \end{dcases}
+    \end{align*}
+    である．$\cdots$(答)
+
+    \vspace{10pt}
+    (3)
+    $y = g(\theta)$, $y = h(\theta)$ は全区間で微分可能だから，これら二つの関数の境界，
+    である$0 < \alpha < \pi$ かつ $\sin(\alpha/2) = \frac{1}{4}$ をみたす $\alpha$ に対して
+    $f(\theta)$ の微分可能性を示せば良い．
+    そのためには微分係数の左右極限が一致することを示せば良い．
+    実際に計算すると，
+    \begin{align*}
+        \lim_{h \to +0} \frac{f(\alpha+h) - f(\alpha)}{h}
+         & = g'(\alpha)                                               \\
+         & = \cos\frac{\theta}{2}\left(1-2\sin\frac{\alpha}{2}\right) \\
+         & = \frac{\sqrt{15}}{4}\left(1-\frac{1}{2}\right)            \\
+         & = \frac{\sqrt{15}}{8}                                      \\
+        \lim_{h \to +0} \frac{f(\alpha) - f(\alpha-h)}{-h}
+         & = h'(\alpha)                                               \\
+         & = 2\sin\frac{\alpha}{2}\cos\frac{\alpha}{2}                \\
+         & = 2\frac{1}{4}\frac{\sqrt{15}}{4}                          \\
+         & = \frac{\sqrt{15}}{8}
+    \end{align*}
+    より，左右極限が一致し，さらに $g(2\alpha) = h(2\alpha)$ であるから，微分可能である．$\cdots$(答)
+
+    \vspace{10pt}
+    以下，$y=f(\theta)$のグラフの概形と最大値を求める．
+    新しく
+    \begin{align*}
+        t = \sin\frac{\theta}{2}
+    \end{align*}
+    とおくと，(2)から
+    \begin{align*}
+        f(\theta) =
+        \begin{dcases}
+            2t - 2t^2          & \left(\frac{1}{2} \le t < 1\right) \\
+            2t^2 + \frac{1}{4} & \left(0 < t \le \frac{1}{2}\right)
+        \end{dcases}
+    \end{align*}
+    だから，$t$で微分すると
+    \begin{align*}
+        \frac{df}{dt} =
+        \begin{cases}
+            2(1-2t) & \left(\frac{1}{4} \le t < 1\right) \\
+            4t      & \left(0 < t \le \frac{1}{4}\right)
+        \end{cases}
+    \end{align*}
+    だから，$f(\theta)$の増減表は\cref{2005-1:table:1}となる．
+    \begin{table}[H]
+        \centering
+        \caption{$f(\theta)$の増減表}
+        \label{2005-1:table:1}
+        \begin{tabular}{|c||c|c|c|c|c|c|c|}
+            \hline
+            $\theta$ & $0$     &            & $\alpha$      &            & $\pi/3$       &            & $\pi$ \\
+            \hline
+            $P$      & $0$     &            & $\frac{1}{4}$ &            & $\frac{1}{2}$ &            & $1$   \\
+            \hline
+            $f'$     &         & $+$        & $+$           & $+$        & $0$           & $-$        &       \\
+            \hline
+            $f$      & $(1/4)$ & $\nearrow$ & $\nearrow$    & $\nearrow$ & $1/2$         & $\searrow$ & $(0)$ \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    したがって，$y=f(\theta)$のグラフの概形は\cref{2005-1:fig:4}で，
+    最大値は
+    \begin{align*}
+        f\left(\frac{\pi}{3}\right) = \frac{1}{2}
+    \end{align*}
+    である．$\cdots$(答)
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            % Define the transition angle 2*alpha and other constants
+            % PGFPlots uses degrees by default for trigonometric functions in plots
+            \pgfmathsetmacro{\alphaVal}{asin(1/4)} % alpha = arcsin(1/4) in degrees
+            \pgfmathsetmacro{\thetaTransDeg}{rad(2*\alphaVal)} % 2*alpha in degrees
+
+            % Define the two function parts f(theta) based on sin(theta/2)
+            % Let P = sin(theta/2).
+            % f(theta) = 2*P - 2*P^2  when P >= 1/4
+            % f(theta) = 2*P^2 + 1/4  when P < 1/4
+            \def\gfunc(#1){2*sin(#1/2) - 2*(sin(#1/2))^2} % Corresponds to P >= 1/4
+            \def\hfunc(#1){2*(sin(#1/2))^2 + 1/4} % Corresponds to P < 1/4
+
+            \begin{axis}[
+                    axis lines=middle, % Draw axes through the origin
+                    xmin=0, xmax=4, % Range for theta in degrees (slightly beyond pi=180 degrees)
+                    ymin=0, ymax=0.8, % Range for f(theta), slightly beyond 0.5
+                    xlabel=$\theta$, % Label for the x-axis
+                    ylabel=$y$, % Label for the y-axis
+                    xtick=\empty, ytick=\empty, % Do not draw default ticks, we will draw them manually
+                    grid=none, % No grid lines
+                    % axis equal image,
+                    clip=false,
+                ]
+
+                % % Plot the first segment of the function: 0 <= theta < 2*alpha (using hfunc)
+                \addplot[domain=0:\thetaTransDeg, samples=100, smooth, black] {2*(sin(deg(x)/2))^2 + 1/4};
+                \addplot[domain=\thetaTransDeg:pi, samples=100, smooth, black] {2*sin(deg(x)/2) - 2*(sin(deg(x)/2))^2};
+
+                % Mark specific points with filled circles as shown in the image
+                \fill (axis cs:0, 1/4) circle (1.5pt); % Point (0, 1/4)
+                \fill (axis cs:\thetaTransDeg, 3/8) circle (1.5pt); % Point (2*alpha, 3/8) - Transition point
+                \fill (axis cs:pi/3, 1/2) circle (1.5pt); % Point (pi/3, 1/2) - Maximum point (pi/3 = 60 degrees)
+                \fill (axis cs:pi, 0) circle (1.5pt); % Point (pi, 0) - End point (pi = 180 degrees)
+
+                % Draw dashed lines from points to axes for visual reference
+                \draw[dashed, gray] (axis cs:0, 1/4) -- (axis cs:-0.05, 1/4); % From (0, 1/4) to y-axis
+                \draw[dashed, gray] (axis cs:\thetaTransDeg, 0) -- (axis cs:\thetaTransDeg, 3/8) -- (axis cs:0, 3/8); % From (2*alpha, 3/8) to both axes
+                \draw[dashed, gray] (axis cs:pi/3, 0) -- (axis cs:pi/3, 1/2) -- (axis cs:0, 1/2); % From (pi/3, 1/2) to both axes
+
+                % --- Labels for axis ticks and the origin ---
+                % Origin label
+                \node at (axis cs:0,0) [anchor=north east] {$0$};
+
+                % X-axis labels and tick marks
+                \node at (axis cs:\thetaTransDeg, 0) [anchor=north] {$\alpha$};
+                \node at (axis cs:pi/3, 0) [anchor=north] {$\pi/3$};
+                \node at (axis cs:pi, 0) [anchor=north] {$\pi$}; % Label for pi on the x-axis
+
+                % Y-axis labels and tick marks
+                \node at (axis cs:0, 0.25) [anchor=east] {$\frac{1}{4}$};
+                \node at (axis cs:0, 0.375) [anchor=east] {$\frac{3}{8}$};
+                \node at (axis cs:0, 0.5) [anchor=east] {$\frac{1}{2}$};
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$y=f(\theta)$のグラフ概形．}
+        \label{2005-1:fig:4}
+    \end{figure}
+
+
+    {\bf[解説]}
+    \textbf{[別解](2)}
+
+    (2)
+    $B(1-b, 0)$ である．$\vec{QA} = \frac{a}{2S\sin\frac{\theta}{2}} \begin{pmatrix} \cos\theta - 1 \\ \sin\theta \end{pmatrix} = \frac{a}{2S\sin\frac{\theta}{2}} \begin{pmatrix} -2\sin^2\frac{\theta}{2} \\ 2\sin\frac{\theta}{2}\cos\frac{\theta}{2} \end{pmatrix} = a \begin{pmatrix} -S \\ C \end{pmatrix}$ から，
+    $A(1-aS, aC)$ だから．
+    $\quad \overline{AB}^2 = \{(1-aS)-(1-b)\}^2 + (aC)^2 = (b-aS)^2 + a^2C^2 = b^2 - 2abS + a^2S^2 + a^2C^2$
+    $\quad = b^2 - 2abS + a^2(S^2+C^2) = a^2+b^2-2abS$
+    となる．
+
+    (2) の (1) 以外
+
+    $b$ を消去する．$0 < a < 2S$, $0 < b < \dots$ から．$b=\frac{S}{a}$ より
+    $$
+        \begin{cases}
+            \overline{AB}^2 = a^2 + \frac{S^2}{a^2} - 2S^2 \quad \text{...*} \\
+            0 < S < 1
+        \end{cases}
+    $$
+    から，$S, 0 < a < 2S \cdots$ のもとでの $\min$ を求めれば良い．
+    $y = A + \frac{S^2}{A}$ のグラフは右図から $4S^2$ と $S$ の大小によって
+    場合分け．
+
+    \begin{tikzpicture}[scale=0.8]
+        % Placeholder for the graph of y = A + S^2/A
+        \draw[->] (0,0) -- (5,0) node[right] {$A$};
+        \draw[->] (0,0) -- (0,5) node[above] {$y$};
+
+        % Example curve for y = A + S^2/A (e.g., S=1)
+        \draw[domain=0.5:4.5] plot(\x, {\x + 1/\x});
+
+        % Points and labels from the image
+        \node at (1,0) {$S$};
+        \node at (2.5,0) {$2S$};
+        \node at (0,1) {$S^2$};
+        \node at (0,2.5) {$2S$};
+
+        \draw[dashed] (1,0) -- (1,2) node[above left] {$y=A+\frac{S^2}{A}$};
+        \draw[dashed] (2.5,0) -- (2.5,4); % Placeholder height
+        \draw[fill] (1,2) circle (1.5pt); % Minimum point (S, 2S)
+        \draw[fill] (2.5, 4) circle (1.5pt); % Point (2S, 2S + S^2/4S^2) = (2S, 2S + 1/4)
+    \end{tikzpicture}
+
+    \noindent
+    $1^\circ \quad 4S^2 \ge S \quad : S \ge \frac{1}{4}$
+    $f(\theta) = 2S-2S^2$ ($a=\sqrt{S}$ でmin)
+
+    \noindent
+    $2^\circ \quad 4S^2 < S \quad : S < \frac{1}{4}$
+    $f(\theta) = (4S^2+\frac{1}{4}) - 2S^2 = 2S^2+\frac{1}{4}$ ($a=2S$ でmin)
+
+    (以下略)
+    \newpage
+\end{multicols}
+\end{document}

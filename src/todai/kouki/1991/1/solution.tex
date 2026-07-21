@@ -1,0 +1,360 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{東京大学後期$1991$年$1$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/1991/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+
+    (1) 題意の関数を
+    \begin{align*}
+        f(x) = \frac{\log x}{x}
+    \end{align*}
+    とおくと，一階微分は
+    \begin{align*}
+        f'(x) = \frac{1 - \log x}{x^2}
+    \end{align*}
+    だから，増減表は\cref{1991-1:table:1}となる．
+
+    \begin{table}[H]
+        \centering
+        \caption{$f(x)$の増減表}
+        \label{1991-1:table:1}
+        \begin{tabular}{|c||c|c|c|c|c|c|}
+            \hline
+            $x$  & $0$         & $\dots$    & $e$           & $\dots$    &  & $\infty$ \\
+            \hline
+            $f'$ &             & $+$        & $0$           & $-$        &  &          \\
+            \hline
+            $f$  & $(-\infty)$ & $\nearrow$ & $\frac{1}{e}$ & $\searrow$ &  & $(0)$    \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    従って，グラフの概形は以下．$\cdots$(答)
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle, % X軸とY軸を中央に配置
+                    xlabel=$x$,        % X軸のラベル
+                    ylabel=$y$,        % Y軸のラベル
+                    xmin=0, xmax=10,    % X軸の範囲
+                    ymin=-0.5, ymax=0.8, % Y軸の範囲 (y軸は負の方向にも伸びるため)
+                    % X軸の目盛りとラベル
+                    xtick={1, {exp(1)}}, % 1 と e に目盛り
+                    xticklabels={$1$, $e$}, % 目盛りのラベル
+                    % Y軸の目盛りとラベル
+                    ytick={{1/exp(1)}}, % 1/e に目盛り
+                    yticklabels={$\frac{1}{e}$}, % 目盛りのラベル
+                    domain=0.7:10, % 関数をプロットするX範囲 (0に近い値から始めることで漸近線を表現)
+                    samples=100, % 曲線の描画点数
+                    axis on top, % ラベルなどがグラフの上に重なるようにする
+                    clip=false, % ラベルが軸の範囲外に出ることを許可する
+                    no marks, % プロット点にマークをつけない
+                ]
+
+                % 関数 y = log x / x をプロット (pgfplotsでは自然対数はln(x)と表記)
+                \addplot[blue, thick] {ln(x)/x} node[pos=0.8, anchor=south west] {$y=\frac{\log x}{x}$};
+
+                % 極大点 (e, 1/e) に点をマーク
+                \fill[black] (axis cs:{exp(1)}, {1/exp(1)}) circle (1.5pt);
+
+                % 曲線がX軸と交差する点 (1, 0) に点をマーク
+                \fill[black] (axis cs:1, 0) circle (1.5pt);
+
+                % 極大点からX軸へ垂直な破線
+                \draw[dashed, gray] (axis cs:{exp(1)}, 0) -- (axis cs:{exp(1)}, {1/exp(1)});
+
+                % 極大点からY軸へ水平な破線
+                \draw[dashed, gray] (axis cs:0, {1/exp(1)}) -- (axis cs:{exp(1)}, {1/exp(1)});
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$y=f(x)$のグラフ}
+        \label{1991-1:fig:1}
+    \end{figure}
+
+    \vspace{10pt}
+
+    (2)
+    $a, b > 0$ より，$a^b = b^a$ の両辺の自然対数をとって，
+    \begin{align}
+         & \frac{\log a}{a} = \frac{\log b}{b} \\
+         & f(a) = f(b) \label{1991-1:eq:1}
+    \end{align}
+    である．
+    (1)のグラフと $2 < e < 3$ より，対称性からまず $a < b$ として考えると
+    \begin{align*}
+        a = 2
+    \end{align*}
+    が必要である．
+    \cref{1991-1:eq:1}に代入して
+    \begin{align*}
+        \frac{\log 2}{2} = \frac{\log b}{b}
+    \end{align*}
+    である．
+    $b=4$ はこの解であり，グラフより解は唯一存在するから，$b=4$のみが解である．
+    従って$b>a$の時も考えて求める解は
+    \begin{align}
+        (a,b) = (2,4), (4,2)\label{1991-1:eq:2}
+    \end{align}
+    である．$\cdots$(答)
+    \vspace{10pt}
+
+    (3)
+    背理法で示す．
+    $x>0$を有理数として$x \neq 3$ とする．
+    $3^x = x^3$ をみたす $x = \frac{a}{b}$ ($a,b \in \mathbb{N}, a,b$ は互いに素) があると仮定する．
+    両辺自然対数をとると
+    \begin{align*}
+        \frac{\log 3}{3} = \frac{\log x}{x}
+    \end{align*}
+    だから，(1)のグラフから，
+    \begin{align}
+        1 < x < 3 \label{1991-1:eq:3}
+    \end{align}
+    が必要である．
+
+    一方で
+    $3^x = x^3$ に$x=b/a$を代入すると
+    \begin{align*}
+         & 3^{b/a} = \left(\frac{b}{a}\right)^3 \\
+         & 3^b = \left(\frac{b}{a}\right)^{3a}
+    \end{align*}
+    ここで$a$と$b$は互いに素だから $b \neq 1$ と仮定するとこの式は
+    \begin{align*}
+        \text{(整数)} = \text{(非整数)}
+    \end{align*}
+    となり矛盾する．
+    従って $b=1$ であり，$x=a \in \mathbb{N}$ となる．
+    この時\cref{1991-1:eq:3}より，$x=2$ が必要である．
+    しかしこれは(2)の結果\cref{1991-1:eq:2} に矛盾する．
+
+    以上より背理法によって，$3^x = x^3$ をみたす正の有理数は $x=3$ のみであることが示された．
+    $\cdots$(答)
+    \vspace{10pt}
+    {\bf[解説]}
+    解答中で$2<e<3$であることを用いた．自然対数の値は
+    \begin{align*}
+        e \sim 2.718281828
+    \end{align*}
+    である．これは「船人、ヤツは一発梯子（ふなびと、やつはいっぱつはしご）」という語呂合わせで値を覚えておくと良い．
+
+    \begin{figure}[H]
+        \centering
+
+        % グラフ1: 面積近似（台形近似）
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=left, % X軸は下、Y軸は左に表示
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xmin=0, xmax=3.5, % X軸の範囲
+                    ymin=0, ymax=1.2, % Y軸の範囲
+                    % X軸の目盛りとラベルを設定
+                    xtick={1, {exp(1)}, {(1+exp(1))/2}},
+                    xticklabels={$1$, $e$, $\frac{1+e}{2}$},
+                    ytick={1,{1/exp(1)}},
+                    yticklabels={$1$, $1/e$},
+                    domain=0.8:3.2, % 関数をプロットするX範囲を広めに取り、曲線が綺麗に見えるようにする
+                    samples=100, % 曲線の描画点数
+                    axis on top, % ラベルなどがグラフの上に重なるようにする
+                    clip=false, % ラベルが軸の範囲外に出ることを許可する
+                    no marks, % プロット点にマークをつけない
+                    title style={at={(0.5,1.05)},anchor=south}, % タイトルを軸環境の上中央に配置
+                    title={台形近似}, % グラフのタイトル
+                ]
+
+                % 関数 y=1/x をプロット
+                \addplot[blue, thick] {1/x} node[pos=0.8, anchor=south west] {$y=\frac{1}{x}$};
+                \draw[dashed] ({exp(1)},0) -- ({exp(1)},{1/exp(1)}) -- (0,{1/exp(1)});
+                \draw[dashed] (1,0) -- (1,1) -- (0,1);
+                \addplot[draw=none, domain=1:{exp(1)},name path=A] {1/x};
+                \addplot[draw=none, domain=1:{exp(1)},name path=B] {0};
+                \addplot[pattern=north west lines] fill between [of=A and B];
+                \node[fill=white] at ({(1+exp(1))/2},0.3) {$S_1$};
+
+            \end{axis}
+        \end{tikzpicture}
+        % 2つの図の間に少し水平方向のスペースを入れる
+        \quad
+        % グラフ2: 凹凸と台形近似の関係を示唆する図
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=left, % X軸は下、Y軸は左に表示
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xmin=0, xmax=3.5, % X軸の範囲
+                    ymin=0, ymax=1.2, % Y軸の範囲
+                    xtick={1, {exp(1)}, {(1+exp(1))/2}},
+                    xticklabels={$1$, $e$, $\frac{1+e}{2}$},
+                    ytick={1,{1/exp(1)}},
+                    yticklabels={$1$, $1/e$},
+                    domain=0.8:3.2, % 関数をプロットするX範囲
+                    samples=100, % 曲線の描画点数
+                    axis on top,
+                    clip=false,
+                ]
+
+                % 中間点のX座標を計算
+                \pgfmathsetmacro{\midpoint}{(1+exp(1))/2}
+
+                % 関数 y=1/x をプロット
+                \addplot[blue, thick] {1/x};
+
+                % 台形の部分を塗りつぶし（斜線パターン）
+                % 頂点: (1,0), (e,0), (e,1/e), (1,1)
+                \fill[gray!50, pattern=north east lines]
+                (axis cs:1,0) --
+                (axis cs:{exp(1)},0) --
+                (axis cs:{exp(1)},{1/exp(1)}) --
+                (axis cs:1,1) -- cycle;
+                % 台形のアウトラインを描画（塗りつぶしと重ねて描くことで線がはっきりする）
+                \draw[black]
+                (axis cs:1,0) --
+                (axis cs:{exp(1)},0) --
+                (axis cs:{exp(1)},{1/exp(1)}) --
+                (axis cs:1,1) -- cycle;
+
+                % (1,1) と (e,1/e) を結ぶ直線（台形の上面）を描画
+                \draw[red, thick] (axis cs:1,1) -- (axis cs:{exp(1)},{1/exp(1)});
+
+                % 曲線上の点 ( (1+e)/2, 1/((1+e)/2) ) に点をマーク
+                \fill[black] (axis cs:\midpoint, {1/\midpoint}) circle (1.5pt);
+
+                % 中間点における曲線上の点から直線までの垂線を破線で描画
+                % 直線の方程式: y - y1 = (y2-y1)/(x2-x1) * (x - x1) を利用して、中間点での直線のY座標を計算
+                \pgfmathsetmacro{\ysecantatmidpoint}{1 + ((1/exp(1)) - 1) / (exp(1) - 1) * (\midpoint - 1)}
+                \draw[black, dashed] (axis cs:\midpoint, {1/\midpoint}) -- (axis cs:\midpoint, \ysecantatmidpoint);
+                \node[fill=white] at ({(1+exp(1))/2},0.3) {$S_2$};
+
+                \draw[dashed] ({exp(1)},0) -- ({exp(1)},{1/exp(1)}) -- (0,{1/exp(1)});
+                \draw[dashed] (1,0) -- (1,1) -- (0,1);
+            \end{axis}
+        \end{tikzpicture}
+
+        \quad
+        % グラフ2: 凹凸と台形近似の関係を示唆する図
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=left, % X軸は下、Y軸は左に表示
+                    xlabel=$x$,
+                    ylabel=$y$,
+                    xmin=0, xmax=3.5, % X軸の範囲
+                    ymin=0, ymax=1.2, % Y軸の範囲
+                    xtick={1, {exp(1)}, {(1+exp(1))/2}},
+                    xticklabels={$1$, $e$, $\frac{1+e}{2}$},
+                    ytick={1,{1/exp(1)}},
+                    yticklabels={$1$, $1/e$},
+                    domain=0.8:3.2, % 関数をプロットするX範囲
+                    samples=100, % 曲線の描画点数
+                    axis on top,
+                    clip=false,
+                ]
+
+                % 中間点のX座標を計算
+                \pgfmathsetmacro{\midpoint}{(1+exp(1))/2}
+                % 中間点のY座標を計算
+                \pgfmathsetmacro {\midpointy}{1/\midpoint}
+                % 中間点での接線の傾きを計算 (f'(x) = -1/x^2)
+                \pgfmathsetmacro {\slope}{-1/(\midpoint*\midpoint)}
+
+                % 関数 y=1/x をプロット
+                \addplot[blue, thick] {1/x};
+                % 中間点での接線を描画: y - y0 = m(x - x0) => y = m(x - x0) + y0
+                \addplot [green!50!black, thick] {\slope*(x - \midpoint) + \midpointy};
+
+                % 台形の部分を塗りつぶし（斜線パターン）
+                \addplot[draw=none, domain=1:{exp(1)},name path=A] {\slope*(x - \midpoint) + \midpointy};
+                \addplot[draw=none, domain=1:{exp(1)},name path=B] {0};
+                \addplot[pattern=north west lines] fill between [of=A and B];
+
+
+                % 曲線上の点 ( (1+e)/2, 1/((1+e)/2) ) に点をマーク
+                \fill[black] (axis cs:\midpoint, {1/\midpoint}) circle (1.5pt);
+
+                \node[fill=white] at ({(1+exp(1))/2},0.3) {$S_3$};
+                \draw[dashed] ({exp(1)},0) -- ({exp(1)},{1/exp(1)}) -- (0,{1/exp(1)});
+                \draw[dashed] (1,0) -- (1,1) -- (0,1);
+            \end{axis}
+        \end{tikzpicture}
+
+        \caption{$y=1/x$の面積近似の様子．$S_3<S_1<S_2$が成立する．}
+    \end{figure}
+
+    流石に不要だと思うが念の為$2<e<3$の評価をその場で導出できるよう簡単な証明も紹介しよう．
+    かなり緩い評価なので，$y=1/x$に対する台形近似を利用する．
+    $1\le x \le e$の領域の面積$S_1$は
+    \begin{align*}
+        S_1
+         & = \int_{1}^{e}\frac{1}{x} dx   \\
+         & = \left[\log x \right]_{1}^{e} \\
+         & = 1
+    \end{align*}
+    である．
+    $S_1$を上側から評価すると，$y=1/x$が下に凸だから図のような台形$S_2$で上側を抑えられて
+    \begin{align*}
+        S_2
+         & = \frac{1}{2}\left(\frac{1}{e}+1\right)\left(e-1\right) \\
+         & = \frac{(1+e)(e-1)}{2e}
+    \end{align*}
+    である．
+
+    同様に下側からの評価は$((1+e)/2,2/(1+e))$での接線で形作られる台形$S_3$で抑えられて
+    \begin{align*}
+        S_3
+         & = \frac{1}{2}\left(\frac{4}{1+e}\right)\left(e-1\right) \\
+         & = \frac{2(e-1)}{1+e}
+    \end{align*}
+    である．
+
+    以上より
+    \begin{align*}
+         & S_3 < S_1 < S_2                                \\
+         & \frac{2(e-1)}{1+e} < 1 < \frac{(1+e)(e-1)}{2e}
+    \end{align*}
+    で，それぞれとくと
+    \begin{align*}
+         & \begin{dcases}
+               2(e-1) < e+1 \\
+               2e < (1+e)(e-1)
+           \end{dcases} \\
+        \therefore
+        1+\sqrt{2} < e < 3
+    \end{align*}
+    となり，$e$の簡単な評価が得られる．
+
+
+    \newpage
+\end{multicols}
+\end{document}

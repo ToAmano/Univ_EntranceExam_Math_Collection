@@ -1,0 +1,159 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{京都大学後期$2005$年$4$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/2005/4/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  \begin{figure}[H]
+    \centering
+    \tdplotsetmaincoords{100}{140} % Adjust viewing angle as needed
+
+    \begin{tikzpicture}[tdplot_main_coords]
+      % Define side length L
+      \pgfmathsetmacro{\L}{5.0}
+
+      % Define coordinates for a regular tetrahedron with O at origin
+      % Vertices based on L=1
+      % O = (0,0,0)
+      % A = (L, 0, 0)
+      % B = (L/2, L*sqrt(3)/2, 0)
+      % C = (L/2, L*sqrt(3)/6, L*sqrt(2/3))
+
+      \coordinate (O) at (0,0,\L);
+      \coordinate (A) at (\L/2,{-\L*sqrt(3)/6},0);
+      \coordinate (B) at (-\L/2, {-\L*sqrt(3)/6}, 0);
+      \coordinate (C) at (0, {\L*sqrt(3)/3}, 0);
+      % Draw A', B', C' points
+      \fill[] (O) circle (1.5pt) node[right]{$O$};
+      \fill[] (A) circle (1.5pt) node[below]{$A$};
+      \fill[] (B) circle (1.5pt) node[below]{$B$};
+      \fill[] (C) circle (1.5pt) node[below]{$C$};
+
+      % Draw tetrahedron OABC
+      \draw[thick] (O) -- (A) -- (B) -- cycle; % Face OAB
+      \draw[thick] (O) -- (C) -- (A) -- cycle; % Face OAC (visible)
+      \draw[thick] (O) -- (C) -- (B) -- cycle; % Face OBC (visible)
+      \draw[thick] (A) -- (C) -- (B) -- cycle; % Face ABC (visible)
+
+
+      % Calculate G (centroid of ABC)
+      % G = (A+B+C)/3
+      \pgfmathsetmacro{\Gx}{0}
+      \pgfmathsetmacro{\Gy}{0}
+      \pgfmathsetmacro{\Gz}{0}
+      \coordinate (G) at (\Gx, \Gy, \Gz);
+
+      % Calculate P (midpoint of OG, as t=1/2)
+      % P = G/2 (since O is origin)
+      \pgfmathsetmacro{\Px}{0}
+      \pgfmathsetmacro{\Py}{0}
+      \pgfmathsetmacro{\Pz}{\L+(\Gz-\L)*0.8}
+      \coordinate (P) at (\Px, \Py, \Pz);
+
+      % Calculate A' from the solution formula: A' = (t/(3-t)) * (B+C)
+
+      %\coordinate (B) at (-\L/2, {\L*sqrt(3)/6}, -2\L);
+      % t = 0.8の時，t/(3-t) = 0.3636
+      \pgfmathsetmacro{\Apx}{-0.3636*\L/2}
+      \pgfmathsetmacro{\Apy}{0.3636*\L*sqrt(3)/6}
+      \pgfmathsetmacro{\Apz}{\L-0.3636*2\L/3}
+      \coordinate (Aprime) at (\Apx, \Apy, \Apz);
+
+      % Calculate B' from the solution formula: B' = 1/5 * (A+C)
+      \pgfmathsetmacro{\Bpx}{0.3636*\L/2}
+      \pgfmathsetmacro{\Bpy}{0.3636*\L*sqrt(3)/6}
+      \pgfmathsetmacro{\Bpz}{\L-0.3636*2\L/3}
+      \coordinate (Bprime) at (\Bpx, \Bpy, \Bpz);
+
+      % Calculate C' from the solution formula: C' = 1/5 * (A+B)
+      \pgfmathsetmacro{\Cpx}{0}
+      \pgfmathsetmacro{\Cpy}{-0.3636*\L*sqrt(3)/3}
+      \pgfmathsetmacro{\Cpz}{\L-0.3636*2\L/3}
+      \coordinate (Cprime) at (\Cpx, \Cpy, \Cpz);
+
+      % Draw line segments for P and G
+      \draw[blue, thick] (O) -- (G); % OG line
+      \fill[blue] (G) circle (1.5pt) node[below right]{$G$}; % G point
+      \fill[red] (P) circle (1.5pt) node[above left]{$P$}; % P point
+
+      % Draw A', B', C' points
+      \fill[black] (Aprime) circle (1.5pt) node[right]{$A'$};
+      \fill[black] (Bprime) circle (1.5pt) node[below]{$B'$};
+      \fill[black] (Cprime) circle (1.5pt) node[below left]{$C'$};
+
+      \draw[dashed] (A) -- (P) -- (Aprime); % Extended line A-P
+      \draw[dashed] (B) -- (P) -- (Bprime); % Extended line B-P
+      \draw[dashed] (C) -- (P) -- (Cprime); % Extended line C-P
+
+    \end{tikzpicture}
+    \caption{四面体OABCとA'B'C'の様子}
+    \label{2005-4:fig:1}
+  \end{figure}
+
+  点Xに対し, $\vec{OX}=\vec{x}$ と表すことにすると
+  $\vec{a}, \vec{b}, \vec{c}$ は四面体をなすから1次独立である．
+
+  三角形ABCの重心Gの位置ベクトルは
+  \begin{align*}
+    \vec{g} = \frac{\vec{a}+\vec{b}+\vec{c}}{3}
+  \end{align*}
+  だから，線分OGを$t:1-t$で内分する点Pの位置ベクトルは
+  \begin{align*}
+    \vec{p}
+     & = t \vec{g}                           \\
+     & = t \frac{\vec{a}+\vec{b}+\vec{c}}{3}
+  \end{align*}
+  である．
+
+  次にA'について考える．
+  A'はAP上の点だから$k \in \mathbb{R}$として
+  \begin{align*}
+    \vec{a'}
+     & = \vec{a}+k(\vec{p}-\vec{a})
+     & = \left(1-k+\frac{t}{3}\right)\vec{a}+\frac{kt}{3}\vec{b} +\frac{kt}{3}\vec{c}
+  \end{align*}
+  とおける．
+  一方でA'は平面OBC上の点だから$\vec{b}$と$\vec{c}$の重ね合わせでかけ，$\vec{a}$の成分はあってはならない．
+  従って，$\vec{a}$の係数比較すると，
+  \begin{align*}
+     & 0 = 1-k+\frac{kt}{3} \\
+    \therefore
+     & k = \frac{3}{3-t}
+  \end{align*}
+  となり，
+  \begin{align*}
+    \vec{a'} = \frac{t}{3-t}(\vec{b}+\vec{c})
+  \end{align*}
+  と書ける．
+
+  同様にB'およびC'について
+  \begin{align*}
+    \vec{b'} & = \frac{t}{3-t}(\vec{a}+\vec{c}) \\
+    \vec{c'} & = \frac{t}{3-t}(\vec{a}+\vec{b})
+  \end{align*}
+  であるから，
+  三角形A'B'C'の各辺の長さについて
+  \begin{align*}
+    \vec{A'B'} & = \left|\frac{t}{3-t}\right||\vec{a}-\vec{b}| \\
+               & = \frac{t}{3-t} AB                            \\
+    \vec{B'C'} & = \frac{t}{3-t} BC                            \\
+    \vec{C'A'} & = \frac{t}{3-t} CA
+  \end{align*}
+  となるから，
+  たしかに $\triangle ABC \propto \triangle A'B'C'$ で，相似比は
+  \begin{align*}
+    \triangle ABC : \triangle A'B'C' = 1 : \frac{t}{3-t}
+  \end{align*}
+  である．$\cdots$(答)
+
+  \vspace{10pt}
+  {\bf[解説]}
+  \newpage
+\end{multicols}
+\end{document}

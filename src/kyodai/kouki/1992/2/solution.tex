@@ -1,0 +1,140 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{京都大学後期$1992$年$2$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/1992/2/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+  (1)
+
+  題意の立方体は\cref{1992-2:fig:1}である．
+  \begin{figure}[H]
+    \centering
+    \tdplotsetmaincoords{70}{300}
+    \begin{tikzpicture}[scale=2.5,tdplot_main_coords]
+      % 頂点の座標
+      \coordinate (A) at (0,1,1);
+      \coordinate (D) at (1,1,1);
+      \coordinate (C) at (1,0,1);
+      \coordinate (B) at (0,0,1);
+      \coordinate (P) at (0,1,0);
+      \coordinate (S) at (1,1,0);
+      \coordinate (R) at (1,0,0);
+      \coordinate (Q) at (0,0,0);
+
+      % 奥側の面 (z=1)
+      \draw (A) -- (B) -- (C) -- (D) -- cycle;
+      \draw (A) -- (P);
+      \draw (B) -- (Q);
+      \draw (C) -- (R);
+
+      % 手前側の面 (z=0)
+      \draw (P) -- (Q) -- (R);
+      \draw[dashed] (R) -- (S) -- (P);
+
+      % 側面の稜線
+      \draw (A) -- (P);
+      \draw (B) -- (Q);
+      \draw (C) -- (R);
+      \draw[dashed] (D) -- (S);
+
+      % 頂点のラベル
+      \node [tdplot_screen_coords, above] at (A) {A};
+      \node [tdplot_screen_coords, above right] at (B) {B};
+      \node [tdplot_screen_coords, right] at (C) {C};
+      \node [tdplot_screen_coords, above left] at (D) {D};
+      \node [tdplot_screen_coords, left] at (P) {P};
+      \node [tdplot_screen_coords, right] at (Q) {Q};
+      \node [tdplot_screen_coords, below right] at (R) {R};
+      \node [tdplot_screen_coords, below left] at (S) {S};
+    \end{tikzpicture}
+    \caption{立方体の様子}
+    \label{1992-2:fig:1}
+  \end{figure}
+
+  題意の場合の数は展開図ADRQ(\cref{1992-2:fig:2})において，AからRへ行く最短経路に等しい．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \coordinate (A) at (0,0);
+      \coordinate (D) at (0,1);
+      \coordinate (Q) at (2,0);
+      \coordinate (R) at (2,1);
+      \coordinate (B) at (1,0);
+      \coordinate (C) at (1,1);
+
+      \draw (A) -- (D) -- (R) -- (Q) -- cycle;
+      \draw (B) -- (C);
+
+      \node [left] at (A) {A};
+      \node [above left] at (D) {D};
+      \node [right] at (Q) {Q};
+      \node [above right] at (R) {R};
+      \node [below] at (B) {B};
+      \node [above] at (C) {C};
+    \end{tikzpicture}
+    \caption{展開図ADRQの様子}
+    \label{1992-2:fig:2}
+  \end{figure}
+
+
+  全体の移動回数は$3n$回であり，そのうちどのタイミングでAD方向に動くかを決めれば良いので，
+  求める場合の数は
+  \begin{align*}
+    {}_{3n}C_n = \frac{3n!}{n!2n!}
+  \end{align*}
+  通りである．  $\cdots$(答)
+
+  \vspace{10pt}
+  (2)
+  どの辺を通って$R$へ辿り着くかで場合分けする．
+  頂点を通る場合は重複があるため，最後にそのような場合の数を差し引くこととする．
+  まず，辺に関する場合わけは，以下の六通りである．
+
+  \begin{itemize}
+    \item 辺PQを通ってRへ行く事象: $\alpha$ \\
+    \item 辺QBを通ってRへ行く事象: $\beta$    \\
+    \item 辺BCを通ってRへ行く事象: $\gamma$   \\
+    \item 辺CDを通ってRへ行く事象: $\delta$   \\
+    \item 辺DSを通ってRへ行く事象: $\epsilon$ \\
+    \item 辺SPを通ってRへ行く事象: $\omega$
+  \end{itemize}
+  従って，求める場合の数は
+  \begin{align}
+    N = n(\alpha \cup \beta \cup \delta \cup \epsilon \cup \omega) \label{1992-2:eq:1}
+  \end{align}
+  である．(1)と対称性から，
+  \begin{align}
+    n(\alpha) = n(\beta) = \cdots = {}_{3n}C_n \label{1992-2:eq:2}
+  \end{align}
+  である．
+
+  次に，二つの事象を同時に満たす（頂点を通る）ような場合の数を考える．
+  対称性から，AからQを経由してRへ辿り着くルートを考えると，AからQへ行くのに${}_{2n}C_n$通り，QからRへは辺を通っていく一通りだから，
+  結局場合の数は${}_{2n}C_n$通りである．従って
+  \begin{align}
+    n(\alpha \cap \beta) = n(\beta \cap \gamma) = \cdots = {}_{2n}C_n \label{1992-2:eq:3}
+  \end{align}
+  である．このようなケースはAとR以外の頂点の数の分，六通りある．
+
+  三つ以上の事象を同時に満たすような場合は存在しないので，
+  以上\cref{1992-2:eq:1,1992-2:eq:2,1992-2:eq:2,1992-2:eq:3}から
+  求める場合の数は
+  \begin{align*}
+    N
+     & = 6 n(\alpha) -6 n(\alpha \cap \beta)    \\
+     & =6 \cdot {}_{3n}C_n - 6 \cdot {}_{2n}C_n
+  \end{align*}
+  である． $\cdots$(答)
+
+  \vspace{10pt}
+  {\bf[解説]}
+
+  \newpage
+\end{multicols}
+\end{document}

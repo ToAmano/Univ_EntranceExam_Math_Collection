@@ -1,0 +1,156 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{京都大学後期$2001$年$1$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/2001/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+    与えられた関数を
+    \begin{align*}
+        f(x,y,z) = x^2+2y^2+2z^2+2yz-2x(y+z)-5
+    \end{align*}
+    とおき，$f(x,y,z)=0$の正の整数解を求める．
+
+    まず，$f(x,y,z)$は$y,z$について対称だから，そこから考える．
+    $\alpha=y+z$, $\beta=yz$ とおく．$y$,$z$が正の整数である時，$\alpha,\beta$もまた正の整数である．
+    従って，$\alpha,\beta$が正の整数であることが必要条件である．
+
+    $y,z$ は $t$ の二次方程式
+    \begin{align*}
+        g(t) = t^2-\alpha t+\beta=0
+    \end{align*}
+    の$2$ 正実解（重解含む）だから，$g(t)=0$の判別式$D$として
+    \begin{align*}
+        \begin{dcases}
+             & D \ge 0              \\
+             & g(0) > 0             \\
+             & \frac{\alpha}{2} > 0
+        \end{dcases}
+    \end{align*}
+    を満たす必要がある．すなわち
+    \begin{align}
+        \begin{dcases}
+            \alpha^2-4\beta \ge 0 \\
+            \alpha \ge 0          \\
+            \beta \ge 0
+        \end{dcases} \label{2001-1:eq:1}
+    \end{align}
+    が必要条件である．
+
+    $\alpha,\beta$を利用して$f(x,y,z)$を書き直すと
+    \begin{align*}
+        x^2-2\alpha x+2\alpha^2-2\beta-5=0
+    \end{align*}
+    であり，これがまた$x$について正の実数解を持つから，同様に判別式が$0$以上で
+    \begin{align}
+         & \alpha^2-(2\alpha^2-2\beta-5) \ge 0                           \\
+        \therefore
+         & -\alpha^2+2\beta+5 \ge 0                                      \\
+         & \beta \ge \frac{1}{2}\alpha^2-\frac{5}{2} \label{2001-1:eq:2}
+    \end{align}
+    であることが必要．
+
+    \cref{2001-1:eq:1,2001-1:eq:2}を$\alpha,\beta$平面に図示すると\cref{2001-1:fig:1}の斜線部となる．
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,
+                    xmin=0, xmax=4.8,
+                    ymin=0, ymax=4.0,
+                    xtick={sqrt(5), 3, {sqrt(10)}}, % Use {sqrt(20)} for better placement
+                    xticklabels={$\sqrt{5}$, $3$, $\sqrt{10}$},
+                    ytick={2, 2.25,2.5}, % 2.25 is 9/4
+                    yticklabels={$2$, $9/4$,$5/2$},
+                    xlabel={$\alpha$},
+                    ylabel={$\beta$},
+                    xlabel style={at={(axis description cs:1.05,0.02)}, anchor=west},
+                    ylabel style={at={(axis description cs:0.02,1.05)}, anchor=south},
+                    clip mode=individual % Allow clipping outside the plot area
+                ]
+
+                % Plot y = x^2/4
+                \addplot[name path=upper,domain=0:4.5, samples=100, blue] {x^2/4} node[pos=0.9, above right, font=\small] {$\beta=\frac{1}{4}\alpha^2$};
+
+                % Plot y = (x^2-5)/2
+                \addplot[name path=lower,domain=sqrt(5):4.5, samples=100, red] {(x^2-5)/2} node[pos=0.9, above left, font=\small] {$\beta=\frac{1}{2}(\alpha^2-5)$};
+
+                \pgfmathsetmacro{\lowx}{sqrt(5)}
+                \pgfmathsetmacro{\highx}{sqrt(10)}
+                \addplot[pattern=north west lines] fill between[
+                        of=upper and lower,
+                        soft clip={domain=\lowx:\highx}];
+                % Add the specific point (3,2) and (3, 9/4) if desired
+                \addplot[mark=o] coordinates {(sqrt(5),0)};
+                \addplot[mark=*] coordinates {(sqrt(10),2.5)};
+                \addplot[mark=*] coordinates {(3,2)};
+
+                % % Add vertical dashed lines from the x-axis to the curves at specific points
+                \draw[thick] (axis cs:\lowx,0) -- (axis cs:\lowx,1.25) ;
+                \draw[dashed] (axis cs:\lowx,1.25) -- (axis cs:0,1.25);
+                \draw[dashed] (axis cs:3,0) -- (axis cs:3,2.25) -- (axis cs:0,2.25);
+                \draw[dashed] (axis cs:3,2) -- (axis cs:0,2);
+                \draw[dashed] (axis cs:\highx,0) -- (axis cs:\highx,2.5) -- (axis cs:0,2.5);
+
+                % % Add labels for the functions directly on the plots
+                \node[right] at (axis cs:4, 3) {$\beta=\frac{1}{4}\alpha^2$};
+                \node[above] at (axis cs:3, 4) {$\beta=\frac{1}{2}(\alpha^2-5)$};
+
+            \end{axis}
+        \end{tikzpicture}
+        \caption{$(\alpha,\beta)$の必要条件は斜線部境界含む．この中で唯一の格子点は$(3,2)$である．}
+        \label{2001-1:fig:1}
+    \end{figure}
+
+    この斜線部の中に含まれる格子点は $(3,2)$ だけだから，
+    $(\alpha,\beta)=(3,2)$であることが必要であり，この時
+    \begin{align*}
+        (y,z)=(2,1),(1,2)
+    \end{align*}
+    となる．この時，\cref{2001-1:eq:2}に代入すると
+    \begin{align*}
+                   & x^2-6x+9=0 \\
+                   & (x-3)^2=0  \\
+        \therefore & x=3
+    \end{align*}
+    となり，これは正の整数だから十分である．以上から，求める正整数解は
+    \begin{align*}
+        (x,y,z)=(3,2,1), (3,1,2)
+    \end{align*}
+    である．$\cdots$(答)
+
+    \vspace{10pt}
+    {\bf[解説]}
+
+    \newpage
+\end{multicols}
+\end{document}

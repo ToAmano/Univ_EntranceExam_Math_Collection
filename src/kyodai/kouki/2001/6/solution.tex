@@ -1,0 +1,285 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{京都大学後期$2001$年$6$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/2001/6/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis lines=middle,
+          xmin=-2, xmax=2,
+          ymin=-2, ymax=2,
+          xtick={-1,1}, ytick={-1,1},
+          xlabel=$x$, ylabel=$y$,
+          clip=false, % Allow drawing outside the axis limits
+        ]
+
+        % Draw the circle x^2+y^2=1
+        \draw[thick] (axis cs:0,0) circle (1);
+
+        % Define theta for the tangent point (2pi/3)
+        \pgfmathsetmacro{\thetaVal}{2*pi/3}
+        \pgfmathsetmacro{\cosTheta}{cos(\thetaVal r)}
+        \pgfmathsetmacro{\sinTheta}{sin(\thetaVal r)}
+
+        % Point P on the circle
+        \coordinate (P) at (axis cs:\cosTheta,\sinTheta);
+        \coordinate (O) at (axis cs:0,0);
+        \coordinate (A) at (axis cs:1,0);
+        \node[above left] at (P) {P};
+        \draw[dashed] (O) -- (P);
+        \fill (P) circle (1.5pt);
+        \pic [draw,black,angle radius=0.3cm] {angle = A--O--P};
+        \node[above right] at (0.1,0.1) {$\theta$};
+
+        % Tangent line at P (cx + sy = 1)
+        % The equation of the tangent line at (c,s) on x^2+y^2=1 is cx+sy=1
+        % For (c,s) = (cos(2pi/3), sin(2pi/3)) = (-1/2, sqrt(3)/2)
+        % So, -0.5x + (sqrt(3)/2)y = 1
+        % (sqrt(3)/2)y = 1 + 0.5x => y = (2/sqrt(3)) + (1/sqrt(3))x
+        \draw[thick] (-2, {2/sqrt(3) - 2/sqrt(3)}) -- (1, {3/sqrt(3)}) node[pos=0.9, above right] {}; % Draw tangent line
+
+        % More precise way to draw the tangent line:
+        % \pgfmathsetmacro{\a}{-1.8}
+        % \pgfmathsetmacro{\y1}{(1 - \cosTheta*\x1)/\sinTheta}
+        % \pgfmathsetmacro{\x2}{2}
+        % \pgfmathsetmacro{\y2}{(1 - \cosTheta*\x2)/\sinTheta}
+        % \draw[thick] (axis cs:\x1,\y1) -- (axis cs:\x2,\y2);
+
+        % Point R (-a, 0)
+        % Choose an 'a' value consistent with -1 < a < -1/2, e.g., a = -0.7
+        \pgfmathsetmacro{\aVal}{-0.7}
+        \coordinate (R) at (axis cs:\aVal,0);
+        \coordinate (Q) at (axis cs:{3*\aVal/4-1/2},{sqrt(3)/2*(1+\aVal/2)});
+        \node[below] at (R) {R};
+        \node[above left] at (Q) {Q};
+        \fill (R) circle (1.5pt);
+        \fill (Q) circle (1.5pt);
+        \draw[dashed] (R) -- (Q);
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{円$C_1$の様子}
+    \label{2001-6:fig:1}
+    % TODO :: 直角マーク
+  \end{figure}
+
+
+  点Pは$C_1$上にあるので$P(\cos\theta,\sin\theta)$とおく．
+  ただし $0 \le \theta < 2\pi$ とする．
+  点Pでの$C_1$の接線$l$の方程式は
+  \begin{align*}
+    l: \cos\theta x+\sin\theta y=1
+  \end{align*}
+  である．この方向ベクトルは
+  \begin{align*}
+    \mqty(\sin\theta \\ -\cos\theta)
+  \end{align*}
+  だから，直線RQがこれと直交することにより
+  \begin{align}
+    \vec{RQ} \parallel \mqty(\cos\theta \\ \sin\theta) \label{2001-6:eq:1}
+  \end{align}
+  である．
+
+  また，線分RQの長さは直線$l$と点Rの距離に等しく
+  \begin{align*}
+    |RQ|
+     & = \frac{|a\cos\theta  - 1|}{\cos^2\theta + \sin^2\theta} \\
+     & = |a\cos\theta  - 1|
+  \end{align*}
+  である．ここで$-1\le\cos\theta \le 1$および，題意より$-1<a<-1/2$だから$-1<\cos\theta a < 1$となり，
+  $|\cos\theta a -1 | = 1-\cos\theta$だから
+  \begin{align}
+    |RQ|
+     & = \left(1-a\cos\theta \right)\label{2001-6:eq:2}
+  \end{align}
+  である．
+
+  \cref{2001-6:eq:1,2001-6:eq:2}から，
+  \begin{align*}
+    \vec{RQ}
+     & = \left(a\cos\theta -1\right) \mqty(\cos\theta \\ \sin\theta)
+  \end{align*}
+  であるから，点$Q(X,Y)$の座標は
+  \begin{align}
+    \mqty( X                                          \\ Y )
+     & = \vec{OR} + \vec{RQ}                          \\
+     & = \left(a\cos\theta -1\right) \mqty(\cos\theta \\ \sin\theta) + \mqty(a \\ 0) \\
+    \therefore
+     & \begin{dcases}
+         X(\theta) = \cos\theta-a\cos^2\theta +a \\
+         Y(\theta) = \sin\theta-a\cos\theta\sin\theta
+       \end{dcases} \label{2001-6:eq:3}
+  \end{align}
+  となる．
+
+  一階微分は
+  \begin{align*}
+    \frac{dX}{d\theta}
+     & = -\sin\theta+2a\cos\theta\sin\theta       \\
+     & = \sin\theta\left(2a\cos\theta-1\right)    \\
+    \frac{dY}{d\theta}
+     & = \cos\theta-a\left(2\cos^2\theta-1\right) \\
+     & = -2a\cos^2\theta+\cos\theta+a
+  \end{align*}
+  となる．$-1<a<-1/2$に注意して，$Q(X,Y)$の増減表は\cref{2001-6:table:1}となる．
+  ただし，$C_2$は$x$軸に関して対称だから，$0\le \theta \le \pi$についてのみ示している．
+  また，$\alpha,\beta$は
+  \begin{align*}
+     & 0 < \alpha < \beta < \pi                \\
+     & \cos\alpha = \frac{1-\sqrt{1+8a^2}}{4a} \\
+     & \cos\beta = \frac{1}{2a}
+  \end{align*}
+  を満たす．
+
+  \begin{table}[H]
+    \centering
+    \caption{$(X,Y)$の増減表}
+    \label{2001-6:table:1}
+    \begin{tabular}{|c||c|c|c|c|c|c|c|}
+      \hline
+      $\theta$  & 0       & $\cdots$   & $\alpha$ & $\cdots$   & $\beta$ & $\cdots$   & $\pi$    \\
+      \hline
+      $\dot{X}$ &         & $-$        & $-$      & $-$        & 0       & $+$        & $0$      \\
+      \hline
+      $\dot{Y}$ &         & $+$        & 0        & $-$        & $-$     & $-$        & $-$      \\
+      \hline
+      (X,Y)     & $(1,0)$ & $\nwarrow$ &          & $\swarrow$ &         & $\searrow$ & $(-1,0)$ \\
+      \hline
+    \end{tabular}
+  \end{table}
+
+  従って，$C_2$の軌跡の概形は\cref{2001-6:fig:2}である．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis lines=middle, % Draw axes through the origin
+          xmin=-1.5, xmax=1.5,
+          ymin=-1.5, ymax=1.5,
+          xtick={-1,1}, ytick={\empty},
+          xlabel=$X$, ylabel=$Y$,
+          axis equal, % Ensure the x and y units are equal
+          grid=none, % No grid
+          samples=200, % Number of samples for the curve
+        ]
+
+        % Define the parameter 'a'
+        \pgfmathsetmacro{\aVal}{-0.7} % Example value for a, between -1 and -0.5
+
+        % Plot the parametric curve
+        \addplot[
+          thick,
+          blue, % Color of the curve
+          smooth, % Smooth the curve
+          domain=0:2*pi,
+        ] ({cos(deg(x)) - \aVal*cos(deg(x))^2 + \aVal}, {sin(deg(x)) - \aVal*cos(deg(x))*sin(deg(x))});
+
+        % % Add labels for specific points on the curve (based on the hand-drawn image)
+        % % (1.0) corresponds to theta = 0 or theta = 2pi
+        \node[above right] at (axis cs:1,0) {$\theta=0$};
+        \fill (axis cs:1,0) circle (1.5pt);
+
+        % % (-1.0) corresponds to theta = pi
+        \node[above left] at (axis cs:-1,0) {$\theta=\pi$};
+        \fill (axis cs:-1,0) circle (1.5pt);
+
+        \draw[dashed] (axis cs:-1, -1) -- (axis cs:-1, 1);
+
+
+        % Mark theta=alpha and theta=beta, assuming their positions roughly from the drawing
+        % These points depend on the specific value of 'a' and the roots of dX/d_theta and dY/d_theta
+        % From the provided solution:
+        % Let's calculate them for a = -0.7
+        \pgfmathsetmacro{\cosAlpha}{(-1 + sqrt(1+8*\aVal*\aVal))/(4*\aVal)}
+        \pgfmathsetmacro{\cosBeta}{1/(2*\aVal)}
+
+        % \pgfmathsetmacro{\alphaVal}{acos(\cosAlpha)} % acos returns angle in radians
+        % \pgfmathsetmacro{\betaVal}{acos(\cosBeta)} % acos returns angle in radians
+
+        % % % Convert to coordinates on the curve
+        % \pgfmathsetmacro{\Xalpha}{cos(\alphaVal r) - \aVal*cos(\alphaVal r)^2 + \aVal}
+        % \pgfmathsetmacro{\Yalpha}{sin(\alphaVal r) - \aVal*cos(\alphaVal r)*sin(\alphaVal r)}
+        % \pgfmathsetmacro{\Xbeta}{cos(\betaVal r) - \aVal*cos(\betaVal r)^2 + \aVal}
+        % \pgfmathsetmacro{\Ybeta}{sin(\betaVal r) - \aVal*cos(\betaVal r)*sin(\betaVal r)}
+
+        % \node[above right] at (axis cs:\Xalpha, \Yalpha) {$\theta=\alpha$};
+        % \draw[dashed] (axis cs:\Xalpha, \Yalpha) -- (axis cs:\Xalpha, 1); % Dashed line up for alpha
+        % \fill (axis cs:\Xalpha, \Yalpha) circle (1.5pt);
+
+        % \node[above left] at (axis cs:\Xbeta, \Ybeta) {$\theta=\beta$};
+        % \draw[dashed] (axis cs:\Xbeta, \Ybeta) -- (axis cs:\Xbeta, 1); % Dashed line up for beta
+        % \fill (axis cs:\Xbeta, \Ybeta) circle (1.5pt);
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$C_2$の概形．$(1,0)$が$\theta=0$，$(-1,0)$が$\theta=\pi$に対応する．}
+    \label{2001-6:fig:2}
+  \end{figure}
+
+  したがって，たしかに$C_2$の$x$座標は $-1$より小さい値を取りうる．
+  よって題意の前半は示された．$\cdots$(答)
+
+  次に，$C_2$の囲む面積$S$を求める．
+  $S$のうち$y \ge 0$の部分を $S'$として，$C_2$が$x$軸に関して対称だから
+  \begin{align}
+    S = 2S' \label{2001-6:eq:4}
+  \end{align}
+  である．
+  $y\ge 0$の部分でグラフの上側 $y_+$, 下側 $y_-$とすると
+  \begin{align*}
+    S'
+     & = \int_{x(\beta)}^{1} y_+ dx - \int_{x(\beta)}^{-1} y_- dx                                                \\
+     & = \int_{\beta}^{0} y_{+} \frac{dx}{d\theta} d\theta - \int_{\beta}^{\pi} y_{-} \frac{dx}{d\theta} d\theta \\
+     & = -\int_{0}^{\pi} y \frac{dx}{d\theta} d\theta                                                            \\
+  \end{align*}
+  である．
+  ここに\cref{2001-6:eq:3}を代入して
+  \begin{align}
+    S'
+     & = -\int_{0}^{\pi} \sin\theta\left(1-a\cos\theta\right) \sin\theta\left(2a\cos\theta-1\right) d\theta          \\
+     & = -\int_{0}^{\pi} \sin^2\theta \left[-2a^2\cos^2\theta + 3a\cos\theta -1 \right] d\theta  \label{2001-6:eq:5} \\
+  \end{align}
+  である．これら各項を計算すると
+  \begin{align*}
+    \int_{0}^{\pi}\sin^2\theta\cos^2\theta d\theta
+     & =    \frac{1}{4}\int_{0}^{\pi} \sin^2 2\theta d\theta                  \\
+     & =    \frac{1}{8}\int_{0}^{\pi} \left(1-\cos 4\theta\right) d\theta     \\
+     & =    \frac{1}{8} \left[\theta-\frac{\sin 4\theta}{4}\right]_{0}^{\pi}  \\
+     & =    \frac{\pi}{8}                                                     \\
+    \int_{0}^{\pi}\sin^2\theta\cos\theta d\theta
+     & = \left[\frac{1}{3}\sin^3\theta\right]_{0}^{\pi}                       \\
+     & = 0                                                                    \\
+    \int_{0}^{\pi}\sin^2\theta d\theta
+     & =    \frac{1}{2} \int_{0}^{\pi}\left(1-\cos 2\theta\right) d\theta     \\
+     & =    \frac{1}{2} \int_{0}^{\pi}\left[1-\cos 2\theta\right] d\theta     \\
+     & =    \frac{1}{2} \left[\theta-\frac{1}{2}\sin 2\theta\right]_{0}^{\pi} \\
+     & =    \frac{\pi}{2}
+  \end{align*}
+  だから，\cref{2001-6:eq:5}に代入して
+  \begin{align*}
+    S'
+     & = 2a^2\frac{\pi}{8} + \frac{\pi}{2}         \\
+     & = \frac{\pi}{2}\left(\frac{a^2}{2}+1\right)
+  \end{align*}
+  だから，\cref{2001-6:eq:4}に代入して
+  \begin{align*}
+    S = \frac{\pi}{2}\left(a^2+2\right)
+  \end{align*}
+  が求める面積である．$\cdots$(答)
+
+  \vspace{10pt}
+  {\bf[解説]}
+  % TODO :: 点と直線の距離の照明
+  \newpage
+\end{multicols}
+\end{document}

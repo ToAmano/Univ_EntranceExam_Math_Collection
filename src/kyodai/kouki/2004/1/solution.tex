@@ -1,0 +1,216 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{京都大学後期$2004$年$1$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/2004/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+    新しく
+    \begin{align*}
+        g_n(x) & = 4nx(1-x) \\
+        j(x)   & = 4x(1-x)
+    \end{align*}
+    とおくと，$y=g_n(x)$ のグラフはのようになる．
+
+    新しく実数$0< \alpha,\beta<1$を
+    \begin{align*}
+        g_n(x) = 1
+    \end{align*}
+    の二つの解とし，$\alpha < \beta$ とする．
+    二次方程式の解の公式から
+    \begin{align*}
+        \alpha & = \frac{1-\sqrt{1-1/n}}{2} \\
+        \beta  & = \frac{1+\sqrt{1-1/n}}{2} \\
+    \end{align*}
+    であり，$n\to\infty$のとき
+    \begin{align}
+        \begin{dcases}
+            \lim_{n\to\infty} \alpha & = 0 \\
+            \lim_{n\to\infty} \beta  & = 1
+        \end{dcases} \label{2004-1:eq:1}
+    \end{align}
+    が極限値となる．
+
+    また，$h(n)$ を
+    \begin{align*}
+        h(n) = n \int_0^1 f(g_n(x)) \, dx
+    \end{align*}
+    で定める．
+    $h(n)$の$n\to\infty$での極限値を求めれば良い．
+
+    グラフおよび$f(x)$の定義から, $h(x)$を明示的に書き下すと
+    \begin{align*}
+        h(n)
+         & = n \int_0^\alpha g_n(x) \, dx + n \int_\beta^1 g_n(x) \, dx \\
+         & = n^2 \int_0^\alpha j(x) \, dx + n^2 \int_\beta^1 j(x) \, dx \\
+         & = 2n^2 \int_0^\alpha j(x) \, dx
+    \end{align*}
+    である．ただし，最後の行で$j(x)$が$x=1/2$を軸に対称なので二つの積分が等しくなることを利用した．
+    $J(x)$を$j(x)$の原始関数
+    \begin{align}
+        J(x) = 2x^2 - \frac{4}{3}x^3 \label{2004-1:eq:2}
+    \end{align}
+    とすると，
+    \begin{align}
+        h(n)
+         & = 2n^2\left(J(\alpha) - J(0) \right)      \label{2004-1:eq:3}
+    \end{align}
+    である．
+    \cref{2004-1:eq:2}を代入すると
+    \begin{align}
+        h(n)
+         & = 2n^2\left(2\alpha^2 - \frac{4}{3}\alpha^3\right)          \\
+         & = 4(n\alpha)^2 - \frac{8}{3}n^2\alpha^3 \label{2004-1:eq:4}
+    \end{align}
+    だから，以下各項の$n\to\infty$での極限値を求める．
+    \begin{align*}
+        \lim_{n\to\infty}(n\alpha)^2
+         & = \lim_{n\to\infty} \frac{1}{4}n^2\left(1-\sqrt{1-\frac{1}{n}}\right)^2          \\
+         & = \lim_{n\to\infty} \frac{1}{4}\left(n-\sqrt{n^2-n}\right)^2                     \\
+         & = \lim_{n\to\infty} \frac{1}{4}\left(\frac{n^2-(n^2-n)}{n+\sqrt{n^2-n}}\right)^2 \\
+         & = \lim_{n\to\infty} \frac{1}{4}\left(\frac{1}{1+\sqrt{1-1/n}} \right)^2          \\
+         & = \frac{1}{16}
+    \end{align*}
+    だから，二つ目の極限値は
+    \begin{align*}
+        \lim_{n\to\infty}n^2\alpha^3
+         & = \lim_{n\to\infty}(n\alpha)^2\alpha \\
+         & = 0
+    \end{align*}
+    となる．従って，\cref{2004-1:eq:4}に代入すると
+    \begin{align*}
+        \lim_{n\to\infty}h(n) = 4\cdot\frac{1}{16} = \frac{1}{4}
+    \end{align*}
+    が求める極限値である．$\cdots$(答)
+
+    \vspace{10pt}
+    {\bf[解説]}
+
+    今回の解答では，対称性を利用して評価する量を減らしたり，
+    極力$\alpha$を用いた見通しの良い変形を行うことで，
+    計算量の少ないものとした．
+
+    このような工夫は，以下のような問題の図形的解釈がわかっていれば素直に発想できるだろう．
+    $n\to\infty$の時，$y=g_n(x)$と$y=1$の交点$\alpha,\beta$がそれぞれ$0,1$に近づくが，この時
+    \begin{align*}
+        h(n)
+         & = n \int_0^\alpha g_n(x) \, dx + n \int_\beta^1 g_n(x) \, dx
+    \end{align*}
+    がどう振る舞うか，というのが問題である．
+    すなわち，積分区間はほぼ$0$に近づくだが，
+    一方で全体に$n$がかかっているので，そことの勝負ということになる．
+    この構造がわかっていると，$\alpha$を使ったまま全体を見通しよく式変形できる．
+
+    ちなみに，高校範囲ではこの程度の解答が限界だが，
+    \cref{2004-1:eq:3}以下，
+    大学数学の範囲のTaylor展開を利用すればさらにエレガントに解くことができる．
+    Taylor展開とは，適切な条件を満たす関数$f(x)$に対して
+    \begin{align*}
+        f(x) = f(a) + \frac{df(a)}{dx}\left(x-a\right)+\frac{1}{2!}\frac{d^2f(a)}{dx^2}\left(x-a\right)^2+\cdots
+    \end{align*}
+    のような展開のことを指す．これを$J(x)$の$x=0$での展開に用いると
+    \begin{align*}
+        J(\alpha)= J(0)+J'(0)\alpha+\frac{1}{2}J''(0)\alpha^2+\Delta(\alpha^3)
+    \end{align*}
+    と展開できるから，\cref{2004-1:eq:3}に代入すると
+    \begin{align*}
+        h(n)
+         & = 2n^2\left(J(\alpha) - J(0) \right)                                      \\
+         & = 2n^2\left(J'(0)\alpha+\frac{1}{2}J''(0)\alpha^2+\Delta(\alpha^3)\right) \\
+         & = 2J'(0)n^2\alpha + J''(0)n^2\alpha^2+\Delta(n^2\alpha^3)
+    \end{align*}
+    となる．ここで$J'(0)=j(0)=0$だから1項目は$0$であり，残りの部分は解答中の極限評価を利用して
+    \begin{align*}
+        \lim_{n\to\infty}h(n)
+         & = \frac{J''(0)}{16} \\
+         & = \frac{4}{16}      \\
+         & = \frac{1}{4}
+    \end{align*}
+    である．
+    今回の問題の場合，このように$J(x)$の二回微分までの評価が必要なので大学数学の範囲が必要になる，というのがポイントだろう．
+
+    % TODO :: 以下のような愚直な変形を解説に載せるか否かを検討．
+    % さて，最後に計算の工夫による計算量低減の重要性を見るため，愚直に計算する例も見てみよう．
+    % $h(n)$の積分による表式から始めよう．
+    % \begin{align*}
+    %     h(n)
+    %      & = n^2 \int_0^\alpha j(x) \, dx + n^2 \int_\beta^1 j(x) \, dx
+    % \end{align*}
+    % 解答中と同じく$j(x)$の原始関数$J(x)$として
+    % \begin{align*}
+    %     h(n) = n^2\left(J(\alpha) - J(0) \right)  + n^2\left(J(1) - J(\beta) \right)
+    % \end{align*}
+    % である．解答中では二項目は対称性を利用して評価しなかったが，以下この式を愚直に評価していく．
+    % \begin{align*}
+    %     J(0) & = 0           \\
+    %     J(1) & = \frac{2}{3}
+    % \end{align*}
+    % であるから
+    % \begin{align*}
+    %     J(\alpha) - J(0) & = 2\alpha^2 - \frac{4}{3}\alpha^3             \\
+    %     J(1)-J(\beta)    & = \frac{2}{3} - 2\beta^2 - \frac{4}{3}\beta^3
+    % \end{align*}
+    % であり，代入して
+    % \begin{align*}
+    %     h(n) = n^2\left(2\alpha^2 - \frac{4}{3}\alpha^3 \right)  + n^2\left(\frac{2}{3} - 2\beta^2 - \frac{4}{3}\beta^3\right)
+    % \end{align*}
+
+
+    % $G_n(x) = -\frac{4}{3}nx^3 + 2nx^2$ とおくと，$G_n'(x) = g_n(x)$ から
+    % \[ h(n) = n(G_n(\alpha) - G_n(0) + G_n(1) - G_n(\beta)) \quad \cdots \textcircled{1} \]
+    % 又，
+    % \[ G_n(1) = \frac{2}{3}n, \quad G_n(0) = 0 \quad \cdots \textcircled{2} \]
+    % ここで，$\alpha, \beta$ の定義から
+    % \[ \alpha + \beta = 1, \quad \alpha\beta = \frac{1}{4n}, \quad \beta - \alpha = \frac{\sqrt{4n^2 - 4n}}{2n} = \frac{\sqrt{n^2 - n}}{n} \]
+    % だから，
+    % \[ G_n(\alpha) - G_n(\beta) = 2n(\alpha^2 - \beta^2) - \frac{4}{3}n(\alpha^3 - \beta^3) \]
+    % \[ = 2n(\alpha - \beta)(\alpha + \beta) - \frac{4}{3}n(\alpha - \beta)(\alpha^2 + \alpha\beta + \beta^2) \]
+    % \[ = (\alpha - \beta) \left[ 2n(\alpha + \beta) - \frac{4}{3}n ((\alpha + \beta)^2 - \alpha\beta) \right] \]
+    % \[ = -\frac{\sqrt{n^2 - n}}{n} \left[ 2n(1) - \frac{4}{3}n \left( (1)^2 - \frac{1}{4n} \right) \right] \]
+    % \[ = -\frac{\sqrt{n^2 - n}}{n} \left( 2n - \frac{4}{3}n + \frac{1}{3} \right) \]
+    % \[ = -\frac{\sqrt{n^2 - n}}{n} \left( \frac{2}{3}n + \frac{1}{3} \right) \quad \cdots \textcircled{3} \]
+    % \textcircled{2}，\textcircled{3} を \textcircled{1} に代入
+    % \[ h(n) = n \left[ -\frac{\sqrt{n^2 - n}}{n} \left( \frac{2}{3}n + \frac{1}{3} \right) + \frac{2}{3}n \right] \]
+    % \[ = n \left[ \frac{2}{3}n - \frac{\sqrt{n^2 - n}}{3n} (2n + 1) \right] \]
+    % \[ = \frac{1}{3} \left[ 2n^2 - \sqrt{n^2 - n} (2n + 1) \right] \]
+    % \[ = \frac{1}{3} \frac{(2n^2)^2 - (n^2 - n)(2n + 1)^2}{2n^2 + \sqrt{n^2 - n} (2n + 1)} \]
+    % \[ = \frac{1}{3} \frac{4n^4 - (n^2 - n)(4n^2 + 4n + 1)}{2n^2 + \sqrt{n^2 - n} (2n + 1)} \]
+    % \[ = \frac{1}{3} \frac{4n^4 - (4n^4 + 4n^3 + n^2 - 4n^3 - 4n^2 - n)}{2n^2 + \sqrt{n^2 - n} (2n + 1)} \]
+    % \[ = \frac{1}{3} \frac{4n^4 - (4n^4 - 3n^2 - n)}{2n^2 + \sqrt{n^2 - n} (2n + 1)} \]
+    % \[ = \frac{1}{3} \frac{3n^2 + n}{2n^2 + \sqrt{n^2 - n} (2n + 1)} \]
+    % \[ = \frac{1}{3} \frac{3 + \frac{1}{n}}{2 + \sqrt{1 - \frac{1}{n}} \left( 2 + \frac{1}{n} \right)} \]
+    % \[ \to \frac{1}{3} \frac{3}{2 + \sqrt{1} (2)} = \frac{1}{3} \frac{3}{4} = \frac{1}{4} \quad (n \to \infty) \]
+
+
+
+    \newpage
+\end{multicols}
+\end{document}

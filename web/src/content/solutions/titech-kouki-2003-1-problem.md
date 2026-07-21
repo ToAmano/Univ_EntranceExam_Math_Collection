@@ -1,0 +1,15 @@
+---
+university: "titech"
+category: "kouki"
+year: "2003"
+question: "1"
+type: "problem"
+title: "TITECH 2003 kouki Q1 (problem)"
+---
+
+$xyz$ 空間の $2$ 点 $P, Q$ を, $\triangle OPQ (O$ は原点$)$ の面積が正の一定値 $S$ となるように動かす. $P, Q$ から $xy$ 平面に引いた垂線をそれぞれ $P', Q'$ とし, $\triangle OP'Q'$ の面積を $S_1$ とする. ただし, $O, P', Q'$ が同一線上にあるときは $S_1=0$ とする. 同様に $P, Q$ から $yz$ 平面, $zx$ 平面に垂線を引いて作っ
+た三角形の面積を $S_2, S_3$ とする.
+
+1.  $S^2 = S_1^2 + S_2^2 + S_3^2$ を証明せよ.
+
+2.  $S_1+S_2+S_3$ の最大値, 最小値を求めよ.

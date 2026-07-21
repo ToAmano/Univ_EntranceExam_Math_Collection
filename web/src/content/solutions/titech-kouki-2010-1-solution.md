@@ -1,0 +1,226 @@
+---
+university: "titech"
+category: "kouki"
+year: "2010"
+question: "1"
+type: "solution"
+title: "TITECH 2010 kouki Q1 (solution)"
+---
+
+## 【解】
+
+### (1)
+
+  $p \ge 0, b \ge 0$
+  $a, b, t \in \mathbb{R}$
+  表記の簡潔さのため，
+  
+$$
+\begin{align*}
+X & = \frac{1}{2}t + \frac{5}{t^2+1}\\
+    Y & = \frac{1}{2}t - \frac{5}{t^2+1}
+\end{align*}
+$$
+
+  とおくと，$X,Y$は
+  
+$$
+\begin{align*}
+X+Y & =t                \\
+    X-Y & =\frac{10}{t^2+1}
+\end{align*}
+$$
+
+  を満たす．
+
+  題意の漸化式は
+  
+$$
+\begin{align*}
+\begin{dcases}
+      a_{n+1} = Xa_n + Y b_n \\
+      b_{n+1} = Ya_n + X b_n
+    \end{dcases}
+\end{align*}
+$$
+
+  となるから辺々足し引きして，
+  
+$$
+\begin{align*}
+\begin{dcases}
+      a_{n+1} + b_{n+1} = (X+Y)(a_n+b_n) = t(a_n+b_n) \\
+      a_{n+1} - b_{n+1} = (X-Y)(a_n-b_n) = \frac{10}{t^2+1}(a_n-b_n)
+    \end{dcases}
+\end{align*}
+$$
+
+  だから，$a_n+b_n$および$a_n-b_n$は等比級数である．
+  これと初期条件 $a_1=a$, $b_1=b$ から，
+  一般項は
+  
+$$
+\begin{align*}
+\begin{dcases}
+      a_n + b_n & = t^{n-1}(a+b)                             \\
+      a_n - b_n & = \left(\frac{10}{t^2+1}\right)^{n-1}(a-b)
+    \end{dcases}
+\end{align*}
+$$
+
+  $a_n$を求めるために辺々足して
+  
+$$
+\begin{align*}
+a_n = \frac{1}{2}(a+b)t^{n-1} + \frac{1}{2}(a-b)\left(\frac{10}{t^2+1}\right)^{n-1}
+\end{align*}
+$$
+
+  を得る．$\cdots$(答)
+
+### (2)
+
+  表記の簡潔さのため$A = \frac{a+b}{2}$, $B = \frac{a-b}{2}$ とする．
+  題意の条件$a \ge 0 > b$から，$B>0$である．
+  さらに $s = \frac{10}{t^2+1}$ とすると (1) で得た一般項は
+  
+$$
+\begin{align*}
+a_n = A \cdot t^{n-1} + B \cdot s^{n-1}
+\end{align*}
+$$
+
+  となる．
+  以下 $a_n$ が収束する条件を$t$と$s$の大小関係に注目して考える．
+  $B>0$, $s>0$ であることに注意する．
+  まず $A \ne 0$ のとき，$t$と$s$の大小関係で場合分けすると
+  
+
+1.  [$1^\circ$] \underline{**$|t| < s \iff -2 < t < 2$ の時**}
+          \begin{align*}
+            a_n = s^{n-1} \left\{ B + A\left(\frac{t}{s}\right)^{n-1} \right\}
+          \end{align*}
+          に於いて，
+          \begin{align*}
+            \left\{ B+A\left(\frac{t}{S}\right)^{n-1} \right\} \xrightarrow{n \to \infty} B (\ne 0)
+          \end{align*}
+          だから，$a_n$ の収束条件は
+          \begin{align*}
+            -1 < s \le 1 \iff t \le -3, 3 \le t
+          \end{align*}
+          となる．$-2 < t < 2$ と同時にこの条件を満たす $t$ はないから，この領域で$a_n$は収束しない．\\
+
+2.  [$2^\circ$] \underline{**$|t| = s \iff t = \pm 2$ の時**}
+
+          まず$t=2$の時，$a_n = a \cdot 2^{n-1}$だから，$a\ge 0$より収束条件は$a=0$である．
+          この時$a \ge 0 > b$より，$ A \neq 0$は自動的に満たされる．
+
+          次に$t=-2$の時，$a_n = A\cdot(-2)^{n-1} + B\cdot 2^{n-1}$だから，$B>0$より$a_n$は収束しない．\\
+
+3.  [$3^\circ$] \underline{\textbf{$|t| > s \iff t < -2 \text{ or } 2 < t$ の時}}
+          \begin{align*}
+            a_n = t^{n-1} \left\{ A + B\left(\frac{S}{t}\right)^{n-1} \right\}
+          \end{align*}
+          である．
+          \begin{align*}
+            \left\{ A+B\left(\frac{s}{t}\right)^{n-1} \right\} \xrightarrow{n \to \infty} A (\ne 0)
+          \end{align*}
+          より収束条件は$-1 < t \le 1$ だが $t < -2 \text{ or } 2 < t$ と同時にこの条件を満たす$t$は存在しない．
+          よってこの領域で$a_n$は収束しない．
+
+  次に $A=0 \iff a+b=0$ の時，
+  
+$$
+\begin{align*}
+a_n = B \cdot s^{n-1}
+\end{align*}
+$$
+
+  より，$a_n$が収束する条件は
+  
+$$
+\begin{align*}
+-1 < s \le 1 \iff t \le -3, 3 \le t
+\end{align*}
+$$
+
+  である．
+
+  以上4つの場合分けから，もとめる条件は
+  
+$$
+\begin{align*}
+(a+b=0 \land(t \le -3 \text{ or } 3 \le t)) \text{ または }\\(a=0 \land t = 2)
+\end{align*}
+$$
+
+  である．$\cdots$(答)
+  
+
+  
+
+## 【解説】
+
+  線形連立漸化式の問題．(1)は対称性に注目すればさほど難しくなく，(2)も丁寧に場合分けすれば解けるので難易度は低い．
+
+  このような連立漸化式は行列表現で考えると見通しが良い．
+  与えられた漸化式は行列表現で
+  
+$$
+\begin{align*}
+\begin{pmatrix} a_{n+1} \\ b_{n+1} \end{pmatrix}& = \begin{pmatrix} \frac{t}{2} + \frac{5}{t^2+1} & \frac{t}{2} - \frac{5}{t^2+1} \\ \frac{t}{2} - \frac{5}{t^2+1} & \frac{t}{2} + \frac{5}{t^2+1} \end{pmatrix}\begin{pmatrix} a_n \\ b_n \end{pmatrix}\\& = \begin{pmatrix} X & Y \\ Y  & X  \end{pmatrix}\begin{pmatrix} a_n \\ b_n \end{pmatrix}
+\end{align*}
+$$
+
+  だから，これを特には係数行列を対角化すれば良く，
+  
+$$
+\begin{align*}
+\begin{pmatrix} X & Y \\ Y  & X  \end{pmatrix} = \frac{1}{2}\begin{pmatrix} 1 & 1 \\ 1  & -1 \end{pmatrix}\begin{pmatrix} X+Y & 0 \\ 0  & X-Y  \end{pmatrix}\begin{pmatrix} 1 & 1 \\ 1  & -1 \end{pmatrix}
+\end{align*}
+$$
+
+  だから，
+  
+$$
+\begin{align*}
+\begin{pmatrix} a_{n+1}+b_{n+1} \\ a_{n+1}-b_{n+1} \end{pmatrix} = \begin{pmatrix} X+Y & 0 \\ 0  & X-Y  \end{pmatrix}\begin{pmatrix} a_{n}+b_{n} \\ a_{n}-b_{n} \end{pmatrix}
+\end{align*}
+$$
+
+  となり，これを繰り返し持ちいれば
+  
+$$
+\begin{align*}
+\begin{pmatrix} a_{n}+b_{n} \\ a_{n}-b_{n} \end{pmatrix}& = \begin{pmatrix} X+Y & 0 \\ 0  & X-Y  \end{pmatrix}^{n-1}\begin{pmatrix} a+b \\ a-b \end{pmatrix}\\& = \begin{pmatrix} (X+Y)^{n-1} & 0 \\ 0  & (X-Y)^{n-1}  \end{pmatrix}\begin{pmatrix} a+b \\ a-b \end{pmatrix}\\
+\end{align*}
+$$
+
+  を得る．
+
+  または，$b_n$を消去して$a_n$の三項間漸化式として考える手もある．
+  漸化式より
+  
+$$
+\begin{align*}
+Y b_n = a_{n+1} - Xa_n
+\end{align*}
+$$
+
+  だから，これをもう一つの漸化式に代入して（$Y\neq 0$として）
+  
+$$
+\begin{align*}
+& Yb_{n+1} = Y^2 a_n + XY b_n                                   \\\therefore& a_{n+2} - Xa_{n+1}  = Y^2 a_n + X\left(a_{n+1} - Xa_n \right)\\\therefore& a_{n+2} - 2X a_{n+1} - (X^2+Y^2) a_n = 0
+\end{align*}
+$$
+
+  を得る．特性方程式の解は
+  
+$$
+\begin{align*}
+& x^2 -2X x^2 - (X^2+Y^2) = 0 \\\therefore& x = X \pm Y
+\end{align*}
+$$
+
+  だから，これを解けば解答に合流する．

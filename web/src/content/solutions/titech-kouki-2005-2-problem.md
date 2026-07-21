@@ -1,0 +1,15 @@
+---
+university: "titech"
+category: "kouki"
+year: "2005"
+question: "2"
+type: "problem"
+title: "TITECH 2005 kouki Q2 (problem)"
+---
+
+$C$ を半径$1$の円とし，その周上に長さ$\theta$の円弧$PQ$をおく．
+$C$と$P$で接し$C$の内部にある円を$A$， $C$と$Q$で接し， $A$にも接する円を$B$とする．
+
+1.  $A$ と $B$ の面積の和の最小値 $S_\theta$ を $\theta$ で表せ．
+
+2.  $\theta$ が $0$ から $2\pi$ まで動くとき，$S_\theta$ の最大値を求めよ．

@@ -1,0 +1,269 @@
+---
+university: "sample_titech"
+category: "kouki"
+year: "1993"
+question: "2"
+type: "solution"
+title: "SAMPLE_TITECH 1993 kouki Q2 (solution)"
+---
+
+## 【解】
+
+### (1)
+
+  $A$は上三角行列であり，二次単位行列
+  
+$$
+\begin{align*}
+I = \imat{2}
+\end{align*}
+$$
+
+  および
+  
+$$
+\begin{align}
+B = \mqty(0 & 1 \\ 0 & 0 ) \label{1993-2:eq:1}
+\end{align}
+$$
+
+  と定義すると
+  
+$$
+\begin{align*}
+A = 2I + B
+\end{align*}
+$$
+
+  となる．$I$が単位行列ゆえ$I$と$B$が可換だから，二項定理が適用できて
+  
+$$
+\begin{align}
+A^n
+     & = \left(2I+B\right)^{n}\\& = \sum_{k=0}^{n}{}_{n}C_{k} B^{k}(2I)^{n-k}\\& = \sum_{k=0}^{n} 2^{n-k}{}_{n}C_{k} B^{k}\label{1993-2:eq:2}
+\end{align}
+$$
+
+  を得る．ここで，$\eqref{1993-2:eq:1}$より
+  
+$$
+\begin{align*}
+B^{2} = \mqty(0 & 1 \\ 0 & 0 )\mqty(0 & 1 \\ 0 & 0 ) = \mqty(\zmat{2}{2})
+\end{align*}
+$$
+
+  が成り立つから，$\eqref{1993-2:eq:2}$で非零の要素は$k=0,1$のみである．
+  したがって$n \ge 2$の時
+  
+$$
+\begin{align*}
+A^{n}& = \sum_{k=0}^{1} 2^{n-k}{}_{n}C_{k} B^{k}\\& = 2^{n}{}_{n}C_{0} B^{0} + 2^{n-1}{}_{n}C_{1} B^{1}\\& = 2^{n} I + 2^{n-1}n B                                         \\& = \mqty(2^{n}& 2^{n-1}n \\
+    0 & 2^{n})
+\end{align*}
+$$
+
+  と計算できる．$n=1$の時もこの式が成立するから，任意の自然数$n$に対して
+  
+$$
+\begin{align*}
+\begin{dcases}
+      a_n = 2^{n}       \\
+      b_n =    2^{n-1}n \\
+      c_n = 0           \\
+      d_n = 2^{n}
+    \end{dcases}
+\end{align*}
+$$
+
+  である．$\cdots$(答)
+
+### (2)
+
+  題意の条件は
+  
+$$
+\begin{align}
+\begin{dcases}
+      \alpha_n = 1 \\
+      \beta_n =  0 \\
+      \gamma_n = 0 \\
+      \delta_n = 1
+    \end{dcases}\label{1993-2:eq:3}
+\end{align}
+$$
+
+  である．
+
+### (1)
+の結果より，まず$c_n=0$を$3$で割った余りは常に$0$であり，よって$\gamma_n=0$は常に成り立つ．
+  ついで$a_n=d_n$だから，$\alpha_n$について条件が成立すれば$\delta_n$についても成立するので，$\alpha_n$のみ考えれば良い．
+
+  そこで以下，$\alpha_n,\beta_n$について検討する．
+  法を$3$とする合同式を考えると$\eqref{1993-2:eq:3}$は
+  
+$$
+\begin{align*}
+& \begin{dcases}
+         2^{n} \equiv 1 \\
+         n2^{n-1} \equiv 0
+       \end{dcases}\\\iff& \begin{dcases}
+         (-1)^{n} \equiv 1 \\
+         n(-1)^{n-1} \equiv 0
+       \end{dcases}\\\iff& \begin{dcases}
+         (-1)^{n} \equiv 1 \\
+         n \equiv 0
+       \end{dcases}
+\end{align*}
+$$
+
+  と書けるから，これを満たす$n$の条件を求めれば良い．
+  一つ目の条件から$n$が偶数であり，二つ目の条件から$n$が$3$の倍数である．
+  よって，$n$が$6$の倍数であることが求める条件であり，題意は示された．$\cdots$(答)
+
+  
+  
+
+## 【解説】
+
+  行列と整数の問題．(1)が行列，(2)が整数と独立しており，どちらも素直で容易な問題である．
+
+### (1)
+は$A$の性質を利用して二項定理から一発で答えを求めたが，もっと愚直に漸化式から導く方法も考えられるので紹介しよう．
+  $A^{n+1}=A A^{n}$をふた通りであらわして
+  
+$$
+\begin{align*}
+\begin{pmatrix} a_{n+1} & b_{n+1} \\ c_{n+1} & d_{n+1} \end{pmatrix} = \mqty(2 & 1 \\ 0 & 2) \begin{pmatrix} a_n & b_n \\ c_n & d_n \end{pmatrix}
+\end{align*}
+$$
+
+  だから
+  
+$$
+\begin{align*}
+\begin{dcases}
+      a_{n+1} = 2 a_{n} + c_{n} \\
+      b_{n+1} = 2 b_{n} + d_{n} \\
+      c_{n+1} = 2c_{n}          \\
+      d_{n+1} = 2d_{n}
+    \end{dcases}
+\end{align*}
+$$
+
+  を得る．初期条件$a_1=d_1=2,b_1=1,c_1=0$と合わせて，まず$c_n,d_n$が
+  
+$$
+\begin{align*}
+\begin{dcases}
+      c_{n} = 0 \\
+      d_{n} = 2^{n}
+    \end{dcases}
+\end{align*}
+$$
+
+  と求まるから，残りの$a_n,b_n$の漸化式に代入すると
+  
+$$
+\begin{align*}
+\begin{dcases}
+      a_{n+1} = 2 a_{n} \\
+      b_{n+1} = 2 b_{n} + 2^{n}
+    \end{dcases}
+\end{align*}
+$$
+
+  となり，これらの漸化式も普通にとけて
+  
+$$
+\begin{align*}
+\begin{dcases}
+      a_n = 2^{n} \\
+      b_n = n2^{n-1}
+    \end{dcases}
+\end{align*}
+$$
+
+  と求まる．
+
+  または，ちょっと大袈裟だが$A^2$を計算するのにケーリーハミルトンの定理を使う方法もある．
+  
+$$
+\begin{align*}
+A^2 = \tr(A)A - (\det A)I
+\end{align*}
+$$
+
+  に代入して
+  
+$$
+\begin{align*}
+A^2 = 4 A - 4I
+\end{align*}
+$$
+
+  より，
+  
+$$
+\begin{align*}
+A^{n+2}& = A^{n}\left(4A-4I\right)\\& = 4 \left(A^{n+1} - A^{n}\right)
+\end{align*}
+$$
+
+  だから，特性方程式から
+  
+$$
+\begin{align*}
+A^{n+2} - 2 A^{n+1} = 2\left(A^{n+1}-2 A^{n}\right)
+\end{align*}
+$$
+
+  と変形できる．漸化式を繰り返し用いて
+  
+$$
+\begin{align*}
+A^{n+1} - 2 A^{n} = 2^{n-1}\left(A^{2}- 2 A^{1}\right)
+\end{align*}
+$$
+
+  を得る．ここで
+  
+$$
+\begin{align*}
+A^{2} = \mqty(4 & 4 \\ 0 & 4)
+\end{align*}
+$$
+
+  だから
+  
+$$
+\begin{align*}
+A^{n+1} - 2 A^{n} = 2^{n}\mqty(0 & 1 \\ 0 & 0)
+\end{align*}
+$$
+
+  となり，成分ごとに表示すると
+  
+$$
+\begin{align*}
+\begin{dcases}
+      a_{n+1} = 2 a_{n}         \\
+      b_{n+1} = 2 b_{n} + 2^{n} \\
+      c_{n+1} = 2 c_{n}         \\
+      d_{n+1} = 2 d_{n}
+    \end{dcases}
+\end{align*}
+$$
+
+  となって，先ほどの結果に合流する．
+
+### (2)
+は題意の条件を合同式で同値変形していけば求まる．ここで
+  
+$$
+\begin{align*}
+& n \equiv n+k & (\mod k)
+\end{align*}
+$$
+
+  が成り立つことに注意しよう．
+  今回の問題では$2 \equiv -1$であることを使って式を書き換えている．

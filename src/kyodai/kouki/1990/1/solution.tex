@@ -1,0 +1,227 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{京都大学後期$1990$年$1$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/1990/1/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+  $f(x) = x^4 - 6x^2$ とおくと，$f(x)$は偶関数で，曲線
+  \begin{align*}
+    C: y = f(x)
+  \end{align*}
+  の様子は\cref{1990-1:fig:1}である．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis lines=middle,
+          xlabel=$x$,
+          ylabel=$y$,
+          xmin=-4, xmax=4,
+          ymin=-10, ymax=5,
+          xtick={-1.71,1.71}, % x-coordinate for s
+          xticklabels={$-\sqrt{3}$,$\sqrt{3}$},
+          ytick={-9}, % s=2
+          yticklabels={$-9$},
+          grid=none,
+          clip=false, % Allow labels to go outside the axis boundaries
+          domain=0:4, % Domain for the log x function
+          samples=100
+        ]
+
+        % Plot the curve y = log x
+        \addplot[blue, thick, domain=-2.6:2.6] {x^4-6*x^2};
+
+        % Plot the tangent line y = (1/s)x + log s - 1 with s=2
+        % y = 0.5x + ln(2) - 1
+        \addplot[black, thick, dashed] coordinates {(-2.6, -9) (2.6, -9)};
+        \node[above right] at (axis cs:2.5, 1.2) {$C$};
+        % Mark point 
+        \addplot[only marks, mark=*] coordinates {({sqrt(3)},-9)};
+        \addplot[only marks, mark=*] coordinates {({-sqrt(3)},-9)};
+
+        % Draw dashed line from P to x-axis
+        \draw[dashed] (axis cs:{sqrt(3)}, 0) -- (axis cs:{sqrt(3)}, -9);
+        \draw[dashed] (axis cs:{-sqrt(3)}, 0) -- (axis cs:{-sqrt(3)}, -9);
+        % 
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$y=f(x)$の様子}
+    \label{1990-1:fig:1}
+  \end{figure}
+
+
+
+  $f'(x) = 4x^3 - 12x$ だから，$x=t$ における接線は
+  \begin{align*}
+    l: y
+     & = (4t^3 - 12t) (x-t) + t^4 - 6t^2           \\
+     & = (4t^3 - 12t)x - 4t^4 + 12t^2 + t^4 - 6t^2 \\
+     & = (4t^3 - 12t)x - 3t^4 + 6t^2
+  \end{align*}
+  である．これが $(a,b)$ を通る時
+  \begin{align*}
+     & b = (4t^3 - 12t)a - 3t^4 + 6t^2                \\
+    \therefore
+     & 0 = 3t^4 - 4at^3 - 6t^2 + 12at + b \equiv g(t)
+  \end{align*}
+  である．グラフより，$y=f(x)$は$t=\pm\sqrt{3}$でのみ二重接線を持つから，
+  題意の条件は，四次方程式$g(t)=0$が
+  \begin{align}
+    t\neq\pm\sqrt{3} \label{1990-1:eq:1}
+  \end{align}
+  に四つの異なる実数解を持つことと同値である．
+  そこで以下この条件を調べる．
+  まず，\cref{1990-1:eq:1}より
+  \begin{align}
+     & b \neq f(\pm \sqrt{3})       \\
+    \therefore
+     & b \neq -9\label{1990-1:eq:2}
+  \end{align}
+  である．
+
+  次に，$g(x)$の増減表を書くことで，$g(t)=0$の解の個数を考察する．
+  まず$g(x)$の一階微分は
+  \begin{align*}
+    g'(t)
+     & = 12t^3 - 12at^2 - 12t + 12a \\
+     & = 12 (t^3 - at^2 - t + a)    \\
+     & = 12 (t^2(t-a) - (t-a))      \\
+     & = 12 (t-a) (t^2 - 1)         \\
+     & = 12 (t-a) (t+1) (t-1)
+  \end{align*}
+  だから，$a$によって以下のような増減表を得る．
+
+  \begin{enumerate}
+    \item $a < -1$
+          \[
+            \begin{array}{|c||c|c|c|c|c|c|c|}
+              \hline
+              t  &          & a &          & -1 &          & 1 &          \\
+              \hline
+              g' & -        & 0 & +        & 0  & -        & 0 & +        \\
+              \hline
+              g  & \searrow &   & \nearrow &    & \searrow &   & \nearrow \\
+              \hline
+            \end{array}
+          \]
+
+    \item $-1 < a < 1$
+          \[
+            \begin{array}{|c||c|c|c|c|c|c|c|}
+              \hline
+              t  &          & -1 &          & a &          & 1 &          \\
+              \hline
+              g' & -        & 0  & +        & 0 & -        & 0 & +        \\
+              \hline
+              g  & \searrow &    & \nearrow &   & \searrow &   & \nearrow \\
+              \hline
+            \end{array}
+          \]
+
+    \item $1 < a$
+          \[
+            \begin{array}{|c||c|c|c|c|c|c|c|}
+              \hline
+              t  &          & -1 &          & 1 &          & a &          \\
+              \hline
+              g' & -        & 0  & +        & 0 & -        & 0 & +        \\
+              \hline
+              g  & \searrow &    & \nearrow &   & \searrow &   & \nearrow \\
+              \hline
+            \end{array}
+          \]
+
+    \item $a=\pm 1$ の時
+          \text{$g$は単調増加関数となり不適}
+  \end{enumerate}
+
+  よって，$g(t)=0$が四つの異なる実解を持つ条件は
+  \begin{align*}
+    \begin{dcases}
+      a < -1     & g(a)<0, g(-1)>0, g(1)<0 \\
+      -1 < a < 1 & g(-1)<0, g(a)>0, g(1)<0 \\
+      1 < a      & (-1)>0, g(a)<0, g(1)>0
+    \end{dcases}
+  \end{align*}
+  である．$g$の値は
+  \begin{align*}
+    g(a)  & = -a^4 + 6a^2 + b \\
+    g(1)  & = 8a-3+b          \\
+    g(-1) & = -8a-3+b
+  \end{align*}
+  だから，\cref{1990-1:eq:2}と合わせて図示すると\cref{1990-1:fig:2}斜線部（$b=-9$, 境界は除く）が求める条件である．$\cdots$(答)
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis lines=middle,
+          xlabel=$x$,
+          ylabel=$y$,
+          xmin=-4, xmax=4,
+          ymin=-10, ymax=8,
+          xtick={-1.71,-1,1,1.71}, % x-coordinate for s
+          xticklabels={$-\sqrt{3}$,$-1$,$1$,$\sqrt{3}$},
+          ytick={-9,3}, % s=2
+          yticklabels={$-9$,$3$},
+          grid=none,
+          clip=false, % Allow labels to go outside the axis boundaries
+          samples=100
+        ]
+
+        \addplot[blue, dashed, thick, domain=-2.6:2.6] {x^4-6*x^2};
+        \addplot[draw=none,domain=-3:3,name path=C] {x^4-6*x^2};
+        \addplot[blue, dashed, thick, domain=-3.0:0.5] {8*x+3};
+        \addplot[draw=none, domain=-4:4,name path=A] {8*x+3};
+        \addplot[blue, dashed, thick, domain=-0.5:3.0] {-8*x+3};
+        \addplot[draw=none, domain=-4:4,name path=B] {-8*x+3};
+
+        %\addplot[pattern=north west lines] fill between [of=C and A,soft clip={domain=-5:0}];
+        %\addplot[pattern=north west lines] fill between [of=B and C,soft clip={domain=0:3}];
+
+        % fill between用の名前付きパス（ドメインを適切に制限）
+        \addplot[draw=none, domain=-2.6:0, name path=C1] {x^4-6*x^2};
+        \addplot[draw=none, domain=-2.6:0, name path=A1] {8*x+3};
+        \addplot[draw=none, domain=0:2.6, name path=C2] {x^4-6*x^2};
+        \addplot[draw=none, domain=0:2.6, name path=B1] {-8*x+3};
+
+        % fill betweenの実行
+        \addplot[pattern=north west lines]
+        fill between [of=C1 and A1];
+        \addplot[pattern=north west lines]
+        fill between [of=B1 and C2];
+
+        % Plot the tangent line y = (1/s)x + log s - 1 with s=2
+        % y = 0.5x + ln(2) - 1
+        \addplot[black, thick, dashed] coordinates {(-2.6, -9) (2.6, -9)};
+        \node[above right] at (axis cs:2.5, 1.2) {$C$};
+        % Mark point 
+        \addplot[only marks, mark=*] coordinates {({sqrt(3)},-9)};
+        \addplot[only marks, mark=*] coordinates {({-sqrt(3)},-9)};
+        \addplot[only marks, mark=*] coordinates {(1,-5)};
+        \addplot[only marks, mark=*] coordinates {(-1,-5)};
+
+        % Draw dashed line from P to x-axis
+        \draw[dashed] (axis cs:{sqrt(3)}, 0) -- (axis cs:{sqrt(3)}, -9);
+        \draw[dashed] (axis cs:{-sqrt(3)}, 0) -- (axis cs:{-sqrt(3)}, -9);
+        \draw[dashed] (axis cs:1, 0) -- (axis cs:1, -5) --(axis cs:-1,-5) -- (axis cs:-1, 0) ;
+        % 
+      \end{axis}
+    \end{tikzpicture}
+    \caption{求めた$(a,b)$の領域（斜線部，ただし境界および$b=-9$は除く．}
+    \label{1990-1:fig:2}
+  \end{figure}
+
+  \vspace{10pt}
+  {\bf[解説]}
+
+
+  \newpage
+\end{multicols}
+\end{document}

@@ -7,7 +7,7 @@ type: "solution"
 title: "SAMPLE_TITECH 2000 kouki Q1 (solution)"
 ---
 
-**【解】**
+## 【解】
 
 ### (1)
 
@@ -15,8 +15,8 @@ title: "SAMPLE_TITECH 2000 kouki Q1 (solution)"
   
 $$
 \begin{align*}
-    f(x)=(x+a)(x^2+(1-a)x+b)
-  \end{align*}
+f(x)=(x+a)(x^2+(1-a)x+b)
+\end{align*}
 $$
 
   と書ける．これ以上の分解はできないため，これが答えである．  $\cdots$(答)
@@ -27,141 +27,25 @@ $$
   
 $$
 \begin{align*}
-    g(x) = x^2+(1-a)x+b
-  \end{align*}
+g(x) = x^2+(1-a)x+b
+\end{align*}
 $$
 
-  とおく．$f(x)$の三次の係数が正だから，$g(x)$の解の数によって関数$f(x)$の概形が\cref{2000-1:fig:1}の4パターンに変化する．
+  とおく．$f(x)$の三次の係数が正だから，$g(x)$の解の数によって関数$f(x)$の概形が[図1](#2000-1:fig:1)の4パターンに変化する．
 
-  \begin{figure}[H]
-    \centering
-    \begin{subcaptionblock}{0.5\linewidth}
-      \centering
-      \begin{tikzpicture}[scale=0.5]
-        \begin{axis}[
-            axis lines=middle, 
-            xlabel=$x$,
-            ylabel=$y$,
-            xmin=-1, xmax=1, 
-            ymin=-0.7, ymax=0.7, 
-            xtick={\empty}, 
-            ytick={\empty}, 
-            grid=both, 
-            grid style={line width=.1pt, draw=gray!10}, 
-            major grid style={line width=.2pt,draw=gray!50}, 
-            samples=100, 
-            domain=-1:1 
-          ]
-          \addplot[
-            domain=-1.3:1.3, 
-            samples=100,
-            smooth, 
-            thick, 
-            blue 
-          ] {x*(x-0.5)*(x+0.5)}; 
-          \addplot[only marks, mark=*, mark size=2pt, color=red] coordinates {(-0.5,0) (0,0) (0.5,0)};
-        \end{axis}
-      \end{tikzpicture}
-    \end{subcaptionblock}\hfill
-    \begin{subcaptionblock}{0.5\linewidth}
-      \centering
-      \begin{tikzpicture}[scale=0.5]
-        \begin{axis}[
-            axis lines=middle, 
-            xlabel=$x$,
-            ylabel=$y$,
-            xmin=-1, xmax=1, 
-            ymin=-0.7, ymax=0.7, 
-            xtick={\empty}, 
-            ytick={\empty}, 
-            grid=both, 
-            grid style={line width=.1pt, draw=gray!10}, 
-            major grid style={line width=.2pt,draw=gray!50}, 
-            samples=100, 
-            domain=-1:1 
-          ]
-          \addplot[
-            domain=-1:1, 
-            samples=100,
-            smooth, 
-            thick, 
-            blue 
-          ] {(x+0.5)*(x-0.5)*(x-0.5)}; 
+  
 
-          \addplot[only marks, mark=*, mark size=2pt, color=red] coordinates {(-0.5,0) (0.5,0)};
-
-        \end{axis}
-      \end{tikzpicture}
-    \end{subcaptionblock}
-
-    \begin{subcaptionblock}{0.5\linewidth}
-      \centering
-      \begin{tikzpicture}[scale=0.5]
-        \begin{axis}[
-            axis lines=middle, 
-            xlabel=$x$,
-            ylabel=$y$,
-            xmin=-1, xmax=1, 
-            ymin=-0.7, ymax=0.7, 
-            xtick={\empty}, 
-            ytick={\empty}, 
-            grid=both, 
-            grid style={line width=.1pt, draw=gray!10}, 
-            major grid style={line width=.2pt,draw=gray!50}, 
-            samples=100, 
-            domain=-1:1 
-          ]
-          \addplot[
-            domain=-1:1, 
-            samples=100,
-            smooth, 
-            thick, 
-            blue 
-          ] {(x-0.5)*(x+0.5)*(x+0.5)}; 
-
-          \addplot[only marks, mark=*, mark size=2pt, color=red] coordinates {(-0.5,0) (0.5,0)};
-        \end{axis}
-      \end{tikzpicture}
-    \end{subcaptionblock}\hfill
-    \begin{subcaptionblock}{0.5\linewidth}
-      \centering
-      \begin{tikzpicture}[scale=0.5]
-        \begin{axis}[
-            axis lines=middle, 
-            xlabel=$x$,
-            ylabel=$y$,
-            xmin=-1, xmax=1, 
-            ymin=-0.7, ymax=0.7, 
-            xtick={\empty}, 
-            ytick={\empty}, 
-            grid=both, 
-            grid style={line width=.1pt, draw=gray!10}, 
-            major grid style={line width=.2pt,draw=gray!50}, 
-            samples=100, 
-            domain=-1:1 
-          ]
-          \addplot[
-            domain=-1:1, 
-            samples=100,
-            smooth, 
-            thick, 
-            blue 
-          ] {x*x*x}; 
-
-          \addplot[only marks, mark=*, mark size=2pt, color=red] coordinates {(0,0)};
-        \end{axis}
-      \end{tikzpicture}
-    \end{subcaptionblock}
-    \caption{三次関数の解の個数とグラフの概形}
-    \label{2000-1:fig:1}
-  \end{figure}
+<figure id="2000-1:fig:1">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/2000/1/fig_1.svg" alt="図 1" />
+  <figcaption>図 1: 三次関数の解の個数とグラフの概形</figcaption>
+</figure>
 
   $g(x)$の判別式$D$は
   
 $$
 \begin{align*}
-    D=(a-1)^2-4b
-  \end{align*}
+D=(a-1)^2-4b
+\end{align*}
 $$
 
   である．$D\ge0$の時 $f(x)=0$は2実解 $\alpha, \beta$ (重解を含む)をもつ．これらの解が$-a$と等しい場合があるかを調べる．
@@ -169,35 +53,33 @@ $$
   
 $$
 \begin{align}
-    x = \frac{a-1 \pm \sqrt{(a-1)^2-4b}}{2}\label{2000-1:eq:2}
-  \end{align}
+x = \frac{a-1 \pm \sqrt{(a-1)^2-4b}}{2}\label{2000-1:eq:2}
+\end{align}
 $$
 
   である．これが$-a$と等しいとき，
   
 $$
 \begin{align*}
-    -a      & = \frac{a-1 \pm \sqrt{(a-1)^2-4b}}{2} \\
-    -3a + 1 & = \pm \sqrt{(a-1)^2-4b}
-  \end{align*}
+-a      & = \frac{a-1 \pm \sqrt{(a-1)^2-4b}}{2}\\
+    -3a + 1 & = \pm\sqrt{(a-1)^2-4b}
+\end{align*}
 $$
 
   両辺二乗して
   
 $$
 \begin{align}
-     & (-3a+1)^2 = (a-1)^2-4b   \nonumber \\
-     & 9a^2-6a+1 = a^2-2a+1 -4b \nonumber \\
-     & b = - 2a^2+a \label{2000-1:eq:3}
-  \end{align}
+& (-3a+1)^2 = (a-1)^2-4b   \nonumber\\& 9a^2-6a+1 = a^2-2a+1 -4b \nonumber\\& b = - 2a^2+a \label{2000-1:eq:3}
+\end{align}
 $$
 
   である．$D=0$との関係では，常に
   
 $$
 \begin{align*}
-    \frac{1}{4}(a-1)^2 \ge -2a^2+a
-  \end{align*}
+\frac{1}{4}(a-1)^2 \ge -2a^2+a
+\end{align*}
 $$
 
   が成り立つ．等号成立は$a=1/3$のときであり，
@@ -205,59 +87,23 @@ $$
   
 $$
 \begin{align*}
-    g(x)
-     & = x^2+\frac{2}{3}x+\frac{1}{9} \\
-     & = \left(x+\frac{1}{3}\right)^2
-  \end{align*}
+g(x)
+     & = x^2+\frac{2}{3}x+\frac{1}{9}\\& = \left(x+\frac{1}{3}\right)^2
+\end{align*}
 $$
 
   と$x=-a$を重解を持つ．
   それ以外の時は，$g(x)$は$-a$およびそれと異なる解を持つ．
   以上の事実を念頭に以下場合わけを行う．
 
-  \begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-      \begin{axis}[
-          axis lines=middle, 
-          xlabel=$x$,
-          ylabel=$y$,
-          xmin=-1, xmax=2, 
-          ymin=-0.7, ymax=0.7, 
-          xtick={\empty}, 
-          ytick={\empty}, 
-          grid=both, 
-          grid style={line width=.1pt, draw=gray!10}, 
-          major grid style={line width=.2pt,draw=gray!50}, 
-          samples=100, 
-          domain=-1:2 
-        ]
-        \addplot[
-          domain=-1:2, 
-          samples=100,
-          smooth, 
-          thick, 
-          blue 
-        ] {(x-1)*(x-1)/4};
-        \node at (axis cs:1.6,0.3) {$f(x)$};
-        \addplot[
-          domain=-1:2, 
-          samples=100,
-          smooth, 
-          thick, 
-          blue 
-        ] {-2*x*x+x};
-        \node at (axis cs:0.9,-0.2) {$g(x)$};
-        \node at (axis cs:1,-0.1) {$1$};
-        \node at (axis cs:1/3,-0.1) {$1/3$};
-        \addplot[dashed, gray] coordinates {(1/3,0) (1/3,1/9)};
-        \addplot[only marks, mark=*, mark size=2pt, color=red] coordinates {(1/3,1/9)};
-      \end{axis}
-    \end{tikzpicture}
-    \caption{$g(x)$の解の個数分布}
-  \end{figure}
+  
 
-  以下場合わけをして考える．全体像は\cref{2000-1:table:1}である．
+<figure id="fig_2">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/2000/1/fig_2.svg" alt="図 2" />
+  <figcaption>図 2: $g(x)$の解の個数分布</figcaption>
+</figure>
+
+  以下場合わけをして考える．全体像は$\eqref{2000-1:table:1}$である．
   \begin{table}[H]
     \centering
     \caption{場合分けの全体像}
@@ -274,31 +120,22 @@ $$
     \label{2000-1:table:1}
   \end{table}
 
-  \begin{enumerate}
-    \item $f(x)$が異なる三つの実数解を持つとき．\\
+  
+
+1.  $f(x)$が異なる三つの実数解を持つとき．\\
           この時は，$g(x)$が異なる二つの実数解を持つ，つまり$D>0$である．
           この時は$g(x)$の解が$-a$ではあり得ない．
           従って
-          
-$$
-\begin{align*}
+          \begin{align*}
             (a-1)^2-4b > 0 \\
           \end{align*}
-$$
-
           の時である．
           このもとで題意の条件を満たすには，$f(x)$の最も大きい解が$0$以下であれば良い．
-          
-$$
-\begin{align*}
+          \begin{align*}
              & \max(-a, \alpha, \beta) \le 0
           \end{align*}
-$$
-
-          \cref{2000-1:eq:2}より，求める条件は
-          
-$$
-\begin{align*}
+          $\eqref{2000-1:eq:2}$より，求める条件は
+          \begin{align*}
              & \begin{dcases}
                  -a \le 0 \\
                  \frac{a-1 + \sqrt{(a-1)^2-4b}}{2} \le 0
@@ -320,178 +157,105 @@ $$
                  0 \le b
                \end{dcases}
           \end{align*}
-$$
 
-    \item $f(x)$が異なる二つの実数解を持つとき．\\
+2.  $f(x)$が異なる二つの実数解を持つとき．\\
           この時は，$D=0$で$g(x)$の解が$-a$でないときか，$D>0$で$g(x)$の一つの解が$-a$となる($-a$が$f$の重解となる)ときである．
           前者の時は$D=0$より
-          
-$$
-\begin{align*}
+          \begin{align*}
             D = (a-1)^2 -4b = 0
           \end{align*}
-$$
-
           であり，この時の重解は $x = \frac{a-1}{2}$である．これが$-a$と一致しないことにより$a\neq 1/3$が必要．
           題意の条件は
-          
-$$
-\begin{align*}
+          \begin{align*}
              & -a \le 0 \\
             \therefore
              & a \ge 0
           \end{align*}
-$$
-
           である．
 
-          後者の条件は，\cref{2000-1:eq:3}より
-          
-$$
-\begin{align*}
+          後者の条件は，$\eqref{2000-1:eq:3}$より
+          \begin{align*}
             b & = - 2a^2+a        \\
             D & = (a-1)^2 -4b > 0
           \end{align*}
-$$
-
           であり，この時$g(x)$のもう一つの解は解と係数の関係から
-          
-$$
-\begin{align*}
+          \begin{align*}
             x = 2a - 1
           \end{align*}
-$$
-
           である．題意の条件はこれが$0$以下であることで
-          
-$$
-\begin{align*}
+          \begin{align*}
              & 2a-1 \le 0        \\
              & a \le \frac{1}{2}
           \end{align*}
-$$
-
           である．
-    \item  $f(x)$がただ一つの実数解を持つとき．\\
+
+3.  $f(x)$がただ一つの実数解を持つとき．\\
           これは$f(x)$が三重解を持つか，または$D<0$の時のときである．
           前者の時は$a=1/3$であり，この元で題意の条件は$-a \le 0$であるから，
-          
-$$
-\begin{align*}
+          \begin{align*}
             \begin{dcases}
               (a-1)^2 -4b = 0 \\
               a = \frac{1}{3}
             \end{dcases}
           \end{align*}
-$$
-
           となる．
 
           後者の時は$D<0$かつ$-a \le 0$であればよく，
-          
-$$
-\begin{align*}
+          \begin{align*}
             \begin{dcases}
               (a-1)^2 -4b < 0 \\
               a \ge 0
             \end{dcases}
           \end{align*}
-$$
-
-  \end{enumerate}
 
   以上をまとめると，以下の4つの条件となる．
   
 $$
 \begin{align*}
-    \begin{dcases}
+\begin{dcases}
       (a-1)^2-4b > 0, 0 \le a \le 1, 0 \le b          \\
       (a-1)^2 -4b > 0, b = - 2a^2+a, a\le \frac{1}{2} \\
       (a-1)^2 -4b = 0, a \ge 0                        \\
       (a-1)^2 -4b < 0 ,      a \ge 0                  \\
     \end{dcases}
-  \end{align*}
+\end{align*}
 $$
 
   これを整理して
   
 $$
 \begin{align*}
-    \begin{dcases}
+\begin{dcases}
       b = - 2a^2+a            & a < 0         \\
       0 \le b                 & 0 \le a \le 1 \\
       b \ge \frac{(a-1)^2}{4} & 1 < a
     \end{dcases}
-  \end{align*}
+\end{align*}
 $$
 
   である．
-  $ab$平面にこの条件を図示すれば，\cref{2000-1:fig:3}の斜線部が求める答えである．
+  $ab$平面にこの条件を図示すれば，[図3](#2000-1:fig:3)の斜線部が求める答えである．
   ただし，実線部および境界を含む．
 
-  \begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-      \begin{axis}[
-          axis lines=middle, 
-          xlabel=$x$,
-          ylabel=$y$,
-          xmin=-1, xmax=3, 
-          ymin=-0.7, ymax=3.0, 
-          xtick={\empty}, 
-          ytick={\empty}, 
-          grid=both, 
-          grid style={line width=.1pt, draw=gray!10}, 
-          major grid style={line width=.2pt,draw=gray!50}, 
-          samples=100, 
-          domain=-1:2 
-        ]
-        \addplot[
-          domain=-1:0, 
-          samples=100,
-          smooth, 
-          dashed,
-        ] {(x-1)*(x-1)/4};
-        \addplot[
-          domain=0:3, 
-          samples=100,
-          smooth, 
-          thick, 
-        ] {(x-1)*(x-1)/4} ;
-        \addplot[only marks, mark=*, mark size=2pt, color=black] coordinates {(0,1/4)};
-        \fill[pattern=north east lines]plot[domain=0:4,smooth](\x,{(\x-1)*(\x-1)/4})--(3,3)--(0,3);
-        \fill[pattern=north west lines]plot[domain=0:1,smooth](\x,{(\x-1)*(\x-1)/4})--(1,0)--(0,0);
+  
 
-        \draw[thick] (axis cs:0,0) -- (axis cs:0,3);
-        \draw[thick] (axis cs:0,0) -- (axis cs:1,0);
-
-        \node at (axis cs:2.5,0.1) {$f(x)$};
-        \addplot[
-          domain=-1:0.5, 
-          samples=100,
-          smooth, 
-          thick
-        ] {-2*x*x+x};
-        \node at (axis cs:-0.4,-0.2) {$g(x)$};
-        \node[below] at (axis cs:1,0) {$1$};
-        \node[below] at (axis cs:1/3,0) {$1/3$};
-        \addplot[dashed, gray] coordinates {(1/3,0) (1/3,1/9)};
-        \addplot[only marks, mark=*, mark size=2pt, color=red] coordinates {(1/3,1/9)};
-      \end{axis}
-    \end{tikzpicture}
-    \caption{求める$(a,b)$の領域は斜線部（境界含む）と，実線部分である．}
-    \label{2000-1:fig:3}
-  \end{figure}
+<figure id="2000-1:fig:3">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/2000/1/fig_3.svg" alt="図 3" />
+  <figcaption>図 3: 求める$(a,b)$の領域は斜線部（境界含む）と，実線部分である．</figcaption>
+</figure>
 
   $\cdots$(答)
 
   
-  **【解説】**
+  
+
+## 【解説】
+
   方程式および多変数関数の問題．(1)は色々試せば$-a$を因数として持つことがわかるのですぐに答えを導ける．
   本題は(2)の方で，三次関数$f(x)$の形の違いによって求める題意の条件が異なるので，場合わけによる正確な処理が求められる．
   特に注意しないといけないのは$g(x)$の解が$-a$となるかどうかという点である．
   この場合は$x=-a$の方で重解を持つことになるので，$g(x)$が重解を持つのとは別のパターンとして処理が必要である．
-  結果的に\cref{2000-1:table:1}のように5パターンの場合わけを処理すれば解答に辿り着ける．
+  結果的に$\eqref{2000-1:table:1}$のように5パターンの場合わけを処理すれば解答に辿り着ける．
 
   簡単な検算としては，$f(0)=ab$で，これが条件より$0$以上なので$ab\ge 0$であり，
-  最後の\cref{2000-1:fig:3}はこの条件を満たしているのでぱっと見大丈夫そうなのが確認できる．
+  最後の[図3](#2000-1:fig:3)はこの条件を満たしているのでぱっと見大丈夫そうなのが確認できる．

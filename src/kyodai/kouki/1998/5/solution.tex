@@ -1,0 +1,186 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{京都大学後期$1998$年$5$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/1998/5/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  まず，明らかに
+  \begin{align*}
+    Q_1 = 1
+  \end{align*}
+  である．$A_i,B_i$を図示すると\cref{1998-5:fig:1}のようになる．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      % Coordinate axes
+      \draw[->] (-0.2,0) -- (4,0) node[below] {$x$};
+      \draw[->] (0,-0.2) -- (0,2.5) node[left] {$y$};
+
+      % Labels for coordinates
+      \node at (-0.2,-0.2) {0};
+      \node at (0.2,2) {2}; % '2' on y-axis as in the image
+
+      % Points A
+      \node[circle, fill, inner sep=1.5pt, label=below:$A_1$] (A1) at (0.5,0) {};
+      \node[circle, fill, inner sep=1.5pt, label=below:$A_2$] (A2) at (1.5,0) {};
+      \node[circle, fill, inner sep=1.5pt, label=below:$A_n$] (An) at (3.5,0) {};
+
+      % Points B
+      \node[circle, fill, inner sep=1.5pt, label=above:$B_1$] (B1) at (0.5,1) {};
+      \node[circle, fill, inner sep=1.5pt, label=above:$B_2$] (B2) at (1.5,1) {};
+      \node[circle, fill, inner sep=1.5pt, label=above:$B_n$] (Bn) at (3.5,1) {};
+
+      % Horizontal arrows for A
+      \draw[->] (A1) -- (A2);
+      \draw[dotted] (A2) -- (2.5,0);
+      \draw[->] (2.5,0) -- (An);
+
+      % Horizontal arrows for B
+      \draw[->] (B1) -- (B2);
+      \draw[dotted] (B2) -- (2.5,1);
+      \draw[->] (2.5,1) -- (Bn);
+
+      % Vertical arrows A to B
+      \draw[->] (A1) -- (B1);
+      \draw[->] (A2) -- (B2);
+      \draw[->] (An) -- (Bn);
+
+      % 'n' label on x-axis
+      \node at (3.5,-0.2) {$n$};
+    \end{tikzpicture}
+    \caption{$A_i,B_i$の様子}
+    \label{1998-5:fig:1}
+  \end{figure}
+
+  (1)
+  \textbf{$n=2$ の時}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      % Points A
+      \node[label=below:$A_1$] (A1) at (0,0) {};
+      \node[label=below:$A_2$] (A2) at (1,0) {};
+
+      % Points B
+      \node[label=above:$B_1$] (B1) at (0,1) {};
+      \node[label=above:$B_2$] (B2) at (1,1) {};
+
+      % Arrows
+      \draw[->] (A1) -- (A2);
+      \draw[->] (B1) -- (B2);
+      \draw[->] (A1) -- (B1);
+      \draw[->] (A2) -- (B2);
+    \end{tikzpicture}
+    \caption{$n=2$の時の様子}
+    \label{1998-5:fig:2}
+  \end{figure}
+
+  $A_1 \to A_2 \to B_2$, 又は $A_1 \to B_1 \to B_2$ と行けば良い．
+  排反事象を考えると，これは$A_1A_2$にも$B_1B_2$にも×がついている時以外である．
+  従って，求める確率は
+  \begin{align*}
+    Q_2 & = 1 - (1-p)^2 \\
+        & = p(2-p)
+  \end{align*}
+  である．$\cdots$(答)
+  \vspace{10pt}
+
+  \textbf{$n=3$ の時}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      % Points A
+      \node[label=below:$A_1$] (A1) at (0,0) {};
+      \node[label=below:$A_2$] (A2) at (1,0) {};
+      \node[label=below:$A_3$] (A3) at (2,0) {};
+
+      % Points B
+      \node[label=above:$B_1$] (B1) at (0,1) {};
+      \node[label=above:$B_2$] (B2) at (1,1) {};
+      \node[label=above:$B_3$] (B3) at (2,1) {};
+
+      % Arrows
+      \draw[->] (A1) -- (A2);
+      \draw[->] (A2) -- (A3);
+      \draw[->] (B1) -- (B2);
+      \draw[->] (B2) -- (B3);
+      \draw[->] (A1) -- (B1);
+      \draw[->] (A2) -- (B2);
+      \draw[->] (A3) -- (B3);
+    \end{tikzpicture}
+    \caption{$n=3$の時の様子}
+    \label{1998-5:fig:3}
+  \end{figure}
+
+  $A_1$ から右方向へ出発し，どこではじめて上方へ移動しなければならないか
+  ($A_k A_{k+1}$ が $\times$ となっている最小の$k \in \mathbb{N}$) で場合分けする．
+  \begin{enumerate}
+    \item $A_1 A_2$ が $\times$ の時，$A_1 \to B_1$ へ行くルートで確率は $p^2 (1-p)$ \\
+    \item $A_2 A_3$ が $\times$ の時，$B_2 B_3$ が矢印になっていれば良く，確率は $p^2 (1-p)$ \\
+    \item $A_1 A_2, A_2 A_3$ とも通過できる時，必ずルートがあって確率は $p^2$
+  \end{enumerate}
+  以上三つの場合は互いに排反だから，求める確率は
+  \begin{align*}
+    Q_3
+     & = 2p^2 (1-p) + p^2 \\
+     & = p^2 (3-2p)
+  \end{align*}
+  である．$\cdots$(答)
+  \vspace{10pt}
+
+  (2) (1)の $n=3$ の時と同様の場合分けをする．
+  つまり，$A_1$ から右へ進んでいって，はじめて行き止まり ($\times$) になっている所が
+  $A_k A_{k+1}$ の時を考える($k=1, 2, \dots, n-1$)．
+  (以下 $n \ge 4$ とする．
+
+  この時．$B_n$ まで行ける確率は $C_n(k)$ とおく．
+  この確率は$A_1 \to \dots \to A_k$まで行き，そのあと$B_k \to \dots \to B_n$
+  が行き止まりになっておらず矢印になっており，$A_k A_{k+1}$ が $X$ になっている時で，
+  \begin{align*}
+    a_n(k) = p^{n-1} \cdot (1-p)
+  \end{align*}
+  である．
+
+  また，Aの横道に一つも行き止まりがない時を便宜上$k=n$とおくと
+  \begin{align*}
+    a_n(n) = p^{n-1}
+  \end{align*}
+  である．
+
+  従って，各$a_{n}(k)$は排反事象であることより，求める確率は
+  \begin{align*}
+    Q_n
+     & = \sum_{k=1}^{n} a_n(k)            \\
+     & = \sum_{k=1}^{n-1} a_n(k) + a_n(n) \\
+     & = (n-1) ^{n-1} (1-p) + p^{n-1}     \\
+     & = p^{n-1} \{ n - (n-1)p \}
+  \end{align*}
+  である．(1)より，これは$n=2,3$ でも成立するから，求める確率は
+  \begin{align*}
+    Q_n = p^{n-1} \{ n - (n-1)p \}
+  \end{align*}
+  である．$\cdots$(答)
+
+
+
+  \vspace{10pt}
+  {\bf[解説]}
+
+  % TODO :: 漸化式を立てる方法も有力
+  % 下側にたどり着く確率$alpha_i$，上側にたどり着く確率$beta_i$とすると
+  % \alpha_{n+1} = p\alpha_{n} \\
+  % \beta_{n+1} = p\beta_{n} + p(1-p)\alpha_n
+  % であり，これは解ける．
+  \newpage
+
+\end{multicols}
+\end{document}

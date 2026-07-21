@@ -1,0 +1,111 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{京都大学後期$2004$年$6$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/2004/6/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+  対称性から，題意をみた正方形のうち第一象限にあるものを$a(n)$として
+  \begin{align}
+    N(n) = 4a(n) \label{2004-6:eq:1}
+  \end{align}
+  である．第一章限の様子を\cref{2004-6:fig:1}に示す．
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis lines=middle, % 軸を中央に配置
+          xlabel=$x$,
+          ylabel=$y$,
+          xmin=0, xmax=6, % X軸の範囲を調整
+          ymin=0, ymax=6, % Y軸の範囲を調整
+          xtick={5}, % x=5に目盛り
+          ytick={5}, % y=5に目盛り
+          xticklabels={$n$}, % x=5の目盛りをnと表示 (問題のnはここでは5に相当)
+          yticklabels={$n$}, % Y軸の目盛りラベルはなし
+          domain=0:6, % 描画範囲を0から5に設定
+          samples=100, % 曲線を滑らかに描画
+        ]
+
+        % x^2 + y^2 = 25 の円の第一象限部分 (y = sqrt(25-x^2))
+        \addplot[thick, blue,domain=0:5] {sqrt(25 - x^2)};
+        % x=0: y = sqrt(25-0) = 5.0 -> 5個の正方形 (y=0,1,2,3,4)
+        \draw[fill=lightgray, draw=black, thin] (0, 0) rectangle (1, 1);
+        \draw[fill=lightgray, draw=black, thin] (0, 1) rectangle (1, 2);
+        \draw[fill=lightgray, draw=black, thin] (0, 2) rectangle (1, 3);
+        \draw[fill=lightgray, draw=black, thin] (0, 3) rectangle (1, 4);
+
+        % x=1: y = sqrt(25-1) = sqrt(24) approx 4.89 -> 4個の正方形 (y=0,1,2,3)
+        \draw[fill=lightgray, draw=black, thin] (1, 0) rectangle (2, 1);
+        \draw[fill=lightgray, draw=black, thin] (1, 1) rectangle (2, 2);
+        \draw[fill=lightgray, draw=black, thin] (1, 2) rectangle (2, 3);
+        \draw[fill=lightgray, draw=black, thin] (1, 3) rectangle (2, 4);
+
+        % x=2: y = sqrt(25-4) = sqrt(21) approx 4.58 -> 4個の正方形 (y=0,1,2,3)
+        \draw[fill=lightgray, draw=black, thin] (2, 0) rectangle (3, 1);
+        \draw[fill=lightgray, draw=black, thin] (2, 1) rectangle (3, 2);
+        \draw[fill=lightgray, draw=black, thin] (2, 2) rectangle (3, 3);
+
+        % x=3: y = sqrt(25-9) = sqrt(16) = 4.0 -> 4個の正方形 (y=0,1,2,3)
+        \draw[fill=lightgray, draw=black, thin] (3, 0) rectangle (4, 1);
+        \draw[fill=lightgray, draw=black, thin] (3, 1) rectangle (4, 2);
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$n=5$の場合に第一象限に正方形を敷き詰めた様子．}
+    \label{2004-6:fig:1}
+  \end{figure}
+
+
+
+  また， $y = \sqrt{n^2-x^2}$ は $0 \leq x \leq n$ で単調減少だから
+  \begin{align*}
+    a(n) = \sum_{k=1}^{n} \lfloor\sqrt{n^2-k^2}\rfloor
+  \end{align*}
+  である．ここで$\lfloor x\rfloor$はガウス記号であり，$x$以下の最大の整数を表す．
+  ガウス記号の性質から
+  \begin{align*}
+    \sqrt{n^2-k^2} - 1 < \lfloor\sqrt{n^2-k^2}\rfloor \leq \sqrt{n^2-k^2}
+  \end{align*}
+  である．$n>0$ だから両辺$n^2$で割ると
+  \begin{align*}
+    \frac{1}{n}\sqrt{1-\left(\frac{k}{n}\right)^2} - \frac{1}{n^2} < \frac{1}{n^2}\lfloor\sqrt{n^2-k^2}\rfloor \leq \frac{1}{n}\sqrt{1-\left(\frac{k}{n}\right)^2}
+  \end{align*}
+  $k=1,2,\cdots, n$について和を取って
+  \begin{align*}
+     & \sum_{k=1}^{n} \left( \frac{1}{n}\sqrt{1-\left(\frac{k}{n}\right)^2} - \frac{1}{n^2} \right) < \frac{a(n)}{n^2} \leq \sum_{k=1}^{n} \frac{1}{n}\sqrt{1-\left(\frac{k}{n}\right)^2} \\
+     & \sum_{k=1}^{n}\frac{1}{n}\sqrt{1-\left(\frac{k}{n}\right)^2} - \frac{1}{n} < \frac{a(n)}{n^2} \leq \sum_{k=1}^{n} \frac{1}{n}\sqrt{1-\left(\frac{k}{n}\right)^2}
+  \end{align*}
+  ここで両辺の和の$n\to\infty$での極限値は区分求積法によって評価でき，
+  \begin{align*}
+    \lim_{n \to \infty} \sum_{k=1}^{n} \frac{1}{n}\sqrt{1-\left(\frac{k}{n}\right)^2}
+     & =\int_{0}^{1} \sqrt{1-x^2} dx \\
+     & = \frac{\pi}{4}
+  \end{align*}
+  だから，はさみうちの定理より，$n \to \infty$ のとき
+  \begin{align}
+    \lim_{n\to\infty}\frac{a(n)}{n^2} \to \frac{\pi}{4} \label{2004-6:eq:2}
+  \end{align}
+  \cref{2004-6:eq:1}，\cref{2004-6:eq:2}から
+  \begin{align*}
+    \lim_{n\to\infty}\frac{N(n)}{n^2} = \pi
+  \end{align*}
+  が求める極限値である．$\cdots$(答)
+
+  \vspace{10pt}
+  {\bf[解説]}
+
+  解答が$\pi$になるのはもっともらしい．
+  なぜならば，$n$を大きくしていくと敷き詰めた正方形の面積と円の面積はほぼ等しくなるため，
+  正方形の面積の合計は$n^2\pi$に近づくはずである．従ってこれを$n^2$で割った極限値が$\pi$になる．
+  これで，解答があっていそうだというのが直感的に理解できる．
+  実際に問題を解いている際もこうした極端な場合を考えることで，答えを大はずししていないかわかるため
+  極限を考える癖をつけておくと良いだろう．
+
+  \newpage
+\end{multicols}
+\end{document}

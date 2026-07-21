@@ -1,0 +1,217 @@
+---
+university: "sample_titech"
+category: "kouki"
+year: "2004"
+question: "2"
+type: "solution"
+title: "SAMPLE_TITECH 2004 kouki Q2 (solution)"
+---
+
+## 【解】
+
+### (1)
+
+  $n$ は偶数とし, $f_n(x) = x^n$, $g_n(x) = n^x$ とおく.
+
+### (1)
+ $x < 0$ の時. $t=-x$とおくと，$t>0$であり，
+  $f_n(x)$ と $g_n(x)$ が一致するとすると
+  
+$$
+\begin{align*}
+f_n(x) & = g_n(x)                     \\\iff(-t)^n & = \left(\frac{1}{n}\right)^t \\\iff
+    t^n    & = \left(\frac{1}{n}\right)^t
+\end{align*}
+$$
+
+  ただし，ここで$n$が偶数であることを用いた．
+  両辺正だから, 自然対数をとって
+  
+$$
+\begin{align}
+n \log t         & = -t\log n  \nonumber\\\iff\frac{\log t}{t}& = -\frac{\log n}{n}\quad(\text{ただし } x > 0) \label{2004-2:eq:1}
+\end{align}
+$$
+
+  である．
+  ここで $h(t) = \frac{\log t}{t}$ とおくとこの条件は
+  
+$$
+\begin{align}
+h(t) = - h(n) \label{2004-2:eq:5}
+\end{align}
+$$
+
+  と表せる．
+
+  $h(t)$の一階微分は
+  
+$$
+\begin{align*}
+h'(t) = \frac{1 - \log t}{t^2}
+\end{align*}
+$$
+
+  であり，また$h(t)$の極限値は
+  
+$$
+\begin{align*}
+h(t) & \to -\infty\quad(t \to +0) \\
+    h(t) & \to 0 \quad(t \to +\infty)
+\end{align*}
+$$
+
+  で与えられるから，$h(t)$の増減表は$\eqref{2004-2:table:1}$となる．
+
+  \begin{table}[H]
+    \centering
+    \caption{$h(x)$の増減表}
+    \label{2004-2:table:1}
+    
+
+| $t$ | $(0)$ | $\cdots$ | $e$ | $\cdots$ | $(\infty)$ |
+|:----:|:-----------:|:----------:|:-------------:|:----------:|:----------:|
+| $h'$ | | $+$ | $0$ | $-$ | |
+| $h$ | $(-\infty)$ | $\nearrow$ | $\frac{1}{e}$ | $\searrow$ | $(0)$ |
+
+  \end{table}
+
+  よって$h(t)$のグラフは[図1](#2004-2:fig:1)となる.
+
+  
+
+<figure id="2004-2:fig:1">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/2004/2/fig_1.svg" alt="図 1" />
+  <figcaption>図 1: $h(t)$の概形.$t=e$で最大値をとる．</figcaption>
+</figure>
+
+  ここで $n$ が$2$以上の偶数であるから図より$h(n)>0$であり，$\eqref{2004-2:eq:5}$より従って
+  
+$$
+\begin{align*}
+h(t) < 0
+\end{align*}
+$$
+
+  である．
+
+  グラフの概形から$\eqref{2004-2:eq:1}$が成立する$t$が$0<t<1$にただひとつ存在する．
+  したがって $C_1, C_2$ は$x= -t<0$にただ 1 つ交点を持つ.$\cdots$(答)
+
+### (2)
+
+  $x>0$ の時. $f_n(x), g_n(x)$ 共に正だから, (1) と同様に自然対数をとって考えると
+  
+$$
+\begin{align*}
+f_n(x)           & = g_n(x)           \\\iff
+    n \log x         & = x \log n         \\\iff\frac{\log x}{x}& = \frac{\log n}{n}
+\end{align*}
+$$
+
+  である．
+  [図1](#2004-2:fig:1)および$n$が$2$以上の偶数であることから
+  
+$$
+\begin{align*}
+0 < \frac{\log n}{n} < \frac{1}{e}
+\end{align*}
+$$
+
+  である．
+  従って[図1](#2004-2:fig:1)からこれみたす $x$ は 2 つある.
+
+  最後に$x=0$の時は $f_n(0) = 0$, $g_n(0) = 1$ だから, $C_1, C_2$ は交わらない.
+
+  以上で$x$について全ての場合が考えられた．$x<0$で一つ，$x=0$で0個，$x>0$で2つの解が存在する．
+  $C_1, C_2$ の交点の数は $f_n(x) = g_n(x)$ の実解の数に等しいことから
+  あわせて $3$ つの交点がある.$\cdots$(答)
+
+### (3)
+ $P_n(-x_n, y_n)$ とおくと，(1)の結果から $0 < x_n < 1$ である．
+  $P_n$ の条件から,
+  
+$$
+\begin{align}
+y_n = (-x_n)^n = n^{-x_n}\label{2004-2:eq:2}
+\end{align}
+$$
+
+  である.
+
+  $n\to\infty$のとき，[図1](#2004-2:fig:1)から $\frac{\log n}{n} \to 0$ だから,
+  $\eqref{2004-2:eq:1}$より
+  
+$$
+\begin{align*}
+\lim_{n\to\infty}\frac{\log x_n}{x_n} = 0
+\end{align*}
+$$
+
+  である. これを満たすには[図1](#2004-2:fig:1)および$0<x_n<1$から
+  
+$$
+\begin{align}
+\lim_{n\to\infty} x_n = 1 \label{2004-2:eq:3}
+\end{align}
+$$
+
+  である．これを$\eqref{2004-2:eq:2}$に代入して
+  
+$$
+\begin{align}
+\lim_{n\to\infty} y_n = \lim_{n\to\infty}\left(\frac{1}{n}\right)^{x_n} = 0 \label{2004-2:eq:4}
+\end{align}
+$$
+
+  である．$\eqref{2004-2:eq:3,2004-2:eq:4}$より，求める$P_n$の極限値は
+  
+$$
+\begin{align*}
+\lim_{n\to\infty}P_n = (-1,0)
+\end{align*}
+$$
+
+  である．$\cdots$(答)
+
+  
+
+  
+
+## 【解説】
+
+  典型的な関数や極限の問題である．
+  $C_1$と$C_2$の交点の$x$座標は$y$を消去した式
+  
+$$
+\begin{align*}
+x^{n} = n^{x}
+\end{align*}
+$$
+
+  の解であることを利用してこの式の挙動を調べていくことになる．
+
+  答案では両辺の自然対数をとって変数を$x$と$n$で分離する方針をとった．
+  自然対数をとるときに$x<0$か$x>0$かが大事であり，それに応じて方程式は
+  
+$$
+\begin{align*}
+\frac{\log n}{n} =
+    \begin{dcases}
+      \frac{\log x}{x}      & (x>0) \\
+      -\frac{\log |x|}{|x|} & (x<0)
+    \end{dcases}
+\end{align*}
+$$
+
+  という形になる．(1)で$x<0$の場合を，(2)で$x>0$の場合を考えている．
+
+  いずれにしても$h(x)=\log x/x$の挙動がわかればこの方程式の解の挙動がわかるため，$h(x)$のグラフを書いて考えている．
+  すると$x\ge 1$の時には$x,y$が一対一対応するのに対して，$x>1, x\neq e$の時には$y$を与える$x$が二つ存在するため，結局解の数が$3$つになる．
+
+  
+
+<figure id="2004-2:fig:2">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/2004/2/fig_2.svg" alt="図 2" />
+  <figcaption>図 2: $h(t)$の概形と，$h(t)=h(n)$の解</figcaption>
+</figure>

@@ -1,0 +1,134 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{京都大学後期$1995$年$2$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/1995/2/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  題意の$\alpha_n$と同様の置き方をして，
+  \begin{align*}
+     & \angle \text{B}_n \text{O} \text{C}_n = \beta_n  \\
+     & \angle \text{C}_n \text{O} \text{A}_n = \gamma_n
+  \end{align*}
+  とする．この様子を\cref{1995-2:fig:1}に示す．
+
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \draw (0,0) circle (2cm);
+      \node at (0,0) {O};
+
+      \coordinate (An) at (60:2cm);
+      \coordinate (Bn) at (180:2cm);
+      \coordinate (Cn) at (300:2cm);
+
+      \node at (An) [above right] {A$_n$};
+      \node at (Bn) [above left] {B$_n$};
+      \node at (Cn) [below right] {C$_n$};
+
+      \draw (0,0) -- (An);
+      \draw (0,0) -- (Bn);
+      \draw (0,0) -- (Cn);
+      \fill (An) circle (2pt);
+      \fill (Bn) circle (2pt);
+      \fill (Cn) circle (2pt);
+
+
+      \draw (60:0.5) arc (60:180:0.5);
+      \node at (100:0.7cm) {$\alpha_n$};
+
+      \draw (180:0.7) arc (180:300:0.7);
+      \node at (220:0.9cm) {$\beta_n$};
+
+      \draw (300:0.9) arc (300:420:0.9);
+      \node at (340:1.1cm) {$\gamma_n$};
+
+      % Add A_{n+1}, B_{n+1}, C_{n+1}
+      \coordinate (An_plus_1) at (120:2cm);
+      \coordinate (Bn_plus_1) at (240:2cm);
+      \coordinate (Cn_plus_1) at (360:2cm);
+
+      \node at (An_plus_1) [above] {A$_{n+1}$};
+      \node at (Bn_plus_1) [below left] {B$_{n+1}$};
+      \node at (Cn_plus_1) [below right] {C$_{n+1}$};
+
+      \draw[dashed] (0,0) -- (An_plus_1);
+      \draw[dashed] (0,0) -- (Bn_plus_1);
+      \draw[dashed] (0,0) -- (Cn_plus_1);
+      \fill (An_plus_1) circle (2pt);
+      \fill (Bn_plus_1) circle (2pt);
+      \fill (Cn_plus_1) circle (2pt);
+
+
+    \end{tikzpicture}
+    \caption{点$A_n,B_n,C_n$の様子}
+    \label{1995-2:fig:1}
+  \end{figure}
+
+  すると置き方からして
+  \begin{align}
+    \alpha_n + \beta_n + \gamma_n & = 2\pi \label{1995-2:eq:1}
+  \end{align}
+  を満たす．
+
+  また，題意より漸化式は以下のようになる．
+  \begin{align}
+    \begin{dcases}
+      \alpha_{n+1} = \frac{1}{2}(\alpha_n + \beta_n) \\
+      \beta_{n+1} = \frac{1}{2}(\beta_n + \gamma_n)  \\
+      \gamma_{n+1} = \frac{1}{2}(\alpha_n + \gamma_n)
+    \end{dcases} \label{1995-2:eq:2}
+  \end{align}
+
+  (1)
+  \cref{1995-2:eq:2,1995-2:eq:1}より
+  \begin{align*}
+    4\alpha_{n+1}
+     & = 2(\alpha_n + \beta_n)                                                               \\
+     & = 2\alpha_n + (\beta_{n-1} + \gamma_{n-1}) \quad (\because \text{\cref{1995-2:eq:2}}) \\
+     & = 2\alpha_n + 2\pi - \alpha_{n-1} \quad (\because \text{\cref{1995-2:eq:1}})          \\
+  \end{align*}
+  であり，題意は示された．$\cdots$(答)
+
+  \vspace{10pt}
+  (2)
+  \cref{1995-2:eq:2,1995-2:eq:1}を繰り返し用いて
+  \begin{align*}
+    \alpha_{n+2}
+     & = \frac{1}{2}(\alpha_{n+1} +\beta_{n+1} )                 \\
+     & = \frac{1}{2}(2\pi - \gamma_{n+1})                        \\
+     & = \pi - \frac{1}{4}(\alpha_n + \gamma_n)                  \\
+     & = \pi - \frac{1}{4}(2\pi - \beta_{n})                     \\
+     & = \frac{1}{2}\pi + \frac{1}{8}(\beta_{n-1} +\gamma_{n-1}) \\
+     & = \frac{1}{2}\pi + \frac{1}{8}(2\pi - \alpha_{n-1})       \\
+     & = \frac{3}{4}\pi - \frac{1}{8}\alpha_{n-1}
+  \end{align*}
+  であり，題意は示された．$\cdots$(答)
+
+  \vspace{10pt}
+  (3)
+  (2)の漸化式でラベルを張り替えて
+  \begin{align*}
+     & \alpha_{3(n+1)}                  = -\frac{1}{8}\alpha_{3n} + \frac{3}{4}\pi              \\
+    \therefore
+     & \alpha_{3(n+1)} - \frac{2}{3}\pi = -\frac{1}{8}\left(\alpha_{3n} - \frac{2}{3}\pi\right)
+  \end{align*}
+  と書ける．
+  等比数列の公式から
+  \begin{align*}
+    \alpha_{3n} = \left(-\frac{1}{8}\right)^n \left(\alpha_0 - \frac{2}{3}\pi\right) + \frac{2}{3}\pi
+  \end{align*}
+  と書ける．$\cdots$(答)
+
+  \vspace{10pt}
+  {\bf[解説]}
+
+  \newpage
+\end{multicols}
+\end{document}

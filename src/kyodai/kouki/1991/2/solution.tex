@@ -1,0 +1,483 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage{luatexja}
+\usepackage[hiragino-pron]{luatexja-preset}
+
+\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
+\setlength{\textwidth}{54\zw}
+\setlength{\textheight}{73\zw}
+
+\usepackage{amsmath,amssymb,ascmac}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{cleveref}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+ \usetikzlibrary{math}
+% \usepackage{indent}
+\usepackage{cases}
+\usepackage{float}
+\allowdisplaybreaks
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\begin{document}
+\rhead{京都大学後期$1991$年$2$番}
+\setcounter{equation}{0}
+\begin{oframed}
+    \input{../../../problems/1991/2/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    {\bf[解]}
+    (1)
+    四面体の頂点をP，Q，R，Sとする．
+    各辺の中点を図のようにA，B，C，D，E，Fとする．
+
+    \begin{figure}[H]
+        \centering
+        \tdplotsetmaincoords{70}{110}
+
+        \begin{tikzpicture}[tdplot_main_coords,scale=3]
+            % Define L as the side length of the regular tetrahedron (2 cm)
+            \pgfmathsetmacro{\L}{2}
+
+            % Vertices of the regular tetrahedron with side length L=2.
+            % This setup places one vertex (P_tetra) on the Z-axis and the base (Q_tetra, R_tetra, S_tetra) in a plane below.
+            % These coordinates ensure the tetrahedron is regular and has a side length of 2cm.
+            \coordinate (P_tetra) at (0, 0, {\L*sqrt(6)/4});
+            \coordinate (Q_tetra) at ({\L/2}, {-\L*sqrt(3)/6}, {-\L*sqrt(6)/12});
+            \coordinate (R_tetra) at ({-\L/2}, {-\L*sqrt(3)/6}, {-\L*sqrt(6)/12});
+            \coordinate (S_tetra) at (0, {\L*sqrt(3)/3}, {-\L*sqrt(6)/12});
+
+            % Vertices of the regular octahedron (midpoints of the tetrahedron edges).
+            % The labels A, B, C, D, E, F are assigned based on the visual layout in the provided image.
+            % A, B, C form the upper visible triangular face. D, E, F form the lower visible triangular face.
+            \coordinate (A) at ($0.5*(P_tetra)+0.5*(S_tetra)$); % Midpoint of PS_tetra
+            \coordinate (B) at ($0.5*(P_tetra)+0.5*(Q_tetra)$); % Midpoint of PQ_tetra
+            \coordinate (C) at ($0.5*(P_tetra)+0.5*(R_tetra)$); % Midpoint of PR_tetra
+            \coordinate (D) at ($0.5*(Q_tetra)+0.5*(S_tetra)$); % Midpoint of QS_tetra
+            \coordinate (E) at ($0.5*(Q_tetra)+0.5*(R_tetra)$); % Midpoint of QR_tetra
+            \coordinate (F) at ($0.5*(R_tetra)+0.5*(S_tetra)$); % Midpoint of RS_tetra
+
+            % Draw tetrahedron edges.
+            % Line visibility (solid/dashed) is determined by visual inspection of the user's image from the given perspective.
+            \draw[thick] (P_tetra) -- (Q_tetra); % P to Q (front-right-top edge)
+            \draw[thick,dashed] (P_tetra) -- (R_tetra); % P to R (front-left-top edge)
+            \draw[thick] (P_tetra) -- (S_tetra); % P to S (back-top edge)
+            \draw[thick,dashed] (Q_tetra) -- (R_tetra); % Q to R (front base edge)
+            \draw[thick] (Q_tetra) -- (S_tetra); % Q to S (right base edge)
+            \draw[thick,dashed] (R_tetra) -- (S_tetra); % R to S (left back base edge)
+
+            % Draw octahedron edges.
+            % All edges of a regular octahedron are drawn.
+            % Line visibility (solid/dashed) is determined by visual inspection of the user's image.
+
+            % Edges of the "top" triangular face (A, B, C)
+            \draw[thick] (A) -- (B);
+            \draw[thick] (A) -- (C);
+            \draw[thick] (B) -- (C);
+
+            % Edges of the "bottom" triangular face (D, E, F)
+            \draw[thick] (E) -- (D) -- (F);
+            \draw[thick,dashed] (C) -- (E) -- (F) -- cycle;
+
+            % Connecting edges between the top and bottom sets of vertices
+            \draw[thick] (A) -- (D);
+            \draw[thick] (A) -- (F);
+            \draw[thick] (B) -- (D);
+            \draw[thick] (B) -- (E);
+
+            % Place labels for tetrahedron vertices
+            \node[above] at (P_tetra) {P};
+            \node[below left] at (Q_tetra) {Q};
+            \node[below right] at (R_tetra) {R};
+            \node[above right] at (S_tetra) {S};
+
+            % Place labels for octahedron vertices
+            \node[above right] at (A) {A};
+            \node[above] at (B) {B};
+            \node[above left] at (C) {C};
+            \node[below right] at (D) {D};
+            \node[below] at (E) {E};
+            \node[below] at (F) {F};
+        \end{tikzpicture}
+        \caption{正四面体PQRSと正八面体ABCDEFの様子．}
+        \label{1991-2:fig:1}
+    \end{figure}
+
+    正八面体の高さHは四面体の高さの$1/2$であるから，四面体の高さを求めよう．
+    四面体の底面QRSの重心Gとすると，四面体の高さは線分PGの長さに等しいから
+    \begin{align}
+        h_0 = \frac{1}{2}PG \label{1991-2:eq:1}
+    \end{align}
+    である．
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[scale=3] % Scale for better visibility
+
+            \pgfmathsetmacro{\hval}{2}
+
+            % Calculate coordinates for the vertices of the large equilateral triangle (bottom-left at origin)
+            \coordinate (P_A) at (0,0); % Q
+            \coordinate (P_B) at (\hval,0); % R
+            \coordinate (P_C) at ({\hval/2}, {\hval*sqrt(3)/2}); % S
+
+            \coordinate (D) at ($0.5*(P_A)+0.5*(P_C)$);
+            \coordinate (E) at ($0.5*(P_A)+0.5*(P_B)$);
+            \coordinate (F) at ($0.5*(P_B)+0.5*(P_C)$);
+
+
+            % Calculate coordinates for the vertices of the hexagon
+            % These points are on the sides of the large triangle, forming the inner hexagon.
+            % The distance from each corner of the large triangle to the nearest hexagon vertex is L_small.
+            \coordinate (G) at ({\hval/2}, {\hval/2/sqrt(3)}); % On P_A P_B, L_small from P_A
+
+            % Draw the hexagon (solid lines)
+            \draw[thick] (P_A) -- (P_B) -- (P_C) -- cycle;
+            \draw[dashed] (P_A) -- (F);
+            \draw[dashed] (P_B) -- (D);
+            \draw[dashed] (P_C) -- (E);
+            \draw[thick]  (P_A) -- (G);
+
+
+            % Place the labels for side lengths as in the image
+            % Label for L_large (side of the original triangle)
+            % Label for L_small (side of the small cut-out triangles / short side of hexagon)
+            \draw[dashed] (P_A) to [out=80,in=220] (P_C);
+            \node[above left=8pt,fill=white] at ($0.5*(P_A)+0.5*(P_C)$) {$2$};
+
+            % Draw black dots at P_A, P_B, P_C, and G
+            \fill (P_A) circle (0.5pt);
+            \fill (P_B) circle (0.5pt);
+            \fill (P_C) circle (0.5pt);
+            \fill (G) circle (0.5pt);
+            \fill (D) circle (0.5pt);
+            \fill (E) circle (0.5pt);
+            \fill (F) circle (0.5pt);
+
+
+            % Place labels for the points (optional, but good for clarity)
+            \node[below left] at (P_A) {Q};
+            \node[below right] at (P_B) {R};
+            \node[above] at (P_C) {S};
+            \node[below right] at (G) {G};
+            \node[above left] at (D) {D};
+            \node[below right] at (E) {E};
+            \node[above right] at (F) {F};
+
+            \pic[draw, "$\frac{\pi}{6}$", angle eccentricity=1.2, angle radius=10mm] {angle = E--P_A--G};
+
+        \end{tikzpicture}
+        \caption{底面QRSとその重心Gの様子．QGの長さはQEと$\angle GQE$から求まる．}
+        \label{1991-2:fig:2}
+    \end{figure}
+
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[scale=3] % Adjust scale for desired size
+
+            % Define coordinates with G at the origin (0,0)
+            % Numerical values for calculations:
+            % 2/sqrt(3) approx 1.1547
+            % sqrt(3)/3 approx 0.5774
+            % 2*sqrt(6)/3 approx 1.6330
+
+            \coordinate (G) at (0,0);
+            \coordinate (Q) at ({-2/sqrt(3)}, 0);
+            \coordinate (F) at ({sqrt(3)/3}, 0);
+            \coordinate (P) at (0, {2*sqrt(6)/3});
+
+            % Define midpoints for labels and dashed line
+            \coordinate (MPQ) at ($0.5*(P)+0.5*(Q)$); % Midpoint of PQ
+            \coordinate (MPG) at ($0.5*(P)+0.5*(G)$); % Midpoint of PG
+
+            % Define the point on PG that is horizontal from MPQ
+            % \coordinate (H_line_end) at (0, (MPQ));
+
+            % Draw the main triangle PQF
+            \draw[thick] (P) -- (Q) -- (F) -- cycle;
+
+            % Draw the line PG
+            \draw[thick] (P) -- (G);
+
+            % Draw the horizontal dashed line from MPQ to PG
+            % \draw[dashed] (MPQ) -- (H_line_end);
+
+            % Draw dots at G and the intersection point of the dashed line with PQ (which is MPQ)
+            \fill (G) circle (0.5pt); % Dot at G
+            % \fill (MPQ) circle (0.5pt); % Dot at the midpoint of PQ
+
+            % Place labels for points (as in the previous context, these could be Q, G, F)
+            \node[below left] at (Q) {Q};
+            \node[below] at (G) {G};
+            \node[below right] at (F) {F};
+            \node[above] at (P) {P};
+
+            % Place labels for lengths
+            \node[left=2pt, rotate=0] at ($0.5*(P)+0.5*(Q)$) {$2$}; % Label for PQ=2
+            \draw[dashed] (Q) to [out=-20,in=200] (F);
+            \node[below=6pt,fill=white] at ($0.5*(Q)+0.5*(F)$) {$\sqrt{3}$}; % Label for QF=sqrt(3)
+            \node[above=6pt,fill=white] at ($0.5*(Q)+0.5*(G)$) {$\frac{2}{\sqrt{3}}$};
+            \draw[dashed] (Q) to [out=20,in=160] (G);
+
+            % The image has sqrt(3) on QF, implying QF is the base.
+            % The description says PQF has PQ=2, QF=PF=sqrt(3).
+            % So QF and PF are the equal sides. My drawing shows QF as base.
+            % Let's put sqrt(3) label on QF and PF.
+            \node[above right=2pt, rotate=0] at ($0.5*(P)+0.5*(F)$) {$\sqrt{3}$}; % Label for PF=sqrt(3)
+
+            % \node[right=2pt] at ($0.5*(P)+0.5*(G)$) {$\frac{2}{3}\sqrt{6}$}; % Label for PG (height)
+            \node[right=2pt] at (MPG) {$\frac{h_0}{2}$};
+
+            % \node[left=2pt] at (MPQ) {$X$}; % Label 'X' at midpoint of PQ
+
+            % Place '3h/4' label (approximate position as in image)
+            % \node[left=10pt] at (y(MPQ)) {$\frac{3}{4}h$}; % Place to the left, vertically aligned with dashed line
+
+        \end{tikzpicture}
+        \caption{断面PQG(F)の様子}
+        \label{1991-2:fig:3}
+    \end{figure}
+
+    四面体の底面QRSは正三角形であるから，QGの長さは（\cref{1991-2:fig:2}）
+    \begin{align*}
+        |QG|
+         & = \frac{|QE|}{\cos \frac{\pi}{6}} \\
+         & = \frac{2}{\sqrt{3}}
+    \end{align*}
+    である．
+
+    $\triangle PQG$ にピタゴラスの定理を用いて
+    \begin{align}
+         & |PQ|^2 = |PG|^2 + |QG|^2                         \\
+         & 2^2 = |PG|^2 + \left(\frac{2}{\sqrt{3}}\right)^2 \\
+        \therefore
+         & |PQ| = \frac{2\sqrt{6}}{3} \label{1991-2:eq:3}
+    \end{align}
+    でる．
+    これを\cref{1991-2:eq:1}に代入して，求めるHの高さは
+    \begin{align*}
+        h_0 = \frac{\sqrt{6}}{3}
+    \end{align*}
+    である．$\cdots$(答)
+
+    \vspace{10pt}
+    (2)
+    水面の高さ$h$の時の水面積$S(h)\,\mathrm{cm^2}$とすると，題意の条件より
+    \begin{align}
+        1 = S(h) \frac{dh}{dt} \label{1991-2:eq:2}
+    \end{align}
+    が成り立つ．
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[scale=3] % Scale for better visibility
+
+            % Define the value of 'h' to ensure positive side lengths as shown in the image.
+            % For a valid hexagon, sqrt(6)*h/2 must be less than (1 + sqrt(6)*h/2)/2
+            % This simplifies to h < 2/sqrt(6) or h < sqrt(6)/3.
+            % Let's choose h = 0.5 for drawing, which satisfies the condition.
+            \pgfmathsetmacro{\hval}{0.5}
+
+            % Define side lengths based on the problem description
+            \pgfmathsetmacro{\Llarge}{1 + sqrt(6)*\hval/2} % Side length of the large equilateral triangle
+            \pgfmathsetmacro{\Lsmall}{sqrt(6)*\hval/2}    % Side length of the small equilateral triangles cut from corners
+
+            % Calculate coordinates for the vertices of the large equilateral triangle (bottom-left at origin)
+            \coordinate (P_A) at (0,0);
+            \coordinate (P_B) at (\Llarge,0);
+            \coordinate (P_C) at ({\Llarge/2}, {\Llarge*sqrt(3)/2});
+
+            % Calculate coordinates for the vertices of the hexagon
+            % These points are on the sides of the large triangle, forming the inner hexagon.
+            % The distance from each corner of the large triangle to the nearest hexagon vertex is L_small.
+            \coordinate (V1) at (\Lsmall, 0); % On P_A P_B, L_small from P_A
+            \coordinate (V2) at ({\Llarge - \Lsmall}, 0); % On P_A P_B, L_small from P_B
+
+            % V3 is on P_B P_C, L_small from P_B
+            % Vector P_B P_C is (-L_large/2, L_large*sqrt(3)/2). Unit vector is (-1/2, sqrt(3)/2).
+            \coordinate (V3) at ({\Llarge - \Lsmall/2}, {\Lsmall*sqrt(3)/2});
+
+            % V4 is on P_B P_C, L_small from P_C
+            % Vector P_C P_B is (L_large/2, -L_large*sqrt(3)/2). Unit vector is (1/2, -sqrt(3)/2).
+            \coordinate (V4) at ({\Llarge/2 + \Lsmall/2}, {\Llarge*sqrt(3)/2 - \Lsmall*sqrt(3)/2});
+
+            % V5 is on P_C P_A, L_small from P_C
+            % Vector P_C P_A is (-L_large/2, -L_large*sqrt(3)/2). Unit vector is (-1/2, -sqrt(3)/2).
+            \coordinate (V5) at ({\Llarge/2 - \Lsmall/2}, {\Llarge*sqrt(3)/2 - \Lsmall*sqrt(3)/2});
+
+            % V6 is on P_C P_A, L_small from P_A
+            % Vector P_A P_C is (L_large/2, L_large*sqrt(3)/2). Unit vector is (1/2, sqrt(3)/2).
+            \coordinate (V6) at ({\Lsmall/2}, {\Lsmall*sqrt(3)/2});
+
+            % Draw the hexagon (solid lines)
+            \draw[thick] (V1) -- (V2) -- (V3) -- (V4) -- (V5) -- (V6) -- cycle;
+
+            % Draw the "cut out" lines (dashed lines)
+            % These connect the corners of the large triangle to the hexagon vertices
+            \draw[thick,dashed] (P_A) -- (V1);
+            \draw[thick,dashed] (P_A) -- (V6);
+            \draw[thick,dashed] (P_B) -- (V2);
+            \draw[thick,dashed] (P_B) -- (V3);
+            \draw[thick,dashed] (P_C) -- (V4);
+            \draw[thick,dashed] (P_C) -- (V5);
+
+            % Place the labels for side lengths as in the image
+            % Label for L_large (side of the original triangle)
+            % Label for L_small (side of the small cut-out triangles / short side of hexagon)
+            \draw[dashed] (P_A) to [out=-20,in=200] (V1);
+            \node[below=2pt] at ($0.5*(P_A)+0.5*(V1)$) {$1-\frac{\sqrt{6}}{2}h$};
+            \draw[dashed] (P_A) to [out=80,in=220] (P_C);
+            \node[above left=2pt,fill=white] at ($0.5*(P_A)+0.5*(P_C)$) {$2 - \frac{\sqrt{6}}{2}h$};
+
+        \end{tikzpicture}
+        \caption{高さ$h$でのHの切り口．外側の正三角形の頂点は，辺PQ，PR，PS上にとる．}
+        \label{1991-2:fig:4}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[scale=3] % Scale for better visibility
+
+            \pgfmathsetmacro{\hval}{2}
+
+            % Calculate coordinates for the vertices of the large equilateral triangle (bottom-left at origin)
+            \coordinate (P_A) at (0,0); % Q
+            \coordinate (P_B) at (\hval,0); % R
+            \coordinate (P_C) at ({\hval/2}, {\hval*sqrt(3)/2}); % S
+
+            \coordinate (B) at ($0.5*(P_A)+0.5*(P_C)$);
+            \coordinate (E) at ($0.5*(P_A)+0.5*(P_B)$);
+            \coordinate (C) at ($0.5*(P_B)+0.5*(P_C)$);
+
+            % BQ,CR中点
+            \coordinate (B_mid) at ($0.5*(B)+0.5*(P_A)$);
+            \coordinate (C_mid) at ($0.5*(C)+0.5*(P_B)$);
+
+            % Cからの垂線用
+            \coordinate (E_mid) at ($0.5*(E)+0.5*(P_B)$);
+            \draw[dashed] (C) -- (E_mid);
+
+
+
+
+            % Calculate coordinates for the vertices of the hexagon
+            % These points are on the sides of the large triangle, forming the inner hexagon.
+            % The distance from each corner of the large triangle to the nearest hexagon vertex is L_small.
+            \coordinate (G) at ({\hval/2}, {\hval/2/sqrt(3)}); % On P_A P_B, L_small from P_A
+
+            % Draw the hexagon (solid lines)
+            \draw[thick] (P_A) -- (P_B) -- (P_C) -- cycle;
+            \draw[] (B) -- (C) -- (E) -- cycle;
+            \draw[dashed] (P_C) -- (E);
+
+
+            % Place the labels for side lengths as in the image
+            % Label for L_large (side of the original triangle)
+            % Label for L_small (side of the small cut-out triangles / short side of hexagon)
+            \draw[dashed] (P_A) to [out=80,in=220] (P_C);
+            \node[above left=8pt,fill=white] at ($0.5*(P_A)+0.5*(P_C)$) {$2$};
+
+            % Draw black dots at P_A, P_B, P_C, and G
+            \fill (P_A) circle (0.5pt);
+            \fill (P_B) circle (0.5pt);
+            \fill (P_C) circle (0.5pt);
+            \fill (G) circle (0.5pt);
+            \fill (B) circle (0.5pt);
+            \fill (E) circle (0.5pt);
+            \fill (C) circle (0.5pt);
+            \fill (B_mid) circle (0.5pt);
+            \fill (C_mid) circle (0.5pt);
+
+
+            % Place labels for the points (optional, but good for clarity)
+            \node[below left] at (P_A) {Q};
+            \node[below right] at (P_B) {R};
+            \node[above] at (P_C) {P};
+            \node[below right] at (G) {G};
+            \node[above left] at (B) {B};
+            \node[below right] at (E) {E};
+            \node[above right] at (C) {C};
+
+            \draw[thick, dashed,red] (B_mid) -- (C_mid);
+            \draw[dashed] (B_mid) to [out=-20,in=200] (C_mid);
+            \node[below=8pt,fill=white] at ($0.5*(B_mid)+0.5*(C_mid)$) {$s$};
+
+            \coordinate (CE_mid) at ($0.5*(E)+0.5*(C)$);
+            \draw[thick, dashed,red] (CE_mid) -- (C_mid);
+            \draw[dashed] (CE_mid) to [out=20,in=160] (C_mid);
+            \node[above=8pt,fill=white] at ($0.5*(CE_mid)+0.5*(C_mid)$) {$t$};
+        \end{tikzpicture}
+        \caption{面PQRを例に，底面からの高さ$h$での切断面での各種長さを求める．
+            赤の点線が底面からの高さ$h$の線とする．}
+        \label{1991-2:fig:5}
+    \end{figure}
+
+    また，底面からの高さ$h$における正八角体Hの切り口は\cref{1991-2:fig:4}のような六角形である．
+
+    ここで，六角形の外側の正三角形の一辺の長さ$s$は，一辺$2$の正三角形QRSとの相似比が
+    \begin{align*}
+        |PG|:|PG|-h
+    \end{align*}
+    だから，\cref{1991-2:eq:3}を代入して
+    \begin{align*}
+        \frac{2\sqrt{6}}{3} : \frac{2\sqrt{6}}{3} -h
+    \end{align*}
+    となり，
+    \begin{align*}
+        s
+         & = 2\cdot \frac{\frac{2\sqrt{6}}{3} -h}{\frac{2\sqrt{6}}{3}} \\
+         & = 2 - \frac{\sqrt{6}h}{2}
+    \end{align*}
+    である．
+
+    切り取る部分の正三角形の一辺の長さ$t$は，一辺$1$の正三角形DFSとの相似比が
+    \begin{align*}
+        \frac{1}{2}|PG| : \frac{1}{2}|PG| - h
+    \end{align*}
+    だから，\cref{1991-2:eq:3}を代入して
+    \begin{align*}
+        \frac{\sqrt{6}}{3} : \frac{\sqrt{6}}{3} -h
+    \end{align*}
+    となり，
+    \begin{align*}
+        t
+         & = 1\cdot \frac{\frac{\sqrt{6}}{3} -h}{\frac{\sqrt{6}}{3}} \\
+         & = 1 - \frac{\sqrt{6}h}{2}
+    \end{align*}
+    である．
+
+    従って，この面積$S(h)$は一辺$2-\sqrt{6}h/2$の正三角形の面積から，3つの一辺$1-\sqrt{6}h/2$の正三角形の面積を引いたものに等しい．
+    \begin{align*}
+        S
+         & = \frac{1}{2}\frac{\sqrt{3}}{2}\left(2-\frac{\sqrt{6}}{2}h\right)^2 - 3\frac{1}{2}\frac{\sqrt{3}}{2}\left(1-\frac{\sqrt{6}}{2}h\right)^2 \\
+         & = \frac{\sqrt{3}}{4}\left[ \left(4+\frac{3h^2}{2}-2\sqrt{6}h\right) -3 \left(1-\sqrt{6}h+\frac{3h^2}{2}\right) \right]                   \\
+         & = \frac{\sqrt{3}}{4}\left[ -3h^2 + \sqrt{6}h + 1 \right]
+    \end{align*}
+    だから，微分方程式\cref{1991-2:eq:2}に代入して整理すると，
+    \begin{align*}
+        dt & = \frac{\sqrt{3}}{4}[-3h^2 + \sqrt{6}h+1 ] dh
+    \end{align*}
+    となる．両辺積分すると，積分定数$C$として
+    \begin{align*}
+        t = \frac{\sqrt{3}}{4} (-h^3 + \frac{\sqrt{6}}{2}h^2+h) + C
+    \end{align*}
+    である．初期条件は$t=0$で$h=0$だから積分定数は$C=0$であり，
+    高さが$h$になるまでに要する時間は
+    \begin{align*}
+        t = \frac{\sqrt{3}}{4} \left(-h^3 + \frac{\sqrt{6}}{2}h^2+h\right)
+    \end{align*}
+    である．$\cdots$(答)
+
+    \vspace{10pt}
+    {\bf[解説]}
+
+    \newpage
+\end{multicols}
+\end{document}

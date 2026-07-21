@@ -1,0 +1,143 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{京都大学後期$2003$年$2$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/2003/2/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+  三角形ABCにおいて
+  \begin{align}
+     & \angle ADB = \theta & \left( \frac{\pi}{3} < \theta < \frac{\pi}{2} \right) \label{2003-2:eq:1}
+  \end{align}
+  とおく．
+  C から直線 BD に下ろした垂線 H とおく．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      % Define vertices of the equilateral triangle ABC
+      \coordinate (A) at (0, 3.464); % Height of equilateral triangle with side length 4
+      \coordinate (B) at (-2, 0);
+      \coordinate (C) at (2, 0);
+
+      % Draw the equilateral triangle ABC
+      \draw (A) -- (B) -- (C) -- cycle;
+
+      % Mark angles of equilateral triangle (optional, just for visual confirmation)
+      \pic [draw, angle eccentricity=1.5, angle radius=0.7cm, "$\frac{\pi}{3}$"] {angle = B--A--C};
+      % \pic [draw, angle eccentricity=1.2, angle radius=0.7cm, "$\frac{\pi}{3}$"] {angle = A--B--C};
+      % \pic [draw, angle eccentricity=1.2, angle radius=0.7cm, "$\frac{\pi}{3}$"] {angle = B--C--A};
+
+      % Point D on AC such that AD:DC = 3:1
+      % Since AC has length 4, AD = 3 and DC = 1
+      \coordinate (D) at ($(A)!0.6!(C)$); % 0.75 along the path from A to C
+
+      % Draw line BD
+      \draw (B) -- (D);
+
+      % Draw the perpendicular from C to BD, let H be the foot of the perpendicular
+      \path (C) -- ($(B)!(C)!(D)$) coordinate (H);
+      \draw[dashed] (C) -- (H) -- (D);
+
+      % Mark the right angle at H
+      % \draw (H) rectangle ($(H) + (-0.2, 0.2)$); % Adjust coordinates if needed for better placement
+
+      % Labels
+      \node[above] at (A) {A};
+      \node[left] at (B) {B};
+      \node[right] at (C) {C};
+      \node[below] at (D) {D};
+      \node[above] at (H) {H};
+
+      % Mark angle ADB as theta
+      \pic [draw, angle eccentricity=2.0, angle radius=0.5cm, "$\theta-\frac{\pi}{3}$"] {angle = C--B--D}; % Angle DBC is theta
+      \pic [draw, angle eccentricity=1.5, angle radius=0.5cm, "$\theta$"] {angle = A--D--B}; % Angle DBC is theta
+      % \pic [draw, angle eccentricity=1.2, angle radius=0.5cm, "$\theta$"] {angle = C--D--H}; % Angle CDH is also theta if angles are aligned
+
+      \fill (D) circle (0.05);
+      \fill (H) circle (0.05);
+      % Add other lines from the reference image, if desired (e.g., lines from A to H)
+      % \draw[dashed] (A) -- (H);
+    \end{tikzpicture}
+    \caption{三角形ABCと点D, Hの様子}
+    \label{2003-2:fig:1}
+  \end{figure}
+
+  四面体 $ABCD$ の体積が最大の時
+  の $\triangle ABD$ を底面とみた時の高さは $CH$ である．
+
+  従って，四面体ABCDは底面が三角形ABD，高さCHの錐体で，
+  その体積$V(\theta)$は，
+  \begin{align*}
+    V(\theta)
+     & = \frac{1}{3}(\triangle ABD) |CH|          \\
+     & = \frac{1}{6}|CH||AD||AB|\sin\frac{\pi}{3} \\
+     & = \frac{\sqrt{3}}{12}|CH||AD||AB|
+  \end{align*}
+  である．
+
+  以下CH,AD,ABの長さを計算する．
+  まず，題意より三角形ABCは一辺の長さ$1$だから
+  \begin{align*}
+    |AB| = 1
+  \end{align*}
+  である．
+
+  次にBDは，三角形ABDに正弦定理を用いて
+  \begin{align*}
+    AD = \frac{\sin(\pi-\theta)}{\sin\theta}
+  \end{align*}
+  である．
+
+  最後にCH については，三角形BCHを考えて
+  \begin{align*}
+    CH
+     & = |BC|\sin \angle HBC  \\
+     & = \sin(\theta - \pi/3)
+  \end{align*}
+  である．
+
+  以上から，四面体 $ABCD$ の体積 $V(\theta)$ は
+  \begin{align*}
+    V(\theta)
+     & = \frac{\sqrt{3}}{12}|CH||AD||AB|                                                      \\
+     & = \frac{\sqrt{3}}{12} \frac{\sin(\pi-\theta)}{\sin\theta} \sin(\theta - \frac{\pi}{3}) \\
+  \end{align*}
+  である．
+  積和公式を用いてさらに変形して
+  \begin{align*}
+    V(\theta)
+     & = \frac{\sqrt{3}}{12} \frac{-1}{2}\frac{\cos\frac{\pi}{3}-\cos(\pi-2\theta)}{\sin\theta} \\
+     & = \frac{-\sqrt{3}}{24} \frac{\frac{1}{2}+\cos 2\theta}{\sin\theta}                       \\
+  \end{align*}
+  さらに倍角公式から$\cos 2\theta = 1-2\sin^2\theta$だから，全体を$\sin\theta$だけでかけて
+  \begin{align*}
+    V(\theta)
+     & = -\frac{\sqrt{3}}{48} \frac{1+2(1-2\sin^2\theta)}{\sin\theta}        \\
+     & = -\frac{\sqrt{3}}{48} \frac{3-4\sin^2\theta}{\sin\theta}             \\
+     & = \frac{\sqrt{3}}{48} \left(4\sin\theta - \frac{3}{\sin\theta}\right) \\
+  \end{align*}
+  となる．
+  ここで，\cref{2003-2:eq:1}から，区間内で$\frac{\sqrt{3}}{2}<\sin\theta\le 1$であり，
+  この区間で$\sin\theta$も$-1/\sin\theta$も$\sin\theta$に関する単調増加関数だから，
+  $V(\theta)$は$\sin\theta$ の単調増加関数で，$\sin\theta=1$ すなわち $\theta=\pi/2$
+  の時に最大値を取る．
+  この時$D$ が $AC$ の中点の時となる．
+  求める最大値は
+  \begin{align*}
+    \max V
+     & = V(\pi/2)            \\
+     & = \frac{\sqrt{3}}{48}
+  \end{align*}
+  である．$\cdots$(答)
+
+  \vspace{10pt}
+  {\bf[解説]}
+
+  \newpage
+\end{multicols}
+\end{document}

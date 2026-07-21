@@ -1,0 +1,252 @@
+\documentclass[../../../../main.tex]{subfiles}
+% \documentclass[a4paper,10pt]{ltjsarticle}
+\begin{document}
+\rhead{東京大学後期$1998$年$2$番}
+\setcounter{equation}{0}
+\begin{oframed}
+  \input{../../../problems/1998/2/problem.tex}
+\end{oframed}
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+  {\bf[解]}
+
+  (1) (E)を変形して，
+  \begin{align}
+    \int_0^{2\pi} \left\{[f(x)]^2 - 2f(x)\sin\theta\right\}dx = 0 \label{1998-2:eq:1}
+  \end{align}
+  である．ここに
+  \begin{align*}
+    f(x) = r\sin(x+\theta)
+  \end{align*}
+  を代入して各項計算すると
+  \begin{align*}
+    \int_0^{2\pi} \{f(x)\}^2dx
+     & = \int_0^{2\pi} r^2 \sin^2(x+\theta) dx                                                 \\
+     & = \frac{r^2}{2} \left[ (x+\theta) - \frac{1}{2}\sin 2(x+\theta) \right]_0^{2\pi}        \\
+     & = \pi r^2                                                                               \\
+    \int_0^{2\pi} f(x)\sin\theta dx
+     & = r \int_0^{2\pi} \sin^2(x+\theta)\sin\theta dx                                         \\
+     & = \frac{r}{2} \int_0^{2\pi} \{-\cos(2x+2\theta) + \cos\theta\} dx                       \\
+     & = \frac{r}{2} \left[-\frac{1}{2}\sin(2x+2\theta) +  x \cdot \cos\theta \right]_0^{2\pi} \\
+     & = \pi r \cos\theta
+  \end{align*}
+  だから，\cref{1998-2:eq:1}に代入すると
+  \begin{align*}
+     & \pi r^2 = 2\pi r \cos\theta \\
+    \therefore
+     & r = 2\cos\theta
+  \end{align*}
+  を得る．$\cdots$(答)
+  \vspace{10pt}
+
+  (2)
+  まず，パラメータの範囲
+  \begin{align*}
+    \begin{dcases}
+      0 < r \\
+      0 \le \theta \le \frac{\pi}{4}
+    \end{dcases}
+  \end{align*}
+  に(1)の$r=2\cos\theta$を代入すると，
+  \begin{align}
+    0 \le \theta \le \frac{\pi}{4} \label{1998-2:eq:2}
+  \end{align}
+  の範囲では常に成立している．
+
+  そこで，\cref{1998-2:eq:2}のもとで
+  \begin{align*}
+    f(x) = 2\cos\theta\sin(x+\theta) & \left(0 \le x \le \frac{\pi}{4}, 0 \le x \le \pi\right)
+  \end{align*}
+  の軌跡を求めれば良い．
+  積和公式から
+  \begin{align*}
+    f(x) = \sin(2\theta+x) + \sin x \equiv g(x, \theta)
+  \end{align*}
+  であり, $x$ を固定して $\theta$ を動かすと，\cref{1998-2:eq:2}より
+  \begin{align}
+    x \leq 2\theta+x \leq x+\frac{\pi}{2} \label{1998-2:eq:3}
+  \end{align}
+  である．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis lines=middle,
+          xmin=-0.1, xmax=3.5,
+          ymin=-0.1, ymax=5.5,
+          xlabel=$x$,
+          ylabel=$y$,
+          xtick={0, pi/4, pi/2, pi},
+          xticklabels={$0$, $\pi/4$, $\pi/2$, $\pi$},
+          ytick={pi/2, pi, 3*pi/2},
+          yticklabels={$\pi/2$, $\pi$, $3\pi/2$},
+          grid=none,
+          clip=false,
+          %every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+          %every axis y label/.style={at={(current axis.above of origin)},anchor=south},
+          %xlabel style={at={(ticklabel cs:1.05)},anchor=west},
+          %ylabel style={at={(ticklabel cs:1.05)},anchor=south},
+        ]
+
+        % Define the two lines
+        \addplot[thick, smooth, domain=0:pi,name path=A] {x} node[above, xshift=-1cm, yshift=-1cm] {$y=x\,(\theta=0)$};
+        \addplot[thick, smooth, domain=0:pi,name path=B] {x + pi/2} node[above, xshift=-1cm] {$y=\pi/2+x\, (\theta=\pi/4)$};
+
+        % Shading the area between the two lines
+        \addplot[
+          fill=gray,
+          fill opacity=0.3,
+          pattern=north west lines,
+          pattern color=black
+        ] fill between[of=A and B];
+
+        % Vertical lines at key points on the x-axis
+        \draw[dashed, gray] (axis cs:0.785398,0) -- (axis cs:0.785398, 3.14159/2+0.785398);
+        \draw[dashed, gray] (axis cs:1.5708,0) -- (axis cs:1.5708, 3.14159);
+        \draw[dashed, gray] (axis cs:3.14159,0) -- (axis cs:3.14159, 3.14159*2);
+
+        % Horizontal lines to y-axis at key points
+        \draw[thick, red] (axis cs:0, pi/2) -- (axis cs:pi/2, pi/2);
+        \draw[dashed, gray] (axis cs:0, pi) -- (axis cs:pi, pi);
+        \draw[dashed, gray] (axis cs:0, 3*pi/2) -- (axis cs:pi, 3*pi/2);
+        \draw[thick, red] (axis cs:pi/2, pi) -- (axis cs:pi, pi);
+
+        % Dots at key intersections
+        \fill (axis cs:0, 0) circle[radius=2pt];
+        \fill (axis cs:0, 1.5708) circle[radius=2pt];
+        \fill (axis cs:0.785398, 0.785398) circle[radius=2pt];
+        \fill (axis cs:0.785398, 0.785398+1.5708) circle[radius=2pt];
+        \fill (axis cs:1.5708, 1.5708) circle[radius=2pt];
+        \fill (axis cs:1.5708, 1.5708+1.5708) circle[radius=2pt];
+        \fill (axis cs:3.14159, 3.14159) circle[radius=2pt];
+        \fill (axis cs:3.14159, 3.14159+1.5708) circle[radius=2pt];
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$2\theta+x$の存在する領域．}
+    \label{1998-2:fig:1}
+  \end{figure}
+
+  $x$を動かした時のこの領域は\cref{1998-2:fig:1}の斜線部（境界含む）だから，$\sin(2\theta+x)$の最大最小を考えて
+  \begin{align*}
+    \begin{dcases}
+      g(x, 0) \leq g(x, \theta) \leq g(x,\theta)|_{2\theta+x=\pi/2}       & 0 \leq x \leq \pi/4     \\
+      g(x, \pi/4) \leq g(x, \theta) \leq g(x,\theta)|_{2\theta+x=x+\pi/2} & \pi/4 \leq x \leq \pi/2 \\
+      g(x, \pi/4) \leq g(x, \theta) \leq g(x, 0)                          & \pi/2 \leq x \leq \pi
+    \end{dcases}
+  \end{align*}
+  である．各点計算すると
+  \begin{align*}
+    \begin{dcases}
+      g(x, 0) = 2\sin x             \\
+      g(x, \pi/4) = \sin x + \cos x \\
+      g(x,\theta)|_{2\theta+x=x+\pi/2} = \sin x + 1
+    \end{dcases}
+  \end{align*}
+  だから，求める領域は
+  \begin{align*}
+    \begin{dcases}
+      2\sin x \leq f(x) \leq  \sin x + 1         & 0 \leq x \leq \pi/4     \\
+      \sin x + \cos x \leq f(x)  \leq \sin x + 1 & \pi/4 \leq x \leq \pi/2 \\
+      \sin x + \cos x \leq f(x)  \leq 2\sin x    & \pi/2 \leq x \leq \pi
+    \end{dcases}
+  \end{align*}
+  となり，図示すると\cref{1998-2:fig:2}の斜線部(境界含む)である．
+  $\cdots$(答)
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          axis lines=middle,
+          xmin=-0.1, xmax=3.5,
+          ymin=-1.5, ymax=2.5,
+          xlabel=$x$,
+          ylabel=$y$,
+          xtick={0, pi/4, pi/2, 3*pi/4, pi},
+          xticklabels={$0$, $\pi/4$, $\pi/2$, $3\pi/4$, $\pi$},
+          ytick={-1, 0, 1, 1.414, 2},
+          yticklabels={$-1$, $0$, $1$, $\sqrt{2}$, $2$},
+          grid=none,
+          clip=false,
+          %every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+          %every axis y label/.style={at={(current axis.above of origin)},anchor=south},
+          %xlabel style={at={(ticklabel cs:1.05)},anchor=west},
+          %ylabel style={at={(ticklabel cs:1.05)},anchor=south},
+        ]
+
+        % Define the curves
+        \addplot[thick, smooth, domain=0:pi] {sin(deg(x))+1} node[right] {$y=\sin x+1$};
+        \addplot[thick, smooth, domain=0:pi] {2*sin(deg(x))} node[right,yshift=0.2] {$y=2\sin x$};
+        \addplot[thick, smooth, domain=0:pi] {sin(deg(x))+cos(deg(x))} node[right, yshift=-0.2cm] {$y=\sin x+\cos x$};
+
+        % Define the curves
+        \addplot[thick, smooth, domain=0:pi/4, name path=f1] {sin(deg(x))+1};
+        \addplot[thick, smooth, domain=0:pi/4, name path=f2] {2*sin(deg(x))};
+
+        \addplot[thick, smooth, domain=pi/4:pi/2, name path=f3] {sin(deg(x))+cos(deg(x))};
+        \addplot[thick, smooth, domain=pi/4:pi/2, name path=f4] {sin(deg(x))+1};
+
+        \addplot[thick, smooth, domain=pi/4:pi, name path=f5] {sin(deg(x))+cos(deg(x))};
+        \addplot[thick, smooth, domain=pi/4:pi, name path=f6] {2*sin(deg(x))};
+
+
+        % Shading the areas based on the conditions
+        \addplot[fill opacity=0.3, pattern=north west lines, pattern color=black] fill between[of=f1 and f2];
+        \addplot[fill opacity=0.3, pattern=north west lines, pattern color=black] fill between[of=f3 and f4];
+        \addplot[fill opacity=0.3, pattern=north west lines, pattern color=black] fill between[of=f5 and f6];
+
+        \fill (axis cs:0,0) circle[radius=2pt];
+        \fill (axis cs:0,1) circle[radius=2pt];
+        \fill (axis cs:pi/4, {sqrt(2)}) circle[radius=2pt];
+        \fill (axis cs:pi/2, 2) circle[radius=2pt];
+        \fill (axis cs:pi, -1) circle[radius=2pt];
+        \fill (axis cs:pi, 0) circle[radius=2pt];
+
+        \draw[dashed, gray] (axis cs:pi/4, 0) -- (axis cs:pi/4, {sqrt(2)}) -- (axis cs:0, {sqrt(2)});
+        \draw[dashed, gray] (axis cs:pi/2, 0) -- (axis cs:pi/2, 2) -- (axis cs:0, 2);
+        \draw[dashed, gray] (axis cs:0, 1) -- (axis cs:pi, 1);
+      \end{axis}
+    \end{tikzpicture}
+    \caption{求める領域は斜線部（教会含む）．}
+    \label{1998-2:fig:2}
+  \end{figure}
+
+  \vspace{10pt}
+
+  (3)
+  求める面積$S$として, 図より
+  \begin{align*}
+    S
+     & = \int_0^{\pi/2} (1+\sin x)dx + \int_{\pi/2}^\pi (2\sin x)dx - \int_0^{\pi/4} (2\sin x)dx - \int_{\pi/4}^\pi (\sin x + \cos x)dx \\
+  \end{align*}
+  である．三角関数の対称性を用いて積分区間を変形すると
+  \begin{align}
+    S
+     & = \int_0^{\pi/2} dx + \int_0^{\pi/2} 3\sin x dx - \int_0^{\pi/4} \sin x dx -  \int_{0}^\pi \sin x dx   - \int_{\pi/4}^\pi \cos x dx \\
+     & = \int_0^{\pi/2} dx + \int_0^{\pi/2} \sin x dx - \int_0^{\pi/4} \sin x dx - \int_{\pi/4}^\pi \cos x dx   \label{1998-2:eq:4}        \\
+  \end{align}
+  だから，各項積分すると
+  \begin{align*}
+     & \int_0^{\pi/2} dx = \frac{\pi}{2}                                                      \\
+     & \int_{0}^{\pi/2} \sin x dx = \left[-\cos x\right]_{0}^{\pi/2} = 1                      \\
+     & \int_{0}^{\pi/4} \sin x dx = \left[-\cos x\right]_{0}^{\pi/4} = 1-\frac{\sqrt{2}}{2}   \\
+     & \int_{\pi/4}^{\pi} \cos x dx = \left[\sin x\right]_{\pi/4}^{\pi} = -\frac{\sqrt{2}}{2} \\
+  \end{align*}
+  だから，\cref{1998-2:eq:4}に代入して
+  \begin{align*}
+    S
+     & = \frac{\pi}{2} + 1 - \left(1-\frac{\sqrt{2}}{2}\right) +\frac{\sqrt{2}}{2} \\
+     & =\frac{\pi}{2} + \sqrt{2}
+  \end{align*}
+  である．  $\cdots$(答)
+  \vspace{10pt}
+
+
+
+  {\bf[解説]}
+
+  \newpage
+\end{multicols}
+\end{document}

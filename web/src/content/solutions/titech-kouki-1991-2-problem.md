@@ -1,0 +1,10 @@
+---
+university: "titech"
+category: "kouki"
+year: "1991"
+question: "2"
+type: "problem"
+title: "TITECH 1991 kouki Q2 (problem)"
+---
+
+原点Oを中心とする半径2の円Kの内部に，一辺の長さが2で対角線の交点がO となるような正方形ABCDをとる．K上の点Pにおいて，線分POと角$\theta$で交わる2 本の半直線を引く．このとき，PがK上のどのような位置にあっても，これら2本の半直線が正方形ABCDを通るような$\theta$の最大値を求めよ．
