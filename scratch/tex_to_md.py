@@ -39,7 +39,7 @@ def render_tikz_to_svg(content, base_name):
 \\usepackage{{tikz}}
 \\usepackage{{pgfplots}}
 \\pgfplotsset{{compat=1.18}}
-\\usetikzlibrary{{angles,quotes,intersections,patterns}}
+\\usetikzlibrary{{angles,quotes,intersections,patterns,calc,arrows.meta,decorations.pathmorphing,decorations.pathreplacing}}
 \\usepgfplotslibrary{{fillbetween}}
 \\begin{{document}}
 {full_tikz}
@@ -66,7 +66,6 @@ def render_tikz_to_svg(content, base_name):
                 )
             except Exception as e:
                 sys.stderr.write(f"Warning: Failed to compile TikZ for {fig_id}: {e}\n")
-                # 失敗時はプレースホルダー画像を配置するか、元のコードのままとする
                 continue
 
         # Markdown/LaTeX画像タグに置換 (最初の1箇所のみ置換)
