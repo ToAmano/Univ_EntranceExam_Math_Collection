@@ -131,11 +131,25 @@ def convert_tex_to_md(tex_path, output_md_path, frontmatter, uni, category, year
         f.write(fm_str + md_body)
 
 def postprocess_markdown(md_body):
-    # 1. $$\begin{align} ... \end{align}$$ の二重$$囲みを修正 (\begin{align} / \begin{aligned} は単体で動く)
-    md_body = re.sub(r'\$\$\s*(\\begin\{(?:align|align\*|aligned|aligned\*|gather|gather\*|eqnarray|eqnarray\*)\})', r'\1', md_body)
-    md_body = re.sub(r'(\\end\{(?:align|align\*|aligned|aligned\*|gather|gather\*|eqnarray|eqnarray\*)\})\s*\$\$', r'\1', md_body)
+    # 1. \begin{align} / \begin{align*} などの環境を $$ \begin{aligned} ... \end{aligned} $$ に置換
+    # (remark-math が数式ブロックとしてパースし、KaTeX がエラーなく美しく描画するデファクト標準形式)
+    def replace_align_env(match):
+        env_type = match.group(1) # align, align*, gather, gather*, etc.
+        body = match.group(2)
+        # \label や \nonumber の削除
+        body = re.sub(r'\\label\{[^}]+\}', '', body)
+        body = re.sub(r'\\nonumber\b', '', body)
+        return f"\n$$\n\\begin{{aligned}}\n{body.strip()}\n\\end{{aligned}}\n$$\n"
 
-    # 2. \label{...} と \nonumber の除去 (KaTeXパースエラーの防止)
+    # 既存の $$...$$ や単体の \begin{align...} を一括置換
+    md_body = re.sub(
+        r'(?:\$\$\s*)?\\begin\{(align|align\*|eqnarray|eqnarray\*|gather|gather\*)\}(.*?)\\end\{\1\}(?:\s*\$\$)?',
+        replace_align_env,
+        md_body,
+        flags=re.DOTALL
+    )
+
+    # 2. \label{...} と \nonumber の個別の除去
     md_body = re.sub(r'\\label\{[^}]+\}', '', md_body)
     md_body = re.sub(r'\\nonumber\b', '', md_body)
 
