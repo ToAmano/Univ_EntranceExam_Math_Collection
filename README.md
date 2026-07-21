@@ -11,17 +11,59 @@
 * `src/`: LaTeXによる解答ソース（マスターデータ）。大問フォルダ一体型で管理。
 * `web/`: AstroによるWebサイトプロジェクト。
 
-## 🛠️ ローカルでのビルド方法
+## 🛠️ ローカルでのビルド・開発手順
 
-### 1. Webサイトのローカル開発
+### 前提条件 (Prerequisites)
+* **Node.js**: `v18.14.1` 以上 (Astro v4 の動作環境)
+* **Python**: `3.x`
+* **LaTeX / CLIツール**: Pandoc, `poppler-utils` (`pdftocairo`), TeX Live (TikZのSVG変換およびPDFビルドに使用)
+
+---
+
+### 1. LaTeX ➔ Markdown / TikZ-SVG の一括変換
+`src/` 配下の全TeXファイルからMarkdownおよびTikZのSVG画像を出力します。
+
+```bash
+# リポジトリルートにて実行
+python3 scratch/tex_to_md.py
+```
+
+※生成された Markdown ファイルは `web/src/content/solutions/` に、TikZ SVG 画像は `web/public/images/tikz/` 以下の階層ディレクトリに自動配置されます。
+
+---
+
+### 2. Webサイトのローカル開発サーバー起動 (`npm run dev`)
+
 ```bash
 cd web
 npm install
 npm run dev
 ```
 
-### 2. PDF書籍のビルド (LuaLaTeX)
+ブラウザで `http://localhost:4321/` を開くと、ポータル画面（`index.astro`）および数式・図形付きの解答ページを確認できます。
+
+---
+
+### 3. Webサイトのプロダクションビルド (`npm run build`)
+GitHub Pages デプロイ用の静的 HTML bundle (`dist/`) を生成・動作検証します。
+
 ```bash
-cd src/sample_todai/zenki/1990/1
-# 個別ビルドは各フォルダにて行えます。
+cd web
+npm run build
+npm run preview   # ビルド成果物 (dist/) のローカルプレビュー
+```
+
+---
+
+### 4. 過去問解答集 PDF マスターの一括ビルド (LuaLaTeX)
+大学・区分ごとの統合マスターTeXから、1冊の解答集PDFをコンパイルします。
+
+```bash
+# 東工大後期の過去問解答集PDFを一括ビルド
+cd src/sample_titech/kouki
+latexmk -lualatex main.tex
+
+# 東大前期の過去問解答集PDFを一括ビルド
+cd src/sample_todai/zenki
+latexmk -lualatex main.tex
 ```
