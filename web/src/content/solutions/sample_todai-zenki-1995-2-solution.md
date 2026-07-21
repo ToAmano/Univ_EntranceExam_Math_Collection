@@ -13,15 +13,15 @@ title: "SAMPLE_TODAI 1995 zenki Q2 (solution)"
 
   
 <figure id="1995-2:fig:1">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1995/2/fig_1.svg" />
-  <figcaption>点ABCの様子</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1995/2/fig_1.svg" alt="図 1" />
+  <figcaption>図 1: 点ABCの様子</figcaption>
 </figure>
 
   $\mathrm{PQ}=1$ だから， $\mathrm{P}(0,0)$, $\mathrm{Q}(1,0)$ とし,
   $\triangle \mathrm{ABC}$ が $xy$ 平面にあるとする.
-  (条件)をみたす時,$A,B,C$ は$\ref{1995-2:fig:1}$の斜線部分内にある.
+  (条件)をみたす時,$A,B,C$ は[図1](#1995-2:fig:1)の斜線部分内にある.
 
-  もし $A,B,C$ が$\ref{1995-2:fig:1}$で斜線部で, 境界を含まない部分にあるとすると $C$ から $AB$ に下ろした垂線と $E,F$ との交点のうち, 垂足 $H$ との距離が $\overline{CH}$ よりも大きいもの $C'$ が存在し
+  もし $A,B,C$ が[図1](#1995-2:fig:1)で斜線部で, 境界を含まない部分にあるとすると $C$ から $AB$ に下ろした垂線と $E,F$ との交点のうち, 垂足 $H$ との距離が $\overline{CH}$ よりも大きいもの $C'$ が存在し
   $\triangle \mathrm{ABC} < \triangle \mathrm{ABC'}$ となる.
   したがって, $\triangle \mathrm{ABC}$ が最大の時, $C$ は $E$ 又は $F$ にある.
   他の頂点についても同様のことがいえるから題意は示された.
@@ -55,8 +55,8 @@ $$
 
   
 <figure id="1995-2:fig:2">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1995/2/fig_2.svg" />
-  <figcaption>点A，B，Cの様子</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1995/2/fig_2.svg" alt="図 2" />
+  <figcaption>図 2: 点A，B，Cの様子</figcaption>
 </figure>
 
   点CがE，F上でABからの距離が最大のとき，点Cでの円の接線の法線ベクトルも
@@ -119,12 +119,12 @@ $$
 
 ### (2)
 の結果から $p$を固定した時に $S$を最大にするのは
-  $\ref{1995-2:fig:3}$のようにHが$x$軸上に存在する時である．
+  [図3](#1995-2:fig:3)のようにHが$x$軸上に存在する時である．
 
   
 <figure id="1995-2:fig:3">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1995/2/fig_3.svg" />
-  <figcaption>$p$を固定した時，三角形ABCの面積が最大になるような場合．</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1995/2/fig_3.svg" alt="図 3" />
+  <figcaption>図 3: \\(p\\)を固定した時，三角形ABCの面積が最大になるような場合．</figcaption>
 </figure>
 
   この時の面積$S(p)$として，

@@ -83,6 +83,9 @@ def convert_tex_with_texsoup(tex_path, output_md_path, frontmatter, public_img_d
         label_node = fig.find('label')
         
         caption_text = str(caption_node.args[0]).strip('{}') if caption_node and caption_node.args else ''
+        # キャプション内の $ ... $ を HTML 内で MathJax が認識する \( ... \) に置換
+        caption_text_html = re.sub(r'\$([^\$]+)\$', r'\\\(\1\\\)', caption_text)
+
         label_id = str(label_node.args[0]).strip('{}') if label_node and label_node.args else f'fig_{fig_count}'
 
         fig_map[label_id] = fig_count
@@ -95,8 +98,8 @@ def convert_tex_with_texsoup(tex_path, output_md_path, frontmatter, public_img_d
             compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs)
 
             web_img_src = f"{public_img_dir_rel}/{svg_filename}"
-            caption_label = f"図 {fig_count}" + (f": {caption_text}" if caption_text else "")
-            fig_html = f'\n<figure id="{label_id}">\n  <img src="{web_img_src}" alt="{caption_label}" />\n  <figcaption>{caption_label}</figcaption>\n</figure>\n'
+            caption_label = f"図 {fig_count}" + (f": {caption_text_html}" if caption_text_html else "")
+            fig_html = f'\n<figure id="{label_id}">\n  <img src="{web_img_src}" alt="図 {fig_count}" />\n  <figcaption>{caption_label}</figcaption>\n</figure>\n'
             fig.replace_with(fig_html)
             fig_count += 1
 

@@ -27,13 +27,13 @@ $$
 
   
 <figure id="1995-1:fig:1">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/1995/1/fig_1.svg" alt="図 1: 立方体と頂点の定義" />
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/1995/1/fig_1.svg" alt="図 1" />
   <figcaption>図 1: 立方体と頂点の定義</figcaption>
 </figure>
 
   
 <figure id="1995-1:fig:2">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/1995/1/fig_2.svg" alt="図 2: 断面AEGC" />
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/1995/1/fig_2.svg" alt="図 2" />
   <figcaption>図 2: 断面AEGC</figcaption>
 </figure>
 
@@ -42,8 +42,8 @@ $$
 
   
 <figure id="1995-1:fig:3">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/1995/1/fig_3.svg" alt="図 3: $S_n$と$S_{n+1}$の関係" />
-  <figcaption>図 3: $S_n$と$S_{n+1}$の関係</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/1995/1/fig_3.svg" alt="図 3" />
+  <figcaption>図 3: \\(S_n\\)と\\(S_{n+1}\\)の関係</figcaption>
 </figure>
 
   $O_n$から$AC$に引いた垂線と$AC$との交点を$T_n$と置くと，その定義より$O_nT_n$の長さは$r_n$に等しい．

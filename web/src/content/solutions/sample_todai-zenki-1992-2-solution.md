@@ -13,8 +13,8 @@ title: "SAMPLE_TODAI 1992 zenki Q2 (solution)"
 
   
 <figure id="1992-2:fig:1">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1992/2/fig_1.svg" />
-  <figcaption>平面$H_1,H_2$の様子．</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1992/2/fig_1.svg" alt="図 1" />
+  <figcaption>図 1: 平面\\(H_1,H_2\\)の様子．</figcaption>
 </figure>
 
   $L$を$x$軸, $H_1$を$xy$平面, Bを原点とし,
@@ -77,11 +77,11 @@ $$
 
   
 <figure id="1992-2:fig:2">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1992/2/fig_2.svg" />
-  <figcaption>1° A,B,C,Dが同一直線上の時</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1992/2/fig_2.svg" alt="図 2" />
+  <figcaption>図 2: 1° A,B,C,Dが同一直線上の時</figcaption>
 </figure>
 
-  対称性から$\ref{1992-2:fig:2}$の時だけ考える．
+  対称性から[図2](#1992-2:fig:2)の時だけ考える．
   
 $$
 \begin{align*}
@@ -96,8 +96,8 @@ $$
 
   
 <figure id="1992-2:fig:3">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1992/2/fig_3.svg" />
-  <figcaption>2° AからDのうち3つが同一直線上の時</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1992/2/fig_3.svg" alt="図 3" />
+  <figcaption>図 3: 2° AからDのうち3つが同一直線上の時</figcaption>
 </figure>
 
   対称性から図の時だけ考える．
@@ -115,8 +115,8 @@ $$
 
   
 <figure id="1992-2:fig:4">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1992/2/fig_4.svg" />
-  <figcaption>3° どの3点も同一直線上にない時</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1992/2/fig_4.svg" alt="図 4" />
+  <figcaption>図 4: 3° どの3点も同一直線上にない時</figcaption>
 </figure>
 
   直線ACをLとしてLを共通の境界とし，角$\theta(0 \leqq \theta \leqq \pi)$で交わる
@@ -129,12 +129,12 @@ $$
   $\angle DAB$, $\angle BCD$は$\theta$の単調増加関数だから
   $\angle ABC + \angle BCD + \angle CDA + \angle DAB$は$\theta=\pi$で最大値をとる．
   この時4点A,B,C,Dはどの3点も同一直線上にないことから四角形ABCDを構成する．
-  この時直線ACに関してB, Dが反対側にあることから各点の関係は$\ref{1992-2:fig:5}$のようになる．
+  この時直線ACに関してB, Dが反対側にあることから各点の関係は[図5](#1992-2:fig:5)のようになる．
 
   
 <figure id="1992-2:fig:5">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1992/2/fig_5.svg" />
-  <figcaption>点ABCDの関係</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1992/2/fig_5.svg" alt="図 5" />
+  <figcaption>図 5: 点ABCDの関係</figcaption>
 </figure>
 
   よって条件をみたすもとでA〜Dをうごかしても，四角形の内角の和は$2\pi$で一定だから

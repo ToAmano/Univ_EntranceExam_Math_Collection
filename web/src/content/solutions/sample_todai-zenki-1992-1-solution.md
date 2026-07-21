@@ -73,12 +73,12 @@ $$
 ### (2)
 
 ### (1)
-から，$y=f_{a_0}(x)$は常に$y=x$の下側にあって，グラフの概形は$\ref{1992-1:fig:1}$のようになる．
+から，$y=f_{a_0}(x)$は常に$y=x$の下側にあって，グラフの概形は[図1](#1992-1:fig:1)のようになる．
 
     
 <figure id="1992-1:fig:1">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1992/1/fig_1.svg" />
-  <figcaption>$y=f_a(x)$のグラフの概形と，題意の領域．</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1992/1/fig_1.svg" alt="図 1" />
+  <figcaption>図 1: \\(y=f_a(x)\\)のグラフの概形と，題意の領域．</figcaption>
 </figure>
 
     従って求める体積$V(\theta)$は，
