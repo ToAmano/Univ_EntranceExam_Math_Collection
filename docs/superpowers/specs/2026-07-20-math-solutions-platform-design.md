@@ -106,7 +106,23 @@ Math-Solutions/
 * **数式描画**: **KaTeX** (ビルド時レンダリング)
   * `remark-math` ＋ `rehype-katex` プラグインを使用し、ビルド時に数式をHTML化。数式の瞬時表示を実現。
 
-### 3.3 変換システム (LaTeX ➔ Markdown)
+### 3.4 Webポータル UI/UX Layout 仕様
+* **トップページ (`web/src/pages/index.astro`)**:
+  - **ヒーローセクション**: 「Math Solutions - 大学数学過去問・解答アーカイブ」のタイトルと検索/フィルター。
+  - **大学・区分カードナビゲーション**: 大学別（東大 `sample_todai` / 東工大 `sample_titech`）・区分別（前期/後期）・収録年度・問題数のグリッドカード。
+  - **年度・大問クイックリンク**: 各年度のサマリ（0番）や各大問へのダイレクトアクセス。
+* **過去問詳細ページ (`web/src/pages/solutions/[...slug].astro`)**:
+  - **パンくずナビゲーション**: ホーム > 大学名 > 区分 > 年度 > 大問。
+  - **年度別アコーディオン・サイドバー**: 他の年度や問題への容易な回遊。
+  - **数式・図形描画**: KaTeXによる数式埋め込みと SVG 形式の TikZ 図形表示。
+
+### 3.5 年度サマリ (0番) 統合仕様
+* **LaTeXソース構造**:
+  - `src/[大学]/[区分]/[年度]/0/solution.tex` に出題テーマ・難易度・解答一覧・試験形態サマリを配置。
+* **PDFマスター (`main.tex`) での順序**:
+  - `\part*{XXXX年}` 直後に `\input{XXXX/0/solution.tex}` を挿入し、`\clearpage` の後に `第1問`, `第2問` ... を配置。
+* **Webポータルでの表示**:
+  - `scratch/tex_to_md.py` で `q_num == "0"` を `type: "summary"` / `title: "XXXX年 全体サマリ"` としてMarkdown化し、各年度の冒頭や年度専用ビューにサマリセクションとして描画。
 * **コアコンバータ**: **Pandoc**
   * `pandoc [file].tex -t markdown --mathjax -o [file].md` のように変換。
 * **前処理・後処理スクリプト (Python)**:
