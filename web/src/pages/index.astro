@@ -7,13 +7,13 @@ const allSolutions = await getCollection('solutions');
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // Helper mapping for university and category labels
-const UNIVERSITY_NAMES: Record<string, string> = {
-	sample_todai: '東京大学',
-	sample_titech: '東京工業大学',
-	sample_kyodai: '京都大学',
-	todai: '東京大学',
-	titech: '東京工業大学',
-	kyodai: '京都大学',
+const UNIVERSITY_NAMES: Record<string, { name: string; aliases: string }> = {
+	sample_todai: { name: '東京大学', aliases: '東大 とうだい utokyo' },
+	sample_titech: { name: '東京工業大学', aliases: '東工大 とうこうだい titech' },
+	sample_kyodai: { name: '京都大学', aliases: '京大 きょうだい kyodai' },
+	todai: { name: '東京大学', aliases: '東大 とうだい utokyo' },
+	titech: { name: '東京工業大学', aliases: '東工大 とうこうだい titech' },
+	kyodai: { name: '京都大学', aliases: '京大 きょうだい kyodai' },
 };
 
 const CATEGORY_NAMES: Record<string, string> = {
@@ -37,6 +37,7 @@ interface UniversityCategoryGroup {
 	universityId: string;
 	categoryId: string;
 	univName: string;
+	aliases: string;
 	catName: string;
 	totalItems: number;
 	years: YearGroup[];
@@ -53,10 +54,12 @@ for (const item of allSolutions) {
 	const key = `${univId}__${catId}`;
 
 	if (!groupsMap.has(key)) {
+		const univInfo = UNIVERSITY_NAMES[univId];
 		groupsMap.set(key, {
 			universityId: univId,
 			categoryId: catId,
-			univName: UNIVERSITY_NAMES[univId] || univId,
+			univName: univInfo ? univInfo.name : univId,
+			aliases: univInfo ? univInfo.aliases : '',
 			catName: CATEGORY_NAMES[catId] || catId,
 			totalItems: 0,
 			years: [],
@@ -153,7 +156,7 @@ for (const uGroup of universityGroups) {
 
 		<div class="university-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
 			{universityGroups.map((uGroup) => (
-				<div class="glass glass-hover univ-card" data-search-text={`${uGroup.univName} ${uGroup.catName} ${uGroup.universityId} ${uGroup.categoryId}`} style="padding: 2rem;">
+				<div class="glass glass-hover univ-card" data-search-text={`${uGroup.univName} ${uGroup.aliases} ${uGroup.catName} ${uGroup.universityId} ${uGroup.categoryId}`} style="padding: 2rem;">
 					<!-- Card Header -->
 					<div style="border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 1.25rem; margin-bottom: 1.5rem;">
 						<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
@@ -172,7 +175,7 @@ for (const uGroup of universityGroups) {
 					<!-- Years List / Accordion -->
 					<div class="years-accordion-list" style="display: flex; flex-direction: column; gap: 1rem;">
 						{uGroup.years.map((yGroup) => (
-							<div class="year-block" data-year-text={`${uGroup.univName} ${yGroup.year}`} style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px; padding: 1rem 1.25rem;">
+							<div class="year-block" data-year-text={`${uGroup.univName} ${uGroup.aliases} ${yGroup.year}`} style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px; padding: 1rem 1.25rem;">
 								<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
 									<span style="font-weight: 700; font-size: 1.1rem; color: var(--primary); font-family: 'Outfit', sans-serif;">
 										{yGroup.year}年
