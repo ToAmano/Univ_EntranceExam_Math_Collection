@@ -1,0 +1,352 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+	const solutions = await getCollection('solutions');
+	
+	const targetCategories = [
+		{ university: 'todai', category: 'zenki' },
+		{ university: 'todai', category: 'kouki' },
+		{ university: 'titech', category: 'zenki' },
+		{ university: 'titech', category: 'kouki' },
+		{ university: 'kyodai', category: 'zenki' },
+		{ university: 'kyodai', category: 'kouki' },
+		{ university: 'sample_todai', category: 'zenki' },
+		{ university: 'sample_todai', category: 'kouki' },
+		{ university: 'sample_titech', category: 'zenki' },
+		{ university: 'sample_titech', category: 'kouki' },
+		{ university: 'sample_kyodai', category: 'zenki' },
+		{ university: 'sample_kyodai', category: 'kouki' },
+	];
+
+	return targetCategories.map(({ university, category }) => {
+		const filteredSolutions = solutions.filter((s) => {
+			const itemUniv = s.data.university;
+			const matchUniv = itemUniv === university || itemUniv === `sample_${university}` || `sample_${itemUniv}` === university;
+			return matchUniv && s.data.category === category;
+		});
+
+		return {
+			params: { university, category },
+			props: {
+				university,
+				category,
+				solutions: filteredSolutions,
+				allSolutions: solutions,
+			},
+		};
+	});
+}
+
+const { university, category, solutions } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const UNIVERSITY_NAMES: Record<string, string> = {
+	sample_todai: '東京大学',
+	sample_titech: '東京工業大学',
+	sample_kyodai: '京都大学',
+	todai: '東京大学',
+	titech: '東京工業大学',
+	kyodai: '京都大学',
+};
+
+const CATEGORY_NAMES: Record<string, string> = {
+	zenki: '前期 理系数学',
+	kouki: '後期 理系数学',
+};
+
+const univName = UNIVERSITY_NAMES[university] || university;
+const catName = CATEGORY_NAMES[category] || category;
+
+// Group solutions by year -> question
+interface QuestionGroup {
+	questionNum: string;
+	summaryItem?: CollectionEntry<'solutions'>;
+	problemItem?: CollectionEntry<'solutions'>;
+	solutionItem?: CollectionEntry<'solutions'>;
+}
+
+interface YearGroup {
+	year: string;
+	questions: QuestionGroup[];
+}
+
+const yearGroupsMap = new Map<string, QuestionGroup[]>();
+
+for (const item of solutions) {
+	const yearStr = item.data.year;
+	const qNum = item.data.question;
+
+	if (!yearGroupsMap.has(yearStr)) {
+		yearGroupsMap.set(yearStr, []);
+	}
+	const qList = yearGroupsMap.get(yearStr)!;
+
+	let qGroup = qList.find((q) => q.questionNum === qNum);
+	if (!qGroup) {
+		qGroup = { questionNum: qNum };
+		qList.push(qGroup);
+	}
+
+	if (item.data.type === 'summary' || qNum === '0') {
+		qGroup.summaryItem = item;
+	} else if (item.data.type === 'problem') {
+		qGroup.problemItem = item;
+	} else {
+		qGroup.solutionItem = item;
+	}
+}
+
+const yearGroups: YearGroup[] = Array.from(yearGroupsMap.entries()).map(([year, questions]) => {
+	questions.sort((a, b) => {
+		if (a.questionNum === '0') return -1;
+		if (b.questionNum === '0') return 1;
+		return a.questionNum.localeCompare(b.questionNum, undefined, { numeric: true });
+	});
+	return { year, questions };
+});
+
+yearGroups.sort((a, b) => b.year.localeCompare(a.year));
+---
+
+<Layout title={`${univName} ${catName} | Math Solutions`}>
+	<div class="category-page">
+		<nav class="breadcrumb">
+			<a href={`${baseUrl}/`}>トップ</a>
+			<span class="sep">/</span>
+			<span class="current">{univName} {catName}</span>
+		</nav>
+
+		<header class="category-header" transition:name={`card-${university}-${category}`}>
+			<div class="badge-row">
+				<span class="univ-badge">{univName}</span>
+				<span class="cat-badge">{catName}</span>
+			</div>
+			<h1>{univName} <span class="highlight">{catName}</span></h1>
+			<p class="count-info">収録問題数: <strong>{solutions.length}</strong> 件</p>
+		</header>
+
+		{solutions.length === 0 ? (
+			<div class="empty-state glass">
+				<div class="empty-icon">📝</div>
+				<h2>現在データを準備中です</h2>
+				<p>このカテゴリの過去問・解答データは順次追加予定です。</p>
+				<a href={`${baseUrl}/`} class="btn-primary">トップページへ戻る</a>
+			</div>
+		) : (
+			<div class="year-sections">
+				{yearGroups.map((yg) => (
+					<section class="year-card glass">
+						<div class="year-header">
+							<h2>{yg.year}年度</h2>
+							<span class="year-count">{yg.questions.length}問</span>
+						</div>
+						<div class="questions-grid">
+							{yg.questions.map((q) => (
+								<div class="question-row">
+									<div class="q-label">
+										{q.questionNum === '0' ? (
+											<span class="tag-summary">全体サマリ</span>
+										) : (
+											<span class="tag-num">第{q.questionNum}問</span>
+										)}
+									</div>
+									<div class="q-actions">
+										{q.summaryItem && (
+											<a href={`${baseUrl}/solutions/${q.summaryItem.slug}`} class="action-btn summary">
+												サマリを見る ➔
+											</a>
+										)}
+										{q.problemItem && (
+											<a href={`${baseUrl}/solutions/${q.problemItem.slug}`} class="action-btn problem">
+												問題 ➔
+											</a>
+										)}
+										{q.solutionItem && (
+											<a href={`${baseUrl}/solutions/${q.solutionItem.slug}`} class="action-btn solution">
+												解答・解説 ➔
+											</a>
+										)}
+									</div>
+								</div>
+							))}
+						</div>
+					</section>
+				))}
+			</div>
+		)}
+	</div>
+</Layout>
+
+<style>
+	.category-page {
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: 2rem 1.5rem 4rem;
+	}
+
+	.breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.9rem;
+		color: var(--text-muted);
+		margin-bottom: 2rem;
+	}
+	.breadcrumb a {
+		color: var(--primary);
+		text-decoration: none;
+	}
+	.breadcrumb a:hover {
+		text-decoration: underline;
+	}
+
+	.category-header {
+		padding: 2.5rem;
+		background: rgba(15, 23, 42, 0.7);
+		border: 1px solid var(--glass-border);
+		border-radius: 20px;
+		margin-bottom: 2.5rem;
+		backdrop-filter: blur(12px);
+	}
+	.badge-row {
+		display: flex;
+		gap: 0.5rem;
+		margin-bottom: 0.75rem;
+	}
+	.univ-badge, .cat-badge {
+		padding: 0.25rem 0.75rem;
+		border-radius: 999px;
+		font-size: 0.8rem;
+		font-weight: 600;
+	}
+	.univ-badge {
+		background: rgba(96, 165, 250, 0.15);
+		color: var(--primary);
+		border: 1px solid rgba(96, 165, 250, 0.3);
+	}
+	.cat-badge {
+		background: rgba(52, 211, 153, 0.15);
+		color: var(--secondary);
+		border: 1px solid rgba(52, 211, 153, 0.3);
+	}
+
+	.category-header h1 {
+		font-size: 2.2rem;
+		font-weight: 800;
+		margin: 0 0 0.5rem;
+	}
+	.category-header .highlight {
+		color: var(--primary);
+	}
+	.count-info {
+		color: var(--text-muted);
+		margin: 0;
+	}
+
+	.empty-state {
+		text-align: center;
+		padding: 4rem 2rem;
+		border-radius: 16px;
+	}
+	.empty-icon {
+		font-size: 3rem;
+		margin-bottom: 1rem;
+	}
+	.btn-primary {
+		display: inline-block;
+		margin-top: 1.5rem;
+		padding: 0.75rem 1.5rem;
+		background: var(--primary);
+		color: #000;
+		font-weight: 700;
+		border-radius: 10px;
+		text-decoration: none;
+	}
+
+	.year-sections {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+	.year-card {
+		padding: 1.5rem;
+		border-radius: 16px;
+	}
+	.year-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px solid var(--glass-border);
+		padding-bottom: 1rem;
+		margin-bottom: 1rem;
+	}
+	.year-header h2 {
+		margin: 0;
+		font-size: 1.4rem;
+	}
+	.year-count {
+		font-size: 0.85rem;
+		color: var(--text-subtle);
+	}
+
+	.questions-grid {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+	.question-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.75rem 1rem;
+		background: rgba(30, 41, 59, 0.4);
+		border-radius: 10px;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+	.tag-summary {
+		background: rgba(167, 139, 250, 0.2);
+		color: var(--accent);
+		padding: 0.2rem 0.6rem;
+		border-radius: 6px;
+		font-size: 0.85rem;
+		font-weight: 600;
+	}
+	.tag-num {
+		font-weight: 700;
+		font-size: 1rem;
+	}
+	.q-actions {
+		display: flex;
+		gap: 0.5rem;
+	}
+	.action-btn {
+		padding: 0.4rem 0.8rem;
+		border-radius: 8px;
+		text-decoration: none;
+		font-size: 0.85rem;
+		font-weight: 600;
+		transition: all 0.2s;
+	}
+	.action-btn.summary {
+		background: rgba(167, 139, 250, 0.15);
+		color: var(--accent);
+		border: 1px solid rgba(167, 139, 250, 0.3);
+	}
+	.action-btn.problem {
+		background: rgba(96, 165, 250, 0.15);
+		color: var(--primary);
+		border: 1px solid rgba(96, 165, 250, 0.3);
+	}
+	.action-btn.solution {
+		background: rgba(52, 211, 153, 0.15);
+		color: var(--secondary);
+		border: 1px solid rgba(52, 211, 153, 0.3);
+	}
+	.action-btn:hover {
+		transform: translateY(-2px);
+		filter: brightness(1.2);
+	}
+</style>
