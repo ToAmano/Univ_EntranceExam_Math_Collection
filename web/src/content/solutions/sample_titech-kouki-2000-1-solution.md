@@ -31,12 +31,12 @@ g(x) = x^2+(1-a)x+b
 \end{align*}
 $$
 
-  とおく．$f(x)$の三次の係数が正だから，$g(x)$の解の数によって関数$f(x)$の概形が$\ref{2000-1:fig:1}$の4パターンに変化する．
+  とおく．$f(x)$の三次の係数が正だから，$g(x)$の解の数によって関数$f(x)$の概形が[図1](#2000-1:fig:1)の4パターンに変化する．
 
   
 <figure id="2000-1:fig:1">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/2000/1/fig_1.svg" />
-  <figcaption>三次関数の解の個数とグラフの概形</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/2000/1/fig_1.svg" alt="図 1: 三次関数の解の個数とグラフの概形" />
+  <figcaption>図 1: 三次関数の解の個数とグラフの概形</figcaption>
 </figure>
 
   $g(x)$の判別式$D$は
@@ -97,8 +97,8 @@ $$
 
   
 <figure id="fig_2">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/2000/1/fig_2.svg" />
-  <figcaption>$g(x)$の解の個数分布</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/2000/1/fig_2.svg" alt="図 2: $g(x)$の解の個数分布" />
+  <figcaption>図 2: $g(x)$の解の個数分布</figcaption>
 </figure>
 
   以下場合わけをして考える．全体像は$\eqref{2000-1:table:1}$である．
@@ -230,13 +230,13 @@ $$
 $$
 
   である．
-  $ab$平面にこの条件を図示すれば，$\ref{2000-1:fig:3}$の斜線部が求める答えである．
+  $ab$平面にこの条件を図示すれば，[図3](#2000-1:fig:3)の斜線部が求める答えである．
   ただし，実線部および境界を含む．
 
   
 <figure id="2000-1:fig:3">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/2000/1/fig_3.svg" />
-  <figcaption>求める$(a,b)$の領域は斜線部（境界含む）と，実線部分である．</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/2000/1/fig_3.svg" alt="図 3: 求める$(a,b)$の領域は斜線部（境界含む）と，実線部分である．" />
+  <figcaption>図 3: 求める$(a,b)$の領域は斜線部（境界含む）と，実線部分である．</figcaption>
 </figure>
 
   $\cdots$(答)
@@ -250,4 +250,4 @@ $$
   結果的に$\eqref{2000-1:table:1}$のように5パターンの場合わけを処理すれば解答に辿り着ける．
 
   簡単な検算としては，$f(0)=ab$で，これが条件より$0$以上なので$ab\ge 0$であり，
-  最後の$\ref{2000-1:fig:3}$はこの条件を満たしているのでぱっと見大丈夫そうなのが確認できる．
+  最後の[図3](#2000-1:fig:3)はこの条件を満たしているのでぱっと見大丈夫そうなのが確認できる．

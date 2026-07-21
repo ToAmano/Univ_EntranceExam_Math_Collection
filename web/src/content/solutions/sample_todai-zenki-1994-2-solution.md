@@ -13,8 +13,8 @@ title: "SAMPLE_TODAI 1994 zenki Q2 (solution)"
 
   
 <figure id="1994-2:fig:1">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1994/2/fig_1.svg" />
-  <figcaption>一辺の長さ$l$の正方形と点Pの様子</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1994/2/fig_1.svg" alt="図 1: 一辺の長さ$l$の正方形と点Pの様子" />
+  <figcaption>図 1: 一辺の長さ$l$の正方形と点Pの様子</figcaption>
 </figure>
 
   Pは円が1周する間$4(l-2)$だけ転がる．円の半径が$1$だから，
@@ -63,8 +63,8 @@ $$
 
   
 <figure id="1994-2:fig:2">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1994/2/fig_2.svg" />
-  <figcaption>一辺の長さ$l$の正方形ABCDと点Pの様子</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1994/2/fig_2.svg" alt="図 2: 一辺の長さ$l$の正方形ABCDと点Pの様子" />
+  <figcaption>図 2: 一辺の長さ$l$の正方形ABCDと点Pの様子</figcaption>
 </figure>
 
   まず辺$AB$上を動く時を考える．
@@ -212,12 +212,12 @@ $$
 
   
 <figure id="1994-2:fig:3">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1994/2/fig_3.svg" />
-  <figcaption>$y=8|\sin t|+8|\cos t|$の概形と$L$を面積と見立てた際の領域（$p=\pi/8$の場合の例）．</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1994/2/fig_3.svg" alt="図 3: $y=8|\sin t|+8|\cos t|$の概形と$L$を面積と見立てた際の領域（$p=\pi/8$の場合の例）．" />
+  <figcaption>図 3: $y=8|\sin t|+8|\cos t|$の概形と$L$を面積と見立てた際の領域（$p=\pi/8$の場合の例）．</figcaption>
 </figure>
 
   ここで$L$は、$y=8|\sin t|+8|\cos t|, t=p, t=p+\frac{\pi}{4}$
-  とx軸の囲む面積でグラフは$\ref{1994-2:fig:3}$だから
+  とx軸の囲む面積でグラフは[図3](#1994-2:fig:3)だから
   $p=\frac{1}{2}\pi$の時より$p=\frac{1}{8}\pi$の時の方がLは大きく，
   $p=0$の時より$p=\frac{3}{8}\pi$の時の方がLは小さい．
   したがって

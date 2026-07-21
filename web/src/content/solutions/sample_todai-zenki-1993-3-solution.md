@@ -35,20 +35,20 @@ $$
 
   
 <figure id="1993-3:fig:1">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1993/3/fig_1.svg" />
-  <figcaption>$1^{\circ}$の場合．</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1993/3/fig_1.svg" alt="図 1: $1^{\circ}$の場合．" />
+  <figcaption>図 1: $1^{\circ}$の場合．</figcaption>
 </figure>
 
   
 <figure id="1993-3:fig:2">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1993/3/fig_2.svg" />
-  <figcaption>$2^{\circ}$の場合．</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1993/3/fig_2.svg" alt="図 2: $2^{\circ}$の場合．" />
+  <figcaption>図 2: $2^{\circ}$の場合．</figcaption>
 </figure>
 
   
 <figure id="1993-3:fig:3">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1993/3/fig_3.svg" />
-  <figcaption>$3^{\circ}$の場合．</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1993/3/fig_3.svg" alt="図 3: $3^{\circ}$の場合．" />
+  <figcaption>図 3: $3^{\circ}$の場合．</figcaption>
 </figure>
 
   まず$2^{\circ}, 3^{\circ}$について考える．
@@ -286,11 +286,11 @@ $$
 
   
 <figure id="1993-3:fig:4">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1993/3/fig_4.svg" />
-  <figcaption>Tは斜線部．</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1993/3/fig_4.svg" alt="図 4: Tは斜線部．" />
+  <figcaption>図 4: Tは斜線部．</figcaption>
 </figure>
 
-  Tの概形は$\ref{1993-3:fig:4}$の斜線部である．
+  Tの概形は[図4](#1993-3:fig:4)の斜線部である．
   従って
   
 $$

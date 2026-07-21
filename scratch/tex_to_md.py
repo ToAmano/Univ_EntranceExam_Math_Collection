@@ -60,6 +60,7 @@ def convert_tex_with_texsoup(tex_path, output_md_path, frontmatter, public_img_d
         if m:
             raw_tex = m.group(1)
 
+    # 不要なマクロ・レイアウトコマンドの削除
     raw_tex = re.sub(r'\\rhead\{[^}]*\}', '', raw_tex)
     raw_tex = re.sub(r'\\setcounter\{[^}]*\}\{[^}]*\}', '', raw_tex)
     raw_tex = re.sub(r'\\begin\{oframed\}\s*\\input\{[^}]+\}\s*\\end\{oframed\}', '', raw_tex)
@@ -71,24 +72,20 @@ def convert_tex_with_texsoup(tex_path, output_md_path, frontmatter, public_img_d
 
     soup = TexSoup(raw_tex)
 
-    # 1. \cref ノードの標準化
-    for cref in list(soup.find_all('cref')):
-        if cref.args:
-            target = str(cref.args[0]).strip('{}')
-            if 'fig:' in target:
-                cref.replace_with(f'$\\ref{{{target}}}$')
-            else:
-                cref.replace_with(f'$\\eqref{{{target}}}$')
-
-    # 2. figure 環境（TikZ図）のビルドと HTML <figure> タグ置換
+    # 図表のラベルIDと番号マップ
+    fig_map = {}
     fig_count = 1
     os.makedirs(output_svg_dir, exist_ok=True)
+
+    # 1. figure 環境（TikZ図）のビルドと番号付き HTML <figure> 置換
     for fig in list(soup.find_all('figure')):
         caption_node = fig.find('caption')
         label_node = fig.find('label')
         
         caption_text = str(caption_node.args[0]).strip('{}') if caption_node and caption_node.args else ''
         label_id = str(label_node.args[0]).strip('{}') if label_node and label_node.args else f'fig_{fig_count}'
+
+        fig_map[label_id] = fig_count
 
         tikz_node = fig.find('tikzpicture')
         if tikz_node:
@@ -98,9 +95,22 @@ def convert_tex_with_texsoup(tex_path, output_md_path, frontmatter, public_img_d
             compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs)
 
             web_img_src = f"{public_img_dir_rel}/{svg_filename}"
-            fig_html = f'\n<figure id="{label_id}">\n  <img src="{web_img_src}" />\n  <figcaption>{caption_text}</figcaption>\n</figure>\n'
+            caption_label = f"図 {fig_count}" + (f": {caption_text}" if caption_text else "")
+            fig_html = f'\n<figure id="{label_id}">\n  <img src="{web_img_src}" alt="{caption_label}" />\n  <figcaption>{caption_label}</figcaption>\n</figure>\n'
             fig.replace_with(fig_html)
             fig_count += 1
+
+    # 2. \cref / \ref のノード置換
+    for ref_node in list(soup.find_all(['cref', 'ref'])):
+        if ref_node.args:
+            target = str(ref_node.args[0]).strip('{}')
+            if 'fig:' in target or target in fig_map:
+                fig_num = fig_map.get(target, 1)
+                # 図表への参照は Markdown / HTML のアンカーリンクに変換
+                ref_node.replace_with(f'[図{fig_num}](#{target})')
+            else:
+                # 数式への参照は MathJax の \eqref に変換
+                ref_node.replace_with(f'$\\eqref{{{target}}}$')
 
     # 3. \begin{enumerate} リスト置換
     for enum in list(soup.find_all('enumerate')):

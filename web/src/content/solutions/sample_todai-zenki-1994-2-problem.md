@@ -20,6 +20,6 @@ title: "SAMPLE_TODAI 1994 zenki Q2 (problem)"
         の範囲を求めよ．
 
 <figure id="fig_1">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1994/2/fig_1.svg" />
-  <figcaption></figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1994/2/fig_1.svg" alt="図 1" />
+  <figcaption>図 1</figcaption>
 </figure>

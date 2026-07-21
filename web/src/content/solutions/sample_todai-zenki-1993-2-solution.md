@@ -120,8 +120,8 @@ $$
 
   
 <figure id="1993-2:fig:1">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1993/2/fig_1.svg" />
-  <figcaption>三角形ABCの様子</figcaption>
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1993/2/fig_1.svg" alt="図 1: 三角形ABCの様子" />
+  <figcaption>図 1: 三角形ABCの様子</figcaption>
 </figure>
 
   点と直線の距離公式から
