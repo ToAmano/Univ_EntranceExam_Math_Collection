@@ -3,7 +3,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
 export default defineConfig({
-  site: 'https://amano.github.io',
+  site: 'https://toamano.github.io',
   base: '/Math-Solutions',
   markdown: {
     remarkPlugins: [remarkMath],
