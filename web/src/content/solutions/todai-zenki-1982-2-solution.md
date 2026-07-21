@@ -1,0 +1,20 @@
+---
+university: "todai"
+category: "zenki"
+year: "1982"
+question: "2"
+type: "solution"
+title: "TODAI 1982 zenki Q2 (solution)"
+---
+
+\input{macros}
+     \begin{oframed}
+     正四面体$T$と半径$1$の球面$S$があって，$T$の$6$つの辺がすべて$S$に接しているという．
+     $T$の一辺の長さを求めよ．つぎに，$T$の外側にあって$S$の内側にある部分の体積を求めよ．
+     \end{oframed}
+
+## 【解】
+
+ 四面体の$4$頂点$A$，$B$，$C$，$D$とする．球面$S$の中心$O$とする．$T$の一辺の長さ$r$とする．$CD$の中点を$M$とし，平面$ABM$で図形を切断する．対称性から$O$はこの平面内にあって，下図のようになる．
+
+上図のように$x$をおく．

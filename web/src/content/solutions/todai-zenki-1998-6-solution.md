@@ -1,0 +1,47 @@
+---
+university: "todai"
+category: "zenki"
+year: "1998"
+question: "6"
+type: "solution"
+title: "TODAI 1998 zenki Q6 (solution)"
+---
+
+\maketitle
+
+\begin{oframed}
+ $xyz$空間に5点$A(1,1,0)$,$B(-1,1,0)$,$C(-1,-1,0)$,$D(1,-1,0)$,$P(0,0,3)$をとる．
+ 四角錐$PABCD$の$x^2+y^2\ge1$を満たす部分の体積を求めよ．
+ \end{oframed}
+ 
+ 
+\textgt{[解]} 対称性から，
+ 
+$$
+\begin{align}
+0\le y\le x             \label{eq:eq1}
+\end{align}
+$$
+
+ の部分で題意を満たす部分の体積$V'$,求める体積$V$として
+ 
+$$
+\begin{align}
+V=8V'
+\end{align}
+$$
+
+となる．以下$V'$について考える．
+
+さて，$0\le\theta\le\pi/2$に対して$c=\cos\theta$,
+$s=\sin\theta$とおき，四角錐を$x=s$で切断すると，題意の不等式は以下のようになる．
+ただし，\eqref{eq:eq1}に注意した．
+
+$$
+\begin{align*}
+c\le y\le s \\
+0\le z\le
+\end{align*}
+$$
+
+ {2}

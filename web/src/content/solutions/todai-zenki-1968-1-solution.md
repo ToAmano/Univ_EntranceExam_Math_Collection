@@ -1,0 +1,93 @@
+---
+university: "todai"
+category: "zenki"
+year: "1968"
+question: "1"
+type: "solution"
+title: "TODAI 1968 zenki Q1 (solution)"
+---
+
+\input{macros}
+     \begin{oframed}
+     平面上の点$(x,y)$で$x^2-5x<y<\cfrac{\pi}{5}\sin\left(\cfrac{\pi x}{5}\right)-\cfrac{3}{5}\sin^2\left(\cfrac{\pi x}{5}\right)$をみたす
+     範囲が，直線$y=\a x$によって面積の等しい二つの部分に分けられるように，$\a$の値を求めよ．
+     \end{oframed}
+
+## 【解】
+
+ 簡単のため
+     
+$$
+\begin{align*}
+\left\{\begin{array}{l}
+          f(x)=x^2-5x \\
+          g(x)=\cfrac{\pi}{5}\sin\left(\cfrac{\pi x}{5}\right)-\cfrac{3}{5}\sin^2\left(\cfrac{\pi x}{5}\right)
+          \end{array}\right.
+\end{align*}
+$$
+
+とおく．$0<x<5$では$f(x)<0$，$g(x)>0$である．
+故にグラフの概形は下図．
+
+     
+     \includegraphics[width=6cm]{ut-68-1-a.eps}
+     
+ 
+これら二つのグラフの囲む面積$S$とすると，
+     
+$$
+\begin{align}
+S=\int_0^5(g(x)-f(x))dx\label{1}
+\end{align}
+$$
+
+である．各項計算すると，
+     
+$$
+\begin{align*}
+&\cdot S_1=-\int_0^5f(x)dx=\frac{5^3}{6}=\frac{125}{6}\\&\cdot S_2=\int_0^5g(x)dx=\int_0^\pi\left(\sin t-\frac{3}{\pi}\sin^2t\right)dt \\&=\left[-\cos t-\frac{3}{2\pi}(t-2\sin 2t)\right]_0^\pi=2-\frac{3}{2}=\frac{1}{2}
+\end{align*}
+$$
+
+である．故に\eqref{1}に代入して
+     
+$$
+\begin{align}
+S=S_1+S_2=\frac{64}{3}\label{2}
+\end{align}
+$$
+
+である．
+
+また，$S_1>S_2$であるから，題意より，$\a<0$となることが必要で,このとき，$y=\a x$と$y=f(x)$が$0<x<5$に交点をひとつ持つ
+．グラフの概形は右上図． 
+    
+     \includegraphics[width=6cm]{ut-68-1-b.eps}
+     
+    
+　\\
+交点の$x$座標を$p$とおく．つまり
+     
+$$
+\begin{align}
+&\begin{cases}
+     0<p<5 \\
+     \a p=p^2-5p
+     \end{cases}\nonumber\\\Longleftrightarrow&\begin{cases}
+     0<p<5 \\
+     \a =p-5
+     \end{cases}\label{3}
+\end{align}
+$$
+
+とする．\eqref{2}に注意して，面積が等しい条件から
+     
+$$
+\begin{align*}
+&\frac{1}{2}S=\int_0^p(\a x-f(x))dx \\\Longleftrightarrow&\frac{32}{3}=\frac{1}{6}p^3\\\Longleftrightarrow&p=4
+\end{align*}
+$$
+
+である．これを\eqref{3}に代入して
+     \[\a=-1\]
+これは$\a<0$を満たし，十分．以上から，求める値は$\a=-1$である．$\cdots$(答)

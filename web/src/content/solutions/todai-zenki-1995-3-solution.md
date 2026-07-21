@@ -1,0 +1,55 @@
+---
+university: "todai"
+category: "zenki"
+year: "1995"
+question: "3"
+type: "solution"
+title: "TODAI 1995 zenki Q3 (solution)"
+---
+
+\input{macros}
+\begin{oframed}
+二辺の長さが$1$と$2$の長方形一辺の長さが$2$の正方形の$2$種類のタイルがある．縦$2$，横$n$
+の長方形の部屋をこれらのタイルで過不足なく敷き詰めることを考える．そのような並べ方の総数を
+$A_n$で表す．ただし$n$は正の整数である．例えば$A_1=1$，$A_2=3$，$A_3=5$である．このとき以下の問いに答えよ．
+     
+
+1.  $n\le3$のとき，$A_n$を$A_{n-1}$，$A_{n-2}$を用いて表せ．
+
+2.  $A_n$を$n$で表せ．
+
+\end{oframed}
+
+## 【解】
+
+     
+
+1.  右端のタイルの敷き詰め方で場合分けして考えれば，
+          \begin{align*}
+          A_n=A_{n-1}+2A_{n-2}\cdots\text{(答)}
+          \end{align*}
+     である．
+
+2.  (1)で得た漸化式を変形する．
+           \begin{align*}
+           \left\{
+                \begin{array}{l}
+               A_{n+2}-2A_{n+1}=-(A_{n+1}-2A_{n}) \\
+               A_{n+2}+A_{n+1}=2( A_{n+1}+A_{n})
+               \end{array}
+         \right.      
+         \end{align*}
+    これを繰り返し用いて，初期条件$A_1=1$，$A_2=3$から
+               \begin{align*}
+               \left\{
+                    \begin{array}{l}
+                    A_{n+1}-2A_{n}=(-1)^{n-1}(3-2) \\
+                    A_{n+1}+A_{n}=2^{n-1}(3+1)
+                    \end{array}
+              \right.
+              \end{align*}
+     辺々引いて整理すれば
+          \begin{align*}
+          A_n=\frac{1}{3}\left(2^{n+1}+(-1)^n\right)\cdots\text{(答)}
+          \end{align*}
+     を得る．
