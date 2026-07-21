@@ -89,11 +89,11 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     # 3. tabular 環境の pypandoc による完全自動 Markdown 表変換
     def convert_tabular_block(match):
         tab_str = match.group(0)
-        # cases / dcases 内の物理改行 \n をスペースに置換して 1 行にフラット化
-        tab_clean = re.sub(r'(\\begin\{(?:dcases|cases)\}.*?\\end\{(?:dcases|cases)\})', lambda m: m.group(1).replace('\n', ' ').replace('\r', ' '), tab_str, flags=re.DOTALL)
         # Pandoc が HTML <table> にエスケープする原因となる multirow / multicolumn マクロの展開
-        tab_clean = re.sub(r'\\multirow\{[^}]*\}\{[^}]*\}', '', tab_clean)
+        tab_clean = re.sub(r'\\multirow\{[^}]*\}\{[^}]*\}', '', tab_str)
         tab_clean = re.sub(r'\\multicolumn\{[^}]*\}\{[^}]*\}', '', tab_clean)
+        # tabular ブロック内のすべての物理改行 \n をスペースに置換して完全 1 行化
+        tab_clean = tab_clean.replace('\n', ' ').replace('\r', ' ')
         try:
             md_table = pypandoc.convert_text(tab_clean, 'markdown_strict+pipe_tables+tex_math_dollars', format='latex')
             # 表セル内の不要な空白・連続スペースの縮約と結合残存マークの除去
