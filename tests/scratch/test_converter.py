@@ -12,6 +12,7 @@ class TestConverter(unittest.TestCase):
     def tearDown(self):
         if os.path.exists(self.test_svg_path):
             os.remove(self.test_svg_path)
+        shutil.rmtree("web/public/images/tikz/test_uni", ignore_errors=True)
 
     def test_preprocess_latex(self):
         # 独自マクロの置換を検証
