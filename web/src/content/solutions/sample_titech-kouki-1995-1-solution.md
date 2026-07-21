@@ -9,11 +9,11 @@ title: "SAMPLE_TITECH 1995 kouki Q1 (solution)"
 
 **【解】**
 
-$1$ \ref{1}のように，立方体の頂点A, B, C, D, E, F, G,
+$1$ $\ref{1}$のように，立方体の頂点A, B, C, D, E, F, G,
 Hに対し題意の3面を ABCD, AEFB, AEHDとする. 各球の中心は
 立方体及び球の対称性から対角線AG上にある．
 $S_n$の中心を$O_n$，半径を$r_n$とおく．
-断面AEGCを\ref{2}に示す．$AC=2\sqrt{2}$,$AE=2$より，$\angle\mathrm{GAC}=\theta$と置くと
+断面AEGCを$\ref{2}$に示す．$AC=2\sqrt{2}$,$AE=2$より，$\angle\mathrm{GAC}=\theta$と置くと
 
 
 $$
@@ -38,7 +38,7 @@ src="/Math-Solutions/images/tikz/sample_titech/kouki/1995/1/fig_2.svg" />
 </figure>
 
 半径$r_n$に関する漸化式を導出することで$r_n$の一般項を求める．
-円$S_n$と$S_{n+1}$に着目して\ref{3}を考える．
+円$S_n$と$S_{n+1}$に着目して$\ref{3}$を考える．
 
 <figure id="1995-1:fig:3" data-latex-placement="H">
 <img
@@ -83,7 +83,7 @@ r_{n}
 $$
 
 
-となる．ただし，\eqref{1995-1:eq:1}を用いた．$\cdots$$答$
+となる．ただし，$\eqref{1995-1:eq:1}$を用いた．$\cdots$$答$
 
 $2$ 立方体 $C$ の中でどの $S_k$ $$k=0,1,\ldots, n$$
 にも含まれない部分の体積を$V_n$とする．

@@ -86,7 +86,7 @@ $$
 $$
 \begin{align*}
 \vec{OP}
-     & = \begin{pmatrix} \theta \\ 0 \end{pmatrix} + \begin{pmatrix} \cos$\alpha-\theta$ \\ \sin$\alpha-\theta$ \end{pmatrix} \quad $0 \le \theta \le \frac{\pi}{2}$
+     & = \begin{pmatrix} \theta \\0 \end{pmatrix} + \begin{pmatrix} \cos$\alpha-\theta$ \\ \sin$\alpha-\theta$ \end{pmatrix} \quad $0 \le \theta \le \frac{\pi}{2}$
 \end{align*}
 $$
 
@@ -143,7 +143,7 @@ L = 2$l_1+l_2$ \label{1994-2:eq:5}
 $$
 
  である．
-\eqref{1994-2:eq:3,1994-2:eq:4}を代入して 
+$\eqref{1994-2:eq:3,1994-2:eq:4}$を代入して 
 
 $$
 \begin{align*}
@@ -214,7 +214,7 @@ $$
 $$
 
 
-と計算できるから，$L$の増減表は\ref{1}となる．
+と計算できるから，$L$の増減表は$\ref{1}$となる．
 
 | $p$ | $0$ |  | $\frac{\pi}{8}$ |  | $\frac{\pi}{4}$ |  | $\frac{3\pi}{8}$ |  | $\frac{\pi}{2}$ |
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
@@ -236,7 +236,7 @@ class="math inline">$p=\pi/8$</span>の場合の例）．</figcaption>
 </figure>
 
 ここで$L$は、$y=8|\sin t|+8|\cos t|, t=p, t=p+\frac{\pi}{4}$
-とx軸の囲む面積でグラフは\ref{3}だから
+とx軸の囲む面積でグラフは$\ref{3}$だから
 $p=\frac{1}{2}\pi$の時より$p=\frac{1}{8}\pi$の時の方がLは大きく，
 $p=0$の時より$p=\frac{3}{8}\pi$の時の方がLは小さい． したがって
 
@@ -293,7 +293,7 @@ $$
 
  である．
 
-以上\eqref{1994-2:eq:6,1994-2:eq:7}及び$L$は連続して値をとることから，求める長さの範囲は
+以上$\eqref{1994-2:eq:6,1994-2:eq:7}$及び$L$は連続して値をとることから，求める長さの範囲は
 
 
 $$

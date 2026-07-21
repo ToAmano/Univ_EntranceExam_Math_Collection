@@ -169,10 +169,13 @@ def postprocess_markdown(md_body):
     # 3. HTMLタグ内の <span class="math inline">\(...\)</span> や \(...\) インライン数式のクリーンアップ
     md_body = re.sub(r'<span class="math inline">\\?\((.*?)\\?\)</span>', r'$\1$', md_body)
 
-    # 4. Pandocの生参照属性記号を \eqref{...} や \ref{...} に復元
-    md_body = re.sub(r'\[\\?\[([^\]]+)\\?\]\]\([^)]+\)\{reference-type="[^"]*"[^}]*\}', r'\\eqref{\1}', md_body)
-    md_body = re.sub(r'\[([^\]]+)\]\([^)]+\)\{reference-type="[^"]*"[^}]*\}', r'\\ref{\1}', md_body)
+    # 4. Pandocの生参照属性記号を $\eqref{...}$ や $\ref{...}$ に復元（MathJaxがパースできるよう$で包む）
+    md_body = re.sub(r'\[\\?\[([^\]]+)\\?\]\]\([^)]+\)\{reference-type="[^"]*"[^}]*\}', r'$\\eqref{\1}$', md_body)
+    md_body = re.sub(r'\[([^\]]+)\]\([^)]+\)\{reference-type="[^"]*"[^}]*\}', r'$\\ref{\1}$', md_body)
     md_body = re.sub(r'\{reference-type="[^"]*"[^}]*\}', '', md_body)
+    # $で囲まれていない単体の \eqref や \ref を $\eqref{...}$ に包む
+    md_body = re.sub(r'(?<!\$)\\(eqref|ref)\{([^}]+)\}(?!\$)', r'$\\ \1{\2}$', md_body)
+    md_body = re.sub(r'\\ \b', r'\\', md_body)
 
     # 5. 生の \( ... \) インライン数式・小設問の置換
     # (小設問の \(1\) や \(2\) などの数字単体は (1) (2) に変換)

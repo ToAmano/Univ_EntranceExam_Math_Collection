@@ -88,7 +88,7 @@ src="/Math-Solutions/images/tikz/sample_todai/zenki/1992/2/fig_2.svg" />
 <figcaption>1° A,B,C,Dが同一直線上の時</figcaption>
 </figure>
 
-対称性から\ref{2}の時だけ考える． 
+対称性から$\ref{2}$の時だけ考える． 
 
 $$
 \begin{align*}
@@ -134,7 +134,7 @@ $\angle BCD$は$\theta$の単調増加関数だから
 $\angle ABC + \angle BCD + \angle CDA + \angle DAB$は$\theta=\pi$で最大値をとる．
 この時4点A,B,C,Dはどの3点も同一直線上にないことから四角形ABCDを構成する．
 この時直線ACに関してB,
-Dが反対側にあることから各点の関係は\ref{5}のようになる．
+Dが反対側にあることから各点の関係は$\ref{5}$のようになる．
 
 <figure id="1992-2:fig:5" data-latex-placement="H">
 <img
