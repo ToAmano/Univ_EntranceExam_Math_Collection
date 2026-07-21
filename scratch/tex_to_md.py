@@ -10,6 +10,8 @@ import shutil
 def preprocess_latex_macros(content):
     # \bm{x} ➔ \mathbf{x} (allowing 1 level of nested braces)
     content = re.sub(r'\\bm\{((?:[^{}]|\{[^{}]*\})*)\}', r'\\mathbf{\1}', content)
+    # \shadowbox unwrap (supporting 2 levels of nested braces e.g. tabular specs with p{8cm})
+    content = re.sub(r'\\shadowbox\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}', r'\1', content, flags=re.DOTALL)
     # \R ➔ \mathbb{R} (assuring no preceding backslash, e.g. from \\R, but allowing even number of backslashes)
     content = re.sub(r'(?<!\\)((?:\\\\)*)\\R(?![a-zA-Z])', r'\1\\mathbb{R}', content)
     content = re.sub(r'(?<!\\)((?:\\\\)*)\\C(?![a-zA-Z])', r'\1\\mathbb{C}', content)
