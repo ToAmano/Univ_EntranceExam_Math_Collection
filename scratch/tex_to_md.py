@@ -84,7 +84,9 @@ def convert_tex_with_texsoup(tex_path, output_md_path, frontmatter, public_img_d
         
         caption_text = str(caption_node.args[0]).strip('{}') if caption_node and caption_node.args else ''
         # キャプション内の $ ... $ を HTML 内で MathJax が認識する \( ... \) に置換
-        caption_text_html = re.sub(r'\$([^\$]+)\$', r'\\\(\1\\\)', caption_text)
+        def caption_math_repl(m):
+            return r"\(" + m.group(1) + r"\)"
+        caption_text_html = re.sub(r'\$([^\$]+)\$', caption_math_repl, caption_text)
 
         label_id = str(label_node.args[0]).strip('{}') if label_node and label_node.args else f'fig_{fig_count}'
 

@@ -14,7 +14,7 @@ title: "SAMPLE_TODAI 1992 zenki Q2 (solution)"
   
 <figure id="1992-2:fig:1">
   <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1992/2/fig_1.svg" alt="図 1" />
-  <figcaption>図 1: 平面\\(H_1,H_2\\)の様子．</figcaption>
+  <figcaption>図 1: 平面\(H_1,H_2\)の様子．</figcaption>
 </figure>
 
   $L$を$x$軸, $H_1$を$xy$平面, Bを原点とし,

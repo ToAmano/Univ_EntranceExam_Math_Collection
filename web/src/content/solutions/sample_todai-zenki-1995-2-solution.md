@@ -124,7 +124,7 @@ $$
   
 <figure id="1995-2:fig:3">
   <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1995/2/fig_3.svg" alt="図 3" />
-  <figcaption>図 3: \\(p\\)を固定した時，三角形ABCの面積が最大になるような場合．</figcaption>
+  <figcaption>図 3: \(p\)を固定した時，三角形ABCの面積が最大になるような場合．</figcaption>
 </figure>
 
   この時の面積$S(p)$として，

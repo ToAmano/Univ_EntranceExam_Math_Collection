@@ -44,7 +44,7 @@ $$
     
 <figure id="1990-1:fig:1">
   <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/1990/1/fig_1.svg" alt="図 1" />
-  <figcaption>図 1: 二次関数 \\(y = 2t^2 - 60t\\) のグラフ</figcaption>
+  <figcaption>図 1: 二次関数 \(y = 2t^2 - 60t\) のグラフ</figcaption>
 </figure>
 
     **【解説】**
