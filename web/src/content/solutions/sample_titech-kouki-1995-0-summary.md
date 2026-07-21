@@ -7,27 +7,20 @@ type: "summary"
 title: "1995年 全体サマリ"
 ---
 
-<div class="center">
-
+::: center
 **1995年度**
-
-</div>
 
 **出題テーマと難易度**
 
-<div class="center">
-
+::: center
 | **問題番号** | **テーマ**     | **難易度** |
 |:------------:|:---------------|:----------:|
 |    第1問     | 空間図形，極限 |     普     |
 |    第2問     | 平面図形       |     普     |
 
-</div>
-
 **解答**
 
-<div class="center">
-
+::: center
 <table>
 <thead>
 <tr>
@@ -62,14 +55,9 @@ V=4\pi^2a $a^2-a+1$\)</span></td>
 </tbody>
 </table>
 
-</div>
-
 **試験形態**
 
-<div class="center">
-
+::: center
 |         |
 |:--------|
 | 2問60分 |
-
-</div>

@@ -108,14 +108,14 @@ def convert_tex_to_md(tex_path, output_md_path, frontmatter, uni, category, year
         f.write(processed_content)
         
     try:
-        cmd = ["pandoc", temp_tex, "-t", "gfm+tex_math_dollars", "--mathjax"]
+        cmd = ["pandoc", temp_tex, "-t", "markdown-grid_tables-simple_tables-multiline_tables-raw_attribute", "--mathjax"]
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
         md_body = result.stdout
     finally:
         if os.path.exists(temp_tex):
             os.remove(temp_tex)
 
-    # Markdown後処理 (KaTeXの二重$$囲み、Pandoc参照属性、非標準:::コンテナの修正)
+    # Markdown後処理 (MathJax AMSモードの最適化)
     md_body = postprocess_markdown(md_body)
 
     # Frontmatterを付与して保存
@@ -131,42 +131,30 @@ def convert_tex_to_md(tex_path, output_md_path, frontmatter, uni, category, year
         f.write(fm_str + md_body)
 
 def postprocess_markdown(md_body):
-    # 1. \begin{align} / \begin{align*} などの環境を $$ \begin{aligned} ... \end{aligned} $$ に置換
-    def replace_align_env(match):
+    # 1. \begin{align} / \begin{align*} などの環境を $$ \begin{align} ... \end{align} $$ にブロックで包む
+    # (MathJax の AMS モード tags: 'ams' により自動ナンバリングと \label / \ref / \eqref 相互参照が機能する)
+    def preserve_align_env(match):
         env_type = match.group(1)
         body = match.group(2)
-        body = re.sub(r'\\label\{[^}]+\}', '', body)
-        body = re.sub(r'\\nonumber\b', '', body)
-        return f"\n$$\n\\begin{{aligned}}\n{body.strip()}\n\\end{{aligned}}\n$$\n"
+        body = re.sub(r'\\\}', '}', body)
+        return f"\n$$\n\\begin{{{env_type}}}\n{body.strip()}\n\\end{{{env_type}}}\n$$\n"
 
     md_body = re.sub(
         r'(?:\$\$\s*)?\\begin\{(align|align\*|eqnarray|eqnarray\*|gather|gather\*)\}(.*?)\\end\{\1\}(?:\s*\$\$)?',
-        replace_align_env,
+        preserve_align_env,
         md_body,
         flags=re.DOTALL
     )
 
-    # 2. \label{...} と \nonumber の完全除去
-    md_body = re.sub(r'\\label\{[^}]+\}', '', md_body)
-    md_body = re.sub(r'\\nonumber\b', '', md_body)
-
-    # 3. HTMLタグ内の <span class="math inline">\(...\)</span> や \(...\) インライン数式のクリーンアップ
+    # 2. HTMLタグ内の <span class="math inline">\(...\)</span> や \(...\) インライン数式のクリーンアップ
     md_body = re.sub(r'<span class="math inline">\\?\((.*?)\\?\)</span>', r'$\1$', md_body)
 
-    # 4. 生参照属性記号やラベル残骸 (例: (1990-1:eq:1\), (1992-1:eq:2,1992-1:eq:3\)) の完全除去・(式1)へ整形
-    def clean_eq_ref(match):
-        raw = match.group(0)
-        eq_nums = re.findall(r'eq:(\d+)', raw)
-        if eq_nums:
-            return "(" + ", ".join(f"式{n}" for n in eq_nums) + ")"
-        return ""
-
-    md_body = re.sub(r'\(?[a-zA-Z0-9_-]+:eq:[^)]*\\?\)?', clean_eq_ref, md_body)
-    md_body = re.sub(r'\[\\?\[([^\]]+)\\?\]\]\([^)]+\)\{reference-type="[^"]*"[^}]*\}', r'(\1)', md_body)
-    md_body = re.sub(r'\[([^\]]+)\]\([^)]+\)\{reference-type="[^"]*"[^}]*\}', r'\1', md_body)
+    # 3. Pandocの生参照属性記号を \eqref{...} や \ref{...} に復元
+    md_body = re.sub(r'\[\\?\[([^\]]+)\\?\]\]\([^)]+\)\{reference-type="[^"]*"[^}]*\}', r'\\eqref{\1}', md_body)
+    md_body = re.sub(r'\[([^\]]+)\]\([^)]+\)\{reference-type="[^"]*"[^}]*\}', r'\\ref{\1}', md_body)
     md_body = re.sub(r'\{reference-type="[^"]*"[^}]*\}', '', md_body)
 
-    # 5. 生の \( ... \) インライン数式・小設問の置換
+    # 4. 生の \( ... \) インライン数式・小設問の置換
     # (小設問の \(1\) や \(2\) などの数字単体は (1) (2) に変換)
     md_body = re.sub(r'\\?\(([0-9a-zA-Z]{1,2})\\?\)', r'(\1)', md_body)
     # それ以外の \( ... \) 数式は $ ... $ に変換
@@ -183,6 +171,10 @@ def postprocess_markdown(md_body):
 
     # 8. \bm{...} の残骸等の処理
     md_body = re.sub(r'\\bm\{((?:[^{}]|\{[^{}]*\})*)\}', r'\\mathbf{\1}', md_body)
+
+    # 9. エスケープされた $`math`$ や末尾 \} のクリーンアップ
+    md_body = re.sub(r'\$`([^`]+)`\$', r'$\1$', md_body)
+    md_body = re.sub(r'\\\}', '}', md_body)
     
     return md_body
 

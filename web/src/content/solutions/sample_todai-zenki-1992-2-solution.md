@@ -25,41 +25,41 @@ $C$から$L$に下ろした垂足を$C'$とし，その座標をC'$$p, 0, 0$$と
 
 $CC' = q $q>0$$ とおくと， 
 $$
-\begin{aligned}
+\begin{align*}
 C$p, q\cos\theta, q\sin\theta$
-\end{aligned}
+\end{align*}
 $$
  とおける．
 
 さらに A$$a, b, 0$$ $$b>0$$ とおくと，$\overline{AC}$の長さは
 
 $$
-\begin{aligned}
+\begin{align*}
 \overline{AC}^2
      & = $a-p$^2 + $b-q\cos\theta$^2 + q^2\sin^2\theta \\
      & = -2bq\cos\theta + q^2+b^2+$a-p$^2
-\end{aligned}
+\end{align*}
 $$
  と書ける．
 
 さて，$\angle ABC=\alpha\, $0 \le \alpha \le \pi$$とおいて$\triangle ABC$に余弦定理を用いると
 
 $$
-\begin{aligned}
+\begin{align*}
 \cos\alpha
      & = \frac{\overline{AB}^2+\overline{BC}^2-\overline{AC}^2}{2\overline{AB} \cdot \overline{BC}}                                                              \\
      & = \frac{\overline{AB}^2+\overline{BC}^2}{2\overline{AB} \cdot \overline{BC}} + \frac{2bq\cos\theta - q^2-b^2-$a-p$^2}{2\overline{AB} \cdot \overline{BC}}
-\end{aligned}
+\end{align*}
 $$
  と書ける．
 
 $\theta$の変化によって$\overline{AB}, \overline{BC}$は変化しないから，
 
 $$
-\begin{aligned}
+\begin{align*}
 \cos\alpha
      & = $\text{定数}$  + \frac{bq}{\overline{AB} \cdot \overline{BC}} \cos\theta
-\end{aligned}
+\end{align*}
 $$
  と書ける．
 
@@ -80,11 +80,11 @@ src="/Math-Solutions/images/tikz/sample_todai/zenki/1992/2/fig_2.svg" />
 <figcaption>1° A,B,C,Dが同一直線上の時</figcaption>
 </figure>
 
-対称性から2の時だけ考える． 
+対称性から\ref{2}の時だけ考える． 
 $$
-\begin{aligned}
+\begin{align*}
 \angle ABC + \angle BCD + \angle CDA + \angle DAB = 2\pi
-\end{aligned}
+\end{align*}
 $$
  だから与式は成立する．
 
@@ -98,9 +98,9 @@ src="/Math-Solutions/images/tikz/sample_todai/zenki/1992/2/fig_3.svg" />
 
 対称性から図の時だけ考える． 
 $$
-\begin{aligned}
+\begin{align*}
 \angle ABC + \angle BCD + \angle CDA + \angle DAB = \pi + \pi = 2\pi
-\end{aligned}
+\end{align*}
 $$
  だから与式は成立する．
 
@@ -122,7 +122,7 @@ $\angle BCD$は$\theta$の単調増加関数だから
 $\angle ABC + \angle BCD + \angle CDA + \angle DAB$は$\theta=\pi$で最大値をとる．
 この時4点A,B,C,Dはどの3点も同一直線上にないことから四角形ABCDを構成する．
 この時直線ACに関してB,
-Dが反対側にあることから各点の関係は5のようになる．
+Dが反対側にあることから各点の関係は\ref{5}のようになる．
 
 <figure id="1992-2:fig:5" data-latex-placement="H">
 <img
@@ -133,9 +133,9 @@ src="/Math-Solutions/images/tikz/sample_todai/zenki/1992/2/fig_5.svg" />
 よって条件をみたすもとでA〜Dをうごかしても，四角形の内角の和は$2\pi$で一定だから
 
 $$
-\begin{aligned}
+\begin{align*}
 \angle ABC + \angle BCD + \angle CDA + \angle DAB = 2\pi
-\end{aligned}
+\end{align*}
 $$
  よって与式は成立する．
 
