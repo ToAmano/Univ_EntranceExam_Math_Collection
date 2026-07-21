@@ -78,7 +78,7 @@ $$
     
 <figure id="1992-1:fig:1">
   <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1992/1/fig_1.svg" alt="図 1" />
-  <figcaption>図 1: \(y=f_a(x)\)のグラフの概形と，題意の領域．</figcaption>
+  <figcaption>図 1: $y=f_a(x)$のグラフの概形と，題意の領域．</figcaption>
 </figure>
 
     従って求める体積$V(\theta)$は，

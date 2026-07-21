@@ -11,6 +11,10 @@ export default defineConfig({
       [rehypeMathjax, {
         tex: {
           tags: 'ams',
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
         },
       }],
     ],

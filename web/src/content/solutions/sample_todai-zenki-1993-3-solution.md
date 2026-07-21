@@ -36,19 +36,19 @@ $$
   
 <figure id="1993-3:fig:1">
   <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1993/3/fig_1.svg" alt="図 1" />
-  <figcaption>図 1: \(1^{\circ}\)の場合．</figcaption>
+  <figcaption>図 1: $1^{\circ}$の場合．</figcaption>
 </figure>
 
   
 <figure id="1993-3:fig:2">
   <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1993/3/fig_2.svg" alt="図 2" />
-  <figcaption>図 2: \(2^{\circ}\)の場合．</figcaption>
+  <figcaption>図 2: $2^{\circ}$の場合．</figcaption>
 </figure>
 
   
 <figure id="1993-3:fig:3">
   <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1993/3/fig_3.svg" alt="図 3" />
-  <figcaption>図 3: \(3^{\circ}\)の場合．</figcaption>
+  <figcaption>図 3: $3^{\circ}$の場合．</figcaption>
 </figure>
 
   まず$2^{\circ}, 3^{\circ}$について考える．

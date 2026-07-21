@@ -98,7 +98,7 @@ $$
   
 <figure id="fig_2">
   <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/2000/1/fig_2.svg" alt="図 2" />
-  <figcaption>図 2: \(g(x)\)の解の個数分布</figcaption>
+  <figcaption>図 2: $g(x)$の解の個数分布</figcaption>
 </figure>
 
   以下場合わけをして考える．全体像は$\eqref{2000-1:table:1}$である．
@@ -236,7 +236,7 @@ $$
   
 <figure id="2000-1:fig:3">
   <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/2000/1/fig_3.svg" alt="図 3" />
-  <figcaption>図 3: 求める\((a,b)\)の領域は斜線部（境界含む）と，実線部分である．</figcaption>
+  <figcaption>図 3: 求める$(a,b)$の領域は斜線部（境界含む）と，実線部分である．</figcaption>
 </figure>
 
   $\cdots$(答)
