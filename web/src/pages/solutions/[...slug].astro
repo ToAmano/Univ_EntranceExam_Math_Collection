@@ -1,0 +1,171 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+	const solutions = await getCollection('solutions');
+	return solutions.map((entry) => ({
+		params: { slug: entry.slug },
+		props: { entry, allSolutions: solutions },
+	}));
+}
+
+const { entry, allSolutions } = Astro.props;
+const { Content } = await entry.render();
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Labels mapping
+const UNIVERSITY_NAMES: Record<string, string> = {
+	sample_todai: '東京大学',
+	sample_titech: '東京工業大学',
+	sample_kyodai: '京都大学',
+	todai: '東京大学',
+	titech: '東京工業大学',
+	kyodai: '京都大学',
+};
+
+const CATEGORY_NAMES: Record<string, string> = {
+	zenki: '前期',
+	kouki: '後期',
+};
+
+const univName = UNIVERSITY_NAMES[entry.data.university] || entry.data.university;
+const catName = CATEGORY_NAMES[entry.data.category] || entry.data.category;
+const year = entry.data.year;
+const questionNum = entry.data.question;
+const entryType = entry.data.type || (questionNum === '0' ? 'summary' : 'solution');
+
+// Get question display label
+let questionLabel = '';
+if (questionNum === '0' || entryType === 'summary') {
+	questionLabel = '0 (全体サマリ)';
+} else {
+	questionLabel = `第${questionNum}問`;
+}
+
+let typeLabel = '';
+if (entryType === 'summary') typeLabel = '全体サマリ';
+else if (entryType === 'problem') typeLabel = '問題';
+else typeLabel = '解答解説';
+
+// Find related questions in the same university + category + year
+const sameYearItems = allSolutions
+	.filter(
+		(item) =>
+			item.data.university === entry.data.university &&
+			item.data.category === entry.data.category &&
+			item.data.year === entry.data.year
+	)
+	.sort((a, b) => {
+		if (a.data.question === '0') return -1;
+		if (b.data.question === '0') return 1;
+		const qA = parseInt(a.data.question, 10);
+		const qB = parseInt(b.data.question, 10);
+		if (qA !== qB) return qA - qB;
+		// If same question, problem before solution
+		return (a.data.type || '').localeCompare(b.data.type || '');
+	});
+
+// Page Title
+const pageTitle = entry.data.title || `${univName} ${catName} ${year}年 ${questionLabel} (${typeLabel})`;
+---
+
+<Layout title={pageTitle} description={`${univName} ${catName} ${year}年 ${questionLabel}の過去問解答解説。`}>
+	<!-- Breadcrumb Navigation -->
+	<nav aria-label="Breadcrumb" style="margin-bottom: 2rem;">
+		<ol class="breadcrumb" style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; list-style: none; padding: 0; margin: 0; font-size: 0.9rem; color: var(--text-muted);">
+			<li>
+				<a href={`${baseUrl}/`} style="color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 0.25rem;">
+					<svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+					ホーム
+				</a>
+			</li>
+			<li><span style="color: var(--text-subtle);">/</span></li>
+			<li>
+				<a href={`${baseUrl}/#archive`} style="color: var(--text-muted); text-decoration: none;">
+					{univName}
+				</a>
+			</li>
+			<li><span style="color: var(--text-subtle);">/</span></li>
+			<li>
+				<span style="color: var(--text-muted);">{catName}</span>
+			</li>
+			<li><span style="color: var(--text-subtle);">/</span></li>
+			<li>
+				<span style="color: var(--text-muted);">{year}年</span>
+			</li>
+			<li><span style="color: var(--text-subtle);">/</span></li>
+			<li>
+				<span style="color: var(--text-main); font-weight: 600;">{questionLabel}</span>
+			</li>
+		</ol>
+	</nav>
+
+	<!-- Header & Controls -->
+	<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem;">
+		<a
+			href={`${baseUrl}/`}
+			class="glass"
+			style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 10px; color: var(--text-main); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.2s ease;"
+		>
+			<svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+			アーカイブ一覧へ戻る
+		</a>
+
+		<div style="display: flex; align-items: center; gap: 0.5rem;">
+			<span class={entry.data.university.includes('todai') ? 'badge badge-todai' : 'badge badge-titech'}>
+				{univName} {catName}
+			</span>
+			<span class="badge" style="background: rgba(255, 255, 255, 0.1); color: var(--text-main); border: 1px solid rgba(255, 255, 255, 0.15);">
+				{year}年
+			</span>
+			{entryType === 'summary' && <span class="badge badge-summary">全体サマリ</span>}
+			{entryType === 'problem' && <span class="badge badge-problem">問題文</span>}
+			{entryType === 'solution' && <span class="badge badge-solution">解答解説</span>}
+		</div>
+	</div>
+
+	<!-- Year Navigation Bar (回遊ナビゲーション) -->
+	{sameYearItems.length > 1 && (
+		<div class="glass" style="padding: 1rem 1.25rem; margin-bottom: 2rem; background: rgba(15, 23, 42, 0.5);">
+			<div style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+				<span>🧭 {year}年度の関連ナビゲーション:</span>
+			</div>
+			<div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+				{sameYearItems.map((item) => {
+					const isCurrent = item.slug === entry.slug;
+					const itemQ = item.data.question;
+					const itemType = item.data.type || (itemQ === '0' ? 'summary' : 'solution');
+					let btnText = itemQ === '0' ? '📊 0 (サマリ)' : `第${itemQ}問 (${itemType === 'problem' ? '問題' : '解答'})`;
+					
+					return (
+						<a
+							href={`${baseUrl}/solutions/${item.slug}`}
+							style={`padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; text-decoration: none; transition: all 0.2s ease; ${
+								isCurrent
+									? 'background: var(--primary); color: #0f172a; font-weight: 700; box-shadow: 0 0 12px rgba(96, 165, 250, 0.4);'
+									: 'background: rgba(30, 41, 59, 0.7); color: var(--text-main); border: 1px solid rgba(255, 255, 255, 0.08);'
+							}`}
+						>
+							{btnText}
+						</a>
+					);
+				})}
+			</div>
+		</div>
+	)}
+
+	<!-- Content Article Card -->
+	<article class="glass" style="padding: 2.5rem 2rem; margin-bottom: 3rem;">
+		<header style="border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 1.5rem; margin-bottom: 2rem;">
+			<h1 style="margin: 0; font-size: 2rem; font-weight: 700; color: #f8fafc; line-height: 1.3;">
+				{pageTitle}
+			</h1>
+		</header>
+
+		<div class="markdown-body">
+			<Content />
+		</div>
+	</article>
+</Layout>

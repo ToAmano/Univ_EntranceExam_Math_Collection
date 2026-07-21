@@ -1,22 +1,275 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+
+const allSolutions = await getCollection('solutions');
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Helper mapping for university and category labels
+const UNIVERSITY_NAMES: Record<string, string> = {
+	sample_todai: '東京大学',
+	sample_titech: '東京工業大学',
+	sample_kyodai: '京都大学',
+	todai: '東京大学',
+	titech: '東京工業大学',
+	kyodai: '京都大学',
+};
+
+const CATEGORY_NAMES: Record<string, string> = {
+	zenki: '前期 理系数学',
+	kouki: '後期 理系数学',
+};
+
+interface QuestionGroup {
+	questionNum: string;
+	summaryItem?: typeof allSolutions[0];
+	problemItem?: typeof allSolutions[0];
+	solutionItem?: typeof allSolutions[0];
+}
+
+interface YearGroup {
+	year: string;
+	questions: QuestionGroup[];
+}
+
+interface UniversityCategoryGroup {
+	universityId: string;
+	categoryId: string;
+	univName: string;
+	catName: string;
+	totalItems: number;
+	years: YearGroup[];
+}
+
+// Group data by University + Category -> Year -> Question
+const groupsMap = new Map<string, UniversityCategoryGroup>();
+
+for (const item of allSolutions) {
+	const univId = item.data.university;
+	const catId = item.data.category;
+	const yearStr = item.data.year;
+	const qNum = item.data.question;
+	const key = `${univId}__${catId}`;
+
+	if (!groupsMap.has(key)) {
+		groupsMap.set(key, {
+			universityId: univId,
+			categoryId: catId,
+			univName: UNIVERSITY_NAMES[univId] || univId,
+			catName: CATEGORY_NAMES[catId] || catId,
+			totalItems: 0,
+			years: [],
+		});
+	}
+
+	const group = groupsMap.get(key)!;
+	group.totalItems += 1;
+
+	let yearGroup = group.years.find((y) => y.year === yearStr);
+	if (!yearGroup) {
+		yearGroup = { year: yearStr, questions: [] };
+		group.years.push(yearGroup);
+	}
+
+	let qGroup = yearGroup.questions.find((q) => q.questionNum === qNum);
+	if (!qGroup) {
+		qGroup = { questionNum: qNum };
+		yearGroup.questions.push(qGroup);
+	}
+
+	if (item.data.type === 'summary' || qNum === '0') {
+		qGroup.summaryItem = item;
+	} else if (item.data.type === 'problem') {
+		qGroup.problemItem = item;
+	} else if (item.data.type === 'solution') {
+		qGroup.solutionItem = item;
+	} else {
+		// Fallback
+		qGroup.solutionItem = item;
+	}
+}
+
+// Sort groups, years, and questions
+const universityGroups = Array.from(groupsMap.values());
+for (const uGroup of universityGroups) {
+	uGroup.years.sort((a, b) => b.year.localeCompare(a.year)); // Descending year
+	for (const yGroup of uGroup.years) {
+		yGroup.questions.sort((a, b) => {
+			if (a.questionNum === '0') return -1;
+			if (b.questionNum === '0') return 1;
+			return parseInt(a.questionNum, 10) - parseInt(b.questionNum, 10);
+		});
+	}
+}
 ---
-<Layout title="東大・東工大・京大数学過去問解答">
-	<div class="glass" style="padding: 2.5rem; text-align: center; margin-bottom: 2rem;">
-		<h1 style="margin: 0; font-size: 2.5rem; font-weight: 700; background: linear-gradient(to right, #60a5fa, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.025em;">
-			大学入試数学 過去問解答ライブラリ
-		</h1>
-		<p style="color: #94a3b8; margin-top: 1rem; font-size: 1.1rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-			東大・京大・東工大の理系数学解答を、TeXコンパイル済みの美しいHTMLとPDFで公開しています。
-		</p>
-	</div>
-	
-	<div class="glass" style="padding: 2.5rem;">
-		<h2 style="margin-top: 0; color: #60a5fa; font-size: 1.5rem; font-weight: 600;">テスト用数式描画</h2>
-		<p style="margin-bottom: 1.5rem;">インライン数式: <code style="background: rgba(0, 0, 0, 0.2); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace;">$E = mc^2$</code> がレンダリングされて $E = mc^2$ になります。</p>
-		<p style="margin-bottom: 1rem;">ブロック数式:</p>
-		{"$$"}
-		{"\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}"}
-		{"$$"}
-	</div>
+
+<Layout title="大学入試数学 過去問解答アーカイブ">
+	<!-- Hero Section -->
+	<section class="hero-section glass" style="padding: 3.5rem 2rem; text-align: center; margin-bottom: 3rem; position: relative; overflow: hidden;">
+		<div style="position: absolute; top: -50%; left: -20%; width: 140%; height: 200%; background: radial-gradient(circle at 50% 30%, rgba(96, 165, 250, 0.12) 0%, transparent 60%); pointer-events: none;"></div>
+		
+		<div style="position: relative; z-index: 1; max-width: 800px; margin: 0 auto;">
+			<div class="badge badge-todai" style="margin-bottom: 1rem; padding: 0.4rem 1rem; font-size: 0.85rem;">
+				✨ 高精度KaTeX & SVG描画過去問アーカイブ
+			</div>
+			
+			<h1 style="margin: 0 0 1.25rem; font-size: 2.8rem; font-weight: 800; line-height: 1.25; background: linear-gradient(135deg, #f8fafc 0%, #60a5fa 50%, #34d399 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.02em;">
+				大学入試数学 過去問解答ライブラリ
+			</h1>
+			
+			<p style="color: #94a3b8; font-size: 1.15rem; margin-bottom: 2rem; line-height: 1.7;">
+				東京大学・東京工業大学などの難関大理系数学過去問を、TeXコンパイル済みの美しいHTMLと年度サマリ付きで完全アーカイブ。
+			</p>
+
+			<!-- Search & Filter Bar -->
+			<div class="search-box-wrapper" style="position: relative; max-width: 600px; margin: 0 auto;">
+				<input
+					type="text"
+					id="searchInput"
+					placeholder="年度、大学名、問題番号で検索... (例: 1990, 東工大, サマリ, 第1問)"
+					style="width: 100%; padding: 1rem 1.25rem 1rem 3rem; font-size: 1rem; border-radius: 12px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); color: #f8fafc; outline: none; transition: all 0.2s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.3);"
+				/>
+				<svg style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); width: 1.25rem; height: 1.25rem; color: #94a3b8;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+				</svg>
+			</div>
+		</div>
+	</section>
+
+	<!-- Main Archive Grid Section -->
+	<section id="archive">
+		<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.75rem;">
+			<h2 style="margin: 0; font-size: 1.75rem; font-weight: 700; color: #f8fafc; display: flex; align-items: center; gap: 0.75rem;">
+				<span>大学別過去問アーカイブ</span>
+				<span class="badge badge-summary" style="font-size: 0.85rem;">全 {allSolutions.length} 解答・サマリ</span>
+			</h2>
+		</div>
+
+		<div class="university-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+			{universityGroups.map((uGroup) => (
+				<div class="glass glass-hover univ-card" data-search-text={`${uGroup.univName} ${uGroup.catName} ${uGroup.years.map(y => y.year).join(' ')}`} style="padding: 2rem;">
+					<!-- Card Header -->
+					<div style="border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 1.25rem; margin-bottom: 1.5rem;">
+						<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+							<span class={uGroup.universityId.includes('todai') ? 'badge badge-todai' : 'badge badge-titech'}>
+								{uGroup.univName}
+							</span>
+							<span style="font-size: 0.85rem; color: var(--text-muted); background: rgba(0,0,0,0.3); padding: 0.2rem 0.6rem; border-radius: 6px;">
+								収録: {uGroup.years.length} 年度
+							</span>
+						</div>
+						<h3 style="margin: 0.5rem 0 0; font-size: 1.4rem; font-weight: 700; color: #f8fafc;">
+							{uGroup.univName} {uGroup.catName}
+						</h3>
+					</div>
+
+					<!-- Years List / Accordion -->
+					<div class="years-accordion-list" style="display: flex; flex-direction: column; gap: 1rem;">
+						{uGroup.years.map((yGroup) => (
+							<div class="year-block" data-year-text={`${uGroup.univName} ${yGroup.year}`} style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px; padding: 1rem 1.25rem;">
+								<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+									<span style="font-weight: 700; font-size: 1.1rem; color: var(--primary); font-family: 'Outfit', sans-serif;">
+										{yGroup.year}年
+									</span>
+									<span style="font-size: 0.8rem; color: var(--text-subtle);">
+										{yGroup.questions.length} 件のデータ
+									</span>
+								</div>
+
+								<div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+									{yGroup.questions.map((qGroup) => {
+										if (qGroup.questionNum === '0' && qGroup.summaryItem) {
+											return (
+												<a
+													href={`${baseUrl}/solutions/${qGroup.summaryItem.slug}`}
+													class="q-link summary-q-link"
+													title="全体サマリを見る"
+													style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.75rem; border-radius: 8px; background: rgba(168, 85, 247, 0.2); border: 1px solid rgba(168, 85, 247, 0.4); color: #e9d5ff; font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: all 0.2s ease;"
+												>
+													<span>📊 0 (全体サマリ)</span>
+												</a>
+											);
+										}
+
+										return (
+											<div style="display: inline-flex; align-items: center; border-radius: 8px; background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); overflow: hidden;">
+												<span style="padding: 0.35rem 0.55rem; font-size: 0.85rem; font-weight: 600; color: #cbd5e1; background: rgba(0, 0, 0, 0.2);">
+													第{qGroup.questionNum}問
+												</span>
+												{qGroup.problemItem && (
+													<a
+														href={`${baseUrl}/solutions/${qGroup.problemItem.slug}`}
+														title="問題文"
+														style="padding: 0.35rem 0.55rem; font-size: 0.8rem; color: #fcd34d; text-decoration: none; border-left: 1px solid rgba(255, 255, 255, 0.08); transition: background 0.2s ease;"
+														class="sub-q-link"
+													>
+														問題
+													</a>
+												)}
+												{qGroup.solutionItem && (
+													<a
+														href={`${baseUrl}/solutions/${qGroup.solutionItem.slug}`}
+														title="解答解説"
+														style="padding: 0.35rem 0.55rem; font-size: 0.8rem; color: #93c5fd; text-decoration: none; border-left: 1px solid rgba(255, 255, 255, 0.08); transition: background 0.2s ease;"
+														class="sub-q-link"
+													>
+														解答
+													</a>
+												)}
+											</div>
+										);
+									})}
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			))}
+		</div>
+	</section>
+
+	<script>
+		// Interactive Filter Functionality
+		const searchInput = document.getElementById('searchInput') as HTMLInputElement | null;
+		if (searchInput) {
+			searchInput.addEventListener('input', (e) => {
+				const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+				const cards = document.querySelectorAll('.univ-card');
+
+				cards.forEach((card) => {
+					const cardText = card.getAttribute('data-search-text') || '';
+					const yearBlocks = card.querySelectorAll('.year-block');
+					let cardHasMatch = false;
+
+					yearBlocks.forEach((yb) => {
+						const yearText = (yb.getAttribute('data-year-text') || '') + ' ' + (yb.textContent || '');
+						if (query === '' || yearText.toLowerCase().includes(query) || cardText.toLowerCase().includes(query)) {
+							(yb as HTMLElement).style.display = '';
+							cardHasMatch = true;
+						} else {
+							(yb as HTMLElement).style.display = 'none';
+						}
+					});
+
+					if (cardHasMatch || query === '') {
+						(card as HTMLElement).style.display = '';
+					} else {
+						(card as HTMLElement).style.display = 'none';
+					}
+				});
+			});
+		}
+	</script>
+
+	<style>
+		.q-link:hover {
+			background: rgba(168, 85, 247, 0.35) !important;
+			transform: scale(1.02);
+		}
+
+		.sub-q-link:hover {
+			background: rgba(255, 255, 255, 0.1);
+		}
+	</style>
 </Layout>
