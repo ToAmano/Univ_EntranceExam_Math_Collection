@@ -7,13 +7,21 @@ type: "solution"
 title: "SAMPLE_TITECH 1995 kouki Q1 (solution)"
 ---
 
+<div class="oframed">
+
+</div>
+
+<div class="multicols">
 **【解】**
 
-\(1\) 1のように，立方体の頂点A, B, C, D, E, F, G,
-Hに対し題意の3面を ABCD, AEFB, AEHDとする. 各球の中心は
+$1$ <a href="#1995-1:fig:1" data-reference-type="ref+label"
+data-reference="1995-1:fig:1">1</a>のように，立方体の頂点A, B, C, D, E,
+F, G, Hに対し題意の3面を ABCD, AEFB, AEHDとする. 各球の中心は
 立方体及び球の対称性から対角線AG上にある．
-$S_n$の中心を$O_n$，半径を$r_n$とおく．
-断面AEGCを2に示す．$AC=2\sqrt{2}$,$AE=2$より，$\angle\mathrm{GAC}=\theta$と置くと
+$`S_n`$の中心を$`O_n`$，半径を$`r_n`$とおく．
+断面AEGCを<a href="#1995-1:fig:2" data-reference-type="ref+label"
+data-reference="1995-1:fig:2">2</a>に示す．$`AC=2\sqrt{2}`$,$`AE=2`$より，$`\angle\mathrm{GAC}=\theta`$と置くと
+``` math
 
 $$
 \begin{aligned}
@@ -21,7 +29,9 @@ $$
     \cos\theta & = \frac{\mathrm{AC}}{\mathrm{AG}} = \frac{\sqrt{2}}{\sqrt{3}}
 \end{aligned}
 $$
- が成り立つことに注意する．
+
+```
+が成り立つことに注意する．
 
 <figure id="1995-1:fig:1" data-latex-placement="H">
 <img
@@ -35,84 +45,103 @@ src="/Math-Solutions/images/tikz/sample_titech/kouki/1995/1/fig_2.svg" />
 <figcaption>断面AEGC</figcaption>
 </figure>
 
-半径$r_n$に関する漸化式を導出することで$r_n$の一般項を求める．
-円$S_n$と$S_{n+1}$に着目して3を考える．
+半径$`r_n`$に関する漸化式を導出することで$`r_n`$の一般項を求める．
+円$`S_n`$と$`S_{n+1}`$に着目して<a href="#1995-1:fig:3" data-reference-type="ref+label"
+data-reference="1995-1:fig:3">3</a>を考える．
 
 <figure id="1995-1:fig:3" data-latex-placement="H">
 <img
 src="/Math-Solutions/images/tikz/sample_titech/kouki/1995/1/fig_3.svg" />
-<figcaption><span class="math inline">\(S_n\)</span>と<span
-class="math inline">\(S_{n+1}\)</span>の関係</figcaption>
+<figcaption>$S_n$と<span
+class="math inline">$S_{n+1}$</span>の関係</figcaption>
 </figure>
 
-$O_n$から$AC$に引いた垂線と$AC$との交点を$T_n$と置くと，その定義より$O_nT_n$の長さは$r_n$に等しい．
-一方で，$O_{n+1}$から$O_nT_n$に引いた垂線と$O_nT_n$の交点を$R_n$と置くと，
+$`O_n`$から$`AC`$に引いた垂線と$`AC`$との交点を$`T_n`$と置くと，その定義より$`O_nT_n`$の長さは$`r_n`$に等しい．
+一方で，$`O_{n+1}`$から$`O_nT_n`$に引いた垂線と$`O_nT_n`$の交点を$`R_n`$と置くと，
+``` math
 
 $$
 \begin{aligned}
 O_nT_n
      & =O_{n+1}T_{n+1}+O_nR_n                        \\
      & =O_{n+1}+O_nO_{n+1}\sin\theta                 \\
-     & =r_{n+1}+\left(r_{n}+r_{n+1}\sin\theta\right)
+     & =r_{n+1}+\left$r_{n}+r_{n+1}\sin\theta\right$
 \end{aligned}
 $$
- と表されるので，$r_n$と$r_{n+1}$の関係は 
+
+```
+と表されるので，$`r_n`$と$`r_{n+1}`$の関係は
+``` math
+
 $$
 \begin{aligned}
 r_{n}
-            & =r_{n+1}+(r_{n}+r_{n+1}\sin\theta)        \\
+            & =r_{n+1}+$r_{n}+r_{n+1}\sin\theta$        \\
     \therefore
     r_{n+1} & = \frac{1-\sin\theta}{1+\sin\theta} r_{n}
 \end{aligned}
 $$
- となる．$r_0=1$と合わせると，この等比級数の解は
+
+```
+となる．$`r_0=1`$と合わせると，この等比級数の解は
+``` math
 
 $$
 \begin{aligned}
 r_{n}
-     & = \left(\frac{1-\sin\theta}{1+\sin\theta}\right)^n \\
-     & = (2-\sqrt{3})^n
+     & = \left$\frac{1-\sin\theta}{1+\sin\theta}\right$^n \\
+     & = $2-\sqrt{3}$^n
 \end{aligned}
 $$
 
-となる．ただし，(1995-1:eq:1\)を用いた．$\cdots$(答)
+```
+となる．ただし，<a href="#$式1, 式1, 式1$
 
-\(2\) 立方体 $C$ の中でどの $S_k$ ($k=0,1,\ldots, n$)
-にも含まれない部分の体積を$V_n$とする．
-求めるべき値は$\displaystyle V = \lim_{n\to\infty}V_n$である．
-$S_k\, (k=0,1,\cdots,n)$同士は互いに体積を共有することはないから，
-体積$V_n$は立方体$C$の体積から，$S_k\, (k=0,1,\cdots,n)$の体積を減じたものに等しく，
+$2$ 立方体 $`C`$ の中でどの $`S_k`$ $$`k=0,1,\ldots, n`$$
+にも含まれない部分の体積を$`V_n`$とする．
+求めるべき値は$`\displaystyle V = \lim_{n\to\infty}V_n`$である．
+$`S_k\, $k=0,1,\cdots,n$`$同士は互いに体積を共有することはないから，
+体積$`V_n`$は立方体$`C`$の体積から，$`S_k\, $k=0,1,\cdots,n$`$の体積を減じたものに等しく，
+``` math
 
 $$
 \begin{aligned}
 V_n & = 8 - \frac{4}{3}\pi \sum_{k=0}^{n} r_k^3                             \\
-        & = 8 - \frac{4}{3}\pi \sum_{k=0}^{n} (2-\sqrt{3})^{3k}                 \\
-        & = 8 - \frac{4}{3}\pi \frac{1-(2-\sqrt{3})^{3(n+1)}}{1-(2-\sqrt{3})^3}
+        & = 8 - \frac{4}{3}\pi \sum_{k=0}^{n} $2-\sqrt{3}$^{3k}                 \\
+        & = 8 - \frac{4}{3}\pi \frac{1-$2-\sqrt{3}$^{3$n+1$}}{1-$2-\sqrt{3}$^3}
 \end{aligned}
 $$
- となる．
 
-$0<(2-\sqrt{3})^3 < 1$ だから求める体積$V$は 
+```
+となる．
+
+$`0<$2-\sqrt{3}$^3 < 1`$ だから求める体積$`V`$は
+``` math
+
 $$
 \begin{aligned}
 V & = \lim_{n \to \infty} V_n                       \\
-      & = 8 - \frac{4}{3}\pi \frac{1}{1-(2-\sqrt{3})^3} \\
+      & = 8 - \frac{4}{3}\pi \frac{1}{1-$2-\sqrt{3}$^3} \\
       & = 8 - \frac{6\sqrt{3}+10}{15}\pi
 \end{aligned}
 $$
- である．$\cdots$(答)
+
+```
+である．$`\cdots`$$答$
 
 **【解説】**
 
 空間図形と数列や極限をうまく融合した問題である．
-(1)の漸化式さえもとまればあとは機械的な計算で解けるため，(1)の前半がポイントだろう．
-逆に(1)がとければ(2)はボーナス問題であり，点差がつきやすいと言えるかもしれない．
+$1$の漸化式さえもとまればあとは機械的な計算で解けるため，$1$の前半がポイントだろう．
+逆に$1$がとければ$2$はボーナス問題であり，点差がつきやすいと言えるかもしれない．
 
-問題としては球を考えているが，結局全ての球の中心は四角形$ACGE$上にあるからこの断面で考えればよく，平面図形の問題に帰着する．
-その上で，漸化式を求める部分では$S_n$と$S_{n+1}$を考えて二つの関係をなんとか導出すれば良い．
-解答中では$O_nT_n$を考えたが，他に$O_nO_{n+1}$を考えるなど，（本質的には同じ）いくつかのやり方がある．
+問題としては球を考えているが，結局全ての球の中心は四角形$`ACGE`$上にあるからこの断面で考えればよく，平面図形の問題に帰着する．
+その上で，漸化式を求める部分では$`S_n`$と$`S_{n+1}`$を考えて二つの関係をなんとか導出すれば良い．
+解答中では$`O_nT_n`$を考えたが，他に$`O_nO_{n+1}`$を考えるなど，（本質的には同じ）いくつかのやり方がある．
 いずれも計算時間は大差ないだろう．
 
-解答中の細かい計算上のポイントとしては，$\theta$を導入して極力代入を遅らせている点が挙げられる．
+解答中の細かい計算上のポイントとしては，$`\theta`$を導入して極力代入を遅らせている点が挙げられる．
 この問題に限らず，入試で部分点を極力取りにいくという姿勢にたつと，先に代入すると計算ミスが発生しやすい上に，ミスが追いにくいという問題がある．
-$\sin\theta$も$\cos\theta$も値としては簡単な値だが，最後の最後$r_n$を求めるところまでは代入の必要がないのでわざわざ文字でおいている．
+$`\sin\theta`$も$`\cos\theta`$も値としては簡単な値だが，最後の最後$`r_n`$を求めるところまでは代入の必要がないのでわざわざ文字でおいている．
+
+</div>

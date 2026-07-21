@@ -108,7 +108,7 @@ def convert_tex_to_md(tex_path, output_md_path, frontmatter, uni, category, year
         f.write(processed_content)
         
     try:
-        cmd = ["pandoc", temp_tex, "-t", "markdown", "--mathjax"]
+        cmd = ["pandoc", temp_tex, "-t", "gfm+tex_math_dollars", "--mathjax"]
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
         md_body = result.stdout
     finally:
@@ -132,16 +132,13 @@ def convert_tex_to_md(tex_path, output_md_path, frontmatter, uni, category, year
 
 def postprocess_markdown(md_body):
     # 1. \begin{align} / \begin{align*} などの環境を $$ \begin{aligned} ... \end{aligned} $$ に置換
-    # (remark-math が数式ブロックとしてパースし、KaTeX がエラーなく美しく描画するデファクト標準形式)
     def replace_align_env(match):
-        env_type = match.group(1) # align, align*, gather, gather*, etc.
+        env_type = match.group(1)
         body = match.group(2)
-        # \label や \nonumber の削除
         body = re.sub(r'\\label\{[^}]+\}', '', body)
         body = re.sub(r'\\nonumber\b', '', body)
         return f"\n$$\n\\begin{{aligned}}\n{body.strip()}\n\\end{{aligned}}\n$$\n"
 
-    # 既存の $$...$$ や単体の \begin{align...} を一括置換
     md_body = re.sub(
         r'(?:\$\$\s*)?\\begin\{(align|align\*|eqnarray|eqnarray\*|gather|gather\*)\}(.*?)\\end\{\1\}(?:\s*\$\$)?',
         replace_align_env,
@@ -149,27 +146,42 @@ def postprocess_markdown(md_body):
         flags=re.DOTALL
     )
 
-    # 2. \label{...} と \nonumber の個別の除去
+    # 2. \label{...} と \nonumber の完全除去
     md_body = re.sub(r'\\label\{[^}]+\}', '', md_body)
     md_body = re.sub(r'\\nonumber\b', '', md_body)
 
-    # 3. Pandocの生参照属性記号やラベル残骸 (例: \(1990-1:eq:1\)) の除去・式番号整形
-    md_body = re.sub(r'\\\([a-zA-Z0-9_-]+:eq:(\d+)\\\)', r'(式\1)', md_body)
-    md_body = re.sub(r'\([a-zA-Z0-9_-]+:eq:(\d+)\\?\)', r'(式\1)', md_body)
+    # 3. HTMLタグ内の <span class="math inline">\(...\)</span> や \(...\) インライン数式のクリーンアップ
+    md_body = re.sub(r'<span class="math inline">\\?\((.*?)\\?\)</span>', r'$\1$', md_body)
+
+    # 4. 生参照属性記号やラベル残骸 (例: (1990-1:eq:1\), (1992-1:eq:2,1992-1:eq:3\)) の完全除去・(式1)へ整形
+    def clean_eq_ref(match):
+        raw = match.group(0)
+        eq_nums = re.findall(r'eq:(\d+)', raw)
+        if eq_nums:
+            return "(" + ", ".join(f"式{n}" for n in eq_nums) + ")"
+        return ""
+
+    md_body = re.sub(r'\(?[a-zA-Z0-9_-]+:eq:[^)]*\\?\)?', clean_eq_ref, md_body)
     md_body = re.sub(r'\[\\?\[([^\]]+)\\?\]\]\([^)]+\)\{reference-type="[^"]*"[^}]*\}', r'(\1)', md_body)
     md_body = re.sub(r'\[([^\]]+)\]\([^)]+\)\{reference-type="[^"]*"[^}]*\}', r'\1', md_body)
     md_body = re.sub(r'\{reference-type="[^"]*"[^}]*\}', '', md_body)
 
-    # 4. Pandoc ::: コンテナ (oframed, multicols) のクリーンアップ
+    # 5. 生の \( ... \) インライン数式・小設問の置換
+    # (小設問の \(1\) や \(2\) などの数字単体は (1) (2) に変換)
+    md_body = re.sub(r'\\?\(([0-9a-zA-Z]{1,2})\\?\)', r'(\1)', md_body)
+    # それ以外の \( ... \) 数式は $ ... $ に変換
+    md_body = re.sub(r'\\?\((.*?)\\?\)', r'$\1$', md_body)
+
+    # 6. Pandoc ::: コンテナ (oframed, multicols) のクリーンアップ
     md_body = re.sub(r'^:::\s*(?:oframed|multicols.*)?\s*$', '', md_body, flags=re.MULTILINE)
 
-    # 5. 冒頭の「2 **\[解\]**」などの不要な数字とエスケープブラケットの整形
+    # 7. 冒頭の「2 **\[解\]**」などの不要な数字とエスケープブラケットの整形
     md_body = re.sub(r'^\s*\d+\s*\*\*\\?\[解\\?\]\*\*', r'**【解】**', md_body, flags=re.MULTILINE)
     md_body = re.sub(r'\*\*\\?\[解\\?\]\*\*', r'**【解】**', md_body)
     md_body = re.sub(r'\*\*\\?\[解説\\?\]\*\*', r'**【解説】**', md_body)
     md_body = re.sub(r'\*\*\\?\[方針\\?\]\*\*', r'**【方針】**', md_body)
 
-    # 6. \bm{...} の残骸等の処理
+    # 8. \bm{...} の残骸等の処理
     md_body = re.sub(r'\\bm\{((?:[^{}]|\{[^{}]*\})*)\}', r'\\mathbf{\1}', md_body)
     
     return md_body
