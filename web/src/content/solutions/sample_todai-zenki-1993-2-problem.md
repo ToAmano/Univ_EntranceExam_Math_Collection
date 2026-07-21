@@ -8,14 +8,9 @@ title: "SAMPLE_TODAI 1993 zenki Q2 (problem)"
 ---
 
 $xy$平面において，直線$l$と点$\mathrm{A}$の距離を$d(l,\mathrm{A})$と書くことにする．さらに，相異なる$3$点$\mathrm{A}=(x_1,y_1)$，$\mathrm{B}=(x_2,y_2)$，$\mathrm{C}=(x_3,y_3)$が与えられたとき，
-
-$$
-\begin{align*}
+$$\begin{align*}
 f(l)=d(l,\mathrm{A})^2+d(l,\mathrm{B})^2+d(l,\mathrm{C})^2
-\end{align*}
-$$
-
-とおく．
+\end{align*}$$ とおく．
 
 1.  ある与えられた直線に平行な直線のうち，$f(l)$を最小にする直線$l_0$は三角形$\mathrm{ABC}$の重心を通ることを示せ．
 
