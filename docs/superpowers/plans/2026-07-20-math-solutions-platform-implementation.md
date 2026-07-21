@@ -1,24 +1,46 @@
-# 数学過去問解答プラットフォーム 実装計画書 (階層化TikZ画像管理対応版)
+# 数学過去問解答プラットフォーム 実装計画書 (マルチ大学対応検証版)
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 複数箇所に散らばっている数学過去問解答（TeXと手書きPDF）を「大問フォルダ一体型」に移行・統合し、AstroでのWeb公開（GitHub Pages）とLuaLaTeXでのPDFビルド・CI/CDを構築する。TikZ図形を `src/` の構造と完全に対称な階層ディレクトリ (`web/public/images/tikz/[uni]/[category]/[year]/[q_num]/fig_[N].svg`) に出力・保存する。
+**Goal:** 複数箇所に散らばっている数学過去問解答（TeXと手書きPDF）を「大問フォルダ一体型」に移行・統合し、AstroでのWeb公開（GitHub Pages）とLuaLaTeXでのPDFビルド・CI/CDを構築する。東大 (`sample_todai`) に加え、東工大 (`sample_titech`) のサンプルデータを追加し、複数大学が存在する場合でもWeb変換・画像階層出力・PDFマスター一括ビルドの全パイプラインが正常に動作することを検証する。
 
-**Architecture:** LaTeXソース（`src/`）をマスターとし、Astro (web/) へPandocで自動Markdown変換してKaTeXで静的描画。TikZブロックは `render_tikz_to_svg` で階層化SVG画像に切り出し・コンパイル。一括PDFは `src/[大学]/[区分]/main.tex` をマスターとして `latexmk -lualatex` でビルド。
+**Architecture:** LaTeXソース（`src/`）をマスターとし、Astro (web/) へPandocで自動Markdown変換してKaTeXで静的描画。TikZブロックは `render_tikz_to_svg` で大学別の階層化SVG画像に切り出し・コンパイル。一括PDFは `src/[大学]/[区分]/main.tex` をマスターとして `latexmk -lualatex` でビルド。
 
 **Tech Stack:** Python 3, Astro (v4.x), KaTeX (rehype-katex), Pandoc, LuaLaTeX / latexmk, poppler-utils (pdftocairo), GitHub Actions
 
 ## Global Constraints
-* すべてのLaTeXソースは `src/` 以下に配置し、「大問フォルダ一体型」（例: `src/todai/zenki/1990/1/problem.tex`）とする。
+* すべてのLaTeXソースは `src/` 以下に配置し、「大問フォルダ一体型」（例: `src/sample_titech/kouki/1990/1/problem.tex`）とする。
 * 既存のTeXファイル（`titech_kouki` 内のソースなど）を操作する際は、**絶対にコピーのみを行い、元ファイルを書き換え・移動しない**こと。
 * Webプロジェクトは `web/` ディレクトリ内にAstroで作成する。
 * TikZ画像は `web/public/images/tikz/[uni]/[category]/[year]/[q_num]/fig_[N].svg` の階層構造で保存する。
 
 ---
 
-### Task 1: 検証用データの拡張 (複数年度のTeXをコピー配置)
+### Task 1: 検証用データのマルチ大学拡張 (東工大サンプルのコピー配置)
 
-(実装済み)
+**Files:**
+* Create: `src/sample_titech/kouki/1990/1/problem.tex`, `solution.tex`
+* Create: `src/sample_titech/kouki/1995/1/problem.tex`, `solution.tex`
+* Create: `src/sample_titech/kouki/2000/1/problem.tex`, `solution.tex`
+* Retain: `src/sample_todai/zenki/` (既存東大サンプル)
+
+**Interfaces:**
+* Consumes: `/Users/amano/works/research/titech_kouki/TitechKouki/manuscript/docs/` 内の各該当 TeX ソース
+* Produces: 東工大サンプルTeXディレクトリ構造 `src/sample_titech/kouki/`
+
+- [ ] **Step 1: 東工大1990, 1995, 2000年の各問題・解答TeXを `src/sample_titech/kouki/` 以下にコピーする**
+
+(※元ファイルはいじらず、コピーして `solution.tex` という単数形名で配置)
+
+- [ ] **Step 2: コピー結果を確認しコミットする**
+
+Run: `git status`
+Expected: `src/sample_titech/` が新規作成され、`titech_kouki` 側には変更がないこと。
+
+```bash
+git add src/sample_titech/
+git commit -m "feat: add Titech (sample_titech) exam files for multi-university validation"
+```
 
 ---
 
@@ -28,69 +50,26 @@
 
 ---
 
-### Task 3: LaTeX ➔ Markdown 変換ツールの実装 (階層ディレクトリ型TikZ画像化)
+### Task 3: LaTeX ➔ Markdown 変換ツールの実行 (マルチ大学一括Web変換)
 
 **Files:**
-* Modify: `scratch/tex_to_md.py` (階層化ディレクトリへのSVG保存とパス置換)
-* Modify: `tests/scratch/test_converter.py` (テストの引数およびパス確認)
+* Executed script: `scratch/tex_to_md.py`
 
-**Interfaces:**
-* Consumes: `src/[大学]/[区分]/[年度]/[大問]/[problem.tex|solution.tex]`
-* Produces: `web/public/images/tikz/[大学]/[区分]/[年度]/[大問]/fig_[N].svg` および `web/src/content/solutions/` 内の `\includegraphics{/Math-Solutions/images/tikz/...}` タグ
+- [ ] **Step 1: マルチ大学サンプルデータを一括変換する**
 
-- [ ] **Step 1: `scratch/tex_to_md.py` の TikZ 画像出力処理を階層フォルダに対応させる**
+Run: `python3 scratch/tex_to_md.py`
+Expected: `web/src/content/solutions/sample_titech-kouki-...md` が追加生成され、TikZ画像が `web/public/images/tikz/sample_titech/kouki/...` に出力される。
 
-```python
-# scratch/tex_to_md.py の変更点イメージ
-def render_tikz_to_svg(content, uni, category, year, q_num):
-    # 階層型出力ディレクトリ
-    rel_tikz_dir = f"images/tikz/{uni}/{category}/{year}/{q_num}"
-    public_tikz_dir = os.path.join("web/public", rel_tikz_dir)
-    os.makedirs(public_tikz_dir, exist_ok=True)
-
-    pattern = re.compile(r'\\begin\{tikzpicture\}(.*?)\\end\{tikzpicture\}', re.DOTALL)
-    matches = pattern.findall(content)
-    
-    for i, tikz_code in enumerate(matches):
-        full_tikz = f"\\begin{{tikzpicture}}{tikz_code}\\end{{tikzpicture}}"
-        fig_name = f"fig_{i+1}.svg"
-        svg_dest_path = os.path.join(public_tikz_dir, fig_name)
-        rel_svg_path = f"/Math-Solutions/{rel_tikz_dir}/{fig_name}"
-        
-        # ... standalone LaTeX compile & pdftocairo ...
-        
-        latex_image_tag = f"\\includegraphics{{{rel_svg_path}}}"
-        content = content.replace(full_tikz, latex_image_tag, 1)
-        
-    return content
-```
-
-- [ ] **Step 2: テストコード `tests/scratch/test_converter.py` も階層パラメータに対応させる**
-
-- [ ] **Step 3: テストを実行してパスすることを確認する**
-
-Run: `python3 -m unittest tests/scratch/test_converter.py`
-Expected: `OK`
-
-- [ ] **Step 4: 旧フラット画像をクリーンアップし、一括変換を再実行する**
-
-Run:
-```bash
-rm -rf web/public/images/tikz/*
-python3 scratch/tex_to_md.py
-```
-Expected: `web/public/images/tikz/sample_todai/zenki/1995/2/fig_1.svg` のように階層構造で保存される。
-
-- [ ] **Step 5: Astroビルドを通す**
+- [ ] **Step 2: Astroビルドを検証する**
 
 Run: `cd web && npm run build`
-Expected: エラー0で完了。
+Expected: エラー0で全大学のページがビルドされる。
 
-- [ ] **Step 6: コミット**
+- [ ] **Step 3: コミット**
 
 ```bash
-git add scratch/tex_to_md.py tests/scratch/test_converter.py web/public/images/tikz/ web/src/content/solutions/
-git commit -m "feat: restructure TikZ SVG storage path into hierarchical directories matching src tree"
+git add web/src/content/solutions/ web/public/images/tikz/
+git commit -m "feat: generate converted markdown and tikz svgs for multi-university dataset"
 ```
 
 ---
@@ -107,8 +86,77 @@ git commit -m "feat: restructure TikZ SVG storage path into hierarchical directo
 
 ---
 
-### Task 6: 統合マスター `main.tex` の構築とPDF一括ビルド・改ページ検証
+### Task 6: 東工大統合マスター `main.tex` の構築とマルチ大学PDF一括ビルド検証
 
-(実装済み)
+**Files:**
+* Create: `src/sample_titech/kouki/main.tex` (東工大区分の統合マスターTeX)
+
+**Interfaces:**
+* Consumes: `src/sample_titech/kouki/` 配下の全年度・全大問
+* Produces: 東工大の一括解答集PDF `src/sample_titech/kouki/main.pdf`
+
+- [ ] **Step 1: 東工大統合マスター `src/sample_titech/kouki/main.tex` を作成する**
+
+```latex
+\documentclass[a4paper,11pt]{ltjsarticle}
+\usepackage{amsmath,amssymb}
+\usepackage{bm}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{angles,quotes,intersections,patterns,fillbetween}
+\usepackage{docmute}
+\usepackage{hyperref}
+
+\title{東京工業大学 後期 数学過去問解答集 (サンプル)}
+\author{Math-Solutions}
+\date{\today}
+
+\begin{document}
+\maketitle
+\clearpage
+
+% --- 1990年 ---
+\part*{1990年}
+\section*{第1問}
+\input{1990/1/problem.tex}
+\subsection*{解答}
+\input{1990/1/solution.tex}
+\clearpage
+
+% --- 1995年 ---
+\part*{1995年}
+\section*{第1問}
+\input{1995/1/problem.tex}
+\subsection*{解答}
+\input{1995/1/solution.tex}
+\clearpage
+
+% --- 2000年 ---
+\part*{2000年}
+\section*{第1問}
+\input{2000/1/problem.tex}
+\subsection*{解答}
+\input{2000/1/solution.tex}
+\clearpage
+
+\end{document}
+```
+
+- [ ] **Step 2: 東工大および東大の両方のマスターPDFをビルド検証する**
+
+Run:
+```bash
+cd src/sample_titech/kouki && latexmk -lualatex main.tex
+cd ../../../sample_todai/zenki && latexmk -lualatex main.tex
+```
+Expected: 双方ともエラーなく `main.pdf` が生成される。
+
+- [ ] **Step 3: コミット**
+
+```bash
+git add src/sample_titech/kouki/main.tex
+git commit -m "feat: construct unified master main.tex for Titech (sample_titech)"
+```
 
 ---

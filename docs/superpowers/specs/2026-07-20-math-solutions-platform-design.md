@@ -51,18 +51,28 @@ Math-Solutions/
 │   │   ├── preamble.tex        # 共通プリアンブル（パッケージ読み込み）
 │   │   └── macros.tex          # 共通マクロ（ショートカットなど）
 │   │
-│   ├── [todai | kyodai | titech]/
-│   │   └── [zenki | kouki]/
+│   ├── sample_todai/                     # [大学名] (例: 東京大学)
+│   │   └── zenki/                        # [区分] (例: 前期)
+│   │       ├── main.tex                  # 東大前期一括マスターPDFビルド用
 │   │       ├── 1990/
-│   │       │   ├── 1/              # 大問1のフォルダ
-│   │       │   │   ├── problem.tex  # 問題文
-│   │       │   │   └── solution.tex # 解答
-│   │       │   ├── 2/
-│   │       │   │   ├── problem.tex
-│   │       │   │   └── solution.tex
-│   │       │   │
-│   │       │   └── main.tex        # 1990年度の一括ビルド用ファイル（1〜6の大問を\inputする）
-│   │       └── ...
+│   │       │   └── 1/
+│   │       │       ├── problem.tex       # 問題LaTeX
+│   │       │       └── solution.tex      # 解答LaTeX
+│   │       └── 1995/
+│   │           └── 2/
+│   │               ├── problem.tex
+│   │               └── solution.tex
+│   ├── sample_titech/                    # [大学名] (例: 東京工業大学)
+│   │   └── kouki/                        # [区分] (例: 後期)
+│   │       ├── main.tex                  # 東工大後期一括マスターPDFビルド用
+│   │       ├── 1990/
+│   │       │   └── 1/
+│   │       │       ├── problem.tex
+│   │       │       └── solution.tex
+│   │       └── 1995/
+│   │           └── 1/
+│   │               ├── problem.tex
+│   │               └── solution.tex
 │   │
 │   └── book_template.tex       # 全年度をまとめて一冊の本にする場合のテンプレート
 │
