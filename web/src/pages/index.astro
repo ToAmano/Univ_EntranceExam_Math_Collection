@@ -92,6 +92,11 @@ for (const item of allSolutions) {
 
 // Sort groups, years, and questions
 const universityGroups = Array.from(groupsMap.values());
+universityGroups.sort((a, b) => {
+	const univCompare = a.universityId.localeCompare(b.universityId);
+	if (univCompare !== 0) return univCompare;
+	return a.categoryId.localeCompare(b.categoryId);
+});
 for (const uGroup of universityGroups) {
 	uGroup.years.sort((a, b) => b.year.localeCompare(a.year)); // Descending year
 	for (const yGroup of uGroup.years) {
@@ -148,7 +153,7 @@ for (const uGroup of universityGroups) {
 
 		<div class="university-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
 			{universityGroups.map((uGroup) => (
-				<div class="glass glass-hover univ-card" data-search-text={`${uGroup.univName} ${uGroup.catName} ${uGroup.years.map(y => y.year).join(' ')}`} style="padding: 2rem;">
+				<div class="glass glass-hover univ-card" data-search-text={`${uGroup.univName} ${uGroup.catName} ${uGroup.universityId} ${uGroup.categoryId}`} style="padding: 2rem;">
 					<!-- Card Header -->
 					<div style="border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 1.25rem; margin-bottom: 1.5rem;">
 						<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
@@ -238,13 +243,16 @@ for (const uGroup of universityGroups) {
 				const cards = document.querySelectorAll('.univ-card');
 
 				cards.forEach((card) => {
-					const cardText = card.getAttribute('data-search-text') || '';
+					const cardText = (card.getAttribute('data-search-text') || '').toLowerCase();
+					const isUnivMatch = query !== '' && cardText.includes(query);
 					const yearBlocks = card.querySelectorAll('.year-block');
 					let cardHasMatch = false;
 
 					yearBlocks.forEach((yb) => {
-						const yearText = (yb.getAttribute('data-year-text') || '') + ' ' + (yb.textContent || '');
-						if (query === '' || yearText.toLowerCase().includes(query) || cardText.toLowerCase().includes(query)) {
+						const yearText = ((yb.getAttribute('data-year-text') || '') + ' ' + (yb.textContent || '')).toLowerCase();
+						const isYearMatch = query !== '' && yearText.includes(query);
+
+						if (query === '' || isUnivMatch || isYearMatch) {
 							(yb as HTMLElement).style.display = '';
 							cardHasMatch = true;
 						} else {
@@ -252,7 +260,7 @@ for (const uGroup of universityGroups) {
 						}
 					});
 
-					if (cardHasMatch || query === '') {
+					if (query === '' || isUnivMatch || cardHasMatch) {
 						(card as HTMLElement).style.display = '';
 					} else {
 						(card as HTMLElement).style.display = 'none';
