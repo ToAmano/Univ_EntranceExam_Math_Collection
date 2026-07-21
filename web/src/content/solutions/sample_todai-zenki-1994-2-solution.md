@@ -11,12 +11,62 @@ title: "SAMPLE_TODAI 1994 zenki Q2 (solution)"
 
 ### (1)
 
-  
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.0]
+      \pgfmathsetmacro{\l}{4}
+      \begin{axis}[
+          axis lines=none,                  
+          xmin=-1.5, xmax=5.5,
+          ymin=-1.5, ymax=5.5,
+          axis equal,                         
+          clip=false,                         
+        ]
+        \draw (-1,-1) rectangle ({\l+1},{\l+1});
+        \draw[dashed] (0,0) rectangle ({\l},{\l});
+        \draw[dashed] (-1,0) -- ({\l+1},0);
 
-<figure id="1994-2:fig:1">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1994/2/fig_1.svg" alt="図 1" />
-  <figcaption>図 1: 一辺の長さ$l$の正方形と点Pの様子</figcaption>
-</figure>
+        \draw (0,0) circle (1);
+
+        \draw ({\l},0) circle (1);
+        \draw (0,{\l}) circle (1);
+        \draw ({\l},{\l}) circle (1);
+
+        \node[below left] at (-1,-1) {A};
+        \node[below right] at ({\l+1},-1) {B};
+        \node[right] at ({\l+1},{\l+1}) {C};
+        \node[left] at (-1,{\l+1}) {D};
+
+        \draw[<->] (-1,-1.1) -- ({\l+1},-1.1) node[midway, below] {$l$};
+        \draw[<->] (0,-0.1) -- ({\l},-0.1) node[midway, below] {$l-2$};
+
+        \draw (0,0) -- (0.707,0.707);
+        \fill (0.707,0.707) circle (0.07) node[above right] {$P$};
+        \draw[-{Stealth[length=2mm]}] (0.5,0.8) arc (45:135:0.4);
+
+        \draw ({\l},0) -- ({\l+0.707},{-0.707});
+        \fill ({\l+0.707},{-0.707}) circle (0.07) node[left] {$P$};
+
+        \draw ({\l},{\l}) -- ({\l-0.707},{\l-0.707});
+        \fill ({\l-0.707},{\l-0.707}) circle (0.07) node[below] {$P$};
+
+        \draw (0,{\l}) -- ({-0.707},{\l+0.707});
+        \fill ({-0.707},{\l+0.707}) circle (0.07) node[below] {$P$};
+
+        \coordinate (O1) at (axis cs:1,0);
+        \coordinate (O) at (axis cs:0,0);
+        \coordinate (P) at (axis cs:0.707,0.707);
+        \pic[draw, "$\alpha$", angle eccentricity=2.0, angle radius=2mm] {angle = O1--O--P};
+        \coordinate (O2B) at (axis cs:{\l+1},0);
+        \coordinate (OB) at (axis cs:{\l},0);
+        \coordinate (PB) at (axis cs:{\l+0.707},-0.707);
+        \pic[draw, "$\alpha-\frac{\pi}{2}$", angle eccentricity=5.0, angle radius=2mm] {angle = PB--OB--O2B};
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{一辺の長さ$l$の正方形と点Pの様子}
+    \label{1994-2:fig:1}
+  \end{figure}
 
   Pは円が1周する間$4(l-2)$だけ転がる．円の半径が$1$だから，
   この時のPの回転角は$4(l-2)$に等しい．
@@ -25,8 +75,8 @@ title: "SAMPLE_TODAI 1994 zenki Q2 (solution)"
   
 $$
 \begin{align*}
-L = 4(l-2) + 2\pi
-\end{align*}
+    L = 4(l-2) + 2\pi
+  \end{align*}
 $$
 
   となる．
@@ -35,8 +85,10 @@ $$
   
 $$
 \begin{align*}
-& 4(l-2) = 2n\pi\\\therefore& l = \frac{n}{2}\pi + 2
-\end{align*}
+     & 4(l-2) = 2n\pi         \\
+    \therefore
+     & l = \frac{n}{2}\pi + 2
+  \end{align*}
 $$
 
   と書ける．$\cdots$(答)
@@ -47,8 +99,8 @@ $$
   
 $$
 \begin{align*}
-l=\frac{1}{2}\pi+2
-\end{align*}
+    l=\frac{1}{2}\pi+2
+  \end{align*}
 $$
 
   である．
@@ -56,18 +108,77 @@ $$
   
 $$
 \begin{align*}
-& A(-1, -1)                           \\& B(\frac{\pi}{2}+1, -1)              \\& C(\frac{\pi}{2}+1, \frac{\pi}{2}+1) \\& D(-1, \frac{\pi}{2}+1)
-\end{align*}
+     & A(-1, -1)                           \\
+     & B(\frac{\pi}{2}+1, -1)              \\
+     & C(\frac{\pi}{2}+1, \frac{\pi}{2}+1) \\
+     & D(-1, \frac{\pi}{2}+1)
+  \end{align*}
 $$
 
   とおき，$P$が$A \to B \to C \to D$の順に動くとする．
 
-  
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.0]
+      \pgfmathsetmacro{\l}{4}
+      \begin{axis}[
+          xmin=-1.5, xmax=5.5,
+          ymin=-1.5, ymax=5.5,
+          axis lines=middle,                  
+          xlabel=$x$,                         
+          ylabel=$y$,                         
+          xlabel style={anchor=north},        
+          ylabel style={anchor=east},
+          xtick={\empty},
+          ytick={\empty},
+          axis equal,                         
+          trig format=deg,                    
+          clip=false,                         
+        ]
+        \draw (-1,-1) rectangle ({\l+1},{\l+1});
+        \draw[dashed] (0,0) rectangle ({\l},{\l});
+        \draw[dashed] (-1,0) -- ({\l+1},0);
 
-<figure id="1994-2:fig:2">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1994/2/fig_2.svg" alt="図 2" />
-  <figcaption>図 2: 一辺の長さ$l$の正方形ABCDと点Pの様子</figcaption>
-</figure>
+        \draw (0,0) circle (1);
+
+        \draw ({\l},0) circle (1);
+        \draw (0,{\l}) circle (1);
+        \draw ({\l},{\l}) circle (1);
+
+        \node[below left] at (-1,-1) {A};
+        \node[below right] at ({\l+1},-1) {B};
+        \node[right] at ({\l+1},{\l+1}) {C};
+        \node[left] at (-1,{\l+1}) {D};
+
+        \draw (0,0) -- (0.707,0.707);
+        \fill (0.707,0.707) circle (0.07) node[above right] {$P$};
+        \draw[-{Stealth[length=2mm]}] (0.5,0.8) arc (45:135:0.4);
+
+        \draw ({\l},0) -- ({\l+0.707},{-0.707});
+        \fill ({\l+0.707},{-0.707}) circle (0.07) node[left] {$P$};
+
+        \draw ({\l},{\l}) -- ({\l-0.707},{\l-0.707});
+        \fill ({\l-0.707},{\l-0.707}) circle (0.07) node[below] {$P$};
+
+        \draw (0,{\l}) -- ({-0.707},{\l+0.707});
+        \fill ({-0.707},{\l+0.707}) circle (0.07) node[below] {$P$};
+
+        \coordinate (O1) at (axis cs:1,0);
+        \coordinate (O) at (axis cs:0,0);
+        \coordinate (P) at (axis cs:0.707,0.707);
+        \pic[draw, "$\alpha$", angle eccentricity=2.0, angle radius=2mm] {angle = O1--O--P};
+        \coordinate (O2B) at (axis cs:{\l+1},0);
+        \coordinate (OB) at (axis cs:{\l},0);
+        \coordinate (PB) at (axis cs:{\l+0.707},-0.707);
+        \pic[draw, "$\alpha-\frac{\pi}{2}$", angle eccentricity=5.0, angle radius=2mm] {angle = PB--OB--O2B};
+
+        \node[below] at ({\l},0) {$\frac{\pi}{2}$};
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{一辺の長さ$l$の正方形ABCDと点Pの様子}
+    \label{1994-2:fig:2}
+  \end{figure}
 
   まず辺$AB$上を動く時を考える．
   はじめ$P(\cos\alpha, \sin\alpha)$だとする．
@@ -75,8 +186,8 @@ $$
   
 $$
 \begin{align*}
-0 \le\alpha < 2\pi
-\end{align*}
+    0 \le \alpha < 2\pi
+  \end{align*}
 $$
 
   とする．
@@ -84,17 +195,22 @@ $$
   
 $$
 \begin{align*}
-\vec{OP}& = \begin{pmatrix} \theta \\ 0 \end{pmatrix} + \begin{pmatrix} \cos(\alpha-\theta) \\ \sin(\alpha-\theta) \end{pmatrix}\quad(0 \le\theta\le\frac{\pi}{2})
-\end{align*}
+    \vec{OP}
+     & = \begin{pmatrix} \theta \\ 0 \end{pmatrix} + \begin{pmatrix} \cos(\alpha-\theta) \\ \sin(\alpha-\theta) \end{pmatrix} \quad (0 \le \theta \le \frac{\pi}{2})
+  \end{align*}
 $$
 
   だから，この時のPの軌跡の長さ$l_1$は
   
 $$
 \begin{align}
-l_1
-     & = \int_{0}^{\frac{\pi}{2}} |\overline{OP}| d\theta\\& = \int_{0}^{\frac{\pi}{2}}\sqrt{\{1+\sin(\alpha-\theta)\}^2 + \{\cos(\alpha-\theta)\}^2} d\theta\\& = \int_{0}^{\frac{\pi}{2}}\sqrt{2\{1+\cos(\frac{\pi}{2}-\alpha+\theta)\}} d\theta\\& = 2 \int_{0}^{\frac{\pi}{2}} |\cos(\frac{\pi}{4}-\frac{\alpha}{2}+\frac{\theta}{2})| d\theta\\& = 4 \int_{\frac{\pi}{4}}^{\frac{\pi}{2}} |\cos(t-\frac{\alpha}{2})| dt \quad(t = \frac{\pi}{4}+\frac{\theta}{2}) \label{1994-2:eq:3}
-\end{align}
+    l_1
+     & = \int_{0}^{\frac{\pi}{2}} |\overline{OP}| d\theta                                                                                    \\
+     & = \int_{0}^{\frac{\pi}{2}} \sqrt{\{1+\sin(\alpha-\theta)\}^2 + \{\cos(\alpha-\theta)\}^2} d\theta                                     \\
+     & = \int_{0}^{\frac{\pi}{2}} \sqrt{2\{1+\cos(\frac{\pi}{2}-\alpha+\theta)\}} d\theta                                                    \\
+     & = 2 \int_{0}^{\frac{\pi}{2}} |\cos(\frac{\pi}{4}-\frac{\alpha}{2}+\frac{\theta}{2})| d\theta                                          \\
+     & = 4 \int_{\frac{\pi}{4}}^{\frac{\pi}{2}} |\cos(t-\frac{\alpha}{2})| dt \quad (t = \frac{\pi}{4}+\frac{\theta}{2}) \label{1994-2:eq:3}
+  \end{align}
 $$
 
   である．
@@ -103,9 +219,10 @@ $$
   
 $$
 \begin{align}
-l_2
-     & = 2 \int_{0}^{\frac{\pi}{2}} |\cos(\frac{3}{4}\pi - \frac{\alpha}{2} + \frac{\theta}{2})| d\theta\\& = 4 \int_{\frac{\pi}{4}}^{\frac{\pi}{2}} |\sin(t-\frac{\alpha}{2})| dt \label{1994-2:eq:4}
-\end{align}
+    l_2
+     & = 2 \int_{0}^{\frac{\pi}{2}} |\cos(\frac{3}{4}\pi - \frac{\alpha}{2} + \frac{\theta}{2})| d\theta \\
+     & = 4 \int_{\frac{\pi}{4}}^{\frac{\pi}{2}} |\sin(t-\frac{\alpha}{2})| dt \label{1994-2:eq:4}
+  \end{align}
 $$
 
   である．
@@ -113,29 +230,34 @@ $$
   
 $$
 \begin{align*}
-l_3
-     & =  4 \int_{\frac{\pi}{4}}^{\frac{\pi}{2}} |\cos(t-\frac{\alpha-2\pi}{2})| dt         \\& = l_1                                                                                \\
+    l_3
+     & =  4 \int_{\frac{\pi}{4}}^{\frac{\pi}{2}} |\cos(t-\frac{\alpha-2\pi}{2})| dt         \\
+     & = l_1                                                                                \\
     l_4
-     & = 4 \int_{\frac{\pi}{4}}^{\frac{\pi}{2}} |\cos(t-\frac{\alpha-3\pi}{2})| dt          \\& = 4 \int_{\frac{\pi}{4}}^{\frac{\pi}{2}} |\cos(\frac{\pi}{2}+t-\frac{\alpha}{2})| dt \\& = 4 \int_{\frac{\pi}{4}}^{\frac{\pi}{2}} |\sin(t-\frac{\alpha}{2})| dt               \\& = l_2
-\end{align*}
+     & = 4 \int_{\frac{\pi}{4}}^{\frac{\pi}{2}} |\cos(t-\frac{\alpha-3\pi}{2})| dt          \\
+     & = 4 \int_{\frac{\pi}{4}}^{\frac{\pi}{2}} |\cos(\frac{\pi}{2}+t-\frac{\alpha}{2})| dt \\
+     & = 4 \int_{\frac{\pi}{4}}^{\frac{\pi}{2}} |\sin(t-\frac{\alpha}{2})| dt               \\
+     & = l_2
+  \end{align*}
 $$
 
   である．よって，合計の軌跡の長さ$L$は
   
 $$
 \begin{align}
-L = 2(l_1+l_2) \label{1994-2:eq:5}
-\end{align}
+    L = 2(l_1+l_2) \label{1994-2:eq:5}
+  \end{align}
 $$
 
   である．
-  $\eqref{1994-2:eq:3,1994-2:eq:4}$を代入して
+  \cref{1994-2:eq:3,1994-2:eq:4}を代入して
   
 $$
 \begin{align*}
-L
-     & = 8\int_{\frac{\pi}{4}}^{\frac{\pi}{2}}\{|\cos(t-\frac{\alpha}{2})| + |\sin(t-\frac{\alpha}{2})|\} dt \\& = 8\int_{\frac{\pi}{4}-\frac{\alpha}{2}}^{\frac{\pi}{2}-\frac{\alpha}{2}}\{|\cos t| + |\sin t |\} dt
-\end{align*}
+    L
+     & = 8\int_{\frac{\pi}{4}}^{\frac{\pi}{2}} \{|\cos(t-\frac{\alpha}{2})| + |\sin(t-\frac{\alpha}{2})|\} dt \\
+     & = 8\int_{\frac{\pi}{4}-\frac{\alpha}{2}}^{\frac{\pi}{2}-\frac{\alpha}{2}} \{|\cos t| + |\sin t |\} dt
+  \end{align*}
 $$
 
   を得る．
@@ -144,17 +266,18 @@ $$
   
 $$
 \begin{align*}
-L
-     & = -8\int_{\frac{\pi}{4}+\frac{\alpha}{2}}^{\frac{\alpha}{2}}\{|\cos(\pi/2-x)| + |\sin(\pi/2-x) |\} dx \\& = 8\int_{p}^{\frac{\pi}{4}+p}\{|\sin x| + |\cos x|\} dx
-\end{align*}
+    L
+     & = -8\int_{\frac{\pi}{4}+\frac{\alpha}{2}}^{\frac{\alpha}{2}} \{|\cos (\pi/2-x)| + |\sin (\pi/2-x) |\} dx \\
+     & = 8\int_{p}^{\frac{\pi}{4}+p} \{|\sin x| + |\cos x|\} dx
+  \end{align*}
 $$
 
   また，ここで簡単のため
   
 $$
 \begin{align*}
-& p = \frac{\alpha}{2}& 0 \le p < \pi
-\end{align*}
+     & p = \frac{\alpha}{2} & 0 \le p < \pi
+  \end{align*}
 $$
 
   とおいた．
@@ -166,14 +289,16 @@ $$
   
 $$
 \begin{align*}
-& L                                                                                                                                                                                                                                         \\& = \begin{dcases}
+     & L                                                                                                                                                                                                                                         \\
+     & = \begin{dcases}
            8\int_{p}^{\frac{\pi}{4}+p} (\cos t + \sin t) dt                                                               & \left(0 \le p \le \frac{\pi}{4}\right)             \\
            8\int_{p}^{\frac{\pi}{2}} (\cos t + \sin t) dt + 8\int_{\frac{\pi}{2}}^{\frac{\pi}{4}+p} (-\cos t + \sin t) dt & \left(\frac{\pi}{4} \le p \le \frac{\pi}{2}\right)
-         \end{dcases}\\& = \begin{dcases}
+         \end{dcases}                                                 \\
+     & = \begin{dcases}
            8\sqrt{2}\int_{p}^{\frac{\pi}{4}+p} \sin\left(t + \frac{\pi}{4}\right) dt                                                                                      & \left(0 \le p \le \frac{\pi}{4}\right)             \\
            8\sqrt{2}\int_{p}^{\frac{\pi}{2}}\sin\left(t + \frac{\pi}{4}\right) dt + 8\sqrt{2}\int_{\frac{\pi}{2}}^{\frac{\pi}{4}+p} \sin\left(t - \frac{\pi}{4}\right) dt & \left(\frac{\pi}{4} \le p \le \frac{\pi}{2}\right)
          \end{dcases}
-\end{align*}
+  \end{align*}
 $$
 
   を得る．
@@ -183,44 +308,96 @@ $$
   
 $$
 \begin{align*}
-\frac{dL}{dp}=
+    \frac{dL}{dp}=
       & \begin{dcases}
           8\sqrt{2}\left[\sin(p+\frac{\pi}{2}) -\sin(p+\frac{\pi}{4})\right] & (0 \le p \le \frac{\pi}{4})             \\
           8\sqrt{2}\left[-\sin(p+\frac{\pi}{4}) + \sin p\right]              & (\frac{\pi}{4} \le p \le \frac{\pi}{2})
-        \end{dcases}\\
+        \end{dcases}      \\
     = & \begin{dcases}
           16\sqrt{2}\cos\left(p + \frac{3\pi}{8}\right)\sin\left(\frac{\pi}{8}\right) & (0 \le p \le \frac{\pi}{4})             \\
           -16\sqrt{2}\cos\left(p + \frac{\pi}{8}\right)\sin\left(\frac{\pi}{8}\right) & (\frac{\pi}{4} \le p \le \frac{\pi}{2})
-        \end{dcases}\\
-\end{align*}
+        \end{dcases} \\
+  \end{align*}
 $$
 
-  と計算できるから，$L$の増減表は$\eqref{1994-2:table:1}$となる．
+  と計算できるから，$L$の増減表は\cref{1994-2:table:1}となる．
   \begin{table}[H]
     \centering
     \caption{$L$の増減表}
     \label{1994-2:table:1}
-    \begin{tabular}{c||c|c|c|c|c|c|c|c|c|}
-      $p$  & $0$ &            & $\frac{\pi}{8}$ &            & $\frac{\pi}{4}$ &            & $\frac{3\pi}{8}$ &            & $\frac{\pi}{2}$ \\
-      \hline
-      $L'$ &     & $+$        & $0$             & $-$        &                 & $-$        & $0$              & $+$        &                 \\
-      \hline
-      $L$  &     & $\nearrow$ &                 & $\searrow$ &                 & $\searrow$ &                  & $\nearrow$ &
-    \end{tabular}
+    
+
+| $`p`$ | $`0`$ |  | $`\frac{\pi}{8}`$ |  | $`\frac{\pi}{4}`$ |  | $`\frac{3\pi}{8}`$ |  | $`\frac{\pi}{2}`$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| $`L'`$ |  | $`+`$ | $`0`$ | $`-`$ |  | $`-`$ | $`0`$ | $`+`$ |  |
+| $`L`$ |  | $`\nearrow`$ |  | $`\searrow`$ |  | $`\searrow`$ |  | $`\nearrow`$ |  |
+
   \end{table}
 
   したがって、最大値は $p=\frac{1}{8}\pi$ 又は $p=\frac{1}{2}\pi$ の時にとる．
   最小値は $p=0$ 又は $p=\frac{3}{8}\pi$の時にとる．
 
-  
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        declare function={
+            func(\x) = abs(sin(\x)) + abs(cos(\x));
+          }
+      ]
+      \begin{axis}[
+          axis lines=middle,
+          xlabel=$t$,                   
+          ylabel=$y$,                   
+          xlabel style={anchor=north},  
+          ylabel style={anchor=east},
+          xmin=0,
+          xmax=3.14159 * 1.1,
+          ymin=0,
+          ymax=1.6,
+          xtick={pi/4, pi/2, 3*pi/4, pi},
+          xticklabels={$\frac{\pi}{4}$, $\frac{\pi}{2}$, $\frac{3\pi}{4}$, $\pi$},
+          ytick={1, sqrt(2)},
+          yticklabels={$1$, $\sqrt{2}$},
+          trig format=rad,              
+          enlarge y limits={upper, value=0.1}, 
+        ]
 
-<figure id="1994-2:fig:3">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_todai/zenki/1994/2/fig_3.svg" alt="図 3" />
-  <figcaption>図 3: $y=8|\sin t|+8|\cos t|$の概形と$L$を面積と見立てた際の領域（$p=\pi/8$の場合の例）．</figcaption>
-</figure>
+        \addplot[
+          domain=0:pi,
+          samples=200, 
+          smooth,
+          thick,
+          black,
+        ] {func(x)};
+
+        \addplot[dashed, domain=0:pi] {1};
+        \addplot[dashed, domain=0:pi] {sqrt(2)};
+
+        \pgfplotsinvokeforeach{1/8, 1/4, 3/8, 1/2, 5/8, 3/4, 7/8, 1}{
+          \draw[dashed] (axis cs:#1*pi, 0) -- (axis cs:#1*pi, {func(#1*pi)});
+        }
+
+        \draw[dashed] (axis cs:0, {func(pi/8)}) -- (axis cs:pi, {func(pi/8)});
+
+        \node[circle, fill, inner sep=1.2pt] at (axis cs:0, 1) {};
+        \node[circle, fill, inner sep=1.2pt] at (axis cs:pi, 1) {};
+
+        \addplot[domain=pi/8:3*pi/8, draw=none, name path=line] {0};
+        \addplot[
+          domain=pi/8:3*pi/8,
+          draw=none,
+          name path=L,
+        ] {func(x)};
+        \addplot[pattern=north west lines, gray, opacity=0.3] fill between [of=L and line];
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{$y=8|\sin t|+8|\cos t|$の概形と$L$を面積と見立てた際の領域（$p=\pi/8$の場合の例）．}
+    \label{1994-2:fig:3}
+  \end{figure}
 
   ここで$L$は、$y=8|\sin t|+8|\cos t|, t=p, t=p+\frac{\pi}{4}$
-  とx軸の囲む面積でグラフは[図3](#1994-2:fig:3)だから
+  とx軸の囲む面積でグラフは\cref{1994-2:fig:3}だから
   $p=\frac{1}{2}\pi$の時より$p=\frac{1}{8}\pi$の時の方がLは大きく，
   $p=0$の時より$p=\frac{3}{8}\pi$の時の方がLは小さい．
   したがって
@@ -237,25 +414,27 @@ $$
   
 $$
 \begin{align*}
-L
-     & = 8\int_{\frac{1}{8}\pi}^{\frac{3}{8}\pi}\sqrt{2}\sin(t+\pi/4)dt \\& = -8\sqrt{2}[\cos\frac{5}{8}\pi - \cos\frac{3}{8}\pi]\\& = 16\sqrt{2}\cos\frac{3}{8}\pi
-\end{align*}
+    L
+     & = 8\int_{\frac{1}{8}\pi}^{\frac{3}{8}\pi} \sqrt{2}\sin(t+\pi/4)dt \\
+     & = -8\sqrt{2}[\cos\frac{5}{8}\pi - \cos\frac{3}{8}\pi]             \\
+     & = 16\sqrt{2}\cos\frac{3}{8}\pi
+  \end{align*}
 $$
 
   であり，$\cos\frac{3}{8}\pi$は半角公式より
   
 $$
 \begin{align*}
-\cos\frac{3}{8}\pi = \sqrt{\frac{1+\cos\frac{3}{4}\pi}{2}} = \frac{\sqrt{2-\sqrt{2}}}{2}\left(>0\right)
-\end{align*}
+    \cos\frac{3}{8}\pi = \sqrt{\frac{1+\cos\frac{3}{4}\pi}{2}} = \frac{\sqrt{2-\sqrt{2}}}{2} \left(>0\right)
+  \end{align*}
 $$
 
   と計算できるから，代入して
   
 $$
 \begin{align}
-L = 8\sqrt{4-2\sqrt{2}}\label{1994-2:eq:6}
-\end{align}
+    L = 8\sqrt{4-2\sqrt{2}} \label{1994-2:eq:6}
+  \end{align}
 $$
 
   を得る．
@@ -267,20 +446,22 @@ $$
   
 $$
 \begin{align}
-L
-     & = 16\int_{\frac{3}{8}\pi}^{\frac{\pi}{2}}\sqrt{2}\sin(t+\pi/4)dt \\& = 16\sqrt{2}(\frac{\sqrt{2}}{2} - \cos\frac{3}{8}\pi)             \\& = 8\{2-\sqrt{4-2\sqrt{2}}\}\label{1994-2:eq:7}
-\end{align}
+    L
+     & = 16\int_{\frac{3}{8}\pi}^{\frac{\pi}{2}} \sqrt{2}\sin(t+\pi/4)dt \\
+     & = 16\sqrt{2}(\frac{\sqrt{2}}{2} - \cos\frac{3}{8}\pi)             \\
+     & = 8\{2-\sqrt{4-2\sqrt{2}}\} \label{1994-2:eq:7}
+  \end{align}
 $$
 
   である．
 
   
-  以上$\eqref{1994-2:eq:6,1994-2:eq:7}$及び$L$は連続して値をとることから，求める長さの範囲は
+  以上\cref{1994-2:eq:6,1994-2:eq:7}及び$L$は連続して値をとることから，求める長さの範囲は
   
 $$
 \begin{align*}
-8\{2-\sqrt{4-2\sqrt{2}}\}\le L \le 8\sqrt{4-2\sqrt{2}}
-\end{align*}
+    8\{2-\sqrt{4-2\sqrt{2}}\} \le L \le 8\sqrt{4-2\sqrt{2}}
+  \end{align*}
 $$
 
   である．$\cdots$(答)

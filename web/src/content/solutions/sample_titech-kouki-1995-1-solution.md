@@ -11,72 +11,167 @@ title: "SAMPLE_TITECH 1995 kouki Q1 (solution)"
 
 ### (1)
 
-  [図1](#1995-1:fig:1)のように，立方体の頂点A, B, C, D, E, F, G, Hに対し題意の3面を
+  \cref{1995-1:fig:1}のように，立方体の頂点A, B, C, D, E, F, G, Hに対し題意の3面を
   ABCD, AEFB, AEHDとする. 各球の中心は
   立方体及び球の対称性から対角線AG上にある．
   $S_n$の中心を$O_n$，半径を$r_n$とおく．
-  断面AEGCを[図2](#1995-1:fig:2)に示す．$AC=2\sqrt{2}$,$AE=2$より，$\angle\mathrm{GAC}=\theta$と置くと
+  断面AEGCを\cref{1995-1:fig:2}に示す．$AC=2\sqrt{2}$,$AE=2$より，$\angle\mathrm{GAC}=\theta$と置くと
   
 $$
 \begin{align}
-\sin\theta& = \frac{\mathrm{AE}}{\mathrm{AG}} = \frac{1}{\sqrt{3}}\label{1995-1:eq:1}\\\cos\theta& = \frac{\mathrm{AC}}{\mathrm{AG}} = \frac{\sqrt{2}}{\sqrt{3}}\label{1995-1:eq:2}
-\end{align}
+    \sin\theta & = \frac{\mathrm{AE}}{\mathrm{AG}} = \frac{1}{\sqrt{3}} \label{1995-1:eq:1}        \\
+    \cos\theta & = \frac{\mathrm{AC}}{\mathrm{AG}} = \frac{\sqrt{2}}{\sqrt{3}} \label{1995-1:eq:2}
+  \end{align}
 $$
 
   が成り立つことに注意する．
 
-  
+  \begin{figure}[H]
+    \centering
+    \tdplotsetmaincoords{70}{110}
+    \begin{tikzpicture}[scale=2, tdplot_main_coords]
+      \coordinate (D) at (0,0,0);
+      \coordinate (A) at (1,0,0);
+      \coordinate (C) at (0,1,0);
+      \coordinate (B) at (1,1,0);
+      \coordinate (H) at (0,0,1);
+      \coordinate (E) at (1,0,1);
+      \coordinate (G) at (0,1,1);
+      \coordinate (F) at (1,1,1);
 
-<figure id="1995-1:fig:1">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/1995/1/fig_1.svg" alt="図 1" />
-  <figcaption>図 1: 立方体と頂点の定義</figcaption>
-</figure>
+      \draw[dashed] (D) -- (A);
+      \draw[dashed] (D) -- (C);
+      \draw[dashed] (D) -- (H);
+      \draw (A) -- (B) -- (C) -- (G) -- (F) -- (E) -- (A);
+      \draw (C) -- (B);
+      \draw (H) -- (E);
+      \draw (H) -- (G);
+      \draw (B) -- (F);
 
-  
+      \node[below] at (D) {D};
+      \node[below] at (A) {A};
+      \node[below] at (B) {B};
+      \node[below] at (C) {C};
+      \node[above] at (H) {H};
+      \node[above] at (E) {E};
+      \node[above] at (G) {G};
+      \node[above] at (F) {F};
+    \end{tikzpicture}
+    \caption{立方体と頂点の定義}
+    \label{1995-1:fig:1}
+  \end{figure}
 
-<figure id="1995-1:fig:2">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/1995/1/fig_2.svg" alt="図 2" />
-  <figcaption>図 2: 断面AEGC</figcaption>
-</figure>
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=2]
+      \coordinate (E) at (0, 0); 
+      \coordinate (G) at ({2*sqrt(2)}, 0); 
+      \coordinate (C) at ({2*sqrt(2)}, 2); 
+      \coordinate (A) at (0, 2); 
+      \coordinate (On) at ({sqrt(2)}, 1); 
+      \coordinate (O1) at ({2*sqrt(2)-sqrt(6)}, {sqrt(3)});
+      \draw (A) -- (C) -- (G) -- (E) -- cycle;
+      \draw (A) -- (G);
+      \fill (On) circle [radius=0.5pt];
+      \fill (O1) circle [radius=0.5pt];
+
+      \draw (On) circle (1); 
+      \draw (O1) circle ({2-sqrt(3)}); 
+      \node[above] at ({1.5*sqrt(2)-0.5*sqrt(6)},{0.5+sqrt(3)*0.5}) {$r_0$}; 
+      \node[below] at (On) {$O_0$};
+      \node[below] at (O1) {$O_1$};
+      \node[left]  at (E) {E};
+      \node[left]  at (A) {A};
+      \node[right]  at (C) {C};
+      \node[right]  at (G) {G};
+
+      \draw[dashed] (On) -- ({sqrt(2)},2);
+      \draw[dashed] (O1) -- ({2*sqrt(2)-sqrt(6)},2);
+      \draw[dashed] (O1) -- ({sqrt(2)},{sqrt(3)});
+
+      \node[left] at (0,1) {$2$};
+      \node[above] at ({sqrt(2)},2) {$2\sqrt{2}$};
+
+      \path pic["$\theta$",draw,angle radius=7mm,angle eccentricity=1.3] {angle = G--A--C};
+
+    \end{tikzpicture}
+    \caption{断面AEGC}
+    \label{1995-1:fig:2}
+  \end{figure}
 
   半径$r_n$に関する漸化式を導出することで$r_n$の一般項を求める．
-  円$S_n$と$S_{n+1}$に着目して[図3](#1995-1:fig:3)を考える．
+  円$S_n$と$S_{n+1}$に着目して\cref{1995-1:fig:3}を考える．
 
-  
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=2]
+      \coordinate (G) at ({2*sqrt(2)}, 0); 
+      \coordinate (C) at ({2*sqrt(2)}, 2); 
+      \coordinate (A) at (0, 2); 
+      \coordinate (On) at ({sqrt(2)}, 1); 
+      \coordinate (O1) at ({2*sqrt(2)-sqrt(6)}, {sqrt(3)});
+      \draw (A) -- (C);
+      \draw (A) -- (G);
+      \fill (On) circle [radius=0.5pt];
+      \fill (O1) circle [radius=0.5pt];
 
-<figure id="1995-1:fig:3">
-  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/sample_titech/kouki/1995/1/fig_3.svg" alt="図 3" />
-  <figcaption>図 3: $S_n$と$S_{n+1}$の関係</figcaption>
-</figure>
+      \draw (On) circle (1); 
+      \draw (O1) circle ({2-sqrt(3)}); 
+      \node[above] at ({1.5*sqrt(2)-0.5*sqrt(6)},{0.5+sqrt(3)*0.5}) {$r_0$}; 
+      \node[below] at (On) {$O_n$};
+      \node[below] at (O1) {$O_{n+1}$};
+      \node[left]  at (A) {A};
+      \node[right]  at (C) {C};
+
+      \draw[dashed] (On) -- ({sqrt(2)},2);
+      \draw[dashed] (O1) -- ({2*sqrt(2)-sqrt(6)},2);
+      \draw[dashed] (O1) -- ({sqrt(2)},{sqrt(3)});
+
+      \node[above] at ({sqrt(2)},2) {$T_n$};
+      \node[above] at ({2*sqrt(2)-sqrt(6)},2) {$T_{n+1}$};
+      \node[right] at ({sqrt(2)},{sqrt(3)}) {$R_{n}$};
+
+      \path pic["$\theta$",draw,angle radius=7mm,angle eccentricity=1.3] {angle = G--A--C};
+
+    \end{tikzpicture}
+    \caption{$S_n$と$S_{n+1}$の関係}
+    \label{1995-1:fig:3}
+  \end{figure}
 
   $O_n$から$AC$に引いた垂線と$AC$との交点を$T_n$と置くと，その定義より$O_nT_n$の長さは$r_n$に等しい．
   一方で，$O_{n+1}$から$O_nT_n$に引いた垂線と$O_nT_n$の交点を$R_n$と置くと，
   
 $$
 \begin{align*}
-O_nT_n
-     & =O_{n+1}T_{n+1}+O_nR_n                        \\& =O_{n+1}+O_nO_{n+1}\sin\theta\\& =r_{n+1}+\left(r_{n}+r_{n+1}\sin\theta\right)
-\end{align*}
+    O_nT_n
+     & =O_{n+1}T_{n+1}+O_nR_n                        \\
+     & =O_{n+1}+O_nO_{n+1}\sin\theta                 \\
+     & =r_{n+1}+\left(r_{n}+r_{n+1}\sin\theta\right)
+  \end{align*}
 $$
 
   と表されるので，$r_n$と$r_{n+1}$の関係は
   
 $$
 \begin{align}
-r_{n}& =r_{n+1}+(r_{n}+r_{n+1}\sin\theta)        \\\therefore
-    r_{n+1}& = \frac{1-\sin\theta}{1+\sin\theta} r_{n}
-\end{align}
+    r_{n}
+            & =r_{n+1}+(r_{n}+r_{n+1}\sin\theta)        \\
+    \therefore
+    r_{n+1} & = \frac{1-\sin\theta}{1+\sin\theta} r_{n}
+  \end{align}
 $$
 
   となる．$r_0=1$と合わせると，この等比級数の解は
   
 $$
 \begin{align}
-r_{n}& = \left(\frac{1-\sin\theta}{1+\sin\theta}\right)^n \\& = (2-\sqrt{3})^n
-\end{align}
+    r_{n}
+     & = \left(\frac{1-\sin\theta}{1+\sin\theta}\right)^n \\
+     & = (2-\sqrt{3})^n
+  \end{align}
 $$
 
-  となる．ただし，$\eqref{1995-1:eq:1}$を用いた．$\cdots$(答)
+  となる．ただし，\cref{1995-1:eq:1}を用いた．$\cdots$(答)
 
 ### (2)
 
@@ -87,8 +182,10 @@ $$
   
 $$
 \begin{align*}
-V_n & = 8 - \frac{4}{3}\pi\sum_{k=0}^{n} r_k^3                             \\& = 8 - \frac{4}{3}\pi\sum_{k=0}^{n}(2-\sqrt{3})^{3k}\\& = 8 - \frac{4}{3}\pi\frac{1-(2-\sqrt{3})^{3(n+1)}}{1-(2-\sqrt{3})^3}
-\end{align*}
+    V_n & = 8 - \frac{4}{3}\pi \sum_{k=0}^{n} r_k^3                             \\
+        & = 8 - \frac{4}{3}\pi \sum_{k=0}^{n} (2-\sqrt{3})^{3k}                 \\
+        & = 8 - \frac{4}{3}\pi \frac{1-(2-\sqrt{3})^{3(n+1)}}{1-(2-\sqrt{3})^3}
+  \end{align*}
 $$
 
   となる．
@@ -97,8 +194,10 @@ $$
   
 $$
 \begin{align*}
-V & = \lim_{n \to \infty} V_n                       \\& = 8 - \frac{4}{3}\pi\frac{1}{1-(2-\sqrt{3})^3}\\& = 8 - \frac{6\sqrt{3}+10}{15}\pi
-\end{align*}
+    V & = \lim_{n \to \infty} V_n                       \\
+      & = 8 - \frac{4}{3}\pi \frac{1}{1-(2-\sqrt{3})^3} \\
+      & = 8 - \frac{6\sqrt{3}+10}{15}\pi
+  \end{align*}
 $$
 
   である．$\cdots$(答)

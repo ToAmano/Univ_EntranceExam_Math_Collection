@@ -7,50 +7,71 @@ type: "summary"
 title: "1990年 全体サマリ"
 ---
 
-\textbf{1990}\normalsize\textbf{年度}
+{ **1990****年度**}
 
-\textbf{出題テーマと難易度}
+**出題テーマと難易度**
 
-\shadowbox{
-    \begin{tabular}{|c|p{8cm}|c|}
-      \hline
-      \textbf{問題番号} & \textbf{テーマ} & \textbf{難易度} \\
-      \hline
-      第1問           & 二次関数         & 易            \\
-      \hline
-      第2問           & 三角関数，数列      & 普            \\
-      \hline
-    \end{tabular}
+  
+    
+
+| **問題番号** | **テーマ**     | **難易度** |
+|:------------:|:---------------|:----------:|
+|    第1問     | 二次関数       |     易     |
+|    第2問     | 三角関数，数列 |     普     |
+
   }
 
-\textbf{解答}
+**解答**
 
-\shadowbox{
-    \renewcommand{\arraystretch}{1.6}
-    \begin{tabular}{|c|c|p{8cm}|}
-      \hline
-      \textbf{問題番号}        & \textbf{小問} & \textbf{答え}                                    \\
-      \hline
-      第1問                  & -           & $\displaystyle x = \frac{32}{5}, -\frac{2}{5}$ \\
-      \hline
-      \multirow{3}{*}{第2問} & (1)         & 証明問題                                           \\
-      \cline{2-3}
-                           & (2)         & 証明問題                                           \\
-      \cline{2-3}
-                           & (3)         & 証明問題                                           \\
-      \hline
-    \end{tabular}
-    \renewcommand{\arraystretch}{1.0}
+  
+    
+    
+
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>問題番号</strong></th>
+<th style="text-align: center;"><strong>小問</strong></th>
+<th style="text-align: left;"><strong>答え</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">第1問</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: left;"><span class="math inline">$\displaystyle x
+= \frac{32}{5}, -\frac{2}{5}$</span></td>
+</tr>
+<tr>
+<td rowspan="3" style="text-align: center;">第2問</td>
+<td style="text-align: center;">(1)</td>
+<td style="text-align: left;">証明問題</td>
+</tr>
+<tr>
+<td style="text-align: center;">(2)</td>
+<td style="text-align: left;">証明問題</td>
+</tr>
+<tr>
+<td style="text-align: center;">(3)</td>
+<td style="text-align: left;">証明問題</td>
+</tr>
+</tbody>
+</table>
+
+    
   }
 
-\textbf{試験形態}
+**試験形態**
 
 東工大の後期はしばらく2問で60分という形態で実施された．
 前期の問題は4問で150分であり，それより1問あたりにかけられる時間がタイトになっている．
 その分問題が簡単かというとそういうわけもなく，純粋に時間が短い分だけ前期より難度が上がっていると考えて良いだろう．
 
-\shadowbox{
-    \begin{tabular}{p{8cm}}
-      2問60分
-    \end{tabular}
+  
+    
+
+|         |
+|:--------|
+| 2問60分 |
+
   }
