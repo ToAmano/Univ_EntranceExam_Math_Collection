@@ -96,11 +96,15 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         tab_clean = re.sub(r'\\multicolumn\{[^}]*\}\{[^}]*\}', '', tab_clean)
         try:
             md_table = pypandoc.convert_text(tab_clean, 'markdown_strict+pipe_tables+tex_math_dollars', format='latex')
-            # 表セル内の改行を除去して純粋な 1 行の Markdown 表構造を維持
+            # 表セル内の不要な空白・連続スペースの縮約と結合残存マークの除去
             clean_table_lines = []
             for line in md_table.splitlines():
                 if 'hline' in line:
                     continue
+                # 連続する複数のスペースを 1 つに縮約
+                line = re.sub(r'[ \t]{2,}', ' ', line)
+                # 左側セルに残った 2-3 などの Pandoc 残存文字をクリーン化
+                line = re.sub(r'\|\s*\d+-\d+\s*\|', '| |', line)
                 clean_table_lines.append(line)
             return "\n\n" + "\n".join(clean_table_lines).strip() + "\n\n"
         except Exception as e:

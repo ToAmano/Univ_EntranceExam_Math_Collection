@@ -579,10 +579,10 @@ $$
     \label{1993-3:table:1}
     
 
-| $r$ | $\frac{3}{2}$ | $\cdots$ | $\frac{-1+\sqrt{21}}{2}$ | $\cdots$ | $\frac{\sqrt{17}}{2}$ |  |
+| $r$ | $\frac{3}{2}$ | $\cdots$ | $\frac{-1+\sqrt{21}}{2}$ | $\cdots$ | $\frac{\sqrt{17}}{2}$ | |
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| $V'$ |  | $+$ | $0$ | $-$ |  | $-$ |
-| $V$ |  | $\nearrow$ |  | $\searrow$ |  | $\searrow$ |
+| $V'$ | | $+$ | $0$ | $-$ | | $-$ |
+| $V$ | | $\nearrow$ | | $\searrow$ | | $\searrow$ |
 
   \end{table}
 
