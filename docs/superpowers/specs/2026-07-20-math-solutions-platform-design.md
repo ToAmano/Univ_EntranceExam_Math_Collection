@@ -106,8 +106,8 @@ Math-Solutions/
     1. LaTeXソース内から `\begin{tikzpicture}` 〜 `\end{tikzpicture}` を正規表現で抽出。
     2. 抽出したコードを `standalone` クラスを用いた一時的なTeXファイルにラップしてコンパイル。
     3. `pdftocairo -svg` を用いて、PDFから拡大しても画質が落ちない **SVG形式の画像** に変換。
-    4. 生成したSVGを `web/public/images/tikz/` 以下に配置。
-    5. Markdown内では、元のTikZブロックを `![図](/Math-Solutions/images/tikz/[ファイル名].svg)` の画像タグに自動で置換する。
+    4. 生成したSVGを `web/public/images/tikz/[大学]/[区分]/[年度]/[大問]/` 以下の階層ディレクトリに配置。
+    5. Markdown内では、元のTikZブロックを `\includegraphics{/Math-Solutions/images/tikz/[大学]/[区分]/[年度]/[大問]/fig_[番号].svg}` に置換してPandocに渡し、HTMLへ自動変換する。
 
 ---
 
