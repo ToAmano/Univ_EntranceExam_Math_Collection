@@ -1,20 +1,55 @@
-# AGENT.md - 行動規範および作業プロトコル
+# AGENT.md - Math-Solutions 開発・変換引き継ぎガイドライン
 
-本リポジトリにおける TeX ➔ Markdown 変換処理、Web ビルド、コンテンツ管理を行うエージェント行動規範です。
+## 1. プロジェクト概要
 
-## 1. 変換後の事前目視検品プロトコル (Mandatory Verification)
-- **原則**: TeX ➔ Markdown 変換処理やコンバータースクリプト（`scratch/tex_to_md.py` 等）を改修・実行した後は、**必ず `view_file` ツールを用いて生成された Markdown ファイルの本文、数式、図表キャプション、HTML タグを目視確認・検品すること**。
-- **チェック項目**:
-  1. **本文の保全**: 日本語本文の一文字改行や消失・虫食いがないか。
-  2. **インライン数式**: `$ ... $` や `\( ... \)` が正しく対になっており、二重エスケープ (`\\(`) や生の `$` 混入がないか。
-  3. **図表キャプション**: `<figcaption>` 内の数式が `\( ... \)` 記法で正確に出力されているか。
-  4. **参照リンク**: 図表への `[図N](#id)` や数式への `$\eqref{id}$` が正確にアンカーリンクされているか。
+本リポジトリは、複数大学（東大 `sample_todai` / 東工大 `sample_titech` 等）の数学過去問・解答 TeX ソースを管理し、Web ポータル（Astro）への自動 Markdown 変換および LuaLaTeX に統合マスター PDF の生成を行うマルチ大学対応プラットフォームです。
 
-## 2. LaTeX ➔ Markdown 変換の標準アプローチ
-- **AST (構文木) パースの原則**:
-  - テキストの単純正規表現置換による破壊を防ぐため、`TexSoup` などの AST パーサーを使用して和文本文と TeX 数式ノードを分離して処理すること。
-- **HTML 内の MathJax 記述ルール**:
-  - `<figure>` や `<figcaption>` などの HTML タグ内にあるインライン数式は、Astro / MathJax が HTML タグ内部でもパースできるように `\( ... \)` 記号（シングルバックスラッシュ）を使用すること。
+---
 
-## 3. 免責・保護規定
-- `titech_kouki` 等のオリジナル TeX リポジトリのソースデータは変更せず、`src/` 配下にコピーしたファイルを加工・使用すること。
+## 2. ディレクトリ構造ルール
+
+* **TeX ソース (`src/`)**: 「大問フォルダ一体型」構成を遵守。
+  - 例: `src/sample_titech/kouki/1990/0/solution.tex`（※ 0番は年度全体サマリ）
+  - 例: `src/sample_titech/kouki/1990/1/solution.tex`
+* **Web プロジェクト (`web/`)**:
+  - Content Collections: `web/src/content/solutions/`
+  - TikZ 生成 SVG: `web/public/images/tikz/[uni]/[cat]/[year]/[q_num]/`
+
+---
+
+## 3. LaTeX ➔ Markdown 変換エンジン (`scratch/tex_to_md.py`) の決定ルール
+
+1. **`tabular` 表の完全自動変換 (`pypandoc` 部分適用)**:
+   - 表ブロック抽出時、`tabular` 内にある物理改行コード（`\n`, `\r`）をすべてスペースに全置換。
+   - `pypandoc.convert_text(tab_clean, 'markdown_strict+pipe_tables+tex_math_dollars', format='latex')` を適用。
+   - これにより、`dcases` や `\displaystyle` を含む数式が `$ \displaystyle ... $` のまま保持され、セル内が生改行で分割されない 100% 正確な 1 行の Markdown Pipe Table（`| ... |`）が生成される。
+2. **TikZ 図表 (`figure`)**:
+   - `tikzpicture` ノードを抽出し、LuaLaTeX + dvisvgm で独立 SVG を自動生成。
+   - `<figure id="..."> <img src="..." alt="図 N" /> <figcaption>図 N: ...</figcaption> </figure>` の HTML ノードへ置換。
+3. **相互参照 (`\cref` / `\ref`)**:
+   - 図表参照: `[図N](#id)` のアンカーリンク。
+   - 数式参照: `$\eqref{id}$`（MathJax 公式対応記法）。
+4. **0番サマリ (`0/solution.tex`)**:
+   - `type: "summary"`、`title: "{year}年 全体サマリ"` の Frontmatter を自動設定。
+
+---
+
+## 4. 事前検証・目視検品プロトコル（必須手順）
+
+変換処理や変換コードの修正を行った後は、**必ず以下の検証プロトコルを順番に実行**すること：
+
+1. **一括変換の実行**:
+   ```bash
+   python3 scratch/tex_to_md.py
+   ```
+2. **Astro Web ビルドの検証**:
+   ```bash
+   export PATH="$HOME/.nvm/versions/node/v22.16.0/bin:$PATH" && cd web && npm run build
+   ```
+3. **`view_file` による全要素の目視検品**:
+   生成された Markdown ファイル（特に `...-0-summary.md` および複雑な数式を含む `solution.md`）を `view_file` ツールで直接開き、以下を目視チェックすること：
+   - 表が崩れず `| ... |` または綺麗な HTML 表になっているか
+   - `dcases` や `\displaystyle` の数式内の `$` が壊れていないか
+   - 生の改行コード `\n` でセルが途中切断されていないか
+4. **GitHub Actions デプロイ状態の確認**:
+   - `gh run list --limit 1` および `gh run watch [RUN_ID]` でリモートデプロイの成功を確認すること。
