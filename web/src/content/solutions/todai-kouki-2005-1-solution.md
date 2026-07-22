@@ -249,20 +249,19 @@ $$
 \end{align*}
 $$
 
-    だから，$f(\theta)$の増減表は$\eqref{2005-1:table:1}$となる．
-    \begin{table}[H]
-        \centering
-        \caption{$f(\theta)$の増減表}
-        \label{2005-1:table:1}
-        
+    だから，$f(\theta)$の増減表は[表1](#2005-1:table:1)となる．
+    
 
-| $\theta$ | $0$ | | $\alpha$ | | $\pi/3$ | | $\pi$ |
+<figure id="2005-1:table:1" class="table-wrapper">
+
+| $\theta$ | $0$ |  | $\alpha$ |  | $\pi/3$ |  | $\pi$ |
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| $P$ | $0$ | | $\frac{1}{4}$ | | $\frac{1}{2}$ | | $1$ |
-| $f'$ | | $+$ | $+$ | $+$ | $0$ | $-$ | |
+| $P$ | $0$ |  | $\frac{1}{4}$ |  | $\frac{1}{2}$ |  | $1$ |
+| $f'$ |  | $+$ | $+$ | $+$ | $0$ | $-$ |  |
 | $f$ | $(1/4)$ | $\nearrow$ | $\nearrow$ | $\nearrow$ | $1/2$ | $\searrow$ | $(0)$ |
 
-    \end{table}
+  <figcaption>表 1: $f(\theta)$の増減表</figcaption>
+</figure>
 
     したがって，$y=f(\theta)$のグラフの概形は[図4](#2005-1:fig:4)で，
     最大値は

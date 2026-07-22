@@ -65,19 +65,18 @@ $$
 $$
 
   の時である．
-  増減表は$\eqref{2006-1:table:1}$となる．
-  \begin{table}[H]
-    \centering
-    \caption{$g(x)$の増減表}
-    \label{2006-1:table:1}
-    
+  増減表は[表1](#2006-1:table:1)となる．
+  
 
-| $X$ | $0$ | | $\alpha$ | | $\frac{1}{\sqrt{a}}$ |
-|:----:|:------------:|:----------:|:--------:|:----------:|:--------------------:|
-| $g'$ | | $+$ | $0$ | $-$ | |
+<figure id="2006-1:table:1" class="table-wrapper">
+
+| $X$ | $0$ |  | $\alpha$ |  | $\frac{1}{\sqrt{a}}$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| $g'$ |  | $+$ | $0$ | $-$ |  |
 | $g$ | $1/\sqrt{b}$ | $\nearrow$ | 最大 | $\searrow$ | $t/\sqrt{a}$ |
 
-  \end{table}
+  <figcaption>表 1: $g(x)$の増減表</figcaption>
+</figure>
 
   よって $X = \alpha$ で $g(X)$は最大だから，$P_t$の座標は
   

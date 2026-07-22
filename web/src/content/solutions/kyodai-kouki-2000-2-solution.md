@@ -49,19 +49,19 @@ f'_n(x) =
 \end{align*}
 $$
 
-  であるから，$f_n(x)$の増減表は$\eqref{2000-2:table:1}$となる．
-  \begin{table}[H]
-    \centering
-    \caption{$f_n(x)$の増減表}
-    \label{2000-2:table:1}
-    
+  であるから，$f_n(x)$の増減表は[表1](#2000-2:table:1)となる．
+  
 
-| $x$ | $0$ | $\cdots$ | $\frac{n+1}{n}$ | $\cdots$ | $\infty$ |
-|:------:|:------:|:----------:|:---------------:|:----------:|:--------:|
-| $f'_n$ | | $+$ | | $-$ | |
-| $f_n$ | $-n^2$ | $\nearrow$ | | $\searrow$ | $0$ |
+<figure id="2000-2:table:1" class="table-wrapper">
 
-  \end{table}
+|  $x$   |  $0$   |  $\cdots$  | $\frac{n+1}{n}$ |  $\cdots$  | $\infty$ |
+|:--------:|:--------:|:------------:|:-----------------:|:------------:|:----------:|
+| $f'_n$ |          |    $+$     |                   |    $-$     |            |
+| $f_n$  | $-n^2$ | $\nearrow$ |                   | $\searrow$ |   $0$    |
+
+  <figcaption>表 1: $f_n(x)$の増減表</figcaption>
+</figure>
+
   従って，$f_n(x)$は$x=(n+1)/n$で最大値を取るから，
   
 $$

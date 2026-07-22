@@ -29,20 +29,19 @@ a > 0
 $$
 
   として考える．
-  $f(x)$の増減表は$\eqref{1993-2:table:1}$となる．
+  $f(x)$の増減表は[表1](#1993-2:table:1)となる．
 
-  \begin{table}[H]
-    \centering
-    \caption{$f(x)$の増減表}
-    \label{1993-2:table:1}
-    
+  
 
-| $x$ | $\cdots$ | $-\sqrt{a}$ | $\cdots$ | $\sqrt{a}$ | $\cdots$ |
-|:----:|:----------:|:------------:|:----------:|:-------------:|:----------:|
-| $f'$ | $+$ | $0$ | $-$ | $0$ | $+$ |
-| $f$ | $\nearrow$ | $2a\sqrt{a}$ | $\searrow$ | $-2a\sqrt{a}$ | $\nearrow$ |
+<figure id="1993-2:table:1" class="table-wrapper">
 
-  \end{table}
+| $x$  |  $\cdots$  | $-\sqrt{a}$  |  $\cdots$  |  $\sqrt{a}$   |  $\cdots$  |
+|:------:|:------------:|:--------------:|:------------:|:---------------:|:------------:|
+| $f'$ |    $+$     |     $0$      |    $-$     |      $0$      |    $+$     |
+| $f$  | $\nearrow$ | $2a\sqrt{a}$ | $\searrow$ | $-2a\sqrt{a}$ | $\nearrow$ |
+
+  <figcaption>表 1: $f(x)$の増減表</figcaption>
+</figure>
 
   従って，$y=f(x)$のグラフは[図1](#1993-2:fig:1)のようになる．
   

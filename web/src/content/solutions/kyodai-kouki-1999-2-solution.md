@@ -91,21 +91,20 @@ g'(\beta)
 \end{align*}
 $$
 
-  となるから，$g(\beta)$の増減表は$\eqref{1999-2:table:1}$となる．
+  となるから，$g(\beta)$の増減表は[表1](#1999-2:table:1)となる．
 
-  \begin{table}[H]
-    \centering
-    \caption{$f(x)$の増減表}
-    \label{1999-2:table:1}
-    
+  
 
-| $\beta$ | 0 | $\cdots$ | $\pi/3$ | $\cdots$ | $\pi$ |
-|:-----------:|:---:|:----------:|:-------:|:----------:|:-----:|
-| $\cos\beta$ | 1 | $+$ | $1/2$ | $-$ | $-1$ |
-| $g'(\beta)$ | | $+$ | 0 | $-$ | |
-| $g(\beta)$ | 0 | $\nearrow$ | | $\searrow$ | 0 |
+<figure id="1999-2:table:1" class="table-wrapper">
 
-  \end{table}
+|   $\beta$   |  0  |  $\cdots$  | $\pi/3$ |  $\cdots$  | $\pi$ |
+|:-------------:|:---:|:------------:|:---------:|:------------:|:-------:|
+| $\cos\beta$ |  1  |    $+$     |  $1/2$  |    $-$     | $-1$  |
+| $g'(\beta)$ |     |    $+$     |     0     |    $-$     |         |
+| $g(\beta)$  |  0  | $\nearrow$ |           | $\searrow$ |    0    |
+
+  <figcaption>表 1: $f(x)$の増減表</figcaption>
+</figure>
 
   従って, $S(\beta)$は $\beta = \pi/3$ の時最大値
   

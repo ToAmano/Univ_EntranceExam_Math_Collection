@@ -53,20 +53,19 @@ f'(t)
 \end{align*}
 $$
 
-  より，$f(t)$の増減表は$\eqref{1990-4:table:1}$となる．
+  より，$f(t)$の増減表は[表1](#1990-4:table:1)となる．
 
-  \begin{table}[H]
-    \centering
-    \caption{$f(t)$の増減表}
-    \label{1990-4:table:1}
-    
+  
 
-| $t$ | $0$ | $\dots$ | $1$ | $\dots$ | |
-|:-------:|:---:|:----------:|:---:|:----------:|:---:|
-| $f'(t)$ | | $-$ | $0$ | $+$ | |
-| $f(t)$ | | $\searrow$ | | $\nearrow$ | |
+<figure id="1990-4:table:1" class="table-wrapper">
 
-  \end{table}
+|   $t$   | $0$ |  $\dots$   | $1$ |  $\dots$   |     |
+|:---------:|:-----:|:------------:|:-----:|:------------:|:---:|
+| $f'(t)$ |       |    $-$     | $0$ |    $+$     |     |
+| $f(t)$  |       | $\searrow$ |       | $\nearrow$ |     |
+
+  <figcaption>表 1: $f(t)$の増減表</figcaption>
+</figure>
 
   よって $t=1$ で $S$ は最小となるから，求める$t$は
   

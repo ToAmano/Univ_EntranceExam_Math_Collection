@@ -195,19 +195,18 @@ $$
 \end{align*}
 $$
 
-  と計算できるから，$L$の増減表は$\eqref{1994-2:table:1}$となる．
-  \begin{table}[H]
-    \centering
-    \caption{$L$の増減表}
-    \label{1994-2:table:1}
-    
+  と計算できるから，$L$の増減表は[表1](#1994-2:table:1)となる．
+  
 
-| $p$ | $0$ | | $\frac{\pi}{8}$ | | $\frac{\pi}{4}$ | | $\frac{3\pi}{8}$ | | $\frac{\pi}{2}$ |
+<figure id="1994-2:table:1" class="table-wrapper">
+
+| $p$ | $0$ |  | $\frac{\pi}{8}$ |  | $\frac{\pi}{4}$ |  | $\frac{3\pi}{8}$ |  | $\frac{\pi}{2}$ |
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| $L'$ | | $+$ | $0$ | $-$ | | $-$ | $0$ | $+$ | |
-| $L$ | | $\nearrow$ | | $\searrow$ | | $\searrow$ | | $\nearrow$ | |
+| $L'$ |  | $+$ | $0$ | $-$ |  | $-$ | $0$ | $+$ |  |
+| $L$ |  | $\nearrow$ |  | $\searrow$ |  | $\searrow$ |  | $\nearrow$ |  |
 
-  \end{table}
+  <figcaption>表 1: $L$の増減表</figcaption>
+</figure>
 
   したがって、最大値は $p=\frac{1}{8}\pi$ 又は $p=\frac{1}{2}\pi$ の時にとる．
   最小値は $p=0$ 又は $p=\frac{3}{8}\pi$の時にとる．

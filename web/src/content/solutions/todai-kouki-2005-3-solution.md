@@ -132,20 +132,19 @@ S(1) & = -2\sqrt{3} < 0    \\
 \end{align*}
 $$
 
-  より，$S(a_0)=0$ なる$a_0$が唯1つあって，$f(a)$の増減表は$\eqref{2005-3:table:1}$となる．
+  より，$S(a_0)=0$ なる$a_0$が唯1つあって，$f(a)$の増減表は[表1](#2005-3:table:1)となる．
 
-  \begin{table}[H]
-    \centering
-    \caption{$f(a)$の増減表．}
-    \label{2005-3:table:1}
-    
+  
 
-| $a$ | $-\frac{1}{2}$ | | $0$ | | $a_0$ | | $1$ | | $2$ |
+<figure id="2005-3:table:1" class="table-wrapper">
+
+| $a$ | $-\frac{1}{2}$ |  | $0$ |  | $a_0$ |  | $1$ |  | $2$ |
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
 | $S'$ | $0$ | $+$ | $+$ | $+$ | $0$ | $-$ | $-$ | $-$ | $0$ |
-| $S$ | | $\nearrow$ | | $\nearrow$ | $\text{max}$ | $\searrow$ | | $\searrow$ | |
+| $S$ |  | $\nearrow$ |  | $\nearrow$ | $\text{max}$ | $\searrow$ |  | $\searrow$ |  |
 
-  \end{table}
+  <figcaption>表 1: $f(a)$の増減表．</figcaption>
+</figure>
 
   よって$a=a_0$で最大であるから，これをみたす4次式をつくれば良い．
   $S'(a)=0$より

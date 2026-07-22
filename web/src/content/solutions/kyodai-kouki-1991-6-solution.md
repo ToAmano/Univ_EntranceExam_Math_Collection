@@ -27,19 +27,19 @@ f'(x) = e^x - e^a
 \end{align*}
 $$
 
-  だから，増減表は$\eqref{1991-6:table:1}$となる．
-  \begin{table}[H]
-    \centering
-    \caption{$f(x)$の増減表}
-    \label{1991-6:table:1}
-    
+  だから，増減表は[表1](#1991-6:table:1)となる．
+  
 
-| $x$ | $\cdots$ | $a$ | $\cdots$ |
-|:----:|:----------:|:---:|:----------:|
-| $f'$ | $-$ | $0$ | $+$ |
-| $f$ | $\searrow$ | | $\nearrow$ |
+<figure id="1991-6:table:1" class="table-wrapper">
 
-  \end{table}
+| $x$  |  $\cdots$  | $a$ |  $\cdots$  |
+|:------:|:------------:|:-----:|:------------:|
+| $f'$ |    $-$     | $0$ |    $+$     |
+| $f$  | $\searrow$ |       | $\nearrow$ |
+
+  <figcaption>表 1: $f(x)$の増減表</figcaption>
+</figure>
+
   従って，$f(x)$は$x=a$で最小値をとるから，
   
 $$

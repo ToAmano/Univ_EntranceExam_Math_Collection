@@ -54,20 +54,19 @@ $$
 \end{align}
 $$
 
-  $f(x)$の増減表は$\eqref{1993-4:table:1}$となる．
+  $f(x)$の増減表は[表1](#1993-4:table:1)となる．
 
-  \begin{table}[H]
-    \centering
-    \caption{$f(x)$の増減表}
-    \label{1993-4:table:1}
-    
+  
 
-| $x$ | $0$ | $\cdots$ | $\alpha$ | |
-|:----:|:---:|:----------:|:--------:|:----------:|
-| $f'$ | | $-$ | $0$ | $+$ |
-| $f$ | | $\searrow$ | | $\nearrow$ |
+<figure id="1993-4:table:1" class="table-wrapper">
 
-  \end{table}
+| $x$  | $0$ |  $\cdots$  | $\alpha$ |              |
+|:------:|:-----:|:------------:|:----------:|:------------:|
+| $f'$ |       |    $-$     |   $0$    |    $+$     |
+| $f$  |       | $\searrow$ |            | $\nearrow$ |
+
+  <figcaption>表 1: $f(x)$の増減表</figcaption>
+</figure>
 
   従って，題意の条件を満たすには $f(\alpha) \ge 0$ ならば良い．
   
@@ -122,20 +121,20 @@ g'(a) = \frac{e}{a} -1
 \end{align*}
 $$
 
-  だから，$g(x)$の増減表は$\eqref{1993-4:table:2}$となる．
+  だから，$g(x)$の増減表は[表2](#1993-4:table:2)となる．
 
-  \begin{table}[H]
-    \centering
-    \caption{$g(x)$の増減表}
-    \label{1993-4:table:2}
-    
+  
 
-| $a$ | $1$ | | $e$ | |
-|:----:|:---:|:----------:|:---:|:----------:|
-| $g'$ | | $+$ | | $-$ |
-| $g$ | | $\nearrow$ | $0$ | $\searrow$ |
+<figure id="1993-4:table:2" class="table-wrapper">
 
-  \end{table}
+| $a$  | $1$ |              | $e$ |              |
+|:------:|:-----:|:------------:|:-----:|:------------:|
+| $g'$ |       |    $+$     |       |    $-$     |
+| $g$  |       | $\nearrow$ | $0$ | $\searrow$ |
+
+  <figcaption>表 2: $g(x)$の増減表</figcaption>
+</figure>
+
   従って，$g(a) \ge 0$を満たす $a$ は $a=e$のみであり，これは$\eqref{1993-4:eq:3}$を満たすから，
   求める$a$は
   

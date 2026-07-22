@@ -105,39 +105,63 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     raw_tex = re.sub(r'\\centerline', '', raw_tex)
 
     # 3. tabular 環境の pypandoc による完全自動 Markdown 表変換
-    def convert_tabular_block(match):
-        tab_str = match.group(0)
+    def convert_tabular_block(tab_input):
+        tab_str = tab_input.group(0) if hasattr(tab_input, 'group') else str(tab_input)
         # Pandoc が HTML <table> にエスケープする原因となる multirow / multicolumn マクロの展開
         tab_clean = re.sub(r'\\multirow\{[^}]*\}\{[^}]*\}', '', tab_str)
         tab_clean = re.sub(r'\\multicolumn\{[^}]*\}\{[^}]*\}', '', tab_clean)
-        # tabular ブロック内のすべての物理改行 \n をスペースに置換して完全 1 行化
-        tab_clean = tab_clean.replace('\n', ' ').replace('\r', ' ')
+        # standalone tabular 文脈を構築して Pandoc に入力
+        wrapped_tex = f"\\documentclass{{article}}\n\\begin{{document}}\n{tab_clean}\n\\end{{document}}"
         try:
-            md_table = pypandoc.convert_text(tab_clean, 'markdown_strict+pipe_tables+tex_math_dollars', format='latex')
-            # 表セル内の不要な空白・連続スペースの縮約と結合残存マークの除去
+            md_table = pypandoc.convert_text(wrapped_tex, 'gfm', format='latex')
             clean_table_lines = []
             for line in md_table.splitlines():
-                if 'hline' in line:
-                    continue
-                # 連続する複数のスペースを 1 つに縮約
-                line = re.sub(r'[ \t]{2,}', ' ', line)
-                # 左側セルに残った 2-3 などの Pandoc 残存文字をクリーン化
-                line = re.sub(r'\|\s*\d+-\d+\s*\|', '| |', line)
-                clean_table_lines.append(line)
-            return "\n\n" + "\n".join(clean_table_lines).strip() + "\n\n"
+                if line.strip().startswith('|'):
+                    # $`math`$ 形式を通常の $math$ に変換
+                    line_clean = re.sub(r'\$`([^`]+)`\$', r'$\1$', line)
+                    clean_table_lines.append(line_clean)
+            if clean_table_lines:
+                return "\n\n" + "\n".join(clean_table_lines).strip() + "\n\n"
+            return "\n\n" + tab_str + "\n\n"
         except Exception as e:
             print(f"Pandoc table conversion warning: {e}")
             return tab_str
 
-    raw_tex = re.sub(r'\\begin\{tabular\}.*?\\end\{tabular\}', convert_tabular_block, raw_tex, flags=re.DOTALL)
-
     fig_count = 1
     fig_map = {}
+    tab_count = 1
+    tab_map = {}
 
     try:
         soup = TexSoup(raw_tex, tolerance=1)
 
-        # 4. figure 環境の SVG ビルドと HTML <figure> ノード置換
+        # 4. table 環境の HTML/Markdown ノード置換
+        tables = list(soup.find_all('table'))
+        for tbl in tables:
+            caption_node = tbl.find('caption')
+            label_node = tbl.find('label')
+
+            caption_text = str(caption_node.args[0]).strip('{}') if caption_node and caption_node.args else ''
+            label_id = str(label_node.args[0]).strip('{}') if label_node and label_node.args else f'tab_{tab_count}'
+
+            tab_map[label_id] = tab_count
+
+            tbl_str = str(tbl)
+            tabular_html = ""
+            m_tab = re.search(r'\\begin\{tabular\}.*?\\end\{tabular\}', tbl_str, re.DOTALL)
+            if m_tab:
+                tabular_html = convert_tabular_block(m_tab.group(0))
+
+            if caption_text:
+                caption_label = f"表 {tab_count}" + (f": {caption_text}" if caption_text else "")
+                tbl_html = f'\n\n<figure id="{label_id}" class="table-wrapper">\n{tabular_html}\n  <figcaption>{caption_label}</figcaption>\n</figure>\n\n'
+            else:
+                tbl_html = f'\n\n<div id="{label_id}" class="table-wrapper">\n{tabular_html}\n</div>\n\n'
+
+            tbl.replace_with(tbl_html)
+            tab_count += 1
+
+        # 5. figure 環境の SVG ビルドと HTML <figure> ノード置換
         figs = list(soup.find_all('figure'))
         for fig in figs:
             caption_node = fig.find('caption')
@@ -162,13 +186,16 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
                 fig.replace_with(fig_html)
                 fig_count += 1
 
-        # 5. \cref / \ref ノード置換
+        # 6. \cref / \ref ノード置換 (図・表のスマート参照)
         for ref_node in list(soup.find_all(['cref', 'ref'])):
             if ref_node.args:
                 target = str(ref_node.args[0]).strip('{}')
                 if 'fig:' in target or target in fig_map:
                     fig_num = fig_map.get(target, 1)
                     ref_node.replace_with(f'[図{fig_num}](#{target})')
+                elif 'tab:' in target or target in tab_map:
+                    tab_num = tab_map.get(target, 1)
+                    ref_node.replace_with(f'[表{tab_num}](#{target})')
                 else:
                     ref_node.replace_with(f'$\\eqref{{{target}}}$')
 
@@ -191,6 +218,7 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
             math_env.replace_with(f'\n$$\n\\begin{{{env_name}}}\n{align_str}\n\\end{{{env_name}}}\n$$\n')
 
         md_body = str(soup)
+        md_body = re.sub(r'\\begin\{tabular\}.*?\\end\{tabular\}', convert_tabular_block, md_body, flags=re.DOTALL)
     except Exception as e:
         print(f"TexSoup warning for {tex_path}: {e}")
         # TexSoup が不整合な TeX をパース失敗した際のフォールバック
@@ -225,7 +253,7 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         md_body = re.sub(r'\\begin\{(align\*?|gather\*?)\}(.*?)\\end\{\1\}', r'\n$$\n\\begin{\1}\2\\end{\1}\n$$\n', md_body, flags=re.DOTALL)
 
     # 見出しと見映えの最終整頓
-    md_content = re.sub(r'\\begin\{center\}|\\end\{center\}|\\shadowbox\{|\\endtabular', '', md_body)
+    md_content = re.sub(r'\\begin\{table\}[^}\n]*|\\end\{table\}|\\centering|\\begin\{center\}|\\end\{center\}|\\shadowbox\{|\\endtabular', '', md_body)
     md_content = re.sub(r'\\renewcommand\{[^}]*\}\{[^}]*\}', '', md_content)
     md_content = re.sub(r'\\textbf\{([^{}]+)\}', r'**\1**', md_content)
     md_content = re.sub(r'\\normalsize', '', md_content)
@@ -233,7 +261,11 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     md_content = re.sub(r'\{\\bf\s*\\?\[解説\\?\]\}|\*\*\[解説\]\*\*|\\\[解説\\\]|(?<!#)\s*【解説】', r'\n\n## 【解説】\n\n', md_content)
     md_content = re.sub(r'\{\\bf\s*\\?\[方針\\?\]\}|\*\*\[方針\]\*\*|\\\[方針\\\]|(?<!#)\s*【方針】', r'\n\n## 【方針】\n\n', md_content)
 
-    # 小設問 (1), (2) などの見出し化
+    # 明示的な TeX 見出し \paragraph{...} の変換
+    md_content = re.sub(r'\\paragraph\*?\s*\{([^}]+)\}', r'\n\n### \1\n\n', md_content)
+    md_content = re.sub(r'\\subparagraph\*?\s*\{([^}]+)\}', r'\n\n#### \1\n\n', md_content)
+
+    # 小設問 (1), (2) などの見出し化 (後方互換性フォールバック)
     md_content = re.sub(r'^\s*\(([0-9]+)\)', r'\n### (\1)\n', md_content, flags=re.MULTILINE)
 
     # 連続する空行を縮小

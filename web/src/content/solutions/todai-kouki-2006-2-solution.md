@@ -157,20 +157,20 @@ $$
 \end{align*}
 $$
 
-  を満たすような$\theta_0$を用いて，$f(\theta)$の増減表は$\eqref{2006-2:table:1}$となる．
-  \begin{table}[H]
-    \centering
-    \caption{$f(\theta)$の増減表}
-    \label{2006-2:table:1}
-    
+  を満たすような$\theta_0$を用いて，$f(\theta)$の増減表は[表1](#2006-2:table:1)となる．
+  
 
-| $\theta$ | $0$ | | $\theta_0$ | | $\pi/2$ |
-|:------------:|:---:|:----------:|:----------:|:----------:|:-------:|
-| $\cos\theta$ | $1$ | | $2/3$ | | $0$ |
-| $f'$ | | $+$ | $0$ | $-$ | |
-| $f$ | | $\nearrow$ | | $\searrow$ | |
+<figure id="2006-2:table:1" class="table-wrapper">
 
-  \end{table}
+|   $\theta$   | $0$ |              | $\theta_0$ |              | $\pi/2$ |
+|:--------------:|:-----:|:------------:|:------------:|:------------:|:---------:|
+| $\cos\theta$ | $1$ |              |   $2/3$    |              |   $0$   |
+|     $f'$     |       |    $+$     |    $0$     |    $-$     |           |
+|     $f$      |       | $\nearrow$ |              | $\searrow$ |           |
+
+  <figcaption>表 1: $f(\theta)$の増減表</figcaption>
+</figure>
+
   したがって$f(\theta)$が最大値を取るのは$\theta=\theta_0$の時で，この時
   
 $$

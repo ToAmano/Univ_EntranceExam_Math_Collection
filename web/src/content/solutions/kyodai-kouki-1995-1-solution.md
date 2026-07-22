@@ -127,20 +127,19 @@ $$
     $\eqref{1995-1:eq:4}$および，$f(x)=0$が$0<x$に異なる二つの実数解を持つ条件を求めれば良い．
 
     そこで，まず$\eqref{1995-1:eq:4}$から考える．
-    これがが任意の自然数で成立するのは$0<\beta<\alpha$のもとで$\eqref{1995-1:table:1}$の時である．
-    \begin{table}[H]
-        \centering
-        \caption{$\eqref{1995-1:eq:4}$が成立する$\alpha,\beta$の条件}
-        \label{1995-1:table:1}
-        
+    これがが任意の自然数で成立するのは$0<\beta<\alpha$のもとで[表1](#1995-1:table:1)の時である．
+    
 
-| | $0 < \alpha < 1$ | $\alpha = 1$ | $1 < \alpha$ |
-|:---------------:|:----------------:|:------------:|:------------------------:|
+<figure id="1995-1:table:1" class="table-wrapper">
+
+|  | $0 < \alpha < 1$ | $\alpha = 1$ | $1 < \alpha$ |
+|:--:|:--:|:--:|:--:|
 | $0 < \beta < 1$ | $\times$ | $\circ$ | $\circ$ |
 | $\beta = 1$ | $\times$ | $\times$ | $\circ$ |
 | $1 < \beta$ | $\times$ | $\times$ | $1<\beta<\alpha$の時のみ |
 
-    \end{table}
+  <figcaption>表 1: \cref{1995-1:eq:4}が成立する$\alpha,\beta$の条件</figcaption>
+</figure>
 
     したがって，$\eqref{1995-1:eq:4}$が任意の自然数で成立する $\alpha, \beta$ の条件は，
     

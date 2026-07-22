@@ -161,21 +161,20 @@ $$
 </figure>
 
   $\eqref{2004-3:eq:6,2004-3:eq:7}$より，この範囲で$dX/d\theta, dY/d\theta \ge 0$であるから
-  $(X,Y)$の増減表は$\eqref{2004-3:table:1}$となる．
+  $(X,Y)$の増減表は[表1](#2004-3:table:1)となる．
 
-  \begin{table}[H]
-    \centering
-    \caption{$P(X,Y)$の増減表}
-    \label{2004-3:table:1}
-    
+  
 
-| $\theta$ | $\pi/4$ | | $\pi/3$ |
+<figure id="2004-3:table:1" class="table-wrapper">
+
+| $\theta$ | $\pi/4$ |  | $\pi/3$ |
 |:--:|:--:|:--:|:--:|
 | $X'$ | $+$ | $+$ | $+$ |
 | $Y'$ | $+$ | $+$ | $+$ |
 | $(X,Y)$ | $(0, \sqrt{2}-1)$ | $\nearrow$ | $\left(\frac{2-\sqrt{3}}{2}, \frac{1}{2}\right)$ |
 
-  \end{table}
+  <figcaption>表 1: $P(X,Y)$の増減表</figcaption>
+</figure>
 
   したがって、$P$の軌跡の概形は[図4](#2004-3:fig:4)のようになる．
 

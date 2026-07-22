@@ -112,21 +112,20 @@ $$
 \end{align}
 $$
 
-  であるから，$\eqref{2000-2:table:1}$を得る．
+  であるから，[表1](#2000-2:table:1)を得る．
 
-  \begin{table}[H]
-    \centering
-    \caption{$(X,Y)$の$\theta$による変化}
-    \label{2000-2:table:1}
-    
+  
 
-| $\theta$ | $0$ | | $\pi/2$ | | $\pi$ |
-|:--------------------:|:-------:|:------------:|:------------:|:-------------:|:--------:|
-| $\frac{dX}{d\theta}$ | | $-$ | $0$ | $+$ | |
-| $X$ | | $\leftarrow$ | | $\rightarrow$ | |
-| $(X,Y)$ | $(1,0)$ | | $(-\pi/2,1)$ | | $(-1,0)$ |
+<figure id="2000-2:table:1" class="table-wrapper">
 
-  \end{table}
+| $\theta$ | $0$ |  | $\pi/2$ |  | $\pi$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| $\frac{dX}{d\theta}$ |  | $-$ | $0$ | $+$ |  |
+| $X$ |  | $\leftarrow$ |  | $\rightarrow$ |  |
+| $(X,Y)$ | $(1,0)$ |  | $(-\pi/2,1)$ |  | $(-1,0)$ |
+
+  <figcaption>表 1: $(X,Y)$の$\theta$による変化</figcaption>
+</figure>
 
   これと$Y \ge 0$に注意して，$P$の軌跡は[図3](#2000-2:fig:3)のようになる．
   図のように$0\le\theta\le\pi/2$の部分を$Y_{+}$,$\pi/2\le\theta\le\pi$の部分を$Y_{-}$と定義する．

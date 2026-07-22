@@ -117,20 +117,19 @@ $$
 $$
 
   となり，これは$0<\theta<\pi$で正，$\pi<\theta<2\pi$で負だから，
-  $S(\theta)$の増減表は$\eqref{1994-5:table:1}$のようになる．
+  $S(\theta)$の増減表は[表1](#1994-5:table:1)のようになる．
 
-  \begin{table}[H]
-    \centering
-    \caption{$S(\theta)$の増減表}
-    \label{1994-5:table:1}
-    
+  
 
-| $\theta$ | $0$ | | $\pi$ | | $2\pi$ |
-|:--------:|:-----:|:----------:|:-----:|:----------:|:----------:|
-| $S'$ | | $+$ | $0$ | $-$ | |
-| $S$ | $(0)$ | $\nearrow$ | | $\searrow$ | $(1/4\pi)$ |
+<figure id="1994-5:table:1" class="table-wrapper">
 
-  \end{table}
+| $\theta$ |  $0$  |              | $\pi$ |              |   $2\pi$   |
+|:----------:|:-------:|:------------:|:-------:|:------------:|:------------:|
+|   $S'$   |         |    $+$     |  $0$  |    $-$     |              |
+|   $S$    | $(0)$ | $\nearrow$ |         | $\searrow$ | $(1/4\pi)$ |
+
+  <figcaption>表 1: $S(\theta)$の増減表</figcaption>
+</figure>
 
   よって$S$は$\theta=\pi$で最大値をとり，その最大値は
   
@@ -170,35 +169,33 @@ f'(\theta)
 \end{align*}
 $$
 
-  より，まず$f'$の増減表は$\eqref{1994-5:table:2}$となる．
+  より，まず$f'$の増減表は[表2](#1994-5:table:2)となる．
 
-  \begin{table}[H]
-    \centering
-    \caption{$f'(\theta)$の増減表}
-    \label{1994-5:table:2}
-    
+  
 
-| $\theta$ | $0$ | | $\pi/2$ | | $3\pi/2$ | | $2\pi$ |
-|:--------:|:---:|:----------:|:-------:|:----------:|:--------:|:----------:|:------:|
-| $f''$ | | $+$ | $0$ | $-$ | $0$ | $+$ | |
+<figure id="1994-5:table:2" class="table-wrapper">
+
+| $\theta$ | $0$ |  | $\pi/2$ |  | $3\pi/2$ |  | $2\pi$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| $f''$ |  | $+$ | $0$ | $-$ | $0$ | $+$ |  |
 | $f'$ | $0$ | $\nearrow$ | \| | $\searrow$ | \| | $\nearrow$ | $0$ |
 
-  \end{table}
+  <figcaption>表 2: $f'(\theta)$の増減表</figcaption>
+</figure>
 
   増減表より，$\pi/2 < \alpha < 3\pi/2$で$f'(\alpha)=0$をみたす$\alpha$が唯一つある．
-  従って$f(\theta)$の増減表は$\eqref{1994-5:table:3}$となる．ただし，$f(\pi)=0$に注意する．
+  従って$f(\theta)$の増減表は[表3](#1994-5:table:3)となる．ただし，$f(\pi)=0$に注意する．
 
-  \begin{table}[H]
-    \centering
-    \caption{$f(\theta)$の増減表}
-    \label{1994-5:table:3}
-    
+  
 
-| $\theta$ | $0$ | | $\alpha$ | | $\pi$ | | $2\pi$ |
-|:--------:|:---:|:----------:|:--------:|:----------:|:-----:|:----------:|:-------:|
-| $f'$ | $0$ | $+$ | $0$ | $-$ | | $-$ | |
-| $f$ | $0$ | $\nearrow$ | | $\searrow$ | $0$ | $\searrow$ | $-2\pi$ |
+<figure id="1994-5:table:3" class="table-wrapper">
 
-  \end{table}
+| $\theta$ | $0$ |  | $\alpha$ |  | $\pi$ |  | $2\pi$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| $f'$ | $0$ | $+$ | $0$ | $-$ |  | $-$ |  |
+| $f$ | $0$ | $\nearrow$ |  | $\searrow$ | $0$ | $\searrow$ | $-2\pi$ |
+
+  <figcaption>表 3: $f(\theta)$の増減表</figcaption>
+</figure>
 
   従って，$f(\theta)$は$0<\theta<\pi$で正，$\pi<\theta<2\pi$で負であり，解答中の増減表に一致する．

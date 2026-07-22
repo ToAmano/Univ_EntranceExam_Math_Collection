@@ -16,7 +16,7 @@ title: "1996年 全体サマリ"
 
 | **問題番号** | **テーマ** | **難易度** |
 |:------------:|:-----------|:----------:|
-| 第1問 | 平面図形 | 普 |
+|    第1問     | 平面図形   |     普     |
 
   }
 
@@ -29,8 +29,8 @@ title: "1996年 全体サマリ"
 | **問題番号** | **小問** | **答え** |
 |:--:|:--:|:---|
 | 第1問 | \(1\) | $\displaystyle S_{\theta}= \frac{1}{2}\theta + \frac{1}{2}\left(\pi-\theta\right)\tan^2\frac{\theta}{2} -\tan\frac{\theta}{2}$ |
-| | \(2\) | $\displaystyle Y = \frac{x(1-x)}{\sqrt{2x-x^2}} \quad (0<x<1)$ |
-| | \(3\) | $\displaystyle V = \pi \left(2\log 2 - \frac{4}{3}\right)$ |
+| 2-3 | \(2\) | $\displaystyle Y = \frac{x(1-x)}{\sqrt{2x-x^2}} \quad (0<x<1)$ |
+| 2-3 | \(3\) | $\displaystyle V = \pi \left(2\log 2 - \frac{4}{3}\right)$ |
 
     
   }
@@ -42,7 +42,7 @@ title: "1996年 全体サマリ"
   
     
 
-| |
+|         |
 |:--------|
 | 1問60分 |
 

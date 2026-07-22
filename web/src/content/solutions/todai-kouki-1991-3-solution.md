@@ -173,21 +173,20 @@ g'(\theta)
 $$
 
   だから，$\theta_0 $を $\frac{\pi}{2}<\theta_0<\pi $かつ$ \cos\theta_0 = \frac{1-\sqrt{3}}{2} $をみたすようにとって
-  $g(\theta)$の増減表は$\eqref{1991-3:table:1}$となる．
+  $g(\theta)$の増減表は[表1](#1991-3:table:1)となる．
 
-  \begin{table}[H]
-    \centering
-    \caption{$g(\theta)$の増減表}
-    \label{1991-3:table:1}
-    
+  
 
-| $\theta$ | $\frac{\pi}{2}$ | | $\theta_0$ | | $\frac{3\pi}{4}$ | | $\pi$ |
+<figure id="1991-3:table:1" class="table-wrapper">
+
+| $\theta$ | $\frac{\pi}{2}$ |  | $\theta_0$ |  | $\frac{3\pi}{4}$ |  | $\pi$ |
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
 | $c$ | $0$ | $+$ | $0$ | $-$ | $-$ | $-$ | $-1$ |
-| $g'$ | | $+$ | $0$ | $-$ | $-$ | $-$ | |
-| $g$ | $(1)$ | $\nearrow$ | | $\searrow$ | $\searrow$ | $\searrow$ | $(0)$ |
+| $g'$ |  | $+$ | $0$ | $-$ | $-$ | $-$ |  |
+| $g$ | $(1)$ | $\nearrow$ |  | $\searrow$ | $\searrow$ | $\searrow$ | $(0)$ |
 
-  \end{table}
+  <figcaption>表 1: $g(\theta)$の増減表</figcaption>
+</figure>
 
   したがって$g(\theta)$は$\theta = \theta_0$で最大である．
   この時$\sin\theta_0 = \sqrt{1 - \left(\frac{1-\sqrt{3}}{2}\right)^2} = \frac{\sqrt{3}}{2}$だから

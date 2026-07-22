@@ -30,20 +30,20 @@ f'(x)  & = 2 \frac{\log x}{x}\label{2010-2:eq:1}\\
 \end{align}
 $$
 
-  であるから，増減表は$\eqref{2010-2:table:1}$となる．
-  \begin{table}[H]
-    \centering
-    \caption{$f(x)$の増減表}
-    \label{2010-2:table:1}
-    
+  であるから，増減表は[表1](#2010-2:table:1)となる．
+  
 
-| $x$ | $0$ | $\cdots$ | $1$ | $\cdots$ | $e$ | $\cdots$ | |
+<figure id="2010-2:table:1" class="table-wrapper">
+
+| $x$ | $0$ | $\cdots$ | $1$ | $\cdots$ | $e$ | $\cdots$ |  |
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| $f'$ | | $-$ | $0$ | $+$ | $+$ | $+$ | |
-| $f''$ | | $+$ | $+$ | $+$ | $0$ | $-$ | |
+| $f'$ |  | $-$ | $0$ | $+$ | $+$ | $+$ |  |
+| $f''$ |  | $+$ | $+$ | $+$ | $0$ | $-$ |  |
 | $f$ | $(\infty)$ | $\roundedArrowDR$ | $0$ | $\roundedArrowRU$ | $1$ | $\roundedArrowUR$ | () |
 
-  \end{table}
+  <figcaption>表 1: $f(x)$の増減表</figcaption>
+</figure>
+
   従って，グラフの概形は[図1](#2010-2:fig:1)となる．
   
 
@@ -115,19 +115,19 @@ h'(x) = \frac{f''(x)}{2}
 \end{align*}
 $$
 
-  であり，$h(x)$の増減表は$\eqref{2010-2:table:2}$となる．
-  \begin{table}[H]
-    \centering
-    \caption{$h(x)$の増減表}
-    \label{2010-2:table:2}
-    
+  であり，$h(x)$の増減表は[表2](#2010-2:table:2)となる．
+  
 
-| $x$ | $0$ | $\cdots$ | $e$ | $\cdots$ | $\infty$ |
-|:----:|:-----------:|:----------:|:---:|:----------:|:--------:|
-| $h'$ | | $+$ | $0$ | $-$ | |
-| $f$ | $(-\infty)$ | $\nearrow$ | $1$ | $\searrow$ | \(0\) |
+<figure id="2010-2:table:2" class="table-wrapper">
 
-  \end{table}
+| $x$  |     $0$     |  $\cdots$  | $e$ |  $\cdots$  | $\infty$ |
+|:------:|:-------------:|:------------:|:-----:|:------------:|:----------:|
+| $h'$ |               |    $+$     | $0$ |    $-$     |            |
+| $f$  | $(-\infty)$ | $\nearrow$ | $1$ | $\searrow$ |   \(0\)    |
+
+  <figcaption>表 2: $h(x)$の増減表</figcaption>
+</figure>
+
   従って$y=h(x)$のグラフの概形は[図2](#2010-2:fig:2)となる．
   
 
@@ -152,19 +152,18 @@ $$
 $$
 
   である．
-  従って$g(x)$の増減表は$\eqref{2010-2:table:3}$のようになる．
-  \begin{table}[H]
-    \centering
-    \caption{$g(x)$の増減表}
-    \label{2010-2:table:3}
-    
+  従って$g(x)$の増減表は[表3](#2010-2:table:3)のようになる．
+  
 
-| $x$ | $0$ | $\cdots$ | $\alpha$ | $\cdots$ | $\infty$ |
-|:----:|:----------:|:----------:|:--------:|:----------:|:----------:|
-| $g'$ | | $-$ | $0$ | $+$ | |
-| $g$ | $(\infty)$ | $\searrow$ | $0$ | $\nearrow$ | $(\infty)$ |
+<figure id="2010-2:table:3" class="table-wrapper">
 
-  \end{table}
+| $x$  |    $0$     |  $\cdots$  | $\alpha$ |  $\cdots$  |  $\infty$  |
+|:------:|:------------:|:------------:|:----------:|:------------:|:------------:|
+| $g'$ |              |    $-$     |   $0$    |    $+$     |              |
+| $g$  | $(\infty)$ | $\searrow$ |   $0$    | $\nearrow$ | $(\infty)$ |
+
+  <figcaption>表 3: $g(x)$の増減表</figcaption>
+</figure>
 
   従って，$g(x)=0$の解の数は$x=\alpha$ただ一つ．
 
@@ -182,19 +181,19 @@ $$
 $$
 
   である．
-  従って$g(x)$の増減表は$\eqref{2010-2:table:4}$のようになる．
-  \begin{table}[H]
-    \centering
-    \caption{$g(x)$の増減表}
-    \label{2010-2:table:4}
-    
+  従って$g(x)$の増減表は[表4](#2010-2:table:4)のようになる．
+  
 
-| $x$ | $0$ | $\cdots$ | $\alpha$ | $\cdots$ | $\infty$ |
-|:----:|:----------:|:----------:|:--------:|:----------:|:-----------:|
-| $g'$ | | $-$ | $0$ | $-$ | |
-| $g$ | $(\infty)$ | $\searrow$ | $0$ | $\nearrow$ | $(-\infty)$ |
+<figure id="2010-2:table:4" class="table-wrapper">
 
-  \end{table}
+| $x$  |    $0$     |  $\cdots$  | $\alpha$ |  $\cdots$  |  $\infty$   |
+|:------:|:------------:|:------------:|:----------:|:------------:|:-------------:|
+| $g'$ |              |    $-$     |   $0$    |    $-$     |               |
+| $g$  | $(\infty)$ | $\searrow$ |   $0$    | $\nearrow$ | $(-\infty)$ |
+
+  <figcaption>表 4: $g(x)$の増減表</figcaption>
+</figure>
+
   よって，$g(x)=0$の解の数は$x=\alpha$ただ一つ．
 
   
@@ -211,19 +210,19 @@ $$
 $$
 
   である．
-  よって$g(x)$の増減表は$\eqref{2010-2:table:5}$となる．
-  \begin{table}[H]
-    \centering
-    \caption{$h(x)$の増減表}
-    \label{2010-2:table:5}
-    
+  よって$g(x)$の増減表は[表5](#2010-2:table:5)となる．
+  
+
+<figure id="2010-2:table:5" class="table-wrapper">
 
 | $x$ | $0$ | $\cdots$ | $\alpha$ | $\cdots$ | $\beta$ | $\cdots$ | $\infty$ |
-|:----:|:----------:|:----------:|:--------:|:----------:|:-------:|:----------:|:-----------:|
-| $g'$ | | $-$ | $0$ | $+$ | $0$ | $-$ | |
-| $g$ | $(\infty)$ | $\searrow$ | $0$ | $\nearrow$ | | $\searrow$ | $(-\infty)$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| $g'$ |  | $-$ | $0$ | $+$ | $0$ | $-$ |  |
+| $g$ | $(\infty)$ | $\searrow$ | $0$ | $\nearrow$ |  | $\searrow$ | $(-\infty)$ |
 
-  \end{table}
+  <figcaption>表 5: $h(x)$の増減表</figcaption>
+</figure>
+
   従って，$g(x)=0$の解の数は二つである．
 
   以上三つの場合わけにより全ての場合は尽くされた．

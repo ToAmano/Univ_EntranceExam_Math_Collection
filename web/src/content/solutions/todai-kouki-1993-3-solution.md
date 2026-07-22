@@ -338,20 +338,19 @@ V'(r)
 $$
 
   である．
-  従って$V(r)$の増減表は$\eqref{1993-3:table:1}$となる．
+  従って$V(r)$の増減表は[表1](#1993-3:table:1)となる．
 
-  \begin{table}[H]
-    \centering
-    \caption{$V(r)$の増減表}
-    \label{1993-3:table:1}
-    
+  
 
-| $r$ | $\frac{3}{2}$ | $\cdots$ | $\frac{-1+\sqrt{21}}{2}$ | $\cdots$ | $\frac{\sqrt{17}}{2}$ | |
+<figure id="1993-3:table:1" class="table-wrapper">
+
+| $r$ | $\frac{3}{2}$ | $\cdots$ | $\frac{-1+\sqrt{21}}{2}$ | $\cdots$ | $\frac{\sqrt{17}}{2}$ |  |
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| $V'$ | | $+$ | $0$ | $-$ | | $-$ |
-| $V$ | | $\nearrow$ | | $\searrow$ | | $\searrow$ |
+| $V'$ |  | $+$ | $0$ | $-$ |  | $-$ |
+| $V$ |  | $\nearrow$ |  | $\searrow$ |  | $\searrow$ |
 
-  \end{table}
+  <figcaption>表 1: $V(r)$の増減表</figcaption>
+</figure>
 
   したがって$V(r)$が最大になるのは
   
