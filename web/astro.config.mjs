@@ -12,6 +12,9 @@ export default defineConfig({
         tex: {
           tags: 'ams',
           inlineMath: [['$', '$'], ['\\(', '\\)']],
+          macros: {
+            mqty: ['\\begin{pmatrix}#1\\end{pmatrix}', 1],
+          },
         },
         options: {
           skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
