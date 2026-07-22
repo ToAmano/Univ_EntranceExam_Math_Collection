@@ -17,11 +17,12 @@ title: "TODAI 1989 zenki Q1 (solution)"
 
  
      
+<span id="1"></span><span id="2"></span><span id="3"></span>
 $$
 \exists\a\exists\b \begin{cases}
-\b=k(\a-\a^3) \label{1}\\
-     \a=k(\b-\b^3) \label{2}\\
-     \a\not=\b \ \ \ \ 0<\a,\b \label{3}
+\b=k(\a-\a^3) \\
+     \a=k(\b-\b^3) \\
+     \a\not=\b \ \ \ \ 0<\a,\b 
 \end{cases}
 $$
 
@@ -55,11 +56,12 @@ $$
      
 途中の変形に$\a+\b\not=0$，$\a-\b\not=0$を用いた． 然るに$k>0$だから
       
+<span id="4"></span><span id="5"></span><span id="6"></span>
 $$
 \exists\a\exists\b \begin{cases}
-1-(\a^2+\b^2)=0 \label{4}\\
-      1=k\a\b  \label{5}\\
-      \a\not=\b \ \ \ \ 0<\a,\b \label{6}
+1-(\a^2+\b^2)=0 \\
+      1=k\a\b  \\
+      \a\not=\b \ \ \ \ 0<\a,\b 
 \end{cases}
 $$
 
@@ -94,11 +96,12 @@ $$
  {\bf[別解2]}\eqref{4}以下，$\a$，$\b$を解とする$2$次方程式を考えてもよい．$a=\a+\b$，$b=\a\b$
  とおけば
        
+<span id="7"></span><span id="8"></span><span id="9"></span>
 $$
 \exists a\exists b \begin{cases}
-1=a^2-2b \label{7}\\
-      1=kb  \label{8}\\
-      \a\not=\b \ \ \ \ 0<\a,\b \label{9}
+1=a^2-2b \\
+      1=kb  \\
+      \a\not=\b \ \ \ \ 0<\a,\b 
 \end{cases}
 $$
 

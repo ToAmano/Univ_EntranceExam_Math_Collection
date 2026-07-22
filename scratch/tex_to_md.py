@@ -239,10 +239,18 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         def replace_numcases(match):
             left_expr = re.sub(r'\\+$', '', match.group(1).strip()).strip()
             body = match.group(2).strip()
+
+            # cases 環境内部の \label{...} は MathJax がパースエラーを起こす原因となるため抽出・除去
+            lbl_matches = re.findall(r'\\label\{([^}]+)\}', body)
+            body_clean = re.sub(r'\\label\{[^}]+\}', '', body)
+
+            # アンカー用 HTML span タグの生成
+            anchors = "".join([f'<span id="{lbl}"></span>' for lbl in lbl_matches])
+
             if left_expr:
-                return f"\n$$\n{left_expr} \\begin{{cases}}\n{body}\n\\end{{cases}}\n$$\n"
+                return f"\n{anchors}\n$$\n{left_expr} \\begin{{cases}}\n{body_clean}\n\\end{{cases}}\n$$\n"
             else:
-                return f"\n$$\n\\begin{{cases}}\n{body}\n\\end{{cases}}\n$$\n"
+                return f"\n{anchors}\n$$\n\\begin{{cases}}\n{body_clean}\n\\end{{cases}}\n$$\n"
 
         md_body = re.sub(r'\\begin\{(?:numcases|subnumcases)\}\s*\{([^}]*)\}(.*?)\\end\{(?:numcases|subnumcases)\}', replace_numcases, md_body, flags=re.DOTALL)
     except Exception as e:

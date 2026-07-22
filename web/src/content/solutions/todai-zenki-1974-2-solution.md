@@ -34,10 +34,11 @@ $$
 となる．ここで$t=a+b$，$s=b-a$とおいて，$a$，$b$の存在条件を調べる．     
 まずは\eqref{1}，\eqref{2}に代入して
      
+<span id="3"></span><span id="4"></span>
 $$
 \begin{cases}
-s>0 \label{3}\\
-     s^2(1+t^2)=l^2 \label{4}
+s>0 \\
+     s^2(1+t^2)=l^2 
 \end{cases}
 $$
 

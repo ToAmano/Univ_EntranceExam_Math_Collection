@@ -75,10 +75,11 @@ $$
      
 を得る$(\because0<c<1)$．故に
      
+<span id="4"></span><span id="5"></span>
 $$
 \begin{cases}
-xf(x)=g(x)+x\frac{g(x)}{1-x}  \label{4}\\
-     f(0)=1 \label{5}
+xf(x)=g(x)+x\frac{g(x)}{1-x}  \\
+     f(0)=1 
 \end{cases}
 $$
 

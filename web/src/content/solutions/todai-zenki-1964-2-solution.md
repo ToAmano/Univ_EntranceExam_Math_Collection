@@ -28,10 +28,11 @@ $$
 $t\in\mathbb{R}$に対して$A(t,t^2)$と置ける． 題意の条件から$s\in\mathbb{R}$に対して
 $B(s,3s^2+24s+50)$とおいてよい．このとき内分点に関する条件から
      
+<span id="3"></span><span id="4"></span>
 $$
 \begin{cases}
-\frac{nt+m\alpha}{m+n}=s \label{3}\\
-     \frac{nt^2+m\beta}{m+n}=3s^2+24s+50 \label{4}
+\frac{nt+m\alpha}{m+n}=s \\
+     \frac{nt^2+m\beta}{m+n}=3s^2+24s+50 
 \end{cases}
 $$
 
