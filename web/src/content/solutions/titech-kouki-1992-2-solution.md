@@ -12,6 +12,7 @@ title: "TITECH 1992 kouki Q2 (solution)"
   ベクトル $\vec{A_n A_{n+1}}$ を表す複素数を $d_n$ と表す．
   また、$e(\theta) = \cos\theta + i\sin\theta$ とし，$p=e(2\pi/3)$とする．題意から，
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -23,6 +24,7 @@ $$
 
   となる．これは初項 $d_0 = a$、公比 $ap$ の等比数列だから，その一般項は，
   
+
 $$
 \begin{align*}
 d_n = a(ap)^n
@@ -32,6 +34,7 @@ $$
   となる．
   したがって，点 $A_n$ を表す複素数を $t_n$ とおくと，$n\ge 1$に対して
   
+
 $$
 \begin{align}
 t_n = \sum_{k=0}^{n-1} d_k = a \frac{1-(ap)^n}{1-ap}
@@ -41,6 +44,7 @@ $$
   となる．題意より$0<a<1$であり，またその定義から$|p|=1$であるから
   $\lim_{n \to \infty} (ap)^n = 0$となり，$t_n$の極限値は
   
+
 $$
 \begin{align*}
 \lim_{n \to \infty} t_n & = \frac{a}{1-ap}
@@ -49,6 +53,7 @@ $$
 
   である．ここに$p=-1/2+i\sqrt{3}/2$を代入すると
   
+
 $$
 \begin{align*}
 \lim_{n \to \infty} t_n
@@ -58,6 +63,7 @@ $$
 
   したがって、求める座標は
   
+
 $$
 \begin{align*}
 \left(\frac{a(2+a)}{2(a^2+a+1)}, \frac{\sqrt{3}a^2}{2(a^2+a+1)}\right)
@@ -78,6 +84,7 @@ $$
   ここで複素数を扱う上での解答上のテクニックを一つ説明したい．
   およそ複素数を何か文字で置く場合
   
+
 $$
 \begin{align*}
 A = x +iy
@@ -86,6 +93,7 @@ $$
 
   のように実部虚部を変数とするか
   
+
 $$
 \begin{align*}
 A = r(\cos\theta + i\sin\theta)
@@ -96,6 +104,7 @@ $$
 
   後者を利用する場合，いわゆる大学数学の範囲にオイラーの公式と言われるものがあって，
   
+
 $$
 \begin{align*}
 e^{i\theta} = \cos\theta + i\sin\theta
@@ -105,6 +114,7 @@ $$
   という関係が成り立つ．これによって，例えば加法定理が成り立つことが以下のように容易に見られる．
   $e^{i(\alpha+\beta)}$をふた通りで計算すると
   
+
 $$
 \begin{align*}
 e^{i\alpha}e^{i\beta}& = \left(\cos\alpha+i\sin\beta\right)\left(\cos\beta+i\sin\beta\right)\\
@@ -114,6 +124,7 @@ $$
 
   だから，実部と虚部を比較すると
   
+
 $$
 \begin{align*}
 \cos\left(\alpha+\beta\right)& =\cos\alpha\cos\beta - \sin\alpha\sin\beta\\\sin\left(\alpha+\beta\right)& =\cos\alpha\sin\beta + \sin\alpha\cos\beta
@@ -125,6 +136,7 @@ $$
   特に複素数で回転を扱う問題の場合，回転の合成をしたいことがあり，その場合にはこのオイラーの公式が非常に有用である．
   かといってあからさまに使うのは憚られるので，今回の解答のように
   
+
 $$
 \begin{align*}
 e(\theta) = \cos\theta + i\sin\theta
@@ -134,6 +146,7 @@ $$
   という表記を用いる．
   すると，先ほどの加法定理から
   
+
 $$
 \begin{align*}
 e(\alpha+\beta) = e(\alpha)e(\beta)
@@ -144,6 +157,7 @@ $$
   今回の解答ではこの関係を使うことはなかったが，使う場合，不安な人は加法定理から証明を与えておけば良いだろう．
   実際にやってみると，
   
+
 $$
 \begin{align*}
 e(\alpha)e(\beta)

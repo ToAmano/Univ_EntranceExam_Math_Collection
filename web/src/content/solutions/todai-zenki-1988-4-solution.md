@@ -21,6 +21,7 @@ title: "TODAI 1988 zenki Q4 (solution)"
  点$P$の軌跡上で，$y$座標が$k\in\mathbb{Z}$の時の$x$座標の値$x_k$とする．
 すると，$x_0=0$で，題意の設定から$k\ge 1$の時
      
+
 $$
 \begin{align*}
 &x_{k+1}=x_k+\frac{1}{s^ka}\\&x_k-x_0=\sum_{i=0}^{k-1}\frac{1}{s^ka}\\\therefore\ &x_k=\left\{\begin{array}{ll}
@@ -32,6 +33,7 @@ $$
 
 である．従って，この極限値は$s$の値によって以下のようになる．
      
+
 $$
 \begin{align*}
 \left\{\begin{array}{ll}
@@ -43,6 +45,7 @@ $$
 
 点$P$は連続的に変化するので，この極限値よりも$b$が小さければよい．故に，
      
+
 $$
 \begin{align*}
 &0<s\le1  &or \ \ \ \ \ b<\frac{1}{a}\frac{1}{1-1/s}

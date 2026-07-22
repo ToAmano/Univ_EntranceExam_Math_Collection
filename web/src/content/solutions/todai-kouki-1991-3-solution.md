@@ -9,7 +9,7 @@ title: "TODAI 1991 kouki Q3 (solution)"
 
 ## 【解】
 
-### (1)
+  (1)
 
   
 
@@ -21,6 +21,7 @@ title: "TODAI 1991 kouki Q3 (solution)"
   $AP = x, BP = y$ とおく($0<x,y<2$)．
   $\triangle ABP$に余弦定理を用いて
   
+
 $$
 \begin{align}
 4 = x^2 + y^2 - 2xy\cos\theta\label{1991-3:eq:1}
@@ -31,6 +32,7 @@ $$
 
   三角形APR，APB，PBQの面積は
   
+
 $$
 \begin{align*}
 \triangle APR
@@ -42,6 +44,7 @@ $$
 
   だから，五角形ARPQBの面積はこれら3つの面積の和で
   
+
 $$
 \begin{align}
 S
@@ -51,9 +54,10 @@ $$
 
   である．
 
-  よって$\eqref{1991-3:eq:2}$の元での$\eqref{1991-3:eq:1}$のとりうる範囲を求めれば良い．
-  $\eqref{1991-3:eq:1}$を$\eqref{1991-3:eq:2}$に代入して$xy$だけを残すと
+  よって[(式2)](#1991-3:eq:2)の元での[(式1)](#1991-3:eq:1)のとりうる範囲を求めれば良い．
+  [(式1)](#1991-3:eq:1)を[(式2)](#1991-3:eq:2)に代入して$xy$だけを残すと
   
+
 $$
 \begin{align}
 S
@@ -66,6 +70,7 @@ $$
   ここで$\alpha=x+y, \beta=xy$とすると、まず$x,y$は$t$の2次方程式 $t^2 - \alpha t + \beta = 0$ の $0<t<2$ をみたす
   2実解(重解含む)だから
   
+
 $$
 \begin{align}
 & \begin{dcases}
@@ -83,8 +88,9 @@ $$
 
   である．
 
-  また，$\eqref{1991-3:eq:1}$を$\alpha,\beta$で書き換えると
+  また，[(式1)](#1991-3:eq:1)を$\alpha,\beta$で書き換えると
   
+
 $$
 \begin{align}
 4 = \alpha^2 - 2(1+\cos\theta)\beta\label{1991-3:eq:5}
@@ -93,8 +99,9 @@ $$
 
   である．
 
-  $\eqref{1991-3:eq:4,1991-3:eq:5}$を図示すると下図太線部(境界含む)だから
+  [(式5)](#1991-3:eq:4,1991-3:eq:5)を図示すると下図太線部(境界含む)だから
   
+
 $$
 \begin{align*}
 0 < \beta\le\frac{\alpha^2-4}{2(1+c)}\\\therefore
@@ -111,8 +118,9 @@ $$
   <figcaption>図 2: $\alpha,\beta$の存在領域</figcaption>
 </figure>
 
-  $\eqref{1991-3:eq:3}$は$\beta=xy$についての一次式だから，とりうる範囲は$\frac{\pi}{2} < \theta < \pi$より
+  [(式3)](#1991-3:eq:3)は$\beta=xy$についての一次式だから，とりうる範囲は$\frac{\pi}{2} < \theta < \pi$より
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -127,6 +135,7 @@ $$
 
   ここで
   
+
 $$
 \begin{align*}
 f(0)
@@ -137,6 +146,7 @@ $$
 
   だから，
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -149,11 +159,12 @@ $$
 
   となる．$\cdots$(答)
 
-### (2)
-
+  
+  (2)
   $\theta$が$\frac{\pi}{2}<\theta<\pi$を満たして動く時の$S$の範囲を求めれば良い．
   そこで，$S$の上限下限を表す関数を
   
+
 $$
 \begin{align*}
 g(\theta) & = \frac{\sin\theta(1-2\cos\theta)}{1-c-\theta}\\
@@ -165,6 +176,7 @@ $$
 
   $g(\theta)$の概形を求めるため，一階微分を計算すると
   
+
 $$
 \begin{align*}
 g'(\theta)
@@ -191,6 +203,7 @@ $$
   したがって$g(\theta)$は$\theta = \theta_0$で最大である．
   この時$\sin\theta_0 = \sqrt{1 - \left(\frac{1-\sqrt{3}}{2}\right)^2} = \frac{\sqrt{3}}{2}$だから
   
+
 $$
 \begin{align*}
 g(\theta_0)
@@ -202,6 +215,7 @@ $$
 
   よってSのとりうる領域は[図3](#1991-3:fig:3)の斜線部である(境界は実線部含む．白点は含まず．)．
   
+
 $$
 \begin{align*}
 0 < S \le 2^{-\frac{1}{2}}\cdot 3^{\frac{3}{4}}\left(3^{\frac{1}{2}}-1\right)

@@ -37,11 +37,11 @@ title: "TODAI 1992 zenki Q5 (solution)"
      であるから，
           \begin{align}
           L&=\int_1^x\sqrt{1+(dy/ds)^2}ds \nonumber\\
-          &=\frac{1}{2}\int_1^s\left(s^2+\frac{1}{s^2}\right)ds\tag{$\because\eqref{2}$}\\
+          &=\frac{1}{2}\int_1^s\left(s^2+\frac{1}{s^2}\right)ds\tag{$\because[2](#2)$}\\
           &=\frac{1}{2}\left[\frac{s^3}{3}-\frac{1}{s}\right]_1^x \nonumber\\
           &=\frac{1}{2}\left(\frac{x^3}{3}-\frac{1}{x}+\frac{2}{3}\label{3}\right)
           \end{align}
-     となる．　\eqref{1}と\eqref{3}が等しいので，
+     となる．　[1](#1)と[3](#3)が等しいので，
           \[t^2=2\left(\frac{x^3}{3}-\frac{1}{x}+\frac{2}{3}\right)\]
      である．$\cdots$(答)
 
@@ -52,7 +52,7 @@ title: "TODAI 1992 zenki Q5 (solution)"
      故，$(1,dy/dx)\parallel(8,15)$の時，
           \begin{align*}
           &\frac{dy}{dx}=\frac{15}{8} \\
-          &\left(x^2-\frac{1}{x^2}\right)=\frac{15}{4}\tag{$\because\eqref{4}$} \\
+          &\left(x^2-\frac{1}{x^2}\right)=\frac{15}{4}\tag{$\because[4](#4)$} \\
           &p^2-\frac{15}{4}p-1=0\tag{$\because p=x^2$} \\
           &(4p+1)(p-4)=0 \\
           &p=4,\frac{-1}{4}

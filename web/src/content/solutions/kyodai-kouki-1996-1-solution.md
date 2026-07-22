@@ -9,11 +9,11 @@ title: "KYODAI 1996 kouki Q1 (solution)"
 
 ## 【解】
 
-### (1)
-
+  (1)
   数学的帰納法で示す．
   まず$f_n(x)$について証明する．$n=1,2$のとき，
   
+
 $$
 \begin{align*}
 & f_1(x)=x      \\& f_2(x)=2x^2-1
@@ -24,6 +24,7 @@ $$
   そこで，次に$n=k,k+1\, (k)\in\mathbb{N}$での成立を仮定する．
   $n=k+2$を考えると，和積公式より
   
+
 $$
 \begin{align}
 \label{eq:1}\cos((k+2)\theta) & = 2\cos((k+1)\theta)\cos\theta - \cos(k\theta)            \\& = 2f_{k+1}(\cos\theta) \cdot\cos\theta - f_k(\cos\theta)
@@ -32,6 +33,7 @@ $$
 
   だから,
   
+
 $$
 \begin{align*}
 f_{k+2}(x)=2xf_{k+1}(x)-f_k(x)
@@ -43,6 +45,7 @@ $$
 
   次に$g_n(x)$について考える．$n=1,2$の時は
   
+
 $$
 \begin{align*}
 g_1(x) & =1  \\
@@ -54,6 +57,7 @@ $$
   そこで，次に$n=k,k+1\, (k)\in\mathbb{N}$での成立を仮定する．
   $n=k+2$を考えると，和積公式より
   
+
 $$
 \begin{align}
 \label{eq:2}\sin((k+2)\theta) & = 2\sin((k+1)\theta)\cos\theta - \sin(k\theta)                               \\& = 2g_{k+1}(\cos\theta)\sin\theta\cdot\cos\theta - g_k(\cos\theta)\sin\theta\\& = \left(2g_{k+1}(\cos\theta)\cos\theta - g_k(\cos\theta)\right)\sin\theta
@@ -62,6 +66,7 @@ $$
 
   だから
   
+
 $$
 \begin{align*}
 g_{k+2}(x)=2xg_{k+1}(x)-g_k(x)
@@ -71,10 +76,11 @@ $$
   とおけば$g_{k+2}$は$k+1$次式で，$n=k+2$でも成立する．
   ゆえに帰納法により示された．$\cdots$(答)
 
-### (2)
-
+  
+  (2)
   $f_n(\cos\theta)=\cos(n\theta)$の両辺を$\theta$で微分して
   
+
 $$
 \begin{align*}
 & f_n'(\cos\theta)\cdot(-\sin\theta) = -n\sin(n\theta) = -n g_n(\cos\theta)\cdot\sin\theta\\\therefore& f'_{n}(\cos\theta) = n g_n(\cos\theta)
@@ -83,6 +89,7 @@ $$
 
   ゆえに$x=\cos\theta$とすると
   
+
 $$
 \begin{align*}
 f_n'(x) = n\cdot g_n(x)
@@ -93,10 +100,10 @@ $$
   $f_n,g_n$は多項式だから，従ってこれが恒等式である．
   ゆえに示された．$\cdots$(答)
 
-### (3)
-
+  (3)
   $p$を$3$以上の素数とすると，$p$は奇数であるから
   
+
 $$
 \begin{align*}
 f_p(0)
@@ -108,10 +115,9 @@ $$
 
   従って，$f_p(x)$の$p-1$次以下の係数が全て$p$で割り切れることと
   $f'_p(x)$の$p-2$次以下の係数が全て$p$で割り切れることと同値である．
-
-### (2)
-の結果から，
+  (2)の結果から，
   
+
 $$
 \begin{align}
 \label{eq:3}

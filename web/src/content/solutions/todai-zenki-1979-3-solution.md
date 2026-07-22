@@ -12,6 +12,7 @@ title: "TODAI 1979 zenki Q3 (solution)"
      \begin{oframed}
      $a$を正の整数とし，数列$\{u_n\}$を次のように定める．
           
+
 $$
 \begin{align*}
 \begin{array}{llll}

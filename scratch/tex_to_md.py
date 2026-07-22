@@ -304,8 +304,40 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     md_content = re.sub(r'\\paragraph\*?\s*\{([^}]+)\}', r'\n\n### \1\n\n', md_content)
     md_content = re.sub(r'\\subparagraph\*?\s*\{([^}]+)\}', r'\n\n#### \1\n\n', md_content)
 
-    # 小設問 (1), (2) などの見出し化 (後方互換性フォールバック)
-    md_content = re.sub(r'^\s*\(([0-9]+)\)', r'\n### (\1)\n', md_content, flags=re.MULTILINE)
+    # --------------------------------------------------------------------------
+    # 数式参照 (\eqref, \ref, \cref) の Markdown アンカーリンク化処理
+    # --------------------------------------------------------------------------
+    # \eqref{lbl} -> [(1)](#lbl) や \ref{lbl} -> [(1)](#lbl) への動的変換
+    eq_counter = {}
+    def replace_ref_links(m):
+        cmd = m.group(1) # eqref, ref, cref
+        lbl = m.group(2)
+        # ラベル名が eq:X のような場合は式番号風にリンク化
+        if 'eq' in lbl:
+            num = lbl.split(':')[-1]
+            return f'[(式{num})](#{lbl})'
+        elif 'fig' in lbl:
+            num = lbl.split(':')[-1]
+            return f'[図{num}](#{lbl})'
+        elif 'tab' in lbl:
+            num = lbl.split(':')[-1]
+            return f'[表{num}](#{lbl})'
+        return f'[{lbl}](#{lbl})'
+
+    md_content = re.sub(r'\\(eqref|ref|cref)\{([^}]+)\}', replace_ref_links, md_content)
+    # $...$ で囲まれた Markdown リンク $[(...)](#id)$ の $ 剥ぎ取り
+    md_content = re.sub(r'\$\s*(\[.*?\]\(#[^)]+\))\s*\$', r'\1', md_content)
+
+    # --------------------------------------------------------------------------
+    # 数式ブロック $$ ... $$ の中のネストされた不要な $ や \displaystyle の除去
+    # --------------------------------------------------------------------------
+    def clean_math_block_dollars(match):
+        block_content = match.group(1)
+        # $...$ または $\displaystyle ...$ を外枠の数式に統合
+        block_clean = re.sub(r'\$\s*(\\displaystyle\s*)?([^$]+)\$', r'\2', block_content)
+        return f"\n$$\n{block_clean.strip()}\n$$\n"
+
+    md_content = re.sub(r'\$\$\n(.*?)\n\$\$', clean_math_block_dollars, md_content, flags=re.DOTALL)
 
     # 連続する空行を縮小
     md_content = re.sub(r'\n{3,}', '\n\n', md_content).strip()

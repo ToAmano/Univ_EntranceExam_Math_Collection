@@ -11,6 +11,7 @@ title: "KYODAI 1990 kouki Q2 (solution)"
 
   $f(x)$の一階微分は
   
+
 $$
 \begin{align*}
 f'(x) = \frac{x\sin x-2(a-\cos x)}{x^3}
@@ -22,6 +23,7 @@ $$
   この範囲では，$f'(x)$の符号は分子の符号と等しい．
   これを$g(x)$とおく．
   
+
 $$
 \begin{align*}
 g(x) & = x\sin x - 2(a-\cos x)
@@ -30,6 +32,7 @@ $$
 
   一階，二階微分は
   
+
 $$
 \begin{align*}
 g'(x)  & = \sin x + x\cos x - 2\sin x                    \\
@@ -42,6 +45,7 @@ $$
 
   従って，$g(x)\ge 0$が成り立つ条件は
   
+
 $$
 \begin{align*}
 g(x)
@@ -54,6 +58,7 @@ $$
 
   従って，求める最大値は
   
+
 $$
 \begin{align*}
 a=\frac{\pi}{4}

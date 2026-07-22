@@ -55,13 +55,13 @@ title: "TODAI 1968 zenki Q6 (solution)"
           　\Longleftrightarrow &2^{10}<2^{1/20}10^3 \nonumber\\
           \therefore \ &2^{200}<2×10^{60} \label{2}
           \end{align}
-     を得る．\eqref{1}，\eqref{2}より，
+     を得る．[1](#1)，[2](#2)より，
           \begin{align}
           10^{60}<2^{200}<2×10^{60}\label{3}
           \end{align}
       であるから，$61$桁で，最高位は$1$である．$\cdots$(答)
 
-3.  \eqref{3}の各辺正より，常用対数を取る.以下$\log_{10}2=a$とする．
+3.  [3](#3)の各辺正より，常用対数を取る.以下$\log_{10}2=a$とする．
            \begin{align*}
            &60<200a<60+a  \\
            \Longleftrightarrow &\frac{3}{10}<a<\frac{60}{199} \\

@@ -21,6 +21,7 @@ title: "TODAI 1985 zenki Q2 (solution)"
 
 \2 ただし，$0\le t<2\pi$とする．すると$P(c,s)$，$Q(\cos 2t,\sin 2t )$となる．故に$R(c,0)$，$Q(\cos 2t,0)$であるから，
      
+
 $$
 \begin{align*}
 l&=|c-\cos 2t|=|2c^2-c-1| \\&=|(2c+1)(c-1)|\equiv f(t)
@@ -35,6 +36,7 @@ $$
 故に，$t$と$c$の関係に注意し，
 $t$と$P$，$Q$の位置関係が一対一対応であることより，求める場合の数は以下の通り．$\cdots$(答)
      
+
 $$
 \begin{align*}
 \begin{array}{|c|c|c|c|} \hline

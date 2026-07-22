@@ -11,6 +11,7 @@ title: "TODAI 1963 zenki Q6 (solution)"
      \begin{oframed}
      $n$を$2$より大きい正の整数とする．曲線
           
+
 $$
 \begin{align}
 y=x^n\tag{i}\label{1}
@@ -20,13 +21,14 @@ $$
      上で，$x$座標が$0$，$1$，$2$である点をそれぞれ$O$，$A$，$B$とし，$O$，$A$，$B$を通り$y$軸に平行な軸を持つ
      放物線
           
+
 $$
 \begin{align}
 y=f(x)\tag{ii}\label{2}
 \end{align}
 $$
 
-     をえがく．曲線\eqref{1}および曲線\eqref{2}の，$O$，$A$の間にある部分の囲む面積を$S_1$，$A$，$B$の間にある部分の囲む
+     をえがく．曲線[1](#1)および曲線[2](#2)の，$O$，$A$の間にある部分の囲む面積を$S_1$，$A$，$B$の間にある部分の囲む
      面積を$S_2$とするとき，$S_1=S_2$となるためには，$n$はどのような数でなければならないか．
      \end{oframed}
 
@@ -34,6 +36,7 @@ $$
 
  $O(0,0)$$A(1,1)$$B(2,2^n)$である．まず$f(x)$を求める．$O$，$A$を通るから$a_{\not=0}$を用いて，
      
+
 $$
 \begin{align*}
 f(x)-x=ax(x-1)
@@ -42,6 +45,7 @@ $$
 
 と書ける．$B$を通る条件から
      
+
 $$
 \begin{align*}
 2^n-2=2a a=2^{n-1}-1
@@ -50,6 +54,7 @@ $$
 
 であるから，結局
      
+
 $$
 \begin{align*}
 f(x)=(2^{n-1}-1)x^2+(2-2^{n-1})x
@@ -58,6 +63,7 @@ $$
 
 である．$g_n(x)=x^n-f(x)$とおく．
      
+
 $$
 \begin{align}
 g_n(x)&=x\left[x^{n-1}-(2^{n-1}-1)x-2+2^{n-1}\right]\nonumber\\&=x\left[x^{n-1}+x+2^{n-1}(1-x)-2\right]\nonumber\\&=x(x-1)h(x) \label{3}
@@ -68,14 +74,16 @@ $$
       \[h(x)=(x^{n-2}+x^{n-3}+\cdots+x+2)-2^{n-1}\]
 とおいた．$0\le x\le2$のとき，
      
+
 $$
 \begin{align*}
 h(x)&\le(2^{n-2}+2^{n-3}+\cdots+2+2)-2^{n-1}\\&=2^{n-1}-1+(1-2^{n-1})=0
 \end{align*}
 $$
 
-であるから，\eqref{3}より，
+であるから，[3](#3)より，
      
+
 $$
 \begin{align*}
 \begin{cases}     
@@ -87,14 +95,17 @@ $$
 
 従って，
       
+
 $$
 \begin{align*}
 S_1=\int_0^1g_n(x)dx&S_2=-\int_1^2g_n(x)dx
 \end{align*}
 $$
+
    
 であり，  
      
+
 $$
 \begin{align*}
 S_1=S_2\Longleftrightarrow\int_0^2g_n(x)dx=0 \\\Longleftrightarrow\left(\frac{1}{n+1}-\frac{1}{6}\right)2^{n+1}=\frac{4}{3}

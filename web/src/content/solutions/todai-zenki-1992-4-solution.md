@@ -24,6 +24,7 @@ title: "TODAI 1992 zenki Q4 (solution)"
 である．そこで，$A$上の点$P(x,c,s)$とすれば，$(0,1,0)$には$\theta=0$が対応する．
 $C$を表すのは従って，
      
+
 $$
 \begin{align}
 \frac{1}{4}<x^2-\sqrt{3}xs+s^2

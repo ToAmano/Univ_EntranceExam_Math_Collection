@@ -21,6 +21,7 @@ title: "KYODAI 2004 kouki Q4 (solution)"
 
   題意の条件より
   
+
 $$
 \begin{align*}
 \tan 44^\circ& = \frac{t}{t+1}\\\tan 45^\circ& = 1
@@ -29,6 +30,7 @@ $$
 
   だから，加法定理により$\tan 1^{\circ}$を評価すると
   
+
 $$
 \begin{align*}
 \tan 1^\circ& = \tan(45^\circ-44^\circ)                                               \\& = \frac{\tan 45^\circ - \tan 44^\circ}{1 + \tan 45^\circ \tan 44^\circ}\\& = \frac{1 - \frac{t}{t+1}}{1 + 1 \cdot \frac{t}{t+1}}\\& = \frac{1}{2t+1}
@@ -37,6 +39,7 @@ $$
 
   となる．題意の不等式に代入して
   
+
 $$
 \begin{align*}
 0.01745 < \frac{1}{2t+1} < 0.01746 \\
@@ -47,6 +50,7 @@ $$
 
   となり，求める答えは
   
+
 $$
 \begin{align*}
 t = 28 [m]

@@ -12,6 +12,7 @@ title: "KYODAI 1997 kouki Q6 (solution)"
   まずは曲線$C$の概形を求める．
   わかりやすさのため
   
+
 $$
 \begin{align*}
 x = f(t) = e^{-t}\cos t \\
@@ -21,6 +22,7 @@ $$
 
   とおくと，
   
+
 $$
 \begin{align*}
 f'(t) & = -e^{-t}\left(\sin t+\cos t\right) < 0 \\
@@ -50,10 +52,11 @@ $$
   <figcaption>図 1: $C$の概形</figcaption>
 </figure>
 
-### (1)
-
+  
+  (1)
   媒介表示曲線の長さの公式から，
   
+
 $$
 \begin{align*}
 L
@@ -63,10 +66,11 @@ $$
 
   が求める長さである．$\cdots$(答)
 
-### (2)
-
+  
+  (2)
   求める面積$S$は[図1](#1997-6:fig:1)の斜線部であり
   
+
 $$
 \begin{align}
 S & = \int_0^{1} y dx                                                           \\& = \int_{\pi/2}^{0} y \frac{dx}{dt} dt                                       \\& = \int_{\pi/2}^{0} e^{-t}\sin t \cdot e^{-t}(-\sin t-\cos t) dt             \\& = \int_0^{\pi/2} e^{-2t}\left(\frac{1-\cos 2t+\sin 2t}{2}\right) dt        \\& = \frac{1}{4}\int_0^{\pi} e^{-p}(1-\cos p + \sin p) dp \label{1997-6:eq:1}
@@ -77,6 +81,7 @@ $$
 
   各項計算して
   
+
 $$
 \begin{align*}
 \cdot& \int_0^{\pi} e^{p} dp
@@ -86,8 +91,9 @@ $$
 \end{align*}
 $$
 
-  だから，$\eqref{1997-6:eq:1}$に代入して求める面積は
+  だから，[(式1)](#1997-6:eq:1)に代入して求める面積は
   
+
 $$
 \begin{align*}
 T = \frac{1}{4}\left(1-e^{-\pi}\right)

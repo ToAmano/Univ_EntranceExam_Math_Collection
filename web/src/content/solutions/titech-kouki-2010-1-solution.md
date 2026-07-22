@@ -9,12 +9,12 @@ title: "TITECH 2010 kouki Q1 (solution)"
 
 ## 【解】
 
-### (1)
-
+  (1)
   $p \ge 0, b \ge 0$
   $a, b, t \in \mathbb{R}$
   表記の簡潔さのため，
   
+
 $$
 \begin{align*}
 X & = \frac{1}{2}t + \frac{5}{t^2+1}\\
@@ -24,6 +24,7 @@ $$
 
   とおくと，$X,Y$は
   
+
 $$
 \begin{align*}
 X+Y & =t                \\
@@ -35,6 +36,7 @@ $$
 
   題意の漸化式は
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -46,6 +48,7 @@ $$
 
   となるから辺々足し引きして，
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -59,6 +62,7 @@ $$
   これと初期条件 $a_1=a$, $b_1=b$ から，
   一般項は
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -70,6 +74,7 @@ $$
 
   $a_n$を求めるために辺々足して
   
+
 $$
 \begin{align*}
 a_n = \frac{1}{2}(a+b)t^{n-1} + \frac{1}{2}(a-b)\left(\frac{10}{t^2+1}\right)^{n-1}
@@ -78,12 +83,13 @@ $$
 
   を得る．$\cdots$(答)
 
-### (2)
-
+  
+  (2)
   表記の簡潔さのため$A = \frac{a+b}{2}$, $B = \frac{a-b}{2}$ とする．
   題意の条件$a \ge 0 > b$から，$B>0$である．
   さらに $s = \frac{10}{t^2+1}$ とすると (1) で得た一般項は
   
+
 $$
 \begin{align*}
 a_n = A \cdot t^{n-1} + B \cdot s^{n-1}
@@ -130,6 +136,7 @@ $$
 
   次に $A=0 \iff a+b=0$ の時，
   
+
 $$
 \begin{align*}
 a_n = B \cdot s^{n-1}
@@ -138,6 +145,7 @@ $$
 
   より，$a_n$が収束する条件は
   
+
 $$
 \begin{align*}
 -1 < s \le 1 \iff t \le -3, 3 \le t
@@ -148,6 +156,7 @@ $$
 
   以上4つの場合分けから，もとめる条件は
   
+
 $$
 \begin{align*}
 (a+b=0 \land(t \le -3 \text{ or } 3 \le t)) \text{ または }\\(a=0 \land t = 2)
@@ -166,6 +175,7 @@ $$
   このような連立漸化式は行列表現で考えると見通しが良い．
   与えられた漸化式は行列表現で
   
+
 $$
 \begin{align*}
 \begin{pmatrix} a_{n+1} \\ b_{n+1} \end{pmatrix}& = \begin{pmatrix} \frac{t}{2} + \frac{5}{t^2+1} & \frac{t}{2} - \frac{5}{t^2+1} \\ \frac{t}{2} - \frac{5}{t^2+1} & \frac{t}{2} + \frac{5}{t^2+1} \end{pmatrix}\begin{pmatrix} a_n \\ b_n \end{pmatrix}\\& = \begin{pmatrix} X & Y \\ Y  & X  \end{pmatrix}\begin{pmatrix} a_n \\ b_n \end{pmatrix}
@@ -174,6 +184,7 @@ $$
 
   だから，これを特には係数行列を対角化すれば良く，
   
+
 $$
 \begin{align*}
 \begin{pmatrix} X & Y \\ Y  & X  \end{pmatrix} = \frac{1}{2}\begin{pmatrix} 1 & 1 \\ 1  & -1 \end{pmatrix}\begin{pmatrix} X+Y & 0 \\ 0  & X-Y  \end{pmatrix}\begin{pmatrix} 1 & 1 \\ 1  & -1 \end{pmatrix}
@@ -182,6 +193,7 @@ $$
 
   だから，
   
+
 $$
 \begin{align*}
 \begin{pmatrix} a_{n+1}+b_{n+1} \\ a_{n+1}-b_{n+1} \end{pmatrix} = \begin{pmatrix} X+Y & 0 \\ 0  & X-Y  \end{pmatrix}\begin{pmatrix} a_{n}+b_{n} \\ a_{n}-b_{n} \end{pmatrix}
@@ -190,6 +202,7 @@ $$
 
   となり，これを繰り返し持ちいれば
   
+
 $$
 \begin{align*}
 \begin{pmatrix} a_{n}+b_{n} \\ a_{n}-b_{n} \end{pmatrix}& = \begin{pmatrix} X+Y & 0 \\ 0  & X-Y  \end{pmatrix}^{n-1}\begin{pmatrix} a+b \\ a-b \end{pmatrix}\\& = \begin{pmatrix} (X+Y)^{n-1} & 0 \\ 0  & (X-Y)^{n-1}  \end{pmatrix}\begin{pmatrix} a+b \\ a-b \end{pmatrix}\\
@@ -201,6 +214,7 @@ $$
   または，$b_n$を消去して$a_n$の三項間漸化式として考える手もある．
   漸化式より
   
+
 $$
 \begin{align*}
 Y b_n = a_{n+1} - Xa_n
@@ -209,6 +223,7 @@ $$
 
   だから，これをもう一つの漸化式に代入して（$Y\neq 0$として）
   
+
 $$
 \begin{align*}
 & Yb_{n+1} = Y^2 a_n + XY b_n                                   \\\therefore& a_{n+2} - Xa_{n+1}  = Y^2 a_n + X\left(a_{n+1} - Xa_n \right)\\\therefore& a_{n+2} - 2X a_{n+1} - (X^2+Y^2) a_n = 0
@@ -217,6 +232,7 @@ $$
 
   を得る．特性方程式の解は
   
+
 $$
 \begin{align*}
 & x^2 -2X x^2 - (X^2+Y^2) = 0 \\\therefore& x = X \pm Y

@@ -23,6 +23,7 @@ $$
   \item[(I)] $n = 0$のときは，与えられた四角形$\text{A}_0 \text{B}_0 \text{C}_0 \text{D}_0$とする．
   \item[(II)] $n > 0$のときは，四角形$\text{A}_{n-1} \text{B}_{n-1} \text{C}_{n-1} \text{D}_{n-1}$まで定まったとして，四角形$\text{A}_n \text{B}_n \text{C}_n \text{D}_n$を
         
+
 $$
 \begin{align}
 \text{A}_n = \text{D}_{n-1}, \quad\text{B}_n = \text{C}_{n-1}\text{ かつ }\square\text{A}_n \text{B}_n \text{C}_n \text{D}_n \sim\square\text{B}_{n-1}\text{C}_{n-1}\text{D}_{n-1}\text{A}_{n-1}
@@ -32,6 +33,7 @@ $$
         となる四角形として定める．
   \item[(III)] $n < 0$のときは， $0, -1, \dots, n+1$と負の向きに進んで，四角形$\text{A}_{n+1} \text{B}_{n+1} \text{C}_{n+1} \text{D}_{n+1}$まで定まったとして，四角形$\text{A}_n \text{B}_n \text{C}_n \text{D}_n$を
         
+
 $$
 \begin{align}
 \text{D}_n = \text{A}_{n+1}, \quad\text{C}_n = \text{B}_{n+1}\text{ かつ }\square\text{A}_n \text{B}_n \text{C}_n \text{D}_n \sim\square\text{B}_{n+1}\text{C}_{n+1}\text{D}_{n+1}\text{A}_{n+1}

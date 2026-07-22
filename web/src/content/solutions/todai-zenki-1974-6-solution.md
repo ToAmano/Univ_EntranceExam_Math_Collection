@@ -27,18 +27,20 @@ title: "TODAI 1974 zenki Q6 (solution)"
 
  $A$が優勝する場合は以下のいずれか．
      
+
 $$
 \begin{align}
 \left\{\begin{array}{ll}
-          \text{$A$の$3$連勝}&p^3 \\
-          \text{$A$の$3$勝$1$敗}& 3p^3q \\
-          \text{$A$の$3$勝$2$敗}& 6p^3q^2
+          \text{Aの3連勝}&p^3 \\
+          \text{Aの3勝1敗}& 3p^3q \\
+          \text{Aの3勝2敗}& 6p^3q^2
           \end{array}\right.\label{0}
 \end{align}
 $$
 
 以上から
      
+
 $$
 \begin{align}
 P&=p^3*3p^3q+6p^3q^2 \nonumber\\&=p^3(1+3q+6q^2) \nonumber\\&=p^3(6p^2-15p+10)&(\because p+q=1)\label{1}
@@ -47,6 +49,7 @@ $$
 
 同様に対称性から
      
+
 $$
 \begin{align}
 Q&=q^3(1+3p+6p^2) \\&=(1-p)^3(1+3p+6p^2)\label{2}
@@ -60,7 +63,7 @@ $$
           \begin{align*}
           f(p)&=P+Q-(p-q) \\
           &=(2P-1)-(2p-1) \\
-          &=2(P-p)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\because \eqref{1}) \\
+          &=2(P-p)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\because [1](#1)) \\
           &=2p\left(p^2(6p^2-15p+10)-1\right) \\
           &=4p\left(p-\frac{1}{2}\right)(p-1)(3p^2-3p-1)
           \end{align*}     
@@ -102,7 +105,7 @@ $$
           \[p=\b=\frac{1}{2}\left(1+\sqrt{1-\frac{2}{15}\sqrt{30}}\right)\]
      である．$\cdots$(答)
 
-3.  $N$の期待値を$N(p)$とする． \eqref{0}および対称性から，
+3.  $N$の期待値を$N(p)$とする． [0](#0)および対称性から，
           \begin{align*}
           N(p)=&3(p^3+q^3)+4(3p^3q+3pq^3)\\
           &+5(6p^3q^2+6p^2q^3) \\

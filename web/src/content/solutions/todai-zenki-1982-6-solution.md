@@ -30,6 +30,7 @@ title: "TODAI 1982 zenki Q6 (solution)"
 
  軸の選び方が$3$通り，各々について$2$通り回転の選び方があるので，あわせて$6$通りの回転が同様に確からしい．まず，
      
+
 $$
 \begin{align*}
 \begin{array}{lll}
@@ -42,6 +43,7 @@ $$
 
 次いで，漸化式は
      
+
 $$
 \begin{align*}
 &\begin{cases}
@@ -60,6 +62,7 @@ $$
 
 変形して
      
+
 $$
 \begin{align*}
 \begin{cases}
@@ -71,6 +74,7 @@ $$
 
 だから，繰り返し用いて，(1)と合わせて
      
+
 $$
 \begin{align*}
 \begin{cases}
@@ -79,5 +83,6 @@ $$
           \end{cases}
 \end{align*}
 $$
+
      
 である．また，$r=2/3$は明白である．$\cdots$(答)

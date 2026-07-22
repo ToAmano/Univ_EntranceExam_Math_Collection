@@ -19,6 +19,7 @@ title: "TODAI 1968 zenki Q2 (solution)"
 $B(1,-1,0)$，$C(-1,-1,0)$，$D(-1,1,0)$とおく．底面と斜面の成す角が$\pi/4$だから，
 $V(0,0,1)$として考えてよい．対称性から平面$VAB$と平面$VBC$のみ考えればよい．これらの平面の基底をなす$2$ベクトルは
      
+
 $$
 \begin{align*}
 VAB:&\vthree{0}{1}{0} , \vthree{-1}{0}{1}\\
@@ -28,6 +29,7 @@ $$
 
 であるから，法線ベクトルは
      
+
 $$
 \begin{align*}
 &VAB:\vec{a}=\vthree{1}{0}{1}&VBC:\vec{b}=\vthree{0}{1}{1}
@@ -36,6 +38,7 @@ $$
 
 となる．故にこれら$2$ベクトルの成す角$\theta$として($0\le\theta\le\pi$)
      
+
 $$
 \begin{align*}
 \cos\theta&=\frac{\vec{a}\cdot\vec{b}}{|\vec{a}||\vec{b}|}\\&=\frac{1}{\sqrt{2}\sqrt{2}}=\frac{1}{2}
@@ -45,6 +48,7 @@ $$
 である．従って$\theta=\dfrac{\pi}{3}$である．
 故に$2$平面の成す角$t$は$0\le t\le\dfrac{\pi}{2}$で考えて
      
+
 $$
 \begin{align*}
 t=\min(\theta,\pi-\theta)=\frac{\pi}{3}

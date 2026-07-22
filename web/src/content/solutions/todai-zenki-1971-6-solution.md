@@ -34,6 +34,7 @@ $n$回目に$3$人，$2$人でジャンケンする確率をそれぞれ$a_n$，
 よって，ジャンケンの推移から以下の漸化式を得る．
      
 <span id="1"></span><span id="2"></span><span id="3"></span>
+
 $$
 \begin{cases}
 c_n=\frac{1}{3}a_n+\frac{2}{3}b_n \\
@@ -42,26 +43,29 @@ c_n=\frac{1}{3}a_n+\frac{2}{3}b_n \\
 \end{cases}
 $$
 
-さらに，初期条件は$a_1=1$，$b_1=0$である．従って\eqref{2}から
+さらに，初期条件は$a_1=1$，$b_1=0$である．従って[2](#2)から
      
+
 $$
 \begin{align}
 a_n=\left(\frac{1}{3}\right)^{n-1}\label{4}
 \end{align}
 $$
 
-となる．さらにこれを\eqref{3}に代入して
+となる．さらにこれを[3](#3)に代入して
      
+
 $$
 \begin{align*}
 b_{n+1}&=\frac{1}{3}b_n+\left(\frac{1}{3}\right)^n \\
      d_{n+1}&=d_n+1          \\
-     d_n&=n-1+d_1\\&=n-1+3b_1 \\&=n-1  \tag{$\because b_1=0$}\\\therefore  b_n&=(n-1)\left(\frac{1}{3}\right)^{n-1}
+     d_n&=n-1+d_1\\&=n-1+3b_1 \\&=n-1  \tag{\because b_1=0}\\\therefore  b_n&=(n-1)\left(\frac{1}{3}\right)^{n-1}
 \end{align*}
 $$
 
-を得る．ただし$d_n=3^nb_n$である．これを\eqref{1}に代入すれば，求める確率は     
+を得る．ただし$d_n=3^nb_n$である．これを[1](#1)に代入すれば，求める確率は     
      
+
 $$
 \begin{align*}
 c_k=(2k-1)\left(\frac{1}{3}\right)^n\tag{答}
@@ -91,23 +95,28 @@ $$
 
 (i)で$A$を行う回数$a$，$B$を行う回数を$b$とすると，
      
+
 $$
 \begin{align}
 a+b=k\label{1}
 \end{align}
 $$
+
       
 が成り立つ．ただし$a,b>0$である．[解] でのジャンケンの推移の確率から，(i)となる確率は
      
+
 $$
 \begin{align*}
 p(a)=\left(\frac{1}{3}\right)^{a-1}\frac{1}{3}\left(\frac{1}{3}\right)^{b-1}\frac{2}{3}
-     =2\left(\frac{1}{3}\right)^k\tag{$\because\eqref{1}$}
+     =2\left(\frac{1}{3}\right)^k\tag{\because[1](#1)}
 \end{align*}
 $$
+
    
 同様に(ii)となる確率は
      
+
 $$
 \begin{align*}
 q=\left(\frac{1}{3}\right)^{k-1}\frac{1}{3}=\left(\frac{1}{3}\right)^k
@@ -116,6 +125,7 @@ $$
 
  となる．故に求める確率は
       
+
 $$
 \begin{align*}
 \sum_{a=0}^{k-1}p(a)+q=(2k-1)\left(\frac{1}{3}\right)^n\tag{答}

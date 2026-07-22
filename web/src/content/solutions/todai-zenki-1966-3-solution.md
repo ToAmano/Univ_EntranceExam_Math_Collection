@@ -20,6 +20,7 @@ title: "TODAI 1966 zenki Q3 (solution)"
 $e(\theta)=\cos\theta+i\sin\theta$とし，複素数平面で置き換えて考える．
 $\vector{P_{n-1}P_n}$を表す複素数を$a_n$とすれば，題意より
      
+
 $$
 \begin{align*}
 \left\{\begin{array}{l}
@@ -33,6 +34,7 @@ $$
 従って$P_{3n}$を表す複素数$b_{n}$として
 $a=2e\left(\dfrac{2\pi}{3}\right)$とおけば，
      
+
 $$
 \begin{align*}
 b_n&=\sum_{k=1}^{3n}(a_k) \\&=\sum_{k=1}^{3n}(a^{k-1}) \\&=\frac{1-a^{3n}}{1-a}\\&=\frac{2+\sqrt{3}i}{7}(1-2^{3n})

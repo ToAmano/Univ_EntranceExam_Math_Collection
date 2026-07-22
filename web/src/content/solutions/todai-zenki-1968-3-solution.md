@@ -27,21 +27,21 @@ $c=-a-b$だから，
      $p=0$，$q$は任意の実数をとるので，$A$は直線$y=0$上を動く．
      \\ \\
      \underline{(3)$\a\not=1,\b=0$の時} \\
-
-### (2)
-と同様に，$A$は直線$x=0$上を動く．
+     (2)と同様に，$A$は直線$x=0$上を動く．
      \\ \\
      \underline{(4)$\a\not=1,\b\not=1$の時} \\
      $p=(\a-1)\{a(\a+1)+b\}$を$b$についてといて，
           
+
 $$
 \begin{align*}
-b=\frac{p}{\a-1}-a(\a+1) \tag{$\because \a\not=1$}
+b=\frac{p}{\a-1}-a(\a+1) \tag{\because \a\not=1}
 \end{align*}
 $$
 
      である．これを$q=(\b-1)\{a(\b+1)+b\}$に代入して
           
+
 $$
 \begin{align*}
 q&=(\b-1)\left\{a(\b+1)+\frac{p}{\a-1}-a(\a+1)\right\}\\&=\frac{\b-1}{\a-1}p+(\b-1)(\b-\a)a
@@ -50,6 +50,7 @@ $$
 
      である．故に$\a=\b$なら$q=p$となり，$\a\not=\b$なら$p\not=q$であるから，
           
+
 $$
 \begin{align*}
 \begin{cases}
@@ -64,6 +65,7 @@ $$
 
  以上をまとめて，
       
+
 $$
 \begin{align*}
 \begin{cases}
@@ -75,5 +77,6 @@ $$
             \end{cases}
 \end{align*}
 $$
+
      
 である．$\cdots$(答)

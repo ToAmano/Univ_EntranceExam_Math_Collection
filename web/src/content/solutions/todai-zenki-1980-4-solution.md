@@ -24,6 +24,7 @@ title: "TODAI 1980 zenki Q4 (solution)"
 
 \2 ただし，周期性から$0\le t<2\pi$としてよい．$f(t)=|OP|^2$とすると
      
+
 $$
 \begin{align*}
 f(t)&=x^2+y^2 \\&=(s+c)^2+(ks^2c^2)^2 \\&=k^2p^4+2p+1\equiv g(p)
@@ -33,6 +34,7 @@ $$
 である．ただし$p=sc$とした．このとき$\left(\dfrac{-1}{2}\le p\le\dfrac{1}{2}\right)$である．
 ここで$a=\sqrt[3]{\dfrac{1}{2k^2}}$とおけば
      
+
 $$
 \begin{align*}
 g'(p)&=4k^2p^3+2  \\&=4k^2(p+a)(p^2-ap+a^2)

@@ -11,6 +11,7 @@ title: "KYODAI 2000 kouki Q5 (solution)"
 
   極座標表示で，実数$r>0,0\le\theta<2\pi$に対して
   
+
 $$
 \begin{align}
 \begin{dcases}
@@ -23,6 +24,7 @@ $$
   とおく．すると，
   および
   
+
 $$
 \begin{align*}
 e^{-1}(\theta)
@@ -33,6 +35,7 @@ $$
   が成立する．
   また，加法定理によって
   
+
 $$
 \begin{align*}
 e^2(\theta)
@@ -43,6 +46,7 @@ $$
   が成立する．
   従ってこれらの関係を繰り返し用いると，任意の整数$n$に対して
   
+
 $$
 \begin{align}
 e^n(\theta) = e(n\theta) \label{2000-5:eq:2}
@@ -51,10 +55,10 @@ $$
 
   が成立する．以下この関係を用いる．
 
-### (1)
-
-  与えられた$a_n$の表現に$\eqref{2000-5:eq:1}$を代入して$\eqref{2000-5:eq:2}$を用いると
+  (1)
+  与えられた$a_n$の表現に[(式1)](#2000-5:eq:1)を代入して[(式2)](#2000-5:eq:2)を用いると
   
+
 $$
 \begin{align}
 a_n
@@ -64,6 +68,7 @@ $$
 
   を得る．従って，
   
+
 $$
 \begin{align*}
 |a_n|^2
@@ -75,10 +80,12 @@ $$
   $n \to \infty$での$|a_n|^2 < 4$の成立が必要だが，$r \neq 1$の時，$|a_n|^2 \to \infty$となる
   から $r=1$．つまり $|\alpha|=1$である．$\cdots$(答)
 
-### (2)
-
-  $r=1$を$\eqref{2000-5:eq:3}$に代入すると，
   
+  (2)
+
+  $r=1$を[(式3)](#2000-5:eq:3)に代入すると，
+  
+
 $$
 \begin{align*}
 a_n = 2\cos n\theta
@@ -88,6 +95,7 @@ $$
   となる．
   従って題意を示すには
   
+
 $$
 \begin{align*}
 |\cos m\theta|> \frac{1}{2}\\
@@ -107,11 +115,11 @@ $$
 
 ## 【解説】
 
-### (1)
-だけ解くのであれば，$|\alpha|$の大きさで場合分けするのが良いだろう．
+  (1)だけ解くのであれば，$|\alpha|$の大きさで場合分けするのが良いだろう．
   すなわち，$|\alpha|=1$以外の時は$a_n$が発散することを示せば良い．
   証明には三角不等式を利用する．複素数$a,b$に対して
   
+
 $$
 \begin{align*}
 |a| + |b| \ge |a+b|
@@ -125,6 +133,7 @@ $$
   今回の場合，愚直に$a=\alpha^n,b=\alpha^{-n}$としてしまうと不等号の向きが使いたい方向と逆になってしまう．
   すなわち
   
+
 $$
 \begin{align*}
 |a_n| = \left|\alpha^n+\alpha^{-n}\right|\le\left|\alpha^n\right| + \left|\alpha^{-n}\right|
@@ -134,6 +143,7 @@ $$
   で，$|a_n|$の発散を示したいのに上から押さえてしまう．
   こういう時はよく使われるテクニックがあり，式を
   
+
 $$
 \begin{align*}
 |a| \ge |a+b| - |b|
@@ -142,6 +152,7 @@ $$
 
   の形で利用する．ここで$a=\alpha^n+\alpha^{-n}$, $b=-\alpha^{-n}$とすれば
   
+
 $$
 \begin{align*}
 |a_n| = \left|\alpha^n+\alpha^{-n}\right|\ge\left|\alpha^n\right| - \left|\alpha^{-n}\right|
@@ -152,6 +163,7 @@ $$
 
   まず，$|\alpha|>1$の時は，三角不等式より
   
+
 $$
 \begin{align*}
 |a_n| = |\alpha^n+\alpha^{-n}| \ge\left|\alpha^n\right| - \left|\alpha^{-n}\right|
@@ -160,6 +172,7 @@ $$
 
   であり，
   
+
 $$
 \begin{align*}
 & \lim_{n\to\infty}\left|\alpha^n\right| = \infty\\& \lim_{n\to\infty}\left|\alpha^{-n}\right| = 0
@@ -168,6 +181,7 @@ $$
 
   より追い出しの原理より
   
+
 $$
 \begin{align*}
 \lim_{n\to\infty} |a_n| = \infty
@@ -178,6 +192,7 @@ $$
 
   同様に$|\alpha|<1$の時は三角不等式で$b=-\alpha^{n}$として
   
+
 $$
 \begin{align*}
 |a_n| = |\alpha^n+\alpha^{-n}| \ge\left|\alpha^{-n}\right| - \left|\alpha^{n}\right|

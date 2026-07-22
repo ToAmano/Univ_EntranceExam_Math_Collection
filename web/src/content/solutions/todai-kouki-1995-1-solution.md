@@ -9,10 +9,10 @@ title: "TODAI 1995 kouki Q1 (solution)"
 
 ## 【解】
 
-### (1)
-
+    (1)
     二項係数の性質から
     
+
 $$
 \begin{align}
 _{n+1}\mathrm{C}_{k+1} = {}_n\mathrm{C}_k + {}_n\mathrm{C}_{k+1}\label{1995-1:eq:1}
@@ -21,8 +21,9 @@ $$
 
     である．
 
-    $\eqref{1995-1:eq:1}$から
+    [(式1)](#1995-1:eq:1)から
     
+
 $$
 \begin{align*}
 P_{n+1}& = \sum_{k=0}^{n+1}{}_{n+1}\mathrm{C}_{3k}\\& = \sum_{k=0}^{n+1}\left({}_{n}\mathrm{C}_{3k} + {}_{n}\mathrm{C}_{3k-1}\right)\\& = \sum_{k=0}^{n}{}_{n}\mathrm{C}_{3k} + \sum_{k=0}^{n}{}_{n}\mathrm{C}_{3k+2}\\& = P_n + R_n
@@ -32,6 +33,7 @@ $$
     を得る．
     $Q_{n}, R_{n}$についても同様に
     
+
 $$
 \begin{align*}
 Q_{n+1}& = \sum_{k=0}^{n+1}{}_{n+1}\mathrm{C}_{3k+1}\\& = \sum_{k=0}^{n+1}\left({}_{n}\mathrm{C}_{3k+1} + {}_{n}\mathrm{C}_{3k}\right)\\& = \sum_{k=0}^{n}{}_{n}\mathrm{C}_{3k+1} + \sum_{k=0}^{n}{}_{n}\mathrm{C}_{3k}\\& = Q_n + P_n                                                                       \\
@@ -41,6 +43,7 @@ $$
 
     だから，以上をまとめて
     
+
 $$
 \begin{align}
 \begin{dcases}
@@ -53,10 +56,12 @@ $$
 
     である．$\cdots$(答)
 
-### (2)
+    
 
+    (2)
     $n=1$の時は
     
+
 $$
 \begin{align}
 \begin{dcases}
@@ -68,9 +73,9 @@ $$
 
     である．
 
-### (1)
-の漸化式$\eqref{1995-1:eq:2}$を全て足し合わせると
+    (1)の漸化式[(式2)](#1995-1:eq:2)を全て足し合わせると
     
+
 $$
 \begin{align}
 P_{n+1}+Q_{n+1}+R_{n+1} = 2\left(P_n + Q_n + R_n\right)\label{1995-1:eq:4}
@@ -79,8 +84,9 @@ $$
 
     である．
 
-    $\eqref{1995-1:eq:3,1995-1:eq:4}$から一般項として
+    [(式4)](#1995-1:eq:3,1995-1:eq:4)から一般項として
     
+
 $$
 \begin{align}
 P_n + Q_n + R_n = 2^{n}\label{1995-1:eq:5}
@@ -89,8 +95,9 @@ $$
 
     を得る．
 
-    漸化式$\eqref{1995-1:eq:2}$から$R_n$を消去すると
+    漸化式[(式2)](#1995-1:eq:2)から$R_n$を消去すると
     
+
 $$
 \begin{align}
 \begin{cases}
@@ -102,6 +109,7 @@ $$
 
     だから，第一式を第二式に代入すると
     
+
 $$
 \begin{align*}
 Q_{n+2} = Q_{n+1} - Q_n + 2^n
@@ -111,6 +119,7 @@ $$
     を得る．
     新しく
     
+
 $$
 \begin{align}
 a_n = \frac{Q_n}{2^n}\label{1995-1:eq:7}
@@ -119,6 +128,7 @@ $$
 
     とおいて代入すると
     
+
 $$
 \begin{align}
 a_{n+2} = \frac{1}{2}a_{n+1} - \frac{1}{4}a_n + \frac{1}{4}\label{1995-1:eq:8}
@@ -127,6 +137,7 @@ $$
 
     である．特性方程式
     
+
 $$
 \begin{align*}
 x^2-\frac{1}{2}x+\frac{1}{4} = 0
@@ -135,6 +146,7 @@ $$
 
     の解は複合同順として
     
+
 $$
 \begin{align*}
 x_{\pm} = \frac{1\pm i\sqrt{3}}{4}
@@ -143,6 +155,7 @@ $$
 
     である．これは
     
+
 $$
 \begin{align}
 \omega = \frac{-1+i\sqrt{3}}{2}\label{1995-1:eq:9}
@@ -151,6 +164,7 @@ $$
 
     とおくと
     
+
 $$
 \begin{align}
 \begin{dcases}
@@ -162,8 +176,9 @@ $$
 
     を満たす．
 
-    さて，$\eqref{1995-1:eq:8}$を変形して
+    さて，[(式8)](#1995-1:eq:8)を変形して
     
+
 $$
 \begin{align}
 & \begin{dcases}
@@ -179,6 +194,7 @@ $$
     となる．
     ただし定数$A,B$は
     
+
 $$
 \begin{align}
 & \begin{dcases}
@@ -198,6 +214,7 @@ $$
 
     初期条件は$Q_0=0, Q_1=1$だから、$a_0=0, a_1=\frac{1}{2}$だから等比数列の公式から
     
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -207,8 +224,9 @@ $$
 \end{align*}
 $$
 
-    となり，$\eqref{1995-1:eq:12}$を代入して
+    となり，[(式12)](#1995-1:eq:12)を代入して
     
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -221,6 +239,7 @@ $$
     である．
     辺々引いて整理すると
     
+
 $$
 \begin{align*}
 \left(\frac{\omega^2}{2} - \frac{\omega}{2}\right)a_n
@@ -231,8 +250,9 @@ $$
 $$
 
     となる．
-    $\eqref{1995-eq:7}$に代入して
+    [(式7)](#1995-eq:7)に代入して
     
+
 $$
 \begin{align}
 Q_n = \frac{1}{3}\left[2^n - (-\omega^2)^{n+1} - (-\omega)^{n+1}\right]\label{1995-1:eq:13}
@@ -241,8 +261,9 @@ $$
 
     と$Q_n$の一般項が求まる．
 
-    次に$P_n$について，$\eqref{1995-1:eq:6}$にこの結果を代入して，$n \ge 2$の時
+    次に$P_n$について，[(式6)](#1995-1:eq:6)にこの結果を代入して，$n \ge 2$の時
     
+
 $$
 \begin{align*}
 P_n & = 2^{n-1} - Q_{n-1}\\& = \frac{1}{3}\left[3 \cdot 2^{n-1} - 2^{n-1} + (-\omega^2)^n + (-\omega)^n\right]\\& = \frac{1}{3}\left[2^n + (-\omega^2)^n + (-\omega)^n\right]
@@ -251,8 +272,9 @@ $$
 
     である．$P_1=1$もこの表式で良い．
 
-    最後に$Q_n$について，$\eqref{1995-1:eq:5}$にこの結果を代入して
+    最後に$Q_n$について，[(式5)](#1995-1:eq:5)にこの結果を代入して
     
+
 $$
 \begin{align*}
 R_n & = 2^n - P_n - Q_n                                                                                                     \\& = \frac{1}{3}\left[3 \cdot 2^n - 2^n - (-\omega^2)^n - (-\omega)^n - 2^n + (-\omega^2)^{n+1} + (-\omega)^{n+1}\right]\\& = \frac{1}{3}\left(2^n + \omega(-\omega^2)^n + \omega^2(-\omega)^n\right)
@@ -263,6 +285,7 @@ $$
 
     以上まとめて，
     
+
 $$
 \begin{align*}
 \begin{cases}
@@ -275,11 +298,11 @@ $$
 
     である．$\cdots$(答)
 
-### (3)
-
-### (2)
-の結果に$n=12$を代入する．$\eqref{1995-1:eq:9}$から
     
+    (3)
+    (2)の結果に$n=12$を代入する．[(式9)](#1995-1:eq:9)から
+    
+
 $$
 \begin{align*}
 \omega^3 = 1 \\\omega^2+\omega+1 = 0
@@ -288,6 +311,7 @@ $$
 
     であることを用いて次数を下げると，
     
+
 $$
 \begin{align*}
 P_{12}& = \frac{1}{3}\left(2^{12} + (-\omega^2)^{12} + (-\omega)^{12}\right)\\& = \frac{1}{3}\left(2^{12} + \omega^{24} + \omega^{12}\right)\\& = \frac{1}{3}\left(4096 + 2\right)\\& = 1366                                                               \\

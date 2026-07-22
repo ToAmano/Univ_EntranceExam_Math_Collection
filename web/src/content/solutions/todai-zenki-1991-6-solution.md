@@ -41,7 +41,7 @@ title: "TODAI 1991 zenki Q6 (solution)"
           &=S(x)+\frac{1}{2}xf(x)-xf(2x) \nonumber\\
           S(x)&=\frac{1}{4}x(f(x)-2f(2x)) \label{1}
           \end{align}
-     である．$g(x)=f(x)-2f(2x)$とおくと，\eqref{0}，\eqref{1}から
+     である．$g(x)=f(x)-2f(2x)$とおくと，[0](#0)，[1](#1)から
           \begin{align}
                \begin{array}{l}
                S'(x)=2f(2x)-f(x)=-g(x) \\
@@ -54,7 +54,7 @@ title: "TODAI 1991 zenki Q6 (solution)"
           \[\frac{-4x}{dx}=\frac{y}{dy}\]
      積分して，$S(1)=1$より，
           \[y=S(x)=x^{-4}\]
-     である．従って\eqref{2}から，$g(x)=4x^{-5}$である．$\cdots$(答)
+     である．従って[2](#2)から，$g(x)=4x^{-5}$である．$\cdots$(答)
 
 2.  $a_n(x)=2^nf(2^nx)$とおく．前問の結果で$x$に$2^nx$を代入して，
           \begin{align*}

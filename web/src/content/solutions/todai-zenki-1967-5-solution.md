@@ -17,6 +17,7 @@ title: "TODAI 1967 zenki Q5 (solution)"
 
 $x=t(t>0)$で接するとすると，$(ax^2)'=2ax$，$(\log x)'=\dfrac{1}{x}$故
      
+
 $$
 \begin{align}
 \left\{\begin{array}{l}
@@ -34,9 +35,10 @@ $$
  \\ \\
 このとき，求める面積$S$は
      
+
 $$
 \begin{align*}
-S&=\int_0^t(ax^2)dx-\int_1^t\log xdx \\&=\left[\frac{a}{3}x^3\right]_0^t-\left[x(\log x-1)\right]_1^t  \\&=\frac{at^3}{3}-t(\log t-1)-1  \\&=\frac{1}{6}\sqrt{e}+\frac{1}{2}\sqrt{e}-1 \tag{$\because\eqref{1}$}\\&=\frac{2}{3}\sqrt{e}-1\cdots\text{(答)}
+S&=\int_0^t(ax^2)dx-\int_1^t\log xdx \\&=\left[\frac{a}{3}x^3\right]_0^t-\left[x(\log x-1)\right]_1^t  \\&=\frac{at^3}{3}-t(\log t-1)-1  \\&=\frac{1}{6}\sqrt{e}+\frac{1}{2}\sqrt{e}-1 \tag{\because[1](#1)}\\&=\frac{2}{3}\sqrt{e}-1\cdots\text{(答)}
 \end{align*}
 $$
 

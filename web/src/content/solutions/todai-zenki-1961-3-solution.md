@@ -21,6 +21,7 @@ title: "TODAI 1961 zenki Q3 (solution)"
      
 上図から，
      
+
 $$
 \begin{align*}
 &|AO|=\frac{a}{c}&|AH|=\frac{a}{cs}\\&|OH|=\frac{a}{c}
@@ -29,6 +30,7 @@ $$
 
 であるから，直円錐の表面積$T$は，
      
+
 $$
 \begin{align*}
 T&=\text{底面積}+\text{側面積}\\&=\pi|AO|^2+\pi|AO||AH| \\&=a^2\pi\left(\frac{1}{s^2}+\frac{1}{cs^2}\right)\\&=a^2\pi\frac{1}{c(1-c)}\ge 4a^2\pi&\\

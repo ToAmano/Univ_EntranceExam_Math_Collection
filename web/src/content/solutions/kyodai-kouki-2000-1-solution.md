@@ -9,10 +9,10 @@ title: "KYODAI 2000 kouki Q1 (solution)"
 
 ## 【解】
 
-### (1)
-
+  (1)
   複素数平面上で複素数$x$を点$X$と表す．
   
+
 $$
 \begin{align*}
 \frac{\beta-z}{\alpha-z} = r(\cos\theta + i \sin\theta) & (r>0, 0 < \theta < 2\pi)
@@ -22,6 +22,7 @@ $$
   とおくと，$\theta$は線分$ZA$から線分$ZB$への角度である．
   題意より，この虚数部分$r\sin\theta$が正だから，
   
+
 $$
 \begin{align*}
 0 < \theta < \pi
@@ -38,10 +39,11 @@ $$
   <figcaption>図 1: 点$z$の存在する領域は，$\alpha$ から $\beta$ を見て左側</figcaption>
 </figure>
 
-### (2)
-
+  
+  (2)
   本題に入る前に(1)と似た状況として，
   
+
 $$
 \begin{align*}
 \frac{\beta-z}{\alpha-z}
@@ -51,6 +53,7 @@ $$
   の虚部が$0$，すなわち実数の場合を考える．
   この時，ある実数$r$を用いて
   
+
 $$
 \begin{align*}
 & \beta - z = r(\alpha-z) \\
@@ -62,6 +65,7 @@ $$
   さて，以下題意を示す．
   与式から
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -74,6 +78,7 @@ $$
 
   であるから，両辺の虚部をとると
   
+
 $$
 \begin{align}
 \begin{dcases}
@@ -90,6 +95,7 @@ $$
   虚部が共に$0$の場合は$\alpha,\beta,\gamma,z$が同一直線上にあって題意に反するから，互いに異符号であることが必要．
   $\alpha,\beta,\gamma$に関しての対称性から
   
+
 $$
 \begin{align}
 \begin{dcases}
@@ -102,22 +108,25 @@ $$
   とおいて良い．
   ここで，実数でない複素数$x$に対して$1/x$の虚部は符号が逆であることに注意すると，
   
+
 $$
 \begin{align*}
 \Im\frac{z-\beta}{z-\gamma} > 0
 \end{align*}
 $$
 
-  だから$\eqref{2000-1:eq:1}$より
+  だから[(式1)](#2000-1:eq:1)より
   
+
 $$
 \begin{align}
 \Im\frac{z-\beta}{z-\alpha} < 0  \label{2000-1:eq:3}
 \end{align}
 $$
 
-  である．以上$\eqref{2000-1:eq:2,2000-1:eq:3}$から
+  である．以上[(式3)](#2000-1:eq:2,2000-1:eq:3)から
   
+
 $$
 \begin{align*}
 \Im\frac{z-\gamma}{z-\alpha} > 0 \\\Im\frac{z-\beta}{z-\gamma} > 0  \\\Im\frac{z-\alpha}{z-\beta} > 0
@@ -129,7 +138,7 @@ $$
   従って（1）から，$z$の存在する範囲は直線$A\Gamma$，$\Gamma B$，$BA$によって規定される．
   これは点$\Gamma$がベクトルBAの向かって左手にあるか右手にあるかで異なる．
   向かって左手にある場合は$z$は三角形ABC内に存在し，向かって右手にある場合はそのような$z$は存在しない．
-  $\eqref{2000-1:eq:2}$で逆の符号を採用した場合は逆の結果になる．
+  [(式2)](#2000-1:eq:2)で逆の符号を採用した場合は逆の結果になる．
 
   
 

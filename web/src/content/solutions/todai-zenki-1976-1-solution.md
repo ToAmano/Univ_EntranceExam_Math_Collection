@@ -11,6 +11,7 @@ title: "TODAI 1976 zenki Q1 (solution)"
      \begin{oframed}
      負でない実数$r$，$l$に対して，$xy$平面上の曲線
           
+
 $$
 \begin{align*}
 y=
@@ -44,6 +45,7 @@ $$
 
 また，題意の条件から
      
+
 $$
 \begin{align}
 r^2+l=c\label{1}
@@ -52,14 +54,16 @@ $$
 
 である．求める体積は，対称性から
      
+
 $$
 \begin{align*}
 \frac{V}{\pi}=2\int_0^r(x^2)^2\,dx+(r^2)^2l
 \end{align*}
 $$
 
-であるから\eqref{1}を代入して
+であるから[1](#1)を代入して
      
+
 $$
 \begin{align*}
 \frac{V}{\pi}&=2\int_0^rx^4\,dx+r^4(c-r^2)\equiv f(r)
@@ -68,6 +72,7 @@ $$
 
 として
      
+
 $$
 \begin{align*}
 f'(r)&=2r^4+4cr^3-6r^5 \\&=2r^3(-3r^2+r+2c)
@@ -76,6 +81,7 @@ $$
 
 である．ただし，$l,r\ge0$から，
      
+
 $$
 \begin{align}
 0\le r^2 \le c \nonumber\\
@@ -85,6 +91,7 @@ $$
 
 である．ここで
      
+
 $$
 \begin{align}
 -3r^2+r+2c=0 \label{2}
@@ -95,6 +102,7 @@ $$
 
 $f(0)=2c>0$だから，$\a<0<\b$であり，
      
+
 $$
 \begin{align*}
 &\b=\frac{1+\sqrt{1+24c}}{6}\le\sqrt{c}\\&1+\sqrt{1+24c}\le 6\sqrt{c}\\&2+24c+2\sqrt{1+24c}\le 36c \\&0\le c(c-1)
@@ -128,8 +136,9 @@ $$
      \end{indentation}
 
      
-以上および\eqref{1}にも注意して，
+以上および[1](#1)にも注意して，
      
+
 $$
 \begin{align*}
 c\ge1&\,\,\,\,\begin{cases}

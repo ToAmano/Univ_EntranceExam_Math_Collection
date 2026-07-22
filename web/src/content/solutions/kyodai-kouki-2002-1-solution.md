@@ -18,6 +18,7 @@ title: "KYODAI 2002 kouki Q1 (solution)"
     $k$としてありうるのは$k=l+1,l+2,\dots,n$の$n-l$通りである．
     従って，Bに入っている札の番号が$l$である確率$Q(l)$は
     
+
 $$
 \begin{align*}
 Q(l) = \frac{n-l}{n!}
@@ -28,6 +29,7 @@ $$
 
     したがって，求める確率$P(n)$は$Q(l)$を$l$について和を取ったものだから，$n \ge 2$の時，
     
+
 $$
 \begin{align*}
 P(n)

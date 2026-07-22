@@ -12,6 +12,7 @@ title: "KYODAI 1993 kouki Q4 (solution)"
   $f(x) = a^x - ax$ とおく．$x>0$ に対し $f(x)>0$ となるための条件を求めれば良い．
   ただし，題意より
   
+
 $$
 \begin{align*}
 a > 0
@@ -22,6 +23,7 @@ $$
   $0 < a \le 1$ とすると $f(x) \to -\infty$ ($x \to \infty$) から不適．
   従って
   
+
 $$
 \begin{align}
 1 < a \label{1993-4:eq:3}
@@ -32,6 +34,7 @@ $$
 
   $f'(x)$の一階微分は
   
+
 $$
 \begin{align*}
 f'(x) = a \left[ a^{x-1}\log a - 1 \right]
@@ -40,6 +43,7 @@ $$
 
   だから，$f'(x)=0$の解は
   
+
 $$
 \begin{align*}
 a^{\alpha-1} = \frac{1}{\log a}
@@ -48,6 +52,7 @@ $$
 
   なる$\alpha$である．$a>1$よりこの両辺は正なので自然対数をとって，
   
+
 $$
 \begin{align}
 (\alpha-1) \log a & = - \log(\log a)                                     \\\alpha& = 1 - \frac{\log(\log a)}{\log a}\label{1993-4:eq:1}
@@ -70,6 +75,7 @@ $$
 
   従って，題意の条件を満たすには $f(\alpha) \ge 0$ ならば良い．
   
+
 $$
 \begin{align*}
 f(\alpha)
@@ -79,6 +85,7 @@ $$
 
   だから，
   
+
 $$
 \begin{align*}
 & f(\alpha) \ge 0              \\
@@ -86,8 +93,9 @@ $$
 \end{align*}
 $$
 
-  $\eqref{1993-4:eq:1}$を代入して
+  [(式1)](#1993-4:eq:1)を代入して
   
+
 $$
 \begin{align*}
 & 1 - \frac{\log(\log a)}{\log a}\le\frac{1}{\log a }\\& \log\frac{a}{\log a }\le 1
@@ -98,6 +106,7 @@ $$
 
   $\log x$ は $x$ について単調増加なので，$\log e = 1$に注意して$\log$を外して
   
+
 $$
 \begin{align*}
 & \frac{a}{\log a}\le  e \\\therefore& e\log a -a \ge 0
@@ -106,6 +115,7 @@ $$
 
   となる．以下この条件を満たすような$a$を求めるため，
   
+
 $$
 \begin{align*}
 g(a) = e\log a -a
@@ -115,6 +125,7 @@ $$
   とおくと，$g(a)\ge 0$となる$a$を求めれば良い．
   一階微分は
   
+
 $$
 \begin{align*}
 g'(a) = \frac{e}{a} -1
@@ -135,9 +146,10 @@ $$
   <figcaption>表 2: $g(x)$の増減表</figcaption>
 </figure>
 
-  従って，$g(a) \ge 0$を満たす $a$ は $a=e$のみであり，これは$\eqref{1993-4:eq:3}$を満たすから，
+  従って，$g(a) \ge 0$を満たす $a$ は $a=e$のみであり，これは[(式3)](#1993-4:eq:3)を満たすから，
   求める$a$は
   
+
 $$
 \begin{align*}
 a = e
@@ -153,6 +165,7 @@ $$
   解答ではかなり素直に関数を微分して条件を満たす$a$を求めに行ったが，よりショートカットも可能ある．
   題意の条件
   
+
 $$
 \begin{align*}
 a^x \ge ax
@@ -161,6 +174,7 @@ $$
 
   が任意の$x\ge 0$で満たすような$a$を探せば良い．$a>0$よりこの両辺は正なので$a$を底とする対数をとって
   
+
 $$
 \begin{align*}
 x-1 \ge\log_a x
@@ -169,6 +183,7 @@ $$
 
   となるから，
   
+
 $$
 \begin{align*}
 h(x) = x-1 - \log_a x

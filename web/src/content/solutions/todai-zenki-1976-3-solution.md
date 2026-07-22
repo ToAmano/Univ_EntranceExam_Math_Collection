@@ -19,6 +19,7 @@ title: "TODAI 1976 zenki Q3 (solution)"
 
  \1 とおく．するとP$(5+rc,5+rs)$とおけるから，
      
+
 $$
 \begin{align*}
 &\mathrm{Q}(13-rc,-5-rs)&\mathrm{R}(-5-rs,5+rc)
@@ -27,6 +28,7 @@ $$
 
 である．故に
      
+
 $$
 \begin{align*}
 |\mathrm{QR}|^2=&\left\{(13-rc)-(-5-rs)\right\}^2 \\&+\left\{(-5-rs)-(5+rc)\right\}^2 \\
@@ -35,6 +37,7 @@ $$
      =&424+2r^2+8\sqrt{53}r\sin(\theta-\a)
 \end{align*}
 $$
+
      
 である．ここで，$\a$は
      \[\tan\a=\frac{2}{7}\]
@@ -42,6 +45,7 @@ $$
      \[-\a\le\theta-\a <2\pi -\a\]
 であるから，$-1\le\sin (\theta-\a)\le 1$である．故に$r>0$から，
      
+
 $$
 \begin{align*}
 \begin{cases}

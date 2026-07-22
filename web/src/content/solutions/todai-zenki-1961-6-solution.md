@@ -25,6 +25,7 @@ $a$，$b$，$c$は定数であって，函数$f(x)=a\sin x+b\cos x+c\cos 2x$は$
      である．まず，極大値の条件から
      $f\left(\dfrac{\pi}{4}\right)=0$が必要である．これと題意の条件から
           
+
 $$
 \begin{align*}
 &\left\{\begin{array}{l}
@@ -42,6 +43,7 @@ $$
     故に$(a,b,c)=(5,5,\sqrt{2})$となる．
       $f'(x)$に値を代入する．
           
+
 $$
 \begin{align*}
 f'(x)&=5t-5s+2\sqrt{2}(t^2-s^2) \\&=(t-s)\left(5+4\sin\left(x+\frac{\pi}{4}\right)\right)
@@ -50,6 +52,7 @@ $$
 
      したがって，下表を得る．
       
+
 $$
 \begin{align*}
 \begin{array}{|c|c|c|c|c|c|c|c|} \hline

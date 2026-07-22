@@ -47,6 +47,7 @@ title: "TODAI 1984 zenki Q2 (solution)"
 
 $C$のQ$(t,\log t)$での接線$l$は，
      
+
 $$
 \begin{align*}
      l:y=\frac{1}{t}x+\log t-1
@@ -55,6 +56,7 @@ $$
 
 である．円が$L$と接することから，半径$r$として
      
+
 $$
 \begin{align}
      r=f
@@ -63,6 +65,7 @@ $$
 
 である．故に円の方程式は
      
+
 $$
 \begin{align*}
      (x-f)^2+(y-g)^2=f^2
@@ -71,6 +74,7 @@ $$
 
 さらに，円がQを通る条件から
      
+
 $$
 \begin{align}
      (t-f)^2+(\log t-g)^2=f^2\label{1}
@@ -79,6 +83,7 @@ $$
 
 Qでの接線が$l$に一致することから
      
+
 $$
 \begin{align*}
      &l \perp\mathrm{P_tQ} \\
@@ -87,8 +92,9 @@ $$
      \end{align*}
 $$
 
-である．\eqref{2}を\eqref{1}に代入して$g$を消去して
+である．[2](#2)を[1](#1)に代入して$g$を消去して
      
+
 $$
 \begin{align*}
      &(t-f)^2+t^2(t-f)^2=f^2 \\
@@ -98,6 +104,7 @@ $$
 
 ここで，円が$A$に含まれることから
      
+
 $$
 \begin{align*}
      &t-f>0&f>0
@@ -106,6 +113,7 @@ $$
 
 だから
      
+
 $$
 \begin{align*}
      \sqrt{1+t^2}(t-f)=f \\
@@ -113,20 +121,22 @@ $$
      \end{align*}
 $$
 
-である．\eqref{2}に代入して
+である．[2](#2)に代入して
      
+
 $$
 \begin{align}
      g(t)=\frac{tf}{\sqrt{1+t^2}}+\log t\label{4}
      \end{align}
 $$
 
-さて，$h(t)=f(t)/g(t)$とおく．\eqref{4}の両辺$f(>0)$でわると
+さて，$h(t)=f(t)/g(t)$とおく．[4](#4)の両辺$f(>0)$でわると
      
+
 $$
 \begin{align*}
      \frac{1}{h}&=\frac{t}{\sqrt{1+t^2}}+\frac{\log t}{f} \\
-     &=\frac{t}{\sqrt{1+t^2}}+\frac{1+\sqrt{1+t^2}}{t\sqrt{1+t^2}}\log t &(\because \eqref{3}) \\
+     &=\frac{t}{\sqrt{1+t^2}}+\frac{1+\sqrt{1+t^2}}{t\sqrt{1+t^2}}\log t &(\because [3](#3)) \\
      &=\frac{t^2+(1+t^2)\log t}{t\sqrt{1+t^2}} \\
      \therefore\,\, h&=\frac{t\sqrt{1+t^2}}{t^2+(1+t^2)\log t}
      \end{align*}
@@ -136,6 +146,7 @@ $$
      \[h\limit{t}{+0}0\]
 および
      
+
 $$
 \begin{align*}
      h=\frac{1}{\frac{t}{1\sqrt{1+t^2}}+\frac{\log t}{t}\frac{1+\sqrt{1+t^2}}{\sqrt{1+t^2}}}\limit{t}{\infty}1

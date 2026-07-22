@@ -24,6 +24,7 @@ title: "TODAI 1979 zenki Q5 (solution)"
 
  条件(A)から$a,\a\in\mathbb{R}$として，
      
+
 $$
 \begin{align*}
 f(x)-x=a(x+t)x(x-\a) \\
@@ -33,6 +34,7 @@ $$
 
 と書ける．従って
      
+
 $$
 \begin{align*}
 f'(x)&=3ax^2+2a(t-\a)x+(1-at\a)\\
@@ -42,6 +44,7 @@ $$
 
 となるので，条件(B)から，
      
+
 $$
 \begin{align*}
 &\begin{cases}
@@ -56,6 +59,7 @@ $$
 
 である．以上から，
      
+
 $$
 \begin{align*}
 f(x)-x=\frac{t^2}{t+1}(x+t)x\left(x-\frac{t}{t+1}\right)
@@ -77,6 +81,7 @@ $$
      
 従って，
      
+
 $$
 \begin{align*}
 S(t)&=\int_0^d(f(x)-x)\,dx \\&=\int_0^d\left(\frac{t^2}{t+1}(x+t)x\left(x-\frac{t}{t+1}\right)\right)\,dx \\&=\teisekibun{-\frac{t+1}{4t^2}x^4-\frac{1}{3}x^3+\frac{1}{2}x^2}{0}{d}\\&=\frac{-1}{4}\left(\frac{1}{t}+\frac{1}{t^2}\right)d^4-\frac{1}{3}d^3+\frac{1}{2}d^2 \\&\limit{t}{\infty}\frac{1}{2}-\frac{1}{3}=\frac{1}{6}

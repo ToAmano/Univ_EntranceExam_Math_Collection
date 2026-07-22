@@ -26,6 +26,7 @@ title: "TODAI 1974 zenki Q1 (solution)"
  $n=0$に対しても同様に$f_p(n)$を定義できるので，以下$n\ge0$で考える．
 合同式の法を$10$とすると，
      
+
 $$
 \begin{align*}
 n^p\equiv f_p(n)
@@ -34,6 +35,7 @@ $$
 
 である．故に$k=0,1,2,\cdots,9$および$i\in\mathbb{Z}_{\ge0}$に対して
      
+
 $$
 \begin{align*}
 f_p(10i+k)=f_p(k)

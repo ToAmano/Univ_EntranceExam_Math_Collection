@@ -21,6 +21,7 @@ title: "TODAI 1991 zenki Q5 (solution)"
      \[2x-5y+a=0\]
 と書ける．これと中心$(m,n)$，半径$r$の円が共有点をもつので
      
+
 $$
 \begin{align}
 \frac{|2m-5n+a|}{\sqrt{4+25}}\le r\label{1}
@@ -28,10 +29,11 @@ $$
 $$
 
 である．従って，$r$の条件式は
-      \[\forall a\exists m \exists n ，\eqref{1}\]
+      \[\forall a\exists m \exists n ，[1](#1)\]
  である．ここで，$2\perp 5$だから，$2m-5n$は全ての整数値のみをとる．従って$a$の
  小数部分$\a$とすれば，$a$を固定した時，
       
+
 $$
 \begin{align*}
 \begin{cases}
@@ -43,6 +45,7 @@ $$
 
 である．故に$\a$を動かした時，これらの値が常に$r$より小さければよいので，条件は
      
+
 $$
 \begin{align*}
 \frac{1/2}{\sqrt{29}}\le r\\\frac{\sqrt{29}}{58}\le r

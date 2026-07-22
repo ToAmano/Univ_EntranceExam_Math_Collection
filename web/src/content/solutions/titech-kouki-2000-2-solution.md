@@ -9,18 +9,20 @@ title: "TITECH 2000 kouki Q2 (solution)"
 
 ## 【解】
 
-### (1)
-
+  (1)
   $m \ge 0, n \ge 1$とする．部分積分法を用いて題意を示す．
   
+
 $$
 \begin{align*}
 \quad a_{m+1,n}& = \int_0^\pi\theta^{m+1}\cos n\theta\, d\theta\\& = \frac{1}{n}\left[\theta^{m+1}\sin n\theta\right]_0^\pi - \frac{m+1}{n}\int_0^\pi\theta^m \sin n\theta\, d\theta\\& = -\frac{m+1}{n} b_{m,n}
 \end{align*}
 $$
+
                                                                                                                                                 \\
   および
   
+
 $$
 \begin{align*}
 \quad b_{m+1,n}& = \int_0^\pi\theta^{m+1}\sin n\theta\, d\theta\\& = -\frac{1}{n}\left[\theta^{m+1}\cos n\theta\right]_0^\pi + \frac{m+1}{n}\int_0^\pi\theta^m \cos n\theta\, d\theta\\& = (-1)^{n+1}\frac{\pi^{m+1}}{n} + \frac{m+1}{n} a_{m,n}
@@ -29,8 +31,8 @@ $$
 
   より題意は示された．$\cdots$(答)
 
-### (2)
-
+  
+  (2)
   半径1の球面が $x^2+y^2+z^2=1$ となるように空間座標をおく．
   $xy$平面でひもがうごく領域を$D$，紐の固定された端点$A(1,0,0)$として，
   $D$を$x$軸まわりに回転した立体の体積$V$を求めれば良い．
@@ -70,6 +72,7 @@ $$
 
   従って，ベクトル$QP$は
   
+
 $$
 \begin{align*}
 \vec{QP} = (\pi-\theta)
@@ -82,6 +85,7 @@ $$
 
   と表せる．従って点$P$の座標は
   
+
 $$
 \begin{align}
 \vec{OP}& = \vec{OQ} + \vec{QP}\nonumber\\& =
@@ -106,6 +110,7 @@ $$
   である．このパラメータ表示の曲線が$xy$平面でどのような軌跡になるかを調べる．
 
   
+
 $$
 \begin{align}
 \frac{dx}{d\theta}& = -\sin\theta - (\pi-\theta)\cos\theta + \sin\theta\nonumber\\& = -(\pi-\theta) \cos\theta\label{2000-2:eq:2}
@@ -142,6 +147,7 @@ $$
   $V$は$x\le 1$の部分の回転体の体積$V_{-}$と$1\le x$の部分の回転体の体積$V_{+}$の和から，球$x^2+y^2+z^2=1$の体積$V_{s}$を引いたものである．
   すなわち
   
+
 $$
 \begin{align}
 V = V_{+} + V_{-} - V_{s}\label{2000-2:eq:7}
@@ -157,6 +163,7 @@ $$
 
   $V_{s}$および$V_{+}$はそれぞれ半径$1$の球と半径$\pi$の球の半分だから
   
+
 $$
 \begin{align}
 V_{s}& = \frac{4\pi}{3}\label{2000-2:eq:8}\\
@@ -166,14 +173,16 @@ $$
 
   である．$V_{-}$は，$Y_{+}$と$Y_{-}$を分けて考えると
   
+
 $$
 \begin{align}
 V_{-}& = \pi\int_{-\frac{\pi}{2}}^{1} Y_{+}^2 dx - \pi\int_{-\frac{\pi}{2}}^{-1} Y_{-}^2 dx                                      \nonumber\\& = \pi\int_{\frac{\pi}{2}}^{0} Y^2 \frac{dx}{d\theta} d\theta - \pi\int_{\frac{\pi}{2}}^{\pi} Y^2 \frac{dx}{d\theta} d\theta\nonumber\\& = -\pi\int_{0}^{\pi} Y^2 \frac{dx}{d\theta} d\theta\label{2000-2:eq:10}
 \end{align}
 $$
 
-  と表せる．$\eqref{2000-2:eq:1,2000-2:eq:2}$を代入して
+  と表せる．[(式2)](#2000-2:eq:1,2000-2:eq:2)を代入して
   
+
 $$
 \begin{align*}
 V_{-} =  -\pi\int_{0}^{\pi}\{\sin\theta + (\pi - \theta) \cos\theta\}^2 \cdot\left[-(\pi - \theta)\cos\theta\right] d\theta
@@ -182,6 +191,7 @@ $$
 
   である．$\pi - \theta \to \theta$ と変数を置き換えて
   
+
 $$
 \begin{align*}
 V_{-}
@@ -196,6 +206,7 @@ $$
 
   ここで，三倍角の公式
   
+
 $$
 \begin{align*}
 \sin 3\theta& = 3\sin\theta - 4 \sin^3\theta\\\cos 3\theta& =-3\cos\theta + 4 \cos^3\theta
@@ -204,6 +215,7 @@ $$
 
   を用いて$\cos^3\theta$, $\sin^3\theta$を除去すると
   
+
 $$
 \begin{align*}
 V_{-}
@@ -217,6 +229,7 @@ $$
 
   となる．各項の積分を，(1)の結果を利用して簡単にして解く．まず，積分を$a_{m,n}$および$b_{m,n}$で表すと
   
+
 $$
 \begin{align}
 V_{-}& = -\pi\left[\frac{1}{4}a_{3,3}-\frac{1}{4}a_{1,3} - \frac{1}{2}b_{2,3} -\frac{1}{2}b_{2,1}+\frac{3}{4}a_{3,1}+\frac{1}{4}a_{1,1}\right]\label{2000-2:eq:5}
@@ -225,6 +238,7 @@ $$
 
   である．(1)の漸化式および$n\le 1$に対して$a_{0,n}=0$, $b_{0,n}=2/n$より，それぞれの項は$m$の小さい順に整理すると
   
+
 $$
 \begin{align*}
 a_{1,1}& = - b_{0,1} = -2                                                         \\
@@ -236,17 +250,19 @@ a_{1,1}& = - b_{0,1} = -2                                                       
 \end{align*}
 $$
 
-  である．$\eqref{2000-2:eq:5}$にこれらを代入する．
+  である．[(式5)](#2000-2:eq:5)にこれらを代入する．
   先に$a_{3,3}, a_{3,1}$を$b$に変換し，最後に$b$に具体的な値を代入すると，
   
+
 $$
 \begin{align}
 V_{-}& = -\pi\left[ -\frac{1}{4}b_{2,3}+\frac{1}{18} - \frac{1}{2}b_{2,3} -\frac{1}{2}b_{2,1}-\frac{9}{4}b_{2,1}-\frac{1}{2}\right]\nonumber\\& = -\pi\left[ -\frac{3}{4}b_{2,3} -\frac{11}{4}b_{2,1}-\frac{4}{9}\right]\nonumber\\& = -\pi\left[ -\frac{3}{4}\left(\frac{\pi^2}{3} - \frac{4}{27}\right) -\frac{11}{4}\left(\pi^2-4\right)-\frac{4}{9}\right]\nonumber\\& = -\pi\left[ -3\pi^2 + \frac{32}{3}\right]\label{2000-2:eq:6}
 \end{align}
 $$
 
-  と求まる．$\eqref{2000-2:eq:8,2000-2:eq:9,2000-2:eq:6}$を$\eqref{2000-2:eq:7}$に代入して求める体積は
+  と求まる．[(式6)](#2000-2:eq:8,2000-2:eq:9,2000-2:eq:6)を[(式7)](#2000-2:eq:7)に代入して求める体積は
   
+
 $$
 \begin{align*}
 V
@@ -262,9 +278,7 @@ $$
 ## 【解説】
 
   空間図形の皮を被った積分の問題と言っても過言ではない．
-
-### (2)
-が本題だが，条件を式に落とし込む前半パートと，回転体の体積を求めるための計算を行う後半パート，
+  (2)が本題だが，条件を式に落とし込む前半パートと，回転体の体積を求めるための計算を行う後半パート，
   どちらも歯応えのある問題だ．
 
   まず前半パートについてだが，点Pが領域の境界にある時，線分$PQ$が円の接線となることを今回は証明なしに用いた．
@@ -286,6 +300,7 @@ $$
   以下の二つの積分は難関大では頻出なので，覚えてしまいたい．
   証明は部分積分法そのままなので割愛する．解答でそのまま使ってしまって問題ない．
   
+
 $$
 \begin{align*}
 \int x^n\sin x dx & = - x^n \cos x + nx^{n-1}\sin x + n(n-1)x^{n-2}\cos x + \cdots\\\int x^n\cos x dx & =   x^n \sin x + nx^{n-1}\cos x - n(n-1)x^{n-2}\sin x - \cdots
@@ -299,6 +314,7 @@ $$
 
   この公式を用いて，以下各項の積分を与える．
   
+
 $$
 \begin{align*}
 \bullet\int_0^\pi(\theta^3-\theta) \cos 3\theta d\theta
@@ -317,6 +333,7 @@ $$
 
   従って，
   
+
 $$
 \begin{align*}
 \frac{V_{-}}{-\pi}
@@ -328,9 +345,10 @@ $$
   となって，同じ答えを得る．$\cdots$(答)
 
   最後に，今回のようなパラメータ表示の曲線の積分時のポイントを一つ復習しよう．
-  $\eqref{2000-2:eq:10}$のように，多価関数になった場合，形式上は積分を分けて考えないといけない．
+  [(式10)](#2000-2:eq:10)のように，多価関数になった場合，形式上は積分を分けて考えないといけない．
   しかし，結局変形するとパラメータに関する一つの積分
   
+
 $$
 \begin{align*}
 \int y^2\frac{dx}{d\theta} d\theta

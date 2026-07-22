@@ -9,10 +9,10 @@ title: "TODAI 1998 kouki Q1 (solution)"
 
 ## 【解】
 
-### (1)
-
+    (1)
     $C_1,C_2$の方程式は
     
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -29,6 +29,7 @@ $$
     この時$S(X, Y)$ とおいて，$S$の軌跡を求める．
     まず，
     
+
 $$
 \begin{align}
 \overrightarrow{RQ}& = \begin{pmatrix} \cos\alpha - 2\cos\beta \\ \sin\alpha +10 - 2\sin\beta \end{pmatrix}\label{1998-1:eq:2}\\\overrightarrow{RS}& = \begin{pmatrix} X-2\cos\beta \\ Y-2\sin\beta \end{pmatrix}\label{1998-1:eq:3}
@@ -39,6 +40,7 @@ $$
 
     三角形QRSが二等辺三角形になる条件より，
     
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -48,8 +50,9 @@ $$
 \end{align*}
 $$
 
-    であるが，$\eqref{1998-1:eq:2}$より
+    であるが，[(式2)](#1998-1:eq:2)より
     
+
 $$
 \begin{align*}
 \overrightarrow{RS} = \pm\begin{pmatrix} \sin\alpha - 2\sin\beta + 10 \\ -(\cos\alpha - 2\cos\beta) \end{pmatrix}
@@ -58,8 +61,9 @@ $$
 
     が従う．
 
-    $\eqref{1998-1:eq:3}$と比較して
+    [(式3)](#1998-1:eq:3)と比較して
     
+
 $$
 \begin{align*}
 \begin{pmatrix} X \\ Y \end{pmatrix}& = 2\begin{pmatrix} \cos\beta \\ \sin\beta \end{pmatrix}\pm\begin{pmatrix} \sin\alpha - 2\sin\beta + 10 \\ -\cos\alpha + 2\cos\beta \end{pmatrix}\\& = \pm\begin{pmatrix} \sin\alpha \\ -\cos\alpha \end{pmatrix} + 2\begin{pmatrix} \cos\beta \mp \sin\beta \\ \sin\beta \pm \cos\beta \end{pmatrix}\pm\begin{pmatrix} 10 \\ 0 \end{pmatrix}\\& = \pm\begin{pmatrix} \sin\alpha \\ -\cos\alpha \end{pmatrix} + 2\sqrt{2}\begin{pmatrix} \cos(\beta \pm \pi/4) \\ \sin(\beta \pm \pi/4) \end{pmatrix}\pm\begin{pmatrix} 10 \\ 0 \end{pmatrix}
@@ -70,6 +74,7 @@ $$
 
     複合正の時，$(X, Y)$はドーナツ型の領域
     
+
 $$
 \begin{align*}
 (2\sqrt{2}-1)^2 \le(x-10)^2+y^2 \le(1+2\sqrt{2})^2
@@ -80,6 +85,7 @@ $$
 
     複合負の時，$(X, Y)$はドーナツ型の領域
     
+
 $$
 \begin{align*}
 (2\sqrt{2}-1)^2 \le(x+10)^2+y^2 \le(1-2\sqrt{2})^2
@@ -90,6 +96,7 @@ $$
 
     以上二つの領域をまとめると
     
+
 $$
 \begin{align}
 \begin{dcases}
@@ -109,11 +116,11 @@ $$
   <figcaption>図 1: $S$の存在領域は斜線部境界を含む．</figcaption>
 </figure>
 
-### (2)
-
-### (1)
-の領域の境界の円の方程式は複合任意で
     
+    (2)
+    (1)の領域の境界の円の方程式は複合任意で
+    
+
 $$
 \begin{align}
 (X \pm 10)^2+Y^2 = (2\sqrt{2}\pm 1)^2 \label{1998-1:eq:4}
@@ -123,14 +130,13 @@ $$
     の合計四つである．
 
     $Q, R$ が一意に定まる，つまり $\alpha, \beta$ が一意に定まるような $C_3$ の軌跡は，
+    (1)の領域の境界[(式4)](#1998-1:eq:4)である．
 
-### (1)
-の領域の境界$\eqref{1998-1:eq:4}$である．
+    したがって，[(式5)](#1998-1:eq:5)の領域と円 $C_3$ がただ1つ共有点を持つ（この時の共有点は[(式4)](#1998-1:eq:4)上になる）ように円の中心 $P_3$ を定めればよい．
 
-    したがって，$\eqref{1998-1:eq:5}$の領域と円 $C_3$ がただ1つ共有点を持つ（この時の共有点は$\eqref{1998-1:eq:4}$上になる）ように円の中心 $P_3$ を定めればよい．
-
-    ここで$\eqref{1998-1:eq:4}$の四つの円のうち，中心を$(-10,0)$とする二つの円
+    ここで[(式4)](#1998-1:eq:4)の四つの円のうち，中心を$(-10,0)$とする二つの円
     
+
 $$
 \begin{align*}
 (X+10)^2+Y^2 = (2\sqrt{2}\pm 1)^2
@@ -139,6 +145,7 @@ $$
 
     について，題意の直線
     
+
 $$
 \begin{align*}
 \ell: x+2y=10
@@ -147,6 +154,7 @@ $$
 
     との距離は点と直線の距離公式より
     
+
 $$
 \begin{align*}
 L = \frac{|-10+10|}{\sqrt{1^2+2^2}}=4\sqrt{5}
@@ -155,6 +163,7 @@ $$
 
     であり，これは$C_3$とこれらの円の半径の合計
     
+
 $$
 \begin{align*}
 \left(2\sqrt{2}\pm 1\right) + \sqrt{2} = 3\sqrt{2}\pm 1
@@ -165,6 +174,7 @@ $$
 
     従って，残りの$E(10,0)$を中心とする二つの円
     
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -198,6 +208,7 @@ $$
     $\overline{BC}=2(\sqrt{2}-1) > 2$ だから，この時，他の交点は存在せず条件に適する．
     よって，$B, C$ からの距離が $\sqrt{2}$ ，すなわちEからの距離が
     
+
 $$
 \begin{align*}
 \left(2\sqrt{2}-1\right) - \sqrt{2} = \sqrt{2}-1
@@ -206,6 +217,7 @@ $$
 
     となるような $\ell$ 上の点が$P_3$であり，
     
+
 $$
 \begin{align*}
 \overrightarrow{EP_3}& = (\sqrt{2}-1)\frac{\pm}{\sqrt{5}}\begin{pmatrix} 2 \\ -1 \end{pmatrix}\\\overrightarrow{OP_3}& = \begin{pmatrix} 10 \\ 0 \end{pmatrix} + (\sqrt{2}-1)\frac{\pm}{\sqrt{5}}\begin{pmatrix} 2 \\ -1 \end{pmatrix}\\
@@ -214,6 +226,7 @@ $$
 
     だから，求める$P_3$は
     
+
 $$
 \begin{align*}
 P_3\left(10\pm\frac{2\sqrt{5}(\sqrt{2}-1)}{5}, \mp\frac{\sqrt{5}(\sqrt{2}-1)}{5}\right)
@@ -228,6 +241,7 @@ $$
     この時，他の交点は存在せず条件に適する．
     よって，$A, D$ からの距離が $\sqrt{2}$ ，すなわちEからの距離が
     
+
 $$
 \begin{align*}
 \left(2\sqrt{2}+1\right) + \sqrt{2} = 3\sqrt{2}+1
@@ -236,6 +250,7 @@ $$
 
     となるような $\ell$ 上の点が$P_3$であり，
     
+
 $$
 \begin{align*}
 \overrightarrow{EP_3}& = (3\sqrt{2}+1)\frac{\pm}{\sqrt{5}}\begin{pmatrix} 2 \\ -1 \end{pmatrix}\\\overrightarrow{OP_3}& = \begin{pmatrix} 10 \\ 0 \end{pmatrix} + (3\sqrt{2}+1)\frac{\pm}{\sqrt{5}}\begin{pmatrix} 2 \\  -1 \end{pmatrix}
@@ -244,6 +259,7 @@ $$
 
     より
     
+
 $$
 \begin{align*}
 P_3\left(10\pm\frac{2\sqrt{5}(3\sqrt{2}+1)}{5}, \mp\frac{\sqrt{5}(3\sqrt{2}+1)}{5}\right)
@@ -255,6 +271,7 @@ $$
     
     以上で全ての場合が尽くされ，求める点は複号同順として
     
+
 $$
 \begin{align*}
 & P_3\left(10\pm\frac{2\sqrt{5}(\sqrt{2}-1)}{5}, \mp\frac{\sqrt{5}(\sqrt{2}-1)}{5}\right)\\& P_3\left(10\pm\frac{2\sqrt{5}(3\sqrt{2}+1)}{5}, \mp\frac{\sqrt{5}(3\sqrt{2}+1)}{5}\right)

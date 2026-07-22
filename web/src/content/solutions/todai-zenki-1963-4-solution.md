@@ -47,7 +47,7 @@ $|AP|=x \ (0<x<a)$とおく．すると相似から
 である．等号成立は$\dfrac{x}{2}=a-x\Longleftrightarrow x=\dfrac{2}{3}a$である．(これは$0<x<a$を満たす．)
 以上から求める値は$|AP|=\dfrac{2}{3}a$である．$\cdots$(答)
 
-2.  \eqref{2}から$V_0=\dfrac{\sqrt{2}}{27}a^3$であり，また
+2.  [2](#2)から$V_0=\dfrac{\sqrt{2}}{27}a^3$であり，また
      \[V=\dfrac{1}{3}S|AH|=\dfrac{\sqrt{2}}{12}a^3 \]
 だから，
      \begin{align*}

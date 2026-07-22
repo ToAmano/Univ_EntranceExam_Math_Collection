@@ -20,6 +20,7 @@ title: "TODAI 1987 zenki Q2 (solution)"
 
  題意から$C:y=(x-a)^2+b$である．接点の$x$座標を$t_{>0}$とすれば，$\left(\cfrac{1}{x}\right)'=\cfrac{-1}{x^2}$だから，求める条件は，
      
+
 $$
 \begin{align}
 &\exists t \left\{\begin{array}{l}
@@ -38,8 +39,9 @@ $$
 \end{align}
 $$
 
-従って，$(a,b)$が\eqref{1}で表されるパラメータ曲線上にあればよい．
+従って，$(a,b)$が[1](#1)で表されるパラメータ曲線上にあればよい．
     
+
 $$
 \begin{align*}
 a'&=1-\frac{1}{t^3}=\frac{t^3-1}{t^3}\\
@@ -49,6 +51,7 @@ $$
 
 だから下表を得る．
     
+
 $$
 \begin{align*}
 \begin{array}{|c|c|c|c|c|}\hline
@@ -60,8 +63,9 @@ $$
 \end{align*}
 $$
 
-また，\eqref{1}から極限値は以下のようになる．
+また，[1](#1)から極限値は以下のようになる．
      
+
 $$
 \begin{align*}
 t\to+0\text{のとき}&\left\{\begin{array}{l}
@@ -81,14 +85,16 @@ $$
       
 次に，接点以外に交点を持たない時，
     
+
 $$
 \begin{align*}
 (x-a)^2+b=\cfrac{1}{x}
 \end{align*}
 $$
 
-を満たす$x_{>0}$が唯一つ$x=t$のみであればよい．\eqref{1}を代入して
+を満たす$x_{>0}$が唯一つ$x=t$のみであればよい．[1](#1)を代入して
     
+
 $$
 \begin{align*}
 &\left(x-\left(t+\cfrac{1}{2t^2}\right)\right)^2+\left(\cfrac{1}{t}-\cfrac{1}{4t^4}\right)=\cfrac{1}{x}\\\Longleftrightarrow&x^2-2\left(t+\cfrac{1}{2t^2}\right)x+\left(t+\cfrac{1}{2t^2}\right)^2+\left(\cfrac{1}{t}-\cfrac{1}{4t^4}\right)=\cfrac{1}{x}\\\Longleftrightarrow&x^3-2\left(t+\cfrac{1}{2t^2}\right)x^2+\left(t^2+\cfrac{2}{t}\right)x-1=0 \\\Longleftrightarrow&(x-t)^2\left(x-\cfrac{1}{t^2}\right)=0
@@ -97,4 +103,4 @@ $$
 
 だから，条件は$t>0$も考慮して
      \[t=\cfrac{1}{t^2}\Longleftrightarrow t=1\]
- である．この時，\eqref{1}から，$(a,b)=\left(\dfrac{3}{2},\dfrac{3}{4}\right)$となる．$\cdots$(答)
+ である．この時，[1](#1)から，$(a,b)=\left(\dfrac{3}{2},\dfrac{3}{4}\right)$となる．$\cdots$(答)

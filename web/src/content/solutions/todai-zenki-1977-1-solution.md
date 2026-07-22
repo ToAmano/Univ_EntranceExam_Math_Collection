@@ -23,6 +23,7 @@ title: "TODAI 1977 zenki Q1 (solution)"
      \underline{(i)$k\le0$の時} \\
      $g'(x)\ge0$だから$g(x)$は単調増加で
           
+
 $$
 \begin{align*}
 &g(0)=0&g(1)=|1-3k|\ge0
@@ -31,6 +32,7 @@ $$
 
      に注意して
           
+
 $$
 \begin{align*}
 M(k)=g(1)=|1-3k|
@@ -50,6 +52,7 @@ $$
           \]
      故に(i)と同様にして($f(0)$は最大値の候補から除外できて)
           
+
 $$
 \begin{align*}
 M(k)&=\max\{f(0),f(\sqrt{k}),f(1)\}\\&=\max\{|1-3k|,2k\sqrt{k}\}
@@ -69,6 +72,7 @@ $$
           \]     
       故に(i)と同様にして，
            
+
 $$
 \begin{align*}
 M(k)=f(1)=|1-3k|
@@ -79,6 +83,7 @@ $$
       
  以上をまとめて
       
+
 $$
 \begin{align}
 M(k)=

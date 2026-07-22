@@ -11,6 +11,7 @@ title: "TITECH 1999 kouki Q1 (solution)"
 
   $\displaystyle F_n = \int_0^{\frac{\pi}{2}} \frac{\sin^2 nx}{x^2} dx$ とおく．半角公式から，
   
+
 $$
 \begin{align}
 F_n
@@ -20,6 +21,7 @@ $$
 
   である．第一項は$n$に依存しない定数で，
   
+
 $$
 \begin{align}
 \int_0^{\frac{\pi}{2}}\frac{1}{2(1+x)} dx
@@ -30,6 +32,7 @@ $$
   である．次に第二項は以下のように$n\to\infty$で$0$に収束することを示せる．
   部分積分法から，
   
+
 $$
 \begin{align}
 \int_0^{\frac{\pi}{2}}\frac{\cos 2nx}{2(1+x)} dx
@@ -37,8 +40,9 @@ $$
 \end{align}
 $$
 
-  ここで$\eqref{1999-1:eq:3}$において，区間内で $1/(1+x)^2 \ge 0$および$\sin 2nx\le 1$だから，
+  ここで[(式3)](#1999-1:eq:3)において，区間内で $1/(1+x)^2 \ge 0$および$\sin 2nx\le 1$だから，
   
+
 $$
 \begin{align*}
 \left|\frac{1}{2n}\int_0^{\frac{\pi}{2}}\frac{\sin 2nx}{2(1+x)^2} dx \right|& \le\frac{1}{2n}\int_0^{\frac{\pi}{2}}\frac{1}{2(1+x)^2} dx \\& \xrightarrow{n \to \infty} 0
@@ -47,14 +51,16 @@ $$
 
   となる．挟み撃ちの定理から極限値は
   
+
 $$
 \begin{align}
 \frac{1}{2n}\int_0^{\frac{\pi}{2}}\frac{\sin 2nx}{2(1+x)^2} dx & \to 0 \label{1999-1:eq:4}
 \end{align}
 $$
 
-  となり，したがって$\eqref{1999-1:eq:1,1999-1:eq:2,1999-1:eq:4}$から求める$F_n$の極限値は
+  となり，したがって[(式4)](#1999-1:eq:1,1999-1:eq:2,1999-1:eq:4)から求める$F_n$の極限値は
   
+
 $$
 \begin{align*}
 \lim_{n\to\infty} F_n = \frac{1}{2}\log\left(1+\frac{\pi}{2}\right)
@@ -72,6 +78,7 @@ $$
 
   さて，別解としてもうひとつ頻出の方法があるので紹介したい．それは積分区間を三角関数の関数の半周期で区切る方法である．すなわち
   
+
 $$
 \begin{align*}
 A_k = \int_{\frac{k-1}{2n}\pi}^{\frac{k}{2n}\pi} f(x) \sin^2 nx \, dx
@@ -84,6 +91,7 @@ $$
   今回は$f(x)$は単調減少なのでなのでわざわざ置く必要もないが，一般性を保って議論を進めよう．
   $\sin^2 nx \ge 0$ からこの区間では
   
+
 $$
 \begin{align*}
 f(m_k) \sin^2 nx \le f(x) \sin^2 nx \le f(M_k) \sin^2 nx
@@ -92,6 +100,7 @@ $$
 
   であり，両辺積分して
   
+
 $$
 \begin{align}
 \int_{\frac{k-1}{2n}\pi}^{\frac{k}{2n}\pi} f(m_k) \sin^2 nx \, dx
@@ -102,6 +111,7 @@ $$
 
   を得る．両辺の積分は簡単に評価できて
   
+
 $$
 \begin{align*}
 \int_{\frac{k-1}{2n}\pi}^{\frac{k}{2n}\pi}\sin^2 nx \, dx
@@ -109,8 +119,9 @@ $$
 \end{align*}
 $$
 
-  だから $\eqref{1999-1:eq:5}$ に代入して
+  だから [(式5)](#1999-1:eq:5) に代入して
   
+
 $$
 \begin{align*}
 \frac{\pi}{4n} f(m_k) \le A_k \le\frac{\pi}{4n} f(M_k)
@@ -119,6 +130,7 @@ $$
 
   だから，もとの$F_n$を求めるために$k=0,1,\cdots,n$ について和をとって，
   
+
 $$
 \begin{align}
 \frac{\pi}{4n}\sum_{k=1}^{n} f(m_k)
@@ -129,6 +141,7 @@ $$
 
   を得る．両辺の$n\to\infty$での極限値は，区分求積法によって求まる．
   
+
 $$
 \begin{align*}
 \lim_{n\to\infty}\frac{\pi}{4n}\sum_{k=1}^{n} f(m_k) = \frac{1}{2}\int_0^{\pi/2} f(x) \, dx = \frac{1}{2}\log\left(1+\frac{\pi}{2}\right)\\\lim_{n\to\infty}\frac{\pi}{4n}\sum_{k=1}^{n} f(M_k) = \frac{1}{2}\int_0^{\pi/2} f(x) \, dx =  \frac{1}{2}\log\left(1+\frac{\pi}{2}\right)
@@ -138,8 +151,9 @@ $$
   この時のポイントは，区間$\left[ \frac{k-1}{2n}\pi, \frac{k}{2n}\pi \right]$の幅が$n\to\infty$で$0$に収束するから，
   $m_k$も$M_k$も区分求積の時の変数と同一視できることである．
 
-  したがって，$\eqref{1999-1:eq:6}$および挟み撃ちの定理から，
+  したがって，[(式6)](#1999-1:eq:6)および挟み撃ちの定理から，
   
+
 $$
 \begin{align*}
 \lim_{n\to\infty} F_n = \frac{1}{2}\log\left(1+\frac{\pi}{2}\right)

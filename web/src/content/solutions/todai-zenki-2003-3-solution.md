@@ -31,6 +31,7 @@ title: "TODAI 2003 zenki Q3 (solution)"
  \1 円錐$A$の側面の方程式は，$x^2+y^2=(1-z)^2$，円柱$B$の側面は$(x-1)^2+y^2=1$であるから，
 $C$の$z=1-c$での切り口は，
      
+
 $$
 \begin{align*}
 \begin{cases}
@@ -47,6 +48,7 @@ $$
      
 この面積$S(t)$は，下の斜線部の面積$S_1$と$S_2$の合計である．すなわち，
      
+
 $$
 \begin{align}
 S(t)=S_1+S_2\label{1}
@@ -66,6 +68,7 @@ $$
      \end{minipage}
 各々計算すると，
      
+
 $$
 \begin{align*}
 S_1&=\theta(2c)^2-(2c)^2cs=4c^2\theta-4c^3s \\
@@ -73,8 +76,9 @@ S_1&=\theta(2c)^2-(2c)^2cs=4c^2\theta-4c^3s \\
 \end{align*}
 $$
 
-であるから，\eqref{1}に代入して，     
+であるから，[1](#1)に代入して，     
      
+
 $$
 \begin{align}
 S&=(4c^2-2)\theta-4c^3s+\pi+2cs+4c^3s \nonumber\\&=2\theta(1-2s^2)+\pi-2cs \label{2}
@@ -85,14 +89,16 @@ $$
 
 従って求める体積$V$として，
      
+
 $$
 \begin{align*}
-V&=\int_0^1S(t)dt \\&=\int_0^{\pi/2}S(t)\frac{dt}{d\theta}d\theta\\&=\int_0^{\pi/2}S(t)sd\theta\\&=\int_0^{\pi/2}(2s\theta-4s^3\theta+\pi s-2cs^2)d\theta&\left(\because\eqref{2}\right)
+V&=\int_0^1S(t)dt \\&=\int_0^{\pi/2}S(t)\frac{dt}{d\theta}d\theta\\&=\int_0^{\pi/2}S(t)sd\theta\\&=\int_0^{\pi/2}(2s\theta-4s^3\theta+\pi s-2cs^2)d\theta&\left(\because[2](#2)\right)
 \end{align*}
 $$
 
 である．各項計算する．
      
+
 $$
 \begin{align*}
 &A=\int_0^{\pi/2}s\theta d\theta=2\left[-c\theta+s\right]_0^{\pi/2}=1 \\&4\int_0^{\pi/2}s^3\theta d\theta=\int_0^{\pi/2}(3s-\sin3\theta)\theta d\theta\\&=3A-\left[\frac{-1}{3}\theta\cos3\theta+\frac{1}{9}\sin3\theta\right]_0^{\pi/2}\\&=3+\frac{1}{9}=\frac{28}{9}\\&\int_0^{\pi/2}sd\theta=1 \\&\int_0^{\pi/2}cs^2d\theta=\left[\frac{1}{3}s^3\right]_0^{\pi/2}=\frac{1}{3}
@@ -101,10 +107,12 @@ $$
 
 これを代入して
      
+
 $$
 \begin{align*}
 V=2-\frac{28}{9}+\pi-\frac{2}{3}=\pi-\frac{16}{9}
 \end{align*}
 $$
+
      
 である．$\cdots$((2)の答)

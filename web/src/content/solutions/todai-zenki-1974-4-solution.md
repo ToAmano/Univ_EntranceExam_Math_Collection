@@ -28,6 +28,7 @@ title: "TODAI 1974 zenki Q4 (solution)"
 
 $p=f'(0)$，$q=g'(0)$とおく．条件3)，4)から
      
+
 $$
 \begin{align*}
 &\left\{\begin{array}{l}

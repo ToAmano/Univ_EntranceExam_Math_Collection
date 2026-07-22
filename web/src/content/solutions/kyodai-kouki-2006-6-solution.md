@@ -14,6 +14,7 @@ title: "KYODAI 2006 kouki Q6 (solution)"
   $\theta=1^\circ$ の時は仮定から成立するので，$\theta=k^\circ \in \mathbb{N}$ での成立を仮定し，$\theta=k+1^\circ$ でも成立することを示す．
   $\tan\theta$の加法定理から
   
+
 $$
 \begin{align*}
 \tan(k+1)^\circ

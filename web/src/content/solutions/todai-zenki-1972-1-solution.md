@@ -22,6 +22,7 @@ title: "TODAI 1972 zenki Q1 (solution)"
 
 上図において，($xz$平面)
      
+
 $$
 \begin{align*}
 &\vector{PA}=\vtwo{-x}{6}&\vector{PB}=\vtwo{-x}{20}
@@ -30,14 +31,16 @@ $$
 
 だから，$0\le\angle APB<\pi/2$とあわせて，
      
+
 $$
 \begin{align*}
-\tan\angle APB&=\frac{|-6x+20x|}{\vector{PA}\cdot\vector{PB}}\\&=\frac{14x}{120+x^2}\tag{$\because x\ge0$}
+\tan\angle APB&=\frac{|-6x+20x|}{\vector{PA}\cdot\vector{PB}}\\&=\frac{14x}{120+x^2}\tag{\because x\ge0}
 \end{align*}
 $$
 
 $\tan\theta$が$0\le\theta<\pi/2$で単調増加であることから，$\angle APB\ge30^\circ$のとき，
      
+
 $$
 \begin{align*}
 &\tan\frac{\pi}{6}\le\frac{14x}{120+x^2}\\\Longleftrightarrow&x^2-14\sqrt{3}x+120\ge0 \\\Longleftrightarrow&(x-10\sqrt{3})(x-4\sqrt{3})\ge0  \\\Longleftrightarrow&4\sqrt{3}\le x\le 10\sqrt{3}
@@ -46,6 +49,7 @@ $$
 
 したがって，$P$を$xy$平面で動かすと，
      
+
 $$
 \begin{align}
 16×3\le x^2+y^2\le100×3\label{1}
@@ -54,9 +58,10 @@ $$
 
 となる．従って，求める領域は
       
+
 $$
 \begin{align}
-\eqref{1}\land(0\le x\le15)\land(0\le y\le15)
+[1](#1)\land(0\le x\le15)\land(0\le y\le15)
 \end{align}
 $$
 
@@ -67,6 +72,7 @@ $$
 
 この面積$S$は 
      
+
 $$
 \begin{align*}
 S&=\frac{1}{2}\frac{\pi}{6}(10\sqrt{3})^2+15×5\sqrt{3}-\frac{1}{2}\frac{\pi}{2}(4\sqrt{3})^2 \\&=13\pi+75\sqrt{3}

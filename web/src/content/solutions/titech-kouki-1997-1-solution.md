@@ -24,6 +24,7 @@ title: "TITECH 1997 kouki Q1 (solution)"
 
   $|PQ| > 0$, $|PQ|=1 \Longleftrightarrow |PQ|^2=1$ だから，
   
+
 $$
 \begin{align}
 & (\beta-\alpha)^2+(\beta^2-\alpha^2)^2 = 1 \nonumber\\\therefore& (\beta-\alpha)^2\left[1 + (\alpha+\beta)^2\right] = 1 \label{1997-1:eq:1}
@@ -32,6 +33,7 @@ $$
 
   ここで，$p=\alpha+\beta$, $q=\beta-\alpha$ とおく．$\alpha,\beta \in\mathbb{R}$ および $\alpha < \beta$から
   
+
 $$
 \begin{align}
 q >0    \label{1997-1:eq:2}
@@ -40,6 +42,7 @@ $$
 
   となる．題意の中点を$M(X,Y)$ とすると
   
+
 $$
 \begin{align}
 X
@@ -49,17 +52,19 @@ X
 \end{align}
 $$
 
-  となることに注意する．さらに，$\eqref{1997-1:eq:1}$を$p$ と $q$ で書くと
+  となることに注意する．さらに，[(式1)](#1997-1:eq:1)を$p$ と $q$ で書くと
   
+
 $$
 \begin{align*}
 & q^2(1+p^2)  = 1                                    \\\therefore& q^2 = \frac{1}{1+p^2}\quad(\because 1+p^2\neq 0)
 \end{align*}
 $$
 
-  で，これは$\eqref{1997-1:eq:2}$を満たす．$\eqref{1997-1:eq:3,1997-1:eq:4}$に代入して$p$および$q$を消去して$X$, $Y$の関係を求めれば，それが求める軌跡である．
-  $\eqref{1997-1:eq:3}$から$p=2X$だから，$\eqref{1997-1:eq:4}$から，
+  で，これは[(式2)](#1997-1:eq:2)を満たす．[(式4)](#1997-1:eq:3,1997-1:eq:4)に代入して$p$および$q$を消去して$X$, $Y$の関係を求めれば，それが求める軌跡である．
+  [(式3)](#1997-1:eq:3)から$p=2X$だから，[(式4)](#1997-1:eq:4)から，
   
+
 $$
 \begin{align*}
 Y
@@ -80,6 +85,7 @@ $$
 
   $C_1$と$C_2$が偶関数だから，$0\le x$の部分の面積の$2$倍が求める面積であり，
   
+
 $$
 \begin{align}
 \frac{1}{2}S_a
@@ -88,8 +94,9 @@ $$
 $$
 
   ここで，$x=\frac{1}{2}\tan\theta$ ($0 \le \theta < \pi/2$) とすると，$\frac{dx}{d\theta} = \frac{1}{2\cos^2\theta}$，又 $a = \frac{1}{2}\tan \alpha$ となる $\alpha$ があるので，
-  $\eqref{1997-1:eq:5}$に代入して
+  [(式5)](#1997-1:eq:5)に代入して
   
+
 $$
 \begin{align}
 \frac{1}{2}S_a
@@ -98,8 +105,9 @@ $$
 \end{align}
 $$
 
-  と面積が求まる．$a = \frac{1}{2}\tan \alpha$より，$a\to\infty$で$\alpha\to\pi/2$だから，$\eqref{1997-1:eq:6}$の極限は
+  と面積が求まる．$a = \frac{1}{2}\tan \alpha$より，$a\to\infty$で$\alpha\to\pi/2$だから，[(式6)](#1997-1:eq:6)の極限は
   
+
 $$
 \begin{align*}
 \lim_{a\to\infty} S_a = \frac{1}{4}\frac{\pi}{2} = \frac{\pi}{8}
@@ -120,6 +128,7 @@ $$
 
   求めた軌跡
   
+
 $$
 \begin{align*}
 y =  \frac{1}{4}\left(4x^2+1/(1+4x^2)\right)
@@ -128,6 +137,7 @@ $$
 
   は$x\to\pm\infty$の極限で
   
+
 $$
 \begin{align*}
 y = x^2
@@ -138,6 +148,7 @@ $$
 
   後半の積分部分は
   
+
 $$
 \begin{align*}
 \int_{0}^{a}\frac{1}{1+4x^2} dx
@@ -147,6 +158,7 @@ $$
   という典型的な形の定積分であり，$2x=\tan\theta$の形の置換で解ける．
   この積分の一般的な形の原始関数は
   
+
 $$
 \begin{align*}
 \int\frac{1}{x^2+a^2} dx = \frac{1}{a}\arctan\left(\frac{x}{a}\right)

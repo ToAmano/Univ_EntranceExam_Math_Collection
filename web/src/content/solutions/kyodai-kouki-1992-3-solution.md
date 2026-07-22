@@ -9,12 +9,13 @@ title: "KYODAI 1992 kouki Q3 (solution)"
 
 ## 【解】
 
-### (1)
+  (1)
 
   まず，$r,R$を$t$を用いて表し，ついで$R/r$のとりうる範囲を求める．
 
   $C_1$が半径$r$で$y$軸に接する条件から，$Y$を実数として，
   
+
 $$
 \begin{align*}
 C_1: (x-r)^2 + (y-Y)^2 = r^2
@@ -24,6 +25,7 @@ $$
   とおける．この方程式が点Pで$y=x^2$に接する条件から$Y$を決定する．
   まず，$C_1$が点Pを通るから
   
+
 $$
 \begin{align}
 (t-r)^2 + (t^2-Y)^2 = r^2 \label{1992-3:eq:1}
@@ -34,6 +36,7 @@ $$
 
   $y=x^2$の$x=t$における法線$l$が，円$C_1$の中心を通るから，
   
+
 $$
 \begin{align*}
 y
@@ -43,6 +46,7 @@ $$
 
   に円の中心$(r,Y)$を代入して
   
+
 $$
 \begin{align}
 Y = -\frac{1}{2t}r + t^2 + \frac{1}{2}\label{1992-3:eq:2}
@@ -51,9 +55,10 @@ $$
 
   である．
 
-  $\eqref{1992-3:eq:1,1992-3:eq:2}$を連立して解いて$r,Y$を求める．
-  $\eqref{1992-3:eq:2}$を$\eqref{1992-3:eq:1}$に代入して$Y$を消去すると
+  [(式2)](#1992-3:eq:1,1992-3:eq:2)を連立して解いて$r,Y$を求める．
+  [(式2)](#1992-3:eq:2)を[(式1)](#1992-3:eq:1)に代入して$Y$を消去すると
   
+
 $$
 \begin{align*}
 (t-r)^2 + \left(\frac{1}{2t}r-\frac{1}{2}\right)^2                      & = r^2 \\\frac{1}{4t^2}r^2 - \left(2t + \frac{1}{2t}\right)r + t^2 + \frac{1}{4}& = 0   \\
@@ -65,6 +70,7 @@ $$
 
   $C_2$についても同様に考えて，$r, R$ は2次方程式
   
+
 $$
 \begin{align*}
 x^2 - 2t(4t^2+1)x + t^2(4t^2+1) = 0
@@ -75,6 +81,7 @@ $$
 
   $r < R$ だから，$r,R$はそれぞれ
   
+
 $$
 \begin{align}
 r & = t(4t^2+1) - \sqrt{t^2(4t^2+1)^2 - t^2(4t^2+1)}\\& = t(4t^2+1) - 2t^2\sqrt{4t^2+1}\label{1992-3:eq:3}
@@ -83,6 +90,7 @@ $$
 
   と
   
+
 $$
 \begin{align}
 R & = t(4t^2+1) + 2t^2\sqrt{4t^2+1}\label{1992-3:eq:4}
@@ -91,9 +99,10 @@ $$
 
   と求まる．
 
-  次に$R/r$を$t$を用いて表す．$\eqref{1992-3:eq:3,1992-3:eq:4}$から
+  次に$R/r$を$t$を用いて表す．[(式4)](#1992-3:eq:3,1992-3:eq:4)から
   $\alpha = 4t^2+1$ とおくと
   
+
 $$
 \begin{align}
 \frac{R}{r}& = \frac{\alpha+2t\sqrt{\alpha}}{\alpha-2t\sqrt{\alpha}}\\& = \frac{\left(\alpha+2t\sqrt{\alpha}\right)\left(\alpha+2t\sqrt{\alpha}\right)}{\left(\alpha-2t\sqrt{\alpha}\right)\left(\alpha+2t\sqrt{\alpha}\right)}\\& = \frac{\alpha^2+4t\alpha\sqrt{\alpha}+4t^2\alpha}{\alpha(\alpha-4t^2)}\\\\& = \alpha +4t\sqrt{\alpha} + 4t^2                                                                                                                        \\& = 8t^2+1+4t\sqrt{4t^2+1}\\& \equiv f(t) \label{1992-3:eq:5}
@@ -103,6 +112,7 @@ $$
   だから，$f(t)$の$t>0$での値域を求めれば良い．
   $f(t)$は明かに$0<t$で単調増加であり，
   
+
 $$
 \begin{align*}
 f(0)                  & = 1      \\\lim_{t\to\infty}f(t) & = \infty
@@ -111,6 +121,7 @@ $$
 
   だから，求める値の範囲は
   
+
 $$
 \begin{align*}
 1 < \frac{R}{r}
@@ -118,11 +129,12 @@ $$
 $$
 
   である．$\cdots$(答)
-
-### (2)
-
-  $\eqref{1992-3:eq:5}$から $\frac{R}{r}=2$の時，
   
+
+  (2)
+  [(式5)](#1992-3:eq:5)から $\frac{R}{r}=2$の時，
+  
+
 $$
 \begin{align*}
 & 8t^2+1+4t\sqrt{4t^2+1} = 2 \\\therefore& 4t\sqrt{4t^2+1} = 1-8t^2
@@ -131,6 +143,7 @@ $$
 
   だから，$1-8t^2\ge0 \iff t\ge 1/2\sqrt{2}$のもとで両辺二乗して
   
+
 $$
 \begin{align*}
 & 16t^2(4t^2+1) = 64t^4-16t^2+1 \\\therefore& 32t^2 = 1                     \\\therefore& t = \frac{\sqrt{2}}{8}
@@ -141,6 +154,7 @@ $$
 
   よってこの時，点Pの座標は
   
+
 $$
 \begin{align*}
 P\left(\frac{\sqrt{2}}{8}, \frac{1}{32}\right)

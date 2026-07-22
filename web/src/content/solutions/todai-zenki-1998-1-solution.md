@@ -18,6 +18,7 @@ title: "TODAI 1998 zenki Q1 (solution)"
 
  まず，
      
+
 $$
 \begin{align*}
 t=a-\frac{1}{a}\label{1}
@@ -26,6 +27,7 @@ $$
 
 とおく．すると，
      
+
 $$
 \begin{align*}
 f'(x)=9x^2-6tx-4
@@ -43,6 +45,7 @@ $$
      \]
 従って，極大値と極小値の差$L$として，
      
+
 $$
 \begin{align*}
 L=&f(\a)-f(\b) \\
@@ -51,6 +54,7 @@ L=&f(\a)-f(\b) \\
      =&\frac{3}{2}(\b-\a)^3
 \end{align*}
 $$
+
      
 である．故に$\b-\a(>0)$の最小値を求めればよい．
 

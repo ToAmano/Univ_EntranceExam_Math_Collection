@@ -28,6 +28,7 @@ title: "TODAI 1982 zenki Q4 (solution)"
 
  時刻$t$でのPの座標を$(x,\sin x)$で表す．そこで以下
      
+
 $$
 \begin{align*}
      c=\cos x&s=\sin x
@@ -38,14 +39,16 @@ $$
      \[\beku{v}=(x',x'c )\]
 であるから，題意より
      
+
 $$
 \begin{align}
      V^2=x'^2(1+c^2)\label{1}
      \end{align}
 $$
 
-となる．\eqref{1}の両辺$t$で微分して
+となる．[1](#1)の両辺$t$で微分して
      
+
 $$
 \begin{align*}
      0=2x'x''(1+c^2)-2x'^3cs
@@ -54,6 +57,7 @@ $$
 
 $V>0$から$x'\not=0$だから
      
+
 $$
 \begin{align*}
      &x''(1+c^2)-x'^2cs=0 \\
@@ -63,6 +67,7 @@ $$
 
 さらに，
      
+
 $$
 \begin{align*}
      \beku{\a}=\left(x'',-x'^2s+x''c\right)
@@ -71,6 +76,7 @@ $$
 
 だから，加速度ベクトルの大きさ$L$として
      
+
 $$
 \begin{align*}
      L^2&=x''^2+(-x'^2s+x''c)^2 \\
@@ -78,10 +84,10 @@ $$
      &=x''^2(1+c^2)-2x'^2csx''+x'^4s^2 \\
      &=\left(\frac{x'^2cs}{1+c^2}\right)^2(1+c^2)-2x'^2cs\frac{x'^2cs}{1+c^2}+x'^4s^2 \\
      &\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-     \quad\quad\quad\quad\quad(\because\eqref{2}) \\
+     \quad\quad\quad\quad\quad(\because[2](#2)) \\
      &=\frac{-x'^4c^2s^2}{1+c^2}+x'^4s^2 \\
      &=\left(\frac{x'^4s^2}{1+c^2}\right) \\
-     &=\frac{s^2}{1+c^2}\frac{V^4}{(1+c^2)^2} \quad\quad(\because\eqref{1})\\
+     &=\frac{s^2}{1+c^2}\frac{V^4}{(1+c^2)^2} \quad\quad(\because[1](#1))\\
      &=\frac{1-c^2}{(1+c^2)^3}V^4
      \end{align*}
 $$

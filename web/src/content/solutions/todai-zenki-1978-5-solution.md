@@ -22,6 +22,7 @@ title: "TODAI 1978 zenki Q5 (solution)"
 
  題意から$k=1,2,\cdots,n-1$に対して
       
+
 $$
 \begin{align*}
 \mathrm{P_kP_{k+1}}=\frac{a}{n}
@@ -30,6 +31,7 @@ $$
 
 である．そこで三角形$\mathrm{ABP_k}$に余弦定理を用いて
      
+
 $$
 \begin{align*}
 \mathrm{AP_k}^2&=\mathrm{AB}^2+\mathrm{BP_k}^2-2\mathrm{AB}\cdot\mathrm{BP_k}\cos\angle\mathrm{B}\\&=c^2+\left(\frac{ak}{n}\right)^2-2c\frac{ak}{n}\cos\angle\mathrm{B}\atag\label{1}
@@ -38,6 +40,7 @@ $$
 
 また，三角形ABCに余弦定理を用いて
      
+
 $$
 \begin{align*}
 \mathrm{AC}^2&=\mathrm{AB}^2+\mathrm{BC}^2-2\mathrm{AB}\cdot\mathrm{BC}\cos\angle\mathrm{B}\\
@@ -45,8 +48,9 @@ $$
 \end{align*}
 $$
 
-\eqref{1}，\eqref{2}から     
+[1](#1)，[2](#2)から     
      
+
 $$
 \begin{align*}
 \mathrm{AP_k}^2=c^2+\left(\frac{ak}{n}\right)^2-(a^2+c^2-b^2)\frac{k}{n}
@@ -55,6 +59,7 @@ $$
 
 $A=a^2+c^2-b^2$とおいて，これを$k$について足して
      
+
 $$
 \begin{align*}
 \frac{1}{n}\sum_{k=1}^n\mathrm{AP_k}^2=c^2+\frac{1}{n}\sum_{k=1}^n\left(\left(\frac{ak}{n}\right)^2-A\frac{k}{n}\right)
@@ -63,6 +68,7 @@ $$
 
 であるから，
      
+
 $$
 \begin{align*}
 \lim_{n\to\infty}\frac{1}{n}\sum_{k=1}^n\mathrm{AP_k}^2&= 

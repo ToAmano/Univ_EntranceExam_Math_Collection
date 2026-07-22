@@ -11,6 +11,7 @@ title: "TITECH 1998 kouki Q1 (solution)"
 
   まずは$x_n$の一般項を求める．
   
+
 $$
 \begin{align*}
 x_n
@@ -20,6 +21,7 @@ $$
 
   ここで
   
+
 $$
 \begin{align*}
 A_n = \frac{1}{n}\sum_{k=n}^{2n-1}\frac{1}{\left(\frac{k}{n}\right)^a}
@@ -28,6 +30,7 @@ $$
 
   とおくと，これは区分求積の形になっており，$n\to\infty$の時以下のように収束する．
   
+
 $$
 \begin{align*}
 \lim_{n\to\infty} A_n
@@ -41,6 +44,7 @@ $$
 
   次に$x_n$の残りの部分を考えると，
   
+
 $$
 \begin{align*}
 \frac{1}{n^{a+b-1}}\xrightarrow{n \to \infty}\begin{dcases}
@@ -53,6 +57,7 @@ $$
 
   である．以上をまとめると，$a+b-1 \ge 0$ の時収束し，その収束値は以下のようになる．
   
+
 $$
 \begin{align*}
 \lim_{n\to\infty} x_n =
@@ -74,6 +79,7 @@ $$
 
   極限の問題であり，級数
   
+
 $$
 \begin{align*}
 \frac{1}{n^a} + \frac{1}{(n+1)^a} + \dots + \frac{1}{(2n-1)^a}
@@ -86,6 +92,7 @@ $$
 
   あとは残りの部分の評価をすれば良い．
   
+
 $$
 \begin{align*}
 f(n) = A(n)B(n)
@@ -94,6 +101,7 @@ $$
 
   と書ける時，$B(n)$が$n\to\infty$で非零の値に収束するならば
   
+
 $$
 \begin{align*}
 \lim_{n\to\infty} f(n) = \lim_{n\to\infty}A(n) \lim_{n\to\infty}B(n)

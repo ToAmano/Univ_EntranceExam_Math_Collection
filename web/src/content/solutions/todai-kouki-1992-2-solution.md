@@ -9,7 +9,7 @@ title: "TODAI 1992 kouki Q2 (solution)"
 
 ## 【解】
 
-### (1)
+  (1)
 
   
 
@@ -25,6 +25,7 @@ title: "TODAI 1992 kouki Q2 (solution)"
 
   $CC' = q (q>0)$ とおくと，
   
+
 $$
 \begin{align*}
 C(p, q\cos\theta, q\sin\theta)
@@ -35,6 +36,7 @@ $$
 
   さらに A($a, b, 0$) ($b>0$) とおくと，$\overline{AC}$の長さは
   
+
 $$
 \begin{align*}
 \overline{AC}^2
@@ -46,6 +48,7 @@ $$
 
   さて，$\angle ABC=\alpha\, (0 \le \alpha \le \pi)$とおいて$\triangle ABC$に余弦定理を用いると
   
+
 $$
 \begin{align*}
 \cos\alpha& = \frac{\overline{AB}^2+\overline{BC}^2-\overline{AC}^2}{2\overline{AB} \cdot \overline{BC}}\\& = \frac{\overline{AB}^2+\overline{BC}^2}{2\overline{AB} \cdot \overline{BC}} + \frac{2bq\cos\theta - q^2-b^2-(a-p)^2}{2\overline{AB} \cdot \overline{BC}}
@@ -56,6 +59,7 @@ $$
 
   $\theta$の変化によって$\overline{AB}, \overline{BC}$は変化しないから，
   
+
 $$
 \begin{align*}
 \cos\alpha& = (\text{定数})  + \frac{bq}{\overline{AB} \cdot \overline{BC}}\cos\theta
@@ -68,8 +72,9 @@ $$
   $\cos\alpha$は$\theta$の単調減少関数である．
   $0 \leqq \alpha \leqq \pi$とあわせて$\alpha$は$\theta$の単調増加関数である．
   よって題意は示された．$\cdots$(答)
+  
 
-### (2)
+  (2)
 
   どの点が同一直線上にあるかで場合分けして考える．
 
@@ -85,6 +90,7 @@ $$
 
   対称性から[図2](#1992-2:fig:2)の時だけ考える．
   
+
 $$
 \begin{align*}
 \angle ABC + \angle BCD + \angle CDA + \angle DAB = 2\pi
@@ -105,6 +111,7 @@ $$
 
   対称性から図の時だけ考える．
   
+
 $$
 \begin{align*}
 \angle ABC + \angle BCD + \angle CDA + \angle DAB = \pi + \pi = 2\pi
@@ -144,6 +151,7 @@ $$
 
   よって条件をみたすもとでA〜Dをうごかしても，四角形の内角の和は$2\pi$で一定だから
   
+
 $$
 \begin{align*}
 \angle ABC + \angle BCD + \angle CDA + \angle DAB = 2\pi

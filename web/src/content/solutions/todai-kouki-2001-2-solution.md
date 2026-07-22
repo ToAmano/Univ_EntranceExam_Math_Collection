@@ -9,7 +9,7 @@ title: "TODAI 2001 kouki Q2 (solution)"
 
 ## 【解】
 
-### (1)
+  (1)
 
   
 
@@ -21,6 +21,7 @@ title: "TODAI 2001 kouki Q2 (solution)"
   [図1](#2001-2:fig:1)のように座標を定めて円の中心を$P(X,Y)$とおく．
   ここで格子の方程式が
   
+
 $$
 \begin{align*}
 & x=kh, y=kh & (k \in\mathbb{Z})
@@ -32,6 +33,7 @@ $$
   格子の間隔が$x,y$軸方向に等しいことから，円が2直線とのみ交わるときx軸平行及びy軸平行と1本ずつ交わる．
   また，$h<1$の時は必ず3本以上の直線と交わるため以下
   
+
 $$
 \begin{align}
 1 \le h \label{2001-2:eq:0}
@@ -49,6 +51,7 @@ $$
 
   格子は$k, l \in \mathbb{Z}$ として
   
+
 $$
 \begin{align}
 D_{k,l} =
@@ -63,6 +66,7 @@ $$
   この時円が$x=0, y=0$ の２本の格子と交わり，$x=\pm h, y=\pm h$ の格子と交わらなければ良い．
   このようなX,Yの条件は，円の半径が$1$だから，
   
+
 $$
 \begin{align}
 & \begin{dcases}
@@ -83,9 +87,10 @@ $$
   <figcaption>図 3: $h$のとりうる領域</figcaption>
 </figure>
 
-  $\eqref{2001-2:eq:1}$と合わせて，
+  [(式1)](#2001-2:eq:1)と合わせて，
   $1 \le h$での$h$の挙動を示した図から，この条件は
   
+
 $$
 \begin{align}
 \begin{dcases}
@@ -97,8 +102,9 @@ $$
 
   である．
 
-  $D_{0,0}$の面積$h^2$に対する$\eqref{2001-2:eq:3}$の領域の面積が求める確率$P(h)$であって，$\eqref{2001-2:eq:0}$と合わせて
+  $D_{0,0}$の面積$h^2$に対する[(式3)](#2001-2:eq:3)の領域の面積が求める確率$P(h)$であって，[(式0)](#2001-2:eq:0)と合わせて
   
+
 $$
 \begin{align*}
 P(h) =
@@ -115,8 +121,9 @@ P(h) =
 $$
 
   である．$\cdots$(答)
+  
 
-### (2)
+  (2)
 
   
 
@@ -125,10 +132,10 @@ $$
   <figcaption>図 4: 座標平面に半径$\sqrt{2}+1$の円を敷き詰めた様子．</figcaption>
 </figure>
 
-### (1)
-と同様に一つの円の中心が原点となるように座標平面をおく．
+  (1)と同様に一つの円の中心が原点となるように座標平面をおく．
   この円と隣り合う円のうち，一部が第一章限にある二つの円の中心までの位置ベクトルを$\vec{a},\vec{b}$とすると
   
+
 $$
 \begin{align*}
 \vec{a} = \begin{pmatrix}2(\sqrt{2}+1\end{pmatrix} \\ 0), \quad\vec{b} = (\sqrt{2}+1)\begin{pmatrix}1 \\\sqrt{3}\end{pmatrix}
@@ -144,10 +151,10 @@ $$
   <figcaption>図 5: $D$は三角形OABの内部である．</figcaption>
 </figure>
 
-### (1)
-と同じく，座標平面は$\vec{a},\vec{b}$の張る三角形によって埋め尽くすことができるから，
+  (1)と同じく，座標平面は$\vec{a},\vec{b}$の張る三角形によって埋め尽くすことができるから，
   その一つである領域$D$
   
+
 $$
 \begin{align*}
 D: \{m\vec{a} + n\vec{b}\mid 0 \le m, n, m+n \le 1\}
@@ -159,6 +166,7 @@ $$
   したがって，Cが3円とのみ交わることはこれら全ての円と交わることと同値である．
   3円の中心をO，A，Bとして，中心同士の距離を
   
+
 $$
 \begin{align*}
 PO=l_1, PA=l_2, PB=l_3
@@ -167,6 +175,7 @@ $$
 
   とおくと，このような条件は
   
+
 $$
 \begin{align*}
 & \left((\sqrt{2}+1)-1\right)\le l_k \le\left((\sqrt{2}+1)+1\right)& (k=1,2,3) \\\therefore& \sqrt{2}\le l_k \le\sqrt{2}+2                                     & (k=1,2,3)
@@ -176,6 +185,7 @@ $$
   である．
   各辺正だから2乗してよく，
   
+
 $$
 \begin{align*}
 & 2 \le l_k^2 \le 6+4\sqrt{2}& (k=1,2,3)
@@ -194,6 +204,7 @@ $$
 
   この領域の面積$S$は
   
+
 $$
 \begin{align}
 S = 3 \times\text{図形}SU + \triangle STU \label{2001-2:eq:4}
@@ -211,6 +222,7 @@ $$
 
   簡単のため
   
+
 $$
 \begin{align}
 r=\sqrt{2}+2 \label{2001-2:eq:8}
@@ -223,6 +235,7 @@ $$
 
   従って
   
+
 $$
 \begin{align}
 \text{図形}SU
@@ -234,6 +247,7 @@ $$
 
   次に正三角形の一辺の長さ$\alpha$とおくと
   
+
 $$
 \begin{align*}
 \alpha = 2r \sin\frac{\pi}{12}
@@ -242,6 +256,7 @@ $$
 
   だから，この面積は
   
+
 $$
 \begin{align}
 \triangle& = \frac{\sqrt{3}}{4}\alpha^2                                         \\& = \sqrt{3}r^2\sin^2\frac{\pi}{12}\\& = \sqrt{3}r^2\frac{1-\cos\frac{\pi}{12}}{2}\\& = \frac{\sqrt{3}}{2}\left(1-\frac{\sqrt{3}}{2}\right)r^2             \\& = \left(\frac{\sqrt{3}}{2}-\frac{3}{4}\right)r^2 \label{2001-2:eq:6}
@@ -250,8 +265,9 @@ $$
 
   である．
 
-  $\eqref{2001-2:eq:5,2001-2:eq:6}$を$\eqref{2001-2:eq:4}$に代入して
+  [(式6)](#2001-2:eq:5,2001-2:eq:6)を[(式4)](#2001-2:eq:4)に代入して
   
+
 $$
 \begin{align}
 S
@@ -263,16 +279,18 @@ $$
 
   一方で領域$D$の面積は
   
+
 $$
 \begin{align*}
 D\text{の面積}& = \triangle OAB                              \\& = \frac{\sqrt{3}}{4}(2(\sqrt{2}+1))^2        \\& = \frac{\sqrt{3}}{4}(\sqrt{2}(\sqrt{2}+2))^2 \\& = \frac{\sqrt{3}}{2}r^2
 \end{align*}
 $$
 
-  である．ただしし最終行で$\eqref{2001-2:eq:8}$を用いた．
+  である．ただしし最終行で[(式8)](#2001-2:eq:8)を用いた．
 
   問題文で与えられている確率の求め方を利用して，求める確率$q$は領域$D$の面積に対する$S$の比率であって，
   
+
 $$
 \begin{align*}
 q

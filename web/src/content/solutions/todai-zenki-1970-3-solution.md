@@ -21,6 +21,7 @@ title: "TODAI 1970 zenki Q3 (solution)"
 
 $A$$B$の$P$からの距離をそれぞれ$A(t)$，$B(t)$とすると，
      
+
 $$
 \begin{align*}
 A(t)=\int_0^tudt+A(0)=ut \\
@@ -31,6 +32,7 @@ $$
 である.$B(t)\le25\Longleftrightarrow0\le t\le6$であるから，$A$が$B$に追いつくには，$y=A(t)$と$y=B(t)$が$0<t<6$で少なくとも一回
 交わればよい．$y$を消去して
      
+
 $$
 \begin{align}
 &A(t)=B(t) \nonumber\\\Longleftrightarrow&u=\frac{1}{4}t^2-\frac{3}{2}t+\frac{25}{t}\equiv f(t)\label{1}
@@ -41,6 +43,7 @@ $$
       \[f'(t)=\frac{1}{2}t-\frac{3}{2}-\frac{25}{t^2}=\frac{(t-5)(t^2+2t+10)}{2t^2}\] 
 から，下表を得る．
      
+
 $$
 \begin{align*}
 \begin{array}{|c|c|c|c|c|c|}\hline
@@ -55,6 +58,6 @@ $$
      
      \scalebox{1}{a}
      
-従って\eqref{1}が$0<t<6$に解を持つ条件は
+従って[1](#1)が$0<t<6$に解を持つ条件は
      \[\frac{15}{4}\le u\]     
 であるから，求める最小値は$15/4 \,\ \mathrm{(m/s)}$である．$\cdots$(答)

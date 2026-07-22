@@ -11,6 +11,7 @@ title: "KYODAI 1997 kouki Q3 (solution)"
 
   点 X の位置ベクトル (O 始点) を $\vec{x}$ と表すと，与式は
   
+
 $$
 \begin{align}
 \vec{a} + \vec{b} + \vec{c} + \vec{d} = 0 \label{1997-3:eq:1}
@@ -19,6 +20,7 @@ $$
 
   である．また，各点が球面上にあるから
   
+
 $$
 \begin{align}
 |\vec{a}|=|\vec{b}|=|\vec{c}|=|\vec{d}|= 1 \label{1997-3:eq:2}

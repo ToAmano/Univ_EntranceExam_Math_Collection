@@ -24,6 +24,7 @@ title: "TODAI 1962 zenki Q5 (solution)"
 まず題意から
      
 <span id="1"></span><span id="2"></span><span id="3"></span>
+
 $$
 \begin{cases}
 x,y,z>0  \\
@@ -35,7 +36,7 @@ $$
 となる．     
      
 
-1.  まず$s=y+z$，$t=yz$として，$y$，$z$の存在条件を考える．\eqref{2}，\eqref{3}
+1.  まず$s=y+z$，$t=yz$として，$y$，$z$の存在条件を考える．[2](#2)，[3](#3)
      から
           \begin{align}
           \left\{
@@ -47,7 +48,7 @@ $$
           \end{align}
      となる．
      
-     さて，\eqref{1}，\eqref{4}から$y$，$z$は$p$の$2$次方程式
+     さて，[1](#1)，[4](#4)から$y$，$z$は$p$の$2$次方程式
           \begin{align*}
           &p^2-sp+t=0\\ 
           \Longleftrightarrow &p^2-(6-x)p+(x^2-6x+9)=0 
@@ -93,7 +94,7 @@ $$
           \end{align}
      の正実解である．故にこれが正の$3$実解(重解含む)をもつ条件を求める．
                     
-          \eqref{5}が正の$3$実解を持つ．\\
+          [5](#5)が正の$3$実解を持つ．\\
           $\Longleftrightarrow$$y=f(p)=p^3-6p^2+9p$と$y=c$が$0<p$に$3$つの共有点(重解含む)を持
           つ．
           

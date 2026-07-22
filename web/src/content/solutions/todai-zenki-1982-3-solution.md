@@ -47,7 +47,7 @@ title: "TODAI 1982 zenki Q3 (solution)"
      \end{align}
 である．$\cdots$(答)
 
-2.  \eqref{1}から$C$の$x$座標は$c(4s^2-1)$である．さらに$AB$の傾きは\eqref{3}から
+2.  [1](#1)から$C$の$x$座標は$c(4s^2-1)$である．さらに$AB$の傾きは[3](#3)から
      $\dfrac{-s}{c}$であるから，
           \[|BC|=\sqrt{1+\left(\frac{s}{c}\right)^2}(2c-c(4s^2-1))=3-4s^2\]
      である．$\cdots$(答)
@@ -65,7 +65,7 @@ title: "TODAI 1982 zenki Q3 (solution)"
           =&8p^2+11p+4  \\
           =&8\left(p-\frac{11}{16}\right)^2+\frac{7}{32}
           \end{align*}     
-     である．\eqref{4}から$\dfrac{1}{2}<p<\dfrac{3}{4}$であることを考慮すると，
+     である．[4](#4)から$\dfrac{1}{2}<p<\dfrac{3}{4}$であることを考慮すると，
           \begin{align*}
           \left\{
                \begin{array}{l}

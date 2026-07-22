@@ -16,6 +16,7 @@ title: "KYODAI 2005 kouki Q6 (solution)"
   数の方が多い」とはすなわち「裏の出た $100$ 円玉の枚数より裏の出た $500$ 円玉の枚数が少ない」
   ということだから，
   
+
 $$
 \begin{align}
 P(X \le Y-1)
@@ -26,6 +27,7 @@ $$
   である．
   ここで，これら二つのパターンは枚数に関して全てのパターンを尽くしており，
   
+
 $$
 \begin{align}
 P(X \le Y-1) + P(Y \le X) = 1 \label{2005-6:eq:2}
@@ -34,8 +36,9 @@ $$
 
   である．この様子を[図1](#2005-6:fig:1)に示す．
 
-  $\eqref{2005-6:eq:1,2005-6:eq:2}$より
+  [(式2)](#2005-6:eq:1,2005-6:eq:2)より
   
+
 $$
 \begin{align*}
 P(X+1 \le Y) = \frac{1}{2}
@@ -68,6 +71,7 @@ $$
   500円が$k$枚表である確率を$P_k$とおくと,
   100円が$j$枚表である確率を$q_j$とおくと,
   
+
 $$
 \begin{align*}
 P_k & = {}_{n+1}\mathrm{C}_k \left(\frac{1}{2}\right)^{n+1}\\
@@ -77,6 +81,7 @@ $$
 
   で，
   
+
 $$
 \begin{align*}
 P & = \sum_{k=1}^{n+1} P_k (q_0 + \dots + q_{k-1})                                                                                                 \\& = \left(\frac{1}{2}\right)^{2n+1}\sum_{k=1}^{n+1}{}_{n+1}\mathrm{C}_k ({}_n\mathrm{C}_0 + \dots + {}_n\mathrm{C}_{k-1}) \quad\dots\text{①}

@@ -40,14 +40,14 @@ $P$により，$xy$平面上に投ぜられた円板$C$の影を$S$とする．
           \begin{align*}
           \vthree{x}{y}{z}=\vthree{0}{0}{2\sqrt{2}}+t\vthree{X}{Y}{-2\sqrt{2}}
           \end{align*}
-    と表せるから，これは\eqref{1}を満たす$t$が存在することである．代入して
+    と表せるから，これは[1](#1)を満たす$t$が存在することである．代入して
          \begin{align}
          tY&=2\sqrt{2}(1-t) \label{2} \\
          x^2&+(y-\dfrac{\sqrt{2}}{2})^2+(z-\dfrac{\sqrt{2}}{2})^2=1　\label{3}
          \end{align}
-     $Y\ge0$に注意して\eqref{2}から$t$を消去して
+     $Y\ge0$に注意して[2](#2)から$t$を消去して
      $t=\dfrac{2\sqrt{2}}{Y+2\sqrt{2}}$である．
-     これを\eqref{3}に代入して，
+     これを[3](#3)に代入して，
           \begin{align*}
           &\frac{8X^2}{(Y+2\sqrt{2})^2}+2(\dfrac{2\sqrt{2}Y}{Y+2\sqrt{2}}-\frac{\sqrt{2}}{2})^2=1 \\
          \therefore&8X^2+2(\frac{3\sqrt{2}}{2}Y-2)^2=(Y+2\sqrt{2})^2 \\
@@ -69,7 +69,7 @@ $P$により，$xy$平面上に投ぜられた円板$C$の影を$S$とする．
           \begin{align}
           V_2=\frac{2}{3}\pi \label{6}
           \end{align}
-     \eqref{5}，\eqref{6}を\eqref{4}に代入して
+     [5](#5)，[6](#6)を[4](#4)に代入して
           \begin{align*}
           V=\frac{2}{3}(2\sqrt{2}-1)\pi\cdots\text{(答)} 
           \end{align*}

@@ -36,6 +36,7 @@ title: "KYODAI 2002 kouki Q3 (solution)"
 
     $l,m,n$の直線の定義から
     
+
 $$
 \begin{align*}
 & \angle\text{CAP} = \angle\text{CBP} = \frac{\pi}{2}\\& \angle\text{ABQ} = \angle\text{ACQ} = \frac{\pi}{2}\\& \angle\text{BCR} = \angle\text{BAR} = \frac{\pi}{2}
@@ -48,6 +49,7 @@ $$
     従って，点D'は三角形ABCの外接円の内側にある．
     よって円周角の定理から
     
+
 $$
 \begin{align}
 \angle\text{ACB} = \angle\text{ACB} < \angle\text{AD'B}\label{2002-3:eq:1}
@@ -59,8 +61,9 @@ $$
     次に平面$\alpha$が平面ABDに一致するまで回転させることを考える．
     この時$\angle \text{AC'B}$と$\angle \text{AD'B}$は連続的に変化する．
     条件から辺ABと辺CDが垂直でないので，C'とD'は一致しないことに注意する．
-    最終的に平面$\alpha$が平面ABDに一致するとき，$\eqref{2002-3:eq:1}$と同じく
+    最終的に平面$\alpha$が平面ABDに一致するとき，[(式1)](#2002-3:eq:1)と同じく
     
+
 $$
 \begin{align}
 \angle\text{AC'B} > \angle\text{ADB} = \angle\text{AD'B}\label{2002-3:eq:2}
@@ -69,7 +72,7 @@ $$
 
     である．
 
-    従って，$\eqref{2002-3:eq:1,2002-3:eq:2}$から，
+    従って，[(式2)](#2002-3:eq:1,2002-3:eq:2)から，
     平面$\alpha$を動かす間に$\angle \text{AC'B}$と$\angle \text{AD'B}$の大小関係が逆転する．
     これらの角度は連続的に変化するので，$\angle \text{AC'B}=\angle \text{AD'B}$となるような$\alpha$が絶対に存在する．
     この時円周角の定理より，異なる4点A, B, C', D'が同一円周上に存在する．

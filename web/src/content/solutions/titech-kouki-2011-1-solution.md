@@ -9,7 +9,7 @@ title: "TITECH 2011 kouki Q1 (solution)"
 
 ## 【解】
 
-### (1)
+  (1)
 
   
 
@@ -22,6 +22,7 @@ title: "TITECH 2011 kouki Q1 (solution)"
   四面体$OABC$の体積$V$をふた通りで表すことで$r$と$t$の関係を導く．
   まず，底面$\triangle OAB=t/2$，高さ$CO$の四面体と見なすことで，$V$は
   
+
 $$
 \begin{align}
 V
@@ -33,6 +34,7 @@ $$
 
   次に，内接円の半径$r$，中心$P$とすると，
   
+
 $$
 \begin{align}
 V
@@ -42,22 +44,25 @@ $$
 
   と，$4$つの四面体の体積の和として表せる．底面の三角形の面積はそれぞれ
   
+
 $$
 \begin{align*}
 \triangle\mathrm{OBC}& = \frac{1}{2}\\\triangle\mathrm{OAC}& = \frac{t}{2}\\\triangle\mathrm{OAB}& = \frac{t}{2}\\\triangle\mathrm{ABC}& = \frac{1}{2}\sqrt{|\vec{AB}|^2|\vec{AC}|^2-(\vec{AB}\cdot\vec{AC})^2}\\& = \frac{1}{2}\sqrt{(t^2+1)^2-t^4}\\& = \frac{1}{2}\sqrt{2t^2+1}
 \end{align*}
 $$
 
-  だから，$\eqref{2011-1:eq:2}$に代入して
+  だから，[(式2)](#2011-1:eq:2)に代入して
   
+
 $$
 \begin{align}
 V = \frac{r}{3}\left[\frac{1}{2}+t+\frac{1}{2}\sqrt{2t^2+1}\right]\label{2011-1:eq:3}
 \end{align}
 $$
 
-  である．従って，$\eqref{2011-1:eq:1}$と$\eqref{2011-1:eq:2}$が等しいので
+  である．従って，[(式1)](#2011-1:eq:1)と[(式2)](#2011-1:eq:2)が等しいので
   
+
 $$
 \begin{align*}
 \frac{t}{6}& = \frac{r}{3}\left(\frac{1}{2} + t + \frac{1}{2}\sqrt{2t^2+1}\right)\\
@@ -67,13 +72,12 @@ $$
 
   と表せる．  $\cdots$(答)
 
-### (2)
-
-  Pの体積$V_1$, 四面体OABCの体積$V_2$, その比$f(t) = \frac{V_1}{V_2}$ とおく．
-
-### (1)
-から
   
+  (2)
+  Pの体積$V_1$, 四面体OABCの体積$V_2$, その比$f(t) = \frac{V_1}{V_2}$ とおく．
+  (1)から
+  
+
 $$
 \begin{align*}
 V_1 & = \frac{4}{3}\pi r^3 \\
@@ -83,6 +87,7 @@ $$
 
   だから，$f(t)$は
   
+
 $$
 \begin{align}
 f(t) & = 8\pi\frac{r^3}{t}\nonumber\\& = 8\pi\frac{1}{t}\left(\frac{t}{1+2t+\sqrt{2t^2+1}}\right)^3 \nonumber\\& = 8\pi\frac{t^2}{(1+2t+\sqrt{2t^2+1})^3}\label{2011-1:eq:4}
@@ -94,6 +99,7 @@ $$
 
   まず，
   
+
 $$
 \begin{align}
 g(t) = 1+2t+\sqrt{2t^2+1}\label{2011-1:eq:5}
@@ -102,6 +108,7 @@ $$
 
   とおくと $g'(t) = 2 + \frac{2t}{\sqrt{2t^2+1}}$ で，
   
+
 $$
 \begin{align*}
 f'(t) & = 8\pi\frac{2t g(t)^3 - 3t^2 g(t)^2 g'(t)}{g(t)^6}\\& = \frac{8\pi t}{g(t)^4}\left[ 2 g(t) - 3t g'(t) \right]
@@ -109,8 +116,9 @@ f'(t) & = 8\pi\frac{2t g(t)^3 - 3t^2 g(t)^2 g'(t)}{g(t)^6}\\& = \frac{8\pi t}{g(
 $$
 
   よって$f'(t)$の符号は $h(t)=2 g(t) - 3t g'(t)$ の符号にひとしい．
-  $\eqref{2011-1:eq:5}$を代入して具体的に$h(t)$の形を求めると
+  [(式5)](#2011-1:eq:5)を代入して具体的に$h(t)$の形を求めると
   
+
 $$
 \begin{align*}
 h(t) & = 2(1+2t+\sqrt{2t^2+1}) - 3t\left(2 + \frac{2t}{\sqrt{2t^2+1}}\right)\\& = 2-2t + 2\sqrt{2t^2+1} - \frac{6t^2}{\sqrt{2t^2+1}}\\& = \frac{2}{\sqrt{2t^2+1}}\left[(1-t)\sqrt{2t^2+1} + (1-t^2)\right]\\& = \frac{2}{\sqrt{2t^2+1}}\left(1-t\right)\left(1+t+\sqrt{2t^2+1}\right)
@@ -131,8 +139,9 @@ $$
   <figcaption>表 1: $f$の増減表</figcaption>
 </figure>
 
-  よって求める最大値は$t=1$の時で，この時$\eqref{2011-1:eq:5}$より
+  よって求める最大値は$t=1$の時で，この時[(式5)](#2011-1:eq:5)より
   
+
 $$
 \begin{align*}
 g(1)=3+\sqrt{3}
@@ -141,6 +150,7 @@ $$
 
   だから
   
+
 $$
 \begin{align*}
 f(1)
@@ -158,14 +168,14 @@ $$
   空間座標の問題だが，ゴリゴリ空間座標を用いた変形をするというよりは幾何学的なところから解いていけるのと，(2)がほぼただの計算なので，あまり空間図形感はない問題である．
   とはいえ(2)の計算コストがかなり高いので，問題の難易度としては低くないだろう．
 
-### (1)
-では$r$と$t$の関係を求めるために，三角錐の体積をふた通りで表す．
+  (1)では$r$と$t$の関係を求めるために，三角錐の体積をふた通りで表す．
   これはよく見る形なので知っておきたい．
 
   また，三角形の面積公式を用いているのでこのところを復習しよう．
   三角形$OAB$の面積$S$を求める方法について，座標平面だけでなく座標空間でも汎用的に使えるものとしてベクトルを用いた表現がある．
   これは三角形をはるベクトル$\vec{OA},\vec{OB}$を用いて
   
+
 $$
 \begin{align*}
 S = \frac{1}{2}\sqrt{|\vec{OA}|^2|\vec{OB}|^2-(\vec{OA}\cdot\vec{OB})^2}
@@ -175,6 +185,7 @@ $$
   と表すものである．
   証明は非常に単純であり，
   
+
 $$
 \begin{align*}
 S
@@ -187,6 +198,7 @@ $$
   
   次に(2)についてだが，(1)で求めた$r$の式を代入してひたすら変形していく．
   
+
 $$
 \begin{align*}
 f(t) = 8\pi\frac{1}{t}\left(\frac{t}{1+2t+\sqrt{2t^2+1}}\right)^3

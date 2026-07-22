@@ -12,6 +12,7 @@ title: "TODAI 1992 zenki Q3 (solution)"
      $a$，$b$を正の実数とする．座標空間の$4$点$P(0,0,0)$，$Q(a,0,0)$，$R(0,1,0)$，$S(0,1,b)$が半径$1$の同一球面上にあるとき，
      $P$，$Q$，$R$，$S$を頂点とする四面体に内接する球の半径を$r$とすれば，次の二つの不等式が成り立つことを示せ．
           
+
 $$
 \begin{align*}
 &\left(\frac{1}{r}-\frac{1}{a}-\frac{1}{b}\right)^2\ge\frac{20}{3}&\frac{1}{r}\ge2\sqrt{\frac{2}{3}}+2\sqrt{\frac{5}{3}}
@@ -27,6 +28,7 @@ $$
     
 $|PT|=1$であるから，
      
+
 $$
 \begin{align}
 \sqrt{X^2+Y^2+Z^2}=1 \nonumber\\\sqrt{1+a^2+b^2}=2 \nonumber\\
@@ -38,16 +40,19 @@ $$
 
 また，四面体$PQRS$の体積$V$を$2$通りで表して，
      
+
 $$
 \begin{align}
 &V=\frac{1}{3}(\triangle PQR)×b \nonumber\\&=\frac{r}{3}(\triangle PQR+\triangle PQS+\triangle PRS+\triangle QRS) \nonumber\\\Longleftrightarrow&\frac{1}{2}ab=\frac{r}{2}(a+a\sqrt{b^2+1}+b+b\sqrt{a^2+1})\nonumber\\\Longleftrightarrow&ab=r(a+b+a\sqrt{1+b^2}+b\sqrt{1+a^2})\label{2}
 \end{align}
 $$
-     
-である．\eqref{1}，\eqref{2}のもとで題意の不等式を示す．
 
-まず，AM-GMおよび\eqref{1}より，
      
+である．[1](#1)，[2](#2)のもとで題意の不等式を示す．
+
+まず，AM-GMおよび[1](#1)より，
+     
+
 $$
 \begin{align}
 ab\le\frac{a^2+b^2}{2}=\frac{3}{2}\label{3}
@@ -56,6 +61,7 @@ $$
 
 である．次いでコーシーシュワルツの不等式から，
      
+
 $$
 \begin{align}
 A=\frac{1}{a^2}+\frac{1}{b^2}\ge\frac{(1+1)^2}{a^2+b^2}=\frac{4}{3}\label{4}
@@ -64,21 +70,23 @@ $$
 
 である．以上に注意する．
 
-\eqref{2}の両辺$abr_{\not=0}$で割って整理して，
+[2](#2)の両辺$abr_{\not=0}$で割って整理して，
      
+
 $$
 \begin{align*}
-&\frac{1}{r}=\frac{1}{b}+\frac{1}{a}+\frac{\sqrt{1+b^2}}{b}+\frac{\sqrt{1+a^2}}{a}\label{5}\tag{5}\\&\left(\frac{1}{r}-\frac{1}{a}-\frac{1}{b}\right)^2=\left(\frac{\sqrt{1+b^2}}{b}+\frac{\sqrt{1+a^2}}{a}\right)^2 \\&=\frac{1+b^2}{b^2}+\frac{1+a^2}{a^2}+2\frac{\sqrt{(1+a^2)(1+b^2)}}{ab}\\&=2+A+2\sqrt{1+A+\frac{1}{(ab)^2}}\\&\ge1+\frac{4}{3}+2\sqrt{1+\frac{4}{3}+\frac{4}{9}}\tag{$\because \eqref{1},\eqref{2}$}\\&=\frac{20}{3}
+&\frac{1}{r}=\frac{1}{b}+\frac{1}{a}+\frac{\sqrt{1+b^2}}{b}+\frac{\sqrt{1+a^2}}{a}\label{5}\tag{5}\\&\left(\frac{1}{r}-\frac{1}{a}-\frac{1}{b}\right)^2=\left(\frac{\sqrt{1+b^2}}{b}+\frac{\sqrt{1+a^2}}{a}\right)^2 \\&=\frac{1+b^2}{b^2}+\frac{1+a^2}{a^2}+2\frac{\sqrt{(1+a^2)(1+b^2)}}{ab}\\&=2+A+2\sqrt{1+A+\frac{1}{(ab)^2}}\\&\ge1+\frac{4}{3}+2\sqrt{1+\frac{4}{3}+\frac{4}{9}}\tag{\because [1](#1),[2](#2)}\\&=\frac{20}{3}
 \end{align*}
 $$
 
 より一つ目の不等式が示された．$\Box$ 
 
-次の不等式を示す．一つ目の不等式の両辺平方根をとって，\eqref{5}より左辺の中身が非負であることから，
+次の不等式を示す．一つ目の不等式の両辺平方根をとって，[5](#5)より左辺の中身が非負であることから，
      
+
 $$
 \begin{align}
-&\frac{1}{r}-\frac{1}{a}-\frac{1}{b}\ge 2\sqrt{\frac{5}{3}}\\&\frac{1}{r}\ge2\sqrt{\frac{1}{ab}}+2\sqrt{\frac{5}{3}}\tag{$\because$ AM-GM}\\&\frac{1}{r}\ge2\sqrt{\frac{2}{3}}+2\sqrt{\frac{5}{3}}\tag{$\because \eqref{1}$}
+&\frac{1}{r}-\frac{1}{a}-\frac{1}{b}\ge 2\sqrt{\frac{5}{3}}\\&\frac{1}{r}\ge2\sqrt{\frac{1}{ab}}+2\sqrt{\frac{5}{3}}\tag{\because AM-GM}\\&\frac{1}{r}\ge2\sqrt{\frac{2}{3}}+2\sqrt{\frac{5}{3}}\tag{\because [1](#1)}
 \end{align}
 $$
 

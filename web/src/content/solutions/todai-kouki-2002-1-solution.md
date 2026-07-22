@@ -9,10 +9,10 @@ title: "TODAI 2002 kouki Q1 (solution)"
 
 ## 【解】
 
-### (1)
-
+    (1)
     $f(x)=xe^{-x^3}$の一階および二階微分は
     
+
 $$
 \begin{align*}
 f'(x)  & =e^{-x^3}(1-3x^3)          \\
@@ -36,6 +36,7 @@ $$
 
     また，極限値および極値は以下のとおりである．
     
+
 $$
 \begin{align*}
 & f\left(\sqrt[3]{1/3}\right) = \sqrt[3]{1/3}e^{-1/3}\\& f\left(\sqrt[3]{4/3}\right) = \sqrt[3]{4/3}e^{-4/3}\\& \lim_{x\to -\infty}f(x) = -\infty\\& \lim_{x\to \infty}f(x) = 0
@@ -51,10 +52,11 @@ $$
   <figcaption>図 1: $f(x)$のグラフの概形</figcaption>
 </figure>
 
-### (2)
-
+    
+    (2)
     題意より
     
+
 $$
 \begin{align*}
 V_1(C) = \pi\int_0^c \{f(x)\}^2 dx
@@ -63,6 +65,7 @@ $$
 
     であり，積分部分を評価して
     
+
 $$
 \begin{align*}
 V_1(C)
@@ -72,6 +75,7 @@ $$
 
     だから、$C\to\infty$の極限を取って
     
+
 $$
 \begin{align*}
 \lim_{C\to\infty} V_1(C)
@@ -81,7 +85,8 @@ $$
 
     が求める極限値である．$\cdots$(答)
 
-### (3)
+    
+    (3)
 
     
 
@@ -90,9 +95,9 @@ $$
   <figcaption>図 2: 斜線部が回転する領域</figcaption>
 </figure>
 
-### (1)
-より，
+    (1)より，
     
+
 $$
 \begin{align}
 p=\sqrt[3]{\frac{1}{3}}\label{2002-1:eq:0}
@@ -101,6 +106,7 @@ $$
 
     とおくと
     
+
 $$
 \begin{align}
 M = p e^{-\frac{1}{3}}\label{2002-1:eq:1}
@@ -112,6 +118,7 @@ $$
     幅$\Delta x$、高さ$f(x)$、長さ$2\pi x$の直方体の体積で近似できるから（バームクーヘン公式），
     $p=\sqrt[3]{\frac{1}{3}}$が積分区間の上端だから，
     
+
 $$
 \begin{align}
 V_2
@@ -121,6 +128,7 @@ $$
 
     である．各項積分すると
     
+
 $$
 \begin{align*}
 \int_0^p xf(x)dx
@@ -128,8 +136,9 @@ $$
 \end{align*}
 $$
 
-    だから，$\eqref{2002-1:eq:2}$に代入して
+    だから，[(式2)](#2002-1:eq:2)に代入して
     
+
 $$
 \begin{align*}
 V_2
@@ -137,8 +146,9 @@ V_2
 \end{align*}
 $$
 
-    ここに$\eqref{2002-1:eq:0,2002-1:eq:1}$を代入すると
+    ここに[(式1)](#2002-1:eq:0,2002-1:eq:1)を代入すると
     
+
 $$
 \begin{align*}
 V_2

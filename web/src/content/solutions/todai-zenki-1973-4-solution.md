@@ -18,6 +18,7 @@ title: "TODAI 1973 zenki Q4 (solution)"
 
  $S$を，$xy$平面上の
      
+
 $$
 \begin{align*}
 &|x|\le\frac{1}{2}&|y|\le\frac{1}{2}
@@ -26,14 +27,17 @@ $$
 
 とする．P$(a,b)$とすれば，$T(\mathrm{P})$は
      
+
 $$
 \begin{align*}
 &|x-a|\le\frac{1}{2}&|y-b|\le\frac{1}{2}
 \end{align*}
 $$
+
  
 で表される．対称性から，
      
+
 $$
 \begin{align}
 a,b\ge0\label{0}
@@ -58,6 +62,7 @@ $$
 
 これらが共通部分を持つとき，
      
+
 $$
 \begin{align}
 &\begin{cases}
@@ -72,6 +77,7 @@ $$
 
 が条件で，このもとで長方形領域
      
+
 $$
 \begin{align*}
 \begin{cases}
@@ -83,6 +89,7 @@ $$
 
 が共通部分である．この面積は
      
+
 $$
 \begin{align*}
 &\left(\frac{1}{2}-\left(a-\frac{1}{2}\right)\right)\left(\frac{1}{2}-\left(b-\frac{1}{2}\right)\right)\\
@@ -92,13 +99,14 @@ $$
 
  である．従って，求める条件は
       
+
 $$
 \begin{align}
 \frac{1}{2}\le(1-a)(1-b)\label{2}
 \end{align}
 $$
 
- である．以上\eqref{0}，\eqref{1}，\eqref{2}からPの存在範囲は下図斜線部(境界含む)．
+ である．以上[0](#0)，[1](#1)，[2](#2)からPの存在範囲は下図斜線部(境界含む)．
 
      \begin{zahyou}[ul=30mm](-0.75,0.75)(-0.75,0.75)
      \def\Fx{1-1/(2-2*X)}
@@ -116,10 +124,12 @@ $$
  
  従って求める面積$U$は，対称性から
       
+
 $$
 \begin{align*}
 U&=4\int_0^{1/2}\left(1-\frac{1}{2(1-a)}\right)\,da \\&=4\teisekibun{a+\frac{1}{2}\log |1-a|}{0}{1/2}\\&=2(1-\log 2)
 \end{align*}
 $$
+
   
  である．$\cdots$(答)

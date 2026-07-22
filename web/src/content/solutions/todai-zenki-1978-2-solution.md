@@ -19,6 +19,7 @@ title: "TODAI 1978 zenki Q2 (solution)"
      \[f'(x)=2x(2x^2-13)\]
 である．故に$\a=\sqrt{13/2}$とおいて下表を得る．
      
+
 $$
 \begin{align*}
 \begin{array}{|c|c|c|c|c|c|c|c|} \hline
@@ -31,11 +32,13 @@ $$
 
 また，
      
+
 $$
 \begin{align*}
 &f(t)=f(t+1) \\\Longleftrightarrow&(t+3)(t-2)(4t+2)=0
 \end{align*}
 $$
+
      
 である．
 故に$y=f(x)$のグラフは下図．\\
@@ -59,6 +62,7 @@ $$
 
 従って，求める関数$g(x)$は以下のようになる．
      
+
 $$
 \begin{align*}
 g(x)=\left\{\begin{array}{ll}

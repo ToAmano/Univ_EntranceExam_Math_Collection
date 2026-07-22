@@ -24,6 +24,7 @@ title: "TODAI 1964 zenki Q6 (solution)"
 
 条件(1)から，
      
+
 $$
 \begin{align}
 a+b=3 \label{1}
@@ -32,15 +33,18 @@ $$
 
 である．次に条件(2)を考える．$x=0$のときはこれは満たされるから，以下$x>0$で考える．このとき，
      
+
 $$
 \begin{align}
 \forall x>0,f(x)\ge0 \nonumber\\\Longleftrightarrow\forall x>0,x^2+ax+b\ge0 \label{2}
 \end{align}
 $$
+
      
-だから\eqref{2}について考えればよろしい．そこでこの不等式の左辺を$g(x)$，
-方程式$g(x)=0$の判別式を$D$とおけば，\eqref{2}は
+だから[2](#2)について考えればよろしい．そこでこの不等式の左辺を$g(x)$，
+方程式$g(x)=0$の判別式を$D$とおけば，[2](#2)は
      
+
 $$
 \begin{align}
 &D\le0 \lor\left\{\begin{array}{l}
@@ -54,17 +58,18 @@ $$
           \end{array}\right.\nonumber\\\Longleftrightarrow&-6\le a\le2 \lor\left\{\begin{array}{l}
           a<-6,2<a  \\
           0<a\le3
-          \end{array}\right.\tag{$\because\eqref{1}$}\\\Longleftrightarrow&-6\le a\le 3 \label{3}
+          \end{array}\right.\tag{\because[1](#1)}\\\Longleftrightarrow&-6\le a\le 3 \label{3}
 \end{align}
 $$
 
 となる．このもとで$h(a)=\int_0^1f(x)dx$の最大小を考える．
      
+
 $$
 \begin{align*}
-h(a)&=\left[\frac{1}{4}x^4+\frac{a}{3}x^3+\frac{b}{2}x^2\right]_0^1 \\&=\frac{-1}{6}a+\frac{7}{4}\tag{$\because\eqref{1}$}
+h(a)&=\left[\frac{1}{4}x^4+\frac{a}{3}x^3+\frac{b}{2}x^2\right]_0^1 \\&=\frac{-1}{6}a+\frac{7}{4}\tag{\because[1](#1)}
 \end{align*}
 $$
 
-となり，$h(a)$は$a$の単調減少関数である．故に\eqref{1}，\eqref{3}より，$(a,b)=(3,0)$で最小，
+となり，$h(a)$は$a$の単調減少関数である．故に[1](#1)，[3](#3)より，$(a,b)=(3,0)$で最小，
 $(a,b)=(-6,9)$で最大となる．$\cdots$(答)

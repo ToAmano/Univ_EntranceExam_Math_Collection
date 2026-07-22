@@ -20,6 +20,7 @@ title: "TODAI 1964 zenki Q4 (solution)"
 
 $K=1,2,3,4$とする．$P_k(a_k,b_k)$とおく．題意から
      
+
 $$
 \begin{align*}
 \left\{\begin{array}{l}
@@ -43,6 +44,7 @@ $$
 
 である．これからまず
      
+
 $$
 \begin{align*}
 &a_1=\frac{a_4}{2}=\frac{a_3+2}{4}=\frac{a_2+5}{8}=\frac{a_1+10}{16}\\\Longleftrightarrow&a_1=\frac{2}{3}
@@ -51,6 +53,7 @@ $$
 
 となり，順に$(a_2,a_3,a_4)=(1/3,2/3,4/3)$である．次に同様に
      
+
 $$
 \begin{align*}
 &b_1=\frac{b_4+2}{2}=\frac{b_3+6}{4}=\frac{b_2+12}{8}=\frac{b_1+24}{16}\\\Longleftrightarrow&b_1=\frac{8}{5}
@@ -59,6 +62,7 @@ $$
 
 であるから，$(b_2,b_3,b_4)=(4/5,2/5,6/5)$が従う．以上から
      
+
 $$
 \begin{align*}
 P_1\left(\frac{2}{3},\frac{8}{5}\right) , P_2\left(\frac{1}{3},\frac{4}{5}\right) ,
@@ -70,6 +74,7 @@ $$
  
  従って四辺形$P_1P_2P_3P_4$の面積は
       
+
 $$
 \begin{align*}
 S=\frac{8-2}{5}\frac{4-1}{3}\frac{1}{2}=\dfrac{3}{5}

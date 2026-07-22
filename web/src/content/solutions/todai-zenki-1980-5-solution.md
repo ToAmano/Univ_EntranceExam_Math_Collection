@@ -25,6 +25,7 @@ title: "TODAI 1980 zenki Q5 (solution)"
 
 まず，題意から以下の漸化式を得る．
      
+
 $$
 \begin{align}
 p_i(n+1)=\dfrac{1}{3}(1-p_i(n)) \label{1}
@@ -34,9 +35,9 @@ $$
      
 
 1.  題意から$p_1(0)=p_2(0)=p_3(0)$であるから$n=0$では成立．次に$n=k$での成立を仮定すれ
-     ば\eqref{1}から$n=k+1$でも成立．以上から示された．$\Box$
+     ば[1](#1)から$n=k+1$でも成立．以上から示された．$\Box$
 
-2.  \eqref{1}から，
+2.  [1](#1)から，
           \begin{align*}
           p_i(n+1)-\frac{1}{4}=\frac{-1}{3}\left(p_i(n)-\frac{1}{4}\right)
           \end{align*}

@@ -32,6 +32,7 @@ title: "TODAI 1974 zenki Q5 (solution)"
 
 従って，
      
+
 $$
 \begin{align*}
 \begin{cases}
@@ -40,11 +41,13 @@ $$
           \end{cases}
 \end{align*}
 $$
+
      
 である．$\cdots$(答)
 
 従って，  
      
+
 $$
 \begin{align*}
 \begin{cases}
@@ -56,6 +59,7 @@ $$
 
 であり，下表を得る．
       
+
 $$
 \begin{align*}
 \begin{array}{|c|c|c|c|c|c|}\hline
@@ -72,6 +76,7 @@ $$
  
  さて，求める孤長$L$とすると，
       
+
 $$
 \begin{align*}
 L&=\int_0^{\pi/2}\sqrt{X'^2+Y'^2}\,d\theta\\&=\int_0^{\pi/2}\sqrt{81c^4s^2+36c^2(1-2s^2)^2}\,d\theta\\&=\int_0^{\pi/2}\sqrt{36c^2}\,d\theta\\&=\int_0^{\pi/2}6c\,d\theta\,\,\,\,\,\,\,(\because c\ge0)\\&=6

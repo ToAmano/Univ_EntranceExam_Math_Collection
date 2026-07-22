@@ -17,6 +17,7 @@ title: "TODAI 1975 zenki Q3 (solution)"
 
  $a\not=0$である．まず，直線の式で$x,y>0$であるから，$0<x<4$となる．方程式から$y$を消去した
      
+
 $$
 \begin{align*}
 4-x=-ax^2+bx \Longleftrightarrow ax^2-(b+1)x+4=0
@@ -25,6 +26,7 @@ $$
 
 が$0<x<4$に重解を持つ．判別式$D$として
      
+
 $$
 \begin{align*}
 \left\{\begin{array}{l}
@@ -39,6 +41,7 @@ $$
 
 第一式から$a>0$であるから，($\because a\not=0$)
     
+
 $$
 \begin{align}
 &\left\{\begin{array}{l}
@@ -63,14 +66,16 @@ $$
      
      題意の面積$S$として
      
+
 $$
 \begin{align*}
 S&=\int_0^{b/a}(-ax^2+bx)dx \\&=\frac{a}{6}\left(\frac{b}{a}\right)^3=\frac{b^3}{6a^2}
 \end{align*}
 $$
 
-である．以下\eqref{1}の下でこの最大値を考えれば良い．\eqref{1}を代入して
+である．以下[1](#1)の下でこの最大値を考えれば良い．[1](#1)を代入して
      
+
 $$
 \begin{align}
 S&=\frac{b^3}{6}\frac{16^2}{(b+1)^4}\nonumber\\&=\frac{128}{3}\frac{b^3}{(b+1)^4}\label{2}
@@ -79,19 +84,21 @@ $$
 
 ここで$b>1$の時，AM-GMから
      
+
 $$
 \begin{align*}
 \frac{3b^3}{(b+1)^4}&\le\left(\frac{1}{4}\left(\frac{3}{b+1}+3\frac{b}{b+1}\right)\right)^4 \\&=\left(\frac{3}{4}\right)^4 \\\therefore&\frac{b^3}{(b+1)^4}\le\frac{3^3}{4^4}
 \end{align*}
 $$
 
-である．等号成立は$\cfrac{3}{b+1}=\cfrac{b}{b+1}\Longleftrightarrow b=3$の時．これは\eqref{1}を満たす．従って\eqref{2}
+である．等号成立は$\cfrac{3}{b+1}=\cfrac{b}{b+1}\Longleftrightarrow b=3$の時．これは[1](#1)を満たす．従って[2](#2)
 に代入して
      
+
 $$
 \begin{align*}
 &S\le\frac{128}{3}\frac{3^3}{4^4}=\frac{9}{2}&\therefore\max S=\frac{9}{2}
 \end{align*}
 $$
 
-である．等号成立は\eqref{1}から$(a,b)=(1,3)$の時である．$\cdots$(答)
+である．等号成立は[1](#1)から$(a,b)=(1,3)$の時である．$\cdots$(答)

@@ -11,6 +11,7 @@ title: "KYODAI 2003 kouki Q2 (solution)"
 
   三角形ABCにおいて
   
+
 $$
 \begin{align}
 & \angle ADB = \theta& \left(\frac{\pi}{3} < \theta < \frac{\pi}{2}\right)\label{2003-2:eq:1}
@@ -33,6 +34,7 @@ $$
   従って，四面体ABCDは底面が三角形ABD，高さCHの錐体で，
   その体積$V(\theta)$は，
   
+
 $$
 \begin{align*}
 V(\theta)
@@ -45,6 +47,7 @@ $$
   以下CH,AD,ABの長さを計算する．
   まず，題意より三角形ABCは一辺の長さ$1$だから
   
+
 $$
 \begin{align*}
 |AB| = 1
@@ -55,6 +58,7 @@ $$
 
   次にBDは，三角形ABDに正弦定理を用いて
   
+
 $$
 \begin{align*}
 AD = \frac{\sin(\pi-\theta)}{\sin\theta}
@@ -65,6 +69,7 @@ $$
 
   最後にCH については，三角形BCHを考えて
   
+
 $$
 \begin{align*}
 CH
@@ -76,6 +81,7 @@ $$
 
   以上から，四面体 $ABCD$ の体積 $V(\theta)$ は
   
+
 $$
 \begin{align*}
 V(\theta)
@@ -86,6 +92,7 @@ $$
   である．
   積和公式を用いてさらに変形して
   
+
 $$
 \begin{align*}
 V(\theta)
@@ -95,6 +102,7 @@ $$
 
   さらに倍角公式から$\cos 2\theta = 1-2\sin^2\theta$だから，全体を$\sin\theta$だけでかけて
   
+
 $$
 \begin{align*}
 V(\theta)
@@ -103,13 +111,14 @@ V(\theta)
 $$
 
   となる．
-  ここで，$\eqref{2003-2:eq:1}$から，区間内で$\frac{\sqrt{3}}{2}<\sin\theta\le 1$であり，
+  ここで，[(式1)](#2003-2:eq:1)から，区間内で$\frac{\sqrt{3}}{2}<\sin\theta\le 1$であり，
   この区間で$\sin\theta$も$-1/\sin\theta$も$\sin\theta$に関する単調増加関数だから，
   $V(\theta)$は$\sin\theta$ の単調増加関数で，$\sin\theta=1$ すなわち $\theta=\pi/2$
   の時に最大値を取る．
   この時$D$ が $AC$ の中点の時となる．
   求める最大値は
   
+
 $$
 \begin{align*}
 \max V

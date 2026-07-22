@@ -29,6 +29,7 @@ title: "TODAI 1988 zenki Q5 (solution)"
      
 題意の条件から，
      
+
 $$
 \begin{align}
 \begin{cases}

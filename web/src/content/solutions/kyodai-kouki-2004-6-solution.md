@@ -11,6 +11,7 @@ title: "KYODAI 2004 kouki Q6 (solution)"
 
   対称性から，題意をみた正方形のうち第一象限にあるものを$a(n)$として
   
+
 $$
 \begin{align}
 N(n) = 4a(n) \label{2004-6:eq:1}
@@ -27,6 +28,7 @@ $$
 
   また， $y = \sqrt{n^2-x^2}$ は $0 \leq x \leq n$ で単調減少だから
   
+
 $$
 \begin{align*}
 a(n) = \sum_{k=1}^{n}\lfloor\sqrt{n^2-k^2}\rfloor
@@ -36,6 +38,7 @@ $$
   である．ここで$\lfloor x\rfloor$はガウス記号であり，$x$以下の最大の整数を表す．
   ガウス記号の性質から
   
+
 $$
 \begin{align*}
 \sqrt{n^2-k^2} - 1 < \lfloor\sqrt{n^2-k^2}\rfloor\leq\sqrt{n^2-k^2}
@@ -44,6 +47,7 @@ $$
 
   である．$n>0$ だから両辺$n^2$で割ると
   
+
 $$
 \begin{align*}
 \frac{1}{n}\sqrt{1-\left(\frac{k}{n}\right)^2} - \frac{1}{n^2} < \frac{1}{n^2}\lfloor\sqrt{n^2-k^2}\rfloor\leq\frac{1}{n}\sqrt{1-\left(\frac{k}{n}\right)^2}
@@ -52,6 +56,7 @@ $$
 
   $k=1,2,\cdots, n$について和を取って
   
+
 $$
 \begin{align*}
 & \sum_{k=1}^{n}\left(\frac{1}{n}\sqrt{1-\left(\frac{k}{n}\right)^2} - \frac{1}{n^2}\right) < \frac{a(n)}{n^2}\leq\sum_{k=1}^{n}\frac{1}{n}\sqrt{1-\left(\frac{k}{n}\right)^2}\\& \sum_{k=1}^{n}\frac{1}{n}\sqrt{1-\left(\frac{k}{n}\right)^2} - \frac{1}{n} < \frac{a(n)}{n^2}\leq\sum_{k=1}^{n}\frac{1}{n}\sqrt{1-\left(\frac{k}{n}\right)^2}
@@ -60,6 +65,7 @@ $$
 
   ここで両辺の和の$n\to\infty$での極限値は区分求積法によって評価でき，
   
+
 $$
 \begin{align*}
 \lim_{n \to \infty}\sum_{k=1}^{n}\frac{1}{n}\sqrt{1-\left(\frac{k}{n}\right)^2}& =\int_{0}^{1}\sqrt{1-x^2} dx \\& = \frac{\pi}{4}
@@ -68,14 +74,16 @@ $$
 
   だから，はさみうちの定理より，$n \to \infty$ のとき
   
+
 $$
 \begin{align}
 \lim_{n\to\infty}\frac{a(n)}{n^2}\to\frac{\pi}{4}\label{2004-6:eq:2}
 \end{align}
 $$
 
-  $\eqref{2004-6:eq:1}$，$\eqref{2004-6:eq:2}$から
+  [(式1)](#2004-6:eq:1)，[(式2)](#2004-6:eq:2)から
   
+
 $$
 \begin{align*}
 \lim_{n\to\infty}\frac{N(n)}{n^2} = \pi

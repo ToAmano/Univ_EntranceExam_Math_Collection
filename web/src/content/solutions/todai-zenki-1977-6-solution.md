@@ -24,6 +24,7 @@ $(1,1,1)$，$(1,3,2)$を通る．
 
 $l$，$m$の方向ベクトルは各々
      
+
 $$
 \begin{align*}
 \vec{l}=\vthree{1}{0}{1} ,
@@ -33,6 +34,7 @@ $$
 
 である．また$n$の方向ベクトル$\vec{n}$とする．簡単のため
      
+
 $$
 \begin{align*}
 \vec{p}=\vthree{1}{1}{0} ,
@@ -43,6 +45,7 @@ $$
 
 とおくと，$l$，$m$，$n$の方程式は
      
+
 $$
 \begin{align*}
 &l:\vector{OX}=\vec{p}+t\vec{l}\\&m:\vector{OX}=\vec{q}+t\vec{m}\\&n:\vector{OX}=\vec{r}+t\vec{n}
@@ -73,6 +76,7 @@ $$
      る．まず$t_1$，$s_1$について
           
 <span id="1a"></span><span id="1b"></span><span id="1c"></span>
+
 $$
 \begin{cases}
 2+xt_1=1+s_1& \\
@@ -81,11 +85,11 @@ $$
 \end{cases}
 $$
 
-     \eqref{1a}，\eqref{1c}から$s_1$を消して
+     [1a](#1a)，[1c](#1c)から$s_1$を消して
           \begin{align*}
           (x-z)t_1=0
           \end{align*}
-     である．\eqref{1b}から$t_0\not=0$だから
+     である．[1b](#1b)から$t_0\not=0$だから
           \begin{align}
           x=z \label{2}
           \end{align}
@@ -94,6 +98,7 @@ $$
      次に$t_2$，$s_2$について     
          
 <span id="2a"></span><span id="2b"></span><span id="2c"></span>
+
 $$
 \begin{cases}
 2+xt_2=1 &\\
@@ -102,18 +107,18 @@ $$
 \end{cases}
 $$
 
-     である．\eqref{2b}，\eqref{2c}から$s_2$を消去して
+     である．[2b](#2b)，[2c](#2c)から$s_2$を消去して
           \begin{align*}
           t_2(y-2z)=1 \label{4}
           \end{align*}     
-     これと，\eqref{2a}において$x\not=0$に注意して$t_2$を消去すれば
+     これと，[2a](#2a)において$x\not=0$に注意して$t_2$を消去すれば
           \begin{align}
           2z-y=x
           \end{align}
       逆にこの時$t_2$，$s_2$は存在する．     
       
-      \eqref{2}及び\eqref{4}から，$(x,y,z)=(x,x,x)$であるから$\vec{n}=(1,1,1)$としてよい．
-      この時\eqref{1b}，\eqref{2a}から$(t_1,t_2)=(1,-1)$であるから，求める交点の座標は
+      [2](#2)及び[4](#4)から，$(x,y,z)=(x,x,x)$であるから$\vec{n}=(1,1,1)$としてよい．
+      この時[1b](#1b)，[2a](#2a)から$(t_1,t_2)=(1,-1)$であるから，求める交点の座標は
            \begin{align*}
            \left\{
                 \begin{array}{l}
@@ -130,6 +135,7 @@ $$
 \begin{indentation}{2zw}{0pt}
 実数$s$，$t$を用いて，$n$上の$3$点は
      
+
 $$
 \begin{align*}
 A(1+s,1,s) , B(1,1+2t,1+t) , C(2,0,1)

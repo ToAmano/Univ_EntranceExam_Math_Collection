@@ -24,6 +24,7 @@ title: "TODAI 1964 zenki Q5 (solution)"
 
 まず，題意から
      
+
 $$
 \begin{align}
 a>0

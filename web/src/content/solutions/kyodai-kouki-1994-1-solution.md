@@ -13,6 +13,7 @@ title: "KYODAI 1994 kouki Q1 (solution)"
   もし $c < 0$ ならば $a+b+c < 0$ となって不適．
   また，もし $a > 0$ ならば $a+b+c > 0$ となって不適だから
   
+
 $$
 \begin{align*}
 a \le 0 \le c
@@ -26,6 +27,7 @@ $$
 
   $1^\circ \ a \le b \le 0 \le c$ の時
   
+
 $$
 \begin{align*}
 (\text{与式})

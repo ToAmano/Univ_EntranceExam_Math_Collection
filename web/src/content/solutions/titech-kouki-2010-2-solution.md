@@ -11,6 +11,7 @@ title: "TITECH 2010 kouki Q2 (solution)"
 
   関数を
   
+
 $$
 \begin{align*}
 f(x) = \left(\log x\right)^2 & (x>0)
@@ -19,10 +20,11 @@ $$
 
   とおく．
 
-### (1)
-
+  
+  (1)
   一階，二階微分は
   
+
 $$
 \begin{align}
 f'(x)  & = 2 \frac{\log x}{x}\label{2010-2:eq:1}\\
@@ -54,10 +56,11 @@ $$
 
   $\cdots$(答)
 
-### (2)
-
-  $P(\alpha, f(\alpha))$ での接線 $L(\alpha)$ は,$\eqref{2010-2:eq:1}$から
   
+  (2)
+  $P(\alpha, f(\alpha))$ での接線 $L(\alpha)$ は,[(式1)](#2010-2:eq:1)から
+  
+
 $$
 \begin{align*}
 y
@@ -67,6 +70,7 @@ $$
 
   であるから，$L(\alpha)$ と $C$ の共有点の個数は
   
+
 $$
 \begin{align}
 & l(x) = f(x)                                                                                   \\\therefore& (\log x)^2 - (\log\alpha)^2 - 2\frac{\log \alpha}{\alpha}(x-\alpha) = 0 \label{2010-2:eq:5}
@@ -74,8 +78,9 @@ $$
 $$
 
   の $x>0$ の解の個数にひとしい.
-  $\eqref{2010-2:eq:5}$の左辺を $g(x)$ とおき，$g(x)$の挙動から解の個数を求める．
+  [(式5)](#2010-2:eq:5)の左辺を $g(x)$ とおき，$g(x)$の挙動から解の個数を求める．
   
+
 $$
 \begin{align*}
 g(x) = (\log x)^2 - (\log\alpha)^2 - 2\frac{\log \alpha}{\alpha}(x-\alpha)
@@ -84,6 +89,7 @@ $$
 
   $g(x)$の一階微分は
   
+
 $$
 \begin{align*}
 g'(x) = 2 \left(\frac{\log x}{x} - \frac{\log \alpha}{\alpha}\right)
@@ -92,6 +98,7 @@ $$
 
   であるから，新しく
   
+
 $$
 \begin{align*}
 h(x) = \frac{\log x}{x}
@@ -100,6 +107,7 @@ $$
 
   とおくと
   
+
 $$
 \begin{align*}
 g'(x) = 2 \left(h(x)-h(\alpha)\right)
@@ -107,8 +115,9 @@ g'(x) = 2 \left(h(x)-h(\alpha)\right)
 $$
 
   となる．よって$h(x)$の挙動から$g'(x)$の符号がわかる．
-  $\eqref{2010-2:eq:1}$より$h(x) = f'(x)/2$だから，
+  [(式1)](#2010-2:eq:1)より$h(x) = f'(x)/2$だから，
   
+
 $$
 \begin{align*}
 h'(x) = \frac{f''(x)}{2}
@@ -145,6 +154,7 @@ $$
   $x<\alpha$では$g'(x)<0$, $\alpha<x$では$g'(x)>0$である．
   また，$g(x)$の極限値は
   
+
 $$
 \begin{align*}
 \lim_{x\to 0} g(x)      & = \infty\\\lim_{x\to \infty} g(x) & = \infty
@@ -174,6 +184,7 @@ $$
   それ以外のとき，$g'(x)<0$である．
   また，$g(x)$の極限値は
   
+
 $$
 \begin{align*}
 \lim_{x\to 0} g(x)      & = \infty\\\lim_{x\to \infty} g(x) & = -\infty
@@ -203,6 +214,7 @@ $$
   これを$x=\beta$とする．
   また，$g(x)$の極限値は
   
+
 $$
 \begin{align*}
 \lim_{x\to 0} g(x)      & = \infty\\\lim_{x\to \infty} g(x) & = -\infty
@@ -228,6 +240,7 @@ $$
   以上三つの場合わけにより全ての場合は尽くされた．
   従って求める共有点の個数は
   
+
 $$
 \begin{align*}
 n(\alpha) =
@@ -240,11 +253,12 @@ $$
 
   である．  $\cdots$(答)
 
-### (3)
-
+  
+  (3)
   $P$から$x$軸に下ろした垂足$Q(\alpha,0)$, $L(a)$と$x$軸の交点$R$, また$T(1,0)$とおく.
   すると$R$の$x$座標は
   
+
 $$
 \begin{align*}
 & 2\frac{\log \alpha}{\alpha}(x-\alpha) + \left(\log\alpha\right)^2 = 0 \\\therefore& x = \alpha - \frac{\alpha}{2}\log\alpha
@@ -263,6 +277,7 @@ $$
   求める面積$S(\alpha)$は，図形$PQT$の面積$A(\alpha)$から，三角形$PQR$の面積$B(\alpha)$を減じたものに等しい．
   すなわち
   
+
 $$
 \begin{align}
 S(\alpha) = A(\alpha) - B(\alpha) \label{2010-2:eq:2}
@@ -271,6 +286,7 @@ $$
 
   まず，$\triangle PQR$について，
   
+
 $$
 \begin{align*}
 |QR|
@@ -280,6 +296,7 @@ $$
 
   および
   
+
 $$
 \begin{align*}
 |PQ| = \left(\log\alpha\right)^2
@@ -288,6 +305,7 @@ $$
 
   だから，
   
+
 $$
 \begin{align}
 B(\alpha)
@@ -298,6 +316,7 @@ $$
   である．
   次に$A(\alpha)$は部分積分法を繰り返し用いて
   
+
 $$
 \begin{align}
 A(\alpha)
@@ -305,8 +324,9 @@ A(\alpha)
 \end{align}
 $$
 
-  だから，$\eqref{2010-2:eq:3,2010-2:eq:4}$を$\eqref{2010-2:eq:2}$に代入して
+  だから，[(式4)](#2010-2:eq:3,2010-2:eq:4)を[(式2)](#2010-2:eq:2)に代入して
   
+
 $$
 \begin{align*}
 S(\alpha)
@@ -322,25 +342,20 @@ $$
 ## 【解説】
 
   典型的な平面図形の問題で，あまり捻ったところもないのでとっつきやすい．
+  (1)でグラフの概形と言われれた時は，二階微分を計算して変曲点まで求めるのが受験業界での暗黙の了解である．
 
-### (1)
-でグラフの概形と言われれた時は，二階微分を計算して変曲点まで求めるのが受験業界での暗黙の了解である．
-
-### (2)
-では$y=\frac{\log x}{x}$の形の関数が出てくるが，これは2004年度の2番でも題材になっている．
+  (2)では$y=\frac{\log x}{x}$の形の関数が出てくるが，これは2004年度の2番でも題材になっている．
   東工大の後期は比較的以前扱った題材が再度出てくることがあり，過去問演習の大切さを教えてくれる．
 
   今回の解答ではちゃんと厳密に方程式の解の個数から$n(\alpha)$を求めているが，
-
-### (1)
-のグラフの概形で変曲点まで求めているので，$\alpha \le 1$では一つ，$\alpha=e$でも一つ，それ以外では二つというのはすぐにわかる．
+  (1)のグラフの概形で変曲点まで求めているので，$\alpha \le 1$では一つ，$\alpha=e$でも一つ，それ以外では二つというのはすぐにわかる．
   なので答えがわかっている状態で答案を作りにいっているという表現が適切だろう．
 
-### (3)
-は図形の面積を求める問題で，$(\log x)^2$の形の積分を処理できれば問題ない．
+  (3)は図形の面積を求める問題で，$(\log x)^2$の形の積分を処理できれば問題ない．
   この形は$\log x$の微分を繰り返す形で部分積分を実行すれば良い．
   ちなみに一般の$(\log x)^{n}$の場合
   
+
 $$
 \begin{align*}
 \int\left(\log x\right)^n dx
@@ -351,6 +366,7 @@ $$
   となるので頭の片隅に入れておくと良い．ここで各項の符号は正負の順番で入れ替わり，あとは$x$をかけた状態で$(\log x)^{n}$の次数を下ろして係数を足していけば良いので覚えやすい．
   一例として$n=1,2,3$の場合を示しておこう．
   
+
 $$
 \begin{align*}
 \int\left(\log x\right)^1 dx & = x\log x - x + C                                \\\int\left(\log x\right)^2 dx & = x(\log x)^2 - 2x\log x + 2x + C                \\\int\left(\log x\right)^3 dx & = x(\log x)^3 - 3x(\log x)^2 + 6x\log x - 6x + C

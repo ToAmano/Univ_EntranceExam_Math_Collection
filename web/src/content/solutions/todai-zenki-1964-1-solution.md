@@ -11,6 +11,7 @@ title: "TODAI 1964 zenki Q1 (solution)"
      \begin{oframed}
      $a$，$b$，$c$を相異なる数，$x$，$y$，$z$を連立方程式
           
+
 $$
 \begin{align*}
 x+ay+a^2z=a^3 , x+by+b^2z=b^3 , x+cy+c^2z=c^3
@@ -25,6 +26,7 @@ $$
 題意から$a$，$b$，$c$は$t$の$3$次式$t^3-zt^2-yt-x=0$の異$3$実解である．解と係数の関係から
      
 <span id="1"></span><span id="2"></span><span id="3"></span>
+
 $$
 \begin{cases}
 a+b+c=z  \\
@@ -33,8 +35,9 @@ a+b+c=z  \\
 \end{cases}
 $$
 
-である．\eqref{1}，\eqref{2}から
+である．[1](#1)，[2](#2)から
      
+
 $$
 \begin{align*}
 a^2+b^2+c^2&=(a+b+c)^2-2(bc+ca+ab)  \\&=z^2+2y
@@ -43,6 +46,7 @@ $$
 
 したがって与式から
      
+
 $$
 \begin{align*}
 &a^3+b^3+c^3 \\

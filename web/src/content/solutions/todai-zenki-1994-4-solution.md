@@ -11,6 +11,7 @@ title: "TODAI 1994 zenki Q4 (solution)"
 \begin{oframed}
 $0<c<1$とする．$0\le x<1$において連続な関数$f(x)$に対して
      
+
 $$
 \begin{align*}
 f_1(x)=f(x)+\int_0^cf(t)dt , f_2(x)=f(x)+\int_0^cf_1(t)dt
@@ -19,6 +20,7 @@ $$
 
 とおく．以下，関数$f_3(x),f_4(x),\cdots$を順次
      
+
 $$
 \begin{align*}
 f_n(x)=f(x)+\int_0^cf_{n-1}(t)dt \ \ \ \ \ (n=3,4,\cdots)
@@ -27,6 +29,7 @@ $$
 
 により定める．また，
      
+
 $$
 \begin{align*}
 g(c)=\int_0^cf(t)dt
@@ -35,6 +38,7 @@ $$
 
 とし，$n=1,2,3,\cdots$に対し          
      
+
 $$
 \begin{align*}
 g_n(c)=\int_0^cf_n(t)dt
@@ -50,6 +54,7 @@ $$
      \[f_{n+1}(x)=f(x)+g_n(c)\]
 であるから，漸化式に代入して
      
+
 $$
 \begin{align}
 g_{n+1}(c)&=\int_0^c\{f(x)+g_n(c)\}dt\nonumber\\&=cg_n(c)+g(c) \nonumber\\\therefore g_{n+1}(c)-\frac{g(c)}{1-c}&=c\left\{ g_{n}(c)-\frac{g(c)}{1-c}\right\}\label{1}
@@ -59,23 +64,27 @@ $$
 これは数列$\{ g_n(c)-\dfrac{g(c)}{1-c}\}$が公比$c$の等比数列であることをあらわす．
 また，初期条件について，漸化式より
      
+
 $$
 \begin{align}
 g_1(c)&=\int_0^c\left\{f(t)+g(c)\right\}dt\nonumber\\&=(1+c)g(c) \label{2}
 \end{align}
 $$
 
-であるから，\eqref{1}，\eqref{2}から
+であるから，[1](#1)，[2](#2)から
      
+
 $$
 \begin{align}
 g_n(c)&=c^{n-1}\left\{(1+c)g(c)-\frac{g(c)}{1-c}\right\}+\frac{g(c)}{1-c}\nonumber\\&\limit{n}{\infty}\frac{g(c)}{1-c}
 \end{align}
 $$
+
      
 を得る$(\because0<c<1)$．故に
      
 <span id="4"></span><span id="5"></span>
+
 $$
 \begin{cases}
 xf(x)=g(x)+x\frac{g(x)}{1-x}  \\
@@ -83,35 +92,41 @@ xf(x)=g(x)+x\frac{g(x)}{1-x}  \\
 \end{cases}
 $$
 
-をみたす$f(x)$をみつければよい．\eqref{4}で$0<x<1$だから，分母を払って
+をみたす$f(x)$をみつければよい．[4](#4)で$0<x<1$だから，分母を払って
      
+
 $$
 \begin{align}
 (1-x)xf(x)=g(x)　\label{6}
 \end{align}
 $$
+
    
 $g(x)=y$とおけば$f(x)=dy/dx$である．$y=0$なる$x$があれば$f(x)\equiv0$となって
-\eqref{5}に反することから$y\not=0$である．
-従って\eqref{6}を書き換えると
+[5](#5)に反することから$y\not=0$である．
+従って[6](#6)を書き換えると
      
+
 $$
 \begin{align}
 \frac{dy}{y}&=\frac{dx}{x(1-x)}\nonumber\\
      y&=C\frac{x}{1-x}\nonumber\\\therefore f(x)&=C\frac{1}{(1-x)^2}\label{7}
 \end{align}
 $$
+
        
-であり，\eqref{5}および$f(x)$の連続性から$\dlim{x}{+0}f(x)=1$であるので
+であり，[5](#5)および$f(x)$の連続性から$\dlim{x}{+0}f(x)=1$であるので
      
+
 $$
 \begin{align*}
 \dlim{x}{+0}f(x)=C=1
 \end{align*}
 $$
 
-となる．これを\eqref{7}に代入して
+となる．これを[7](#7)に代入して
      
+
 $$
 \begin{align*}
 f(x)=\frac{1}{(1-x)^2}\cdots\text{(答)}

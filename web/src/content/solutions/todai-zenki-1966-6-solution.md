@@ -18,6 +18,7 @@ title: "TODAI 1966 zenki Q6 (solution)"
 
 題意より$l_1:y=k$とおける．$C_2:x^2-y+1=0$とする．$C:x+y^2-5=0$を$l_1$に関して折り返したグラフを$C_1$とすれば$C$上の点$(x,y)$は$C_1$上の点$(x,2k-y)$に移るので
      
+
 $$
 \begin{align*}
 C_1:x+(y-2k)^2-5=0
@@ -28,10 +29,11 @@ $$
 垂直$2$等分線で，傾き$\pm1$で，$(x,y)=(0,2k)$を通るので$l_2:y=\pm x+2k$である．又，
 頂点は頂点に移るので$A(0,1)$が$B(5,2k)$に移る．故に以下複合同順として
      
+
 $$
 \begin{align*}
 &\left\{\begin{array}{l}
-          \text{線分$AB$の中点$M$が$l_2$上}　\\
+          \text{線分ABの中点Mがl_2上}　\\
           \vector{PQ}\perp l_2
           \end{array}\right.\\\Longleftrightarrow&\left\{\begin{array}{l}
           \dfrac{2k+1}{2}=\pm\dfrac{5}{2}+2k　\\
@@ -39,16 +41,18 @@ $$
           \end{array}\right.\\\Longleftrightarrow&\text{(複合負)} ,k=3
 \end{align*}
 $$
+
   
 
 以下十分条件を求める．
 
 $C_1$上の点$P(x,y)$が$C_2$上の点$Q(x+2X,y+2Y)$に移るとすると，$(X,Y)$は
      
+
 $$
 \begin{align*}
 &\left\{\begin{array}{l}
-          \text{線分$PQ$の中点$M$が$l_2$上}　\\
+          \text{線分PQの中点Mがl_2上}　\\
           \vector{PQ}\perp l_2
           \end{array}\right.\\\Longleftrightarrow&\left\{\begin{array}{l}
           (y+Y)=-(x+X)+6　\\
@@ -59,6 +63,7 @@ $$
 
 である．この時$Q$が$C_2$上にある条件から     
      
+
 $$
 \begin{align*}
 (x+2X)^2-(y+2Y)+1=0  \\(6-y)^2-(6-x)+1=0  \\
@@ -68,6 +73,7 @@ $$
 
  これは$Q$が$l_2$の折り返しにより$P$に移動することを示し，十分である．以上から
       
+
 $$
 \begin{align*}
 \left\{\begin{array}{l}

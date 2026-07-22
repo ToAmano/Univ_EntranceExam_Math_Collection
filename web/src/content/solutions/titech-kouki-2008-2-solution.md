@@ -11,6 +11,7 @@ title: "TITECH 2008 kouki Q2 (solution)"
 
   以下，
   
+
 $$
 \begin{align*}
 a_k = \int_{\frac{k-1}{n}}^{\frac{k}{n}} x^2 \left|\sin n\pi x\right|\,dx
@@ -20,6 +21,7 @@ $$
   とおく．
   $f(x)=x^2$ とおき，$\left[ \frac{k-1}{n}, \frac{k}{n} \right]$ で $f(x)$ の最大，最小を与える$x$ をそれぞれ $M_k, m_k$ とすると，$|\sin n\pi x| \ge 0$ から，
   
+
 $$
 \begin{align*}
 f(m_k) |\sin n\pi x| \le f(x) |\sin n\pi x| \le f(M_k) |\sin n\pi x|
@@ -29,6 +31,7 @@ $$
   なる不等式を満たす．
   両辺を$\left[ \frac{k-1}{n}, \frac{k}{n} \right]$で積分して
   
+
 $$
 \begin{align}
 \int_{\frac{k-1}{n}}^{\frac{k}{n}} f(m_k) |\sin n\pi x| \,dx \le a_k \le\int_{\frac{k-1}{n}}^{\frac{k}{n}} f(M_k) |\sin n\pi x| \,dx \label{2008-2:eq:1}
@@ -37,14 +40,16 @@ $$
 
   である．ここで両辺の積分は
   
+
 $$
 \begin{align*}
 \int_{\frac{k-1}{n}}^{\frac{k}{n}} |\sin n\pi x| \,dx = \frac{2}{n\pi}
 \end{align*}
 $$
 
-  と実行できるから，$\eqref{2008-2:eq:1}$に代入して
+  と実行できるから，[(式1)](#2008-2:eq:1)に代入して
   
+
 $$
 \begin{align*}
 \frac{2}{n\pi} f(m_k) \le a_k \le\frac{2}{n\pi} f(M_k)
@@ -53,6 +58,7 @@ $$
 
   を得る．$k=1,2,\cdots,n$ について和をとって
   
+
 $$
 \begin{align}
 \frac{2}{n\pi}\sum_{k=1}^{n} f(m_k) \le\sum_{k=1}^{n} a_k \le\frac{2}{n\pi}\sum_{k=1}^{n} f(M_k) \nonumber\\\therefore\frac{2}{n\pi}\sum_{k=1}^{n} f(m_k) \le I_n \le\frac{2}{n\pi}\sum_{k=1}^{n} f(M_k) \label{2008-2:eq:2}
@@ -61,6 +67,7 @@ $$
 
   である．両辺の和は区分求積法によって評価でき，$n\to\infty$のとき
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -70,8 +77,9 @@ $$
 \end{align*}
 $$
 
-  だから，$\eqref{2008-2:eq:2}$に代入して，挟み撃ちの原理から求める極限値は
+  だから，[(式2)](#2008-2:eq:2)に代入して，挟み撃ちの原理から求める極限値は
   
+
 $$
 \begin{align*}
 \lim_{n\to\infty}I_n = \frac{2}{3\pi}

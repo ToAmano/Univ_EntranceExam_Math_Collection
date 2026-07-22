@@ -13,8 +13,8 @@ $$
 \begin{align*}
 f(x)=
   \begin{cases}
-    x & \text{$0\le x\le 1$のとき} \\
-    0 & \text{$x>1$のとき}
+    x & \text{0\le x\le 1のとき} \\
+    0 & \text{x>1のとき}
   \end{cases}
 \end{align*}
 $$

@@ -28,7 +28,7 @@ title: "TODAI 1990 kouki Q3 (solution)"
     \fi
   }
 
-### (1)
+  (1)
 
   
 
@@ -65,6 +65,7 @@ title: "TODAI 1990 kouki Q3 (solution)"
 
   以上まとめて
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -73,10 +74,11 @@ $$
     \end{dcases}
 \end{align*}
 $$
+
 $\cdots$(答)
 
-### (2)
-
+  
+  (2)
   
 
 <figure id="1990-3:fig:2">
@@ -100,6 +102,7 @@ $\cdots$(答)
   $Q_n(1)$ を出た後は $Q_n(2)$ 内を通って $B_{n+1}$ へ行く．
   よって$Q_n(1)$を脱出するのに$x_n+y_n$通り，さらに$Q_n(2)$を通るのに$x_n+y_n$通りで，合計
   
+
 $$
 \begin{align*}
 (x_n+y_n)^2
@@ -127,6 +130,7 @@ $$
 
   以上から
   
+
 $$
 \begin{align*}
 x_{n+1}& = (x_n+y_n)^2 + y_nx^2_n + x^2_n(x_n+y_n) \\& = (x_n+y_n)^2 + 2x_n^2y_n + x_n^3
@@ -142,6 +146,7 @@ $$
   $x_{n+1}$ の時と同様に，$B_n(1)$を通るかどうかで場合分けして考える．
   $B_n(1)$を通る場合は$y_ny_nx_n$通り，通らない場合は$x_ny_n(x_n+y_n)$通りだから，
   
+
 $$
 \begin{align*}
 y_{n+1}& = x_ny_n(x_n+y_n) + x_ny_n^2 \\& = 2x_n y_n^2 + x_n^2 y_n
@@ -152,6 +157,7 @@ $$
 
   以上まとめて
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -163,11 +169,11 @@ $$
 
   である．$\cdots$(答)
 
-### (3)
-
-### (2)
-の漸化式で$n=2$として，(1)の結果を代入すれば
   
+  (3)
+  (2)の漸化式で$n=2$として，(1)の結果を代入すれば
+  
+
 $$
 \begin{align*}
 x_3 & = 10^2 + 2 \cdot 49 \cdot 3 + 49 \cdot 7 = 737 \\
@@ -177,6 +183,7 @@ $$
 
   より
   
+
 $$
 \begin{align*}
 \begin{dcases}

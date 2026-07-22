@@ -9,9 +9,9 @@ title: "TODAI 1998 kouki Q2 (solution)"
 
 ## 【解】
 
-### (1)
- (E)を変形して，
+  (1) (E)を変形して，
   
+
 $$
 \begin{align}
 \int_0^{2\pi}\left\{[f(x)]^2 - 2f(x)\sin\theta\right\}dx = 0 \label{1998-2:eq:1}
@@ -20,6 +20,7 @@ $$
 
   である．ここに
   
+
 $$
 \begin{align*}
 f(x) = r\sin(x+\theta)
@@ -28,6 +29,7 @@ $$
 
   を代入して各項計算すると
   
+
 $$
 \begin{align*}
 \int_0^{2\pi}\{f(x)\}^2dx
@@ -36,8 +38,9 @@ $$
 \end{align*}
 $$
 
-  だから，$\eqref{1998-2:eq:1}$に代入すると
+  だから，[(式1)](#1998-2:eq:1)に代入すると
   
+
 $$
 \begin{align*}
 & \pi r^2 = 2\pi r \cos\theta\\\therefore& r = 2\cos\theta
@@ -45,11 +48,12 @@ $$
 $$
 
   を得る．$\cdots$(答)
+  
 
-### (2)
-
+  (2)
   まず，パラメータの範囲
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -61,6 +65,7 @@ $$
 
   に(1)の$r=2\cos\theta$を代入すると，
   
+
 $$
 \begin{align}
 0 \le\theta\le\frac{\pi}{4}\label{1998-2:eq:2}
@@ -69,8 +74,9 @@ $$
 
   の範囲では常に成立している．
 
-  そこで，$\eqref{1998-2:eq:2}$のもとで
+  そこで，[(式2)](#1998-2:eq:2)のもとで
   
+
 $$
 \begin{align*}
 f(x) = 2\cos\theta\sin(x+\theta) & \left(0 \le x \le\frac{\pi}{4}, 0 \le x \le\pi\right)
@@ -80,14 +86,16 @@ $$
   の軌跡を求めれば良い．
   積和公式から
   
+
 $$
 \begin{align*}
 f(x) = \sin(2\theta+x) + \sin x \equiv g(x, \theta)
 \end{align*}
 $$
 
-  であり, $x$ を固定して $\theta$ を動かすと，$\eqref{1998-2:eq:2}$より
+  であり, $x$ を固定して $\theta$ を動かすと，[(式2)](#1998-2:eq:2)より
   
+
 $$
 \begin{align}
 x \leq 2\theta+x \leq x+\frac{\pi}{2}\label{1998-2:eq:3}
@@ -105,6 +113,7 @@ $$
 
   $x$を動かした時のこの領域は[図1](#1998-2:fig:1)の斜線部（境界含む）だから，$\sin(2\theta+x)$の最大最小を考えて
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -117,6 +126,7 @@ $$
 
   である．各点計算すると
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -129,6 +139,7 @@ $$
 
   だから，求める領域は
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -149,10 +160,12 @@ $$
   <figcaption>図 2: 求める領域は斜線部（教会含む）．</figcaption>
 </figure>
 
-### (3)
+  
 
+  (3)
   求める面積$S$として, 図より
   
+
 $$
 \begin{align*}
 S
@@ -162,6 +175,7 @@ $$
 
   である．三角関数の対称性を用いて積分区間を変形すると
   
+
 $$
 \begin{align}
 S
@@ -171,14 +185,16 @@ $$
 
   だから，各項積分すると
   
+
 $$
 \begin{align*}
 & \int_0^{\pi/2} dx = \frac{\pi}{2}\\& \int_{0}^{\pi/2}\sin x dx = \left[-\cos x\right]_{0}^{\pi/2} = 1                      \\& \int_{0}^{\pi/4}\sin x dx = \left[-\cos x\right]_{0}^{\pi/4} = 1-\frac{\sqrt{2}}{2}\\& \int_{\pi/4}^{\pi}\cos x dx = \left[\sin x\right]_{\pi/4}^{\pi} = -\frac{\sqrt{2}}{2}\\
 \end{align*}
 $$
 
-  だから，$\eqref{1998-2:eq:4}$に代入して
+  だから，[(式4)](#1998-2:eq:4)に代入して
   
+
 $$
 \begin{align*}
 S

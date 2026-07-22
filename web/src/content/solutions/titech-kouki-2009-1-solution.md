@@ -23,6 +23,7 @@ title: "TITECH 2009 kouki Q1 (solution)"
   線分$CP$と球の中心$O'$の距離が球の半径である$1$より小さければ良い．
   直線$CP$はパラメータ表示で
   
+
 $$
 \begin{align*}
 \begin{pmatrix}x   \\y\\ z\end{pmatrix}
@@ -32,6 +33,7 @@ $$
 
   だから、CP上の点$Q(t)$として、
   
+
 $$
 \begin{align*}
 & |\vec{O'Q(t)}|^2                              \\
@@ -43,6 +45,7 @@ $$
 
   となる．ここで簡単のため
   
+
 $$
 \begin{align*}
 A & =(X-a)^2+Y^2+9(>0) \\
@@ -52,6 +55,7 @@ $$
 
   とおいて，式変形を続けると
   
+
 $$
 \begin{align*}
 |O'Q|^2= & A\left(t+\frac{B}{A}\right)+a^2+4-\frac{B^2}{A}
@@ -61,6 +65,7 @@ $$
   だから，$t = - B/A$ の時最小値$a^2+4-B^2/A$をとる．
   よって条件は
   
+
 $$
 \begin{align*}
 & \min |\vec{O'Q}|^2 \le 1                                    \\\Leftrightarrow& a^2+4 - \frac{\{a(X-a)-6\}^2}{(X-a)^2+Y^2+9}\le 1          \\\Leftrightarrow& a^2+3 - \frac{\{a(X-a)-6\}^2}{(X-a)^2+Y^2+9}\le 0          \\\Leftrightarrow& (a^2+3) \{(X-a)^2+Y^2+9\} - \{a(X-a)-6\}^2 \le 0            \\\Leftrightarrow& (a^2+3)(X-a)^2+(a^2+3)Y^2+9(a^2+3)                          \\& - \{a^2(X-a)^2-12a(X-a)+36\}\le 0                          \\\Leftrightarrow& 3(X-a)^2+(a^2+3)Y^2+12a(X-a)+9a^2-9 \le 0                   \\\Leftrightarrow& 3\left[(X-a)+2a\right]^2+(a^2+3)Y^2+12a(X-a)-3(a^2+3) \le 0 \\\Leftrightarrow& \frac{(X+a)^2}{a^2+3} + \frac{Y^2}{3}\le 1
@@ -69,6 +74,7 @@ $$
 
   という楕円となり，これが求めるべき条件である．従って答えは
   
+
 $$
 \begin{align*}
 \frac{(X+a)^2}{a^2+3} + \frac{Y^2}{3}\le 1
@@ -101,6 +107,7 @@ $$
 
   $CH$はCO'のCPへの正射影ベクトルだから
   
+
 $$
 \begin{align*}
 \vec{CH} = \frac{\vec{CP}\cdot\vec{CO'}}{|\vec{CP}|^2}\vec{CP}
@@ -109,6 +116,7 @@ $$
 
   であるから，
   
+
 $$
 \begin{align*}
 \vec{O'H}& = \vec{CH}-\vec{CO}\\& = \frac{\vec{CP}\cdot\vec{CO'}}{|\vec{CP}|^2}\vec{CP} - \vec{CO}
@@ -117,6 +125,7 @@ $$
 
   となる．各ベクトルは
   
+
 $$
 \begin{align*}
 \vec{CO'}& = \begin{pmatrix}-a  \\ 0 \\ -2\end{pmatrix}\\\vec{CP}& = \begin{pmatrix}X-a \\ Y \\ -3\end{pmatrix}
@@ -125,6 +134,7 @@ $$
 
   だから，
   
+
 $$
 \begin{align*}
 \vec{O'H}& = \frac{-a(X-a)+6}{(X-a)^2+Y^2+9}\begin{pmatrix}X-a \\ Y \\ -3\end{pmatrix} - \begin{pmatrix}-a  \\ 0 \\ -2\end{pmatrix} \\& = \frac{-B}{A}\begin{pmatrix}X-a                    \\ Y \\ -3\end{pmatrix} - \begin{pmatrix}-a  \\ 0 \\ -2\end{pmatrix}
@@ -133,6 +143,7 @@ $$
 
   この長さが$1$よりも小さければ良いので，
   
+
 $$
 \begin{align*}
 \left|\vec{O'H}\right|^2 \le 1
@@ -141,6 +152,7 @@ $$
 
   が条件である．
   
+
 $$
 \begin{align*}
 & \left|\vec{O'H}\right|^2                                                                          \\& = \left(\frac{-B}{A}(X-a)+a\right)^2+\left(\frac{-B}{A}Y\right)^2 + \left(\frac{3B}{A}+2\right)^2 \\& = \frac{1}{A^2}\left(-B(X-a)+aA\right)^2+\frac{B^2Y^2}{A^2} + \frac{1}{A^2}\left(3B+2A\right)^2   \\
@@ -149,6 +161,7 @@ $$
 
   を得る．さらに整理すると
   
+
 $$
 \begin{align*}
 \left|\vec{O'H}\right|^2

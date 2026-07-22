@@ -37,6 +37,7 @@ title: "TITECH 2002 kouki Q2 (solution)"
 
   $M$での$C$の接線の方程式は
   
+
 $$
 \begin{align*}
 \cos\theta x + \sin\theta y = 1
@@ -45,6 +46,7 @@ $$
 
   であり，これが$Q(-2,0)$を通るので，
   
+
 $$
 \begin{align*}
 -2\cos\theta = 1 \\\therefore\theta = \pm\frac{4\pi}{3}
@@ -54,6 +56,7 @@ $$
   である．
   従って$\theta$の取り得る範囲はこれらの$\theta$の時より点$M$が$Q$側になる場合で，
   
+
 $$
 \begin{align*}
 \frac{2\pi}{3}\le\theta\le\frac{4\pi}{3}
@@ -73,6 +76,7 @@ $$
 
   最短経路の長さ$f(\theta)$とすると
   
+
 $$
 \begin{align}
 f(\theta) = |PM| + |QM|\label{2002-2:eq:1}
@@ -93,6 +97,7 @@ $$
 
   対称性から
   
+
 $$
 \begin{align}
 0 \le\theta\le\pi\label{2002-2:eq:4}
@@ -103,6 +108,7 @@ $$
 
   まず，PMの劣弧の長さは，$\angle POQ=\theta$より
   
+
 $$
 \begin{align*}
 \text{劣弧PM}& = \theta
@@ -111,6 +117,7 @@ $$
 
   だから，円錐の側面の長さが$PR=2$であることにも留意すると
   
+
 $$
 \begin{align*}
 \angle\text{MRP}& = \frac{\theta}{2}
@@ -119,6 +126,7 @@ $$
 
   となるので，展開図上のPMの長さ$l(\theta)$は
   
+
 $$
 \begin{align}
 l(\theta) & = 4 \sin\frac{\theta}{2}\label{2002-2:eq:2}
@@ -129,6 +137,7 @@ $$
 
   次に，線分QMの長さを求める．これは各点の座標から，
   
+
 $$
 \begin{align}
 |\text{QM}|
@@ -138,8 +147,9 @@ $$
 
   となる．
 
-  以上$\eqref{2002-2:eq:2,2002-2:eq:3}$を$\eqref{2002-2:eq:1}$に代入すると，$\theta$を与えた時の最短経路の長さ$f(\theta)$は
+  以上[(式3)](#2002-2:eq:2,2002-2:eq:3)を[(式1)](#2002-2:eq:1)に代入すると，$\theta$を与えた時の最短経路の長さ$f(\theta)$は
   
+
 $$
 \begin{align}
 f(\theta)
@@ -148,10 +158,9 @@ f(\theta)
 $$
 
   となる．
-
-### (1)
-および$\eqref{2002-2:eq:4}$から，この関数の
+  (1)および[(式4)](#2002-2:eq:4)から，この関数の
   
+
 $$
 \begin{align}
 \frac{2\pi}{3}\le\theta\le\pi\label{2002-2:eq:6}
@@ -160,6 +169,7 @@ $$
 
   での最小値をもとめにば良い．新しく
   
+
 $$
 \begin{align*}
 t=\cos\frac{\theta}{2}
@@ -168,6 +178,7 @@ $$
 
   とおくと，半角および倍角の公式から
   
+
 $$
 \begin{align*}
 \sin\frac{\theta}{4}& = \sqrt{\frac{1-\cos\frac{\theta}{2}}{2}}& \left(\sin\frac{\theta}{4}\ge 0\right)\\& = \sqrt{\frac{1-t}{2}}
@@ -176,6 +187,7 @@ $$
 
   および
   
+
 $$
 \begin{align*}
 \cos\theta& = 2\cos^2\frac{\theta}{2} - 1 \\& = 2t^2-1
@@ -184,6 +196,7 @@ $$
 
   から，$f$の変数を$\theta$から$t$に移して
   
+
 $$
 \begin{align}
 f(t)
@@ -192,8 +205,9 @@ f(t)
 $$
 
   となる．
-  $\eqref{2002-2:eq:6}$から
+  [(式6)](#2002-2:eq:6)から
   
+
 $$
 \begin{align}
 0\le t \le\frac{1}{2}\label{2002-2:eq:7}
@@ -202,6 +216,7 @@ $$
 
   である．$f$の一階微分は
   
+
 $$
 \begin{align*}
 f'(t)
@@ -212,14 +227,16 @@ $$
   である．この分母は常に正だから，$f'(t)$の正負は分子の正負と等しい．
   そこで分子を因数分解すると
   
+
 $$
 \begin{align*}
 & -32t^3 + 24t^2-1                                                                                                            \\& = -32\left(t^3-\frac{3}{4}t^2+\frac{1}{32}\right)\\& = -32\left(t-\frac{1}{4}\right)\left(t^2-\frac{1}{2}t-\frac{1}{8}\right)\\& = -32\left(t-\frac{1}{4}\right)\left(t-\frac{1}{4}+\sqrt{\frac{3}{16}}\right)\left(t-\frac{1}{4}-\sqrt{\frac{3}{16}}\right)
 \end{align*}
 $$
 
-  である．$\eqref{2002-2:eq:7}$の$t$の区間に注意して，
+  である．[(式7)](#2002-2:eq:7)の$t$の区間に注意して，
   
+
 $$
 \begin{align*}
 \frac{1}{4}-\sqrt{\frac{3}{16}} < 0 < \frac{1}{4} < \frac{1}{2} < \frac{1}{4}+\sqrt{\frac{3}{16}}
@@ -242,6 +259,7 @@ $$
 
   従って，求める最小値は$t=1/4$の時で
   
+
 $$
 \begin{align*}
 \min f(t)
@@ -261,16 +279,18 @@ $$
   今回の解答のように，$\theta/2$を利用する方が$\theta/4$と$\theta$を対称に扱っていて計算は早い．
 
   それを見るために，$t=\sin\frac{\theta}{4}$として求めてみよう．
-  $\theta$の動く範囲が$\eqref{2002-2:eq:4}$だから，
+  $\theta$の動く範囲が[(式4)](#2002-2:eq:4)だから，
   
+
 $$
 \begin{align}
 \frac{1}{2}\le t \le\frac{\sqrt{2}}{2}\label{2002-2:eq:10}
 \end{align}
 $$
 
-  である．$\eqref{2002-2:eq:9}$に倍角公式を利用して$t$で表すと
+  である．[(式9)](#2002-2:eq:9)に倍角公式を利用して$t$で表すと
   
+
 $$
 \begin{align*}
 f(t) & = 4t + \sqrt{9-32t^2(1-t^2)}
@@ -279,6 +299,7 @@ $$
 
   だから，一階微分は
   
+
 $$
 \begin{align*}
 f'(t)
@@ -288,9 +309,10 @@ $$
 
   となり，分母は常に正だから$f'$の符号は分子の符号に等しい．
   
+
 $$
 \begin{align*}
-& f'(t) \ge 0                                                                                   \\\Leftrightarrow& \sqrt{32t^4-32t^2+9}\ge 8t(1-2t^2) \quad(\ge 0) \quad(\because\text{$\eqref{2002-2:eq:10}$}) \\\Leftrightarrow& 32t^4-32t^2+9 \ge 64t^2(1-2t^2)^2                                                             \\\Leftrightarrow& 256s^3-288s^2+96s-9 \le 0 \quad(s=t^2, \frac{1}{4}\le s \le\frac{1}{2})                    \\\Leftrightarrow& (s-\frac{3}{8})(256s^2-192s+24) \le 0                                                         \\\Leftrightarrow& (s-\frac{3}{8})(s-\frac{3+\sqrt{3}}{16})(s-\frac{3-\sqrt{3}}{16}) \le 0
+& f'(t) \ge 0                                                                                   \\\Leftrightarrow& \sqrt{32t^4-32t^2+9}\ge 8t(1-2t^2) \quad(\ge 0) \quad(\because\text{[(式10)](#2002-2:eq:10)}) \\\Leftrightarrow& 32t^4-32t^2+9 \ge 64t^2(1-2t^2)^2                                                             \\\Leftrightarrow& 256s^3-288s^2+96s-9 \le 0 \quad(s=t^2, \frac{1}{4}\le s \le\frac{1}{2})                    \\\Leftrightarrow& (s-\frac{3}{8})(256s^2-192s+24) \le 0                                                         \\\Leftrightarrow& (s-\frac{3}{8})(s-\frac{3+\sqrt{3}}{16})(s-\frac{3-\sqrt{3}}{16}) \le 0
 \end{align*}
 $$
 
@@ -310,6 +332,7 @@ $$
 
   したがって，$f(t)$は
   
+
 $$
 \begin{align*}
 t=\frac{\sqrt{6}}{4}
@@ -318,6 +341,7 @@ $$
 
   で最小値
   
+
 $$
 \begin{align*}
 \min f(\theta)

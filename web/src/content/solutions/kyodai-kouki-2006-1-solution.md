@@ -11,6 +11,7 @@ title: "KYODAI 2006 kouki Q1 (solution)"
 
     $A,B,C$が全て一次式なので
     
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -25,6 +26,7 @@ $$
 
     与式から
     
+
 $$
 \begin{align*}
 A^2(x)              & = (C(x) + B(x))(C(x) - B(x))                                     \\
@@ -35,6 +37,7 @@ $$
 
     ここで，$(a_2+a_3)(a_2-a_3)=0$となると左辺の$a_1=0$となり矛盾するから
     
+
 $$
 \begin{align*}
 (a_2+a_3)(a_2-a_3) \neq 0
@@ -43,6 +46,7 @@ $$
 
     である．この元でさらに式を整理すると
     
+
 $$
 \begin{align*}
 a^2_1(a_1x + b_1)^2 & = (a_2+a_3)(a_3-a_2)\left(x+\frac{a_2b_2+a_3b_3}{a_2+a_3}\right)\left(x+\frac{a_3b_3-a_2b_2}{a_3-a_2}\right)
@@ -52,6 +56,7 @@ $$
     である．これが恒等式であるから，$x$の各次数の係数が等しい．
     係数比較すると
     
+
 $$
 \begin{align}
 a^2_1 & = (a_2+a_3)(a_3-a_2)                               \label{2006-1:eq:1}\\
@@ -59,8 +64,9 @@ a^2_1 & = (a_2+a_3)(a_3-a_2)                               \label{2006-1:eq:1}\\
 \end{align}
 $$
 
-    $\eqref{2006-1:eq:2}$から，
+    [(式2)](#2006-1:eq:2)から，
     
+
 $$
 \begin{align*}
 & \begin{dcases}
@@ -75,6 +81,7 @@ $$
 
     である．辺々足し引きすると
     
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -86,6 +93,7 @@ $$
 
     であり，$a_2a_3\neq 0$より
     
+
 $$
 \begin{align*}
 b_1=b_2=b_3

@@ -19,6 +19,7 @@ $s_n=\dfrac{1}{n}\left(\overline{PQ_0}^2+\overline{PQ_1}^2+\dots+\overline{PQ_{n
 
 $L_n=\overline{PQ_n}^2$とおくと，
      
+
 $$
 \begin{align*}
 L_n&=\left(\cos\frac{2\pi}{n}k-a\right)^2+\left(\sin\frac{2\pi}{n}k-b\right)^2  \\&=1+a^2+b^2-2\left(a\cos\frac{2\pi}{n}k+b\sin\frac{2\pi}{n}k\right)
@@ -27,6 +28,7 @@ $$
 
 となる．$a_k=\left(a\cos\dfrac{2\pi}{n}k+b\sin\dfrac{2\pi}{n}k\right)$とおけば区分求積により，
      
+
 $$
 \begin{align*}
 \frac{1}{n}\sum_{k=0}^{n-1}a_k
@@ -36,6 +38,7 @@ $$
 
 より，
      
+
 $$
 \begin{align*}
 s_n&=\frac{1}{n}\sum_{k=0}^{n-1}L_k \\&=\frac{1}{n}\left\{1+a^2+b^2-2\sum_{k=0}^{n-1}a_k\right\}\\&\limit{n}{\infty}1+a^2+b^2

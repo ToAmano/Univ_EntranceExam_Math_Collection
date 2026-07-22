@@ -15,8 +15,8 @@ $$
 \begin{align*}
 X_i=
   \begin{cases}
-    1 & \text{$i$回目に当たりくじがでたとき，}  \\
-    0 & \text{$i$回目に当たりくじがでないとき．}
+    1 & \text{i回目に当たりくじがでたとき，}  \\
+    0 & \text{i回目に当たりくじがでないとき．}
   \end{cases}
 \end{align*}
 $$

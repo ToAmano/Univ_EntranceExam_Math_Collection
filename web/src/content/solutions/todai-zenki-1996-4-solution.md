@@ -39,7 +39,7 @@ $c_k\le c_n$ならば$a_n=c_n$，それ以外の時$a_n=0$とおく．ただし$
           \end{align*}
      となる．
 
-2.  期待値の加法定理および\eqref{1}から
+2.  期待値の加法定理および[1](#1)から
           \begin{align*}
           N(n)&=\sum_{l=1}^nP(a_l=2)　\\
           &=\sum_{l=1}^n\left(\frac{2}{6}\right)^{n-1}\frac{1}{6} \\

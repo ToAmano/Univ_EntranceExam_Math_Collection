@@ -12,6 +12,7 @@ title: "TODAI 1996 zenki Q2 (solution)"
      \begin{oframed}
      $a$，$b$，$c$，$d$を正の数とする．不等式
           
+
 $$
 \begin{align*}
 \begin{cases}
@@ -31,6 +32,7 @@ $$
  与方程式の左辺$f(x)$とする．また
                
 <span id="1"></span><span id="2"></span>
+
 $$
 \begin{cases}
 s(1-a)-tb>0 \\
@@ -40,24 +42,27 @@ $$
 
 とする．
 
-$1-a\le 0$つまり$1\le a$の時，\eqref{1}が満たされず不適．故に
+$1-a\le 0$つまり$1\le a$の時，[1](#1)が満たされず不適．故に
      
+
 $$
 \begin{align}
 0<a<1\label{5}
 \end{align}
 $$
 
-このもとで，\eqref{1}を変形して
+このもとで，[1](#1)を変形して
      
+
 $$
 \begin{align}
 s>\frac{b}{1-a}t\label{3}
 \end{align}
 $$
 
-また，$c>0$だから，\eqref{2}を変形して
+また，$c>0$だから，[2](#2)を変形して
      
+
 $$
 \begin{align}
 s<\frac{1-d}{c}t\label{4}
@@ -66,6 +71,7 @@ $$
 
 である．ここで，$s>0$だから，
      
+
 $$
 \begin{align}
 1-d>0 \nonumber\\
@@ -77,9 +83,10 @@ $$
 
 以上から
       
+
 $$
 \begin{align*}
-&\exists s_{>0},\exists t_{>0}，\eqref{1}\land\eqref{2}\\\Longleftrightarrow&\exists s_{>0},\exists t_{>0}，\eqref{3}\land\eqref{4}\land\eqref{5}\\\Longleftrightarrow&\exists t_{>0}，\frac{b}{1-a}t<\frac{1-d}{c}t \land\eqref{5}\\\Longleftrightarrow& \frac{b}{1-a}<\frac{1-d}{c}\land\eqref{5}\\\Longleftrightarrow& bc<(1-a)(1-d) \land\eqref{5}&(\because c>0)
+&\exists s_{>0},\exists t_{>0}，[1](#1)\land[2](#2)\\\Longleftrightarrow&\exists s_{>0},\exists t_{>0}，[3](#3)\land[4](#4)\land[5](#5)\\\Longleftrightarrow&\exists t_{>0}，\frac{b}{1-a}t<\frac{1-d}{c}t \land[5](#5)\\\Longleftrightarrow& \frac{b}{1-a}<\frac{1-d}{c}\land[5](#5)\\\Longleftrightarrow& bc<(1-a)(1-d) \land[5](#5)&(\because c>0)
 \end{align*}
 $$
 
@@ -87,6 +94,7 @@ $$
 
 故に，$a$から$d$までが正であることと併せて，
      
+
 $$
 \begin{align*}
 f(\pm 1)&=(1+ad-bc)\mp(a+d) \\&>(a+d)\mp(a+d)>0 \\

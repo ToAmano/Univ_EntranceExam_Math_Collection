@@ -12,6 +12,7 @@ title: "KYODAI 1999 kouki Q2 (solution)"
   変数を減らして解くことを考える．
   $\alpha + \beta + \gamma = \pi$ より$\gamma$を削除して
   
+
 $$
 \begin{align*}
 \gamma = \pi - (\alpha + \beta)
@@ -20,6 +21,7 @@ $$
 
   だから，これを他の条件に代入して
   
+
 $$
 \begin{align}
 & \begin{dcases}
@@ -34,6 +36,7 @@ $$
 
   を得る．そこで以下，
   
+
 $$
 \begin{align*}
 f(\alpha,\beta) =  -\frac{1}{2}\{\cos(2\alpha+\beta)-\cos\beta\}\sin\beta
@@ -43,8 +46,9 @@ $$
   の最大値を求める．
 
   そのため$\beta$を固定し, $\alpha$をうごかす．
-  この時$\eqref{1990-2:eq:1}$より$\alpha$の値域は
+  この時[(式1)](#1990-2:eq:1)より$\alpha$の値域は
   
+
 $$
 \begin{align}
 0 < \alpha < \pi-\beta\label{1990-2:eq:2}
@@ -54,8 +58,9 @@ $$
   である．
   $\sin\beta > 0$ から $f$は $\cos(2\alpha+\beta)$の単調減少関数で,
   $\cos(2\alpha+\beta)$が最小のとき$f$は最大値をとる．
-  $2\alpha+\beta$のとりうる値は，$\eqref{1990-2:eq:2}$より
+  $2\alpha+\beta$のとりうる値は，[(式2)](#1990-2:eq:2)より
   
+
 $$
 \begin{align*}
 \beta < 2\alpha+\beta < 2\pi-\beta
@@ -64,6 +69,7 @@ $$
 
   だから，
   
+
 $$
 \begin{align*}
 2\alpha+\beta = \pi\\\therefore\alpha = \frac{\pi-\beta}{2}
@@ -72,6 +78,7 @@ $$
 
   の時に$f$は最大値をとる．その最大値は
   
+
 $$
 \begin{align}
 \max f(\alpha,\beta)
@@ -84,6 +91,7 @@ $$
   そこで，次に $\beta$ を $0 < \beta < \pi$ でうごかして$g(\beta)$の最大値を求める．
   一階微分は
   
+
 $$
 \begin{align*}
 g'(\beta)
@@ -108,6 +116,7 @@ $$
 
   従って, $S(\beta)$は $\beta = \pi/3$ の時最大値
   
+
 $$
 \begin{align*}
 \max S(\beta)
@@ -126,6 +135,7 @@ $$
   この問題は，有名不等式を用いてかなりエレガントに解くことができるので紹介しよう．
   まず，相加相乗平均の不等式より
   
+
 $$
 \begin{align*}
 \sqrt[3]{\sin\alpha\sin\beta\sin\gamma}\le\frac{\sin\alpha+\sin\beta+\sin\gamma}{3}
@@ -134,6 +144,7 @@ $$
 
   である．ここで等号成立は
   
+
 $$
 \begin{align*}
 \sin\alpha=\sin\beta=\sin\gamma
@@ -144,6 +155,7 @@ $$
 
   次に，$y=\sin x$は$0\le x\le \pi$で上に凸だから，イェンゼンの不等式より
   
+
 $$
 \begin{align*}
 \frac{\sin\alpha+\sin\beta+\sin\gamma}{3}& \le\sin\left(\frac{1}{3}\alpha+\frac{1}{3}\beta+\frac{1}{3}\gamma\right)\\& = \sin\frac{\pi}{3}\\& = \frac{\sqrt{3}}{2}
@@ -152,6 +164,7 @@ $$
 
   と上側から評価できる．等号成立は
   
+
 $$
 \begin{align*}
 \alpha=\beta=\gamma
@@ -162,6 +175,7 @@ $$
 
   以上二つの不等式の評価より，
   
+
 $$
 \begin{align*}
 \sin\alpha\sin\beta\sin\gamma\le\left(\frac{\sqrt{3}}{2}\right)^3 = \frac{3}{8}\sqrt{3}
@@ -170,6 +184,7 @@ $$
 
   であり，等号成立は
   
+
 $$
 \begin{align*}
 & \sin\alpha=\sin\beta=\sin\gamma\land\alpha=\beta=\gamma\\\therefore& \alpha=\beta=\gamma = \frac{\pi}{3}

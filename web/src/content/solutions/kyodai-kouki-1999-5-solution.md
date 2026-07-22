@@ -12,6 +12,7 @@ title: "KYODAI 1999 kouki Q5 (solution)"
     $x^2+ax+b=0$の解を$\alpha,\beta$とおく．
     題意より，
     
+
 $$
 \begin{align}
 \alpha = u+\sqrt{3}v \label{1999-5:eq:1}
@@ -20,6 +21,7 @@ $$
 
     とおける．解と係数の関係から，
     
+
 $$
 \begin{align}
 a & = -\alpha-\beta\label{1999-5:eq:2}\\
@@ -29,16 +31,18 @@ $$
 
     である．
 
-    $\eqref{1999-5:eq:2}$より
+    [(式2)](#1999-5:eq:2)より
     
+
 $$
 \begin{align}
 \beta = -u-a-\sqrt{3}v \label{1999-5:eq:4}
 \end{align}
 $$
 
-    となる．$\eqref{1999-5:eq:3}$に代入して
+    となる．[(式3)](#1999-5:eq:3)に代入して
     
+
 $$
 \begin{align*}
 b
@@ -49,6 +53,7 @@ $$
     となる．
     ここで$a,b,u,v$が有理数だから，この式が成立するには
     
+
 $$
 \begin{align*}
 & (a+2u)v = 0         \\\therefore& a+2u = 0 \lor v = 0
@@ -62,22 +67,25 @@ $$
     まず，$v\neq 0$の場合を考える．
     この場合
     
+
 $$
 \begin{align}
 u = -\frac{a}{2}\label{1999-5:eq:6}
 \end{align}
 $$
 
-    だから，$\alpha,\beta$は$\eqref{1999-5:eq:1,1999-5:eq:4}$より
+    だから，$\alpha,\beta$は[(式4)](#1999-5:eq:1,1999-5:eq:4)より
     
+
 $$
 \begin{align*}
 \alpha& = -\frac{a}{2} + \sqrt{3}v \\\beta& = -\frac{a}{2} - \sqrt{3}v \\
 \end{align*}
 $$
 
-    となり，$\eqref{1999-5:eq:3}$は
+    となり，[(式3)](#1999-5:eq:3)は
     
+
 $$
 \begin{align}
 12v^2 = a^2-4b \label{1999-5:eq:5}
@@ -88,6 +96,7 @@ $$
     題意の条件$a,b\in\mathbb{Z}$より右辺は整数だから左辺も整数であり，
     有理数$v$を互いに素な整数$n,m$を用いて
     
+
 $$
 \begin{align*}
 v = \frac{m}{n}
@@ -96,6 +105,7 @@ $$
 
     と書くと，
     
+
 $$
 \begin{align*}
 12\frac{m^2}{n^2}\in\mathbb{Z}
@@ -108,8 +118,9 @@ $$
     \begin{itemize}
         \item[$1^\circ$] $n=2$の時
 
-              $\eqref{1999-5:eq:5}$に代入して
+              [(式5)](#1999-5:eq:5)に代入して
               
+
 $$
 \begin{align*}
 3m^2 = a^2 - 4b
@@ -118,6 +129,7 @@ $$
 
               である．ところが，両辺法$4$とする合同式をとると，$A \in \mathbb{Z}$とすれば$A^2 \equiv 0, 1 \pmod{4}$であるから，
               
+
 $$
 \begin{align*}
 \text{左辺}\equiv 3m^2 \equiv 0, 3 \pmod{4}\\\text{右辺}\equiv a^2  \equiv 0, 1 \pmod{4}
@@ -131,8 +143,9 @@ $$
         \item[$2^\circ$] $n=1$の時
 
               この時，$v$は整数である．
-              $\eqref{1999-5:eq:5}$に代入して
+              [(式5)](#1999-5:eq:5)に代入して
               
+
 $$
 \begin{align*}
 a^2 = 4(3m^2 + b)
@@ -140,7 +153,7 @@ a^2 = 4(3m^2 + b)
 $$
 
               となる．$3m^2 + b \in\mathbb{Z}$だから$a^2$が$4$で割り切れる，すなわち$a$が$2$で割り切れる．
-              従って，$\eqref{1999-5:eq:6}$から$u$も整数となる．
+              従って，[(式6)](#1999-5:eq:6)から$u$も整数となる．
               以上から，$u,v \in\mathbb{Z}$となる．
     \end{itemize}
 
@@ -150,6 +163,7 @@ $$
 
     この時，$\alpha = u$だから，
     
+
 $$
 \begin{align*}
 u^2+au+b=0
@@ -158,6 +172,7 @@ $$
 
     が成立する．有理数$u$を互いに素な整数$n,m$を用いて
     
+
 $$
 \begin{align*}
 u = \frac{m}{n}
@@ -166,6 +181,7 @@ $$
 
     と書くと，
     
+
 $$
 \begin{align*}
 & \frac{m^2}{n^2}+a\frac{m}{n}+b=0 \\\therefore& \frac{m^2}{n} = -(am+bn)

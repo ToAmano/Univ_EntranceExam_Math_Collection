@@ -18,6 +18,7 @@ $\lim_{n\to\infty}\theta_n$をもとめよ．
 
 漸化式から
      
+
 $$
 \begin{align*}
 2\sin\theta_{n+1}&=\sqrt{2+2\sin \theta_n}\\&=\sqrt{2+2\cos \left(\frac{\pi}{2}-\theta_n\right)}\\&=\sqrt{4\cos^2\left(\frac{\pi}{4}-\frac{\theta_n}{2}\right)}\\&=2\cos\left(\frac{\pi}{4}-\frac{\theta_n}{2}\right)\\&=2\sin\left(\frac{\pi}{4}+\frac{\theta_n}{2}\right)

@@ -20,6 +20,7 @@ title: "TODAI 1965 zenki Q3 (solution)"
 
 題意の接点を$P(t,1/t)$とする．ただし$t>0$とする．このとき$(1/x)'=-1/x^2$だから
      
+
 $$
 \begin{align*}
 l:y=\frac{-1}{t^2}(x-t)+\frac{1}{t}\\\therefore l:y=\frac{-1}{t^2}x+\frac{2}{t}\equiv f(x)
@@ -28,6 +29,7 @@ $$
 
 となるので，これと$x$軸の交点は$Q(2t,0)$となる．題意の条件より
      
+
 $$
 \begin{align}
 1\le2t\label{1}
@@ -39,6 +41,7 @@ $$
       \underline{(i)$1\le2t\le2$つまり$1/2\le t\le 1$の時}　　\\
      グラフが右図のようになるので
           
+
 $$
 \begin{align*}
 S(t)&=\int_1^{2t}f(x)dx  \\&=\left[\frac{-1}{2t^2}x^2+\frac{2}{t}x\right]_1^{2t}\\&=\frac{-1}{2t^2}(4t^2-1)+\frac{2}{t}(2t-1)  \\&=2-\frac{2}{t}+\frac{1}{2t^2}\\&=\frac{1}{2}(s-2)^2
@@ -50,6 +53,7 @@ $$
      
       \underline{(ii)$2\le2t$つまり$1\le t$の時}　　\\
           
+
 $$
 \begin{align*}
 S(t)&=\int_1^2f(x)dx \\&=\left[\frac{-1}{2t^2}x^2+\frac{2}{t}x\right]_1^2  \\&=\frac{-3}{2t^2}+\frac{2}{t}\\&=\frac{-3}{2}\left(s-\frac{2}{3}\right)^2+\frac{2}{3}

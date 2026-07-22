@@ -9,10 +9,10 @@ title: "TODAI 1991 kouki Q2 (solution)"
 
 ## 【解】
 
-### (1)
-
+  (1)
   xy平面で考える．
   
+
 $$
 \begin{align*}
 & C_1: x^2+y^2=1                                      \\& C_2: (x-a)^2+y^2=r_1^2              & a> 0, r_1 > 0 \\& C_3: (x-\alpha)^2+(y-\beta)^2=r_2^2 & r_2 >0
@@ -24,6 +24,7 @@ $$
 
   $C_1, C_2$が2交点を持つので
   
+
 $$
 \begin{align*}
 -1 < a-r_1 < 1
@@ -48,6 +49,7 @@ $$
 
   A，$O_3$から$x$軸に下ろした垂線の足をH$(h,0)$，R$(\alpha,0)$とすると，題意を示すには
   
+
 $$
 \begin{align*}
 & H=R & \therefore h = \alpha
@@ -59,6 +61,7 @@ $$
   $C_1$と$C_3$, $C_2$と$C_3$の交点の1つをP，Qとする．
   題意より三角形$O_1PO_3$と$O_2QO_3$は直角三角形であり，三平方の定理から
   
+
 $$
 \begin{align}
 & \begin{dcases}
@@ -75,6 +78,7 @@ $$
 
   点$R$の情報について，同様に直角三角形$O_1RO_3$，$O_2RO_3$にも三平方の定理を用いて
   
+
 $$
 \begin{align*}
 & \begin{dcases}
@@ -84,8 +88,9 @@ $$
 \end{align*}
 $$
 
-  である．$\eqref{1991-2:eq:1}$を代入して右辺を書き直すと
+  である．[(式1)](#1991-2:eq:1)を代入して右辺を書き直すと
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -97,6 +102,7 @@ $$
 
   二つの式を引いて
   
+
 $$
 \begin{align}
 2a\alpha -a ^2 = 1 - r_1^2 \\\therefore\alpha = \frac{1+a^2-r_1^2}{2a}\label{1991-2:eq:2}
@@ -107,6 +113,7 @@ $$
 
   一方で，点$H$については直角三角形$O_1HA$，$O_2HA$にも三平方の定理を用いて
   
+
 $$
 \begin{align*}
 & \begin{dcases}
@@ -121,6 +128,7 @@ $$
 
   二つの式を引いて
   
+
 $$
 \begin{align}
 2a h -a^2 = 1 -r_1^2 \\\therefore
@@ -130,16 +138,17 @@ $$
 
   である．
 
-  以上$\eqref{1991-2:eq:2,1991-2:eq:3}$から$\alpha=h$すなわち$R=H$だから，
+  以上[(式3)](#1991-2:eq:2,1991-2:eq:3)から$\alpha=h$すなわち$R=H$だから，
   題意は示され，$C_3$の中心は直線AB上に存在する．$\cdots$(答)
+  
 
-### (2)
-
+  (2)
   $C_1, C_2$のx軸に関する対称性から$C_3$の中心が$y \ge 0$にあるとして良い．
   よって$\beta \ge 0$とする．
 
-  新しく，$\angle AO_1R=\theta\, (0 <\theta < \pi/2)$とおくと，(1)より$R=H$であること$\eqref{1991-2:eq:1}$より
+  新しく，$\angle AO_1R=\theta\, (0 <\theta < \pi/2)$とおくと，(1)より$R=H$であること[(式1)](#1991-2:eq:1)より
   
+
 $$
 \begin{align*}
 \alpha& = |O_1A|\cos\theta = \cos\theta\\\beta& = \sqrt{|O_1O_3|^2 - |O_1R|^2}\\& = \sqrt{1 + r_2^2 - \cos^2\theta}\\& = \sqrt{r_2^2 + \sin^2\theta}
@@ -150,6 +159,7 @@ $$
 
   また点A，Bの座標は
   
+
 $$
 \begin{align*}
 & A(\cos\theta,\sin\theta)  \\& B(\cos\theta,-\sin\theta)
@@ -160,6 +170,7 @@ $$
 
   ここで，円$C_3$の方程式は
   
+
 $$
 \begin{align*}
 & f(x,y) = (x-\alpha)^2+(y-\beta)^2 - r_2^2 = 0                              \\\therefore& f(x,y) = (x-\cos\theta)^2 + (y - \sqrt{r_2^2 + \sin^2\theta})^2 -r_2^2 = 0
@@ -172,6 +183,7 @@ $$
 
   実際に点A，Bの座標を代入すると
   
+
 $$
 \begin{align*}
 f(A)

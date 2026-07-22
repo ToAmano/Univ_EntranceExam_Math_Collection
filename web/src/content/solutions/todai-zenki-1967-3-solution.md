@@ -21,6 +21,7 @@ title: "TODAI 1967 zenki Q3 (solution)"
 
 \1 ただし$0\le\theta<2\pi$とする．$A$の中心$(c,s)$とすると，$A$の周及び内部の点は不等式
      
+
 $$
 \begin{align}
 \left\{\begin{array}{l}
@@ -32,6 +33,7 @@ $$
 
 となる．一方$B$の周及び内部は，不等式
      
+
 $$
 \begin{align}
 \left\{\begin{array}{l}
@@ -41,8 +43,9 @@ $$
 \end{align}
 $$
 
-で表される．\eqref{1}，\eqref{2}が共通部分を持つための条件は$s\ge0$つまり$0\le\theta\le\pi$で，このもとで共通部分は
+で表される．[1](#1)，[2](#2)が共通部分を持つための条件は$s\ge0$つまり$0\le\theta\le\pi$で，このもとで共通部分は
      
+
 $$
 \begin{align}
 \left\{\begin{array}{l}
@@ -51,9 +54,11 @@ $$
           \end{array}\right.\label{3}
 \end{align}
 $$
+
     
 で表される長方形である．故にこの面積$S(\theta)$は 
      
+
 $$
 \begin{align*}
 S(\theta)=s(c+1)
@@ -62,6 +67,7 @@ $$
 
 である．このとき$S'(\theta)=(2c-1)(c+1)$より下表を得る．
      
+
 $$
 \begin{align*}
 \begin{array}{|c|c|c|c|c|c|} \hline

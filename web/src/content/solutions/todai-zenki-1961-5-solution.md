@@ -17,6 +17,7 @@ title: "TODAI 1961 zenki Q5 (solution)"
 
  $x'=2t$，$y'=2t+1$であるから，下表を得る．
      
+
 $$
 \begin{align*}
 \begin{array}{|c|c|c|c|c|c|} \hline
@@ -35,6 +36,7 @@ $$
 
 ここでグラフの下側を$y_-$，上側を$y_+$とすると，求める面積$S$は，
      
+
 $$
 \begin{align*}
 S&=\int_1^2(y_+-y_-)dx-\int_2^5y_-dx \\&=\int_0^1y_+\frac{dx}{dt}dt-\int_0^{-1}y_-\frac{dx}{dt}dt-\int_{-1}^{-2}y_-\frac{dx}{dt}dt \\&=\int_{-2}^1y\frac{dx}{dt}dt \\&=\int_{-2}^1(t^2+t-2)2tdt \\&=2\left[\frac{1}{4}t^4+\frac{1}{3}t^3-t^2\right]_{-2}^1=\frac{9}{2}
@@ -45,10 +47,12 @@ $$
   \\ \\
 {\bf[別解]}$xy'-x'y=-t^2+6t+1$より，ガウスグリーンの定理から，
      
+
 $$
 \begin{align*}
 T=\frac{1}{2}\int_{-2}^1-(-t^2+6t+1)dt=\frac{9}{2}
 \end{align*}
 $$
+
      
 である．$\cdots$(答)

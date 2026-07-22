@@ -9,7 +9,7 @@ title: "TODAI 1995 kouki Q2 (solution)"
 
 ## 【解】
 
-### (1)
+  (1)
 
   
 
@@ -28,13 +28,14 @@ title: "TODAI 1995 kouki Q2 (solution)"
   他の頂点についても同様のことがいえるから題意は示された.
 
   $\cdots$(答)
+  
 
-### (2)
-
+  (2)
   Pを固定した時, ABにPから下した垂足をHとする.
   Hは $x^2+y^2=p^2$ 上を動く.
   この時三角形PAHを考えると
   
+
 $$
 \begin{align*}
 \overline{AB}& = 2\overline{AH}\\& = 2\sqrt{1-p^2}
@@ -46,6 +47,7 @@ $$
   従って，この時E，F上でABからの距離が最大の点がCの時, $\triangle \mathrm{ABC}$ は最大である.
   そこで$0\le \theta < 2\pi$に対して
   
+
 $$
 \begin{align*}
 \vec{\mathrm{PH}} = p \begin{pmatrix} \cos\theta \\ \sin\theta \end{pmatrix}
@@ -63,6 +65,7 @@ $$
 
   点CがE，F上でABからの距離が最大のとき，点Cでの円の接線の法線ベクトルも
   
+
 $$
 \begin{align}
 \begin{pmatrix} \cos\theta \\ \sin\theta \end{pmatrix}\label{1995-2:eq:1}
@@ -73,6 +76,7 @@ $$
   このような点はE上に2点, F上に2点あるので，E上のものを$X_1, X_2$，F上のものを$X_3, X_4$とすると
   $X_1,X_2$について
   
+
 $$
 \begin{align}
 \begin{dcases}
@@ -82,8 +86,9 @@ $$
 \end{align}
 $$
 
-  であり，$X_3, X_4$については$\eqref{1995-2:eq:1}$より
+  であり，$X_3, X_4$については[(式1)](#1995-2:eq:1)より
   
+
 $$
 \begin{align*}
 & X_3(1+\cos\theta, \sin\theta) \\& X_4(1-\cos\theta, \sin\theta)
@@ -93,6 +98,7 @@ $$
   として良い．
   $X_3,X_4$と線分ABの距離を$L_3,L_4$とすると
   
+
 $$
 \begin{align}
 \begin{dcases}
@@ -102,9 +108,10 @@ $$
 \end{align}
 $$
 
-  である．$0 \le p \le 1$および$-1 \le \cos\theta \le 1$から，$\eqref{1995-2:eq:2,1995-2:eq:3}$のうちで最大のものは
+  である．$0 \le p \le 1$および$-1 \le \cos\theta \le 1$から，[(式3)](#1995-2:eq:2,1995-2:eq:3)のうちで最大のものは
   $L_4$において$\cos\theta = -1$として時で
   
+
 $$
 \begin{align*}
 \max L_4 = (p+2)
@@ -116,11 +123,10 @@ $$
   この時，$\cos\theta=-1$より$\theta=\pi$となって，確かに$\mathrm{PQ} \perp \mathrm{AB}$ である．
   よって題意は示された．
   $\cdots$(答)
+  
 
-### (3)
-
-### (2)
-の結果から $p$を固定した時に $S$を最大にするのは
+  (3)
+  (2)の結果から $p$を固定した時に $S$を最大にするのは
   [図3](#1995-2:fig:3)のようにHが$x$軸上に存在する時である．
 
   
@@ -132,6 +138,7 @@ $$
 
   この時の面積$S(p)$として，
   
+
 $$
 \begin{align*}
 S(p)
@@ -144,6 +151,7 @@ $$
   $f(p)$が最大の時$S(p)$も最大だから，$f(p)$の増減表を書く．
   一階微分は
   
+
 $$
 \begin{align*}
 f'(p)
@@ -166,6 +174,7 @@ $$
 
   したがって，$f$および$S$は$p=\frac{-1+\sqrt{3}}{2}$で最大値
   
+
 $$
 \begin{align*}
 \max S
@@ -179,8 +188,7 @@ $$
 
 ## 【解説】
 
-### (2)
-の別解を紹介する．
+  (2)の別解を紹介する．
   ABとPQのなす角を$\theta$とする. ABと平行に, Fの接線を引き, 接点をCとする.
   右図から, ABとCのキョリ$h$は
   $$ h = p + \sin\theta + 1 $$

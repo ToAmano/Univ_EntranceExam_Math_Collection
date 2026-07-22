@@ -17,24 +17,27 @@ title: "TODAI 1965 zenki Q5 (solution)"
 
  \3 題意の曲線$y=f(x)$とすると
      
+
 $$
 \begin{align}
 f'(x)&=6\cos 2x-3\sin 3x  \nonumber\\&=6(1-2s^2)-3(3s-4s^3)  \nonumber\\&=3(4s^3-4s^2-3s+2) \label{1}
 \end{align}
 $$
 
-である．題意の直線の傾きは$-3$だから，$f'(x)=-3$となる$x$での接線を求めればよい．\eqref{1}から
+である．題意の直線の傾きは$-3$だから，$f'(x)=-3$となる$x$での接線を求めればよい．[1](#1)から
      
+
 $$
 \begin{align*}
 f'(x)=-3     \Longleftrightarrow 4s^3-4s^2-3s+2=-1 \\(4s^2-3)(s-1)=0  \\
-     s=\frac{\sqrt{3}}{2},1 \tag{$\because0<x<\pi$}\\
+     s=\frac{\sqrt{3}}{2},1 \tag{\because0<x<\pi}\\
      x=\frac{\pi}{2},\frac{\pi}{3},\frac{2\pi}{3}
 \end{align*}
 $$
 
 であり，$f(\pi/2)=0$，$f(\pi/3)=3\sqrt{3}/2-1$，$f(2\pi/3)=1-3\sqrt{3}/2$から求める方程式は
      
+
 $$
 \begin{align*}
 \left\{\begin{array}{l}

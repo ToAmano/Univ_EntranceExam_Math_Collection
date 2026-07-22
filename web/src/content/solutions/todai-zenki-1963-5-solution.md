@@ -28,6 +28,7 @@ title: "TODAI 1963 zenki Q5 (solution)"
      
 $0\le x$の時，明らかに折れ線は正方形の面積を二等分しないから
      
+
 $$
 \begin{align}
 t-1\le x<0\label{1}
@@ -36,6 +37,7 @@ $$
 
 である．この時，折れ線と$BC$の交点は$R(x,-x-1)$である．$PR$と$x$軸の交点$T$とすれば，題意の面積についての条件から，
      
+
 $$
 \begin{align*}
 &\triangle CRT=\square AQPT \\&\frac{1}{2}(1+s)^2=\frac{1}{2}\left((1-t-x)+(1-x)\right)\\&=\frac{1}{2}t(2-2x-t) \\&x^2+2x+1=2t-2xt-t^2 \\&x^2+t^2+2xt+2x-2t+1=0 \\&x^2+2(t+1)x+(t-1)^2=0 \\&x=-(t+1)\pm\sqrt{(t+1)^2-(t-1)^2}\\&x=-(t+1)\pm2\sqrt{t}\\
@@ -44,6 +46,7 @@ $$
 
 $P$は$(0,1)$を通るので，複合正をとって
      
+
 $$
 \begin{align*}
 x=-t-1+2\sqrt{t}=-(\sqrt{t}-1)^2
@@ -56,6 +59,7 @@ $$
     
 求める面積$S$は
      
+
 $$
 \begin{align*}
 S&=\int_0^1(1-t+(\sqrt{t}-1)^2)dt \\&=\int_0^12(1-\sqrt{t})dt \\&=2\left[t-\frac{2}{3}t^3/2\right]_0^1 \\&=\frac{2}{3}
@@ -64,6 +68,7 @@ $$
 
 である．一辺$a$とすると，これの$a^2/2$倍ゆえ
      
+
 $$
 \begin{align*}
 S=\frac{1}{3}a^2

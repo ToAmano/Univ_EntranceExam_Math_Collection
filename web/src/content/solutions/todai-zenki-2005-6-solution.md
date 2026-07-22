@@ -11,6 +11,7 @@ title: "TODAI 2005 zenki Q6 (solution)"
      \begin{oframed}
      $r$を正の実数とする．$xyz$空間において，
           
+
 $$
 \begin{align*}
 &x^2+y^2\le r^2 \\&y^2+z^2\ge r^2 \\&z^2+x^2\le r^2
@@ -24,6 +25,7 @@ $$
 
  各軸を$1/r$倍して考える．題意の体積を$V$とする．
           
+
 $$
 \begin{align*}
 \begin{cases}
@@ -36,6 +38,7 @@ $$
 
 を満たす立体の体積を$V'$とすると，
      
+
 $$
 \begin{align}
 V=r^3V'\label{1}
@@ -44,6 +47,7 @@ $$
 
 である．対称性から，さらに$x\ge0$，$0\le y\le z$を満たす部分の体積$v$とすると，     
      
+
 $$
 \begin{align}
 V'=16v\label{2}
@@ -54,6 +58,7 @@ $$
 
 \1 ただし，$0\le\theta\le\pi/4$である．$x=s$での切断面は，
           
+
 $$
 \begin{align*}
 \begin{cases}
@@ -63,6 +68,7 @@ $$
                \end{cases}
 \end{align*}
 $$
+
      
 であって，下図である．
      
@@ -70,6 +76,7 @@ $$
      
 この平面での$v$の面積$S(\theta)$として，
      
+
 $$
 \begin{align*}
 S(\theta)=\frac{1}{2}(c-s)c-\frac{1}{2}\left(\frac{\pi}{4}-\theta\right)
@@ -78,6 +85,7 @@ $$
 
 であるから，
      
+
 $$
 \begin{align*}
 v&=\int_0^{\sqrt{2}/2}S(\theta)ds \\&=\int_0^{\pi/4}S(\theta)\frac{ds}{d\theta}d\theta\\&=\frac{1}{2}\int_0^{\pi/4}\left\{(c-s)c^2-c\left(\frac{\pi}{4}-\theta\right)\right\}d\theta
@@ -86,6 +94,7 @@ $$
 
 各項計算して，
      
+
 $$
 \begin{align*}
 &\int_0^{\pi/4}c^3d\theta=\left[s-\frac{1}{3}s^3\right]_0^{\pi/4}\\&=\frac{5\sqrt{2}}{12}\\&\int_0^{\pi/4}sc^2d\theta=\frac{-1}{3}[c^3]_0^{\pi/4}\\&=\frac{1}{3}\left(1-\frac{\sqrt{2}}{4}\right)\\&\int_0^{\pi/4}cd\theta=\frac{\sqrt{2}}{2}\\&\int_0^{\pi/4}c\theta d\theta=[s\theta+c]_0^{\pi/4}=\frac{\sqrt{2}\pi}{8}+\frac{\sqrt{2}}{2}-1
@@ -94,6 +103,7 @@ $$
 
 であるから，代入して，
      
+
 $$
 \begin{align*}
 v&=\frac{1}{2}\left[\frac{5\sqrt{2}}{12}-\frac{1}{3}\left(1-\frac{\sqrt{2}}{4}\right)-\frac{\sqrt{2}\pi}{8}+\frac{\sqrt{2}\pi}{8}+
@@ -101,6 +111,6 @@ v&=\frac{1}{2}\left[\frac{5\sqrt{2}}{12}-\frac{1}{3}\left(1-\frac{\sqrt{2}}{4}\r
 \end{align*}
 $$
 
-これを\eqref{1}，\eqref{2}に代入して，
+これを[1](#1)，[2](#2)に代入して，
      \[V=8\left(\sqrt{2}-\frac{4}{3}\right)r^3\]
 である．$\cdots$(答)

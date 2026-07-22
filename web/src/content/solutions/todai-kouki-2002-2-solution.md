@@ -9,10 +9,10 @@ title: "TODAI 2002 kouki Q2 (solution)"
 
 ## 【解】
 
-### (1)
-
+  (1)
   三角形の面積公式を用いる．三角形$P_1P_2P_3$をなすベクトルは
   
+
 $$
 \begin{align*}
 \vec{\text{P}_1\text{P}_2} = \begin{pmatrix} a  \\ a-b \\ b \end{pmatrix} \\\vec{\text{P}_1\text{P}_3} = \begin{pmatrix}b-a \\ -b \\ a\end{pmatrix}
@@ -21,6 +21,7 @@ $$
 
   だから，これらの内積は
   
+
 $$
 \begin{align*}
 \vec{\text{P}_1\text{P}_2}\cdot\vec{\text{P}_1\text{P}_3}& = (a)(b-a) - (a-b)(b) + ab \\& = (b-a)^2 + ab
@@ -29,6 +30,7 @@ $$
 
   であり，三角形$P_1P_2P_3$の面積は
   
+
 $$
 \begin{align*}
 \triangle\text{P}_1\text{P}_2\text{P}_3
@@ -40,6 +42,7 @@ $$
 
   次に，平面$P_1P_2P_3$の法線ベクトルの一つに
   
+
 $$
 \begin{align*}
 \vec{n} = \begin{pmatrix}1 \\ 1 \\ 1 \end{pmatrix}
@@ -48,6 +51,7 @@ $$
 
   があるから，O からこの平面への垂線 H として，正射影ベクトルを考えると
   
+
 $$
 \begin{align*}
 |\vec{\text{OH}}|
@@ -59,6 +63,7 @@ $$
 
   以上まとめて
   
+
 $$
 \begin{align*}
 \triangle\text{P}_1\text{P}_2\text{P}_3 & = \frac{\sqrt{3}}{2}\left(a^2+b^2-ab\right)\\
@@ -68,10 +73,11 @@ $$
 
   である．$\cdots$(答)
 
-### (2)
-
+  
+  (2)
   まず四面体$OP_1P_2P_3$については(1)から，
   
+
 $$
 \begin{align*}
 (\text{四面体}\text{OP}_1\text{P}_2\text{P}_3)
@@ -84,6 +90,7 @@ $$
   一方四面体$OP_1S_2P_2$は，三角形$OP_2S_2$が$yz$平面にあってこの面積が$ab$であり，
   三角形$OP_2S_2$を底面と見るなら$P_1$への高さは$a$だから，
   
+
 $$
 \begin{align*}
 (\text{四面体}\text{OP}_1\text{P}_2\text{S}_2)
@@ -95,6 +102,7 @@ $$
 
   以上まとめて
   
+
 $$
 \begin{align*}
 (\text{四面体}\text{OP}_1\text{P}_2\text{P}_3) & =\frac{1}{6}(a+b)\left(a^2-ab+b^2\right)\\(\text{四面体}\text{OP}_1\text{P}_2\text{S}_2) & = \frac{1}{3} a^2b
@@ -103,13 +111,14 @@ $$
 
   である．$\cdots$(答)
 
-### (3)
-
+  
+  (3)
   題意のように三角形を作る時，$\triangle \text{P}_1\text{P}_2\text{P}_3$ と合同な三角形が $8$ 個，
   $\triangle \text{P}_1\text{P}_2\text{S}_2$ に合同な三角形が $12$ 個出来るから，
   立体$D$の体積$V$は，四面体$\text{O}\text{P}_1\text{P}_2\text{P}_3$の体積$8$個と四面体$\text{O}\text{P}_1\text{P}_2\text{S}_2$の体積$12$個分に等しい．
   従って（2）の結果から
   
+
 $$
 \begin{align*}
 V & = 8(\text{四面体}\text{OP}_1\text{P}_2\text{P}_3) + 12(\text{四面体}\text{OP}_1\text{P}_2\text{S}_2) \\& = \frac{4}{3}(a+b)(a^2-b^2) + 4a^2b
@@ -118,6 +127,7 @@ $$
 
   である．ここに$a=\cos\theta,b=\sin\theta$を代入して，$t=\tan \theta$ とすると，
   
+
 $$
 \begin{align*}
 V & = \frac{4}{3} a^3 (1+t)(t^2-t+1) + 4a^3t \\& = \frac{4}{3} a^3 \left(t^3+3t+1\right)
@@ -126,6 +136,7 @@ $$
 
   である．ここで$a>0$より
   
+
 $$
 \begin{align*}
 a = \cos\theta = \frac{1}{1+t^2}
@@ -134,6 +145,7 @@ $$
 
   を代入して
   
+
 $$
 \begin{align*}
 V
@@ -142,11 +154,12 @@ V
 $$
 
   が求める体積である．$\cdots$(答)
+  
 
-### (4)
-
+  (4)
   $V$を$f(t)$とおき，増減表を書くことで最大値を求める．
   
+
 $$
 \begin{align*}
 & f(t) = \frac{t^3+3t+1}{(1+t^2)^{3/2}}& (0<t<1)
@@ -155,6 +168,7 @@ $$
 
   $f(t)>0$ だからから自然対数をとって，
   
+
 $$
 \begin{align*}
 \log f(t) & = \log(t^3+3t+1) - \frac{3}{2}\log(t^2+1) \\
@@ -163,6 +177,7 @@ $$
 
   である．両辺を$t$で微分して
   
+
 $$
 \begin{align*}
 \frac{f'(t)}{f(t)}& = \frac{3t^2+3}{t^3+3t+1} - \frac{3}{2}\frac{2t}{t^2+1}\\& = \frac{3(t^2+1)}{t^3+3t+1} - \frac{3t}{t^2+1}\\& = 3\frac{(t^2+1)^2 - t(t^3+3t+1)}{(t^3+3t+1)(t^2+1)}\\& = 3\frac{(t^4+2t^2+1) - (t^4+3t^2+t)}{(t^3+3t+1)(t^2+1)}\\& = 3\frac{-t^2-t+1}{(t^3+3t+1)(t^2+1)}\\
@@ -171,6 +186,7 @@ $$
 
   だから，$f'(t)=0$となる時，この分子が$0$で
   
+
 $$
 \begin{align*}
 t^2+t-1=0 \iff t=\frac{-1\pm\sqrt{5}}{2}

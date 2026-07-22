@@ -14,6 +14,7 @@ title: "TITECH 2005 kouki Q2 (solution)"
   $P(1,0)$, $Q(\cos\theta, \sin \theta)$とおく．
   対称性より
   
+
 $$
 \begin{align*}
 0 \le\theta\le\pi
@@ -22,8 +23,8 @@ $$
 
   で考える．
 
-### (1)
-
+  
+  (1)
   円 $A,B$ の半径 $r_A, r_B$，中心 $O_A, O_B$ とする．
   まず，点$P$で$A$と$C$が接するから，$O_A$は線分OP上にある．
   同様に点$Q$で$B$と$C$が接するから，$O_B$は線分OQ上にある．
@@ -39,6 +40,7 @@ $$
   以下，円$A$と$B$が接することから，$r_A$および$r_B$に関する条件を導く．
   まず，
   
+
 $$
 \begin{align*}
 0 < r_A, r_B < 1
@@ -47,6 +49,7 @@ $$
 
   のもとで，題意の条件より
   
+
 $$
 \begin{align}
 \begin{dcases}
@@ -58,8 +61,9 @@ $$
 $$
 
   である．
-  $\theta\neq\pi$ の時 $\triangle O_A O O_B$ に余弦定理を用いて，$\eqref{2005-2:eq:1}$から
+  $\theta\neq\pi$ の時 $\triangle O_A O O_B$ に余弦定理を用いて，[(式1)](#2005-2:eq:1)から
   
+
 $$
 \begin{align}
 & \overline{O_A O_B}^2 = \overline{OO_A}^2 + \overline{OO_B}^2 -2 \overline{OO_A}\overline{OO_B}\cos\theta\nonumber\\\therefore& (r_A+r_B)^2 = (1-r_A)^2 + (1-r_B)^2 - 2(1-r_A)(1-r_B)\cos\theta\nonumber\\\therefore& 2r_A r_B = -2(r_A+r_B) + 2 - 2(1-r_A)(1-r_B)\cos\theta\nonumber\\\therefore& r_A r_B = -(r_A+r_B) + 1 - (1-r_A)(1-r_B)\cos\theta\label{2005-2:eq:2}
@@ -69,24 +73,27 @@ $$
   を得る．
   一方$\theta=\pi$のとき，$O,O_A,O_B$は$x$軸上にあり，
   
+
 $$
 \begin{align*}
 r_A+r_B = 1
 \end{align*}
 $$
 
-  となるが，これは$\eqref{2005-2:eq:2}$に内包される．そこで以下，$0<\theta\le\pi$で$\eqref{2005-2:eq:2}$を考える．
+  となるが，これは[(式2)](#2005-2:eq:2)に内包される．そこで以下，$0<\theta\le\pi$で[(式2)](#2005-2:eq:2)を考える．
 
   新しい変数$\alpha,\beta$を
   
+
 $$
 \begin{align*}
 \alpha& =r_A+r_B \\\beta& =r_A r_B
 \end{align*}
 $$
 
-  とおくと，$\eqref{2005-2:eq:2}$は
+  とおくと，[(式2)](#2005-2:eq:2)は
   
+
 $$
 \begin{align}
 & \beta               = -\alpha+1 - (1+\beta-\alpha)\cos\theta\nonumber\\\therefore& (1+\cos\theta)\beta = (1-\cos\theta)(1-\alpha) \label{2005-2:eq:3}
@@ -98,6 +105,7 @@ $$
   また，$r_A, r_B$ は $x$ の2次方程式 $f(x)=x^2-\alpha x+\beta=0$ の $0<x<1$ をみたす2実解(重解含む)だから，
   このような$r_A,r_B$が存在するような$\alpha,\beta$の条件として
   
+
 $$
 \begin{align}
 & \begin{dcases}
@@ -118,7 +126,7 @@ $$
 
   が課せられる．
 
-  $\eqref{2005-2:eq:3,2005-2:eq:4}$を$\alpha\beta$平面に図示すると，
+  [(式4)](#2005-2:eq:3,2005-2:eq:4)を$\alpha\beta$平面に図示すると，
   [図1](#2005-2:fig:2,2005-2:fig:3)の太線部となる．
 
   
@@ -137,6 +145,7 @@ $$
 
   これは数式に起こすと$t = \tan\frac{\theta}{2}$,$c=\cos\frac{\theta}{2}$, $s=\sin\frac{\theta}{2}$ として， として
   
+
 $$
 \begin{align}
 \begin{dcases}
@@ -150,27 +159,30 @@ $$
 
   さて，$A$ と $B$ の面積和を $T$ として，
   
+
 $$
 \begin{align}
 T = \pi(r_A^2+r_B^2) = \pi(\alpha^2-2\beta) \label{2005-2:eq:5}
 \end{align}
 $$
 
-  だから，$\eqref{2005-2:eq:6}$の条件のもとで，$\eqref{2005-2:eq:5}$を最小化する．
+  だから，[(式6)](#2005-2:eq:6)の条件のもとで，[(式5)](#2005-2:eq:5)を最小化する．
 
   
   \underline{**$0 < \theta < \pi$ の時**}
 
-  $\eqref{2005-2:eq:5}$に$\eqref{2005-2:eq:6}$を代入して$\beta$を除去すると
+  [(式5)](#2005-2:eq:5)に[(式6)](#2005-2:eq:6)を代入して$\beta$を除去すると
   
+
 $$
 \begin{align*}
 \frac{T}{\pi}& = \alpha^2-2\beta\\& = \alpha^2-2t^2(1-\alpha)  \\& = \alpha^2+2t^2\alpha-2t^2 \\& = (\alpha+t^2)^2-t^4-2t^2
 \end{align*}
 $$
 
-  で $t>0$ と$\eqref{2005-2:eq:6}$から
+  で $t>0$ と[(式6)](#2005-2:eq:6)から
   
+
 $$
 \begin{align*}
 \alpha = \frac{2(1-s)t}{c}
@@ -179,6 +191,7 @@ $$
 
   で $T$ は最小で，この時の最小値は
   
+
 $$
 \begin{align}
 \frac{\min T}{\pi}& = \left[ 4\frac{(1-s)^2}{c^2} + 4\frac{s(1-s)}{c^2} - 2 \right] t^2 \nonumber\\& = \frac{2(s-1)^2 s^2}{c^4}\nonumber\\& = \frac{2(1-s)^2 s^2}{(1-s^2)^2}\nonumber\\& = \frac{2s^2}{(1+s)^2}\label{2005-2:eq:7}
@@ -190,13 +203,14 @@ $$
   
   \underline{**$\theta=\pi$ の時**}
 
-  $\eqref{2005-2:eq:6}$から$\min T$ は
-  $(\alpha,\beta)=(1,\frac{1}{4})$ の時の $\frac{1}{2}$ で，この時も$\eqref{2005-2:eq:7}$で良い．
+  [(式6)](#2005-2:eq:6)から$\min T$ は
+  $(\alpha,\beta)=(1,\frac{1}{4})$ の時の $\frac{1}{2}$ で，この時も[(式7)](#2005-2:eq:7)で良い．
 
   
   又，$\pi \le \theta \le 2\pi$ の時も対称性よりこれで良いので，($0 \to 2\pi-\theta$ ととりかえて同じになる)
   求める最小値は$0<\theta<2\pi$に対して
   
+
 $$
 \begin{align*}
 S_\theta& = 2\pi\left(\frac{\sin\frac{\theta}{2}}{1+\sin\frac{\theta}{2}}\right)^2
@@ -205,9 +219,10 @@ $$
 
   である．$\cdots$(答)
 
-### (2)
- $x=1+\sin\frac{\theta}{2}$ とすると，$0\le x < 2\pi$で$0 \le x \le 2$ であり，
   
+  (2) $x=1+\sin\frac{\theta}{2}$ とすると，$0\le x < 2\pi$で$0 \le x \le 2$ であり，
+  
+
 $$
 \begin{align*}
 S_\theta& = 2\pi\left(\frac{x-1}{x}\right)^2 \\& = 2\pi\left(1-\frac{1}{x}\right)^2
@@ -216,6 +231,7 @@ $$
 
   で．これば $x=2$ すなわち $\theta=\pi$ の時最大値
   
+
 $$
 \begin{align*}
 S_\theta = \frac{\pi}{2}
@@ -231,23 +247,23 @@ $$
 
   平面図形の問題．立式できればあとは多変数関数の最小を求める問題に帰着する．
 
-### (1)
-がこの問題のポイントで，$\theta$を固定した時の二つの円の半径をどのように設定すれば面積の和が最小化するか？を考えれば良い．
+  (1)がこの問題のポイントで，$\theta$を固定した時の二つの円の半径をどのように設定すれば面積の和が最小化するか？を考えれば良い．
   最大となるのは片方の円の半径が$0$（従ってもう片方の半径が$C$と同じ$1$）の時なので，その逆パターンとして両方の円の半径が等しい時だろうと想像がつく．
   それを数式で示していけばよい．
   答案では二つの円の半径を変数で設定して，$S_{\theta}$を計算して最小化した．
   二つの半径は対称なので，このような場合は対称式を導入して解いていくのが王道のやり方だ．
 
   実際，二つの円を同じ半径にするのが最も大きい$S$を与えることは
-  $\eqref{2005-2:eq:6}$を見ればわかる．なぜならば$(\alpha,\beta)$が重解を持つ曲線(判別式$D=0$)
+  [(式6)](#2005-2:eq:6)を見ればわかる．なぜならば$(\alpha,\beta)$が重解を持つ曲線(判別式$D=0$)
   
+
 $$
 \begin{align*}
 \beta = \frac{\alpha^2}{4}
 \end{align*}
 $$
 
-  上で$S_{\theta}$が最大になることを$\eqref{2005-2:eq:7}$の導出過程で示しているからである．
+  上で$S_{\theta}$が最大になることを[(式7)](#2005-2:eq:7)の導出過程で示しているからである．
 
   さて，以上のような議論を考えると，$r_{A}=r_{B}$の時に$S_{\theta}$が最小になることがもっとわかりやすいように答案を作ることも考えられる．
   今回の答案では対称式を$\alpha=r_{A}+r_{B},\beta=r_{A}r_{B}$で定義したのでこの事実が分かりにくくなっている．
@@ -255,14 +271,16 @@ $$
   そこで，$\beta$の代わりに$\gamma=r_{A}-r_{B}$を用いると，$\gamma=0$が明確に$S_{\theta}$の最小値を与えるはずである．
   $\beta$との関係は
   
+
 $$
 \begin{align*}
 \beta = \frac{\alpha^2 -\gamma^2}{4}
 \end{align*}
 $$
 
-  だから，条件$\eqref{2005-2:eq:3,2005-2:eq:4,2005-2:eq:5}$は（簡単のため$\theta\neq\pi$の時のみ考えると）
+  だから，条件[(式5)](#2005-2:eq:3,2005-2:eq:4,2005-2:eq:5)は（簡単のため$\theta\neq\pi$の時のみ考えると）
   
+
 $$
 \begin{align*}
 & \begin{dcases}
@@ -298,6 +316,7 @@ $$
 
   従って，求めるべき$S_{\theta}$は
   
+
 $$
 \begin{align*}
 S_{\theta}& = \frac{\pi}{2}\left[\left(\sqrt{\frac{4(1-\cos\theta)}{1+\cos\theta}}\right)^2+0^2\right]\\& = \frac{2\pi(1-\cos\theta)}{(1+\cos\theta)}\\& = \frac{2\pi\sin\frac{\pi}{2}}{1+\sin\frac{\pi}{2}}
@@ -307,13 +326,14 @@ $$
   となり，答案と一致する．こちらの解法の方が図形的に分かり易く，問題の構造も明確になるため優れている．
   問題の裏側がわかると答案に工夫ができる良い例である．
 
-### (2)
-は正真正銘のボーナス問題で，$S_{\theta}$が出ていれば一撃でその最大値が求まる．
+  
+  (2)は正真正銘のボーナス問題で，$S_{\theta}$が出ていれば一撃でその最大値が求まる．
   この手の形は解答中で実演しているように，分母が綺麗になるように変数変換すると見通しが良くなることが多い．
 
   答えも$\theta=\pi$の時で，これは直感的にも一番円の半径を大きくできそうである．
-  この時$\eqref{2005-2:eq:2}$から$r_A+r_B=1$を保ちながら，
+  この時[(式2)](#2005-2:eq:2)から$r_A+r_B=1$を保ちながら，
   
+
 $$
 \begin{align*}
 S_{\theta} = \pi\left(r_A^2+r_B^2\right)
@@ -322,6 +342,7 @@ $$
 
   を最大化すれば良いが，$y=x^2$が下に凸なことからイェンゼンの不等式を利用すると
   
+
 $$
 \begin{align*}
 S_{\theta} = \pi\left(r_A^2+r_B^2\right)\le 2\pi\left(\frac{r_A+r_B}{2}\right)^2 = \frac{\pi}{2}

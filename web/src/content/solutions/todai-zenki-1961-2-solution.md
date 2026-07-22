@@ -29,7 +29,7 @@ E&=\frac{a}{10000}+\frac{b}{1000}+\frac{c}{100}+\frac{d}{10}+e\label{d}
 \end{align}
 $$
 
-$\eqref{a}-\eqref{b}$，$\eqref{c}-\eqref{d}$から
+[a](#a)-[b](#b)，[c](#c)-[d](#d)から
 
 $$
 \begin{align*}

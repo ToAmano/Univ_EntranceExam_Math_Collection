@@ -20,6 +20,7 @@ $p=\log_ab$とおく．$a,b\not=1$から$p\not=0$であるから，
 題意の方程式は$x^2-2px+\dfrac{1}{p}=0$となる．これが題意のような解を持つので，判別式を$D$，
 方程式の左辺を$f(x)$として
      
+
 $$
 \begin{align*}
 &\left\{\begin{array}{l}
@@ -44,6 +45,7 @@ $$
 
 が条件である．これは$p\not=0$を満たし十分．故に
      
+
 $$
 \begin{align*}
 1<p \Longleftrightarrow\log_aa<\log_ab  \\\Longleftrightarrow\left\{\begin{array}{ll}

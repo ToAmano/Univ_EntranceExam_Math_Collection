@@ -18,6 +18,7 @@ title: "KYODAI 1996 kouki Q4 (solution)"
 
   四面体の$4$頂点をA，B，C，Dとして，
   
+
 $$
 \begin{align}
 \begin{dcases}
@@ -44,6 +45,7 @@ $$
 
   $\text{B}(X,Y,Z)$の存在条件は
   
+
 $$
 \begin{align}
 & \begin{dcases}
@@ -61,6 +63,7 @@ $$
   をみたす$(X, Y, Z)$の存在条件に等しい.
   ただし，ABCDが四面体となる条件として
   
+
 $$
 \begin{align*}
 Z \neq 0
@@ -69,8 +72,9 @@ $$
 
   が必要である．
 
-  $\eqref{1996-4:eq:2}$で第一式を第二，三式に代入すると
+  [(式2)](#1996-4:eq:2)で第一式を第二，三式に代入すると
   
+
 $$
 \begin{align*}
 & \begin{dcases}
@@ -83,8 +87,9 @@ $$
 \end{align*}
 $$
 
-  だから，これを$\eqref{1996-4:eq:2}$の第一式に代入して$X,Y$を削除すると
+  だから，これを[(式2)](#1996-4:eq:2)の第一式に代入して$X,Y$を削除すると
   
+
 $$
 \begin{align}
 Z^2 = 1 - \frac{1}{4}\left(2-\alpha^2\right)^2 - \frac{1}{3}\left(1+\frac{1}{2}\alpha^2-\beta^2\right)^2 \label{1996-4:eq:3}
@@ -94,8 +99,9 @@ $$
   である．
 
   このような実数$X, Y, Z$の存在条件は
-  $\eqref{1996-4:eq:3}$の左辺が$0$より大となることで($\because z \neq 0$)
+  [(式3)](#1996-4:eq:3)の左辺が$0$より大となることで($\because z \neq 0$)
   
+
 $$
 \begin{align*}
 & 1 - \frac{1}{4}(2-\alpha^2)^2 - \frac{1}{3}\left(1+\frac{1}{2}\alpha^2-\beta^2\right)^2 > 0 \\\Leftrightarrow& 1 - \frac{1}{4}(2-(x+y))^2 - \frac{1}{12}(2-x+3y)^2 > 0                                     \\\Leftrightarrow& x^2-4x+3y^2+1 < 0                                                                           \\\Leftrightarrow& \frac{(x-2)^2}{3} + y^2 < 1

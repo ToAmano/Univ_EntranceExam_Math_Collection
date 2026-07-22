@@ -34,7 +34,7 @@ title: "TODAI 1970 zenki Q2 (solution)"
           \begin{align}
           \frac{{}_4C_0}{2^4}=\frac{1}{16}\label{2}
           \end{align}
-     \eqref{1}，\eqref{2}から，余事象より$x=0$にいる確率は
+     [1](#1)，[2](#2)から，余事象より$x=0$にいる確率は
           \begin{align*}
           1-2\left(\frac{1}{4}+\frac{1}{16}\right)=\frac{3}{8}
           \end{align*}

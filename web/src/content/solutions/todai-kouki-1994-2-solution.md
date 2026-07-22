@@ -9,7 +9,7 @@ title: "TODAI 1994 kouki Q2 (solution)"
 
 ## 【解】
 
-### (1)
+  (1)
 
   
 
@@ -23,6 +23,7 @@ title: "TODAI 1994 kouki Q2 (solution)"
   また，各頂点でPの見た目の位相は$\pi/2$ずつ追加されるので，これは角が$4$つで合計$2\pi$となる．
   したがってPが一周まわった時の総回転角は
   
+
 $$
 \begin{align*}
 L = 4(l-2) + 2\pi
@@ -33,6 +34,7 @@ $$
   Pが一周回って元の位置と等しくなるのは，$L$が$2\pi$の整数倍であることである．
   よって$n \in \mathbb{Z}$として
   
+
 $$
 \begin{align*}
 & 4(l-2) = 2n\pi\\\therefore& l = \frac{n}{2}\pi + 2
@@ -40,11 +42,12 @@ $$
 $$
 
   と書ける．$\cdots$(答)
+  
 
-### (2)
-
+  (2)
   題意の条件$l>2$から，(1)をみたす$l$の最小値は$n=1$の時の
   
+
 $$
 \begin{align*}
 l=\frac{1}{2}\pi+2
@@ -54,6 +57,7 @@ $$
   である．
   $xy$座標において，正方形の4頂点A~Dを
   
+
 $$
 \begin{align*}
 & A(-1, -1)                           \\& B(\frac{\pi}{2}+1, -1)              \\& C(\frac{\pi}{2}+1, \frac{\pi}{2}+1) \\& D(-1, \frac{\pi}{2}+1)
@@ -73,6 +77,7 @@ $$
   はじめ$P(\cos\alpha, \sin\alpha)$だとする．
   ただし
   
+
 $$
 \begin{align*}
 0 \le\alpha < 2\pi
@@ -82,6 +87,7 @@ $$
   とする．
   円が長さ$\theta$だけ転がった時のPの位置ベクトル
   
+
 $$
 \begin{align*}
 \vec{OP}& = \begin{pmatrix} \theta \\ 0 \end{pmatrix} + \begin{pmatrix} \cos(\alpha-\theta) \\ \sin(\alpha-\theta) \end{pmatrix}\quad(0 \le\theta\le\frac{\pi}{2})
@@ -90,6 +96,7 @@ $$
 
   だから，この時のPの軌跡の長さ$l_1$は
   
+
 $$
 \begin{align}
 l_1
@@ -101,6 +108,7 @@ $$
 
   PがBからCへ移動する時は$\alpha$ を $\alpha - \frac{\pi}{2}$ でおきかえて，この時のPの軌跡の長さ$l_2$は
   
+
 $$
 \begin{align}
 l_2
@@ -111,6 +119,7 @@ $$
   である．
   同様にPがCからDまで移動する時の軌跡の長さ$l_3$は$\alpha$ を $\alpha - 2\pi$で，DからAまで移動する時の軌跡の長さ$l_4$は$\alpha$を$\alpha - 3\pi$ でおきかえたものだから
   
+
 $$
 \begin{align*}
 l_3
@@ -122,6 +131,7 @@ $$
 
   である．よって，合計の軌跡の長さ$L$は
   
+
 $$
 \begin{align}
 L = 2(l_1+l_2) \label{1994-2:eq:5}
@@ -129,8 +139,9 @@ L = 2(l_1+l_2) \label{1994-2:eq:5}
 $$
 
   である．
-  $\eqref{1994-2:eq:3,1994-2:eq:4}$を代入して
+  [(式4)](#1994-2:eq:3,1994-2:eq:4)を代入して
   
+
 $$
 \begin{align*}
 L
@@ -142,6 +153,7 @@ $$
 
   $t \to \frac{\pi}{2}-t$と変数変換して
   
+
 $$
 \begin{align*}
 L
@@ -151,6 +163,7 @@ $$
 
   また，ここで簡単のため
   
+
 $$
 \begin{align*}
 & p = \frac{\alpha}{2}& 0 \le p < \pi
@@ -164,6 +177,7 @@ $$
   $|cos t|$の値は$\alpha$の値によって変化する．
   三角関数の合成を用いて$L$を変形すると
   
+
 $$
 \begin{align*}
 & L                                                                                                                                                                                                                                         \\& = \begin{dcases}
@@ -181,6 +195,7 @@ $$
   以下，$p$が変化した時の$L$の最大・最小を求めればよい．
   $L$の$p$による一階微分は和積公式を用いて
   
+
 $$
 \begin{align*}
 \frac{dL}{dp}=
@@ -234,6 +249,7 @@ $$
 
   この時$L$は
   
+
 $$
 \begin{align*}
 L
@@ -243,6 +259,7 @@ $$
 
   であり，$\cos\frac{3}{8}\pi$は半角公式より
   
+
 $$
 \begin{align*}
 \cos\frac{3}{8}\pi = \sqrt{\frac{1+\cos\frac{3}{4}\pi}{2}} = \frac{\sqrt{2-\sqrt{2}}}{2}\left(>0\right)
@@ -251,6 +268,7 @@ $$
 
   と計算できるから，代入して
   
+
 $$
 \begin{align}
 L = 8\sqrt{4-2\sqrt{2}}\label{1994-2:eq:6}
@@ -264,6 +282,7 @@ $$
 
   この時$L$は
   
+
 $$
 \begin{align}
 L
@@ -274,8 +293,9 @@ $$
   である．
 
   
-  以上$\eqref{1994-2:eq:6,1994-2:eq:7}$及び$L$は連続して値をとることから，求める長さの範囲は
+  以上[(式7)](#1994-2:eq:6,1994-2:eq:7)及び$L$は連続して値をとることから，求める長さの範囲は
   
+
 $$
 \begin{align*}
 8\{2-\sqrt{4-2\sqrt{2}}\}\le L \le 8\sqrt{4-2\sqrt{2}}

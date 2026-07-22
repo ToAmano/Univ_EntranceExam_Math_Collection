@@ -17,6 +17,7 @@ title: "TODAI 1966 zenki Q5 (solution)"
 
 題意の積分$S$として
      
+
 $$
 \begin{align}
 S&=\left[2ax^3+\frac{4+3ab}{2}x^2+2bx\right]_0^1 \nonumber\\&=2(a+b)+\frac{3}{2}ab+2=0\label{1}
@@ -24,8 +25,9 @@ S&=\left[2ax^3+\frac{4+3ab}{2}x^2+2bx\right]_0^1 \nonumber\\&=2(a+b)+\frac{3}{2}
 $$
 
 が成り立つ．そこで$p=a+b$，$q=ab$とおいて，$a$，$b$の存在条件を調べる．
-まず\eqref{1}から
+まず[1](#1)から
      
+
 $$
 \begin{align}
 q=\frac{-4}{3}(1+p)\label{2}
@@ -35,6 +37,7 @@ $$
 となる．
 さて，$a$，$b$は$x$の$2$次方程式$x^2-px+q=0$の$2$実解であるからこの判別式$D$として，
      
+
 $$
 \begin{align*}
 &D\ge 0 \Longleftrightarrow p^2-4q\ge0 \\\Longleftrightarrow&p^2+\frac{16}{3}(1+p)\ge0 \Longleftrightarrow p\le -4,\frac{4}{3}\le p
@@ -43,6 +46,7 @@ $$
 
 となる．故に求める範囲は
      
+
 $$
 \begin{align*}
 a+b\le -4,\frac{4}{3}\le a+b\tag{答}

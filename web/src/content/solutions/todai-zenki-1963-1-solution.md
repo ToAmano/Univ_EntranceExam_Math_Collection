@@ -18,6 +18,7 @@ title: "TODAI 1963 zenki Q1 (solution)"
 
 $OA=x$，$OB=y$，$OC=z$とする．$\triangle OAB$に三平方の定理を用いて
      
+
 $$
 \begin{align}
 c^2=x^2+y^2　\label{1}
@@ -26,6 +27,7 @@ $$
 
 同様にして
      
+
 $$
 \begin{align}
 b^2=x^2+z^2  \label{2}\\
@@ -35,6 +37,7 @@ $$
 
 であるから，
      
+
 $$
 \begin{align*}
 OD&=\sqrt{x^2+y^2+z^2}\\&=\sqrt{\frac{a^2+b^2+c^2}{2}}\tag{答}
@@ -43,9 +46,10 @@ $$
 
 となる．
 
-次に後半部分について考える．\eqref{1}，\eqref{2}，\eqref{3}を$x$，$y$，$z$について解いて          
+次に後半部分について考える．[1](#1)，[2](#2)，[3](#3)を$x$，$y$，$z$について解いて          
 $a$，$b$の値を代入して
       
+
 $$
 \begin{align*}
 x=\sqrt{\frac{-a^2+b^2+c^2}{2}}=\sqrt{\frac{c^2-16}{2}}\\
@@ -56,9 +60,10 @@ $$
 
 このような正の実数$x$，$y$，$z$が存在すれば良いので，求める条件は平方根の中身が非負であること．故に
      
+
 $$
 \begin{align*}
-&\frac{c^2-16}{2}>0\land\frac{c^2+16}{2}>0\land\frac{-c^2+34}{2}>0  \\\Longleftrightarrow&4<c<\sqrt{34}\cdots\text{(答)}\tag{$\because c>0$}
+&\frac{c^2-16}{2}>0\land\frac{c^2+16}{2}>0\land\frac{-c^2+34}{2}>0  \\\Longleftrightarrow&4<c<\sqrt{34}\cdots\text{(答)}\tag{\because c>0}
 \end{align*}
 $$
 

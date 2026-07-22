@@ -23,6 +23,7 @@ title: "TODAI 1978 zenki Q3 (solution)"
 
  $y'=3x$だから，$C$における法線は
      
+
 $$
 \begin{align}
 (x-t)+3t\left(y-\frac{3}{2}t^2+\frac{1}{3}\right)=0 \nonumber\\
@@ -30,16 +31,17 @@ $$
 \end{align}
 $$
 
-である．放物線では接点が異なれば法線が異なるから，点Pにたいし\eqref{1}を満たす$t$がただ一つ存在すればよい．
+である．放物線では接点が異なれば法線が異なるから，点Pにたいし[1](#1)を満たす$t$がただ一つ存在すればよい．
 すなわち，求める領域を$D$とすると，
      
+
 $$
 \begin{align*}
-D=\{(x,y)\mid\eqref{1}\text{を満たす$t$が唯一つ存在する．}\}
+D=\{(x,y)\mid[1](#1)\text{を満たすtが唯一つ存在する．}\}
 \end{align*}
 $$
 
-\eqref{1}の左辺$g(t)$とおく．$g'(t)=27t^2-6y$より，$y$の値によって以下のようになる．\\
+[1](#1)の左辺$g(t)$とおく．$g'(t)=27t^2-6y$より，$y$の値によって以下のようになる．\\
 
      \begin{indentation}{2zw}{0pt}
      \underline{(i)$y\le0$の時}\\
@@ -49,6 +51,7 @@ $$
      \underline{(ii)$y>0$の時}\\
      下表を得る．ただし$\a=\sqrt{2y}/3$である．
           
+
 $$
 \begin{align*}
 \begin{array}{|c|c|c|c|c|c|}\hline
@@ -64,22 +67,25 @@ $$
      
      $D$のようになる条件は，
           
+
 $$
 \begin{align}
 g(-\a)g(\a)>0\label{2}
 \end{align}
 $$
 
-     である．ここで\eqref{1}から
+     である．ここで[1](#1)から
           
+
 $$
 \begin{align*}
 g(\pm\a)&=\pm 9\a^3\mp 6y\a -2x \\&=\mp\frac{4\sqrt{2}}{3}y^{3/2}-2x
 \end{align*}
 $$
 
-     であるから，\eqref{2}に代入して
+     であるから，[2](#2)に代入して
           
+
 $$
 \begin{align}
 \left(\frac{2\sqrt{2}}{3}y^{3/2}-x\right)\left(-\frac{2\sqrt{2}}{3}y^{3/2}-x\right)>0\label{3}
@@ -90,9 +96,10 @@ $$
      
 以上から，求める領域$D$は，
      
+
 $$
 \begin{align}
-y\le0 \lor(y>0\land\eqref{3})
+y\le0 \lor(y>0\land[3](#3))
 \end{align}
 $$
 
@@ -111,6 +118,7 @@ $$
 
 この領域の対称性から$D$のうち$x\ge0$の部分の面積$S_1$とすると，求める面積$S$との関係は
      
+
 $$
 \begin{align}
 S=2S_1\label{4}
@@ -119,6 +127,7 @@ $$
 
 である．$y=f(x)$と$x=\dfrac{2\sqrt{2}}{3}y^{3/2}$の$y>0$での交点は，
      
+
 $$
 \begin{align*}
 &y=\frac{3}{2}\left(\frac{2\sqrt{2}}{3}y^{3/2}\right)^2-\frac{1}{3}\\&4y^3-3y-1=0 \\&(y-1)(4y^2+4y+1)=0 \\&y=1&(\because y>0)
@@ -139,6 +148,7 @@ $$
 
 さて，$x>0$のとき
      
+
 $$
 \begin{align*}
 &x=\frac{2\sqrt{2}}{3}y^{3/2}\\\therefore\,&y=\frac{\sqrt[3]{9}}{2}x^{2/3}
@@ -147,12 +157,13 @@ $$
 
 に注意して
      
+
 $$
 \begin{align*}
 S_1&=\int_0^\b\left(f(x)-\frac{\sqrt[3]{9}}{2}x^{2/3}\right)\,dx \\&=\teisekibun{\frac{1}{2}x^3-\frac{1}{3}x}{0}{\b}-\frac{\sqrt[3]{9}}{2}\teisekibun{\frac{3}{5}x^{5/3}}{0}{\b}\\&=\frac{44\sqrt{2}}{135}
 \end{align*}
 $$
 
-であるから，\eqref{4}に代入して
+であるから，[4](#4)に代入して
      \[S=\frac{88\sqrt{2}}{135}\]
 である．$\cdots$((2)の答)

@@ -11,6 +11,7 @@ title: "KYODAI 1990 kouki Q4 (solution)"
 
   題意より，時刻 $t\, (t>0)$ での P,Q,R の座標は
   
+
 $$
 \begin{align*}
 & P(1,0,0) \\& Q(2,t,0) \\& R(2,2,t)
@@ -19,6 +20,7 @@ $$
 
   だから
   
+
 $$
 \begin{align*}
 \vec{\text{PQ}} = \begin{pmatrix}1 \\ t \\ 0 \end{pmatrix}, \quad\vec{\text{PR}} = \begin{pmatrix}1 \\ 2 \\ t\end{pmatrix}
@@ -27,6 +29,7 @@ $$
 
   より
   
+
 $$
 \begin{align*}
 |\vec{\text{PQ}}|^2                   & = (2-t)^2+t^2    = 1+t^2 \\
@@ -36,6 +39,7 @@ $$
 
   だから，三角形PQRの面積は
   
+
 $$
 \begin{align*}
 S
@@ -46,6 +50,7 @@ $$
   である．$\sqrt{x}$は$x$について単調増加だから，$f(t)$が最小のとき$S$も最小である．
   従って，以下$f(t)$を最小にする$t$を求める．
   
+
 $$
 \begin{align*}
 f'(t)
@@ -69,6 +74,7 @@ $$
 
   よって $t=1$ で $S$ は最小となるから，求める$t$は
   
+
 $$
 \begin{align*}
 t = 1

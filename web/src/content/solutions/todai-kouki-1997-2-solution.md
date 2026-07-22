@@ -9,12 +9,12 @@ title: "TODAI 1997 kouki Q2 (solution)"
 
 ## 【解】
 
-### (1)
-
+  (1)
   A$(x,y)$とおく．
   $y = \frac{1}{|x|}$の$x<0, 0<x$での接点を$D(t, -\frac{1}{t}), E(s, \frac{1}{s})$ とする．
   ただし
   
+
 $$
 \begin{align}
 t<0<s \label{1997-2:eq:1}
@@ -32,6 +32,7 @@ $$
 
   この時，$(\frac{1}{x})' = -\frac{1}{x^2}$だから，D，Eでの接線の方程式は
   
+
 $$
 \begin{align}
 \begin{dcases}
@@ -45,6 +46,7 @@ $$
 
   従ってこの接線と$x$軸の交点がB，Cなので
   
+
 $$
 \begin{align}
 \begin{dcases}
@@ -56,8 +58,9 @@ $$
 
   である．
 
-  また，Aは二つの接線の交点だから，$\eqref{1997-2:eq:2}$を連立して$X$は
+  また，Aは二つの接線の交点だから，[(式2)](#1997-2:eq:2)を連立して$X$は
   
+
 $$
 \begin{align*}
 & \frac{1}{t^2}X - \frac{2}{t} = -\frac{1}{s^2}X + \frac{2}{s}\\& \left(\frac{1}{t^2}+\frac{1}{s^2}\right)X =  \frac{2}{s} +  \frac{2}{t}\\& \left(t^2+s^2\right)X =  2st(s+t)                                       \\& X = \frac{2st(s+t)}{s^2+t^2}
@@ -66,6 +69,7 @@ $$
 
   と求まる．この時$Y$は
   
+
 $$
 \begin{align*}
 Y
@@ -75,6 +79,7 @@ $$
 
   となり，結局Aの座標は
   
+
 $$
 \begin{align}
 A(\frac{2t^2s(t+s)}{t^2+s^2}, \frac{2(s-t)}{t^2+s^2}) \label{1997-2:eq:4}
@@ -85,6 +90,7 @@ $$
 
   従って$\triangle ABC$の面積$T_1$は
   
+
 $$
 \begin{align}
 T_1
@@ -96,6 +102,7 @@ $$
 
   題意よりDが線分AB上に存在することから，$x$座標に注目して，
   
+
 $$
 \begin{align*}
 & t < X                        \\\therefore& t < \frac{2ts(t+s)}{t^2+s^2}\\\therefore& t(t^2+s^2) < 2ts(t+s)
@@ -104,6 +111,7 @@ $$
 
   $t<0$に注意して
   
+
 $$
 \begin{align}
 2s(t+s) < t^2+s^2 \label{1997-2:eq:6}
@@ -113,6 +121,7 @@ $$
   である．
   同様にEが線分AC上に存在することから，
   
+
 $$
 \begin{align*}
 & X < s                        \\\therefore& \frac{2ts(t+s)}{t^2+s^2} < s \\\therefore& 2ts(t+s) < s(t^2+s^2)
@@ -121,6 +130,7 @@ $$
 
   $s>0$より
   
+
 $$
 \begin{align}
 2t(t+s) < t^2+s^2 \label{1997-2:eq:7}
@@ -129,9 +139,10 @@ $$
 
   である．
 
-  以上から，$\eqref{1997-2:eq:6,1997-2:eq:7}$の条件のもとで$\eqref{1997-2:eq:5}$のとりうる範囲を求める．
+  以上から，[(式7)](#1997-2:eq:6,1997-2:eq:7)の条件のもとで[(式5)](#1997-2:eq:5)のとりうる範囲を求める．
   新しく
   
+
 $$
 \begin{align*}
 & x = \frac{s}{t}& (x<0)
@@ -140,6 +151,7 @@ $$
 
   とおくと，
   
+
 $$
 \begin{align}
 \begin{dcases}
@@ -152,6 +164,7 @@ $$
 
   である．後ろ二つの不等式から$x$のとりうる範囲は
   
+
 $$
 \begin{align}
 & \begin{dcases}
@@ -166,6 +179,7 @@ $$
 
   この時，$T_1$の一階微分は
   
+
 $$
 \begin{align*}
 \frac{d T_1}{dx}& =\frac{4(x^2-1)}{(x^2+1)^2}
@@ -188,6 +202,7 @@ $$
 
   ここで
   
+
 $$
 \begin{align*}
 & T_1(x=-1-\sqrt{2}) = \frac{6+4\sqrt{2}}{2+\sqrt{2}} =  2+\sqrt{2}\\& T_1(x=-1)          = 4                                            \\& T_1(x=1-\sqrt{2})  = \frac{2}{2-\sqrt{2}} = 2+\sqrt{2}
@@ -196,6 +211,7 @@ $$
 
   だから，求める$T_1$のとりうる範囲は
   
+
 $$
 \begin{align*}
 2+ \sqrt{2} < T_1 \leq 4
@@ -203,11 +219,12 @@ $$
 $$
 
   である．$\cdots$(答)
+  
 
-### (2)
-
+  (2)
   三角形$ADE$をなすベクトルについて
   
+
 $$
 \begin{align*}
 \vec{AD}& = \frac{t^2-2st-s^2}{t^2+s^2}\begin{pmatrix} t \\ \frac{1}{t} \end{pmatrix}\\\vec{AE}& = \frac{s^2-2st-t^2}{t^2+s^2}\begin{pmatrix} s \\ -\frac{1}{s} \end{pmatrix}
@@ -216,6 +233,7 @@ $$
 
   だから，サラスの公式より、$\triangle APE$の面積$T_2$として
   
+
 $$
 \begin{align*}
 T_2
@@ -224,10 +242,9 @@ T_2
 $$
 
   である．
-
-### (1)
-と同様の変数変換$x=s/t$を用いると
+  (1)と同様の変数変換$x=s/t$を用いると
   
+
 $$
 \begin{align}
 T_2
@@ -235,10 +252,11 @@ T_2
 \end{align}
 $$
 
-  を得る．この$\eqref{1997-2:eq:9}$のもとでのとりうる値を求めれば良い．
+  を得る．この[(式9)](#1997-2:eq:9)のもとでのとりうる値を求めれば良い．
 
   新しく
   
+
 $$
 \begin{align*}
 f(x) = \frac{x^4-6x^2+1}{x(x^2+1)}
@@ -247,6 +265,7 @@ $$
 
   とおくと，
   
+
 $$
 \begin{align*}
 T_2 = \frac{1}{2}\left|f(x)\right|
@@ -255,6 +274,7 @@ $$
 
   であり，$f(x)$の一階微分は
   
+
 $$
 \begin{align*}
 f'(x)
@@ -277,6 +297,7 @@ $$
 
   従って，求める$T_2$のとりうる範囲は
   
+
 $$
 \begin{align*}
 0 < T_2 \leq 1

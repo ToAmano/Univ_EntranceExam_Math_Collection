@@ -11,6 +11,7 @@ title: "TODAI 1994 zenki Q3 (solution)"
      \begin{oframed}
      $xyz$空間において，条件
           
+
 $$
 \begin{align*}
 \begin{array}{lll}
@@ -33,6 +34,7 @@ $$
 
  \1 $z=c$での切断面は，
      
+
 $$
 \begin{align*}
 \begin{cases}
@@ -49,6 +51,7 @@ $$
 
 $S(k)$は斜線部の面積で
      
+
 $$
 \begin{align*}
 S(k)=\theta c^2-c^3s
@@ -58,6 +61,7 @@ $$
 である．$\cdots$((1)の答) \\
 従って，求める体積$V$は
      
+
 $$
 \begin{align*}
 V&=\int_0^1S(k)dk \\&=\int_{\pi/2}^0(\theta c^2-c^3s)\frac{dk}{d\theta}d\theta\\&=\int_0^{\pi/2}(c^2s\theta-c^3s^2)d\theta\\&=-\left[\frac{1}{3}c^3\theta\right]_0^{\pi/2}+\frac{1}{3}\int_0^{\pi/2}c^3d\theta-\int_0^{\pi/2}c^3s^2d\theta\\&=\int_0^{\pi/2}c(1-s^2)\left(\frac{1}{3}-s^2\right)d\theta\\&=\int_0^1(1-x^2)\left(\frac{1}{3}-x^2\right)dx \\&=\left[\frac{1}{5}x^5-\frac{4}{9}x^3+\frac{1}{3}x\right]_0^1 \\&=\frac{4}{45}

@@ -23,6 +23,7 @@ title: "TITECH 2009 zenki Q4 (solution)"
 
  題意の平面$\Pi$として，
      
+
 $$
 \begin{align*}
 &\left(x-\frac{t}{3}\right)+\left(x-\frac{t}{3}\right)+\left(x-\frac{t}{3}\right)=0 \\&x+y+z=t
@@ -35,6 +36,7 @@ $$
 
 $D$と(1)で求めた交線の共有部分を考える．$y$を消去して，
      
+
 $$
 \begin{align}
 0\le t-x\le x(1-x) \\\Longleftrightarrow\begin{cases}
@@ -46,6 +48,7 @@ $$
 
 である．ただし，第$2$の不等式での$x$の存在条件から，
      
+
 $$
 \begin{align}
 1-t\ge0\Longleftrightarrow t\le1\label{2}
@@ -54,24 +57,28 @@ $$
 
 である．このもとで，    
      \[t\le1+\sqrt{1-t}\]
-であるから，$x$の範囲は，\eqref{1}から，
+であるから，$x$の範囲は，[1](#1)から，
      
+
 $$
 \begin{align*}
 1-\sqrt{1-t}\le x<t
 \end{align*}
 $$
+
  
 である．再び$x$の存在条件から，
      
+
 $$
 \begin{align}
-&1-\sqrt{1-t}\le t \Longleftrightarrow 0\le t&(\because\eqref{2})
+&1-\sqrt{1-t}\le t \Longleftrightarrow 0\le t&(\because[2](#2))
 \end{align}
 $$
 
 である．以上から，共有部分は，
      
+
 $$
 \begin{align}
 E:&\begin{cases}
@@ -87,13 +94,14 @@ $$
      
 題意の回転体を$\Pi$で切断した断面の面積$S(t)$とする．$E$上の点$P(x,t-x,0)$に対して，$Q(t/3,t/3,t/3)$との距離の$2$乗は，
      
+
 $$
 \begin{align*}
-|PQ|^2&=\left(x-\frac{t}{3}\right)^2+\left(t-x-\frac{t}{3}\right)^2+\left(\frac{t}{3}\right)^2 \\&=2\left(x-\frac{t}{2}\right)^2+(\text{$x$に寄らない定数項})
+|PQ|^2&=\left(x-\frac{t}{3}\right)^2+\left(t-x-\frac{t}{3}\right)^2+\left(\frac{t}{3}\right)^2 \\&=2\left(x-\frac{t}{2}\right)^2+(\text{xに寄らない定数項})
 \end{align*}
 $$
 
-である．これは，\eqref{3}の範囲内では，
+である．これは，[3](#3)の範囲内では，
      \[\frac{t}{2}\le1-\sqrt{1-t}\le t\]
 ゆえ，$x=t$で最大値$M$，$x=1-\sqrt{1-t}$で最小値$m$をとる．
 
@@ -110,6 +118,7 @@ $$
 
 故に，右上図から，
      
+
 $$
 \begin{align*}
 \frac{S(t)}{\pi}&=M-m \\&=2\left(t-\frac{t}{2}\right)^2-2\left(1-\sqrt{1-t}-\frac{t}{2}\right)^2     \\&=4(1-t)+(2-t)\sqrt{1-t}\\&=2[2(1-t)+\sqrt{1-t}+(1-t)\sqrt{1-t}]
@@ -120,6 +129,7 @@ $$
 
 さて，$|(t/3,t/3,t/3)|=\sqrt{3}/3$に注意すれば，求める体積$V$は，
      
+
 $$
 \begin{align*}
 &\frac{V}{\pi}=\int_0^1S(t)\frac{\sqrt{3}}{3}dt \\\therefore\ &\frac{\sqrt{3}V}{2\pi}=\frac{1}{2}\int_0^1S(t)dt \\&=\int_0^1\{2(t-1)+\sqrt{1-t}+(1-t)\sqrt{1-t}\}dt
@@ -128,6 +138,7 @@ $$
 
 である．各項計算すれば，
      
+
 $$
 \begin{align*}
 &\int_0^12(t-1)dt=\left[(t-1)^2\right]_0^1=-1 \\&\int_0^1\sqrt{1-t}dt=\left[\frac{-2}{3}(1-t)^3/2\right]_0^1=\frac{2}{3}\\&\int_0^1(1-t)\sqrt{1-t}dt=\left[\frac{-2}{5}(1-t)^5/2\right]_0^1=\frac{2}{5}
@@ -136,6 +147,7 @@ $$
 
 であるから，代入して，
      
+
 $$
 \begin{align*}
 V=\frac{2\sqrt{3}\pi}{3}\left[-1+\frac{2}{3}+\frac{2}{5}\right]=\frac{2\sqrt{3}\pi}{45}

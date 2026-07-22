@@ -9,10 +9,11 @@ title: "KYODAI 1995 kouki Q1 (solution)"
 
 ## 【解】
 
-### (1)
+    (1)
 
     $x^n$ を $x^2+ax+b$ でわった商を $P_n(x)$ とおく．すなわち
     
+
 $$
 \begin{align*}
 x^n = Pn(x)(x^2+ax+b) + r_n x + s_n
@@ -21,6 +22,7 @@ $$
 
     である．$s_n$と$r_n$の漸化式を得るため，両辺に$x$をかけると
     
+
 $$
 \begin{align*}
 x^{n+1}& = x P_n(x) (x^2+ax+b) + r_n x^2 + s_n x                \\& = (x P_n(x) + r_n) (x^2+ax+b) + (s_n - ar_n) x - b r_n
@@ -30,6 +32,7 @@ $$
     これが$P_{n+1}(x)(x^2+ax+b) + r_{n+1} x + s_{n+1}$に等しいから
     係数比較して
     
+
 $$
 \begin{align*}
 r_{n+1}& = s_n - ar_n \\
@@ -39,6 +42,7 @@ $$
 
     を得る．二つ目の式を一つ目の式に代入して$s_n$を消去すると
     
+
 $$
 \begin{align}
 r_{n+2} = -a r_{n+1} - b r_n \label{1995-1:eq:1}
@@ -47,6 +51,7 @@ $$
 
     である．初期条件は
     
+
 $$
 \begin{align}
 & r_1 = 1                      & s_1 = 0 \label{1995-1:eq:2}\\& r_2 = -a \label{1995-1:eq:3}
@@ -55,17 +60,19 @@ $$
 
     である．
     題意の条件(イ)から，
-    $\eqref{1995-1:eq:1}$の特性方程式$x^2+ax+b=0$の解は
+    [(式1)](#1995-1:eq:1)の特性方程式$x^2+ax+b=0$の解は
     $x=\alpha,\beta$だから，漸化式を書き直して
     
+
 $$
 \begin{align*}
 & r_{n+2} - \alpha r_{n+1} = \beta(r_{n+1}-\alpha r_{n}) \\& r_{n+2} - \beta  r_{n+1} = \alpha(r_{n+1}-\beta r_{n})
 \end{align*}
 $$
 
-    より，これを初期条件$\eqref{1995-1:eq:2,1995-1:eq:3}$のもとで解いて，
+    より，これを初期条件[(式3)](#1995-1:eq:2,1995-1:eq:3)のもとで解いて，
     
+
 $$
 \begin{align*}
 & r_{n+1} - \alpha r_{n} = \beta^{n-1}(-a-\alpha) \\& r_{n+1} - \beta r_{n} = \alpha^{n-1}(-a-\beta)
@@ -74,6 +81,7 @@ $$
 
     解と係数の関係より$a=-\alpha-\beta$だから，
     
+
 $$
 \begin{align*}
 & r_{n+1} - \alpha r_{n} = \beta^{n}\\& r_{n+1} - \beta r_{n} = \alpha^{n}
@@ -82,6 +90,7 @@ $$
 
     となり，両辺引き算して
     
+
 $$
 \begin{align*}
 & (\alpha - \beta) r_{n} = \alpha^n - \beta^n       \\\therefore& r_{n} = \frac{\alpha^n - \beta^n}{\alpha - \beta}
@@ -92,6 +101,7 @@ $$
 
     題意の条件(ロ) に代入して
     
+
 $$
 \begin{align*}
 \frac{\alpha^n - \beta^n}{\alpha - \beta} < \frac{\alpha^{n+1} - \beta^{n+1}}{\alpha - \beta}
@@ -101,6 +111,7 @@ $$
     が任意の自然数 $n$ で成立する．
     (イ) から $0 < \beta < \alpha$だから，両辺 $\alpha-\beta (>0)$ をかけてから$\beta^n (>0)$ で割って整理すると
     
+
 $$
 \begin{align}
 \beta - 1 < \left(\frac{\alpha}{\beta}\right)^n (\alpha - 1) \label{1995-1:eq:4}
@@ -110,11 +121,12 @@ $$
     となる．
     よって題意は示された．$\cdots$(答)
 
-### (2)
-
+    
+    (2)
     (イ)，（ロ）と同値になる条件を考える．まず，(イ)は
     二次方程式
     
+
 $$
 \begin{align*}
 f(x) = x^2+ax+b =0
@@ -123,10 +135,10 @@ $$
 
     が$0<x$に異なる二つの実数解を持つことと同値である．
 
-    このもとで，（ロ）の条件は（1）で求めた$\eqref{1995-1:eq:4}$と同値だから，
-    $\eqref{1995-1:eq:4}$および，$f(x)=0$が$0<x$に異なる二つの実数解を持つ条件を求めれば良い．
+    このもとで，（ロ）の条件は（1）で求めた[(式4)](#1995-1:eq:4)と同値だから，
+    [(式4)](#1995-1:eq:4)および，$f(x)=0$が$0<x$に異なる二つの実数解を持つ条件を求めれば良い．
 
-    そこで，まず$\eqref{1995-1:eq:4}$から考える．
+    そこで，まず[(式4)](#1995-1:eq:4)から考える．
     これがが任意の自然数で成立するのは$0<\beta<\alpha$のもとで[表1](#1995-1:table:1)の時である．
     
 
@@ -138,11 +150,12 @@ $$
 | $\beta = 1$ | $\times$ | $\times$ | $\circ$ |
 | $1 < \beta$ | $\times$ | $\times$ | $1<\beta<\alpha$の時のみ |
 
-  <figcaption>表 1: \cref{1995-1:eq:4}が成立する$\alpha,\beta$の条件</figcaption>
+  <figcaption>表 1: [(式4)](#1995-1:eq:4)が成立する$\alpha,\beta$の条件</figcaption>
 </figure>
 
-    したがって，$\eqref{1995-1:eq:4}$が任意の自然数で成立する $\alpha, \beta$ の条件は，
+    したがって，[(式4)](#1995-1:eq:4)が任意の自然数で成立する $\alpha, \beta$ の条件は，
     
+
 $$
 \begin{align*}
 0 < \beta < \alpha\land 1 \le\alpha
@@ -161,6 +174,7 @@ $$
     この時は，判別式が$0$より大きくて軸$x=-a/2$が$1$以上，かつ$f(1)\ge 0$ならば良い．
     従って求める条件は
     
+
 $$
 \begin{align*}
 & \begin{dcases}
@@ -182,6 +196,7 @@ $$
     この時は，判別式が$0$より大きく，$f(0)>0$および$f(1)\le 0$であれば良い．
     従って求める条件は
     
+
 $$
 \begin{align*}
 & \begin{dcases}
@@ -200,6 +215,7 @@ $$
 
     以上二つの場合をまとめて，求める条件は
     
+
 $$
 \begin{align*}
 & \begin{dcases}

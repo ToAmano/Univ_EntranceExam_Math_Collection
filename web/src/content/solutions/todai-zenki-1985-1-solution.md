@@ -35,6 +35,7 @@ title: "TODAI 1985 zenki Q1 (solution)"
 
 $y=a\sin x$と$y=1$の交点の$x$座標$t$として
      
+
 $$
 \begin{align}
      &a\sin t=1&0<t\le\frac{\pi}{2}\label{1}
@@ -49,16 +50,18 @@ $$
      \[S_1=\int_t^{\pi/2}(a\sin x-1)\,dx\]
  である．$f(a)=S_2-S_1$は
      
+
 $$
 \begin{align*}
      f(a)&=S-2S_1 \\
      &=a-2ac+\pi-2t \\
-     &=\frac{1}{s}-\frac{2c}{s}-2t+\pi&(\because\eqref{1})
+     &=\frac{1}{s}-\frac{2c}{s}-2t+\pi&(\because[1](#1))
      \end{align*}
 $$
 
 である．これを$g(t)$とおく．
      
+
 $$
 \begin{align*}
      g'(t)&=\frac{-c}{s^2}+\frac{2}{s^2}-2 \\
@@ -69,6 +72,7 @@ $$
 
 ゆえ，下表を得る．
      
+
 $$
 \begin{align*}
           \begin{array}{|c|c|c|c|c|c|}\hline
@@ -79,6 +83,6 @@ $$
      \end{align*}
 $$
 
-従って，求める最大値は$t=\pi/3$の時の$\pi/3$である．このとき\eqref{1}から
+従って，求める最大値は$t=\pi/3$の時の$\pi/3$である．このとき[1](#1)から
      \[a=\frac{2\sqrt{3}}{3}\]
 である．$\cdots$(答)

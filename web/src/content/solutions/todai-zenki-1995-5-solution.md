@@ -59,7 +59,7 @@ title: "TODAI 1995 zenki Q5 (solution)"
      である．
           \[P(X\cup Y)=P(X)+P(Y)-P(X\cap Y) \]
      に注意して     
-     \eqref{2}，\eqref{3}を\eqref{1}に代入すれば
+     [2](#2)，[3](#3)を[1](#1)に代入すれば
           \begin{align*}
           a_n=\frac{1}{4}\left(1-2\left(\frac{2}{3}\right)^n+\left(\frac{1}{3}\right)^n\right)\cdots\text{(答)}
           \end{align*}

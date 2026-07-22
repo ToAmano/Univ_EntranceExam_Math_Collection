@@ -12,6 +12,7 @@ title: "KYODAI 1999 kouki Q4 (solution)"
     $\triangle ABC$の$3$辺の長さを$a,b,c$とする ($a,b,c > 0$)．
     $\triangle ABC$が鋭角三角形だから，余弦定理より
     
+
 $$
 \begin{align*}
 c^2 = a^2+b^2 - 2ab\cos\angle\mathrm{ABC} < a^2+b^2
@@ -20,6 +21,7 @@ $$
 
     のような式が成り立つから，
     
+
 $$
 \begin{align*}
 \begin{cases}

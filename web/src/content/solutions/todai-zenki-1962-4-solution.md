@@ -18,6 +18,7 @@ title: "TODAI 1962 zenki Q4 (solution)"
 
 題意の無限級数$S$の第$n$部分和を$S_n$とおく．
      
+
 $$
 \begin{align*}
 \dfrac{r^{2^{n-1}}}{1-r^{2^n}}=\frac{1}{1-r^{2^{n-1}}}-
@@ -27,6 +28,7 @@ $$
 
 だから
      
+
 $$
 \begin{align*}
 S_n&=\sum_{k=1}^n\frac{1}{1-r^{2^{k-1}}}-\frac{1}{1-r^{2^k}}\\&=\frac{1}{1-r}-\frac{1}{1-r^{2^n}}
@@ -35,6 +37,7 @@ $$
 
 である．故に$|r|$で場合分けして
      
+
 $$
 \begin{align*}
 S=\left\{\begin{array}{ll}
@@ -43,5 +46,6 @@ S=\left\{\begin{array}{ll}
           \end{array}\right.\tag{答}
 \end{align*}
 $$
+
    
 となる．

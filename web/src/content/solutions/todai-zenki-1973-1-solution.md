@@ -33,6 +33,7 @@ $P$が見えるのは$2a\le x$の領域である．これは$-\pi/3\le\theta\le\
 
 次に，$f(\theta)=|NP|^2$とおくと，
      
+
 $$
 \begin{align*}
 f(\theta)&=\left(4ac-\frac{a}{2}\right)^2+(4as)^2+\left(\frac{\sqrt{3}a}{2}\right)^2 \\&=a^2\left[16c^2-4c+\frac{1}{4}+16s^2+\frac{3}{4}\right]\\&=a^2\left[-4c+17\right]
@@ -41,6 +42,7 @@ $$
 
 である．この$-\pi/3\le\theta\le\pi/3$での最大小を求めればよく，$|NP|\ge0$ゆえ，
      
+
 $$
 \begin{align*}
 &\begin{cases}

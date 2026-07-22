@@ -23,6 +23,7 @@ title: "TODAI 1973 zenki Q5 (solution)"
 
  $y$の存在条件から，($1<t$)
      
+
 $$
 \begin{align*}
 &\frac{t}{(1+t^2)x}\le\frac{1}{1+x^2}\\\Longleftrightarrow&(x-t)\left(x-\frac{1}{t}\right)\ge0 \\\Longleftrightarrow&\frac{1}{t}\le x\le t
@@ -33,6 +34,7 @@ $$
 
 従って，
      
+
 $$
 \begin{align}
 f(t)&=\int_{1/t}^t\left(\frac{1}{1+x^2}-\frac{t}{(1+t^2)x}\right)dx \nonumber\\&=\int_{1/t}^t\left(\frac{1}{1+x^2}dx-\frac{t}{1+t^2}\frac{1}{x}\right)dx\label{1}
@@ -41,12 +43,13 @@ $$
 
 両辺$t$で微分する．各項計算して，
      
+
 $$
 \begin{align*}
 \cdot&\left[\int_{1/t}^t\left(\frac{1}{1+x^2}dx\right)\right]'=\frac{2}{1+t^2}\\\cdot&\left[\frac{t}{1+t^2}\int_{1/t}^t\frac{1}{x}dx\right]'=\frac{2}{1+t^2}+\frac{1-t^2}{(1+t^2)^2}2\log t
 \end{align*}
 $$
 
-であるから，\eqref{1}に代入して
+であるから，[1](#1)に代入して
      \[f'(t)=\frac{-2(1-t^2)}{(1+t^2)^2}\log t\]
 である．$\cdots$(答)

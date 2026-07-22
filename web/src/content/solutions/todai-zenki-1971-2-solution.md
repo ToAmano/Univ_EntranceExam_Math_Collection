@@ -35,7 +35,7 @@ title: "TODAI 1971 zenki Q2 (solution)"
      \Longleftrightarrow&a_n\not=1\label{1}
      \end{align}
 である．$x\not=2$ならば，$a_1\not=1$だから，漸化式より帰納的に
-$a_n\not=1$である．これと\eqref{1}より題意は示された．$\Box$
+$a_n\not=1$である．これと[1](#1)より題意は示された．$\Box$
 
 2.  漸化式および$x>0$から，$a_n>0$であることに注意すると，$a_{n+1}$は$a_n$の単調増加関数である．
 $x<2$ならば$a_1<1$である．そこで以下$k\in\mathbb{N}$に対して$a_k<1$が成立すると仮定すると
@@ -55,7 +55,7 @@ $x<2$ならば$a_1<1$である．そこで以下$k\in\mathbb{N}$に対して$a_k
 
 ここで，漸化式より，$k\le n$のとき，
      \begin{align*}
-     &2(a_{k+1}-a_k)=(a_k-1)^2>\epsilon^2&(\because\eqref{2})
+     &2(a_{k+1}-a_k)=(a_k-1)^2>\epsilon^2&(\because[2](#2))
      \end{align*}     
 となる．$k$について和をとって，
      \begin{align*}

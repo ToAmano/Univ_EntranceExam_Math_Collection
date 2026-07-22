@@ -9,10 +9,10 @@ title: "KYODAI 1991 kouki Q6 (solution)"
 
 ## 【解】
 
-### (1)
-
+  (1)
   関数$f(x)$を
   
+
 $$
 \begin{align*}
 f(x) = e^x - e^a - (x-a)e^a
@@ -21,6 +21,7 @@ $$
 
   とおくと，一階微分は
   
+
 $$
 \begin{align*}
 f'(x) = e^x - e^a
@@ -42,6 +43,7 @@ $$
 
   従って，$f(x)$は$x=a$で最小値をとるから，
   
+
 $$
 \begin{align*}
 & f(x) \ge f(a) = 0      \\\iff& e^x \ge e^a + (x-a)e^a
@@ -50,11 +52,11 @@ $$
 
   である．よって題意は示された． $\cdots$(答)
 
-### (2)
-
-### (1)
-で示した不等式で $x = \sin\pi x$ として，$[ 0, 1]$で積分すると
   
+  (2)
+  (1)で示した不等式で $x = \sin\pi x$ として，$[ 0, 1]$で積分すると
+  
+
 $$
 \begin{align*}
 \int_0^1 e^{\sin\pi x} dx & \ge\int_0^1 e^a(\sin\pi x + (1-a)) dx                    \\& = e^a \left[ -\frac{1}{\pi}\cos\pi x + (1-a)x \right]_0^1 \\& = e^a \left[ -\frac{1}{\pi}(-1-1) + (1-a) \right]\\& = e^a \left(\frac{2}{\pi} + 1 - a  \right)
@@ -64,6 +66,7 @@ $$
   となる．
   $a$は任意だが，$a=\frac{2}{\pi}$を代入して
   
+
 $$
 \begin{align*}
 \int_0^1 e^{\sin\pi x} dx \ge e^{\frac{2}{\pi}}\left(\frac{2}{\pi} + 1 - \frac{2}{\pi}\right) = e^{\frac{2}{\pi}}

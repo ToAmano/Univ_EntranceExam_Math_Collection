@@ -40,6 +40,7 @@ title: "TODAI 1990 zenki Q1 (solution)"
 
 ここで簡単のため，
      
+
 $$
 \begin{align*}
 &A= \int_1^n\frac{1}{\sqrt{x}}\,dx&B= \frac{1}{\sqrt{2}}\int_1^n\frac{1}{\sqrt{x}+1/2}\,dx
@@ -48,6 +49,7 @@ $$
 
 とおく．グラフの面積を比較して，$n$が十分大きい時，
      
+
 $$
 \begin{align}
 &A+\frac{1}{\sqrt{n+1}}\le a_n\le A+1\nonumber\\&2\sqrt{n}+\frac{1}{\sqrt{n+1}}-2\le a_n\le 2\sqrt{n}-1\label{1}
@@ -58,6 +60,7 @@ $$
 
 同様にして$b_n$についても，
      
+
 $$
 \begin{align}
 &B+\frac{1}{\sqrt{2n+3}}\le b_n\le B+\frac{1}{\sqrt{3}}\nonumber\\&\sqrt{2n+1}+\frac{1}{\sqrt{2n+3}}-\sqrt{3}\le b_n\le\sqrt{2n+1}\label{2}
@@ -66,20 +69,23 @@ $$
 
 となる．この左辺を$D$とおく．
 
-\eqref{1}の両辺は$\infty$に発散するから，挟み撃ちの定理から
+[1](#1)の両辺は$\infty$に発散するから，挟み撃ちの定理から
      \[a_n\to\infty\]
 である．$\cdots$(答)
 
-次に$n$が十分大きい時，\eqref{1}，\eqref{2}の両辺は正であることから，
+次に$n$が十分大きい時，[1](#1)，[2](#2)の両辺は正であることから，
      
+
 $$
 \begin{align*}
 \frac{D}{2\sqrt{n}-1}\le\frac{b_n}{a_n}\le\frac{\sqrt{2n+1}}{C}
 \end{align*}
 $$
+
      
 である．
      
+
 $$
 \begin{align*}
 \text{(左辺)}&= \frac{D}{2\sqrt{n}-1}\\&=\frac{\sqrt{2n+1}+1/\sqrt{2n+3}-\sqrt{3}}{2\sqrt{n}-1}\\&=\frac{\sqrt{2+1/n}}{2-1/\sqrt{n}}+\frac{1/\sqrt{2n+3}-\sqrt{3}}{2\sqrt{n}-1}\\&\limit{n}{\infty}\frac{\sqrt{2}}{2}
@@ -88,6 +94,7 @@ $$
 
 および
      
+
 $$
 \begin{align*}
 \text{(右辺)}&=\frac{\sqrt{2n+1}}{C}\\&=\frac{\sqrt{2n+1}}{2\sqrt{n}+1/\sqrt{n+1}-2}\\&=\frac{\sqrt{2+1/n}}{2+1/\sqrt{n^2+n}-2/\sqrt{n}}\\&\limit{n}{\infty}\frac{\sqrt{2}}{2}

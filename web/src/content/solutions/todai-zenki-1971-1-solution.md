@@ -11,6 +11,7 @@ title: "TODAI 1971 zenki Q1 (solution)"
 \begin{oframed}
 変数$t$が$0$から$\pi$まで動く時，
      
+
 $$
 \begin{align*}
 x=2\cos\left(t-\frac{\pi}{6}\right) , y=\cos\left(t+\frac{\pi}{3}\right)
@@ -25,6 +26,7 @@ $$
 
 \2 題意の距離の$2$乗を$L(t)$とおけば
      
+
 $$
 \begin{align*}
 L(t)&=x^2+y^2 \\&=4\cos^2\left(t-\frac{\pi}{6}\right)+\cos^2\left(t+\frac{\pi}{3}\right)\\&=\left(\sqrt{3}c+s\right)^2+\left(\frac{1}{2}c-\frac{\sqrt{3}}{2}s\right)^2 \\&=\frac{13}{4}c^2+\frac{7}{4}s^2+\frac{3\sqrt{3}}{2}sc  \\&=\frac{7}{4}+\frac{3}{2}c^2+\frac{3\sqrt{3}}{4}\sin2t \\&=\frac{5}{2}+\frac{3}{4}(\cos2t+\sqrt{3}\sin2t) \\&=\frac{5}{2}+\frac{3}{2}\sin\left(2t+\frac{\pi}{6}\right)
@@ -33,6 +35,7 @@ $$
 
 となる．$0\le t\le \pi$に注意して，求める距離$L$の最大小は，
      
+
 $$
 \begin{align*}
 \left\{\begin{array}{ll}
@@ -41,5 +44,6 @@ $$
           \end{array}\right.\tag{答}
 \end{align*}
 $$
+
      
 となる．

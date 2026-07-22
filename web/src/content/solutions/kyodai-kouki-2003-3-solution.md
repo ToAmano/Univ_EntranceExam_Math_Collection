@@ -11,20 +11,22 @@ title: "KYODAI 2003 kouki Q3 (solution)"
 
   解と係数の関係から
   
+
 $$
 \begin{align}
 & \alpha_1 \alpha_2 \alpha_3                                 = -1 \label{2003-3:eq:1}\\& \alpha_2 \alpha_3 + \alpha_3 \alpha_1 + \alpha_1 \alpha_2  = b  \label{2003-3:eq:2}\\& \alpha_1 + \alpha_2 + \alpha_3                             = -a \label{2003-3:eq:3}
 \end{align}
 $$
 
-  である.$\eqref{2003-3:eq:1}$より，どの$\alpha$も$0$ではない．
-  $\eqref{2003-3:eq:3}$において$a \in \mathbb{R}$ だから, $\alpha_1 \sim \alpha_3$ のうち,1つ又は3つが実数の場合を調べれば良い.
+  である.[(式1)](#2003-3:eq:1)より，どの$\alpha$も$0$ではない．
+  [(式3)](#2003-3:eq:3)において$a \in \mathbb{R}$ だから, $\alpha_1 \sim \alpha_3$ のうち,1つ又は3つが実数の場合を調べれば良い.
   （二つのみ実数の時は，$a$が虚数となり不適）
 
   \begin{itemize}
     \item[$1$] $ \alpha_1, \alpha_2, \alpha_3 \in \mathbb{R} $の時
           題意の条件より
           
+
 $$
 \begin{align*}
 \alpha_1 & = \alpha_2 \pm\sqrt{3}\\\alpha_2 & = \alpha_3 \pm\sqrt{3}\\\alpha_3 & = \alpha_1 \pm\sqrt{3}
@@ -33,6 +35,7 @@ $$
 
           だが, 一つ目と二つ目の式から
           
+
 $$
 \begin{align*}
 \alpha_1 = \alpha_3 \pm\sqrt{3}\pm\sqrt{3}\\
@@ -52,8 +55,9 @@ $$
           $\alpha_1,\alpha_2,\alpha_3$について対称だから，
           $\alpha_1 \in \mathbb{R}$, $\alpha_2, \alpha_3 \notin \mathbb{R}$
           の時を考えれば十分．
-          $\eqref{2003-3:eq:1,2003-3:eq:3}$より，
+          [(式3)](#2003-3:eq:1,2003-3:eq:3)より，
           
+
 $$
 \begin{align*}
 \alpha_2\alpha_3  & = -\frac{1}{\alpha_1}\in\mathbb{R}\alpha_2+\alpha_3 & = -a -\alpha_1 \in\mathbb{R}
@@ -64,6 +68,7 @@ $$
           このもとで一つ目の式より，$\alpha_2$と$\alpha_3$の実部は等しくないといけない．
           すなわち
           
+
 $$
 \begin{align*}
 \alpha_3 = \bar{\alpha_2}
@@ -77,6 +82,7 @@ $$
 
           従って，題意の条件$|\alpha_i-\alpha_j|=\sqrt{3}$は
           
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -88,8 +94,9 @@ $$
 
           とおける.
 
-          $\alpha_1$を求めるため，$\eqref{2003-3:eq:1}$に代入して整理すると
+          $\alpha_1$を求めるため，[(式1)](#2003-3:eq:1)に代入して整理すると
           
+
 $$
 \begin{align*}
 & \alpha_1^3 \pm 3 \alpha_1^2 + 3 \alpha_1 + 1  = 0 \\\therefore& \begin{dcases}
@@ -101,6 +108,7 @@ $$
 
           を得る．従って，
           
+
 $$
 \begin{align*}
 (\alpha_1, \alpha_2, \alpha_3)
@@ -108,8 +116,9 @@ $$
 \end{align*}
 $$
 
-          となり，$\eqref{2003-3:eq:2,2003-3:eq:3}$に代入すると
+          となり，[(式3)](#2003-3:eq:2,2003-3:eq:3)に代入すると
           
+
 $$
 \begin{align*}
 (a,b) = (0,0), (3\sqrt[3]{2}, 3\sqrt[3]{4})
@@ -128,6 +137,7 @@ $$
 
   以上により全ての場合が尽くされた．従って求める$(a,b)$は
   
+
 $$
 \begin{align*}
 (a,b) = (0,0), (3\sqrt[3]{2}, 3\sqrt[3]{4})

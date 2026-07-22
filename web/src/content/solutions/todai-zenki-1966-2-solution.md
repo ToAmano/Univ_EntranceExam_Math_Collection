@@ -17,6 +17,7 @@ title: "TODAI 1966 zenki Q2 (solution)"
 
 まず，$l$が$y$軸平行な時を考える．この時は$l:x=const$となるから，題意より
      
+
 $$
 \begin{align*}
 \forall y,x=4x+2y\Longleftrightarrow\forall y,3x+2y=0
@@ -26,14 +27,16 @@ $$
 となって矛盾．故に$l$は$y$軸平行ではなく，$a,b\in\mathbb{R}$に対して$y=f(x)=ax+b$
 とおける．故に任意の$x$に対し
      
+
 $$
 \begin{align}
 &f(x+3y)=4x+2y \nonumber\\\Longleftrightarrow&x+3(ax+b)=a(4x+2(ax+b))+b \nonumber\\\Longleftrightarrow&(3a+1)x+3b=(2a^2+4a)x+(2ab+b) \label{1}
 \end{align}
 $$
 
-が成り立つ．つまり\eqref{1}が$x$についての恒等式なので
+が成り立つ．つまり[1](#1)が$x$についての恒等式なので
      
+
 $$
 \begin{align*}
 \left\{\begin{array}{l}

@@ -11,6 +11,7 @@ title: "TODAI 1973 zenki Q3 (solution)"
      \begin{oframed}
      区間$1\le x\le 3$において次のように定義された関数$f(x)$がある．
           
+
 $$
 \begin{align*}
 f(x)=
@@ -35,6 +36,7 @@ $$
 
  $g(x)=f(x)-ax$とおく．
           
+
 $$
 \begin{align*}
 g(x)=
@@ -44,6 +46,7 @@ g(x)=
                \end{cases}
 \end{align*}
 $$
+
      
 である($g(x)$は連続)．$a$の値によって以下のようになる．\\
 
@@ -51,6 +54,7 @@ $$
      \underline{(i)$a\le0$の時}\\
      $g(x)$は増加関数だから，
           
+
 $$
 \begin{align*}
 V(a)=g(3)-g(1)=1-2a
@@ -79,6 +83,7 @@ $$
           
      また
           
+
 $$
 \begin{align*}
 \begin{cases}
@@ -90,6 +95,7 @@ $$
 
      であるから，
           
+
 $$
 \begin{align*}
 V(a)=&
@@ -108,6 +114,7 @@ $$
      \underline{(iii)$1\le a$の時}\\
      $g(x)$は減少関数だから，
           
+
 $$
 \begin{align*}
 V(a)=g(1)-g(3)=2a-1

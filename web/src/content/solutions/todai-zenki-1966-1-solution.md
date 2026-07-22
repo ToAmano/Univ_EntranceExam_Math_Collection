@@ -22,6 +22,7 @@ title: "TODAI 1966 zenki Q1 (solution)"
 
 $p,q\in\mathbb{N}$とする．$a=0.1p$，$b=0.1q$とおく．距離$x$の時の運賃を$f(x)$とする．
      
+
 $$
 \begin{align*}
 \left\{\begin{array}{l}
@@ -33,6 +34,7 @@ $$
 
 となる．後半の文章から
      
+
 $$
 \begin{align*}
 &\left\{\begin{array}{l}

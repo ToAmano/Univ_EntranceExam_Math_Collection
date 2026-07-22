@@ -27,8 +27,7 @@ title: "TITECH 1998 kouki Q2 (solution)"
   <figcaption>図 2: $C$上の点$P$と直線$l_1$の距離．</figcaption>
 </figure>
 
-### (1)
-
+  (1)
   まず、$Z = k$ での $C$ の切断面を求める．(1)の答えは最後に$k=0$とすれば求まる．
   対称性から $0 \le k$ とする.
   $l_1$と$l_2$の様子を[図1](#1998-2:fig:1)に示す．
@@ -38,14 +37,16 @@ title: "TITECH 1998 kouki Q2 (solution)"
   $\vec{OH}$ は $\vec{OP}$ の $l_1$ への射影だから,
   $l_1$の方向ベクトルを$\vec{n}=(0,1,1)$ として
   
+
 $$
 \begin{align}
 \vec{OH}& = \frac{\vec{OP} \cdot \vec{n}}{|\vec{n}|^2}\vec{n}\nonumber\\\therefore\left|\vec{OH}\right|& = \frac{|\vec{OP}\cdot\vec{n}|}{|\vec{n}|}\nonumber\\& = \frac{(Y+Z)^2}{2}\label{1998-2:eq:1}
 \end{align}
 $$
 
-  である．$\triangle OPH$ にピタゴラスの定理を用いて$\eqref{1998-2:eq:1}$を代入すると
+  である．$\triangle OPH$ にピタゴラスの定理を用いて[(式1)](#1998-2:eq:1)を代入すると
   
+
 $$
 \begin{align*}
 PH^2 = OP^2 - OH^2 = (X^2+Y^2+Z^2) - \frac{(Y+Z)^2}{2}
@@ -54,6 +55,7 @@ $$
 
   これが $1$ に等しいので,
   
+
 $$
 \begin{align}
 2(X^2+Y^2+Z^2) - (Y+Z)^2 = 2 \label{1998-2:eq:2}
@@ -62,8 +64,9 @@ $$
 
   を得る．これが$C$ の方程式である．
 
-  $Z=k$での切断面は，$\eqref{1998-2:eq:2}$に$Z=k$を代入して
+  $Z=k$での切断面は，[(式2)](#1998-2:eq:2)に$Z=k$を代入して
   
+
 $$
 \begin{align}
 2X^2 + Y^2 - 2kY + k^2 - 2 = 0 \nonumber\\
@@ -80,8 +83,9 @@ $$
   <figcaption>図 3: 楕円: $2x^2 + (y-k)^2 = 2$の様子</figcaption>
 </figure>
 
-  従って，$\eqref{1998-2:eq:3}$に$k=0$を代入して，$xy$平面での断面は
+  従って，[(式3)](#1998-2:eq:3)に$k=0$を代入して，$xy$平面での断面は
   
+
 $$
 \begin{align*}
 2x^2+y^2=2
@@ -90,17 +94,16 @@ $$
 
   である．$\cdots$(答)
 
-### (2)
-
+  
+  (2)
   次に，$C$を$z$軸周りに回転させた$R$の方程式について考える．
-
-### (2)
-の答えは，最後に$x=0$を代入すれば求まる．
+  (2)の答えは，最後に$x=0$を代入すれば求まる．
 
   $C$ の $z=k$ での切断面 $C_k$ を原点$O_{k}(0,0,k)$中心に回転させたものが$R$である．
   従って，$C_k$上の点で, 原点からの距離が最大の点を $A_k$, 最小の点 $B_k$ とおくと,
   この平面での回転体$R$の範囲は
   
+
 $$
 \begin{align*}
 O_KB_k^2 \le x^2+y^2 \le O_kA_k^2
@@ -109,6 +112,7 @@ $$
 
   であり，面積 $S_k$ は
   
+
 $$
 \begin{align}
 S_k = \pi(O_kA_k^2 - O_kB_k^2)\label{1998-2:eq:4}
@@ -130,6 +134,7 @@ $$
   ただし$-\pi \le \theta \le \pi$ とする.
   この時の$OQ$を考えると
   
+
 $$
 \begin{align*}
 \overline{\text{OQ}}^2
@@ -141,6 +146,7 @@ $$
   $\overline{\text{OQ}}^2$の最小値，最大値は$k$によって以下のようになる.
   まず最小値は
   
+
 $$
 \begin{align}
 \label{1998-2:eq:5}\begin{dcases}
@@ -152,8 +158,9 @@ $$
 
   であり，一方最大値は$\theta=\pi/2$のときで，$A_k(0, k+\sqrt{2})$で一定である．
   この時$\max \overline{\text{OQ}}^2 = \overline{\mathrm{OA_k}}^2 = (k+\sqrt{2})^2$である．
-  したがって, $\eqref{1998-2:eq:4,1998-2:eq:5}$から$Z=k$での$R$の領域及び面積$S_k$は以下のようになる.
+  したがって, [(式5)](#1998-2:eq:4,1998-2:eq:5)から$Z=k$での$R$の領域及び面積$S_k$は以下のようになる.
   
+
 $$
 \begin{align}
 & R =      \nonumber\\& \begin{dcases}
@@ -171,8 +178,9 @@ $$
 \end{align}
 $$
 
-  従って，求める$R$の$yz$平面での断面は，$\eqref{1998-2:eq:6}$に$k=z,x=0$を代入して
+  従って，求める$R$の$yz$平面での断面は，[(式6)](#1998-2:eq:6)に$k=z,x=0$を代入して
   
+
 $$
 \begin{align*}
 R & =
@@ -192,10 +200,11 @@ $$
   <figcaption>図 5: (2)の回答の領域，すなわち$R$ の $yz$ 平面での断面．</figcaption>
 </figure>
 
-### (3)
-
-  対称性から，$\eqref{1998-2:eq:7}$を$0\le k \le 2$で積分したものの2倍が求める体積である．
   
+  (3)
+  対称性から，[(式7)](#1998-2:eq:7)を$0\le k \le 2$で積分したものの2倍が求める体積である．
+  
+
 $$
 \begin{align}
 \frac{1}{2}V
@@ -205,6 +214,7 @@ $$
 
   である。各項積分すると
   
+
 $$
 \begin{align*}
 \int_0^{\sqrt{2}/2}(2k^2+2\sqrt{2}k+1)dk
@@ -213,8 +223,9 @@ $$
 \end{align*}
 $$
 
-  だから$\eqref{1998-2:eq:8}$に代入して
+  だから[(式8)](#1998-2:eq:8)に代入して
   
+
 $$
 \begin{align*}
 V
@@ -237,6 +248,7 @@ $$
   空間中の直線$l$が方程式$\vec{x}=\vec{x}_{0}+t\vec{a}$と表されている時，空間内の点$P$の位置ベクトル$\vec{p}$とすると
   $P$と$l$の距離は
   
+
 $$
 \begin{align*}
 d = \frac{\sqrt{|\vec{p}-\vec{x}_0|^2|\vec{a}|^2-\left[(\vec{p}-\vec{x}_{0})\cdot \vec{a}\right]^2}}{|\vec{a}|}
@@ -250,6 +262,7 @@ $$
 
   点$P$から$l$におろした垂線の足を$H$とすると，$\vec{X_0H}$は$\vec{X_0P}$の$l$への正射影だから
   
+
 $$
 \begin{align*}
 \vec{X_0H} = \frac{\vec{X_0P}\cdot \vec{a}}{|\vec{a}|^2}\vec{a}
@@ -258,6 +271,7 @@ $$
 
   であり，
   
+
 $$
 \begin{align*}
 \vec{HP} = \vec{X_0P} -\vec{X_0H}
@@ -267,6 +281,7 @@ $$
   の大きさを求めれば良い．
   変形すると
   
+
 $$
 \begin{align*}
 d

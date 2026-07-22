@@ -10,6 +10,7 @@ title: "TODAI 1994 zenki Q1 (solution)"
 \input{macros}
 \begin{oframed}
      
+
 $$
 \begin{align*}
 f(x)=x^4+x^3+\frac{1}{2}x^2+\frac{1}{6}x+\frac{1}{24} , 

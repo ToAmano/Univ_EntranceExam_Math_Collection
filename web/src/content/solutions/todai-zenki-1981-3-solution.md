@@ -28,6 +28,7 @@ $(x^2)'=2x$だから，$Q$での法線方向のベクトル$\vec{l}$は，
      \[\vtwo{X}{Y}=\vtwo{t}{t^2}+s\vtwo{-2t}{1}\]
 と書ける．(ハ)の条件から，
      
+
 $$
 \begin{align*}
 &\left|s\vtwo{-2t}{1}\right|=(t-t^2)\sqrt{1+4t^2}\\\Longleftrightarrow&s=\pm(t-t^2)
@@ -38,6 +39,7 @@ $$
       \[\vtwo{X}{Y}=\vtwo{t}{t^2}+(t-t^2)\vtwo{-2t}{1}\]
 である．従って
      
+
 $$
 \begin{align*}
 C: 
@@ -55,6 +57,7 @@ $$
 
 故に求める面積$S$は，上のように$S_1$，$S_2$をおいて，
      
+
 $$
 \begin{align}
 S=1-S_1-S_2\label{1}
@@ -63,6 +66,7 @@ $$
 
 と書ける．各項計算して
      
+
 $$
 \begin{align*}
 S_1&=\int_0^1x^2dx=\frac{1}{3}\\
@@ -72,6 +76,6 @@ S_1&=\int_0^1x^2dx=\frac{1}{3}\\
 \end{align*}
 $$
 
-であるから，\eqref{1}に代入して
+であるから，[1](#1)に代入して
      \[S=\frac{1}{3}\]
 である．$\cdots$(答)

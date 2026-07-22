@@ -11,6 +11,7 @@ title: "KYODAI 2004 kouki Q2 (solution)"
 
   与式の両辺$0$以上なのでを二乗して，
   
+
 $$
 \begin{align}
 & |\alpha+(it+t+1)|^2 \leq 1                                                                                            \\& |\alpha|^2 + (it+t+1)\overline{\alpha} + (-it+t+1)\alpha + |it+t+1|^2                      \leq 1                     \\& |\alpha|^2 + (\overline{\alpha}-\alpha)it + (\alpha+\overline{\alpha})(t+1) + (t+1)^2+t^2  \leq 1                     \\& 2t^2 + 2t + (\overline{\alpha}-\alpha)it + (\alpha+\overline{\alpha})(t+1)  + |\alpha|^2   \leq 0 \label{2004-2:eq:1}
@@ -21,6 +22,7 @@ $$
 
   まず，
   
+
 $$
 \begin{align*}
 \Re(\alpha) & =X \in\mathbb{R}\\\Im(\alpha) & =Y \in\mathbb{R}
@@ -29,14 +31,16 @@ $$
 
   とおくと
   
+
 $$
 \begin{align*}
 & \alpha+\overline{\alpha}=2X    \\& i(\overline{\alpha}-\alpha)=2Y \\& |\alpha|^2=X^2+Y^2
 \end{align*}
 $$
 
-  だから,$\eqref{2004-2:eq:1}$に代入して
+  だから,[(式1)](#2004-2:eq:1)に代入して
   
+
 $$
 \begin{align}
 2t^2+2(X+Y+1)t + X^2+2X+Y^2 \le 0 \label{2004-2:eq:2}
@@ -47,6 +51,7 @@ $$
   左辺を $f(t)$ とすると，\label{2004-2:eq:2}を満たす$t \in \mathbb{R}$ の存在条件は
   $f(t)=0$ の判別式 $D$ が0以上であることで，
   
+
 $$
 \begin{align*}
 & D/4 = (X+Y+1)^2 - 2(X^2+2X+Y^2) \geq 0  \\\therefore& (X-Y+1-\sqrt{2})(X-Y+1+\sqrt{2}) \leq 0
@@ -70,6 +75,7 @@ $$
 
   検算の例として，境界線上の点$\alpha=\sqrt{2}-1$で実際に$t$が存在するかをチェックしてみよう．
   
+
 $$
 \begin{align*}
 |(1+i)t+\sqrt{2}|^2             & \leq 1 \\

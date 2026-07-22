@@ -18,6 +18,7 @@ title: "KYODAI 1991 kouki Q3 (solution)"
 
   対称性から，$\vec{a}$を
   
+
 $$
 \begin{align*}
 \vec{a} = \begin{pmatrix}1 \\ 0 \\ 0\end{pmatrix}
@@ -28,6 +29,7 @@ $$
   次に$\vec{b}$を$xy$平面においてもよく，
   題意の条件$\vec{a}\cdot\vec{b}=\cos\gamma$より，
   
+
 $$
 \begin{align*}
 \vec{b} = \begin{pmatrix} \cos\gamma\\\sin\gamma\\ 0\end{pmatrix}
@@ -36,6 +38,7 @@ $$
 
   とおける．残りの$\vec{c}$を一般性を保って
   
+
 $$
 \begin{align}
 & \vec{c} = \begin{pmatrix} p                    \\ q \\ r\end{pmatrix} \\& p^2 q^2 + r^2 = 1 \label{1991-3:eq:1}
@@ -47,6 +50,7 @@ $$
   題意の残りの条件，$\vec{b}\cdot\vec{c}=\cos\alpha$, $\vec{a}\cdot\vec{c}=\cos\beta$に
   これらの座標を代入して
   
+
 $$
 \begin{align*}
 \cos\alpha = \vec{b}\cdot\vec{c} = pc + q \sin r \quad\cdots\textcircled{2}\\\cos\beta = \vec{a}\cdot\vec{c} = p \quad\cdots\textcircled{3}
@@ -55,6 +59,7 @@ $$
 
   となる．従って，
   
+
 $$
 \begin{align*}
 A = \cos^2 \alpha+ \cos^2 \beta + \cos^2 \gamma - 2\cos\alpha\cos\beta\cos\gamma
@@ -63,14 +68,16 @@ $$
 
   とおくと，
   
+
 $$
 \begin{align*}
 A & = (p\cos\gamma + q \sin\gamma)^2 + p^2 + \cos^2 \gamma - 2(p\cos\gamma + q \sin\gamma) p \cos\gamma\\& = (p\cos\gamma + q \sin\gamma)(q \sin\gamma - p\cos\gamma) + p^2 + \cos^2\gamma\\& = q^2 \sin^2 \gamma - p^2 \cos^2\gamma + p^2 + \cos^2 \gamma& = (p^2 + q^2) \sin^2 r + c^2 r^2
 \end{align*}
 $$
 
-  と計算できる．$\eqref{1991-3:eq:1}$より
+  と計算できる．[(式1)](#1991-3:eq:1)より
   
+
 $$
 \begin{align*}
 0 \le A \le(p^2 + q^2 + r^2) \sin^2 \gamma + \cos^2 \gamma = \sin^2 \gamma + \cos^2 \gamma = 1 \\\therefore
@@ -84,6 +91,7 @@ $$
   次に等号成立条件について考える．
   まず左側の等号が成立するのは，$A$の形から
   
+
 $$
 \begin{align*}
 (p^2+q^2) \sin^2 r = 0 \land\cos^2 \gamma = 0
@@ -97,6 +105,7 @@ $$
   
   最後に右側の等号が成立するのは，
   
+
 $$
 \begin{align*}
 r^2 = 0 \iff r=0

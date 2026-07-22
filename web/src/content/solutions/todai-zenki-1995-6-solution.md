@@ -40,7 +40,7 @@ title: "TODAI 1995 zenki Q6 (solution)"
           \end{align}
      となる．これは$X$，$Y$によらない定数である．$\Box$
 
-2.  $p=e^t$とする．$t$が任意実数だから$p>0$である．\eqref{1}に値を代入して
+2.  $p=e^t$とする．$t$が任意実数だから$p>0$である．[1](#1)に値を代入して
           \begin{align}
           S&=(5p^2+p^{-1})(p^2+p^{-1})\nonumber \\
           &=5p^4+6p+p^{-2} \label{2}
@@ -58,7 +58,7 @@ title: "TODAI 1995 zenki Q6 (solution)"
                S  &   & \se&                          &\ne \\ \hline
                \end{array}
           \end{align*}
-     したがって\eqref{2}とあわせて
+     したがって[2](#2)とあわせて
           \begin{align*}
           \min S&=5\left(\frac{1}{5}\right)^{4/3}+6\left(\frac{1}{5}\right)^{1/3}+5^{2/3} \\
           &=7\left(\frac{1}{5}\right)^{1/3}+5^{2/3}\cdots\text{(答)}

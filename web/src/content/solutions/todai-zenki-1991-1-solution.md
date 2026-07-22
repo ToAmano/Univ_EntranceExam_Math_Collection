@@ -18,6 +18,7 @@ title: "TODAI 1991 zenki Q1 (solution)"
 
 題意の確率$p_n$とおくと，対称性から
     
+
 $$
 \begin{align*}
 &p_{n+1}=\frac{1}{3}(1-p_n) \\\therefore&p_{n+1}-\frac{1}{4}=\frac{-1}{3}\left(p_n-\frac{1}{4}\right)
@@ -26,6 +27,7 @@ $$
 
 $p_0=1$だから，繰り返し用いて
      
+
 $$
 \begin{align*}
 p_n=\frac{1}{4}\left\{1-\left(\frac{-1}{3}\right)^{n-1}\right\}\tag{答}

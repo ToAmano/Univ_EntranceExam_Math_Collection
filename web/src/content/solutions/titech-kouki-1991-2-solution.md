@@ -22,6 +22,7 @@ title: "TITECH 1991 kouki Q2 (solution)"
   点Pが直線DA上にくる時，$\alpha = \pi/6$であることに注意する．線分PO と角 $\theta$ をなす半直線 $l, m$ とする．$\theta$を大きくしていったとき，$l, m$ が正方形ABCDを通る条件は，$\alpha$ によって異なるため，
   
 <span id="1991-2:eq:1"></span><span id="1991-2:eq:2"></span>
+
 $$
 \begin{cases}
 0     &\le \alpha \le \pi/6 \\
@@ -29,15 +30,16 @@ $$
 \end{cases}
 $$
 
-  の2つの場合分けで考える．$\eqref{1991-2:eq:1}$ の場合は，$\theta$ が最大となるとき $l, m$ は A または B を通る．したがって，$\min \angle \mathrm{OP}(\alpha)\mathrm{B}$, $\min \angle \mathrm{OP}(\alpha)\mathrm{A}$ のうち，小さい方が最大の $\theta$ を与える．一方で$\eqref{1991-2:eq:2}$ の場合は，$\theta$ が最大となるとき $l, m$ は B または D を通る．したがって，$\min \angle \mathrm{OP}(\alpha)\mathrm{B}$, $\min \angle \mathrm{OP}(\alpha)\mathrm{C}$ のうち，小さい方が最大の $\theta$ を与える．これらの場合をそれぞれ図に示す．
+  の2つの場合分けで考える．[(式1)](#1991-2:eq:1) の場合は，$\theta$ が最大となるとき $l, m$ は A または B を通る．したがって，$\min \angle \mathrm{OP}(\alpha)\mathrm{B}$, $\min \angle \mathrm{OP}(\alpha)\mathrm{A}$ のうち，小さい方が最大の $\theta$ を与える．一方で[(式2)](#1991-2:eq:2) の場合は，$\theta$ が最大となるとき $l, m$ は B または D を通る．したがって，$\min \angle \mathrm{OP}(\alpha)\mathrm{B}$, $\min \angle \mathrm{OP}(\alpha)\mathrm{C}$ のうち，小さい方が最大の $\theta$ を与える．これらの場合をそれぞれ図に示す．
 
   これらの条件を数式に起こすと
   
 <span id="1991-2:eq:3"></span><span id="1991-2:eq:4"></span>
+
 $$
 \max\theta = \begin{cases}
-\min \left(\min \angle \mathrm{OPB}, \min \angle \mathrm{OPA}\right) & $\displaystyle 0 \le \alpha \le \frac{\pi}{6}$ \\
-    \min \left(\min \angle \mathrm{OPB}, \min \angle \mathrm{OPD}\right) & $\displaystyle \frac{\pi}{6} \le \alpha \le \frac{\pi}{4}$ 
+\min \left(\min \angle \mathrm{OPB}, \min \angle \mathrm{OPA}\right) & 0 \le \alpha \le \frac{\pi}{6} \\
+    \min \left(\min \angle \mathrm{OPB}, \min \angle \mathrm{OPD}\right) & \frac{\pi}{6} \le \alpha \le \frac{\pi}{4} 
 \end{cases}
 $$
 
@@ -51,6 +53,7 @@ $$
 
   まず，$\angle \mathrm{OP}(\alpha)\mathrm{A}$, $\angle \mathrm{OP}(\alpha)\mathrm{B}$, $\angle \mathrm{OP}(\alpha)\mathrm{D}$の表現について考える．対称性から$\angle \mathrm{OP}(\alpha)\mathrm{A}$について考えれば十分である．$\triangle \mathrm{OPA}$に余弦定理を用いると，
   
+
 $$
 \begin{align*}
 \cos\angle\mathrm{OPA}& = \frac{\mathrm{OP}^2 + \mathrm{PA}^2 - \mathrm{OA}^2}{2 \mathrm{OP} \cdot \mathrm{PA}}\\& = \frac{2 + \mathrm{PA}^2 }{4\mathrm{PA}}\\& = \frac{1}{4}\left(\mathrm{PA} + \frac{2}{\mathrm{PA}}\right)
@@ -59,6 +62,7 @@ $$
 
   を得る．ここで，PがK上の点であるから$\mathrm{OP} = 2$であること，および$\mathrm{OA}=\sqrt{2}$を利用した．ここで新しく関数$f(x)$を
   
+
 $$
 \begin{align*}
 f(x) = \frac{1}{4}\left(x + \frac{2}{x}\right)\quad(x > 0)
@@ -67,6 +71,7 @@ $$
 
   で定義すると，残りの2つの角についても同様に，
   
+
 $$
 \begin{align*}
 \cos\angle\mathrm{OPA}& = f(\mathrm{PA}) \\\cos\angle\mathrm{OPB}& = f(\mathrm{PB}) \\\cos\angle\mathrm{OPD}& = f(\mathrm{PD})
@@ -101,6 +106,7 @@ $$
 
   この場合，
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -112,6 +118,7 @@ $$
 
   だから，$f(x)$のグラフの増減から，
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -121,13 +128,14 @@ $$
 \end{align*}
 $$
 
-  となる．ここで$\beta=f(\sqrt{8-2\sqrt{3}})$とおいた．$f(x)$のグラフの概形より$\sqrt{3}/2>\beta$だから，このときの$\max \theta$は$\eqref{1991-2:eq:3}$より$\cos \angle \mathrm{APO} = \frac{\sqrt{3}}{2}$すなわち$\max \theta=\pi/6$である．
+  となる．ここで$\beta=f(\sqrt{8-2\sqrt{3}})$とおいた．$f(x)$のグラフの概形より$\sqrt{3}/2>\beta$だから，このときの$\max \theta$は[(式3)](#1991-2:eq:3)より$\cos \angle \mathrm{APO} = \frac{\sqrt{3}}{2}$すなわち$\max \theta=\pi/6$である．
 
   
   (ii) $\pi/6 \le \alpha \le \pi/4$の場合
 
   この場合，
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -139,6 +147,7 @@ $$
 
   だから，$f(x)$のグラフの増減から，
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -148,7 +157,7 @@ $$
 \end{align*}
 $$
 
-  となる．$\sqrt{3}/2>\sqrt{6}{3}$より，したがってこのときの$\max \theta$は$\eqref{1991-2:eq:4}$より$cos \angle \mathrm{DPO} = \frac{\sqrt{3}}{2}$すなわち$\max \theta=\pi/6$である．
+  となる．$\sqrt{3}/2>\sqrt{6}{3}$より，したがってこのときの$\max \theta$は[(式4)](#1991-2:eq:4)より$cos \angle \mathrm{DPO} = \frac{\sqrt{3}}{2}$すなわち$\max \theta=\pi/6$である．
 
   
   以上(i),(ii)から，どちらの場合も$\max \theta = \pi/6$である．したがって，求める最大値は$\displaystyle \max\theta = \frac{\pi}{6}$である．$\cdots$(答)
@@ -162,7 +171,7 @@ $$
   「2本の半直線が正方形ABCDを通る」というのをそのまま数式に起こすのは大変だが，最大値や最小値を求めるだけということで極端な場合だけを考えればすむことに気づけるかがポイント．
   また，図形的な図形的な感覚を使えばほとんど計算なしで答えも出せる良問だろう．
 
-  今回の回答では，$\eqref{1991-2:eq:3,1991-2:eq:4}$から$\theta$の最大値を関数$f(x)$を導入してかなり丁寧に求めたが，$\angle \mathrm{APO}$,$\angle \mathrm{BPO}$,$\angle \mathrm{DPO}$が単調に変化することは図から自明としてしまっても良いかもしれない．この場合は後半の解答は細かい数値の比較は除いて以下のように簡略化できる．
+  今回の回答では，[(式4)](#1991-2:eq:3,1991-2:eq:4)から$\theta$の最大値を関数$f(x)$を導入してかなり丁寧に求めたが，$\angle \mathrm{APO}$,$\angle \mathrm{BPO}$,$\angle \mathrm{DPO}$が単調に変化することは図から自明としてしまっても良いかもしれない．この場合は後半の解答は細かい数値の比較は除いて以下のように簡略化できる．
 
   
   (i) $0 \le \alpha \le \pi/6$の場合

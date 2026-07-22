@@ -11,6 +11,7 @@ title: "KYODAI 2005 kouki Q1 (solution)"
 
     $f(x)=x^3$とおくと，$f'(x)=3x^2$より，$x=t$ ($t>0$)における$C$の接線 $l$および法線 $m$ の方程式は
     
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -24,6 +25,7 @@ $$
 
     従って，$l$と$x$軸の交点$Q$の座標は
     
+
 $$
 \begin{align*}
 Q\left(\frac{2}{3}t, 0\right)
@@ -32,6 +34,7 @@ $$
 
     であり，$m$と$y$軸の交点$R$の座標は
     
+
 $$
 \begin{align*}
 R\left(0, t^3+\frac{1}{3t}\right)
@@ -42,6 +45,7 @@ $$
 
     以下，
     
+
 $$
 \begin{align*}
 g(x)=\frac{QR}{OQ}
@@ -50,6 +54,7 @@ $$
 
     と置いてその最小値を求める．$t>0$だから，$g(t)$は
     
+
 $$
 \begin{align*}
 g(t)
@@ -59,6 +64,7 @@ $$
 
     で与えられる．$t^2>0$より相加相乗平均の関係から
     
+
 $$
 \begin{align*}
 g(t)
@@ -70,6 +76,7 @@ $$
     等号成立は $3t^2 = \frac{1}{t^2}$ つまり $t = \frac{1}{\sqrt[4]{3}}$ の時である．
     以上から，求める最小値は
     
+
 $$
 \begin{align*}
 g\left(\frac{1}{\sqrt[4]{3}}\right) = \sqrt{3}

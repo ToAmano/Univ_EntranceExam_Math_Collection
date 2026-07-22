@@ -17,6 +17,7 @@ title: "TODAI 1974 zenki Q2 (solution)"
 
 線分の両端を$A(a,a^2)$，$B(b,b^2)$とする．ただし
      
+
 $$
 \begin{align}
 a<b\label{1}
@@ -25,6 +26,7 @@ $$
 
      とする．$l$の長さが$l$であるから
      
+
 $$
 \begin{align}
 |AB|=l \Longleftrightarrow |AB|^2=l^2  \nonumber\\(b-a)^2+(b^2-a^2)^2=l^2  \nonumber\\(b-a)^2\left(1+(a+b)^2\right)=l^2 \label{2}
@@ -32,9 +34,10 @@ $$
 $$
 
 となる．ここで$t=a+b$，$s=b-a$とおいて，$a$，$b$の存在条件を調べる．     
-まずは\eqref{1}，\eqref{2}に代入して
+まずは[1](#1)，[2](#2)に代入して
      
 <span id="3"></span><span id="4"></span>
+
 $$
 \begin{cases}
 s>0 \\
@@ -44,15 +47,17 @@ $$
 
 次に，$ab=\dfrac{t^2-s^2}{4}$であるから，$a$，$b$は$x$の$2$次方程式$x^2-tx+\dfrac{t^2-s^2}{4}=0$の異$2$実解であるから，判別式$D$として
      
+
 $$
 \begin{align*}
 &D>0\\\Longleftrightarrow&t^2-4\frac{t^2-s^2}{4}>0\\\Longleftrightarrow&s^2>0
 \end{align*}
 $$
 
-これは\eqref{3}から常に成立する．よって$s$，$t$の条件式は\eqref{3}，\eqref{4}である．
+これは[3](#3)から常に成立する．よって$s$，$t$の条件式は[3](#3)，[4](#4)である．
 このもとで$M(X,Y)$として$Y$が最小となる場合を考えれば良い($\because Y\ge0$)．
      
+
 $$
 \begin{align*}
 \left\{\begin{array}{l}
@@ -62,11 +67,12 @@ $$
 \end{align*}
 $$
 
-であるから，\eqref{4}を用いて$t$を消去して
+であるから，[4](#4)を用いて$t$を消去して
      
+
 $$
 \begin{align*}
-Y&=\frac{t^2+s^2}{4}\\&=\frac{1}{4}\left(s^2+\frac{l^2}{s^2}-1\right)\\&\ge\frac{1}{4}\left(2\sqrt{l^2}-1\right)\tag{$s,l>0$故AM-GM}\\&=\frac{1}{4}\left(2l-1\right)\tag{$l>0$}
+Y&=\frac{t^2+s^2}{4}\\&=\frac{1}{4}\left(s^2+\frac{l^2}{s^2}-1\right)\\&\ge\frac{1}{4}\left(2\sqrt{l^2}-1\right)\tag{s,l>0故AM-GM}\\&=\frac{1}{4}\left(2l-1\right)\tag{l>0}
 \end{align*}
 $$
 

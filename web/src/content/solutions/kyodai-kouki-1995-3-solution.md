@@ -14,6 +14,7 @@ title: "KYODAI 1995 kouki Q3 (solution)"
   まず，$c=0$の時，
   $g(x)$ は高々1次関数で，その最大値・最小値は端点で取るので$|x| \leqq 1$ の時，
   
+
 $$
 \begin{align}
 & \min\{g(1), g(-1)\}\leqq g(x) \leqq\max\{g(-1), g(1)\}\\\iff& a-b \leqq x \leqq a+b \label{1995-3:eq:1}
@@ -24,6 +25,7 @@ $$
 
   一方で，$|p(\pm 1)| \leqq 1$ だから
   
+
 $$
 \begin{align}
 -1 \leqq a \pm b \leqq 1  \label{1995-3:eq:2}
@@ -32,8 +34,9 @@ $$
 
   である．
 
-  $\eqref{1995-3:eq:1,1995-3:eq:2}$から
+  [(式2)](#1995-3:eq:1,1995-3:eq:2)から
   
+
 $$
 \begin{align*}
 -1 \le g(x) \le 1
@@ -46,6 +49,7 @@ $$
   $g(x)$ は2次関数で，その最大値・最小値は軸ないし端点でとる．
   軸は$x=-b/2c$だから，これらの点での$q(x)$の値は
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -60,6 +64,7 @@ $$
 
   ここで，$|p(x)| \le 1$より
   
+
 $$
 \begin{align*}
 |p(\pm 1)| = |a \pm b + c| \leqq 1
@@ -68,6 +73,7 @@ $$
 
   であるから，
   
+
 $$
 \begin{align}
 |g(\pm 1)| = |p(\pm 1)| \le 1 \label{1995-3:eq:5}
@@ -78,6 +84,7 @@ $$
 
   次に軸での値について，軸が最大または最小となりうるのは軸が$-1\le x\le 1$の範囲にあるときで
   
+
 $$
 \begin{align}
 & -1 \le\frac{-b}{2c}\le 1                        \\\iff& -1 \leqq\frac{b}{2c}\leqq 1 \label{1995-3:eq:3}
@@ -86,9 +93,10 @@ $$
 
   の場合を考えれば良い．この時三角不等式より
   
+
 $$
 \begin{align}
-\left|g\left(-\frac{b}{2c}\right)\right|& = \left|a-\frac{b^2}{4c}\right|\\& \leqq |a| + |\frac{b^2}{4c}|                                                    \\& \leqq |a| + \left|\frac{b}{2}\right|\left|\frac{b}{2c}\right|\\& \leqq |a| + \left|\frac{b}{2}\right|\quad(\because\text{$\eqref{1995-3:eq:3}$}) \\& \leqq |a+b| \quad(\because b \ge 0) \label{1995-3:eq:4}
+\left|g\left(-\frac{b}{2c}\right)\right|& = \left|a-\frac{b^2}{4c}\right|\\& \leqq |a| + |\frac{b^2}{4c}|                                                    \\& \leqq |a| + \left|\frac{b}{2}\right|\left|\frac{b}{2c}\right|\\& \leqq |a| + \left|\frac{b}{2}\right|\quad(\because\text{[(式3)](#1995-3:eq:3)}) \\& \leqq |a+b| \quad(\because b \ge 0) \label{1995-3:eq:4}
 \end{align}
 $$
 
@@ -96,14 +104,16 @@ $$
 
   一方で，$p(x)$の条件と三角不等式より
   
+
 $$
 \begin{align*}
 & |p(1)-p(0)| \le |p(1)| + |p(0)| \le 2 \\\therefore& |a+b| \le 2
 \end{align*}
 $$
 
-  だから，$\eqref{1995-3:eq:3}$より
+  だから，[(式3)](#1995-3:eq:3)より
   
+
 $$
 \begin{align}
 \left|g\left(-\frac{b}{2c}\right)\right|\le 2 \label{1995-3:eq:6}
@@ -112,7 +122,7 @@ $$
 
   である．
 
-  以上$\eqref{1995-3:eq:5,1995-3:eq:6}$より，全ての$x, |x|\leqq 1$に対して
+  以上[(式6)](#1995-3:eq:5,1995-3:eq:6)より，全ての$x, |x|\leqq 1$に対して
   $|g(x)| \leqq 2$ である．
   よって $c \neq 0$ の場合も示された．
 
@@ -127,6 +137,7 @@ $$
   ポイントはうまいこと$q(x)$を$p(x)$を利用して表すことである．
   三角不等式から
   
+
 $$
 \begin{align*}
 |q(x)|
@@ -136,6 +147,7 @@ $$
 
   であるが，$-1\le x \le 1$の範囲で
   
+
 $$
 \begin{align*}
 & |c||x^2-1| \le |c| = |p(0)| \le 1           \\& |bx+a+c| \le |\pm b+a+c| = |p(\pm 1)| \le 1
@@ -144,6 +156,7 @@ $$
 
   だから，
   
+
 $$
 \begin{align*}
 |q(x)|

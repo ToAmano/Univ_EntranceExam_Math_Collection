@@ -28,6 +28,7 @@ title: "TODAI 1972 zenki Q5 (solution)"
 $f(x)$を$f$などと略記する．題意の条件から
      
 <span id="1"></span><span id="2"></span><span id="3"></span>
+
 $$
 \begin{cases}
 u=\dint{o}{x}hfdt+h\dint{x}{1}fdt \\
@@ -36,8 +37,9 @@ u=\dint{o}{x}hfdt+h\dint{x}{1}fdt \\
 \end{cases}
 $$
 
-まず，\eqref{1}で$x=0$として,\eqref{3}から
+まず，[1](#1)で$x=0$として,[3](#3)から
      
+
 $$
 \begin{align*}
 0=h(0)\dint{x}{1}fdt
@@ -46,6 +48,7 @@ $$
 
 ここで$f$は任意の一次関数だから$\dint{x}{1}fdt\equiv0$とはならないので(例えば$f=x$)
      
+
 $$
 \begin{align}
 h(0)=0\label{0}
@@ -54,8 +57,9 @@ $$
 
 である．
 
- \eqref{1}の両辺を$x$で微分する．
+ [1](#1)の両辺を$x$で微分する．
      
+
 $$
 \begin{align*}
 u'&=hf+h'\int_x^1fdt-hf  \\&=h'\int_x^1fdt
@@ -64,22 +68,25 @@ $$
 
  さらに微分して
       
+
 $$
 \begin{align*}
 u''=h''\int_x^1fdt-h'f
 \end{align*}
 $$
 
-\eqref{2}を代入して
+[2](#2)を代入して
      
+
 $$
 \begin{align}
 \{1+h'\}f=h''\int_x^1fdt\label{4}
 \end{align}
 $$
 
-$f(x)$は任意の一次関数で，$a_{\not=0},b\in\mathbb{R}$として，\eqref{4}に$f(x)=ax+b$を代入したとき両辺$a$で割ることにより，$f(x)=x+b$のみ考えれば良いことがわかる．実際に代入して
+$f(x)$は任意の一次関数で，$a_{\not=0},b\in\mathbb{R}$として，[4](#4)に$f(x)=ax+b$を代入したとき両辺$a$で割ることにより，$f(x)=x+b$のみ考えれば良いことがわかる．実際に代入して
      
+
 $$
 \begin{align*}
 &\{1+h'\}(x+b)=\left[\frac{1}{2}t^2+bt\right]_x^1h'' \\
@@ -90,6 +97,7 @@ $$
 これが$b$についての恒等式だから係数比較して，
      
 <span id="5"></span><span id="6"></span>
+
 $$
 \begin{cases}
 1+h'-(1-x)h''=0 \\
@@ -97,22 +105,24 @@ $$
 \end{cases}
 $$
 
-となる．\eqref{5}を\eqref{6}に代入して
+となる．[5](#5)を[6](#6)に代入して
      
+
 $$
 \begin{align*}
 &(1+h')x-\frac{1}{2}(1+h')(1+x)=0 \\\Longleftrightarrow&(1+h')(x-1)=0
 \end{align*}
 $$
 
-これが$x$についての恒等式だから，$h'=-1$が従う．\eqref{0}と合わせて
+これが$x$についての恒等式だから，$h'=-1$が従う．[0](#0)と合わせて
      
+
 $$
 \begin{align*}
 h(x)=-x
 \end{align*}
 $$
 
-である．これが\eqref{1}，\eqref{2}，\eqref{3}を満たすことは容易に確かめられる．ゆえに求める関数は
+である．これが[1](#1)，[2](#2)，[3](#3)を満たすことは容易に確かめられる．ゆえに求める関数は
      \[h(x)=-x\]
 である．$\cdots$(答)

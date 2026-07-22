@@ -21,6 +21,7 @@ title: "KYODAI 1994 kouki Q5 (solution)"
   線分OPから線分OQに向かう角度を$\theta$とおく．
   弧PQの長さが$1$だから，
   
+
 $$
 \begin{align}
 r\theta = 1 \label{1994-5:eq:1}
@@ -29,6 +30,7 @@ $$
 
   を満たす．ここで題意より$1<2\pi r$だから，
   
+
 $$
 \begin{align}
 0 < \theta < 2\pi\label{1994-5:eq:2}
@@ -43,6 +45,7 @@ $$
 
   $S(\theta)$は[図2](#1994-5:fig:2)の斜線部の面積に等しく，
   
+
 $$
 \begin{align*}
 S(\theta)
@@ -64,6 +67,7 @@ $$
 
   $S(\theta)$は[図3](#1994-5:fig:3)の斜線部の面積に等しく，
   
+
 $$
 \begin{align*}
 S(\theta)
@@ -84,6 +88,7 @@ $$
   
   以上から，全ての場合で
   
+
 $$
 \begin{align*}
 S(\theta) = \frac{1}{2}\theta r^2 - \frac{1}{2}r^2\sin\theta
@@ -91,17 +96,19 @@ S(\theta) = \frac{1}{2}\theta r^2 - \frac{1}{2}r^2\sin\theta
 $$
 
   と書ける．
-  $\eqref{1994-5:eq:1}$を代入して変数を$\theta$に取り替えると
+  [(式1)](#1994-5:eq:1)を代入して変数を$\theta$に取り替えると
   
+
 $$
 \begin{align*}
 S(\theta) = \frac{1}{2}\frac{1}{\theta} - \frac{1}{2}\frac{1}{\theta^2}\sin\theta
 \end{align*}
 $$
 
-  である．この$\eqref{1994-5:eq:2}$での最大値を求めれば良い．
+  である．この[(式2)](#1994-5:eq:2)での最大値を求めれば良い．
   一階微分は
   
+
 $$
 \begin{align*}
 \frac{dS}{d\theta}& = -\frac{1}{2\theta^2} - \frac{1}{2}\frac{1}{\theta^4}(\cos\theta\cdot\theta^2 - \sin\theta\cdot 2\theta)     \\& = -\frac{1}{2\theta^3}[\theta + \theta\cos\theta - 2\sin\theta]\\& = -\frac{1}{2\theta^3}[\theta(1+\cos\theta) - 2\sin\theta]\\& = -\frac{1}{2\theta^3}[2\theta\cos^2\frac{\theta}{2} - 4\sin\frac{\theta}{2}\cos\frac{\theta}{2}]\\& = -\frac{2\cos\frac{\theta}{2}}{\theta^3}\left[\frac{\theta}{2}\cos\frac{\theta}{2} - \sin\frac{\theta}{2}\right]
@@ -110,6 +117,7 @@ $$
 
   ここで，$\theta=\pi$を代入すると$dS/d\theta=0$であり，それ以外の時は
   
+
 $$
 \begin{align*}
 \frac{dS}{d\theta}= -\frac{2\cos^2\frac{\theta}{2}}{\theta^3}\left[\frac{\theta}{2} - \tan\frac{\theta}{2}\right]
@@ -133,6 +141,7 @@ $$
 
   よって$S$は$\theta=\pi$で最大値をとり，その最大値は
   
+
 $$
 \begin{align*}
 \max S(\theta)
@@ -152,6 +161,7 @@ $$
   計算量はこちらの方が多くなるが，一般的な方法でテクニックが不要なので採用しやすいだろう．
   $dS/d\theta$の式において，正負は分子
   
+
 $$
 \begin{align*}
 f(\theta) = -(\theta + \theta\cos\theta - 2\sin\theta)
@@ -160,6 +170,7 @@ $$
 
   の正負と等しい．そこで$f(\theta)$の一階，二階微分から$f$の正負を求める．
   
+
 $$
 \begin{align*}
 f'(\theta)

@@ -9,7 +9,7 @@ title: "TODAI 2005 kouki Q1 (solution)"
 
 ## 【解】
 
-### (1)
+    (1)
 
     
 
@@ -20,6 +20,7 @@ title: "TODAI 2005 kouki Q1 (solution)"
 
     線分$PQ$の長さの二乗は
     
+
 $$
 \begin{align*}
 |PQ|^2
@@ -31,6 +32,7 @@ $$
     $0 < \theta < \pi$ より $\sin^2(\theta/2) > 0$ だから，
     両辺ルートをとって
     
+
 $$
 \begin{align*}
 |PQ| = 2\sin\frac{\theta}{2}
@@ -41,6 +43,7 @@ $$
     ここで，$\angle PQO = \frac{\pi-\theta}{2}$だから，
     三角形$OPQ$および$ABQ$の面積は，$|PO|=1$より
     
+
 $$
 \begin{align*}
 (\triangle OPQ)
@@ -51,6 +54,7 @@ $$
 
     である．題意の条件より$\triangle ABQ$の面積が$\triangle OPQ$の半分だから
     
+
 $$
 \begin{align*}
 \frac{1}{2}\sin\frac{\theta}{2}\sin\frac{\pi-\theta}{2} =  \frac{1}{2} ab \sin\frac{\pi-\theta}{2}
@@ -59,6 +63,7 @@ $$
 
     $0<\theta<\pi$より$\sin\frac{\pi-\theta}{2}\neq 0$だから
     
+
 $$
 \begin{align}
 ab = \sin\frac{\theta}{2}\label{2005-1:eq:1}
@@ -67,10 +72,11 @@ $$
 
     である．よって題意は示された．$\cdots$(答)
 
-### (2)
-
+    
+    (2)
     $\angle PQO=\frac{\pi-\theta}{2}$だから，$\triangle ABQ$に余弦定理を用いて
     
+
 $$
 \begin{align*}
 & |AB|^2 = |AQ|^2 + |BQ|^2 -2 |AQ||BQ|\cos\frac{\pi-\theta}{2}\\\therefore& |AB|^2 = a^2 + b^2 -2ab\sin\frac{\theta}{2}
@@ -79,8 +85,9 @@ $$
 
     を得る．$\theta$を固定して$a,b$を動かしたときの$|AB|^2$の最小値が$f(\theta)$を与える．
 
-    そこで，新しく$T=a+b$とおいて$\eqref{2005-1:eq:1}$を代入して
+    そこで，新しく$T=a+b$とおいて[(式1)](#2005-1:eq:1)を代入して
     
+
 $$
 \begin{align}
 |AB|^2
@@ -90,9 +97,10 @@ $$
 
     である．
 
-    以下，$\eqref{2005-1:eq:1}$のもとでの$T$の最小値を求めれば良い．
+    以下，[(式1)](#2005-1:eq:1)のもとでの$T$の最小値を求めれば良い．
     まず，Aが線分PQ上にあり，Bが線分QOにあることから
     
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -116,6 +124,7 @@ $$
 
     $(a,b)$ の存在範囲は上図太線部 (境界含む)だから，
     
+
 $$
 \begin{align*}
 (a,b)=(2\sin(\theta/2), \frac{1}{2})\text{の時 } t                 & =2\sin(\theta/2)+\frac{1}{2}\\(a,b)=(\frac{1}{2}, 2\sin(\theta/2))\text{の時 } t                 & =\frac{1}{2}+2\sin(\theta/2) \\(a,b)=(\sqrt{\sin(\theta/2)}, \sqrt{\sin(\theta/2)})\text{の時 } t & =2\sqrt{\sin(\theta/2)}
@@ -124,14 +133,16 @@ $$
 
     であることに注意すると，$T=a+b$の下限は
     
+
 $$
 \begin{align*}
 2\sqrt{\sin(\theta/2)}\le t
 \end{align*}
 $$
 
-    だから，$\eqref{2005-1:eq:2}$から
+    だから，[(式2)](#2005-1:eq:2)から
     
+
 $$
 \begin{align*}
 2\sin\left(\theta/2\right) - 2\sin^2\left(\theta/2\right)\le\overline{AB}^2
@@ -140,6 +151,7 @@ $$
 
     であり，$f(\theta)$は
     
+
 $$
 \begin{align}
 f(\theta) = 2\sin\left(\theta/2\right) - 2\sin^2\left(\theta/2\right)\label{2005-1:eq:3}
@@ -161,14 +173,16 @@ $$
     $(a,b)$ の存在範囲は上図太線部(境界含む)だから，
     $1^\circ$ と同様に考えて
     
+
 $$
 \begin{align*}
 2\sin\left(\theta/2\right)+\frac{1}{2}\le t
 \end{align*}
 $$
 
-    だから，$\eqref{2005-1:eq:2}$から
+    だから，[(式2)](#2005-1:eq:2)から
     
+
 $$
 \begin{align*}
 2\sin^2\left(\theta/2\right)+\frac{1}{4}\le\overline{AB}^2
@@ -177,6 +191,7 @@ $$
 
     であり，$f(\theta)$は
     
+
 $$
 \begin{align}
 f(\theta) = 2\sin^2\left(\theta/2\right)+\frac{1}{4}\label{2005-1:eq:4}
@@ -188,6 +203,7 @@ $$
     
     以上\label{2005-1:eq:3,2005-1:eq:4}より
     
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -199,14 +215,15 @@ $$
 
     である．$\cdots$(答)
 
-### (3)
-
+    
+    (3)
     $y = g(\theta)$, $y = h(\theta)$ は全区間で微分可能だから，これら二つの関数の境界，
     である$0 < \alpha < \pi$ かつ $\sin(\alpha/2) = \frac{1}{4}$ をみたす $\alpha$ に対して
     $f(\theta)$ の微分可能性を示せば良い．
     そのためには微分係数の左右極限が一致することを示せば良い．
     実際に計算すると，
     
+
 $$
 \begin{align*}
 \lim_{h \to +0}\frac{f(\alpha+h) - f(\alpha)}{h}& = g'(\alpha)                                               \\& = \cos\frac{\theta}{2}\left(1-2\sin\frac{\alpha}{2}\right)\\& = \frac{\sqrt{15}}{4}\left(1-\frac{1}{2}\right)\\& = \frac{\sqrt{15}}{8}\\\lim_{h \to +0}\frac{f(\alpha) - f(\alpha-h)}{-h}& = h'(\alpha)                                               \\& = 2\sin\frac{\alpha}{2}\cos\frac{\alpha}{2}\\& = 2\frac{1}{4}\frac{\sqrt{15}}{4}\\& = \frac{\sqrt{15}}{8}
@@ -219,6 +236,7 @@ $$
     以下，$y=f(\theta)$のグラフの概形と最大値を求める．
     新しく
     
+
 $$
 \begin{align*}
 t = \sin\frac{\theta}{2}
@@ -227,6 +245,7 @@ $$
 
     とおくと，(2)から
     
+
 $$
 \begin{align*}
 f(\theta) =
@@ -239,6 +258,7 @@ $$
 
     だから，$t$で微分すると
     
+
 $$
 \begin{align*}
 \frac{df}{dt} =
@@ -266,6 +286,7 @@ $$
     したがって，$y=f(\theta)$のグラフの概形は[図4](#2005-1:fig:4)で，
     最大値は
     
+
 $$
 \begin{align*}
 f\left(\frac{\pi}{3}\right) = \frac{1}{2}
@@ -287,16 +308,14 @@ $$
 
     **[別解](2)**
 
-### (2)
-
+    (2)
     $B(1-b, 0)$ である．$\vec{QA} = \frac{a}{2S\sin\frac{\theta}{2}} \begin{pmatrix} \cos\theta - 1 \\ \sin\theta \end{pmatrix} = \frac{a}{2S\sin\frac{\theta}{2}} \begin{pmatrix} -2\sin^2\frac{\theta}{2} \\ 2\sin\frac{\theta}{2}\cos\frac{\theta}{2} \end{pmatrix} = a \begin{pmatrix} -S \\ C \end{pmatrix}$ から，
     $A(1-aS, aC)$ だから．
     $\quad \overline{AB}^2 = \{(1-aS)-(1-b)\}^2 + (aC)^2 = (b-aS)^2 + a^2C^2 = b^2 - 2abS + a^2S^2 + a^2C^2$
     $\quad = b^2 - 2abS + a^2(S^2+C^2) = a^2+b^2-2abS$
     となる．
 
-### (2)
- の (1) 以外
+    (2) の (1) 以外
 
     $b$ を消去する．$0 < a < 2S$, $0 < b < \dots$ から．$b=\frac{S}{a}$ より
     $$

@@ -19,6 +19,7 @@ title: "TITECH 1979 zenki Q1 (solution)"
  $\vec{a}=(1,1,1)$，$\vec{b}=(2,3,-1)$，$\vec{c}=(0,1,0)$とすると，$\vec{a}$，$\vec{b}$はそれぞれ，
 $l$，$m$の方向ベクトルである．$P_n$，$Q_n$が各直線上にあるので，実数$t_n$，$s_n$を用いて
      
+
 $$
 \begin{align*}
 &\vector{OP_n}=t_n\vec{a}&\vector{OQ_n}=\vec{c}+s_n\vec{b}
@@ -27,6 +28,7 @@ $$
 
 と表される．題意の条件から
      
+
 $$
 \begin{align}
 &\begin{cases}
@@ -44,6 +46,7 @@ $$
 
 ここで，
      
+
 $$
 \begin{align*}
 &|\vec{a}|^2=3&|\vec{b}|^2=14 \\&\vec{a}\cdot\vec{c}=1&\vec{b}\cdot\vec{c}=3 \\&\vec{a}\cdot\vec{b}=4
@@ -52,6 +55,7 @@ $$
 
 を代入して
      
+
 $$
 \begin{align}
 \begin{cases}
@@ -61,8 +65,9 @@ $$
 \end{align}
 $$
 
-\eqref{2}から$s_n$を消去して
+[2](#2)から$s_n$を消去して
      
+
 $$
 \begin{align*}
 t_{n+1}=\frac{1}{21}(8t_n+1) \\
@@ -72,22 +77,26 @@ $$
 
 繰り返し用いて
      
+
 $$
 \begin{align}
 t_n=\frac{1}{13}+\left(\frac{8}{21}\right)^{n-1}\left(t_1-\frac{1}{13}\right)\nonumber\\\limit{n}{\infty}\frac{1}{13}\label{3}
 \end{align}
 $$
 
-故に\eqref{2}から
+故に[2](#2)から
      
+
 $$
 \begin{align}
-\lim_{n\to\infty}s_n&=\lim_{n\to\infty}\left(\frac{4t_n-3}{14}\right)\nonumber\\&=\frac{1}{14}\left(4\lim_{n\to\infty}t_n-3\right)\nonumber\\&=\frac{1}{14}\left(4\frac{1}{13}-3\right)&(\because\eqref{3})\nonumber\\&=\frac{-5}{26}\label{4}
+\lim_{n\to\infty}s_n&=\lim_{n\to\infty}\left(\frac{4t_n-3}{14}\right)\nonumber\\&=\frac{1}{14}\left(4\lim_{n\to\infty}t_n-3\right)\nonumber\\&=\frac{1}{14}\left(4\frac{1}{13}-3\right)&(\because[3](#3))\nonumber\\&=\frac{-5}{26}\label{4}
 \end{align}
 $$
+
           
 である．以上の結果から，
      
+
 $$
 \begin{align*}
 \vector{OP_n}&=t_n\vec{a}\\&\limit{n}{\infty}\frac{1}{13}\vec{a}\\&=\left(\frac{1}{13},\frac{1}{13},\frac{1}{13}\right)\\\vector{OQ_n}&=\vec{c}+s_n\vec{b}\\&\limit{n}{\infty}\vec{c}-\frac{5}{26}\vec{b}\\&=\left(\frac{-5}{13},\frac{11}{26},\frac{5}{26}\right)
@@ -96,6 +105,7 @@ $$
 
 となって，求める点は
      
+
 $$
 \begin{align*}
 &P_n\to\left(\frac{1}{13},\frac{1}{13},\frac{1}{13}\right)\\&Q_n\to\left(\frac{-5}{13},\frac{11}{26},\frac{5}{26}\right)

@@ -11,14 +11,14 @@ title: "TITECH 1990 kouki Q2 (solution)"
 
   $n \in \mathbb{N}$ に拡張して考えて良い．
 
-### (1)
- 数学的帰納法で題意を示す．
+  (1) 数学的帰納法で題意を示す．
 
   
 
   (i)
   $n=1, 2$ のとき
   
+
 $$
 \begin{align*}
 P_1(x) & = 1, P_2(x) = 1-2x                              \\
@@ -34,6 +34,7 @@ $$
   以下 $n=k, k+1 \in \mathbb{N}$ での成立を仮定し，$n=k+2$ での成立を示す．
   和積公式より，
   
+
 $$
 \begin{align*}
 \sin(2k+4)\theta& = 2\sin(2k+2)\theta\cos2\theta - \sin2k\theta\\\cos(2k+4)\theta& = 2\cos(2k+2)\theta\cos2\theta - \cos2k\theta
@@ -42,6 +43,7 @@ $$
 
   であり，ここに$n=k, k+1$ のときの $P_n(x), Q_n(x)$ を代入して
   
+
 $$
 \begin{align*}
 \sin(2k+4)\theta
@@ -55,6 +57,7 @@ $$
   を得る．ただし途中で半角公式$\cos2\theta = 1-2\sin^2\theta$を利用した．
   従って$x=\sin^2\theta$ とおいて
   
+
 $$
 \begin{align}
 \label{1990-2:eq:condition}\begin{dcases}
@@ -68,10 +71,11 @@ $$
 
   (i), (ii) より，数学的帰納法により題意は示された．
 
-### (2)
- 題意を示すには，因数定理より$P_n(x)$ の零点が$x=1/\alpha_{k}$であること，および$0$次の係数が$1$であることを示せば良い．
+  
+  (2) 題意を示すには，因数定理より$P_n(x)$ の零点が$x=1/\alpha_{k}$であること，および$0$次の係数が$1$であることを示せば良い．
   まずは前者から示す．$x=\sin^2\theta$ とすると、$\sin^2\theta$ の周期性から
   
+
 $$
 \begin{align}
 \label{1990-2:eq:1}
@@ -81,6 +85,7 @@ $$
 
   の範囲のみ考えれば良い．以下 $\theta$ をこの範囲で考える．
   
+
 $$
 \begin{align}
 \label{1990-2:eq:2}\sin(2\theta) = 0 \Leftrightarrow\theta = 0
@@ -89,14 +94,16 @@ $$
 
   だから、これ以外の時、(1)から
   
+
 $$
 \begin{align*}
 P_n(\sin^2\theta) = \frac{\sin(2n\theta)}{2n\sin(2\theta)}\qquad\cdots\cdots ②
 \end{align*}
 $$
 
-  とかける．したがって$P_n(\sin^2\theta)=0$ となるのは $\sin(2n\theta)=0$ のときである.この条件は$\eqref{1990-2:eq:1,1990-2:eq:2}$に注意して
+  とかける．したがって$P_n(\sin^2\theta)=0$ となるのは $\sin(2n\theta)=0$ のときである.この条件は[(式2)](#1990-2:eq:1,1990-2:eq:2)に注意して
   
+
 $$
 \begin{align*}
 \theta = \frac{k\pi}{2n}\quad(k=1, 2, \dots, n-1)
@@ -105,6 +112,7 @@ $$
 
   となる. これら $n-1$ 個の$\theta$に対して$x$は異なる値を取り，さらに $P_n(x)$ は $n-1$ 次式だから、これが $P_n(x)=0$ の全ての解である．これで1つ目の条件は示された．したがって因数定理から，$A\ne 0$ として
   
+
 $$
 \begin{align}
 \label{1990-2:eq:3}
@@ -112,8 +120,9 @@ $$
 \end{align}
 $$
 
-  とおける。以下 $A$ を求める。$P_n(x)$ の定数項を $a_n$ とすると、$\eqref{1990-2:eq:condition}$から
+  とおける。以下 $A$ を求める。$P_n(x)$ の定数項を $a_n$ とすると、[(式condition)](#1990-2:eq:condition)から
   
+
 $$
 \begin{align}
 \begin{dcases}
@@ -123,16 +132,18 @@ $$
 \end{align}
 $$
 
-  となり、帰納的に $a_n=1$ である．これで2つ目の条件が示された．$\eqref{1990-2:eq:3}$で定数項の係数を比較して
+  となり、帰納的に $a_n=1$ である．これで2つ目の条件が示された．[(式3)](#1990-2:eq:3)で定数項の係数を比較して
   
+
 $$
 \begin{align*}
 A            & \prod_{k=1}^{n-1}\left(-\sin^2\frac{k\pi}{2n}\right) = 1         \\\therefore A & = \frac{1}{\prod_{k=1}^{n-1} \left(-\sin^2\frac{k\pi}{2n}\right)}
 \end{align*}
 $$
 
-  だから、これを$\eqref{1990-2:eq:3}$に代入して
+  だから、これを[(式3)](#1990-2:eq:3)に代入して
   
+
 $$
 \begin{align}
 P_n(x) = \prod_{k=1}^{n-1}\left(1 - \frac{x}{\sin^2\frac{k\pi}{2n}}\right) = \prod_{k=1}^{n-1}(1-\alpha_k x)
@@ -141,10 +152,11 @@ $$
 
   を得る．以上より題意は示された．
 
-### (3)
-
+  
+  (3)
   $\displaystyle \sum_{k=1}^{n-1} \alpha_k$ は、(2)の結果より$P_n(x)$ の $x$ の1次の項の係数を $b_n$ として、
   
+
 $$
 \begin{align}
 \label{1990-2:eq:5}\sum_{k=1}^{n-1}\alpha_k = -b_n
@@ -153,6 +165,7 @@ $$
 
   と表せる。したがって，題意を示すには
   
+
 $$
 \begin{align}
 \label{1990-2:eq:4}
@@ -160,8 +173,9 @@ $$
 \end{align}
 $$
 
-  を示せばよい．ここで，$b_n$ については$\eqref{1990-2:eq:condition}$から
+  を示せばよい．ここで，$b_n$ については[(式condition)](#1990-2:eq:condition)から
   
+
 $$
 \begin{align}
 \label{1990-2:eq:6}\begin{dcases}
@@ -171,11 +185,12 @@ $$
 \end{align}
 $$
 
-  なる漸化式が成立する．これを用いて以下 $\eqref{1990-2:eq:4}$ がすべての$n$について成立することを数学的帰納法により示す．
+  なる漸化式が成立する．これを用いて以下 [(式4)](#1990-2:eq:4) がすべての$n$について成立することを数学的帰納法により示す．
 
   
   (i) $n=1, 2$ のとき
   
+
 $$
 \begin{align*}
 b_1 & = -\frac{2}{3}(1^2-1) = 0  \\
@@ -183,14 +198,15 @@ b_1 & = -\frac{2}{3}(1^2-1) = 0  \\
 \end{align*}
 $$
 
-  となり、$\eqref{1990-2:eq:6}$ の初期条件と一致するため成立する．
+  となり、[(式6)](#1990-2:eq:6) の初期条件と一致するため成立する．
 
   
   (ii) $n=k, k+1$ での成立を仮定する。すなわち、
   $b_k = -\frac{2}{3}(k^2 - 1)$, $b_{k+1} = -\frac{2}{3}((k+1)^2 - 1)$
   が成り立つと仮定する．このとき、$n=k+2$ での成立を示す．
-  $\eqref{1990-2:eq:6}$ の漸化式に $n=k$ を代入して仮定を用いると，
+  [(式6)](#1990-2:eq:6) の漸化式に $n=k$ を代入して仮定を用いると，
   
+
 $$
 \begin{align*}
 b_{k+2}& = \frac{1}{k+2}\left[ 2(k+1)(b_{k+1} - 2) - k b_k \right]\\& = \frac{1}{k+2}\left[ 2(k+1) \left\{ -\frac{2}{3}((k+1)^2 - 1) - 2 \right\} - k \left\{ -\frac{2}{3}(k^2 - 1) \right\}\right]\\& = \frac{1}{k+2}\left[ 2(k+1) \left\{ -\frac{2}{3}(k^2+2k) - 2 \right\} + \frac{2}{3}k(k^2 - 1) \right]\\& = \frac{1}{k+2}\left[ -\frac{4}{3}(k+1)(k^2+2k) - 4(k+1) + \frac{2}{3}k(k^2-1) \right]\\& = \frac{2}{3(k+2)}\left[ -2(k+1)k(k+2) - 6(k+1) + k(k-1)(k+1) \right]\\& = \frac{2(k+1)}{3(k+2)}\left[ -2k(k+2) - 6 + k(k-1) \right]\\& = \frac{2(k+1)}{3(k+2)}(-k^2 - 5k - 6)                                                                                         \\& = -\frac{2(k+1)}{3(k+2)}(k+2)(k+3)                                                                                             \\& = -\frac{2}{3}(k+1)(k+3)                                                                                                        \\& = -\frac{2}{3}((k+2)^2 - 1)
@@ -202,8 +218,9 @@ $$
   
 
   (i), (ii) より、すべての自然数 $n$ に対して $b_n = -\frac{2}{3}(n^2 - 1)$ が示された．
-  これと $\eqref{1990-2:eq:5}$ から、
+  これと [(式5)](#1990-2:eq:5) から、
   
+
 $$
 \begin{align*}
 \sum_{k=1}^{n-1}\alpha_k = -b_n = \frac{2}{3}(n^2-1)
@@ -221,6 +238,7 @@ $$
 
   第一種および第二種チェビシフ多項式$T_n(x), U_n(x)$は以下の式で定義される．
   
+
 $$
 \begin{align*}
 T_n(x) & = \cos(n\theta) \quad(\text{ただし } x = \cos\theta)                    \\
@@ -230,6 +248,7 @@ $$
 
   ここで、$T_n(x)$ も $U_n(x)$ も $n$ 次の多項式であることが帰納的に示せる．このように三角関数が$\cos\theta$に関する多項式に変換できるのは本問中の証明でみも見たように加法定理の帰結である．いくつか$n$の小さい値に対して例示すると
   
+
 $$
 \begin{align*}
 T_0(x) & = 1, \quad T_1(x) = x,               \\
@@ -242,6 +261,7 @@ $$
   のようになる．
   チェビシフ多項式は以下のような三項間漸化式を満たす．
   
+
 $$
 \begin{align*}
 T_{n+1}(x) & = 2xT_n(x) - T_{n-1}(x) \\
@@ -251,6 +271,7 @@ $$
 
   本文では$P_n(x)$と$Q_n(x)$が$\sin^{2}\theta$による関数として定義されているため漸化式が複雑になっている．また，$T_n(x)$と$U_n(x)$は
   
+
 $$
 \begin{align*}
 nU_{n-1}(x) = T'_n(x)
@@ -262,6 +283,7 @@ $$
   チェビシフ多項式には数多くの重要な性質があるが，ここでは例として母関数および直交性を紹介する．
   チェビシフ多項式の母関数は以下のように表される
   
+
 $$
 \begin{align*}
 \sum_{n=0}^{\infty} T_n(x) t^n & = \frac{1 - xt}{1 - 2xt + t^2}\\\sum_{n=0}^{\infty} U_n(x) t^n & = \frac{1}{1 - 2xt + t^2}
@@ -272,6 +294,7 @@ $$
   また、チェビシフ多項式は直交性を満たす．
   すなわち、$n, m \in \mathbb{Z}$ にたいして
   
+
 $$
 \begin{align*}
 \int_{-1}^{1} T_n(x) T_m(x)\frac{1}{\sqrt{1-x^2}}\, dx & = N_{n}\delta_{nm}\\\int_{-1}^{1}  U_n(x) U_m(x) \sqrt{1-x^2}\, dx         & = \frac{\pi}{2}\delta_{nm}
@@ -285,6 +308,7 @@ $$
 
   次に，バーゼル問題について紹介する．バーゼル問題は逆二乗和の収束値を求める問題であり，以下のように定義される．
   
+
 $$
 \begin{align*}
 \sum_{n=1}^{\infty}\frac{1}{n^2} = \frac{\pi^2}{6}
@@ -296,6 +320,7 @@ $$
 
   自然数$n$にたいして，$k=1,2,\dots,n$ として $\theta_k = \frac{k\pi}{2n+1}$ とおく．$0 < \theta_k < \frac{\pi}{2}$ から
   
+
 $$
 \begin{align}
 0 < \sin\theta_k < \theta_k < \tan\theta_k
@@ -304,6 +329,7 @@ $$
 
   だから，逆数をとって2乗して整理すると，
   
+
 $$
 \begin{align*}
 \frac{1}{\tan^2\theta_k}& \le\frac{1}{\theta_k^2}\le\frac{1}{\sin^2\theta_k}\\\frac{\pi^2}{(2n+1)^2}\left(-1 + \frac{1}{\sin^2\theta_k}\right)& \le\frac{1}{k^2}\le\frac{\pi^2}{(2n+1)^2}\frac{1}{\sin^2\theta_k}
@@ -312,6 +338,7 @@ $$
 
   $k$ について和をとって $\displaystyle A_n = \sum_{k=1}^n \frac{1}{\sin^2\theta_k}$ とおくと，
   
+
 $$
 \begin{align}
 \frac{\pi^2}{(2n+1)^2}\left(-n + A_n\right)\le\sum_{k=1}^n \frac{1}{k^2}\le\frac{\pi^2}{(2n+1)^2} A_n
@@ -320,6 +347,7 @@ $$
 
   だから，$A_n$ を求めると $\displaystyle \sum_{k=1}^n \frac{1}{k^2}$ が求まる．そして，$A_n$が本問(3)で求めたそのものである．したがって，(3)の結果を代入すると
   
+
 $$
 \begin{align*}
 \frac{\pi^2}{(2n+1)^2}\left(-n + \frac{2}{3}(n^2-1)\right)\le\sum_{k=1}^n \frac{1}{k^2}\le\frac{\pi^2}{(2n+1)^2}\frac{2}{3}(n^2-1)
@@ -328,6 +356,7 @@ $$
 
   両辺とも$n\to\infty$の極限を取ると$\pi^2/6$に収束するから，挟み撃ちの定理により
   
+
 $$
 \begin{align*}
 \sum_{k=1}^n \frac{1}{k^2}\longrightarrow\frac{\pi^2}{6}

@@ -24,6 +24,7 @@ title: "TODAI 1965 zenki Q4 (solution)"
  $O$を原点とし，$B$を$x$軸正方向，$C$を$y$軸正方向とする座標系を考える．$P(0,(1+k)t)$とおく．
 すると，まず$0\le(1+k)t\le1$より
      
+
 $$
 \begin{align}
 0\le t\le\frac{1}{1+k}\label{1}
@@ -32,6 +33,7 @@ $$
 
 である．また，内分点の条件から$Q(0,t)$であるから，$S$の$x$座標は
       
+
 $$
 \begin{align*}
 x^2+t^2=1 \\
@@ -41,11 +43,13 @@ $$
 
 である．故に四辺形の面積$f(t)$として
      
+
 $$
 \begin{align*}
 f(t)&=\frac{1}{2}|OP||RS| \\&=|OP||QS| \\&=(1+k)t\sqrt{1-t^2}\\&=(1+k)\sqrt{-\left(t^2-\frac{1}{2}\right)^2+\frac{1}{4}}
 \end{align*}
 $$
+
  
 グラフの概形は下図のようである．
      
@@ -61,6 +65,7 @@ $$
      \end{indentation}
 以上から，求める$P$の位置は，
      
+
 $$
 \begin{align*}
 \begin{cases}
@@ -69,5 +74,6 @@ $$
           \end{cases}
 \end{align*}
 $$
+
  
 である．

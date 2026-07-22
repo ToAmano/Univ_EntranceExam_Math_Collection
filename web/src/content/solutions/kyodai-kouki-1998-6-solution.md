@@ -9,10 +9,10 @@ title: "KYODAI 1998 kouki Q6 (solution)"
 
 ## 【解】
 
-### (1)
-
+  (1)
   半角公式により
   
+
 $$
 \begin{align*}
 \cos 2\theta& = 2cos^2\theta - 1
@@ -21,6 +21,7 @@ $$
 
   だから，$I_n$は
   
+
 $$
 \begin{align*}
 I_n
@@ -30,6 +31,7 @@ $$
 
   と変形できる．$t = \cos\theta$とおくと$dt/d\theta = - \sin\theta$だから
   
+
 $$
 \begin{align*}
 I_n = \int_{\sqrt{2}/2}^{1}\left(2t^2 - 1\right)^{n}\left(1-t^2\theta\right) dt
@@ -40,6 +42,7 @@ $$
 
   ここに$n=2$を代入して$I_2$を計算すると，
   
+
 $$
 \begin{align*}
 I_2
@@ -49,11 +52,12 @@ $$
 
   が求める値である．  $\cdots$(答)
 
-### (2)
-
+  
+  (2)
   まずは題意の曲線の軌跡を求める．
   $P(x(\theta),y(\theta))$を曲線上の点とすると，$r=\sin 2\theta$より
   
+
 $$
 \begin{align*}
 \begin{pmatrix}x                            \\ y\end{pmatrix}
@@ -64,6 +68,7 @@ $$
   と書ける．
   一階微分は，半角公式より
   
+
 $$
 \begin{align*}
 x'(\theta)
@@ -75,6 +80,7 @@ $$
   となるから，$0 \le \theta \le \pi/2$の範囲での増減表は[表1](#1998-6:table:1)となる．
   ただし，$\alpha, \beta$ は
   
+
 $$
 \begin{align}
 \begin{dcases}
@@ -98,8 +104,9 @@ $$
   <figcaption>表 1: $(x,y)$の増減表</figcaption>
 </figure>
 
-  また，$\theta=\alpha,\beta$の時の$(x,y)$の値は$\eqref{1998-6:eq:1}$より
+  また，$\theta=\alpha,\beta$の時の$(x,y)$の値は[(式1)](#1998-6:eq:1)より
   
+
 $$
 \begin{align*}
 x(\alpha)
@@ -129,6 +136,7 @@ $$
 
   そこで，点$(x(\theta), y(\theta))$を負の方向に$\pi/4$回転させた点を$X(\theta), Y(\theta)$とおくと，
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -144,6 +152,7 @@ $$
   と書き直せる．
   ここで，$t = \theta - \frac{\pi}{4}$とおくと，$0 \le \theta \le \pi/2$より
   
+
 $$
 \begin{align*}
 -\frac{\pi}{4}\le t \le\frac{\pi}{4}
@@ -152,6 +161,7 @@ $$
 
   であり，$X(t), Y(t)$は
   
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -173,6 +183,7 @@ $$
 
   従って，体積$V$はこの$-pi/4$回転した領域で，$Y(t) \ge 0$をみたす部分（$0\le t\le \pi/4$）のみを考えればよい．
   
+
 $$
 \begin{align*}
 V & = \int_0^{1}\pi Y^2 dX                                                                 \\& = \int_{\pi/4}^{0}\pi Y^2(t) \frac{dX}{dt} dt                                          \\& = \int_{\pi/4}^{0}\pi(\cos 2t)^2 \sin^2 t (-2\sin 2t\cos t-\cos 2t\sin t ) dt         \\& = \int_{\pi/4}^{0}\pi(\cos 2t)^2 \sin^2 t (-4\sin t \cos^2 t - \sin t (1-2\sin^2)) dt \\& = \int_{0}^{\pi/4}\pi(\cos 2t)^2 \sin^3 t (4(1-\sin^2 t) + (1-2\sin^2 t) ) dt         \\& = \int_{0}^{\pi/4}\pi(\cos 2t)^2 \sin^3 t (5-6\sin^2 t) dt                            \\& = \int_{0}^{\pi/4}\pi(\cos 2t)^2 (5\sin^3 t-6\sin^5 t) dt
@@ -182,6 +193,7 @@ $$
   と変形できる．
   倍角公式$\cos 2\theta = 1-2\sin^2\theta$を用いて$\sin^5 t$を書き直すと
   
+
 $$
 \begin{align*}
 V

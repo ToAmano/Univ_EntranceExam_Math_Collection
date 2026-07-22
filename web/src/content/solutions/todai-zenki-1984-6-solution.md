@@ -46,6 +46,7 @@ $y=x^2$をPに関して対称移動すると，
 
 さて，簡単のため題意の条件を
      
+
 $$
 \begin{align*}
 A&:D\cap U\not=\emptyset\\
@@ -58,28 +59,31 @@ $$
      
 不等号の向きから
      
+
 $$
 \begin{align}
-&A\land C \Longleftrightarrow\nonumber\\&f(x)=x^2\text{が$x<2$のみに実解を持つ．}\label{1}\\&B\land C \Longleftrightarrow\nonumber\\&f(x)=g(x)\text{が$2<x$のみに実解を持つ．}\label{2}
+&A\land C \Longleftrightarrow\nonumber\\&f(x)=x^2\text{がx<2のみに実解を持つ．}\label{1}\\&B\land C \Longleftrightarrow\nonumber\\&f(x)=g(x)\text{が2<xのみに実解を持つ．}\label{2}
 \end{align}
 $$
 
 である．故に
      
+
 $$
 \begin{align}
-A\land B\land C \Longleftrightarrow\eqref{1}\cap\eqref{2}\label{3}
+A\land B\land C \Longleftrightarrow[1](#1)\cap[2](#2)\label{3}
 \end{align}
 $$
 
 である．以下順番に考える．\\
 
      \begin{indentation}{2zw}{0pt}
-     \underline{(i)\,\eqref{1}について}\\
-     \eqref{1}の方程式
+     \underline{(i)\,[1](#1)について}\\
+     [1](#1)の方程式
           \[(x-a)^2+a^2-b=0\]
      の左辺$h(x)$とおく．判別式を$D_1$とおく．$h(x)=0$が$x<2$にのみ実解をもつ条件は，
           
+
 $$
 \begin{align*}
 &\begin{cases}
@@ -93,14 +97,16 @@ $$
                \end{cases}
 \end{align*}
 $$
+
      
      である．\\
      
-     \underline{(ii)\,\eqref{2}について}\\
-     \eqref{2}の方程式
+     \underline{(ii)\,[2](#2)について}\\
+     [2](#2)の方程式
           \[\left\{x-(2+a)\right\}^2+(a-2)^2-b=0\]
      の左辺$t(x)$とおく．判別式を$D_2$とおく．$t(x)=0$が$2<x$にのみ実解をもつ条件は，
      
+
 $$
 \begin{align*}
 &\begin{cases}
@@ -114,11 +120,12 @@ $$
                \end{cases}
 \end{align*}
 $$
+
      
      である．\\     
      \end{indentation}
 以上をまとめて
-     \[\eqref{3}\Longleftrightarrow 
+     \[[3](#3)\Longleftrightarrow 
           \begin{cases}
           0<a<2\\
           2(a-1)^2+2>b \\

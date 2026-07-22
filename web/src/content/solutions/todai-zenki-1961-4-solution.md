@@ -20,6 +20,7 @@ title: "TODAI 1961 zenki Q4 (solution)"
 
  $\triangle ABL$と$CN$にメラネウスを用いて
      
+
 $$
 \begin{align}
 &\frac{NB}{AN}\frac{CL}{BC}\frac{BA}{LP}=1\nonumber\\&\frac{PA}{LP}=\frac{3}{4}\label{1}
@@ -28,6 +29,7 @@ $$
 
 対称性から(詳しくはメラネウスを各三角形に用いることで)
      
+
 $$
 \begin{align}
 LQ:QP:PA=NP:PR:RC\nonumber\\
@@ -37,21 +39,25 @@ $$
 
 とおけることに注意して，$\triangle CPL$と$BR$にメラネウスを用いて
      
+
 $$
 \begin{align}
 \frac{RP}{CR}\frac{QL}{PQ}\frac{BC}{LB}=1 \nonumber\\\frac{a}{c}=\frac{1}{3}\label{3}
 \end{align}
 $$
+
    
-一方\eqref{1}，\eqref{2}から，
+一方[1](#1)，[2](#2)から，
      
+
 $$
 \begin{align}
 a+b:c=4:3 \label{4}
 \end{align}
 $$
+
   
-\eqref{3}，\eqref{4}から
+[3](#3)，[4](#4)から
      \[a:b:c=1:3:3\]
 であるから，
      \[\triangle PQR=\frac{2}{3}\frac{3}{7}\frac{1}{2}\triangle ABC=\frac{1}{7}\triangle ABC\]     

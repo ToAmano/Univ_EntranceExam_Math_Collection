@@ -17,6 +17,7 @@ title: "TODAI 1968 zenki Q1 (solution)"
 
  簡単のため
      
+
 $$
 \begin{align*}
 \left\{\begin{array}{l}
@@ -35,6 +36,7 @@ $$
  
 これら二つのグラフの囲む面積$S$とすると，
      
+
 $$
 \begin{align}
 S=\int_0^5(g(x)-f(x))dx\label{1}
@@ -43,14 +45,16 @@ $$
 
 である．各項計算すると，
      
+
 $$
 \begin{align*}
 &\cdot S_1=-\int_0^5f(x)dx=\frac{5^3}{6}=\frac{125}{6}\\&\cdot S_2=\int_0^5g(x)dx=\int_0^\pi\left(\sin t-\frac{3}{\pi}\sin^2t\right)dt \\&=\left[-\cos t-\frac{3}{2\pi}(t-2\sin 2t)\right]_0^\pi=2-\frac{3}{2}=\frac{1}{2}
 \end{align*}
 $$
 
-である．故に\eqref{1}に代入して
+である．故に[1](#1)に代入して
      
+
 $$
 \begin{align}
 S=S_1+S_2=\frac{64}{3}\label{2}
@@ -68,6 +72,7 @@ $$
 　\\
 交点の$x$座標を$p$とおく．つまり
      
+
 $$
 \begin{align}
 &\begin{cases}
@@ -80,14 +85,15 @@ $$
 \end{align}
 $$
 
-とする．\eqref{2}に注意して，面積が等しい条件から
+とする．[2](#2)に注意して，面積が等しい条件から
      
+
 $$
 \begin{align*}
 &\frac{1}{2}S=\int_0^p(\a x-f(x))dx \\\Longleftrightarrow&\frac{32}{3}=\frac{1}{6}p^3\\\Longleftrightarrow&p=4
 \end{align*}
 $$
 
-である．これを\eqref{3}に代入して
+である．これを[3](#3)に代入して
      \[\a=-1\]
 これは$\a<0$を満たし，十分．以上から，求める値は$\a=-1$である．$\cdots$(答)

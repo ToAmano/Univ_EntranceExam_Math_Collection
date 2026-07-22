@@ -19,6 +19,7 @@ title: "TODAI 1976 zenki Q5 (solution)"
      \[0\le z\le1-c+\sqrt{3}s \]
 で与えられる．$z$の存在条件から
      
+
 $$
 \begin{align*}
 &0\le 1-c+\sqrt{3}s \\\Longleftrightarrow&\cos\left(\theta+\frac{\pi}{3}\right)\le\frac{1}{2}\\\Longleftrightarrow&0\le\theta\le\frac{4\pi}{3}
@@ -29,6 +30,7 @@ $$
 
 従って，求める面積$S$は
      
+
 $$
 \begin{align*}
 S&=\int_0^\frac{4\pi}{3}(1-c+\sqrt{3}s)d\theta\\&=\left[\theta-s-\sqrt{3}c\right]_0^\frac{4\pi}{3}\\&=2\sqrt{3}+\frac{4\pi}{3}

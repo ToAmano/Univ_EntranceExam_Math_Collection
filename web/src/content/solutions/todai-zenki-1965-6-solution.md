@@ -26,6 +26,7 @@ $\angle AOP=2\pi/3$である．$P$，$Q$から$x$軸に下ろした垂足を，$
      
 このとき，求める体積$V$として
      
+
 $$
 \begin{align*}
 V_1&=(\triangle AQH\text{の回転体}) \\
@@ -36,6 +37,7 @@ $$
 
 とおけば，
      
+
 $$
 \begin{align}
 V=V_1+V_2-V_3\label{1}
@@ -44,6 +46,7 @@ $$
 
 である．各項計算して，
      
+
 $$
 \begin{align*}
 V_1&=\frac{1}{3}\frac{1}{2}\frac{3}{4}\pi=\frac{1}{8}\pi\\
@@ -52,6 +55,6 @@ V_1&=\frac{1}{3}\frac{1}{2}\frac{3}{4}\pi=\frac{1}{8}\pi\\
 \end{align*}
 $$
 
-これらを\eqref{1}に代入して
+これらを[1](#1)に代入して
      \[V=\left(\frac{1}{8}+\frac{11}{12}-\frac{3}{8}\right)\pi=\frac{2}{3}\pi\]
 である．$\cdots$(答)

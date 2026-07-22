@@ -11,6 +11,7 @@ title: "TODAI 1971 zenki Q3 (solution)"
 \begin{oframed}
 与えられた実数係数の整式$f(x)$について
      
+
 $$
 \begin{align*}
 & \int_0^1f(x)dx=2 &\int_0^1xf(x)dx=3
@@ -26,6 +27,7 @@ $$
 
 題意の式を$g(a,b)$とおく．また，簡単のため
      
+
 $$
 \begin{align*}
 A&= \int_0^1f(x)dx=2 \\
@@ -38,6 +40,7 @@ $$
 
 とおく．するとこれらの値に注意して$F$を定数として
      
+
 $$
 \begin{align*}
 g(a,b)&=Da^2+2Eab+b^2-2Ba-2Ab+C \\&=\frac{1}{3}a^2+(b-6)a+b^2-4b+C \\&=\frac{1}{3}\left\{a+\frac{3}{2}\left(b-6\right)\right\}^2+\frac{1}{4}(b+10)^2+F
@@ -46,6 +49,7 @@ $$
 
 したがって，求めるのは
      
+
 $$
 \begin{align*}
 &b+10=0 \\&a+\dfrac{3}{2}\left(b-6\right)=0

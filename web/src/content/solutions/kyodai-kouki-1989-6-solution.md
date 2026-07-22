@@ -11,6 +11,7 @@ title: "KYODAI 1989 kouki Q6 (solution)"
 
     帰納的に$f(x)\equiv 0$ とはならないから
     
+
 $$
 \begin{align*}
 g_n(x) = \frac{1}{f_n(x)}
@@ -19,6 +20,7 @@ $$
 
     とすると
     
+
 $$
 \begin{align*}
 f_{n+1}(x) & = \frac{af_n(x)}{f_n(x)+1}
@@ -27,6 +29,7 @@ $$
 
     の両辺逆数とって
     
+
 $$
 \begin{align*}
 g_{n+1}(x) & = \frac{1}{a}(1+g_n(x))
@@ -65,8 +68,8 @@ $$
 
     が求める一般項である．$\cdots$(答)
 
-### (2)
-
+    
+    (2)
     $a=1$か否かで場合わけして考える．
 
     
@@ -88,6 +91,7 @@ $$
 
     以上から
     
+
 $$
 \begin{align*}
 b_n = \begin{dcases}

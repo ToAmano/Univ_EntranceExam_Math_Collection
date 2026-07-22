@@ -22,6 +22,7 @@ title: "TODAI 1996 kouki Q3 (solution)"
   題意から $v$ は 比例
   定数$k$として
   
+
 $$
 \begin{align}
 v = k\sqrt{h}\label{1996-3:eq:1}
@@ -32,6 +33,7 @@ $$
 
   一方流出する水に関して
   
+
 $$
 \begin{align}
 v = -S \frac{dh}{dt}\label{1996-3:eq:2}
@@ -49,6 +51,7 @@ $$
 
   さらに，タンクの高さ$h$での切断面は奥行き$L$，幅
   
+
 $$
 \begin{align*}
 2\sqrt{R^2-(h-R)^2} = 2\sqrt{2Rh-h^2}
@@ -57,6 +60,7 @@ $$
 
   の長方形だから
   
+
 $$
 \begin{align}
 S = 2L\sqrt{2Rh - h^2}\label{1996-3:eq:3}
@@ -65,8 +69,9 @@ $$
 
   である．
 
-  $\eqref{1996-3:eq:1,1996-3:eq:3}$を$\eqref{1996-3:eq:2}$に代入して
+  [(式3)](#1996-3:eq:1,1996-3:eq:3)を[(式2)](#1996-3:eq:2)に代入して
   
+
 $$
 \begin{align*}
 k\sqrt{h} = -2L\sqrt{2Rh - h^2}\frac{dh}{dt}
@@ -77,6 +82,7 @@ $$
 
   両辺$\sqrt{h}$で割って整理して
   
+
 $$
 \begin{align*}
 k\,dt = -2L \sqrt{2R-h}\,dh
@@ -85,6 +91,7 @@ $$
 
   だから，積分して
   
+
 $$
 \begin{align*}
 -\frac{k}{2L} t = -\frac{2}{3}(2R-h)^{\frac{3}{2}} + C
@@ -95,6 +102,7 @@ $$
 
   初期条件は $t=0$ で $h=2R$ だから，$C=0$ が従う．
   
+
 $$
 \begin{align*}
 -\frac{k}{2L} t = -\frac{2}{3}(2R-h)^{\frac{3}{2}}
@@ -103,6 +111,7 @@ $$
 
   さらに題意の条件より$t=1\text{[h]}$で$h=R$だから
   
+
 $$
 \begin{align*}
 \frac{k}{2L} = -\frac{2}{3} R^{\frac{3}{2}}\quad\cdots ⑤
@@ -111,6 +120,7 @@ $$
 
   であるから
   
+
 $$
 \begin{align*}
 & -\frac{2}{3} R^{\frac{3}{2}} t = -\frac{2}{3}(2R-h)^{\frac{3}{2}}\\\therefore& t = \left(2-\frac{h}{R}\right)^{\frac{3}{2}}
@@ -120,6 +130,7 @@ $$
   $h=0$ になる時の $t=t_0$ をもとめるため
   $h=0$を代入すると
   
+
 $$
 \begin{align*}
 t_0 = 2^{\frac{3}{2}} = 2\sqrt{2}
@@ -130,6 +141,7 @@ $$
 
   よって，現在$t=1$から$h=0$になるまでの時間$T$は
   
+
 $$
 \begin{align}
 T
@@ -141,14 +153,16 @@ $$
 
   ここで
   
+
 $$
 \begin{align*}
 & (1.414)^2 = 1.999396 < 2\,(1.415)^2 = 2.002225 > 2 \\\therefore& 1.414 < \sqrt{2} < 1.415
 \end{align*}
 $$
 
-  だから，$\eqref{1996-3:eq:4}$に代入して
+  だから，[(式4)](#1996-3:eq:4)に代入して
   
+
 $$
 \begin{align*}
 & 1.828 < T_0 < 1.83                                         \\\therefore& 1\text{時間}\,49.68\text{分} < T_o < 1\text{時間}\,49.8\text{分}
@@ -157,6 +171,7 @@ $$
 
   である．従って，1分以下を切り捨てて
   
+
 $$
 \begin{align*}
 T_0 = 1\text{時間}\,49\text{分}

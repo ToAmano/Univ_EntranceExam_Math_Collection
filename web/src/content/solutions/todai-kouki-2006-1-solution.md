@@ -9,10 +9,10 @@ title: "TODAI 2006 kouki Q1 (solution)"
 
 ## 【解】
 
-### (1)
-
+    (1)
     題意の媒介変数表示を
     
+
 $$
 \begin{align}
 \begin{dcases}
@@ -24,6 +24,7 @@ $$
 
     とおく．一回微分は
     
+
 $$
 \begin{align*}
 x'(t) & = 2(1+t) \\
@@ -33,6 +34,7 @@ $$
 
     だから，$t\neq 1$の時
     
+
 $$
 \begin{align*}
 \frac{dy}{dx} = \frac{dy/dt}{dx/dt} = \frac{4t+1}{2(1+t)}
@@ -41,19 +43,21 @@ $$
 
     である．$\cdots$(答)
 
-### (2)
-
+    
+    (2)
     $t = -1$ の時は$x'(t)=0$より不適なので，以下$t \neq -1$として考える．
     （1）より，$dy/dx=-1/2$となる時，
     
+
 $$
 \begin{align*}
 & \frac{dy}{dx} = \frac{4t+1}{2(1+t)} = -\frac{1}{2}\\\therefore& 4t+1 = -(1+t)                                      \\& t = -\frac{2}{5}
 \end{align*}
 $$
 
-    である．$\eqref{2006-1:eq:1}$に代入して
+    である．[(式1)](#2006-1:eq:1)に代入して
     
+
 $$
 \begin{align*}
 x\left(-\frac{2}{5}\right) = -\frac{16}{25}\\
@@ -63,6 +67,7 @@ $$
 
     だから，求める座標は
     
+
 $$
 \begin{align*}
 A\left(-\frac{16}{25}, -\frac{2}{25}\right)
@@ -71,10 +76,11 @@ $$
 
     である．$\cdots$(答)
 
-### (3)
-
-    $X,Y$の表現に$\eqref{2006-1:eq:1}$を代入して
     
+    (3)
+    $X,Y$の表現に[(式1)](#2006-1:eq:1)を代入して
+    
+
 $$
 \begin{align*}
 X
@@ -86,6 +92,7 @@ $$
 
     を得る．第一式より$t = \sqrt{5}X/3$だから，第二式に代入して
     
+
 $$
 \begin{align*}
 Y
@@ -95,11 +102,11 @@ $$
 
     という放物線である．$\cdots$(答)
 
-### (4)
-
-### (3)
- の変換を $f$ とおく．$\alpha$ を $0 < \alpha < \pi/2$ で $\tan\alpha = \frac{1}{2}$ をみたす角とおくと，
     
+    (4)
+    (3) の変換を $f$ とおく．$\alpha$ を $0 < \alpha < \pi/2$ で $\tan\alpha = \frac{1}{2}$ をみたす角とおくと，
+    
+
 $$
 \begin{align*}
 \begin{dcases}
@@ -111,6 +118,7 @@ $$
 
     だから，$f$は
     
+
 $$
 \begin{align*}
 X + iY = (\cos\alpha + i\sin\alpha)(x+iy)

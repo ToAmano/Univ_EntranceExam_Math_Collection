@@ -19,6 +19,7 @@ $R\left(\dfrac{1}{4},0,\dfrac{\sqrt{3}}{4}\right)$
 
 辺$PR$，$QR$の方程式はそれぞれ以下のようになる．
      
+
 $$
 \begin{align*}
 PR&:\vthree{x}{y}{z}=\vthree{1}{1/2}{0}+t\vthree{-3/4}{-1/2}{\sqrt{3}/4}\\	
@@ -28,6 +29,7 @@ $$
 
 これらと平面$z=k$の交点は順に,
      
+
 $$
 \begin{align*}
 p&=\frac{1}{2}\left(1-\frac{4\sqrt{3}}{3}k\right)\\
@@ -37,6 +39,7 @@ $$
 
 として
      
+
 $$
 \begin{align*}
 (q,p,k), (q,-p,k)
@@ -46,6 +49,7 @@ $$
 である．     
 故に，図形の$z=k(0\le k\le \dfrac{\sqrt{3}}{4})$での切断面は
      
+
 $$
 \begin{align*}
 &x=q \\&|y|\le p
@@ -54,6 +58,7 @@ $$
 
 となる．したがって，切断面上の点と原点との距離の最大小値は
      
+
 $$
 \begin{align*}
 r_{max}^2&=p^2+q^2 \\
@@ -63,6 +68,7 @@ $$
 
 である．故にこの平面での切断面の面積$S(k)$は
      
+
 $$
 \begin{align*}
 S(k)&=\pi(r_{max}^2- r_{min}^2) \\&=\pi p^2
@@ -71,6 +77,7 @@ $$
 
 となる．求める体積$V$は
      
+
 $$
 \begin{align*}
 V&=\int_0^{\sqrt{3}/4}S(k)dk \\&=\frac{\pi}{4}\int_0^{\sqrt{3}/4}\left(1-\frac{4\sqrt{3}}{3}k\right)^2dk \\&=\frac{\pi}{4}\left[\frac{\sqrt{3}}{12}\left(\frac{4\sqrt{3}}{3}k-1\right)^3\right]_0^{\sqrt{3}/4}\\&=\frac{\sqrt{3}\pi}{48}\cdots\text{(答)}

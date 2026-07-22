@@ -9,8 +9,7 @@ title: "TITECH 1996 kouki Q1 (solution)"
 
 ## 【解】
 
-### (1)
-
+  (1)
   $C$,$C_{\theta}$の中心をそれぞれ$O$,$O_{\theta}$とする．
   [図1](#1996-1:fig:1)に概形を示す．
   題意より，点$P$での接線$OP$と$O'P$が直交し，
@@ -25,6 +24,7 @@ title: "TITECH 1996 kouki Q1 (solution)"
 
   したがって，$O'(X,Y)$とおくと,
   
+
 $$
 \begin{align}
 & \begin{dcases}
@@ -42,6 +42,7 @@ $$
 
   である. したがって, $C_{\theta}$の半径$R_{\theta}$は
   
+
 $$
 \begin{align}
 R_{\theta}& = \mathrm{PO'}\\& = Y                                                 \\& = \frac{1-\cos\theta}{\sin\theta}\\& = \frac{\sin\frac{\theta}{2}}{\cos\frac{\theta}{2}}\\& = \tan\frac{\theta}{2}
@@ -51,6 +52,7 @@ $$
   である．ただし，最後の行で倍角公式を利用した．
   したがって，
   
+
 $$
 \begin{align*}
 \tan\angle POO'
@@ -70,6 +72,7 @@ $$
   求める共通領域の面積$S_\theta$は, 扇形$OPQ$と扇形$O'PQ$の面積の和から，四角形$OPO'Q$を引いたものに等しい．
   $\angle PO'Q=\pi-\theta$に注意して，
   
+
 $$
 \begin{align*}
 \text{扇形}OPQ    & = \frac{1}{2}\theta\\\text{扇形}O'PQ   & = \frac{1}{2}\left(\pi-\theta\right)\tan^2\frac{\theta}{2}\\\text{四角形}OPO'Q & = 2\triangle OPO'                                          \\& = 2 \frac{1}{2} |OP| |PO'|                                 \\& = \tan\frac{\theta}{2}
@@ -78,6 +81,7 @@ $$
 
   より，求める面積$S_{\theta}$は
   
+
 $$
 \begin{align*}
 S_{\theta}& = \text{扇形}OPQ + \text{扇形}O'PQ -\text{四角形}OPO'Q                                                      \\& = \frac{1}{2}\theta + \frac{1}{2}\left(\pi-\theta\right)\tan^2\frac{\theta}{2} -\tan\frac{\theta}{2}
@@ -86,10 +90,12 @@ $$
 
   である．$\cdots$(答)
 
-### (2)
+  
 
+  (2)
   線分$OO'$の長さは，倍角公式より
   
+
 $$
 \begin{align*}
 OO'
@@ -108,6 +114,7 @@ $$
 
   $A_{\theta}$は線分$OO'$上にあって，線分$OA_{\theta}$の長さは
   
+
 $$
 \begin{align*}
 OA_{\theta}& = OO' - O'A_{\theta}\\& = OO' - R_{\theta}\\& = \frac{1}{\cos\frac{\theta}{2}} -  \frac{\sin\frac{\theta}{2}}{\cos\frac{\theta}{2}}\\& = \frac{1-\sin\frac{\theta}{2}}{\cos\frac{\theta}{2}}
@@ -116,6 +123,7 @@ $$
 
   だから，
   
+
 $$
 \begin{align*}
 \va*{OA_{\theta}}& =  \frac{1-\sin\frac{\theta}{2}}{\cos\frac{\theta}{2}}\begin{pmatrix}\cos\frac{\theta}{2}\\\sin\frac{\theta}{2}\end{pmatrix} \\& \equiv\begin{pmatrix}x                                                                    \\ y\end{pmatrix}
@@ -124,6 +132,7 @@ $$
 
   とかける．
   
+
 $$
 \begin{align}
 x & = 1-\sin\frac{\theta}{2}\\
@@ -133,6 +142,7 @@ $$
 
   において，$0<\theta<\pi$より，$\cos\theta/2>0$だから，
   
+
 $$
 \begin{align}
 \cos\frac{\theta}{2} = \sqrt{1-\sin^2\frac{\theta}{2}}
@@ -141,6 +151,7 @@ $$
 
   を代入して
   
+
 $$
 \begin{align}
 x & = 1-\sin\frac{\theta}{2}\\
@@ -150,6 +161,7 @@ $$
 
   1つ目の式から$\sin(\theta/2)$を消去して
   
+
 $$
 \begin{align*}
 & \sin\frac{\theta}{2} = 1-x & (0<x<1)
@@ -158,6 +170,7 @@ $$
 
   を2つ目の式に代入して
   
+
 $$
 \begin{align*}
 Y
@@ -167,10 +180,10 @@ $$
 
   がもとめる軌跡である．$\cdots$(答)
 
-### (3)
+  
 
-### (2)
-でもとめたグラフは$0<x<1$で$y>0$であり，[図4](#1996-1:fig:3)のようになる．
+  (3)
+  (2)でもとめたグラフは$0<x<1$で$y>0$であり，[図4](#1996-1:fig:3)のようになる．
 
   
 
@@ -181,6 +194,7 @@ $$
 
   したがってもとめる体積は
   
+
 $$
 \begin{align*}
 V
@@ -198,6 +212,7 @@ $$
   ポイントは対称性から$\angle POO'=\theta/2$と，直線$OO'$が$\angle POQ$を半分に分割する直線になっていることである．
   本解答では座標からこの事実を導出したが，対称性からこの事実を認めてしまえば，$O'$の座標は直線
   
+
 $$
 \begin{align*}
 y = \tan\frac{\theta}{2} x

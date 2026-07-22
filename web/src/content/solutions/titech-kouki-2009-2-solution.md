@@ -20,6 +20,7 @@ title: "TITECH 2009 kouki Q2 (solution)"
 
   従って，接点$A,B$の$x$成分を$m,s$として，
   
+
 $$
 \begin{align*}
 m < 0 < s
@@ -30,6 +31,7 @@ $$
 
   この時，点$A,B$での接線$l_A,l_B$の方程式は
   
+
 $$
 \begin{align*}
 l_A & : y = \frac{1}{m^2}x - \frac{2}{m}\\
@@ -39,6 +41,7 @@ $$
 
   である．この2本の直線の交点が$P(p,q)$だから，$l_A, l_B$を連立して
   
+
 $$
 \begin{align*}
 & \frac{1}{m^2}p - \frac{2}{m}                                               = \frac{1}{s^2}p - \frac{2}{s}\\\therefore& \left(\frac{1}{m^2}-\frac{1}{s^2}\right) p                                 = -\frac{2}{s} +  \frac{2}{m}\\\therefore& \left(\frac{1}{m}-\frac{1}{s}\right)\left(\frac{1}{m}+\frac{1}{s}\right) p  = -\frac{2}{s} +  \frac{2}{m}\\\therefore& \left(\frac{1}{m}+\frac{1}{s}\right) p                                      = 2
@@ -47,6 +50,7 @@ $$
 
   だから
   
+
 $$
 \begin{align}
 p & = \frac{2}{\left(\frac{1}{m}+\frac{1}{s}\right)} = \frac{2ms}{m+s}\label{2009-2:eq:1}
@@ -55,6 +59,7 @@ $$
 
   である．この時$q$は$l_A$の式に代入して
   
+
 $$
 \begin{align}
 q
@@ -64,9 +69,10 @@ $$
 
   となる．
 
-  以下$\eqref{2009-2:eq:1,2009-2:eq:2}$を用いて三角形PABの面積を求める．
+  以下[(式2)](#2009-2:eq:1,2009-2:eq:2)を用いて三角形PABの面積を求める．
   まず，
   
+
 $$
 \begin{align*}
 \vec{PA} = \begin{pmatrix} m - p \\ -\frac{1}{m} - q \end{pmatrix}\\\vec{PB} = \begin{pmatrix} s - p \\ -\frac{1}{s} - q \end{pmatrix}
@@ -76,6 +82,7 @@ $$
   であることに注意する．これら二つのベクトルの作る三角形の面積公式から，
   $\triangle PAB$の面積$f$として
   
+
 $$
 \begin{align}
 f
@@ -87,6 +94,7 @@ $$
 
   次に，これを$t=pq$を用いて書き直すため，
   
+
 $$
 \begin{align*}
 \alpha& =m+s        \\\beta& =s-m\,(>0)
@@ -95,6 +103,7 @@ $$
 
   とおくと，
   
+
 $$
 \begin{align*}
 sm
@@ -102,8 +111,9 @@ sm
 \end{align*}
 $$
 
-  だから，$\eqref{2009-2:eq:3}$に代入して
+  だから，[(式3)](#2009-2:eq:3)に代入して
   
+
 $$
 \begin{align}
 f
@@ -111,8 +121,9 @@ f
 \end{align}
 $$
 
-  を得る．一方で，$t$を$\alpha,\beta$で表すと$\eqref{2009-2:eq:1,2009-2:eq:2}$より
+  を得る．一方で，$t$を$\alpha,\beta$で表すと[(式2)](#2009-2:eq:1,2009-2:eq:2)より
   
+
 $$
 \begin{align}
 t
@@ -120,8 +131,9 @@ t
 \end{align}
 $$
 
-  $a = \alpha/\beta$と置いて$\eqref{2009-2:eq:4,2009-2:eq:5}$に代入して$f$と$t$を表すと
+  $a = \alpha/\beta$と置いて[(式5)](#2009-2:eq:4,2009-2:eq:5)に代入して$f$と$t$を表すと
   
+
 $$
 \begin{align*}
 f & =2\left|\frac{1}{a(a^2-1)}\right|\\
@@ -131,6 +143,7 @@ $$
 
   である．第二式から$|a|=\sqrt{\frac{1}{t+1}}$ だから，第一式に代入して
   
+
 $$
 \begin{align}
 f
@@ -142,9 +155,10 @@ $$
 
   
   次に，この三角形の面積の最小値を求める．
-  点Pが第一章限にあることから$t>0$での$\eqref{2009-2:eq:6}$の最小値を求めれば良い．
+  点Pが第一章限にあることから$t>0$での[(式6)](#2009-2:eq:6)の最小値を求めれば良い．
   新しく
   
+
 $$
 \begin{align*}
 x = t^{1/3}\quad(x>0)
@@ -153,6 +167,7 @@ $$
 
   と置いて式を整理すると
   
+
 $$
 \begin{align*}
 f
@@ -163,6 +178,7 @@ $$
   である．ただし下から2行目の不等式は相加相乗平均の不等式による．
   等号成立は
   
+
 $$
 \begin{align*}
 & \frac{x}{2} =  \frac{1}{x^2}\\& x =\sqrt[3]{2}
@@ -171,6 +187,7 @@ $$
 
   の時，すなわち
   
+
 $$
 \begin{align*}
 t = 2
@@ -179,6 +196,7 @@ $$
 
   の時である．これは$t>0$を満たしているから，求める面積の最小値は
   
+
 $$
 \begin{align*}
 \min f = 3\sqrt{3}
@@ -198,6 +216,7 @@ $$
   三角形の面積公式としてサラスの公式を利用しているので復習しよう．
   三角形OABにおいて，Oを原点とし，AとBの位置ベクトルを
   
+
 $$
 \begin{align*}
 \vec{a} = \begin{pmatrix}a_x,a_y\end{pmatrix} \\\vec{b} = \begin{pmatrix}b_x,b_y\end{pmatrix}
@@ -206,6 +225,7 @@ $$
 
   とすると，三角形OABの面積$S$は
   
+
 $$
 \begin{align*}
 S = \frac{1}{2}\left|a_xb_y-a_yb_x\right|
@@ -215,6 +235,7 @@ $$
   で与えられる．
   行列を知っている人であれば，これは$\vec{a},\vec{b}$から作った二次元正方行列
   
+
 $$
 \begin{align*}
 \begin{pmatrix}a_x & b_x \\ a_y & b_y\end{pmatrix}
@@ -226,6 +247,7 @@ $$
   ちなみに，同様に三次元への拡張として，四面体OABCの体積$V$を求めることができる．
   原点を$O$とし，$A(a_x,a_y,a_z), B(b_x,b_y,b_z), C(c_x,c_y,c_z)$とすると，
   
+
 $$
 \begin{align*}
 V

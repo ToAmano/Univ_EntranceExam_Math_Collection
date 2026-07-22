@@ -17,6 +17,7 @@ title: "TODAI 1967 zenki Q4 (solution)"
  題意の曲線$C$とし，$C$を負方向に$\pi/4$だけ回転した図形$C'$とする．$C(X,Y)$が$C'(x,y)$に移るとする．
  $e(\theta)=\cos\theta+i\sin\theta$として，
       
+
 $$
 \begin{align*}
 X+iY&=e\left(\frac{\pi}{4}\right)(x+iy) \\&=\frac{\sqrt{2}}{2}(1+i)(x+iy)
@@ -25,6 +26,7 @@ $$
 
 であるから，
      
+
 $$
 \begin{align*}
 &X=\dfrac{\sqrt{2}}{2}(x-y) &
@@ -34,6 +36,7 @@ $$
 
 これを$C$の方程式に代入して
      
+
 $$
 \begin{align*}
 &(x-y)^2-(x+y)(x-y)+(x+y)^2=6 \\\therefore\,\ &x^2+3y^2=6
@@ -59,6 +62,7 @@ $$
  
 ここで$(X,Y)=(x/\sqrt{6},y/\sqrt{2})$なる座標変換をすると，右上図のようになるから，
      
+
 $$
 \begin{align*}
 \frac{1}{\sqrt{6}}\frac{1}{\sqrt{2}}S=\frac{1}{2}\frac{2\pi}{3}\\

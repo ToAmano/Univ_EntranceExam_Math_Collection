@@ -20,6 +20,7 @@ title: "KYODAI 2001 kouki Q6 (solution)"
   ただし $0 \le \theta < 2\pi$ とする．
   点Pでの$C_1$の接線$l$の方程式は
   
+
 $$
 \begin{align*}
 l: \cos\theta x+\sin\theta y=1
@@ -28,6 +29,7 @@ $$
 
   である．この方向ベクトルは
   
+
 $$
 \begin{align*}
 \begin{pmatrix}\sin\theta\\ -\cos\theta\end{pmatrix}
@@ -36,6 +38,7 @@ $$
 
   だから，直線RQがこれと直交することにより
   
+
 $$
 \begin{align}
 \vec{RQ}\parallel\begin{pmatrix}\cos\theta\\\sin\theta\end{pmatrix} \label{2001-6:eq:1}
@@ -46,6 +49,7 @@ $$
 
   また，線分RQの長さは直線$l$と点Rの距離に等しく
   
+
 $$
 \begin{align*}
 |RQ|
@@ -56,6 +60,7 @@ $$
   である．ここで$-1\le\cos\theta \le 1$および，題意より$-1<a<-1/2$だから$-1<\cos\theta a < 1$となり，
   $|\cos\theta a -1 | = 1-\cos\theta$だから
   
+
 $$
 \begin{align}
 |RQ|
@@ -65,8 +70,9 @@ $$
 
   である．
 
-  $\eqref{2001-6:eq:1,2001-6:eq:2}$から，
+  [(式2)](#2001-6:eq:1,2001-6:eq:2)から，
   
+
 $$
 \begin{align*}
 \vec{RQ}& = \left(a\cos\theta -1\right)\begin{pmatrix}\cos\theta\\\sin\theta\end{pmatrix}
@@ -75,6 +81,7 @@ $$
 
   であるから，点$Q(X,Y)$の座標は
   
+
 $$
 \begin{align}
 \begin{pmatrix} X                                          \\ Y \end{pmatrix}
@@ -89,6 +96,7 @@ $$
 
   一階微分は
   
+
 $$
 \begin{align*}
 \frac{dX}{d\theta}& = -\sin\theta+2a\cos\theta\sin\theta\\& = \sin\theta\left(2a\cos\theta-1\right)\\\frac{dY}{d\theta}& = \cos\theta-a\left(2\cos^2\theta-1\right)\\& = -2a\cos^2\theta+\cos\theta+a
@@ -99,6 +107,7 @@ $$
   ただし，$C_2$は$x$軸に関して対称だから，$0\le \theta \le \pi$についてのみ示している．
   また，$\alpha,\beta$は
   
+
 $$
 \begin{align*}
 & 0 < \alpha < \beta < \pi\\& \cos\alpha = \frac{1-\sqrt{1+8a^2}}{4a}\\& \cos\beta = \frac{1}{2a}
@@ -135,6 +144,7 @@ $$
   次に，$C_2$の囲む面積$S$を求める．
   $S$のうち$y \ge 0$の部分を $S'$として，$C_2$が$x$軸に関して対称だから
   
+
 $$
 \begin{align}
 S = 2S' \label{2001-6:eq:4}
@@ -144,6 +154,7 @@ $$
   である．
   $y\ge 0$の部分でグラフの上側 $y_+$, 下側 $y_-$とすると
   
+
 $$
 \begin{align*}
 S'
@@ -152,8 +163,9 @@ S'
 $$
 
   である．
-  ここに$\eqref{2001-6:eq:3}$を代入して
+  ここに[(式3)](#2001-6:eq:3)を代入して
   
+
 $$
 \begin{align}
 S'
@@ -163,14 +175,16 @@ $$
 
   である．これら各項を計算すると
   
+
 $$
 \begin{align*}
 \int_{0}^{\pi}\sin^2\theta\cos^2\theta d\theta& =    \frac{1}{4}\int_{0}^{\pi}\sin^2 2\theta d\theta\\& =    \frac{1}{8}\int_{0}^{\pi}\left(1-\cos 4\theta\right) d\theta\\& =    \frac{1}{8}\left[\theta-\frac{\sin 4\theta}{4}\right]_{0}^{\pi}\\& =    \frac{\pi}{8}\\\int_{0}^{\pi}\sin^2\theta\cos\theta d\theta& = \left[\frac{1}{3}\sin^3\theta\right]_{0}^{\pi}\\& = 0                                                                    \\\int_{0}^{\pi}\sin^2\theta d\theta& =    \frac{1}{2}\int_{0}^{\pi}\left(1-\cos 2\theta\right) d\theta\\& =    \frac{1}{2}\int_{0}^{\pi}\left[1-\cos 2\theta\right] d\theta\\& =    \frac{1}{2}\left[\theta-\frac{1}{2}\sin 2\theta\right]_{0}^{\pi}\\& =    \frac{\pi}{2}
 \end{align*}
 $$
 
-  だから，$\eqref{2001-6:eq:5}$に代入して
+  だから，[(式5)](#2001-6:eq:5)に代入して
   
+
 $$
 \begin{align*}
 S'
@@ -178,8 +192,9 @@ S'
 \end{align*}
 $$
 
-  だから，$\eqref{2001-6:eq:4}$に代入して
+  だから，[(式4)](#2001-6:eq:4)に代入して
   
+
 $$
 \begin{align*}
 S = \frac{\pi}{2}\left(a^2+2\right)
