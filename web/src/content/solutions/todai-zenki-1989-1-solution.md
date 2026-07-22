@@ -16,11 +16,15 @@ title: "TODAI 1989 zenki Q1 (solution)"
 ## 【解】
 
  
-     \begin{subnumcases}{\exists\a\exists\b}
-     \b=k(\a-\a^3) \label{1}\\
+     
+$$
+\exists\a\exists\b \begin{cases}
+\b=k(\a-\a^3) \label{1}\\
      \a=k(\b-\b^3) \label{2}\\
      \a\not=\b \ \ \ \ 0<\a,\b \label{3}
-     \end{subnumcases}
+\end{cases}
+$$
+
 なる条件を調べればよい．
      
 $$
@@ -50,11 +54,15 @@ $$
 $$
      
 途中の変形に$\a+\b\not=0$，$\a-\b\not=0$を用いた． 然るに$k>0$だから
-      \begin{subnumcases}{\exists\a\exists\b}
-      1-(\a^2+\b^2)=0 \label{4}\\
+      
+$$
+\exists\a\exists\b \begin{cases}
+1-(\a^2+\b^2)=0 \label{4}\\
       1=k\a\b  \label{5}\\
       \a\not=\b \ \ \ \ 0<\a,\b \label{6}
-      \end{subnumcases}
+\end{cases}
+$$
+
 このような$k_{>0}$の条件を調べる．そこで\1 ($0<\theta<\pi/2 , \theta\not=\pi/4$)
 \eqref{4}，\eqref{6}から$\a=c,\b=s$と置ける．\eqref{5}に代入して
       \[k=\frac{1}{sc}=\frac{2}{\sin 2\theta}\]
@@ -85,11 +93,15 @@ $$
  \\
  {\bf[別解2]}\eqref{4}以下，$\a$，$\b$を解とする$2$次方程式を考えてもよい．$a=\a+\b$，$b=\a\b$
  とおけば
-       \begin{subnumcases}{\exists a\exists b}
-      1=a^2-2b \label{7}\\
+       
+$$
+\exists a\exists b \begin{cases}
+1=a^2-2b \label{7}\\
       1=kb  \label{8}\\
       \a\not=\b \ \ \ \ 0<\a,\b \label{9}
-      \end{subnumcases}
+\end{cases}
+$$
+
  を考えればよい．考える方程式は$x^2-ax+b=0$であって，\eqref{9}からこれが正の異$2$実解を持てばよいので，判別式$D$として
       
 $$

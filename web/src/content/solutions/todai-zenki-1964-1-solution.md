@@ -23,11 +23,15 @@ $$
 ## 【解】
 
 題意から$a$，$b$，$c$は$t$の$3$次式$t^3-zt^2-yt-x=0$の異$3$実解である．解と係数の関係から
-     \begin{subnumcases}{}
-     a+b+c=z  \label{1}\\
+     
+$$
+\begin{cases}
+a+b+c=z  \label{1}\\
      bc+ca+ab=-y \label{2}\\
      abc=x \label{3}
-     \end{subnumcases}
+\end{cases}
+$$
+
 である．\eqref{1}，\eqref{2}から
      
 $$

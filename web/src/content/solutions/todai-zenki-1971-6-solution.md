@@ -32,11 +32,15 @@ $n$回目に$3$人，$2$人でジャンケンする確率をそれぞれ$a_n$，
 
         
 よって，ジャンケンの推移から以下の漸化式を得る．
-     \begin{subnumcases}{}
-     c_n=\frac{1}{3}a_n+\frac{2}{3}b_n \label{1}\\
+     
+$$
+\begin{cases}
+c_n=\frac{1}{3}a_n+\frac{2}{3}b_n \label{1}\\
      a_{n+1}=\frac{1}{3}a_n  \label{2}\\
      b_{n+1}=\frac{1}{3}a_n+\frac{1}{3}b_n \label{3}
-     \end{subnumcases}
+\end{cases}
+$$
+
 さらに，初期条件は$a_1=1$，$b_1=0$である．従って\eqref{2}から
      
 $$

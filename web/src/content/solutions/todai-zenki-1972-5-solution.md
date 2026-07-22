@@ -26,11 +26,15 @@ title: "TODAI 1972 zenki Q5 (solution)"
 ## 【解】
 
 $f(x)$を$f$などと略記する．題意の条件から
-     \begin{numcases}{}
-     u=\dint{o}{x}hfdt+h\dint{x}{1}fdt \label{1}\\
+     
+$$
+\begin{cases}
+u=\dint{o}{x}hfdt+h\dint{x}{1}fdt \label{1}\\
      u''=f \label{2}\\
      u=0\label{3}
-     \end{numcases}
+\end{cases}
+$$
+
 まず，\eqref{1}で$x=0$として,\eqref{3}から
      
 $$
@@ -83,10 +87,14 @@ $$
 $$
 
 これが$b$についての恒等式だから係数比較して，
-     \begin{subnumcases}{}
-     1+h'-(1-x)h''=0 \label{5}\\
+     
+$$
+\begin{cases}
+1+h'-(1-x)h''=0 \label{5}\\
      (1+h')x-\frac{1}{2}h''(1-x)(1+x)=0 \label{6}
-     \end{subnumcases}
+\end{cases}
+$$
+
 となる．\eqref{5}を\eqref{6}に代入して
      
 $$

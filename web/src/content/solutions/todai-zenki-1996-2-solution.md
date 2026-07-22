@@ -29,9 +29,14 @@ $$
 ## 【解】
 
  与方程式の左辺$f(x)$とする．また
-               \begin{numcases}{}s(1-a)-tb>0 \label{1}\\
+               
+$$
+\begin{cases}
+s(1-a)-tb>0 \label{1}\\
                -sc+t(1-d)>0\label{2}
-               \end{numcases}
+\end{cases}
+$$
+
 とする．
 
 $1-a\le 0$つまり$1\le a$の時，\eqref{1}が満たされず不適．故に

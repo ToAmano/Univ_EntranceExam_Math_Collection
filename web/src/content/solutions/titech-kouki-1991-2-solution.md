@@ -20,17 +20,25 @@ title: "TITECH 1991 kouki Q2 (solution)"
 </figure>
 
   点Pが直線DA上にくる時，$\alpha = \pi/6$であることに注意する．線分PO と角 $\theta$ をなす半直線 $l, m$ とする．$\theta$を大きくしていったとき，$l, m$ が正方形ABCDを通る条件は，$\alpha$ によって異なるため，
-  \begin{numcases}{}
-    0     &\le \alpha \le \pi/6 \label{1991-2:eq:1}\\
+  
+$$
+\begin{cases}
+0     &\le \alpha \le \pi/6 \label{1991-2:eq:1}\\
     \pi/6 &\le \alpha \le \pi/4 \label{1991-2:eq:2}
-  \end{numcases}
+\end{cases}
+$$
+
   の2つの場合分けで考える．$\eqref{1991-2:eq:1}$ の場合は，$\theta$ が最大となるとき $l, m$ は A または B を通る．したがって，$\min \angle \mathrm{OP}(\alpha)\mathrm{B}$, $\min \angle \mathrm{OP}(\alpha)\mathrm{A}$ のうち，小さい方が最大の $\theta$ を与える．一方で$\eqref{1991-2:eq:2}$ の場合は，$\theta$ が最大となるとき $l, m$ は B または D を通る．したがって，$\min \angle \mathrm{OP}(\alpha)\mathrm{B}$, $\min \angle \mathrm{OP}(\alpha)\mathrm{C}$ のうち，小さい方が最大の $\theta$ を与える．これらの場合をそれぞれ図に示す．
 
   これらの条件を数式に起こすと
-  \begin{numcases}{\max\theta = \\}
-    \min \left(\min \angle \mathrm{OPB}, \min \angle \mathrm{OPA}\right) & $\displaystyle 0 \le \alpha \le \frac{\pi}{6}$ \label{1991-2:eq:3}\\
+  
+$$
+\max\theta = \begin{cases}
+\min \left(\min \angle \mathrm{OPB}, \min \angle \mathrm{OPA}\right) & $\displaystyle 0 \le \alpha \le \frac{\pi}{6}$ \label{1991-2:eq:3}\\
     \min \left(\min \angle \mathrm{OPB}, \min \angle \mathrm{OPD}\right) & $\displaystyle \frac{\pi}{6} \le \alpha \le \frac{\pi}{4}$ \label{1991-2:eq:4}
-  \end{numcases}
+\end{cases}
+$$
+
   となる．この区間では$0\le\theta<\pi/2$であるから，$\theta$の最大値は$\cos\theta$の最小値に対応する．以下では$\cos\theta$の最小値を求める．
   
 

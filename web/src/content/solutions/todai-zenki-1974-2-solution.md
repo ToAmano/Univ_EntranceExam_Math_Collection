@@ -33,10 +33,14 @@ $$
 
 となる．ここで$t=a+b$，$s=b-a$とおいて，$a$，$b$の存在条件を調べる．     
 まずは\eqref{1}，\eqref{2}に代入して
-     \begin{subnumcases}{}
-     s>0 \label{3}\\
+     
+$$
+\begin{cases}
+s>0 \label{3}\\
      s^2(1+t^2)=l^2 \label{4}
-     \end{subnumcases}
+\end{cases}
+$$
+
 次に，$ab=\dfrac{t^2-s^2}{4}$であるから，$a$，$b$は$x$の$2$次方程式$x^2-tx+\dfrac{t^2-s^2}{4}=0$の異$2$実解であるから，判別式$D$として
      
 $$

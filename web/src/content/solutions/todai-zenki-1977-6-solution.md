@@ -71,11 +71,15 @@ $$
           \end{align*}
      となる．このような実数$t_k$，$s_k$の存在条件を考えればよい．そこで$\vec{n}=(x,y,z)$とす
      る．まず$t_1$，$s_1$について
-          \begin{subnumcases}{ }
-                2+xt_1=1+s_1& \label{1a}\\
+          
+$$
+\begin{cases}
+2+xt_1=1+s_1& \label{1a}\\
                 yt_1=1&  \label{1b}\\
                 1+zt_1=s_1 & \label{1c}
-          \end{subnumcases}
+\end{cases}
+$$
+
      \eqref{1a}，\eqref{1c}から$s_1$を消して
           \begin{align*}
           (x-z)t_1=0
@@ -87,11 +91,15 @@ $$
      が従う．逆にこの時実数$t_1$，$s_1$は存在．
      
      次に$t_2$，$s_2$について     
-         \begin{subnumcases}{ }
-         2+xt_2=1 &\label{2a}\\
+         
+$$
+\begin{cases}
+2+xt_2=1 &\label{2a}\\
          yt_2=1+2s_2 &\label{2b}\\
          1+zt_2=1+s_2 &\label{2c}
-          \end{subnumcases}
+\end{cases}
+$$
+
      である．\eqref{2b}，\eqref{2c}から$s_2$を消去して
           \begin{align*}
           t_2(y-2z)=1 \label{4}

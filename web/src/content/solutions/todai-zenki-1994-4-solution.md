@@ -74,10 +74,14 @@ g_n(c)&=c^{n-1}\left\{(1+c)g(c)-\frac{g(c)}{1-c}\right\}+\frac{g(c)}{1-c}\nonumb
 $$
      
 を得る$(\because0<c<1)$．故に
-     \begin{subnumcases}{}
-     xf(x)=g(x)+x\frac{g(x)}{1-x}  \label{4}\\
+     
+$$
+\begin{cases}
+xf(x)=g(x)+x\frac{g(x)}{1-x}  \label{4}\\
      f(0)=1 \label{5}
-     \end{subnumcases}
+\end{cases}
+$$
+
 をみたす$f(x)$をみつければよい．\eqref{4}で$0<x<1$だから，分母を払って
      
 $$

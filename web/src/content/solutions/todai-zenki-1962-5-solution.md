@@ -22,11 +22,15 @@ title: "TODAI 1962 zenki Q5 (solution)"
 ## 【解】
 
 まず題意から
-     \begin{subnumcases}{}
-     x,y,z>0 \label{1} \\
+     
+$$
+\begin{cases}
+x,y,z>0 \label{1} \\
      x+y+z=6  \label{2}\\
      yz+zx+xy=9  \label{3}
-     \end{subnumcases}
+\end{cases}
+$$
+
 となる．     
      
 

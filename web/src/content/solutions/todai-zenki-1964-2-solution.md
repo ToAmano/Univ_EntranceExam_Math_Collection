@@ -27,10 +27,14 @@ $$
 
 $t\in\mathbb{R}$に対して$A(t,t^2)$と置ける． 題意の条件から$s\in\mathbb{R}$に対して
 $B(s,3s^2+24s+50)$とおいてよい．このとき内分点に関する条件から
-     \begin{numcases}{}
-     \frac{nt+m\alpha}{m+n}=s \label{3}\\
+     
+$$
+\begin{cases}
+\frac{nt+m\alpha}{m+n}=s \label{3}\\
      \frac{nt^2+m\beta}{m+n}=3s^2+24s+50 \label{4}
-     \end{numcases}
+\end{cases}
+$$
+
 $\forall t \exists s,\eqref{3}\land\eqref{4}$となる$P$，$m$，$n$の条件を求めればよい．     
 \eqref{3}を\eqref{4}に代入して$s$を消去する．$a=m+n$として簡単のため
      
