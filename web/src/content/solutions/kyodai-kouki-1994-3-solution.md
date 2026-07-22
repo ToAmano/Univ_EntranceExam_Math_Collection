@@ -90,7 +90,7 @@ $$
   
 $$
 \begin{align*}
-\vec{OR}& = \vec{OM} + \vec{MR}\\& = \frac{1}{2}\mqty(X  \\Y) \pm\frac{\sqrt{3}}{2}\mqty(Y \\ X) \\
+\vec{OR}& = \vec{OM} + \vec{MR}\\& = \frac{1}{2}\begin{pmatrix}X  \\Y\end{pmatrix} \pm\frac{\sqrt{3}}{2}\begin{pmatrix}Y \\ X\end{pmatrix} \\
 \end{align*}
 $$
 

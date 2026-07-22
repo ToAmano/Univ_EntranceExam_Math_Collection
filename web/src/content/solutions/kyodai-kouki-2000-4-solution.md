@@ -29,7 +29,7 @@ title: "KYODAI 2000 kouki Q4 (solution)"
   
 $$
 \begin{align*}
-n \parallel\vec{\text{C'A}}\parallel\mqty(\sqrt{2}\\ 1 \\ 1 )
+n \parallel\vec{\text{C'A}}\parallel\begin{pmatrix}\sqrt{2}\\ 1 \\ 1 \end{pmatrix}
 \end{align*}
 $$
 

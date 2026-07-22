@@ -115,7 +115,7 @@ $$
     
 $$
 \begin{align*}
-\vec{P_0 P_1}& = \mqty( 16/y^2_0 - 4/y_0^2 \\ -\frac{1}{2}y_0 - y_0 ) = \mqty( 12/y_0 \\ -\frac{3}{2}y_0 ) \\\vec{P_0 P_2}& = \mqty( 64/y^2_0 - 4/y^2_0 \\\frac{1}{4}y_0 - y_0 ) = \mqty( 60/y^2_0 \\ -\frac{3}{4}y_0 )
+\vec{P_0 P_1}& = \begin{pmatrix} 16/y^2_0 - 4/y_0^2 \\ -\frac{1}{2}y_0 - y_0 \end{pmatrix} = \begin{pmatrix} 12/y_0 \\ -\frac{3}{2}y_0 \end{pmatrix} \\\vec{P_0 P_2}& = \begin{pmatrix} 64/y^2_0 - 4/y^2_0 \\\frac{1}{4}y_0 - y_0 \end{pmatrix} = \begin{pmatrix} 60/y^2_0 \\ -\frac{3}{4}y_0 \end{pmatrix}
 \end{align*}
 $$
 
@@ -210,7 +210,7 @@ $$
 $$
 \begin{align*}
 R
-         & =  \overline{P_0 P_2}\\& =  \left|\mqty(64/y_0^2-4/y_0^2                                          \\ y_0/4 - y_0)\right|\\& =  \left|\mqty(60/y_0^2                                                  \\ -3y_0/4 )\right|\\& = \sqrt{\left(\frac{60}{y_0}\right)^2 + \left(-\frac{3}{4}y_0\right)^2 }\\& = \sqrt{\frac{9}{16}y_0^2 + \frac{3600}{y_0^2}}\\
+         & =  \overline{P_0 P_2}\\& =  \left|\begin{pmatrix}64/y_0^2-4/y_0^2                                          \\ y_0/4 - y_0\end{pmatrix}\right|\\& =  \left|\begin{pmatrix}60/y_0^2                                                  \\ -3y_0/4 \end{pmatrix}\right|\\& = \sqrt{\left(\frac{60}{y_0}\right)^2 + \left(-\frac{3}{4}y_0\right)^2 }\\& = \sqrt{\frac{9}{16}y_0^2 + \frac{3600}{y_0^2}}\\
 \end{align*}
 $$
 

@@ -23,7 +23,7 @@ $$
   
 $$
 \begin{align}
-B = \mqty(0 & 1 \\ 0 & 0 ) \label{1993-2:eq:1}
+B = \begin{pmatrix}0 & 1 \\ 0 & 0 \end{pmatrix} \label{1993-2:eq:1}
 \end{align}
 $$
 
@@ -48,7 +48,7 @@ $$
   
 $$
 \begin{align*}
-B^{2} = \mqty(0 & 1 \\ 0 & 0 )\mqty(0 & 1 \\ 0 & 0 ) = \mqty(\zmat{2}{2})
+B^{2} = \begin{pmatrix}0 & 1 \\ 0 & 0 \end{pmatrix}\begin{pmatrix}0 & 1 \\ 0 & 0 \end{pmatrix} = \begin{pmatrix}\zmat{2}{2}\end{pmatrix}
 \end{align*}
 $$
 
@@ -57,8 +57,8 @@ $$
   
 $$
 \begin{align*}
-A^{n}& = \sum_{k=0}^{1} 2^{n-k}{}_{n}C_{k} B^{k}\\& = 2^{n}{}_{n}C_{0} B^{0} + 2^{n-1}{}_{n}C_{1} B^{1}\\& = 2^{n} I + 2^{n-1}n B                                         \\& = \mqty(2^{n}& 2^{n-1}n \\
-    0 & 2^{n})
+A^{n}& = \sum_{k=0}^{1} 2^{n-k}{}_{n}C_{k} B^{k}\\& = 2^{n}{}_{n}C_{0} B^{0} + 2^{n-1}{}_{n}C_{1} B^{1}\\& = 2^{n} I + 2^{n-1}n B                                         \\& = \begin{pmatrix}2^{n}& 2^{n-1}n \\
+    0 & 2^{n}\end{pmatrix}
 \end{align*}
 $$
 
@@ -133,7 +133,7 @@ $$
   
 $$
 \begin{align*}
-\begin{pmatrix} a_{n+1} & b_{n+1} \\ c_{n+1} & d_{n+1} \end{pmatrix} = \mqty(2 & 1 \\ 0 & 2) \begin{pmatrix} a_n & b_n \\ c_n & d_n \end{pmatrix}
+\begin{pmatrix} a_{n+1} & b_{n+1} \\ c_{n+1} & d_{n+1} \end{pmatrix} = \begin{pmatrix}2 & 1 \\ 0 & 2\end{pmatrix} \begin{pmatrix} a_n & b_n \\ c_n & d_n \end{pmatrix}
 \end{align*}
 $$
 
@@ -229,7 +229,7 @@ $$
   
 $$
 \begin{align*}
-A^{2} = \mqty(4 & 4 \\ 0 & 4)
+A^{2} = \begin{pmatrix}4 & 4 \\ 0 & 4\end{pmatrix}
 \end{align*}
 $$
 
@@ -237,7 +237,7 @@ $$
   
 $$
 \begin{align*}
-A^{n+1} - 2 A^{n} = 2^{n}\mqty(0 & 1 \\ 0 & 0)
+A^{n+1} - 2 A^{n} = 2^{n}\begin{pmatrix}0 & 1 \\ 0 & 0\end{pmatrix}
 \end{align*}
 $$
 

@@ -30,7 +30,7 @@ $$
          \vec{O'Q} \perp \vec{l}
        \end{dcases}\\\therefore& \begin{dcases}
          t^2 + (t^2-Y)^2 = r^2 & \quad \dots \textcircled{1} \\
-         \mqty(t                                             \\ t^2-Y) \cdot \mqty(1 \\ 2t) = 0 & \quad \dots \textcircled{2}
+         \begin{pmatrix}t                                             \\ t^2-Y\end{pmatrix} \cdot \begin{pmatrix}1 \\ 2t\end{pmatrix} = 0 & \quad \dots \textcircled{2}
        \end{dcases}\\\therefore& \begin{dcases}
          t^2 + (t^2-Y)^2 = r^2                   \\
          1 + 2(t^2-Y) = 0 & \quad (\because t>0)

@@ -15,7 +15,7 @@ title: "TODAI 2002 kouki Q2 (solution)"
   
 $$
 \begin{align*}
-\vec{\text{P}_1\text{P}_2} = \mqty( a  \\ a-b \\ b ) \\\vec{\text{P}_1\text{P}_3} = \mqty(b-a \\ -b \\ a)
+\vec{\text{P}_1\text{P}_2} = \begin{pmatrix} a  \\ a-b \\ b \end{pmatrix} \\\vec{\text{P}_1\text{P}_3} = \begin{pmatrix}b-a \\ -b \\ a\end{pmatrix}
 \end{align*}
 $$
 
@@ -42,7 +42,7 @@ $$
   
 $$
 \begin{align*}
-\vec{n} = \mqty(1 \\ 1 \\ 1 )
+\vec{n} = \begin{pmatrix}1 \\ 1 \\ 1 \end{pmatrix}
 \end{align*}
 $$
 

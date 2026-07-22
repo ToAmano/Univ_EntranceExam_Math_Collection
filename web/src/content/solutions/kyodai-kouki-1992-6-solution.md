@@ -18,7 +18,7 @@ title: "KYODAI 1992 kouki Q6 (solution)"
   
 $$
 \begin{align*}
-\vec{\text{AB}}& = \mqty( -\frac{1}{a}-1 \\ a-1 \\ -1) \\\vec{\text{AD}}& = \mqty( -1             \\ -\frac{1}{a}-1 \\ a-1 ) \\\vec{\text{DC}}& = \mqty(-a              \\\frac{1}{a}\\\frac{1}{a}-a )
+\vec{\text{AB}}& = \begin{pmatrix} -\frac{1}{a}-1 \\ a-1 \\ -1\end{pmatrix} \\\vec{\text{AD}}& = \begin{pmatrix} -1             \\ -\frac{1}{a}-1 \\ a-1 \end{pmatrix} \\\vec{\text{DC}}& = \begin{pmatrix}-a              \\\frac{1}{a}\\\frac{1}{a}-a \end{pmatrix}
 \end{align*}
 $$
 
@@ -97,7 +97,7 @@ $$
   
 $$
 \begin{align*}
-\mqty(x \\ y \\ z) = \mqty(1 \\ 1 \\ 1) + t \mqty(-1 \\ a-1 \\ -1)
+\begin{pmatrix}x \\ y \\ z\end{pmatrix} = \begin{pmatrix}1 \\ 1 \\ 1\end{pmatrix} + t \begin{pmatrix}-1 \\ a-1 \\ -1\end{pmatrix}
 \end{align*}
 $$
 

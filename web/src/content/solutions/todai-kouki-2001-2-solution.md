@@ -131,7 +131,7 @@ $$
   
 $$
 \begin{align*}
-\vec{a} = \mqty(2(\sqrt{2}+1) \\ 0), \quad\vec{b} = (\sqrt{2}+1)\mqty(1 \\\sqrt{3})
+\vec{a} = \begin{pmatrix}2(\sqrt{2}+1\end{pmatrix} \\ 0), \quad\vec{b} = (\sqrt{2}+1)\begin{pmatrix}1 \\\sqrt{3}\end{pmatrix}
 \end{align*}
 $$
 

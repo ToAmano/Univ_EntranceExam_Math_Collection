@@ -31,8 +31,8 @@ $$
          \va*{OP}\cdot \va*{PO'} = 0 \\
          \va*{OQ}\cdot \va*{QO'} = 0
        \end{dcases}\\\therefore& \begin{dcases}
-         \mqty(1          \\0)\cdot \mqty(X-1\\Y) = 0 \\
-         \mqty(\cos\theta \\ \sin\theta)\cdot \mqty(X-\cos\theta\\ \sin\theta) = 0
+         \begin{pmatrix}1          \\0\end{pmatrix}\cdot \begin{pmatrix}X-1\\Y\end{pmatrix} = 0 \\
+         \begin{pmatrix}\cos\theta \\ \sin\theta\end{pmatrix}\cdot \begin{pmatrix}X-\cos\theta\\ \sin\theta\end{pmatrix} = 0
        \end{dcases}\\\therefore& \begin{dcases}
          X=1 \\
          Y = \frac{1-\cos\theta}{\sin\theta} \quad (\because 0 < \theta < \pi) \quad \cdots\text{②}
@@ -118,7 +118,7 @@ $$
   
 $$
 \begin{align*}
-\va*{OA_{\theta}}& =  \frac{1-\sin\frac{\theta}{2}}{\cos\frac{\theta}{2}}\mqty(\cos\frac{\theta}{2}\\\sin\frac{\theta}{2}) \\& \equiv\mqty(x                                                                    \\ y)
+\va*{OA_{\theta}}& =  \frac{1-\sin\frac{\theta}{2}}{\cos\frac{\theta}{2}}\begin{pmatrix}\cos\frac{\theta}{2}\\\sin\frac{\theta}{2}\end{pmatrix} \\& \equiv\begin{pmatrix}x                                                                    \\ y\end{pmatrix}
 \end{align*}
 $$
 

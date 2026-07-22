@@ -25,8 +25,8 @@ title: "TITECH 2009 kouki Q1 (solution)"
   
 $$
 \begin{align*}
-\mqty(x   \\y\\ z)
-    = \mqty(a \\ 0 \\ 3) + t \mqty(X-a \\ Y \\ -3)\quad(t \in\mathbb{R})
+\begin{pmatrix}x   \\y\\ z\end{pmatrix}
+    = \begin{pmatrix}a \\ 0 \\ 3\end{pmatrix} + t \begin{pmatrix}X-a \\ Y \\ -3\end{pmatrix}\quad(t \in\mathbb{R})
 \end{align*}
 $$
 
@@ -119,7 +119,7 @@ $$
   
 $$
 \begin{align*}
-\vec{CO'}& = \mqty(-a  \\ 0 \\ -2)\\\vec{CP}& = \mqty(X-a \\ Y \\ -3)
+\vec{CO'}& = \begin{pmatrix}-a  \\ 0 \\ -2\end{pmatrix}\\\vec{CP}& = \begin{pmatrix}X-a \\ Y \\ -3\end{pmatrix}
 \end{align*}
 $$
 
@@ -127,7 +127,7 @@ $$
   
 $$
 \begin{align*}
-\vec{O'H}& = \frac{-a(X-a)+6}{(X-a)^2+Y^2+9}\mqty(X-a \\ Y \\ -3) - \mqty(-a  \\ 0 \\ -2) \\& = \frac{-B}{A}\mqty(X-a                    \\ Y \\ -3) - \mqty(-a  \\ 0 \\ -2)
+\vec{O'H}& = \frac{-a(X-a)+6}{(X-a)^2+Y^2+9}\begin{pmatrix}X-a \\ Y \\ -3\end{pmatrix} - \begin{pmatrix}-a  \\ 0 \\ -2\end{pmatrix} \\& = \frac{-B}{A}\begin{pmatrix}X-a                    \\ Y \\ -3\end{pmatrix} - \begin{pmatrix}-a  \\ 0 \\ -2\end{pmatrix}
 \end{align*}
 $$
 

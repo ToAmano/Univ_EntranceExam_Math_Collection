@@ -35,7 +35,7 @@ $$
   
 $$
 \begin{align*}
-\mqty(a\cos\alpha-1 \\ a\sin\alpha) \cdot\mqty( \cos\beta\\\sin\beta) = 0
+\begin{pmatrix}a\cos\alpha-1 \\ a\sin\alpha\end{pmatrix} \cdot\begin{pmatrix} \cos\beta\\\sin\beta\end{pmatrix} = 0
 \end{align*}
 $$
 
@@ -43,7 +43,7 @@ $$
   
 $$
 \begin{align*}
-& \mqty(-a\frac{\sqrt{2}}{2}-1                     \\ a\frac{\sqrt{2}}{2}) \cdot\mqty( 1              \\\sqrt{3}) = 0 \\\therefore& -a\frac{\sqrt{2}}{2}-1 + \frac{\sqrt{6}}{2}a = 0 \\\therefore& (\sqrt{6}-\sqrt{2})a = 2                         \\\therefore& a = \frac{\sqrt{2}}{\sqrt{3}-1}\\& = \frac{\sqrt{2}(\sqrt{3}+1)}{2}
+& \begin{pmatrix}-a\frac{\sqrt{2}}{2}-1                     \\ a\frac{\sqrt{2}}{2}\end{pmatrix} \cdot\begin{pmatrix} 1              \\\sqrt{3}\end{pmatrix} = 0 \\\therefore& -a\frac{\sqrt{2}}{2}-1 + \frac{\sqrt{6}}{2}a = 0 \\\therefore& (\sqrt{6}-\sqrt{2})a = 2                         \\\therefore& a = \frac{\sqrt{2}}{\sqrt{3}-1}\\& = \frac{\sqrt{2}(\sqrt{3}+1)}{2}
 \end{align*}
 $$
 
@@ -54,7 +54,7 @@ $$
   
 $$
 \begin{align*}
-\mqty(b\cos\beta-1 \\ b\sin\beta) \cdot\mqty( \cos\alpha\\\sin\alpha) = 0
+\begin{pmatrix}b\cos\beta-1 \\ b\sin\beta\end{pmatrix} \cdot\begin{pmatrix} \cos\alpha\\\sin\alpha\end{pmatrix} = 0
 \end{align*}
 $$
 
@@ -62,7 +62,7 @@ $$
   
 $$
 \begin{align*}
-& \mqty(-b\frac{1}{2}-1                     \\ a\frac{\sqrt{3}}{2}) \cdot\mqty( 1 \\ 1) = 0 \\\therefore& -b\frac{1}{2}-1 + \frac{\sqrt{3}}{2}b = 0 \\\therefore& (\sqrt{3}-1)b = 2                         \\\therefore& b = \frac{2}{\sqrt{3}-1}\\& = \sqrt{3}+1
+& \begin{pmatrix}-b\frac{1}{2}-1                     \\ a\frac{\sqrt{3}}{2}\end{pmatrix} \cdot\begin{pmatrix} 1 \\ 1\end{pmatrix} = 0 \\\therefore& -b\frac{1}{2}-1 + \frac{\sqrt{3}}{2}b = 0 \\\therefore& (\sqrt{3}-1)b = 2                         \\\therefore& b = \frac{2}{\sqrt{3}-1}\\& = \sqrt{3}+1
 \end{align*}
 $$
 
@@ -99,8 +99,8 @@ $$
 $$
 \begin{align}
 & \begin{dcases}
-                   \mqty(b\cos\beta-1  \\ b\sin\beta) \cdot \mqty(\cos\alpha \\ \sin\alpha) = 0 \\
-                   \mqty(a\cos\alpha-1 \\ a\sin\alpha) \cdot \mqty( \cos\beta \\ \sin\beta ) = 0
+                   \begin{pmatrix}b\cos\beta-1  \\ b\sin\beta\end{pmatrix} \cdot \begin{pmatrix}\cos\alpha \\ \sin\alpha\end{pmatrix} = 0 \\
+                   \begin{pmatrix}a\cos\alpha-1 \\ a\sin\alpha\end{pmatrix} \cdot \begin{pmatrix} \cos\beta \\ \sin\beta \end{pmatrix} = 0
                  \end{dcases}\\\therefore& \begin{dcases}
                    b\cos(\beta-\alpha) = \cos\alpha \\
                    a\cos(\beta-\alpha) = \cos\beta
@@ -357,7 +357,7 @@ $$
   
 $$
 \begin{align*}
-ab\cos\theta + (a+\sqrt{2})b\sin\theta = \mqty(a \\ a+\sqrt{2}) \cdot\vec{OB}
+ab\cos\theta + (a+\sqrt{2})b\sin\theta = \begin{pmatrix}a \\ a+\sqrt{2}\end{pmatrix} \cdot\vec{OB}
 \end{align*}
 $$
 
@@ -370,7 +370,7 @@ $$
   
 $$
 \begin{align*}
-\mqty(a \\ a+\sqrt{2}) \parallel\mqty(\cos\frac{\pi}{3}\\\sin\frac{\pi}{3})
+\begin{pmatrix}a \\ a+\sqrt{2}\end{pmatrix} \parallel\begin{pmatrix}\cos\frac{\pi}{3}\\\sin\frac{\pi}{3}\end{pmatrix}
 \end{align*}
 $$
 

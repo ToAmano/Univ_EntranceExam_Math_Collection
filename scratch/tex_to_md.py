@@ -252,6 +252,11 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         md_body = re.sub(r'\\begin\{figure\}.*?\\end\{figure\}', replace_figure_fallback, md_body, flags=re.DOTALL)
         md_body = re.sub(r'\\begin\{(align\*?|gather\*?)\}(.*?)\\end\{\1\}', r'\n$$\n\\begin{\1}\2\\end{\1}\n$$\n', md_body, flags=re.DOTALL)
 
+    # physics パッケージ \mqty マクロの標準 LaTeX 行列環境への変換
+    md_body = re.sub(r'\\mqty\((.*?)\)', r'\\begin{pmatrix}\1\\end{pmatrix}', md_body, flags=re.DOTALL)
+    md_body = re.sub(r'\\mqty\[(.*?)\]', r'\\begin{bmatrix}\1\\end{bmatrix}', md_body, flags=re.DOTALL)
+    md_body = re.sub(r'\\mqty\{(.*?)\}', r'\\begin{matrix}\1\\end{matrix}', md_body, flags=re.DOTALL)
+
     # 見出しと見映えの最終整頓
     md_content = re.sub(r'\\begin\{table\}[^}\n]*|\\end\{table\}|\\centering|\\begin\{center\}|\\end\{center\}|\\shadowbox\{|\\endtabular', '', md_body)
     md_content = re.sub(r'\\renewcommand\{[^}]*\}\{[^}]*\}', '', md_content)

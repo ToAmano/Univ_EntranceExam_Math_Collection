@@ -200,7 +200,7 @@ $$
   
 $$
 \begin{align*}
-\vec{a} = \mqty(a_x,a_y) \\\vec{b} = \mqty(b_x,b_y)
+\vec{a} = \begin{pmatrix}a_x,a_y\end{pmatrix} \\\vec{b} = \begin{pmatrix}b_x,b_y\end{pmatrix}
 \end{align*}
 $$
 
@@ -217,7 +217,7 @@ $$
   
 $$
 \begin{align*}
-\mqty(a_x & b_x \\ a_y & b_y)
+\begin{pmatrix}a_x & b_x \\ a_y & b_y\end{pmatrix}
 \end{align*}
 $$
 
@@ -229,7 +229,7 @@ $$
 $$
 \begin{align*}
 V
-     & = \frac{1}{6}\left|\det\mqty(a_x                                                               & b_x & c_x \\ a_y & b_y & c_y \\ a_z & b_z & c_z) \right|\\& = \frac{1}{6}\left|a_xb_yc_z + a_yb_zc_x + a_zb_xc_y - a_zb_yc_x - a_xb_zc_y - a_yb_xc_z\right|
+     & = \frac{1}{6}\left|\det\begin{pmatrix}a_x                                                               & b_x & c_x \\ a_y & b_y & c_y \\ a_z & b_z & c_z\end{pmatrix} \right|\\& = \frac{1}{6}\left|a_xb_yc_z + a_yb_zc_x + a_zb_xc_y - a_zb_yc_x - a_xb_zc_y - a_yb_xc_z\right|
 \end{align*}
 $$
 

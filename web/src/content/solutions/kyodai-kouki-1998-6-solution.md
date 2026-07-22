@@ -56,8 +56,8 @@ $$
   
 $$
 \begin{align*}
-\mqty(x                            \\ y)
-     & = r \mqty(\cos\theta\\\sin\theta) \\& = \sin 2\theta\mqty(\cos\theta\\\sin\theta)
+\begin{pmatrix}x                            \\ y\end{pmatrix}
+     & = r \begin{pmatrix}\cos\theta\\\sin\theta\end{pmatrix} \\& = \sin 2\theta\begin{pmatrix}\cos\theta\\\sin\theta\end{pmatrix}
 \end{align*}
 $$
 

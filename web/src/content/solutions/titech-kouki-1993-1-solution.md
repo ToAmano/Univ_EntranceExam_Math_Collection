@@ -192,7 +192,7 @@ $$
   
 $$
 \begin{align*}
-\vec{l}& = t \vec{AB}\\& = t \mqty(1  \\ 1 \\ 1)
+\vec{l}& = t \vec{AB}\\& = t \begin{pmatrix}1  \\ 1 \\ 1\end{pmatrix}
 \end{align*}
 $$
 
@@ -200,7 +200,7 @@ $$
   
 $$
 \begin{align*}
-d\vec{l}& = dt \mqty(1 \\ 1 \\ 1)
+d\vec{l}& = dt \begin{pmatrix}1 \\ 1 \\ 1\end{pmatrix}
 \end{align*}
 $$
 
@@ -208,7 +208,7 @@ $$
   
 $$
 \begin{align*}
-\vec{V} = \int_{t_A}^{t_B} f(t) \mqty(1 \\1\\1) dt
+\vec{V} = \int_{t_A}^{t_B} f(t) \begin{pmatrix}1 \\1\\1\end{pmatrix} dt
 \end{align*}
 $$
 
@@ -227,7 +227,7 @@ $$
 $$
 \begin{align*}
 dl
-     & =dt \left|\mqty(1 \\ 1 \\ 1)\right|\\& = \sqrt{3} dt
+     & =dt \left|\begin{pmatrix}1 \\ 1 \\ 1\end{pmatrix}\right|\\& = \sqrt{3} dt
 \end{align*}
 $$
 

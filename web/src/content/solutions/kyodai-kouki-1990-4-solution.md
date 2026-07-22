@@ -21,7 +21,7 @@ $$
   
 $$
 \begin{align*}
-\vec{\text{PQ}} = \mqty(1 \\ t \\ 0 ), \quad\vec{\text{PR}} = \mqty(1 \\ 2 \\ t)
+\vec{\text{PQ}} = \begin{pmatrix}1 \\ t \\ 0 \end{pmatrix}, \quad\vec{\text{PR}} = \begin{pmatrix}1 \\ 2 \\ t\end{pmatrix}
 \end{align*}
 $$
 

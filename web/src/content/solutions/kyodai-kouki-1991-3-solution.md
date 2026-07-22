@@ -20,7 +20,7 @@ title: "KYODAI 1991 kouki Q3 (solution)"
   
 $$
 \begin{align*}
-\vec{a} = \mqty(1 \\ 0 \\ 0)
+\vec{a} = \begin{pmatrix}1 \\ 0 \\ 0\end{pmatrix}
 \end{align*}
 $$
 
@@ -30,7 +30,7 @@ $$
   
 $$
 \begin{align*}
-\vec{b} = \mqty( \cos\gamma\\\sin\gamma\\ 0)
+\vec{b} = \begin{pmatrix} \cos\gamma\\\sin\gamma\\ 0\end{pmatrix}
 \end{align*}
 $$
 
@@ -38,7 +38,7 @@ $$
   
 $$
 \begin{align}
-& \vec{c} = \mqty( p                    \\ q \\ r) \\& p^2 q^2 + r^2 = 1 \label{1991-3:eq:1}
+& \vec{c} = \begin{pmatrix} p                    \\ q \\ r\end{pmatrix} \\& p^2 q^2 + r^2 = 1 \label{1991-3:eq:1}
 \end{align}
 $$
 

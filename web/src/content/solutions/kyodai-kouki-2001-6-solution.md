@@ -30,7 +30,7 @@ $$
   
 $$
 \begin{align*}
-\mqty(\sin\theta\\ -\cos\theta)
+\begin{pmatrix}\sin\theta\\ -\cos\theta\end{pmatrix}
 \end{align*}
 $$
 
@@ -38,7 +38,7 @@ $$
   
 $$
 \begin{align}
-\vec{RQ}\parallel\mqty(\cos\theta\\\sin\theta) \label{2001-6:eq:1}
+\vec{RQ}\parallel\begin{pmatrix}\cos\theta\\\sin\theta\end{pmatrix} \label{2001-6:eq:1}
 \end{align}
 $$
 
@@ -69,7 +69,7 @@ $$
   
 $$
 \begin{align*}
-\vec{RQ}& = \left(a\cos\theta -1\right)\mqty(\cos\theta\\\sin\theta)
+\vec{RQ}& = \left(a\cos\theta -1\right)\begin{pmatrix}\cos\theta\\\sin\theta\end{pmatrix}
 \end{align*}
 $$
 
@@ -77,8 +77,8 @@ $$
   
 $$
 \begin{align}
-\mqty( X                                          \\ Y )
-     & = \vec{OR} + \vec{RQ}\\& = \left(a\cos\theta -1\right)\mqty(\cos\theta\\\sin\theta) + \mqty(a \\ 0) \\\therefore& \begin{dcases}
+\begin{pmatrix} X                                          \\ Y \end{pmatrix}
+     & = \vec{OR} + \vec{RQ}\\& = \left(a\cos\theta -1\right)\begin{pmatrix}\cos\theta\\\sin\theta\end{pmatrix} + \begin{pmatrix}a \\ 0\end{pmatrix} \\\therefore& \begin{dcases}
          X(\theta) = \cos\theta-a\cos^2\theta +a \\
          Y(\theta) = \sin\theta-a\cos\theta\sin\theta
        \end{dcases}\label{2001-6:eq:3}
