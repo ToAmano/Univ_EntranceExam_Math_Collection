@@ -21,9 +21,9 @@ title: "TODAI 1989 zenki Q1 (solution)"
 
 $$
 \exists\a\exists\b \begin{cases}
-\b=k(\a-\a^3) \\
-     \a=k(\b-\b^3) \\
-     \a\not=\b \ \ \ \ 0<\a,\b 
+\b=k(\a-\a^3) \tag{1} \\
+\a=k(\b-\b^3) \tag{2} \\
+\a\not=\b \ \ \ \ 0<\a,\b \tag{3}
 \end{cases}
 $$
 
@@ -64,9 +64,9 @@ $$
 
 $$
 \exists\a\exists\b \begin{cases}
-1-(\a^2+\b^2)=0 \\
-      1=k\a\b  \\
-      \a\not=\b \ \ \ \ 0<\a,\b 
+1-(\a^2+\b^2)=0 \tag{4} \\
+1=k\a\b \tag{5} \\
+\a\not=\b \ \ \ \ 0<\a,\b \tag{6}
 \end{cases}
 $$
 
@@ -107,9 +107,9 @@ $$
 
 $$
 \exists a\exists b \begin{cases}
-1=a^2-2b \\
-      1=kb  \\
-      \a\not=\b \ \ \ \ 0<\a,\b 
+1=a^2-2b \tag{7} \\
+1=kb \tag{8} \\
+\a\not=\b \ \ \ \ 0<\a,\b \tag{9}
 \end{cases}
 $$
 

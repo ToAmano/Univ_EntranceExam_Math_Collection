@@ -37,9 +37,9 @@ $n$回目に$3$人，$2$人でジャンケンする確率をそれぞれ$a_n$，
 
 $$
 \begin{cases}
-c_n=\frac{1}{3}a_n+\frac{2}{3}b_n \\
-     a_{n+1}=\frac{1}{3}a_n  \\
-     b_{n+1}=\frac{1}{3}a_n+\frac{1}{3}b_n 
+c_n=\frac{1}{3}a_n+\frac{2}{3}b_n \tag{1} \\
+a_{n+1}=\frac{1}{3}a_n \tag{2} \\
+b_{n+1}=\frac{1}{3}a_n+\frac{1}{3}b_n \tag{3}
 \end{cases}
 $$
 

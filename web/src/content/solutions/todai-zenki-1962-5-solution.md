@@ -27,9 +27,9 @@ title: "TODAI 1962 zenki Q5 (solution)"
 
 $$
 \begin{cases}
-x,y,z>0  \\
-     x+y+z=6  \\
-     yz+zx+xy=9  
+x,y,z>0 \tag{1} \\
+x+y+z=6 \tag{2} \\
+yz+zx+xy=9 \tag{3}
 \end{cases}
 $$
 

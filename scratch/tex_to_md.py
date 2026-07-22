@@ -240,11 +240,23 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
             left_expr = re.sub(r'\\+$', '', match.group(1).strip()).strip()
             body = match.group(2).strip()
 
-            # cases 環境内部の \label{...} は MathJax がパースエラーを起こす原因となるため抽出・除去
-            lbl_matches = re.findall(r'\\label\{([^}]+)\}', body)
-            body_clean = re.sub(r'\\label\{[^}]+\}', '', body)
+            # 各行の \label{...} から式番号を抽出し、MathJax 用の \tag{式番号} を付与
+            lines = body.split(r'\\')
+            new_lines = []
+            lbl_matches = []
+            for line in lines:
+                m_lbl = re.search(r'\\label\{([^}]+)\}', line)
+                if m_lbl:
+                    lbl_id = m_lbl.group(1)
+                    lbl_matches.append(lbl_id)
+                    # ラベル名末尾から番号（例: 1991-2:eq:1 -> 1）を取得
+                    num = lbl_id.split(':')[-1]
+                    clean_line = re.sub(r'\\label\{[^}]+\}', '', line).strip()
+                    new_lines.append(f"{clean_line} \\tag{{{num}}}")
+                else:
+                    new_lines.append(line)
 
-            # アンカー用 HTML span タグの生成
+            body_clean = " \\\\\n".join(new_lines)
             anchors = "".join([f'<span id="{lbl}"></span>' for lbl in lbl_matches])
 
             if left_expr:

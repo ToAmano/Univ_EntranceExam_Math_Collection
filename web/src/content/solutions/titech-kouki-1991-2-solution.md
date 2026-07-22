@@ -25,8 +25,8 @@ title: "TITECH 1991 kouki Q2 (solution)"
 
 $$
 \begin{cases}
-0     &\le \alpha \le \pi/6 \\
-    \pi/6 &\le \alpha \le \pi/4 
+0     &\le \alpha \le \pi/6 \tag{1} \\
+\pi/6 &\le \alpha \le \pi/4 \tag{2}
 \end{cases}
 $$
 
@@ -38,8 +38,8 @@ $$
 
 $$
 \max\theta = \begin{cases}
-\min \left(\min \angle \mathrm{OPB}, \min \angle \mathrm{OPA}\right) & 0 \le \alpha \le \frac{\pi}{6} \\
-    \min \left(\min \angle \mathrm{OPB}, \min \angle \mathrm{OPD}\right) & \frac{\pi}{6} \le \alpha \le \frac{\pi}{4} 
+\min \left(\min \angle \mathrm{OPB}, \min \angle \mathrm{OPA}\right) & 0 \le \alpha \le \frac{\pi}{6} \tag{3} \\
+\min \left(\min \angle \mathrm{OPB}, \min \angle \mathrm{OPD}\right) & \frac{\pi}{6} \le \alpha \le \frac{\pi}{4} \tag{4}
 \end{cases}
 $$
 

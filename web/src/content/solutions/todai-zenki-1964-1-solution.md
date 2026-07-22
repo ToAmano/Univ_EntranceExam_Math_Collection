@@ -29,9 +29,9 @@ $$
 
 $$
 \begin{cases}
-a+b+c=z  \\
-     bc+ca+ab=-y \\
-     abc=x 
+a+b+c=z \tag{1} \\
+bc+ca+ab=-y \tag{2} \\
+abc=x \tag{3}
 \end{cases}
 $$
 

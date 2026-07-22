@@ -40,8 +40,8 @@ $$
 
 $$
 \begin{cases}
-s>0 \\
-     s^2(1+t^2)=l^2 
+s>0 \tag{3} \\
+s^2(1+t^2)=l^2 \tag{4}
 \end{cases}
 $$
 

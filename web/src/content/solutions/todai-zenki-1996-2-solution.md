@@ -35,8 +35,8 @@ $$
 
 $$
 \begin{cases}
-s(1-a)-tb>0 \\
-               -sc+t(1-d)>0
+s(1-a)-tb>0 \tag{1} \\
+-sc+t(1-d)>0 \tag{2}
 \end{cases}
 $$
 

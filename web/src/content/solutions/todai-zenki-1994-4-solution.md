@@ -87,8 +87,8 @@ $$
 
 $$
 \begin{cases}
-xf(x)=g(x)+x\frac{g(x)}{1-x}  \\
-     f(0)=1 
+xf(x)=g(x)+x\frac{g(x)}{1-x} \tag{4} \\
+f(0)=1 \tag{5}
 \end{cases}
 $$
 
