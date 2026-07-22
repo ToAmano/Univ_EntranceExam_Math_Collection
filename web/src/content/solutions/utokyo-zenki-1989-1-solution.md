@@ -1,0 +1,134 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1989"
+question: "1"
+type: "solution"
+title: "UTOKYO 1989 zenki Q1 (solution)"
+---
+
+\input{macros}
+     \begin{oframed}
+     $k>0$とする．$xy$平面上の二曲線$y=k(x-x^3)$，$x=k(y-y^3)$が第一象限に$\a\not=\b$
+     なる交点$(\a,\b)$をもつような$k$の範囲を求めよ．
+     \end{oframed}
+
+## 【解】
+
+ 
+     
+
+$$
+\exists\a\exists\b \begin{cases}
+\b=k(\a-\a^3) \\
+     \a=k(\b-\b^3) \\
+     \a\not=\b \ \ \ \ 0<\a,\b 
+\end{cases}
+$$
+
+なる条件を調べればよい．
+     
+
+$$
+\begin{align*}
+[1](#1)\land[2](#2)\Longleftrightarrow[1](#1)-[2](#2)\land[1](#1)+[2](#2)
+\end{align*}
+$$
+
+より同値変形して    
+     
+
+$$
+\begin{align*}
+&\exists\a\exists\b\left\{\begin{array}{l}
+     \a+\b=k\left\{(\a+\b)-(\a^3+\b^3)\right\} \\
+     \b-\a=k\left\{(\a-\b)-(\a^3-\b^3)\right\} \\
+     \a\not=\b \ \ \ \ 0<\a,\b
+     \end{array}\right.\\\Longleftrightarrow&\exists\a\exists\b\left\{\begin{array}{l}
+     1=k\left\{1-(\a^2-\a\b+\b^2)\right\} \\
+     -1=k\left\{1-(\a^2+\a\b+\b^2)\right\} \\
+     \a\not=\b \ \ \ \ 0<\a,\b
+     \end{array}\right.\\\Longleftrightarrow&\exists\a\exists\b\left\{\begin{array}{l}
+     0=2k\left\{1-(\a^2+\b^2)\right\} \\
+     1=k\a\b \\
+     \a\not=\b \ \ \ \ 0<\a,\b
+     \end{array}\right.
+\end{align*}
+$$
+
+     
+途中の変形に$\a+\b\not=0$，$\a-\b\not=0$を用いた． 然るに$k>0$だから
+      
+
+$$
+\exists\a\exists\b \begin{cases}
+1-(\a^2+\b^2)=0 \\
+      1=k\a\b  \\
+      \a\not=\b \ \ \ \ 0<\a,\b 
+\end{cases}
+$$
+
+このような$k_{>0}$の条件を調べる．そこで\1 ($0<\theta<\pi/2 , \theta\not=\pi/4$)
+[4](#4)，[6](#6)から$\a=c,\b=s$と置ける．[5](#5)に代入して
+      \[k=\frac{1}{sc}=\frac{2}{\sin 2\theta}\]
+であって，$\theta$の範囲から$0<\sin 2\theta<1$であるから，求める$k$の範囲は
+     \[2<k\]
+である．$\cdots$(答)
+  \\
+  \\
+{\bf[別解1]}[4](#4)以下，$\a\b$平面上に図示する方法も考えられる．この時は[5](#5)と原点の距離
+の二乗$L$が
+     
+
+$$
+\begin{align*}
+L&=\a^2+\b^2 \\&=  \a^2+\left(\frac{1}{k\a}\right)^2 \\&\ge 2\sqrt{\frac{1}{k^2}}\tag{\a,k>0からAM-GM}\\&=\frac{2}{k}
+\end{align*}
+$$
+
+で与えられること，及び答号成立が$\a=\b$であって，グラフが連続であることから，
+     
+
+$$
+\begin{align*}
+\frac{2}{k}<1\Longleftrightarrow 2<k
+\end{align*}
+$$
+
+となる．$\cdots$(答)
+ \\
+ \\
+ {\bf[別解2]}[4](#4)以下，$\a$，$\b$を解とする$2$次方程式を考えてもよい．$a=\a+\b$，$b=\a\b$
+ とおけば
+       
+
+$$
+\exists a\exists b \begin{cases}
+1=a^2-2b \\
+      1=kb  \\
+      \a\not=\b \ \ \ \ 0<\a,\b 
+\end{cases}
+$$
+
+ を考えればよい．考える方程式は$x^2-ax+b=0$であって，[9](#9)からこれが正の異$2$実解を持てばよいので，判別式$D$として
+      
+
+$$
+\begin{align*}
+&D>0 &a,b>0 \\\Longleftrightarrow&a^2-4b>0 & a,b>0
+\end{align*}
+$$
+
+これに[7](#7)，[8](#8)を代入して$a$，$b$を消去する．$k>0$から$a,b>0$は自動的に満たされ，
+     
+
+$$
+\begin{align*}
+\left(1+\frac{2}{k}\right)-\frac{4}{k}>0
+     \Longleftrightarrow
+     2<k
+\end{align*}
+$$
+
+ 
+となる．$\cdots$(答)

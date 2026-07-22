@@ -1,0 +1,364 @@
+---
+university: "utokyo"
+category: "kouki"
+year: "2003"
+question: "2"
+type: "solution"
+title: "UTOKYO 2003 kouki Q2 (solution)"
+---
+
+## 【解】
+
+  (1)
+  以下
+  
+
+$$
+\begin{align}
+\left(\sqrt{p} - \left[\sqrt{p}\right]\right)^{l} = A_{l}\sqrt{p} + B_{l}\label{2003-2:eq:1}
+\end{align}
+$$
+
+  なる整数$A_{l},B_{l}$が任意の$l$について存在することを数学的帰納法で示す．
+
+  まず$l=1$の時は
+  
+
+$$
+\begin{align}
+\begin{dcases}
+      A_1 = 1 \\
+      B_1 = -\left[\sqrt{p}\right]
+    \end{dcases}\label{2003-2:eq:2}
+\end{align}
+$$
+
+  とすればよく題意は成立する．
+
+  そこで$l=k$での成立を仮定すると，$l=k+1$について
+  
+
+$$
+\begin{align*}
+\left(\sqrt{p} - \left[\sqrt{p}\right]\right)^{k+1}& = \left(\sqrt{p} - \left[\sqrt{p}\right]\right)\left(A_{k}\sqrt{p} + B_{k}\right)\\& = \left(B_{k}-A_{k}\left[\sqrt{p}\right]\right)\sqrt{p}+\left(pA_k-\left[\sqrt{p}\right]B_{k}\right)
+\end{align*}
+$$
+
+  だから，
+  
+
+$$
+\begin{align}
+\begin{dcases}
+      A_{k+1} & = B_{k}-A_{k}\left[\sqrt{p}\right] \\
+      B_{k+1} & = pA_k-\left[\sqrt{p}\right]B_{k}
+    \end{dcases}\label{2003-2:eq:3}
+\end{align}
+$$
+
+  となり，仮定よりこれらは整数である．よって$l=k+1$でも成立する．
+
+  以上から，数学的帰納法によって任意の自然数$l$に対して整数$A_{l},B_{l}$の存在が証明された．
+  従って
+  
+
+$$
+\begin{align*}
+A & = A_{l}\\
+    B & = B_{l}
+\end{align*}
+$$
+
+  ととることで題意は示された．$\cdots$(答)
+
+  
+  (2)
+  第一象限にある格子点$(X,Y)$を考えると，この点と$y=\sqrt{p}x$の距離$L$は
+  
+
+$$
+\begin{align}
+L=\frac{\left|X\sqrt{p}-Y\right|}{\sqrt{p+1}}\label{2003-2:eq:4}
+\end{align}
+$$
+
+  である．
+
+  よって，題意を示すには，任意の自然数$N$に対して$X \ge N$かつ$L \le 1/N$を満たすような$X,Y$の存在が示せれば良い．
+
+  ここで，$A_{k},B_{k}$について，[(式2)](#2003-2:eq:2)から$A_1>0, B_1<0$だから，
+  漸化式[(式3)](#2003-2:eq:3)より$A_{l}$は$l$が奇数の時のみ正，$B_{l}$は$l$が偶数の時のみ正である．
+  そこで新しく
+  
+
+$$
+\begin{align*}
+\begin{dcases}
+      A'_{l} = (-1)^{l+1}A_{l} \\
+      B'_{l} = (-1)^{l}B_{l}
+    \end{dcases}
+\end{align*}
+$$
+
+  とおくと初期条件は
+  
+
+$$
+\begin{align}
+\begin{dcases}
+      A'_1 = 1 \\
+      B'_1 = \left[\sqrt{p}\right]
+    \end{dcases}\label{2003-2:eq:5}
+\end{align}
+$$
+
+  で，漸化式は
+  
+
+$$
+\begin{align}
+\begin{dcases}
+      A'_{k+1} = B'_{k}+A'_{k}\left[\sqrt{p}\right] \\
+      B'_{k+1} = pA'_k+\left[\sqrt{p}\right]B'_{k}
+    \end{dcases}\label{2003-2:eq:8}
+\end{align}
+$$
+
+  となり，任意の自然数$l$に対して$A'_{l},B'_{l}>0$である．
+
+  そこで，格子点$(X,Y)$を$(A'_{l},B'_{l})$ととることを考える．
+  この時任意の自然数$N$に対して$A'_{l} \ge N$を満たす自然数$l$があることを示す．
+
+  まず，$A'_{l},B'_{l}$が単調増加であることを示す．
+  $\sqrt{p}$が自然数でないことより$p \ge 2$だから，漸化式より
+  
+
+$$
+\begin{align*}
+A'_{l+1} - A'_{l}& = B'_{l}+A'_{l}\left(\left[\sqrt{p}\right]-1\right)\\& \ge B'_{l} > 0                                       \\
+    B'_{k+1} - B'_{l}& = pA'_{l}+B'_{l}\left(\left[\sqrt{p}\right]-1\right)\\& \ge pA'_{l} > 0
+\end{align*}
+$$
+
+  を得る．よって$A'_{l},B'_{l}$は単調増加で，
+  
+
+$$
+\begin{align*}
+A'_{l+1} - A'_{l}\ge B'_{l}\ge B'_{1} = \left[\sqrt{p}\right]
+\end{align*}
+$$
+
+  と評価できるから，この不等式を繰り返し持ちいれば
+  
+
+$$
+\begin{align*}
+A'_{l}\ge\left[\sqrt{p}\right] l
+\end{align*}
+$$
+
+  であり，$l\to\infty$の極限で発散する．
+
+  従って，任意の自然数$N$に対して十分大きいある自然数$l_1$をとって，
+  
+
+$$
+\begin{align*}
+A'_{l_1}\ge N
+\end{align*}
+$$
+
+  を満たすようにできる．
+
+  次に，点と直線の距離$L$について，[(式4)](#2003-2:eq:4)より
+  
+
+$$
+\begin{align*}
+L
+     & =\frac{\left|A'_{l}\sqrt{p}-B'_{l}\right|}{\sqrt{p+1}}\\& =\frac{\left|(-1)^{l+1}A_{l}\sqrt{p}-(-1)^{l}B_{l}\right|}{\sqrt{p+1}}\\& =\frac{\left|A_{l}\sqrt{p}+B_{l}\right|}{\sqrt{p+1}}\\& =\frac{\left|\left(\sqrt{p} - \left[\sqrt{p}\right]\right)^{l}\right|}{\sqrt{p+1}}\\
+\end{align*}
+$$
+
+  である．ただし最終行で[(式1)](#2003-2:eq:1)を用いた．
+  ここでこの分子について
+  
+
+$$
+\begin{align*}
+0 \le\sqrt{p} - \left[\sqrt{p}\right] < 1
+\end{align*}
+$$
+
+  だから，$l\to\infty$で
+  
+
+$$
+\begin{align*}
+\lim_{l\to\infty}\left(\sqrt{p} - \left[\sqrt{p}\right]\right)^{l} = 0
+\end{align*}
+$$
+
+  であり，任意の自然数$N$に対して十分大きな自然数$l_2$を取れば
+  
+
+$$
+\begin{align*}
+L \le\frac{1}{N}
+\end{align*}
+$$
+
+  とできる．
+
+  以上より，$l=\max(l_1,l_2)$なる自然数$l$を選べば，
+  格子点$(A_{l},B_{l})$が題意の条件を満たす．$\cdots$(答)
+
+  
+  (3)
+  双曲線
+  
+
+$$
+\begin{align*}
+C: \frac{x^{2}}{q/p} - \frac{y^{2}}{q} = -1
+\end{align*}
+$$
+
+  の漸近線は
+  
+
+$$
+\begin{align*}
+D: y = \pm\sqrt{p}x
+\end{align*}
+$$
+
+  である．
+
+  格子点，$C$上の点，漸近線$D$上の点を
+  
+
+$$
+\begin{align*}
+\begin{dcases}
+      Q_l(A'_{l},B'_{l})                                \\
+      P_{l}(A'_{l}, \sqrt{p \left(A'_{l}\right)^{2}+q}) \\
+      R_{l}(A'_{l}, \sqrt{p} A'_{l})
+    \end{dcases}
+\end{align*}
+$$
+
+  と取ることを考える．
+
+  (2)より，十分大きな$l_1$を取れば
+  
+
+$$
+\begin{align}
+|R_{l_1}Q_{l_1}| = |B'_{l_1}-\sqrt{p} p A'_{l_1}| \le\frac{1}{2M}\label{2003-2:eq:6}
+\end{align}
+$$
+
+  を満たすようにできる．ここで(2)の$L$とは分母の係数分異なるが，議論は全く同じである．
+
+  次に
+  
+
+$$
+\begin{align*}
+|P_{l}R_{l}|
+     & = |\sqrt{p \left(A'_{l}\right)^{2}+q}-\sqrt{p} p A'_{l}|           \\& = |\frac{q}{\sqrt{p \left(A'_{l}\right)^{2}+q} + \sqrt{p} A'_{l}}|
+\end{align*}
+$$
+
+  について，(2)より$A'_{l}$が単調増加で発散するから，$|P_{l}R_{l}|$は単調に減少し$0$に収束する．
+  従って十分大きい$l_2$を取れば
+  
+
+$$
+\begin{align*}
+|P_{l_2}R_{l_2}| \le\frac{1}{2M}\label{2003-2:eq:7}
+\end{align*}
+$$
+
+  とできる．
+
+  以上から，$l=\max(l_1,l_2)$とすると，三角不等式および[(式7)](#2003-2:eq:6,2003-2:eq:7)より
+  
+
+$$
+\begin{align*}
+|P_{l}Q_{l}|
+     & \le |P_{l}R_{l}| + |R_{l}Q_{l}|         \\& \le |P_{l_2}R_{l_2}| + |R_{l_1}Q_{l_1}| \\& \le\frac{1}{2}
+\end{align*}
+$$
+
+  である．よって題意は示された．$\cdots$(答)
+
+  
+  (4)
+  $\left[\sqrt{5}\right]=2$だから，[(式8)](#2003-2:eq:5,2003-2:eq:8)から
+  
+
+$$
+\begin{align}
+\begin{dcases}
+      A'_1 = 1 \\
+      B'_1 = 2
+    \end{dcases}
+\end{align}
+$$
+
+  および
+  
+
+$$
+\begin{align}
+\begin{dcases}
+      A'_{k+1} = B'_{k}+2A'_{k} \\
+      B'_{k+1} = 5A'_k+2B'_{k}
+    \end{dcases}
+\end{align}
+$$
+
+  である．漸化式を繰り返し用いて，
+  
+
+$$
+\begin{align*}
+& (A'_2, B'_2) = (4,9)    \\& (A'_3, B'_3) = (17,38)  \\& (A'_4, B'_4) = (72,161)
+\end{align*}
+$$
+
+  となる．
+  対応して(3)のように定めた線分$|P_{l}Q_{l}|$の長さは
+  
+
+$$
+\begin{align*}
+|P_{2}Q_{2}|
+     & = |\sqrt{5*4^2+2} - 9|              \\& = \sqrt{1}{|\sqrt{5*4^2+2} + 9|}\\& > \frac{1}{100}\\
+    P_{3}Q_{3}|
+     & = |\sqrt{5*17^2+2} - 38|            \\& = \sqrt{1}{|\sqrt{5*17^2+2} + 38|}\\& > \frac{1}{100}\\
+    |P_{4}Q_{4}|
+     & = |\sqrt{5*72^2+2} - 161|           \\& = \sqrt{1}{|\sqrt{5*72^2+2} + 161|}\\& < \frac{1}{100}
+\end{align*}
+$$
+
+  となる．よって
+  
+
+$$
+\begin{align*}
+Q_{4}(72,161)
+\end{align*}
+$$
+
+  は題意の条件を満たす．$\cdots$(答)
+
+  
+
+  
+
+## 【解説】

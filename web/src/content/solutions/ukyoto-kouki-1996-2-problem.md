@@ -1,0 +1,11 @@
+---
+university: "ukyoto"
+category: "kouki"
+year: "1996"
+question: "2"
+type: "problem"
+title: "UKYOTO 1996 kouki Q2 (problem)"
+---
+
+$m$，$n$は自然数で，$m<n$を満たすものとする．
+$m^n+1$，$n^m+1$がともに$10$の倍数となる$m$，$n$を$1$組与えよ．

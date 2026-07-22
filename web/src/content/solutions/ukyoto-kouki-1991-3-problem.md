@@ -1,0 +1,18 @@
+---
+university: "ukyoto"
+category: "kouki"
+year: "1991"
+question: "3"
+type: "problem"
+title: "UKYOTO 1991 kouki Q3 (problem)"
+---
+
+空間に原点を始点とする長さ$1$のベクトル$\va*{a}$，$\va*{b}$，$\va*{c}$がある．
+$\va*{a}$，$\va*{b}$のなす角を$\gamma$，$\va*{b}$，$\va*{c}$のなす角を$\alpha$，$\va*{c}$，$\va*{a}$のなす角を$\beta$とするとき，次の関係の成立することを示せ．
+またここで等号の成立するのはどのような場合か．
+
+$$
+\begin{align*}
+0\le\cos^2\alpha+\cos^2\beta+\cos^2\gamma-2\cos\alpha\cos\beta\cos\gamma\le 1
+\end{align*}
+$$

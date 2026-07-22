@@ -1,0 +1,71 @@
+---
+university: "utokyo"
+category: "kouki"
+year: "2007"
+question: "2"
+type: "problem"
+title: "UTOKYO 2007 kouki Q2 (problem)"
+---
+
+次の問に答えよ．
+
+1.  実数を成分とする行列$A=\begin{pmatrix}
+            a & b \\ c & d
+          \end{pmatrix}\, (a^2+b^2\neq 0)$に対し
+        \begin{equation}
+          B=\begin{pmatrix}
+            a  & b \\
+            -b & a
+          \end{pmatrix}
+          \begin{pmatrix}
+            a & b \\
+            b & d
+          \end{pmatrix}
+          \begin{pmatrix}
+            a  & b \\
+            -b & a
+          \end{pmatrix}^{-1}
+        \end{equation}
+        とおく．行列$B$は$B=\begin{pmatrix}
+            r & s \\ s & t
+          \end{pmatrix}$の形であることを示し，$r+t$，$rt-s^2$を$a$，$b$，$c$を用いてあらわせ．
+
+2.  前問(1)において$r^2+s^2\ge a^2+b^2$が成り立つことを示せ．
+
+3.  実数$a_n$，$b_n$，$c_n\, (n=0,1,2\cdots)$を次のように定める．
+        \begin{align}
+          \text{$n=0$のとき}    &
+          \begin{pmatrix}
+            a_0 & b_0 \\
+            b_0 & c_0
+          \end{pmatrix} =
+          \begin{pmatrix}
+            1 & 1 \\
+            1 & 2
+          \end{pmatrix},       \\
+          \text{$n\ge 1$のとき} &
+          \begin{pmatrix}
+            a_n & b_n \\
+            b_n & c_n
+          \end{pmatrix} =
+          \begin{pmatrix}
+            a_{n-1}  & b_{n-1} \\
+            -b_{n-1} & a_{n-1}
+          \end{pmatrix}
+          \begin{pmatrix}
+            a_{n-1} & b_{n-1} \\
+            b_{n-1} & c_{n-1}
+          \end{pmatrix}
+          \begin{pmatrix}
+            a_{n-1}  & b_{n-1} \\
+            -b_{n-1} & a_{n-1}
+          \end{pmatrix}^{-1}
+        \end{align}
+        \begin{itemize}
+          [ア] $\lim_{n\to\infty}b_n=0$を示せ．
+          [イ] $\lim_{n\to\infty}a_n$，$\lim_{n\to\infty}c_n=0$を求めよ．
+        \end{itemize}
+
+4.  [ア] $\lim_{n\to\infty}b_n=0$を示せ．
+
+5.  [イ] $\lim_{n\to\infty}a_n$，$\lim_{n\to\infty}c_n=0$を求めよ．

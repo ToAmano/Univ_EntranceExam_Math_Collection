@@ -1,0 +1,136 @@
+---
+university: "ukyoto"
+category: "kouki"
+year: "2005"
+question: "2"
+type: "solution"
+title: "UKYOTO 2005 kouki Q2 (solution)"
+---
+
+## 【解】
+
+  与式の左辺が発散しないために，
+  
+
+$$
+\begin{align*}
+Z \neq -2i
+\end{align*}
+$$
+
+  が必要である．以下このもとで考える．
+  与式の両辺に$(z+2i)$をかけて整理すると
+  
+
+$$
+\begin{align*}
+& 2(z+i) = (z+2i)\overline{z}\\\therefore& |z|^2 + 2i\overline{z} - 2z - 2i = 0
+\end{align*}
+$$
+
+  である．ここで複素数$z$を
+  
+
+$$
+\begin{align}
+z = x+y\kern1pt i \quad(x,y \in\mathbb{R}) \label{2005_2:eq:0}
+\end{align}
+$$
+
+  と置いて代入すると
+  
+
+$$
+\begin{align*}
+& x^2+y^2 + 2i(x+yi) - 2(x+yi) - 2i = 0 \\\therefore& (x^2+y^2+2y-2x) + i(2x-2y-2) = 0
+\end{align*}
+$$
+
+  $x,y \in \mathbb{R}$だから
+  
+
+$$
+\begin{align*}
+\begin{dcases}
+      x^2+y^2-2x+2y=0 \\
+      2(x-y-1)=0
+    \end{dcases}
+\end{align*}
+$$
+
+  である．二つ目の式より
+  
+
+$$
+\begin{align}
+y=x-1 \label{2005_2:eq:1}
+\end{align}
+$$
+
+  だから，一つ目の式に代入して$y$を消去すると
+  
+
+$$
+\begin{align*}
+x^2+(x-1)^2-2x+2(x-1)=0 \\
+    2x^2-2x-1=0             \\\therefore
+    x = \frac{1\pm\sqrt{3}}{2}
+\end{align*}
+$$
+
+  である．この時[(式1)](#2005_2:eq:1)より
+  
+
+$$
+\begin{align*}
+y = \frac{-1\pm\sqrt{3}}{2}
+\end{align*}
+$$
+
+  だから，
+  
+
+$$
+\begin{align*}
+(x,y) = \left(\frac{1\pm\sqrt{3}}{2}, \frac{-1\pm\sqrt{3}}{2}\right)\quad\text{(複号同順)}
+\end{align*}
+$$
+
+  となるので，求める$z$は[(式1)](#2005_2:eq:1)から
+  
+
+$$
+\begin{align*}
+z = \frac{1\pm\sqrt{3}}{2} + \frac{-1\pm\sqrt{3}}{2}i
+\end{align*}
+$$
+
+  である．これは $z \neq -2i$ をみたすので，この二つが答えである．$\cdots$(答)
+
+  
+  
+
+## 【解説】
+
+  受験上の作法としては，求めた解答が条件をちゃんと満たしているか検算しよう．
+  今回の場合，求めた$z$が与えられた条件を満たすか確認する．
+  
+
+$$
+\begin{align*}
+2(z+i)               & = (1 \pm\sqrt{5}) + (-1 \pm\sqrt{5})i         \\
+    |z|^2+2i\overline{z}& = 2 + \{(-1 \pm\sqrt{5}) + (1 \pm\sqrt{5})i\}
+\end{align*}
+$$
+
+  この時．
+  
+
+$$
+\begin{align*}
+2(z+i)
+     & = (1 \pm\sqrt{3}) + (-1 \pm\sqrt{3})i         \\(z+2i)\overline{z}& = 2 + \{(-1 \pm\sqrt{3}) + (1 \pm\sqrt{3})i\}\\& =  (1 \pm\sqrt{3}) + (1 \pm\sqrt{3})i
+\end{align*}
+$$
+
+  より$2(z+i)=(z+2i)\overline{z}$を満たし，題意の条件を満たしていることがわかるので答えがあっていそうなことが確認できる．

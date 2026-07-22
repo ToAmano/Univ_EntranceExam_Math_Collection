@@ -8,18 +8,18 @@ WORKSPACE_ROOT = Path('/Users/amano/works/research/Math-Solutions')
 SRC_DIR = WORKSPACE_ROOT / 'src'
 HOMEPAGE_SOLUTIONS = Path('/Users/amano/works/research/homepage/docs/_pages/ent-ex/solutions')
 
-ZENKI_TARGETS = [
+UNIVERSITY_CONFIGS = [
     {
-        'university': 'todai',
+        'university': 'utokyo',
         'search_dir': HOMEPAGE_SOLUTIONS / 'todai' / 'todai-zenki',
     },
     {
         'university': 'titech',
-        'search_dir': HOMEPAGE_SOLUTIONS / 'toukou' / 'toukou-zenki',
+        'search_dir': HOMEPAGE_SOLUTIONS / 'titech' / 'titech-zenki',
     },
     {
-        'university': 'kyodai',
-        'search_dir': HOMEPAGE_SOLUTIONS / 'kyodai' / 'zenki',
+        'university': 'ukyoto',
+        'search_dir': HOMEPAGE_SOLUTIONS / 'kyodai' / 'kyodai-zenki',
     },
 ]
 

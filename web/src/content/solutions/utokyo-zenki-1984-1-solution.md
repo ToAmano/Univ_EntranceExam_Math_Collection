@@ -1,0 +1,76 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1984"
+question: "1"
+type: "solution"
+title: "UTOKYO 1984 zenki Q1 (solution)"
+---
+
+\input{macros}
+\begin{oframed}
+空間内の店点の集合$\{(x,y,z)|0\le y,0\le z\}$に含まれ，原点$O$において$x$軸に接し，$xy$平面と
+$45^\circ$の傾きをなす，半径$1$の円板$C$がある．座標が$(0,0,2\sqrt{2})$の位置にある点光源
+$P$により，$xy$平面上に投ぜられた円板$C$の影を$S$とする．
+     
+
+1.  $S$の輪郭を表す$xy$平面上の曲線の方程式を求めよ．
+
+2.  円板$C$と影$S$の間に挟まれ，光の届かない部分のつくる立体の体積を求めよ．
+
+\end{oframed}
+
+## 【解】
+
+     
+
+1.  点光源のある点を$P$とする．題意の曲線を$C'$とし，この上の点を$Q(X,Y,0)$とする．
+     題意から，$C$の中心は
+     $R\left(0,\dfrac{\sqrt{2}}{2},\dfrac{\sqrt{2}}{2}\right)$であり，また$C$は平面$y=z$にあるから，
+     $C$の外周$D$上の点$E$の満たす式は
+          \begin{align}
+          D:\left\{
+               \begin{array}{l}
+               y=z \\
+               |\vector{ER}|=1 
+               \end{array}
+          \right. \label{1}
+          \end{align}
+     となる．$Q$の条件は，直線$PQ$が$D$と交わることである．直線$PQ$はパラメータを用いて
+          \begin{align*}
+          \vthree{x}{y}{z}=\vthree{0}{0}{2\sqrt{2}}+t\vthree{X}{Y}{-2\sqrt{2}}
+          \end{align*}
+    と表せるから，これは[1](#1)を満たす$t$が存在することである．代入して
+         \begin{align}
+         tY&=2\sqrt{2}(1-t) \label{2} \\
+         x^2&+(y-\dfrac{\sqrt{2}}{2})^2+(z-\dfrac{\sqrt{2}}{2})^2=1　\label{3}
+         \end{align}
+     $Y\ge0$に注意して[2](#2)から$t$を消去して
+     $t=\dfrac{2\sqrt{2}}{Y+2\sqrt{2}}$である．
+     これを[3](#3)に代入して，
+          \begin{align*}
+          &\frac{8X^2}{(Y+2\sqrt{2})^2}+2(\dfrac{2\sqrt{2}Y}{Y+2\sqrt{2}}-\frac{\sqrt{2}}{2})^2=1 \\
+         \therefore&8X^2+2(\frac{3\sqrt{2}}{2}Y-2)^2=(Y+2\sqrt{2})^2 \\
+         \therefore&X^2+(Y-\sqrt{2})^2=2\cdots\text{(答)}
+          \end{align*}
+     これがもとめる$C'$の方程式である．
+
+2.  求める体積$V$とすれば，
+          \begin{align}
+          V=(\text{円錐P-C'})-(\text{円錐P-C}) \label{4}
+          \end{align}
+     である．円錐P-C'は底面積$\sqrt{2}\sqrt{2}\pi=2\pi$，高さ$2\sqrt{2}$の円錐で，この体積$V_1$
+     として
+          \begin{align}
+          V_1=\frac{1}{3}(2\sqrt{2})(2\pi)=\frac{4\sqrt{2}}{3}\pi  \label{5}
+          \end{align}
+     となる．次に円錐P-Cについて，この高さは平面$y=z$と点$P$の距離に等しく$2$，底面積は
+     半径$1$の円のそれ$\pi$である．故に体積$V_2$として
+          \begin{align}
+          V_2=\frac{2}{3}\pi \label{6}
+          \end{align}
+     [5](#5)，[6](#6)を[4](#4)に代入して
+          \begin{align*}
+          V=\frac{2}{3}(2\sqrt{2}-1)\pi\cdots\text{(答)} 
+          \end{align*}
+     である．

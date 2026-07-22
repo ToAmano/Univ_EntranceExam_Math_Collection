@@ -1,0 +1,57 @@
+---
+university: "ukyoto"
+category: "kouki"
+year: "1994"
+question: "1"
+type: "solution"
+title: "UKYOTO 1994 kouki Q1 (solution)"
+---
+
+## 【解】
+
+  対称性から $a \le b \le c$ として考えても良い．
+  もし $c < 0$ ならば $a+b+c < 0$ となって不適．
+  また，もし $a > 0$ ならば $a+b+c > 0$ となって不適だから
+  
+
+$$
+\begin{align*}
+a \le 0 \le c
+\end{align*}
+$$
+
+  である．
+  以下のいずれかである
+
+   
+
+  $1^\circ \ a \le b \le 0 \le c$ の時
+  
+
+$$
+\begin{align*}
+(\text{与式})
+     & \iff |bc| + |ca| + |ab| + bc + ca + ab \ge 0 \\& \iff -bc - ca + ab + bc + ca + ab \ge 0      \\& \iff ab \ge 0
+\end{align*}
+$$
+
+  だが，この成立は$a,b \le 0$より明らかで，与式は成立する．
+  等号成立は$ab=0$ の時，つまり $a=0$ 又は $b=0$の時である．
+
+   
+
+  $2^\circ \ a \le 0 \le b \le c$ の時
+
+  $1^\circ$ と同じく， (与式) $\iff bc \ge 0$ であり
+  これは $b, c \ge 0$ から明らかに成立する．
+  よって与式は成立し，等号成立は $bc=0$ つまり $b=0$ 又は $c=0$の時．
+
+   
+
+  以上から $(|a|+|b|+|c|)^2 \ge 2(a^2+b^2+c^2)$ は成立し，
+  等号成立は$abc=0$ の時である．$\cdots$(答)
+
+  
+  
+
+## 【解説】

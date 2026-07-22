@@ -6,38 +6,68 @@
 \usepgfplotslibrary{fillbetween,colormaps}
 \pgfplotsset{compat=1.18}
 
-
+\def\thA{50}
+\def\thB{\thA + 90}
+\def\thA{60}
+\def\thB{\thA + 90}
+\def\thA{45}
+\def\thB{\thA + 90}
+\pgfmathsetmacro{\xPtwo}{1 - sqrt(3)/2}
+\pgfmathsetmacro{\yPtwo}{0.5}
 
 \begin{document}
 \begin{tikzpicture}
       \begin{axis}[
           axis lines=middle,
-          xlabel=$\Re \alpha$,
-          ylabel=$\Im \alpha$,
-          xmin=-4, xmax=4,
-          ymin=-3, ymax=6,
-          xtick= {\empty},
-          ytick= {\empty},
-          grid=both,
-          grid style={line width=.1pt, draw=gray!10},
-          major grid style={line width=.2pt,draw=gray!50},
-          axis on top,
-          axis line style={-stealth} 
+          xlabel=$x$,
+          ylabel=$y$,
+          xmin=-0.1, xmax=1.2,
+          ymin=-0.1, ymax=1.2,
+          xtick={\empty},
+          ytick={1},
+          axis equal,
+          xlabel style={anchor=north},
+          ylabel style={anchor=east},
+          enlargelimits=false,
         ]
 
-        \addplot[name path=upper, domain=-4:4, blue]{x + 1 + sqrt(2)};
-        \addplot[name path=lower, domain=-4:4, blue]{x + 1 - sqrt(2)};
+        \pgfmathsetmacro{\xPtwo}{1 - sqrt(3)/2}
+        \pgfmathsetmacro{\yPtwo}{0.5}
+        \coordinate (P2) at (\xPtwo, \yPtwo);
 
-        \addplot[gray!20, pattern=north east lines] fill between[of=lower and upper];
 
-        \node[above right, blue] at (axis cs: -2, 4) {$\Im \alpha= \Re\alpha+1+\sqrt{2}$};
-        \node[below right, blue] at (axis cs: -1, -1) {$\Im \alpha = \Re\alpha+1-\sqrt{2}$};
+        \addplot[domain=90:180, samples=50, dashed] ({1+cos(x)}, {sin(x)});
+        \addplot[domain=150:180, samples=50, thick, name path=circle] ({1+cos(x)}, {sin(x)});
 
-        \draw[dashed, gray] (axis cs:0, {1+sqrt(2)}) -- (axis cs:0, {1+sqrt(2)});
-        \draw[dashed, gray] (axis cs:0, {1-sqrt(2)}) -- (axis cs:0, {1-sqrt(2)});
+        \addplot[domain=45:60, samples=50, thick, name path=curve]
+        ({sin(x)^2 - cos(x)^2 - (sin(x)-cos(x))}, {sin(x)+cos(x) - 2*sin(x)*cos(x)});
 
-        \node[left] at (axis cs:0, {1+sqrt(2)}) {$1+\sqrt{2}$};
-        \node[left] at (axis cs:0, {1-sqrt(2)}) {$1-\sqrt{2}$};
+        \addplot[pattern=north west lines] fill between [of=circle and curve];
+
+        \draw[dashed] (0,0) rectangle (1,1);
+        \coordinate (O) at (0,0);
+        \coordinate (C) at (1,0);
+        \coordinate (P2_proj) at (\xPtwo, 0);
+        \coordinate (F) at (0,{sqrt(2)-1});
+        \coordinate (G) at ({1-sqrt(3)/2},{1/2});
+        \coordinate (H) at ({1-sqrt(3)/2},0);
+        \coordinate (I) at (1,0);
+
+        \draw[dashed] (C) -- (P2) -- (P2_proj);
+
+        \fill[] (P2) circle (1.5pt);
+        \fill[] (F) circle (1.5pt);
+        \fill[] (O) circle (1.5pt);
+        \node[below] at (O) {O};
+        \node[left] at (F) {F};
+        \node[above] at (G) {G};
+        \node[below] at (H) {H};
+        \node[below] at (I) {I};
+
+        \draw[->, thin] (0.5, 0.8) node[above right] {$\theta=\pi/4$} to[out=200, in=50] (0.05, {sqrt(2)-1+0.05});
+        \draw[->, thin] (0.5, 0.3) node[right] {$\theta=\pi/3$} to[out=180, in=0] (P2);
+
+        \pic[draw=black, angle eccentricity=1.6,"$\pi/6$", angle radius=10mm, font=\small]{angle = P2--C--O};
 
       \end{axis}
     \end{tikzpicture}
