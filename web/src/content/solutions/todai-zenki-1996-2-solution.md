@@ -31,12 +31,11 @@ $$
 
  与方程式の左辺$f(x)$とする．また
                
-<span id="1"></span><span id="2"></span>
 
 $$
 \begin{cases}
-s(1-a)-tb>0 \tag{1} \\
--sc+t(1-d)>0 \tag{2}
+s(1-a)-tb>0 \\
+               -sc+t(1-d)>0
 \end{cases}
 $$
 

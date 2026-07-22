@@ -21,12 +21,11 @@ title: "TITECH 1991 kouki Q2 (solution)"
 
   点Pが直線DA上にくる時，$\alpha = \pi/6$であることに注意する．線分PO と角 $\theta$ をなす半直線 $l, m$ とする．$\theta$を大きくしていったとき，$l, m$ が正方形ABCDを通る条件は，$\alpha$ によって異なるため，
   
-<span id="1991-2:eq:1"></span><span id="1991-2:eq:2"></span>
 
 $$
 \begin{cases}
-0     &\le \alpha \le \pi/6 \tag{1} \\
-\pi/6 &\le \alpha \le \pi/4 \tag{2}
+0     &\le \alpha \le \pi/6 \\
+    \pi/6 &\le \alpha \le \pi/4 
 \end{cases}
 $$
 
@@ -34,12 +33,11 @@ $$
 
   これらの条件を数式に起こすと
   
-<span id="1991-2:eq:3"></span><span id="1991-2:eq:4"></span>
 
 $$
 \max\theta = \begin{cases}
-\min \left(\min \angle \mathrm{OPB}, \min \angle \mathrm{OPA}\right) & 0 \le \alpha \le \frac{\pi}{6} \tag{3} \\
-\min \left(\min \angle \mathrm{OPB}, \min \angle \mathrm{OPD}\right) & \frac{\pi}{6} \le \alpha \le \frac{\pi}{4} \tag{4}
+\min \left(\min \angle \mathrm{OPB}, \min \angle \mathrm{OPA}\right) & 0 \le \alpha \le \frac{\pi}{6} \\
+    \min \left(\min \angle \mathrm{OPB}, \min \angle \mathrm{OPD}\right) & \frac{\pi}{6} \le \alpha \le \frac{\pi}{4} 
 \end{cases}
 $$
 

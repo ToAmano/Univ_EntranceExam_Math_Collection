@@ -23,13 +23,12 @@ title: "TODAI 1962 zenki Q5 (solution)"
 
 まず題意から
      
-<span id="1"></span><span id="2"></span><span id="3"></span>
 
 $$
 \begin{cases}
-x,y,z>0 \tag{1} \\
-x+y+z=6 \tag{2} \\
-yz+zx+xy=9 \tag{3}
+x,y,z>0  \\
+     x+y+z=6  \\
+     yz+zx+xy=9  
 \end{cases}
 $$
 

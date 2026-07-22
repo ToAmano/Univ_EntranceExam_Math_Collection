@@ -75,13 +75,12 @@ $$
      となる．このような実数$t_k$，$s_k$の存在条件を考えればよい．そこで$\vec{n}=(x,y,z)$とす
      る．まず$t_1$，$s_1$について
           
-<span id="1a"></span><span id="1b"></span><span id="1c"></span>
 
 $$
 \begin{cases}
-2+xt_1=1+s_1& \tag{1a} \\
-yt_1=1& \tag{1b} \\
-1+zt_1=s_1 & \tag{1c}
+2+xt_1=1+s_1& \\
+                yt_1=1&  \\
+                1+zt_1=s_1 & 
 \end{cases}
 $$
 
@@ -97,13 +96,12 @@ $$
      
      次に$t_2$，$s_2$について     
          
-<span id="2a"></span><span id="2b"></span><span id="2c"></span>
 
 $$
 \begin{cases}
-2+xt_2=1 & \tag{2a} \\
-yt_2=1+2s_2 & \tag{2b} \\
-1+zt_2=1+s_2 & \tag{2c}
+2+xt_2=1 &\\
+         yt_2=1+2s_2 &\\
+         1+zt_2=1+s_2 &
 \end{cases}
 $$
 

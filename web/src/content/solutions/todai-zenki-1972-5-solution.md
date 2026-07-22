@@ -27,13 +27,12 @@ title: "TODAI 1972 zenki Q5 (solution)"
 
 $f(x)$を$f$などと略記する．題意の条件から
      
-<span id="1"></span><span id="2"></span><span id="3"></span>
 
 $$
 \begin{cases}
-u=\dint{o}{x}hfdt+h\dint{x}{1}fdt \tag{1} \\
-u''=f \tag{2} \\
-u=0 \tag{3}
+u=\dint{o}{x}hfdt+h\dint{x}{1}fdt \\
+     u''=f \\
+     u=0
 \end{cases}
 $$
 
@@ -96,12 +95,11 @@ $$
 
 これが$b$についての恒等式だから係数比較して，
      
-<span id="5"></span><span id="6"></span>
 
 $$
 \begin{cases}
-1+h'-(1-x)h''=0 \tag{5} \\
-(1+h')x-\frac{1}{2}h''(1-x)(1+x)=0 \tag{6}
+1+h'-(1-x)h''=0 \\
+     (1+h')x-\frac{1}{2}h''(1-x)(1+x)=0 
 \end{cases}
 $$
 

@@ -25,13 +25,12 @@ $$
 
 題意から$a$，$b$，$c$は$t$の$3$次式$t^3-zt^2-yt-x=0$の異$3$実解である．解と係数の関係から
      
-<span id="1"></span><span id="2"></span><span id="3"></span>
 
 $$
 \begin{cases}
-a+b+c=z \tag{1} \\
-bc+ca+ab=-y \tag{2} \\
-abc=x \tag{3}
+a+b+c=z  \\
+     bc+ca+ab=-y \\
+     abc=x 
 \end{cases}
 $$
 

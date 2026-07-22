@@ -221,48 +221,20 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         md_body = re.sub(r'\\begin\{tabular\}.*?\\end\{tabular\}', convert_tabular_block, md_body, flags=re.DOTALL)
 
         # --------------------------------------------------------------------------
-        # 経緯・背景: \begin{numcases}{...} / \begin{subnumcases}{...} 環境の変換対応
-        #
-        # [背景と問題]
-        # 標準の amsmath の cases 環境 (\begin{cases} ... \end{cases}) は全体で1つの数式
-        # ブロックとして扱われるため、各行個別に式番号や \label を振ることができない。
-        # そのため TeX ソース側で各行に別々の \label を付与したい場合、cases.sty パッケージの
-        # \begin{numcases}{左辺} ... \end{numcases} 環境が使用されるケースがある。
-        #
-        # しかし、MathJax / KaTeX には numcases の直接対応パッケージが存在せず、
-        # かつ $$ ... $$ の外側に剥き出しで書かれると画面上で生の TeX 文字列として崩れてしまう。
-        #
-        # [解決策]
-        # numcases{左辺} から左辺式と各条件行を抽出し、Web表示エンジンが100%美しく
-        # ネイティブ描画できる $$ 左辺 \begin{cases} ... \end{cases} $$ へ全自動構造変換を行う。
+        # numcases / subnumcases 環境の基本対応 (Issue #8 にて将来的に包括的対応)
+        # 複雑な式番号付与を行わず、シンプルに標準の cases 環境 ($$ ... \begin{cases} ... \end{cases} $$)
+        # へ変換するにとどめる。
         # --------------------------------------------------------------------------
         def replace_numcases(match):
             left_expr = re.sub(r'\\+$', '', match.group(1).strip()).strip()
             body = match.group(2).strip()
-
-            # 各行の \label{...} から式番号を抽出し、MathJax 用の \tag{式番号} を付与
-            lines = body.split(r'\\')
-            new_lines = []
-            lbl_matches = []
-            for line in lines:
-                m_lbl = re.search(r'\\label\{([^}]+)\}', line)
-                if m_lbl:
-                    lbl_id = m_lbl.group(1)
-                    lbl_matches.append(lbl_id)
-                    # ラベル名末尾から番号（例: 1991-2:eq:1 -> 1）を取得
-                    num = lbl_id.split(':')[-1]
-                    clean_line = re.sub(r'\\label\{[^}]+\}', '', line).strip()
-                    new_lines.append(f"{clean_line} \\tag{{{num}}}")
-                else:
-                    new_lines.append(line)
-
-            body_clean = " \\\\\n".join(new_lines)
-            anchors = "".join([f'<span id="{lbl}"></span>' for lbl in lbl_matches])
+            # cases 内でパースエラーとなる \label をクリーン除去
+            body_clean = re.sub(r'\\label\{[^}]+\}', '', body)
 
             if left_expr:
-                return f"\n{anchors}\n$$\n{left_expr} \\begin{{cases}}\n{body_clean}\n\\end{{cases}}\n$$\n"
+                return f"\n$$\n{left_expr} \\begin{{cases}}\n{body_clean}\n\\end{{cases}}\n$$\n"
             else:
-                return f"\n{anchors}\n$$\n\\begin{{cases}}\n{body_clean}\n\\end{{cases}}\n$$\n"
+                return f"\n$$\n\\begin{{cases}}\n{body_clean}\n\\end{{cases}}\n$$\n"
 
         md_body = re.sub(r'\\begin\{(?:numcases|subnumcases)\}\s*\{([^}]*)\}(.*?)\\end\{(?:numcases|subnumcases)\}', replace_numcases, md_body, flags=re.DOTALL)
     except Exception as e:
