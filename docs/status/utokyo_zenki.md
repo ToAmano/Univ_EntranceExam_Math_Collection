@@ -236,7 +236,7 @@
 | 2000年 | 第2問 | ❌ unfinish | ❌ unfinish | ✅ あり | 🔴 未着手 |
 | 2000年 | 第3問 | ❌ unfinish | ❌ unfinish | ✅ あり | 🔴 未着手 |
 | 2000年 | 第4問 | ❌ unfinish | ❌ unfinish | ✅ あり | 🔴 未着手 |
-| 2000年 | 第5問 | ❌ unfinish | ❌ unfinish | ✅ あり | 🔴 未着手 |
+| 2000年 | 第5問 | ✅ finish | ❌ unfinish | ✅ あり | 🟡 未完成 |
 | 2000年 | 第6問 | ❌ unfinish | ❌ unfinish | ✅ あり | 🔴 未着手 |
 | 2001年 | 第1問 | ❌ unfinish | ❌ unfinish | ✅ あり | 🔴 未着手 |
 | 2001年 | 第2問 | ❌ unfinish | ❌ unfinish | ✅ あり | 🔴 未着手 |
