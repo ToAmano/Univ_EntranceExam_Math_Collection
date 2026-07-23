@@ -12,7 +12,8 @@ $S$上を動く点$A, \, B, \, C, \, D$に対して
 \[ F=2({AB}^2+{BC}^2+{CA}^2)-3({AD}^2+{BD}^2+{CD}^2) \]
 とおく．以下の問いに答えよ．
 
-1.  $\overrightarrow{OA}=\overrightarrow{a}, \,
+\begin{enumerate}
+\item$\overrightarrow{OA}=\overrightarrow{a}, \,
 \overrightarrow{OB}=\overrightarrow{b}, \,
 \overrightarrow{OC}=\overrightarrow{c}, \,
 \overrightarrow{OD}=\overrightarrow{d}$とするとき，
@@ -21,9 +22,8 @@ $\overrightarrow{a}, \, \overrightarrow{b}, \, \overrightarrow{c}, \, \overright
 \[ F=k(\overrightarrow{a}+\overrightarrow{b}+\overrightarrow{c}) \cdot
 (\overrightarrow{a}+\overrightarrow{b}+\overrightarrow{c}-3\overrightarrow{d}) \]
 と書けることを示し，定数$k$を求めよ．
-
-2.  点$A, \, B, \, C, \, D$が球面$S$上を動くときの，$F$の最大値$M$を求めよ．
-
-3.  点$C$の座標が$\displaystyle(-\frac{1}{4}, \, \frac{\sqrt{15}}{4}, \, 0)$，
+  \item点$A, \, B, \, C, \, D$が球面$S$上を動くときの，$F$の最大値$M$を求めよ．
+  \item点$C$の座標が$\displaystyle(-\frac{1}{4}, \, \frac{\sqrt{15}}{4}, \, 0)$，
 点$D$の座標が$(1, \, 0, \, 0)$であるとき，
 $F=M$となる$S$上の点$A, \, B$の組をすべて求めよ．
+\end{enumerate}

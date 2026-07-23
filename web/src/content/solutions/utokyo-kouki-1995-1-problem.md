@@ -19,11 +19,11 @@ $$
 
 として数列${P_n}$, ${Q_n}$, ${R_n}$を定義する．ただし，$k > n$のとき${}_{n}C_{k} = 0$とする．
 
-1.  $P_{n+1}$, $Q_{n+1}$, $R_{n+1}$を$P_n$, $Q_n$, $R_n$の式として表せ．
-
-2.  一般項$P_n$, $Q_n$, $R_n$を求めよ．
-
-3.  $P_{12}$, $Q_{12}$, $R_{12}$を求めよ．
+\begin{enumerate}
+\item $P_{n+1}$, $Q_{n+1}$, $R_{n+1}$を$P_n$, $Q_n$, $R_n$の式として表せ．
+  \item 一般項$P_n$, $Q_n$, $R_n$を求めよ．
+  \item $P_{12}$, $Q_{12}$, $R_{12}$を求めよ．
+\end{enumerate}
 
 <figure id="fig_1">
   <img src="/Univ_EntranceExam_Math_Collection/images/tikz/utokyo/kouki/1995/1/fig_1.svg" alt="図 1" />

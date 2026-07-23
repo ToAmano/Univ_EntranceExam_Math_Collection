@@ -10,8 +10,9 @@ title: "UKYOTO 2012 zenki Q5 (problem)"
 次の命題(p),(q)のそれぞれについて，正しいかどうか答えよ．
 正しければ証明し，正しくなければ反例を挙げて正しくないことを説明せよ．
 
-1.  正$n$角形の頂点から3点を選んで内角の1つが$60^\circ$である
+\begin{enumerate}
+\item正$n$角形の頂点から3点を選んで内角の1つが$60^\circ$である
 三角形を作ることができるならば，$n$は3の倍数である．
-
-2.  $\triangle ABC$と$\triangle ABD$において，
+  \item$\triangle ABC$と$\triangle ABD$において，
 $AC<AD$かつ$BC<BD$ならば，$\angle C > \angle D$である．
+\end{enumerate}

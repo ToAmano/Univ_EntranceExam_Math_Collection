@@ -9,30 +9,23 @@ title: "UTOKYO 2024 zenki Q3 (problem)"
 
 座標平面上を次の規則(i)，(ii)に従って1秒ごとに動く点Pを考える。
 
-1.  最初に，Pは点$(2, \, 1)$にいる。
-
-2.  ある時刻でPが点$(a, \, b)$にいるとき，その1秒後にはPは
-
-1.  確率$\displaystyle\frac{1}{3}$で$x$軸に関して$(a, \, b)$と対称な点
-[●]確率$\displaystyle\frac{1}{3}$で$y$軸に関して$(a, \, b)$と対称な点
-[●]確率$\displaystyle\frac{1}{6}$で直線$y=x$に関して$(a, \, b)$と対称な点
-[●]確率$\displaystyle\frac{1}{6}$で直線$y=-x$に関して$(a, \, b)$と対称な点
+\begin{enumerate}
+\item最初に，Pは点$(2, \, 1)$にいる。
+  \itemある時刻でPが点$(a, \, b)$にいるとき，その1秒後にはPは
+\begin{enumerate}
+\item 確率$\displaystyle\frac{1}{3}$で$x$軸に関して$(a, \, b)$と対称な点
+\item 確率$\displaystyle\frac{1}{3}$で$y$軸に関して$(a, \, b)$と対称な点
+\item 確率$\displaystyle\frac{1}{6}$で直線$y=x$に関して$(a, \, b)$と対称な点
+\item 確率$\displaystyle\frac{1}{6}$で直線$y=-x$に関して$(a, \, b)$と対称な点
+\end{enumerate}
 
 にいる。
-
-3.  [●]確率$\displaystyle\frac{1}{3}$で$x$軸に関して$(a, \, b)$と対称な点
-
-4.  [●]確率$\displaystyle\frac{1}{3}$で$y$軸に関して$(a, \, b)$と対称な点
-
-5.  [●]確率$\displaystyle\frac{1}{6}$で直線$y=x$に関して$(a, \, b)$と対称な点
-
-6.  [●]確率$\displaystyle\frac{1}{6}$で直線$y=-x$に関して$(a, \, b)$と対称な点
-
+\end{enumerate}
 以下の問いに答えよ。ただし，(1)については，結論のみを書けばよい。
 
-1.  $P$がとりうる点の座標をすべて求めよ。
-
-2.  $n$を正の整数とする。最初から$n$秒後にPが点$(2, \, 1)$にいる確率と，
+\begin{enumerate}
+\item$P$がとりうる点の座標をすべて求めよ。
+  \item$n$を正の整数とする。最初から$n$秒後にPが点$(2, \, 1)$にいる確率と，
 最初から$n$秒後にPが点$(-2, \, -1)$にいる確率は等しいことを示せ。
-
-3.  $n$を正の整数とする。最初から$n$秒後にPが点$(2, \, 1)$にいる確率を求めよ。
+  \item$n$を正の整数とする。最初から$n$秒後にPが点$(2, \, 1)$にいる確率を求めよ。
+\end{enumerate}

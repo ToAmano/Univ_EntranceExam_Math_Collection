@@ -15,12 +15,12 @@ $\triangle ABC$を一辺の長さ6の正三角形とする．
 \overrightarrow{AR}=\frac{Z}{6}\overrightarrow{AB} \]
 をみたすように取る．
 
-1.  $\triangle PQR$が正三角形になる確率を求めよ．
-
-2.  点$B$，$P$，$R$を互いに線分で結んでできる図形を$T_1$，
+\begin{enumerate}
+\item$\triangle PQR$が正三角形になる確率を求めよ．
+  \item点$B$，$P$，$R$を互いに線分で結んでできる図形を$T_1$，
 点$C$，$Q$，$P$を互いに線分で結んでできる図形を$T_2$，
 点$A$，$R$，$Q$を互いに線分で結んでできる図形を$T_3$とする．
 $T_1$，$T_2$，$T_3$のうち，ちょうど2つが正三角形になる確率を求めよ．
-
-3.  $\triangle PQR$の面積を$S$とし，$S$のとりうる値の最小値を$m$とする．
+  \item$\triangle PQR$の面積を$S$とし，$S$のとりうる値の最小値を$m$とする．
 $m$の値および$S=m$となる確率を求めよ．
+\end{enumerate}

@@ -13,6 +13,7 @@ $a$は$a\geqq1$を満たす定数とする．
 y \leqq\frac{e^x+e^{-x}}{2},  y\leqq a \]
 次の問いに答えよ．
 
-1.  $D_a$の面積$S_a$を求めよ．
-
-2.  $\displaystyle\lim_{a\to\infty}S_a$を求めよ．
+\begin{enumerate}
+\item$D_a$の面積$S_a$を求めよ．
+  \item$\displaystyle\lim_{a\to\infty}S_a$を求めよ．
+\end{enumerate}

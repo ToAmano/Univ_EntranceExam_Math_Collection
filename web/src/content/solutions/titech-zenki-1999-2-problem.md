@@ -11,6 +11,7 @@ title: "TITECH 1999 zenki Q2 (problem)"
 つまり，底面を正$n$角形$A_1 A_2 \cdots\cdots A_n$，頂点を$O$と表せば$OA_1=OA_2=\dots=OA_n=1$である．
 そのような正$n$角錐のなかで最大の体積をもつものを$C_n$とする．
 
-1.  $C_n$の体積$V_n$を求めよ．
-
-2.  $\displaystyle \lim_{n \to \infty}V_n$を求めよ．
+\begin{enumerate}
+\item$C_n$の体積$V_n$を求めよ．
+  \item$\displaystyle \lim_{n \to \infty}V_n$を求めよ．
+\end{enumerate}

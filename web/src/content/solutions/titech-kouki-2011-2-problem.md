@@ -11,6 +11,7 @@ title: "TITECH 2011 kouki Q2 (problem)"
 定数 $t>0$ に対し点 P$(t,0)$ を通り $x$ 軸に垂直な直線 $l$ と曲線 $C$ の交点を Q とする．
 曲線 $C$，$x$ 軸，$y$ 軸，および直線 $l$ で囲まれた図形の面積を $S_1$ とし，$\triangle$OPQ の面積を $S_2$ とする．
 
-1.  $S_1$, $S_2$ を $t$ を用いて表せ．
-
-2.  極限 $\displaystyle\lim_{t \to \infty} \frac{S_1 - S_2}{\log t}$ を求めよ．
+\begin{enumerate}
+\item $S_1$, $S_2$ を $t$ を用いて表せ．
+  \item 極限 $\displaystyle\lim_{t \to \infty} \frac{S_1 - S_2}{\log t}$ を求めよ．
+\end{enumerate}

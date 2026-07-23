@@ -14,13 +14,13 @@ title: "UTOKYO 1975 zenki Q6 (problem)"
 $\displaystyle\frac{1}{2}$に保たれており，
 容器$C$からはつねに赤球が取り出されるものとする．
 
-1.  上記の操作を$n$回くり返したとき，
+\begin{enumerate}
+\item上記の操作を$n$回くり返したとき，
 容器$A$に$x$個の赤球が入っている確率を$P_n(x)$，
 $n=1,2,3,\cdots$で表せば，関係式
 \[ P_{n+1}(x)=\frac{1}{12}(6+x)P_n(x)+\frac{1}{24}(1+x)P_n(x+1)+\frac{1}{8}(5-x)P_n(x-1) \]
 が成り立つことを証明せよ．
 ただし$x \leqq -1$または$x \geqq 5$のときは$P_n(x)=0$と定める．
-
-2.  $n$回目の操作を終えたとき$A$の中にある赤球の数の期待値$E_n$を求めよ．
-
-3.  $\displaystyle\lim_{n\to\infty}E_n$を求めよ．
+  \item$n$回目の操作を終えたとき$A$の中にある赤球の数の期待値$E_n$を求めよ．
+  \item$\displaystyle\lim_{n\to\infty}E_n$を求めよ．
+\end{enumerate}

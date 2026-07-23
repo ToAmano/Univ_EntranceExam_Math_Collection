@@ -12,15 +12,14 @@ title: "UTOKYO 1968 zenki Q5 (solution)"
      整数を係数とする次数$3$の多項式$P(x)$で，次の条件を満たすものを求めよ．
           
 
-1.  $P(x)$のグラフは原点に関して対称である．
-
-2.  $P(x)=0$は重根を持たない．
-
-3.  $P(x)$は極大値も極小値も持たない．
-
-4.  $P\left(\dfrac{1}{2}\right)$は整数である．
-
-5.  $0<P(1)<6$である．
+\begin{enumerate}
+[(1)]
+          \item $P(x)$のグラフは原点に関して対称である．
+          \item $P(x)=0$は重根を持たない．
+          \item $P(x)$は極大値も極小値も持たない．
+          \item $P\left(\dfrac{1}{2}\right)$は整数である．
+          \item $0<P(1)<6$である．
+\end{enumerate}
 
      \end{oframed}
 

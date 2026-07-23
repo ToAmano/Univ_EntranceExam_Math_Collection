@@ -19,9 +19,9 @@ $$
 
 四角形$\text{A}_0 \text{B}_0 \text{C}_0 \text{D}_0$が与えられたとき，この四角形から出発して，任意の整数$n$に対して四角形$\text{A}_n \text{B}_n \text{C}_n \text{D}_n$を以下のように帰納的に定める．
 
-1.  $n = 0$のときは，与えられた四角形$\text{A}_0 \text{B}_0 \text{C}_0 \text{D}_0$とする．
-
-2.  $n > 0$のときは，四角形$\text{A}_{n-1} \text{B}_{n-1} \text{C}_{n-1} \text{D}_{n-1}$まで定まったとして，四角形$\text{A}_n \text{B}_n \text{C}_n \text{D}_n$を
+\begin{itemize}
+\item $n = 0$のときは，与えられた四角形$\text{A}_0 \text{B}_0 \text{C}_0 \text{D}_0$とする．
+  \item $n > 0$のときは，四角形$\text{A}_{n-1} \text{B}_{n-1} \text{C}_{n-1} \text{D}_{n-1}$まで定まったとして，四角形$\text{A}_n \text{B}_n \text{C}_n \text{D}_n$を
         
 
 $$
@@ -31,8 +31,7 @@ $$
 $$
 
         となる四角形として定める．
-
-3.  $n < 0$のときは， $0, -1, \dots, n+1$と負の向きに進んで，四角形$\text{A}_{n+1} \text{B}_{n+1} \text{C}_{n+1} \text{D}_{n+1}$まで定まったとして，四角形$\text{A}_n \text{B}_n \text{C}_n \text{D}_n$を
+  \item $n < 0$のときは， $0, -1, \dots, n+1$と負の向きに進んで，四角形$\text{A}_{n+1} \text{B}_{n+1} \text{C}_{n+1} \text{D}_{n+1}$まで定まったとして，四角形$\text{A}_n \text{B}_n \text{C}_n \text{D}_n$を
         
 
 $$
@@ -42,6 +41,7 @@ $$
 $$
 
         となる四角形として定める．
+\end{itemize}
 
 こうして定まった四角形$\text{A}_n \text{B}_n \text{C}_n \text{D}_n$を$K_n$と書くことにする．
 
@@ -63,11 +63,11 @@ $$
 
 について考える．
 
-1.  $\angle \text{B}_0\text{O}\text{P}$を求めよ．
-
-2.  線分$\text{OP}$上のある点$\text{C}_0$を与え，それにより定まる四角形$\text{A}_0 \text{B}_0 \text{C}_0 \text{D}_0$から出発して，四角形の系列$\dots, K_{-2}, K_{-1}, K_0, K_1, K_2, \dots$を作ったところ，ある0でない整数$n$が存在して，$K_n = K_0$となったという．このとき，点$\text{C}_0$の座標を求めよ．また，$K_n = K_0$となる整数$n$の値をすべて求めよ．
-
-3.  線分$\text{OP}$上のある点$\text{C}_0$を与え，それにより定まる四角形$\text{A}_0 \text{B}_0 \text{C}_0 \text{D}_0$から出発して，四角形の系列$\dots, K_{-2}, K_{-1}, K_0, K_1, K_2, \dots$を作ったところ，これらの四角形が座標平面において原点を除いた部分を，辺と頂点以外には互いに重なることなく，すき間なくおおったという．このような性質をもつ点$\text{C}_0$をすべて求め，それらの座標を記せ．またそれらの場合のおのおのについて，点$(100, 50)$が$K_n$に含まれるような整数$n$の値をすべて求めよ．
+\begin{enumerate}
+\item $\angle \text{B}_0\text{O}\text{P}$を求めよ．
+  \item 線分$\text{OP}$上のある点$\text{C}_0$を与え，それにより定まる四角形$\text{A}_0 \text{B}_0 \text{C}_0 \text{D}_0$から出発して，四角形の系列$\dots, K_{-2}, K_{-1}, K_0, K_1, K_2, \dots$を作ったところ，ある0でない整数$n$が存在して，$K_n = K_0$となったという．このとき，点$\text{C}_0$の座標を求めよ．また，$K_n = K_0$となる整数$n$の値をすべて求めよ．
+  \item 線分$\text{OP}$上のある点$\text{C}_0$を与え，それにより定まる四角形$\text{A}_0 \text{B}_0 \text{C}_0 \text{D}_0$から出発して，四角形の系列$\dots, K_{-2}, K_{-1}, K_0, K_1, K_2, \dots$を作ったところ，これらの四角形が座標平面において原点を除いた部分を，辺と頂点以外には互いに重なることなく，すき間なくおおったという．このような性質をもつ点$\text{C}_0$をすべて求め，それらの座標を記せ．またそれらの場合のおのおのについて，点$(100, 50)$が$K_n$に含まれるような整数$n$の値をすべて求めよ．
+\end{enumerate}
 
 <figure id="fig_1">
   <img src="/Univ_EntranceExam_Math_Collection/images/tikz/utokyo/kouki/1999/3/fig_1.svg" alt="図 1" />

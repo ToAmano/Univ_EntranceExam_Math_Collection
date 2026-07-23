@@ -13,6 +13,7 @@ title: "UTOKYO 2006 zenki Q2 (problem)"
 操作をくり返し行い，記号×が最初のものも含めて3個出るよりも前に，記号○が$n$個出る確率を$P_n$とする．
 ただし，記号○が$n$個出た段階で操作は終了する．
 
-1.  $P_2$を$p$で表せ．
-
-2.  $n \geqq 3$のとき，$P_n$を$p$と$n$で表せ．
+\begin{enumerate}
+\item$P_2$を$p$で表せ．
+  \item$n \geqq 3$のとき，$P_n$を$p$と$n$で表せ．
+\end{enumerate}

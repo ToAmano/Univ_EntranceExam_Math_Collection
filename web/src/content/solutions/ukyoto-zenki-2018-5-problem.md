@@ -11,10 +11,11 @@ title: "UKYOTO 2018 zenki Q5 (problem)"
 点$B$を$AB=1$となるようにとる．
 ただし$B$の$x$座標は$t$より大きいとする．
 
-1.  点$B$の座標$(u(t), \, v(t))$を求めよ．
+\begin{enumerate}
+\item点$B$の座標$(u(t), \, v(t))$を求めよ．
 また$\displaystyle \left( \frac{du}{dt}, \, \frac{dv}{dt} \right)$を求めよ．
-
-2.  実数$r$は$0<r<1$を満たすとし，
+  \item実数$r$は$0<r<1$を満たすとし，
 $t$が$r$から1まで動くときに点$A$と点$B$が描く曲線の長さを
 それぞれ$L_1(r)$，$L_2(r)$とする．
 このとき，極限$\displaystyle\lim_{r\to+0}(L_1(r)-L_2(r))$を求めよ．
+\end{enumerate}

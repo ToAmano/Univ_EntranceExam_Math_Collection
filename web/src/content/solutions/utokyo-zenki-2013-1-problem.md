@@ -13,6 +13,7 @@ title: "UTOKYO 2013 zenki Q1 (problem)"
 によって定める。
 このとき，次の条件(i)，(ii)がともに成り立つような$(a, \, b)$をすべて求めよ。
 
-1.  $P_0=P_6$
-
-2.  $P_0, \, P_1, \, P_2, \, P_3, \, P_4, \, P_5$は相異なる。
+\begin{enumerate}
+\item$P_0=P_6$
+  \item$P_0, \, P_1, \, P_2, \, P_3, \, P_4, \, P_5$は相異なる。
+\end{enumerate}

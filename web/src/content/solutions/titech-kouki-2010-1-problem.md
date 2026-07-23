@@ -11,6 +11,7 @@ $a, b, t$は実数で, $a \ge 0 > b$とする. 次の漸化式により, 数列$
 \[ a_1=a, \quad b_1=b \]
 \[ a_{n+1} = \left(\frac{t}{2} + \frac{5}{t^2+1}\right) a_n + \left(\frac{t}{2} - \frac{5}{t^2+1}\right) b_n, \quad b_{n+1} = \left(\frac{t}{2} - \frac{5}{t^2+1}\right) a_n + \left(\frac{t}{2} + \frac{5}{t^2+1}\right) b_n \]
 
-1.  $a_n$を$a, b, t, n$を用いて表せ.
-
-2.  $n \to \infty$とするとき, $a_n$が収束するための$a, b, t$についての必要十分条件を求めよ.
+\begin{enumerate}
+\item $a_n$を$a, b, t, n$を用いて表せ.
+  \item $n \to \infty$とするとき, $a_n$が収束するための$a, b, t$についての必要十分条件を求めよ.
+\end{enumerate}

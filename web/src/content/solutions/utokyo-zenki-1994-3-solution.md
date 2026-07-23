@@ -24,9 +24,11 @@ $$
      $z=k$による切り口の面積を$S(k)$とする．
           
 
-1.  $k=\cos\theta$とおくとき$S(k)$を$\theta$で表せ．ただし$0\le\theta\pi/2$とする．
-
-2.  $V$の値を求めよ．
+\begin{enumerate}
+[(1)]
+          \item $k=\cos\theta$とおくとき$S(k)$を$\theta$で表せ．ただし$0\le\theta\pi/2$とする．
+          \item $V$の値を求めよ．
+\end{enumerate}
 
      \end{oframed}
 

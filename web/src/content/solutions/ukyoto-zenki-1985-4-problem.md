@@ -9,11 +9,13 @@ title: "UKYOTO 1985 zenki Q4 (problem)"
 
 実数$r$ $(r>0)$に対して，下の方程式\ding{"AC}の定める球面と，\ding{"AD}の定める平面の共通部分を$D$とする．
 
-1.  [\ding{"AC}]$\displaystyle x^2+y^2+z^2=\frac{1}{3}(r^2+2)$
+\begin{enumerate}
+\item $\displaystyle x^2+y^2+z^2=\frac{1}{3}(r^2+2)$
+\item $x+y+z=r$
+\end{enumerate}
 
-2.  [\ding{"AD}]$x+y+z=r$
-
-1.  点$P$，$Q$がともに$D$に属すれば，
+\begin{enumerate}
+\item点$P$，$Q$がともに$D$に属すれば，
 $|\overrightarrow{PQ}|\leqq2\sqrt{\displaystyle\frac{2}{3}}$が成立つことを示せ．
-
-2.  $r$が自然数のとき，連立方程式\ding{"AC}，\ding{"AD}の整数解を決定せよ．
+  \item$r$が自然数のとき，連立方程式\ding{"AC}，\ding{"AD}の整数解を決定せよ．
+\end{enumerate}

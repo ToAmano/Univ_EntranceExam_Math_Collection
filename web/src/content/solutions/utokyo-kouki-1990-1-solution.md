@@ -16,9 +16,10 @@ title: "UTOKYO 1990 kouki Q1 (solution)"
     以下の2パターンを考えれば良い．
     
 
-1.  $l$が隣り合う二辺を通る．
-
-2.  $l$が向かい合う二辺を通る．
+\begin{itemize}
+\item $l$が隣り合う二辺を通る．
+        \item $l$が向かい合う二辺を通る．
+\end{itemize}
 
     対称性から，前者の代表として
     「1. OA,OCを通る」

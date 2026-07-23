@@ -14,6 +14,7 @@ $\triangle ABC$の内部の点$P$が
 \frac{\overrightarrow{PB}}{|\overrightarrow{PB}|}+
 \frac{\overrightarrow{PC}}{|\overrightarrow{PC}|}=\overrightarrow{0} \]
 
-1.  $\angle APB$，$\angle APC$を求めよ。
-
-2.  $|\overrightarrow{PA}|$，$|\overrightarrow{PB}|$，$|\overrightarrow{PC}|$を求めよ。
+\begin{enumerate}
+\item$\angle APB$，$\angle APC$を求めよ。
+  \item$|\overrightarrow{PA}|$，$|\overrightarrow{PB}|$，$|\overrightarrow{PC}|$を求めよ。
+\end{enumerate}

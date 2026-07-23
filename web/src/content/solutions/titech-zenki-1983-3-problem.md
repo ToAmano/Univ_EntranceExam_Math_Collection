@@ -16,6 +16,7 @@ $A=\begin{pmatrix} \displaystyle\cos\frac{2\pi}{3} & \displaystyle-\sin\frac{2\p
 \overrightarrow{u_n}=\overrightarrow{u_{n-1}}+
 \frac{1}{2}A(\overrightarrow{u_{n-1}}-\overrightarrow{u_{n-2}})  (n\geqq3) \]
 
-1.  $x_n$，$y_n$を求めよ．
-
-2.  $\displaystyle\lim_{n\to\infty}x_n$，$\displaystyle\lim_{n\to\infty}y_n$を求めよ．
+\begin{enumerate}
+\item$x_n$，$y_n$を求めよ．
+  \item$\displaystyle\lim_{n\to\infty}x_n$，$\displaystyle\lim_{n\to\infty}y_n$を求めよ．
+\end{enumerate}

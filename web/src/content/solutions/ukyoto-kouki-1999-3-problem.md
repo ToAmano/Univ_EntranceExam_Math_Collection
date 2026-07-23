@@ -17,6 +17,7 @@ $$
 \end{align*}
 $$
 
-1.  $a_2$，$b_2$，$a_3$，$b_3$，$a_4$，$b_4$を求めよ．
-
-2.  $\dfrac{a_{2n+1}}{a_{2n}}$を求めよ．
+\begin{enumerate}
+\item $a_2$，$b_2$，$a_3$，$b_3$，$a_4$，$b_4$を求めよ．
+  \item $\dfrac{a_{2n+1}}{a_{2n}}$を求めよ．
+\end{enumerate}

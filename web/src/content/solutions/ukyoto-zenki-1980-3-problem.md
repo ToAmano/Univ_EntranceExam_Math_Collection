@@ -9,17 +9,17 @@ title: "UKYOTO 1980 zenki Q3 (problem)"
 
 空間の3点$A$，$B$，$C$の組で，次の条件をみたすものを考える．
 
-1.  [\ding{"AC}]$A$，$B$，$C$は平面$x+y+z=1$上にある．
-
-2.  [\ding{"AD}]$A$の座標が$(l,m,n)$であれば，$B$，$C$の座標はそれぞれ$(m,n,l)$，$(n,l,m)$である．
-
-3.  [\ding{"AE}]ベクトル$\overrightarrow{OA}$，$\overrightarrow{OB}$は直交する(ただし，$O=(0,0,0)$)．
+\begin{enumerate}
+\item $A$，$B$，$C$は平面$x+y+z=1$上にある．
+\item $A$の座標が$(l,m,n)$であれば，$B$，$C$の座標はそれぞれ$(m,n,l)$，$(n,l,m)$である．
+\item ベクトル$\overrightarrow{OA}$，$\overrightarrow{OB}$は直交する(ただし，$O=(0,0,0)$)．
+\end{enumerate}
 
 　このとき，そのような$A$，$B$，$C$のとりかたに関せず次の三つが成り立つことを示せ。
 
-1.  $A$，$B$，$C$は定円上にある．
-
-2.  四面体$OABC$の体積は一定である．
-
-3.  $BC$，$CA$，$AB$，$OA$，$OB$，$OC$の中点をそれぞれ$L$，$M$，$N$，$P$，$Q$，$R$とすれば
+\begin{enumerate}
+\item$A$，$B$，$C$は定円上にある．
+  \item四面体$OABC$の体積は一定である．
+  \item$BC$，$CA$，$AB$，$OA$，$OB$，$OC$の中点をそれぞれ$L$，$M$，$N$，$P$，$Q$，$R$とすれば
 6点$L$，$M$，$N$，$P$，$Q$，$R$は定球面上にある．
+\end{enumerate}

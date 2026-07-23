@@ -14,13 +14,19 @@ title: "UTOKYO 1997 kouki Q1 (problem)"
 
 次の問いに答えよ。
 
-1.  はじめに塗りつぶされている単位正三角形が1つだけのとき、$n$回目の操作が終わったときに塗りつぶされている単位正三角形の個数 $a_n$ を求めよ。
+\begin{enumerate}
+\item はじめに塗りつぶされている単位正三角形が1つだけのとき、$n$回目の操作が終わったときに塗りつぶされている単位正三角形の個数 $a_n$ を求めよ。
+  \item はじめに2個以上有限個の単位正三角形が塗りつぶされているとき、$n$回目の操作が終わったときに塗りつぶされている単位正三角形の個数を $b_n$ とおくと、極限
+        
 
-2.  はじめに2個以上有限個の単位正三角形が塗りつぶされているとき、$n$回目の操作が終わったときに塗りつぶされている単位正三角形の個数を $b_n$ とおくと、極限
-        \begin{align}
-          \lim_{n \to \infty} \frac{a_n}{b_n}
-        \end{align}
+$$
+\begin{align}
+\lim_{n \to \infty}\frac{a_n}{b_n}
+\end{align}
+$$
+
         は、はじめの塗りつぶされ方がどのようであっても存在するか。極限が存在する場合については、その極限値を求めよ。存在しない場合があるならば、その例をあげよ。
+\end{enumerate}
 
 <figure id="fig_1">
   <img src="/Univ_EntranceExam_Math_Collection/images/tikz/utokyo/kouki/1997/1/fig_1.svg" alt="図 1" />

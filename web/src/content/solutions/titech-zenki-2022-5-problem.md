@@ -12,25 +12,23 @@ $\displaystyle f(x)=\frac{4}{3}\sin\left( \frac{\pi}{4}+ax \right)
 \cos\left( \frac{\pi}{4}-ax \right)$とする．
 このとき，次の問いに答えよ．
 
-1.  次の等式(＊)を満たす$a$がただ1つ存在することを示せ．
+\begin{enumerate}
+\item次の等式(＊)を満たす$a$がただ1つ存在することを示せ．
 \[ \text{(＊)}  \int_0^1f(x)dx=1 \]
-
-2.  $0 \leqq b < c \leqq 1$を満たす実数$b, \, c$について，不等式
+  \item$0 \leqq b < c \leqq 1$を満たす実数$b, \, c$について，不等式
 \[ f(b)(c-b) \leqq \int_b^cf(x)dx \leqq f(c)(c-b) \]
 が成り立つことを示せ．
-
-3.  次の試行を考える．
-
-1.  $n$個の数$1, \, 2, \, \cdots\cdots, \, n$を出目とする，あるルーレットを$k$回まわす．
+  \item次の試行を考える．
+\begin{enumerate}
+\item $n$個の数$1, \, 2, \, \cdots\cdots, \, n$を出目とする，あるルーレットを$k$回まわす．
+\end{enumerate}
 
 この(試行)において，各$i=1, \, 2, \, \cdots\cdots, \, n$について
 $i$が出た回数を$S_{n,k,i}$とし，
 \[ \text{(＊＊)}  \lim_{k\to\infty}\frac{S_{n,k,i}}{k}=
 \int_{\frac{i-1}{n}}^{\frac{i}{n}}f(x)dx \]
 が成り立つとする．このとき，(1)の等式(＊)が成り立つことを示せ．
-
-4.  (3)の(試行)において出た数の平均値を$A_{n,k}$とし，
+  \item(3)の(試行)において出た数の平均値を$A_{n,k}$とし，
 $\displaystyle A_n=\lim_{k\to\infty}A_{n,k}$とする．\\
 (＊＊)が成り立つとき，極限$\displaystyle\lim_{n\to\infty}\frac{A_n}{n}$を$a$を用いて表せ．
-
-5.  [(試行)]$n$個の数$1, \, 2, \, \cdots\cdots, \, n$を出目とする，あるルーレットを$k$回まわす．
+\end{enumerate}

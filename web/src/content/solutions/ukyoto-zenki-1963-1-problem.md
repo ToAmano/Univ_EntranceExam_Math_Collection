@@ -7,9 +7,10 @@ type: "problem"
 title: "UKYOTO 1963 zenki Q1 (problem)"
 ---
 
-1.  方程式$x^2-(a+c)x+(ac-b^2)=0$は実根をもつことを示せ．
-
-2.  上の根を$\alpha$，$\beta$ $(\alpha\leqq\beta)$とし，また
+\begin{enumerate}
+\item方程式$x^2-(a+c)x+(ac-b^2)=0$は実根をもつことを示せ．
+  \item上の根を$\alpha$，$\beta$ $(\alpha\leqq\beta)$とし，また
 \[ \gamma=\frac{a+c}{2}-\frac{(a-c)(p^2-q^2)+4bpq}{2(p^2+q^2)} \]
 とするとき，つねに$\alpha\leqq\gamma\leqq\beta$が成り立つかどうかを調べよ．\\
 (イ)，(ロ)において，$a$，$b$，$c$，$p$，$q$は任意の実数で，$p$，$q$の少なくも一方は0でないとする．
+\end{enumerate}

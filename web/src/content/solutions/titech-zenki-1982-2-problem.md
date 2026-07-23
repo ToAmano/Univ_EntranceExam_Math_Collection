@@ -12,9 +12,10 @@ title: "TITECH 1982 zenki Q2 (problem)"
 $A$，$B$の位置ベクトルをそれぞれ$\vec{a}$，$\vec{b}$とし，
 $L=\{ m\vec{a}+n\vec{b} \, | \, m, \, n \text{は整数} \}$とする．
 
-1.  零ベクトルでない$L$の元の大きさの最小値$r$は
+\begin{enumerate}
+\item零ベクトルでない$L$の元の大きさの最小値$r$は
 1，$|\vec{a}+\vec{b}|$，$|\vec{a}-\vec{b}|$のうちの
 最小のものに等しいことを証明せよ．
-
-2.  2点$A$，$B$が$r=1$を満たして$C$の周上を動くとき，
+  \item2点$A$，$B$が$r=1$を満たして$C$の周上を動くとき，
 $\triangle OAB$の面積$S$の最小値を求めよ．
+\end{enumerate}

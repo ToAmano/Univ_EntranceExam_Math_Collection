@@ -14,43 +14,65 @@ title: "UTOKYO 1963 zenki Q4 (solution)"
      $P'$，$Q'$，$R'$とする．
           
 
-1.  三角柱$PQR$-$P'Q'R'$の体積が最大になる時の$AP$の長さを求めよ．
-
-2.  この三角柱の体積の最大値$V_0$と正四面体$ABCD$の体積$V$の比$\dfrac{V_0}{V}$
+\begin{enumerate}
+[(1)]
+          \item 三角柱$PQR$-$P'Q'R'$の体積が最大になる時の$AP$の長さを求めよ．
+          \item この三角柱の体積の最大値$V_0$と正四面体$ABCD$の体積$V$の比$\dfrac{V_0}{V}$
           を求めよ．
+\end{enumerate}
 
      \end{oframed}
 
 ## 【解】
 
-1.  $A$から平面$BCD$に下ろした垂足$H$とする．$ABCD$が正四面体だから
+\begin{enumerate}
+[(1)]
+\item  $A$から平面$BCD$に下ろした垂足$H$とする．$ABCD$が正四面体だから
 $|AH|=\dfrac{\sqrt{6}}{3}a$である．
 $|AP|=x \ (0<x<a)$とおく．すると相似から
-     \begin{align*}
-     |PP'|&=\frac{a-x}{a}|AH|=\frac{\sqrt{6}}{3}(a-x) \\
+     
+
+$$
+\begin{align*}
+|PP'|&=\frac{a-x}{a}|AH|=\frac{\sqrt{6}}{3}(a-x) \\
      |PQ|&=x
-     \end{align*}
+\end{align*}
+$$
+
 である．$\triangle PQR$は正三角形でその面積
      \[S=\dfrac{\sqrt{3}}{4}|PQ|^2=\dfrac{\sqrt{3}}{4}x^2\]
 だから，三角錐の
 体積$V(x)$は
-     \begin{align*}
-     V(x)&=(\triangle PQR)|PP'| \\
-     &=\frac{\sqrt{6}}{3}(a-x)S \\
-     &=\frac{\sqrt{2}}{4}x^2(a-x)
-     \end{align*}
+     
+
+$$
+\begin{align*}
+V(x)&=(\triangle PQR)|PP'| \\&=\frac{\sqrt{6}}{3}(a-x)S \\&=\frac{\sqrt{2}}{4}x^2(a-x)
+\end{align*}
+$$
+
 となる．$x,a-x>0$からAM-GMより
-     \begin{align}
-     V(x)&=\sqrt{2}\left(\frac{x}{2}\right)^2(a-x) \nonumber\\
-     &\le\sqrt{2}\left(\frac{a}{3}\right)^3\label{2}
-     \end{align}
+     
+
+$$
+\begin{align}
+V(x)&=\sqrt{2}\left(\frac{x}{2}\right)^2(a-x) \nonumber\\&\le\sqrt{2}\left(\frac{a}{3}\right)^3\label{2}
+\end{align}
+$$
+
 である．等号成立は$\dfrac{x}{2}=a-x\Longleftrightarrow x=\dfrac{2}{3}a$である．(これは$0<x<a$を満たす．)
 以上から求める値は$|AP|=\dfrac{2}{3}a$である．$\cdots$(答)
 
-2.  [2](#2)から$V_0=\dfrac{\sqrt{2}}{27}a^3$であり，また
+\item [2](#2)から$V_0=\dfrac{\sqrt{2}}{27}a^3$であり，また
      \[V=\dfrac{1}{3}S|AH|=\dfrac{\sqrt{2}}{12}a^3 \]
 だから，
-     \begin{align*}
-     \dfrac{V_0}{V}=\dfrac{\dfrac{\sqrt{2}}{27}a^3}{\dfrac{\sqrt{2}}{12}a^3}=\frac{4}{9}
-     \end{align*}
+     
+
+$$
+\begin{align*}
+\dfrac{V_0}{V}=\dfrac{\dfrac{\sqrt{2}}{27}a^3}{\dfrac{\sqrt{2}}{12}a^3}=\frac{4}{9}
+\end{align*}
+$$
+
 である．$\cdots$(答)
+\end{enumerate}

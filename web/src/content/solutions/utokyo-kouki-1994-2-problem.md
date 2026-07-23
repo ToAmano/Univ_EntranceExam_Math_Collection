@@ -14,10 +14,11 @@ title: "UTOKYO 1994 kouki Q2 (problem)"
 がるとする．この円の中心が最初にもとの位置にもどってくるまでの円周上の点 $P$ の軌
 跡を考える．
 
-1.  [(1)] $P$ の軌跡の始点と終点が一致するための $l$ の条件を求めよ．
-
-2.  [(2)] $l$ は (1) の条件を満たす最小の長さとする．このとき $P$ の軌跡の長さのとりうる値
+\begin{enumerate}
+\item $P$ の軌跡の始点と終点が一致するための $l$ の条件を求めよ．
+  \item $l$ は (1) の条件を満たす最小の長さとする．このとき $P$ の軌跡の長さのとりうる値
         の範囲を求めよ．
+\end{enumerate}
 
 <figure id="fig_1">
   <img src="/Univ_EntranceExam_Math_Collection/images/tikz/utokyo/kouki/1994/2/fig_1.svg" alt="図 1" />

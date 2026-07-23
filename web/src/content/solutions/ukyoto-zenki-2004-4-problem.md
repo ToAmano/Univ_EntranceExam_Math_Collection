@@ -12,4 +12,6 @@ $A=\begin{pmatrix} 2 & 0 \\ 1 & 1 \end{pmatrix}$，
 $B=\begin{pmatrix} \alpha & 0 \\ 0 & \beta \end{pmatrix}$とする．
 次の(＊)が成り立つための実数$\alpha$，$\beta$についての必要十分条件を求めよ．
 
-1.  [(＊)]どんな2次正方行列$Y$に対しても，2次正方行列$X$で$AX-XB=Y$となるものがある．
+\begin{enumerate}
+\item どんな2次正方行列$Y$に対しても，2次正方行列$X$で$AX-XB=Y$となるものがある．
+\end{enumerate}

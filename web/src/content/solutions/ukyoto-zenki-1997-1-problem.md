@@ -12,6 +12,7 @@ title: "UKYOTO 1997 zenki Q1 (problem)"
 その線分の$P$の側の延長線上に点$Q$を$\overline{AP}\cdot\overline{PQ}=3$となるようにとる．
 ただし，$\overline{AP}$は線分$AP$の長さを表す．
 
-1.  $s=\overline{AP}$，$t=\overline{OQ}$とおいて，$t$を$s$で表せ．ただし，$O(0,0)$は原点である．
-
-2.  点$P$が円$C$上を動くとき，点$Q$の描く軌跡を求めよ．
+\begin{enumerate}
+\item$s=\overline{AP}$，$t=\overline{OQ}$とおいて，$t$を$s$で表せ．ただし，$O(0,0)$は原点である．
+  \item点$P$が円$C$上を動くとき，点$Q$の描く軌跡を求めよ．
+\end{enumerate}

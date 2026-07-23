@@ -15,11 +15,12 @@ title: "UTOKYO 1974 zenki Q6 (solution)"
      問に答えよ．
            
 
-1.  $p>q$のとき，$P-Q$と$p-q$とはどちらが大きいか．
-
-2.  $P-p$を最大にする$p$の値を求めよ．
-
-3.  $N$の期待値を最大にする$p$の値およびそのときの$N$の期待値を求めよ．
+\begin{enumerate}
+[(1)]
+           \item $p>q$のとき，$P-Q$と$p-q$とはどちらが大きいか．
+           \item $P-p$を最大にする$p$の値を求めよ．
+           \item $N$の期待値を最大にする$p$の値およびそのときの$N$の期待値を求めよ．
+\end{enumerate}
 
      \end{oframed}
 
@@ -59,44 +60,64 @@ $$
 である．
      
 
-1.  $p>q\Longleftrightarrow 1/2<p<1$のとき，$P+Q=1$に注意して，
-          \begin{align*}
-          f(p)&=P+Q-(p-q) \\
-          &=(2P-1)-(2p-1) \\
-          &=2(P-p)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\because [1](#1)) \\
-          &=2p\left(p^2(6p^2-15p+10)-1\right) \\
-          &=4p\left(p-\frac{1}{2}\right)(p-1)(3p^2-3p-1)
-          \end{align*}     
+\begin{enumerate}
+[(1)]
+     \item $p>q\Longleftrightarrow 1/2<p<1$のとき，$P+Q=1$に注意して，
+          
+
+$$
+\begin{align*}
+f(p)&=P+Q-(p-q) \\&=(2P-1)-(2p-1) \\&=2(P-p)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\because[1](#1)) \\&=2p\left(p^2(6p^2-15p+10)-1\right)\\&=4p\left(p-\frac{1}{2}\right)(p-1)(3p^2-3p-1)
+\end{align*}
+$$
+
+     
      である．$1/2<p<1$から，
-          \begin{align*}
-          &p>0&p-1<0 \\
-          &p-\frac{1}{2}>0&3p^2-3p-1<0
-          \end{align*}
+          
+
+$$
+\begin{align*}
+&p>0&p-1<0 \\&p-\frac{1}{2}>0&3p^2-3p-1<0
+\end{align*}
+$$
+
      だから，$f(p)>0$すなわち
           \[P-Q>p-q\]
      である．$\cdots$(答)
+     
+     \item 前問の過程から，$f(p)$を最大にする$p$を求めればよい．
+          
 
-2.  前問の過程から，$f(p)$を最大にする$p$を求めればよい．
-          \begin{align*}
-          \frac{1}{2}f'(p)&=30p^4-60p^3+30p^2-1 \\
-          &=30p^2(p-1)^2-1
-          \end{align*}
+$$
+\begin{align*}
+\frac{1}{2}f'(p)&=30p^4-60p^3+30p^2-1 \\&=30p^2(p-1)^2-1
+\end{align*}
+$$
+
      だから，$0<p<1$に注意して
-          \begin{align*}
-          f'(p)\ge0 \Longleftrightarrow &p^2(p-1)^2\ge\frac{1}{30} \\
-          \Longleftrightarrow &p(1-p)\ge\frac{\sqrt{30}}{30} \\
-          \Longleftrightarrow &\a \le p\le \b
-          \end{align*}
+          
+
+$$
+\begin{align*}
+f'(p)\ge0 \Longleftrightarrow&p^2(p-1)^2\ge\frac{1}{30}\\\Longleftrightarrow&p(1-p)\ge\frac{\sqrt{30}}{30}\\\Longleftrightarrow&\a\le p\le\b
+\end{align*}
+$$
+
      ただし，$\a$，$\b$は
           \[p^2-p+\frac{\sqrt{30}}{30}=0\]
      の$2$解で，かつ$\a<\b$である．これは$0<p<1$の範囲にあるので，下表を得る．
-          \begin{align*}
-               \begin{array}{|c|c|c|c|c|c|c|c|}\hline
+          
+
+$$
+\begin{align*}
+\begin{array}{|c|c|c|c|c|c|c|c|}\hline
                p&0 &    &\a &     &\b &   &1    \\\hline
                f'&   & -  &0  & +  &0 & -  &     \\\hline
                f&   &\se&    &\ne&   &\se&    \\\hline
                \end{array}
-          \end{align*}
+\end{align*}
+$$
+
      従って，$f(p)$を最大にするのは$p=0$または$p=\b$である．前問から，
           \[f(0)=0\]
      であり，また，
@@ -104,22 +125,34 @@ $$
      だから，$f(\b)>0$．故に$f(\b)>f(0)$で，求める$p$の値は
           \[p=\b=\frac{1}{2}\left(1+\sqrt{1-\frac{2}{15}\sqrt{30}}\right)\]
      である．$\cdots$(答)
+     
+     \item $N$の期待値を$N(p)$とする． [0](#0)および対称性から，
+          
 
-3.  $N$の期待値を$N(p)$とする． [0](#0)および対称性から，
-          \begin{align*}
-          N(p)=&3(p^3+q^3)+4(3p^3q+3pq^3)\\
-          &+5(6p^3q^2+6p^2q^3) \\
-          =&3(p^3+q^3)+12(p^3q+pq^3)\\
-          &+30(p^3q^2+p^2q^3)
-          \end{align*}
+$$
+\begin{align*}
+N(p)=&3(p^3+q^3)+4(3p^3q+3pq^3)\\&+5(6p^3q^2+6p^2q^3) \\
+          =&3(p^3+q^3)+12(p^3q+pq^3)\\&+30(p^3q^2+p^2q^3)
+\end{align*}
+$$
+
      となる．$p+q=1$に注意して，$t=pq$とおいて変形すると
-          \begin{align*}
-          N(p)&=3(p^3+q^3)+12pq(p^2+q^2)+30p^2q^2 \\
-          &=3(1-3t)+12t(1-2t)+30t^2 \\
-          &=3+3t+6t^2 \\
-          \end{align*}
+          
+
+$$
+\begin{align*}
+N(p)&=3(p^3+q^3)+12pq(p^2+q^2)+30p^2q^2 \\&=3(1-3t)+12t(1-2t)+30t^2 \\&=3+3t+6t^2 \\
+\end{align*}
+$$
+
      である．$t=p(1-p)$は正で，この範囲で$N(p)$は$t$について単調増加．またAM-GMから
-          \begin{align*}
-          &t=p(1-p)\le\frac{1}{4}&(\text{等号成立は$p=1/2$})
-          \end{align*}
+          
+
+$$
+\begin{align*}
+&t=p(1-p)\le\frac{1}{4}&(\text{等号成立はp=1/2})
+\end{align*}
+$$
+
      であるから，$N(p)$は$p=1/2$で最大値$33/8$をとる．$\cdots$(答)
+\end{enumerate}

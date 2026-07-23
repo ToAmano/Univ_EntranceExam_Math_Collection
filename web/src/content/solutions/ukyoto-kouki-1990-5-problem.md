@@ -10,6 +10,7 @@ title: "UKYOTO 1990 kouki Q5 (problem)"
 平面上に$2$つの円$\mathrm{C}$，$\mathrm{C'}$がある．
 一次変換$f$は逆変換をもち，かつ$\mathrm{C}$を$\mathrm{C'}$にうつしている．
 
-1.  $l$を$C$上の1点$\mathrm{P}$における雪線とする．このとき$l$の$f$による像$l'$は点$f(\mathrm{P})$における$\mathrm{C'}$の接線である．この理由を述べよ．
-
-2.  $\mathrm{A}$を$\mathrm{C}$の中心とすれば，$f(\mathrm{A})$は$\mathrm{C'}$の中心となる．この理由を述べよ．
+\begin{enumerate}
+\item $l$を$C$上の1点$\mathrm{P}$における雪線とする．このとき$l$の$f$による像$l'$は点$f(\mathrm{P})$における$\mathrm{C'}$の接線である．この理由を述べよ．
+  \item $\mathrm{A}$を$\mathrm{C}$の中心とすれば，$f(\mathrm{A})$は$\mathrm{C'}$の中心となる．この理由を述べよ．
+\end{enumerate}

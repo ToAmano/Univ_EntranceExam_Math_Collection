@@ -9,6 +9,7 @@ title: "UKYOTO 1992 kouki Q1 (problem)"
 
 $0$でない$x$の整式$f(x)$に対し，${\displaystyle F(x)=\int_0^x f(t)\dd t }$，${\displaystyle G(x)=\int_x^1 f(t)\dd t }$とおく．ある定数$p$，$q$が存在して，$F(G(x))=-\{F(x)\}^2+pG(x)+q$が成立しているとする．
 
-1.  ${\displaystyle a=\int_0^1 f(t)\dd t }$とおくとき，$F(x)$を$a$を用いてあらわせ．
-
-2.  さらに$0\le x\le 1$での$F(x)$の最大値が$\dfrac{1}{2}$であるとき，$f(x)$を求めよ．
+\begin{enumerate}
+\item ${\displaystyle a=\int_0^1 f(t)\dd t }$とおくとき，$F(x)$を$a$を用いてあらわせ．
+  \item さらに$0\le x\le 1$での$F(x)$の最大値が$\dfrac{1}{2}$であるとき，$f(x)$を求めよ．
+\end{enumerate}

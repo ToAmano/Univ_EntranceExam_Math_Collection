@@ -9,19 +9,15 @@ title: "UTOKYO 1981 zenki Q6 (problem)"
 
 $a$，$b$，$c$，$d$を実数の定数として，関数$f(x)=ax^3+bx^2+cx+d$を考える．
 
-1.  関数$f(x)$が3条件
-
-1.  $f(-1)=0$
-  $f(1)=0$
-  $|x|\leqq1$のとき$f(x)\geqq1-|x|$
+\begin{enumerate}
+\item関数$f(x)$が3条件
+\begin{enumerate}
+  \item$f(-1)=0$
+  \item$f(1)=0$
+  \item$|x|\leqq1$のとき$f(x)\geqq1-|x|$
+\end{enumerate}
 
 をみたすのは，定数$a$，$b$，$c$，$d$がどのような条件をみたすときか．
-
-2.  条件(イ)，(ロ)，(ハ)をみたす関数$f(x)$のうちで，
+  \item条件(イ)，(ロ)，(ハ)をみたす関数$f(x)$のうちで，
 積分$\displaystyle\int_{-1}^1 { \{ f'(x)-x \} }^2 dx$の値を最小にするものを求めよ．
-
-3.  $f(-1)=0$
-
-4.  $f(1)=0$
-
-5.  $|x|\leqq1$のとき$f(x)\geqq1-|x|$
+\end{enumerate}

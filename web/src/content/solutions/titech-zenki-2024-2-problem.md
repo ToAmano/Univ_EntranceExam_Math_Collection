@@ -14,11 +14,10 @@ title: "TITECH 2024 zenki Q2 (problem)"
 \[ p(t)={ \{ f(t) \} }^2+{ \{ g(t) \} }^2,  q(t)=\log\frac{1+g(t)}{1-g(t)} \]
 とおく．
 
-1.  $p'(t)$を求めよ．
-
-2.  $q'(t)$は定数関数であることを示せ．
-
-3.  $\displaystyle\lim_{t\to\infty}g(t)$を求めよ．
-
-4.  $f(T)=g(T)$となる正の実数$T$に対して，媒介変数表示された
+\begin{enumerate}
+\item$p'(t)$を求めよ．
+  \item$q'(t)$は定数関数であることを示せ．
+  \item$\displaystyle\lim_{t\to\infty}g(t)$を求めよ．
+  \item$f(T)=g(T)$となる正の実数$T$に対して，媒介変数表示された
 平面曲線$(x, \, y)=(f(t), \, g(t))$ $(0 \leqq t \leqq T)$の長さを求めよ．
+\end{enumerate}

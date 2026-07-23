@@ -102,37 +102,62 @@ $$
   まず $A \ne 0$ のとき，$t$と$s$の大小関係で場合分けすると
   
 
-1.  [$1^\circ$] \underline{**$|t| < s \iff -2 < t < 2$ の時**}
-          \begin{align*}
-            a_n = s^{n-1} \left\{ B + A\left(\frac{t}{s}\right)^{n-1} \right\}
-          \end{align*}
-          に於いて，
-          \begin{align*}
-            \left\{ B+A\left(\frac{t}{S}\right)^{n-1} \right\} \xrightarrow{n \to \infty} B (\ne 0)
-          \end{align*}
-          だから，$a_n$ の収束条件は
-          \begin{align*}
-            -1 < s \le 1 \iff t \le -3, 3 \le t
-          \end{align*}
-          となる．$-2 < t < 2$ と同時にこの条件を満たす $t$ はないから，この領域で$a_n$は収束しない．\\
+\begin{enumerate}
+\item \underline{**$|t| < s \iff -2 < t < 2$ の時**}
+          
 
-2.  [$2^\circ$] \underline{**$|t| = s \iff t = \pm 2$ の時**}
+$$
+\begin{align*}
+a_n = s^{n-1}\left\{ B + A\left(\frac{t}{s}\right)^{n-1}\right\}
+\end{align*}
+$$
+
+          に於いて，
+          
+
+$$
+\begin{align*}
+\left\{ B+A\left(\frac{t}{S}\right)^{n-1}\right\}\xrightarrow{n \to \infty} B (\ne 0)
+\end{align*}
+$$
+
+          だから，$a_n$ の収束条件は
+          
+
+$$
+\begin{align*}
+-1 < s \le 1 \iff t \le -3, 3 \le t
+\end{align*}
+$$
+
+          となる．$-2 < t < 2$ と同時にこの条件を満たす $t$ はないから，この領域で$a_n$は収束しない．\\
+    \item \underline{**$|t| = s \iff t = \pm 2$ の時**}
 
           まず$t=2$の時，$a_n = a \cdot 2^{n-1}$だから，$a\ge 0$より収束条件は$a=0$である．
           この時$a \ge 0 > b$より，$ A \neq 0$は自動的に満たされる．
 
           次に$t=-2$の時，$a_n = A\cdot(-2)^{n-1} + B\cdot 2^{n-1}$だから，$B>0$より$a_n$は収束しない．\\
+    \item \underline{\textbf{$|t| > s \iff t < -2 \text{ or } 2 < t$ の時}}
+          
 
-3.  [$3^\circ$] \underline{\textbf{$|t| > s \iff t < -2 \text{ or } 2 < t$ の時}}
-          \begin{align*}
-            a_n = t^{n-1} \left\{ A + B\left(\frac{S}{t}\right)^{n-1} \right\}
-          \end{align*}
+$$
+\begin{align*}
+a_n = t^{n-1}\left\{ A + B\left(\frac{S}{t}\right)^{n-1}\right\}
+\end{align*}
+$$
+
           である．
-          \begin{align*}
-            \left\{ A+B\left(\frac{s}{t}\right)^{n-1} \right\} \xrightarrow{n \to \infty} A (\ne 0)
-          \end{align*}
+          
+
+$$
+\begin{align*}
+\left\{ A+B\left(\frac{s}{t}\right)^{n-1}\right\}\xrightarrow{n \to \infty} A (\ne 0)
+\end{align*}
+$$
+
           より収束条件は$-1 < t \le 1$ だが $t < -2 \text{ or } 2 < t$ と同時にこの条件を満たす$t$は存在しない．
           よってこの領域で$a_n$は収束しない．
+\end{enumerate}
 
   次に $A=0 \iff a+b=0$ の時，
   

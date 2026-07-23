@@ -14,9 +14,10 @@ title: "UTOKYO 1997 zenki Q4 (problem)"
 頂点に達するとそこでとまるものとする．
 また，三角形の内部では光線は直進するものとする．
 
-1.  $\displaystyle\tan\theta=\frac{\sqrt3}{4}$のとき，
+\begin{enumerate}
+\item$\displaystyle\tan\theta=\frac{\sqrt3}{4}$のとき，
 この光線はどの頂点に到達するかを述べよ．
-
-2.  正の整数$k$を用いて$\displaystyle\tan\theta=\frac{\sqrt3}{6k+2}$と表せるとき，
+  \item正の整数$k$を用いて$\displaystyle\tan\theta=\frac{\sqrt3}{6k+2}$と表せるとき，
 この光線の到達する頂点を求め，
 またそこへ至るまでの反射の回数を$k$を用いて表せ．
+\end{enumerate}

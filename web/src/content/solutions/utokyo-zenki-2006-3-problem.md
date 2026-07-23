@@ -13,8 +13,9 @@ $O$を原点とする座標平面上に，$y$軸上の点$P(0,p)$と直線$m:y=(
 原点$O$は直線$y=1$上の，第1象限の点$Q$に移り，
 $y$軸上の点$P$は直線$m$上の，第1象限の点$R$に移った．
 
-1.  このとき，$\tan\theta$を$\alpha$と$p$で表せ．
-
-2.  次の条件を満たす点$P$が存在することを示し，そのときの$p$の値を求めよ．\\
+\begin{enumerate}
+\itemこのとき，$\tan\theta$を$\alpha$と$p$で表せ．
+  \item次の条件を満たす点$P$が存在することを示し，そのときの$p$の値を求めよ．\\
 条件：どのような$\theta$ $\displaystyle \left( 0<\theta<\frac{\pi}{2} \right)$に対しても，
 原点を通り直線$l$に垂直な直線は$\displaystyle y = \left( \tan\frac{\theta}{3} \right) x$となる．
+\end{enumerate}

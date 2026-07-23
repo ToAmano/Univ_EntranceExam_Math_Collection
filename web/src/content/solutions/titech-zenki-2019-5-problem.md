@@ -11,7 +11,8 @@ $\displaystyle a=\frac{2^8}{3^4}$として，数列
 \[ b_k=\frac{{(k+1)}^{k+1}}{a^kk \, !}  (k=1, \, 2, \, 3, \, \cdots) \]
 を考える．
 
-1.  関数$\displaystyle f(x)=(x+1)\log\left( 1+\frac{1}{x} \right)$は
+\begin{enumerate}
+\item関数$\displaystyle f(x)=(x+1)\log\left( 1+\frac{1}{x} \right)$は
 $x>0$で減少することを示せ．
-
-2.  数列$\{ b_k \}$の項の最大値$M$を既約分数で表し，$b_k=M$となる$k$をすべて求めよ．
+  \item数列$\{ b_k \}$の項の最大値$M$を既約分数で表し，$b_k=M$となる$k$をすべて求めよ．
+\end{enumerate}

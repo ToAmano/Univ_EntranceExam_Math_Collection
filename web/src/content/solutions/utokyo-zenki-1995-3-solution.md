@@ -14,9 +14,11 @@ title: "UTOKYO 1995 zenki Q3 (solution)"
 $A_n$で表す．ただし$n$は正の整数である．例えば$A_1=1$，$A_2=3$，$A_3=5$である．このとき以下の問いに答えよ．
      
 
-1.  $n\le3$のとき，$A_n$を$A_{n-1}$，$A_{n-2}$を用いて表せ．
-
-2.  $A_n$を$n$で表せ．
+\begin{enumerate}
+[(1)]
+     \item $n\le3$のとき，$A_n$を$A_{n-1}$，$A_{n-2}$を用いて表せ．
+     \item $A_n$を$n$で表せ．
+\end{enumerate}
 
 \end{oframed}
 
@@ -24,32 +26,51 @@ $A_n$で表す．ただし$n$は正の整数である．例えば$A_1=1$，$A_2=
 
      
 
-1.  右端のタイルの敷き詰め方で場合分けして考えれば，
-          \begin{align*}
-          A_n=A_{n-1}+2A_{n-2}\cdots\text{(答)}
-          \end{align*}
-     である．
+\begin{enumerate}
+[(1)]
+     \item 右端のタイルの敷き詰め方で場合分けして考えれば，
+          
 
-2.  (1)で得た漸化式を変形する．
-           \begin{align*}
-           \left\{
-                \begin{array}{l}
+$$
+\begin{align*}
+A_n=A_{n-1}+2A_{n-2}\cdots\text{(答)}
+\end{align*}
+$$
+
+     である．
+     
+     \item (1)で得た漸化式を変形する．
+           
+
+$$
+\begin{align*}
+\left\{\begin{array}{l}
                A_{n+2}-2A_{n+1}=-(A_{n+1}-2A_{n}) \\
                A_{n+2}+A_{n+1}=2( A_{n+1}+A_{n})
-               \end{array}
-         \right.      
-         \end{align*}
+               \end{array}\right.
+\end{align*}
+$$
+
     これを繰り返し用いて，初期条件$A_1=1$，$A_2=3$から
-               \begin{align*}
-               \left\{
-                    \begin{array}{l}
+               
+
+$$
+\begin{align*}
+\left\{\begin{array}{l}
                     A_{n+1}-2A_{n}=(-1)^{n-1}(3-2) \\
                     A_{n+1}+A_{n}=2^{n-1}(3+1)
-                    \end{array}
-              \right.
-              \end{align*}
+                    \end{array}\right.
+\end{align*}
+$$
+
      辺々引いて整理すれば
-          \begin{align*}
-          A_n=\frac{1}{3}\left(2^{n+1}+(-1)^n\right)\cdots\text{(答)}
-          \end{align*}
+          
+
+$$
+\begin{align*}
+A_n=\frac{1}{3}\left(2^{n+1}+(-1)^n\right)\cdots\text{(答)}
+\end{align*}
+$$
+
      を得る．
+\end{enumerate}

@@ -17,9 +17,9 @@ f_n(0)=c, \\
 \end{cases} \]
 ただし，$\displaystyle h=\frac{a}{n}$，$c>0$である．このとき，以下の問いに答えよ．
 
-1.  $\displaystyle p_k=\frac{1}{f_n(kh)}$ $(k=0,1,\cdots,n)$とおいて$p_k$を求めよ．
-
-2.  $\displaystyle g(a)=\lim_{n\to\infty}f_n(a)$とおく．$g(a)$を求めよ．
-
-3.  $\displaystyle c=2,1,\frac{1}{4}$それぞれの場合について，
+\begin{enumerate}
+\item$\displaystyle p_k=\frac{1}{f_n(kh)}$ $(k=0,1,\cdots,n)$とおいて$p_k$を求めよ．
+  \item$\displaystyle g(a)=\lim_{n\to\infty}f_n(a)$とおく．$g(a)$を求めよ．
+  \item$\displaystyle c=2,1,\frac{1}{4}$それぞれの場合について，
 $y=g(x)$の$x>0$でのグラフをかけ．
+\end{enumerate}

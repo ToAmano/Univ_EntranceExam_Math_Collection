@@ -21,11 +21,12 @@ D=\begin{pmatrix} b^{1-c} & 0 \\ 0 & a^{1-c} \end{pmatrix} \]
 とする。\\
 　このとき以下の問いに答えよ。
 
-1.  各実数$t$に対して，$x$の関数
+\begin{enumerate}
+\item各実数$t$に対して，$x$の関数
 \[ f(x)=Tr \left( (U(t)AU(-t)-B) U(x) \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} U(-x) \right) \]
 の最大値$m(t)$を求めよ。
 (ただし，最大値をとる$x$を求める必要はない。)
-
-2.  すべての実数$t$に対し
+  \itemすべての実数$t$に対し
 \[ 2Tr(U(t)CU(-t)D) \geqq Tr(U(t)AU(-t)+B) - m(t) \]
 が成り立つことを示せ。
+\end{enumerate}

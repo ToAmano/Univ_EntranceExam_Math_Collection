@@ -15,7 +15,8 @@ $C_0=0$，$C_1=1$，$C_{n+1}=C_n+C_{n-1}$ $(n=1, \, 2, \, 3, \, \cdots)$で
 ただし，$\alpha_n\geqq\beta_n$とする．
 このとき
 
-1.  $\displaystyle\frac{\alpha_{n+1}}{\alpha_n}$，
+\begin{enumerate}
+\item$\displaystyle\frac{\alpha_{n+1}}{\alpha_n}$，
 $\displaystyle\frac{\beta_{n+1}}{\beta_n}$を求めよ．
-
-2.  $\alpha_n$，$\beta_n$を求めよ．
+  \item$\alpha_n$，$\beta_n$を求めよ．
+\end{enumerate}

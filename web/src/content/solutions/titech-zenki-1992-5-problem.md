@@ -11,6 +11,7 @@ $n=1,2,\cdots\cdots$に対し
 \[ I_n=(-1)^n\int_0^\frac{\pi}{4}\frac{x \cos (2n-1)x}{\cos x}dx \]
 とおく．
 
-1.  $I_n-I_{n-1}$を求めよ．
-
-2.  $I_3$を求めよ．
+\begin{enumerate}
+\item$I_n-I_{n-1}$を求めよ．
+  \item$I_3$を求めよ．
+\end{enumerate}

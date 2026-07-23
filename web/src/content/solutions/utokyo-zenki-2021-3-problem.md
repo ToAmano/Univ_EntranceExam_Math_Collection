@@ -14,9 +14,10 @@ title: "UTOKYO 2021 zenki Q3 (problem)"
 \[ l:y=g(x) \]
 とする。
 
-1.  $C$と$l$の共有点で$A$と異なるものがただ1つ存在することを示し，
+\begin{enumerate}
+\item$C$と$l$の共有点で$A$と異なるものがただ1つ存在することを示し，
 その点の$x$座標を求めよ。
-
-2.  (1)で求めた共有点の$x$座標を$\alpha$とする。定積分
+  \item(1)で求めた共有点の$x$座標を$\alpha$とする。定積分
 \[ \int_{\alpha}^1 { \{ f(x)-g(x) \} }^2 dx \]
 を計算せよ。
+\end{enumerate}

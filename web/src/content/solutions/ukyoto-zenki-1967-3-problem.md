@@ -11,6 +11,7 @@ title: "UKYOTO 1967 zenki Q3 (problem)"
 $P(x_1,y_1)$ $(x_1>0,y_1>0)$をとる．
 この双曲線の$P$における接線が$x$軸と交わる点を$Q$とし，座標の原点を$O$とする．
 
-1.  $\triangle OPQ$の面積を$x_1$を用いて表わせ．
-
-2.  $x_1\to+\infty$のとき，$\triangle OPQ$の面積の極限値を求めよ．
+\begin{enumerate}
+\item$\triangle OPQ$の面積を$x_1$を用いて表わせ．
+  \item$x_1\to+\infty$のとき，$\triangle OPQ$の面積の極限値を求めよ．
+\end{enumerate}

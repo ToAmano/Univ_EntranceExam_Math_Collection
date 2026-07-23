@@ -9,8 +9,9 @@ title: "UTOKYO 2006 zenki Q6 (problem)"
 
 $x>0$を定義域とする関数$\displaystyle f(x)=\frac{12(e^{3x}-3e^x)}{e^{2x}-1}$について，以下の問いに答えよ．
 
-1.  関数$y=f(x)$ $(x>0)$は，実数全体を定義域とする逆関数を持つことを示せ．
+\begin{enumerate}
+\item関数$y=f(x)$ $(x>0)$は，実数全体を定義域とする逆関数を持つことを示せ．
 すなわち，任意の実数$a$に対して，$f(x)=a$となる$x>0$がただ1つ存在することを示せ．
-
-2.  前問(1)で定められた逆関数を$y=g(x)$ $(-\infty<x<\infty)$とする．
+  \item前問(1)で定められた逆関数を$y=g(x)$ $(-\infty<x<\infty)$とする．
 このとき，定積分$\displaystyle\int_8^{27}g(x)dx$を求めよ．
+\end{enumerate}

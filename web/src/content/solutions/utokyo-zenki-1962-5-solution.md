@@ -13,9 +13,11 @@ title: "UTOKYO 1962 zenki Q5 (solution)"
      $x$，$y$，$z$の和が$6$，全表面積が$18$であるとき，
           
 
-1.  $x$のとりうる値の範囲を求めよ．
-
-2.  このような直方体の体積の最大値を求めよ．
+\begin{enumerate}
+[(i)]
+          \item $x$のとりうる値の範囲を求めよ．
+          \item このような直方体の体積の最大値を求めよ．
+\end{enumerate}
 
      \end{oframed}
 
@@ -35,62 +37,68 @@ $$
 となる．     
      
 
-1.  まず$s=y+z$，$t=yz$として，$y$，$z$の存在条件を考える．[2](#2)，[3](#3)
+\begin{enumerate}
+[(i)]
+     \item  まず$s=y+z$，$t=yz$として，$y$，$z$の存在条件を考える．[2](#2)，[3](#3)
      から
-          \begin{align}
-          \left\{
-               \begin{array}{l}
+          
+
+$$
+\begin{align}
+\left\{\begin{array}{l}
                s=6-x \\
                t=x^2-6x+9
-               \end{array}
-          \right.\label{4}
-          \end{align}
+               \end{array}\right.\label{4}
+\end{align}
+$$
+
      となる．
      
      さて，[1](#1)，[4](#4)から$y$，$z$は$p$の$2$次方程式
-          \begin{align*}
-          &p^2-sp+t=0\\ 
-          \Longleftrightarrow &p^2-(6-x)p+(x^2-6x+9)=0 
-          \end{align*}
+          
+
+$$
+\begin{align*}
+&p^2-sp+t=0\\\Longleftrightarrow&p^2-(6-x)p+(x^2-6x+9)=0
+\end{align*}
+$$
+
      の正$2$実解であるから，判別式$D$として     
-          \begin{align*}
-          &\left\{
-               \begin{array}{l}
+          
+
+$$
+\begin{align*}
+&\left\{\begin{array}{l}
                D\ge0  \\
                s,t>0
-               \end{array}
-          \right.  \\
-          \Longleftrightarrow&\left\{
-               \begin{array}{l}
+               \end{array}\right.\\\Longleftrightarrow&\left\{\begin{array}{l}
                (6-x)^2-4(x^2-6x+9)\ge0  \\
                6-x>0  \\
                x^2-6x+9>0
-               \end{array}
-          \right.\\
-          \Longleftrightarrow&\left\{
-               \begin{array}{l}
+               \end{array}\right.\\\Longleftrightarrow&\left\{\begin{array}{l}
                (6-x)^2-4(x^2-6x+9)\ge0  \\
                6-x>0  \\
                x^2-6x+9>0
-               \end{array}
-          \right.\\
-          \Longleftrightarrow&\left\{
-               \begin{array}{l}
+               \end{array}\right.\\\Longleftrightarrow&\left\{\begin{array}{l}
                0\le x\le 4  \\
                x<6  \\
                x\not=3
-               \end{array}
-          \right. \\
-          \Longleftrightarrow&
+               \end{array}\right.\\\Longleftrightarrow&
                0\le x<3,3<x\le 4  \tag{答}
-          \end{align*} 
-となる．
+\end{align*}
+$$
 
-2.  $a=x+y+z$，$b=yz+zx+xy$，$c=xyz$とおく．すると$x$，$y$，$z$は$p$の$3$次方程式
-          \begin{align}
-          &p^3-ap^2+bp-c=0  \nonumber\\
-          \Longleftrightarrow&p^3-6p^2+9p-c=0 \label{5}
-          \end{align}
+ 
+となる．     
+     \item $a=x+y+z$，$b=yz+zx+xy$，$c=xyz$とおく．すると$x$，$y$，$z$は$p$の$3$次方程式
+          
+
+$$
+\begin{align}
+&p^3-ap^2+bp-c=0  \nonumber\\\Longleftrightarrow&p^3-6p^2+9p-c=0 \label{5}
+\end{align}
+$$
+
      の正実解である．故にこれが正の$3$実解(重解含む)をもつ条件を求める．
                     
           [5](#5)が正の$3$実解を持つ．\\
@@ -98,23 +106,33 @@ $$
           つ．
           
      である．
-          \begin{align*}
-          f'(p)&=3p^2-12p+9  \\
-          &=3(p-1)(p-3)
-          \end{align*}
+          
+
+$$
+\begin{align*}
+f'(p)&=3p^2-12p+9  \\&=3(p-1)(p-3)
+\end{align*}
+$$
+
      であるから下表を得る．
-          \begin{align*}
-               \begin{array}{|c|c|c|c|c|c|}  \hline
+          
+
+$$
+\begin{align*}
+\begin{array}{|c|c|c|c|c|c|}  \hline
                p &    &  1  &      &  3  &     \\ \hline
                f' &+  &  0  & -    &  0  & +  \\ \hline     
                f &\ne&  4  &\se &  0  &\ne  \\ \hline
                \end{array}
-          \end{align*}
+\end{align*}
+$$
+
      従って，$y=f(p)$のグラフは下のようになり，故に$c$の値域は$0\le c\le4$である．
           
           \scalebox{1}{\input{ut-62-5p}}
           
      さて，直方体の体積は$c$に等しいから$\max c=4\cdots$(答)である．
+\end{enumerate}
 
      
 

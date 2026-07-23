@@ -13,11 +13,12 @@ title: "UTOKYO 1994 kouki Q1 (problem)"
 \]
 とおく。ただし、ただし $a_m \neq 0$ とする。
 
-1.  \[
+\begin{enumerate}
+\item
+        \[
           [m, m-1, \dots, 1]_m = [1, 0, \dots, 0]_{m+1} - 1
         \]
         を証明せよ。
-
-2.  すべての正の整数は $[a_m, a_{m-1}, \dots, a_1]_m$ の形にただ一通りに表示できることを証明せよ。
-
-3.  $n$ が $5$ 以上の整数のとき $\dfrac{n!}{5}$ を $[a_m, a_{m-1}, \dots, a_1]_m$ の形に表示せよ。
+  \item すべての正の整数は $[a_m, a_{m-1}, \dots, a_1]_m$ の形にただ一通りに表示できることを証明せよ。
+  \item $n$ が $5$ 以上の整数のとき $\dfrac{n!}{5}$ を $[a_m, a_{m-1}, \dots, a_1]_m$ の形に表示せよ。
+\end{enumerate}

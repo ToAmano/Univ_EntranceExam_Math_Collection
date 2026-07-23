@@ -15,7 +15,8 @@ $c_k \leqq c_n$ならば$a_n=c_n$，
 それ以外のとき$a_n=0$とおく．
 ただし，$a_1=c_1$とする．
 
-1.  $a_n$の期待値を$E(n)$とするとき，$\displaystyle\lim_{n\to\infty}E(n)$を求めよ．
-
-2.  $a_1,a_2,\cdots\cdots,a_n$のうち2に等しいものの個数の期待値を$N(n)$とするとき，
+\begin{enumerate}
+\item$a_n$の期待値を$E(n)$とするとき，$\displaystyle\lim_{n\to\infty}E(n)$を求めよ．
+  \item$a_1,a_2,\cdots\cdots,a_n$のうち2に等しいものの個数の期待値を$N(n)$とするとき，
 $\displaystyle\lim_{n\to\infty}N(n)$を求めよ．
+\end{enumerate}

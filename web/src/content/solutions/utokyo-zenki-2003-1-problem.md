@@ -10,9 +10,10 @@ title: "UTOKYO 2003 zenki Q1 (problem)"
 $a$，$b$，$c$を実数とし，$a \neq 0$とする．
 2次関数$f(x)=ax^2+bx+c$が次の条件(A)，(B)を満たすとする．
 
-1.  $f(-1)=-1$，$f(1)=1$
-
-2.  $-1 \leqq x \leqq 1$を満たすすべての$x$に対し，$f(x) \leqq 3x^2-1$
+\begin{enumerate}
+\item$f(-1)=-1$，$f(1)=1$
+  \item$-1 \leqq x \leqq 1$を満たすすべての$x$に対し，$f(x) \leqq 3x^2-1$
+\end{enumerate}
 
 　このとき，
 積分$\displaystyle I=\int_{-1}^1 (f'(x))^2 dx$の値のとりうる範囲を求めよ．

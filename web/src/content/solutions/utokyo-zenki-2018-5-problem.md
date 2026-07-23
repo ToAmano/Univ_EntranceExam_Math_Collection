@@ -12,10 +12,11 @@ title: "UTOKYO 2018 zenki Q5 (problem)"
 点$P$における円$C$の接線に関して，点$A$と対称な点を$Q(u)$とする。
 $\displaystyle w=\frac{1}{1-u}$とおき，$w$と共役な複素数を$\overline{w}$で表す。
 
-1.  $u$と$\displaystyle\frac{\overline{w}}{w}$を
+\begin{enumerate}
+\item$u$と$\displaystyle\frac{\overline{w}}{w}$を
 $z$についての整式として表し，
 絶対値の商$\displaystyle\frac{|w+\overline{w}-1|}{|w|}$を求めよ。
-
-2.  $C$のうち実部が$\displaystyle\frac{1}{2}$以下の複素数で
+  \item$C$のうち実部が$\displaystyle\frac{1}{2}$以下の複素数で
 表される部分を$C'$とする。
 点$P(z)$が$C'$上を動くときの点$R(w)$の軌跡を求めよ。
+\end{enumerate}

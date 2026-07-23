@@ -128,91 +128,132 @@ $$
 
   
 
-1.  $f(x)$が異なる三つの実数解を持つとき．\\
+\begin{enumerate}
+\item $f(x)$が異なる三つの実数解を持つとき．\\
           この時は，$g(x)$が異なる二つの実数解を持つ，つまり$D>0$である．
           この時は$g(x)$の解が$-a$ではあり得ない．
           従って
-          \begin{align*}
-            (a-1)^2-4b > 0 \\
-          \end{align*}
+          
+
+$$
+\begin{align*}
+(a-1)^2-4b > 0 \\
+\end{align*}
+$$
+
           の時である．
           このもとで題意の条件を満たすには，$f(x)$の最も大きい解が$0$以下であれば良い．
-          \begin{align*}
-             & \max(-a, \alpha, \beta) \le 0
-          \end{align*}
+          
+
+$$
+\begin{align*}
+& \max(-a, \alpha, \beta) \le 0
+\end{align*}
+$$
+
           [(式2)](#2000-1:eq:2)より，求める条件は
-          \begin{align*}
-             & \begin{dcases}
+          
+
+$$
+\begin{align*}
+& \begin{dcases}
                  -a \le 0 \\
                  \frac{a-1 + \sqrt{(a-1)^2-4b}}{2} \le 0
-               \end{dcases} \\
-            \therefore
-             & \begin{dcases}
+               \end{dcases}\\\therefore& \begin{dcases}
                  -a \le 0 \\
                  \sqrt{(a-1)^2-4b} \le 1-a
-               \end{dcases}                    \\
-            \therefore
-             & \begin{dcases}
+               \end{dcases}\\\therefore& \begin{dcases}
                  -a \le 0  \\
                  1-a \le 0 \\
                  (a-1)^2-4b \le (1-a)^2
-               \end{dcases}                       \\
-            \therefore
-             & \begin{dcases}
+               \end{dcases}\\\therefore& \begin{dcases}
                  0 \le a \le 1 \\
                  0 \le b
                \end{dcases}
-          \end{align*}
+\end{align*}
+$$
 
-2.  $f(x)$が異なる二つの実数解を持つとき．\\
+    \item $f(x)$が異なる二つの実数解を持つとき．\\
           この時は，$D=0$で$g(x)$の解が$-a$でないときか，$D>0$で$g(x)$の一つの解が$-a$となる($-a$が$f$の重解となる)ときである．
           前者の時は$D=0$より
-          \begin{align*}
-            D = (a-1)^2 -4b = 0
-          \end{align*}
+          
+
+$$
+\begin{align*}
+D = (a-1)^2 -4b = 0
+\end{align*}
+$$
+
           であり，この時の重解は $x = \frac{a-1}{2}$である．これが$-a$と一致しないことにより$a\neq 1/3$が必要．
           題意の条件は
-          \begin{align*}
-             & -a \le 0 \\
-            \therefore
-             & a \ge 0
-          \end{align*}
+          
+
+$$
+\begin{align*}
+& -a \le 0 \\\therefore& a \ge 0
+\end{align*}
+$$
+
           である．
 
           後者の条件は，[(式3)](#2000-1:eq:3)より
-          \begin{align*}
-            b & = - 2a^2+a        \\
-            D & = (a-1)^2 -4b > 0
-          \end{align*}
-          であり，この時$g(x)$のもう一つの解は解と係数の関係から
-          \begin{align*}
-            x = 2a - 1
-          \end{align*}
-          である．題意の条件はこれが$0$以下であることで
-          \begin{align*}
-             & 2a-1 \le 0        \\
-             & a \le \frac{1}{2}
-          \end{align*}
-          である．
+          
 
-3.  $f(x)$がただ一つの実数解を持つとき．\\
+$$
+\begin{align*}
+b & = - 2a^2+a        \\
+            D & = (a-1)^2 -4b > 0
+\end{align*}
+$$
+
+          であり，この時$g(x)$のもう一つの解は解と係数の関係から
+          
+
+$$
+\begin{align*}
+x = 2a - 1
+\end{align*}
+$$
+
+          である．題意の条件はこれが$0$以下であることで
+          
+
+$$
+\begin{align*}
+& 2a-1 \le 0        \\& a \le\frac{1}{2}
+\end{align*}
+$$
+
+          である．
+    \item  $f(x)$がただ一つの実数解を持つとき．\\
           これは$f(x)$が三重解を持つか，または$D<0$の時のときである．
           前者の時は$a=1/3$であり，この元で題意の条件は$-a \le 0$であるから，
-          \begin{align*}
-            \begin{dcases}
+          
+
+$$
+\begin{align*}
+\begin{dcases}
               (a-1)^2 -4b = 0 \\
               a = \frac{1}{3}
             \end{dcases}
-          \end{align*}
+\end{align*}
+$$
+
           となる．
 
           後者の時は$D<0$かつ$-a \le 0$であればよく，
-          \begin{align*}
-            \begin{dcases}
+          
+
+$$
+\begin{align*}
+\begin{dcases}
               (a-1)^2 -4b < 0 \\
               a \ge 0
             \end{dcases}
-          \end{align*}
+\end{align*}
+$$
+
+\end{enumerate}
 
   以上をまとめると，以下の4つの条件となる．
   

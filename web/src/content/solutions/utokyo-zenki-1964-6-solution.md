@@ -12,9 +12,11 @@ title: "UTOKYO 1964 zenki Q6 (solution)"
      関数$f(x)=x^3+ax^2+bx$は次の条件を満たすものとする．
           
 
-1.  $f(1)=4$．
-
-2.  $x\ge0$のとき$f(x)\ge0$．
+\begin{enumerate}
+[(1)]
+          \item $f(1)=4$．
+          \item $x\ge0$のとき$f(x)\ge0$．
+\end{enumerate}
 
      このとき$\int_0^1f(x)dx$の値を最大にする$a$，$b$の値，最小にする$a$，$b$の値をそれぞれ
      求めよ．     

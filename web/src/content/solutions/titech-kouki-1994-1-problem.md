@@ -13,10 +13,10 @@ title: "TITECH 1994 kouki Q1 (problem)"
 \[ F(x) = x^2 + ax|x-b| + cx \]
 が常に成立し，さらに $3$ つの条件
 
-1.  [(i)] $f(x)$ は連続
-
-2.  [(ii)] $F(1) = 0$
-
-3.  [(iii)] $f(0) = 1$
+\begin{enumerate}
+\item $f(x)$ は連続
+  \item $F(1) = 0$
+  \item $f(0) = 1$
+\end{enumerate}
 
 が満たされているとする．このとき $f(x)$ を求めよ．

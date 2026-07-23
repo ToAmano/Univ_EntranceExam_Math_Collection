@@ -18,15 +18,19 @@ $$
 
 で表される曲線を$C$とする．次の問に答えよ．
 
-1.  $t\neq -1$のとき，$\dv{y}{x}$を$t$の式であらわせ．
+\begin{enumerate}
+\item $t\neq -1$のとき，$\dv{y}{x}$を$t$の式であらわせ．
+  \item 曲線$C$上で$\dv{y}{x}=-\dfrac{1}{2}$を満たす点$\mathrm{A}$の座標を求めよ．
+  \item 曲線$C$上の点$(x,y)$を点$(X,Y)$に移す移動が
+        
 
-2.  曲線$C$上で$\dv{y}{x}=-\dfrac{1}{2}$を満たす点$\mathrm{A}$の座標を求めよ．
-
-3.  曲線$C$上の点$(x,y)$を点$(X,Y)$に移す移動が
-        \begin{align}
-          X & =\frac{1}{\sqrt{5}}(2x-y) \\
+$$
+\begin{align}
+X & =\frac{1}{\sqrt{5}}(2x-y) \\
           Y & =\frac{1}{\sqrt{5}}(x+2y)
-        \end{align}
-        で表されているとする．このとき$Y$を$X$を用いてあらわせ．
+\end{align}
+$$
 
-4.  曲線$C$の概形を$xy$平面上に描け．
+        で表されているとする．このとき$Y$を$X$を用いてあらわせ．
+  \item 曲線$C$の概形を$xy$平面上に描け．
+\end{enumerate}

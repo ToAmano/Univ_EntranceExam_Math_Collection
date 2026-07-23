@@ -17,11 +17,12 @@ title: "UTOKYO 1974 zenki Q5 (solution)"
      $\theta$が$0$から$\pi/2$まで動くとして，次の問いに答えよ．
           
 
-1.  $X$と$Y$とを$\theta$の関数として表せ．
-
-2.  $Y$の最大値を求めよ．
-
-3.  Mの描く曲線の弧の長さを求めよ．
+\begin{enumerate}
+[(1)]
+          \item $X$と$Y$とを$\theta$の関数として表せ．
+          \item $Y$の最大値を求めよ．
+          \item Mの描く曲線の弧の長さを求めよ．
+\end{enumerate}
 
      
      \end{oframed}

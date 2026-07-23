@@ -12,6 +12,7 @@ $OA_1=OB_1=1$，$\angle B_1OA_1=\theta$ $(0<\theta<\pi)$であるような二等
 以下同様にして，$n>2$についても二等辺三角形$OA_nB_n$を作っていく．\\
 　辺$OA_n$の長さを$a_n$とおく．
 
-1.  $\displaystyle a_3\cdot\sin\frac{\theta}{4}$を計算せよ．
-
-2.  $\displaystyle\lim_{n\to\infty}a_n$を計算せよ．
+\begin{enumerate}
+\item$\displaystyle a_3\cdot\sin\frac{\theta}{4}$を計算せよ．
+  \item$\displaystyle\lim_{n\to\infty}a_n$を計算せよ．
+\end{enumerate}

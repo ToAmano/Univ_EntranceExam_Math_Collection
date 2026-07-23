@@ -106,11 +106,11 @@ $$
   $\theta$の値で場合分けすると，以下のようになる．
   
 
-1.  $|\cos\theta| > \frac{1}{2}$の時，$|a_1|=2|\cos\theta|>1$より$m=1$とすれば良い．
-
-2.  $|\cos\theta| < \frac{1}{2}$の時，$|a_2| = 2|\cos 2\theta| = 2|2\cos^2\theta - 1| = 2(1-2\cos^2\theta)> 1$ より$m=2$とすれば良い．
-
-3.  $|\cos\theta| = \frac{1}{2}$の時，$|a_3| = 2|\cos 3\theta| = 2|4\cos^3\theta - 3\cos\theta| = 2 > 1 $より$m=3$とすれば良い．
+\begin{itemize}
+\item $|\cos\theta| > \frac{1}{2}$の時，$|a_1|=2|\cos\theta|>1$より$m=1$とすれば良い．
+    \item $|\cos\theta| < \frac{1}{2}$の時，$|a_2| = 2|\cos 2\theta| = 2|2\cos^2\theta - 1| = 2(1-2\cos^2\theta)> 1$ より$m=2$とすれば良い．
+    \item $|\cos\theta| = \frac{1}{2}$の時，$|a_3| = 2|\cos 3\theta| = 2|4\cos^3\theta - 3\cos\theta| = 2 > 1 $より$m=3$とすれば良い．
+\end{itemize}
 
   以上で全ての場合が尽くされ，題意は示された．$\cdots$(答)
   

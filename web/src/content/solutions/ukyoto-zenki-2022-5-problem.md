@@ -14,10 +14,10 @@ $C$上の点$Q(t, \, \cos^3t)$と原点$O$，および$P(t, \, 0)$，$R(0, \cos^
 長方形$OPQR$の面積を$f(t)$とする．
 このとき，次の各問に答えよ．
 
-1.  $S$を求めよ．
-
-2.  $f(t)$は最大値をただ1つの$t$でとることを示せ．
+\begin{enumerate}
+\item$S$を求めよ．
+  \item$f(t)$は最大値をただ1つの$t$でとることを示せ．
 そのときの$t$を$\alpha$とすると，
 $\displaystyle f(\alpha)=\frac{\cos^4\alpha}{3\sin\alpha}$であることを示せ．
-
-3.  $\displaystyle \frac{f(\alpha)}{S}<\frac{9}{16}$を示せ．
+  \item$\displaystyle \frac{f(\alpha)}{S}<\frac{9}{16}$を示せ．
+\end{enumerate}

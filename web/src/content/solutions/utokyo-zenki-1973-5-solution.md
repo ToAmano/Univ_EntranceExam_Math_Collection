@@ -12,9 +12,11 @@ title: "UTOKYO 1973 zenki Q5 (solution)"
      $t$は$1$より大きい実数とする．$xy$平面上に置いて，不等式
          
 
-1.  $0<x$
-
-2.  $\dfrac{t}{(1+t^2)x}\le y\le\dfrac{1}{1+x^2}$
+\begin{enumerate}
+[(1)]
+         \item $0<x$
+         \item $\dfrac{t}{(1+t^2)x}\le y\le\dfrac{1}{1+x^2}$
+\end{enumerate}
 
     を同時に満たす点$(x,y)$全体のつくる図形の面積を$t$の関数と考えて$f(t)$とおく．$f(t)$の導関数$f'(t)$を求めよ．
      \end{oframed}

@@ -11,19 +11,20 @@ title: "UTOKYO 2011 zenki Q2 (problem)"
 これを記号$\langle x \rangle$で表す．
 実数$a$に対して，無限数列$\{ a_n \}$の各項$a_n$ $(n=1,2,3,\cdots)$を次のように順次定める．
 
-1.  $a_1 = \langle a \rangle$
-
-2.  $\begin{cases}
+\begin{enumerate}
+\item$a_1 = \langle a \rangle$
+  \item$\begin{cases}
 a_n \neq 0 \text{のとき，} a_{n+1}= \left\langle\displaystyle\frac{1}{a_n}\right\rangle \\
 a_n = 0 \text{のとき，} a_{n+1} = 0
 \end{cases}$
+\end{enumerate}
 
-1.  $a=\sqrt2$のとき，数列$\{ a_n \}$を求めよ．
-
-2.  任意の自然数$n$に対して$a_n=a$となるような
+\begin{enumerate}
+\item$a=\sqrt2$のとき，数列$\{ a_n \}$を求めよ．
+  \item任意の自然数$n$に対して$a_n=a$となるような
 $\displaystyle\frac{1}{3}$以上の実数$a$をすべて求めよ．
-
-3.  $a$が有理数であるとする．
+  \item$a$が有理数であるとする．
 $a$を整数$p$と自然数$q$を用いて$a=\displaystyle\frac{p}{q}$と表すとき，
 $q$以上のすべての自然数$n$に対して，
 $a_n=0$であることを示せ．
+\end{enumerate}

@@ -12,7 +12,9 @@ $a$を正の定数とする．
 $A$と異なる動点$P=P(x,y)$をとる．
 次の条件
 
-1.  [　]$A$から$P$に向けた半直線上の点$Q$に対し\\
+\begin{enumerate}
+\item $A$から$P$に向けた半直線上の点$Q$に対し\\
 $\displaystyle\frac{AQ}{AP}\leqq2$ならば$\displaystyle\frac{QP}{OQ}\leqq\frac{AP}{OA}$
+\end{enumerate}
 
 を満たす$P$からなる領域を$D$とする．$D$を図示せよ．

@@ -10,6 +10,7 @@ title: "UKYOTO 1967 zenki Q2 (problem)"
 複素数$Z=x+iy$($x$，$y$は実数，$i$は虚数単位)が
 次の(i)または(ii)をみたすように$x$，$y$を定めよ．
 
-1.  $Z^2=i$
-
-2.  $Z^2-4iZ+(-4+2i)=0$
+\begin{enumerate}
+\item$Z^2=i$
+  \item$Z^2-4iZ+(-4+2i)=0$
+\end{enumerate}

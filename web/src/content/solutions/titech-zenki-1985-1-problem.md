@@ -9,15 +9,16 @@ title: "TITECH 1985 zenki Q1 (problem)"
 
 2つの条件
 
-1.  $a^2-2b^2=1$または$a^2-2b^2=-1$
-
-2.  $a+\sqrt2 \, b>0$
+\begin{enumerate}
+\item$a^2-2b^2=1$または$a^2-2b^2=-1$
+  \item$a+\sqrt2 \, b>0$
+\end{enumerate}
 
 を満たす任意の整数$a$，$b$から得られる実数$g=a+\sqrt2 \, b$全体の集合を$G$とする．
 1より大きい$G$の元のうち最小のものを$u$とする．
 
-1.  $u$を求めよ．
-
-2.  整数$n$と$G$の元$g$に対し，$gu^n$は$G$の元であることを示せ．
-
-3.  $G$の任意の元$g$は適当な整数$m$によって，$g=u^m$と書かれることを示せ．
+\begin{enumerate}
+\item$u$を求めよ．
+  \item整数$n$と$G$の元$g$に対し，$gu^n$は$G$の元であることを示せ．
+  \item$G$の任意の元$g$は適当な整数$m$によって，$g=u^m$と書かれることを示せ．
+\end{enumerate}

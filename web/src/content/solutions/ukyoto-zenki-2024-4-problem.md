@@ -13,6 +13,7 @@ title: "UKYOTO 2024 zenki Q4 (problem)"
 \displaystyle\frac{3a_n+1}{2} & (a_n\text{が奇数のとき}) \end{cases} \]
 次の問いに答えよ．
 
-1.  $a_0, \, a_1, \, a_2, \, a_3$がすべて奇数であるような最小の自然数$a_0$を求めよ．
-
-2.  $a_0, \, a_1, \, \cdots, \, a_{10}$がすべて奇数であるような最小の自然数$a_0$を求めよ．
+\begin{enumerate}
+\item$a_0, \, a_1, \, a_2, \, a_3$がすべて奇数であるような最小の自然数$a_0$を求めよ．
+  \item$a_0, \, a_1, \, \cdots, \, a_{10}$がすべて奇数であるような最小の自然数$a_0$を求めよ．
+\end{enumerate}

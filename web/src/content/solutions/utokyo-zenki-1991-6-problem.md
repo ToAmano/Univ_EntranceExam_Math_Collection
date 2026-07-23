@@ -16,9 +16,9 @@ $\displaystyle S(x)=\int_x^{2x}f(t)dt$とおく．
 曲線$y=f(x)$とで
 囲まれる部分の面積は$3S(a)$に等しいものとする．
 
-1.  $S(x)$，$f(x)-2f(2x)$をそれぞれ$x$の関数として表せ．
-
-2.  $x>0$に対して，$\displaystyle a(x)=\lim_{n\to\infty}2^nf(2^nx)$とおく．
+\begin{enumerate}
+\item$S(x)$，$f(x)-2f(2x)$をそれぞれ$x$の関数として表せ．
+  \item$x>0$に対して，$\displaystyle a(x)=\lim_{n\to\infty}2^nf(2^nx)$とおく．
 積分$\displaystyle\int_x^{2x}a(t)dt$の値を求めよ．
-
-3.  関数$f(x)$を決定せよ．
+  \item関数$f(x)$を決定せよ．
+\end{enumerate}

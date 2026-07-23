@@ -12,8 +12,8 @@ $OA=a$，$OB=b$，$\angle AOB=\theta$とおく．
 2点$A$，$B$の座標$a_1$，$a_2$，$b_1$，$b_2$が有理数であるとき
 次の3条件はたがいに同値であることを証明せよ．
 
-1.  $ab$は有理数である．
-
-2.  $\cos\theta$は有理数である．
-
-3.  $\sin\theta$は有理数である．
+\begin{enumerate}
+\item$ab$は有理数である．
+  \item$\cos\theta$は有理数である．
+  \item$\sin\theta$は有理数である．
+\end{enumerate}

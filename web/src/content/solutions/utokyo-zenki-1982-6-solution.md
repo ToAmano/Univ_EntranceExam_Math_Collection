@@ -18,11 +18,12 @@ title: "UTOKYO 1982 zenki Q6 (solution)"
      にある確率を$r_n$とする．
           
 
-1.  $p_1$，$q_1$，$r_1$を求めよ．
-
-2.  $p_n$，$q_n$，$r_n$を$p_{n-1}$，$q_{n-1}$，$r_{n-1}$で表せ．
-
-3.  $p=\dlim{n}{\infty}p_n$，$q=\dlim{n}{\infty}q_n$，$r=\dlim{n}{\infty}r_n$を求めよ．
+\begin{enumerate}
+[(1)]
+          \item $p_1$，$q_1$，$r_1$を求めよ．
+          \item $p_n$，$q_n$，$r_n$を$p_{n-1}$，$q_{n-1}$，$r_{n-1}$で表せ．
+          \item $p=\dlim{n}{\infty}p_n$，$q=\dlim{n}{\infty}q_n$，$r=\dlim{n}{\infty}r_n$を求めよ．
+\end{enumerate}
 
      \end{oframed}
 

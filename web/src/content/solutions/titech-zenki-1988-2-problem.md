@@ -10,6 +10,7 @@ title: "TITECH 1988 zenki Q2 (problem)"
 関数$f(x)=ax^2+bx+c$は$|x|\leqq1$で$|f(x)|\leqq1$を満たしている．
 このとき，$f(x)$の導関数$f'(x)$について，
 
-1.  $|f'(1)|\leqq4$を示せ．
-
-2.  $|f'(1)|=4$となる$f(x)$をすべて求めよ．
+\begin{enumerate}
+\item$|f'(1)|\leqq4$を示せ．
+  \item$|f'(1)|=4$となる$f(x)$をすべて求めよ．
+\end{enumerate}

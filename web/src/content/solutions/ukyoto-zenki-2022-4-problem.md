@@ -13,6 +13,7 @@ title: "UKYOTO 2022 zenki Q4 (problem)"
 $P$を辺$BC$上の点とし，$\triangle OAP$の重心を$G$とする．
 このとき，次の各問に答えよ．
 
-1.  $\overrightarrow{PG} \perp \overrightarrow{OA}$を示せ．
-
-2.  $P$が辺$BC$上を動くとき，$PG$の最小値を求めよ．
+\begin{enumerate}
+\item$\overrightarrow{PG} \perp \overrightarrow{OA}$を示せ．
+  \item$P$が辺$BC$上を動くとき，$PG$の最小値を求めよ．
+\end{enumerate}

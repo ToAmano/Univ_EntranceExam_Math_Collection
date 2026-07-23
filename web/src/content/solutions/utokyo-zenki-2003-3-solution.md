@@ -19,9 +19,11 @@ title: "UTOKYO 2003 zenki Q3 (solution)"
      $0\le t\le1$を満たす実数$t$に対し，平面$z=t$による$C$の切り口の面積を$S(t)$とおく．
           
 
-1.  $0\le\theta\le\pi/2$とする．$t=1-\cos\theta$のとき，$S(t)$を$\theta$で表せ．
-
-2.  $C$の体積$\dint{0}{1}S(t)dt$を求めよ．
+\begin{enumerate}
+[(1)]
+          \item $0\le\theta\le\pi/2$とする．$t=1-\cos\theta$のとき，$S(t)$を$\theta$で表せ．
+          \item $C$の体積$\dint{0}{1}S(t)dt$を求めよ．
+\end{enumerate}
 
      
      \end{oframed}

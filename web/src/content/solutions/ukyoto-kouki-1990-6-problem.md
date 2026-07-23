@@ -21,8 +21,8 @@ X_i=
 \end{align*}
 $$
 
-1.  確率変数$X$を$X_i (1\le i\le l)$であらわせ．
-
-2.  $X^2$の期待値$E(X^2)$を求めよ．
-
-3.  $E(X^2)>2$となる最小の$l$は何か．
+\begin{enumerate}
+\item 確率変数$X$を$X_i (1\le i\le l)$であらわせ．
+  \item $X^2$の期待値$E(X^2)$を求めよ．
+  \item $E(X^2)>2$となる最小の$l$は何か．
+\end{enumerate}

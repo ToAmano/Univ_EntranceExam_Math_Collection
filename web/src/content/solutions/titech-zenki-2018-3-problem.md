@@ -11,10 +11,11 @@ title: "TITECH 2018 zenki Q3 (problem)"
 \[ e^x(1-\sin x)=1 \]
 について，次の問に答えよ．
 
-1.  この方程式は負の実数解を持たないことを示せ．
+\begin{enumerate}
+\itemこの方程式は負の実数解を持たないことを示せ．
 また，正の実数解を無限個持つことを示せ．
-
-2.  この方程式の正の実数解を小さい方から順に並べて
+  \itemこの方程式の正の実数解を小さい方から順に並べて
 $a_1, \, a_2, \, a_3, \, \cdots$とし，
 $\displaystyle S_n=\sum_{k=1}^na_k$とおく．
 このとき極限値$\displaystyle\lim_{n\to\infty}\frac{S_n}{n^2}$を求めよ．
+\end{enumerate}

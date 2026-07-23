@@ -17,10 +17,10 @@ $\triangle ABC$の内部または辺上の点$P_0$に対し，
 点$P_3,P_4,\cdots,P_n$を作る．
 ベクトル$\overrightarrow{OP_n}$の長さの2乗${|\overrightarrow{OP_n}|^2}$の期待値を$E_n$とおく．
 
-1.  $E_1$をベクトル$\overrightarrow{OP_0}$の長さを用いて表せ．
-
-2.  選んだ頂点が$X_1,X_2,\cdots,X_n$のとき，
+\begin{enumerate}
+\item$E_1$をベクトル$\overrightarrow{OP_0}$の長さを用いて表せ．
+  \item選んだ頂点が$X_1,X_2,\cdots,X_n$のとき，
 ベクトル$\overrightarrow{OP_n}$をベクトル$\overrightarrow{OP_0}$と$\overrightarrow{OX_i}$，$i=1,2,\cdots,n$，
 を用いて表せ．
-
-3.  $P_0$が原点$O$のとき$E_n$を求めよ．
+  \item$P_0$が原点$O$のとき$E_n$を求めよ．
+\end{enumerate}

@@ -14,10 +14,11 @@ title: "TITECH 2017 zenki Q3 (problem)"
 頂点$D$を持ち上げて$P$と一致するように折り紙を一回折ったとき，
 もとの長方形$ABCD$からはみ出る部分の面積を$S$とする．
 
-1.  $S$を$a$と$x$で表せ．
-
-2.  $a=1$とする．$P$が$A$から$B$まで動くとき，
+\begin{enumerate}
+\item$S$を$a$と$x$で表せ．
+  \item$a=1$とする．$P$が$A$から$B$まで動くとき，
 $S$を最大にするような$x$の値を求めよ．
+\end{enumerate}
 
 \includegraphics[width=8cm]{fig_2017_3.jpg}\\
 なお配布された白紙を自由に使ってよい．(白紙は回収しない．)

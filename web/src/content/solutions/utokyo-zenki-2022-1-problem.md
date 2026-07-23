@@ -12,6 +12,7 @@ title: "UTOKYO 2022 zenki Q1 (problem)"
 \int_0^x(\cos t)\log(\cos t)dt 
 \left( 0 \leqq x < \frac{\pi}{2} \right) \]
 
-1.  $f(x)$は区間$\displaystyle 0 \leqq x < \frac{\pi}{2}$において最小値を持つことを示せ。
-
-2.  $f(x)$の区間$\displaystyle 0 \leqq x < \frac{\pi}{2}$における最小値を求めよ。
+\begin{enumerate}
+\item$f(x)$は区間$\displaystyle 0 \leqq x < \frac{\pi}{2}$において最小値を持つことを示せ。
+  \item$f(x)$の区間$\displaystyle 0 \leqq x < \frac{\pi}{2}$における最小値を求めよ。
+\end{enumerate}

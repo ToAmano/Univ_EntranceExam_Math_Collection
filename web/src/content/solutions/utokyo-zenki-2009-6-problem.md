@@ -14,31 +14,32 @@ title: "UTOKYO 2009 zenki Q6 (problem)"
 $\triangle A_1A_2A_3$の内部に3点$B_1$，$B_2$，$B_3$を，$d(A_n,B_n)=1$ $(n=1,2,3)$となるようにとる．
 また，
 
-1.  []$\overrightarrow{a_1}=\overrightarrow{A_1A_2}$，
+\begin{enumerate}
+\item $\overrightarrow{a_1}=\overrightarrow{A_1A_2}$，
 $\overrightarrow{a_2}=\overrightarrow{A_2A_3}$，
 $\overrightarrow{a_3}=\overrightarrow{A_3A_1}$
-
-2.  []$\overrightarrow{e_1}=\overrightarrow{A_1B_1}$，
+\item $\overrightarrow{e_1}=\overrightarrow{A_1B_1}$，
 $\overrightarrow{e_2}=\overrightarrow{A_2B_2}$，
 $\overrightarrow{e_3}=\overrightarrow{A_3B_3}$
+\end{enumerate}
 
 とおく．
 $n=1,2,3$のそれぞれに対して，時刻0に$A_n$を出発し，
 $\overrightarrow{e_n}$の向きに速さ1で直進する点を考え，時刻$t$におけるその位置を$P_n(t)$と表すことにする．
 
-1.  ある時刻$t$で$d(P_1(t),P_2(t))\leqq1$が成立した．
+\begin{enumerate}
+\itemある時刻$t$で$d(P_1(t),P_2(t))\leqq1$が成立した．
 ベクトル$\overrightarrow{e_1}-\overrightarrow{e_2}$と，ベクトル$\overrightarrow{a_1}$とのなす角度を$\theta$とおく．
 このとき$\displaystyle|\sin\theta|\leqq\frac{1}{1000}$となることを示せ．
-
-2.  角度$\theta_1$，$\theta_2$，$\theta_3$を
+  \item角度$\theta_1$，$\theta_2$，$\theta_3$を
 $\theta_1=\angle B_1A_1A_2$，$\theta_2=\angle B_2A_2A_3$，$\theta_3=\angle B_3A_3A_1$によって定義する．
 $\alpha$を$\displaystyle0<\alpha<\frac{\pi}{2}$かつ$\displaystyle\sin\alpha=\frac{1}{1000}$をみたす実数とする．
 (1)と同じ仮定のもとで，$\theta_1+\theta_2$の値のとる範囲を$\alpha$を用いて表せ．
-
-3.  時刻$t_1$，$t_2$，$t_3$のそれぞれにおいて，次が成立した．
+  \item時刻$t_1$，$t_2$，$t_3$のそれぞれにおいて，次が成立した．
 \[ d(P_2(t_1),P_3(t_1))\leqq1,  d(P_3(t_2),P_1(t_2))\leqq1,  d(P_1(t_3),P_2(t_3))\leqq1 \]
 このとき，時刻$\displaystyle T=\frac{1000}{\sqrt3}$において同時に
 \[ d(P_1(T),O)\leqq3,  d(P_2(T),O)\leqq3,  d(P_3(T),O)\leqq3 \]
 が成立することを示せ．
+\end{enumerate}
 
 \includegraphics[width=5cm]{fig_2009_6.jpg}

@@ -16,7 +16,8 @@ $H$と$K$を2つの底面とする円柱を$B$とする．\\
 　$0 \leqq t \leqq 1$を満たす実数$t$に対し，
 平面$z=t$による$C$の切り口の面積を$S(t)$とおく．
 
-1.  $\displaystyle 0 \leqq \theta \leqq \frac{\pi}{2}$とする．
+\begin{enumerate}
+\item$\displaystyle 0 \leqq \theta \leqq \frac{\pi}{2}$とする．
 $t=1-\cos\theta$のとき，$S(t)$を$\theta$で表せ．
-
-2.  $C$の体積$\displaystyle\int_0^1S(t)dt$を求めよ．
+  \item$C$の体積$\displaystyle\int_0^1S(t)dt$を求めよ．
+\end{enumerate}

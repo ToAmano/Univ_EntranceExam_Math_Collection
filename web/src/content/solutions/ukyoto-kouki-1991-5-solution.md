@@ -131,6 +131,7 @@ $$
 
   
 
-1.  ${}_n C_r = {}_{n} C_{n-r}$
-
-2.  $\sum_{k=r}^n {}_k C_r = {}_{n+1} C_{r+1}$
+\begin{itemize}
+\item ${}_n C_r = {}_{n} C_{n-r}$
+    \item $\sum_{k=r}^n {}_k C_r = {}_{n+1} C_{r+1}$
+\end{itemize}

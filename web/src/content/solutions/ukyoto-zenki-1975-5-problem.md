@@ -12,6 +12,7 @@ $n$と$a_1,a_2,\cdots,a_n$は自然数であって，
 $\displaystyle \sum_{i=1}^n \left( 1-\frac{1}{a_i} \right) -2>0$をみたすものとする．
 $\displaystyle S=\sum_{i=1}^n \left( 1-\frac{1}{a_i} \right) -2$とおく．
 
-1.  とくに$n=3$として，$S$を最小にする$(a_1,a_2,a_3)$を求めよ．
-
-2.  $n$も自由に動かした可能なすべての組$(n,a_1,a_2,\cdots,a_n)$のうちで，$S$を最小にするものを求めよ．
+\begin{enumerate}
+\itemとくに$n=3$として，$S$を最小にする$(a_1,a_2,a_3)$を求めよ．
+  \item$n$も自由に動かした可能なすべての組$(n,a_1,a_2,\cdots,a_n)$のうちで，$S$を最小にするものを求めよ．
+\end{enumerate}

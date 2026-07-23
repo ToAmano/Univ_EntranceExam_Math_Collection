@@ -11,9 +11,10 @@ title: "UTOKYO 2017 zenki Q6 (problem)"
 また，点$A(1, \, 0, \, 0)$に対して，$\angle AOP$を$\theta$とおく。
 ただし$0^\circ\leqq\theta\leqq{180}^\circ$とする。
 
-1.  点$Q$が$(0, \, 0, \, 1)$にあるとき，
+\begin{enumerate}
+\item点$Q$が$(0, \, 0, \, 1)$にあるとき，
 点$P$の$x$座標がとりうる値の範囲と，
 $\theta$がとりうる値の範囲を求めよ。
-
-2.  点$Q$が平面$x=0$上を動くとき，辺$OP$が通過しうる範囲を$K$とする。
+  \item点$Q$が平面$x=0$上を動くとき，辺$OP$が通過しうる範囲を$K$とする。
 $K$の体積を求めよ。
+\end{enumerate}

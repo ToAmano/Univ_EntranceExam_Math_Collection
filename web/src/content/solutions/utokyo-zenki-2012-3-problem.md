@@ -12,6 +12,7 @@ title: "UTOKYO 2012 zenki Q3 (problem)"
 によって定まる領域を$S$とする。$S$を$x$軸のまわりに回転してできる立体の体積を$V_1$とし，
 $y$軸のまわりに回転してできる立体の体積を$V_2$とする。
 
-1.  $V_1$と$V_2$の値を求めよ。
-
-2.  $\displaystyle\frac{V_2}{V_1}$の値と1の大小を判定せよ。
+\begin{enumerate}
+\item$V_1$と$V_2$の値を求めよ。
+  \item$\displaystyle\frac{V_2}{V_1}$の値と1の大小を判定せよ。
+\end{enumerate}

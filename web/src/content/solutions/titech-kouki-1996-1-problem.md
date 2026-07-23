@@ -9,8 +9,8 @@ title: "TITECH 1996 kouki Q1 (problem)"
 
 円 $C: x^2+y^2=1$ 上の2点 P$(1,0)$ と Q$(\cos\theta, \sin\theta)$ を通り円 $C$ と直交する円を $C_\theta$ とする．ただし，円 $C$ と $C_\theta$ が直交するとは交点におけるそれぞれの接線が直交することをいう．このとき次の問いに答えよ．
 
-1.  $0 < \theta < \pi$ のとき $C$ の内部と $C_\theta$ の内部の共通部分の面積 $S_\theta$ を求めよ．
-
-2.  $C$ の内部にある $C_\theta$ の円弧 PQ の中点を $A_\theta$ とする．$\theta$ が $0 < \theta < \pi$ の範囲を動くとき $A_\theta$ の軌跡の方程式を求めよ．
-
-3.  $A_\theta$ の軌跡と $x$ 軸で囲まれる部分を $x$ 軸のまわりに回転してできる立体の体積 $V$ を求めよ．
+\begin{enumerate}
+\item $0 < \theta < \pi$ のとき $C$ の内部と $C_\theta$ の内部の共通部分の面積 $S_\theta$ を求めよ．
+  \item $C$ の内部にある $C_\theta$ の円弧 PQ の中点を $A_\theta$ とする．$\theta$ が $0 < \theta < \pi$ の範囲を動くとき $A_\theta$ の軌跡の方程式を求めよ．
+  \item $A_\theta$ の軌跡と $x$ 軸で囲まれる部分を $x$ 軸のまわりに回転してできる立体の体積 $V$ を求めよ．
+\end{enumerate}

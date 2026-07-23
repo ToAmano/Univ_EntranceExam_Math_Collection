@@ -13,6 +13,7 @@ $A$に含まれ，直線$L$に接し，かつ曲線$C$と点$(t,\log t)$ $(0<t)$
 　$P_t$の$x$座標，$y$座標を$t$の関数として$x=f(t)$，$y=g(t)$と表したとき，
 次の極限値はどのような数となるか．
 
-1.  $\displaystyle\lim_{t\to0}\frac{f(t)}{g(t)}$
-
-2.  $\displaystyle\lim_{t\to+\infty}\frac{f(t)}{g(t)}$
+\begin{enumerate}
+\item$\displaystyle\lim_{t\to0}\frac{f(t)}{g(t)}$
+  \item$\displaystyle\lim_{t\to+\infty}\frac{f(t)}{g(t)}$
+\end{enumerate}

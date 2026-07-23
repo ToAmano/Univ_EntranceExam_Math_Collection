@@ -15,10 +15,12 @@ $1$つのサイコロを続けて投げて，それによって$a_n(n=1,2,\dots)
 $c_k\le c_n$ならば$a_n=c_n$，それ以外の時$a_n=0$とおく．ただし$a_1=c_1$とする．
      
 
-1.  $a_n$の期待値を$E(n)$とするとき，$\dlim{n}{\infty}E(n)$をもとめよ．
-
-2.  $a_1,a_2,\dots ,a_n$のうち$2$に等しいものの個数の期待値を$N(n)$とするとき，
+\begin{enumerate}
+[(1)]
+     \item $a_n$の期待値を$E(n)$とするとき，$\dlim{n}{\infty}E(n)$をもとめよ．
+     \item $a_1,a_2,\dots ,a_n$のうち$2$に等しいものの個数の期待値を$N(n)$とするとき，
      $\dlim{n}{\infty}N(n)$を求めよ．
+\end{enumerate}
 
 \end{oframed}
 
@@ -26,24 +28,36 @@ $c_k\le c_n$ならば$a_n=c_n$，それ以外の時$a_n=0$とおく．ただし$
 
      
 
-1.  $k$を$1$から$6$までの整数とする．$a_n=k$となる確率は$n=1$のとき$\dfrac{1}{6}$
+\begin{enumerate}
+[(1)]
+     \item $k$を$1$から$6$までの整数とする．$a_n=k$となる確率は$n=1$のとき$\dfrac{1}{6}$
      で，$n\le2$のときは$a_1$から$a_{n-1}$がすべて$k$以下となる時で
-          \begin{align}
-          P(a_n=k)=\left(\dfrac{k}{6}\right)^{n-1}\dfrac{1}{6} \label{1}
-          \end{align}
-     である．これは$n=1$でも成立する．よって
-          \begin{align*}
-          E(n)&=\sum_{k=1}^6kP(a_n=k) \\
-          &=\sum_{k=1}^6\left(\frac{k}{6}\right)^n \\
-          &\limit{n}{\infty} 1\cdots\text{(答)}
-          \end{align*}
-     となる．
+          
 
-2.  期待値の加法定理および[1](#1)から
-          \begin{align*}
-          N(n)&=\sum_{l=1}^nP(a_l=2)　\\
-          &=\sum_{l=1}^n\left(\frac{2}{6}\right)^{n-1}\frac{1}{6} \\
-          &=\frac{1}{6}\frac{1-(1/3)^n}{1-1/3} \\
-          &\limit{n}{\infty}\frac{1}{4}\cdots\text{(答)}
-          \end{align*}
+$$
+\begin{align}
+P(a_n=k)=\left(\dfrac{k}{6}\right)^{n-1}\dfrac{1}{6}\label{1}
+\end{align}
+$$
+
+     である．これは$n=1$でも成立する．よって
+          
+
+$$
+\begin{align*}
+E(n)&=\sum_{k=1}^6kP(a_n=k) \\&=\sum_{k=1}^6\left(\frac{k}{6}\right)^n \\&\limit{n}{\infty} 1\cdots\text{(答)}
+\end{align*}
+$$
+
      となる．
+     \item 期待値の加法定理および[1](#1)から
+          
+
+$$
+\begin{align*}
+N(n)&=\sum_{l=1}^nP(a_l=2)　\\&=\sum_{l=1}^n\left(\frac{2}{6}\right)^{n-1}\frac{1}{6}\\&=\frac{1}{6}\frac{1-(1/3)^n}{1-1/3}\\&\limit{n}{\infty}\frac{1}{4}\cdots\text{(答)}
+\end{align*}
+$$
+
+     となる．
+\end{enumerate}

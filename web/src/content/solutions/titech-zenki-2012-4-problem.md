@@ -14,9 +14,9 @@ a_{k+1}=-\frac{1}{k+n+1}+\frac{n}{k}\sum_{i=1}^k a_i
 (k=1,2,3,\cdots)\]
 によって定める．
 
-1.  $a_2$および$a_3$を求めよ．
-
-2.  一般項$a_k$を求めよ．
-
-3.  $b_n=\displaystyle\sum_{k=1}^n \sqrt{a_k}$とおくとき，
+\begin{enumerate}
+\item$a_2$および$a_3$を求めよ．
+  \item一般項$a_k$を求めよ．
+  \item$b_n=\displaystyle\sum_{k=1}^n \sqrt{a_k}$とおくとき，
 $\displaystyle\lim_{n \to \infty}b_n=\log2$を示せ．
+\end{enumerate}

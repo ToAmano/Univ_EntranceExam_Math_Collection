@@ -14,13 +14,12 @@ title: "UKYOTO 1993 kouki Q5 (solution)"
   これらの数を$A,B,C\, (A\ge B\ge C)$として，
   
 
-1.  [(i)] $(A,B,C) = (2,2,2)$
-
-2.  [(ii)] $(A,B,C) = (4,2,0)$
-
-3.  [(iii)] $(A,B,C) = (3,3,0)$
-
-4.  [(iiii)] $(A,B,C) = (6,0,0)$
+\begin{enumerate}
+\item $(A,B,C) = (2,2,2)$
+    \item $(A,B,C) = (4,2,0)$
+    \item $(A,B,C) = (3,3,0)$
+    \item $(A,B,C) = (6,0,0)$
+\end{enumerate}
 
   の4パターンのみがありうる．これらのパターンは全て排反である．
 

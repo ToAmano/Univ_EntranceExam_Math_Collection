@@ -10,12 +10,13 @@ title: "TITECH 2019 zenki Q3 (problem)"
 $i$を虚数単位とする．実部と虚部が共に整数であるような複素数$z$により
 $\displaystyle\frac{z}{3+2i}$と表される複素数全体の集合をMとする．
 
-1.  原点を中心とする半径$r$の円上またはその内部に含まれるMの要素の個数を$N(r)$とする．
+\begin{enumerate}
+\item原点を中心とする半径$r$の円上またはその内部に含まれるMの要素の個数を$N(r)$とする．
 このとき，集合$\{ r \, | \, 10\leqq N(r) <25 \}$を求めよ．
-
-2.  複素数平面の相異なる2点$z$，$w$を結ぶ線分を$L(z, \, w)$で表すとき，6つの線分
+  \item複素数平面の相異なる2点$z$，$w$を結ぶ線分を$L(z, \, w)$で表すとき，6つの線分
 $L(0, \, 1)$，$\displaystyle L \left( 1, \, 1+\frac{i}{2} \right)$，
 $\displaystyle L \left( 1+\frac{i}{2}, \, \frac{1+i}{2} \right)$，
 $\displaystyle L \left( \frac{1+i}{2}, \, \frac{1}{2}+i \right)$，
 $\displaystyle L \left( \frac{1}{2}+i, \, i \right)$，$L(i, \, 0)$
 で囲まれる領域の内部または境界に含まれるMの要素の個数を求めよ．
+\end{enumerate}

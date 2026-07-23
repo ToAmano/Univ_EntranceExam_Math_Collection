@@ -13,12 +13,18 @@ title: "UTOKYO 1972 zenki Q5 (solution)"
      も，$u(x)=\dint{o}{x}h(t)f(t)dt+h(x)\dint{x}{1}f(t)dt$とおけば，
           
 
-1.  $\dfrac{d^2u}{dx^2}=f(x)$
+\begin{enumerate}
+[(1)]
+          \item $\dfrac{d^2u}{dx^2}=f(x)$
+\end{enumerate}
 
      および
           
 
-1.  $u(0)=0$
+\begin{enumerate}
+[(2)]
+          \item $u(0)=0$
+\end{enumerate}
 
      が成り立つ．このとき，$h(x)$を求めよ．     
      \end{oframed}

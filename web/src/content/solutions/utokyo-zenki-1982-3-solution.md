@@ -14,72 +14,98 @@ title: "UTOKYO 1982 zenki Q3 (solution)"
      点$C$で円周と交わるものとする．
           
 
-1.  $\theta=\angle AOB$の取りうる値の範囲を求めよ．
-
-2.  $BC$の長さを$\theta$で表せ．
-
-3.  線分$OB$の中点を$M$とするとき，線分$CM$の長さの範囲を求めよ．
+\begin{enumerate}
+[(1)]
+          \item $\theta=\angle AOB$の取りうる値の範囲を求めよ．
+          \item $BC$の長さを$\theta$で表せ．
+          \item 線分$OB$の中点を$M$とするとき，線分$CM$の長さの範囲を求めよ．
+\end{enumerate}
 
      \end{oframed}
 
 ## 【解】
 
-1.  \1 ただし，題意から$0<\theta<\pi/2$である．また$A(c,s)$である．
+\begin{enumerate}
+[(1)]
+\item
+ \1 ただし，題意から$0<\theta<\pi/2$である．また$A(c,s)$である．
 この時$\triangle ABO$は$OA=AB=1$の二等辺三角形だから$B(2c,0)$となる．故に線分$AB$の方程式は，$c\not=0$に注意して，
-      \begin{align}
-      &(2c-c)(y-s)-(0-s)(x-s)=0     \nonumber\\
-      &sx+cy-2sc=0                     \nonumber\\
-      &y=\frac{s}{c}(-x+2c) \,\,\,\,\ (c\le x\le2c) \label{3}
-      \end{align}
+      
+
+$$
+\begin{align}
+&(2c-c)(y-s)-(0-s)(x-s)=0     \nonumber\\&sx+cy-2sc=0                     \nonumber\\&y=\frac{s}{c}(-x+2c) \,\,\,\,\ (c\le x\le2c) \label{3}
+\end{align}
+$$
+
 である．これが円周と交わるので，$y$を消した
-     \begin{align}
-     &x^2+\left(\frac{s}{c}\right)^2(-x+2c)^2=1  \nonumber\\
-     &c^2x^2+s^2(-x+2c)^2=c^2 \nonumber\\
-     &x^2-4s^2cx+c^2(4s^2-1)=0  \nonumber\\
-     &(x-c)\left(x-c(4s^2-1)\right)=0  \label{1}
-     \end{align}
+     
+
+$$
+\begin{align}
+&x^2+\left(\frac{s}{c}\right)^2(-x+2c)^2=1  \nonumber\\&c^2x^2+s^2(-x+2c)^2=c^2 \nonumber\\&x^2-4s^2cx+c^2(4s^2-1)=0  \nonumber\\&(x-c)\left(x-c(4s^2-1)\right)=0  \label{1}
+\end{align}
+$$
+
 が$c\le x\le2c$に解を持つ．従って$0<\theta<\pi/2$に注意して
-     \begin{align}
-     c<c(4s^2-1)<2c \nonumber\\
-     1<4s^2-1<2 \nonumber\\
-     \frac{1}{2}<s^2<\frac{3}{4} \label{4}\\
-     \frac{\pi}{4}<\theta<\frac{\pi}{3}\label{2}
-     \end{align}
+     
+
+$$
+\begin{align}
+c<c(4s^2-1)<2c \nonumber\\
+     1<4s^2-1<2 \nonumber\\\frac{1}{2}<s^2<\frac{3}{4}\label{4}\\\frac{\pi}{4}<\theta<\frac{\pi}{3}\label{2}
+\end{align}
+$$
+
 である．$\cdots$(答)
 
-2.  [1](#1)から$C$の$x$座標は$c(4s^2-1)$である．さらに$AB$の傾きは[3](#3)から
+     \item[1](#1)から$C$の$x$座標は$c(4s^2-1)$である．さらに$AB$の傾きは[3](#3)から
      $\dfrac{-s}{c}$であるから，
           \[|BC|=\sqrt{1+\left(\frac{s}{c}\right)^2}(2c-c(4s^2-1))=3-4s^2\]
      である．$\cdots$(答)
-
-3.  $M(c,0)$である．故に$|MB|=c$．これと前問の結果，及び二等辺三角形の性質より
+     
+     \item $M(c,0)$である．故に$|MB|=c$．これと前問の結果，及び二等辺三角形の性質より
      $\angle ABO=\angle AOB=\theta$であることから，
      $\triangle BCM$に余弦定理を用いて
-          \begin{align*}
-          &|MC|^2 \\
+          
+
+$$
+\begin{align*}
+&|MC|^2 \\
           =&|MB|^2+|BC|^2-2|MB||BC|\cos\angle MBC  \\
           =&c^2+(3-4s^2)^2-2c(3-4s^2)\cos\angle ABO \\
           =&c^2+(3-4s^2)^2-2c(3-4s^2)c　\\
           =&c^2(-5+8s^2)+(3-4s^2)^2 \\
-          =&(1-p)(8p-5)+(4p-3)^2   \tag{$p=s^2$}\\ 
+          =&(1-p)(8p-5)+(4p-3)^2   \tag{p=s^2}\\ 
           =&8p^2+11p+4  \\
           =&8\left(p-\frac{11}{16}\right)^2+\frac{7}{32}
-          \end{align*}     
+\end{align*}
+$$
+
+     
      である．[4](#4)から$\dfrac{1}{2}<p<\dfrac{3}{4}$であることを考慮すると，
-          \begin{align*}
-          \left\{
-               \begin{array}{l}
+          
+
+$$
+\begin{align*}
+\left\{\begin{array}{l}
                p=11/16\text{で}\min7/32 \\
                p\to 1/2\text{で}\max 1/2
-               \end{array}
-          \right.
-          \end{align*}
+               \end{array}\right.
+\end{align*}
+$$
+
      である．$|MC|>0$から，
-          \begin{align*}
-          &\sqrt{\frac{7}{32}}\le|MC|<\sqrt{\frac{1}{2}} \\
-          \therefore \ &\frac{\sqrt{14}}{8}\le|MC|<\frac{\sqrt{2}}{2}
-          \end{align*}
+          
+
+$$
+\begin{align*}
+&\sqrt{\frac{7}{32}}\le|MC|<\sqrt{\frac{1}{2}}\\\therefore\ &\frac{\sqrt{14}}{8}\le|MC|<\frac{\sqrt{2}}{2}
+\end{align*}
+$$
+
      である．$\cdots$(答)
+\end{enumerate}
 
 {\bf[別解]}(1)について，$A(c,s)$での円の接線
      \[cx+sy=1\]

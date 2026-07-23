@@ -13,6 +13,7 @@ $AB=a$，$BC=b$，$a \leqq b$とする。
 　条件：点$A, \, B, \, C, \, D$はそれぞれ辺$EF, \, FG, \, GH, \, HE$上にある。\\
 ただし，辺はその両端の点も含むものとする。
 
-1.  $\angle BCG=\theta$とするとき，$S$を$a, \, b, \, \theta$を用いて表せ。
-
-2.  $S$のとりうる値の最大値を$a, \, b$を用いて表せ。
+\begin{enumerate}
+\item$\angle BCG=\theta$とするとき，$S$を$a, \, b, \, \theta$を用いて表せ。
+  \item$S$のとりうる値の最大値を$a, \, b$を用いて表せ。
+\end{enumerate}

@@ -15,9 +15,12 @@ title: "UTOKYO 1984 zenki Q6 (solution)"
      このとき，次の条件(＊)を満たす点P$(a,b)$全体の集合を求め，これを図示せよ．
           
 
-1.  P$(a,b)$に関して$D$と対称な領域を$U$とするとき，
+\begin{enumerate}
+[(＊)]
+          \item P$(a,b)$に関して$D$と対称な領域を$U$とするとき，
                \[D\cap U\not=\emptyset，E\cap U\not=\emptyset，D\cap E\cap U=\emptyset\]
           が同時に成り立つ．ただし$\emptyset$は空集合を表すものとする．
+\end{enumerate}
 
      \end{oframed}
 

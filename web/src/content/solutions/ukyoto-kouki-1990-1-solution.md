@@ -84,7 +84,8 @@ $$
 
   
 
-1.  $a < -1$
+\begin{enumerate}
+\item $a < -1$
           \[
             \begin{array}{|c||c|c|c|c|c|c|c|}
               \hline
@@ -97,7 +98,7 @@ $$
             \end{array}
           \]
 
-2.  $-1 < a < 1$
+    \item $-1 < a < 1$
           \[
             \begin{array}{|c||c|c|c|c|c|c|c|}
               \hline
@@ -110,7 +111,7 @@ $$
             \end{array}
           \]
 
-3.  $1 < a$
+    \item $1 < a$
           \[
             \begin{array}{|c||c|c|c|c|c|c|c|}
               \hline
@@ -123,8 +124,9 @@ $$
             \end{array}
           \]
 
-4.  $a=\pm 1$ の時
+    \item $a=\pm 1$ の時
           \text{$g$は単調増加関数となり不適}
+\end{enumerate}
 
   よって，$g(t)=0$が四つの異なる実解を持つ条件は
   

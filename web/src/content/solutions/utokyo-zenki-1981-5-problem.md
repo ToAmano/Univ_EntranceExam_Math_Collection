@@ -19,10 +19,11 @@ title: "UTOKYO 1981 zenki Q5 (problem)"
 これら$n$個の点を通る円の半径が1であるような，
 正$n$角錐のみを考えることにする．
 
-1.  各$n$に対して，
+\begin{enumerate}
+\item各$n$に対して，
 このような正$n$角錐の体積の最大値$v_n$を求めよ．
-
-2.  $\displaystyle\lim_{n\to\infty}v_n$を求めよ．
+  \item$\displaystyle\lim_{n\to\infty}v_n$を求めよ．
+\end{enumerate}
 
 　注：図は，$n=5$の場合の，正$n$角錐とその展開図の例である．
 

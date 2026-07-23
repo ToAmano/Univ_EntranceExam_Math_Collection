@@ -7,38 +7,28 @@ type: "problem"
 title: "UKYOTO 1974 zenki Q6 (problem)"
 ---
 
-1.  $\triangle OP_0P_1$が与えられている．
+\begin{enumerate}
+\item$\triangle OP_0P_1$が与えられている．
 辺$P_0O$上に点$P_2,P_4,\cdots,P_{2n},\cdots$を，
 また辺$P_1O$上に点$P_3,P_5,\cdots,P_{2n+1},\cdots$を適当にとって，
 次の三条件(イ)〜(ハ)がみたされるようにしうるための，
 $\triangle OP_0P_1$についての条件を求めよ．
-
-1.  $P_0,P_2,P_4,\cdots,P_{2n},\cdots$はこの順に線分$P_0O$上にならび，しかも$n$が大きくなるに従って，$O$に近づく．
-  $P_1,P_3,P_5,\cdots,P_{2n+1},\cdots$はこの順に線分$P_1O$にならんでいる．
-  $\triangle P_{n-1}P_nP_{n+1} \text{∽} \triangle P_nP_{n+1}P_{n+2}$が，
+\begin{enumerate}
+  \item$P_0,P_2,P_4,\cdots,P_{2n},\cdots$はこの順に線分$P_0O$上にならび，しかも$n$が大きくなるに従って，$O$に近づく．
+  \item$P_1,P_3,P_5,\cdots,P_{2n+1},\cdots$はこの順に線分$P_1O$にならんでいる．
+  \item$\triangle P_{n-1}P_nP_{n+1} \text{∽} \triangle P_nP_{n+1}P_{n+2}$が，
 $n$のどの自然数値に対しても成立する．
 (ここでいう相似は，
 左辺の三角形の$P_{n-1}$，$P_n$，$P_{n+1}$が右辺の三角形の$P_n$，$P_{n+1}$，$P_{n+2}$に順次対応した相似を意味する．)
+\end{enumerate}
 
-2.  上のように点がとれたとき，$\triangle P_{n-1}P_nP_{n+1}$の面積を第$n$項$(n=1,2,\cdots)$とする数列は
+  \item上のように点がとれたとき，$\triangle P_{n-1}P_nP_{n+1}$の面積を第$n$項$(n=1,2,\cdots)$とする数列は
 
-1.  いつでも等比数列である
-  等比数列になる場合もあり，等比数列にならない場合もある
-  けっして等比数列にはならない
+\begin{enumerate}
+\itemいつでも等比数列である
+  \item等比数列になる場合もあり，等比数列にならない場合もある
+  \itemけっして等比数列にはならない
+\end{enumerate}
 
 のどれが正しいか，理由を付して答えよ．
-
-3.  $P_0,P_2,P_4,\cdots,P_{2n},\cdots$はこの順に線分$P_0O$上にならび，しかも$n$が大きくなるに従って，$O$に近づく．
-
-4.  $P_1,P_3,P_5,\cdots,P_{2n+1},\cdots$はこの順に線分$P_1O$にならんでいる．
-
-5.  $\triangle P_{n-1}P_nP_{n+1} \text{∽} \triangle P_nP_{n+1}P_{n+2}$が，
-$n$のどの自然数値に対しても成立する．
-(ここでいう相似は，
-左辺の三角形の$P_{n-1}$，$P_n$，$P_{n+1}$が右辺の三角形の$P_n$，$P_{n+1}$，$P_{n+2}$に順次対応した相似を意味する．)
-
-6.  いつでも等比数列である
-
-7.  等比数列になる場合もあり，等比数列にならない場合もある
-
-8.  けっして等比数列にはならない
+\end{enumerate}

@@ -13,11 +13,11 @@ title: "UKYOTO 2020 zenki Q4 (problem)"
 例えば，$B(3^2\cdot5)=2$である．\\
 　$m, \, n$は整数で，次の条件を満たすとする．
 
-1.  $1 \leqq m \leqq 30$．
-
-2.  $1 \leqq n \leqq 30$．
-
-3.  $n$は3で割り切れない．
+\begin{enumerate}
+\item$1 \leqq m \leqq 30$．
+  \item$1 \leqq n \leqq 30$．
+  \item$n$は3で割り切れない．
+\end{enumerate}
 
 このような$(m, \, n)$について
 \[ f(m, \, n)=m^3+n^2+n+3 \]

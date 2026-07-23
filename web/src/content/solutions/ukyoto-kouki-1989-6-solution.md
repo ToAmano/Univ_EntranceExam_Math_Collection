@@ -41,30 +41,52 @@ $$
     $a=1$か否かで場合わけして，
     
 
-1.  [$1^\circ$] $a=1$ の時
-              \begin{align*}
-                  g_n(x) & = g_1(x) + (n-1) = \frac{x+1}{ax} + (n-1)
-              \end{align*}
+\begin{enumerate}
+\item $a=1$ の時
+              
 
-2.  [$2^\circ$] $0<a<1$ の時
+$$
+\begin{align*}
+g_n(x) & = g_1(x) + (n-1) = \frac{x+1}{ax} + (n-1)
+\end{align*}
+$$
+
+        \item $0<a<1$ の時
               等比数列の公式から
-              \begin{align*}
-                  g_n(x)
-                   & = \left(\frac{1}{a}\right)^{n-1} \left(\frac{x+1}{ax} - \frac{1}{a-1}\right) + \frac{1}{a-1}
-              \end{align*}
+              
+
+$$
+\begin{align*}
+g_n(x)
+                   & = \left(\frac{1}{a}\right)^{n-1}\left(\frac{x+1}{ax} - \frac{1}{a-1}\right) + \frac{1}{a-1}
+\end{align*}
+$$
+
+\end{enumerate}
 
     より
     
 
-1.  [$1^\circ$] $a=1$ の時
-              \begin{align*}
-                  f_n(x) & = \frac{ax}{(x+1)+a(n-1)x} = \frac{x}{nx+1}
-              \end{align*}
+\begin{enumerate}
+\item $a=1$ の時
+              
 
-2.  [$2^\circ$] $0<a<1$ の時
-              \begin{align*}
-                  f_n(x) & = \frac{ax(a-1)}{\left(\frac{1}{a}\right)^{n-1} (-x+a-1) + ax}
-              \end{align*}
+$$
+\begin{align*}
+f_n(x) & = \frac{ax}{(x+1)+a(n-1)x} = \frac{x}{nx+1}
+\end{align*}
+$$
+
+        \item $0<a<1$ の時
+              
+
+$$
+\begin{align*}
+f_n(x) & = \frac{ax(a-1)}{\left(\frac{1}{a}\right)^{n-1} (-x+a-1) + ax}
+\end{align*}
+$$
+
+\end{enumerate}
 
     が求める一般項である．$\cdots$(答)
 
@@ -74,20 +96,30 @@ $$
 
     
 
-1.  [$1^\circ$] $a=1$ の時
-              \begin{align*}
-                  b_n        & = n \text{ とおけば}                                                                    \\
-                  b_n f_n(c) & = \frac{nc}{nc+1} = \frac{1}{1+\frac{1}{nc}} \longrightarrow 1 \quad (n \to \infty)
-              \end{align*}
-              となって条件をみたす．
+\begin{enumerate}
+\item $a=1$ の時
+              
 
-2.  [$2^\circ$] $a \neq 1$ の時
-              \begin{align*}
-                  b_n        & = \left(\frac{1}{a}\right)^{n-1} \text{ とおけば } |a|<1 \text{ から} \\
-                  b_n f_n(c) & = \frac{a(a-1)c}{(a-1-c)+ac \cdot a^{n-1}}                      \\
-                             & \longrightarrow \frac{ac(a-1)}{a-1-c} \quad (n \to \infty)
-              \end{align*}
+$$
+\begin{align*}
+b_n        & = n \text{ とおけば}\\
+                  b_n f_n(c) & = \frac{nc}{nc+1} = \frac{1}{1+\frac{1}{nc}}\longrightarrow 1 \quad(n \to\infty)
+\end{align*}
+$$
+
+              となって条件をみたす．
+        \item $a \neq 1$ の時
+              
+
+$$
+\begin{align*}
+b_n        & = \left(\frac{1}{a}\right)^{n-1}\text{ とおけば } |a|<1 \text{ から}\\
+                  b_n f_n(c) & = \frac{a(a-1)c}{(a-1-c)+ac \cdot a^{n-1}}\\& \longrightarrow\frac{ac(a-1)}{a-1-c}\quad(n \to\infty)
+\end{align*}
+$$
+
               となり，条件をみたす． ($\because c>0, 0<a<1$)
+\end{enumerate}
 
     以上から
     

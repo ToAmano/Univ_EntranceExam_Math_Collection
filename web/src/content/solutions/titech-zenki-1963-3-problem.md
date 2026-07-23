@@ -16,6 +16,7 @@ $AB$，$AD$に平行なその接線の交点を$E$とする。
 このとき，次の問に答えよ。\\
 \includegraphics[width=5cm]{fig_1963_3.jpg}
 
-1.  2円（円$O$と円$E$）が交わるような$r$の値の範囲を求めよ。
-
-2.  2円が交わるとき，交点を$K$，$L$とすれば，$\theta=\angle KEL$はどんな範囲にあるか。
+\begin{enumerate}
+\item2円（円$O$と円$E$）が交わるような$r$の値の範囲を求めよ。
+  \item2円が交わるとき，交点を$K$，$L$とすれば，$\theta=\angle KEL$はどんな範囲にあるか。
+\end{enumerate}

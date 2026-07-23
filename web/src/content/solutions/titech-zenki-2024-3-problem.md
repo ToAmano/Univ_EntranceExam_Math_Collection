@@ -15,8 +15,8 @@ $xy$平面上に，点$A(a, \, 0)$，$B(0, \, b)$，$C(-a, \, 0)$ (ただし$0<a
 点$A_n$を通り$y$軸に平行な直線と直線$k$との交点を$C_{n+1}$，
 点$C_{n+1}$を通り$x$軸に平行な直線と直線$l$との交点を$A_{n+1}$とする．
 
-1.  点$A_n, \, C_n$の座標を求めよ．
-
-2.  $\triangle CBA_n$の面積$S_n$を求めよ．
-
-3.  $\displaystyle\lim_{n\to\infty}\frac{BA_n}{BC}$を求めよ．
+\begin{enumerate}
+\item点$A_n, \, C_n$の座標を求めよ．
+  \item$\triangle CBA_n$の面積$S_n$を求めよ．
+  \item$\displaystyle\lim_{n\to\infty}\frac{BA_n}{BC}$を求めよ．
+\end{enumerate}

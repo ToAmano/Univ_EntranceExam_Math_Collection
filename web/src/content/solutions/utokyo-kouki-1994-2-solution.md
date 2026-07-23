@@ -240,9 +240,10 @@ $$
   したがって
   
 
-1.  $p=\frac{1}{8}\pi$ でLは最大 \\
-
-2.  $p=\frac{3}{8}\pi$ でLは最小
+\begin{itemize}
+\item $p=\frac{1}{8}\pi$ でLは最大 \\
+    \item $p=\frac{3}{8}\pi$ でLは最小
+\end{itemize}
 
   である．
 

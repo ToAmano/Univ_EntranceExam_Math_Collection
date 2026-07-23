@@ -13,7 +13,8 @@ title: "UTOKYO 2014 zenki Q6 (problem)"
 線分$OP$と線分$OQ$の長さの和が6となるように動く。
 このとき，線分$PQ$の通過する領域を$D$とする。
 
-1.  $s$を$0 \leqq s \leqq 2$をみたす実数とするとき，
+\begin{enumerate}
+\item$s$を$0 \leqq s \leqq 2$をみたす実数とするとき，
 点$(s, \, t)$が$D$に入るような$t$の範囲を求めよ。
-
-2.  $D$を図示せよ。
+  \item$D$を図示せよ。
+\end{enumerate}

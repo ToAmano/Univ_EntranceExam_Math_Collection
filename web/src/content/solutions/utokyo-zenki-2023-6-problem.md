@@ -13,27 +13,23 @@ $O$を原点とする座標空間において，
 　以下，座標空間内の2点$A$，$B$が一致するとき，
 線分$AB$は点$A$を表すものとし，その長さを0と定める。
 
-1.  座標空間内の点$P$が次の条件(i)，(ii)をともに満たすとき，
+\begin{enumerate}
+\item座標空間内の点$P$が次の条件(i)，(ii)をともに満たすとき，
 点$P$が動きうる範囲$V$の体積を求めよ。
+\begin{enumerate}
+  \item$OP\leqq\sqrt3$
+  \item線分$OP$と$S$は，共有点を持たないか，点$P$のみを共有点に持つ。
+\end{enumerate}
 
-1.  $OP\leqq\sqrt3$
-  線分$OP$と$S$は，共有点を持たないか，点$P$のみを共有点に持つ。
-
-2.  座標空間内の点$N$と点$P$が次の条件(iii)，(iv)，(v)をすべて満たすとき，
+  \item座標空間内の点$N$と点$P$が次の条件(iii)，(iv)，(v)をすべて満たすとき，
 点$P$が動きうる範囲$W$の体積を求めよ。
 必要ならば，$\displaystyle \sin\alpha=\frac{1}{\sqrt3}$を満たす実数
 $\alpha$ $\displaystyle \left( 0<\alpha<\frac{\pi}{2} \right)$を用いてよい。
 
-1.  $ON+NP\leqq\sqrt3$
-  線分$ON$と$S$は共有点を持たない。
-  線分$NP$と$S$は，共有点を持たないか，点$P$のみを共有点に持つ。
+\begin{enumerate}
+\item$ON+NP\leqq\sqrt3$
+  \item線分$ON$と$S$は共有点を持たない。
+  \item線分$NP$と$S$は，共有点を持たないか，点$P$のみを共有点に持つ。
+\end{enumerate}
 
-3.  $OP\leqq\sqrt3$
-
-4.  線分$OP$と$S$は，共有点を持たないか，点$P$のみを共有点に持つ。
-
-5.  $ON+NP\leqq\sqrt3$
-
-6.  線分$ON$と$S$は共有点を持たない。
-
-7.  線分$NP$と$S$は，共有点を持たないか，点$P$のみを共有点に持つ。
+\end{enumerate}

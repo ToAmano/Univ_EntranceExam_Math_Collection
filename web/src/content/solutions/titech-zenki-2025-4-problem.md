@@ -15,9 +15,9 @@ a_{n+2}=a_{n+1}+a_n  (n=1, \, 2, \, 3, \, \cdots) \end{cases} \]
 により定める．
 ただし，$\displaystyle 0<b_n<\frac{\pi}{2}$であるものとする．
 
-1.  $n\geqq2$に対して，$a_{n+1}a_{n-1}-a_n^2$を求めよ．
-
-2.  $m\geqq1$ ($m$は整数)に対して，
+\begin{enumerate}
+\item$n\geqq2$に対して，$a_{n+1}a_{n-1}-a_n^2$を求めよ．
+  \item$m\geqq1$ ($m$は整数)に対して，
 $a_{2m} \cdot \tan(b_{2m+1}+b_{2m+2})$を求めよ．
-
-3.  無限級数$\displaystyle\sum_{m=0}^\infty b_{2m+1}$を求めよ．
+  \item無限級数$\displaystyle\sum_{m=0}^\infty b_{2m+1}$を求めよ．
+\end{enumerate}

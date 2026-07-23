@@ -16,9 +16,10 @@ title: "UTOKYO 1990 zenki Q4 (problem)"
 \begin{pmatrix} x_n \\ y_n \end{pmatrix}=M\begin{pmatrix} x_{n-1} \\ y_{n-1} \end{pmatrix}, 
 \cdots\cdots \]
 
-1.  $a$が正の実数を動くとき，$\triangle P_0P_1P_2$の面積を最大にする$a$の値を求めよ．
-
-2.  $a$を(1)で求めた値とする．
+\begin{enumerate}
+\item$a$が正の実数を動くとき，$\triangle P_0P_1P_2$の面積を最大にする$a$の値を求めよ．
+  \item$a$を(1)で求めた値とする．
 $\triangle P_0P_1P_2,\triangle P_1P_2P_3,\cdots\cdots,\triangle P_nP_{n+1}P_{n+2}$の和集合として
 表される図形の面積を$S_n$とするとき，
 $\displaystyle\lim_{n\to\infty}S_n$を求めよ．
+\end{enumerate}

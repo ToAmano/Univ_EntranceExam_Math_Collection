@@ -12,9 +12,10 @@ title: "UTOKYO 1972 zenki Q3 (problem)"
 　たがいに外接する定円$C$，$C'$が共通接線$l$の同じ側にあるとする．
 図のように
 
-1.  []$C$，$C'$，$l$に接する円を$C_1$，　$C$，$C_1$，$l$に接する円を$C_2$，$\cdots\cdots$
-
-2.  []$C$，$C_{n-1}$，$l$に接する円を$C_n$，$\cdots\cdots$
+\begin{enumerate}
+\item $C$，$C'$，$l$に接する円を$C_1$，　$C$，$C_1$，$l$に接する円を$C_2$，$\cdots\cdots$
+\item $C$，$C_{n-1}$，$l$に接する円を$C_n$，$\cdots\cdots$
+\end{enumerate}
 
 とする．
 このとき円$C_n$の半径を$r_n$として，極限値$\displaystyle\lim_{n\to\infty}n^2r_n$を，

@@ -11,10 +11,11 @@ title: "UTOKYO 1971 zenki Q2 (problem)"
 \[ 2a_1=x,  2a_2={a_1}^2+1,  \cdots\cdots,  2a_{n+1}={a_n}^2+1,  \cdots\cdots \]
 のように数列$ \{ a_n \} $を定めるとき，
 
-1.  $x \neq 2$ならば，$a_1<a_2<\cdots\cdots<a_n<\cdots\cdots$となることを証明せよ．
-
-2.  $x<2$ならば，$a_n<1$となることを証明せよ．
+\begin{enumerate}
+\item$x \neq 2$ならば，$a_1<a_2<\cdots\cdots<a_n<\cdots\cdots$となることを証明せよ．
+  \item$x<2$ならば，$a_n<1$となることを証明せよ．
 このとき，正数$\epsilon$を$\displaystyle 1-\frac{x}{2}$より小となるようにとって，
 $a_1,a_2,\cdots\cdots,a_n$までが$1-\epsilon$以下となったとすれば，
 個数$n$について次の不等式が成り立つことを証明せよ．
 \[ 2-x>n{\epsilon}^2 \]
+\end{enumerate}

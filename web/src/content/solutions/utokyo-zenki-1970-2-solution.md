@@ -13,11 +13,13 @@ title: "UTOKYO 1970 zenki Q2 (solution)"
      むことにする．
           
 
-1.  これを$4$回くりかえしたとき$x=0$，$x=\pm1$，$x=\pm2$，$x=\pm3$，$x=\pm4$
+\begin{enumerate}
+[(1)]
+          \item これを$4$回くりかえしたとき$x=0$，$x=\pm1$，$x=\pm2$，$x=\pm3$，$x=\pm4$
           の各点にいる確率をもとめよ．
-
-2.  一般にこれを$n$回くりかえしたとき$x=n-2$にいる確率と$x=n-4$にいる確率とを求め
+          \item 一般にこれを$n$回くりかえしたとき$x=n-2$にいる確率と$x=n-4$にいる確率とを求め
           よ．
+\end{enumerate}
 
      \end{oframed}
 
@@ -25,33 +27,54 @@ title: "UTOKYO 1970 zenki Q2 (solution)"
 
      
 
-1.  $4$回操作した時，$x=\pm1,\pm3$にある確率は明らかに$0$であることに注意する．
+\begin{enumerate}
+[(1)]
+     \item $4$回操作した時，$x=\pm1,\pm3$にある確率は明らかに$0$であることに注意する．
      又，$x=\pm2$にいる確率は対称性から等しく，例えば表が$3$回出る時で
-          \begin{align}
-          \frac{{}_4C_1}{2^4}=\frac{1}{4}\label{1}
-          \end{align}
+          
+
+$$
+\begin{align}
+\frac{{}_4C_1}{2^4}=\frac{1}{4}\label{1}
+\end{align}
+$$
+
      $x=\pm4$にいる確率は対称性から等しく，例えば表が$4$回出る時で
-          \begin{align}
-          \frac{{}_4C_0}{2^4}=\frac{1}{16}\label{2}
-          \end{align}
+          
+
+$$
+\begin{align}
+\frac{{}_4C_0}{2^4}=\frac{1}{16}\label{2}
+\end{align}
+$$
+
      [1](#1)，[2](#2)から，余事象より$x=0$にいる確率は
-          \begin{align*}
-          1-2\left(\frac{1}{4}+\frac{1}{16}\right)=\frac{3}{8}
-          \end{align*}
+          
+
+$$
+\begin{align*}
+1-2\left(\frac{1}{4}+\frac{1}{16}\right)=\frac{3}{8}
+\end{align*}
+$$
+
      である．以上をまとめて
-          \begin{align*}
-          \left\{
-               \begin{array}{ll}
+          
+
+$$
+\begin{align*}
+\left\{\begin{array}{ll}
                x=\pm1,\pm3 & 0     \\
                x=0                & 3/8   \\
                x=\pm2          & 1/4   \\
                x=\pm4          & 1/16
-               \end{array}
-          \right.
-          \end{align*}
-     である．$\cdots$(答)
+               \end{array}\right.
+\end{align*}
+$$
 
-2.  $x=n-2$にいるのは表が$n-1$回出た時で$\dfrac{{}_nC_{n-1}}{2^n}=\dfrac{n}{2^n}$．
+     である．$\cdots$(答)
+     
+     \item $x=n-2$にいるのは表が$n-1$回出た時で$\dfrac{{}_nC_{n-1}}{2^n}=\dfrac{n}{2^n}$．
      $\cdots$(答)
      また$x=n-4$にいるのは表が$n-2$回出た時で$\dfrac{{}_nC_{n-2}}{2^n}=\dfrac{n(n-1)}{2^{n+1}}$．
      $\cdots$(答)
+\end{enumerate}

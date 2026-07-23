@@ -14,6 +14,7 @@ title: "UTOKYO 1995 zenki Q3 (problem)"
 たとえば$A_1=1$，$A_2=3$，$A_3=5$である．
 このとき以下の問いに答えよ．
 
-1.  $n\geqq3$のとき，$A_n$を$A_{n-1}$，$A_{n-2}$を用いて表せ．
-
-2.  $A_n$を$n$で表せ．
+\begin{enumerate}
+\item$n\geqq3$のとき，$A_n$を$A_{n-1}$，$A_{n-2}$を用いて表せ．
+  \item$A_n$を$n$で表せ．
+\end{enumerate}

@@ -199,14 +199,7 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
                 else:
                     ref_node.replace_with(f'$\\eqref{{{target}}}$')
 
-        # 6. \begin{enumerate} リスト置換
-        for enum in list(soup.find_all('enumerate')):
-            items = enum.find_all('item')
-            list_md = []
-            for i, item in enumerate(items, 1):
-                item_text = str(item).replace('\\item', '').strip()
-                list_md.append(f"{i}.  {item_text}")
-            enum.replace_with('\n\n' + '\n\n'.join(list_md) + '\n\n')
+        # 6. \begin{enumerate} / \begin{description} / \begin{itemize} は MathJax の TeX 表示用に完全保持する
 
         # 7. align / align* / gather / gather* 数式ブロック置換
         for math_env in list(soup.find_all(['align', 'align*', 'gather', 'gather*', 'eqnarray', 'eqnarray*'])):
@@ -298,23 +291,15 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     md_content = re.sub(r'\{\\bf\s*\\?\[解説\\?\]\}|\*\*\[解説\]\*\*|\\\[解説\\\]|(?<!#)\s*【解説】', r'\n\n## 【解説】\n\n', md_content)
     md_content = re.sub(r'\{\\bf\s*\\?\[方針\\?\]\}|\*\*\[方針\]\*\*|\\\[方針\\\]|(?<!#)\s*【方針】', r'\n\n## 【方針】\n\n', md_content)
 
-    # リスト環境 (\begin{enumerate}, \begin{description}, \begin{itemize}) のスマート番号付きリスト変換
-    def replace_enumerate_block(m):
-        block = m.group(1)
-        items = re.split(r'\\item\s*', block)
-        res = []
-        count = 1
-        for it in items:
-            it = it.strip()
-            if not it:
-                continue
-            # 残存する項目ラベル [ (1) ] や [(イ)] 等のストリップ
-            it = re.sub(r'^\[\s*\(?.*?\)?\s*\]\s*', '', it)
-            res.append(f"{count}.  {it}")
-            count += 1
-        return "\n\n" + "\n\n".join(res) + "\n\n"
+    # リスト環境 (\begin{enumerate}, \begin{itemize}) を MathJax レンダリング用にそのまま TeX ブロックとして保持
+    def preserve_enumerate_block(m):
+        env_name = m.group(1)
+        block = m.group(2)
+        # オプションラベル \item[(1)] をシンプルな \item に整流化
+        clean_block = re.sub(r'\\item\s*\[\s*\(?.*?\)?\s*\]\s*', r'\\item ', block)
+        return f"\n\n\\begin{{{env_name}}}\n{clean_block.strip()}\n\\end{{{env_name}}}\n\n"
 
-    md_content = re.sub(r'\\begin\{(?:enumerate|description|itemize)\}(.*?)\\end\{(?:enumerate|description|itemize)\}', replace_enumerate_block, md_content, flags=re.DOTALL)
+    md_content = re.sub(r'\\begin\{(enumerate|description|itemize)\}(.*?)\\end\{\1\}', preserve_enumerate_block, md_content, flags=re.DOTALL)
 
     # 冒頭・単独の空の中括弧 {} や不要記号の除去
     md_content = re.sub(r'^\s*\{\}\s*$', '', md_content, flags=re.MULTILINE)

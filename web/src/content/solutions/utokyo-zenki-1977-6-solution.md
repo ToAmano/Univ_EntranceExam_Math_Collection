@@ -13,10 +13,12 @@ title: "UTOKYO 1977 zenki Q6 (solution)"
 $(1,1,1)$，$(1,3,2)$を通る．
      
 
-1.  $l$を含み$m$に平行な平面の方程式を$ax+by+cz+d=0$の形に表せ．
-
-2.  点$(2,0,1)$を通り$l$，$m$の両方と交わる直線を$n$とする．$l$と$n$の交点及び$m$と
+\begin{enumerate}
+[(1)]
+     \item $l$を含み$m$に平行な平面の方程式を$ax+by+cz+d=0$の形に表せ．
+     \item 点$(2,0,1)$を通り$l$，$m$の両方と交わる直線を$n$とする．$l$と$n$の交点及び$m$と
      $n$の交点を求めよ．
+\end{enumerate}
 
 \end{oframed}
 
@@ -55,23 +57,31 @@ $$
 である．
      
 
-1.  題意の平面$\pi$は$(1,1,0)$を通り$\vec{l}$，$\vec{m}$と平行である．この$2$ベクトル
+\begin{enumerate}
+[(1)]
+     \item 題意の平面$\pi$は$(1,1,0)$を通り$\vec{l}$，$\vec{m}$と平行である．この$2$ベクトル
      に直交するベクトルに$(-2,-1,2)$があるから，求める方程式は
-          \begin{align*}
-          -2(x-1)-1(y-1)+2z=0 \\
-          \therefore -2x-y+2z+4=0\cdots\text{(答)}
-          \end{align*}
-     である．
+          
 
-2.  題意から$k=1,2$に対し実数$t_k$，$s_k$があって
-          \begin{align*}
-          \left\{
-               \begin{array}{l}
+$$
+\begin{align*}
+-2(x-1)-1(y-1)+2z=0 \\\therefore -2x-y+2z+4=0\cdots\text{(答)}
+\end{align*}
+$$
+
+     である．
+     \item 題意から$k=1,2$に対し実数$t_k$，$s_k$があって
+          
+
+$$
+\begin{align*}
+\left\{\begin{array}{l}
                \vec{r}+t_1\vec{n}=\vec{p}+s_1\vec{l} \\
                \vec{r}+t_2\vec{n}=\vec{q}+s_2\vec{m}
-               \end{array}
-          \right.
-          \end{align*}
+               \end{array}\right.
+\end{align*}
+$$
+
      となる．このような実数$t_k$，$s_k$の存在条件を考えればよい．そこで$\vec{n}=(x,y,z)$とす
      る．まず$t_1$，$s_1$について
           
@@ -85,13 +95,23 @@ $$
 $$
 
      [1a](#1a)，[1c](#1c)から$s_1$を消して
-          \begin{align*}
-          (x-z)t_1=0
-          \end{align*}
+          
+
+$$
+\begin{align*}
+(x-z)t_1=0
+\end{align*}
+$$
+
      である．[1b](#1b)から$t_0\not=0$だから
-          \begin{align}
-          x=z \label{2}
-          \end{align}
+          
+
+$$
+\begin{align}
+x=z \label{2}
+\end{align}
+$$
+
      が従う．逆にこの時実数$t_1$，$s_1$は存在．
      
      次に$t_2$，$s_2$について     
@@ -106,26 +126,41 @@ $$
 $$
 
      である．[2b](#2b)，[2c](#2c)から$s_2$を消去して
-          \begin{align*}
-          t_2(y-2z)=1 \label{4}
-          \end{align*}     
+          
+
+$$
+\begin{align*}
+t_2(y-2z)=1 \label{4}
+\end{align*}
+$$
+
+     
      これと，[2a](#2a)において$x\not=0$に注意して$t_2$を消去すれば
-          \begin{align}
-          2z-y=x
-          \end{align}
+          
+
+$$
+\begin{align}
+2z-y=x
+\end{align}
+$$
+
       逆にこの時$t_2$，$s_2$は存在する．     
       
       [2](#2)及び[4](#4)から，$(x,y,z)=(x,x,x)$であるから$\vec{n}=(1,1,1)$としてよい．
       この時[1b](#1b)，[2a](#2a)から$(t_1,t_2)=(1,-1)$であるから，求める交点の座標は
-           \begin{align*}
-           \left\{
-                \begin{array}{l}
-                \text{$l$と$n$の交点}(3,1,2) \\
-                \text{$m$と$n$の交点}(1,-1,0)
-                \end{array}
-           \right.
-           \end{align*}
+           
+
+$$
+\begin{align*}
+\left\{\begin{array}{l}
+                \text{lとnの交点}(3,1,2) \\
+                \text{mとnの交点}(1,-1,0)
+                \end{array}\right.
+\end{align*}
+$$
+
      である.$\cdots$(答)
+\end{enumerate}
 
  
        

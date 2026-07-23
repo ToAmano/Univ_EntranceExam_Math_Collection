@@ -14,10 +14,11 @@ title: "UKYOTO 2025 zenki Q4 (problem)"
 \overrightarrow{ON}=u\overrightarrow{OC} \]
 が成り立つようにとる．
 
-1.  $s, \, t, \, u$が$\displaystyle \frac{1}{s}+\frac{2}{t}+\frac{3}{u}=4$を
+\begin{enumerate}
+\item$s, \, t, \, u$が$\displaystyle \frac{1}{s}+\frac{2}{t}+\frac{3}{u}=4$を
 満たす範囲であらゆる値をとるとき，
 3点$L, \, M, \, N$の定める平面$LMN$は，$s, \, t, \, u$の値に無関係な一定の点$P$を通ることを示せ．
 さらに，そのような点$P$はただ一つに定まることを示せ．
-
-2.  四面体$OABC$の体積を$V$とする．
+  \item四面体$OABC$の体積を$V$とする．
 (1)における点$P$について，四面体$PABC$の体積を$V$を用いて表せ．
+\end{enumerate}

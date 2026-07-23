@@ -13,7 +13,8 @@ title: "UTOKYO 2017 zenki Q1 (problem)"
 \[ g(\theta)=\frac{f(\theta)-f(0)}{\cos\theta-1} \]
 を考える。
 
-1.  $f(\theta)$と$g(\theta)$を$x=\cos\theta$の整式で表せ。
-
-2.  $g(\theta)$が$0<\theta<\pi$の範囲で最小値0をとるための$a$，$b$についての条件を求めよ。
+\begin{enumerate}
+\item$f(\theta)$と$g(\theta)$を$x=\cos\theta$の整式で表せ。
+  \item$g(\theta)$が$0<\theta<\pi$の範囲で最小値0をとるための$a$，$b$についての条件を求めよ。
 また，条件をみたす点$(a, \, b)$が描く図形を座標平面上に図示せよ。
+\end{enumerate}

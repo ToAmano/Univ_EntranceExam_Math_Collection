@@ -15,6 +15,7 @@ title: "UKYOTO 1971 zenki Q5 (problem)"
 順次このようにして$n$個の扇形をつくる．
 さて，正$n$角形$A_1A_2\cdots\cdots A_n$の面積とこれら$n$個の扇形の面積の総和を$S_n$で表わすとき，
 
-1.  $S_n$を$n$，$r$を用いて表わせ．
-
-2.  $\displaystyle\lim_{n\to\infty}S_n$を求めよ．
+\begin{enumerate}
+\item$S_n$を$n$，$r$を用いて表わせ．
+  \item$\displaystyle\lim_{n\to\infty}S_n$を求めよ．
+\end{enumerate}

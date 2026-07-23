@@ -14,7 +14,8 @@ $xyz$空間において条件
 $0 \leqq k \leqq 1$に対し，
 $z$軸と直交する平面$z=k$による切り口の面積を$S(k)$とする．
 
-1.  $k=\cos\theta$とおくとき$S(k)$を$\theta$で表せ．
+\begin{enumerate}
+\item$k=\cos\theta$とおくとき$S(k)$を$\theta$で表せ．
 ただし$\displaystyle 0 \leqq \theta \leqq \frac{\pi}{2}$とする．
-
-2.  $V$の値を求めよ．
+  \item$V$の値を求めよ．
+\end{enumerate}

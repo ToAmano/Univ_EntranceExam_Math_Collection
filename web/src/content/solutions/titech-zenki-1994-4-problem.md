@@ -11,6 +11,7 @@ title: "TITECH 1994 zenki Q4 (problem)"
 \[ \left( \sum_{k=1}^{m+n} k \right) + n \]
 を考え，これを$f(m,n)$と書くことにする．ただし$f(0,0)=0$とする．
 
-1.  $f(m,n) \leqq 5$を満たす点$(m,n)$の位置を，座標平面上に図示せよ．
-
-2.  $f(m,n)=f(m',n')$ならば$(m,n)=(m',n')$であることを示せ．
+\begin{enumerate}
+\item$f(m,n) \leqq 5$を満たす点$(m,n)$の位置を，座標平面上に図示せよ．
+  \item$f(m,n)=f(m',n')$ならば$(m,n)=(m',n')$であることを示せ．
+\end{enumerate}

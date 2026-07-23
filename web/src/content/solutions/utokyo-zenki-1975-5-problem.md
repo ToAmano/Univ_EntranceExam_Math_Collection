@@ -16,9 +16,10 @@ $O_{n+1}$は$S_n$の表面上にあって，
 また$S$の半径は$a$，$S_n$の半径は$\displaystyle\frac{a}{2^n}$である．
 このとき，
 
-1.  $S_n$と$S_{n+1}$の共通部分の体積$v_n$を求めよ．
-
-2.  $m=1,2,3,\cdots$に対して，$\displaystyle V_m=\sum_{n=1}^m v_n$とおくとき，
+\begin{enumerate}
+\item$S_n$と$S_{n+1}$の共通部分の体積$v_n$を求めよ．
+  \item$m=1,2,3,\cdots$に対して，$\displaystyle V_m=\sum_{n=1}^m v_n$とおくとき，
 $\displaystyle V=\lim_{m\to\infty}V_m$を求めよ．
+\end{enumerate}
 
 \includegraphics[width=5cm]{fig_1975_5.jpg}

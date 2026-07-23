@@ -11,7 +11,8 @@ title: "TITECH 2016 zenki Q5 (problem)"
 \[ \begin{cases} x=3\cos t-\cos3t \\ y=3\sin t-\sin3t \end{cases} \]
 ただし$\displaystyle0 \leqq t \leqq \frac{\pi}{2}$である．
 
-1.  $\displaystyle\frac{dx}{dt}$および$\displaystyle\frac{dy}{dt}$を計算し，
+\begin{enumerate}
+\item$\displaystyle\frac{dx}{dt}$および$\displaystyle\frac{dy}{dt}$を計算し，
 $C$の概形を図示せよ．
-
-2.  $C$と$x$軸と$y$軸で囲まれた部分の面積を求めよ．
+  \item$C$と$x$軸と$y$軸で囲まれた部分の面積を求めよ．
+\end{enumerate}

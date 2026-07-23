@@ -12,6 +12,7 @@ title: "UTOKYO 1987 zenki Q6 (problem)"
 出た目を番号とするすべての頂点にしるしをつけるものとする．
 このとき，しるしのついた三点を頂点とする直角三角形が存在する確率を$p_n$とする．
 
-1.  $p_3$，$p_4$を求めよ．
-
-2.  $\displaystyle\lim_{n\to\infty}\frac{1}{n}\log(1-p_n)$を求めよ．
+\begin{enumerate}
+\item$p_3$，$p_4$を求めよ．
+  \item$\displaystyle\lim_{n\to\infty}\frac{1}{n}\log(1-p_n)$を求めよ．
+\end{enumerate}

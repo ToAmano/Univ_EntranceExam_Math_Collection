@@ -24,7 +24,8 @@ $$
 
   
 
-1.  $ \alpha_1, \alpha_2, \alpha_3 \in \mathbb{R} $の時
+\begin{itemize}
+\item $ \alpha_1, \alpha_2, \alpha_3 \in \mathbb{R} $の時
           題意の条件より
           
 
@@ -52,7 +53,7 @@ $$
           を得るが，これは三つ目の式に反して矛盾．
           よって$ \alpha_1, \alpha_2, \alpha_3 \in \mathbb{R} $の時は条件を満たさず不適．
 
-2.  $\alpha_1,\alpha_2,\alpha_3$のうち，一つが実数，二つが虚数の時
+    \item $\alpha_1,\alpha_2,\alpha_3$のうち，一つが実数，二つが虚数の時
           $\alpha_1,\alpha_2,\alpha_3$について対称だから，
           $\alpha_1 \in \mathbb{R}$, $\alpha_2, \alpha_3 \notin \mathbb{R}$
           の時を考えれば十分．
@@ -127,6 +128,7 @@ $$
 $$
 
           を得る．
+\end{itemize}
 
   
 

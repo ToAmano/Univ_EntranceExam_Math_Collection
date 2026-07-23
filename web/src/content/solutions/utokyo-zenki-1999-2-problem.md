@@ -12,8 +12,9 @@ title: "UTOKYO 1999 zenki Q2 (problem)"
 \[ |z|=\sqrt{x^2+y^2} \]
 で定義する．
 
-1.  すべての自然数$n$について
+\begin{enumerate}
+\itemすべての自然数$n$について
 $\displaystyle\frac{3\times5^{n-1}}{4}<|z_n|<\frac{5^n}{4}$が成り立つことを示せ．
-
-2.  実数$r>0$に対して，$|z_n| \leqq r$を満たす$z_n$の個数を$f(r)$とおく．
+  \item実数$r>0$に対して，$|z_n| \leqq r$を満たす$z_n$の個数を$f(r)$とおく．
 このとき，$\displaystyle\lim_{r\to+\infty}\frac{f(r)}{\log r}$を求めよ．
+\end{enumerate}

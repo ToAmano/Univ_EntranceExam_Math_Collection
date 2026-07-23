@@ -122,25 +122,33 @@ $$
     のふた通りである．
     
 
-1.  [\textsuperscript{\textcircled{1}}] $(A+B, A-B) = (4p, 2q)$の時
+\begin{enumerate}
+[]
+        \item $(A+B, A-B) = (4p, 2q)$の時
 
               $A= 2p+q, B = 2p-q$ を[(式2)](#1989-1:eq:2)に代入して
-              \begin{align*}
-                  b & = \frac{1}{8} [11(2p-q)^2 - 3(2p+q)^2] \\
-                    & = \frac{1}{8} [32p^2-56pq + 8q^2]      \\
-                    & = 4p^2-7pq+q^2
-              \end{align*}
-              となるが，$p,q$が奇数だから右辺は偶数であり，$b$が奇数であることに矛盾する．
+              
 
-2.  [\textsuperscript{\textcircled{2}}] $(A+B, A-B) = (2p, 4q)$の時
+$$
+\begin{align*}
+b & = \frac{1}{8}[11(2p-q)^2 - 3(2p+q)^2]\\& = \frac{1}{8}[32p^2-56pq + 8q^2]\\& = 4p^2-7pq+q^2
+\end{align*}
+$$
+
+              となるが，$p,q$が奇数だから右辺は偶数であり，$b$が奇数であることに矛盾する．
+        \item $(A+B, A-B) = (2p, 4q)$の時
 
               $A= p+2q, B = p-2q$ を[(式2)](#1989-1:eq:2)に代入して
-              \begin{align*}
-                  b & = \frac{1}{8} [11(p-2q)^2 - 3(p+2q)^2] \\
-                    & = \frac{1}{8} [8p^2 - 56pq + 32q^2]    \\
-                    & = p^2-7pq+4q^2
-              \end{align*}
+              
+
+$$
+\begin{align*}
+b & = \frac{1}{8}[11(p-2q)^2 - 3(p+2q)^2]\\& = \frac{1}{8}[8p^2 - 56pq + 32q^2]\\& = p^2-7pq+4q^2
+\end{align*}
+$$
+
               となるが，$p,q$が奇数だから右辺は偶数であり，$b$が奇数であることに矛盾する．
+\end{enumerate}
 
     以上いずれの場合も矛盾するから，背理法により$m,n$がともに平方数であることはない．$\cdots$(答)
 

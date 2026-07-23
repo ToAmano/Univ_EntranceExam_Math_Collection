@@ -12,7 +12,8 @@ title: "UKYOTO 1993 zenki Q4 (problem)"
 \[ b_n=\int_0^1{(1+x)}^{-n}xe^{x^2}dx \]
 とおく．
 
-1.  $\displaystyle b_n \leqq e\cdot\int_0^1{(1+x)}^{-n}dx$が成り立つことを示し，
+\begin{enumerate}
+\item$\displaystyle b_n \leqq e\cdot\int_0^1{(1+x)}^{-n}dx$が成り立つことを示し，
 $\displaystyle\lim_{n\to\infty}b_n$を求めよ．
-
-2.  $\displaystyle\lim_{n\to\infty}na_n$を求めよ．
+  \item$\displaystyle\lim_{n\to\infty}na_n$を求めよ．
+\end{enumerate}
