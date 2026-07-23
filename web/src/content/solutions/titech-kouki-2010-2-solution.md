@@ -148,7 +148,7 @@ $$
   以下$\alpha$の値によって場合わけする．
 
   
-  \underline{**$0<\alpha\le 1$の時**}
+  \underline**$0<\alpha\le 1$の時**
 
   $g'(x) = 0$となる$x$は$x=\alpha$ただ一つである．
   $x<\alpha$では$g'(x)<0$, $\alpha<x$では$g'(x)>0$である．
@@ -178,7 +178,7 @@ $$
   従って，$g(x)=0$の解の数は$x=\alpha$ただ一つ．
 
   
-  \underline{**$\alpha= e$の時**}
+  \underline**$\alpha= e$の時**
 
   $g'(x) = 0$となる$x$は$x=\alpha$ただ一つである．
   それ以外のとき，$g'(x)<0$である．
@@ -208,7 +208,7 @@ $$
   よって，$g(x)=0$の解の数は$x=\alpha$ただ一つ．
 
   
-  \underline{**$1 < \alpha, \, \alpha\neq e$の時**}
+  \underline**$1 < \alpha, \, \alpha\neq e$の時**
 
   この時は$x=\alpha$以外にもう一つ$g'(x)=0$となる$x$がある．
   これを$x=\beta$とする．

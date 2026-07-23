@@ -9,7 +9,6 @@ title: "UTOKYO 1990 kouki Q3 (problem)"
 
 \newcommand{\drawTriangle}[3]{
   \draw (#1) -- (#2) -- (#3) -- cycle;
-}
 
 \newcommand{\recursiveTriangleQTwo}[4]{
   \ifnum#4=0
@@ -24,7 +23,6 @@ title: "UTOKYO 1990 kouki Q3 (problem)"
     \drawTriangle{#1}{#2}{#3};
     \drawTriangle{MAB2}{MBC2}{MCA2};
   \fi
-}
 
 \newcommand{\recursiveTriangleQThree}[3]{
   \path let
@@ -38,7 +36,6 @@ title: "UTOKYO 1990 kouki Q3 (problem)"
   \recursiveTriangleQTwo{#1}{MAB3}{MCA3}{1}
   \recursiveTriangleQTwo{MAB3}{#2}{MBC3}{1}
   \recursiveTriangleQTwo{MCA3}{MBC3}{#3}{1}
-}
 
 \newcommand{\recursiveTriangleQFour}[3]{
   \path let
@@ -52,7 +49,6 @@ title: "UTOKYO 1990 kouki Q3 (problem)"
   \recursiveTriangleQThree{#1}{MAB4}{MCA4}
   \recursiveTriangleQThree{MAB4}{#2}{MBC4}
   \recursiveTriangleQThree{MCA4}{MBC4}{#3}
-}
 
 長さ1の線分をつなげてできる右のような平面上の図形 $Q_1, Q_2, Q_3, \ldots$ を考える．\\
 $n = 1, 2, 3, \ldots$ に対し，図形 $Q_n$ の左端の点を $A_n$, 右端の点を $B_n$, 上端の点を $C_n$ とする．

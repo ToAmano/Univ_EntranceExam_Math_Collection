@@ -276,13 +276,31 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     md_body = re.sub(r'\\mqty\{(.*?)\}', r'\\begin{matrix}\1\\end{matrix}', md_body, flags=re.DOTALL)
 
     # 見出しと見映えの最終整頓
-    md_content = re.sub(r'\\begin\{table\}[^}\n]*|\\end\{table\}|\\centering|\\begin\{center\}|\\end\{center\}|\\shadowbox\{|\\endtabular', '', md_body)
+    md_content = re.sub(r'\\begin\{table\}[^}\n]*|\\end\{table\}|\\centering|\\begin\{center\}|\\end\{center\}|\\endtabular', '', md_body)
+    
+    # \shadowbox{...} のアンラップ
+    md_content = re.sub(r'\\shadowbox\{([^}]*)\}', r'\1', md_content)
+    md_content = re.sub(r'\\shadowbox\{', '', md_content)
+
+    # フォント・スペーシング関連不要マクロの削除
+    md_content = re.sub(r'\\fontsize\{[^}]*\}\{[^}]*\}', '', md_content)
+    md_content = re.sub(r'\\selectfont|\\normalsize|\\noindent|\\vspace\{[^}]*\}|\\hspace\{[^}]*\}|\\pagestyle\{[^}]*\}', '', md_content)
     md_content = re.sub(r'\\renewcommand\{[^}]*\}\{[^}]*\}', '', md_content)
+
+    # \textbf の Markdown 化
     md_content = re.sub(r'\\textbf\{([^{}]+)\}', r'**\1**', md_content)
-    md_content = re.sub(r'\\normalsize', '', md_content)
+    # **AAAA****BBBB** や **AAAA** **BBBB** の自動結合 (**AAAABBBB**)
+    md_content = re.sub(r'\*\*([^*]+)\*\*\s*\*\*([^*]+)\*\*', r'**\1\2**', md_content)
+
+    # 見出しセクションの整形
     md_content = re.sub(r'\{\\bf\s*\\?\[解\\?\]\}|\*\*\[解\]\*\*|\\\[解\\\]|(?<!#)\s*【解】', r'\n\n## 【解】\n\n', md_content)
     md_content = re.sub(r'\{\\bf\s*\\?\[解説\\?\]\}|\*\*\[解説\]\*\*|\\\[解説\\\]|(?<!#)\s*【解説】', r'\n\n## 【解説】\n\n', md_content)
     md_content = re.sub(r'\{\\bf\s*\\?\[方針\\?\]\}|\*\*\[方針\]\*\*|\\\[方針\\\]|(?<!#)\s*【方針】', r'\n\n## 【方針】\n\n', md_content)
+
+    # 孤立した不要な波括弧 { や } のクリーンアップ
+    md_content = re.sub(r'^\s*\{\s*(\*\*[^*]+\*\*)\s*\}\s*$', r'\1', md_content, flags=re.MULTILINE)
+    md_content = re.sub(r'\{\s*(\*\*[^*]+\*\*)\s*\}', r'\1', md_content)
+    md_content = re.sub(r'^\s*[\{\}]\s*$', '', md_content, flags=re.MULTILINE)
 
     # 明示的な TeX 見出し \paragraph{...} の変換
     md_content = re.sub(r'\\paragraph\*?\s*\{([^}]+)\}', r'\n\n### \1\n\n', md_content)

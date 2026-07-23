@@ -11,7 +11,6 @@ title: "UTOKYO 1990 kouki Q3 (solution)"
 
   \newcommand{\drawTriangle}[3]{
     \draw (#1) -- (#2) -- (#3) -- cycle;
-  }
 
   \newcommand{\recursiveTriangleQTwo}[4]{
     \ifnum#4=0
@@ -26,7 +25,6 @@ title: "UTOKYO 1990 kouki Q3 (solution)"
       \drawTriangle{#1}{#2}{#3};
       \drawTriangle{MAB2}{MBC2}{MCA2};
     \fi
-  }
 
   (1)
 
