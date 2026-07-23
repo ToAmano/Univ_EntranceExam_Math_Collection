@@ -7,8 +7,18 @@ type: "problem"
 title: "UTOKYO 1980 zenki Q2 (problem)"
 ---
 
-長さ2の線分$NS$を直径とする球面$K$がある．
-点$S$において球面$K$に接する平面の上で，
-$S$を中心とする半径2の四分円(円周の$\displaystyle\frac{1}{4}$の長さをもつ円弧)
-$\stackrel{\frown}{AB}$と線分$AB$をあわせて得られる曲線上を，点$P$が1周する．
-このとき，線分$NP$と球面$K$との交点$Q$の描く曲線の長さを求めよ．
+図のような立体 $ABCD-EFGH$ がある．
+上底面 $ABCD$，下底面 $EFGH$ はともに正方形であって，
+両底面はたがいに平行であり，
+4つの側面 $ABFE$，$BCGF$，$CDHG$，$DAEH$ は台形であって，
+$AE=BF=CG=DH$ である．
+また下底面の1辺の長さは12，両底面の間の距離は4である．
+
+上底面の1辺の長さが $x$ のとき，
+側面 $ABFE$ の面積を $S(x)$ とする．
+$x$ が $2 \leqq x \leqq 10$ の範囲を動くときの $S(x)$ の最大値と最小値を求めよ．
+
+<figure id="fig_1">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/utokyo/zenki/1980/2/fig_1.svg" alt="図 1" />
+  <figcaption>図 1</figcaption>
+</figure>
