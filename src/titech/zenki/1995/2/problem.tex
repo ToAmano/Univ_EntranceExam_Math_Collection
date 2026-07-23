@@ -1,10 +1,38 @@
 \documentclass[../../../../main.tex]{subfiles}
 \begin{document}
 
-\usepackage[dvipdfm]{graphicx}
+右図のような4辺の長さが1で，それらのなす外角が $\theta$ $\displaystyle \left( 0<\theta<\frac{\pi}{2} \right)$ であるような五角形の面積の最大値を求めよ．
 
-　右図のような4辺の長さ1で，それらのなす外角が$\theta$ $\displaystyle \left( 0<\theta<\frac{\pi}{2} \right)$であるような五角形の面積の最大値を求めよ．
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=2, >=stealth]
+    \def\ang{40}
+    \coordinate (V1) at (0,0);
+    \coordinate (V2) at (1,0);
+    \coordinate (V3) at ($(V2) + (\ang:1)$);
+    \coordinate (V4) at ($(V3) + (2*\ang:1)$);
+    \coordinate (V5) at ($(V4) + (3*\ang:1)$);
 
-\includegraphics[width=5cm]{fig_1995_2.jpg}
+    \draw[thick] (V1) -- (V2) -- (V3) -- (V4) -- (V5) -- cycle;
+
+    \node[below] at ($(V1)!0.5!(V2)$) {$1$};
+    \node[below right] at ($(V2)!0.5!(V3)$) {$1$};
+    \node[right] at ($(V3)!0.5!(V4)$) {$1$};
+    \node[above right] at ($(V4)!0.5!(V5)$) {$1$};
+
+    % 外角 theta
+    \draw[dashed] (V2) -- +(0.5, 0);
+    \draw (V2) +(0.25, 0) arc (0:\ang:0.25);
+    \node at ($(V2) + (20:0.38)$) {$\theta$};
+
+    \draw[dashed] (V3) -- +(\ang:0.5);
+    \draw (V3) +(\ang:0.25) arc (\ang:2*\ang:0.25);
+    \node at ($(V3) + (1.5*\ang:0.38)$) {$\theta$};
+
+    \draw[dashed] (V4) -- +(2*\ang:0.5);
+    \draw (V4) +(2*\ang:0.25) arc (2*\ang:3*\ang:0.25);
+    \node at ($(V4) + (2.5*\ang:0.38)$) {$\theta$};
+  \end{tikzpicture}
+\end{figure}
 
 \end{document}

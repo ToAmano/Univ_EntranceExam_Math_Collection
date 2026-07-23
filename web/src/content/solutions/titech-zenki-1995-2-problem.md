@@ -7,8 +7,9 @@ type: "problem"
 title: "TITECH 1995 zenki Q2 (problem)"
 ---
 
-\usepackage[dvipdfm]{graphicx}
+右図のような4辺の長さが1で，それらのなす外角が $\theta$ $\displaystyle \left( 0<\theta<\frac{\pi}{2} \right)$ であるような五角形の面積の最大値を求めよ．
 
-　右図のような4辺の長さ1で，それらのなす外角が$\theta$ $\displaystyle \left( 0<\theta<\frac{\pi}{2} \right)$であるような五角形の面積の最大値を求めよ．
-
-\includegraphics[width=5cm]{fig_1995_2.jpg}
+<figure id="fig_1">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/titech/zenki/1995/2/fig_1.svg" alt="図 1" />
+  <figcaption>図 1</figcaption>
+</figure>
