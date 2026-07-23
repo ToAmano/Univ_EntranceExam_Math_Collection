@@ -282,10 +282,11 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     md_content = re.sub(r'\\shadowbox\{([^}]*)\}', r'\1', md_content)
     md_content = re.sub(r'\\shadowbox\{', '', md_content)
 
-    # フォント・スペーシング関連不要マクロの削除
+    # フォント・スペーシング・再定義関連不要マクロの完全削除
+    md_content = re.sub(r'\\renewcommand\s*\{?\\[a-zA-Z]+\}?\s*(\[[^\]]*\])?\s*\{[^}]*\}', '', md_content)
+    md_content = re.sub(r'\\renewcommand\s*\{?[^}\n]+\}?\s*\{[^}]*\}', '', md_content)
     md_content = re.sub(r'\\fontsize\{[^}]*\}\{[^}]*\}', '', md_content)
     md_content = re.sub(r'\\selectfont|\\normalsize|\\noindent|\\vspace\{[^}]*\}|\\hspace\{[^}]*\}|\\pagestyle\{[^}]*\}', '', md_content)
-    md_content = re.sub(r'\\renewcommand\{[^}]*\}\{[^}]*\}', '', md_content)
 
     # \textbf の Markdown 化
     md_content = re.sub(r'\\textbf\{([^{}]+)\}', r'**\1**', md_content)
