@@ -11,6 +11,7 @@ title: "UTOKYO 1990 kouki Q3 (solution)"
 
   \newcommand{\drawTriangle}[3]{
     \draw (#1) -- (#2) -- (#3) -- cycle;
+  }
 
   \newcommand{\recursiveTriangleQTwo}[4]{
     \ifnum#4=0
@@ -25,6 +26,7 @@ title: "UTOKYO 1990 kouki Q3 (solution)"
       \drawTriangle{#1}{#2}{#3};
       \drawTriangle{MAB2}{MBC2}{MCA2};
     \fi
+  }
 
   (1)
 
@@ -36,28 +38,39 @@ title: "UTOKYO 1990 kouki Q3 (solution)"
 </figure>
 
   まず$y_2$について，$C_2$を通る時，$A_2$ から $C_1(1) \to C_2 \to C_1(2)$ を経由して $B_2$ に行くルートだから，
-  \begin{itemize}
-    \item $A_2 \to C_1(1) \to C_2 \to C_1(2) \to B_2 $
-    \item $A_2 \to C_1(1) \to C_2 \to C_1(2) \to B_1(1) \to B_2 $
-    \item $A_2 \to B_1(1) \to C_1(1) \to C_2 \to C_1(2) \to B_2 $
-  \end{itemize}
+  
+
+1.  $A_2 \to C_1(1) \to C_2 \to C_1(2) \to B_2 $
+
+2.  $A_2 \to C_1(1) \to C_2 \to C_1(2) \to B_1(1) \to B_2 $
+
+3.  $A_2 \to B_1(1) \to C_1(1) \to C_2 \to C_1(2) \to B_2 $
+
   の3通りである．よって$y_2 = 3$である．
 
   一方$x_2$について，$C_2$ を通らない時はパターンを列挙すると
-  \begin{itemize}
-    \item $B_1(1)$から$Q_1(2)$へ移動する場合
+  
+
+1.  $B_1(1)$から$Q_1(2)$へ移動する場合
           \begin{itemize}
-            \item $A_2 \to B_1(1) \to C_1(2) \to B_2 $
-            \item $A_2 \to B_1(1) \to B_2 $
-            \item $A_2 \to C_1(1) \to B_1(1) \to B_2 $
-            \item $A_2 \to C_1(1) \to B_1(1) \to  C_1(2) \to B_2 $
-          \end{itemize}
+
+2.  $A_2 \to B_1(1) \to C_1(2) \to B_2 $
+
+3.  $A_2 \to B_1(1) \to B_2 $
+
+4.  $A_2 \to C_1(1) \to B_1(1) \to B_2 $
+
+5.  $A_2 \to C_1(1) \to B_1(1) \to  C_1(2) \to B_2 $
+
     \item $C_1(2)$から$Q_1(2)$へ移動する場合
-          \begin{itemize}
-            \item $A_2 \to B_1(1) \to C_1(1) \to C_1(2) \to B_2 $
-            \item $A_2 \to C_1(1) \to C_1(2) \to B_2 $
-            \item $A_2 \to C_1(1) \to C_1(2) \to B_1(1) \to B_2 $
-          \end{itemize}
+          
+
+1.  $A_2 \to B_1(1) \to C_1(1) \to C_1(2) \to B_2 $
+
+2.  $A_2 \to C_1(1) \to C_1(2) \to B_2 $
+
+3.  $A_2 \to C_1(1) \to C_1(2) \to B_1(1) \to B_2 $
+
   \end{itemize}
   の合計$7$通りなので$x_2=7$である．
 
@@ -115,16 +128,17 @@ $$
   $Q_n(1)$ を出たあと，$Q_n(3)$を経由して $Q_n(2)$ 内を通って $B_{n+1}$ へ行く．
   この時，$Q_n(1)$ 内を通過中，$B_n(1)$ を通るか否かで場合分けして考える．
 
-  \begin{itemize}
-    \item[（ア）] $Q_n(1)$ 内を通過中に $B_n(1)$ を通る時．\\
+  
+
+1.  $Q_n(1)$ 内を通過中に $B_n(1)$ を通る時．\\
           $C_n(2)$ を通過中，$B_n(1)$ を通ることができないことに注意すると，
           対称性から，$A_{n+1} \to C_n(1)$ が $y_n$ 通り，
           $C_n(1) \to C_n(2)$ が $x_n$ 通り，
           $C_n(2) \to B_{n+1}$ が $x_n$ 通りある．
           よってあわせて $y_n \cdot x_n^2$ 通りである．
-    \item[（イ）] $Q_n(1)$ を通過中，$B_n(1)$ を通らない時．\\
+
+2.  $Q_n(1)$ を通過中，$B_n(1)$ を通らない時．\\
           （ア）と同様に考えて $x_n \cdot x_n \cdot (x_n+y_n)$ 通りある．
-  \end{itemize}
 
   以上から
   

@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 2014 zenki Q6 (problem)"
 ---
 
-{}
-　双曲線$\displaystyle y=\frac{1}{x}$の第1象限にある部分と，
+双曲線$\displaystyle y=\frac{1}{x}$の第1象限にある部分と，
 原点$O$を中心とする円の第1象限にある部分を，
 それぞれ$C_1$，$C_2$とする．
 $C_1$と$C_2$は2つの異なる点$A$，$B$で交わり，

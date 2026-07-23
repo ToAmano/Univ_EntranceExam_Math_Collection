@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 2020 zenki Q3 (problem)"
 ---
 
-{}
-　$k$を正の実数とする．座標空間において，
+$k$を正の実数とする．座標空間において，
 原点$O$を中心とする半径1の球面上の4点$A, \, B, \, C, \, D$が次の関係式を満たしている．
 \[ \overrightarrow{OA}\cdot\overrightarrow{OB}=\overrightarrow{OC}\cdot\overrightarrow{OD}=\frac{1}{2}, \]
 \[ \overrightarrow{OA}\cdot\overrightarrow{OC}=\overrightarrow{OB}\cdot\overrightarrow{OC}=

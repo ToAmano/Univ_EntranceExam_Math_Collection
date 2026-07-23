@@ -7,12 +7,11 @@ type: "problem"
 title: "UKYOTO 1997 zenki Q1 (problem)"
 ---
 
-{}
-　単位円$C:x^2+y^2=1$上の点$P$をとり，
+単位円$C:x^2+y^2=1$上の点$P$をとり，
 定点$A(-2,0)$から$P$へ線分を引き，
 その線分の$P$の側の延長線上に点$Q$を$\overline{AP}\cdot\overline{PQ}=3$となるようにとる．
 ただし，$\overline{AP}$は線分$AP$の長さを表す．
-\begin{description}
-\item[(1)]$s=\overline{AP}$，$t=\overline{OQ}$とおいて，$t$を$s$で表せ．ただし，$O(0,0)$は原点である．
-\item[(2)]点$P$が円$C$上を動くとき，点$Q$の描く軌跡を求めよ．
-\end{description}
+
+1.  $s=\overline{AP}$，$t=\overline{OQ}$とおいて，$t$を$s$で表せ．ただし，$O(0,0)$は原点である．
+
+2.  点$P$が円$C$上を動くとき，点$Q$の描く軌跡を求めよ．

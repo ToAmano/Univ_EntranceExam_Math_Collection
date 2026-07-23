@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 1972 zenki Q5 (problem)"
 ---
 
-{}
-　だ円$\displaystyle\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ $(a,b>0)$の上の点$P(x,y)$を媒介変数$u$をつかって，
+だ円$\displaystyle\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ $(a,b>0)$の上の点$P(x,y)$を媒介変数$u$をつかって，
 \[ x=a\cos u,  y=b\sin u,  (0 \leqq u<2\pi) \]
 で表わす．
 時間を$t$とし，$P$は$t$の変化につれて次のように移動する．

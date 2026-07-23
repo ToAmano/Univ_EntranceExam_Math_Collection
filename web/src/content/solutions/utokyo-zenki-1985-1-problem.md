@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1985 zenki Q1 (problem)"
 ---
 
-{}
-　$a\geqq1$とする．
+$a\geqq1$とする．
 $xy$平面において，
 不等式$\displaystyle 0 \leqq x \leqq \frac{\pi}{2}$，$1 \leqq y \leqq a\sin x$
 によって定められる領域の面積を$S_1$，

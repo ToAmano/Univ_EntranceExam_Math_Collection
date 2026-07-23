@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1980 zenki Q4 (problem)"
 ---
 
-{}
-　$xy$平面上の動点$P$の座標$(x,y)$は，時刻$t$を用いて
+$xy$平面上の動点$P$の座標$(x,y)$は，時刻$t$を用いて
 $\begin{cases}
 x= \sin t+\cos t \\
 y = k \sin^2 t \cos^2 t

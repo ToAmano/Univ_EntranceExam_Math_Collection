@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1976 zenki Q1 (problem)"
 ---
 
-{}
-　負でない実数$r$，$l$に対して，
+負でない実数$r$，$l$に対して，
 $xy$平面上の曲線$y=
 \begin{cases}
 x^2 & (0 \leqq x \leqq r) \\

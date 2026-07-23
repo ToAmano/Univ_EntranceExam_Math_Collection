@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 1996 zenki Q6 (problem)"
 ---
 
-{}
-　ガソリンを$x$kg積んだ状態で時速$v$kmで走るとき，
+ガソリンを$x$kg積んだ状態で時速$v$kmで走るとき，
 毎時$\displaystyle\frac{100+x}{100}e^{kv}$kgのガソリンを消費する車がある．
 ここで$k$は正の定数である．
 この車を用いて100km離れた地点へ一定速度で行くとき，

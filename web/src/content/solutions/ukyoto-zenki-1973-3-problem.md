@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 1973 zenki Q3 (problem)"
 ---
 
-{}
-　正三角形$ABC$がある．
+正三角形$ABC$がある．
 点$O$を直線$AB$に関して$C$と反対側にとって$\angle AOB={60}^\circ$となるようにし，
 ベクトル$\overrightarrow{OA}$，$\overrightarrow{OB}$，$\overrightarrow{OC}$を
 それぞれ$\mathbf{a}$，$\mathbf{b}$，$\mathbf{c}$で表わす．

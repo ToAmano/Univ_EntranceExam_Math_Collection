@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 1986 zenki Q3 (problem)"
 ---
 
-{}
-　座標平面の原点を$O$とし，
+座標平面の原点を$O$とし，
 $\overrightarrow{OA}=\begin{pmatrix} 1 \\ 1 \end{pmatrix}$，
 $\overrightarrow{OB}=\begin{pmatrix} 1 \\ -1 \end{pmatrix}$とする．
 また$\alpha$，$\beta$は2つの実数とする．

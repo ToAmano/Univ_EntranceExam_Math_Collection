@@ -7,11 +7,10 @@ type: "problem"
 title: "UKYOTO 1976 zenki Q4 (problem)"
 ---
 
-{}
-　正の数列$a_n$ $(n=1,2,3,\cdots)$が
+正の数列$a_n$ $(n=1,2,3,\cdots)$が
 不等式$\displaystyle{a_n}^3+3{a_n}^2- \left( 9+\frac{1}{n} \right) a_n+5<0$をみたしているとき，
 次の(i)，(ii)を証明せよ．ただし，(ii)を先に証明してもよい．
-\begin{description}
-\item[(i)]$\displaystyle\lim_{n\to\infty}a_n=1$
-\item[(ii)]$\displaystyle{(a_n-1)}^2<\frac{1}{4n}$
-\end{description}
+
+1.  $\displaystyle\lim_{n\to\infty}a_n=1$
+
+2.  $\displaystyle{(a_n-1)}^2<\frac{1}{4n}$

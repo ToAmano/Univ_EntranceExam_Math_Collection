@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1991 zenki Q6 (problem)"
 ---
 
-{}
-　$f(x)$は$x>0$で定義された連続な関数で，
+$f(x)$は$x>0$で定義された連続な関数で，
 $0<x_1<x_2$ならば，つねに$f(x_1)>f(x_2)>0$であるものとし，
 $\displaystyle S(x)=\int_x^{2x}f(t)dt$とおく．
 このとき，$S(1)=1$であり，
@@ -16,9 +15,10 @@ $\displaystyle S(x)=\int_x^{2x}f(t)dt$とおく．
 原点と点$(a,f(a))$，原点と点$(2a,f(2a))$を結ぶ2直線と
 曲線$y=f(x)$とで
 囲まれる部分の面積は$3S(a)$に等しいものとする．
-\begin{description}
-\item[(1)]$S(x)$，$f(x)-2f(2x)$をそれぞれ$x$の関数として表せ．
-\item[(2)]$x>0$に対して，$\displaystyle a(x)=\lim_{n\to\infty}2^nf(2^nx)$とおく．
+
+1.  $S(x)$，$f(x)-2f(2x)$をそれぞれ$x$の関数として表せ．
+
+2.  $x>0$に対して，$\displaystyle a(x)=\lim_{n\to\infty}2^nf(2^nx)$とおく．
 積分$\displaystyle\int_x^{2x}a(t)dt$の値を求めよ．
-\item[(3)]関数$f(x)$を決定せよ．
-\end{description}
+
+3.  関数$f(x)$を決定せよ．

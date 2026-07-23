@@ -7,15 +7,15 @@ type: "problem"
 title: "TITECH 2020 zenki Q2 (problem)"
 ---
 
-{}
-　複素数平面上の異なる3点$A, \, B, \, C$を
+複素数平面上の異なる3点$A, \, B, \, C$を
 複素数$\alpha, \, \beta, \, \gamma$で表す．
 ここで$A, \, B, \, C$は同一直線上にないと仮定する．
-\begin{description}
-\item[(1)]$\triangle ABC$が正三角形となる必要十分条件は，
+
+1.  $\triangle ABC$が正三角形となる必要十分条件は，
 \[ \alpha^2+\beta^2+\gamma^2=\alpha\beta+\beta\gamma+\gamma\alpha \]
 であることを示せ．
-\item[(2)]$\triangle ABC$が正三角形のとき，
+
+2.  $\triangle ABC$が正三角形のとき，
 $\triangle ABC$の外接円上の点$P$を任意にとる．
 このとき，
 \[ {AP}^2+{BP}^2+{CP}^2 \]
@@ -23,4 +23,3 @@ $\triangle ABC$の外接円上の点$P$を任意にとる．
 \[ {AP}^4+{BP}^4+{CP}^4 \]
 を外接円の半径$R$を用いて表せ．
 ただし2点$X, \, Y$に対し，$XY$とは線分$XY$の長さを表す．
-\end{description}

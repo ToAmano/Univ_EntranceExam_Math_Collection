@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1998 zenki Q3 (problem)"
 ---
 
-{}
-　$xy$平面に2つの円
+$xy$平面に2つの円
 \[
 C_0:x^2+{ \left( y-\frac{1}{2} \right) }^2=\frac{1}{4}, 
 C_1:{(x-1)}^2+{ \left( y-\frac{1}{2} \right) }^2=\frac{1}{4}
@@ -18,10 +17,11 @@ C_1:{(x-1)}^2+{ \left( y-\frac{1}{2} \right) }^2=\frac{1}{4}
 $C_n$の半径を$r_n$，$C_n$と$x$軸の接点を$(x_n,0)$として，
 \[ q_n=\frac{1}{\sqrt{2r_n}},  p_n=q_nx_n \]
 とおく．
-\begin{description}
-\item[(1)]$q_n$は整数であることを示せ．
-\item[(2)]$p_n$も整数で，$p_n$と$q_n$は互いに素であることを示せ．
-\item[(3)]$\alpha$を$\displaystyle\alpha=\frac{1}{1+\alpha}$を満たす正の数として，不等式
+
+1.  $q_n$は整数であることを示せ．
+
+2.  $p_n$も整数で，$p_n$と$q_n$は互いに素であることを示せ．
+
+3.  $\alpha$を$\displaystyle\alpha=\frac{1}{1+\alpha}$を満たす正の数として，不等式
 \[ |x_{n+1}-\alpha|<\frac{2}{3}|x_n-\alpha| \]
 を示し，極限$\displaystyle\lim_{n\to\infty}x_n$を求めよ．
-\end{description}

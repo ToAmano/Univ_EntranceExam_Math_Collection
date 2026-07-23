@@ -9,7 +9,6 @@ title: "UTOKYO 1968 zenki Q4 (problem)"
 
 \usepackage[dvipdfm]{graphicx}
 
-{}
 　$(x,y,z)$を空間の直交座標とし，
 点$(1,0,0)$を通り$z$軸に平行な直線を$l$とする．
 $yz-$平面内にあって$y=1-z^2$で表わされる曲線の$-1 \leqq z \leqq 1$なる部分を，

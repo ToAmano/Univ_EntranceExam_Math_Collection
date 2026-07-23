@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1971 zenki Q5 (problem)"
 ---
 
-{}
-　$n$を正の整数とし，
+$n$を正の整数とし，
 $\displaystyle \left( \cos\frac{2\pi}{n}k,\sin\frac{2\pi}{n}k \right)$
 を座標とする点を$Q_n$であらわす．
 このとき，$n$個の点$Q_0,Q_1,\cdots\cdots,Q_{n-1}$によって円周$x^2+y^2=1$は$n$等分される．\\

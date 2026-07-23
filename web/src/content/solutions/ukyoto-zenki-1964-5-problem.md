@@ -7,13 +7,12 @@ type: "problem"
 title: "UKYOTO 1964 zenki Q5 (problem)"
 ---
 
-{}
-　$a_1,a_2,\cdots,a_n,\cdots$を数列とし，
+$a_1,a_2,\cdots,a_n,\cdots$を数列とし，
 $\displaystyle f_n(x)=\cos \left( x+\frac{a_{n+1}+a_n}{2} \right) \sin\frac{a_{n+1}-a_n}{2}$ $(n=1,2,\cdots\cdots)$とおく．
-\begin{description}
-\item[(イ)]すべての$x$の値について，$\displaystyle\sum_{n=1}^\infty f_n(x)$が収束するためには，
+
+1.  すべての$x$の値について，$\displaystyle\sum_{n=1}^\infty f_n(x)$が収束するためには，
 数列$a_1,a_2,\cdots,a_n,\cdots$がどのような条件をみたすことが必要十分であるか．
-\item[(ロ)](イ)の条件がみたされているときについて，和$\displaystyle F(x)=\sum_{n=1}^\infty f_n(x)$を求め，
+
+2.  (イ)の条件がみたされているときについて，和$\displaystyle F(x)=\sum_{n=1}^\infty f_n(x)$を求め，
 $\displaystyle\int_0^\frac{\pi}{2}F(x)dx$と
 級数の和$\displaystyle\sum_{n=1}^\infty \left( \int_0^\frac{\pi}{2}f_n(x)dx \right)$とを比較せよ．
-\end{description}

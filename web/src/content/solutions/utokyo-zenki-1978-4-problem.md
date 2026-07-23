@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1978 zenki Q4 (problem)"
 ---
 
-{}
-　行列$A=\begin{pmatrix} 1/3 & 5 \\ 0 & 3 \end{pmatrix}$に対し，次の問に答えよ．\\
+行列$A=\begin{pmatrix} 1/3 & 5 \\ 0 & 3 \end{pmatrix}$に対し，次の問に答えよ．\\
 　任意の整数$n>0$に対して，$A^n$を数学的帰納法を用いて求めよ．\\
 　また，与えられた$\begin{pmatrix} a \\ b \end{pmatrix}$に対し
 $A^n\begin{pmatrix} a \\ b \end{pmatrix}=\begin{pmatrix} a_n \\ b_n \end{pmatrix}$

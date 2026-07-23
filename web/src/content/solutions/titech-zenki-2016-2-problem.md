@@ -7,20 +7,20 @@ type: "problem"
 title: "TITECH 2016 zenki Q2 (problem)"
 ---
 
-{}
-　$\triangle ABC$を一辺の長さ6の正三角形とする．
+$\triangle ABC$を一辺の長さ6の正三角形とする．
 サイコロを3回振り，出た目を順に$X$，$Y$，$Z$とする．
 出た目に応じて，点$P$，$Q$，$R$をそれぞれ線分$BC$，$CA$，$AB$上に
 \[ \overrightarrow{BP}=\frac{X}{6}\overrightarrow{BC}, 
 \overrightarrow{CQ}=\frac{Y}{6}\overrightarrow{CA}, 
 \overrightarrow{AR}=\frac{Z}{6}\overrightarrow{AB} \]
 をみたすように取る．
-\begin{description}
-\item[(1)]$\triangle PQR$が正三角形になる確率を求めよ．
-\item[(2)]点$B$，$P$，$R$を互いに線分で結んでできる図形を$T_1$，
+
+1.  $\triangle PQR$が正三角形になる確率を求めよ．
+
+2.  点$B$，$P$，$R$を互いに線分で結んでできる図形を$T_1$，
 点$C$，$Q$，$P$を互いに線分で結んでできる図形を$T_2$，
 点$A$，$R$，$Q$を互いに線分で結んでできる図形を$T_3$とする．
 $T_1$，$T_2$，$T_3$のうち，ちょうど2つが正三角形になる確率を求めよ．
-\item[(3)]$\triangle PQR$の面積を$S$とし，$S$のとりうる値の最小値を$m$とする．
+
+3.  $\triangle PQR$の面積を$S$とし，$S$のとりうる値の最小値を$m$とする．
 $m$の値および$S=m$となる確率を求めよ．
-\end{description}

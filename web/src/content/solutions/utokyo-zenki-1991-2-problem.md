@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1991 zenki Q2 (problem)"
 ---
 
-{}
-　$a$，$b$，$c$を正の実数とする．
+$a$，$b$，$c$を正の実数とする．
 $xyz$空間において，$|x|\leqq a$，$|y|\leqq b$，$z=c$をみたす点$(x,y,z)$からなる板$R$を考える．
 点光源$P$が平面$z=c+1$上の楕円$\displaystyle\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$，$z=c+1$の上を一周するとき，
 光が板$R$にさえぎられて$xy$平面上にできる影の通過する部分の図をえがき，その面積を求めよ．

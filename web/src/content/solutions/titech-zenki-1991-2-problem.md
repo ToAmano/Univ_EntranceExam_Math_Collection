@@ -7,7 +7,6 @@ type: "problem"
 title: "TITECH 1991 zenki Q2 (problem)"
 ---
 
-{}
-　空間内の$xy$平面上の直線$l$を楕円$\displaystyle x^2+\frac{y^2}{4}=1$，$z=0$の接線とする．
+空間内の$xy$平面上の直線$l$を楕円$\displaystyle x^2+\frac{y^2}{4}=1$，$z=0$の接線とする．
 直線$l$と点$\displaystyle \left( \frac{1}{2},1,1 \right) $を含む平面$\pi$が$z$軸と交わる点$Q$を$(0,0,k)$とするとき，
 $k$のとり得る値の範囲を求めよ．

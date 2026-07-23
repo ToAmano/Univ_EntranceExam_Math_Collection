@@ -7,7 +7,8 @@ type: "summary"
 title: "1997年 全体サマリ"
 ---
 
-**1997年度**
+{ **1997年度**}
+
 **出題テーマと難易度**
 
   
@@ -30,6 +31,9 @@ title: "1997年 全体サマリ"
 |:--:|:--:|:---|
 | 第1問 | \- | $\displaystyle \lim_{a\to\infty} S_a = \frac{\pi}{8}$ |
 | 第2問 | \(1\) | $\displaystyle p_n = \frac{1}{4}\left\{1-\left(-\frac{1}{3}\right)^{n-1}\right\}$ |
+
+    
+  }
 
 **試験形態**
 

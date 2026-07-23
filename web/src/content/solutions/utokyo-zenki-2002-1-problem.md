@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 2002 zenki Q1 (problem)"
 ---
 
-{}
-　2つの放物線
+2つの放物線
 $\begin{matrix}
 y=2\sqrt3(x-\cos\theta)^2+\sin\theta \\
 y=-2\sqrt3(x+\cos\theta)^2-\sin\theta

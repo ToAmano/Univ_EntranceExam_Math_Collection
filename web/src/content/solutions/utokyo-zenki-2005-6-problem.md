@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 2005 zenki Q6 (problem)"
 ---
 
-{}
-　$r$を正の実数とする．$xyz$空間において
+$r$を正の実数とする．$xyz$空間において
 \[ x^2+y^2 \leqq r^2 \]
 \[ y^2+z^2 \geqq r^2 \]
 \[ z^2+x^2 \leqq r^2 \]

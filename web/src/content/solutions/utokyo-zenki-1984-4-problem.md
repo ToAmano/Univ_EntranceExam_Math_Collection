@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1984 zenki Q4 (problem)"
 ---
 
-{}
-　空間内に，3点$\displaystyle P \left( 1,\frac{1}{2},0 \right)$，
+空間内に，3点$\displaystyle P \left( 1,\frac{1}{2},0 \right)$，
 $\displaystyle Q \left( 1,-\frac{1}{2},0 \right)$，
 $\displaystyle R \left( \frac{1}{4},0,\frac{\sqrt3}{4} \right)$を頂点とする正3角形の板$S$がある．
 $S$を$z$軸のまわりに1回転させたとき，

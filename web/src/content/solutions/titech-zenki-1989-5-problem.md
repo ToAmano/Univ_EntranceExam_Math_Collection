@@ -7,12 +7,11 @@ type: "problem"
 title: "TITECH 1989 zenki Q5 (problem)"
 ---
 
-{}
-　箱の中に，1から$n$までの数字をそれぞれ1つずつ書いた$n$枚のカードが入っている．
+箱の中に，1から$n$までの数字をそれぞれ1つずつ書いた$n$枚のカードが入っている．
 箱から無作為に1枚のカードを取り出して，その数字を記録し，箱に戻す．
 この試行を$k$回くり返し，それまでに記録された相異なる数字の個数を$S_k$とする．
 $S_k=r$となる確率を$P(S_k=r)$で表すとき，次の問に答えよ．
-\begin{description}
-\item[(1)]$P(S_k=r)$を$P(S_{k-1}=r)$と$P(S_{k-1}=r-1)$で表せ．
-\item[(2)]$S_k$の期待値$\displaystyle E_k=\sum_{r=1}^krP(S_k=r)$を求めよ．
-\end{description}
+
+1.  $P(S_k=r)$を$P(S_{k-1}=r)$と$P(S_{k-1}=r-1)$で表せ．
+
+2.  $S_k$の期待値$\displaystyle E_k=\sum_{r=1}^krP(S_k=r)$を求めよ．

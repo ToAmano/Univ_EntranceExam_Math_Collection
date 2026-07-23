@@ -7,7 +7,8 @@ type: "summary"
 title: "1991年 全体サマリ"
 ---
 
-**1991年度**
+{ **1991年度**}
+
 **出題テーマと難易度**
 
   
@@ -31,6 +32,9 @@ title: "1991年 全体サマリ"
 | 第2問 | \(1\) | $\displaystyle a_n=9^n$ |
 | 2-3 | \(2\) | $\displaystyle \lim_{n \to \infty} \frac{b_n}{a_n}  = \frac{1}{10}$ |
 | 第2問 | \- | $\displaystyle \max\theta =\frac{\pi}{6}$ |
+
+    
+  }
 
 **試験形態**
 

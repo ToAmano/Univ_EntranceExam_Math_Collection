@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1962 zenki Q2 (problem)"
 ---
 
-{}
-　$\triangle ABC$において$\angle A=90^\circ$，$AB=AC=2$とする．
+$\triangle ABC$において$\angle A=90^\circ$，$AB=AC=2$とする．
 点$B$，$C$から直線$BC$に関して$A$と同じ側に辺$BC$に垂直な半直線$BX$，$CY$を引く．
 半直線$BX$，辺$AB$，$BC$，$CA$，半直線$CY$の上にそれぞれ点$P$，$Q$，$R$，$S$，$T$をとり，
 \[ PQ // BC,  \frac{\cos\angle BQP}{\cos\angle AQR}=\sqrt2, 

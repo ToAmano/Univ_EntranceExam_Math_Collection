@@ -9,7 +9,6 @@ title: "UTOKYO 1979 zenki Q2 (problem)"
 
 \usepackage[dvipdfm]{graphicx}
 
-{}
 　図のように，半径1の球が，
 ある円錐の内部にはめこまれる形で接しているとする．
 球と円錐面が接する点の全体は円をなすが，

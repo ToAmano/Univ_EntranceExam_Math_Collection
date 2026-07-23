@@ -9,7 +9,6 @@ title: "UTOKYO 1982 zenki Q4 (problem)"
 
 \usepackage[dvipdfm]{graphicx}
 
-{}
 　$xy$平面上の曲線$y=\sin x$に沿って，
 図のように左から右へすすむ動点$P$がある．
 $P$の速さが一定$V$ $(V>0)$であるとき，

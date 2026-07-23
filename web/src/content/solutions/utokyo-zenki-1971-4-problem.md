@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1971 zenki Q4 (problem)"
 ---
 
-{}
-　$x$の整式
+$x$の整式
 \[ f_n(x)=1+\frac{x}{1 \, !}+\frac{x^2}{2 \, !}+\cdots\cdots+\frac{x^n}{n \, !}  (n=1,2,\cdots\cdots) \]
 について
 \[ f_n ' (x)=f_{n-1}(x)  (n=2,3,\cdots\cdots) \]

@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1994 zenki Q4 (problem)"
 ---
 
-{}
-　$0<c<1$とする．$0 \leqq x < 1$において連続な関数$f(x)$に対して
+$0<c<1$とする．$0 \leqq x < 1$において連続な関数$f(x)$に対して
 \[ f_1(x)=f(x)+\int_0^cf(t)dt,  f_2(x)=f(x)+\int_0^cf_1(t)dt \]
 とおく．以下，関数$f_3(x),f_4(x),\cdots\cdots$を順次
 \[ f_n(x)=f(x)+\int_0^cf_{n-1}(t)dt  (n=3,4,\cdots\cdots) \]

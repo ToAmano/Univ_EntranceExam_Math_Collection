@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1998 zenki Q5 (problem)"
 ---
 
-{}
-　$\theta$は$0\leqq\theta<2\pi$を満たす実数とする．$xy$平面にベクトル
+$\theta$は$0\leqq\theta<2\pi$を満たす実数とする．$xy$平面にベクトル
 \[ \vec{a}=(\cos\theta,\sin\theta),  \vec{b}=\left(\frac{\sqrt3}{2},\frac{1}{2}\right) \]
 をとり，点$P_n$，$Q_n$，$n=1,2,\cdots$を
 \[ \begin{cases}

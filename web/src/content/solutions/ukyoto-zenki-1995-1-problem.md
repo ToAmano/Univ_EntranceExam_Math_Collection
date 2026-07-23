@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 1995 zenki Q1 (problem)"
 ---
 
-{}
-　行列$\begin{pmatrix} a & b \\ 0 & a \end{pmatrix}$で表される1次変換を$f$とする．
+行列$\begin{pmatrix} a & b \\ 0 & a \end{pmatrix}$で表される1次変換を$f$とする．
 平面上の1点を$P$，原点を$O$とする．
 $\overrightarrow{OP}$の$f$による像を$\overrightarrow{OQ}$，
 $x$軸に垂直で点$Q$を通る直線と$x$軸との交点を$R$とする．

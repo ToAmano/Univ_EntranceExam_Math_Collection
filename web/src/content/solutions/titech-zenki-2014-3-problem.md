@@ -7,8 +7,7 @@ type: "problem"
 title: "TITECH 2014 zenki Q3 (problem)"
 ---
 
-{}
-　1個のさいころを投げて，
+1個のさいころを投げて，
 出た目が1か2であれば行列$A=\begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix}$を，
 出た目が3か4であれば行列$B=\begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$を，
 出た目が5か6であれば行列$C=\begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}$を選ぶ．
@@ -16,9 +15,10 @@ title: "TITECH 2014 zenki Q3 (problem)"
 点$R$は最初は点$(0, \, 1)$にあるものとし，
 さいころを投げて点$R$を移す操作を$n$回続けて行ったときに
 点$R$が点$(0, \, 1)$にある確率を$p_n$，点$(0, \, -1)$にある確率を$q_n$とする．
-\begin{description}
-\item[(1)]$p_1$，$p_2$と$q_1$，$q_2$を求めよ．
-\item[(2)]$p_n+q_n$と$p_{n-1}+q_{n-1}$の関係式を求めよ．
+
+1.  $p_1$，$p_2$と$q_1$，$q_2$を求めよ．
+
+2.  $p_n+q_n$と$p_{n-1}+q_{n-1}$の関係式を求めよ．
 また，$p_n-q_n$と$p_{n-1}-q_{n-1}$の関係式を求めよ．
-\item[(3)]$p_n$を$n$を用いて表せ．
-\end{description}
+
+3.  $p_n$を$n$を用いて表せ．

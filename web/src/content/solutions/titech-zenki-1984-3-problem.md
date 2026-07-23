@@ -7,15 +7,14 @@ type: "problem"
 title: "TITECH 1984 zenki Q3 (problem)"
 ---
 
-{}
-　曲線$\displaystyle y=\frac{1}{x}$ $(x>0)$を$C_1$とし，
+曲線$\displaystyle y=\frac{1}{x}$ $(x>0)$を$C_1$とし，
 $\displaystyle y=-\frac{1}{x}$ $(x<0)$を$C_2$とする．
 $C_1$上に点$P_1$，$C_2$上に点$P_2$をとり，
 $P_1$，$P_2$を結ぶ直線を$l$とする．
 原点を$O$とする．
-\begin{description}
-\item[(1)]$l$が$C_1$または$C_2$の接線になっているとき，
+
+1.  $l$が$C_1$または$C_2$の接線になっているとき，
 $\triangle OP_1P_2$の面積は一定であることを示せ．
-\item[(2)]$\triangle OP_1P_2$の面積が(1)の値に等しいとき，
+
+2.  $\triangle OP_1P_2$の面積が(1)の値に等しいとき，
 $l$は$C_1$または$C_2$の接線になることを示せ．
-\end{description}

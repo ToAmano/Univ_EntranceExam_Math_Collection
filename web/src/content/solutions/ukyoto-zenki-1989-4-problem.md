@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 1989 zenki Q4 (problem)"
 ---
 
-{}
-　四面体$OABC$において，
+四面体$OABC$において，
 $\overrightarrow{OA}$，$\overrightarrow{OB}$，$\overrightarrow{OC}$はたがいに直交している．
 $\displaystyle\overrightarrow{OG}=\frac{1}{4}(\overrightarrow{OA}+\overrightarrow{OB}+\overrightarrow{OC})$
 となる点$G$を通り$\overrightarrow{OG}$に直交する平面による四面体$OABC$の切り口は，どのような図形か．

@@ -7,7 +7,6 @@ type: "problem"
 title: "UKYOTO 1993 zenki Q5 (problem)"
 ---
 
-{}
-　$n$を自然数とする．
+$n$を自然数とする．
 さいころを$2n$回投げて$n$回以上偶数の目が出る確率を$p_n$とするとき，
 $\displaystyle p_n\geqq\frac{1}{2}+\frac{1}{4n}$であることを示せ．

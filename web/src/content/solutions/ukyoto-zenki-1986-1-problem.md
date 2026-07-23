@@ -7,7 +7,6 @@ type: "problem"
 title: "UKYOTO 1986 zenki Q1 (problem)"
 ---
 
-{}
-　すべては0でない$n$個の実数$a_1,a_2,\cdots\cdots,a_n$があり，
+すべては0でない$n$個の実数$a_1,a_2,\cdots\cdots,a_n$があり，
 $a_1 \leqq a_2 \leqq \cdots\cdots \leqq a_n$かつ$a_1+a_2+\cdots\cdots+a_n=0$を満たすとき，
 $a_1+2a_2+\cdots\cdots+na_n>0$が成り立つことを証明せよ．

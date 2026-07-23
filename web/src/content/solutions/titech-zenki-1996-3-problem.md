@@ -7,11 +7,10 @@ type: "problem"
 title: "TITECH 1996 zenki Q3 (problem)"
 ---
 
-{}
-　関数$f(x)=px^7(x-\alpha)(x-\beta)$が$x=1$で極値1をとり，
+関数$f(x)=px^7(x-\alpha)(x-\beta)$が$x=1$で極値1をとり，
 さらに$x$軸と曲線$y=f(x)$で囲まれ面積が有限な2つの部分の面積が等しいとする．
 このとき次の問いに答えよ．
-\begin{description}
-\item[(1)]$0<\alpha<\beta$のとき$f(x)$を求めよ．
-\item[(2)]$\alpha<0<\beta$のとき$f(x)$を求めよ．
-\end{description}
+
+1.  $0<\alpha<\beta$のとき$f(x)$を求めよ．
+
+2.  $\alpha<0<\beta$のとき$f(x)$を求めよ．

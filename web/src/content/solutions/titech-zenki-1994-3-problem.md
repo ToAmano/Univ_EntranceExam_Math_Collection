@@ -7,8 +7,6 @@ type: "problem"
 title: "TITECH 1994 zenki Q3 (problem)"
 ---
 
-{}
-\begin{description}
-\item[(1)]定積分$\displaystyle \int_0^\pi e^{-x} \sin x dx$を求めよ．
-\item[(2)]極限値$\displaystyle \lim_{n\to\infty} \int_0^{n\pi} e^{-x} |\sin x| dx$を求めよ．
-\end{description}
+1.  定積分$\displaystyle \int_0^\pi e^{-x} \sin x dx$を求めよ．
+
+2.  極限値$\displaystyle \lim_{n\to\infty} \int_0^{n\pi} e^{-x} |\sin x| dx$を求めよ．

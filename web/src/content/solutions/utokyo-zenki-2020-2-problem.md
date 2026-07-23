@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 2020 zenki Q2 (problem)"
 ---
 
-{}
-　平面上の点$P, \, Q, \, R$が同一直線上にないとき，
+平面上の点$P, \, Q, \, R$が同一直線上にないとき，
 それらを3頂点とする三角形の面積を$\triangle PQR$で表す。
 また，$P, \, Q, \, R$が同一直線上にあるときは，
 $\triangle PQR=0$とする。\\

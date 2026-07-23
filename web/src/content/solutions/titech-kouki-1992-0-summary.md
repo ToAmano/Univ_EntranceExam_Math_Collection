@@ -7,7 +7,8 @@ type: "summary"
 title: "1992年 全体サマリ"
 ---
 
-**1992年度**
+{ **1992年度**}
+
 **出題テーマと難易度**
 
   
@@ -30,6 +31,9 @@ title: "1992年 全体サマリ"
 |:--:|:--:|:---|
 | 第1問 | \- | $\displaystyle \min F(x) = 3 - 2\sqrt{2}$ |
 | 第2問 | \- | $\displaystyle \lim_{n\to\infty}A_n = \left( \frac{a(2+a)}{2(a^2+a+1)}, \frac{\sqrt{3}a^2}{2(a^2+a+1)} \right)$ |
+
+    
+  }
 
 **試験形態**
 

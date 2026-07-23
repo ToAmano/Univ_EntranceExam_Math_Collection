@@ -7,13 +7,13 @@ type: "problem"
 title: "UTOKYO 1977 zenki Q2 (problem)"
 ---
 
-{}
-　$xy$平面上の，原点$O$とは異なる2点$A(a_1,a_2)$，$B(b_1,b_2)$に対し，
+$xy$平面上の，原点$O$とは異なる2点$A(a_1,a_2)$，$B(b_1,b_2)$に対し，
 $OA=a$，$OB=b$，$\angle AOB=\theta$とおく．
 2点$A$，$B$の座標$a_1$，$a_2$，$b_1$，$b_2$が有理数であるとき
 次の3条件はたがいに同値であることを証明せよ．
-\begin{description}
-\item[i)]$ab$は有理数である．
-\item[ii)]$\cos\theta$は有理数である．
-\item[iii)]$\sin\theta$は有理数である．
-\end{description}
+
+1.  $ab$は有理数である．
+
+2.  $\cos\theta$は有理数である．
+
+3.  $\sin\theta$は有理数である．

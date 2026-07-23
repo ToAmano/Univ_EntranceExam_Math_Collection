@@ -22,8 +22,9 @@ $$
   [(式3)](#2003-3:eq:3)において$a \in \mathbb{R}$ だから, $\alpha_1 \sim \alpha_3$ のうち,1つ又は3つが実数の場合を調べれば良い.
   （二つのみ実数の時は，$a$が虚数となり不適）
 
-  \begin{itemize}
-    \item[$1$] $ \alpha_1, \alpha_2, \alpha_3 \in \mathbb{R} $の時
+  
+
+1.  $ \alpha_1, \alpha_2, \alpha_3 \in \mathbb{R} $の時
           題意の条件より
           
 
@@ -51,7 +52,7 @@ $$
           を得るが，これは三つ目の式に反して矛盾．
           よって$ \alpha_1, \alpha_2, \alpha_3 \in \mathbb{R} $の時は条件を満たさず不適．
 
-    \item[$2$] $\alpha_1,\alpha_2,\alpha_3$のうち，一つが実数，二つが虚数の時
+2.  $\alpha_1,\alpha_2,\alpha_3$のうち，一つが実数，二つが虚数の時
           $\alpha_1,\alpha_2,\alpha_3$について対称だから，
           $\alpha_1 \in \mathbb{R}$, $\alpha_2, \alpha_3 \notin \mathbb{R}$
           の時を考えれば十分．
@@ -126,7 +127,6 @@ $$
 $$
 
           を得る．
-  \end{itemize}
 
   
 

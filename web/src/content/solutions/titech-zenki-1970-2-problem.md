@@ -7,11 +7,10 @@ type: "problem"
 title: "TITECH 1970 zenki Q2 (problem)"
 ---
 
-{}
-　だ円$\displaystyle\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ $(a>b>0)$について次の問いに答えよ．
-\begin{description}
-\item[(1)]その焦点$F(ae, \, 0)$（ただし$e>0$とする）を極，
+だ円$\displaystyle\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ $(a>b>0)$について次の問いに答えよ．
+
+1.  その焦点$F(ae, \, 0)$（ただし$e>0$とする）を極，
 $x$軸の正の方向を始線（原線）とする極方程式を求めよ．
-\item[(2)]$F$を通る2つの弦$PQ$，$RS$が直交するとき
+
+2.  $F$を通る2つの弦$PQ$，$RS$が直交するとき
 $\displaystyle\frac{1}{PF \cdot QF}+\frac{1}{RF \cdot SF}$の値を求めよ．
-\end{description}

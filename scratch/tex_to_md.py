@@ -298,10 +298,27 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     md_content = re.sub(r'\{\\bf\s*\\?\[解説\\?\]\}|\*\*\[解説\]\*\*|\\\[解説\\\]|(?<!#)\s*【解説】', r'\n\n## 【解説】\n\n', md_content)
     md_content = re.sub(r'\{\\bf\s*\\?\[方針\\?\]\}|\*\*\[方針\]\*\*|\\\[方針\\\]|(?<!#)\s*【方針】', r'\n\n## 【方針】\n\n', md_content)
 
-    # 孤立した不要な波括弧 { や } のクリーンアップ
-    md_content = re.sub(r'^\s*\{\s*(\*\*[^*]+\*\*)\s*\}\s*$', r'\1', md_content, flags=re.MULTILINE)
-    md_content = re.sub(r'\{\s*(\*\*[^*]+\*\*)\s*\}', r'\1', md_content)
-    md_content = re.sub(r'^\s*[\{\}]\s*$', '', md_content, flags=re.MULTILINE)
+    # リスト環境 (\begin{enumerate}, \begin{description}, \begin{itemize}) のスマート番号付きリスト変換
+    def replace_enumerate_block(m):
+        block = m.group(1)
+        items = re.split(r'\\item\s*', block)
+        res = []
+        count = 1
+        for it in items:
+            it = it.strip()
+            if not it:
+                continue
+            # 残存する項目ラベル [ (1) ] や [(イ)] 等のストリップ
+            it = re.sub(r'^\[\s*\(?.*?\)?\s*\]\s*', '', it)
+            res.append(f"{count}.  {it}")
+            count += 1
+        return "\n\n" + "\n\n".join(res) + "\n\n"
+
+    md_content = re.sub(r'\\begin\{(?:enumerate|description|itemize)\}(.*?)\\end\{(?:enumerate|description|itemize)\}', replace_enumerate_block, md_content, flags=re.DOTALL)
+
+    # 冒頭・単独の空の中括弧 {} や不要記号の除去
+    md_content = re.sub(r'^\s*\{\}\s*$', '', md_content, flags=re.MULTILINE)
+    md_content = re.sub(r'^\s*\{\}\s*', '', md_content, flags=re.MULTILINE)
 
     # 明示的な TeX 見出し \paragraph{...} の変換
     md_content = re.sub(r'\\paragraph\*?\s*\{([^}]+)\}', r'\n\n### \1\n\n', md_content)

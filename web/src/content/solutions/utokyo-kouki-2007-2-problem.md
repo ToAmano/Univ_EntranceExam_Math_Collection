@@ -61,10 +61,10 @@ title: "UTOKYO 2007 kouki Q2 (problem)"
             -b_{n-1} & a_{n-1}
           \end{pmatrix}^{-1}
         \end{align}
-        \begin{itemize}
-          [ア] $\lim_{n\to\infty}b_n=0$を示せ．
+        
+
+1.  $\lim_{n\to\infty}b_n=0$を示せ．
           [イ] $\lim_{n\to\infty}a_n$，$\lim_{n\to\infty}c_n=0$を求めよ．
-        \end{itemize}
 
 4.  [ア] $\lim_{n\to\infty}b_n=0$を示せ．
 

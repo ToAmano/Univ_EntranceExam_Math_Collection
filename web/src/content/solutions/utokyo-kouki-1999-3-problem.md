@@ -19,9 +19,9 @@ $$
 
 四角形$\text{A}_0 \text{B}_0 \text{C}_0 \text{D}_0$が与えられたとき，この四角形から出発して，任意の整数$n$に対して四角形$\text{A}_n \text{B}_n \text{C}_n \text{D}_n$を以下のように帰納的に定める．
 
-\begin{itemize}
-  \item[(I)] $n = 0$のときは，与えられた四角形$\text{A}_0 \text{B}_0 \text{C}_0 \text{D}_0$とする．
-  \item[(II)] $n > 0$のときは，四角形$\text{A}_{n-1} \text{B}_{n-1} \text{C}_{n-1} \text{D}_{n-1}$まで定まったとして，四角形$\text{A}_n \text{B}_n \text{C}_n \text{D}_n$を
+1.  $n = 0$のときは，与えられた四角形$\text{A}_0 \text{B}_0 \text{C}_0 \text{D}_0$とする．
+
+2.  $n > 0$のときは，四角形$\text{A}_{n-1} \text{B}_{n-1} \text{C}_{n-1} \text{D}_{n-1}$まで定まったとして，四角形$\text{A}_n \text{B}_n \text{C}_n \text{D}_n$を
         
 
 $$
@@ -31,7 +31,8 @@ $$
 $$
 
         となる四角形として定める．
-  \item[(III)] $n < 0$のときは， $0, -1, \dots, n+1$と負の向きに進んで，四角形$\text{A}_{n+1} \text{B}_{n+1} \text{C}_{n+1} \text{D}_{n+1}$まで定まったとして，四角形$\text{A}_n \text{B}_n \text{C}_n \text{D}_n$を
+
+3.  $n < 0$のときは， $0, -1, \dots, n+1$と負の向きに進んで，四角形$\text{A}_{n+1} \text{B}_{n+1} \text{C}_{n+1} \text{D}_{n+1}$まで定まったとして，四角形$\text{A}_n \text{B}_n \text{C}_n \text{D}_n$を
         
 
 $$
@@ -41,7 +42,6 @@ $$
 $$
 
         となる四角形として定める．
-\end{itemize}
 
 こうして定まった四角形$\text{A}_n \text{B}_n \text{C}_n \text{D}_n$を$K_n$と書くことにする．
 

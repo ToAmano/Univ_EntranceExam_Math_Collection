@@ -9,7 +9,6 @@ title: "UTOKYO 1978 zenki Q1 (problem)"
 
 \usepackage[dvipdfm]{graphicx}
 
-{}
 　半径1の円$O$の周を6等分する点を図のように順次$A_1,A_2,\cdots\cdots,A_6$とする．\\
 　弧$A_2A_1A_6$および半径$OA_2$，$OA_6$に接する円の中心を$P$とし，
 この円$P$の周と線分$OP$の交点を$B$とする．

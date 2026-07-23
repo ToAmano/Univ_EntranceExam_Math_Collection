@@ -28,13 +28,13 @@ title: "TITECH 1995 kouki Q2 (solution)"
   $X$が$\pm a$に等しいか否かで場合分けして考える．
 
   
-  \underline**$X= \pm a$の時**
+  \underline{**$X= \pm a$の時**}
 
   接線のうち一本が$y$軸並行となるため，もう一本の接線は$x$軸並行である必要がある．
   このような条件を満たすのは$Y=\pm 1$（複号同順）である．この時[図2](#1995-2:fig:2)のようになる．
 
   
-  \underline**$X \neq \pm a$の時**
+  \underline{**$X \neq \pm a$の時**}
 
   接線が$Y$軸平行でないので接線$l_1, l_2$を実数$m, m_z$を用いて
   

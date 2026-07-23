@@ -7,9 +7,7 @@ type: "problem"
 title: "UTOKYO 2000 zenki Q6 (problem)"
 ---
 
-{}
-\begin{description}
-\item[(1)]$a$，$b$，$c$を正の実数とするとき，
+1.  $a$，$b$，$c$を正の実数とするとき，
 \[
 \begin{pmatrix} 1 & a & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix}
 \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & b \\ 0 & 0 & 1 \end{pmatrix}
@@ -20,8 +18,9 @@ title: "UTOKYO 2000 zenki Q6 (problem)"
 \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & z \\ 0 & 0 & 1 \end{pmatrix}
 \]
 を満たす実数$x$，$y$，$z$を$a$，$b$，$c$で表せ．
-\item[(2)]$a$，$b$，$c$が$1 \leqq a \leqq 2$，$1 \leqq b \leqq 2$，$1 \leqq c \leqq 2$の範囲を動くとき，
+
+2.  $a$，$b$，$c$が$1 \leqq a \leqq 2$，$1 \leqq b \leqq 2$，$1 \leqq c \leqq 2$の範囲を動くとき，
 (1)の$x$，$y$，$z$を座標とする点$(x,y,z)$が描く立体を$K$とする．
 立体$K$を平面$y=t$で切った切り口の面積を求めよ．
-\item[(3)]この立体$K$の体積を求めよ．
-\end{description}
+
+3.  この立体$K$の体積を求めよ．

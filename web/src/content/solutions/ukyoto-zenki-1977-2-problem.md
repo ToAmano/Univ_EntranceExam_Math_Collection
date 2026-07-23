@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 1977 zenki Q2 (problem)"
 ---
 
-{}
-　正の数$a$に対し，関数$f(x)=ax-(1+a^4)x^3$を考える．
+正の数$a$に対し，関数$f(x)=ax-(1+a^4)x^3$を考える．
 この関数のグラフが$x$軸の正の部分と交わる点の$x$座標を$c$とし，
 積分$\displaystyle S_a=\int_0^cf(x)dx$を考える．
 $a$をいろいろ変えたとき，$S_a$の値が最大になるような$a$の値を求めよ．

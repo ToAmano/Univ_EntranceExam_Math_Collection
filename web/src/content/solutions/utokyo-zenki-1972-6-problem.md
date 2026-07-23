@@ -9,7 +9,6 @@ title: "UTOKYO 1972 zenki Q6 (problem)"
 
 \usepackage[dvipdfm]{graphicx}
 
-{}
 　図の長方形$ABP_1P_5$はある国境の町をあらわし，
 各線分は道路をあらわす．
 図の地点$P_1$，$P_2$，$\cdots$，$P_9$には外国への通路が開かれている．

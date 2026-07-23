@@ -7,10 +7,9 @@ type: "problem"
 title: "UKYOTO 1963 zenki Q4 (problem)"
 ---
 
-{}
-　三角形$ABC$の辺上を動く点$D$，$E$，$F$が，時刻$t=0$にそれぞれ$A$，$B$，$C$を出発し，
+三角形$ABC$の辺上を動く点$D$，$E$，$F$が，時刻$t=0$にそれぞれ$A$，$B$，$C$を出発し，
 $B$，$C$，$A$にむかってそれぞれ一定の速さで進んで，時刻$t=1$に$B$，$C$，$A$に達するものとする．
-\begin{description}
-\item[(イ)]その間$\triangle DEF$の重心は動かないことを示せ．
-\item[(ロ)]$\triangle DEF$の面積の最小値は$\triangle ABC$の面積の何倍か．
-\end{description}
+
+1.  その間$\triangle DEF$の重心は動かないことを示せ．
+
+2.  $\triangle DEF$の面積の最小値は$\triangle ABC$の面積の何倍か．

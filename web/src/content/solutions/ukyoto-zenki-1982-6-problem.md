@@ -7,9 +7,8 @@ type: "problem"
 title: "UKYOTO 1982 zenki Q6 (problem)"
 ---
 
-{}
-　関数$\displaystyle f(x)=\int_x^{x+1}te^{-|t|}dt$について，次の問に答えよ．
-\begin{description}
-\item[(1)]$-1\leqq x \leqq0$のとき，$f(-1)\leqq f(x) \leqq f(0)$であることを示せ．
-\item[(2)]$f(x)$が最大および最小となる$x$の値をそれぞれ求めよ．
-\end{description}
+関数$\displaystyle f(x)=\int_x^{x+1}te^{-|t|}dt$について，次の問に答えよ．
+
+1.  $-1\leqq x \leqq0$のとき，$f(-1)\leqq f(x) \leqq f(0)$であることを示せ．
+
+2.  $f(x)$が最大および最小となる$x$の値をそれぞれ求めよ．

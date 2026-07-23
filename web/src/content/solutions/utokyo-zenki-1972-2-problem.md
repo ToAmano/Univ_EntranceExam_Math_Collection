@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1972 zenki Q2 (problem)"
 ---
 
-{}
-　平面上の三角形$ABC$において，
+平面上の三角形$ABC$において，
 頂点$A$を通り辺$AB$，$AC$に垂直な直線をそれぞれ$h$，$k$とする．
 $B$の$k$に関する対称点を$B'$，$C$の$h$に関する対称点を$C'$とする．
 ベクトル$\mathbf{b}=\overrightarrow{AB}$，

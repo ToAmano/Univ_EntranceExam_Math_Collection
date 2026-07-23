@@ -7,7 +7,8 @@ type: "summary"
 title: "2009年 全体サマリ"
 ---
 
-**2009年度**
+{ **2009年度**}
+
 **出題テーマと難易度**
 
   
@@ -31,6 +32,9 @@ title: "2009年 全体サマリ"
 | 第1問 | \- | $\displaystyle \frac{(X+a)^2}{a^2+3} + \frac{Y^2}{3} \le 1$ |
 | 第2問 | \- | $\displaystyle 2\frac{\sqrt{t+1}(t+1)}{t}$ |
 | 2-3 | \(2\) | $\displaystyle 3\sqrt{3}$ |
+
+    
+  }
 
 **試験形態**
 

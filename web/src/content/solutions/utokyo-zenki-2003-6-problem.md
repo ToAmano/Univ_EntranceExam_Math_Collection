@@ -7,5 +7,4 @@ type: "problem"
 title: "UTOKYO 2003 zenki Q6 (problem)"
 ---
 
-{}
-　円周率が3.05より大きいことを証明せよ．
+円周率が3.05より大きいことを証明せよ．

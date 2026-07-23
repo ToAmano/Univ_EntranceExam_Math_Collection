@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 1972 zenki Q1 (problem)"
 ---
 
-{}
-　2つまたは3つのベクトルの加法について，次の法則が成立する．
+2つまたは3つのベクトルの加法について，次の法則が成立する．
 \[ \overrightarrow{A}+\overrightarrow{B}=\overrightarrow{B}+\overrightarrow{A}, 
 (\overrightarrow{A}+\overrightarrow{B})+\overrightarrow{C} =
 \overrightarrow{A}+(\overrightarrow{B}+\overrightarrow{C}) \]

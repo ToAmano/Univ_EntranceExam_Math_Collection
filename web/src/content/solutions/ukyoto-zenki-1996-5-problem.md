@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 1996 zenki Q5 (problem)"
 ---
 
-{}
-　$xy$平面上の正三角形$\triangle ABC$を考える．
+$xy$平面上の正三角形$\triangle ABC$を考える．
 $\triangle ABC$の重心は原点$O$にあり，ベクトル$\overrightarrow{OA}$の長さは1とする．
 $\triangle ABC$の内部または辺上の点$P_0$に対し，
 3頂点$A$，$B$，$C$から1点を等確率$\displaystyle\frac{1}{3}$で選び，
@@ -17,10 +16,11 @@ $\triangle ABC$の内部または辺上の点$P_0$に対し，
 以下この操作を繰り返して，
 点$P_3,P_4,\cdots,P_n$を作る．
 ベクトル$\overrightarrow{OP_n}$の長さの2乗${|\overrightarrow{OP_n}|^2}$の期待値を$E_n$とおく．
-\begin{description}
-\item[(1)]$E_1$をベクトル$\overrightarrow{OP_0}$の長さを用いて表せ．
-\item[(2)]選んだ頂点が$X_1,X_2,\cdots,X_n$のとき，
+
+1.  $E_1$をベクトル$\overrightarrow{OP_0}$の長さを用いて表せ．
+
+2.  選んだ頂点が$X_1,X_2,\cdots,X_n$のとき，
 ベクトル$\overrightarrow{OP_n}$をベクトル$\overrightarrow{OP_0}$と$\overrightarrow{OX_i}$，$i=1,2,\cdots,n$，
 を用いて表せ．
-\item[(3)]$P_0$が原点$O$のとき$E_n$を求めよ．
-\end{description}
+
+3.  $P_0$が原点$O$のとき$E_n$を求めよ．

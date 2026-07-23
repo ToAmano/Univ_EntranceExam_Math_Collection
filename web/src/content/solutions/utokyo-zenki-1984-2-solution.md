@@ -17,10 +17,14 @@ title: "UTOKYO 1984 zenki Q2 (solution)"
      
      $\mathrm{P_t}$の$x$座標，$y$座標を$t$の関数として$x=f(t)$，$y=g(t)$と表した時，次の極限値は
      どのような数となるか．
-          \begin{enumerate}[i)]
-          \item $\dlim{t}{0}\dfrac{f(t)}{g(t)}$ \\
-          \item $\dlim{t}{+\infty}\dfrac{f(t)}{g(t)}$
-          \end{enumerate}
+          
+
+1.  
+
+2.  $\dlim{t}{0}\dfrac{f(t)}{g(t)}$ \\
+
+3.  $\dlim{t}{+\infty}\dfrac{f(t)}{g(t)}$
+
      \end{oframed}
 
 ## 【解】

@@ -7,7 +7,8 @@ type: "summary"
 title: "2011年 全体サマリ"
 ---
 
-**2011年度**
+{ **2011年度**}
+
 **出題テーマと難易度**
 
   
@@ -32,6 +33,9 @@ title: "2011年 全体サマリ"
 | 2-3 | \(2\) | $\displaystyle \frac{18-10\sqrt{3}}{9}\pi$ |
 | 第2問 | \(1\) | $`\displaystyle \begin{dcases}
 | 2-3 | \(2\) | $\displaystyle \lim_{t\to\infty}\frac{S_1 - S_2}{\log t} = \frac{1}{2}$ |
+
+    
+  }
 
 **試験形態**
 

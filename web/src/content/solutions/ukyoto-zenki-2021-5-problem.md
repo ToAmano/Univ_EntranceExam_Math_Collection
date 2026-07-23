@@ -7,14 +7,13 @@ type: "problem"
 title: "UKYOTO 2021 zenki Q5 (problem)"
 ---
 
-{}
-　$xy$平面において，2点$B(-\sqrt3, \, -1)$，$C(\sqrt3, \, -1)$に対し，
+$xy$平面において，2点$B(-\sqrt3, \, -1)$，$C(\sqrt3, \, -1)$に対し，
 点$A$は次の条件(＊)を満たすとする．
-\begin{description}
-\item[(＊)]$\displaystyle \angle BAC=\frac{\pi}{3}$かつ点$A$の$y$座標は正．
-\end{description}
+
+1.  [(＊)]$\displaystyle \angle BAC=\frac{\pi}{3}$かつ点$A$の$y$座標は正．
+
 　次の各問に答えよ．
-\begin{description}
-\item[(1)]$\triangle ABC$の外心の座標を求めよ．
-\item[(2)]点$A$が条件(＊)を満たしながら動くとき，$\triangle ABC$の垂心の軌跡を求めよ．
-\end{description}
+
+1.  $\triangle ABC$の外心の座標を求めよ．
+
+2.  点$A$が条件(＊)を満たしながら動くとき，$\triangle ABC$の垂心の軌跡を求めよ．

@@ -7,11 +7,11 @@ type: "problem"
 title: "TITECH 2010 zenki Q1 (problem)"
 ---
 
-{}
-　$f(x)=1-\cos x-x\sin x$とする．
-\begin{description}
-\item[(1)]$0<x<\pi$において，$f(x)=0$は唯一の解を持つことを示せ．
-\item[(2)]$\displaystyle J=\int_0^\pi|f(x)|dx$とする．
+$f(x)=1-\cos x-x\sin x$とする．
+
+1.  $0<x<\pi$において，$f(x)=0$は唯一の解を持つことを示せ．
+
+2.  $\displaystyle J=\int_0^\pi|f(x)|dx$とする．
 (1)の唯一の解を$\alpha$とするとき，$J$を$\sin\alpha$の式で表せ．
-\item[(3)](2)で定義された$J$と$\sqrt2$の大小を比較せよ．
-\end{description}
+
+3.  (2)で定義された$J$と$\sqrt2$の大小を比較せよ．

@@ -238,10 +238,12 @@ $$
   $p=\frac{1}{2}\pi$の時より$p=\frac{1}{8}\pi$の時の方がLは大きく，
   $p=0$の時より$p=\frac{3}{8}\pi$の時の方がLは小さい．
   したがって
-  \begin{itemize}
-    \item $p=\frac{1}{8}\pi$ でLは最大 \\
-    \item $p=\frac{3}{8}\pi$ でLは最小
-  \end{itemize}
+  
+
+1.  $p=\frac{1}{8}\pi$ でLは最大 \\
+
+2.  $p=\frac{3}{8}\pi$ でLは最小
+
   である．
 
   

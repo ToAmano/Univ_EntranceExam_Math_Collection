@@ -7,7 +7,8 @@ type: "summary"
 title: "2005年 全体サマリ"
 ---
 
-**2005年度**
+{ **2005年度**}
+
 **出題テーマと難易度**
 
   
@@ -33,6 +34,9 @@ title: "2005年 全体サマリ"
 |  |  | $`\lim_{n\to\infty}T_n =
 | 第2問 | \(1\) | $\displaystyle S_{\theta} = 2\pi \left(\frac{\sin\frac{\theta}{2}}{1+\sin\frac{\theta}{2}}\right)^2$ |
 | 2-3 | \(2\) | $\displaystyle \max S_{\theta} = \frac{\pi}{2}$ |
+
+    
+  }
 
 **試験形態**
 

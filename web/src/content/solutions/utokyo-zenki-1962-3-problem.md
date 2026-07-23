@@ -9,7 +9,6 @@ title: "UTOKYO 1962 zenki Q3 (problem)"
 
 \usepackage[dvipdfm]{graphicx}
 
-{}
 　図で，$g$は水平面に対する傾き$\tan\alpha$が1/2であるような定直線とし，
 $OA$，$AB$は$A$で(ちょうつがいで)連結された長さの等しい棒で，
 その端$O$は$g$上の定点に固定され，

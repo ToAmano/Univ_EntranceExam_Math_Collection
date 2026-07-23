@@ -9,7 +9,6 @@ title: "UTOKYO 1984 zenki Q5 (problem)"
 
 \usepackage[dvipdfm]{graphicx}
 
-{}
 　各世代ごとに，各個体が，他の個体とは独立に，
 確率$p$で1個，確率$1-p$で2個の新しい個体を次の世代に残し，
 それ自身は消滅する細胞がある．

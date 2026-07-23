@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1973 zenki Q1 (problem)"
 ---
 
-{}
-　$S$を中心$O$，半径$a$の球面とし，$N$を$S$上の1点とする．
+$S$を中心$O$，半径$a$の球面とし，$N$を$S$上の1点とする．
 点$O$において線分$ON$と$\displaystyle\frac{\pi}{3}$の角度で交わるひとつの平面の上で，
 点$P$が点$O$を中心とする等速円運動をしている．
 その角速度は毎秒$\displaystyle\frac{\pi}{12}$であり，

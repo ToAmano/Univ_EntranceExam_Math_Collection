@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1964 zenki Q2 (problem)"
 ---
 
-{}
-　平面上に2つの曲線
+平面上に2つの曲線
 \begin{equation} y=x^2 \end{equation}
 \begin{equation} y=3x^2+24x+50 \end{equation}
 がある．

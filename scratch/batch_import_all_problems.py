@@ -5,22 +5,25 @@ from pathlib import Path
 tmp_dir = Path('/Users/amano/works/research/Math-Solutions/scratch/tmp_download')
 src_root = Path('/Users/amano/works/research/Math-Solutions/src')
 
-# 大学・アーカイブフォルダー・区分の対応マップ
-UNIV_MAP = {
-    '01_tokyo': 'utokyo',
-    '02_kyoto': 'ukyoto',
-    '08_titech': 'titech',
-}
-
 def clean_problem_tex(raw_tex):
-    # プリアンブルと不要マクロの削除
+    # 1. プリアンブルと不要マクロの削除
     tex = re.sub(r'\\documentclass\[.*?\]\{.*?\}', '', raw_tex)
     tex = re.sub(r'\\usepackage\{.*?\}', '', tex)
     tex = re.sub(r'\\pagestyle\{.*?\}', '', tex)
     tex = re.sub(r'\\setlength\{.*?\}\{.*?\}', '', tex)
     tex = re.sub(r'\\begin\{document\}|\\end\{document\}', '', tex)
     tex = re.sub(r'\\begin\{flushleft\}|\\end\{flushleft\}', '', tex)
-    tex = re.sub(r'\\huge\s*\d+', '', tex) # {\huge 1} などの問題番号の見出し
+    tex = re.sub(r'\\huge\s*\d+|\\Large\s*\d+|\\large\s*\d+', '', tex) # {\huge 1} などの問題番号の見出し
+    tex = re.sub(r'\{\s*\}', '', tex) # 空の中括弧 {} の削除
+
+    # 2. description / itemize 環境を標準的な enumerate 環境へ統一・置換
+    tex = re.sub(r'\\begin\{description\}', r'\\begin{enumerate}', tex)
+    tex = re.sub(r'\\end\{description\}', r'\\end{enumerate}', tex)
+    tex = re.sub(r'\\begin\{itemize\}', r'\\begin{enumerate}', tex)
+    tex = re.sub(r'\\end\{itemize\}', r'\\end{enumerate}', tex)
+
+    # \item[(1)] や \item[(イ)] などを標準の \item へ統一化
+    tex = re.sub(r'\\item\[\s*\(?([0-9a-zA-Z1-9①-⑨一二三四五イロハニホヘトチリヌルヲ]+)\)?\s*\]', r'  \\item', tex)
 
     # 行頭・行末のトリム
     lines = [l.rstrip() for l in tex.splitlines()]
@@ -35,7 +38,6 @@ def clean_problem_tex(raw_tex):
 
 def process_archive():
     imported_count = 0
-    skipped_count = 0
 
     # 1. 東工大 (titech) の処理
     titech_dir = tmp_dir / '08_titech'
@@ -43,7 +45,6 @@ def process_archive():
         for year_dir in sorted(titech_dir.iterdir()):
             if year_dir.is_dir() and year_dir.name.isdigit():
                 year = year_dir.name
-                # 前期 1~5問 (1961〜2014年等)
                 for q in range(1, 6):
                     tex_file = year_dir / f"{year}_{q}.tex"
                     if tex_file.exists():
@@ -63,7 +64,6 @@ def process_archive():
         for year_dir in sorted(tokyo_dir.iterdir()):
             if year_dir.is_dir() and year_dir.name.isdigit():
                 year = year_dir.name
-                # 前期 1~6問 (1961〜2014年等)
                 for q in range(1, 7):
                     tex_file = year_dir / f"{year}_{q}.tex"
                     if tex_file.exists():
@@ -83,7 +83,6 @@ def process_archive():
         for year_dir in sorted(kyoto_dir.iterdir()):
             if year_dir.is_dir() and year_dir.name.isdigit():
                 year = year_dir.name
-                # 前期 1~6問 (1961〜2014年等)
                 for q in range(1, 7):
                     tex_file = year_dir / f"{year}_{q}.tex"
                     if tex_file.exists():
@@ -97,7 +96,7 @@ def process_archive():
                         except Exception as e:
                             print(f"Error processing {tex_file}: {e}")
 
-    print(f"\nSuccessfully imported and formatted {imported_count} problem.tex files!")
+    print(f"\nSuccessfully imported and standardized {imported_count} problem.tex files with enumerate environment!")
 
 if __name__ == '__main__':
     process_archive()

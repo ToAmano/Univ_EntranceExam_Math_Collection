@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 2013 zenki Q2 (problem)"
 ---
 
-{}
-　$a$を実数とし，$x>0$で定義された関数$f(x)$，$g(x)$を次のように定める。
+$a$を実数とし，$x>0$で定義された関数$f(x)$，$g(x)$を次のように定める。
 \[ f(x)=\frac{\cos x}{x} \]
 \[ g(x)=\sin x+ax \]
 　このとき$y=f(x)$のグラフと$y=g(x)$のグラフが$x>0$において

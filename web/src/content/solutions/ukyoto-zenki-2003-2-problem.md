@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 2003 zenki Q2 (problem)"
 ---
 
-{}
-　$f(x)=x\sin x$ $(x \geqq 0)$とする．
+$f(x)=x\sin x$ $(x \geqq 0)$とする．
 点$\displaystyle \left( \frac{\pi}{2},\frac{\pi}{2} \right)$における$y=f(x)$の法線と，
 $y=f(x)$のグラフの$\displaystyle 0 \leqq x \leqq \frac{\pi}{2}$の部分，
 および$y$軸とで囲まれる図形を考える．

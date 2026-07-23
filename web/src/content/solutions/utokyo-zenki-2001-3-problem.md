@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 2001 zenki Q3 (problem)"
 ---
 
-{}
-　実数$t>1$に対し，
+実数$t>1$に対し，
 $xy$平面上の点$O(0,0)$，$P(1,1)$，$\displaystyle Q \left( t,\frac{1}{t} \right)$を頂点とする
 三角形の面積を$a(t)$とし，
 線分$OP$，$OQ$と双曲線$xy=1$とで囲まれた部分の面積を$b(t)$とする．このとき

@@ -9,7 +9,6 @@ title: "TITECH 1964 zenki Q3 (problem)"
 
 \usepackage[dvipdfm]{graphicx}
 
-{}
 　図のように，三角形$ABC$の内接円よりはじめて，
 次々と前の円と外接し，
 かつ三角形の2辺に接する円を3つの頂点に向かってえがいていく。

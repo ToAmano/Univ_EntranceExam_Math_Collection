@@ -7,7 +7,6 @@ type: "problem"
 title: "UTOKYO 1989 zenki Q6 (problem)"
 ---
 
-{}
-　3個の赤玉と$n$個の白玉を無作為に環状に並べるものとする．
+3個の赤玉と$n$個の白玉を無作為に環状に並べるものとする．
 このとき白玉が連続して$k+1$個以上並んだ箇所が現れない確率を求めよ．
 ただし$\displaystyle \frac{n}{3} \leqq k \leqq \frac{n}{2}$とする．

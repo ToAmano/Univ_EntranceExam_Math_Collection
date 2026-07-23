@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 1977 zenki Q3 (problem)"
 ---
 
-{}
-　関数$f(x)=\sin x$に対し，関数$f^{(n)}(x)$を，
+関数$f(x)=\sin x$に対し，関数$f^{(n)}(x)$を，
 $f^{(0)}(x)=f(x)$，$\displaystyle f^{(n+1)}(x)=\frac{df^{(n)}(x)}{dx}$により定める$(n=0,1,2,\cdots)$．
 任意の自然数$n$について，
 2つの関数$y=xf^{(n-1)}(x)$および$y=f^{(n)}(x)$のグラフを，

@@ -7,8 +7,7 @@ type: "problem"
 title: "TITECH 1962 zenki Q5 (problem)"
 ---
 
-{}
-　$h$を正の定数とし，
+$h$を正の定数とし，
 \[ f_0(x)=\cos x, 
 f_n(x)=\frac{1}{2h}\int_{x-h}^{x+h}f_{n-1}(t)dt 
 (n=1, \, 2, \, \cdots\cdots) \]

@@ -7,8 +7,7 @@ type: "problem"
 title: "TITECH 1974 zenki Q4 (problem)"
 ---
 
-{}
-　だ円$\displaystyle\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ $(a, \, b>0)$に
+だ円$\displaystyle\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ $(a, \, b>0)$に
 $x$軸上の点$(2a, \, 0)$より2つの接線を引く．
 だ円の外部にあって，だ円およびこれらの接線によって囲まれた部分を
 $y$軸のまわりに1回転してできる立体の体積を求めよ．

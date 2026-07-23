@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 2025 zenki Q3 (problem)"
 ---
 
-{}
-　$e$は自然対数の底とする．
+$e$は自然対数の底とする．
 $\displaystyle x>\frac{1}{\sqrt{e}}$において定義された次の関数$f(x), \, g(x)$を考える．
 \[ f(x)=x^2\log x \]
 \[ g(x)=x^2\log x-\frac{1}{1+2\log x} \]

@@ -7,8 +7,7 @@ type: "problem"
 title: "TITECH 1981 zenki Q1 (problem)"
 ---
 
-{}
-　$\alpha$は$0<\alpha<1$を満たす実数とする．
+$\alpha$は$0<\alpha<1$を満たす実数とする．
 任意の自然数$n$に対して，
 $2^{n-1}\alpha$の整数部分を$a_n$とし，
 $2^{n-1}\alpha=a_n+b_n$とおくと，

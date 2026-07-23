@@ -7,15 +7,15 @@ type: "problem"
 title: "UKYOTO 1983 zenki Q3 (problem)"
 ---
 
-{}
-　$ab+cd=0$，$ad-bc\neq0$を満たす実数$a$，$b$，$c$，$d$のつくる行列
+$ab+cd=0$，$ad-bc\neq0$を満たす実数$a$，$b$，$c$，$d$のつくる行列
 $A=\begin{pmatrix} a & b \\ c & d \end{pmatrix}$がある．
 ただし，$a$，$c$は負ではないとする．
-\begin{description}
-\item[(1)]$A=\begin{pmatrix} v\cos\theta & -v\sin\theta \\ v\sin\theta & v\cos\theta \end{pmatrix}
+
+1.  $A=\begin{pmatrix} v\cos\theta & -v\sin\theta \\ v\sin\theta & v\cos\theta \end{pmatrix}
 \begin{pmatrix} 1 & 0 \\ 0 & u \end{pmatrix}$と表されることを示せ．
 ただし，$u$，$v$，$\theta$は実数で，$v>0$，$0\leqq\theta<2\pi$とする．
-\item[(2)]$O$を原点とする座標平面上の1次変換
+
+2.  $O$を原点とする座標平面上の1次変換
 $\begin{pmatrix} x' \\ y' \end{pmatrix}=A\begin{pmatrix} x \\ y \end{pmatrix}$について，
 長さ1のベクトル$\overrightarrow{OP}=\begin{pmatrix} x \\ y \end{pmatrix}$から，
 ベクトル$\overrightarrow{OP'}=\begin{pmatrix} x' \\ y' \end{pmatrix}$への角度を
@@ -24,4 +24,3 @@ $\gamma$ $(-\pi<\gamma\leqq\pi)$とする
 $(x,y)$が$x\geqq0$，$y\geqq0$，$x^2+y^2=1$の範囲を動いたとき，
 $\gamma$を最大にする$\overrightarrow{OP}$を求めよ．
 ただし，$0<u<1$とする．
-\end{description}

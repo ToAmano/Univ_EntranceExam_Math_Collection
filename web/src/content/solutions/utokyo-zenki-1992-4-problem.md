@@ -7,8 +7,7 @@ type: "problem"
 title: "UTOKYO 1992 zenki Q4 (problem)"
 ---
 
-{}
-　$xyz$空間において，$x$軸の平行な柱面
+$xyz$空間において，$x$軸の平行な柱面
 \[ A= \{ (x,y,z) | y^2+z^2=1,x,y,z\text{は実数} \} \]
 から，$y$軸と平行な柱面
 \[ B = \{ (x,y,z) | x^2-\sqrt3xz+z^2=\frac{1}{4},x,y,z\text{は実数} \} \]

@@ -9,7 +9,6 @@ title: "UTOKYO 1983 zenki Q5 (problem)"
 
 \usepackage[dvipdfm]{graphicx}
 
-{}
 　正四角錐$V$に内接する球を$S$とする．
 $V$をいろいろ変えるとき，
 比$\displaystyle R=\frac{S\text{の表面積}}{V\text{の表面積}}$のとりうる値のうち，

@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 2023 zenki Q2 (problem)"
 ---
 
-{}
-　空間内の4点$O$，$A$，$B$，$C$は同一平面上にないとする．
+空間内の4点$O$，$A$，$B$，$C$は同一平面上にないとする．
 点$D$，$P$，$Q$を次のように定める．
 点$D$は$\overrightarrow{OD}=\overrightarrow{OA}+2\overrightarrow{OB}+3\overrightarrow{OC}$を満たし，
 点$P$は線分$OA$を$1:2$に内分し，点$Q$は線分$OB$の中点である．

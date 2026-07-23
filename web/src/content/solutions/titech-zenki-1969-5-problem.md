@@ -7,7 +7,6 @@ type: "problem"
 title: "TITECH 1969 zenki Q5 (problem)"
 ---
 
-{}
-　$a_0>0$，$a_k\geqq0$ $(k=1, \, 2, \, \cdots, \, n)$，$\displaystyle\sum_{k=0}^na_k=1$のとき，
+$a_0>0$，$a_k\geqq0$ $(k=1, \, 2, \, \cdots, \, n)$，$\displaystyle\sum_{k=0}^na_k=1$のとき，
 方程式$\displaystyle x=\sum_{k=0}^na_kx^k$が$0<x<1$を満たすただ1つの根をもつための必要十分条件は
 $\displaystyle\sum_{k=1}^nka_k>1$であることを証明せよ．

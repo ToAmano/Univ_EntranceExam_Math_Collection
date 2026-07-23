@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 2024 zenki Q3 (problem)"
 ---
 
-{}
-　座標空間の4点O，A，B，Cは同一平面上にないとする．
+座標空間の4点O，A，B，Cは同一平面上にないとする．
 線分OAの中点をP，線分ABの中点をQとする．
 実数$x$，$y$に対して，直線OC上の点Xと，直線BC上の点Yを次のように定める．
 \[ \overrightarrow{OX}=x\overrightarrow{OC}, 
