@@ -1,42 +1,76 @@
 \documentclass[../../../../main.tex]{subfiles}
 \begin{document}
 
-\usepackage[dvipdfm]{graphicx}
-
-　平面上の2点$P$，$Q$の距離を$d(P,Q)$と表すことにする．
-平面上に点$O$を中心とする一辺の長さが1000の正三角形$\triangle A_1A_2A_3$がある．
-$\triangle A_1A_2A_3$の内部に3点$B_1$，$B_2$，$B_3$を，$d(A_n,B_n)=1$ $(n=1,2,3)$となるようにとる．
+平面上の2点 $P$，$Q$ の距離を $d(P,Q)$ と表すことにする．
+平面上に点 $O$ を中心とする一辺の長さが1000の正三角形 $\triangle A_1A_2A_3$ がある．
+$\triangle A_1A_2A_3$ の内部に3点 $B_1$，$B_2$，$B_3$ を，$d(A_n,B_n)=1$ $(n=1,2,3)$ となるようにとる．
 また，
-\begin{enumerate}
-\item []$\overrightarrow{a_1}=\overrightarrow{A_1A_2}$，
-$\overrightarrow{a_2}=\overrightarrow{A_2A_3}$，
-$\overrightarrow{a_3}=\overrightarrow{A_3A_1}$
-\item []$\overrightarrow{e_1}=\overrightarrow{A_1B_1}$，
-$\overrightarrow{e_2}=\overrightarrow{A_2B_2}$，
-$\overrightarrow{e_3}=\overrightarrow{A_3B_3}$
-\end{enumerate}
+\begin{align*}
+  \overrightarrow{a_1}=\overrightarrow{A_1A_2}, \hspace{1zw} \overrightarrow{a_2}=\overrightarrow{A_2A_3}, \hspace{1zw} \overrightarrow{a_3}=\overrightarrow{A_3A_1} \\
+  \overrightarrow{e_1}=\overrightarrow{A_1B_1}, \hspace{1zw} \overrightarrow{e_2}=\overrightarrow{A_2B_2}, \hspace{1zw} \overrightarrow{e_3}=\overrightarrow{A_3B_3}
+\end{align*}
 とおく．
-$n=1,2,3$のそれぞれに対して，時刻0に$A_n$を出発し，
-$\overrightarrow{e_n}$の向きに速さ1で直進する点を考え，時刻$t$におけるその位置を$P_n(t)$と表すことにする．
-\begin{enumerate}
-  \item ある時刻$t$で$d(P_1(t),P_2(t))\leqq1$が成立した．
-ベクトル$\overrightarrow{e_1}-\overrightarrow{e_2}$と，ベクトル$\overrightarrow{a_1}$とのなす角度を$\theta$とおく．
-このとき$\displaystyle|\sin\theta|\leqq\frac{1}{1000}$となることを示せ．
-  \item 角度$\theta_1$，$\theta_2$，$\theta_3$を
-$\theta_1=\angle B_1A_1A_2$，$\theta_2=\angle B_2A_2A_3$，$\theta_3=\angle B_3A_3A_1$によって定義する．
-$\alpha$を$\displaystyle0<\alpha<\frac{\pi}{2}$かつ$\displaystyle\sin\alpha=\frac{1}{1000}$をみたす実数とする．
-(1)と同じ仮定のもとで，$\theta_1+\theta_2$の値のとる範囲を$\alpha$を用いて表せ．
-  \item 時刻$t_1$，$t_2$，$t_3$のそれぞれにおいて，次が成立した．
-\begin{align*}
-  d(P_2(t_1),P_3(t_1))\leqq1, \hspace{1zw} d(P_3(t_2),P_1(t_2))\leqq1, \hspace{1zw} d(P_1(t_3),P_2(t_3))\leqq1
-\end{align*}
-このとき，時刻$\displaystyle T=\frac{1000}{\sqrt3}$において同時に
-\begin{align*}
-  d(P_1(T),O)\leqq3, \hspace{1zw} d(P_2(T),O)\leqq3, \hspace{1zw} d(P_3(T),O)\leqq3
-\end{align*}
-が成立することを示せ．
-\end{enumerate}
+$n=1,2,3$ のそれぞれに対して，時刻0に $A_n$ を出発し，
+$\overrightarrow{e_n}$ の向きに速さ1で直進する点を考え，時刻 $t$ におけるその位置を $P_n(t)$ と表すことにする．
 
-\includegraphics[width=5cm]{fig_2009_6.jpg}
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.3]
+    \coordinate (O) at (0,0);
+    \coordinate (A1) at (90:2.5);
+    \coordinate (A2) at (210:2.5);
+    \coordinate (A3) at (330:2.5);
+
+    \draw[thick] (A1) -- (A2) -- (A3) -- cycle;
+
+    \fill (O) circle (1.5pt) node[below right] {$O$};
+
+    \coordinate (P1) at ($(A1) + (-75:1.2)$);
+    \draw[thick] (A1) -- (P1);
+    \fill (P1) circle (1.5pt) node[below] {$P_1(t)$};
+
+    \coordinate (P2) at ($(A2) + (25:1.2)$);
+    \draw[thick] (A2) -- (P2);
+    \fill (P2) circle (1.5pt) node[above] {$P_2(t)$};
+
+    \coordinate (P3) at ($(A3) + (145:1.2)$);
+    \draw[thick] (A3) -- (P3);
+    \fill (P3) circle (1.5pt) node[above] {$P_3(t)$};
+
+    \draw (A1) +(-120:0.5) arc (-120:-75:0.5);
+    \node at ($(A1)+(-100:0.7)$) {$\theta_1$};
+
+    \draw (A2) +(0:0.5) arc (0:25:0.5);
+    \node at ($(A2)+(12:0.7)$) {$\theta_2$};
+
+    \draw (A3) +(120:0.5) arc (120:145:0.5);
+    \node at ($(A3)+(132:0.7)$) {$\theta_3$};
+
+    \node[above] at (A1) {$A_1$};
+    \node[below left] at (A2) {$A_2$};
+    \node[below right] at (A3) {$A_3$};
+  \end{tikzpicture}
+\end{figure}
+
+\begin{enumerate}
+  \item ある時刻 $t$ で $d(P_1(t),P_2(t))\leqq1$ が成立した．
+  ベクトル $\overrightarrow{e_1}-\overrightarrow{e_2}$ と，ベクトル $\overrightarrow{a_1}$ とのなす角度を $\theta$ とおく．
+  このとき $\displaystyle|\sin\theta|\leqq\frac{1}{1000}$ となることを示せ．
+
+  \item 角度 $\theta_1$，$\theta_2$，$\theta_3$ を
+  $\theta_1=\angle B_1A_1A_2$，$\theta_2=\angle B_2A_2A_3$，$\theta_3=\angle B_3A_3A_1$ によって定義する．
+  $\alpha$ を $\displaystyle0<\alpha<\frac{\pi}{2}$ かつ $\displaystyle\sin\alpha=\frac{1}{1000}$ をみたす実数とする．
+  (1) と同じ仮定のもとで，$\theta_1+\theta_2$ の値のとる範囲を $\alpha$ を用いて表せ．
+
+  \item 時刻 $t_1$，$t_2$，$t_3$ のそれぞれにおいて，次が成立した．
+  \begin{align*}
+    d(P_2(t_1),P_3(t_1))\leqq1, \hspace{1zw} d(P_3(t_2),P_1(t_2))\leqq1, \hspace{1zw} d(P_1(t_3),P_2(t_3))\leqq1
+  \end{align*}
+  このとき，時刻 $\displaystyle T=\frac{1000}{\sqrt3}$ において同時に
+  \begin{align*}
+    d(P_1(T),O)\leqq3, \hspace{1zw} d(P_2(T),O)\leqq3, \hspace{1zw} d(P_3(T),O)\leqq3
+  \end{align*}
+  が成立することを示せ．
+\end{enumerate}
 
 \end{document}
