@@ -13,7 +13,7 @@ $xy$平面の点$P(x, \, y)$に$x+y=u$，$xy=v$によって$uv$平面の点$Q(u,
 ただし$\displaystyle0<\theta<\frac{\pi}{2}$とする．
 
 \begin{enumerate}
-\item$Q$の存在範囲を図示し，その面積$S(\theta)$を求めよ．
-  \item$S(\theta)$のグラフは直線$\displaystyle\theta=\frac{\pi}{4}$について
+\item $Q$の存在範囲を図示し，その面積$S(\theta)$を求めよ．
+  \item $S(\theta)$のグラフは直線$\displaystyle\theta=\frac{\pi}{4}$について
 対称であることを証明せよ．
 \end{enumerate}

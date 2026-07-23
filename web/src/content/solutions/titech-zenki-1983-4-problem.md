@@ -11,6 +11,6 @@ $A$，$B$，$C$を2等辺3角形の内角とし，
 $F=\sin3A+\sin3B+\sin3C$とおく．
 
 \begin{enumerate}
-\item$F$の最大値を求めよ．
-  \item$F$のとる値の範囲を求めよ．
+\item $F$の最大値を求めよ．
+  \item $F$のとる値の範囲を求めよ．
 \end{enumerate}

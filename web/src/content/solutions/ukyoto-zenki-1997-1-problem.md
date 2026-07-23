@@ -13,6 +13,6 @@ title: "UKYOTO 1997 zenki Q1 (problem)"
 ただし，$\overline{AP}$は線分$AP$の長さを表す．
 
 \begin{enumerate}
-\item$s=\overline{AP}$，$t=\overline{OQ}$とおいて，$t$を$s$で表せ．ただし，$O(0,0)$は原点である．
-  \item点$P$が円$C$上を動くとき，点$Q$の描く軌跡を求めよ．
+\item $s=\overline{AP}$，$t=\overline{OQ}$とおいて，$t$を$s$で表せ．ただし，$O(0,0)$は原点である．
+  \item 点$P$が円$C$上を動くとき，点$Q$の描く軌跡を求めよ．
 \end{enumerate}

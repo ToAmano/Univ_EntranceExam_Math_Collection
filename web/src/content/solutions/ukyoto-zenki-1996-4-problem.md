@@ -12,9 +12,9 @@ $a_1=0$，$\displaystyle a_n=\left[\frac{a_{n-1}+k}{3}\right]$ $(n\geqq2)$によ
 ただし実数$t$に対し$[t]$は$t$を超えない最大の整数を表す．
 
 \begin{enumerate}
-\item$k=8$および$k=9$のとき，数列$\{a_n\}$を求めよ．
-  \itemすべての自然数$n$に対し，
+\item $k=8$および$k=9$のとき，数列$\{a_n\}$を求めよ．
+  \item すべての自然数$n$に対し，
 次の2つの不等式$\displaystyle a_n\leqq\frac{k-1}{2}$，$a_n \leqq a_{n+1}$が成り立つことを示せ．
-  \item$a_n=a_{n+1}$ならば，$n$以上のすべての整数$m$に対し$a_n=a_m$であることを示し，
+  \item $a_n=a_{n+1}$ならば，$n$以上のすべての整数$m$に対し$a_n=a_m$であることを示し，
 このときの$a_n$の値を求めよ．
 \end{enumerate}

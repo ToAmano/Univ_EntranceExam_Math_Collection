@@ -11,6 +11,6 @@ title: "TITECH 1988 zenki Q2 (problem)"
 このとき，$f(x)$の導関数$f'(x)$について，
 
 \begin{enumerate}
-\item$|f'(1)|\leqq4$を示せ．
-  \item$|f'(1)|=4$となる$f(x)$をすべて求めよ．
+\item $|f'(1)|\leqq4$を示せ．
+  \item $|f'(1)|=4$となる$f(x)$をすべて求めよ．
 \end{enumerate}

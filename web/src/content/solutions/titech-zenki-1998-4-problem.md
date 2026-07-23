@@ -13,6 +13,6 @@ $l$と直線$x=p$のなす角に等しいとする．
 ただし2直線のなす角は鋭角の方をとることにする．
 
 \begin{enumerate}
-\item座標$p$を$a$で表せ．
-  \item極限値$\displaystyle \lim_{a \to 1}p$および$\displaystyle \lim_{a \to \infty}\frac{p}{a}$を求めよ．
+\item 座標$p$を$a$で表せ．
+  \item 極限値$\displaystyle \lim_{a \to 1}p$および$\displaystyle \lim_{a \to \infty}\frac{p}{a}$を求めよ．
 \end{enumerate}

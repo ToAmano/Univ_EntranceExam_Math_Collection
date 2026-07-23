@@ -12,10 +12,10 @@ $A=\begin{pmatrix} a & b \\ c & d \end{pmatrix}$がある．
 ただし，$a$，$c$は負ではないとする．
 
 \begin{enumerate}
-\item$A=\begin{pmatrix} v\cos\theta & -v\sin\theta \\ v\sin\theta & v\cos\theta \end{pmatrix}
+\item $A=\begin{pmatrix} v\cos\theta & -v\sin\theta \\ v\sin\theta & v\cos\theta \end{pmatrix}
 \begin{pmatrix} 1 & 0 \\ 0 & u \end{pmatrix}$と表されることを示せ．
 ただし，$u$，$v$，$\theta$は実数で，$v>0$，$0\leqq\theta<2\pi$とする．
-  \item$O$を原点とする座標平面上の1次変換
+  \item $O$を原点とする座標平面上の1次変換
 $\begin{pmatrix} x' \\ y' \end{pmatrix}=A\begin{pmatrix} x \\ y \end{pmatrix}$について，
 長さ1のベクトル$\overrightarrow{OP}=\begin{pmatrix} x \\ y \end{pmatrix}$から，
 ベクトル$\overrightarrow{OP'}=\begin{pmatrix} x' \\ y' \end{pmatrix}$への角度を

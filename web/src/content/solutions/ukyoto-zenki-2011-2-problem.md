@@ -13,8 +13,8 @@ $\begin{pmatrix} a & 1 \\ b & c \end{pmatrix}$
 この1次変換$T$が2つの条件
 
 \begin{enumerate}
-\item点$(1,2)$を点$(1,2)$に移す
-  \item点$(1,0)$と点$(0,1)$が$T$によって点$A$，$B$にそれぞれ移るとき，
+\item 点$(1,2)$を点$(1,2)$に移す
+  \item 点$(1,0)$と点$(0,1)$が$T$によって点$A$，$B$にそれぞれ移るとき，
 $\triangle OAB$の面積が$\displaystyle\frac{1}{2}$である
 \end{enumerate}
 

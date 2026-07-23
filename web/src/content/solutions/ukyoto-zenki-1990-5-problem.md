@@ -13,8 +13,8 @@ title: "UKYOTO 1990 zenki Q5 (problem)"
 このようにして定めた確率変数$X$，$Y$について
 
 \begin{enumerate}
-\item$N=5,6$のそれぞれの場合について，$X$と$Y$は互いに独立か．
-  \item$X$，$Y$が互いに独立となる$N$ $(N\geqq3)$をすべて求めよ．
+\item $N=5,6$のそれぞれの場合について，$X$と$Y$は互いに独立か．
+  \item $X$，$Y$が互いに独立となる$N$ $(N\geqq3)$をすべて求めよ．
 \end{enumerate}
 
 　ただし確率変数$X$，$Y$が互いに独立であるとは，$X=i$となる確率$P$ $(X=i)$と

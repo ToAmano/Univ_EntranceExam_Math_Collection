@@ -8,14 +8,25 @@ title: "UKYOTO 1972 zenki Q1 (problem)"
 ---
 
 2つまたは3つのベクトルの加法について，次の法則が成立する．
-\[ \overrightarrow{A}+\overrightarrow{B}=\overrightarrow{B}+\overrightarrow{A}, 
-(\overrightarrow{A}+\overrightarrow{B})+\overrightarrow{C} =
-\overrightarrow{A}+(\overrightarrow{B}+\overrightarrow{C}) \]
+
+$$
+\begin{align*}
+\overrightarrow{A}+\overrightarrow{B}=\overrightarrow{B}+\overrightarrow{A}, (\overrightarrow{A}+\overrightarrow{B})+\overrightarrow{C} =
+\overrightarrow{A}+(\overrightarrow{B}+\overrightarrow{C})
+\end{align*}
+$$
+
 　いま，$n$個のベクトルを$\overrightarrow{A_1},\overrightarrow{A_2},\cdots,\overrightarrow{A_n}$とし，
 その順序を任意にかえたものを，$\overrightarrow{B_1},\overrightarrow{B_2},\cdots,\overrightarrow{B_n}$とする．
 上の2つの法則だけをつかって，
-\[ \overrightarrow{A_1}+\overrightarrow{A_2}+\cdots+\overrightarrow{A_n} =
-\overrightarrow{B_1}+\overrightarrow{B_2}+\cdots+\overrightarrow{B_n} \]
+
+$$
+\begin{align*}
+\overrightarrow{A_1}+\overrightarrow{A_2}+\cdots+\overrightarrow{A_n} =
+\overrightarrow{B_1}+\overrightarrow{B_2}+\cdots+\overrightarrow{B_n}
+\end{align*}
+$$
+
 がなりたつことを数学的帰納法を用いて示せ．
 なお，
 たとえば4つのベクトル$\overrightarrow{A}$，$\overrightarrow{B}$，$\overrightarrow{C}$，$\overrightarrow{D}$について，

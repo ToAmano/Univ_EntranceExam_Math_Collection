@@ -12,6 +12,6 @@ title: "TITECH 1996 zenki Q3 (problem)"
 このとき次の問いに答えよ．
 
 \begin{enumerate}
-\item$0<\alpha<\beta$のとき$f(x)$を求めよ．
-  \item$\alpha<0<\beta$のとき$f(x)$を求めよ．
+\item $0<\alpha<\beta$のとき$f(x)$を求めよ．
+  \item $\alpha<0<\beta$のとき$f(x)$を求めよ．
 \end{enumerate}

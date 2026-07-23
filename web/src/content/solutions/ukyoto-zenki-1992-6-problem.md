@@ -17,7 +17,7 @@ $n=1,2,\cdots\cdots$について，$a_{n+1}$，$b_{n+1}$，$c_{n+1}$を次式で
 \end{enumerate}
 
 \begin{enumerate}
-\item${a_n}^2+{b_n}^2={c_n}^2$を数学的帰納法により証明せよ．
-  \item$c_n>0$および$c_n \geqq c_{n+1}$を示せ．
-  \item$c_m>c_{m+1}=c_{m+2}$となったときの$m$について，$a_m:b_m:c_m$を求めよ．
+\item ${a_n}^2+{b_n}^2={c_n}^2$を数学的帰納法により証明せよ．
+  \item $c_n>0$および$c_n \geqq c_{n+1}$を示せ．
+  \item $c_m>c_{m+1}=c_{m+2}$となったときの$m$について，$a_m:b_m:c_m$を求めよ．
 \end{enumerate}

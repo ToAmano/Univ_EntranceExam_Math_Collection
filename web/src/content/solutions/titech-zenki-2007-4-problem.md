@@ -8,11 +8,17 @@ title: "TITECH 2007 zenki Q4 (problem)"
 ---
 
 \begin{enumerate}
-\item整数$n=0,1,2,\cdots$と正数$a_n$に対して
-\[ f_n(x)=a_n(x-n)(n+1-x) \]
+\item 整数$n=0,1,2,\cdots$と正数$a_n$に対して
+
+$$
+\begin{align*}
+f_n(x)=a_n(x-n)(n+1-x)
+\end{align*}
+$$
+
 とおく．
 2つの曲線$y=f_n(x)$と$y=e^{-x}$が接するような$a_n$を求めよ．
-  \item$f_n(x)$は(1)で定めたものとする．
+  \item $f_n(x)$は(1)で定めたものとする．
 $y=f_0(x)$，$y=e^{-x}$と$y$軸で囲まれる図形の面積を$S_0$，
 $n \geqq 1$に対し$y=f_{n-1}(x)$，$y=f_n(x)$と$y=e^{-x}$で囲まれる図形の面積を$S_n$とおく．
 このとき$\displaystyle\lim_{n\to\infty}(S_0+S_1+\cdots+S_n)$を求めよ．

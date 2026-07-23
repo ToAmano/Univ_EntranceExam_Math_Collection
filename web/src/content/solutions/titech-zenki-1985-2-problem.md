@@ -13,7 +13,7 @@ $0<t<3$である実数$t$に対し，
 小さいほうの体積（等しいときは，どちらでもよい）を$f(t)$とする．
 
 \begin{enumerate}
-\item$f(t)$を求めよ．
-  \item$f(t)$を$t$の関数と考えたとき，
+\item $f(t)$を求めよ．
+  \item $f(t)$を$t$の関数と考えたとき，
 $t=1$および$\displaystyle t=\frac{3}{2}$で微分可能であるか．
 \end{enumerate}

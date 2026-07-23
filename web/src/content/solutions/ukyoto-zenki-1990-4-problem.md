@@ -11,7 +11,7 @@ title: "UKYOTO 1990 zenki Q4 (problem)"
 $n$ $(\geqq2)$を固定した上で，$r$を変化させる．
 
 \begin{enumerate}
-\item$r$は$\displaystyle0<r\leqq\frac{\displaystyle\sin\frac{\pi}{n}}{\displaystyle1+\sin\frac{\pi}{n}}$
+\item $r$は$\displaystyle0<r\leqq\frac{\displaystyle\sin\frac{\pi}{n}}{\displaystyle1+\sin\frac{\pi}{n}}$
 の範囲になければならないことを示せ．
-  \itemこれら$n+2$個の円の面積の総和が最小となる$r$の値を求めよ．
+  \item これら$n+2$個の円の面積の総和が最小となる$r$の値を求めよ．
 \end{enumerate}

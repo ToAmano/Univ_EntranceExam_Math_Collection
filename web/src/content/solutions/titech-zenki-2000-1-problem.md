@@ -13,9 +13,9 @@ title: "TITECH 2000 zenki Q1 (problem)"
 図のように，定点$(1,0)$より$x$軸となす角$\theta$で光線が発射され，2回半円に反射したのち，$x$軸上の点$P$を通過したとする．
 
 \begin{enumerate}
-\itemこのような状況が起こるための$\theta$の範囲を求めよ．
-  \item$P$の座標を$\theta$を用いて表せ．
-  \item$\theta$が(1)の範囲を動くときの$P$の動く範囲を求めよ．
+\item このような状況が起こるための$\theta$の範囲を求めよ．
+  \item $P$の座標を$\theta$を用いて表せ．
+  \item $\theta$が(1)の範囲を動くときの$P$の動く範囲を求めよ．
 \end{enumerate}
 
 \includegraphics[width=5cm]{fig_2000_1.jpg}

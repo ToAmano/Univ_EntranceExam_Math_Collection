@@ -9,5 +9,11 @@ title: "TITECH 2008 zenki Q2 (problem)"
 
 実数$x$に対し，$x$以上の最小の整数を$f(x)$とする．
 $a$，$b$を正の実数とするとき，極限
-\[ \lim_{x\to\infty} x^c \left( \frac{1}{f(ax-7)}-\frac{1}{f(bx+3)} \right) \]
+
+$$
+\begin{align*}
+\lim_{x\to\infty} x^c \left(\frac{1}{f(ax-7)}-\frac{1}{f(bx+3)}\right)
+\end{align*}
+$$
+
 が収束するような実数$c$の最大値と，そのときの極限値を求めよ．

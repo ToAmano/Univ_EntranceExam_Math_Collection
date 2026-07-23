@@ -54,6 +54,8 @@ def generate_markdowns():
         years = sorted([d.name for d in cat_dir.iterdir() if d.is_dir() and d.name.isdigit()])
 
         for year in years:
+            if int(year) > 2015:
+                continue
             year_dir = cat_dir / year
             has_pdf = (year_dir / 'handwritten.pdf').exists()
             pdf_mark = "✅ あり" if has_pdf else "❌ なし"

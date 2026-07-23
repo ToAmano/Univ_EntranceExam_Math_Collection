@@ -13,8 +13,8 @@ title: "UKYOTO 1986 zenki Q4 (problem)"
 線分$AA'$，$BB'$，$CC'$の中点をそれぞれ$P$，$Q$，$R$とする．
 
 \begin{enumerate}
-\item$MP\leqq1$，$MQ\leqq1$，$MR\leqq1$となることを示せ．
-  \itemもし$\triangle PQR$が鋭角三角形でその外接円の半径が1となるならば，
+\item $MP\leqq1$，$MQ\leqq1$，$MR\leqq1$となることを示せ．
+  \item もし$\triangle PQR$が鋭角三角形でその外接円の半径が1となるならば，
 点$M$はこの外接円の中心と一致することを示せ．
 さらにこのとき$\triangle ABC$，$\triangle A'B'C'$，$\triangle PQR$はすべて合同となることを示せ．
 \end{enumerate}

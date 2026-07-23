@@ -11,6 +11,6 @@ title: "TITECH 2005 zenki Q2 (problem)"
 2次式$(x-\alpha)(x-\beta)=x^2+sx+t$を$f(x)$とおき$f(x)^2=x^4+ax^3+bx^2+cx+d$とする．
 
 \begin{enumerate}
-\item$s$および$t$の期待値を求めよ．
-  \item$a$，$b$，$c$および$d$の期待値を求めよ．
+\item $s$および$t$の期待値を求めよ．
+  \item $a$，$b$，$c$および$d$の期待値を求めよ．
 \end{enumerate}

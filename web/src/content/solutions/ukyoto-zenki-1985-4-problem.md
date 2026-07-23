@@ -15,7 +15,7 @@ title: "UKYOTO 1985 zenki Q4 (problem)"
 \end{enumerate}
 
 \begin{enumerate}
-\item点$P$，$Q$がともに$D$に属すれば，
+\item 点$P$，$Q$がともに$D$に属すれば，
 $|\overrightarrow{PQ}|\leqq2\sqrt{\displaystyle\frac{2}{3}}$が成立つことを示せ．
-  \item$r$が自然数のとき，連立方程式\ding{"AC}，\ding{"AD}の整数解を決定せよ．
+  \item $r$が自然数のとき，連立方程式\ding{"AC}，\ding{"AD}の整数解を決定せよ．
 \end{enumerate}

@@ -18,6 +18,6 @@ $xy$平面上の2曲線
 このとき，
 
 \begin{enumerate}
-\item$\displaystyle a=\frac{3}{2}p$，$b=0$，$\displaystyle c=-\frac{1}{2}q$であることを示せ．
-  \item$p$，$q$のみたす条件を求めよ．
+\item $\displaystyle a=\frac{3}{2}p$，$b=0$，$\displaystyle c=-\frac{1}{2}q$であることを示せ．
+  \item $p$，$q$のみたす条件を求めよ．
 \end{enumerate}

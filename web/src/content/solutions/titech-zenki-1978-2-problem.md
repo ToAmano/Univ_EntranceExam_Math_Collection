@@ -12,6 +12,6 @@ $(ab-1)(bc-1)(ca-1)$は$abc$で割り切れるとする．
 このとき次の問に答えよ．
 
 \begin{enumerate}
-\item$ab+bc+ca-1$は$abc$で割り切れることを示せ．
-  \item$a, \, b, \, c$をすべて求めよ．
+\item $ab+bc+ca-1$は$abc$で割り切れることを示せ．
+  \item $a, \, b, \, c$をすべて求めよ．
 \end{enumerate}

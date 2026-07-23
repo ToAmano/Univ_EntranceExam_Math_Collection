@@ -12,7 +12,7 @@ title: "UKYOTO 1979 zenki Q4 (problem)"
 このとき
 
 \begin{enumerate}
-\item引き分けになる確率$P$を求めよ．
-  \item$\displaystyle P\geqq\frac{1}{6}$であることを示せ．
+\item 引き分けになる確率$P$を求めよ．
+  \item $\displaystyle P\geqq\frac{1}{6}$であることを示せ．
 また，$\displaystyle P=\frac{1}{6}$ならば$\displaystyle p_k=\frac{1}{6}$である$(k=1,2,3,4,5,6)$ことを示せ．
 \end{enumerate}

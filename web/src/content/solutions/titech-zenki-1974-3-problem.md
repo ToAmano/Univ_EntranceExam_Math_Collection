@@ -11,6 +11,6 @@ title: "TITECH 1974 zenki Q3 (problem)"
 このとき，次の問に答えよ．
 
 \begin{enumerate}
-\item$w$が実数となるような$z$の集合を求めよ．
-  \item$z$がこの集合の上を動くとき，$w$はすべての実数値をとることを証明せよ．
+\item $w$が実数となるような$z$の集合を求めよ．
+  \item $z$がこの集合の上を動くとき，$w$はすべての実数値をとることを証明せよ．
 \end{enumerate}

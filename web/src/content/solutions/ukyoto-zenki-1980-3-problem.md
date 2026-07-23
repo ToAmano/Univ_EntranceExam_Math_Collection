@@ -18,8 +18,8 @@ title: "UKYOTO 1980 zenki Q3 (problem)"
 　このとき，そのような$A$，$B$，$C$のとりかたに関せず次の三つが成り立つことを示せ。
 
 \begin{enumerate}
-\item$A$，$B$，$C$は定円上にある．
-  \item四面体$OABC$の体積は一定である．
-  \item$BC$，$CA$，$AB$，$OA$，$OB$，$OC$の中点をそれぞれ$L$，$M$，$N$，$P$，$Q$，$R$とすれば
+\item $A$，$B$，$C$は定円上にある．
+  \item 四面体$OABC$の体積は一定である．
+  \item $BC$，$CA$，$AB$，$OA$，$OB$，$OC$の中点をそれぞれ$L$，$M$，$N$，$P$，$Q$，$R$とすれば
 6点$L$，$M$，$N$，$P$，$Q$，$R$は定球面上にある．
 \end{enumerate}

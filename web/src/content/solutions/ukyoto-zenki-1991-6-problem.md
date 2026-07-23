@@ -16,12 +16,12 @@ $\displaystyle\int_0^x{(f(t))}^{-a}dt=\int_a^{f(x)}(e^{\displaystyle-\frac{t^2}{
 \end{enumerate}
 
 \begin{enumerate}
-\item\ding{"AD}の等式の両辺を$x$について微分して得られる($y$の満たす)微分方程式を書け．また$f(0)$の値を求めよ．
-  \item正の定数$b$，$c$があって次の不等式(イ)，(ロ)を満たしていることを示せ．
+\item \ding{"AD}の等式の両辺を$x$について微分して得られる($y$の満たす)微分方程式を書け．また$f(0)$の値を求めよ．
+  \item 正の定数$b$，$c$があって次の不等式(イ)，(ロ)を満たしていることを示せ．
 \begin{enumerate}
-  \item$b \leqq f'(x) \leqq 1$
-  \item$\displaystyle 0 \leqq f(x) \left( \frac{1}{f'(x)}-1 \right) \leqq c$
+  \item $b \leqq f'(x) \leqq 1$
+  \item $\displaystyle 0 \leqq f(x) \left( \frac{1}{f'(x)}-1 \right) \leqq c$
 \end{enumerate}
 
-  \item$\displaystyle\lim_{x\to\infty}f'(x)$を求めよ．また$f'(x)$の最小値を求めよ．
+  \item $\displaystyle\lim_{x\to\infty}f'(x)$を求めよ．また$f'(x)$の最小値を求めよ．
 \end{enumerate}

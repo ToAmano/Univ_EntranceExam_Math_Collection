@@ -295,11 +295,15 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     def preserve_enumerate_block(m):
         env_name = m.group(1)
         block = m.group(2)
-        # オプションラベル \item[(1)] をシンプルな \item に整流化
+        # オプションラベル \item[(1)] をシンプルな \item に整流化し、必ず直後にスペースを確保 (\item $math$)
         clean_block = re.sub(r'\\item\s*\[\s*\(?.*?\)?\s*\]\s*', r'\\item ', block)
+        clean_block = re.sub(r'\\item(?![a-zA-Z\s])', r'\\item ', clean_block)
         return f"\n\n\\begin{{{env_name}}}\n{clean_block.strip()}\n\\end{{{env_name}}}\n\n"
 
     md_content = re.sub(r'\\begin\{(enumerate|description|itemize)\}(.*?)\\end\{\1\}', preserve_enumerate_block, md_content, flags=re.DOTALL)
+
+    # ディスプレイ数式 \[ ... \] の \begin{align*} ... \end{align*} への統一
+    md_content = re.sub(r'\\\[\s*(.*?)\s*\\\]', r'\n$$\n\\begin{align*}\n\1\n\\end{align*}\n$$\n', md_content, flags=re.DOTALL)
 
     # 冒頭・単独の空の中括弧 {} や不要記号の除去
     md_content = re.sub(r'^\s*\{\}\s*$', '', md_content, flags=re.MULTILINE)

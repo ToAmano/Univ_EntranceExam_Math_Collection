@@ -23,7 +23,13 @@ def clean_problem_tex(raw_tex):
     tex = re.sub(r'\\end\{itemize\}', r'\\end{enumerate}', tex)
 
     # \item[(1)] や \item[(イ)] などを標準の \item へ統一化
-    tex = re.sub(r'\\item\[\s*\(?([0-9a-zA-Z1-9①-⑨一二三四五イロハニホヘトチリヌルヲ]+)\)?\s*\]', r'  \\item', tex)
+    tex = re.sub(r'\\item\[\s*\(?([0-9a-zA-Z1-9①-⑨一二三四五イロハニホヘトチリヌルヲ]+)\)?\s*\]', r'  \\item ', tex)
+
+    # 3. \item の直後に必ず半角スペースを挿入 (\item$t$ -> \item $t$)
+    tex = re.sub(r'\\item(?![a-zA-Z\s])', r'\\item ', tex)
+
+    # 4. ディスプレイ数式 \[ ... \] を \begin{align*} ... \end{align*} に統一
+    tex = re.sub(r'\\\[\s*(.*?)\s*\\\]', r'\\begin{align*}\n  \1\n\\end{align*}', tex, flags=re.DOTALL)
 
     # 行頭・行末のトリム
     lines = [l.rstrip() for l in tex.splitlines()]
@@ -44,6 +50,9 @@ def process_archive():
     if titech_dir.exists():
         for year_dir in sorted(titech_dir.iterdir()):
             if year_dir.is_dir() and year_dir.name.isdigit():
+                year_num = int(year_dir.name)
+                if year_num > 2015:
+                    continue
                 year = year_dir.name
                 for q in range(1, 6):
                     tex_file = year_dir / f"{year}_{q}.tex"
@@ -63,6 +72,9 @@ def process_archive():
     if tokyo_dir.exists():
         for year_dir in sorted(tokyo_dir.iterdir()):
             if year_dir.is_dir() and year_dir.name.isdigit():
+                year_num = int(year_dir.name)
+                if year_num > 2015:
+                    continue
                 year = year_dir.name
                 for q in range(1, 7):
                     tex_file = year_dir / f"{year}_{q}.tex"
@@ -82,6 +94,9 @@ def process_archive():
     if kyoto_dir.exists():
         for year_dir in sorted(kyoto_dir.iterdir()):
             if year_dir.is_dir() and year_dir.name.isdigit():
+                year_num = int(year_dir.name)
+                if year_num > 2015:
+                    continue
                 year = year_dir.name
                 for q in range(1, 7):
                     tex_file = year_dir / f"{year}_{q}.tex"
@@ -96,7 +111,7 @@ def process_archive():
                         except Exception as e:
                             print(f"Error processing {tex_file}: {e}")
 
-    print(f"\nSuccessfully imported and standardized {imported_count} problem.tex files with enumerate environment!")
+    print(f"\nSuccessfully imported and formatted {imported_count} problem.tex files with space after \\item and \\begin{{align*}}!")
 
 if __name__ == '__main__':
     process_archive()

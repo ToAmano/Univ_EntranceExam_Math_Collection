@@ -8,7 +8,7 @@ title: "UKYOTO 2002 zenki Q4 (problem)"
 ---
 
 \begin{enumerate}
-\item$x \geqq 0$で定義された関数$f(x)=\log(x+\sqrt{1+x^2})$について，導関数$f'(x)$を求めよ．
-  \item極方程式$r=\theta$ $(\theta\geqq0)$で定義される曲線の，
+\item $x \geqq 0$で定義された関数$f(x)=\log(x+\sqrt{1+x^2})$について，導関数$f'(x)$を求めよ．
+  \item 極方程式$r=\theta$ $(\theta\geqq0)$で定義される曲線の，
 $0\leqq\theta\leqq\pi$の部分の長さを求めよ．
 \end{enumerate}

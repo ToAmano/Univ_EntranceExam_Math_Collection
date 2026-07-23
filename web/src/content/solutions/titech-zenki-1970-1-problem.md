@@ -8,10 +8,21 @@ title: "TITECH 1970 zenki Q1 (problem)"
 ---
 
 \begin{enumerate}
-\item$\alpha$と$t$とが実数のとき$(\alpha^2+1)t^2-4t+\alpha^2+5$の最小値を求めよ．
-  \item$p$，$q$を適当な実数の定数とする．ある実数$t$に対して，$x$，$y$座標が
-\[ x=(p^2+1)t^2-4t+p^2+5 \]
-\[ y=t^2-2qt+q^2+\sqrt3 \]
+\item $\alpha$と$t$とが実数のとき$(\alpha^2+1)t^2-4t+\alpha^2+5$の最小値を求めよ．
+  \item $p$，$q$を適当な実数の定数とする．ある実数$t$に対して，$x$，$y$座標が
+
+$$
+\begin{align*}
+x=(p^2+1)t^2-4t+p^2+5
+\end{align*}
+$$
+
+$$
+\begin{align*}
+y=t^2-2qt+q^2+\sqrt3
+\end{align*}
+$$
+
 によって与えられる平面上の点$P(x, \, y)$は原点を中心とする半径2の円周上にあるという．
 $p$，$q$の値を求めよ．
 \end{enumerate}

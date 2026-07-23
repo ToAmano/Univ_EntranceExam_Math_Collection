@@ -10,7 +10,7 @@ title: "TITECH 2008 zenki Q1 (problem)"
 正の実数$a$，$b$に対し，$x>0$で定義された2つの関数$x^a$と$\log bx$のグラフが1点で接するとする．
 
 \begin{enumerate}
-\item接点の座標$(s,t)$を$a$を用いて表せ．また，$b$を$a$の関数として表せ．
-  \item$0<h<s$をみたす$h$に対し，直線$x=h$および2つの曲線$y=x^a$，$y=\log bx$で囲まれる領域の面積を$A(h)$とする．
+\item 接点の座標$(s,t)$を$a$を用いて表せ．また，$b$を$a$の関数として表せ．
+  \item $0<h<s$をみたす$h$に対し，直線$x=h$および2つの曲線$y=x^a$，$y=\log bx$で囲まれる領域の面積を$A(h)$とする．
 $\displaystyle\lim_{h \to 0}A(h)$を$a$で表せ．
 \end{enumerate}

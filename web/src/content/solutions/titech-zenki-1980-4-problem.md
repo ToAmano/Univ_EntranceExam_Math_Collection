@@ -7,11 +7,16 @@ type: "problem"
 title: "TITECH 1980 zenki Q4 (problem)"
 ---
 
-\[ S_n=\int_0^\frac{\pi}{2}x^n\sin^nxdx  (n=1, \, 2, \, \cdots\cdots) \]
+$$
+\begin{align*}
+S_n=\int_0^\frac{\pi}{2}x^n\sin^nxdx (n=1, \, 2, \,\cdots\cdots)
+\end{align*}
+$$
+
 とする．次のことを証明せよ．
 
 \begin{enumerate}
-\item$S_1<S_2$
-  \item$S_{n+2}+S_n>2S_{n+1}$
-  \item$m<n$のとき，$S_m<S_n$
+\item $S_1<S_2$
+  \item $S_{n+2}+S_n>2S_{n+1}$
+  \item $m<n$のとき，$S_m<S_n$
 \end{enumerate}

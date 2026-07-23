@@ -12,6 +12,6 @@ $\overrightarrow{OP}=h\overrightarrow{OA}$，$\overrightarrow{OQ}=k\overrightarr
 $\triangle OAB$，$\triangle OPQ$の面積をそれぞれ$S$，$T$とすれば，次の関係が成り立つことを示せ．
 
 \begin{enumerate}
-\item$\displaystyle\frac{1}{h}+\frac{1}{k}=3$
-  \item$\displaystyle\frac{4}{9}S\leqq T \leqq\frac{1}{2}S$
+\item $\displaystyle\frac{1}{h}+\frac{1}{k}=3$
+  \item $\displaystyle\frac{4}{9}S\leqq T \leqq\frac{1}{2}S$
 \end{enumerate}

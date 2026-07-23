@@ -9,4 +9,9 @@ title: "TITECH 1967 zenki Q5 (problem)"
 
 $\alpha$，$\beta$が方程式$2x=\tan x$の異なる正の2根であるとき，
 次の定積分の値を求めよ．
-\[ \int_0^1\sin\alpha x\sin\beta xdx \]
+
+$$
+\begin{align*}
+\int_0^1\sin\alpha x\sin\beta xdx
+\end{align*}
+$$

@@ -19,7 +19,7 @@ $\alpha$，$\beta$，$\gamma$が次の3条件を満たすとする．
 　このとき，次の問に答えよ．
 
 \begin{enumerate}
-\item$z=\alpha-1$とおいて，$\beta$と$\gamma$を$z$を使って表せ．
-  \item$\alpha$，$\beta$，$\gamma$の偏角を求めよ．
+\item $z=\alpha-1$とおいて，$\beta$と$\gamma$を$z$を使って表せ．
+  \item $\alpha$，$\beta$，$\gamma$の偏角を求めよ．
 ただし$0^\circ \leqq \arg\alpha \leqq \arg\beta \leqq \arg\gamma < {360}^\circ$とする．
 \end{enumerate}

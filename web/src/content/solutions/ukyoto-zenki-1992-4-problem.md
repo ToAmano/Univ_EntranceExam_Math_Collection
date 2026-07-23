@@ -11,6 +11,6 @@ title: "UKYOTO 1992 zenki Q4 (problem)"
 すなわち，$k$回目に出た目の数を$Y_k$とすると，$X=Y_1Y_2\cdots\cdots Y_n$
 
 \begin{enumerate}
-\item$X$が3で割りきれる確率$p_n$を求めよ．
-  \item$X$が6で割りきれる確率$q_n$を求めよ．
+\item $X$が3で割りきれる確率$p_n$を求めよ．
+  \item $X$が6で割りきれる確率$q_n$を求めよ．
 \end{enumerate}

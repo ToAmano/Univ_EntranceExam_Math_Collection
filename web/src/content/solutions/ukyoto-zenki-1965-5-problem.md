@@ -12,5 +12,5 @@ title: "UKYOTO 1965 zenki Q5 (problem)"
 
 \begin{enumerate}
 \item $\displaystyle\frac{1}{x^3}$
-  \item$\sqrt{1+x+x^2}$
+  \item $\sqrt{1+x+x^2}$
 \end{enumerate}

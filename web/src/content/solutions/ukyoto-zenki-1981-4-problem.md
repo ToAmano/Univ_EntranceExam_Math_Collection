@@ -8,8 +8,8 @@ title: "UKYOTO 1981 zenki Q4 (problem)"
 ---
 
 \begin{enumerate}
-\item四面体$PQRS$が，$\angle PQR=\angle RQS=\angle SQP={90}^\circ$および$PR=PS=a$ (定数)をみたすとき，
+\item 四面体$PQRS$が，$\angle PQR=\angle RQS=\angle SQP={90}^\circ$および$PR=PS=a$ (定数)をみたすとき，
 このような四面体の体積の最大値を求めよ．
-  \item四面体$ABCD$が，$AB=BC=CD=DA=a$ (定数)をみたすとき，
+  \item 四面体$ABCD$が，$AB=BC=CD=DA=a$ (定数)をみたすとき，
 このような四面体の体積の最大値を求めよ．
 \end{enumerate}

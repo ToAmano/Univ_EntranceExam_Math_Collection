@@ -13,7 +13,7 @@ title: "TITECH 2001 zenki Q3 (problem)"
 $X_1,\cdots\cdots,X_k$のうちのどれかが$k$となる確率を$P_N(k)$とする．
 
 \begin{enumerate}
-\item$N \geqq 3$のとき$P_N(1)$，$P_N(2)$，$P_N(3)$を$N$で表せ．
-  \item$P_3(4)$，$P_3(5)$を求めよ．
-  \item$k \leqq N$のとき，$P_N(k)$を$N$と$k$で表せ．
+\item $N \geqq 3$のとき$P_N(1)$，$P_N(2)$，$P_N(3)$を$N$で表せ．
+  \item $P_3(4)$，$P_3(5)$を求めよ．
+  \item $k \leqq N$のとき，$P_N(k)$を$N$と$k$で表せ．
 \end{enumerate}

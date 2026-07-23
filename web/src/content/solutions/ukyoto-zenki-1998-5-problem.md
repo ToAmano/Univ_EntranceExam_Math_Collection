@@ -15,7 +15,7 @@ title: "UKYOTO 1998 zenki Q5 (problem)"
 このとき以下の問に答えよ．
 
 \begin{enumerate}
-\item得点が$n$になるような取り出し方の数を$A(n)$とするとき，
+\item 得点が$n$になるような取り出し方の数を$A(n)$とするとき，
 $A(0)$，$A(1)$，$A(2)$，$A(3)$を求めよ．
-  \item得点の期待値を求めよ．
+  \item 得点の期待値を求めよ．
 \end{enumerate}

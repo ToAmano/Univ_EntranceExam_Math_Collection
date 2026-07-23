@@ -11,9 +11,9 @@ title: "UKYOTO 1979 zenki Q5 (problem)"
 このとき
 
 \begin{enumerate}
-\item$\overrightarrow{OA_1}+\overrightarrow{OA_2}+\overrightarrow{OA_3}=\overrightarrow{OH}$となるように
+\item $\overrightarrow{OA_1}+\overrightarrow{OA_2}+\overrightarrow{OA_3}=\overrightarrow{OH}$となるように
 点$H$をとれば，点$H$は$\triangle A_1A_2A_3$の垂心であることを示せ．
-  \item6点$A_k$ $(k=1,2,3,4,5,6)$のうちから3点を任意にえらぶ．
+  \item 6点$A_k$ $(k=1,2,3,4,5,6)$のうちから3点を任意にえらぶ．
 えらんだ3点を頂点とする三角形の垂心と，残りの3点を頂点とする三角形の重心とを通る直線は，
 3点のえらびかたに無関係な一定の点を通ることを示せ．
 \end{enumerate}

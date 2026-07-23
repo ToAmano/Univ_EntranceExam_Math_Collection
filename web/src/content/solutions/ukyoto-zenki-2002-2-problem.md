@@ -10,7 +10,7 @@ title: "UKYOTO 2002 zenki Q2 (problem)"
 半径1の円周上に相異なる3点$A$，$B$，$C$がある．
 
 \begin{enumerate}
-\item${AB}^2+{BC}^2+{CA}^2>8$ならば$\triangle ABC$は鋭角三角形であることを示せ．
-  \item${AB}^2+{BC}^2+{CA}^2 \leqq 9$が成立することを示せ．
+\item ${AB}^2+{BC}^2+{CA}^2>8$ならば$\triangle ABC$は鋭角三角形であることを示せ．
+  \item ${AB}^2+{BC}^2+{CA}^2 \leqq 9$が成立することを示せ．
 また，この等号が成立するのはどのような場合か．
 \end{enumerate}

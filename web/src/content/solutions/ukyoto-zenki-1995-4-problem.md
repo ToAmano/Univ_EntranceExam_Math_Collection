@@ -10,8 +10,8 @@ title: "UKYOTO 1995 zenki Q4 (problem)"
 $x$と$y$の2文字からなる文字列$z_n$を次の規則(イ)，(ロ)で順次定めていく．
 
 \begin{enumerate}
-\item$z_1=x$とおく．
-  \item$z_n$の中に現れるすべての$x$を$yx$で，
+\item $z_1=x$とおく．
+  \item $z_n$の中に現れるすべての$x$を$yx$で，
 すべての$y$を$xx$で置き換えてできる文字列を$z_{n+1}$とする$(n=1,2,3,\cdots)$．\\
 \end{enumerate}
 

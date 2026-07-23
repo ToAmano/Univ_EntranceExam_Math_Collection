@@ -12,6 +12,6 @@ title: "UKYOTO 1997 zenki Q3 (problem)"
 (すなわち，$L$の上側にある部分の面積と下側にある部分の面積が等しい)．
 
 \begin{enumerate}
-\item$a^2$を$k$で表せ．
-  \item$\displaystyle\lim_{k\to\infty}a^2$を求めよ．
+\item $a^2$を$k$で表せ．
+  \item $\displaystyle\lim_{k\to\infty}a^2$を求めよ．
 \end{enumerate}

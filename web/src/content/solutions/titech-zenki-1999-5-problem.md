@@ -13,14 +13,14 @@ title: "TITECH 1999 zenki Q5 (problem)"
 このとき次の問いに答えよ．
 
 \begin{enumerate}
-\item複素平面上の点列$P_n$ $(n \geqq 0)$を次のように定める．
+\item 複素平面上の点列$P_n$ $(n \geqq 0)$を次のように定める．
 
 $P_0$は0を表す点とし，$P_1$は$1+i$を表す点とする．
 
 以下$n \geqq 2$に対しては，ベクトル$\overrightarrow{P_{n-2}P_{n-1}}$を反時計まわりに$\displaystyle\frac{\pi}{3}$回転し，
 長さを$\displaystyle\frac{2}{3}$倍したベクトルが$\overrightarrow{P_{n-1}P_n}$となるように$P_n$を定める．
 $P_n$の極限点$P_{\infty}$が表す複素数を求めよ．
-  \item点列$Q_n$ $(n \geqq 0)$は次のように定める．
+  \item 点列$Q_n$ $(n \geqq 0)$は次のように定める．
 
 $Q_0$は0を表す点とし，$Q_1$は$z=x+iy$を表す点とする．
 

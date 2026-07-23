@@ -8,13 +8,31 @@ title: "UKYOTO 1978 zenki Q6 (problem)"
 ---
 
 \begin{enumerate}
-\item$m$，$n$は自然数とする．三角関数の加法定理を用いて，等式
-\[ \sin mx \sin nx = \frac{1}{2} \{ \cos(m-n)x-\cos(m+n)x \} \]
+\item $m$，$n$は自然数とする．三角関数の加法定理を用いて，等式
+
+$$
+\begin{align*}
+\sin mx \sin nx = \frac{1}{2}\{\cos(m-n)x-\cos(m+n)x \}
+\end{align*}
+$$
+
 が成り立つことを示し，さらに次の積分$I_{m,n}$を求めよ．
-\[ I_{m,n}=\int_{-\pi}^\pi \sin mx \sin nx dx \]
-  \item整数$k$ $(0 \leqq k \leqq 5)$，自然数$m$，$n$および実数$a$，$b$に対して，
-\[ f(k)=\int_{-\pi}^\pi{(\sin kx - a \sin mx - b \sin nx)}^2 dx, 
+
+$$
+\begin{align*}
+I_{m,n}=\int_{-\pi}^\pi\sin mx \sin nx dx
+\end{align*}
+$$
+
+  \item 整数$k$ $(0 \leqq k \leqq 5)$，自然数$m$，$n$および実数$a$，$b$に対して，
+
+$$
+\begin{align*}
+f(k)=\int_{-\pi}^\pi{(\sin kx - a \sin mx - b \sin nx)}^2 dx, 
 p(k)=\frac{5 \, !}{k \, ! (5-k) \, !}{\left( \frac{1}{2} \right)}^5, 
-E=\sum_{k=0}^5 p(k)f(k) \]
+E=\sum_{k=0}^5 p(k)f(k)
+\end{align*}
+$$
+
 とおくとき，$E$を最小にするような$m$，$n$，$a$，$b$を求めよ．
 \end{enumerate}

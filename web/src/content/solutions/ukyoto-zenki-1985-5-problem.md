@@ -14,7 +14,7 @@ title: "UKYOTO 1985 zenki Q5 (problem)"
 また存在する場合には，どれだけあるか，次の2つの場合について答えよ．
 
 \begin{enumerate}
-\item$X$は2項分布，すなわち$P(X=k)=_2C_kp^k{(1-p)}^{2-k}$ $(k=0,1,2)$\\
+\item $X$は2項分布，すなわち$P(X=k)=_2C_kp^k{(1-p)}^{2-k}$ $(k=0,1,2)$\\
 ただし$p$ $(0<p<1)$はあらかじめ指定した定数である．
-  \item$X$は一様分布，すなわち$\displaystyle P(X=k)=\frac{1}{3}$ $(k=0,1,2)$
+  \item $X$は一様分布，すなわち$\displaystyle P(X=k)=\frac{1}{3}$ $(k=0,1,2)$
 \end{enumerate}

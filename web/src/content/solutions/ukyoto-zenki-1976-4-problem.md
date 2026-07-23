@@ -12,6 +12,6 @@ title: "UKYOTO 1976 zenki Q4 (problem)"
 次の(i)，(ii)を証明せよ．ただし，(ii)を先に証明してもよい．
 
 \begin{enumerate}
-\item$\displaystyle\lim_{n\to\infty}a_n=1$
-  \item$\displaystyle{(a_n-1)}^2<\frac{1}{4n}$
+\item $\displaystyle\lim_{n\to\infty}a_n=1$
+  \item $\displaystyle{(a_n-1)}^2<\frac{1}{4n}$
 \end{enumerate}

@@ -8,10 +8,16 @@ title: "TITECH 2011 zenki Q2 (problem)"
 ---
 
 実数$x$に対して
-\[ f(x)=\int_0^{\displaystyle\frac{\pi}{2}}|\cos t-x\sin 2t|dt \]
+
+$$
+\begin{align*}
+f(x)=\int_0^{\displaystyle\frac{\pi}{2}}|\cos t-x\sin 2t|dt
+\end{align*}
+$$
+
 とおく．
 
 \begin{enumerate}
-\item関数$f(x)$の最小値を求めよ．
-  \item定積分$\displaystyle\int_0^1f(x)dx$を求めよ．
+\item 関数$f(x)$の最小値を求めよ．
+  \item 定積分$\displaystyle\int_0^1f(x)dx$を求めよ．
 \end{enumerate}

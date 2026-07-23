@@ -13,6 +13,6 @@ title: "UKYOTO 1982 zenki Q5 (problem)"
 白線に達するまで，これを続ける．
 
 \begin{enumerate}
-\item$A$点から$n$メートル北の点に到達する確率$p_n$を求めよ．
-  \item$p_n$を最大にする$n$を求めよ．
+\item $A$点から$n$メートル北の点に到達する確率$p_n$を求めよ．
+  \item $p_n$を最大にする$n$を求めよ．
 \end{enumerate}

@@ -8,5 +8,11 @@ title: "TITECH 1979 zenki Q2 (problem)"
 ---
 
 $x$の関数
-\[ \left( 1-\frac{a}{2}\cos^2x \right) \sin x \]
+
+$$
+\begin{align*}
+\left( 1-\frac{a}{2}\cos^2x \right)\sin x
+\end{align*}
+$$
+
 の最大値が1となるような$a$の範囲を求めよ．

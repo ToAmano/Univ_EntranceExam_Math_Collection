@@ -11,6 +11,6 @@ title: "TITECH 2010 zenki Q3 (problem)"
 このとき，引いたカードの数字のうち小さい方が3の倍数である確率を$p(n)$とする．
 
 \begin{enumerate}
-\item$p(8)$を求めよ．
-  \item正の整数$k$に対し，$p(3k+2)$を$k$で表せ．
+\item $p(8)$を求めよ．
+  \item 正の整数$k$に対し，$p(3k+2)$を$k$で表せ．
 \end{enumerate}

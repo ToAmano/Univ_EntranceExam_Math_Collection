@@ -12,6 +12,6 @@ title: "TITECH 1999 zenki Q2 (problem)"
 そのような正$n$角錐のなかで最大の体積をもつものを$C_n$とする．
 
 \begin{enumerate}
-\item$C_n$の体積$V_n$を求めよ．
-  \item$\displaystyle \lim_{n \to \infty}V_n$を求めよ．
+\item $C_n$の体積$V_n$を求めよ．
+  \item $\displaystyle \lim_{n \to \infty}V_n$を求めよ．
 \end{enumerate}

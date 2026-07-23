@@ -8,6 +8,6 @@ title: "UKYOTO 1975 zenki Q2 (problem)"
 ---
 
 \begin{enumerate}
-\item$x\geqq0$のとき$\displaystyle\sqrt{x}\leqq\frac{1}{2}(x+1)$を示せ．
-  \item$\displaystyle\int_0^k\sqrt{x}{ \left( 1-\frac{x}{k} \right) }^kdx<1$を示せ($k$は自然数)．
+\item $x\geqq0$のとき$\displaystyle\sqrt{x}\leqq\frac{1}{2}(x+1)$を示せ．
+  \item $\displaystyle\int_0^k\sqrt{x}{ \left( 1-\frac{x}{k} \right) }^kdx<1$を示せ($k$は自然数)．
 \end{enumerate}

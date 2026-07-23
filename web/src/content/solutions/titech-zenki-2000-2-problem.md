@@ -8,9 +8,9 @@ title: "TITECH 2000 zenki Q2 (problem)"
 ---
 
 \begin{enumerate}
-\item極座標表示された複素数$z=r(\cos\theta+i\sin\theta)$が$\displaystyle \left| z+\frac{1}{2} \right| < \frac{1}{2}$を
+\item 極座標表示された複素数$z=r(\cos\theta+i\sin\theta)$が$\displaystyle \left| z+\frac{1}{2} \right| < \frac{1}{2}$を
 満たすための必要十分条件を$r$と$\theta$を用いて表せ．
-  \item$n$を自然数とするとき，$|1+z+\dots+z^n|^2$を$r$，$\theta$、$n$を用いて表せ．
-  \item複素数$z$が$\displaystyle \left| z+\frac{1}{2} \right| < \frac{1}{2}$を満たすならば，
+  \item $n$を自然数とするとき，$|1+z+\dots+z^n|^2$を$r$，$\theta$、$n$を用いて表せ．
+  \item 複素数$z$が$\displaystyle \left| z+\frac{1}{2} \right| < \frac{1}{2}$を満たすならば，
 すべての自然数$n$に対し$|1+z+\dots+z^n|<1$が成り立つことを示せ．
 \end{enumerate}

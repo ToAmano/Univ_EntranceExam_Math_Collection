@@ -11,6 +11,6 @@ title: "UKYOTO 1967 zenki Q2 (problem)"
 次の(i)または(ii)をみたすように$x$，$y$を定めよ．
 
 \begin{enumerate}
-\item$Z^2=i$
-  \item$Z^2-4iZ+(-4+2i)=0$
+\item $Z^2=i$
+  \item $Z^2-4iZ+(-4+2i)=0$
 \end{enumerate}

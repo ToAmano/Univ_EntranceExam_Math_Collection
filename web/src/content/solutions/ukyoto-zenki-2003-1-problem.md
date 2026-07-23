@@ -11,6 +11,6 @@ title: "UKYOTO 2003 zenki Q1 (problem)"
 $\displaystyle\sum_{k=1}^n a_k$を求めよ．
 
 \begin{enumerate}
-\item$a_1=1$
-  \item$\log a_n - \log a_{n-1} = \log(n-1)-\log(n+1)$ $(n \geqq 2)$
+\item $a_1=1$
+  \item $\log a_n - \log a_{n-1} = \log(n-1)-\log(n+1)$ $(n \geqq 2)$
 \end{enumerate}

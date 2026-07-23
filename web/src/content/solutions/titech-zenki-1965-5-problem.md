@@ -8,5 +8,11 @@ title: "TITECH 1965 zenki Q5 (problem)"
 ---
 
 次の不等式を証明せよ。
-\[ \int_0^\pi|\sin(x+h)-\sin x|dx<2h \]
+
+$$
+\begin{align*}
+\int_0^\pi|\sin(x+h)-\sin x|dx<2h
+\end{align*}
+$$
+
 ただし，$0<h<\pi$とする。

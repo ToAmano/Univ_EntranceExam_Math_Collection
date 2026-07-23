@@ -12,6 +12,6 @@ $n$を正の整数とする．
 関数$f(n)$の値を$m$とする．このとき，次の値を求めよ．
 
 \begin{enumerate}
-\item$f(10)$，$f(100)$
-  \item$\displaystyle\lim_{n\to\infty}\frac{f(10^n)}{10^n}$
+\item $f(10)$，$f(100)$
+  \item $\displaystyle\lim_{n\to\infty}\frac{f(10^n)}{10^n}$
 \end{enumerate}

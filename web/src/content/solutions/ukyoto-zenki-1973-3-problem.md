@@ -12,6 +12,12 @@ title: "UKYOTO 1973 zenki Q3 (problem)"
 ベクトル$\overrightarrow{OA}$，$\overrightarrow{OB}$，$\overrightarrow{OC}$を
 それぞれ$\mathbf{a}$，$\mathbf{b}$，$\mathbf{c}$で表わす．
 このとき
-\[ \mathbf{c}=\frac{|\mathbf{b}|}{|\mathbf{a}|}\mathbf{a}+\frac{|\mathbf{a}|}{|\mathbf{b}|}\mathbf{b} \]
+
+$$
+\begin{align*}
+\mathbf{c}=\frac{|\mathbf{b}|}{|\mathbf{a}|}\mathbf{a}+\frac{|\mathbf{a}|}{|\mathbf{b}|}\mathbf{b}
+\end{align*}
+$$
+
 であることを証明せよ．
 ただし$|\mathbf{a}|$，$|\mathbf{b}|$はそれぞれ$\mathbf{a}$，$\mathbf{b}$の大きさを示す．

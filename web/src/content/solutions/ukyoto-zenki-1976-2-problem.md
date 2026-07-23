@@ -16,10 +16,10 @@ $\displaystyle\frac{2(\mathbf{a},\mathbf{b})}{(\mathbf{b},\mathbf{b})}$は整数
 ただし，$(\mathbf{a},\mathbf{b})$等はベクトルの内積をあらわす．
 
 \begin{enumerate}
-\item$S$の2つのベクトルの間の角は，
+\item $S$の2つのベクトルの間の角は，
 $0^\circ$，${30}^\circ$，${45}^\circ$，${60}^\circ$，${90}^\circ$およびこれらの補角のうちの1つであることを示せ．
-  \item(i)において，角が$0^\circ$，${30}^\circ$，${60}^\circ$の場合には，
+  \item (i)において，角が$0^\circ$，${30}^\circ$，${60}^\circ$の場合には，
 2つのベクトルの長さの比はどうなるか．
-  \item${30}^\circ$の角をなすベクトル$\mathbf{a}$，$\mathbf{b}$を含み，
+  \item ${30}^\circ$の角をなすベクトル$\mathbf{a}$，$\mathbf{b}$を含み，
 12個のベクトルからなる集合$S$の例を図示し，各ベクトルを$\mathbf{a}$，$\mathbf{b}$であらわせ．
 \end{enumerate}

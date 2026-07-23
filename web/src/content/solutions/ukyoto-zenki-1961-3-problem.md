@@ -9,10 +9,16 @@ title: "UKYOTO 1961 zenki Q3 (problem)"
 
 同一平面上で，二点$A$，$B$をとおる直線の一方の側に二点$P$，$Q$があって，
 ともに$AB$の中点$M$から$a$の距離にあり，$PM$は$AB$に垂直であるとする．
-\[ \angle APB=\alpha \text{，　} \angle AQB=\beta \text{，　} \angle PMQ=\theta \text{，　} AM=r \]
+
+$$
+\begin{align*}
+\angle APB=\alpha\text{，　}\angle AQB=\beta\text{，　}\angle PMQ=\theta\text{，　} AM=r
+\end{align*}
+$$
+
 とおき，$\alpha$は直角でないとする．
 
 \begin{enumerate}
-\item$\tan\alpha$を$r$と$a$であらわせ．
-  \item$\tan\alpha\cdot\cos\theta=\tan\beta$を示せ．
+\item $\tan\alpha$を$r$と$a$であらわせ．
+  \item $\tan\alpha\cdot\cos\theta=\tan\beta$を示せ．
 \end{enumerate}

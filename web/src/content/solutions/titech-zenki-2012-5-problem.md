@@ -13,6 +13,6 @@ $\displaystyle\frac{OP'}{OP}=\displaystyle\frac{OQ'}{OQ}$が成り立つ．
 ただし，$P'$，$Q'$はそれぞれ$P$，$Q$の$f$による像を表す．
 
 \begin{enumerate}
-\item$a^2+c^2=b^2+d^2$を示せ．
-  \item1次変換$f$により，点$(1,\sqrt3)$が点$(-4,0)$に移るとき，$A$を求めよ．
+\item $a^2+c^2=b^2+d^2$を示せ．
+  \item 1次変換$f$により，点$(1,\sqrt3)$が点$(-4,0)$に移るとき，$A$を求めよ．
 \end{enumerate}

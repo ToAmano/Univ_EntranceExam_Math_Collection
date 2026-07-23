@@ -16,6 +16,6 @@ $O_5$は$O_1$に内接し，$O_3$，$O_4$と互いに外接する．
 $D$は$B$，$C$を通る直線に関して$A$の反対側にあるものとする．
 
 \begin{enumerate}
-\item四辺形$ABDC$の面積$S(a)$を求めよ．
-  \item$S(a)$の最大値を求めよ．
+\item 四辺形$ABDC$の面積$S(a)$を求めよ．
+  \item $S(a)$の最大値を求めよ．
 \end{enumerate}

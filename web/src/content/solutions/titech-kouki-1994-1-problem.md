@@ -8,9 +8,21 @@ title: "TITECH 1994 kouki Q1 (problem)"
 ---
 
 関数 $f(x)$ に対し
-\[ F(x) = \int_0^x f(t)dt \]
+
+$$
+\begin{align*}
+F(x) = \int_0^x f(t)dt
+\end{align*}
+$$
+
 とおく．ある定数 $a, b, c$ が存在して
-\[ F(x) = x^2 + ax|x-b| + cx \]
+
+$$
+\begin{align*}
+F(x) = x^2 + ax|x-b| + cx
+\end{align*}
+$$
+
 が常に成立し，さらに $3$ つの条件
 
 \begin{enumerate}

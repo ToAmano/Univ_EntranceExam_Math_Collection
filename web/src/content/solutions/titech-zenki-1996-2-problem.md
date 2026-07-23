@@ -14,6 +14,6 @@ $A$で表される1次変換により，
 このとき次の問いに答えよ．
 
 \begin{enumerate}
-\item行列$A$を$\theta$，$a$，$b$を用いて表せ．
-  \item自然数$n$に対し$A^n$を求めよ．
+\item 行列$A$を$\theta$，$a$，$b$を用いて表せ．
+  \item 自然数$n$に対し$A^n$を求めよ．
 \end{enumerate}

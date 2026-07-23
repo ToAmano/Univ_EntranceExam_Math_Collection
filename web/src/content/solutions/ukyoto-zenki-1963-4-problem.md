@@ -11,6 +11,6 @@ title: "UKYOTO 1963 zenki Q4 (problem)"
 $B$，$C$，$A$にむかってそれぞれ一定の速さで進んで，時刻$t=1$に$B$，$C$，$A$に達するものとする．
 
 \begin{enumerate}
-\itemその間$\triangle DEF$の重心は動かないことを示せ．
-  \item$\triangle DEF$の面積の最小値は$\triangle ABC$の面積の何倍か．
+\item その間$\triangle DEF$の重心は動かないことを示せ．
+  \item $\triangle DEF$の面積の最小値は$\triangle ABC$の面積の何倍か．
 \end{enumerate}

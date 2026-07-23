@@ -11,12 +11,18 @@ $N$を2以上の自然数とし，$a_n$ $(n=1, \, 2, \, \cdots)$を
 次の性質(i)，(ii)をみたす数列とする．
 
 \begin{enumerate}
-\item$a_1=2^N-3$．
-  \item$n=1, \, 2, \, \cdots$に対して，\\
+\item $a_1=2^N-3$．
+  \item $n=1, \, 2, \, \cdots$に対して，\\
 $a_n$が偶数のとき$\displaystyle a_{n+1}=\frac{a_n}{2}$，
 $a_n$が奇数のとき$\displaystyle a_{n+1}=\frac{a_n-1}{2}$．
 \end{enumerate}
 
 このときどのような自然数$M$に対しても
-\[ \sum_{n=1}^Ma_n \leqq 2^{N+1}-N-5 \]
+
+$$
+\begin{align*}
+\sum_{n=1}^Ma_n \leqq 2^{N+1}-N-5
+\end{align*}
+$$
+
 が成り立つことを示せ．

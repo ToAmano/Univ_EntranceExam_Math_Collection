@@ -13,6 +13,6 @@ title: "UKYOTO 1993 zenki Q2 (problem)"
 $C$上の点$P$から$C_1$，$C_2$に1本ずつ接線を引き，それらの接点を$Q$，$R$とする．
 
 \begin{enumerate}
-\item$\angle POA=\theta$とするとき，$PQ$は$\theta$によってどのように表せるか．
-  \item$P$を$C$上で動かしたときの$PQ+PR$の最大値を求めよ．
+\item $\angle POA=\theta$とするとき，$PQ$は$\theta$によってどのように表せるか．
+  \item $P$を$C$上で動かしたときの$PQ+PR$の最大値を求めよ．
 \end{enumerate}

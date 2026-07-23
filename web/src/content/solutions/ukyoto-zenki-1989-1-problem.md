@@ -13,6 +13,6 @@ $OA_1=OB_1=1$，$\angle B_1OA_1=\theta$ $(0<\theta<\pi)$であるような二等
 　辺$OA_n$の長さを$a_n$とおく．
 
 \begin{enumerate}
-\item$\displaystyle a_3\cdot\sin\frac{\theta}{4}$を計算せよ．
-  \item$\displaystyle\lim_{n\to\infty}a_n$を計算せよ．
+\item $\displaystyle a_3\cdot\sin\frac{\theta}{4}$を計算せよ．
+  \item $\displaystyle\lim_{n\to\infty}a_n$を計算せよ．
 \end{enumerate}

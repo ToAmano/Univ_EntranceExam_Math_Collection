@@ -13,6 +13,6 @@ title: "TITECH 2003 zenki Q2 (problem)"
 例えば，$a=3$，$\displaystyle a=\frac{3}{2}$の場合はどちらも2回でこの操作は終わる．
 
 \begin{enumerate}
-\item3回でこの操作が終わるような$a$の値をすべて求めよ．
-  \item$n$回の操作で終わるような$a$の値の最大値と最小値を求めよ．
+\item 3回でこの操作が終わるような$a$の値をすべて求めよ．
+  \item $n$回の操作で終わるような$a$の値の最大値と最小値を求めよ．
 \end{enumerate}
