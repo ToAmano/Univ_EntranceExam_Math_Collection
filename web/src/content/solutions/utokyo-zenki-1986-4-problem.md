@@ -7,16 +7,28 @@ type: "problem"
 title: "UTOKYO 1986 zenki Q4 (problem)"
 ---
 
-二次方程式$ax^2-2bx+c=0$の係数$a$，$b$，$c$が，それぞれ次の範囲を動くものとする．
+平面 $S$ の一点 $A$ と正数 $\alpha$ $(\alpha<180)$ をとる．
+点の集合としての $S$ から $S$ への写像 $\varphi$ が，
+次の三つの条件 (i)，(ii)，(iii) をみたすとき，
+$\varphi$ は $A$ を中心とする正の向きの $\alpha^\circ$ 回転と呼ばれる．
 
-$$
-\begin{align*}
-0.9 \leqq a \leqq 1.1,  2.7 \leqq b \leqq 3.3,  4.5 \leqq c \leqq 5.4
-\end{align*}
-$$
+1.  $\varphi(A)=A$，
 
-1.  このとき$\displaystyle u=\frac{b}{a}$，$\displaystyle v=\frac{c}{a}$
-を座標とする点$P(u,v)$の動く範囲を定め，図示せよ．
+2.  $S$ の任意の点 $P$ $(\neq A)$ に対し，$AP=A\varphi(P)$，$\angle PA\varphi(P)=\alpha^\circ$，
 
-2.  上の二次方程式の二つの解のうち，大きい方を$z$とする．
-$a$，$b$，$c$が上の範囲を動くときの，$z$の最大値，最小値を求めよ．
+3.  人が三角形 $P\varphi(P)A$ の周を一周し，$P$，$\varphi(P)$，$A$ の順序に頂点を通るとき，
+  三角形の内部は常に人の左側にある．
+
+いま $S$ 上に相異なる二点 $A$，$B$ をとり，
+$A$ を中心とする正の向きの $60^\circ$ 回転を $f$，
+$B$ を中心とする正の向きの $60^\circ$ 回転を $g$ とする．
+これに対し，$f$ と $g$ の合成写像 $h=g \circ f$ が，$h(P)=g(f(P))$ によって定義される．
+
+<figure id="fig_1">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/utokyo/zenki/1986/4/fig_1.svg" alt="図 1" />
+  <figcaption>図 1</figcaption>
+</figure>
+
+1.  このとき，点 $h(A)$ と $h(B)$ は，$A$，$B$ に対して，どのような位置にあるかを求め，図示せよ．
+
+2.  $h$ はある点 $O$ を中心とする正の向きの回転であることを示し，点 $O$ および回転角を求めよ．
