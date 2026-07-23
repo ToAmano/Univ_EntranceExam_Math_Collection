@@ -19,11 +19,11 @@ title: "UTOKYO 1984 zenki Q2 (solution)"
      どのような数となるか．
           
 
-\begin{enumerate}
-[i)]
-          \item $\dlim{t}{0}\dfrac{f(t)}{g(t)}$ \\
-          \item $\dlim{t}{+\infty}\dfrac{f(t)}{g(t)}$
-\end{enumerate}
+1.  
+
+2.  $\dlim{t}{0}\dfrac{f(t)}{g(t)}$ \\
+
+3.  $\dlim{t}{+\infty}\dfrac{f(t)}{g(t)}$
 
      \end{oframed}
 
@@ -147,7 +147,14 @@ $$
 $$
 
 だから，
-     \[h\limit{t}{+0}0\]
+     
+
+$$
+\begin{align*}
+h\limit{t}{+0}0
+\end{align*}
+$$
+
 および
      
 

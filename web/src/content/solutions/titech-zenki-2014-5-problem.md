@@ -13,8 +13,8 @@ $k=1, \, 2, \, 3, \, \cdots$に対して，
 $P_{k-1}$と異なる点を$P_k(x_k, \, y_k)$とする．
 このとき，$P_{k-1}$と$P_k$を結ぶ線分と$C$によって囲まれた部分の面積を$S_k$とする．
 
-\begin{enumerate}
-\item $S_1$を求めよ．
-  \item $x_k$を$k$を用いて表せ．
-  \item $\displaystyle\sum_{k=1}^\infty\frac{1}{S_k}$を求めよ．
-\end{enumerate}
+1.  $S_1$を求めよ．
+
+2.  $x_k$を$k$を用いて表せ．
+
+3.  $\displaystyle\sum_{k=1}^\infty\frac{1}{S_k}$を求めよ．

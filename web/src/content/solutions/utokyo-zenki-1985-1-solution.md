@@ -45,9 +45,23 @@ $$
 である．以下\2 
 
 まず，
-     \[S=\int_0^{\pi/2}a\sin x\,dx=a\]
+     
+
+$$
+\begin{align*}
+S=\int_0^{\pi/2}a\sin x\,dx=a
+\end{align*}
+$$
+
 とおく．題意から
-     \[S_1=\int_t^{\pi/2}(a\sin x-1)\,dx\]
+     
+
+$$
+\begin{align*}
+S_1=\int_t^{\pi/2}(a\sin x-1)\,dx
+\end{align*}
+$$
+
  である．$f(a)=S_2-S_1$は
      
 
@@ -84,5 +98,12 @@ $$
 $$
 
 従って，求める最大値は$t=\pi/3$の時の$\pi/3$である．このとき[1](#1)から
-     \[a=\frac{2\sqrt{3}}{3}\]
+     
+
+$$
+\begin{align*}
+a=\frac{2\sqrt{3}}{3}
+\end{align*}
+$$
+
 である．$\cdots$(答)

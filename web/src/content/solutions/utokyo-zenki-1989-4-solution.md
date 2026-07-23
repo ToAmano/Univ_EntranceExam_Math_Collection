@@ -65,7 +65,14 @@ _{21}C_03^{20}=73^{21}\equiv 1
 $$
 
 だから[3](#3)に代入して
-     \[A\equiv9\]
+     
+
+$$
+\begin{align*}
+A\equiv9
+\end{align*}
+$$
+
 である．$\cdots$(答)
  \\
  \\
@@ -79,9 +86,30 @@ $$
 $$
 
 とすれば，
-     \[A=C-D\]
+     
+
+$$
+\begin{align*}
+A=C-D
+\end{align*}
+$$
+
 である．
-     \[C=10^{200}+310^{190}+\cdots+3^{19}10^{10}+3^{20}\equiv 3^{20}\]
+     
+
+$$
+\begin{align*}
+C=10^{200}+310^{190}+\cdots+3^{19}10^{10}+3^{20}\equiv 3^{20}
+\end{align*}
+$$
+
 であり，題意から$3^{20}\equiv 1$，[解]より$D=1.04\dots$だから
-     \[A\equiv C-D\equiv 9\]
+     
+
+$$
+\begin{align*}
+A\equiv C-D\equiv 9
+\end{align*}
+$$
+
 である．$\cdots$(答)

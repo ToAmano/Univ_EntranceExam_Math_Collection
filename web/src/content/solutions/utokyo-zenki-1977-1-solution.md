@@ -16,7 +16,14 @@ title: "UTOKYO 1977 zenki Q1 (solution)"
 ## 【解】
 
  $g(x)=x^3-3kx$とおく．$g(x)$は奇関数だから，$f(x)$は偶関数．故に$0\le x$で考える．
-     \[g'(x)=3(x^2-k)\]
+     
+
+$$
+\begin{align*}
+g'(x)=3(x^2-k)
+\end{align*}
+$$
+
 であるから，$k$の値によって場合分けする．\\
 
      \begin{indentation}{2zw}{0pt}
@@ -43,13 +50,18 @@ $$
      
      \underline{(ii)$0<k\le 1$の時}\\
      下表を得る．
-          \[
-          \begin{array}{|c|c|c|c|c|c|}\hline
+          
+
+$$
+\begin{align*}
+\begin{array}{|c|c|c|c|c|c|}\hline
           x & 0 &    &\sqrt{k}&     & 1 \\   \hline
           g'&    & -  & 0        & +  &    \\ \hline
           g&    &\se&           &\ne&    \\ \hline
           \end{array}
-          \]
+\end{align*}
+$$
+
      故に(i)と同様にして($f(0)$は最大値の候補から除外できて)
           
 
@@ -63,13 +75,19 @@ $$
      
      \underline{(iii)$1\le k$の時}\\
      下表を得る．
-          \[
-          \begin{array}{|c|c|c|c|}\hline
+          
+
+$$
+\begin{align*}
+\begin{array}{|c|c|c|c|}\hline
           x & 0 &     & 1 \\ \hline
           g'&    & -   &    \\ \hline
           g&    &\se &    \\ \hline
           \end{array}
-          \]     
+\end{align*}
+$$
+
+     
       故に(i)と同様にして，
            
 
@@ -115,5 +133,13 @@ $$
       \end{zahyou}
       
 故に求める最小値は
-     \[M\left(\frac{1}{4}\right)=\frac{1}{4}\]      
+     
+
+$$
+\begin{align*}
+M\left(\frac{1}{4}\right)=\frac{1}{4}
+\end{align*}
+$$
+
+      
 である．$\cdots$(答)

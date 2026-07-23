@@ -84,10 +84,12 @@ $$
 
   
 
-\begin{enumerate}
-\item $a < -1$
-          \[
-            \begin{array}{|c||c|c|c|c|c|c|c|}
+1.  $a < -1$
+          
+
+$$
+\begin{align*}
+\begin{array}{|c||c|c|c|c|c|c|c|}
               \hline
               t  &          & a &          & -1 &          & 1 &          \\
               \hline
@@ -96,11 +98,15 @@ $$
               g  & \searrow &   & \nearrow &    & \searrow &   & \nearrow \\
               \hline
             \end{array}
-          \]
+\end{align*}
+$$
 
-    \item $-1 < a < 1$
-          \[
-            \begin{array}{|c||c|c|c|c|c|c|c|}
+2.  $-1 < a < 1$
+          
+
+$$
+\begin{align*}
+\begin{array}{|c||c|c|c|c|c|c|c|}
               \hline
               t  &          & -1 &          & a &          & 1 &          \\
               \hline
@@ -109,11 +115,15 @@ $$
               g  & \searrow &    & \nearrow &   & \searrow &   & \nearrow \\
               \hline
             \end{array}
-          \]
+\end{align*}
+$$
 
-    \item $1 < a$
-          \[
-            \begin{array}{|c||c|c|c|c|c|c|c|}
+3.  $1 < a$
+          
+
+$$
+\begin{align*}
+\begin{array}{|c||c|c|c|c|c|c|c|}
               \hline
               t  &          & -1 &          & 1 &          & a &          \\
               \hline
@@ -122,11 +132,11 @@ $$
               g  & \searrow &    & \nearrow &   & \searrow &   & \nearrow \\
               \hline
             \end{array}
-          \]
+\end{align*}
+$$
 
-    \item $a=\pm 1$ の時
+4.  $a=\pm 1$ の時
           \text{$g$は単調増加関数となり不適}
-\end{enumerate}
 
   よって，$g(t)=0$が四つの異なる実解を持つ条件は
   

@@ -13,12 +13,12 @@ title: "UKYOTO 1980 zenki Q5 (problem)"
 
 このとき，
 
+1.  次の二つのうちのいずれか一方が成り立つことを示せ．
 \begin{enumerate}
-\item 次の二つのうちのいずれか一方が成り立つことを示せ．
-\begin{enumerate}
-  \item $a_i \geqq 0$ $(i=1,2,\cdots,n)$
-  \item $a_i \leqq 0$ $(i=1,2,\cdots,n)$
-\end{enumerate}
+
+2.  $a_i \geqq 0$ $(i=1,2,\cdots,n)$
+
+3.  $a_i \leqq 0$ $(i=1,2,\cdots,n)$
 
   \item $a_1,a_2,\cdots,a_n$の順序を適当に変えれば等差数列になることを示せ．
 \end{enumerate}

@@ -16,7 +16,14 @@ title: "UTOKYO 1976 zenki Q5 (solution)"
 ## 【解】
 
  \1 円柱側面の点$P$は$P(c,s,z)$とおける．ただし$0\le\theta<2\pi$とする．すると，$D$は
-     \[0\le z\le1-c+\sqrt{3}s \]
+     
+
+$$
+\begin{align*}
+0\le z\le1-c+\sqrt{3}s
+\end{align*}
+$$
+
 で与えられる．$z$の存在条件から
      
 

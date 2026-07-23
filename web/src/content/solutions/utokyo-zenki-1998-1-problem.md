@@ -8,5 +8,11 @@ title: "UTOKYO 1998 zenki Q1 (problem)"
 ---
 
 $a$は0でない実数とする．関数
-\[ f(x)=(3x^2-4) \left( x-a+\frac{1}{a} \right) \]
+
+$$
+\begin{align*}
+f(x)=(3x^2-4) \left( x-a+\frac{1}{a}\right)
+\end{align*}
+$$
+
 の極大値と極小値の差が最小となる$a$の値を求めよ．

@@ -14,7 +14,14 @@ title: "UTOKYO 1978 zenki Q5 (solution)"
      いま辺BCを$n$等分する点を$\mathrm{P_1}$，$\mathrm{P_2}$，$\cdots$，$\mathrm{P_{n-1}}$とし，
      $\mathrm{P_n}=\mathrm{C}$とする．
      このとき極限
-          \[\lim_{n\to\infty}\frac{1}{n}(\mathrm{AP_1}^2+\mathrm{AP_2}^2+\cdots+\mathrm{AP_n})\]
+          
+
+$$
+\begin{align*}
+\lim_{n\to\infty}\frac{1}{n}(\mathrm{AP_1}^2+\mathrm{AP_2}^2+\cdots+\mathrm{AP_n})
+\end{align*}
+$$
+
      を求め，これを$a$，$b$，$c$で表せ．
      \end{oframed}
 

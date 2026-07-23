@@ -112,5 +112,12 @@ v&=\frac{1}{2}\left[\frac{5\sqrt{2}}{12}-\frac{1}{3}\left(1-\frac{\sqrt{2}}{4}\r
 $$
 
 これを[1](#1)，[2](#2)に代入して，
-     \[V=8\left(\sqrt{2}-\frac{4}{3}\right)r^3\]
+     
+
+$$
+\begin{align*}
+V=8\left(\sqrt{2}-\frac{4}{3}\right)r^3
+\end{align*}
+$$
+
 である．$\cdots$(答)

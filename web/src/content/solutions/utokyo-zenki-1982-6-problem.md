@@ -15,10 +15,10 @@ title: "UTOKYO 1982 zenki Q6 (problem)"
 側面のどこかにある確率を$q_n$，
 底面にある確率を$r_n$とする．
 
-\begin{enumerate}
-\item$p_1$，$q_1$，$r_1$を求めよ．
-  \item$p_n$，$q_n$，$r_n$を$p_{n-1}$，$q_{n-1}$，$r_{n-1}$で表わせ．
-  \item$\displaystyle p=\lim_{n\to\infty}p_n$，
+1.  $p_1$，$q_1$，$r_1$を求めよ．
+
+2.  $p_n$，$q_n$，$r_n$を$p_{n-1}$，$q_{n-1}$，$r_{n-1}$で表わせ．
+
+3.  $\displaystyle p=\lim_{n\to\infty}p_n$，
 $\displaystyle q=\lim_{n\to\infty}q_n$，
 $\displaystyle r=\lim_{n\to\infty}r_n$を求めよ．
-\end{enumerate}

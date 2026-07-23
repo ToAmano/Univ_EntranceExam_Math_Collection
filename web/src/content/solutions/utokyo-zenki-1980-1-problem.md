@@ -14,7 +14,6 @@ title: "UTOKYO 1980 zenki Q1 (problem)"
 線分$CR$と線分$BQ$の交点を$C'$とする．
 $BP=x$として，次の問に答えよ．
 
-\begin{enumerate}
-\item$BB'$，$PB'$を$x$を用いて表せ．
-  \item三角形$A'B'C'$の面積が三角形$ABC$の面積の$\displaystyle\frac{1}{2}$になるような$x$の値を求めよ．
-\end{enumerate}
+1.  $BB'$，$PB'$を$x$を用いて表せ．
+
+2.  三角形$A'B'C'$の面積が三角形$ABC$の面積の$\displaystyle\frac{1}{2}$になるような$x$の値を求めよ．

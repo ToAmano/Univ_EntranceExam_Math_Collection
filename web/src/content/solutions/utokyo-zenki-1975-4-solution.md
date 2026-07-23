@@ -28,9 +28,27 @@ $$
 ただし，変形途中で，$0<\theta_n<\dfrac{\pi}{2}$により
 $\cos\left(\dfrac{\pi}{4}-\dfrac{\theta_n}{2}\right)>0$であることに注意した．
 だから$0<\theta_n<\dfrac{\pi}{2}$とあわせて
-\[\theta_{n+1}=\frac{\pi}{4}+\frac{\theta_n}{2}\]
+
+$$
+\begin{align*}
+\theta_{n+1}=\frac{\pi}{4}+\frac{\theta_n}{2}
+\end{align*}
+$$
+
 である．変形して
-\[\theta_{n+1}-\frac{\pi}{2}=\frac{1}{2}\left(\theta_n-\frac{\pi}{2}\right) \]
+
+$$
+\begin{align*}
+\theta_{n+1}-\frac{\pi}{2}=\frac{1}{2}\left(\theta_n-\frac{\pi}{2}\right)
+\end{align*}
+$$
+
 だから，繰り返し用いて，初期条件$\theta_1=\dfrac{\pi}{4}$より
-\[\theta_n=-\left(\frac{1}{2}\right)^{n-1}\frac{\pi}{2}+\frac{\pi}{2} \cdots\text{(答)}　\]
+
+$$
+\begin{align*}
+\theta_n=-\left(\frac{1}{2}\right)^{n-1}\frac{\pi}{2}+\frac{\pi}{2} \cdots\text{(答)}
+\end{align*}
+$$
+
 故に求める極限値は$\lim_{n\to\infty}\theta_n=\dfrac{\pi}{2}\cdots$(答)である．

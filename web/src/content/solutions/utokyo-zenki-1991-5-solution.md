@@ -18,7 +18,14 @@ title: "UTOKYO 1991 zenki Q5 (solution)"
 ## 【解】
 
  $a$を実数として，題意の直線は
-     \[2x-5y+a=0\]
+     
+
+$$
+\begin{align*}
+2x-5y+a=0
+\end{align*}
+$$
+
 と書ける．これと中心$(m,n)$，半径$r$の円が共有点をもつので
      
 
@@ -29,7 +36,14 @@ $$
 $$
 
 である．従って，$r$の条件式は
-      \[\forall a\exists m \exists n ，[1](#1)\]
+      
+
+$$
+\begin{align*}
+\forall a\exists m \exists n ，[1](#1)
+\end{align*}
+$$
+
  である．ここで，$2\perp 5$だから，$2m-5n$は全ての整数値のみをとる．従って$a$の
  小数部分$\a$とすれば，$a$を固定した時，
       
@@ -53,7 +67,14 @@ $$
 $$
 
 である．求める最小値は
-     \[\min r=\frac{\sqrt{29}}{58}\]
+     
+
+$$
+\begin{align*}
+\min r=\frac{\sqrt{29}}{58}
+\end{align*}
+$$
+
 である．
 
 a

@@ -19,7 +19,14 @@ title: "UTOKYO 1989 zenki Q5 (solution)"
  区間内で$f(x)\ge0$に注意する．区間内に$X$，$X+\Delta x$をとり，($\Delta x>0$)
 $0\le x\le X$の範囲での回転体の体積を$V(X)$と書く．また，同区間での$f(x)$の最大小
 値をそれぞれ$M(X)$，$m(X)$とおくと，
-     \[0\le m(X)\le f(x)\le M(X) \]
+     
+
+$$
+\begin{align*}
+0\le m(X)\le f(x)\le M(X)
+\end{align*}
+$$
+
 ゆえ，これを$y$軸の周りに回転させれば，
      
 
@@ -59,7 +66,14 @@ V'(X)=2\pi Xf(X)
 $$
 
 となるので，両辺積分して$V(0)=0$より
-     \[V=2\pi\int_0^1xf(x)dx\]
+     
+
+$$
+\begin{align*}
+V=2\pi\int_0^1xf(x)dx
+\end{align*}
+$$
+
 である．$\Box$　　     
 
 次に値を計算する．$t=\pi x^2$とすれば$\dfrac{dt}{dx}=2\pi x$，$t:0\to\pi$だから

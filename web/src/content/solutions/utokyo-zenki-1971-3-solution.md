@@ -19,7 +19,13 @@ $$
 $$
 
 となるとする．そのとき，
-\[\int_0^1\{f(x)-ax-b\}^2dx \]
+
+$$
+\begin{align*}
+\int_0^1\{f(x)-ax-b\}^2dx
+\end{align*}
+$$
+
 の値を最小にする実数$a$および$b$の値をもとめよ．
 \end{oframed}
 

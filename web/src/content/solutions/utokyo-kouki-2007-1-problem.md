@@ -9,9 +9,10 @@ title: "UTOKYO 2007 kouki Q1 (problem)"
 
 $xy$平面の曲線$C:xy^2=4$上に$1$点$\mathrm{P}_0(x_0,y_0)\, (y_0>0)$をとる．$\mathrm{P}_0$における$C$の接線と$C$との共有点のうち，$\mathrm{P}_0$と異なるものを$\mathrm{P}_1(x_1,y_1)$とする．また，$\mathrm{P}_1$における$C$の接線と$C$との共有点のうち，$P_1$と異なるものを$\mathrm{P}_2(x_2,y_2)$とする．次の問に答えよ．
 
-\begin{enumerate}
-\item $\mathrm{P}_1$，$\mathrm{P}_2$の座標を$y_0$を用いてあらわせ．
-  \item $\triangle \mathrm{P_0P_1P_2}$の面積を$T$とし，線分$\mathrm{P_0P_1}$，$\mathrm{P_1P_2}$および曲線$C$で囲まれた領域の面積を$S$とする．$\dfrac{T}{S}$の値を求めよ．
-  \item $\angle \mathrm{P_0P_1P_2}$が直角となるような$y_0$の値を求めよ．
-  \item 全問(3)で求めた$y_0$に対し，$\triangle \mathrm{P_0P_1P_2}$の外接円の面積を求めよ．
-\end{enumerate}
+1.  $\mathrm{P}_1$，$\mathrm{P}_2$の座標を$y_0$を用いてあらわせ．
+
+2.  $\triangle \mathrm{P_0P_1P_2}$の面積を$T$とし，線分$\mathrm{P_0P_1}$，$\mathrm{P_1P_2}$および曲線$C$で囲まれた領域の面積を$S$とする．$\dfrac{T}{S}$の値を求めよ．
+
+3.  $\angle \mathrm{P_0P_1P_2}$が直角となるような$y_0$の値を求めよ．
+
+4.  全問(3)で求めた$y_0$に対し，$\triangle \mathrm{P_0P_1P_2}$の外接円の面積を求めよ．

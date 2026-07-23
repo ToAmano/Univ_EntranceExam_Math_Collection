@@ -10,7 +10,13 @@ title: "UTOKYO 1995 zenki Q2 (solution)"
 \input{macros}
 \begin{oframed}
 $f(x)=1-\sin x$に対し，$g(x)=\int_0^x(x-t)f(t)dt$ とおく．このとき,任意の実数$x$，$y$について
-\[g(x+y)+g(x-y)\ge 2g(x)\]
+
+$$
+\begin{align*}
+g(x+y)+g(x-y)\ge 2g(x)
+\end{align*}
+$$
+
 が成り立つことを示せ．
 \end{oframed}
 

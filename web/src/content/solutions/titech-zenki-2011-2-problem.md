@@ -17,7 +17,6 @@ $$
 
 とおく．
 
-\begin{enumerate}
-\item 関数$f(x)$の最小値を求めよ．
-  \item 定積分$\displaystyle\int_0^1f(x)dx$を求めよ．
-\end{enumerate}
+1.  関数$f(x)$の最小値を求めよ．
+
+2.  定積分$\displaystyle\int_0^1f(x)dx$を求めよ．

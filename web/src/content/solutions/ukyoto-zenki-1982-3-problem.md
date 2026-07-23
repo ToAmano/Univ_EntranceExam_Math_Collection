@@ -14,8 +14,8 @@ $\triangle DAB$の重心を$C_1$，$\triangle ABC$の重心を$D_1$として，
 これを1回目とし，同様の手続きをくり返して，$n$回目にえられる四辺形を$A_nB_nC_nD_n$とする．\\
 　このとき，次のことを示せ．
 
-\begin{enumerate}
-\item 線分$AA_1$，$BB_1$，$CC_1$，$DD_1$は1点$P$を共有する．
-  \item 点$A_n$ $(n=1,2,3,\cdots)$は1直線上にある．
-  \item $A_n$と$P$の距離$\overline{A_nP}$について，$\displaystyle\lim_{n\to\infty}\overline{A_nP}=0$である．
-\end{enumerate}
+1.  線分$AA_1$，$BB_1$，$CC_1$，$DD_1$は1点$P$を共有する．
+
+2.  点$A_n$ $(n=1,2,3,\cdots)$は1直線上にある．
+
+3.  $A_n$と$P$の距離$\overline{A_nP}$について，$\displaystyle\lim_{n\to\infty}\overline{A_nP}=0$である．

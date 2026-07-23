@@ -11,9 +11,8 @@ title: "TITECH 2007 zenki Q2 (problem)"
 $l$と$y=x^2$との交点で$A$でない方を$B$とする．
 さらに点$(a,0)$を$C$，原点を$O$とする．
 
-\begin{enumerate}
-\item $l$の式を求めよ．
-  \item 線分$OC$，$CA$と$y=x^2$で囲まれる部分の面積を$S(a)$，
+1.  $l$の式を求めよ．
+
+2.  線分$OC$，$CA$と$y=x^2$で囲まれる部分の面積を$S(a)$，
 線分$AB$と$y=x^2$で囲まれる部分の面積を$T(a)$とする．
 このとき$\displaystyle\lim_{a\to\infty}\frac{T(a)}{S(a)}$を求めよ．
-\end{enumerate}

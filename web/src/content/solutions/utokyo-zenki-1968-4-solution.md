@@ -45,5 +45,11 @@ V'&=\pi\int_0^1f(t)dt \\&=\pi\left[\frac{1}{5}t^5-\frac{2}{3}t^3+2t\right]_0^1 \
 $$
 
 したがって[a](#a)から
-\[V=\frac{46}{15}\pi\cdots\text{(答)}　\]
+
+$$
+\begin{align*}
+V=\frac{46}{15}\pi\cdots\text{(答)}
+\end{align*}
+$$
+
 である．

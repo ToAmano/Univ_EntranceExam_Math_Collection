@@ -114,24 +114,35 @@ $$
      \begin{indentation}{2zw}{0pt}
      \underline{(i)$1\le c$の時} \\
      下表を得る．
-          \[
-          \begin{array}{|c|c|c|c|c|c|}\hline
+          
+
+$$
+\begin{align*}
+\begin{array}{|c|c|c|c|c|c|}\hline
           r   &0 &     &\b  &      &\sqrt{c} \\ \hline
           f'  &   & +   & 0 & -    &            \\ \hline
           f   &  &\ne &     &\se &            \\ \hline 
           \end{array}
-          \]
+\end{align*}
+$$
+
      従って，$r=\b$のとき$V$は最大．\\
      
      \underline{(ii)$0<c\le 1$の時} \\
      下表を得る．
-          \[
-          \begin{array}{|c|c|c|c|}\hline
+          
+
+$$
+\begin{align*}
+\begin{array}{|c|c|c|c|}\hline
           r   &0 &     &\sqrt{c} \\ \hline
           f'  &   & +   &            \\ \hline
           f   &   &\ne &            \\ \hline 
           \end{array}
-          \]    
+\end{align*}
+$$
+
+    
      故に$r=\sqrt{c}$のとき$V$は最大．
      \end{indentation}
 

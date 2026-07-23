@@ -10,19 +10,19 @@ title: "UTOKYO 2009 zenki Q2 (problem)"
 実数を成分にもつ行列$A=\begin{pmatrix} a & b \\ c & d \end{pmatrix}$と
 実数$r$，$s$が下の条件(i)，(ii)，(iii)をみたすとする．
 
-\begin{enumerate}
-\item$s>1$
-  \item$A\begin{pmatrix} r \\ 1 \end{pmatrix}=s\begin{pmatrix} r \\ 1 \end{pmatrix}$
-  \item$A^n\begin{pmatrix} 1 \\ 0 \end{pmatrix}=\begin{pmatrix} x_n \\ y_n \end{pmatrix}$
+1.  $s>1$
+
+2.  $A\begin{pmatrix} r \\ 1 \end{pmatrix}=s\begin{pmatrix} r \\ 1 \end{pmatrix}$
+
+3.  $A^n\begin{pmatrix} 1 \\ 0 \end{pmatrix}=\begin{pmatrix} x_n \\ y_n \end{pmatrix}$
  $(n=1,2,\cdots)$とするとき，$\displaystyle\lim_{n\to\infty}x_n=\lim_{n\to\infty}y_n=0$
-\end{enumerate}
 
 　このとき以下の問に答えよ．
 
-\begin{enumerate}
-\item$B={\begin{pmatrix} 1 & r \\ 0 & 1 \end{pmatrix}}^{-1}A\begin{pmatrix} 1 & r \\ 0 & 1 \end{pmatrix}$
+1.  $B={\begin{pmatrix} 1 & r \\ 0 & 1 \end{pmatrix}}^{-1}A\begin{pmatrix} 1 & r \\ 0 & 1 \end{pmatrix}$
 を$a$，$c$，$r$，$s$を用いて表せ．
-  \item$B^n\begin{pmatrix} 1 \\ 0 \end{pmatrix}=\begin{pmatrix} z_n \\ w_n \end{pmatrix}$
+
+2.  $B^n\begin{pmatrix} 1 \\ 0 \end{pmatrix}=\begin{pmatrix} z_n \\ w_n \end{pmatrix}$
  $(n=1,2,\cdots)$とするとき，$\displaystyle\lim_{n\to\infty}z_n=\lim_{n\to\infty}w_n=0$を示せ．
-  \item$c=0$かつ$|a|<1$を示せ．
-\end{enumerate}
+
+3.  $c=0$かつ$|a|<1$を示せ．

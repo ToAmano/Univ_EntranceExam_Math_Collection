@@ -9,14 +9,14 @@ title: "UKYOTO 1985 zenki Q3 (problem)"
 
 $b$，$c$は実数とし，$x^2+2bx+c=0$の2根を$\alpha$，$\beta$とする．
 
-\begin{enumerate}
-\item $b^2-c<0$，$b\neq0$とすれば，
+1.  $b^2-c<0$，$b\neq0$とすれば，
 いかなる複素数$\gamma$に対しても$\gamma=t\alpha+u\beta$となる実数$t$，$u$が存在することを示せ．
-  \item $f(x)=x^2+2(b-1)x+5-c$とおくとき，
+
+2.  $f(x)=x^2+2(b-1)x+5-c$とおくとき，
 次の条件(*)を満たす点$(b,c)$全体の集合$D$を決定し，
 図示せよ．
 \begin{enumerate}
-\item $t$，$u$がともに実数なら，$f(t\alpha+u\beta)\neq0$
-\end{enumerate}
+
+3.  $t$，$u$がともに実数なら，$f(t\alpha+u\beta)\neq0$
 
 \end{enumerate}

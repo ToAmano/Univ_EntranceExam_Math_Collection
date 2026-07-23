@@ -18,10 +18,9 @@ $$
 で表されている．
 原点を$O$とし，時刻$t$における$P$の速度ベクトルを$\overrightarrow{v}$とする．
 
-\begin{enumerate}
-\item $\overrightarrow{OP}$と$\overrightarrow{v}$のなす角を$\theta(t)$とするとき，
+1.  $\overrightarrow{OP}$と$\overrightarrow{v}$のなす角を$\theta(t)$とするとき，
 極限値$\displaystyle\lim_{t\to\infty}\theta(t)$を求めよ．
-  \item $\overrightarrow{v}$が$y$軸に平行になるような$t$ $(t>0)$のうち，
+
+2.  $\overrightarrow{v}$が$y$軸に平行になるような$t$ $(t>0)$のうち，
 最も小さいものを$t_1$，次に小さいものを$t_2$とする．
 このとき，不等式$t_2-t_1<\pi$を示せ．
-\end{enumerate}

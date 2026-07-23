@@ -9,7 +9,6 @@ title: "TITECH 2001 zenki Q1 (problem)"
 
 $a>0$，$t>0$に対して定積分$\displaystyle S(a,t)=\int_0^a \left| e^{-x}-\frac{1}{t} \right| dx$を考える．
 
-\begin{enumerate}
-\item $a$を固定したとき，$t$の関数$S(a,t)$の最小値$m(a)$を求めよ．
-  \item $\displaystyle\lim_{a \to 0}\frac{m(a)}{a^2}$を求めよ．
-\end{enumerate}
+1.  $a$を固定したとき，$t$の関数$S(a,t)$の最小値$m(a)$を求めよ．
+
+2.  $\displaystyle\lim_{a \to 0}\frac{m(a)}{a^2}$を求めよ．

@@ -19,7 +19,6 @@ $$
 \end{align*}
 $$
 
-\begin{enumerate}
-\item $x_n$，$y_n$を求めよ．
-  \item $\displaystyle\lim_{n\to\infty}x_n$，$\displaystyle\lim_{n\to\infty}y_n$を求めよ．
-\end{enumerate}
+1.  $x_n$，$y_n$を求めよ．
+
+2.  $\displaystyle\lim_{n\to\infty}x_n$，$\displaystyle\lim_{n\to\infty}y_n$を求めよ．

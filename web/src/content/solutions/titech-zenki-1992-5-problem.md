@@ -17,7 +17,6 @@ $$
 
 とおく．
 
-\begin{enumerate}
-\item $I_n-I_{n-1}$を求めよ．
-  \item $I_3$を求めよ．
-\end{enumerate}
+1.  $I_n-I_{n-1}$を求めよ．
+
+2.  $I_3$を求めよ．

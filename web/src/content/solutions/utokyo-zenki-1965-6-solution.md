@@ -56,5 +56,12 @@ V_1&=\frac{1}{3}\frac{1}{2}\frac{3}{4}\pi=\frac{1}{8}\pi\\
 $$
 
 これらを[1](#1)に代入して
-     \[V=\left(\frac{1}{8}+\frac{11}{12}-\frac{3}{8}\right)\pi=\frac{2}{3}\pi\]
+     
+
+$$
+\begin{align*}
+V=\left(\frac{1}{8}+\frac{11}{12}-\frac{3}{8}\right)\pi=\frac{2}{3}\pi
+\end{align*}
+$$
+
 である．$\cdots$(答)

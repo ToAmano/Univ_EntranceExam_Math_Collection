@@ -16,7 +16,14 @@ title: "UTOKYO 1978 zenki Q2 (solution)"
 ## 【解】
 
  まず，
-     \[f'(x)=2x(2x^2-13)\]
+     
+
+$$
+\begin{align*}
+f'(x)=2x(2x^2-13)
+\end{align*}
+$$
+
 である．故に$\a=\sqrt{13/2}$とおいて下表を得る．
      
 

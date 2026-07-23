@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 1978 zenki Q6 (problem)"
 ---
 
-\begin{enumerate}
-\item $m$，$n$は自然数とする．三角関数の加法定理を用いて，等式
+1.  $m$，$n$は自然数とする．三角関数の加法定理を用いて，等式
 
 $$
 \begin{align*}
@@ -24,7 +23,7 @@ I_{m,n}=\int_{-\pi}^\pi\sin mx \sin nx dx
 \end{align*}
 $$
 
-  \item 整数$k$ $(0 \leqq k \leqq 5)$，自然数$m$，$n$および実数$a$，$b$に対して，
+2.  整数$k$ $(0 \leqq k \leqq 5)$，自然数$m$，$n$および実数$a$，$b$に対して，
 
 $$
 \begin{align*}
@@ -35,4 +34,3 @@ E=\sum_{k=0}^5 p(k)f(k)
 $$
 
 とおくとき，$E$を最小にするような$m$，$n$，$a$，$b$を求めよ．
-\end{enumerate}

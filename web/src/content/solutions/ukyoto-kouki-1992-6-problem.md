@@ -17,7 +17,6 @@ $$
 
 について，次の問に答えよ．
 
-\begin{enumerate}
-\item 四点$\mathrm{A}$，$\mathrm{B}$，$\mathrm{C}$，$\mathrm{D}$は正方形の頂点であることを示せ．
-  \item 四角錐$\mathrm{O-ABCD}$を平面$x=0$によって二つの部分$W_1$，$W_2$に分けたとき，$W_1$，$W_2$の体積の比を求めよ．
-\end{enumerate}
+1.  四点$\mathrm{A}$，$\mathrm{B}$，$\mathrm{C}$，$\mathrm{D}$は正方形の頂点であることを示せ．
+
+2.  四角錐$\mathrm{O-ABCD}$を平面$x=0$によって二つの部分$W_1$，$W_2$に分けたとき，$W_1$，$W_2$の体積の比を求めよ．

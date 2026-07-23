@@ -15,12 +15,18 @@ title: "UTOKYO 1984 zenki Q6 (solution)"
      このとき，次の条件(＊)を満たす点P$(a,b)$全体の集合を求め，これを図示せよ．
           
 
-\begin{enumerate}
-[(＊)]
-          \item P$(a,b)$に関して$D$と対称な領域を$U$とするとき，
-               \[D\cap U\not=\emptyset，E\cap U\not=\emptyset，D\cap E\cap U=\emptyset\]
+1.  
+
+2.  P$(a,b)$に関して$D$と対称な領域を$U$とするとき，
+               
+
+$$
+\begin{align*}
+D\cap U\not=\emptyset，E\cap U\not=\emptyset，D\cap E\cap U=\emptyset
+\end{align*}
+$$
+
           が同時に成り立つ．ただし$\emptyset$は空集合を表すものとする．
-\end{enumerate}
 
      \end{oframed}
 
@@ -28,9 +34,23 @@ title: "UTOKYO 1984 zenki Q6 (solution)"
 
  $g(x)=(x-4)^2$とおく．
 $y=x^2$をPに関して対称移動すると，
-     \[(2b-y)=(2a-x)^2\]
+     
+
+$$
+\begin{align*}
+(2b-y)=(2a-x)^2
+\end{align*}
+$$
+
 であるから，
-     \[U:y\le -(x-2a)^2+2b(\equiv f(x))\]
+     
+
+$$
+\begin{align*}
+U:y\le -(x-2a)^2+2b(\equiv f(x))
+\end{align*}
+$$
+
 である．$D$と$E$のグラフは下図のようになる．\\
 
      \begin{zahyou}[ul=5mm](-0.5,6)(-1,6)
@@ -83,7 +103,14 @@ $$
      \begin{indentation}{2zw}{0pt}
      \underline{(i)\,[1](#1)について}\\
      [1](#1)の方程式
-          \[(x-a)^2+a^2-b=0\]
+          
+
+$$
+\begin{align*}
+(x-a)^2+a^2-b=0
+\end{align*}
+$$
+
      の左辺$h(x)$とおく．判別式を$D_1$とおく．$h(x)=0$が$x<2$にのみ実解をもつ条件は，
           
 
@@ -106,7 +133,14 @@ $$
      
      \underline{(ii)\,[2](#2)について}\\
      [2](#2)の方程式
-          \[\left\{x-(2+a)\right\}^2+(a-2)^2-b=0\]
+          
+
+$$
+\begin{align*}
+\left\{x-(2+a)\right\}^2+(a-2)^2-b=0
+\end{align*}
+$$
+
      の左辺$t(x)$とおく．判別式を$D_2$とおく．$t(x)=0$が$2<x$にのみ実解をもつ条件は，
      
 
@@ -128,14 +162,20 @@ $$
      である．\\     
      \end{indentation}
 以上をまとめて
-     \[[3](#3)\Longleftrightarrow 
+     
+
+$$
+\begin{align*}
+[3](#3)\Longleftrightarrow 
           \begin{cases}
           0<a<2\\
           2(a-1)^2+2>b \\
           a^2\le b \\
           (a-2)^2\le b
           \end{cases}
-     \]
+\end{align*}
+$$
+
 が求める条件である．$\cdots$(答)\\
 
 図示すると下図斜線部．(境界は実線のみ含む．)\\

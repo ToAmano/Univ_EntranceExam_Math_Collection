@@ -13,11 +13,11 @@ title: "UTOKYO 1962 zenki Q6 (solution)"
      このとき
           
 
-\begin{enumerate}
-[(1)]
-          \item $R$の座標を求めよ．
-          \item 線分$PR$，$QR$と上の曲線とで囲まれる図形の面積を求めよ．
-\end{enumerate}
+1.  
+
+2.  $R$の座標を求めよ．
+
+3.  線分$PR$，$QR$と上の曲線とで囲まれる図形の面積を求めよ．
 
      \end{oframed}
 
@@ -26,10 +26,17 @@ title: "UTOKYO 1962 zenki Q6 (solution)"
  
      
 
-\begin{enumerate}
-[(1)]
-     \item $h(x)=6\sin(x/6)$とおく．
-          \[h'(x)=\cos(x/6)\]
+1.  
+
+2.  $h(x)=6\sin(x/6)$とおく．
+          
+
+$$
+\begin{align*}
+h'(x)=\cos(x/6)
+\end{align*}
+$$
+
      だから，$P$ ，$Q$における接線$l_p$，$l_q$は，
           
 
@@ -43,11 +50,25 @@ $$
 $$
 
      だから，$R$はこれらの交点で，
-          \[R(14\pi/3-2\sqrt{3},4\pi/3+2\sqrt{3})\]
+          
+
+$$
+\begin{align*}
+R(14\pi/3-2\sqrt{3},4\pi/3+2\sqrt{3})
+\end{align*}
+$$
+
      である．$\cdots$(答)
-     
-     \item グラフの概形は下図である．ただし，
-          \[t=14\pi/3-2\sqrt{3}\]
+
+3.  グラフの概形は下図である．ただし，
+          
+
+$$
+\begin{align*}
+t=14\pi/3-2\sqrt{3}
+\end{align*}
+$$
+
      である．
           
           \scalebox{1}{\input{ut-62-6p}}
@@ -62,4 +83,3 @@ S&=\int_{2\pi}^tfdx+\int_t^{6\pi}gdx-\int_{2\pi}^{6\pi}hdx \nonumber\\&=\frac{8}
 $$
 
      である．$\cdots$(答)
-\end{enumerate}

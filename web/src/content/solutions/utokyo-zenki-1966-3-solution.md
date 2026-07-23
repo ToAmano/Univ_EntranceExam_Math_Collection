@@ -42,5 +42,12 @@ b_n&=\sum_{k=1}^{3n}(a_k) \\&=\sum_{k=1}^{3n}(a^{k-1}) \\&=\frac{1-a^{3n}}{1-a}\
 $$
 
 であるから，求める座標は
-      \[P_{3n}\left(\dfrac{2}{7}(1-2^{3n}),\dfrac{\sqrt{3}}{7}(1-2^{3n})\right)\]
+      
+
+$$
+\begin{align*}
+P_{3n}\left(\dfrac{2}{7}(1-2^{3n}),\dfrac{\sqrt{3}}{7}(1-2^{3n})\right)
+\end{align*}
+$$
+
 である．$\cdots$(答)

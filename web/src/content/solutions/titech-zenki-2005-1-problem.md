@@ -15,8 +15,7 @@ a_n=\int_1^e (\log x)^n dx (n=1,2,\cdots)
 \end{align*}
 $$
 
-\begin{enumerate}
-\item $n \geqq 3$のとき，次の漸化式を示せ．
+1.  $n \geqq 3$のとき，次の漸化式を示せ．
 
 $$
 \begin{align*}
@@ -24,13 +23,12 @@ a_n=(n-1)(a_{n-2}-a_{n-1})
 \end{align*}
 $$
 
-  \item $n \geqq 1$に対し$a_n>a_{n+1}>0$なることを示せ．
-  \item $n \geqq 2$のとき，以下の不等式が成立することを示せ．
+2.  $n \geqq 1$に対し$a_n>a_{n+1}>0$なることを示せ．
+
+3.  $n \geqq 2$のとき，以下の不等式が成立することを示せ．
 
 $$
 \begin{align*}
 a_{2n}<\frac{3 \cdot 5 \cdots \cdots (2n-1)}{4 \cdot 6 \cdots \cdots (2n)}(e-2)
 \end{align*}
 $$
-
-\end{enumerate}

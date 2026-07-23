@@ -11,8 +11,7 @@ title: "UKYOTO 1979 zenki Q4 (problem)"
 ただし，このサイコロは必ずしも正しいものではなく，$k$の目の出る確率は$p_k$である$(k=1,2,3,4,5,6)$．
 このとき
 
-\begin{enumerate}
-\item 引き分けになる確率$P$を求めよ．
-  \item $\displaystyle P\geqq\frac{1}{6}$であることを示せ．
+1.  引き分けになる確率$P$を求めよ．
+
+2.  $\displaystyle P\geqq\frac{1}{6}$であることを示せ．
 また，$\displaystyle P=\frac{1}{6}$ならば$\displaystyle p_k=\frac{1}{6}$である$(k=1,2,3,4,5,6)$ことを示せ．
-\end{enumerate}

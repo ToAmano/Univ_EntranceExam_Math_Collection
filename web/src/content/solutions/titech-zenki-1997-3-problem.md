@@ -7,9 +7,9 @@ type: "problem"
 title: "TITECH 1997 zenki Q3 (problem)"
 ---
 
-\begin{enumerate}
-\item $\displaystyle \frac{1}{x}+\frac{1}{y}=\frac{1}{2}$を満たす自然数$x$，$y$の組$(x,y)$をすべて求めよ．
-  \item $n$を自然数，$r$を正の有理数とする．このとき
+1.  $\displaystyle \frac{1}{x}+\frac{1}{y}=\frac{1}{2}$を満たす自然数$x$，$y$の組$(x,y)$をすべて求めよ．
+
+2.  $n$を自然数，$r$を正の有理数とする．このとき
 
 $$
 \begin{align*}
@@ -18,4 +18,3 @@ $$
 $$
 
 を満たす自然数$x_k$の組$(x_1,\cdots\cdots,x_n)$の個数は有限であることを示せ．
-\end{enumerate}

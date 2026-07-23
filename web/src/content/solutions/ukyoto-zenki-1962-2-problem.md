@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 1962 zenki Q2 (problem)"
 ---
 
-\begin{enumerate}
-\item $a$，$b$は0でない与えられた実数とする．
+1.  $a$，$b$は0でない与えられた実数とする．
 $k$が-1でないどんな実数値をとっても，円$(k+1)(x^2+y^2)=ax+kby$は2つの定点を通ることを示せ．
-  \item これらの円の中心の軌跡を$x$，$y$の方程式で表わせ．
-\end{enumerate}
+
+2.  これらの円の中心の軌跡を$x$，$y$の方程式で表わせ．

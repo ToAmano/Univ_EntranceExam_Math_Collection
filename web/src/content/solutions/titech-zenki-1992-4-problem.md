@@ -17,8 +17,7 @@ $$
 
 さらに$f_1(x)=f(x)$とおき，$f_n(x)$を$f_n(x)=f(f_{n-1}(x))$ $(n=2,3,4,\cdots\cdots)$と定義する．
 
-\begin{enumerate}
-\item $f_3(x)$のグラフを描き，$f_3(x)$を式で表せ．
-  \item $k$と$m$を$1 \leqq k \leqq 2^m - 1$を満たす自然数とし$\displaystyle p = \frac{k}{2^m}$とおく．
+1.  $f_3(x)$のグラフを描き，$f_3(x)$を式で表せ．
+
+2.  $k$と$m$を$1 \leqq k \leqq 2^m - 1$を満たす自然数とし$\displaystyle p = \frac{k}{2^m}$とおく．
 極限値$\displaystyle\lim_{n\to\infty}\frac{f_1(p)+\cdots\cdots+f_n(p)}{n}$を求めよ．
-\end{enumerate}

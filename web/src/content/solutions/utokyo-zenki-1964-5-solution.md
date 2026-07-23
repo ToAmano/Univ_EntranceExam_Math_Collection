@@ -13,12 +13,12 @@ title: "UTOKYO 1964 zenki Q5 (solution)"
      $Q$がある．
           
 
-\begin{enumerate}
-[(1)]
-          \item 線分$QP$の長さの最小値を$a$で表せ．
-          \item 線分$QP$の長さが最小になるとき，$QP$が$x$軸の正の方向と$30^\circ$の角をなすよ
+1.  
+
+2.  線分$QP$の長さの最小値を$a$で表せ．
+
+3.  線分$QP$の長さが最小になるとき，$QP$が$x$軸の正の方向と$30^\circ$の角をなすよ
           うな$a$の値を求めよ．
-\end{enumerate}
 
      \end{oframed}
 
@@ -37,9 +37,9 @@ $$
 である．また$c>0$として$\left(-c,\dfrac{-1}{c}\right)$とおける．
      
 
-\begin{enumerate}
-[(1)]
-     \item $|QP|^2=(c+a)^2+\left(\dfrac{1}{c}+\dfrac{1}{a}\right)^2$であるからこれを$f(c)$として
+1.  
+
+2.  $|QP|^2=(c+a)^2+\left(\dfrac{1}{c}+\dfrac{1}{a}\right)^2$であるからこれを$f(c)$として
           
 
 $$
@@ -79,9 +79,9 @@ $$
 \end{align*}
 $$
 
-     となる．      
-     
-     \item このとき，前問の結果から，
+     となる．
+
+3.  このとき，前問の結果から，
           
 
 $$
@@ -103,4 +103,3 @@ $$
 
   
      となる．
-\end{enumerate}

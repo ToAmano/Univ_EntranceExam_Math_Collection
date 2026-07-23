@@ -17,7 +17,14 @@ title: "UTOKYO 1968 zenki Q3 (solution)"
 
  $p=f(\a)$，$q=f(\b)$とし，$A(p,q)$とおけば，$A$の動く範囲を求めればよい．
 $c=-a-b$だから，
-     \[f(x)=a(x^2-1)+b(x-1)=(x-1)\{a(x+1)+b\}\]
+     
+
+$$
+\begin{align*}
+f(x)=a(x^2-1)+b(x-1)=(x-1)\{a(x+1)+b\}
+\end{align*}
+$$
+
 である．従って，$\a$，$\b$が$1$か否かで場合分けする．
      \begin{indentation}{2zw}{0pt}
      \underline{(1)$\a=\b=1$の時}\\

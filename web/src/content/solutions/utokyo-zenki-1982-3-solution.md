@@ -14,21 +14,21 @@ title: "UTOKYO 1982 zenki Q3 (solution)"
      点$C$で円周と交わるものとする．
           
 
-\begin{enumerate}
-[(1)]
-          \item $\theta=\angle AOB$の取りうる値の範囲を求めよ．
-          \item $BC$の長さを$\theta$で表せ．
-          \item 線分$OB$の中点を$M$とするとき，線分$CM$の長さの範囲を求めよ．
-\end{enumerate}
+1.  
+
+2.  $\theta=\angle AOB$の取りうる値の範囲を求めよ．
+
+3.  $BC$の長さを$\theta$で表せ．
+
+4.  線分$OB$の中点を$M$とするとき，線分$CM$の長さの範囲を求めよ．
 
      \end{oframed}
 
 ## 【解】
 
-\begin{enumerate}
-[(1)]
-\item
- \1 ただし，題意から$0<\theta<\pi/2$である．また$A(c,s)$である．
+1.  
+
+2.  \1 ただし，題意から$0<\theta<\pi/2$である．また$A(c,s)$である．
 この時$\triangle ABO$は$OA=AB=1$の二等辺三角形だから$B(2c,0)$となる．故に線分$AB$の方程式は，$c\not=0$に注意して，
       
 
@@ -59,12 +59,19 @@ $$
 
 である．$\cdots$(答)
 
-     \item[1](#1)から$C$の$x$座標は$c(4s^2-1)$である．さらに$AB$の傾きは[3](#3)から
+3.  [1](#1)から$C$の$x$座標は$c(4s^2-1)$である．さらに$AB$の傾きは[3](#3)から
      $\dfrac{-s}{c}$であるから，
-          \[|BC|=\sqrt{1+\left(\frac{s}{c}\right)^2}(2c-c(4s^2-1))=3-4s^2\]
+          
+
+$$
+\begin{align*}
+|BC|=\sqrt{1+\left(\frac{s}{c}\right)^2}(2c-c(4s^2-1))=3-4s^2
+\end{align*}
+$$
+
      である．$\cdots$(答)
-     
-     \item $M(c,0)$である．故に$|MB|=c$．これと前問の結果，及び二等辺三角形の性質より
+
+4.  $M(c,0)$である．故に$|MB|=c$．これと前問の結果，及び二等辺三角形の性質より
      $\angle ABO=\angle AOB=\theta$であることから，
      $\triangle BCM$に余弦定理を用いて
           
@@ -105,13 +112,33 @@ $$
 $$
 
      である．$\cdots$(答)
-\end{enumerate}
 
 {\bf[別解]}(1)について，$A(c,s)$での円の接線
-     \[cx+sy=1\]
+     
+
+$$
+\begin{align*}
+cx+sy=1
+\end{align*}
+$$
+
 の$x$切片は$1/c$であるから，
 円周と$AB$が交わるための条件は
-      \[1<2c<\frac{1}{c}\Longleftrightarrow \frac{1}{2}<c<\frac{\sqrt{2}}{2}\]
+      
+
+$$
+\begin{align*}
+1<2c<\frac{1}{c}\Longleftrightarrow \frac{1}{2}<c<\frac{\sqrt{2}}{2}
+\end{align*}
+$$
+
 であり，これを解いて
-      \[\frac{\pi}{4}<\theta<\frac{\pi}{3}\]
+      
+
+$$
+\begin{align*}
+\frac{\pi}{4}<\theta<\frac{\pi}{3}
+\end{align*}
+$$
+
 となる．$\cdots$(答)

@@ -14,12 +14,13 @@ title: "UTOKYO 1991 zenki Q6 (solution)"
      $(2a,f(2a))$を結ぶ$2$直線と曲線$y=f(x)$とで囲まれる部分の面積は$3S(x)$に等しいものとする．
           
 
-\begin{enumerate}
-[(1)]
-          \item $S(x)$，$f(x)-2f(2x)$をそれぞれ$x$の関数として表せ．
-          \item $x>0$に対して，$a(x)=\dlim{n}{\infty}2^nf(2^nx)$とおく．積分$\dint{x}{2x}a(t)dt$を求めよ．
-          \item 関数$f(x)$を決定せよ．
-\end{enumerate}
+1.  
+
+2.  $S(x)$，$f(x)-2f(2x)$をそれぞれ$x$の関数として表せ．
+
+3.  $x>0$に対して，$a(x)=\dlim{n}{\infty}2^nf(2^nx)$とおく．積分$\dint{x}{2x}a(t)dt$を求めよ．
+
+4.  関数$f(x)$を決定せよ．
 
      \end{oframed}
 
@@ -28,9 +29,9 @@ title: "UTOKYO 1991 zenki Q6 (solution)"
  
      
 
-\begin{enumerate}
-[(1)]
-     \item 題意から，$f(x)$は区間内で単調減少である．また，
+1.  
+
+2.  題意から，$f(x)$は区間内で単調減少である．また，
           
 
 $$
@@ -67,14 +68,35 @@ $$
 $$
 
      $g(x)$を消して，$S(x)=y$とすれば，
-          \[4y=-x\frac{dy}{dx} \]
+          
+
+$$
+\begin{align*}
+4y=-x\frac{dy}{dx}
+\end{align*}
+$$
+
      となる．$0<x$で$0<f(x)$であるから，$y>0$となるので，変形して
-          \[\frac{-4x}{dx}=\frac{y}{dy}\]
+          
+
+$$
+\begin{align*}
+\frac{-4x}{dx}=\frac{y}{dy}
+\end{align*}
+$$
+
      積分して，$S(1)=1$より，
-          \[y=S(x)=x^{-4}\]
+          
+
+$$
+\begin{align*}
+y=S(x)=x^{-4}
+\end{align*}
+$$
+
      である．従って[2](#2)から，$g(x)=4x^{-5}$である．$\cdots$(答)
-     
-     \item $a_n(x)=2^nf(2^nx)$とおく．前問の結果で$x$に$2^nx$を代入して，
+
+3.  $a_n(x)=2^nf(2^nx)$とおく．前問の結果で$x$に$2^nx$を代入して，
           
 
 $$
@@ -105,10 +127,23 @@ $$
 $$
 
       である．
-      
-      \item $f(x)>0$から，$a(x)>0$である．これと前問の積分計算から，被積分が恒等的に$0$である．
-           \[a(x)\equiv0\Longleftrightarrow f(x)=\frac{64}{15}x^{-5}\]
+
+4.  $f(x)>0$から，$a(x)>0$である．これと前問の積分計算から，被積分が恒等的に$0$である．
+           
+
+$$
+\begin{align*}
+a(x)\equiv0\Longleftrightarrow f(x)=\frac{64}{15}x^{-5}
+\end{align*}
+$$
+
       これは$x>0$で定義された，連続な単調減少関数であり，十分である．以上から，
-           \[f(x)=\frac{64}{15}x^{-5}\]
+           
+
+$$
+\begin{align*}
+f(x)=\frac{64}{15}x^{-5}
+\end{align*}
+$$
+
       である．$\cdots$(答)
-\end{enumerate}

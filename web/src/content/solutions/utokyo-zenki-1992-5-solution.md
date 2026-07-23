@@ -14,11 +14,11 @@ title: "UTOKYO 1992 zenki Q5 (solution)"
      正または$0$であるとする．
           
 
-\begin{enumerate}
-[(1)]
-          \item 出発してから$t$秒後の$P$の位置を$(x,y)$として，$x$と$t$の関係式を求めよ．
-          \item $\vec{v}$がベクトル$(8,15)$と平行になるのは出発してから何秒後か．
-\end{enumerate}
+1.  
+
+2.  出発してから$t$秒後の$P$の位置を$(x,y)$として，$x$と$t$の関係式を求めよ．
+
+3.  $\vec{v}$がベクトル$(8,15)$と平行になるのは出発してから何秒後か．
 
      \end{oframed}
 
@@ -26,9 +26,9 @@ title: "UTOKYO 1992 zenki Q5 (solution)"
 
      
 
-\begin{enumerate}
-[(1)]
-     \item 題意から，時刻$t$までに$P$は，
+1.  
+
+2.  題意から，時刻$t$までに$P$は，
           
 
 $$
@@ -57,10 +57,17 @@ L&=\int_1^x\sqrt{1+(dy/ds)^2}ds \nonumber\\&=\frac{1}{2}\int_1^s\left(s^2+\frac{
 $$
 
      となる．　[1](#1)と[3](#3)が等しいので，
-          \[t^2=2\left(\frac{x^3}{3}-\frac{1}{x}+\frac{2}{3}\right)\]
+          
+
+$$
+\begin{align*}
+t^2=2\left(\frac{x^3}{3}-\frac{1}{x}+\frac{2}{3}\right)
+\end{align*}
+$$
+
      である．$\cdots$(答)
-     
-     \item $\vec{v}$は$P$での曲線の接線方向のベクトルと平行である．
+
+3.  $\vec{v}$は$P$での曲線の接線方向のベクトルと平行である．
           
 
 $$
@@ -80,6 +87,12 @@ $$
 
      である．題意から$x<1$ゆえ$p=x^2\ge0$であるから，$p=4$つまり$x=2$が従う．
      この時，前問の結果より，
-          \[t^2=2\left(\frac{2^3}{3}-\frac{1}{2}+\frac{2}{3}\right)=\frac{17}{3}\]
+          
+
+$$
+\begin{align*}
+t^2=2\left(\frac{2^3}{3}-\frac{1}{2}+\frac{2}{3}\right)=\frac{17}{3}
+\end{align*}
+$$
+
      $t>0$より，求める　$t$は$t=\sqrt{17/3}$である．$\cdots$(答)
-\end{enumerate}

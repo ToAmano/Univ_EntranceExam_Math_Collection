@@ -9,10 +9,10 @@ title: "TITECH 2004 zenki Q2 (problem)"
 
 次の問いに答えよ．
 
-\begin{enumerate}
-\item $f(x)$，$g(x)$を連続な偶関数，$m$を正の整数とするとき，
+1.  $f(x)$，$g(x)$を連続な偶関数，$m$を正の整数とするとき，
 $\displaystyle \int_0^{mx}f(\sin x)g(\cos x)dx=m\int_0^{\pi}f(\sin x)g(\cos x)dx$を証明せよ．
-  \item 正の整数$m$，$n$が$m\pi \leqq n < (m+1)\pi$を満たしているとき，
+
+2.  正の整数$m$，$n$が$m\pi \leqq n < (m+1)\pi$を満たしているとき，
 
 $$
 \begin{align*}
@@ -21,5 +21,5 @@ $$
 $$
 
 を証明せよ．
-  \item 極限値$\displaystyle\lim_{n \to \infty}\int_0^1\frac{|\sin nx|}{(1+\cos^2 nx)^2}dx$を求めよ．
-\end{enumerate}
+
+3.  極限値$\displaystyle\lim_{n \to \infty}\int_0^1\frac{|\sin nx|}{(1+\cos^2 nx)^2}dx$を求めよ．

@@ -9,10 +9,15 @@ title: "UTOKYO 2005 zenki Q1 (problem)"
 
 $x>0$に対し$\displaystyle f(x)=\frac{\log x}{x}$とする．
 
-\begin{enumerate}
-\item$n=1,2,\cdots\cdots$に対し$f(x)$の第$n$次導関数は，数列$\{ a_n \}$，$\{ b_n \}$を用いて
-\[ f^{(n)}(x)=\frac{a_n+b_n\log x}{x^{n+1}} \]
+1.  $n=1,2,\cdots\cdots$に対し$f(x)$の第$n$次導関数は，数列$\{ a_n \}$，$\{ b_n \}$を用いて
+
+$$
+\begin{align*}
+f^{(n)}(x)=\frac{a_n+b_n\log x}{x^{n+1}}
+\end{align*}
+$$
+
 と表されることを示し，$a_n$，$b_n$に関する漸化式を求めよ．
-  \item$\displaystyle h_n=\sum_{k=1}^n\frac{1}{k}$とおく．
+
+2.  $\displaystyle h_n=\sum_{k=1}^n\frac{1}{k}$とおく．
 $h_n$を用いて$a_n$，$b_n$の一般項を求めよ．
-\end{enumerate}

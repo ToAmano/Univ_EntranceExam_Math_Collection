@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 1999 zenki Q3 (problem)"
 ---
 
-\begin{enumerate}
-\item $a_0<b_0$，$a_1<b_1$を満たす正の実数$a_0$，$b_0$，$a_1$，$b_1$について，
+1.  $a_0<b_0$，$a_1<b_1$を満たす正の実数$a_0$，$b_0$，$a_1$，$b_1$について，
 次の不等式が成り立つことを示せ．
 
 $$
@@ -17,7 +16,7 @@ $$
 \end{align*}
 $$
 
-  \item $n$個の自然数$x_1,x_2,\cdots,x_n$は互いに相異なり，
+2.  $n$個の自然数$x_1,x_2,\cdots,x_n$は互いに相異なり，
 $1 \leqq x_k \leqq n$ $(1 \leqq k \leqq n)$を満たしているとする．
 このとき，次の不等式が成り立つことを示せ．
 
@@ -26,5 +25,3 @@ $$
 \sum_{k=1}^n\frac{{x_k}^2}{k^2+1}>n-\frac{8}{5}
 \end{align*}
 $$
-
-\end{enumerate}

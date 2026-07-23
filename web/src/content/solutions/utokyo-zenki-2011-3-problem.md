@@ -12,10 +12,16 @@ $L$を正定数とする．
 原点$O$を中心とし点$P$を通る円周上を，
 $P$から出発して反時計回りに道のり$L$だけ進んだ点を$Q(u(t),v(t))$と表す．
 
-\begin{enumerate}
-\item$u(t)$，$v(t)$を求めよ．
-  \item$0<a<1$の範囲の実数$a$に対し，積分
-\[ f(a) = \int_a^1 \sqrt{ {\{u'(t)\}}^2+{\{v'(t)\}}^2 } dt \]
+1.  $u(t)$，$v(t)$を求めよ．
+
+2.  $0<a<1$の範囲の実数$a$に対し，積分
+
+$$
+\begin{align*}
+f(a) = \int_a^1 \sqrt{ {\{u'(t)\}}^2+{\{v'(t)\}}^2 } dt
+\end{align*}
+$$
+
 を求めよ．
-  \item極限$\displaystyle\lim_{a\to+0}\frac{f(a)}{\log a}$を求めよ．
-\end{enumerate}
+
+3.  極限$\displaystyle\lim_{a\to+0}\frac{f(a)}{\log a}$を求めよ．

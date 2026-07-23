@@ -76,6 +76,13 @@ Y&=\frac{t^2+s^2}{4}\\&=\frac{1}{4}\left(s^2+\frac{l^2}{s^2}-1\right)\\&\ge\frac
 $$
 
 である．等号成立は
-     \[s^2=\frac{l^2}{s^2}\Longleftrightarrow s=\sqrt{l},t=\pm\sqrt{l-1}\]
+     
+
+$$
+\begin{align*}
+s^2=\frac{l^2}{s^2}\Longleftrightarrow s=\sqrt{l},t=\pm\sqrt{l-1}
+\end{align*}
+$$
+
 のときで，$l\ge1$からこのような$(s,t)$は必ず存在する．又この時$X=\dfrac{\pm\sqrt{l-1}}{2}$である．
 よって求める座標は$\left(\dfrac{\pm\sqrt{l-1}}{2},\dfrac{1}{4}\left(2l-1\right)\right)\cdots$(答) である．

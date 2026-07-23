@@ -21,7 +21,6 @@ a_{n+1} = \left(\frac{t}{2} + \frac{5}{t^2+1}\right) a_n + \left(\frac{t}{2} - \
 \end{align*}
 $$
 
-\begin{enumerate}
-\item $a_n$を$a, b, t, n$を用いて表せ.
-  \item $n \to \infty$とするとき, $a_n$が収束するための$a, b, t$についての必要十分条件を求めよ.
-\end{enumerate}
+1.  $a_n$を$a, b, t, n$を用いて表せ.
+
+2.  $n \to \infty$とするとき, $a_n$が収束するための$a, b, t$についての必要十分条件を求めよ.

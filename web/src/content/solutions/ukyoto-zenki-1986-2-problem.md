@@ -13,7 +13,6 @@ title: "UKYOTO 1986 zenki Q2 (problem)"
 動点$Q$は同時に$E$から$F$の方向へ出発し，$P$と同じ一定の速さで$\triangle DEF$の周を一周する．
 線分$PQ$が通過してできる曲面と$\triangle ABC$，$\triangle DEF$によって囲まれる立体を$V$とする．
 
-\begin{enumerate}
-\item 平面$z=a$ $(0 \leqq a \leqq 1)$による$V$の切り口はどのような図形か．
-  \item $V$の体積を求めよ．
-\end{enumerate}
+1.  平面$z=a$ $(0 \leqq a \leqq 1)$による$V$の切り口はどのような図形か．
+
+2.  $V$の体積を求めよ．

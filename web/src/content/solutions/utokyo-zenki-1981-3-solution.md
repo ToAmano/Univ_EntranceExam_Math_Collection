@@ -13,11 +13,11 @@ title: "UTOKYO 1981 zenki Q3 (solution)"
      を，$Q$における$C$の接線という．$0\le t\le1$とし，つぎの$3$条件をみたす点$P$を考える．
           
 
-\begin{itemize}
-\item $C$上の点$Q(t,t^2)$における$C$の法線上にある．
-          \item 領域$y\ge x^2$に含まれる．
-          \item $P$と$Q$の距離は$(t-t^2)\sqrt{1+4t^2}$である．
-\end{itemize}
+1.  $C$上の点$Q(t,t^2)$における$C$の法線上にある．
+
+2.  領域$y\ge x^2$に含まれる．
+
+3.  $P$と$Q$の距離は$(t-t^2)\sqrt{1+4t^2}$である．
 
      $t$が$0$から$1$まで嚥下する時，$P$の描く曲線を$C'$とする．このとき，$C$と$C'$とで囲ま
      れた部分の面積を求めよ．
@@ -26,9 +26,23 @@ title: "UTOKYO 1981 zenki Q3 (solution)"
 ## 【解】
 
 $(x^2)'=2x$だから，$Q$での法線方向のベクトル$\vec{l}$は，
-     \[\vec{l}=\vtwo{-2t}{1}\]
+     
+
+$$
+\begin{align*}
+\vec{l}=\vtwo{-2t}{1}
+\end{align*}
+$$
+
 と書ける．故に$P(X,Y)$は
-     \[\vtwo{X}{Y}=\vtwo{t}{t^2}+s\vtwo{-2t}{1}\]
+     
+
+$$
+\begin{align*}
+\vtwo{X}{Y}=\vtwo{t}{t^2}+s\vtwo{-2t}{1}
+\end{align*}
+$$
+
 と書ける．(ハ)の条件から，
      
 
@@ -39,7 +53,14 @@ $$
 $$
 
 である．条件(ロ)から複合正をとって，
-      \[\vtwo{X}{Y}=\vtwo{t}{t^2}+(t-t^2)\vtwo{-2t}{1}\]
+      
+
+$$
+\begin{align*}
+\vtwo{X}{Y}=\vtwo{t}{t^2}+(t-t^2)\vtwo{-2t}{1}
+\end{align*}
+$$
+
 である．従って
      
 
@@ -80,5 +101,12 @@ S_1&=\int_0^1x^2dx=\frac{1}{3}\\
 $$
 
 であるから，[1](#1)に代入して
-     \[S=\frac{1}{3}\]
+     
+
+$$
+\begin{align*}
+S=\frac{1}{3}
+\end{align*}
+$$
+
 である．$\cdots$(答)

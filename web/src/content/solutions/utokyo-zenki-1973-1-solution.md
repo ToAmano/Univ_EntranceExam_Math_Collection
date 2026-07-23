@@ -20,7 +20,14 @@ title: "UTOKYO 1973 zenki Q1 (solution)"
  \1 ただし$0\le\theta<2\pi$とする．
 $P$が$xy$平面上の円$x^2+y^2=16a^2$上を動くよう，$N(a/2,0,\sqrt{3}a/2)$とする．
 すると$P(4ac,4as)$と置ける．$N$での$S$の接平面$T$は
-     \[T:\frac{a}{2}x+\frac{\sqrt{3}a}{2}z=a^2\]
+     
+
+$$
+\begin{align*}
+T:\frac{a}{2}x+\frac{\sqrt{3}a}{2}z=a^2
+\end{align*}
+$$
+
 であり，これと$xy$平面との交線は$x=2a$となり，下図のようになる．
  
      
@@ -28,7 +35,14 @@ $P$が$xy$平面上の円$x^2+y^2=16a^2$上を動くよう，$N(a/2,0,\sqrt{3}a/
      
      
 $P$が見えるのは$2a\le x$の領域である．これは$-\pi/3\le\theta\le\pi/3$の領域であるから，見え続ける時間$t$として
-     \[\frac{\pi}{12}t=\frac{2\pi}{3} \Longleftrightarrow t=8\]
+     
+
+$$
+\begin{align*}
+\frac{\pi}{12}t=\frac{2\pi}{3} \Longleftrightarrow t=8
+\end{align*}
+$$
+
 である．$\cdots$(答)
 
 次に，$f(\theta)=|NP|^2$とおくと，

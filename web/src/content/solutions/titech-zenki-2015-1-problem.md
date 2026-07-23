@@ -25,9 +25,9 @@ $$
 
 と定める．
 
-\begin{enumerate}
-\item 数列$\{ a_n \}$の一般項を求めよ．
-  \item すべての$n$に対して，
+1.  数列$\{ a_n \}$の一般項を求めよ．
+
+2.  すべての$n$に対して，
 不等式$\displaystyle b_n\leqq3+\frac{4}{n+1}$が成り立つことを示せ．
-  \item 極限値$\displaystyle\lim_{n\to\infty}b_n$を求めよ．
-\end{enumerate}
+
+3.  極限値$\displaystyle\lim_{n\to\infty}b_n$を求めよ．

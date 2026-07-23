@@ -102,5 +102,12 @@ $$
 $$
 
 だから，条件は$t>0$も考慮して
-     \[t=\cfrac{1}{t^2}\Longleftrightarrow t=1\]
+     
+
+$$
+\begin{align*}
+t=\cfrac{1}{t^2}\Longleftrightarrow t=1
+\end{align*}
+$$
+
  である．この時，[1](#1)から，$(a,b)=\left(\dfrac{3}{2},\dfrac{3}{4}\right)$となる．$\cdots$(答)

@@ -18,7 +18,6 @@ $$
 
 とおき，$\alpha$は直角でないとする．
 
-\begin{enumerate}
-\item $\tan\alpha$を$r$と$a$であらわせ．
-  \item $\tan\alpha\cdot\cos\theta=\tan\beta$を示せ．
-\end{enumerate}
+1.  $\tan\alpha$を$r$と$a$であらわせ．
+
+2.  $\tan\alpha\cdot\cos\theta=\tan\beta$を示せ．

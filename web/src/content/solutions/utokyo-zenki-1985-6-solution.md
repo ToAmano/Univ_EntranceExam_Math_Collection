@@ -14,11 +14,11 @@ title: "UTOKYO 1985 zenki Q6 (solution)"
      立体を$K$とする．
           
 
-\begin{enumerate}
-[(1)]
-          \item $K$を平面$z=0$で切った切り口の面積を求めよ．
-          \item $K$の体積を求めよ．
-\end{enumerate}
+1.  
+
+2.  $K$を平面$z=0$で切った切り口の面積を求めよ．
+
+3.  $K$の体積を求めよ．
 
      \end{oframed}
 

@@ -70,7 +70,14 @@ $$
 となる．この左辺を$D$とおく．
 
 [1](#1)の両辺は$\infty$に発散するから，挟み撃ちの定理から
-     \[a_n\to\infty\]
+     
+
+$$
+\begin{align*}
+a_n\to\infty
+\end{align*}
+$$
+
 である．$\cdots$(答)
 
 次に$n$が十分大きい時，[1](#1)，[2](#2)の両辺は正であることから，
@@ -102,5 +109,12 @@ $$
 $$
 
 から，挟み撃ちの定理より
-     \[\frac{b_n}{a_n}\to\frac{\sqrt{2}}{2}\]
+     
+
+$$
+\begin{align*}
+\frac{b_n}{a_n}\to\frac{\sqrt{2}}{2}
+\end{align*}
+$$
+
 である．$\cdots$(答)

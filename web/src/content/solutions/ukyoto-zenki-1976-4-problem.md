@@ -11,7 +11,6 @@ title: "UKYOTO 1976 zenki Q4 (problem)"
 不等式$\displaystyle{a_n}^3+3{a_n}^2- \left( 9+\frac{1}{n} \right) a_n+5<0$をみたしているとき，
 次の(i)，(ii)を証明せよ．ただし，(ii)を先に証明してもよい．
 
-\begin{enumerate}
-\item $\displaystyle\lim_{n\to\infty}a_n=1$
-  \item $\displaystyle{(a_n-1)}^2<\frac{1}{4n}$
-\end{enumerate}
+1.  $\displaystyle\lim_{n\to\infty}a_n=1$
+
+2.  $\displaystyle{(a_n-1)}^2<\frac{1}{4n}$

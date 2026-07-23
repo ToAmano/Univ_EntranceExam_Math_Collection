@@ -12,13 +12,12 @@ title: "UKYOTO 1981 zenki Q2 (problem)"
 $P_1P_2P_3P_4$が平行四辺形をなすものとする．
 このとき次の問いに答えよ．
 
-\begin{enumerate}
-\item $|\overrightarrow{OP_1}|:|\overrightarrow{P_1A}|=k:(1-k)$，
+1.  $|\overrightarrow{OP_1}|:|\overrightarrow{P_1A}|=k:(1-k)$，
 $|\overrightarrow{AP_2}|:|\overrightarrow{P_2B}|=(1-l):l$，
 $|\overrightarrow{BP_3}|:|\overrightarrow{P_3C}|=m:(1-m)$，
 $|\overrightarrow{CP_4}|:|\overrightarrow{P_4O}|=(1-n):n$とすれば，
 $k=l=m=n$であることを示せ．
 ただし，$||$はベクトルの大きさを表わす．
-  \item 平行四辺形$P_1P_2P_3P_4$の対角線の交点は，
+
+2.  平行四辺形$P_1P_2P_3P_4$の対角線の交点は，
 線分$OB$，$AC$のそれぞれの中点を結ぶ線分上にあることを示せ．
-\end{enumerate}

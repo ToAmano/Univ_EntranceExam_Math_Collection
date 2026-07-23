@@ -16,7 +16,6 @@ a_{n+2}=a_{n+1}+a_n  (n=1,2,\cdots)
 $\displaystyle b_n=\frac{a_{n+1}}{a_n}$ $(n=1,2,\cdots)$とおく．
 ただし，$i$は虚数単位である．
 
-\begin{enumerate}
-\item3点$b_1$，$b_2$，$b_3$を通る円$C$の中心と半径を求めよ．
-  \itemすべての点$b_n$ $(n=1,2,\cdots)$は円$C$の周上にあることを示せ．
-\end{enumerate}
+1.  3点$b_1$，$b_2$，$b_3$を通る円$C$の中心と半径を求めよ．
+
+2.  すべての点$b_n$ $(n=1,2,\cdots)$は円$C$の周上にあることを示せ．

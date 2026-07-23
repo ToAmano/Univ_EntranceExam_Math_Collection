@@ -12,4 +12,9 @@ title: "UTOKYO 1993 zenki Q1 (problem)"
 辺の長さは$AB=2l-1$，$BC=2l$，$CA=2l+1$ $(l>2)$である．
 四面体$ABCD$の体積を$V(l)$とするとき，
 次の極限値を求めよ．
-\[ \lim_{l\to2}\frac{V(l)}{\sqrt{l-2}} \]
+
+$$
+\begin{align*}
+\lim_{l\to2}\frac{V(l)}{\sqrt{l-2}}
+\end{align*}
+$$

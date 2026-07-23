@@ -12,8 +12,8 @@ title: "TITECH 2001 zenki Q3 (problem)"
 このとき，はじめから$j$回目$(j=1,\cdots\cdots,k)$までに取り出したカードの番号の和を$X_j$とし，
 $X_1,\cdots\cdots,X_k$のうちのどれかが$k$となる確率を$P_N(k)$とする．
 
-\begin{enumerate}
-\item $N \geqq 3$のとき$P_N(1)$，$P_N(2)$，$P_N(3)$を$N$で表せ．
-  \item $P_3(4)$，$P_3(5)$を求めよ．
-  \item $k \leqq N$のとき，$P_N(k)$を$N$と$k$で表せ．
-\end{enumerate}
+1.  $N \geqq 3$のとき$P_N(1)$，$P_N(2)$，$P_N(3)$を$N$で表せ．
+
+2.  $P_3(4)$，$P_3(5)$を求めよ．
+
+3.  $k \leqq N$のとき，$P_N(k)$を$N$と$k$で表せ．

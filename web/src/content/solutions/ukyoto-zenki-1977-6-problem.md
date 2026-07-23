@@ -15,16 +15,16 @@ $$
 \end{align*}
 $$
 
-\begin{enumerate}
-\item $f'(x)=-g(x)$
-  \item $g'(x) \geqq f(x)$(すべての$x$の値について)
-  \item $g(0)=0$
-  \item $0 \leqq x \leqq a$ならば$f(x)>0$
-\end{enumerate}
+1.  $f'(x)=-g(x)$
+
+2.  $g'(x) \geqq f(x)$(すべての$x$の値について)
+
+3.  $g(0)=0$
+
+4.  $0 \leqq x \leqq a$ならば$f(x)>0$
 
 このとき，次の(i)，(ii)を示せ．
 
-\begin{enumerate}
-\item $g(a)>0$
-  \item $\displaystyle a \leqq y \leqq a+\frac{f(a)}{g(a)}$，$f(y)=0$をみたす実数$y$がある．
-\end{enumerate}
+1.  $g(a)>0$
+
+2.  $\displaystyle a \leqq y \leqq a+\frac{f(a)}{g(a)}$，$f(y)=0$をみたす実数$y$がある．

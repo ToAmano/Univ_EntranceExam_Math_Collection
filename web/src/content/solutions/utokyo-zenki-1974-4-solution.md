@@ -12,14 +12,16 @@ title: "UTOKYO 1974 zenki Q4 (solution)"
      $2$の関数$f(x)$，$g(x)$が次の性質1)，2)，3)，4)を持つものとする．
           
 
-\begin{enumerate}
-[1)]
-          \item $f(x)$，$g(x)$は$x=0$において微分可能．
-          \item $f(0)=g(o)=0$．
-          \item 原点において，$y=f(x)$および$y=g(x)$のグラフに引いた接線はたがいに直交する．
-          \item 実数$a$，$b$，$c$を適当に取ると，$f'(0)=\dlim{x}{0}\dfrac{ax+bf(x)}{cx+f(x)}$，
+1.  
+
+2.  $f(x)$，$g(x)$は$x=0$において微分可能．
+
+3.  $f(0)=g(o)=0$．
+
+4.  原点において，$y=f(x)$および$y=g(x)$のグラフに引いた接線はたがいに直交する．
+
+5.  実数$a$，$b$，$c$を適当に取ると，$f'(0)=\dlim{x}{0}\dfrac{ax+bf(x)}{cx+f(x)}$，
           $g'(0)=\dlim{x}{0}\dfrac{ax+bg(x)}{cx+g(x)}$が成り立つ．
-\end{enumerate}
 
      このとき，$a$の値を求めよ．     
      \end{oframed}

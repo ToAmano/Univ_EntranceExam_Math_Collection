@@ -12,10 +12,9 @@ $xy$平面上の長さ$2$の線分$\mathrm{AB}$を直径とする半円を$\math
 $\mathrm{A}$と$\mathrm{P}$を通る直線と半円$\mathrm{D}$の円孤の部分との交点を$\mathrm{Q}$とし，$\mathrm{B}$と$\mathrm{P}$を通る直線と半円$\mathrm{D}$の円弧の部分との交点を$\mathrm{R}$とする．
 五角形$\mathrm{ARPQB}$の面積を$S$とおく．
 
-\begin{enumerate}
-\item $\angle \mathrm{APB}$を一定に保ったまま点$\mathrm{P}$が半円$\mathrm{D}$の内部を動くとき，$S$のとる値の範囲を$\angle APB=\theta$を使ってあらわせ．
-  \item 点$\mathrm{P}$が，半円$\mathrm{D}$の内部を自由に動くとき，$\mathrm{S}$のとる値の範囲を求めよ．
-\end{enumerate}
+1.  $\angle \mathrm{APB}$を一定に保ったまま点$\mathrm{P}$が半円$\mathrm{D}$の内部を動くとき，$S$のとる値の範囲を$\angle APB=\theta$を使ってあらわせ．
+
+2.  点$\mathrm{P}$が，半円$\mathrm{D}$の内部を自由に動くとき，$\mathrm{S}$のとる値の範囲を求めよ．
 
 <figure id="fig_1">
   <img src="/Univ_EntranceExam_Math_Collection/images/tikz/utokyo/kouki/1991/3/fig_1.svg" alt="図 1" />

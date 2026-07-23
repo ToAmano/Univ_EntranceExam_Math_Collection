@@ -10,7 +10,13 @@ title: "UTOKYO 1995 zenki Q1 (solution)"
 \input{macros}
 \begin{oframed}
 全ての正の実数$x$，$y$に対し
-\[ \sqrt{x}+\sqrt{y}\le k\sqrt{2x+y} \]
+
+$$
+\begin{align*}
+\sqrt{x}+\sqrt{y}\le k\sqrt{2x+y}
+\end{align*}
+$$
+
 が成立するような実数$k$の最小値を求めよ．
 \end{oframed}
 

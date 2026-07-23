@@ -10,7 +10,14 @@ title: "UTOKYO 1961 zenki Q4 (solution)"
 \input{macros}
      \begin{oframed}
      $\triangle ABC$の$3$辺$BC$，$CA$，$AB$の上にそれぞれ点$L$，$M$，$N$をとり
-          \[\frac{BL}{LC}=\frac{CM}{MA}=\frac{AN}{NB}=\frac{1}{2}\]
+          
+
+$$
+\begin{align*}
+\frac{BL}{LC}=\frac{CM}{MA}=\frac{AN}{NB}=\frac{1}{2}
+\end{align*}
+$$
+
      となるようにする.
      $AL$と$CN$の交点を$P$，$AL$と$BM$の交点を$Q$，$BM$と$CN$の交点を$R$とするとき，$\triangle PQR$の面積と
      $\triangle ABC$の面積との比を求めよ．
@@ -58,7 +65,22 @@ $$
 
   
 [3](#3)，[4](#4)から
-     \[a:b:c=1:3:3\]
+     
+
+$$
+\begin{align*}
+a:b:c=1:3:3
+\end{align*}
+$$
+
 であるから，
-     \[\triangle PQR=\frac{2}{3}\frac{3}{7}\frac{1}{2}\triangle ABC=\frac{1}{7}\triangle ABC\]     
+     
+
+$$
+\begin{align*}
+\triangle PQR=\frac{2}{3}\frac{3}{7}\frac{1}{2}\triangle ABC=\frac{1}{7}\triangle ABC
+\end{align*}
+$$
+
+     
 であるy．$\cdots$(答)

@@ -7,24 +7,34 @@ type: "problem"
 title: "UTOKYO 2011 zenki Q6 (problem)"
 ---
 
-\begin{enumerate}
-\item$x$，$y$を実数とし，$x>0$とする．
+1.  $x$，$y$を実数とし，$x>0$とする．
 $t$を変数とする2次関数$f(t)=xt^2+yt$の$0 \leqq t \leqq 1$における最大値と最小値の差を求めよ．
-  \item次の条件を満たす点$(x,y)$全体からなる座標平面内の領域を$S$とする．
+
+2.  次の条件を満たす点$(x,y)$全体からなる座標平面内の領域を$S$とする．
 \begin{enumerate}
-\item $x>0$かつ，実数$z$で$0 \leqq t \leqq 1$の範囲の全ての実数$t$に対して
-\[ 0 \leqq xt^2 + yt + z \leqq 1 \]
+
+3.  $x>0$かつ，実数$z$で$0 \leqq t \leqq 1$の範囲の全ての実数$t$に対して
+
+$$
+\begin{align*}
+0 \leqq xt^2 + yt + z \leqq 1
+\end{align*}
+$$
+
 を満たすようなものが存在する．
-\end{enumerate}
 
 $S$の概形を図示せよ．
-  \item次の条件を満たす点$(x,y,z)$全体からなる座標空間内の領域を$V$とする．
+  \item 次の条件を満たす点$(x,y,z)$全体からなる座標空間内の領域を$V$とする．
 
-\begin{enumerate}
-\item $0 \leqq x \leqq 1$かつ，$0 \leqq t \leqq 1$の範囲の全ての実数$t$に対して，
-\[ 0 \leqq xt^2 + yt + z \leqq 1 \]
+1.  $0 \leqq x \leqq 1$かつ，$0 \leqq t \leqq 1$の範囲の全ての実数$t$に対して，
+
+$$
+\begin{align*}
+0 \leqq xt^2 + yt + z \leqq 1
+\end{align*}
+$$
+
 が成り立つ．
-\end{enumerate}
 
 $V$の体積を求めよ．
 \end{enumerate}

@@ -65,7 +65,13 @@ $$
   残り$n$枚ずつ投げて, $X < Y$ となれば良く, 確率 $P(X < Y)$
 
   コインが$n$枚ずつあるため対称性から $P(X < Y) = P(X > Y)$ だから
-  \[ \frac{1}{2} \left( P(X \le Y) + P(X \not< Y) \right) = \frac{1}{2} \left( P(X \le Y) + P(X \ge Y) \right) = \frac{1}{2} \]
+  
+
+$$
+\begin{align*}
+\frac{1}{2} \left( P(X \le Y) + P(X \not< Y) \right) = \frac{1}{2} \left( P(X \le Y) + P(X \ge Y) \right) = \frac{1}{2}
+\end{align*}
+$$
 
   **[解3]**
   500円が$k$枚表である確率を$P_k$とおくと,
@@ -90,12 +96,39 @@ $$
 
   ここで, $A = \sum_{k=1}^{n+1} {}_{n+1}\mathrm{C}_k ({}_n\mathrm{C}_0 + \dots + {}_n\mathrm{C}_{k-1})$ とおくと, $A$ は $(1+x)^n (1+x)^{n+1}$ の展開項のうち, $x^{n+1}$ 次以上
   のもの和である.
-  \[ (x+1)^{2n+1} = {}_{2n+1}\mathrm{C}_0 x^0 + \dots + {}_{2n+1}\mathrm{C}_n x^n + {}_{2n+1}\mathrm{C}_{n+1} x^{n+1} + \dots + {}_{2n+1}\mathrm{C}_{2n+1} x^{2n+1} \]
+  
+
+$$
+\begin{align*}
+(x+1)^{2n+1} = {}_{2n+1}\mathrm{C}_0 x^0 + \dots + {}_{2n+1}\mathrm{C}_n x^n + {}_{2n+1}\mathrm{C}_{n+1} x^{n+1} + \dots + {}_{2n+1}\mathrm{C}_{2n+1} x^{2n+1}
+\end{align*}
+$$
+
   として, ${}_{2n+1}\mathrm{C}_{2n+1-k} = {}_{2n+1}\mathrm{C}_k$ だから.
-  \[ 2^{2n+1} = 2 \left({}_{2n+1}\mathrm{C}_0 + \dots + {}_{2n+1}\mathrm{C}_n \right) = 2A \]
-  \[ \therefore A = 2^{2n} \quad \dots \text{②} \]
+  
+
+$$
+\begin{align*}
+2^{2n+1} = 2 \left({}_{2n+1}\mathrm{C}_0 + \dots + {}_{2n+1}\mathrm{C}_n \right) = 2A
+\end{align*}
+$$
+
+  
+
+$$
+\begin{align*}
+\therefore A = 2^{2n} \quad \dots \text{②}
+\end{align*}
+$$
+
   ①②から,
-  \[ P = \left(\frac{1}{2}\right)^{2n+1} 2^{2n} = \frac{1}{2} \]
+  
+
+$$
+\begin{align*}
+P = \left(\frac{1}{2}\right)^{2n+1} 2^{2n} = \frac{1}{2}
+\end{align*}
+$$
 
   $\cdots$(答)
 

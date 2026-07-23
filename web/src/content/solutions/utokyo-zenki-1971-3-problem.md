@@ -8,7 +8,19 @@ title: "UTOKYO 1971 zenki Q3 (problem)"
 ---
 
 与えられた実数係数の整式$f(x)$について
-\[ \int_0^1 f(x)dx=2,  \int_0^1 xf(x)dx=3 \]
+
+$$
+\begin{align*}
+\int_0^1 f(x)dx=2, \int_0^1 xf(x)dx=3
+\end{align*}
+$$
+
 となるとする．そのとき，
-\[ \int_0^1 { \{ f(x)-ax-b \} }^2 dx \]
+
+$$
+\begin{align*}
+\int_0^1 { \{ f(x)-ax-b \} }^2 dx
+\end{align*}
+$$
+
 の値を最小にする実数$a$および$b$の値を求めよ．

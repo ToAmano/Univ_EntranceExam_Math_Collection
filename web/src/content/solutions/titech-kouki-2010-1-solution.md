@@ -102,8 +102,7 @@ $$
   まず $A \ne 0$ のとき，$t$と$s$の大小関係で場合分けすると
   
 
-\begin{enumerate}
-\item \underline{**$|t| < s \iff -2 < t < 2$ の時**}
+1.  \underline{**$|t| < s \iff -2 < t < 2$ の時**}
           
 
 $$
@@ -131,13 +130,15 @@ $$
 $$
 
           となる．$-2 < t < 2$ と同時にこの条件を満たす $t$ はないから，この領域で$a_n$は収束しない．\\
-    \item \underline{**$|t| = s \iff t = \pm 2$ の時**}
+
+2.  \underline{**$|t| = s \iff t = \pm 2$ の時**}
 
           まず$t=2$の時，$a_n = a \cdot 2^{n-1}$だから，$a\ge 0$より収束条件は$a=0$である．
           この時$a \ge 0 > b$より，$ A \neq 0$は自動的に満たされる．
 
           次に$t=-2$の時，$a_n = A\cdot(-2)^{n-1} + B\cdot 2^{n-1}$だから，$B>0$より$a_n$は収束しない．\\
-    \item \underline{\textbf{$|t| > s \iff t < -2 \text{ or } 2 < t$ の時}}
+
+3.  \underline{\textbf{$|t| > s \iff t < -2 \text{ or } 2 < t$ の時}}
           
 
 $$
@@ -157,7 +158,6 @@ $$
 
           より収束条件は$-1 < t \le 1$ だが $t < -2 \text{ or } 2 < t$ と同時にこの条件を満たす$t$は存在しない．
           よってこの領域で$a_n$は収束しない．
-\end{enumerate}
 
   次に $A=0 \iff a+b=0$ の時，
   

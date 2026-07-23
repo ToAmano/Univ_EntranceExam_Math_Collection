@@ -7,8 +7,7 @@ type: "problem"
 title: "UKYOTO 1997 zenki Q4 (problem)"
 ---
 
-\begin{enumerate}
-\item $\displaystyle0\leqq\alpha<\beta\leqq\frac{\pi}{2}$であるとき，次の不等式を示せ．
+1.  $\displaystyle0\leqq\alpha<\beta\leqq\frac{\pi}{2}$であるとき，次の不等式を示せ．
 
 $$
 \begin{align*}
@@ -17,5 +16,4 @@ $$
 \end{align*}
 $$
 
-  \item $\displaystyle\sum_{k=1}^7\sin\frac{k\pi}{8}<\frac{16}{\pi}$を示せ．
-\end{enumerate}
+2.  $\displaystyle\sum_{k=1}^7\sin\frac{k\pi}{8}<\frac{16}{\pi}$を示せ．

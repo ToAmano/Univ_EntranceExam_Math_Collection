@@ -21,8 +21,7 @@ $$
 ただし，$\alpha_n\geqq\beta_n$とする．
 このとき
 
-\begin{enumerate}
-\item $\displaystyle\frac{\alpha_{n+1}}{\alpha_n}$，
+1.  $\displaystyle\frac{\alpha_{n+1}}{\alpha_n}$，
 $\displaystyle\frac{\beta_{n+1}}{\beta_n}$を求めよ．
-  \item $\alpha_n$，$\beta_n$を求めよ．
-\end{enumerate}
+
+2.  $\alpha_n$，$\beta_n$を求めよ．

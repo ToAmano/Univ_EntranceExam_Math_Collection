@@ -15,8 +15,8 @@ $$
 
 とする．次のことを証明せよ．
 
-\begin{enumerate}
-\item $S_1<S_2$
-  \item $S_{n+2}+S_n>2S_{n+1}$
-  \item $m<n$のとき，$S_m<S_n$
-\end{enumerate}
+1.  $S_1<S_2$
+
+2.  $S_{n+2}+S_n>2S_{n+1}$
+
+3.  $m<n$のとき，$S_m<S_n$

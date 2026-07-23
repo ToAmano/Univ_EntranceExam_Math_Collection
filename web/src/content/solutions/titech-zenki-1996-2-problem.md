@@ -13,7 +13,6 @@ $A$で表される1次変換により，
 楕円$\displaystyle C: \frac{x^2}{a^2}+\frac{y^2}{b^2}=1$(ただし$a,b>0$)上の点は$C$上の点にうつるものとする．
 このとき次の問いに答えよ．
 
-\begin{enumerate}
-\item 行列$A$を$\theta$，$a$，$b$を用いて表せ．
-  \item 自然数$n$に対し$A^n$を求めよ．
-\end{enumerate}
+1.  行列$A$を$\theta$，$a$，$b$を用いて表せ．
+
+2.  自然数$n$に対し$A^n$を求めよ．

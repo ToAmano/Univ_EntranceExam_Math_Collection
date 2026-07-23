@@ -13,12 +13,12 @@ title: "UTOKYO 1970 zenki Q1 (solution)"
      って動くとする．このとき，
          
 
-\begin{enumerate}
-[(1)]
-         \item $a^n$は何個の異なる値をとり得るか．
-         \item $\frac{(1-a^n)(1-a^{2n})(1-a^{3n})(1-a^{4n})(1-a^{5n})}{(1-a)(1-a^2)(1-a^3)(1-a^4)(1-a^5)}$
+1.  
+
+2.  $a^n$は何個の異なる値をとり得るか．
+
+3.  $\frac{(1-a^n)(1-a^{2n})(1-a^{3n})(1-a^{4n})(1-a^{5n})}{(1-a)(1-a^2)(1-a^3)(1-a^4)(1-a^5)}$
          の値を求めよ
-\end{enumerate}
 
      \end{oframed}
 
@@ -36,15 +36,23 @@ $$
 となる．
      
 
-\begin{enumerate}
-[(1)]
-     \item [1](#1)から$a^k$についてのみ考えればよいが，このとき$0\le i<j\le5$に対して
+1.  
+
+2.  [1](#1)から$a^k$についてのみ考えればよいが，このとき$0\le i<j\le5$に対して
      $a^i=a^j$と仮定すると$a^{j-i}=1$となって矛盾．故に$a^i\not=a^j$だから$a^k$はすべて
      異なり，求めるのは$6$個である．
-     \item 合同式の法を$6$とする．
+
+3.  合同式の法を$6$とする．
           \begin{indentation}{2zw}{0pt}
           \underline{(i)$n\equiv \pm1$の時} 
-          \[\{n,2n,3n,4n,5n\}\equiv\{1,2,3,4,5\}\]
+          
+
+$$
+\begin{align*}
+\{n,2n,3n,4n,5n\}\equiv\{1,2,3,4,5\}
+\end{align*}
+$$
+
          であるから，[1](#1)から(与式)$=1$である．
          
          \underline{(ii)otherwise}　\\
@@ -63,4 +71,3 @@ $$
 $$
 
     となる．
-\end{enumerate}

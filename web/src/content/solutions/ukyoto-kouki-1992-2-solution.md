@@ -48,14 +48,17 @@ $$
 
   
 
-\begin{itemize}
-\item 辺PQを通ってRへ行く事象: $\alpha$ \\
-    \item 辺QBを通ってRへ行く事象: $\beta$    \\
-    \item 辺BCを通ってRへ行く事象: $\gamma$   \\
-    \item 辺CDを通ってRへ行く事象: $\delta$   \\
-    \item 辺DSを通ってRへ行く事象: $\epsilon$ \\
-    \item 辺SPを通ってRへ行く事象: $\omega$
-\end{itemize}
+1.  辺PQを通ってRへ行く事象: $\alpha$ \\
+
+2.  辺QBを通ってRへ行く事象: $\beta$    \\
+
+3.  辺BCを通ってRへ行く事象: $\gamma$   \\
+
+4.  辺CDを通ってRへ行く事象: $\delta$   \\
+
+5.  辺DSを通ってRへ行く事象: $\epsilon$ \\
+
+6.  辺SPを通ってRへ行く事象: $\omega$
 
   従って，求める場合の数は
   

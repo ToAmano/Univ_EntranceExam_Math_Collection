@@ -219,11 +219,11 @@ $$
   正二十面体は黄金比$\psi=\frac{1+\sqrt{5}}{2}$を用いて，
   
 
-\begin{itemize}
-\item $xy$ 平面上の $(\pm 1, \pm \psi, 0)$ \\
-    \item $yz$ 平面上の $(0, \pm 1, \pm \psi)$ \\
-    \item $xz$ 平面上の $(\pm \psi, 0, \pm 1)$
-\end{itemize}
+1.  $xy$ 平面上の $(\pm 1, \pm \psi, 0)$ \\
+
+2.  $yz$ 平面上の $(0, \pm 1, \pm \psi)$ \\
+
+3.  $xz$ 平面上の $(\pm \psi, 0, \pm 1)$
 
   に頂点を置いたものである．
 

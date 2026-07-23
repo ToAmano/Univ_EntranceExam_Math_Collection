@@ -70,9 +70,23 @@ $$
 
 このような$k_{>0}$の条件を調べる．そこで\1 ($0<\theta<\pi/2 , \theta\not=\pi/4$)
 [4](#4)，[6](#6)から$\a=c,\b=s$と置ける．[5](#5)に代入して
-      \[k=\frac{1}{sc}=\frac{2}{\sin 2\theta}\]
+      
+
+$$
+\begin{align*}
+k=\frac{1}{sc}=\frac{2}{\sin 2\theta}
+\end{align*}
+$$
+
 であって，$\theta$の範囲から$0<\sin 2\theta<1$であるから，求める$k$の範囲は
-     \[2<k\]
+     
+
+$$
+\begin{align*}
+2<k
+\end{align*}
+$$
+
 である．$\cdots$(答)
   \\
   \\

@@ -18,7 +18,6 @@ $$
 
 で定める．
 
-\begin{enumerate}
-\item $a_n^2-2b_n^2$を求めよ．
-  \item ${\displaystyle \lim_{n\to\infty}}\dfrac{a_n}{b_n}$を求めよ．
-\end{enumerate}
+1.  $a_n^2-2b_n^2$を求めよ．
+
+2.  ${\displaystyle \lim_{n\to\infty}}\dfrac{a_n}{b_n}$を求めよ．

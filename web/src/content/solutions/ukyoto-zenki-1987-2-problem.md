@@ -16,8 +16,7 @@ $$
 \end{align*}
 $$
 
-\begin{enumerate}
-\item $x_2$，$y_2$，$x_3$，$y_3$を求めよ．
-  \item $\displaystyle\frac{1}{2}<a<\frac{3}{2}$のとき，
+1.  $x_2$，$y_2$，$x_3$，$y_3$を求めよ．
+
+2.  $\displaystyle\frac{1}{2}<a<\frac{3}{2}$のとき，
 $\displaystyle\lim_{n\to\infty}x_n$，$\displaystyle\lim_{n\to\infty}y_n$を求めよ．
-\end{enumerate}

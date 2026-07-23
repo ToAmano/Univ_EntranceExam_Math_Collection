@@ -7,11 +7,11 @@ type: "problem"
 title: "TITECH 1979 zenki Q3 (problem)"
 ---
 
-\begin{enumerate}
-\item $p(x)$，$q(x)$を$x$の3次以下の多項式とする．
+1.  $p(x)$，$q(x)$を$x$の3次以下の多項式とする．
 すべての$x$に対して$p(x)\cos x=q(x)\sin x$が成り立つならば，
 $p(x)$，$q(x)$は恒等的に0に等しいことを示せ．
-  \item $P(x)$，$Q(x)$を$x$の3次以下の多項式とする．
+
+2.  $P(x)$，$Q(x)$を$x$の3次以下の多項式とする．
 すべての$x$に対して
 
 $$
@@ -21,4 +21,3 @@ P(x)\cos x+\int_0^xQ(t)\sin tdt=(x^2+2x+3)\sin x
 $$
 
 が成り立つとき，$P(x)$，$Q(x)$を求めよ．
-\end{enumerate}

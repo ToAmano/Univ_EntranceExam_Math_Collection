@@ -291,16 +291,23 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     md_content = re.sub(r'\{\\bf\s*\\?\[解説\\?\]\}|\*\*\[解説\]\*\*|\\\[解説\\\]|(?<!#)\s*【解説】', r'\n\n## 【解説】\n\n', md_content)
     md_content = re.sub(r'\{\\bf\s*\\?\[方針\\?\]\}|\*\*\[方針\]\*\*|\\\[方針\\\]|(?<!#)\s*【方針】', r'\n\n## 【方針】\n\n', md_content)
 
-    # リスト環境 (\begin{enumerate}, \begin{itemize}) を MathJax レンダリング用にそのまま TeX ブロックとして保持
-    def preserve_enumerate_block(m):
-        env_name = m.group(1)
+    # リスト環境 (\begin{enumerate}, \begin{description}, \begin{itemize}) の HTML/Markdown 番号付きリスト変換 (Issue #509)
+    def convert_enumerate_to_md_list(m):
         block = m.group(2)
-        # オプションラベル \item[(1)] をシンプルな \item に整流化し、必ず直後にスペースを確保 (\item $math$)
-        clean_block = re.sub(r'\\item\s*\[\s*\(?.*?\)?\s*\]\s*', r'\\item ', block)
-        clean_block = re.sub(r'\\item(?![a-zA-Z\s])', r'\\item ', clean_block)
-        return f"\n\n\\begin{{{env_name}}}\n{clean_block.strip()}\n\\end{{{env_name}}}\n\n"
+        items = re.split(r'\\item\s*', block)
+        res = []
+        count = 1
+        for it in items:
+            it = it.strip()
+            if not it:
+                continue
+            # 残存する項目オプションラベル [(1)] や [(イ)] 等のストリップ
+            it = re.sub(r'^\[\s*\(?.*?\)?\s*\]\s*', '', it)
+            res.append(f"{count}.  {it}")
+            count += 1
+        return "\n\n" + "\n\n".join(res) + "\n\n"
 
-    md_content = re.sub(r'\\begin\{(enumerate|description|itemize)\}(.*?)\\end\{\1\}', preserve_enumerate_block, md_content, flags=re.DOTALL)
+    md_content = re.sub(r'\\begin\{(enumerate|description|itemize)\}(.*?)\\end\{\1\}', convert_enumerate_to_md_list, md_content, flags=re.DOTALL)
 
     # ディスプレイ数式 \[ ... \] の \begin{align*} ... \end{align*} への統一
     md_content = re.sub(r'\\\[\s*(.*?)\s*\\\]', r'\n$$\n\\begin{align*}\n\1\n\\end{align*}\n$$\n', md_content, flags=re.DOTALL)

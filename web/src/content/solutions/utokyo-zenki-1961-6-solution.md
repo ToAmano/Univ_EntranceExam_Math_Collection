@@ -12,18 +12,25 @@ title: "UTOKYO 1961 zenki Q6 (solution)"
 $a$，$b$，$c$は定数であって，函数$f(x)=a\sin x+b\cos x+c\cos 2x$は$x=\dfrac{\pi}{4}$において
 極大値$6\sqrt{2}$をとり，また$\int_0^{2\pi} f(x)\cos x dx=5\pi$である．このとき　\\
 
-\begin{enumerate}
-[(1)]
-\item $a$，$b$，$c$を求める．
-\item $0\le x\le 2\pi$の範囲で$f(x)$を最小にする$x$の値とその時の$f(x)$の値とを求めよ．
-\end{enumerate}
+1.  
+
+2.  $a$，$b$，$c$を求める．
+
+3.  $0\le x\le 2\pi$の範囲で$f(x)$を最小にする$x$の値とその時の$f(x)$の値とを求めよ．
 
 \end{oframed}
 
 ## 【解】
 
      $\cos x=t$,$\sin x=s$とおく．
-     \[f'(x)=at-bs+2c\cos 2x\]
+     
+
+$$
+\begin{align*}
+f'(x)=at-bs+2c\cos 2x
+\end{align*}
+$$
+
      である．まず，極大値の条件から
      $f\left(\dfrac{\pi}{4}\right)=0$が必要である．これと題意の条件から
           
@@ -68,10 +75,10 @@ $$
      故に$x=\dfrac{\pi}{4}$で極大となり十分である．以上から
      
 
-\begin{enumerate}
-[(1)]
-     \item $(a,b,c)=(5,5,\sqrt{2})$ 
-     \item $\min f(x)=f\left(\dfrac{5\pi}{4}\right)=-4\sqrt{2}$
-\end{enumerate}
+1.  
+
+2.  $(a,b,c)=(5,5,\sqrt{2})$
+
+3.  $\min f(x)=f\left(\dfrac{5\pi}{4}\right)=-4\sqrt{2}$
 
      となる．$\cdots$(答)

@@ -10,6 +10,12 @@ title: "UTOKYO 2001 zenki Q2 (problem)"
 次の等式を満たす関数$f(x)$ $(0 \leqq x \leqq 2\pi)$がただ一つ定まるための
 実数$a$，$b$の条件を求めよ．
 また，そのときの$f(x)$を決定せよ．
-\[ f(x)=\frac{a}{2\pi}\int_0^{2\pi}\sin(x+y)f(y)dy+
-\frac{b}{2\pi}\int_0^{2\pi}\cos(x-y)f(y)dy+\sin x+\cos x \]
+
+$$
+\begin{align*}
+f(x)=\frac{a}{2\pi}\int_0^{2\pi}\sin(x+y)f(y)dy+
+\frac{b}{2\pi}\int_0^{2\pi}\cos(x-y)f(y)dy+\sin x+\cos x
+\end{align*}
+$$
+
 ただし，$f(x)$は区間$0 \leqq x \leqq 2\pi$で連続な関数とする．

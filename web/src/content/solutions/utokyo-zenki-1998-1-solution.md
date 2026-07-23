@@ -10,7 +10,14 @@ title: "UTOKYO 1998 zenki Q1 (solution)"
 \input{macros}
      \begin{oframed}
      $a$は$0$でない実数とする．関数
-          \[f(x)=(3x^2-4)\left(x-a+\frac{1}{a}\right)\]
+          
+
+$$
+\begin{align*}
+f(x)=(3x^2-4)\left(x-a+\frac{1}{a}\right)
+\end{align*}
+$$
+
      の極大値と極小値の差が最小となる$a$の値を求めよ．
      \end{oframed}
 
@@ -36,13 +43,18 @@ $$
 
 である．$f'(0)<0$および$2$次係数正から，$f'(x)=0$は$2$異実解$\a$，$\b$($\a<\b$)を持ち，下表を
 得る．
-     \[
-     \begin{array}{|c|c|c|c|c|c|}\hline
+     
+
+$$
+\begin{align*}
+\begin{array}{|c|c|c|c|c|c|}\hline
      x &      & \a &   &\b &      \\\hline
      f' &+    &0  & -  & 0 &+      \\\hline
      f &  \ne&    &\se&    &\ne \\\hline
      \end{array}
-     \]
+\end{align*}
+$$
+
 従って，極大値と極小値の差$L$として，
      
 
@@ -59,7 +71,21 @@ $$
 である．故に$\b-\a(>0)$の最小値を求めればよい．
 
 ここで，$\a$，$\b$は$f'(x)=0$の$2$解であるから，
-     \[\b-\a=\frac{2\sqrt{9t^2+36}}{9}=\frac{2\sqrt{t^2+4}}{3}\]
+     
+
+$$
+\begin{align*}
+\b-\a=\frac{2\sqrt{9t^2+36}}{9}=\frac{2\sqrt{t^2+4}}{3}
+\end{align*}
+$$
+
  である．従って$t^2$が最小の時$L$は最小である．
-       \[t=0\Longleftrightarrow a=\pm1\]
+       
+
+$$
+\begin{align*}
+t=0\Longleftrightarrow a=\pm1
+\end{align*}
+$$
+
  であるから，$t^2$の最小値は$0$で，この時の値$a=\pm1$が求める答えである．$\cdots$(答)

@@ -13,7 +13,6 @@ title: "UKYOTO 1992 kouki Q2 (problem)"
 立方体の各面は一辺の長さ$1$の正方形に碁盤目状に区切られているとする．
 そこで，頂点$\mathrm{A}$から頂点$\mathrm{R}$へ碁盤目上の辺を辿っていくときの最短経路を考える．
 
-\begin{enumerate}
-\item 辺$\mathrm{BC}$上の点を通過する最短経路は全部で何通りあるか．
-  \item 頂点$\mathrm{A}$から頂点$\mathrm{R}$への最短経路は全部で何通りあるか．
-\end{enumerate}
+1.  辺$\mathrm{BC}$上の点を通過する最短経路は全部で何通りあるか．
+
+2.  頂点$\mathrm{A}$から頂点$\mathrm{R}$への最短経路は全部で何通りあるか．

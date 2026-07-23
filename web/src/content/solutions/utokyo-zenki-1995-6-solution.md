@@ -10,17 +10,24 @@ title: "UTOKYO 1995 zenki Q6 (solution)"
 \input{macros}
 \begin{oframed}
 原点を$O$とする$xy$平面上の双曲線
-     \[\frac{x^2}{a^2}-\frac{y^2}{b^2}=1 \ \ \ \ \ (a>0,b>0) \]
+     
+
+$$
+\begin{align*}
+\frac{x^2}{a^2}-\frac{y^2}{b^2}=1 \ \ \ \ \ (a>0,b>0)
+\end{align*}
+$$
+
 上の点$P$における接線と$2$つの漸近線との交点を$Q$，$R$とする．このとき以下の問いに答えよ．
      
 
-\begin{enumerate}
-[(1)]
-     \item 三角形$QOR$の面積$S$は，点$P$の取り方にはよらず，$a$，$b$によって定まることを
+1.  
+
+2.  三角形$QOR$の面積$S$は，点$P$の取り方にはよらず，$a$，$b$によって定まることを
      示せ．
-     \item $a=5e^{2t}+e^{-t}$，$b=e^{2t}+e^{-t}$として実数$t$を変化させるときの$S$の最小値を求め
+
+3.  $a=5e^{2t}+e^{-t}$，$b=e^{2t}+e^{-t}$として実数$t$を変化させるときの$S$の最小値を求め
      よ．
-\end{enumerate}
 
 \end{oframed}
 
@@ -28,14 +35,35 @@ title: "UTOKYO 1995 zenki Q6 (solution)"
 
      
 
-\begin{enumerate}
-[(1)]
-     \item $2$本の漸近線は$y=\pm\dfrac{b}{a}x$であり，$P(X,Y)$での双曲線の接線$l$は
-          \[\frac{Xx}{a^2}-\frac{Yy}{b^2}=1 \]
+1.  
+
+2.  $2$本の漸近線は$y=\pm\dfrac{b}{a}x$であり，$P(X,Y)$での双曲線の接線$l$は
+          
+
+$$
+\begin{align*}
+\frac{Xx}{a^2}-\frac{Yy}{b^2}=1
+\end{align*}
+$$
+
      である．故にこれらの交点は
-          \[A=\dfrac{X}{a}+\dfrac{Y}{b} , B=\dfrac{X}{a}-\dfrac{Y}{b} \]
+          
+
+$$
+\begin{align*}
+A=\dfrac{X}{a}+\dfrac{Y}{b} , B=\dfrac{X}{a}-\dfrac{Y}{b}
+\end{align*}
+$$
+
      として
-          \[ \left(\frac{a}{A},\frac{-b}{A}\right),\left(\frac{a}{B},\frac{b}{B}\right)\]
+          
+
+$$
+\begin{align*}
+\left(\frac{a}{A},\frac{-b}{A}\right),\left(\frac{a}{B},\frac{b}{B}\right)
+\end{align*}
+$$
+
      である．したがってサラスの公式から
           
 
@@ -45,8 +73,9 @@ S&=\frac{1}{2}\left|\frac{ab}{AB}+\frac{ab}{AB}\right|\nonumber\\&=\frac{ab}{AB}
 \end{align}
 $$
 
-     となる．これは$X$，$Y$によらない定数である．$\Box$     
-     \item $p=e^t$とする．$t$が任意実数だから$p>0$である．[1](#1)に値を代入して
+     となる．これは$X$，$Y$によらない定数である．$\Box$
+
+3.  $p=e^t$とする．$t$が任意実数だから$p>0$である．[1](#1)に値を代入して
           
 
 $$
@@ -87,4 +116,3 @@ $$
 $$
 
      となる．
-\end{enumerate}

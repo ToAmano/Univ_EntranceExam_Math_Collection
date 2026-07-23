@@ -8,5 +8,11 @@ title: "UTOKYO 1995 zenki Q1 (problem)"
 ---
 
 すべての正の実数$x$，$y$に対し
-\[ \sqrt{x}+\sqrt{y} \leqq k\sqrt{2x+y} \]
+
+$$
+\begin{align*}
+\sqrt{x}+\sqrt{y}\leqq k\sqrt{2x+y}
+\end{align*}
+$$
+
 が成り立つような実数$k$の最小値を求めよ．

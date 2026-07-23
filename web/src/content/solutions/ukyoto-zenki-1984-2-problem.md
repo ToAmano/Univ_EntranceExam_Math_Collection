@@ -14,8 +14,8 @@ title: "UKYOTO 1984 zenki Q2 (problem)"
 　次の関数は周期関数であるか否かを，理由をつけて答えよ．
 また，周期関数である場合には，その周期を求めよ．
 
-\begin{enumerate}
-\item $f(x)=\sin(\sin x)$
-  \item $f(x)=\cos(\sin x)$
-  \item $f(x)=\sin(x^3)$
-\end{enumerate}
+1.  $f(x)=\sin(\sin x)$
+
+2.  $f(x)=\cos(\sin x)$
+
+3.  $f(x)=\sin(x^3)$

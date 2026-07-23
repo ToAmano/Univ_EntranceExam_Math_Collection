@@ -10,18 +10,31 @@ title: "UTOKYO 1971 zenki Q2 (solution)"
 \input{macros}
      \begin{oframed}
      正数$x$を与えて，
-          \[2a_1=x，2a_2=a_1^2+1，\cdots，2a_{n+1}=a_n^2+1，\cdots\]
+          
+
+$$
+\begin{align*}
+2a_1=x，2a_2=a_1^2+1，\cdots，2a_{n+1}=a_n^2+1，\cdots
+\end{align*}
+$$
+
      のように数列$\{a_n\}$を定める時，
           
 
-\begin{enumerate}
-[(1)]
-          \item $x\not=2$ならば，$a_1<a_2<\cdots<a_n<\cdots$となることを証明せよ．
-          \item $x<2$ならば，$a_n<1$となることを証明せよ．このとき，正数$\epsilon$を$1-x/2$より
+1.  
+
+2.  $x\not=2$ならば，$a_1<a_2<\cdots<a_n<\cdots$となることを証明せよ．
+
+3.  $x<2$ならば，$a_n<1$となることを証明せよ．このとき，正数$\epsilon$を$1-x/2$より
           小となるようにとって，$a_1，a_2，\cdots，a_n$までが$1-\epsilon$以下となったとすれば，
           個数$n$について次の不等式が成り立つことを証明せよ．
-               \[2-x>n\epsilon^2\]
-\end{enumerate}
+               
+
+$$
+\begin{align*}
+2-x>n\epsilon^2
+\end{align*}
+$$
 
      \end{oframed}
 
@@ -29,9 +42,9 @@ title: "UTOKYO 1971 zenki Q2 (solution)"
 
  
 
-\begin{enumerate}
-[(1)]
-\item 与えられた漸化式より，
+1.  
+
+2.  与えられた漸化式より，
      
 
 $$
@@ -41,9 +54,9 @@ $$
 $$
 
 である．$x\not=2$ならば，$a_1\not=1$だから，漸化式より帰納的に
-$a_n\not=1$である．これと[1](#1)より題意は示された．$\Box$     
-  
- \item 漸化式および$x>0$から，$a_n>0$であることに注意すると，$a_{n+1}$は$a_n$の単調増加関数である．
+$a_n\not=1$である．これと[1](#1)より題意は示された．$\Box$
+
+3.  漸化式および$x>0$から，$a_n>0$であることに注意すると，$a_{n+1}$は$a_n$の単調増加関数である．
 $x<2$ならば$a_1<1$である．そこで以下$k\in\mathbb{N}$に対して$a_k<1$が成立すると仮定すると
      
 
@@ -100,4 +113,3 @@ $$
 $$
 
 となって，題意の不等式を得る．$\Box$
-\end{enumerate}

@@ -11,13 +11,12 @@ title: "TITECH 2015 zenki Q2 (problem)"
 頂点$O$から平面$ABC$に垂線を下ろし，平面$ABC$との交点を$H$とする．
 頂点$A$から平面$OBC$に垂線を下ろし，平面$OBC$との交点を$H'$とする．
 
-\begin{enumerate}
-\item $\overrightarrow{OA}=\overrightarrow{a}$，
+1.  $\overrightarrow{OA}=\overrightarrow{a}$，
 $\overrightarrow{OB}=\overrightarrow{b}$，
 $\overrightarrow{OC}=\overrightarrow{c}$とし，
 $\overrightarrow{OH}=p\overrightarrow{a}+q\overrightarrow{b}+r\overrightarrow{c}$，
 $\overrightarrow{OH'}=s\overrightarrow{b}+t\overrightarrow{c}$と表す．
 このとき，$p, \, q, \, r$および$s, \, t$を$x$の式で表せ．
-  \item 四面体$OABC$の体積$V$を$x$の式で表せ．
+
+2.  四面体$OABC$の体積$V$を$x$の式で表せ．
 また，$x$が変化するときの$V$の最大値を求めよ．
-\end{enumerate}

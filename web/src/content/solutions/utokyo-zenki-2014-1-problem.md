@@ -15,11 +15,10 @@ title: "UTOKYO 2014 zenki Q1 (problem)"
 四角形$OPQR$の面積を$S$とおく。
 また，$\angle AOP$を$\alpha$，$\angle COR$を$\beta$とおく。
 
-\begin{enumerate}
-\item$S$を$\tan\alpha$と$\tan\beta$を用いて表せ。
-  \item$\displaystyle\alpha+\beta=\frac{\pi}{4}$，$\displaystyle S=\frac{7}{6}$であるとき，
+1.  $S$を$\tan\alpha$と$\tan\beta$を用いて表せ。
+
+2.  $\displaystyle\alpha+\beta=\frac{\pi}{4}$，$\displaystyle S=\frac{7}{6}$であるとき，
 $\tan\alpha+\tan\beta$の値を求めよ。
 さらに，$\alpha \leqq \beta$のとき，$\tan\alpha$の値を求めよ。
-\end{enumerate}
 
 \includegraphics[width=5cm]{fig_2014_1.jpg}

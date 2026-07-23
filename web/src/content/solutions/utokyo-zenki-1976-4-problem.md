@@ -10,9 +10,8 @@ title: "UTOKYO 1976 zenki Q4 (problem)"
 $0<t<1$であるような$t$のおのおのの値に対して，
 $x$の関数$\displaystyle f(x)=\frac{x+t}{x(1-tx)}$を考える．
 
-\begin{enumerate}
-\item区間$0<x<1$において$f(x)$の最小値を与える$x$の値$\alpha$は$t$に関係して定まる数である．
+1.  区間$0<x<1$において$f(x)$の最小値を与える$x$の値$\alpha$は$t$に関係して定まる数である．
 $t$が0から1に向って動くとき，点$(\alpha,f(\alpha))$はどのように動くかを図示せよ．
-  \item区間$0<x \leqq t$において$f(x)$の最小値を与える$x$の値を$\beta$とする．
+
+2.  区間$0<x \leqq t$において$f(x)$の最小値を与える$x$の値を$\beta$とする．
 $t$が0から1に向かって動くとき，点$(\beta,f(\beta))$はどのように動くかを図示せよ．
-\end{enumerate}

@@ -9,17 +9,29 @@ title: "UTOKYO 2000 zenki Q3 (problem)"
 
 $a>0$とする．
 正の整数$n$に対して，区間$0 \leqq x \leqq a$を$n$等分する点の集合
-\[ \left\{ 0, \frac{a}{n}, \cdots, \frac{n-1}{n}a, a \right\} \]
+
+$$
+\begin{align*}
+\left\{ 0, \frac{a}{n}, \cdots, \frac{n-1}{n}a, a \right\}
+\end{align*}
+$$
+
 の上で定義された関数$f_n(x)$があり，次の方程式を満たす．
-\[ \begin{cases}
+
+$$
+\begin{align*}
+\begin{cases}
 f_n(0)=c, \\
 \displaystyle \frac{f_n((k+1)h)-f_n(kh)}{h}=\{1-f_n(kh)\}f_n((k+1)h)  (k=0,1,\cdots,n-1)
-\end{cases} \]
+\end{cases}
+\end{align*}
+$$
+
 ただし，$\displaystyle h=\frac{a}{n}$，$c>0$である．このとき，以下の問いに答えよ．
 
-\begin{enumerate}
-\item$\displaystyle p_k=\frac{1}{f_n(kh)}$ $(k=0,1,\cdots,n)$とおいて$p_k$を求めよ．
-  \item$\displaystyle g(a)=\lim_{n\to\infty}f_n(a)$とおく．$g(a)$を求めよ．
-  \item$\displaystyle c=2,1,\frac{1}{4}$それぞれの場合について，
+1.  $\displaystyle p_k=\frac{1}{f_n(kh)}$ $(k=0,1,\cdots,n)$とおいて$p_k$を求めよ．
+
+2.  $\displaystyle g(a)=\lim_{n\to\infty}f_n(a)$とおく．$g(a)$を求めよ．
+
+3.  $\displaystyle c=2,1,\frac{1}{4}$それぞれの場合について，
 $y=g(x)$の$x>0$でのグラフをかけ．
-\end{enumerate}

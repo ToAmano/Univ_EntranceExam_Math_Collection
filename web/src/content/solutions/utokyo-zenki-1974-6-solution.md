@@ -15,12 +15,13 @@ title: "UTOKYO 1974 zenki Q6 (solution)"
      問に答えよ．
            
 
-\begin{enumerate}
-[(1)]
-           \item $p>q$のとき，$P-Q$と$p-q$とはどちらが大きいか．
-           \item $P-p$を最大にする$p$の値を求めよ．
-           \item $N$の期待値を最大にする$p$の値およびそのときの$N$の期待値を求めよ．
-\end{enumerate}
+1.  
+
+2.  $p>q$のとき，$P-Q$と$p-q$とはどちらが大きいか．
+
+3.  $P-p$を最大にする$p$の値を求めよ．
+
+4.  $N$の期待値を最大にする$p$の値およびそのときの$N$の期待値を求めよ．
 
      \end{oframed}
 
@@ -60,9 +61,9 @@ $$
 である．
      
 
-\begin{enumerate}
-[(1)]
-     \item $p>q\Longleftrightarrow 1/2<p<1$のとき，$P+Q=1$に注意して，
+1.  
+
+2.  $p>q\Longleftrightarrow 1/2<p<1$のとき，$P+Q=1$に注意して，
           
 
 $$
@@ -82,10 +83,17 @@ $$
 $$
 
      だから，$f(p)>0$すなわち
-          \[P-Q>p-q\]
+          
+
+$$
+\begin{align*}
+P-Q>p-q
+\end{align*}
+$$
+
      である．$\cdots$(答)
-     
-     \item 前問の過程から，$f(p)$を最大にする$p$を求めればよい．
+
+3.  前問の過程から，$f(p)$を最大にする$p$を求めればよい．
           
 
 $$
@@ -104,7 +112,14 @@ f'(p)\ge0 \Longleftrightarrow&p^2(p-1)^2\ge\frac{1}{30}\\\Longleftrightarrow&p(1
 $$
 
      ただし，$\a$，$\b$は
-          \[p^2-p+\frac{\sqrt{30}}{30}=0\]
+          
+
+$$
+\begin{align*}
+p^2-p+\frac{\sqrt{30}}{30}=0
+\end{align*}
+$$
+
      の$2$解で，かつ$\a<\b$である．これは$0<p<1$の範囲にあるので，下表を得る．
           
 
@@ -119,14 +134,35 @@ $$
 $$
 
      従って，$f(p)$を最大にするのは$p=0$または$p=\b$である．前問から，
-          \[f(0)=0\]
+          
+
+$$
+\begin{align*}
+f(0)=0
+\end{align*}
+$$
+
      であり，また，
-          \[\b=\frac{1}{2}\left(1+\sqrt{1-\frac{2}{15}\sqrt{30}}\right)>\frac{1}{2}\]
+          
+
+$$
+\begin{align*}
+\b=\frac{1}{2}\left(1+\sqrt{1-\frac{2}{15}\sqrt{30}}\right)>\frac{1}{2}
+\end{align*}
+$$
+
      だから，$f(\b)>0$．故に$f(\b)>f(0)$で，求める$p$の値は
-          \[p=\b=\frac{1}{2}\left(1+\sqrt{1-\frac{2}{15}\sqrt{30}}\right)\]
+          
+
+$$
+\begin{align*}
+p=\b=\frac{1}{2}\left(1+\sqrt{1-\frac{2}{15}\sqrt{30}}\right)
+\end{align*}
+$$
+
      である．$\cdots$(答)
-     
-     \item $N$の期待値を$N(p)$とする． [0](#0)および対称性から，
+
+4.  $N$の期待値を$N(p)$とする． [0](#0)および対称性から，
           
 
 $$
@@ -155,4 +191,3 @@ $$
 $$
 
      であるから，$N(p)$は$p=1/2$で最大値$33/8$をとる．$\cdots$(答)
-\end{enumerate}

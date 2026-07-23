@@ -10,7 +10,6 @@ title: "UKYOTO 1992 zenki Q3 (problem)"
 $\triangle ABC$の外心$O$から直線$BC$，$CA$，$AB$に下ろした垂線の足をそれぞれ$P$，$Q$，$R$とするとき，
 $\overrightarrow{OP}+2\overrightarrow{OQ}+3\overrightarrow{OR}=\vec{0}$が成立しているとする．
 
-\begin{enumerate}
-\item $\overrightarrow{OA}$，$\overrightarrow{OB}$，$\overrightarrow{OC}$の関係式を求めよ．
-  \item $\angle A$の大きさを求めよ．
-\end{enumerate}
+1.  $\overrightarrow{OA}$，$\overrightarrow{OB}$，$\overrightarrow{OC}$の関係式を求めよ．
+
+2.  $\angle A$の大きさを求めよ．

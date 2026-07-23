@@ -11,7 +11,6 @@ title: "UTOKYO 1962 zenki Q6 (problem)"
 $x=2\pi$，$x=6\pi$なる点をそれぞれ$P$，$Q$とし，
 点$P$，$Q$における曲線の接線の交点を$R$とする．このとき
 
-\begin{enumerate}
-\item$R$の座標を求めよ．
-  \item線分$PR$，$QR$と上の曲線とで囲まれる図形の面積を求めよ．
-\end{enumerate}
+1.  $R$の座標を求めよ．
+
+2.  線分$PR$，$QR$と上の曲線とで囲まれる図形の面積を求めよ．

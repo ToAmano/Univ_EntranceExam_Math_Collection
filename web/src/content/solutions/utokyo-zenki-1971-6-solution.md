@@ -88,11 +88,11 @@ $$
 と定める．$k$回目に一人の勝者が決まるのは以下のいずれかである．
      
 
-\begin{enumerate}
-[(i)]
-     \item $A\to \dots\to \stackrel{a回目}{A}\to B\to \dots \to \stackrel{k回目}{B}$
-     \item $A\to\dots\to \stackrel{k回目}{A}$
-\end{enumerate}
+1.  
+
+2.  $A\to \dots\to \stackrel{a回目}{A}\to B\to \dots \to \stackrel{k回目}{B}$
+
+3.  $A\to\dots\to \stackrel{k回目}{A}$
 
 (i)で$A$を行う回数$a$，$B$を行う回数を$b$とすると，
      

@@ -71,7 +71,14 @@ g_n(x)&=x\left[x^{n-1}-(2^{n-1}-1)x-2+2^{n-1}\right]\nonumber\\&=x\left[x^{n-1}+
 $$
 
 である．ただし
-      \[h(x)=(x^{n-2}+x^{n-3}+\cdots+x+2)-2^{n-1}\]
+      
+
+$$
+\begin{align*}
+h(x)=(x^{n-2}+x^{n-3}+\cdots+x+2)-2^{n-1}
+\end{align*}
+$$
+
 とおいた．$0\le x\le2$のとき，
      
 

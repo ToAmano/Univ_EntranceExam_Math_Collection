@@ -9,8 +9,7 @@ title: "TITECH 2002 zenki Q4 (problem)"
 
 $n$を自然数とする．
 
-\begin{enumerate}
-\item 次の極限を求めよ．
+1.  次の極限を求めよ．
 
 $$
 \begin{align*}
@@ -18,7 +17,7 @@ $$
 \end{align*}
 $$
 
-  \item 関数$y=x(x-1)(x-2)\cdots(x-n)$の極値を与える$x$の最小値を$x_n$とする．このとき
+2.  関数$y=x(x-1)(x-2)\cdots(x-n)$の極値を与える$x$の最小値を$x_n$とする．このとき
 
 $$
 \begin{align*}
@@ -27,5 +26,5 @@ $$
 $$
 
 および$\displaystyle 0 < x_n \leqq \frac{1}{2}$を示せ．
-  \item (2)の$x_n$に対して，極限$\displaystyle\lim_{n \to \infty}x_n\log n$を求めよ．
-\end{enumerate}
+
+3.  (2)の$x_n$に対して，極限$\displaystyle\lim_{n \to \infty}x_n\log n$を求めよ．

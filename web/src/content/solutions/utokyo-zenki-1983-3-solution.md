@@ -16,5 +16,12 @@ title: "UTOKYO 1983 zenki Q3 (solution)"
 ## 【解】
 
 対称性から，$C$が$xy$平面上の円
-     \[x^2+y^2=1\]
+     
+
+$$
+\begin{align*}
+x^2+y^2=1
+\end{align*}
+$$
+
 に一致し，$A(a,0)$であるとして考えて一般性を失わない．

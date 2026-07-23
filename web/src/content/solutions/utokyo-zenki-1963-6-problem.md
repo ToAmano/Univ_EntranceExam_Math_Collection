@@ -9,10 +9,22 @@ title: "UTOKYO 1963 zenki Q6 (problem)"
 
 $n$を2より大きい正の整数とする．
 曲線
-\[ y=x^n  (i) \]
+
+$$
+\begin{align*}
+y=x^n (i)
+\end{align*}
+$$
+
 上で，$x$座標が0，1，2である点をそれぞれ$O$，$A$，$B$とし，
 $O$，$A$，$B$をとおり$y$軸に平行な軸をもつ放物線
-\[ y=f(x)  (ii) \]
+
+$$
+\begin{align*}
+y=f(x) (ii)
+\end{align*}
+$$
+
 をえがく．
 曲線(i)および放物線(ii)の，
 $O$，$A$の間にある部分の囲む面積を$S_1$，

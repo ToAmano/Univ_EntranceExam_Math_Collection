@@ -9,8 +9,7 @@ title: "TITECH 2008 kouki Q1 (problem)"
 
 次の問に答えよ．
 
-\begin{enumerate}
-\item 実数 $a_1, a_2, x_1, x_2, y_1, y_2$ が
+1.  実数 $a_1, a_2, x_1, x_2, y_1, y_2$ が
         
 
 $$
@@ -20,7 +19,8 @@ $$
 $$
 
         をみたすとしている．このとき $x_1 + x_2 \le y_1 + y_2$ であることを証明せよ．
-  \item $n$ を $2$ 以上の整数とし，$3n$ 個の実数 $a_1, a_2, \dots, a_n, x_1, x_2, \dots, x_n, y_1, y_2, \dots, y_n$ が
+
+2.  $n$ を $2$ 以上の整数とし，$3n$ 個の実数 $a_1, a_2, \dots, a_n, x_1, x_2, \dots, x_n, y_1, y_2, \dots, y_n$ が
         
 
 $$
@@ -48,4 +48,3 @@ $$
 $$
 
         であることを証明せよ．
-\end{enumerate}

@@ -9,8 +9,7 @@ title: "TITECH 1964 zenki Q2 (problem)"
 
 $a, \, b, \, c, \, d$は正数とする。
 
-\begin{enumerate}
-\item 次の2つの不等式を証明せよ。
+1.  次の2つの不等式を証明せよ。
 
 $$
 \begin{align*}
@@ -18,7 +17,7 @@ $$
 \end{align*}
 $$
 
-  \item 次の式で与えられる$P, \, Q, \, R, \, S$の大小を比較せよ。
+2.  次の式で与えられる$P, \, Q, \, R, \, S$の大小を比較せよ。
 
 $$
 \begin{align*}
@@ -37,5 +36,3 @@ $$
 S=\frac{\sqrt[3]{abc}+\sqrt[3]{abd}+\sqrt[3]{acd}+\sqrt[3]{bcd}}{4}
 \end{align*}
 $$
-
-\end{enumerate}

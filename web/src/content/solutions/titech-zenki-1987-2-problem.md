@@ -19,8 +19,7 @@ $$
 
 と定める．このとき次の問に答えよ．
 
-\begin{enumerate}
-\item $x_n+y_n$，$x_n-2y_n$をそれぞれ$x_0$，$y_0$で表せ．
-  \item $(x_0, \, y_0)\neq(0, \, 0)$のとき，
+1.  $x_n+y_n$，$x_n-2y_n$をそれぞれ$x_0$，$y_0$で表せ．
+
+2.  $(x_0, \, y_0)\neq(0, \, 0)$のとき，
 $\displaystyle\lim_{n\to\infty}\frac{{x_n}^2}{{x_n}^2+{y_n}^2}$を求めよ．
-\end{enumerate}

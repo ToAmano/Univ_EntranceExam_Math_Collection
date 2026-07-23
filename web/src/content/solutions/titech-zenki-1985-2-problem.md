@@ -12,8 +12,7 @@ $0<t<3$である実数$t$に対し，
 平面$\displaystyle x+\frac{y}{2}+\frac{z}{3}=t$で$V$を2分したとき，
 小さいほうの体積（等しいときは，どちらでもよい）を$f(t)$とする．
 
-\begin{enumerate}
-\item $f(t)$を求めよ．
-  \item $f(t)$を$t$の関数と考えたとき，
+1.  $f(t)$を求めよ．
+
+2.  $f(t)$を$t$の関数と考えたとき，
 $t=1$および$\displaystyle t=\frac{3}{2}$で微分可能であるか．
-\end{enumerate}

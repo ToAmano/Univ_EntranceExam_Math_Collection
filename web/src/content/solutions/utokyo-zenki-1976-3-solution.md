@@ -40,9 +40,23 @@ $$
 
      
 である．ここで，$\a$は
-     \[\tan\a=\frac{2}{7}\]
+     
+
+$$
+\begin{align*}
+\tan\a=\frac{2}{7}
+\end{align*}
+$$
+
 を満たす数である．$0\le \theta <2\pi$から，
-     \[-\a\le\theta-\a <2\pi -\a\]
+     
+
+$$
+\begin{align*}
+-\a\le\theta-\a <2\pi -\a
+\end{align*}
+$$
+
 であるから，$-1\le\sin (\theta-\a)\le 1$である．故に$r>0$から，
      
 

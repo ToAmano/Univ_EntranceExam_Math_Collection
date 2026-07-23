@@ -14,8 +14,7 @@ title: "UTOKYO 1990 zenki Q6 (problem)"
 $a_1=0.5,a_2=0.52,a_3=0.526,\cdots\cdots$である．
 実数$\alpha$に対して$a_n\leqq\alpha$となる確率を$p_n(\alpha)$とおく．
 
-\begin{enumerate}
-\item$\displaystyle\lim_{n\to\infty}p_n \left( \frac{41}{333} \right)$を求めよ．
-  \item$\displaystyle\lim_{n\to\infty}p_n(\alpha)=\frac{1}{2}$となるのは
+1.  $\displaystyle\lim_{n\to\infty}p_n \left( \frac{41}{333} \right)$を求めよ．
+
+2.  $\displaystyle\lim_{n\to\infty}p_n(\alpha)=\frac{1}{2}$となるのは
 $\alpha$がどのような範囲にあるときか．
-\end{enumerate}

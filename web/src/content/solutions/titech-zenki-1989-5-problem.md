@@ -12,7 +12,6 @@ title: "TITECH 1989 zenki Q5 (problem)"
 この試行を$k$回くり返し，それまでに記録された相異なる数字の個数を$S_k$とする．
 $S_k=r$となる確率を$P(S_k=r)$で表すとき，次の問に答えよ．
 
-\begin{enumerate}
-\item $P(S_k=r)$を$P(S_{k-1}=r)$と$P(S_{k-1}=r-1)$で表せ．
-  \item $S_k$の期待値$\displaystyle E_k=\sum_{r=1}^krP(S_k=r)$を求めよ．
-\end{enumerate}
+1.  $P(S_k=r)$を$P(S_{k-1}=r)$と$P(S_{k-1}=r-1)$で表せ．
+
+2.  $S_k$の期待値$\displaystyle E_k=\sum_{r=1}^krP(S_k=r)$を求めよ．

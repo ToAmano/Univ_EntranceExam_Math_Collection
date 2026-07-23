@@ -41,8 +41,7 @@ $$
     $a=1$か否かで場合わけして，
     
 
-\begin{enumerate}
-\item $a=1$ の時
+1.  $a=1$ の時
               
 
 $$
@@ -51,7 +50,7 @@ g_n(x) & = g_1(x) + (n-1) = \frac{x+1}{ax} + (n-1)
 \end{align*}
 $$
 
-        \item $0<a<1$ の時
+2.  $0<a<1$ の時
               等比数列の公式から
               
 
@@ -62,13 +61,10 @@ g_n(x)
 \end{align*}
 $$
 
-\end{enumerate}
-
     より
     
 
-\begin{enumerate}
-\item $a=1$ の時
+1.  $a=1$ の時
               
 
 $$
@@ -77,7 +73,7 @@ f_n(x) & = \frac{ax}{(x+1)+a(n-1)x} = \frac{x}{nx+1}
 \end{align*}
 $$
 
-        \item $0<a<1$ の時
+2.  $0<a<1$ の時
               
 
 $$
@@ -85,8 +81,6 @@ $$
 f_n(x) & = \frac{ax(a-1)}{\left(\frac{1}{a}\right)^{n-1} (-x+a-1) + ax}
 \end{align*}
 $$
-
-\end{enumerate}
 
     が求める一般項である．$\cdots$(答)
 
@@ -96,8 +90,7 @@ $$
 
     
 
-\begin{enumerate}
-\item $a=1$ の時
+1.  $a=1$ の時
               
 
 $$
@@ -108,7 +101,8 @@ b_n        & = n \text{ とおけば}\\
 $$
 
               となって条件をみたす．
-        \item $a \neq 1$ の時
+
+2.  $a \neq 1$ の時
               
 
 $$
@@ -119,7 +113,6 @@ b_n        & = \left(\frac{1}{a}\right)^{n-1}\text{ とおけば } |a|<1 \text{ 
 $$
 
               となり，条件をみたす． ($\because c>0, 0<a<1$)
-\end{enumerate}
 
     以上から
     

@@ -38,5 +38,12 @@ T&=\text{底面積}+\text{側面積}\\&=\pi|AO|^2+\pi|AO||AH| \\&=a^2\pi\left(\f
 $$
 
 等号成立は$c=1/2$の時，つまり$t=\pi/3$の時である．この時，
-　　　　　\[|OH|=2a\]
+　　　　　
+
+$$
+\begin{align*}
+|OH|=2a
+\end{align*}
+$$
+
 となる．$\cdots$(答)

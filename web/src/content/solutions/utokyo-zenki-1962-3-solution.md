@@ -63,7 +63,14 @@ Y=\frac{-1}{2}(\sin\a\cos\b+s)
 $$
 
 だから，これが最小になる時の$\tan\theta$を求めればよい．
-     \[\a+\b=\theta\]
+     
+
+$$
+\begin{align*}
+\a+\b=\theta
+\end{align*}
+$$
+
 に注意して
      
 
@@ -101,5 +108,12 @@ $$
 $$
 
 の時で，この時
-     \[\tan\theta=3\]
+     
+
+$$
+\begin{align*}
+\tan\theta=3
+\end{align*}
+$$
+
 である．$\cdots$(答)
