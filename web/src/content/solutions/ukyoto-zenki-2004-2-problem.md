@@ -7,7 +7,13 @@ type: "problem"
 title: "UKYOTO 2004 zenki Q2 (problem)"
 ---
 
-$a>0$とし，$x>0$で定義された関数
-$\displaystyle f(x)= \left( \frac{e}{x^a}-1 \right) \frac{\log x}{x}$を考える．
-$y=f(x)$のグラフより下側で$x$軸より上側の部分の面積を$a$であらわせ．
-ただし，$e$は自然対数の底である．
+区間 $-1 \leqq x \leqq 1$ で定義された関数 $f(x)$ が，
+$f(-1)=f(0)=1$，$f(1)=-2$ を満たし，
+またそのグラフが右図のようになっているという．
+
+このとき，$\displaystyle\int_{-1}^1f(x)dx\geqq-1$ を示せ．
+
+<figure id="fig_1">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/ukyoto/zenki/2004/2/fig_1.svg" alt="図 1" />
+  <figcaption>図 1</figcaption>
+</figure>
