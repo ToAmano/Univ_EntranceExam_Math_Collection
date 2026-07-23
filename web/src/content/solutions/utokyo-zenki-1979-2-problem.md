@@ -7,15 +7,18 @@ type: "problem"
 title: "UTOKYO 1979 zenki Q2 (problem)"
 ---
 
-\usepackage[dvipdfm]{graphicx}
-
-　図のように，半径1の球が，
+図のように，半径1の球が，
 ある円錐の内部にはめこまれる形で接しているとする．
 球と円錐面が接する点の全体は円をなすが，
-その円を含む平面を$\alpha$とする．\\
-　円錐の頂点を$P$とし，$\alpha$に関して$P$と同じ側にある球の部分を$K$とする．
-また，$\alpha$に関して$P$と同じ側にある球面の部分および円錐面の部分で囲まれる立体を$D$とする．
-いま，$D$の体積が球の体積の半分に等しいという．\\
-　そのときの$K$の体積を求めよ．
+その円を含む平面を $\alpha$ とする．
 
-\includegraphics[width=5cm]{fig_1979_2.jpg}
+円錐の頂点を $P$ とし，$\alpha$ に関して $P$ と同じ側にある球の部分を $K$ とする．
+また，$\alpha$ に関して $P$ と同じ側にある球面の部分および円錐面の部分で囲まれる立体を $D$ とする．
+いま，$D$ の体積が球の体積の半分に等しいという．
+
+そのときの $K$ の体積を求めよ．
+
+<figure id="fig_1">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/utokyo/zenki/1979/2/fig_1.svg" alt="図 1" />
+  <figcaption>図 1</figcaption>
+</figure>
