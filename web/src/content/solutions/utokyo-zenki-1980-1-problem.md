@@ -7,13 +7,14 @@ type: "problem"
 title: "UTOKYO 1980 zenki Q1 (problem)"
 ---
 
-1辺の長さが1の正三角形$ABC$の辺$BC$，$CA$，$AB$上に，
-それぞれ点$P$，$Q$，$R$を$\displaystyle BP=CQ=AR<\frac{1}{2}$となるようにとり，
-線分$AP$と線分$CR$の交点を$A'$，
-線分$BQ$と線分$AP$の交点を$B'$，
-線分$CR$と線分$BQ$の交点を$C'$とする．
-$BP=x$として，次の問に答えよ．
+図のように，半径 $a$ の円 $O$ の周を8等分する点を順に $A_1,A_2,\cdots,A_8$ とし，
+弦 $A_1A_4$ と弦 $A_2A_7$，$A_3A_6$ との交点をそれぞれ $P$，$Q$ とし，
+弦 $A_5A_8$ と弦 $A_3A_6$，$A_2A_7$ との交点をそれぞれ $R$，$S$ とする．
 
-1.  $BB'$，$PB'$を$x$を用いて表せ．
+このとき，正方形 $PQRS$ の面積を求めよ．
+また，線分 $A_1P$，$A_2P$ と弧 $A_1A_2$ とで囲まれる図形の面積を求めよ．
 
-2.  三角形$A'B'C'$の面積が三角形$ABC$の面積の$\displaystyle\frac{1}{2}$になるような$x$の値を求めよ．
+<figure id="fig_1">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/utokyo/zenki/1980/1/fig_1.svg" alt="図 1" />
+  <figcaption>図 1</figcaption>
+</figure>
