@@ -7,7 +7,12 @@ type: "problem"
 title: "UTOKYO 1973 zenki Q2 (problem)"
 ---
 
-$x_1$，$x_2$，$\cdots\cdots$，$x_n$はおのおの0，1，2のどれかの値をとる．
-$\displaystyle f_1=\sum_{i=1}^n x_i$，$\displaystyle f_2=\sum_{i=1}^n {x_i}^2$のとき
-$\displaystyle f_k=\sum_{i=1}^n {x_i}^k$ $(k=1,2,3,\cdots\cdots)$を
-$f_1$と$f_2$とを用いて表わせ．
+図において $AB=2a$ とする．
+$AB$ を直径とする半円周上に $P$ があるとする．
+$P$ から $AB$ に下した垂線の足を $Q$ とする．
+$\triangle APQ$ を $AB$ のまわりに回転してできる立体の体積の最大値を求めよ．
+
+<figure id="fig_1">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/utokyo/zenki/1973/2/fig_1.svg" alt="図 1" />
+  <figcaption>図 1</figcaption>
+</figure>
