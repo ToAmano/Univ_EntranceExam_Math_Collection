@@ -7,16 +7,23 @@ type: "problem"
 title: "UKYOTO 1979 zenki Q3 (problem)"
 ---
 
-1.  変数$t$が$t>0$の範囲を動くとき
+下記の表のように，次の規則によって数列を順に並べる．
+
+<figure id="fig_1">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/ukyoto/zenki/1979/3/fig_1.svg" alt="図 1" />
+  <figcaption>図 1</figcaption>
+</figure>
+
+1.  第1行は1，1，1，1である．
+
+2.  第2行以下では，左右両端の数は1であり，その他の数は左上の数と右上の数との和である．
+
+第 $n$ 行の数列を ${}_nA_0,{}_nA_1,\cdots,{}_nA_k,\cdots,{}_nA_{n+2}$ とかけば
 
 $$
 \begin{align*}
-f(t)=\sqrt{t}+\frac{1}{\sqrt{t}}+\sqrt{t+\frac{1}{t}+1}, 
-g(t)=\sqrt{t}+\frac{1}{\sqrt{t}}-\sqrt{t+\frac{1}{t}+1}
+(1+x^2){(1+x)}^n=\sum_{k=0}^{n+2}{}_nA_kx^k
 \end{align*}
 $$
 
-について，$f(t)$の最小値は$2+\sqrt3$，$g(t)$の最大値は$2-\sqrt3$であることを示せ．
-
-2.  $a=\sqrt{x^2+xy+y^2}$，$b=p\sqrt{xy}$，$c=x+y$とおく．
-任意の正数$x$，$y$ $(>0)$に対して$a$，$b$，$c$を3辺の長さとする三角形がつねに存在するように，$p$の値の範囲を定めよ．
+が成り立つことを示せ．
