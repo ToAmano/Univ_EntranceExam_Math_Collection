@@ -1,0 +1,17 @@
+---
+university: "titech"
+category: "zenki"
+year: "1978"
+question: "2"
+type: "problem"
+title: "TITECH 1978 zenki Q2 (problem)"
+---
+
+{}
+　$a, \, b, \, c$は$1<a<b<c$を満たす整数とし，
+$(ab-1)(bc-1)(ca-1)$は$abc$で割り切れるとする．
+このとき次の問に答えよ．
+\begin{description}
+\item[(1)]$ab+bc+ca-1$は$abc$で割り切れることを示せ．
+\item[(2)]$a, \, b, \, c$をすべて求めよ．
+\end{description}

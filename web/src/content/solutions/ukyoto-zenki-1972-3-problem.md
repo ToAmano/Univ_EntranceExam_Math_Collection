@@ -1,0 +1,13 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1972"
+question: "3"
+type: "problem"
+title: "UKYOTO 1972 zenki Q3 (problem)"
+---
+
+{}
+　実数または複素数の$x$，$y$，$z$，$a$について，
+$x+y+z=a$，$x^3+y^3+z^3=a^3$の2式が成立するとき，
+$x$，$y$，$z$のうち少なくとも1つは$a$に等しいことを示せ．

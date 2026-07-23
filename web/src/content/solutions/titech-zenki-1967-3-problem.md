@@ -1,0 +1,22 @@
+---
+university: "titech"
+category: "zenki"
+year: "1967"
+question: "3"
+type: "problem"
+title: "TITECH 1967 zenki Q3 (problem)"
+---
+
+{}
+　$C_0=0$，$C_1=1$，$C_{n+1}=C_n+C_{n-1}$ $(n=1, \, 2, \, 3, \, \cdots)$で
+定義される数列$\{ C_n \}$がある．
+2次方程式
+\[ x^2-(C_{n+1}+C_{n-1})x+(C_{n+1}C_{n-1}-{C_n}^2)=0 \]
+の2根を$\alpha_n$，$\beta_n$とする．
+ただし，$\alpha_n\geqq\beta_n$とする．
+このとき
+\begin{description}
+\item[(1)]$\displaystyle\frac{\alpha_{n+1}}{\alpha_n}$，
+$\displaystyle\frac{\beta_{n+1}}{\beta_n}$を求めよ．
+\item[(2)]$\alpha_n$，$\beta_n$を求めよ．
+\end{description}

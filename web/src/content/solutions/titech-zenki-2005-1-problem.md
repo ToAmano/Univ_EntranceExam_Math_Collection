@@ -1,0 +1,19 @@
+---
+university: "titech"
+category: "zenki"
+year: "2005"
+question: "1"
+type: "problem"
+title: "TITECH 2005 zenki Q1 (problem)"
+---
+
+{}
+　$e$を自然対数の底とし，数列$\{ a_n \}$を次式で定義する．
+\[ a_n=\int_1^e (\log x)^n dx  (n=1,2,\cdots) \]
+\begin{description}
+\item[(1)]$n \geqq 3$のとき，次の漸化式を示せ．
+\[ a_n=(n-1)(a_{n-2}-a_{n-1}) \]
+\item[(2)]$n \geqq 1$に対し$a_n>a_{n+1}>0$なることを示せ．
+\item[(3)]$n \geqq 2$のとき，以下の不等式が成立することを示せ．
+\[ a_{2n}<\frac{3 \cdot 5 \cdots \cdots (2n-1)}{4 \cdot 6 \cdots \cdots (2n)}(e-2) \]
+\end{description}

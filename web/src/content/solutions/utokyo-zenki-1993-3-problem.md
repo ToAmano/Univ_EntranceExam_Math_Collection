@@ -1,0 +1,16 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1993"
+question: "3"
+type: "problem"
+title: "UTOKYO 1993 zenki Q3 (problem)"
+---
+
+{}
+　$xy$平面内に次の二つの集合$l$，$m$を考える．
+\[ l=\{(-5,y)|-5<y<5\},  m=\{(5,y)|-5<y<5\} \]
+$l$，$m$上にない2点$A$，$B$に対し，
+$A$，$B$を$l$，$m$と交らない線分又は折れ線で結ぶときの経路の長さの最小値を$d(A,B)$で表す．\\
+　2点$P(-9,-3)$，$Q(9,3)$に対し
+$d(P,R)=d(Q,R)$となる点$R$の軌跡を$xy$平面上に図示せよ．

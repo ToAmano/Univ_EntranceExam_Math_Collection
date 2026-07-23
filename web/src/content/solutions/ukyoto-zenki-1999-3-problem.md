@@ -1,0 +1,19 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1999"
+question: "3"
+type: "problem"
+title: "UKYOTO 1999 zenki Q3 (problem)"
+---
+
+{}
+\begin{description}
+\item[(1)]$a_0<b_0$，$a_1<b_1$を満たす正の実数$a_0$，$b_0$，$a_1$，$b_1$について，
+次の不等式が成り立つことを示せ．
+\[ \frac{{b_1}^2}{{a_0}^2+1}+\frac{{a_1}^2}{{b_0}^2+1}>\frac{{a_1}^2}{{a_0}^2+1}+\frac{{b_1}^2}{{b_0}^2+1} \]
+\item[(2)]$n$個の自然数$x_1,x_2,\cdots,x_n$は互いに相異なり，
+$1 \leqq x_k \leqq n$ $(1 \leqq k \leqq n)$を満たしているとする．
+このとき，次の不等式が成り立つことを示せ．
+\[ \sum_{k=1}^n\frac{{x_k}^2}{k^2+1}>n-\frac{8}{5} \]
+\end{description}

@@ -1,0 +1,14 @@
+---
+university: "titech"
+category: "zenki"
+year: "1968"
+question: "3"
+type: "problem"
+title: "TITECH 1968 zenki Q3 (problem)"
+---
+
+{}
+　$z=\cos\alpha+i\sin\alpha$，$w=\cos\beta+i\sin\beta$，
+$0\leqq\alpha\leqq2\pi$，$0\leqq\beta\leqq2\pi$とするとき
+$|1+z+w|\leqq1$を満たす$\alpha$，$\beta$を直交座標とする
+点$(\alpha, \, \beta)$の範囲を図示せよ．

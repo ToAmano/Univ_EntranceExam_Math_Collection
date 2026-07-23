@@ -1,0 +1,16 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "2007"
+question: "3"
+type: "problem"
+title: "UTOKYO 2007 zenki Q3 (problem)"
+---
+
+{}
+　座標平面上の2点$P$，$Q$が，曲線$y=x^2$ $(-1 \leqq x \leqq 1)$上を自由に動くとき，線分$PQ$を$1:2$に内分する点$R$が動く範囲を$D$とする．
+ただし，$P=Q$のときは$R=P$とする．
+\begin{description}
+\item[(1)]$a$を$-1 \leqq a \leqq 1$をみたす実数とするとき，点$(a,b)$が$D$に属するための$b$の条件を$a$を用いて表せ．
+\item[(2)]$D$を図示せよ．
+\end{description}

@@ -1,0 +1,14 @@
+---
+university: "titech"
+category: "zenki"
+year: "1982"
+question: "1"
+type: "problem"
+title: "TITECH 1982 zenki Q1 (problem)"
+---
+
+{}
+　$n$を自然数とする．
+半径$\displaystyle\frac{1}{n}$の円を互いに重なり合わないように半径1の円に外接させる．
+このとき外接する円の最大個数を$a$とする．
+$\displaystyle\lim_{n\to\infty}\frac{a_n}{n}$を求めよ．

@@ -1,0 +1,18 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1980"
+question: "6"
+type: "problem"
+title: "UKYOTO 1980 zenki Q6 (problem)"
+---
+
+{}
+　0，1のいずれとも異なる2整数$a$，$b$ $(a \neq b)$を考え，$f(x)=x(x-1)(x-a)(x-b)+1$とおく．
+$g(x)$，$h(x)$が整数係数の多項式で$f(x)=g(x)h(x)$であると仮定する．
+このとき，
+\begin{description}
+\item[(i)]$g(0)=h(0)$を示せ．
+\item[(ii)]$g(x)$，$h(x)$のどちらも定数でないならば$g(x)=h(x)$であることを示せ．
+\item[(iii)](ii)の場合が起こるような$a$，$b$の例を一組求めよ．
+\end{description}

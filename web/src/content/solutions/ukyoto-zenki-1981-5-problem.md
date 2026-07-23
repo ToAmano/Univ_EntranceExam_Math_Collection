@@ -1,0 +1,18 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1981"
+question: "5"
+type: "problem"
+title: "UKYOTO 1981 zenki Q5 (problem)"
+---
+
+{}
+　A君がおみくじを引く．
+$N$回引いても「大吉」が出なければ打ち切ってやめる．
+もし$N$回までに大吉が出ればその回でやめることにした．
+ただし，$N$は2以上の定まった自然数とする．\\
+　A君が1回ごとに大吉を引く確率を$p$とする．
+このときA君がおみくじを引くのをやめるまでの回数の期待値(平均ともいう)$E$は
+$\displaystyle E=\frac{1-{(1-p)}^N}{p}$と表わされることを示し，
+$\displaystyle p=\frac{1}{5}$，$N=10$のときの$E$の値を小数第2位まで求めよ．

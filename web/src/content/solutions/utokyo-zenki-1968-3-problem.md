@@ -1,0 +1,14 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1968"
+question: "3"
+type: "problem"
+title: "UTOKYO 1968 zenki Q3 (problem)"
+---
+
+{}
+　$\alpha$，$\beta$は与えられた実数とする．
+$x$の二次式$f(x)=ax^2+bx+c$の係数$a$，$b$，$c$が$a+b+c=0$なる関係式をみたしながら動くとき，
+座標$(f(\alpha),f(\beta))$をもつ点の全体は，
+平面上のどんな集合になるか．

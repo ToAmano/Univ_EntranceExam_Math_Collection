@@ -1,0 +1,16 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "2016"
+question: "1"
+type: "problem"
+title: "UKYOTO 2016 zenki Q1 (problem)"
+---
+
+{}
+\begin{description}
+\item[(1)]$n$を2以上の自然数とするとき，関数
+\[ f_n(\theta)=(1+\cos\theta)\sin^{n-1}\theta \]
+の$\displaystyle 0 \leqq \theta \leqq \frac{\pi}{2}$における最大値$M_n$を求めよ．
+\item[(2)]$\displaystyle\lim_{n\to\infty}{(M_n)}^n$を求めよ．
+\end{description}

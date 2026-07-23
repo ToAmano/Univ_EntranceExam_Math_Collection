@@ -1,0 +1,13 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "2005"
+question: "6"
+type: "problem"
+title: "UKYOTO 2005 zenki Q6 (problem)"
+---
+
+{}
+　先頭車両から順に1から$n$までの番号のついた$n$両編成の列車がある．
+ただし$n \geqq 2$とする．
+各車両を赤色，青色，黄色のいずれか一色で塗るとき，隣り合った車両の少なくとも一方が赤色となるような色の塗り方は何通りか．

@@ -1,0 +1,13 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1965"
+question: "2"
+type: "problem"
+title: "UKYOTO 1965 zenki Q2 (problem)"
+---
+
+{}
+　$a$，$b$は定数とし，$k$は任意の正の値をとるものとする．\\
+　$x$に関する2次方程式$kx^2-(k+2)^2x+(ak^2+4k+b)=0$の根の一つが，$k$の値に関係なく一定であるように，$a$，$b$を定めよ．\\
+　また，この場合，他の根は$k$のどんな値に対して最小となるか．

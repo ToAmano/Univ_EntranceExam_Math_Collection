@@ -32,7 +32,7 @@ title: "2010年 全体サマリ"
 | 2-3 | \(2\) | $\displaystyle (a+b=0 \land (t \le -3 \text{ or } 3 \le t)) \text{ または } (a=0 \land t = 2)$ |
 |  |  |  |
 | 第2問 | \(1\) | グラフを描く問題 |
-| 2-3 | \(2\) | $`\displaystyle     n(\alpha) =
+| 2-3 | \(2\) | $`\displaystyle n(\alpha) =
 | 2-3 | \(3\) | $\displaystyle S(\alpha)= 2 -\alpha (\log \alpha)^2 + 2\alpha \log \alpha - 2\alpha + \frac{1}{4}\alpha (\log \alpha)^3$ |
 
 **試験形態**

@@ -1,0 +1,13 @@
+---
+university: "titech"
+category: "zenki"
+year: "1982"
+question: "5"
+type: "problem"
+title: "TITECH 1982 zenki Q5 (problem)"
+---
+
+{}
+　3つの数$0, \, 1, \, 2$がそれぞれ確率$\displaystyle\frac{1}{3}$で現れる試行を9回行う．
+ただし，各回の試行によって起こる事象どうしは独立とする．
+この結果得られた9個の数の平均値の小数第1位が1となる確率を求めよ．

@@ -1,0 +1,17 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1965"
+question: "2"
+type: "problem"
+title: "UTOKYO 1965 zenki Q2 (problem)"
+---
+
+{}
+　$A$，$B$，$C$を三つの山頂とする．
+$A$から見ると，$C$は真北より東10$^\circ$の方向にあって仰角15$^\circ$であり，
+$B$から見ると，$C$は真北より西20$^\circ$の方向にあって仰角30$^\circ$である．
+また$B$から$A$を見る仰角は30$^\circ$である．
+$A$，$B$の高さがそれぞれ海抜1600m，1210mであるとすれば，
+$C$の高さは海抜何メートルか．
+$\sqrt3=1.732$として計算し，1m未満は四捨五入せよ．

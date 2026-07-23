@@ -1,0 +1,16 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "2002"
+question: "1"
+type: "problem"
+title: "UTOKYO 2002 zenki Q1 (problem)"
+---
+
+{}
+　2つの放物線
+$\begin{matrix}
+y=2\sqrt3(x-\cos\theta)^2+\sin\theta \\
+y=-2\sqrt3(x+\cos\theta)^2-\sin\theta
+\end{matrix}$
+が相異なる2点で交わるような一般角$\theta$の範囲を求めよ．

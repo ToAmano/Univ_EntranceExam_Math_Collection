@@ -1,0 +1,14 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "2015"
+question: "1"
+type: "problem"
+title: "UKYOTO 2015 zenki Q1 (problem)"
+---
+
+{}
+　2つの関数$\displaystyle y=\sin\left(x+\frac{\pi}{8}\right)$と$y=\sin2x$のグラフの
+$\displaystyle 0 \leqq x \leqq \frac{\pi}{2}$の部分で囲まれる領域を，
+$x$軸のまわりに1回転させてできる立体の体積を求めよ．\\
+　ただし，$x=0$と$\displaystyle x=\frac{\pi}{2}$は領域を囲む線とは考えない．

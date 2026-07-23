@@ -2,9 +2,9 @@
 
 | 大学・区分 | ステータスファイル | 総問題数 | 問題文完成度 | 解答完成度 | 進捗率 |
 |:---|:---|:---:|:---:|:---:|:---:|
-| **東大 前期** | [utokyo_zenki.md](./utokyo_zenki.md) | 318問 | 1/318 | 129/318 | `40.6%` |
+| **東大 前期** | [utokyo_zenki.md](./utokyo_zenki.md) | 390問 | 378/390 | 129/390 | `33.1%` |
 | **東大 後期** | [utokyo_kouki.md](./utokyo_kouki.md) | 54問 | 54/54 | 54/54 | `100.0%` |
-| **東工大 前期** | [titech_zenki.md](./titech_zenki.md) | 270問 | 0/270 | 2/270 | `0.7%` |
+| **東工大 前期** | [titech_zenki.md](./titech_zenki.md) | 330問 | 311/330 | 2/330 | `0.6%` |
 | **東工大 後期** | [titech_kouki.md](./titech_kouki.md) | 44問 | 43/44 | 43/44 | `97.7%` |
-| **京大 前期** | [ukyoto_zenki.md](./ukyoto_zenki.md) | 324問 | 0/324 | 0/324 | `0.0%` |
+| **京大 前期** | [ukyoto_zenki.md](./ukyoto_zenki.md) | 396問 | 366/396 | 0/396 | `0.0%` |
 | **京大 後期** | [ukyoto_kouki.md](./ukyoto_kouki.md) | 108問 | 107/108 | 108/108 | `100.0%` |

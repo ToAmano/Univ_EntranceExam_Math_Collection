@@ -1,0 +1,15 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1996"
+question: "2"
+type: "problem"
+title: "UTOKYO 1996 zenki Q2 (problem)"
+---
+
+{}
+　$a$，$b$，$c$，$d$を正の数とする．
+不等式$\begin{cases} s(1-a)-tb>0 \\ -sc+t(1-d)>0 \end{cases}$を同時に満たす正の数$s$，$t$があるとき，
+2次方程式
+\[ x^2-(a+d)x+(ad-bc)=0 \]
+は$-1<x<1$の範囲に異なる2つの実数解をもつことを示せ．

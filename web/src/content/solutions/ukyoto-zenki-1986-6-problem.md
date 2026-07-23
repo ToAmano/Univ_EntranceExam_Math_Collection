@@ -1,0 +1,14 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1986"
+question: "6"
+type: "problem"
+title: "UKYOTO 1986 zenki Q6 (problem)"
+---
+
+{}
+　$0<r<1$となる実数$r$に対し，点$O=(0,0)$を中心とし半径が$r$の円を$C$とする．
+円$C'$は中心が$O'=(1,0)$で円$C$と異なる2点$P$，$Q$で交わり，$OP \bot O'P$となるものとする．
+円$C$の内部を$D$，円$C'$の内部を$D'$，四辺形$OPO'Q$の内部を$D''$と表す．
+$r$を$0<r<1$の範囲で変化させるとき，$D''$から交わり$D \cap D'$を除いた部分の面積の最大値を求めよ．

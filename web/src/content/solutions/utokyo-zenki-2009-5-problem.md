@@ -1,0 +1,16 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "2009"
+question: "5"
+type: "problem"
+title: "UTOKYO 2009 zenki Q5 (problem)"
+---
+
+{}
+\begin{description}
+\item[(1)]実数$x$が$-1<x<1$，$x\neq0$をみたすとき，次の不等式を示せ．
+\[ {(1-x)}^{1-\frac{1}{x}}<{(1+x)}^\frac{1}{x} \]
+\item[(2)]次の不等式を示せ．
+\[ {0.9999}^{101}<0.99<{0.9999}^{100} \]
+\end{description}

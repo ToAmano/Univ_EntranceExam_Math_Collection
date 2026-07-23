@@ -1,0 +1,17 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1996"
+question: "6"
+type: "problem"
+title: "UTOKYO 1996 zenki Q6 (problem)"
+---
+
+{}
+　$\alpha$，$\beta$を正の数とし，$xy$平面において，
+\ruby{楕}{だ}円$\displaystyle C:\frac{x^2}{\alpha}+\frac{{(y-\sqrt\beta)}^2}{\beta}=1$と
+領域$D=\{(x,y)|x^2+y^2\leqq1\}$を考える．
+\begin{description}
+\item[(1)]$C$が$D$に含まれるような点$(\alpha,\beta)$の範囲を求め，$\alpha\beta$平面上に図示せよ．
+\item[(2)]点$(\alpha,\beta)$が(1)で求めた範囲を動くとき，\ruby{楕}{だ}円$C$の面積の最大値を求めよ．
+\end{description}

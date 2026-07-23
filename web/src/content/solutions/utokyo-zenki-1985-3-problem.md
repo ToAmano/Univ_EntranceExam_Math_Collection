@@ -1,0 +1,16 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1985"
+question: "3"
+type: "problem"
+title: "UTOKYO 1985 zenki Q3 (problem)"
+---
+
+{}
+　$t$を正の数とする．
+$xyz$空間において，点$(t,t,0)$を$P$とし，
+$x$軸を含み点$(t,t,1)$を通る平面に関して$P$と対称な点を$Q$，
+$y$軸を含み点$(t,t,1)$を通る平面に関して$P$と対称な点を$R$とする．
+また，原点を$O$とする．
+4点$O$，$P$，$Q$，$R$を頂点とする4面体の体積を求めよ．

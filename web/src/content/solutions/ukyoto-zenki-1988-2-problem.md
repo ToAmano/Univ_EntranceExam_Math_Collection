@@ -1,0 +1,13 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1988"
+question: "2"
+type: "problem"
+title: "UKYOTO 1988 zenki Q2 (problem)"
+---
+
+{}
+　三角形$ABC$において，辺$AB$，$BC$，$CA$をそれぞれ2:1に内分する点を$A_1$，$B_1$，$C_1$とし，
+また線分$A_1B_1$，$B_1C_1$，$C_1A_1$をそれぞれ2:1に内分する点を$A_2$，$B_2$，$C_2$とする．
+このとき，三角形$A_2B_2C_2$は三角形$ABC$に相似であることを示せ．

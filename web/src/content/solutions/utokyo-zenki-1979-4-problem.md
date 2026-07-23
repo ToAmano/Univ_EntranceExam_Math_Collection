@@ -1,0 +1,14 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1979"
+question: "4"
+type: "problem"
+title: "UTOKYO 1979 zenki Q4 (problem)"
+---
+
+{}
+　平面上の点$O$を中心とする半径1の円周上に点$P$をとり，
+円の内部または周上に2点$Q$，$R$を，
+$\triangle PQR$が1辺の長さ$\displaystyle\frac{2}{\sqrt3}$の正三角形になるようにとる．
+このとき，${OQ}^2+{OR}^2$の最大値および最小値を求めよ．

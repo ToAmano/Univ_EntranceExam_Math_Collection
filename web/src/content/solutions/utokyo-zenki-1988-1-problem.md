@@ -1,0 +1,19 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1988"
+question: "1"
+type: "problem"
+title: "UTOKYO 1988 zenki Q1 (problem)"
+---
+
+{}
+　$xy$平面上の一次変換$f$が次の3条件をみたすとする．
+\begin{description}
+\item[(i)]点$(1,0)$は$f$により第4象限の内部にうつる．
+\item[(ii)]点$(0,1)$は$f$により第2象限の内部にうつる．
+\item[(iii)]点$(1,1)$は$f$により第1象限の内部にうつる．
+\end{description}
+　このとき$f$には逆変換が存在することを示せ．
+また，点$P$の像$f(P)$が第1象限の内部にあれば，
+点$P$も第1象限の内部にあることを示せ．

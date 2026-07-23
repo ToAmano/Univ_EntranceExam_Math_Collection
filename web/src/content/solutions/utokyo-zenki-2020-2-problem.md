@@ -1,0 +1,18 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "2020"
+question: "2"
+type: "problem"
+title: "UTOKYO 2020 zenki Q2 (problem)"
+---
+
+{}
+　平面上の点$P, \, Q, \, R$が同一直線上にないとき，
+それらを3頂点とする三角形の面積を$\triangle PQR$で表す。
+また，$P, \, Q, \, R$が同一直線上にあるときは，
+$\triangle PQR=0$とする。\\
+　$A, \, B, \, C$を平面上の3点とし，$\triangle ABC=1$とする。
+この平面上の点$X$が
+\[ 2 \leqq \triangle ABX+\triangle BCX+\triangle CAX \leqq 3 \]
+を満たしながら動くとき，$X$の動きうる範囲の面積を求めよ。

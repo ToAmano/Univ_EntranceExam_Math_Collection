@@ -1,0 +1,12 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1968"
+question: "2"
+type: "problem"
+title: "UKYOTO 1968 zenki Q2 (problem)"
+---
+
+{}
+　各辺の長さが20m，22m，24m，26m，28m，30m，32m，34m，36mのいずれかである3角形は，
+いく種類あるか．ただし，合同な3角形は同じ種類と考える．

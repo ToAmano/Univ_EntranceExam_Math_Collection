@@ -1,0 +1,15 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "2004"
+question: "3"
+type: "problem"
+title: "UKYOTO 2004 zenki Q3 (problem)"
+---
+
+{}
+　$n$を2以上の自然数とする．
+$x^{2n}$を$\displaystyle x^2-x+\frac{n-1}{n^2}$で割った余りを$a_nx+b_n$とする．
+すなわち，$x$の多項式$P_n(x)$があって
+$\displaystyle x^{2n}=P_n(x) \left( x^2-x+\frac{n-1}{n^2} \right) +a_nx+b_n$が成り立っているとする．
+$\displaystyle\lim_{n\to\infty}a_n$，$\displaystyle\lim_{n\to\infty}b_n$を求めよ．

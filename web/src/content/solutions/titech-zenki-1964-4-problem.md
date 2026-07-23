@@ -1,0 +1,17 @@
+---
+university: "titech"
+category: "zenki"
+year: "1964"
+question: "4"
+type: "problem"
+title: "TITECH 1964 zenki Q4 (problem)"
+---
+
+\usepackage[dvipdfm]{graphicx}
+
+{}
+　図は$O$を中心とする四分円であって，$OA=\sqrt3$，$OB=1$である。
+いま，動点$P$が円弧に沿って$A$から$Q$まで進み，さらに$Q$から$B$まで直進する。
+ところが，$P$の弧$AQ$上での速さは2，線分$QB$上での速さは1である。
+この路に沿っての$A$から$B$までの所要時間が最小となるような点$Q$の位置を定めよ。\\
+\includegraphics[width=5cm]{fig_1964_4.jpg}

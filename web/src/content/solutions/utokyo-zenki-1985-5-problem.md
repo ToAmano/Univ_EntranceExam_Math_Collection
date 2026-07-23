@@ -1,0 +1,19 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1985"
+question: "5"
+type: "problem"
+title: "UTOKYO 1985 zenki Q5 (problem)"
+---
+
+{}
+　0または正の整数の値をとる変数$X$，$Y$がある．
+$X$が整数$n$ $(n\geqq0)$の値をとる確率と，
+$Y$が整数$n$ $(n\geqq0)$の値をとる確率は，
+ともに$p_n$であるとする．
+(ここで，$\displaystyle\sum_{n=0}^\infty p_n=1$である．)\\
+　いま，任意の整数$m$，$n$ $(m\geqq0,n\geqq0)$に対して，
+$X=m$なる事象と$Y=n$なる事象は独立であり，
+また，$X+Y=n$となる確率は$(n+1)p_{n+1}$に等しいという．
+このとき，$p_n$ $(n=0,1,2,\cdots\cdots)$と$\displaystyle\sum_{n=0}^\infty np_n$の値を求めよ．

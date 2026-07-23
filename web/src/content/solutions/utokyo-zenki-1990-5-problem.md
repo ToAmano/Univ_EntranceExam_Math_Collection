@@ -1,0 +1,15 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1990"
+question: "5"
+type: "problem"
+title: "UTOKYO 1990 zenki Q5 (problem)"
+---
+
+{}
+　円$x^2+y^2=1$を$C_0$，
+だ円$\displaystyle \frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ $(a>0,b>0)$を$C_1$とする．
+$C_1$上のどんな点$P$に対しても，
+$P$を頂点にもち$C_0$に外接して$C_1$に内接する平行四辺形が存在するための必要十分条件を
+$a$，$b$で表せ．

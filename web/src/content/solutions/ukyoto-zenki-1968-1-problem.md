@@ -1,0 +1,23 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1968"
+question: "1"
+type: "problem"
+title: "UKYOTO 1968 zenki Q1 (problem)"
+---
+
+{}
+　つぎの5つの命題のうち，正しいものには□の中に○印をつけて，証明せよ．
+また，正しくないものには□の中に×印をつけて，理由を示せ．
+\begin{description}
+\item[□　(1)]2実数$a$，$b$について，$a=b$ならば，$a \leqq b$である．
+\item[□　(2)]どの3点も1直線上にはない4点$A$，$B$，$C$，$D$について，
+$\overrightarrow{AB}+\overrightarrow{CD}=0$(零ベクトル)はけっして成立しない．
+\item[□　(3)]3つの集合$A$，$B$，$C$について，
+$A \subset B$，$B \subset C$，$C \subset A$という関係があれば，$A=B=C$である．
+\item[□　(4)]$n>4$である自然数$n$について，$n^2<2^n$が成立する．
+\item[□　(5)]自然数の逆数全体の集合
+$\displaystyle \left\{ 1,\frac{1}{2},\cdots\cdots,\frac{1}{n},\cdots\cdots \right\}$
+において，最小数は0である．
+\end{description}

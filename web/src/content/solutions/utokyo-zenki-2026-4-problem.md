@@ -1,0 +1,24 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "2026"
+question: "4"
+type: "problem"
+title: "UTOKYO 2026 zenki Q4 (problem)"
+---
+
+{}
+　$k$を実数とし，座標平面上の曲線$C$を$y=x^3-kx$で定める。
+$C$上の2点$P, \, Q$に対する以下の条件(＊)を考える。
+\begin{description}
+\item[条件(＊)]原点$O$，点$P$，点$Q$は相異なり，$C$の$O, \, P, \, Q$における接線のうち，
+どの2本も交わり，そのなす角はすべて$\displaystyle\frac{\pi}{3}$となる。
+\end{description}
+　だたし，2直線のなす角は0以上$\displaystyle\frac{\pi}{2}$以下の範囲で考えるものとする。
+\begin{description}
+\item[(1)]条件(＊)を満たす$P, \, Q$が存在するような$k$の範囲を求めよ。
+\item[(2)]$k$が(1)で定まる範囲にあるとする。$P, \, Q$が条件(＊)を満たすように動くとき，
+$C$の$O, \, P, \, Q$における接線によって囲まれる三角形の面積$S$の
+最大値を$M$，最小値を$m$とおく。ただし，3本の接線が1点で交わるときは$S=0$とする。
+$M=4m$となる$k$の値を求めよ。
+\end{description}

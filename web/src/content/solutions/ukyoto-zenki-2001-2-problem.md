@@ -1,0 +1,12 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "2001"
+question: "2"
+type: "problem"
+title: "UKYOTO 2001 zenki Q2 (problem)"
+---
+
+{}
+　未知数$x$に関する方程式$x^5+x^4-x^3+x^2-(a+1)x+a=0$が，
+虚軸上の複素数を解に持つような実数$a$をすべて求めよ．

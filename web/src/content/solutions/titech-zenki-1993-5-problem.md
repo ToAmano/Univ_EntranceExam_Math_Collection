@@ -1,0 +1,12 @@
+---
+university: "titech"
+category: "zenki"
+year: "1993"
+question: "5"
+type: "problem"
+title: "TITECH 1993 zenki Q5 (problem)"
+---
+
+{}
+　サイコロを4回ふり，出る目の数を順に、$x_1$，$x_2$，$x_3$，$x_4$とするとき，
+点$P=(x_1,x_2)$，$O=(0,0)$，$Q=(x_3,-x_4)$のなす角$\angle POQ$が鋭角になる確率を求めよ．

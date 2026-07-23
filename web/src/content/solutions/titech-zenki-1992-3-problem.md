@@ -1,0 +1,12 @@
+---
+university: "titech"
+category: "zenki"
+year: "1992"
+question: "3"
+type: "problem"
+title: "TITECH 1992 zenki Q3 (problem)"
+---
+
+{}
+　$c>1$を定数とする．$xy$平面で，点$(1,c)$を通る直線$l$と放物線$y=x^2$で囲まれる図形の面積を最小にする$l$の傾きを求めよ．
+またその最小面積を求めよ．

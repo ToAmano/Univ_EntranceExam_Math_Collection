@@ -1,0 +1,22 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1974"
+question: "5"
+type: "problem"
+title: "UTOKYO 1974 zenki Q5 (problem)"
+---
+
+{}
+　原点$O$に中心をもつ半径2の固定された円板を$A$とする．
+半径1の円板$B$を，その中心$C$が点$(3,0)$に重なるように置くとき，
+点$(4,0)$に重なる$B$の周上の点を$M$とする．
+$B$を，$A$の周囲に沿って滑らないようにころがして，
+$OC$が$x$軸の正の方向となす角が$\theta$になったときの，
+$M$の位置の座標を$(X,Y)$とする．\\
+　$\theta$が0から$\displaystyle\frac{\pi}{2}$まで動くとして，次の問に答えよ．
+\begin{description}
+\item[(1)]$X$と$Y$とを$\theta$の関数として表わせ．
+\item[(2)]$Y$の最大値を求めよ．
+\item[(3)]$M$の描く曲線の弧の長さを求めよ．
+\end{description}

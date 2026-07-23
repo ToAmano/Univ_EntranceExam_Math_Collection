@@ -1,0 +1,13 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1991"
+question: "4"
+type: "problem"
+title: "UKYOTO 1991 zenki Q4 (problem)"
+---
+
+{}
+　実数$a$，$b$ $\displaystyle \left( 0 \leqq a < \frac{\pi}{4} , 0 \leqq b < \frac{\pi}{4} \right)$に対し
+次の不等式の成り立つことを示せ．
+\[ \sqrt{\tan a \cdot \tan b} \leqq \tan \left( \frac{a+b}{2} \right) \leqq \frac{1}{2}(\tan a + \tan b) \]

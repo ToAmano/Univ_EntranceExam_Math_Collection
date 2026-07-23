@@ -1,0 +1,19 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1976"
+question: "6"
+type: "problem"
+title: "UKYOTO 1976 zenki Q6 (problem)"
+---
+
+{}
+　外観では区別できない2つの袋$U_1$，$U_2$があり，
+$U_1$には$4n$個の赤玉と$n$個の白玉，$U_2$には$2n$個の赤玉と$3n$個の白玉がそれぞれ入っている．
+この袋のどちらかが観測者に手渡され，
+袋$U_1$が手渡される確率は$\displaystyle\frac{2}{3}$，
+袋$U_2$が手渡される確率は$\displaystyle\frac{1}{3}$である．
+観測者は手渡された袋から3個玉をとりだし，
+赤玉の数が白玉の数より多いときは手渡された袋は$U_1$であると判断し，
+そうでないときは$U_2$であると判断する．
+観測者が誤った判断を下す確率を$p_n$とするとき，$\displaystyle\lim_{n\to\infty}p_n$を求めよ．

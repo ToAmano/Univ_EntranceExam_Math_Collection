@@ -1,0 +1,16 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1997"
+question: "4"
+type: "problem"
+title: "UKYOTO 1997 zenki Q4 (problem)"
+---
+
+{}
+\begin{description}
+\item[(1)]$\displaystyle0\leqq\alpha<\beta\leqq\frac{\pi}{2}$であるとき，次の不等式を示せ．
+\[ \int_\alpha^\beta \sin xdx + \int_{\pi-\beta}^{\pi-\alpha} \sin xdx >
+(\beta-\alpha)(\sin\alpha+\sin(\pi-\beta)) \]
+\item[(2)]$\displaystyle\sum_{k=1}^7\sin\frac{k\pi}{8}<\frac{16}{\pi}$を示せ．
+\end{description}

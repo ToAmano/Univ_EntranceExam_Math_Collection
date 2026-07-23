@@ -1,0 +1,17 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1982"
+question: "4"
+type: "problem"
+title: "UKYOTO 1982 zenki Q4 (problem)"
+---
+
+{}
+　$0 \leqq x$，$0 \leqq y$，$0 \leqq z$で定まる空間の部分を$A$とし，
+$0 \leqq x \leqq 1$，$0 \leqq y \leqq 1$，$0 \leqq z \leqq 1$で定まる立方体を$C$とする．
+$t$が$0<t<3$の範囲で動くとき，平面$x+y+z=t$による，$A$および$C$の切り口の面積を，それぞれ$T(t)$および$S(t)$とする．
+\begin{description}
+\item[(1)]$T(t)$を求めよ．
+\item[(2)]$S(t)$の最大値を求めよ．
+\end{description}

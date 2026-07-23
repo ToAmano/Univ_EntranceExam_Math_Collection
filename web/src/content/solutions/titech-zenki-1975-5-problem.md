@@ -1,0 +1,18 @@
+---
+university: "titech"
+category: "zenki"
+year: "1975"
+question: "5"
+type: "problem"
+title: "TITECH 1975 zenki Q5 (problem)"
+---
+
+{}
+　Aの箱には1個の赤球と2個の青球と3個の白球が入っている．
+Bの箱には10本のくじが入っていて，そのうち3本が当たりくじである．
+Aの箱から1個の球をとり，それが赤であれば同時に3本，青であれば同時に2本，
+白であれば1本のくじをBの箱から引けるものとする．
+\begin{description}
+\item[(1)]ちょうど1本当たる確率を求めよ．
+\item[(2)]少なくとも1本当たる確率を求めよ．
+\end{description}

@@ -1,0 +1,18 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1976"
+question: "1"
+type: "problem"
+title: "UKYOTO 1976 zenki Q1 (problem)"
+---
+
+{}
+\begin{description}
+\item[(i)]多項式$f(x)=x^n$が，区間$\displaystyle -\frac{1}{2} \leqq x \leqq \frac{1}{2}$において
+不等式$\displaystyle |f(x)|<\frac{1}{1000}$をみたすためには，
+$n$をどのようにとればよいか．
+\item[(ii)]最高次の係数が1である多項式$g(x)$で，
+区間$0 \leqq x \leqq 1$において不等式$\displaystyle|g(x)|<\frac{1}{1000}$をみたし，
+さらに$10000<|g(3)|<100000$であるようなものの例を1つあげよ．
+\end{description}

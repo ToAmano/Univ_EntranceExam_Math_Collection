@@ -1,0 +1,15 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1998"
+question: "4"
+type: "problem"
+title: "UKYOTO 1998 zenki Q4 (problem)"
+---
+
+{}
+　$a$，$m$は自然数で$a$は定数とする．
+$xy$平面上の点$(a,m)$を頂点とし，原点と点$(2a,0)$を通る放物線を考える．
+この放物線と$x$軸で囲まれる領域の面積を$S_m$，この領域の内部および境界線上にある格子点の数を$L_m$とする．
+このとき極限値$\displaystyle\lim_{m\to\infty}\frac{L_m}{S_m}$を求めよ．
+ただし$xy$平面上の格子点とはその点の$x$座標と$y$座標がともに整数となる点のことである．

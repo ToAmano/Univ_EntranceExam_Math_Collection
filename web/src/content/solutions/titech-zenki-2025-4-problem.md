@@ -1,0 +1,23 @@
+---
+university: "titech"
+category: "zenki"
+year: "2025"
+question: "4"
+type: "problem"
+title: "TITECH 2025 zenki Q4 (problem)"
+---
+
+{}
+　数列$\{ a_n \}$を
+\[ \begin{cases} a_1=a_2=1 \\
+a_{n+2}=a_{n+1}+a_n  (n=1, \, 2, \, 3, \, \cdots) \end{cases} \]
+により定め，数列$\{ b_n \}$を
+\[ \tan b_n=\frac{1}{a_n} \]
+により定める．
+ただし，$\displaystyle 0<b_n<\frac{\pi}{2}$であるものとする．
+\begin{description}
+\item[(1)]$n\geqq2$に対して，$a_{n+1}a_{n-1}-a_n^2$を求めよ．
+\item[(2)]$m\geqq1$ ($m$は整数)に対して，
+$a_{2m} \cdot \tan(b_{2m+1}+b_{2m+2})$を求めよ．
+\item[(3)]無限級数$\displaystyle\sum_{m=0}^\infty b_{2m+1}$を求めよ．
+\end{description}

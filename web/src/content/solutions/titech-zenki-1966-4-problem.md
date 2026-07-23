@@ -1,0 +1,13 @@
+---
+university: "titech"
+category: "zenki"
+year: "1966"
+question: "4"
+type: "problem"
+title: "TITECH 1966 zenki Q4 (problem)"
+---
+
+{}
+　2つの放物線$y=x^2+ax+b$，$y=x^2+cx+d$ $(a \neq c)$の共通接線と
+これらの放物線との接点の$x$座標をそれぞれ$p$，$q$とする。
+この接線と上の2つの放物線とで囲まれた部分の面積を$p$，$q$で表わせ。

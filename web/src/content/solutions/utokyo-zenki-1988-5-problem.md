@@ -1,0 +1,16 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1988"
+question: "5"
+type: "problem"
+title: "UTOKYO 1988 zenki Q5 (problem)"
+---
+
+{}
+　$xyz$空間において，$xz$平面上の$0 \leqq z \leqq 2-x^2$で表される図形を
+$z$軸のまわりに回転して得られる不透明な立体を$V$とする．
+$V$の表面上$z$座標1のところにひとつの点光源$P$がある．\\
+　$xy$平面上の原点を中心とする円$C$の，
+$P$からの光が当たっている部分の長さが$2\pi$であるとき，
+$C$のかげの部分の長さを求めよ．

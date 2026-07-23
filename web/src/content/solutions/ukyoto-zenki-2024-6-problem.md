@@ -1,0 +1,16 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "2024"
+question: "6"
+type: "problem"
+title: "UKYOTO 2024 zenki Q6 (problem)"
+---
+
+{}
+　自然数$k$に対して，$a_k=2^{\sqrt{k}}$とする．
+$n$を自然数とし，$a_k$の整数部分が$n$桁であるような$k$の個数を$N_n$とする．
+また，$a_k$の整数部分が$n$桁であり，その最高位の数字が1であるような$k$の個数を$L_n$とする．
+次を求めよ．
+\[ \lim_{n\to\infty}\frac{L_n}{N_n} \]
+ただし，例えば実数$2345.678$の整数部分2345は4桁で，最高位の数字は2である．

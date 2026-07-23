@@ -1,0 +1,13 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1975"
+question: "3"
+type: "problem"
+title: "UTOKYO 1975 zenki Q3 (problem)"
+---
+
+{}
+　直線$x+y=4$に第一象限において接する放物線$y=-ax^2+bx$がある．
+この放物線と$x$軸の正の部分とで囲まれる図形の面積が最大となるときの
+$a$，$b$の値とその場合の面積を求めよ．

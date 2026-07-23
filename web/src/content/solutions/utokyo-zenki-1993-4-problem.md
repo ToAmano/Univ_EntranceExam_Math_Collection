@@ -1,0 +1,15 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1993"
+question: "4"
+type: "problem"
+title: "UTOKYO 1993 zenki Q4 (problem)"
+---
+
+{}
+　$n$を2以上の自然数とし
+$f(x)=x^n+px+q$ $(p,q\text{は実数})$の形の$n$次関数について
+積分$\displaystyle I=\frac{1}{2}\int_{-1}^1{f(x)}^2dx$を考える．
+$I$を最小にするような$(p,q)$が唯一組存在することを示し，
+そのような$(p,q)$と$I$の最小値を求めよ．
