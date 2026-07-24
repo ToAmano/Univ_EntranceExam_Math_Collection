@@ -56,17 +56,24 @@ npm run preview   # ビルド成果物 (dist/) のローカルプレビュー
 ---
 
 ### 4. 過去問解答集 PDF マスターの一括ビルド (LuaLaTeX)
-大学・区分ごとの統合マスターTeXから、1冊の解答集PDFをコンパイルします。
+大学・区分（`titech`/`utokyo`/`ukyoto` × `kouki`/`zenki`）ごとに `src/{univ}/{cat}/main.tex` があり、
+その区分の全年度・全問題を1冊のPDFにまとめてビルドできます。
 
 ```bash
-# 東工大後期の過去問解答集PDFを一括ビルド
-cd src/sample_titech/kouki
+# main.tex を最新のソースから再生成（問題・解答が増減したら再実行）
+python3 scratch/generate_main_tex.py
+
+# 例: 東大前期の過去問解答集PDFを一括ビルド
+cd src/utokyo/zenki
 latexmk -lualatex main.tex
 
-# 東大前期の過去問解答集PDFを一括ビルド
-cd src/sample_todai/zenki
+# 例: 東工大後期の過去問解答集PDFを一括ビルド
+cd src/titech/kouki
 latexmk -lualatex main.tex
 ```
+
+CIでは `.github/workflows/build-pdf.yml` がタグpush時に6区分すべてを自動ビルドし、
+`utokyo_zenki.pdf` のような名前でGitHub Releaseに添付します。
 
 ---
 
