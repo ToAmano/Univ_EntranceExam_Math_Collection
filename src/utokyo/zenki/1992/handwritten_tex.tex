@@ -1,0 +1,357 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{1992年 東京大学 理科}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+問 & 分野 & 計 & 思 & 総 \\ \hline
+1 & 極限 & B & A & B \\ \hline
+2 & 整数論 & A & C & B \\ \hline
+3 & 多変数 & B & B & B \\ \hline
+4 & 空間図形 & C & C & C \\ \hline
+5 & 微積分 & B & B & B \\ \hline
+6 & 確率 & B & B & B \\ \hline
+\end{tabular}
+\end{center}
+
+\bigskip
+
+\subsection*{第1問}
+
+\noindent
+\textbf{[解]} $S_1 - \int_1^a \log x \, dx = a(\log a - 1) + 1 \quad \dots \text{① である.}$
+
+\bigskip
+
+(1) $\square ABCD$ の面積を $S'$ とすると,
+\[
+S' = \triangle ABD D' + \triangle D' B C = \frac{1}{2}(\log a + \log b)(a - b) + \frac{1}{2} \log b \cdot (b - 1)
+\]
+図より明らかに $S' < S_1$ だから, $S'$ の最大値こそ $S_2$ である.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=stealth]
+\draw[->] (-0.5,0) -- (4,0) node[right] {$x$};
+\draw[->] (0,-0.5) -- (0,2.5) node[above] {$y$};
+\draw[domain=0.5:3.8, smooth, variable=\x, thick] plot ({\x}, {log2(\x)});
+\node[above left] at (3.5, {log2(3.5)}) {$y = \log x$};
+\coordinate (C) at (1,0);
+\coordinate (Dp) at (2.2,0);
+\coordinate (A) at (3.2,0);
+\coordinate (D) at (2.2,{log2(2.2)});
+\coordinate (B) at (3.2,{log2(3.2)});
+
+\draw[dashed] (D) -- (Dp);
+\draw[dashed] (B) -- (A);
+\draw[thick] (C) -- (D) -- (B) -- (A) -- cycle;
+
+\node[below] at (C) {$C$};
+\node[below] at (Dp) {$D'$};
+\node[below] at (A) {$A$};
+\node[above left] at (D) {$D$};
+\node[above left] at (B) {$B$};
+\end{tikzpicture}
+\end{center}
+
+\[
+\frac{d}{db} S' = \frac{1}{2b}(a - 1) - \frac{1}{2} \log a
+\]
+より, 極大を与える $\left(\because \frac{a-1}{\log a} < a\right)$
+
+\begin{center}
+\begin{tabular}{c|ccccc}
+$b$ & $(1)$ & $\dots$ & $\frac{a-1}{\log a}$ & $\dots$ & $a$ \\ \hline
+$S'$ & & $+$ & $0$ & $-$ & \\ \hline
+$S$ & & $\nearrow$ & 極大 & $\searrow$ & 
+\end{tabular}
+\end{center}
+
+従って,
+\[
+S_2 = S'\Big|_{b = \frac{a-1}{\log a}} = \frac{1}{2}(a \log a - a + 1) + \frac{1}{2} \frac{a-1}{\log a} \log\left(\frac{a-1}{\log a}\right)
+\]
+
+\bigskip
+
+(2)
+\begin{align*}
+\frac{S_2}{S_1} &= \frac{\frac{1}{2}(a \log a - a + 1) + \frac{1}{2}(a-1)\{\log(a-1) - \log\log a\}}{a \log a - a + 1} \\
+&= \frac{1}{2} + \frac{1}{2} \underbrace{\frac{(a-1)\{\log(a-1) - \log\log a\}}{a \log a - a + 1}}_{T}
+\end{align*}
+
+\[
+T = \frac{\left(1 - \frac{1}{a}\right) \left\{ 1 + \frac{\log(1 - \frac{1}{a})}{\log a} - \frac{\log\log a}{\log a} \right\}}{1 - \frac{1}{\log a} + \frac{1}{a \log a}} \longrightarrow 1 \quad (a \to \infty)
+\]
+\[
+\left[ \log a = A \to \infty \text{ より } \frac{\log(\log a)}{\log a} = \frac{\log A}{A} \to 0 \right]
+\]
+より,
+\[
+\frac{S_2}{S_1} \longrightarrow 1 \quad (a \to \infty) \text{ である.}
+\]
+
+\newpage
+
+\subsection*{第2問}
+
+\noindent
+\textbf{[解]} 点 $X$ に対し, $\vec{AX} = \vec{x}$ とおく.
+
+\bigskip
+
+(1) $AB, AC$ 上に, 端点除いて奇数個の格子点がある時, $(a,b), (c,d)$ を互いに素な自然数として
+\[
+\vec{b} = 2k \begin{pmatrix} a \\ b \end{pmatrix}, \quad \vec{c} = 2l \begin{pmatrix} c \\ d \end{pmatrix} \quad (k, l \in \mathbb{N})
+\]
+とおいて良い. (点 $A, B, C$ に関する対称性)
+\[
+\vec{BC} = 2l \begin{pmatrix} c \\ d \end{pmatrix} - 2k \begin{pmatrix} a \\ b \end{pmatrix} = 2 \begin{pmatrix} lc - ka \\ ld - kb \end{pmatrix}
+\]
+において, $lc - ka, ld - kb \in \mathbb{Z}$ より, たしかに $BC$ 上には, 端点を除いて奇数個の格子点がある.
+
+\bigskip
+
+(2) (1)と同じく,
+\[
+\vec{b} = 4 \begin{pmatrix} a \\ b \end{pmatrix}, \quad \vec{c} = 4 \begin{pmatrix} c \\ d \end{pmatrix}
+\]
+とおけるから, $\triangle ABC$ の面積 $S$ として
+\[
+S = \frac{1}{2} | 16 ad - 16 bc | = 8 |ad - bc|
+\]
+$ad - bc \in \mathbb{Z}$ より, たしかに $S$ は 8 の倍数.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8, >=stealth]
+\coordinate (A) at (0,0);
+\coordinate (B) at (2,3);
+\coordinate (C) at (4,1);
+\draw[thick] (A) -- (B) -- (C) -- cycle;
+\filldraw (A) circle (2pt) node[below] {$A$};
+\filldraw (B) circle (2pt) node[above] {$B$};
+\filldraw (C) circle (2pt) node[right] {$C$};
+\foreach \i in {1,2,3} {
+  \filldraw ($(A)!\i/4!(B)$) circle (1.5pt);
+  \filldraw ($(A)!\i/4!(C)$) circle (1.5pt);
+}
+\end{tikzpicture}
+\end{center}
+
+\newpage
+
+\subsection*{第3問}
+
+\noindent
+\textbf{[解]} 題意の円の中心 $T$ は, $PQ, PR, RS$ の垂直2等分線上だから, $T\left(\frac{1}{2}a, \frac{1}{2}, \frac{1}{2}b\right)$ である. したがって, $\overline{PT} = 1 \iff \overline{PT}^2 = 1$ (両辺0以上) に代入して
+\[
+\frac{1}{4}(a^2 + b^2 + 1) = 1 \iff a^2 + b^2 = 3 \quad \dots \text{①}
+\]
+又, 四面体 $PQRS$ の体積 $V$ は
+\[
+V = \frac{1}{6} ab \quad \dots \text{②}
+\]
+表面積 $S'$ は
+\[
+S' = \frac{1}{2}\left(a + b + b\sqrt{a^2+1} + a\sqrt{b^2+1}\right) \quad \dots \text{③}
+\]
+だから, $V = \frac{1}{3} r S'$ に ②, ③ を代入して
+\[
+ab = r\left(a + b + b\sqrt{a^2+1} + a\sqrt{b^2+1}\right) \quad \dots \text{④}
+\]
+④の両辺 $ab r$ でわって
+\[
+\frac{1}{r} - \frac{1}{a} - \frac{1}{b} = \frac{\sqrt{a^2+1}}{a} + \frac{\sqrt{b^2+1}}{b} > 0 \quad \dots \text{＊}
+\]
+2乗して,
+\[
+\left(\frac{1}{r} - \frac{1}{a} - \frac{1}{b}\right)^2 \ge \frac{a^2+1}{a^2} + \frac{b^2+1}{b^2} + 2 \frac{\sqrt{(a^2+1)(b^2+1)}}{ab} \quad \dots \text{⑤}
+\]
+⑤の右辺について,
+\[
+\frac{a^2+1}{a^2} + \frac{b^2+1}{b^2} + \frac{2\sqrt{(a^2+1)(b^2+1)}}{ab} = 2 + \left(\frac{1}{a^2} + \frac{1}{b^2}\right) + 2\sqrt{1 + \frac{4}{a^2 b^2}} \quad \dots \text{⑥}
+\]
+ここでコーシー・シュワルツから
+\[
+\frac{1}{a^2} + \frac{1}{b^2} \ge \frac{(1+1)^2}{a^2+b^2} = \frac{4}{3} \quad (\because \text{①}) \quad \dots \text{⑦}
+\]
+AM-GMから
+\[
+ab \le \frac{a^2+b^2}{2} = \frac{3}{2} \quad \text{より} \quad \frac{4}{a^2 b^2} \ge \left(\frac{2}{3}\right)^2 \cdot 4 = \frac{16}{9} \quad \dots \text{⑧}
+\]
+⑦, ⑧ を ⑥ に代入して
+\[
+(\text{右辺}) \ge 2 + \frac{4}{3} + 2\sqrt{1 + \frac{16}{9}} = \frac{20}{3}
+\]
+だから ⑤ より
+\[
+\left(\frac{1}{r} - \frac{1}{a} - \frac{1}{b}\right)^2 \ge \frac{20}{3}
+\]
+両辺平方根をとって, (＊より $\frac{1}{r} - \frac{1}{a} - \frac{1}{b} > 0$)
+\begin{align*}
+\frac{1}{r} &\ge \frac{1}{a} + \frac{1}{b} + \sqrt{\frac{20}{3}} \ge 2\sqrt{\frac{1}{ab}} + 2\sqrt{\frac{5}{3}} \quad (\because ab > 0 \text{ から AM-GM}) \\
+&\ge 2\sqrt{\frac{2}{3}} + 2\sqrt{\frac{5}{3}} \quad (\because \text{⑧})
+\end{align*}
+を得る.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=stealth]
+\draw[->] (0,0,0) -- (3,0,0) node[right] {$x$};
+\draw[->] (0,0,0) -- (0,2.5,0) node[above] {$z$};
+\draw[->] (0,0,0) -- (0,0,3) node[below left] {$y$};
+\coordinate (P) at (0,0,0);
+\coordinate (Q) at (2,0,0);
+\coordinate (R) at (0,0,2);
+\coordinate (S) at (0,2,0);
+\draw[thick] (P) -- (Q) -- (S) -- cycle;
+\draw[thick] (P) -- (R) -- (S);
+\draw[thick] (Q) -- (R);
+\node[below left] at (P) {$P$};
+\node[below] at (Q) {$Q(a,0,0)$};
+\node[right] at (R) {$R(0,1,0)$};
+\node[above] at (S) {$S(0,0,b)$};
+\end{tikzpicture}
+\end{center}
+
+\newpage
+
+\subsection*{第4問}
+
+\noindent
+\textbf{[解]}
+\[
+\begin{cases} y^2 + z^2 = 1 \\ x^2 - \sqrt{3} x z + z^2 = \frac{1}{4} \end{cases}
+\]
+以下 $C = \cos\theta, S = \sin\theta$ とする. $y^2 + z^2 = 1 \land x = 0$ 上に, $R(0,1,0), Q(0,C,S)$ をとる. $Q$ を通り $x$ 軸に平行な直線上の図形をひかえる. $B$ は
+\[
+x^2 - \sqrt{3} S x + S^2 = \frac{1}{4}
+\]
+だから, $Z = S$ として
+\[
+x^2 - \sqrt{3} S x + S^2 - \frac{1}{4} = 0
+\]
+\[
+\therefore x = \sin\left(\theta \pm \frac{\pi}{6}\right)
+\]
+だから, これを展開図 ($0 \le \theta \le 2\pi$) 上に描くと, 下図のようになる. したがって, $C$ の展開図は, 下図斜線部. (境界は実線の部分含む)
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=stealth]
+\draw[->] (0,0) -- (7,0) node[right] {$\theta$};
+\draw[->] (0,-2.5) -- (0,2.5) node[above] {$x$};
+
+\node[below left] at (0,0) {$0$};
+\node[below] at (6.28,0) {$2\pi$};
+
+\foreach \x/\label in {0.523/\frac{\pi}{6}, 1.57/\frac{\pi}{2}, 2.618/\frac{5\pi}{6}, 3.14/\pi, 3.665/\frac{7\pi}{6}, 4.71/\frac{3\pi}{2}, 5.76/\frac{11\pi}{6}} {
+  \draw[dashed, gray!50] (\x,-2) -- (\x,2);
+  \node[below, scale=0.7] at (\x, 0) {$\label$};
+}
+\draw[dashed, gray!50] (0,1) -- (6.28,1) node[right, scale=0.8] {$1$};
+\draw[dashed, gray!50] (0,-1) -- (6.28,-1) node[right, scale=0.8] {$-1$};
+
+\draw[domain=0:6.28, samples=100, thick, blue] plot (\x, {2*sin((\x + 0.523) r)});
+\draw[domain=0:6.28, samples=100, thick, red] plot (\x, {2*sin((\x - 0.523) r)});
+
+\node[above, blue, scale=0.8] at (2, 2.1) {$y = \sin(\theta + \pi/6)$};
+\node[below, red, scale=0.8] at (4, -2.1) {$y = \sin(\theta - \pi/6)$};
+
+\end{tikzpicture}
+\end{center}
+
+\newpage
+
+\subsection*{第5問}
+
+\noindent
+\textbf{[解]} (1) $t$ 秒後までに $P$ は $\int_0^t \frac{s}{2} \, ds = \frac{1}{4} t^2$ だけ進む.
+
+この時の $P$ の座標 $(x,y)$ とすると, 道のりは
+\begin{align*}
+\int_1^x \sqrt{1 + (y')^2} \, dx &= \int_1^x \sqrt{1 + \left(\frac{1}{2} x^2 - \frac{1}{2x^2}\right)^2} \, dx' \\
+&= \int_1^x \sqrt{\left(\frac{x^2 + 1/x^2}{2}\right)^2} \, dx' \\
+&= \int_1^x \left(\frac{x^2}{2} + \frac{1}{2x^2}\right) dx' = \left[ \frac{1}{6} x^3 - \frac{1}{2x} \right]_1^x = \frac{1}{6} x^3 - \frac{1}{2x} + \frac{1}{3}
+\end{align*}
+以上2つが等しいので
+\[
+\frac{1}{4} t^2 = \frac{1}{6} x^3 - \frac{1}{2x} + \frac{1}{3}
+\]
+
+\bigskip
+
+(2) $\vec{v}$ は, 曲線の接線ベクトルと平行であり, $\vec{v} \mathbin{/\!\!/} \begin{pmatrix} 1 \\ \frac{15}{16} \end{pmatrix}$ の時, $P$ の $x$ 座標を $x_0$ とすると,
+\[
+\frac{1}{2} x_0^2 - \frac{1}{2 x_0^2} = \frac{15}{16}
+\]
+$x_0 \neq 0$ より, 両辺 $x_0^2$ 倍して, $\alpha = x_0^2$ とおくと,
+\[
+4\alpha^2 - 15\alpha - 4 = 0
+\]
+\[
+\alpha = 4, -\frac{1}{4}
+\]
+$x > 0$ より, $\alpha = 4 \implies x_0 = 2 \ (>0)$ だから, (1)より,
+\[
+\frac{1}{4} t^2 = \frac{8}{6} - \frac{1}{4} + \frac{1}{3} = \frac{17}{12}
+\]
+\[
+\therefore t = \sqrt{\frac{17}{3}} \quad (>0)
+\]
+
+\newpage
+
+\subsection*{第6問}
+
+\noindent
+\textbf{[解]} Aがグー, チョキ, パーを出す確率を $p, q, r$ とする. これらは排反だから
+\[
+p + q + r = 1 \quad \dots \text{①}
+\]
+さらに, $a + b + c = 1 \ \dots \text{②}$ と規格化して考えて良い.
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+A \textbackslash{} B & グー & チョキ & パー \\ \hline
+グー & $\times$ & Bが3歩 & Aが6歩 \\ \hline
+チョキ & Aが3歩 & $\times$ & Bが5歩 \\ \hline
+パー & Bが6歩 & Aが5歩 & $\times$ \\ \hline
+\end{tabular}
+\end{center}
+
+\bigskip
+
+A, Bの歩数の期待値を $E_A, E_B$ とすると, 上表から
+\begin{align*}
+E_A &= r \cdot a \cdot 6 + p \cdot b \cdot 3 + q \cdot c \cdot 5 \\
+E_B &= q \cdot a \cdot 3 + r \cdot b \cdot 5 + p \cdot c \cdot 6
+\end{align*}
+だから,
+\begin{align*}
+E = E_A - E_B &= (6r - 3q) a + (3p - 5r) b + (5q - 6p) c \quad \dots \text{③} \\
+&= (3b - 6c) p + (5c - 3a) q + (6a - 5b) r \quad \dots \text{④}
+\end{align*}
+となる.
+
+\bigskip
+
+(1) ④で, $a = b = c = \frac{1}{3}$ として
+\[
+E = -p + \frac{2}{3} q + \frac{1}{3} r \le \frac{2}{3} \quad (\text{等号成立は } p=r=0, q=1)
+\]
+から $(p, q, r) = (0, 1, 0)$.
+
+\bigskip
+
+(2) ③及び④から, $(a,b,c) = (1,0,0), (0,1,0), (0,0,1)$ での成立が必要で,
+\[
+\begin{cases} 6r - 3q \ge 0 \\ 3p - 5r \ge 0 \\ 5q - 6p \ge 0 \end{cases} \quad \therefore r \ge \frac{1}{2} q \ge \frac{3}{5} p \ge r \quad \dots \text{⑤}
+\]
+から, ⑤で全ての等号が成立し, $r = \frac{1}{2} q = \frac{3}{5} p$ で, ①に代入して $(p, q, r) = \left( \frac{5}{14}, \frac{3}{7}, \frac{3}{14} \right)$ となる. 逆にこの時⑤の右辺は0となり, 以上から,
+\[
+(p, q, r) = \left( \frac{5}{14}, \frac{3}{7}, \frac{3}{14} \right)
+\]
+
+\end{document}

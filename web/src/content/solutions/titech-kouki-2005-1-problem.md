@@ -7,9 +7,9 @@ type: "problem"
 title: "TITECH 2005 kouki Q1 (problem)"
 ---
 
-数列 $\{a_m\}$ (ただし $a_m = m$ とする) に対し $b_n = \sum_{m=1}^{n} a_m$ とおく．
+数列 $\{a_m\}$ (ただし $a_m = m$ とする) に対し $\displaystyle b_n = \sum_{m=1}^{n} a_m$ とおく．
 
-1.  $0 < r < 1$ とするとき，$\lim_{n \to \infty} nr^n = 0$ および $\lim_{n \to \infty} n^2r^n = 0$ となることを証明せよ．
+1.  $0 < r < 1$ とするとき，$\displaystyle \lim_{n \to \infty} nr^n = 0$ および $\displaystyle \lim_{n \to \infty} n^2r^n = 0$ となることを証明せよ．
 
 2.  $S_m = a_1r + a_2r^2 + \dots + a_mr^m$, $T_n = b_1r + b_2r^2 + \dots + b_nr^n$ とおくとき，
-        $\lim_{m \to \infty} S_m$ および $\lim_{n \to \infty} T_n$ を求めよ．
+        $\displaystyle \lim_{m \to \infty} S_m$ および $\displaystyle \lim_{n \to \infty} T_n$ を求めよ．

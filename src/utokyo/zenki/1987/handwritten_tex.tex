@@ -1,0 +1,389 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{1987年 東京大学 理科}
+
+\subsection*{第2問}
+
+[解] $y = x^2$ を $\begin{pmatrix} a \\ b \end{pmatrix}$ だけ平行移動した放物線を $C$ とすると,
+\[
+C: y = (x-a)^2 + b
+\]
+である. $C$ の $x=t$ ($t>0$) での接線と $C': y = \frac{1}{x}$ の接線が一致する時, $C$ と $C'$ は $x=t$ で接していて
+\[
+\begin{cases}
+2(t-a) = -\frac{1}{t^2} \\
+(t-a)^2 + b = \frac{1}{t}
+\end{cases}
+\]
+\[
+\iff
+\begin{cases}
+a = t + \frac{1}{2t^2} \equiv f(t) & \dots \text{①} \\
+b = -(t-a)^2 + \frac{1}{t} = -\frac{1}{4t^4} + \frac{1}{t} \equiv g(t) & \dots \text{②}
+\end{cases}
+\]
+これをみたす $t > 0$ の存在条件を求めれば良い. ①, ②に代入して,
+\[
+b = g(t) = -\frac{1}{4t^4} + \frac{1}{t}
+\]
+
+又, 接点以外に交点を持たない時,
+\[
+\begin{cases}
+C: y = (x - f(t))^2 + g(t) \\
+C': y = \frac{1}{x}
+\end{cases}
+\quad (x > 0)
+\]
+が $x=t$ 以外に共有点を持たないので, 連立した
+\[
+\frac{1}{x} = (x - f(t))^2 + g(t) \quad (x > 0)
+\]
+\[
+x^3 - 2f(t)x^2 + \left[\{f(t)\}^2 + g(t)\right]x - 1 = 0 \quad (x > 0)
+\]
+が $x=t$ 以外に実解を持たなければよい.
+\[
+(x-t)^2 \left( x - \frac{1}{t^2} \right) = 0 \quad (x > 0) \quad \dots \text{③}
+\]
+従って, ③が $x=t$ 以外に実解を持たない条件は $t > 0$ より
+\[
+t = \frac{1}{t^2} \iff t = 1 \quad (\because t > 0)
+\]
+で, この時 $(a, b) = \left( \frac{3}{2}, \frac{3}{4} \right)$ である.
+
+従って, $(a, b)$ は $a = f(t), b = g(t)$ ($t > 0$) で表されるパラメータ関数上にある.
+\[
+f'(t) = 1 - \frac{1}{t^3} = \frac{1}{t^3}(t-1)(t^2 + t + 1)
+\]
+\[
+g'(t) = \frac{1}{t^5} - \frac{1}{t^2} = \frac{1}{t^5}(1 - t^3) = \frac{1}{t^5}(1-t)(t^2 + t + 1)
+\]
+
+増減表をつくると,
+\begin{center}
+\begin{tabular}{c|c c c c}
+$t$ & $(0)$ & $\dots$ & $1$ & $\dots$ \\ \hline
+$f'$ & & $-$ & $0$ & $+$ \\ \hline
+$g'$ & & $+$ & $0$ & $-$ \\ \hline
+$(a,b)$ & & $\nwarrow$ & $\left(\frac{3}{2}, \frac{3}{4}\right)$ & $\searrow$
+\end{tabular}
+\end{center}
+
+これと, $a \to +\infty, b \to -\infty$ ($t \to +0$), $a \to +\infty, b \to -0$ ($t \to +\infty$) より, $(a, b)$ のグラフは下図のようになる.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  % Axes
+  \draw[->] (-0.5,0) -- (3.5,0) node[right] {$a$};
+  \draw[->] (0,-1.5) -- (0,1.2) node[above] {$b$};
+  \node[below left] at (0,0) {$O$};
+
+  % Coordinates
+  \draw[dashed] (1.5,0) node[below] {$\frac{3}{2}$} -- (1.5,0.75) -- (0,0.75) node[left] {$\frac{3}{4}$};
+  \fill (1.5,0.75) circle (1.5pt) node[above right] {$\left(\frac{3}{2}, \frac{3}{4}\right)$};
+
+  % Curve
+  \draw[thick, domain=0.65:1, samples=50, smooth] plot ({ \x + 1/(2*\x*\x) }, { 1/\x - 1/(4*\x*\x*\x*\x) });
+  \draw[thick, domain=1:3, samples=50, smooth] plot ({ \x + 1/(2*\x*\x) }, { 1/\x - 1/(4*\x*\x*\x*\x) });
+\end{tikzpicture}
+\end{center}
+
+\subsection*{第3問}
+
+\subsubsection*{思考メモ・方針}
+
+$S$ の算出までは前座で, ここからが本題.
+\[
+S = \frac{1}{2} \frac{(c+1)^2}{a b c} \quad (a^2 + b^2 + c^2 = 1, \, 0 < a, b, c)
+\]
+の $\min$ をもとめる. 方針は2つくらいかな?
+\begin{enumerate}
+  \item 球体のパラメータ表示
+  \item 2段階の有名不等式
+\end{enumerate}
+
+\paragraph{[球のパラメータ表示]}
+\begin{itemize}
+  \item 原点中心半径1の球面は右のように考えて,
+  \[
+  \begin{cases}
+  x = \sin\theta \cos\phi \\
+  y = \sin\theta \sin\phi \\
+  z = \cos\theta
+  \end{cases}
+  \]
+  とおける.
+  \item その他にも, "角度"を1つにして, $z$ を $p, q$ といった文字で表し, 未定条件にしても良い.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=stealth]
+  \draw[->] (0,0,0) -- (1.5,0,0) node[right] {$y$};
+  \draw[->] (0,0,0) -- (0,1.5,0) node[above] {$z$};
+  \draw[->] (0,0,0) -- (0,0,1.8) node[below left] {$x$};
+  \draw (0,0,0) -- (0.8,0.8,0.5) node[above right] {長さ $1$};
+  \draw[dashed] (0.8,0.8,0.5) -- (0.8,0,0.5);
+  \draw[dashed] (0,0,0) -- (0.8,0,0.5);
+  \draw (0,0.4,0) arc (90:45:0.4) node[above right] {$\theta$};
+  \draw (0.3,0,0.2) arc (35:65:0.4) node[below] {$\phi$};
+\end{tikzpicture}
+\end{center}
+
+[ポイント] 2段階不等式
+\begin{itemize}
+  \item ①だと, $\theta$ か $\phi$ を固定して, 別々に最小値をもとめることになる.
+  \item ②だと,
+  \begin{itemize}
+    \item $S$ の式は, "$a$ と $b$" がシマだからけしたい.
+    \item $a^2 + b^2 = 1 - c^2$ から, $\frac{1}{ab}$ を下から評価したい $\to$ AM-GM または図示.
+    \item $c$ だけの式になって解決.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{解答}
+
+[解] $K: x^2 + y^2 + (z-1)^2 = 1$ だから $Q(a, b, c)$ が $K$ 上にあることより
+\[
+\begin{cases}
+a^2 + b^2 + (c-1)^2 = 1 \\
+a > 0, b > 0, c > 1
+\end{cases}
+\quad \dots \text{①}
+\]
+$Q$ における $K$ の接平面は
+\[
+a x + b y + (c-1)(z-1) = 1
+\]
+だから, $A\left(\frac{c}{a}, 0, 0\right)$, $B\left(0, \frac{c}{b}, 0\right)$, $C\left(0, 0, 1 + \frac{1}{c-1}\right)$ となり, $d = c-1$ とおくと, $d > 0$ \dots ② ($\because c > 1$).
+\[
+\vec{CA} = \begin{pmatrix} \frac{d+1}{a} \\ 0 \\ -1 - \frac{1}{d} \end{pmatrix}, \quad
+\vec{CB} = \begin{pmatrix} 0 \\ \frac{d+1}{b} \\ -1 - \frac{1}{d} \end{pmatrix}
+\]
+から
+\[
+|\vec{CA}|^2 = \frac{(d+1)^2}{a^2} + \frac{(d+1)^2}{d^2}
+\]
+\[
+|\vec{CB}|^2 = \frac{(d+1)^2}{b^2} + \frac{(d+1)^2}{d^2}
+\]
+\[
+\vec{CA} \cdot \vec{CB} = \frac{(d+1)^2}{d^2}
+\]
+だから, $\triangle ABC$ の面積 $T$ として, 又 $\alpha = \frac{(d+1)^2}{d^2}$ とすると,
+\[
+T = \frac{1}{2} \sqrt{ \left(\alpha + \frac{(d+1)^2}{a^2}\right)\left(\alpha + \frac{(d+1)^2}{b^2}\right) - \alpha^2 }
+\]
+\[
+= \frac{1}{2} \sqrt{ \left\{ \frac{(d+1)^2}{a^2} + \frac{(d+1)^2}{b^2} \right\} \cdot \alpha + \frac{(d+1)^4}{a^2 b^2} }
+\]
+\[
+= \frac{1}{2} (d+1)^2 \sqrt{ \left(\frac{1}{a^2} + \frac{1}{b^2}\right) \frac{1}{d^2} + \frac{1}{a^2 b^2} }
+\]
+\[
+= \frac{1}{2} \frac{(d+1)^2}{a b d} \quad (\because \text{①から } a^2 + b^2 + d^2 = 1)
+\]
+
+したがって, ①のもとでこの $\min$ を求めれば良い. $d$ を固定すると ($0 < d < 1$)
+\[
+\begin{cases}
+a^2 + b^2 = 1 - d^2 \\
+0 < a, 0 < b
+\end{cases}
+\]
+から, $(a, b)$ は右図太線部をうごくので, $ab$ は $(a, b) = \left( \sqrt{\frac{1-d^2}{2}}, \sqrt{\frac{1-d^2}{2}} \right)$ で最大値, $\max ab = \frac{1-d^2}{2}$ をとる.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  \draw[->] (-0.2,0) -- (1.5,0) node[right] {$a$};
+  \draw[->] (0,-0.2) -- (0,1.5) node[above] {$b$};
+  \node[below left] at (0,0) {$O$};
+  \draw[dashed] (0,0) -- (1.2,1.2);
+  \draw[ultra thick, domain=0:90, samples=50] plot ({1*cos(\x)}, {1*sin(\x)});
+  \node[below] at (1,0) {$\sqrt{1-d^2}$};
+  \fill (0.707,0.707) circle (1.5pt) node[above right] {$\left(\sqrt{\frac{1-d^2}{2}}, \sqrt{\frac{1-d^2}{2}}\right)$};
+\end{tikzpicture}
+\end{center}
+
+したがって, $d$ を固定した時
+\[
+\min T = \frac{1}{2} \frac{(d+1)^2}{\frac{1-d^2}{2} d} = \frac{(d+1)^2}{(1+d)(1-d) d} = \frac{d+1}{d(1-d)}
+\]
+\[
+= \frac{c}{(c-1)(2-c)} \quad (\because c = d+1, \, 1 < c < 2)
+\]
+\[
+= \frac{1}{3 - (c + 2/c)} \ge \frac{1}{3 - 2\sqrt{2}} = 3 + 2\sqrt{2} \quad (\because \text{AM-GM})
+\]
+等号成立は $c = \sqrt{2}$ の時で, これは $1 < c < 2$ をみたす.
+
+\subsection*{第4問}
+
+[解] $P(0, t, 1-t^2)$ とおく. $x = k$ とする.
+\[
+AP = \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} + p \begin{pmatrix} -1 \\ t-1 \\ 1-t^2 \end{pmatrix}
+\]
+だから, $x = k$ の時, $1 - p = k \implies p = 1 - k$ だから,
+\[
+(k, (1-k)t, 1 - (1-k)t^2)
+\]
+である. これは右図. したがって, この平面での $t$ のかりの面積 $S(t)$ とする.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=stealth]
+  \draw[->] (0,0,0) -- (0,0,2) node[below left] {$x$};
+  \draw[->] (0,0,0) -- (2,0,0) node[right] {$y$};
+  \draw[->] (0,0,0) -- (0,2,0) node[above] {$z$};
+  \node[below left] at (0,0,0) {$O$};
+
+  % Parabola z = 1 - y^2 in yz plane
+  \draw[thick, domain=-1.2:1.2, samples=50, smooth] plot (\x, {1 - \x*\x}, 0) node[above right] {$z = 1 - y^2$};
+  \fill (0,1,0) circle (1.5pt) node[above left] {$A$};
+  \node[below] at (1,0,0) {$1$};
+  \node[left] at (0,1,0) {$1$};
+
+  % Point P
+  \coordinate (P) at (0.7, {1 - 0.7*0.7}, 0);
+  \fill (P) circle (1.5pt) node[above right] {$P$};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[scale=1.2, >=stealth]
+  \draw[->] (-0.5,0) -- (2,0) node[right] {$y$};
+  \draw[->] (0,-0.5) -- (0,2) node[above] {$z$};
+  \node[below left] at (0,0) {$O$};
+  \node[above right] at (0,1.5) {$x=k$};
+  \coordinate (Q) at (1.2, 1.3);
+  \fill (Q) circle (1.5pt);
+  \draw[dashed] (Q) -- (1.2,0) node[below] {$(1-k)t$};
+  \draw[dashed] (Q) -- (0,1.3) node[left] {$1-(1-k)t^2$};
+  \draw (0,0) -- (Q);
+\end{tikzpicture}
+\end{center}
+
+\[
+S(t) = \pi \left\{ (1-k)^2 t^2 + [1 - (1-k)t^2]^2 \right\}
+\]
+\[
+= \pi \left[ t^2 (1-k)^2 + t^4 (1-k)^2 - 2t^2(1-k) + 1 \right] \quad \dots \text{①}
+\]
+したがって
+\[
+V = \int_0^1 S(t) dt
+\]
+\[
+= \pi \int_0^1 \left\{ (t^2 + t^4)(1-k)^2 - 2t^2(1-k) + 1 \right\} dk
+\]
+\[
+= \pi \left[ \frac{1}{3} (t^2 + t^4)(k-1)^3 + t^2 (k-1)^2 + k \right]_0^1
+\]
+\[
+= \pi \left[ + \frac{1}{3}(t^2 + t^4) - t^2 + 1 \right]
+\]
+\[
+= \pi \left( \frac{1}{3} t^4 - \frac{2}{3} t^2 + 1 \right)
+\]
+\[
+= \pi \cdot \left[ \frac{1}{3} (t^2 - 1)^2 + \frac{2}{3} \right] \ge \frac{2}{3}\pi \quad (\text{等号成立は } t = \pm 1)
+\]
+
+\subsection*{第5問}
+
+[解] M.I. で示す.
+
+\paragraph{[I] $n=2$ の時}
+$y_1 = z_1, y_2 = z_2$ の時は明らかに成立. $y_1 = z_2, y_2 = z_1$ の時,
+\[
+\sum_{k=1}^2 (x_k - z_k)^2 - \sum_{k=1}^2 (x_k - y_k)^2
+\]
+\[
+= (-2x_1 y_2 - 2x_2 y_1) - (-2x_1 y_1 - 2x_2 y_2)
+\]
+\[
+= 2(x_1 - x_2)(y_1 - y_2) \ge 0 \quad (\because x_1 \ge x_2, \, y_1 \ge y_2)
+\]
+より成立.
+
+\paragraph{[II] $n=k$ での成立を仮定}
+$n = k+1$ の時, 数列 $\{x_n\}, \{y_n\}$ に対し
+\[
+x_1 \ge x_2 \ge \dots \ge x_k \ge x_{k+1}
+\]
+\[
+y_1 \ge y_2 \ge \dots \ge y_k \ge y_{k+1}
+\]
+とする.
+
+\subparagraph{① $z_{k+1} = y_{k+1}$ の時}
+$x_1 \sim x_k, y_1 \sim y_k$ に仮定を適用出来る.
+\[
+\sum_{i=1}^{k+1} (x_i - z_i)^2 - \sum_{i=1}^{k+1} (x_i - y_i)^2
+\]
+\[
+= \sum_{i=1}^k (x_i - z_i)^2 - \sum_{i=1}^k (x_i - y_i)^2 \ge 0 \quad (\because \text{仮定})
+\]
+から $n = k+1$ でも成立.
+
+\subparagraph{② $z_{k+1} \neq y_{k+1}$ の時}
+$y_{k+1}$ は $z_{k+1}$ 以外の名ある $z_l$ ($l \le k$) に等しく, $z_{k+1}$ は $y_{k+1}$ 以外の名ある $y_m$ ($m \le k$) に等しい. ここで, 次のような数列 $\{z'_n\}$ をかんがえる.
+
+\begin{center}
+\begin{tabular}{l|l}
+$z'_{k+1} = z_l = y_{k+1}$ & $z_1, z_2, \dots, z_l, \dots, z_k, z_{k+1}$ \\
+$z'_l = z_{k+1} = y_m$ & $z_1, z_2, \dots, z_{k+1}, \dots, z_k, z_l$ \\
+$j \neq l, k+1$ の時 $z'_j = z_j$ & $y_{k+1}, \dots, y_m$
+\end{tabular}
+\end{center}
+
+この時, $\{y_n\}$ と $\{z'_n\}$ において, $y_{k+1} = z'_{k+1}$ であり, $1 \le n \le k$ の時 $\{z'_n\}$ は $\{y_n\}$ をならびかえたものだから ①から
+\[
+\sum_{i=1}^{k+1} (x_i - z'_i)^2 \ge \sum_{i=1}^{k+1} (x_i - y_i)^2 \quad \dots \text{①}
+\]
+
+又, $\{z_n\}, \{z'_n\}$ について,
+\[
+\sum_{i=1}^{k+1} \left[ (x_i - z_i)^2 - (x_i - z'_i)^2 \right]
+\]
+\[
+= \left\{ (x_l - z_l)^2 - (x_l - z'_l)^2 \right\} + \left\{ (x_{k+1} - z_{k+1})^2 - (x_{k+1} - z'_{k+1})^2 \right\}
+\]
+\[
+= \left\{ (x_l - y_{k+1})^2 - (x_l - y_m)^2 \right\} + \left\{ (x_{k+1} - y_m)^2 - (x_{k+1} - y_{k+1})^2 \right\}
+\]
+\[
+= -2x_l y_{k+1} + 2x_l y_m - 2x_{k+1} y_m + 2x_{k+1} y_{k+1}
+\]
+\[
+= 2(x_{k+1} - x_l)(y_{k+1} - y_m) \ge 0 \quad (\because y_m \le y_{k+1}, \, x_l \le x_{k+1}) \quad \dots \text{②}
+\]
+
+だから ①, ②から
+\[
+\sum_{i=1}^{k+1} (x_i - z_i)^2 \ge \sum_{i=1}^{k+1} (x_i - y_i)^2
+\]
+となり, $n = k+1$ でも成立.
+
+以上より示された. \hfill $\blacksquare$
+
+\paragraph{[別解]}
+
+数列 $\{z_n\}$ に対し, まず $z_1$ と $z_l$ ($l = 2, 3, \dots, n$) を順に比較し, $z_1 < z_l$ の時に限り $z_1$ と $z_l$ を交換し, 交換後の $z_1$ に対し, 交換後の $z_l$ の次の項以下について同様の操作を続ける. 次に交換後の $z_2$ と $z_l$ ($3 \le l \le n$) について上と同様の作業をくり返す. この操作が全て終了すると, $\{z_n\}$ は $\{y_n\}$ となる.
+
+次に各操作において $z_p < z_q$ ($p < q$) の時 $z_p$ と $z_q$ を交換後 $z'_p = z_q, z'_q = z_p$ となったとすると,
+\[
+(x_p - z'_p)^2 + (x_q - z'_q)^2 - \left\{ (x_p - z_p)^2 + (x_q - z_q)^2 \right\}
+\]
+\[
+= 2(x_p - x_q)(z_p - z_q) \le 0
+\]
+だから,
+\[
+(x_p - z'_p)^2 + (x_q - z'_q)^2 \le (x_p - z_p)^2 + (x_q - z_q)^2
+\]
+したがって, $P_n = \sum_{k=1}^n (x_k - z_k)^2$ の操作後の値を $P'_n$ とすれば $P'_n \le P_n$ となる. 全ての操作がおわった時のことをかんがえて
+\[
+\sum_{k=1}^n (x_k - y_k)^2 \le \sum_{k=1}^n (x_k - z_k)^2 \quad \blacksquare
+\]
+
+\end{document}

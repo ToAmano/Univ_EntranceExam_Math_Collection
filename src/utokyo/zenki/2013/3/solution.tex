@@ -1,0 +1,88 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\noindent
+\textbf{[解]} (1) $n$ 回コインを投げた時に A が勝つのは、$n$ 回目の試行の前に A がコインを持ち、かつ投げて表が出る時である。さらに、$n-1$ 回目までに A が1点、B が0点又は1点である。\\
+以下 $n \ge 2$ とする。
+
+\medskip
+
+\noindent
+$1^\circ$ B が 0 点の時\\
+$n$ は偶数である。以下の表のように $n$ 個の丸の中に、左から $n$ 回目の試行の後に玉を持つ人を書き下すと、この間に1ヶ所だけ A が連続する場所がある。この場所の選び方は $n = 2m$ とおくと、$m$ 通り。
+
+\begin{center}
+\begin{tabular}{ccccccc}
+1 & 2 & $\dots$ & $2k-1, 2k$ & $\dots$ & $n-1$ & $n$ \\
+$\circ$ & $\circ$ & $\dots$ & $\circ \quad \circ$ & $\dots$ & $\circ$ & $\circ$ \\
+B & A & $\dots$ & A \quad A & $\dots$ & A & A
+\end{tabular}
+\end{center}
+
+\medskip
+
+\noindent
+$2^\circ$ B が 1 点の時\\
+$n$ は奇数である。$1^\circ$ と同様に考えると A, B 共に連続する場所が1ヶ所ずつある。\\
+この場合の数は、右下のように $n-3$ 個の $\text{BABA} \dots \text{BA}$ の列の中の2ヶ所に、A と B を1つずつ入れる場合の数で、$n-2 = 2m+1$ とおくと、B の入れ方は $m-1$ 通り、A の入れ方は $m$ 通りであわせて $(m-1)m$ 通り。
+
+\medskip
+
+\noindent
+全事象は $2^n$ 通りで、同様にたしからしく、$n=1$ の時、$P(1) = 0$ だから $2^\circ$ の表でよく、
+\[
+P(n) = \begin{cases}
+\dfrac{m}{2^{2m}} & (n \text{ even}) \\[10pt]
+\dfrac{(n-1)(n-3)}{2^{n+2}} & (n \text{ odd})
+\end{cases}
+\hfill \text{固}
+\]
+
+\bigskip
+
+\noindent
+(2) $A_N = \sum_{n=1}^N P(n)$ とおきます。まず $N = 2m \; (m \in \mathbb{N})$ の時、(1)から
+\begin{align*}
+A_N &= \sum_{t=1}^m \{ P(2t-1) + P(2t) \} \\
+&= \sum_{t=1}^m \left( \frac{(2t-4)(2t-2)}{2^{2t+1}} + \frac{2t}{2^{2t+1}} \right) \\
+&= \sum_{t=1}^m \frac{2t^2 - 5t + 4}{4^t} \quad \cdots \textcircled{1}
+\end{align*}
+
+\noindent
+ここで、$B_n = \sum_{k=1}^n k \cdot \left(\frac{1}{4}\right)^k, \; C_n = \sum_{k=1}^n k^2 \cdot \left(\frac{1}{4}\right)^k$ とおくと、
+\[
+B_n = \left( -\frac{1}{3} n - \frac{1}{9} \right) \left(\frac{1}{4}\right)^{n+1} + \frac{1}{9} \quad \cdots \textcircled{2}
+\]
+であり、
+\begin{align*}
+C_n &= 1 \cdot \left(\frac{1}{4}\right) + \dots + n^2 \left(\frac{1}{4}\right)^n \\
+\frac{1}{4} C_n &= \left(\frac{1}{4}\right)^2 + \dots + (n-1)^2 \left(\frac{1}{4}\right)^n + n^2 \left(\frac{1}{4}\right)^{n+1}
+\end{align*}
+の辺々引いて、
+\begin{align*}
+\frac{3}{4} C_n &= \sum_{k=1}^n (2k-1) \left(\frac{1}{4}\right)^k - n^2 \left(\frac{1}{4}\right)^{n+1} \\
+&= 2 B_n - \frac{1 - (1/4)^n}{4 \cdot \frac{3}{4}} - n^2 \left(\frac{1}{4}\right)^{n+1} \\
+C_n &= \frac{8}{3} B_n - \frac{4}{9} + \frac{4}{9} \left(\frac{1}{4}\right)^n - \frac{4}{3} n^2 \left(\frac{1}{4}\right)^{n+1} \quad \cdots \textcircled{3}
+\end{align*}
+
+\noindent
+となる。②、③から、$n \to \infty$ の時、$B_n \to \frac{1}{9}, \; C_n \to \frac{20}{27}$ となるので、①より
+\[
+A_N \longrightarrow 2 \cdot \frac{20}{27} - 5 \cdot \frac{1}{9} + \frac{1}{1-1/4} = \frac{16}{27} \quad \cdots \textcircled{4}
+\]
+であり、
+\[
+A_{2m+1} = A_{2m} + P(2m+1) \longrightarrow \frac{16}{27} \quad \cdots \textcircled{5}
+\]
+だから、④⑤から、
+\[
+A_n \longrightarrow \frac{16}{27} \hfill \text{固}
+\]
+
+\bigskip
+
+\end{document}

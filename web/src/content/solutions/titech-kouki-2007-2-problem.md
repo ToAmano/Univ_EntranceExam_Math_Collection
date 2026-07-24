@@ -7,7 +7,7 @@ type: "problem"
 title: "TITECH 2007 kouki Q2 (problem)"
 ---
 
-$0 < x < \frac{\pi}{2}$ に対して関数 $f(x) = \frac{x}{\tan x}$, $g(x) = \frac{x}{\tan x} + \frac{\tan x}{x}$ を考える.
+$\displaystyle 0 < x < \frac{\pi}{2}$ に対して関数 $\displaystyle f(x) = \frac{x}{\tan x}$, $\displaystyle g(x) = \frac{x}{\tan x} + \frac{\tan x}{x}$ を考える.
 
 1.  $f'(x), f''(x)$ の正負を判定し, $y=f(x)$ のグラフをかけ.
 

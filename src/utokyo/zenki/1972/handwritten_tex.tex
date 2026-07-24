@@ -1,0 +1,386 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\subsection*{第1問}
+
+[解] まず, $\angle APB \ge 30^\circ$ について考える。
+
+対称性から, $P$ が $x$ 軸にある時を考える。
+
+右下図において, ($xz$平面)
+\[
+\vec{PA} = \begin{pmatrix} -x \\ 6 \end{pmatrix}, \quad \vec{PB} = \begin{pmatrix} -x \\ 20 \end{pmatrix}
+\]
+だから, $0 \le \angle APB < \pi/2$ とあわせて,
+\[
+\tan \angle APB = \frac{|-6x + 20x|}{\vec{PA} \cdot \vec{PB}} = \frac{14x}{120 + x^2} \quad (\because x \ge 0)
+\]
+$\tan \theta$ が $0 \le \theta < \pi/2$ で単調増加であることから
+
+$\angle APB \ge 30^\circ$ のとき
+\[
+\frac{\sqrt{3}}{3} \le \frac{14x}{120 + x^2}
+\]
+\[
+x^2 - 14\sqrt{3}x + 120 \le 0 \quad (\because 120 + x^2 > 0)
+\]
+\[
+(x - 10\sqrt{3})(x - 4\sqrt{3}) \le 0
+\]
+\[
+\therefore 4\sqrt{3} \le x \le 10\sqrt{3}
+\]
+したがって, $P$ をつつむ平面でうごかすと,
+\[
+16 \cdot 3 \le x^2 + y^2 \le 100 \cdot 3 \quad \cdots \text{①}
+\]
+したがって, もとめるのは
+\[
+\text{①} \land 0 \le x \le 15 \land 0 \le y \le 15
+\]
+で, 図示して右図斜線部で, この面積 $S$ は
+\[
+\begin{aligned}
+S &= \frac{1}{2} \cdot \frac{\pi}{6} (10\sqrt{3})^2 + 15 \cdot 5\sqrt{3} - \frac{1}{2} \cdot \frac{\pi}{2} (4\sqrt{3})^2 \\
+&= 13\pi + 75\sqrt{3}
+\end{aligned}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  % Diagram 1: xz-plane
+  \draw[->] (-0.5,0) -- (4,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,4.5) node[above] {$z$};
+  \node[below left] at (0,0) {$O$};
+  \coordinate (A) at (0,1.2);
+  \coordinate (B) at (0,3.8);
+  \coordinate (P) at (3,0);
+  \fill (A) circle (1.5pt) node[left] {$A(6)$};
+  \fill (B) circle (1.5pt) node[left] {$B(20)$};
+  \fill (P) circle (1.5pt) node[below] {$P$};
+  \draw (A) -- (P) -- (B);
+\end{tikzpicture}
+\quad
+\begin{tikzpicture}[scale=0.25]
+  % Diagram 2: xy-plane region
+  \draw[->] (-1,0) -- (18,0) node[right] {$x$};
+  \draw[->] (0,-1) -- (0,18) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % Boundaries of 0 <= x <= 15, 0 <= y <= 15
+  \draw[dashed] (15,0) node[below] {$15$} -- (15,15) -- (0,15) node[left] {$15$};
+
+  % Outer circle sector R = 10*sqrt(3) ~ 17.32
+  \draw[domain=30:60, samples=50, smooth, thick] plot ({10*sqrt(3)*cos(\x)}, {10*sqrt(3)*sin(\x)});
+  \draw[thick] (15,0) -- (15, {5*sqrt(3)});
+  \draw[thick] (0,15) -- ({5*sqrt(3)}, 15);
+
+  % Inner circle r = 4*sqrt(3) ~ 6.93
+  \draw[domain=0:90, samples=50, smooth, thick] plot ({4*sqrt(3)*cos(\x)}, {4*sqrt(3)*sin(\x)});
+
+  % Shaded region
+  \fill[fill=gray!30]
+    plot[domain=0:30, samples=30] ({10*sqrt(3)*cos(\x)}, {10*sqrt(3)*sin(\x)}) -- (15, {5*sqrt(3)}) -- (15,0) -- ({4*sqrt(3)}, 0)
+    plot[domain=0:90, samples=30] ({4*sqrt(3)*cos(90-\x)}, {4*sqrt(3)*sin(90-\x)}) -- (0, 15) -- ({5*sqrt(3)}, 15)
+    plot[domain=60:30, samples=30] ({10*sqrt(3)*cos(\x)}, {10*sqrt(3)*sin(\x)});
+
+  % Labels
+  \node[below] at ({4*sqrt(3)},0) {$4\sqrt{3}$};
+  \node[left] at (0,{4*sqrt(3)}) {$4\sqrt{3}$};
+  \node[right] at (15,{5*sqrt(3)}) {$5\sqrt{3}$};
+  \node[above] at ({5*sqrt(3)},15) {$5\sqrt{3}$};
+  \node[below] at ({10*sqrt(3)*cos(30)}, 0) {$10\sqrt{3}$};
+  \node[left] at (0, {10*sqrt(3)*sin(60)}) {$10\sqrt{3}$};
+
+  \draw (0,0) -- (15, {5*sqrt(3)});
+  \node at (4,1.5) {$30^\circ$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{第2問}
+
+[解] $B, C$ から $k, h$ に下ろした垂線の足を順に $P, Q$ とおく。正射影から,
+\[
+\vec{BP} = -\frac{\vec{b} \cdot \vec{c}}{|\vec{c}|^2} \vec{c}
+\]
+\[
+\vec{CQ} = -\frac{\vec{b} \cdot \vec{c}}{|\vec{b}|^2} \vec{b}
+\]
+だから, $\vec{BB'} = 2\vec{BP}$, $\vec{CC'} = 2\vec{CQ}$ より,
+\[
+\begin{cases}
+\vec{b'} = \vec{b} + 2\vec{BP} = \vec{b} - 2\frac{\vec{b} \cdot \vec{c}}{|\vec{c}|^2} \vec{c} \\
+\vec{c'} = \vec{c} + 2\vec{CQ} = -2\frac{\vec{b} \cdot \vec{c}}{|\vec{b}|^2} \vec{b} + \vec{c}
+\end{cases}
+\quad \cdots \text{①}
+\]
+である。$\angle BAC = \theta \; (0 < \theta < \pi)$ とおく。$\vec{b}, \vec{c}$ は三角形をなし, 一次独立だから, ①および題意から,
+\[
+-2\frac{\vec{b} \cdot \vec{c}}{|\vec{c}|^2} = 1, \quad m = -2\vec{b} \cdot \vec{c}
+\]
+\[
+\therefore -2 \frac{\cos\theta}{|\vec{c}|} = 1, \quad m = -2|\vec{c}|\cos\theta \quad \cdots \text{②}
+\]
+前者から $|\vec{c}| = -2\cos\theta$ だから, $|\vec{c}| > 0$ より $\frac{\pi}{2} < \theta < \pi \quad \cdots \text{③}$ である。このもとで②の後者に代入して
+\[
+m = 4\cos^2\theta
+\]
+$-1 < \cos\theta < 0$ 及び $m \in \mathbb{Z}_{>0}$ から, $(m, \cos\theta) = \left(1, -\frac{1}{2}\right), \left(2, -\frac{1}{\sqrt{2}}\right), \left(3, -\frac{\sqrt{3}}{2}\right)$ で②とあわせて
+\[
+(m, \theta, |\vec{c}|) = \left(1, \frac{2}{3}\pi, 1\right), \left(2, \frac{3}{4}\pi, \sqrt{2}\right), \left(3, \frac{5}{6}\pi, \sqrt{3}\right)
+\]
+となる。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (-1.5,-1);
+  \coordinate (C) at (1.5,-0.5);
+
+  \draw[thick] (B) node[left] {$B$} -- (A) node[above] {$A$} -- (C) node[right] {$C$};
+
+  % Lines k and h perpendicular to AC and AB
+  \draw[dashed] (-1,2) -- (1,-2) node[below] {$h$};
+  \draw[dashed] (-2,1) -- (2,-1) node[below] {$k$};
+
+  % Right angle marks at A
+  \draw (0.2,-0.067) -- (0.133,-0.333) -- (-0.067,-0.267);
+
+  \coordinate (P) at (-0.8,0.4);
+  \coordinate (Q) at (0.4,-0.8);
+  \draw[dotted] (B) -- (P) node[above left] {$P$};
+  \draw[dotted] (C) -- (Q) node[below right] {$Q$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{第3問}
+
+[解] $C, C', C_n$ と $l$ の接点を $H, H', H_n$ とする。($C' = C_0, H' = H_0$ とする)
+
+右図から, ピタゴラスの定理より, $|HH_n|$ を2通りで表して
+\[
+|HH_n| = \sqrt{(R+r_n)^2 - (R-r_n)^2}
+\]
+\[
+|HH_n| = |HH_{n+1}| + |H_{n+1}H_n| = \sqrt{(R+r_{n+1})^2 - (R-r_{n+1})^2} + \sqrt{(r_n+r_{n+1})^2 - (r_n-r_{n+1})^2}
+\]
+だから,
+\[
+2\sqrt{Rr_n} = 2\sqrt{Rr_{n+1}} + 2\sqrt{r_n r_{n+1}} \quad \cdots \text{①}
+\]
+$C_n = \frac{1}{\sqrt{r_n}}$ とする。①の両辺 $\sqrt{r_n r_{n+1}} \; (\neq 0)$ でわって,
+\[
+C_{n+1} = C_n + \sqrt{1/R}
+\]
+$C_0 = \sqrt{1/R}$ とあわせて, くり返し用いて,
+\[
+C_n = n\sqrt{1/R} + \sqrt{1/R}
+\]
+だから,
+\[
+r_n = \frac{1}{C_n^2} = \frac{1}{(n\sqrt{1/R} + \sqrt{1/R})^2}
+\]
+より,
+\[
+n^2 r_n = \frac{1}{(\sqrt{1/R} + \frac{1}{n}\sqrt{1/R})^2} \to R \quad (n \to +\infty)
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Line l
+  \draw[thick] (-0.5,0) -- (4,0) node[right] {$l$};
+
+  % Large circle C (radius R = 1)
+  \draw (0,1) circle (1);
+  \fill (0,0) circle (1pt) node[below] {$H$};
+  \node at (0,1) {$R$};
+
+  % Circle C_{n+1} (smaller)
+  \draw (1.6,0.3) circle (0.3);
+  \fill (1.6,0) circle (1pt) node[below] {$H_{n+1}$};
+
+  % Circle C_n (medium)
+  \draw (2.8,0.5) circle (0.5);
+  \fill (2.8,0) circle (1pt) node[below] {$H_n$};
+  \node at (2.8,0.5) {$r_n$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{第4問}
+
+[解] $g(x) = 0 \iff x = \pm 1, -4$ であり, この時, 等式は成立しないので, $x \neq \pm 1, -4 \quad \cdots \text{①}$ となる。したがって, $g(x) \neq 0$ だから
+\[
+k = \frac{f(x)}{g(x)} = \frac{x^2(x+8)}{(x^2-1)(x+4)} = 1 + \frac{4x^2+x+4}{(x^2-1)(x+4)} \equiv h(x) \quad \cdots \text{②}
+\]
+となる。以下 $xy$ 平面で $y=k$ と $y=h(x)$ の共地点の数を求める。
+\[
+\begin{aligned}
+h'(x) &= \frac{(8x+1)(x^2-1)(x+4) - (3x^2+8x-1)(4x^2+x+4)}{(x^2-1)^2 (x+4)^2} \\
+&= \frac{-4x^4 - 2x^3 - 20x^2 - 64x}{(x^2-1)^2 (x+4)^2} \\
+&= \frac{-2x(x+2)(2x^2 - 3x + 16)}{(x^2-1)^2 (x+4)^2}
+\end{aligned}
+\]
+であり, $2x^2 - 3x + 16 = 2\left(x - \frac{3}{4}\right)^2 + \frac{119}{8} > 0$ だから, 下表をうる。
+
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c}
+$x$ & $\dots$ & $-4$ & $\dots$ & $-2$ & $\dots$ & $-1$ & $\dots$ & $0$ & $\dots$ & $1$ & $\dots$ \\ \hline
+$h'$ & $-$ & $\times$ & $-$ & $0$ & $+$ & $\times$ & $+$ & $0$ & $-$ & $\times$ & $-$ \\ \hline
+$h$ & $\searrow$ & $\times$ & $\searrow$ & $4$ & $\nearrow$ & $\times$ & $\nearrow$ & $0$ & $\searrow$ & $\times$ & $\searrow$
+\end{tabular}
+\end{center}
+
+及び, 極限値として以下をうる。
+\[
+\begin{aligned}
+h(x) &\to +\infty \quad (x \to -4+0, -1-0, 1+0) \\
+h(x) &\to -\infty \quad (x \to -4-0, -1+0, 1-0) \\
+h(x) &\to 1 \quad (x \to \pm\infty)
+\end{aligned}
+\]
+したがって $y=h(x)$ のグラフは右図。
+
+もとめる解の数は
+\begin{itemize}
+  \item $0 < k < 1, 1 < k < 4$ の時 1コ
+  \item $k = 1$ の時 0コ
+  \item $k = 0, 4$ の時 2コ
+  \item $k < 0, 4 < k$ の時 3コ
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+  \draw[->] (-6,0) -- (4,0) node[right] {$x$};
+  \draw[->] (0,-4) -- (0,6) node[above] {$y$};
+  \node[below left] at (0,0) {$0$};
+
+  % Asymptotes
+  \draw[dashed] (-4,-4) -- (-4,6);
+  \node[below] at (-4,0) {$-4$};
+  \draw[dashed] (-1,-4) -- (-1,6);
+  \node[below left] at (-1,0) {$-1$};
+  \draw[dashed] (1,-4) -- (1,6);
+  \node[below right] at (1,0) {$1$};
+  \draw[dashed] (-6,1) -- (4,1) node[right] {$y=1$};
+
+  % Points
+  \fill (-2,4) circle (2pt) node[above] {$4$};
+  \node[below] at (-2,0) {$-2$};
+
+  % Branches
+  \draw[thick, domain=-6:-4.2, samples=50] plot (\x, {(\x*\x*(\x+8))/((\x*\x-1)*(\x+4))});
+  \draw[thick, domain=-3.8:-1.2, samples=50] plot (\x, {(\x*\x*(\x+8))/((\x*\x-1)*(\x+4))});
+  \draw[thick, domain=-0.8:0.8, samples=50] plot (\x, {(\x*\x*(\x+8))/((\x*\x-1)*(\x+4))});
+  \draw[thick, domain=1.3:3.8, samples=50] plot (\x, {(\x*\x*(\x+8))/((\x*\x-1)*(\x+4))});
+\end{tikzpicture}
+\end{center}
+
+\subsection*{第5問}
+
+[解]
+\[
+\begin{cases}
+u(x) = \int_0^x h(t) f(t) \, dt + h(x) \int_x^1 f(t) \, dt \quad \cdots \text{①} \\
+u''(x) = f(x) \quad \cdots \text{②} \\
+u(0) = 0 \quad \cdots \text{③}
+\end{cases}
+\]
+
+①の両辺を $x$ で微分して
+\[
+\begin{aligned}
+u'(x) &= h(x)f(x) + h'(x) \int_x^1 f(t) \, dt - h(x)f(x) \\
+&= h'(x) \int_x^1 f(t) \, dt
+\end{aligned}
+\]
+もう1回微分して
+\[
+u''(x) = h''(x) \int_x^1 f(t) \, dt - h'(x)f(x)
+\]
+②から
+\[
+(1 + h'(x)) f(x) = h''(x) \int_x^1 f(t) \, dt \quad \cdots \text{④}
+\]
+$f(x)$ は任意の1次関数だから, モニック1次多項式として $f(x) = x+a$ とし, ④に代入すると,
+\[
+\begin{aligned}
+\{1 + h'(x)\} (x+a) &= \left[ \frac{1}{2} t^2 + a t \right]_x^1 h''(x) \\
+&= \left\{ \frac{1}{2} (1-x^2) + a(1-x) \right\} h''(x)
+\end{aligned}
+\]
+これが $a$ についての恒等式なので, 係数比較して,
+\[
+\begin{cases}
+1 + h'(x) - (1-x) h''(x) = 0 \quad \cdots \text{⑤} \\
+\{1 + h'(x)\} x - \frac{1}{2}(1-x^2) h''(x) = 0 \quad \cdots \text{⑥}
+\end{cases}
+\]
+⑤を⑥に代入して
+\[
+\{1 + h'(x)\} x - \frac{1}{2}(1+x) \{ (1-x) h''(x) \} = 0
+\]
+\[
+\{1 + h'(x)\} x - \frac{1}{2}(1+x) (1 + h'(x)) = 0
+\]
+\[
+\therefore \{1 + h'(x)\} (x-1) = 0
+\]
+これが $x$ についての恒等式だから, $h'(x) = -1$ で, この時⑤, ⑥はみたされ, 十分。
+
+これと, ①, ③から $h(0) = 0$ であることから
+\[
+h(x) = -x
+\]
+である。
+
+\subsection*{第6問}
+
+[解]
+
+$P_j$ にくる確率 $a_j$, $Q_j$ にくる確率 $b_j$ とおくと,
+
+\[
+\begin{aligned}
+a_1 &= \left(\frac{1}{2}\right)^8, & a_5 &= \frac{1}{2} b_4 \\
+a_2 &= \frac{1}{2}(b_1 + b_2), & a_6 &= \frac{1}{2} b_5 \\
+a_3 &= \frac{1}{2}(b_2 + b_3), & a_7 &= \frac{1}{2} b_6 \\
+a_4 &= \frac{1}{2}(b_3 + b_4), & a_8 &= \frac{1}{2} b_7 \\
+& & a_9 &= \frac{1}{2} b_8
+\end{aligned}
+\]
+であり, 各 $b_j$ は以下のようになる
+
+\begin{center}
+\begin{tabular}{c|c|c}
+$j$ & 場合の数 & 確率 $b_j$ \\ \hline
+$1$ & ${}_7\mathrm{C}_0 = 1$ & $(1/2)^7$ \\
+$2$ & ${}_7\mathrm{C}_1 = 7$ & $7(1/2)^7$ \\
+$3$ & ${}_7\mathrm{C}_2 = 21$ & $21(1/2)^7$ \\
+$4$ & ${}_7\mathrm{C}_3 = 35$ & $35(1/2)^7$ \\
+$5$ & ${}_6\mathrm{C}_3 = 20$ & $20(1/2)^6$ \\
+$6$ & ${}_5\mathrm{C}_2 = 10$ & $10(1/2)^5$ \\
+$7$ & ${}_4\mathrm{C}_1 = 4$ & $4(1/2)^4$ \\
+$8$ & $1$ & $(1/2)^3$
+\end{tabular}
+\end{center}
+
+従って, 各 $a_j$ は以下のようになる ($\alpha = 1/2$)
+
+\begin{center}
+\begin{tabular}{c|c || c|c}
+$j$ & $a_j / \alpha^8$ & $j$ & $a_j / \alpha^8$ \\ \hline
+$1$ & $1$ & $5$ & $35$ \\
+$2$ & $8$ & $6$ & $40$ \\
+$3$ & $28$ & $7$ & $40$ \\
+$4$ & $56$ & $8$ & $32$ \\
+& & $9$ & $16$
+\end{tabular}
+\end{center}
+
+従って, $a_j$ の最も大きい地点に police を配置すればよく, $P_4, P_6, P_7$ で, この時, もとめる確率 $p$ は
+\[
+p = \frac{136}{2^8} = \frac{17}{2^5} = 0.531 \fallingdotseq 0.53
+\]
+
+\end{document}

@@ -1,0 +1,393 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{東大理科数学 1985年}
+
+\begin{itemize}
+    \item 所要時間: 100 / 120 分
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+問 & 分野 & 計 & 見 & 統 \\ \hline
+1 & 多変数 & B & B & B \\ \hline
+2 & 多変数 & B & B & B \\ \hline
+3 & 空間 & B & B & B \\ \hline
+4 & 行列 & & & \\ \hline
+5 & 確率 & B & B & B \\ \hline
+6 & 空間 & B & B & B \\ \hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+\subsection*{第1問}
+
+\noindent
+\textbf{[解]} $y = A \sin x$ と $y = 1$ は $0 < x \le \frac{\pi}{2}$ において共有点を持つ。このとき座標として
+\[
+A \sin t = 1 \quad \left(0 < t \le \frac{\pi}{2}\right) \quad \dots \text{①}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.8, >=stealth]
+  % Axes
+  \draw[->] (-0.3,0) -- (2.2,0) node[right] {$x$};
+  \draw[->] (0,-0.3) -- (0,2.2) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % Key values on axes
+  \draw (1.57,0.05) -- (1.57,-0.05) node[below] {$\frac{\pi}{2}$};
+  \draw (0.64,0.05) -- (0.64,-0.05) node[below] {$t$};
+  \draw (0.05,1.0) -- (-0.05,1.0) node[left] {$1$};
+  \draw (0.05,1.8) -- (-0.05,1.8) node[left] {$a$};
+
+  % Curve y = A sin(x)
+  \draw[thick, domain=0:1.57, samples=50] plot (\x, {1.8*sin(\x r)}) node[above right] {$y = A \sin x$};
+
+  % Line y = 1
+  \draw[dashed] (0,1.0) -- (1.57,1.0);
+  \draw[dashed] (0.64,0) -- (0.64,1.0);
+  \draw[dashed] (1.57,0) -- (1.57,1.8);
+
+  % Shading S1 and S2
+  \begin{scope}
+    \clip (0.64,1.0) -- (1.57,1.0) -- (1.57,1.8) -- plot[domain=1.57:0.64] (\x, {1.8*sin(\x r)}) -- cycle;
+    \fill[pattern=north east lines, pattern color=gray!60] (0.64,1.0) rectangle (1.57,1.8);
+  \end{scope}
+
+  \begin{scope}
+    \clip (0,0) -- plot[domain=0:0.64] (\x, {1.8*sin(\x r)}) -- (1.57,1.0) -- (1.57,0) -- cycle;
+    \fill[pattern=north west lines, pattern color=gray!30] (0,0) rectangle (1.57,1.0);
+  \end{scope}
+
+  % Labels S1, S2
+  \node at (1.1, 1.35) {$S_1$};
+  \node at (1.1, 0.45) {$S_2$};
+\end{tikzpicture}
+\end{center}
+
+\noindent
+又,
+\begin{align*}
+S_2 - S_1 &= \text{長方形} - 2 S_1 = \int_0^{\frac{\pi}{2}} A \sin x \, dx - 2 \int_t^{\frac{\pi}{2}} (A \sin x - 1) \, dx \\
+&= A - 2 A \int_t^{\frac{\pi}{2}} \sin x \, dx + 2 \int_t^{\frac{\pi}{2}} \, dx \\
+&= A - 2 A \cos t + \pi - 2 t \equiv f(t)
+\end{align*}
+とおき, この最大値を求める。①から（以下 $\sin t = s, \cos t = c$）
+\begin{align*}
+f(t) &= \frac{1}{\sin t} - 2 \frac{\cos t}{\sin t} - 2 t + \pi \\
+f'(t) &= - \frac{\cos t}{\sin^2 t} + 2 \frac{1}{\sin^2 t} - 2 = \frac{2 - \cos t}{\sin^2 t} - 2 \quad \left( = \frac{c(2c-1)}{1-c^2} \right) \\
+f''(t) &= \frac{s^3 - 2 s c (2-c)}{s^4} = \frac{c^2 - 4c + 1}{s^3}
+\end{align*}
+下表を考える（$\cos t_0 = 2 - \sqrt{3}$）
+
+\begin{center}
+\begin{tabular}{c|cccc}
+$t$ & $0$ & & $t_0$ & $\pi/2$ \\ \hline
+$c$ & & $-$ & $2-\sqrt{3}$ & $+$ & $0$ \\
+$f''$ & & $\searrow$ & $0$ & $\nearrow$ & $1$ \\
+$f'$ & $+\infty$ & & $-$ & & $0$
+\end{tabular}
+\end{center}
+
+\noindent
+よって, $f'(t_1) = 0$ なる $t_1$ が $0 < t_1 < t_0$ に存在し, 下表を考える
+
+\begin{center}
+\begin{tabular}{c|ccccc}
+$t$ & $0$ & & $t_1$ & & $\pi/2$ \\ \hline
+$f'$ & & $+$ & $0$ & $-$ & $0$ \\ \hline
+$f$ & & $\nearrow$ & & $\searrow$ & $\pi-1$
+\end{tabular}
+\end{center}
+
+\noindent
+よって, $\max f(t) = f(t_1)$ であり, $t_1$ は
+\[
+f'(t_1) = 0 \text{ より, } \cos t_1 = c' \text{ として } (c' \neq 0)
+\]
+\[
+\frac{2 - c'}{1 - {c'}^2} = 2 \quad \therefore c' = \frac{1}{2}
+\]
+つまり, 値域から $t_1 = \frac{\pi}{3}$ だから
+\[
+\max(S_2 - S_1) = f\left(\frac{\pi}{3}\right) = \frac{\pi}{3}
+\]
+\[
+a = \frac{1}{\sin \frac{\pi}{3}} = \frac{2}{3}\sqrt{3}
+\]
+
+\newpage
+
+\subsection*{第2問}
+
+\noindent
+\textbf{[解]} $0 \le \theta < 2\pi$ とし, $OA$ から $OP$ へ向かう角を $\theta$ とおく。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  % Circle
+  \draw[thick] (0,0) circle (1.5);
+  \draw[->] (-1.8,0) -- (1.8,0);
+  \draw[->] (0,-1.8) -- (0,1.8);
+  \node[below left] at (0,0) {$O$};
+
+  \coordinate (A) at (1.5,0);
+  \coordinate (P) at (60:1.5);
+  \coordinate (Q) at (120:1.5);
+
+  \draw (0,0) -- (A) node[below right] {$A$};
+  \draw (0,0) -- (P) node[above right] {$P$};
+  \draw (0,0) -- (Q) node[above left] {$Q$};
+
+  \draw[->] (0.4,0) arc (0:60:0.4) node[midway, right] {$\theta$};
+  \draw[->] (0.6,0) arc (0:120:0.6) node[midway, above left] {$\theta$};
+
+  % Projections R and S on x-axis
+  \coordinate (R) at (0.75,0);
+  \coordinate (S) at (-0.75,0);
+  \draw[dashed] (P) -- (R) node[below] {$R$};
+  \draw[dashed] (Q) -- (S) node[below] {$S$};
+\end{tikzpicture}
+\end{center}
+
+\noindent
+$R(\cos \theta, 0, 0)$, $S(\cos 2\theta, 0, 0)$ だから
+\begin{align*}
+RS &= |\cos \theta - \cos 2\theta| \\
+&= |2t^2 - t - 1| \quad (-1 \le t \le 1, \, t = \cos \theta) \equiv |f(t)|
+\end{align*}
+であり, $y = |f(t)|$ のグラフは右下图。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.8, >=stealth]
+  \draw[->] (-1.5,0) -- (1.5,0) node[right] {$t$};
+  \draw[->] (0,-0.3) -- (0,2.3) node[above] {$y$};
+  \node[below left] at (0,0) {$0$};
+
+  \draw (-1,0.05) -- (-1,-0.05) node[below] {$-1$};
+  \draw (-0.5,0.05) -- (-0.5,-0.05) node[below] {$-\frac{1}{2}$};
+  \draw (1,0.05) -- (1,-0.05) node[below] {$1$};
+
+  \draw[dashed] (0.25,0) -- (0.25,1.125) -- (0,1.125) node[left] {$\frac{9}{8}$};
+  \draw[dashed] (-1,0) -- (-1,2) -- (0,2) node[left] {$2$};
+
+  % Graph y = |2t^2 - t - 1|
+  \draw[thick, domain=-1:-0.5, samples=30] plot (\x, {2*\x*\x - \x - 1});
+  \draw[thick, domain=-0.5:1, samples=50] plot (\x, {-(2*\x*\x - \x - 1)});
+  \draw[dashed, domain=-0.5:1, samples=50] plot (\x, {2*\x*\x - \x - 1});
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tabular}{c|c|c}
+$t$ & $\pm 1$ & $-1 < t < 1$ \\ \hline
+$\theta$ & $1$つ & $2$つ
+\end{tabular}
+\end{center}
+
+\noindent
+よって, 与えられた $l \ge 0$ に対し, $t, \theta$ の関係は下図:
+
+\begin{center}
+\begin{tabular}{c|c|c|c}
+$l$ & $t$ & $\theta$ & $P, Q$のペア \\ \hline
+$l = 0$ & $2$つ & $3$つ & $3$ \\ \hline
+$0 < l < \frac{9}{8}$ & $3$つ & $6$つ & $6$ \\ \hline
+$l = \frac{9}{8}$ & $2$つ & $4$つ & $4$ \\ \hline
+$\frac{9}{8} < l < 2$ & $1$つ & $2$つ & $2$ \\ \hline
+$l = 2$ & $1$つ & $1$つ & $1$ \\ \hline
+$2 < l$ & $0$ & $0$ & $0$
+\end{tabular}
+\end{center}
+
+\noindent
+($0 \le \theta < 2\pi$ より, $\theta$ と $(P, Q)$ が1対1に対応する)
+
+\newpage
+
+\subsection*{第3問}
+
+\noindent
+\textbf{[解]} 題意から, 2平面は $Z = \frac{1}{t} Y$, $Z = \frac{1}{t} X$ となるから, $Q(t, Y, Z)$ とおける。$RQ$ の傾き及び中点について
+\[
+\begin{cases}
+\cdot M\left(t, \dfrac{Y+t}{2}, \dfrac{Z}{2}\right) \text{ が } Z = \dfrac{1}{t} Y \text{ 上} \\[1ex]
+\cdot \vec{RQ} \cdot \begin{pmatrix} 0 \\ 1 \\ -t \end{pmatrix} = 0
+\end{cases}
+\dots \begin{cases} Y = \dfrac{t(t^2-1)}{1+t^2} \\[1.5ex] Z = \dfrac{2t^2}{1+t^2} \end{cases} \quad \dots \text{①}
+\]
+となる。対称性から $R(Y, t, Z)$ となる。この時, $QR$ の中点を $N$ とすると, 平面 $OPN$ に関して立体は対称で, $N\left(\frac{t+Y}{2}, \frac{t+Y}{2}, Z\right)$ となるから, もとめる体積 $V$ として
+\begin{align*}
+V &= 2 \Delta R\text{-}OPN \\
+&= 2 \cdot \frac{1}{3} \cdot RN \times \Delta OPN \quad (\because OPN \perp RN) \quad \dots \text{②}
+\end{align*}
+と書ける。
+\[
+RN = \sqrt{\left(Y - \frac{t+Y}{2}\right)^2 + \left(t - \frac{t+Y}{2}\right)^2} = \frac{1}{\sqrt{2}} |Y - t| = \frac{1}{\sqrt{2}} \frac{2t}{1+t^2}
+\]
+\[
+\Delta OPN = \frac{1}{2} \cdot \sqrt{2}t \cdot Z = \frac{1}{\sqrt{2}} \frac{2t^3}{1+t^2}
+\]
+を②に代入して
+\[
+V = \frac{2}{3} \cdot \frac{1}{\sqrt{2}} \frac{2t}{1+t^2} \cdot \frac{1}{\sqrt{2}} \frac{2t^3}{1+t^2} = \frac{4}{3} \frac{t^4}{(1+t^2)^2}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  \draw[->] (0,0,0) -- (2.5,0,0) node[right] {$y$};
+  \draw[->] (0,0,0) -- (0,2.5,0) node[above] {$z$};
+  \draw[->] (0,0,0) -- (0,0,2.5) node[below left] {$x$};
+  \node[below left] at (0,0,0) {$O$};
+
+  \coordinate (P) at (1.5,0,1.5);
+  \coordinate (Q) at (1.5,0.8,0);
+  \coordinate (R) at (0.8,1.5,0);
+  \coordinate (N) at (1.15,1.15,0);
+
+  \draw[dashed] (0,0,0) -- (P);
+  \draw[dashed] (0,0,0) -- (N);
+  \draw (Q) -- (R);
+  \draw (P) -- (Q);
+  \draw (P) -- (R);
+  \draw (P) -- (N);
+
+  \node[right] at (Q) {$Q$};
+  \node[above] at (R) {$R$};
+  \node[right] at (N) {$N$};
+  \node[below] at (P) {$P$};
+\end{tikzpicture}
+\end{center}
+
+\vspace{1em}
+\noindent
+\textbf{[解2] (後半部)} \\
+サラスの公式から
+\begin{align*}
+V &= \frac{1}{6} |t Y Z + t Z Y - t Z t - t t Z| \\
+&= \frac{t}{3} |Y Z - t Z| \\
+&= \frac{t}{3} \left| \frac{t(t^2-1)}{1+t^2} - t \right| \frac{2t^2}{1+t^2} \\
+&= \frac{t}{3} \cdot \frac{2t}{1+t^2} \cdot \frac{2t^2}{1+t^2} \\
+&= \frac{4}{3} \frac{t^4}{(1+t^2)^2}
+\end{align*}
+
+\newpage
+
+\subsection*{第4問}
+
+\noindent
+(問題未解答)
+
+\newpage
+
+\subsection*{第5問}
+
+\noindent
+\textbf{[解]} $X=m, Y=n$ である事象を $X_m, Y_n$ とおく。$X_m, Y_n$ が独立だから
+\[
+P(X_m \wedge Y_n) = P(X_m) P(Y_n) \quad \dots \text{①}
+\]
+又, $X+Y=n$ となる確率が $(n+1) P_{n+1}$ に等しく, この時 $(X, Y) = (k, n-k) \ (k=0, 1, \dots, n)$ だから
+\begin{align*}
+& P(X+Y=n) = (n+1) P_{n+1} \\
+\therefore & \sum_{k=0}^n P(X_k \wedge Y_{n-k}) = (n+1) P_{n+1} \quad \dots \text{②}
+\end{align*}
+①を②に代入して
+\[
+\sum_{k=0}^n P_k P_{n-k} = (n+1) P_{n+1} \quad \dots \text{③}
+\]
+以下, 任意の $n \in \mathbb{Z}_{\ge 0}$ に対し, $P_n = P_0^{n+1} \dots \text{◆}$ であること $\dots$ ④ を帰納的に示す。 \\
+$n=0$ の時は明らかに成立する。以下 $n \le l \ (l \in \mathbb{Z}_{\ge 0})$ での◆の成立を仮定する。 \\
+③から
+\[
+(l+1) P_{l+1} = \sum_{k=0}^l P_0^{k+1} P_0^{l-k+1} = (l+1) P_0^{l+2}
+\]
+$l+1 \neq 0$ から
+\[
+P_{l+1} = P_0^{l+2}
+\]
+となり, $n=l+1$ でも◆は成立。以上から④は示された。これを $\sum_{n=0}^\infty P_n = 1$ に代入する。 \\
+$P_0 = 1$ は明らかに不適なので, $P_0 \neq 1$ とすると,
+\[
+\sum_{n=0}^N P_n = P_0 \frac{1 - P_0^{N+1}}{1 - P_0} \quad \dots \text{⑤}
+\]
+これが収束するのは, $|P_0| < 1$ の時で, このもとで⑤は $\frac{P_0}{1-P_0}$ に収束する。
+\[
+\frac{P_0}{1-P_0} = 1 \iff P_0 = \frac{1}{2} \quad (|P_0| < 1 \text{をみたす})
+\]
+だから◆に代入して
+\[
+P_n = \left(\frac{1}{2}\right)^{n+1}
+\]
+だから, $r = \frac{1}{2}$ として
+\[
+\sum_{k=0}^n k \cdot P_k = \frac{1}{1-r} r - \frac{1}{(1-r)^2} r^{n+1} + \frac{r}{1-r} \xrightarrow{n \to \infty} \frac{r}{1-r} = 1 \quad (|r| < 1)
+\]
+となる。
+
+\newpage
+
+\subsection*{第6問}
+
+\noindent
+\textbf{[解]} (1) 右図から, もとめる面積 $S$ として
+
+\begin{center}
+\begin{tikzpicture}[scale=0.5, >=stealth]
+  \coordinate (A) at (0,4);
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (6.928,0);
+
+  \draw[thick] (A) -- (B) -- (C) -- cycle;
+
+  \draw[dashed] (-1,4) -- (-1,0) -- (6.928,-1);
+  \draw[dashed] (0,-1) -- (6.928,-1);
+
+  \draw (A) ++(0,1) arc (90:180:1) -- (-1,0) arc (180:270:1) -- (6.928,-1) arc (-90:30:1) -- cycle;
+
+  \node[left] at (A) {$A$};
+  \node[below left] at (B) {$O$};
+  \node[below right] at (C) {$B$};
+\end{tikzpicture}
+\end{center}
+
+\begin{align*}
+S &= \text{△} + \text{扇形} + \text{口} + \text{口} + \text{口} \\
+&= \frac{1}{2} \left(4 \cdot 4\sqrt{3} - (4-1-\sqrt{3})(4\sqrt{3}-3-\sqrt{3})\right) + \pi + 4 + 8 + 4\sqrt{3} \\
+&= \frac{1}{2} \left(16\sqrt{3} - 3\sqrt{3}(4-2\sqrt{3})\right) + 12 + 4\sqrt{3} + \pi \\
+&= \frac{1}{2} (4\sqrt{3} + 18) + 12 + 4\sqrt{3} + \pi \\
+&= 21 + 6\sqrt{3} + \pi
+\end{align*}
+
+\noindent
+(2) $C = z \ (z \ge 0, S = S(z))$ とする。$Z = C$ で切断すると, 同様に切断面は, $\Delta ABO$ のまわりを半径 $S$ の円が通過した部分で, 左図だから, 面積 $S(z)$ として
+\begin{align*}
+S(z) &= \frac{1}{2} \left(4\cdot 4\sqrt{3} - (4-S-\sqrt{3}S)(4\sqrt{3}-S-3\sqrt{3}S)\right) + S^2 \pi + S(4+8+4\sqrt{3}) \\
+&= \frac{1}{2} \left[ 16\sqrt{3} - \{(1+\sqrt{3})S - 4\}\{(3+\sqrt{3})S - 4\sqrt{3}\} \right] + S^2 \pi + (12+4\sqrt{3})S \\
+&= \frac{1}{2} \left[ 16\sqrt{3} - \{(1+\sqrt{3})(3+\sqrt{3})S^2 - 2(12+4\sqrt{3})S + 16\sqrt{3}\} \right] + S^2 \pi + (12+4\sqrt{3})S \\
+&= -\frac{1}{2} (6+4\sqrt{3}) S^2 + (12+4\sqrt{3}) S + \pi S^2 + (12+4\sqrt{3}) S \quad \dots \text{①}
+\end{align*}
+したがって, もとめる体積 $V$ として, 対称性から
+\begin{align*}
+\frac{1}{2} V &= \int_0^1 S(z) \, dz \\
+&= \int_0^{\pi/2} \left[ -(3+2\sqrt{3}) S^2 + 2(12+4\sqrt{3}) S + \pi S^2 \right] s \, d\theta \quad \dots \text{②}
+\end{align*}
+となる。ここで
+\[
+\int_0^{\pi/2} S^3 \, d\theta = \int_0^{\pi/2} \frac{1}{4} (3 S - \sin 3\theta) \, d\theta = \left[ -\frac{3}{4} \cos\theta + \frac{1}{12} \cos 3\theta \right]_0^{\pi/2} = \frac{3}{4} - \frac{1}{12} = \frac{2}{3}
+\]
+\[
+\int_0^{\pi/2} S^2 \, d\theta = \frac{1}{2} \left[ \theta - \frac{1}{2} \sin 2\theta \right]_0^{\pi/2} = \frac{\pi}{4}
+\]
+だから①に代入して
+\begin{align*}
+\frac{1}{2} V &= (\pi - 3 - 2\sqrt{3}) \cdot \frac{2}{3} + 2(12+4\sqrt{3}) \frac{\pi}{4} \\
+V &= \frac{4}{3} (\pi - 3 - 2\sqrt{3}) + (12+4\sqrt{3}) \pi \\
+&= 4 \left( \frac{10}{3}\pi + \sqrt{3}\pi - 4\left(1 + \frac{2}{3}\sqrt{3}\right) \right)
+\end{align*}
+
+\end{document}

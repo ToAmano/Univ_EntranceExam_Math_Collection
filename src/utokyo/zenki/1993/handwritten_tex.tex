@@ -1,0 +1,595 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{東大理科数学 1993年}
+
+\subsection*{第1問}
+
+\begin{center}
+\begin{framed}
+全ての面が合同な四面体 $ABCD$ がある。頂点 $A,B,C$ が $x,y,z$ 軸の正の部分にある。$AB=2l-1$, $AC=2l+1$, $BC=2l$ ($l>2$)。四面体 $ABCD$ の体積 $V(l)$ として
+\[
+\lim_{l \to 2} \frac{V(l)}{\sqrt{l-2}}
+\]
+\end{framed}
+\end{center}
+
+\noindent
+\begin{framed}
+\textbf{[四面体のまとめ (再掲)]}\\
+・直方体の対角線を結んで四面体 $ABCD$ をつくると、全ての面が合同。
+\end{framed}
+
+\noindent
+$\triangleright$ $V(l)$ をどうもとめるか。どの道、$D$ の座標がいる。\\
+--- * 一応座標で押しても出来る ---
+
+\begin{equation*}
+D(x,y,z) \text{ とおく。}
+\begin{cases}
+DA = BC \to (x-a)^2 + y^2 + z^2 = b^2 + c^2 \\
+DB = CA \to x^2 + (y-b)^2 + z^2 = a^2 + c^2 \\
+DC = AB \to x^2 + y^2 + (z-c)^2 = a^2 + b^2
+\end{cases}
+\end{equation*}
+
+$A = x^2 + y^2 + z^2$ とおく。
+\begin{align}
+A - 2ax &= -a^2 + b^2 + c^2 \\
+A - 2by &= a^2 - b^2 + c^2 \\
+A - 2cz &= a^2 + b^2 - c^2
+\end{align}
+
+(1)$-$(2) より
+\begin{align*}
+2(by - ax) &= 2(-a^2 + b^2) \\
+by - ax &= -a^2 + b^2 \\
+a(x-a) &= b(y-b) \quad \dots \text{(4)}
+\end{align*}
+
+(1)$-$(3) より
+\begin{align*}
+cz - ax &= c^2 - a^2 \\
+a(x-a) &= c(z-c) \quad \dots \text{(5)}
+\end{align*}
+
+(4), (5) は、$x-a = kbc$, $y-b = kac$, $z-c = kab$ なる $k$ が存在することと同値。\\
+$x = a + kbc$ などを (1) に代入して
+\[
+k = 0, \quad \frac{-4abc}{a^2b^2 + b^2c^2 + c^2a^2}
+\]
+となり、$D$ も求まる。
+
+\bigskip
+\noindent
+$\triangleright$ 直方体を考えればすぐに $D$ は求まる。\\
+どの道、$l$ ではなく、考えやすい $a,b,c$ で考える。
+
+\begin{center}
+\begin{framed}
+直方体の中に、四面体がおさまる (全ての面が合同)
+\end{framed}
+
+\begin{tikzpicture}[scale=1.2, >=stealth]
+  % Cuboid vertices
+  \coordinate (O) at (0,0,0);
+  \coordinate (A) at (2,0,0);
+  \coordinate (B) at (0,2,0);
+  \coordinate (C) at (0,0,2);
+  \coordinate (AB) at (2,2,0);
+  \coordinate (BC) at (0,2,2);
+  \coordinate (CA) at (2,0,2);
+  \coordinate (D) at (2,2,2);
+
+  % Draw cuboid edges
+  \draw[gray, dashed] (O) -- (A) (O) -- (B) (O) -- (C);
+  \draw[gray] (A) -- (AB) -- (B) (B) -- (BC) -- (C) (C) -- (CA) -- (A);
+  \draw[gray] (AB) -- (D) (BC) -- (D) (CA) -- (D);
+
+  % Tetrahedron edges
+  \draw[thick, blue] (A) -- (B) -- (C) -- cycle;
+  \draw[thick, blue] (A) -- (D);
+  \draw[thick, blue] (B) -- (D);
+  \draw[thick, blue] (C) -- (D);
+\end{tikzpicture}
+\end{center}
+
+\newpage
+
+\noindent
+\textbf{[解]} $A(a,0,0)$, $B(0,b,0)$, $C(0,0,c)$ とおく。\\
+対称性から、$D(a,b,c)$ の時のみ考えれば良い。\\
+右図のように3辺の長さが $a,b,c$ である直方体を考えて,
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  % Axes
+  \draw[->] (-0.5,0,0) -- (3,0,0) node[right] {$x$};
+  \draw[->] (0,-0.5,0) -- (0,3,0) node[above] {$y$};
+  \draw[->] (0,0,-0.5) -- (0,0,3) node[above left] {$z$};
+
+  \node[below left] at (0,0,0) {$O$};
+  
+  \coordinate (A) at (2,0,0);
+  \coordinate (B) at (0,2.2,0);
+  \coordinate (C) at (0,0,2.5);
+  \coordinate (D) at (2,2.2,2.5);
+
+  \node[below] at (A) {$A(a,0,0)$};
+  \node[right] at (B) {$B(0,b,0)$};
+  \node[above left] at (C) {$C(0,0,c)$};
+  \node[above right] at (D) {$D(a,b,c)$};
+
+  \draw[dashed, gray] (2,0,0) -- (2,2.2,0) -- (0,2.2,0);
+  \draw[dashed, gray] (2,0,0) -- (2,0,2.5) -- (0,0,2.5);
+  \draw[dashed, gray] (0,2.2,0) -- (0,2.2,2.5) -- (0,0,2.5);
+  \draw[dashed, gray] (2,2.2,0) -- (D) (2,0,2.5) -- (D) (0,2.2,2.5) -- (D);
+
+  \draw[thick, red] (A) -- (B) -- (C) -- cycle;
+  \draw[thick, red] (A) -- (D);
+  \draw[thick, red] (B) -- (D);
+  \draw[thick, red] (C) -- (D);
+\end{tikzpicture}
+\end{center}
+
+\[
+V(l) = abc - 4 \cdot \frac{1}{6} abc = \frac{1}{3} abc \quad \dots \text{①}
+\]
+一方、$\overline{AB} = 2l-1$, $\overline{BC} = 2l$, $\overline{CA} = 2l+1$ から、\\
+ピタゴラスの定理より、
+\[
+\begin{cases}
+(2l-1)^2 = a^2+b^2 \\
+(2l)^2 = b^2+c^2 & \dots \text{②} \\
+(2l+1)^2 = a^2+c^2
+\end{cases}
+\]
+各辺足して,
+\[
+12l^2+2 = 2(a^2+b^2+c^2) \implies 6l^2+1 = a^2+b^2+c^2
+\]
+だから、②より,
+\[
+a^2 = 2l^2+1, \quad b^2 = 2l^2-4l, \quad c^2 = 2l^2+4l
+\]
+となる。$a,b,c > 0$ に注意して、①とあわせて,
+\begin{align*}
+\frac{V(l)}{\sqrt{l-2}} &= \frac{1}{\sqrt{l-2}} \cdot \frac{1}{3} \sqrt{2l^2+1} \sqrt{2l(l-2)} \sqrt{2l(l+2)} \\
+&= \frac{2}{3} \sqrt{2l^2+1} \cdot \sqrt{l} \cdot \sqrt{l(l+2)} \xrightarrow{l \to 2} \frac{8}{3} \quad \text{\#\#}
+\end{align*}
+
+\newpage
+
+\subsection*{第2問}
+
+\noindent
+\textbf{[解]} (1) $a_n$ を 2 でわったあまりを $b_n$ とすると、
+\[
+\begin{cases}
+b_1 = 1, \quad b_2 = 1 \\
+b_{n+2} \equiv 3b_{n+1} - 7b_n \equiv b_{n+1} - b_n
+\end{cases}
+\]
+である。「$a_n$ が偶数 $\iff n \equiv 0 \pmod 3$」を帰納的に示す。
+
+$1^\circ$ $n=1,2,3$ の時,
+\[
+b_1 = 1, \quad b_2 = 1, \quad b_3 = 0 \quad \text{より、成立}
+\]
+
+$2^\circ$ $n = 3k-2, 3k-1, 3k$ ($k \in \mathbb{N}$) の時 成立とすると,
+\[
+b_{3k+1} = 1, \quad b_{3k+2} = 1, \quad b_{3k+3} = 0 \quad \text{より},
+\]
+$n = 3k+1 \sim 3k+3$ でも成立。
+
+以上より示された。(逆も成立).
+
+\bigskip
+\noindent
+(2) $a_n$ が 5 の倍数になる条件を調べる。$a_n$ を 5 でわったあまりを $c_n$ とおく。
+\[
+\begin{cases}
+c_1 = 1, \quad c_2 = 3 \\
+c_{n+2} \equiv 3c_{n+1} - 2c_n
+\end{cases}
+\]
+より、$c_n$ は、$\{1, 3, 2, 0\}$ のくり返しであるから,
+\[
+\text{「} c_n = 0 \iff n \text{ が 4 の倍数} \text{」} \quad \dots \text{①}
+\]
+である。(1) と ① より,
+\[
+\text{「} a_n \text{ が 10 の倍数} \iff n \text{ が 12 の倍数} \text{」} \quad \text{\#\#}
+\]
+
+\newpage
+
+\subsection*{第3問}
+
+\noindent
+$\triangleright$ まず、楕円, 双曲線の図形的定義での書き方.
+
+\begin{framed}
+\noindent
+\textbf{[楕円]}\\
+$\overline{AP} + \overline{BP} = 2a$ の時、右のようになる。
+\[
+\frac{x^2}{a^2} + \frac{y^2}{a^2-c^2} = 1
+\]
+$\star$ まず、$a$ から手前的に端点をとる。\\
+$\longrightarrow$ $c, a$ から $b$ をキメル
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=stealth]
+  \draw[->] (-2.5,0) -- (2.5,0) node[right] {$x$};
+  \draw[->] (0,-1.5) -- (0,1.5) node[above] {$y$};
+  \draw[thick, blue] (0,0) ellipse (2cm and 1.2cm);
+  \filldraw (-1.2,0) circle (1.5pt) node[above] {$A$} (1.2,0) circle (1.5pt) node[above] {$C$};
+  \node[below left] at (0,0) {$O$};
+  \node[below] at (-2,0) {$-a$};
+  \node[below] at (2,0) {$a$};
+  \node[above left] at (0,1.2) {$\sqrt{a^2-c^2}$};
+\end{tikzpicture}
+\end{center}
+\end{framed}
+
+\begin{framed}
+\noindent
+\textbf{[双曲線]}\\
+$|\overline{AP} - \overline{BP}| = 2a$ の時、右のようになる。
+\[
+\frac{x^2}{a^2} - \frac{y^2}{c^2-a^2} = 1
+\]
+$\star$ $a$ から端点 $\to$ $c, a$ から $b$\\
+$\longrightarrow$ 漸近線 $\frac{x}{a} \pm \frac{y}{\sqrt{c^2-a^2}} = 0$
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=stealth]
+  \draw[->] (-2.5,0) -- (2.5,0) node[right] {$x$};
+  \draw[->] (0,-1.8) -- (0,1.8) node[above] {$y$};
+  \draw[dashed] (-2,-1.5) -- (2,1.5);
+  \draw[dashed] (-2,1.5) -- (2,-1.5);
+  \draw[thick, blue, domain=-1.3:1.3, samples=50] plot ({1*cosh(\x)}, {1.2*sinh(\x)});
+  \draw[thick, blue, domain=-1.3:1.3, samples=50] plot ({-1*cosh(\x)}, {1.2*sinh(\x)});
+  \filldraw (-1.6,0) circle (1.5pt) node[below] {$A$} (1.6,0) circle (1.5pt) node[below] {$B$};
+  \node[below left] at (0,0) {$O$};
+  \node[below left] at (-1,0) {$-a$};
+  \node[below right] at (1,0) {$a$};
+\end{tikzpicture}
+\end{center}
+\end{framed}
+
+\newpage
+
+\noindent
+\textbf{[解]} $R(x,y)$ とおく。下図のように、$xy$ 平面を分割する。ただし $\square PTQS$ は正方形。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.35, >=stealth]
+  \draw[->] (-12,0) -- (12,0) node[right] {$x$};
+  \draw[->] (0,-12) -- (0,12) node[above] {$y$};
+  
+  \filldraw (-9,-3) circle (3pt) node[left] {$P$};
+  \filldraw (9,3) circle (3pt) node[right] {$Q$};
+  \filldraw (-5,5) circle (2pt) node[left] {$L_4$};
+  \filldraw (-5,-5) circle (2pt) node[left] {$L_3$};
+  \filldraw (5,5) circle (2pt) node[right] {$L_1$};
+  \filldraw (5,-5) circle (2pt) node[right] {$L_2$};
+
+  \draw[dashed] (-5,-5) -- (-5,5) -- (5,5) -- (5,-5) -- cycle;
+  \draw[dashed] (-9,-3) -- (9,3);
+  \draw[thick] (-5,-5) -- (-5,5);
+  \draw[thick] (5,-5) -- (5,5);
+
+  \node at (0,0) {$C$};
+  \node at (-9,5) {$A$};
+  \node at (9,-5) {$B$};
+\end{tikzpicture}
+\end{center}
+
+\noindent
+左図で、斜線部は明らかに $d(P,R) = d(Q,R)$ とならない。\\
+まず、$A, B$ について、$d(P,R) = d(Q,R)$ となるのは、線分 $PQ$ の垂直二等分線 $y = -3x$ 上である。 \quad \dots \text{①}
+
+次に $C$ について、$\alpha,\beta$ のうち大きくない方を $\min\{\alpha,\beta\}$ と表すと、
+\[
+\begin{cases}
+d(P,R) = \min \{ \overline{PL_3} + \overline{L_3R}, \overline{PL_4} + \overline{L_4R} \} \\
+d(Q,R) = \min \{ \overline{QL_1} + \overline{L_1R}, \overline{QL_2} + \overline{L_2R} \}
+\end{cases}
+\quad \dots \text{②}
+\]
+である。$\overline{PL_3} = \overline{QL_1} = 2\sqrt{5}$, $\overline{PL_4} = \overline{QL_2} = 4\sqrt{5}$ \dots ③ だから,
+\begin{align*}
+\overline{PL_3} + \overline{L_3R} = \overline{PL_4} + \overline{L_4R} &\iff \overline{L_3R} - \overline{L_4R} = 2\sqrt{5} \quad \dots \text{④} \\
+\overline{QL_1} + \overline{L_1R} = \overline{QL_2} + \overline{L_2R} &\iff \overline{L_1R} - \overline{L_2R} = 2\sqrt{5} \quad \dots \text{⑤}
+\end{align*}
+なので、$C$ をさらに、以下のように分割できる。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.35, >=stealth]
+  \draw[->] (-8,0) -- (8,0) node[right] {$x$};
+  \draw[->] (0,-8) -- (0,8) node[above] {$y$};
+  
+  \draw[dashed] (-5,-5) -- (-5,5) -- (5,5) -- (5,-5) -- cycle;
+  \node at (0,6) {$C_1$};
+  \node at (0,-6) {$C_2$};
+  \node at (0,0) {$C_3$};
+  
+  \draw[thick, domain=-5:5, samples=50] plot (\x, {sqrt(5*(1 + (\x+5)^2/20))});
+  \draw[thick, domain=-5:5, samples=50] plot (\x, {-sqrt(5*(1 + (\x-5)^2/20))});
+\end{tikzpicture}
+\end{center}
+
+\[
+\begin{cases}
+C_1 : d(P,R) = \overline{PL_4} + \overline{L_4R}, \quad d(Q,R) = \overline{QL_1} + \overline{L_1R} \\
+C_2 : d(P,R) = \overline{PL_3} + \overline{L_3R}, \quad d(Q,R) = \overline{QL_2} + \overline{L_2R} \\
+C_3 : d(P,R) = \overline{PL_3} + \overline{L_3R}, \quad d(Q,R) = \overline{QL_1} + \overline{L_1R}
+\end{cases}
+\]
+境界は
+\[
+\frac{(x+5)^2}{20} - \frac{y^2}{5} = -1, \quad \frac{(x-5)^2}{20} - \frac{y^2}{5} = -1
+\]
+
+まず $C_1, C_2$ について、対称性から $C_1$ のみ考える。$C_1$ から
+\[
+d(P,R) = d(Q,R) \iff \overline{PL_4} + \overline{L_4R} = \overline{QL_1} + \overline{L_1R} \iff \overline{L_1R} - \overline{L_4R} = 2\sqrt{5}
+\]
+を満たす $R$ は、双曲線
+\[
+\frac{x^2}{5} - \frac{(y-5)^2}{20} = 1
+\]
+上にある。
+
+$C_3$ について、④から、
+\[
+d(P,R) = d(Q,R) \iff \overline{PL_3} + \overline{L_3R} = \overline{QL_1} + \overline{L_1R} \iff \overline{L_3R} = \overline{L_1R}
+\]
+だから、$R$ は $\overline{L_1L_3}$ の垂直二等分線 $y = -x$ 上にある。
+
+\bigskip
+\noindent
+以上まとめて、
+\[
+\begin{cases}
+y = -3x & (|x| \ge 3) \\
+y = -x & \left( |x| \le \frac{-5+4\sqrt{10}}{3} \right) \\
+\frac{x^2}{5} - \frac{(y-5)^2}{20} = 1 & (C_1 \text{内}) \\
+\frac{x^2}{5} - \frac{(y+5)^2}{20} = 1 & (C_2 \text{内})
+\end{cases}
+\]
+だから、図示して下図太線部。
+
+\begin{framed}
+\begin{align*}
+&y = -x \text{ と } \frac{x^2}{5} - \frac{(y-5)^2}{20} = 1 \text{ の交点は } 3x^2 - 10x - 45 = 0 \text{ の解} \\
+&\text{共に } \left( \frac{5-4\sqrt{10}}{3}, \frac{-5+4\sqrt{10}}{3} \right) \text{ である。}
+\end{align*}
+\end{framed}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.5, >=stealth]
+  \draw[->] (-8,0) -- (8,0) node[right] {$x$};
+  \draw[->] (0,-10) -- (0,10) node[above] {$y$};
+
+  \draw[dashed] (-5,-5) -- (-5,5) -- (5,5) -- (5,-5) -- cycle;
+  \draw[dashed, domain=-8:8] plot (\x, {-3*\x});
+  \draw[dashed, domain=-7:7] plot (\x, {-\x});
+
+  % Trajectory of R
+  \draw[ultra thick, blue, domain=-8:-3] plot (\x, {-3*\x});
+  \draw[ultra thick, blue, domain=3:8] plot (\x, {-3*\x});
+  \draw[ultra thick, blue, domain=-2.55:2.55] plot (\x, {-\x});
+  \draw[ultra thick, blue, domain=-3:-2.55, samples=50] plot (\x, {5 + sqrt(20*(1 + \x^2/5))});
+  \draw[ultra thick, blue, domain=2.55:3, samples=50] plot (\x, {-5 - sqrt(20*(1 + \x^2/5))});
+
+  \node[left] at (-3,9) {$y=-3x$};
+  \node[right] at (3,-9) {$y=-3x$};
+  \node[right] at (2,-2) {$y=-x$};
+\end{tikzpicture}
+\end{center}
+
+\newpage
+
+\subsection*{第4問}
+
+\noindent
+\textbf{[解]} $p,q \in \mathbb{R}$ とする。
+\[
+(f(x))^2 = x^{2n} + p^2 x^2 + q^2 + 2(p x^{n+1} + q x^n + pq x)
+\]
+だから,
+\[
+I = \int_0^1 (x^{2n} + p^2 x^2 + q^2) \, dx + \int_{-1}^1 (p x^{n+1} + q x^n) \, dx \quad \dots \text{①}
+\]
+である。
+
+\bigskip
+\noindent
+$1^\circ$ $n \in \text{odd}$ の時\\
+①から
+\begin{align*}
+I &= \int_0^1 (x^{2n} + p^2 x^2 + q^2) \, dx + 2 \int_0^1 p x^{n+1} \, dx \\
+&= p^2 \int_0^1 x^2 \, dx + 2p \int_0^1 x^{n+1} \, dx + q^2 \int_0^1 1 \, dx + \int_0^1 x^{2n} \, dx \\
+&= \frac{1}{3} p^2 + \frac{2}{n+2} p + q^2 + \frac{1}{2n+1} \\
+&= \frac{1}{3} \left( p + \frac{3}{n+2} \right)^2 + q^2 - \frac{3}{(n+2)^2} + \frac{1}{2n+1}
+\end{align*}
+だから、$n \in \mathbb{N}$ より $(p,q) = \left(-\frac{3}{n+2}, 0\right)$ で $\min I = \frac{1}{2n+1} - \frac{3}{(n+2)^2}$
+
+\bigskip
+\noindent
+$2^\circ$ $n \in \text{even}$ の時\\
+①から
+\begin{align*}
+I &= \int_0^1 (x^{2n} + p^2 x^2 + q^2 + 2q x^n) \, dx \\
+&= q^2 + \frac{2q}{n+1} + \frac{1}{3} p^2 + \frac{1}{2n+1} \\
+&= \left( q + \frac{1}{n+1} \right)^2 + \frac{1}{3} p^2 + \frac{1}{2n+1} - \frac{1}{(n+1)^2}
+\end{align*}
+から $(p,q) = \left(0, -\frac{1}{n+1}\right)$ で $\min I = \frac{1}{2n+1} - \frac{1}{(n+1)^2}$
+
+\bigskip
+\noindent
+以上まとめて,
+\[
+\begin{cases}
+n \in \text{odd} \dots (p,q) = \left(-\frac{3}{n+2}, 0\right) \text{の時} \quad \min I = \frac{(n-1)^2}{(2n+1)(n+2)^2} \\[1.5ex]
+n \in \text{even} \dots (p,q) = \left(0, -\frac{1}{n+1}\right) \text{の時} \quad \min I = \frac{n^2}{(2n+1)(n+1)^2}
+\end{cases}
+\quad \text{\#\#}
+\]
+
+\newpage
+
+\subsection*{第5問}
+
+\noindent
+\textbf{[解]} 左から $k$ 番目の数の、$S_n$ での値が $S$ と一致する確率を $t_k(n)$ とする。
+
+\bigskip
+\noindent
+$1^\circ$ $k=1,3,4$ の時\\
+$S$ では 1 だったから、$n+1$ 回目について、$n$ 回目で場合分けして
+\begin{align*}
+t_k(n+1) &= (1-q) t_k(n) + p(1 - t_k(n)) \\
+&= (1-p-q) t_k(n) + p \\
+t_k(n+1) - \frac{p}{p+q} &= (1-p-q) \left( t_k(n) - \frac{p}{p+q} \right)
+\end{align*}
+$t_k(0) = 1$ から、くり返し用いて
+\begin{align*}
+t_k(n) &= (1-p-q)^n \left( 1 - \frac{p}{p+q} \right) + \frac{p}{p+q} \\
+&= \frac{1}{p+q} \{ p + q(1-p-q)^n \} \quad \dots \text{①}
+\end{align*}
+
+\bigskip
+\noindent
+$2^\circ$ $k=2,5$ の時\\
+$1^\circ$ と同様に、
+\begin{align*}
+t_k(n+1) &= (1-p) t_k(n) + q(1 - t_k(n)) \\
+&= (1-p-q) t_k(n) + q \\
+t_k(n+1) - \frac{q}{p+q} &= (1-p-q) \left( t_k(n) - \frac{q}{p+q} \right)
+\end{align*}
+$t_k(0) = 1$ から、くり返し用いて
+\[
+t_k(n) = \frac{1}{p+q} \{ q + p(1-p-q)^n \} \quad \dots \text{②}
+\]
+
+\bigskip
+\noindent
+①, ② から、
+\[
+C(n) = \prod_{k=1}^5 t_k(n) \xrightarrow{n \to \infty} \frac{p^3 q^2}{(p+q)^5} \quad \text{\#\#}
+\]
+
+\newpage
+
+\subsection*{第6問}
+
+\noindent
+\textbf{[解]} $S = \sin t, C = \cos t$ とする。\\
+$f(t) = 2C + \cos 2t$, $g(t) = \sin 2t$ とおく。
+
+\bigskip
+\noindent
+(1) $f'(t) = -2S - 2\sin 2t$, $g'(t) = 2\cos 2t$ だから、$\vec{v} = \begin{pmatrix} f'(t) \\ g'(t) \end{pmatrix}$ とすると、
+\begin{align*}
+|\vec{v}|^2 &= 4(S + \sin 2t)^2 + 4\cos^2 2t \\
+&= 4S^2 + 8S \sin 2t + 4 \\
+&= 4S^2(1 + 4C) + 4 \\
+&= 4[(1-C^2)(1+4C) + 1] \equiv h(C)
+\end{align*}
+とおく。\\
+$h'(C) = -2(6C^2 + C - 2) = -2(3C+2)(2C-1)$ から、下表を得る。
+
+\begin{center}
+\begin{tabular}{c|ccccccc}
+$C$ & $-1$ & $\dots$ & $-\frac{2}{3}$ & $\dots$ & $\frac{1}{2}$ & $\dots$ & $1$ \\ \hline
+$h'$ & & $-$ & $0$ & $+$ & $0$ & $-$ & \\ \hline
+$h$ & $4$ & $\searrow$ & $\frac{8}{27}$ & $\nearrow$ & $13$ & $\searrow$ & $4$
+\end{tabular}
+\end{center}
+
+したがって $|\vec{v}| \ge 0$ より、$\max |\vec{v}| = \sqrt{13}$, $\min |\vec{v}| = \sqrt{\frac{8}{27}}$ \quad \text{\#\#}
+
+\bigskip
+\noindent
+(2) $f'(t) = -2S(1+2C)$, $g'(t) = 2\cos 2t$ から下表を得る。($f(\pi+t) = f(\pi-t), g(\pi+t) = -g(\pi-t)$)
+
+\begin{center}
+\begin{tabular}{c|ccccccccc}
+$t$ & $0$ & $\dots$ & $\pi/4$ & $\dots$ & $\frac{2}{3}\pi$ & $\dots$ & $\frac{3}{4}\pi$ & $\dots$ & $\pi$ \\ \hline
+$f'$ & $0$ & $-$ & $-$ & $-$ & $0$ & $+$ & $+$ & $+$ & $0$ \\ \hline
+$g'$ & $+$ & $+$ & $0$ & $-$ & $-$ & $-$ & $0$ & $+$ & $+$ \\ \hline
+$(x,y)$ & $(3,0)$ & $\searrow$ & $(\sqrt{2},1)$ & $\swarrow$ & & $\nwarrow$ & & $\nearrow$ & $(-1,0)$
+\end{tabular}
+\end{center}
+
+したがって、グラフの概形は下図のようになる。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=stealth]
+  \draw[->] -2.5,0 -- 3.5,0 node[right] {$x$};
+  \draw[->] 0,-1.5 -- 0,1.5 node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  \draw[thick, blue, domain=0:2*pi, samples=100] plot ({2*cos(\x r) + cos(2*\x r)}, {sin(2*\x r)});
+  \filldraw (-1,0) circle (2pt) node[below left] {$(-1,0)$};
+\end{tikzpicture}
+\end{center}
+
+ここで、$(f(t), g(t))$ ($0 \le t < 2\pi$) の表す曲線の交点が $(-1,0)$ のみであることを示す。$f(t), g(t)$ の増減及び対称性から、$0 < t < \pi$ の時に共有点がないことを示せば良い。背理法で示す。$t_1, t_2$ に対応する点で交わっているとすると ($t_1 < t_2$)
+\[
+\begin{cases}
+2\cos t_1 + \cos 2t_1 = 2\cos t_2 + \cos 2t_2 & \dots \text{①} \\
+\sin 2t_1 = \sin 2t_2 & \dots \text{②}
+\end{cases}
+\]
+$\frac{\pi}{2} < t_1 < t_2 < \pi$ 及び ② から、$t_2 = \frac{3}{2}\pi - t_1$ である。この時 ① から
+\begin{align*}
+& 2\cos t_2 + \cos 2t_2 = -2\cos \left(\frac{\pi}{2} - t_1\right) - \cos 2t_1 = 2\cos t_1 + \cos 2t_1 \\
+\implies & \sin t_1 + \cos t_1 + 2\cos 2t_1 = 0
+\end{align*}
+だから $\sin^2 t_1 + \cos^2 t_1 = 1$ に代入して、以下 $P = \cos t_1$ とすると
+\[
+P(P+1)(5P^2 - P - 2) = 0 \quad \dots \text{③}
+\]
+一方、$\frac{\pi}{2} < t_1 < t_2 < \pi$ だったから $t_2 = \frac{3}{2}\pi - t_1$ から
+\[
+\frac{\pi}{2} < t_1 < \frac{3}{4}\pi
+\]
+だから $-\frac{\sqrt{2}}{2} < P < 0$ となる。③ を同時にみたす $P$ はなく矛盾。
+
+\bigskip
+\noindent
+以上から、交点はただ1つ存在し、同時刻 $t = \frac{\pi}{2}, \pi, \frac{3}{2}\pi$ での速度ベクトルは各々
+\[
+\begin{pmatrix} -2 \\ -2 \end{pmatrix}, \quad \begin{pmatrix} 0 \\ 2 \end{pmatrix}, \quad \begin{pmatrix} 2 \\ -2 \end{pmatrix}
+\]
+だから図示して下図。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=stealth]
+  \draw[->] (-3,0) -- (2,0) node[right] {$x$};
+  \draw[->] (0,-3) -- (0,3) node[above] {$y$};
+  \filldraw (-1,0) circle (2pt) node[above left] {$(-1,0)$};
+
+  \draw[->, ultra thick, red] (-1,0) -- (-1,2) node[above] {$(0,2)$};
+  \draw[->, ultra thick, red] (-1,0) -- (-3,-2) node[below left] {$(-2,-2)$};
+  \draw[->, ultra thick, red] (-1,0) -- (1,-2) node[below right] {$(2,-2)$};
+\end{tikzpicture}
+\end{center}
+
+\bigskip
+\noindent
+\textbf{[解2] (交点の唯一性)}\\
+②から $t_1, t_2 = \frac{3}{4}\pi \pm \alpha$ ($0 < \alpha < \frac{3}{4}\pi$) とおける。$f(t) = 2C^2 + 2C - 1$ だから
+\[
+f\left(\frac{3}{4}\pi \pm \alpha\right) = -\sqrt{2}\cos\alpha \pm (1-\sqrt{2})\sin\alpha - 1
+\]
+これらが一致することはないので不適。 \quad \text{\#\#}
+
+\end{document}

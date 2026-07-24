@@ -1,0 +1,146 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\subsection*{第1問}
+
+[解] (1) $a^6=1$ から, $k=0,1,2,3,4,5$ に対し, $a^{6n+k}=a^k$ ($n \in \mathbb{N}$) だから, $k=0,1,2,\dots,5$ のみ調べれば良い。しかし, $a^k$ はいずれも異なるので, 6コ.
+
+(2) 合同式の法を 6 とする。与式を $I$ とする。
+\[
+\begin{cases}
+n \equiv 0, \pm 2, 3 \text{ の時, } I = 0 \\
+n \equiv \pm 1 \text{ の時, } I = 1
+\end{cases}
+\]
+である。
+
+\subsection*{第2問}
+
+[解]
+(1) 4回操作した時, $x=\pm 1, \pm 3$ にある確率は明らかに 0 である。 $\cdots$ ①\\
+又, $x=\pm 2$ にいる確率は等しく, $\frac{{}_4\mathrm{C}_1}{2^4} \text{ (表が3回)} = \frac{1}{4}$ $\cdots$ ②\\
+$x=\pm 4 \quad \text{〃} \quad \frac{{}_4\mathrm{C}_0}{2^4} \text{ (表が4回)} = \frac{1}{16}$ $\cdots$ ③\\
+①〜③より, 余事象から $x=0$ にいる確率は $1-2\left(\frac{1}{4}+\frac{1}{16}\right) = \frac{3}{8}$ となる。
+
+以上をまとめて,
+\[
+\begin{cases}
+x = \pm 1, \pm 3 & \dots 0 \\
+x = 0 & \dots 3/8 \\
+x = \pm 2 & \dots 1/4 \\
+x = \pm 4 & \dots 1/16
+\end{cases}
+\]
+
+(2) $x=n-2$ にいるのは, $n-1$ 回表が出た時で, $\frac{{}_n\mathrm{C}_{n-1}}{2^n} = \frac{n}{2^n}$\\
+$x=n-4 \quad \text{〃} \quad n-2$ 回表が出た時で, $\frac{{}_n\mathrm{C}_{n-2}}{2^n} = \frac{n(n-1)}{2^{n+1}}$
+
+\subsection*{第3問}
+
+[解] 時刻 $t$ での A, B の Pからのキョリ $A(t), B(t)$ は, $A(0)=0, B(0)=25$ より,
+\[
+\begin{cases}
+A(t) = \int_0^t u \, dt + A(0) = ut \\
+B(t) = \int_0^t v \, dt + B(0) = \frac{1}{4}t^3 - \frac{3}{2}t^2 + 25
+\end{cases}
+\]
+とかける。$B(t) \leqq 25 \iff 0 \leqq t \leqq 6$ だから, ($\because t \geqq 0$) AがBにおいつくには, $y=A(t), y=B(t)$ のグラフが $0 < t < 6$ で少なくとも1回交われば良い。\\
+$y$ をけして,
+\[
+A(t) = B(t)
+\]
+\[
+\therefore u = \frac{1}{4}t^2 - \frac{3}{2}t + \frac{25}{t} \equiv f(t) \quad (\because t > 0) \quad \cdots \text{①}
+\]
+とすると, $f'(t) = \frac{1}{2}t - \frac{3}{2} - \frac{25}{t^2} = \frac{(t-5)(t^2+2t+10)}{2t^2}$ より下表をとる。
+
+\begin{center}
+\begin{array}{c|c|c|c|c|c}
+t & 0 & \dots & 5 & \dots & 6 \\
+\hline
+f' & & - & 0 & + & \\
+\hline
+f & & \searrow & \frac{15}{4} & \nearrow & \frac{25}{6}
+\end{array}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=stealth]
+  \draw[->] (-0.5,0) -- (6.5,0) node[right] {$t$};
+  \draw[->] (0,-0.5) -- (0,4.5) node[above] {$f$};
+  \node[below left] at (0,0) {$O$};
+  
+  \draw[dashed] (0,3.0) node[left] {$15/4$} -- (5,3.0);
+  \draw[dashed] (5,0) node[below] {$5$} -- (5,3.0);
+  \draw[dashed] (6,0) node[below] {$6$} -- (6,3.33);
+  
+  \draw[domain=1.8:6.2,samples=100,smooth,thick] plot (\x, {0.25*(\x)^2 - 1.5*\x + 25/\x});
+\end{tikzpicture}
+\end{center}
+
+よって $f(t) \to +\infty \; (t \to +0)$ とあわせて, グラフは右上図。したがって, ①を満たす $t$ が存在する $u$ の条件は
+\[
+\frac{15}{4} \leqq u .
+\]
+よって, もとめる $\min u = \frac{15}{4} \;\mathrm{[m/s]}$ である。
+
+\subsection*{第4問}
+
+[解]
+(1) 時刻 $t=0$ に穴をとび出した水の, 時刻 $t$ でのイチを $(X,Y)$ とする。\\
+ただし, 右のように $XY$ 平面をとる。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=stealth]
+  \draw[->] (-0.5,0) -- (4.0,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,3.0) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+  
+  \node[left] at (0,1.8) {$a-h$};
+  \fill (0,2.3) circle (1.5pt) node[left] {噴出口};
+  \draw[->,thick] (0,1.8) -- (0.8,1.8);
+  \draw[domain=0:3.2,samples=100,smooth,thick] plot (\x, {1.8 - 0.15*(\x)^2});
+\end{tikzpicture}
+\end{center}
+
+\[
+\begin{cases}
+X = \sqrt{2gh} \, t \\
+Y = a - h - \frac{1}{2}gt^2
+\end{cases}
+\]
+$\sqrt{2gh} \neq 0$ から, $t$ をけして
+\[
+\begin{aligned}
+Y &= -\frac{1}{2}g \cdot \frac{X^2}{2gh} + a - h \\
+&= -\frac{1}{4h} X^2 - h + a \quad \cdots \text{①}
+\end{aligned}
+\]
+したがって, 水平到達キョリは $X = 2\sqrt{h(a-h)}$
+
+(2) (1)の値を最大にするのは $h = \frac{1}{2}a$, つまり水槽の中点.
+
+(3) ①で $0 < h < a$ とするときの $(X,Y)$ のとる値を考える。
+\[
+Y' = -1 + \frac{X^2}{4h^2} =
+\]
+だから, 下表をとる。 ($\because$ (2)から $0 \leqq X < a$)
+
+\begin{center}
+\begin{array}{c|c|c|c|c|c}
+h & 0 & \dots & \frac{X}{2} & \dots & a \\
+\hline
+Y' & & + & 0 & - & \\
+\hline
+Y & (-\infty) & \nearrow & a-X & \searrow & -\frac{X^2}{4a}
+\end{array}
+\end{center}
+
+これと $0 < Y$ から,
+\[
+0 < Y \leqq a - X
+\]
+が求める領域である。
+
+\end{document}

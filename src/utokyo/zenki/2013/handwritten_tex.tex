@@ -1,0 +1,471 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{東大理科数学 2013年}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+問 & 仕 & 思 & 統 \\ \hline
+1 & A & B & A \\ \hline
+2 & A & A & A \\ \hline
+3 & B & B & B \\ \hline
+4 & B & A & B \\ \hline
+5 & A & C & C \\ \hline
+6 & B & B & B \\ \hline
+\end{tabular}
+\end{center}
+
+\bigskip
+
+\subsection*{第1問}
+
+\noindent
+\textbf{[解]} $x_0 = 1, y_0 = 0$
+\[
+\begin{cases}
+x_{n+1} = a x_n - b y_n \\
+y_{n+1} = b x_n + a y_n
+\end{cases}
+\quad \cdots \textcircled{1}
+\]
+
+\noindent
+①より、
+\[
+(x_{n+1} + y_{n+1} i) = (a + bi)(x_n + y_n i) \quad \cdots \textcircled{2}
+\]
+
+\noindent
+だから、$r e(i\theta) = \cos\theta + i\sin\theta$, $r \ge 0$ に対して、$a + bi = r e(i\theta)$ とおくと、②は $(x_n, y_n)$ を $\theta$ だけ回転して $r$ 倍することに対応する。②をくり返し用いて、
+\[
+x_6 + i y_6 = r^6 e(i 6\theta)
+\]
+これが $x_0 + i y_0 = 1$ に等しいので、まず $r = 1$ (∵ ①である)。このもとで、
+\[
+6\theta = 2n\pi \quad (n \in \mathbb{Z})
+\]
+$0 \le \theta < 2\pi$ で考えれば良く、
+\[
+\theta = \frac{k}{3}\pi \quad (k = 0, 1, 2, 3, 4, 5)
+\]
+となり、点 $P_k$ は $e(i\theta)$ に対応する点であるから、
+\[
+\begin{cases}
+k = 0 \quad \cdots \quad P_0 = P_1 \text{となり不適。} \\
+k = 1 \quad \cdots \quad P_k \text{は全て異なり適する。} \\
+k = 2 \quad \cdots \quad P_0 = P_3 \text{となり不適。} \\
+k = 3 \quad \cdots \quad P_0 = P_2 \text{ 〃} \\
+k = 5 \quad \cdots \quad P_k \text{は全て異なり適する。} \\
+k = 4 \quad \cdots \quad P_0 = P_3 \text{となり不適。}
+\end{cases}
+\]
+となり、求めるのは $k=1, 5$ の時で、
+\[
+a + bi = \frac{1}{2} + \frac{\sqrt{3}}{2}i, \quad \frac{1}{2} - \frac{\sqrt{3}}{2}i
+\]
+\[
+\therefore \; (a,b) = \left( \frac{1}{2}, \pm \frac{\sqrt{3}}{2} \right) \hfill \text{固}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  \draw[->] (-1.3,0) -- (1.3,0) node[right] {$\text{Re}$};
+  \draw[->] (0,-1.3) -- (0,1.3) node[above] {$\text{Im}$};
+  \draw (0,0) circle (1);
+  \foreach \k in {0,1,2,3,4,5} {
+    \fill ({cos(\k*60)}, {sin(\k*60)}) circle (1.5pt);
+  }
+  \node[above right] at (1,0) {$P_0$};
+  \node[above right] at ({cos(60)}, {sin(60)}) {$P_1$};
+  \node[above left] at ({cos(120)}, {sin(120)}) {$P_2$};
+  \node[above left] at (-1,0) {$P_3$};
+  \node[below left] at ({cos(240)}, {sin(240)}) {$P_4$};
+  \node[below right] at ({cos(300)}, {sin(300)}) {$P_5$};
+\end{tikzpicture}
+\end{center}
+
+\bigskip
+
+\subsection*{第2問}
+
+\noindent
+\textbf{[解]} $C = \cos x, S = \sin x$ とする。$x > 0$ から
+\[
+f(x) = g(x) \iff \frac{C - S x}{x^2} = a \quad \cdots \textcircled{1}
+\]
+である。この左辺を $h(x)$ とする。$(C - S x)' = (-S - S - C x) = -(2S + C x)$ から、
+\begin{align*}
+h'(x) &= \frac{-(2S + C x) \cdot x^2 - 2x (C - S x)}{x^4} \\
+&= \frac{-(x^2 + 2)}{x^3} C
+\end{align*}
+だから、下表をうる。
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+$x$ & $0$ & $\cdots$ & $\frac{\pi}{2}$ & $\cdots$ & $\frac{3}{2}\pi$ & $\cdots$ & $2\pi$ & $\cdots$ \\ \hline
+$h'$ & & $-$ & $0$ & $+$ & $0$ & $-$ & $0$ & \\ \hline
+$h$ & & $\searrow$ & & $\nearrow$ & & $\searrow$ & & \\ \hline
+\end{tabular}
+\end{center}
+
+\noindent
+これと、$h(x) = \frac{C}{x^2} - \frac{S}{x} \to +\infty \; (x \to +0)$ から、グラフの概形は右図
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=stealth]
+  \draw[->] (-0.5,0) -- (8.5,0) node[right] {$x$};
+  \draw[->] (0,-2.0) -- (0,3.0) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+  
+  \draw[domain=0.35:8.0, samples=200, smooth, thick, variable=\x] 
+    plot ({\x}, {(cos(\x r) - sin(\x r)*\x)/(\x*\x)});
+    
+  \draw[dashed] ({pi/2}, 0) -- ({pi/2}, {-2/pi});
+  \node[above] at ({pi/2}, 0) {$\frac{\pi}{2}$};
+  \node[left] at (0, {-2/pi}) {$-\frac{2}{\pi}$};
+  \draw[dashed] (0, {-2/pi}) -- ({pi/2}, {-2/pi});
+  \fill ({pi/2}, {-2/pi}) circle (1.5pt);
+
+  \draw[dashed] ({3*pi/2}, 0) -- ({3*pi/2}, {2/(3*pi)});
+  \node[below] at ({3*pi/2}, 0) {$\frac{3}{2}\pi$};
+  \node[left] at (0, {2/(3*pi)}) {$\frac{2}{3\pi}$};
+  \draw[dashed] (0, {2/(3*pi)}) -- ({3*pi/2}, {2/(3*pi)});
+  \fill ({3*pi/2}, {2/(3*pi)}) circle (1.5pt);
+
+  \draw[dashed] ({5*pi/2}, 0) -- ({5*pi/2}, {-2/(5*pi)});
+  \node[above] at ({5*pi/2}, 0) {$\frac{5}{2}\pi$};
+  \node[left] at (0, {-2/(5*pi)}) {$-\frac{2}{5\pi}$};
+  \draw[dashed] (0, {-2/(5*pi)}) -- ({5*pi/2}, {-2/(5*pi)});
+  \fill ({5*pi/2}, {-2/(5*pi)}) circle (1.5pt);
+
+  \draw[dashed] ({7*pi/2}, 0) -- ({7*pi/2}, {2/(7*pi)});
+  \node[below] at ({7*pi/2}, 0) {$\frac{7}{2}\pi$};
+  \fill ({7*pi/2}, {2/(7*pi)}) circle (1.5pt);
+\end{tikzpicture}
+\end{center}
+
+\noindent
+ここで、極値について、
+\[
+h\left( 2m\pi + \frac{1}{2}\pi \right) = \frac{-1}{2m\pi + \frac{1}{2}\pi}
+\]
+\[
+h\left( 2m\pi + \frac{3}{2}\pi \right) = \frac{1}{2m\pi + \frac{3}{2}\pi}
+\]
+だから、商の絶対値は $m$ について単調減少である。したがって、図から
+\[
+a = -\frac{2}{5\pi}, \quad \frac{2}{5\pi} < a < \frac{2}{3\pi} \hfill \text{固}
+\]
+
+\bigskip
+
+\subsection*{第3問}
+
+\noindent
+\textbf{[解]} (1) $n$ 回コインを投げた時に A が勝つのは、$n$ 回目の試行の前に A がコインを持ち、かつ投げて表が出る時である。さらに、$n-1$ 回目までに A が1点、B が0点又は1点である。\\
+以下 $n \ge 2$ とする。
+
+\medskip
+
+\noindent
+$1^\circ$ B が 0 点の時\\
+$n$ は偶数である。以下の表のように $n$ 個の丸の中に、左から $n$ 回目の試行の後に玉を持つ人を書き下すと、この間に1ヶ所だけ A が連続する場所がある。この場所の選び方は $n = 2m$ とおくと、$m$ 通り。
+
+\begin{center}
+\begin{tabular}{ccccccc}
+1 & 2 & $\dots$ & $2k-1, 2k$ & $\dots$ & $n-1$ & $n$ \\
+$\circ$ & $\circ$ & $\dots$ & $\circ \quad \circ$ & $\dots$ & $\circ$ & $\circ$ \\
+B & A & $\dots$ & A \quad A & $\dots$ & A & A
+\end{tabular}
+\end{center}
+
+\medskip
+
+\noindent
+$2^\circ$ B が 1 点の時\\
+$n$ は奇数である。$1^\circ$ と同様に考えると A, B 共に連続する場所が1ヶ所ずつある。\\
+この場合の数は、右下のように $n-3$ 個の $\text{BABA} \dots \text{BA}$ の列の中の2ヶ所に、A と B を1つずつ入れる場合の数で、$n-2 = 2m+1$ とおくと、B の入れ方は $m-1$ 通り、A の入れ方は $m$ 通りであわせて $(m-1)m$ 通り。
+
+\medskip
+
+\noindent
+全事象は $2^n$ 通りで、同様にたしからしく、$n=1$ の時、$P(1) = 0$ だから $2^\circ$ の表でよく、
+\[
+P(n) = \begin{cases}
+\dfrac{m}{2^{2m}} & (n \text{ even}) \\[10pt]
+\dfrac{(n-1)(n-3)}{2^{n+2}} & (n \text{ odd})
+\end{cases}
+\hfill \text{固}
+\]
+
+\bigskip
+
+\noindent
+(2) $A_N = \sum_{n=1}^N P(n)$ とおきます。まず $N = 2m \; (m \in \mathbb{N})$ の時、(1)から
+\begin{align*}
+A_N &= \sum_{t=1}^m \{ P(2t-1) + P(2t) \} \\
+&= \sum_{t=1}^m \left( \frac{(2t-4)(2t-2)}{2^{2t+1}} + \frac{2t}{2^{2t+1}} \right) \\
+&= \sum_{t=1}^m \frac{2t^2 - 5t + 4}{4^t} \quad \cdots \textcircled{1}
+\end{align*}
+
+\noindent
+ここで、$B_n = \sum_{k=1}^n k \cdot \left(\frac{1}{4}\right)^k, \; C_n = \sum_{k=1}^n k^2 \cdot \left(\frac{1}{4}\right)^k$ とおくと、
+\[
+B_n = \left( -\frac{1}{3} n - \frac{1}{9} \right) \left(\frac{1}{4}\right)^{n+1} + \frac{1}{9} \quad \cdots \textcircled{2}
+\]
+であり、
+\begin{align*}
+C_n &= 1 \cdot \left(\frac{1}{4}\right) + \dots + n^2 \left(\frac{1}{4}\right)^n \\
+\frac{1}{4} C_n &= \left(\frac{1}{4}\right)^2 + \dots + (n-1)^2 \left(\frac{1}{4}\right)^n + n^2 \left(\frac{1}{4}\right)^{n+1}
+\end{align*}
+の辺々引いて、
+\begin{align*}
+\frac{3}{4} C_n &= \sum_{k=1}^n (2k-1) \left(\frac{1}{4}\right)^k - n^2 \left(\frac{1}{4}\right)^{n+1} \\
+&= 2 B_n - \frac{1 - (1/4)^n}{4 \cdot \frac{3}{4}} - n^2 \left(\frac{1}{4}\right)^{n+1} \\
+C_n &= \frac{8}{3} B_n - \frac{4}{9} + \frac{4}{9} \left(\frac{1}{4}\right)^n - \frac{4}{3} n^2 \left(\frac{1}{4}\right)^{n+1} \quad \cdots \textcircled{3}
+\end{align*}
+
+\noindent
+となる。②、③から、$n \to \infty$ の時、$B_n \to \frac{1}{9}, \; C_n \to \frac{20}{27}$ となるので、①より
+\[
+A_N \longrightarrow 2 \cdot \frac{20}{27} - 5 \cdot \frac{1}{9} + \frac{1}{1-1/4} = \frac{16}{27} \quad \cdots \textcircled{4}
+\]
+であり、
+\[
+A_{2m+1} = A_{2m} + P(2m+1) \longrightarrow \frac{16}{27} \quad \cdots \textcircled{5}
+\]
+だから、④⑤から、
+\[
+A_n \longrightarrow \frac{16}{27} \hfill \text{固}
+\]
+
+\bigskip
+
+\subsection*{第4問}
+
+\noindent
+\textbf{[解]} (1) $\angle APB = \alpha, \angle APC = \beta$ とおく。\\
+右図のように、$P$ を原点とし、$A$ を $x$ 軸正の方向とする座標をとる。この時、$C$ が $y \ge 0$ にくるようにする。\\
+($P$ が $\triangle ABC$ の内部) この時、$\vec{PA}, \vec{PB}, \vec{PC}$ に平行な単位ベクトルを各々 $\vec{a}, \vec{b}, \vec{c}$ として、
+\[
+\vec{a} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad \vec{b} = \begin{pmatrix} \cos(-\alpha) \\ \sin(-\alpha) \end{pmatrix}, \quad \vec{c} = \begin{pmatrix} \cos\beta \\ \sin\beta \end{pmatrix}
+\]
+と書ける。題意から $\vec{a} + \vec{b} + \vec{c} = \vec{0}$ だから、
+\[
+\begin{cases}
+1 + \cos\alpha + \cos\beta = 0 \\
+\sin\alpha = \sin\beta
+\end{cases}
+\quad \cdots \textcircled{1}
+\]
+$\cos^2\alpha + \sin^2\alpha = 1$ から
+\[
+2 + 2\cos\beta = 1 \quad \therefore \cos\beta = -\frac{1}{2}
+\]
+$0 \le \beta \le \pi$ から $\beta = \frac{2}{3}\pi$ で、①から $\alpha = \frac{2}{3}\pi$ が従う。よって、
+\[
+\angle APB = \frac{2}{3}\pi, \quad \angle APC = \frac{2}{3}\pi \hfill \text{固}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  \draw[->] (-1.5,0) -- (1.8,0) node[right] {$x$};
+  \draw[->] (0,-1.5) -- (0,1.8) node[above] {$y$};
+  \node[below left] at (0,0) {$P$};
+  
+  \coordinate (A) at (1.2, 0);
+  \coordinate (B) at ({-1.2*cos(60)}, {-1.2*sin(60)});
+  \coordinate (C) at ({-1.5*cos(60)}, {1.5*sin(60)});
+  
+  \draw[thick] (A) -- (B) -- (C) -- cycle;
+  \draw[dashed, ->] (0,0) -- (A) node[above right] {$A$};
+  \draw[dashed, ->] (0,0) -- (B) node[below left] {$B$};
+  \draw[dashed, ->] (0,0) -- (C) node[above left] {$C$};
+  
+  \draw (0.4,0) arc (0:120:0.4);
+  \node at (60:0.55) {$\beta$};
+  \draw (0.3,0) arc (0:-120:0.3);
+  \node at (-60:0.45) {$\alpha$};
+\end{tikzpicture}
+\end{center}
+
+\noindent
+(2) $|\vec{PA}| = a, |\vec{PB}| = b, |\vec{PC}| = c$ とすると、
+\[
+\vec{PA} = a \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad \vec{PB} = -\frac{b}{2} \begin{pmatrix} 1 \\ \sqrt{3} \end{pmatrix}, \quad \vec{PC} = \frac{c}{2} \begin{pmatrix} -1 \\ \sqrt{3} \end{pmatrix}
+\]
+である。したがって、
+\[
+\vec{AB} = \begin{pmatrix} -\frac{1}{2}b - a \\ -\frac{\sqrt{3}}{2}b \end{pmatrix}, \quad \vec{AC} = \begin{pmatrix} -\frac{1}{2}c - a \\ \frac{\sqrt{3}}{2}c \end{pmatrix}
+\]
+だから、$\angle CAB = \frac{\pi}{2}, AB = 1, AC = \sqrt{3}$ から、
+\[
+\begin{cases}
+(-\frac{1}{2}b - a)(-\frac{1}{2}c - a) - \frac{3}{4}bc = 0 \\
+(\frac{1}{2}b + a)^2 + \frac{3}{4}b^2 = 1 \\
+(\frac{1}{2}c + a)^2 + \frac{3}{4}c^2 = 3
+\end{cases}
+\iff
+\begin{cases}
+a^2 + b^2 + ab = 1 \\
+a^2 + c^2 + ac = 3 \\
+a^2 + \frac{1}{2}(ac + ab - bc) = 0
+\end{cases}
+\]
+これをといて、
+\[
+a = \frac{\sqrt{7}}{7}, \quad b = \frac{2\sqrt{7}}{7}, \quad c = \frac{4\sqrt{7}}{7} \hfill \text{固}
+\]
+
+\bigskip
+
+\subsection*{第5問}
+
+\noindent
+\textbf{[解]} (1) 与式から
+\[
+x^3 + 3y x^2 < (x+y)^3 - (x+y) < x^3 + (3y+1) x^2
+\]
+\[
+x^3 + 3y x^2 < x^3 + 3x^2 y + 3x y^2 + y^3 - x - y < x^3 + 3y x^2 + x^2
+\]
+\[
+0 < 3x y^2 + y^3 - (x+y) < x^2
+\]
+$t = y^3 - y$ とおく。さらに変形して、
+\[
+0 < (3y^2 - 1) x + t < x^2 \quad \cdots \textcircled{1}
+\]
+①の左側の不等式から ($3y^2 - 1 > 0$ より)
+\[
+-\frac{t}{3y^2 - 1} < x \quad \cdots \textcircled{2}
+\]
+又、①の右側の不等式から、
+\[
+x < \frac{1}{2} \left( (3y^2 - 1) - \sqrt{(3y^2 - 1)^2 + 4t} \right), \quad x > \frac{1}{2} \left( (3y^2 - 1) + \sqrt{(3y^2 - 1)^2 + 4t} \right) \quad \cdots \textcircled{3}
+\]
+ここで $x > 0$ および $y \in \mathbb{N}$ から、②の左側は常にみたされ、③の左側は常に不成立だから、
+\[
+\frac{1}{2} \left( (3y^2 - 1) + \sqrt{(3y^2 - 1)^2 + 4y(y^2 - 1)} \right) < x \hfill \text{固}
+\]
+
+\bigskip
+
+\noindent
+(2) $111 \dots 1$ (99個) の各位の和は $99$ で、$3$ の倍数で $111 \dots 1 = 3y$ とおける ($y \in \mathbb{N}$)。これと $x = 10^n$ ($n$ は (1)をみたす程度に十分大きく、かつ $n \ge 100$) を (1)に代入して、
+\[
+(10^n + 3y) 10^{2n} < (x+y)(x+y-1)(x+y+1) < (10^n + 3y + 1) 10^{2n}
+\]
+\[
+100 \dots 0 11 \dots 1 00 \dots 0 < A < 100 \dots 0 11 \dots 1 2 00 \dots 0
+\]
+となり、たしかに $A$ は (1)を満たす。よって示された。 \hfill $\qed$
+
+\bigskip
+
+\subsection*{第6問}
+
+\noindent
+\textbf{[解]} $V_1$ の表面上の点 $P(x,y,z)$ とする。この立体の $x+y = 2k \; (0 \le k \le 1)$ での切り断面は $H_k(k,k,0)$ を中心とし、半径 $\sqrt{2}(1-k)$ の円であるから、右下図のようである。この時、$x+y = t$ の点は $y$ 座標が $2k - t$ であり、$z$ 座標は、$k$ の正負で以下のようになる。
+
+\medskip
+
+\noindent
+$1^\circ \; k \ge 0$
+\[
+(t-k)^2 + (2k-t-k)^2 + z^2 = 2(1-k)^2
+\]
+\[
+z^2 = 2\{ (1-k)^2 - (t-k)^2 \} = 2(1-t) \{ -2k + (1+t) \}
+\]
+
+\noindent
+$2^\circ \; k \le 0$
+\[
+(t-k)^2 + (2k-t-k)^2 + z^2 = 2(1+k)^2
+\]
+\[
+z^2 = 2\{ (1+k)^2 - (t-k)^2 \} = 2(1+t) \{ 2k + (1-t) \}
+\]
+
+\noindent
+次に $k$ を動かす。$-1 \le y \le 1$ から、
+\[
+\frac{t-1}{2} \le k \le \frac{t+1}{2}
+\]
+で考えれば良い。$y = 2k - t \implies k = \frac{y+t}{2}$ だから $0 \le k \le 1$ とあわせて、以下のようになる。
+
+\medskip
+
+\noindent
+① $\frac{t-1}{2} \le k \le 0$\\
+$\frac{t-1}{2} \le \frac{y+t}{2} \le 0 \implies -1 \le y \le -t$ の時、$2^\circ$ から
+\[
+z^2 = 2(1+t)(y+1) \quad \cdots \textcircled{\star_1}
+\]
+
+\noindent
+② $0 \le k \le \frac{t+1}{2}$\\
+$0 \le \frac{y+t}{2} \le \frac{t+1}{2} \implies -t \le y \le 1$ の時、$1^\circ$ から
+\[
+z^2 = 2(1-t)(1-y) \quad \cdots \textcircled{\star_2}
+\]
+
+\noindent
+以上を図示して、右図斜線部だから、この面積は $t=1$ の時
+\begin{align*}
+S(t) &= \left( \frac{1}{6 \cdot 2(1+t)} + \frac{1}{6 \cdot 2(1-t)} \right) \left( 2 \sqrt{2(1-t^2)} \right)^3 \quad (\textcircled{\star_1}, \textcircled{\star_2} \text{より}) \\
+&= \frac{1}{12} \left( \frac{1}{1+t} + \frac{1}{1-t} \right) \cdot 8 \cdot 2\sqrt{2} (1-t^2) \sqrt{1-t^2} \\
+&= \frac{8}{3} \sqrt{2} \sqrt{1-t^2}
+\end{align*}
+$t=1$ の時も $S(1) = 0$ となるのでこの式で良い。よって
+\[
+S(t) = \frac{8}{3} \sqrt{2} \sqrt{1-t^2} \hfill \text{固}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  \draw[->] (-1.5,0) -- (1.5,0) node[right] {$y$};
+  \draw[->] (0,-0.3) -- (0,1.8) node[above] {$z$};
+  \node[below left] at (0,0) {$O$};
+  
+  \draw[thick, domain=-1:0, samples=50] plot (\x, {sqrt(2*(1+0.5)*(\x+1))});
+  \draw[thick, domain=0:1, samples=50] plot (\x, {sqrt(2*(1-0.5)*(1-\x))});
+  
+  \draw[dashed] (-1,0) node[below] {$-1$} -- (-1,0);
+  \draw[dashed] (1,0) node[below] {$1$} -- (1,0);
+  \draw[dashed] (-0.5,0) node[below] {$-t$} -- (-0.5, {sqrt(2*(1.5)*0.5)});
+  
+  \node at (-0.7, 0.7) {$\textcircled{\star_1}$};
+  \node at (0.6, 0.7) {$\textcircled{\star_2}$};
+\end{tikzpicture}
+\end{center}
+
+\bigskip
+
+\noindent
+(2) 対称性から、求める体積 $V$, $V'$ のうち $0 \le x$ のものを $V'$ として、
+\[
+V = 2 V'
+\]
+とできる。$V_2$ を $x=t$ で切った時の切断面は、$y$ と $z$ 軸に関して対称だから、共通部分は右図のようになる。この面積 $T(t)$ は
+\begin{align*}
+T(t) &= 2 \cdot \frac{1}{6 \cdot 2(1-t)} \left( 2\sqrt{2(1-t)} \right)^3 \\
+&= \frac{1}{6} \cdot 8 \sqrt{2} \sqrt{1-t} = \frac{8}{3} \sqrt{2} \sqrt{1-t}
+\end{align:
+だから、
+\begin{align*}
+V' &= \int_0^1 T(t) dt \\
+&= \frac{8}{3}\sqrt{2} \int_0^1 \sqrt{1-t} \, dt \\
+&= \frac{8}{3}\sqrt{2} \left[ -\frac{2}{3} (1-t)^{\frac{3}{2}} \right]_0^1 = \frac{16}{9} \sqrt{2}
+\end{align*}
+となり、①から
+\[
+V = \frac{32}{9}\sqrt{2} \hfill \text{固}
+\]
+である。
+
+\end{document}

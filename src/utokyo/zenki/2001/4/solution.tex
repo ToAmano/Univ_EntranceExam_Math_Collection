@@ -1,0 +1,70 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\noindent
+\textbf{[解]} $a_1 = 1, a_2 = i \quad \cdots \textcircled{1}, \quad a_{n+2} = a_{n+1} + a_n \quad \cdots \textcircled{2}$
+
+\medskip
+
+\noindent
+(1) \textcircled{2} から $a_3 = 1+i, a_4 = 1+2i$ だから、
+\[
+b_1 = 1-i, \quad b_2 = \frac{1+2i}{1+i} = \frac{3+i}{2}, \quad b_3 = \frac{2+3i}{1+2i} = \frac{8-i}{5}
+\]
+である。これら3点を通る円の中心は、$b_1 b_2, b_1 b_3$ の垂直2等分線の交点で、
+すなわち $\frac{1}{2}$。この時、半径は $\sqrt{\left(1 - \frac{1}{2}\right)^2 + 1^2} = \frac{\sqrt{5}}{2}$ である。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  \draw[->] (-0.5, 0) -- (2.5, 0) node[right] {$\text{Re}$};
+  \draw[->] (0, -1.5) -- (0, 1.5) node[above] {$\text{Im}$};
+  \node[below left] at (0,0) {$0$};
+
+  \draw[dashed] (0.5, 0) circle (1.118); % radius sqrt(5)/2 approx 1.118
+
+  \fill (1, -1) circle (1.5pt) node[below right] {$b_1$};
+  \fill (1.5, 0.5) circle (1.5pt) node[above right] {$b_2$};
+  \fill (1.6, -0.2) circle (1.5pt) node[right] {$b_3$};
+  \fill (0.5, 0) circle (1.5pt) node[below] {$\frac{1}{2}$};
+\end{tikzpicture}
+\end{center}
+
+\noindent
+(2) 任意の $n \in \mathbb{N}$ に対し、「$b_n$ は円 $C$ の周上にある」$\dots \diamondsuit$ ことを示す。(1)から、$n=1,2,3$ では成立するから、以下 $n=k$ での成立を仮定し ($k \in \mathbb{N}$)、$n=k+1$ での成立を示す。$C$ の中心 $\alpha$, 半径 $r$ とする。
+\[
+b_{k+1} = \frac{a_{k+2}}{a_{k+1}} = 1 + \frac{a_k}{a_{k+1}} = 1 + \frac{1}{b_k} \quad (\because \textcircled{2})
+\]
+だから、$b_n \neq 1$ である。逆について
+\[
+b_k = \frac{1}{b_{k+1}-1} \quad \cdots \textcircled{3}
+\]
+だから、仮定より $|b_k - \alpha| = r$ に代入、両辺 $0$ 以上から2乗して、
+\[
+|b_k|^2 - \alpha(b_k + \bar{b}_k) = r^2 - \alpha^2 = 1
+\]
+両辺 $|b_k|^2 \quad (\neq 0)$ で割って (\textcircled{1}\textcircled{2}から漸化的に $a_n \neq 0$ だから、$b_n \neq 0$ である)、
+\[
+\frac{1}{|b_k|^2} + \alpha \left( \frac{1}{b_k} + \frac{1}{\bar{b}_k} \right) - 1 = 0
+\]
+\[
+|b_{k+1}-1|^2 + \alpha( \bar{b}_{k+1}-1 + b_{k+1}-1 ) - 1 = 0 \quad (\because \textcircled{3})
+\]
+\[
+|b_{k+1}-1|^2 - \frac{1}{2} ( b_{k+1} + \bar{b}_{k+1} ) - 1 = 0 \quad \left(\because \alpha = \frac{1}{2}\right)
+\]
+\[
+|b_{k+1} - \alpha|^2 = r^2
+\]
+$|b_{k+1} - \alpha|, r$ 共に $0$ 以上だから、
+\[
+|b_{k+1} - \alpha| = r
+\]
+したがって、$b_{k+1}$ も $C$ 上にあるので、$n=k+1$ でも $\diamondsuit$ は成立。よって数学的帰納法により、題意は示された。 \hfill $\text{固}$
+
+\bigskip
+
+\end{document}

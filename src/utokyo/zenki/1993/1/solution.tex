@@ -1,0 +1,163 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\begin{center}
+\begin{framed}
+全ての面が合同な四面体 $ABCD$ がある。頂点 $A,B,C$ が $x,y,z$ 軸の正の部分にある。$AB=2l-1$, $AC=2l+1$, $BC=2l$ ($l>2$)。四面体 $ABCD$ の体積 $V(l)$ として
+\[
+\lim_{l \to 2} \frac{V(l)}{\sqrt{l-2}}
+\]
+\end{framed}
+\end{center}
+
+\noindent
+\begin{framed}
+\textbf{[四面体のまとめ (再掲)]}\\
+・直方体の対角線を結んで四面体 $ABCD$ をつくると、全ての面が合同。
+\end{framed}
+
+\noindent
+$\triangleright$ $V(l)$ をどうもとめるか。どの道、$D$ の座標がいる。\\
+--- * 一応座標で押しても出来る ---
+
+\begin{equation*}
+D(x,y,z) \text{ とおく。}
+\begin{cases}
+DA = BC \to (x-a)^2 + y^2 + z^2 = b^2 + c^2 \\
+DB = CA \to x^2 + (y-b)^2 + z^2 = a^2 + c^2 \\
+DC = AB \to x^2 + y^2 + (z-c)^2 = a^2 + b^2
+\end{cases}
+\end{equation*}
+
+$A = x^2 + y^2 + z^2$ とおく。
+\begin{align}
+A - 2ax &= -a^2 + b^2 + c^2 \\
+A - 2by &= a^2 - b^2 + c^2 \\
+A - 2cz &= a^2 + b^2 - c^2
+\end{align}
+
+(1)$-$(2) より
+\begin{align*}
+2(by - ax) &= 2(-a^2 + b^2) \\
+by - ax &= -a^2 + b^2 \\
+a(x-a) &= b(y-b) \quad \dots \text{(4)}
+\end{align*}
+
+(1)$-$(3) より
+\begin{align*}
+cz - ax &= c^2 - a^2 \\
+a(x-a) &= c(z-c) \quad \dots \text{(5)}
+\end{align*}
+
+(4), (5) は、$x-a = kbc$, $y-b = kac$, $z-c = kab$ なる $k$ が存在することと同値。\\
+$x = a + kbc$ などを (1) に代入して
+\[
+k = 0, \quad \frac{-4abc}{a^2b^2 + b^2c^2 + c^2a^2}
+\]
+となり、$D$ も求まる。
+
+\bigskip
+\noindent
+$\triangleright$ 直方体を考えればすぐに $D$ は求まる。\\
+どの道、$l$ ではなく、考えやすい $a,b,c$ で考える。
+
+\begin{center}
+\begin{framed}
+直方体の中に、四面体がおさまる (全ての面が合同)
+\end{framed}
+
+\begin{tikzpicture}[scale=1.2, >=stealth]
+  % Cuboid vertices
+  \coordinate (O) at (0,0,0);
+  \coordinate (A) at (2,0,0);
+  \coordinate (B) at (0,2,0);
+  \coordinate (C) at (0,0,2);
+  \coordinate (AB) at (2,2,0);
+  \coordinate (BC) at (0,2,2);
+  \coordinate (CA) at (2,0,2);
+  \coordinate (D) at (2,2,2);
+
+  % Draw cuboid edges
+  \draw[gray, dashed] (O) -- (A) (O) -- (B) (O) -- (C);
+  \draw[gray] (A) -- (AB) -- (B) (B) -- (BC) -- (C) (C) -- (CA) -- (A);
+  \draw[gray] (AB) -- (D) (BC) -- (D) (CA) -- (D);
+
+  % Tetrahedron edges
+  \draw[thick, blue] (A) -- (B) -- (C) -- cycle;
+  \draw[thick, blue] (A) -- (D);
+  \draw[thick, blue] (B) -- (D);
+  \draw[thick, blue] (C) -- (D);
+\end{tikzpicture}
+\end{center}
+
+\newpage
+
+\noindent
+\textbf{[解]} $A(a,0,0)$, $B(0,b,0)$, $C(0,0,c)$ とおく。\\
+対称性から、$D(a,b,c)$ の時のみ考えれば良い。\\
+右図のように3辺の長さが $a,b,c$ である直方体を考えて,
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  % Axes
+  \draw[->] (-0.5,0,0) -- (3,0,0) node[right] {$x$};
+  \draw[->] (0,-0.5,0) -- (0,3,0) node[above] {$y$};
+  \draw[->] (0,0,-0.5) -- (0,0,3) node[above left] {$z$};
+
+  \node[below left] at (0,0,0) {$O$};
+  
+  \coordinate (A) at (2,0,0);
+  \coordinate (B) at (0,2.2,0);
+  \coordinate (C) at (0,0,2.5);
+  \coordinate (D) at (2,2.2,2.5);
+
+  \node[below] at (A) {$A(a,0,0)$};
+  \node[right] at (B) {$B(0,b,0)$};
+  \node[above left] at (C) {$C(0,0,c)$};
+  \node[above right] at (D) {$D(a,b,c)$};
+
+  \draw[dashed, gray] (2,0,0) -- (2,2.2,0) -- (0,2.2,0);
+  \draw[dashed, gray] (2,0,0) -- (2,0,2.5) -- (0,0,2.5);
+  \draw[dashed, gray] (0,2.2,0) -- (0,2.2,2.5) -- (0,0,2.5);
+  \draw[dashed, gray] (2,2.2,0) -- (D) (2,0,2.5) -- (D) (0,2.2,2.5) -- (D);
+
+  \draw[thick, red] (A) -- (B) -- (C) -- cycle;
+  \draw[thick, red] (A) -- (D);
+  \draw[thick, red] (B) -- (D);
+  \draw[thick, red] (C) -- (D);
+\end{tikzpicture}
+\end{center}
+
+\[
+V(l) = abc - 4 \cdot \frac{1}{6} abc = \frac{1}{3} abc \quad \dots \text{①}
+\]
+一方、$\overline{AB} = 2l-1$, $\overline{BC} = 2l$, $\overline{CA} = 2l+1$ から、\\
+ピタゴラスの定理より、
+\[
+\begin{cases}
+(2l-1)^2 = a^2+b^2 \\
+(2l)^2 = b^2+c^2 & \dots \text{②} \\
+(2l+1)^2 = a^2+c^2
+\end{cases}
+\]
+各辺足して,
+\[
+12l^2+2 = 2(a^2+b^2+c^2) \implies 6l^2+1 = a^2+b^2+c^2
+\]
+だから、②より,
+\[
+a^2 = 2l^2+1, \quad b^2 = 2l^2-4l, \quad c^2 = 2l^2+4l
+\]
+となる。$a,b,c > 0$ に注意して、①とあわせて,
+\begin{align*}
+\frac{V(l)}{\sqrt{l-2}} &= \frac{1}{\sqrt{l-2}} \cdot \frac{1}{3} \sqrt{2l^2+1} \sqrt{2l(l-2)} \sqrt{2l(l+2)} \\
+&= \frac{2}{3} \sqrt{2l^2+1} \cdot \sqrt{l} \cdot \sqrt{l(l+2)} \xrightarrow{l \to 2} \frac{8}{3} \quad \text{\#\#}
+\end{align*}
+
+\newpage
+
+\end{document}

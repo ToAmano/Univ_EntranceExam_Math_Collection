@@ -1,0 +1,42 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] 題意の円周は、$x^2+y^2=t^2$ だから、$u(t) = t \cos \frac{L}{t}$, $v(t) = t \sin \frac{L}{t}$ $\cdots (1)$
+(2) $u'(t) = \cos \frac{L}{t} + t \cdot \left( -\sin \frac{L}{t} \right) \left( -\frac{L}{t^2} \right) = \cos \frac{L}{t} + \frac{L}{t} \sin \frac{L}{t}$ だから、
+\[ v'(t) = \sin \frac{L}{t} + t \left( \cos \frac{L}{t} \right) \left( -\frac{L}{t^2} \right) = \sin \frac{L}{t} - \frac{L}{t} \cos \frac{L}{t} \]
+\[ \{u'(t)\}^2 + \{v'(t)\}^2 = 1 + \left( \frac{L}{t} \right)^2 + 2 \frac{L}{t} \left( \cos \frac{L}{t} \sin \frac{L}{t} - \sin \frac{L}{t} \cos \frac{L}{t} \right) = 1 + \frac{L^2}{t^2} \]
+となり、$0 < a < 1$ から、
+\[ f(a) = \int_a^1 \sqrt{1 + \frac{L^2}{t^2}} dt = \int_a^1 \frac{\sqrt{t^2+L^2}}{t} dt \]
+で、$x = \sqrt{t^2+L^2}$ とすると、$\frac{dx}{dt} = \frac{t}{x}$ だから $\alpha = \sqrt{a^2+L^2}$, $\beta = \sqrt{1+L^2}$ として
+\begin{align*}
+f(a) &= \int_\alpha^\beta \frac{x}{t} \cdot \frac{x}{t} dx = \int_\alpha^\beta \frac{x^2}{x^2-L^2} dx = \int_\alpha^\beta \left( 1 + \frac{L}{2} \left( \frac{1}{x-L} - \frac{1}{x+L} \right) \right) dx \\
+&= \left[ x + \frac{L}{2} \log (x-L) - \frac{L}{2} \log (x+L) \right]_\alpha^\beta \\
+&= (\beta - \alpha) + \frac{L}{2} \log \frac{\beta-L}{\alpha-L} - \frac{L}{2} \log \frac{\beta+L}{\alpha+L} \\
+&= \sqrt{L^2+1} - \sqrt{L^2+a^2} + \frac{L}{2} \log \frac{(\sqrt{L^2+1}-L)}{(\sqrt{L^2+a^2}-L)} \frac{(\sqrt{L^2+a^2}+L)}{(\sqrt{L^2+1}+L)}
+\end{align*}
+
+(3) 
+\[ \frac{\sqrt{L^2+1} - \sqrt{L^2+a^2}}{\log a} \xrightarrow{a \to +0} 0 \quad \cdots \text{①} \]
+\[ \frac{\log (\beta \pm L)}{\log a} \xrightarrow{} 0, \quad \frac{\log (\alpha + L)}{\log a} \xrightarrow{} 0 \quad \cdots \text{②} \]
+\[ \frac{\log (\alpha - L)}{\log a} = \frac{\log (\sqrt{L^2+a^2} - L)}{\log a} = \frac{\log a^2 - \log (\sqrt{L^2+a^2} + L)}{\log a} \xrightarrow{} 2 \quad \cdots \text{③} \]
+を(2)に代入して
+\[ \frac{f(a)}{\log a} \xrightarrow{a \to +0} - \frac{L}{2} \cdot 2 = -L \]
+(※解答用紙の記述に合わせて極限先を表記)
+
+\begin{center}
+\begin{tikzpicture}
+\draw[->] (-1, 0) -- (4, 0) node[below] {$x$};
+\draw[->] (0, -0.5) -- (0, 3) node[left] {$y$};
+\draw (2.5,0) arc (0:60:2.5);
+\draw (0,0) -- (1.25, 2.165);
+\node at (0.8, 0.4) {$\theta$};
+\node at (3, 1) {$L$};
+\draw[dashed] (2.5,0) -- (2.5,-0.2) node[below] {$p$};
+\end{tikzpicture}
+\end{center}
+
+\end{document}

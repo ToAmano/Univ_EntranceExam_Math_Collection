@@ -1,0 +1,81 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] 以下の解では, ゲームが終了する場合は含めないものとする。ただし, ちょうど終わる時は含む。
+
+(1) $n$ 回じゃんけんして, 同じ手が出ているのは, ゲームが終了せず, かつ 2 人の勝ち数の合計が $k$ 回になっている時である。求める確率 $q$ は, $k \ge 2$ の時
+
+$\text{i)} \ n < k \text{ の時}$
+\[
+q = 0
+\]
+
+$\text{ii)} \ n = k \text{ の時}$
+$n$ 回とも引き分けがない時であるから,
+\[
+q = \left(1 - \frac{1}{3}\right)^n = \left(\frac{2}{3}\right)^n
+\]
+
+$\text{iii)} \ n > k \text{ の時}$
+2 人の勝ちの合計が $k$ 回かつ, 片方が先に勝たなければ良い。ゆえに,
+\begin{align*}
+q &= {}_n\text{C}_k \left(\frac{2}{3}\right)^k \left(\frac{1}{3}\right)^{n-k} - 2 \cdot {}_{n-1}\text{C}_{k-1} \left(\frac{1}{3}\right)^k \left(\frac{1}{3}\right)^{n-k-1} \cdot \left(\frac{1}{3}\right) \\
+&= {}_n\text{C}_k \left(\frac{1}{3}\right)^n \cdot 2^k - 2 \left(\frac{n-k}{n}\right) {}_n\text{C}_k \left(\frac{1}{3}\right)^n \\
+&= 2 {}_n\text{C}_k \left(\frac{1}{3}\right)^n \left( 2^{k-1} - 1 + \frac{k}{n} \right)
+\end{align*}
+これをまとめて, $n < k$ の時 ${}_n\text{C}_k = 0$, 又, $k=1$ の時もこれで良いから,
+\[
+q = \frac{2}{3^n} {}_n\text{C}_k \left( 2^{k-1} - 1 + \frac{k}{n} \right)
+\]
+
+(2) $x, y$ は, $A, B$ の勝利回数を表す。ゆえに
+\[
+x + y \le n \quad \dots \text{①}
+\]
+又, $k$ 回までしか移動できないから,
+\[
+x, y \le k \quad \dots \text{②}
+\]
+このもとで考える。$n$ 回じゃんけんをしたということは, $n-1$ 回目までゲームは終了しなかったということだから, まず $x, y \le k-1$ の時,
+\[
+P(x, y) = {}_n\text{C}_x {}_{n-x}\text{C}_y \left(\frac{1}{3}\right)^x \left(\frac{1}{3}\right)^y \left(\frac{1}{3}\right)^{n-x-y} = {}_n\text{C}_x {}_{n-x}\text{C}_y \left(\frac{1}{3}\right)^n \quad \dots \text{③}
+\]
+$x = y = k$ となることはありえない (ゲームが終了している) ので, たとえば $x \le k-1, y = k$ の時, $B$ が最後に1勝しなければならないから,
+\[
+P(x, k) = {}_{n-1}\text{C}_{k-1} {}_{(n-1)-(k-1)}\text{C}_x \left(\frac{1}{3}\right)^n = {}_{n-1}\text{C}_{k-1} {}_{n-k}\text{C}_x \left(\frac{1}{3}\right)^n \quad (\text{①, ②から } k \le n)
+\]
+これは対称性により, $x = k, y \le k-1$ にも同じことが言える。よって ①, ②のもとで,
+\[
+P(x, y) = \begin{cases}
+{}_n\text{C}_x {}_{n-x}\text{C}_y \left(\frac{1}{3}\right)^n & (x, y \le k-1) \\
+{}_{n-1}\text{C}_{k-1} {}_{n-k}\text{C}_x \left(\frac{1}{3}\right)^n & (x \le k-1, y = k) \\
+{}_{n-1}\text{C}_{k-1} {}_{n-k}\text{C}_y \left(\frac{1}{3}\right)^n & (y \le k-1, x = k) \\
+0 & (\text{otherwise})
+\end{cases}
+\]
+
+(3) $k = 2$ とする。(2) の $P(x, y)$ を用いて,
+\begin{align*}
+P &= \sum_{x, y \le 2} P(x, y) \\
+&= P(0,0) + P(1,0) + P(0,1) + P(2,0) + P(1,1) + P(0,2) + P(2,1) + P(1,2) + P(2,2) \\
+&= P(0,0) + 2 P(1,0) + 2 P(2,0) + P(1,1) + 2 P(2,1) + P(2,2) \\
+&= \left(\frac{1}{3}\right)^n \left[ 1 + 2n + n(n-1) + n(n-1) + n(n-1)(n-2) + \frac{1}{4}n(n-1)(n-2)(n-3) \right] \\
+&= \left(\frac{1}{3}\right)^n \frac{1}{4} \left[ n^4 - 2n^3 + 7n^2 + 2n + 4 \right] \quad \dots \text{④}
+\end{align*}
+一方 $n=3$ の時, 余事象を考えて,
+\[
+P = 1 - 2\left(\frac{1}{3}\right)^3 = \frac{25}{27}
+\]
+だから, $n=3$ でも ④は成立。以上から
+\[
+P = \frac{1}{4} \left(\frac{1}{3}\right)^n \left[ n^4 - 2n^3 + 7n^2 + 2n + 4 \right]
+\]
+
+\noindent
+[* 問題文が悪い！ ゲーム終了の扱いをどうするのかが不明瞭。この解答では, 50年の解をとった。]
+
+\end{document}

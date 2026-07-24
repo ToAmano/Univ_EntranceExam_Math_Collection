@@ -1,0 +1,66 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] $\begin{cases} b_1 = 2 \\ b_{n+1} = b_n + \frac{1}{b_n} + 2 \end{cases} \quad \cdots$ ①
+
+(1) $b_n > 2n \quad (n \ge 2) \quad \cdots \Diamond$ を帰納法で示す. $n=2$ の時, ①から $b_2 = 4 + \frac{1}{2}$ なので $\Diamond$ は成立. $n=k \in \mathbb{N}_{\ge 2}$ での成立をカテイすると, ①から
+\[ b_{k+1} = b_k + \frac{1}{b_k} + 2 > 2(k + 1) \]
+となり, $n=k+1$ でも $\Diamond$ は成立. よって示された. (終)
+
+(2) (1) から $n \ge 2$ に対して $\frac{1}{a_n} > 2n \ \therefore \ a_n < \frac{1}{2n}$ である. $n \to \infty$ をかんがえるので $n$ は十分大きいとして良く, 右図で面積比較して,
+\begin{align*}
+\frac{1}{n} \sum_{k=1}^n a_k &< \frac{1}{n} \left( \frac{1}{2} + \sum_{k=2}^n \frac{1}{2k} \right) < \frac{1}{2n} \left( 1 + \int_1^n \frac{1}{x} dx \right) \\
+\therefore \ \frac{1}{n} \sum_{k=1}^n a_k &< \frac{1 + \log n}{2n} \to 0 \quad (n \to \infty)
+\end{align*}
+から, $0 < a_k$ とあわせて ($\because$ ①から帰納的に $0 < a_k$), はさみうちから,
+\[ \frac{1}{n} \sum_{k=1}^n a_k \to 0 \quad (\text{終}) \]
+
+\begin{center}
+\begin{tikzpicture}
+\draw[->] (0,0) -- (3,0) node[right]{$x$};
+\draw[->] (0,0) -- (0,2) node[above]{$y$};
+\draw[domain=0.5:2.5, smooth] plot (\x, {1/\x});
+\draw (1,0) rectangle (1.5, 1);
+\draw (1.5,0) rectangle (2, 0.66);
+\node[below] at (1,0) {$1$};
+\node[below] at (2,0) {$n$};
+\node at (0,1) [left] {$\frac{1}{a_n}$}; % rough inclusion based on scratch
+\end{tikzpicture}
+\end{center}
+
+(3) ①から,
+\[ b_{n+1} - b_n = 2 + a_n \]
+$n=1, 2, \cdots, N$ として足して,
+\[ b_{N+1} - b_1 = 2N + \sum_{k=1}^N a_k \]
+両辺 $N+1$ でわって,
+\[ \frac{1}{(N+1)a_{N+1}} = \frac{2}{N+1} + 2\frac{N}{N+1} \cdot \frac{1}{N} \sum_{k=1}^N a_k \xrightarrow{N \to \infty} 2 \quad (\because (2)) \]
+だから, $0 < x$ で $\frac{1}{x}$ が連続なことから,
+\[ N a_N \to \frac{1}{2} \quad (N \to \infty) \quad (\text{終}) \]
+
+[解2]
+(3) $b_n \le 2n + \log n$ を帰納法で示す. $n=1$ の時は成立するので, $1 \le n = k \in \mathbb{N}$ での成立をカテイ. ①から
+\[ b_{k+1} = b_k + \frac{1}{b_k} + 2 \le 2(k+1) + \log k + \frac{1}{2k} \quad (\because 2k \le b_k) \quad \cdots \text{②} \]
+ここで, $f(x) = \log(x+1) - \log x - \frac{1}{2x}$ とすると,
+\[ f'(x) = \frac{1}{x+1} - \frac{1}{x} + \frac{1}{2x^2} = \frac{1-x}{2x^2(x+1)} \]
+から増減表をうる
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$x$ & $0$ & $\cdots$ & $1$ & $\cdots$ \\ \hline
+$f'(x)$ & & $+$ & $0$ & $-$ \\ \hline
+$f(x)$ & & $\nearrow$ & & $\searrow$ \\ \hline
+\end{tabular}
+\end{center}
+$\left( \text{$x \to \infty$ の時, 平均値から $x < c < x+1$ なる $c$ に対し, } f(x) = \frac{1}{c} - \frac{1}{2x} > \frac{1}{x+1} - \frac{1}{2x} > 0 \right)$
+
+よって $1 \le x$ では $f(x) > 0$ つまり $\log(k+1) > \log k + \frac{1}{2k}$ だから, ②より
+\[ b_{k+1} \le 2(k+1) + \log(k+1) \]
+よって $n=k+1$ でも成立. 以上から成立し,
+\[ 2n < \frac{1}{a_n} < 2n + \log n \]
+だから, はさみうちより $n a_n \to \frac{1}{2}$ (終)
+
+\end{document}

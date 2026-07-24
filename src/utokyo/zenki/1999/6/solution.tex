@@ -1,0 +1,49 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\noindent
+\textbf{[解]} 与式左辺を計算する。
+\begin{align*}
+\int_0^\pi e^x \sin^2 x \, dx &= \int_0^\pi e^x \frac{1 - \cos 2x}{2} \, dx \\
+&= \frac{1}{2} [ e^x ]_0^\pi - \frac{1}{2} \cdot \frac{1}{1+4} [ e^x (\cos 2x + 2\sin 2x) ]_0^\pi \\
+&= \frac{1}{2} (e^\pi - 1) - \frac{1}{10} (e^\pi - 1) \\
+&= \frac{4}{10} (e^\pi - 1)
+\end{align*}
+だから、
+\[
+(\text{与式}) \iff e^\pi > 21 \quad \cdots \textcircled{1}
+\]
+である。$y = e^x$ のグラフを考える。$(y')' = e^x > 0$ からグラフは下に凸だから、$x = t$ での接線 $y = e^t(x - t) + e^t$ との比較
+\[
+e^x > e^t(x - t) + e^t
+\]
+が成立する。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=stealth]
+  \draw[->] (-0.5,0) -- (3.5,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,3.5) node[above] {$y$};
+  \draw[domain=0:2.8, smooth, variable=\x, thick] plot ({\x}, {exp(\x-1.5)});
+  \node[above left] at (2.5, {exp(1)}) {$y=e^x$};
+  \draw[thick] (-0.2, {exp(0.8-1.5) + (0.8-1.5)*exp(0.8-1.5)}) -- (3, {exp(0.8-1.5) + (2-0.8)*exp(0.8-1.5)});
+  \draw[dashed] (2, 0) -- (2, {exp(0.5)});
+  \node[below] at (2,0) {$\pi$};
+  \node[left] at (0, {exp(0.5)}) {$e^\pi$};
+  \node[below left] at (0,0) {$0$};
+\end{tikzpicture}
+\end{center}
+
+\noindent
+$t = 3, x = \pi$ とすると、
+\begin{align*}
+e^\pi &> e^3(\pi - 3) + e^3 = e^3(\pi - 2) \\
+&> (2.71)^3 \cdot 1.14 \quad (\because \text{題意}) \\
+&= 22.68\dots > 21
+\end{align*}
+から、\textcircled{1}は示された。 \hfill $\qed$
+
+\end{document}

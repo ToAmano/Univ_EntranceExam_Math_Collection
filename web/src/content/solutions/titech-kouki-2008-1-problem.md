@@ -10,7 +10,7 @@ title: "TITECH 2008 kouki Q1 (problem)"
 次の問に答えよ．
 
 1.  実数 $a_1, a_2, x_1, x_2, y_1, y_2$ が
-        
+  
 
 $$
 \begin{align*}
@@ -18,33 +18,33 @@ $$
 \end{align*}
 $$
 
-        をみたすとしている．このとき $x_1 + x_2 \le y_1 + y_2$ であることを証明せよ．
+  をみたすとしている．このとき $x_1 + x_2 \le y_1 + y_2$ であることを証明せよ．
 
 2.  $n$ を $2$ 以上の整数とし，$3n$ 個の実数 $a_1, a_2, \dots, a_n, x_1, x_2, \dots, x_n, y_1, y_2, \dots, y_n$ が
-        
+  
 
 $$
 \begin{align*}
-0 < a_1 \le a_2 \le \dots \le a_n
+0 < a_1 \le a_2 \le\dots\le a_n
 \end{align*}
 $$
 
-        および $n$ 個の不等式
-        
+  および $n$ 個の不等式
+  
 
 $$
 \begin{align*}
-\sum_{i=1}^j a_i x_i \le \sum_{i=1}^j a_i y_i \quad (j=1, 2, \dots, n)
+\sum_{i=1}^j a_i x_i \le\sum_{i=1}^j a_i y_i \quad(j=1, 2, \dots, n)
 \end{align*}
 $$
 
-        をみたしているならば，
-        
+  をみたしているならば，
+  
 
 $$
 \begin{align*}
-\sum_{i=1}^n x_i \le \sum_{i=1}^n y_i
+\sum_{i=1}^n x_i \le\sum_{i=1}^n y_i
 \end{align*}
 $$
 
-        であることを証明せよ．
+  であることを証明せよ．

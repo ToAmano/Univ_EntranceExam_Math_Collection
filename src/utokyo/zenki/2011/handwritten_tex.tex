@@ -1,0 +1,320 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+\section*{東大理科数学 2011年}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+ & & 計 & 思 & 総 \\
+\hline
+1 & 多変数 & A & A & A \\
+\hline
+2 & 整数 & B & C & C \\
+\hline
+3 & 多変数 & B & A & A \\
+\hline
+4 & 多変数 & B & A & B \\
+\hline
+5 & 場合の数 & B & B & B \\
+\hline
+6 & 空間 & B & B & B \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{第1問}
+[解] $C: x^2 + (y-1)^2 = 1$, $l: y = a(x+1)$
+
+(1) Pから $l$ に下ろした垂足を H とする
+\[ PH = \frac{|a-1|}{\sqrt{a^2+1}} \]
+だから、
+\[ HQ = \sqrt{1 - PH^2} = \sqrt{1 - \frac{(a-1)^2}{a^2+1}} = \sqrt{\frac{2a}{a^2+1}} \]
+より
+\[ \triangle PQR = \frac{1}{2} \cdot PH \cdot 2HQ = \frac{\sqrt{2a}|a-1|}{a^2+1} \]
+
+(2) $0 < a < 1$ の時、
+\[ \triangle PQR = S(a) = \frac{\sqrt{2a}(1-a)}{a^2+1} = \sqrt{\frac{2a(1-a)^2}{(a^2+1)^2}} \]
+$\sqrt{\vphantom{x}}$ の中身を $f(a)$ とおく。
+\begin{align*}
+f'(a) &= 2 \frac{ (3a^2-4a+1)(a^2+1)^2 - a(1-a)^2 \cdot 2(a^2+1) \cdot 2a }{(a^2+1)^4} \\
+&= \frac{2}{(a^2+1)^3} \left[ (3a-1)(a-1)(a^2+1) - 4a^2(1-a)^2 \right] \\
+&= \frac{2(1-a)}{(a^2+1)^2} (a+1) (a^2-4a+1)
+\end{align*}
+から、下表をうる。
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+$a$ & $0$ & $\cdots$ & $2-\sqrt{3}$ & $\cdots$ & $1$ \\
+\hline
+$f'$ & & $+$ & $0$ & $-$ & \\
+\hline
+$f$ & & $\nearrow$ & & $\searrow$ & \\
+\hline
+\end{tabular}
+\end{center}
+したがって、$S(a)$ も $a=2-\sqrt{3}$ で max をとる。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+\draw[->] (-1.5, 0) -- (1.5, 0) node[below] {$x$};
+\draw[->] (0, -0.5) -- (0, 2.5) node[left] {$y$};
+\draw (0,1) circle (1);
+\fill (0,1) circle (1pt) node[above left] {$P$};
+\draw[domain=-1.5:1.5] plot (\x, {0.5*(\x+1)}) node[right] {$l$};
+\fill (-1,0) circle (1pt);
+\node at (-1, -0.2) {$-1$};
+\node at (0.2, -0.2) {$O$};
+\node at (-0.6, 0.4) {$Q$};
+\node at (0.8, 1.1) {$R$};
+\draw[dashed] (0,1) -- (0.2, 0.6) node[midway, right] {$H$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{第2問}
+[解]
+(1) $1 < \sqrt{2} < 2$ から、$\langle a \rangle = \sqrt{2}-1$ とする。$a_1 = \sqrt{2}-1$、$a_2 = \langle \frac{1}{\sqrt{2}-1} \rangle = \sqrt{2}-1$ だから、
+以下帰納的に $a_n = \sqrt{2}-1$
+
+(2) まず、$a_1 = \langle a \rangle$ から、$\frac{1}{2} \le a < 1$ $\cdots$ ①が必要。
+\[ a_{n+1} = \left\langle \frac{1}{a_n} \right\rangle = \left\langle \frac{1}{a} \right\rangle = a \]
+より、$m \in \mathbb{Z}_{\ge 0}$ として
+\[ \frac{1}{a} - m = a \quad \therefore a^2 + ma - 1 = 0 \]
+から $a = \frac{-m \pm \sqrt{m^2+4}}{2}$ だから、①に代入
+\[ \frac{2}{3} \le -m \pm \sqrt{m^2+4} < 2 \]
+\[ m + \frac{2}{3} \le \pm \sqrt{m^2+4} < m + 2 \]
+$m \ge 0$ から、複号正を採用して、この時、各項0以上だから2乗してよく、
+\[ \frac{4}{9} m + \frac{4}{9} \le 4 < 4m + 4 \]
+\[ \therefore 0 < m \le \frac{8}{3} \]
+$m \in \mathbb{Z}_{\ge 0}$ から、$m = 1, 2$ だから、$a = \frac{-1+\sqrt{5}}{2}, -1+\sqrt{2}$
+
+(3) $p$ と $q$ は互いに素であるとする。$a_n \neq 0$ かつ $a_{n+1}=0$ の時 (ii)から $\frac{1}{a_n} \in \mathbb{Z}$ である。
+$q=1$ の時は明らかに成立するから、以下 $q \ge 2$ とする。$p$ を $q$ で割った商を $j_1$、あまりを $r_1$ として、
+\[ p = j_1 q + r_1 \quad (0 \le r_1 < q) \]
+$r_1=0$ の時は $a_1 = 0$ となり題意は成立するから、以下 $r_1 \neq 0$ とする。この時
+\[ a_1 = \left\langle \frac{p}{q} \right\rangle = \left\langle j_1 + \frac{r_1}{q} \right\rangle = \frac{r_1}{q} \quad (\neq 0) \]
+となる。$q$ を $r_1$ で割った商とあまりを、$j_2, r_2$ とすると
+\[ q = j_2 r_1 + r_2 \quad (0 \le r_2 < r_1) \]
+\[ \therefore a_2 = \left\langle \frac{1}{a_1} \right\rangle = \left\langle \frac{q}{r_1} \right\rangle = \frac{r_2}{r_1} \]
+$r_2=0$ ならば $a_2=0$、$r_2 \neq 0$ ならば $r_1$ を $r_2$ で割った余りを $r_3$ とする。以下同様に、$m \in \mathbb{N}$ に対し、
+$r_m = 0$ なら $a_m = 0$、$r_m \neq 0$ なら $r_{m-1}$ を $r_m$ で割ったあまりを $r_{m+1}$ とする。（ただし $r_0 = q$）
+ここで、$q$ 以下の自然数 $l$ で、$r_l = 0$ となるものが存在しないと仮定すると、
+\[ q > r_1 > r_2 > \dots > r_q \ge 1 \]
+なる自然数 $r_1, r_2, \dots, r_q$ が得られ、矛盾。よって、$r_l = 0$ となるものが存在し、この時 $q$ 以上の全ての自然数に対し、$a_n = 0$ となる。
+
+\subsection*{第3問}
+[解] 題意の円周は、$x^2+y^2=t^2$ だから、$u(t) = t \cos \frac{L}{t}$, $v(t) = t \sin \frac{L}{t}$ $\cdots (1)$
+(2) $u'(t) = \cos \frac{L}{t} + t \cdot \left( -\sin \frac{L}{t} \right) \left( -\frac{L}{t^2} \right) = \cos \frac{L}{t} + \frac{L}{t} \sin \frac{L}{t}$ だから、
+\[ v'(t) = \sin \frac{L}{t} + t \left( \cos \frac{L}{t} \right) \left( -\frac{L}{t^2} \right) = \sin \frac{L}{t} - \frac{L}{t} \cos \frac{L}{t} \]
+\[ \{u'(t)\}^2 + \{v'(t)\}^2 = 1 + \left( \frac{L}{t} \right)^2 + 2 \frac{L}{t} \left( \cos \frac{L}{t} \sin \frac{L}{t} - \sin \frac{L}{t} \cos \frac{L}{t} \right) = 1 + \frac{L^2}{t^2} \]
+となり、$0 < a < 1$ から、
+\[ f(a) = \int_a^1 \sqrt{1 + \frac{L^2}{t^2}} dt = \int_a^1 \frac{\sqrt{t^2+L^2}}{t} dt \]
+で、$x = \sqrt{t^2+L^2}$ とすると、$\frac{dx}{dt} = \frac{t}{x}$ だから $\alpha = \sqrt{a^2+L^2}$, $\beta = \sqrt{1+L^2}$ として
+\begin{align*}
+f(a) &= \int_\alpha^\beta \frac{x}{t} \cdot \frac{x}{t} dx = \int_\alpha^\beta \frac{x^2}{x^2-L^2} dx = \int_\alpha^\beta \left( 1 + \frac{L}{2} \left( \frac{1}{x-L} - \frac{1}{x+L} \right) \right) dx \\
+&= \left[ x + \frac{L}{2} \log (x-L) - \frac{L}{2} \log (x+L) \right]_\alpha^\beta \\
+&= (\beta - \alpha) + \frac{L}{2} \log \frac{\beta-L}{\alpha-L} - \frac{L}{2} \log \frac{\beta+L}{\alpha+L} \\
+&= \sqrt{L^2+1} - \sqrt{L^2+a^2} + \frac{L}{2} \log \frac{(\sqrt{L^2+1}-L)}{(\sqrt{L^2+a^2}-L)} \frac{(\sqrt{L^2+a^2}+L)}{(\sqrt{L^2+1}+L)}
+\end{align*}
+
+(3) 
+\[ \frac{\sqrt{L^2+1} - \sqrt{L^2+a^2}}{\log a} \xrightarrow{a \to +0} 0 \quad \cdots \text{①} \]
+\[ \frac{\log (\beta \pm L)}{\log a} \xrightarrow{} 0, \quad \frac{\log (\alpha + L)}{\log a} \xrightarrow{} 0 \quad \cdots \text{②} \]
+\[ \frac{\log (\alpha - L)}{\log a} = \frac{\log (\sqrt{L^2+a^2} - L)}{\log a} = \frac{\log a^2 - \log (\sqrt{L^2+a^2} + L)}{\log a} \xrightarrow{} 2 \quad \cdots \text{③} \]
+を(2)に代入して
+\[ \frac{f(a)}{\log a} \xrightarrow{a \to +0} - \frac{L}{2} \cdot 2 = -L \]
+(※解答用紙の記述に合わせて極限先を表記)
+
+\begin{center}
+\begin{tikzpicture}
+\draw[->] (-1, 0) -- (4, 0) node[below] {$x$};
+\draw[->] (0, -0.5) -- (0, 3) node[left] {$y$};
+\draw (2.5,0) arc (0:60:2.5);
+\draw (0,0) -- (1.25, 2.165);
+\node at (0.8, 0.4) {$\theta$};
+\node at (3, 1) {$L$};
+\draw[dashed] (2.5,0) -- (2.5,-0.2) node[below] {$p$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{第4問}
+[解] $\alpha < \beta \dots$ ①として良い。$PQ^2 = PR^2$ だから、
+\begin{align*}
+(\beta - \frac{1}{2})^2 + (\beta^2 - \frac{1}{4})^2 &= (\alpha - \frac{1}{2})^2 + (\alpha^2 - \frac{1}{4})^2 \\
+\beta^2 - \beta + \beta^4 - \frac{1}{2}\beta^2 &= \alpha^2 - \alpha + \alpha^4 - \frac{1}{2}\alpha^2 \\
+\beta^4 + \frac{1}{2}\beta^2 - \beta &= \alpha^4 + \frac{1}{2}\alpha^2 - \alpha \\
+(\beta^2 + \alpha^2)(\beta^2 - \alpha^2) + \frac{1}{2}(\beta^2 - \alpha^2) - (\beta - \alpha) &= 0
+\end{align*}
+$\alpha \neq \beta$ から
+\[ (\beta^2 + \alpha^2)(\beta + \alpha) + \frac{1}{2}(\beta + \alpha) - 1 = 0 \quad \cdots \text{①} \]
+ここで、$p = \alpha + \beta, \ q = \alpha \beta$ とすると、$\alpha, \beta$ の実数条件から、
+\[ p^2 - 4q > 0 \quad \cdots \text{②} \]
+である。①に代入して
+\[ (p^2 - 2q)p + \frac{1}{2}p = 1 \quad \cdots \text{③} \]
+次に、$G$ について
+\begin{align*}
+X &= \frac{\alpha+\beta+\frac{1}{2}}{3} = \frac{1}{3}(p+\frac{1}{2}) \quad \cdots * \\
+Y &= \frac{\alpha^2+\beta^2+\frac{1}{4}}{3} = \frac{1}{3}(p^2-2q+\frac{1}{4})
+\end{align*}
+である。③において、$p=0$ とすると $0=1$ となり矛盾、つまり $p \neq 0 \dots$ ④ であるから
+\[ q = \frac{1}{2} \left( p^2 - \frac{1}{p} + \frac{1}{2} \right) \]
+となる。②、*に代入して、
+\[ \begin{cases}
+p^2 - 2 \left( \frac{1}{2}(p^2 - \frac{1}{p} + \frac{1}{2}) \right) > 0 \\
+Y = \frac{1}{3} \left( p^2 - p^2 + \frac{1}{p} - \frac{1}{2} + \frac{1}{4} \right) = \frac{1}{3}(\frac{1}{p} - \frac{1}{4})
+\end{cases} \]
+\[ \begin{cases}
+-p(p-1)(p^2+p+2) > 0 \\
+X = \frac{1}{3}(p+\frac{1}{2}) \implies p = 3X - \frac{1}{2} \ (\text{※式展開の都合で } X = \frac{1}{3}(\frac{1}{p}-\frac{1}{4}) \text{ は下段の } Y \text{ の計算})
+\end{cases} \]
+（※原稿の記述： $Y = \frac{1}{3}(\frac{1}{p}-\frac{1}{4})$, $X = \frac{1}{3}(p+\frac{1}{2})$ ）
+から、$p^2+p+2 = (p+\frac{1}{2})^2 + \frac{7}{4} > 0$ に注意して $0 < p < 1$ である。*から $p = 3X - \frac{1}{2}$ だから、
+\[ \begin{cases}
+0 < 3X - \frac{1}{2} < 1 \\
+Y = \frac{1}{3} \left( \frac{1}{3X-\frac{1}{2}} - \frac{1}{4} \right)
+\end{cases} \]
+\[ \begin{cases}
+\frac{1}{6} < X < \frac{1}{2} \\
+Y = \frac{1}{3} \left( \frac{2}{6X-1} - \frac{1}{4} \right)
+\end{cases} \]
+
+\begin{center}
+\begin{tikzpicture}[scale=2]
+\draw[->] (-0.2, 0) -- (1.5, 0) node[below] {$x$};
+\draw[->] (0, -0.2) -- (0, 1.5) node[left] {$y$};
+\draw[domain=0.25:0.5, thick] plot (\x, {1/3*(2/(6*\x-1) - 1/4)}) node[right] {$Y = \frac{1}{3}(\frac{2}{6X-1} - \frac{1}{4})$};
+\draw[dashed] (1/6, 0) -- (1/6, 1.5);
+\node at (1/6, -0.1) {$1/6$};
+\node at (1/2, -0.1) {$1/2$};
+\draw[dashed] (0, 1/4) -- (1/2, 1/4);
+\node at (-0.1, 1/4) {$1/4$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{第5問}
+[解] $p, q \in \mathbb{N}$,
+\[ -q \le b \le 0 \le a \le p, \quad b \le c \le a, \quad a, b, c \in \mathbb{Z} \quad \cdots \text{①} \]
+
+(1) まず前者についてかんがえる。
+\[ W([a, b; c]) = p - q - (a+b) = -q \quad \therefore p = (a+b) \]
+$b \le 0, \ a \le p$ から、このようになるには $(a, b) = (p, 0)$ が必要で、①からこの時、
+$c = 0, 1, \dots, p$ とすれば十分。よって、$p+1$ コある。
+
+次に後者について、
+\[ W([a, b; c]) = p - q - (a+b) = p \quad \therefore -q = (a+b) \]
+$-q \le b, \ 0 \le a$ から、$(a, b) = (0, -q)$ が必要で、①から $c = 0, -1, \dots, -q$ とすれば
+十分で、$q+1$ コある。
+
+(2) $p = q$ の時、$s \in \mathbb{Z}$ に対して
+\[ W([a, b; c]) = -(a+b) = -p + s \quad \therefore a+b = p-s \]
+①から、$-p \le a+b \le p$ だから、$0 \le s \le 2p$ である。この時は、$b = p-s-a$ から、
+$-p \le p-s-a \le 0 \iff p-s \le a \le 2p-s$ の時のみ、各 $a$ に対して $b$ がただ1つ対応する。
+よって、$s$ によって以下のようになる。
+
+(i) $0 \le s \le p$ の時
+$p-s \le a \le p$ で、各 $(a,b)$ に対し、$c$ は
+\[ a - b + 1 = a - (p-s-a) + 1 = 2a + (1+s-p) \text{ 通り} \]
+あるから、全部で
+\begin{align*}
+\sum_{a=p-s}^{p} \{ 2a + (1+s-p) \} &= \frac{1}{2} \cdot 2 \cdot (2p-s)(s+1) + (1+s-p)(s+1) \\
+&= (p+1)(s+1)
+\end{align*}
+
+(ii) $p \le s \le 2p$ の時
+$0 \le a \le 2p-s$ で (i) と同様に
+\begin{align*}
+\sum_{a=0}^{2p-s} \{ 2a + (1+s-p) \} &= \frac{1}{2} \cdot 2 \cdot (2p-s)(2p-s+1) + (1+s-p)(2p-s+1) \\
+&= (p+1)(2p-s+1)
+\end{align*}
+
+以上まとめて、
+\[ \begin{cases}
+(p+1)(s+1) & (0 \le s \le p) \\
+(p+1)(2p-s+1) & (p \le s \le 2p) \\
+0 & (\text{otherwise})
+\end{cases} \]
+
+(3) $s$ について和をとれば良く、$p \ge 1$ なら
+\begin{align*}
+&\sum_{s=0}^{p-1} (p+1)(s+1) + \sum_{s=p}^{2p} (p+1)(2p-s+1) \\
+&= (p+1) \sum_{s=1}^{p} s + (p+1) \sum_{s=1}^{p+1} s \\
+&= (p+1) \left[ \frac{1}{2}p(p+1) + \frac{1}{2}(p+1)(p+2) \right] = (p+1)^3
+\end{align*}
+
+\subsection*{第6問}
+[解] (1) $x>0$ から、$f(t) = x(t + \frac{y}{2x})^2 - \frac{y^2}{4x}$ である。
+$-\frac{y}{2x} \le 0$ の時、$\min f(t) = f(0)$, $\max f(t) = f(1)$
+$0 \le -\frac{y}{2x} \le \frac{1}{2}$ の時、$\min f(t) = f(-\frac{y}{2x})$, $\max f(t) = f(1)$
+$\frac{1}{2} \le -\frac{y}{2x} \le 1$ の時、$\min f(t) = f(-\frac{y}{2x})$, $\max f(t) = f(0)$
+$1 \le -\frac{y}{2x}$ の時、$\min f(t) = f(1)$, $\max f(t) = f(0)$
+となり、$f(0)=0$, $f(1)=x+y$, $f(-\frac{y}{2x}) = -\frac{y^2}{4x}$ だから、$x>0$ より、
+$-\frac{y}{2x} \le 0$ の時、$x+y$
+$0 \le -\frac{y}{2x} \le \frac{1}{2}$ の時、$x+y + \frac{y^2}{4x}$
+$\frac{1}{2} \le -\frac{y}{2x} \le 1$ の時、$\frac{y^2}{4x}$
+$1 \le -\frac{y}{2x}$ の時、$-(x+y)$
+
+(2) $f(t)$ の値域の幅が1以下ならば必要十分である。(1)から、
+$\cdot y \ge 0$ の時、$x+y \le 1$
+$\cdot -x \le y \le 0$ の時、$x+y + \frac{y^2}{4x} \le 1 \quad (-2x-2\sqrt{x} \le y \le -2x+2\sqrt{x})$
+$\cdot -2x \le y \le -x$ の時、$\frac{y^2}{4x} \le 1$
+$\cdot y \le -2x$ の時、$-(x+y) \le 1$
+これを図示して、下図斜線部（境界は、$y$軸以外含む）
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+\draw[->] (-0.5, 0) -- (4, 0) node[below] {$x$};
+\draw[->] (0, -3) -- (0, 1.5) node[left] {$y$};
+\draw (0,1) -- (1,0) node[right] {$x+y=1$};
+\draw (0,0) -- (3,-3) node[right] {$y=-x$};
+\draw (0,0) -- (1.5,-3) node[right] {$y=-2x$};
+\draw (0,-1) -- (2,-3) node[right] {$y=-(x+1)$};
+\draw[domain=0.01:2.25] plot (\x, {-2*sqrt(\x)}) node[right] {$x=\frac{1}{4}y^2$};
+\fill[pattern=north west lines, opacity=0.5] 
+  (0,1) -- (1,0) 
+  -- plot[domain=1:2.25] (\x, {-2*\x+2*sqrt(\x)}) 
+  -- plot[domain=2.25:0.25] (\x, {-2*sqrt(\x)}) 
+  -- (0,-1) -- cycle;
+\end{tikzpicture}
+\end{center}
+
+$(-2x+2\sqrt{x})' = -2 + \frac{1}{\sqrt{x}}$ だから、$0 < x \le \frac{1}{4}$ で増加し、$\frac{1}{4} \le x$ で減少する。
+
+(3) $-f(t) \le z \le 1-f(t)$ が $0 \le t \le 1$ の全ての $t$ で成立するのは、$\max f(t) = M_t$, $\min f(t) = m_t$ ( $0 \le t \le 1$ )として、
+\[ -z \le m_t \land M_t \le 1-z \]
+の時である。(1)から、
+$y \ge 0$ の時、$-z \le 0 \land x+y \le 1-z$
+$-x \le y \le 0$ の時、$-z \le -\frac{y^2}{4x} \land x+y \le 1-z$
+$-2x \le y \le -x$ の時、$-z \le -\frac{y^2}{4x} \land 0 \le 1-z$
+$y \le -2x$ の時、$-z \le x+y \land 0 \le 1-z$
+
+したがって、$0 \le z \le 1$ であり、$z$ での立体の断面は下図
+\begin{center}
+\begin{tikzpicture}[scale=2]
+\draw[->] (-0.5, 0) -- (1.5, 0) node[below] {$x$};
+\draw[->] (0, -1.5) -- (0, 1.5) node[left] {$y$};
+\draw (0, 1) -- (1, 0) node[right] {$x+y=1-z$};
+\draw (0, 0) -- (1, -1) node[right] {$x+y=-z$};
+\draw[domain=0.01:1] plot (\x, {-2*sqrt(0.5*\x)}) node[right] {$x=\frac{y^2}{4z}$};
+\draw[dashed] (0.5, -1) -- (0.5, 0);
+\node at (0.5, 0.1) {$z$};
+\node at (1, 0.1) {$1-z$};
+\end{tikzpicture}
+\end{center}
+($0 < z \le 1$) \quad ($z=0$)
+ただし、$z=0$ の時、条件は $0 \le x \le 1 \land 0 \le y+x \le 1$ であることに注意した。この面積 $S(z)$ は、
+$S(z) = (\text{台形}) - (\text{三角形}) - (\text{放物線領域})$
+であり、($0 < z \le 1$ の時)
+\begin{align*}
+(\text{台形}) &= \frac{1}{2} \{ (2\sqrt{z}-z) + (2\sqrt{z}+1-z) \} = \frac{1}{2}(4\sqrt{z}-2z+1) \\
+(\text{三角形}) &= \frac{1}{2} \cdot z \cdot z = \frac{1}{2}z^2 \\
+(\text{放物線領域}) &= \int_{-2\sqrt{z}}^{-2z} \frac{y^2}{4z} dy = \frac{1}{12z} \left[ y^3 \right]_{-2\sqrt{z}}^{-2z} = \frac{2}{3z} (z\sqrt{z}-z^3) = \frac{2}{3} (\sqrt{z}-z^2)
+\end{align*}
+これらを代入して
+\begin{align*}
+S(z) &= 2\sqrt{z} - z + \frac{1}{2} - \frac{1}{2}z^2 - \frac{2}{3}\sqrt{z} + \frac{2}{3}z^2 \\
+&= \frac{1}{6}z^2 - z + \frac{4}{3}\sqrt{z} + \frac{1}{2}
+\end{align*}
+これは $z=0$ でも成立するから、
+\[ V = \int_0^1 S(z) dz = \left[ \frac{1}{18}z^3 - \frac{1}{2}z^2 + \frac{2}{3} \cdot \frac{2}{3} z^{\frac{3}{2}} + \frac{1}{2}z \right]_0^1 = \frac{17}{18} \]
+
+\end{document}

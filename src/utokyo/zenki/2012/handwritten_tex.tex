@@ -1,0 +1,254 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{東大理科数学 2012年}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+問 & 分野 & 思 & 計 & 総 \\ \hline
+1 & 積分法 & & & \\ \hline
+2 & 確率 & & & \\ \hline
+3 & 体積 & & & \\ \hline
+4 & 整数 & & & \\ \hline
+\end{tabular}
+\end{center}
+
+\bigskip
+
+\subsection*{第1問}
+
+\noindent
+\textbf{[解]} $D = \left\{ (x,y) \mid x^2+(y-1)^2 \le 1 \land x \ge \frac{\sqrt{3}}{3} \right\}$ は右図斜線部(境界含む)。
+又、$A\left(\frac{\sqrt{3}}{3}, 1-\frac{\sqrt{6}}{3}\right), B\left(\frac{\sqrt{3}}{3}, 1+\frac{\sqrt{6}}{3}\right)$ とおく。
+題意を満たす $l$ は明らかに傾き正だから(※)、
+\[ l : y = \tan\theta \cdot x \]
+とかける。以下 $C = \cos\theta, S = \sin\theta, t = \tan\theta$ と表す。すると $x$ 軸と $OA, OB$ とのなす角 $\alpha, \beta$ として、
+\[ \alpha < \theta < \beta \quad \cdots \textcircled{1} \]
+であり、$l$ と $x^2+(y-1)^2=1$ との交点は、
+\[ (1+t^2)x^2 - 2tx = 0 \]
+\[ x = 0, \frac{2t}{1+t^2} \]
+だから、
+\[ L = \left( \frac{2t}{1+t^2} - \frac{\sqrt{3}}{3} \right) / C = 2S - \frac{\sqrt{3}}{3}\frac{1}{C} \quad \cdots \textcircled{2} \]
+\[ \frac{dL}{d\theta} = 2C - \frac{\sqrt{3}}{3}\frac{S}{C^2} \]
+①の内、$S, C > 0$ から
+\begin{align*}
+\frac{dL}{d\theta} \ge 0 &\iff 2C^3 \ge \frac{\sqrt{3}}{3}S \iff 4C^6 \ge \frac{2}{9}S^2 \\
+&\iff 18C^6 \ge 1-C^2 \\
+&\iff (C^2 - \frac{1}{3})(18C^4 + 6C^2 + 3) \ge 0 \\
+&\iff (C^2 - \frac{1}{3})\left\{ 18\left(C^2+\frac{1}{6}\right)^2 + \frac{5}{2} \right\} \ge 0 \\
+&\iff C^2 \ge \frac{1}{3} \\
+&\iff C \ge \frac{\sqrt{3}}{3} \quad (\because C>0)
+\end{align*}
+から下表をうる。ただし、$\theta_0$ は $0 < \theta_0 < \pi/2 \land \cos\theta_0 = \frac{\sqrt{3}}{3}$ をみたす。
+
+\begin{center}
+\begin{tabular}{c|ccccc}
+$\theta$ & $\alpha$ & \dots & $\theta_0$ & \dots & $\beta$ \\ \hline
+$C$ & & & $\frac{\sqrt{3}}{3}$ & & \\ \hline
+$L'$ & & $+$ & $0$ & $-$ & \\ \hline
+$L$ & & $\nearrow$ & & $\searrow$ &
+\end{tabular}
+\end{center}
+
+\noindent
+\[ \left( \tan\alpha = \frac{3\sqrt{2}-\sqrt{14}}{2}, \tan\beta = \frac{3\sqrt{2}+\sqrt{14}}{2}, \tan\theta_0 = \sqrt{2} \text{ から、} \alpha < \theta_0 < \beta \; (\tan\theta \text{ は単調}) \right) \]
+
+\noindent
+したがって、$C = \cos\theta = \frac{\sqrt{3}}{3}$ の時、$\max L = \frac{\sqrt{6}}{3}$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.8, >=stealth]
+  \draw[->] (-0.5, 0) -- (1.5, 0) node[right] {$x$};
+  \draw[->] (0, -0.5) -- (0, 2.2) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+  
+  \draw[dashed] (0,1) circle (1);
+  \draw (1/1.732, -0.3) -- (1/1.732, 2.1);
+  \node[below] at (1/1.732, 0) {$\frac{\sqrt{3}}{3}$};
+  \node[left] at (0, 1+1.414/1.732) {$1+\frac{\sqrt{6}}{3}$};
+  \node[left] at (0, 1-1.414/1.732) {$1-\frac{\sqrt{6}}{3}$};
+  
+  \draw[thick] (0,0) -- (1.2, 1.2*1.414) node[above right] {$l$};
+  \draw[thick, line width=1.5pt] (1/1.732, 1.414/1.732) -- (0.94, 1.33);
+  
+  \filldraw[fill=gray!30, opacity=0.5] (1/1.732, 1-1.414/1.732) arc (-125.26:125.26:1) -- cycle;
+  
+  \node[right] at (1/1.732, 1-1.414/1.732) {$A$};
+  \node[right] at (1/1.732, 1+1.414/1.732) {$B$};
+  \draw (0,0) -- (1/1.732, 1-1.414/1.732);
+  \draw (0,0) -- (1/1.732, 1+1.414/1.732);
+  \draw (0.3, 0) arc (0:54.7:0.3);
+  \node at (0.4, 0.2) {$\theta$};
+\end{tikzpicture}
+\end{center}
+
+\bigskip
+
+\subsection*{第2問}
+
+\begin{center}
+\begin{tabular}{|p{0.9\textwidth}|}
+\hline
+場合の数のこの手のヤツでは、
+\begin{enumerate}
+  \item[(1)] 対称性
+  \item[(2)] $\bmod$ で場合分け
+\end{enumerate}
+ができないかまずチェックせよ。 \\
+\hline
+\end{tabular}
+\end{center}
+
+\bigskip
+
+\noindent
+\textbf{[解]} $k \in \mathbb{N}$ とする。球は $2k$ 秒後にのみ $P, Q$ にある。右のように $R$ を定める。対称性から、$2k$ 秒後に球が $P, Q, R$ にある確率は、$b_k, b_k, b_k$ とおける。
+又、題意から、以下の漸化式をうる。
+\[ b_{k+1} = \frac{2}{3} b_k + \frac{1}{6} b_k + \frac{1}{6} a_k \quad \cdots \textcircled{1} \]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=stealth]
+  \draw[thick] (0, 1.5) -- (-1.3, -0.7) -- (1.3, -0.7) -- cycle;
+  \draw (0, 1.5) -- (0, -0.7);
+  \draw (-1.3, -0.7) -- (0.65, 0.4);
+  \draw (1.3, -0.7) -- (-0.65, 0.4);
+  \node at (0, 0.7) {$P$};
+  \node at (0.4, -0.2) {$Q$};
+  \node at (-0.4, -0.2) {$R$};
+\end{tikzpicture}
+\quad\quad
+\begin{tikzpicture}[scale=1.2, >=stealth]
+  \node (P) at (0, 1) {$P$};
+  \node (Q) at (2, 0) {$Q$};
+  \node (R) at (0, -1) {$R$};
+  \draw[->] (P) -- node[above right] {$1/6$} (Q);
+  \draw[->] (Q) to[out=30,in=-30,loop] node[right] {$2/3$} (Q);
+  \draw[->] (R) -- node[below right] {$1/6$} (Q);
+\end{tikzpicture}
+\end{center}
+
+\noindent
+又、$a_k + 2b_k = 1$ から ① で $a_k$ をけして
+\[ b_{k+1} = \frac{1}{2} b_k + \frac{1}{6} \]
+\[ b_{k+1} - \frac{1}{3} = \frac{1}{2} \left( b_k - \frac{1}{3} \right) \]
+$b_0 = 0$ だから、これをくり返し用いて、
+\[ b_k = \left(\frac{1}{2}\right)^k \left(-\frac{1}{3}\right) + \frac{1}{3} \]
+だから、もとめる確率は
+\[
+\begin{cases}
+0 & (n \in \text{odd}) \\
+\frac{1}{3} \left( 1 - \left(\frac{1}{2}\right)^{\frac{n}{2}} \right) & (n \in \text{even})
+\end{cases}
+\]
+
+\bigskip
+
+\subsection*{第3問}
+
+\noindent
+\textbf{[解]} $y \ge \frac{1}{2} x^2, \frac{x^2}{1/2} + \frac{y^2}{1/32} \le 1$ を図示すると下図斜線部。
+
+\begin{center}
+\begin{tikzpicture}[scale=2.2, >=stealth]
+  \draw[->] (-1.0, 0) -- (1.0, 0) node[right] {$x$};
+  \draw[->] (0, -0.3) -- (0, 0.4) node[above] {$y$};
+  \node[below left] at (0,0) {$0$};
+  
+  \draw[domain=-0.7:0.7, smooth, variable=\x] plot ({\x}, {0.5*\x*\x});
+  \node[above right] at (0.45, 0.1) {$y = \frac{1}{2}x^2$};
+  
+  \draw[dashed] (0,0) ellipse ({1/sqrt(2)} and {1/sqrt(32)});
+  
+  \begin{scope}
+    \clip (0,0) ellipse ({1/sqrt(2)} and {1/sqrt(32)});
+    \fill[gray!30, domain=-0.7:0.7, variable=\x] (-0.7, 0.4) -- plot ({\x}, {0.5*\x*\x}) -- (0.7, 0.4) -- cycle;
+  \end{scope}
+  \draw[domain=-0.5:0.5, smooth, variable=\x] plot ({\x}, {0.5*\x*\x});
+  \draw[dashed] (0,0) ellipse ({1/sqrt(2)} and {1/sqrt(32)});
+  
+  \node at (0, 0.12) {$S$};
+  \node[below] at ({1/sqrt(2)}, 0) {$\frac{1}{\sqrt{2}}$};
+  \node[below] at ({-1/sqrt(2)}, 0) {$-\frac{1}{\sqrt{2}}$};
+  \node[below] at (0.5, 0) {$\frac{1}{2}$};
+  \node[below] at (-0.5, 0) {$-\frac{1}{2}$};
+  \node[above left] at (0, {1/sqrt(32)}) {$\frac{1}{\sqrt{32}}$};
+\end{tikzpicture}
+\end{center}
+
+\noindent
+(1) 対称性から
+\begin{align*}
+\frac{1}{\pi} \frac{1}{2} V_1 &= \int_0^{\frac{1}{2}} \left[ \left( \frac{1}{32} - \frac{x^2}{16} \right) - \frac{1}{4} x^4 \right] dx \\
+&= \left[ -\frac{1}{20} x^5 - \frac{1}{48} x^3 + \frac{1}{32} x \right]_0^{\frac{1}{2}} \\
+&= \frac{11}{15} \left(\frac{1}{2}\right)^6
+\end{align*}
+
+\[
+\frac{1}{\pi} V_2 = \int_0^{\frac{1}{8}} (2y) dy + \int_{\frac{1}{8}}^{\frac{1}{\sqrt{32}}} \left( \frac{1}{2} - 16y^2 \right) dy
+\]
+\[
+= \left[ y^2 \right]_0^{\frac{1}{8}} + \left[ \frac{1}{2} y - \frac{16}{3} y^3 \right]_{\frac{1}{8}}^{\frac{1}{\sqrt{32}}}
+\]
+\[
+= \frac{1}{64} + \frac{1}{8} \frac{\sqrt{2}-1}{2} - \frac{16}{3} \frac{2\sqrt{2}-1}{8^3}
+\]
+\[
+= \frac{1}{64} + \frac{\sqrt{2}-1}{16} - \frac{1}{3} \frac{2\sqrt{2}-1}{32}
+\]
+\[
+= \frac{1}{3} \frac{1}{64} \left[ -7 + 8\sqrt{2} \right]
+\]
+
+だから
+\[
+V_1 = \frac{11}{15} \left(\frac{1}{2}\right)^5 \pi, \quad V_2 = \frac{\pi}{192} (-7 + 8\sqrt{2})
+\]
+
+\bigskip
+
+\noindent
+(2) (1) から、
+\begin{align*}
+\frac{V_2}{V_1} &= \frac{\frac{1}{3} \left(\frac{1}{2}\right)^6 (-7 + 8\sqrt{2})}{\frac{11}{15} \left(\frac{1}{2}\right)^5} = \frac{\frac{1}{6}(-7 + 8\sqrt{2})}{\frac{11}{15}} \\
+&= \frac{5}{22} (-7 + 8\sqrt{2}) < 1 \\
+&\iff -7 + 8\sqrt{2} < \frac{22}{5} \iff 8\sqrt{2} < \frac{57}{5} \quad \cdots \textcircled{1}
+\end{align*}
+だが、①は $64 \cdot 2 \cdot 25 = 3200 < 3249 = (57)^2$ の平方根をとって
+$8\sqrt{2} < \frac{57}{5}$ だから成立。よって
+\[ \frac{V_2}{V_1} < 1 \]
+
+\bigskip
+
+\subsection*{第4問}
+
+\noindent
+\textbf{[解]} $n \in \mathbb{N}_{\ge 2} \quad \cdots \textcircled{1}$
+
+\bigskip
+
+\noindent
+(1) 連続 2 自然数の積が $n$ 乗数になるものがあると仮定し、それを $m(m+1)$ ($m \in \mathbb{N}$) とおくと、$k \in \mathbb{N}$ として
+\[ m(m+1) = k^n \]
+とかける。$m \perp m+1$ から、$m, m+1$ が共に $n$ 乗数であることが必要で、
+$t, s \in \mathbb{N}$ として
+\[ m = t^n, \quad m+1 = s^n \]
+とかける。$m$ をけして、
+\[ t^n = s^n - 1 \quad \therefore 1 = s^n - t^n = (s-t)(s^{n-1} + \dots + t^{n-1}) \]
+①から、$s-t \in \mathbb{Z}, s^{n-1} + \dots + t^{n-1} \ge 1+1 = 2$ となって矛盾。よって示された。
+
+\bigskip
+
+\noindent
+(2) $n=2$ での成立は示されたので、$n \ge 3$ とする。
+(1) と同様にして、$A_m = \frac{(m+n)!}{m!} = \prod_{k=1}^n (m+k)$ が $n$ 乗数だと仮定する。($m \in \mathbb{Z}_{\ge 0}, p \in \mathbb{N}$ として)
+\[ A_m = p^n \]
+とかける。$(m+1)^n < A_m < (m+n)^n$ から ($\because m \in \mathbb{Z}_{\ge 0}$)
+\begin{align*}
+(m+1)^n < p^n < (m+n)^n \\
+m+1 < p < m+n
+\end{align*}
+したがって、$p = m+k \; (k=2, \dots, n-1)$ とかけるが、$A_m$ は $p$ と互いに素な $m+k+1$ を因数に持つ。不適。よって矛盾し題意は示された。
+
+\end{document}

@@ -1,0 +1,305 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\subsection*{第2問}
+
+[解] $T$の頂点を $A, B, C, D$ とし, 一辺を $r$ とする. $CD$ の中点を $M$ とし, $A, B, M$ を含む平面で切ると(図1)の様になる. $\triangle MAB$ は $\overline{AM} = \overline{BM}$ の二等辺三角形だから, $AB$ の中点を $N$ として, $MN$ は $S$ の直径になっている. $\triangle ANM$ にピタゴラスを用いて,
+\[
+\overline{MN} = \sqrt{\left(\frac{\sqrt{3}}{2}r\right)^2 - \left(\frac{1}{2}r\right)^2} = \frac{\sqrt{2}}{2}r
+\]
+だから, 円の半径について,
+\[
+1 = \frac{1}{2}\overline{MN} \iff 1 = \frac{\sqrt{2}}{2}r
+\]
+となる.
+\[
+\left(\therefore r = 2\sqrt{2}\right)_{\text{\#}}
+\]
+
+次に, $O$ から $AM$ に下ろした垂足を $H$ として $O$ を原点, $OH$ を $x$ 軸正方向とする右図のような $xy$ 平面をとる. 右下斜線部を $x$ 軸まわりに回転して出来る立体の体積 $V'$, もとめる体積 $V$ とすると対称性から
+\[
+V = 4V' \quad \dots \text{①}
+\]
+(対称性から, $S$ の中心 $O$ はこの平面内にある)
+
+$\triangle AON$ にピタゴラスを用いると, $\overline{OA} = 1$ で, $\overline{OH} = p$, $\overline{MN} = t$ とすると, $\triangle OAH, \triangle OMH$ にピタゴラスを用いて,
+\[
+\begin{cases}
+1 - p^2 = t^2 \\
+3 - p^2 = (\sqrt{6} - t)^2
+\end{cases}
+\quad (\because \overline{AH} = \overline{AM} - \overline{MH})
+\]
+辺々引いて $t = \frac{\sqrt{6}}{3}$, $p = \frac{1}{\sqrt{3}}$ を得る. したがって,
+\[
+V' = \pi \int_{1/\sqrt{3}}^1 (1-x^2) \, dx = \pi \left[ x - \frac{1}{3}x^3 \right]_{1/\sqrt{3}}^1 = \pi \left\{ \frac{2}{3} - \left( \frac{1}{\sqrt{3}} - \frac{1}{9\sqrt{3}} \right) \right\} = \frac{2}{3}\pi \left( 1 - \frac{4}{9}\sqrt{3} \right)
+\]
+だから, ①から
+\[
+V = \frac{8}{3}\pi \left( 1 - \frac{4}{9}\sqrt{3} \right)_{\text{\#}}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+  % Vertices of Tetrahedron
+  \coordinate (A) at (0, 2.5);
+  \coordinate (B) at (-2, -0.5);
+  \coordinate (C) at (1.5, -0.8);
+  \coordinate (D) at (2.2, 0.8);
+  \coordinate (M) at ($(C)!0.5!(D)$);
+  \coordinate (O) at (0.2, 0.6);
+
+  % Edges
+  \draw[thick] (A) -- (B);
+  \draw[thick] (B) -- (C);
+  \draw[thick] (C) -- (D);
+  \draw[thick] (A) -- (C);
+  \draw[thick] (A) -- (D);
+  \draw[dashed] (B) -- (D);
+  \draw[dashed] (A) -- (M);
+  \draw[dashed] (B) -- (M);
+
+  % Inscribed circle (cross section)
+  \draw[dashed] (O) circle (0.95);
+  \fill (O) circle (1.2pt) node[left] {$O$};
+
+  % Labels
+  \node[above] at (A) {$A$};
+  \node[below left] at (B) {$B$};
+  \node[below] at (C) {$C$};
+  \node[right] at (D) {$D$};
+  \node[right] at (M) {$M$};
+  \node[left] at (-1, 1) {$r$};
+
+  % Tick marks on CM and MD
+  \node[right] at ($(C)!0.5!(M)$) {$\shortparallel$};
+  \node[right] at ($(M)!0.5!(D)$) {$\shortparallel$};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[scale=1.5]
+  % Vertices of triangle ABM
+  \coordinate (A) at (0, 2.2);
+  \coordinate (B) at (-2, 0);
+  \coordinate (M) at (1.5, 0);
+  
+  \coordinate (N) at ($(A)!0.5!(B)$);
+  \coordinate (H) at ($(A)!0.5!(M)$);
+  \coordinate (O) at (-0.15, 0.7);
+
+  % Draw triangle
+  \draw[thick] (A) -- (B) -- (M) -- cycle;
+
+  % Circle
+  \draw[thick] (O) circle (0.75);
+  \fill (O) circle (1.2pt) node[below left] {$O$};
+
+  % Altitude and perpendiculars
+  \draw[dashed] (N) -- (M);
+  \draw[dashed] (O) -- (N) node[midway, above left] {$1$};
+  \draw[dashed] (O) -- (H) node[midway, below left] {$1$};
+
+  % Labels
+  \node[above] at (A) {$A$};
+  \node[below left] at (B) {$B$};
+  \node[below right] at (M) {$M$};
+  \node[above left] at (N) {$N$};
+  \node[above right] at (H) {$H$};
+
+  \node[above left] at ($(A)!0.5!(N)$) {$r=2\sqrt{2}$};
+  \node[above right] at ($(A)!0.5!(H)$) {$\frac{\sqrt{3}}{2}r = \sqrt{6}$};
+  \node[below] at ($(B)!0.5!(M)$) {$\sqrt{6}$};
+
+  % Right angle symbols
+  \draw (N) ++(0.1,-0.1) -- ++(0.1,0.1) -- ++(-0.1,0.1);
+  \draw (H) ++(-0.1,-0.1) -- ++(0.1,-0.1) -- ++(0.1,0.1);
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[scale=1.8, >=stealth]
+  % Axes
+  \draw[->] (-0.3,0) -- (1.5,0) node[right] {$x$};
+  \draw[->] (0,-1.3) -- (0,1.3) node[above] {$y$};
+  \node[below left] at (0,0) {$0$};
+
+  % Circle arc x^2 + y^2 = 1
+  \draw[thick, domain=-90:90, samples=100] plot ({cos(\x)}, {sin(\x)});
+  \node[above right] at (0.7,0.7) {$x^2+y^2=1$};
+
+  % Vertical line x = 1/sqrt(3) ~ 0.577
+  \draw[thick] (0.577, -0.816) -- (0.577, 0.816);
+  
+  % Shaded region
+  \fill[pattern=north east lines, pattern color=gray!60] 
+    (0.577, -0.816) -- plot[domain=-54.7:54.7, samples=50] ({cos(\x)}, {sin(\x)}) -- cycle;
+
+  % Key points and labels
+  \fill (0.577,0) circle (1pt) node[below right] {$H$};
+  \fill (0.577,-0.816) circle (1pt) node[below left] {$M$};
+  \fill (1,0) circle (1pt) node[below right] {$1$};
+  \fill (0,1) circle (1pt) node[left] {$1$};
+  \fill (0,-1) circle (1pt) node[left] {$-1$};
+  
+  \node[left] at (0, 0.816) {$\frac{\sqrt{6}}{3}$};
+  \node[left] at (0, 0.577) {$\frac{\sqrt{3}}{3}$};
+  \draw[dashed] (0, 0.816) -- (0.577, 0.816);
+  \draw[dashed] (0, 0.577) -- (0.577, 0.577);
+  \draw[dashed] (0.577, 0) -- (0.577, 0.816);
+\end{tikzpicture}
+\end{center}
+
+\noindent
+[解注] - \\
+積分区間 $\overline{OH}$ をもとめる方法は様々だが\dots \\
+$\cdot \triangle ABC$ での断面は半径 $\frac{\sqrt{3}}{3}$ の円だから, ピタゴラスから,
+\[
+\overline{OH} = \sqrt{1 - \left(\frac{\sqrt{3}}{3}\right)^2} = \frac{1}{\sqrt{3}}
+\]
+
+\bigskip
+
+\noindent
+[解2] (前半部) \\
+対称性から, 球 $S$ の中心は四面体 $ABCD$ の重心 $G$ である. $G$ から $AC$ に下ろした垂足 $H$ は $AC$ の中点である. $\triangle AGH$ にピタゴラスを用いる.
+\[
+\overline{AG} = \frac{\sqrt{6}}{3}r \cdot \frac{3}{4} = \frac{\sqrt{6}}{4}r \quad \text{($G$ は高さを $3:1$ に内分)}
+\]
+\[
+\overline{GH} = 1
+\]
+\[
+\overline{AH} = \frac{1}{2}r
+\]
+から,
+\[
+\frac{6}{16}r^2 = 1 + \frac{1}{4}r^2 \quad \therefore r = 2\sqrt{2}_{\text{\#}}
+\]
+
+
+\subsection*{第3問}
+
+[解] $\overline{OA} = \overline{OB} = 1$ から, $\triangle OAB$ は二等辺三角形で, $B(2c, 0, 0)$ となる. この時, $c = \cos\theta, s = \sin\theta$ とおく. ($0 < \theta < \pi/2$)
+
+$AB: (2c-c)(y-s) - (0-s)(x-c) = 0 \quad (c \le x \le 2c)$
+\[
+\therefore AB: c(y-s) + s(x-c) = 0 \quad (c \le x \le 2c)
+\]
+したがって, 線分 $AB$ が円と交わる時, $y = +\frac{1}{c}(-sx + 2sc)$ から
+\[
+x^2 + \left(\frac{s}{c}\right)^2 (-x+2c)^2 = 1
+\]
+\[
+\left(1 + \frac{s^2}{c^2}\right)x^2 - 2\left(\frac{s}{c}\right)^2 \cdot 2cx + \left(\frac{s}{c}\right)^2 (2c)^2 = 1
+\]
+\[
+\frac{1}{c^2}x^2 - 4\frac{s^2}{c}x + 4s^2 - 1 = 0
+\]
+\[
+(x-c)\left(\frac{1}{c^2}x - \frac{4s^2-1}{c}\right) = 0 \quad (c < x < 2c)
+\]
+が解を持つ. したがって
+\[
+c < c(4s^2-1) < 2c
+\]
+$c > 0$ から
+\[
+\frac{1}{2} < s^2 < \frac{3}{4} \quad \therefore \frac{\pi}{4} < \theta < \frac{\pi}{3}_{\text{\#}} \quad (\because 0 < \theta < \pi/2)
+\]
+である. この時, $C$ の $x$ 座標 $c(4s^2-1)$, $AB$ の傾き $-\frac{s}{c}$ だから,
+\[
+\overline{BC}^2 = \left\{1+\left(\frac{s}{c}\right)^2\right\}\left(2c - c(4s^2-1)\right)^2 = 3 - 4s^2_{\text{\#}}
+\]
+又, $M(c, 0)$ だから, $\triangle BCM$ に余弦定理を用いて,
+\[
+\overline{MC}^2 = \overline{MB}^2 + \overline{BC}^2 - 2\overline{MB}\cdot\overline{BC}\cos\angle ABO
+\]
+\[
+= c^2 + (3-4s^2)^2 - 2c(3-4s^2)\cdot c
+\]
+\[
+= (1-s^2)(1 - 2(3-4s^2)) + (3-4s^2)^2
+\]
+\[
+= (1-p)(8p-5) + (4p-3)^2 \quad (p = s^2)
+\]
+\[
+= 8p^2 - 11p + 4
+\]
+\[
+= 8\left(p - \frac{11}{16}\right)^2 + \frac{7}{32}
+\]
+で, (1)から $\frac{1}{2} < p < \frac{3}{4}$ だから, $\overline{MC}^2$ は $p = \frac{11}{16}$ で $\min \frac{7}{32}$ を, $p \to \frac{1}{2}$ で $\max \frac{1}{2}$ をとるから,
+
+$\overline{MC} > 0$ から,
+\[
+\sqrt{\frac{7}{32}} \le \overline{MC} < \sqrt{\frac{1}{2}} \quad \therefore \frac{\sqrt{14}}{8} \le \overline{MC} < \frac{\sqrt{2}}{2}_{\text{\#}}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=2, >=stealth]
+  % Axes
+  \draw[->] (-0.3,0) -- (2.3,0) node[right] {$x$};
+  \draw[->] (0,-0.3) -- (0,1.5) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % Circle x^2 + y^2 = 1
+  \draw[thick, domain=0:90, samples=100] plot ({cos(\x)}, {sin(\x)});
+
+  % Point A (cos 55^\circ, sin 55^\circ)
+  \coordinate (A) at (0.57, 0.82);
+  \coordinate (B) at (1.15, 0);
+  \coordinate (M) at (0.57, 0);
+  
+  % Intersection C
+  \coordinate (C) at (0.88, 0.47);
+
+  % Draw line segments
+  \draw[thick] (O) -- (A);
+  \draw[thick] (A) -- (B);
+  \draw[dashed] (M) -- (C);
+
+  % Points
+  \fill (A) circle (1.2pt) node[above right] {$A$};
+  \fill (B) circle (1.2pt) node[below] {$B$};
+  \fill (C) circle (1.2pt) node[above right] {$C$};
+  \fill (M) circle (1.2pt) node[below] {$M$};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[scale=2, >=stealth]
+  % Axes
+  \draw[->] (-0.3,0) -- (2.2,0) node[right] {$x$};
+  \draw[->] (0,-0.3) -- (0,1.5) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % Circle
+  \draw[thick, domain=0:90, samples=100] plot ({cos(\x)}, {sin(\x)});
+
+  % Point A and tangent
+  \coordinate (A) at (0.6, 0.8);
+  \fill (A) circle (1.2pt) node[above right] {$A$};
+  
+  % Tangent line
+  \draw[thick] (0.6, 0.8) -- (1.67, 0);
+  \draw[dashed] (0.6, 0.8) -- (0, 1.25);
+
+  % Line segment AB to B = 2c = 1.2
+  \coordinate (B) at (1.2, 0);
+  \fill (B) circle (1.2pt) node[below] {$B$};
+  \draw[thick] (A) -- (B);
+
+  % Labels on x-axis
+  \fill (1,0) circle (1pt) node[below] {$1$};
+  \fill (1.67,0) circle (1pt) node[below] {$\frac{1}{c}$};
+  \node[below] at (0.6,0) {$c$};
+  \draw[dashed] (A) -- (0.6,0);
+\end{tikzpicture}
+\end{center}
+
+\noindent
+[解2] \\
+(1) $A$ での円の接線 $cx + sy = 1$ の $x$ 切片は $\frac{1}{c}$ だから, 線分 $AB$ が円と交わる条件は右図から
+\[
+1 < 2c < \frac{1}{c} \quad \therefore \frac{1}{2} < c < \frac{\sqrt{2}}{2}
+\]
+だから $\frac{\pi}{4} < \theta < \frac{\pi}{3}_{\text{\#}}$
+
+\end{document}

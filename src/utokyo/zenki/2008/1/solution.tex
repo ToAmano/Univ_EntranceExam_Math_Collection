@@ -1,0 +1,84 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\noindent
+\textbf{[解]} $f$ によって $(x, y)$ が $(X, Y)$ にうつるとすると
+\[
+\begin{cases}
+X = 3x + y \\
+Y = -2x
+\end{cases}
+\quad \therefore \begin{cases}
+x = -\frac{1}{2}Y \\
+y = X + \frac{3}{2}Y
+\end{cases}
+\]
+だから、$a_n x + b_n y = 1$ は、$a_n \left(-\frac{1}{2}Y\right) + b_n \left(X + \frac{3}{2}Y\right) = 1$ にうつるので、
+\[
+\begin{cases}
+a_{n+1} = b_n \\
+b_{n+1} = -\frac{1}{2}a_n + \frac{3}{2}b_n
+\end{cases}
+\quad \cdots \text{(1)}
+\]
+
+\bigskip
+
+\noindent
+(2) $a_1 = 3, b_1 = 2 \quad \cdots \text{① である。(1)から、}$
+\[
+a_{n+2} = \frac{3}{2}a_{n+1} - \frac{1}{2}a_n
+\]
+なので、①とあわせて、
+\[
+a_n = 1 + \left(\frac{1}{2}\right)^{n-1}
+\]
+だから、(1)から、
+\[
+l_n : \left\{1+\left(\frac{1}{2}\right)^{n-1}\right\}x + \left\{1+\left(\frac{1}{2}\right)^n\right\}y = 1 \quad \cdots \text{②}
+\]
+である。$l_n$ は右図であり、$1+\left(\frac{1}{2}\right)^{n-1}, 1+\left(\frac{1}{2}\right)^n$ は $n$ について単調に減少し、共に 1 に収束する。$l_n$ と $l_{n+1}$ の交点 $Q_n$ は $Q_n(-1, 2)$ であり、$l_n$ の傾きを $C_n$ とすると、
+\[
+C_n = -\frac{1+\left(\frac{1}{2}\right)^{n-1}}{1+\left(\frac{1}{2}\right)^n}
+\]
+とすると、$\alpha = \frac{1}{2}$ として
+\[
+\frac{-C_n}{-C_{n+1}} = \frac{\alpha^{2n} + \frac{5}{4}\alpha^n + 1}{\alpha^{2n} + 2\alpha^n + 1} < 1 \quad \therefore C_n < C_{n+1}
+\]
+だから、$C_n$ は単調増加で、$C_1 = -\frac{3}{2}, C_n \to -1 \, (n \to \infty)$ となる。以上から、
+$l_n$ は右図斜線部をうごくから、（境界は実線のみ含む）
+もとめる領域は下図斜線部（境界は実線のみ含む）
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=stealth]
+  \draw[->] (-2.5, 0) -- (2.5, 0) node[right] {$x$};
+  \draw[->] (0, -1) -- (0, 3) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  \fill (-1, 2) circle (2pt) node[above left] {$(-1,2)$};
+
+  \draw[thick] (-2, 3.5) -- (2, -2.5) node[right] {$3x+2y=1$};
+  \draw[thick] (-2, 3) -- (2, -1) node[right] {$x+y=1$};
+
+  \begin{scope}
+    \clip (-1, 2) -- (2.5, -3.25) -- (2.5, -1.5) -- cycle;
+    \fill[gray!25] (-1, 2) -- (2.5, -3.25) -- (2.5, -1.5) -- cycle;
+    \foreach \x in {-0.8,-0.5,...,2.4} {
+      \draw[gray!70, thin] (\x, -2.5) -- (\x+1, 3);
+    }
+  \end{scope}
+
+  \fill (0, 1) circle (1.5pt) node[right] {$1$};
+  \fill (1, 0) circle (1.5pt) node[above right] {$1$};
+  \fill (0, 0.5) circle (1.5pt) node[left] {$\frac{1}{2}$};
+  \fill (1/3, 0) circle (1.5pt) node[below] {$\frac{1}{3}$};
+\end{tikzpicture}
+\end{center}
+
+\bigskip
+
+\end{document}

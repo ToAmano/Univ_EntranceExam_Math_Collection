@@ -1,0 +1,59 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] $n$ 個から $2k$ 個をとり出し, これを $2$ つずつの組に分ける場合の数と同じである。
+
+したがって, $n \ge 2k$ のもとで
+\[
+\frac{{}_n\mathrm{C}_{2k} \cdot {}_{2k}\mathrm{C}_2 \cdot {}_{2k-2}\mathrm{C}_2 \cdots {}_4\mathrm{C}_2 \cdot {}_2\mathrm{C}_2}{k!}
+\]
+\[
+= \frac{\frac{n!}{2k!(n-2k)!} \cdot \frac{2k(2k-1)}{2} \frac{4\cdot 3}{2} \cdots \frac{2\cdot 1}{2}}{k!}
+\]
+\[
+= \frac{n!}{k!(n-2k)!} \cdot \frac{1}{2^k} \quad \text{通り}
+\]
+であり, $n < 2k$ の時は $0$ 通り。以上まとめて,
+\[
+f(n, k) = 
+\begin{cases}
+\frac{n!}{(n-2k)! \cdot k!} \frac{1}{2^k} \, \text{通り} & (n \ge 2k) \\
+0 \, \text{通り} & (n < 2k)
+\end{cases}
+\]
+
+次に, $f(n, k) = f(n, 1)$ について, $n \ge 2$ から $f(n, 1) \neq 0$ だから, $n \ge 2k$ のもとで考えれば良い。
+\[
+f(n, k) = f(n, 1)
+\]
+\[
+\iff \frac{1}{2^k} \frac{n!}{k!(n-2k)!} = \frac{1}{2} \frac{n!}{(n-2)!}
+\]
+\[
+\iff 2^{k-1} k! (n-2k)! = (n-2)!
+\]
+\[
+\iff 2^{k-1} = \frac{(n-2)(n-3) \dots (n+1-2k)}{k!} \quad \dots \text{①}
+\]
+ここで, 連続した整数は $k!$ で割り切れるから, $A \in \mathbb{N}$ として,
+\[
+(n-2) \cdots (n+1-2k) = A(2k-2)!
+\]
+とおける。①から
+\[
+\text{①} \iff 2^{k-1} = A \cdot (2k-2)(2k-3) \cdots (k+1) \quad \dots \text{②}
+\]
+同様に, $(2k-2) \dots (k+1)$ は $(k-2)!$ で割り切れるから, $k \ge 5$ の時 $2^{k-1}$ が $3$ で割り切れることになり不適。又, $k=2, 4$ の時は ②から, $2^{k-1}$ が各々 $3$ ($k=2$), $5$ ($k=4$) で割り切れることになり不適。以上から $k=3$ が必要。この時①から,
+\[
+3 \cdot 2 \cdot 2^2 = (n-2) \cdots (n-5)
+\]
+\[
+1 \cdot 2 \cdot 3 \cdot 4 = (n-2) \cdots (n-5)
+\]
+となり, $n=6$ とすれば十分。以上から, もとめるのは $(n, k) = (6, 3)$ である。
+
+\end{document}

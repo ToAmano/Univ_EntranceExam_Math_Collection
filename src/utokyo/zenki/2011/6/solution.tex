@@ -1,0 +1,83 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] (1) $x>0$ から、$f(t) = x(t + \frac{y}{2x})^2 - \frac{y^2}{4x}$ である。
+$-\frac{y}{2x} \le 0$ の時、$\min f(t) = f(0)$, $\max f(t) = f(1)$
+$0 \le -\frac{y}{2x} \le \frac{1}{2}$ の時、$\min f(t) = f(-\frac{y}{2x})$, $\max f(t) = f(1)$
+$\frac{1}{2} \le -\frac{y}{2x} \le 1$ の時、$\min f(t) = f(-\frac{y}{2x})$, $\max f(t) = f(0)$
+$1 \le -\frac{y}{2x}$ の時、$\min f(t) = f(1)$, $\max f(t) = f(0)$
+となり、$f(0)=0$, $f(1)=x+y$, $f(-\frac{y}{2x}) = -\frac{y^2}{4x}$ だから、$x>0$ より、
+$-\frac{y}{2x} \le 0$ の時、$x+y$
+$0 \le -\frac{y}{2x} \le \frac{1}{2}$ の時、$x+y + \frac{y^2}{4x}$
+$\frac{1}{2} \le -\frac{y}{2x} \le 1$ の時、$\frac{y^2}{4x}$
+$1 \le -\frac{y}{2x}$ の時、$-(x+y)$
+
+(2) $f(t)$ の値域の幅が1以下ならば必要十分である。(1)から、
+$\cdot y \ge 0$ の時、$x+y \le 1$
+$\cdot -x \le y \le 0$ の時、$x+y + \frac{y^2}{4x} \le 1 \quad (-2x-2\sqrt{x} \le y \le -2x+2\sqrt{x})$
+$\cdot -2x \le y \le -x$ の時、$\frac{y^2}{4x} \le 1$
+$\cdot y \le -2x$ の時、$-(x+y) \le 1$
+これを図示して、下図斜線部（境界は、$y$軸以外含む）
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+\draw[->] (-0.5, 0) -- (4, 0) node[below] {$x$};
+\draw[->] (0, -3) -- (0, 1.5) node[left] {$y$};
+\draw (0,1) -- (1,0) node[right] {$x+y=1$};
+\draw (0,0) -- (3,-3) node[right] {$y=-x$};
+\draw (0,0) -- (1.5,-3) node[right] {$y=-2x$};
+\draw (0,-1) -- (2,-3) node[right] {$y=-(x+1)$};
+\draw[domain=0.01:2.25] plot (\x, {-2*sqrt(\x)}) node[right] {$x=\frac{1}{4}y^2$};
+\fill[pattern=north west lines, opacity=0.5] 
+  (0,1) -- (1,0) 
+  -- plot[domain=1:2.25] (\x, {-2*\x+2*sqrt(\x)}) 
+  -- plot[domain=2.25:0.25] (\x, {-2*sqrt(\x)}) 
+  -- (0,-1) -- cycle;
+\end{tikzpicture}
+\end{center}
+
+$(-2x+2\sqrt{x})' = -2 + \frac{1}{\sqrt{x}}$ だから、$0 < x \le \frac{1}{4}$ で増加し、$\frac{1}{4} \le x$ で減少する。
+
+(3) $-f(t) \le z \le 1-f(t)$ が $0 \le t \le 1$ の全ての $t$ で成立するのは、$\max f(t) = M_t$, $\min f(t) = m_t$ ( $0 \le t \le 1$ )として、
+\[ -z \le m_t \land M_t \le 1-z \]
+の時である。(1)から、
+$y \ge 0$ の時、$-z \le 0 \land x+y \le 1-z$
+$-x \le y \le 0$ の時、$-z \le -\frac{y^2}{4x} \land x+y \le 1-z$
+$-2x \le y \le -x$ の時、$-z \le -\frac{y^2}{4x} \land 0 \le 1-z$
+$y \le -2x$ の時、$-z \le x+y \land 0 \le 1-z$
+
+したがって、$0 \le z \le 1$ であり、$z$ での立体の断面は下図
+\begin{center}
+\begin{tikzpicture}[scale=2]
+\draw[->] (-0.5, 0) -- (1.5, 0) node[below] {$x$};
+\draw[->] (0, -1.5) -- (0, 1.5) node[left] {$y$};
+\draw (0, 1) -- (1, 0) node[right] {$x+y=1-z$};
+\draw (0, 0) -- (1, -1) node[right] {$x+y=-z$};
+\draw[domain=0.01:1] plot (\x, {-2*sqrt(0.5*\x)}) node[right] {$x=\frac{y^2}{4z}$};
+\draw[dashed] (0.5, -1) -- (0.5, 0);
+\node at (0.5, 0.1) {$z$};
+\node at (1, 0.1) {$1-z$};
+\end{tikzpicture}
+\end{center}
+($0 < z \le 1$) \quad ($z=0$)
+ただし、$z=0$ の時、条件は $0 \le x \le 1 \land 0 \le y+x \le 1$ であることに注意した。この面積 $S(z)$ は、
+$S(z) = (\text{台形}) - (\text{三角形}) - (\text{放物線領域})$
+であり、($0 < z \le 1$ の時)
+\begin{align*}
+(\text{台形}) &= \frac{1}{2} \{ (2\sqrt{z}-z) + (2\sqrt{z}+1-z) \} = \frac{1}{2}(4\sqrt{z}-2z+1) \\
+(\text{三角形}) &= \frac{1}{2} \cdot z \cdot z = \frac{1}{2}z^2 \\
+(\text{放物線領域}) &= \int_{-2\sqrt{z}}^{-2z} \frac{y^2}{4z} dy = \frac{1}{12z} \left[ y^3 \right]_{-2\sqrt{z}}^{-2z} = \frac{2}{3z} (z\sqrt{z}-z^3) = \frac{2}{3} (\sqrt{z}-z^2)
+\end{align*}
+これらを代入して
+\begin{align*}
+S(z) &= 2\sqrt{z} - z + \frac{1}{2} - \frac{1}{2}z^2 - \frac{2}{3}\sqrt{z} + \frac{2}{3}z^2 \\
+&= \frac{1}{6}z^2 - z + \frac{4}{3}\sqrt{z} + \frac{1}{2}
+\end{align*}
+これは $z=0$ でも成立するから、
+\[ V = \int_0^1 S(z) dz = \left[ \frac{1}{18}z^3 - \frac{1}{2}z^2 + \frac{2}{3} \cdot \frac{2}{3} z^{\frac{3}{2}} + \frac{1}{2}z \right]_0^1 = \frac{17}{18} \]
+
+\end{document}

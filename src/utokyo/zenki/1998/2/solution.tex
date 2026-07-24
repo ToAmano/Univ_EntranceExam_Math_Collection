@@ -1,0 +1,102 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\noindent
+\textbf{[解]} $z = k \in \mathbb{Z}$ と固定すると,
+\[
+\begin{cases}
+x + y \le n - k \\
+-x + y \le n + k \\
+x - y \le n + k \\
+-x - y \le n - k
+\end{cases}
+\iff
+\begin{cases} -(n-k) \le x + y \le n - k \\ -(n+k) \le x - y \le n + k \end{cases} \quad \dots \text{①}
+\]
+これをみたす $(x, y)$ の存在条件から, $-n \le k \le n \ \dots \text{②}$ である. このもとで①を図示すると右図斜線部(境界含む). この内部にある格子点の数を $S(k)$ とおく. ここで 1辺 $2n$ の正方形から, 三角形4つを取り去ることで $S(k)$ をもとめる. まず, 右図1のような正方形の周及び内部の格子点は
+\[
+(2n + 1)^2 \quad \dots \text{③}
+\]
+である. 対称性から, 以下 $k \ge 0$ とする. 右の図のように各点を定める. ここで, $\triangle ABH, \triangle BCD, \triangle DEF, \triangle FGH$ は, 各々1辺が $n-k, n+k, n-k, n+k$ の直角2等辺三角形である. $\dots \text{④}$
+
+ここで, 1辺 $p \in \mathbb{N}$ の直角2等辺三角形の周及び内部(斜辺をのぞく)の格子点は, 右図2から,
+\[
+1 + 2 + \dots + p = \frac{1}{2} p (p + 1) \quad \dots \text{⑤}
+\]
+である. よって, ④⑤から, $\triangle ABH, \triangle BCD, \triangle DEF, \triangle FGH$ の周及び内部(斜辺除く)にある格子点はあわせて
+\[
+(n+k)(n+k+1) + (n-k)(n+1-k) \quad \dots \text{⑥}
+\]
+である. ③⑥から,
+\[
+S(k) = (2n+1)^2 - (n+k)(n+1+k) - (n-k)(n+1-k) \quad \dots \text{⑦}
+\]
+である. したがって対称性から, もとめる格子点の数は, ②とあわせて,
+\[
+f(n) = S(0) + 2 \sum_{k=1}^n S(k) \quad \dots \text{⑧}
+\]
+である. ⑦から
+\[
+\begin{cases}
+S(0) = 2n^2 + 2n + 1 \\
+\displaystyle\sum_{k=1}^n S(k) = n(2n+1)^2 - \sum_{k=1}^n (k+n)(k+1+n) - \sum_{k=1}^n (n-k)(n-1-k)
+\end{cases} \quad \dots \text{⑨}
+\]
+であり,
+\begin{align*}
+\sum_{k=1}^n (k+n)(k+1+n) &= \frac{1}{3} \sum_{k=1}^n \left\{ (k+n)(k+1+n)(k+n+2) - (k+n-1)(k+n)(k+n+1) \right\} \\
+&= \frac{1}{3} \left\{ (2n)(2n+1)(2n+2) - n(n+1)(n+2) \right\} = \frac{n(n+1)}{3} (7n + 2) \\
+\sum_{k=1}^n (k-n)(k-n-1) &= \frac{1}{3} \sum_{k=1}^n \left\{ (k+1-n)(k-n)(k-1-n) - (k-n)(k-1-n)(k-2-n) \right\} \\
+&= \frac{1}{3} \left\{ -(-1)(-n)(-1-n) \right\} = \frac{1}{3} n(n+1)(n-1)
+\end{align*}
+を⑨に代入して,
+\[
+\sum_{k=1}^n S(k) = (2n+1)^2 \cdot n - \frac{1}{3} n(n+1)(7n+2) - \frac{1}{3} n(n+1)(n-1)
+\]
+だから, ⑧とあわせて
+\begin{align*}
+\frac{f(n)}{n^3} &= \frac{S(0)}{n^3} + 2 \left[ \left(2 + \frac{1}{n}\right)^2 - \frac{1}{3}\left(1 + \frac{1}{n}\right)\left(7 + \frac{2}{n}\right) - \frac{1}{3}\left(1 + \frac{1}{n}\right)\left(1 - \frac{1}{n}\right) \right] \\
+&\xrightarrow{n \to \infty} 0 + 2 \left[ 4 - \frac{7}{3} - \frac{1}{3} \right] = \frac{8}{3} \quad \left( \because \frac{S(0)}{n^3} \to 0 \right)
+\end{align*}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7, >=stealth]
+\draw[->] (-4,0) -- (4,0) node[right] {$x$};
+\draw[->] (0,-4) -- (0,4) node[above] {$y$};
+\fill[gray!20] (-3,1) -- (-1,3) -- (3,1) -- (3,-1) -- (1,-3) -- (-3,-1) -- cycle;
+\draw[thick] (-3,1) -- (-1,3) -- (3,1) -- (3,-1) -- (1,-3) -- (-3,-1) -- cycle;
+\draw[dashed] (-3,-3) rectangle (3,3);
+\node[above left] at (-3,1) {$A$};
+\node[above] at (-1,3) {$B$};
+\node[above right] at (3,3) {$C$};
+\node[right] at (3,1) {$D$};
+\node[below right] at (3,-3) {$E$};
+\node[below] at (1,-3) {$F$};
+\node[below left] at (-3,-3) {$G$};
+\node[left] at (-3,-1) {$H$};
+\node[below] at (-3,0) {$-n$};
+\node[below] at (3,0) {$n$};
+\node[left] at (0,3) {$n$};
+\node[left] at (0,-3) {$-n$};
+\node[above] at (0,3.3) {(図1)};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[scale=0.7, >=stealth]
+\draw[->] (-0.5,0) -- (4,0) node[right] {$x$};
+\draw[->] (0,-0.5) -- (0,4) node[above] {$y$};
+\draw[thick] (0,3) -- (3,0) node[midway, above right] {$x+y=p$};
+\draw[dashed] (0,3) -- (0,0) -- (3,0);
+\filldraw (0,3) circle (2pt) node[left] {$p$};
+\filldraw (3,0) circle (2pt) node[below] {$p$};
+\node[below left] at (0,0) {$0$};
+\node[above] at (1.5,3.3) {(図2)};
+\end{tikzpicture}
+\end{center}
+
+\newpage
+
+\end{document}

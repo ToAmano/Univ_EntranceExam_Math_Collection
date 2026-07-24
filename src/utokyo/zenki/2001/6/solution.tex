@@ -1,0 +1,90 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\noindent
+\textbf{[解]} $A, B$ の $n$ 回目の試行後の座標を $a_n, b_n$ とする。又以下のように場合の数を置く。
+
+\begin{itemize}
+  \item[$1^\circ$] $a_n > b_n \quad (P_n)$ \\
+  表なら共に $+1$、裏なら $B$ を $+1$ すすめる。
+  \item[$2^\circ$] $a_n = b_n \quad (X_n)$ \\
+  表なら $A$ を $+1$ すすめる、裏なら $B$ を $+1$ すすめる。
+  \item[$3^\circ$] $a_n < b_n \quad (Q_n)$ \\
+  表なら $A$ を $+1$ すすめる、裏なら共に $+1$ すすめる。
+\end{itemize}
+
+\medskip
+
+\noindent
+(1) 題意から、任意の $n$ に対して、$|a_n - b_n| \le 1$ である。したがって $n+1$ 回目に $a_{n+1} = b_{n+1}$ となるのは以下の場合：
+\[
+\begin{cases}
+1^\circ \text{ で裏が出る。} \\
+3^\circ \text{ で表が出る。}
+\end{cases}
+\]
+したがって、
+\[
+X_{n+1} = P_n + Q_n = 2^n - X_n \quad (\because P_n + Q_n + X_n = 2^n) \quad \cdots \textcircled{1}
+\]
+
+\medskip
+
+\noindent
+(2) $Y_n = \frac{X_n}{2^n}$ によって $\{Y_n\}$ を定める。\textcircled{1}の両辺を $2^{n+1}$ でわって
+\[
+Y_{n+1} = -\frac{1}{2}Y_n + \frac{1}{2}
+\]
+\[
+Y_{n+1} - \frac{1}{3} = -\frac{1}{2}\left(Y_n - \frac{1}{3}\right) \quad \cdots \textcircled{2}
+\]
+$X_1 = 0$ つまり $Y_1 = 0$ だから、\textcircled{2}をくり返し用いて、
+\[
+Y_n - \frac{1}{3} = \left(-\frac{1}{2}\right)^{n-1}\left(-\frac{1}{3}\right)
+\]
+\[
+\therefore X_n = \frac{1}{3} \{ 2^n + 2 \cdot (-1)^n \} \hfill \text{\slash\slash}
+\]
+
+\medskip
+
+\noindent
+(3) $A_n$ の期待値 $E_n(a)$ を求めれば良い。ここで、確率変数 $t_k$ を以下のように定める。
+\[
+t_k = \begin{cases}
+0 & (k \text{回目の試行で } A \text{ が進まない}) \\
+1 & (k \text{回目の試行で } A \text{ が進む})
+\end{cases}
+\]
+すると、題意から
+\[
+E_n(a) = \sum_{k=1}^n P(t_k = 1) \quad \cdots \textcircled{3}
+\]
+である。$k$ 回目で $A$ が進むのは以下の時：
+\[
+\begin{cases}
+\text{\textcircled{1} コインで表が出る。 (確率 } \frac{1}{2}\text{)} \\
+\text{\textcircled{2} } a_{k-1} < b_{k-1} \text{ かつ コインで裏が出る。}
+\end{cases}
+\]
+ここで、(1)及び(2)、対称性から $P_n = Q_n$ であることから、
+\[
+P_n = \frac{1}{2} (2^n - X_n) = \frac{1}{3} (2^n - (-1)^n)
+\]
+だから、\textcircled{2}の起きる確率は $\frac{1}{2^k} P_{k-1}$ である。したがって、$k \ge 2$ の時、
+\[
+P(t_k = 1) = \frac{1}{2} + \frac{1}{2^k} \cdot \frac{1}{3} ( 2^{k-1} - (-1)^{k-1} ) = \frac{2}{3} + \frac{1}{3} \left(-\frac{1}{2}\right)^k
+\]
+である。$k=1$ の時、$P(t_1=1) = \frac{1}{2}$ であるからこれも良い。したがって\textcircled{3}から、
+\[
+E_n(a) = \sum_{k=1}^n \left\{ \frac{2}{3} + \frac{1}{3}\left(-\frac{1}{2}\right)^k \right\}
+\]
+\[
+= \frac{2}{3}n - \frac{1}{6} \cdot \frac{1 - (-1/2)^n}{1 + 1/2} = \frac{2}{3}n - \frac{1}{9}\left\{ 1 - \left(-\frac{1}{2}\right)^n \right\} \hfill \text{\slash\slash}
+\]
+
+\end{document}

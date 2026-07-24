@@ -1,0 +1,69 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\noindent
+\textbf{[解]}
+\[
+a(t) = \frac{1}{2} \left| t - \frac{1}{t} \right| = \frac{1}{2} \left( t - \frac{1}{t} \right) \quad (\because t > 1) \quad \cdots \textcircled{1}
+\]
+とする。$P, Q$ から $x$ 軸に下ろした垂足を $P', Q'$ として
+\[
+b(t) = \triangle OPP' - \triangle OQQ' + \text{台形 } PP'Q'Q
+\]
+\[
+= \frac{1}{2} - \frac{1}{2} + \int_1^t \frac{1}{x} \, dx = \log t \quad \cdots \textcircled{2}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  \draw[->] (-0.3, 0) -- (3.2, 0) node[right] {$x$};
+  \draw[->] (0, -0.3) -- (0, 2.2) node[above] {$y$};
+  \node[below left] at (0,0) {$0$};
+
+  \draw[domain=0.5:3.0, smooth, variable=\x, thick] plot ({\x}, {1.5/\x});
+
+  \coordinate (P) at (1, 1.5);
+  \coordinate (Q) at (2.5, 0.6);
+  \coordinate (Pp) at (1, 0);
+  \coordinate (Qp) at (2.5, 0);
+
+  \fill[gray!20] (0,0) -- (P) -- plot[domain=1:2.5] (\x, {1.5/\x}) -- (Q) -- (0,0);
+
+  \draw (0,0) -- (P) node[above right] {$P$};
+  \draw (0,0) -- (Q) node[above right] {$Q$};
+  \draw[dashed] (P) -- (Pp) node[below] {$P'$};
+  \draw[dashed] (Q) -- (Qp) node[below] {$Q'$};
+\end{tikzpicture}
+\end{center}
+
+\noindent
+\textcircled{1}, \textcircled{2} から
+\[
+C(t) = \frac{\log t}{\frac{1}{2}\left(t - \frac{1}{t}\right)} = \frac{2t \log t}{t^2 - 1}
+\]
+\[
+C'(t) = \frac{2(\log t + 1)(t^2 - 1) - 2t \log t \cdot 2t}{(t^2 - 1)^2}
+\]
+\[
+= \frac{2}{(t^2 - 1)^2} \left[ -(t^2 + 1)\log t + (t^2 - 1) \right]
+\]
+\[
+= \frac{2(t^2 + 1)}{(t^2 - 1)^2} \left[ -\log t + \frac{t^2 - 1}{t^2 + 1} \right]
+\]
+この符号は $f(t)$ のそれにひとしい。
+ここで $f(t) = -\log t + \frac{t^2 - 1}{t^2 + 1}$ とおくと、
+\[
+f'(t) = -\frac{1}{t} + \frac{2t(t^2 + 1) - (t^2 - 1)\cdot 2t}{(t^2 + 1)^2}
+\]
+\[
+= \frac{-(t^2 - 1)^2}{t(t^2 + 1)^2} < 0 \quad (\because t > 1)
+\]
+より、$f(t)$ は単調減少で、$f(t) < f(1) = 0$。よって $C'(t) < 0$ であるから、$C(t)$ は $1 < t$ で単調減少である。 \hfill $\qed$
+
+\bigskip
+
+\end{document}

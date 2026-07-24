@@ -1,0 +1,231 @@
+\documentclass[../../../../main.tex]{subfiles}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+
+\begin{document}
+\section*{東大理科数学 2010年}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+ & 計 & 思 & 統 \\
+\hline
+1 & 多変数 & B & A & A \\
+\hline
+2 & 不等式 & B & B & B \\
+\hline
+3 & 場数 & B & B & B \\
+\hline
+4 & 関数 & A & C & B \\
+\hline
+5 & 多変数 & A & B & B \\
+\hline
+6 & ベクトル-空間 & C & B & C \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{第1問}
+[解] (1) 右のように回転軸 $l$ をとる。(図1)、(図2) のどちらのように回転させても、
+\[ V = (ac + \frac{1}{4} \pi (a^2 c)) b \]
+
+(2) $\alpha = a+c$, $\beta = ac$ とおく。$a, c$ は0より大きい実数だから、
+\[ \begin{cases} \alpha^2 - 4\beta \ge 0 \\ 0 < \alpha \\ \beta > 0 \end{cases} \cdots \text{①} \]
+である。$a+b+c = 1$ から $b = 1 - \alpha$ で、$0 < b$ から
+\[ \alpha < 1 \cdots \text{②} \]
+となる。$V$ に代入して
+\begin{align*}
+V &= (\beta + \frac{1}{4}\pi (\alpha^2 - 2\beta))(1-\alpha) \\
+&= (1-\alpha) \left\{ (1 - \frac{1}{2}\pi)\beta + \frac{1}{4}\pi \alpha^2 \right\} \cdots \text{③}
+\end{align*}
+である。① $\land$ ②を図示すると右図斜線部で、③から $V$ は $\beta$ の単調減少関数だから、$\alpha$ を固定すると、
+\[ (1-\alpha) \left\{ (1-\frac{1}{2}\pi)\frac{1}{4}\alpha^2 + \frac{1}{4}\pi \alpha^2 \right\} \le V < \frac{1}{4}\pi \alpha^2 (1-\alpha) \cdots \text{④} \]
+である。④の左辺 $f(\alpha)$、右辺 $g(\alpha)$ とおく。(境界は $\beta = \frac{1}{4}\alpha^2$ のみ含む)
+\[ \begin{cases} f(\alpha) = (1 + \frac{1}{8}\pi) \alpha^2 (1-\alpha) \\ g(\alpha) = \frac{1}{4}\pi \alpha^2 (1-\alpha) \end{cases} \cdots \text{⑤} \]
+であり、$h(\alpha) = \alpha^2 (1-\alpha)$ とすると、$h'(\alpha) = 2\alpha - 3\alpha^2 = \alpha(2-3\alpha)$ から下表をうる。
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+$\alpha$ & 0 & $\cdots$ & $2/3$ & $\cdots$ & 1 \\
+\hline
+$h'$ & & $+$ & 0 & $-$ & \\
+\hline
+$h$ & 0 & $\nearrow$ & $4/27$ & $\searrow$ & 0 \\
+\hline
+\end{tabular}
+\end{center}
+
+したがって、$0 < h(\alpha) \le \frac{4}{27}$ だから ④、⑤とあわせて、
+\[ 0 < V < \frac{1}{4}\pi \frac{4}{27} = \frac{\pi}{27} \]
+\[ \therefore 0 < V < \frac{\pi}{27} \]
+
+\begin{center}
+\begin{tikzpicture}
+\draw[->] (-0.5,0) -- (2,0) node[right] {$\alpha$};
+\draw[->] (0,-0.5) -- (0,2) node[above] {$\beta$};
+\draw[domain=0:1, smooth, variable=\x] plot ({\x}, {\x*\x/4});
+\node at (1.5, 1) {$\beta = \frac{1}{4}\alpha^2$};
+\fill[pattern=north east lines] (0,0) -- plot[domain=0:1] ({\x}, {\x*\x/4}) -- (1,0) -- cycle;
+\end{tikzpicture}
+\end{center}
+
+\subsection*{第2問}
+[解] (1) $a_k = \int_{0}^{\frac{1}{k}} \frac{1-x}{x+k} dx$ とおく。
+\begin{align*}
+a_k &= \int_{0}^{\frac{1}{k}} \left\{ -1 + \frac{k+1}{x+k} \right\} dx = \left[ -x + (k+1)\log(x+k) \right]_{0}^{\frac{1}{k}} \\
+&= -\frac{1}{k} + (k+1)\log\frac{k+1}{k}
+\end{align*}
+だから、$k \in \mathbb{N}$ より
+\[ \text{(与式)} \Leftrightarrow \frac{2k+3}{2(k+1)^2} < \log\frac{k+1}{k} < \frac{2k+1}{2k(k+1)} \cdots \text{①} \]
+である。ここで、右図の面積を比較して、
+\[ \frac{1}{k+1/2} < \int_{k}^{k+1} \frac{1}{x} dx < \frac{1}{2}\left(\frac{1}{k} + \frac{1}{k+1}\right) \cdots * \]
+\[ \frac{2}{2k+1} < \log\frac{k+1}{k} < \frac{2k+1}{2k(k+1)} \]
+であり、
+\[ \frac{2}{2k+1} - \frac{2k+3}{2(k+1)^2} = \frac{1}{2(k+1)^2(2k+1)} > 0 \quad \left( y = \frac{1}{x}, y'' = \frac{2}{x^3} \text{ より } y = \frac{1}{x} \text{ は下に凸} \right) \]
+とあわせて、
+\[ \frac{2k+3}{2(k+1)^2} < \log\frac{k+1}{k} < \frac{2k+1}{2k(k+1)} \]
+だから①は示された。よって不等式は成立。
+
+(2) ①で $k=n, n+1, \dots, m-1$ として足して、
+\[ \sum_{k=n}^{m-1} \frac{1}{k+1} + \sum_{k=n}^{m-1} \frac{1}{(k+1)^2} < \log\frac{m}{n} < \frac{1}{2}\sum_{k=n}^{m-1}\left(\frac{1}{k} + \frac{1}{k+1}\right) \]
+\[ \sum_{k=n+1}^{m} \frac{1}{k} < \log\frac{m}{n} - \sum_{k=n+1}^{m} \frac{1}{k} < \frac{m-n}{2mn} \cdots \text{②} \]
+ここで、$\sum_{k=n+1}^{m} \frac{1}{k^2}$ は右図斜線部だから、面積比較して、
+\begin{align*}
+\sum_{k=n+1}^{m} \frac{1}{k^2} &> \int_{n+1}^{m+1} \frac{1}{x^2} dx = \left[ -\frac{1}{x} \right]_{n+1}^{m+1} \\
+&= \frac{1}{n+1} - \frac{1}{m+1} \\
+&= \frac{m-n}{(m+1)(n+1)}
+\end{align*}
+だから、②に代入して
+\[ \frac{m-n}{(m+1)(n+1)} < \log\frac{m}{n} - \sum_{k=n+1}^{m} \frac{1}{k} < \frac{m-n}{2mn} \quad \text{終} \]
+
+[別]
+① 最後の評価は、
+\[ \sum_{k=n+1}^{m} \frac{1}{k^2} > \sum_{k=n+1}^{m} \frac{1}{k(k+1)} = \frac{1}{n+1} - \frac{1}{m+1} \]
+でも良い。
+
+② $a_k$ の表式から
+\[ \frac{1}{2(k+1)} < -1 + (k+1)\log\frac{k+1}{k} < \frac{1}{2k} \]
+\[ \frac{1}{2(k+1)^2} < \log\frac{k+1}{k} - \frac{1}{k+1} < \frac{1}{2k(k+1)} \]
+として $k$ について和をとっても良い。
+
+\subsection*{第3問}
+[解] (1) はじめの操作で場合分けする。
+$1^\circ \ 0 \le x \le 15$
+$P_m(x) = \frac{1}{2} P_{m-1}(2x) + \frac{1}{2} P_{m-1}(0)$ であり、$P_{m-1}(0) = 0$ だから、
+\[ P_m(x) = \frac{1}{2} P_{m-1}(2x) \]
+
+$2^\circ \ 16 \le x \le 30$
+$P_m(x) = \frac{1}{2} P_{m-1}(2x-30) + \frac{1}{2} P_{m-1}(30)$ であり、$P_{m-1}(30) = 1$ から、
+\[ P_m(x) = \frac{1}{2} P_{m-1}(2x-30) + \frac{1}{2} \]
+
+以上まとめて、
+\[ P_m(x) = \begin{cases} \frac{1}{2} P_{m-1}(2x) & (0 \le x \le 15) \\ \frac{1}{2} P_{m-1}(2x-30) + \frac{1}{2} & (16 \le x \le 30) \end{cases} \]
+
+(2) (1)から、
+\[ P_{2n+2}(10) = \frac{1}{2} P_{2n+1}(20) = \frac{1}{2}\left(\frac{1}{2} P_{2n}(10) + \frac{1}{2}\right) = \frac{1}{4} P_{2n}(10) + \frac{1}{4} \]
+であり、
+\[ P_{2n+2}(10) - \frac{1}{3} = \frac{1}{4} \left(P_{2n}(10) - \frac{1}{3}\right) \]
+となる。$P_2(10) = \frac{1}{4}$ だから、くり返し用いて、
+\[ P_{2n}(10) = \left(\frac{1}{4}\right)^{n-1} \left(\frac{1}{4} - \frac{1}{3}\right) + \frac{1}{3} = \frac{1}{3} \left\{ 1 - \left(\frac{1}{4}\right)^n \right\} \]
+
+(3) (1) から
+\begin{align*}
+P_{4n+4}(6) &= \frac{1}{2} P_{4n+3}(12) = \frac{1}{4} P_{4n+2}(24) = \frac{1}{4}\left(\frac{1}{2} P_{4n+1}(18) + \frac{1}{2}\right) \\
+&= \frac{1}{8} \left(\frac{1}{2} P_{4n}(6) + \frac{1}{2}\right) + \frac{1}{8} = \frac{1}{16} P_{4n}(6) + \frac{3}{16}
+\end{align*}
+\[ \therefore P_{4n+4}(6) - \frac{1}{5} = \frac{1}{16} \left(P_{4n}(6) - \frac{1}{5}\right) \]
+となる。$P_4(6) = \frac{3}{16}$ だから、くり返し用いて、
+\[ P_{4n}(6) = \left(\frac{1}{16}\right)^{n-1} \left(\frac{3}{16} - \frac{1}{5}\right) + \frac{1}{5} = \frac{1}{5} \left\{ 1 - \left(\frac{1}{16}\right)^n \right\} \]
+
+\subsection*{第4問}
+[解] $f(x) = \frac{1}{2}x + \sqrt{\left(\frac{1}{2}x\right)^2 + 2}$ とおく。
+(1) 題意の直線は、各々 $y=y_1, y=y_2$ であるから、$H_1(y_1, y_1)$ となる。$\triangle OP_1 H_1$ の面積 $S_1$ とする。サラスの公式から
+\[ S_1 = \frac{1}{2} | x_1 y_1 - y_1 y_1 | = \frac{1}{2} | y_1 | \left| \sqrt{\left(\frac{1}{2}x_1\right)^2+2} - \frac{1}{2}x_1 \right| = \frac{1}{2} | y_1 | \frac{2}{|y_1|} = 1 \]
+となり、$S_1$ は $i$ によらない一定値だから、$\triangle OP_1 H_1 = \triangle OP_2 H_2$ 固
+
+(2) $C$ の概形は右図である。$y = \frac{1}{2}x + \sqrt{\left(\frac{1}{2}x\right)^2 + 2}$ を逆に解く。
+\[ y - \frac{1}{2}x = \sqrt{\left(\frac{1}{2}x\right)^2 + 2} \]
+図から $y - \frac{1}{2}x > 0$ だから両辺 $0$ 以上なので2乗して
+\[ y^2 - xy = 2 \implies x = \frac{y^2 - 2}{y} = y - \frac{2}{y} \cdots \text{①} \]
+(1)から、もとめる面積は右図斜線部で、
+\begin{align*}
+S &= \text{(台形)} - \text{(積分)} \\
+&= \frac{1}{2}(y_1 + y_2)(y_2 - y_1) - \int_{y_1}^{y_2} x dy \\
+&= \frac{1}{2}(y_2^2 - y_1^2) - \left[ \frac{1}{2}y^2 - 2\log y \right]_{y_1}^{y_2} \quad (\because \text{①}) \\
+&= 2\log\frac{y_2}{y_1}
+\end{align*}
+となる。
+
+\subsection*{第5問}
+[解] $C: x^2+y^2=1$, $A(1, 0)$ とする。時刻 $t$ での $P, Q, R$ の位置は
+\[ P_t(\cos mt, \sin mt), Q_t(\cos t, \sin t), R_t(\cos(-2t), \sin(-2t)) \]
+とかける。$\angle PQR = \angle R$ の時、$P_t R_t$ が直径になる。
+ゆえ、$n \in \mathbb{Z}$ として
+\[ mt = -2t + (2n+1)\pi \implies (m+2)t = (2n+1)\pi \cdots \text{①} \]
+又 $A R_t \perp O Q_t$ から、$l \in \mathbb{Z}$ として、
+\[ t = -2t + \frac{\pi}{2} + l\pi \implies t = \frac{\pi}{3}\left(\frac{1}{2} + l\right) = \frac{\pi}{6}(1+2l) \cdots \text{②} \]
+②を①に代入して
+\[ \frac{\pi}{6}(m+2)(1+2l) = (2n+1)\pi \cdots \text{③} \]
+②及び $0 \le t \le 2\pi$ から $l = 0, 1, 2, 3, 4, 5$ である。
+\begin{itemize}
+\item $1^\circ \ l=0$: ③から $(m+2) = 6(2n+1)$ だから $(m, n) = (4, 0)$
+\item $2^\circ \ l=1$: ③から $(m+2) = 2(2n+1)$ だから $(m, n) = (4, 1), (8, 2)$
+\item $3^\circ \ l=2$: ③から $5(m+2) = 6(2n+1)$ だから $(m, n) = (4, 2)$
+\item $4^\circ \ l=3$: ③から $7(m+2) = 6(2n+1)$ だから $(m, n) = (4, 3)$
+\item $5^\circ \ l=4$: ③から $3(m+2) = 2(2n+1)$ だから $(m, n) = (4, 4), (8, 7)$
+\item $6^\circ \ l=5$: ③から $11(m+2) = 6(2n+1)$ だから $(m, n) = (4, 5)$
+\end{itemize}
+以上まとめて、
+\[ (t, m) = \left(\frac{\pi}{6}, 4\right), \left(\frac{1}{2}\pi, 4\right), \left(\frac{1}{2}\pi, 8\right), \left(\frac{5}{6}\pi, 4\right), \left(\frac{7}{6}\pi, 4\right), \left(\frac{3}{2}\pi, 4\right), \left(\frac{3}{2}\pi, 8\right), \left(\frac{11}{6}\pi, 4\right) \]
+
+\subsection*{第6問}
+[解] 右図のように空間座標をとる。点 X に対し、$\vec{OX} = \vec{x}$ とおく。$H$ は $L$ 上の点だから
+\[ \vec{OH} = \alpha \vec{a} + \beta \vec{b} \]
+と表せる。$CH \perp L$ だから、$\vec{CH} \cdot \vec{a} = 0$ かつ $\vec{CH} \cdot \vec{b} = 0$ で、
+\[ \begin{cases} (\alpha \vec{a} + \beta \vec{b} - \vec{c}) \cdot \vec{a} = 0 \\ (\alpha \vec{a} + \beta \vec{b} - \vec{c}) \cdot \vec{b} = 0 \end{cases} \cdots \text{①} \]
+ここで、
+\[ |\vec{a}| = 3, |\vec{b}| = \sqrt{7}, |\vec{c}| = 2, \vec{a}\cdot\vec{b} = 6, \vec{a}\cdot\vec{c} = 3, \vec{b}\cdot\vec{c} = 1 \cdots \text{②} \]
+を①に代入して
+\[ \begin{cases} 9\alpha + 6\beta - 3 = 0 \\ 6\alpha + 7\beta - 1 = 0 \end{cases} \implies \begin{cases} \alpha = \frac{5}{9} \\ \beta = -\frac{1}{3} \end{cases} \]
+だから、$\vec{OH} = \frac{5}{9}\vec{a} - \frac{1}{3}\vec{b}$
+
+(2) 直線 $OC$ と $M$ の交点を $R_t$ とすると、$\vec{OR_t} = s \vec{c}$ とかける。
+$R_t$ から $L$ に下ろした垂足 $H_t$ は、
+\[ \vec{OH_t} = s \left( \frac{5}{9}\vec{a} - \frac{1}{3}\vec{b} \right) \]
+となる。これが $P_t Q_t$ 上にあるので、
+\[ \vec{OH_t} = \vec{OP_t} + r \vec{Q_t P_t} = t \vec{a} + r t (\vec{a} - \vec{b}) \]
+とも書ける。$\vec{a}, \vec{b}$ は1次独立だから、
+\[ \begin{cases} \frac{5}{9} s = t (1+r) \\ -\frac{1}{3} s = -rt \end{cases} \cdots \text{③} \]
+\[ \therefore \begin{cases} r = \frac{3}{2} \\ s = \frac{9}{2} t \end{cases} \]
+となる。
+
+$1^\circ \ 0 \le t \le \frac{2}{9}$ の時
+切り口は右のようになる。ここで、
+\[ |\vec{CH}|^2 = \frac{25}{81}\cdot 9 + \frac{1}{9}\cdot 7 + 4 + 2\left(-\frac{5\cdot 6}{27} - \frac{1}{3} - \frac{5\cdot 3}{9}\right) = \frac{25}{9} + \frac{7}{9} + 4 - \frac{44}{9} = \frac{8}{3} \]
+だから、
+\[ |\vec{R_t H_t}| = s |\vec{CH}| = \frac{9}{2}\sqrt{\frac{8}{3}} t = 3\sqrt{6}t \]
+となり
+\[ S(t) = \frac{1}{2} \cdot 2t \cdot 3\sqrt{6}t = 3\sqrt{6}t^2 \cdots \text{④} \]
+である。
+
+$2^\circ \ \frac{2}{9} \le t < 1$ の時
+$M$ は $AC, BC$ と交点を持つので、これを $S_t, T_t$ とおく。この時、
+\[ \begin{cases} \vec{OS_t} = \vec{a} + \alpha' (\vec{c} - \vec{a}) = \vec{OP_t} + \alpha' \vec{P_t R_t} \\ \vec{OT_t} = \vec{b} + \beta' (\vec{c} - \vec{b}) = \vec{OQ_t} + \beta' \vec{Q_t R_t} \end{cases} \]
+とかける。③から、$\vec{OR_t} = \frac{9}{2} t \vec{c}$ であり、
+\[ \begin{cases} (1-\alpha')\vec{a} + \alpha'\vec{c} = (1-\alpha') t \vec{a} + \frac{9}{2}\alpha' t \vec{c} \\ (1-\beta')\vec{b} + \beta'\vec{c} = (1-\beta') t \vec{b} + \frac{9}{2}\beta' t \vec{c} \end{cases} \]
+$\vec{a}, \vec{b}, \vec{c}$ は1次独立だから、係数比較して、
+\[ \alpha' = \frac{2}{7}\left(\frac{1}{t}-1\right), \beta' = \frac{2}{7}\left(\frac{1}{t}-1\right) \]
+だから、切り口は右図で、相似から
+\begin{align*}
+S(t) &= 3\sqrt{6}t^2 \left\{ 1 - (1-\alpha')^2 \right\} \\
+&= 3\sqrt{6}t^2 \left\{ 1 - \left( \frac{9t-2}{7t} \right)^2 \right\} \cdots \text{⑤}
+\end{align*}
+④⑤から、
+\[ S(t) = \begin{cases} 3\sqrt{6}t^2 & \left(0 < t \le \frac{2}{9}\right) \\ \frac{12\sqrt{6}}{49}(-8t^2+9t-1) & \left(\frac{2}{9} \le t < 1\right) \end{cases} \]
+
+(3) $0 < t \le \frac{2}{9}$ の時、$S(t)$は単調増加であり、$\max S(t) = S\left(\frac{2}{9}\right) \cdots \text{⑥}$ となる。
+$\frac{2}{9} \le t < 1$ の時、$S(t)$は $t = \frac{9}{16}$ で最大値 $\frac{3\sqrt{6}}{8}$ をとる。⑥とあわせて、
+\[ \max S(t) = \frac{3\sqrt{6}}{8} \]
+
+\end{document}

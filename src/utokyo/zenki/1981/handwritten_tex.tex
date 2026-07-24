@@ -1,0 +1,568 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\subsection*{第1問}
+
+[解] $n$ 個から $2k$ 個をとり出し, これを $2$ つずつの組に分ける場合の数と同じである。
+
+したがって, $n \ge 2k$ のもとで
+\[
+\frac{{}_n\mathrm{C}_{2k} \cdot {}_{2k}\mathrm{C}_2 \cdot {}_{2k-2}\mathrm{C}_2 \cdots {}_4\mathrm{C}_2 \cdot {}_2\mathrm{C}_2}{k!}
+\]
+\[
+= \frac{\frac{n!}{2k!(n-2k)!} \cdot \frac{2k(2k-1)}{2} \frac{4\cdot 3}{2} \cdots \frac{2\cdot 1}{2}}{k!}
+\]
+\[
+= \frac{n!}{k!(n-2k)!} \cdot \frac{1}{2^k} \quad \text{通り}
+\]
+であり, $n < 2k$ の時は $0$ 通り。以上まとめて,
+\[
+f(n, k) = 
+\begin{cases}
+\frac{n!}{(n-2k)! \cdot k!} \frac{1}{2^k} \, \text{通り} & (n \ge 2k) \\
+0 \, \text{通り} & (n < 2k)
+\end{cases}
+\]
+
+次に, $f(n, k) = f(n, 1)$ について, $n \ge 2$ から $f(n, 1) \neq 0$ だから, $n \ge 2k$ のもとで考えれば良い。
+\[
+f(n, k) = f(n, 1)
+\]
+\[
+\iff \frac{1}{2^k} \frac{n!}{k!(n-2k)!} = \frac{1}{2} \frac{n!}{(n-2)!}
+\]
+\[
+\iff 2^{k-1} k! (n-2k)! = (n-2)!
+\]
+\[
+\iff 2^{k-1} = \frac{(n-2)(n-3) \dots (n+1-2k)}{k!} \quad \dots \text{①}
+\]
+ここで, 連続した整数は $k!$ で割り切れるから, $A \in \mathbb{N}$ として,
+\[
+(n-2) \cdots (n+1-2k) = A(2k-2)!
+\]
+とおける。①から
+\[
+\text{①} \iff 2^{k-1} = A \cdot (2k-2)(2k-3) \cdots (k+1) \quad \dots \text{②}
+\]
+同様に, $(2k-2) \dots (k+1)$ は $(k-2)!$ で割り切れるから, $k \ge 5$ の時 $2^{k-1}$ が $3$ で割り切れることになり不適。又, $k=2, 4$ の時は ②から, $2^{k-1}$ が各々 $3$ ($k=2$), $5$ ($k=4$) で割り切れることになり不適。以上から $k=3$ が必要。この時①から,
+\[
+3 \cdot 2 \cdot 2^2 = (n-2) \cdots (n-5)
+\]
+\[
+1 \cdot 2 \cdot 3 \cdot 4 = (n-2) \cdots (n-5)
+\]
+となり, $n=6$ とすれば十分。以上から, もとめるのは $(n, k) = (6, 3)$ である。
+
+
+\subsection*{第2問}
+
+[解] 正六角形の一辺の長さは $1$ であり, 三角形ができる時, その面積は
+\begin{enumerate}
+  \item[$1^\circ$] $A_1 A_2 A_6$ 形 $\dots \frac{\sqrt{3}}{4}$
+  \item[$2^\circ$] $A_1 A_2 A_5$ 形 $\dots \frac{\sqrt{3}}{2}$
+  \item[$3^\circ$] $A_1 A_3 A_5$ 形 $\dots \frac{3}{4}\sqrt{3}$
+\end{enumerate}
+のいずれかである。$3$ つの頂点のえらび方 $6^3$ 通りが同様にたしからしい。以下, $1$ つ目に $A_1$ がえらばれたとして
+
+$1^\circ$ の時
+\begin{quote}
+どの点が頂点になるかで $2 \times 3 = 6$ 通り
+\end{quote}
+
+$2^\circ$ の時
+\begin{quote}
+$1$ つの頂点に対し, のこりの頂点が $2$ 通りあるから
+\[
+4 \times 2 + 2 \times 2 = 12 \text{ 通り}
+\]
+\end{quote}
+
+$3^\circ$ の時
+\begin{quote}
+$2$ 通り
+\end{quote}
+
+だから, これらの $6$ 倍ずつえらび方があるので, もとめる期待値として
+\[
+E = \frac{6}{36} \cdot \frac{\sqrt{3}}{4} + \frac{12}{36} \cdot \frac{\sqrt{3}}{2} + \frac{2}{36} \cdot \frac{3}{4}\sqrt{3}
+\]
+\[
+= \frac{\sqrt{3}}{36} \left( \frac{3}{2} + 6 + \frac{3}{2} \right)
+\]
+\[
+= \frac{\sqrt{3}}{4}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Hexagon vertices
+  \coordinate (A1) at (90:1.8);
+  \coordinate (A2) at (30:1.8);
+  \coordinate (A3) at (-30:1.8);
+  \coordinate (A4) at (-90:1.8);
+  \coordinate (A5) at (-150:1.8);
+  \coordinate (A6) at (150:1.8);
+
+  \draw (A1) -- (A2) -- (A3) -- (A4) -- (A5) -- (A6) -- cycle;
+
+  % Internal lines from A1
+  \draw[dashed] (A1) -- (A3);
+  \draw[dashed] (A1) -- (A4);
+  \draw[dashed] (A1) -- (A5);
+
+  % Vertex labels
+  \node[above] at (A1) {$A_1$};
+  \node[above right] at (A2) {$A_2$};
+  \node[right] at (A3) {$A_3$};
+  \node[below] at (A4) {$A_4$};
+  \node[left] at (A5) {$A_5$};
+\end{tikzpicture}
+\end{center}
+
+
+\subsection*{第3問}
+
+[解] $Q(t, t^2)$ における法線ベクトルが $\vec{n} = \begin{pmatrix} -2t \\ 1 \end{pmatrix}$ だから
+
+法線上の点 $P(X, Y)$ は $s \in \mathbb{R}$ として
+\[
+\begin{pmatrix} X \\ Y \end{pmatrix} = \begin{pmatrix} t \\ t^2 \end{pmatrix} + s \begin{pmatrix} -2t \\ 1 \end{pmatrix} \quad \dots \text{①}
+\]
+とかける。$\left| \begin{pmatrix} -2t \\ 1 \end{pmatrix} \right| = \sqrt{4t^2+1}$ から, $\overline{PQ} = \sqrt{4t^2+1} \, |s|$ である。
+
+(ロ)から $s > 0$ だから, (イ)に代入して
+\[
+\sqrt{4t^2+1} \, s = \sqrt{4t^2+1} (t - t^2)
+\]
+$\sqrt{4t^2+1} > 0$ から $s = t - t^2 \quad \dots \text{②}$ なので, ②を①に代入して $P$ は
+\[
+\begin{cases}
+X = 2t^3 - 2t^2 + t \\
+Y = t
+\end{cases} \quad (0 \le t \le 1)
+\]
+で表されるパラメータ曲線の上うち, $Y \ge 0$ の部分をうごく。$t$ をけして
+\[
+X = 2Y^3 - 2Y^2 + Y \quad (0 \le Y \le 1) \equiv f(Y)
+\]
+このグラフの試形は右図で, もとめるのは斜線部の面積で,
+\[
+S = \int_0^1 (\sqrt{Y} - f(Y)) \, dY
+\]
+\[
+= \left[ \frac{2}{3} Y^{\frac{3}{2}} - \frac{1}{2} Y^4 + \frac{2}{3} Y^3 - \frac{1}{2} Y^2 \right]_0^1
+\]
+\[
+= \frac{1}{3}
+\]
+
+$\left[ x = 2y^3 - 2y^2 + y \text{ は 3次関数なので, そのグラフの面積はばらさずに計算してよいだろう} \right]$
+
+\begin{center}
+\begin{tikzpicture}[scale=2.2]
+  % Axes
+  \draw[->] (-0.2,0) -- (1.3,0) node[right] {$x$};
+  \draw[->] (0,-0.2) -- (0,1.3) node[above] {$y$};
+  \node[below left] at (0,0) {$0$};
+
+  % Functions: y = x^2 (x = sqrt(y)) and x = f(y) = 2y^3 - 2y^2 + y
+  \draw[domain=0:1,samples=50] plot ({2*\x^3 - 2*\x^2 + \x}, {\x}) node[below right] {$f(y)$};
+  \draw[domain=0:1,samples=50] plot ({\x}, {\x*\x}) node[above left] {$y=x^2$};
+
+  % Fill shaded area
+  \fill[pattern=north east lines,pattern color=gray!60] 
+    plot[domain=0:1,samples=50] ({2*\x^3 - 2*\x^2 + \x}, {\x}) -- 
+    plot[domain=1:0,samples=50] ({\x}, {\x*\x}) -- cycle;
+
+  % Key points
+  \draw[dashed] (1,0) node[below] {$1$} -- (1,1) -- (0,1) node[left] {$1$};
+  \fill (1,1) circle (0.6pt);
+\end{tikzpicture}
+\end{center}
+
+
+\subsection*{［角度の扱いメモ］}
+
+\begin{enumerate}
+  \item[(1)] $\cos\theta \dots 0 \le \theta \le \frac{\pi}{2}$ が明らかな時, 有効
+  \item[(2)] $\tan\theta \dots$ これで立式して, $\tan \leftrightarrow \cos$ のりかえを行う (推奨)
+  \item[(3)] $\tan\theta = \frac{S}{C} = \frac{\triangle ABC}{\vec{a} \cdot \vec{b}}$ (推奨)
+\end{enumerate}
+
+［$\tan\theta \leftrightarrow \cos\theta$ のりかえ］
+$\frac{1}{\cos^2}, \frac{1}{\sin^2}$ がでてきたら速攻のりかえる。
+
+
+\subsection*{第4問}
+
+[解] $0 \le \alpha < \pi/2 \quad \dots \text{①}$
+
+$Z > 0 \quad \dots \text{②}$ から, $P$ は $A, B, C$ であることに適する。
+\[
+\vec{AP} = \begin{pmatrix} x-1 \\ y-1 \\ Z \end{pmatrix}, \quad 
+\vec{BP} = \begin{pmatrix} x-1 \\ y+1 \\ Z \end{pmatrix}, \quad 
+\vec{CP} = \begin{pmatrix} x \\ y \\ Z \end{pmatrix}
+\]
+(ロ)～(ニ)より, $\vec{n} = \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}$ として,
+\[
+\begin{cases}
+\vec{n} \cdot \vec{AP} = |\vec{n}| |\vec{AP}| \cos\pi/4 \\
+\vec{n} \cdot \vec{BP} = |\vec{n}| |\vec{BP}| \cos\pi/4 \\
+\vec{n} \cdot \vec{CP} = |\vec{n}| |\vec{CP}| \cos\alpha
+\end{cases}
+\iff
+\begin{cases}
+Z = \sqrt{(x-1)^2 + (y-1)^2 + Z^2} \cdot \frac{1}{\sqrt{2}} \\
+Z = \sqrt{(x-1)^2 + (y+1)^2 + Z^2} \cdot \frac{1}{\sqrt{2}} \\
+Z = \sqrt{x^2 + y^2 + Z^2} \cos\alpha
+\end{cases}
+\]
+①②から, 両辺 2 乗しても同値。
+\[
+\begin{cases}
+Z^2 = (x-1)^2 + (y+1)^2 = (x-1)^2 + (y-1)^2 & \dots \text{②} \\
+Z^2 \cdot \tan^2\alpha = x^2 + y^2 & \dots \text{③}
+\end{cases}
+\]
+②の右側の不等式から, $(y+1)^2 = (y-1)^2 \iff y=0 \quad \dots \text{④}$ だから, ②③に代入して
+\[
+\begin{cases}
+Z^2 = (x-1)^2 + 1 = x^2 - 2x + 2 & \dots \text{⑤} \\
+Z^2 \cdot \tan^2\alpha = x^2 & \dots \text{⑥}
+\end{cases}
+\]
+したがって, ①～② $\land$ ④ $\land$ ⑤ $\land$ ⑥ をみたす $P$ の数をもとめれば良い。⑤から,
+
+$1^\circ$ $\alpha \neq 0$ の時
+
+⑥から $Z^2 = \left( \frac{x}{\tan\alpha} \right)^2$ だから, ⑤に代入して, $t = \tan\alpha$ とおくと,
+\[
+\begin{cases}
+x \neq 0 \\
+(t^2-1) x^2 - 2t^2 x + 2t^2 = 0 \quad \dots \text{⑦}
+\end{cases}
+\]
+⑦をみたす $x$ に対し, ⑥から $Z$ が $Z = \left|\frac{x}{\tan\alpha}\right|$ と一意に定まり, $y=0$ だから, ⑦をみたす $x$ の数が $P$ の数に等しい。$t^2 - 1 \neq 0$ の時, ⑦の判別式 $D$ として
+\[
+D/4 = t^4 - (t^2-1) \cdot 2t^2 = t^2 (2 - t^2)
+\]
+だから,
+\[
+\begin{cases}
+D/4 > 0 \iff 2 > t^2 \text{ の時 } 2 \text{ 個} \\
+D/4 = 0 \iff 2 = t^2 \text{ の時 } 1 \text{ 個} & \dots A_1 \\
+D/4 < 0 \iff 2 < t^2 \text{ の時 } 0 \text{ 個}
+\end{cases}
+\]
+である ($\alpha \neq 0$ から, $x=0$ は解にならない)。
+
+一方, $t^2 - 1 = 0 \iff \alpha = \pi/4$ ($\because$ ①) の時, ⑦ $\to x = 1$, ⑥から $Z=1$ となって $1$ 個。
+
+$2^\circ$ $\alpha = 0$ の時
+
+⑥から $x=0$ だから ⑤より $Z = \sqrt{2}$ となる。
+
+以上まとめて, ⑦の解が ($D \ge 0$ の時) $x = \frac{t^2 \pm \sqrt{t^2(2-t^2)}}{t^2 - 1}$ であるから
+\[
+Z = \left| \frac{x}{t} \right| = \left| \frac{t \pm \sqrt{2-t^2}}{t^2 - 1} \right|
+\]
+であることをあわせて,
+\[
+\begin{cases}
+\alpha = 0 \text{ の時}, Z = \sqrt{2} \text{ の } 1 \text{ つ} \\
+0 < \tan\alpha < \sqrt{2} \land \alpha \neq \pi/4 \text{ の時}, Z = \left| \frac{t \pm \sqrt{2-t^2}}{t^2 - 1} \right| \text{ の } 2 \text{ つ} \\
+\tan\alpha = \sqrt{2} \text{ の時}, Z = \sqrt{2} \text{ の } 1 \text{ つ} \\
+\sqrt{2} < \tan\alpha \text{ の時}, 0 \text{ 個} \\
+\alpha = \pi/4 \text{ の時}, Z = 1 \text{ の } 1 \text{ つ}
+\end{cases}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  % Axes
+  \draw[->] (0,0,0) -- (2.5,0,0) node[right] {$y$};
+  \draw[->] (0,0,0) -- (0,2.5,0) node[above] {$z$};
+  \draw[->] (0,0,0) -- (0,0,2.5) node[below left] {$x$};
+
+  % Origin / Point C
+  \node[below left] at (0,0,0) {$C$};
+
+  % Points A, B, P
+  \coordinate (C) at (0,0,0);
+  \coordinate (A) at (1,0,1);
+  \coordinate (B) at (-1,0,1);
+  \coordinate (P) at (0,1.8,0.8);
+
+  % Draw points and lines
+  \draw[dashed] (C) -- (P) node[midway, right] {$\alpha$};
+  \draw[dashed] (A) -- (P);
+  \draw[dashed] (B) -- (P);
+  \draw (0,0,0) -- (1,0,1) node[right] {$A$};
+  \draw (0,0,0) -- (-1,0,1) node[left] {$B$};
+
+  \fill (P) circle (1.5pt) node[above] {$P$};
+  \fill (A) circle (1.5pt);
+  \fill (B) circle (1.5pt);
+  \fill (C) circle (1.5pt);
+\end{tikzpicture}
+\end{center}
+
+
+\subsection*{第5問}
+
+[解] (1) 図のような展開図での頂点を $A_1, A_2, \dots, A_n$ とする。
+又, 底面の各点を $B_1 \dots B_n$ とする。$A_k$ から $B_k B_{k+1}$ ($k=1, 2 \dots n, B_{n+1} = B_1$) に下ろした垂足を $H_k$ とする。
+$OH_1 = x, A_1 H_1 = y$ とおく ($0 < x < y$)。
+
+$B_k B_{k+1} = 2x \tan \frac{\pi}{n}$
+
+さて, 展開図が円に内接するとき
+\[
+A_1 O = -x + y = 1 \iff y = 1 - x \quad \left(0 < x < \frac{1}{2}\right)
+\]
+である。立体の高さとして
+\[
+h = \sqrt{y^2 - x^2} = \sqrt{1 - 2x}
+\]
+又, 底面積 $S$ は
+\[
+S = n \times (\triangle O B_1 B_2) = n \times \frac{1}{2} \cdot x \cdot \left(2x \tan\frac{\pi}{n}\right) = n x^2 \tan\frac{\pi}{n}
+\]
+だから体積 $V$ は
+\[
+V = \frac{1}{3} S \cdot h = \frac{1}{3} n \tan\frac{\pi}{n} \, x^2 \sqrt{1 - 2x}
+\]
+$x$ の部分を $f(x)$ とおくと, $f(x) \ge 0$ から $f(x)^2$ が最大の時 $f(x)$ も最大。
+\[
+(f(x))^2 = 4x^3 - 10x^4 = 2x^3 (2 - 5x)
+\]
+より下表を考える。
+
+\[
+\begin{array}{c|c|c|c|c|c}
+x & 0 & \dots & \frac{2}{5} & \dots & \frac{1}{2} \\ \hline
+f' & & + & 0 & - & \\ \hline
+f^2 & & \nearrow & \text{極大} & \searrow &
+\end{array}
+\]
+
+よって $x = 2/5$ の時 $f(x)$ も最大で
+\[
+V = V_n = \frac{1}{3} n \tan\frac{\pi}{n} \cdot \left(\frac{2}{5}\right)^2 \sqrt{\frac{1}{5}} = \frac{4\sqrt{5}}{375} n \tan\frac{\pi}{n}
+\]
+
+(2) $t = \frac{\pi}{n}$ とおくと $n \to \infty$ で $t \to 0$ で
+\[
+V_n = \frac{4\sqrt{5}}{375} \pi \frac{\tan t}{t} \longrightarrow \frac{4\sqrt{5}}{375} \pi \quad (n \to \infty, t \to 0)
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3]
+  \coordinate (O) at (0,0);
+  \coordinate (A1) at (90:2);
+  \coordinate (A2) at (30:2);
+  \coordinate (A3) at (-30:2);
+
+  \coordinate (B1) at (120:0.8);
+  \coordinate (B2) at (60:0.8);
+  \coordinate (B3) at (0:0.8);
+
+  \draw (O) circle (2);
+
+  \draw (A1) -- (B1) -- (B2) -- cycle;
+  \draw (A2) -- (B2) -- (B3) -- cycle;
+  \draw (O) -- (B1);
+  \draw (O) -- (B2);
+
+  \coordinate (H1) at ($(B1)!0.5!(B2)$);
+  \draw[dashed] (O) -- (H1) node[midway, left] {$x$};
+  \draw[dashed] (A1) -- (H1);
+
+  \node[above] at (A1) {$A_1$};
+  \node[above right] at (A2) {$A_2$};
+  \node[right] at (A3) {$A_3$};
+  \node[left] at (B1) {$B_1$};
+  \node[above] at (B2) {$B_2$};
+  \node[right] at (B3) {$B_3$};
+  \node[below left] at (O) {$O$};
+  \node[above right] at (H1) {$H_1$};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[scale=1.3]
+  \draw (0,0) node[below left] {$O$} -- (1.5,0) node[below right] {$H_1$} node[midway, below] {$x$} -- (1.5,2.5) node[above] {頂点} -- cycle node[midway, above left] {$y$};
+  \node[right] at (1.5,1.25) {$h$};
+  \draw (1.3,0) -- (1.3,0.2) -- (1.5,0.2);
+\end{tikzpicture}
+\end{center}
+
+
+\subsection*{第6問}
+
+[解] (1) (ロ)から, $f(x) = a(x+1)(x-1)(x-\alpha)$ ($\alpha \in \mathbb{R}$) とおける。($a \neq 0$ の時)
+
+$1^\circ$ $0 \le x$ の時
+
+(イ) $\iff f(x) \ge 1 - x \iff a(x+1)(x-\alpha)(x-1) \ge -(x-1)$ で, $x=1$ で等号成立, $0 \le x < 1$ の時は $x-1 < 0$ だから
+\[
+a(x+1)(x-\alpha) \le -1
+\]
+\[
+a x^2 + a(1-\alpha) x + 1 - a\alpha \le 0 \quad \dots \text{①}
+\]
+この左辺を $g(x)$ とおく。
+
+$\text{i)}$ $a > 0$ の時
+
+$0 \le x \le 1$ で $g(x) \le 0$ であれば良い。条件は
+\[
+g(0) \le 0 \land g(1) \le 0 \iff 1 - a\alpha \le 0 \land 2a - 2a\alpha + 1 \le 0
+\]
+
+$\text{ii)}$ $a < 0$ の時
+
+$g(x)$ の軸 $x = \frac{\alpha - 1}{2}$ で場合分け, $g(x) = 0$ の判別式を $D$ とおく。
+\[
+\begin{cases}
+0 \le \frac{\alpha-1}{2} \le 1 \text{ の時}, D \le 0 \iff a^2(1-\alpha)^2 - 4a(1-a\alpha) \le 0 \iff a \left[ a(\alpha+1)^2 - 4 \right] \le 0 \dots \star_1 \\
+\text{otherwise} \quad g(0) \le 0 \land g(1) \le 0
+\end{cases}
+\]
+
+$2^\circ$ $x \le 0$ の時
+
+$f(x) \ge 1+x \iff a(x-1)(x-\alpha)(x+1) \ge (x+1)$ で, $1^\circ$ と同様に
+\[
+a(x-1)(x-\alpha) \ge 1
+\]
+\[
+a x^2 - a(1+\alpha) x + a\alpha - 1 \ge 0 \quad \dots \text{②}
+\]
+この左辺を $h(x)$ とおく。
+
+$\text{i)}$ $a > 0$ の時
+
+軸 $x = \frac{\alpha+1}{2}$ で場合分け, $h(x)=0$ の判別式を $D'$ とおく。
+\[
+\begin{cases}
+-1 \le \frac{\alpha+1}{2} \le 0 \text{ の時}, D' \le 0 \iff a^2(\alpha+1)^2 - 4a(a\alpha-1) \ge 0 \iff a \left[ a(\alpha-1)^2 + 4 \right] \ge 0 \dots \star_2 \\
+\text{otherwise} \quad g(-1) \ge 0 \land g(0) \ge 0 \iff 2a + 2a\alpha - 1 \ge 0 \land a\alpha - 1 \ge 0
+\end{cases}
+\]
+
+$\text{ii)}$ $a < 0$ の時
+
+条件は $g(-1) \ge 0 \land g(0) \ge 0$
+
+ここで, $a < 0$ から $\star_1 \iff a(\alpha+1)^2 - 4 \ge 0$ (これをみたす $\alpha, a$ はない)。
+同じく $a > 0$ から $\star_2 \iff a(\alpha-1)^2 + 4 \ge 0 \iff \alpha, a$ は任意。
+
+だから, $1^\circ, 2^\circ$ をまとめて,
+
+$a > 0$ の時
+\[
+\begin{cases}
+1 - a\alpha \le 0 \land 2a - 2a\alpha + 1 \le 0 \land (\alpha \le -3 \text{ or } 0 \le \alpha) \land \\
+a\alpha - 1 \ge 0 \land 2a + 2a\alpha - 1 \ge 0
+\end{cases}
+\]
+$a < 0$ の時
+\[
+\begin{cases}
+a\alpha - 1 \ge 0 \land 2a + 2a\alpha - 1 \ge 0 \land (\alpha \le 1 \text{ or } 3 \le \alpha) \land \\
+1 - a\alpha \le 0 \land 2a - 2a\alpha + 1 \le 0
+\end{cases}
+\]
+
+ここで, $f(x) = a(x^2-1)(x-\alpha) = a(x^3 - \alpha x^2 - x + \alpha)$ から
+\[
+b = -a\alpha, \quad d = a\alpha, \quad c = -a \quad \dots \text{③}
+\]
+である。$\alpha$ は, $a>0$ の時 $1 < \alpha$, $a<0$ の時 $\alpha < -1$ なので条件はまとめて
+\[
+\begin{cases}
+\alpha = \frac{b}{-a} + 1 \\
+\alpha = \frac{d}{a}
+\end{cases} \quad \text{で} \quad
+\begin{cases}
+1 - a\alpha \le 0 \land 2a - 2a\alpha + 1 \le 0 \\
+2a + 2a\alpha - 1 \ge 0
+\end{cases} \quad \dots \text{④}
+\]
+一方, $a=0$ の時, $f(x)$ が $1$ 次以下で不適なので $b \neq 0$ のもとで $f(x) = b(x^2-1)$ とおける。
+(ハ)の条件は $f(0) \ge 1 \iff 1+b \le 0$ である。
+
+以上まとめて,
+\[
+b = -d, \quad c = -a, \quad 1 + b \le 0, \quad
+\begin{cases}
+2a + 2b + 1 \le 0 \\
+2a - 2b - 1 \ge 0
+\end{cases}
+\]
+
+(2) (1)から, $f(x) = ax^3 + bx^2 - ax - d$ とおける。$f'(x) = 3ax^2 + 2bx - a$ から
+\[
+\{f'(x) - x\}^2 = (3ax^2)^2 + (2b-1)^2 x^2 + a^2 + 2 \left[ 3a(2b-1) x^3 - 3a^2 x^2 - (2b-1)ax \right]
+\]
+\[
+= 9a^2 x^4 + \left[ (2b-1)^2 - 6a^2 \right] x^2 + a^2 + (\text{奇数次項})
+\]
+より,
+\[
+\int_{-1}^1 \{f'(x) - x\}^2 \, dx = 2 \int_0^1 \left( 9a^2 x^4 + \left[ (2b-1)^2 - 6a^2 \right] x^2 + a^2 \right) dx
+\]
+\[
+= 2 \left[ a^2 \int_0^1 (9x^4 - 6x^2 + 1) dx + (2b-1)^2 \int_0^1 x^2 dx \right]
+\]
+\[
+= 2 \left[ \frac{4}{5} a^2 + \frac{1}{3}(2b-1)^2 \right] \equiv A \quad \dots \text{⑤}
+\]
+ここで, $(a, b)$ は領域をうごくから,
+\[
+\begin{cases}
+0 \le a \le \frac{1}{2} \text{ の時}, b \le -\frac{1}{2} \\
+\frac{1}{2} \le a \text{ の時}, b \le -a - \frac{1}{2}
+\end{cases}
+\]
+したがって
+\[
+|a| \le \frac{1}{2} \text{ の時}, A \text{ は } (a, b) = (0, -1) \text{ で } \min 6
+\]
+\[
+\frac{1}{2} \le |a| \text{ の時}, A \text{ は } 0 \le a \le \frac{1}{2} \text{ の時より大きい}
+\]
+から, $A$ は $(a, b) = (0, -1)$ で $\min 6$ をとる。この時
+\[
+f(x) = -x^2 + 1
+\]
+
+[別] 軽〜く処理するなら…
+(ハ)の条件は $f'(1) \le -1, f'(-1) \ge 1, f(0) \ge 1$ である。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  % Axes for (a,b) plane
+  \draw[->] (-1.5,0) -- (1.5,0) node[right] {$a$};
+  \draw[->] (0,-2) -- (0,1) node[above] {$b$};
+  \node[above left] at (0,0) {$0$};
+
+  % Line b = -1/2 and b = -a - 1/2
+  \draw[dashed] (-1.5,-0.5) -- (1.5,-0.5) node[right] {$b = -\frac{1}{2}$};
+  \draw[dashed] (0.5,-0.5) -- (1.5,-1.5) node[right] {$b = -a - \frac{1}{2}$};
+  \draw[dashed] (-0.5,-0.5) -- (-1.5,-1.5);
+
+  % Shaded region
+  \fill[pattern=north east lines, pattern color=gray!60] (-0.5,-2) rectangle (0.5,-0.5);
+  \fill[pattern=north east lines, pattern color=gray!60] (0.5,-0.5) -- (1.5,-1.5) -- (1.5,-2) -- (0.5,-2) -- cycle;
+  \fill[pattern=north east lines, pattern color=gray!60] (-0.5,-0.5) -- (-1.5,-1.5) -- (-1.5,-2) -- (-0.5,-2) -- cycle;
+
+  % Key points
+  \draw[dashed] (0.5,0) node[above] {$\frac{1}{2}$} -- (0.5,-0.5);
+  \draw[dashed] (-0.5,0) node[above] {$-\frac{1}{2}$} -- (-0.5,-0.5);
+  \fill (0,-1) circle (1.5pt) node[left] {$(0, -1)$};
+\end{tikzpicture}
+\end{center}
+
+\end{document}
