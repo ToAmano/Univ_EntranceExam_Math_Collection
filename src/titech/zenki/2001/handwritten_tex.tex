@@ -1,0 +1,242 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{第1問}
+
+\begin{proof}[解]
+$S(a,t)=\displaystyle\int_0^a\left|e^{-x}-\frac1t\right|dx$。$y=e^{-x}$は$[0,a]$で$1$から$e^{-a}$まで単調減少する。
+
+\textbf{(1)} 直線$y=1/t$と曲線の位置関係で場合分けする。
+
+\textbf{$1/t\ge1$（$t\le1$）の時：} $[0,a]$上で常に$e^{-x}\le1\le1/t$だから
+\[
+S(a,t)=\int_0^a\left(\frac1t-e^{-x}\right)dx=\frac at+e^{-a}-1
+\]
+これは$(1/t)$の1次関数で係数$a>0$だから，$(1/t)$の単調増加関数。
+
+\textbf{$1/t\le e^{-a}$（$t\ge e^a$）の時：} 常に$e^{-x}\ge e^{-a}\ge1/t$だから
+\[
+S(a,t)=\int_0^a\left(e^{-x}-\frac1t\right)dx=(1-e^{-a})-\frac at
+\]
+これは$(1/t)$の単調減少関数。
+
+$S(a,t)$は明らかに連続だから，$e^{-a}\le1/t\le1$（$1\le t\le e^a$）の範囲で最小値をとる。この範囲では，$e^{-\alpha}=1/t$をみたす$\alpha\in[0,a]$がただ1つ存在し，$x<\alpha$で$e^{-x}>1/t$，$x>\alpha$で$e^{-x}<1/t$だから
+\[
+S(a,t)=\int_0^\alpha\left(e^{-x}-\frac1t\right)dx+\int_\alpha^a\left(\frac1t-e^{-x}\right)dx
+\]
+\[
+=\left[-e^{-x}-\frac xt\right]_0^\alpha+\left[\frac xt+e^{-x}\right]_\alpha^a
+=\left(1-e^{-\alpha}-\frac\alpha t\right)+\left(\frac at+e^{-a}-\frac\alpha t-e^{-\alpha}\right)
+\]
+\[
+=1+e^{-a}-2e^{-\alpha}+\frac{a-2\alpha}t \quad\cdots\text{①}
+\]
+
+$a$を固定し，$\alpha=\log t$（$e^{-\alpha}=1/t$より）として①を$t$の関数とみて微分する。$e^{-\alpha}=1/t$を使って
+\[
+S=1+e^{-a}-\frac2t+\frac{a-2\log t}t
+\]
+\[
+\frac{dS}{dt}=\frac2{t^2}-\frac{-\frac2t\cdot t-(a-2\log t)}{t^2}=\frac{2-\{-2-(a-2\log t)\}}{t^2}=\frac{2\log t-a}{t^2}=\frac{2\alpha-a}{t^2}
+\]
+これは$\alpha<a/2$（$t<e^{a/2}$）で負，$\alpha>a/2$（$t>e^{a/2}$）で正だから，下表のように$t=e^{a/2}$（$\alpha=a/2$）で最小。
+\begin{center}
+\begin{tabular}{c|ccccc}
+$t$ & $1$ & & $e^{a/2}$ & & $e^a$ \\
+\hline
+$S'$ & & $-$ & $0$ & $+$ & \\
+\hline
+$S$ & & $\searrow$ & & $\nearrow$ &
+\end{tabular}
+\end{center}
+したがって①に$\alpha=a/2$を代入して
+\[
+m(a)=1+e^{-a}-2e^{-a/2}=\left(1-e^{-a/2}\right)^2
+\]
+
+\textbf{(2)} $p=-a/2$とおくと，$a\to0$で$p\to0$，
+\[
+\frac{m(a)}{a^2}=\frac{\left(1-e^{-a/2}\right)^2}{a^2}=\frac{\left(e^{p}-1\right)^2}{(-2p)^2}=\frac14\left(\frac{e^p-1}p\right)^2
+\]
+$\dfrac{e^p-1}p\to1$（$p\to0$）だから
+\[
+\lim_{a\to0}\frac{m(a)}{a^2}=\frac14
+\]
+\end{proof}
+
+\newpage
+
+\section*{第2問}
+
+\begin{proof}[解]
+動点$P$は原点を出発し，$z\le0$では最大秒速$a$，$z>0$では最大秒速$1$で動ける（$a>1$）。求める領域は$z$軸のまわりに回転対称だから，$xz$平面（$X\ge0$）内での断面$E$を求め，それを$z$軸のまわりに回転すれば良い。
+
+\textbf{$z\le0$の部分：} 原点から$z\le0$の点へは，そこへ向かう直線が常に$z\le0$内にあるから，速さ$a$で直進するのが最適で，1秒で到達できるのは半径$a$の球内。よってこの部分は半球$x^2+y^2+z^2\le a^2,\ z\le0$。
+
+\textbf{$z>0$の部分：} 点$Q(X,Z)$（$Z>0$）へ到達する一つの方法として，時刻$t$（$0\le t\le1$）まで$x$軸の正方向（$z=0$の境界，速さ$a$が使える）へ進み点$(at,0)$に達し，そこから残り時間$1-t$でまっすぐ$Q$へ向かう（速さ$1$以下）という進み方を考える。これで$Q$に到達できる条件は，ある$t\in[0,1]$に対して
+\[
+(X-at)^2+Z^2\le(1-t)^2
+\]
+整理すると
+\[
+(a^2-1)t^2+(2-2aX)t+X^2+Z^2-1\le0 \quad\cdots\text{⑤}
+\]
+この左辺を$f(t)$とおくと，$a^2-1>0$だから$f$は下に凸な2次式。$Q$が到達可能である条件$(\ast)$は，$f(t)\le0$をみたす$t\in[0,1]$が存在すること，すなわち$[0,1]$上での$f$の最小値が$0$以下であること。
+\[
+f(0)=X^2+Z^2-1,\qquad f(1)=(X-a)^2+Z^2\ge0 \quad\cdots\text{⑥}
+\]
+軸の位置は$t_0=\dfrac{aX-1}{a^2-1}$で，$0\le X\le a$から$t_0\le1$（⑦）。判別式（の$1/4$）は
+\[
+D=(1-aX)^2-(a^2-1)(X^2+Z^2-1) \quad\cdots\text{⑧}
+\]
+$f(1)\ge0$は常に成立するから，軸$t_0\ge1$となるのは$(X,Z)=(a,0)$の場合のみで，このとき$(\ast)$は等号で成立。以下，それ以外の場合を，軸の位置$t_0$で場合分けして考える。
+
+\textbf{$1^\circ$ $t_0\le0\iff X\le1/a$の時：} $f$は$[0,1]$で単調増加だから，条件は$f(0)\le0$：
+\[
+X^2+Z^2\le1 \quad\cdots\text{⑨}
+\]
+
+\textbf{$2^\circ$ $0\le t_0\le1\iff1/a\le X\le a$の時：} 条件は$D\ge0$：
+\[
+(X-a)^2-(a^2-1)Z^2\ge0 \iff \left(X-a+\sqrt{a^2-1}\,Z\right)\left(X-a-\sqrt{a^2-1}\,Z\right)\ge0
+\]
+$X\le a,\ Z\ge0$から第2因子は$\le0$，よって第1因子も$\le0$が必要：
+\[
+X-a+\sqrt{a^2-1}\,Z\le0 \quad\cdots\text{⑩}
+\]
+
+以上から，$(\ast)\iff(X,Z)=(a,0)$，または⑨（$X\le1/a$の時），または⑩（$1/a\le X\le a$の時）。これが$E$（境界を含む）である。⑨は原点中心半径1の円（の一部），⑩は2点$(1/a,\sqrt{1-1/a^2})$と$(a,0)$を結ぶ直線であり，$Z=\sqrt{1-1/a^2}$でなめらかに接続する。
+
+これを$z$軸のまわりに回転した立体の体積$V$を，$-a\le z\le0$（A），$0\le z\le\sqrt{1-1/a^2}$（B），$\sqrt{1-1/a^2}\le z\le1$（C）に分けてもとめる。
+
+\textbf{A（半球）：} $V_A=\dfrac43\pi a^3\cdot\dfrac12=\dfrac23\pi a^3$
+
+\textbf{B（円錐台，⑩の直線を回転）：} 底円半径$a$，高さ$a/\sqrt{a^2-1}$の円錐から，底円半径$1/a$，高さ$\dfrac1{a\sqrt{a^2-1}}$の円錐を引いたもの：
+\[
+V_B=\frac\pi3\cdot\frac1{\sqrt{a^2-1}}\left(a^3-\frac1{a^3}\right)
+\]
+
+\textbf{C（球冠，⑨の円弧を回転）：}
+\[
+V_C=\int_{\sqrt{1-1/a^2}}^1\pi(1-z^2)\,dz=\pi\left[z-\frac{z^3}3\right]_{\sqrt{1-1/a^2}}^1=\pi\left\{\frac23-\sqrt{1-\frac1{a^2}}\left(\frac23+\frac1{3a^2}\right)\right\}
+\]
+
+以上をまとめて，$\sqrt{1-1/a^2}=\sqrt{a^2-1}/a$に注意して
+\[
+V=V_A+V_B+V_C=\frac23\pi a^3+\frac\pi3\cdot\frac1{\sqrt{a^2-1}}\left(a^3-\frac1{a^3}\right)+\frac23\pi-\frac{\sqrt{a^2-1}}a\pi\left(\frac23+\frac1{3a^2}\right)
+\]
+整理すると
+\[
+V=\frac\pi3\left(2a^3+2+\frac{(a^2-1)\sqrt{a^2-1}}a\right)
+\]
+\end{proof}
+
+\newpage
+
+\section*{第3問}
+
+\begin{proof}[解]
+$N\ge3$とする。$k$回の試行で$j$回目までの和を$X_j$とし，$X_1,\dots,X_k$のいずれかが$k$となる確率を$P_N(k)$とする。
+
+\textbf{(1)} $P_N(1)$：1回目で$1$が出れば良く，$P_N(1)=\dfrac1N$。
+
+$P_N(2)$：$X_1=2$（1回目に2，確率$1/N$）または$X_1=1,X_2=2$（確率$1/N^2$，これらは排反）：
+\[
+P_N(2)=\frac1N+\frac1{N^2}
+\]
+
+$P_N(3)$：長さ1のケース（1回目=3）：$1/N$。長さ2のケース（$X_2=3$，かつ$X_1\ne3$）：$(1,2),(2,1)$の2通り，$2/N^2$。長さ3のケース（$X_3=3$，かつ途中で3にならない）：$(1,1,1)$の1通り，$1/N^3$。
+\[
+P_N(3)=\frac1N+\frac2{N^2}+\frac1{N^3}
+\]
+
+\textbf{(2)} $N=3$として，同様に和がちょうど4，5となる最初の到達までの数列を数え上げる。
+
+\textbf{$P_3(4)$：} 長さ2（和4，$\{1,3\},\{2,2\}$）：$(1,3),(3,1),(2,2)$の3通り。長さ3（和4，最小値1が3つ以上必要，分割$1+1+2$）：$3$通り。長さ4（分割$1+1+1+1$）：$1$通り。
+\[
+P_3(4)=3\left(\frac13\right)^2+3\left(\frac13\right)^3+\left(\frac13\right)^4=\frac{27+9+1}{81}=\frac{37}{81}
+\]
+
+\textbf{$P_3(5)$：} 長さ2（分割$2+3$）：2通り。長さ3（分割$1+1+3$：3通り，$1+2+2$：3通り，計6通り）。長さ4（分割$1+1+1+2$）：4通り。長さ5（分割$1+1+1+1+1$）：1通り。
+\[
+P_3(5)=2\left(\frac13\right)^2+6\left(\frac13\right)^3+4\left(\frac13\right)^4+\left(\frac13\right)^5=\frac{54+54+12+1}{243}=\frac{121}{243}
+\]
+
+\textbf{(3)} $k\le N$とする。$S_k=\displaystyle\sum_{\ell=1}^kP_N(\ell)$とおく。1回目に引いた札の値で場合分けすると，$1\le k+1\le N$の時
+\[
+P_N(k+1)=\frac1N\sum_{\ell=1}^kP_N(\ell)+\frac1N=\frac1NS_k+\frac1N \quad\cdots\text{①}
+\]
+（1回目が$k+1$なら直ちに達成，1回目が$m\le k$なら残り$k$回で「$k+1-m$を達成する」確率$P_N(k+1-m)$に帰着，1回目が$m>k+1$なら達成不可能）。$k\ge2$の時，①と，①で$k$を$k-1$に置き換えた式$P_N(k)=\frac1NS_{k-1}+\frac1N$の差をとると，$S_k-S_{k-1}=P_N(k)$だから
+\[
+P_N(k+1)-P_N(k)=\frac1NP_N(k) \quad\therefore\ P_N(k+1)=\left(1+\frac1N\right)P_N(k) \quad(k\ge2)
+\]
+$P_N(2)=\dfrac1N\left(1+\dfrac1N\right)$（(1)，または①に$k=1$を代入）を初項として，帰納的に
+\[
+P_N(k)=\left(1+\frac1N\right)^{k-2}P_N(2)=\frac1N\left(1+\frac1N\right)^{k-1} \quad(k\ge2)
+\]
+これは$k=1$でも成立する（$P_N(1)=1/N$）。以上から
+\[
+P_N(k)=\frac1N\left(1+\frac1N\right)^{k-1}
+\]
+\end{proof}
+
+\bigskip
+\noindent\textbf{[別解]（(3)の別証明）}
+
+\begin{proof}[別解]
+$X_j=\displaystyle\sum_{\ell=1}^jx_\ell=k$となる場合を直接数える（$x_\ell$は$\ell$番目に引いた札の番号）。$k\le N$だから，札の値の上限$N$は制約として効かず，$x_1,\dots,x_j$（各々$1$以上の整数）の和が$k$となる組の数は，$k$個の○と$j-1$本の仕切りを並べる場合の数（両端に仕切りは来ない）に等しく，${}_{k-1}C_{j-1}$通り。したがって，長さ$j$の数列で和が$k$となるものが起こる確率は$\dfrac1{N^j}\,{}_{k-1}C_{j-1}$であり，
+\[
+P_N(k)=\sum_{j=1}^k\frac1{N^j}\,{}_{k-1}C_{j-1}=\sum_{j=0}^{k-1}\frac1{N^{j+1}}\,{}_{k-1}C_j=\frac1N\sum_{j=0}^{k-1}{}_{k-1}C_j\left(\frac1N\right)^j=\frac1N\left(1+\frac1N\right)^{k-1}
+\]
+（最後は二項定理）。
+\end{proof}
+
+\newpage
+
+\section*{第4問}
+
+\begin{proof}[解]
+1辺1の正方形$ABCD$を1本の折り目で折り，線対称な五角形$P$（二重になる部分）ができるようにする。図のように，折り返しでできる各点・角を定める（$O$は正方形の対角線の交点とし，折り目は$O$を通る）。$B,C$の像を$B',A'$とし，折り目と辺の交点を$E,F,I,H,G$などとする。$0<x\le1/2,\ 0<\theta\le\pi/4$（$x$は折り返し部分の一辺，$\theta$は折り目の傾き）とする。
+
+求める面積$T$，$\triangle EB'F$の面積$S_1$，$\triangle EA'G(\cong\triangle CEF)$の面積$S_2$とおくと
+\[
+T=\frac12-(S_1+S_2) \quad\cdots\text{②}
+\]
+
+$OC=OB'$（対称性）から$\triangle OCB'$は二等辺三角形で$\angle OB'C=\angle OCB'$（③-1）。また$\angle OB'F=\angle OCF=\pi/4$（③-2，正方形の対角線の角度）。③-1,③-2から$\angle B'CF=\angle CB'F$となり，$\triangle FCB'$は二等辺三角形で$CF=B'F$。これと$\triangle IB'F\equiv\triangle ECF$（対称性）から，
+\[
+S_1=S_2=\frac12x^2\tan\theta
+\]
+②に代入して
+\[
+T=\frac12-x^2\tan\theta \quad\cdots\text{④}
+\]
+
+また，辺$\overline{AB}$の長さを$2$通りに表して（折り返し部分の幾何関係から）
+\[
+1=x\tan\theta+\frac x{\cos\theta}+x
+\]
+\[
+\therefore\ x=\frac{\cos\theta}{\sin\theta+\cos\theta+1} \quad(C=\cos\theta,\ S=\sin\theta\ \text{として}\ x=\frac C{S+C+1}) \quad\cdots\text{⑤}
+\]
+
+④から，$T$は$P=x^2\tan\theta$が最大の時最小。⑤から
+\[
+P=x^2\tan\theta=\frac{C^2}{(S+C+1)^2}\cdot\frac SC=\frac{SC}{(S+C+1)^2}
+\]
+$t=C+S$とおくと，$S+C+1=t+1$，$SC=\dfrac{t^2-1}2$（$\because(S+C)^2=S^2+2SC+C^2=1+2SC$）だから
+\[
+P=\frac{(t^2-1)/2}{(t+1)^2}=\frac{t-1}{2(t+1)}=\frac12\left(1-\frac2{t+1}\right)
+\]
+これは$t$の単調増加関数。$t=\sin\theta+\cos\theta=\sqrt2\sin\left(\theta+\dfrac\pi4\right)$は，$0<\theta\le\pi/4$で単調増加し$t\in(1,\sqrt2]$。よって$P$は$\theta=\pi/4$（$t=\sqrt2$）で最大：
+\[
+\max P=\frac12\left(1-\frac2{\sqrt2+1}\right)
+\]
+したがって
+\[
+\min T=\frac12-\max P=\frac12\cdot\frac2{\sqrt2+1}=\frac1{\sqrt2+1}=\sqrt2-1
+\]
+\end{proof}
+
+\end{document}
