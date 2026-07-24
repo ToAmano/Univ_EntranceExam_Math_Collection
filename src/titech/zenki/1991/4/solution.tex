@@ -1,0 +1,78 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\begin{proof}[解]
+$f(x)=x^3+ax^2+(b-a-1)x$
+
+\textbf{(1)} $f'(x)=3x^2+2ax+(b-a-1)$だから，これが$x\ge0$で0以上であるような$(a,b)$を求めれば良い（$a,b\in\mathbb{R}$）。軸$x=-\dfrac13a$で場合分け。
+
+\textbf{$1^\circ$ $-\dfrac13a\le0\ \therefore\ a\ge0$の時}
+
+条件は$f'(0)\ge0\iff b\ge a+1$
+
+\textbf{$2^\circ$ $0\le-\dfrac13a\ \therefore\ a\le0$の時}
+
+条件は$f'(-\tfrac13a)\ge0\iff b\ge\dfrac13a^2+a+1$
+
+以上をまとめ，図示して下図斜線部
+\[
+\begin{cases}
+a\le0\text{の時}\ b\ge\dfrac13a^2+a+1 \\
+a\ge0\text{の時}\ b\ge a+1
+\end{cases}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=stealth]
+  \draw[->] (-4,0) -- (2.5,0) node[right] {$a$};
+  \draw[->] (0,-0.5) -- (0,3.5) node[above] {$b$};
+  \draw[domain=-3.5:0, smooth, thick] plot (\x,{\x*\x/3+\x+1});
+  \draw[domain=0:2, smooth, thick] plot (\x,{\x+1});
+  \fill[gray!25, domain=-3.5:0, variable=\x] plot ({\x},{\x*\x/3+\x+1}) -- (0,3.9) -- (-3.9,3.9) -- cycle;
+  \fill[gray!25, domain=0:2, variable=\x] plot ({\x},{\x+1}) -- (2.4,3.9) -- (0,3.9) -- cycle;
+  \node[below] at (-2,0) {$-2$};
+  \node[below] at (-1,0) {$-1$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{(2)} $(a,b)$が$G$をうごく時，$0\le x$で$f(x)$は単調増加かつ$f(1)=b$から，グラフの概形は右図で，斜線部が求める面積$K$に等しい。したがって，与式$S$として
+\[
+S=b-\int_0^1f(x)dx
+\]
+\[
+=b-\left(\frac14+\frac13a+\frac12(b-a-1)\right)
+\]
+\[
+=\frac12b+\frac16a+\frac14 \quad\cdots\text{①}
+\]
+である。$a$を固定すると，①から，
+
+\textbf{$a\le0$の時}
+\[
+\min S=\frac16a+\frac12\left(\frac13a^2+a+1\right)+\frac14
+\]
+\[
+=\frac16a^2+\frac23a+\frac34
+\]
+\[
+=\frac16(a+2)^2+\frac1{12}\ge\frac1{12} \quad(\text{等号成立は}a=-2)
+\]
+
+\textbf{$a\ge0$の時}
+\[
+\min S=\frac16a+\frac12(a+1)+\frac14
+\]
+\[
+=\frac23a+\frac34\ge\frac34 \quad(\because a=0)
+\]
+
+だから，$\min S=\dfrac1{12}$
+\end{proof}
+
+\newpage
+
+\end{document}
