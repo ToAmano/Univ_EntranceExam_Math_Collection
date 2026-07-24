@@ -1,0 +1,221 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+\section*{京都大学 1994年 前期}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & & 計 & 思 & 総 & \\
+\hline
+1 & & & & & \\
+\hline
+2 & 数列 & B & B & B & 20 \\
+\hline
+3 & 空間 & B & B & B & 20 \\
+\hline
+4 & 多変数 & B & B & B & 20 \\
+\hline
+5 & 確率 & B & B & B & 20 \\
+\hline
+6 & 多変数 & B & B & B & 20 \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{第1問}
+
+\subsection*{第2問}
+[解] $n \in \mathbb{Z}_{\ge 0}$ である
+(1) 漸化式から、法を3として $a_{n+2} \equiv a_{n+1} + a_n$ だから、
+\begin{align*}
+&b_0 = 1,\ b_1 = 2,\ b_2 = 0,\ b_3 = 2,\ b_4 = 2,\ b_5 = 1,\ b_6 = 0, \\
+&b_7 = 1,\ b_8 = 1,\ b_9 = 2
+\end{align*}
+
+(2) $C_n$ の定義から
+$$C_{n+8} - C_n = \underbrace{b_{n+1} + b_{n+2} + b_{n+3} + b_{n+4} + b_{n+5} + b_{n+6} + b_{n+7} + b_{n+8}}_{A}$$
+又、(1)から $\{b_n\}$ は $\{1, 2, 0, 2, 2, 1, 0, 1\}$ の周期数列だから、
+$A$ の中にはこれらの要素が1つずつ入っているので、
+$$A = \sum_{k=1}^8 b_k = C_8$$
+だから
+$$C_{n+8} = C_n + C_8 \quad \square$$
+
+(3) $C_8 = 9$ より $C_{n+8} = C_n + 9$ である。以下、題意を帰納的に示す。\\
+$1^\circ\ n=0\sim 7$ の時、
+\begin{align*}
+1 \le C_0 = 1 \le \frac{3}{2} && 5 \le C_4 = 7 \le 9 \\
+2 \le C_1 = 3 \le \frac{9}{2} && 6 \le C_5 = 8 \le \frac{21}{2} \\
+3 \le C_2 = 3 \le 6 && 7 \le C_6 = 8 \le 12 \\
+4 \le C_3 = 5 \le \frac{15}{2} && 8 \le C_7 = 9 \le 15
+\end{align*}
+より成立。
+
+$2^\circ\ n=8k, 8k+1, \cdots, 8k+7$ ($k \in \mathbb{Z}_{\ge 0}$) での成立を仮定\\
+漸化式と仮定より
+$$n+1+9 \le C_{n+8} \le \frac{3}{2}(n+1)+9$$
+$$n+9 \le C_{n+8} \le \frac{3}{2}(n+7) \le \frac{3}{2}(n+9)$$
+より $n$ で成立するなら $n+8$ でも成立するから、$n=8(k+1)\sim 8(k+1)+7$ でも成立
+
+以上から示された \quad $\square$
+
+\subsection*{第3問}
+[解] 正四面体の一辺の長さを1として良い。座標空間において、
+$$A\left(0, 0, \frac{\sqrt{6}}{3}\right),\ B\left(\frac{\sqrt{3}}{3}, 0, 0\right)$$
+$$C\left(-\frac{\sqrt{3}}{6}, \frac{1}{2}, 0\right),\ D\left(-\frac{\sqrt{3}}{6}, -\frac{1}{2}, 0\right)$$
+とおける。すると $B, C, D$ を通る円は $z=0, x^2+y^2 = \frac{1}{3}$ である。
+
+$xz$平面で立体を切断すると左下図で線分$FG$の中点を$M$とし、
+$EM$と$xy$平面の交点を$N$、$AM$と$x$軸の交点を$H$とすると、メネラウスの定理から
+$$\frac{1-s}{s} \cdot \frac{NH}{BN} \cdot \frac{t}{1-t} = 1$$
+$$BN = \frac{1-s}{s} \frac{t}{1-t} NH$$
+だから $NH = p$ として、
+$$\left(\frac{\sqrt{3}}{2} + p\right) = \frac{1-s}{s} \frac{t}{1-t} p$$
+$$\therefore p = \frac{\frac{\sqrt{3}}{2}}{\frac{1-s}{s}\frac{t}{1-t} - 1} \quad (>0)$$
+だから、$N\left(-\frac{\sqrt{3}}{6} - p, 0, 0\right)$ である。図形の対称性から、条件は
+$$-\frac{\sqrt{3}}{6} - p \ge -\frac{\sqrt{3}}{3} \quad (\because ON \le \text{円の半径})$$
+$$\Leftrightarrow 4s(1-t) \le (1-s)t \quad \left(\because p>0 \text{から} \frac{1-s}{s}\frac{t}{1-t} > 1 \Leftrightarrow t > s\right)$$
+これと $0 < t, s < 1$ を図示して、下図（境界は $t = \frac{4s}{1+3s}$ のみ含む）
+
+\vspace{1em}
+\begin{tikzpicture}[scale=2]
+  \draw[->] (-0.2,0) -- (1.5,0) node[right] {$s$};
+  \draw[->] (0,-0.2) -- (0,1.5) node[above] {$t$};
+  \draw (1,0) node[below]{$1$} -- (1,1) -- (0,1) node[left]{$1$};
+  \draw[dashed] (0,0) -- (1,1);
+  \draw[thick, domain=0:1, samples=100] plot (\x, {4*\x/(1+3*\x)});
+  \node at (0.6, 0.4) {$t = \frac{4s}{1+3s}$};
+  \node at (0.5, -0.4) {($t \le s$ の時は明らかに条件をみたさない)};
+\end{tikzpicture}
+\vspace{1em}
+
+\subsection*{第4問}
+[解] 題意から
+$$AQ : QB = PA : PB \cdots \text{①}$$
+である。
+$$\overline{AP}^2 = (t+1)^2 + (2t^2+1)^2$$
+$$\overline{PB}^2 = (t-1)^2 + (2t^2+1)^2$$
+より、①から
+$$\left(\frac{QB}{AQ}\right)^2 = \frac{\overline{PB}^2}{\overline{AP}^2} = \frac{(t-1)^2 + (2t^2+1)^2}{(t+1)^2 + (2t^2+1)^2} = f(t)$$
+$\frac{QB}{AQ} > 0$ から、$f(t)$が最大、最小値をとる時、$\frac{QB}{AQ}$も最大、最小値をとる。\\
+$f'(t)$の符号は、以下の式と同じ
+\begin{align*}
+g(t) &= \{2(t-1) + 2(2t^2+1) \cdot 4t\}\{(t+1)^2 + (2t^2+1)^2\} \\
+&\quad - \{2(t+1) + 2(2t^2+1) \cdot 4t\}\{(t-1)^2 + (2t^2+1)^2\} \\
+&= -4(2t^2+1)^2 + 8t(2t^2+1) \cdot 4t + 2(t-1)(t+1)^2 - 2(t+1)(t-1)^2 \\
+&= -4(2t^2+1) [ (2t^2+1) - 8t^2 ] + 2(t-1)(t+1) \cdot 2 \\
+&= 4( 12t^4 + 5t^2 - 2 ) = 4(3t^2+2)(4t^2-1)
+\end{align*}
+従って、下表をえる
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+$t$ & $\cdots$ & $-\frac{1}{2}$ & $\cdots$ & $\frac{1}{2}$ & $\cdots$ \\
+\hline
+$f'$ & $+$ & $0$ & $-$ & $0$ & $+$ \\
+\hline
+$f$ & $\nearrow$ & $\frac{9}{5}$ & $\searrow$ & $\frac{5}{9}$ & $\nearrow$ \\
+\hline
+\end{tabular}
+\end{center}
+
+これと $f(t) = \frac{\left(2 + \frac{1}{t^2}\right)^2 + \frac{1}{t^2} \left(1 - \frac{1}{t}\right)^2}{\left(2 + \frac{1}{t^2}\right)^2 + \frac{1}{t^2} \left(1 + \frac{1}{t}\right)^2} \to 1 \ (t \to \pm\infty)$ から
+
+$$\max \frac{QB}{AQ} = \sqrt{\frac{9}{5}} = \frac{3\sqrt{5}}{5}$$
+$$\min \frac{QB}{AQ} = \sqrt{\frac{5}{9}} = \frac{\sqrt{5}}{3}$$
+
+\vspace{1em}
+\begin{tikzpicture}[scale=1]
+  \draw[->] (-2,0) -- (2,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,4) node[above] {$y$};
+  \draw[domain=-1.2:1.2, smooth, variable=\x] plot ({\x}, {2*\x*\x+1});
+  \coordinate (A) at (-1,0);
+  \coordinate (B) at (1,0);
+  \coordinate (P) at (0.8, 2.28);
+  \coordinate (Q) at (0.3, 0);
+  \draw (A) node[below] {$-1$} node[above left] {$A$};
+  \draw (B) node[below] {$1$} node[above right] {$B$};
+  \draw (P) node[right] {$P$} -- (A);
+  \draw (P) -- (B);
+  \draw (P) -- (Q) node[below right] {$Q$};
+\end{tikzpicture}
+\vspace{1em}
+
+\subsection*{第5問}
+[解] $\frac{1}{3}$ の確率でAとBが、$\frac{2}{3}$ の確率でAとCが札を交換する\\
+(1)
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \node at (0, 2.5) {$n$回目};
+  \node at (3, 2.5) {$n+1$回目};
+  
+  \node (an) at (0, 1.5) {$a_n$};
+  \node (bn) at (0, 0.5) {$b_n$};
+  \node (cn) at (0, -0.5) {$c_n$};
+  
+  \node (an1) at (3, 1.5) {$a_{n+1}$};
+  \node (bn1) at (3, 0.5) {$b_{n+1}$};
+  \node (cn1) at (3, -0.5) {$c_{n+1}$};
+  
+  \draw[->] (an) -- (bn1) node[midway, above left] {$\frac{1}{3}$};
+  \draw[->] (an) -- (cn1) node[midway, above left] {$\frac{2}{3}$};
+  
+  \draw[->] (bn) -- (an1) node[midway, below] {$\frac{1}{3}$};
+  \draw[->] (bn) -- (bn1) node[midway, above] {$\frac{2}{3}$};
+  
+  \draw[->] (cn) -- (an1) node[midway, below right] {$\frac{2}{3}$};
+  \draw[->] (cn) -- (cn1) node[midway, below] {$\frac{1}{3}$};
+  
+  \node at (-1.5, 1.5) {Aが赤};
+  \node at (-1.5, 0.5) {Bが赤};
+  \node at (-1.5, -0.5) {Cが赤};
+\end{tikzpicture}
+\end{center}
+
+上図から
+\begin{align*}
+a_{n+1} &= \frac{1}{3} b_n + \frac{2}{3} c_n \\
+b_{n+1} &= \frac{1}{3} a_n + \frac{2}{3} b_n \\
+c_{n+1} &= \frac{2}{3} a_n + \frac{1}{3} c_n
+\end{align*}
+
+(2) $a_n + b_n + c_n = 1$ から $c_n$ を消去し(1)に代入して
+\begin{equation}
+a_{n+1} = \frac{1}{3}(-2a_n - b_n + 2) \tag{①}
+\end{equation}
+\begin{equation}
+b_{n+1} = \frac{1}{3}a_n + \frac{2}{3}b_n \tag{②}
+\end{equation}
+①から $b_n = -3a_{n+1} - 2a_n + 2$ を②に代入
+$$-3a_{n+2} - 2a_{n+1} + 2 = \frac{1}{3}a_n + \frac{2}{3}(-3a_{n+1} - 2a_n + 2)$$
+$$9a_{n+2} = 3a_n + 2$$
+$$a_{n+2} - \frac{1}{3} = \frac{1}{3} \left(a_n - \frac{1}{3}\right)$$
+
+これと $a_0 = 1, a_1 = 0$ から、等比数列の公式から
+$$a_{2k} = \left(\frac{1}{3}\right)^k \frac{2}{3} + \frac{1}{3}$$
+$$a_{2k+1} = \left(\frac{1}{3}\right)^k \left(-\frac{1}{3}\right) + \frac{1}{3}$$
+だから
+$$a_n = \begin{cases} \frac{1}{3}\left[2\left(\frac{1}{3}\right)^{\frac{n}{2}} + 1\right] & (n \in \text{even}) \\ \frac{1}{3}\left[-\left(\frac{1}{3}\right)^{\frac{n-1}{2}} + 1\right] & (n \in \text{odd}) \end{cases}$$
+
+\subsection*{第6問}
+[解] $P(\theta) = (x(\theta), y(\theta))$ とおく。又、以下 $\sin\theta = S, \cos\theta = C$ とする
+(1) $x'(\theta) = -2S + 2\sin 2\theta, \ y'(\theta) = 2C - 2\cos 2\theta$ より
+\begin{align*}
+L &= \int_0^{2\pi} \sqrt{\{x'(\theta)\}^2 + \{y'(\theta)\}^2} d\theta \\
+&= 2 \int_0^{2\pi} \sqrt{2 - 2\cos\theta} \ d\theta \\
+&= 2 \int_0^{2\pi} 2 \left| \sin\frac{\theta}{2} \right| d\theta \\
+&= 4 \int_0^\pi |\sin t| \cdot 2\ dt \quad \left(t = \frac{\theta}{2}\right) \\
+&= 8 \big[ -\cos t \big]_0^\pi = 16
+\end{align*}
+
+(2) (1)から
+$$8 \int_0^{\frac{1}{2}\theta_n} |\sin t| dt = \frac{16}{n}$$
+$0 < \frac{1}{2}\theta_n < \pi$ から
+$$8 \left( 1 - \cos\frac{\theta_n}{2} \right) = \frac{16}{n}$$
+$$\therefore n = \frac{2}{1 - \cos\frac{\theta_n}{2}} = \frac{1}{\sin^2\frac{\theta_n}{4}}$$
+だから $\sin\frac{\theta_n}{4} > 0$ から
+$$\sqrt{n}\ \theta_n = \frac{\theta_n}{\sin\frac{\theta_n}{4}} = \frac{\frac{1}{4}\theta_n}{\sin\frac{1}{4}\theta_n} \cdot 4 \to 4$$
+$(n \to \infty \text{ で } \theta_n \to 0)$
+
+\end{document}

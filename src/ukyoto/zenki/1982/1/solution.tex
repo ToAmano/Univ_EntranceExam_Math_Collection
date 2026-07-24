@@ -1,0 +1,48 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] $f(x) = x^3 + ax$, $P$の$x$座標を$t$とすると, $f'(t) = 3t^2 + a$から接線$l$は
+$$ l: y = g(x) = (3t^2 + a)x - 2t^3 $$
+だから
+$$ f(x) - g(x) = x^3 - 3t^2x + 2t^3 = (x-t)^2(x+2t) $$
+より, $x = -2t$ ($x \neq t$, $\because t \neq 0$) を$x$座標とする点$Q$で交わる \dots (1)
+
+(2) $x \le 0$の部分の面積$S_1$, $x \ge 0$ " $S_2$とする。$y = f(x)$は原点対称性だから$t>0$の時 $S_1 : S_2 = A : B$ なら$t<0$の時$S_1 : S_2 = B : A$である \dots (1)
+よって, $t>0$の時のみ考える。
+
+$$ S_1 = \int_{-2t}^0 \{ f(x) - g(x) \} dx $$
+$$ = \int_{-2t}^0 \{ (x+2t) - 3t \}^2 (x+2t) dx $$
+$$ = \left[ \frac{1}{4} (x+2t)^4 - 2t(x+2t)^3 + \frac{9t^2}{2} (x+2t)^2 \right]_{-2t}^0 $$
+$$ = \left( \frac{16}{4} - 16 + 18 \right) t^4 = 6t^4 \cdots \text{(2)} $$
+
+$$ S_2 = \int_0^t \{ f(x) - g(x) \} dx = \int_0^t (x-t)^2 (x+2t) dx $$
+$$ = \left[ \frac{1}{4} (x-t)^4 + t (x-t)^3 \right]_0^t $$
+$$ = -\frac{1}{4} t^4 + t^4 = \frac{3}{4} t^4 \cdots \text{(3)} $$
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  \draw[->] (-3,0) -- (2,0) node[right] {$x$};
+  \draw[->] (0,-2) -- (0,3) node[above] {$y$};
+  \draw[domain=-2.5:1.5, smooth, variable=\x, thick] plot ({\x}, {0.5*(\x)^3 - \x});
+  \draw[domain=-2.5:2, smooth, variable=\x, thick] plot ({\x}, {0.5*\x - 1});
+  \draw[dashed] (1,0) -- (1,-0.5) node[below right] {$P$};
+  \draw[dashed] (-2,0) -- (-2,-2) node[below left] {$Q$};
+  \node at (1,0) [above] {$t$};
+  \node at (-2,0) [above] {$-2t$};
+  
+  \fill[pattern=north east lines] plot[domain=-2:0] ({\x}, {0.5*(\x)^3 - \x}) -- plot[domain=0:-2] ({\x}, {0.5*\x - 1}) -- cycle;
+  \fill[pattern=north east lines] plot[domain=0:1] ({\x}, {0.5*(\x)^3 - \x}) -- plot[domain=1:0] ({\x}, {0.5*\x - 1}) -- cycle;
+  
+  \node at (-0.5, -0.5) [fill=white, inner sep=1pt] {$S_1$};
+  \node at (0.5, -0.6) [fill=white, inner sep=1pt] {$S_2$};
+\end{tikzpicture}
+\end{center}
+
+(2), (3), $t \neq 0$ から, $t>0$の時, $S_1 : S_2 = 8 : 1$
+$t<0$ " $S_1 : S_2 = 1 : 8 \quad (\because \text{(1)})$
+
+\end{document}

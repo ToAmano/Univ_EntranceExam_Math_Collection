@@ -1,0 +1,61 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] 到達時刻 $t_0$ とする。右のように点 P, Q を定める。
+\[ |\overline{OP}| = |t-a|, \quad |\overline{OQ}| = |t_0-b|, \quad |\overline{PQ}| = \sqrt{2}(t_0-t) \]
+だから、$\triangle OPQ$ にピタゴラスの定理を用いて、
+\[ 2(t_0-t)^2 = (t-a)^2 + (t_0-b)^2 \quad \cdots \text{①} \]
+
+\begin{tikzpicture}
+\draw[->] (-1,0) -- (4,0) node[right] {$x$};
+\draw[->] (0,-1) -- (0,4) node[above] {$y$};
+\coordinate (O) at (0,0);
+\coordinate (P) at (2,0);
+\coordinate (Q) at (0,3);
+\draw (P) -- (Q);
+\node[below left] at (O) {O};
+\node[below right] at (P) {P};
+\node[above left] at (Q) {Q};
+\node[below] at (2,-0.2) {$t-a$};
+\node[left] at (-0.2,3) {$t_0-b$};
+\node[above right] at (1,1.5) {$\sqrt{2}(t_0-t)$};
+\end{tikzpicture}
+
+$S = t_0 - t$ とすると、$S$ を min にする $t$ をもとめれば良い。①に代入して
+\begin{align*}
+2 S^2 &= (t-a)^2 + (S + t - b)^2 \\
+&= S^2 + 2(t-b)S + (t-b)^2 + (t-a)^2
+\end{align*}
+\[ \therefore S^2 - 2(t-b)S - (t-a)^2 - (t-b)^2 = 0 \]
+\[ \therefore S = t-b + \sqrt{2(t-b)^2 + (t-a)^2} \quad (\because S > 0) \]
+であるから、両辺 $t$ で微分して、
+\[ \frac{dS}{dt} = 1 + \frac{2(t-b) + (t-a)}{\sqrt{2(t-b)^2 + (t-a)^2}} \]
+だから、
+\[ \frac{dS}{dt} \ge 0 \iff \sqrt{2(t-b)^2 + (t-a)^2} \ge -2(t-b) - (t-a) \]
+$-2(t-b) - (t-a) \ge 0 \iff t \le \frac{a+2b}{3}$ のもとで2乗して解く（$t \ge \frac{a+2b}{3}$ のときは常に $\frac{dS}{dt} \ge 0$ ）
+\begin{align*}
+2(t-b)^2 + (t-a)^2 &\ge 4(t-b)^2 + (t-a)^2 + 4(t-a)(t-b) \\
+\iff 0 &\ge 2(t-b)^2 + 4(t-b)(t-a) \\
+&= 2(t-b) \{ 3t - (2a+b) \} \\
+\iff \frac{2a+b}{3} &\le t \le b \quad (\because 0 < a < b)
+\end{align*}
+だから、下表をうる。
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+$t$ & $0$ & $\cdots$ & $\frac{2a+b}{3}$ & $\cdots$ & $b$ \\
+\hline
+$S'$ & & $-$ & $0$ & $+$ & \\
+\hline
+$S$ & & $\searrow$ & & $\nearrow$ & \\
+\hline
+\end{tabular}
+\end{center}
+したがって、もとめるのは $t = \frac{2a+b}{3}$ である。
+
+\end{document}

@@ -1,0 +1,305 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+\section*{京都大学 1988年 前期}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+ & & 思 & 計 & 総 \\ \hline
+1 & 多変数 & B & B & B \\ \hline
+2 & ベクトル & A & B & A \\ \hline
+3 & & & & \\ \hline
+4 & 空間 & B & A & B \\ \hline
+5 & 確率 & A & A & A \\ \hline
+6 & 多変数 & B & B & B \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection*{第1問}
+[解]\\
+(1) $g(x)-x = f(x)^2+af(x)+b-x$\\
+$\quad= \{f(x)-x\}\{f(x)+a+x+1\} \quad \qed$
+
+(2) $g(p)=p \land f(p) \neq p$ の時（$p \in \mathbb{R}$）(1)から
+\[
+\begin{cases}
+f(p)+a+p+1=0 \\
+f(p) \neq p
+\end{cases}
+\]
+\[
+\Leftrightarrow
+\begin{cases}
+p^2+(a+1)p+a+b+1=0 & \cdots \text{①} \\
+p^2+(a-1)p+b \neq 0 & \cdots \text{②}
+\end{cases}
+\]
+①をみたす$p$がある条件は判別式$D$として
+\[ D = (a+1)^2-4(a+b+1) \ge 0 \quad \cdots \text{③} \]
+このもとで、「①の左辺と②の左辺が2つとも同じ解を持つ（重解含む）」がみたされなければよい。
+
+$1^\circ \ D>0$ の時\\
+①は2実数解を持ち、②も2次方程式だから①②が一致しなければよく、係数比較して
+\[ a+1 \neq a-1, \quad a+b+1 \neq b \]
+前者が常にみたされるから$D>0$は適。
+
+$2^\circ \ D=0$ の時\\
+①は重解$p=-\frac{a+1}{2}$を持つから、これが②をみたさなければよい。代入して
+\[ -\frac{a+1}{2}\left(-\frac{a+1}{2}+a-1\right)+\frac{1}{4}a^2-\frac{1}{2}a-\frac{3}{4}=0 \]
+これは$a$についての恒等式だから$D=0$の時、これが常にみたされ、不適。
+
+以上から、条件は$D>0$で、図示して下図斜線部（境界含まず）
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    \fill[pattern=north east lines, pattern color=gray!50] (-3, -3) -- plot[domain=-3:4] (\x, {0.25*\x*\x - 0.5*\x - 0.75}) -- (4, -3) -- cycle;
+    \draw[->] (-3.5, 0) -- (4.5, 0) node[right] {$a$};
+    \draw[->] (0, -3.5) -- (0, 3.5) node[above] {$b$};
+    \draw[domain=-3.5:4.5, smooth, variable=\x] plot ({\x}, {0.25*\x*\x - 0.5*\x - 0.75}) node[right] {$b=\frac{1}{4}a^2-\frac{1}{2}a-\frac{3}{4}$};
+    \draw[dashed] (1, 0) -- (1, -1) -- (0, -1);
+    \node[below] at (1, 0) {$1$};
+    \node[left] at (0, -1) {$-1$};
+    \node[above right] at (0, 0) {$O$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{第2問}
+[解] 原点Oを支点とし、点Xの位置ベクトル$\vec{x}$とする。
+
+\[
+\begin{cases}
+\vec{a}_1 = \frac{1}{3}(\vec{a}+2\vec{b}) \\
+\vec{b}_1 = \frac{1}{3}(\vec{b}+2\vec{c}) \\
+\vec{c}_1 = \frac{1}{3}(\vec{c}+2\vec{a})
+\end{cases}
+\]
+\[
+\begin{cases}
+\vec{a}_2 = \frac{1}{3}(\vec{a}_1+2\vec{b}_1) \\
+\vec{b}_2 = \frac{1}{3}(\vec{b}_1+2\vec{c}_1) \\
+\vec{c}_2 = \frac{1}{3}(\vec{c}_1+2\vec{a}_1)
+\end{cases}
+\]
+から
+\[
+\begin{cases}
+\vec{a}_2 = \frac{1}{9}(\vec{a}+4\vec{b}+4\vec{c}) \\
+\vec{b}_2 = \frac{1}{9}(4\vec{a}+\vec{b}+4\vec{c}) \\
+\vec{c}_2 = \frac{1}{9}(4\vec{a}+4\vec{b}+\vec{c})
+\end{cases}
+\]
+より、
+\begin{align*}
+\overline{A_2B_2} &= |\vec{b}_2-\vec{a}_2| = \frac{1}{3}|\vec{a}-\vec{b}| = \frac{1}{3}\overline{AB} \\
+\overline{B_2C_2} &= |\vec{c}_2-\vec{b}_2| = \frac{1}{3}|\vec{b}-\vec{c}| = \frac{1}{3}\overline{BC} \\
+\overline{C_2A_2} &= |\vec{a}_2-\vec{c}_2| = \frac{1}{3}|\vec{c}-\vec{a}| = \frac{1}{3}\overline{CA}
+\end{align*}
+だから三辺相等より
+\[ \triangle ABC \sim \triangle A_2B_2C_2 \quad // \]
+
+\begin{center}
+\begin{tikzpicture}[scale=2]
+    \coordinate (A) at (1, 2);
+    \coordinate (B) at (0, 0);
+    \coordinate (C) at (3, 0);
+    \draw (A) node[above] {$A$} -- (B) node[below left] {$B$} -- (C) node[below right] {$C$} -- cycle;
+    \coordinate (A1) at ($(A)!2/3!(B)$);
+    \coordinate (B1) at ($(B)!2/3!(C)$);
+    \coordinate (C1) at ($(C)!2/3!(A)$);
+    \draw (A1) node[left] {$A_1$} -- (B1) node[below] {$B_1$} -- (C1) node[right] {$C_1$} -- cycle;
+    \coordinate (A2) at ($(A1)!2/3!(B1)$);
+    \coordinate (B2) at ($(B1)!2/3!(C1)$);
+    \coordinate (C2) at ($(C1)!2/3!(A1)$);
+    \draw (A2) node[below] {$A_2$} -- (B2) node[above right] {$B_2$} -- (C2) node[above left] {$C_2$} -- cycle;
+    \node at ($(A)!0.5!(A1)$) {\fbox{1}};
+    \node at ($(A1)!0.5!(B)$) {\fbox{2}};
+    \node at ($(B)!0.5!(B1)$) {\fbox{1}};
+    \node at ($(B1)!0.5!(C)$) {\fbox{2}};
+    \node at ($(C)!0.5!(C1)$) {\fbox{1}};
+    \node at ($(C1)!0.5!(A)$) {\fbox{2}};
+    \node at ($(A1)!0.5!(A2)$) {\textcircled{\small 1}};
+    \node at ($(A2)!0.5!(B1)$) {\textcircled{\small 2}};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{第3問}
+% (空白ページ)
+
+\subsection*{第4問}
+[解]\\
+(1) $C(0, -1, \sqrt{2}), D(0, 1, \sqrt{2})$\\
+とすると四面体ABCDは\\
+一辺2の正四面体となり\\
+題意をみたす。
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    \draw[->] (0,0) -- (3, -1) node[right] {$x$};
+    \draw[->] (0,0) -- (3, 1) node[right] {$y$};
+    \draw[->] (0,0) -- (0, 3) node[above] {$z$};
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (2, -0.67);
+    \coordinate (B) at (-2, 0.67);
+    \coordinate (M) at (0, 2);
+    \coordinate (C) at (-1, 1.5);
+    \coordinate (D) at (1, 2.5);
+    \draw[dashed] (B) -- (O) -- (A);
+    \node[right] at (A) {$A(1,0,0)$};
+    \node[left] at (B) {$B(-1,0,0)$};
+    \node[left] at (C) {$C$};
+    \node[right] at (D) {$D$};
+    \node[left] at (M) {$M$};
+    \draw (C) -- (D);
+    \draw (A) -- (C);
+    \draw (A) -- (D);
+    \draw (B) -- (C);
+    \draw (B) -- (D);
+\end{tikzpicture}
+\end{center}
+
+(2) $\alpha$とz軸の交点$H$は$OM=\sqrt{2}$から$H(0, 0, t\sqrt{2})$である。\\
+$\alpha$で切断すると、切り口はz軸に\\
+垂直な四角形になり右の切断図から、\\
+下図のようになる
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    \draw[->] (-2,0) -- (2,0) node[right] {$x$};
+    \draw[->] (0,-1.5) -- (0,1.5) node[right] {$y$};
+    \draw[fill=gray!30] (-1.2, -0.8) rectangle (1.2, 0.8);
+    \node[above right] at (0, 0.8) {$t$};
+    \node[below right] at (0, -0.8) {$-t$};
+    \node[above right] at (1.2, 0) {$1-t$};
+    \node[above left] at (-1.2, 0) {$-(1-t)$};
+    \node[above left] at (0,0) {$z=t\sqrt{2}$};
+\end{tikzpicture}
+\hspace{1cm}
+\begin{tikzpicture}[scale=1.5]
+    \coordinate (M) at (0, 2);
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (1.5, 0);
+    \coordinate (H) at (0, 0.8);
+    \coordinate (P) at (0.9, 0.8);
+    \draw (M) node[above] {$M$} -- (O) node[below left] {$O$} -- (A) node[below] {$A$} -- cycle;
+    \draw (H) node[left] {$H$} -- (P);
+    \node[right] at (P) {$1-t$};
+    \draw (0, 1.4) arc (270:325:0.4);
+    \node at (0.2, 1.2) {$\alpha$};
+\end{tikzpicture}
+\hspace{1cm}
+\begin{tikzpicture}[scale=1.5]
+    \coordinate (C) at (-1.5, 2);
+    \coordinate (M) at (0, 2);
+    \coordinate (O) at (0, 0);
+    \coordinate (H) at (0, 0.8);
+    \coordinate (Q) at (-0.6, 0.8);
+    \draw (C) node[left] {$C$} -- (M) node[right] {$M$} -- (O) node[below right] {$O$} -- cycle;
+    \draw (H) node[right] {$H$} -- (Q);
+    \node[left] at (Q) {$t$};
+    \draw (0, 0.5) arc (90:130:0.5);
+    \node at (-0.2, 0.7) {$\alpha$};
+\end{tikzpicture}
+\end{center}
+
+(3) (2)と同じくして$z=k\sqrt{2}$における切り口の面積$S(k)$は（$0 \le k \le t$）
+\[ S(k) = 2(1-k) \cdot 2k = 4k(1-k) \]
+だから、求める体積$V$は
+\begin{align*}
+V &= \int_0^{t\sqrt{2}} S(k) dz \\
+&= \int_0^t S(k) \frac{dz}{dk} dk \\
+&= \int_0^t 4k(1-k) \sqrt{2} dk \\
+&= 4\sqrt{2} \left[ \frac{1}{2}k^2 - \frac{1}{3}k^3 \right]_0^t \\
+&= 4\sqrt{2} \left( \frac{1}{2}t^2 - \frac{1}{3}t^3 \right) \quad //
+\end{align*}
+
+{\color{cyan}
+[本時のミス]\\
+$\circ$ 1文字の代入ミス $\Rightarrow$ 検算でひっかからない系\\
+$\Rightarrow$ {\color{orange} 1行戻りの大切さ}\\
+$\circ$ また座標まちがえた\dots
+}
+
+\subsection*{第5問}
+[解]
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+    \draw (0,0) grid (6,3);
+\end{tikzpicture}
+\end{center}
+一辺1の正方形タイルをA\\
+一辺2の正方形タイルをB\\
+と名付ける。A, Bの用いた枚数\\
+$a, b$ とすると（$a, b \in \mathbb{Z}_{\ge 0}$）、面積から
+\[ a + 4b = 18 \]
+が必要で、
+\[ (a, b) = (2, 4), (6, 3), (10, 2), (14, 1), (18, 0) \]
+のいずれかである。又、長方形の形から、$b \le 3$ も必要であるから、$(a,b)=(2,4)$ は不適である。逆に、他の時は長方形をうまくうめることができて十分。
+
+（試行回数$n$）$=a+b$に注意して、求める確率を$a_n$とおくと
+\begin{align*}
+a_9 &= {}_9\mathrm{C}_3 \cdot p^6 q^3 = 84 p^6 q^3 \\
+a_{12} &= {}_{12}\mathrm{C}_2 \cdot p^{10} q^2 = 66 p^{10} q^2 \\
+a_{15} &= {}_{15}\mathrm{C}_1 \cdot p^{14} q = 15 p^{14} q \\
+a_{18} &= p^{18} \\
+\text{otherwise} &\quad a_n = 0 \quad //
+\end{align*}
+
+\subsection*{第6問}
+[解] 題意から$y = \frac{a}{x} + b$の\\
+グラフは右のようである\\
+（対称性から$a>0$のみ考える）\\
+よって、$y = \frac{a}{x} + b$ が$(1, 8), (5, 0)$を通る\\
+から
+\[
+\begin{cases}
+8 = a + b \\
+0 = \frac{a}{5} + b
+\end{cases}
+\Leftrightarrow
+\begin{cases}
+b = -2 \\
+a = 10
+\end{cases}
+\]
+である。以下 $f(x) = \frac{10}{x} - 2$ とおく。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+    \draw[->] (-1, 0) -- (7, 0) node[right] {$x$};
+    \draw[->] (0, -3) -- (0, 9) node[above] {$y$};
+    \draw[domain=1:6, smooth, variable=\x] plot ({\x}, {10/\x - 2});
+    \draw[dashed] (1, 0) -- (1, 8) -- (0, 8) node[left] {$8$};
+    \node[below] at (5, 0) {$5$};
+\end{tikzpicture}
+\end{center}
+
+(1) 高さ$h$ ($0 \le h \le 8$) の時の水の体積\\
+$V(h)$とおくと
+\begin{align*}
+V(h) &= \int_0^h \pi \left( \frac{10}{y+2} \right)^2 dy \\
+&= 100\pi \left[ -\frac{1}{y+2} \right]_0^h \\
+&= 100\pi \left( \frac{1}{2} - \frac{1}{h+2} \right)
+\end{align*}
+だから
+\[ V(6) = \frac{75}{2}\pi \quad // \]
+
+(2) $\left. \frac{dh}{dt} \right|_{h=3}$ をもとめれば良い。題意から $\frac{dV}{dt} = k$ であって、
+$\frac{dh}{dt} = h'$ とおくと、
+\[ k = 100\pi \frac{1}{(h+2)^2} h' \]
+だから$h=3$として、
+\[ \left. h' \right|_{h=3} = \frac{25}{100\pi}k = \frac{k}{4\pi} \text{ [cm/s]} \quad // \]
+
+\vspace{1cm}
+[解 2(2)] エースを使ってみる。\\
+(2) （$y = \frac{10}{x} - 2$まで同じ）時刻$t$での表面積$S$、高さ$h$とすると
+\[ k = S \frac{dh}{dt} \quad \cdots \text{①} \]
+\[ S = \pi \left(\frac{10}{h+2}\right)^2 \quad \cdots \text{②} \]
+②を①に代入
+\[ \frac{dh}{dt} = \frac{k}{\left(\frac{10}{h+2}\right)^2 \cdot \pi} \]
+$h=3$として
+\[ \frac{dh}{dt} = \frac{k}{4\pi} \quad // \]
+
+{\color{cyan}
+\fbox{エースのすばらしさ!! これはとんでもない}
+}
+\end{document}

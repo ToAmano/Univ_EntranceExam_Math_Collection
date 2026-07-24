@@ -1,0 +1,313 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+\section*{京都大学 1982年 前期}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+& & 思 & 計 & 総 & \\
+\hline
+[1] & 多変数 & A & B & B & 20 \\
+\hline
+[2] & 多変数 & B & A & B & 20 \\
+\hline
+[3] & ベクトル & B & B & B & 20 \\
+\hline
+[4] & 空間 & B & B & B & 20 \\
+\hline
+[5] & 確率 & A & A & A & 20 \\
+\hline
+[6] & 関数 & B & B & B & 20 \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{第1問}
+[解] $f(x) = x^3 + ax$, $P$の$x$座標を$t$とすると, $f'(t) = 3t^2 + a$から接線$l$は
+$$ l: y = g(x) = (3t^2 + a)x - 2t^3 $$
+だから
+$$ f(x) - g(x) = x^3 - 3t^2x + 2t^3 = (x-t)^2(x+2t) $$
+より, $x = -2t$ ($x \neq t$, $\because t \neq 0$) を$x$座標とする点$Q$で交わる \dots (1)
+
+(2) $x \le 0$の部分の面積$S_1$, $x \ge 0$ " $S_2$とする。$y = f(x)$は原点対称性だから$t>0$の時 $S_1 : S_2 = A : B$ なら$t<0$の時$S_1 : S_2 = B : A$である \dots (1)
+よって, $t>0$の時のみ考える。
+
+$$ S_1 = \int_{-2t}^0 \{ f(x) - g(x) \} dx $$
+$$ = \int_{-2t}^0 \{ (x+2t) - 3t \}^2 (x+2t) dx $$
+$$ = \left[ \frac{1}{4} (x+2t)^4 - 2t(x+2t)^3 + \frac{9t^2}{2} (x+2t)^2 \right]_{-2t}^0 $$
+$$ = \left( \frac{16}{4} - 16 + 18 \right) t^4 = 6t^4 \cdots \text{(2)} $$
+
+$$ S_2 = \int_0^t \{ f(x) - g(x) \} dx = \int_0^t (x-t)^2 (x+2t) dx $$
+$$ = \left[ \frac{1}{4} (x-t)^4 + t (x-t)^3 \right]_0^t $$
+$$ = -\frac{1}{4} t^4 + t^4 = \frac{3}{4} t^4 \cdots \text{(3)} $$
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  \draw[->] (-3,0) -- (2,0) node[right] {$x$};
+  \draw[->] (0,-2) -- (0,3) node[above] {$y$};
+  \draw[domain=-2.5:1.5, smooth, variable=\x, thick] plot ({\x}, {0.5*(\x)^3 - \x});
+  \draw[domain=-2.5:2, smooth, variable=\x, thick] plot ({\x}, {0.5*\x - 1});
+  \draw[dashed] (1,0) -- (1,-0.5) node[below right] {$P$};
+  \draw[dashed] (-2,0) -- (-2,-2) node[below left] {$Q$};
+  \node at (1,0) [above] {$t$};
+  \node at (-2,0) [above] {$-2t$};
+  
+  \fill[pattern=north east lines] plot[domain=-2:0] ({\x}, {0.5*(\x)^3 - \x}) -- plot[domain=0:-2] ({\x}, {0.5*\x - 1}) -- cycle;
+  \fill[pattern=north east lines] plot[domain=0:1] ({\x}, {0.5*(\x)^3 - \x}) -- plot[domain=1:0] ({\x}, {0.5*\x - 1}) -- cycle;
+  
+  \node at (-0.5, -0.5) [fill=white, inner sep=1pt] {$S_1$};
+  \node at (0.5, -0.6) [fill=white, inner sep=1pt] {$S_2$};
+\end{tikzpicture}
+\end{center}
+
+(2), (3), $t \neq 0$ から, $t>0$の時, $S_1 : S_2 = 8 : 1$
+$t<0$ " $S_1 : S_2 = 1 : 8 \quad (\because \text{(1)})$
+
+\subsection*{第2問}
+[解] 与式の左辺を$f(x)$とおくと$f(x)=0$が、2実解を持つ時
+$$ a^2 - 3a + 2 \ge 0 \iff a \le 1, 2 \le a \cdots \text{(1)} $$
+
+以下、$ay \ge 3(x-\beta)$ \dots (2) について考える。まず、$ay=3(x-\beta)$が$(\beta, 0)$を通るから$\beta>0$が必要。これは(1)のもとで
+$$ \begin{cases} \text{端点} f(0) > 0 \\ \text{軸} \frac{3}{2}a > 0 \end{cases} \iff \begin{cases} 3a-2 > 0 \\ a > 0 \end{cases} \iff a > \frac{2}{3} \cdots \text{(3)} $$
+だから、(3)が条件。このもとで、
+(2) $\iff y \ge \frac{3}{a}(x-\beta)$
+より条件は
+$\frac{3}{a} > 1 \iff 3 > a \cdots \text{(4)}$
+
+\begin{center}
+\begin{tikzpicture}
+  \draw[->] (-1,0) -- (4,0) node[right] {$x$};
+  \draw[->] (0,-1) -- (0,3) node[above] {$y$};
+  \draw[domain=-0.5:3] plot (\x, \x);
+  \draw[domain=0.5:2] plot (\x, {2*(\x-1)});
+  \fill[pattern=north east lines] (0,0) -- (2,2) -- (1,0) -- cycle;
+  \fill (1,0) circle (1.5pt) node[right] {$(\beta, 0)$};
+\end{tikzpicture}
+\end{center}
+
+(1), (3), (4) から
+$$ \frac{2}{3} < a \le 1, \quad 2 \le a < 3 $$
+
+\subsection*{第3問}
+[解] 原点$O$とし、点$X$の位置ベクトルを$\vec{x}$とする。
+
+\begin{minipage}{0.5\textwidth}
+$$ \begin{cases}
+\vec{a}_{n+1} = (\vec{b}_n + \vec{c}_n + \vec{d}_n) / 3 \\
+\vec{b}_{n+1} = (\vec{a}_n + \vec{c}_n + \vec{d}_n) / 3 \\
+\vec{c}_{n+1} = (\vec{a}_n + \vec{b}_n + \vec{d}_n) / 3 \quad \cdots \text{(1)} \\
+\vec{d}_{n+1} = (\vec{a}_n + \vec{b}_n + \vec{c}_n) / 3
+\end{cases} $$
+帰納的に
+$\vec{a}_n + \vec{b}_n + \vec{c}_n + \vec{d}_n = \vec{a} + \vec{b} + \vec{c} + \vec{d} \cdots \text{(2)}$
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (4,-0.2);
+  \coordinate (C) at (2.5,3);
+  \coordinate (D) at (1.5,1.5);
+  \draw (A) node[left] {$A$} -- (B) node[right] {$B$} -- (C) node[above] {$C$} -- cycle;
+  \draw[dashed] (A) -- (D) node[above right] {$D$};
+  \draw[dashed] (B) -- (D);
+  \draw[dashed] (C) -- (D);
+  \fill (2.5, 1.5) circle (1.5pt) node[right] {$A_1$};
+  \fill (1, 1) circle (1.5pt) node[left] {$B_1$};
+  \fill (2, 0.5) circle (1.5pt) node[below] {$C_1$};
+  \fill (2.8, 1) circle (1.5pt) node[right] {$D_1$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+
+(1) $AA_1, BB_1, CC_1, DD_1$上の点は各々 $0 \le t, s, u, v \le 1$として
+$$ t \vec{a}_1 + (1-t) \vec{a} $$
+$$ s \vec{b}_1 + (1-s) \vec{b} $$
+$$ u \vec{c}_1 + (1-u) \vec{c} $$
+$$ v \vec{d}_1 + (1-v) \vec{d} $$
+で表される。$t=s=u=v=\frac{3}{4}$とすれば、いずれも
+$$ \frac{1}{4} (\vec{a} + \vec{b} + \vec{c} + \vec{d}) $$
+を通るから、これが$P$である (証)
+
+(2) 帰納的に示す。つまり$A_1 A_2, A_3 \dots$が直線$AA_1$上にあることを示す。$AA_1$上の点$X$は$t \in \mathbb{R}$として
+$$ \vec{x} = \frac{t}{3} (\vec{b} + \vec{c} + \vec{d}) + (1-t) \vec{a} \cdots \text{(3)} $$
+と表される。$n=1$の時は明らか。$n=k$での成立を仮定する
+(1), (2) から
+$$ \vec{a}_{k+1} = \frac{1}{3} (\vec{a} + \vec{b} + \vec{c} + \vec{d} - \vec{a}_k) $$
+カテイから、(3)で、$\vec{a}_k$に対応する$t$が存在し、これを$t_k$とおくと
+$$ \vec{a}_{k+1} = \frac{1}{3} \left[ \vec{a} + \vec{b} + \vec{c} + \vec{d} - \frac{t_k}{3} (\vec{b} + \vec{c} + \vec{d}) - (1-t_k) \vec{a} \right] $$
+$$ = \frac{1}{3} \left[ \left(1-\frac{t_k}{3}\right) (\vec{b} + \vec{c} + \vec{d}) + t_k \vec{a} \right] $$
+だが、これは(3)で $t = 1 - \frac{t_k}{3}$ としたものにひとしく、$A_{k+1}$も$AA_1$上にある。よって$n=k+1$でも成立。
+以上から示された (証)
+
+(3) (2)から、点$A_n$に対応する$t$を$t_n$とおくと
+$$ \begin{cases} t_{n+1} = 1 - \frac{t_n}{3} \\ t_1 = 1 \end{cases} $$
+これをといて、等比数列の公式から、
+$$ t_n = \left(-\frac{1}{3}\right)^{n-1} \left(1-\frac{3}{4}\right) + \frac{3}{4} $$
+よって、$t_n \to \frac{3}{4} \ (n \to \infty)$ だから、(1)とあわせて、
+$$ A_n \to P \ (n \to \infty) $$
+となり
+$$ \vec{A_n P} \to 0 \ (n \to \infty) $$
+である (証)
+
+\subsection*{第4問}
+[解]
+
+(1) 切り口は右図斜線部で、
+これは一辺$\sqrt{2}t$の正三角形
+だから
+$$ T(t) = \frac{1}{2} \cdot \frac{\sqrt{3}}{2} (\sqrt{2}t)^2 = \frac{\sqrt{3}}{4} 2t^2 = \frac{\sqrt{3}}{2} t^2 \cdots (1) $$
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \draw[->] (0,0,0) -- (3,0,0) node[right] {$y$};
+  \draw[->] (0,0,0) -- (0,3,0) node[above] {$z$};
+  \draw[->] (0,0,0) -- (0,0,3) node[below left] {$x$};
+  \draw[fill=gray!30] (2,0,0) -- (0,2,0) -- (0,0,2) -- cycle;
+  \node at (2,0,0) [right] {$t$};
+  \node at (0,2,0) [above right] {$t$};
+  \node at (0,0,2) [below] {$t$};
+\end{tikzpicture}
+\end{center}
+
+(2)
+(ア) $1 \le t \le 2$ の時
+右図斜線部で、これは
+一辺$\sqrt{2}t$の正三角形から
+一辺$\sqrt{2}(t-1)$の " を
+3つとりのぞいたもので、
+$$ S(t) = \frac{\sqrt{3}}{2} t^2 - 3 \frac{\sqrt{3}}{2} (t-1)^2 = \frac{\sqrt{3}}{2} (-2t^2 + 6t - 3) $$
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  \draw[->] (0,0,0) -- (2,0,0) node[right] {$y$};
+  \draw[->] (0,0,0) -- (0,2,0) node[above] {$z$};
+  \draw[->] (0,0,0) -- (0,0,2) node[below left] {$x$};
+  \draw (1,0,1) -- (1,0,0) -- (1,1,0) -- (0,1,0) -- (0,1,1) -- (0,0,1) -- cycle;
+  \draw (1,0,1) -- (1,1,1) -- (1,1,0);
+  \draw (0,1,1) -- (1,1,1);
+  \coordinate (A) at (1, 0, 0.5);
+  \coordinate (B) at (1, 0.5, 0);
+  \coordinate (C) at (0.5, 1, 0);
+  \coordinate (D) at (0, 1, 0.5);
+  \coordinate (E) at (0, 0.5, 1);
+  \coordinate (F) at (0.5, 0, 1);
+  \draw[fill=gray!30] (A) -- (B) -- (C) -- (D) -- (E) -- (F) -- cycle;
+  \node at (0, 1.5, 0) [left] {$t$};
+  \node at (0, 1.5, 1.5) [left] {$t-1$};
+\end{tikzpicture}
+\end{center}
+
+(イ) $2 \le t < 3$ の時
+右図斜線部で、これは
+一辺$\sqrt{2}(3-t)$の正三角形で、
+$$ S(t) = \frac{\sqrt{3}}{2} (3-t)^2 $$
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+  \draw[->] (0,0,0) -- (2,0,0) node[right] {$y$};
+  \draw[->] (0,0,0) -- (0,2,0) node[above] {$z$};
+  \draw[->] (0,0,0) -- (0,0,2) node[below left] {$x$};
+  \draw (1,0,1) -- (1,0,0) -- (1,1,0) -- (0,1,0) -- (0,1,1) -- (0,0,1) -- cycle;
+  \draw (1,0,1) -- (1,1,1) -- (1,1,0);
+  \draw (0,1,1) -- (1,1,1);
+  \coordinate (A) at (1, 0.5, 1);
+  \coordinate (B) at (1, 1, 0.5);
+  \coordinate (C) at (0.5, 1, 1);
+  \draw[fill=gray!30] (A) -- (B) -- (C) -- cycle;
+  \node at (1.5, 0, 0) [below] {$t-2$};
+\end{tikzpicture}
+\end{center}
+
+(ウ) $0 < t \le 1$ の時
+明らかに $S(t) = T(t) = \frac{\sqrt{3}}{2} t^2$
+
+以上から、$y=S(t)$のグラフは下図
+
+\begin{center}
+\begin{tikzpicture}
+  \draw[->] (-0.5, 0) -- (4, 0) node[right] {$t$};
+  \draw[->] (0, -0.5) -- (0, 3) node[above] {$y$};
+  \draw[domain=0:1, smooth, variable=\x] plot ({\x}, {0.866*\x*\x});
+  \draw[domain=1:2, smooth, variable=\x] plot ({\x}, {0.866*(-2*\x*\x + 6*\x - 3)});
+  \draw[domain=2:3, smooth, variable=\x] plot ({\x}, {0.866*(3-\x)*(3-\x)});
+  \draw[dashed] (1, 0) node[below] {$1$} -- (1, 0.866) -- (0, 0.866) node[left] {$\frac{\sqrt{3}}{2}$};
+  \draw[dashed] (1.5, 0) node[below] {$\frac{3}{2}$} -- (1.5, 1.299) -- (0, 1.299) node[left] {$\frac{3\sqrt{3}}{4}$};
+  \draw[dashed] (2, 0) node[below] {$2$} -- (2, 0.866);
+  \node at (3, 0) [below] {$3$};
+  \node at (0, 0) [below left] {$O$};
+\end{tikzpicture}
+\end{center}
+
+よって、$\max S(t) = S\left(\frac{3}{2}\right) = \frac{3\sqrt{3}}{4}$
+
+\subsection*{第5問}
+[解] $A$から北へ$n$メートルいった
+点を$A_n$、その1m西を$B_n$とする
+
+\begin{center}
+\begin{tikzpicture}
+  \draw[->] (-2,0) -- (2,0) node[right] {$x$};
+  \draw (0,-0.2) -- (0,3);
+  \fill (0,0) circle (1.5pt) node[below right] {$A$};
+  \fill (-1,0) circle (1.5pt) node[below left] {$B$};
+  \fill (0,2) circle (1.5pt) node[right] {$A_n$};
+  \fill (-1,2) circle (1.5pt) node[left] {$B_n$};
+  \draw[dashed] (-1,0) -- (-1,2) -- (0,2);
+  \foreach \y in {0,1,2} {
+    \draw (-0.1,\y) -- (0.1,\y);
+    \draw (-1.1,\y) -- (-0.9,\y);
+  }
+\end{tikzpicture}
+\end{center}
+
+(1) $A_n$にたどりつくのは、$B_n$について
+オモテ $\dots$ 右へ$1$
+ウラ $\dots$ 上へ$1$
+から表をだす確率で、
+$$ p_n = \frac{{}_{n+4}C_4}{2^{n+4}} \cdot \frac{1}{2} = \frac{{}_{n+4}C_4}{2^{n+5}} $$
+
+(2) $\frac{p_{n+1}}{p_n} \ge 1 \cdots (1)$ をみたす$n$をもとめる。(1)から、
+$$ \frac{p_{n+1}}{p_n} = \frac{{}_{n+5}C_4}{{}_{n+4}C_4} \cdot \frac{2^{n+5}}{2^{n+6}} = \frac{(n+5)(n+4)(n+3)(n+2)}{(n+4)(n+3)(n+2)(n+1)} \frac{1}{2} $$
+$$ = \frac{n+5}{2(n+1)} \ge 1 $$
+$$ \iff 3 \ge n \quad (n=3\text{で等号成立}) $$
+だから、
+$$ p_1 < p_2 < p_3 = p_4 > p_5 > \cdots $$
+より、$p_n$を最大にする$n$は、$n=3, 4$
+
+\subsection*{第6問}
+(1) $-1 \le x \le 0$ の時、
+$$ f(x) = \int_x^0 t e^t dt + \int_0^{x+1} t e^{-t} dt $$
+より、
+$$ f'(x) = -x e^x + (x+1) e^{-x-1} $$
+$$ = e^{-x} \left[ \frac{1}{e}(x+1) - x e^{2x} \right] \ge 0 \quad (\because -1 \le x \le 0) $$
+から、$f(x)$は単調増加で、
+$$ f(-1) \le f(x) \le f(0) \quad (-1 \le x \le 0) $$
+
+(2) $0 \le x$ の時 $f(x) = \int_x^{x+1} t e^{-t} dt$ だから、
+$$ f'(x) = (x+1) e^{-x-1} - x e^{-x} $$
+$$ = e^{-x-1} \left[ (1-e)x + 1 \right] $$
+
+$x \le -1$ の時、$f(x) = \int_x^{x+1} t e^t dt$ だから
+$$ f'(x) = (x+1) e^{x+1} - x e^x $$
+$$ = e^x \left[ (e-1)x + e \right] $$
+
+から増減表をえる
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+$x$ & $\cdots$ & $\frac{-e}{e-1}$ & $\cdots$ & $-1$ & $\cdots$ & $0$ & $\cdots$ & $\frac{1}{e-1}$ & $\cdots$ \\
+\hline
+$f'$ & $-$ & $0$ & $+$ & & $+$ & & $+$ & $0$ & $-$ \\
+\hline
+$f$ & $\searrow$ & & $\nearrow$ & $\nearrow$ & $\nearrow$ & $\nearrow$ & $\nearrow$ & & $\searrow$ \\
+\hline
+\end{tabular}
+\end{center}
+
+これで $\lim_{x \to \infty} f(x) = 0$, $\lim_{x \to -\infty} f(x) = 0$, $f\left(\frac{-e}{e-1}\right) = e^{\frac{-e}{e-1}}(1-e) < 0$
+$f\left(\frac{1}{e-1}\right) = (e-1) e^{-\frac{1}{e-1}-1} > 0$ から、
+$$ \max \cdots x = \frac{1}{e-1} $$
+$$ \min \cdots x = \frac{-e}{e-1} $$
+
+\end{document}

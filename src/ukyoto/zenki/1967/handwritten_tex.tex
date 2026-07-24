@@ -1,0 +1,327 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{京大理科 数学 1967 表紙・配点・概略}
+
+\begin{itemize}
+    \item 所要時間: 6問
+\end{itemize}
+
+\subsection*{各問のメモ・解答概要}
+\begin{enumerate}
+    \item 3次方程式の解の配置。$k > 0$ における $y = f(x)$ のグラフと単調減少区間および漸近線から正の実根の範囲 $1 < x < 1 + \frac{2}{k}$ を示す。
+    \item 複素数平面における方程式 $z^2 = \dots$ の解 $x, y \in \mathbb{R}$ を求める。
+    \item 双曲線上の一点 $P(x_1, y_1)$ における接線が $x$ 軸と交わる点を $Q$ とするとき、(1) 三角形 $OPQ$ の面積を $x_1$ で表し、(2) $x_1 \to \infty$ の極限を求める。
+    \item (1) $a+b\sqrt{3}=c+d\sqrt{3}$ より $a=c, b=d$ を証明し、$(2+\sqrt{3})^n = x_n + y_n \sqrt{3}$ の係数 $(x_2,y_2), (x_3,y_3)$ を求める。
+    \item ベクトルの一次独立性と点の一致に関する証明。(1) $P$ が線分 $AB$ 上にある必要十分条件、(2) $p\vec{OA}+q\vec{OB}+r\vec{OC}=\vec{0}$ の一次独立性、(3) ベクトルの表現の一意性と存在。
+    \item 関数の上下関係と定積分。(1) $y_1 > y_2$ であることを示し、(2) 2曲線と直線で囲まれた部分の面積 $S = 1 + \frac{4}{\pi} + \frac{\pi}{8} \log 2$ を求める。
+\end{enumerate}
+
+\newpage
+
+\section*{第1問}
+
+\noindent
+[\textbf{解}]
+\begin{enumerate}
+    \item[(1)] $x = \pm 1$ は明らかに解でないから，
+    \[
+    k = \frac{-x(x-3)(x+3)}{3(x+1)(x-1)} = \frac{1}{3}\left[ -x + \frac{8x}{x^2-1} \right] \equiv f(x) \cdot \frac{1}{3}
+    \]
+    \[
+    f'(x) = -1 + \frac{8(x^2-1) - 8x \cdot 2x}{(x^2-1)^2} = -1 + \frac{-8x^2-8}{(x^2-1)^2} = \frac{-(x^2+3)^2}{(x^2-1)^2} < 0
+    \]
+    から $f(x)$ は $x < -1, -1 < x < 1, 1 < x$ の各区間で単調減少。これと，
+    \[
+    \begin{aligned}
+    f(x) &\longrightarrow \mp \infty \quad (x \to \pm \infty) \\
+    f(x) &\longrightarrow \mp \infty \quad (x \to -1 \pm 0) \qquad (\text{複号同順}) \\
+    f(x) &\longrightarrow \mp \infty \quad (x \to 1 \pm 0)
+    \end{aligned}
+    \]
+    から $y=f(x)$ のグラフは下図．よって示すべきことは明らか．
+
+    \begin{center}
+    \begin{tikzpicture}[scale=1.0]
+        \draw[->] (-4,0) -- (4,0) node[right]{$x$};
+        \draw[->] (0,-3) -- (0,3) node[above]{$y$};
+        
+        \draw[dashed] (-1,-3) -- (-1,3);
+        \draw[dashed] (1,-3) -- (1,3);
+        \node[below left] at (-1,0) {$-1$};
+        \node[below right] at (1,0) {$1$};
+        \node[below left] at (-3,0) {$-3$};
+        
+        \draw[thick, domain=-3.8:-1.1, smooth] plot (\x, {(-\x*(\x-3)*(\x+3))/(3*(\x+1)*(\x-1))});
+        \draw[thick, domain=-0.85:0.85, smooth] plot (\x, {(-\x*(\x-3)*(\x+3))/(3*(\x+1)*(\x-1))});
+        \draw[thick, domain=1.15:3.8, smooth] plot (\x, {(-\x*(\x-3)*(\x+3))/(3*(\x+1)*(\x-1))});
+        
+        \draw[thick] (-0.2, 1.2) -- (3.5, 1.2) node[above]{$k$};
+        \node[below] at (2.2, 0) {$1 + \frac{2}{k}$};
+        \draw[dashed] (2.2,0) -- (2.2,1.2);
+    \end{tikzpicture}
+    \end{center}
+
+    \item[(2)] (1)より，
+    \[
+    f\left(1+\frac{2}{k}\right) = \frac{-\left(1+\frac{2}{k}\right)\left(-2+\frac{2}{k}\right)\left(4+\frac{2}{k}\right)}{3\left(2+\frac{2}{k}\right)\frac{2}{k}} = \frac{-(2+k)(2-2k)(4+2/k)}{6(2k+2)}
+    \]
+    \[
+    = \frac{-(k-1)(k+2)(2k+1)}{3k(k+1)}
+    \]
+    から
+    \[
+    k - \frac{(k-1)(k+2)(2k+1)}{3k(k+1)} = \frac{k^3+3k+2}{3k(k+1)} > 0 \quad (\because k > 0)
+    \]
+    より，$k > f\left(1+\frac{2}{k}\right)$ となり，$1 < 1+\frac{2}{k}$ とあわせて，正の解はただ1つあって
+    \[
+    1 < x < 1 + \frac{2}{k}
+    \]
+    をみたす．
+\end{enumerate}
+
+\newpage
+
+\section*{第2問}
+
+\noindent
+[\textbf{解}] $x, y \in \mathbb{R}$
+\begin{enumerate}
+    \item[(i)] $z^2 = x^2 - y^2 + 2xyi = i$ だから，複素数の相等から
+    \[
+    \begin{cases}
+    x^2 - y^2 = 0 \\
+    2xy = 1
+    \end{cases}
+    \iff (x, y) = \left( \pm \frac{1}{\sqrt{2}}, \pm \frac{1}{\sqrt{2}} \right) \quad (\text{複号同順}) \quad \dots \text{①}
+    \]
+
+    \item[(ii)] $z = 2i \pm \sqrt{(2i)^2 - (-4+2i)}$
+    \[
+    \begin{aligned}
+    &= 2i \pm \sqrt{-4 + 4 - 2i} \\
+    &= 2i \pm \sqrt{-2i} \\
+    &= 2i \pm \sqrt{2}i \left( \frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}}i \right) \\
+    &= -1 + 3i = x + yi \quad \dots \text{②}
+    \end{aligned}
+    \]
+    だから，① 又は ② をみたせば良く
+    \[
+    (x, y) = \left( \pm \frac{1}{\sqrt{2}}, \pm \frac{1}{\sqrt{2}} \right), (-1, 3)
+    \]
+\end{enumerate}
+
+\newpage
+
+\section*{第3問}
+
+\noindent
+[\textbf{解}] $P$ での接線は $\frac{x_1}{a^2}x - \frac{y_1}{b^2}y = 1 \dots \text{①}$ であるから，$Q\left(\frac{a^2}{x_1}, 0\right)$ である．
+
+\begin{enumerate}
+    \item[(1)] まず $\frac{y_1^2}{b^2} = \frac{x_1^2}{a^2} - 1$ 及び $y_1, b > 0$ から
+    \[
+    y_1 = b \sqrt{\frac{x_1^2}{a^2} - 1}
+    \]
+    だから
+    \[
+    \triangle OPQ = \frac{1}{2} \frac{a^2}{x_1} b \sqrt{\frac{x_1^2}{a^2} - 1}
+    \]
+
+    \item[(2)]
+    \[
+    \begin{aligned}
+    \triangle OPQ &= \frac{ab}{2} \sqrt{\frac{x_1^2 - a^2}{x_1^2}} \\
+    &= \frac{ab}{2} \sqrt{1 - a^2 / x_1^2} \xrightarrow{x_1 \to \infty} \frac{ab}{2}
+    \end{aligned}
+    \]
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    \draw[->] (-0.5,0) -- (4,0) node[right]{$x$};
+    \draw[->] (0,-0.5) -- (0,3) node[above]{$y$};
+    \node[below left] at (0,0) {$O$};
+    
+    \draw[thick, domain=1.2:3.5, smooth] plot (\x, {sqrt(\x*\x - 1.44)});
+    \node[below] at (1.2,0) {$a$};
+    
+    \coordinate (P) at (2.8, 2.53);
+    \fill (P) circle (1.5pt) node[above left]{$P$};
+    \draw[dashed] (2.8,0) node[below]{$x_1$} -- (P) -- (0,2.53) node[left]{$y_1$};
+    
+    \coordinate (Q) at (0.51, 0);
+    \fill (Q) circle (1.5pt) node[below left]{$Q$};
+    
+    \draw[thick] (-0.2, -0.78) -- (3.3, 3.08);
+    \draw[fill=gray!20, opacity=0.5] (0,0) -- (Q) -- (P) -- cycle;
+\end{tikzpicture}
+\end{center}
+
+\newpage
+
+\section*{第4問}
+
+\noindent
+[\textbf{解}]
+\begin{enumerate}
+    \item[(1)] (\textbf{証明})\\
+    $a + b\sqrt{3} = c + d\sqrt{3} \iff (a-c) = (d-b)\sqrt{3}$ である。もし $d-b \neq 0$ と仮定すると，
+    \[
+    (\text{セイスウ}) = (\text{ムリスウ})
+    \]
+    となって矛盾。よって $d-b=0$ で, $a-c=0$ が従う。 (終)
+
+    さて，
+    \[
+    (2+\sqrt{3})^2 = 7+4\sqrt{3}, \quad (2+\sqrt{3})^3 = 8 + 12\sqrt{3} + 18 + 3\sqrt{3} = 26 + 15\sqrt{3}
+    \]
+    から
+    \[
+    (x_2, y_2) = (7, 4), \quad (x_3, y_3) = (26, 15)
+    \]
+\end{enumerate}
+
+\newpage
+
+\section*{第5問}
+
+\noindent
+[\textbf{解}]
+\begin{enumerate}
+    \item[(1)] $P$ が $AB$ 上にある時, $t$ にたいして
+    \[
+    \vec{OP} = \vec{OA} + t \vec{AB}
+    \]
+    とかける。$t$ にたいして
+    \[
+    \vec{OP} = (1-t)\vec{OA} + t\vec{OB}
+    \]
+    だから $a = 1-t, b = t$ とおけば, 十分性が示される $\dots \text{①}$
+
+    次に, $\vec{OP} = a\vec{OA} + b\vec{OB}, a+b=1$ とおける時, $b=1-a$ から
+    \[
+    \begin{aligned}
+    \vec{OP} &= a\vec{OA} + (1-a)\vec{OB} \\
+    &= \vec{OB} + a\vec{BA}
+    \end{aligned}
+    \]
+    となり, たしかに $P$ は $AB$ 上にある。よって必要性が示された $\dots \text{②}$
+
+    ①, ② から示された．(終)
+
+    \item[(2)] $p+q+r=0$ から, $r=-(p+q)$ だから,
+    \[
+    p(\vec{OA} - \vec{OC}) + q(\vec{OB} - \vec{OC}) = 0
+    \]
+    \[
+    p\vec{CA} + q\vec{CB} = 0 \quad \dots \text{③}
+    \]
+    ここで, $A, B, C$ は一直線上にないから③をみたす $p, q$ は $p=q=0$ のみ。よって
+    \[
+    r = 0
+    \]
+    となるから $(p, q, r) = (0, 0, 0)$ である．(終)
+
+    \item[(3)] $\vec{OQ} = \vec{OA}' + \vec{AQ}' = \vec{OA} + x\vec{AB} + y\vec{AC}$ ($\because$題意)から,
+    \[
+    \begin{aligned}
+    \vec{OQ} &= (1-x-y)\vec{OA} + x\vec{OB} + y\vec{OC} \\
+    &= l\vec{OA} + m\vec{OB} + n\vec{OC}
+    \end{aligned}
+    \]
+    (2)から, $\vec{OA}, \vec{OB}, \vec{OC}$ の係数比較ができて
+    \[
+    l = 1-(x+y), \quad m = x, \quad n = y \quad \dots \text{④}
+    \]
+    これは $l+m+n = 1$ をみたし十分。したがって④のように一意に表せ, 又必ず存在する．(終)
+\end{enumerate}
+
+\newpage
+
+\section*{第6問}
+
+\noindent
+[\textbf{解}] $y_1 = f(x) = \frac{\pi}{4}\frac{1}{x} - \frac{\pi}{4} + 1$, $y_2 = g(x) = \sqrt{2}\cos \frac{\pi}{4}x$ とおく。
+
+\begin{enumerate}
+    \item[(1)] $y_1 - y_3 = \frac{\pi}{4}\frac{1}{x} - \frac{\pi}{4} + 1 - \frac{\pi}{4} + \frac{\pi}{4}x - 1 = \frac{\pi}{4}\left(x + \frac{1}{x} - 2\right)$ であり, $0 < x \le 1$ では
+    AM-GMから
+    \[
+    y_1 - y_3 \ge \frac{\pi}{4}(2-2) = 0
+    \]
+    等号成立は $x=1$ $\dots \text{①}$
+
+    $y_3 - y_2 = \frac{\pi}{4}(1-x) + 1 - \sqrt{2}\cos\frac{\pi}{4}x$
+    \[
+    = \frac{\pi}{4}(1-x) + \sqrt{2}\left(\cos\frac{\pi}{4} - \cos\frac{\pi}{4}x\right)
+    \]
+    これは $x=1$ で等号成立。 $0 < x < 1$ の時, 平均値の定理から
+    \[
+    \cos\frac{\pi}{4} - \cos\frac{\pi}{4}x = (1-x) \cdot \left(-\frac{\pi}{4}\right) \sin\frac{\pi}{4}c \quad (0 < c < 1)
+    \]
+    をみたす $c$ があるので
+    \[
+    y_3 - y_2 = \frac{\pi}{4}(1-x)\left[ 1 - \sqrt{2}\sin\frac{\pi}{4}c \right] > 0 \quad (\because \sqrt{2}\sin\frac{\pi}{4}c < 1)
+    \]
+    だから, ②とあわせて
+    \[
+    y_3 \ge y_2 \quad (\text{等号成立は } x=1) \quad \dots \text{②}
+    \]
+    ①, ②から, $0 < x < 1$ では $y_1 > y_2$ となり, 交点を持たず, $x=1$ での $(1,1)$ のみである．(終)
+
+    \item[(2)] 右図から, もとめる面積 $S$ として
+    \[
+    \begin{aligned}
+    S &= \int_0^{1/2} \left(1 + \frac{\pi}{4} - \sqrt{2}\cos\frac{\pi}{4}x\right) dx + \int_{1/2}^1 (f(x) - g(x)) dx \\
+    &= \int_0^{1/2} \left(1 + \frac{\pi}{4}\right) dx + \int_{1/2}^1 f(x) dx - \int_0^1 g(x) dx \quad \dots \text{③}
+    \end{aligned}
+    \]
+    ここで,
+    \begin{itemize}
+        \item $\int_0^{1/2} \left(1 + \frac{\pi}{4}\right) dx = \frac{1}{2}\left(1 + \frac{\pi}{4}\right)$
+        \item $\int_{1/2}^1 f(x) dx = \left[ \frac{\pi}{4}\log x + \left(1-\frac{\pi}{4}\right)x \right]_{1/2}^1 = \frac{\pi}{4}\log 2 + \frac{1}{2}\left(1-\frac{\pi}{4}\right)$
+        \item $\int_0^1 g(x) dx = \sqrt{2} \frac{4}{\pi} \left[ \sin\frac{\pi}{4}x \right]_0^1 = \frac{4}{\pi}$
+    \end{itemize}
+    を③に代入して
+    \[
+    \begin{aligned}
+    S &= \frac{1}{2}\left(1+\frac{\pi}{4}\right) + \frac{\pi}{8}\log 2 + \frac{1}{2}\left(1-\frac{\pi}{4}\right) + \frac{4}{\pi} \\
+    &= 1 + \frac{4}{\pi} + \frac{\pi}{8}\log 2
+    \end{aligned}
+    \]
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=2.0]
+    \draw[->] (-0.2,0) -- (1.5,0) node[right]{$x$};
+    \draw[->] (0,-0.2) -- (0,2.2) node[above]{$y$};
+    \node[below left] at (0,0) {$O$};
+    
+    \draw (0.5,0.03) -- (0.5,-0.03) node[below]{$1/2$};
+    \draw (1.0,0.03) -- (1.0,-0.03) node[below]{$1$};
+    
+    \draw (0.03,1.0) -- (-0.03,1.0) node[left]{$1$};
+    \draw (0.03,1.414) -- (-0.03,1.414) node[left]{$\sqrt{2}$};
+    \draw (0.03,1.785) -- (-0.03,1.785) node[left]{$1+\pi/4$};
+    
+    \draw[dashed] (0.5,0) -- (0.5, 1.785);
+    \draw[dashed] (1.0,0) -- (1.0, 1.0);
+    \draw[dashed] (0,1.785) -- (0.5, 1.785);
+    
+    \draw[thick, domain=0.25:1.0, smooth] plot (\x, {0.785398/\x - 0.785398 + 1});
+    \node[right] at (0.9, 1.2) {$y_1$};
+    
+    \draw[thick, domain=0:1.0, smooth] plot (\x, {1.41421*cos(45*\x)});
+    \node[below left] at (0.8, 1.0) {$y_2$};
+    
+    \draw[thick] (0,1.785) -- (0.5, 1.785);
+    
+    % Shading
+    \fill[gray!30, opacity=0.5] (0,1.414) -- plot[domain=0:0.5, smooth] (\x, {1.41421*cos(45*\x)}) -- (0.5, 1.785) -- (0, 1.785) -- cycle;
+    \fill[gray!30, opacity=0.5] (0.5, 1.156) -- plot[domain=0.5:1.0, smooth] (\x, {1.41421*cos(45*\x)}) -- (1.0, 1.0) -- plot[domain=1.0:0.5, smooth] (\x, {0.785398/\x - 0.785398 + 1}) -- cycle;
+\end{tikzpicture}
+\end{center}
+
+\end{document}

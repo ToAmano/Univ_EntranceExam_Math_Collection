@@ -1,0 +1,400 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+\section*{京都大学 1998年 前期}
+
+\subsection*{第1問}
+\begin{minipage}[t]{0.5\textwidth}
+[解] $\angle \text{BAC} = \angle \text{R}$ となるよう、3頂点 $\text{A}, \text{B}, \text{C}$ を定める。\\
+$\text{AB}=c, \text{AC}=b, \text{BC}=a$ となる\\
+内接円の中心 $\text{O}$ から各辺に\\
+下ろした垂線を $\text{H}_1 \sim \text{H}_3$ と\\
+する。題意から\\
+$2r + a + b + c = 2 \cdots \text{①}$
+
+(1) $\square \text{AH}_1\text{OH}_3$ が正方形だから、
+\[
+\begin{cases}
+\text{BH}_2 = \text{BH}_1 = c-r \\
+\text{CH}_2 = \text{CH}_3 = b-r
+\end{cases}
+\quad \therefore a = b+c-2r
+\]
+①に代入して
+\[
+b+c = 1 \qquad \cdots \text{②}
+\]
+だから $\quad a = 1-2r$
+
+(2) $\triangle \text{ABC}$ の面積 $S(r)$ とする\\
+$S(r) = \frac{1}{2}bc$\\
+以下この $\max$ をもとめる。$a, b, c, r > 0$ であり、$\triangle \text{ABC}$ の存在条件から
+\[
+\begin{cases}
+b+c > b+c-2r \\
+2b+c-2r > c \\
+2c+b-2r > b
+\end{cases}
+\quad \therefore
+\begin{cases}
+2r > 0 \\
+b-r > 0 \\
+c-r > 0
+\end{cases}
+\]
+$A = bc$ とおくと $b, c$ は $t$ の2次方程式 $t^2 - t + A = 0 \ (\because \text{②})$ の\\
+$r$ より大なる2実解。判別式 $D$、左辺 $f(t)$ として
+\[
+\begin{cases}
+D \ge 0 \\
+f(r) > 0 \\
+r < \frac{1}{2}
+\end{cases}
+\quad \therefore
+\begin{cases}
+1 - 4A \ge 0 \\
+r^2 - r + A > 0 \\
+0 < r < \frac{1}{2}
+\end{cases}
+\]
+これを図示すると右図斜線部\\
+(境界は $A = \frac{1}{4}$ のみ含む)\\
+したがって
+\[
+\max S(r) = \frac{1}{2} \max A = \frac{1}{8}
+\]
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{center}
+\begin{tikzpicture}
+\coordinate (A) at (0, 2.5);
+\coordinate (B) at (-2, 0);
+\coordinate (C) at (2.5, 0);
+\draw (A) -- (B) node[midway, left] {$c$};
+\draw (B) -- (C) node[midway, below] {$a$};
+\draw (C) -- (A) node[midway, right] {$b$};
+\node[above] at (A) {A};
+\node[below left] at (B) {B};
+\node[below right] at (C) {C};
+\draw (A) ++(0,-0.3) -- ++(0.3,0) -- ++(0,0.3);
+
+% Incenter approx
+\coordinate (O) at (0.3, 0.8);
+\draw (O) circle (0.8);
+\node[right] at (O) {O};
+\coordinate (H1) at (-0.3, 1.4); % approx on AB
+\coordinate (H2) at (0.3, 0); % on BC
+\coordinate (H3) at (1, 1.3); % approx on AC
+
+\draw[dashed] (O) -- (A);
+\draw[dashed] (O) -- (H1);
+\draw[dashed] (O) -- (H2);
+\draw[dashed] (O) -- (H3);
+\node[left] at (H1) {H$_1$};
+\node[below] at (H2) {H$_2$};
+\node[right] at (H3) {H$_3$};
+\node at (0, 1) {$r$};
+\node at (0.6, 1.1) {$r$};
+\node at (0.4, 0.4) {$r$};
+\end{tikzpicture}
+\end{center}
+
+[別] $\cdots a, b$ を消去。完全に\\
+内接円と三角形のカンケイから
+\[
+\frac{1}{2}ab = \frac{1}{2} \cdot r \cdot (2-2r)
+\]
+\[
+ab = 2r(1-r)
+\]
+(本解)から $a+b=1$ でもあるから $a,b$ は
+\[
+t^2 - t + 2r(1-r) = 0
+\]
+の2実解。これが $t > r$ に2実解をもつので
+\[
+\begin{cases}
+r < \frac{1}{2} \\
+1 - 8r(1-r) \ge 0 \\
+r^2 - r + 2r(1-r) > 0
+\end{cases}
+\]
+$\Rightarrow$ とくと $0 < r \le \frac{2-\sqrt{2}}{4}$ となり、代入してオワリ。
+
+\vspace{1em}
+\begin{center}
+\begin{tikzpicture}
+\draw[->] (-0.5, 0) -- (3, 0) node[right] {$r$};
+\draw[->] (0, -0.5) -- (0, 2) node[above] {$A$};
+\draw[domain=0:2, smooth, variable=\r] plot ({\r}, {4*(\r/2 - (\r/2)^2)});
+\draw (0, 1) -- (2.5, 1);
+\node[left] at (0, 1) {$\frac{1}{4}$};
+\node[below] at (1, 0) {$\frac{1}{2}$};
+\node[right] at (1.5, 0.7) {$A = -r^2+r$};
+\fill[pattern=north east lines] (0,0) -- (0,1) -- (1,1) -- plot[domain=1:0] ({\x}, {4*(\x/2 - (\x/2)^2)}) -- cycle;
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+
+\subsection*{第2問}
+[解] $f(x) = x^2+7$
+
+(1) $a^2+7$ が $2^n$ の倍数の時。$(a \in \mathbb{N}, n \in \mathbb{N} \ge 3) \cdots \text{①}$
+\begin{align*}
+f(a) &= a^2+7 \\
+f(a+2^{n-1}) &= (a+2^{n-1})^2+7 = (a^2+7) + 2^n \cdot a + 2^{2n-2}
+\end{align*}
+$f(a)$ が $2^{n+1}$ の倍数の時、題意は成立。$f(a)$が $2^{n+1}$の倍数でない時、\\
+①から $f(a) = a^2+7 = 2^n \cdot A \ (A \in \text{odd})$ とかける。
+\begin{align*}
+f(a+2^{n-1}) &= 2^n \cdot A + 2^n \cdot a + 2^{2n-2} \\
+&= 2^n (A+a) + 2^{2n-2}
+\end{align*}
+ここで、$A, a \in \text{odd}$ から $A+a \equiv 0 \pmod 2$、又 $n \ge 3$ から $2n-2 \ge n+1$\\
+だから各項はいずれも $2^{n+1}$ でわり切れる。つまり $f(a+2^{n-1})$ は $2^{n+1}$ でわり切れる\\
+以上から示された。終
+
+(2) $n$についてのキノウ法で示す。\\
+$n=1,2,3$の時、$a_1=1, a_2=1, a_3=1$ とすれば成立。\\
+$n=k \in \mathbb{N}$ での成立をかていすると、(1)から $f(a_k)$ 又は $f(a_k+2^{k-1})$ のいずれかは $2^{k+1}$ でわり切れるから、そのわり切れる方をとって $a_{k+1} = a_k \text{ or } a_k+2^{k-1}$ とすれば良く、$n=k+1$でも成立\\
+以上から示された。
+
+\subsection*{第3問}
+[解] 点 $\text{X}$ に対し、$\overrightarrow{\text{OX}} = \vec{x}$ と定めると、\\
+$\vec{a}, \vec{b}, \vec{c}$ は1次独立 $\cdots \text{①}$。題意から
+\[
+\begin{cases}
+\vec{p} = p\vec{a} \\
+\vec{q} = q\vec{a} + (1-q)\vec{b} \\
+\vec{r} = r\vec{b} + (1-r)\vec{c} \\
+\vec{s} = s\vec{c}
+\end{cases}
+\]
+とおける。$p \sim s$ はいずれも $0 < p,q,r,s < 1$ をみたす実数。
+
+\begin{center}
+\begin{tikzpicture}
+\coordinate (O) at (0,3);
+\coordinate (A) at (-2,0);
+\coordinate (B) at (2,0);
+\coordinate (C) at (4,1.5);
+\draw (O) -- (A);
+\draw (O) -- (B);
+\draw (O) -- (C);
+\draw (A) -- (B);
+\draw (B) -- (C);
+\draw[dashed] (A) -- (C);
+\coordinate (P) at (-1, 1.5); % on OA
+\coordinate (Q) at (0, 0);    % on AB
+\coordinate (R) at (3, 0.75); % on BC
+\coordinate (S) at (2, 2.25); % on OC
+\draw (P) -- (Q) -- (R);
+\draw[dashed] (R) -- (S) -- (P);
+\draw (P) -- (R);
+\draw (Q) -- (S);
+\coordinate (H) at (1, 1.125); % intersection
+\node[above] at (O) {O};
+\node[below left] at (A) {A};
+\node[below] at (B) {B};
+\node[right] at (C) {C};
+\node[left] at (P) {P};
+\node[below] at (Q) {Q};
+\node[right] at (R) {R};
+\node[above] at (S) {S};
+\node[above] at (H) {H};
+\end{tikzpicture}
+\end{center}
+
+\[
+\begin{cases}
+\overrightarrow{\text{PQ}} = (q-p)\vec{a} + (1-q)\vec{b} \equiv \vec{A} \\
+\overrightarrow{\text{PS}} = -p\vec{a} + s\vec{c} \equiv \vec{B} \\
+\overrightarrow{\text{PR}} = -p\vec{a} + r\vec{b} + (1-r)\vec{c}
+\end{cases} \quad \cdots *
+\]
+\[
+\overrightarrow{\text{PH}} = \frac{1}{2}\overrightarrow{\text{PR}} = \frac{1}{2}(\overrightarrow{\text{PS}} + \overrightarrow{\text{PQ}}) \quad ( \text{HはPR, SQの中点} ) \quad \cdots \text{②}
+\]
+\[
+\quad \overrightarrow{\text{PR}} = \vec{A} + \vec{B}
+\]
+
+$*$を代入して
+\[
+\quad -p\vec{a} + r\vec{b} + (1-r)\vec{c} = (q-2p)\vec{a} + (1-q)\vec{b} + s\vec{c}
+\]
+
+①から
+\[
+\begin{cases}
+-p = q-2p \\
+r = 1-q \\
+1-r = s
+\end{cases}
+\quad \therefore
+\begin{cases}
+q = s = p \\
+r = 1-p
+\end{cases}
+\]
+
+②に代入して
+\[
+\quad \vec{h} = \frac{1}{2}( p\vec{a} + (1-p)\vec{b} + p\vec{c} ) \quad \cdots \text{③}
+\]
+
+一方、題意の線分上の点 $\text{X}$ は $\gamma$ に対して $(0 < \gamma < 1)$
+\[
+\quad \vec{x} = \gamma \frac{\vec{a}+\vec{c}}{2} + (1-\gamma) \frac{\vec{b}}{2} \quad \cdots \text{④}
+\]
+と表せる。$0 < p < 1$ とあわせて、④で $\gamma = p$ としたものが ③だから、たしかに\\
+$\text{H}$ は題意の線分上にある (終)
+
+\subsection*{第4問}
+[解] 題意の放物線は
+\[
+y = f(x) = \frac{m}{a^2}x(2a-x)
+\]
+である。
+\begin{align*}
+S_m &= \int_0^{2a} f(x) dx \\
+&= \frac{1}{6} \frac{m}{a^2} (2a)^3 = \frac{4}{3}ma \quad \cdots \text{①}
+\end{align*}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+\draw[->] (-0.5, 0) -- (4.5, 0) node[right] {$x$};
+\draw[->] (0, -0.5) -- (0, 3) node[above] {$y$};
+\draw[domain=0:4, smooth, variable=\x] plot ({\x}, {2.5 - 2.5*(\x-2)^2/4});
+\draw[dashed] (2, 0) -- (2, 2.5) -- (0, 2.5);
+\node[left] at (0, 2.5) {$m$};
+\node[below] at (2, 0) {$a$};
+\node[below] at (4, 0) {$2a$};
+\draw (1.5, 0) rectangle (1.8, 1.8);
+\end{tikzpicture}
+\end{center}
+
+又、$L_m = \sum_{k=0}^{2a} \{ [f(k)] + 1 \}$ だから、$f(k)-1 < [f(k)] \le f(k)$ より
+\[
+\sum_{k=0}^{2a} f(k) < L_m \le \sum_{k=0}^{2a} f(k) + 2a + 1
+\]
+
+①より
+\[
+\frac{3}{4ma} \sum_{k=0}^{2a} f(k) < \frac{L_m}{S_m} \le \frac{3}{4ma} \sum_{k=0}^{2a} f(k) + \frac{3(2a+1)}{4ma} \quad \cdots \text{②}
+\]
+
+ここで、
+\begin{align*}
+\sum_{k=0}^{2a} k(2a-k) &= -\frac{1}{6} \cdot 2a(2a+1)(4a+1) + a \cdot 2a(2a+1) \\
+&= -\frac{1}{3}a(2a+1)(4a+1) + 2a^2(2a+1) \\
+&= \frac{1}{3}a(4a^2-1)
+\end{align*}
+
+だから $\sum_{k=0}^{2a} f(k) = \frac{m}{a^2} \frac{1}{3}a(4a^2-1) = \frac{m}{3} \frac{4a^2-1}{a}$ だから、②に代入
+\[
+\frac{1}{4ma} m \frac{4a^2-1}{a} < \frac{L_m}{S_m} \le \frac{1}{4ma} m \frac{4a^2-1}{a} + \frac{3(2a+1)}{4ma}
+\]
+\[
+1 - \frac{1}{4a^2} < \frac{L_m}{S_m} \le 1 - \frac{1}{4a^2} + \frac{3(2a+1)}{4ma}
+\]
+
+はさみうちから
+\[
+\frac{L_m}{S_m} \longrightarrow 1 - \frac{1}{4a^2} \quad (m \to \infty)
+\]
+
+\subsection*{第5問}
+[解] 青、赤、白を $\text{B}, \text{R}, \text{W}$ とし、たとえば青球の1番を $\text{B-}1$ と表す。
+
+(1) 3点となるのは、色も番号も異なる3つの玉をとりだしたときで、
+\[
+A(3) = 3 \times 2 \times 1 = 6
+\]
+
+2点となることはありえず、$A(2) = 0$
+
+1点となるのは、2つの玉のみ、色又は番号が被る時で、全く被らない1つのキメ方から
+\[
+A(1) = 9 \times (_4\text{C}_2 - 2) = 36
+\]
+
+余事象から
+\[
+A(0) = _9\text{C}_3 - (6 + 0 + 36) = 42
+\]
+
+(2)
+\begin{align*}
+E &= 3 \times \frac{6}{_9\text{C}_3} + 2 \times 0 + 1 \times \frac{36}{_9\text{C}_3} \\
+&= \frac{18 + 36}{84} = \frac{9}{14}
+\end{align*}
+
+\subsection*{第6問}
+[解] $0 < a < 1 \cdots \text{①}$ より、グラフは右図。$f(x) = \log(x-a)$ とする。
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+\draw[->] (-0.5, 0) -- (4, 0) node[right] {$x$};
+\draw[->] (0, -2) -- (0, 2) node[above] {$y$};
+\draw[dashed] (0.5, -2) -- (0.5, 2);
+\node[below left] at (0.5, 0) {$a$};
+\draw[domain=0.6:3.5, smooth, variable=\x] plot ({\x}, {ln(\x-0.5)});
+\node[below] at (1.5, 0) {$a+1$};
+\node[below] at (1, 0) {$1$};
+\node[below] at (3, 0) {$3$};
+\draw (3, 0) -- (3, {ln(2.5)});
+\draw (1, 0) -- (1, {ln(0.5)});
+\fill[pattern=north east lines] (1.5, 0) -- plot[domain=1.5:3] ({\x}, {ln(\x-0.5)}) -- (3,0) -- cycle;
+\end{tikzpicture}
+\end{center}
+
+\begin{align*}
+(1) \quad V(a) &= \int_1^3 \pi \{ f(x) \}^2 dx \\
+&= \pi \int_{1-a}^{3-a} (\log x)^2 dx \quad \cdots \text{②} \\
+&= \pi \left[ x(\log x)^2 - 2x(\log x - 1) \right]_{1-a}^{3-a} \\
+&= \pi \left\{ (3-a) \left\{ (\log(3-a))^2 - 2\log(3-a) + 2 \right\} - (1-a) \left\{ (\log(1-a))^2 - 2\log(1-a) + 2 \right\} \right\}
+\end{align*}
+
+(2) ②から
+\begin{align*}
+\frac{1}{\pi} V'(a) &= - (\log(3-a))^2 + (\log(1-a))^2 \\
+&= \{ \log(1-a) + \log(3-a) \} \{ \log(1-a) - \log(3-a) \} \\
+&= \log(1-a)(3-a) \cdot \log \frac{1-a}{3-a}
+\end{align*}
+
+から、下表をうる。
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+$a$ & $0$ & $\cdots$ & $2-\sqrt{2}$ & $\cdots$ & $1$ \\ \hline
+$V'$ & & $-$ & $0$ & $+$ & \\ \hline
+$V$ & & $\searrow$ & & $\nearrow$ & \\ \hline
+\end{tabular}
+\end{center}
+
+\[
+\left( \begin{array}{l}
+(1-a)(3-a) \ge 1 \iff a \le 2-\sqrt{2}, 2+\sqrt{2} \le a \\
+\text{①から } \frac{1-a}{3-a} \le 1 \text{ である。}
+\end{array} \right)
+\]
+
+したがって、$a = 2-\sqrt{2}$ の時 $V$ は $\min$ で、この時、
+\[
+\begin{cases}
+1-a = -1+\sqrt{2} \\
+3-a = 1+\sqrt{2}
+\end{cases}
+\]
+から $B = \log(-1+\sqrt{2}), A = \log(1+\sqrt{2})$ として、$B = -A$ だから
+\begin{align*}
+V(a) \cdot \frac{1}{\pi} &= (1+\sqrt{2}) \{ A^2 - 2A + 2 \} - (-1+\sqrt{2}) \{ B^2 - 2B + 2 \} \\
+&= (1+\sqrt{2}) \{ A^2 - 2A + 2 \} + (1-\sqrt{2}) \{ A^2 + 2A + 2 \} \\
+&= 2A^2 - 4\sqrt{2}A + 4
+\end{align*}
+\[
+\therefore V(a) = 2\pi \left\{ (\log(1+\sqrt{2}))^2 - 2\sqrt{2}\log(1+\sqrt{2}) + 2 \right\}
+\]
+
+\end{document}

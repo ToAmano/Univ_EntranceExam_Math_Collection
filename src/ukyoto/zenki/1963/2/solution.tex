@@ -1,0 +1,114 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\noindent
+[\textbf{解}] 内接円の半径 $r$, 外接円の半径 $R$ とおく。まず $\triangle ABC$ において内心 $O$ とし、図のように角度をおく ($\alpha+\beta+\gamma = \pi/2$) と
+\[
+AB = \frac{r}{\tan \alpha} + \frac{r}{\tan \beta}
+\]
+だから正弦定理から
+\[
+\frac{r}{\sin 2\gamma} \left( \frac{1}{\tan \alpha} + \frac{1}{\tan \beta} \right) = 2R
+\]
+$A = \sin \alpha \sin \beta \sin \gamma$ とおくと
+\[
+\frac{r \sin(\alpha+\beta)}{2A \cos \gamma} = 2R
+\]
+$\alpha+\beta+\gamma = \pi/2$ から $\sin(\alpha+\beta) = \sin(\pi/2-\gamma) = \cos \gamma$ だから
+\[
+A = \frac{r}{4R} \quad \dots \text{①}
+\]
+である。同様に $\triangle DEF$ において右のように角をおくと ($O''$ は $\triangle DEF$ の内心)
+\[
+\sin \alpha' \sin \beta' \sin \gamma' = \frac{r}{4R} \quad \dots \text{②}
+\]
+である。$\{\alpha, \beta, \gamma\} = \{\alpha', \beta', \gamma'\}$ ならば $\triangle ABC$ と $\triangle DEF$ は合同である $\dots$ ③。以下、
+\begin{align*}
+f(x, y) &= \sin x \sin y \sin(\pi/2 - x - y) \\
+&= \sin x \sin y \cos(x+y) \quad (0 < x, y, \ x+y < \pi/2)
+\end{align*}
+のとりうる値を考える。もし、異なる2組の $(x,y)$ に対し $f(x,y)$ が同じ値をとるなら、①, ②から $\triangle ABC$ と $\triangle DEF$ は合同とは限らない $\dots$ ④
+
+\[
+f(x,y) = \frac{1}{2} \sin y \{ \sin(2x+y) - \sin y \}
+\]
+まず $y$ を固定して考える。$0 < x < \pi/2$ から $y < 2x+y < \pi-y$, $0 < y < \pi/2$ に注意して右辺 $g(y)$ とおくと
+\[
+0 < g(y) \le \frac{1}{2} \sin y (1 - \sin y) \quad \dots *
+\]
+次に $t = \sin y \ (0 < t < 1)$ とおいて、$y$ をうごかすことにより $S = g(y)$ のとりうる領域は下図斜線部である（境界は、斜線部のみ含む）。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=stealth]
+  \coordinate (A) at (1, 2.2);
+  \coordinate (B) at (0, 0);
+  \coordinate (C) at (3, 0);
+  \coordinate (O) at (1.1, 0.7);
+  
+  \draw (A) -- (B) -- (C) -- cycle;
+  \draw (A) -- (O);
+  \draw (B) -- (O);
+  \draw (C) -- (O);
+  
+  \node[above] at (A) {$A$};
+  \node[below left] at (B) {$B$};
+  \node[below right] at (C) {$C$};
+  \node[right] at (O) {$O$};
+  
+  \node at (0.9, 1.7) {$\alpha$};
+  \node at (0.4, 0.3) {$\beta$};
+  \node at (2.4, 0.3) {$\gamma$};
+  \node at (1.0, 0.35) {$r$};
+\end{tikzpicture}
+\hspace{0.5cm}
+\begin{tikzpicture}[scale=0.7, >=stealth]
+  \coordinate (D) at (1, 1.5);
+  \coordinate (E) at (0, 0);
+  \coordinate (F) at (2, 0);
+  \coordinate (O2) at (1, 0.5);
+  \draw (D) -- (E) -- (F) -- cycle;
+  \draw (D) -- (O2);
+  \draw (E) -- (O2);
+  \draw (F) -- (O2);
+  \node[above] at (D) {$D$};
+  \node[below left] at (E) {$E$};
+  \node[below right] at (F) {$F$};
+  \node[left] at (0.8, 1.2) {$\alpha'$};
+  \node at (0.4, 0.2) {$\beta'$};
+  \node at (1.6, 0.2) {$\gamma'$};
+  \node[above right] at (O2) {$O''$};
+\end{tikzpicture}
+\hspace{0.5cm}
+\begin{tikzpicture}[scale=0.8, >=stealth]
+  \draw[->] (-0.5,0) -- (3.0,0) node[right] {$t$};
+  \draw[->] (0,-0.5) -- (0,2.0) node[above] {$S$};
+  \node[below left] at (0,0) {$0$};
+  
+  \draw[domain=0:2.0, smooth, variable=\t, thick] plot ({\t}, {1.8*\t*(1-\t/2.0)});
+  \fill[pattern=north east lines, pattern color=gray, domain=0:2.0, variable=\t] 
+    plot ({\t}, {1.8*\t*(1-\t/2.0)}) -- (0,0) -- cycle;
+    
+  \draw[dashed] (1.0, 0) -- (1.0, 0.9) -- (0, 0.9);
+  \node[below] at (1.0, 0) {$\frac{1}{2}$};
+  \node[left] at (0, 0.9) {$\frac{1}{8}$};
+  \node[below] at (2.0, 0) {$1$};
+\end{tikzpicture}
+\end{center}
+
+\noindent
+今、①, ②を満たす文字の存在は保障されていることから③, ④より
+\[
+0 < \frac{r}{4R} < \frac{1}{8} \text{ の時、合同とは限らない}
+\]
+\[
+\frac{r}{4R} = \frac{1}{8} \text{ の時、合同}
+\]
+($\because 0 < y < \pi/2$ から $t = 1/2 \iff y = \pi/6$, で、等号が成立することから $2x+\pi/6 = \pi/2 \iff x = \pi/6$)
+
+\newpage
+
+\end{document}

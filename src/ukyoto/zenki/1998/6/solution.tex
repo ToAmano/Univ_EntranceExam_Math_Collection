@@ -1,0 +1,75 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] $0 < a < 1 \cdots \text{①}$ より、グラフは右図。$f(x) = \log(x-a)$ とする。
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+\draw[->] (-0.5, 0) -- (4, 0) node[right] {$x$};
+\draw[->] (0, -2) -- (0, 2) node[above] {$y$};
+\draw[dashed] (0.5, -2) -- (0.5, 2);
+\node[below left] at (0.5, 0) {$a$};
+\draw[domain=0.6:3.5, smooth, variable=\x] plot ({\x}, {ln(\x-0.5)});
+\node[below] at (1.5, 0) {$a+1$};
+\node[below] at (1, 0) {$1$};
+\node[below] at (3, 0) {$3$};
+\draw (3, 0) -- (3, {ln(2.5)});
+\draw (1, 0) -- (1, {ln(0.5)});
+\fill[pattern=north east lines] (1.5, 0) -- plot[domain=1.5:3] ({\x}, {ln(\x-0.5)}) -- (3,0) -- cycle;
+\end{tikzpicture}
+\end{center}
+
+\begin{align*}
+(1) \quad V(a) &= \int_1^3 \pi \{ f(x) \}^2 dx \\
+&= \pi \int_{1-a}^{3-a} (\log x)^2 dx \quad \cdots \text{②} \\
+&= \pi \left[ x(\log x)^2 - 2x(\log x - 1) \right]_{1-a}^{3-a} \\
+&= \pi \left\{ (3-a) \left\{ (\log(3-a))^2 - 2\log(3-a) + 2 \right\} - (1-a) \left\{ (\log(1-a))^2 - 2\log(1-a) + 2 \right\} \right\}
+\end{align*}
+
+(2) ②から
+\begin{align*}
+\frac{1}{\pi} V'(a) &= - (\log(3-a))^2 + (\log(1-a))^2 \\
+&= \{ \log(1-a) + \log(3-a) \} \{ \log(1-a) - \log(3-a) \} \\
+&= \log(1-a)(3-a) \cdot \log \frac{1-a}{3-a}
+\end{align*}
+
+から、下表をうる。
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+$a$ & $0$ & $\cdots$ & $2-\sqrt{2}$ & $\cdots$ & $1$ \\ \hline
+$V'$ & & $-$ & $0$ & $+$ & \\ \hline
+$V$ & & $\searrow$ & & $\nearrow$ & \\ \hline
+\end{tabular}
+\end{center}
+
+\[
+\left( \begin{array}{l}
+(1-a)(3-a) \ge 1 \iff a \le 2-\sqrt{2}, 2+\sqrt{2} \le a \\
+\text{①から } \frac{1-a}{3-a} \le 1 \text{ である。}
+\end{array} \right)
+\]
+
+したがって、$a = 2-\sqrt{2}$ の時 $V$ は $\min$ で、この時、
+\[
+\begin{cases}
+1-a = -1+\sqrt{2} \\
+3-a = 1+\sqrt{2}
+\end{cases}
+\]
+から $B = \log(-1+\sqrt{2}), A = \log(1+\sqrt{2})$ として、$B = -A$ だから
+\begin{align*}
+V(a) \cdot \frac{1}{\pi} &= (1+\sqrt{2}) \{ A^2 - 2A + 2 \} - (-1+\sqrt{2}) \{ B^2 - 2B + 2 \} \\
+&= (1+\sqrt{2}) \{ A^2 - 2A + 2 \} + (1-\sqrt{2}) \{ A^2 + 2A + 2 \} \\
+&= 2A^2 - 4\sqrt{2}A + 4
+\end{align*}
+\[
+\therefore V(a) = 2\pi \left\{ (\log(1+\sqrt{2}))^2 - 2\sqrt{2}\log(1+\sqrt{2}) + 2 \right\}
+\]
+
+\end{document}

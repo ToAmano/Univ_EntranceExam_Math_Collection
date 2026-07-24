@@ -1,0 +1,507 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{第1問}
+
+［解1］座標平面で，$A(0, a)$, $B(b, 0)$, $C(c, 0)$ ($a>0, b>0, c<0$) として良い。$PQ$ の中点の軌跡を考える。まず，$P, Q$ が $AC, BC$ 上を動く時，
+\[
+P(ct, a(1-t)), \quad Q(s, 0) \quad (0 \le t \le 1, c \le s \le b)
+\]
+とおける。$PQ$ の中点 $R(X, Y)$ とすると
+\[
+\begin{pmatrix} X \\ Y \end{pmatrix} = \frac{1}{2} \begin{pmatrix} ct \\ a(1-t) \end{pmatrix} + \frac{1}{2} \begin{pmatrix} s \\ 0 \end{pmatrix} = \frac{1}{2} t \begin{pmatrix} c \\ -a \end{pmatrix} + \frac{1}{2} s \begin{pmatrix} 1 \\ 0 \end{pmatrix} + \frac{1}{2} \begin{pmatrix} 0 \\ a \end{pmatrix}
+\]
+だから，$R$ の軌跡は右図斜線部のようである（境界含む）。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=stealth]
+  \draw[->] (-2.5,0) -- (3,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,2.5) node[above] {$y$};
+  \coordinate (A) at (0,2);
+  \coordinate (B) at (2.5,0);
+  \coordinate (C) at (-2,0);
+  \draw[thick] (A) node[above left] {$A$} -- (B) node[below right] {$B$} -- (C) node[below left] {$C$} -- cycle;
+  \node[below left] at (0,0) {$O$};
+  \node[left] at (0,2) {$a$};
+  \node[below] at (2.5,0) {$b$};
+  \node[below] at (-2,0) {$c$};
+\end{tikzpicture}
+\end{center}
+
+$PQ$ が
+$\begin{cases} 1^\circ \quad AC, AB \text{ 上の時} \\ 2^\circ \quad AB, BC \text{ 上の時} \end{cases}$
+も，対称性から $R$ の軌跡は以下のようになる（境界含む）。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8, >=stealth]
+  \draw[->] (-2,0) -- (2.5,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,2.5) node[above] {$y$};
+  \coordinate (A) at (0,2);
+  \coordinate (B) at (2,0);
+  \coordinate (C) at (-1.5,0);
+  \draw[thick] (A) node[above] {$a$} -- (B) -- (C) -- cycle;
+  \coordinate (MAB) at (1,1);
+  \coordinate (MAC) at (-0.75,1);
+  \coordinate (MBC) at (0.25,0);
+  \fill[pattern=north east lines] (A) -- (MAB) -- (MBC) -- (MAC) -- cycle;
+  \draw (MAB) node[right] {$\frac{1}{2}a$};
+  \draw (MAC) node[left] {$\frac{1}{2}c$};
+  \draw (MBC) node[below] {$\frac{b+c}{2}$};
+  \node[below] at (-1.5,0) {$c$};
+  \node[below] at (2,0) {$\frac{1}{2}b$};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[scale=0.8, >=stealth]
+  \draw[->] (-2,0) -- (2.5,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,2.5) node[above] {$y$};
+  \coordinate (A) at (0,2);
+  \coordinate (B) at (2,0);
+  \coordinate (C) at (-1.5,0);
+  \draw[thick] (A) -- (B) -- (C) -- cycle;
+  \coordinate (MAB) at (1,1);
+  \coordinate (MAC) at (-0.75,1);
+  \coordinate (MBC) at (0.25,0);
+  \fill[pattern=north west lines] (MAC) -- (A) -- (MAB) -- cycle;
+  \node[right] at (MAB) {$\frac{1}{2}a$};
+  \node[below] at (C) {$c$};
+  \node[below] at (B) {$b$};
+  \node at (0,-0.8) {$1^\circ$ の時};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[scale=0.8, >=stealth]
+  \draw[->] (-2,0) -- (2.5,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,2.5) node[above] {$y$};
+  \coordinate (A) at (0,2);
+  \coordinate (B) at (2,0);
+  \coordinate (C) at (-1.5,0);
+  \draw[thick] (A) node[above] {$a$} -- (B) -- (C) -- cycle;
+  \coordinate (MAB) at (1,1);
+  \coordinate (MAC) at (-0.75,1);
+  \coordinate (MBC) at (0.25,0);
+  \fill[pattern=north east lines] (MAB) -- (B) -- (MBC) -- cycle;
+  \node[right] at (MAB) {$\frac{1}{2}a$};
+  \node[below] at (MBC) {$\frac{b+c}{2}$};
+  \node[below] at (B) {$b$};
+  \node at (0,-0.8) {$2^\circ$ の時};
+\end{tikzpicture}
+\end{center}
+
+以上まとめて，$AB, BC, CA$ の中点を $\alpha, \beta, \gamma$ として，以下のようになる。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+  \coordinate (A) at (0,2.5);
+  \coordinate (B) at (-2,0);
+  \coordinate (C) at (2,0);
+  \coordinate (alpha) at (-1,1.25);
+  \coordinate (beta) at (0,0);
+  \coordinate (gamma) at (1,1.25);
+
+  \draw[thick] (A) node[above] {$A$} -- (B) node[below left] {$B$} -- (C) node[below right] {$C$} -- cycle;
+  \draw[dashed] (alpha) node[left] {$\alpha$} -- (beta) node[below] {$\beta$} -- (gamma) node[right] {$\gamma$} -- cycle;
+
+  \node at (0,1.7) {$1$本};
+  \node at (-1.1,0.5) {$1$本};
+  \node at (1.1,0.5) {$1$本};
+  \node at (0,0.7) {$3$本};
+  \draw[<-] (0,0.85) -- (0.8,0.7) node[right] {サ};
+\end{tikzpicture}
+\end{center}
+
+［解2］（解1の最後の図を用いる）
+
+$\triangle A\alpha\gamma, \triangle B\beta\alpha, \triangle C\gamma\beta$（辺 $\beta\alpha, \gamma\alpha, \gamma\beta$ をのぞく）の周及び内部を $T_1$，\\
+辺 $\beta\alpha, \gamma\alpha, \gamma\beta$ を $T_2$，\\
+$\triangle \alpha\beta\gamma$ の内部を $T_3$
+
+とする。$M$ が各々の領域をうごく時の線本数をしらべる。まず $T_3$ について。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+  \coordinate (A) at (0,2.5);
+  \coordinate (B) at (-2.5,0);
+  \coordinate (C) at (2.5,0);
+  \draw[thick] (A) node[above] {$A$} -- (B) node[below left] {$B$} -- (C) node[below right] {$C$} -- cycle;
+  \coordinate (Ap) at (0.5,0);
+  \coordinate (Bp) at (1.2,1.3);
+  \coordinate (Cp) at (-1.2,1.3);
+  \draw[dashed] (A) -- (Ap) node[below] {$A'$};
+  \draw[dashed] (B) -- (Bp) node[above right] {$B'$};
+  \draw[dashed] (C) -- (Cp) node[above left] {$C'$};
+  \coordinate (M) at (0.2,0.8);
+  \fill (M) circle (1.5pt) node[right] {$M$};
+  \coordinate (P) at (-0.6, 1.9);
+  \coordinate (Q) at (1.5, 0);
+  \draw (P) node[above left] {$P$} -- (Q) node[below] {$Q$};
+\end{tikzpicture}
+\end{center}
+
+$AM$ と $BC$，$BM$ と $AC$，$CM$ と $AB$ の交点を各々 $A', B', C'$ とする。$P \in A$ から，$Q$ を $A'$ から，反時計回りに $PQ$ が $M$ を通るようにうごかす。（$P$ は $A \to C' \to B \to A'$，$Q$ は $A' \to C \to B' \to A$）
+
+\[
+|MA| - |MA'| > 0, \quad |MC'| - |MC| < 0
+\]
+から，$P$ が $A \to C'$ とうごく時，
+\[
+|MP| - |MQ|
+\]
+はレンゾクな値をとりながら正 $\to$ 負と変化するので，$|MP| - |MQ| = 0$ となる $(P, Q)$ の組が少なくとも1つ存在する。このような組が2つ以上あると仮定すると，これらを $(P_1, Q_1), (P_2, Q_2)$ として，この4点は平行四辺形をなすが，$AB \mathbin{/\!/} BC$ 等より矛盾。よって $|MP| - |MQ| = 0$ となる $(P, Q)$ がただ1つ存在する。同様に $P$ が $C' \to B, B \to A'$ と動く時にも1つずつ，計3つある。
+
+同様に $T_2$ のときは2つ，$T_1$ のときは1つあるので，［解1］のようになる。
+
+\newpage
+
+\section*{第2問}
+
+［解］(1)
+\[
+\text{(与式)} \iff k(x^2 + y^2 - by) + (x^2 + y^2 - ax) = 0
+\]
+だから，2円の交点
+\[
+(x, y) = (0, 0), \left( \frac{ab^2}{a^2+b^2}, \frac{a^2 b}{a^2+b^2} \right)
+\]
+を通る。
+
+(2) 中心 $M(X, Y)$ とすると
+\[
+X = \frac{a}{2(k+1)}, \quad Y = \frac{kb}{2(k+1)}
+\]
+$a \ne 0$ から $X \ne 0$ で
+\[
+\frac{Y}{X} = \frac{b}{a} k \quad \therefore k = \frac{a}{b} \frac{Y}{X} \quad (\because b \ne 0)
+\]
+だから，代入して
+\[
+X = \frac{a}{2\left( \frac{a}{b} \frac{Y}{X} + 1 \right)} = \frac{abX}{2(aY + bX)}
+\]
+$X \ne 0$ から
+\[
+2(aY + bX) = ab \quad (X \ne 0)
+\]
+切片形は
+\[
+2bx + 2ay = ab \quad (x \ne 0) \quad \dots \text{/\!/}
+\]
+
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+(1) から，これが2定点 $AB$ として，$AB$ の垂直2等分線なら OK だが \\
+\quad $y = -\frac{b}{a} \left( x - \frac{ab^2}{2(a^2+b^2)} \right) + \frac{a^2 b}{2(a^2+b^2)}$ \\
+\quad $y = -\frac{b}{a} x + \frac{b(a^2+b^2)}{2(a^2+b^2)}$ \\
+\quad $bx + ay = \frac{1}{2} ab \implies \text{一致！！}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+\section*{第3問}
+
+［解］
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw (0,0) circle (1.5);
+  \coordinate (P) at (0,1.5);
+  \coordinate (Q) at (-1.3,-0.75);
+  \coordinate (R) at (1.3,-0.75);
+  \coordinate (S) at (1.4,0.5);
+  \draw (P) node[above] {$P$} -- (Q) node[below left] {$Q$} -- (R) node[below right] {$R$} -- cycle;
+  \draw (S) node[right] {$S$} -- (R);
+  \draw (-1.8, 0.8) -- (0.5, 0.8);
+  \node at (-0.8, 0.95) {$A$};
+  \node at (-0.2, 0.95) {$B$};
+\end{tikzpicture}
+\end{center}
+
+$SR$ と $AB$ の交点を $C$ とおく。$P$ の位置によって，以下の2通りの位置関係がありうる。
+
+だから，直線 $SR$ は $P$ の位置によらず，定点 $C$ を通る図。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw (0,0) circle (1.5);
+  \coordinate (P) at (-0.4,1.45);
+  \coordinate (A) at (-1.3,0.75);
+  \coordinate (B) at (-0.2,0.75);
+  \coordinate (C) at (0.8,0.75);
+  \coordinate (Q) at (-1.4,-0.5);
+  \coordinate (S) at (-0.3,-1.46);
+  \coordinate (R) at (1.2,-0.9);
+  \draw (-1.8,0.75) -- (1.8,0.75);
+  \draw (P) node[above] {$P$};
+  \draw (A) node[above left] {$A$};
+  \draw (B) node[above right] {$B$};
+  \draw (C) node[above] {$C$};
+  \draw (Q) node[below left] {$Q$};
+  \draw (S) node[below] {$S$};
+  \draw (R) node[below right] {$R$};
+  \draw (P) -- (A) -- (S);
+  \draw (P) -- (R);
+  \draw (Q) -- (S);
+  \draw (S) -- (R) -- (C);
+  \node at (0,-1.9) {$1^\circ$ 線分 $QS$ と $PR$ が交わらない};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[scale=0.9]
+  \draw (0,0) circle (1.5);
+  \coordinate (P) at (0,1.5);
+  \coordinate (A) at (-1.2,0.9);
+  \coordinate (B) at (-0.4,0.9);
+  \coordinate (C) at (1.2,0.9);
+  \coordinate (Q) at (-1.45,-0.3);
+  \coordinate (S) at (1.4,-0.5);
+  \coordinate (R) at (0.5,-1.4);
+  \draw (-1.8,0.9) -- (1.8,0.9);
+  \draw (P) node[above] {$P$};
+  \draw (A) node[above left] {$A$};
+  \draw (B) node[above right] {$B$};
+  \draw (C) node[above] {$C$};
+  \draw (Q) node[left] {$Q$};
+  \draw (S) node[right] {$S$};
+  \draw (R) node[below right] {$R$};
+  \draw (P) -- (R);
+  \draw (Q) -- (S);
+  \draw (S) -- (R) -- (C);
+  \node at (0,-1.9) {$2^\circ$ 線分 $QS$ と $PR$ が交わる};
+\end{tikzpicture}
+\end{center}
+
+$1^\circ$ の時，$PR$ と $QS$ の交点を $D$ とすると，内接四角形の対角の和が $\pi$ であることから角度が図のようになり（$\because AB \mathbin{/\!/} QS$），
+\[
+\triangle PAB \sim \triangle CRB
+\]
+
+$2^\circ$ の時，同じく $D$ ととると円周角の定理から $\angle QPR = \angle QSR$ であることから角度が図のようになり（$\because AB \mathbin{/\!/} QS$），
+\[
+\triangle PAB \sim \triangle CRB
+\]
+
+以上 $1^\circ, 2^\circ$ から，いずれの場合も $\triangle PAB \sim \triangle CRB$ であり，
+$PB = x, BR = y$ とおくと
+\[
+BC = \frac{xy}{AB} \quad \dots \text{①}
+\]
+である。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \coordinate (P) at (0,1.5);
+  \coordinate (A) at (-1,0.5);
+  \coordinate (B) at (-0.3,0.5);
+  \coordinate (C) at (1.2,0);
+  \coordinate (R) at (0.7,-1);
+  \draw (P) node[above] {$P$} -- (A) node[left] {$A$} -- (C) node[right] {$C$};
+  \draw (P) -- (B) node[above right] {$B$} -- (R) node[below right] {$R$} -- (C);
+  \draw (A) -- (B);
+  \node at (-0.4, 1.1) {$x$};
+  \node at (0.4, -0.2) {$y$};
+\end{tikzpicture}
+\end{center}
+
+一方，直線 $BC$ と円の交点を $E, F$ として方べきの定理から
+\[
+x \cdot y = BF \cdot BE \quad \dots \text{②}
+\]
+①, ②から
+\[
+BC = \frac{BF \cdot BE}{AB} = \text{const} \quad (P \text{ の位置によらない})
+\]
+
+\newpage
+
+\section*{第4問}
+
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+$\begin{cases} C < a+b \text{ の時，} (p, q) \text{ は存在する} \\ C \ge a+b \text{ の時，} \quad \text{＂} \quad \text{しない} \end{cases}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+［解］$f(x) = x(x-a)(b-x) - px^2 + qx$ に対し，$x \le C$ で常に $f(x) \ge 0$ となる $(p, q)$ をさがせばよい。
+\[
+f'(x) = -3x^2 + 2(a+b-p)x - ab + q \quad \dots \text{①}
+\]
+さて，2つの関数の解は $x = 0, a, b$ と $x = 0, \frac{q}{p}$ だからグラフは右のようになる。したがって，$x=0$ で接することが必要で，
+\[
+-q = -ab \iff q = ab \quad \dots \text{②}
+\]
+だから①に代入して
+\[
+f'(x) = x [ -3x + 2(a+b-p) ]
+\]
+従って $0 < a+b-p$ となる $p$ をとると極大を与える。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  \draw[->] (-0.5,0) -- (3,0) node[right] {$x$};
+  \draw[->] (0,-1.5) -- (0,1.5) node[above] {$y$};
+  \draw[domain=0:2.5, samples=50, smooth, thick] plot (\x, {\x*(\x-1)*(2-\x)});
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tabular}{c|c|c|c|c}
+$x$ & $0$ & $\dots$ & $\frac{2}{3}(a+b-p)$ & $\dots$ \\ \hline
+$f'$ & $-$ & $0$ & $+$ & $0$ & $-$ \\ \hline
+$f$ & $\searrow$ & $0$ & $\nearrow$ & & $\searrow$
+\end{tabular}
+\end{center}
+
+ア $C < \frac{2}{3}(a+b)$ の時，
+
+$C \le \frac{2}{3}(a+b-p)$ となるよう $p (>0)$ がとれて，この時 $f(x)$ は $x=0$ で $\min 0$ をとるから，題意を満たす $p, q$ が存在する。
+
+イ $C \ge \frac{2}{3}(a+b)$ の時，
+
+$\frac{2}{3}(a+b-p) < C$ から $f(x)$ は，$x=0$ 又は $x=C$ で $\min$ ををとる。
+\begin{align*}
+f(C) &= -C(C-a)(C-b) - pC^2 + abC \\
+&= C [ -(C-a)(C-b) - pC + ab ] \\
+&= C^2 [ -C + (a+b-p) ]
+\end{align*}
+だから，
+\begin{enumerate}
+  \item[$1^\circ$] $C < a+b$ の時，$f(C) \ge 0$ となる $p$ がとれて，題意を満たす $(p, q)$ が存在。
+  \item[$2^\circ$] $C \ge a+b$ の時，$f(C) < 0$ から不適。
+\end{enumerate}
+
+一方，$a+b-p \le 0$ となる $p$ をとったとき $0 \le x \le C$ で $f(x)$ は単調減少。かつ $f(0) = 0$ から，これは不適。
+
+従って，コタエは
+\[
+\begin{cases}
+C < a+b \text{ の時，} (p, q) \text{ は存在する} \\
+C \ge a+b \text{ の時，存在しない}
+\end{cases}
+\]
+
+\newpage
+
+\section*{第5問}
+
+［解］(1)
+\begin{align*}
+f(x) &= \sqrt{2} a \pi x + c \cos \pi x + \sin \pi x \\
+&= \sqrt{2} a t + c \cos t + \sin t \quad (t = \pi x) \equiv g(t)
+\end{align*}
+とすると
+\[
+g'(t) = \sqrt{2} a + c \cos t - \sin t
+\]
+だから $t_0$ の前後で $g'(t)$ の符号が変化するような $t_0$ の存在条件は，右図から
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  \draw[->] (-0.5,0) -- (3.5,0) node[right] {$t$};
+  \draw[->] (0,-2) -- (0,2) node[above] {$y$};
+  \draw[domain=0:3.14, samples=50, smooth, thick] plot (\x, {1.414*sin(\x r - 0.785 r)});
+  \draw[dashed] (0, 1.414) node[left] {$\sqrt{2}$} -- (3.14, 1.414);
+  \draw[dashed] (0, -1.414) node[left] {$-\sqrt{2}$} -- (3.14, -1.414);
+  \node[below] at (0.785, 0) {$\pi/4$};
+  \node[right] at (3, 1) {$y = \sin t - c \cos t$};
+\end{tikzpicture}
+\end{center}
+
+\[
+-\sqrt{2} < \sqrt{2} a < \sqrt{2}
+\]
+\[
+\therefore 0 < a < 1 \quad (\because a > 0)
+\]
+
+(2)
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  \draw[->] (-0.5,0) -- (4.5,0) node[right] {$t$};
+  \draw[->] (0,-1.5) -- (0,2.5) node[above] {$g'(t)$};
+  \draw[domain=0:4, samples=50, smooth, thick] plot (\x, {cos(\x r * 1.5) + 0.8});
+  \draw[dashed] (0, 1.8) node[left] {$\sqrt{2}a + 1$} -- (4, 1.8);
+  \draw[dashed] (0, 0.8) node[left] {$\sqrt{2}a$} -- (4, 0.8);
+  \draw[dashed] (0, -0.2) node[left] {$\sqrt{2}(a-1)$} -- (4, -0.2);
+  \fill (1.05, 0) circle (2pt);
+  \fill (3.14, 0) circle (2pt);
+  \node at (2, -1) {（オブラス）};
+\end{tikzpicture}
+\end{center}
+
+$g'(t)$ が周期 $2\pi$ の周期関数であることから，$0 \le t < 2\pi$ で $g'(t)$ の符号が $t_0$ の前後で正から負になるような $t_0$ があって，$t = t_0 + 2n\pi \, (n \in \mathbb{Z})$ においては $g(t)$ は極大になる。
+
+従って，極大となる点の座標を $(X, Y)$ とすると $t = \pi x$ から
+\[
+X = \frac{t_0}{\pi} + 2n, \quad Y = \sqrt{2} a \left( \frac{t_0}{\pi} + 2n \right) + c \cos t_0 + \sin t_0
+\]
+従って，たしかに $(X, Y)$ は直線上にあり（$n$ を消せばわかる），その $X$ 座標の間隔が $2$ だから，等間隔である。
+
+\newpage
+
+\section*{第6問}
+
+［解］$y = 4 - x^2$ 上の $x = t$ での接線 $l$ は ($0 < t < 2$)
+\[
+l: y = f(x) = -2tx + 4 + t^2
+\]
+だからこれが $(a, 0)$ を通る時，
+\[
+0 = t^2 - 2at + 4
+\]
+\[
+\therefore t = a - \sqrt{a^2 - 4} \quad (\because t < 2, a > 2)
+\]
+である。これを $t_0$ とおくと，右図から
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  \draw[->] (-0.5,0) -- (3,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,3) node[above] {$y$};
+  \draw[domain=0:2, samples=50, smooth, thick] plot (\x, {4 - \x*\x});
+  \draw[thick] (0.5, 3.75) -- (2.5, -0.25) node[above right] {カタムキ $-2t_0$};
+  \fill[pattern=north east lines] (1, 3) -- (2, 0) -- (1, 0) -- cycle;
+  \node[above right] at (1.5, 0.8) {$S$};
+  \node[below] at (1, 0) {$t_0$};
+  \node[below] at (2, 0) {$2$};
+  \node[below] at (2.5, 0) {$a$};
+\end{tikzpicture}
+\end{center}
+
+求める面積 $S$ は
+\begin{align*}
+S &= \int_{t_0}^2 (f(x) - (4-x^2)) dx + \frac{1}{2} (a-2)^2 \cdot 2t_0 \\
+&= \int_{t_0}^2 (x - t_0)^2 dx + t_0 (a-2)^2 \\
+&= \frac{1}{3} (2 - t_0)^3 + t_0 (a-2)^2
+\end{align*}
+（$A = \sqrt{2+a}, B = \sqrt{a-2}$ とおく）
+\begin{align*}
+&= \frac{1}{3} (-B^2 + AB)^3 + (a - AB) B^4 \\
+&= \frac{1}{3} B^3 (A^3 - 3A^2 B + 3AB^2 - B^3) + aB^4 - AB^5 \\
+&= \frac{1}{3} B^3 (A^3 - B^3) - A^2 B^4 + aB^4 \\
+&= \frac{1}{3} \left( (a^2-4)^\frac{3}{2} - (a-2)^3 \right) - 2(a-2)^2 \\
+&= \frac{1}{3} (a^2-4)^\frac{3}{2} - \frac{1}{3} (a+4)(a-2)^2
+\end{align*}
+
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+思ったより大変だった。他の方法だと... \\
+\begin{minipage}{0.9\textwidth}
+\begin{align*}
+S &= \text{台形} - \triangle \\
+&= \frac{1}{2} (a-t_0)^2 \cdot 2t_0 - \int_{t_0}^2 (4-x^2) dx \\
+&= t_0 (a^2-4) - \frac{16}{3} + 4t_0 - \frac{1}{3} t_0^3 \\
+&= t_0 \left( 4 - \frac{1}{3} t_0^2 + a^2-4 \right) - \frac{16}{3} \\
+&= \frac{1}{3} (a - \sqrt{a^2-4}) \left( a^2 + 4 + 2a\sqrt{a^2-4} \right) - \frac{16}{3} \\
+&= \frac{1}{3} \left[ a(a^2+4) - 20(a^2-4) + (a^2-4)^\frac{3}{2} \right] - \frac{16}{3} \\
+&= \frac{1}{3}(a^2-4)^\frac{3}{2} - \frac{1}{3}(a+4)(a-2)^2
+\end{align*}
+\end{minipage} \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}

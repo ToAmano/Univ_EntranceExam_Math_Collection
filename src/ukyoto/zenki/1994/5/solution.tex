@@ -1,0 +1,64 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] $\frac{1}{3}$ の確率でAとBが、$\frac{2}{3}$ の確率でAとCが札を交換する\\
+(1)
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \node at (0, 2.5) {$n$回目};
+  \node at (3, 2.5) {$n+1$回目};
+  
+  \node (an) at (0, 1.5) {$a_n$};
+  \node (bn) at (0, 0.5) {$b_n$};
+  \node (cn) at (0, -0.5) {$c_n$};
+  
+  \node (an1) at (3, 1.5) {$a_{n+1}$};
+  \node (bn1) at (3, 0.5) {$b_{n+1}$};
+  \node (cn1) at (3, -0.5) {$c_{n+1}$};
+  
+  \draw[->] (an) -- (bn1) node[midway, above left] {$\frac{1}{3}$};
+  \draw[->] (an) -- (cn1) node[midway, above left] {$\frac{2}{3}$};
+  
+  \draw[->] (bn) -- (an1) node[midway, below] {$\frac{1}{3}$};
+  \draw[->] (bn) -- (bn1) node[midway, above] {$\frac{2}{3}$};
+  
+  \draw[->] (cn) -- (an1) node[midway, below right] {$\frac{2}{3}$};
+  \draw[->] (cn) -- (cn1) node[midway, below] {$\frac{1}{3}$};
+  
+  \node at (-1.5, 1.5) {Aが赤};
+  \node at (-1.5, 0.5) {Bが赤};
+  \node at (-1.5, -0.5) {Cが赤};
+\end{tikzpicture}
+\end{center}
+
+上図から
+\begin{align*}
+a_{n+1} &= \frac{1}{3} b_n + \frac{2}{3} c_n \\
+b_{n+1} &= \frac{1}{3} a_n + \frac{2}{3} b_n \\
+c_{n+1} &= \frac{2}{3} a_n + \frac{1}{3} c_n
+\end{align*}
+
+(2) $a_n + b_n + c_n = 1$ から $c_n$ を消去し(1)に代入して
+\begin{equation}
+a_{n+1} = \frac{1}{3}(-2a_n - b_n + 2) \tag{①}
+\end{equation}
+\begin{equation}
+b_{n+1} = \frac{1}{3}a_n + \frac{2}{3}b_n \tag{②}
+\end{equation}
+①から $b_n = -3a_{n+1} - 2a_n + 2$ を②に代入
+$$-3a_{n+2} - 2a_{n+1} + 2 = \frac{1}{3}a_n + \frac{2}{3}(-3a_{n+1} - 2a_n + 2)$$
+$$9a_{n+2} = 3a_n + 2$$
+$$a_{n+2} - \frac{1}{3} = \frac{1}{3} \left(a_n - \frac{1}{3}\right)$$
+
+これと $a_0 = 1, a_1 = 0$ から、等比数列の公式から
+$$a_{2k} = \left(\frac{1}{3}\right)^k \frac{2}{3} + \frac{1}{3}$$
+$$a_{2k+1} = \left(\frac{1}{3}\right)^k \left(-\frac{1}{3}\right) + \frac{1}{3}$$
+だから
+$$a_n = \begin{cases} \frac{1}{3}\left[2\left(\frac{1}{3}\right)^{\frac{n}{2}} + 1\right] & (n \in \text{even}) \\ \frac{1}{3}\left[-\left(\frac{1}{3}\right)^{\frac{n-1}{2}} + 1\right] & (n \in \text{odd}) \end{cases}$$
+
+\end{document}

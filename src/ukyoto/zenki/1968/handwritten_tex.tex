@@ -1,0 +1,288 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{京大理科 数学 1968 表紙・配点・概略}
+
+\begin{itemize}
+    \item 得点: 100/150点
+\end{itemize}
+
+\subsection*{各問のメモ・解答概要}
+\begin{enumerate}
+    \item 命題の真偽判定（5小問）。
+    \item 与えられた長さのうち3つを選んで三角形を作る場合の数を求める（165通り）。
+    \item 条件を満たす $l, m$ の範囲および集合 $S$ の決定。
+    \item （手書き解答なし）
+    \item 距離の二乗和の極値および変曲点を微分法で求める。
+    \item 定積分で定義された方程式から $y=f(x)$ を求め、導関数の符号から増減と極限を調べる。
+\end{enumerate}
+
+\newpage
+
+\section*{第1問}
+
+\noindent
+[\textbf{解}]
+\begin{enumerate}
+    \item[(1)] \textbf{正しい}
+
+    対偶をとると「$a > b \implies a \neq b$」だからこれは明らか.
+
+    \item[(2)] \textbf{正しくない}
+
+    座標平面で $A(0,0)$, $B(1,0)$, $C(1,1)$, $D(0,1)$ とすると, どの3点も一直線上にないが,
+    \[
+    \vec{AB} + \vec{CD} = \begin{pmatrix} 1 \\ 0 \end{pmatrix} + \begin{pmatrix} -1 \\ 0 \end{pmatrix} = \vec{0}
+    \]
+    である.
+
+    \item[(3)] \textbf{正しい}
+
+    まず, $A=B$を示す. $A \subset B \dots \text{①}$ である. 次に,
+    \[
+    B \subset C \subset A
+    \]
+    だから $B \subset A \dots \text{②}$. ①, ②から $A=B$ である. 同様にして $B=C$ も示されるので
+    \[
+    A=B=C
+    \]
+
+    \item[(4)] \textbf{正しい}
+
+    帰納法で示す. $n=5$の時, $25 < 32$となって成立. $n=k \, (k \in \mathbb{N}, k \geqq 5)$ での成立を仮定し, $n=k+1$の時
+    \[
+    2^{k+1} > 2 \cdot k^2 \quad \dots \text{① (仮定)}
+    \]
+    \[
+    2k^2 > (k+1)^2 \quad \dots \text{②} \quad (\because (\text{左}) - (\text{右}) = k^2 - 2k - 1 > 0 \quad (k \geqq 5))
+    \]
+    ①, ②から
+    \[
+    2^{k+1} > (k+1)^2
+    \]
+    となって $n=k+1$ で成立. 以上から示された.
+
+    \item[(5)] \textbf{正しくない}
+
+    正しいとすると $\frac{1}{N} = 0$ なる $N \in \mathbb{N}$ が存在する. 両辺に $N (\neq 0)$ をかけると
+    \[
+    1 = 0
+    \]
+    となって矛盾するから示された.
+\end{enumerate}
+
+\newpage
+
+\section*{第2問}
+
+\noindent
+[\textbf{解}] 3辺の長さ $a, b, c$ ($a \leqq b \leqq c$) とすると, 三角不等式から
+\[
+a \leqq b \leqq c < a + b
+\]
+が成り立つ.
+\[
+a + b - c \geqq 20 + 20 - 36 \geqq 0
+\]
+だから, 問題文の中にある長さのうち任意に3つ持ってくると, 三角形をつくることができる. から, 9つの辺の長さから3つをえらぶ方法を考えて
+
+\begin{itemize}
+    \item[$1^\circ$] 3辺とも違う長さ $\dots {}_9\mathrm{C}_3 = 84$ 通り
+    \item[$2^\circ$] 2等辺三角形 $\dots 2 \cdot {}_9\mathrm{C}_2 = 72$ 通り
+    \item[$3^\circ$] 正三角形 $\dots 9$ 通り
+\end{itemize}
+
+よって
+\[
+84 + 72 + 9 = 165 \text{ 通り}
+\]
+
+\paragraph*{[本番のミス]}
+“相似”と“合同”をまちがえていた
+
+\newpage
+
+\section*{第3問}
+
+\noindent
+[\textbf{解}]
+
+\begin{enumerate}
+    \item[(1)] 右のグラフから
+    \begin{itemize}
+        \item $l < 0$ の時, $x \leqq l$ をみたす $x$ に対して $x^2 > 0 > l$ となり, $S$ には属さない.
+        \item $l > 1$ の時, $x = l$ での題意の成立が必要だが,
+        \[
+        l^2 - l = l(l-1) > 0
+        \]
+        となって $l^2 < l$ に矛盾.
+    \end{itemize}
+    よって, $0 \leqq l \leqq 1$ である.
+
+    \begin{center}
+    \begin{tikzpicture}[scale=1.5]
+        \draw[->] (-0.5,0) -- (2.5,0) node[right]{$x$};
+        \draw[->] (0,-0.5) -- (0,2.5) node[above]{$y$};
+        \node[below left] at (0,0) {$O$};
+        \draw[thick, domain=-0.2:1.5, smooth] plot (\x, {\x*\x}) node[right]{$y=x^2$};
+        \draw[thick, domain=-0.2:1.8, smooth] plot (\x, {\x}) node[right]{$y=x$};
+        \draw[dashed] (1,0) node[below]{$1$} -- (1,1) -- (0,1) node[left]{$1$};
+        \draw[dashed] (1.3,0) node[below]{$l$} -- (1.3,1.69);
+    \end{tikzpicture}
+    \end{center}
+
+    \item[(2)]
+    \begin{itemize}
+        \item $0 < m < 1$ とすると, $x = m$ での題意の成立が必要だが ($m \leqq l \leqq 1$ だから)
+        \[
+        m^2 - m = m(m-1) < 0 \implies m^2 < m
+        \]
+        となり矛盾.
+        \item $1 < m$ とすると, $1 < m \leqq l$ となり, (1) から $0 \leqq l \leqq 1$ であることに反する.
+    \end{itemize}
+    以上から $m \leqq 0$ または $m = 1$ である.
+
+    \item[(3)] $m = 1$ の時, $0 \leqq l \leqq 1$ と $1 \leqq l$ から $l = 1$ であり,
+    \[
+    S = \{1\}
+    \]
+
+    \item[(4)] $m < 0$ の時, $m \leqq x \leqq l$ の全ての $x$ で $m \leqq x^2 \leqq l$ となるような $m$ を求める.
+    $x^2 = l \iff x = \pm \sqrt{l}$ から, グラフは右のようになり, 条件は
+    \[
+    -\sqrt{l} \leqq m \leqq 0
+    \]
+    である.
+
+    \begin{center}
+    \begin{tikzpicture}[scale=1.5]
+        \draw[->] (-2.0,0) -- (2.0,0) node[right]{$x$};
+        \draw[->] (0,-0.5) -- (0,2.5) node[above]{$y$};
+        \node[below left] at (0,0) {$O$};
+        \draw[thick, domain=-1.5:1.5, smooth] plot (\x, {\x*\x}) node[right]{$y=x^2$};
+        \draw[thick, domain=-0.5:1.8, smooth] plot (\x, {\x}) node[right]{$y=x$};
+        \draw[dashed] (-1.2,0) node[below]{$-\sqrt{l}$} -- (-1.2,1.44);
+        \draw[dashed] (1.2,0) node[below]{$l$} -- (1.2,1.44);
+        \draw[dashed] (-1.2,1.44) -- (1.2,1.44);
+    \end{tikzpicture}
+    \end{center}
+\end{enumerate}
+
+\newpage
+
+\section*{第4問}
+
+\noindent
+（手書き解答なし）
+
+\newpage
+
+\section*{第5問}
+
+\noindent
+[\textbf{解}] $A\left(-\frac{1}{2}, \frac{1}{4}\right)$, $B\left(\frac{3}{2}, \frac{9}{4}\right)$, $P(x, x^2)$, $f(x) = \overline{PA}^2 + \overline{PB}^2$ とおく.
+
+\[
+f(x) = \left(x + \frac{1}{2}\right)^2 + \left(x^2 - \frac{1}{4}\right)^2 + \left(x - \frac{3}{2}\right)^2 + \left(x^2 - \frac{9}{4}\right)^2
+\]
+\[
+= 2x^4 - 3x^2 - 2x + \frac{61}{8}
+\]
+
+\[
+f'(x) = 8x^3 - 6x - 2
+\]
+\[
+f''(x) = 24x^2 - 6 = 6(2x+1)(2x-1)
+\]
+
+以下表を得る:
+
+\begin{center}
+\begin{array}{c|c|c|c|c|c|c|c}
+x & \dots & -\frac{1}{2} & \dots & \frac{1}{2} & \dots & 1 & \dots \\ \hline
+f' & - & - & - & - & - & 0 & + \\ \hline
+f'' & + & 0 & - & 0 & + & + & + \\ \hline
+f & \searrow & & \searrow & & \searrow & \text{極小} & \nearrow
+\end{array}
+\end{center}
+
+よって, グラフは下図:
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    \draw[->] (-1.2,0) -- (1.8,0) node[right]{$x$};
+    \draw[->] (0,-0.5) -- (0,9.0) node[above]{$y$};
+    \node[below left] at (0,0) {$O$};
+
+    \draw[thick, domain=-0.9:1.3, smooth] plot (\x, {2*\x*\x*\x*\x - 3*\x*\x - 2*\x + 61/8});
+
+    \node[above right] at (0, 7.625) {$\frac{61}{8}$};
+    \draw[dashed] (-0.5,0) node[below]{$-\frac{1}{2}$} -- (-0.5, 8) -- (0, 8) node[right]{$8$};
+    \draw[dashed] (0.5,0) node[below]{$\frac{1}{2}$} -- (0.5, 6) -- (0, 6) node[left]{$6$};
+    \draw[dashed] (1.0,0) node[below]{$1$} -- (1.0, 4.625) -- (0, 4.625) node[left]{$\frac{37}{8}$};
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+    \item 極値: $\frac{37}{8}$
+    \item 変曲点: $\left(-\frac{1}{2}, 8\right)$, $\left(\frac{1}{2}, 6\right)$
+\end{itemize}
+
+\newpage
+
+\section*{第6問}
+
+\noindent
+[\textbf{解}] $0 < x < 1 \dots \text{①}$
+
+\[
+\frac{1}{x} \int_0^x \frac{1}{\sqrt{1-t}} \, dt = \frac{1}{\sqrt{1-y}} \quad \dots \text{②}
+\]
+
+\[
+\frac{1}{x} \int_0^x \frac{1}{\sqrt{1-t}} \, dt = \frac{1}{x} \left[ -2(1-t)^{\frac{1}{2}} \right]_0^x = \frac{-2}{x} \left(\sqrt{1-x} - 1\right)
+\]
+
+を②に代入
+
+\[
+\frac{2}{x} \left(1 - \sqrt{1-x}\right) = \frac{1}{\sqrt{1-y}}
+\]
+
+①では両辺正だから2乗して
+
+\[
+\frac{4}{x^2} \left(1 - \sqrt{1-x}\right)^2 = \frac{1}{1-y}
+\]
+
+同じく逆数をとって
+
+\[
+\frac{x^2}{4\left(1 - \sqrt{1-x}\right)^2} = 1 - y
+\]
+
+\[
+\therefore y = 1 - \frac{x^2}{4\left(1 - \sqrt{1-x}\right)^2} \equiv f(x) \quad \dots \text{③}
+\]
+
+さて,
+\[
+\begin{aligned}
+4 f'(x) &= -\frac{2x\left(1-\sqrt{1-x}\right)^2 - x^2 \cdot 2\left(1-\sqrt{1-x}\right) \frac{-1}{2\sqrt{1-x}}}{\left(1-\sqrt{1-x}\right)^4} \\
+&= \frac{-2x}{\left(1-\sqrt{1-x}\right)^3} \left[ \left(1-\sqrt{1-x}\right) - \frac{x}{2\sqrt{1-x}} \right] \\
+&= \frac{-x}{\left(1-\sqrt{1-x}\right)^3 \sqrt{1-x}} \left[ 2\sqrt{1-x} - (2-x) \right] \\
+&= \frac{1}{\left(1-\sqrt{1-x}\right)^3 \sqrt{1-x}} \frac{x^3}{2\sqrt{1-x} + (2-x)} > 0 \quad (\because 0 < x < 1)
+\end{aligned}
+\]
+
+から, $y$ は $x$ の単調増加であり, 又, ③の表すから
+
+\[
+y \longrightarrow \frac{3}{4} \quad (x \to 1)
+\]
+
+である.
+
+\end{document}

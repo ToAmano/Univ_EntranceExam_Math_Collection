@@ -1,0 +1,61 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] 題意の放物線は
+\[
+y = f(x) = \frac{m}{a^2}x(2a-x)
+\]
+である。
+\begin{align*}
+S_m &= \int_0^{2a} f(x) dx \\
+&= \frac{1}{6} \frac{m}{a^2} (2a)^3 = \frac{4}{3}ma \quad \cdots \text{①}
+\end{align*}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+\draw[->] (-0.5, 0) -- (4.5, 0) node[right] {$x$};
+\draw[->] (0, -0.5) -- (0, 3) node[above] {$y$};
+\draw[domain=0:4, smooth, variable=\x] plot ({\x}, {2.5 - 2.5*(\x-2)^2/4});
+\draw[dashed] (2, 0) -- (2, 2.5) -- (0, 2.5);
+\node[left] at (0, 2.5) {$m$};
+\node[below] at (2, 0) {$a$};
+\node[below] at (4, 0) {$2a$};
+\draw (1.5, 0) rectangle (1.8, 1.8);
+\end{tikzpicture}
+\end{center}
+
+又、$L_m = \sum_{k=0}^{2a} \{ [f(k)] + 1 \}$ だから、$f(k)-1 < [f(k)] \le f(k)$ より
+\[
+\sum_{k=0}^{2a} f(k) < L_m \le \sum_{k=0}^{2a} f(k) + 2a + 1
+\]
+
+①より
+\[
+\frac{3}{4ma} \sum_{k=0}^{2a} f(k) < \frac{L_m}{S_m} \le \frac{3}{4ma} \sum_{k=0}^{2a} f(k) + \frac{3(2a+1)}{4ma} \quad \cdots \text{②}
+\]
+
+ここで、
+\begin{align*}
+\sum_{k=0}^{2a} k(2a-k) &= -\frac{1}{6} \cdot 2a(2a+1)(4a+1) + a \cdot 2a(2a+1) \\
+&= -\frac{1}{3}a(2a+1)(4a+1) + 2a^2(2a+1) \\
+&= \frac{1}{3}a(4a^2-1)
+\end{align*}
+
+だから $\sum_{k=0}^{2a} f(k) = \frac{m}{a^2} \frac{1}{3}a(4a^2-1) = \frac{m}{3} \frac{4a^2-1}{a}$ だから、②に代入
+\[
+\frac{1}{4ma} m \frac{4a^2-1}{a} < \frac{L_m}{S_m} \le \frac{1}{4ma} m \frac{4a^2-1}{a} + \frac{3(2a+1)}{4ma}
+\]
+\[
+1 - \frac{1}{4a^2} < \frac{L_m}{S_m} \le 1 - \frac{1}{4a^2} + \frac{3(2a+1)}{4ma}
+\]
+
+はさみうちから
+\[
+\frac{L_m}{S_m} \longrightarrow 1 - \frac{1}{4a^2} \quad (m \to \infty)
+\]
+
+\end{document}

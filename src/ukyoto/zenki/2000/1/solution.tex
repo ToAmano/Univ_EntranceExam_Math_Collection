@@ -1,0 +1,58 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] 円は半径1として良い。BCとAPの交点をQとする。題意から、点Xの位置ベクトルを$\vec{x}$と表すと、
+\[ \vec{q} = (1-p)\vec{b} + p\vec{c} \]
+だから、$AP \parallel AQ$ より、$k \in \mathbb{R}$ として
+\[ \vec{p} - \vec{a} = k\left(-\vec{a} + (1-p)\vec{b} + p\vec{c}\right) \quad \cdots \text{①} \]
+\[ \vec{p} = (1-k)\vec{a} + k(1-p)\vec{b} + kp\vec{c} \]
+$|\vec{p}|=1$ をみたすので、$|\vec{a}|=|\vec{b}|=|\vec{c}|=1$, $\vec{a}\cdot\vec{b} = \vec{b}\cdot\vec{c} = \vec{c}\cdot\vec{a} = -\frac{1}{2}$ より
+\begin{align*}
+|\vec{p}|^2 &= (1-k)^2|\vec{a}|^2 + k^2(1-p)^2|\vec{b}|^2 + k^2p^2|\vec{c}|^2 + 2\Big[k(1-k)(1-p)\vec{a}\cdot\vec{b} + k^2p(1-p)\vec{b}\cdot\vec{c} + k(1-k)p\vec{a}\cdot\vec{c}\Big] \\
+&= \{p^2+(1-p)^2\}k^2 + k^2 - 2k + 1 - \left\{p(1-p)k^2 + k(1-k)p + (1-p)k(1-k)\right\} \\
+&= (p^2-2p+2)k^2 - 2k + 1 - \left\{(-p^2+p-1)k^2 + k\right\} \\
+&= 3(p^2-p+1)k^2 - 3k + 1 = 1
+\end{align*}
+\[ \therefore k=0, \ \frac{1}{p^2-p+1} \]
+$k=0$ は $A$ に対応するから $P$ に対応するのは $k = \frac{1}{p^2-p+1}$ で、①から
+\begin{align*}
+\overrightarrow{AP} &= -\frac{1}{p^2-p+1}\vec{a} + \frac{1-p}{p^2-p+1}\vec{b} + \frac{p}{p^2-p+1}\vec{c} \\
+&= \frac{1-p}{p^2-p+1}\overrightarrow{AB} + \frac{p}{p^2-p+1}\overrightarrow{AC}
+\end{align*}
+
+\begin{center}
+\begin{tikzpicture}
+\draw (0,0) circle (2);
+\coordinate (A) at (2,0);
+\coordinate (B) at (120:2);
+\coordinate (C) at (240:2);
+\draw (A) -- (B) -- (C) -- cycle;
+\coordinate (Q) at ($(B)!0.7!(C)$);
+\draw (A) -- (Q);
+\path[name path=lineAQ] (A) -- ($(A)!5!(Q)$);
+\path[name path=circO] (0,0) circle (2);
+\path[name intersections={of=lineAQ and circO, by={P1,P2}}];
+\coordinate (P) at (P2);
+\draw (0,0) -- (A) node[midway, below] {$\vec{a}$};
+\draw (0,0) -- (B) node[midway, left] {$\vec{b}$};
+\draw (0,0) -- (C) node[midway, left] {$\vec{c}$};
+\draw (0,0) -- (P);
+\node[right] at (A) {A};
+\node[above left] at (B) {B};
+\node[below left] at (C) {C};
+\node[above left] at (P) {P};
+\node[left] at (Q) {Q};
+\fill (A) circle (1.5pt);
+\fill (B) circle (1.5pt);
+\fill (C) circle (1.5pt);
+\fill (P) circle (1.5pt);
+\fill (Q) circle (1.5pt);
+\fill (0,0) circle (1.5pt) node[below right] {O};
+\end{tikzpicture}
+\end{center}
+
+\end{document}

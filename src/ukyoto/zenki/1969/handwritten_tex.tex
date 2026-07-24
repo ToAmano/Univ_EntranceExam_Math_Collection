@@ -1,0 +1,278 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{京大理科 数学 1969 表紙・配点・概略}
+
+\begin{itemize}
+    \item 所要時間: 35/150分
+\end{itemize}
+
+\subsection*{各問のメモ・解答概要}
+\begin{enumerate}
+    \item[1] [関数] 3次方程式の解の配置。実数範囲で少なくとも1つの実根を持つことを中間値の定理により示し，3つの根の実部がすべて負であるときに係数 $a,b,c > 0$ であることを示す。
+    \item[2] [図形] 円に内接する四角形の幾何的関係の証明。$\tan\alpha \tan\beta = \frac{DP}{CP}$ を面積比を用いて証明する。
+    \item[3] [論理] (本文中に解答なし)
+    \item[4] [多変数] 水溶液の流出と比重。時刻 $t$ における比重から時刻 $k$ での平均比重 $1 + \frac{a}{bk}(1-e^{-bk})$ を求める。
+    \item[5] [関数] ベクトルの和の大きさの平方の期待値。$|\vec{X}|^2$ の期待値 $E = a^2+1$ を求める。
+    \item[6] [多変数] 条件付き2変数関数の最小値。$X=\sqrt{x}, Y=\sqrt{y}$ の置換による領域上の最小値 $\min\{a, 1\}$ を求める。
+\end{enumerate}
+
+\newpage
+
+\section*{第1問}
+
+\noindent
+[\textbf{解}]
+\begin{enumerate}
+    \item[(1)] $f(x)=0$ は実数範囲で少なくとも1つ解を持つことを示せば良い。\\
+    $y=f(x)$ のグラフを考えると，$f(x) \to \pm \infty \ (x \to \pm \infty)$，\\
+    $f(x)$ は連続だから，中間値の定理から $f(x)=0$ は実数範囲で少なくとも1つ解を持つ。
+    \begin{center}
+    [複素共役が解ならば (by (2))]
+    \end{center}
+
+    \item[(2)] (1)より，複素数 $\alpha$ に対して $f(\alpha)=0$ ならば $f(\bar{\alpha})=0$ であることから，$f(x)=0$ は複素数範囲で重根込めて3つの解しかないことから $f(x)=0$ の解は以下のいずれか。
+    \begin{enumerate}
+        \item[$1^\circ$] 3つとも実解
+        \item[$2^\circ$] 1つ実解，2つが複素解
+    \end{enumerate}
+
+    \vspace{0.5em}
+    \noindent
+    $1^\circ$ の時\\
+    3解 $\alpha, \beta, \gamma$ ($\alpha, \beta, \gamma < 0$) として $f(x)=(x-\alpha)(x-\beta)(x-\gamma)$ とおけるから，係数比較して
+    \[
+    \begin{aligned}
+    -(\alpha+\beta+\gamma) &= a > 0 \\
+    \alpha\beta+\beta\gamma+\gamma\alpha &= b > 0 \\
+    -\alpha\beta\gamma &= c > 0
+    \end{aligned}
+    \]
+    よって，$a, b, c > 0$。
+
+    \vspace{0.5em}
+    \noindent
+    $2^\circ$ の時\\
+    実解 $\alpha$，共役解を $p \pm qi$ ($p, q \in \mathbb{R}$, $p < 0, \alpha < 0$) とおくと，
+    \[
+    \begin{aligned}
+    f(x) &= (x-\alpha)(x-(p+qi))(x-(p-qi)) \\
+    &= (x-\alpha)(x^2 - 2px + (p^2+q^2))
+    \end{aligned}
+    \]
+    と表せるから係数比較して
+    \[
+    \begin{aligned}
+    -\alpha - 2p &= a > 0 \\
+    p^2+q^2+2\alpha p &= b > 0 \\
+    -\alpha(p^2+q^2) &= c > 0
+    \end{aligned}
+    \]
+    よって $a, b, c > 0$。
+
+    \vspace{0.5em}
+    \noindent
+    以上から，いずれの場合も $a, b, c > 0$ である。
+\end{enumerate}
+
+\newpage
+
+\section*{第2問}
+
+\noindent
+[\textbf{解}]
+定円の中心を $O$ とする。\\
+円周角の定理から $\angle CAD = \angle CBD = \angle R$ だから，
+\[
+\begin{aligned}
+\tan\alpha \tan\beta &= \frac{AD}{CA} \cdot \frac{BD}{CB} \\
+&= \frac{\frac{1}{2} AD \cdot BD \cdot \sin(\pi - \alpha - \beta)}{\frac{1}{2} AC \cdot BC \cdot \sin(\alpha + \beta)} \quad (\because \sin\theta = \sin(\pi-\theta)) \\
+&= \frac{\triangle ADB}{\triangle ACB} \quad \dots \text{①}
+\end{aligned}
+\]
+又，$\angle CPA = \theta$ とおけば
+\[
+\frac{\triangle ADB}{\triangle ACB} = \frac{\frac{1}{2} AB \cdot DP \sin\theta}{\frac{1}{2} AB \cdot CP \sin\theta} = \frac{DP}{CP} \quad \dots \text{②}
+\]
+①，②から，題意は示された。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Circle center O
+    \coordinate (O) at (0,0);
+    \draw[thick] (O) circle (2cm);
+    \node[above left] at (O) {$O$};
+    \fill (O) circle (1.5pt);
+
+    % Diameter CD
+    \coordinate (C) at (-2,0);
+    \coordinate (D) at (2,0);
+    \draw[thick] (C) -- (D);
+    \node[left] at (C) {$C$};
+    \node[right] at (D) {$D$};
+
+    % Points A and B on circle
+    \coordinate (A) at (1,-1.732);
+    \coordinate (B) at (1.2,1.6);
+    \node[below right] at (A) {$A$};
+    \node[above right] at (B) {$B$};
+
+    % Chords and triangles
+    \draw[thick] (C) -- (A) -- (D);
+    \draw[thick] (C) -- (B) -- (D);
+
+    % Intersection P of CD and AB
+    \coordinate (P) at (1.1,0);
+    \draw[thick] (A) -- (B);
+    \node[below left] at (P) {$P$};
+    \fill (P) circle (1.5pt);
+
+    % Angles
+    \node at (-1.3, -0.2) {$\alpha$};
+    \node at (-1.3, 0.2) {$\beta$};
+    \node at (0.9, -0.3) {$\theta$};
+    \node at (1.5, -0.4) {$\pi-\alpha-\beta$};
+
+    % Right angle marks
+    \draw (A) -- ++(-0.15,0.26) -- ++(0.26,0.15);
+    \draw (B) -- ++(-0.24,-0.18) -- ++(0.18,-0.24);
+\end{tikzpicture}
+\end{center}
+
+\newpage
+
+\section*{第4問}
+
+\noindent
+[\textbf{解}] $A$からの流出速度を $v$，水の単位体積あたりの重さを $w$ とすると，
+
+\begin{enumerate}
+    \item[ア] 時刻 $k$ における総水溶液は $vk$
+    \item[イ] その重さは
+    \[
+    \begin{aligned}
+    w \int_0^k (1+ae^{-bt}) v \, dt &= \left[ t - \frac{a}{b} e^{-bt} \right]_0^k v w \\
+    &= vw \left[ \left( k - \frac{a}{b} e^{-bk} \right) - \left( -\frac{a}{b} \right) \right] \\
+    &= vw \left( k + \frac{a}{b} - \frac{a}{b} e^{-bk} \right)
+    \end{aligned}
+    \]
+\end{enumerate}
+
+だから，求める比重は
+\[
+\frac{vw \left( k + \frac{a}{b}(1 - e^{-bk}) \right)}{vk} \cdot \frac{1}{w} = 1 + \frac{a}{bk} (1 - e^{-bk})
+\]
+
+\begin{center}
+\small
+\begin{tabular}{|p{0.9\textwidth}|}
+\hline
+\textbf{補足メモ}: \\
+「比重\dots水に対する相対重さ」という解釈で良いのかな \\
+$\Rightarrow \frac{(\text{重さ})}{(\text{総量})}$ が単位あたり重さ，これと水の重さでくらべる \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+\section*{第5問}
+
+\noindent
+[\textbf{解}]
+\[
+\begin{aligned}
+|\vec{X}|^2 &= |\vec{A}|^2 + |\vec{B_k}|^2 + 2\vec{A} \cdot \vec{B_k} \\
+&= a^2 + 1 + 2\vec{A} \cdot \vec{B_k} \quad \dots \text{①'}
+\end{aligned}
+\]
+である。題意から，$\vec{A} = a \begin{pmatrix} \cos\theta \\ \sin\theta \end{pmatrix}$ とおける。($0 \leqq \theta < 2\pi$)
+
+\vspace{0.5em}
+\noindent
+$|\vec{X}|^2$ の大きさの期待値を $E$ とおくと①'から，
+\[
+\begin{aligned}
+E &= \frac{1}{6} \sum_{k=1}^6 \left\{ a^2+1 + 2 \begin{pmatrix} \cos\theta \\ \sin\theta \end{pmatrix} \cdot \begin{pmatrix} \cos\frac{k\pi}{3} \\ \sin\frac{k\pi}{3} \end{pmatrix} \right\} \\
+&= (a^2+1) + \frac{1}{3} \sum_{k=1}^6 \cos\left(\frac{k\pi}{3} - \theta\right) \quad \dots \text{②}
+\end{aligned}
+\]
+ここで，単位円に内接する正六角形を考えると，中心から各頂点へのベクトルの $x$ 成分は $\cos\left(\frac{k\pi}{3} - \theta\right)$ ($k=1, 2, \dots, 6$) で表わされ，又，この和は零だから，
+\[
+\sum_{k=1}^6 \cos\left(\frac{k\pi}{3} - \theta\right) = 0
+\]
+②に代入して
+\[
+E = a^2 + 1
+\]
+
+\newpage
+
+\section*{第6問}
+
+\noindent
+[\textbf{解}] $X = \sqrt{x}, Y = \sqrt{y}$ とおくと，
+\[
+X \geqq 0, \quad Y \geqq 0, \quad X^2 + Y^2 \geqq 1 \quad \dots \text{①}
+\]
+の時，$g(X, Y) = X + aY$ の $\min$ をもとめればよい。$k = X + aY \dots \text{②}$ とおいて，$Y$-$X$ 平面で ①, ②が交点を持つ条件をもとめればよい。
+
+\begin{enumerate}
+    \item[$1^\circ$] $0 < a \leqq 1$ の時\\
+    ②が $(Y, X) = (1, 0)$ を通る時で，$\min k = a$
+    \item[$2^\circ$] $a \geqq 1$ の時\\
+    ②が $(Y, X) = (0, 1)$ を通る時で，$\min k = 1$
+\end{enumerate}
+
+\noindent
+従って，
+\[
+\min f(x, y) = \min \{a, 1\}
+\]
+である。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    \draw[->] (-0.3,0) -- (2.5,0) node[right]{$Y$};
+    \draw[->] (0,-0.3) -- (0,2.5) node[above]{$X$};
+    \node[below left] at (0,0) {$O$};
+
+    % Quarter circle
+    \draw[thick] (1,0) arc (0:90:1);
+    \fill (1,0) circle (1.5pt) node[below]{$(1,0)$};
+    \fill (0,1) circle (1.5pt) node[left]{$(0,1)$};
+
+    % Hatching region X^2+Y^2 >= 1, X>=0, Y>=0
+    \fill[gray!20, opacity=0.7] (1,0) arc (0:90:1) -- (0,2.2) -- (2.2,2.2) -- (2.2,0) -- cycle;
+
+    % Line X = -aY + k
+    \draw[thick, dashed] (0, 1.4) -- (1.6, 0.2) node[right]{$X = -aY + k$};
+\end{tikzpicture}
+\end{center}
+
+\vspace{1em}
+\noindent
+[\textbf{解} \quad 一応，上が一番早い気がしただけで本流もある]
+
+\vspace{0.5em}
+\noindent
+$f(x, y) = \sqrt{x} + a\sqrt{y}$ において $x$ を固定する。$a > 0$ に注意して
+\[
+\begin{aligned}
+\min f(x, y) &= \sqrt{x} + a\sqrt{1-x} \quad (0 \leqq x \leqq 1) \quad \dots \text{①} \\
+\min f(x, y) &= \sqrt{x} \quad (1 \leqq x) \quad \dots \text{②}
+\end{aligned}
+\]
+①の時，$x$ をうごかして，$\min f(x, y) = \min \{a, 1\}$\\
+②の時 \quad $\prime\prime$ \quad $\min f(x, y) = 1$
+
+\vspace{0.5em}
+\noindent
+したがって
+\[
+\min f(x, y) = \min \{a, 1\}
+\]
+
+\end{document}
+

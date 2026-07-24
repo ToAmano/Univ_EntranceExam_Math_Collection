@@ -1,0 +1,397 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{京大理科 数学 1971 表紙・配点・概略}
+
+\begin{itemize}
+    \item 所要時間: 70分 / 150分
+\end{itemize}
+
+\subsection*{各問のメモ・解答概要}
+\begin{enumerate}
+    \item (i) 辺が軸に平行な1辺1の正方形は $x, y$ 座標の各区間に整数を含む。(ii) 1辺 $\sqrt{2}$ の正方形は中心からの距離 $\frac{1}{2}$ の円を含み、1辺1の格子点正方形の任意の点から格子点への距離は $\frac{\sqrt{2}}{2}$ 以下となるため格子点を含む。
+    \item 共役をとって整理することにより必要条件 $\beta = \alpha \bar{\beta}$ を導き、十分性については $\beta = 0$ と $\beta \neq 0$ (複素平面上の直線) に分けて示す。
+    \item 軸の位置で $m = f(x)$ の最小値を場合分けし、$(a, b)$ の領域内で評価して最大値 $(a, b) = \left(-1, \frac{3}{2}\right)$ を得る。
+    \item $y = \sqrt{|x^2 - 1|}$ の $x \ge 0$ 部分における回転体の体積 $V'$ を円柱から半球と双曲線の回転体を引いて求め、$V = 2V' = \frac{4}{3}\pi (5\sqrt{5} - 2)$ を得る。
+    \item 正 $n$ 角形の一辺 $l_n = 2r \sin \frac{\pi}{n}$ と扇形の半径 $r_k = (k+1)l_n$ から面積の和 $S_n = S + T$ を表し、$n \to \infty$ の極限で $\pi r^2 + \frac{4}{3}\pi^3 r^2$ となることを示す。
+    \item 原点と $P_t, Q_t$ が一直線上にある条件 $f(t) = vt\cos\pi t - a\sin\pi t = 0$ に対し、$f'(t)$ の符号変化から各区間 $n < t < n+1$ での解 $t_n$ の唯一性を示し、極限 $\lim_{n\to\infty}(t_n - n) = \frac{1}{2}$ を導く。
+\end{enumerate}
+
+\newpage
+
+\section*{第1問}
+
+\noindent
+[\textbf{解}]
+
+\begin{enumerate}
+    \item[(i)] 1辺の長さ1の辺が座標軸に平行な時.
+
+    この正方形内部(周含む)の点 $(x, y)$ は, $\alpha, \beta \in \mathbb{R}$ として
+    \[
+    \begin{cases}
+    \alpha \le x \le \alpha + 1 \\
+    \beta \le y \le \beta + 1
+    \end{cases}
+    \]
+    と書ける. この時, $\alpha \le m \le \alpha + 1$, $\beta \le n \le \beta + 1$ をみたす $m, n \in \mathbb{Z}$ が必ず存在するから, $(m, n)$ は正方形内部にある. 従って, 常に少なくとも1つの格子点を含む.
+
+    \begin{center}
+    \begin{tikzpicture}[scale=0.8]
+        \draw[step=1cm,gray!40,very thin] (-0.5,-0.5) grid (3.5,3.5);
+        \draw[thick] (0.7,0.7) rectangle (1.7,1.7);
+        \foreach \x in {0,1,2,3}
+            \foreach \y in {0,1,2,3}
+                \fill (\x,\y) circle (2pt);
+    \end{tikzpicture}
+    \end{center}
+
+    \item[(ii)] 1辺の長さ $\sqrt{2}$ の時.
+
+    1辺の長さ $\sqrt{2}$ の時, 右図から, 正方形の中心(対角線の交点)からの距離 $\frac{1}{2}$ の点は全て正方形内に含まれる. $\dots$ $\ast$
+
+    又, 1辺1の正方形の4頂点となるような4格子点をもってくる. その内部 $A$ 内の任意の点は少なくとも1つの格子点からの距離が $\frac{\sqrt{2}}{2}$ 以下だから (対角線の長さ $\sqrt{2}$), $\ast$ より, 辺の長さ $\sqrt{2}$ の正方形は少なくとも1つの格子点を持つ.
+
+    \begin{center}
+    \begin{tikzpicture}[scale=1.5]
+        % Square of side \sqrt{2} containing circle of radius 1/2
+        \begin{scope}[shift={(0,0)}]
+            \draw[thick] (-0.707,-0.707) rectangle (0.707,0.707);
+            \draw (0,0) circle (0.5);
+            \fill (0,0) circle (1.5pt);
+            \draw[<->] (0,0) -- (0.5,0) node[midway,above,font=\small]{$\frac{1}{2}$};
+            \node at (0.9,0.7) {\small 1辺 $\sqrt{2}$};
+        \end{scope}
+
+        % Grid square of side 1 with region A
+        \begin{scope}[shift={(3.5,-0.5)}]
+            \draw[thick] (0,0) node[below left]{} -- (1,0) node[below right]{} -- (1,1) node[above right]{} -- (0,1) node[above left]{} -- cycle;
+            \fill (0,0) circle (1.5pt);
+            \fill (1,0) circle (1.5pt);
+            \fill (1,1) circle (1.5pt);
+            \fill (0,1) circle (1.5pt);
+            \node at (0.5,0.5) {$A$};
+            \node[right] at (1,0.5) {\small $\frac{\sqrt{2}}{2}$};
+            \draw[dashed] (0.5,0.5) -- (1,1);
+        \end{scope}
+    \end{tikzpicture}
+    \end{center}
+
+    \noindent
+    [\textbf{別}] (i)をつかうとお手軽. 径1の円に外接する座標軸に平行な辺を持つ正方形をもってきてもOK.
+\end{enumerate}
+
+\newpage
+
+\section*{第2問}
+
+\noindent
+[\textbf{解}]
+
+\noindent
+(\textbf{必要性})
+\[
+\begin{cases}
+z + \alpha \bar{z} + \beta = 0 & \dots \text{①} \\
+\bar{\alpha} z + \bar{z} + \bar{\beta} = 0 & \dots \text{②}
+\end{cases}
+\]
+① $-$ ② $\times \alpha$ より $\alpha \bar{\beta} = \beta$ ($|\alpha| = 1$ だから). 示された.
+
+\vspace{1em}
+\noindent
+(\textbf{十分性})
+
+$\beta = \alpha \bar{\beta}$ の時, $\beta = 0$ ならば $z = 0$ が $z + \alpha \bar{z} + \beta = 0$ をみたす.
+
+$\beta \neq 0$ の時
+\[
+z + \alpha \bar{z} + \beta = 0
+\]
+\[
+\iff z + \frac{\beta}{\bar{\beta}} \bar{z} + \beta = 0
+\]
+\[
+\implies \bar{\beta} z + \beta \bar{z} + |\beta|^2 = 0 \quad \dots \text{③}
+\]
+③はガウス平面上で直線を表すから, $z + \alpha \bar{z} + \beta = 0$ をみたす $z$ は必ず存在し, 十分. \hfill 終
+
+\newpage
+
+\section*{第3問}
+
+\noindent
+[\textbf{解}]
+
+\noindent
+$m$ は $a, b$ によって以下のようになる. (軸の位置で場合分け)
+
+\begin{enumerate}
+    \item[ア] $-\frac{a}{2} \le 0 \iff a \ge 0$ の時, $m = f(0) = b$
+    \item[イ] $0 \le -\frac{a}{2} \le 1 \iff -2 \le a \le 0$ の時, $m = f\left(-\frac{a}{2}\right) = -\frac{1}{4}a^2 + b$
+    \item[ウ] $1 \le -\frac{a}{2} \iff a \le -2$ の時, $m = f(1) = a + b + 1$
+\end{enumerate}
+
+\noindent
+又, $(a, b)$ の存在領域は下図斜線部 (境界含む) である.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    \draw[->] (-3,0) -- (3,0) node[right]{$a$};
+    \draw[->] (0,-1.5) -- (0,2) node[above]{$b$};
+    \draw[thick,domain=-3:3] plot (\x, {-0.5*\x + 1}) node[right]{\small $b = -\frac{1}{2}a + 1$};
+    
+    \begin{scope}
+        \clip (-3,-1.5) rectangle (3,2);
+        \fill[gray!20] (-3, 2.5) -- (3, -0.5) -- (3,-1.5) -- (-3,-1.5) -- cycle;
+        \draw[thick] (-3, 2.5) -- (3, -0.5);
+    \end{scope}
+    
+    \node[below left] at (0,0) {$0$};
+    \fill (0,1) circle (1.5pt) node[left]{\small $1$};
+    \fill (2,0) circle (1.5pt) node[below]{\small $2$};
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+    \item[アの時] $\max f(0) = 1 \quad ((a, b) = (0, 1))$
+    \item[イの時] $m \le -\frac{1}{4}a^2 - \frac{1}{2}a + 1 = -\frac{1}{4}(a+1)^2 + \frac{5}{4} \le \frac{5}{4}$\\
+    等号成立 $(a, b) = \left(-1, \frac{3}{2}\right)$
+    \item[ウの時] $m \le a + 1 - \frac{1}{2}a + 1 = \frac{1}{2}a + 2 \le 1$\\
+    等号成立 $(a, b) = (-2, 2)$
+\end{itemize}
+
+\noindent
+以上から $(a, b) = \left(-1, \frac{3}{2}\right)$ が $m$ を最大にする.
+
+\newpage
+
+\section*{第4問}
+
+\noindent
+[\textbf{解}]
+
+\noindent
+$y = \sqrt{|x^2 - 1|}$ のグラフは下図だから, 求める体積 $V$ のうち $x \ge 0$ でみた右部分の体積 $V'$ として
+\[
+V = 2 V' \quad \dots \text{①}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    \draw[->] (-3,0) -- (3,0) node[right]{$x$};
+    \draw[->] (0,-0.5) -- (0,2.8) node[above]{$y$};
+    
+    % Semicircle part |x| <= 1
+    \draw[thick,domain=-1:1,samples=100] plot (\x, {sqrt(1 - \x*\x)});
+    % Hyperbola part 1 <= |x| <= sqrt(5)
+    \draw[thick,domain=1:2.236,samples=100] plot (\x, {sqrt(\x*\x - 1)});
+    \draw[thick,domain=-2.236:-1,samples=100] plot (\x, {sqrt(\x*\x - 1)});
+    
+    % Top boundary y = 2
+    \draw[dashed] (-2.236,2) -- (2.236,2);
+    \draw[dashed] (2.236,0) -- (2.236,2);
+    \draw[dashed] (-2.236,0) -- (-2.236,2);
+    
+    % Labels
+    \node[below left] at (0,0) {$0$};
+    \node[left] at (0,2) {$2$};
+    \node[below] at (1,0) {$1$};
+    \node[below] at (-1,0) {$-1$};
+    \node[below] at (2.236,0) {$\sqrt{5}$};
+    \node[below] at (-2.236,0) {$-\sqrt{5}$};
+    
+    \node[above] at (1.5,1.2) {\small $y = \sqrt{|x^2 - 1|}$};
+    \node[below] at (0.5,0.5) {\small $x^2+y^2=1$};
+\end{tikzpicture}
+\end{center}
+
+\noindent
+又,
+\[
+V' = 4 \sqrt{5}\pi - \frac{1}{2} \cdot \frac{4}{3}\pi - \int_1^{\sqrt{5}} \pi (x^2 - 1) \, dx
+\]
+\[
+= \pi \left[ 4\sqrt{5} - \frac{2}{3} - \left[ \frac{1}{3}x^3 - x \right]_1^{\sqrt{5}} \right]
+\]
+\[
+= \pi \left[ 4\sqrt{5} - \frac{2}{3} - \frac{2}{3}\sqrt{5} + \frac{2}{3} \right]
+\]
+\[
+= \pi \left( \frac{10}{3}\sqrt{5} - \frac{4}{3} \right)
+\]
+だから①に代入
+\[
+V = \frac{4}{3}\pi (5\sqrt{5} - 2)
+\]
+
+\newpage
+
+\section*{第5問}
+
+\noindent
+[\textbf{解}]
+
+\noindent
+正 $n$ 角形の一辺の長さを $l_n$ とおくと, $l_n = 2 r \sin \frac{\pi}{n}$ である $\dots$ ①
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Left circle and polygon diagram
+    \begin{scope}[shift={(0,0)}]
+        \draw (0,0) circle (1.5);
+        \fill (0,0) circle (1.5pt) node[below]{$O$};
+        % Regular polygon vertices
+        \foreach \i in {1,...,6} {
+            \coordinate (A\i) at ({90 - (\i-1)*60}:1.5);
+        }
+        \draw (A1) -- (A2) -- (A3) -- (A4) -- (A5) -- (A6) -- cycle;
+        \node[above] at (A1) {$A_4$};
+        \node[above left] at (A2) {$A_3$};
+        \node[below left] at (A3) {$A_2$};
+        \node[below] at (A4) {$A_1$};
+        \node[below right] at (A5) {$B_0$};
+        \node[above right] at (A6) {$A_n$};
+        \draw (0,0) -- (A4) node[midway,left]{$r$};
+    \end{scope}
+    
+    % Right sector diagram
+    \begin{scope}[shift={(4.5,0)}]
+        \draw (0,0) -- (2,0) -- (1.5,1.5) -- cycle;
+        \draw (0,0) -- (1.8, 0.7);
+        \draw (0.5,0) arc (0:22.5:0.5);
+        \node at (0.8,0.2) {\small $\frac{2\pi}{n}$};
+        \node[below] at (1,0) {$r$};
+        \node[right] at (1.6,1.0) {$l_n = 2r \sin \frac{\pi}{n}$};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\noindent
+題意から扇形 $A_{k+2} A_{k+1} B_k$ ($k \ge 0, B_0 = A_1$) の半径を $r_k$ とすると
+\[
+\begin{cases}
+r_0 = 1 \cdot l_n \\
+r_{k+1} = r_k + l_n
+\end{cases}
+\]
+から, 等差数列の公式より, $r_k = (k+1) l_n$ であり, 中心角は $\frac{2\pi}{n}$ だから, 扇形 $A_{k+2} A_{k+1} B_k$ の面積 $T_k$ は
+\[
+T_k = \frac{1}{2} \cdot \frac{2\pi}{n} \cdot r_k^2 = \frac{\pi}{n} l_n^2 (k+1)^2
+\]
+
+\noindent
+よって, 扇形の面積の総和 $T$ は
+\[
+T = \sum_{k=0}^{n-1} \frac{\pi}{n} l_n^2 (k+1)^2
+\]
+\[
+= \sum_{k=1}^n \frac{\pi}{n} l_n^2 k^2
+\]
+\[
+= \frac{1}{6} \pi (n+1)(2n+1) l_n^2 \quad \dots \text{②}
+\]
+
+\noindent
+一方, 正 $n$ 角形の面積 $S$ は, 右の小三角形の面積の $n$ 倍で,
+
+\begin{minipage}{0.7\textwidth}
+\[
+\frac{S}{n} = \frac{1}{2} \cdot r^2 \cdot \sin \frac{2\pi}{n}
+\]
+\[
+S = \frac{1}{2} n r^2 \sin \frac{2\pi}{n} \quad \dots \text{③}
+\]
+\end{minipage}
+\begin{minipage}{0.28\textwidth}
+\begin{tikzpicture}[scale=0.8]
+    \draw (0,0) -- (1.5,0) -- (0.75, 1.3) -- cycle;
+    \draw (0.3,0) arc (0:60:0.3);
+    \node at (0.4,0.3) {\small $\frac{2\pi}{n}$};
+    \node[left] at (0.4,0.7) {$r$};
+    \node[right] at (1.1,0.7) {$r$};
+\end{tikzpicture}
+\end{minipage}
+
+\vspace{1em}
+\noindent
+①, ②, ③から
+\[
+S_n = S + T = \frac{1}{2} n r^2 \sin \frac{2\pi}{n} + \frac{\pi}{6} (n+1)(2n+1) r^2 \cdot 4 \sin^2 \frac{\pi}{n}
+\]
+\[
+= \frac{1}{2} r^2 \cdot \frac{\sin \frac{2\pi}{n}}{\frac{2\pi}{n}} \cdot 2\pi + \frac{2\pi}{3} r^2 \left( \frac{\sin \frac{\pi}{n}}{\frac{\pi}{n}} \right)^2 \pi^2 \left( 1 + \frac{1}{n} \right) \left( 2 + \frac{1}{n} \right)
+\]
+\[
+\to \pi r^2 + \frac{4}{3} \pi^3 r^2 \quad \left( n \to \infty, \text{この時 } \frac{2\pi}{n}, \frac{\pi}{n} \to 0 \right)
+\]
+
+\newpage
+
+\section*{第6問}
+
+\noindent
+[\textbf{解}]
+
+\noindent
+時刻 $t$ の $P, Q$ の座標は
+\[
+P_t (\cos \pi t, \sin \pi t), \quad Q_t (a, vt) \quad (0 < v < a\pi)
+\]
+である.
+
+\begin{enumerate}
+    \item[(1)] $\vec{OP_t} \parallel \vec{O Q_t} \iff v t \cos \pi t - a \sin \pi t = 0 \quad \dots \text{① である.}$
+
+    ①の左辺を $f(t)$ とおくと
+    \[
+    f'(t) = v \cos \pi t - \pi v t \sin \pi t - \pi a \cos \pi t
+    \]
+    \[
+    = -(\pi a - v) \cos \pi t - \pi v t \sin \pi t
+    \]
+    である. $A = \sqrt{(\pi a - v)^2 + (\pi v t)^2} \ (>0)$ とおくと
+    \[
+    f'(t) = -A \sin(\pi t + \alpha)
+    \]
+    とおける. ただし $\alpha$ は $\cos \alpha = \frac{\pi v t}{A} (>0)$, $\sin \alpha = \frac{\pi a - v}{A} (>0)$ をみたす $0 < \alpha < \frac{\pi}{2}$ なる角であって, $n < t \le n+1$ の時,
+    \[
+    n\pi + \alpha \le \pi t + \alpha \le (n+1)\pi + \alpha
+    \]
+    となり, $f'(t)$ は区間内で唯一, 符号をかえる点を持つ.
+
+    従ってこの時の $t$ を $t'$ として下表をえる ($k \in \mathbb{Z}_{\ge 0}$).
+
+    \begin{center}
+    \begin{tabular}{c|c|c|c|c|c}
+    $t$ & $2k$ & $\dots$ & $t'$ & $\dots$ & $2k+1$ \\ \hline
+    $f'$ & & $-$ & $0$ & $+$ & \\ \hline
+    $f$ & 正 & $\searrow$ & & $\nearrow$ & 負
+    \end{tabular}
+    \hspace{2em}
+    \begin{tabular}{c|c|c|c|c|c}
+    $t$ & $2k+1$ & $\dots$ & $t'$ & $\dots$ & $2k+2$ \\ \hline
+    $f'$ & & $+$ & $0$ & $-$ & \\ \hline
+    $f$ & 負 & $\nearrow$ & & $\searrow$ & 正
+    \end{tabular}
+    \end{center}
+
+    従って, $n \le t_n \le n+1$ の間に $f(t_n) = 0$ をみたす $t_n$ が唯一ある. \hfill 固
+
+    \item[(2)] $n \le t_n \le n+1 \quad \dots \text{②である((1)から)}$
+
+    \[
+    v t_n \cos \pi t_n - a \sin \pi t_n = 0
+    \]
+    \[
+    \cos \pi t_n = \frac{a \sin \pi t_n}{v t_n} \to 0 \quad (n \to \infty, \text{②から})
+    \]
+    ②からしたがって
+    \[
+    t_n \to n + \frac{1}{2} \quad (n \to \infty)
+    \]
+    だから $t_n - n \to \frac{1}{2} \quad (n \to \infty)$ である.
+\end{enumerate}
+
+\end{document}
