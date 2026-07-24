@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -11,6 +12,16 @@ permissions:
 jobs:
   build-pdf:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - { univ: titech, cat: kouki }
+          - { univ: titech, cat: zenki }
+          - { univ: utokyo, cat: kouki }
+          - { univ: utokyo, cat: zenki }
+          - { univ: ukyoto, cat: kouki }
+          - { univ: ukyoto, cat: zenki }
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,21 +29,51 @@ jobs:
       - name: Install TeX Live
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive-lang-japanese texlive-luatex latexmk
+          sudo apt-get install -y \
+            texlive-lang-japanese texlive-luatex \
+            texlive-latex-extra texlive-latex-recommended \
+            texlive-pictures texlive-science texlive-fonts-extra \
+            latexmk
 
-      - name: Build PDFs
+      - name: Regenerate main.tex
+        run: python3 scratch/generate_main_tex.py ${{ matrix.target.univ }}/${{ matrix.target.cat }}
+
+      - name: Build ${{ matrix.target.univ }}/${{ matrix.target.cat }}/main.tex
+        working-directory: src/${{ matrix.target.univ }}/${{ matrix.target.cat }}
+        run: latexmk -lualatex -interaction=nonstopmode main.tex
+
+      - name: Rename output PDF
         run: |
-          # 各年度の main.tex をビルドする例
-          find src -name "main.tex" | while read main_tex; do
-            dir=$(dirname "$main_tex")
-            echo "Building $main_tex..."
-            (cd "$dir" && latexmk -lualatex main.tex)
-          done
+          mkdir -p dist-pdf
+          cp "src/${{ matrix.target.univ }}/${{ matrix.target.cat }}/main.pdf" \
+             "dist-pdf/${{ matrix.target.univ }}_${{ matrix.target.cat }}.pdf"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.target.univ }}_${{ matrix.target.cat }}
+          path: dist-pdf/${{ matrix.target.univ }}_${{ matrix.target.cat }}.pdf
+
+  release:
+    needs: build-pdf
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download all PDFs
+        uses: actions/download-artifact@v4
+        with:
+          path: pdfs
+
+      - name: Flatten artifact directories
+        run: |
+          mkdir -p release
+          find pdfs -name "*.pdf" -exec cp {} release/ \;
+          ls -la release
 
       - name: Create Release and Upload PDFs
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            src/**/*.pdf
+          files: release/*.pdf
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

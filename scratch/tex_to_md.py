@@ -405,4 +405,30 @@ def process_all_src():
                     convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel, output_svg_dir)
 
 if __name__ == '__main__':
-    process_all_src()
+    if len(sys.argv) > 1:
+        target_path = sys.argv[1]
+        parts = os.path.normpath(target_path).split(os.sep)
+        if len(parts) >= 6:
+            # src/titech/zenki/2000/1/problem.tex
+            uni, category, year, q_num = parts[1], parts[2], parts[3], parts[4]
+            file = parts[5]
+            type_str = "problem" if file == "problem.tex" else "solution"
+            title_str = f"{uni.upper()} {year} {category} Q{q_num} ({type_str})"
+            frontmatter = {
+                "university": uni,
+                "category": category,
+                "year": year,
+                "question": q_num,
+                "type": type_str,
+                "title": title_str
+            }
+            dest_root = "web/src/content/solutions"
+            filename = f"{uni}-{category}-{year}-{q_num}-{type_str}.md"
+            output_md_path = os.path.join(dest_root, filename)
+            public_img_dir_rel = f"/Univ_EntranceExam_Math_Collection/images/tikz/{uni}/{category}/{year}/{q_num}"
+            output_svg_dir = os.path.join("web", "public", "images", "tikz", uni, category, year, q_num)
+            print(f"Pinpoint Converting: {target_path} -> {output_md_path}")
+            convert_tex_clean(target_path, output_md_path, frontmatter, public_img_dir_rel, output_svg_dir)
+            print("Pinpoint Conversion Finished!")
+    else:
+        process_all_src()
