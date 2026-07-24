@@ -1,0 +1,53 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] $3a_n > 2a_{n-1} \quad \dots \text{①}$
+
+与式から
+\[
+\begin{pmatrix} X \\ Y \end{pmatrix} = x \begin{pmatrix} a_n \\ a_{n-1} \end{pmatrix} + y \begin{pmatrix} 2 \\ 3 \end{pmatrix}
+\]
+である。$\vec{a}_n = \begin{pmatrix} a_n \\ a_{n-1} \end{pmatrix}$, $\vec{\beta} = \begin{pmatrix} 2 \\ 3 \end{pmatrix}$ とおくと、$|x| + |y| \le 1$ から、$(X, Y)$ は右下斜線部内をうごく ($O$ に注意した)。この面積 $S$ は、
+\begin{align*}
+\frac{1}{2} S &= (\text{$\vec{\beta}$ と $-\vec{a}_n$ でつくられる三角形}) + (\text{$\vec{\beta}$ と $\vec{a}_n$ でつくられる三角形}) \\
+&= \frac{1}{2} |-3a_n + 2a_{n-1}| + \frac{1}{2} |3a_n - 2a_{n-1}| \\
+&= |3a_n - 2a_{n-1}| \\
+&= 3a_n - 2a_{n-1} \quad (\because \text{①})
+\end{align*}
+と表せる。$S = 2$ だから、
+\[
+1 = 3a_n - 2a_{n-1} \quad (n \ge 2)
+\]
+\[
+\therefore a_n - 1 = \frac{2}{3}(a_{n-1} - 1) \quad (n \ge 2)
+\]
+くり返し用いて、
+\[
+a_n = \left(\frac{2}{3}\right)^{n-1} (a_1 - 1) + 1 \longrightarrow 1 \quad (n \to +\infty)
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (2.2, 0.8); % a_n
+  \coordinate (B) at (0.8, 2.0); % \beta
+  \coordinate (MA) at (-2.2, -0.8); % -a_n
+  \coordinate (MB) at (-0.8, -2.0); % -\beta
+
+  \fill[gray!30] (A) -- (B) -- (MA) -- (MB) -- cycle;
+  \draw[thick] (A) -- (B) -- (MA) -- (MB) -- cycle;
+
+  \draw[->, thick] (O) -- (A) node[right] {$\vec{a}_n$};
+  \draw[->, thick] (O) -- (B) node[above] {$\vec{\beta}$};
+  \draw[dashed] (MA) -- (A);
+  \draw[dashed] (MB) -- (B);
+
+  \node[below left] at (O) {$O$};
+\end{tikzpicture}
+\end{center}
+
+\end{document}

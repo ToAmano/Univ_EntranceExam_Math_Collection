@@ -1,0 +1,52 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\begin{proof}[解]
+$0 \leqq x \leqq 1$, $0 \leqq y \leqq 1$, $2 \leqq z \leqq 3$ \hfill $\dots$ \textcircled{1}
+
+\begin{enumerate}
+    \item[(1)] $w = 3 \iff 3(z-y) = z-x \iff 2z = 3y-x$ だが, \textcircled{1}から $4 \leqq 2z \leqq 6$, $-1 \leqq 3y-x \leqq 3$ となるので, $w=3$ となることはない.
+
+    \item[(2)] $\operatorname{Max} w = \dfrac{z}{z-1}$
+
+    \item[(3)] (2)で $z$ をうごかして, $w = 1 + \dfrac{1}{z-1}$ だから, $z=2$ で $\operatorname{max} 2$.
+
+    \item[(4)] $z$ が一定の時 $\dfrac{z-1}{z} \leqq w \leqq \dfrac{z}{z-1}$ だから, $w$ の存在範囲は右図斜線部（境界含む）だから, もとめる $\max k$ は $k = \dfrac{3}{2}$ である.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+    % Axes
+    \draw[->] (-0.3,0) -- (3.8,0) node[below] {$z$};
+    \draw[->] (0,-0.3) -- (0,2.4) node[left] {$w$};
+    \node[below left] at (0,0) {$0$};
+
+    % Shaded region domain z in [2, 3]
+    \fill[pattern=north east lines, pattern color=gray!60] 
+        plot[domain=2:3, smooth] (\x, {\x/(\x-1)}) -- 
+        (3, 2/3) -- 
+        plot[domain=3:2, smooth] (\x, {(\x-1)/\x}) -- 
+        cycle;
+
+    \draw[thick, domain=1.5:3.5, samples=100] plot (\x, {\x/(\x-1)}) node[right] {$w = \frac{z}{z-1}$};
+    \draw[thick, domain=1.5:3.5, samples=100] plot (\x, {(\x-1)/\x}) node[right] {$w = \frac{z-1}{z}$};
+
+    % Vertical boundary lines
+    \draw[dashed] (2,0) node[below] {$2$} -- (2,2);
+    \draw[dashed] (3,0) node[below] {$3$} -- (3,1.5);
+
+    % Ticks on w-axis
+    \draw[dashed] (0,2) node[left] {$2$} -- (2,2);
+    \draw[dashed] (0,1.5) node[left] {$\frac{3}{2}$} -- (3,1.5);
+    \draw[dashed] (0,1) node[left] {$1$} -- (3.5,1);
+    \draw[dashed] (0,2/3) node[left] {$\frac{2}{3}$} -- (3,2/3);
+    \draw[dashed] (0,0.5) node[left] {$\frac{1}{2}$} -- (2,0.5);
+\end{tikzpicture}
+\end{center}
+\end{proof}
+
+\end{document}

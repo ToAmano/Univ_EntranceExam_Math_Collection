@@ -1,0 +1,86 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\begin{proof}[解]
+$x(t)=t+e^{at},\ y(t)=-t+e^{at}$とおく。又，$p=e^t$とする。
+\[
+x'(t)=1+ap^a, \qquad y'(t)=-1+ap^a \quad\cdots\text{①}
+\]
+$a>0$から，$x'(t)>0$だから
+\[
+\frac{dy}{dx}=\frac{y'(t)}{x'(t)}=\frac{-1+ap^a}{1+ap^a} \quad\cdots\text{②}
+\]
+題意から，$y(t)=0$の時，$dy/dx=0$なる$t$がある。$dy/dx=0\iff a\cdot p^a=1$（$\because②$）で，これをといて，（$a>0$）
+\[
+t=-\frac1a\log a
+\]
+この時$y(t)=0$となるから，
+\[
+\frac1a\log a+\frac1a=0 \quad\therefore\ a=\frac1e\ (>0)
+\]
+
+\textbf{(2)} ②及び(1)の結果から下表をうる。
+\begin{center}
+\begin{tabular}{c|ccccc}
+$t$ & & & $e$ & & \\
+\hline
+$x'$ & $+$ & $+$ & $+$ & & \\
+\hline
+$y'$ & & $-$ & $0$ & $+$ & \\
+\hline
+$(x,y)$ & $\searrow$ & & $(2e,0)$ & & $\nearrow$
+\end{tabular}
+\end{center}
+$t\to+\infty$の時，$x(t),y(t)\to+\infty$。$t\to-\infty$の時，$x(t)\to-\infty,\ y(t)\to+\infty$。
+\[
+x(t)\le y(t)\iff t+e^{t/e}\le-t+e^{t/e}\iff t\le0 \quad(x(0)=1,\ y(0)=1)
+\]
+とあわせて，グラフの概形は下図でもとめる面積$S$は下図斜線部。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.55, >=stealth]
+  \draw[->] (-0.5,0) -- (10,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,6) node[above] {$y$};
+  \draw[dashed] (0,0) -- (6,6) node[right] {$y=x$};
+  \draw[domain=-1.3:2.72, smooth] plot ({\x+exp(\x/2.71828)},{-\x+exp(\x/2.71828)}) node[right] {$C$};
+  \fill[gray!30] (0,0) -- (1,1) -- (1,0) -- cycle;
+  \fill[gray!30, domain=0:2.71828, variable=\tau] plot ({\tau+exp(\tau/2.71828)},{-\tau+exp(\tau/2.71828)}) -- (1,0) -- cycle;
+  \fill (1,1) circle (1.2pt) node[above] {$1$};
+  \fill (5.436,0) circle (1.2pt) node[below] {$2e$};
+\end{tikzpicture}
+\end{center}
+
+\[
+S=\triangle+\int_1^{2e}y(t)dx=\frac12+\int_1^{2e}y(t)dx=\frac12+\int_0^ey(t)\frac{dx}{dt}dt \quad\cdots\text{③}
+\]
+ここで，
+\[
+y(t)\frac{dx}{dt}=\left(-t+e^{\frac{t}{e}}\right)\left(1+\frac1ee^{\frac{t}{e}}\right)=\frac1ee^{\frac2et}+\left(1-\frac{t}{e}\right)e^{\frac{t}{e}}-t \quad\cdots\text{④}
+\]
+であり，各項計算して，
+\[
+\int_0^e\frac1ee^{\frac2et}dt=\frac12\left[e^{\frac2et}\right]_0^e=\frac12(e^2-1)
+\]
+\[
+\int_0^e\left(1-\frac{t}{e}\right)e^{\frac{t}{e}}dt=e\int_0^1(1-x)e^xdx=e^2-2e
+\]
+\[
+\int_0^et\,dt=\frac12e^2
+\]
+だから④に代入して，
+\[
+④=\frac12(e^2-1)+e^2-2e-\frac12e^2=e^2-2e-\frac12
+\]
+だから，③から
+\[
+S=e(e-2)
+\]
+\end{proof}
+
+\newpage
+
+\end{document}

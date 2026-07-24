@@ -1,0 +1,79 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\begin{proof}[解]
+\begin{enumerate}
+    \item[(1)] 準線のうち $x > 0$ のものを $l$ とする. $F(ae, 0)$ とおく時, この楕円の離心率は $e$ であり, 右図のように $P, H$ を定めると,
+    \[
+    \overline{PF} = e \overline{PH}
+    \]
+    だから, $\overline{PF} = r$ として,
+    \[
+    \frac{a}{e} - ae = r \cos \theta + \frac{r}{e}
+    \]
+    \[
+    r = \frac{a(1-e^2)}{1+e\cos\theta}
+    \]
+
+    \begin{center}
+    \begin{tikzpicture}[scale=1.5, >=stealth]
+        % Axes
+        \draw[->] (-1.8,0) -- (2.5,0) node[below] {$x$};
+        \draw[->] (0,-1.4) -- (0,1.4) node[left] {$y$};
+        \node[below left] at (0,0) {$O$};
+
+        % Ellipse with a=1.5, b=1.0, e=0.745 => ae=1.118, a/e=2.013
+        \draw[thick] (0,0) ellipse (1.5cm and 1.0cm);
+
+        % Points and ticks
+        \coordinate (F) at (1.118,0);
+        \node[below] at (F) {$F$};
+        \fill (F) circle (1pt);
+        \node[below] at (1.118,-0.05) {$ae$};
+        \node[below left] at (1.5,0) {$a$};
+        \node[left] at (0,1.0) {$b$};
+
+        % Directrix l
+        \draw[dashed, thick] (2.013,-1.3) -- (2.013,1.3) node[above] {$l$};
+        \node[below] at (2.013,0) {$\frac{a}{e}$};
+
+        % Point P and H
+        \coordinate (P) at ({1.118 + 0.65*cos(50)}, {0.65*sin(50)});
+        \fill (P) circle (1pt);
+        \node[above left] at (P) {$P$};
+
+        \coordinate (H) at (2.013, {0.65*sin(50)});
+        \fill (H) circle (1pt);
+        \node[above right] at (H) {$H$};
+
+        % Segments
+        \draw (F) -- (P) node[midway, left] {$r$};
+        \draw (P) -- (H);
+        \draw (P) -- ({1.118 + 0.65*cos(50)}, 0);
+
+        % Angle theta arc
+        \draw (1.118+0.25,0) arc (0:50:0.25);
+        \node at (1.118+0.35, 0.15) {$\theta$};
+    \end{tikzpicture}
+    \end{center}
+
+    \item[(2)] $P, Q$ に対応する $\theta$ を $\alpha, \alpha+\pi \, (0 \leqq \alpha \leqq \pi)$, $R, S$ に対応する $\theta$ を $\alpha-\frac{\pi}{2}, \alpha+\frac{\pi}{2}$ とする. $A = a(1-e^2)$ とすると,
+    \begin{align*}
+        \overline{PF} \cdot \overline{QF} &= r(\alpha) \cdot r(\alpha+\pi) \\
+        &= \frac{A}{1+e\cos\alpha} \cdot \frac{A}{1-e\cos\alpha} = \frac{A^2}{1-e^2\cos^2\alpha}
+    \end{align*}
+    \[
+    \overline{FR} \cdot \overline{FS} = r\left(\alpha+\frac{\pi}{2}\right) r\left(\alpha-\frac{\pi}{2}\right) = \frac{A^2}{1-e^2\sin^2\alpha}
+    \]
+    だから
+    \[
+    \frac{1}{\overline{PF}\cdot\overline{QF}} + \frac{1}{\overline{FR}\cdot\overline{FS}} = \frac{2-e^2}{A^2} = \frac{2-e^2}{a^2(1-e^2)^2}.
+    \]
+\end{enumerate}
+\end{proof}
+
+\end{document}

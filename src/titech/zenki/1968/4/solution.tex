@@ -1,0 +1,83 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\begin{proof}[解]
+直線 $PQ$ を $l$ とする。$C = \cos\theta$, $S = \sin\theta$ とする。
+
+\begin{align*}
+l : (S^2+C^2)(x-C^2) + (S^2-C^2)(y-C^2) &= 0 \\
+x-C^2 + (S^2-C^2)y - C^2(S^2-C^2) &= 0
+\end{align*}
+
+$t = C^2$ とする。
+\[
+x - t + (1-2t)y - t(1-2t) = 0
+\]
+
+$(X, Y)$ を $l$ が通る時、
+\begin{equation}
+X - t + Y(1-2t) + t(2t-1) = 0 \quad \cdots \text{①}
+\end{equation}
+
+が $0 \le t \le 1$ に解を持つ。①の左辺を $f(t)$ とする。
+\[
+f(t) = 2t^2 + (-2-2Y)t + X+Y
+\]
+である。
+
+\paragraph{$1^\circ \ [0, 1]$ に $1$ つだけ}
+\[
+f(0)f(1) \le 0 \iff (X+Y)(X-Y) \le 0
+\]
+
+\paragraph{$2^\circ \ [0, 1]$ に $2$ つ（重解含む）}
+\[
+\begin{cases}
+\text{判: } (-1-Y)^2 - 2(X+Y) \ge 0 \\
+\text{端: } f(0) \ge 0, f(1) \ge 0 \\
+\text{軸: } 0 \le \frac{1+Y}{2} \le 1
+\end{cases}
+\iff \begin{cases}
+Y^2+1-2X \ge 0 \\
+X+Y \ge 0 \\
+X-Y \ge 0 \\
+-1 \le Y \le 1
+\end{cases}
+\]
+
+したがって、$1^\circ, 2^\circ$ の和集合が求める領域で、図示して下図非斜線部（境界含む）。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    \draw[->] (-1.5,0) -- (2.5,0) node[right] {$X$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$Y$};
+    \node[below left] at (0,0) {$0$};
+    \node[below] at (0.5,0) {$\frac{1}{2}$};
+    \node[below] at (1,0) {$1$};
+
+    % Lines Y = X and Y = -X
+    \draw[domain=-1.8:1.8, smooth, variable=\x] plot ({\x}, {\x}) node[right] {$Y=X$};
+    \draw[domain=-1.8:1.8, smooth, variable=\x] plot ({\x}, {-\x}) node[right] {$Y=-X$};
+
+    % Parabola X = (Y^2+1)/2
+    \draw[domain=-1.5:1.5, smooth, variable=\y] plot ({((\y)^2 + 1)/2}, {\y}) node[above right] {$X = \frac{Y^2+1}{2}$};
+
+    % Hatching in the shaded region
+    \begin{scope}
+        \clip (0.5,-1.5) rectangle (2.2,1.5);
+        \fill[pattern=north east lines, pattern color=gray!50] (1,-1) -- plot[domain=-1:1, smooth, variable=\y] ({((\y)^2 + 1)/2}, {\y}) -- (1,1) -- (2.2,1.5) -- (2.2,-1.5) -- cycle;
+    \end{scope}
+
+    \draw[dashed] (1,0) -- (1,1) -- (0,1);
+    \draw[dashed] (1,0) -- (1,-1) -- (0,-1);
+    \node[left] at (0,1) {$1$};
+    \node[left] at (0,-1) {$-1$};
+\end{tikzpicture}
+\end{center}
+\end{proof}
+
+\end{document}

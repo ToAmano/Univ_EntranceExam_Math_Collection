@@ -1,0 +1,71 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\begin{proof}[解]
+内接円の中心 $O$ から $AB, BC, CA$ に下ろした垂足を順に $H_1, H_2, H_3$ とする. $AC, BC$ に接する円を, 内接円から順に $C_0, C_1, C_2, \dots$ とおく. $C_n$ の半径を $r_n$ とする. 題意から $r_0 = r$ で, 円 $C_n$ の中心を $O_n$ として右図から
+\[
+\sin \frac{C}{2} = \frac{r_n - r_{n+1}}{r_n + r_{n+1}}
+\]
+\[
+\therefore r_{n+1} = \frac{1 - \sin\frac{C}{2}}{1 + \sin\frac{C}{2}} r_n
+\]
+だから, くり返し用いて,
+\[
+r_n = \left(\frac{1 - \sin\frac{C}{2}}{1 + \sin\frac{C}{2}}\right)^n r \qquad \dots \text{\textcircled{1}}
+\]
+である. 同様にして, 他の2辺に接する円の半径 $s_n, t_n$ は,
+\[
+s_n = \left(\frac{1 - \sin\frac{A}{2}}{1 + \sin\frac{A}{2}}\right)^n r, \quad t_n = \left(\frac{1 - \sin\frac{B}{2}}{1 + \sin\frac{B}{2}}\right)^n r \qquad \dots \text{\textcircled{2}}
+\]
+と書けるから, 全ての $C_n$ の面積和は ($C_0$ のぞく),
+\[
+\lim_{n \to \infty} \sum_{k=1}^n \pi r_k^2 = \pi r^2 \frac{1}{1 - \left(\frac{1-\sin\frac{C}{2}}{1+\sin\frac{C}{2}}\right)^2} = \pi r^2 \frac{(1 - \sin\frac{C}{2})^2}{4 \sin\frac{C}{2}} \equiv F_C \qquad \dots \text{\textcircled{3}}
+\]
+と書けることから, 全ての面積和 $T$ は対称性から,
+\[
+T = F_A + F_B + F_C + \pi r^2 = \pi r^2 \left\{ 1 + \frac{(1-\sin\frac{A}{2})^2}{4\sin\frac{A}{2}} + \frac{(1-\sin\frac{B}{2})^2}{4\sin\frac{B}{2}} + \frac{(1-\sin\frac{C}{2})^2}{4\sin\frac{C}{2}} \right\}
+\]
+$\triangle ABC$ が一辺 $a$ の正三角形の時, $A=B=C=\pi/3$, $r = \frac{\sqrt{3}}{6} a$ だから代入して,
+\[
+T = \frac{11}{96} \pi a^2
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Triangle ABC
+    \coordinate (C) at (0, 3);
+    \coordinate (A) at (-2.5, 0);
+    \coordinate (B) at (2.5, 0);
+
+    \draw[thick] (A) node[left] {$A$} -- (B) node[right] {$B$} -- (C) node[above] {$C$} -- cycle;
+    \draw (C) node[above right] {$H_3$};
+
+    % Incircle C_0
+    \draw (0, 0.9) circle (0.9);
+    \node at (0.3, 0.9) {$O_0$};
+
+    % Smaller circle C_1 near C
+    \draw (0, 2.1) circle (0.3);
+    \node at (0.15, 2.1) {\tiny $O_1$};
+
+    % Labels
+    \node[left] at (-1.25, 1.5) {$r$};
+    \node[below] at (0, 0) {$H_2$};
+
+    % Auxiliary right triangle figure
+    \begin{scope}[shift={(3, 1)}]
+        \draw[thick] (0,0) -- (1.5,0) node[midway, below] {$r_n - r_{n+1}$} -- (1.5, 1) -- cycle;
+        \node[above left] at (0.75, 0.5) {$r_n + r_{n+1}$};
+        \node[left] at (0.3, 0.15) {$\frac{C}{2}$};
+        \node[above right] at (1.5, 1) {$O_n$};
+        \node[below left] at (0, 0) {$O_{n+1}$};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+\end{proof}
+
+\end{document}

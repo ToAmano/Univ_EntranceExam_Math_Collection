@@ -1,0 +1,65 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] $C = \cos x, S = \sin x$ とおく. 又, $p = S+C$ とすると $SC = \frac{p^2-1}{2}, -\sqrt{2} \leqq p \leqq \sqrt{2} \dots \text{①}$ である.
+\begin{align*}
+f(x) &= 3(S-C) - \cos 2x = (S-C)(S+C+3) \\
+f'(x) &= 3(C+S) + 2\sin 2x \\
+&= 3(C+S) + 4SC \\
+&= 3p + 2p^2 - 2 = (2p-1)(p+2)
+\end{align*}
+から, ①とあわせて下表をうる.
+
+\[
+\begin{array}{c|c|c|c|c|c|c|c}
+x & 0 & \dots & \alpha & \dots & \beta & \dots & 2\pi \\ \hline
+p & 1 & + & 1/2 & - & 1/2 & + & 1 \\ \hline
+f' & & + & 0 & - & 0 & + & \\ \hline
+f & -4 & \nearrow & & \searrow & & \nearrow & -4
+\end{array}
+\qquad
+\left( \alpha, \beta \text{ は } p = \frac{1}{2} \text{ となるもの.} \right)
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1, >=stealth]
+  \draw[->] (-0.3,0) -- (6.8,0) node[below] {$x$};
+  \draw[->] (0,-1.6) -- (0,1.8) node[left] {$p$};
+  
+  \draw[domain=0:6.283, samples=100, smooth, thick] plot (\x, {sin(\x r) + cos(\x r)});
+  
+  \draw[dashed] (0, 1.414) node[left] {$\sqrt{2}$} -- (0.785, 1.414) -- (0.785, 0) node[below] {$\frac{\pi}{4}$};
+  \draw[dashed] (0, 0.5) node[left] {$\frac{1}{2}$} -- (6.0, 0.5);
+  
+  \draw[dashed] (2.05, 0.5) -- (2.05, 0) node[below] {$\alpha$};
+  \draw[dashed] (5.80, 0.5) -- (5.80, 0) node[below] {$\beta$};
+  
+  \node[below] at (2.35, 0) {$\frac{3\pi}{4}$};
+  \node[below] at (5.5, 0) {$\frac{7\pi}{4}$};
+  \node[below right] at (6.28, 0) {$2\pi$};
+  \node[below left] at (0, 0) {$0$};
+\end{tikzpicture}
+\end{center}
+
+ここで,
+\begin{align*}
+S-C &= \pm \sqrt{(S-C)^2} = \pm \sqrt{(S+C)^2 - 4SC} \\
+&= \pm \sqrt{2-p^2}
+\end{align*}
+及び右図から $x=\alpha$ の時 $S-C > 0$, $x=\beta$ の時 $S-C < 0$ だから
+\[
+\begin{cases}
+f(\alpha) = \sqrt{2-\frac{1}{4}} \left( \frac{1}{2} + 3 \right) = \sqrt{2-\frac{1}{4}} \cdot \frac{7}{2} = \frac{7}{4}\sqrt{7} \\
+f(\beta) = -\sqrt{2-\frac{1}{4}} \left( \frac{1}{2} + 3 \right) = -\sqrt{2-\frac{1}{4}} \cdot \frac{7}{2} = -\frac{7}{4}\sqrt{7}
+\end{cases}
+\]
+となり, $-4 > -\frac{7}{4}\sqrt{7}$ とあわせて
+\[
+\text{max} \;\; \frac{7}{4}\sqrt{7}, \quad \text{min} \;\; -\frac{7}{4}\sqrt{7}
+\]
+
+\end{document}

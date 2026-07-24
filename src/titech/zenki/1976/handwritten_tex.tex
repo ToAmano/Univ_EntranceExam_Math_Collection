@@ -1,0 +1,249 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{第1問}
+
+\begin{proof}[解]
+$x^4$ を $P(x)$ でわった商を $A(x)$，あまりを $Q(x)$ とする。又，$x^5$ を $P(x)$ でわった商を $B(x)$ とする。
+\[
+\begin{cases}
+x^4=A(x)\cdot P(x)+Q(x) \\
+x^5=B(x)\cdot P(x)+Q(x)
+\end{cases}
+\]
+したがって，辺々引いて，
+\[
+x^4(x-1)=\{B(x)-A(x)\}P(x)
+\]
+だから $x^4(x-1)$ は $P(x)$ で割り切れるので，$a$ を係数として
+\[
+P(x)=ax^3, \quad a(x-1)\cdot x^2
+\]
+である。題意から，$Q(x)\ne0$ だから前者は不適で，$P(x)=a(x-1)\cdot x^2$ である。 $\cdots$①
+
+次に，$f(x)$ を $P(x)$ でわった商 $C(x)$，$f(x)\cdot x$ を $P(x)$ でわった商を $D(x)$ とする。
+\[
+\begin{cases}
+f(x)=C(x)\cdot P(x)+r(x) & \cdots \text{②} \\
+xf(x)=D(x)\cdot P(x) & \cdots \text{③}
+\end{cases}
+\]
+②$\times x$ と③を辺々引いて，
+\[
+0=\{x\cdot C(x)-D(x)\}\cdot P(x)+x\cdot r(x)
+\]
+より，$r(x)\cdot x$ は $P(x)$ で割り切れ，かつ①より，$r(x)$ は2次以下だから，
+\[
+r(x)=ax(x-1)
+\]
+である。$r(x)$ の最高次係数1から，$a=1$ として，
+\[
+r(x)=x(x-1)
+\]
+\end{proof}
+
+\newpage
+
+\section*{第2問}
+
+\begin{proof}[解]
+与式の両辺0以上かつ，$1+4x^2>0$，$c>0$ から，平方根をとって，
+\[
+|b+x^2|>c\sqrt{1+4x^2}
+\]
+$t=x^2$（$t\ge0$）として，
+\[
+|b+t|>c\sqrt{1+4t} \quad \cdots \text{①}
+\]
+である。$b\le0$ の時，$t=-b$（$\ge0$）を①に代入すると
+\[
+0>c\sqrt{1-4b}
+\]
+となり不適。したがって，$0<b$ が必要である。この時，①から
+\[
+b>c\sqrt{4t+1}-t\equiv f(t) \quad \cdots \text{②}
+\]
+とすると，
+\[
+f'(t)=\frac{4c}{2\sqrt{4t+1}}-1=\frac{2c-\sqrt{4t+1}}{\sqrt{4t+1}}
+\]
+から，$c$によって以下のようになる。
+
+\textbf{$1^\circ\ c\le\dfrac{1}{2}$ の時}
+
+$f'(t)\le0$ となり，$f(t)$ は単調減少である。したがって②が全ての $t$ で成立する条件は
+\[
+b>f(0)=c \quad \cdots \text{③}
+\]
+
+\textbf{$2^\circ\ \dfrac{1}{2}\le c$ の時}
+
+下表をうる。
+\begin{center}
+\begin{tabular}{c|c|c|c}
+$t$ & $0$ & $c^2-\dfrac14$ & \\
+\hline
+$f'$ & $+$ & $0$ & $-$ \\
+\hline
+$f$ & $\nearrow$ & & $\searrow$
+\end{tabular}
+\end{center}
+
+したがって，$1^\circ$ と同様に，条件は
+\[
+b>f\left(c^2-\frac14\right)=c^2+\frac14 \quad \cdots \text{④}
+\]
+
+以上③④は $b>0$ をみたすから，
+\[
+0<c\le\frac12\ \text{の時}\quad b>c
+\]
+\[
+\frac12\le c\ \text{の時}\quad b>c^2+\frac14
+\]
+\end{proof}
+
+\newpage
+
+\section*{第3問}
+
+\begin{proof}[解]
+対称性から，右図の $\triangle OAB$ 内で $P$ がうごく時のみを考える。この時，$P$ と最近の辺は $AB$ である。$P$ から $AB$ に下ろした垂足を $H$ とし，$O$ を極，$x$軸正方向を始線とする極座標で $P(r,\theta)$ とおく。（$r,\theta\ge0$）題意から，
+\[
+\overline{OP}=\overline{PH} \iff r=\frac{a}{2}-r\cos\theta \iff r=\frac{\frac12 a}{1+\cos\theta} \quad (0\le\theta\le\pi/4) \quad \cdots \text{①}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3, >=stealth]
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (1.5,0);
+  \coordinate (B) at (1.5,1.5);
+  \draw (O) -- (A) -- (B) -- cycle;
+  \draw[dashed] (0,1.5) -- (B);
+  \node[left] at (0,0.75) {$\frac a2$};
+  \node[below] at (0.75,0) {$\frac a2$};
+  \node[below] at (O) {$O$};
+  \node[right] at (A) {$A$};
+  \node[above right] at (B) {$B$};
+  \draw[domain=0:45, smooth, thick] plot ({0.9*cos(\x)/(1+cos(\x))*2}, {0.9*sin(\x)/(1+cos(\x))*2});
+  \coordinate (P) at (0.55,0.35);
+  \fill (P) circle (0.7pt) node[above] {$P$};
+  \draw[dashed] (O) -- (P);
+  \draw[dashed] (P) -- (1.5,0.35) node[midway,above]{$H$};
+  \draw (0.15,0) arc (0:38:0.15);
+  \node at (0.3,0.1) {$\theta$};
+\end{tikzpicture}
+\end{center}
+
+この時，たしかに $P$ は $\triangle OAB$ 内にある。対称性から，もとめる面積 $S$，$S$ のうち $\triangle OAB$ 内のものを $S'$ として，
+\[
+S=8S' \quad \cdots \text{②}
+\]
+であり，
+\[
+S'=\int_0^{\pi/4}\frac{1}{2}r^2d\theta = \frac{1}{2}\cdot\frac{a^2}{4}\int_0^{\pi/4}\frac{1}{(1+\cos\theta)^2}d\theta = \frac{a^2}{8}\int_0^{\pi/4}\frac{1}{4\cos^4\frac\theta2}d\theta
+\]
+（以下 $C=\cos\dfrac{\theta}{2},\ t=\tan\dfrac{\theta}{2}$ とする）
+\[
+=\frac{a^2}{32}\int_0^{\pi/4}(1+t^2)\frac{1}{C^2}d\theta = \frac{2a^2}{32}\left[t+\frac13t^3\right]_0^{\pi/4} = \frac{a^2}{16}\left(\tan\frac\pi8+\frac13\tan^3\frac\pi8\right) \quad \cdots \text{③}
+\]
+ここで，$p=\tan\dfrac\pi8$ とすると $p>0$ より，
+\[
+\tan\frac\pi4=\frac{2p}{1-p^2} \quad\therefore\ p^2+2p-1=0 \quad\therefore\ p=-1+\sqrt2
+\]
+だから，③より
+\[
+S'=\frac{a^2}{16}(-1+\sqrt2)\left(1+\frac13(-1+\sqrt2)^2\right) = \frac{a^2}{16}(-1+\sqrt2)\left(\frac{6-2\sqrt2}{3}\right)
+\]
+となって，②に代入して
+\[
+S=\frac{a^2}{2}\cdot\frac23(-1+\sqrt2)(3-\sqrt2) = \frac{a^2}{3}(-5+4\sqrt2)
+\]
+
+\medskip
+\noindent\textbf{[解2]（$\triangle OAB$ 内で考える）}
+
+$P$ の軌跡は，$O$ を焦点，$AB$ を準線とする放物線で，その方程式は $\alpha=\dfrac14 a$ として
+\[
+y^2=-4\alpha\left(x-\frac{a}{4}\right)=-a\left(x-\frac a4\right)
+\]
+である。よって右図斜線部の面積 $S'$ は
+\[
+S'=\int_0^{\frac{\sqrt2-1}{2}a}\left(-\frac1ay^2+\frac a4\right)dy-\frac12\left(\frac{\sqrt2-1}{2}a\right)^2
+\]
+\[
+=-\frac1{3a}\left(\frac{\sqrt2-1}{2}a\right)^3+\frac a4\cdot\frac{\sqrt2-1}{2}a-\frac18(3-2\sqrt2)a^2
+\]
+と計算され，[解1] と同じく $S=\dfrac{a^2}{3}(-5+4\sqrt2)$ を得る。（原稿はここで途切れている）
+\end{proof}
+
+\newpage
+
+\section*{第4問}
+
+\begin{proof}[解]
+$A=\displaystyle\int_0^1 f(t)e^{-t}dt$ とおく。与式の両辺は $x$ で微分できる。
+\[
+f(x)=e^x-2aA\,e^{2x} \quad \cdots \text{①}
+\]
+$A$ の式に代入して
+\[
+A=\int_0^1(e^t-2aA\cdot e^{2t})e^{-t}dt=\int_0^1(1-2aA\cdot e^t)dt=\left[t-2aA\cdot e^t\right]_0^1=1-2aA(e-1)
+\]
+\[
+\therefore\ A=\frac{1}{1+2a(e-1)} \quad (\because 1+2a(e-1)=0\text{ は }a=1\text{ で不適}) \quad \cdots \text{②}
+\]
+次に，与式に $x=0$ を代入すると，
+\[
+0=1-Aa \quad\therefore\ Aa=1 \quad \cdots \text{③}
+\]
+である。②，③から
+\[
+(A,a)=\left(3-2e,\ \frac{1}{3-2e}\right)
+\]
+だから，
+\[
+f(x)=e^x-2e^{2x}, \quad a=\frac{1}{3-2e}
+\]
+\end{proof}
+
+\newpage
+
+\section*{第5問}
+
+\begin{proof}[解]
+$\vec{v}=x\vec{a}+y\vec{b}+z\vec{c}$ とおく。又，与方程式 $x^2+2y^2+3z^2=1$ を①とする。
+
+\begin{enumerate}
+  \item[(1)] ①は $(x,y,z)=(1,0,0),\left(0,\dfrac{1}{\sqrt2},0\right),\left(0,0,\dfrac{1}{\sqrt3}\right)$ で成立するので，これを順に①に代入して
+  \[
+  |\vec{v}|=|\vec{a}|=\left|\frac{1}{\sqrt2}\vec{b}\right|=\left|\frac{1}{\sqrt3}\vec{c}\right|=1 \quad\therefore\ |\vec{a}|=1,\ |\vec{b}|=\sqrt2,\ |\vec{c}|=\sqrt3
+  \]
+
+  \item[(2)] ①は $(x,y,z)=\left(\dfrac{1}{2},\sqrt{\dfrac38},0\right),\left(\dfrac12,0,\dfrac12\right),\left(0,\dfrac12,\sqrt{\dfrac16}\right)$ で成立するので，$|\vec v|^2=1$ に代入して
+  \[
+  \begin{cases}
+  \dfrac14|\vec a|^2+\dfrac38|\vec b|^2+2\cdot\dfrac12\sqrt{\dfrac38}\,\vec a\cdot\vec b=1 \\
+  \dfrac14|\vec a|^2+\dfrac14|\vec c|^2+2\cdot\dfrac12\cdot\dfrac12\,\vec a\cdot\vec c=1 \\
+  \dfrac14|\vec b|^2+\dfrac16|\vec c|^2+2\cdot\dfrac12\sqrt{\dfrac16}\,\vec b\cdot\vec c=1
+  \end{cases}
+  \quad\therefore\quad
+  \begin{cases}
+  \vec a\cdot\vec b=0 \\
+  \vec a\cdot\vec c=0 \\
+  \vec b\cdot\vec c=0
+  \end{cases}
+  \]
+\end{enumerate}
+\end{proof}
+
+\newpage
+
+\section*{第6問}
+
+\begin{proof}[解]
+（原稿は空欄）
+\end{proof}
+
+\end{document}

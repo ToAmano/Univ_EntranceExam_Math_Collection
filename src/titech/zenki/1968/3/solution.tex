@@ -1,0 +1,73 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\begin{proof}[解]
+$e(\theta) = \cos\theta + i\sin\theta$ とする。$z = e(\alpha)$, $w = e(\beta)$ であり、
+\begin{align*}
+e(\alpha) + e(\beta) &= (\cos\alpha + \cos\beta) + i(\sin\alpha + \sin\beta) \\
+&= 2 \cos\frac{\alpha+\beta}{2} \cos\frac{\alpha-\beta}{2} + 2 i \sin\frac{\alpha+\beta}{2} \cos\frac{\alpha-\beta}{2} \\
+&= 2 \cos\frac{\alpha-\beta}{2} e\left(\frac{\alpha+\beta}{2}\right)
+\end{align*}
+
+だから、$t = z+w$ として、
+\begin{equation}
+|1 + z + w| \le 1 \iff |1 + t|^2 \le 1 \iff |t|^2 + t + \bar{t} \le 0 \quad \cdots \text{①}
+\end{equation}
+
+に代入して、$|e(\theta)| = 1$ より、
+\[
+4 \cos^2\frac{\alpha-\beta}{2} + 2 \cos\frac{\alpha-\beta}{2} \cdot 2 \cos\frac{\alpha+\beta}{2} \le 0
+\]
+\[
+\iff \cos\frac{\alpha-\beta}{2} \left(\cos\frac{\alpha-\beta}{2} + \cos\frac{\alpha+\beta}{2}\right) \le 0
+\]
+\begin{equation}
+\iff \cos\frac{\alpha-\beta}{2} \cos\frac{\alpha}{2} \cos\frac{\beta}{2} \le 0 \quad \cdots \text{②}
+\end{equation}
+
+以上から、求める $(\alpha, \beta)$ は ②を満たし、かつ $0 \le \alpha, \beta \le 2\pi$ なる $(\alpha, \beta)$ であり、図示して下図斜線部（境界含む）。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    \draw[->] (-0.3,0) -- (7,0) node[right] {$\alpha$};
+    \draw[->] (0,-0.3) -- (0,7) node[above] {$\beta$};
+    
+    % Shaded triangles
+    \fill[pattern=north east lines, pattern color=gray!60] (0,{pi}) -- ({pi},{pi}) -- ({pi},{2*pi}) -- cycle;
+    \fill[pattern=north east lines, pattern color=gray!60] ({pi},0) -- ({pi},{pi}) -- ({2*pi},{pi}) -- cycle;
+    
+    % Outer boundary of [0, 2pi]^2
+    \draw (0,0) rectangle ({2*pi},{2*pi});
+    
+    % Grid lines at pi
+    \draw[dashed] ({pi},0) -- ({pi},{2*pi});
+    \draw[dashed] (0,{pi}) -- ({2*pi},{pi});
+    
+    % Diagonals
+    \draw (0,{pi}) -- ({pi},{2*pi});
+    \draw ({pi},0) -- ({2*pi},{pi});
+    
+    % Axis labels
+    \node[below left] at (0,0) {$0$};
+    \node[below] at ({pi},0) {$\pi$};
+    \node[below] at ({2*pi},0) {$2\pi$};
+    \node[left] at (0,{pi}) {$\pi$};
+    \node[left] at (0,{2*pi}) {$2\pi$};
+\end{tikzpicture}
+\end{center}
+
+\[
+\begin{cases}
+0 \le \alpha \le \pi \land 0 \le \beta \le \pi \text{ の時} & ② \iff \cos\frac{\alpha-\beta}{2} \le 0 \\
+0 \le \alpha \le \pi \land \pi \le \beta \le 2\pi \text{ 〃} & ② \iff \cos\frac{\alpha-\beta}{2} \ge 0 \\
+\pi \le \alpha \le 2\pi \land 0 \le \beta \le \pi \text{ 〃} & ② \iff \cos\frac{\alpha-\beta}{2} \ge 0 \\
+\pi \le \alpha \le 2\pi \land \pi \le \beta \le 2\pi \text{ 〃} & ② \iff \cos\frac{\alpha-\beta}{2} \le 0
+\end{cases}
+\]
+\end{proof}
+
+\end{document}

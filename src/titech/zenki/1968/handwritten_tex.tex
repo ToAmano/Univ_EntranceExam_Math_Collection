@@ -1,0 +1,375 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{第1問}
+
+\begin{proof}[解]
+\begin{equation}
+\begin{cases}
+ab+1 \le abc \le bc+ca+ab+1 & \cdots \text{①} \\
+a > b > c & \cdots \text{②}
+\end{cases}
+\end{equation}
+
+①の両辺を $abc$ でわって
+\begin{equation}
+\frac{1}{c} + \frac{1}{abc} \le 1 \le \frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{abc} \quad \cdots \text{③}
+\end{equation}
+
+$T = \frac{1}{abc}$ とおく。まず、$c=1$ は③の左側が成立せず不適だから、$c \ge 2$ である。③の右側から
+\begin{equation}
+1 < \frac{3}{c} + \frac{1}{c^3} \quad \therefore c^3 - 3c^2 - 1 < 0 \quad (\because c > 0) \quad \cdots \text{④}
+\end{equation}
+
+$f(x) = x^3 - 3x^2 - 1$ とおく。$f'(x) = 3x^2 - 6x = 3x(x-2)$ より増減表をつくる。
+
+\[
+\begin{array}{c|c|c|c|c|c|c|c}
+x & 0 & \cdots & 2 & \cdots & 3 & \cdots & 4 \\ \hline
+f' & 0 & - & 0 & + & + & + & + \\ \hline
+f & -1 & \searrow & -5 & \nearrow & -1 & \nearrow & 15
+\end{array}
+\]
+
+したがって $y=f(x)$ のグラフは右上がりで、④には $c=1, 2, 3$ が必要。一方 $c \ge 2$ だったから、$c=2, 3$ である。
+
+\paragraph{$1^\circ \ c=2$}
+②、③に代入
+\begin{equation}
+\begin{cases}
+\frac{1}{2ab} \le \frac{1}{2} \le \frac{1}{a} + \frac{1}{b} + \frac{1}{2ab} & \cdots \text{⑤} \\
+3 \le b < a
+\end{cases}
+\end{equation}
+
+再び右側から
+\[
+\frac{1}{2} < \frac{2}{b} + \frac{1}{2b^2} \quad \therefore b^2 - 4b - 1 < 0
+\]
+
+$y = x^2 - 4x - 1$ のグラフから $b=3, 4$ である。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.6]
+    \draw[->] (-1,0) -- (6,0) node[right] {$x$};
+    \draw[->] (0,-5.5) -- (0,2) node[above] {$y$};
+    \draw[domain=-0.8:4.8, smooth, variable=\x] plot ({\x}, {\x*\x - 4*\x - 1});
+    \node[below left] at (0,0) {$0$};
+    \node[below] at (4,0) {$4$};
+    \node[below] at (5,0) {$5$};
+    \node[below right] at ({2+sqrt(5)},0) {$2+\sqrt{5}$};
+    \draw[dashed] ({2+sqrt(5)},0) -- ({2+sqrt(5)},-2);
+\end{tikzpicture}
+\end{center}
+
+\subparagraph{(I) $b=4$}
+⑤から
+\[
+\frac{1}{8a} \le \frac{1}{2} \le \frac{1}{4} + \frac{1}{a} + \frac{1}{8a} = \frac{1}{4} + \frac{9}{8a}
+\]
+\[
+\therefore \frac{1}{4} \le a \le \frac{9}{2}
+\]
+だが、$5 \le a$ とあわせて不適。
+
+\subparagraph{(II) $b=3$}
+⑤から
+\[
+\frac{1}{6a} \le \frac{1}{2} \le \frac{1}{3} + \frac{1}{a} + \frac{1}{6a} = \frac{1}{3} + \frac{7}{6a}
+\]
+\[
+\therefore \frac{1}{3} \le a \le 7
+\]
+$4 \le a$ とあわせて、$a=4, 5, 6, 7$
+
+\paragraph{$2^\circ \ c=3$}
+②、③に代入
+\begin{equation}
+\begin{cases}
+\frac{1}{3ab} \le \frac{2}{3} \le \frac{1}{a} + \frac{1}{b} + \frac{1}{3ab} & \cdots \text{⑥} \\
+4 \le b < a
+\end{cases}
+\end{equation}
+
+右側から
+\[
+\frac{2}{3} < \frac{2}{b} + \frac{1}{3b^2} \quad \therefore 2b^2 - 6b - 1 < 0
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=0.6]
+    \draw[->] (-1,0) -- (5,0) node[right] {$x$};
+    \draw[->] (0,-6) -- (0,2) node[above] {$y$};
+    \draw[domain=-0.6:3.6, smooth, variable=\x] plot ({\x}, {2*\x*\x - 6*\x - 1});
+    \node[below left] at (0,0) {$0$};
+    \node[below] at (3,0) {$3$};
+    \node[below] at (4,0) {$4$};
+    \node[above right] at (1.5, -5.5) {$\frac{3+\sqrt{11}}{2}$};
+\end{tikzpicture}
+\end{center}
+
+$y = 2x^2 - 6x - 1$ のグラフから、これと⑥を満たす $b$ はなく、不適。
+
+\paragraph{}
+以上まとめて、
+\[
+(a,b,c) = (4,3,2), (5,3,2), (6,3,2), (7,3,2)
+\]
+\end{proof}
+
+\section*{第2問}
+
+\begin{proof}[解]
+$x^2+bx+b^2 = \left(x + \frac{1}{2}b\right)^2 + \frac{3}{4}b^2 > 0$ だから、与式の両辺に $x^2+bx+b^2$ をかけて整理する。
+\[
+2x^2 + (3b+a)x + (3b^2-a^2) \ge 0
+\]
+かつ
+\[
+2x^2 - (3a+b)x + (3a^2-b^2) \ge 0
+\]
+
+だから、判別式を考えて
+\[
+\begin{cases}
+(3b+a)^2 - 4 \cdot 2 (3b^2-a^2) \le 0 \\
+(3a+b)^2 - 4 \cdot 2 (3a^2-b^2) \le 0
+\end{cases}
+\]
+\begin{equation}
+\therefore \begin{cases}
+9a^2 + 6ab - 15b^2 \le 0 \\
+-15a^2 + 6ab + 9b^2 \le 0
+\end{cases} \quad \cdots \text{①}
+\end{equation}
+
+$t = \frac{a}{b}$ とおく。$b \neq 0$ から①の両辺 $b^2$ でわって
+\[
+\begin{cases}
+9t^2 + 6t - 15 \le 0 \\
+-15t^2 + 6t + 9 \le 0
+\end{cases}
+\]
+\[
+\iff \begin{cases}
+-\frac{5}{3} \le t \le 1 \\
+t \le -\frac{3}{5}, \ 1 \le t
+\end{cases}
+\]
+\[
+\iff -\frac{5}{3} \le t \le -\frac{3}{5} \quad \text{or} \quad t = 1
+\]
+\end{proof}
+
+\section*{第3問}
+
+\begin{proof}[解]
+$e(\theta) = \cos\theta + i\sin\theta$ とする。$z = e(\alpha)$, $w = e(\beta)$ であり、
+\begin{align*}
+e(\alpha) + e(\beta) &= (\cos\alpha + \cos\beta) + i(\sin\alpha + \sin\beta) \\
+&= 2 \cos\frac{\alpha+\beta}{2} \cos\frac{\alpha-\beta}{2} + 2 i \sin\frac{\alpha+\beta}{2} \cos\frac{\alpha-\beta}{2} \\
+&= 2 \cos\frac{\alpha-\beta}{2} e\left(\frac{\alpha+\beta}{2}\right)
+\end{align*}
+
+だから、$t = z+w$ として、
+\begin{equation}
+|1 + z + w| \le 1 \iff |1 + t|^2 \le 1 \iff |t|^2 + t + \bar{t} \le 0 \quad \cdots \text{①}
+\end{equation}
+
+に代入して、$|e(\theta)| = 1$ より、
+\[
+4 \cos^2\frac{\alpha-\beta}{2} + 2 \cos\frac{\alpha-\beta}{2} \cdot 2 \cos\frac{\alpha+\beta}{2} \le 0
+\]
+\[
+\iff \cos\frac{\alpha-\beta}{2} \left(\cos\frac{\alpha-\beta}{2} + \cos\frac{\alpha+\beta}{2}\right) \le 0
+\]
+\begin{equation}
+\iff \cos\frac{\alpha-\beta}{2} \cos\frac{\alpha}{2} \cos\frac{\beta}{2} \le 0 \quad \cdots \text{②}
+\end{equation}
+
+以上から、求める $(\alpha, \beta)$ は ②を満たし、かつ $0 \le \alpha, \beta \le 2\pi$ なる $(\alpha, \beta)$ であり、図示して下図斜線部（境界含む）。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    \draw[->] (-0.3,0) -- (7,0) node[right] {$\alpha$};
+    \draw[->] (0,-0.3) -- (0,7) node[above] {$\beta$};
+    
+    % Shaded triangles
+    \fill[pattern=north east lines, pattern color=gray!60] (0,{pi}) -- ({pi},{pi}) -- ({pi},{2*pi}) -- cycle;
+    \fill[pattern=north east lines, pattern color=gray!60] ({pi},0) -- ({pi},{pi}) -- ({2*pi},{pi}) -- cycle;
+    
+    % Outer boundary of [0, 2pi]^2
+    \draw (0,0) rectangle ({2*pi},{2*pi});
+    
+    % Grid lines at pi
+    \draw[dashed] ({pi},0) -- ({pi},{2*pi});
+    \draw[dashed] (0,{pi}) -- ({2*pi},{pi});
+    
+    % Diagonals
+    \draw (0,{pi}) -- ({pi},{2*pi});
+    \draw ({pi},0) -- ({2*pi},{pi});
+    
+    % Axis labels
+    \node[below left] at (0,0) {$0$};
+    \node[below] at ({pi},0) {$\pi$};
+    \node[below] at ({2*pi},0) {$2\pi$};
+    \node[left] at (0,{pi}) {$\pi$};
+    \node[left] at (0,{2*pi}) {$2\pi$};
+\end{tikzpicture}
+\end{center}
+
+\[
+\begin{cases}
+0 \le \alpha \le \pi \land 0 \le \beta \le \pi \text{ の時} & ② \iff \cos\frac{\alpha-\beta}{2} \le 0 \\
+0 \le \alpha \le \pi \land \pi \le \beta \le 2\pi \text{ 〃} & ② \iff \cos\frac{\alpha-\beta}{2} \ge 0 \\
+\pi \le \alpha \le 2\pi \land 0 \le \beta \le \pi \text{ 〃} & ② \iff \cos\frac{\alpha-\beta}{2} \ge 0 \\
+\pi \le \alpha \le 2\pi \land \pi \le \beta \le 2\pi \text{ 〃} & ② \iff \cos\frac{\alpha-\beta}{2} \le 0
+\end{cases}
+\]
+\end{proof}
+
+\section*{第4問}
+
+\begin{proof}[解]
+直線 $PQ$ を $l$ とする。$C = \cos\theta$, $S = \sin\theta$ とする。
+
+\begin{align*}
+l : (S^2+C^2)(x-C^2) + (S^2-C^2)(y-C^2) &= 0 \\
+x-C^2 + (S^2-C^2)y - C^2(S^2-C^2) &= 0
+\end{align*}
+
+$t = C^2$ とする。
+\[
+x - t + (1-2t)y - t(1-2t) = 0
+\]
+
+$(X, Y)$ を $l$ が通る時、
+\begin{equation}
+X - t + Y(1-2t) + t(2t-1) = 0 \quad \cdots \text{①}
+\end{equation}
+
+が $0 \le t \le 1$ に解を持つ。①の左辺を $f(t)$ とする。
+\[
+f(t) = 2t^2 + (-2-2Y)t + X+Y
+\]
+である。
+
+\paragraph{$1^\circ \ [0, 1]$ に $1$ つだけ}
+\[
+f(0)f(1) \le 0 \iff (X+Y)(X-Y) \le 0
+\]
+
+\paragraph{$2^\circ \ [0, 1]$ に $2$ つ（重解含む）}
+\[
+\begin{cases}
+\text{判: } (-1-Y)^2 - 2(X+Y) \ge 0 \\
+\text{端: } f(0) \ge 0, f(1) \ge 0 \\
+\text{軸: } 0 \le \frac{1+Y}{2} \le 1
+\end{cases}
+\iff \begin{cases}
+Y^2+1-2X \ge 0 \\
+X+Y \ge 0 \\
+X-Y \ge 0 \\
+-1 \le Y \le 1
+\end{cases}
+\]
+
+したがって、$1^\circ, 2^\circ$ の和集合が求める領域で、図示して下図非斜線部（境界含む）。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    \draw[->] (-1.5,0) -- (2.5,0) node[right] {$X$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$Y$};
+    \node[below left] at (0,0) {$0$};
+    \node[below] at (0.5,0) {$\frac{1}{2}$};
+    \node[below] at (1,0) {$1$};
+
+    % Lines Y = X and Y = -X
+    \draw[domain=-1.8:1.8, smooth, variable=\x] plot ({\x}, {\x}) node[right] {$Y=X$};
+    \draw[domain=-1.8:1.8, smooth, variable=\x] plot ({\x}, {-\x}) node[right] {$Y=-X$};
+
+    % Parabola X = (Y^2+1)/2
+    \draw[domain=-1.5:1.5, smooth, variable=\y] plot ({((\y)^2 + 1)/2}, {\y}) node[above right] {$X = \frac{Y^2+1}{2}$};
+
+    % Hatching in the shaded region
+    \begin{scope}
+        \clip (0.5,-1.5) rectangle (2.2,1.5);
+        \fill[pattern=north east lines, pattern color=gray!50] (1,-1) -- plot[domain=-1:1, smooth, variable=\y] ({((\y)^2 + 1)/2}, {\y}) -- (1,1) -- (2.2,1.5) -- (2.2,-1.5) -- cycle;
+    \end{scope}
+
+    \draw[dashed] (1,0) -- (1,1) -- (0,1);
+    \draw[dashed] (1,0) -- (1,-1) -- (0,-1);
+    \node[left] at (0,1) {$1$};
+    \node[left] at (0,-1) {$-1$};
+\end{tikzpicture}
+\end{center}
+\end{proof}
+
+\section*{第5問}
+
+\begin{proof}[解]
+$_{2n}P_n = \frac{(2n)!}{n!}$ だから、$A_n = \sqrt[n]{_{2n}P_n}$ とすると、$A_n > 0$ で
+\[
+\log A_n = \frac{1}{n} \log _{2n}P_n = \frac{1}{n} \sum_{k=n+1}^{2n} \log k
+\]
+
+だから、
+\begin{align*}
+\log \left(\frac{1}{n} A_n\right) &= -\log n + \frac{1}{n} \sum_{k=n+1}^{2n} \log k \\
+&= \frac{1}{n} \sum_{k=n+1}^{2n} \log \frac{k}{n} \\
+&\xrightarrow{n \to \infty} \int_{1}^{2} \log x \, dx = [x(\log x - 1)]_1^2 = 2(\log 2 - 1) - 1(-1) \\
+&= 2 \log 2 - 1 = \log \frac{4}{e}
+\end{align*}
+
+となり、$\log x$ の連続性から、
+\[
+\frac{1}{n} A_n \longrightarrow \frac{4}{e} \quad (n \to +\infty)
+\]
+\end{proof}
+
+\section*{第6問}
+
+\begin{proof}[解]
+$0 \le x \le \pi/2$ では、$0 \le \sin x \le x$, $\cos x \ge 0$ だから $x$ を選ぶよりも $\sin x$ を選んだ方が積は小さくなるので、$\sin x = S$, $\cos x = C$ として、
+\[
+f(x) = S^t C^{4-t} \quad (t = 0, 1, 2, 3, 4)
+\]
+
+の場合をかんがえれば良い。対称性から $t=0, 1, 2$ のみしらべれば良い。$F = \int_0^{\pi/2} f(x) dx$ とする。
+
+\paragraph{$1^\circ \ t=0$}
+\begin{align*}
+F &= \int_0^{\pi/2} S^4 dx = \int_0^{\pi/2} \left(\frac{1 - \cos 2x}{2}\right)^2 dx \\
+&= \frac{1}{4} \int_0^{\pi/2} (\cos^2 2x - 2\cos 2x + 1) dx \quad \cdots \text{①}
+\end{align*}
+である。
+\[
+\int_0^{\pi/2} \cos^2 2x \, dx = \frac{1}{2} \left[ x + \frac{1}{4} \sin 4x \right]_0^{\pi/2} = \frac{1}{2} \cdot \frac{\pi}{2} = \frac{\pi}{4}
+\]
+\[
+\int_0^{\pi/2} \cos 2x \, dx = \frac{1}{2} [\sin 2x]_0^{\pi/2} = 0
+\]
+\[
+\int_0^{\pi/2} dx = \frac{\pi}{2}
+\]
+
+を①に代入して
+\[
+F = \frac{1}{4} \left( \frac{\pi}{4} + \frac{\pi}{2} \right) = \frac{3\pi}{16}
+\]
+
+\paragraph{$2^\circ \ t=1$}
+\[
+F = \int_0^{\pi/2} S \cdot C^3 dx = \left[ -\frac{1}{4} C^4 \right]_0^{\pi/2} = \frac{1}{4}
+\]
+
+\paragraph{$3^\circ \ t=2$}
+\[
+F = \int_0^{\pi/2} S^2 C^2 dx = \frac{1}{4} \int_0^{\pi/2} (\sin 2x)^2 dx = \frac{1}{4} \cdot \frac{1}{2} \left[ x - \frac{1}{4} \sin 4x \right]_0^{\pi/2} = \frac{\pi}{16}
+\]
+
+$3.14 < \pi < 3.15$ から、この $3$ つもっとも小さいのは $\frac{\pi}{16}$ である。
+\end{proof}
+
+\end{document}

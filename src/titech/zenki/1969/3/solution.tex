@@ -1,0 +1,64 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] $\alpha = x + y, \beta = xy$ とすると、存在条件 ($x, y$ の実数条件) から $\alpha^2 - 4\beta \ge 0 \quad \dots \text{①}$ である。
+\[
+u = \alpha + 1, \quad v = 1 - 2\beta \quad \dots \text{②}
+\]
+であり、$x^2 + y^2 = a^2$ から
+\[
+\alpha^2 - 2\beta = a^2 \quad \dots \text{③}
+\]
+②から $\alpha = u - 1, \beta = \frac{1}{2}(1 - v)$ だから、①, ③に代入して
+\[
+\begin{cases}
+(u-1)^2 - 2(1-v) \ge 0 \\
+(u-1)^2 - (1-v) = a^2
+\end{cases}
+\iff
+\begin{cases}
+v \ge \frac{1}{2}(-u^2 + 2u + 1) \\
+v = -u^2 + 2u + a^2
+\end{cases}
+\quad \text{\dots (1)}
+\]
+
+\noindent
+(2) $\frac{1}{\sqrt{2}} \le a \le 1$ の時、$\frac{1}{2} \le a^2 \le 1$ だから、(1)から
+\[
+\begin{cases}
+-u^2 + 2u + \frac{1}{2} \le v \le -u^2 + 2u + 1 \\
+v \ge \frac{1}{2}(-u^2 + 2u + 1)
+\end{cases}
+\]
+図示して下図斜線部
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+  \draw[->] (-1,0) -- (3,0) node[right] {$u$};
+  \draw[->] (0,-1) -- (0,2.5) node[above] {$v$};
+  \node[below left] at (0,0) {$0$};
+
+  \fill[gray!30, domain=0:2, samples=50]
+    plot (\x, {-\x*\x + 2*\x + 1})
+    -- plot[domain=2:0] (\x, {-\x*\x + 2*\x + 0.5})
+    -- cycle;
+
+  \draw[thick, domain=-0.4:2.4, samples=100] plot (\x, {-\x*\x + 2*\x + 1}) node[right] {\small $v = -u^2 + 2u + 1$};
+  \draw[thick, domain=-0.4:2.4, samples=100] plot (\x, {-\x*\x + 2*\x + 0.5}) node[right] {\small $v = -u^2 + 2u + \frac{1}{2}$};
+  \draw[thick, dashed, domain=-0.6:2.6, samples=100] plot (\x, {-0.5*\x*\x + \x + 0.5}) node[below right] {\small $v = \frac{1}{2}(-u^2 + 2u + 1)$};
+
+  \node[left] at (0,1) {$1$};
+  \node[left] at (0,0.5) {$\frac{1}{2}$};
+  \node[left] at (0,2) {$2$};
+
+  \fill (0,1) circle (1.5pt);
+  \fill (0,0.5) circle (1.5pt);
+\end{tikzpicture}
+\end{center}
+
+\end{document}

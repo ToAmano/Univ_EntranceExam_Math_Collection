@@ -1,0 +1,127 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\noindent
+[\textbf{解}] $O(0,0), C(\sqrt{2},0), A(-\sqrt{2},0), B(0,-\sqrt{2})$ となるよう $xy$ 平面をおく。\\
+この時 $E(-\sqrt{2}r, 0)$ となる。又円 $O$ が $\square ABCD$ の内部だから
+\begin{align}
+0 < r \le 1 \tag{1}
+\end{align}
+である。この時、相似から、
+\[
+(AO) : (AE) = \sqrt{2} : \sqrt{2}(1-r) = 1 : 1-r
+\]
+となる。したがって円 $E$ の半径は $r(1-r)$ であるから、
+\begin{align}
+\text{円}E : (x + \sqrt{2}r)^2 + y^2 = r^2(1-r)^2 \tag{2}
+\end{align}
+である。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=stealth]
+  \draw[->] (-2.2, 0) -- (2.2, 0) node[right] {$x$};
+  \draw[->] (0, -2.0) -- (0, 2.0) node[above] {$y$};
+  \node[below right] at (0,0) {$O$};
+  
+  % Square ABCD
+  \draw[thick] (1.414, 0) node[below right] {$C$} 
+    -- (0, 1.414) node[above right] {$D$} 
+    -- (-1.414, 0) node[below left] {$A$} 
+    -- (0, -1.414) node[below right] {$B$} -- cycle;
+    
+  % Circle O (r = 0.8)
+  \draw[dashed] (0,0) circle (0.8);
+  
+  % Circle E centered at (-1.414*0.8, 0) = (-1.131, 0) with radius 0.8*0.2 = 0.16
+  \draw (-1.131, 0) circle (0.16);
+  \fill (-1.131, 0) circle (1.2pt) node[above] {$E$};
+  
+\end{tikzpicture}
+\end{center}
+
+\noindent
+(1) 2円が交わる条件は、(2)から、
+\[
+r - r(1-r) < \sqrt{2}r < r + r(1-r)
+\]
+\[
+\iff 0 < r < 2 - \sqrt{2} \quad (\because (1))
+\]
+
+\noindent
+(2) $K$ が第2象限にあるとして良い。すると、\\
+$K(X, Y)$ として、
+\[
+\begin{cases}
+X = \frac{\sqrt{2}}{4}r (r^2 - 2r - 2) \\
+Y = \sqrt{r^2 - X^2}
+\end{cases}
+\]
+である。したがって
+\begin{align*}
+\cos \frac{\theta}{2} &= \frac{X + \sqrt{2}r}{r(1-r)} = \frac{\sqrt{2}r \left[ \frac{r^2-2r-2}{4} + 1 \right]}{r(1-r)} = \frac{r^2-2r+2}{4(1-r)} \cdot \sqrt{2} \\
+&= \frac{\sqrt{2}}{4} \left\{ (1-r) + \frac{1}{1-r} \right\} \tag{3}
+\end{align*}
+である。$t = 1-r$ に対し、$f(t) = t + \frac{1}{t}$ とすると、(1)のとき $-1+\sqrt{2} < t < 1$ で $y = f(t)$ のグラフは右図だから (1)のとき $2 < f(t) < 2\sqrt{2}$ である。(3)に代入して
+\begin{align}
+\frac{\sqrt{2}}{2} < \cos \frac{\theta}{2} < 1 \tag{4}
+\end{align}
+$0 \le \theta \le \pi$ 及び $\cos \frac{\theta}{2}$ が同区間で単調減少なことから、
+\[
+0 < \frac{\theta}{2} < \frac{\pi}{4}
+\]
+\[
+\therefore 0 < \theta < \frac{\pi}{2}
+\]
+である。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  % Circle intersection diagram
+  \draw[->] (-1.8, 0) -- (1.5, 0) node[right] {$x$};
+  \draw[->] (0, -1.5) -- (0, 1.5) node[above] {$y$};
+  \node[below right] at (0,0) {$O$};
+  
+  \draw (0,0) circle (1.2);
+  \draw (-0.8,0) circle (0.8);
+  \fill (-0.8,0) circle (1.2pt) node[below] {$E$};
+  
+  \coordinate (K) at (-0.9, 0.7937);
+  \coordinate (L) at (-0.9, -0.7937);
+  
+  \fill (K) circle (1.2pt) node[above left] {$K$};
+  \fill (L) circle (1.2pt) node[below left] {$L$};
+  
+  \draw (0,0) -- (K);
+  \draw (-0.8,0) -- (K);
+  
+  \draw (0,0) ++(180:0.3) arc (180:138.6:0.3);
+  \node at (-0.4, 0.15) {$\frac{\theta}{2}$};
+\end{tikzpicture}
+\quad
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  % f(t) = t + 1/t graph
+  \draw[->] (-0.3, 0) -- (1.5, 0) node[right] {$t$};
+  \draw[->] (0, -0.3) -- (0, 3.2) node[above] {$y$};
+  \node[below left] at (0,0) {$0$};
+  
+  \draw[thick, domain=0.414:1, samples=50] plot (\x, {\x + 1/\x});
+  \draw[dashed, domain=0.35:0.414, samples=20] plot (\x, {\x + 1/\x});
+  \draw[dashed, domain=1:1.2, samples=20] plot (\x, {\x + 1/\x});
+  
+  \draw[dashed] (0.414, 0) node[below] {$-1+\sqrt{2}$} -- (0.414, 2.828) -- (0, 2.828) node[left] {$2\sqrt{2}$};
+  \draw[dashed] (1, 0) node[below] {$1$} -- (1, 2) -- (0, 2) node[left] {$2$};
+  
+  \fill (0.414, 2.828) circle (1.2pt);
+  \fill (1, 2) circle (1.2pt);
+  \node[right] at (1.1, 2.2) {$y = f(t)$};
+\end{tikzpicture}
+\end{center}
+
+\newpage
+
+\end{document}

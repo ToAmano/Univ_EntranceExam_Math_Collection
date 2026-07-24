@@ -1,0 +1,83 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\begin{proof}[解]
+$0<t\le\dfrac12\ \cdots$①，$y=f(t)=\dfrac12\left\{t+\dfrac{x(2-x)}{t}\right\}$とおく。
+\[
+f'(t)=\frac12\left\{1+\frac{x(x-2)}{t^2}\right\}
+\]
+であり，以下のようになる。
+
+\textbf{$1^\circ$ $x\le0,\ 2\le x$の時}
+
+$f'(t)>0$から，$\displaystyle\lim_{t\to0}f(t)<y\le f\left(\frac12\right)$
+
+\textbf{$2^\circ$ $0<x<1-\dfrac{\sqrt3}{2},\ 1+\dfrac{\sqrt3}{2}<x<2$の時}
+
+下表を得る。
+\begin{center}
+\begin{tabular}{c|ccccc}
+$t$ & $0$ & & $\sqrt{x(2-x)}$ & & $\frac12$ \\
+\hline
+$f'$ & & $-$ & $0$ & $+$ & \\
+\hline
+$f$ & & $\searrow$ & & $\nearrow$ &
+\end{tabular}
+\end{center}
+したがって，$\displaystyle\lim_{t\to0}f(t)>f\left(\frac12\right)$から
+\[
+f(\sqrt{x(2-x)})\le f(t)<\lim_{t\to0}f(t)
+\]
+
+\textbf{$3^\circ$ $1-\dfrac{\sqrt3}{2}\le x\le1+\dfrac{\sqrt3}{2}$の時}
+
+$f'(t)<0$から $\displaystyle f\left(\frac12\right)\le y<\lim_{t\to0}f(t)$
+
+ここで
+\[
+f\left(\frac12\right)=-x^2+2x+\frac14=-(x-1)^2+\frac54, \qquad f(\sqrt{x(2-x)})=\sqrt{x(2-x)}
+\]
+図示して，下図斜線部（境界は$x=0,2$を除く）。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=stealth]
+  \draw[->] (-1.6,0) -- (3.6,0) node[right] {$x$};
+  \draw[->] (0,-1.6) -- (0,2.3) node[above] {$y$};
+  \begin{scope}
+    \clip (0,0) rectangle (0.134,2.3);
+    \fill[gray!25] plot[domain=0:0.134,samples=20] (\x,{sqrt(\x*(2-\x))}) -- (0.134,2.3) -- (0,2.3) -- cycle;
+  \end{scope}
+  \begin{scope}
+    \clip (0.134,0) rectangle (1.866,2.3);
+    \fill[gray!25] plot[domain=0.134:1.866,samples=40] (\x,{-(\x-1)*(\x-1)+1.25}) -- (1.866,2.3) -- (0.134,2.3) -- cycle;
+  \end{scope}
+  \begin{scope}
+    \clip (1.866,0) rectangle (2,2.3);
+    \fill[gray!25] plot[domain=1.866:2,samples=20] (\x,{sqrt(\x*(2-\x))}) -- (2,2.3) -- (1.866,2.3) -- cycle;
+  \end{scope}
+  \begin{scope}
+    \clip (-1.6,-1.6) rectangle (0,2.3);
+    \fill[gray!25] (-1.6,-1.6) -- (-1.6,1.25) plot[domain=-1.6:0,samples=20] (\x,{-(\x-1)*(\x-1)+1.25}) -- (0,-1.6) -- cycle;
+  \end{scope}
+  \begin{scope}
+    \clip (2,-1.6) rectangle (3.6,2.3);
+    \fill[gray!25] (2,-1.6) -- (2,1) plot[domain=2:3.6,samples=20] (\x,{-(\x-1)*(\x-1)+1.25}) -- (3.6,-1.6) -- cycle;
+  \end{scope}
+  \draw[domain=0:2, smooth, thick] plot (\x,{sqrt(\x*(2-\x))});
+  \draw[domain=-1.6:3.6, smooth, thick] plot (\x,{-(\x-1)*(\x-1)+1.25});
+  \draw[dashed] (0.134,-1.6) -- (0.134,2.3);
+  \draw[dashed] (1.866,-1.6) -- (1.866,2.3);
+  \node[below] at (0.134,-1.6) {$1-\frac{\sqrt3}{2}$};
+  \node[below] at (1.866,-1.6) {$1+\frac{\sqrt3}{2}$};
+\end{tikzpicture}
+\end{center}
+（$0<x<2$の部分は上側の曲線・放物線の下側包絡線から上方に無限に広がる領域，$x\le0,2\le x$の部分は放物線$y=-(x-1)^2+\frac54$の下方に無限に広がる領域。灰色部は図の枠内で切り取って表示している。）
+\end{proof}
+
+\newpage
+
+\end{document}

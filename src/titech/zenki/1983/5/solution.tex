@@ -1,0 +1,67 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\begin{proof}[解]
+\[
+\ell_1: y=-x-2, \qquad \ell_2: y=-\frac{1}{t^2}x+\frac{2}{t}
+\]
+$\ell_1$と$y=-\dfrac3x$の交点のうち$A(1,-3)$，$\ell_2$と$y=-\dfrac3x$の交点のうち$B\left(3t,-\dfrac1t\right)$，$\ell_1$と$\ell_2$の交点$C\left(-\dfrac{2t}{t-1},\dfrac{2}{t-1}\right)$とおく。$S(t)$は，直線$AC$，$BC$と曲線$AB$（$y=-3/x$）とで囲まれた図形の面積であり，右のように分割できる。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7, >=stealth]
+  \coordinate (A) at (1,-3);
+  \coordinate (B) at (6,-0.5);
+  \coordinate (C) at (-2,3);
+  \coordinate (D) at (1,-0.5);
+  \draw (C) -- (A);
+  \draw (B) -- (C);
+  \draw[domain=1:6,smooth] plot (\x,{-3/\x});
+  \draw[dashed] (D) -- (A);
+  \draw[dashed] (D) -- (B);
+  \fill (A) circle (1.2pt) node[below] {$A$};
+  \fill (B) circle (1.2pt) node[right] {$B$};
+  \fill (C) circle (1.2pt) node[above] {$C$};
+  \fill (D) circle (1.2pt) node[above right] {$D\left(1,-\frac1t\right)$};
+\end{tikzpicture}
+\end{center}
+
+補助点$D\left(1,-\dfrac1t\right)$をとると，
+\[
+\triangle ADB=\frac12(3t-1)\left(3-\frac1t\right)=\frac{(3t-1)^2}{2t}
+\]
+\[
+\text{（曲線と弦}DB\text{の間の面積）}=\int_1^{3t}\frac3x\,dx-(3t-1)\cdot\frac1t=3\log3t-\frac{3t-1}{t}
+\]
+であり，$\triangle ABC$の面積は
+\[
+\triangle ABC=\frac12\left|(3t-1)\left(\frac{2}{t-1}+3\right)-\left(-\frac1t+3\right)\left(-\frac{2t}{t-1}-1\right)\right|=\frac12\cdot\frac{(3t-1)^2}{t-1}\cdot\frac{t+1}{t}
+\]
+これらを合わせて計算すると，
+\[
+S(t)=\frac{2(3t-1)}{t-1}+3\log3t
+\]
+を得る。よって
+\[
+S'(t)=\frac3t-\frac{4}{(t-1)^2}=\frac{(3t-1)(t-3)}{t(t-1)^2}
+\]
+$t>1$において下表を得る。
+\begin{center}
+\begin{tabular}{c|ccccc}
+$t$ & $1$ & & $3$ & & \\
+\hline
+$S'$ & & $-$ & $0$ & $+$ & \\
+\hline
+$S$ & & $\searrow$ & & $\nearrow$ &
+\end{tabular}
+\end{center}
+したがって，
+\[
+\min S(t)=S(3)=8+6\log3
+\]
+\end{proof}
+
+\end{document}

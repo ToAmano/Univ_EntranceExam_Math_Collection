@@ -1,0 +1,80 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\begin{proof}[解]
+対称性から，右図の $\triangle OAB$ 内で $P$ がうごく時のみを考える。この時，$P$ と最近の辺は $AB$ である。$P$ から $AB$ に下ろした垂足を $H$ とし，$O$ を極，$x$軸正方向を始線とする極座標で $P(r,\theta)$ とおく。（$r,\theta\ge0$）題意から，
+\[
+\overline{OP}=\overline{PH} \iff r=\frac{a}{2}-r\cos\theta \iff r=\frac{\frac12 a}{1+\cos\theta} \quad (0\le\theta\le\pi/4) \quad \cdots \text{①}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3, >=stealth]
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (1.5,0);
+  \coordinate (B) at (1.5,1.5);
+  \draw (O) -- (A) -- (B) -- cycle;
+  \draw[dashed] (0,1.5) -- (B);
+  \node[left] at (0,0.75) {$\frac a2$};
+  \node[below] at (0.75,0) {$\frac a2$};
+  \node[below] at (O) {$O$};
+  \node[right] at (A) {$A$};
+  \node[above right] at (B) {$B$};
+  \draw[domain=0:45, smooth, thick] plot ({0.9*cos(\x)/(1+cos(\x))*2}, {0.9*sin(\x)/(1+cos(\x))*2});
+  \coordinate (P) at (0.55,0.35);
+  \fill (P) circle (0.7pt) node[above] {$P$};
+  \draw[dashed] (O) -- (P);
+  \draw[dashed] (P) -- (1.5,0.35) node[midway,above]{$H$};
+  \draw (0.15,0) arc (0:38:0.15);
+  \node at (0.3,0.1) {$\theta$};
+\end{tikzpicture}
+\end{center}
+
+この時，たしかに $P$ は $\triangle OAB$ 内にある。対称性から，もとめる面積 $S$，$S$ のうち $\triangle OAB$ 内のものを $S'$ として，
+\[
+S=8S' \quad \cdots \text{②}
+\]
+であり，
+\[
+S'=\int_0^{\pi/4}\frac{1}{2}r^2d\theta = \frac{1}{2}\cdot\frac{a^2}{4}\int_0^{\pi/4}\frac{1}{(1+\cos\theta)^2}d\theta = \frac{a^2}{8}\int_0^{\pi/4}\frac{1}{4\cos^4\frac\theta2}d\theta
+\]
+（以下 $C=\cos\dfrac{\theta}{2},\ t=\tan\dfrac{\theta}{2}$ とする）
+\[
+=\frac{a^2}{32}\int_0^{\pi/4}(1+t^2)\frac{1}{C^2}d\theta = \frac{2a^2}{32}\left[t+\frac13t^3\right]_0^{\pi/4} = \frac{a^2}{16}\left(\tan\frac\pi8+\frac13\tan^3\frac\pi8\right) \quad \cdots \text{③}
+\]
+ここで，$p=\tan\dfrac\pi8$ とすると $p>0$ より，
+\[
+\tan\frac\pi4=\frac{2p}{1-p^2} \quad\therefore\ p^2+2p-1=0 \quad\therefore\ p=-1+\sqrt2
+\]
+だから，③より
+\[
+S'=\frac{a^2}{16}(-1+\sqrt2)\left(1+\frac13(-1+\sqrt2)^2\right) = \frac{a^2}{16}(-1+\sqrt2)\left(\frac{6-2\sqrt2}{3}\right)
+\]
+となって，②に代入して
+\[
+S=\frac{a^2}{2}\cdot\frac23(-1+\sqrt2)(3-\sqrt2) = \frac{a^2}{3}(-5+4\sqrt2)
+\]
+
+\medskip
+\noindent\textbf{[解2]（$\triangle OAB$ 内で考える）}
+
+$P$ の軌跡は，$O$ を焦点，$AB$ を準線とする放物線で，その方程式は $\alpha=\dfrac14 a$ として
+\[
+y^2=-4\alpha\left(x-\frac{a}{4}\right)=-a\left(x-\frac a4\right)
+\]
+である。よって右図斜線部の面積 $S'$ は
+\[
+S'=\int_0^{\frac{\sqrt2-1}{2}a}\left(-\frac1ay^2+\frac a4\right)dy-\frac12\left(\frac{\sqrt2-1}{2}a\right)^2
+\]
+\[
+=-\frac1{3a}\left(\frac{\sqrt2-1}{2}a\right)^3+\frac a4\cdot\frac{\sqrt2-1}{2}a-\frac18(3-2\sqrt2)a^2
+\]
+と計算され，[解1] と同じく $S=\dfrac{a^2}{3}(-5+4\sqrt2)$ を得る。（原稿はここで途切れている）
+\end{proof}
+
+\newpage
+
+\end{document}

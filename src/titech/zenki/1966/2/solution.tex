@@ -1,0 +1,53 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] 判別式として $D > 0 \iff p^2 - 2q > 0 \quad \dots \text{①}$ である。又, 収束する条件から
+\[ -1 < \frac{\alpha}{2\beta} \le 1, \quad -1 < \frac{4\beta^2}{\alpha} \le 1 \quad \dots \text{②} \]
+ここで, ①の $p > 1 \land 1-2p+2q \ge 0$ を図示すると右図斜線部 (境界は実線のみ含む) だから, $p, q > 0$ となり
+\[ \alpha + \beta = p > 0, \quad \alpha\beta = \frac{q}{2} > 0 \quad \dots \text{③} \]
+から $\alpha > 0, \, \beta > 0$ である。したがって, ②から
+\[ -2\beta < \alpha \le 2\beta, \quad -\alpha < 4\beta^2 \le \alpha \]
+\[ \therefore 0 < \alpha \le 2\beta, \quad 0 < 4\beta^2 \le \alpha \]
+\[ \therefore 4\beta^2 \le \alpha \le 2\beta \quad \dots \text{④} \]
+まず, $\alpha$の存在条件から $4\beta^2 \le 2\beta \quad \therefore 2\beta \le 1 \dots \text{⑤}$ が必要。
+$\alpha \le \beta$ の時 ④の左側が不成立だから $\beta \le \alpha$ が必要である。③を $p > 1, \, 1-2p+2q \ge 0$ に代入して
+\[ 1 < \alpha + \beta, \quad 1 - 2(\alpha+\beta) + 4\alpha\beta \ge 0 \quad \dots \text{⑤} \]
+④, ⑤を図示して, 右図黒丸の $(\alpha, \beta) = \left(1, \dfrac{1}{2}\right)$ を得る。
+この時, ③から $(p, q) = \left(\dfrac{3}{2}, 1\right)$ である。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=stealth]
+  \draw[->] (-0.5,0) -- (2.5,0) node[right] {$p$};
+  \draw[->] (0,-0.8) -- (0,2.2) node[above] {$q$};
+  \node[below left] at (0,0) {$0$};
+  \draw[domain=0:2, smooth, variable=\x] plot (\x, {0.5*\x*\x}) node[right] {$q=\frac{1}{2}p^2$};
+  \draw[domain=0.3:2.2, smooth, variable=\x] plot (\x, {\x - 0.5}) node[right] {$q=p-\frac{1}{2}$};
+  
+  \fill[pattern=north east lines, pattern color=gray] 
+    plot[domain=1:2, variable=\x] (\x, {0.5*\x*\x}) -- 
+    plot[domain=2:1, variable=\x] (\x, {\x - 0.5}) -- cycle;
+    
+  \draw[dashed] (1,0) node[below] {$1$} -- (1,0.5) -- (0,0.5) node[left] {$\frac{1}{2}$};
+  \draw[dashed] (0,-0.5) node[left] {$-\frac{1}{2}$} -- (0.5,0);
+  \fill (1,0.5) circle (1.5pt);
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[scale=1.8, >=stealth]
+  \draw[->] (-0.2,0) -- (1.2,0) node[right] {$\beta$};
+  \draw[->] (0,-0.2) -- (0,1.3) node[above] {$\alpha$};
+  \node[below left] at (0,0) {$0$};
+  
+  \draw[domain=0:0.55, smooth, variable=\x] plot (\x, {4*\x*\x}) node[right] {$\alpha=4\beta^2$};
+  \draw[domain=0:0.6, smooth, variable=\x] plot (\x, {2*\x}) node[right] {$\alpha=2\beta$};
+  \draw[domain=0:1.1, smooth, variable=\x] plot (\x, {1 - \x}) node[above right] {$\alpha+\beta=1$};
+  
+  \draw[dashed] (0.5,0) node[below] {$\frac{1}{2}$} -- (0.5,1) -- (0,1) node[left] {$1$};
+  \fill (0.5,1) circle (1.5pt);
+\end{tikzpicture}
+\end{center}
+
+\end{document}

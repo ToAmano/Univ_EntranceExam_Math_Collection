@@ -1,0 +1,55 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\begin{proof}[解]
+$S=\sin x,\ C=\cos x$と書く。
+\[
+\tan x=\cos x \quad\therefore\ S=C^2=1-S^2 \quad\therefore\ S=\frac12(-1\pm\sqrt5)
+\]
+$|S|\le1$から$S=\dfrac{-1+\sqrt5}{2}\equiv S_0$である。 $\cdots$①
+
+グラフは下図で，交点$A$の$x$座標を$\alpha$とおく。$(\tan\alpha)'=\dfrac{1}{C^2}$だから，①とあわせて，$\ell$の傾きは
+\[
+\frac{1}{1-S_0^2}=\frac{1}{S_0}=\frac{2}{\sqrt5-1}=\frac{\sqrt5+1}{2}
+\]
+であって，$A$から$x$軸に下ろした垂足$B$，$\ell$と$x$軸の交点$C$とすると，もとめる面積$T$として
+\[
+T=\int_0^\alpha\tan x\,dx-\triangle ABC \quad\cdots\text{①}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.6, >=stealth]
+  \draw[->] (-0.9,0) -- (1.3,0) node[right] {$x$};
+  \draw[->] (0,-0.3) -- (0,1.7) node[above] {$y$};
+  \begin{scope}
+    \clip (-0.9,-0.3) rectangle (1.3,1.7);
+    \draw[domain=-0.9:1.0, smooth] plot (\x,{tan(\x r)}) node[right] {$y=\tan x$};
+    \draw[domain=-0.9:0.9, smooth] plot (\x,{cos(\x r)}) node[right] {$y=\cos x$};
+  \end{scope}
+  \draw[domain=0:1.0, thick] plot (\x,{0.786+1.618*(\x-0.666)});
+  \fill (0.666,0.786) circle (0.8pt) node[above] {$A$};
+  \fill (0.666,0) circle (0.8pt) node[below] {$B$};
+  \fill (0.180,0) circle (0.8pt) node[below] {$C$};
+  \node at (0.35,1.35) {$\ell$};
+\end{tikzpicture}
+\end{center}
+
+まず，
+\[
+\triangle ABC=\frac12\left(\sqrt{\frac{\sqrt5-1}{2}}\right)^2\cdot\frac{1}{\frac{\sqrt5+1}{2}}=\frac12\cdot\frac{\sqrt5-1}{\sqrt5+1}=\frac12\cdot\frac{(\sqrt5-1)^2}{4}\quad\cdots\text{②}
+\]
+さらに
+\[
+\int_0^\alpha\tan x\,dx=\left[-\log(\cos x)\right]_0^\alpha=-\log(\cos\alpha)=-\frac12\log\frac{\sqrt5-1}{2}\quad\cdots\text{③}
+\]
+①，②，③から
+\[
+T=-\frac12\log\frac{\sqrt5-1}{2}-\frac18(\sqrt5-1)^2
+\]
+\end{proof}
+
+\end{document}

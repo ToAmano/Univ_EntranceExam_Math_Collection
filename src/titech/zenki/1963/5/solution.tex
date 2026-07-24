@@ -1,0 +1,119 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\noindent
+[\textbf{解}] $a > 0 \dots (1)$
+\[
+\begin{cases}
+C_1 : y = x^2 \\
+C_2 : x = \frac{1}{6}a^2 y^2 - \frac{7}{6}ay \equiv f(y)
+\end{cases}
+\]
+とおく。$f(y) = \frac{1}{6}a^2 \left( y - \frac{7}{2a^2} \right)^2 - \frac{49}{24a^2}$ だから、グラフの概形は右図
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=stealth]
+  \draw[->] (-2.5, 0) -- (2.0, 0) node[right] {$x$};
+  \draw[->] (0, -0.5) -- (0, 4.5) node[above] {$y$};
+  \node[below left] at (0,0) {$0$};
+  
+  \draw[thick, domain=-2.1:1.8, samples=50] plot (\x, {\x*\x}) node[above] {$C_1$};
+  
+  \draw[thick, domain=0:4.2, samples=50] plot ({1/6*\x*\x - 7/6*\x}, \x) node[right] {$C_2$};
+  
+  \draw[dashed] (-2.5, 4) -- (0, 4) node[right] {$\frac{4}{a^2}$};
+  \draw[dashed] (-2.5, 2.04) -- (0, 2.04) node[right] {$\frac{7}{2a^2}$};
+  \draw[dashed] (-2.5, 1) -- (0, 1) node[right] {$\frac{1}{a^2}$};
+  \draw[dashed] (-49/24, 0) node[below] {$-\frac{49}{24a^2}$} -- (-49/24, 2.04);
+  
+  \draw[dashed] (-2, 0) node[below] {$-\frac{2}{a}$} -- (-2, 4);
+  \draw[dashed] (-1, 0) node[below] {$-\frac{1}{a}$} -- (-1, 1);
+  
+  \node at (-1.4, 2.2) {$S_1$};
+  \node at (-0.4, 0.6) {$S_2$};
+\end{tikzpicture}
+\end{center}
+
+\noindent
+交点の $x$ 座標について、$y$ を消去して
+\begin{align*}
+6x &= a^2 x^4 - 7ax^2 \\
+x(a^2 x^3 - 7ax - 6) &= 0 \\
+x(ax + 1)((ax)^2 - (ax) - 6) &= 0 \\
+x(ax + 1)(ax - 3)(ax + 2) &= 0
+\end{align*}
+\[
+\therefore x = 0, \, -\frac{1}{a}, \, -\frac{2}{a}, \, \frac{3}{a}
+\]
+となる。したがって、右図のように面積 $S_1, S_2$ をおくと、まず
+\begin{align}
+S_2 = 
+\begin{tikzpicture}[scale=0.4, baseline=-0.5ex]
+  \draw (0,0) rectangle (1,0.7);
+\end{tikzpicture}
+-
+\begin{tikzpicture}[scale=0.4, baseline=-0.5ex]
+  \draw (0,0) -- (1,0) -- (1,0.7);
+  \draw (0,0) parabola (1,0.7);
+\end{tikzpicture}
+-
+\begin{tikzpicture}[scale=0.4, baseline=-0.5ex]
+  \draw (0,0) -- (0,0.7) -- (1,0.7);
+  \draw (0,0) parabola (1,0.7);
+\end{tikzpicture}
+\tag{2}
+\end{align}
+となる。対称性に注意して
+\begin{align*}
+\begin{tikzpicture}[scale=0.4, baseline=-0.5ex]
+  \draw (0,0) rectangle (1,0.7);
+\end{tikzpicture}
+&= \frac{1}{a} \cdot \frac{1}{a^2} = \frac{1}{a^3} \\
+\begin{tikzpicture}[scale=0.4, baseline=-0.5ex]
+  \draw (0,0) -- (1,0) -- (1,0.7);
+  \draw (0,0) parabola (1,0.7);
+\end{tikzpicture}
+&= \int_0^{\frac{1}{a}} x^2 \, dx = \frac{1}{3}\frac{1}{a^3} \\
+\begin{tikzpicture}[scale=0.4, baseline=-0.5ex]
+  \draw (0,0) -- (0,0.7) -- (1,0.7);
+  \draw (0,0) parabola (1,0.7);
+\end{tikzpicture}
+&= -\int_0^{\frac{1}{a^2}} f(y) \, dy = -\left[ \frac{a^2}{18}y^3 - \frac{7}{12}ay^2 \right]_0^{\frac{1}{a^2}} = \frac{19}{36}\frac{1}{a^3}
+\end{align*}
+だから、(2)に代入して
+\begin{align}
+S_2 = \left( 1 - \frac{1}{3} - \frac{19}{36} \right) / a^3 = \frac{5}{36}\frac{1}{a^3} \tag{3}
+\end{align}
+一方、$S_1$ について、
+\begin{align}
+S_1 = 
+\begin{tikzpicture}[scale=0.4, baseline=-0.5ex]
+  \draw (0,0) rectangle (1.2,0.7);
+\end{tikzpicture}
+-
+\begin{tikzpicture}[scale=0.4, baseline=-0.5ex]
+  \draw (0,0) rectangle (1,0.7);
+\end{tikzpicture}
+\tag{4}
+\end{align}
+である。
+\begin{align*}
+\text{[第1領域]} &= -\int_{\frac{1}{a^2}}^{\frac{4}{a^2}} f(y) \, dy = -\left[ \frac{a^2}{18}y^3 - \frac{7}{12}ay^2 \right]_{\frac{1}{a^2}}^{\frac{4}{a^2}} = \frac{21}{4a^3} \\
+\text{[第2領域]} &= \left( \frac{8}{a^3} - \frac{1}{a^3} \right) - \int_{\frac{1}{a}}^{\frac{2}{a}} x^2 \, dx = \frac{14}{3a^3}
+\end{align*}
+を(4)に代入して
+\begin{align}
+S_1 = \left( \frac{21}{4} - \frac{14}{3} \right) / a^3 = \frac{7}{12}\frac{1}{a^3} \tag{5}
+\end{align}
+(3),(5)から
+\[
+S_1 : S_2 = \frac{7}{12} : \frac{5}{36} = 21 : 5 \quad \text{■}
+\]
+
+\newpage
+
+\end{document}
