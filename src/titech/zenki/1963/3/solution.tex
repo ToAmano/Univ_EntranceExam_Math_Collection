@@ -1,26 +1,53 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 \noindent
-[\textbf{解}] $O(0,0), C(\sqrt{2},0), A(-\sqrt{2},0), B(0,-\sqrt{2})$ となるよう $xy$ 平面をおく。\\
-この時 $E(-\sqrt{2}r, 0)$ となる。又円 $O$ が $\square ABCD$ の内部だから
+{\bf [解]} 
+$O(0,0), C(\sqrt{2},0), A(-\sqrt{2},0), B(0,-\sqrt{2}), D(0, \sqrt{2})$ となるよう $xy$ 平面をおく．
+円 $O$ が $\square ABCD$ の内部だから
 \begin{align}
-0 < r \le 1 \tag{1}
+0 < r \le 1 \label{eq:1}
 \end{align}
-である。この時、相似から、
-\[
-(AO) : (AE) = \sqrt{2} : \sqrt{2}(1-r) = 1 : 1-r
-\]
-となる。したがって円 $E$ の半径は $r(1-r)$ であるから、
-\begin{align}
-\text{円}E : (x + \sqrt{2}r)^2 + y^2 = r^2(1-r)^2 \tag{2}
-\end{align}
-である。
+である．
 
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=stealth]
+  \draw[->] (-2.2, 0) -- (2.2, 0) node[right] {$x$};
+  \draw[->] (0, -2.0) -- (0, 2.0) node[above] {$y$};
+  \node[below right] at (0,0) {$O$};
+  
+  % Square ABCD
+  \draw[thick] (1.414, 0) node[below right] {$C$} 
+    -- (0, 1.414) node[above right] {$D$} 
+    -- (-1.414, 0) node[below left] {$A$} 
+    -- (0, -1.414) node[below right] {$B$} -- cycle;
+    
+  % Circle O (r = 0.8)
+  \draw[dashed] (0,0) circle (0.8);
+  
+\end{tikzpicture}
+\caption{座標平面上の正方形$ABCD$の様子．}
+\end{center}
+\end{figure}
+
+まず点$E$の座標を求めよう．
+これは題意より点$\left(\dfrac{-\sqrt{2}r}{2},\dfrac{\sqrt{2}r}{2}\right)$と$\left(\dfrac{-\sqrt{2}r}{2},\dfrac{-\sqrt{2}r}{2}\right)$から引いた円の接線だから，
+この時 $E(-\sqrt{2}r, 0)$ となる．二つの円の相似の中心がAだから，AOとAEの比を考えると
+\begin{align}
+(AO) : (AE) = \sqrt{2} : \sqrt{2}(1-r) = 1 : 1-r 
+\end{align}
+だから，円 $E$ の半径は 
+\begin{align}
+ r\cdot(1-r) = r(1-r)
+\end{align}
+である．よって円$E$の方程式は
+\begin{align}
+ (x + \sqrt{2}r)^2 + y^2 = r^2(1-r)^2 \label{eq:2}
+\end{align}
+である．この様子を以下に示す．
+
+\begin{figure}[htb] 
 \begin{center}
 \begin{tikzpicture}[scale=1.2, >=stealth]
   \draw[->] (-2.2, 0) -- (2.2, 0) node[right] {$x$};
@@ -38,72 +65,122 @@
   
   % Circle E centered at (-1.414*0.8, 0) = (-1.131, 0) with radius 0.8*0.2 = 0.16
   \draw (-1.131, 0) circle (0.16);
-  \fill (-1.131, 0) circle (1.2pt) node[above] {$E$};
-  
+  \fill (-1.131, 0) circle (1.2pt) node[below right] {$E$};
 \end{tikzpicture}
+\caption{二つの円$O$と$E$の様子．}
 \end{center}
+\end{figure}
+
 
 \noindent
-(1) 2円が交わる条件は、(2)から、
-\[
-r - r(1-r) < \sqrt{2}r < r + r(1-r)
-\]
-\[
-\iff 0 < r < 2 - \sqrt{2} \quad (\because (1))
-\]
+(1) 点$E$が必ず円$O$の外側に来ることを踏まえると，2円が交わる条件は二つの円の距離が半径の差と和の間におさまっていることで
+\begin{align}
+r - r(1-r) < \sqrt{2}r < r + r(1-r) \\
+\iff 0 < r < 2 - \sqrt{2} \quad (\because \text{\cref{eq:1}})
+\end{align}
+が求める$r$の範囲である．
 
 \noindent
-(2) $K$ が第2象限にあるとして良い。すると、\\
-$K(X, Y)$ として、
-\[
-\begin{cases}
+(2) 対称性から$K$ が第2象限にあるとして良い．すると $K(X, Y)$ は二つの円の方程式の共有解で
+\begin{align}
+ \begin{cases}
 X = \frac{\sqrt{2}}{4}r (r^2 - 2r - 2) \\
 Y = \sqrt{r^2 - X^2}
 \end{cases}
-\]
-である。したがって
-\begin{align*}
-\cos \frac{\theta}{2} &= \frac{X + \sqrt{2}r}{r(1-r)} = \frac{\sqrt{2}r \left[ \frac{r^2-2r-2}{4} + 1 \right]}{r(1-r)} = \frac{r^2-2r+2}{4(1-r)} \cdot \sqrt{2} \\
-&= \frac{\sqrt{2}}{4} \left\{ (1-r) + \frac{1}{1-r} \right\} \tag{3}
-\end{align*}
-である。$t = 1-r$ に対し、$f(t) = t + \frac{1}{t}$ とすると、(1)のとき $-1+\sqrt{2} < t < 1$ で $y = f(t)$ のグラフは右図だから (1)のとき $2 < f(t) < 2\sqrt{2}$ である。(3)に代入して
-\begin{align}
-\frac{\sqrt{2}}{2} < \cos \frac{\theta}{2} < 1 \tag{4}
 \end{align}
-$0 \le \theta \le \pi$ 及び $\cos \frac{\theta}{2}$ が同区間で単調減少なことから、
-\[
-0 < \frac{\theta}{2} < \frac{\pi}{4}
-\]
-\[
-\therefore 0 < \theta < \frac{\pi}{2}
-\]
-である。
+である．
 
+\begin{figure}[htb]
 \begin{center}
-\begin{tikzpicture}[scale=1.5, >=stealth]
-  % Circle intersection diagram
-  \draw[->] (-1.8, 0) -- (1.5, 0) node[right] {$x$};
-  \draw[->] (0, -1.5) -- (0, 1.5) node[above] {$y$};
-  \node[below right] at (0,0) {$O$};
-  
-  \draw (0,0) circle (1.2);
-  \draw (-0.8,0) circle (0.8);
-  \fill (-0.8,0) circle (1.2pt) node[below] {$E$};
-  
-  \coordinate (K) at (-0.9, 0.7937);
-  \coordinate (L) at (-0.9, -0.7937);
-  
-  \fill (K) circle (1.2pt) node[above left] {$K$};
-  \fill (L) circle (1.2pt) node[below left] {$L$};
-  
-  \draw (0,0) -- (K);
-  \draw (-0.8,0) -- (K);
-  
-  \draw (0,0) ++(180:0.3) arc (180:138.6:0.3);
-  \node at (-0.4, 0.15) {$\frac{\theta}{2}$};
+\begin{tikzpicture}[scale=5, >=stealth]
+  % 座標軸
+  \draw[->] (-1.3, 0) -- (0.8, 0) node[right] {$x$};
+  \draw[->] (0, -0.6) -- (0, 0.6) node[above] {$y$};
+  \node[below right, font=\small] at (0,0) {$O$};
+
+  % パラメータ設定 (r = 0.5)
+  \def\r{0.5}
+  \pgfmathsetmacro{\Ex}{-\r*sqrt(2)}          % Eのx座標 ≒ -0.7071
+  \pgfmathsetmacro{\Re}{\r*(1-\r)}             % 円Eの半径 = 0.25
+  \pgfmathsetmacro{\Ax}{-sqrt(2)}              % Aのx座標 ≒ -1.4142
+
+  % 点の定義
+  \coordinate (A) at (\Ax, 0);
+  \coordinate (E) at (\Ex, 0);
+
+  % 1. 円Oの描画
+  \draw[thick, blue!80!black] (0,0) circle (\r);
+
+  % 2. 円Eの描画
+  \draw[thick, red!80!black] (E) circle (\Re);
+  \fill[red!80!black] (E) circle (0.8pt) node[below left, font=\small] {$E$};
+
+  % -------------------------------------------------------------
+  % TikZで2円の交点 K, L を幾何学的に計算 (r=0.5 のとき)
+  % X ≒ -0.4861, Y ≒ ±0.1172
+  % -------------------------------------------------------------
+  \pgfmathsetmacro{\Kx}{(\Ex*\Ex + \r*\r - \Re*\Re)/(2*\Ex)}
+  \pgfmathsetmacro{\Ky}{sqrt(\r*\r - \Kx*\Kx)}
+
+  \coordinate (K) at (\Kx, \Ky);
+  \coordinate (L) at (\Kx, -\Ky);
+
+  % 交点 K, L のマーキング
+  \fill[purple] (K) circle (0.8pt) node[right, font=\small] {$K$};
+  \fill[purple] (L) circle (0.8pt) node[right, font=\small] {$L$};
+
+  % 線分 EK, EL と 弦 KL
+  \draw[gray!80, thick] (E) -- (K);
+  \draw[gray!80, thick] (E) -- (L);
+  \draw[dashed, gray!80] (K) -- (L);
+
+  % 角 theta (Eにおける角 K-E-L)
+  % E -> K の角度と E -> L の角度を計算してarcを描画
+  \pgfmathanglebetweenpoints{\pgfpointanchor{E}{center}}{\pgfpointanchor{K}{center}}
+  \let\angK\pgfmathresult
+  \pgfmathanglebetweenpoints{\pgfpointanchor{E}{center}}{\pgfpointanchor{L}{center}}
+  \let\angL\pgfmathresult
+
+  \draw[purple, ->] (E) ++(\angL:0.08) arc (\angL:\angK+360:0.08);
+  \node[purple, right] at ($(E)+(0.09,0)$) {$\theta$};
+
+  % \node[above left, font=\small] at (A) {$A$};
+  % \fill (A) circle (0.8pt);
+  % % Aから円Eの下側への接線
+  % \draw[gray!60, domain=\Ax:0.2] plot (\x, {-0.577*(\x - \Ax)});
+
 \end{tikzpicture}
-\quad
-\begin{tikzpicture}[scale=1.5, >=stealth]
+\caption{円$E$と円$O$の交点$K, L$および角$\theta$}
+\end{center}
+\end{figure}
+
+
+したがって$KL$と$x$軸の交点を$P$とすると
+\begin{align*}
+\cos \frac{\theta}{2} 
+&= \frac{|EP|}{|EK|} \\
+&= \frac{|EP|}{\text{円$E$の半径}} \\
+&= \frac{X + \sqrt{2}r}{r(1-r)} \\
+&= \frac{\sqrt{2}r \left[ \frac{r^2-2r-2}{4} + 1 \right]}{r(1-r)} \\
+&= \frac{r^2-2r+2}{4(1-r)} \cdot \sqrt{2} \\
+&= \frac{\sqrt{2}}{4} \left\{ (1-r) + \frac{1}{1-r} \right\} \label{eq:2}
+\end{align*}
+である．
+
+以下$r$が動いた時の\cref{eq:2}の値域から$\theta$の値域を求める．
+簡単のため$t = 1-r$ および 
+\begin{align}
+ f(t) = t + \frac{1}{t}
+\end{align}
+とおくと，(1)の結果より
+\begin{align}
+ -1+\sqrt{2} < t < 1
+\end{align}
+であり，従って$y=f(t)$のグラフは以下のようになる．
+
+\begin{figure}[htb]
+\begin{center}
+ \begin{tikzpicture}[scale=1.5, >=stealth]
   % f(t) = t + 1/t graph
   \draw[->] (-0.3, 0) -- (1.5, 0) node[right] {$t$};
   \draw[->] (0, -0.3) -- (0, 3.2) node[above] {$y$};
@@ -120,7 +197,21 @@ $0 \le \theta \le \pi$ 及び $\cos \frac{\theta}{2}$ が同区間で単調減�
   \fill (1, 2) circle (1.2pt);
   \node[right] at (1.1, 2.2) {$y = f(t)$};
 \end{tikzpicture}
+\caption{$y=f(t)$のとりうる範囲．}
 \end{center}
+\end{figure}
+
+よって$2 < f(t) < 2\sqrt{2}$ である．\cref{eq:2}に代入して
+\begin{align}
+\frac{\sqrt{2}}{2} < \cos \frac{\theta}{2} < 1 \label{eq:3}
+\end{align}
+を得る．$0 \le \theta \le \pi$ 及び $\cos \frac{\theta}{2}$ が同区間で単調減少なことから
+\begin{align}
+ 0 < \frac{\theta}{2} < \frac{\pi}{4} \\
+\therefore 0 < \theta < \frac{\pi}{2}
+\end{align}
+が求める$\theta$の範囲である．
+
 
 \newpage
 
