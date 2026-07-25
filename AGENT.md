@@ -166,12 +166,13 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 1. **構成確認**: `pdfinfo {year}/handwritten.pdf` でページ数を確認する。表紙1ページ＋大問ごとに1ページが基本だが、**大問の数は年度によって4〜6問程度で変動する**。`scratch/tmp_download/08_titech/{year}/{year}_{q}.tex` の実在数が、その年度の実際の大問数の手がかりになる（`{year}_6.tex` があれば第6問が存在する、等）。
 2. **全体レンダリング**: `pdftoppm -png -r 200 {year}/handwritten.pdf {tmpdir}/hw{year}` 程度の解像度でまず全ページを概観する。
 3. **`problem.tex` との突き合わせ**: 各大問の `problem.tex`（既存）を読み、手書き解答がどの設問に対応するか確認してから読み進める。
-4. **既存 `handwritten_tex.tex` への書き起こし**: 大問ごとに `\section*{第N問}` 見出しで区切り、`\begin{proof}[解]...\end{proof}` で解答を囲む。ファイル冒頭は `\documentclass[../../../../main.tex]{subfiles}` + `\begin{document}`、末尾は `\end{document}`。図は TikZ で再現する（8.3参照）。
+4. **既存 `handwritten_tex.tex` への書き起こし**: 大問ごとに `\section*{第N問}` 見出しで区切り、解答冒頭に `{\bf [解]}` を置く（`\begin{proof}[解]...\end{proof}` は使わない。8.3.6参照）。ファイル冒頭は `\documentclass[../../../../main.tex]{subfiles}` + `\begin{document}`、末尾は `\end{document}`。図は TikZ で再現する（8.3参照）。
 5. **分割**: `python3 scratch/split_handwritten_tex.py {univ}` で `{year}/{q}/solution.tex` に自動分割する。**既存の `solution.tex` は上書きされない**（既存優先でスキップされる。過去に別形式で解答が存在する年度・設問はそのまま残る）。
 6. **`problem.tex` の欠落補完**: `scratch/batch_import_all_problems.py` は `range(1,6)` のバグにより第6問を取り込まないため、第6問が存在する年度は `scratch/tmp_download/08_titech/{year}/{year}_6.tex` 等から手動インポートが必要になることがある。
 7. **単体コンパイル確認**: プリアンブル一式（`scratch/generate_main_tex.py` の `PREAMBLE` と同一内容）＋対象年度の大問だけを `\subfile` するテスト用 `test{year}.tex` を作り、`latexmk -lualatex -interaction=nonstopmode -halt-on-error test{year}.tex` でエラーが出ないことを確認する。TikZ 図がある場合は `pdftoppm` で PNG 化し、元のスキャンと見比べて図の忠実性も目視確認する。
 8. **テスト成果物の削除**: `test{year}.{pdf,aux,log,fls,fdb_latexmk,synctex.gz,toc,out,tex}` を必ず削除してから次の年度に進む。
 9. **`main.tex` の再生成**: 複数年度まとめて処理したあとは `python3 scratch/generate_main_tex.py {univ}/{cat}` を実行し、可能なら全体ビルド（第5章参照）でも通しでコンパイル確認する。
+10. **進捗ステータスの更新**: 1問（大問1つ）の文字起こし・自己検証が終わるたびに `python3 scratch/generate_status_markdowns.py` を実行し、`docs/status/{univ}_{cat}.md` を更新する。このスクリプトは新規に検出した解答を `✅ finish` ではなく `🤖 文字起こし済` として記録する（`finish` は人間が最終チェックした後に手動で書き換えるためのステータスであり、自動生成では絶対に付与しない。既存ファイルで既に `finish` になっている行はスクリプトが読み取って引き継ぐ）。
 
 ### 8.2 判読困難な箇所への対処（クロップ・拡大）
 
@@ -191,7 +192,7 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 ### 8.3.5 複数解法がある場合は全て文字起こしする
 
 * 原稿に`[解1]`（または単に`[解]`）に続けて`[解2]`のような**別解が書かれている場合、省略・要約せず全て`handwritten_tex.tex`に書き起こす**こと。片方だけ書いて「もう一方は同様」のように済ませてはいけない。
-* 別解は`\bigskip\noindent\textbf{[解2]}`のような見出しを立てて、同じ`\begin{proof}[解]...\end{proof}`ブロック内、または新たな`\begin{proof}[解]`ブロックとして、通し番号の式ラベル（①②…）を含めて完全に再現する。
+* 別解は`\bigskip\noindent{\bf [解2]}`のような見出しを立てて、通し番号の式ラベル（①②…）を含めて完全に再現する。
 * 判読が難しい別解ほど省略したくなるが、そここそ本来の解答の価値がある部分であることが多い。時間がかかっても該当ページを高解像度で読み直し、8.2節の手順で最後まで読み切ること。
 
 ### 8.3.6 LaTeX フォーマットの注意事項
@@ -199,6 +200,8 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 * **数式環境は `align`（または `align*`）環境を利用する**。単発の数式でも `\[...\]` や `equation` ではなく `align*` を使い、複数行にまたがる変形は `&=` で位置を揃える。
 * **`tikzpicture` 環境は必ず `figure` → `center` → `tikzpicture` の順にネストする**（`\begin{figure}[h]\centering\begin{tikzpicture}...\end{tikzpicture}\end{figure}` の形）。裸の `tikzpicture` を本文中に直接置かない。
 * **図を挿入する際は必ず `\caption{}` を付ける**。`\begin{figure}...\end{figure}` の中に `\caption{...}` を含め、何を表す図かを一言で示す。
+* **句読点は全角の「．」「，」を使う**（「。」「、」は使わない）。既存の人手作成 `solution.tex` もこの慣習に従っている。
+* **解答冒頭は `{\bf [解]}` とする**（`\begin{proof}[解]...\end{proof}` は使わない）。
 
 ### 8.4 図（TikZ）の再現について
 
