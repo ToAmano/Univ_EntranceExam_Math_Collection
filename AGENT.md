@@ -194,6 +194,12 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 * 別解は`\bigskip\noindent\textbf{[解2]}`のような見出しを立てて、同じ`\begin{proof}[解]...\end{proof}`ブロック内、または新たな`\begin{proof}[解]`ブロックとして、通し番号の式ラベル（①②…）を含めて完全に再現する。
 * 判読が難しい別解ほど省略したくなるが、そここそ本来の解答の価値がある部分であることが多い。時間がかかっても該当ページを高解像度で読み直し、8.2節の手順で最後まで読み切ること。
 
+### 8.3.6 LaTeX フォーマットの注意事項
+
+* **数式環境は `align`（または `align*`）環境を利用する**。単発の数式でも `\[...\]` や `equation` ではなく `align*` を使い、複数行にまたがる変形は `&=` で位置を揃える。
+* **`tikzpicture` 環境は必ず `figure` → `center` → `tikzpicture` の順にネストする**（`\begin{figure}[h]\centering\begin{tikzpicture}...\end{tikzpicture}\end{figure}` の形）。裸の `tikzpicture` を本文中に直接置かない。
+* **図を挿入する際は必ず `\caption{}` を付ける**。`\begin{figure}...\end{figure}` の中に `\caption{...}` を含め、何を表す図かを一言で示す。
+
 ### 8.4 図（TikZ）の再現について
 
 * 元の手書き図は TikZ で簡略化して再現する。厳密な形状の一致より、問題の理解を妨げない程度の忠実さを優先する。
