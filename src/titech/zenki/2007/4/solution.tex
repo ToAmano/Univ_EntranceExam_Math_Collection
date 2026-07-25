@@ -1,0 +1,77 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\begin{proof}[解]
+\textbf{(1)} $f_n(x)=a_n(x-n)(n+1-x)=-a_n(x-n)(x-n-1)$より$f_n'(x)=-a_n\{2x-(2n+1)\}$。$y=f_n(x)$と$y=e^{-x}$が$x=\alpha_n$で接するとすると
+\begin{align*}
+-a_n(\alpha_n-n)(\alpha_n-n-1)&=e^{-\alpha_n}\tag{①}\\
+-a_n\{2\alpha_n-(2n+1)\}&=-e^{-\alpha_n}\tag{②}
+\end{align*}
+②より$e^{-\alpha_n}=a_n(2\alpha_n-2n-1)$。これを①に代入し$a_n\neq0$で割ると
+\begin{align*}
+-(\alpha_n-n)(\alpha_n-n-1)=2\alpha_n-2n-1.
+\end{align*}
+$\beta=\alpha_n-n$とおくと$-\beta(\beta-1)=2\beta-1$，整理して
+\begin{align*}
+\beta^2+\beta-1=0,\qquad\beta=\frac{-1\pm\sqrt5}2.
+\end{align*}
+$a_n>0,\ e^{-\alpha_n}>0$と①から$(\alpha_n-n)(\alpha_n-n-1)<0$，すなわち$\beta(\beta-1)<0$より$0<\beta<1$。これをみたすのは$\beta=\dfrac{-1+\sqrt5}2$のみだから
+\begin{align*}
+\alpha_n=n+\frac{-1+\sqrt5}2\qquad(n<\alpha_n<n+1).
+\end{align*}
+②に代入すると（$2\alpha_n-2n-1=\sqrt5-2$，$\frac1{\sqrt5-2}=\sqrt5+2$を用いて）
+\begin{align*}
+a_n=\frac{e^{-\alpha_n}}{2\alpha_n-2n-1}=(2+\sqrt5)\,e^{-n-\frac{-1+\sqrt5}2}=(2+\sqrt5)\,e^{\frac{1-\sqrt5}2}\,e^{-n}.
+\end{align*}
+
+\textbf{(2)} $K=(2+\sqrt5)e^{\frac{1-\sqrt5}2}$とおくと$a_n=Ke^{-n}$（公比$1/e$の等比数列）。$T_n=\displaystyle\sum_{k=0}^nS_k$とおく。
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=2.2]
+  \draw[->] (-0.15,0) -- (1.7,0) node[right]{$x$};
+  \draw[->] (0,-0.1) -- (0,1.15) node[above]{$y$};
+  \fill[gray!30] (0,0) -- (0,1) -- plot[domain=0:0.618,samples=30] (\x,{exp(-\x)}) -- plot[domain=0.618:0,samples=30] (\x,{2.2836*\x*(1-\x)}) -- cycle;
+  \draw[thick,domain=0:1.6,samples=60] plot (\x,{exp(-\x)}) node[right]{\scriptsize$y=e^{-x}$};
+  \draw[thick,blue,domain=0:1,samples=40] plot (\x,{2.2836*\x*(1-\x)}) node[below right]{\scriptsize$y=f_0(x)$};
+  \node at (0.28,0.75) {\scriptsize$S_0$};
+  \filldraw (0.618,{exp(-0.618)}) circle(0.012) node[above]{\scriptsize$\alpha_0$};
+\end{tikzpicture}
+\caption{$S_0$：$y=f_0(x)$，$y=e^{-x}$と$y$軸で囲まれる部分}
+\end{figure}
+
+$y=e^{-x}$は単調減少凸であり，各放物線$y=f_k(x)$は区間$[k,k+1]$で$y=e^{-x}$と$x=\alpha_k$においてのみ接する（それ以外では$f_k<e^{-x}$）から，図のように
+\begin{align*}
+T_n=\int_0^{\alpha_n}e^{-x}dx-\sum_{k=0}^{n-1}\int_k^{k+1}f_k(x)\,dx-\int_n^{\alpha_n}f_n(x)\,dx.
+\end{align*}
+各項を計算する。
+\begin{align*}
+\int_0^{\alpha_n}e^{-x}dx=1-e^{-\alpha_n}.
+\end{align*}
+$u=x-k$と置換すると$\displaystyle\int_k^{k+1}f_k(x)dx=a_k\int_0^1u(1-u)du=\frac{a_k}6$なので，$a_k=Ke^{-k}$の等比性より
+\begin{align*}
+\sum_{k=0}^{n-1}\int_k^{k+1}f_k(x)dx=\frac16\sum_{k=0}^{n-1}Ke^{-k}=\frac K6\cdot\frac{1-(1/e)^n}{1-1/e}.
+\end{align*}
+$\beta=\alpha_n-n=\dfrac{-1+\sqrt5}2$として$u=x-n$と置換すると
+\begin{align*}
+\int_n^{\alpha_n}f_n(x)dx=a_n\int_0^\beta u(1-u)du=A\,a_n\qquad\Bigl(A:=\frac{\beta^2}2-\frac{\beta^3}3,\ nに無関係な定数\Bigr).
+\end{align*}
+以上をまとめると
+\begin{align*}
+T_n=1-e^{-\alpha_n}-\frac K6\cdot\frac{1-(1/e)^n}{1-1/e}-A\,a_n.
+\end{align*}
+$n\to\infty$のとき$\alpha_n\to\infty$より$e^{-\alpha_n}\to0$，$(1/e)^n\to0$，$a_n=Ke^{-n}\to0$だから
+\begin{align*}
+\lim_{n\to\infty}T_n=1-\frac K{6(1-1/e)}=1-\frac{Ke}{6(e-1)}.
+\end{align*}
+$Ke=(2+\sqrt5)e^{\frac{1-\sqrt5}2}\cdot e=(2+\sqrt5)e^{\frac{3-\sqrt5}2}$だから
+\begin{align*}
+\lim_{n\to\infty}(S_0+S_1+\cdots+S_n)=1-\frac{(2+\sqrt5)\,e^{\frac{3-\sqrt5}2}}{6(e-1)}.
+\end{align*}
+\end{proof}
+
+\end{document}
