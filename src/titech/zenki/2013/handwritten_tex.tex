@@ -1,0 +1,233 @@
+\documentclass[../../../../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{第1問}
+
+\begin{proof}[解]
+\textbf{(1)} $x^2-3x+5=0$の2解を$\alpha,\beta$とすると$\alpha+\beta=3$，$\alpha\beta=5$。$b_n=\alpha^n+\beta^n$とおくと，漸化式
+\begin{align*}
+b_{n+2}=(\alpha+\beta)b_{n+1}-\alpha\beta b_n=3b_{n+1}-5b_n\tag{①}
+\end{align*}
+が成り立つ。$a_n=b_n-3^n$とおき，すべての正の整数$n$で$a_n\equiv0\pmod5$（②）であることを2項ずつの数学的帰納法で示す。
+
+$n=1,2$のとき：$b_1=3$，$b_2=(\alpha+\beta)^2-2\alpha\beta=9-10=-1$より，$a_1=3-3=0\equiv0$，$a_2=-1-9=-10\equiv0\pmod5$。よって②は成立。
+
+$n=k,k+1$（$k\in\mathbb N$）で②が成立すると仮定する。①より
+\begin{align*}
+a_{k+2}&=b_{k+2}-3^{k+2}=3b_{k+1}-5b_k-3^{k+2}\\
+&=3(a_{k+1}+3^{k+1})-5(a_k+3^k)-3^{k+2}=3a_{k+1}-5a_k-5\cdot3^k\equiv0\pmod5
+\end{align*}
+（仮定より$a_{k+1}\equiv a_k\equiv0$，かつ$-5a_k$，$-5\cdot3^k$はともに$5$の倍数）。よって$n=k+2$でも②は成立し，数学的帰納法によりすべての正の整数$n$で$\alpha^n+\beta^n-3^n$は$5$の倍数である。
+
+\textbf{(2)} 4種類の目$a,b,c,d$が出る場合，6個の出目の内訳（重複度の分割）は$3+1+1+1$または$2+2+1+1$の2パターンに限る。6個のさいころを区別すれば全事象は$6^6$通りで同様に確からしい。
+
+$1^\circ$ 内訳が$3,1,1,1$のとき：$4$個の目のうちどれが$3$回出るかで$6$通り，残り$3$つの目を残り$5$種類の目から選ぶ方法が${}_5C_3=10$通りだから，目の選び方は$6\times10=60$通り。各選び方について，どのさいころがどの目になるかの割り当ては$\dfrac{6!}{3!1!1!1!}={}_6C_3\cdot3!=20\times6=120$通り。よってこのパターンの場合の数は$60\times120=7200=2\cdot6^2\cdot100$。
+
+$2^\circ$ 内訳が$2,2,1,1$のとき：$2$回出る目の選び方が${}_6C_2=15$通り，残りから$1$回ずつ出る目の選び方が${}_4C_2=6$通りで，目の選び方は$15\times6=90$通り。割り当ては$\dfrac{6!}{2!2!1!1!}={}_6C_2\cdot{}_4C_2\cdot2!=15\times6\times2=180$通り。よってこのパターンの場合の数は$90\times180=16200=2\cdot9^2\cdot100$。
+
+以上より，求める確率は
+\begin{align*}
+\frac{2\cdot6^2\cdot100+2\cdot9^2\cdot100}{6^6}=\frac{(72+162)\times100}{46656}=\frac{23400}{46656}=\frac{325}{648}.
+\end{align*}
+\end{proof}
+
+\newpage
+
+\section*{第2問}
+
+\begin{proof}[解]
+（原稿の解答は「[解]」のみで中断していたため，以下は独立に与える完全な解答である。）
+
+\textbf{(1)} $A=\begin{pmatrix}a&b\\c&d\end{pmatrix}$，$B=\begin{pmatrix}e&f\\g&h\end{pmatrix}$とすると
+\begin{align*}
+AB=\begin{pmatrix}ae+bg&af+bh\\ce+dg&cf+dh\end{pmatrix}
+\end{align*}
+より
+\begin{align*}
+\Delta(AB)&=(ae+bg)(cf+dh)-(af+bh)(ce+dg)\\
+&=acef+adeh+bcfg+bdgh-acef-adfg-bceh-bdgh\\
+&=ad(eh-fg)-bc(eh-fg)=(ad-bc)(eh-fg)=\Delta(A)\Delta(B).
+\end{align*}
+
+\textbf{(2)} $x=\Delta(A)$，$y=t(A)$とする。ケイリー・ハミルトンの定理より
+\begin{align*}
+A^2=yA-xE.\tag{①}
+\end{align*}
+(1)より$\Delta(A^5)=\Delta(A)^5=x^5$。一方$A^5=E$より$\Delta(A^5)=\Delta(E)=1$だから$x^5=1$。$x$は実数だから
+\begin{align*}
+x=1.
+\end{align*}
+①は$A^2=yA-E$となる。この漸化式を用いて$A^3,A^4,A^5$を$A,E$で表すと
+\begin{align*}
+A^3&=A\cdot A^2=y A^2-A=(y^2-1)A-yE,\\
+A^4&=A\cdot A^3=(y^2-1)A^2-yA=(y^3-2y)A-(y^2-1)E,\\
+A^5&=A\cdot A^4=(y^3-2y)A^2-(y^2-1)A=(y^4-3y^2+1)A-(y^3-2y)E.
+\end{align*}
+$A^5=E$より
+\begin{align*}
+(y^4-3y^2+1)A-(y^3-2y+1)E=O.\tag{②}
+\end{align*}
+
+$A$がスカラー行列（$A=cE$，$c$は実数）の場合，$A^5=c^5E=E$より$c^5=1$，$c$は実数だから$c=1$，すなわち$A=E$。このとき$y=t(E)=2$（$x=\Delta(E)=1$と合わせて，これは1つの解である）。
+
+$A$がスカラー行列でない場合，$A,E$は1次独立だから，②より
+\begin{align*}
+y^4-3y^2+1=0,\qquad y^3-2y+1=0
+\end{align*}
+が同時に成り立つ必要がある。$y^3-2y+1=(y-1)(y^2+y-1)$と因数分解でき，$y=1$または$y^2+y-1=0$。$y=1$を$y^4-3y^2+1$に代入すると$1-3+1=-1\neq0$となり不適。$y^2+y-1=0$（$y^2=1-y$）のとき，$y^4=(1-y)^2=1-2y+y^2=1-2y+(1-y)=2-3y$なので
+\begin{align*}
+y^4-3y^2+1=(2-3y)-3(1-y)+1=2-3y-3+3y+1=0
+\end{align*}
+となり成立する。よって$y^2+y-1=0$の2解
+\begin{align*}
+y=\frac{-1\pm\sqrt5}2
+\end{align*}
+が非スカラーの場合の解である（これらは$A$の固有値が$1$の原始$5$乗根の共役対$e^{\pm2\pi i/5}$，$e^{\pm4\pi i/5}$となる場合に対応し，$t(A)=2\cos\frac{2\pi}5=\frac{-1+\sqrt5}2$，$2\cos\frac{4\pi}5=\frac{-1-\sqrt5}2$として実際に実現される）。
+
+以上より，$x=\Delta(A)=1$は常に成り立ち，
+\begin{align*}
+y=t(A)=2,\ \frac{-1+\sqrt5}2,\ \frac{-1-\sqrt5}2
+\end{align*}
+のいずれかである。
+\end{proof}
+
+\newpage
+
+\section*{第3問}
+
+\begin{proof}[解]
+$f(x)=e^x-x^e$（$x>0$）とおく。$f'(x)=e^x-e\cdot x^{e-1}$。$x>0$のとき
+\begin{align*}
+f'(x)=0\iff e^x=e\cdot x^{e-1}\iff x=1+(e-1)\log x\tag{①}
+\end{align*}
+（両辺の自然対数をとった）。$g(x)=x-1-(e-1)\log x$とおくと$g'(x)=1-\dfrac{e-1}x$であり，$g'(x)=0\iff x=e-1$，$g$は$(0,e-1)$で減少，$(e-1,\infty)$で増加。
+
+$g(1)=1-1-(e-1)\log1=0$（自明な解），$g(e)=e-1-(e-1)\log e=e-1-(e-1)=0$（もう一つの解）。$1<e-1<e$であり，$g$は$(0,e-1)$で単調減少・$(e-1,\infty)$で単調増加だから，$g$の零点は$x=1$と$x=e$のちょうど2つで，これらが$f'(x)=0$の解である。また，$f'(x)\ge0\iff x\le1+(e-1)\log x\iff g(x)\ge0$（対数は単調増加なので同値関係が保たれる）だから，$f'$と$g$は同符号。
+
+よって$f$は$(0,1)$で増加，$(1,e)$で減少，$(e,\infty)$で増加。
+\begin{align*}
+f(0)=1,\qquad f(1)=e-1,\qquad f(e)=e^e-e^e=0,\qquad f(x)\to\infty\ (x\to\infty).
+\end{align*}
+（$f(1)$が極大値$e-1$，$f(e)$が極小値$0$。）
+
+$y=f(x)$のグラフの形状から，$y=k$との交点の個数（$=$求める解の個数）は次のようになる：
+\begin{align*}
+\begin{cases}
+0\text{個} & (k<0)\\
+1\text{個} & (k=0)\\
+2\text{個} & (0<k\le1)\\
+3\text{個} & (1<k<e-1)\\
+2\text{個} & (k=e-1)\\
+1\text{個} & (k>e-1)
+\end{cases}
+\end{align*}
+（$0<k\le1$では$(0,1)$の増加部分は$f\ge1$のため寄与せず，$(1,e)$の減少部分と$(e,\infty)$の増加部分のみが交わるので2個。$1<k<e-1$では3つの単調区間すべてが交わるので3個。$k=e-1$では極大点$x=1$で1個，$(e,\infty)$の部分で1個の計2個。$k>e-1$では$(e,\infty)$の部分のみで1個。）
+\end{proof}
+
+\newpage
+
+\section*{第4問}
+
+\begin{proof}[解]
+$0\le x\le\dfrac\pi2$のとき$0\le4nx\le2n\pi$であり，$\sin4nx\ge\sin x$となる条件は，整数$k$を用いて
+\begin{align*}
+2k\pi+x\le4nx\le2k\pi+(\pi-x)
+\end{align*}
+と表せる（正弦の値がある値以上になる一般解）。これを$x$について解くと
+\begin{align*}
+\frac{2k\pi}{4n-1}\le x\le\frac{(2k+1)\pi}{4n+1}.\tag{②}
+\end{align*}
+この区間を$D_k$とする。区間が空でない条件は$\dfrac{2k\pi}{4n-1}\le\dfrac{(2k+1)\pi}{4n+1}$，整理して$4k\le4n-1$，すなわち$k\le n-\dfrac14$，$k$は整数だから$k\le n-1$。さらに$k=0,1,\dots,n-1$のとき$D_k\subset[0,\pi/2]$に含まれ，それ以外の$k$では$D_k$は$[0,\pi/2]$からはみ出す（または空）。よって
+\begin{align*}
+S_n=\sum_{k=0}^{n-1}\ell_k\tag{③}
+\end{align*}
+（$\ell_k$は$D_k$の長さ）。②より
+\begin{align*}
+\ell_k=\Bigl(\frac{2k+1}{4n+1}-\frac{2k}{4n-1}\Bigr)\pi=\frac{(2k+1)(4n-1)-2k(4n+1)}{(4n+1)(4n-1)}\pi=\frac{4n-4k-1}{(4n+1)(4n-1)}\pi.
+\end{align*}
+よって
+\begin{align*}
+\sum_{k=0}^{n-1}\ell_k=\frac{\pi}{(4n+1)(4n-1)}\sum_{k=0}^{n-1}(4n-4k-1)=\frac{\pi}{16n^2-1}\Bigl\{n(4n-1)-4\cdot\frac{n(n-1)}2\Bigr\}=\frac{\pi}{16n^2-1}\cdot n(2n+1)
+\end{align*}
+（$\sum_{k=0}^{n-1}(4n-1-4k)=n(4n-1)-2n(n-1)=n\{(4n-1)-2(n-1)\}=n(2n+1)$を用いた）。よって③より
+\begin{align*}
+S_n=\frac{n(2n+1)\pi}{16n^2-1}=\frac{(2n^2+n)\pi}{16n^2-1}\xrightarrow[n\to\infty]{}\frac{2}{16}\pi=\frac\pi8.
+\end{align*}
+\end{proof}
+
+\newpage
+
+\section*{第5問}
+
+\begin{proof}[解]
+$C=\cos\chi$，$S=\sin\chi$とし，$C_2$上の点$P(C,bS)$（$0\le C\le1$）とおく。また$A(a,0)$（$C_1$の中心）とする。
+
+\textbf{(1)} $C_1$が$C_2$に内接する条件は
+\begin{align*}
+\min_P\overline{AP}=(C_1\text{の半径})=a\tag{①}
+\end{align*}
+である。
+\begin{align*}
+\overline{AP}^2=(C-a)^2+b^2S^2=(C-a)^2+b^2(1-C^2)=(1-b^2)C^2-2aC+(a^2+b^2)\equiv f(C)
+\end{align*}
+とおく（$0\le C\le1$で考えればよい：$a>0$より対称性から接点は$x\ge0$側）。$f'(C)=2(1-b^2)C-2a$であり，$f'(0)=-2a<0$。$f'(1)=2(1-a-b^2)$の正負で場合分けする。
+
+$1^\circ$ $f'(1)\le0\iff1\le a+b^2$のとき：$f'(C)$は$C$の1次式で両端が非正だから区間内で$f'(C)\le0$，すなわち$f$は単調減少で
+\begin{align*}
+\min f(C)=f(1)=(1-b^2)-2a+(a^2+b^2)=(1-a)^2.
+\end{align*}
+
+$2^\circ$ $f'(1)\ge0\iff1\ge a+b^2$のとき：このとき$1-b^2\ge a>0$だから，$f(C)$は下に凸な$C$の2次関数で，$C=\dfrac a{1-b^2}\in(0,1]$で最小となり
+\begin{align*}
+\min f(C)=f\Bigl(\frac a{1-b^2}\Bigr)=\frac{a^2}{1-b^2}-\frac{2a^2}{1-b^2}+(a^2+b^2)=(a^2+b^2)-\frac{a^2}{1-b^2}.
+\end{align*}
+
+①（$\min f(C)=a^2$）より，$1^\circ$では$(1-a)^2=a^2$，すなわち$a=\dfrac12$，$2^\circ$では$(a^2+b^2)-\dfrac{a^2}{1-b^2}=a^2$，整理して$b^2(1-b^2)=a^2$。これらはいずれも$C_1$が$C_2$の内側にあり接することに対応し，まとめると条件は
+\begin{align*}
+a=\frac12\ \text{かつ}\ \frac12\le b^2\quad(\text{接点}(1,0))\qquad\text{または}\qquad b^2\le\frac12\ \text{かつ}\ a^2=b^2(1-b^2)\quad\Bigl(\text{接点は}C=\frac a{1-b^2}\text{となる点}\Bigr).
+\end{align*}
+
+\textbf{(2)} $b=\dfrac1{\sqrt3}$のとき$b^2=\dfrac13\le\dfrac12$だから後者の場合に該当し，
+\begin{align*}
+a^2=b^2(1-b^2)=\frac13\cdot\frac23=\frac29\quad\therefore\ a=\frac{\sqrt2}3.
+\end{align*}
+接点の$x$座標は
+\begin{align*}
+p=\frac a{1-b^2}=\frac{\sqrt2/3}{2/3}=\frac{\sqrt2}2
+\end{align*}
+であり，$q=b\sqrt{1-p^2}=\dfrac1{\sqrt3}\sqrt{1-\dfrac12}=\dfrac1{\sqrt3}\cdot\dfrac1{\sqrt2}=\dfrac1{\sqrt6}=\dfrac{\sqrt6}6$（第1象限より$q>0$）。よって
+\begin{align*}
+(p,q)=\Bigl(\frac{\sqrt2}2,\ \frac{\sqrt6}6\Bigr).
+\end{align*}
+
+\textbf{(3)} $x\ge p$の範囲で$C_1$と$C_2$に囲まれた部分の面積を$T$とする。$y$軸に関する対称性（$x\ge p>0$の範囲は上下対称）から，上半分（$y\ge0$）の面積を$T'$として$T=2T'$。
+
+$C_2$の上半分は$y=b\sqrt{1-x^2}$（$p\le x\le1$），$C_1$の上半分は$y=\sqrt{a^2-(x-a)^2}$（$p\le x\le2a$，$C_1$は$x\le2a$までしか存在しない）。よって
+\begin{align*}
+T'=\int_p^1b\sqrt{1-x^2}\,dx-\int_p^{2a}\sqrt{a^2-(x-a)^2}\,dx.
+\end{align*}
+第1項：$\displaystyle\int\sqrt{1-x^2}dx=\frac12\bigl[x\sqrt{1-x^2}+\arcsin x\bigr]$を用いて，$x=1$で$\dfrac12\cdot\dfrac\pi2=\dfrac\pi4$，$x=p=\frac{\sqrt2}2$で$\sqrt{1-p^2}=\frac{\sqrt2}2$だから$\dfrac12\bigl[\dfrac{\sqrt2}2\cdot\dfrac{\sqrt2}2+\dfrac\pi4\bigr]=\dfrac12\bigl[\dfrac12+\dfrac\pi4\bigr]=\dfrac14+\dfrac\pi8$。よって
+\begin{align*}
+\int_p^1\sqrt{1-x^2}dx=\frac\pi4-\Bigl(\frac14+\frac\pi8\Bigr)=\frac\pi8-\frac14,\qquad
+b\int_p^1\sqrt{1-x^2}dx=\frac1{\sqrt3}\Bigl(\frac\pi8-\frac14\Bigr)=\frac{\sqrt3}{24}\pi-\frac{\sqrt3}{12}.
+\end{align*}
+第2項：$u=x-a$と置換すると，$x=p$で$u=p-a=\frac{\sqrt2}2-\frac{\sqrt2}3=\frac{\sqrt2}6$，$x=2a$で$u=a$。$\displaystyle\int\sqrt{a^2-u^2}du=\frac12\bigl[u\sqrt{a^2-u^2}+a^2\arcsin\frac ua\bigr]$を用いる。$u=a$で$\dfrac12\cdot a^2\cdot\dfrac\pi2=\dfrac{a^2\pi}4$。$u=\frac{\sqrt2}6$のとき，$\sqrt{a^2-u^2}=q=\frac{\sqrt6}6$（接点の$y$座標）であり，$\dfrac ua=\dfrac{\sqrt2/6}{\sqrt2/3}=\dfrac12$より$\arcsin\dfrac12=\dfrac\pi6$だから
+\begin{align*}
+\frac12\Bigl[\frac{\sqrt2}6\cdot\frac{\sqrt6}6+a^2\cdot\frac\pi6\Bigr]=\frac12\Bigl[\frac{\sqrt{12}}{36}+\frac29\cdot\frac\pi6\Bigr]=\frac12\Bigl[\frac{\sqrt3}{18}+\frac\pi{27}\Bigr]=\frac{\sqrt3}{36}+\frac\pi{54}.
+\end{align*}
+よって
+\begin{align*}
+\int_p^{2a}\sqrt{a^2-(x-a)^2}dx=\frac{a^2\pi}4-\Bigl(\frac{\sqrt3}{36}+\frac\pi{54}\Bigr)=\frac29\cdot\frac\pi4-\frac{\sqrt3}{36}-\frac\pi{54}=\frac\pi{18}-\frac{\sqrt3}{36}-\frac\pi{54}=\frac\pi{27}-\frac{\sqrt3}{36}
+\end{align*}
+（$\pi/18-\pi/54=3\pi/54-\pi/54=2\pi/54=\pi/27$を用いた）。以上より
+\begin{align*}
+T'=\Bigl(\frac{\sqrt3}{24}\pi-\frac{\sqrt3}{12}\Bigr)-\Bigl(\frac\pi{27}-\frac{\sqrt3}{36}\Bigr)=\frac{\sqrt3}{24}\pi-\frac{\sqrt3}{12}+\frac{\sqrt3}{36}-\frac\pi{27}=\Bigl(\frac\pi{24}-\frac1{18}\Bigr)\sqrt3-\frac\pi{27}
+\end{align*}
+（$-\sqrt3/12+\sqrt3/36=-3\sqrt3/36+\sqrt3/36=-2\sqrt3/36=-\sqrt3/18$を用いた）。よって
+\begin{align*}
+T=2T'=\Bigl(\frac\pi{12}-\frac19\Bigr)\sqrt3-\frac{2\pi}{27}.
+\end{align*}
+\end{proof}
+
+\end{document}
