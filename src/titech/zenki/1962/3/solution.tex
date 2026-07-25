@@ -1,55 +1,161 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
+\usepackage{scrextend}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf ［解］}
 
-［解］ $C: (x - 2a)^2 + (y - a)^2 = 5a^2 - 20a + 25$ とおく。
+題意の円を$C: (x - 2a)^2 + (y - a)^2 = 5a^2 - 20a + 25$ とおく．
 
-$(\text{与式}) \iff (-4x - 2y + 20)a + (x^2 + y^2 - 25) = 0$ だから，これが $a$ についての恒等式の時，つまり
-\[
+まず前半部分，円$C$が二つの定点を通ることを示す．円の方程式を$a$について整理すると
+\begin{align}
+ (-4x - 2y + 20)a + (x^2 + y^2 - 25) = 0
+\end{align}
+だから，これが $a$ についての恒等式の時，つまり
+\begin{align}
 \begin{cases}
 -4x - 2y + 20 = 0 \\
 x^2 + y^2 = 25
 \end{cases}
-\iff (x,y) = (3,4), (5,0)
-\]
-の時，与式は $a$ によらず成り立つから，もとめる $2$ 点はこれである。又，$2$ 円の中心間距離 $d$ は $d = \sqrt{(2a)^2 + a^2} = \sqrt{5}|a|$ である。
+\iff (x,y) = (3,4), (5,0) 
+\end{align}
+の時に与式は $a$ によらず成り立つから，もとめる $2$ 定点はこれである．
 
-\paragraph{1. 外接する時}
-\[
-\sqrt{5} + \sqrt{5}\sqrt{a^2 - 4a + 5} = \sqrt{5}|a|
-\]
-\[
-\sqrt{a^2 - 4a + 5} = |a| - 1
-\]
-$|a| \ge 1$ のもとで $2$ 乗して，整理すると $a = 2$ を得る。
+次に後半部分を考える．二つ目の円を$D: x^2+y^2=25$とする．
+二つの円$C, D$の中心間距離 $d$ は 
+\begin{align}
+ d = \sqrt{(2a)^2 + a^2} = \sqrt{5}|a| 
+\end{align}
+である．
+二つの円が接するパターンは外接と内接があるから場合分けして考える．
 
-\paragraph{2. 内接する時}
-\[
-| \sqrt{5} - \sqrt{5}\sqrt{a^2 - 4a + 5} | = \sqrt{5}|a|
-\]
-両辺 $0$ 以上から $2$ 乗して
-\[
-a^2 - 4a + 5 + 1 - 2\sqrt{a^2 - 4a + 5} = a^2
-\]
-\[
+% \begin{addmargin}[2em]{0pt}
+\paragraph{$1^\circ$ 外接する時}
+二つの円の半径の和が中心間距離$d$に等しいから
+\begin{align}
+& \sqrt{5} + \sqrt{5}\sqrt{a^2 - 4a + 5} = \sqrt{5}|a| \\
+& \sqrt{a^2 - 4a + 5} = |a| - 1
+\end{align}
+である．$|a| \ge 1$ のもとで両辺二乗して整理すると $a = 2$ を得る．
+
+\paragraph{$2^\circ$ 内接する時}
+二つの円の半径の差が中心間距離$d$に等しいから
+\begin{align}
+| \sqrt{5} - \sqrt{5}\sqrt{a^2 - 4a + 5} | = \sqrt{5}|a| 
+\end{align}
+両辺 $0$ 以上だから二乗して
+\begin{align}
+a^2 - 4a + 5 + 1 - 2\sqrt{a^2 - 4a + 5} = a^2 \\
 \sqrt{a^2 - 4a + 5} = 3 - 2a
-\]
-$a \le \frac{3}{2}$ のもとで $2$ 乗して
-\[
-a^2 - 4a + 5 = 4a^2 - 12a + 9
-\]
-\[
-3a^2 - 8a + 4 = 0
-\]
-\[
-(3a - 2)(a - 2) = 0 \quad \dots \quad \therefore a = \frac{2}{3}, 2
-\]
-$a \le \frac{3}{2}$ をみたすのは $a = \frac{2}{3}$
+\end{align}
+$a \le \frac{3}{2}$ のもとで両辺二乗して
+\begin{align}
+   & a^2 - 4a + 5 = 4a^2 - 12a + 9 \\
+   & 3a^2 - 8a + 4 = 0 \\
+   & (3a - 2)(a - 2) = 0 \\
+\therefore 
+   & a = \frac{2}{3}, 2
+\end{align}
+$a \le \frac{3}{2}$ をみたすのは $a = \frac{2}{3}$である．
+% \end{addmargin}
 
-以上から $a = \frac{2}{3}, 2$
+以上から求める値は 
+\begin{align}
+ a = \frac{2}{3}, 2 
+\end{align}
+である．
+
+\begin{figure}[htb]
+\begin{center}
+  \begin{tikzpicture}[scale=0.8, >=stealth]
+  % 軸の描画
+  \draw[->, thick] (-6, 0) -- (8, 0) node[right] {$x$};
+  \draw[->, thick] (0, -6) -- (0, 7) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 円D
+  \def\rD{2.236} % sqrt(5)
+  \coordinate (CenterD) at (0,0);
+
+  % 円C (a = 2/3)
+  % \coordinate (CenterC) at (1.333, 0.667); % (4/3, 2/3)
+  % \def\rC{5.218} % sqrt(5)*sqrt((2/3)^2 - 4*(2/3) + 5) = 7*sqrt(5)/3 ≒ 5.218
+
+  \coordinate (CenterC) at (4, 2); 
+  \def\rC{2.236} % sqrt(5)
+
+
+  % 2つの定点 (3,4) と (5,0)
+  \coordinate (P1) at (3,4);
+  \coordinate (P2) at (5,0);
+
+  % 円 D (x^2 + y^2 = 25)
+  \draw[thick, blue!80!black] (CenterD) circle (\rD);
+  \node[blue!80!black, font=\small] at (-0.8, -1.2) {$D$};
+  \fill[blue!80!black] (CenterD) circle (2pt) node[below left] {$O$};
+
+  % 円 C (a = 2/3)
+  \draw[thick, red!80!black] (CenterC) circle (\rC);
+  \node[red!80!black, font=\small, right] at (4.8, 5.2) {$C\;(a=2)$};
+  \fill[red!80!black] (CenterC) circle (2pt) node[below right, font=\small] {$\left(4,2\right)$};
+
+  % 中心間を結ぶ線分 d
+  \draw[thick, purple, dashed] (CenterD) -- (CenterC);
+
+
+  % 定点 (3,4), (5,0) のプロットとラベル
+  \fill[black] (P1) circle (2.5pt) node[above right] {$(3,4)$};
+  \fill[black] (P2) circle (2.5pt) node[below right] {$(5,0)$};
+
+\end{tikzpicture}
+\caption{$a=2$で二つの円が外接する場合}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+  \begin{tikzpicture}[scale=0.8, >=stealth]
+  % 軸の描画
+  \draw[->, thick] (-6, 0) -- (8, 0) node[right] {$x$};
+  \draw[->, thick] (0, -6) -- (0, 7) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 円D
+  \def\rD{2.236} % sqrt(5)
+  \coordinate (CenterD) at (0,0);
+
+  % 円C (a = 2/3)
+  \coordinate (CenterC) at ({4/3}, {2/3});
+  \def\rC{sqrt(125)/3} % sqrt(20/9-40/3+25)=sqrt(125/9)
+
+
+  % 2つの定点 (3,4) と (5,0)
+  \coordinate (P1) at (3,4);
+  \coordinate (P2) at (5,0);
+
+  % 円 D (x^2 + y^2 = 25)
+  \draw[thick, blue!80!black] (CenterD) circle (\rD);
+  \node[blue!80!black, font=\small] at (-0.8, -1.2) {$D$};
+  \fill[blue!80!black] (CenterD) circle (2pt) node[below left] {$O$};
+
+  % 円 C (a = 2/3)
+  \draw[thick, red!80!black] (CenterC) circle (\rC);
+  \node[red!80!black, font=\small, right] at (4.8, 5.2) {$C\;(a=2/3)$};
+  \fill[red!80!black] (CenterC) circle (2pt) node[below right, font=\small] {$\left(\dfrac{4}{3},\dfrac{2}{3}\right)$};
+
+  % 中心間を結ぶ線分 d
+  \draw[thick, purple, dashed] (CenterD) -- (CenterC);
+
+
+  % 定点 (3,4), (5,0) のプロットとラベル
+  \fill[black] (P1) circle (2.5pt) node[above right] {$(3,4)$};
+  \fill[black] (P2) circle (2.5pt) node[below right] {$(5,0)$};
+
+\end{tikzpicture}
+\caption{$a=\dfrac{2}{3}$で二つの円が内接する場合}
+\end{center}
+\end{figure}
+
+
 
 \newpage
 
