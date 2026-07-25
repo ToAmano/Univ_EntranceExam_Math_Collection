@@ -5,9 +5,9 @@
 {\bf [解]}
 $A(1,0), B(-1,0), C(t,0)$ ($0 \le t \le 1$) とおくと，与えられた図形は以下のようになる．
 
-\begin{figure}
+\begin{figure}[htb]
 \begin{center}
-\begin{tikzpicture}[scale=1.5, >=stealth]
+\begin{tikzpicture}[scale=3, >=stealth]
   \draw[->] (-1.3,0) -- (1.5,0) node[right] {$x$};
   \draw[->] (0,-0.3) -- (0,1.5) node[above] {$y$};
   
@@ -17,26 +17,40 @@ $A(1,0), B(-1,0), C(t,0)$ ($0 \le t \le 1$) とおくと，与えられた図形
   \fill (-0.3,0) circle (1pt);
   \fill (0.7,0) circle (1pt);
   
-  \draw[thick] (-0.5, 0.95) -- (1.2, 0.05);
-  
-  \fill (-0.02, 0.641) circle (1pt) node[above left] {$Q$};
-  \fill (0.82, 0.275) circle (1pt) node[above right] {$P$};
-  
-  \draw[dashed] (-0.3,0) -- (-0.02, 0.641);
-  \draw[dashed] (0.7,0) -- (0.82, 0.275);
-  
-  \node[below] at (-1,0) {$-1$};
-  \node[below] at (-0.3,-0.1) {$\frac{-1+t}{2}$};
+  % 正確な Q, P の座標定義 (theta = 66度)
+  % Q = (-0.3 + 0.7*cos(66), 0.7*sin(66))
+  % P = (0.7 + 0.3*cos(66), 0.3*sin(66))
+  \coordinate (Q) at ({-0.3 + 0.7*cos(66)}, {0.7*sin(66)});
+  \coordinate (P) at ({0.7 + 0.3*cos(66)}, {0.3*sin(66)});
+
+  % PQ の中点 M の座標定義
+  \coordinate (M) at ($(P)!0.5!(Q)$);
+
+  % 正しい共通外接線 (P, Q を通る直線)
+  % x = -0.5 から x = 1.25 まで描写
+  \draw[thick] ($-0.8*(P)+1.8*(Q)$) -- ($1.5*(P)-0.5*(Q)$);
+
+  % 点 P, Q, M のプロットとラベル
+  \fill (Q) circle (1pt) node[above left] {$Q$};
+  \fill (P) circle (1pt) node[above right] {$P$};
+  \fill (M) circle (1pt) node[above right] {$M$};
+
+  % 半径の破線
+  \draw[dashed] (-0.3,0) -- (Q);
+  \draw[dashed] (0.7,0) -- (P);
+
+  \node[below left] at (-1,0) {$-1$};
+  \node[below] at (-0.3,0) {$\frac{-1+t}{2}$};
   \node[below left] at (0,0) {$0$};
-  \node[below] at (0.4,0) {$t$};
-  \node[below] at (0.7,-0.1) {$\frac{1+t}{2}$};
-  \node[below] at (1,0) {$1$};
+  \node[below left] at (0.4,0) {$t$};
+  \node[below] at (0.7,0) {$\frac{1+t}{2}$};
+  \node[below right] at (1,0) {$1$};
   
-  \draw (-0.3,0.2) arc (90:66:0.2);
-  \node at (-0.23,0.27) {$\theta$};
+  \draw (-0.1,0) arc (0:66:0.2); % 中心-0.3, 半径0.2
+  \node at (-0.1,0.2) {$\theta$};
   
-  \draw (0.7,0.15) arc (90:66:0.15);
-  \node at (0.75,0.2) {$\theta$};
+  \draw (0.85,0) arc (0:66:0.15); % 中心0.7, 半径0.15
+  \node at (0.9,0.1) {$\theta$};
 \end{tikzpicture}
 \caption{題意の状況}
 \end{center}
@@ -96,7 +110,71 @@ $A(1,0), B(-1,0), C(t,0)$ ($0 \le t \le 1$) とおくと，与えられた図形
 \end{align}
 が求める軌跡である．
 
-- TODO:: 軌跡を入れた図
+
+{\bf [解説]}
+
+軌跡を求める問題で素直に立式していけば解ける．出てきた答えが正しそうなことは$t$の極限を考えると割と理解しやすい．
+まず$t=1$の極限，すなわち右側の円が潰れる時は中点$M$は$(1,0)$であり，逆に$t=-1$の時は$(-1,0)$である．
+一方$t=0$の時すなわち二つの円がそれぞれ半径$1/2$の時は$M$は$\left(0,\pm \dfrac{1}{2}\right)$である．
+出てきた楕円の方程式はこれらの場合を全て満たしているから，そんなに外してなさそうだということがわかる．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=3, >=stealth]
+  \draw[->] (-1.3,0) -- (1.5,0) node[right] {$x$};
+  \draw[->] (0,-1.3) -- (0,1.5) node[above] {$y$};
+  
+  \draw[thick] (-0.3,0) circle (0.7);
+  \draw[thick] (0.7,0) circle (0.3);
+  
+  \fill (-0.3,0) circle (1pt);
+  \fill (0.7,0) circle (1pt);
+  
+  % 正確な Q, P の座標定義 (theta = 66度)
+  % Q = (-0.3 + 0.7*cos(66), 0.7*sin(66))
+  % P = (0.7 + 0.3*cos(66), 0.3*sin(66))
+  \coordinate (Q) at ({-0.3 + 0.7*cos(66)}, {0.7*sin(66)});
+  \coordinate (P) at ({0.7 + 0.3*cos(66)}, {0.3*sin(66)});
+
+  % PQ の中点 M の座標定義
+  \coordinate (M) at ($(P)!0.5!(Q)$);
+
+  % 正しい共通外接線 (P, Q を通る直線)
+  % x = -0.5 から x = 1.25 まで描写
+  \draw[thick] ($-0.8*(P)+1.8*(Q)$) -- ($1.5*(P)-0.5*(Q)$);
+
+  % M の軌跡: 楕円 x^2 + 4y^2 = 1 (y >= 0 の領域を描画)
+  % x = cos(t), y = 0.5*sin(t) 
+  \draw[very thick, red!80!black, domain=0:360, samples=100] 
+    plot ({cos(\x)}, {0.5*sin(\x)});
+  \node[red!80!black, font=\small, right] at (0.35, -0.52) {$x^2 + 4y^2 = 1$};
+
+  % 点 P, Q, M のプロットとラベル
+  \fill (Q) circle (1pt) node[above left] {$Q$};
+  \fill (P) circle (1pt) node[above right] {$P$};
+  \fill (M) circle (1pt) node[above right] {$M$};
+
+  % 半径の破線
+  \draw[dashed] (-0.3,0) -- (Q);
+  \draw[dashed] (0.7,0) -- (P);
+
+  \node[below left] at (-1,0) {$-1$};
+  \node[below] at (-0.3,0) {$\frac{-1+t}{2}$};
+  \node[below left] at (0,0) {$0$};
+  \node[below left] at (0.4,0) {$t$};
+  \node[below] at (0.7,0) {$\frac{1+t}{2}$};
+  \node[below right] at (1,0) {$1$};
+  
+  \draw (-0.1,0) arc (0:66:0.2); % 中心-0.3, 半径0.2
+  \node at (-0.1,0.2) {$\theta$};
+  
+  \draw (0.85,0) arc (0:66:0.15); % 中心0.7, 半径0.15
+  \node at (0.9,0.1) {$\theta$};
+\end{tikzpicture}
+\caption{$M$の軌跡．}
+\end{center}
+\end{figure}
+
 
 \newpage
 

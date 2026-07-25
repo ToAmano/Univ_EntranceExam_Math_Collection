@@ -46,6 +46,73 @@ F(x) = \dfrac{1}{4}x^4 + \dfrac{p}{3}x^3 + \dfrac{q}{2}x^2 + rx \label{eq:1}
 最後の条件に$r$が出てこないのは自然で，$r$は$f(x)$の定数項だから，元の不等式で左辺で$[0,x]$まで積分したものの$2$倍と，
 右辺で$[0,x+y]$,$[0,x-y]$まで積分したものの和は等しくなって必ず打ち消しあうので条件として現れない．
 
+\begin{figure}[htb]
+ \begin{center}
+  \begin{tikzpicture}[scale=1.2, >=stealth]
+    % 軸の描画
+    \draw[->, thick] (-0.5, 0) -- (5.2, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.5) -- (0, 4.5) node[above] {$F(x)$};
+    \node[below left] at (0,0) {$O$};
+
+    % 下に凸な曲線 (二次関数 F(x) = 0.3*(x-1)^2 + 0.5)
+    \draw[very thick, blue!80!black, domain=0.3:4.6, samples=100] 
+        plot (\x, {0.3*(\x-1)^2 + 0.5}) node[right] {$y = F(x)$};
+
+    % 座標の定義
+    % x_0 = 2.5, y_val = 1.2 と設定
+    \def\xval{2.5}
+    \def\yval{1.2}
+    
+    \coordinate (X)   at (\xval, 0);
+    \coordinate (XmY) at (\xval-\yval, 0);
+    \coordinate (XpY) at (\xval+\yval, 0);
+
+    % 曲線上の点 (x-y, F(x-y)), (x, F(x)), (x+y, F(x+y))
+    \coordinate (P1) at (\xval-\yval, {0.3*(\xval-\yval-1)^2 + 0.5}); % (x-y, F(x-y))
+    \coordinate (P2) at (\xval,       {0.3*(\xval-1)^2 + 0.5});        % (x, F(x))
+    \coordinate (P3) at (\xval+\yval, {0.3*(\xval+\yval-1)^2 + 0.5}); % (x+y, F(x+y))
+
+    % P1 と P3 を結ぶ割線（弦）とその中点 M
+    \draw[thick, red!80!black] (P1) -- (P3);
+    \coordinate (M) at ($(P1)!0.5!(P3)$); % 中点 = (F(x+y) + F(x-y))/2
+
+    % x軸からの垂線（点線）
+    \draw[dashed, gray] (XmY) -- (P1);
+    \draw[dashed, gray] (X)   -- (M);
+    \draw[dashed, gray] (XpY) -- (P3);
+
+    % y軸への垂線（点線）とラベル
+    \draw[dashed, gray] (0, {0.3*(\xval-1)^2 + 0.5}) -- (P2);
+    \draw[dashed, gray] (0, {0.3*((\xval+\yval)-1)^2 + 0.5 - 0.5*(0.3*((\xval+\yval)-1)^2 + 0.5 - (0.3*((\xval-\yval)-1)^2 + 0.5))}) -- (M); % 中点のy座標
+
+    % 各点のプロット
+    \fill[blue!80!black] (P1) circle (2pt) node[above left, font=\small] {$F(x-y)$};
+    \fill[blue!80!black] (P2) circle (2pt);
+    \fill[blue!80!black] (P3) circle (2pt) node[right, font=\small] {$F(x+y)$};
+    \fill[red!80!black]  (M)  circle (2pt);
+
+    % F(x) と 中点 (F(x+y)+F(x-y))/2 を結ぶ縦矢印（凸性の強調）
+    \draw[<->, thick, purple] (P2) -- (M) 
+        node[midway, right, font=\footnotesize] {$\ge 0$};
+
+    % x軸上のラベルと y の幅（<-> 矢印）
+    \node[below, font=\small] at (XmY) {$x-y$};
+    \node[below, font=\small] at (X)   {$x$};
+    \node[below, font=\small] at (XpY) {$x+y$};
+
+    \draw[<->, >=stealth, font=\footnotesize] (\xval-\yval, -0.35) -- (\xval, -0.35) node[midway, fill=white] {$y$};
+    \draw[<->, >=stealth, font=\footnotesize] (\xval, -0.35) -- (\xval+\yval, -0.35) node[midway, fill=white] {$y$};
+
+    % y軸上のラベル
+    \node[left, font=\small, blue!80!black] at (0, {0.3*(\xval-1)^2 + 0.5}) {$F(x)$};
+    \node[left, font=\small, red!80!black]  at (0, {0.3*(\xval-\yval-1)^2 + 0.5 + 0.5*(0.3*(\xval+\yval-1)^2 - 0.3*(\xval-\yval-1)^2)}) {$\frac{F(x+y)+F(x-y)}{2}$};
+
+\end{tikzpicture}
+\caption{不等式\cref{eq:2}の様子．}
+ \end{center}
+\end{figure}
+
+
 途中で出てきた式\eqref{eq:2}はまさに凸不等式であり，要するに$F(x)$が下に凸である条件を求めれば良い．
 以下その方針にたった解答を示す．こちらの方が数学的な背景がわかってる感があって綺麗だろう．
 
@@ -59,7 +126,7 @@ $F(x)$が下に凸なための条件は2階微分が非負であること，す�
 \end{align}
 が非正であればよく，
 \begin{align}
- p^2 \le 3p
+ p^2 \le 3q
 \end{align}
 が求める条件である．
 
