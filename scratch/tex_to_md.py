@@ -3,6 +3,7 @@ import sys
 import re
 import subprocess
 import shutil
+import tempfile
 import pypandoc
 from TexSoup import TexSoup
 
@@ -10,11 +11,18 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs=""):
     """
     TikZコードと大問レベルのマクロ定義を組み合わせてスタンドアロンSVG画像を生成する
     pdftocairo (Poppler) を最優先で使用し、完璧なベクトル描画を行う
+
+    図ごとに独立した一時ディレクトリを使い、コンパイラの終了コードを必ず確認する。
+    以前は固定パス scratch/tikz_build/fig.pdf を使い回し、かつ os.path.exists() のみで
+    成否判定していたため、ある図のコンパイルが失敗しても直前の図の fig.pdf が
+    残っていれば「成功」と誤判定され、その古い画像が使い回されてしまう不具合があった
+    （CI環境で全ての図が同一画像になる原因になっていた）。
     """
-    temp_dir = os.path.join("scratch", "tikz_build")
-    os.makedirs(temp_dir, exist_ok=True)
+    os.makedirs("scratch", exist_ok=True)
+    temp_dir = tempfile.mkdtemp(prefix="tikz_build_", dir="scratch")
     tex_filename = os.path.join(temp_dir, "fig.tex")
     pdf_filename = os.path.join(temp_dir, "fig.pdf")
+    log_filename = os.path.join(temp_dir, "fig.log")
 
     full_tex = f"""\\documentclass[tikz,border=2pt]{{standalone}}
 \\usepackage{{amsmath,amssymb,amsfonts,amsthm}}
@@ -34,39 +42,69 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs=""):
     with open(tex_filename, 'w', encoding='utf-8') as f:
         f.write(full_tex)
 
+    def _log_tail(result):
+        if os.path.exists(log_filename):
+            return open(log_filename, encoding='utf-8', errors='ignore').read()[-2000:]
+        return ((result.stdout or "") + (result.stderr or ""))[-2000:]
+
     try:
-        # 1. LuaLaTeX または pdflatex で高品質 PDF の作成
-        cmd_compile_pdf = ["lualatex", "-interaction=batchmode", "-output-directory=" + temp_dir, tex_filename]
-        subprocess.run(cmd_compile_pdf, capture_output=True, text=True)
+        # 1. LuaLaTeX で高品質 PDF の作成。失敗したら pdflatex にフォールバック。
+        #    どちらも終了コードと pdf_filename の存在を両方確認する
+        #    （終了コードだけ／存在だけの片方の確認では不十分）。
+        cmd_compile_pdf = ["lualatex", "-interaction=nonstopmode", "-halt-on-error",
+                            "-output-directory=" + temp_dir, tex_filename]
+        result = subprocess.run(cmd_compile_pdf, capture_output=True, text=True)
 
-        if not os.path.exists(pdf_filename):
-            cmd_pdflatex = ["pdflatex", "-interaction=batchmode", "-output-directory=" + temp_dir, tex_filename]
-            subprocess.run(cmd_pdflatex, capture_output=True, text=True)
+        if result.returncode != 0 or not os.path.exists(pdf_filename):
+            cmd_pdflatex = ["pdflatex", "-interaction=nonstopmode", "-halt-on-error",
+                             "-output-directory=" + temp_dir, tex_filename]
+            result = subprocess.run(cmd_pdflatex, capture_output=True, text=True)
 
-        if not os.path.exists(pdf_filename):
-            print(f"Failed to produce PDF for TikZ figure at {output_svg_path}")
+        if result.returncode != 0 or not os.path.exists(pdf_filename):
+            print(f"[tex_to_md] Failed to produce PDF for TikZ figure at {output_svg_path} "
+                  f"(exit code {result.returncode})")
+            print(f"[tex_to_md]   log tail:\n{_log_tail(result)}")
             return False
 
         # 2. pdftocairo (Poppler) による完璧な SVG 変換
+        svg_ok = False
         pdftocairo_bin = shutil.which("pdftocairo") or "/opt/homebrew/bin/pdftocairo"
-        if os.path.exists(pdftocairo_bin):
+        if pdftocairo_bin and os.path.exists(pdftocairo_bin):
             cmd_svg = [pdftocairo_bin, "-svg", pdf_filename, output_svg_path]
-            subprocess.run(cmd_svg, capture_output=True, text=True)
+            r = subprocess.run(cmd_svg, capture_output=True, text=True)
+            svg_ok = r.returncode == 0 and os.path.exists(output_svg_path)
+            if not svg_ok:
+                print(f"[tex_to_md] pdftocairo failed for {output_svg_path} "
+                      f"(exit code {r.returncode}): {(r.stderr or '')[-500:]}")
 
         # 3. pdf2svg フォールバック
-        if not os.path.exists(output_svg_path) and shutil.which("pdf2svg"):
+        if not svg_ok and shutil.which("pdf2svg"):
             cmd_svg = ["pdf2svg", pdf_filename, output_svg_path]
-            subprocess.run(cmd_svg, capture_output=True, text=True)
+            r = subprocess.run(cmd_svg, capture_output=True, text=True)
+            svg_ok = r.returncode == 0 and os.path.exists(output_svg_path)
+            if not svg_ok:
+                print(f"[tex_to_md] pdf2svg failed for {output_svg_path} "
+                      f"(exit code {r.returncode}): {(r.stderr or '')[-500:]}")
 
         # 4. dvisvgm フォールバック
-        if not os.path.exists(output_svg_path) and shutil.which("dvisvgm"):
+        if not svg_ok and shutil.which("dvisvgm"):
             cmd_svg = ["dvisvgm", "--pdf", "--no-fonts", "-o", output_svg_path, pdf_filename]
-            subprocess.run(cmd_svg, capture_output=True, text=True)
+            r = subprocess.run(cmd_svg, capture_output=True, text=True)
+            svg_ok = r.returncode == 0 and os.path.exists(output_svg_path)
+            if not svg_ok:
+                print(f"[tex_to_md] dvisvgm failed for {output_svg_path} "
+                      f"(exit code {r.returncode}): {(r.stderr or '')[-500:]}")
 
-        return os.path.exists(output_svg_path)
+        if not svg_ok:
+            print(f"[tex_to_md] Failed to convert PDF to SVG for {output_svg_path} "
+                  f"(no SVG backend succeeded)")
+
+        return svg_ok
     except Exception as e:
-        print(f"Error compiling TikZ to SVG: {e}")
+        print(f"[tex_to_md] Error compiling TikZ to SVG for {output_svg_path}: {e}")
         return False
+    finally:
+        shutil.rmtree(temp_dir, ignore_errors=True)
 
 def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel, output_svg_dir):
     with open(tex_path, 'r', encoding='utf-8') as f:
