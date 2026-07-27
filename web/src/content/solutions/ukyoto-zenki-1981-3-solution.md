@@ -1,0 +1,66 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1981"
+question: "3"
+type: "solution"
+title: "UKYOTO 1981 zenki Q3 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] $f(x) = k(x^{m+1}-1) - (x^m-1)$ とおく。$f(x) \ge 0$ が $0 < x$ の任意の$x$で成り立つ$k$の条件をしらべる
+
+$$
+\begin{align*}
+f'(x) &= k(m+1)x^m - mx^{m-1}\\&= \{k(m+1)x - m\} x^{m-1}
+\end{align*}
+$$
+
+から、下表を得る
+
+| $x$  | $0$ |  $\cdots$  | $\frac{m}{k(m+1)}$ |  $\cdots$  |
+|:------:|:-----:|:------------:|:--------------------:|:------------:|
+| $f'$ |       |    $-$     |        $0$         |    $+$     |
+| $f$  |       | $\searrow$ |                      | $\nearrow$ |
+
+よって、
+
+$$
+\begin{align*}
+f(x) &\ge f\left(\frac{m}{k(m+1)}\right) = k \left[\left\{\frac{m}{k(m+1)}\right\}^{m+1} - 1 \right] - \left[\left\{\frac{m}{k(m+1)}\right\}^m - 1 \right]\\&= \left\{\frac{m}{k(m+1)}\right\}^m \left(\frac{m}{m+1} - 1 \right) + (1-k) \cdots\text{①}
+\end{align*}
+$$
+
+$x \to \infty$ とすれば、$k > 0$ が必要なので、$t = \frac{1}{k}$ とおいて、①を$g(t)$とすると
+
+$$
+\begin{align*}
+g(t) = - \frac{m^m}{(m+1)^{m+1}} t^m + 1 - \frac{1}{t}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+g'(t) = - \frac{m^{m+1}}{(m+1)^{m+1}} t^{m-1} + \frac{1}{t^2}
+\end{align*}
+$$
+
+より、下表をえる
+
+| $t$  | $0$ |  $\cdots$  | $\frac{m+1}{m}$ |  $\cdots$  |
+|:------:|:-----:|:------------:|:-----------------:|:------------:|
+| $g'$ |       |    $+$     |       $0$       |    $-$     |
+| $g$  |       | $\nearrow$ |                   | $\searrow$ |
+
+これから
+
+$$
+\begin{align*}
+g(t) \le g\left(\frac{m+1}{m}\right) = 0
+\end{align*}
+$$
+
+だから、常に $f(x) \ge 0$ がみたされるには、$t = \frac{m+1}{m} \Leftrightarrow k = \frac{m}{m+1}$ が条件である。

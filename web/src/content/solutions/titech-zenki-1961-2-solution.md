@@ -1,0 +1,98 @@
+---
+university: "titech"
+category: "zenki"
+year: "1961"
+question: "2"
+type: "solution"
+title: "TITECH 1961 zenki Q2 (solution)"
+---
+
+## 【解】
+
+題意より$f(0) = 1, f\left(\dfrac{\pi}{2}\right) = 1$ が成り立つから，ここに具体的な$f(x)$の表式を代入して
+
+$$
+\begin{align}
+\begin{cases}
+    1 = a + b \\
+    1 = a + c
+  \end{cases}\quad\therefore b = c = 1 - a \label{eq:1}
+\end{align}
+$$
+
+である．[(式1)](#eq:1)を用いて$b,c$を消去すると，$f(x)$およびその一階微分$f'(x)$は
+
+$$
+\begin{align}
+f(x) &= a + (1-a)(\cos x + \sin x) \\
+  f'(x) &= (1-a)(\cos x - \sin x) \\&= \sqrt{2}(1-a)\cos\left(x + \frac{\pi}{4}\right)\label{eq:2}
+\end{align}
+$$
+
+となる．従って$a$の値によって増減表は以下のように変化する．
+
+\begin{addmargin}[2em]{0pt}
+
+### $1^\circ$ $1-a < 0 \quad \therefore 1 < a$ の時
+
+ 
+
+増減表は以下の通り．
+
+<div id="tab_1" class="table-wrapper">
+
+| $x$  | $0$ |  $\dots$   | $\pi/4$ |  $\dots$   | $\pi/2$ |
+|:------:|:-----:|:------------:|:---------:|:------------:|:---------:|
+| $f'$ |       |    $-$     |   $0$   |    $+$     |           |
+| $f$  | $1$ | $\searrow$ |           | $\nearrow$ |   $1$   |
+
+</div>
+
+したがって，$|f(x)| \le 2$ となる条件は$f\left(\frac{\pi}{4}\right)$が$-2$以上であることで，
+
+$$
+\begin{align}
+f\left(\frac{\pi}{4}\right)\ge -2 
+ & \iff(1-\sqrt{2})a+\sqrt{2}\ge -2 \\& \iff a \le 4+3\sqrt{2}
+\end{align}
+$$
+
+である．
+
+### $2^\circ$ $1-a = 0 \quad \therefore a = 1$ の時
+
+$f(x) \equiv 1$ となるから題意の条件$|f(x)| \le 2$は常に満たされる．
+
+### $3^\circ$ $1-a > 0 \quad \therefore a < 1$ の時
+
+増減表は以下の通り．
+
+<div id="tab_2" class="table-wrapper">
+
+| $x$  | $0$ |  $\dots$   | $\pi/4$ |  $\dots$   | $\pi/2$ |
+|:------:|:-----:|:------------:|:---------:|:------------:|:---------:|
+| $f'$ |       |    $+$     |   $0$   |    $-$     |           |
+| $f$  | $1$ | $\nearrow$ |           | $\searrow$ |   $1$   |
+
+</div>
+
+従って題意を満たす条件は$f\left(\frac{\pi}{4}\right)$が$2$以下であることで，
+
+$$
+\begin{align}
+f\left(\frac{\pi}{4}\right)\le 2 
+   &\iff(1-\sqrt{2})a+\sqrt{2}\le 2 \\&\iff -\sqrt{2}\le a
+\end{align}
+$$
+
+\end{addmargin}
+
+以上3つの場合わけから，求める条件は
+
+$$
+\begin{align}
+-\sqrt{2}\le a \le 4+3\sqrt{2}
+\end{align}
+$$
+
+である．

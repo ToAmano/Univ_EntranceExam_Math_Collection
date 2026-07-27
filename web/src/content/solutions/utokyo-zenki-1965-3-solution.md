@@ -37,7 +37,7 @@ $$
 $$
 
 となる．題意の面積を$S(t)$とすると，$t$の値で場合分けして以下のようになる．
-     \begin{indentation}{2zw}{0pt}
+     \begin{indentation}{2\zw}{0pt}
       \underline{(i)$1\le2t\le2$つまり$1/2\le t\le 1$の時}　　\\
      グラフが右図のようになるので
           

@@ -1,0 +1,77 @@
+---
+university: "titech"
+category: "zenki"
+year: "1993"
+question: "5"
+type: "solution"
+title: "TITECH 1993 zenki Q5 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$x_k=1,2,\cdots,6$だから（$k=1,2,3,4$），$P,O,Q$の3点は常に異なるので，
+
+$$
+\begin{align*}
+\angle POQ\text{が鋭角}\iff\overrightarrow{OP}\cdot\overrightarrow{OQ}>0 \iff x_1x_3>x_2x_4 \quad\cdots\text{①}
+\end{align*}
+$$
+
+である．ここで，さいころの出る目6通りのうち，
+
+$$
+\begin{align*}
+\begin{cases}
+x_1x_3>x_2x_4 & \cdots A\text{通り} \\
+x_1x_3=x_2x_4 & \cdots B\text{通り} \\
+x_1x_3<x_2x_4 & \cdots C\text{通り}
+\end{cases}
+\end{align*}
+$$
+
+とおくと，対称性から$A=C\ \cdots$②であり，上で全ての場合が尽くされ，かつ排反だから
+
+$$
+\begin{align*}
+A+B+C=6^4 \quad\cdots\text{③}
+\end{align*}
+$$
+
+も成立する．ここで，$B$を数える．$p,q\ (p,q=1,2,\cdots,6)$に対する積$pq$は，以下の表になる．
+
+| $p\backslash q$ |  1  |  2  |  3  |  4  |  5  |  6  |
+|:-----------------:|:---:|:---:|:---:|:---:|:---:|:---:|
+|         1         |  1  |  2  |  3  |  4  |  5  |  6  |
+|         2         |  2  |  4  |  6  |  8  | 10  | 12  |
+|         3         |  3  |  6  |  9  | 12  | 15  | 18  |
+|         4         |  4  |  8  | 12  | 16  | 20  | 24  |
+|         5         |  5  | 10  | 15  | 20  | 25  | 30  |
+|         6         |  6  | 12  | 18  | 24  | 30  | 36  |
+
+積$v$を実現する$(p,q)$の組の個数を$n_v$とすると，$x_1x_3=x_2x_4=v$となる場合の数は，$(x_1,x_3)$，$(x_2,x_4)$ともに積$v$を実現する組であればよいから，$n_v^2$通り．表から，$n_v=1$となる積（1,9,16,25,36の5個），$n_v=2$となる積（2,3,5,8,10,15,18,20,24,30の10個），$n_v=3$となる積（4の1個），$n_v=4$となる積（6,12の2個）に分けて，
+
+$$
+\begin{align*}
+B=\sum_vn_v^2=5\cdot1^2+10\cdot2^2+1\cdot3^2+2\cdot4^2=5+40+9+32=86
+\end{align*}
+$$
+
+だから，②③から
+
+$$
+\begin{align*}
+A=\frac{6^4-86}{2}
+\end{align*}
+$$
+
+となり，①から，もとめる確率は
+
+$$
+\begin{align*}
+\frac{\frac{6^4-86}{2}}{6^4}=\frac{3\cdot6^3-43}{6^4}=\frac{605}{1296}
+\end{align*}
+$$

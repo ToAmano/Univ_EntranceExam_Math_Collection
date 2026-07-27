@@ -1,0 +1,102 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1975"
+question: "6"
+type: "solution"
+title: "UTOKYO 1975 zenki Q6 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] $A$ に赤玉が $x$ 個入っている時, 1回試行をして, $A$ の赤玉が1つ増える確率 $\alpha_x$, 変化しない確率 $\beta_x$, 1つ減る確率 $\gamma_x$ とおく。
+
+1.  $A$ から赤をとる ($\frac{x}{4}$)
+  \begin{itemize}
+
+2.  $A$ に赤を戻す \quad $\dots \frac{x}{4} \left[ \frac{1}{2} + \frac{1}{2} \cdot \frac{2}{3} \right] = \frac{5}{6} \frac{x}{4}$
+
+3.  $A$ に白を戻す \quad $\dots \frac{x}{4} \left[ 0 + \frac{1}{2} \cdot \frac{1}{3} \right] = \frac{1}{6} \frac{x}{4}$
+
+  \item $A$ から白をとる ($\frac{4-x}{4}$)
+  
+
+1.  $A$ に赤を戻す \quad $\dots \frac{4-x}{4} \left[ \frac{1}{2} \cdot \frac{2}{3} + \frac{1}{2} \cdot \frac{1}{3} \right] = \frac{1}{2} \frac{4-x}{4}$
+
+2.  $A$ に白を戻す \quad $\dots \frac{4-x}{4} \left[ \frac{1}{2} \cdot \frac{1}{3} + \frac{1}{2} \cdot \frac{2}{3} \right] = \frac{1}{2} \frac{4-x}{4}$
+
+\end{itemize}
+
+上図から,
+
+$$
+\begin{align*}
+\alpha_x = \frac{1}{2} \frac{4-x}{4}, \quad \beta_x = \frac{5}{6} \frac{x}{4} + \frac{1}{2} \frac{4-x}{4} = \frac{6+x}{12}, \quad \gamma_x = \frac{x}{24}
+\end{align*}
+$$
+
+であるから, $n+1$ 回目の試行の後に $A$ に赤い玉が入っている確率は, $n$ 回目の個数 $x, x \pm 1$ で場合分けして
+
+$$
+\begin{align*}
+\begin{aligned}
+P_{n+1}(x) &= \frac{6+x}{12} P_n(x) + \frac{x+1}{24} P_n(x+1) + \frac{4-(x-1)}{8} P_n(x-1) \\
+&= \frac{1}{12}(6+x) P_n(x) + \frac{1}{24}(x+1) P_n(x+1) + \frac{1}{8}(5-x) P_n(x-1) \quad \cdots \text{①}
+\end{aligned}
+\end{align*}
+$$
+
+となる。
+
+(i) ①から,
+
+$$
+\begin{align*}
+x P_{n+1}(x) = \frac{1}{12} x (6+x) P_n(x) + \frac{x}{24} (x+1) P_n(x+1) + \frac{1}{8} x (5-x) P_n(x-1)
+\end{align*}
+$$
+
+$x = 0, 1, 2, 3, 4, 5$ として足すと,
+
+$$
+\begin{align*}
+\begin{aligned}
+E_{n+1} &= \frac{1}{12} \sum_{x=0}^5 (6x P_n(x) + x^2 P_n(x)) + \frac{1}{24} \sum_{x=0}^5 \{(x+1)^2 P_n(x+1) - (x+1) P_n(x+1)\} \\
+&\qquad + \frac{1}{8} \sum_{x=0}^5 \{-(x-1)^2 P_n(x-1) + 3(x-1) P_n(x-1) + 4 P_n(x-1)\} \quad \cdots \text{②}
+\end{aligned}
+\end{align*}
+$$
+
+各項計算する。 $T = \sum_{x=1}^4 x^2 P_n(x)$ とする。
+
+1.  $(\text{第1項}) = \frac{1}{12} [ 6 E_n + T ] \quad (\because P_n(5) = 0)$
+
+2.  $(\text{第2項}) = \frac{1}{24} [ T - E_n ]$
+
+3.  $(\text{第3項}) = \frac{1}{8} [ -T + 3 E_n + 4 ] \quad (\because \sum_{x=0}^4 P_n(x) = 1)$
+
+だから, ②に代入して
+
+$$
+\begin{align*}
+E_{n+1} = \frac{20}{24} E_n + \frac{1}{2} = \frac{5}{6} E_n + \frac{1}{2}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+E_{n+1} - 3 = \frac{5}{6} (E_n - 3) \quad \cdots \text{③}
+\end{align*}
+$$
+
+はじめ, $A$ には赤1コと白3コが入っていたので, $E_0 = 1$ として③をくり返し用いて,
+
+$$
+\begin{align*}
+E_n = \left(\frac{5}{6}\right)^n (1 - 3) + 3 = 3 - 2 \left(\frac{5}{6}\right)^n
+\end{align*}
+$$
+
+(ii) (i)の表式から, $E_n \xrightarrow{n \to \infty} 3$ である。

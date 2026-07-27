@@ -1,0 +1,92 @@
+---
+university: "titech"
+category: "zenki"
+year: "2008"
+question: "2"
+type: "solution"
+title: "TITECH 2008 zenki Q2 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$f(x)\in\mathbb Z$，$x\le f(x)<x+1$（①）．$a,b>0$（②）とする．①より
+
+$$
+\begin{align*}
+ax-7\le f(ax-7)<ax-6,\qquad bx+3\le f(bx+3)<bx+4.\tag{\ast}
+\end{align*}
+$$
+
+これより（$x$が十分大きいときすべて正）
+
+$$
+\begin{align*}
+\frac1{ax-6}-\frac1{bx+3}\ \le\ \frac1{f(ax-7)}-\frac1{f(bx+3)}\ <\ \frac1{ax-7}-\frac1{bx+4}
+\end{align*}
+$$
+
+すなわち（$A:=\dfrac1{f(ax-7)}-\dfrac1{f(bx+3)}$とおく）
+
+$$
+\begin{align*}
+\frac{(b-a)x+9}{(ax-6)(bx+3)}\ \le\ A\ <\ \frac{(b-a)x+11}{(ax-7)(bx+4)}.
+\end{align*}
+$$
+
+$x\to\infty$を考えるので$x>0$としてよく，両辺に$x^c$をかけると
+
+$$
+\begin{align*}
+\frac{(b-a)x+9}{(ax-6)(bx+3)}x^c\ \le\ A\,x^c\ <\ \frac{(b-a)x+11}{(ax-7)(bx+4)}x^c.\tag{③}
+\end{align*}
+$$
+
+**(A) $a\neq b$のとき．** ③の分子・分母を$x$で割ると
+
+$$
+\begin{align*}
+\frac{b-a+\frac9x}{\bigl(a-\frac6x\bigr)\bigl(b+\frac3x\bigr)}x^{c-1}\ \le\ A\,x^c\ <\ \frac{b-a+\frac{11}x}{\bigl(a-\frac7x\bigr)\bigl(b+\frac4x\bigr)}x^{c-1}
+\end{align*}
+$$
+
+であり，両端の係数はともに$x\to\infty$で$\dfrac{b-a}{ab}$（有限，$\neq0$）に収束する．
+
+$1^\circ$ $c<1$のとき，$x^{c-1}\to0$だから両辺は$0$に収束し，はさみうちより$A\,x^c\to0$．
+
+$2^\circ$ $c=1$のとき，はさみうちより$A\,x\to\dfrac{b-a}{ab}$．
+
+$3^\circ$ $c>1$のとき，$x^{c-1}\to\infty$かつ係数が$0$でない値に収束するから，$Ax^c$は収束しない．
+
+以上から，この場合の最大値は$c=1$で，収束値は$\dfrac{b-a}{ab}$．
+
+**(B) $a=b$のとき．** $(bx+3)=(ax-7)+10$（$10$は整数）であり，天井関数の性質$f(y+10)=f(y)+10$より$f(ax+3)=f(ax-7)+10$．$B:=f(ax-7)$とおくと
+
+$$
+\begin{align*}
+A=\frac1B-\frac1{B+10}=\frac{10}{B(B+10)}.
+\end{align*}
+$$
+
+$(\ast)$より$B\in[ax-7,ax-6)$，$B+10\in[ax+3,ax+4)$であり，$B(B+10)$はこの範囲で単調増加だから
+
+$$
+\begin{align*}
+(ax-7)(ax+3)\le B(B+10)<(ax-6)(ax+4)
+\end{align*}
+$$
+
+逆数をとって$x^c$をかけると
+
+$$
+\begin{align*}
+\frac{10x^c}{(ax-6)(ax+4)}<A\,x^c\le\frac{10x^c}{(ax-7)(ax+3)}
+\end{align*}
+$$
+
+両端はともに（分母が$a^2x^2$のオーダー）$c=2$のとき有限な値$\dfrac{10}{a^2}$に収束し，$c<2$なら$0$，$c>2$なら発散する．よってこの場合の最大値は$c=2$で，収束値は$\dfrac{10}{a^2}$．
+
+**結論.** $a\neq b$のとき，$c$の最大値は$1$，極限値は$\dfrac{b-a}{ab}$．$a=b$のとき，$c$の最大値は$2$，極限値は$\dfrac{10}{a^2}$．

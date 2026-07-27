@@ -1,0 +1,162 @@
+---
+university: "titech"
+category: "zenki"
+year: "1998"
+question: "4"
+type: "solution"
+title: "TITECH 1998 zenki Q4 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+楕円$C:\dfrac{x^2}{a^2}+y^2=1$（$a>1$），$A(a,0)$，$B(a\cos\theta,\sin\theta)$（$0<\theta<\pi$，$q=\sin\theta>0$）とし，$c=\cos\theta,\ s=\sin\theta$と書く．$B$における接線は
+
+$$
+\begin{align*}
+\ell:\ \frac{p}{a^2}x+qy=1,\qquad p=ac,\ q=s
+\end{align*}
+$$
+
+$\ell$の方向ベクトルは$\vec\ell=(-as,c)$，直線$x=p$の方向ベクトルは$(0,1)$，$\overrightarrow{BA}=(a(1-c),-s)$である．2直線のなす角の正接は，方向ベクトル$\vec u,\vec v$に対し$\tan=\dfrac{|\vec u\times\vec v|}{\vec u\cdot\vec v}$（外積は$z$成分）で計算できるから，
+
+$\ell$と$x=p$のなす角$\beta$について，角は鋭角にとるので絶対値を用いて
+
+$$
+\begin{align*}
+\vec\ell\times(0,1)=-as,\qquad\vec\ell\cdot(0,1)=c \quad\therefore\ \tan\beta=\frac{as}{|c|}
+\end{align*}
+$$
+
+$\ell$と$BA$のなす角$\alpha$について，
+
+$$
+\begin{align*}
+\vec\ell\times\overrightarrow{BA}=(-as)(-s)-c\cdot a(1-c)=a(s^2-c+c^2)=a(1-c)
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\vec\ell\cdot\overrightarrow{BA}=-a^2s(1-c)-cs=-s\{a^2(1-c)+c\}
+\end{align*}
+$$
+
+$a^2(1-c)+c>0$（$1-c>0$かつ$a>1$から常に成立）なので
+
+$$
+\begin{align*}
+\therefore\ \tan\alpha=\frac{a(1-c)}{s\{a^2(1-c)+c\}}
+\end{align*}
+$$
+
+条件$\alpha=\beta$（ともに鋭角）より$\tan\alpha=\tan\beta$：
+
+$$
+\begin{align*}
+\frac{a(1-c)}{s\{a^2(1-c)+c\}}=\frac{as}{|c|}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+|c|(1-c)=s^2\{a^2(1-c)+c\}=(1-c)(1+c)\{a^2(1-c)+c\}
+\end{align*}
+$$
+
+$1-c\ne0$（$B\ne A$）で両辺を割って
+
+$$
+\begin{align*}
+|c|=(1+c)\{a^2(1-c)+c\}
+\end{align*}
+$$
+
+まず$c>0$（$|c|=c$）と仮定すると，$c=(1+c)\{a^2(1-c)+c\}$を整理して$a^2+(1-a^2)c^2=0\ \therefore\ c^2=\dfrac{a^2}{a^2-1}>1$となり$0<c<1$に反し不適．よって$c<0$（$|c|=-c$）であり，
+
+$$
+\begin{align*}
+-c=(1+c)\{a^2(1-c)+c\}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+0=c+(1+c)\{a^2(1-c)+c\}
+\end{align*}
+$$
+
+右辺を展開すると（$a^2(1-c)+c=a^2-a^2c+c$に注意して）
+
+$$
+\begin{align*}
+(1+c)\{a^2(1-c)+c\}=(a^2-a^2c+c)+c(a^2-a^2c+c)=a^2+c+(1-a^2)c^2
+\end{align*}
+$$
+
+だから
+
+$$
+\begin{align*}
+0=c+a^2+c+(1-a^2)c^2=(1-a^2)c^2+2c+a^2 \quad\therefore\ (a^2-1)c^2-2c-a^2=0
+\end{align*}
+$$
+
+$$
+\begin{align*}
+c=\frac{1\pm\sqrt{1+a^2(a^2-1)}}{a^2-1}
+\end{align*}
+$$
+
+$c<0$かつ$a>1$（$a^2-1>0$）より，$+$の解は常に正だから不適．よって
+
+$$
+\begin{align*}
+c=\frac{1-\sqrt{1+a^2(a^2-1)}}{a^2-1}
+\end{align*}
+$$
+
+（これは確かに負：$\sqrt{1+a^2(a^2-1)}>1$だから分子は負．）
+
+**(1)** 求める$p$は
+
+$$
+\begin{align*}
+p=ac=\frac{a\left\{1-\sqrt{1+a^2(a^2-1)}\right\}}{a^2-1}
+\end{align*}
+$$
+
+**(2)** 分子を有理化すると
+
+$$
+\begin{align*}
+p=\frac{a\left\{1-\bigl(1+a^2(a^2-1)\bigr)\right\}}{(a^2-1)\left\{1+\sqrt{1+a^2(a^2-1)}\right\}}=\frac{-a^3(a^2-1)}{(a^2-1)\left\{1+\sqrt{1+a^2(a^2-1)}\right\}}=\frac{-a^3}{1+\sqrt{1+a^2(a^2-1)}}
+\end{align*}
+$$
+
+したがって
+
+$$
+\begin{align*}
+\lim_{a\to1}p=\frac{-1}{1+\sqrt1}=-\frac12
+\end{align*}
+$$
+
+また，
+
+$$
+\begin{align*}
+\frac pa=\frac{1-\sqrt{1+a^2(a^2-1)}}{a^2-1}=\frac{\dfrac1{a^2}-\sqrt{\dfrac1{a^4}+1-\dfrac1{a^2}}}{1-\dfrac1{a^2}}
+\end{align*}
+$$
+
+$a\to\infty$の時，$1/a^2\to0,\ 1/a^4\to0$だから
+
+$$
+\begin{align*}
+\lim_{a\to\infty}\frac pa=\frac{0-\sqrt1}{1-0}=-1
+\end{align*}
+$$

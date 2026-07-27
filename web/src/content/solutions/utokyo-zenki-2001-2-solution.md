@@ -1,0 +1,157 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "2001"
+question: "2"
+type: "solution"
+title: "UTOKYO 2001 zenki Q2 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+ $S = \sin x, C = \cos x, S' = \sin y, C' = \cos y$ とする。又 $f(y) = f$ と略記する。
+
+$$
+\begin{align*}
+\int_0^{2\pi} \sin(x+y) f(y) \, dy = S \int_0^{2\pi} C' f \, dy + C \int_0^{2\pi} S' f \, dy
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\int_0^{2\pi} \cos(x-y) f(y) \, dy = C \int_0^{2\pi} C' f \, dy + S \int_0^{2\pi} S' f \, dy
+\end{align*}
+$$
+
+だから、与式に代入して、
+
+$$
+\begin{align*}
+f = \left[ \frac{a}{2\pi} \int_0^{2\pi} C' f \, dy + \frac{b}{2\pi} \int_0^{2\pi} S' f \, dy + 1 \right] S + \left[ \frac{a}{2\pi} \int_0^{2\pi} S' f \, dy + \frac{b}{2\pi} \int_0^{2\pi} C' f \, dy + 1 \right] C \quad \cdots *
+\end{align*}
+$$
+
+だから、左の括弧内を $A$、右の括弧内を $B$ として
+
+$$
+\begin{align*}
+f = A S + B C \quad \cdots \textcircled{3}
+\end{align*}
+$$
+
+と書ける。したがって、
+
+$$
+\begin{align*}
+\int_0^{2\pi} S' f \, dx = \int_0^{2\pi} (A S^2 + B C S) \, dx = \frac{1}{2} A \left[ x - \frac{1}{2}\sin 2x \right]_0^{2\pi} - \frac{1}{4} B \left[ \cos 2x \right]_0^{2\pi} = A \pi \quad \cdots \textcircled{4}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\int_0^{2\pi} C' f \, dx = \int_0^{2\pi} (A S C + B C^2) \, dx = -\frac{1}{4} A \left[ \cos 2x \right]_0^{2\pi} + \frac{1}{2} B \left[ x + \frac{1}{2}\sin 2x \right]_0^{2\pi} = B \pi \quad \cdots \textcircled{5}
+\end{align*}
+$$
+
+とあわせて $A, B$ の定義式に代入すると、
+
+$$
+\begin{align*}
+\begin{cases}
+A = \frac{a}{2\pi} B \pi + \frac{b}{2\pi} A \pi + 1 = \frac{1}{2} a B + \frac{1}{2} b A + 1 \\
+B = \frac{a}{2\pi} A \pi + \frac{b}{2\pi} B \pi + 1 = \frac{1}{2} a A + \frac{1}{2} b B + 1
+\end{cases}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\therefore
+\begin{cases}
+(b-2)A + aB + 2 = 0 \\
+aA + (b-2)B + 2 = 0
+\end{cases}
+\quad \cdots \textcircled{6}
+\end{align*}
+$$
+
+$(A,B) = (0,0)$ の時、\textcircled{6}は成立せず不適だから、$A, B$ のうち少なくとも一方は $0$ でない。したがって\textcircled{3}から、$(A,B)$ が一意に定まることが、$f$ が一意に定まることの必要十分条件である。$\cdots \textcircled{7}$
+
+ここで、$AB$ 平面上で連立方程式\textcircled{6}の解は2直線の共有点を表すから、($(a,b) = (0,2)$ の時は不適だから、$a, b-2$ のうち少なくとも一方は $0$ でない)
+\textcircled{6}の解が一意に定まるには、\textcircled{6}の2直線が平行でなければ良く、
+
+$$
+\begin{align*}
+(b-2)^2 \neq a^2 \quad \cdots \textcircled{8}
+\end{align*}
+$$
+
+が条件である。(これは $(a,b) \neq (0,2)$ を含む) 以上\textcircled{7}、\textcircled{8}から、求める条件は
+
+$$
+\begin{align*}
+(b-2)^2 \neq a^2 \hfill \text{\slash\slash}
+\end{align*}
+$$
+
+である。この時\textcircled{6}を解いて、$A = B = \frac{2}{2-(a+b)}$ だから、\textcircled{3}に代入して
+
+$$
+\begin{align*}
+f(x) = \frac{2}{2-(a+b)} (\sin x + \cos x) \hfill \text{\slash\slash}
+\end{align*}
+$$
+
+である。
+
+\bigskip
+
+**[後半部の別解]** \\
+$k = b-2$ として、\textcircled{6}の2本の和差をとって
+
+$$
+\begin{align*}
+\begin{cases}
+(k+a)(A+B) = -4 & \cdots \textcircled{1}' \\
+(k-a)(A-B) = 0 & \cdots \textcircled{2}'
+\end{cases}
+\end{align*}
+$$
+
+\textcircled{6} $\iff$ \textcircled{1}' \textcircled{2}' に注意する。
+
+\medskip
+
+$1^\circ \; k-a \neq 0$ \\
+\textcircled{2}' から $A=B$ である。$k+a=0$ は不適だから、\textcircled{1}'より
+
+$$
+\begin{align*}
+A = B = \frac{2}{2-(a+b)}
+\end{align*}
+$$
+
+この時、$f$ は一意に定まる。
+
+\medskip
+
+$2^\circ \; k-a = 0$ \\
+\textcircled{2}' は任意の $(A,B)$ で成立する。$k+a=0$ は不適だから、\textcircled{1}'から
+
+$$
+\begin{align*}
+B = -A - \frac{2}{k+a}
+\end{align*}
+$$
+
+となり、$f$ は一意に定まらない。
+
+\medskip
+
+以上から、求める条件は $b-2 \neq \pm a$ つまり $f(x) = \frac{2}{2-(a+b)}(\sin x + \cos x)$ である。
+
+\bigskip

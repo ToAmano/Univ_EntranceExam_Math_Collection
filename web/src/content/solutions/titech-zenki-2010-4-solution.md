@@ -1,0 +1,91 @@
+---
+university: "titech"
+category: "zenki"
+year: "2010"
+question: "4"
+type: "solution"
+title: "TITECH 2010 zenki Q4 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$a>0$とする．$P=(x,y)\neq A$とし，$\overrightarrow{AP}=(x-a,y)$とおく．半直線$AP$上の点$Q$で$\dfrac{AQ}{AP}=t$（$0\le t\le2$）となるものは
+
+$$
+\begin{align*}
+\overrightarrow{AQ}=t(x-a,y),\qquad Q=(a+t(x-a),\,ty)
+\end{align*}
+$$
+
+と表せる．条件は，この範囲のすべての$t$に対して
+
+$$
+\begin{align*}
+\frac{QP}{OQ}\le\frac{AP}{OA}\quad(OQ\neq0)
+\end{align*}
+$$
+
+が成り立つことである．$QP=|1-t|\cdot AP$，$OA=a$だから，条件は（$AP>0$より）
+
+$$
+\begin{align*}
+a|1-t|\le OQ=\sqrt{(a+t(x-a))^2+(ty)^2}\qquad(0\le t\le2).
+\end{align*}
+$$
+
+両辺とも非負なので2乗して整理すると
+
+$$
+\begin{align*}
+a^2(1-t)^2\le(a+t(x-a))^2+t^2y^2
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\Longleftrightarrow\ t\bigl[(x^2-2ax+y^2)t+2ax\bigr]\ge0.\tag{①}
+\end{align*}
+$$
+
+（展開の詳細：右辺$-$左辺を計算すると$t^2\{(x-a)^2+y^2-a^2\}+t\cdot2ax=t^2(x^2-2ax+y^2)+2axt$となる．）
+
+$t=0$のとき①は自明に成立するから，$t\in(0,2]$で$h(t):=(x^2-2ax+y^2)t+2ax\ge0$が成り立てばよい．$h$は$t$の1次式（線形）だから，区間$[0,2]$上で$h\ge0$となるための必要十分条件は両端点で$h\ge0$となることである（線形関数の値は端点の値の凸結合として得られるため）：
+
+$$
+\begin{align*}
+h(0)=2ax\ge0,\qquad h(2)=2(x^2-ax+y^2)\ge0.
+\end{align*}
+$$
+
+$a>0$より$h(0)\ge0\iff x\ge0$．また$h(2)\ge0\iff x^2-ax+y^2\ge0\iff\Bigl(x-\frac a2\Bigr)^2+y^2\ge\Bigl(\frac a2\Bigr)^2$．
+
+以上から，条件をみたす$(x,y)$の範囲は
+
+$$
+\begin{align*}
+x\ge0\quad\text{かつ}\quad\Bigl(x-\frac a2\Bigr)^2+y^2\ge\Bigl(\frac a2\Bigr)^2,
+\end{align*}
+$$
+
+すなわち，線分$OA$を直径とする円の外部（境界を含む）かつ$x\ge0$の部分である．この円は$x\ge0$の範囲に含まれるから，実質的な制約は「線分$OA$を直径とする円の外部（境界を含む）」である．
+
+最後に，$P\neq A$および$OQ\neq0$の制約を反映する．$P=A$は除外される（問題設定より）．$P=O=(0,0)$の場合，$\overrightarrow{AP}=(-a,0)$より$Q=(a-ta,0)=a(1-t,0)$となり，$t=1\in(0,2]$で$Q=O$となって$OQ=0$（未定義）となるから，$P=O$も除外される．$x$軸上の他の点（$0<x<a/2$は円の内部としてすでに除外され，$x>a$では$OQ=0$となる$t$は存在しない）については追加の除外は不要である．
+
+よって，領域$D$は
+
+$$
+\begin{align*}
+D:\ \Bigl\{(x,y)\ \Big|\ x\ge0,\ \Bigl(x-\frac a2\Bigr)^2+y^2\ge\Bigl(\frac a2\Bigr)^2\Bigr\}\setminus\{(0,0),\,(a,0)\}
+\end{align*}
+$$
+
+すなわち，$O(0,0)$と$A(a,0)$を直径の両端とする円の外部（境界は含むが，$O$，$A$の2点は除く）．
+
+<figure id="fig_1">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/titech/zenki/2010/4/fig_1.svg" alt="図 1" />
+  <figcaption>図 1: 領域$D$（斜線部，境界を含み$O,A$の2点のみ除く；$x<0$の部分は含まない）</figcaption>
+</figure>

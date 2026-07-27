@@ -1,0 +1,75 @@
+---
+university: "titech"
+category: "zenki"
+year: "1990"
+question: "2"
+type: "solution"
+title: "TITECH 1990 zenki Q2 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$$
+\begin{align*}
+x_i>0, \qquad\sum_{i=1}^nx_i=k \quad\cdots\text{①}
+\end{align*}
+$$
+
+$A_n=\displaystyle\sum_{i=1}^nx_i\log x_i$，$B_n=k\log\dfrac{k}{n}$とおく．「$A_n\ge B_n\ \cdots$②が任意の$n\in\mathbb{N}$で成立すること」…③を帰納法で示す．$n=1$の時の成立は明らかなので，$n=p$での③の成立を仮定し，$n=p+1$でも成立することを示す．
+
+$p+1$個の正数$x_i\ (i=1,2,\cdots,p+1)$に対し，$\displaystyle\sum_{i=1}^{p+1}x_i=k$とし，$\displaystyle\sum_{i=1}^px_i=\ell\ (0<\ell<k)$とおく．まず$\ell$を固定する．
+
+$$
+\begin{align*}
+A_{p+1}=A_p+x_{p+1}\log x_{p+1}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\ge\ell\log\frac{\ell}{p}+(k-\ell)\log(k-\ell)\equiv f(\ell) \quad(\because\text{仮定}) \quad\cdots\text{②}
+\end{align*}
+$$
+
+次に$\ell$をうごかす．
+
+$$
+\begin{align*}
+f'(\ell)=1+\log\ell-\log p-\log(k-\ell)-1=\log\frac{\ell}{k-\ell}-\log p
+\end{align*}
+$$
+
+$\log x$が$x$の単調増加関数であるから下表をうる（$\ell,k,p>0,\ k-\ell>0$）．
+
+| $\ell$ | $0$ |              | $\dfrac{pk}{p+1}$ |              | $k$ |
+|:--------:|:-----:|:------------:|:-------------------:|:------------:|:-----:|
+|  $f'$  |       |    $-$     |        $0$        |    $+$     |       |
+|  $f$   |       | $\searrow$ |                     | $\nearrow$ |       |
+
+よって
+
+$$
+\begin{align*}
+f(\ell)\ge\frac{pk}{p+1}\log\frac{k}{p+1}+\frac{k}{p+1}\log\frac{k}{p+1}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+=k\log\frac{k}{p+1}=B_{p+1}\quad\cdots\text{③}
+\end{align*}
+$$
+
+②，③から
+
+$$
+\begin{align*}
+A_{p+1}\ge B_{p+1}
+\end{align*}
+$$
+
+となり，$n=p+1$でも②は成立．以上から③は示された．$\blacksquare$

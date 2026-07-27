@@ -1,0 +1,114 @@
+---
+university: "titech"
+category: "zenki"
+year: "1977"
+question: "3"
+type: "solution"
+title: "TITECH 1977 zenki Q3 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$t>0$ に対し，$x=t$ とすると，$P(t,t^2)$ である．$P$ における接線 $\ell$ は $(x^2)'=2x$ より，
+
+$$
+\begin{align*}
+\ell: y=2tx-t^2 \quad\left(\text{方向ベクトル}\ \vec\ell=\begin{pmatrix}1\\2t\end{pmatrix}\right)
+\end{align*}
+$$
+
+である．この時，直線 $AP$ の方程式は，
+
+$$
+\begin{align*}
+AP: y=\frac{t^2}{t+\frac13}\left(x+\frac13\right)\quad\left(\text{方向ベクトル}\ \vec{m}=\begin{pmatrix}t+\frac13\\t^2\end{pmatrix}\right)
+\end{align*}
+$$
+
+となる．$y$軸と平行なベクトル $\vec n=\begin{pmatrix}0\\1\end{pmatrix}$ をおき，$\vec\ell$ と $\vec m$，$\vec\ell$ と $\vec n$ のなす角を各々 $\theta_1,\theta_2$ とすると，（$0\le\theta_1,\theta_2\le\pi$）$t>0$ から $\theta_1,\theta_2\ne\pi/2$ であるから，題意から，
+
+$$
+\begin{align*}
+\tan\theta_2=\pm\tan\theta_1 \quad\cdots\text{①}
+\end{align*}
+$$
+
+となる．
+
+$$
+\begin{align*}
+\tan\theta_1=\frac{|t^2-2t(t+\frac13)|}{\vec\ell\cdot\vec m}=\frac{|t^2+\frac23t|}{t+\frac13+2t^3}=\frac{t^2+\frac23t}{2t^3+t+\frac13}\quad(\because t>0)
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\tan\theta_2=\frac{|1|}{\vec\ell\cdot\vec n}=\frac{1}{2t}
+\end{align*}
+$$
+
+だから，$\tan\theta_1,\tan\theta_2>0$ であることより，①で複号正を採用して代入して
+
+$$
+\begin{align*}
+\frac{1}{2t}=\frac{t^2+\frac23t}{2t^3+t+\frac13}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\therefore\ 2t^3+t+\frac13=2t^3+\frac43t^2 \quad\therefore\ t=1\ (\because t>0)
+\end{align*}
+$$
+
+となり，$P(1,1)$ である．
+
+\medskip
+**[解2]**
+
+$\ell,AP$ の傾きを各々 $\ell=\tan\alpha,\ m=\tan\beta$ とおく．（$-\pi/2<\alpha,\beta<\pi/2$）
+
+$$
+\begin{align*}
+\ell=2t,\quad m=\frac{t^2}{t+\frac13}
+\end{align*}
+$$
+
+である．右図のように $\theta_1,\theta_2$ をとると，どのような場合にも，
+
+$$
+\begin{align*}
+\begin{cases}
+\theta_1=\pi-(\alpha-\beta) \\
+\theta_2=\dfrac{\pi}{2}-\alpha
+\end{cases}\quad\cdots\star
+\end{align*}
+$$
+
+となる．題意から
+
+$$
+\begin{align*}
+\tan\theta_2=\pm\tan\theta_1
+\end{align*}
+$$
+
+であり，$\star$から，
+
+$$
+\begin{align*}
+\frac{1}{\tan\alpha}=\pm\tan(\alpha-\beta)=\pm\frac{2t-\frac{t^2}{t+1/3}}{1+2t\cdot\frac{t^2}{t+1/3}}=\frac{t^2+\frac23t}{2t^3+t+\frac13}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\therefore\ \frac{1}{2t}=\frac{t^2+\frac23t}{2t^3+t+\frac13}
+\end{align*}
+$$
+
+（以下同様）

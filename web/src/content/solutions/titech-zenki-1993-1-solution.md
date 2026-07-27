@@ -1,0 +1,82 @@
+---
+university: "titech"
+category: "zenki"
+year: "1993"
+question: "1"
+type: "solution"
+title: "TITECH 1993 zenki Q1 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$C_1,L$，$C_2$と$L$の原点以外の交点$A(\alpha,k\alpha)$，$B(\beta,k\beta)$とおく．$\alpha,\beta$は各々，$x$の2次方程式$ax^2+bx=kx$，$px^2+qx=kx$の解のうち$x\ne0$のもので，
+
+$$
+\begin{align*}
+\alpha=\frac{k-b}{a}, \qquad\beta=\frac{k-q}{p}\quad\cdots\text{①}
+\end{align*}
+$$
+
+である．
+
+$$
+\begin{align*}
+S_1=\left|\int_\alpha^0(ax^2+bx-kx)dx\right|=\frac{|a|}{6}|\alpha|^3
+\end{align*}
+$$
+
+$$
+\begin{align*}
+S_2=\frac{|p|}{6}|\beta|^3
+\end{align*}
+$$
+
+だから，①から
+
+$$
+\begin{align*}
+\frac{S_1}{S_2}=\frac{|a||\alpha|^3}{|p||\beta|^3}=\frac{|a|\cdot\frac{|k-b|^3}{|a|^3}}{|p|\cdot\frac{|k-q|^3}{|p|^3}}=\frac{|k-b|^3/a^2}{|k-q|^3/p^2}\quad\cdots\text{②}
+\end{align*}
+$$
+
+である．②が$k$によらない，すなわち$\dfrac{|k-b|^3}{a^2}=A\dfrac{|k-q|^3}{p^2}$が，$k$の恒等式になるような$A$の存在条件をかんがえれば良い．両辺0以上だから2乗して良く，
+
+$$
+\begin{align*}
+p^4(k-b)^6=A^2a^4(k-q)^6 \quad\cdots\text{③}
+\end{align*}
+$$
+
+係数比較して，
+
+$$
+\begin{align*}
+6\text{次}\cdots\ p^4=A^2a^4 \quad\cdots\text{④}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+5\text{次}\cdots\ -6bp^4=A^2a^4(-6q) \quad\cdots\text{⑤}
+\end{align*}
+$$
+
+$A\ne0,p\ne0,a\ne0$だから，④⑤から，$b=q\ \cdots$⑥及び$p=\pm\sqrt Aa\ \cdots$⑦が必要．逆にこの時②において，
+
+$$
+\begin{align*}
+\frac{|k-b|^3}{a^2}:\frac{|k-q|^3}{p^2}=\frac{|k-b|^3}{a^2}:\frac{|k-b|^3}{A\cdot a^2}=1:\frac1A \quad(\because k\ne b)
+\end{align*}
+$$
+
+で，たしかに$S_1:S_2$は一定で十分．①をみたす$A$は必ず存在するから，求める条件は⑥で
+
+$$
+\begin{align*}
+b=q
+\end{align*}
+$$

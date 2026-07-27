@@ -1,0 +1,65 @@
+---
+university: "titech"
+category: "zenki"
+year: "1974"
+question: "3"
+type: "solution"
+title: "TITECH 1974 zenki Q3 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+1.  $w\in\mathbb{R} \iff w=\bar w$ だから $w=az^2+bz$ を代入して
+  
+
+$$
+\begin{align*}
+az^2+bz=a\bar z^2+b\bar z
+  \iff a(z^2-\bar z^2)+b(z-\bar z)=0
+  \iff\{a(z+\bar z)+b\}(z-\bar z)=0
+\end{align*}
+$$
+
+  
+
+$$
+\begin{align*}
+\iff z+\bar z=-\frac{b}{a}\ \text{or}\ z\in\mathbb{R}\iff x=-\frac{b}{2a}\ \text{or}\ y=0
+\end{align*}
+$$
+
+2.  $y=0$ の時，$w$ は $f(x)=ax^2+bx$ で表される． $\cdots$①
+
+  次に $x=-\dfrac{b}{2a}$ の時，
+  
+
+$$
+\begin{align*}
+az^2+bz = a\left(-\frac{b}{2a}+iy\right)^2+b\left(-\frac{b}{2a}+iy\right)
+  = a\left(\frac{b^2}{4a^2}-\frac{by}{a}i-y^2\right)+byi-\frac{b^2}{2a}
+\end{align*}
+$$
+
+  
+
+$$
+\begin{align*}
+= -ay^2-\frac{b^2}{4a}\equiv g(y) \quad\cdots\text{②}
+\end{align*}
+$$
+
+  である．
+
+  **$1^\circ\ a>0$ の時**
+
+  $f(x)\ge-\dfrac{b^2}{4a}$，$g(y)\le-\dfrac{b^2}{4a}$ でこの間の値はくまなくとるから，$w$ は任意の実数値をとる．
+
+  **$2^\circ\ a<0$ の時**
+
+  $f(x)\le-\dfrac{b^2}{4a}$，$g(y)\ge-\dfrac{b^2}{4a}$ で $1^\circ$ と同様に $w$ は任意の実数値をとる．
+
+  以上から示された．

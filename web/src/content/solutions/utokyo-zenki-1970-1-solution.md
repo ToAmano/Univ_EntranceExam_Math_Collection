@@ -43,7 +43,7 @@ $$
      異なり，求めるのは$6$個である．
 
 3.  合同式の法を$6$とする．
-          \begin{indentation}{2zw}{0pt}
+          \begin{indentation}{2\zw}{0pt}
           \underline{(i)$n\equiv \pm1$の時} 
           
 

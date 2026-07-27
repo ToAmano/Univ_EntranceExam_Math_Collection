@@ -1,0 +1,83 @@
+---
+university: "titech"
+category: "zenki"
+year: "1978"
+question: "4"
+type: "solution"
+title: "TITECH 1978 zenki Q4 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+題意から，
+
+$$
+\begin{align*}
+\begin{cases}
+a_1=1 \\
+a_n+a_{n+1}=-3n \\
+a_na_{n+1}=C_n
+\end{cases}
+\end{align*}
+$$
+
+である．したがって，
+
+$$
+\begin{align*}
+a_{n+1}+\frac32(n+1)-\frac34=-\left\{a_n+\frac32n-\frac34\right\}
+\end{align*}
+$$
+
+だから，くり返し用いて，
+
+$$
+\begin{align*}
+a_n=(-1)^{n-1}\left\{1+\frac32-\frac34\right\}-\frac32n+\frac34 = \frac74(-1)^{n-1}+\frac34-\frac32n
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\therefore\
+\begin{cases}
+a_{2k}=-3k-1 \\
+a_{2k-1}=-3k+4
+\end{cases}
+\end{align*}
+$$
+
+となるので，
+
+$$
+\begin{align*}
+\begin{cases}
+C_{2k-1}=a_{2k-1}\cdot a_{2k}=(-3k+4)(-3k-1) \\
+C_{2k}=a_{2k}\cdot a_{2k+1}=(-3k-1)(-3k-1+3)
+\end{cases}\quad\cdots\text{②}
+\end{align*}
+$$
+
+より，
+
+$$
+\begin{align*}
+\sum_{k=1}^{2p}C_k=\sum_{k=1}^{p}(C_{2k-1}+C_{2k}) = \sum_{k=1}^{p}(-3k-1)(-6k+5) \quad(\because②) = \sum_{k=1}^{p}(18k^2-9k-5)
+\end{align*}
+$$
+
+$$
+\begin{align*}
+=18\cdot\frac16 p(p+1)(2p+1)-\frac92p(p+1)-5p = 3p(p+1)(2p+1)-\frac92p(p+1)-5p
+\end{align*}
+$$
+
+$$
+\begin{align*}
+=p(p+1)\left\{6p+3-\frac92\right\}-5p = 6p^3+\frac92p^2-\frac{13}{2}p
+\end{align*}
+$$

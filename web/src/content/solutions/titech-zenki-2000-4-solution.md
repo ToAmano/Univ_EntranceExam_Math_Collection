@@ -1,0 +1,90 @@
+---
+university: "titech"
+category: "zenki"
+year: "2000"
+question: "4"
+type: "solution"
+title: "TITECH 2000 zenki Q4 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$f(x)=e^{nx}-1-e^x$，$t=e^x$とおく．
+
+**(1)** $f'(x)=ne^{nx}-e^x=nt^n-t=t(nt^{n-1}-1)$．$x\ge0$では$t=e^x\ge1$だから，$n\ge2$より$nt^{n-1}\ge n\ge2>1$，よって$nt^{n-1}-1>0$，$t>0$とあわせて$f'(x)>0$（$x\ge0$）．
+
+| $x$  | $0$ |              |
+|:------:|:-----:|:------------:|
+| $f'$ |       |    $+$     |
+| $f$  |       | $\nearrow$ |
+
+これと$f(0)=1-1-1=-1<0$，$f(x)\to\infty\ (x\to\infty)$から，$f(x)=0$は$x>0$にただ1つの実解を持つ（$f$は$x\ge0$で狭義単調増加だから一意）．したがって(ア)，(イ)は第1象限にただ1つの交点を持つ．
+
+**(2)** 交点の$x$座標を$a_n$とする（$f(a_n)=0,\ a_n>0$）．
+
+$$
+\begin{align*}
+f\left(\frac1n\right)=e-1-e^{1/n}
+\end{align*}
+$$
+
+$n\ge2$より$1/n\le1/2$，よって$e^{1/n}\le e^{1/2}$，したがって
+
+$$
+\begin{align*}
+f\left(\frac1n\right)=e-1-e^{1/n}\ge e-1-e^{1/2}
+\end{align*}
+$$
+
+$(1.7)^2=2.89>e$より$e^{1/2}<1.7$，また$e>2.7$だから
+
+$$
+\begin{align*}
+e-1-e^{1/2}>2.7-1-1.7=0
+\end{align*}
+$$
+
+よって$f(1/n)\ge e-1-e^{1/2}>0$．(1)の単調性と$f(a_n)=0$から$a_n<1/n$，$a_n>0$とあわせて
+
+$$
+\begin{align*}
+0<a_n<\frac1n
+\end{align*}
+$$
+
+はさみうちの定理から$a_n\to0\ (n\to\infty)$．
+
+また，$f(a_n)=0$より$e^{na_n}=e^{a_n}+1$．両辺の自然対数をとって
+
+$$
+\begin{align*}
+na_n=\log(e^{a_n}+1) \xrightarrow{n\to\infty}\log2 \quad(\because a_n\to0)
+\end{align*}
+$$
+
+**(3)** 第1象限で(ア)が(イ)より上（$0<x<a_n$で$e^x>e^{nx}-1$）だから，
+
+$$
+\begin{align*}
+S_n=\int_0^{a_n}\left\{e^x-(e^{nx}-1)\right\}dx=\left[e^x-\frac1ne^{nx}+x\right]_0^{a_n}
+=e^{a_n}-\frac1ne^{na_n}+a_n-1+\frac1n
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\therefore\ nS_n=n(e^{a_n}-1)+na_n+1-e^{na_n}=na_n\cdot\frac{e^{a_n}-1}{a_n}+na_n+1-e^{na_n}
+\end{align*}
+$$
+
+$n\to\infty$の時，$a_n\to0$より$\dfrac{e^{a_n}-1}{a_n}\to1$，$na_n\to\log2$，$e^{na_n}\to e^{\log2}=2$だから
+
+$$
+\begin{align*}
+nS_n\longrightarrow(\log2)\cdot1+\log2+1-2=2\log2-1
+\end{align*}
+$$

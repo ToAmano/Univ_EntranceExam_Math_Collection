@@ -1,0 +1,88 @@
+---
+university: "titech"
+category: "zenki"
+year: "1985"
+question: "4"
+type: "solution"
+title: "TITECH 1985 zenki Q4 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$C$上の点$P(x,y)$での$C$の接線$\ell$が常に$Q\left(\dfrac{6x^3+1}{6x^2},2y\right)$を通る．
+
+$$
+\begin{align*}
+\frac{6x^3+1}{6x^2}-x=\frac{1}{6x^2}\ne0
+\end{align*}
+$$
+
+から，直線$PQ$は$y$軸平行でないので，$XY$平面において，
+
+$$
+\begin{align*}
+\ell: Y=\frac{dy}{dx}(X-x)+y
+\end{align*}
+$$
+
+と表せる．$Q$が$\ell$上にあるので，
+
+$$
+\begin{align*}
+2y=\frac{dy}{dx}\left(\frac{6x^3+1}{6x^2}-x\right)+y
+\end{align*}
+$$
+
+$$
+\begin{align*}
+y=\frac{1}{6x^2}\frac{dy}{dx}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+6x^2\,dx=\frac1y\,dy
+\end{align*}
+$$
+
+両辺積分して，定数$C_1$として
+
+$$
+\begin{align*}
+2x^3+C_1=\log|y| \quad\cdots\text{①}
+\end{align*}
+$$
+
+$C$は連続だから，$(x,y)=(0,2)$でも①がなりたつので，
+
+$$
+\begin{align*}
+C_1=\log2
+\end{align*}
+$$
+
+したがって，
+
+$$
+\begin{align*}
+|y|=2\cdot e^{2x^3}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+y=\pm2\cdot e^{2x^3}
+\end{align*}
+$$
+
+複号負は$C$が$(0,2)$を通ることに反するから，
+
+$$
+\begin{align*}
+y=2e^{2x^3}
+\end{align*}
+$$

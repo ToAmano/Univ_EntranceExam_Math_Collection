@@ -1,0 +1,64 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1961"
+question: "4"
+type: "solution"
+title: "UKYOTO 1961 zenki Q4 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\begin{proof}[解]
+出発点の座標を $0$ とすると時刻 $t$ での A, B の座標は各々
+
+$$
+\begin{align*}
+A \dots a t
+\end{align*}
+$$
+
+$$
+\begin{align*}
+B \dots v\left(t - \frac{l}{a}\right) \quad \left(t \ge \frac{l}{a}, v > a\right)
+\end{align*}
+$$
+
+とおける．B が A に追いつく時刻 $t_0$ は
+
+$$
+\begin{align*}
+t_0 = \frac{l/a}{1 - \frac{a}{v}} = \frac{l v}{a(v-a)}
+\end{align*}
+$$
+
+である．したがって，B のひろう $f(v)$ は
+
+$$
+\begin{align*}
+f(v) &= v^2 \left(t_0 - \frac{l}{a}\right)\\&= \frac{v^2}{v-a} l = l \left(v + a + \frac{a^2}{v-a}\right)
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\frac{f'(v)}{l} = 1 - \frac{a^2}{(v-a)^2} = \frac{v(v-2a)}{(v-a)^2}
+\end{align*}
+$$
+
+以下表を考える．
+
+$$
+\begin{align*}
+\begin{array}{c|c*3{c}}
+v & a & \dots & 2a & \dots \\ \hline
+f' & & - & 0 & + \\ \hline
+f & & \searrow & & \nearrow
+\end{array}
+\end{align*}
+$$
+
+よって $v = 2a$ の時，疲労が最小．
+\end{proof}

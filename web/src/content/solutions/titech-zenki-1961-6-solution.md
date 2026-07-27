@@ -1,0 +1,94 @@
+---
+university: "titech"
+category: "zenki"
+year: "1961"
+question: "6"
+type: "solution"
+title: "TITECH 1961 zenki Q6 (solution)"
+---
+
+## 【解】
+
+与えられた条件
+
+$$
+\begin{align}
+-\dfrac{1}{2} < f'(x) < \dfrac{1}{2}\label{eq:1}
+\end{align}
+$$
+
+の両辺を不定積分して
+
+$$
+\begin{align}
+-\dfrac{1}{2}x + C_1 < f(x) < \dfrac{1}{2}x + C_2 \label{eq:2}
+\end{align}
+$$
+
+である．ただし$C_1$, $C_2$は積分定数である．
+
+(1)
+ $F(x) = f(x) - x$ とおくと[(式1)](#eq:1)より$F'(x) = f'(x) - 1 < 0$ だから$F(x)$ は単調減少である．
+ さらに，[(式2)](#eq:2)の両辺から$x$を引くと
+  
+
+$$
+\begin{align}
+-\frac{3}{2}x + C_1 < F(x) < -\frac{1}{2}x + C_2
+\end{align}
+$$
+
+ だからはさみうちの定理から，
+
+$$
+\begin{align}
+&\lim_{x\to \infty}F(x) = -\infty\\&\lim_{x\to -\infty}F(x) = \infty
+\end{align}
+$$
+
+となる．
+
+$F(x)$ は連続関数だから以上の事実より $F(x) = 0$ はただ1つの実解を持つ．
+
+(2)
+題意の条件より $f(\alpha) = \alpha$ である．従って与えられた漸化式の両辺からこの式を引いて
+  
+
+$$
+\begin{align}
+a_{n+1} - \alpha = f(a_n) - f(\alpha) \label{eq:3}
+\end{align}
+$$
+
+と書ける．
+
+以下場合分けして考える．
+まず$a_n = \alpha$ なる $n$ がある時，[(式3)](#eq:3)から$n \le m$ をみたす $m$ に対して，$a_m = \alpha$ だから，$a_m \to \alpha \ (n \to \infty)$ である．
+
+その他の場合平均値の定理から，$f(a_n) - f(\alpha) = f'(c)(a_n - \alpha)$ をみたす $c$ がある．[(式3)](#eq:1,eq:3)より
+
+$$
+\begin{align}
+|a_{n+1} - \alpha| = |f'(c)||a_n - \alpha| < \frac{1}{2}|a_n - \alpha|
+\end{align}
+$$
+
+だからくり返し用いて，
+
+$$
+\begin{align}
+|a_n - \alpha| < \left(\frac{1}{2}\right)^{n-1}|a_1 - \alpha| \xrightarrow{n \to \infty} 0
+\end{align}
+$$
+
+を得るから，挟み撃ちの定理から
+
+$$
+\begin{align}
+\lim_{n \to \infty} a_n \longrightarrow\alpha
+\end{align}
+$$
+
+である．
+
+以上から題意は示された．

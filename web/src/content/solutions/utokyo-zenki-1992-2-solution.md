@@ -1,0 +1,70 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1992"
+question: "2"
+type: "solution"
+title: "UTOKYO 1992 zenki Q2 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+ 点 $X$ に対し, $\vec{AX} = \vec{x}$ とおく.
+
+\bigskip
+
+(1) $AB, AC$ 上に, 端点除いて奇数個の格子点がある時, $(a,b), (c,d)$ を互いに素な自然数として
+
+$$
+\begin{align*}
+\vec{b} = 2k \begin{pmatrix} a \\ b \end{pmatrix}, \quad \vec{c} = 2l \begin{pmatrix} c \\ d \end{pmatrix} \quad (k, l \in \mathbb{N})
+\end{align*}
+$$
+
+とおいて良い. (点 $A, B, C$ に関する対称性)
+
+$$
+\begin{align*}
+\vec{BC} = 2l \begin{pmatrix} c \\ d \end{pmatrix} - 2k \begin{pmatrix} a \\ b \end{pmatrix} = 2 \begin{pmatrix} lc - ka \\ ld - kb \end{pmatrix}
+\end{align*}
+$$
+
+において, $lc - ka, ld - kb \in \mathbb{Z}$ より, たしかに $BC$ 上には, 端点を除いて奇数個の格子点がある.
+
+\bigskip
+
+(2) (1)と同じく,
+
+$$
+\begin{align*}
+\vec{b} = 4 \begin{pmatrix} a \\ b \end{pmatrix}, \quad \vec{c} = 4 \begin{pmatrix} c \\ d \end{pmatrix}
+\end{align*}
+$$
+
+とおけるから, $\triangle ABC$ の面積 $S$ として
+
+$$
+\begin{align*}
+S = \frac{1}{2} | 16 ad - 16 bc | = 8 |ad - bc|
+\end{align*}
+$$
+
+$ad - bc \in \mathbb{Z}$ より, たしかに $S$ は 8 の倍数.
+
+\begin{tikzpicture}[scale=0.8, >=stealth]
+\coordinate (A) at (0,0);
+\coordinate (B) at (2,3);
+\coordinate (C) at (4,1);
+\draw[thick] (A) -- (B) -- (C) -- cycle;
+\filldraw (A) circle (2pt) node[below] {$A$};
+\filldraw (B) circle (2pt) node[above] {$B$};
+\filldraw (C) circle (2pt) node[right] {$C$};
+\foreach \i in {1,2,3} {
+  \filldraw ($(A)!\i/4!(B)$) circle (1.5pt);
+  \filldraw ($(A)!\i/4!(C)$) circle (1.5pt);
+}
+\end{tikzpicture}

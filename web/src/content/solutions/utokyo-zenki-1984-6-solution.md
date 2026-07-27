@@ -22,7 +22,7 @@ title: "UTOKYO 1984 zenki Q6 (solution)"
 
 $$
 \begin{align*}
-D\cap U\not=\emptyset，E\cap U\not=\emptyset，D\cap E\cap U=\emptyset
+D\cap U\not=\emptyset{}，E\cap U\not=\emptyset{}，D\cap E\cap U=\emptyset
 \end{align*}
 $$
 
@@ -100,7 +100,7 @@ $$
 
 である．以下順番に考える．\\
 
-     \begin{indentation}{2zw}{0pt}
+     \begin{indentation}{2\zw}{0pt}
      \underline{(i)\,[1](#1)について}\\
      [1](#1)の方程式
           

@@ -1,0 +1,59 @@
+---
+university: "titech"
+category: "zenki"
+year: "1963"
+question: "1"
+type: "solution"
+title: "TITECH 1963 zenki Q1 (solution)"
+---
+
+## 【解】
+
+与えられた式は
+
+$$
+\begin{align}
+x^3 - y^3 - z^3 &= 3xyz \label{eq:1}\\
+x^2 &= 2(y + z) \label{eq:2}
+\end{align}
+$$
+
+である．[(式2)](#eq:2)を[(式1)](#eq:1)に代入して$x$についての一次式を作ると
+
+$$
+\begin{align}
+\{ 2(y+z) - 3yz \} x = y^3 + z^3 \label{eq:3}
+\end{align}
+$$
+
+となる．
+$x, y, z \in \mathbb{N}$ より $x > 0, y^3 + z^3 > 0$ だから $2(y+z) - 3yz > 0$ が必要である．
+対称性から $y \le z$ とすると
+
+$$
+\begin{align}
+3yz < 2(y+z) \le 4z \quad\therefore 3y < 4 \quad(\because z > 0)
+\end{align}
+$$
+
+を得る．$y \in \mathbb{N}$ とあわせると $y = 1$ であることが必要．
+[(式3)](#eq:3)に代入して
+
+$$
+\begin{align}
+(2-z)x = y^3 + z^3
+\end{align}
+$$
+
+を得る．
+同様に $2-z > 0$ が必要だから $z = 1$ となる．これは当初の条件$y \le z$を満たす．
+以上から $(y, z) = (1, 1)$ が必要で，この時 $x = 2$ のみ[(式2)](#eq:1,eq:2)をみたす．
+従って
+
+$$
+\begin{align}
+(x, y, z) = (2, 1, 1)
+\end{align}
+$$
+
+が求める答えである．

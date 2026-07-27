@@ -1,0 +1,58 @@
+---
+university: "titech"
+category: "zenki"
+year: "1988"
+question: "5"
+type: "solution"
+title: "TITECH 1988 zenki Q5 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$$
+\begin{align*}
+\frac{{}_{3n}C_n}{{}_{2n}C_n}=\frac{(3n)!}{n!(2n)!}\cdot\frac{n!n!}{(2n)!}=\frac{(3n)!\,n!}{(2n)!(2n)!}\equiv f(n)
+\end{align*}
+$$
+
+とおく．$f(n)>0$より，$g(n)=\log f(n)^{\frac1n}$とおくと
+
+$$
+\begin{align*}
+g(n)=\frac1n\left(\sum_{k=2n+1}^{3n}\log\frac{k}{n}-\sum_{k=n+1}^{2n}\log\frac{k}{n}\right)\quad\cdots\text{①}
+\end{align*}
+$$
+
+である．ここで
+
+$$
+\begin{align*}
+\frac1n\sum_{k=n+1}^{2n}\log\frac{k}{n}\longrightarrow\int_1^2\log x\,dx=2(\log2+1)-1
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\frac1n\sum_{k=2n+1}^{3n}\log\frac{k}{n}\longrightarrow\int_2^3\log x\,dx=3(\log3+1)-2(\log2+1)
+\end{align*}
+$$
+
+だから，①より
+
+$$
+\begin{align*}
+g(n)\longrightarrow3\log3+4-4\log2-4=3\log3-4\log2=\log\frac{27}{16}
+\end{align*}
+$$
+
+以上から，
+
+$$
+\begin{align*}
+\lim_{n\to\infty}\left(\frac{{}_{3n}C_n}{{}_{2n}C_n}\right)^{\frac1n}=\frac{27}{16}
+\end{align*}
+$$

@@ -1,0 +1,26 @@
+---
+university: "titech"
+category: "zenki"
+year: "1986"
+question: "1"
+type: "solution"
+title: "TITECH 1986 zenki Q1 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$a_n=19^n+(-1)^{n-1}2^{4n-3}$の全てを割り切る数$b$は，$a_1=21,\ a_2=329$の両方を割り切ることが必要で，$b\in\text{prime}$とあわせて，$b=7$が必要．以下，任意の$a_n$が7で割り切れることを示す．
+
+法を7として
+
+$$
+\begin{align*}
+a_n\equiv5^n+2(-16)^{n-1}\equiv(-2)^n+(-2)^{n-1}\cdot2\equiv0
+\end{align*}
+$$
+
+より示された．以上から$7$

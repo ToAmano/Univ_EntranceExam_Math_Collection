@@ -1,0 +1,77 @@
+---
+university: "titech"
+category: "zenki"
+year: "1995"
+question: "3"
+type: "solution"
+title: "TITECH 1995 zenki Q3 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+**(1)** $f(x)=\dfrac{x^2}{n^2}+e^{2x}-1$，$f'(x)=\dfrac{2}{n^2}x+2e^{2x}$．$f'(x)$は単調増加から，$f'(x)\to\pm\infty\ (x\to\pm\infty)$から，$f'(\alpha)=0$なる$\alpha$がただ1つ存在．（$\alpha<0$）
+
+| $x$  |     |              | $\alpha$ |              |     |
+|:------:|:---:|:------------:|:----------:|:------------:|:---:|
+| $f'$ |     |    $-$     |   $0$    |    $+$     |     |
+| $f$  |     | $\searrow$ |            | $\nearrow$ |     |
+
+（$f(x)\to\infty\ (x\to\pm\infty)$，$f(0)=0$で，グラフは下図の概形．）
+
+**(2)** $x_n$は$\dfrac{1}{n^2}x_n^2+e^{2x_n}-1=0$をみたし，$x_n\ne0$であるから，$f(x)=0$の$x\ne0$の解である．
+
+$$
+\begin{align*}
+f(-n)=e^{-2n}>0 \quad\cdots\text{①}
+\end{align*}
+$$
+
+$k$を定数とする（$k>0$）．
+
+$$
+\begin{align*}
+f(-n+k)=\frac{-2kn+k^2}{n^2}+e^{2(k-n)}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+=-2k\cdot\frac1n+\frac{k^2}{n^2}+e^{2(k-n)}
+\end{align*}
+$$
+
+$n$が十分大きい時，$\dfrac1n\gg\dfrac1{n^2}\gg\dfrac1{e^n}$だから
+
+$$
+\begin{align*}
+f(-n+k)<0 \quad\cdots\text{②}
+\end{align*}
+$$
+
+①，②と$y=f(x)$のグラフから
+
+$$
+\begin{align*}
+-n<x_n<-n+k
+\end{align*}
+$$
+
+$n>0$から
+
+$$
+\begin{align*}
+-1<\frac{x_n}{n}<-1+\frac{k}{n}
+\end{align*}
+$$
+
+はさみうちの定理から
+
+$$
+\begin{align*}
+\frac{x_n}{n}\longrightarrow-1 \quad(n\to\infty)
+\end{align*}
+$$

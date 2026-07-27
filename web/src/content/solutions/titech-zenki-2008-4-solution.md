@@ -1,0 +1,95 @@
+---
+university: "titech"
+category: "zenki"
+year: "2008"
+question: "4"
+type: "solution"
+title: "TITECH 2008 zenki Q4 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$\alpha$を固定し，$L_1:y=-\tan\alpha\cdot x,\ L_2:y=\tan\alpha\cdot x$（$x\ge0$）とする．以下$C=\cos\alpha,\ S=\sin\alpha$と書く．$P,Q$の位置を表す媒介変数$a,b>0$を用いて
+
+$$
+\begin{align*}
+\overrightarrow{OP}=a\begin{pmatrix}C\\-S\end{pmatrix},\qquad\overrightarrow{OQ}=b\begin{pmatrix}C\\S\end{pmatrix}
+\end{align*}
+$$
+
+とおける．$\angle POQ=2\alpha$なので，$\triangle OPQ$に余弦定理を用いて（$PQ=1$より）
+
+$$
+\begin{align*}
+1=a^2+b^2-2ab\cos2\alpha.\tag{①}
+\end{align*}
+$$
+
+<figure id="fig_1">
+  <img src="/Univ_EntranceExam_Math_Collection/images/tikz/titech/zenki/2008/4/fig_1.svg" alt="図 1" />
+  <figcaption>図 1: $L_1,L_2$上の$P,Q$と正三角形$PQR$（模式図，$R$は実際には$\triangle PQR$が正三角形になる位置）</figcaption>
+</figure>
+
+$M$を$PQ$の中点とすると，$\overrightarrow{PQ}=\bigl((b-a)C,\,(b+a)S\bigr)$だから，$\overrightarrow{PQ}\perp\overrightarrow{MR}$，$|\overrightarrow{MR}|=\dfrac{\sqrt3}2|\overrightarrow{PQ}|=\dfrac{\sqrt3}2$．$R$が直線$PQ$に関して$O$と反対側にあることから
+
+$$
+\begin{align*}
+\overrightarrow{MR}=\frac{\sqrt3}2\begin{pmatrix}(b+a)S\\-(b-a)C\end{pmatrix}.
+\end{align*}
+$$
+
+$M=\Bigl(\dfrac{a+b}2C,\ \dfrac{b-a}2S\Bigr)$なので，$I=a+b,\ H=b-a$とおくと
+
+$$
+\begin{align*}
+\overrightarrow{OR}=\overrightarrow{OM}+\overrightarrow{MR}=\frac12\begin{pmatrix}IC\\HS\end{pmatrix}+\frac{\sqrt3}2\begin{pmatrix}IS\\-HC\end{pmatrix}=\frac12\begin{pmatrix}I(C+\sqrt3S)\\H(S-\sqrt3C)\end{pmatrix}.
+\end{align*}
+$$
+
+よって$R=(X,Y)$とおくと
+
+$$
+\begin{align*}
+X=\frac I2(C+\sqrt3S),\qquad Y=\frac H2(S-\sqrt3C).\tag{②}
+\end{align*}
+$$
+
+**(1)** $PQ\parallel y$軸のとき，$\overrightarrow{PQ}$の$x$成分$(b-a)C=0$かつ$C\neq0$（$0<\alpha<\frac\pi3$）だから$a=b$，すなわち$H=0$．①に代入して$1=2a^2(1-\cos2\alpha)=4a^2S^2$より$a=\dfrac1{2S}$，$I=2a=\dfrac1S$．②より
+
+$$
+\begin{align*}
+X=\frac1{2S}(C+\sqrt3S)=\frac1{2\tan\alpha}+\frac{\sqrt3}2,\qquad Y=0.
+\end{align*}
+$$
+
+よって$R=\Bigl(\dfrac1{2\tan\alpha}+\dfrac{\sqrt3}2,\ 0\Bigr)$．
+
+**(2)** $C+\sqrt3S=2\sin\bigl(\alpha+\frac\pi6\bigr)$，$S-\sqrt3C=2\sin\bigl(\alpha-\frac\pi3\bigr)$である．$0<\alpha<\frac\pi3$のとき$\alpha+\frac\pi6\in\bigl(\frac\pi6,\frac\pi2\bigr)$，$\alpha-\frac\pi3\in\bigl(-\frac\pi3,0\bigr)$だから，これらはいずれも$0$でない（③）．よって②から
+
+$$
+\begin{align*}
+I=\frac{2X}{C+\sqrt3S},\qquad H=\frac{2Y}{S-\sqrt3C}.\tag{②'}
+\end{align*}
+$$
+
+一方，$a=\dfrac{I-H}2,\ b=\dfrac{I+H}2$より$a^2+b^2=\dfrac{I^2+H^2}2$，$ab=\dfrac{I^2-H^2}4$だから，①は
+
+$$
+\begin{align*}
+1=\frac{I^2+H^2}2-\frac{I^2-H^2}2\cos2\alpha\quad(\because②')
+\end{align*}
+$$
+
+すなわち$2=I^2(1-\cos2\alpha)+H^2(1+\cos2\alpha)=2S^2I^2+2C^2H^2$．②$'$を代入して整理すると
+
+$$
+\begin{align*}
+1=\frac{X^2}{\left(\dfrac{C+\sqrt3S}{2S}\right)^2}+\frac{Y^2}{\left(\dfrac{S-\sqrt3C}{2C}\right)^2}.
+\end{align*}
+$$
+
+これは（$\alpha$を固定するとき）$X,Y$に関する楕円の方程式だから，$P,Q$が$PQ=1$を保ちながら動くときの点$R(X,Y)$の軌跡は，この楕円の一部である．

@@ -111,7 +111,7 @@ $$
 
 に注意して，$c$の値によって場合分けする．\\
 
-     \begin{indentation}{2zw}{0pt}
+     \begin{indentation}{2\zw}{0pt}
      \underline{(i)$1\le c$の時} \\
      下表を得る．
           

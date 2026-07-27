@@ -14,7 +14,7 @@ title: "UTOKYO 1971 zenki Q2 (solution)"
 
 $$
 \begin{align*}
-2a_1=x，2a_2=a_1^2+1，\cdots，2a_{n+1}=a_n^2+1，\cdots
+2a_1=x，2a_2=a_1^2+1，\cdots{}，2a_{n+1}=a_n^2+1，\cdots
 \end{align*}
 $$
 
@@ -26,7 +26,7 @@ $$
 2.  $x\not=2$ならば，$a_1<a_2<\cdots<a_n<\cdots$となることを証明せよ．
 
 3.  $x<2$ならば，$a_n<1$となることを証明せよ．このとき，正数$\epsilon$を$1-x/2$より
-          小となるようにとって，$a_1，a_2，\cdots，a_n$までが$1-\epsilon$以下となったとすれば，
+          小となるようにとって，$a_1，a_2，\cdots{}，a_n$までが$1-\epsilon$以下となったとすれば，
           個数$n$について次の不等式が成り立つことを証明せよ．
                
 

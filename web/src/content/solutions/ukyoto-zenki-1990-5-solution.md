@@ -1,0 +1,55 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1990"
+question: "5"
+type: "solution"
+title: "UKYOTO 1990 zenki Q5 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解]
+(1) $N=5$の時
+$i=j=0$での成立が必要だが
+
+$$
+\begin{align*}
+&P(X=0 \land Y=0) = \frac{1}{36}\\&P(X=0) = \frac{1}{6}\quad(N=6\text{の時の図}) \\&P(Y=0) = \frac{7}{36}
+\end{align*}
+$$
+
+から $P(X=0 \land Y=0) = P(X=0)P(Y=0)$ は不成立、よって$X, Y$は独立ではない。
+
+$2^{\circ} \ N=6$の時
+確率変数$X, Y$に対し、まず$P(X=k)=P(Y=k)=\frac{1}{6} \quad (k=0 \sim 5)$であり
+$$ P(X=i \land Y=j) = \frac{1}{36} \quad \left( \text{$X=i$になるし(確率$1/6$)、$Y=j$となる目が出る(確率$1/6$)} \right) 
+$$
+から、任意のi, jに対し P(X=i \land Y=j) = P(X=i)P(Y=j) が成立するので、XとYは独立。
+
+(2) i=j=0での成立が必要である。
+1^{\circ} \ N=3の時
+P(X=k)=P(Y=k)=\frac{1}{3} \quad (k=0 \sim 2) であり (1)と同じく、
+P(X=i \land Y=j) = \frac{1}{9} だから、X, Yは独立。
+
+2^{\circ} \ N=4の時、
+P(X=0) = \frac{1}{6}, \quad P(Y=0) = \frac{9}{36}, \quad P(X=0 \land Y=0) = \frac{1}{36} から
+X, Yは非独立。
+
+3^{\circ} \ 7 \le Nの時
+2週まわって6にいくことはないので、1回目に出た目をA、2回目をBとすると、Y=6となるのは A+B=6 の5通り。
+$$
+ P(Y=6) = \frac{5}{36} 
+$$
+又、P(X=6)=\frac{1}{6}, \quad P(X=6 \land Y=6)=0 だから
+$$
+ P(X=6)P(Y=6) \neq P(X=6 \land Y=6) 
+$$
+となり、XとYは独立ではない。
+
+以上から、X, Yが独立なのは
+$$
+ N=3, 6 $$
+の時。

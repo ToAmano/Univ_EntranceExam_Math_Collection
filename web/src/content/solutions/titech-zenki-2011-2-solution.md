@@ -1,0 +1,74 @@
+---
+university: "titech"
+category: "zenki"
+year: "2011"
+question: "2"
+type: "solution"
+title: "TITECH 2011 zenki Q2 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$g(t)=\cos t-x\sin2t$とおく．$0\le t\le\dfrac\pi2$で$\cos t\ge0$だから
+
+$$
+\begin{align*}
+g(t)=\cos t-2x\sin t\cos t=\cos t(1-2x\sin t).
+\end{align*}
+$$
+
+これより，
+
+$x\le\dfrac12$のとき，$0\le t\le\pi/2$で$\sin t\le1\le\dfrac1{2x}$（$x>0$の場合；$x\le0$なら自明）より$1-2x\sin t\ge0$，よって$g(t)\ge0$．
+
+$x>\dfrac12$のとき，$0<t<\pi/2$に$\sin t=\dfrac1{2x}\in(0,1)$となる$t=\alpha$がただ1つ存在し，$0\le t\le\alpha$で$g(t)\ge0$，$\alpha\le t\le\pi/2$で$g(t)\le0$．
+
+したがって
+
+$$
+\begin{align*}
+f(x)=\begin{cases}\displaystyle\int_0^{\pi/2}g(t)\,dt & \Bigl(x\le\dfrac12\Bigr)\\[2mm]\displaystyle\int_0^\alpha g(t)\,dt-\int_\alpha^{\pi/2}g(t)\,dt & \Bigl(\dfrac12\le x\Bigr)\end{cases}\tag{①}
+\end{align*}
+$$
+
+$g(t)$の原始関数の1つとして$G(t)=\sin t+\dfrac12x\cos2t$がある．
+
+**$1^\circ$ $x\le\dfrac12$のとき.** $f(x)=G(\pi/2)-G(0)=\Bigl(1-\dfrac12x\Bigr)-\dfrac12x=1-x$．
+
+**$2^\circ$ $\dfrac12\le x$のとき.** $f(x)=2G(\alpha)-G(0)-G(\pi/2)=\bigl(2\sin\alpha+x\cos2\alpha\bigr)-\Bigl(1-\dfrac12x\Bigr)-\dfrac12x=2\sin\alpha+x\cos2\alpha-1$．$0<\alpha<\pi/2$かつ$g(\alpha)=0$より$\sin\alpha=\dfrac1{2x}$だから，$\cos2\alpha=1-2\sin^2\alpha=1-\dfrac1{2x^2}$を用いて
+
+$$
+\begin{align*}
+f(x)=\frac1x+x\Bigl(1-\frac1{2x^2}\Bigr)-1=x+\frac1{2x}-1
+\end{align*}
+$$
+
+（$x=\dfrac12$のときもこの式で$f(1/2)=1/2$となり，$1^\circ$の式と一致する）．
+
+以上より
+
+$$
+\begin{align*}
+f(x)=\begin{cases}1-x & \Bigl(x\le\dfrac12\Bigr)\\[1mm]x+\dfrac1{2x}-1 & \Bigl(x\ge\dfrac12\Bigr)\end{cases}
+\end{align*}
+$$
+
+**(1)** $x\le1/2$では$f(x)=1-x$は単調減少で$f(1/2)=1/2$．$x\ge1/2$では$f(x)=x+\dfrac1{2x}-1$は相加相乗平均より$x+\dfrac1{2x}\ge2\sqrt{\dfrac12}=\sqrt2$（等号は$x=\dfrac1{\sqrt2}$，これは$\ge1/2$をみたす）となるから，この区間の最小値は$\sqrt2-1$．$\sqrt2-1\approx0.414<1/2$だから，$f(x)$全体の最小値は
+
+$$
+\begin{align*}
+\sqrt2-1\qquad\Bigl(x=\frac1{\sqrt2}\ \text{のとき}\Bigr).
+\end{align*}
+$$
+
+**(2)**
+
+$$
+\begin{align*}
+\int_0^1f(x)dx&=\int_0^{1/2}(1-x)dx+\int_{1/2}^1\Bigl(x+\frac1{2x}-1\Bigr)dx\\&=\Bigl[x-\frac12x^2\Bigr]_0^{1/2}+\Bigl[\frac12x^2+\frac12\log x-x\Bigr]_{1/2}^1\\&=\frac38+\Bigl(-\frac12\Bigr)-\Bigl(-\frac38-\frac12\log2\Bigr)\\&=\frac38-\frac12+\frac38+\frac12\log2=\frac14+\frac12\log2.
+\end{align*}
+$$

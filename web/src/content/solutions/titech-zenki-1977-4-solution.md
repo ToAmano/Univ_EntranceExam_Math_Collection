@@ -1,0 +1,50 @@
+---
+university: "titech"
+category: "zenki"
+year: "1977"
+question: "4"
+type: "solution"
+title: "TITECH 1977 zenki Q4 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$m,n\in\mathbb{Z}_{>0}$，$m<n$，$0<x<1$ $\cdots$①である．$f(t)=\left(1+\dfrac{x}{t^2}\right)^t$ とする．$f(t)>0$ のゆえ，自然対数をとってから微分して，
+
+$$
+\begin{align*}
+\frac{f'(t)}{f(t)}=\log\left(1+\frac{x}{t^2}\right)+\frac{t}{1+x/t^2}(-2)\frac{1}{t^3} = \log\left(1+\frac{x}{t^2}\right)-\frac{2}{x+t^2}\quad\cdots\text{②}
+\end{align*}
+$$
+
+この右辺を $g(t)$ とする．
+
+$$
+\begin{align*}
+g'(t)=\frac{1}{1+x/t^2}(-2)\frac{1}{t^3}+2\left(\frac{1}{t^2+x}\right)^2\cdot2t = -\frac2t\cdot\frac{1}{x+t^2}+4t\left(\frac{1}{x+t^2}\right)^2 = \frac{2(t^2-x)}{t(x+t^2)^2}
+\end{align*}
+$$
+
+だから，①より，$1\le t$ の時，$g'(t)\ge0$ で，$g(t)$ は単調増加となる．これと
+
+$$
+\begin{align*}
+g(t)\xrightarrow{t\to+\infty}0
+\end{align*}
+$$
+
+から，$1\le t$ の時，$g(t)<0$ となる．したがって，②から，$1\le t$ の時，$f'(t)<0$ つまり $f(t)$ は単調減少である． $\cdots$③
+
+①③から，$f(n)<f(m)$ つまり，
+
+$$
+\begin{align*}
+\left(1+\frac{x}{m^2}\right)^m>\left(1+\frac{x}{n^2}\right)^n
+\end{align*}
+$$
+
+である．

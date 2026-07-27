@@ -1,0 +1,83 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1970"
+question: "4"
+type: "solution"
+title: "UTOKYO 1970 zenki Q4 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解]
+(1) 時刻 $t=0$ に穴をとび出した水の, 時刻 $t$ でのイチを $(X,Y)$ とする。\\
+ただし, 右のように $XY$ 平面をとる。
+
+\begin{tikzpicture}[scale=1.0, >=stealth]
+  \draw[->] (-0.5,0) -- (4.0,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,3.0) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+  
+  \node[left] at (0,1.8) {$a-h$};
+  \fill (0,2.3) circle (1.5pt) node[left] {噴出口};
+  \draw[->,thick] (0,1.8) -- (0.8,1.8);
+  \draw[domain=0:3.2,samples=100,smooth,thick] plot (\x, {1.8 - 0.15*(\x)^2});
+\end{tikzpicture}
+
+$$
+\begin{align*}
+\begin{cases}
+X = \sqrt{2gh} \, t \\
+Y = a - h - \frac{1}{2}gt^2
+\end{cases}
+\end{align*}
+$$
+
+$\sqrt{2gh} \neq 0$ から, $t$ をけして
+
+$$
+\begin{align*}
+\begin{aligned}
+Y &= -\frac{1}{2}g \cdot \frac{X^2}{2gh} + a - h \\
+&= -\frac{1}{4h} X^2 - h + a \quad \cdots \text{①}
+\end{aligned}
+\end{align*}
+$$
+
+したがって, 水平到達キョリは $X = 2\sqrt{h(a-h)}$
+
+(2) (1)の値を最大にするのは $h = \frac{1}{2}a$, つまり水槽の中点.
+
+(3) ①で $0 < h < a$ とするときの $(X,Y)$ のとる値を考える。
+
+$$
+\begin{align*}
+Y' = -1 + \frac{X^2}{4h^2} =
+\end{align*}
+$$
+
+だから, 下表をとる。 ($\because$ (2)から $0 \leqq X < a$)
+
+$$
+\begin{align*}
+\begin{array}{c|c|c|c|c|c}
+h & 0 & \dots & \frac{X}{2} & \dots & a \\
+\hline
+Y' & & + & 0 & - & \\
+\hline
+Y & (-\infty) & \nearrow & a-X & \searrow & -\frac{X^2}{4a}
+\end{array}
+\end{align*}
+$$
+
+これと $0 < Y$ から,
+
+$$
+\begin{align*}
+0 < Y \leqq a - X
+\end{align*}
+$$
+
+が求める領域である。

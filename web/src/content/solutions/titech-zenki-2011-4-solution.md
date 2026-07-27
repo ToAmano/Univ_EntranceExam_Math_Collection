@@ -1,0 +1,81 @@
+---
+university: "titech"
+category: "zenki"
+year: "2011"
+question: "4"
+type: "solution"
+title: "TITECH 2011 zenki Q4 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+（本問は難問として知られ，原稿の解答は設定の記述のみで完結していなかったため，以下は独立に完全な解答を与える．）
+
+一辺の長さ1の正方形$D$と，$D$と交わる直線$m$を考える．$m$を軸に$D$を回転してできる回転体の体積を$V(m)$とする．
+
+**(1)** $l$を固定された方向（$D$のどの辺にも平行でない）とし，$m$は$l$に平行で$D$と交わる直線とする．$m$の方向を$u$軸，それと垂直な方向を$v$軸とする直交座標$(u,v)$をとり，$m$を$v=c$と表す．$D$を$(u,v)$座標で見ると，$l$がどの辺にも平行でないから，各$u$（$D$が存在する範囲）に対して$D$の$v$方向の切り口はちょうど1つの区間$[a(u),b(u)]$（$a(u)\le b(u)$）になる．$m=\{v=c\}$が$D$と交わる$c$の範囲は，ある区間$[c_{\min},c_{\max}]$であり，$c=c_{\min}$，$c=c_{\max}$がちょうど$m$が$D$と1点のみで交わる場合（$D$の一つの頂点で$m$が支持線となる場合）に対応する．
+
+$m=\{v=c\}$のまわりの回転体の体積は，各$u$での切り口を回転して得られる円板・円環の面積を積分して
+
+$$
+\begin{align*}
+\frac{V(c)}\pi=\int\varphi(u,c)\,du,
+\end{align*}
+$$
+
+ただし$\varphi(u,c)$は次で与えられる（$a=a(u),\ b=b(u)$と略記）：
+
+$$
+\begin{align*}
+\varphi(u,c)=\begin{cases}
+(b-c)^2-(a-c)^2 & (c\le a)\\
+\max\bigl((b-c)^2,(c-a)^2\bigr) & (a\le c\le b)\\
+(c-a)^2-(c-b)^2 & (c\ge b)
+\end{cases}
+\end{align*}
+$$
+
+（$a\le c\le b$のとき，切り口の区間は軸をまたぐので回転体は半径$\max(b-c,c-a)$の円板になり，$c\le a$または$c\ge b$のときは軸をまたがないので円環になる．）
+
+$c\le a$での$\varphi$は$c$の1次式で傾き$-2(b-a)$，$c\ge b$での$\varphi$は$c$の1次式で傾き$+2(b-a)$であり，$a\le c\le b$での$\varphi=\max((b-c)^2,(c-a)^2)$は凸関数（凸関数の最大値は凸関数）である．さらに$c=a$では両側から$\varphi=(b-a)^2$，傾き$-2(b-a)$に一致し，$c=b$では両側から$\varphi=(b-a)^2$，傾き$+2(b-a)$に一致するから，$\varphi(u,\cdot)$は$\mathbb R$上$C^1$級かつ各区間で凸であり，全体として凸関数である．
+
+よって，$V(c)/\pi=\int\varphi(u,c)\,du$は凸関数の積分として$c$の凸関数である．凸関数は閉区間上の最大値を端点で取るから，$V(c)$は$c=c_{\min}$または$c=c_{\max}$，すなわち$m$が$D$とちょうど1点で交わるとき（$D$のある頂点で$m$が支持線となるとき）に最大となる．
+
+{\bf[解（続き：(2)）]}
+(1)より，各方向$l$について体積を最大にする軸は，$D$のある頂点で支持線となる直線（頂点でちょうど1点のみ$D$と交わる直線）である．$D$の中心$O'$を原点とする座標をとり，$D$の頂点を$\Bigl(\pm\frac12,\pm\frac12\Bigr)$とする．方向の法線ベクトルを$(\cos\psi,\sin\psi)$とすると，この方向の支持線（$D$を片側に持つ接線で頂点に接するもの）の中心$O'$からの距離は，$D$の台関数（サポート関数）
+
+$$
+\begin{align*}
+h(\psi)=\max_{\text{頂点}}(\text{頂点}\cdot(\cos\psi,\sin\psi))=\frac12(|\cos\psi|+|\sin\psi|)
+\end{align*}
+$$
+
+に等しい．$D$全体がこの支持線の片側にあるから，パップスの定理（回転体の体積 $=2\pi\times$（軸からの重心の距離）$\times$（面積））より，このときの体積は
+
+$$
+\begin{align*}
+V=2\pi h(\psi)\cdot1=2\pi h(\psi)
+\end{align*}
+$$
+
+（$D$の重心は中心$O'$に一致し，面積は$1$）．$h(\psi)=\dfrac12(|\cos\psi|+|\sin\psi|)$は$\psi=\dfrac\pi4$（対角線方向）で最大値
+
+$$
+\begin{align*}
+h\Bigl(\frac\pi4\Bigr)=\frac12\Bigl(\frac{\sqrt2}2+\frac{\sqrt2}2\Bigr)=\frac{\sqrt2}2
+\end{align*}
+$$
+
+をとる（一辺に平行な方向$\psi=0,\pi/2$等では$h=1/2$で，これより小さい）．よって，すべての$m$にわたる体積の最大値は
+
+$$
+\begin{align*}
+V_{\max}=2\pi\cdot\frac{\sqrt2}2=\sqrt2\,\pi
+\end{align*}
+$$
+
+であり，これは$D$の対角線に垂直で，対角線の一端の頂点を通る直線を軸とするときに実現される．

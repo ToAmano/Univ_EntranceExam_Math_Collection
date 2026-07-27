@@ -1,0 +1,70 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1969"
+question: "2"
+type: "solution"
+title: "UKYOTO 1969 zenki Q2 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[**解**]
+定円の中心を $O$ とする。\\
+円周角の定理から $\angle CAD = \angle CBD = \angle R$ だから，
+
+$$
+\begin{align*}
+\begin{aligned}
+\tan\alpha \tan\beta &= \frac{AD}{CA} \cdot \frac{BD}{CB} \\
+&= \frac{\frac{1}{2} AD \cdot BD \cdot \sin(\pi - \alpha - \beta)}{\frac{1}{2} AC \cdot BC \cdot \sin(\alpha + \beta)} \quad (\because \sin\theta = \sin(\pi-\theta)) \\
+&= \frac{\triangle ADB}{\triangle ACB} \quad \dots \text{①}
+\end{aligned}
+\end{align*}
+$$
+
+又，$\angle CPA = \theta$ とおけば
+
+$$
+\begin{align*}
+\frac{\triangle ADB}{\triangle ACB} = \frac{\frac{1}{2} AB \cdot DP \sin\theta}{\frac{1}{2} AB \cdot CP \sin\theta} = \frac{DP}{CP} \quad \dots \text{②}
+\end{align*}
+$$
+
+①，②から，題意は示された。
+
+\begin{tikzpicture}[scale=1.5]
+    \coordinate (O) at (0,0);
+    \draw[thick] (O) circle (2cm);
+    \node[above left] at (O) {$O$};
+    \fill (O) circle (1.5pt);
+
+    \coordinate (C) at (-2,0);
+    \coordinate (D) at (2,0);
+    \draw[thick] (C) -- (D);
+    \node[left] at (C) {$C$};
+    \node[right] at (D) {$D$};
+
+    \coordinate (A) at (1,-1.732);
+    \coordinate (B) at (1.2,1.6);
+    \node[below right] at (A) {$A$};
+    \node[above right] at (B) {$B$};
+
+    \draw[thick] (C) -- (A) -- (D);
+    \draw[thick] (C) -- (B) -- (D);
+
+    \coordinate (P) at (1.1,0);
+    \draw[thick] (A) -- (B);
+    \node[below left] at (P) {$P$};
+    \fill (P) circle (1.5pt);
+
+    \node at (-1.3, -0.2) {$\alpha$};
+    \node at (-1.3, 0.2) {$\beta$};
+    \node at (0.9, -0.3) {$\theta$};
+    \node at (1.5, -0.4) {$\pi-\alpha-\beta$};
+
+    \draw (A) -- ++(-0.15,0.26) -- ++(0.26,0.15);
+    \draw (B) -- ++(-0.24,-0.18) -- ++(0.18,-0.24);
+\end{tikzpicture}

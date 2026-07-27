@@ -1,0 +1,73 @@
+---
+university: "titech"
+category: "zenki"
+year: "1963"
+question: "4"
+type: "solution"
+title: "TITECH 1963 zenki Q4 (solution)"
+---
+
+$\sec x= \dfrac{1}{\cos x}$だから
+
+$$
+\begin{align}
+f(x) = 2\tan^3 x -3\left(\sqrt{3}+1\right)\frac{1}{\cos^2 x} + 6\sqrt{3}\tan x - 1
+\end{align}
+$$
+
+である．ここで
+
+$$
+\begin{align}
+1+\tan^2 x = \frac{1}{\cos^2 x}
+\end{align}
+$$
+
+を代入して全体を$t = \tan x$だけで書き直すと
+
+$$
+\begin{align}
+f(x) 
+ &= 2t^3  -3\left(\sqrt{3}+1\right)(1+t^2) + 6\sqrt{3}t - 1 \\&= 2t^3  -3\left(\sqrt{3}+1\right)t^2 + 6\sqrt{3}t - 3\sqrt{3} - 4
+\end{align}
+$$
+
+である．以下$-\infty < t < \infty$における$f$の極大極小を求める．
+一階微分を計算すると
+
+$$
+\begin{align}
+f' 
+ &= 6\left[t^2 - \left(\sqrt{3}+1\right)t + \sqrt{3}\right]\\&= 6\left(t-\sqrt{3}\right)\left(t-1\right)
+\end{align}
+$$
+
+だから，増減表は以下のようになる．
+
+<figure id="tab_1" class="table-wrapper">
+
+|   $t$   |  $\cdots$  | $1$ |  $\cdots$  | $\sqrt{3}$ |  $\cdots$  |     |
+|:---------:|:------------:|:-----:|:------------:|:------------:|:------------:|:---:|
+| $f'(t)$ |    $+$     | $0$ |    $-$     |    $0$     |    $+$     |     |
+| $f(t)$  | $\nearrow$ |       | $\searrow$ |              | $\nearrow$ |     |
+
+  <figcaption>表 1: $f$の増減表</figcaption>
+</figure>
+
+従って，極大は$t=1$の時でその値は
+
+$$
+\begin{align}
+f\left(1\right) = -5
+\end{align}
+$$
+
+であり，極小は$t=\sqrt{3}$の時でその値は
+
+$$
+\begin{align}
+f\left(\sqrt{3}\right) = -6\sqrt{3} + 5
+\end{align}
+$$
+
+である．

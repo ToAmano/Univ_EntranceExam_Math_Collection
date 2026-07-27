@@ -1,0 +1,153 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "2001"
+question: "1"
+type: "solution"
+title: "UTOKYO 2001 zenki Q1 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+|                                 |
+|:--------------------------------|
+| **
+
+$$
+\begin{align*}
+球・円
+\end{align*}
+$$
+
+**                  |
+| ・中心を含む平面で切る (対称性) |
+
+—— **[等式のとき方 - パート②]** —— \\
+まとまったカタマリを文字でおく手法
+
+\bigskip
+
+## 【解】
+
+題意の球の中心を $O$ とする。$CD$ の中点を $E$ とし $\triangle ABE$ で切断すると、右図。対称性から、$O$ は $\triangle ACD$ の外心を通り $\triangle ACD$ に垂直な直線上かつ $\triangle BCD$ の外心を通り $\triangle BCD$ に垂直な直線上にあることをあわせて、この平面上にある。$O$ から $AE, BE$ に下ろした垂足を $P, Q$ とすると、
+
+\begin{tikzpicture}[scale=1.2, >=stealth]
+  \coordinate (A) at (0, 2);
+  \coordinate (B) at (-1.5, -0.5);
+  \coordinate (C) at (0.3, -1);
+  \coordinate (D) at (1.5, 0.2);
+  \coordinate (E) at (0.9, -0.4);
+
+  \draw[thick] (A) -- (B) node[left] {$B$};
+  \draw[thick] (A) -- (C);
+  \draw[thick] (A) -- (D) node[right] {$D$};
+  \draw[thick] (B) -- (C) node[below] {$C$};
+  \draw[thick] (C) -- (D);
+  \draw[dashed] (B) -- (D);
+  \draw[dashed] (A) -- (E) node[below right] {$E$};
+  \draw[dashed] (B) -- (E);
+
+  \node[above] at (A) {$A$};
+  \node[left] at (-0.7, 0.8) {$3$};
+  \node[above right] at (0.7, 1.1) {$2$};
+  \node[below] at (-0.6, -0.8) {$2$};
+  \node[right] at (0.9, -0.7) {$2$};
+  \node[above] at (0.2, 1) {$2$};
+
+  \begin{scope}[xshift=5cm]
+    \coordinate (A2) at (0, 2.2);
+    \coordinate (B2) at (-1.2, 0);
+    \coordinate (E2) at (1.2, 0);
+    \coordinate (R) at (-0.6, 1.1);
+    \coordinate (O) at (0.1, 0.8);
+    \coordinate (P) at (0.44, 1.4);
+    \coordinate (Q) at (0.44, 0.3);
+
+    \draw[thick] (A2) node[above] {$A$} -- (B2) node[below left] {$B$} -- (E2) node[below right] {$E$} -- cycle;
+    \draw[dashed] (E2) -- (R) node[left] {$R$};
+    \draw[thick] (O) node[left] {$O$} -- (P) node[above right] {$P$};
+    \draw[thick] (O) -- (Q) node[right] {$Q$};
+    \draw[thick] (O) -- (R);
+    \draw[thick] (O) -- (E2);
+
+    \node[left] at (-0.3, 1.7) {$\sqrt{3}$};
+    \node[below] at (-0.3, 0) {$\frac{2}{3}\sqrt{3}$};
+    \node[below] at (0.6, 0) {$\frac{1}{3}\sqrt{3}$};
+  \end{scope}
+\end{tikzpicture}
+
+したがって、
+
+$$
+\begin{align*}
+\bar{AP} = \bar{BQ} = \frac{2}{3}\sqrt{3} \quad \cdots \textcircled{1}
+\end{align*}
+$$
+
+となる。$O$ から $AB$ に下ろした垂足を $R$ とする。
+
+$$
+\begin{align*}
+\bar{ER} = \frac{3}{2} \quad \cdots \textcircled{2}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\bar{OR} = \sqrt{r^2 - \left(\frac{3}{2}\right)^2} = \sqrt{r^2 - \frac{9}{4}} \quad \cdots \textcircled{3} \quad (\because \textcircled{2})
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\bar{OE} = \sqrt{\bar{OP}^2 + \left(\frac{1}{3}\sqrt{3}\right)^2} = \sqrt{\left\{r^2 - \left(\frac{2}{3}\sqrt{3}\right)^2\right\} + \left(\frac{1}{3}\sqrt{3}\right)^2} = \sqrt{r^2 - 1} \quad \cdots \textcircled{4} \quad (\because \textcircled{1})
+\end{align*}
+$$
+
+\textcircled{2}～\textcircled{4}から、$\bar{ER}$ を2通りで表して ($E-O-R$ は一直線上)、
+
+$$
+\begin{align*}
+\frac{3}{2} = \sqrt{r^2 - \frac{9}{4}} + \sqrt{r^2 - 1}
+\end{align*}
+$$
+
+$t = r^2$ として、両辺正から2乗して
+
+$$
+\begin{align*}
+\frac{9}{4} = 2t - \frac{13}{4} + 2\sqrt{\left(t - \frac{9}{4}\right)(t - 1)}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+2 - t = \sqrt{\left(t - \frac{9}{4}\right)(t - 1)}
+\end{align*}
+$$
+
+$t < 2$ のもとで2乗して
+
+$$
+\begin{align*}
+-4t + 4 = -\frac{13}{4}t + \frac{9}{4}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+t = \frac{13}{9} \quad (t < 2 \text{ をみたす})
+\end{align*}
+$$
+
+$r > 0$ から
+
+$$
+\begin{align*}
+r = \sqrt{t} = \frac{\sqrt{13}}{3} \hfill \text{\slash\slash}
+\end{align*}
+$$
+
+\bigskip

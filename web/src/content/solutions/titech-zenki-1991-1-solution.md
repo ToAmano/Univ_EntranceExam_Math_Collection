@@ -1,0 +1,82 @@
+---
+university: "titech"
+category: "zenki"
+year: "1991"
+question: "1"
+type: "solution"
+title: "TITECH 1991 zenki Q1 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$n\in\mathbb{N}\ \cdots$①．$f(n)$は，$n!$の中の素因数$2^p,5^q\ (p,q\in\mathbb{Z}_{\ge0})$について，$p,q$のうち大きくない方に等しい．明らかに$p\ge q$だから，$f(n)=q$である．
+
+**(1)** $10\div5=2$から，$q=2\ \therefore\ f(10)=2$
+
+$100\div5=20$，$100\div25=4$だから，$f(100)=20+4=24$
+
+**(2)** (1)と同様にして，
+
+$$
+\begin{align*}
+f(10^n)=\sum_{k=1}^\infty\left[\frac{10^n}{5^k}\right]\quad\cdots\text{①}
+\end{align*}
+$$
+
+とかける．ただし，$[x]$は$x$以下の最大の整数である．$k=2n$の時，
+
+$$
+\begin{align*}
+\left[\frac{10^n}{5^{2n}}\right]=\left[\left(\frac{2}{5}\right)^n\right]=0
+\end{align*}
+$$
+
+だから，$[10^n/5^k]$が$k$の単調減少かつ0であることとあわせて，①で$k=1,2,\cdots,2n$として和をとれば良く，
+
+$$
+\begin{align*}
+f(10^n)=\sum_{k=1}^{2n}\left[\frac{10^n}{5^k}\right]\quad\cdots\text{②}
+\end{align*}
+$$
+
+$[x]$の性質から
+
+$$
+\begin{align*}
+\frac{10^n}{5^k}-1<\left[\frac{10^n}{5^k}\right]\le\frac{10^n}{5^k}
+\end{align*}
+$$
+
+$k=1,2,\cdots,2n$として足して②から
+
+$$
+\begin{align*}
+\sum_{k=1}^{2n}\left(\frac{10^n}{5^k}-1\right)<f(10^n)\le\sum_{k=1}^{2n}\frac{10^n}{5^k}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+10^n\cdot\frac15\cdot\frac{1-(1/5)^{2n}}{1-1/5}-2n<f(10^n)\le10^n\cdot\frac15\cdot\frac{1-(1/5)^{2n}}{1-1/5}
+\end{align*}
+$$
+
+両辺$10^n$でわって
+
+$$
+\begin{align*}
+\frac15\cdot\frac{1-(1/5)^{2n}}{4/5}-\frac{2n}{10^n}<\frac{f(10^n)}{10^n}\le\frac15\cdot\frac{1-(1/5)^{2n}}{4/5}
+\end{align*}
+$$
+
+この両辺共に$n\to\infty$で$1/4$に収束するから，はさみうちから
+
+$$
+\begin{align*}
+\frac{f(10^n)}{10^n}\longrightarrow\frac14
+\end{align*}
+$$

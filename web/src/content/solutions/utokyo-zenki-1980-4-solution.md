@@ -49,7 +49,7 @@ g'(p)&=4k^2p^3+2  \\&=4k^2(p+a)(p^2-ap+a^2)
 $$
 
 から下表を得る．$(\because k>0)$ \\
-     \begin{indentation}{2zw}{0pt}
+     \begin{indentation}{2\zw}{0pt}
      \underline{(i)$\dfrac{1}{2}\ge a$つまり$2\le k$の時} \\
           
 

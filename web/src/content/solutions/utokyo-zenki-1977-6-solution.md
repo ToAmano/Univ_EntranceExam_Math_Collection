@@ -165,7 +165,7 @@ $$
  
        
 {\bf[(2)別解]} 
-\begin{indentation}{2zw}{0pt}
+\begin{indentation}{2\zw}{0pt}
 実数$s$，$t$を用いて，$n$上の$3$点は
      
 

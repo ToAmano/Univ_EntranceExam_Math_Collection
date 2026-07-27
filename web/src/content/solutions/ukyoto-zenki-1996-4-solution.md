@@ -1,0 +1,93 @@
+---
+university: "ukyoto"
+category: "zenki"
+year: "1996"
+question: "4"
+type: "solution"
+title: "UKYOTO 1996 zenki Q4 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+[解] (1) $k=8$の時、 $a_1 = 0, a_2 = 2, a_n = 3 \ (n \ge 3)$ \\
+$k=9, \ \ a_1 = 0, a_2 = 3, a_n = 4 \ (n \ge 3)$ \hfill(終)
+
+(2) 題意を帰納的に示す。まず、$n=1$の時、$a_1=0, a_2 = [\frac{k}{3}] \ge 0$、$k \ge 0$ から成立する。以下$n=k \in \mathbb{N}$での成立を仮定する。$[x]$は単調増加だから、
+
+$$
+\begin{align*}
+a_{k+1} = \left[ \frac{a_k + k}{3} \right] \le \left[ \frac{a_{k+1} + k}{3} \right] = a_{k+2} \cdots \text{①}
+\end{align*}
+$$
+
+次に、
+
+$$
+\begin{align*}
+a_{k+1} = \left[ \frac{a_k + k}{3} \right] \le \left[ \frac{\frac{k}{2} - \frac{1}{6}}{3} \right] \quad \text{(※修正)}
+\end{align*}
+$$
+
+であり、$k \in \text{odd}$の時 $\left[ \frac{k}{2} - \frac{1}{6} \right] = \left[ \frac{k-1}{2} + \frac{1}{3} \right] = \frac{k-1}{2}$ \\
+$k \in \text{even}$の時 $\left[ \frac{k}{2} - \frac{1}{6} \right] = \frac{k}{2} - 1 < \frac{k-1}{2}$ \\
+から、
+
+$$
+\begin{align*}
+a_{k+1} \le \frac{k-1}{2} \cdots \text{②}
+\end{align*}
+$$
+
+となる。以上①②から、$n=k+1$でも成立。よって示された \hfill(終)
+
+(3) 題意を帰納的に示す。$n=N$の時は成立するので、以下$n=N \in \mathbb{N}$としての成立を仮定する。
+
+$$
+\begin{align*}
+a_{N+1} = \left[ \frac{a_N + k}{3} \right] = \left[ \frac{a_n + k}{3} \right] = a_{n+1} = a_n \quad (\because \text{仮定})
+\end{align*}
+$$
+
+から、$n=N+1$でも成立。よって示された \hfill(終)
+
+(4) (2)から $0 \le a_n \le \frac{k-1}{2}$ で、$a_n \in \mathbb{Z}$ から、$a_n = a_{n+1}$ となる$n$がある。この時、
+
+$$
+\begin{align*}
+a_{n+1} = \left[ \frac{a_n + k}{3} \right] = a_n
+\end{align*}
+$$
+
+から、
+
+$$
+\begin{align*}
+a_n \le \frac{a_n + k}{3} < a_n + 1
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\frac{k-3}{2} < a_n \le \frac{k}{2} \cdots \text{③}
+\end{align*}
+$$
+
+である。
+
+$1^\circ \ k \in \text{odd}$ \\
+$a_n \in \mathbb{Z}$ と③から、$a_n = \frac{k-1}{2}$ である。
+
+$2^\circ \ k \in \text{even}$ \\
+$a_n \in \mathbb{Z}$ と③、$a_n \le \frac{k-1}{2}$ から、$a_n = \frac{k-2}{2}$ である。
+
+以上まとめて、
+
+$$
+\begin{align*}
+a_n = \begin{cases} \frac{k-1}{2} & (k \in \text{odd}) \\ \frac{k}{2} - 1 & (k \in \text{even}) \end{cases}
+\end{align*}
+$$
+
+ \hfill(終)

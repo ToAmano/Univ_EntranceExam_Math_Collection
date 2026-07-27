@@ -1,0 +1,86 @@
+---
+university: "titech"
+category: "zenki"
+year: "2001"
+question: "4"
+type: "solution"
+title: "TITECH 2001 zenki Q4 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+1辺1の正方形$ABCD$を1本の折り目で折り，線対称な五角形$P$（二重になる部分）ができるようにする．図のように，折り返しでできる各点・角を定める（$O$は正方形の対角線の交点とし，折り目は$O$を通る）．$B,C$の像を$B',A'$とし，折り目と辺の交点を$E,F,I,H,G$などとする．$0<x\le1/2,\ 0<\theta\le\pi/4$（$x$は折り返し部分の一辺，$\theta$は折り目の傾き）とする．
+
+求める面積$T$，$\triangle EB'F$の面積$S_1$，$\triangle EA'G(\cong\triangle CEF)$の面積$S_2$とおくと
+
+$$
+\begin{align*}
+T=\frac12-(S_1+S_2) \quad\cdots\text{②}
+\end{align*}
+$$
+
+$OC=OB'$（対称性）から$\triangle OCB'$は二等辺三角形で$\angle OB'C=\angle OCB'$（③-1）．また$\angle OB'F=\angle OCF=\pi/4$（③-2，正方形の対角線の角度）．③-1,③-2から$\angle B'CF=\angle CB'F$となり，$\triangle FCB'$は二等辺三角形で$CF=B'F$．これと$\triangle IB'F\equiv\triangle ECF$（対称性）から，
+
+$$
+\begin{align*}
+S_1=S_2=\frac12x^2\tan\theta
+\end{align*}
+$$
+
+②に代入して
+
+$$
+\begin{align*}
+T=\frac12-x^2\tan\theta\quad\cdots\text{④}
+\end{align*}
+$$
+
+また，辺$\overline{AB}$の長さを$2$通りに表して（折り返し部分の幾何関係から）
+
+$$
+\begin{align*}
+1=x\tan\theta+\frac x{\cos\theta}+x
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\therefore\ x=\frac{\cos\theta}{\sin\theta+\cos\theta+1}\quad(C=\cos\theta,\ S=\sin\theta\ \text{として}\ x=\frac C{S+C+1}) \quad\cdots\text{⑤}
+\end{align*}
+$$
+
+④から，$T$は$P=x^2\tan\theta$が最大の時最小．⑤から
+
+$$
+\begin{align*}
+P=x^2\tan\theta=\frac{C^2}{(S+C+1)^2}\cdot\frac SC=\frac{SC}{(S+C+1)^2}
+\end{align*}
+$$
+
+$t=C+S$とおくと，$S+C+1=t+1$，$SC=\dfrac{t^2-1}2$（$\because(S+C)^2=S^2+2SC+C^2=1+2SC$）だから
+
+$$
+\begin{align*}
+P=\frac{(t^2-1)/2}{(t+1)^2}=\frac{t-1}{2(t+1)}=\frac12\left(1-\frac2{t+1}\right)
+\end{align*}
+$$
+
+これは$t$の単調増加関数．$t=\sin\theta+\cos\theta=\sqrt2\sin\left(\theta+\dfrac\pi4\right)$は，$0<\theta\le\pi/4$で単調増加し$t\in(1,\sqrt2]$．よって$P$は$\theta=\pi/4$（$t=\sqrt2$）で最大：
+
+$$
+\begin{align*}
+\max P=\frac12\left(1-\frac2{\sqrt2+1}\right)
+\end{align*}
+$$
+
+したがって
+
+$$
+\begin{align*}
+\min T=\frac12-\max P=\frac12\cdot\frac2{\sqrt2+1}=\frac1{\sqrt2+1}=\sqrt2-1
+\end{align*}
+$$

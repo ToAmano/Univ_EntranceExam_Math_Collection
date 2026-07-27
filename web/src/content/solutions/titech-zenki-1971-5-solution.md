@@ -1,0 +1,96 @@
+---
+university: "titech"
+category: "zenki"
+year: "1971"
+question: "5"
+type: "solution"
+title: "TITECH 1971 zenki Q5 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+1.  $f(x)=e^{-x}+x-1$ とおくと，$x>0$ で $f(x)>0$ を示せば良い．
+  $f'(x)=-e^{-x}+1>0$（$\because x>0$）だから，$0<x$ で $f(x)$ は単調増加で，
+  
+
+$$
+\begin{align*}
+f(x)>f(0)=0
+\end{align*}
+$$
+
+2.  $A_n = \displaystyle\prod_{k=1}^n\left(1-\frac{1}{\sqrt{k}+\sqrt{k+1}}\right)$ とおく．$1-\dfrac{1}{\sqrt{k}+\sqrt{k+1}} \ge 1-\dfrac{1}{1+\sqrt2} > 1-1 = 0$ 及び
+  
+
+$$
+\begin{align*}
+1-\frac{1}{\sqrt{k}+\sqrt{k+1}} = 1-\sqrt{k+1}+\sqrt{k}
+\end{align*}
+$$
+
+  から（$A_n>0$ だから），$p_k=\sqrt{k+1}-\sqrt{k}$ とおくと
+  
+
+$$
+\begin{align*}
+\log A_n = \sum_{k=1}^n \log(1-p_k) \equiv B_n \quad\cdots\text{①}
+\end{align*}
+$$
+
+  (1)から，$0<x<1$ の時，自然対数をとって
+  
+
+$$
+\begin{align*}
+-x > \log(1-x)
+\end{align*}
+$$
+
+  $0<p_k<1$ だから，$x=p_k$ として
+  
+
+$$
+\begin{align*}
+-p_k > \log(1-p_k)
+\end{align*}
+$$
+
+  $k$ について足して
+  
+
+$$
+\begin{align*}
+-\sum_{k=1}^n p_k > B_n \quad\Longrightarrow\quad 1-\sqrt{n+1} > B_n \quad\cdots\text{②}
+\end{align*}
+$$
+
+  ①②から
+  
+
+$$
+\begin{align*}
+1-\sqrt{n+1} > \log A_n
+\end{align*}
+$$
+
+  $n\to\infty$ の時，$1-\sqrt{n+1}\to-\infty$ だから，追い出しの原理より
+  
+
+$$
+\begin{align*}
+\log A_n \to -\infty
+\end{align*}
+$$
+
+  $y=\log x$ は連続で，
+  
+
+$$
+\begin{align*}
+A_n \to +0
+\end{align*}
+$$

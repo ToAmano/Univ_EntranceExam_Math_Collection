@@ -55,7 +55,7 @@ $$
 $$
 
 が$P$を満たすことは明らかである．そこで$k\in\mathbb{N}$に対し$n=2k-1,2k$での$P$の成立を仮定する．
-     \begin{indentation}{2zw}{0pt}
+     \begin{indentation}{2\zw}{0pt}
       \underline{(i)$n=2k+1$のとき} \\
       [1](#1)および仮定から$f'_{2k+1}=f'_{2k}(x)>0$だから$y=f_{2k+1}$は単調増加．
      また連続で$\dlim{x}{\pm\infty}f_{2k+1}(x)=\pm\infty$(複合同順)であるから，中間値の定理より

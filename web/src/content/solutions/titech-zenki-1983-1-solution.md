@@ -1,0 +1,102 @@
+---
+university: "titech"
+category: "zenki"
+year: "1983"
+question: "1"
+type: "solution"
+title: "TITECH 1983 zenki Q1 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+1.  $x=\dfrac{c}{b},\ y=\dfrac{d}{a}$とおける．ただし，$a,b,c,d\in\mathbb{N}$，$b$と$c$，$a$と$d$は互いに素，又対称性から$x>y$とする． $\cdots$①
+  
+
+$$
+\begin{align*}
+\frac{1}{|x-y|}=\frac{1}{x-y}=\frac{ab}{ac-bd}\quad(\because①)
+\end{align*}
+$$
+
+  
+
+$$
+\begin{align*}
+f(x)+f(y)=b^2+a^2
+\end{align*}
+$$
+
+  から
+  
+
+$$
+\begin{align*}
+f(x)+f(y)-\frac{2}{|x-y|}=a^2+b^2-\frac{2ab}{ac-bd}
+\end{align*}
+$$
+
+  
+
+$$
+\begin{align*}
+=(a-b)^2+2ab\left(1-\frac{1}{ac-bd}\right)\ge0
+\end{align*}
+$$
+
+  となり示された．（$ac-bd\in\mathbb{N}$から，$\dfrac{1}{ac-bd}\le1$）
+
+2.  $x_n=\dfrac{2}{3n+4}$とおく．$k\in\mathbb{N}$とする．
+  
+
+$$
+\begin{align*}
+n=2k\text{の時，}x_n=\frac{1}{3k+2}, \qquad n=2k-1\text{の時，}x_n=\frac{2}{6k+1}
+\end{align*}
+$$
+
+  であるから，$F_n=\{f(x_n)+f(x_{n+1})\}|x_n-x_{n+1}|$とおくと，$n\to\infty$で$k\to\infty$で，
+  
+
+$$
+\begin{align*}
+F_{2k}=\left|\frac{1}{3k+2}-\frac{2}{6k+7}\right|\left\{(3k+2)^2+(6k+7)^2\right\}
+\end{align*}
+$$
+
+  
+
+$$
+\begin{align*}
+=\frac{3\left\{(3k+2)^2+(6k+7)^2\right\}}{(3k+2)(6k+7)}
+  =\frac{3\left\{(3+2/k)^2+(6+7/k)^2\right\}}{(3+2/k)(6+7/k)}\longrightarrow\frac{3\cdot45}{18}=\frac{15}{2}\quad(k\to\infty)
+\end{align*}
+$$
+
+  
+
+$$
+\begin{align*}
+F_{2k-1}=\left|\frac{2}{6k+1}-\frac{1}{3k+2}\right|\left\{(3k+2)^2+(6k+1)^2\right\}
+\end{align*}
+$$
+
+  
+
+$$
+\begin{align*}
+=\frac{3\left[(3+2/k)^2+(6+1/k)^2\right]}{(6+1/k)(3+2/k)}\longrightarrow\frac{15}{2}\quad(k\to\infty)
+\end{align*}
+$$
+
+  以上から
+  
+
+$$
+\begin{align*}
+(\text{与式})=\frac{15}{2}
+\end{align*}
+$$

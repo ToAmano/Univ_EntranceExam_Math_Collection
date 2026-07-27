@@ -1,0 +1,133 @@
+---
+university: "titech"
+category: "zenki"
+year: "1974"
+question: "2"
+type: "solution"
+title: "TITECH 1974 zenki Q2 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$|\alpha|=k$ とおく．
+
+1.  $k\ne0,1$ とする．題意から $x=\alpha,\alpha^2,\alpha^4,\cdots,\alpha^{2^n},\cdots$ が $f(x)=0$ の解であり，$k\ne0,1$ から，これらは全て異なる．これは $f(x)$ が3次であることに反し矛盾．以上から，$k=0,1$ である．
+
+2.  $a,b,c\in\mathbb{R}$ として，$f(x)=x^3+ax^2+bx+c$ とおく．$f(x)=0$ の3解を $\alpha,\beta,\gamma$ とおく．
+
+  \textbf{$1^\circ$ $\alpha,\beta,\gamma\in\mathbb{R}$ の時}
+
+  $\alpha\ne\beta,\beta\ne\gamma,\gamma\ne\alpha$ 及び (1) から，$\{\alpha,\beta,\gamma\}=\{0,\pm1\}$ となり，この時，十分である．
+  
+
+$$
+\begin{align*}
+f(x)=x^3-x \quad\cdots\text{①}
+\end{align*}
+$$
+
+  **$2^\circ$ $\alpha,\beta,\gamma$ のうち1つのみ実数の時**
+
+  対称性から，$\alpha\in\mathbb{R}$ として良い．この時，$\gamma=\bar\beta$ となる（$\because a,b,c\in\mathbb{R}$）．又題意から，
+  
+
+$$
+\begin{align*}
+\alpha=0,1
+\end{align*}
+$$
+
+  である．（(1) 及び，$\alpha=-1$ ならば $\alpha^2=1$ が解になるので）
+
+  **(i) $\alpha=0$**
+
+  題意から，$\beta^2$ も $f(x)=0$ の解だから，
+  
+
+$$
+\begin{align*}
+\beta^2=0,\beta,\bar\beta
+\end{align*}
+$$
+
+  $\beta\ne0,1$ より，
+  
+
+$$
+\begin{align*}
+\beta^2=\bar\beta\quad\cdots(\star)
+\end{align*}
+$$
+
+  ここで，$e(\theta)=\cos\theta+i\sin\theta$ として，$\beta=e(\theta)$ とすると，$(0\le\theta<2\pi)$，$(\star)$ から，（$\because(1)$）
+  
+
+$$
+\begin{align*}
+e(2\theta)=e(-\theta) \quad\therefore\ 2\theta=-\theta+2n\pi\ (n\in\mathbb{Z}) \quad\therefore\ \theta=\frac{2}{3}n\pi
+\end{align*}
+$$
+
+  $0\le\theta<2\pi$ から，$n=0,1,2$ として，
+  
+
+$$
+\begin{align*}
+\theta=0,\frac{2\pi}{3},\frac{4\pi}{3}
+\end{align*}
+$$
+
+  このうち，$\theta=0$ は $\beta=1$ となって不適で，その他の時は十分である．この時
+  
+
+$$
+\begin{align*}
+f(x)=x^3+x^2+x \quad\cdots\text{②}
+\end{align*}
+$$
+
+  となる．
+
+  **(ii) $\alpha=1$**
+
+  (i) と同じく，
+  
+
+$$
+\begin{align*}
+\beta^2=1,\beta,\bar\beta
+\end{align*}
+$$
+
+  $\beta\ne0,1$ から，
+  
+
+$$
+\begin{align*}
+\beta^2=1,\bar\beta
+\end{align*}
+$$
+
+  $\beta^2=\bar\beta$ の時，(i) と同じく，$\{\beta,\gamma\}=\left\{e\left(\dfrac{2}{3}\pi\right),e\left(\dfrac{4}{3}\pi\right)\right\}$ で，
+  
+
+$$
+\begin{align*}
+f(x)=(x-1)(x^2+x+1)=x^3-1 \quad\cdots\text{③}
+\end{align*}
+$$
+
+  $\beta^2=1$ の時，$\beta=\pm1$ で，$\beta\in\mathbb{R}$ となり矛盾．
+
+  $a,b,c\in\mathbb{R}$ から，以上で全ての場合がつくせる．よって①②③より，
+  
+
+$$
+\begin{align*}
+f(x)=x^3-x,\ x^3+x^2+x,\ x^3-1
+\end{align*}
+$$

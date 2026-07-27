@@ -1,0 +1,48 @@
+---
+university: "titech"
+category: "zenki"
+year: "1975"
+question: "2"
+type: "solution"
+title: "TITECH 1975 zenki Q2 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$f(x)=0$ の2解 $\alpha,\beta$ として，$f(x)=(x-\alpha)(x-\beta)$ とおく．
+
+$$
+\begin{align*}
+f(f(x))=(f(x)-\alpha)(f(x)-\beta)=0 \quad\cdots\text{①}
+\end{align*}
+$$
+
+が重解 $r$ を持つ．$\alpha\ne\beta$ だから対称性から，$f(x)-\alpha=0$ が重解を持つ時のみ考えれば良い．$f(x)-\alpha=x^2+2x+\alpha\beta-\alpha=0$ の判別式を $D$ として $D=0$ である．
+
+$$
+\begin{align*}
+\frac{D}{4}=1-(\alpha\beta-\alpha)=0 \quad\therefore\ 1+\alpha-\alpha\beta=0 \quad\cdots\text{②}
+\end{align*}
+$$
+
+$\alpha+\beta=-2$ $\therefore \beta=-(\alpha+2)$ だから，②に代入して
+
+$$
+\begin{align*}
+1+\alpha+\alpha(\alpha+2)=0 \quad\Longrightarrow\quad\alpha^2+3\alpha+1=0 \quad\Longrightarrow\quad\alpha=\frac{-3\pm\sqrt5}{2}
+\end{align*}
+$$
+
+したがって，$(\alpha,\beta)=\left(\dfrac{-3\pm\sqrt5}{2},-\dfrac{1\pm\sqrt5}{2}\right)$（複号同順）となり，
+
+$$
+\begin{align*}
+a=\alpha\beta=\frac{-1+\sqrt5}{2},\ \frac{-1-\sqrt5}{2}
+\end{align*}
+$$
+
+である．この時 $r=-1$ となる．

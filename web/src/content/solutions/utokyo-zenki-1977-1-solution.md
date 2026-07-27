@@ -26,7 +26,7 @@ $$
 
 であるから，$k$の値によって場合分けする．\\
 
-     \begin{indentation}{2zw}{0pt}
+     \begin{indentation}{2\zw}{0pt}
      \underline{(i)$k\le0$の時} \\
      $g'(x)\ge0$だから$g(x)$は単調増加で
           

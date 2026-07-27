@@ -1,0 +1,135 @@
+---
+university: "titech"
+category: "zenki"
+year: "2002"
+question: "4"
+type: "solution"
+title: "TITECH 2002 zenki Q4 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+**(1)** $y=1/x$は単調減少だから，区間$[k,k+1]$での面積比較により
+
+$$
+\begin{align*}
+\sum_{k=1}^n\frac1k<1+\int_1^n\frac1x\,dx \quad\cdots\text{①}, \qquad\int_1^n\frac1x\,dx+\frac1{n+1}<\sum_{k=1}^n\frac1k \quad\cdots\text{②}
+\end{align*}
+$$
+
+①②から（$\int_1^n(1/x)dx=\log n$）
+
+$$
+\begin{align*}
+\log n+\frac1{n+1}<\sum_{k=1}^n\frac1k<\log n+1
+\end{align*}
+$$
+
+両辺$\log n$（$>0$）で割って
+
+$$
+\begin{align*}
+1+\frac1{(n+1)\log n}<\frac1{\log n}\sum_{k=1}^n\frac1k<1+\frac1{\log n}\quad\cdots\text{③}
+\end{align*}
+$$
+
+③の両辺は$n\to\infty$で$1$に収束するから，はさみうちの定理から
+
+$$
+\begin{align*}
+\lim_{n\to\infty}\frac1{\log n}\sum_{k=1}^n\frac1k=1
+\end{align*}
+$$
+
+**(2)** $f_n(x)=\displaystyle\prod_{k=0}^n(x-k)$とおく．積の微分法から
+
+$$
+\begin{align*}
+f_n'(x)=(x-1)\cdots(x-n)+x(x-2)\cdots(x-n)+\cdots+x(x-1)\cdots(x-(n-1))
+\end{align*}
+$$
+
+（各項は$k$番目の因子$(x-k)$を除いた積）．$0\le k\le n$なる整数$k$に対し$f_n(k)\ne0$（$x_n$は整数でない）だから，極値を与える$x=x_n$では$f_n(x_n)\ne0$であり，$f_n'(x_n)=0$の両辺を$f_n(x_n)$で割って
+
+$$
+\begin{align*}
+0=\frac1{x_n}+\frac1{x_n-1}+\cdots+\frac1{x_n-n}
+\end{align*}
+$$
+
+すなわち
+
+$$
+\begin{align*}
+\frac1{x_n}=\frac1{1-x_n}+\frac1{2-x_n}+\cdots+\frac1{n-x_n}
+\end{align*}
+$$
+
+次に$0<x_n\le1/2$を示す．$f_n(0)=f_n(1)=0$（$x=0,1$がともに$f_n$の根）だから，平均値の定理（ロルの定理）より，$f_n'(c)=\dfrac{f_n(1)-f_n(0)}{1-0}=0$をみたす$c\in(0,1)$が存在する．$x_n$は極値を与える最小の$x$であり，この$c$は$(0,1)$内にあるので，$0<x_n<1$である．
+
+次に$1/2<x_n<1$と仮定すると，$1<1/x_n<2$であり，$0<1-x_n<1/2$より$1/(1-x_n)>2$，また$k\ge2$では$k-x_n>k-1\ge1>0$より$1/(k-x_n)>0$．したがって定義式の右辺は
+
+$$
+\begin{align*}
+\frac1{1-x_n}+\frac1{2-x_n}+\cdots+\frac1{n-x_n}>\frac1{1-x_n}>2
+\end{align*}
+$$
+
+となり，左辺$1/x_n<2$と矛盾する．よって$1/2<x_n<1$ではあり得ず，$0<x_n\le1/2$である．
+
+\bigskip
+**[解2]**（(2)の別証明の一部：$f_n'(0)$，$f_n'(1/2)$を直接評価する方法）
+
+{\bf[解2]}
+$f_n(0)=(-1)(-2)\cdots(-n)=(-1)^n\,n!$
+
+$n=1$の時，$f_1(x)=x(x-1)$は放物線で，頂点（極値点）はちょうど$x=1/2$にあり，$x_1=1/2$．
+
+$n\ge2$の時，$f_n'(0)$と$f_n'(1/2)$を直接計算すると符号が異なることが確かめられ（$f_n'(0)f_n'(1/2)<0$），$f_n'$は連続だから中間値の定理により$f_n'(x)=0$となる$x$が$(0,1/2)$内に存在する．以上いずれの場合も，$0<x_n\le1/2$に極値を与える$x$がある．
+
+## 【解】
+
+**(3)** $0<x_n\le1/2$より，$n$が十分大きいとして，各$k\ge1$で$k-1<k-x_n\le k-\dfrac12$（$k\ge1$では$k-x_n<k$，$k\ge1$では$x_n\le1/2$から$k-x_n\ge k-1/2$）に注意すると，
+
+$$
+\begin{align*}
+\sum_{k=1}^n\frac1k<\frac1{x_n}=\sum_{k=1}^n\frac1{k-x_n}<\frac1{1-x_n}+\sum_{k=2}^n\frac1{k-1}\le\frac1{1-1/2}+\sum_{k=2}^n\frac1{k-1}=2+\sum_{j=1}^{n-1}\frac1j
+\end{align*}
+$$
+
+（左の不等式は$k-x_n<k$から$1/(k-x_n)>1/k$を各項について足し合わせたもの，右は$k\ge2$で$k-x_n>k-1$から$1/(k-x_n)<1/(k-1)$，$k=1$の項は$1/(1-x_n)\le1/(1-1/2)=2$による．）
+$\displaystyle\sum_{j=1}^{n-1}\frac1j=\sum_{k=1}^n\frac1k-\frac1n$だから
+
+$$
+\begin{align*}
+\sum_{k=1}^n\frac1k<\frac1{x_n}<\sum_{k=1}^n\frac1k+2-\frac1n
+\end{align*}
+$$
+
+両辺を$\log n$（$>0$）で割って
+
+$$
+\begin{align*}
+\frac1{\log n}\sum_{k=1}^n\frac1k<\frac1{x_n\log n}<\frac1{\log n}\sum_{k=1}^n\frac1k+\frac1{\log n}\left(2-\frac1n\right)\quad\cdots\text{⑦}
+\end{align*}
+$$
+
+⑦の両辺は(1)から$n\to\infty$で$1$に収束するので，はさみうちの定理から
+
+$$
+\begin{align*}
+\frac1{x_n\log n}\longrightarrow1 \quad(n\to\infty)
+\end{align*}
+$$
+
+$1/x$は$x>0$で連続だから
+
+$$
+\begin{align*}
+x_n\log n\longrightarrow1 \quad(n\to\infty)
+\end{align*}
+$$

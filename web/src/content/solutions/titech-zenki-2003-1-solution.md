@@ -1,0 +1,76 @@
+---
+university: "titech"
+category: "zenki"
+year: "2003"
+question: "1"
+type: "solution"
+title: "TITECH 2003 zenki Q1 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$C:y=f(x)=-x^3+ax^2+bx$（$a>0$）とし，$y=mx$（$m\in\mathbb R$）が$C$と2点を共有するとする．この時
+
+$$
+\begin{align*}
+-x^3+ax^2+bx=mx \iff x^3-ax^2+(m-b)x=0 \iff x\left\{x^2-ax+(m-b)\right\}=0 \quad\cdots\text{①}
+\end{align*}
+$$
+
+**(1)$1^\circ$ $x^2-ax+m-b=0$が$x=0$を解に持つ時：** 代入して$m=b$．この時方程式は$x^2-ax=0$すなわち$x(x-a)=0$となり，残りの解は$x=a\ne0$（$a>0$）．①全体の解は$\{0,a\}$（$x=0$は重解），ちょうど2点を共有する．
+
+**$2^\circ$ $x^2-ax+m-b=0$が$x\ne0$に重解を持つ時：** 判別式$=0$：$a^2-4(m-b)=0$，すなわち$m=\dfrac14a^2+b$．この時の重解は$x=\dfrac a2\ne0$（$a>0$）．①全体の解は$\{0,a/2\}$（$a/2$が重解），ちょうど2点を共有する．
+
+以上から，もとめる2本の直線は
+
+$$
+\begin{align*}
+y=bx,\qquad y=\left(\frac14a^2+b\right)x
+\end{align*}
+$$
+
+**(2)** $\dfrac14a^2>0$（$a>0$）だから，傾きの大きい方は$\ell_1:y=\left(\dfrac14a^2+b\right)x$，小さい方は$\ell_2:y=bx$．
+
+$\ell_2$と$C$の交点は$x=0$（重解，接点）と$x=a$．$C$と$\ell_2$の差
+
+$$
+\begin{align*}
+f(x)-bx=-x^3+ax^2=x^2(a-x)
+\end{align*}
+$$
+
+は$[0,a]$で符号一定だから
+
+$$
+\begin{align*}
+S_2=\left|\int_0^a x^2(a-x)\,dx\right|=\left|a\cdot\frac{a^3}3-\frac{a^4}4\right|=\frac1{12}a^4
+\end{align*}
+$$
+
+$\ell_1$と$C$の交点は$x=0$と$x=a/2$（重解，接点）．$\ell_1$と$C$の差
+
+$$
+\begin{align*}
+\left(\frac14a^2+b\right)x-f(x)=x^3-ax^2+\frac14a^2x=x\left(x-\frac a2\right)^2
+\end{align*}
+$$
+
+は$[0,a/2]$で符号一定だから
+
+$$
+\begin{align*}
+S_1=\left|\int_0^{a/2}x\left(x-\frac a2\right)^2dx\right|=\frac1{12}\left(\frac a2\right)^4=\frac1{192}a^4
+\end{align*}
+$$
+
+したがって
+
+$$
+\begin{align*}
+S_1:S_2=\frac1{192}:\frac1{12}=1:16
+\end{align*}
+$$

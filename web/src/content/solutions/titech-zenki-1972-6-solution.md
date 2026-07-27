@@ -1,0 +1,44 @@
+---
+university: "titech"
+category: "zenki"
+year: "1972"
+question: "6"
+type: "solution"
+title: "TITECH 1972 zenki Q6 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+1.  $a_n = a+d(n-1)$ だから，$A_n = \displaystyle\sum_{k=1}^n e^{a_k}$ として
+  
+
+$$
+\begin{align*}
+A_n = e^a\sum_{k=1}^n (e^d)^{k-1}
+\end{align*}
+$$
+
+  だから収束条件は $-1<e^d\le1 \iff d\le0$
+
+2.  $A = \displaystyle\int_0^\pi f(t)\sin t\,dt$ として，$f(x)=x+A$ だから
+  
+
+$$
+\begin{align*}
+A = \int_0^\pi(x+A)\sin x\,dx = \left[-(x+A)\cos x+\sin x\right]_0^\pi = -(\pi+A)(-1)+A = \pi+2A
+\end{align*}
+$$
+
+  
+
+$$
+\begin{align*}
+\therefore\ A=-\pi
+\end{align*}
+$$
+
+  だから，$f(x)=x-\pi$

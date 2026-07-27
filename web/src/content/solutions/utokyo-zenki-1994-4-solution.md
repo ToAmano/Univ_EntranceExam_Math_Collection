@@ -115,7 +115,7 @@ $g(x)=y$とおけば$f(x)=dy/dx$である．$y=0$なる$x$があれば$f(x)\equi
 
 $$
 \begin{align}
-\frac{dy}{y}&=\frac{dx}{x(1-x)}\nonumber\\
+\frac{dy}{y}&=\frac{dx}{x(1-x)}\nonumber{}\\
      y&=C\frac{x}{1-x}\nonumber\\\therefore f(x)&=C\frac{1}{(1-x)^2}\label{7}
 \end{align}
 $$

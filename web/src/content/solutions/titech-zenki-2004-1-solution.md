@@ -1,0 +1,74 @@
+---
+university: "titech"
+category: "zenki"
+year: "2004"
+question: "1"
+type: "solution"
+title: "TITECH 2004 zenki Q1 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$a,b>0$とする．
+
+**(1)** $f(x)=\dfrac{x^4}{(x-a)^3}$は$x>a$で正である．$\log f(x)=4\log x-3\log(x-a)$を$x$で微分して
+
+$$
+\begin{align*}
+\frac{f'(x)}{f(x)}=\frac4x-\frac3{x-a}=\frac{x-4a}{x(x-a)}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\therefore\ f'(x)=\frac{x^3(x-4a)}{(x-a)^4}
+\end{align*}
+$$
+
+$x>a$では$x^3>0,\ (x-a)^4>0$だから，$f'(x)$の符号は$(x-4a)$の符号と一致する．
+
+| $x$  | $a$ |              | $4a$ |              |     |
+|:------:|:-----:|:------------:|:------:|:------------:|:---:|
+| $f'$ |       |    $-$     | $0$  |    $+$     |     |
+| $f$  |       | $\searrow$ |        | $\nearrow$ |     |
+
+すなわち，$f$は$a<x<4a$で単調減少，$4a<x$で単調増加し，$x=4a$で最小値$f(4a)=\dfrac{(4a)^4}{(3a)^3}=\dfrac{4^4}{3^3}a$をとる．
+
+**(2)** $g(x)=\dfrac1{(x-a)^2}-\dfrac b{x^3}$，$g'(x)=\dfrac{-2}{(x-a)^3}+\dfrac{3b}{x^4}$．$x$軸に平行な直線と3点で交わるためには，$g'(x)=0$，$a<x$の前後で$g'$が符号を変える点が少なくとも2つあることが必要十分（$*$）．
+
+$x>a$で
+
+$$
+\begin{align*}
+g'(x)\ge0 \iff\frac{3b}{x^4}\ge\frac2{(x-a)^3}\iff\frac32b\ge\frac{x^4}{(x-a)^3}=f(x)
+\end{align*}
+$$
+
+(1)から$f$は$x=4a$で最小値$\dfrac{4^4}{3^3}a$をとり，$x\to a^+,\ x\to\infty$で$f(x)\to\infty$．したがって，$y=\dfrac32b$のグラフが$y=f(x)$のグラフと2点で交わり，$(*)$をみたすための条件は
+
+$$
+\begin{align*}
+\frac{4^4}{3^3}a<\frac32b \quad\cdots\text{②}
+\end{align*}
+$$
+
+このとき$g'(x)=0$は2解$\alpha,\beta$（$\alpha<\beta$）を持ち，下表を得る．
+
+| $x$  | $a$ |              | $\alpha$ |              | $\beta$ |              |     |
+|:------:|:-----:|:------------:|:----------:|:------------:|:---------:|:------------:|:---:|
+| $g'$ |       |    $-$     |   $0$    |    $+$     |   $0$   |    $-$     |     |
+| $g$  |       | $\searrow$ |            | $\nearrow$ |           | $\searrow$ |     |
+
+$g(x)\to+\infty\ (x\to a^+)$，$g(x)\to0\ (x\to+\infty)$だから，$g$のグラフは，$+\infty$から$g(\alpha)$（極小）まで減少，$g(\beta)$（極大）まで増加，その後$0$に向かって減少する形になる．この時，$g(\alpha)<k<g(\beta)$をみたす$k$に対し，直線$y=k$は$g$のグラフとちょうど3点で交わる．$g(\alpha)<g(\beta)$は，まさに$g$が極大・極小を両方持つこと，すなわち②と同値である．
+
+以上から，もとめる必要十分条件は②を整理して
+
+$$
+\begin{align*}
+b>\frac{2\cdot4^4}{3^4}a
+\end{align*}
+$$

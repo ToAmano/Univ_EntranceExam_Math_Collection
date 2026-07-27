@@ -58,6 +58,6 @@ $$
 
 故に$q\in\mathbb{N}$と合わせて$q=11,12,\cdots,16$である．以下$A=f(349)-f(319)$とおく．$A=40$
 となることが必要である．
-     \begin{indentation}{2zw}{0pt}
+     \begin{indentation}{2\zw}{0pt}
      \underline{(i)$q=11$}
      \end{indentation}

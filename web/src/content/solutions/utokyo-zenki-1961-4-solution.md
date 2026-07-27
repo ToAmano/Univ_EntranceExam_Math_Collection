@@ -30,7 +30,7 @@ $$
 
 $$
 \begin{align}
-&\frac{NB}{AN}\frac{CL}{BC}\frac{BA}{LP}=1\nonumber\\&\frac{PA}{LP}=\frac{3}{4}\label{1}
+&\frac{NB}{AN}\frac{CL}{BC}\frac{BA}{LP}=1\nonumber{}\\&\frac{PA}{LP}=\frac{3}{4}\label{1}
 \end{align}
 $$
 

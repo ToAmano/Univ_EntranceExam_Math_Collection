@@ -1,0 +1,104 @@
+---
+university: "titech"
+category: "zenki"
+year: "2005"
+question: "1"
+type: "solution"
+title: "TITECH 2005 zenki Q1 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$a_n=\displaystyle\int_1^e(\log x)^n\,dx$（$n=1,2,\dots$）とする．
+
+**(1)** $n\ge3$の時，部分積分を用いる．まず
+
+$$
+\begin{align*}
+a_{n-1}=\int_1^e(\log x)^{n-1}dx=\bigl[x(\log x)^{n-1}\bigr]_1^e-\int_1^ex\cdot(n-1)(\log x)^{n-2}\cdot\frac1x\,dx=e-(n-1)a_{n-2}
+\end{align*}
+$$
+
+（$n-1\ge2$の場合の同じ部分積分公式）．同様に
+
+$$
+\begin{align*}
+a_n=\bigl[x(\log x)^n\bigr]_1^e-\int_1^ex\cdot n(\log x)^{n-1}\cdot\frac1x\,dx=e-n\,a_{n-1}
+\end{align*}
+$$
+
+この2式から$e$を消去すると，$e=a_{n-1}+(n-1)a_{n-2}$を$a_n=e-na_{n-1}$に代入して
+
+$$
+\begin{align*}
+a_n=\{a_{n-1}+(n-1)a_{n-2}\}-na_{n-1}=(n-1)a_{n-2}-(n-1)a_{n-1}=(n-1)(a_{n-2}-a_{n-1})
+\end{align*}
+$$
+
+**(2)** $[1,e]$では$0\le\log x\le1$（②）．したがって$0\le(\log x)^{n+1}\le(\log x)^n$（$0\le t\le1$なら$t^{n+1}\le t^n$）．同区間で積分して
+
+$$
+\begin{align*}
+0\le a_{n+1}\le a_n
+\end{align*}
+$$
+
+さらに，②の等号は$x=1$（両辺$0$）または$x=e$（両辺$1$）でしか成立しないから，$(1,e)$上では真の不等式$(\log x)^{n+1}<(\log x)^n$が成り立ち，正の測度の区間で成り立つので積分の不等式も真に：
+
+$$
+\begin{align*}
+0<a_{n+1}<a_n
+\end{align*}
+$$
+
+**(3)** $n\ge2$とする．(1)（$2n\ge4\ge3$に適用）から
+
+$$
+\begin{align*}
+a_{2n}=(2n-1)(a_{2n-2}-a_{2n-1})
+\end{align*}
+$$
+
+(2)から$a_{2n}<a_{2n-1}$，すなわち$-a_{2n-1}<-a_{2n}$だから，$a_{2n-2}-a_{2n-1}<a_{2n-2}-a_{2n}$．$(2n-1)>0$をかけて
+
+$$
+\begin{align*}
+a_{2n}<(2n-1)(a_{2n-2}-a_{2n})
+\end{align*}
+$$
+
+整理すると$a_{2n}+(2n-1)a_{2n}<(2n-1)a_{2n-2}$，すなわち
+
+$$
+\begin{align*}
+2n\,a_{2n}<(2n-1)a_{2n-2}\quad\therefore\ a_{2n}<\frac{2n-1}{2n}a_{2n-2}
+\end{align*}
+$$
+
+これをくり返し用いて（$n,n-1,\dots,2$について）
+
+$$
+\begin{align*}
+a_{2n}<\frac{2n-1}{2n}\cdot\frac{2n-3}{2(n-1)}\cdots\frac34\,a_2
+\end{align*}
+$$
+
+$a_2$を求める．$\int(\log x)^2dx=x(\log x)^2-2x\log x+2x+C$（微分すれば確認できる）だから
+
+$$
+\begin{align*}
+a_2=\bigl[x(\log x)^2-2x\log x+2x\bigr]_1^e=(e-2e+2e)-(0-0+2)=e-2
+\end{align*}
+$$
+
+以上から
+
+$$
+\begin{align*}
+a_{2n}<\frac{(2n-1)(2n-3)\cdots3}{(2n)(2n-2)\cdots4}(e-2)=\frac{3\cdot5\cdots(2n-1)}{4\cdot6\cdots(2n)}(e-2)
+\end{align*}
+$$

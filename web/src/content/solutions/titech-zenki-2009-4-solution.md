@@ -7,174 +7,94 @@ type: "solution"
 title: "TITECH 2009 zenki Q4 (solution)"
 ---
 
-\input{macros}
-     \begin{oframed}
-     $xyz$空間の原点と点$(1,1,1)$を通る直線を$l$とする．
-          
-
-1.  
-
-2.  $l$上の点$(t/3,t/3,t/3)$を通り$l$と垂直な平面が，$xy$平面と交わってできる直線の方程式を求めよ．
-
-3.  不等式$0\le y\le x(1-x)$の表す$xy$平面内の領域を$D$とする．$l$を軸として$D$を回転させて得られる回転体の体積を求め
-          よ．
-
-     \end{oframed}
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
 
 ## 【解】
 
- 題意の平面$\Pi$として，
-     
+$l$の方向ベクトルは$\vec a=(1,1,1)$である．
+
+**(1)** 点$\bigl(\frac t3,\frac t3,\frac t3\bigr)$を通り$l$と垂直な平面$\pi$は，法線ベクトル$(1,1,1)$を持つから
 
 $$
 \begin{align*}
-&\left(x-\frac{t}{3}\right)+\left(x-\frac{t}{3}\right)+\left(x-\frac{t}{3}\right)=0 \\&x+y+z=t
+\pi:\ x+y+z=\frac t3+\frac t3+\frac t3=t.
 \end{align*}
 $$
 
-であるから，$z=0$との交線は，
-     
+これと$xy$平面（$z=0$）との交線は
 
 $$
 \begin{align*}
-x+y=t，z=0
+x+y=t,\qquad z=0.
 \end{align*}
 $$
 
-である．$\cdots((1)の答)$     
+**(2)** $l$上に$\overrightarrow{OP}=\dfrac t3(1,1,1)$なる点$P$（$t\in\mathbb R$）をとる．$P$を通り$l$と垂直な平面による回転体の切り口を考える．この平面と$xy$平面の交線$x+y=t,\ z=0$は，(1)で見た通り$\pi\cap\{z=0\}$そのものである．
 
-$D$と(1)で求めた交線の共有部分を考える．$y$を消去して，
-     
-
-$$
-\begin{align}
-0\le t-x\le x(1-x) \\\Longleftrightarrow\begin{cases}
-          x\le t \\
-          1-\sqrt{1-t}\le x\le1+\sqrt{1-t}
-          \end{cases}\label{1}
-\end{align}
-$$
-
-である．ただし，第$2$の不等式での$x$の存在条件から，
-     
-
-$$
-\begin{align}
-1-t\ge0\Longleftrightarrow t\le1\label{2}
-\end{align}
-$$
-
-である．このもとで，    
-     
+直線$x+y=t$と放物線$y=x(1-x)$の交点$Q$は，$x+x(1-x)=t$すなわち$x^2-2x+t=0$を解いて$x=1\pm\sqrt{1-t}$のうち$[0,1]$内の解
 
 $$
 \begin{align*}
-t\le1+\sqrt{1-t}
+x=1-\sqrt{1-t}\qquad(0\le t\le1)
 \end{align*}
 $$
 
-であるから，$x$の範囲は，[1](#1)から，
-     
+に対応する点で，$Q=\bigl(1-\sqrt{1-t},\,(1-\sqrt{1-t})\sqrt{1-t},\,0\bigr)$．また直線$x+y=t$と$x$軸（$y=0$）の交点を$R=(t,0,0)$とする．
 
 $$
 \begin{align*}
-1-\sqrt{1-t}\le x<t
+\overrightarrow{PR}=\Bigl(\frac23t,-\frac13t,-\frac13t\Bigr),\qquad|\overrightarrow{PR}|^2=\frac{4}9t^2+\frac19t^2+\frac19t^2=\frac23t^2.
 \end{align*}
 $$
 
- 
-である．再び$x$の存在条件から，
-     
-
-$$
-\begin{align}
-&1-\sqrt{1-t}\le t \Longleftrightarrow 0\le t&(\because[2](#2))
-\end{align}
-$$
-
-である．以上から，共有部分は，
-     
-
-$$
-\begin{align}
-E:&\begin{cases}
-          x+y=t \\
-          1-\sqrt{1-t}\le x\le t
-          \end{cases}&(0\le t\le1)\label{3}
-\end{align}
-$$
-
-である．(右上図)
-     
-     \scalebox{.7}{\input{t-09-4p1}}
-     
-題意の回転体を$\Pi$で切断した断面の面積$S(t)$とする．$E$上の点$P(x,t-x,0)$に対して，$Q(t/3,t/3,t/3)$との距離の$2$乗は，
-     
+また
 
 $$
 \begin{align*}
-|PQ|^2&=\left(x-\frac{t}{3}\right)^2+\left(t-x-\frac{t}{3}\right)^2+\left(\frac{t}{3}\right)^2 \\&=2\left(x-\frac{t}{2}\right)^2+(\text{xに寄らない定数項})
+\overrightarrow{PQ}=\Bigl(1-\sqrt{1-t}-\frac t3,\ (1-\sqrt{1-t})\sqrt{1-t}-\frac t3,\ -\frac t3\Bigr)
 \end{align*}
 $$
 
-である．これは，[3](#3)の範囲内では，
-     
+より，$|\overrightarrow{PQ}|^2$を計算すると
 
 $$
 \begin{align*}
-\frac{t}{2}\le1-\sqrt{1-t}\le t
+|\overrightarrow{PQ}|^2=\frac23t^2-4t+4-2(2-t)\sqrt{1-t}.
 \end{align*}
 $$
 
-ゆえ，$x=t$で最大値$M$，$x=1-\sqrt{1-t}$で最小値$m$をとる．
+（$t=0,1$で検算すると，$t=0$で$0$，$t=1$で$\frac23$となり，直接計算とも一致する．）
 
- \begin{minipage}{0.5\hsize}
-     
-     \scalebox{.5}{\input{t-09-4p3}}
-     
- \end{minipage}
- \begin{minipage}{0.5\hsize}
-  
-       \scalebox{.5}{\input{t-09-4p2}}
-  
- \end{minipage}
-
-故に，右上図から，
-     
+領域$D$の平面$\pi$による切り口は，線分$QR$（$P$を中心とする半径$|\overrightarrow{PQ}|$から$|\overrightarrow{PR}|$までの範囲；$|\overrightarrow{PQ}|\le|\overrightarrow{PR}|$）に対応し，これを$l$のまわりに回転させると，半径$|\overrightarrow{PQ}|$から$|\overrightarrow{PR}|$までの円環（アニュラス）になる．よってこの平面での立体の断面積$S(t)$は
 
 $$
 \begin{align*}
-\frac{S(t)}{\pi}&=M-m \\&=2\left(t-\frac{t}{2}\right)^2-2\left(1-\sqrt{1-t}-\frac{t}{2}\right)^2     \\&=4(1-t)+(2-t)\sqrt{1-t}\\&=2[2(1-t)+\sqrt{1-t}+(1-t)\sqrt{1-t}]
+\frac{S(t)}\pi=|\overrightarrow{PR}|^2-|\overrightarrow{PQ}|^2=\frac23t^2-\Bigl(\frac23t^2-4t+4-2(2-t)\sqrt{1-t}\Bigr)=4t-4+2(2-t)\sqrt{1-t}.
 \end{align*}
 $$
 
-である．
-
-さて，$|(t/3,t/3,t/3)|=\sqrt{3}/3$に注意すれば，求める体積$V$は，
-     
+$t$は平面$\pi$を指定するパラメータであり，$l$の単位方向ベクトルは$\frac1{\sqrt3}(1,1,1)$，$\pi$上の点$\bigl(\frac t3,\frac t3,\frac t3\bigr)$の$l$に沿った弧長は$\dfrac t{\sqrt3}=\dfrac{\sqrt3}3t$だから，もとめる体積$V$は
 
 $$
 \begin{align*}
-&\frac{V}{\pi}=\int_0^1S(t)\frac{\sqrt{3}}{3}dt \\\therefore\ &\frac{\sqrt{3}V}{2\pi}=\frac{1}{2}\int_0^1S(t)dt \\&=\int_0^1\{2(t-1)+\sqrt{1-t}+(1-t)\sqrt{1-t}\}dt
+V=\int_0^1S(t)\cdot\frac{\sqrt3}3\,dt=\frac{\sqrt3}3\pi\int_0^1\bigl\{4(t-1)+2(2-t)\sqrt{1-t}\bigr\}dt.
 \end{align*}
 $$
 
-である．各項計算すれば，
-     
+$2(2-t)\sqrt{1-t}=2(1-t)\sqrt{1-t}+2\sqrt{1-t}$と分けて，
 
 $$
 \begin{align*}
-&\int_0^12(t-1)dt=\left[(t-1)^2\right]_0^1=-1 \\&\int_0^1\sqrt{1-t}dt=\left[\frac{-2}{3}(1-t)^3/2\right]_0^1=\frac{2}{3}\\&\int_0^1(1-t)\sqrt{1-t}dt=\left[\frac{-2}{5}(1-t)^5/2\right]_0^1=\frac{2}{5}
+\int_0^1(t-1)dt=\Bigl[\frac12t^2-t\Bigr]_0^1=-\frac12,\quad\int_0^1\sqrt{1-t}\,dt=\Bigl[-\frac23(1-t)^{3/2}\Bigr]_0^1=\frac23,\quad\int_0^1(1-t)\sqrt{1-t}\,dt=\Bigl[-\frac25(1-t)^{5/2}\Bigr]_0^1=\frac25
 \end{align*}
 $$
 
-であるから，代入して，
-     
+を用いると
 
 $$
 \begin{align*}
-V=\frac{2\sqrt{3}\pi}{3}\left[-1+\frac{2}{3}+\frac{2}{5}\right]=\frac{2\sqrt{3}\pi}{45}
+V=\frac{\sqrt3}3\pi\Bigl[4\Bigl(-\frac12\Bigr)+2\cdot\frac25+2\cdot\frac23\Bigr]=\frac{\sqrt3}3\pi\Bigl[-2+\frac45+\frac43\Bigr]=\frac{\sqrt3}3\pi\cdot\frac2{15}=\frac{2\sqrt3}{45}\pi.
 \end{align*}
 $$
-
-である．$\cdots$((2)の答)

@@ -1,0 +1,54 @@
+---
+university: "titech"
+category: "zenki"
+year: "2014"
+question: "2"
+type: "solution"
+title: "TITECH 2014 zenki Q2 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+**(1)** $a=2$のとき，$t>0$から
+
+$$
+\begin{align*}
+(\ast)\iff e^t-e^{t/2}t-1\ge0.\tag{①}
+\end{align*}
+$$
+
+この左辺を$f(t)$とおく．
+
+$$
+\begin{align*}
+f'(t)=e^t-e^{t/2}\Bigl(1+\frac t2\Bigr)=e^{t/2}\Bigl\{e^{t/2}-\Bigl(\frac t2+1\Bigr)\Bigr\}>0\qquad(\because t>0,\ e^{t/2}>1+\frac t2)
+\end{align*}
+$$
+
+だから，$f(t)$は単調増加で，$0<t$のとき$f(t)>f(0)=0$．よって①が成り立ち，(*)が示された．
+
+**(2)** $g(t)=e^t-e^{t/a}t-1$とおく．$t>0$で$g(t)\ge0$であることを示せばよい．$x=t/a$とおくと
+
+$$
+\begin{align*}
+g'(t)=e^t-e^{t/a}\Bigl(1+\frac ta\Bigr)=e^{ax}-e^x(1+x)=e^x\bigl[e^{(a-1)x}-(x+1)\bigr].\tag{②}
+\end{align*}
+$$
+
+$a\ge2$のとき，$a-1\ge1$より$e^{(a-1)x}\ge1+(a-1)x\ge1+x$（$x>0$，$e^u\ge1+u$と$a-1\ge1$より）だから②は$\ge0$，すなわち$g'(t)\ge0$．$g$は単調増加だから$t>0$に対して$g(t)>g(0)=0$となる．（③）
+
+一方，$1<a<2$のとき，$0<x<\alpha$なる十分小さい$\alpha$で$e^{(a-1)x}-(x+1)<0$となる（$x\to0^+$で$e^{(a-1)x}-(x+1)\to0$かつその微分係数は$x=0$で$(a-1)-1=a-2<0$だから，小さい$x>0$で負）．したがって②より$g'(t)<0$となる$t$が存在し，$g(0)=0$から出発して$g$は減少するので$g(t)<0$となる$t$が存在し，(*)は成り立たない．（④）
+
+以上③④から，求める条件は
+
+$$
+\begin{align*}
+a\ge2
+\end{align*}
+$$
+
+である．（②の直感：$y=e^x$の$x=0$での接線は$y=x+1$であり，$(e^{(a-1)x})'|_{x=0}=a-1$だから，$a-1$が$1$以上か未満かでグラフの交わり方が変わり，これが上記の場合分けに対応する．）

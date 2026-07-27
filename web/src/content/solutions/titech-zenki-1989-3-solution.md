@@ -1,0 +1,100 @@
+---
+university: "titech"
+category: "zenki"
+year: "1989"
+question: "3"
+type: "solution"
+title: "TITECH 1989 zenki Q3 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$$
+\begin{align*}
+f(x+y)=f(x)+f(y)+f(x)f(y) \quad\cdots\text{①}
+\end{align*}
+$$
+
+**(1)**
+
+$$
+\begin{align*}
+\frac{f(x+y)-f(x)}{y}=\frac{f(y)(1+f(x))}{y}\longrightarrow f'(0)(1+f(x)) \quad(y\to0)
+\end{align*}
+$$
+
+より示すべきことは明らか．$\blacksquare$
+
+**(2)** $a=f'(0)$とおく．まず①で$(x,y)=(0,0)$として，
+
+$$
+\begin{align*}
+f(0)(1+f(0))=0 \quad\therefore\ f(0)=0,-1 \quad\cdots\text{②}
+\end{align*}
+$$
+
+である．(1)から，$y=f(x)$とおくと，
+
+$$
+\begin{align*}
+\frac{dy}{dx}=a(1+y) \quad\cdots\text{③}
+\end{align*}
+$$
+
+$a=0$の時，$y=C$（$C$：定数）とおける．①に代入して$C=0$だから，$f(x)=0$は解の1つ．以下$a\ne0$とする．③から
+
+$$
+\begin{align*}
+\frac{dy}{1+y}=a\,dx
+\end{align*}
+$$
+
+積分して
+
+$$
+\begin{align*}
+\log(1+y)=ax+C_1
+\end{align*}
+$$
+
+$$
+\begin{align*}
+y=C\cdot e^{ax}-1
+\end{align*}
+$$
+
+とおける．ただし，$C,C_1$は定数．②に代入して，$C=0,1$である．
+
+**$1^\circ$ $C=1$の時**
+
+$y=e^{ax}-1$だから，①に代入すると
+
+$$
+\begin{align*}
+(\text{左辺})=e^{a(x+y)}-1
+\end{align*}
+$$
+
+$$
+\begin{align*}
+(\text{右辺})=e^{ax}+e^{ay}-2+(e^{ax}-1)(e^{ay}-1)=e^{a(x+y)}-1
+\end{align*}
+$$
+
+となって恒等的に①は成立．
+
+**$2^\circ$ $C=0$の時**
+
+$y=-1$となり，不適（$a\ne0$の仮定に反する）．
+
+以上から
+
+$$
+\begin{align*}
+y=0,\quad e^{f'(0)x}-1
+\end{align*}
+$$

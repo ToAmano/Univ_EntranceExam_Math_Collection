@@ -1,0 +1,92 @@
+---
+university: "titech"
+category: "zenki"
+year: "1992"
+question: "5"
+type: "solution"
+title: "TITECH 1992 zenki Q5 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$$
+\begin{align*}
+I_n=(-1)^n\int_0^{\frac{\pi}{4}}\frac{x\cos(2n-1)x}{\cos x}dx
+\end{align*}
+$$
+
+である．
+
+**(1)**
+
+$$
+\begin{align*}
+I_n-I_{n-1}=(-1)^n\left[\int_0^{\frac{\pi}{4}}\frac{x\cos(2n-1)x}{\cos x}dx+\int_0^{\frac{\pi}{4}}\frac{x\cos(2n-3)x}{\cos x}dx\right]
+\end{align*}
+$$
+
+$$
+\begin{align*}
+=(-1)^n\int_0^{\frac{\pi}{4}}\frac{x\{\cos(2n-3)x+\cos(2n-1)x\}}{\cos x}dx
+\end{align*}
+$$
+
+$$
+\begin{align*}
+=(-1)^n\int_0^{\frac{\pi}{4}}\frac{x}{\cos x}\cdot2\cos(2n-2)x\cos x\,dx
+\end{align*}
+$$
+
+$$
+\begin{align*}
+=(-1)^n\int_0^{\frac{\pi}{4}}2x\cos(2n-2)x\,dx \quad\cdots\text{①}
+\end{align*}
+$$
+
+これは$n\ge2$であることから
+
+$$
+\begin{align*}
+\int_0^{\frac{\pi}{4}}2x\cos(2n-2)x\,dx=2\left[\frac{x}{2n-2}\sin(2n-2)x+\frac{1}{(2n-2)^2}\cos(2n-2)x\right]_0^{\frac{\pi}{4}}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+=2\left\{\frac{\pi}{4}\cdot\frac{1}{2n-2}\sin\frac{n-1}{2}\pi+\frac{1}{(2n-2)^2}\left(\cos\frac{n-1}{2}\pi-1\right)\right\}
+\end{align*}
+$$
+
+だから，①に代入して
+
+$$
+\begin{align*}
+I_n-I_{n-1}=2(-1)^n\left\{\frac{\pi}{4}\cdot\frac{1}{2n-2}\sin\frac{n-1}{2}\pi+\frac{1}{(2n-2)^2}\left(\cos\frac{n-1}{2}\pi-1\right)\right\}
+\end{align*}
+$$
+
+**(2)** $I_1=-\displaystyle\int_0^{\frac{\pi}{4}}x\,dx=-\frac12\left(\frac{\pi}{4}\right)^2$だから，(1)で$n=2,3$として
+
+$$
+\begin{align*}
+I_2=I_1+2\left(\frac{\pi}{4}\cdot\frac12-\frac14\right)=I_1+\frac{\pi}{4}-\frac12
+\end{align*}
+$$
+
+$$
+\begin{align*}
+I_3=I_2-2\left(\frac{\pi}{4}\cdot\frac14\cdot0-\frac18\right)=I_2+\frac14
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\therefore\ I_3=I_1+\frac{\pi}{4}-\frac12+\frac14=-\frac{\pi^2}{32}+\frac{\pi}{4}-\frac14
+\end{align*}
+$$
+
+である．

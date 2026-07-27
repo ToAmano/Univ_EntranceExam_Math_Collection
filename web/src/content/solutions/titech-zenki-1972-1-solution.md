@@ -1,0 +1,40 @@
+---
+university: "titech"
+category: "zenki"
+year: "1972"
+question: "1"
+type: "solution"
+title: "TITECH 1972 zenki Q1 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$|a\omega+b|^2 = a^2|\omega|^2+b^2+ab(\omega+\bar\omega) = a^2+b^2-ab$ だから，
+
+$$
+\begin{align*}
+a^2+b^2-ab=1 \quad\cdots\text{①}
+\end{align*}
+$$
+
+をみたす $(a,b)\in\mathbb{Z}$ をもとめれば良い．対称性から $a\le b$ とする．
+
+$$
+\begin{align*}
+a^2+b^2=ab+1\le b^2+1 \quad\therefore\ a^2\le1
+\end{align*}
+$$
+
+だから $a=0,\pm1$ が必要で，順に①に代入して，
+
+$$
+\begin{align*}
+(a,b)=(0,\pm1),\ (1,1),\ (1,0),\ (-1,-1),\ (-1,0)
+\end{align*}
+$$
+
+である．

@@ -1,0 +1,91 @@
+---
+university: "utokyo"
+category: "zenki"
+year: "1985"
+question: "5"
+type: "solution"
+title: "UTOKYO 1985 zenki Q5 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+ $X=m, Y=n$ である事象を $X_m, Y_n$ とおく。$X_m, Y_n$ が独立だから
+
+$$
+\begin{align*}
+P(X_m \wedge Y_n) = P(X_m) P(Y_n) \quad \dots \text{①}
+\end{align*}
+$$
+
+又, $X+Y=n$ となる確率が $(n+1) P_{n+1}$ に等しく, この時 $(X, Y) = (k, n-k) \ (k=0, 1, \dots, n)$ だから
+
+$$
+\begin{align*}
+& P(X+Y=n) = (n+1) P_{n+1}\\\therefore& \sum_{k=0}^n P(X_k \wedge Y_{n-k}) = (n+1) P_{n+1}\quad\dots\text{②}
+\end{align*}
+$$
+
+①を②に代入して
+
+$$
+\begin{align*}
+\sum_{k=0}^n P_k P_{n-k} = (n+1) P_{n+1} \quad \dots \text{③}
+\end{align*}
+$$
+
+以下, 任意の $n \in \mathbb{Z}_{\ge 0}$ に対し, $P_n = P_0^{n+1} \dots \text{◆}$ であること $\dots$ ④ を帰納的に示す。 \\
+$n=0$ の時は明らかに成立する。以下 $n \le l \ (l \in \mathbb{Z}_{\ge 0})$ での◆の成立を仮定する。 \\
+③から
+
+$$
+\begin{align*}
+(l+1) P_{l+1} = \sum_{k=0}^l P_0^{k+1} P_0^{l-k+1} = (l+1) P_0^{l+2}
+\end{align*}
+$$
+
+$l+1 \neq 0$ から
+
+$$
+\begin{align*}
+P_{l+1} = P_0^{l+2}
+\end{align*}
+$$
+
+となり, $n=l+1$ でも◆は成立。以上から④は示された。これを $\sum_{n=0}^\infty P_n = 1$ に代入する。 \\
+$P_0 = 1$ は明らかに不適なので, $P_0 \neq 1$ とすると,
+
+$$
+\begin{align*}
+\sum_{n=0}^N P_n = P_0 \frac{1 - P_0^{N+1}}{1 - P_0} \quad \dots \text{⑤}
+\end{align*}
+$$
+
+これが収束するのは, $|P_0| < 1$ の時で, このもとで⑤は $\frac{P_0}{1-P_0}$ に収束する。
+
+$$
+\begin{align*}
+\frac{P_0}{1-P_0} = 1 \iff P_0 = \frac{1}{2} \quad (|P_0| < 1 \text{をみたす})
+\end{align*}
+$$
+
+だから◆に代入して
+
+$$
+\begin{align*}
+P_n = \left(\frac{1}{2}\right)^{n+1}
+\end{align*}
+$$
+
+だから, $r = \frac{1}{2}$ として
+
+$$
+\begin{align*}
+\sum_{k=0}^n k \cdot P_k = \frac{1}{1-r} r - \frac{1}{(1-r)^2} r^{n+1} + \frac{r}{1-r} \xrightarrow{n \to \infty} \frac{r}{1-r} = 1 \quad (|r| < 1)
+\end{align*}
+$$
+
+となる。

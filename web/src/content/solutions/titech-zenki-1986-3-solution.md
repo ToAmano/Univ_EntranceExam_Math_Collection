@@ -1,0 +1,78 @@
+---
+university: "titech"
+category: "zenki"
+year: "1986"
+question: "3"
+type: "solution"
+title: "TITECH 1986 zenki Q3 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$$
+\begin{align*}
+f(x)>0\ (0\le x\le1), \qquad f(0)=2,\ f(1)=1 \quad\cdots\text{①}
+\end{align*}
+$$
+
+又，題意及び①から$k\in\mathbb{R}_{>0}$として，
+
+$$
+\begin{align*}
+(x-a)\{f(a)+f(x)\}=k\int_a^xf(t)dt \quad\cdots\text{②}
+\end{align*}
+$$
+
+が$0\le a\le x\le1$なる任意の$a,x$で成立．（$a=x$でも明らかに成立．）$x$で微分して，
+
+$$
+\begin{align*}
+f(a)+f(x)+xf'(x)-af'(x)=kf(x)
+\end{align*}
+$$
+
+$y=f(x)$とおく．$a=x=1$として①から$k=2$．次に$a=0$として
+
+$$
+\begin{align*}
+2+y+x\frac{dy}{dx}=2y
+\end{align*}
+$$
+
+$y\ne2,\ x\ne0$の時
+
+$$
+\begin{align*}
+\frac{dy}{y-2}=\frac{dx}{x}\quad\cdots\text{③}
+\end{align*}
+$$
+
+積分して，
+
+$$
+\begin{align*}
+\log|y-2|=\log x+C_1 \quad\cdots\text{④}
+\end{align*}
+$$
+
+ただし，$C_1$は定数．$x=1$は①より，$x\ne0,\ y\ne2$をみたすので，$x=1$で④が成立することから$C_1=0$．したがって
+
+$$
+\begin{align*}
+x=|y-2|
+\end{align*}
+$$
+
+したがって，$(x,y)=(1,1)$とあわせて
+
+$$
+\begin{align*}
+y=-x+2
+\end{align*}
+$$
+
+これは$x=0$でも成立する．

@@ -1,0 +1,56 @@
+---
+university: "titech"
+category: "zenki"
+year: "1994"
+question: "3"
+type: "solution"
+title: "TITECH 1994 zenki Q3 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+**(1)**
+
+$$
+\begin{align*}
+\int_0^\pi e^{-x}\sin x\,dx=\frac{1}{1+1}\left[-e^{-x}\sin x-e^{-x}\cos x\right]_0^\pi
+\end{align*}
+$$
+
+$$
+\begin{align*}
+=\frac12\left(1+e^{-\pi}\right)
+\end{align*}
+$$
+
+**(2)** $A_n=\displaystyle\int_0^{n\pi}e^{-x}|\sin x|dx$とおく．$a_k=\displaystyle\int_{(k-1)\pi}^{k\pi}e^{-x}|\sin x|dx$とおくと，$t=x-(k-1)\pi$として，
+
+$$
+\begin{align*}
+a_k=\int_0^\pi e^{-t-(k-1)\pi}|\sin t|\,dt
+\end{align*}
+$$
+
+$$
+\begin{align*}
+=e^{-(k-1)\pi}\int_0^\pi e^{-t}\sin t\,dt \quad(\because0\le t\le\pi\text{で}\sin t\ge0)
+\end{align*}
+$$
+
+$$
+\begin{align*}
+=e^{-(k-1)\pi}a_1
+\end{align*}
+$$
+
+だから，
+
+$$
+\begin{align*}
+A_n=\sum_{k=1}^na_k=a_1\frac{1-e^{-n\pi}}{1-e^{-\pi}}\xrightarrow{n\to\infty}\frac{a_1}{1-e^{-\pi}}=\frac12\cdot\frac{1+e^{-\pi}}{1-e^{-\pi}}\quad(\because(1))
+\end{align*}
+$$

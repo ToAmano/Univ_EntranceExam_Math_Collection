@@ -1,0 +1,79 @@
+---
+university: "titech"
+category: "zenki"
+year: "1974"
+question: "6"
+type: "solution"
+title: "TITECH 1974 zenki Q6 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$F(a)=\displaystyle\int_0^{\pi/2}|\sin x-a\cos x|dx$，$S=\sin x,\ C=\cos x,\ f(x)=S-aC$ とおく．$f'(x)=C+aS$
+
+$a\le0$ の時，$f(x)\ge0$ とでき，
+
+$$
+\begin{align*}
+F(a)=\int_0^{\pi/2}S-a\int_0^{\pi/2}C\,dx=1-a
+\end{align*}
+$$
+
+これは $a$ の単調減少関数であるから，連続性も考えて，$0\le a$ で考えれば良い．この時
+$f(0)=-a\le0$，$f(\pi/2)=1$，$f'(x)\ge0$ から，$[0,\pi/2]$ に $f(\alpha)=0$ なる $\alpha$ がただ1つあって，
+
+$$
+\begin{align*}
+F(a)=-\int_0^\alpha f(x)dx+\int_\alpha^{\pi/2}f(x)dx
+= -\int_0^\alpha S\,dx+\int_0^\alpha aC\,dx+\int_\alpha^{\pi/2}S\,dx-\int_\alpha^{\pi/2}aC\,dx \quad\cdots\text{①}
+\end{align*}
+$$
+
+とかける．
+
+$$
+\begin{align*}
+F'(a) = -\sin\alpha\cdot\alpha'+a\cos\alpha\cdot\alpha'+\int_0^\alpha C\,dx-\sin\alpha\cdot\alpha'+a\cos\alpha\cdot\alpha'-\int_\alpha^{\pi/2}C\,dx
+\end{align*}
+$$
+
+$$
+\begin{align*}
+=2(a\cos\alpha-\sin\alpha)\alpha'+2\sin\alpha-1 = 2\sin\alpha-1 \quad(\because f(\alpha)=0)
+\end{align*}
+$$
+
+から下表をうる．
+
+|   $a$    | $0$ |              |                    | $+\infty$  |
+|:----------:|:-----:|:------------:|:------------------:|:------------:|
+| $\alpha$ | $0$ | $\nearrow$ |    $(\pi/2)$     |              |
+|   $F'$   |       |    $-$     |       $0$        |    $+$     |
+|   $F$    |       | $\searrow$ | $\dfrac{\pi}{6}$ | $\nearrow$ |
+
+したがって，$\alpha=\dfrac{\pi}{6}$ で $F(a)$ は最小で，この時，$f(\alpha)=0$ より，$a=\dfrac{\sqrt3}{3}$ でこの時，①から
+
+$$
+\begin{align*}
+F\left(\frac{\sqrt3}{3}\right) = -\int_0^{\pi/6}\left(S-\frac{\sqrt3}{3}C\right)dx+\int_{\pi/6}^{\pi/2}\left(S-\frac{\sqrt3}{3}C\right)dx
+\end{align*}
+$$
+
+$$
+\begin{align*}
+= -\left[-C-\frac{\sqrt3}{3}S\right]_0^{\pi/6}+\left[-C-\frac{\sqrt3}{3}S\right]_{\pi/6}^{\pi/2}
+= \left(\frac{\sqrt3}{2}+\frac{\sqrt3}{6}-1\right)-\left(\frac{\sqrt3}{3}-\frac{\sqrt3}{2}-\frac{\sqrt3}{6}\right)
+\end{align*}
+$$
+
+$$
+\begin{align*}
+= \sqrt3-1
+\end{align*}
+$$
+
+となる．

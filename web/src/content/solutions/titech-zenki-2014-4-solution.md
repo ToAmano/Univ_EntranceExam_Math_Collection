@@ -1,0 +1,97 @@
+---
+university: "titech"
+category: "zenki"
+year: "2014"
+question: "4"
+type: "solution"
+title: "TITECH 2014 zenki Q4 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+**(1)** 題意から，複素数平面上で$45^\circ$回転を考えると
+
+$$
+\begin{align*}
+x+yi&=\Bigl(\cos\frac\pi4+i\sin\frac\pi4\Bigr)(t+si)=\frac{\sqrt2}2(1+i)(t+si)=\frac{\sqrt2}2\bigl\{(t-s)+i(t+s)\bigr\}
+\end{align*}
+$$
+
+であり，$x,y,s,t$は実数だから
+
+$$
+\begin{align*}
+x=\frac{\sqrt2}2(t-s)=\frac{\sqrt2}2(-\sqrt2t^2+3t)\equiv f(t),\qquad
+y=\frac{\sqrt2}2(s+t)=\frac{\sqrt2}2(\sqrt2t^2-t)\equiv g(t).
+\end{align*}
+$$
+
+**(2)** $g(t)=\dfrac{\sqrt2}2\Bigl[\sqrt2\Bigl(t-\dfrac1{2\sqrt2}\Bigr)^2-\dfrac{\sqrt2}8\Bigr]$だから，$g$は$t=\dfrac1{2\sqrt2}=\dfrac{\sqrt2}4$で最小値
+
+$$
+\begin{align*}
+\frac{\sqrt2}2\cdot\Bigl(-\frac{\sqrt2}8\Bigr)=-\frac18
+\end{align*}
+$$
+
+をとる．$g(t)$は$t$の2次関数（上に凸ではなく下に凸）で，直線$y=a$が曲線$C$とただ1点で交わるのは，この最小値の位置，すなわち
+
+$$
+\begin{align*}
+a=-\frac18
+\end{align*}
+$$
+
+のときである．
+
+**(3)** $g(t)=0\iff t=0,\ \dfrac{\sqrt2}2$（$\sqrt2t^2-t=t(\sqrt2t-1)=0$より）．よって$0\le t\le\dfrac{\sqrt2}2$の部分がグラフと$x$軸で囲む領域$D$の境界を与え，$t\in\bigl(0,\frac{\sqrt2}4\bigr)$で$x_-(y)$（左側の枝），$t\in\bigl(\frac{\sqrt2}4,\frac{\sqrt2}2\bigr)$で$x_+(y)$（右側の枝）を与える．$D$を$y$軸のまわりに回転した体積$V$は
+
+$$
+\begin{align*}
+\frac V\pi=\int_a^0\bigl(x_+^2-x_-^2\bigr)dy=\int_0^{\sqrt2/2}x(t)^2\frac{dy}{dt}dt\tag{①}
+\end{align*}
+$$
+
+（両方の枝の寄与が$t=0$から$\frac{\sqrt2}2$までの一つの積分にまとまる）．$g'(t)=\dfrac{\sqrt2}2(2\sqrt2t-1)$であり，$x(t)=\dfrac{\sqrt2}2t(3-\sqrt2t)$だから
+
+$$
+\begin{align*}
+x(t)^2g'(t)&=\frac12t^2(3-\sqrt2t)^2\cdot\frac{\sqrt2}2(2\sqrt2t-1)=\frac{\sqrt2}4t^2(3-\sqrt2t)^2(2\sqrt2t-1)\\&=\frac{\sqrt2}4t^2(4\sqrt2t^3-26t^2+24\sqrt2t-9)
+\end{align*}
+$$
+
+（$(3-\sqrt2t)^2(2\sqrt2t-1)=4\sqrt2t^3-26t^2+24\sqrt2t-9$を展開して得た）．①に代入して
+
+$$
+\begin{align*}
+\frac V\pi&=\frac{\sqrt2}4\Bigl[\frac{4\sqrt2}6t^6-\frac{26}5t^5+\frac{24\sqrt2}4t^4-\frac93t^3\Bigr]_0^{\sqrt2/2}\\&=\frac{\sqrt2}4\Bigl[\frac{2\sqrt2}3t^6-\frac{26}5t^5+6\sqrt2t^4-3t^3\Bigr]_0^{\sqrt2/2}
+\end{align*}
+$$
+
+$t=\dfrac{\sqrt2}2$のとき$t^2=\dfrac12,t^3=\dfrac{\sqrt2}4,t^4=\dfrac14,t^5=\dfrac{\sqrt2}8,t^6=\dfrac18$を代入すると
+
+$$
+\begin{align*}
+\frac{2\sqrt2}3\cdot\frac18-\frac{26}5\cdot\frac{\sqrt2}8+6\sqrt2\cdot\frac14-3\cdot\frac{\sqrt2}4=\frac{\sqrt2}{12}-\frac{13\sqrt2}{20}+\frac{3\sqrt2}2-\frac{3\sqrt2}4=\frac{11\sqrt2}{60}
+\end{align*}
+$$
+
+（通分すると$\frac{5-39+90-45}{60}\sqrt2=\frac{11}{60}\sqrt2$）．よって
+
+$$
+\begin{align*}
+\frac V\pi=\frac{\sqrt2}4\cdot\frac{11\sqrt2}{60}=\frac{11\cdot2}{240}=\frac{11}{120}
+\end{align*}
+$$
+
+より
+
+$$
+\begin{align*}
+V=\frac{11}{120}\pi.
+\end{align*}
+$$

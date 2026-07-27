@@ -1,0 +1,56 @@
+---
+university: "titech"
+category: "zenki"
+year: "1987"
+question: "5"
+type: "solution"
+title: "TITECH 1987 zenki Q5 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+**(1)** $k+l$回の移動のうち，行何回目に上へ移動するかかんがえて，
+
+$$
+\begin{align*}
+P(k,l)={}_{k+l}C_k\left(\frac12\right)^{k+l}
+\end{align*}
+$$
+
+**(2)** 右図から
+
+$$
+\begin{align*}
+P(n,2)=P(n,1)+\frac12P(n-1,2) \quad\cdots\text{①}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+P(n,1)=P(n,0)+\frac12P(n-1,1) \quad\cdots\text{②}
+\end{align*}
+$$
+
+ここで，$P(n,0)=\left(\dfrac12\right)^n$，$P(n-1,2)={}_{n+1}C_2\left(\dfrac12\right)^{n+1}$，$P(n-1,1)={}_nC_1\left(\dfrac12\right)^n$（$\because(1)$）だから②，①に代入して
+
+$$
+\begin{align*}
+P(n,1)=\left(\frac12\right)^n+\frac{n}{2}\left(\frac12\right)^n
+\end{align*}
+$$
+
+$$
+\begin{align*}
+P(n,2)=\left(1+\frac{n}{2}\right)\left(\frac12\right)^n+\frac12\cdot\frac{(n+1)n}{2}\left(\frac12\right)^{n+1}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+=\frac{n^2+5n+8}{8}\left(\frac12\right)^n
+\end{align*}
+$$

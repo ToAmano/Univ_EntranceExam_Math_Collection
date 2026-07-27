@@ -1,0 +1,62 @@
+---
+university: "titech"
+category: "zenki"
+year: "1992"
+question: "3"
+type: "solution"
+title: "TITECH 1992 zenki Q3 (solution)"
+---
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+## 【解】
+
+$c>1\ \cdots$①　$A(1,c)$とおく．$\ell$の傾きを$m$とおく．と$y=m(x-1)+c$だから，
+
+$$
+\begin{align*}
+x^2=m(x-1)+c \quad\cdots\text{②}
+\end{align*}
+$$
+
+の2解$\alpha,\beta\ (\alpha<\beta)$が$\ell$と$y=x^2$の交点の$x$座標である．題意の面積$S$として
+
+$$
+\begin{align*}
+S=\int_\alpha^\beta\{m(x-1)+c-x^2\}dx
+\end{align*}
+$$
+
+$$
+\begin{align*}
+=\frac16(\beta-\alpha)^3 \quad\cdots\text{③}
+\end{align*}
+$$
+
+であり，$\alpha<\beta$と$\alpha,\beta$が②の解であることから
+
+$$
+\begin{align*}
+\beta-\alpha=2\cdot\frac{\sqrt{m^2-4(m-c)}}{2}=\sqrt{m^2-4m+4c}
+\end{align*}
+$$
+
+だから，③に代入して
+
+$$
+\begin{align*}
+S=\frac16\left\{(m-2)^2+4c-4\right\}^{3/2}
+\end{align*}
+$$
+
+これは$m=2$の時，
+
+$$
+\begin{align*}
+\min S=\frac16\cdot8(c-1)^{3/2}=\frac43(c-1)^{3/2}
+\end{align*}
+$$
+
+をとる．
