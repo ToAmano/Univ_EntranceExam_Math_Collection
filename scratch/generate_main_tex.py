@@ -57,6 +57,7 @@ PREAMBLE = r"""\documentclass[a4paper,10pt]{ltjsarticle}
 \usepackage{bm}
 \usepackage{tikz,pgfplots}
 \usepackage{tikz-3dplot}
+\usepackage{scrextend}
 \usetikzlibrary{arrows.meta,calc,intersections,patterns,patterns.meta,angles,quotes,through,positioning,decorations.pathmorphing,decorations.markings,math,3d,perspective,shapes.geometric,backgrounds}
 \usepgfplotslibrary{fillbetween,colormaps,groupplots}
 \pgfplotsset{compat=1.18}

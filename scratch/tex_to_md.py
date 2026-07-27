@@ -7,6 +7,85 @@ import tempfile
 import pypandoc
 from TexSoup import TexSoup
 
+
+def _extract_braced(text, start):
+    """text[start] は '{' である前提。対応する閉じ '}' までを中括弧の
+    ネストを数えながら走査し、(全体の文字列, 閉じ括弧直後のインデックス) を返す。
+    \\newcommand の本体は複数行・ネスト中括弧を含みうるため、単純な正規表現では
+    正しく切り出せない。"""
+    depth = 0
+    i = start
+    n = len(text)
+    while i < n:
+        c = text[i]
+        if c == '\\' and i + 1 < n:
+            i += 2
+            continue
+        if c == '{':
+            depth += 1
+        elif c == '}':
+            depth -= 1
+            if depth == 0:
+                return text[start:i + 1], i + 1
+        i += 1
+    return text[start:], n
+
+
+def extract_global_macro_defs(raw_tex):
+    """図を単体で（別ドキュメントとして）コンパイルする際に必要な、外部で定義された
+    マクロ／設定だけを、出現順を保ったまま抽出する。
+
+    tikzpicture 本体の内側で定義されている \\def / \\pgfmathsetmacro は対象外とする：
+    \\foreach \\i in {...}{ \\pgfmathsetmacro{\\angle}{\\i * ...} } や
+    \\pgfplotsinvokeforeach{...}{ \\pgfmathsetmacro{...}{...#1...} } のようにループ変数
+    （\\i, #1 等）に依存する行がそのまま拾われると、ループの外（プリアンブル）では
+    その変数が未定義でエラーになる。また、tikzpicture 内の行は元々その figure の
+    tikz_code に含まれているため、外側へ複製する必要自体がない
+    （実例: utokyo 後期2006年第2問、utokyo 後期1999年第3問で発生）。
+
+    \\pgfmathsetmacro{\\foo}{...}; のように文末に踏襲された `;` がプリアンブルへ
+    そのままハイストされると、`;` が地の文字としてタイプセットされ
+    "Missing \\begin{document}" エラーになる（実例: titech 後期2006年第1問、
+    utokyo 後期1992年第1問）。これも上記の「tikzpicture 内側は対象外」ルールで
+    合わせて回避される。
+
+    \\newcommand / \\renewcommand は本体が複数行・ネスト中括弧を含みうるため、
+    _extract_braced() でブレース対応を追跡しながら抽出する
+    （実例: utokyo 後期1990年第3問の \\recursiveTriangleQTwo）。
+    """
+    outer_text = re.sub(r'\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}', '', raw_tex, flags=re.DOTALL)
+
+    newcommand_defs = []
+    masked = list(outer_text)
+    for m in re.finditer(r'\\(?:newcommand|renewcommand)\s*(?:\{\\[a-zA-Z]+\}|\\[a-zA-Z]+)', outer_text):
+        start = m.start()
+        j = m.end()
+        while True:
+            m_opt = re.match(r'\s*\[[^\]]*\]', outer_text[j:])
+            if not m_opt:
+                break
+            j += m_opt.end()
+        m_ws = re.match(r'\s*', outer_text[j:])
+        j += m_ws.end()
+        if j < len(outer_text) and outer_text[j] == '{':
+            snippet, end = _extract_braced(outer_text, j)
+            newcommand_defs.append((start, outer_text[start:end]))
+            for k in range(start, end):
+                masked[k] = ' '
+    masked_text = ''.join(masked)
+
+    other_defs = [(m.start(), m.group(0))
+                  for m in re.finditer(r'\\(?:def|pgfmathsetmacro|tdplot)[^\n]+', masked_text)]
+
+    seen = set()
+    ordered = []
+    for _, snippet in sorted(newcommand_defs + other_defs, key=lambda t: t[0]):
+        if snippet not in seen:
+            seen.add(snippet)
+            ordered.append(snippet)
+    return "\n".join(ordered)
+
+
 def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs=""):
     """
     TikZコードと大問レベルのマクロ定義を組み合わせてスタンドアロンSVG画像を生成する
@@ -30,9 +109,24 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs=""):
 \\usepackage[haranoaji]{{luatexja-preset}}
 \\usepackage{{tikz,pgfplots}}
 \\usepackage{{tikz-3dplot}}
-\\usetikzlibrary{{arrows.meta,calc,intersections,patterns,patterns.meta,angles,quotes,through,positioning,decorations.pathmorphing,decorations.markings}}
-\\usepgfplotslibrary{{fillbetween,colormaps}}
+\\usetikzlibrary{{arrows.meta,calc,intersections,patterns,patterns.meta,angles,quotes,through,positioning,decorations.pathmorphing,decorations.markings,math,3d,perspective,shapes.geometric,backgrounds}}
+\\usepgfplotslibrary{{fillbetween,colormaps,groupplots}}
 \\pgfplotsset{{compat=1.18}}
+% ここから下は generate_main_tex.py の PREAMBLE と同じフォールバック・略記マクロ群。
+% 図を単体でコンパイルする際、全体ビルドでは定義済みの前提で書かれている図
+% （\\tikzmath や \\R 等）が単体コンパイルだけ失敗するのを防ぐため、
+% 実質的に同じプリアンブルを維持する。
+% tdplot_main_coords スタイルを使う figure が \\tdplotsetmaincoords を
+% 自前で呼んでいない場合、ここで呼んでおかないと
+% "I do not know the key '/tikz/tdplot_main_coords'" で単体コンパイルが失敗する
+% （各 figure 側で呼んでいれば tikz_code 側の呼び出しで上書きされる）。
+\\tdplotsetmaincoords{{70}}{{110}}
+\\newcommand{{\\R}}{{\\mathbb{{R}}}}
+\\newcommand{{\\C}}{{\\mathbb{{C}}}}
+\\newcommand{{\\N}}{{\\mathbb{{N}}}}
+\\newcommand{{\\Z}}{{\\mathbb{{Z}}}}
+\\newcommand{{\\Q}}{{\\mathbb{{Q}}}}
+\\providecommand{{\\roundedArrowDR}}{{\\searrow}}
 
 {macro_defs}
 
@@ -128,7 +222,9 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         clean_lines.append(line_clean)
     raw_tex = "\n".join(clean_lines)
 
-    macro_defs = "\n".join(re.findall(r'(\\(?:def|pgfmath|tdplot)[^\n]+)', raw_tex))
+    # 図を単体で（別ドキュメントとして）コンパイルする際に必要な、外部で定義された
+    # マクロ／設定だけを拾う（詳細は extract_global_macro_defs() のdocstring参照）。
+    macro_defs = extract_global_macro_defs(raw_tex)
 
     # 不要なレイアウトマクロの削除
     raw_tex = re.sub(r'\\rhead\{[^}]*\}', '', raw_tex)
