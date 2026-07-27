@@ -1,0 +1,56 @@
+\documentclass[../../../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+{\bf [解]}
+$f(x)=x^3+3ax^2+3bx$とおき，$A:y=f(x)$，$B:y=c$とする．$f'(x)=3x^2+6ax+3b=3(x^2+2ax+b)$である．$A$，$B$が相異なる3交点を持つには，$f(x)=c$が異なる3実解を持つ，つまり$f$が極大・極小を持ちその間に$c$がある必要がある．そのためには$f'(x)=0$が異なる2実解を持つことが必要で，$x^2+2ax+b=0$の判別式を考えて
+\begin{align*}
+\frac{D}4=a^2-b>0\iff a^2>b
+\end{align*}
+が必要．このもとで，$f'(x)=0$の2実解を$\alpha,\beta$（$\alpha<\beta$）とおくと，
+\begin{align*}
+\alpha=-a-\sqrt{a^2-b},\quad\beta=-a+\sqrt{a^2-b}
+\end{align*}
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=1.3, >=stealth]
+  \draw[->] (-3.6,0) -- (3.6,0) node[right] {\scriptsize $x$};
+  \draw[->] (0,-2.2) -- (0,2.6) node[above] {\scriptsize $y$};
+  \draw[thick, domain=-3.3:3.3, smooth, variable=\x] plot ({\x},{(\x*\x*\x-3*\x)/6});
+  \draw[gray] (-3.3,0.4) -- (3.3,0.4) node[right] {\scriptsize $B:y=c$};
+  \node[above] at (2.2,1.9) {\scriptsize $A:y=f(x)$};
+  \foreach \p/\lab/\posn in {-2.8/{$\frac{3\alpha-\beta}2$}/below, -1.7/{$\alpha$}/below, 0/{$\frac{\alpha+\beta}2$}/below, 1.7/{$\beta$}/below, 2.8/{$\frac{3\beta-\alpha}2$}/below} {
+    \draw[gray, dashed] (\p,-1.6) -- (\p,1.9);
+    \node[\posn] at (\p,-1.7) {\scriptsize \lab};
+  }
+\end{tikzpicture}
+\caption{$y=f(x)$と$y=c$のグラフ概形}
+\end{figure}
+
+$f$は$x<\alpha$で増加，$\alpha<x<\beta$で減少，$x>\beta$で増加し，$x=\alpha$で極大，$x=\beta$で極小となる．$A,B$が相異なる3交点を持つとき，$c$は極小値と極大値の間にあるから，3交点の$x$座標を$x_1<x_2<x_3$とすると$x_1<\alpha<x_2<\beta<x_3$である．
+
+$d=\sqrt{a^2-b}$とおくと，$\alpha=-a-d$，$\beta=-a+d$である．$u=x+a$とおいて$f$を平行移動すると，
+\begin{align*}
+f(-a+u)-f(-a)=u^3-3d^2u=:h(u)
+\end{align*}
+となる（実際，展開して確認できる）．$h$は奇関数で，$h'(u)=3(u^2-d^2)$だから，$h$は$u<-d$で増加，$-d<u<d$で減少，$u>d$で増加し，
+\begin{align*}
+h(-d)=2d^3,\qquad h(d)=-2d^3,\qquad h(-2d)=-2d^3,\qquad h(2d)=2d^3
+\end{align*}
+である．$k=c-f(-a)$とおくと，$f(x)=c\iff h(u)=k$（$u=x+a$）であり，異なる3実解を持つことから$-2d^3<k<2d^3$である．
+
+$x_1$に対応する$u_1=x_1+a<-d$は$h(u)=k$の$u<-d$における唯一の解であり，$h$はこの範囲で単調増加で$h(-2d)=-2d^3<k$だから，$u_1>-2d$．同様に，$x_3$に対応する$u_3=x_3+a>d$は$h(u)=k$の$u>d$における唯一の解であり，$h(2d)=2d^3>k$だから，$u_3<2d$．また$u_2=x_2+a\in(-d,d)\subset(-2d,2d)$である．
+
+以上から，$u_1,u_2,u_3\in(-2d,2d)$，すなわち
+\begin{align*}
+x_1,x_2,x_3\in(-a-2d,-a+2d)=\left(-a-2\sqrt{a^2-b},-a+2\sqrt{a^2-b}\right)
+\end{align*}
+であり，題意は示された．$\blacksquare$
+
+\newpage
+
+\end{document}

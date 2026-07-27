@@ -8,5 +8,5 @@
 | **東大 後期** | [utokyo_kouki.md](./utokyo_kouki.md) | 54問 | 54/54 | 0/54 | 54/54 | `100.0%` |
 | **東工大 前期** | [titech_zenki.md](./titech_zenki.md) | 293問 | 274/293 | 235/293 | 26/293 | `89.1%` |
 | **東工大 後期** | [titech_kouki.md](./titech_kouki.md) | 44問 | 43/44 | 0/44 | 43/44 | `97.7%` |
-| **京大 前期** | [ukyoto_zenki.md](./ukyoto_zenki.md) | 330問 | 300/330 | 223/330 | 0/330 | `67.6%` |
+| **京大 前期** | [ukyoto_zenki.md](./ukyoto_zenki.md) | 330問 | 300/330 | 273/330 | 0/330 | `82.7%` |
 | **京大 後期** | [ukyoto_kouki.md](./ukyoto_kouki.md) | 108問 | 107/108 | 0/108 | 108/108 | `100.0%` |
