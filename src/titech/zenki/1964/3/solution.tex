@@ -1,71 +1,116 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
+内接円の中心 $O$ から $AB, BC, CA$ に下ろした垂足を順に $H_1, H_2, H_3$ とする. 
+$AC, BC$ に接する円を内接円から順に $C_0, C_1, C_2, \dots$ とおく. $C_n$ の半径を $r_n$ とすると題意から $r_0 = r$ である．
+円 $C_n$ の中心を $O_n$ とおく．この状況は下図のように書ける．
 
-\begin{proof}[解]
-内接円の中心 $O$ から $AB, BC, CA$ に下ろした垂足を順に $H_1, H_2, H_3$ とする. $AC, BC$ に接する円を, 内接円から順に $C_0, C_1, C_2, \dots$ とおく. $C_n$ の半径を $r_n$ とする. 題意から $r_0 = r$ で, 円 $C_n$ の中心を $O_n$ として右図から
-\[
-\sin \frac{C}{2} = \frac{r_n - r_{n+1}}{r_n + r_{n+1}}
-\]
-\[
-\therefore r_{n+1} = \frac{1 - \sin\frac{C}{2}}{1 + \sin\frac{C}{2}} r_n
-\]
-だから, くり返し用いて,
-\[
-r_n = \left(\frac{1 - \sin\frac{C}{2}}{1 + \sin\frac{C}{2}}\right)^n r \qquad \dots \text{\textcircled{1}}
-\]
-である. 同様にして, 他の2辺に接する円の半径 $s_n, t_n$ は,
-\[
-s_n = \left(\frac{1 - \sin\frac{A}{2}}{1 + \sin\frac{A}{2}}\right)^n r, \quad t_n = \left(\frac{1 - \sin\frac{B}{2}}{1 + \sin\frac{B}{2}}\right)^n r \qquad \dots \text{\textcircled{2}}
-\]
-と書けるから, 全ての $C_n$ の面積和は ($C_0$ のぞく),
-\[
-\lim_{n \to \infty} \sum_{k=1}^n \pi r_k^2 = \pi r^2 \frac{1}{1 - \left(\frac{1-\sin\frac{C}{2}}{1+\sin\frac{C}{2}}\right)^2} = \pi r^2 \frac{(1 - \sin\frac{C}{2})^2}{4 \sin\frac{C}{2}} \equiv F_C \qquad \dots \text{\textcircled{3}}
-\]
-と書けることから, 全ての面積和 $T$ は対称性から,
-\[
-T = F_A + F_B + F_C + \pi r^2 = \pi r^2 \left\{ 1 + \frac{(1-\sin\frac{A}{2})^2}{4\sin\frac{A}{2}} + \frac{(1-\sin\frac{B}{2})^2}{4\sin\frac{B}{2}} + \frac{(1-\sin\frac{C}{2})^2}{4\sin\frac{C}{2}} \right\}
-\]
-$\triangle ABC$ が一辺 $a$ の正三角形の時, $A=B=C=\pi/3$, $r = \frac{\sqrt{3}}{6} a$ だから代入して,
-\[
-T = \frac{11}{96} \pi a^2
-\]
-
+\begin{figure}[htb]
 \begin{center}
-\begin{tikzpicture}[scale=1.2]
-    % Triangle ABC
-    \coordinate (C) at (0, 3);
-    \coordinate (A) at (-2.5, 0);
-    \coordinate (B) at (2.5, 0);
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  % -------------------------------------------------------------
+  % パラメータ設定
+  % 角 H2-C-H3 を約 60 度に設定
+  % -------------------------------------------------------------
+  \def\r{1.8}     % 大円 C_0 の半径
+  \def\rOne{0.6}  % 小円 C_1 の半径
 
-    \draw[thick] (A) node[left] {$A$} -- (B) node[right] {$B$} -- (C) node[above] {$C$} -- cycle;
-    \draw (C) node[above right] {$H_3$};
+  % 座標定義
+  \coordinate (C) at (3.118, 0);               % 頂点 C
+  \coordinate (H2) at (0, 0);                  % 垂足 H2 (原点)
+  \coordinate (H3) at (1.559, 2.7);            % 垂足 H3
+  \coordinate (O) at (0, \r);                  % 大円 C_0 の中心 O
+  \coordinate (O1) at (2.078, \rOne);          % 小円 C_1 の中心 O1
 
-    % Incircle C_0
-    \draw (0, 0.9) circle (0.9);
-    \node at (0.3, 0.9) {$O_0$};
+  % -------------------------------------------------------------
+  % 1. 2辺 (H2-C, H3-C) の描画
+  % -------------------------------------------------------------
+  \draw[thick] (H2) node[below left] {$H_2$} -- (C) node[below right] {$C$};
+  \draw[thick] (H3) node[above right] {$H_3$} -- (C);
 
-    % Smaller circle C_1 near C
-    \draw (0, 2.1) circle (0.3);
-    \node at (0.15, 2.1) {\tiny $O_1$};
+  % -------------------------------------------------------------
+  % 2. 円 C_0 と 円 C_1 の描画
+  % -------------------------------------------------------------
+  % 大円 C_0 (中心 O, 半径 r)
+  \draw[thick] (O) circle (\r);
+  \fill (O) circle (1.2pt) node[left] {$O$};
+  \node at (1.1, 1.9) {$C_0$};
 
-    % Labels
-    \node[left] at (-1.25, 1.5) {$r$};
-    \node[below] at (0, 0) {$H_2$};
+  % 小円 C_1 (中心 O1, 半径 r1)
+  \draw[thick] (O1) circle (\rOne);
+  \fill (O1) circle (1.2pt) node[right, font=\small] {$O_1$};
 
+  % -------------------------------------------------------------
+  % 3. 補助線・半径・ラベルの描画
+  % -------------------------------------------------------------
+  % O から H2, H3 への垂線 (半径 r)
+  \draw[dashed] (O) -- (H2) node[midway, left] {$r$};
+  \draw[dashed] (O) -- (H3) node[midway, above left] {$r$};
+
+  % O1 から下辺への垂線 (半径 r1)
+  \draw[dashed] (O1) -- (2.078, 0);
+
+  % O1 から OH2 への水平補助線
+  \draw[dashed] (O1) -- (0, \rOne);
+
+  % 角の二等分線 (C - O1 - O)
+  \draw[gray!70] (C) -- (O);
+
+\end{tikzpicture}
+\caption{円$C_0$と$C_1$および接点・中心の配置}
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+ \begin{center}
+\begin{tikzpicture}[scale=2]
     % Auxiliary right triangle figure
-    \begin{scope}[shift={(3, 1)}]
-        \draw[thick] (0,0) -- (1.5,0) node[midway, below] {$r_n - r_{n+1}$} -- (1.5, 1) -- cycle;
-        \node[above left] at (0.75, 0.5) {$r_n + r_{n+1}$};
-        \node[left] at (0.3, 0.15) {$\frac{C}{2}$};
-        \node[above right] at (1.5, 1) {$O_n$};
-        \node[below left] at (0, 0) {$O_{n+1}$};
-    \end{scope}
+    \draw[thick] (0,0) -- (1.5,0) node[midway, below] {$r_n - r_{n+1}$} -- (1.5, 1) -- cycle;
+    \node[above left] at (0.75, 0.5) {$r_n + r_{n+1}$};
+    \node[right] at (0.3, 0.15) {$\frac{C}{2}$};
+    \node[above right] at (1.5, 1) {$O_n$};
+    \node[below left] at (0, 0) {$O_{n+1}$};
+    \node[below left] at (1.5, 0) {$T_{n}$};
+    % C/2 の角度を表す円弧 (arc)
+    % 角度: arctan(1/1.5) ≒ 33.69度
+    \draw (0,0) ++(0:0.3) arc (0:33.69:0.3);
 \end{tikzpicture}
 \end{center}
-\end{proof}
+\end{figure}
+
+$O_{n+1}$から$O_n$と$C_n$と線分$CH_3$の接点を結ぶ直線に向かっておろした垂線の足を$T_n$とおく．
+三角形$T_nO_nO_{n+1}$を考えると，
+\begin{align}
+\sin \frac{C}{2} &= \frac{r_n - r_{n+1}}{r_n + r_{n+1}} \\
+\therefore 
+  r_{n+1} &= \frac{1 - \sin\frac{C}{2}}{1 + \sin\frac{C}{2}} r_n
+\end{align}
+と書けるから，これを$n=0,1,\cdots$と繰り返し用いて
+\begin{align}
+ r_n = \left(\frac{1 - \sin\frac{C}{2}}{1 + \sin\frac{C}{2}}\right)^n r \label{eq:1}
+\end{align}
+である.よって$C_0$を除く全ての $C_n$ の面積和$F_C$は
+\begin{align}
+ F_C &= \lim_{n \to \infty} \sum_{k=1}^n \pi r_k^2 \\
+     &= \pi r^2 \frac{1}{1 - \left(\frac{1-\sin\frac{C}{2}}{1+\sin\frac{C}{2}}\right)^2} \\
+     &= \pi r^2 \frac{(1 - \sin\frac{C}{2})^2}{4 \sin\frac{C}{2}} \label{eq:2}
+\end{align}
+と計算できる．
+
+他の2辺に接する円の面積和$F_A, F_B$も\cref{eq:2}と全く同様にして書けるから，全体の面積和は$C_0$の面積$\pi r^2$も考慮して
+\begin{align}
+T 
+ &= F_A + F_B + F_C + \pi r^2 \\
+ &= \pi r^2 \left\{ 1 + \frac{(1-\sin\frac{A}{2})^2}{4\sin\frac{A}{2}} + \frac{(1-\sin\frac{B}{2})^2}{4\sin\frac{B}{2}} + \frac{(1-\sin\frac{C}{2})^2}{4\sin\frac{C}{2}} \right\} \label{eq:3}
+\end{align}
+が求める答えである．
+
+次に$\triangle ABC$ が一辺 $a$ の正三角形の時, $A=B=C=\pi/3$, $r = \frac{\sqrt{3}}{6} a$ だから\cref{eq:3}に代入して
+\begin{align}
+T = \frac{11}{96} \pi a^2 
+\end{align}
+である．
+
 
 \end{document}
