@@ -67,6 +67,47 @@ const sameYearItems = allSolutions
 		return (a.data.type || '').localeCompare(b.data.type || '');
 	});
 
+// Adjacent-year navigation: same university + category, stepping to the
+// nearest earlier/later year that has any content, preferring the same
+// question number + type if that exact page exists in that year.
+const sameSeries = allSolutions.filter(
+	(item) =>
+		item.data.university === entry.data.university &&
+		item.data.category === entry.data.category
+);
+const currentYearNum = parseInt(entry.data.year, 10);
+const yearsAvailable = Array.from(new Set(sameSeries.map((item) => parseInt(item.data.year, 10)))).sort(
+	(a, b) => a - b
+);
+const earlierYears = yearsAvailable.filter((y) => y < currentYearNum);
+const laterYears = yearsAvailable.filter((y) => y > currentYearNum);
+const prevYearNum = earlierYears.length > 0 ? earlierYears[earlierYears.length - 1] : null;
+const nextYearNum = laterYears.length > 0 ? laterYears[0] : null;
+
+function pickEntryForYear(targetYearNum: number | null) {
+	if (targetYearNum === null) return null;
+	const targetYear = String(targetYearNum);
+	const yearItems = sameSeries.filter((item) => item.data.year === targetYear);
+	// Prefer the exact same question number + type as the page being viewed.
+	const exact = yearItems.find(
+		(item) => item.data.question === entry.data.question && (item.data.type || '') === (entry.data.type || '')
+	);
+	if (exact) return exact;
+	// Otherwise prefer the same question number regardless of type.
+	const sameQuestion = yearItems.find((item) => item.data.question === entry.data.question);
+	if (sameQuestion) return sameQuestion;
+	// Otherwise fall back to that year's summary page, or its first question in order.
+	const fallbackSorted = yearItems.sort((a, b) => {
+		if (a.data.question === '0') return -1;
+		if (b.data.question === '0') return 1;
+		return parseInt(a.data.question, 10) - parseInt(b.data.question, 10);
+	});
+	return fallbackSorted[0] || null;
+}
+
+const prevYearEntry = pickEntryForYear(prevYearNum);
+const nextYearEntry = pickEntryForYear(nextYearNum);
+
 // Page Title
 const pageTitle = entry.data.title || `${univName} ${catName} ${year}年 ${questionLabel} (${typeLabel})`;
 ---
@@ -117,6 +158,42 @@ const pageTitle = entry.data.title || `${univName} ${catName} ${year}年 ${quest
 			{entryType === 'solution' && <span class="badge badge-solution">解答解説</span>}
 		</div>
 	</div>
+
+	<!-- Adjacent Year Navigation (前後の年度へ移動) -->
+	{(prevYearEntry || nextYearEntry) && (
+		<div style="display: flex; align-items: stretch; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem;">
+			{prevYearEntry ? (
+				<a
+					href={`${baseUrl}/solutions/${prevYearEntry.slug}/`}
+					class="glass"
+					style="flex: 1; display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.1rem; border-radius: 10px; color: var(--text-main); text-decoration: none; font-size: 0.9rem; transition: all 0.2s ease;"
+				>
+					<svg style="width: 1.1rem; height: 1.1rem; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+					<span>
+						<span style="display: block; font-size: 0.75rem; color: var(--text-muted);">前の年度</span>
+						<span style="font-weight: 600;">{prevYearEntry.data.year}年</span>
+					</span>
+				</a>
+			) : (
+				<span style="flex: 1;"></span>
+			)}
+			{nextYearEntry ? (
+				<a
+					href={`${baseUrl}/solutions/${nextYearEntry.slug}/`}
+					class="glass"
+					style="flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem; padding: 0.75rem 1.1rem; border-radius: 10px; color: var(--text-main); text-decoration: none; font-size: 0.9rem; text-align: right; transition: all 0.2s ease;"
+				>
+					<span>
+						<span style="display: block; font-size: 0.75rem; color: var(--text-muted);">次の年度</span>
+						<span style="font-weight: 600;">{nextYearEntry.data.year}年</span>
+					</span>
+					<svg style="width: 1.1rem; height: 1.1rem; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+				</a>
+			) : (
+				<span style="flex: 1;"></span>
+			)}
+		</div>
+	)}
 
 	<!-- Year Navigation Bar (回遊ナビゲーション) -->
 	{sameYearItems.length > 1 && (
