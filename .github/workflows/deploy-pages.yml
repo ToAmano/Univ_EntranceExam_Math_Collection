@@ -21,6 +21,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # generate_news.py walks the full git history of src/**/solution.tex;
+          # a shallow clone would only see the most recent commit.
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -36,6 +40,9 @@ jobs:
         run: |
           python3 -m pip install TexSoup pypandoc
           python3 scratch/tex_to_md.py
+
+      - name: Generate news feed from git history
+        run: python3 scratch/generate_news.py
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
