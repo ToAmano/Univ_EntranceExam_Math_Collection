@@ -26,6 +26,8 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs=""):
 
     full_tex = f"""\\documentclass[tikz,border=2pt]{{standalone}}
 \\usepackage{{amsmath,amssymb,amsfonts,amsthm}}
+\\usepackage{{luatexja}}
+\\usepackage[haranoaji]{{luatexja-preset}}
 \\usepackage{{tikz,pgfplots}}
 \\usepackage{{tikz-3dplot}}
 \\usetikzlibrary{{arrows.meta,calc,intersections,patterns,patterns.meta,angles,quotes,through,positioning,decorations.pathmorphing,decorations.markings}}
