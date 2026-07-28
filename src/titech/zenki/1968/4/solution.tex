@@ -1,41 +1,39 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-直線 $PQ$ を $l$ とする．$C = \cos\theta$, $S = \sin\theta$ とする．
-
-\begin{align*}
-l : (S^2+C^2)(x-C^2) + (S^2-C^2)(y-C^2) &= 0 \\
-x-C^2 + (S^2-C^2)y - C^2(S^2-C^2) &= 0
-\end{align*}
-
-$t = C^2$ とする．
-\begin{align*}
-x - t + (1-2t)y - t(1-2t) = 0
-\end{align*}
-
-$(X, Y)$ を $l$ が通る時，
-\begin{align*}
-X - t + Y(1-2t) + t(2t-1) = 0 \quad \cdots \text{①}
-\end{align*}
-
-が $0 \le t \le 1$ に解を持つ．①の左辺を $f(t)$ とする．
-\begin{align*}
+直線 $PQ$ を $l$ とする．簡単のため$c = \cos\theta$, $s = \sin\theta$ とすると $l$ の方程式は
+\begin{align}
+l : (s^2+c^2)(x-c^2) + (s^2-c^2)(y-c^2) &= 0 \\
+x-c^2 + (s^2-c^2)y - c^2(s^2-c^2) &= 0 \\
+x-c^2 + (1-2c^2)y - c^2(1-2c^2) &= 0 
+\end{align}
+と書ける．さらに$t = c^2$ とすると$0\le t \le 2\pi$である．
+\begin{align}
+l : x - t + (1-2t)y - t(1-2t) = 0 \label{eq:1}
+\end{align}
+である．この$l$が通る領域を求めれば，それ以外の部分が求める範囲である．
+そこで$l$が通る領域を求めよう．
+$(X, Y)$ を $l$ が通る時
+\begin{align}
+X - t + Y(1-2t) + t(2t-1) = 0 \label{eq:2}
+\end{align}
+が $0 \le t \le 1$ に解を持つ．\cref{eq:2}の左辺を $f(t)$ とすると
+\begin{align}
 f(t) = 2t^2 + (-2-2Y)t + X+Y
-\end{align*}
+\end{align}
 である．
 
-\paragraph{$1^\circ \ [0, 1]$ に $1$ つだけ}
-\begin{align*}
-f(0)f(1) \le 0 \iff (X+Y)(X-Y) \le 0
-\end{align*}
+\paragraph{$1^\circ \ [0, 1]$ に $1$ つだけ解を持つ時}
+このような条件は
+\begin{align}
+f(0)f(1) \le 0 \iff (X+Y)(X-Y) \le 0  \label{eq:3}
+\end{align}
+である．
 
-\paragraph{$2^\circ \ [0, 1]$ に $2$ つ（重解含む）}
-\begin{align*}
+\paragraph{$2^\circ \ [0, 1]$ に $2$ つの解を持つ（重解含む）時}
+このような条件は
+\begin{align}
 \begin{cases}
 \text{判: } (-1-Y)^2 - 2(X+Y) \ge 0 \\
 \text{端: } f(0) \ge 0, f(1) \ge 0 \\
@@ -46,41 +44,105 @@ Y^2+1-2X \ge 0 \\
 X+Y \ge 0 \\
 X-Y \ge 0 \\
 -1 \le Y \le 1
-\end{cases}
-\end{align*}
+\end{cases} \label{eq:4}
+\end{align}
+である．
 
-したがって，$1^\circ, 2^\circ$ の和集合が求める領域で，図示して下図非斜線部（境界含む）．
+したがって\cref{eq:3,eq:4}の和集合が$l$が通る領域で，これは図示すると下図斜線部（境界含む）である．
 
 \begin{figure}[htb]
-\begin{center}
-\begin{tikzpicture}[scale=1.5]
-    \draw[->] (-1.5,0) -- (2.5,0) node[right] {$X$};
-    \draw[->] (0,-2) -- (0,2) node[above] {$Y$};
+ \begin{center}
+  \begin{tikzpicture}[scale=1.5]
+    % 座標軸
+    \draw[->] (-2.2,0) -- (2.5,0) node[right] {$X$};
+    \draw[->] (0,-2.2) -- (0,2.2) node[above] {$Y$};
     \node[below left] at (0,0) {$0$};
-    \node[below] at (0.5,0) {$\frac{1}{2}$};
-    \node[below] at (1,0) {$1$};
+    \node[below left] at (0.5,0) {$\frac{1}{2}$};
+    \node[below right] at (1,0) {$1$};
 
-    % Lines Y = X and Y = -X
-    \draw[domain=-1.8:1.8, smooth, variable=\x] plot ({\x}, {\x}) node[right] {$Y=X$};
-    \draw[domain=-1.8:1.8, smooth, variable=\x] plot ({\x}, {-\x}) node[right] {$Y=-X$};
-
-    % Parabola X = (Y^2+1)/2
-    \draw[domain=-1.5:1.5, smooth, variable=\y] plot ({((\y)^2 + 1)/2}, {\y}) node[above right] {$X = \frac{Y^2+1}{2}$};
-
-    % Hatching in the shaded region
+    % --- 1°および2°の和集合領域のハッチング (lが通る領域) ---
     \begin{scope}
-        \clip (0.5,-1.5) rectangle (2.2,1.5);
-        \fill[pattern=north east lines, pattern color=gray!50] (1,-1) -- plot[domain=-1:1, smooth, variable=\y] ({((\y)^2 + 1)/2}, {\y}) -- (1,1) -- (2.2,1.5) -- (2.2,-1.5) -- cycle;
+        % 全体の領域制限 (描画可能範囲)
+        \clip (-2.2,-2.2) rectangle (2.2,2.2);
+
+        % 1° の領域: (X+Y)(X-Y) <= 0  <=>  |X| <= |Y| (上下のV字領域)
+        \fill[pattern=north east lines, pattern color=gray!70] 
+            (0,0) -- (2.2,2.2) -- (-2.2,2.2) -- cycle;
+        \fill[pattern=north east lines, pattern color=gray!70] 
+            (0,0) -- (2.2,-2.2) -- (-2.2,-2.2) -- cycle;
+
+        % 2° の領域: |Y| < X < (Y^2+1)/2 (直線 Y = X, Y = -X と放物線に挟まれた領域)
+        \fill[pattern=north east lines, pattern color=gray!70] 
+            (0,0) -- (1,1) 
+            -- plot[domain=1:-1, smooth, variable=\y] ({((\y)^2 + 1)/2}, {\y})
+            -- (1,-1) -- cycle;
     \end{scope}
 
+    % 境界線・関数の描画
+    \draw[domain=-2.0:2.0, smooth, variable=\x] plot ({\x}, {\x}) node[right, font=\small] {$Y=X$};
+    \draw[domain=-2.0:2.0, smooth, variable=\x] plot ({\x}, {-\x}) node[above left, font=\small] {$Y=-X$};
+    \draw[domain=-1.7:1.7, smooth, variable=\y] plot ({((\y)^2 + 1)/2}, {\y}) node[right,font=\small] {$X = \frac{Y^2+1}{2}$};
+
+    % 補助点線と目盛り
     \draw[dashed] (1,0) -- (1,1) -- (0,1);
     \draw[dashed] (1,0) -- (1,-1) -- (0,-1);
+    \draw[dashed] (0.5,0) -- (0.5,0); % 頂点 (1/2, 0) 用の補助
+    
     \node[left] at (0,1) {$1$};
     \node[left] at (0,-1) {$-1$};
+    \fill (0.5,0) circle (1pt);
+    \fill (1,1) circle (1pt);
+    \fill (1,-1) circle (1pt);
+
 \end{tikzpicture}
-\end{center}
-\caption{$1^\circ$，$2^\circ$の和集合となる領域（非斜線部）}
+\caption{$l$が通る領域(境界を含む)}
+ \end{center}
 \end{figure}
 
+よって求めるのはこの補集合の領域で，下図斜線部（境界含まず）となる．
+\begin{figure}[htb]
+ \begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % 座標軸
+    \draw[->] (-2.2,0) -- (2.5,0) node[right] {$X$};
+    \draw[->] (0,-2.2) -- (0,2.2) node[above] {$Y$};
+    \node[below left] at (0,0) {$0$};
+    \node[below] at (0.5,0) {$\frac{1}{2}$};
+    \node[below right] at (1,0) {$1$};
+
+    % --- lが通らない領域（補集合）のハッチング ---
+    \begin{scope}
+        % 全体の領域制限
+        \clip (-2.2,-2.2) rectangle (2.2,2.2);
+
+        % ① 左側の領域 ( X <= -|Y| )
+        \fill[pattern=north east lines, pattern color=gray!70] 
+            (0,0) -- (-2.2,2.2) -- (-2.2,-2.2) -- cycle;
+
+         \fill[pattern=north east lines, pattern color=gray!50] (1,-1) -- plot[domain=-1:1, smooth, variable=\y] ({((\y)^2 + 1)/2}, {\y}) -- (1,1) -- (2.2,2.2) -- (2.2,-2.2) -- cycle;
+    \end{scope}
+
+    % 境界線・関数の描画
+    \draw[dashed,domain=-2.0:2.0, smooth, variable=\x] plot ({\x}, {\x}) node[right,font=\small] {$Y=X$};
+    \draw[dashed,domain=-2.0:2.0, smooth, variable=\x] plot ({\x}, {-\x}) node[above left,font=\small] {$Y=-X$};
+    \draw[dashed,domain=-1.7:1.7, smooth, variable=\y] plot ({((\y)^2 + 1)/2}, {\y}) node[right, font=\small] {$X = \frac{Y^2+1}{2}$};
+
+    % 補助点線と目盛り
+    \draw[dashed] (1,0) -- (1,1) -- (0,1);
+    \draw[dashed] (1,0) -- (1,-1) -- (0,-1);
+    
+    \node[left] at (0,1) {$1$};
+    \node[left] at (0,-1) {$-1$};
+    
+    % 特徴的な点のプロット
+    \fill (0,0) circle (1pt);
+    \fill (0.5,0) circle (1pt);
+    \fill (1,1) circle (1pt);
+    \fill (1,-1) circle (1pt);
+
+\end{tikzpicture}
+ \caption{$l$が通過しない領域（境界含まず）}
+ \end{center}
+\end{figure}
 
 \end{document}
