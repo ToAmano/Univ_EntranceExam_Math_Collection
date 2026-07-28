@@ -1,50 +1,18 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-[解] 題意の円を $C$ とおく．
-\begin{align*} C \equiv (x-2)^2+(y+1)^2=4 \end{align*}
-から, $O(2, -1), \, r=2$ である．そこで,
-\begin{align*} \vec{OP} = \begin{pmatrix} x-2 \\ y+1 \end{pmatrix} \end{align*}
-だから, $\vec{OQ} = k\vec{OP} \quad (k>0)$ とおけることより,
-\begin{align*} |\vec{OP}| \cdot |\vec{OQ}| = k \{ (x-2)^2+(y+1)^2 \} = 4 \quad (\because \text{題意}) \end{align*}
-$O \ne P$ から
-\begin{align*} k = \frac{4}{(x-2)^2+(y+1)^2} \end{align*}
-だから,
-\begin{align*} \vec{OQ} = \begin{pmatrix} X-2 \\ Y+1 \end{pmatrix} = \frac{4}{(x-2)^2+(y+1)^2} \begin{pmatrix} x-2 \\ y+1 \end{pmatrix} \end{align*}
-である．成分を比較して
-\begin{align*}
-\begin{cases}
-X = \dfrac{4(x-2)}{(x-2)^2+(y+1)^2} + 2 \\[10pt]
-Y = \dfrac{4(y+1)}{(x-2)^2+(y+1)^2} - 1
-\end{cases}
-\quad \text{(1)}
-\end{align*}
-
-(2) $x \in \mathbb{R}, \, y=0$ だから, (1) より
-\begin{align*}
-\begin{cases}
-X-2 = \dfrac{4(x-2)}{(x-2)^2+1} \\[10pt]
-Y+1 = \dfrac{4}{(x-2)^2+1}
-\end{cases}
-\quad \dots (*)
-\end{align*}
-$Y \ne -1$ だから (第2式より), 第2式を変形して,
-\begin{align*} (x-2)^2+1 = \frac{4}{Y+1} \end{align*}
-第1式に代入して,
-\begin{align*} X-2 = (Y+1)(x-2) \end{align*}
-\begin{align*} \therefore x-2 = \frac{X-2}{Y+1} \quad (\because Y \ne -1) \end{align*}
-だから, $(*)$ に代入して
-\begin{align*} Y+1 = \frac{4}{\left( \dfrac{X-2}{Y+1} \right)^2 + 1} \end{align*}
-\begin{align*} \therefore (X-2)^2 + (Y+1)^2 = 4(Y+1) \quad (\because Y \ne -1) \end{align*}
-\begin{align*} (X-2)^2 + (Y-1)^2 = 4 \quad \dots \text{①} \end{align*}
-又, $(*)$ 及び $x \in \mathbb{R}$ から,
-\begin{align*} 0 < Y+1 \le 4 \quad \therefore -1 < Y \le 3 \end{align*}
-に注意して, $(X, Y) \ne (2, -1)$ である．以上から
-\begin{align*} (X-2)^2 + (Y-1)^2 = 4 \quad ((X, Y)=(2, -1) \text{を除く})  \end{align*}
+題意の円を $C$ とおく．円の方程式を平方完成すると
+\begin{align} 
+ C \equiv (x-2)^2+(y+1)^2=4 
+\end{align}
+だから, 円の中心は$O(2, -1)$であり，円の半径は $r=2$ である．
+よって
+\begin{align} 
+\vec{OP} = \begin{pmatrix} x-2 \\ y+1 \end{pmatrix} 
+\end{align}
+と書ける．
 
 \begin{figure}[htb]
 \begin{center}
@@ -55,15 +23,154 @@ $Y \ne -1$ だから (第2式より), 第2式を変形して,
   \coordinate (O) at (2,-1);
   \draw[dashed] (2,0) node[above] {$2$} -- (O) -- (0,-1) node[left] {$-1$};
   \draw (O) circle (2);
-  \fill (O) circle (1.5pt) node[below left] {$O$};
-  \coordinate (P) at (2.8,0.2);
+  \fill (O) circle (2pt) node[below left] {$O$};
   \coordinate (Q) at (3.5,1.075);
+  % 点 P を O と Q を結ぶ線分上の点（OからQへの53%の位置）として定義
+  % これにより数学的に絶対に OQ 上に乗ります
+  \path (O) -- (Q) coordinate[pos=0.53] (P);
   \draw (O) -- (Q);
-  \fill (P) circle (1.5pt) node[above left] {$P$};
-  \fill (Q) circle (1.5pt) node[above left] {$Q$};
+  \fill (P) circle (2pt) node[above left] {$P$};
+  \fill (Q) circle (2pt) node[above left] {$Q$};
 \end{tikzpicture}
 \end{center}
-\caption{点$(X,Y)$の軌跡（円）の図示}
+\caption{円と点$P,Q$ の様子}
+\end{figure}
+
+題意より $\vec{OQ} = k\vec{OP} \quad (k>0)$ とおけることより，題意の条件$|OP||OQ|=4$は
+\begin{align} 
+|\vec{OP}| \cdot |\vec{OQ}| = k \{ (x-2)^2+(y+1)^2 \} = 4 
+\end{align}
+と書ける．
+$O \ne P$ より $(x-2)^2+(y+1)^2\neq 0$ であって
+\begin{align} 
+k = \frac{4}{(x-2)^2+(y+1)^2} 
+\end{align}
+と求まる．
+一方で$Q(X,Y)$だから
+\begin{align} 
+\vec{OQ} 
+ &= \begin{pmatrix} X-2 \\ Y+1 \end{pmatrix} \\
+ &= \frac{4}{(x-2)^2+(y+1)^2} \begin{pmatrix} x-2 \\ y+1 \end{pmatrix} 
+\end{align}
+である．
+成分を比較して
+\begin{align}
+\begin{cases}
+X = \dfrac{4(x-2)}{(x-2)^2+(y+1)^2} + 2 \\
+Y = \dfrac{4(y+1)}{(x-2)^2+(y+1)^2} - 1
+\end{cases} \label{eq:1}
+\end{align}
+が求める座標である．
+
+(2) 
+$x \in \mathbb{R}, \, y=0$ の時の\cref{eq:1}の軌跡を求めれば良い．\cref{eq:1}に$y=0$を代入して
+\begin{align}
+\begin{cases}
+X-2 = \dfrac{4(x-2)}{(x-2)^2+1} \\
+Y+1 = \dfrac{4}{(x-2)^2+1}
+\end{cases} \label{eq:2}
+\end{align}
+である．第二式より$Y \ne -1$だから，第二式を変形して
+\begin{align} 
+  (x-2)^2+1 = \frac{4}{Y+1} 
+\end{align}
+だから，これを第一式の分母に代入して
+\begin{align} 
+ X-2 &= (Y+1)(x-2) \\
+\therefore 
+ x-2 &= \frac{X-2}{Y+1} \quad (\because Y \ne -1) 
+\end{align}
+となる．これを再度\cref{eq:1}の第二式に代入して$x$を消去すれば
+\begin{align}
+ &  Y+1 = \frac{4}{\left( \dfrac{X-2}{Y+1} \right)^2 + 1}  \\
+ \therefore 
+ & (X-2)^2 + (Y+1)^2 = 4(Y+1) \quad (\because Y \ne -1) \\
+ \therefore
+ & (X-2)^2 + (Y-1)^2 = 4 \label{eq:3}
+\end{align}
+を得る．
+
+$x \in \mathbb{R}$の時の$X,Y$の値域については\cref{eq:2}より
+\begin{align}
+ &\begin{cases}
+   -2 \le X-2 \le 2 \\ 
+   0 < Y+1 \le 4
+  \end{cases} \\
+\therefore
+ &\begin{cases}
+  0 \le X \le 4\\
+  -1 < Y \le 3
+ \end{cases}
+\end{align}
+である．よって\cref{eq:3}の範囲では $(X, Y) \ne (2, -1)$ である．
+
+以上から求める軌跡は
+\begin{align} 
+ (X-2)^2 + (Y-1)^2 = 4 \quad ((X, Y)=(2, -1) \text{を除く})  
+\end{align}
+である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=0.8, >=stealth]
+  % -------------------------------------------------------------
+  % 座標軸
+  % -------------------------------------------------------------
+  \draw[->] (-1.0, 0) -- (5.0, 0) node[right] {$X$};
+  \draw[->] (0, -3.8) -- (0, 3.8) node[above] {$Y$};
+  \node[below left, font=\small] at (0,0) {$O'$};
+
+  % -------------------------------------------------------------
+  % 1. 元の円 C: (x-2)^2 + (y+1)^2 = 4 (中心 O(2, -1), 半径 2)
+  % -------------------------------------------------------------
+  \coordinate (O) at (2, -1);
+  \draw[dashed, gray!80] (O) circle (2);
+  \fill[gray!80] (O) circle (2pt) node[below left, font=\small, black] {$O(2,-1)$};
+
+  % -------------------------------------------------------------
+  % 2. 求める軌跡: (X-2)^2 + (Y-1)^2 = 4 (中心 O_Q(2, 1), 半径 2)
+  % -------------------------------------------------------------
+  \coordinate (OQ) at (2, 1);
+  \draw[thick, red!80!black] (OQ) circle (2);
+  \fill[red!80!black] (OQ) circle (2pt) node[above left, font=\small] {$O_Q(2,1)$};
+
+  % -------------------------------------------------------------
+  % 3. 除外点 (2, -1) の白抜き表示
+  % -------------------------------------------------------------
+  % 軌跡上の除外点 (2, -1) を目立たせるため、白抜き丸を描画
+  \fill[white] (2, -1) circle (3pt);
+  \draw[thick, red!80!black] (2, -1) circle (3pt);
+  \node[below right, font=\small, red!80!black] at (2, -1) {除外点 $(2,-1)$};
+
+  % -------------------------------------------------------------
+  % 4. 具体的な点 P (y=0上) と 対応する点 Q の例
+  % 例: x = 3 のとき, P(3,0) -> Q(3.6, 0.2) などの直線
+  % -------------------------------------------------------------
+  \coordinate (P) at (3.5, 0); % y=0 上の点 P
+  % O(2,-1) から P(3.5,0) を通る直線上にある Q(X,Y)
+  % k = 4 / ((3.5-2)^2 + 1) = 4 / 3.25 = 1.2307
+  % X = 1.2307 * 1.5 + 2 = 3.846, Y = 1.2307 * 1 - 1 = 0.2307
+  \coordinate (Q) at (3.846, 0.2307);
+
+  % 半直線 O - P - Q
+  \draw[blue!80!black] (O) -- (Q);
+  \fill[blue!80!black] (P) circle (2pt) node[below right, font=\small] {$P(x,0)$};
+  \fill[purple] (Q) circle (2pt) node[above right, font=\small] {$Q(X,Y)$};
+
+  % -------------------------------------------------------------
+  % 5. 軸上の目盛り・補助線
+  % -------------------------------------------------------------
+  \draw[dotted, gray!70] (2, -3.5) -- (2, 3.5);
+  \node[above right, font=\small] at (2, 0) {$2$};
+  \node[left, font=\small] at (0, 1) {$1$};
+  \draw[dashed, gray!60] (0, 1) -- (2, 1);
+  \node[left, font=\small] at (0, 3) {$3$};
+  \draw[dashed, gray!60] (0, 3) -- (2, 3);
+  \node[left, font=\small] at (0, -1) {$-1$};
+
+\end{tikzpicture}
+\end{center}
+\caption{点$Q(X,Y)$の描く軌跡 $(X-2)^2 + (Y-1)^2 = 4$（除外点 $(2,-1)$）}
 \end{figure}
 
 \end{document}

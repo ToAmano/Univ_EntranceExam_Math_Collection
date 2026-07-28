@@ -1,29 +1,117 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-[解] $f(x) = x^2+ax+b, \, g(x) = x^2+cx+d$ とおく．共通接線を $l : y = h(x)$ とすると,
-\begin{align*}
+題意の二次方程式を$f(x) = x^2+ax+b, \, g(x) = x^2+cx+d$ とおく．
+共通接線を $l : y = h(x)$ とすると
+\begin{align}
 \begin{cases}
 f(x) - h(x) = (x-p)^2 \\[5pt]
 g(x) - h(x) = (x-q)^2
-\end{cases}
+\end{cases}\label{eq:1}
 \quad \dots \text{①}
-\end{align*}
-だから, 辺々引いて,
-\begin{align*} f(x) - g(x) = (x-p)^2 - (x-q)^2 = (2x - p - q)(q - p) \end{align*}
+\end{align}
+を満たすから，辺々引いて
+\begin{align} 
+  f(x) - g(x) = (x-p)^2 - (x-q)^2 = (2x - p - q)(q - p)
+\end{align}
 となり, $y = f(x)$ と $y = g(x)$ の交点の $x$ 座標は $x = \dfrac{p+q}{2}$ である．
 
-したがって, 求める面積 $S$ として ①から, $p < q$ の時
-\begin{align*}
-\begin{aligned}
-S &= \int_p^{\frac{p+q}{2}} (x-p)^2 dx + \int_{\frac{p+q}{2}}^q (x-q)^2 dx \\[10pt]
-&= \frac{1}{12}(q-p)^3
-\end{aligned}
-\end{align*}
-$q < p$ の時もかんがえて, $S = \dfrac{1}{12}|q-p|^3$
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  % -------------------------------------------------------------
+  % パラメータ設定 (接線 l: y = 0.5*x + 0.2)
+  % f(x) = (x-p)^2 + h(x)
+  % g(x) = (x-q)^2 + h(x)
+  % p = 0.5, q = 2.5, 交点 mid = 1.5
+  % -------------------------------------------------------------
+  \def\P{0.5}
+  \def\Q{2.5}
+  \def\Mid{1.5} % (p+q)/2
+
+  % 共通接線 h(x) の定義: h(x) = 0.5*x + 0.2
+  % f(x) = (x - 0.5)^2 + 0.5*x + 0.2
+  % g(x) = (x - 2.5)^2 + 0.5*x + 0.2
+
+  % -------------------------------------------------------------
+  % 面積 S の斜線塗りつぶし (ハッチング)
+  % -------------------------------------------------------------
+  % 1. p <= x <= (p+q)/2 : f(x) と h(x) の間
+  \fill[pattern=north east lines, pattern color=gray!70]
+      plot[domain=\P:\Mid, samples=50] (\x, {(\x-\P)*(\x-\P) + 0.5*\x + 0.2})
+      -- plot[domain=\Mid:\P, samples=2] (\x, {0.5*\x + 0.2})
+      -- cycle;
+
+  % 2. (p+q)/2 <= x <= q : g(x) と h(x) の間
+  \fill[pattern=north east lines, pattern color=gray!70]
+      plot[domain=\Mid:\Q, samples=50] (\x, {(\x-\Q)*(\x-\Q) + 0.5*\x + 0.2})
+      -- plot[domain=\Q:\Mid, samples=2] (\x, {0.5*\x + 0.2})
+      -- cycle;
+
+  % -------------------------------------------------------------
+  % 座標軸
+  % -------------------------------------------------------------
+  \draw[->] (-0.5, 0) -- (3.2, 0) node[right] {$x$};
+  \draw[->] (0, -0.5) -- (0, 3.2) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % -------------------------------------------------------------
+  % 共通接線 l: y = h(x) (斜めの直線)
+  % -------------------------------------------------------------
+  \draw[thick, green!50!black, domain=-0.2:3.0, samples=2]
+      plot (\x, {0.5*\x + 0.2}) node[above left, font=\small] {$l : y = h(x)$};
+
+  % -------------------------------------------------------------
+  % 放物線 y = f(x), y = g(x)
+  % -------------------------------------------------------------
+  % y = f(x)
+  \draw[thick, blue!80!black, domain=-0.2:2.0, samples=100]
+      plot (\x, {(\x-\P)*(\x-\P) + 0.5*\x + 0.2}) node[above left, font=\small] {$y = f(x)$};
+
+  % y = g(x)
+  \draw[thick, red!80!black, domain=1.0:3.1, samples=100]
+      plot (\x, {(\x-\Q)*(\x-\Q) + 0.5*\x + 0.2}) node[above right, font=\small] {$y = g(x)$};
+
+  % -------------------------------------------------------------
+  % 接点・交点・補助線・ラベル
+  % -------------------------------------------------------------
+  % 接点 (p, h(p))
+  \coordinate (TouchP) at (\P, {0.5*\P + 0.2});
+  \fill[purple] (TouchP) circle (1.5pt);
+  \draw[dashed, gray!80] (\P, 0) node[below, font=\small, black] {$p$} -- (TouchP);
+
+  % 接点 (q, h(q))
+  \coordinate (TouchQ) at (\Q, {0.5*\Q + 0.2});
+  \fill[purple] (TouchQ) circle (1.5pt);
+  \draw[dashed, gray!80] (\Q, 0) node[below, font=\small, black] {$q$} -- (TouchQ);
+
+  % 放物線同士の交点 ( (p+q)/2, f((p+q)/2) )
+  \coordinate (Intersection) at (\Mid, {(\Mid-\P)*(\Mid-\P) + 0.5*\Mid + 0.2});
+  \fill[purple] (Intersection) circle (1.5pt);
+
+  % 交点からの垂直破線
+  \draw[dashed, gray!80] (\Mid, 0) node[below, font=\small, black] {$\frac{p+q}{2}$} -- (Intersection);
+
+  % 領域ラベル S
+  \node[font=\small, purple!80!black, fill=white, inner sep=1pt] at (1.5, 1.2) {$S$};
+
+\end{tikzpicture}
+\end{center}
+\caption{2つの放物線と共通接線 $l$ で囲まれた領域 $S$}
+\end{figure}
+
+したがって, 求める面積 $S$ として \cref{eq:1} から, $p < q$ の時
+\begin{align}
+S 
+ &= \int_p^{\frac{p+q}{2}} (x-p)^2 dx + \int_{\frac{p+q}{2}}^q (x-q)^2 dx \\
+ &= \frac{1}{12}(q-p)^3
+\end{align}
+となる．$q < p$ の時も同様だから，まとめて
+\begin{align}
+  S = \dfrac{1}{12}|q-p|^3 
+\end{align}
+が求める面積である．
 
 \end{document}
