@@ -1,44 +1,89 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]} 
+題意の漸化式
+\begin{align}
+ C_{n+1} = C_{n} + C_{n-1} \label{eq:1}
+\end{align}
+に注意して，二次方程式の解の公式から，題意の方程式の解は 
+\begin{align}
+x &= \frac{1}{2}\left[ (C_{n+1}+C_{n-1}) \pm \sqrt{(C_{n+1}+C_{n-1})^2 - 4C_{n+1}C_{n-1} + 4{C_n}^2} \right] \\
+  &= \frac{1}{2}\left[ (C_{n+1}+C_{n-1}) \pm \sqrt{(C_{n+1}-C_{n-1})^2 + 4(C_{n+1}-C_{n-1})^2} \right] \\
+  &= \frac{1}{2}\left[ (C_{n+1}+C_{n-1}) \pm \sqrt{5}(C_{n+1}-C_{n-1}) \right] \quad \dots \text{①} \label{eq:2}
+\end{align}
+である．ただし最後の行で漸化式から $C_{n+1} \ge C_{n-1}$ であることを利用した. 簡単のため
+\begin{align}
+ p_{\pm} = \frac{1\pm\sqrt{5}}{2}
+\end{align}
+と置くと，$\alpha_n \ge \beta_n$より\cref{eq:2}は
+\begin{align}
+\begin{cases}
+ \alpha_n &= p_{+} C_{n+1} + p_{-} C_{n-1} \\
+ \beta_n  &= p_{-} C_{n+1} + p_{+} C_{n-1}
+\end{cases} \label{eq:3}
+ \end{align}
+である．
 
-[解] 題意の方程式の解は $x = \frac{1}{2}\left[ (C_{n+1}+C_{n-1}) \pm \sqrt{(C_{n+1}+C_{n-1})^2 - 4C_{n+1}C_{n-1} + 4{C_n}^2} \right]$
-\begin{align*}
-= \frac{1}{2}\left[ (C_{n+1}+C_{n-1}) \pm \sqrt{(C_{n+1}-C_{n-1})^2 + 4(C_{n+1}-C_{n-1})^2} \right] = \frac{1}{2}\left[ (C_{n+1}+C_{n-1}) \pm \sqrt{5}(C_{n+1}-C_{n-1}) \right] \quad \dots \text{①}
-\end{align*}
-である ($\because C_{n+1} \ge C_{n-1}$). $p = \frac{1+\sqrt{5}}{2}, q = \frac{1-\sqrt{5}}{2}$ とおく.
-
-(1) $\alpha_n = p C_{n+1} + q C_{n-1} = p (C_{n+2}-C_n) + q(C_{n+1}-C_n)$
-\begin{align*}
-&= p(C_{n+2}-C_n) + q(C_{n+2}-2C_n) = (p+q)C_{n+2} - (p+2q)C_n \\
-&= C_{n+2} - \frac{3-\sqrt{5}}{2} C_n
-\end{align*}
+(1) 
+まず$\dfrac{\alpha_{n+1}}{\alpha_n}$から考える．
+\cref{eq:3}および題意の漸化式から
+\begin{align}
+ \alpha_{n+1}
+ &= p_{+} C_{n+2} + p_{-} C_{n} \\
+ &= p_{+} \left(C_{n+1}+C_{n}\right) + p_{-} C_{n} \\
+ &= p_{+} C_{n+1} + \left(p_{+}+p_{-}\right) C_{n} \\
+ &= p_{+} C_{n+1} + C_{n} \\
+ &= p_{+} C_{n+1} + \left(C_{n+1}-C_{n-1}\right) \\
+ &= \left(p_{+}+1\right) C_{n+1} - C_{n-1} 
+\end{align}
+ここで$p_{\pm}$の性質から
+\begin{align}
+ p_{+}+1 = p_{+}^2, \quad p_{+}p_{-} = -1
+\end{align}
 だから
-\begin{align*}
-p\alpha_n = p C_{n+2} - \frac{1+\sqrt{5}}{2} \cdot \frac{3-\sqrt{5}}{2} C_n = p C_{n+2} - q C_n = \alpha_{n+1}
-\end{align*}
-\begin{align*}
-\therefore \frac{\alpha_{n+1}}{\alpha_n} = p = \frac{1+\sqrt{5}}{2}
-\end{align*}
+\begin{align}
+ \alpha_{n+1} 
+   &= p_{+}^2 C_{n+1} + p_{+}p_{-} C_{n-1} \\
+   &= p_{+}\alpha_{n}
+\end{align}
+を得る．従って求める一つ目の量は
+\begin{align}
+ \frac{\alpha_{n+1}}{\alpha_n} = p = \frac{1+\sqrt{5}}{2} 
+\end{align}
+である．
 
-\begin{align*}
-\beta_n &= q C_{n+1} + p C_{n-1} = q (C_{n+2}-C_n) + p (C_{n+2}-2C_n) \\
-&= C_{n+2} - (2p+q) C_n
-\end{align*}
-だから
-\begin{align*}
-q \cdot \beta_n = q C_{n+2} + p C_n = \beta_{n+1} \quad \therefore \frac{\beta_{n+1}}{\beta_n} = q = \frac{1-\sqrt{5}}{2}
-\end{align*}
+次に$\dfrac{\beta_{n+1}}{\beta_n}$を考える．全く同様に漸化式を用いて変形すると
+\begin{align}
+ \beta_{n+1}
+  &= p_{-} C_{n+2} + p_{+} C_{n} \\
+  &= p_{-} \left(C_{n+1}+C_{n}\right) + p_{+} C_{n} \\
+  &= p_{-} C_{n+1}+\left(q_{-}+p_{+}\right)C_{n} \\
+  &= p_{-} C_{n+1}+C_{n} \\
+  &= p_{-} C_{n+1}+ \left(C_{n+1}-C_{n-1}\right) \\
+  &= \left(p_{-}+1\right) C_{n+1} - C_{n-1} \\
+  &= p_{-}^2 C_{n+1} + q_{-}p_{+} C_{n-1} \\
+  &= p_{-} \beta_{n}
+\end{align}
+だから求める比は
+\begin{align}
+ \frac{\beta_{n+1}}{\beta_n} = q = \frac{1-\sqrt{5}}{2}
+\end{align}
+である．
 
-(2) $\alpha_1 = p C_2 + q C_0 = p, \quad \beta_1 = q C_2 + p C_0 = q$ だから くり返し用いて,
-\begin{align*}
+(2) 
+漸化式は(1)でもとまったのであとは初期条件が定まれば一般項が求まる．
+初期条件は
+\begin{align}
+ \alpha_1 = p C_2 + q C_0 = p, \quad \beta_1 = q C_2 + p C_0 = q
+\end{align}
+だから一般項は
+\begin{align}
 \begin{cases}
 \alpha_n = p^n = \left( \frac{1+\sqrt{5}}{2} \right)^n \\
 \beta_n = q^n = \left( \frac{1-\sqrt{5}}{2} \right)^n
 \end{cases}
-\end{align*}
+\end{align}
+となる．
 
 \end{document}

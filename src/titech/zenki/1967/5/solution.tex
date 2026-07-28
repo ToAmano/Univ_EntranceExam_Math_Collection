@@ -1,32 +1,174 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-[解] $\sin\alpha x \sin\beta x = -\frac{1}{2} \{ \cos(\alpha+\beta)x - \cos(\alpha-\beta)x \}$ であり, $\alpha+\beta \neq 0, \alpha-\beta \neq 0$ から,
-\begin{align*}
-\int_0^1 \sin\alpha x \cdot \sin\beta x \, dx = -\frac{1}{2} \left[ \frac{1}{\alpha+\beta}\sin(\alpha+\beta)x - \frac{1}{\alpha-\beta}\sin(\alpha-\beta)x \right]_0^1
-\end{align*}
-\begin{align*}
-= -\frac{1}{2} \left( \frac{1}{\alpha+\beta}\sin(\alpha+\beta) - \frac{1}{\alpha-\beta}\sin(\alpha-\beta) \right) \quad \dots \text{①}
-\end{align*}
-ここで, $\tan\alpha = 2\alpha$ の時 $\cos\alpha = \pm \frac{1}{\sqrt{1+\tan^2\alpha}} = \pm \frac{1}{\sqrt{1+4\alpha^2}}, \quad \sin\alpha = \pm \frac{2\alpha}{\sqrt{1+4\alpha^2}} \quad (\because \text{同号})$
-であり, $\alpha > 0$ から $\tan\alpha > 0$, つまり $\sin\alpha, \alpha$ の符号は一致するから
-\begin{align*}
-\sin(\alpha+\beta) = \sin\alpha\cos\beta + \sin\beta\cos\alpha = \frac{A}{\sqrt{(1+4\alpha^2)(1+4\beta^2)}}
-\end{align*}
-\begin{align*}
-\sin(\alpha-\beta) = \sin\alpha\cos\beta - \sin\beta\cos\alpha = \frac{B}{\sqrt{(1+4\alpha^2)(1+4\beta^2)}}
-\end{align*}
-ただし $A, B$ は $\sin\alpha$ などの複号において
-\begin{align*}
-(A, B) = (2\alpha+2\beta, 2\alpha-2\beta) \quad \text{または} \quad (-2\alpha-2\beta, -2\alpha+2\beta)
-\end{align*}
-をとる. ①に代入して
-\begin{align*}
-(\text{与式}) = -\frac{1}{2} \frac{1}{\sqrt{(1+4\alpha^2)(1+4\beta^2)}} \left\{ \frac{A}{\alpha+\beta} - \frac{B}{\alpha-\beta} \right\} = 0
-\end{align*}
+積和の公式より被積分関数は
+\begin{align}
+ \sin\alpha x \sin\beta x = -\frac{1}{2} \{ \cos(\alpha+\beta)x - \cos(\alpha-\beta)x \}
+\end{align}
+であり，$\alpha+\beta \neq 0, \alpha-\beta \neq 0$ から与えられた定積分（以下$I$とする）は
+\begin{align}
+I 
+ &= \int_0^1 \sin\alpha x \cdot \sin\beta x \, dx \\
+ &= -\frac{1}{2} \left[ \frac{1}{\alpha+\beta}\sin(\alpha+\beta)x - \frac{1}{\alpha-\beta}\sin(\alpha-\beta)x \right]_0^1 \\
+ &= -\frac{1}{2} \left( \frac{1}{\alpha+\beta}\sin(\alpha+\beta) - \frac{1}{\alpha-\beta}\sin(\alpha-\beta) \right) \label{eq:1}
+\end{align}
+である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.1, >=stealth]
+  % -------------------------------------------------------------
+  % 座標軸
+  % -------------------------------------------------------------
+  \draw[->] (-0.5, 0) -- (8.5, 0) node[right] {$x$};
+  \draw[->] (0, -0.5) -- (0, 7.5) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % -------------------------------------------------------------
+  % 直線 y = 2x の描画
+  % -------------------------------------------------------------
+  \draw[thick, red!80!black, domain=-0.2:4.7, samples=2]
+      plot (\x, {2*\x}) node[above left, font=\small] {$y = 2x$};
+
+  % -------------------------------------------------------------
+  % y = tan x の描画 (各周期区間に分けて描画)
+  % -------------------------------------------------------------
+  % 1. 区間 (-pi/2, pi/2)
+  \draw[thick, blue!80!black, domain=-0.4:1.35, samples=100]
+      plot (\x, {tan(\x r)});[O]
+
+  % 2. 区間 (pi/2, 3pi/2)
+  \draw[thick, blue!80!black, domain=2.0:4.62, samples=100]
+      plot (\x, {tan(\x r)});
+
+  % 3. 区間 (3pi/2, 5pi/2)
+  \draw[thick, blue!80!black, domain=5.2:7.65, samples=100]
+      plot (\x, {tan(\x r)}) node[right, font=\small] {$y = \tan x$};
+
+  % -------------------------------------------------------------
+  % 漸近線の描画 (x = pi/2, 3pi/2, 5pi/2)
+  % -------------------------------------------------------------
+  \draw[dashed, gray!70] (1.5708, -0.5) -- (1.5708, 7.0);
+  \node[below, font=\scriptsize] at (1.5708, 0) {$\frac{\pi}{2}$};
+
+  \draw[dashed, gray!70] (4.7124, -0.5) -- (4.7124, 7.0);
+  \node[below, font=\scriptsize] at (4.7124, 0) {$\frac{3\pi}{2}$};
+
+  \draw[dashed, gray!70] (7.8540, -0.5) -- (7.8540, 7.0);
+  \node[below, font=\scriptsize] at (7.8540, 0) {$\frac{5\pi}{2}$};
+
+  % -------------------------------------------------------------
+  % 正の実数解（交点）のプロットと補足
+  % -------------------------------------------------------------
+  % 1. 原点 (x = 0)
+  \fill[purple] (0,0) circle (1.5pt);
+
+  % 2. 第1の解 alpha (x = 0 は除く正の最小解, 約 1.165 rad, y = 2.33)
+  \coordinate (Alpha) at (1.165, 2.33);
+  \fill[purple] (Alpha) circle (1.8pt) node[above left, font=\small] {$\alpha$};
+  \draw[dotted, gray!80] (1.165, 0) node[below, font=\small, black] {$\alpha$} -- (Alpha);
+
+  % 3. 第2の解 beta (約 4.493 rad, y = 8.986)
+  \coordinate (Beta) at (4.5, 9); 
+  % 描画エリアに収まる範囲で破線と交点ラベルを表示
+  \fill[purple] (4.6, 9.2) circle (1.8pt);
+  \draw[dotted, gray!80] (4.493, 0) node[below, font=\small, black] {$\beta$} -- (4.493, 7.0);
+
+  % -------------------------------------------------------------
+  % 目盛り・ラベル等
+  % -------------------------------------------------------------
+  \node[below, font=\scriptsize] at (3.1416, 0) {$\pi$};
+  \fill (3.1416, 0) circle (1.0pt);
+
+  \node[below, font=\scriptsize] at (6.2832, 0) {$2\pi$};
+  \fill (6.2832, 0) circle (1.0pt);
+
+\end{tikzpicture}
+\end{center}
+\caption{方程式 $\tan x = 2x$ の正の実数解 $\alpha, \beta$}
+\end{figure}
+
+ここで題意の条件$\tan x = 2x$が満たされる時，
+\begin{align}
+ \cos x = \pm \frac{1}{\sqrt{1+\tan^2 x}} = \pm \frac{1}{\sqrt{1+4x^2}} \label{eq:2}
+\end{align}
+であり，よって$\cos^2 x+\sin^2 x=1$より
+\begin{align}
+ \sin x = \pm \frac{2x}{\sqrt{1+4x^2}} \label{eq:3}
+\end{align}
+である．
+ここで題意より$\alpha > 0$だから$\tan\alpha = \dfrac{\sin \alpha}{\cos \alpha} > 0$である．つまり$\sin\alpha$と $\cos \alpha$ の符号は一致する（$\beta$も同様）から
+\cref{eq:3}の複合は$\cos, sin$ともに同じ方をとる．従って
+\begin{align}
+\sin(\alpha+\beta) &= \sin\alpha\cos\beta + \sin\beta\cos\alpha = \frac{A}{\sqrt{(1+4\alpha^2)(1+4\beta^2)}} \\
+\sin(\alpha-\beta) &= \sin\alpha\cos\beta - \sin\beta\cos\alpha = \frac{B}{\sqrt{(1+4\alpha^2)(1+4\beta^2)}}
+\end{align}
+ただし $A, B$ は $\sin\alpha$ などの複号に応じて
+\begin{align}
+(A, B) = \left(2(\alpha+\beta), 2(\alpha-\beta)\right) \quad \text{または} \quad \left(-2(\alpha+\beta), -2(\alpha-\beta)\right)
+\end{align}
+をとる.
+\cref{eq:1}に代入すると
+\begin{align}
+ I 
+   &= -\frac{1}{2} \frac{1}{\sqrt{(1+4\alpha^2)(1+4\beta^2)}} \left\{ \frac{A}{\alpha+\beta} - \frac{B}{\alpha-\beta} \right\} \\
+   &= 0
+\end{align}
+となる．
+
+{\bf [解説]}
+いわゆる関数の直交性に関する問題である．
+ベクトルにおける内積 $\vec{u} \cdot \vec{v} = 0$ が直交を意味するように，閉区間 $[0, 1]$ 上の連続関数 $f(x), g(x)$ に対しても内積を
+\begin{align}
+\langle f, g \rangle = \int_0^1 f(x)g(x) \, dx 
+\end{align}
+と定義できる．
+本問の積分 $I = 0$ は関数 $f(x) = \sin\alpha x$ と $g(x) = \sin\beta x$ がこの内積のもとで「直交している」ことを示している．
+フーリエ級数において $\sin(n\pi x)$ 同士が直交することはよく知られているが，本問ではより一般的に $\tan x = 2x$ という特定の境界条件から定まる固有関数群 $\sin\lambda x$ も閉区間上で互いに直交するという Sturm-Liouville 理論の基本的な構造を背景としている．
+
+微分方程式を扱うので完全に高校数学の範囲を超えてしまうが，この構造を背景とするとより数式変形少なく解答を作れるのでやってみよう．
+
+次のような 2 階微分方程式の境界値問題を考えよう．
+\begin{align}
+ \begin{cases}
+  y''(x) + \lambda^2 y(x) = 0 \quad (0 < x < 1) \\[3pt]
+  y(0) = 0, \quad y'(1) - 2y(1) = 0
+\end{cases} \label{eq:4}
+\end{align}
+$y(0) = 0$ より微分方程式の一般解は $y(x) = C \sin\lambda x$（$C$ は定数）と表される．
+これを 2 つ目の境界条件 $y'(1) - 2y(1) = 0$ に代入すると
+\begin{align}
+\lambda \cos\lambda - 2\sin\lambda = 0 \iff \tan\lambda = \frac{1}{2}\lambda  
+\end{align}
+が得られる．すなわち$\alpha, \beta$ はこの境界値問題の固有値 $\lambda$ であり，$\sin\alpha x, \sin\beta x$ は対応する固有関数である．
+
+異なる固有値 $\alpha, \beta$ ($\alpha^2 \neq \beta^2$) に対応する固有関数を $y_1(x) = \sin\alpha x$, $y_2(x) = \sin\beta x$ とおくと，微分方程式\cref{eq:4}より
+\begin{align}
+y_1'' + \alpha^2 y_1 = 0 \label{eq:sl1} \\
+y_2'' + \beta^2 y_2 = 0 \label{eq:sl2}
+\end{align}
+である．\cref{eq:sl1} $\times y_2 - $ \eqref{eq:sl2} $\times y_1$ を計算すると
+\begin{align}
+(\alpha^2 - \beta^2) y_1 y_2 = y_1'' y_2 - y_2'' y_1 = \frac{d}{dx} \left( y_1' y_2 - y_2' y_1 \right) 
+\end{align}
+を得ル．両辺を $x = 0$ から $x = 1$ まで定積分して
+\begin{align}
+(\alpha^2 - \beta^2) \int_0^1 \sin\alpha x \sin\beta x \, dx 
+  &= \Big[ y_1'(x) y_2(x) - y_2'(x) y_1(x) \Big]_0^1 \\
+  &= \alpha \cos\alpha \sin\beta - \beta \cos\beta \sin\alpha
+\end{align}
+である．
+ここで境界条件 $\sin\alpha = 2\alpha\cos\alpha, \, \sin\beta = 2\beta\cos\beta$ を代入して
+\begin{align}
+\text{右辺} = \alpha \cos\alpha (2\beta\cos\beta) - \beta \cos\beta (2\alpha\cos\alpha) = 0 
+\end{align}
+となる．$\alpha^2 \neq \beta^2$ より直ちに
+\begin{align}
+\int_0^1 \sin\alpha x \sin\beta x \, dx = 0 
+\end{align}
+が導かれる．
+
 
 \end{document}
