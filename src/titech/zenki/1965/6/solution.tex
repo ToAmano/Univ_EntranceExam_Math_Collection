@@ -1,45 +1,132 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-[解] 2接点 $P(\alpha, \alpha^2), Q(\beta, \beta^2)$ とおく．$(\alpha < \beta)$．$P, Q$ での接線は
-\begin{align*}
+2接点 $P(\alpha, \alpha^2), Q(\beta, \beta^2)$ とおく $(\alpha < \beta)$．$P, Q$ での接線は
+\begin{align}
 y = 2\alpha x - \alpha^2, \quad y = 2\beta x - \beta^2
-\end{align*}
-だから，この交点は $\left( \frac{\alpha+\beta}{2}, \alpha\beta \right)$ である．これが $(t, -1)$ に等しいので
-\begin{align*}
+\end{align}
+だから，この交点は $\left( \frac{\alpha+\beta}{2}, \alpha\beta \right)$ である．
+題意よりこれが $(t, -1)$ に等しいので
+\begin{align}
 \begin{cases}
 \alpha + \beta = 2t \\
 \alpha\beta = -1
-\end{cases}
-\quad \dots \text{①}
-\end{align*}
-又，題意の面積 $S(t)$ は
-\begin{align*}
-S(t) &= \int_\alpha^t (x^2 - 2\alpha x + \alpha^2) \, dx + \int_t^\beta (x^2 - 2\beta x + \beta^2) \, dx \\
-&= \frac{1}{12} (\beta - \alpha)^3 \quad \dots \text{②}
-\end{align*}
-であり，①から $\alpha, \beta$ は $x$ の2次方程式 $x^2 - 2tx - 1 = 0$ の2実解で $\alpha < \beta$ とあわせて
-\begin{align*}
-\beta - \alpha = 2\sqrt{t^2 + 1}
-\end{align*}
-だから，②とあわせて
-\begin{align*}
-\frac{S(t)}{\sqrt{t}} = \frac{1}{12} \frac{8(t^2+1)\sqrt{t^2+1}}{\sqrt{t}} = \frac{2}{3} \sqrt{ \frac{(t^2+1)^3}{t} } \quad \dots \text{③}
-\end{align*}
-$f(t) = \frac{(t^2+1)^3}{t}$ とおく．$p = t^{\frac{1}{3}}$ とすると $p > 0$ で
-\begin{align*}
-f(t) &= \left( \frac{p^6+1}{p} \right)^3 = \left( p^5 + \frac{1}{p} \right)^3 = \left( p^5 + 5 \cdot \frac{1}{5p} \right)^3 \\
-&\ge \left( 6 \sqrt[6]{ p^5 \cdot \left(\frac{1}{5p}\right)^5 } \right)^3 = 6^3 \cdot \left(\frac{1}{5}\right)^{\frac{5}{2}} \quad (\because \text{AM-GM})
-\end{align*}
-(等号成立は $p = \left(\frac{1}{5}\right)^{\frac{1}{6}}$ つまり $t = \sqrt{1/5}$ の時)
+\end{cases} \label{eq:1}
+\end{align}
+である．
 
-だから，③に代入して
-\begin{align*}
-\min \frac{S(t)}{\sqrt{t}} = \frac{2}{3} \sqrt{ 6^3 \left(\frac{1}{5}\right)^{\frac{5}{2}} } = \frac{4}{5} \sqrt{\frac{6}{\sqrt{5}}}
-\end{align*}
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  % -------------------------------------------------------------
+  % パラメータ設定 (t = 0.5, alpha*beta = -1 になるように設定)
+  % 方程式 x^2 - 2tx - 1 = 0 の解: alpha ≒ -0.618, beta ≒ 1.618
+  % -------------------------------------------------------------
+  \def\T{0.5}          % t = 0.5
+  \def\Alpha{-0.618}   % alpha
+  \def\Beta{1.618}     % beta
+
+  % 座標軸
+  \draw[->] (-1.8, 0) -- (2.3, 0) node[right] {$x$};
+  \draw[->] (0, -1.5) -- (0, 3.2) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % -------------------------------------------------------------
+  % 正しい囲まれた領域 S(t) のハッチング (斜線塗りつぶし)
+  % 上辺: 放物線 (alpha -> beta)
+  % 下辺: Qでの接線 (beta -> t) -> Pでの接線 (t -> alpha)
+  % -------------------------------------------------------------
+  \fill[pattern=north east lines, pattern color=gray!70]
+      plot[domain=\Alpha:\Beta, samples=100] (\x, {\x*\x}) % 上側の放物線
+      -- (\T, -1)                                          % 交点 (t, -1) へ
+      -- cycle;                                            % P(alpha, alpha^2) へ戻って閉じる
+
+  % -------------------------------------------------------------
+  % 関数・接線の描画
+  % -------------------------------------------------------------
+  % 放物線 y = x^2
+  \draw[very thick, blue!80!black, domain=-1.5:1.9, samples=100]
+      plot (\x, {\x*\x}) node[above right, font=\small] {$y = x^2$};
+
+  % Pでの接線: y = 2*alpha*x - alpha^2
+  \draw[thick, red!80!black, domain=-1.4:1.2]
+      plot (\x, {2*\Alpha*\x - \Alpha*\Alpha});
+
+  % Qでの接線: y = 2*beta*x - beta^2
+  \draw[thick, red!80!black, domain=-0.2:2.1]
+      plot (\x, {2*\Beta*\x - \Beta*\Beta});
+
+  % -------------------------------------------------------------
+  % 点・座標ラベル・補助線
+  % -------------------------------------------------------------
+  % 接点 P(alpha, alpha^2)
+  \coordinate (P) at (\Alpha, {\Alpha*\Alpha});
+  \fill[purple] (P) circle (1.2pt) node[above left, font=\small] {$P(\alpha, \alpha^2)$};
+
+  % 接点 Q(beta, beta^2)
+  \coordinate (Q) at (\Beta, {\Beta*\Beta});
+  \fill[purple] (Q) circle (1.2pt) node[above right, font=\small] {$Q(\beta, \beta^2)$};
+
+  % 接線の交点 (t, -1)
+  \coordinate (Intersection) at (\T, -1);
+  \fill[purple] (Intersection) circle (1.2pt) node[below right, font=\small] {$(t, -1)$};
+
+  % 軸上の目盛りと破線
+  \draw[dashed, gray!70] (\Alpha, 0) node[above, font=\small, black] {$\alpha$} -- (P);
+  \draw[dashed, gray!70] (\Beta, 0) node[below, font=\small, black] {$\beta$} -- (Q);
+  \draw[dashed, gray!70] (\T, 0) node[above, font=\small, black] {$t$} -- (Intersection);
+  \draw[dashed, gray!70] (0, -1) node[left, font=\small, black] {$-1$} -- (Intersection);
+
+  % 領域ラベル S(t)
+  \node[font=\small, purple!80!black, fill=white, inner sep=1pt] at (0.5, 0.6) {$S(t)$};
+
+\end{tikzpicture}
+\caption{放物線 $y=x^2$ と2本の接線で囲まれた領域 $S(t)$}
+\end{center}
+\end{figure}
+
+題意の面積 $S(t)$ は
+\begin{align}
+S(t) 
+  &= \int_\alpha^t (x^2 - 2\alpha x + \alpha^2) \, dx + \int_t^\beta (x^2 - 2\beta x + \beta^2) \, dx \\
+  &= \frac{1}{12} (\beta - \alpha)^3 \label{eq:2}
+\end{align}
+である．以下これを$t$で書き直そう．
+\cref{eq:1}から $\alpha, \beta$ は $x$ の2次方程式 $x^2 - 2tx - 1 = 0$ の2実解だから $\alpha < \beta$ とあわせて
+\begin{align}
+\beta - \alpha = 2\sqrt{t^2 + 1}
+\end{align}
+と書ける．これを\cref{eq:2}に代入して
+\begin{align}
+\frac{S(t)}{\sqrt{t}} 
+ &= \frac{1}{12} \frac{8(t^2+1)\sqrt{t^2+1}}{\sqrt{t}} \\
+ &= \frac{2}{3} \sqrt{ \frac{(t^2+1)^3}{t} } \label{eq:3}
+\end{align}
+となる．以下この最小値を求める．
+簡単のため
+\begin{align}
+ f(t) = \frac{(t^2+1)^3}{t}
+\end{align}
+とおく．$p = t^{\frac{1}{3}}$ とおいて$f(t)$を書き直して評価すると $p > 0$ で
+\begin{align}
+f(t)
+  &= \left( \frac{p^6+1}{p} \right)^3 \\
+  &= \left( p^5 + \frac{1}{p} \right)^3 \\
+  &= \left( p^5 + 5 \cdot \frac{1}{5p} \right)^3 \\
+  &\ge \left( 6 \sqrt[6]{ p^5 \cdot \left(\frac{1}{5p}\right)^5 } \right)^3 \\
+  &= 6^3 \cdot \left(\frac{1}{5}\right)^{\frac{5}{2}} \quad (\because \text{AM-GM})
+\end{align}
+なる評価を得る．等号成立は $p = \left(\frac{1}{5}\right)^{\frac{1}{6}}$ つまり $t = \sqrt{1/5}$ の時である．
+
+従って\cref{eq:3}に代入して求める最小値は
+\begin{align}
+\min \frac{S(t)}{\sqrt{t}} 
+ &= \frac{2}{3} \sqrt{ 6^3 \left(\frac{1}{5}\right)^{\frac{5}{2}} } \\
+ &= \frac{4}{5} \sqrt{\frac{6}{\sqrt{5}}}
+\end{align}
+である．
+
 
 \end{document}

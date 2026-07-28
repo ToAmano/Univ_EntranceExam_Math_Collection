@@ -1,11 +1,48 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-[解] $l : y = -x + 5$ とおく．$B(13, 0)$ の $l$ に関する対称点 $C(2X+13, 2Y)$ とおくと，$BC$ の中点 $M(X+13, Y)$ が $l$ 上にあり，かつ $BC \perp l$ だから
+$l : y = -x + 5$ とおく．題意の状況は下図である．
+\begin{figure}[htb]
+ \begin{center}
+ \begin{tikzpicture}[scale=0.5, >=stealth]
+    % 座標軸（A(2,7) や B(13,0) が収まるように範囲を拡張）
+    \draw[->] (-1,0) -- (14.5,0) node[right] {$x$};
+    \draw[->] (0,-1) -- (0,8.5) node[above] {$y$};
+    \node[below left] at (0,0) {$O$};
+
+    % 直線 y = -x + 5
+    \draw[domain=-1:6.5, smooth, variable=\x, thick, blue!80!black] 
+        plot (\x, {-\x + 5}) node[right, font=\small] {$y=-x+5$};
+
+    % 軸上の切片ラベル
+    \node[left] at (0,5) {$5$};
+    \node[below] at (5,0) {$5$};
+
+    % 点 A(2, 7) の描画
+    \coordinate (A) at (2,7);
+    \fill[purple] (A) circle (3pt) node[above right] {$A(2, 7)$};
+    \draw[dashed, gray!60] (2,0) node[below, black] {$2$} -- (A) -- (0,7) node[left, black] {$7$};
+
+    % 点 B(13, 0) の描画
+    \coordinate (B) at (13,0);
+    \fill[purple] (B) circle (3pt) node[above right] {$B(13, 0)$};
+
+    % 直線上の点 P(3, 2) の描画
+    \coordinate (P) at (3,2);
+    \fill[red!80!black] (P) circle (3pt) node[above right] {$P$};
+
+    % 線分 AP, BP (位置関係を示す線)
+    \draw[dashed, thick] (A) -- (P) -- (B);
+
+ \end{tikzpicture}
+ \end{center}
+ \caption{直線$l:y=-x+5$と点$A$，$B$，$P$の位置関係}
+\end{figure}
+
+$B(13, 0)$ の $l$ に関する対称点を $C(2X+13, 2Y)$ とおいてまずはその座標を求める．
+$BC$ の中点 $M(X+13, Y)$ が $l$ 上にあり，かつ $BC \perp l$ だから，
 \begin{align*}
 \begin{cases}
 Y = -(X+13) + 5 \\
@@ -13,40 +50,73 @@ Y = -(X+13) + 5 \\
 \end{cases}
 \iff X = Y = -4
 \end{align*}
-だから $C(5, -8)$ である．右図から，$P$ が $AC$ 上の時 $AP + PB$ は $\min$ で
-この時 $AC : y = \frac{-8-7}{5-2}(x-2) + 7 = -5x + 17$ だから，$P$ は
-$y = -5x + 17$ と $y = -x + 5$ の交点で $P(3, 2)$
+である．よって $C(5, -8)$ である．これを図に示す．
 
 \begin{figure}[htb]
-\begin{center}
-\begin{tikzpicture}[scale=0.5]
-  \draw[->] (-1,0) -- (6,0) node[right] {$x$};
-  \draw[->] (0,-1) -- (0,6) node[above] {$y$};
-  \draw[domain=-0.5:5.5, smooth, variable=\x] plot (\x, {-\x + 5});
-  \node[above right] at (0,5) {$5$};
-  \node[above right] at (5,0) {$5$};
-  \node[above right] at (5.2,4.8) {$y=-x+5$};
-\end{tikzpicture}
-\qquad
-\begin{tikzpicture}[scale=0.4]
-  \coordinate (A) at (2,7);
-  \coordinate (B) at (13,0);
-  \coordinate (C) at (5,-8);
-  \coordinate (P) at (3,2);
-  
-  \draw[thick] (A) -- (P);
-  \draw[thick] (P) -- (C);
-  \draw[dashed] (P) -- (B);
-  \draw[dashed] (B) -- (C);
-  \draw[domain=-1:6, smooth, variable=\x] plot (\x, {-\x + 5}) node[right] {$l$};
-  
-  \node[above] at (A) {$A$};
-  \node[right] at (B) {$B$};
-  \node[below] at (C) {$C$};
-  \node[left] at (P) {$P$};
-\end{tikzpicture}
-\end{center}
-\caption{直線$l:y=-x+5$と点$A$，$B$，$C$，$P$の位置関係}
+ \begin{center}
+ \begin{tikzpicture}[scale=0.45, >=stealth]
+    % 座標軸の描画（C(5,-8) が入るように y 軸の負方向を拡張）
+    \draw[->] (-1.5,0) -- (14.5,0) node[right] {$x$};
+    \draw[->] (0,-9) -- (0,8.5) node[above] {$y$};
+    \node[below left] at (0,0) {$O$};
+
+    % 直線 l: y = -x + 5
+    \draw[domain=-1.5:10, smooth, variable=\x, thick, blue!80!black] 
+        plot (\x, {-\x + 5}) node[above right, font=\small] {$l: y=-x+5$};
+
+    % 軸上の切片ラベル
+    \node[left] at (0,5) {$5$};
+    \node[below left] at (5,0) {$5$};
+
+    % -------------------------------------------------------------
+    % 点の定義・プロット
+    % -------------------------------------------------------------
+    % 点 A(2, 7)
+    \coordinate (A) at (2,7);
+    \fill[purple] (A) circle (3pt) node[above right] {$A(2, 7)$};
+    \draw[dashed, gray!60] (2,0) node[below, black] {$2$} -- (A) -- (0,7) node[left, black] {$7$};
+
+    % 点 B(13, 0)
+    \coordinate (B) at (13,0);
+    \fill[purple] (B) circle (3pt) node[above right] {$B(13, 0)$};
+
+    % 対称点 C(5, -8)
+    \coordinate (C) at (5,-8);
+    \fill[purple] (C) circle (3pt) node[below right] {$C(5, -8)$};
+    \draw[dashed, gray!60] (5,0) node[above, black] {$5$} -- (C) -- (0,-8) node[left, black] {$-8$};
+
+    % 直線上の交点 P(3, 2)
+    \coordinate (P) at (3,2);
+    \fill[red!80!black] (P) circle (3pt) node[above right] {$P(3, 2)$};
+
+    % -------------------------------------------------------------
+    % 補助線の描画
+    % -------------------------------------------------------------
+    % 1. 線分 AC（直線 l と P で垂直に交わる直線）
+    \draw[thick, gray!80] (A) -- (C);
+
+    % 2. AP, BP, CP の補助線
+    \draw[dashed, thick, red!80!black] (A) -- (P) -- (B);
+    \draw[dashed, thick, red!80!black] (C) -- (B);
+
+    % % 直交マーク (AC と 直線 l の交点 P における垂直記号)
+    % % 直線 l の傾きは -1（135°）なので、回転させて直角記号を描画
+    % \begin{scope}[shift={(P)}, rotate=45]
+    %     \draw[gray!80, thick] (-0.4,0) -- (-0.4,0.4) -- (0,0.4);
+    % \end{scope}
+
+ \end{tikzpicture}
+ \end{center}
+ \caption{直線$l:y=-x+5$と点$A$，$B$，$C$，$P$の位置関係}
 \end{figure}
+
+$AP+PB = AP+BC$で，これは$P$が線分$AC$上にある時最小である．この時の$P$の座標は
+$AC : y = \frac{-8-7}{5-2}(x-2) + 7 = -5x + 17$ と$l$の交点で，
+\begin{align}
+  & -5x + 17 = -x + 5 \\
+\therefore 
+  & x = 3
+\end{align}
+より $P(3, 2)$ である．
 
 \end{document}

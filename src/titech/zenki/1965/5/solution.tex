@@ -1,31 +1,107 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
-[解] 題意から，$0 \le x \le \pi$ に $\sin(x+h) = \sin x$ をみたす $x$ が $1$ つあるので，それを $\alpha$ とする．
+{\bf [解]}
+
+$0<h<\pi$より，$0 \le x \le \pi$ に $\sin(x+h) = \sin x$ をみたす $x$ が $1$ つあるのでそれを $\alpha$ とする．
 つまり
-\begin{align*}
-\sin(\alpha+h) - \sin\alpha = 0, \quad 0 \le \alpha \le \pi \quad \dots \text{①}
-\end{align*}
-この時
-\begin{align*}
-\int_0^\pi |\sin(x+h) - \sin x| \, dx = \int_0^\alpha \{ \sin(x+h) - \sin x \} \, dx - \int_\alpha^\pi \{ \sin(x+h) - \sin x \} \, dx \quad \dots \text{②}
-\end{align*}
-$F(x) = \cos x - \cos(x+h)$ とおくと，
-\begin{align*}
-\text{②} &= 2F(\alpha) - F(0) - F(\pi) = 2F(\alpha) - (1 - \cos h) - (-1 + \cos h) \\
-&= 2F(\alpha) \quad \dots \text{③}
-\end{align*}
-ここで $0 < h < \pi$ から，$2\alpha + h = \pi \implies \alpha = \frac{\pi - h}{2}$ だから
-\begin{align*}
-F(\alpha) = \cos\left(\frac{\pi}{2} - \frac{h}{2}\right) - \cos\left(\frac{\pi}{2} - \frac{h}{2} + h\right) = 2\sin\frac{h}{2}
-\end{align*}
-だから，③から
-\begin{align*}
-\int_0^\pi |\sin(x+h) - \sin x| \, dx < 4\sin\frac{h}{2} < 2h \quad (\because 0 < x \text{ の時 } \sin x < x) \quad \text{證}
-\end{align*}
+\begin{align}
+\sin(\alpha+h) - \sin\alpha = 0, \quad 0 \le \alpha \le \pi \label{eq:1}   \\
+\therefore 
+  \alpha + h = -\alpha + \pi \\
+\therefore 
+  \alpha = \frac{\pi - h}{2} \label{eq:2}
+\end{align}
+である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.8, >=stealth]
+  % パラメータ設定 (例として h = pi/3 = 60° ≒ 1.047)
+  \def\H{1.04719}                   % h = pi/3
+  \def\Alpha{1.04719}                % alpha = (pi - h)/2 = pi/3
+  \def\PI{3.14159}                  % pi
+
+  % 座標軸
+  \draw[->] (-0.8, 0) -- (3.8, 0) node[right] {$x$};
+  \draw[->] (0, -1.3) -- (0, 1.4) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % -------------------------------------------------------------
+  % 2曲線の上下関係と積分領域の着色 (0 <= x <= pi)
+  % -------------------------------------------------------------
+  
+  % 1. 0 <= x <= alpha の範囲: sin(x+h) > sin(x) (青系斜線)
+  \fill[pattern=north east lines, pattern color=blue!60]
+      plot[domain=0:\Alpha, samples=100] (\x, {sin((\x + \H) r)})
+      -- plot[domain=\Alpha:0, samples=100] (\x, {sin(\x r)})
+      -- cycle;
+
+  % 2. alpha <= x <= pi の範囲: sin(x+h) < sin(x) (赤系斜線)
+  \fill[pattern=north west lines, pattern color=red!60]
+      plot[domain=\Alpha:\PI, samples=100] (\x, {sin(\x r)})
+      -- plot[domain=\PI:\Alpha, samples=100] (\x, {sin((\x + \H) r)})
+      -- cycle;
+
+  % -------------------------------------------------------------
+  % グラフの描画 (0 から pi 付近)
+  % -------------------------------------------------------------
+  % y = sin(x) (赤線)
+  \draw[thick, red!80!black, domain=-0.5:3.5, samples=150]
+      plot (\x, {sin(\x r)})
+      node[right, font=\small] {$y = \sin x$};
+
+  % y = sin(x + h) (青線)
+  \draw[thick, blue!80!black, domain=-0.5:3.5, samples=150]
+      plot (\x, {sin((\x + \H) r)})
+      node[above right, font=\small] {$y = \sin(x + h)$};
+
+  % -------------------------------------------------------------
+  % 交点・主要な x 座標のラベルと破線
+  % -------------------------------------------------------------
+  % 交点 alpha = (pi - h)/2
+  \coordinate (P) at (\Alpha, {sin(\Alpha r)});
+  \fill[purple] (P) circle (1.2pt);
+  \draw[dashed, gray!80] (\Alpha, 0) node[below, black, font=\small] {$\alpha = \frac{\pi - h}{2}$} -- (P);
+
+  % 積分区間の右端 x = pi
+  \draw[dashed, gray!80] (\PI, 0) node[below, black, font=\small] {$\pi$} -- (\PI, {sin(\PI r)});
+
+  % y = 1 のグリッド線（高さの参考）
+  \draw[dotted, gray!60] (0, 1) node[left, font=\scriptsize, black] {$1$} -- (3.3, 1);
+
+\end{tikzpicture}
+\caption{$y = \sin x$ と $y = \sin(x+h)$ の位置関係と交点 $\alpha$}
+\end{center}
+\end{figure}
+
+この時与えられた積分は
+\begin{align}
+\int_0^\pi |\sin(x+h) - \sin x| \, dx 
+  &= \int_0^\alpha \{ \sin(x+h) - \sin x \} \, dx - \int_\alpha^\pi \{ \sin(x+h) - \sin x \} \, dx \label{eq:2}
+\end{align}
+だから
+\begin{align}
+F(x) = \cos x - \cos(x+h) 
+\end{align}
+とおくと
+\begin{align}
+\text{\cref{eq:2}}
+  &= 2F(\alpha) - F(0) - F(\pi) \\
+  &= 2F(\alpha) - (1 - \cos h) - (-1 + \cos h) \\
+  &= 2F(\alpha) \label{eq:3}
+\end{align}
+と書ける．\cref{eq:2}を代入して
+\begin{align}
+F(\alpha) 
+  &= \cos\left(\frac{\pi}{2} - \frac{h}{2}\right) - \cos\left(\frac{\pi}{2} - \frac{h}{2} + h\right) \\
+  &= 2\sin\frac{h}{2}
+\end{align}
+だから，\cref{eq:3}に代入して
+\begin{align}
+\int_0^\pi |\sin(x+h) - \sin x| \, dx = 2F(\alpha) = 4\sin\frac{h}{2} < 2h \quad (\because 0 < x \text{ の時 } \sin x < x) 
+\end{align}
+となり題意は示された．
 
 \end{document}
