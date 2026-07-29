@@ -1,32 +1,72 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
+与えられた条件式
+\begin{align}
+a^2 - b^2 - c^2 > 0  \dots \text{①} \label{eq:1}\\
+ap < 0, \quad x > 0  \dots \text{②} \label{eq:2}\\
+ax + by + cz = p  \dots \text{③} \label{eq:3}
+\end{align}
+を考える．このもとで
+\begin{align}
+ T = x^2 - (y^2+z^2)
+\end{align}
+の符号を考える．
 
-[解]
-\begin{align*}
-\begin{cases}
-a^2 - b^2 - c^2 > 0 & \dots \text{①} \\
-ap < 0, \quad x > 0 & \dots \text{②} \\
-ax + by + cz = p & \dots \text{③}
-\end{cases}
-\end{align*}
+まず$x$を固定して$y,z$を動かす．そこで\cref{eq:3}が$yz$平面で表す直線を$l$と考える．
+$(b, c) = (0, 0)$ とすると $ax = p$ となるがこれは\cref{eq:2}に反するので$(b, c) \neq (0, 0)$である．
+これを図示すると以下のようになる．
 
-$yz$平面で③の表す直線を $l$ と考える．まず，$(b, c) = (0, 0)$ とすると，$ax = p$ となるが，これは②に反する．よって $(b, c) \neq (0, 0)$ である．このもとで
-\begin{align*}
-\min (y^2 + z^2) = \left( \frac{|p - ax|}{\sqrt{b^2 + c^2}} \right)^2 = \frac{(p - ax)^2}{b^2 + c^2}
-\end{align*}
-だから，
-\begin{align*}
-x^2 - (y^2 + z^2) &\le x^2 - \frac{(p - ax)^2}{b^2 + c^2} < x^2 - \frac{(p - ax)^2}{a^2} \quad (\because \text{①}) \\
-&= + 2 \frac{p}{a} x - \left( \frac{p}{a} \right)^2 = \left( \frac{p}{a} \right) \left( 2x - \frac{p}{a} \right) < 0 \quad (\because \text{②より}, \frac{p}{a} < 0, x > 0)
-\end{align*}
-となり，
-\begin{align*}
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+  % 座標軸 (y軸, z軸)
+  \draw[->] (-1.5, 0) -- (3.5, 0) node[right] {$y$};
+  \draw[->] (0, -1.0) -- (0, 3.2) node[above] {$z$};
+  \node[below left] at (0,0) {$O$};
+
+  % 直線 l: by + cz = p - ax
+  % 傾きをもった直線を定義 (y=-1 から 3.2 まで)
+  \draw[thick] (-0.8, 3.0) -- (3.2, -0.6) node[right] {$l: by + cz = p - ax$};
+
+  % 原点から直線 l への垂線（長さ t）
+  % 直線上の足の座標 (約 1.2, 1.2)
+  \coordinate (O) at (0,0);
+  \coordinate (H) at (1.2, 1.2);
+  
+  \draw[dashed, thick] (O) -- (H) node[midway, above left] {$t$};
+  \fill (H) circle (1.5pt) node[above right] {$H$};
+
+  % 垂直記号 (直角マーク)
+  \draw (1.02, 1.02) -- (1.14, 0.84) -- (1.32, 1.02);
+
+  % 直線上の任意の点 P(y,z) とベクトル/線分
+  \coordinate (P) at (2.2, 0.3);
+  \fill (P) circle (1.5pt) node[above right] {$P(y, z)$};
+  \draw[dashed] (O) -- (P) node[midway, above, font=\small] {$\sqrt{y^2+z^2}$};
+
+\end{tikzpicture}
+\end{center}
+\caption{$yz$平面における直線 $l$ と原点からの最短距離 $t$}
+\end{figure}
+
+点と直線の距離公式から，原点$O(0,0)$とこの直線$l$の距離$t$が$\sqrt{y^2+z^2}$の最小値である．よって
+\begin{align}
+ t^2 = \min (y^2 + z^2) = \left( \frac{|p - ax|}{\sqrt{b^2 + c^2}} \right)^2 = \frac{(p - ax)^2}{b^2 + c^2} 
+\end{align}
+である．従って$T$は上から評価できて，
+\begin{align}
+T &= x^2 - (y^2 + z^2)  \\
+  &\le x^2 - \frac{(p - ax)^2}{b^2 + c^2} \\
+  & < x^2 - \frac{(p - ax)^2}{a^2} \quad (\because \text{\cref{eq:1}}) \\
+  &= + 2 \frac{p}{a} x - \left( \frac{p}{a} \right)^2 = \left( \frac{p}{a} \right) \left( 2x - \frac{p}{a} \right) \\
+  &< 0 \quad (\because \text{\cref{eq:2}}, \frac{p}{a} < 0, x > 0)
+\end{align}
+だから
+\begin{align}
 x^2 - y^2 - z^2 < 0
-\end{align*}
+\end{align}
 である．
 
 \end{document}

@@ -1,34 +1,18 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-[解] $3a_n > 2a_{n-1} \quad \dots \text{①}$
+{\bf [解]} 
+題意の条件
+\begin{align}
+ 3a_n > 2a_{n-1} \label{eq:1}
+\end{align}
+の元で考える．
 
 与式から
-\begin{align*}
+\begin{align}
 \begin{pmatrix} X \\ Y \end{pmatrix} = x \begin{pmatrix} a_n \\ a_{n-1} \end{pmatrix} + y \begin{pmatrix} 2 \\ 3 \end{pmatrix}
-\end{align*}
-である．$\vec{a}_n = \begin{pmatrix} a_n \\ a_{n-1} \end{pmatrix}$, $\vec{\beta} = \begin{pmatrix} 2 \\ 3 \end{pmatrix}$ とおくと，$|x| + |y| \le 1$ から，$(X, Y)$ は右下斜線部内をうごく ($O$ に注意した)．この面積 $S$ は，
-\begin{align*}
-\frac{1}{2} S &= (\text{$\vec{\beta}$ と $-\vec{a}_n$ でつくられる三角形}) + (\text{$\vec{\beta}$ と $\vec{a}_n$ でつくられる三角形}) \\
-&= \frac{1}{2} |-3a_n + 2a_{n-1}| + \frac{1}{2} |3a_n - 2a_{n-1}| \\
-&= |3a_n - 2a_{n-1}| \\
-&= 3a_n - 2a_{n-1} \quad (\because \text{①})
-\end{align*}
-と表せる．$S = 2$ だから，
-\begin{align*}
-1 = 3a_n - 2a_{n-1} \quad (n \ge 2)
-\end{align*}
-\begin{align*}
-\therefore a_n - 1 = \frac{2}{3}(a_{n-1} - 1) \quad (n \ge 2)
-\end{align*}
-くり返し用いて，
-\begin{align*}
-a_n = \left(\frac{2}{3}\right)^{n-1} (a_1 - 1) + 1 \longrightarrow 1 \quad (n \to +\infty)
-\end{align*}
+\end{align}
+である．$\vec{\alpha}_n = \begin{pmatrix} a_n \\ a_{n-1} \end{pmatrix}$, $\vec{\beta} = \begin{pmatrix} 2 \\ 3 \end{pmatrix}$ とおくと，$|x| + |y| \le 1$ から，$(X, Y)$ は右下斜線部内をうごく．ただし\cref{eq:1}より$\alpha_n$と$\beta$の位置関係に注意した．
 
 \begin{figure}[htb]
 \begin{center}
@@ -42,7 +26,10 @@ a_n = \left(\frac{2}{3}\right)^{n-1} (a_1 - 1) + 1 \longrightarrow 1 \quad (n \t
   \fill[gray!30] (A) -- (B) -- (MA) -- (MB) -- cycle;
   \draw[thick] (A) -- (B) -- (MA) -- (MB) -- cycle;
 
-  \draw[->, thick] (O) -- (A) node[right] {$\vec{a}_n$};
+\draw[->] (-3, 0) -- (3, 0) node[right] {$x$}; % x軸
+  \draw[->] (0, -2.5) -- (0, 2.5) node[above] {$y$}; % y軸
+
+  \draw[->, thick] (O) -- (A) node[right] {$\vec{\alpha}_n$};
   \draw[->, thick] (O) -- (B) node[above] {$\vec{\beta}$};
   \draw[dashed] (MA) -- (A);
   \draw[dashed] (MB) -- (B);
@@ -50,7 +37,29 @@ a_n = \left(\frac{2}{3}\right)^{n-1} (a_1 - 1) + 1 \longrightarrow 1 \quad (n \t
   \node[below left] at (O) {$O$};
 \end{tikzpicture}
 \end{center}
-\caption{点列$\vec a_n$の$\vec\beta$への収束の様子}
+\caption{$\alpha_n$と$\beta$および$(X,Y)$の動く範囲（斜線部境界含む）}
 \end{figure}
+
+
+この面積 $S_n$ は，
+\begin{align}
+\frac{1}{2} S_n &= (\text{$\vec{\beta}$ と $-\vec{\alpha}_n$ でつくられる三角形}) + (\text{$\vec{\beta}$ と $\vec{\alpha}_n$ でつくられる三角形}) \\
+&= \frac{1}{2} |-3a_n + 2a_{n-1}| + \frac{1}{2} |3a_n - 2a_{n-1}| \\
+&= |3a_n - 2a_{n-1}| \\
+&= 3a_n - 2a_{n-1} \quad (\because \text{\cref{eq:1}})
+\end{align}
+と表せる．
+題意より全ての$n$に対して$S_n = 2$ だから，
+\begin{align}
+1 = 3a_n - 2a_{n-1} \quad (n \ge 2) \\
+\therefore 
+  a_n - 1 = \frac{2}{3}(a_{n-1} - 1) \quad (n \ge 2) 
+\end{align}
+なる漸化式を得る．
+この漸化式をくり返し用いて，$a_n$の一般項および求める極限値は
+\begin{align}
+a_n = \left(\frac{2}{3}\right)^{n-1} (a_1 - 1) + 1 \longrightarrow 1 \quad (n \to +\infty)
+\end{align}
+である．
 
 \end{document}
