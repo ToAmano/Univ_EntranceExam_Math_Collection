@@ -1,37 +1,101 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$f'(x)>0$ から $f(x)$ は単調増加であるから，
-\begin{align*}
-F(x) = \int_a^x [f(x)-f(t)]dt + \int_x^b[f(t)-f(x)]dt
-\end{align*}
-\begin{align*}
-= f(x)\int_a^x dt - \int_a^x f(t)dt + \int_x^b f(t)dt - f(x)\int_x^b dt
-\end{align*}
-\begin{align*}
-F'(x) = f'(x)(x-a) + f(x) - f(x) - f(x) - f'(x)(b-x) + f(x)
-\end{align*}
-\begin{align*}
-= f'(x)(2x-a-b)
-\end{align*}
-$f'(x)>0$ から下記のようになる．
 
+% プリアンブルに以下を追加してください
+% \usepackage{tikz}
+% \usetikzlibrary{patterns}
+
+\begin{figure}[htb]
 \begin{center}
-\begin{tabular}{c|c|c|c|c}
-$x$ & $a$ & $\dfrac{a+b}{2}$ & & $b$ \\
-\hline
-$F'$ & & $-$\ $0$\ $+$ & & \\
-\hline
-$F$ & & $\searrow$\ \ $\nearrow$ & &
-\end{tabular}
-\end{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+  % 1. 領域の塗りつぶし (F(x) の表す面積)
+  % [a, x] の領域: 水平線 s = f(x) が上、曲線 s = f(t) が下
+  \fill[gray!30, domain=0.5:1.6, samples=50]
+    (0.5, {0.3*1.6*1.6 + 0.2}) -- plot (\x, {0.3*\x*\x + 0.2})
+    -- (1.6, {0.3*1.6*1.6 + 0.2}) -- cycle;
 
-よって，$x=\dfrac{a+b}{2}$ で最小となる．
+  % [x, b] の領域: 曲線 s = f(t) が上、水平線 s = f(x) が下
+  \fill[gray!30, domain=1.6:2.6, samples=50]
+    (1.6, {0.3*1.6*1.6 + 0.2}) -- plot (\x, {0.3*\x*\x + 0.2})
+    -- (2.6, {0.3*1.6*1.6 + 0.2}) -- cycle;
+
+  % 斜線パターンを追加して領域を強調
+  \begin{scope}
+    \clip[domain=0.5:1.6, samples=50]
+      (0.5, {0.3*1.6*1.6 + 0.2}) -- plot (\x, {0.3*\x*\x + 0.2}) -- (1.6, {0.3*1.6*1.6 + 0.2}) -- cycle;
+    \fill[pattern=north east lines, pattern color=black!60] (-1,-1) rectangle (4,4);
+  \end{scope}
+  \begin{scope}
+    \clip[domain=1.6:2.6, samples=50]
+      (1.6, {0.3*1.6*1.6 + 0.2}) -- plot (\x, {0.3*\x*\x + 0.2}) -- (2.6, {0.3*1.6*1.6 + 0.2}) -- cycle;
+    \fill[pattern=north west lines, pattern color=black!60] (-1,-1) rectangle (4,4);
+  \end{scope}
+
+  % 2. 座標軸 (t 軸, s 軸)
+  \draw[->] (-0.3, 0) -- (3.0, 0) node[right] {$t$};
+  \draw[->] (0, -0.3) -- (0, 2.6) node[above] {$s$};
+  \node[below left] at (0,0) {$O$};
+
+  % 3. 曲線 s = f(t) の描画 (単調増加)
+  \draw[thick, domain=0.2:2.8, samples=100] plot (\x, {0.3*\x*\x + 0.2}) node[above left] {$s = f(t)$};
+
+  % 4. 直線 s = f(x) の描画 (水平線)
+  \draw[thick, color=blue!80!black] (0, {0.3*1.6*1.6 + 0.2}) -- (2.8, {0.3*1.6*1.6 + 0.2}) node[right] {$s = f(x)$};
+
+  % 5. 補助線 (t = a, x, b)
+  \draw[dashed] (0.5, 0) -- (0.5, {0.3*1.6*1.6 + 0.2});
+  \draw[dashed] (1.6, 0) -- (1.6, {0.3*1.6*1.6 + 0.2});
+  \draw[dashed] (2.6, 0) -- (2.6, {0.3*2.6*2.6 + 0.2});
+
+  % 6. 軸上の点とラベル
+  \node[below] at (0.5, 0) {$a$};
+  \node[below] at (1.6, 0) {$x$};
+  \node[below] at (2.6, 0) {$b$};
+  \node[left, color=blue!80!black] at (0, {0.3*1.6*1.6 + 0.2}) {$f(x)$};
+
+  % 各領域の数式ラベル
+  \node at (1.05, 0.7) {\small $\int_a^x [f(x)-f(t)]dt$};
+  \node at (2.15, 1.4) {\small $\int_x^b [f(t)-f(x)]dt$};
+
+  % 交点・端点のプロット
+  \fill (0.5, {0.3*0.5*0.5 + 0.2}) circle (1pt);
+  \fill (1.6, {0.3*1.6*1.6 + 0.2}) circle (1pt);
+  \fill (2.6, {0.3*2.6*2.6 + 0.2}) circle (1pt);
+
+\end{tikzpicture}
+\end{center}
+\caption{$F(x)$ が表す面積（$s=f(t)$ と $s=f(x)$ で囲まれた2領域の和）}
+\end{figure}
+
+$f'(x)>0$ より $f(x)$ は単調増加であるから$F(x)$の絶対値を外すと
+\begin{align}
+F(x) 
+  &= \int_a^x [f(x)-f(t)]dt + \int_x^b[f(t)-f(x)]dt \\
+  &= f(x)\int_a^x dt - \int_a^x f(t)dt + \int_x^b f(t)dt - f(x)\int_x^b dt
+\end{align}
+である．従って一階微分は
+\begin{align}
+F'(x) 
+  &= f'(x)(x-a) + f(x) - f(x) - f(x) - f'(x)(b-x) + f(x) \\
+  &= f'(x)(2x-a-b)
+\end{align}
+である．$f'(x)>0$ より$F(x)$の増減表は下表のようになる．
+
+\begin{table}[htb]
+\centering
+\caption{$F(x)$の増減表}
+\begin{tabular}{c|ccccc}
+$x$ & $a$ & $\dots$ & $\dfrac{a+b}{2}$ & $\dots$ & $b$ \\
+\hline
+$F'(x)$ & & $-$ & $0$ & $+$ & \\
+\hline
+$F(x)$ & & $\searrow$ & 極小 & $\nearrow$ & 
+\end{tabular}
+\end{table}
+
+従って増減表より $x=\dfrac{a+b}{2}$ で最小となる．
 
 
 \newpage
