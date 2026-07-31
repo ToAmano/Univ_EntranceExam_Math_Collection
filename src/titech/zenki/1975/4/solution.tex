@@ -1,52 +1,84 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-2接点を $P\left(t,\dfrac{1}{t}\right)$，$Q\left(-s,\dfrac{1}{s}\right)$ $(t,s>0)$ とすると，$P,Q$ での接線は $\left(\dfrac{1}{x}\right)'=-\dfrac{1}{x^2}$ から，
-\begin{align*}
+題意の2接点を $P\left(t,\dfrac{1}{t}\right)$，$Q\left(-s,\dfrac{1}{s}\right)$ $(t,s>0)$ とする．
+すると $P,Q$ での接線$\ell_P$, $\ell_Q$は $\left(\dfrac{1}{x}\right)'=-\dfrac{1}{x^2}$ より
+\begin{align}
 \ell_P: y=-\frac{1}{t^2}x+\frac{2}{t}, \qquad \ell_Q: y=\frac{1}{s^2}x+\frac{2}{s}
-\end{align*}
-となり，交点 $R$，$\ell_P$ の $x$ 切片 $T$，$\ell_Q$ の $x$ 切片 $U$ とすると
-\begin{align*}
-R\left(2\frac{ts(s-t)}{t^2+s^2},2\frac{t+s}{t^2+s^2}\right), \qquad T(2t,0), \qquad U(-2s,0)
-\end{align*}
+\end{align}
+となる．
+よって2接線の交点を$R$，$\ell_P$ の $x$ 切片 $T$，$\ell_Q$ の $x$ 切片 $U$ とするとこれらの座標は
+\begin{align}
+R\left(\frac{2ts(s-t)}{t^2+s^2},\frac{2(t+s)}{t^2+s^2}\right), \qquad T(2t,0), \qquad U(-2s,0) \label{eq:1}
+\end{align}
+である．
+よってグラフは以下のようになる．
 
 \begin{figure}[htb]
 \begin{center}
-\begin{tikzpicture}[scale=1.1, >=stealth]
-  \draw[->] (-3,0) -- (3,0) node[right] {$x$};
-  \draw[->] (0,-0.3) -- (0,3) node[above] {$y$};
-  \draw[domain=0.45:2.6, smooth, thick] plot (\x, {1.6/\x});
-  \draw[domain=-2.6:-0.45, smooth, thick] plot (\x, {-1.6/\x});
-  \draw[thick] (-2.6,0.65) -- (2,3) node[above right] {};
-  \draw[thick] (-2,3) -- (2.6,0.65);
-  \fill (0.9,1.78) circle (1pt) node[above right] {$P$};
-  \fill (-0.9,1.78) circle (1pt) node[above left] {$Q$};
-  \fill (0,2.3) circle (1pt) node[above right] {$R$};
-  \fill (1.8,0) circle (1pt) node[below] {$T$};
-  \fill (-1.8,0) circle (1pt) node[below] {$U$};
-  \draw[dashed] (-1.8,0) -- (0,2.3) -- (1.8,0);
+\begin{tikzpicture}[scale=2, >=stealth]
+  % 媒介変数の設定 (例: t = 1.2, s = 0.8)
+  % P(1.2, 0.833), Q(-0.8, 1.25)
+  % T(2.4, 0), U(-1.6, 0)
+  % R(-0.384, 1.923)
+
+  % 1. 三角形 RTU の塗りつぶし（面積 f の領域）
+  \fill[gray!30] (-1.6, 0) -- (2.4, 0) -- (-0.384, 1.923) -- cycle;
+  \fill[pattern=north east lines, pattern color=black!60] (-1.6, 0) -- (2.4, 0) -- (-0.384, 1.923) -- cycle;
+
+  % 2. 座標軸
+  \draw[->] (-2.5,0) -- (3.0,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,2.8) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 3. 2曲線（第1象限 y = 1/x, 第2象限 y = -1/x）
+  % Q(-s, 1/s) を通るため、x < 0 では y = -1/x のグラフを描画
+  \draw[thick, domain=0.45:2.6, samples=100] plot (\x, {1/\x});
+  \draw[thick, domain=-2.6:-0.45, samples=100] plot (\x, {-1/\x});
+
+  % 4. 接線 l_P と l_Q (U, R, P, T を通る直線)
+  % l_P: y = -0.694 x + 1.667 (U から R を通って T へ)
+  \draw[thick, color=blue!80!black] (-1.0, 2.36) -- (2.6, -0.138) node[right] {$\ell_P$};
+  % l_Q: y = 1.5625 x + 2.5 (U から R を通って P へ)
+  \draw[thick, color=red!80!black] (-1.9, -0.468) -- (0.1, 2.656) node[above right] {$\ell_Q$};
+
+  % 5. 垂線 RH の描画
+  \draw[dashed] (-0.384, 1.923) -- (-0.384, 0) node[below, font=\small] {$H$};
+
+  % 6. 各点のプロットとラベル
+  \fill (1.2, 0.833) circle (1.2pt) node[above right] {$P$};
+  \fill (-0.8, 1.25) circle (1.2pt) node[above left] {$Q$};
+  \fill (-0.384, 1.923) circle (1.2pt) node[above] {$R$};
+  \fill (2.4, 0) circle (1.2pt) node[below] {$T$};
+  \fill (-1.6, 0) circle (1.2pt) node[below] {$U$};
+
 \end{tikzpicture}
 \end{center}
-\caption{点$P$，$Q$，$R$，$T$，$U$の位置関係}
+\caption{点 $P, Q, R, T, U$ の位置関係と三角形 $RTU$（斜線部）}
 \end{figure}
 
-だから，題意の△の面積 $f$ は，$R$ から $x$ 軸への垂足 $H$ として
-\begin{align*}
-f=\overline{TU}\times\overline{RH}\cdot\frac{1}{2} = \frac{1}{2}(2t+2s)\cdot2\frac{t+s}{t^2+s^2} = 2\frac{(t+s)^2}{t^2+s^2}=2\left(1+\frac{2ts}{t^2+s^2}\right) \quad \cdots \text{①}
-\end{align*}
-AM-GM から，$t^2+s^2\ge2ts$ $\therefore 1\ge\dfrac{2st}{t^2+s^2}$（$\because t,s>0$）で等号成立は $s=t$ の時．
-
-よって①から，
-\begin{align*}
-f\le2(1+1)=4
-\end{align*}
-となる．
-
+題意の三角形の面積 $f$ は図の斜線部の領域である．$R$ から $x$ 軸への垂足 $H$ として\cref{eq:1}より
+\begin{align}
+f &=\frac{1}{2}|TU||RH| \\
+  &=\frac{1}{2}(2t+2s)\cdot \frac{2(t+s)}{t^2+s^2} \\
+  &=\frac{2(t+s)^2}{t^2+s^2} \\
+  &=2\left(1+\frac{2ts}{t^2+s^2}\right) \label{eq:2}
+\end{align}
+である．以下この最大値を求める．
+AM-GM不等式 から，
+\begin{align}
+ t^2+s^2 \ge 2ts \quad (\text{等号成立は}t=s) 
+\end{align}
+だから
+\begin{align}
+ \dfrac{2st}{t^2+s^2} \le \dfrac{t^2+s^2}{t^2+s^2} = 1
+\end{align}
+より，\cref{eq:2}に代入して
+\begin{align}
+ f \le 2(1+1)=4
+\end{align}
+である．等号成立は$s=t$の時であり，これは実現可能だから求める面積の最大値は$4$である．
 
 \newpage
 
