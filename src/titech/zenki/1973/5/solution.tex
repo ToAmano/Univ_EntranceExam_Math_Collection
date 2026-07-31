@@ -1,37 +1,62 @@
-\documentclass[../../../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-$x, y$ 軸のまわりにまわして得られる立体の体積 $V_x, V_y$ とする.
+
+下図に曲線$y=(ax-b)^2$の様子を示す．題意の領域は図の斜線部である．
+以下簡単のため
+\begin{align}
+ f(x) = (ax-b)^2
+\end{align}
+とおく．
 
 \begin{figure}[htb]
 \begin{center}
-\begin{tikzpicture}[scale=1.2]
-  \draw[->] (-0.2,0) -- (2.2,0) node[right] {$x$};
-  \draw[->] (0,-0.2) -- (0,2.2) node[above] {$y$};
-  \draw[domain=0:1.5,smooth,variable=\x,thick] plot ({\x},{(1.5-\x)*(1.5-\x)});
+\begin{tikzpicture}[scale=1.2, >=stealth]
+  % 1. 領域の塗りつぶし (x ∈ [0, b/a] において 曲線 y=(ax-b)^2 と xy軸で囲まれた領域)
+  \begin{scope}
+    \fill[pattern=north east lines, pattern color=gray!80]
+      (0,0) -- (0,2.25) -- plot[domain=0:1.5, smooth] (\x, {(1.5-\x)*(1.5-\x)}) -- (1.5,0) -- cycle;
+  \end{scope}
+
+  % 2. 座標軸
+  \draw[->] (-0.3,0) -- (2.0,0) node[right] {$x$};
+  \draw[->] (0,-0.3) -- (0,2.6) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 3. 曲線 y = (ax-b)^2 の描画
+  \draw[domain=0:1.6, smooth, thick] plot (\x, {(1.5-\x)*(1.5-\x)}) node[above right] {$y=f(x)$};
+
+  % 4. 切片のプロットとラベル
+  \fill (0, 2.25) circle (1.2pt);
+  \fill (1.5, 0) circle (1.2pt);
+
   \node[left] at (0,2.25) {$b^2$};
   \node[below] at (1.5,0) {$b/a$};
+
 \end{tikzpicture}
 \end{center}
-\caption{回転体の体積を求めるための図}
+\caption{曲線 $y=(ax-b)^2$ と各軸で囲まれた領域（斜線部）}
 \end{figure}
 
-\begin{align*} V_x = \pi \int_0^{b/a} (ax-b)^4 dx \end{align*}
-\begin{align*} V_y = 2\pi \int_0^{b/a} x(ax-b)^2 dx \end{align*}
-から,
-\begin{align*}
-V_x = V_y &\iff \int_0^{b/a} \{ (ax-b)^4 - 2x(ax-b)^2 \} dx = 0 \\
+この領域を$x, y$ 軸のまわりにまわして得られる立体の体積 $V_x, V_y$ とすると
+
+\begin{align}
+  V_x &= \pi \int_0^{b/a} \left(f(x)\right)^2 dx = \pi \int_0^{b/a} (ax-b)^4 dx \\
+  V_y &= 2\pi \int_0^{b/a} xf(x) dx = 2\pi \int_0^{b/a} x(ax-b)^2 dx 
+\end{align}
+である．これらが等しくなる時
+\begin{align}
+V_x = V_y 
+&\iff \int_0^{b/a} \{ (ax-b)^4 - 2x(ax-b)^2 \} dx = 0 \\
 &\iff \left[ \frac{1}{5a} (ax-b)^5 - \frac{2}{4}a^2 x^4 + \frac{4}{3}ab x^3 - b^2 x^2 \right]_0^{b/a} = 0 \\
-&\iff -\frac{1}{5a} (-b)^5 - \frac{2}{4}a^2 \left(\frac{b}{a}\right)^4 + \frac{4}{3}ab \left(\frac{b}{a}\right)^3 - b^2 \left(\frac{b}{a}\right)^2 = 0 \\
-&\iff \frac{b^5}{5a} - \frac{2}{4}\frac{b^4}{a^2} + \frac{4}{3}\frac{b^4}{a^2} - \frac{b^4}{a^2} = 0 \\
-&\iff ab\frac{1}{5} - \frac{1}{2} + \frac{4}{3} - 1 = 0 \qquad (\because a, b \neq 0) \\
-&\iff ab = \frac{5}{6} = \text{const} \quad \text{答}
-\end{align*}
+&\iff -\frac{1}{5a} (-b)^5 - \frac{1}{2}a^2 \left(\frac{b}{a}\right)^4 + \frac{4}{3}ab \left(\frac{b}{a}\right)^3 - b^2 \left(\frac{b}{a}\right)^2 = 0 \\
+&\iff \frac{b^5}{5a} - \frac{1}{2}\frac{b^4}{a^2} + \frac{4}{3}\frac{b^4}{a^2} - \frac{b^4}{a^2} = 0 \\
+&\iff \frac{ab}{5} - \frac{1}{2} + \frac{4}{3} - 1 = 0 \qquad (\because a, b \neq 0) \\
+&\iff ab = \frac{5}{6} 
+\end{align}
+となり，確かに$ab$は定数である．よって示された．
 
 
 \newpage
