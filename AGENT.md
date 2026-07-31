@@ -202,6 +202,10 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 * **図を挿入する際は必ず `\caption{}` を付ける**。`\begin{figure}...\end{figure}` の中に `\caption{...}` を含め、何を表す図かを一言で示す。
 * **句読点は全角の「．」「，」を使う**（「。」「、」は使わない）。既存の人手作成 `solution.tex` もこの慣習に従っている。
 * **解答冒頭は `{\bf [解]}` とする**（`\begin{proof}[解]...\end{proof}` は使わない）。
+* **分数は `\frac` ではなく `\dfrac` を使う**。`align*` 環境内でも `\frac` はディスプレイスタイルでも小さく組まれてしまうことがあるため、常に `\dfrac` で統一する。
+* **`\dfrac` と `\sqrt` の引数は必ず `{}` で囲む**。`\sqrt2` ではなく `\sqrt{2}` のように書く（`\dfrac12` のような省略形も同様に禁止で、`\dfrac{1}{2}` と書く）。
+* **辺の長さは `\overline{AB}` ではなく `|AB|`（絶対値記号ではさむ）で書く**。手書き原稿が `\overline{}` を使っていても，転記時に `|...|` に直す。
+* **1行目は `\documentclass[../../main.tex]{subfiles}` とする**（`src/{univ}/{cat}/{year}/{q}/solution.tex` から `src/{univ}/{cat}/main.tex` までは2階層上がるだけなので `../../` が正しい。`../../../../` ではない）。
 
 ### 8.4 図（TikZ）の再現について
 
