@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
+import { SUMMARY_QUESTION_ID, isSummaryItem, countRealQuestions } from '../../../lib/solutions';
 
 export async function getStaticPaths() {
 	const solutions = await getCollection('solutions');
@@ -89,7 +90,7 @@ for (const item of solutions) {
 		qList.push(qGroup);
 	}
 
-	if (item.data.type === 'summary' || qNum === '0') {
+	if (isSummaryItem(item)) {
 		qGroup.summaryItem = item;
 	} else if (item.data.type === 'problem') {
 		qGroup.problemItem = item;
@@ -124,7 +125,7 @@ yearGroups.sort((a, b) => b.year.localeCompare(a.year));
 				<span class="cat-badge">{catName}</span>
 			</div>
 			<h1>{univName} <span class="highlight">{catName}</span></h1>
-			<p class="count-info">収録問題数: <strong>{solutions.length}</strong> 件</p>
+			<p class="count-info">収録問題数: <strong>{countRealQuestions(solutions)}</strong> 件</p>
 		</header>
 
 		{solutions.length === 0 ? (
@@ -162,7 +163,7 @@ yearGroups.sort((a, b) => b.year.localeCompare(a.year));
 						<section class="year-card glass">
 							<div class="year-header">
 								<h2>{yg.year}年度</h2>
-								<span class="year-count">{yg.questions.length}問</span>
+								<span class="year-count">{yg.questions.filter((q) => q.questionNum !== SUMMARY_QUESTION_ID).length}問</span>
 							</div>
 							<div class="questions-grid">
 								{yg.questions.map((q) => (
