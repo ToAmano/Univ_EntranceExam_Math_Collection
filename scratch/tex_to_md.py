@@ -452,9 +452,28 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     md_content = re.sub(r'^\s*\{\}\s*$', '', md_content, flags=re.MULTILINE)
     md_content = re.sub(r'^\s*\{\}\s*', '', md_content, flags=re.MULTILINE)
 
-    # 明示的な TeX 見出し \paragraph{...} の変換
-    md_content = re.sub(r'\\paragraph\*?\s*\{([^}]+)\}', r'\n\n### \1\n\n', md_content)
-    md_content = re.sub(r'\\subparagraph\*?\s*\{([^}]+)\}', r'\n\n#### \1\n\n', md_content)
+    # 明示的な TeX 見出し \paragraph{...} / \subparagraph{...} の変換。
+    # 場合分けの見出しには \subparagraph{$0\le x\le\dfrac{1}{2}$の時} のように
+    # 引数中にネストした {} を含むことが多く、単純な [^}]+ では最初の '}' で
+    # 切れてしまうため、_extract_braced で中括弧の対応を数えながら切り出す。
+    def _convert_heading_command(text, command, heading_prefix):
+        pattern = re.compile(r'\\' + command + r'\*?\s*\{')
+        out = []
+        i = 0
+        while True:
+            m = pattern.search(text, i)
+            if not m:
+                out.append(text[i:])
+                break
+            out.append(text[i:m.start()])
+            braced, end = _extract_braced(text, m.end() - 1)
+            inner = braced[1:-1]
+            out.append(f'\n\n{heading_prefix} {inner}\n\n')
+            i = end
+        return ''.join(out)
+
+    md_content = _convert_heading_command(md_content, 'subparagraph', '####')
+    md_content = _convert_heading_command(md_content, 'paragraph', '###')
 
     # --------------------------------------------------------------------------
     # 数式参照 (\eqref, \ref, \cref) の Markdown アンカーリンク化処理
