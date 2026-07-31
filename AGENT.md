@@ -172,7 +172,7 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 7. **単体コンパイル確認**: プリアンブル一式（`scratch/generate_main_tex.py` の `PREAMBLE` と同一内容）＋対象年度の大問だけを `\subfile` するテスト用 `test{year}.tex` を作り、`latexmk -lualatex -interaction=nonstopmode -halt-on-error test{year}.tex` でエラーが出ないことを確認する。TikZ 図がある場合は `pdftoppm` で PNG 化し、元のスキャンと見比べて図の忠実性も目視確認する。
 8. **テスト成果物の削除**: `test{year}.{pdf,aux,log,fls,fdb_latexmk,synctex.gz,toc,out,tex}` を必ず削除してから次の年度に進む。
 9. **`main.tex` の再生成**: 複数年度まとめて処理したあとは `python3 scratch/generate_main_tex.py {univ}/{cat}` を実行し、可能なら全体ビルド（第5章参照）でも通しでコンパイル確認する。
-10. **進捗ステータスの更新**: 1問（大問1つ）の文字起こし・自己検証が終わるたびに `python3 scratch/generate_status_markdowns.py` を実行し、`docs/status/{univ}_{cat}.md` を更新する。このスクリプトは新規に検出した解答を `✅ finish` ではなく `🤖 文字起こし済` として記録する（`finish` は人間が最終チェックした後に手動で書き換えるためのステータスであり、自動生成では絶対に付与しない。既存ファイルで既に `finish` になっている行はスクリプトが読み取って引き継ぐ）。
+10. **進捗ステータスの更新**: 1問（大問1つ）の文字起こし・自己検証が終わるたびに `python3 scratch/generate_status_markdowns.py` を実行し、`docs/status/{univ}_{cat}.md` を更新する。このスクリプトは新規に検出した解答を `finish` ではなく `文字起こし済` として記録する（`finish` は人間が最終チェックした後に手動で書き換えるためのステータスであり、自動生成では絶対に付与しない。既存ファイルで既に `finish` になっている行はスクリプトが読み取って引き継ぐ）。
 
 ### 8.2 判読困難な箇所への対処（クロップ・拡大）
 
