@@ -17,24 +17,32 @@ CATEGORIES = [
 
 # 解答列のステータスは3段階:
 #   unfinish : solution.tex が空/未着手
-#   transcribed (🤖 文字起こし済) : 自動判定でそれらしい内容がある（AI文字起こし直後の既定状態）
-#   finish (✅ finish) : 人間が最終チェック済み。自動生成では絶対に付与せず、
-#                        既存マークダウンで既に finish になっている行のみ引き継ぐ。
-SOL_UNFINISH = "❌ unfinish"
-SOL_TRANSCRIBED = "🤖 文字起こし済"
-SOL_FINISH = "✅ finish"
+#   transcribed (文字起こし済) : 自動判定でそれらしい内容がある（AI文字起こし直後の既定状態）
+#   finish : 人間が最終チェック済み。自動生成では絶対に付与せず、
+#            既存マークダウンで既に finish になっている行のみ引き継ぐ。
+SOL_UNFINISH = "unfinish"
+SOL_TRANSCRIBED = "文字起こし済"
+SOL_FINISH = "finish"
 
-PROB_FINISH = "✅ finish"
-PROB_UNFINISH = "❌ unfinish"
+PROB_FINISH = "finish"
+PROB_UNFINISH = "unfinish"
 
 ROW_RE = re.compile(
     r"^\|\s*(?P<year>\S+?)\s*\|\s*(?P<q>\S+(?:\s*\(全体サマリ\))?)\s*\|"
     r"\s*(?P<prob>[^|]+?)\s*\|\s*(?P<sol>[^|]+?)\s*\|"
 )
 
+# 旧フォーマット（絵文字プレフィックス付き）の status ファイルからでも
+# finish 状態を正しく引き継げるように、先頭の絵文字・記号を取り除く。
+_LEADING_SYMBOLS_RE = re.compile(r"^[^\w぀-ヿ一-鿿]+")
+
+
+def _normalize_status_text(raw):
+    return _LEADING_SYMBOLS_RE.sub('', raw).strip()
+
 
 def load_existing_solution_status(out_path):
-    """既存の status md から (year, q) -> 解答列の生テキスト を読み取る。
+    """既存の status md から (year, q) -> 解答列の正規化済みテキスト を読み取る。
     finish を人手チェック済みとして引き継ぐために使う。"""
     prev = {}
     if not out_path.exists():
@@ -45,7 +53,7 @@ def load_existing_solution_status(out_path):
             continue
         year = m.group('year').replace('年', '').strip()
         q = m.group('q').replace('第', '').replace('問', '').strip()
-        prev[(year, q)] = m.group('sol').strip()
+        prev[(year, q)] = _normalize_status_text(m.group('sol'))
     return prev
 
 
@@ -92,11 +100,11 @@ def generate_markdowns():
         prev_status = load_existing_solution_status(out_path)
 
         md_lines = []
-        md_lines.append(f"# 📊 問題・解答ステータス一覧: {display_name}\n")
+        md_lines.append(f"# 問題・解答ステータス一覧: {display_name}\n")
         md_lines.append(f"更新日: `{today}`\n")
         md_lines.append(
-            "解答列: `❌ unfinish`(未着手) → `🤖 文字起こし済`(AI文字起こし・自己検証済/人手未チェック) → `✅ finish`(人手チェック済)。"
-            "`✅ finish` は自動生成では付与されず、人間が手動で書き換えた場合のみ維持される。\n"
+            "解答列: `unfinish`(未着手) → `文字起こし済`(AI文字起こし・自己検証済/人手未チェック) → `finish`(人手チェック済)。"
+            "`finish` は自動生成では付与されず、人間が手動で書き換えた場合のみ維持される。\n"
         )
         md_lines.append("| 年度 | 問題番号 | 問題文 (`problem.tex`) | 解答 (`solution.tex`) | 手書き原稿 (`handwritten.pdf`) | 総合ステータス |")
         md_lines.append("|:---:|:---:|:---:|:---:|:---:|:---:|")
@@ -114,7 +122,7 @@ def generate_markdowns():
                 continue
             year_dir = cat_dir / year
             has_pdf = (year_dir / 'handwritten.pdf').exists()
-            pdf_mark = "✅ あり" if has_pdf else "❌ なし"
+            pdf_mark = "あり" if has_pdf else "なし"
 
             # 実際のサブフォルダ (0, 1, 2, 3...)
             q_dirs = [d.name for d in year_dir.iterdir() if d.is_dir() and d.name.isdigit()]
@@ -126,7 +134,7 @@ def generate_markdowns():
             if s0_prob.exists() or s0_sol.exists() or (year_dir / '0').exists():
                 p_icon = PROB_FINISH if check_file_status(s0_prob) else PROB_UNFINISH
                 s_icon = solution_status_icon(s0_sol, prev_status.get((year, '0 (全体サマリ)')))
-                st_icon = "🟢 完了" if (p_icon == PROB_FINISH and s_icon == SOL_FINISH) else "🟡 制作中"
+                st_icon = "完了" if (p_icon == PROB_FINISH and s_icon == SOL_FINISH) else "制作中"
                 md_lines.append(f"| {year}年 | 0 (全体サマリ) | {p_icon} | {s_icon} | {pdf_mark} | {st_icon} |")
 
             for q in range(1, max_q + 1):
@@ -145,11 +153,11 @@ def generate_markdowns():
 
                 p_icon = PROB_FINISH if p_done else PROB_UNFINISH
                 if s_icon == SOL_FINISH and p_done:
-                    st_icon = "🟢 完了"
+                    st_icon = "完了"
                 elif s_icon in (SOL_FINISH, SOL_TRANSCRIBED) or p_done:
-                    st_icon = "🟡 未完成"
+                    st_icon = "未完成"
                 else:
-                    st_icon = "🔴 未着手"
+                    st_icon = "未着手"
 
                 md_lines.append(f"| {year}年 | 第{q_str}問 | {p_icon} | {s_icon} | {pdf_mark} | {st_icon} |")
 
@@ -160,7 +168,7 @@ def generate_markdowns():
 
     # 全体ダッシュボード README.md の作成
     index_lines = []
-    index_lines.append("# 🎓 入試数学データソース 進捗管理ダッシュボード\n")
+    index_lines.append("# 入試数学データソース 進捗管理ダッシュボード\n")
     index_lines.append(f"更新日: `{today}`\n")
     index_lines.append("| 大学・区分 | ステータスファイル | 総問題数 | 問題文完成度 | 解答: 文字起こし済 | 解答: 人手finish | 進捗率 |")
     index_lines.append("|:---|:---|:---:|:---:|:---:|:---:|:---:|")
@@ -168,6 +176,11 @@ def generate_markdowns():
     for d_name, fname, t_q, p_f, s_t, s_h in summary_stats:
         rate = ((s_t + s_h) / t_q * 100) if t_q > 0 else 0
         index_lines.append(f"| **{d_name}** | [{fname}](./{fname}) | {t_q}問 | {p_f}/{t_q} | {s_t}/{t_q} | {s_h}/{t_q} | `{rate:.1f}%` |")
+
+    gaps_path = docs_status_dir / 'transcription_gaps.md'
+    if gaps_path.exists():
+        index_lines.append("")
+        index_lines.append("`unfinish` のまま残る箇所のうち，原稿を確認済みで転記不能と判明しているものの証跡は [transcription_gaps.md](./transcription_gaps.md) を参照。")
 
     (docs_status_dir / 'README.md').write_text("\n".join(index_lines) + "\n", encoding='utf-8')
     print("Generated dashboard README.md")

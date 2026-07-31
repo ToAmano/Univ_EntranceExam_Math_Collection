@@ -1,116 +1,116 @@
-# 📊 問題・解答ステータス一覧: 京大 後期
+# 問題・解答ステータス一覧: 京大 後期
 
-更新日: `2026-07-27`
+更新日: `2026-07-31`
 
-解答列: `❌ unfinish`(未着手) → `🤖 文字起こし済`(AI文字起こし・自己検証済/人手未チェック) → `✅ finish`(人手チェック済)。`✅ finish` は自動生成では付与されず、人間が手動で書き換えた場合のみ維持される。
+解答列: `unfinish`(未着手) → `文字起こし済`(AI文字起こし・自己検証済/人手未チェック) → `finish`(人手チェック済)。`finish` は自動生成では付与されず、人間が手動で書き換えた場合のみ維持される。
 
 | 年度 | 問題番号 | 問題文 (`problem.tex`) | 解答 (`solution.tex`) | 手書き原稿 (`handwritten.pdf`) | 総合ステータス |
 |:---:|:---:|:---:|:---:|:---:|:---:|
-| 1989年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1989年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1989年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1989年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1989年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1989年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1990年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1990年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1990年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1990年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1990年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1990年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1991年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1991年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1991年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1991年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1991年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1991年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1992年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1992年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1992年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1992年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1992年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1992年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1993年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1993年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1993年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1993年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1993年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1993年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1994年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1994年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1994年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1994年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1994年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1994年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1995年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1995年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1995年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1995年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1995年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1995年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1996年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1996年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1996年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1996年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1996年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1996年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1997年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1997年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1997年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1997年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1997年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1997年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1998年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1998年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1998年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1998年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1998年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1998年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1999年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1999年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1999年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1999年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1999年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 1999年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2000年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2000年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2000年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2000年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2000年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2000年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2001年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2001年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2001年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2001年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2001年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2001年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2002年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2002年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2002年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2002年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2002年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2002年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2003年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2003年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2003年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2003年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2003年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2003年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2004年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2004年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2004年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2004年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2004年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2004年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2005年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2005年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2005年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2005年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2005年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2005年 | 第6問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2006年 | 第1問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2006年 | 第2問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2006年 | 第3問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2006年 | 第4問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2006年 | 第5問 | ✅ finish | ✅ finish | ✅ あり | 🟢 完了 |
-| 2006年 | 第6問 | ❌ unfinish | ✅ finish | ✅ あり | 🟡 未完成 |
+| 1989年 | 第1問 | finish | finish | あり | 完了 |
+| 1989年 | 第2問 | finish | finish | あり | 完了 |
+| 1989年 | 第3問 | finish | finish | あり | 完了 |
+| 1989年 | 第4問 | finish | finish | あり | 完了 |
+| 1989年 | 第5問 | finish | finish | あり | 完了 |
+| 1989年 | 第6問 | finish | finish | あり | 完了 |
+| 1990年 | 第1問 | finish | finish | あり | 完了 |
+| 1990年 | 第2問 | finish | finish | あり | 完了 |
+| 1990年 | 第3問 | finish | finish | あり | 完了 |
+| 1990年 | 第4問 | finish | finish | あり | 完了 |
+| 1990年 | 第5問 | finish | finish | あり | 完了 |
+| 1990年 | 第6問 | finish | finish | あり | 完了 |
+| 1991年 | 第1問 | finish | finish | あり | 完了 |
+| 1991年 | 第2問 | finish | finish | あり | 完了 |
+| 1991年 | 第3問 | finish | finish | あり | 完了 |
+| 1991年 | 第4問 | finish | finish | あり | 完了 |
+| 1991年 | 第5問 | finish | finish | あり | 完了 |
+| 1991年 | 第6問 | finish | finish | あり | 完了 |
+| 1992年 | 第1問 | finish | finish | あり | 完了 |
+| 1992年 | 第2問 | finish | finish | あり | 完了 |
+| 1992年 | 第3問 | finish | finish | あり | 完了 |
+| 1992年 | 第4問 | finish | finish | あり | 完了 |
+| 1992年 | 第5問 | finish | finish | あり | 完了 |
+| 1992年 | 第6問 | finish | finish | あり | 完了 |
+| 1993年 | 第1問 | finish | finish | あり | 完了 |
+| 1993年 | 第2問 | finish | finish | あり | 完了 |
+| 1993年 | 第3問 | finish | finish | あり | 完了 |
+| 1993年 | 第4問 | finish | finish | あり | 完了 |
+| 1993年 | 第5問 | finish | finish | あり | 完了 |
+| 1993年 | 第6問 | finish | finish | あり | 完了 |
+| 1994年 | 第1問 | finish | finish | あり | 完了 |
+| 1994年 | 第2問 | finish | finish | あり | 完了 |
+| 1994年 | 第3問 | finish | finish | あり | 完了 |
+| 1994年 | 第4問 | finish | finish | あり | 完了 |
+| 1994年 | 第5問 | finish | finish | あり | 完了 |
+| 1994年 | 第6問 | finish | finish | あり | 完了 |
+| 1995年 | 第1問 | finish | finish | あり | 完了 |
+| 1995年 | 第2問 | finish | finish | あり | 完了 |
+| 1995年 | 第3問 | finish | finish | あり | 完了 |
+| 1995年 | 第4問 | finish | finish | あり | 完了 |
+| 1995年 | 第5問 | finish | finish | あり | 完了 |
+| 1995年 | 第6問 | finish | finish | あり | 完了 |
+| 1996年 | 第1問 | finish | finish | あり | 完了 |
+| 1996年 | 第2問 | finish | finish | あり | 完了 |
+| 1996年 | 第3問 | finish | finish | あり | 完了 |
+| 1996年 | 第4問 | finish | finish | あり | 完了 |
+| 1996年 | 第5問 | finish | finish | あり | 完了 |
+| 1996年 | 第6問 | finish | finish | あり | 完了 |
+| 1997年 | 第1問 | finish | finish | あり | 完了 |
+| 1997年 | 第2問 | finish | finish | あり | 完了 |
+| 1997年 | 第3問 | finish | finish | あり | 完了 |
+| 1997年 | 第4問 | finish | finish | あり | 完了 |
+| 1997年 | 第5問 | finish | finish | あり | 完了 |
+| 1997年 | 第6問 | finish | finish | あり | 完了 |
+| 1998年 | 第1問 | finish | finish | あり | 完了 |
+| 1998年 | 第2問 | finish | finish | あり | 完了 |
+| 1998年 | 第3問 | finish | finish | あり | 完了 |
+| 1998年 | 第4問 | finish | finish | あり | 完了 |
+| 1998年 | 第5問 | finish | finish | あり | 完了 |
+| 1998年 | 第6問 | finish | finish | あり | 完了 |
+| 1999年 | 第1問 | finish | finish | あり | 完了 |
+| 1999年 | 第2問 | finish | finish | あり | 完了 |
+| 1999年 | 第3問 | finish | finish | あり | 完了 |
+| 1999年 | 第4問 | finish | finish | あり | 完了 |
+| 1999年 | 第5問 | finish | finish | あり | 完了 |
+| 1999年 | 第6問 | finish | finish | あり | 完了 |
+| 2000年 | 第1問 | finish | finish | あり | 完了 |
+| 2000年 | 第2問 | finish | finish | あり | 完了 |
+| 2000年 | 第3問 | finish | finish | あり | 完了 |
+| 2000年 | 第4問 | finish | finish | あり | 完了 |
+| 2000年 | 第5問 | finish | finish | あり | 完了 |
+| 2000年 | 第6問 | finish | finish | あり | 完了 |
+| 2001年 | 第1問 | finish | finish | あり | 完了 |
+| 2001年 | 第2問 | finish | finish | あり | 完了 |
+| 2001年 | 第3問 | finish | finish | あり | 完了 |
+| 2001年 | 第4問 | finish | finish | あり | 完了 |
+| 2001年 | 第5問 | finish | finish | あり | 完了 |
+| 2001年 | 第6問 | finish | finish | あり | 完了 |
+| 2002年 | 第1問 | finish | finish | あり | 完了 |
+| 2002年 | 第2問 | finish | finish | あり | 完了 |
+| 2002年 | 第3問 | finish | finish | あり | 完了 |
+| 2002年 | 第4問 | finish | finish | あり | 完了 |
+| 2002年 | 第5問 | finish | finish | あり | 完了 |
+| 2002年 | 第6問 | finish | finish | あり | 完了 |
+| 2003年 | 第1問 | finish | finish | あり | 完了 |
+| 2003年 | 第2問 | finish | finish | あり | 完了 |
+| 2003年 | 第3問 | finish | finish | あり | 完了 |
+| 2003年 | 第4問 | finish | finish | あり | 完了 |
+| 2003年 | 第5問 | finish | finish | あり | 完了 |
+| 2003年 | 第6問 | finish | finish | あり | 完了 |
+| 2004年 | 第1問 | finish | finish | あり | 完了 |
+| 2004年 | 第2問 | finish | finish | あり | 完了 |
+| 2004年 | 第3問 | finish | finish | あり | 完了 |
+| 2004年 | 第4問 | finish | finish | あり | 完了 |
+| 2004年 | 第5問 | finish | finish | あり | 完了 |
+| 2004年 | 第6問 | finish | finish | あり | 完了 |
+| 2005年 | 第1問 | finish | finish | あり | 完了 |
+| 2005年 | 第2問 | finish | finish | あり | 完了 |
+| 2005年 | 第3問 | finish | finish | あり | 完了 |
+| 2005年 | 第4問 | finish | finish | あり | 完了 |
+| 2005年 | 第5問 | finish | finish | あり | 完了 |
+| 2005年 | 第6問 | finish | finish | あり | 完了 |
+| 2006年 | 第1問 | finish | finish | あり | 完了 |
+| 2006年 | 第2問 | finish | finish | あり | 完了 |
+| 2006年 | 第3問 | finish | finish | あり | 完了 |
+| 2006年 | 第4問 | finish | finish | あり | 完了 |
+| 2006年 | 第5問 | finish | finish | あり | 完了 |
+| 2006年 | 第6問 | unfinish | finish | あり | 未完成 |
