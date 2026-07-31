@@ -16,7 +16,7 @@ import glob
 HEADING_RE = re.compile(r'^\\(?:sub){0,1}section\*\{(.*?)\}[ \t]*$', re.MULTILINE)
 QNUM_RE = re.compile(r'^第(\d+)問$')
 
-SOLUTION_TEMPLATE = """\\documentclass[../../../../main.tex]{{subfiles}}
+SOLUTION_TEMPLATE = """\\documentclass[../../main.tex]{{subfiles}}
 \\begin{{document}}
 
 \\begin{{flushright}}
