@@ -197,15 +197,17 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 
 ### 8.3.6 LaTeX フォーマットの注意事項
 
-* **数式環境は `align`（または `align*`）環境を利用する**。単発の数式でも `\[...\]` や `equation` ではなく `align*` を使い、複数行にまたがる変形は `&=` で位置を揃える。
+* **数式環境は `align` を利用する（`align*` は使わない）**。単発の数式でも `\[...\]` や `equation` ではなく `align` を使い、複数行にまたがる変形は `&=` で位置を揃える。
 * **`tikzpicture` 環境は必ず `figure` → `center` → `tikzpicture` の順にネストする**（`\begin{figure}[h]\centering\begin{tikzpicture}...\end{tikzpicture}\end{figure}` の形）。裸の `tikzpicture` を本文中に直接置かない。
 * **図を挿入する際は必ず `\caption{}` を付ける**。`\begin{figure}...\end{figure}` の中に `\caption{...}` を含め、何を表す図かを一言で示す。
 * **句読点は全角の「．」「，」を使う**（「。」「、」は使わない）。既存の人手作成 `solution.tex` もこの慣習に従っている。
 * **解答冒頭は `{\bf [解]}` とする**（`\begin{proof}[解]...\end{proof}` は使わない）。
-* **分数は `\frac` ではなく `\dfrac` を使う**。`align*` 環境内でも `\frac` はディスプレイスタイルでも小さく組まれてしまうことがあるため、常に `\dfrac` で統一する。
+* **分数は `\frac` ではなく `\dfrac` を使う**。`align` 環境内でも `\frac` はディスプレイスタイルでも小さく組まれてしまうことがあるため、常に `\dfrac` で統一する。
+* **`cases` などのネスト環境の中では数式に `\displaystyle` を用いる**。`cases`（`dcases` ではなく）環境内は既定でテキストスタイルになり分数などが小さく組まれるため，`\begin{cases}\displaystyle ...\end{cases}` のように明示する。
 * **`\dfrac` と `\sqrt` の引数は必ず `{}` で囲む**。`\sqrt2` ではなく `\sqrt{2}` のように書く（`\dfrac12` のような省略形も同様に禁止で、`\dfrac{1}{2}` と書く）。
 * **辺の長さは `\overline{AB}` ではなく `|AB|`（絶対値記号ではさむ）で書く**。手書き原稿が `\overline{}` を使っていても，転記時に `|...|` に直す。
 * **1行目は `\documentclass[../../main.tex]{subfiles}` とする**（`src/{univ}/{cat}/{year}/{q}/solution.tex` から `src/{univ}/{cat}/main.tex` までは2階層上がるだけなので `../../` が正しい。`../../../../` ではない）。
+* **小問（(1), (2), ...）は `enumerate` 環境で囲わない**。`\begin{enumerate}\item ...\end{enumerate}` は使わず，`(1) ...`，`(2) ...` のように解答文中に直接書き進める。
 
 ### 8.4 図（TikZ）の再現について
 
