@@ -338,7 +338,7 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         # 6. \begin{enumerate} / \begin{description} / \begin{itemize} は MathJax の TeX 表示用に完全保持する
 
         # 7. align / align* / gather / gather* 数式ブロック置換
-        for math_env in list(soup.find_all(['align', 'align*', 'gather', 'gather*', 'eqnarray', 'eqnarray*'])):
+        for math_env in list(soup.find_all(['align', 'align*', 'gather', 'gather*', 'eqnarray', 'eqnarray*', 'equation', 'equation*'])):
             env_name = math_env.name
             body = []
             for child in math_env.contents:
@@ -397,7 +397,7 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
             return fig_content
 
         md_body = re.sub(r'\\begin\{figure\}.*?\\end\{figure\}', replace_figure_fallback, md_body, flags=re.DOTALL)
-        md_body = re.sub(r'\\begin\{(align\*?|gather\*?)\}(.*?)\\end\{\1\}', r'\n$$\n\\begin{\1}\2\\end{\1}\n$$\n', md_body, flags=re.DOTALL)
+        md_body = re.sub(r'\\begin\{(align\*?|gather\*?|equation\*?)\}(.*?)\\end\{\1\}', r'\n$$\n\\begin{\1}\2\\end{\1}\n$$\n', md_body, flags=re.DOTALL)
 
     # physics パッケージ \mqty マクロの標準 LaTeX 行列環境への変換
     md_body = re.sub(r'\\mqty\((.*?)\)', r'\\begin{pmatrix}\1\\end{pmatrix}', md_body, flags=re.DOTALL)
@@ -476,24 +476,53 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     md_content = _convert_heading_command(md_content, 'paragraph', '###')
 
     # --------------------------------------------------------------------------
+    # 数式ブロック内 \label{...} の自前アンカー化
+    # --------------------------------------------------------------------------
+    # MathJax (tags:'ams') は \label{eq:1} を "mjx-eqn:eq:1" のような、
+    # バージョン依存かつラベルによっては自動連番 ("mjx-eqn:2" 等) にフォール
+    # バックする非公開の内部IDに変換してしまい、下で生成する #eq:1 形式の
+    # リンクとは一致しない。MathJax のID生成に依存せず、$$...$$ ブロックの
+    # 直前に自前の <span id="..."> アンカーを差し込み、\label 自体は数式内
+    # から除去する。
+    def _promote_math_labels(text):
+        block_re = re.compile(r'\$\$\n.*?\n\$\$\n', re.DOTALL)
+
+        def process_block(m):
+            block = m.group(0)
+            labels = re.findall(r'\\label\{([^}]+)\}', block)
+            if not labels:
+                return block
+            block_clean = re.sub(r'\\label\{[^}]+\}', '', block)
+            anchors = ''.join(f'<span id="{lbl}"></span>' for lbl in labels)
+            return anchors + block_clean
+
+        return block_re.sub(process_block, text)
+
+    md_content = _promote_math_labels(md_content)
+
+    # --------------------------------------------------------------------------
     # 数式参照 (\eqref, \ref, \cref) の Markdown アンカーリンク化処理
     # --------------------------------------------------------------------------
-    # \eqref{lbl} -> [(1)](#lbl) や \ref{lbl} -> [(1)](#lbl) への動的変換
-    eq_counter = {}
+    # \eqref{lbl} -> [(1)](#lbl) や \ref{lbl} -> [(1)](#lbl) への動的変換。
+    # \cref{eq:1,eq:2} のような複数ラベル一括参照はカンマ区切りで別々の
+    # リンクに分解する（そのまま繋げると #eq:1,eq:2 という実在しない
+    # 1つのIDへのリンクになってしまうため）。
     def replace_ref_links(m):
-        cmd = m.group(1) # eqref, ref, cref
-        lbl = m.group(2)
-        # ラベル名が eq:X のような場合は式番号風にリンク化
-        if 'eq' in lbl:
-            num = lbl.split(':')[-1]
-            return f'[(式{num})](#{lbl})'
-        elif 'fig' in lbl:
-            num = lbl.split(':')[-1]
-            return f'[図{num}](#{lbl})'
-        elif 'tab' in lbl:
-            num = lbl.split(':')[-1]
-            return f'[表{num}](#{lbl})'
-        return f'[{lbl}](#{lbl})'
+        raw_lbls = [l.strip() for l in m.group(2).split(',') if l.strip()]
+
+        def one(lbl):
+            if 'eq' in lbl:
+                num = lbl.split(':')[-1]
+                return f'[(式{num})](#{lbl})'
+            elif 'fig' in lbl:
+                num = lbl.split(':')[-1]
+                return f'[図{num}](#{lbl})'
+            elif 'tab' in lbl:
+                num = lbl.split(':')[-1]
+                return f'[表{num}](#{lbl})'
+            return f'[{lbl}](#{lbl})'
+
+        return ','.join(one(lbl) for lbl in raw_lbls)
 
     md_content = re.sub(r'\\(eqref|ref|cref)\{([^}]+)\}', replace_ref_links, md_content)
     # $...$ で囲まれた Markdown リンク $[(...)](#id)$ の $ 剥ぎ取り
