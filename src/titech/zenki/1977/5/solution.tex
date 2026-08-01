@@ -1,61 +1,93 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$f(x)$ は任意の $x$ に対し，$f(x)=f(x+2\pi)$ をみたす． $\cdots$①
+題意より$f(x)$は周期$2\pi$の周期関数だから $x$ に対して
+\begin{align}
+ f(x)=f(x+2\pi) \label{eq:1}
+\end{align}
+を満たす．
 
-\begin{enumerate}
-  \item[(1)] $s=t-x$ とすると，
-  \begin{align*}
-  \int_0^{2\pi}f(t-x)\sin t\,dt=\int_{-x}^{2\pi-x}f(s)\sin(x+s)ds
-  \end{align*}
-  \begin{align*}
-  =\int_{-x}^{0}f(s)\sin(x+s)ds+\int_0^{2\pi-x}f(s)\sin(x+s)ds
-  \end{align*}
-  \begin{align*}
-  =\int_{2\pi-x}^{2\pi}f(p-2\pi)\sin(x+p-2\pi)dp+\int_0^{2\pi-x}f(s)\sin(x+s)ds \quad (\text{第1項で}\ p=s+2\pi\text{とした})
-  \end{align*}
-  \begin{align*}
-  =\int_{2\pi-x}^{2\pi}f(p)\sin(x+p)dp+\int_0^{2\pi-x}f(s)\sin(x+s)ds \quad (\because①，及び\sin(p+2\pi)=\sin p)
-  \end{align*}
-  \begin{align*}
-  =\int_0^{2\pi}f(s)\sin(x+s)ds
-  \end{align*}
+(1)
+与えられた積分$I$において$s=t-x$ と置換積分すると
+\begin{align}
+  I
+  &= \int_0^{2\pi}f(t-x)\sin t\,dt \\
+  &=\int_{-x}^{2\pi-x}f(s)\sin(x+s)ds \\
+  &=\int_{-x}^{0}f(s)\sin(x+s)ds+\int_0^{2\pi-x}f(s)\sin(x+s)ds \\
+  &=\int_{2\pi-x}^{2\pi}f(p-2\pi)\sin(x+p-2\pi)dp+\int_0^{2\pi-x}f(s)\sin(x+s)ds \quad (\text{第1項で}\ p=s+2\pi\text{とした}) \\
+ &=\int_{2\pi-x}^{2\pi}f(p)\sin(x+p)dp+\int_0^{2\pi-x}f(s)\sin(x+s)ds \quad (\because\cref{eq:1}及び\sin(p+2\pi)=\sin p) \\
+  &=\int_0^{2\pi}f(s)\sin(x+s)ds
+\end{align}
+となり，題意は示された．
 
-  \item[(2)] (1)から，
-  \begin{align*}
-  \int_0^{2\pi}f(t)\sin(x+t)dt=cf(x) \quad \cdots \text{②}
-  \end{align*}
-  が $x$ についての恒等式になれば良い．以下 $S=\sin x,\ P=\cos x$ とする．②の左辺を変形する．
-  \begin{align*}
-  (\text{②の左辺})=\int_0^{2\pi}\{f(t)\cos t\cdot S+f(t)\sin t\cdot P\}dt = S\int_0^{2\pi}f(t)\cos t\,dt+P\int_0^{2\pi}f(t)\sin t\,dt \quad \cdots \text{③}
-  \end{align*}
-  $A=\displaystyle\int_0^{2\pi}f(t)\cos t\,dt,\ B=\int_0^{2\pi}f(t)\sin t\,dt \quad \cdots \text{④}$ とおいて，②③より，
-  \begin{align*}
-  f(x)=\frac1c\{AS+BP\}=\frac{A}{c}S+\frac{B}{c}P \quad \cdots \text{⑤}
-  \end{align*}
-  ⑤に代入して，
-  \begin{align*}
-  A=\int_0^{2\pi}\left\{\frac{A}{c}SP+\frac{B}{c}P^2\right\}dx=\left[-\frac{A}{4c}\cos2x+\frac{B}{2c}\left(x+\frac12\sin2x\right)\right]_0^{2\pi}=\frac{B}{c}\pi \quad \cdots \text{⑥}
-  \end{align*}
-  \begin{align*}
-  B=\int_0^{2\pi}\left\{\frac{A}{c}S^2+\frac{B}{c}SP\right\}dx=\left[\frac{A}{2c}\left(x-\frac12\sin2x\right)-\frac{B}{4c}\cos2x\right]_0^{2\pi}=\frac{A}{c}\pi \quad \cdots \text{⑦}
-  \end{align*}
-  ⑤⑥及び $f(0)=1$ から $(A,B)=(0,0)$ ではなく，$c=B$ である（$\because$④）ことから，
-  \begin{align*}
-  (A,B,c)=(\pi,\pi,\pi)
-  \end{align*}
-  となり，④から
-  \begin{align*}
+(2)
+(1)から，
+\begin{align}
+  \int_0^{2\pi}f(t)\sin(x+t)dt=cf(x) \quad \cdots \text{②} \label{eq:2}
+\end{align}
+が $x$ についての恒等式になれば良い．
+以下 $S=\sin x,\ P=\cos x$ とする．\cref{eq:2}の左辺を加法定理で変形すると
+\begin{align}
+(\text{②の左辺})
+  &=\int_0^{2\pi}\{f(t)\cos t\cdot \sin x+f(t)\sin t\cdot \cos x\}dt \\
+  &= \sin x\int_0^{2\pi}f(t)\cos t\,dt+\cos x\int_0^{2\pi}f(t)\sin t\,dt \quad \cdots \text{③} \label{eq:3}
+\end{align}
+であるから，\cref{eq:2}に代入して
+\begin{align}
+ \sin x\int_0^{2\pi}f(t)\cos t\,dt+\cos x\int_0^{2\pi}f(t)\sin t\,dt = cf(x) \label{eq:4}
+\end{align}
+となる．
+新しく
+\begin{align} 
+ \begin{cases}
+ A &=\displaystyle\int_0^{2\pi}f(t)\cos t\,dt \\
+ B &=\displaystyle\int_0^{2\pi}f(t)\sin t\,dt  
+ \end{cases} \label{eq:5}
+\end{align}
+とおく．
+\cref{eq:5}を\cref{eq:4}に代入すると
+\begin{align}
+  f(x) &=\frac{1}{c}\left(A\sin x+B\cos x\right) \\
+       &=\frac{A}{c}\sin x+\frac{B}{c}\cos x \quad \cdots \text{⑤} \label{eq:6}
+ \end{align}
+となる．ここで題意より$f(0)=1$だから
+\begin{align}
+ B = c \label{eq:7}
+\end{align}
+が従う．
+\cref{eq:6}を\cref{eq:4}に代入すると
+\begin{align}
+  A
+   &=\int_0^{2\pi}\left\{\frac{A}{c}\sin x\cos x+\frac{B}{c}\cos x^2\right\}dx \\
+   &=\left[-\frac{A}{4c}\cos2x+\frac{B}{2c}\left(x+\frac12\sin2x\right)\right]_0^{2\pi} \\
+   &=\frac{B}{c}\pi \quad \cdots \text{⑥} \label{eq:8}
+\end{align}
+および
+\begin{align}
+  B
+   &=\int_0^{2\pi}\left\{\frac{A}{c}\sin x^2+\frac{B}{c}\sin x\cos x\right\}dx \\
+   &=\left[\frac{A}{2c}\left(x-\frac12\sin2x\right)-\frac{B}{4c}\cos2x\right]_0^{2\pi} \\
+   &=\frac{A}{c}\pi \quad \cdots \text{⑦} \label{eq:9}
+\end{align}
+を得る．辺々掛け算すると
+\begin{align}
+ AB = AB \dfrac{\pi}{c} \quad AB\left(1-\dfrac{\pi}{c}\right) = 0
+\end{align}
+である．$A=0$または$B=0$の時は\cref{eq:8,eq:9}より直ちに$A=B=0$が従うが，これは\cref{eq:7}より$c=0$となり題意の条件$c>0$に矛盾する．
+従って
+\begin{align}
+ c = \pi
+\end{align}
+であり，\cref{eq:7,eq:8}より
+\begin{align}
+  (A,B,c)=(\pi,\pi,\pi) 
+\end{align}
+となり，\cref{eq:5}より
+\begin{align}
   f(x)=\sin x+\cos x, \quad c=\pi
-  \end{align*}
-  を得る．
-\end{enumerate}
-
+\end{align}
+である．
 
 \newpage
 
