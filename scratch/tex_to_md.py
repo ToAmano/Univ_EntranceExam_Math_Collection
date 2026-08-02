@@ -31,6 +31,95 @@ def _extract_braced(text, start):
     return text[start:], n
 
 
+def _split_top_level_rows(content):
+    """align/gather 系環境の中身を、トップレベルの \\\\ でのみ行分割する。
+    \\begin{cases}/\\begin{split}/\\begin{pmatrix} などネストした環境内部の \\\\ は
+    その環境自身の行区切りであって、外側の align にとっての行区切りではない
+    ため、ネスト深度を数えて無視する（split の中身は丸ごと 1 行として扱われる）。
+    """
+    begin_re = re.compile(r'\\begin\{[a-zA-Z*]+\}')
+    end_re = re.compile(r'\\end\{[a-zA-Z*]+\}')
+    rows = []
+    buf = []
+    depth = 0
+    i = 0
+    n = len(content)
+    while i < n:
+        m = begin_re.match(content, i)
+        if m:
+            depth += 1
+            buf.append(m.group(0))
+            i = m.end()
+            continue
+        m = end_re.match(content, i)
+        if m:
+            depth -= 1
+            buf.append(m.group(0))
+            i = m.end()
+            continue
+        if content[i:i + 2] == '\\\\' and depth == 0:
+            rows.append(''.join(buf))
+            buf = []
+            i += 2
+            continue
+        buf.append(content[i])
+        i += 1
+    if ''.join(buf).strip():
+        rows.append(''.join(buf))
+    return rows
+
+
+_EQ_NUMBER_ENV_RE = re.compile(r'\\begin\{(align|gather|eqnarray|equation)(\*?)\}')
+_EQ_NUMBER_LABEL_RE = re.compile(r'\\label\{([^}]+)\}')
+
+
+def compute_eq_numbers(raw_tex):
+    """MathJax (tags:'ams') の数式自動採番を模倣し、\\label{...} が実際に画面上
+    表示される番号を計算して {ラベル名: 番号} の辞書として返す。
+
+    \\cref/\\eqref の表示テキストをラベル名 (例 "eq:2" の "2") からそのまま
+    生成すると、align は「ブロック単位」ではなく「\\\\ で区切られた行単位」で
+    採番されるため、1つの align に複数行あるとラベルが指す実際の番号とずれる
+    （\\begin{split} で包まれた行は 1 行分としてまとめて数える）。
+
+    numcases/subnumcases (cases パッケージ) は意図的に対象外: このサイトでは
+    $$...$$ にラップされる際に無採番の \\begin{cases} へ変換されて表示される
+    ため（tags:'ams' は素の $$...$$ を採番しない）、実際には画面上に番号が
+    一切表示されない。ここでカウンタを進めてしまうと、同じファイル内で後に
+    続く本物の align ブロックの番号が実際の表示より大きくずれてしまう。
+    """
+    numbers = {}
+    counter = 0
+    pos = 0
+    while True:
+        m = _EQ_NUMBER_ENV_RE.search(raw_tex, pos)
+        if not m:
+            break
+        env, star = m.group(1), m.group(2)
+        end_re = re.compile(r'\\end\{' + re.escape(env + star) + r'\}')
+        end_m = end_re.search(raw_tex, m.end())
+        if not end_m:
+            pos = m.end()
+            continue
+        block = raw_tex[m.end():end_m.start()]
+        pos = end_m.end()
+
+        if star:
+            continue  # 星付き環境は無採番なのでカウンタを進めない
+
+        rows = [block] if env == 'equation' else _split_top_level_rows(block)
+        for row in rows:
+            if not row.strip():
+                continue
+            has_notag = '\\notag' in row
+            labels = _EQ_NUMBER_LABEL_RE.findall(row)
+            if not has_notag:
+                counter += 1
+                for lbl in labels:
+                    numbers[lbl] = counter
+    return numbers
+
+
 def extract_global_macro_defs(raw_tex):
     """図を単体で（別ドキュメントとして）コンパイルする際に必要な、外部で定義された
     マクロ／設定だけを、出現順を保ったまま抽出する。
@@ -222,6 +311,10 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         clean_lines.append(line_clean)
     raw_tex = "\n".join(clean_lines)
 
+    # \cref/\eqref の表示番号を、ラベル名にある数字ではなく実際の自動採番位置
+    # から求めるための対応表。後段の replace_ref_links で使用する。
+    eq_numbers = compute_eq_numbers(raw_tex)
+
     # 図を単体で（別ドキュメントとして）コンパイルする際に必要な、外部で定義された
     # マクロ／設定だけを拾う（詳細は extract_global_macro_defs() のdocstring参照）。
     macro_defs = extract_global_macro_defs(raw_tex)
@@ -357,13 +450,14 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         def replace_numcases(match):
             left_expr = re.sub(r'\\+$', '', match.group(1).strip()).strip()
             body = match.group(2).strip()
-            # cases 内でパースエラーとなる \label をクリーン除去
-            body_clean = re.sub(r'\\label\{[^}]+\}', '', body)
+            # \label は除去しない: 後段の _promote_math_labels が $$...$$ 内の
+            # \label を自前の <span id> アンカーへ変換してから MathJax に渡すため、
+            # ここで消すと該当ラベルへのハイパーリンクが宛先の無いリンクになる。
 
             if left_expr:
-                return f"\n$$\n{left_expr} \\begin{{cases}}\n{body_clean}\n\\end{{cases}}\n$$\n"
+                return f"\n$$\n{left_expr} \\begin{{cases}}\n{body}\n\\end{{cases}}\n$$\n"
             else:
-                return f"\n$$\n\\begin{{cases}}\n{body_clean}\n\\end{{cases}}\n$$\n"
+                return f"\n$$\n\\begin{{cases}}\n{body}\n\\end{{cases}}\n$$\n"
 
         md_body = re.sub(r'\\begin\{(?:numcases|subnumcases)\}\s*\{([^}]*)\}(.*?)\\end\{(?:numcases|subnumcases)\}', replace_numcases, md_body, flags=re.DOTALL)
     except Exception as e:
@@ -507,24 +601,52 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     # \cref{eq:1,eq:2} のような複数ラベル一括参照はカンマ区切りで別々の
     # リンクに分解する（そのまま繋げると #eq:1,eq:2 という実在しない
     # 1つのIDへのリンクになってしまうため）。
-    def replace_ref_links(m):
+    # ただし $$...$$ ブロック（\begin{align} 等の生の LaTeX）内の \cref は、
+    # \text{} などの数式の一部として使われている場合があり、Markdown の
+    # [..](#..) リンク構文をそのまま埋め込むと KaTeX/MathJax が丸ごとパース
+    # 失敗してブロック全体が未レンダリングの生テキストになってしまう。
+    # そのためブロック内ではリンク化せず番号だけのプレーンテキストにする。
+    def replace_ref_links(m, in_math=False):
         raw_lbls = [l.strip() for l in m.group(2).split(',') if l.strip()]
 
         def one(lbl):
-            if 'eq' in lbl:
-                num = lbl.split(':')[-1]
-                return f'[(式{num})](#{lbl})'
+            # ラベル名の書式 (eq:N, 素の数字, 1a など) によらず、実際の自動採番
+            # 位置を計算済みの eq_numbers を最優先で使う。これに無ければ
+            # 数式ラベルではない（図表ラベル等）とみなし、名前ベースの
+            # 従来ロジックにフォールバックする。
+            if lbl in eq_numbers:
+                label = f'(式{eq_numbers[lbl]})'
+            elif 'eq' in lbl:
+                print(f"[tex_to_md] WARNING: no computed number for label '{lbl}' in {tex_path}; "
+                      f"falling back to label-name digit (may be wrong)")
+                label = f'(式{lbl.split(":")[-1]})'
             elif 'fig' in lbl:
                 num = lbl.split(':')[-1]
-                return f'[図{num}](#{lbl})'
+                label = f'図{num}'
             elif 'tab' in lbl:
                 num = lbl.split(':')[-1]
-                return f'[表{num}](#{lbl})'
-            return f'[{lbl}](#{lbl})'
+                label = f'表{num}'
+            else:
+                label = lbl
+            if in_math:
+                return label
+            return f'[{label}](#{lbl})'
 
         return ','.join(one(lbl) for lbl in raw_lbls)
 
-    md_content = re.sub(r'\\(eqref|ref|cref)\{([^}]+)\}', replace_ref_links, md_content)
+    REF_RE = re.compile(r'\\(eqref|ref|cref)\{([^}]+)\}')
+    MATH_BLOCK_RE = re.compile(r'\$\$\n.*?\n\$\$', re.DOTALL)
+
+    def _convert_refs(text, in_math):
+        return REF_RE.sub(lambda m: replace_ref_links(m, in_math=in_math), text)
+
+    non_math_parts = MATH_BLOCK_RE.split(md_content)
+    math_parts = MATH_BLOCK_RE.findall(md_content)
+    rebuilt = [_convert_refs(non_math_parts[0], in_math=False)]
+    for part, block in zip(non_math_parts[1:], math_parts):
+        rebuilt.append(_convert_refs(block, in_math=True))
+        rebuilt.append(_convert_refs(part, in_math=False))
+    md_content = ''.join(rebuilt)
     # $...$ で囲まれた Markdown リンク $[(...)](#id)$ の $ 剥ぎ取り
     md_content = re.sub(r'\$\s*(\[.*?\]\(#[^)]+\))\s*\$', r'\1', md_content)
 
