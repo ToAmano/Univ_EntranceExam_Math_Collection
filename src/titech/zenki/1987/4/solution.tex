@@ -44,14 +44,19 @@ x(t)\le y(t)\iff t+e^{t/e}\le-t+e^{t/e}\iff t\le0 \quad(x(0)=1,\ y(0)=1)
 \begin{figure}[htb]
 \begin{center}
 \begin{tikzpicture}[scale=0.55, >=stealth]
+  % 座標軸
   \draw[->] (-0.5,0) -- (10,0) node[right] {$x$};
   \draw[->] (0,-0.5) -- (0,6) node[above] {$y$};
+  % 直線 y=x
   \draw[dashed] (0,0) -- (6,6) node[right] {$y=x$};
+  % 曲線 C: x=t+e^{t/e}, y=-t+e^{t/e} (t=0で(1,1), t=eで(2e,0))
   \draw[domain=-1.3:2.72, smooth] plot ({\x+exp(\x/2.71828)},{-\x+exp(\x/2.71828)}) node[right] {$C$};
+  % 面積S: 三角形部分(0,0)-(1,1)-(1,0)
   \fill[gray!30] (0,0) -- (1,1) -- (1,0) -- cycle;
+  % 面積S: 曲線Cとx軸で囲まれた部分 (t=0からeまで)
   \fill[gray!30, domain=0:2.71828, variable=\tau] plot ({\tau+exp(\tau/2.71828)},{-\tau+exp(\tau/2.71828)}) -- (1,0) -- cycle;
-  \fill (1,1) circle (1.2pt) node[above] {$1$};
-  \fill (5.436,0) circle (1.2pt) node[below] {$2e$};
+  \fill (1,1) circle (2.2pt) node[above] {$1$};
+  \fill (5.436,0) circle (2.2pt) node[below] {$2e$};
 \end{tikzpicture}
 \end{center}
 \caption{曲線$C$の概形と面積$S$}
