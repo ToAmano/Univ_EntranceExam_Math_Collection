@@ -54,17 +54,27 @@ Y&=\dfrac{1}{2}(\alpha^2+\beta^2)=\dfrac{1}{2}(A^2-2b)
 \begin{figure}[htb]
 \begin{center}
 \begin{tikzpicture}[scale=1.1, >=stealth]
+  % 座標軸
   \draw[->] (-0.3,0) -- (2.6,0) node[right] {$x$};
-  \draw[->] (0,-0.3) -- (0,6) node[above] {$y$};
+  \draw[->] (0,-0.3) -- (0,10) node[above] {$y$};
+  % 上側境界 y=2x^2+1
   \draw[domain=0:2, smooth, thick] plot (\x,{2*\x*\x+1}) node[right] {$y=2x^2+1$};
+  % 下側境界 y=2x^2-x+1 (0<=x<=1), y=2x^2+x-1 (1<=x<=2)
   \draw[domain=0:1, smooth, thick] plot (\x,{2*\x*\x-\x+1});
   \draw[domain=1:2, smooth, thick] plot (\x,{2*\x*\x+\x-1}) node[below right] {$y=2x^2-x+1,\ y=2x^2+x-1$};
+  % 求める領域 (斜線部)
   \fill[gray!25, domain=0:1, variable=\x] plot ({\x},{2*\x*\x+1}) -- plot[domain=1:0] ({\x},{2*\x*\x-\x+1}) -- cycle;
   \fill[gray!25, domain=1:2, variable=\x] plot ({\x},{2*\x*\x+1}) -- plot[domain=2:1] ({\x},{2*\x*\x+\x-1}) -- cycle;
-  \fill (1,2) circle (1pt) node[below] {$1/4$};
+  % 補助線と目盛 (原点で領域が(0,1)に、x=2で(2,9)に収束)
+  \draw[dashed, gray] (2,0) -- (2,9) -- (0,9);
+  \fill (2,9) circle (1.1pt);
+  \node[left] at (0,9) {$9$};
   \node[left] at (0,3) {$3$};
   \node[left] at (0,2) {$2$};
   \node[left] at (0,1) {$1$};
+  \node[below] at (0.25,0) {$1/4$};
+  \node[below] at (1,0) {$1$};
+  \node[below] at (2,0) {$2$};
 \end{tikzpicture}
 \end{center}
 \caption{求める領域の図示（斜線部）}
