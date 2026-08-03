@@ -3,62 +3,138 @@
 
 
 {\bf [解]}
-$t>0$ に対し，$x=t$ とすると，$P(t,t^2)$ である．$P$ における接線 $\ell$ は $(x^2)'=2x$ より，
+$t>0$ に対して $x=t$ とすると $P(t,t^2)$ である．$P$ における接線 $\ell$ は $(x^2)'=2x$ より，
 \begin{align}
-\ell: y=2tx-t^2 \quad \left(\text{方向ベクトル}\ \vec\ell=\begin{pmatrix}1\\2t\end{pmatrix}\right)
+\ell: y=2tx-t^2 \quad \left(\text{方向ベクトル}\ \vec\ell=\begin{pmatrix}1\\2t\end{pmatrix}\right) \label{eq:1}
 \end{align}
-である．この時，直線 $AP$ の方程式は，
+である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=2, >=stealth]
+  % 1. 座標軸 (x軸, y軸)
+  \draw[->] (-0.8, 0) -- (1.8, 0) node[right] {$x$};
+  \draw[->] (0, -1.2) -- (0, 2.2) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 2. 放物線 y = x^2 (x > 0 周辺)
+  \draw[thick, domain=-0.5:1.4, samples=100] plot (\x, {\x*\x}) node[right] {$y=x^2$};
+
+  % 3. 主要な点の定義 (t = 1 のとき: P(1,1), A(-1/3,0))
+  \coordinate (A) at ({-1/3}, 0);
+  \coordinate (P) at (1, 1);
+
+  % 4. 直線 AP の描画
+  % AP: y = (3/4)*(x + 1/3) = 0.75x + 0.25
+  \draw[thick, red!80!black, domain=-0.6:1.5] plot (\x, {0.75*\x + 0.25}); % node[above left, font=\small] {$$};
+
+  % 5. 接線 \ell の描画 (Pにおける接線: y = 2x - 1)
+  \draw[thick, blue!80!black, domain=-0.1:1.5] plot (\x, {2*\x - 1}) node[above right, font=\small] {$\ell$};
+
+  % 6. y軸に平行な補助線（Pを通る鉛直線）
+  \draw[dashed, gray] (1, 0) -- (1, 2.0) node[above, black, font=\small] {$y\text{軸と平行}$};
+
+  % 7. なす角 \theta_1, \theta_2 の表示
+  % 接線\ell (傾き2, 角度63.43度) と 直線AP (傾き0.75, 角度36.87度) の間の角 \theta_1 = 26.56度
+  % 接線\ell と y軸(角度90度) の間の角 \theta_2 = 26.56度
+  
+  % \theta_1 (接線 \ell と 直線 AP のなす角)
+  \draw[->, thick, orange!90!black] (1,1) + (36.87:0.4) arc (36.87:63.43:0.4);
+  \node[orange!90!black, font=\small] at (1.35, 1.4) {$\theta_1$};
+
+  % \theta_2 (接線 \ell と 鉛直線 のなす角)
+  \draw[->, thick, green!60!black] (1,1) + (63.43:0.4) arc (63.43:90:0.4);
+  \node[green!60!black, font=\small] at (1.13, 1.5) {$\theta_2$};
+
+  % 8. 点のプロットとラベル
+  \fill (A) circle (1.2pt) node[below] {$-\frac{1}{3}$};
+  \fill (A) circle (1.2pt) node[above left] {$A$};
+  \fill (P) circle (1.2pt) node[below right] {$P$};
+  \fill (0, -1) circle (1pt); % 接線のy切片
+
+  % 補助点線
+  \draw[dashed] (1,0) -- (P) -- (0,1);
+  \node[below] at (1,0) {$t$};
+  \node[left] at (0,1) {$t^2$};
+  \node[left] at (0,-1) {$-t^2$};
+
+\end{tikzpicture}
+\end{center}
+\caption{点 $P$ における接線 $\ell$、直線 $AP$、および交角 $\theta_1, \theta_2$}
+\end{figure}
+
+一方直線 $AP$ の方程式は，
 \begin{align}
-AP: y=\dfrac{t^2}{t+\dfrac{1}{3}}\left(x+\dfrac{1}{3}\right) \quad \left(\text{方向ベクトル}\ \vec{m}=\begin{pmatrix}t+\dfrac{1}{3}\\t^2\end{pmatrix}\right)
+AP: y=\dfrac{t^2}{t+\dfrac{1}{3}}\left(x+\dfrac{1}{3}\right) \quad \left(\text{方向ベクトル}\ \vec{m}=\begin{pmatrix}t+\dfrac{1}{3}\\t^2\end{pmatrix}\right) \label{eq:2}
 \end{align}
-となる．$y$軸と平行なベクトル $\vec n=\begin{pmatrix}0\\1\end{pmatrix}$ をおき，$\vec\ell$ と $\vec m$，$\vec\ell$ と $\vec n$ のなす角を各々 $\theta_1,\theta_2$ とすると，（$0\le\theta_1,\theta_2\le\pi$）$t>0$ から $\theta_1,\theta_2\ne\pi/2$ であるから，題意から，
+となる．$y$軸と平行なベクトル $\vec n=\begin{pmatrix}0\\1\end{pmatrix}$ をおく．
+$\vec\ell$ と $\vec m$，$\vec\ell$ と $\vec n$ のなす角を各々 $\theta_1,\theta_2$ とすると，$0\le\theta_1,\theta_2\le\pi, t>0$ より $\theta_1,\theta_2\ne\pi/2$ であるから，題意の条件は
 \begin{align}
-\tan\theta_2=\pm\tan\theta_1 \quad \cdots \text{①}
+\tan\theta_2=\pm\tan\theta_1 \quad \cdots \text{①} \label{eq:3}
 \end{align}
-となる．
+となる．これを$\vec\ell, \vec m, \vec n$で表すと
 \begin{align}
-\tan\theta_1=\dfrac{|t^2-2t(t+\dfrac{1}{3})|}{\vec\ell\cdot\vec m}=\dfrac{|t^2+\dfrac{2}{3}t|}{t+\dfrac{1}{3}+2t^3}=\dfrac{t^2+\dfrac{2}{3}t}{2t^3+t+\dfrac{1}{3}} \quad (\because t>0)
+\tan\theta_1
+  &=\dfrac{|\vec\ell||\vec m|\sin\theta_1}{|\vec\ell||\vec m|\cos\theta_1} \\
+  &=\dfrac{(\text{$\vec\ell, \vec m$の張る三角形の面積の2倍})}{\vec\ell \cdot \vec m} \label{eq:4} \\
 \end{align}
+である．ここで\cref{eq:1,eq:2}より
 \begin{align}
-\tan\theta_2=\dfrac{|1|}{\vec\ell\cdot\vec n}=\dfrac{1}{2t}
+ \vec\ell \cdot \vec m 
+    &= \begin{pmatrix}1\\2t\end{pmatrix} \cdot \begin{pmatrix}t+\dfrac{1}{3}\\t^2\end{pmatrix} \\
+    &= 2t^3+t+\dfrac{1}{3}
 \end{align}
-だから，$\tan\theta_1,\tan\theta_2>0$ であることより，①で複号正を採用して代入して
+および
 \begin{align}
-\dfrac{1}{2t}=\dfrac{t^2+\dfrac{2}{3}t}{2t^3+t+\dfrac{1}{3}}
+ (\text{$\vec\ell, \vec m$の張る三角形の面積の2倍}) = \left|t^2-2t\left(t+\dfrac{1}{3}\right)\right| = t^2+\dfrac{2}{3}t \quad (\because\ t>0)
 \end{align}
+だから，\cref{eq:4}に代入して
 \begin{align}
-\therefore\ 2t^3+t+\dfrac{1}{3}=2t^3+\dfrac{4}{3}t^2 \quad\therefore\ t=1\ (\because t>0)
+ \tan\theta_1 = \dfrac{t^2+\dfrac{2}{3}t}{2t^3+t+\dfrac{1}{3}} \label{eq:5}
+\end{align}
+である．全く同様にして
+\begin{align}
+ \tan\theta_2=\dfrac{|1|}{\vec\ell\cdot\vec n}=\dfrac{1}{2t}
+\end{align}
+だから，$\tan\theta_1,\tan\theta_2>0$ であることより，\cref{eq:3}で複号正を採用して代入して
+\begin{align}
+ \dfrac{1}{2t}=\dfrac{t^2+\dfrac{2}{3}t}{2t^3+t+\dfrac{1}{3}} \\
+\therefore\ 
+ 2t^3+t+\dfrac{1}{3}=2t^3+\dfrac{4}{3}t^2 \\
+\therefore\ t=1\ (\because t>0)
 \end{align}
 となり，$P(1,1)$ である．
 
 \medskip
 \noindent\textbf{[解2]}
 
-$\ell,AP$ の傾きを各々 $\ell=\tan\alpha,\ m=\tan\beta$ とおく．（$-\pi/2<\alpha,\beta<\pi/2$）
+$\ell,AP$ の傾きを各々 $\ell=\tan\alpha,\ m=\tan\beta$ とおく．ただし$-\pi/2<\alpha,\beta<\pi/2$とする．
+\cref{eq:1,eq:2}より
 \begin{align}
-\ell=2t,\quad m=\dfrac{t^2}{t+\dfrac{1}{3}}
+\ell=2t,\quad m=\dfrac{t^2}{t+\dfrac{1}{3}} \label{eq:6}
 \end{align}
-である．右図のように $\theta_1,\theta_2$ をとると，どのような場合にも，
+である．解1のように $\theta_1,\theta_2$ をとると，どのような場合にも，
 \begin{align}
 \begin{cases}
 \theta_1=\pi-(\alpha-\beta) \\
 \theta_2=\dfrac{\pi}{2}-\alpha
-\end{cases}
-\quad \cdots \star
+\end{cases} \label{eq:7}
 \end{align}
-となる．題意から
-\begin{align}
-\tan\theta_2=\pm\tan\theta_1
-\end{align}
-であり，$\star$から，
+となる．よって\cref{eq:3}に\cref{eq:6,eq:7}を代入すると
 \begin{align}
 \dfrac{1}{\tan\alpha}=\pm\tan(\alpha-\beta)=\pm\dfrac{2t-\dfrac{t^2}{t+1/3}}{1+2t\cdot\dfrac{t^2}{t+1/3}}=\dfrac{t^2+\dfrac{2}{3}t}{2t^3+t+\dfrac{1}{3}}
 \end{align}
 \begin{align}
 \therefore\ \dfrac{1}{2t}=\dfrac{t^2+\dfrac{2}{3}t}{2t^3+t+\dfrac{1}{3}}
 \end{align}
-（以下同様）
+となる．あとはこれを解くのは解1と同様である．
 
+{\bf [解説]}
+二つのベクトル$\vec{a}, \vec{b}$の張る三角形の面積$S$は，ベクトルの外積を用いて
+\begin{align}
+ S = \frac{1}{2}\left|\vec{a}\times\vec{b}\right|
+\end{align}
+となる．
 
 \newpage
 
