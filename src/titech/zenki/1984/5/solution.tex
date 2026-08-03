@@ -24,13 +24,18 @@ T=\int_0^\alpha\tan x\,dx-\triangle ABC \quad\cdots\text{①}
 \begin{figure}[htb]
 \begin{center}
 \begin{tikzpicture}[scale=1.6, >=stealth]
+  % 座標軸
   \draw[->] (-0.9,0) -- (1.3,0) node[right] {$x$};
   \draw[->] (0,-0.3) -- (0,1.7) node[above] {$y$};
+  % y=tan x, y=cos x のグラフ (交点Aのx座標はalpha=arcsin((sqrt5-1)/2))
   \begin{scope}
     \clip (-0.9,-0.3) rectangle (1.3,1.7);
-    \draw[domain=-0.9:1.0, smooth] plot (\x,{tan(\x r)}) node[right] {$y=\tan x$};
-    \draw[domain=-0.9:0.9, smooth] plot (\x,{cos(\x r)}) node[right] {$y=\cos x$};
+    \draw[domain=-0.9:1.0, smooth] plot (\x,{tan(\x r)});
+    \draw[domain=-0.9:0.9, smooth] plot (\x,{cos(\x r)});
   \end{scope}
+  \node[right] at (0.95,1.4) {$y=\tan x$};
+  \node[right] at (0.9,0.55) {$y=\cos x$};
+  % 接線 l (Aでtan xに接する直線)
   \draw[domain=0:1.0, thick] plot (\x,{0.786+1.618*(\x-0.666)});
   \fill (0.666,0.786) circle (0.8pt) node[above] {$A$};
   \fill (0.666,0) circle (0.8pt) node[below] {$B$};
