@@ -1,45 +1,99 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-\begin{enumerate}
-  \item[(1)] $L$ の方程式は $\dfrac{r}{\sqrt{2}}x+\dfrac{r}{\sqrt{2}}y=r^2$ $\therefore x+y=\sqrt{2}r$ だから，方向ベクトル $\vec v=\begin{pmatrix}1\\-1\end{pmatrix}$ で，$P$ が $L$ 上の点の時，$a+b=\sqrt{2}r$ で，これは $P'(b,a)$ が $L$ 上にあることも意味する．したがって，$t$ を実数として
-  \begin{align}
-  \begin{pmatrix}c\\d\end{pmatrix}=\begin{pmatrix}b\\a\end{pmatrix}+(a-b)t\begin{pmatrix}1\\-1\end{pmatrix}
-  \end{align}
-  と表せる．（$\because P\ne\left(\dfrac{r}{\sqrt{2}},\dfrac{r}{\sqrt{2}}\right)$ より，$a\ne b$）したがって，
-  \begin{align}
-  \begin{cases}
-  c=b+(a-b)t=at+(1-t)b \\
-  d=a+(a-b)t(-1)=(1-t)a+tb
-  \end{cases}
-  \end{align}
-  と表せる．
+(1)
 
-  \begin{figure}[htb]
+$L$ の方程式は 
+\begin{align}
+ \dfrac{r}{\sqrt{2}}x+\dfrac{r}{\sqrt{2}}y=r^2 \\
+ \therefore x+y=\sqrt{2}r \label{eq:1}
+\end{align}
+だから，方向ベクトル $\vec v=\begin{pmatrix}1\\-1\end{pmatrix}$ である．
+さて$P(a,b)$ が $L$ 上の点の時は\cref{eq:1}より $a+b=\sqrt{2}r$ で，これは $P'(b,a)$ が $L$ 上にあることも意味する．したがって，$L$上の任意の点$Q(c,d)$は $PP'$の内分・外分点として表されるから，$t$ を実数として
+\begin{align}
+ \begin{pmatrix}c\\d\end{pmatrix}=t\begin{pmatrix}a\\b\end{pmatrix}+(1-t)\begin{pmatrix}b\\a\end{pmatrix}
+ % 通常の線分の方程式はこっち
+ % \begin{pmatrix}c\\d\end{pmatrix}=\begin{pmatrix}b\\a\end{pmatrix}+(a-b)t\begin{pmatrix}1\\-1\end{pmatrix}
+\end{align}
+と表せる（$\because P\ne\left(\dfrac{r}{\sqrt{2}},\dfrac{r}{\sqrt{2}}\right)$ より，$a\ne b$）．
+したがって，
+\begin{align}
+  \begin{cases}
+  c=at+(1-t)b \\
+  d=(1-t)a+tb
+  \end{cases}
+\end{align}
+と表せる．
+
+\begin{figure}[htb]
 \begin{center}
-  \begin{tikzpicture}[scale=1.3, >=stealth]
-    \draw[->] (-0.3,0) -- (2,0) node[right] {$x$};
-    \draw[->] (0,-0.3) -- (0,2) node[above] {$y$};
-    \draw[thick] (-0.2,1.8) -- (1.8,-0.2) node[below right] {$L$};
-    \draw[dashed] (-0.2,-0.2) -- (1.6,1.6) node[above right] {$y=x$};
-    \fill (0.8,0.8) circle (0.7pt) node[above left] {$R$};
-    \fill (1.3,0.35) circle (0.7pt) node[below right] {$P$};
-    \fill (0.35,1.3) circle (0.7pt) node[above left] {$P'$};
+  \begin{tikzpicture}[scale=2, >=stealth]
+    % 1. 座標軸 (r = 1.0 とみなす)
+    \draw[->] (-0.3,0) -- (1.6,0) node[right] {$x$};
+    \draw[->] (0,-0.3) -- (0,1.6) node[above] {$y$};
+    \node[below left] at (0,0) {$O$};
+
+    % 2. 半径 r (=1.0) の円 (C)
+    \draw[thick] (0,0) circle (1.0);
+    \node[below left] at (1.0, 0) {$r$};
+    \node[below left] at (0, 1.0) {$r$};
+
+    % 3. 変数と座標の計算 (\pgfmathsetmacro を使用)
+    \pgfmathsetmacro{\rtwo}{sqrt(2)}
+    \pgfmathsetmacro{\rhalf}{1.0/\rtwo}
+    \pgfmathsetmacro{\px}{1.2}
+    \pgfmathsetmacro{\py}{\rtwo - \px} % py = 1.414 - 1.2 = 0.214
+    \pgfmathsetmacro{\tval}{0.7}
+    \pgfmathsetmacro{\qx}{\px*\tval + \py*(1-\tval)}
+    \pgfmathsetmacro{\qy}{\px*(1-\tval) + \py*\tval}
+
+    % 座標の定義
+    \coordinate (R)  at (\rhalf,\rhalf);
+    \coordinate (P)  at (\px, \py);     % (a, b)
+    \coordinate (Pp) at (\py, \px);     % (b, a)
+    \coordinate (Q)  at (\qx, \qy);
+
+    % 4. P, P' から各軸への補助線（破線）と軸のラベル
+    % P(a,b) からの補助線
+    \draw[dashed, gray] (P) -- (\px, 0) node[below, black] {$a$};
+    \draw[dashed, gray] (P) -- (0, \py) node[left, black] {$b$};
+
+    % P'(b,a) からの補助線
+    \draw[dashed, gray] (Pp) -- (\py, 0) node[below, black] {$b$};
+    \draw[dashed, gray] (Pp) -- (0, \px) node[left, black] {$a$};
+
+    % 5. 接点 R の描画
+    \fill (R) circle (1pt) node[above right=1pt, xshift=-1pt, yshift=-1pt] {$R$};
+
+    % 6. 直線 L ( x+y = sqrt(2)r )
+    \draw[thin] (-0.1, {\rtwo+0.1}) -- ({\rtwo+0.1}, -0.1) node[below right] {$L$};
+
+    % 7. 線分 PP' を強調描画
+    \draw[ultra thick, blue!80!black] (Pp) -- (P); % node[midway, below left, font=\tiny, black] {線分$\overline{P'P}$};
+
+    % 点のプロット
+    \fill[red] (Pp) circle (1pt) node[above right, black] {$P'$};
+    \fill[red] (P)  circle (1pt) node[above right, black] {$P$};
+    \fill (Q)  circle (1pt) node[above right, font=\small, color=black] {$Q$};
+
+    % 8. 補助線 y=x と 方向ベクトル v
+    \draw[dashed, gray] (-0.2,-0.2) -- (1.5,1.5) node[above right, black] {$y=x$};
+
+    % 方向ベクトル v=(1,-1)
+    \draw[->, blue, thick] (R) -- ({\rhalf+\rhalf/2}, {\rhalf-\rhalf/2}); % node[midway, above right, font=\small] {$\vec{v}$};
+
   \end{tikzpicture}
   \end{center}
-\caption{点$P$，$P'$と直線$y=x$の関係}
+\caption{点$P, P', Q$の様子}
 \end{figure}
 
-  \item[(2)] $\begin{pmatrix}c\\d\end{pmatrix}=t\begin{pmatrix}a\\b\end{pmatrix}+(1-t)\begin{pmatrix}b\\a\end{pmatrix}$ より，$(c,d)$ は $\overline{PP'}$ 上にある時，$P'P$ の $t:1-t$ 内分点である．これと接点 $R$ が $\overline{PP'}$ の中点であることから，$t$ の条件は
-  \begin{align}
+(2) 
+(1)より $(c,d)$ は $\overline{PP'}$ 上にある時 $P'P$ の $t:1-t$ 内分点である．これと接点 $R$ が $\overline{PP'}$ の中点であることから，求める $t$ の条件は
+\begin{align}
   \dfrac{1}{2}\le t\le1
-  \end{align}
-\end{enumerate}
+\end{align}
+である．
 
 
 \newpage

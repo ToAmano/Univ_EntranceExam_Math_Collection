@@ -1,28 +1,83 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$-1\le a\le1$ から，
-\begin{align}
-I(a)=\int_{-1}^a(a-x)\cdot e^xdx+\int_a^1(x-a)e^xdx
-\end{align}
-\begin{align}
-=a\int_{-1}^ae^xdx-\int_{-1}^axe^xdx-a\int_a^1e^xdx+\int_a^1xe^xdx
-\end{align}
-とする．
-\begin{align}
-I'(a)=\int_{-1}^ae^xdx+ae^a-\int_a^1e^xdx+ae^a-ae^a-ae^a = \int_{-1}^ae^xdx-\int_a^1e^xdx
-\end{align}
-\begin{align}
-=\left[e^x\right]_{-1}^a-\left[e^x\right]_a^1=\left(e^a-\dfrac{1}{e}\right)-(e-e^a)=2e^a-\left(e+\dfrac{1}{e}\right)
-\end{align}
-から，下表を得る（$I'(a)=0\iff e^a=\dfrac{e+1/e}{2}=\dfrac{e^2+1}{2e}$，つまり $a=\log\dfrac{e^2+1}{2e}$）
 
+\begin{figure}[htb]
 \begin{center}
+\begin{tikzpicture}[scale=2, >=stealth]
+  % パラメータ設定 (例として a = 0.2 とする)
+  \pgfmathsetmacro{\a}{0.2}
+
+  % 1. 領域1: [-1, a] の塗りつぶし (y = (a-x)e^x) -> 右下がりの斜線
+  \begin{scope}
+    \fill[pattern=north east lines, pattern color=blue!70!black]
+      (-1,0) -- plot[domain=-1:\a, samples=50] (\x, {(\a - \x)*exp(\x)}) -- (\a,0) -- cycle;
+  \end{scope}
+
+  % 2. 領域2: [a, 1] の塗りつぶし (y = (x-a)e^x) -> 右上がりの斜線
+  \begin{scope}
+    \fill[pattern=north west lines, pattern color=red!70!black]
+      (\a,0) -- plot[domain=\a:1, samples=50] (\x, {(\x - \a)*exp(\x)}) -- (1,0) -- cycle;
+  \end{scope}
+
+  % 3. 座標軸 (x軸, y軸)
+  \draw[->] (-1.4, 0) -- (1.5, 0) node[right] {$x$};
+  \draw[->] (0, -0.3) -- (0, 2.4) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 4. 曲線 y = |x-a|e^x の描画
+  % [-1, a] の部分
+  \draw[thick, blue!80!black, domain=-1.2:\a, samples=50] plot (\x, {(\a - \x)*exp(\x)});
+  % [a, 1.1] の部分
+  \draw[thick, red!80!black, domain=\a:1.1, samples=50] plot (\x, {(\x - \a)*exp(\x)});
+
+  % 曲線のラベル
+  \node[above right, font=\small] at (0.6, 1.2) {$y = |x-a|e^x$};
+
+  % 5. 積分区間の境界線 (x = -1, x = a, x = 1)
+  \draw[dashed, gray] (-1, 0) -- (-1, {(\a - (-1))*exp(-1)});
+  \draw[dashed, gray] (1, 0) -- (1, {(1 - \a)*exp(1)});
+
+  % 目盛りラベルと点のプロット
+  \fill (-1, 0) circle (1pt) node[below] {$-1$};
+  \fill (\a, 0) circle (1pt) node[below] {$a$};
+  \fill (1, 0) circle (1pt) node[below] {$1$};
+
+  % 6. 積分の式と対応する領域ラベル
+  \node[blue!80!black, font=\small] at (-0.5, 0.25) {$\int_{-1}^a (a-x)e^x dx$};
+  \node[red!80!black, font=\small] at (0.6, 0.45) {$\int_a^1 (x-a)e^x dx$};
+
+\end{tikzpicture}
+\end{center}
+\caption{被積分関数 $y = |x-a|e^x$ と積分領域 $I(a)$}
+\end{figure}
+
+$-1\le a\le1$ から与えられた積分の絶対値を外すと
+\begin{align}
+I(a)
+  &=\int_{-1}^a(a-x)\cdot e^xdx+\int_a^1(x-a)e^xdx \\
+  &=a\int_{-1}^ae^xdx-\int_{-1}^axe^xdx-a\int_a^1e^xdx+\int_a^1xe^xdx
+\end{align}
+となる．この増減を調べるため一階微分を計算すると
+\begin{align}
+I'(a)
+  &=\int_{-1}^ae^xdx+ae^a-\int_a^1e^xdx+ae^a-ae^a-ae^a \\
+  &= \int_{-1}^ae^xdx-\int_a^1e^xdx \\
+  &=\left[e^x\right]_{-1}^a-\left[e^x\right]_a^1 \\
+  &=\left(e^a-\dfrac{1}{e}\right)-(e-e^a) \\
+  &=2e^a-\left(e+\dfrac{1}{e}\right)
+\end{align}
+である．ここで
+\begin{align}
+ I'(a)=0\iff e^a=\dfrac{e+1/e}{2}=\dfrac{e^2+1}{2e} \\
+\therefore 
+ a=\log\dfrac{e^2+1}{2e}
+\end{align}
+に注意して増減表は以下のようになる．
+
+\begin{table}[htb]
+ \begin{center}
 \begin{tabular}{c|c|c|c|c|c}
 $a$ & $-1$ & & $\log\dfrac{e^2+1}{2e}$ & & $1$ \\
 \hline
@@ -31,18 +86,21 @@ $I'$ & & $-$ & $0$ & $+$ & \\
 $I$ & & $\searrow$ & & $\nearrow$ &
 \end{tabular}
 \end{center}
+\end{table}
+
 
 したがって，最大値は $I(1), I(-1)$ のうち小さくない方である．
+具体的に計算すると
 \begin{align}
 I(1)=\int_{-1}^1(1-x)e^xdx=\left[e^x(2-x)\right]_{-1}^1=e-\dfrac{3}{e}
 \end{align}
 \begin{align}
 I(-1)=\int_{-1}^1(x+1)e^xdx=\left[e^x\cdot x\right]_{-1}^1=e+\dfrac{1}{e}
 \end{align}
-一方，$I(-1)>I(1)$（$\because e>0$）だから，もとめる $\max$ は
+であって，$e>0$より $I(-1)>I(1)$ だから，もとめる最大値は
 \begin{align}
 I(-1)=e+\dfrac{1}{e}
 \end{align}
-
+である．
 
 \end{document}
