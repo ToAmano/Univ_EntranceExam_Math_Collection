@@ -33,20 +33,34 @@ S=\dfrac{3}{2}\pi+\dfrac{2}{3}\sqrt{3}\pi=\left(\dfrac{3}{2}+\dfrac{2\sqrt{3}}{3
 
 \begin{figure}[htb]
 \begin{center}
-\begin{tikzpicture}[scale=0.55, >=stealth]
-  \begin{scope}
-    \clip (0,0) rectangle (6,6);
-    \fill[gray!25] (0,0) ellipse ({2*sqrt(3)} and 2);
-    \begin{scope}[rotate=45]
-      \fill[gray!25] (0,0) ellipse ({2*sqrt(3)} and 2);
-    \end{scope}
-  \end{scope}
-  \draw (0,0) ellipse ({2*sqrt(3)} and 2);
-  \begin{scope}[rotate=45]
-    \draw (0,0) ellipse ({2*sqrt(3)} and 2);
-  \end{scope}
+\begin{tikzpicture}[scale=0.8, >=stealth]
+  % 座標軸
   \draw[->] (-4.2,0) -- (5,0) node[right] {$x$};
   \draw[->] (0,-4.2) -- (0,5) node[above] {$y$};
+  % 参考: もとの楕円 D (点線)
+  \draw[dashed, gray] (0,0) ellipse ({2*sqrt(3)} and 2);
+  % 求める領域 (第1象限部分): 扇型OCD (半径2√3の円弧, D→C) + 領域OBC
+  % (Cから90°方向まで, 回転後の楕円の弧, C→B)
+  \fill[gray!25]
+    (0,0) -- ({2*sqrt(3)},0)
+    arc (0:45:{2*sqrt(3)})
+    -- plot[domain=0:60,samples=40,smooth]
+       ({sqrt(2)*(sqrt(3)*cos(\x)-sin(\x))},{sqrt(2)*(sqrt(3)*cos(\x)+sin(\x))})
+    -- cycle;
+  % 扇型 OCD の弧 (半径2√3, 0°→45°)
+  \draw[thick] ({2*sqrt(3)},0) arc (0:45:{2*sqrt(3)});
+  % 回転後の楕円の弧 C→B (もとの楕円のパラメータ psi=0→60° を45°回転)
+  \draw[thick, domain=0:60,samples=40,smooth]
+    plot ({sqrt(2)*(sqrt(3)*cos(\x)-sin(\x))},{sqrt(2)*(sqrt(3)*cos(\x)+sin(\x))});
+  \draw (0,0) -- ({2*sqrt(3)},0);
+  \draw (0,0) -- (0,{sqrt(6)});
+  \draw (0,0) -- ({sqrt(6)},{sqrt(6)});
+  \draw[->] (0.9,0) arc (0:45:0.9);
+  \node at (1.15,0.35) {$\dfrac{\pi}{4}$};
+  \fill (0,0) circle (1.5pt) node[below left] {$O$};
+  \fill ({2*sqrt(3)},0) circle (1.5pt) node[below] {$D$};
+  \fill ({sqrt(6)},{sqrt(6)}) circle (1.5pt) node[above right] {$C$};
+  \fill (0,{sqrt(6)}) circle (1.5pt) node[left] {$B$};
 \end{tikzpicture}
 \end{center}
 \caption{面積$S$を求めるための図}
