@@ -1,82 +1,110 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$P,Q$が線分$OR$上にある時を，時刻の基準として$t=0$とする．又この時の$R$の座標が$(3,0)$となるようにして考える．すると時刻$t$での各々の座標は
+$P,Q$が線分$OR$上にある時を時刻の基準として$t=0$とする．
+又この時の$R$の座標が$(3,0)$となるようにして考える．
+すると題意より時刻$t$での各々の座標は
 \begin{align}
 P(\cos t,\sin t),\quad Q(2\cos2t,2\sin2t),\quad R(3\cos3t,3\sin3t)
 \end{align}
-とかける．以下$S=\sin t,\ C=\cos t$とする．
+とかける．以下$s=\sin t,\ c=\cos t$とする．
+
 
 \begin{figure}[htb]
 \begin{center}
 \begin{tikzpicture}[scale=1.1, >=stealth]
-  % 座標軸
+  % 1. 座標軸
   \draw[->] (-2.3,0) -- (3.5,0) node[right] {$x$};
-  \draw[->] (0,-2.3) -- (0,2.3) node[above] {$y$};
-  % 半径 1,2,3 の同心円 (P,Q,Rの軌道)
+  \draw[->] (0,-2.3) -- (0,3.5) node[above] {$y$};
+
+  % 2. 半径 1,2,3 の同心円 (P,Q,Rの軌道)
   \draw (0,0) circle (1);
   \draw (0,0) circle (2);
   \draw (0,0) circle (3);
-  \node[below] at (1,0) {$1$};
-  \node[below] at (2,0) {$2$};
-  \node[below] at (3,0) {$3$};
+  \node[below right] at (1,0) {$1$};
+  \node[below right] at (2,0) {$2$};
+  \node[below right] at (3,0) {$3$};
   \fill (0,0) circle (1.1pt) node[below left] {$O$};
-  % P,Q,R の位置 (ある時刻 t での例示)
-  \fill (0.878,0.479) circle (1.1pt) node[above] {$P$};
-  \fill (1.081,1.683) circle (1.1pt) node[above] {$Q$};
-  \fill (0.212,2.992) circle (1.1pt) node[above] {$R$};
-  \draw[dashed] (0,0) -- (0.212,2.992);
+
+  % 3. P,Q,R の座標定義
+  \coordinate (P) at (0.878,0.479);
+  \coordinate (Q) at (1.081,1.683);
+  \coordinate (R) at (0.212,2.992);
+
+  % 4. △PQR の斜線塗りつぶしと外枠描画
+  % pattern=north east lines で右上上がりの斜線（角度や密度も調整可能）
+  \fill[pattern=north east lines, pattern color=black!60] (P) -- (Q) -- (R) -- cycle;
+  \draw[thick] (P) -- (Q) -- (R) -- cycle;
+
+  % 5. 点のプロットとラベル
+  \fill (P) circle (1.1pt) node[below right] {$P$};
+  \fill (Q) circle (1.1pt) node[right] {$Q$};
+  \fill (R) circle (1.1pt) node[above] {$R$};
+  
 \end{tikzpicture}
 \end{center}
 \caption{点$P$，$Q$，$R$の位置関係}
 \end{figure}
 
+
+この時
 \begin{align}
-\overrightarrow{PQ}=\begin{pmatrix}2\cos2t-C\\2\sin2t-S\end{pmatrix},\qquad
-\overrightarrow{PR}=\begin{pmatrix}3\cos3t-C\\3\sin3t-S\end{pmatrix}
+\overrightarrow{PQ}=\begin{pmatrix}2\cos2t-c\\2\sin2t-s\end{pmatrix},\qquad
+\overrightarrow{PR}=\begin{pmatrix}3\cos3t-c\\3\sin3t-s\end{pmatrix}
 \end{align}
 だからサラスの公式より，時刻$t$での$\triangle PQR$の面積$T(t)$として，
 \begin{align}
 \begin{split}
-2T(t)&=\left|(3\sin3t-S)(2\cos2t-C)-(3\cos3t-C)(2\sin2t-S)\right| \\
-&=\bigl|6\sin3t\cos2t-2S\cos2t-3C\sin3t+SC-(6\sin2t\cos3t-3S\cos3t-2C\sin2t+SC)\bigr| \\
-&=\bigl|6(\sin3t\cos2t-\sin2t\cos3t)-3(C\sin3t-S\cos3t)-2(S\cos2t-C\sin2t)\bigr| \\
+2T(t)&=\left|(3\sin3t-s)(2\cos2t-c)-(3\cos3t-c)(2\sin2t-s)\right| \\
+&=\bigl|6\sin3t\cos2t-2s\cos2t-3c\sin3t+sc-(6\sin2t\cos3t-3s\cos3t-2c\sin2t+sc)\bigr| \\
+&=\bigl|6(\sin3t\cos2t-\sin2t\cos3t)-3(c\sin3t-s\cos3t)-2(s\cos2t-c\sin2t)\bigr| \\
 &=\bigl|6\sin t-3\sin2t-2\sin(-t)\bigr|
-=\bigl|8S-3\sin2t\bigr|
-=\bigl|8S-6SC\bigr|=|S|\,|8-6C| \quad \cdots \text{①}
-\end{split}
+=\bigl|8s-3\sin2t\bigr|
+=\bigl|8s-6sc\bigr| \quad \cdots \text{①}
+\end{split} \\
+\therefore 
+T(t) &= \bigl|4s-3sc\bigr| \label{eq:1}
 \end{align}
-①の中身を$f(t)$とすると，
+と書ける．\cref{eq:1}の右辺の絶対値の中身を$f(t)$としてその挙動を求めれば良い．
+一階微分は
 \begin{align}
-f'(t)=8C-6\cos2t=8C-6(2C^2-1)=2(-6C^2+4C+3)
+f'(t)=8c-6\cos2t=8c-6(2c^2-1)=2(-6c^2+4c+3)
 \end{align}
-から，下表をうる（$|S|,C$の周期性から，$0\le t\le\pi$で考えれば良い）．ただし，$\alpha=\dfrac{2-\sqrt{22}}{6}$である．
+$f'(t)=0$となるのは
+\begin{align}
+ t_{\pm} = \dfrac{2\pm \sqrt{22}}{6}
+\end{align}
+だから増減表は以下のようになる．ここで$|s|,c$の周期性から，$0\le t\le\pi$で考えれば良い．
+
+\begin{table}[htb]
 \begin{center}
+\caption{$f(t)$の増減表}
 \begin{tabular}{c|ccccc}
 $t$ & $0$ & & & & $\pi$ \\
 \hline
-$C$ & $1$ & & $\alpha$ & & $-1$ \\
+$c$ & $1$ & & $t_{-}$ & & $-1$ \\
 \hline
 $f'$ & & $+$ & $0$ & $-$ & \\
 \hline
 $f$ & $0$ & $\nearrow$ & & $\searrow$ & $0$
 \end{tabular}
-\end{center}
-ここで，$C=\alpha$の時，
+\end{center} 
+\end{table}
+
+従って求める$T(t)$の最大値は$t=t_{-}$の時である．この時$\sin t$は
 \begin{align}
-|S|=\sqrt{1-\alpha^2}=\dfrac{1}{6}\sqrt{10+4\sqrt{22}}
+|s|=\sqrt{1-t_{-}^2}=\dfrac{1}{6}\sqrt{10+4\sqrt{22}}
 \end{align}
-だから，①に代入して
+だから，\cref{eq:1}に代入して求める最大値は
 \begin{align}
-\max T(t)=\dfrac{\sqrt{10+4\sqrt{22}}}{6}\left|4-3\cdot\dfrac{2-\sqrt{22}}{6}\right|
-=\dfrac{(6+\sqrt{22})\sqrt{10+4\sqrt{22}}}{12}
-\left(=\dfrac{\sqrt{409+88\sqrt{22}}}{6}\right)
+\max T(t) 
+ &= T(t_{-}) \\
+ &=\dfrac{\sqrt{10+4\sqrt{22}}}{6}\left|4-3\cdot\dfrac{2-\sqrt{22}}{6}\right| \\
+ &=\dfrac{(6+\sqrt{22})\sqrt{10+4\sqrt{22}}}{12} \\
+ &=\dfrac{\sqrt{409+88\sqrt{22}}}{6}
 \end{align}
+である．
 
 
 \newpage
