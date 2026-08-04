@@ -104,7 +104,13 @@ def check_proof_env(text):
 
 
 def check_documentclass(text):
+    """kouki 系の problem.tex は \\begin{document} を持たない中身だけの
+    フラグメントで、solution.tex 側から \\input{problem.tex} される設計
+    （scratch/generate_main_tex.py 冒頭のコメント参照）。\\begin{document}
+    が無いファイルは documentclass も無くて正しいので対象外とする。"""
     errors = []
+    if '\\begin{document}' not in text:
+        return errors
     m = re.search(r'\\documentclass\[([./]*)main\.tex\]\{subfiles\}', text)
     if not m:
         errors.append((1, "\\documentclass[../../main.tex]{subfiles} が見つからない"))
