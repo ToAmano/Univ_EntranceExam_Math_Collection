@@ -143,6 +143,7 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 
 * **`deploy-pages.yml`**（`main` push / 手動実行）: `tex_to_md.py` 実行 → `web` で `npm ci && npm run build` → GitHub Pages にデプロイ。
 * **`build-pdf.yml`**（`v*` タグ push / 手動実行）: 大学・区分の 6 通りを matrix ビルドし、各ジョブで `generate_main_tex.py` → `latexmk -lualatex` → `{univ}_{cat}.pdf`（例: `utokyo_zenki.pdf`）にリネームして artifact化。最後に release ジョブが全 artifact を集約して GitHub Release に添付する。
+* **`lint-tex.yml`**（`src/**/*.tex` を含む push / PR）: `scratch/lint_latex_style.py` で 8.3.6 節のルール（機械的に判定可能なもののみ）を **差分ファイルのみ** に対してチェックする。TeX Live 不要の軽量ジョブ。既存コーパスには本ルール導入以前からの違反が大量にあるため（2026年時点で約6800件）、リポジトリ全体を対象にはせず、変更・新規追加された `solution.tex`/`problem.tex` のみを厳格化する「ratchet」方式を採用している。ローカルでの単体実行は `python3 scratch/lint_latex_style.py [対象ファイル...]`（引数なしならリポジトリ全体をスキャンして集計のみ表示）。
 
 ---
 
@@ -196,6 +197,8 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 * 判読が難しい別解ほど省略したくなるが、そここそ本来の解答の価値がある部分であることが多い。時間がかかっても該当ページを高解像度で読み直し、8.2節の手順で最後まで読み切ること。
 
 ### 8.3.6 LaTeX フォーマットの注意事項
+
+このうち機械的に判定可能なもの（`align*` 禁止，句読点，`\dfrac`/`\sqrt` の裸引数禁止，`\frac`/`\dfrac` の添字位置ルール，`tikzpicture` のネスト，`\caption` 必須，`\documentclass` の相対パス，`enumerate` 禁止など）は `lint-tex.yml`（6節）が変更ファイルに対して自動チェックする。大カッコのサイズ判断など視覚的な確認が必要なものは対象外。
 
 * **数式環境は `align` を利用する（`align*` は使わない）**。単発の数式でも `\[...\]` や `equation` ではなく `align` を使い、複数行にまたがる変形は `&=` で位置を揃える。
 * **「`&=` で繋いで最後の結果だけに意味がある」変形は `split` でまとめて式番号を1つにすることを検討する**。`align` は既定で行ごとに番号が付くため，途中式ごとに番号が振られるのを避けたい場合は `\begin{align}\begin{split} ... \end{split}\end{align}` のように `split` で包む。ただし `split` は1行につき `&` を1つしか使えないため，1行に複数の位置揃えが必要な変形では無理に `split`化せず，通常の `align`（行ごとに番号）のままでよい。
