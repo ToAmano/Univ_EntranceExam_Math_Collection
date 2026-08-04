@@ -198,7 +198,7 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 
 ### 8.3.6 LaTeX フォーマットの注意事項
 
-このうち機械的に判定可能なもの（`align*` 禁止，句読点，`\dfrac`/`\sqrt` の裸引数禁止，`\frac`/`\dfrac` の添字位置ルール，`tikzpicture` のネスト，`\caption` 必須，`\documentclass` の相対パス，`enumerate` 禁止など）は `lint-tex.yml`（6節）が変更ファイルに対して自動チェックする。大カッコのサイズ判断など視覚的な確認が必要なものは対象外。
+このうち機械的に判定可能なもの（`align*` 禁止，句読点，`\dfrac`/`\sqrt` の裸引数禁止，`\frac`/`\dfrac` の添字位置ルール，`tikzpicture` のネスト，`\caption` 必須，`\documentclass` の相対パス）は `lint-tex.yml`（6節）が変更ファイルに対して自動チェックする。大カッコのサイズ判断や，`enumerate`/`itemize` が小問ラベリング目的か場合分け目的かの判別（後者は許容される）など目視確認が必要なものは対象外。
 
 * **数式環境は `align` を利用する（`align*` は使わない）**。単発の数式でも `\[...\]` や `equation` ではなく `align` を使い、複数行にまたがる変形は `&=` で位置を揃える。
 * **「`&=` で繋いで最後の結果だけに意味がある」変形は `split` でまとめて式番号を1つにすることを検討する**。`align` は既定で行ごとに番号が付くため，途中式ごとに番号が振られるのを避けたい場合は `\begin{align}\begin{split} ... \end{split}\end{align}` のように `split` で包む。ただし `split` は1行につき `&` を1つしか使えないため，1行に複数の位置揃えが必要な変形では無理に `split`化せず，通常の `align`（行ごとに番号）のままでよい。

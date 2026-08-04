@@ -4,7 +4,8 @@ AGENT.md 8.3.6「LaTeX フォーマットの注意事項」を機械的にチェ
 .github/workflows/lint-tex.yml から呼び出される。
 
 対象は src/**/solution.tex と src/**/problem.tex。
-視覚的な判断が必要なルール（大カッコを \\Bigl 化すべきか等）は対象外。
+目視判断が必要なルール（大カッコを \\Bigl 化すべきか、enumerate/itemize が小問
+ラベリング目的か場合分け目的か等）は対象外。
 違反が1件でもあれば exit code 1 で終了する（\\overline{} の使用のみ警告扱いで非ブロッキング）。
 """
 import re
@@ -89,12 +90,10 @@ def check_punctuation(text):
     return errors
 
 
-def check_enumerate_in_solution(text):
-    errors = []
-    for m in re.finditer(r'\\begin\{(enumerate|itemize|description)\}', text):
-        errors.append((line_of(text, m.start()),
-                        f"solution.tex 内で \\begin{{{m.group(1)}}} は使わない（小問は (1) ... と直接書く）"))
-    return errors
+# enumerate/itemize は「小問(1),(2),...を enumerate で囲う」場合のみ禁止で，
+# 場合分け（1°, 2°, ... の case analysis）等での使用は許容される。この2つを
+# 構文的に判別するのは信頼できないため機械チェックの対象からは外している
+# （大カッコのサイズ判断と同様、目視確認が必要なルール）。
 
 
 def check_proof_env(text):
@@ -191,9 +190,15 @@ def check_tikz_nesting(text):
     return errors
 
 
-def check_frac_subscript_rule(text):
-    """\\int の上下限・評価カッコ ]_a^b の添字位置では \\frac、それ以外では \\dfrac を使う。"""
-    errors = []
+def find_frac_exempt_spans(text):
+    """\\int の上下限・評価カッコ ]_a^b の添字位置の (start, end) 一覧を返す。
+    そこに現れる分数は \\dfrac ではなく \\frac を使ってよい（使うべき）。
+
+    添字は _{...} や ^{...} のように {} で囲まれている場合だけでなく、
+    _0 や ^n のような裸の1トークンのこともある。裸トークンの場合でも
+    "もう一方の添字" を見逃さないよう、必ず1トークン分だけ読み飛ばして
+    次を確認する（\\int_0^{\\frac{\\pi}{2}t} で ^{...} 側を見逃すと、
+    その中の \\frac を誤って \\dfrac に変換してしまうバグになる）。"""
     n = len(text)
     spans = []
     for m in TRIGGER_RE.finditer(text):
@@ -201,16 +206,34 @@ def check_frac_subscript_rule(text):
         for _ in range(2):  # 添字は _{...}^{...} の順不同で最大2つ
             while j < n and text[j] in ' \t':
                 j += 1
-            if j < n and text[j] == '{':
+            if j >= n:
+                break
+            if text[j] == '{':
                 _, j2 = extract_braced(text, j)
                 spans.append((j, j2))
                 j = j2
-                while j < n and text[j] in ' \t':
-                    j += 1
-                if j < n and text[j] in '_^':
-                    j += 1
-                    continue
+            elif text[j] == '\\':
+                k = j + 1
+                while k < n and text[k].isalpha():
+                    k += 1
+                if k == j + 1:
+                    k += 1  # \X（英字以外1文字）はそれ自体が1つのコマンド
+                j = k
+            else:
+                j += 1  # 裸の1文字（数字・添え字変数など）
+            while j < n and text[j] in ' \t':
+                j += 1
+            if j < n and text[j] in '_^':
+                j += 1
+                continue
             break
+    return spans
+
+
+def check_frac_subscript_rule(text):
+    """\\int の上下限・評価カッコ ]_a^b の添字位置では \\frac、それ以外では \\dfrac を使う。"""
+    errors = []
+    spans = find_frac_exempt_spans(text)
 
     def in_span(pos):
         return any(s <= pos < e for s, e in spans)
@@ -236,7 +259,7 @@ def check_overline_warning(text):
     return warnings
 
 
-def lint_file(path, is_solution):
+def lint_file(path):
     text = strip_comments(path.read_text(encoding='utf-8'))
     errors = []
     errors += check_align_star(text)
@@ -247,8 +270,6 @@ def lint_file(path, is_solution):
     errors += check_documentclass(text)
     errors += check_proof_env(text)
     errors += check_frac_subscript_rule(text)
-    if is_solution:
-        errors += check_enumerate_in_solution(text)
     warnings = check_overline_warning(text)
     return errors, warnings
 
@@ -268,7 +289,7 @@ def main():
         if only_changed is not None and path.resolve() not in only_changed:
             continue
         files_checked += 1
-        errors, warnings = lint_file(path, is_solution=(path.name == 'solution.tex'))
+        errors, warnings = lint_file(path)
         rel = path.relative_to(REPO_ROOT)
         for lineno, msg in sorted(errors):
             print(f"::error file={rel},line={lineno}::{msg}")
