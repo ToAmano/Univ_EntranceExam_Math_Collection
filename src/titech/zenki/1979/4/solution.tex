@@ -1,10 +1,6 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 $C: y=\log x$，$(\log x)'=\dfrac{1}{x}$ より，$C$ 上 $x=t$ での接線は
 \begin{align}
@@ -14,45 +10,98 @@ $C: y=\log x$，$(\log x)'=\dfrac{1}{x}$ より，$C$ 上 $x=t$ での接線は
 \begin{align}
 \ell_a: y=\dfrac{1}{a}(x-a)+\log a, \qquad \ell_c: y=\dfrac{1}{c}(x-c)+\log c
 \end{align}
-とおり，$\ell_a,\ell_c$ の交点 $R$ の $x$ 座標は
+とおり，$\ell_a,\ell_c$ の交点 $R$ の $x,y$ 座標$x_R, y_R$は
 \begin{align}
-x_R=\dfrac{ac(\log c-\log a)}{c-a}
+\begin{cases}
+ x_R=\dfrac{ac(\log c-\log a)}{c-a} \\
+ y_R=\dfrac{c\log c-a\log a}{c-a}
+\end{cases}\label{eq:1}
 \end{align}
 である．
 
 \begin{figure}[htb]
 \begin{center}
-\begin{tikzpicture}[scale=1.2, >=stealth]
-  % 座標軸
-  \draw[->] (-0.3,0) -- (4,0) node[right] {$x$};
-  \draw[->] (0,-1) -- (0,2.3) node[above] {$y$};
-  % 曲線 C: y=log x  (a=1.2, c=2.6 として図示)
-  \draw[domain=0.15:3.7, smooth, thick] plot (\x, {ln(\x)});
-  % 接線 l_a, l_c
-  \draw[thick, domain=0.4:3.5] plot (\x, {(\x-1.2)/1.2+ln(1.2)});
-  \draw[thick, domain=0.4:3.5] plot (\x, {(\x-2.6)/2.6+ln(2.6)});
-  % 接線の交点 R (a=1.2, c=2.6 での実際の交点座標)
-  \fill (1.723,0.618) circle (1.2pt) node[above left] {$R$};
-  \fill (1.2,0) circle (1.2pt) node[below] {$P'$};
-  \fill (2.6,0) circle (1.2pt) node[below] {$Q'$};
-  \draw[dashed] (1.2,0) -- (1.2,{ln(1.2)});
-  \draw[dashed] (2.6,0) -- (2.6,{ln(2.6)});
+\begin{tikzpicture}[scale=2, >=stealth]
+  % パラメータ設定 (a = 1.2, c = 2.6)
+  \pgfmathsetmacro{\a}{1.2}
+  \pgfmathsetmacro{\c}{2.6}
+  
+  % 交点 R の実際の計算 (a=1.2, c=2.6)
+  % x_R = a*c*(ln(c)-ln(a))/(c-a) ≒ 1.723
+  % y_R = (c*ln(c)-a*ln(a))/(c-a) ≒ 0.618
+  \pgfmathsetmacro{\xr}{1.723}
+  \pgfmathsetmacro{\yr}{0.618}
+
+  % 1. 領域 S (曲線 y=log x と x軸, x=a, x=c で囲まれた領域) の塗りつぶし
+  \begin{scope}
+    \fill[pattern=north east lines, pattern color=blue!70!black]
+      (\a, 0) -- plot[domain=\a:\c, samples=50] (\x, {ln(\x)}) -- (\c, 0) -- cycle;
+  \end{scope}
+
+  % 2. 領域 T (三角形 P'Q'R) の塗りつぶし
+  \begin{scope}
+    \fill[pattern=north west lines, pattern color=red!70!black]
+      (\a, 0) -- (\xr, \yr) -- (\c, 0) -- cycle;
+  \end{scope}
+
+  % 3. 座標軸
+  \draw[->] (-0.3,0) -- (4.0,0) node[right] {$x$};
+  \draw[->] (0,-0.8) -- (0,2.0) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 4. 曲線 C: y = log x
+  \draw[domain=0.3:3.6, smooth, thick] plot (\x, {ln(\x)});
+  \node[above] at (3.5, {ln(3.5)}) {$C: y=\log x$};
+
+  % 5. 接線 l_a, l_c
+  \draw[thick, blue!80!black, domain=0.4:3.2] plot (\x, {(\x-\a)/\a + ln(\a)});
+  \draw[thick, red!80!black, domain=0.8:3.5] plot (\x, {(\x-\c)/\c + ln(\c)});
+  
+  \node[blue!80!black, above left, font=\small] at (0.5, { (0.5-\a)/\a + ln(\a) }) {$\ell_a$};
+  \node[red!80!black, above right, font=\small] at (3.3, { (3.3-\c)/\c + ln(\c) }) {$\ell_c$};
+
+  % 6. 補助線 (x=a, x=c の破線)
+  \draw[dashed, gray] (\a, 0) -- (\a, {ln(\a)});
+  \draw[dashed, gray] (\c, 0) -- (\c, {ln(\c)});
+
+  % 7. 点のプロットとラベル
+  \fill (\a, 0) circle (1.2pt) node[below] {$P'(a,0)$};
+  \fill (\c, 0) circle (1.2pt) node[below] {$Q'(c,0)$};
+  \fill (\a, {ln(\a)}) circle (1.2pt) node[above left=-1pt] {$P$};
+  \fill (\c, {ln(\c)}) circle (1.2pt) node[above left=-1pt] {$Q$};
+  \fill (\xr, \yr) circle (1.2pt) node[above=2pt] {$R$};
+
+  % 8. 領域ラベル (S, T)
+  \node[blue!90!black, fill=white, inner sep=1pt, font=\small] at (1.9, 0.25) {$S$};
+  \node[red!90!black, fill=white, inner sep=1pt, font=\small] at (1.7, 0.45) {$T$};
+
 \end{tikzpicture}
 \end{center}
-\caption{接線$\ell_a$，$\ell_c$の交点$R$}
+\caption{面積 $S$（積分領域）と 面積 $T$（$\triangle P'Q'R$）}
 \end{figure}
 
+まず$S$の面積は
 \begin{align}
-S=\int_a^c\log x\,dx=\left[x(\log x-1)\right]_a^c=c(\log c-1)-a(\log a-1) \quad \cdots \text{①}
+ S 
+  &=\int_a^c\log x\,dx \\
+  &=\left[x(\log x-1)\right]_a^c \\
+  &=c(\log c-1)-a(\log a-1) \quad \cdots \text{①} \label{eq:2}
 \end{align}
-$P'Q'$ を底辺，$R$ の $y$ 座標を高さとする三角形として，$f(x)=x\log x$ とおくと，$T=\dfrac{1}{2}(c-a)\cdot(R\text{の}y\text{座標})$ であり，接線の性質から
+と書ける．次に$\triangle P'Q'R$の面積$T$は$P'Q'$を底辺を見立てると
 \begin{align}
-T=\dfrac{1}{2}\left(f(c)-f(a)\right)=\dfrac{1}{2}(c\log c-a\log a) \quad \cdots \text{②}
+ T=\dfrac{1}{2}(c-a) y_R
 \end{align}
-①②から，もとめる比は
+だから，\cref{eq:1}を代入して
+\begin{align}
+ T
+  &= \dfrac{1}{2}(c-a) \dfrac{c\log c-a\log a}{c-a} \\
+  &= \dfrac{c\log c-a\log a}{2} \label{eq:3}
+\end{align}
+である．\cref{eq:2,eq:3}より求める比は
 \begin{align}
 S:T=\bigl\{c(\log c-1)-a(\log a-1)\bigr\}:\dfrac{1}{2}(c\log c-a\log a)
 \end{align}
+である．
 
 
 \end{document}
