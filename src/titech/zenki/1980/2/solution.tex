@@ -1,58 +1,85 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$|BD|=x$ とする．$\angle CBD=\theta$ とする．この時題意から $\angle ACB=2\theta$ である．$|CD|=y$ とする．まず，$\triangle ABC$ の成立条件から
+$|BD|=x$ , $|CD|=y$, $\angle CBD=\theta$ とする．この時題意から $\angle ACB=2\theta$ である．
+まず，$\triangle ABC$ の成立条件から
 \begin{align}
-0<2\theta<\dfrac{\pi}{2} \quad\therefore\ 0<\theta<\dfrac{\pi}{4} \quad \cdots \text{①}
+ 0<2\theta<\dfrac{\pi}{2} \quad\therefore\ 0<\theta<\dfrac{\pi}{4} \quad \cdots \text{①} \label{eq:1}
 \end{align}
+が必要である．
 
 \begin{figure}[htb]
 \begin{center}
-\begin{tikzpicture}[scale=3.6, >=stealth]
-  % 二等辺三角形 ABC (底辺 BC=1, theta=25度として図示)
+\begin{tikzpicture}[scale=4, >=stealth]
+  % 1. 座標の定義
   \coordinate (B) at (0,0);
   \coordinate (C) at (1,0);
   \coordinate (A) at (0.5,0.596);
-  % D: 角Bの二等分線 BD と辺 AC の交点 (角の二等分線定理から算出)
   \coordinate (D) at (0.719,0.335);
+
+  % 各線分の角度パラメータ (arc描き込み用)
+  % BC: 0度, BD: 25度, BA: 50度, CA: 130度, CD: 130度, DB: 205度
+  
+  % 2. 角度マーク（弧）の追加
+  % 角 DBC (\theta)
+  \draw[thin] (B) + (0:0.18) arc (0:25:0.18);
+  % 角 ABD (\theta)
+  \draw[thin] (B) + (25:0.22) arc (25:50:0.22);
+  % 角 ACB (2\theta)
+  \draw[thin] (C) + (130:0.15) arc (130:180:0.15);
+  % 角 BDC (\pi - 3\theta)
+  \draw[thin] (D) + (205:0.08) arc (205:310:0.08); % 205
+
+  % 3. 三角形と二等分線の描画
   \draw (B) -- (A) -- (C) -- cycle;
   \draw (B) -- (D);
-  % AB=AC の印
+
+  % 4. AB=AC の等長印
   \draw (0.2308,0.3141) -- (0.2692,0.2819);
   \draw (0.7692,0.3141) -- (0.7308,0.2819);
+
+  % 5. 各点のプロットと頂点ラベル
   \fill (B) circle (0.33pt) node[below] {$B$};
   \fill (C) circle (0.33pt) node[below] {$C$};
   \fill (A) circle (0.33pt) node[above] {$A$};
-  \fill (D) circle (0.33pt) node[right] {$D$};
-  \node at (0.146,0.033) {$\theta$};
+  \fill (D) circle (0.33pt) node[above right] {$D$};
+
+  % 6. 角度ラベル (弧の位置に合わせて微調整)
+  \node[font=\small] at (12.5:0.24) {$\theta$};
+  \node[font=\small] at (37.5:0.28) {$\theta$};
+  \node[font=\small] at ([shift={(155:0.22)}]C) {$2\theta$};
+  \node[font=\small] at ([shift={(240:0.15)}]D) {$\pi-3\theta$};
+
+  % 7. 長さラベル (1, x, y)
   \node[below] at (0.5,0) {$1$};
-  \node at (0.119,0.091) {$\theta$};
-  \node at (0.864,0.063) {$2\theta$};
   \node at (0.334,0.222) {$x$};
   \node at (0.906,0.206) {$y$};
-  \node[below] at (0.691,0.208) {$\pi-3\theta$};
+
 \end{tikzpicture}
 \end{center}
 \caption{$\triangle ABC$と点$D$の位置関係}
 \end{figure}
 
-$\triangle BCD$ に正弦定理を用いて，
+また$\angle BCD = \pi-3\theta$ だから $\triangle BCD$ に正弦定理を用いて，
 \begin{align}
-\dfrac{x}{\sin2\theta}=\dfrac{1}{\sin(\pi-3\theta)}=\dfrac{1}{\sin3\theta} \quad\therefore\ x=\dfrac{\sin2\theta}{\sin3\theta} \quad \cdots \text{②}
+\dfrac{x}{\sin2\theta}=\dfrac{1}{\sin(\pi-3\theta)}=\dfrac{1}{\sin3\theta} \quad\therefore\ x=\dfrac{\sin2\theta}{\sin3\theta} \quad \cdots \text{②} \label{eq:2}
 \end{align}
-以下 $S=\sin\theta,\ C=\cos\theta$ とする．$\sin2\theta=2SC,\ \sin3\theta=3S-4S^3$ より，②から
+を得る．倍角公式，三倍角の公式より
 \begin{align}
-x=\dfrac{2SC}{3S-4S^3}=\dfrac{2C}{3-4S^2}=\dfrac{2C}{4C^2-1}
+ \sin2\theta=2\sin\theta\cos\theta,\ \sin3\theta=3\sin\theta-4\sin^3\theta \label{eq:3}
 \end{align}
-これは $C$ の単調減少関数であり，①とあわせて，
+だから，\cref{eq:2}に代入して
 \begin{align}
-\dfrac{2}{3}<x<\sqrt{2} \quad \left(\because\ \dfrac{2C}{4C^2-1}\xrightarrow{C\to\dfrac{\sqrt{2}}{2}+0}\sqrt{2},\quad \dfrac{2C}{4C^2-1}\xrightarrow{C\to1-0}\dfrac{2}{3}\right)
+  x=\dfrac{2\sin\theta\cos\theta}{3\sin\theta-4\sin^3\theta}=\dfrac{2\cos\theta}{3-4\sin^2\theta}=\dfrac{2\cos\theta}{4\cos^2\theta-1} 
 \end{align}
+これは \cref{eq:1}の範囲で $\cos\theta$ の単調減少関数であり，\cref{eq:1}の範囲では
+\begin{align}
+ x\left(\theta=\dfrac{\pi}{4}\right) < x < x\left(\theta=0\right) \\
+ \therefore 
+ \dfrac{2}{3}<x<\sqrt{2} 
+\end{align}
+となる．
 
 
 \newpage

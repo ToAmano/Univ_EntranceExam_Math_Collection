@@ -1,52 +1,70 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$f_n(x)=x^n\sin^nx$ とおく．さらに，$P(x)=f_1(x)$ とする．はじめに(2)を証明する．
+$f_n(x)=x^n\sin^nx$ とおくと
+\begin{align}
+ f_n(x) = \left(f_1(x)\right)^n
+\end{align}
+であることに注意する．以下簡単のため $\sin x=s,\ \cos x=c$ と書く．
 
-以下，$P(x)=P,\ \sin x=S,\ \cos x=C$ などと書く．
+
+(1)
+ $S_1,\ S_2$ を計算すると
+\begin{align}
+S_1&=\int_0^{\pi/2}f_1(x)dx=\left[-xc+s\right]_0^{\frac{\pi}{2}}=1 
+\end{align}
+および
 \begin{align}
 \begin{split}
-S_{n+2}+S_n&>2S_{n+1} \\
-&\iff \int_0^{\pi/2}P^n(P^2+1)dx>2\int_0^{\pi/2}P^{n+1}dx \\
-&\iff \int_0^{\pi/2}P^n(P-1)^2dx>0 \quad \cdots \text{①}
+S_2
+ &=\int_0^{\pi/2}f_2(x)dx \\
+ &=\int_0^{\pi/2}x^2\cdot\dfrac{1-\cos2x}{2}dx \\
+ &=\dfrac{1}{2}\left[\dfrac{1}{3}x^3\right]_0^{\pi/2}-\dfrac{1}{2}\left[\dfrac{1}{2}x^2\sin2x+\dfrac{1}{4}\cdot2x\cos2x-\dfrac{1}{8}\cdot2\sin2x\right]_0^{\pi/2} \\
+ &=\dfrac{1}{6}\left(\dfrac{\pi}{2}\right)^3-\dfrac{1}{2}\cdot\dfrac{1}{4}\cdot2\cdot\left(-\dfrac{\pi}{2}\right) \\
+ &=\dfrac{\pi^3}{48}+\dfrac{\pi}{8}
 \end{split}
 \end{align}
-であり，$[0,\pi/2]$ では $0\le P,\ 0\le(P-1)^2$ だから，
-\begin{align}
-0\le P^n(P-1)^2
-\end{align}
-$[0,\pi/2]$ で積分し，常には等号が成立しないことから，
-\begin{align}
-0<\int_0^{\pi/2}P^n(P-1)^2dx \quad \cdots \text{②}
-\end{align}
-①，②から(2)が示された．以下(1)，(3)を示す．
-
-ここで $S_1,\ S_2$ を計算する．
-\begin{align}
-\begin{split}
-S_1&=\int_0^{\pi/2}Pdx=\left[-xC+S\right]_0^{\pi/2}=1 \\
-S_2&=\int_0^{\pi/2}f_2(x)dx=\int_0^{\pi/2}x^2\cdot\dfrac{1-\cos2x}{2}dx \\
-&=\dfrac{1}{2}\left[\dfrac{1}{3}x^3\right]_0^{\pi/2}-\dfrac{1}{2}\left[\dfrac{1}{2}x^2\sin2x+\dfrac{1}{4}\cdot2x\cos2x-\dfrac{1}{8}\cdot2\sin2x\right]_0^{\pi/2} \\
-&=\dfrac{1}{6}\left(\dfrac{\pi}{2}\right)^3-\dfrac{1}{2}\cdot\dfrac{1}{4}\cdot2\cdot\left(-\dfrac{\pi}{2}\right)=\dfrac{\pi^3}{48}+\dfrac{\pi}{8}
-\end{split}
-\end{align}
-であり，$\pi>3.14$ から
+となる．ここで $\pi>3.14$ だから
 \begin{align}
 \begin{split}
 S_2&>\dfrac{\pi}{8}\left(\dfrac{3.14^2}{6}+1\right)>\dfrac{2.64}{8}\cdot3.14=\dfrac{8.2896}{8}>1=S_1 \\
-&\therefore\ S_2>S_1 \quad \text{(1)}
+&\therefore\ S_2>S_1 
 \end{split}
 \end{align}
-となる．したがって，(2)の不等式をくり返し用いて，
+となる．よって示された．
+
+(2)
+示すべき不等式を$f_n(x)$で表すと
+\begin{align}
+\begin{split}
+     & S_{n+2}+S_n >2S_{n+1} \\
+\iff & \int_0^{\pi/2}\left(f_1(x)\right)^n(f_1(x)^2+1)dx>2\int_0^{\pi/2}f_1(x)^{n+1}dx \\
+\iff & \int_0^{\pi/2}\left(f_1(x)\right)^n(f_1(x)-1)^2dx>0 \quad \cdots \text{①} \label{eq:1}
+\end{split}
+\end{align}
+であるから以下これを示す．
+
+$\left[0,\dfrac{pi}{2}\right]$ では $0\le f_1(x),\ 0\le(f_1(x)-1)^2$ だから，
+\begin{align}
+0\le \left(f_1(x)\right)^n(f_1(x)-1)^2
+\end{align}
+である．これを $[0,\pi/2]$ で積分し，常には等号が成立しないことから，
+\begin{align}
+0<\int_0^{\pi/2}P^n(P-1)^2dx \quad \cdots \text{②} \label{eq:2}
+\end{align}
+を得る．\cref{eq:1,eq:2}より(2)が示された．
+
+(3)
+(2)の不等式を整理すると
+\begin{align}
+ S_{n+2}-S_{n+1} < S_{n+1}-S_{n}
+\end{align}
+だからくり返し用いて，
 \begin{align}
 S_{n+1}-S_n>S_n-S_{n-1}>\cdots>S_2-S_1>0 \quad\therefore\ S_{n+1}>S_n
 \end{align}
-だから，$\{S_n\}$ は単調増加で，$m<n$ ならば $S_m<S_n$ となる． \text{(3)}
+となる．従って $\{S_n\}$ は単調増加で，$m<n$ ならば $S_m<S_n$ となる．よって示された．
 
-
+\newpage
 \end{document}
