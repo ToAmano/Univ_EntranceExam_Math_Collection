@@ -1,63 +1,121 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$S=\sin x,\ C=\cos x$と書く．
+簡単のため$s=\sin x,\ c=\cos x$と書く．
+まずは$y=\tan x$と$y=\cos x$の交点の$x$座標を求める．$y$を消去した方程式をとくと
 \begin{align}
-\tan x=\cos x \quad\therefore\ S=C^2=1-S^2 \quad\therefore\ S=\dfrac{1}{2}(-1\pm\sqrt{5})
+\tan x=\cos x \quad\therefore\ s=c^2=1-s^2 \quad\therefore\ s=\dfrac{1}{2}(-1\pm\sqrt{5})
 \end{align}
-$|S|\le1$から$S=\dfrac{-1+\sqrt{5}}{2}\equiv S_0$である． $\cdots$①
-
-グラフは下図で，交点$A$の$x$座標を$\alpha$とおく．$(\tan\alpha)'=\dfrac{1}{C^2}$だから，①とあわせて，$\ell$の傾きは
+である．このうち$|s|\le 1$を満たすのは
 \begin{align}
-\dfrac{1}{1-S_0^2}=\dfrac{1}{S_0}=\dfrac{2}{\sqrt{5}-1}=\dfrac{\sqrt{5}+1}{2}
+ s=\dfrac{-1+\sqrt{5}}{2}\equiv s_0 \label{eq:1}
 \end{align}
-であって，$A$から$x$軸に下ろした垂足$B$，$\ell$と$x$軸の交点$C$とすると，もとめる面積$T$として
+である．そこで$\sin x=s_0$を満たす$x$を$\alpha$とおく．$|\alpha|<\dfrac{\pi}{2}$より$\cos\alpha>0$だから
 \begin{align}
-T=\int_0^\alpha\tan x\,dx-\triangle ABC \quad\cdots\text{①}
+ \cos\alpha 
+  &= \sqrt{1-s^2_0} \\
+  &= \sqrt{1-\left(\dfrac{-1+\sqrt{5}}{2}\right)^2} \\ 
+  &= \sqrt{\dfrac{-1+\sqrt{5}}{2}} \label{eq:2}
+\end{align}
+である．
+$(\tan x)'=\dfrac{1}{c^2}$だから\cref{eq:1}と合わせて接線$\ell$の傾きは
+\begin{align}
+\dfrac{1}{1-s_0^2}=\dfrac{2}{\sqrt{5}-1}=\dfrac{\sqrt{5}+1}{2} \label{eq:3}
+\end{align}
+である．
+$A$から$x$軸に下ろした垂足$B$，$\ell$と$x$軸の交点$C$とするともとめる面積$T$として
+\begin{align}
+  T=\int_0^\alpha\tan x\,dx-\triangle ABC \quad\cdots\text{①} \label{eq:4}
 \end{align}
 
 \begin{figure}[htb]
 \begin{center}
-\begin{tikzpicture}[scale=1.6, >=stealth]
-  % 座標軸
-  \draw[->] (-0.9,0) -- (1.3,0) node[right] {$x$};
-  \draw[->] (0,-0.3) -- (0,1.7) node[above] {$y$};
-  % y=tan x, y=cos x のグラフ (交点Aのx座標はalpha=arcsin((sqrt5-1)/2))
+\begin{tikzpicture}[scale=3.0, >=stealth, every node/.style={font=\small}]
+
+  % 1. 数値・座標の設定
+  % \alpha = arcsin((-1+sqrt(5))/2) \approx 0.6662 rad (38.17°)
+  % y_A = tan(\alpha) = cos(\alpha) = sqrt((-1+sqrt(5))/2) \approx 0.7862
+  % 接線 l: y = 1.6180 * (x - 0.6662) + 0.7862
+  % 接線と x 軸の交点 C の x 座標: 0.6662 - 0.7862 / 1.6180 \approx 0.1802
+
+  \coordinate (A) at (0.6662, 0.7862);
+  \coordinate (B) at (0.6662, 0);
+  \coordinate (C) at (0.1802, 0);
+
+  % 2. 面積 T の斜線塗りつぶし
+  % 領域 T : x = 0 から x = \alpha(0.6662) までの y = tan x の下側領域から △ABC を差し引いた部分
+  \fill[pattern=north east lines, pattern color=black!50]
+    (0,0) -- plot[domain=0:0.6662, samples=50] (\x, {tan(\x r)})
+    -- (C) -- (0,0) -- cycle;
+
+  % 3. 補助点線 (A から B への垂線)
+  \draw[dashed, gray!70, thick] (A) -- (B);
+
+  % 4. 座標軸
+  \draw[->, thick] (-0.6, 0) -- (1.3, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.3) -- (0, 1.6) node[above] {$y$};
+  \node[above left] at (0,0) {$O$};
+
+  % 5. 曲線・直線の描画
   \begin{scope}
-    \clip (-0.9,-0.3) rectangle (1.3,1.7);
-    \draw[domain=-0.9:1.0, smooth] plot (\x,{tan(\x r)});
-    \draw[domain=-0.9:0.9, smooth] plot (\x,{cos(\x r)});
+    \clip (-0.6, -0.3) rectangle (1.2, 1.5);
+    % y = tan x
+    \draw[domain=-0.6:0.95, smooth, thick, blue!80!black, samples=60] 
+      plot (\x, {tan(\x r)});
+    % y = cos x
+    \draw[domain=-0.6:1.1, smooth, thick, green!50!black, samples=60] 
+      plot (\x, {cos(\x r)});
+    % 接線 l (点 C から点 A を通る直線)
+    \draw[domain=-0.1:1.0, thick, red!80!black] 
+      plot (\x, {1.6180*(\x - 0.6662) + 0.7862});
   \end{scope}
-  \node[right] at (0.95,1.4) {$y=\tan x$};
-  \node[right] at (0.9,0.55) {$y=\cos x$};
-  % 接線 l (Aでtan xに接する直線)
-  \draw[domain=0:1.0, thick] plot (\x,{0.786+1.618*(\x-0.666)});
-  \fill (0.666,0.786) circle (0.8pt) node[above] {$A$};
-  \fill (0.666,0) circle (0.8pt) node[below] {$B$};
-  \fill (0.180,0) circle (0.8pt) node[below] {$C$};
-  \node at (0.35,1.35) {$\ell$};
+
+  % 6. 曲線・直線の名札ラベル
+  \node[blue!80!black, left] at (0.85, 1.25) {$y=\tan x$};
+  \node[green!50!black, right] at (0.85, 0.55) {$y=\cos x$};
+  \node[red!80!black, right] at (0.85, 1.1) {$\ell$};
+
+  % 7. 特徴的なプロット点とラベル
+  \fill (A) circle (1.0pt) node[above left] {$A$};
+  \fill (B) circle (1.0pt) node[below] {$B$};
+  \fill (C) circle (1.0pt) node[below] {$C$};
+
+  % 8. 領域 T の名札
+  \node[fill=white, inner sep=1pt, font=\bfseries] at (0.32, 0.22) {$T$};
+
 \end{tikzpicture}
 \end{center}
-\caption{曲線$y=\tan x$，$y=\cos x$と面積$T$}
+\caption{曲線 $y=\tan x$，$y=\cos x$ と面積 $T$（斜線部）}
 \end{figure}
 
-まず，
+
+まず$\triangle ABC$の面積は\cref{eq:2,eq:3}より
 \begin{align}
-\triangle ABC=\dfrac{1}{2}\left(\sqrt{\dfrac{\sqrt{5}-1}{2}}\right)^2\cdot\dfrac{1}{\dfrac{\sqrt{5}+1}{2}}=\dfrac{1}{2}\cdot\dfrac{\sqrt{5}-1}{\sqrt{5}+1}=\dfrac{1}{2}\cdot\dfrac{(\sqrt{5}-1)^2}{4}\quad\cdots\text{②}
+\triangle ABC
+  &=\dfrac{1}{2}|AB||AC| \\
+  &=\dfrac{1}{2}|AB|\dfrac{|AB|}{\dfrac{\sqrt{5}+1}{2}} \\
+  &=\dfrac{1}{2}\dfrac{|\cos\alpha|^2}{\dfrac{\sqrt{5}+1}{2}} \\
+  &=\dfrac{1}{2}\left(\sqrt{\dfrac{\sqrt{5}-1}{2}}\right)^2\cdot\dfrac{1}{\dfrac{\sqrt{5}+1}{2}} \\
+  &=\dfrac{1}{2}\cdot\dfrac{\sqrt{5}-1}{\sqrt{5}+1} \\
+  &=\dfrac{1}{2}\cdot\dfrac{(\sqrt{5}-1)^2}{4}\quad\cdots\text{②} \label{eq:5}
 \end{align}
-さらに
+である．
+
+\cref{eq:4}の第一項は
 \begin{align}
-\int_0^\alpha\tan x\,dx=\left[-\log(\cos x)\right]_0^\alpha=-\log(\cos\alpha)=-\dfrac{1}{2}\log\dfrac{\sqrt{5}-1}{2}\quad\cdots\text{③}
+\int_0^\alpha\tan x\,dx
+  &=\left[-\log(\cos x)\right]_0^\alpha \\
+  &=-\log(\cos\alpha) \\
+  &=-\dfrac{1}{2}\log\dfrac{\sqrt{5}-1}{2}\quad\cdots\text{③} \label{eq:6}
 \end{align}
-①，②，③から
+である．
+
+\cref{eq:5,eq:6}を\cref{eq:4}に代入して求める面積は
 \begin{align}
-T=-\dfrac{1}{2}\log\dfrac{\sqrt{5}-1}{2}-\dfrac{1}{8}(\sqrt{5}-1)^2
+ T=-\dfrac{1}{2}\log\dfrac{\sqrt{5}-1}{2}-\dfrac{1}{8}(\sqrt{5}-1)^2
 \end{align}
+である．
 
 
 \end{document}

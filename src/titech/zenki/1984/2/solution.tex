@@ -1,12 +1,13 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$n\in\mathbb{Z}_{\ge3}\ \cdots$①，$x,y,z\in\mathbb{N}\ \cdots$②
+題意より
+\begin{align}
+ n\in\mathbb{Z}_{\ge3} \label{eq:1}\\
+ x,y,z\in\mathbb{N} \label{eq:2}
+\end{align}
+である．このもとで与えられた不等式
 \begin{align}
 \begin{cases}\displaystyle
 x+y+z=n \\
@@ -14,55 +15,79 @@ x\le y+z \\
 y\le z+x \\
 z\le x+y
 \end{cases}
-\quad\cdots *_1
+\quad\cdots *_1 \label{eq:3}
 \end{align}
-まず，$z=k$と固定する．$*_1$に代入して
+を考える．
+
+まず $z=k\in\mathbb{N}$と固定して\cref{eq:3}に代入して
 \begin{align}
 \begin{cases}\displaystyle
-x+y=n-k\ge k \\
-y\ge x-k \\
-y\le x+k
+  x+y=n-k \\
+  k\le x+y \\
+  y\ge x-k \\
+  y\le x+k
 \end{cases}
-\quad\cdots *_2
+\quad\cdots *_2 \label{eq:4}
 \end{align}
-$y=n-k-x$を代入，$y>0$から$x<n-k\ \cdots$③
+となる．第一式より$y=n-k-x$だから，これを残りの3つの不等式に代入して
 \begin{align}
-\begin{split}
-x-k&\le n-k-x\le x+k \\
-\dfrac{n}{2}-k&\le x\le\dfrac{n}{2}\quad\cdots\text{④}
-\end{split}
+ \begin{cases}
+  k \le n-k \\
+  x-k\le n-k-x\le x+k   
+ \end{cases} \\
+\therefore
+\begin{cases}
+   k \le \dfrac{n}{2} \\
+  \dfrac{n}{2}-k\le x\le\dfrac{n}{2}\quad\cdots\text{④}
+\end{cases} \label{eq:5} 
 \end{align}
-又，$1\le k\le\dfrac{n}{2}$である．同区間では$\dfrac{n}{2}\le n-k$である $\cdots$⑤
-
-\subparagraph{⑦ $n=2p\ (p\in\mathbb{N})$の時（$p=2,3,\cdots$）}
-
-$z=k$と固定（$k=1,2,\cdots,p$）した時の$(x,y)$の数は，④⑤より
+である．また，$y>0$より
 \begin{align}
-\begin{cases}\displaystyle
-k=1,2,\cdots,p-1\text{の時} & k+1\text{個} \\
-k=p\text{の時} & p-1\text{個}
-\end{cases}
+ x < n-k \label{eq:6}
 \end{align}
-より，あわせて
+である．
+
+\subparagraph{$n=2p\ (p\in\mathbb{N})$の時（$p=2,3,\cdots$）}
+
+この時\cref{eq:5}より$k=1,2,\cdots, p$をとる．
+よって$z=k$と固定した時の$(x,y)$の数は，\cref{eq:5,eq:6}より
 \begin{align}
-\sum_{k=1}^{p-1}(k+1)+(p-1)=\left(\dfrac{p(p+1)}{2}-1\right)+(p-1)=\dfrac{1}{2}p^2+\dfrac{3}{2}p-2=\dfrac{1}{8}n^2+\dfrac{3}{4}n-2\ \text{個}
+ \begin{cases}\displaystyle
+  k=1,2,\cdots,p-1\text{の時} & k+1\text{個} \\
+  k=p\text{の時} & p-1\text{個}
+ \end{cases}
 \end{align}
-
-\subparagraph{⑦ $n=2p+1$の時}
-
-$z=k$と固定（$k=1,2,\cdots,p$）した時の$(x,y)$の数は，③④より$k$個で，
+である．よってこれらを足し合わせて求める数$S_n$は
 \begin{align}
-\sum_{k=1}^{p}k=\dfrac{1}{2}p(p+1)=\dfrac{1}{2}\cdot\dfrac{n-1}{2}\cdot\dfrac{n+1}{2}\ \text{個}
+ S_{2p} 
+   &=\sum_{k=1}^{p-1}(k+1)+(p-1) \\
+   &=\left(\dfrac{p(p+1)}{2}-1\right)+(p-1) \\
+   &=\dfrac{1}{2}p^2+\dfrac{3}{2}p-2 \\
+   &=\dfrac{1}{8}n^2+\dfrac{3}{4}n-2\ \text{個}
 \end{align}
+である．
 
-したがって，
+\subparagraph{$n=2p+1\ (p\in\mathbb{N})$の時（$p=1,2,3,\cdots$）}
+
+この時は\cref{eq:5}より$k=1,2,\cdots,p$をとる．
+よって$z=k$と固定した時の$(x,y)$の数は，\cref{eq:5,eq:6}より$k$個である．
+よってこれらを足し合わせて求める数$S_n$は
+\begin{align}
+  S_{2p+1} 
+   &=\sum_{k=1}^{p}k \\
+   &=\dfrac{1}{2}p(p+1) \\
+   &=\dfrac{1}{2}\cdot\dfrac{n-1}{2}\cdot\dfrac{n+1}{2}\ \text{個}
+\end{align}
+である．
+
+以上二つの場合分けより求める数は
 \begin{align}
 \begin{cases}\displaystyle
 \dfrac{1}{8}n^2+\dfrac{3}{4}n-2\text{個} & (n:\text{even}) \\[2mm]
 \dfrac{1}{2}\cdot\dfrac{n-1}{2}\cdot\dfrac{n+1}{2}\text{個} & (n:\text{odd})
 \end{cases}
 \end{align}
-
+である．
 
 \newpage
 
