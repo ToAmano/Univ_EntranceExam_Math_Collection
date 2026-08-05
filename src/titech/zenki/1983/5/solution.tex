@@ -1,15 +1,96 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
+題意より
 \begin{align}
-\ell_1: y=-x-2, \qquad \ell_2: y=-\dfrac{1}{t^2}x+\dfrac{2}{t}
+\ell_1: y=-x-2, \qquad \ell_2: y=-\dfrac{1}{t^2}x+\dfrac{2}{t} \label{eq:1}
 \end{align}
-$\ell_1$と$y=-\dfrac{3}{x}$の交点のうち$A(1,-3)$，$\ell_2$と$y=-\dfrac{3}{x}$の交点のうち$B\left(3t,-\dfrac{1}{t}\right)$，$\ell_1$と$\ell_2$の交点$C\left(-\dfrac{2t}{t-1},\dfrac{2}{t-1}\right)$とおく．$S(t)$は，直線$AC$，$BC$と曲線$AB$（$y=-3/x$）とで囲まれた図形の面積であり，右のように分割できる．
+と書ける．
+$\ell_1$と$y=-\dfrac{3}{x}\, (x>0)$の交点を$A(1,-3)$，$\ell_2$と$y=-\dfrac{3}{x}$の交点を$B\left(3t,-\dfrac{1}{t}\right)$，$\ell_1$と$\ell_2$の交点を$C\left(-\dfrac{2t}{t-1},\dfrac{2}{t-1}\right)$とおく．
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
+
+  % --- 1. 定数と座標の設定 (例として t = 2 で描画) ---
+  % t = 2 のとき:
+  % P = (2, 1/2)
+  % A = (1, -3)  [y = -3/x と l1 の交点]
+  % B = (6, -1/2) [y = -3/x と l2 の交点]
+  % C = (-4, 2)   [l1 と l2 の交点]
+  
+  \coordinate (A) at (1, -3);
+  \coordinate (B) at (6, -0.5);
+  \coordinate (C) at (-4, 2);
+  \coordinate (P) at (2, 0.5);
+
+  % --- 2. 面積 S(t) の領域（斜線塗りつぶし） ---
+  % 境界: 交点 C(-4,2) -> 直線 l1 上を A(1,-3) へ -> 双曲線 y = -3/x に沿って B(6,-0.5) へ -> 直線 l2 上を C(-4,4) へ戻る
+  \fill[pattern=north east lines, pattern color=black!40]
+    (C) -- (A)
+    -- plot[domain=1:6, samples=50, smooth] (\x, {-3/\x})
+    -- (C) -- cycle;
+
+  % --- 3. 座標軸 ---
+  \draw[->, thick] (-5.0, 0) -- (7.2, 0) node[right] {$x$};
+  \draw[->, thick] (0, -4.2) -- (0, 3.0) node[above] {$y$};
+  \node[below left] at (0,0) {$\text{O}$};
+
+  % --- 4. 曲線 (双曲線 2種) ---
+  % 曲線 1: y = 1/x (Pにおける接線 l2 を引く対象)
+  \draw[domain=0.35:6.8, smooth, thick, blue!80!black] plot (\x, {1/\x}) 
+    node[right] {$y = \dfrac{1}{x}$};
+
+  % 曲線 2: y = -3/x (x > 0) (面積の境界)
+  \draw[domain=0.7:6.8, smooth, thick, green!50!black] plot (\x, {-3/\x}) 
+    node[below right] {$y = -\dfrac{3}{x}$};
+
+  % --- 5. 直線 (l1, l2) ---
+  % 直線 l1: y = -x - 2
+  \draw[thick, red!80!black, domain=-5.2:2.2] plot (\x, {-\x - 2}) 
+    node[below left] {$\ell_1: y = -x - 2$};
+
+  % 直線 l2: y = -(1/t^2)x + 2/t  (t=2 のとき y = -0.25x + 1)
+  \draw[thick, orange!90!black, domain=-5.0:7.0] plot (\x, {-0.25*\x + 1}) 
+    node[above right] {$\ell_2$};
+
+  % --- 6. 補助点線 (各交点の座標指示) ---
+  % 点 A(1, -3)
+  \draw[dashed, gray!70] (1, 0) -- (A) -- (0, -3);
+  \node[above right] at (1, 0) {$1$};
+  \node[left] at (0, -3) {$-3$};
+
+  % 点 B(3t, -1/t) -> (6, -0.5)
+  \draw[dashed, gray!70] (6, 0) -- (B) -- (0, -0.5);
+  \node[above] at (6, 0) {$3t$};
+  \node[left] at (0, -0.5) {$-\frac{1}{t}$};
+
+  % 点 C(-2t/(t-1), 2/(t-1)) -> (-4, 2)
+  \draw[dashed, gray!70] (-4, 0) -- (C) -- (0, 2);
+  \node[below] at (-4, 0) {$-\frac{2t}{t-1}$};
+  \node[right] at (0, 2) {$\frac{2}{t-1}$};
+
+  % 点 P(t, 1/t) -> (2, 0.5)
+  \draw[dashed, gray!70] (2, 0) -- (P) -- (0, 0.5);
+  \node[below] at (2, 0) {$t$};
+  \node[left] at (0, 0.5) {$\frac{1}{t}$};
+
+  % --- 7. プロット点とラベル ---
+  \fill (A) circle (1.5pt) node[below left] {$\text{A}$};
+  \fill (B) circle (1.5pt) node[below left] {$\text{B}$};
+  \fill (C) circle (1.5pt) node[above left] {$\text{C}$};
+  \fill[blue!80!black] (P) circle (1.5pt) node[above right] {$\text{P}\left(t, \dfrac{1}{t}\right)$};
+
+  % 面積 S(t) の名札
+  \node[fill=white, inner sep=2pt, font=\bfseries] at (1.0, 0.8) {$S(t)$};
+
+\end{tikzpicture}
+\caption{2直線 $\ell_1, \ell_2$ と曲線 $y = -\frac{3}{x}$ で囲まれる領域 $S(t)$}
+\end{figure}
+
+$S(t)$は，直線$AC$，$BC$と曲線$AB$（$y=-3/x$）とで囲まれた図形の面積であり下図のように分割できる．
+ここで新しく補助点$D\left(1,-\dfrac{1}{t}\right)$をおいた．
 
 \begin{figure}[htb]
 \begin{center}
@@ -25,36 +106,92 @@ $\ell_1$と$y=-\dfrac{3}{x}$の交点のうち$A(1,-3)$，$\ell_2$と$y=-\dfrac{
   \draw[domain=1:6,smooth] plot (\x,{-3/\x});
   \draw[dashed] (D) -- (A);
   \draw[dashed] (D) -- (B);
+  \draw[dashed] (A) -- (B);
   \fill (A) circle (1.2pt) node[below] {$A$};
   \fill (B) circle (1.2pt) node[right] {$B$};
   \fill (C) circle (1.2pt) node[above] {$C$};
-  \fill (D) circle (1.2pt) node[above right] {$D\left(1,-\dfrac{1}{t}\right)$};
+  \fill (D) circle (1.2pt) node[above] {$D$};
 \end{tikzpicture}
 \end{center}
 \caption{面積$S(t)$を求めるための図形の分割}
 \end{figure}
 
-補助点$D\left(1,-\dfrac{1}{t}\right)$をとると，
+従って
 \begin{align}
-\begin{split}
-\triangle ADB&=\dfrac{1}{2}(3t-1)\left(3-\dfrac{1}{t}\right)=\dfrac{(3t-1)^2}{2t} \\
-\text{（曲線と弦}DB\text{の間の面積）}&=\int_1^{3t}\dfrac{3}{x}\,dx-(3t-1)\cdot\dfrac{1}{t}=3\log3t-\dfrac{3t-1}{t}
-\end{split}
+ S(t)
+  &= \triangle\text{ABC} - \text{\begin{tikzpicture}[baseline={(0,0.1)}, scale=0.4]{
+        % 弓形 AB : 弦 (直線) と 右下に膨らむ弧 (双曲線) で囲まれた領域
+        %\fill[pattern=north east lines, pattern color=black!60] 
+        %  (0,0) -- (0.8,0.8) to[out=-20, in=110] (0,0);
+        \draw[thick] (0,0) -- (0.8,0.8); % 弦 AB
+        \draw[thick] (0,0) to[out=20, in=-110] (0.8,0.8); % 弧 AB (下側に膨らむ)
+     }\end{tikzpicture}} AB \\
+  &= \triangle\text{ABC} - \left( 
+     \triangle\text{ADB} - \text{\begin{tikzpicture}[baseline={(0,0.1)}, scale=0.4]{
+        % 領域 ABD : 垂直線 AD, 水平線 DB, 弧 AB で囲まれた領域
+        %\fill[pattern=north east lines, pattern color=black!60] 
+        %  (0,0) -- (0,0.8) -- (0.8,0.8) to[out=-110, in=20] (0,0);
+        \draw[thick] (0,0) -- (0,0.8) -- (0.8,0.8); % 直線 AD, DB
+        \draw[thick] (0,0) to[out=80, in=-170] (0.8,0.8); % 弧 AB
+     }\end{tikzpicture}} \text{ABD} \right) \label{eq:2}
 \end{align}
-であり，$\triangle ABC$の面積は
+と書けるから各項を順番に計算する．
+
+まず三角形ABDの面積は
 \begin{align}
-\triangle ABC=\dfrac{1}{2}\left|(3t-1)\left(\dfrac{2}{t-1}+3\right)-\left(-\dfrac{1}{t}+3\right)\left(-\dfrac{2t}{t-1}-1\right)\right|=\dfrac{1}{2}\cdot\dfrac{(3t-1)^2}{t-1}\cdot\dfrac{t+1}{t}
+ \triangle \text{ABD} 
+   &= \dfrac{|AD||BD|}{2} \\
+   &= \dfrac{1}{2}\left(3t-1\right)\left(3-\dfrac{1}{t}\right) \\
+   &= \dfrac{1}{2t}\left(3t-1\right)^2 \label{eq:3}
 \end{align}
-これらを合わせて計算すると，
+である．
+
+次に$\triangle ABC$の面積は
 \begin{align}
-S(t)=\dfrac{2(3t-1)}{t-1}+3\log3t
+ \vec{CA} &= \\
+ \vec{CB} &=
 \end{align}
-を得る．よって
+より
 \begin{align}
-S'(t)=\dfrac{3}{t}-\dfrac{4}{(t-1)^2}=\dfrac{(3t-1)(t-3)}{t(t-1)^2}
+  \triangle ABC
+     &=\dfrac{1}{2}\left|(3t-1)\left(\dfrac{2}{t-1}+3\right)-\left(-\dfrac{1}{t}+3\right)\left(-\dfrac{2t}{t-1}-1\right)\right| \\
+     &=\dfrac{1}{2}\cdot\dfrac{(3t-1)^2}{t-1}\cdot\dfrac{t+1}{t} \\
+     &=\dfrac{1}{2}\cdot\dfrac{(3t-1)^2(t+1)}{(t-1)t} \label{eq:4}
 \end{align}
-$t>1$において下表を得る．
-\begin{center}
+である．最後に$y=-3/x$の作る部分ABDの面積は
+\begin{align}
+ \text{\begin{tikzpicture}[baseline={(0,0.1)}, scale=0.4]{
+=        % 領域 ABD : 垂直線 AD, 水平線 DB, 弧 AB で囲まれた領域
+=        %\fill[pattern=north east lines, pattern color=black!60]
+=        %  (0,0) -- (0,0.8) -- (0.8,0.8) to[out=-110, in=20] (0,0);
+=        \draw[thick] (0,0) -- (0,0.8) -- (0.8,0.8); % 直線 AD, DB
+=        \draw[thick] (0,0) to[out=80, in=-170] (0.8,0.8); % 弧 AB
+=     }\end{tikzpicture}} \text{ABD}
+  &= \int_1^{3t}\dfrac{3}{x}\,dx-(3t-1)\cdot\dfrac{1}{t} \\
+  &=3\log3t-\dfrac{3t-1}{t} \label{eq:5}
+\end{align}
+である．
+
+以上\cref{eq:3,eq:4,eq:5}を\cref{eq:2}に代入して
+\begin{align}
+  S(t)
+   &= \dfrac{1}{2}\cdot\dfrac{(3t-1)^2(t+1)}{(t-1)t} - \dfrac{1}{2t}\left(3t-1\right)^2 + \left(3\log3t-\dfrac{3t-1}{t}\right) \\
+   &= \dfrac{3t-1}{2t}\left\{\dfrac{(3t-1)(t+1)}{t-1}-(3t-1) -2 \right\} + 3\log3t \\
+   &= \dfrac{3t-1}{2t}\dfrac{4t}{t-1} + 3\log3t \\
+   &= \dfrac{2(3t-1)}{t-1}+ 3\log3t \\
+   &= 2\left(3+\dfrac{2}{t-1}\right) + 3\log 3t \label{eq:6}
+\end{align}
+を得る．よって以下この$t>1$における最小値を求める．一階微分を計算すると
+\begin{align}
+S'(t)
+   &=\dfrac{3}{t}-\dfrac{4}{(t-1)^2} \\
+   &=\dfrac{(3t-1)(t-3)}{t(t-1)^2}
+\end{align}
+だから増減表は$t>1$において以下のようになる．
+
+\begin{table}[htb]
+ \begin{center}
+\caption{$S(t)$の増減表}
 \begin{tabular}{c|ccccc}
 $t$ & $1$ & & $3$ & & \\
 \hline
@@ -63,10 +200,12 @@ $S'$ & & $-$ & $0$ & $+$ & \\
 $S$ & & $\searrow$ & & $\nearrow$ &
 \end{tabular}
 \end{center}
-したがって，
+\end{table}
+
+したがって$S$は$t=3$の時に最小で，その最小値は
 \begin{align}
 \min S(t)=S(3)=8+6\log3
 \end{align}
-
+である．
 
 \end{document}
