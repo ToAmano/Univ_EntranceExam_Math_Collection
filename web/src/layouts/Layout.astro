@@ -18,7 +18,27 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 		<meta name="description" content={description} />
 		<link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
 		<ViewTransitions />
-		
+
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-SELJLBC32E"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(...args: unknown[]) { window.dataLayer.push(args); }
+			// @ts-ignore
+			window.gtag = gtag;
+			gtag('js', new Date());
+
+			// ViewTransitions によるクライアントサイド遷移は通常のページロードを
+			// 起こさないため、gtag('config', ...) を一度だけ呼ぶと2ページ目以降の
+			// 閲覧が記録されない。astro:page-load は初回ロード・遷移後の両方で
+			// 発火するので、ここで毎回 page_path 付きで config し直す。
+			document.addEventListener('astro:page-load', () => {
+				gtag('config', 'G-SELJLBC32E', {
+					page_path: window.location.pathname,
+				});
+			});
+		</script>
+
 		<!-- Google Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
