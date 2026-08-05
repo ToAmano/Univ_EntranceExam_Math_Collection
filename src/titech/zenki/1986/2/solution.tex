@@ -1,60 +1,245 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$E(t,-1-t,0)$，$F(u,u,-2u+2)$（$t,u\in\mathbb{R}$とおく）．正四面体の性質上から，$EF$は$\ell_1,\ell_2$と垂直である．
+
+(1)
+
+% 視点の設定 (tdplot_set_coordinates{r}{theta}{phi})
+\tdplotsetmaincoords{70}{60}
+
+\begin{figure}[htb]
+\begin{center}
+ \begin{tikzpicture}[tdplot_main_coords, scale=1.8]
+
+    % --- 1. 各頂点・中点の座標定義 (計算値に基づく) ---
+    % sqrt(3) ≒ 1.732
+    \pgfmathsetmacro{\sqrttwo}{1.4142}
+    \pgfmathsetmacro{\sqrtthree}{1.7320}
+
+    % 共通両垂線の足 (中点 E, F)
+    \coordinate (E) at (-0.5, -0.5, 0);
+    \coordinate (F) at (0.5, 0.5, 1);
+
+    % 直線 l1 上の頂点 A, B
+    \coordinate (A) at ({-0.5 + \sqrtthree/2}, {-0.5 - \sqrtthree/2}, 0);
+    \coordinate (B) at ({-0.5 - \sqrtthree/2}, {-0.5 + \sqrtthree/2}, 0);
+
+    % 直線 l2 上の頂点 C, D
+    \coordinate (C) at ({0.5 + \sqrtthree/2}, {0.5 + \sqrtthree/2}, {1 - \sqrtthree});
+    \coordinate (D) at ({0.5 - \sqrtthree/2}, {0.5 - \sqrtthree/2}, {1 + \sqrtthree});
+
+    % --- 2. 座標軸の描画 ---
+    \draw[->, thick, gray] (-2,0,0) -- (2.5,0,0) node[anchor=north east]{$x$};
+    \draw[->, thick, gray] (0,-2,0) -- (0,2.5,0) node[anchor=north west]{$y$};
+    \draw[->, thick, gray] (0,0,-1) -- (0,0,3) node[anchor=south]{$z$};
+    \node[anchor=north east, gray] at (0,0,0) {$O$};
+
+    % --- 3. 直線 l1, l2 の描画 ---
+    % 直線 l1: A, B を通る
+    \draw[dashed, blue!60, line width=0.8pt] 
+        ($ (A) ! -0.4 ! (B) $) -- ($ (B) ! -0.4 ! (A) $) 
+        node[anchor=south west] {$\ell_1$};
+
+    % 直線 l2: C, D を通る
+    \draw[dashed, red!60, line width=0.8pt] 
+        ($ (C) ! -0.3 ! (D) $) -- ($ (D) ! -0.3 ! (C) $) 
+        node[anchor=north east] {$\ell_2$};
+
+    % --- 4. 正四面体 ABCD の面と辺の描画 ---
+    % 奥側の面・隠線（点線）
+    \draw[thick, dashed, opacity=0.7] (A) -- (B);
+
+    % 手前側の辺（実線）
+    \draw[thick, line join=round] (A) -- (C) -- (B) -- (D) -- cycle;
+    \draw[thick] (C) -- (D);
+
+    % --- 5. 共通両垂線 EF (直交関係) ---
+    \draw[ultra thick, green!50!black] (E) -- (F);
+    % \node[anchor=south, green!40!black] at ($ (E)!0.5!(F) $) {$EF$};
+
+    % --- 6. 垂直記号の補助線描画 ---
+    % Eでの垂直 (l1 ⊥ EF)
+    \draw[thin, green!50!black] ($ (E)!0.15cm!(A) $) -- ($ (E)!0.15cm!(A) + (E)!0.15cm!(F) - (E) $) -- ($ (E)!0.15cm!(F) $);
+    % Fでの垂直 (l2 ⊥ EF)
+    \draw[thin, green!50!black] ($ (F)!0.15cm!(D) $) -- ($ (F)!0.15cm!(D) + (F)!0.15cm!(E) - (F) $) -- ($ (F)!0.15cm!(E) $);
+
+    % --- 7. 各点のプロットとラベル指定 ---
+    \fill[black] (A) circle (1.2pt) node[anchor=north west] {$A$};
+    \fill[black] (B) circle (1.2pt) node[anchor=south east] {$B$};
+    \fill[black] (C) circle (1.2pt) node[anchor=north west] {$C$};
+    \fill[black] (D) circle (1.2pt) node[anchor=south west] {$D$};
+
+    \fill[green!50!black] (E) circle (1.2pt) node[anchor=south west] {$E$};
+    \fill[green!50!black] (F) circle (1.2pt) node[anchor=east] {$F$};
+
+\end{tikzpicture}
+\caption{題意の四面体ABCDの様子}
+\end{center}
+\end{figure}
+
+E,Fも直線$\ell_1,\ell_2$上にあるので$E(t,-1-t,0)$，$F(u,u,-2u+2)$（$t,u\in\mathbb{R}$）とおく．
+正四面体の性質から線分$EF$は$\ell_1,\ell_2$と垂直である．$\ell_1,\ell_2$の方向ベクトルを$\vec{v}_1, \vec{v}_2$とすると
+\begin{align}
+ &\vec{v}_1 = \begin{pmatrix}-1\\1\\0\end{pmatrix} &\vec{v}_2= \begin{pmatrix}1\\1\\-2\end{pmatrix}
+\end{align}
+であり，
 \begin{align}
 \overrightarrow{EF}=\begin{pmatrix}u-t\\u+t+1\\-2u+2\end{pmatrix}
 \end{align}
 だから
 \begin{align}
-\begin{split}
-\overrightarrow{EF}\cdot\begin{pmatrix}-1\\1\\0\end{pmatrix}&=0, \qquad
-\overrightarrow{EF}\cdot\begin{pmatrix}1\\1\\-2\end{pmatrix}=0 \\
-\begin{cases}\displaystyle
+ \vec{v}_1\cdot \vec{EF} = 0 \\
+ \vec{v}_2\cdot \vec{EF} = 0 
+\end{align}
+に代入して
+\begin{align}
+&\begin{cases}\displaystyle
 (u-t)-(u+t+1)=0 \\
 (u-t)+(u+t+1)+4(u-1)=0
 \end{cases} \\
-\begin{cases}\displaystyle
+\therefore
+&\begin{cases}\displaystyle
 t=-\dfrac{1}{2} \\
 u=\dfrac{1}{2}
 \end{cases}
-\end{split}
 \end{align}
 となり，
 \begin{align}
-E\left(-\dfrac{1}{2},-\dfrac{1}{2},0\right), \qquad F\left(\dfrac{1}{2},\dfrac{1}{2},1\right)
+E\left(-\dfrac{1}{2},-\dfrac{1}{2},0\right), \qquad F\left(\dfrac{1}{2},\dfrac{1}{2},1\right) \label{eq:1}
 \end{align}
+が求める座標である．
 
-\textbf{(2)} 1辺の長さを$d$とすると，正四面体の面（正三角形）の中線の長さから$BF=\dfrac{\sqrt{3}}{2}d$．だから$\triangle FEB$にピタゴラスを用いて，
+
+(2) 
+1辺の長さを$d$とする．下図のように正四面体の面（正三角形）BCDを考える．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % 座標設定 (1辺 d の正三角形)
+    % C を原点付近に置き、D を右、B を上へ
+    \coordinate (C) at (0, 0);
+    \coordinate (D) at (3, 0);
+    \coordinate (B) at (1.5, {3*sqrt(3)/2});
+    \coordinate (F) at (1.5, 0); % CD の中点
+
+    % 面 BCD (正三角形) の描画
+    \draw[thick] (B) -- (C) -- (D) -- cycle;
+    
+    % 中線 BF
+    \draw[thick, blue!80!black] (B) -- (F);
+
+    % 垂直記号 (F における CD ⊥ BF)
+    \draw[thin] (F) ++(0.2,0) -- ++(0,0.2) -- ++(-0.2,0);
+
+    % 辺の長さの表示
+    \node[left] at ($(B)!0.5!(C)$) {$d$};
+    \node[right] at ($(B)!0.5!(D)$) {$d$};
+    \node[below] at ($(C)!0.5!(F)$) {$\frac{d}{2}$};
+    \node[below] at ($(F)!0.5!(D)$) {$\frac{d}{2}$};
+    % \node[right, blue!80!black] at ($(B)!0.5!(F)$) {$|BF| = \frac{\sqrt{3}}{2}d$};
+
+    % 点の描画とラベル
+    \fill[black] (B) circle (1.5pt) node[above] {$B$};
+    \fill[black] (C) circle (1.5pt) node[below left] {$C$};
+    \fill[black] (D) circle (1.5pt) node[below right] {$D$};
+    \fill[blue!80!black] (F) circle (1.5pt) node[below] {$F$};
+\end{tikzpicture}
+\caption{$\triangle BCD$の様子}
+\end{center} 
+\end{figure}
+
+図より
+\begin{align}
+ |BF| = \dfrac{\sqrt{3}}{2}d
+\end{align}
+である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.3]
+    % --- 座標定義 ---
+    % AB の長さ d = 3 とし、中点を E(0,0) とする
+    \coordinate (E) at (0, 0);
+    \coordinate (A) at (-1.5, 0);
+    \coordinate (B) at (1.5, 0);
+    % 高さ |EF| = sqrt(2)/2 * d に相当する比率で配置
+    \coordinate (F) at (0, 2.12);
+
+    % --- 三角形 ABF と中線 EF の描画 ---
+    \draw[thick] (A) -- (B) -- (F) -- cycle;
+    \draw[thick, green!50!black] (E) -- (F); % 共通両垂線 EF
+
+    % 垂直記号 (E における AB ⊥ EF)
+    \draw[thin] (E) ++(0.18,0) -- ++(0,0.18) -- ++(-0.18,0);
+
+    % --- 各辺・線分のラベル ---
+    \node[below] at ($(A)!0.5!(E)$) {$\frac{d}{2}$};
+    \node[below] at ($(E)!0.5!(B)$) {$\frac{d}{2}$};
+    % \node[left, green!50!black] at ($(E)!0.5!(F)$) {$|EF|$};
+    \node[above left] at ($(A)!0.5!(F)$) {$|AF| = \frac{\sqrt{3}}{2}d$};
+    \node[above right, blue!80!black] at ($(B)!0.5!(F)$) {$|BF| = \frac{\sqrt{3}}{2}d$};
+
+    % --- 点のプロットとラベル ---
+    \fill[black] (A) circle (1.5pt) node[below left] {$A$};
+    \fill[black] (B) circle (1.5pt) node[below right] {$B$};
+    \fill[green!50!black] (E) circle (1.5pt) node[below] {$E$};
+    \fill[blue!80!black] (F) circle (1.5pt) node[above] {$F$};
+\end{tikzpicture}
+\caption{$\triangle ABF$の様子}
+\end{center}
+\end{figure}
+
+次に上図で$\triangle FEB$にピタゴラスの定理を用いて，
 \begin{align}
 \begin{split}
+|BF|^2 &= |EF|^2+|BE|^2 \\
 \left(\dfrac{\sqrt{3}}{2}d\right)^2&=|EF|^2+\left(\dfrac{d}{2}\right)^2 \\
-|EF|&=\dfrac{\sqrt{2}}{2}d \quad(\because d,|EF|>0)
+\therefore
+|EF|&=\dfrac{\sqrt{2}}{2}d \quad(\because d,|EF|>0) \label{eq:2}
 \end{split}
 \end{align}
-一方，(1)から$|EF|=\sqrt{3}$だから，
+を得る．一方で\cref{eq:1}より$|EF|=\sqrt{3}$だから，\cref{eq:2}に代入して
 \begin{align}
-d=\sqrt{6}
+  d=\sqrt{6} \label{eq:3}
 \end{align}
+である．
 
-\textbf{(3)} $A(p,-1-p,0)$とおくと，
+
+(3) 
+
+点$A$は$\ell_1$上にあるので$A(p,-1-p,0)$とおける．$|AF|$をふた通りで表すことで$p$を求めよう．
+まず\cref{eq:1}より|AF|の長さを計算すると
 \begin{align}
-|AF|=\sqrt{\left(p-\dfrac{1}{2}\right)^2+\left(-p-\dfrac{3}{2}\right)^2+1}=\sqrt{2p^2+2p+\dfrac{7}{2}}
+ |AF|
+  &=\sqrt{\left(p-\dfrac{1}{2}\right)^2+\left(-p-\dfrac{3}{2}\right)^2+1} \\
+  &=\sqrt{2p^2+2p+\dfrac{7}{2}} \label{eq:4}
 \end{align}
-ここで，(2)から$|AF|=\dfrac{\sqrt{3}}{2}d=\dfrac{3}{2}\sqrt{2}$だから，といて
+である．
+
+次に(2)の図および\cref{eq:3}より
 \begin{align}
-p=\dfrac{1}{2}(-1\pm\sqrt{3})
+ |AF|=\dfrac{\sqrt{3}}{2}d=\dfrac{3}{2}\sqrt{2} \label{eq:5}
 \end{align}
-題意から複号正に対応するのが$A$で，
+である．
+
+以上\cref{eq:4,eq:5}より
+\begin{align}
+ \sqrt{2p^2+2p+\dfrac{7}{2}} &= \dfrac{3}{2}\sqrt{2} \\
+ 2p^2+2p+\dfrac{7}{2}        &= \dfrac{9}{2} \\
+ 2p^2+2p-1 &= 0 \\
+\therefore
+ p &= \dfrac{-1\pm\sqrt{3}}{2}
+\end{align}
+となる．
+
+これら複合二つが$A,B$に対応するが，題意より$A$の方が$x$座標が大きいので
+複号正に対応するのが$A$であって，求める$A$の座標は
 \begin{align}
 A\left(\dfrac{-1+\sqrt{3}}{2},\dfrac{-1-\sqrt{3}}{2},0\right)
 \end{align}
-
+である．
 
 \newpage
 

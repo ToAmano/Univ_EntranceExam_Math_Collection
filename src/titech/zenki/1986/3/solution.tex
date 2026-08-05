@@ -6,39 +6,126 @@
 \end{flushright}
 
 {\bf [解]}
+
+題意の状況を図示すると下図のようになる．
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xmin=-0.1, xmax=1.1,
+    ymin=-0.2, ymax=2.5,
+    axis lines=middle,
+    xlabel={$x$},
+    ylabel={$y$},
+    ticks=none,
+    enlargelimits=false,
+    clip=false
+]
+    % --- パラメータ a, x の設定 ---
+    \pgfmathsetmacro{\a}{0.2}
+    \pgfmathsetmacro{\xval}{0.7}
+    \pgfmathsetmacro{\fa}{(\a-1)^2 + 1}
+    \pgfmathsetmacro{\fx}{(\xval-1)^2 + 1}
+
+    % --- 領域の塗り分け ---
+
+    % (i) 曲線下の面積 (積分領域) を赤のドットで塗りつぶし
+    % pgfplotsのプロット関数と同じ式 (t-1)^2 + 1 を用いて領域を指定
+    \fill[pattern=dots, pattern color=red!40]
+        (axis cs:\a,0) -- 
+        plot[domain=\a:\xval, samples=50] (axis cs:\x, {(\x-1)^2 + 1}) -- 
+        (axis cs:\xval,0) -- cycle;
+
+    % (ii) 四辺形 ABCD (台形) を青の斜線でハッチング
+    \fill[pattern=north east lines, pattern color=blue!50] 
+        (axis cs:\a,0) -- (axis cs:\a,\fa) -- (axis cs:\xval,\fx) -- (axis cs:\xval,0) -- cycle;
+
+    % --- 境界線とプロット ---
+
+    % 一般的な関数 y = f(x) (下に凸な曲線)
+    \addplot[domain=0:1, samples=100, ultra thick, blue!80!black] {(x-1)^2 + 1};
+    \node[blue!80!black, anchor=west] at (axis cs:1, 1.3) {$y=f(x)$};
+
+    % 台形の垂直な辺 AB, CD (点線)
+    \draw[dashed, thin] (axis cs:\a,0) -- (axis cs:\a,\fa);
+    \draw[dashed, thin] (axis cs:\xval,0) -- (axis cs:\xval,\fx);
+    
+    % 台形ABCDの上辺 AD (直線)
+    \draw[thick, blue!80!black] (axis cs:\a,\fa) -- (axis cs:\xval,\fx);
+
+    % 頂点 A, B, C, D のプロット
+    \node[fill=black, circle, inner sep=1.3pt, label={above right:$A(a, f(a))$}] at (axis cs:\a,\fa) {};
+    \node[fill=black, circle, inner sep=1.3pt, label={below:$B(a, 0)$}]  at (axis cs:\a,0) {};
+    \node[fill=black, circle, inner sep=1.3pt, label={below:$C(x, 0)$}]  at (axis cs:\xval,0) {};
+    \node[fill=black, circle, inner sep=1.3pt, label={above:$D(x, f(x))$}] at (axis cs:\xval,\fx) {};
+
+    % 軸の目盛りと端点ラベル
+    \node[below left] at (axis cs:0,0) {$O$};
+    \node[left] at (axis cs:0,2) {$2$};
+    \node[fill=black, circle, inner sep=1pt] at (axis cs:0,2) {};
+    \draw[dotted] (axis cs:1,0) -- (axis cs:1,1) -- (axis cs:0,1);
+    \node[left] at (axis cs:0,1) {$1$};
+    \node[below] at (axis cs:1,0) {$1$};
+    \node[fill=black, circle, inner sep=1pt] at (axis cs:1,1) {};
+\end{axis}
+\end{tikzpicture}
+\caption{$f(x)$と点A,B,C,Dの様子}
+\end{center}
+\end{figure}
+
+題意より$f(x)$は
 \begin{align}
-f(x)>0\ (0\le x\le1), \qquad f(0)=2,\ f(1)=1 \quad\cdots\text{①}
+f(x)>0\ (0\le x\le1), \qquad f(0)=2,\ f(1)=1 \quad\cdots\text{①} \label{eq:1}
 \end{align}
-又，題意及び①から$k\in\mathbb{R}_{>0}$として，
+を満たす．
+従って四辺形$ABCD$の面積は$(x-a)\{f(a)+f(x)\}$であり，$y=f(x)$のグラフとAB,BC,CDで囲まれる面積は$\int_a^xf(t)dt$だから定数$k\in\mathbb{R}_{>0}$として
 \begin{align}
-(x-a)\{f(a)+f(x)\}=k\int_a^xf(t)dt \quad\cdots\text{②}
+ (x-a)\{f(a)+f(x)\}=k\int_a^xf(t)dt \quad\cdots\text{②} \label{eq:2}
 \end{align}
-が$0\le a\le x\le1$なる任意の$a,x$で成立．（$a=x$でも明らかに成立．）$x$で微分して，
+が$0\le a\le x\le1$なる任意の$a,x$で成立する．ここで\cref{eq:2}は $a=x$でも明らかに成立するので不等号を拡張している．
+\cref{eq:2}の両辺を$x$で微分すると
 \begin{align}
-f(a)+f(x)+xf'(x)-af'(x)=kf(x)
+f(a)+f(x)+xf'(x)-af'(x)=kf(x) \label{eq:3}
 \end{align}
-$y=f(x)$とおく．$a=x=1$として①から$k=2$．次に$a=0$として
+となる．$a=x=1$を\cref{eq:3}に代入すると
 \begin{align}
-2+y+x\dfrac{dy}{dx}=2y
+ 2f(1) = k f(1)
 \end{align}
-$y\ne2,\ x\ne0$の時
+であり，\cref{eq:1}を代入して
+\begin{align}
+ k = 2 \label{eq:4}
+\end{align}
+を得る．
+
+次に\cref{eq:3}で$a=0$として$y=f(x)$とおくと
+\begin{align}
+ 2+y+x\dfrac{dy}{dx}=2y \label{eq:5}
+\end{align}
+を得る．$y\ne 2,\ x\ne 0$の時は両辺を整理して
 \begin{align}
 \dfrac{dy}{y-2}=\dfrac{dx}{x} \quad\cdots\text{③}
 \end{align}
-積分して，
+となる．両辺を積分して
 \begin{align}
-\log|y-2|=\log x+C_1 \quad\cdots\text{④}
+\log|y-2|=\log x+C_1 \quad\cdots\text{④} \label{eq:6}
 \end{align}
-ただし，$C_1$は定数．$x=1$は①より，$x\ne0,\ y\ne2$をみたすので，$x=1$で④が成立することから$C_1=0$．したがって
-\begin{align}
-x=|y-2|
-\end{align}
-したがって，$(x,y)=(1,1)$とあわせて
-\begin{align}
-y=-x+2
-\end{align}
-これは$x=0$でも成立する．
+となる．ただし$C_1$は定数である．
 
+$x=1$の時\cref{eq:1}より$y=1$で$x\ne0,\ y\ne2$をみたすので，$(x,y)=(1,1)$で\cref{eq:6}が成立することから$C_1=0$である．
+したがって
+\begin{align}
+  x=|y-2|
+\end{align}
+となる．$(x,y)=(1,1)$とあわせて絶対値を外せば
+\begin{align}
+y=-x+2 \label{eq:7}
+\end{align}
+となる．これは\cref{eq:1}より$x=0$でも成立し，また\cref{eq:2}を満たすからこれが求める関数である．
+以上より
+\begin{align}
+ f(x) = -x+2
+\end{align}
+である．
 
 \newpage
 

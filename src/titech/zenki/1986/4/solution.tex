@@ -1,64 +1,132 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$q=p(p^2-3)$とかける．又，
+題意の放物線の頂点は$(p,q)$だから，これが$y=x(x^2-3)$の上にある時
 \begin{align}
-f(x)=-(x-p)^2+p(p^2-3), \qquad g(x)=x(x^2-3)
+ q = p(p^2-3) \label{eq:1}
 \end{align}
-とおくと$f(x)=g(x)$の異なる実解が2つである．
+と書ける．また
+\begin{align}
+f(x)=-(x-p)^2+p(p^2-3), \qquad g(x)=x(x^2-3) \label{eq:2}
+\end{align}
+とおくと$f(x)=g(x)$の異なる実解が2つ存在する．
+そこで$h(x)=g(x)-h(x)$について考えると，
 \begin{align}
 \begin{split}
-g(x)-f(x)&=x^3-3x+x^2-2px+p^2-p^3+3p \\
-&=(x-p)\left(x^2+(p+1)x+(p^2-p-3)\right)
-\end{split}
+  h(x)
+  &=g(x)-f(x) \\
+  &=x^3-3x+x^2-2px+p^2-p^3+3p \\
+  &=(x-p)\left(x^2+(p+1)x+(p^2-p-3)\right) 
+\end{split}\label{eq:3}
 \end{align}
-$\sim$部を$h(x)$とかくと，したがって，$h(x)=0$が$x\ne p$にただ1つ実解を持つ
+だから，$h(x)=0$がただ二つの解を持つためには，$i(x)=x^2+(p+1)x+(p^2-p-3)$について$i(x)=0$が$x\neq p$にただ一つの解を持てば良い．
+$i(x)$は二次関数だから$i(x)=0$はたかだか二つの解をもち，この条件を満たすのは以下の二つのパターンである．
 
-\subparagraph{⑦ $h(x)=0$が$x\ne p$に重解を持つ時}
+\subparagraph{1.  $i(x)=0$が$x\ne p$に重解を持つ時}
 
-判別式$D$として，
+この時は$i(x)=0$の判別式を$D$として$D=0$であれば良い．具体的に$D$を計算すると
 \begin{align}
-D=-3p^2+6p+13
+  D=-3p^2+6p+13
 \end{align}
-だから，$D=0\iff p=\dfrac{3\pm4\sqrt{3}}{3}$の時，だがこれは$0<p<2$に反し不適
+だから，$D=0\iff p=\dfrac{3\pm4\sqrt{3}}{3}$の時である．しかしこれは題意の条件$0<p<2$に反して不適である．
 
-\subparagraph{⑦ $h(x)=0$が$x=p$を解に持つ時}
 
+\subparagraph{2.  $i(x)=0$が$x=p$と$x\neq p$に一つづつ解を持つ時}
+
+この時は$i(p)=0$となる．具体的に$i(p)$を計算すると
 \begin{align}
-h(p)=3(p^2-1)=0\iff p=\pm1
+ i(p) 
+   &= p^2+(p+1)p+(p^2-p-3) \\
+   &= 3p^2-3 
 \end{align}
-であり，$0<p<2$から$p=1$である．この時，$h(x)=0$の解は$x=1,-3$である
+だからこれが$0$の時$p=\pm 1$である．題意の条件$0<p<2$を満たすのは$p=1$の時である．
+この時
+\begin{align}
+ i(x) = x^2 +2x - 3 = (x-1)(x+3)
+\end{align}
+だからもう一つの解は$x=-3$となる．
+また\cref{eq:1}より
+\begin{align}
+ q = 1(1-3) = -2
+\end{align}
+である．
 
-以上から，$(p,q)=(1,-2)$であり，グラフの概形は下図．
+以上の場合分けより$(p,q)=(1,-2)$であり，この時の2曲線で囲まれた部分は下図斜線部となる．
 
 \begin{figure}[htb]
 \begin{center}
-\begin{tikzpicture}[xscale=0.9, yscale=0.14, >=stealth]
-  % 座標軸
-  \draw[->] (-4,0) -- (3,0) node[right] {$x$};
-  \draw[->] (0,-25) -- (0,10) node[above] {$y$};
-  % y=g(x)=x^3-3x, y=f(x)=-(x-1)^2-2 (p=1,q=-2)
-  \draw[domain=-3.2:2.1, smooth] plot (\x,{\x*\x*\x-3*\x}) node[right] {$y=g(x)$};
-  \draw[domain=-3.2:4.3, smooth] plot (\x,{-(\x-1)*(\x-1)-2}) node[below right] {$y=f(x)$};
-  % 面積S: 2曲線で囲まれた部分 (x=-3から1)
-  \fill[gray!30, domain=-3:1, variable=\x] plot ({\x},{\x*\x*\x-3*\x}) -- plot[domain=1:-3] ({\x},{-(\x-1)*(\x-1)-2}) -- cycle;
-  \fill (-3,-18) circle (2pt) node[left] {$-3$};
-  \fill (1,-2) circle (2pt) node[below] {$1$};
+\begin{tikzpicture}[xscale=1.4, yscale=0.25, >=stealth, every node/.style={font=\small}]
+
+  % 1. 囲まれた領域 S の斜線塗りつぶし
+  % x = -3 から x = 1 まで 3次関数 g(x) と放物線 f(x) で囲まれた部分
+  \fill[pattern=north east lines, pattern color=black!50]
+    plot[domain=-3:1, samples=60] (\x, {\x*\x*\x - 3*\x})
+    -- plot[domain=1:-3, samples=60] (\x, { -(\x-1)*(\x-1) - 2 })
+    -- cycle;
+
+  % 2. 補助線（点線）
+  % 交点 (-3, -18) からの垂線・水平線
+  \draw[dashed, gray!70] (-3, 0) -- (-3, -18) -- (0, -18);
+  % 接点兼頂点 (1, -2) からの垂線・水平線
+  \draw[dashed, gray!70] (1, 0) -- (1, -2) -- (0, -2);
+  % 3次関数の極大点 (-1, 2) / 極小点 (1, -2) の極大値補助線
+  \draw[dashed, gray!70] (-1, 0) -- (-1, 2) -- (0, 2);
+
+  % 3. 座標軸描画
+  \draw[->, thick] (-3.8, 0) -- (2.6, 0) node[right] {$x$};
+  \draw[->, thick] (0, -22) -- (0, 7) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 4. 曲線描画
+  % y = g(x) = x^3 - 3x (3次関数)
+  \draw[domain=-3.25:2.15, smooth, thick, blue!80!black, samples=70] 
+    plot (\x, {\x*\x*\x - 3*\x}) node[right] {$y=g(x)$};
+
+  % y = f(x) = -(x-1)^2 - 2 (放物線)
+  \draw[domain=-3.25:3.6, smooth, thick, red!80!black, samples=70] 
+    plot (\x, { -(\x-1)*(\x-1) - 2 }) node[below right] {$y=f(x)$};
+
+  % 5. 軸上の目盛りテキスト
+  \node[above] at (-3, 0) {$-3$};
+  \node[above] at (-1, 0) {$-1$};
+  \node[above] at (1, 0) {$1$};
+
+  \node[left] at (0, 2) {$2$};
+  \node[right] at (0, -2) {$-2$};
+  \node[right] at (0, -18) {$-18$};
+
+  % 6. 特徴的なプロット点
+  % 交点 (-3, -18)
+  \fill (-3, -18) circle (2pt); % node[below left] {$(-3,-18)$};
+  % 接点 (1, -2)
+  \fill (1, -2) circle (2pt); % node[below left] {$(1,-2)$};
+
+  % 7. 領域 S の名札
+  \node[fill=white, inner sep=1.5pt, font=\bfseries] at (-1.2, -6) {$S$};
+
 \end{tikzpicture}
 \end{center}
-\caption{$y=f(x)$，$y=g(x)$のグラフの概形}
+\caption{2曲線 $y=f(x)$ と $y=g(x)$ で囲まれた領域 $S$（斜線部）}
 \end{figure}
 
-もとめる面積$S$として
+従って求める面積$S$は\cref{eq:3}より
 \begin{align}
-S=\int_{-3}^1(g(x)-f(x))dx=\int_{-3}^1(x-1)^2(x+3)dx=\dfrac{1}{12}\cdot4^4=\dfrac{64}{3}
+  S
+   &=\int_{-3}^1(g(x)-f(x))dx \\
+   &=\int_{-3}^1(x-1)^2(x+3)dx \\
+   &=\dfrac{1}{12}\cdot4^4 \\
+   &=\dfrac{64}{3}
 \end{align}
+である．
 
+
+{\bf [解説]}
+最後の積分でベータ関数の公式
+\begin{align}
+ \int_{a}^{b}(x-a)^n(x-b)^m dx = \dfrac{m!n!}{(m+n+1)!}\left(b-a\right)^{m+n+1}
+\end{align}
+を用いた．
 
 \newpage
 
