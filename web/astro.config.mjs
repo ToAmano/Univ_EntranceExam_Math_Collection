@@ -1,10 +1,12 @@
 import { defineConfig } from 'astro/config';
 import remarkMath from 'remark-math';
 import rehypeMathjax from 'rehype-mathjax';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://toamano.github.io',
   base: '/Univ_EntranceExam_Math_Collection',
+  integrations: [sitemap()],
   markdown: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [
