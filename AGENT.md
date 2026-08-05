@@ -144,6 +144,7 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 * **`deploy-pages.yml`**（`main` push / 手動実行）: `tex_to_md.py` 実行 → `web` で `npm ci && npm run build` → GitHub Pages にデプロイ。
 * **`build-pdf.yml`**（`v*` タグ push / 手動実行）: 大学・区分の 6 通りを matrix ビルドし、各ジョブで `generate_main_tex.py` → `latexmk -lualatex` → `{univ}_{cat}.pdf`（例: `utokyo_zenki.pdf`）にリネームして artifact化。最後に release ジョブが全 artifact を集約して GitHub Release に添付する。
 * **`lint-tex.yml`**（`src/**/*.tex` を含む push / PR）: `scratch/lint_latex_style.py` で 8.3.6 節のルール（機械的に判定可能なもののみ）を **差分に入った `solution.tex` のみ** に対してチェックする。`problem.tex`（原題の問題文）はCIの対象外——著者が書く解答文とは性質が違い、`\caption` 必須などの一部ルールがそもそも馴染まないため。TeX Live 不要の軽量ジョブ。既存コーパスには本ルール導入以前からの違反が大量にあるため（2026年時点で約6800件）、リポジトリ全体を対象にはせず、変更・新規追加された `solution.tex` のみを厳格化する「ratchet」方式を採用している。ローカルでの単体実行は `python3 scratch/lint_latex_style.py [対象ファイル...]`（引数なしならリポジトリ全体を `problem.tex` も含めてスキャンし集計のみ表示。`problem.tex` も個別に指定すれば手動でチェック可能）。
+* **`lint-tex-full.yml`**（毎週月曜 00:00 UTC の `schedule` / 手動実行）: `scratch/lint_full_report.py` でリポジトリ全体の `solution.tex`（`lint-tex.yml` と同じスコープ）を走査し、ルール別・書籍別の内訳を Markdown レポートとして生成、`LaTeX Lint Backlog Report` という固定タイトルの Issue を検索して見つかれば本文を更新、無ければ新規作成する（PR ごとに Issue を乱発しない）。違反があってもジョブ自体は失敗しない非ブロッキングの可視化用ワークフローで、`lint-tex.yml`（差分のみを強制）とは役割が異なる。
 
 ---
 

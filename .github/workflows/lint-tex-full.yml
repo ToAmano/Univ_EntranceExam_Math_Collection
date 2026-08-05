@@ -1,0 +1,42 @@
+name: Lint LaTeX Style (Full Report)
+
+on:
+  schedule:
+    # Every Monday 00:00 UTC (09:00 JST)
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  full-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Generate full-repo lint report
+        run: python3 scratch/lint_full_report.py > report.md
+
+      - name: Post or update tracking issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TITLE="LaTeX Lint Backlog Report"
+          number=$(gh issue list --search "in:title \"$TITLE\"" --state open \
+            --json number,title --jq ".[] | select(.title == \"$TITLE\") | .number" | head -1)
+
+          if [ -n "$number" ]; then
+            echo "Updating existing issue #$number"
+            gh issue edit "$number" --body-file report.md
+          else
+            echo "Creating new tracking issue"
+            gh issue create --title "$TITLE" --body-file report.md
+          fi
