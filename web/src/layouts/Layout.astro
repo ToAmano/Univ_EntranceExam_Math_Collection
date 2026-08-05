@@ -4,20 +4,43 @@ import { ViewTransitions } from 'astro:transitions';
 interface Props {
 	title: string;
 	description?: string;
+	ogType?: 'website' | 'article';
 }
 
-const { title, description = "東大・京大・東工大などの大学入試数学過去問解答アーカイブ。KaTeX描画による高品質な数式と解答解説。" } = Astro.props;
+const {
+	title,
+	description = "東大・京大・東工大などの大学入試数学過去問解答アーカイブ。KaTeX描画による高品質な数式と解答解説。",
+	ogType = 'website',
+} = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const fullTitle = `${title} | Math Solutions`;
+const canonicalUrl = Astro.url.href;
+const ogImageUrl = new URL(`${baseUrl}/ogp-default.png`, Astro.site).href;
 ---
 <!doctype html>
 <html lang="ja">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>{title} | Math Solutions</title>
+		<title>{fullTitle}</title>
 		<meta name="description" content={description} />
 		<meta name="google-site-verification" content="ln8dYR-Jf-TTw5pvDyCe5vkziWE6VWTNKAdq4fG7RLk" />
+		<link rel="canonical" href={canonicalUrl} />
 		<link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
+
+		<!-- OGP / Twitter Card -->
+		<meta property="og:type" content={ogType} />
+		<meta property="og:site_name" content="Math Solutions" />
+		<meta property="og:title" content={fullTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta property="og:locale" content="ja_JP" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={fullTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImageUrl} />
+
 		<ViewTransitions />
 
 		<!-- Google tag (gtag.js) -->
