@@ -204,6 +204,7 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 * **数式環境は `align` を利用する（`align*` は使わない）**。単発の数式でも `\[...\]` や `equation` ではなく `align` を使い、複数行にまたがる変形は `&=` で位置を揃える。
 * **「`&=` で繋いで最後の結果だけに意味がある」変形は `split` でまとめて式番号を1つにすることを検討する**。`align` は既定で行ごとに番号が付くため，途中式ごとに番号が振られるのを避けたい場合は `\begin{align}\begin{split} ... \end{split}\end{align}` のように `split` で包む。ただし `split` は1行につき `&` を1つしか使えないため，1行に複数の位置揃えが必要な変形では無理に `split`化せず，通常の `align`（行ごとに番号）のままでよい。
 * **`tikzpicture` 環境は必ず `figure` → `center` → `tikzpicture` の順にネストする**（`\begin{figure}[h]\centering\begin{tikzpicture}...\end{tikzpicture}\end{figure}` の形）。裸の `tikzpicture` を本文中に直接置かない。
+* **`tabular` 環境も同様に必ず `table` → `center` → `tabular` の順にネストする**（`\begin{table}[htb]\centering\begin{tabular}...\end{tabular}\end{table}` の形）。増減表なども `\begin{center}\begin{tabular}...\end{tabular}\end{center}` のように `table` を省略しない（`table` があると `\caption` で「表1: ...」の通し番号が付き，`figure`/`\caption` との扱いが揃う）。ただし `\shadowbox{...}` で表全体を枠囲みにする凡例的な用法（年度サマリファイル等）は対象外。
 * **図を挿入する際は必ず `\caption{}` を付ける**。`\begin{figure}...\end{figure}` の中に `\caption{...}` を含め、何を表す図かを一言で示す。
 * **句読点は全角の「．」「，」を使う**（「。」「、」は使わない）。既存の人手作成 `solution.tex` もこの慣習に従っている。
 * **解答冒頭は `{\bf [解]}` とする**（`\begin{proof}[解]...\end{proof}` は使わない）。
