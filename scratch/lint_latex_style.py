@@ -170,9 +170,17 @@ def check_figure_caption(text):
     return errors
 
 
+MATH_DISPLAY_ENVS = {'align', 'align*', 'equation', 'equation*', 'gather', 'gather*',
+                     'multline', 'multline*', 'split', 'flalign', 'flalign*'}
+
+
 def check_tikz_nesting(text):
-    """tikzpicture は figure の直下、または figure > center の下にネストする
-    （\\centering コマンド利用時は center 環境自体が無いので figure 直下でよい）。"""
+    """tikzpicture は figure の直下、figure > center の下、figure >
+    subcaptionblock の下（複数図を並べる場合）のいずれかにネストする
+    （\\centering コマンド利用時は center 環境自体が無いので figure 直下でよい）。
+    また、S=[小さな図]-[小さな図] のように align 等の数式環境内で
+    \\text{\\begin{tikzpicture}...} を図形記号として使う用法もあるため、
+    align 等の数式表示環境の中にある tikzpicture も許容する。"""
     errors = []
     stack = []
     for m in ENV_TOKEN_RE.finditer(text):
@@ -180,10 +188,14 @@ def check_tikz_nesting(text):
         if begin_name:
             if begin_name == 'tikzpicture':
                 ok = (len(stack) >= 1 and stack[-1] == 'figure') or \
-                     (len(stack) >= 2 and stack[-1] == 'center' and stack[-2] == 'figure')
+                     (len(stack) >= 2 and stack[-1] == 'center' and stack[-2] == 'figure') or \
+                     (len(stack) >= 1 and stack[-1] == 'subcaptionblock') or \
+                     (len(stack) >= 2 and stack[-1] == 'center' and stack[-2] == 'subcaptionblock') or \
+                     any(s in MATH_DISPLAY_ENVS for s in stack)
                 if not ok:
                     errors.append((line_of(text, m.start()),
-                                    "tikzpicture は figure（直下、または center を挟んで）の中にネストする"))
+                                    "tikzpicture は figure（直下、center/subcaptionblockを挟んで）の中、"
+                                    "または align 等の数式環境内（図形記号として使う場合）にネストする"))
             stack.append(begin_name)
         elif end_name:
             if stack and stack[-1] == end_name:
