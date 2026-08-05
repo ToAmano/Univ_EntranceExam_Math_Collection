@@ -5,6 +5,7 @@ import subprocess
 import shutil
 import tempfile
 import pypandoc
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from TexSoup import TexSoup
 
 
@@ -674,10 +675,22 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     with open(output_md_path, 'w', encoding='utf-8') as f:
         f.write(fm_str + md_content)
 
+def _convert_one_task(task):
+    """process_all_src の各ファイル1件分の変換を実行するワーカー関数。
+    ProcessPoolExecutor に渡すため、引数は pickle 可能な単純な値のみ
+    （tex_path, output_md_path, frontmatter, public_img_dir_rel,
+    output_svg_dir のタプル）にしてある。"""
+    tex_path, output_md_path, frontmatter, public_img_dir_rel, output_svg_dir = task
+    print(f"Converting Clean: {tex_path} -> {output_md_path}")
+    convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel, output_svg_dir)
+    return tex_path
+
+
 def process_all_src():
     src_root = "src"
     dest_root = "web/src/content/solutions"
 
+    tasks = []
     for root, _, files in os.walk(src_root):
         for file in files:
             if file in ("problem.tex", "solution.tex"):
@@ -707,8 +720,21 @@ def process_all_src():
                     output_svg_dir = os.path.join("web", "public", "images", "tikz", uni, category, year, q_num)
 
                     tex_path = os.path.join(root, file)
-                    print(f"Converting Clean: {tex_path} -> {output_md_path}")
-                    convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel, output_svg_dir)
+                    tasks.append((tex_path, output_md_path, frontmatter, public_img_dir_rel, output_svg_dir))
+
+    # 各ファイルの変換（TikZ図があれば LuaLaTeX コンパイルを含む）は他のファイルと
+    # 完全に独立しているため、ProcessPoolExecutor で並列化する。compile_tikz_to_svg
+    # は図ごとに tempfile.mkdtemp() で個別の一時ディレクトリを使うため、
+    # 複数プロセスから同時に呼んでも衝突しない。
+    #
+    # as_completed でループしつつ future.result() を呼ぶことで、逐次版と同じ
+    # 「どれか1件でも例外が出たら即座に全体を失敗させる」挙動を保つ
+    # （例外を握りつぶして変換漏れに気づけなくなることを避ける）。
+    max_workers = os.cpu_count() or 4
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        futures = [executor.submit(_convert_one_task, t) for t in tasks]
+        for future in as_completed(futures):
+            future.result()
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
