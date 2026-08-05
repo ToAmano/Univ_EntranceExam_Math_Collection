@@ -17,11 +17,6 @@ SRC_DIR = REPO_ROOT / 'src'
 
 ENV_TOKEN_RE = re.compile(r'\\begin\{([a-zA-Z*]+)\}|\\end\{([a-zA-Z*]+)\}')
 
-# \int の上下限、または評価カッコ ]_a^b の添字位置を示す「起点」トークン
-TRIGGER_RE = re.compile(
-    r'(\\int|\\bigr\]|\\Bigr\]|\\biggr\]|\\Biggr\]|\\right\]|\])\s*([_^])'
-)
-
 FRAC_CMD_RE = re.compile(r'\\(d?frac)(?![a-zA-Z])')
 
 
@@ -263,47 +258,30 @@ def check_tabular_nesting(text):
 
 
 def find_frac_exempt_spans(text):
-    """\\int の上下限・評価カッコ ]_a^b の添字位置の (start, end) 一覧を返す。
-    そこに現れる分数は \\dfrac ではなく \\frac を使ってよい（使うべき）。
+    """あらゆる上付き・下付き（_{...} / ^{...}）の中身の (start, end) 一覧を
+    返す。そこに現れる分数は \\dfrac ではなく \\frac を使ってよい（使うべき）。
 
-    添字は _{...} や ^{...} のように {} で囲まれている場合だけでなく、
-    _0 や ^n のような裸の1トークンのこともある。裸トークンの場合でも
-    "もう一方の添字" を見逃さないよう、必ず1トークン分だけ読み飛ばして
-    次を確認する（\\int_0^{\\frac{\\pi}{2}t} で ^{...} 側を見逃すと、
-    その中の \\frac を誤って \\dfrac に変換してしまうバグになる）。"""
+    当初は \\int の上下限や評価カッコ ]_a^b の直後の添字だけに限定していたが
+    （TRIGGER_RE 参照）、AGENT.md のルール文自体は「上付き・下付きの位置」を
+    一般的に指しており、x^{\\dfrac{1}{m}} のように \\int/評価カッコを伴わない
+    単なる変数の指数でも同じ理由（添字位置では文字が縮小されるため \\dfrac だと
+    間延びする）で \\frac にすべき。実際 titech zenki 1986/5 で見逃していた
+    （TRIGGER_RE ベースの実装は \\int_0^{...} のような限られた形にしか
+    反応せず、x^{...} のような一般の添字を検出できなかった）。
+    そのため _/^ の直後が {...} であれば、直前が何であるかによらず
+    無条件に添字位置とみなす（このコーパスで _ と ^ は数式の添字演算子
+    以外の用途では使われないため、一般化しても誤検知のリスクは低い）。"""
     n = len(text)
     spans = []
-    for m in TRIGGER_RE.finditer(text):
-        j = m.end()
-        for _ in range(2):  # 添字は _{...}^{...} の順不同で最大2つ
-            while j < n and text[j] in ' \t':
-                j += 1
-            if j >= n:
-                break
-            if text[j] == '{':
-                _, j2 = extract_braced(text, j)
-                spans.append((j, j2))
-                j = j2
-            elif text[j] == '\\':
-                k = j + 1
-                while k < n and text[k].isalpha():
-                    k += 1
-                if k == j + 1:
-                    k += 1  # \X（英字以外1文字）はそれ自体が1つのコマンド
-                j = k
-            else:
-                j += 1  # 裸の1文字（数字・添え字変数など）
-            while j < n and text[j] in ' \t':
-                j += 1
-            if j < n and text[j] in '_^':
-                j += 1
-                continue
-            break
+    for m in re.finditer(r'[_^]\s*\{', text):
+        brace_start = m.end() - 1
+        _, end = extract_braced(text, brace_start)
+        spans.append((brace_start, end))
     return spans
 
 
 def check_frac_subscript_rule(text):
-    """\\int の上下限・評価カッコ ]_a^b の添字位置では \\frac、それ以外では \\dfrac を使う。"""
+    """上付き・下付き（_{...} / ^{...}）の添字位置では \\frac、それ以外では \\dfrac を使う。"""
     errors = []
     spans = find_frac_exempt_spans(text)
 
@@ -316,7 +294,7 @@ def check_frac_subscript_rule(text):
         inside = in_span(pos)
         if inside and cmd == 'dfrac':
             errors.append((line_of(text, pos),
-                            "\\int の上下限・評価カッコ ]_a^b の添字位置では \\dfrac ではなく \\frac を使う"))
+                            "上付き・下付き（添字）の位置では \\dfrac ではなく \\frac を使う"))
         elif not inside and cmd == 'frac':
             errors.append((line_of(text, pos),
                             "分数は（添字位置を除き）\\frac ではなく \\dfrac を使う"))
