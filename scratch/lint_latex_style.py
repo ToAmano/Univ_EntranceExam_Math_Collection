@@ -161,11 +161,17 @@ def check_bare_args(text):
 
 
 def check_figure_caption(text):
+    """figure 環境には \\caption{} が必要。ただし subcaptionblock で複数図を
+    並べる形式では、個々のパネルに \\subcaption{} が付いていれば
+    （figure 全体としての \\caption が無くても）説明責務は果たされている
+    とみなし、\\subcaption{} の存在も許容する。"""
     errors = []
     for m in re.finditer(r'\\begin\{figure\}', text):
         end_m = re.search(r'\\end\{figure\}', text[m.end():])
         body = text[m.end():m.end() + end_m.start()] if end_m else text[m.end():]
-        if '\\caption{' not in body and '\\caption ' not in body:
+        has_caption = '\\caption{' in body or '\\caption ' in body
+        has_subcaption = '\\subcaption{' in body or '\\subcaption ' in body
+        if not has_caption and not has_subcaption:
             errors.append((line_of(text, m.start()), "figure 環境に \\caption{} がない"))
     return errors
 
