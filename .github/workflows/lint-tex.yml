@@ -28,7 +28,7 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Determine changed solution.tex / problem.tex files
+      - name: Determine changed solution.tex files
         id: changed
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
@@ -44,10 +44,13 @@ jobs:
             BASE=$(git rev-parse "$HEAD^" 2>/dev/null || echo "$HEAD")
           fi
 
+          # problem.tex (the original exam statement) is intentionally out of
+          # scope -- it's source text, not authored solution prose, so rules
+          # like "figures need a \caption" don't apply the same way.
           git diff --diff-filter=ACMR --name-only "$BASE" "$HEAD" \
-            | grep -E '(^|/)(solution|problem)\.tex$' > changed_files.txt || true
+            | grep -E '(^|/)solution\.tex$' > changed_files.txt || true
 
-          echo "Changed solution.tex / problem.tex files:"
+          echo "Changed solution.tex files:"
           cat changed_files.txt
 
       - name: Run LaTeX style lint on changed files
@@ -55,5 +58,5 @@ jobs:
           if [ -s changed_files.txt ]; then
             python3 scratch/lint_latex_style.py $(cat changed_files.txt)
           else
-            echo "No solution.tex / problem.tex changes to lint."
+            echo "No solution.tex changes to lint."
           fi
