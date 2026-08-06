@@ -4,7 +4,7 @@
 
 ## 公開サイト (GitHub Pages)
 最新の解答は以下のサイトでご覧いただけます．
-**[過去問解答サイト]([https://amano.github.io/Math-Solutions/](https://toamano.github.io/Univ_EntranceExam_Math_Collection/)**
+**[過去問解答サイト](https://toamano.github.io/Univ_EntranceExam_Math_Collection/)**
 
 ## リポジトリ構成
 
