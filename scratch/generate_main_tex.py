@@ -71,6 +71,10 @@ PREAMBLE = r"""\documentclass[a4paper,10pt]{ltjsarticle}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
+% Web変換 (tex_to_md.py) 用のマーカー。\subparagraph による場合分けの
+% 最後のケースの直後に書くと、Web側でそこまでを case-block として
+% 区切ってくれる（PDF上は空定義で何も出力しない）。
+\newcommand{\casesend}{}
 \newtheorem{lemma}{補題}
 % 増減表用の矢印記号を使っているが定義されていないソースがあるためのフォールバック
 \providecommand{\roundedArrowDR}{\searrow}

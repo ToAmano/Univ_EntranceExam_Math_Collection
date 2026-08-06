@@ -572,11 +572,14 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
 
     # \subparagraph (####, 場合分けの各ケース) は見出し自体には左線が引けても
     # 本文との境界が分かりにくい (Issue #584)。見出しから次の見出し
-    # (#, ##, ###, #### のいずれか) の直前までを <div class="case-block"> で
-    # 囲み、本文全体に連続した境界線を引けるようにする。
+    # (#, ##, ###, #### のいずれか) または \casesend マーカーの直前までを
+    # <div class="case-block"> で囲み、本文全体に連続した境界線を引けるように
+    # する。\casesend は最後のケースの直後、場合分け全体のまとめ文の手前に
+    # 書くと、そのまとめ文が最後のケースの箱に取り込まれるのを防げる
+    # （PDF上は空定義で何も出力しない、Web出力からもここで除去する）。
     def _wrap_subparagraph_cases(text):
-        heading_re = re.compile(r'^(#{1,4})[ \t]', re.MULTILINE)
-        matches = list(heading_re.finditer(text))
+        boundary_re = re.compile(r'^(#{1,4})[ \t]|\\casesend\b', re.MULTILINE)
+        matches = list(boundary_re.finditer(text))
         spans = []
         for idx, m in enumerate(matches):
             if m.group(1) != '####':
@@ -588,7 +591,8 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         for start, end in reversed(spans):
             block = text[start:end].strip('\n')
             text = text[:start] + f'<div class="case-block">\n\n{block}\n\n</div>\n\n' + text[end:]
-        return text
+
+        return re.sub(r'\\casesend\b\s*', '', text)
 
     md_content = _wrap_subparagraph_cases(md_content)
 
