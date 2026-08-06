@@ -1,28 +1,282 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-\textbf{(1)} $t$にまって，切断面は変化する直方体の頂点を通る．$\pi(t): x+\dfrac{1}{2}y+\dfrac{1}{3}z=t$とおく．$V$の体積は$T=6$である $\cdots$①
+\textbf{(1)} 
+$t$によって切断面の方程式が変化するので，これを
+\begin{align}
+ \pi(t): x+\dfrac{1}{2}y+\dfrac{1}{3}z=t \label{eq:1}
+\end{align}
+とおく．
+
+下図のように直方体$V$の頂点を定める．O,A,B,Cは$y=0$上にあり，D,E,F,Gは$y=2$上に存在する．
+この時，直方体$V$の体積は
+\begin{align}
+ T = 6 \label{eq:2}
+\end{align}
+である．以下$t$の大きさで場合分けする．
+
+% 視点の設定 (tdplot_set_coordinates{r}{theta}{phi})
+% 手書きスケッチに近い視点 (右上から見下ろす)
+\tdplotsetmaincoords{65}{120}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[tdplot_main_coords, scale=1.5]
+
+    % --- 1. 座標定義 ---
+    % 直方体 V の頂点 (0<=x<=1, 0<=y<=2, 0<=z<=3)
+    % 手書き図の対応:
+    % y=0 上: O(0,0,0), A(0,0,3), B(1,0,3), C(1,0,0)
+    % y=2 上: G(0,2,0), D(0,2,3), E(1,2,3), F(1,2,0)
+    \coordinate (O) at (0,0,0);
+    \coordinate (A) at (0,0,3);
+    \coordinate (B) at (1,0,3);
+    \coordinate (C) at (1,0,0);
+    \coordinate (G) at (0,2,0);
+    \coordinate (D) at (0,2,3);
+    \coordinate (E) at (1,2,3);
+    \coordinate (F) at (1,2,0);
+
+    % --- 2. 座標軸の描画 ---
+    \draw[->, thick, gray] (0,0,0) -- (2.0,0,0) node[anchor=north east]{$x$};
+    \draw[->, thick, gray] (0,0,0) -- (0,3.0,0) node[anchor=north west]{$y$};
+    \draw[->, thick, gray] (0,0,0) -- (0,0,4.0) node[anchor=south]{$z$};
+
+    % --- 3. 切平面 pi(t) と軸の交点 (t = 0.8 の例) ---
+    % x + y/2 + z/3 = t  =>  x-int=t, y-int=2t, z-int=3t
+    \pgfmathsetmacro{\tval}{0.8}
+    \coordinate (Px) at (\tval, 0, 0);
+    \coordinate (Py) at (0, 2*\tval, 0);
+    \coordinate (Pz) at (0, 0, 3*\tval);
+
+    % 切断領域 (三角錐) の塗りつぶし
+    \fill[red!30, opacity=0.6] (Px) -- (Py) -- (Pz) -- cycle;
+    \draw[red!80!black, thick] (Px) -- (Py) -- (Pz) -- cycle;
+
+    % --- 4. 直方体 V の辺の描画 ---
+    % 隠線 (破線)
+    \draw[dashed, thick] (O) -- (C);
+    \draw[dashed, thick] (O) -- (G);
+    \draw[dashed, thick] (O) -- (A);
+
+    % 実線
+    \draw[thick] (C) -- (B) -- (A);
+    \draw[thick] (G) -- (F) -- (E) -- (D) -- cycle;
+    \draw[thick] (C) -- (F);
+    \draw[thick] (B) -- (E);
+    \draw[thick] (A) -- (D);
+
+    % --- 5. 目盛りラベル ---
+    \node[anchor=north east] at (C) {$1$};
+    \node[anchor=south west] at (G) {$2$};
+    \node[anchor=west] at (A) {$3$};
+
+    % --- 6. 頂点ラベルと点のプロット ---
+    \fill[black] (O) circle (1pt) node[anchor=north west] {$O$};
+    \fill[black] (A) circle (1pt) node[anchor=south east] {$A$};
+    \fill[black] (B) circle (1pt) node[anchor=north west] {$B$};
+    \fill[black] (C) circle (1pt) node[anchor=south east] {$C$};
+    \fill[black] (D) circle (1pt) node[anchor=south east] {$D$};
+    \fill[black] (E) circle (1pt) node[anchor=south west] {$E$};
+    \fill[black] (F) circle (1pt) node[anchor=west] {$F$};
+    \fill[black] (G) circle (1pt) node[anchor=south east] {$G$};
+
+    \node[above right] at (E) {$V$};
+
+\end{tikzpicture}
+\caption{直方体Vの様子．}
+\end{center} 
+\end{figure}
+
 
 \subparagraph{$1^\circ$ $0<t\le1$の時}
 
-切断立体のうち，三角錐のものの体積は
+この時切断面は以下のようになり，直方体の辺と切断面の交点は辺OC, OG, OA上にくる．
+
+% 視点の設定 (tdplot_set_coordinates{r}{theta}{phi})
+\tdplotsetmaincoords{65}{120}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[tdplot_main_coords, scale=1.5]
+
+    % --- 1. 座標定義 ---
+    % 直方体 V の頂点
+    \coordinate (O) at (0,0,0);
+    \coordinate (A) at (0,0,3);
+    \coordinate (B) at (1,0,3);
+    \coordinate (C) at (1,0,0);
+    \coordinate (G) at (0,2,0);
+    \coordinate (D) at (0,2,3);
+    \coordinate (E) at (1,2,3);
+    \coordinate (F) at (1,2,0);
+
+    % --- 2. 座標軸の描画 ---
+    \draw[->, thick, gray] (0,0,0) -- (2.2,0,0) node[anchor=north east]{$x$};
+    \draw[->, thick, gray] (0,0,0) -- (0,3.2,0) node[anchor=north west]{$y$};
+    \draw[->, thick, gray] (0,0,0) -- (0,0,4.2) node[anchor=south]{$z$};
+
+    % --- 3. 切平面 pi(t) と軸の交点 (0 < t <= 1) ---
+    % x-int = t, y-int = 2t, z-int = 3t
+    \pgfmathsetmacro{\tval}{0.7}
+    \coordinate (Px) at (\tval, 0, 0);       % x軸上の点 (t)
+    \coordinate (Py) at (0, 2*\tval, 0);     % y軸上の点 (2t)
+    \coordinate (Pz) at (0, 0, 3*\tval);     % z軸上の点 (3t)
+
+    % 切り口 (三角形) の塗りつぶしと境界線
+    \fill[red!25, opacity=0.6] (Px) -- (Py) -- (Pz) -- cycle;
+    \draw[red!80!black, ultra thick] (Px) -- (Py) -- (Pz) -- cycle;
+
+    % --- 4. 直方体 V のフレーム描画 ---
+    % 隠線 (破線)
+    \draw[dashed, thick] (O) -- (C);
+    \draw[dashed, thick] (O) -- (G);
+    \draw[dashed, thick] (O) -- (A);
+
+    % 外枠 (実線)
+    \draw[thick] (C) -- (B) -- (A);
+    \draw[thick] (G) -- (F) -- (E) -- (D) -- cycle;
+    \draw[thick] (C) -- (F);
+    \draw[thick] (B) -- (E);
+    \draw[thick] (A) -- (D);
+
+    % --- 5. 交点 (t, 2t, 3t) のプロットとラベル ---
+    \fill[red!80!black] (Px) circle (1.2pt) node[anchor=north west] {$t$};
+    \fill[red!80!black] (Py) circle (1.2pt) node[anchor=south west] {$2t$};
+    \fill[red!80!black] (Pz) circle (1.2pt) node[anchor=east] {$3t$};
+
+    % --- 6. 頂点ラベル ---
+    \fill[black] (O) circle (1pt) node[anchor=north east] {$O$};
+    \fill[black] (A) circle (1pt) node[anchor=south east] {$A$};
+    \fill[black] (B) circle (1pt) node[anchor=north west] {$B$};
+    \fill[black] (C) circle (1pt) node[anchor=south west] {$C$};
+    \fill[black] (D) circle (1pt) node[anchor=south east] {$D$};
+    \fill[black] (E) circle (1pt) node[anchor=south west] {$E$};
+    \fill[black] (F) circle (1pt) node[anchor=west] {$F$};
+    \fill[black] (G) circle (1pt) node[anchor=south east] {$G$};
+\end{tikzpicture}
+\caption{$0<t\le 1$の時の切断面}
+\end{center}
+\end{figure}
+
+切断された立体のうち点Oを含む三角錐の体積は
 \begin{align}
 \dfrac{1}{3}\cdot t\cdot\left(\dfrac{1}{2}\cdot t\cdot 2t\cdot\dfrac{3}{2}\right)=t^3
 \end{align}
-であり，これは$t\le3/2$より小さいから，$f(t)=t^3$
+であり，これは$\dfrac{T}{2}=3$よりも小さいから題意より
+\begin{align}
+ f(t) = t^3
+\end{align}
+である．
 
 \subparagraph{$2^\circ$ $1\le t\le2$の時}
 
-切断立体のうち，原点$O$を含む方の体積は，コーナーの三角錐を3つ分あわせて切り取ることになり，
+この時切断面は以下のようになり，直方体の辺と切断面の交点は辺BC,CF, FG, GD, DA, AB上にくる．
+
+% 視点の設定 (tdplot_set_coordinates{r}{theta}{phi})
+\tdplotsetmaincoords{65}{120}
+
+\begin{figure}[htb]
+ \begin{center}
+\begin{tikzpicture}[tdplot_main_coords, scale=1.5]
+
+    % --- 1. 座標定義 ---
+    % 直方体 V の頂点
+    \coordinate (O) at (0,0,0);
+    \coordinate (A) at (0,0,3);
+    \coordinate (B) at (1,0,3);
+    \coordinate (C) at (1,0,0);
+    \coordinate (G) at (0,2,0);
+    \coordinate (D) at (0,2,3);
+    \coordinate (E) at (1,2,3);
+    \coordinate (F) at (1,2,0);
+
+    % パラメータ設定 (1 < t < 1.5 例として t = 1.25)
+    \pgfmathsetmacro{\tval}{1.25}
+
+    % 大きな三角錐の頂点 (各軸との交点 t, 2t, 3t)
+    \coordinate (Px) at (\tval, 0, 0);       % x軸上: t
+    \coordinate (Py) at (0, 2*\tval, 0);     % y軸上: 2t
+    \coordinate (Pz) at (0, 0, 3*\tval);     % z軸上: 3t
+
+    % 切断六角形の頂点 (直方体の各辺との交点)
+    \coordinate (K_CF) at (1, {2*(\tval-1)}, 0);    % 辺 CF 上
+    \coordinate (K_FG) at ({\tval-1}, 2, 0);        % 辺 FG 上
+    \coordinate (K_GD) at (0, 2, {3*(\tval-1)});    % 辺 GD 上
+    \coordinate (K_DA) at (0, {2*(\tval-1)}, 3);    % 辺 DA 上
+    \coordinate (K_AB) at ({\tval-1}, 0, 3);        % 辺 AB 上
+    \coordinate (K_BC) at (1, 0, {3*(\tval-1)});    % 辺 BC 上
+
+    % --- 2. 座標軸の描画 ---
+    \draw[->, thick, gray] (0,0,0) -- (2.0,0,0) node[anchor=north east]{$x$};
+    \draw[->, thick, gray] (0,0,0) -- (0,3.2,0) node[anchor=north west]{$y$};
+    \draw[->, thick, gray] (0,0,0) -- (0,0,4.2) node[anchor=south]{$z$};
+
+    % --- 3. 大きな三角錐の破線外枠 (手書き図の t, 2t, 3t を結ぶ直線) ---
+    \draw[dashed, red!60!black, thin] (Px) -- (Py) -- (Pz) -- cycle;
+
+    % --- 4. 切り口 (六角形) の塗りつぶしと境界線 ---
+    \fill[blue!25, opacity=0.6] 
+        (K_CF) -- (K_FG) -- (K_GD) -- (K_DA) -- (K_AB) -- (K_BC) -- cycle;
+    
+    \draw[blue!80!black, ultra thick] 
+        (K_CF) -- (K_FG) -- (K_GD) -- (K_DA) -- (K_AB) -- (K_BC) -- cycle;
+
+    % --- 5. 直方体 V のフレーム描画 ---
+    % 隠線 (破線)
+    \draw[dashed, thick] (O) -- (C);
+    \draw[dashed, thick] (O) -- (G);
+    \draw[dashed, thick] (O) -- (A);
+
+    % 外枠 (実線)
+    \draw[thick] (C) -- (B) -- (A);
+    \draw[thick] (G) -- (F) -- (E) -- (D) -- cycle;
+    \draw[thick] (C) -- (F);
+    \draw[thick] (B) -- (E);
+    \draw[thick] (A) -- (D);
+
+    % --- 6. 各辺上の切断点 (黒丸) ---
+    \fill[blue!80!black] (K_CF) circle (1.3pt);
+    \fill[blue!80!black] (K_FG) circle (1.3pt);
+    \fill[blue!80!black] (K_GD) circle (1.3pt);
+    \fill[blue!80!black] (K_DA) circle (1.3pt);
+    \fill[blue!80!black] (K_AB) circle (1.3pt);
+    \fill[blue!80!black] (K_BC) circle (1.3pt);
+
+    % --- 7. 交点 (t, 2t, 3t) のプロットとラベル ---
+    \fill[red!60!black] (Px) circle (1pt) node[anchor=north west] {$t$};
+    \fill[red!60!black] (Py) circle (1pt) node[anchor=south west] {$2t$};
+    \fill[red!60!black] (Pz) circle (1pt) node[anchor=east] {$3t$};
+
+    % --- 8. 頂点ラベル ---
+    \fill[black] (O) circle (1pt) node[anchor=north east] {$O$};
+    \fill[black] (A) circle (1pt) node[anchor=south east] {$A$};
+    \fill[black] (B) circle (1pt) node[anchor=north west] {$B$};
+    \fill[black] (C) circle (1pt) node[anchor=south west] {$C$};
+    \fill[black] (D) circle (1pt) node[anchor=south east] {$D$};
+    \fill[black] (E) circle (1pt) node[anchor=south west] {$E$};
+    \fill[black] (F) circle (1pt) node[anchor=west] {$F$};
+    \fill[black] (G) circle (1pt) node[anchor=south east] {$G$};
+\end{tikzpicture}
+\caption{$1\le t \le 2$の時の切断面．}
+\end{center}
+\end{figure}
+
+切断立体のうち原点$O$を含む方の体積は，大きな三角錐からコーナーの三角錐を3つ分切り取ることで求められる．
+大きな三角錐の体積は
 \begin{align}
-t^3-3(t-1)^3=-2t^3+9t^2-9t+3\equiv g(t)
+ \dfrac{1}{3}2t \dfrac{t\cdot 3t}{2} = t^3
 \end{align}
-である．$g'(t)=-6(t^2-3t+2)=-6(t-2)(t-1)\ge0\ (1\le t\le2)$だから$g(t)$は非減少で，$g(3/2)=3$だから，
+である．対してコーナーの小さい三角錐は大きな三角錐との比が$t:t-1$, $2t:2t-2$,$3t:3t-3$でいずれも$t:t-1$となるから，いずれも体積は
+\begin{align}
+ t^3\cdot \dfrac{(t-1)^3}{t^3} = (t-1)^3
+\end{align}
+である．従って断立体のうち原点$O$を含む方の体積は
+\begin{align}
+  t^3-3(t-1)^3=-2t^3+9t^2-9t+3 \equiv g(t)
+\end{align}
+である．$g'(t)=-6(t^2-3t+2)=-6(t-2)(t-1)\ge0\ (1\le t\le2)$だから$g(t)$は非減少で，かつ$g(3/2)=3$だから，
 \begin{align}
 f(t)=
 \begin{cases}\displaystyle
@@ -33,9 +287,9 @@ g(t) & \left(1\le t\le\dfrac{3}{2}\right) \\
 
 \subparagraph{$3^\circ$ $2\le t<3$の時}
 
-対称性から，$f(t)=(3-t)^3$
+$t$についての対称性から $f(t)=(3-t)^3$ である．
 
-以上から
+以上3つの場合分けから求める体積は
 \begin{align}
 f(t)=
 \begin{cases}\displaystyle
@@ -45,25 +299,40 @@ t^3 & (0\le t\le1) \\
 (3-t)^3 & (2\le t\le3)
 \end{cases}
 \end{align}
+である．
 
-\textbf{(2)} $h(t)=t^3,\ P(t)=6-g(t)$とおく．以下$h\to0$と扱う．$f(t)$は各区間で連続である．
 
-\subparagraph{⑦ $t=1$の時}
+(2)
+
+$f(t)$は全区間で連続だから題意を示すには$t=1,\dfrac{3}{2}$での両側極限の一致を見れば良い．
+簡単のため
 \begin{align}
-\dfrac{f(1+h)-f(1)}{h}\xrightarrow{h\to0}g'(1)=3, \qquad \dfrac{f(1-h)-f(1)}{-h}\xrightarrow{h\to0}f'(1)=3
+ p(t) = t^3 \\
+ q(t) = 6-g(t)
 \end{align}
-より左右極限が一致し，微分可能．
+と置くと，これらは$t=1,\dfrac{3}{2}$で微分可能である．
 
-\subparagraph{⑦ $t=3/2$の時}
+\subparagraph{1. $t=1$の時}
+
+この時の左右極限は
 \begin{align}
-\dfrac{f(3/2+h)-f(3/2)}{h}\xrightarrow{h\to0}P'(3/2)=-\dfrac{9}{2}, \qquad \dfrac{f(3/2-h)-f(3/2)}{-h}\xrightarrow{h\to0}g'(3/2)=+\dfrac{9}{2}
+ \lim_{h\to +0}\dfrac{f(1+h)-f(1)}{h} = p'(1)=3, \qquad \lim_{h\to +0}\dfrac{f(1-h)-f(1)}{-h} = g'(1)=3
 \end{align}
-より左右極限が一致せず，微分不可．
+より一致するから，$f(t)$は$t=1$で微分可能である．
+
+\subparagraph{2. $t=\dfrac{3}{2}$の時}
+
+この時の左右極限は
+\begin{align}
+  \lim_{h\to +0}\dfrac{f(3/2+h)-f(3/2)}{h} = q'(3/2)=-\dfrac{9}{2}, \qquad \lim_{h\to +0}\dfrac{f(3/2-h)-f(3/2)}{-h} = g'(3/2)=+\dfrac{9}{2}
+\end{align}
+より一致しないから，$f(t)$は$t=\dfrac{3}{2}$では微分不可能である．
 
 以上から
 \begin{align}
-t=1:\ \text{possible}, \qquad t=\dfrac{3}{2}:\ \text{impossible}
+t=1:\ \text{微分可能}, \qquad t=\dfrac{3}{2}:\ \text{微分不可能}
 \end{align}
+である．
 
 
 \newpage

@@ -1,47 +1,121 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$C$上の点$P(x,y)$での$C$の接線$\ell$が常に$Q\left(\dfrac{6x^3+1}{6x^2},2y\right)$を通る．
+題意のように$C$上の点$P(x,y)$での$C$の接線$\ell$が常に$Q\left(\dfrac{6x^3+1}{6x^2},2y\right)$を通る場合を考えよう．
+P, Qの$x$座標の差分を計算すると$x\neq 0$より
 \begin{align}
-\dfrac{6x^3+1}{6x^2}-x=\dfrac{1}{6x^2}\ne0
+\dfrac{6x^3+1}{6x^2}-x=\dfrac{1}{6x^2}\ne 0
 \end{align}
-から，直線$PQ$は$y$軸平行でないので，$XY$平面において，
+となるから，PとQの$x$座標は常に異なる．従って直線$PQ$は$y$軸並行ではない．
+
+\begin{figure}[htb]
+ \begin{center}
+  \begin{tikzpicture}
+\begin{axis}[
+    xmin=-0.3, xmax=1.5,
+    ymin=-0.5, ymax=6.0,
+    axis lines=middle,
+    xlabel={$x, X$},
+    ylabel={$y, Y$},
+    ticks=none,
+    enlargelimits=false,
+    clip=false
+]
+    % --- 1. 定数・パラメータの設定 ---
+    % わかりやすい図にするため x = 0.55 で設定
+    \pgfmathsetmacro{\px}{0.55}
+    \pgfmathsetmacro{\py}{2*exp(2*\px*\px*\px)} % y = 2*e^(2x^3)
+    \pgfmathsetmacro{\dydx}{12*\px*\px*exp(2*\px*\px*\px)} % y' = 12x^2*e^(2x^3)
+
+    % 点 Q の座標計算
+    \pgfmathsetmacro{\qx}{(6*\px*\px*\px + 1)/(6*\px*\px)}
+    \pgfmathsetmacro{\qy}{2*\py}
+
+    % --- 2. 曲線 C: y = 2*e^(2x^3) の描画 ---
+    \addplot[domain=-0.25:0.75, samples=100, ultra thick, blue!80!black] 
+        {2*exp(2*x^3)};
+    \node[blue!80!black, anchor=south east] at (axis cs:0.45, 2.5) {$C$};
+
+    % --- 3. 接線 l (点 P, Q を通る直線) の描画 ---
+    \addplot[domain=0.2:1.2, samples=2, thick, red!80!black] 
+        {\dydx*(x - \px) + \py};
+    \node[red!80!black, anchor=south west] at (axis cs:0.85, 5.0) {$\ell$};
+
+    % --- 4. 座標の点線ガイド (x 座標の差分を示す) ---
+    \draw[dashed, gray] (axis cs:\px, 0) -- (axis cs:\px, \py) -- (axis cs:0, \py);
+    \draw[dashed, gray] (axis cs:\qx, 0) -- (axis cs:\qx, \qy) -- (axis cs:0, \qy);
+
+    % --- 5. 点 P, Q および通過点 (0,2) のプロット ---
+    % 通過点 (0,2)
+    \fill[black] (axis cs:0, 2) circle (1.3pt);
+    \node[above left] at (axis cs:0, 2) {$2$};
+
+    % 点 P(x, y)
+    \fill[blue!80!black] (axis cs:\px, \py) circle (1.5pt);
+    \node[anchor=north west] at (axis cs:\px, \py) {$P(x, y)$};
+
+    % 点 Q
+    \fill[red!80!black] (axis cs:\qx, \qy) circle (1.5pt);
+    \node[anchor=south east] at (axis cs:\qx, \qy) {$Q\left(\frac{6x^3+1}{6x^2}, 2y\right)$};
+
+    % 軸の目盛りラベル
+    \node[below left] at (axis cs:0,0) {$O$};
+    \node[below] at (axis cs:\px, 0) {$x$};
+    \node[below] at (axis cs:\qx, 0) {$x + \frac{1}{6x^2}$};
+
+\end{axis}
+\end{tikzpicture}
+ \end{center}
+\end{figure}
+
+そこで$XY$平面において直線PQの方程式を考えると
 \begin{align}
 \ell: Y=\dfrac{dy}{dx}(X-x)+y
 \end{align}
-と表せる．$Q$が$\ell$上にあるので，
+と表せる．$Q$が$\ell$上にあるのでQの座標を代入して$x\neq 0$で変形を進めると
 \begin{align}
 \begin{split}
 2y&=\dfrac{dy}{dx}\left(\dfrac{6x^3+1}{6x^2}-x\right)+y \\
-y&=\dfrac{1}{6x^2}\dfrac{dy}{dx} \\
+y&=\dfrac{1}{6x^2}\dfrac{dy}{dx} 
+\end{split} 
+\end{align}
+を得る．ここで$y=0$とすると$y'=0$となり，$y=0$が解となるがこれは点$(0,2)$を通ることに反する．
+よって$y\neq 0$として変数分離すると
+\begin{align}
 6x^2\,dx&=\dfrac{1}{y}\,dy
-\end{split}
 \end{align}
-両辺積分して，定数$C_1$として
+を得る．両辺を積分して積分定数を定数$C_1$とすると
 \begin{align}
-2x^3+C_1=\log|y| \quad\cdots\text{①}
+2x^3+C_1=\log|y| \quad\cdots\text{①} \\
+\therefore
+ |y| = e^{2x^3+C_1} 
 \end{align}
-$C$は連続だから，$(x,y)=(0,2)$でも①がなりたつので，
+となる．従って$x<0$および$x>0$の各接続区間において定数$A,B$を用いて以下のように表せる．
 \begin{align}
-C_1=\log2
+ y = 
+ \begin{cases}
+  Ae^{2x^3} & (x>0)\\
+  Be^{2x^3} & (x<0)
+ \end{cases} \label{eq:1}
 \end{align}
-したがって，
+曲線$C$は点$(0,2)$を通るため$x=0$で連続である．
+よって$y$の左右極限が共に$2$に一致すれば良いから
 \begin{align}
-\begin{split}
+  A = B = 2 
+\end{align}
+となる．よって\cref{eq:1}に代入して
+\begin{align}
 |y|&=2\cdot e^{2x^3} \\
-y&=\pm2\cdot e^{2x^3}
-\end{split}
+\therefore
+y&=\pm 2\cdot e^{2x^3}
 \end{align}
-複号負は$C$が$(0,2)$を通ることに反するから，
+となるが，複号負は$C$が$(0,2)$を通ることに反する．
+従って求める曲線は
 \begin{align}
-y=2e^{2x^3}
+C: y=2e^{2x^3}
 \end{align}
-
+である．
 
 \newpage
 

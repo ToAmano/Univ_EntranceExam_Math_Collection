@@ -141,11 +141,11 @@
 | 1984年 | 第3問 | finish | finish | あり | 完了 |
 | 1984年 | 第4問 | finish | finish | あり | 完了 |
 | 1984年 | 第5問 | finish | finish | あり | 完了 |
-| 1985年 | 第1問 | finish | 文字起こし済 | あり | 未完成 |
-| 1985年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
-| 1985年 | 第3問 | finish | 文字起こし済 | あり | 未完成 |
-| 1985年 | 第4問 | finish | 文字起こし済 | あり | 未完成 |
-| 1985年 | 第5問 | finish | 文字起こし済 | あり | 未完成 |
+| 1985年 | 第1問 | finish | finish | あり | 完了 |
+| 1985年 | 第2問 | finish | finish | あり | 完了 |
+| 1985年 | 第3問 | finish | finish | あり | 完了 |
+| 1985年 | 第4問 | finish | finish | あり | 完了 |
+| 1985年 | 第5問 | finish | finish | あり | 完了 |
 | 1986年 | 第1問 | finish | finish | あり | 完了 |
 | 1986年 | 第2問 | finish | finish | あり | 完了 |
 | 1986年 | 第3問 | finish | finish | あり | 完了 |

@@ -1,86 +1,148 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-円$O_k\ (k=1,2,\cdots,5)$の半径を$r_k$とすると，題意から
-\begin{align}
-r_1=1, \qquad r_2=a, \qquad r_3=r_4=\dfrac{1-a}{2}
-\end{align}
-である．又，$\angle DAB=\theta$とおく（$0<\theta<\pi/2\ \cdots$①）．
+題意の円$O_k\ (k=1,2,\cdots,5)$の様子を図示すると下図のようになる．
 
 \begin{figure}[htb]
 \begin{center}
 \begin{tikzpicture}[scale=1.3, >=stealth]
-  % a=0.3 として図示 (円の半径は2倍に拡大: r1=2, r2=2a=0.6, r3=r4=2(1-a)/2=0.7, r5=2*0.1275)
-  % O_1,O_2 は同心円 (中心は原点=A)
-  \draw (0,0) circle (2);
-  \draw (0,0) circle (0.6);
-  \draw (1.0954,-0.7) circle (0.7);
-  \draw (1.0954,0.7) circle (0.7);
-  \draw (1.745,0) circle (0.255);
-  \fill (0,0) circle (1pt) node[below left] {$O_1(=A)$};
-  \fill (1.0954,0.7) circle (1pt) node[above] {$C$};
-  \fill (1.0954,-0.7) circle (1pt) node[below] {$B$};
-  \fill (1.745,0) circle (1pt) node[right] {$D$};
+  % --- 座標・パラメータ定義 ---
+  % a = 0.3 のとき (元の図のスケール・配置を踏襲)
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (1.0954,-0.7);
+  \coordinate (C) at (1.0954,0.7);
+  \coordinate (D) at (1.745,0);
+  \coordinate (E) at (1.0954,0); % ADとBCの交点(O_3, O_4の接点)
+
+  % --- 1. 各円 O_1 〜 O_5 の描画 ---
+  \draw[thick] (A) circle (2);      % O_1
+  \draw[thick] (A) circle (0.6);    % O_2
+  \draw[thick] (B) circle (0.7);    % O_3
+  \draw[thick] (C) circle (0.7);    % O_4
+  \draw[thick] (D) circle (0.255);  % O_5
+
+  % --- 2. 補助線の描画 (解答の三角形・線分に対応) ---
+  % 直線 AD (中心軸) と 線分 BC (O_3, O_4 の中心を結ぶ線分)
+  \draw[dashed, gray!80] (A) -- (D);
+  \draw[dashed, gray!80] (C) -- (B);
+
+  % 直角三角形 ABE, BDE を形作る中心同士の結線
+  \draw[blue!80!black, thick] (A) -- (B); % AB = r2 + r3
+  \draw[blue!80!black, thick] (B) -- (D); % BD = r3 + r5
+  \draw[red!80!black,  thick] (B) -- (E); % BE = r3 (高さ)
+
+  % 四角形 ABDC の外枠（対照用）
+  \draw[blue!80!black, thick] (A) -- (C) -- (D);
+
+  % --- 3. 垂直記号 (Eにおける AD ⊥ BC) ---
+  \draw[thin, gray!80] (E) ++(-0.1,0) -- ++(0,-0.1) -- ++(0.1,0);
+
+  % --- 4. 各点のプロットとラベル ---
+  \fill (A) circle (1.2pt) node[below left] {$A$};
+  \fill (B) circle (1.2pt) node[below] {$B$};
+  \fill (C) circle (1.2pt) node[above] {$C$};
+  \fill (D) circle (1.2pt) node[right] {$D$};
+  \fill[red!80!black] (E) circle (1.2pt) node[below left, red!80!black] {$E$};
+
 \end{tikzpicture}
 \end{center}
-\caption{円$O_1\sim O_5$の配置}
+\caption{円$O_1\sim O_5$の配置と補助線}
 \end{figure}
 
-$O_3$と$O_4$の接点を$E$とする．$E$は$AD$，$BC$の交点であることに注意する．
+円$O_k\ (k=1,2,\cdots,5)$の半径を$r_k$とすると題意から
+\begin{align}
+r_1=1, \qquad r_2=a, \qquad r_3=r_4=\dfrac{1-a}{2} \label{eq:1}
+\end{align}
+である．
+また$\angle DAB=\theta$とおく（$0<\theta<\pi/2\ \cdots$①）．
+$O_3$と$O_4$の接点を$E$とすると$E$は$AD, BC$の交点であることに注意する．
 
-\textbf{(1)} ピタゴラスの定理から
-\begin{align}
-\begin{split}
-AE&=\sqrt{\left(a+\dfrac{1-a}{2}\right)^2-\left(\dfrac{1-a}{2}\right)^2}=\sqrt{a} \quad\cdots * \\
-DE&=\sqrt{\left(r_5+\dfrac{1-a}{2}\right)^2-\left(\dfrac{1-a}{2}\right)^2}=\sqrt{r_5^2+(1-a)r_5}
-\end{split}
-\end{align}
-したがって，$r_1=1$を2通りで表して
-\begin{align}
-\begin{split}
-1&=AE+DE+r_5=\sqrt{a}+\sqrt{r_5^2+(1-a)r_5}+r_5 \\
-(1-\sqrt{a})-r_5&=\sqrt{r_5^2+(1-a)r_5} \\
-r_5^2-2(1-\sqrt{a})r_5+(1-\sqrt{a})^2&=r_5^2+(1-a)r_5 \quad\cdots\text{②}, \qquad (1-\sqrt{a})-r_5\ge0\quad\cdots\text{③}
-\end{split}
-\end{align}
-②から
-\begin{align}
-r_5=\dfrac{(1-\sqrt{a})^2}{2(1-\sqrt{a})+(1-a)}=\dfrac{(1-\sqrt{a})^2}{3-a-2\sqrt{a}}
-\end{align}
-である．$t=\sqrt{a}\ (0<t<1,\ \cdots$④$)$とおいて③に代入
-\begin{align}
-(1-t)+\dfrac{(1-t)^2}{t^2+2t-3}=(1-t)-\dfrac{1-t}{t+3}=\dfrac{(1-t)(t+2)}{t+3}\ge0\quad(\because④)
-\end{align}
-から，この$t$は③をみたして良い．この時，$*$から
-\begin{align}
-\begin{split}
-DE&=\sqrt{\dfrac{1-t}{t+3}\left(\dfrac{1-t}{t+3}+1-t\right)}=\sqrt{\dfrac{(1-t)^2}{(t+3)^2}(t+2)^2}=\dfrac{(1-t)(t+2)}{t+3}\quad(\because④) \\
-AE&=t
-\end{split}
-\end{align}
-だから
-\begin{align}
-\begin{split}
-S(a)&=\triangle ABD+\triangle ACD=AD\cdot BE=\left(t+\dfrac{(1-t)(t+2)}{t+3}\right)\cdot\dfrac{1-t^2}{2} \\
-&=\dfrac{(t+1)(1-t)}{t+3}\cdot\dfrac{(\sqrt{a}+1)(1-\sqrt{a})}{\sqrt{a}+3}
-\end{split}
-\end{align}
 
-\textbf{(2)} $f(t)=\dfrac{(t+1)(1-t)^2}{t+3}$とおく．$f(t)$の$0<t<1$での最大値をもとめれば良い．
+(1) 
+四角形ABDCの面積は
+\begin{align}
+ S(a) = |AD||BE| \label{eq:2}
+\end{align}
+であるから，以下$|AD|, |BE|$を$a$を用いて表す．
+そのために$r_5$が必要なのでまずはこれを求めよう．
+$\triangle ABE, \triangle BDE$にピタゴラスの定理を用いて
+\begin{align}
+AE&=\sqrt{|AB|^2-|BE|^2}=\sqrt{(r_2+r_3)^2-r_3^2}=\sqrt{\left(a+\dfrac{1-a}{2}\right)^2-\left(\dfrac{1-a}{2}\right)^2}=\sqrt{a} \label{eq:3} \\
+DE&=\sqrt{|BD|^2-|BE|^2}=\sqrt{(r_3+r_4)^2-r_3^2}=\sqrt{\left(r_5+\dfrac{1-a}{2}\right)^2-\left(\dfrac{1-a}{2}\right)^2}=\sqrt{r_5^2+(1-a)r_5} \label{eq:4}
+\end{align}
+である．$r_1=1$を$r_k$を用いて表すと
+\begin{align}
+ r_1 = 1 = |AE|+|DE|+r_5
+\end{align}
+だからここに\cref{eq:3,eq:4}を代入して
+\begin{align}
+1&=\sqrt{a}+\sqrt{r_5^2+(1-a)r_5}+r_5 \\
+(1-\sqrt{a})-r_5&=\sqrt{r_5^2+(1-a)r_5} 
+\end{align}
+だから，
+\begin{align}
+ (1-\sqrt{a})-r_5\ge 0 \label{eq:5}
+\end{align}
+の元で両辺二乗して
+\begin{align}
+  & r_5^2-2(1-\sqrt{a})r_5+(1-\sqrt{a})^2=r_5^2+(1-a)r_5  \\
+\end{align}
+だから整理して
+ \begin{align}
+  r_5 
+    & =\dfrac{(1-\sqrt{a})^2}{2(1-\sqrt{a})+(1-a)} \\
+    & =\dfrac{(1-\sqrt{a})^2}{3-a-2\sqrt{a}} \\
+    & =\dfrac{(1-\sqrt{a})^2}{(3+\sqrt{a})(1-\sqrt{a})} \\
+    & =\dfrac{1-\sqrt{a}}{3+\sqrt{a}} \label{eq:6}
+\end{align}
+となる．これを\cref{eq:5}に代入すると$0<a<1$より
+\begin{align}
+ (1-\sqrt{a})-r_5= (1-\sqrt{a})+\dfrac{1-\sqrt{a}}{3+\sqrt{a}}=\dfrac{(1-\sqrt{a})(\sqrt{a}+2)}{\sqrt{a}+3} \ge 0
+\end{align}
+であり，よって\cref{eq:6}の$r_5$は\cref{eq:5}を満たして十分である．
 
-$p=t+3$とおくと，$3<p<4$で，
+このもとで\cref{eq:4}に代入して，\cref{eq:1}に注意すると
+\begin{align}
+ DE 
+   &=\sqrt{\dfrac{1-\sqrt{a}}{\sqrt{a}+3}\left(\dfrac{1-\sqrt{a}}{\sqrt{a}+3}+1-\sqrt{a}\right)} \\
+   &=\sqrt{\dfrac{(1-\sqrt{a})^2}{(\sqrt{a}+3)^2}(\sqrt{a}+2)^2} \\
+   &=\dfrac{(1-\sqrt{a})(\sqrt{a}+2)}{\sqrt{a}+3} 
+\end{align}
+だから\cref{eq:2}に代入すると
 \begin{align}
 \begin{split}
-f(t)&=\dfrac{(p-2)^2(4-p)}{p} \\
-\dfrac{df}{dp}&=\dfrac{p[2(p-2)(4-p)-(p-2)^2]-(p-2)^2(4-p)}{p^2}=\dfrac{-2(p-2)(p^2-2p-4)}{p^2}
-\end{split}
+S(a)
+  &=AD\cdot BE \\
+  &=(AE+ED)\cdot BE \\
+  &=\left(AE+ED\right)\cdot r_3 \\
+  &=\left(\sqrt{a}+\dfrac{(1-\sqrt{a})(\sqrt{a}+2)}{\sqrt{a}+3}\right)\cdot\dfrac{1-a}{2} \\
+  &=\dfrac{(\sqrt{a}+1)(1-a)}{\sqrt{a}+3} 
+\end{split}\label{eq:7}
 \end{align}
-より，下表をうる．
+が求める面積である．
+
+
+(2) 
+簡単のため
+\begin{align}
+ p = \sqrt{a}+3
+\end{align}
+とおくと，\cref{eq:1}の元で
+\begin{align}
+ 3 < p < 4 \label{eq:8}
+\end{align}
+である．\cref{eq:7}の$S$の表示と合わせて，以下\cref{eq:8}の元で
+\begin{align}
+ S(a) = f(p) = \dfrac{(p-2)^2(4-p)}{p}
+\end{align}
+の最大値を求めれば良い．
+$f(p)$の一階微分を計算すると
+\begin{align}
+  \dfrac{df}{dp}&=\dfrac{p[2(p-2)(4-p)-(p-2)^2]-(p-2)^2(4-p)}{p^2}=\dfrac{-2(p-2)(p^2-2p-4)}{p^2}
+\end{align}
+だから増減表は以下のようになる．
+
 \begin{table}[htb]
   \centering
 \begin{tabular}{c|ccccc}
@@ -91,8 +153,11 @@ $f'$ & & $+$ & $0$ & $-$ & \\
 $f$ & & $\nearrow$ & & $\searrow$ &
 \end{tabular}
 \end{table}
-したがって，$p=1+\sqrt{5}$で最大値$10\sqrt{5}-22$をとる．
-
+したがって$f$すなわち$S$は$p=1+\sqrt{5}$で最大値をとり，その時の値は
+\begin{align}
+ \max S = f(p=1+\sqrt{5}) = 10\sqrt{5}-22
+\end{align}
+である．
 
 \newpage
 

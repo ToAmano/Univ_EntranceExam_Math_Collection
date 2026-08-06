@@ -1,47 +1,73 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-3人を$a_1,a_2,a_3$とし，$a_1$の得点を確率変数$X$とする．
+3人を$a_1,a_2,a_3$として，$i=1,2,3$に対して$a_i$の得点を確率変数$X_i$，引いた数を確率変数$Y_i$とする．
+以下A, Bそれぞれの場合での$X_1$の期待値$E(X_1)$を求めよう．
 
 \subparagraph{Aの場合}
 
-$X=k$となる確率$P(X=k)$は，$a_1$が$k$を引き，$a_2,a_3$が$k-1$以下の枚を引く場合．
+$k=1,2,\cdots, n$に対して$X_i=k$となる確率$P(X=k)$は，$a_1$が$k$を引いて$a_2,a_3$が$k-1$以下の枚を引く場合である．
+従って
 \begin{align}
-P(X=1)=0, \qquad P(X=k)=\dfrac{1}{n^3}(k-1)^2\quad(k=2,\cdots,n)
+P(X_1=1)=0, \qquad P(X_1=k)=\dfrac{1}{n^3}(k-1)^2\quad(k=2,\cdots,n)
 \end{align}
-他の場合の$a_1$の得点は0だから，
+と書ける．後者の表式が$k=1$の時にも成立するので結局
+\begin{align}
+ P(X_1=k)=\dfrac{1}{n^3}(k-1)^2
+\end{align}
+である．従って求める期待値は
 \begin{align}
 \begin{split}
-E&=\sum_{k=2}^n\dfrac{k}{n^3}(k-1)^2=\dfrac{1}{n^3}\sum_{k=2}^n\left\{k(k-1)(k-2)+k(k-1)\right\} \\
-&=\dfrac{1}{n^3}\left[\dfrac{1}{4}(n+1)n(n-1)(n-2)+\dfrac{1}{3}(n+1)n(n-1)\right] \\
-&=\dfrac{(n+1)(n-1)(3n-2)}{12n^2}
-\end{split}
+ E(X_1)
+  &=\sum_{k=1}^n kP(X_1=k) \\
+  &=\sum_{k=2}^n\dfrac{k}{n^3}(k-1)^2 \\
+  &=\dfrac{1}{n^3}\sum_{k=2}^n\left\{k(k-1)(k-2)+k(k-1)\right\} \\
+  &=\dfrac{1}{n^3}\left[\dfrac{1}{4}(n+1)n(n-1)(n-2)+\dfrac{1}{3}(n+1)n(n-1)\right] \\
+  &=\dfrac{1}{12n^3}(n+1)(n-1)(3n-2)
+\end{split} \label{eq:1}
 \end{align}
+である．
 
 \subparagraph{Bの場合}
 
-$a_1$の引いた数が$Y_1$である時，$a_1$が得点するのは，$a_2,a_3$の引いた数$Y_2,Y_3$として，$Y_2,Y_3\le Y_1-1$の時．したがって，この時の$a_1$の得点の期待値$E(Y_1)$は，$Y_1=1$の時0，$Y_1\ge2$のとき，
+$a_1$の引いた数が$Y_1$である時に$a_1$が得点する場合は，$Y_2,Y_3\le Y_1-1$の時でありこの時の得点は$X_1=Y_2+Y_3$となる．
+従って$a_1$が$Y_1$を引いた時の得点の期待値$E_{Y_1}(X_1)$は$Y_1=1$の時$0$であって，$Y_1\ge2$のときは
 \begin{align}
-E(Y_1)=\dfrac{1}{n^3}\left(\text{条件をみたす全ての}(Y_2,Y_3)\text{についての}Y_2+Y_3\text{の和}\right)
+ E_{Y_1}(X_1)
+   &=\dfrac{1}{n^2}\left(\text{条件をみたす全ての}(Y_2,Y_3)\text{についての}X_1=Y_2+Y_3\text{の和}\right) \\
+   &=\dfrac{1}{n^2}\sum_{(Y_2,Y_3) \le Y_1-1}(Y_2+Y_3) 
 \end{align}
-であるから
+ここで，$(Y_2,Y_3)$は$Y_2=1,2,\cdots,Y_1-1$および$Y_3=1,2,\cdots,Y_1-1$の範囲で独立に選べるから，$Y_2$一つに対して$Y_3=1,2,\cdots, Y_1-1$が対応する．
+従って
 \begin{align}
-E(Y_1)=\dfrac{1}{n^3}\cdot2(Y_1-1)\{1+\cdots+(Y_1-1)\}=\dfrac{1}{n^3}(Y_1-1)^2Y_1
+ E_{Y_1}(X_1)
+   &=\dfrac{1}{n^2}\left(Y_1-1\right)\left(\sum_{Y_2=1}^{Y_1-1}Y_2+\sum_{Y_3=1}^{Y_1-1}Y_3\right) \\
+   &=\dfrac{1}{n^2}\left(Y_1-1\right)\left(\dfrac{(Y_1-1)Y_1}{2}+\dfrac{(Y_1-1)Y_1}{2}\right) \\
+   &=\dfrac{1}{n^2}(Y_1-1)^2Y_1
 \end{align}
-したがって，もとめる期待値$E'$は
+である．これは$Y_1=1$の時の$E=0$も満たすから，全ての$Y_1$について
 \begin{align}
-E'=\sum_{Y_1=1}^nE(Y_1)=\dfrac{1}{12n^2}(n+1)(n-1)(3n-2)
+ E_{Y_1}(X_1) = \dfrac{1}{n^2}(Y_1-1)^2Y_1
 \end{align}
+である．
 
-よって，いずれの場合も
+これを全ての$Y_1$について平均すれば全体の期待値が出るから，
+\begin{align}
+ E(X_1) 
+   &= \dfrac{1}{n}\sum_{Y_1=1}^{n}E_{Y_1}(X_1) \\
+   &= \dfrac{1}{n}\sum_{Y_1=1}^{n} \dfrac{1}{n^2}(Y_1-1)^2Y_1 \\
+   &= \dfrac{1}{n^3}\left(\sum_{Y_1=1}^{n} (Y_1-1)^3 + \sum_{Y_1=1}^{n}(Y_1-1)^2 \right) \\
+   &= \dfrac{1}{n^3}\left(\dfrac{(n-1)^2n^2}{4}+\dfrac{(n-1)n(2n-1)}{6}\right) \\
+   &= \dfrac{1}{12n^2}(n-1)(n+1)(3n-2) \label{eq:2}
+\end{align}
+である．
+
+\cref{eq:1,eq:2}よりA, Bいずれの場合も求める期待値は
 \begin{align}
 \dfrac{1}{12n^2}(n+1)(n-1)(3n-2)
 \end{align}
+である．
 
 
 \end{document}
