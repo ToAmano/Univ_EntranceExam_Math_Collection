@@ -287,16 +287,28 @@ const ogImageUrl = new URL(`${baseUrl}/ogp-default.png`, Astro.site).href;
 			}
 
 			/* \subparagraph (場合分けラベル: "1°...の時" 等) 用。
-			   通常の見出しというより地の文中の区切りラベルなので、
-			   h3 までより軽めに: 左アクセントバー + 控えめな余白。 */
+			   見出しだけでなく、次のケースが始まるまでの本文全体を
+			   .case-block で囲み、境界線を本文末尾まで連続させる
+			   (見出しにしか線が入らないと、どこまでがそのケースの
+			   話なのか読み進めても分かりにくいため。Issue #584)。 */
+			.markdown-body .case-block {
+				margin: 1.5rem 0;
+				padding: 0.1rem 1.25rem 1rem;
+				border-left: 3px solid var(--accent);
+				background: rgba(167, 139, 250, 0.05);
+				border-radius: 0 10px 10px 0;
+			}
+
+			.markdown-body .case-block + .case-block {
+				margin-top: 1.5rem;
+			}
+
 			.markdown-body h4 {
 				font-size: 1rem;
 				font-weight: 600;
 				color: var(--accent);
-				margin-top: 1.25rem;
+				margin-top: 1rem;
 				margin-bottom: 0.5rem;
-				padding-left: 0.75rem;
-				border-left: 3px solid var(--accent);
 			}
 
 			.markdown-body table {
