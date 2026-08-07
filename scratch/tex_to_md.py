@@ -334,6 +334,21 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     raw_tex = re.sub(r'\\selectfont', '', raw_tex)
     raw_tex = re.sub(r'\\centerline', '', raw_tex)
 
+    # 手書き解答の自動文字起こしファイルなどにある
+    # \begin{flushright}\footnotesize\textit{...}\end{flushright} 形式の
+    # 注記（「自動文字起こし・要確認」等）を、そのまま出すと生の LaTeX が
+    # 漏れて見えてしまうため、警告バナー風の HTML に変換する。
+    def _convert_editorial_note(m):
+        note = m.group(1).strip()
+        return f'\n\n<div class="editorial-note">{note}</div>\n\n'
+
+    raw_tex = re.sub(
+        r'\\begin\{flushright\}\s*\\footnotesize\\textit\{(.*?)\}\s*\\end\{flushright\}',
+        _convert_editorial_note,
+        raw_tex,
+        flags=re.DOTALL,
+    )
+
     # 3. tabular 環境の pypandoc による完全自動 Markdown 表変換
     def convert_tabular_block(tab_input):
         tab_str = tab_input.group(0) if hasattr(tab_input, 'group') else str(tab_input)
