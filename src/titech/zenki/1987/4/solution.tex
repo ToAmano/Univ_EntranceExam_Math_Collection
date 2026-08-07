@@ -1,29 +1,46 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$x(t)=t+e^{at},\ y(t)=-t+e^{at}$とおく．又，$p=e^t$とする．
+
+\paragraph{(1)}
+わかりやすいように
 \begin{align}
-x'(t)=1+ap^a, \qquad y'(t)=-1+ap^a \quad\cdots\text{①}
+ \begin{cases}
+  x(t)=t+e^{at} \\
+  y(t)=-t+e^{at}
+ \end{cases} \label{eq:1}
 \end{align}
-$a>0$から，$x'(t)>0$だから
+とおく．一階微分を計算すると
 \begin{align}
-\dfrac{dy}{dx}=\dfrac{y'(t)}{x'(t)}=\dfrac{-1+ap^a}{1+ap^a} \quad\cdots\text{②}
+ \begin{cases}
+   x'(t)=1+ae^{at} \\
+   y'(t)=-1+ae^{at} \quad\cdots\text{①}  
+ \end{cases} \label{eq:2}
 \end{align}
-題意から，$y(t)=0$の時，$dy/dx=0$なる$t$がある．$dy/dx=0\iff a\cdot p^a=1$（$\because②$）で，これをといて，（$a>0$）
+である．
+$a>0$より$x'(t)>0$だから$\dfrac{dy}{dx}$は
 \begin{align}
-t=-\dfrac{1}{a}\log a
+\dfrac{dy}{dx}=\dfrac{y'(t)}{x'(t)}=\dfrac{-1+ae^{at}}{1+ae^{at}} \quad\cdots\text{②}
 \end{align}
-この時$y(t)=0$となるから，
+となる．
+
+題意より$y(t)=0$かつ$dy/dx=0$なる$t$があるから，これを$t_0$と置く．
+まず\cref{eq:2}より
+\begin{align}
+  &\dfrac{dy}{dx}=0 \\
+  &-1+ae^{at_0} = 0 \\
+\therefore 
+ &t_0=-\dfrac{1}{a}\log a
+\end{align}
+である．ついで$y(t_0)=0$に\cref{eq:1}に代入して
 \begin{align}
 \dfrac{1}{a}\log a+\dfrac{1}{a}=0 \quad\therefore\ a=\dfrac{1}{e}\ (>0)
 \end{align}
+が求める$a$である．
 
-\textbf{(2)} ②及び(1)の結果から下表をうる．
+\paragraph{(2)} 
+(1)の結果を\cref{eq:1,eq:2}に代入すると曲線$C$の増減表は以下のようになる．
 \begin{table}[htb]
   \centering
 \begin{tabular}{c|ccccc}
@@ -36,41 +53,91 @@ $y'$ & & $-$ & $0$ & $+$ & \\
 $(x,y)$ & $\searrow$ & & $(2e,0)$ & & $\nearrow$
 \end{tabular}
 \end{table}
-$t\to+\infty$の時，$x(t),y(t)\to+\infty$．$t\to-\infty$の時，$x(t)\to-\infty,\ y(t)\to+\infty$．
+また極限値は
+\begin{align}
+ \lim_{t\to+\infty}x(t) = +\infty, \quad \lim_{t\to+\infty}y(t) = +\infty \\
+ \lim_{t\to-\infty}x(t) = -\infty, \quad \lim_{t\to-\infty}y(t) = +\infty 
+\end{align}
+である．
+
+また，$y=x$との上下関係を調べると
 \begin{align}
 x(t)\le y(t)\iff t+e^{t/e}\le-t+e^{t/e}\iff t\le0 \quad(x(0)=1,\ y(0)=1)
 \end{align}
-とあわせて，グラフの概形は下図でもとめる面積$S$は下図斜線部．
+である．
+
+以上から$C$の概形は下図で，もとめる面積$S$は下図斜線部である．
 
 \begin{figure}[htb]
 \begin{center}
-\begin{tikzpicture}[scale=0.55, >=stealth]
-  % 座標軸
-  \draw[->] (-0.5,0) -- (10,0) node[right] {$x$};
-  \draw[->] (0,-0.5) -- (0,6) node[above] {$y$};
+\begin{tikzpicture}[scale=0.8, >=stealth]
+
+  % --- 1. 媒介変数 t の関数定義 (a = 1/e) ---
+  % x(t) = t + exp(t/e),  y(t) = -t + exp(t/e)  (e ≒ 2.71828)
+  % t=0 で (1, 1), t=e で (2e, 0) ≒ (5.436, 0)
+
+  % --- 2. 面積 S (斜線部) のハッチング描画 (グラフの下層に配置) ---
+  % (i) 三角形 OAB : (0,0) -> (1,0) -> (1,1) -> cycle
+  \fill[pattern=north east lines, pattern color=gray!80] 
+    (0,0) -- (1,0) -- (1,1) -- cycle;
+
+  % (ii) 曲線 C と x=1, x-軸で囲まれた領域 (t: 0 -> e)
+  \fill[pattern=north east lines, pattern color=gray!80] 
+    (1,0) -- (1,1) 
+    -- plot[domain=0:2.71828, samples=50, variable=\t] 
+         ({\t + exp(\t/2.71828)}, {-\t + exp(\t/2.71828)}) 
+    -- cycle;
+
+  % --- 3. 座標軸の描画 ---
+  \draw[->, thick] (-1.5,0) -- (7.0,0) node[right] {$x$};
+  \draw[->, thick] (0,-1.0) -- (0,4) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 4. 補助線と直線 y=x ---
   % 直線 y=x
-  \draw[dashed] (0,0) -- (6,6) node[right] {$y=x$};
-  % 曲線 C: x=t+e^{t/e}, y=-t+e^{t/e} (t=0で(1,1), t=eで(2e,0))
-  \draw[domain=-1.3:2.72, smooth] plot ({\x+exp(\x/2.71828)},{-\x+exp(\x/2.71828)}) node[right] {$C$};
-  % 面積S: 三角形部分(0,0)-(1,1)-(1,0)
-  \fill[gray!30] (0,0) -- (1,1) -- (1,0) -- cycle;
-  % 面積S: 曲線Cとx軸で囲まれた部分 (t=0からeまで)
-  \fill[gray!30, domain=0:2.71828, variable=\tau] plot ({\tau+exp(\tau/2.71828)},{-\tau+exp(\tau/2.71828)}) -- (1,0) -- cycle;
-  \fill (1,1) circle (2.2pt) node[above] {$1$};
-  \fill (5.436,0) circle (2.2pt) node[below] {$2e$};
+  \draw[dashed, gray!80] (-1.0,-1.0) -- (4,4) node[above right, black] {$y=x$};
+
+  % 点 B(1,0) と A(1,1) を結ぶ垂線 x=1
+  \draw[dashed, gray!80] (1,0) node[below] {$1$} -- (1,1);
+
+  % --- 5. 曲線 C の描画 ---
+  % t=-1.2 から t=2.8 程度まで描画して曲線の概形を示す
+  \draw[ultra thick, blue!80!black, domain=-1.2:3.5, samples=100, smooth, variable=\t] 
+    plot ({\t + exp(\t/2.71828)}, {-\t + exp(\t/2.71828)}) 
+    node[above right] {$C$};
+
+  % --- 6. 頂点・境界点のプロットとラベル ---
+  % 点 A(1, 1)
+  \fill[black] (1,1) circle (2pt) node[above] {$A$};
+  
+  % 点 B(1, 0)
+  \fill[black] (1,0) circle (2pt) node[below right] {$B$};
+
+  % 点 D(2e, 0) - 最下点・x軸との交点
+  \fill[red!80!black] (5.436,0) circle (2pt) node[below] {$D$};
+
+  % y軸上の目盛り (y(0)=1)
+  \draw[dotted, gray] (0,1) node[left] {$1$} -- (1,1);
+
 \end{tikzpicture}
 \end{center}
 \caption{曲線$C$の概形と面積$S$}
 \end{figure}
 
+
+図のように$O(0,0), A(1,1), B(1,0), D(2e,0)$と置くと面積$S$は$triangle OAB$と，曲線$D$と$x=1, y=0$の囲む部分の二つの面積の合計であるから
 \begin{align}
-S=\triangle+\int_1^{2e}y(t)dx=\dfrac{1}{2}+\int_1^{2e}y(t)dx=\dfrac{1}{2}+\int_0^ey(t)\dfrac{dx}{dt}dt \quad\cdots\text{③}
+S=\triangle OAB + ABC = \dfrac{1}{2}+\int_1^{2e}y(t)dx=\dfrac{1}{2}+\int_0^ey(t)\dfrac{dx}{dt}dt  \label{eq:3}
 \end{align}
-ここで，
+である．
+
+ここで\cref{eq:1,eq:2}から被積分関数は
 \begin{align}
-y(t)\dfrac{dx}{dt}=\left(-t+e^{\frac{t}{e}}\right)\left(1+\dfrac{1}{e}e^{\frac{t}{e}}\right)=\dfrac{1}{e}e^{\frac{2}{e}t}+\left(1-\dfrac{t}{e}\right)e^{\frac{t}{e}}-t \quad\cdots\text{④}
+ y(t)\dfrac{dx}{dt}
+   &=\left(-t+e^{\frac{t}{e}}\right)\left(1+\dfrac{1}{e}e^{\frac{t}{e}}\right) \\
+   &=\dfrac{1}{e}e^{\frac{2}{e}t}+\left(1-\dfrac{t}{e}\right)e^{\frac{t}{e}}-t \label{eq:4}
 \end{align}
-であり，各項計算して，
+であり，各項個別に積分を計算すると
 \begin{align}
 \begin{split}
 \int_0^e\dfrac{1}{e}e^{\frac{2}{e}t}dt&=\dfrac{1}{2}\left[e^{\frac{2}{e}t}\right]_0^e=\dfrac{1}{2}(e^2-1) \\
@@ -78,15 +145,11 @@ y(t)\dfrac{dx}{dt}=\left(-t+e^{\frac{t}{e}}\right)\left(1+\dfrac{1}{e}e^{\frac{t
 \int_0^et\,dt&=\dfrac{1}{2}e^2
 \end{split}
 \end{align}
-だから④に代入して，
+だから\cref{eq:3}に代入して，
 \begin{align}
-④=\dfrac{1}{2}(e^2-1)+e^2-2e-\dfrac{1}{2}e^2=e^2-2e-\dfrac{1}{2}
+S = \dfrac{1}{2} + \dfrac{1}{2}(e^2-1)+e^2-2e-\dfrac{1}{2}e^2=e^2-2e
 \end{align}
-だから，③から
-\begin{align}
-S=e(e-2)
-\end{align}
-
+が求める面積である．
 
 \newpage
 
