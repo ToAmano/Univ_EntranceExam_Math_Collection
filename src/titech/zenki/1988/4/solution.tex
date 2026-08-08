@@ -1,37 +1,141 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$C: x^2+y^2=1$，$D: (x-4)^2+y^2=4$．時刻$t$での$P,Q$の座標は
+
+\begin{figure}[htb]
+ \begin{center}
+  \begin{tikzpicture}[scale=1.1, >=stealth]
+
+  % --- 1. 座標軸の描画 ---
+  \draw[->, thick] (-1.8,0) -- (7.0,0) node[right] {$x$};
+  \draw[->, thick] (0,-3.2) -- (0,3.2) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 2. 円 C と円 D の描画 ---
+  % 円 C: 原点中心, 半径 1
+  \draw[thick, blue!80!black] (0,0) circle (1);
+  \node[blue!80!black, above left] at (-0.7,0.7) {$C$};
+
+  % 円 D: (4,0) 中心, 半径 2
+  \draw[thick, red!80!black] (4,0) circle (2);
+  \node[red!80!black, above right] at (6,1) {$D$};
+
+  % 中心 (4,0) のプロット
+  \fill[black] (4,0) circle (1.2pt) node[below] {$4$};
+
+  % --- 3. 一般の時刻 t での動点 P, Q (例: t = 50度 程度) ---
+  % P(cos 2t, sin 2t), Q(4 + 2cos t, 2sin t)
+  \pgfmathsetmacro{\tval}{50}
+  \coordinate (P) at ({cos(2*\tval)}, {sin(2*\tval)});
+  \coordinate (Q) at ({4 + 2*cos(\tval)}, {2*sin(\tval)});
+
+  % 一般の線分 PQ
+  \draw[thick, gray] (P) -- (Q);
+  \draw[dashed, gray] (0,0) -- (P);
+  \draw[dashed, gray] (4,0) -- (Q);
+
+  % 点 P, Q のプロット
+  \fill[blue!80!black] (P) circle (1.8pt) node[above left] {$P$};
+  \fill[red!80!black] (Q) circle (1.8pt) node[above right] {$Q$};
+
+  % 角度 t, 2t のガイド
+  \draw[->, thin, gray] (0.4,0) arc (0:100:0.4);
+  \node[gray, font=\tiny] at (0.25,0.4) {$2t$};
+  
+  \draw[->, thin, gray] (4.5,0) arc (0:50:0.5);
+  \node[gray, font=\tiny] at (4.7,0.2) {$t$};
+
+  % --- 4. 【最大値の状況】 c = 3/8 のときの P_max, Q_max ---
+  % c = 3/8 => t ≒ 67.975度
+  %\pgfmathsetmacro{\tmax}{acos(3/8)}
+  %\coordinate (Pmax) at ({cos(2*\tmax)}, {sin(2*\tmax)});
+  %\coordinate (Qmax) at ({4 + 2*cos(\tmax)}, {2*sin(\tmax)});
+
+  % 最大距離の線分 PQ (強調)
+  %\draw[ultra thick, green!50!black] (Pmax) -- (Qmax) 
+  %  node[midway, above, font=\small, sloped] {$\max|PQ| = \frac{5\sqrt{5}}{2}$};
+
+  % 最大値を与える点のプロット
+  %\fill[green!40!black] (Pmax) circle (2pt) node[below left, font=\small] {$P_{\text{max}}$};
+  %\fill[green!40!black] (Qmax) circle (2pt) node[above right, font=\small] {$Q_{\text{max}}$};
+
+  % --- 5. 【最小値の状況】 c = -1 (t = 180度) のときの点 (1,0) と (2,0) ---
+  % P_min = (1, 0), Q_min = (2, 0)
+  %\coordinate (Pmin) at (1,0);
+  %\coordinate (Qmin) at (2,0);
+  
+  % \draw[ultra thick, orange!90!black] (Pmin) -- (Qmin);
+  % \fill[orange!90!black] (Pmin) circle (1.8pt);
+  % \fill[orange!90!black] (Qmin) circle (1.8pt);
+  % \node[orange!90!black, below, font=\small] at (1.5,0) {$\min|PQ|=1$};
+
+  % X軸上の目盛り
+  \node[below left] at (1,0) {$1$};
+  \node[below right] at (2,0) {$2$};
+
+\end{tikzpicture}
+  \caption{円$C, D$と点$P, Q$の様子．}
+ \end{center}
+\end{figure}
+
+$C,D$の方程式は
 \begin{align}
-P(\cos2t,\sin2t), \qquad Q(4+2\cos t,2\sin t)
+ \begin{cases}
+  C: x^2+y^2=1 \\
+  D: (x-4)^2+y^2=4
+ \end{cases}
 \end{align}
-とおける．以下$c=\cos t,\ s=\sin t$とおく．
+である．従って時刻$t$での$P,Q$の座標は
+\begin{align}
+P(\cos2t,\sin2t), \qquad Q(4+2\cos t,2\sin t) \label{eq:1}
+\end{align}
+とおける．
+
+以下簡単のため$c=\cos t,\ s=\sin t$とおいて$f(\theta)=|PQ|^2$を計算すると
 \begin{align}
 \begin{split}
-|PQ|^2&=(\cos2t-2\cos t-4)^2+(\sin2t-2\sin t)^2 \\
-&=(\cos^22t+\sin^22t)+\left\{(2c+4)^2+4s^2\right\}-2(2c+4)\cos2t-4s\sin2t \\
-&=1+(4+16+16c)-4(c+2\cos2t) \\
-&=21+16c-4c-16c^2+8 \\
-&=-16c^2+12c+29 \\
-&=-16\left(c-\dfrac{3}{8}\right)^2+29+\dfrac{9}{4}
+f(\theta) \\
+  &=|PQ|^2 \\
+  &=(\cos2t-2\cos t-4)^2+(\sin2t-2\sin t)^2 \\
+  &=(\cos^22t+\sin^22t)+\left\{(2c+4)^2+4s^2\right\}-2(2c+4)\cos2t-4s\sin2t \\
+  &=1+(4+16+16c)-8\cos 2t - 4c\cos 2t-4s\sin 2t \\
+  &=21+16c-8\cos 2t - 4c\cos 2t-4s\sin 2t
 \end{split}
 \end{align}
-から，$-1\le c\le1$とあわせて，
-
-\subparagraph{$1^\circ$ maxについて}
-
-$c=\dfrac{3}{8}$で$\max|PQ|=\dfrac{5\sqrt{5}}{2}$，この時$P\left(-\dfrac{23}{32},\pm\dfrac{3\sqrt{55}}{32}\right)$，$Q\left(\dfrac{19}{4},\pm\dfrac{\sqrt{55}}{4}\right)$（複号同順）
-
-\subparagraph{$2^\circ$ minについて}
-
-$c=-1$で$\min|PQ|=1$，この時$P(1,0)$，$Q(2,0)$
-
 である．
+さらに倍角公式$\cos 2t = 2c^2-1 = c^2-s^2, \sin 2t = 2cs$を代入すると
+\begin{align}
+ f(\theta)
+  &= 21+16c-8(2c^2-1) - 4c(c^2-s^2) -8s^2c \\
+  &= 21+16c-16c^2+8 -4c^3 -4cs^2 \\
+  &= 29+16c-16c^2-4c(c^2+s^2) \\
+  &= 29+16c-16c^2-4c \\ 
+  &= -16c^2+12c+29 \\
+  &= -16\left(c-\dfrac{3}{8}\right)^2+\dfrac{125}{4} \label{eq:2}
+\end{align} 
+となる．これは$c$の二次関数だから $-1 \le c \le 1$ での最大最小値を考えれば良い．
+
+\subparagraph{1. 最大値について}
+
+\cref{eq:2}より$|PQ|$は$c=\dfrac{3}{8}$で最大値
+\begin{align}
+ \max |PQ| = \sqrt{f(\theta)} = \dfrac{5\sqrt{5}}{2}
+\end{align}
+をとる．また
+\begin{align}
+ s = \pm \sqrt{1-c^2} = \dfrac{\pm 55}{8}
+\end{align}
+だから，\cref{eq:1}より$P,Q$の座標は$P\left(-\dfrac{23}{32},\pm\dfrac{3\sqrt{55}}{32}\right)$，$Q\left(\dfrac{19}{4},\pm\dfrac{\sqrt{55}}{4}\right)$（複号同順）である．
+
+
+\subparagraph{2. 最小値について}
+
+\cref{eq:2}より$|PQ|$は$c=-1$で最小値
+\begin{align}
+ \min |PQ| = \sqrt{f(\theta)} = 1
+\end{align}
+をとる．この時\cref{eq:1}より$P,Q$の座標は$P(1,0)$，$Q(2,0)$である．
 
 
 \newpage

@@ -1,24 +1,97 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-$A: x^2+y^2=r^2$，$B: y=\cos\left(\sqrt{\dfrac{\pi}{2}}x\right)$とおく．$A$と$B$の共有点の数は$y$を消した
+
+\begin{figure}[htb]
+ \begin{center}
+  \begin{tikzpicture}[scale=1.5, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-3.8,0) -- (3.8,0) node[right] {$x$};
+  \draw[->, thick] (0,-1.8) -- (0,1.8) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 2. 曲線 y = cos( sqrt(pi/2) * x ) の描画 ---
+  % 定数: sqrt(pi/2) ≒ 1.2533
+  % x 軸との交点: x = ± sqrt(pi/2) ≒ ±1.2533, ±3*sqrt(pi/2) ≒ ±3.76
+  \draw[ultra thick, blue!80!black, domain=-3.5:3.5, samples=150, smooth] 
+    plot (\x, {cos(1.253314*180/3.1415926*\x)}) 
+    node[above right] {$y = \cos\left(\sqrt{\frac{\pi}{2}}x\right)$};
+
+  % --- 3. 円 x^2 + y^2 = r^2 の描画 (r の値を変えた例) ---
+  
+  % (iii) r = 1.8 (1 < r < r_1: 山・谷とさらに交わる)
+  \draw[thick, orange!90!black, dotted] (0,0) circle (1.8);
+  \node[orange!90!black, font=\small, anchor=south east] at (-1.27, 1.27) {$r$};
+
+  % --- 4. 境界点・目盛りのプロット ---
+  % y 軸との交点 (0, 1)
+  \fill[black] (0,1) circle (1.2pt) node[above left] {$1$};
+  \fill[black] (0,-1) circle (1.2pt) node[below left] {$-1$};
+
+  % x 軸との最初の交点 x = ± sqrt(pi/2)
+  \fill[blue!80!black] (1.2533,0) circle (1.2pt) node[below right, font=\small] {$\sqrt{\frac{\pi}{2}}$};
+  \fill[blue!80!black] (-1.2533,0) circle (1.2pt) node[below left, font=\small] {$-\sqrt{\frac{\pi}{2}}$};
+
+\end{tikzpicture}
+\caption{$y=\cos\left(\sqrt{\dfrac{\pi}{2}}x \right)$と円の様子．}
+ \end{center}
+\end{figure}
+
+
+
+$A: x^2+y^2=r^2$，$B: y=\cos\left(\sqrt{\dfrac{\pi}{2}}x\right)$とおく．$A$と$B$の共有点の数は$y$を消去した$x$の方程式
 \begin{align}
-x^2+\cos^2\left(\sqrt{\dfrac{\pi}{2}}x\right)=r^2 \quad\cdots\text{①}
+x^2+\cos^2\left(\sqrt{\dfrac{\pi}{2}}x\right)=r^2 \quad\cdots\text{①} \label{eq:1}
 \end{align}
-の解の数に等しい．この左辺を$f(x)$とおく．$f(x)$は偶関数だから，$x\ge0$でかんがえる．
+の解の数に等しい．そこでこの左辺を$f(x)$とおく．$f(x)$は偶関数だから$x\ge0$でかんがえれば十分である．
+$f$の一階微分を計算すると
 \begin{align}
-f'(x)=2x+2\cos\left(\sqrt{\dfrac{\pi}{2}}x\right)\left(-\sqrt{\dfrac{\pi}{2}}\sin\left(\sqrt{\dfrac{\pi}{2}}x\right)\right)=2x-\sqrt{\dfrac{\pi}{2}}\sin\left(\sqrt{2\pi}x\right)
+f'(x)
+  &=2x+2\cos\left(\sqrt{\dfrac{\pi}{2}}x\right)\left(-\sqrt{\dfrac{\pi}{2}}\sin\left(\sqrt{\dfrac{\pi}{2}}x\right)\right) \\
+  &=2x-\sqrt{\dfrac{\pi}{2}}\sin\left(\sqrt{2\pi}x\right)
 \end{align}
-より，
-\begin{align}
-f'(x)\ge0 \iff 2x\ge\sqrt{\dfrac{\pi}{2}}\sin\left(\sqrt{2\pi}x\right)
-\end{align}
-だから左図から下表をうる．
+である．ここで$y=2x$と$y=\sqrt{\dfrac{\pi}{2}}\sin\left(\sqrt{2\pi}x\right)$のグラフは下図のようになる．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=2, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-0.3,0) -- (2.0,0) node[right] {$x$};
+  \draw[->, thick] (0,-0.3) -- (0,2.0) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 2. 直線 y = 2x の描画 ---
+  \draw[ultra thick, blue!80!black, domain=0:1.2, samples=2] 
+    plot (\x, {2*\x}) node[above] {$y = 2x$};
+
+  % --- 3. 曲線 y = sqrt(pi/2) * sin(sqrt(2pi) * x) の描画 ---
+  % sqrt(pi/2) ≒ 1.2533, sqrt(2pi) ≒ 2.5066 (rad)
+  % 最初の山の頂点は x = sqrt(pi/8) ≒ 0.6267 で y = sqrt(pi/2) ≒ 1.2533
+  \draw[ultra thick, red!80!black, domain=0:1.4, samples=100, smooth] 
+    plot (\x, {1.253314 * sin(2.506628 * \x * 180 / 3.1415926)}) 
+    node[right] {$y = \sqrt{\frac{\pi}{2}}\sin\left(\sqrt{2\pi}x\right)$};
+
+  % --- 4. 交点 x_0 = 1/2 * sqrt(pi/2) ≒ 0.6267 のプロット ---
+  % この交点では y = 2*x_0 = sqrt(pi/2) ≒ 1.2533 で正弦波の頂点と一致する
+  \coordinate (X0) at (0.626657, 1.253314);
+  \draw[dashed, gray] (0.626657,0) node[below, black, font=\small] {$\frac{1}{2}\sqrt{\frac{\pi}{2}}$} -- (X0);
+  \draw[dashed, gray] (0,1.253314) node[left, black, font=\small] {$\sqrt{\frac{\pi}{2}}$} -- (X0);
+  \fill[black] (X0) circle (1.5pt);
+
+  % --- 5. 符号 (+ / -) の視覚的注釈 ---
+  %\node[font=\small, red!80!black] at (0.35, 1.1) {$f'(x) < 0$};
+  %\node[font=\small, blue!80!black] at (0.9, 1.2) {$f'(x) > 0$};
+
+\end{tikzpicture}
+\caption{$f'(x)$ の正負と増減の境界}
+\end{center}
+\end{figure}
+
+増減表は以下のようになる．
 \begin{table}[htb]
   \centering
 \begin{tabular}{c|ccccc}
@@ -29,7 +102,63 @@ $f'$ & & $-$ & $0$ & $+$ & \\
 $f$ & $1$ & $\searrow$ & & $\nearrow$ & $+\infty$
 \end{tabular}
 \end{table}
-したがって，グラフは右上図よって解は
+
+ここで
+\begin{align}
+ f\left(\dfrac{1}{2}\sqrt{\dfrac{\pi}{2}}\right) = \dfrac{\pi}{8}+\dfrac{1}{2}
+\end{align}
+であることと，$f(x)$が偶関数であることから，$y=f(x)$の概形は以下のようになる．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=2, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-2,0) -- (2,0) node[right] {$x$};
+  \draw[->, thick] (0,-0.3) -- (0,2) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 2. 曲線 f(x) の描画 ---
+  % f(x) = x^2 + cos^2( sqrt(pi/2) * x )
+  \draw[ultra thick, blue!80!black, domain=-1.2:1.2, samples=150, smooth] 
+    plot (\x, {\x*\x + (cos(1.253314 * \x * 180 / 3.1415926))^2}) 
+    node[above right] {$y = f(x)$};
+
+  % --- 3. 水平線 y = r^2 の各種境界ケース ---
+  
+  % (i) r^2 = 1 (極大点 (0,1) を通る: 交点3個)
+  \draw[thick, green!50!black] (-2.2, 1.2) -- (2.2, 1.2) 
+    node[right, font=\small] {$r^2$}; % {$r^2 = 1\ (N=3)$};
+
+  % (ii) r^2 = pi/8 + 1/2 ≒ 0.8927 (極小点を通る: 交点2個)
+  %\draw[thick, red!80!black] (-2.2, 0.8927) -- (2.2, 0.8927) 
+  %  node[right, font=\small] {$r^2 = \frac{\pi}{8}+\frac{1}{2}\ (N=2)$};
+
+  % (iii) pi/8 + 1/2 < r^2 < 1 (間に挟まれる: 交点4個)
+  %\draw[dashed, orange!90!black] (-2.2, 0.946) -- (2.2, 0.946) 
+  %  node[right, font=\small] {$\frac{\pi}{8}+\frac{1}{2} < r^2 < 1\ (N=4)$};
+
+  % --- 4. 重要点のプロットと目盛り ---
+  % y軸上の点 (0, 1)
+  \fill[black] (0, 1.0) circle (1.3pt) node[above left, font=\small] {$1$};
+
+  % 極小点 (±x_0, pi/8 + 1/2)
+  \coordinate (MinR) at (0.626657, 0.8927);
+  \coordinate (MinL) at (-0.626657, 0.8927);
+  
+  \fill[red!80!black] (MinR) circle (1.3pt);
+  \fill[red!80!black] (MinL) circle (1.3pt);
+  
+  \draw[dashed, gray!80!black] (0.626657,0) node[below, font=\small] {$\frac{1}{2}\sqrt{\frac{\pi}{2}}$} -- (MinR);
+  \draw[dashed, gray!80!black] (-0.626657,0) node[below, font=\small] {$-\frac{1}{2}\sqrt{\frac{\pi}{2}}$} -- (MinL);
+  \draw[dashed, gray!80!black] (0, 0.8927) node[left, font=\small] {$\frac{\pi}{8}+\frac{1}{2}$} -- (MinR);
+
+\end{tikzpicture}
+\caption{$y=f(x)$ のグラフと $y=r^2$ の交点の個数}
+\end{center}
+\end{figure}
+
+$f(x)=r^2$の解の数$N(r)$は，グラフ上で$y=f(x)$と$y=r^2$の交点の数に等しいから以下のようになる．
 \begin{align}
 \begin{cases}\displaystyle
 0<r^2<\dfrac{\pi}{8}+\dfrac{1}{2}\ \text{の時} & 0\text{個} \\
@@ -39,7 +168,7 @@ r^2=1 & 3\text{個} \\
 1<r^2 & 2\text{個}
 \end{cases}
 \end{align}
-だから
+これを整理して以下が答えである．
 \begin{align}
 N(r)=
 \begin{cases}\displaystyle
@@ -50,6 +179,53 @@ N(r)=
 \end{cases}
 \end{align}
 
+
+{\bf [解説]}
+実際いくつかの$r$についてプロットしてみると以下のようになる．
+
+\begin{figure}[htb]
+ \begin{center}
+  \begin{tikzpicture}[scale=1.5, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-3.8,0) -- (3.8,0) node[right] {$x$};
+  \draw[->, thick] (0,-1.8) -- (0,1.8) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 2. 曲線 y = cos( sqrt(pi/2) * x ) の描画 ---
+  % 定数: sqrt(pi/2) ≒ 1.2533
+  % x 軸との交点: x = ± sqrt(pi/2) ≒ ±1.2533, ±3*sqrt(pi/2) ≒ ±3.76
+  \draw[ultra thick, blue!80!black, domain=-3.5:3.5, samples=150, smooth] 
+    plot (\x, {cos(1.253314*180/3.1415926*\x)}) 
+    node[above right] {$y = \cos\left(\sqrt{\frac{\pi}{2}}x\right)$};
+
+  % --- 3. 円 x^2 + y^2 = r^2 の描画 (r の値を変えた例) ---
+  
+  % (i) r = 0.6 (r < 1: 交点 2 個)
+  \draw[thick, red!70!black, dashed] (0,0) circle (0.6);
+  \node[red!70!black, font=\small, anchor=south west] at (0.42, 0.42) {$r < 1$};
+
+  % (ii) r = 1.0 (y 軸上で接する境界: 交点 3 個)
+  \draw[thick, green!50!black] (0,0) circle (1.0);
+  \node[green!50!black, font=\small, anchor=north west] at (0.7, -0.7) {$r = 1$};
+
+  % (iii) r = 1.8 (1 < r < r_1: 山・谷とさらに交わる)
+  \draw[thick, orange!90!black, dotted] (0,0) circle (1.8);
+  \node[orange!90!black, font=\small, anchor=south east] at (-1.27, 1.27) {$r > 1$};
+
+  % --- 4. 境界点・目盛りのプロット ---
+  % y 軸との交点 (0, 1)
+  \fill[black] (0,1) circle (1.2pt) node[above left] {$1$};
+  \fill[black] (0,-1) circle (1.2pt) node[below left] {$-1$};
+
+  % x 軸との最初の交点 x = ± sqrt(pi/2)
+  \fill[blue!80!black] (1.2533,0) circle (1.2pt) node[below right, font=\small] {$\sqrt{\frac{\pi}{2}}$};
+  \fill[blue!80!black] (-1.2533,0) circle (1.2pt) node[below left, font=\small] {$-\sqrt{\frac{\pi}{2}}$};
+
+\end{tikzpicture}
+\caption{$y=\cos\left(\sqrt{\dfrac{\pi}{2}}x \right)$と円の様子．}
+ \end{center}
+\end{figure}
 
 \newpage
 

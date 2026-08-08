@@ -1,27 +1,56 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
+与えらえた漸化式
 \begin{align}
-a_{n+1}=\dfrac{1}{(n+1)^2}a_n^2+1, \qquad a_1=1 \quad\cdots\text{①}
+a_{n+1}=\dfrac{1}{(n+1)^2}a_n^2+1, \qquad a_1=1 \label{eq:1}
 \end{align}
-$n\ge2$の時，$a_n<1+\dfrac{1}{n}$であることを帰納的に示す．$a_2=\dfrac{5}{4}$，$1+\dfrac{1}{2}=\dfrac{3}{2}=\dfrac{6}{4}$より，$n=2$で成立．以下$n=k\ (\in\mathbb{N}_{\ge2})$での成立を仮定し，$n=k+1$での成立を示す．①より
+について考える．
+まず$n\ge2$の時$1<a_n<1+\dfrac{1}{n}$であることを帰納的に示す．
+まず\cref{eq:1}から$a_2$を求めると$a_2=\dfrac{5}{4}$より$1<a_2<1+\dfrac{1}{2}$となって，$n=2$では成立する．
+そこで以下$n=k\ (\in\mathbb{N}_{\ge2})$での成立を仮定し，$n=k+1$での成立を示す．
+\cref{eq:1}を用いて$a_{k+1}$をまず上から評価すると
 \begin{align}
-\begin{split}
-a_{k+1}&<\dfrac{(1+\dfrac{1}{k})^2}{(k+1)^2}+1=1+\dfrac{1}{k^2}<1+\dfrac{1}{k+1} \quad(\because k\ge2より) \\
-\Bigl(k^2-k-1&=\left(k-\dfrac{1+\sqrt{5}}{2}\right)\left(k-\dfrac{1-\sqrt{5}}{2}\right),\ \ 2>\dfrac{1+\sqrt{5}}{2}より\Bigr)
-\end{split}
+  a_{k+1}
+   &= \dfrac{1}{(k+1)^2}a_k^2+1 \\ 
+   &<\dfrac{\left(1+\dfrac{1}{k}\right)^2}{(k+1)^2}+1 \\
+   &=1+\dfrac{1}{k^2} \label{eq:2}
 \end{align}
-だから，$n=k+1$でも成立．以上から，$a_n<1+\dfrac{1}{n}$．一方，①から$1\le a_n$だから
+だが，ここで$k \ge 2$の時
 \begin{align}
-1\le a_n<1+\dfrac{1}{n} \quad(a_1=1,\ 1+1=2より)
+ k^2-k-1&=\left(k-\dfrac{1+\sqrt{5}}{2}\right)\left(k-\dfrac{1-\sqrt{5}}{2}\right) > 0 \\
+\therefore
+ k^2 > k+1 \\
+\therefore
+ \dfrac{1}{k+1} > \dfrac{1}{k^2}
 \end{align}
-はさみうちから$a_n\to1$
+だから\cref{eq:2}に代入して
+\begin{align}
+ a_{k+1} < 1+\dfrac{1}{k+1} 
+\end{align}
+である．
 
+次に下から評価すると仮定より$a_{k}>1$だから
+\begin{align}
+ a_{k+1}
+   &= \dfrac{1}{(k+1)^2}a_k^2+1 \\
+   &> \dfrac{1}{(k+1)^2}1^2+1 \\
+   &> 1 
+\end{align}
+である．
+
+従って$n=k+1$でも成立する．
+
+以上から数学的帰納法により$n>2$にたいして
+\begin{align}
+1\le a_n<1+\dfrac{1}{n}
+\end{align}
+である．$n\to\infty$の極限をとると，挟み撃ちの定理より
+\begin{align}
+ \lim_{n\to\infty} a_n = 1
+\end{align}
+である．
 
 \newpage
 

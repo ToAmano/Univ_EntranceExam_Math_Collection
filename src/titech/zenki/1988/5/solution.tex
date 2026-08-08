@@ -1,33 +1,42 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
+新しく
 \begin{align}
-\dfrac{{}_{3n}C_n}{{}_{2n}C_n}=\dfrac{(3n)!}{n!(2n)!}\cdot\dfrac{n!n!}{(2n)!}=\dfrac{(3n)!\,n!}{(2n)!(2n)!}\equiv f(n)
+  f(n) 
+   &=\dfrac{{}_{3n}C_n}{{}_{2n}C_n}=\dfrac{(3n)!}{n!(2n)!}\cdot\dfrac{n!n!}{(2n)!}=\dfrac{(3n)!\,n!}{(2n)!(2n)!}
 \end{align}
-とおく．$f(n)>0$より，$g(n)=\log f(n)^{\frac{1}{n}}$とおくと
+とおくと$\left(f(n)\right)^{\frac{1}{n}}$の$n\to\infty$の極限を求めれば良い．
+$f(n)>0$より$g(n)=\log \left(f(n)^{\frac{1}{n}}\right)$とおくと
 \begin{align}
-g(n)=\dfrac{1}{n}\left(\sum_{k=2n+1}^{3n}\log\dfrac{k}{n}-\sum_{k=n+1}^{2n}\log\dfrac{k}{n}\right) \quad\cdots\text{①}
+  g(n)
+   &= \dfrac{1}{n}\log \left(\dfrac{(3n)!\,n!}{(2n)!(2n)!}\right) \\
+   &= \dfrac{1}{n}\left(\log (3n)! + \log n! - 2\log(2n)!\right) \\
+   &= \dfrac{1}{n}\left(\sum_{k=1}^{3n}\log k + \sum_{k=1}^{n}\log k  - 2\sum_{k=1}^{2n}\log k \right) \\
+   &= \dfrac{1}{n}\left(\sum_{k=2n+1}^{3n}\log k - \sum_{k=n+1}^{2n}\log k \right) \\
 \end{align}
-である．ここで
+ここで$\log n - \log n = 0 $を間に挟むと
 \begin{align}
-\begin{split}
-\dfrac{1}{n}\sum_{k=n+1}^{2n}\log\dfrac{k}{n}\longrightarrow\int_1^2\log x\,dx&=2(\log2+1)-1 \\
-\dfrac{1}{n}\sum_{k=2n+1}^{3n}\log\dfrac{k}{n}\longrightarrow\int_2^3\log x\,dx&=3(\log3+1)-2(\log2+1)
-\end{split}
+ g(n) 
+   &= \dfrac{1}{n}\left(\sum_{k=2n+1}^{3n}\log \dfrac{k}{n} - \sum_{k=n+1}^{2n}\log \dfrac{k}{n} \right) \label{eq:1}
 \end{align}
-だから，①より
+と書ける．ここで区分求積法より
 \begin{align}
-g(n)\longrightarrow3\log3+4-4\log2-4=3\log3-4\log2=\log\dfrac{27}{16}
+ \lim_{n\to\infty}\dfrac{1}{n}\sum_{k=n+1}^{2n}\log\dfrac{k}{n} = \int_1^2\log x\,dx&=2(\log2+1)-1 \\
+ \lim_{n\to\infty}\dfrac{1}{n}\sum_{k=2n+1}^{3n}\log\dfrac{k}{n} = \int_2^3\log x\,dx&=3(\log3+1)-2(\log2+1)
 \end{align}
-以上から，
+だから\cref{eq:1}に代入して
 \begin{align}
-\lim_{n\to\infty}\left(\dfrac{{}_{3n}C_n}{{}_{2n}C_n}\right)^{\frac{1}{n}}=\dfrac{27}{16}
+ &\lim_{n\to\infty}g(n) = 3\log3+4-4\log2-4=3\log3-4\log2=\log\dfrac{27}{16} \\
+\therefore 
+ &\lim_{n\to\infty} \log \left(f(n)^{\frac{1}{n}}\right) = \log\dfrac{27}{16}
 \end{align}
+である．$\log x$の連続性から
+\begin{align}
+ \lim_{n\to\infty} \left(f(n)^{\frac{1}{n}}\right) = \dfrac{27}{16}
+\end{align}
+が求める極限値である．
 
-
+\newpage
 \end{document}
