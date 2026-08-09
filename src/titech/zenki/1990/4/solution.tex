@@ -1,20 +1,24 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$0<x<\dfrac{\pi}{2}\ \cdots$①
+以下
 \begin{align}
-\begin{split}
-f(x)&=\int_0^x\dfrac{d\theta}{\cos\theta}+\int_x^{\frac{\pi}{2}}\dfrac{d\theta}{\sin\theta} \\
-f'(x)&=\dfrac{1}{\cos x}-\dfrac{1}{\sin x}=\dfrac{S-C}{CS} \quad(S=\sin x,\ C=\cos x\text{から，下表を得る})
-\end{split}
+ 0<x<\dfrac{\pi}{2} \label{eq:1}
 \end{align}
+の範囲で考えよう．与えられた関数
+\begin{align} 
+ f(x)&=\int_0^x\dfrac{d\theta}{\cos\theta}+\int_x^{\frac{\pi}{2}}\dfrac{d\theta}{\sin\theta} \label{eq:2}
+\end{align}
+の挙動を考えるために一階微分を計算すると
+\begin{align}
+ f'(x)&=\dfrac{1}{\cos x}-\dfrac{1}{\sin x}=\dfrac{\sin x-\cos x}{\cos x\sin x}
+\end{align}
+だから，増減表は以下のようになる．
+
 \begin{table}[htb]
   \centering
+ \caption{$f(x)$の増減表}
 \begin{tabular}{c|ccccc}
 $x$ & $0$ & & $\dfrac{\pi}{4}$ & & $\dfrac{\pi}{2}$ \\
 \hline
@@ -23,22 +27,32 @@ $f'$ & & $-$ & $0$ & $+$ & \\
 $f$ & & $\searrow$ & & $\nearrow$ &
 \end{tabular}
 \end{table}
-したがって，$f(x)$は$x=\dfrac{\pi}{4}$で最小．
+したがって，$f(x)$は$x=\dfrac{\pi}{4}$で最小である．以下$f\left(\dfrac{\pi}{4}\right)$を計算しよう．
+まず置換積分によって
 \begin{align}
 \begin{split}
-\int_{\frac{\pi}{4}}^{\frac{\pi}{2}}\dfrac{d\theta}{\sin\theta}&=\int_{\frac{\pi}{4}}^0\dfrac{-dt}{\sin\left(\dfrac{\pi}{2}-t\right)} \quad\left(t=\dfrac{\pi}{2}-\theta\right) \\
-&=\int_0^{\frac{\pi}{4}}\dfrac{d\theta}{\cos\theta}
+\int_{\frac{\pi}{4}}^{\frac{\pi}{2}}\dfrac{d\theta}{\sin\theta}
+  &=\int_{\frac{\pi}{4}}^0\dfrac{-dt}{\sin\left(\dfrac{\pi}{2}-t\right)} \quad\left(t=\dfrac{\pi}{2}-\theta\right) \\
+  &=\int_0^{\frac{\pi}{4}}\dfrac{d\theta}{\cos\theta}
 \end{split}
 \end{align}
-からこの時
+だから，\cref{eq:2}に代入して
+\begin{align}
+f\left(\dfrac{\pi}{4}\right)
+  &=2\int_0^{\frac{\pi}{4}}\dfrac{d\theta}{\cos\theta} \\
+  &=2\int_0^{\frac{\pi}{4}}\dfrac{\cos\theta d\theta}{\cos^2\theta} \\
+\end{align}
+である．$x=\sin\theta$と置換すると$\dfrac{dx}{d\theta}=\cos\theta,\cos^2\theta=1-x^2$だから
 \begin{align}
 \begin{split}
-f\left(\dfrac{\pi}{4}\right)&=2\int_0^{\frac{\pi}{4}}\dfrac{d\theta}{\cos\theta} \\
-&=2\int_0^{\frac{\sqrt{2}}{2}}\dfrac{1}{1-x^2}dx \\
-&=\left[\log(x+1)-\log(1-x)\right]_0^{\frac{\sqrt{2}}{2}} \\
-&=\log\dfrac{1+\dfrac{\sqrt{2}}{2}}{1-\dfrac{\sqrt{2}}{2}}=\log\dfrac{2+\sqrt{2}}{2-\sqrt{2}}
+ f\left(\dfrac{\pi}{4}\right) 
+  &=2\int_0^{\frac{\sqrt{2}}{2}}\dfrac{1}{1-x^2}dx \\
+  &=\left[\log(x+1)-\log(1-x)\right]_0^{\frac{\sqrt{2}}{2}} \\
+  &=\log\dfrac{1+\dfrac{\sqrt{2}}{2}}{1-\dfrac{\sqrt{2}}{2}} \\
+  &=\log\dfrac{2+\sqrt{2}}{2-\sqrt{2}}
 \end{split}
 \end{align}
+が求める最小値である．
 
 
 \newpage

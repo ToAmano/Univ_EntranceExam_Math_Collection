@@ -1,28 +1,36 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-\begin{align}
-x_i>0, \qquad \sum_{i=1}^nx_i=k \quad\cdots\text{①}
-\end{align}
-$A_n=\displaystyle\sum_{i=1}^nx_i\log x_i$，$B_n=k\log\dfrac{k}{n}$とおく．「$A_n\ge B_n\ \cdots$②が任意の$n\in\mathbb{N}$で成立すること」…③を帰納法で示す．$n=1$の時の成立は明らかなので，$n=p$での③の成立を仮定し，$n=p+1$でも成立することを示す．
 
-$p+1$個の正数$x_i\ (i=1,2,\cdots,p+1)$に対し，$\displaystyle\sum_{i=1}^{p+1}x_i=k$とし，$\displaystyle\sum_{i=1}^px_i=\ell\ (0<\ell<k)$とおく．まず$\ell$を固定する．
+題意で与えられた$x_i$の条件
+\begin{align}
+x_i>0, \qquad \sum_{i=1}^nx_i=k \quad\cdots\text{①} \label{eq:1}
+\end{align}
+の元で考える．簡単のため
+\begin{align}
+ \begin{cases}
+  A_n&=\displaystyle\sum_{i=1}^nx_i\log x_i \\
+  B_n&=k\log\dfrac{k}{n}
+ \end{cases}
+\end{align}
+とおく．「$A_n\ge B_n\ \cdots$が任意の$n\in\mathbb{N}$で成立すること」を帰納法で示す．
+$n=1$の時には$A_1=B_1=k\log k$だから成立は明らかなので，以下$n=p\, (p\in\mathbb{N})$での成立を仮定して$n=p+1$でも成立することを示す．
+
+$p+1$個の正数$x_i\ (i=1,2,\cdots,p+1)$に対し，$\displaystyle\sum_{i=1}^{p+1}x_i=k$とし，$\displaystyle\sum_{i=1}^px_i=\ell\ (0<\ell<k)$とおく．まず$\ell$を固定して考えると仮定より
 \begin{align}
 \begin{split}
-A_{p+1}&=A_p+x_{p+1}\log x_{p+1} \\
-&\ge\ell\log\dfrac{\ell}{p}+(k-\ell)\log(k-\ell)\equiv f(\ell) \quad(\because\text{仮定}) \quad\cdots\text{②}
+A_{p+1}
+ &=A_p+x_{p+1}\log x_{p+1} \\
+ &\ge\ell\log\dfrac{\ell}{p}+(k-\ell)\log(k-\ell)\equiv f(\ell) \quad(\because\text{仮定}) \quad\cdots\text{②} \label{eq:2}
 \end{split}
 \end{align}
-次に$\ell$をうごかす．
+と下から評価できる．次に$\ell$を動かして$f(\ell)$の最小値を考えよう．
+$f$の一階微分を計算すると
 \begin{align}
 f'(\ell)=1+\log\ell-\log p-\log(k-\ell)-1=\log\dfrac{\ell}{k-\ell}-\log p
 \end{align}
-$\log x$が$x$の単調増加関数であるから下表をうる（$\ell,k,p>0,\ k-\ell>0$）．
+であって，$\log x$が$x$の単調増加関数であるから増減表は以下のようになる．
 \begin{table}[htb]
   \centering
 \begin{tabular}{c|ccccc}
@@ -33,18 +41,23 @@ $f'$ & & $-$ & $0$ & $+$ & \\
 $f$ & & $\searrow$ & & $\nearrow$ &
 \end{tabular}
 \end{table}
-よって
+
+従って$f$は下から評価できて
 \begin{align}
 \begin{split}
-f(\ell)&\ge\dfrac{pk}{p+1}\log\dfrac{k}{p+1}+\dfrac{k}{p+1}\log\dfrac{k}{p+1} \\
-&=k\log\dfrac{k}{p+1}=B_{p+1} \quad\cdots\text{③}
+f(\ell)
+ &\ge f\left(\dfrac{pk}{p+1}\right) \\
+ & = \dfrac{pk}{p+1}\log\dfrac{k}{p+1}+\dfrac{k}{p+1}\log\dfrac{k}{p+1} \\
+ & = k\log\dfrac{k}{p+1}=B_{p+1} \quad\cdots\text{③} \label{eq:3}
 \end{split}
 \end{align}
-②，③から
+\cref{eq:3}を\cref{eq:2}に代入して
 \begin{align}
-A_{p+1}\ge B_{p+1}
+ A_{p+1} \ge B_{p+1}
 \end{align}
-となり，$n=p+1$でも②は成立．以上から③は示された．$\blacksquare$
+である．よって$n=p+1$でも主張は成立する．
+
+以上から数学的帰納法により$A_n \ge B_n$であり，題意は示された．
 
 
 \newpage

@@ -1,38 +1,118 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$P$から引いた接線が座標軸に平行になる時，(i)から$P$の$x$座標が$\pm\dfrac{1}{\sqrt{3}}$である．このうち(i)を満たすのは$P$の$y$座標が$|y|\le1$をみたす時．以下，他の場合を考える．
+$P$から引いた接線が$y$軸に平行になるのは(i)から$P$の$x$座標が$\pm\dfrac{1}{\sqrt{3}}$である．
+このうち(i)(ii)を満たすのは$P$の$y$座標が$|y|\le1$をみたす時である．
 
-この時$P$から引いた接線$\ell$として
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thin] (-1.5,0) -- (1.5,0) node[right] {$x$};
+  \draw[->, thin] (0,-1.5) -- (0,1.5) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 2. 楕円 3x^2 + y^2 = 1 (a = 1/sqrt(3) ≒ 0.577, b = 1) ---
+  \draw[thick, blue!80!black] (0,0) ellipse (0.5774 and 1.0);
+  \node[blue!80!black, above left] at (-0.5774, 0.7) {$3x^2+y^2=1$};
+
+  % --- 3. 接線 x = 1/sqrt(3) と x = -1/sqrt(3) ---
+  \draw[thick, red!80!black] (0.5774, -1.3) -- (0.5774, 1.3) node[above, font=\small] {$x = \frac{1}{\sqrt{3}}$};
+  \draw[dashed, gray] (-0.5774, -1.3) -- (-0.5774, 1.3) node[below, font=\small] {$x = -\frac{1}{\sqrt{3}}$};
+
+  % --- 4. 点 P(a, b) の例 (a = 1/sqrt(3), |b| <= 1) ---
+  \coordinate (P) at (0.5774, 0.6);
+  \fill[red!80!black] (P) circle (1.5pt) node[right] {$P\left(\frac{1}{\sqrt{3}}, b\right)$};
+
+  % --- 5. 接点 A(1/sqrt(3), 0) ---
+  \fill[black] (0.5774, 0) circle (1.2pt) node[below left, font=\small] {$A$};
+
+\end{tikzpicture}
+\end{center}
+\caption{接線が $y$ 軸に平行となる場合（$a = \pm\frac{1}{\sqrt{3}}$）}
+\end{figure}
+
+
+そこで以下$P$から引いた接線が座標軸に平行にならない場合を考えよう．
+この時，$P(a,b)$から引いた接線$\ell$は傾き$m$として
 \begin{align}
 \ell: y=m(x-a)+b
 \end{align}
-とおける．$m\in\mathbb{R}$，$P(a,b)$とした．$\cdots\bigstar$
+とおける．
 
-ここで，$X=\sqrt{3}x,\ Y=y$なる変換を考える．この変換によって図形$A$が$A'$にうつると表す．楕円は$X^2+Y^2=1$に，$\ell$は$\ell'$にうつり，$\ell'$と円$X^2+Y^2=1$は接している．
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.8, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thin] (-1.2,0) -- (1.6,0) node[right] {$x$};
+  \draw[->, thin] (0,-1.2) -- (0,1.6) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 2. 楕円 3x^2 + y^2 = 1 (a = 1/sqrt(3) ≒ 0.5774, b = 1) ---
+  \draw[thick, blue!80!black] (0,0) ellipse (0.57735 and 1.0);
+
+  % --- 3. 点 P, Q, R の厳密座標 ---
+  % P(1, 1)
+  \coordinate (P) at (1.0, 1.0);
+  
+  % 接点 Q(0, 1)
+  \coordinate (Q) at (0, 1.0);
+  
+  % 接点 R(1/2, -1/2)
+  \coordinate (R) at (0.5, -0.5);
+
+  % --- 4. 接線の描画 (接点を通って延ばす) ---
+  % 接線 PQ: y = 1 (水平接線)
+  \draw[thick, red!80!black] (-0.3, 1.0) -- (1.4, 1.0) node[right, font=\small] {$\ell_1$};
+
+  % 接線 PR: P(1,1) と R(1/2, -1/2) を結ぶ直線 (傾き 3: y = 3x - 2)
+  \draw[thick, red!80!black] ($(P)!-0.25!(R)$) -- ($(P)!1.3!(R)$) node[below right, font=\small] {$\ell_2$};
+
+  % --- 5. なす角 angle QPR ---
+  \draw[->, thin, gray] ($(P)+(-0.3,0)$) arc (180:251.57:0.3);
+  \node[gray, font=\small] at (0.72, 0.8) {$\angle QPR$};
+
+  % --- 6. 各点のプロットとラベル ---
+  \fill[red!80!black] (P) circle (1.5pt) node[above right] {$P(a,b)$};
+  \fill[black] (Q) circle (1.2pt) node[above left, font=\small] {$Q$};
+  \fill[black] (R) circle (1.2pt) node[right, font=\small] {$R$};
+
+  % 参考点 A(1/sqrt(3), 0)
+  \fill[black] (0.57735, 0) circle (1.0pt) node[below left, font=\small] {$A$};
+  \draw[dashed, gray] (P) -- (0.57735, 0);
+
+\end{tikzpicture}
+\end{center}
+\caption{点 $P(a,b)$ から楕円に引いた2接線となす角 $\angle QPR$}
+\end{figure}
+
+ここで，$X=\sqrt{3}x,\ Y=y$なる変換を考える．この変換によって図形や点が移動した後の図形や点をダッシュ付きで表す（例えば$A$は$A'$のようにする）．この変換によって楕円は半径$1$の円$C: X^2+Y^2=1$に変換される．
+$\ell$が変換された$\ell'$
 \begin{align}
 \ell': Y=m\left(\dfrac{1}{\sqrt{3}}X-a\right)+b
 \end{align}
-で接する条件から
+は円$C$と接している．よって円と直線が接する条件が円の中心$(0,0)$と直線の距離が円の半径$1$に等しいことであるから
 \begin{align}
 \dfrac{|-am+b|}{\sqrt{\dfrac{1}{3}m^2+1}}=1
 \end{align}
-両辺0以上から2乗しても良く，
+を満たす．両辺$0$以上なので2乗しても良く，
 \begin{align}
-\left(a^2-\dfrac{1}{3}\right)m^2-2abm+b^2-1=0 \quad\cdots\text{①}
+\left(a^2-\dfrac{1}{3}\right)m^2-2abm+b^2-1=0 \quad\cdots\text{①} \label{eq:1}
 \end{align}
-$m$の2次方程式①の2実解$m_1,m_2\ (m_1\le m_2)$とする．
-\begin{align}
-\text{①の判別式}D\text{として，}\quad\dfrac{D}{4}=a^2b^2-\left(a^2-\dfrac{1}{3}\right)(b^2-1)=a^2+\dfrac{1}{3}b^2-\dfrac{1}{3}\ge0
-\end{align}
-又，$a\ne\dfrac{1}{\sqrt{3}}$から①は2次式．
+となる．$a\ne\dfrac{1}{\sqrt{3}}$だから\cref{eq:1}は$m$についての二次方程式である．
 
-まず，条件(i)を考える．(i)がみたされる時，$A\left(\dfrac{1}{\sqrt{3}},0\right)$として，線分$AP$上の点$B(t(a-\tfrac{1}{\sqrt{3}})+\tfrac{1}{\sqrt{3}},\ tb)\ (0\le t\le1)$と楕円の共有点が$A$のみであるから，
+$P$から$2$本の接線が引けるから$m$の2次方程式\cref{eq:1}が二つの実数解を持つのでこれを$m_1,m_2\ (m_1\le m_2)$とする．
+\cref{eq:1}の判別式$D$とすると$D \ge 0$であって，
+\begin{align}
+ \dfrac{D}{4}=a^2b^2-\left(a^2-\dfrac{1}{3}\right)(b^2-1)=a^2+\dfrac{1}{3}b^2-\dfrac{1}{3}\ge0 \label{eq:2}
+\end{align}
+である．
+
+さて，\cref{eq:2}のもとで条件(i),(ii)について考えよう．
+まず条件(i)を考える．(i)がみたされる時$A\left(\dfrac{1}{\sqrt{3}},0\right)$として，線分$AP\left(t\left(a-\tfrac{1}{\sqrt{3}}\right)+\tfrac{1}{\sqrt{3}},\ tb\right)\ (0\le t\le1)$と楕円の共有点が$A$のみであるから，
 \begin{align}
 \begin{split}
 3\left\{t\left(a-\dfrac{1}{\sqrt{3}}\right)+\dfrac{1}{\sqrt{3}}\right\}^2+t^2b^2&=1 \\
@@ -41,49 +121,115 @@ $m$の2次方程式①の2実解$m_1,m_2\ (m_1\le m_2)$とする．
 \end{align}
 の$t\ne0$の解が負ならば良く，
 \begin{align}
-a-\dfrac{1}{\sqrt{3}}\ge0 \iff a\ge\dfrac{1}{\sqrt{3}} \quad\cdots\text{②}
+a-\dfrac{1}{\sqrt{3}}\ge0 \iff a\ge\dfrac{1}{\sqrt{3}} \quad\cdots\text{②} \label{eq:3}
 \end{align}
+である．
 
-次に，条件(ii)をかんがえる．$\angle QPR\ge\angle R$の時，$\overrightarrow{PQ}\cdot\overrightarrow{PR}\le0$である．
+次に条件(ii)をかんがえる．$\angle QPR$が$\dfrac{\pi}{2}$より大きい条件は$\overrightarrow{PQ}\cdot\overrightarrow{PR}\le0$と表せる：
 \begin{align}
-\begin{pmatrix}-1\\m_1\end{pmatrix}\cdot\begin{pmatrix}-1\\m_2\end{pmatrix}\le0 \quad\therefore\ 1+m_1m_2\le0
+\begin{pmatrix}-1\\m_1\end{pmatrix}\cdot\begin{pmatrix}-1\\m_2\end{pmatrix}\le0 \quad\therefore\ 1+m_1m_2\le0 \label{eq:4}
 \end{align}
-①の$m_1m_2=(b^2-1)/(a^2-\tfrac13)$だから，代入して
+ここで\cref{eq:2}において解と係数の関係より
 \begin{align}
-1\le\dfrac{1-b^2}{a^2-\dfrac{1}{3}}
+ m_1m_2=\dfrac{b^2-1}{a^2-\dfrac{1}{3}}
 \end{align}
-②から，$a^2-\dfrac{1}{3}\ge0$だから
+だから\cref{eq:4}に代入して
 \begin{align}
-a^2-\dfrac{1}{3}\le1-b^2 \quad\therefore\ a^2+b^2\le\dfrac{4}{3} \quad\cdots\text{③}
+ 1\le\dfrac{1-b^2}{a^2-\dfrac{1}{3}}
 \end{align}
-②③と前半の議論により図示するのは下図斜線部（境界含む）で，面積$S$として
+\cref{eq:3}より$a^2-\dfrac{1}{3}\ge0$だから両辺にかけて整理すると
 \begin{align}
-\begin{split}
-S&=\dfrac{1}{2}\cdot\dfrac{2\pi}{3}\cdot\dfrac{4}{3}-\dfrac{\sqrt{3}}{3} \\
-&=\dfrac{1}{3}\left(\dfrac{4}{3}\pi-\sqrt{3}\right)
-\end{split}
+a^2-\dfrac{1}{3}\le1-b^2 \quad\therefore\ a^2+b^2\le\dfrac{4}{3} \quad\cdots\text{③} \label{eq:5}
 \end{align}
+である．
+
+以上から求める$(a,b)$の条件は\cref{eq:2,eq:3,eq:5}および$a = \pm\dfrac{1}{\sqrt{3}}, |b| \le 1$であり整理すると
+\begin{align}
+ \begin{cases}
+  &a^2+\dfrac{b^2}{3} \ge \dfrac{1}{3} \\
+  &\dfrac{1}{\sqrt{3}}\le a \\
+  &a^2+b^2\le\dfrac{4}{3}
+ \end{cases}
+\end{align}
+である．これを図示すると下図斜線部（境界含む）である．
 
 \begin{figure}[htb]
 \begin{center}
 \begin{tikzpicture}[scale=1.6, >=stealth]
-  % 座標軸
-  \draw[->] (-1.4,0) -- (1.4,0) node[right] {$x$};
-  \draw[->] (0,-1.4) -- (0,1.4) node[above] {$y$};
-  % 境界円 a^2+b^2=4/3 (半径 2/sqrt3)
-  \draw (0,0) circle (1.1547);
-  % 求める領域: a>=1/sqrt3 かつ a^2+b^2<=4/3 (斜線部)
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-1.4,0) -- (1.6,0) node[right] {$a$};
+  \draw[->, thick] (0,-1.4) -- (0,1.5) node[above] {$b$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 2. 求める領域の斜線ハッチング (pattern=north east lines) ---
+  % 円 a^2 + b^2 <= 4/3 (半径 R = 2/sqrt(3) ≒ 1.1547)
+  % かつ 直線 a >= 1/sqrt(3) ≒ 0.5774
+  % 交点: a = 1/sqrt(3) のとき b = ±1
+  
   \begin{scope}
+    % 円の内部にクリップ
     \clip (0,0) circle (1.1547);
-    \fill[gray!25] (0.5774,-1.4) rectangle (1.4,1.4);
+    % 直線 a >= 1/sqrt(3) より右側をハッチング
+    \fill[pattern=north east lines, pattern color=blue!70] 
+      (0.5774, -1.4) rectangle (1.4, 1.4);
   \end{scope}
-  \draw[dashed] (0.5774,-1.4) -- (0.5774,1.4);
-  \node[below] at (0.5774,0) {$\dfrac{1}{\sqrt{3}}$};
-  \node[above right] at (0.9,0.9) {$x^2+y^2=\dfrac{4}{3}$};
+
+  % --- 3. 境界線の描画 ---
+  % (i) 円 a^2 + b^2 = 4/3
+  \draw[thick, blue!80!black] (0,0) circle (1.1547);
+  \node[blue!80!black, above right] at (0.8, 0.8) {$a^2+b^2=\dfrac{4}{3}$};
+
+  % (ii) 内側の楕円 a^2 + b^2/3 = 1/3 (a=1/sqrt(3), b=1)
+  \draw[thick, dashed, red!80!black] (0,0) ellipse (0.5774 and 1.0);
+
+  % (iii) 境界直線 a = 1/sqrt(3) (実線部)
+  \draw[ultra thick, green!50!black] (0.5774, -1.0) -- (0.5774, 1.0);
+  \draw[dashed, gray] (0.5774, -1.3) -- (0.5774, 1.3);
+  \node[below, font=\small] at (0.5774, 0) {$\dfrac{1}{\sqrt{3}}$};
+
+  % --- 4. 重要交点のプロットと目盛り ---
+  % 交点 (1/sqrt(3), 1) および (1/sqrt(3), -1)
+  \fill[black] (0.5774, 1.0) circle (1.3pt);
+  \fill[black] (0.5774, -1.0) circle (1.3pt);
+
+  \draw[dashed, gray] (0, 1.0) node[left, font=\small] {$1$} -- (0.5774, 1.0);
+  \draw[dashed, gray] (0, -1.0) node[left, font=\small] {$-1$} -- (0.5774, -1.0);
+  \draw[dashed, gray] (0.5774, -1.0) -- (0, 0) -- (0.5774, 1.0);
+  
+  % --- 【追加部分】 角度 2pi/3 の表示 ---
+  % 交点の角度は +-60度 (pi/3) なので、間の角は 120度 (2pi/3)
+  % \draw[->, thin, gray] ($(0,0)+(Pbot)$); % ダミー（ arc の始点を計算させるため）
+  \draw[->, thin] (0:0.4) arc (0:60:0.4);
+  \node[font=\small, above right, xshift=2pt] at (0,0) {$\frac{\pi}{3}$};
+
+
+  % 円の x 軸交点 2/sqrt(3) ≒ 1.155
+  \node[below right, font=\small] at (1.1547, 0) {$\dfrac{2}{\sqrt{3}}$};
+
 \end{tikzpicture}
 \end{center}
-\caption{面積$S$を求める領域の図示（斜線部）}
+\caption{面積 $S$ を求める領域の図示（斜線部・境界を含む）}
 \end{figure}
+
+斜線部の面積$S$とすると，これは半径$\dfrac{2}{\sqrt{3}}$, 角度$\dfrac{2\pi}{3}$の扇形から底辺$\dfrac{1}{\sqrt{3}}$, 高さ$2$の三角形の面積を減じたもので
+\begin{align}
+\begin{split}
+S
+ &=\left( \text{\begin{tikzpicture}[baseline={(0,-0.05)}, scale=0.5, >=stealth]
+  % 扇形（中心角120度、少し傾ける）
+  \draw[thick, fill=gray!20] (0,0) -- (-60:1) arc (-60:60:1) -- cycle;
+\end{tikzpicture}} \right)
+-
+\left( \text{\begin{tikzpicture}[baseline={(0,-0.05)}, scale=0.5, >=stealth]
+  % 二等辺三角形（扇形に対応する弦を持つ形）
+  \draw[thick, fill=gray!20] (0,0) -- (-60:1) -- (60:1) -- cycle;
+\end{tikzpicture}} \right) \\
+&=\dfrac{1}{2}\cdot\dfrac{2\pi}{3}\cdot\dfrac{4}{3}-\dfrac{1}{2}\cdot 2 \cdot \dfrac{1}{\sqrt{3}} \\
+&=\dfrac{1}{3}\left(\dfrac{4}{3}\pi-\sqrt{3}\right)
+\end{split}
+\end{align}
+である．
 
 
 \end{document}
