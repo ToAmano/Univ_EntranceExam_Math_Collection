@@ -527,15 +527,38 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     md_content = re.sub(r'\\fontsize\{[^}]*\}\{[^}]*\}', '', md_content)
     md_content = re.sub(r'\\selectfont|\\normalsize|\\noindent|\\vspace\{[^}]*\}|\\hspace\{[^}]*\}|\\pagestyle\{[^}]*\}', '', md_content)
 
+    # 見出しセクションの整形
+    # {\bf [XXX]} / \textbf{[XXX]} 形式のセクション見出しを ## 【XXX】 に変換する。
+    # 以前は「解」「解説」「方針」の3語だけをハードコードしていたが、実際には
+    # 「解2」「別解」「補題1」「研究」等、様々なラベルが同じ書式で使われており、
+    # それらは変換対象に含まれず生の LaTeX がそのままページに漏れていた
+    # （実例: titech zenki 1988/2 の {\bf [解1]}/{\bf [解2]}）。
+    #
+    # 裸の \[XXX\]（バックスラッシュ角カッコ）や **[XXX]**、および裸の
+    # 【XXX】パススルーは一般化の対象にしない。前2つはコーパス中に「解」等の
+    # ラベルでの使用例が無く不要。裸の【XXX】は tikzpicture の node ラベル
+    # （例: 【$D$ による判別】）や自動文字起こし注記
+    # （\begin{flushright}...\end{flushright} 経由で既に <div class="editorial-note">
+    # に変換済みの【自動文字起こし・要確認】）でも使われており、見出しとして
+    # 一般化すると図の中身や注記バナーを壊してしまう。
+    #
+    # 次の「\textbf の Markdown 化」より必ず先に実行すること。\textbf{[解2]} を
+    # 先に **[解2]** へ変換してしまうと、この見出し変換が \textbf{...} 形式の
+    # ラベルを検出できなくなる（実例: utokyo zenki 1994/5 の \textbf{[研究]}
+    # が見出しにならず地の文の **[研究]** のまま漏れていた）。
+    def _convert_bf_heading(m):
+        label = next(g for g in m.groups() if g is not None)
+        return f'\n\n## 【{label}】\n\n'
+
+    md_content = re.sub(
+        r'\{\\bf\s*\\?\[([^\]]*)\\?\]\}'
+        r'|\\textbf\{\\?\[([^\]]*)\\?\]\}',
+        _convert_bf_heading, md_content)
+
     # \textbf の Markdown 化
     md_content = re.sub(r'\\textbf\{([^{}]+)\}', r'**\1**', md_content)
     # **AAAA****BBBB** や **AAAA** **BBBB** の自動結合 (**AAAABBBB**)
     md_content = re.sub(r'\*\*([^*]+)\*\*\s*\*\*([^*]+)\*\*', r'**\1\2**', md_content)
-
-    # 見出しセクションの整形
-    md_content = re.sub(r'\{\\bf\s*\\?\[解\\?\]\}|\*\*\[解\]\*\*|\\\[解\\\]|(?<!#)\s*【解】', r'\n\n## 【解】\n\n', md_content)
-    md_content = re.sub(r'\{\\bf\s*\\?\[解説\\?\]\}|\*\*\[解説\]\*\*|\\\[解説\\\]|(?<!#)\s*【解説】', r'\n\n## 【解説】\n\n', md_content)
-    md_content = re.sub(r'\{\\bf\s*\\?\[方針\\?\]\}|\*\*\[方針\]\*\*|\\\[方針\\\]|(?<!#)\s*【方針】', r'\n\n## 【方針】\n\n', md_content)
 
     # リスト環境 (\begin{enumerate}, \begin{description}, \begin{itemize}) の HTML/Markdown 番号付きリスト変換 (Issue #509)
     def convert_enumerate_to_md_list(m):
