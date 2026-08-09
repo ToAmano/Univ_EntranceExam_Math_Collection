@@ -257,9 +257,18 @@ def check_tabular_nesting(text):
         exempt_spans=find_command_arg_spans(text, 'shadowbox'))
 
 
+def find_tikzpicture_spans(text):
+    """\\begin{tikzpicture}...\\end{tikzpicture} の (start, end) 一覧を返す。
+    図中の node ラベル（多くは font=\\small 等で縮小表示される）でも、
+    添字位置と同じ理由で \\dfrac だと間延びするため \\frac を使ってよい。"""
+    return [(m.start(), m.end())
+            for m in re.finditer(r'\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}', text, re.DOTALL)]
+
+
 def find_frac_exempt_spans(text):
-    """あらゆる上付き・下付き（_{...} / ^{...}）の中身の (start, end) 一覧を
-    返す。そこに現れる分数は \\dfrac ではなく \\frac を使ってよい（使うべき）。
+    """あらゆる上付き・下付き（_{...} / ^{...}）の中身、および tikzpicture
+    環境全体の (start, end) 一覧を返す。そこに現れる分数は \\dfrac ではなく
+    \\frac を使ってよい（使うべき）。
 
     当初は \\int の上下限や評価カッコ ]_a^b の直後の添字だけに限定していたが
     （TRIGGER_RE 参照）、AGENT.md のルール文自体は「上付き・下付きの位置」を
@@ -270,18 +279,23 @@ def find_frac_exempt_spans(text):
     反応せず、x^{...} のような一般の添字を検出できなかった）。
     そのため _/^ の直後が {...} であれば、直前が何であるかによらず
     無条件に添字位置とみなす（このコーパスで _ と ^ は数式の添字演算子
-    以外の用途では使われないため、一般化しても誤検知のリスクは低い）。"""
+    以外の用途では使われないため、一般化しても誤検知のリスクは低い）。
+
+    同じ理由で、tikzpicture 内の node ラベルも titech zenki 1987/1988 で
+    まとめて \\frac が使われていたことから例外に加えた。"""
     n = len(text)
     spans = []
     for m in re.finditer(r'[_^]\s*\{', text):
         brace_start = m.end() - 1
         _, end = extract_braced(text, brace_start)
         spans.append((brace_start, end))
+    spans.extend(find_tikzpicture_spans(text))
     return spans
 
 
 def check_frac_subscript_rule(text):
-    """上付き・下付き（_{...} / ^{...}）の添字位置では \\frac、それ以外では \\dfrac を使う。"""
+    """上付き・下付き（_{...} / ^{...}）の添字位置および tikzpicture 内では
+    \\frac、それ以外では \\dfrac を使う。"""
     errors = []
     spans = find_frac_exempt_spans(text)
 
@@ -294,10 +308,10 @@ def check_frac_subscript_rule(text):
         inside = in_span(pos)
         if inside and cmd == 'dfrac':
             errors.append((line_of(text, pos),
-                            "上付き・下付き（添字）の位置では \\dfrac ではなく \\frac を使う"))
+                            "添字位置・tikzpicture内では \\dfrac ではなく \\frac を使う"))
         elif not inside and cmd == 'frac':
             errors.append((line_of(text, pos),
-                            "分数は（添字位置を除き）\\frac ではなく \\dfrac を使う"))
+                            "分数は（添字位置・tikzpicture内を除き）\\frac ではなく \\dfrac を使う"))
     return errors
 
 

@@ -210,6 +210,7 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 * **解答冒頭は `{\bf [解]}` とする**（`\begin{proof}[解]...\end{proof}` は使わない）。
 * **分数は `\frac` ではなく `\dfrac` を使う**。`align` 環境内でも `\frac` はディスプレイスタイルでも小さく組まれてしまうことがあるため、常に `\dfrac` で統一する。
   * **例外: 上付き・下付き（添字）の位置に分数が入る場合は `\dfrac` ではなく通常の `\frac` を使う**。これは `\int` の上下限や評価記号 `[...]_a^b` に限らず，`x^{\dfrac{1}{m}}` のような単なる変数の指数も含め，`_{...}` / `^{...}` のあらゆる添字位置に一般的に当てはまる（添字位置では文字が自動的に縮小されるため，フル displaystyle の `\dfrac` を使うと縦に間延びして見にくい）。例: `\int_{\dfrac{a}{b}}^{b}` → `\int_{\frac{a}{b}}^{b}`，`\Bigl[F(x)\Bigr]_{\dfrac{a}{b}}^{b}` → `\Bigl[F(x)\Bigr]_{\frac{a}{b}}^{b}`，`x^{\dfrac{1}{m}}` → `x^{\frac{1}{m}}`。添字位置以外（被積分関数本体や，独立した式としての分数）では引き続き `\dfrac` を使う。
+  * **例外: `tikzpicture` 内の node ラベルでも `\dfrac` ではなく `\frac` を使う**。図中のラベルは多くが `font=\small` 等で縮小表示されるため，添字位置と同じ理由で `\dfrac` だと間延びする。
 * **`cases` などのネスト環境の中では数式に `\displaystyle` を用いる**。`cases`（`dcases` ではなく）環境内は既定でテキストスタイルになり分数などが小さく組まれるため，`\begin{cases}\displaystyle ...\end{cases}` のように明示する。
 * **`\dfrac` と `\sqrt` の引数は必ず `{}` で囲む**。`\sqrt2` ではなく `\sqrt{2}` のように書く（`\dfrac12` のような省略形も同様に禁止で、`\dfrac{1}{2}` と書く）。
 * **辺の長さは `\overline{AB}` ではなく `|AB|`（絶対値記号ではさむ）で書く**。手書き原稿が `\overline{}` を使っていても，転記時に `|...|` に直す。
