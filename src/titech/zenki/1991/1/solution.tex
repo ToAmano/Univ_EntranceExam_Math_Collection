@@ -1,49 +1,55 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$n\in\mathbb{N}\ \cdots$①．$f(n)$は，$n!$の中の素因数$2^p,5^q\ (p,q\in\mathbb{Z}_{\ge0})$について，$p,q$のうち大きくない方に等しい．明らかに$p\ge q$だから，$f(n)=q$である．
 
-\textbf{(1)} $10\div5=2$から，$q=2\ \therefore\ f(10)=2$
+$f(n)$は $n!$の中の素因数$2^p,5^q\ (p,q\in\mathbb{Z}_{\ge0})$について，$p,q$のうち大きくない方に等しい．明らかに$p\ge q$だから$f(n)=q$である．
 
-$100\div5=20$，$100\div25=4$だから，$f(100)=20+4=24$
+\paragraph{(1)}
 
-\textbf{(2)} (1)と同様にして，
+まず$n=10$について$10\div5=2$だから，$q=2\ \therefore\ f(10)=2$である．
+次に$n=100$について$\dfrac{100}{5}=20$，$\dfrac{100}{25}=4$だから，$f(100)=20+4=24$である．
+
+\paragraph{(2)}
+
+(1)と同様にして$f(10^n)$は
 \begin{align}
-f(10^n)=\sum_{k=1}^\infty\left[\dfrac{10^n}{5^k}\right] \quad\cdots\text{①}
+f(10^n)=\sum_{k=1}^\infty\left[\dfrac{10^n}{5^k}\right] \quad\cdots\text{①} \label{eq:1}
 \end{align}
-とかける．ただし，$[x]$は$x$以下の最大の整数である．$k=2n$の時，
+とかける．ただしガウス記号$[x]$は$x$以下の最大の整数である．$k$についての和は無限大までとるが，実際には$k=2n$の段階で
+$k=2n$の時，
 \begin{align}
 \left[\dfrac{10^n}{5^{2n}}\right]=\left[\left(\dfrac{2}{5}\right)^n\right]=0
 \end{align}
-だから，$[10^n/5^k]$が$k$の単調減少かつ0であることとあわせて，①で$k=1,2,\cdots,2n$として和をとれば良く，
+となるから，$[10^n/5^k]$が非負で$k$の単調減少関数であることとあわせて，$k \ge 2n$では全ての寄与は$0$である．従って和は$k=1,2,\cdots 2n$までに制限してよく，
 \begin{align}
-f(10^n)=\sum_{k=1}^{2n}\left[\dfrac{10^n}{5^k}\right] \quad\cdots\text{②}
+  f(10^n)=\sum_{k=1}^{2n}\left[\dfrac{10^n}{5^k}\right] \quad\cdots\text{②} \label{eq:2}
 \end{align}
-$[x]$の性質から
+である．
+
+ここで$[x]$の性質から
 \begin{align}
-\dfrac{10^n}{5^k}-1<\left[\dfrac{10^n}{5^k}\right]\le\dfrac{10^n}{5^k}
+\dfrac{10^n}{5^k}-1<\left[\dfrac{10^n}{5^k}\right]\le\dfrac{10^n}{5^k} \label{eq:3}
 \end{align}
-$k=1,2,\cdots,2n$として足して②から
+だから，$k=1,2,\cdots,2n$として足し合わせて\cref{eq:2}を代入すると
 \begin{align}
 \begin{split}
 \sum_{k=1}^{2n}\left(\dfrac{10^n}{5^k}-1\right)&<f(10^n)\le\sum_{k=1}^{2n}\dfrac{10^n}{5^k} \\
-10^n\cdot\dfrac{1}{5}\cdot\dfrac{1-(1/5)^{2n}}{1-1/5}-2n&<f(10^n)\le10^n\cdot\dfrac{1}{5}\cdot\dfrac{1-(1/5)^{2n}}{1-1/5}
+10^n\cdot\dfrac{1}{5}\cdot\dfrac{1-(1/5)^{2n}}{1-1/5}-2n&<f(10^n)\le10^n\cdot\dfrac{1}{5}\cdot\dfrac{1-(1/5)^{2n}}{1-1/5} \\
+10^n\dfrac{1}{4}\left(1-(1/5)^{2n}\right)-2n&<f(10^n)\le 10^n\dfrac{1}{4}\left(1-(1/5)^{2n}\right)
 \end{split}
 \end{align}
+である．
+
 両辺$10^n$でわって
 \begin{align}
-\dfrac{1}{5}\cdot\dfrac{1-(1/5)^{2n}}{4/5}-\dfrac{2n}{10^n}<\dfrac{f(10^n)}{10^n}\le\dfrac{1}{5}\cdot\dfrac{1-(1/5)^{2n}}{4/5}
+ \dfrac{1}{4}\left(1-(1/5)^{2n}\right) -\dfrac{2n}{10^n}<\dfrac{f(10^n)}{10^n}\le \dfrac{1}{4}\left(1-(1/5)^{2n}\right)
 \end{align}
-この両辺共に$n\to\infty$で$1/4$に収束するから，はさみうちから
+この両辺は共に$n\to\infty$で$\dfrac{1}{4}$に収束するから，はさみうちの定理から
 \begin{align}
 \dfrac{f(10^n)}{10^n}\longrightarrow\dfrac{1}{4}
 \end{align}
-
+である．
 
 \newpage
 

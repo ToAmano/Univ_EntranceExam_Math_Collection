@@ -1,81 +1,199 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-$f(x)=x^3+ax^2+(b-a-1)x$
+与えられた関数
+\begin{align}
+ f(x)=x^3+ax^2+(b-a-1)x \label{eq:1}
+\end{align}
+を考える．
 
-\textbf{(1)} $f'(x)=3x^2+2ax+(b-a-1)$だから，これが$x\ge0$で0以上であるような$(a,b)$を求めれば良い（$a,b\in\mathbb{R}$）．軸$x=-\dfrac{1}{3}a$で場合分け．
+\paragraph{(1)}
+$f(x)$の挙動を調べるために一階微分を計算すると
+\begin{align}
+ f'(x)=3x^2+2ax+(b-a-1) = 3\left(x+\dfrac{a}{3}\right)^2 + (b-a-1) -\dfrac{a^2}{3} \label{eq:2}
+\end{align}
+である．題意を満たす$(a,b)$はこれが$x\ge0$で0以上であるような時である．
+$f'(x)$は二次関数だから軸の位置$x_0=-\dfrac{1}{3}a$の大きさで場合分けする．
+
 
 \subparagraph{$1^\circ$ $-\dfrac{1}{3}a\le0\ \therefore\ a\ge0$の時}
 
-条件は$f'(0)\ge0\iff b\ge a+1$
+この時は$x \ge 0$で$f'$は単調増加だから，$f'(x) \ge 0$と成る条件は
+\begin{align}
+ f'(0)\ge0\iff b\ge a+1 \label{eq:3}
+\end{align}
+である．
 
 \subparagraph{$2^\circ$ $0\le-\dfrac{1}{3}a\ \therefore\ a\le0$の時}
 
-条件は$f'(-\tfrac13a)\ge0\iff b\ge\dfrac{1}{3}a^2+a+1$
+この時は$0 \le x_0$で$f'$は最小値をとるから，これが非負ならば$f'(x) \ge 0$となるから条件は
+\begin{align}
+ f'\left(-\dfrac{a}{3}\right) \ge 0\iff b\ge\dfrac{1}{3}a^2+a+1 \label{eq:4}
+\end{align}
+である．
 \casesend
 
-以上をまとめ，図示して下図斜線部
+以上\cref{eq:3,eq:4}が求める条件でまとめると
 \begin{align}
 \begin{cases}\displaystyle
 a\le0\text{の時}\ b\ge\dfrac{1}{3}a^2+a+1 \\
 a\ge0\text{の時}\ b\ge a+1
-\end{cases}
+\end{cases} \label{eq:5}
 \end{align}
+となる．図示すると下図斜線部である．
 
 \begin{figure}[htb]
 \begin{center}
-\begin{tikzpicture}[scale=1.0, >=stealth]
-  % 座標軸
-  \draw[->] (-4,0) -- (2.5,0) node[right] {$a$};
-  \draw[->] (0,-0.5) -- (0,3.5) node[above] {$b$};
-  % 境界: a<=0で b=a^2/3+a+1, a>=0で b=a+1 (a=0で連続に接続)
-  \draw[domain=-4:0, smooth, thick] plot (\x,{\x*\x/3+\x+1});
-  \draw[domain=0:2, smooth, thick] plot (\x,{\x+1});
-  % 求める範囲 G (各境界より上側)
-  \fill[gray!25, domain=-4:0, variable=\x] plot ({\x},{\x*\x/3+\x+1}) -- (0,3.6) -- (-4,3.6) -- cycle;
-  \fill[gray!25, domain=0:2, variable=\x] plot ({\x},{\x+1}) -- (2,3.6) -- (0,3.6) -- cycle;
-  \node[below] at (-2,0) {$-2$};
-  \node[below] at (-1,0) {$-1$};
+\begin{tikzpicture}[scale=1.2, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-4.2,0) -- (2.2,0) node[right] {$a$};
+  \draw[->, thick] (0,-0.5) -- (0,3.8) node[above] {$b$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 2. 求める領域 G の斜線ハッチング (pattern=north east lines) ---
+  % a <= 0: b >= a^2/3 + a + 1
+  % a >= 0: b >= a + 1
+  \begin{scope}
+    \clip (-4.2,0) rectangle (2.2,3.6);
+    \fill[pattern=north east lines, pattern color=blue!60]
+      (-4.2,3.6) -- plot[domain=-4.2:0, samples=50] (\x, {\x*\x/3 + \x + 1})
+      -- plot[domain=0:2.2, samples=50] (\x, {\x + 1})
+      -- (2.2,3.6) -- cycle;
+  \end{scope}
+
+  % --- 3. 境界線の描画 ---
+  % (i) a <= 0 側の放物線 b = a^2/3 + a + 1
+  \draw[ultra thick, blue!80!black, domain=-4.0:0, samples=100] 
+    plot (\x, {\x*\x/3 + \x + 1}) node[above left, font=\small] {$b = \frac{1}{3}a^2+a+1$};
+
+  \draw[blue!80!black, domain=0:2.0, samples=100] 
+    plot (\x, {\x*\x/3 + \x + 1}); 
+
+  % (ii) a >= 0 側の直線 b = a + 1
+  \draw[ultra thick, blue!80!black, domain=0:2.2, samples=50] 
+    plot (\x, {\x + 1}) node[above left, font=\small] {$b = a+1$};
+
+  \draw[blue!80!black, domain=-2.0:0, samples=50] 
+    plot (\x, {\x + 1});
+
+
+  % --- 4. 特徴的な点と目盛りのプロット ---
+  % 放物線の頂点 a = -3/2 = -1.5, b = 1/4 = 0.25
+  \draw[dashed, gray] (-1.5,0) node[below, font=\small] {$-\frac{3}{2}$} -- (-1.5, 0.25) -- (0, 0.25) node[right, font=\small] {$\frac{1}{4}$};
+  \fill[black] (-1.5, 0.25) circle (1.2pt);
+
+  % a 軸との交点 a = -3
+  \fill[black] (-3,0) circle (1.2pt) node[below, font=\small] {$-3$};
+
+  % b 軸片 (0, 1)
+  \fill[black] (0,1) circle (1.5pt) node[left, font=\small] {$1$};
+
+  % 領域名 G
+  \node[blue!80!black, font=\large] at (-1.5, 2.2) {$G$};
+
 \end{tikzpicture}
 \end{center}
-\caption{条件を満たす$(a,b)$の範囲（斜線部）}
+\caption{条件を満たす $(a,b)$ の範囲 $G$（斜線部・境界含む）}
 \end{figure}
 
-\textbf{(2)} $(a,b)$が$G$をうごく時，$0\le x$で$f(x)$は単調増加かつ$f(1)=b$から，グラフの概形は右図で，斜線部が求める面積$K$に等しい．したがって，与式$S$として
+\paragraph{(2)} 
+
+$(a,b)$が$G$をうごく時(1)より$0\le x$で$f(x)$は単調増加かつ$f(1)=b$だからグラフの概形は下図である．
+求める面積$S$は図の斜線部である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.6, >=stealth]
+
+  % --- 1. 座標定義 ---
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (1,0);
+  \coordinate (B) at (1,0.85);
+  \coordinate (C) at (0,0.85);
+
+  % --- 2. 座標軸 ---
+  \draw[->, thick] (-0.3,0) -- (2.2,0) node[right] {$x$};
+  \draw[->, thick] (0,-0.3) -- (0,2.0) node[above] {$y$};
+  \node[below left] at (O) {$O(0,0)$};
+
+  % --- 3. 斜線ハッチング領域 (pattern=north east lines) ---
+  % y = f(x) の上側かつ x=0, y=b で囲まれた領域
+  % ※例として a = -0.5, b = 1.5 付近の単調増加曲線を使用
+  \begin{scope}
+    \clip (0,0) -- plot[domain=0:1, samples=50] (\x, {0.5*\x*\x*\x - 0.25*\x*\x + 0.6*\x})
+          -- (0,0.85) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!60] 
+      (0,0) rectangle (1,0.85);
+  \end{scope}
+
+  % --- 4. 曲線 y = f(x) の描画 ---
+  \draw[ultra thick, blue!80!black, domain=0:1.3, samples=100] 
+    plot (\x, {0.5*\x*\x*\x - 0.25*\x*\x + 0.6*\x}) node[right] {$y = f(x)$};
+
+  % --- 5. 長方形 OABC の枠線・破線 ---
+  % 上辺 CB (実線または破線)
+  \draw[thick, gray] (C) -- (B);
+  % 右辺 AB (破線)
+  \draw[dashed, gray] (A) -- (B);
+
+  % --- 6. 各頂点のプロットとラベル ---
+  \fill[black] (A) circle (1.2pt) node[below] {$A(1,0)$};
+  \fill[black] (B) circle (1.5pt) node[above right] {$B(1,b)$};
+  \fill[black] (C) circle (1.2pt) node[left] {$C(0,b)$};
+
+\end{tikzpicture}
+\end{center}
+\caption{曲線 $y=f(x)$ と求める面積$S$の領域（斜線部）}
+\end{figure}
+
+新しく点を$O(0,0), A(1,0), B(1,b), C(0,b)$とおくと面積$S$は
 \begin{align}
 \begin{split}
-S&=b-\int_0^1f(x)dx \\
-&=b-\left(\dfrac{1}{4}+\dfrac{1}{3}a+\dfrac{1}{2}(b-a-1)\right) \\
-&=\dfrac{1}{2}b+\dfrac{1}{6}a+\dfrac{1}{4} \quad\cdots\text{①}
-\end{split}
+S
+ &= \int_{0}^{b}f^{-1}(y) dy \\
+ &=\text{四角形} OABC-\int_0^1f(x)dx \\
+ &=b-\left(\dfrac{1}{4}+\dfrac{1}{3}a+\dfrac{1}{2}(b-a-1)\right) \\
+ &=\dfrac{1}{2}b+\dfrac{1}{6}a+\dfrac{1}{4} \quad\cdots\text{①}
+\end{split} \label{eq:6}
 \end{align}
-である．$a$を固定すると，①から，
+である．この最小値を求めるため，\cref{eq:5}から$a$の値で場合分けする．
 
 \subparagraph{$a\le0$の時}
+
+この時は\cref{eq:5}から$b\ge\dfrac{1}{3}a^2+a+1$だから\cref{eq:6}を下から評価して
 \begin{align}
 \begin{split}
-\min S&=\dfrac{1}{6}a+\dfrac{1}{2}\left(\dfrac{1}{3}a^2+a+1\right)+\dfrac{1}{4} \\
-&=\dfrac{1}{6}a^2+\dfrac{2}{3}a+\dfrac{3}{4} \\
-&=\dfrac{1}{6}(a+2)^2+\dfrac{1}{12}\ge\dfrac{1}{12} \quad(\text{等号成立は}a=-2)
-\end{split}
+ S
+ &\ge \dfrac{1}{6}a+\dfrac{1}{2}\left(\dfrac{1}{3}a^2+a+1\right)+\dfrac{1}{4} \\
+ &=\dfrac{1}{6}a^2+\dfrac{2}{3}a+\dfrac{3}{4} \\
+ &=\dfrac{1}{6}(a+2)^2+\dfrac{1}{12} \\
+ &\ge\dfrac{1}{12} \quad(\text{等号成立は}a=-2)
+\end{split} \label{eq:7}
 \end{align}
+である．
 
 \subparagraph{$a\ge0$の時}
+
+この時は\cref{eq:5}から $b\ge a+1$ だから\cref{eq:6}を下から評価して
 \begin{align}
 \begin{split}
-\min S&=\dfrac{1}{6}a+\dfrac{1}{2}(a+1)+\dfrac{1}{4} \\
-&=\dfrac{2}{3}a+\dfrac{3}{4}\ge\dfrac{3}{4} \quad(\because a=0)
-\end{split}
+S
+&\ge \dfrac{1}{6}a+\dfrac{1}{2}(a+1)+\dfrac{1}{4} \\
+&=\dfrac{2}{3}a+\dfrac{3}{4} \\
+&\ge\dfrac{3}{4} \quad(\text{等号成立は}a=0)
+\end{split} \label{eq:8}
 \end{align}
+である．
 \casesend
 
-だから，$\min S=\dfrac{1}{12}$
-
+以上\cref{eq:7,eq:8}から求める最小値は$a=-2, b=\dfrac{4}{3}$の時の
+\begin{align}
+ S=\dfrac{1}{12}
+\end{align}
+である．
 
 \newpage
 

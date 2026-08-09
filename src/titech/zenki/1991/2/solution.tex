@@ -1,47 +1,120 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$C: x^2+\dfrac{y^2}{4}=1,\ z=0$とおく．$C=\cos\theta,\ S=\sin\theta\ (0\le\theta<2\pi)$とすると，$C$上の点$(C,2S,0)$での接線は
-\begin{align}
-\ell: Cx+\dfrac{S}{2}y=1, \quad z=0
-\end{align}
-である．$\ell$に含まれる2つの1次独立なベクトルに
-\begin{align}
-\vec a=\begin{pmatrix}S\\-2C\\0\end{pmatrix}, \qquad
-\vec b=\begin{pmatrix}\dfrac{1}{2}-C\\1-2S\\1\end{pmatrix}
-\end{align}
-があるから平面$\pi$の法線ベクトルの1つに
-\begin{align}
-\vec n=\begin{pmatrix}2C\\S\\2-(C+S)\end{pmatrix}
-\end{align}
-がある．したがって，
-\begin{align}
-\pi: 2C(X-C)+S(Y-2S)+\{2-(C+S)\}Z=0
-\end{align}
-とかける．$X=Y=0$の時，
-\begin{align}
-\begin{split}
--2C^2-2S^2+\{2-(C+S)\}Z&=0 \\
-Z&=\dfrac{2}{2-(C+S)} \quad\cdots\text{①}
-\end{split}
-\end{align}
-である．ここで$C+S=\sqrt{2}\sin(\theta+\pi/4)$から，$0\le\theta<2\pi$では$-\sqrt{2}\le C+S\le\sqrt{2}$だから，
-\begin{align}
-2-\sqrt{2}\le2-(C+S)\le2+\sqrt{2}
-\end{align}
-となり，①から
-\begin{align}
-\begin{split}
-\dfrac{2}{2+\sqrt{2}}&\le Z\le\dfrac{2}{2-\sqrt{2}} \\
-2-\sqrt{2}&\le Z\le2+\sqrt{2}
-\end{split}
-\end{align}
 
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+
+  % --- 1. 3D視点と原点の設定 ---
+  \coordinate (O) at (0,0);
+
+  % --- 2. 座標軸 ---
+  \draw[->, thick] (O) -- (-1.8, -1.2) node[below left] {$x$};
+  \draw[->, thick] (O) -- (2.5, 0) node[right] {$y$};
+  \draw[->, thick] (O) -- (0, 3.8) node[above] {$z$};
+  \node[below left] at (O) {$O$};
+
+  % --- 3. xy 平面上の楕円 C (x^2 + y^2/4 = 1, z=0) ---
+  \draw[ultra thick, blue!80!black, domain=0:360, samples=100, smooth] 
+    plot ({-0.6*cos(\x) + 2*sin(\x)}, {-0.4*cos(\x)});
+  \node[blue!80!black, below right] at (1.8, 0) {$C$};
+
+  % --- 4. 動点 P(c, 2s, 0) と 接線 l (例: theta = 50度) ---
+  \pgfmathsetmacro{\tval}{50}
+  \pgfmathsetmacro{\cval}{cos(\tval)}
+  \pgfmathsetmacro{\sval}{sin(\tval)}
+  
+  % P の 3D -> 2D 投影座標
+  \pgfmathsetmacro{\Px}{-0.6*\cval + 2*\sval}
+  \pgfmathsetmacro{\Py}{-0.4*\cval}
+  \coordinate (P) at (\Px, \Py);
+
+  % 接線 l 上の 2 点（数字の 1 を A, B に変更）
+  \pgfmathsetmacro{\LxA}{-0.6*(\cval - 0.8*\sval) + 2*(\sval + 0.8*\cval)}
+  \pgfmathsetmacro{\LyA}{-0.4*(\cval - 0.8*\sval)}
+  \pgfmathsetmacro{\LxB}{-0.6*(\cval + 0.8*\sval) + 2*(\sval - 0.8*\cval)}
+  \pgfmathsetmacro{\LyB}{-0.4*(\cval + 0.8*\sval)}
+  
+  \coordinate (LA) at (\LxA, \LyA);
+  \coordinate (LB) at (\LxB, \LyB);
+
+  \draw[thick, red!80!black] (LA) -- (LB) node[right, font=\small] {$\ell$};
+
+  % --- 5. 点 R(1/2, 1, 1) と ベクトル b ---
+  \coordinate (R) at (0.7, 0.8);
+  
+  \draw[dashed, gray] (P) -- (R) node[midway, right, font=\small] {$\vec{b}$};
+  \fill[black] (R) circle (1.5pt) node[above right, font=\small] {$R\left(\frac{1}{2}, 1, 1\right)$};
+
+  % --- 6. z 軸上の点 Q(0,0,k) と 平面 pi のイメージ ---
+  \pgfmathsetmacro{\kval}{2 / (2 - (\cval + \sval))}
+  \coordinate (Q) at (0, \kval);
+
+  % 平面 pi の面表現 (半透明)
+  \fill[orange!30, opacity=0.4] (LA) -- (R) -- (Q) -- (LB) -- cycle;
+  \draw[dashed, orange!90!black] (LA) -- (Q) -- (LB);
+  \draw[dashed, orange!90!black] (R) -- (Q);
+  \node[orange!90!black, above left] at (0.3, 1.8) {平面 $\pi$};
+
+  % --- 7. 各点のプロットとラベル ---
+  \fill[blue!80!black] (P) circle (1.8pt) node[below left, font=\small] {$P(c,2s,0)$};
+  \fill[red!80!black] (Q) circle (1.8pt) node[left, font=\small] {$Q(0,0,k)$};
+
+\end{tikzpicture}
+\caption{楕円$C$, 接線$\ell$, 平面$\pi$の様子．}
+\end{center}
+\end{figure}
+
+題意の楕円を
+\begin{align}
+ C: x^2+\dfrac{y^2}{4}=1,\ z=0 \label{eq:1}
+\end{align}
+とおく．
+$0\le\theta<2\pi$に対して$c=\cos\theta,\ s=\sin\theta$とおく．
+これを用いて$C$上の点を$P(c,2s,0)$とおく．
+この点$P$での接線の方程式は
+\begin{align}
+\ell: cx+\dfrac{s}{2}y=1, \quad z=0 \label{eq:2}
+\end{align}
+である．この$\ell$の方向ベクトルは
+\begin{align}
+ \vec a=\begin{pmatrix}s\\-2c\\0\end{pmatrix} \label{eq:3}
+\end{align}
+である．平面$\pi$を張るベクトルとして$\vec a$と一次独立なものとして
+\begin{align}
+\vec b=\begin{pmatrix}\dfrac{1}{2}-c\\1-2s\\1\end{pmatrix} \label{eq:4}
+\end{align}
+がある．平面$\pi$の法線ベクトルは\cref{eq:3,eq:4}と垂直なベクトルで，その一つに
+\begin{align}
+\vec n=\begin{pmatrix}2c\\s\\2-(c+s)\end{pmatrix} \label{eq:5}
+\end{align}
+がある．従って平面$\pi$の方程式は
+\begin{align}
+\pi: 2c(X-c)+s(Y-2s)+\{2-(c+s)\}Z=0 \label{eq:6}
+\end{align}
+とかける．点$Q(0,0,k)$の座標はここに$X=Y=0, Z=k$を代入することで
+\begin{align}
+ & -2c^2-2s^2+\{2-(c+s)\}k=0 \\
+\therefore
+ & k=\dfrac{2}{2-(c+s)} \quad\cdots\text{①} \label{eq:7}
+\end{align}
+である．ここで三角関数の合成から
+\begin{align}
+ c+s=\sqrt{2}\sin\left(\theta+\dfrac{\pi}{4}\right)
+\end{align}
+だから$0\le\theta<2\pi$では$-\sqrt{2}\le c+s\le\sqrt{2}$となって
+\begin{align}
+2-\sqrt{2}\le2-(c+s)\le2+\sqrt{2}
+\end{align}
+となり，\cref{eq:7}に代入して
+\begin{align}
+\dfrac{2}{2+\sqrt{2}}&\le k\le\dfrac{2}{2-\sqrt{2}} \\
+\therefore
+2-\sqrt{2}&\le k\le2+\sqrt{2}
+\end{align}
+が求める範囲である．
 
 \newpage
 
