@@ -697,8 +697,15 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     # --------------------------------------------------------------------------
     def clean_math_block_dollars(match):
         block_content = match.group(1)
-        # $...$ または $\displaystyle ...$ を外枠の数式に統合
-        block_clean = re.sub(r'\$\s*(\\displaystyle\s*)?([^$]+)\$', r'\2', block_content)
+        # $$...$$ ブロックの中身全体が丸ごと $...$（または $\displaystyle ...$）で
+        # 包まれている場合にのみ、その外枠だけを取り除く。以前は [^$]+ で
+        # ブロック内のどこにある $...$ にもマッチしていたため、
+        # \text{$\vec\ell$の...} のように \text{} 内で本来の数式再突入として
+        # 使われている $...$ まで誤って剥がしてしまっていた
+        # （titech zenki 1977/3 で発覚）。
+        stripped = block_content.strip()
+        m = re.fullmatch(r'\$\s*(?:\\displaystyle\s*)?(.+?)\s*\$', stripped, flags=re.DOTALL)
+        block_clean = m.group(1) if m else block_content
         return f"\n$$\n{block_clean.strip()}\n$$\n"
 
     md_content = re.sub(r'\$\$\n(.*?)\n\$\$', clean_math_block_dollars, md_content, flags=re.DOTALL)
