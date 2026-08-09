@@ -1,10 +1,6 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 \begin{align}
 \begin{array}{ccc}
@@ -14,12 +10,17 @@ r & \xrightarrow{\dfrac{r}{n}} & r
 \end{array}
 \end{align}
 
-\textbf{(1)} 上図から
+\paragraph{(1)}
+$S_k=r$となるのは，$S_{k-1}=r$でかつ$k$回目に今までと同じカードを引くか，$S_{k-1}=r-1$でかつ$k$回目に新しいカードを引くかのどちらかだから，
 \begin{align}
 P(S_k=r)=\dfrac{n+1-r}{n}P(S_{k-1}=r-1)+\dfrac{r}{n}P(S_{k-1}=r) \quad(r=1,2,\cdots,k\text{の時}, P(S_0=r)=0\text{と扱う})
 \end{align}
+である．
 
-\textbf{(2)} 確率変数$X_t$を，
+
+\paragraph{(2)}
+
+確率変数$X_t$を，
 \begin{align}
 X_t=
 \begin{cases}\displaystyle
@@ -27,43 +28,52 @@ X_t=
 1 & (t\text{のカードを}k\text{回目までに引いた})
 \end{cases}
 \end{align}
-と定めると，$S_k=\displaystyle\sum_{t=1}^nX_t$だから，期待値の加法性から
+と定めると$S_k=\displaystyle\sum_{t=1}^nX_t$だから，期待値の加法性および$X_t$に関する対称性から
 \begin{align}
-E(S_k)=E\left(\sum_{t=1}^nX_t\right)=\sum_{t=1}^nE(X_t)=nE(X_1) \quad(\because\text{対称性}) \quad\cdots\text{①}
+E(S_k)=E\left(\sum_{t=1}^nX_t\right)=\sum_{t=1}^nE(X_t)=nE(X_1) \quad\cdots\text{①} \label{eq:1}
 \end{align}
-である．$k$回目までに1のカードを引く確率$\ell_k$は，排反をかんがえて，
+である．$k$回目までに1のカードを引く確率$P(k, X_1=1)$は排反事象をかんがえて，
 \begin{align}
-\ell_k=1-\left(\dfrac{n-1}{n}\right)^k
+P(k, X_1=1)=1-\left(\dfrac{n-1}{n}\right)^k
 \end{align}
-で，$E(X_1)=0\cdot P(X_1=0)+1\cdot P(X_1=1)=P(X_1=1)=\ell_k$だから，①より，
+であり，また期待値の定義から$k$回目までの$X_1$の期待値は
 \begin{align}
-E_k=n\left[1-\left(\dfrac{n-1}{n}\right)^k\right]
+ E(k, X_1)=\sum_{X_1}X_1 P(k,X_1) = 0\cdot P(k,X_1=0)+1\cdot P(k,X_1=1) = 1-\left(\dfrac{n-1}{n}\right)^k
 \end{align}
+だから，\cref{eq:1}に代入して求める$S_k$の期待値は
+\begin{align}
+  E_k=n\left[1-\left(\dfrac{n-1}{n}\right)^k\right]
+\end{align}
+である．
 
 
 \bigskip
-\noindent\textbf{[別解]}
-
 {\bf [別解]}
-\textbf{(2)} (1)の両辺$r$をかけて$r$について和をとる．
+
+\paragraph{(2)}
+解答では誘導を使わずに直接求めたが，(1)の誘導に乗ると以下のようになる．
+
+(1)の漸化式の両辺$r$をかけて$r$について和をとると
 \begin{align}
 \sum_{r=1}^krP(S_k=r)=\sum_{r=1}^k\dfrac{r^2}{n}P(S_{k-1}=r)+\sum_{r=1}^k\dfrac{nr+r(r-1)}{n}P(S_{k-1}=r-1)
 \end{align}
-$P(S_{k-1}=k)=0$だから，
+を得る．$P(S_{k-1}=k)=0$だから右辺第一項の和の上端は$k-1$で書き換えられて
 \begin{align}
 \begin{split}
-E_k&=\sum_{r=1}^{k-1}\dfrac{r^2}{n}P(S_{k-1}=r)+\sum_{r=1}^k\dfrac{(n-1)(r-1)+n-(r-1)^2}{n}P(S_{k-1}=r-1) \\
-&=\sum_{r=1}^{k-1}\dfrac{r^2}{n}P(S_{k-1}=r)+\dfrac{n-1}{n}E_{k-1}+\sum_{r=1}^kP(S_{k-1}=r-1)-\sum_{r=1}^k\dfrac{(r-1)^2}{n}P(S_{k-1}=r-1)
+E_k
+ &=\sum_{r=1}^{k-1}\dfrac{r^2}{n}P(S_{k-1}=r)+\sum_{r=1}^k\dfrac{(n-1)(r-1)+n-(r-1)^2}{n}P(S_{k-1}=r-1) \\
+ &=\sum_{r=1}^{k-1}\dfrac{r^2}{n}P(S_{k-1}=r)+\dfrac{n-1}{n}E_{k-1}+\sum_{r=1}^kP(S_{k-1}=r-1)-\sum_{r=1}^k\dfrac{(r-1)^2}{n}P(S_{k-1}=r-1)
 \end{split}
 \end{align}
-最初の和と最後の和は（添字を$j=r-1$とおきかえると）互いに打ち消しあうので，$\displaystyle\sum_{r=1}^kP(S_{k-1}=r-1)=1$から，
+最初の和と最後の和は（添字を$j=r-1$とおきかえると）互いに打ち消しあう．また確率の定義より第3項は$\displaystyle\sum_{r=1}^kP(S_{k-1}=r-1)=1$であるから，結局
 \begin{align}
 E_k=\dfrac{n-1}{n}E_{k-1}+1
 \end{align}
-だから，$E_1=1$より
+とかける．$E_1=1$と合わせてこの漸化式をとくと
 \begin{align}
 E_k=n\left[1-\left(\dfrac{n-1}{n}\right)^k\right]
 \end{align}
+となる．
 
 
 \end{document}

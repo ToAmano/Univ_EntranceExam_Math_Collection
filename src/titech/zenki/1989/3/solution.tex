@@ -1,62 +1,82 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
+与えられた関数方程式
 \begin{align}
-f(x+y)=f(x)+f(y)+f(x)f(y) \quad\cdots\text{①}
+f(x+y)=f(x)+f(y)+f(x)f(y) \quad\cdots\text{①} \label{eq:1}
 \end{align}
+について考える．
 
-\textbf{(1)}
-\begin{align}
-\dfrac{f(x+y)-f(x)}{y}=\dfrac{f(y)(1+f(x))}{y}\longrightarrow f'(0)(1+f(x)) \quad(y\to0)
-\end{align}
-より示すべきことは明らか．$\blacksquare$
+\paragraph{(1)}
 
-\textbf{(2)} $a=f'(0)$とおく．まず①で$(x,y)=(0,0)$として，
+\cref{eq:1}から
 \begin{align}
-f(0)(1+f(0))=0 \quad\therefore\ f(0)=0,-1 \quad\cdots\text{②}
+ f(x+y)-f(x) = f(y)\left(1+f(x)\right)
 \end{align}
-である．(1)から，$y=f(x)$とおくと，
+だから，$y \neq 0$として両辺$y$で割ると
 \begin{align}
-\dfrac{dy}{dx}=a(1+y) \quad\cdots\text{③}
+\dfrac{f(x+y)-f(x)}{y}=\dfrac{f(y)(1+f(x))}{y} 
 \end{align}
-$a=0$の時，$y=C$（$C$：定数）とおける．①に代入して$C=0$だから，$f(x)=0$は解の1つ．以下$a\ne0$とする．③から
+となる．両辺$y\to 0$の極限をとると
 \begin{align}
-\dfrac{dy}{1+y}=a\,dx
+ \lim_{y\to 0} \dfrac{f(x+y)-f(x)}{y} = \lim_{y\to 0}\dfrac{f(y)}{y}(1+f(x))
 \end{align}
-積分して
+である．ここで右辺の極限について題意より
 \begin{align}
-\begin{split}
-\log(1+y)&=ax+C_1 \\
-y&=C\cdot e^{ax}-1
-\end{split}
+ \lim_{y\to 0}\dfrac{f(y)}{y} = f'(0)
 \end{align}
-とおける．ただし，$C,C_1$は定数．②に代入して，$C=0,1$である．
+だから代入して
+\begin{align}
+ \lim_{y\to 0} \dfrac{f(x+y)-f(x)}{y} = f'(0)(1+f(x)) \label{eq:2}
+\end{align}
+である．従って左辺の極限値が存在するから，$f(x)$は任意の$x$で微分可能である．
+
+\paragraph{(2)}
+まず\cref{eq:1}で$(x,y)=(0,0)$として，
+\begin{align}
+f(0)(1+f(0))=0 \quad\therefore\ f(0)=0,-1 \quad\cdots\text{②} \label{eq:3}
+\end{align}
+である．\cref{eq:2}より
+\begin{align}
+ f'(x) = f'(0)(1+f(x)) 
+\end{align}
+だから$y=f(x)$として
+\begin{align}
+ \dfrac{dy}{dx}=f'(0)(1+y) \\
+\therefore 
+ \dfrac{dy}{1+y} = f'(0) dx \label{eq:4}
+\end{align}
+である．両辺を積分して
+\begin{align}
+ \log(1+y)&=f'(0)x+C_1 \\
+ y&=C\cdot e^{f'(0)x}-1 \label{eq:5}
+ \end{align}
+ とおける．ただし$C,C_1$は積分定数である．
+\cref{eq:3}に代入して$C=0,1$である．
+
 
 \subparagraph{$1^\circ$ $C=1$の時}
 
-$y=e^{ax}-1$だから，①に代入すると
+この時\cref{eq:5}より$y=e^{f'(0)x}-1$だから，\cref{eq:1}に代入すると
 \begin{align}
 \begin{split}
-(\text{左辺})&=e^{a(x+y)}-1 \\
-(\text{右辺})&=e^{ax}+e^{ay}-2+(e^{ax}-1)(e^{ay}-1)=e^{a(x+y)}-1
+(\text{左辺})&=e^{f'(0)(x+y)}-1 \\
+(\text{右辺})&=e^{f'(0)x}+e^{f'(0)y}-2+(e^{f'(0)x}-1)(e^{f'(0)y}-1)=e^{f'(0)(x+y)}-1
 \end{split}
 \end{align}
-となって恒等的に①は成立．
+となって恒等的に\cref{eq:1}が成立するから十分である．
 
 \subparagraph{$2^\circ$ $C=0$の時}
 
-$y=-1$となり，不適（$a\ne0$の仮定に反する）．
+この時は\cref{eq:5}より$y=-1$であり，この時も\cref{eq:1}は成立するから十分である．
 \casesend
 
-以上から
+以上から求める$f(x)$は
 \begin{align}
 y=0,\quad e^{f'(0)x}-1
 \end{align}
+である．
 
 
 \newpage
