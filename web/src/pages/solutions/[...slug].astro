@@ -13,6 +13,25 @@ export async function getStaticPaths() {
 const { entry, allSolutions } = Astro.props;
 const { Content } = await entry.render();
 
+// 解答ページでは、同じ大学・日程・年度・問題番号の問題文エントリを見つけて
+// 解答の直前に埋め込む（tex_to_md.py側の変換や個別ページ自体は変えず、
+// このページの描画時にだけ両者を合成する）。
+let ProblemContent: typeof Content | null = null;
+if ((entry.data.type || 'solution') === 'solution') {
+	const problemEntry = allSolutions.find(
+		(item) =>
+			item.data.university === entry.data.university &&
+			item.data.category === entry.data.category &&
+			item.data.year === entry.data.year &&
+			item.data.question === entry.data.question &&
+			(item.data.type || '') === 'problem'
+	);
+	if (problemEntry) {
+		const rendered = await problemEntry.render();
+		ProblemContent = rendered.Content;
+	}
+}
+
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // Labels mapping
@@ -233,6 +252,17 @@ const pageTitle = entry.data.title || `${univName} ${catName} ${year}年 ${quest
 			</h1>
 		</header>
 
+		{ProblemContent && (
+			<div class="problem-block">
+				<div class="problem-block-label">📝 問題</div>
+				<div class="markdown-body">
+					<ProblemContent />
+				</div>
+			</div>
+		)}
+
+		{ProblemContent && <div class="solution-block-label">✏️ 解答解説</div>}
+
 		<div class="markdown-body">
 			<Content />
 		</div>
@@ -240,6 +270,37 @@ const pageTitle = entry.data.title || `${univName} ${catName} ${year}年 ${quest
 </Layout>
 
 <style is:global>
+	.problem-block {
+		margin-bottom: 2rem;
+		padding: 1.5rem 1.75rem;
+		border: 1px solid rgba(251, 191, 36, 0.35);
+		border-left: 4px solid #fbbf24;
+		border-radius: 0 12px 12px 0;
+		background: rgba(251, 191, 36, 0.06);
+	}
+
+	.problem-block-label {
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: #fbbf24;
+		letter-spacing: 0.05em;
+		margin-bottom: 1rem;
+	}
+
+	.problem-block .markdown-body {
+		margin: 0;
+	}
+
+	.solution-block-label {
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: var(--primary);
+		letter-spacing: 0.05em;
+		margin: 0 0 1.25rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
 	.markdown-body h2 {
 		font-size: 1.45rem;
 		font-weight: 700;
