@@ -1,35 +1,96 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$c>1\ \cdots$①　$A(1,c)$とおく．$\ell$の傾きを$m$とおく．と$y=m(x-1)+c$だから，
+題意より
 \begin{align}
-x^2=m(x-1)+c \quad\cdots\text{②}
+ c>1 \label{eq:1}
 \end{align}
-の2解$\alpha,\beta\ (\alpha<\beta)$が$\ell$と$y=x^2$の交点の$x$座標である．題意の面積$S$として
+のもとで考える．
+$A(1,c)$，$\ell$の傾きを$m$とおくと$y=m(x-1)+c$だから，これと$y=x^2$を連立した
+\begin{align}
+x^2=m(x-1)+c \quad\cdots\text{②} \label{eq:2}
+\end{align}
+の2解$\alpha,\beta\ (\alpha<\beta)$が$\ell$と$y=x^2$の交点の$x$座標である．
+
+\begin{figure}[htb]
+ \begin{center}
+  \begin{tikzpicture}[scale=1.2, >=stealth]
+
+  % --- パラメータ設定 (c > 1) ---
+  \def\cVal{2.5}  % 点 A の y 座標 c
+  \def\mGen{4.0}  % 一般の直線 l の傾き m (m != 2)
+  \def\mMin{2.0}  % S を最小にする傾き m = 2
+
+  % --- 座標軸 ---
+  \draw[->, thick] (-1.5,0) -- (4.0,0) node[right] {$x$};
+  \draw[->, thick] (0,-0.5) -- (0,5.5) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 放物線 y = x^2 ---
+  \draw[ultra thick, blue!80!black, domain=-0.8:2.3, samples=100] plot (\x, {\x*\x});
+  \node[blue!80!black, right] at (2.1, 4.41) {$y=x^2$};
+
+  % --- 点 A(1, c) ---
+  \coordinate (A) at (1, \cVal);
+  \fill[black] (A) circle (2pt) node[above left] {$A(1,c)$};
+  \draw[dashed, gray] (1,0) node[below, black] {$1$} -- (A);
+  \draw[dashed, gray] (0, \cVal) node[left, black] {$c$} -- (A);
+
+
+  % ==========================================================
+  % 2. 面積 S を最小にする状況 (m = 2)
+  % ==========================================================
+  % 直線の方程式: y = 2*(x-1) + cVal
+  % この時, 交点間距離 beta-alpha = sqrt(4c-4) = 2*sqrt(c-1)
+  \pgfmathsetmacro{\sqrtcmone}{sqrt(\cVal - 1)}
+  \pgfmathsetmacro{\amin}{1 - \sqrtcmone} % alpha (m=2)
+  \pgfmathsetmacro{\bmin}{1 + \sqrtcmone} % beta (m=2)
+
+  % 最小面積 S_min の斜線ハッチング (または濃い塗りつぶし)
+  \begin{scope}
+    \clip (\amin, -0.5) rectangle (\bmin, 5.5);
+    \fill[red!30, opacity=0.7, domain=\amin:\bmin, samples=50]
+      plot (\x, {\x*\x}) -- plot[domain=\bmin:\amin] (\x, {2*(\x-1) + \cVal}) -- cycle;
+  \end{scope}
+
+  % 直線 l (最小)
+  \draw[ultra thick, red!80!black, domain=-0.5:2.5] plot (\x, {\mMin*(\x-1) + \cVal}) node[right] {$\ell_0$};
+
+  % 交点プロット (最小)
+  \fill[red!80!black] (\amin, {\amin*\amin}) circle (1.5pt) node[above, font=\small] {$\alpha$};
+  \fill[red!80!black] (\bmin, {\bmin*\bmin}) circle (1.5pt) node[above left, font=\small] {$\beta$};
+
+  % 最小面積ラベル min S
+  \draw[<-] (1.3, {\cVal - 0.5}) -- (2.5, {\cVal - 0.8}) node[right, red!80!black, font=\small] {$S$};
+
+\end{tikzpicture}
+\caption{放物線$y=x^2$と直線$\ell$, および題意の領域（斜線部）の様子．}
+ \end{center} 
+\end{figure}
+
+題意の面積$S$とすると
 \begin{align}
 \begin{split}
-S&=\int_\alpha^\beta\{m(x-1)+c-x^2\}dx \\
-&=\dfrac{1}{6}(\beta-\alpha)^3 \quad\cdots\text{③}
-\end{split}
+S
+ &=\int_\alpha^\beta\{m(x-1)+c-x^2\}dx \\
+ &=\dfrac{1}{6}(\beta-\alpha)^3 \quad\cdots\text{③}
+\end{split} \label{eq:3}
 \end{align}
-であり，$\alpha<\beta$と$\alpha,\beta$が②の解であることから
+である．
+$\alpha<\beta$と$\alpha,\beta$が\cref{eq:2}の解であることから
 \begin{align}
 \beta-\alpha=2\cdot\dfrac{\sqrt{m^2-4(m-c)}}{2}=\sqrt{m^2-4m+4c}
 \end{align}
-だから，③に代入して
+なので，\cref{eq:3}に代入して
 \begin{align}
 S=\dfrac{1}{6}\left\{(m-2)^2+4c-4\right\}^{3/2}
 \end{align}
-これは$m=2$の時，
+となる．これが最小になるのは$m=2$の時で，その時の最小値は
 \begin{align}
 \min S=\dfrac{1}{6}\cdot8(c-1)^{3/2}=\dfrac{4}{3}(c-1)^{3/2}
 \end{align}
-をとる．
+である． 
 
 
 \newpage
