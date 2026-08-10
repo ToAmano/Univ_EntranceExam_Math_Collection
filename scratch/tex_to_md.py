@@ -330,7 +330,34 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     raw_tex = re.sub(r'\\newpage', '', raw_tex)
     raw_tex = re.sub(r'\\vspace\{[^}]*\}', '', raw_tex)
     raw_tex = re.sub(r'\\noindent', '', raw_tex)
-    raw_tex = re.sub(r'\\fontsize\{[^}]*\}\{[^}]*\}', '', raw_tex)
+    # {\fontsize{A}{B}\selectfont CONTENT} のような、フォントサイズ変更の
+    # スコープを示すためだけの外側の {} をまとめて取り除く。CONTENT 自体に
+    # \textbf{...} 等のネストした {} が含まれることが多く、単純な
+    # \fontsize{...}{...} / \selectfont だけを消す従来のやり方だと、外側の
+    # '{' と対応する '}' が孤立したまま出力に残ってしまう
+    # （実例: titech kouki の年度サマリーページの見出しに孤立した "{"/"}"
+    # がそのまま表示されていた）。
+    def _unwrap_fontsize_group(text):
+        pattern = re.compile(r'\\fontsize\{[^}]*\}\{[^}]*\}\\selectfont\s*')
+        out = []
+        i = 0
+        while True:
+            m = pattern.search(text, i)
+            if not m:
+                out.append(text[i:])
+                break
+            brace_pos = m.start() - 1
+            if brace_pos >= 0 and text[brace_pos] == '{':
+                out.append(text[i:brace_pos])
+                snippet, end = _extract_braced(text, brace_pos)
+                out.append(snippet[1:-1][len(m.group(0)):])
+                i = end
+            else:
+                out.append(text[i:m.start()])
+                i = m.end()
+        return ''.join(out)
+
+    raw_tex = _unwrap_fontsize_group(raw_tex)
     raw_tex = re.sub(r'\\selectfont', '', raw_tex)
     raw_tex = re.sub(r'\\centerline', '', raw_tex)
 
@@ -355,6 +382,28 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         # Pandoc が HTML <table> にエスケープする原因となる multirow / multicolumn マクロの展開
         tab_clean = re.sub(r'\\multirow\{[^}]*\}\{[^}]*\}', '', tab_str)
         tab_clean = re.sub(r'\\multicolumn\{[^}]*\}\{[^}]*\}', '', tab_clean)
+        # \cline{2-3} が除去されずに残ると、pandoc がその引数 "2-3" を独立した
+        # テーブル行のセル内容として誤って拾ってしまう（実例: titech kouki
+        # 1990年サマリーの解答表で "2-3" という意味不明な行が公開ページに
+        # 表示されていた）。\hline 同様に見た目に影響しないため単純に除去する。
+        tab_clean = re.sub(r'\\cline\{[^}]*\}', '', tab_clean)
+        # 数式（$...$）内の "|" は Pandoc の GFM テーブル書き出し時にエスケープされず
+        # 列区切りと誤認されてしまう（実例: $|\vec a|=1$ のような絶対値記号を含む
+        # セルが崩れる）。"\|" へのエスケープは MathJax 上では別記号（二重バー／
+        # ノルム）に化けてしまうため使えない。かわりに絶対値の開き・閉じを表す
+        # \lvert / \rvert に機械的に置き換える（"|" の文字自体が消えるので
+        # テーブル分割問題も同時に解消する）。
+        def _protect_math_pipes(m):
+            body = m.group(1)
+            parts = body.split('|')
+            if len(parts) == 1:
+                return '$' + body + '$'
+            rebuilt = parts[0]
+            for i, part in enumerate(parts[1:]):
+                rebuilt += (r'\lvert ' if i % 2 == 0 else r'\rvert ') + part
+            return '$' + rebuilt + '$'
+
+        tab_clean = re.sub(r'\$([^$]*)\$', _protect_math_pipes, tab_clean)
         # standalone tabular 文脈を構築して Pandoc に入力
         wrapped_tex = f"\\documentclass{{article}}\n\\begin{{document}}\n{tab_clean}\n\\end{{document}}"
         try:
@@ -517,9 +566,28 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     # 見出しと見映えの最終整頓
     md_content = re.sub(r'\\begin\{table\}[^}\n]*|\\end\{table\}|\\centering|\\begin\{center\}|\\end\{center\}|\\endtabular', '', md_body)
     
-    # \shadowbox{...} のアンラップ
-    md_content = re.sub(r'\\shadowbox\{([^}]*)\}', r'\1', md_content)
-    md_content = re.sub(r'\\shadowbox\{', '', md_content)
+    # \shadowbox{...} のアンラップ。中身に \begin{tabular}{...}...\end{tabular} 等
+    # ネストした {} を含むことが多く、[^}]* の単純な正規表現では最初の '}' で
+    # 閉じたと誤認して、本来の閉じ括弧を残したまま欠けた形になってしまう
+    # （実例: titech kouki 1990年サマリーの解答表末尾に孤立した "}" が
+    # 公開ページにそのまま表示されていた）。_extract_braced で対応を追跡する。
+    def _unwrap_shadowbox(text):
+        out = []
+        i = 0
+        n = len(text)
+        while i < n:
+            j = text.find('\\shadowbox{', i)
+            if j == -1:
+                out.append(text[i:])
+                break
+            out.append(text[i:j])
+            brace_start = j + len('\\shadowbox')
+            snippet, end = _extract_braced(text, brace_start)
+            out.append(snippet[1:-1])
+            i = end
+        return ''.join(out)
+
+    md_content = _unwrap_shadowbox(md_content)
 
     # フォント・スペーシング・再定義関連不要マクロの完全削除
     md_content = re.sub(r'\\renewcommand\s*\{?\\[a-zA-Z]+\}?\s*(\[[^\]]*\])?\s*\{[^}]*\}', '', md_content)
