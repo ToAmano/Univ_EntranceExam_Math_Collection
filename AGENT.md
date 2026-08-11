@@ -216,7 +216,7 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 * **辺の長さは `\overline{AB}` ではなく `|AB|`（絶対値記号ではさむ）で書く**。手書き原稿が `\overline{}` を使っていても，転記時に `|...|` に直す。
 * **大きい括弧は素の `[ ]` `( )` のまま使わず，`\Bigl[ \Bigr]` / `\Bigl( \Bigr)` 等でサイズを明示する**。中身が分数や指数で背が高くなると素の括弧は窮屈に見えるため。既存ソースでは `\Bigl`系が`\bigl`系よりも多用されている（`\Bigl`系325件 対 `\bigl`系158件，`\biggl`系は0件）ので，特にサイズ判断に迷う場合は `\Bigl[ \Bigr]` を既定として使う。`\left[ \right]` の自動サイズ調整は式ごとに高さがまちまちになりやすいため，複数式でサイズを揃えたい場面では避ける。
 * **1行目は `\documentclass[../../main.tex]{subfiles}` とする**（`src/{univ}/{cat}/{year}/{q}/solution.tex` から `src/{univ}/{cat}/main.tex` までは2階層上がるだけなので `../../` が正しい。`../../../../` ではない）。
-* **小問（(1), (2), ...）は `enumerate` 環境で囲わない**。`\begin{enumerate}\item ...\end{enumerate}` は使わず，`(1) ...`，`(2) ...` のように解答文中に直接書き進める。
+* **小問（(1), (2), ...）は `enumerate` 環境で囲わず，`\paragraph{(1)}` のように見出し化する**。`\begin{enumerate}\item ...\end{enumerate}` は使わない。地の文に `(1) ...` と直接書き進めるのではなく，`\paragraph{(1)}` を単独の行に置き，その次の行から解答本文を続ける（`\paragraph` は Markdown 変換時に `###` 見出しになる）。本文中で既出の小問を後方参照する場合（例:「(1)の結果より」）は，あくまで地の文中の参照であり見出しではないため `\paragraph`化しない。
 
 ### 8.4 図（TikZ）の再現について
 

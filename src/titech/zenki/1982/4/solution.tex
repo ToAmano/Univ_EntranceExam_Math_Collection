@@ -1,35 +1,25 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-もとの楕円を$\theta$だけ回転させた図形上の点$(X,Y)$とすると
+点$(x,y)$を$\theta$だけ回転させた図形上の点$(X,Y)$とすると，
 \begin{align}
 x+yi=(X+Yi)\left(\dfrac{\sqrt{2}}{2}-\dfrac{\sqrt{2}}{2}i\right)=\dfrac{\sqrt{2}}{2}(X+Y)+\dfrac{\sqrt{2}}{2}i(-X+Y)
 \end{align}
-から
+より
 \begin{align}
 (x,y)=\left(\dfrac{\sqrt{2}}{2}(X+Y),\ \dfrac{\sqrt{2}}{2}(X-Y)\right)
 \end{align}
-とすれば，
+と書ける．これを元の楕円の領域
 \begin{align}
-\dfrac{(X+Y)^2}{12}\cdot\dfrac{1}{2}+\dfrac{1}{2}\cdot\dfrac{(X-Y)^2}{4}\le1
+ \dfrac{x^2}{12}+\dfrac{y^2}{4} \le 1
 \end{align}
-である．したがって斜線の部分の概形は下図．
+に代入すれば回転した楕円の方程式になる：
 \begin{align}
-\text{扇型}\ OCD=\dfrac{1}{2}\cdot\dfrac{\pi}{4}\cdot(2\sqrt{3})^2=\dfrac{3}{2}\pi \quad \cdots \text{①}
+\dfrac{(X+Y)^2}{24}+\cdot\dfrac{(X-Y)^2}{8}\le1
 \end{align}
-又，$\triangle OBC$について，$X=\dfrac{x}{2\sqrt{3}},\ Y=\dfrac{y}{2}$なる変換をすれば下図斜線部の領域式（単位円）になるので，
-\begin{align}
-\triangle OBC=\dfrac{1}{2}\cdot\dfrac{\pi}{3}\times2\sqrt{3}\cdot2=\dfrac{2}{3}\sqrt{3}\pi \quad \cdots \text{②}
-\end{align}
-①②から，もとめる面積$S$として
-\begin{align}
-S=\dfrac{3}{2}\pi+\dfrac{2}{3}\sqrt{3}\pi=\left(\dfrac{3}{2}+\dfrac{2\sqrt{3}}{3}\right)\pi
-\end{align}
+
+従って$D$の通過する領域は以下の斜線部である．
 
 \begin{figure}[htb]
 \begin{center}
@@ -56,7 +46,7 @@ S=\dfrac{3}{2}\pi+\dfrac{2}{3}\sqrt{3}\pi=\left(\dfrac{3}{2}+\dfrac{2\sqrt{3}}{3
   \draw (0,0) -- (0,{sqrt(6)});
   \draw (0,0) -- ({sqrt(6)},{sqrt(6)});
   \draw[->] (0.9,0) arc (0:45:0.9);
-  \node at (1.15,0.35) {$\dfrac{\pi}{4}$};
+  \node at (1.15,0.35) {$\frac{\pi}{4}$};
   \fill (0,0) circle (1.5pt) node[below left] {$O$};
   \fill ({2*sqrt(3)},0) circle (1.5pt) node[below] {$D$};
   \fill ({sqrt(6)},{sqrt(6)}) circle (1.5pt) node[above right] {$C$};
@@ -65,6 +55,129 @@ S=\dfrac{3}{2}\pi+\dfrac{2}{3}\sqrt{3}\pi=\left(\dfrac{3}{2}+\dfrac{2\sqrt{3}}{3
 \end{center}
 \caption{面積$S$を求めるための図}
 \end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=stealth, every node/.style={font=\small}]
+
+  % 1. 通過領域 S の斜線塗りつぶし
+  % 扇形 OCD (半径 2\sqrt{3}, 0°->45°) + 楕円弧 CB (回転後楕円のパラメータ psi: 0°->60°)
+  % 2\sqrt{3} \approx 3.464, \sqrt{6} \approx 2.449
+  \fill[pattern=north east lines, pattern color=black!50]
+    (0,0) -- (3.464, 0)
+    arc (0:45:3.464)
+    -- plot[domain=0:60, samples=50, smooth]
+       ({sqrt(2)*(sqrt(3)*cos(\x)-sin(\x))}, {sqrt(2)*(sqrt(3)*cos(\x)+sin(\x))})
+    -- cycle;
+
+  % 2. 参考曲線 (楕円全体を点線描画)
+  % 元の楕円 (x軸方向 長軸 2\sqrt{3}, y軸方向 短軸 2)
+  \draw[dashed, gray!70, thick] (0,0) ellipse ({2*sqrt(3)} and 2);
+  
+  % 回転後の楕円 (時計回りに 45° 回転 / rotate=-45)
+  \draw[dashed, red!80!black, thick, rotate=45] (0,0) ellipse ({2*sqrt(3)} and 2);
+
+  % 3. 領域 S の実線境界
+  % 扇形 OCD の円弧
+  \draw[thick, blue!80!black] (3.464, 0) arc (0:45:3.464);
+  
+  % 回転後楕円の弧 C -> B
+  \draw[thick, blue!80!black, domain=0:60, samples=50, smooth]
+    plot ({sqrt(2)*(sqrt(3)*cos(\x)-sin(\x))}, {sqrt(2)*(sqrt(3)*cos(\x)+sin(\x))});
+
+  % 線段 OD, OC, OB
+  \draw[thick] (0,0) -- (3.464, 0);
+  \draw[thick] (0,0) -- (2.449, 2.449);
+  \draw[thick] (0,0) -- (0, 2.449);
+
+  % 4. 座標軸描画
+  \draw[->, thick] (-4.0, 0) -- (4.8, 0) node[right] {$x$};
+  \draw[->, thick] (0, -4.0) -- (0, 4.8) node[above] {$y$};
+
+  % 5. 角度表記・アーク
+  \draw[->, gray!80!black] (1.2, 0) arc[start angle=0, end angle=45, radius=1.2];
+  \node at (1.5, 0.45) {$\frac{\pi}{4}$};
+
+  \draw[->, gray!80!black] (45:1.5) arc[start angle=45, end angle=90, radius=1.5];
+  \node at (0.6, 1.8) {$\frac{\pi}{4}$};
+
+  % 6. プロット点とラベル
+  \fill (0,0) circle (1.5pt) node[below left] {$O$};
+  \fill (3.464, 0) circle (1.5pt) node[below right] {$D(2\sqrt{3}, 0)$};
+  \fill (2.449, 2.449) circle (1.5pt) node[above right] {$C(\sqrt{6}, \sqrt{6})$};
+  \fill (0, 2.449) circle (1.5pt) node[above left] {$B(0, \sqrt{6})$};
+
+  % 7. 凡例（楕円の補足）
+  % \node[gray!80!black, font=\small, right] at (2.2, -1.8) {元の楕円};
+  % \draw[->, gray!80!black, thin] (2.2, -1.8) -- (1.5, -1.3);
+
+  % \node[red!80!black, font=\small, right] at (-3.8, -2.5) {回転後の楕円};
+  % \draw[->, red!80!black, thin] (-2.2, -2.3) -- (-1.5, -1.8);
+
+\end{tikzpicture}
+\end{center}
+\caption{Dの通過領域（斜線部）と回転前後の楕円}
+\end{figure}
+
+従って求める面積$S$は扇形OCDと楕円を切り取った部分OBCの二つの面積の和で表せる．
+まず前者の面積は
+\begin{align}
+\text{扇型}\ OCD=\dfrac{1}{2}\cdot\dfrac{\pi}{4}\cdot(2\sqrt{3})^2=\dfrac{3}{2}\pi \quad \cdots \text{①} \label{eq:1}
+\end{align}
+と求められる．
+
+次にOBCの部分について考えよう．
+$\angle BOC = \dfrac{\pi}{4}$に注意すると，$X=\dfrac{x}{2\sqrt{3}},\ Y=\dfrac{y}{2}$なる変換をすれば下図斜線部の領域になるので，
+\begin{align}
+ OBC=\dfrac{1}{2}\cdot\dfrac{\pi}{3}\times \left(2\sqrt{3}\cdot 2\right)=\dfrac{2}{3}\sqrt{3}\pi \quad \cdots \text{②} \label{eq:2}
+\end{align}
+である．
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=2.5, >=stealth, every node/.style={font=\small}]
+
+  % 1. 扇形領域 (0°から60°まで) の斜線塗りつぶし
+  \fill[pattern=north east lines, pattern color=black!50]
+    (0,0) -- (1,0) arc[start angle=0, end angle=60, radius=1] -- cycle;
+
+  % 2. 座標軸
+  \draw[->, thick] (-0.15, 0) -- (1.3, 0) node[right] {$X$};
+  \draw[->, thick] (0, -0.15) -- (0, 1.3) node[above] {$Y$};
+  \node[below left] at (0,0) {$\text{O}$};
+
+  % 3. 単位円の円弧 (0°から90°まで)
+  \draw[thick, blue!80!black] (1,0) arc[start angle=0, end angle=90, radius=1];
+
+  % 4. 境界線 (原点から 60° 方向への線分)
+  \draw[thick] (0,0) -- (1,0);
+  \draw[thick] (0,0) -- (60:1);
+
+  % 5. 角度のアーク表記 (pi/3)
+  \draw[->, gray!80!black, thick] (0.35, 0) arc[start angle=0, end angle=60, radius=0.35];
+  \node at (30:0.55) {$\frac{\pi}{3}$};
+
+  % 6. 軸上の目盛りとプロット点
+  \fill (0,0) circle (0.8pt);
+  \fill (1,0) circle (0.8pt);
+  \fill (0,1) circle (0.8pt);
+  \fill (60:1) circle (0.8pt);
+
+  \node[below] at (1, 0) {$1$};
+  \node[left] at (0, 1) {$1$};
+
+\end{tikzpicture}
+\caption{変換後の平面における扇形領域 $OBC$}
+\end{figure}
+
+\cref{eq:1,eq:2}から求める面積$S$は
+\begin{align}
+ S
+  &=\text{扇形}OCD + \text{楕円}OBC \\ 
+  &=\dfrac{3}{2}\pi+\dfrac{2}{3}\sqrt{3}\pi \\
+  &=\left(\dfrac{3}{2}+\dfrac{2\sqrt{3}}{3}\right)\pi
+\end{align}
+である．
 
 
 \newpage
