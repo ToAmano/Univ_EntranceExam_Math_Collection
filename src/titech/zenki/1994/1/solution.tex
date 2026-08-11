@@ -13,6 +13,76 @@ $C: y=x^2$，$P(\alpha,\alpha^2)$，$Q(\beta,\beta^2)$（$\alpha<\beta$）とお
 \end{align}
 である．
 
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=3, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-1.6, 0) -- (1.6, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.8) -- (0, 2.5) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 2. 点 R の軌跡 y = x^2 - 1/4 (青破線) ---
+  %\draw[thick, dashed, blue!80!black, domain=-1.4:1.4, samples=100] 
+  %  plot (\x, {\x*\x - 0.25}) node[right, font=\small] {$y = x^2 - \frac{1}{4}$};
+
+  % --- 3. 放物線 C: y = x^2 ---
+  \draw[ultra thick, black, domain=-1.3:1.3, samples=100] 
+    plot (\x, {\x*\x});
+  \node[above left] at (-1.5, 2.25) {$C: y = x^2$};
+
+  % --- パラメータ設定 (beta - alpha = 1 の例: alpha = -0.2, beta = 0.8) ---
+  \def\alphaVal{-0.2}
+  \def\betaVal{0.8}
+
+  % P, Q の座標
+  \coordinate (P) at (\alphaVal, {\alphaVal*\alphaVal});
+  \coordinate (Q) at (\betaVal, {\betaVal*\betaVal});
+
+  % 交点 R の座標: X = (alpha + beta)/2, Y = alpha * beta
+  \pgfmathsetmacro{\Rx}{(\alphaVal + \betaVal)/2}
+  \pgfmathsetmacro{\Ry}{\alphaVal * \betaVal}
+  \coordinate (R) at (\Rx, \Ry);
+
+  % --- 4. 囲まれる領域 S の斜線ハッチング (pattern) ---
+  \begin{scope}
+    \clip plot[domain=\alphaVal:\betaVal, samples=50] (\x, {\x*\x}) -- (Q) -- (P) -- cycle;
+    \fill[pattern=north east lines, pattern color=gray!80]
+      plot[domain=\alphaVal:\betaVal, samples=50] (\x, {\x*\x}) -- cycle;
+  \end{scope}
+
+  % 直線 PQ
+  \draw[thick, gray] ($(P)!-0.5!(Q)$) -- ($(P)!1.5!(Q)$) node[right, font=\small] {直線 $PQ$};
+
+  % --- 5. 接線 l_P, l_Q の描画 ---
+  % l_P: y = 2*alpha*x - alpha^2
+  \draw[thick, red!80!black] ($(P)!-0.8!(R)$) -- ($(P)!1.5!(R)$) node[below left, font=\small] {$\ell_P$};
+  % l_Q: y = 2*beta*x - beta^2
+  \draw[thick, red!80!black] ($(Q)!-0.8!(R)$) -- ($(Q)!1.5!(R)$) node[below right, font=\small] {$\ell_Q$};
+
+  % --- 6. 各点のプロットとラベル ---
+  % 点 P(alpha, alpha^2)
+  \fill[black] (P) circle (1.8pt) node[left] {$P(\alpha, \alpha^2)$};
+  \draw[dashed, gray] (\alphaVal, 0) node[above, font=\small, yshift=1pt] {$\alpha$} -- (P);
+
+  % 点 Q(beta, beta^2)
+  \fill[black] (Q) circle (1.8pt) node[right] {$Q(\beta, \beta^2)$};
+  \draw[dashed, gray] (\betaVal, 0) node[below, font=\small] {$\beta$} -- (Q);
+
+  % 交点 R(X, Y)
+  \fill[blue!80!black] (R) circle (2.0pt) node[below, font=\small] {$R(X,Y)$};
+
+  % 面積 S のラベル
+  \node[font=\small] at (0.3, 0.45) {$S = \frac{1}{6}$};
+
+  % y 軸切片 -1/4
+  \fill[black] (0, -0.25) circle (1.0pt) node[left, font=\small] {$-\frac{1}{4}$};
+
+\end{tikzpicture}
+\end{center}
+\caption{直線 $PQ$ と放物線 $C$ で囲まれる領域 $S$ および接線の交点 $R$ の軌跡}
+\end{figure}
+
 次に$P,Q$における$C$の接線は
 \begin{align}
 \begin{split}

@@ -6,36 +6,118 @@
 \end{flushright}
 
 {\bf [解]}
-$f(x)=x^2$，$g(x)=-x^2-16x-65=-(x+8)^2-1$とおく．$P,Q$の$x$座標を$\alpha$，$\beta-8$とする．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=0.5, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-13, 0) -- (5, 0) node[right] {$x$};
+  \draw[->, thick] (0, -10) -- (0, 10) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 2. 放物線 y = f(x) = x^2 ---
+  \draw[ultra thick, blue!80!black, domain=-3.1:3.1, samples=100] 
+    plot (\x, {\x*\x});
+  \node[blue!80!black, right] at (2.5, 7) {$y = f(x) = x^2$};
+
+  % --- 3. 放物線 y = g(x) = -(x+8)^2 - 1 ---
+  \draw[ultra thick, red!80!black, domain=-11.1:-4.9, samples=100] 
+    plot (\x, { -(\x+8)*(\x+8) - 1 });
+  \node[red!80!black, left] at (-9.5, -7) {$y = g(x) = -(x+8)^2 - 1$};
+
+  % 頂点 (-8, -1) のガイド
+  \draw[dashed, gray] (-8, 0) node[above, font=\small] {$-8$} -- (-8, -1) -- (0, -1) node[right, font=\small] {$-1$};
+  \fill[black] (-8, -1) circle (2.5pt);
+
+  % % ==========================================================
+  % % 4. 最小値をとる状況 (a = 2, b = 0 => alpha = -1, beta = 1)
+  % % ==========================================================
+  % % P_min: alpha = -1 => P(-1, 1)
+  % % Q_min: beta - 8 = 1 - 8 = -7 => Q(-7, g(-7)) = Q(-7, -2)
+  % \coordinate (Pmin) at (-1, 1);
+  % \coordinate (Qmin) at (-7, -2);
+
+  % % 最小距離の線分 PQ
+  % \draw[ultra thick, green!50!black] (Pmin) -- (Qmin) node[midway, above left, font=\small] {$\min |PQ| = 3\sqrt{5}$};
+
+  % % 各点のプロット
+  % \fill[blue!80!black] (Pmin) circle (3pt) node[above left] {$P(-1, 1)$};
+  % \fill[red!80!black] (Qmin) circle (3pt) node[below right] {$Q(-7, -2)$};
+
+  % % ガイド線
+  % \draw[dashed, gray] (-1, 0) node[below, font=\small] {$-1$} -- (Pmin);
+  % \draw[dashed, gray] (-7, 0) node[above, font=\small] {$-7$} -- (Qmin);
+
+
+  % ==========================================================
+  % 5. 一般の点 P, Q (比較用・細い線分)
+  % ==========================================================
+  % 例: alpha = 1.8 => P(1.8, 3.24)
+  %     beta - 8 = -10 => Q(-10, -5)
+  \coordinate (Pgen) at (1.8, 3.24);
+  \coordinate (Qgen) at (-10, -5);
+
+  \draw[thick, gray, dashed] (Pgen) -- (Qgen) node[midway, below right, font=\small] {$|PQ|$};
+
+  \fill[gray] (Pgen) circle (2.5pt) node[right, font=\small] {$P(\alpha, \alpha^2)$};
+  \fill[gray] (Qgen) circle (2.5pt) node[left, font=\small] {$Q(\beta-8, g(\beta-8))$};
+
+\end{tikzpicture}
+\end{center}
+\caption{放物線 $f(x), g(x)$ と動点 $P, Q$ 間距離の最小化}
+\end{figure}
+
+与えられた関数を
+\begin{align}
+ \begin{cases}
+  f(x)=x^2 \\
+  g(x)=-x^2-16x-65=-(x+8)^2-1
+ \end{cases}
+\end{align}
+とおく．$P,Q$の$x$座標を$\alpha$，$\beta-8$とすると
 \begin{align}
 \overrightarrow{PQ}=\begin{pmatrix}\beta-8\\g(\beta-8)\end{pmatrix}-\begin{pmatrix}\alpha\\\alpha^2\end{pmatrix}=\begin{pmatrix}\beta-\alpha-8\\-\alpha^2-\beta^2-1\end{pmatrix}
 \end{align}
-だから，$a=\beta-\alpha,\ b=\beta+\alpha$とすると
+である．従って
 \begin{align}
-\alpha^2+\beta^2=\dfrac{a^2+b^2}{2}
+ |PQ|^2 
+  &= \left(\beta-\alpha-8\right)^2 + \left(-\alpha^2-\beta^2-1\right)^2 \label{eq:1}
 \end{align}
-に注意して
-\begin{align}
-\begin{split}
-|\overrightarrow{PQ}|^2&=(a-8)^2+\left(\dfrac{a^2+b^2}{2}+1\right)^2 \\
-&=\dfrac{1}{4}\left\{b^2+(a^2+2)\right\}^2+(a-8)^2 \quad\cdots\text{①}
-\end{split}
-\end{align}
-$\alpha,\beta$は$x$の2次式$x^2-bx+\dfrac{b^2-a^2}{4}=0$の2実解だから，判別式$D$として，
+である．
+
+ここで$a=\beta-\alpha,\ b=\beta+\alpha$とすると，$\alpha,\beta$は$x$の2次式$x^2-bx+\dfrac{b^2-a^2}{4}=0$の2実解だから判別式$D$として，
 \begin{align}
 D=b^2-(b^2-a^2)\ge0 \quad\therefore\ a^2\ge0
 \end{align}
-これは$a\in\mathbb{R}$から常に成立．よって①の$\min$をかんがえれば良い．$a$を固定すると$b=0$で$\min$で，
+であることが必要だが，これは$a\in\mathbb{R}$から常に成立する．
+
+そこで以下$a,b$を用いて\cref{eq:1}を表す．
+まず
 \begin{align}
-\min|\overrightarrow{PQ}|^2=\dfrac{1}{4}(a^2+2)^2+(a-8)^2\ (\equiv f(a))
+\alpha^2+\beta^2=\dfrac{a^2+b^2}{2}
 \end{align}
-とすると
+だから，\cref{eq:1}に代入して
+\begin{align}
+|\overrightarrow{PQ}|^2
+  &=(a-8)^2+\left(\dfrac{a^2+b^2}{2}+1\right)^2 \\
+  &=\dfrac{1}{4}\left\{b^2+a^2+2\right\}^2+(a-8)^2 \quad\cdots\text{①} \label{eq:2}
+\end{align}
+である．
+
+$a$を固定するとこれは$b=0$で最小値
+\begin{align}
+\min|PQ|^2=\dfrac{1}{4}(a^2+2)^2+(a-8)^2\ (\equiv f(a))
+\end{align}
+をとる．この右辺を$f(a)$とおくと，一階微分は
 \begin{align}
 f'(a)=\dfrac{1}{2}(a^2+2)\cdot2a+2(a-8)=a^3+4a-16=(a-2)(a^2+2a+8)
 \end{align}
-から下表をうる．
+だから増減表は以下のようになる．
+
 \begin{table}[htb]
-  \centering
+ \centering
+\caption{$f(a)$の増減表}
 \begin{tabular}{c|ccccc}
 $a$ & & & $2$ & & \\
 \hline
@@ -44,10 +126,11 @@ $f'$ & & $-$ & $0$ & $+$ & \\
 $f$ & & $\searrow$ & & $\nearrow$ &
 \end{tabular}
 \end{table}
-よって$a=2$で$|\overrightarrow{PQ}|^2$は$\min$をとる．$|\overrightarrow{PQ}|\ge0$から，この時$|\overrightarrow{PQ}|$も最小で，
-\begin{align}
-\min|\overrightarrow{PQ}|=\sqrt{45}=3\sqrt{5}
-\end{align}
 
+従って$a=2$で$|PQ|^2$は最小値をとる．$|PQ|\ge0$からこの時$|PQ|$も最小で，その最小値は
+\begin{align}
+\min|PQ|=\sqrt{45}=3\sqrt{5}
+\end{align}
+である．
 
 \end{document}
