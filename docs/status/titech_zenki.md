@@ -191,10 +191,10 @@
 | 1994年 | 第3問 | finish | finish | あり | 完了 |
 | 1994年 | 第4問 | finish | finish | あり | 完了 |
 | 1994年 | 第5問 | finish | finish | あり | 完了 |
-| 1995年 | 第1問 | finish | 文字起こし済 | あり | 未完成 |
-| 1995年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
-| 1995年 | 第3問 | finish | 文字起こし済 | あり | 未完成 |
-| 1995年 | 第4問 | finish | 文字起こし済 | あり | 未完成 |
+| 1995年 | 第1問 | finish | finish | あり | 完了 |
+| 1995年 | 第2問 | finish | finish | あり | 完了 |
+| 1995年 | 第3問 | finish | finish | あり | 完了 |
+| 1995年 | 第4問 | finish | finish | あり | 完了 |
 | 1995年 | 第5問 | unfinish | unfinish | あり | 未着手 |
 | 1996年 | 第1問 | finish | 文字起こし済 | あり | 未完成 |
 | 1996年 | 第2問 | finish | unfinish | あり | 未完成 |

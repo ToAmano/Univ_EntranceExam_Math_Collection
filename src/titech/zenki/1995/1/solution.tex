@@ -6,53 +6,66 @@
 \end{flushright}
 
 {\bf [解]}
+題意の数列
 \begin{align}
-a(n)=\dfrac{(n+2)(n+3)(n+4)}{n!}
+a(n)=\dfrac{(n+2)(n+3)(n+4)}{n!} \label{eq:1}
 \end{align}
+について考える．
 
-\textbf{(1)} $a(n)>0$であり，
+\paragraph{(1)}
+
+$n\to\infty$の時を考えるので$n \ge 4$として良い．この時$n! \ge n(n-1)(n-2)(n-3)$だから\cref{eq:1}に代入して
 \begin{align}
-\dfrac{a(n+1)}{a(n)}=\dfrac{(n+3)(n+4)(n+5)/(n+1)!}{(n+2)(n+3)(n+4)/n!}=\dfrac{n+5}{(n+1)(n+2)}\longrightarrow0 \quad(n\to\infty)
+ 0 \le a(n) \le \dfrac{(n+2)(n+3)(n+4)}{n(n-1)(n-2)(n-3)} = \dfrac{(1+2/n)(1+3/n)(1+4/n)}{n(1-1/n)(1-2/n)(1-3/n)}
 \end{align}
-となり，$n$が十分大きい所で比が$1/2$未満になることから，$a(n)\to0$である．
+である．右辺は$n\to\infty$で$0$に収束するから，挟み撃ちの定理より
+\begin{align}
+ \lim_{n\to\infty}a(n) = 0
+\end{align}
+である．
 
-\textbf{(2)} $a(1)$から書き出す．
+\paragraph{(2)}
+$n=1$から$a(n)$を書き出すと
 \begin{align}
 \begin{split}
-a(1)&=a(2)=60 \\
+ a(1)&=a(2)=60 \\
 a(3)&=35,\quad a(4)=14,\quad a(5)=\dfrac{21}{5},\quad a(6)=1 \\
-a(7)&<1
-\end{split}
+a(7)&=\dfrac{11}{56}<1
+\end{split} \label{eq:2}
 \end{align}
-以下，$a(n)$が$n\ge2$で単調減少であることを示す．
+である．
+
+以下，$a(n)$が$n\ge2$で単調減少であることを示す．そのために$a(n)-a(n+1)$を計算すると
 \begin{align}
 \begin{split}
-a(n)-a(n+1)&=\dfrac{(n+3)(n+4)}{(n+1)!}\left[(n+1)(n+2)-(n+5)\right] \\
-&=\dfrac{(n+3)(n+4)}{(n+1)!}(n^2+2n-3)>0 \quad(\because n\ge2)
-\end{split}
+a(n)-a(n+1)
+ &=\dfrac{(n+2)(n+3)(n+4)}{n!} - \dfrac{(n+3)(n+4)(n+5)}{(n+1)!} \\
+ &=\dfrac{(n+3)(n+4)}{(n+1)!}\left[(n+1)(n+2)-(n+5)\right] \\
+ &=\dfrac{(n+3)(n+4)}{(n+1)!}(n^2+2n-3)>0 \quad(\because n\ge2)
+\end{split} 
 \end{align}
-より，示された．これと$a(7)<1$，$a_n\to0\ (n\to\infty)$から，$7\le n$なる$n\in\mathbb{N}$に対し，$0<a(n)<1$となり，$a(n)\notin\mathbb{Z}$．以上から，
+より示された．これと$a(7)<1$，および(1)の結果$a_n\to0\ (n\to\infty)$より，$7\le n$なる$n\in\mathbb{N}$に対しては$0<a(n)<1$となり$a(n)$が整数になることはない．以上から$a(n)$が整数となる$n$は
 \begin{align}
 n=1,2,3,4,6
 \end{align}
+である．
 
-\textbf{(3)} (2)から，$S_n=\displaystyle\prod_{k=1}^na(k)$とおくと，$n\ge7$の時，$S_n$は単調減少である．(2)から，$n=1,2,\cdots,7$の時，$S_n\in\mathbb{Z}$である．
-\begin{align}
-S_7=a(1)\cdots a(7)=2^2\cdot3^3\cdot5^2\cdot7^2\cdot11=1455300\in\mathbb{Z}
-\end{align}
-$n\ge8$の時
+\paragraph{(3)}
+(2)で$n\ge7$の時に$0<a(n)<1$だったから$S_n=\displaystyle\prod_{k=1}^na(k)$とおくと，$n\ge7$の時には$S_n$は単調減少である．
+また\cref{eq:2}から$n=1,2,\cdots,7$の時は$S_n\in\mathbb{Z}$である．そこで$n\ge8$の時を順番に計算すると
 \begin{align}
 \begin{split}
+S(7)&=a(1)\cdots a(7)=2^2\cdot3^3\cdot5^2\cdot7^2\cdot11=1455300\in\mathbb{Z} \\
 S(8)&=S_7\cdot a(8)=\dfrac{3^2\cdot5^2\cdot7\cdot11^2}{2^2}\notin\mathbb{Z} \\
 S(9)&=S(8)\cdot a(9)=\dfrac{5\cdot11^3\cdot13}{2^7\cdot3}\notin\mathbb{Z} \\
 S(10)&=S(9)\cdot a(10)=\dfrac{11^3\cdot13^2}{2^{12}\cdot3^4\cdot5}\notin\mathbb{Z}<1
 \end{split}
 \end{align}
-より，$10\le n$の時，$0<S(n)<1$で$S(n)\notin\mathbb{Z}$．以上から，
+である．従って$10\le n$の時は$0<S(n)<1$で$S(n)$は整数とならない．以上から求める整数は
 \begin{align}
 n=1,2,3,4,5,6,7
 \end{align}
-
+である．
 
 \newpage
 
