@@ -6,202 +6,171 @@
 
 | 年度 | 問題番号 | 問題文 (`problem.tex`) | 解答 (`solution.tex`) | 手書き原稿 (`handwritten.pdf`) | 総合ステータス |
 |:---:|:---:|:---:|:---:|:---:|:---:|
-| 1961年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1961年 | 第1問 | finish | finish | あり | 完了 |
 | 1961年 | 第2問 | finish | finish | あり | 完了 |
 | 1961年 | 第3問 | finish | finish | あり | 完了 |
 | 1961年 | 第4問 | finish | finish | あり | 完了 |
 | 1961年 | 第5問 | finish | finish | あり | 完了 |
 | 1961年 | 第6問 | finish | finish | あり | 完了 |
-| 1962年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1962年 | 第1問 | finish | finish | あり | 完了 |
 | 1962年 | 第2問 | finish | finish | あり | 完了 |
 | 1962年 | 第3問 | finish | finish | あり | 完了 |
 | 1962年 | 第4問 | finish | finish | あり | 完了 |
 | 1962年 | 第5問 | finish | finish | あり | 完了 |
 | 1962年 | 第6問 | finish | finish | あり | 完了 |
-| 1963年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1963年 | 第1問 | finish | finish | あり | 完了 |
 | 1963年 | 第2問 | finish | finish | あり | 完了 |
 | 1963年 | 第3問 | finish | finish | あり | 完了 |
 | 1963年 | 第4問 | finish | finish | あり | 完了 |
 | 1963年 | 第5問 | finish | finish | あり | 完了 |
 | 1963年 | 第6問 | finish | finish | あり | 完了 |
-| 1964年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1964年 | 第1問 | finish | finish | あり | 完了 |
 | 1964年 | 第2問 | finish | finish | あり | 完了 |
 | 1964年 | 第3問 | finish | finish | あり | 完了 |
 | 1964年 | 第4問 | finish | finish | あり | 完了 |
 | 1964年 | 第5問 | finish | finish | あり | 完了 |
 | 1964年 | 第6問 | finish | finish | あり | 完了 |
-| 1965年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1965年 | 第1問 | finish | finish | あり | 完了 |
 | 1965年 | 第2問 | finish | finish | あり | 完了 |
 | 1965年 | 第3問 | finish | finish | あり | 完了 |
 | 1965年 | 第4問 | finish | finish | あり | 完了 |
 | 1965年 | 第5問 | finish | finish | あり | 完了 |
 | 1965年 | 第6問 | finish | finish | あり | 完了 |
-| 1966年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1966年 | 第1問 | finish | finish | あり | 完了 |
 | 1966年 | 第2問 | finish | finish | あり | 完了 |
 | 1966年 | 第3問 | finish | finish | あり | 完了 |
 | 1966年 | 第4問 | finish | finish | あり | 完了 |
 | 1966年 | 第5問 | finish | finish | あり | 完了 |
 | 1966年 | 第6問 | finish | finish | あり | 完了 |
-| 1967年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1967年 | 第1問 | finish | finish | あり | 完了 |
 | 1967年 | 第2問 | finish | finish | あり | 完了 |
 | 1967年 | 第3問 | finish | finish | あり | 完了 |
 | 1967年 | 第4問 | finish | finish | あり | 完了 |
 | 1967年 | 第5問 | finish | finish | あり | 完了 |
 | 1967年 | 第6問 | finish | finish | あり | 完了 |
-| 1968年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1968年 | 第1問 | finish | finish | あり | 完了 |
 | 1968年 | 第2問 | finish | finish | あり | 完了 |
 | 1968年 | 第3問 | finish | finish | あり | 完了 |
 | 1968年 | 第4問 | finish | finish | あり | 完了 |
 | 1968年 | 第5問 | finish | finish | あり | 完了 |
 | 1968年 | 第6問 | finish | finish | あり | 完了 |
-| 1969年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1969年 | 第1問 | finish | finish | あり | 完了 |
 | 1969年 | 第2問 | finish | finish | あり | 完了 |
 | 1969年 | 第3問 | finish | finish | あり | 完了 |
 | 1969年 | 第4問 | finish | finish | あり | 完了 |
 | 1969年 | 第5問 | finish | finish | あり | 完了 |
 | 1969年 | 第6問 | finish | finish | あり | 完了 |
-| 1970年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1970年 | 第1問 | finish | finish | あり | 完了 |
 | 1970年 | 第2問 | finish | finish | あり | 完了 |
 | 1970年 | 第3問 | finish | finish | あり | 完了 |
 | 1970年 | 第4問 | finish | finish | あり | 完了 |
 | 1970年 | 第5問 | finish | finish | あり | 完了 |
 | 1970年 | 第6問 | finish | finish | あり | 完了 |
-| 1971年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1971年 | 第1問 | finish | finish | あり | 完了 |
 | 1971年 | 第2問 | finish | finish | あり | 完了 |
 | 1971年 | 第3問 | finish | finish | あり | 完了 |
 | 1971年 | 第4問 | finish | finish | あり | 完了 |
 | 1971年 | 第5問 | finish | finish | あり | 完了 |
 | 1971年 | 第6問 | finish | finish | あり | 完了 |
-| 1972年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1972年 | 第1問 | finish | finish | あり | 完了 |
 | 1972年 | 第2問 | finish | finish | あり | 完了 |
 | 1972年 | 第3問 | finish | finish | あり | 完了 |
 | 1972年 | 第4問 | finish | finish | あり | 完了 |
 | 1972年 | 第5問 | finish | finish | あり | 完了 |
 | 1972年 | 第6問 | finish | finish | あり | 完了 |
-| 1973年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1973年 | 第1問 | finish | finish | あり | 完了 |
 | 1973年 | 第2問 | finish | finish | あり | 完了 |
 | 1973年 | 第3問 | finish | finish | あり | 完了 |
 | 1973年 | 第4問 | finish | finish | あり | 完了 |
 | 1973年 | 第5問 | finish | finish | あり | 完了 |
 | 1973年 | 第6問 | finish | finish | あり | 完了 |
-| 1974年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1974年 | 第1問 | finish | 文字起こし済 | あり | 未完成 |
 | 1974年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
 | 1974年 | 第3問 | finish | 文字起こし済 | あり | 未完成 |
 | 1974年 | 第4問 | finish | 文字起こし済 | あり | 未完成 |
 | 1974年 | 第5問 | finish | 文字起こし済 | あり | 未完成 |
 | 1974年 | 第6問 | finish | 文字起こし済 | あり | 未完成 |
-| 1975年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1975年 | 第1問 | finish | finish | あり | 完了 |
 | 1975年 | 第2問 | finish | finish | あり | 完了 |
 | 1975年 | 第3問 | finish | finish | あり | 完了 |
 | 1975年 | 第4問 | finish | finish | あり | 完了 |
 | 1975年 | 第5問 | finish | finish | あり | 完了 |
 | 1975年 | 第6問 | finish | finish | あり | 完了 |
-| 1976年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1976年 | 第1問 | finish | finish | あり | 完了 |
 | 1976年 | 第2問 | finish | finish | あり | 完了 |
 | 1976年 | 第3問 | finish | finish | あり | 完了 |
 | 1976年 | 第4問 | finish | finish | あり | 完了 |
 | 1976年 | 第5問 | finish | finish | あり | 完了 |
 | 1976年 | 第6問 | finish | finish | あり | 完了 |
-| 1977年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1977年 | 第1問 | finish | finish | あり | 完了 |
 | 1977年 | 第2問 | finish | finish | あり | 完了 |
 | 1977年 | 第3問 | finish | finish | あり | 完了 |
 | 1977年 | 第4問 | finish | finish | あり | 完了 |
 | 1977年 | 第5問 | finish | finish | あり | 完了 |
 | 1977年 | 第6問 | finish | finish | あり | 完了 |
-| 1978年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1978年 | 第1問 | finish | finish | あり | 完了 |
 | 1978年 | 第2問 | finish | finish | あり | 完了 |
 | 1978年 | 第3問 | finish | finish | あり | 完了 |
 | 1978年 | 第4問 | finish | finish | あり | 完了 |
 | 1978年 | 第5問 | finish | finish | あり | 完了 |
 | 1978年 | 第6問 | finish | finish | あり | 完了 |
-| 1979年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1979年 | 第1問 | finish | finish | あり | 完了 |
 | 1979年 | 第2問 | finish | finish | あり | 完了 |
 | 1979年 | 第3問 | finish | finish | あり | 完了 |
 | 1979年 | 第4問 | finish | finish | あり | 完了 |
-| 1980年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1980年 | 第1問 | finish | finish | あり | 完了 |
 | 1980年 | 第2問 | finish | finish | あり | 完了 |
 | 1980年 | 第3問 | finish | finish | あり | 完了 |
 | 1980年 | 第4問 | finish | finish | あり | 完了 |
-| 1981年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1981年 | 第1問 | finish | finish | あり | 完了 |
 | 1981年 | 第2問 | finish | finish | あり | 完了 |
 | 1981年 | 第3問 | finish | finish | あり | 完了 |
 | 1981年 | 第4問 | finish | finish | あり | 完了 |
-| 1982年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1982年 | 第1問 | finish | 文字起こし済 | あり | 未完成 |
 | 1982年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
 | 1982年 | 第3問 | finish | 文字起こし済 | あり | 未完成 |
 | 1982年 | 第4問 | finish | 文字起こし済 | あり | 未完成 |
 | 1982年 | 第5問 | finish | 文字起こし済 | あり | 未完成 |
-| 1983年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1983年 | 第1問 | finish | finish | あり | 完了 |
 | 1983年 | 第2問 | finish | finish | あり | 完了 |
 | 1983年 | 第3問 | finish | finish | あり | 完了 |
 | 1983年 | 第4問 | finish | finish | あり | 完了 |
 | 1983年 | 第5問 | finish | finish | あり | 完了 |
-| 1984年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1984年 | 第1問 | finish | finish | あり | 完了 |
 | 1984年 | 第2問 | finish | finish | あり | 完了 |
 | 1984年 | 第3問 | finish | finish | あり | 完了 |
 | 1984年 | 第4問 | finish | finish | あり | 完了 |
 | 1984年 | 第5問 | finish | finish | あり | 完了 |
-| 1985年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1985年 | 第1問 | finish | finish | あり | 完了 |
 | 1985年 | 第2問 | finish | finish | あり | 完了 |
 | 1985年 | 第3問 | finish | finish | あり | 完了 |
 | 1985年 | 第4問 | finish | finish | あり | 完了 |
 | 1985年 | 第5問 | finish | finish | あり | 完了 |
-| 1986年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1986年 | 第1問 | finish | finish | あり | 完了 |
 | 1986年 | 第2問 | finish | finish | あり | 完了 |
 | 1986年 | 第3問 | finish | finish | あり | 完了 |
 | 1986年 | 第4問 | finish | finish | あり | 完了 |
 | 1986年 | 第5問 | finish | finish | あり | 完了 |
-| 1987年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1987年 | 第1問 | finish | finish | あり | 完了 |
 | 1987年 | 第2問 | finish | unfinish | あり | 未完成 |
 | 1987年 | 第3問 | finish | finish | あり | 完了 |
 | 1987年 | 第4問 | finish | finish | あり | 完了 |
 | 1987年 | 第5問 | finish | finish | あり | 完了 |
-| 1988年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1988年 | 第1問 | finish | finish | あり | 完了 |
 | 1988年 | 第2問 | finish | finish | あり | 完了 |
 | 1988年 | 第3問 | finish | finish | あり | 完了 |
 | 1988年 | 第4問 | finish | finish | あり | 完了 |
 | 1988年 | 第5問 | finish | finish | あり | 完了 |
-| 1989年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1989年 | 第1問 | finish | finish | あり | 完了 |
 | 1989年 | 第2問 | finish | finish | あり | 完了 |
 | 1989年 | 第3問 | finish | finish | あり | 完了 |
 | 1989年 | 第4問 | finish | finish | あり | 完了 |
 | 1989年 | 第5問 | finish | finish | あり | 完了 |
-| 1990年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1990年 | 第1問 | finish | finish | あり | 完了 |
 | 1990年 | 第2問 | finish | finish | あり | 完了 |
 | 1990年 | 第3問 | finish | finish | あり | 完了 |
 | 1990年 | 第4問 | finish | finish | あり | 完了 |
 | 1990年 | 第5問 | finish | finish | あり | 完了 |
-| 1991年 | 0 (全体サマリ) | unfinish | 文字起こし済 | あり | 制作中 |
 | 1991年 | 第1問 | finish | finish | あり | 完了 |
 | 1991年 | 第2問 | finish | finish | あり | 完了 |
 | 1991年 | 第3問 | finish | finish | あり | 完了 |

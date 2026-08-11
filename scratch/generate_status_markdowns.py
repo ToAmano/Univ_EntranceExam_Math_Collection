@@ -131,15 +131,6 @@ def generate_markdowns():
             q_dirs = [d.name for d in year_dir.iterdir() if d.is_dir() and d.name.isdigit()]
             max_q = max(int(q) for q in q_dirs) if q_dirs else default_q_count
 
-            # サマリ 0
-            s0_prob = year_dir / '0' / 'problem.tex'
-            s0_sol = year_dir / '0' / 'solution.tex'
-            if s0_prob.exists() or s0_sol.exists() or (year_dir / '0').exists():
-                p_icon = PROB_FINISH if check_file_status(s0_prob) else PROB_UNFINISH
-                s_icon = solution_status_icon(s0_sol, prev_status.get((year, '0 (全体サマリ)')))
-                st_icon = "完了" if (p_icon == PROB_FINISH and s_icon == SOL_FINISH) else "制作中"
-                md_lines.append(f"| {year}年 | 0 (全体サマリ) | {p_icon} | {s_icon} | {pdf_mark} | {st_icon} |")
-
             for q in range(1, max_q + 1):
                 q_str = str(q)
                 q_dir = year_dir / q_str
