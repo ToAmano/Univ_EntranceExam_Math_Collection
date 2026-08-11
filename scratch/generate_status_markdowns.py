@@ -125,8 +125,11 @@ def generate_markdowns():
             pdf_mark = "あり" if has_pdf else "なし"
 
             # 実際のサブフォルダ (0, 1, 2, 3...)
+            # 出題数は年度によって異なる（例: 東工大前期は1995年以降おおむね4問だが
+            # 1999,2012-2014年は5問）ため、既存フォルダがあればその実数に従う。
+            # default_q_count はフォルダが1つも無い（未着手）年度のみのフォールバック。
             q_dirs = [d.name for d in year_dir.iterdir() if d.is_dir() and d.name.isdigit()]
-            max_q = max([int(q) for q in q_dirs] + [default_q_count]) if q_dirs else default_q_count
+            max_q = max(int(q) for q in q_dirs) if q_dirs else default_q_count
 
             # サマリ 0
             s0_prob = year_dir / '0' / 'problem.tex'
