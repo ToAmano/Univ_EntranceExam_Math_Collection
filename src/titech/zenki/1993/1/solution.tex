@@ -1,45 +1,125 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 $C_1,L$，$C_2$と$L$の原点以外の交点$A(\alpha,k\alpha)$，$B(\beta,k\beta)$とおく．$\alpha,\beta$は各々，$x$の2次方程式$ax^2+bx=kx$，$px^2+qx=kx$の解のうち$x\ne0$のもので，
 \begin{align}
-\alpha=\dfrac{k-b}{a}, \qquad \beta=\dfrac{k-q}{p} \quad\cdots\text{①}
+\alpha=\dfrac{k-b}{a}, \qquad \beta=\dfrac{k-q}{p} \quad\cdots\text{①} \label{eq:1}
 \end{align}
-である．
+である．この様子を下図に示す．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.3, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-3.0, 0) -- (3.2, 0) node[right] {$x$};
+  \draw[->, thick] (0, -2.0) -- (0, 3.5) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 2. 面積 S_1, S_2 の斜線ハッチング (pattern) ---
+  % 放物線 C1: y = 0.5*x^2 + 1.5*x  (a > 0)
+  % 放物線 C2: y = -0.6*x^2 + 1.8*x (p < 0)
+  % 直線  L : y = 0.5*x            (k = 0.5)
+  %
+  % C1 と L の原点以外の交点 A: 0.5*x + 1.5 = 0.5 => x = -2  => A(-2, -1)
+  % C2 と L の原点以外の交点 B: -0.6*x + 1.8 = 0.5 => x = 13/6 ≒ 2.167 => B(2.167, 1.083)
+
+  % 領域 S_1 (放物線 C1 と 直線 L で囲まれた領域 [-2, 0])
+  \begin{scope}
+    \clip plot[domain=-2.2:0.2, samples=50] (\x, {0.5*\x*\x + 1.5*\x}) -- (0.2, 0.1) -- (-2.2, -1.1) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!70]
+      plot[domain=-2:0, samples=50] (\x, {0.5*\x*\x + 1.5*\x})
+      -- plot[domain=0:-2, samples=50] (\x, {0.5*\x});
+  \end{scope}
+
+  % 領域 S_2 (放物線 C2 と 直線 L で囲まれた領域 [0, 2.167])
+  \begin{scope}
+    \clip plot[domain=-0.2:2.4, samples=50] (\x, {-0.6*\x*\x + 1.8*\x}) -- (2.4, 1.2) -- (-0.2, -0.1) -- cycle;
+    \fill[pattern=north west lines, pattern color=red!70]
+      plot[domain=0:2.167, samples=50] (\x, {-0.6*\x*\x + 1.8*\x})
+      -- plot[domain=2.167:0, samples=50] (\x, {0.5*\x});
+  \end{scope}
+
+  % --- 3. 曲線・直線の描画 ---
+  % 直線 L: y = kx (k = 0.5)
+  \draw[thick, gray, domain=-2.6:2.8] plot (\x, {0.5*\x}) node[right, black] {$L: y=kx$};
+
+  % 放物線 C_1: y = ax^2 + bx (a > 0)
+  \draw[ultra thick, blue!80!black, domain=-2.4:0.8, samples=100] 
+    plot (\x, {0.5*\x*\x + 1.5*\x}) node[above left] {$C_1: y=ax^2+bx$};
+
+  % 放物線 C_2: y = px^2 + qx (p < 0)
+  \draw[ultra thick, red!80!black, domain=-0.5:2.5, samples=100] 
+    plot (\x, {-0.6*\x*\x + 1.8*\x}) node[below right] {$C_2: y=px^2+qx$};
+
+  % --- 4. 交点 A, B のプロットとガイド線 ---
+  % 交点 A(alpha, k*alpha)
+  \coordinate (A) at (-2, -1);
+  \fill[blue!80!black] (A) circle (1.8pt) node[above left] {$A$};
+  \draw[dashed, gray] (-2, 0) node[above, font=\small, yshift=2pt] {$\alpha$} -- (A);
+
+  % 交点 B(beta, k*beta)
+  \coordinate (B) at (2.167, 1.083);
+  \fill[red!80!black] (B) circle (1.8pt) node[above right] {$B$};
+  \draw[dashed, gray] (2.167, 0) node[below, font=\small] {$\beta$} -- (B);
+
+  % 領域ラベル S_1, S_2
+  \node[blue!80!black, font=\large] at (-1.0, -0.1) {$S_1$};
+  \node[red!80!black, font=\large] at (1.1, 1.0) {$S_2$};
+
+\end{tikzpicture}
+\end{center}
+\caption{放物線 $C_1, C_2$ と直線 $L$ の交点および囲まれる領域 $S_1, S_2$}
+\end{figure}
+
+題意の面積$S_1, S_2$は
 \begin{align}
 \begin{split}
 S_1&=\left|\int_\alpha^0(ax^2+bx-kx)dx\right|=\dfrac{|a|}{6}|\alpha|^3 \\
 S_2&=\dfrac{|p|}{6}|\beta|^3
 \end{split}
 \end{align}
-だから，①から
+だから，\cref{eq:1}を代入してこの面積の比$A$は
 \begin{align}
-\dfrac{S_1}{S_2}=\dfrac{|a||\alpha|^3}{|p||\beta|^3}=\dfrac{|a|\cdot\dfrac{|k-b|^3}{|a|^3}}{|p|\cdot\dfrac{|k-q|^3}{|p|^3}}=\dfrac{|k-b|^3/a^2}{|k-q|^3/p^2} \quad\cdots\text{②}
+A = \dfrac{S_1}{S_2}=\dfrac{|a||\alpha|^3}{|p||\beta|^3}=\dfrac{|a|\cdot\dfrac{|k-b|^3}{|a|^3}}{|p|\cdot\dfrac{|k-q|^3}{|p|^3}}=\dfrac{|k-b|^3/a^2}{|k-q|^3/p^2} \quad\cdots\text{②} \label{eq:2}
 \end{align}
-である．②が$k$によらない，すなわち$\dfrac{|k-b|^3}{a^2}=A\dfrac{|k-q|^3}{p^2}$が，$k$の恒等式になるような$A$の存在条件をかんがえれば良い．両辺0以上だから2乗して良く，
+である．
+\cref{eq:2}が$k$によらないので，$A$が$k$によらない定数になるための条件を考えれば良い．両辺$0$以上だから2乗して良く，
 \begin{align}
-p^4(k-b)^6=A^2a^4(k-q)^6 \quad\cdots\text{③}
+p^4(k-b)^6=A^2a^4(k-q)^6 \quad\cdots\text{③} \label{eq:3}
 \end{align}
-係数比較して，
+を得る．これは$k$についての$6$次方程式だから，$A$が$k$によらない定数である時，\cref{eq:3}が任意の$k$で成立するのは\cref{eq:3}が$k$についての恒等式である時である．
+
+そこで$k$の$6$次および$5$次についての係数が両辺で等しいから比較して，
 \begin{align}
-\begin{split}
-6\text{次}\cdots\ p^4&=A^2a^4 \quad\cdots\text{④} \\
-5\text{次}\cdots\ -6bp^4&=A^2a^4(-6q) \quad\cdots\text{⑤}
-\end{split}
+6\text{次}\cdots\ p^4&=A^2a^4 \quad\cdots\text{④} \label{eq:4}\\
+5\text{次}\cdots\ -6bp^4&=A^2a^4(-6q) \quad\cdots\text{⑤} \label{eq:5}
 \end{align}
-$A\ne0,p\ne0,a\ne0$だから，④⑤から，$b=q\ \cdots$⑥及び$p=\pm\sqrt{A}a\ \cdots$⑦が必要．逆にこの時②において，
+であることが必要．まず\cref{eq:4}より
+\begin{align}
+ p = \pm \sqrt{A}a \label{eq:6}
+\end{align}
+である．
+ついで\cref{eq:4}を\cref{eq:5}に代入すると
+\begin{align}
+ -6b\left(A^2a^4\right) = A^2a^4(-6q)
+\end{align}
+である．ここで題意より$A\ne0,a\ne0$だから両辺$A^2a^4$で割って
+\begin{align}
+ b = q \label{eq:7}
+\end{align}
+である．
+
+逆に\cref{eq:6,eq:7}の時，\cref{eq:2}に代入すると
 \begin{align}
 \dfrac{|k-b|^3}{a^2}:\dfrac{|k-q|^3}{p^2}=\dfrac{|k-b|^3}{a^2}:\dfrac{|k-b|^3}{A\cdot a^2}=1:\dfrac{1}{A} \quad(\because k\ne b)
 \end{align}
-で，たしかに$S_1:S_2$は一定で十分．①をみたす$A$は必ず存在するから，求める条件は⑥で
+で，たしかに$S_1:S_2$は一定で十分である．\cref{eq:6}をみたす$A$は必ず存在するから，求める条件は\cref{eq:7}で
 \begin{align}
 b=q
 \end{align}
+である．
 
 
 \newpage

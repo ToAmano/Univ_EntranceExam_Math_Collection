@@ -1,12 +1,76 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$f(x)=x^4-2ax^2$とおく．$x=t$での接線は$\ell_t: y=(4t^3-4at)x-3t^4+2at^2$であるから，$C$と$\ell_t$の交点の$x$座標は（$P$のぞく）
+
+\paragraph{(1)}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.3, >=stealth]
+
+  % --- パラメータ設定 (a = 1.5, t は -sqrt(a/3) < t < sqrt(a/3) 内) ---
+  \def\aVal{1.5}
+  \def\tVal{0.4}
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-2.2, 0) -- (2.2, 0) node[right] {$x$};
+  \draw[->, thick] (0, -2.8) -- (0, 1.5) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 2. 4次関数 y = f(x) = x^4 - 2ax^2 ---
+  \draw[ultra thick, blue!80!black, domain=-2.1:1.95, samples=100] 
+    plot (\x, {\x*\x*\x*\x - 2*\aVal*\x*\x});
+  \node[blue!80!black, right] at (1.6, 1.0) {$C: y = f(x)$};
+
+  % --- 3. 正確な x 座標の計算 ---
+  % 接点 P の x 座標: x_P = t
+  \pgfmathsetmacro{\xP}{\tVal}
+  
+  % 交点 Q, R の x 座標: x^2 + 2tx + (3t^2 - 2a) = 0 の解
+  % alpha = -t - sqrt(2a - 2t^2)
+  % beta  = -t + sqrt(2a - 2t^2)
+  \pgfmathsetmacro{\xQ}{-\tVal - sqrt(2*\aVal - 2*\tVal*\tVal)}
+  \pgfmathsetmacro{\xR}{-\tVal + sqrt(2*\aVal - 2*\tVal*\tVal)}
+
+  % 接線 l_t の傾き m = 4t^3 - 4at, y切片 b = -3t^4 + 2at^2
+  \pgfmathsetmacro{\mVal}{4*\tVal*\tVal*\tVal - 4*\aVal*\tVal}
+  \pgfmathsetmacro{\bVal}{-3*\tVal*\tVal*\tVal*\tVal + 2*\aVal*\tVal*\tVal}
+
+  % --- 4. 接線 l_t の描画 ---
+  \draw[thick, red!80!black, domain=-2.1:1.8] 
+    plot (\x, {\mVal*\x + \bVal}) node[right] {$\ell_t$};
+
+  % --- 5. 各点のプロットとガイド線（x 座標から曲線上・接線上に精密配置） ---
+  % (i) 接点 P(t, f(t))
+  \coordinate (P) at (\xP, {\xP*\xP*\xP*\xP - 2*\aVal*\xP*\xP});
+  \fill[red!80!black] (P) circle (1.8pt) node[below right, font=\small] {$P(t, f(t))$};
+  \draw[dashed, gray] (\xP, 0) node[above, font=\small, yshift=2pt] {$t$} -- (P);
+
+  % (ii) 交点 Q(alpha, f(alpha))
+  \coordinate (Q) at (\xQ, {\xQ*\xQ*\xQ*\xQ - 2*\aVal*\xQ*\xQ});
+  \fill[black] (Q) circle (1.8pt) node[above left, font=\small] {$Q(\alpha, f(\alpha))$};
+  \draw[dashed, gray] (\xQ, 0) node[above, font=\small, yshift=2pt] {$\alpha$} -- (Q);
+
+  % (iii) 交点 R(beta, f(beta))
+  \coordinate (R) at (\xR, {\xR*\xR*\xR*\xR - 2*\aVal*\xR*\xR});
+  \fill[black] (R) circle (1.8pt) node[below left, font=\small] {$R(\beta, f(\beta))$};
+  \draw[dashed, gray] (\xR, 0) node[below, font=\small] {$\beta$} -- (R);
+
+  % 極小値の x 座標 ±sqrt(a) の表示
+  \draw[dashed, gray] ({sqrt(\aVal)}, 0) node[above, font=\small, yshift=2pt] {$\sqrt{a}$};
+  \draw[dashed, gray] ({-sqrt(\aVal)}, 0) node[above, font=\small, yshift=2pt] {$-\sqrt{a}$};
+
+\end{tikzpicture}
+\end{center}
+\caption{$C: y=f(x)$ の概形と接線 $\ell_t$、交点 $P, Q, R$ の位置関係}
+\end{figure}
+
+$f(x)=x^4-2ax^2$とおくと一階微分は$f'(x)=4x^3-4ax$だから$x=t$での接線は
+\begin{align}
+ \ell_t: y=(4t^3-4at)x-3t^4+2at^2 \label{eq:1}
+\end{align}
+となる．$C$と$\ell_t$の交点の$x$座標は$f(x)$と$\ell_t$を連立した四次方程式
 \begin{align}
 \begin{split}
 x^4-2ax^2&=(4t^3-4at)x-3t^4+2at^2 \\
@@ -14,77 +78,154 @@ x^4-2ax^2-4t(t^2-a)x+3t^4-2at^2&=0 \\
 (x-t)^2\{x^2+2tx+(3t^2-2a)\}&=0
 \end{split}
 \end{align}
-のうち$x\ne t$のもの，すなわち
+の解である．このうち$x=t$は点$P$に対応し，
 \begin{align}
-x^2+2tx+3t^2-2a=0 \quad(\text{左辺}g(x)\text{とする}) \quad\cdots\text{①}
+ x^2+2tx+(3t^2-2a)=0 \label{eq:2}
 \end{align}
-の解である．この判別式$D$として，$-\sqrt{a}\le t\le\sqrt{a}$から
+の解が$Q,R$に対応する．以下この左辺を$g(x)$とおく．
+\cref{eq:2}の判別式$D$として，$-\sqrt{a}\le t\le\sqrt{a}$から
 \begin{align}
 D/4=t^2-(3t^2-2a)=2a-t^2\ge0
 \end{align}
-となり，①は異2実解（重解含む）を持つ．したがって，①の2解が$\alpha,\beta$で，
+となり，\cref{eq:2}は2実解（重解含む）を持つ．したがって\cref{eq:2}の2解が$\alpha,\beta$で，
+解と係数の関係から
 \begin{align}
-\alpha+\beta=-2t, \qquad \alpha\beta=3t^2-2a
-\end{align}
-
-\textbf{(2)} $\alpha\le\beta$だから，題意の条件は（重なる場合をのぞいて）
-\begin{align}
-\alpha<t<\beta \quad\cdots\text{②}
-\end{align}
-である．すなわち，①の解が$x<t$に1つ，$t<x$に1つある時で，この条件は
-\begin{align}
-g(t)<0 \iff 6t^2-2a<0 \iff -\sqrt{\dfrac{a}{3}}<t<\sqrt{\dfrac{a}{3}}
+\alpha+\beta=-2t, \qquad \alpha\beta=3t^2-2a \label{eq:3}
 \end{align}
 である．
 
-\textbf{(3)} $\ell$の傾きは$4t^3-4at$だから，位置関係は右図のようになる．したがってピタゴラスの定理から
+\paragraph{(2)}
+$\alpha\le\beta$だから，題意の条件は（重なる場合をのぞいて）
+\begin{align}
+\alpha<t<\beta \quad\cdots\text{②} \label{eq:4}
+\end{align}
+である．すなわち\cref{eq:2}の解が$x<t$に1つ，$t<x$に1つある時である．
+この条件は
+\begin{align}
+  g(t)<0 \iff 6t^2-2a<0 \iff -\sqrt{\dfrac{a}{3}}<t<\sqrt{\dfrac{a}{3}} \label{eq:5}
+\end{align}
+である．
+
+\paragraph{(3)}
+$\ell$の傾きは$4t^3-4at$だから位置関係は下図のようになる．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+
+  % --- 1. 概念的な直角三角形と直線 l_t の描画 ---
+  % 直線 l_t の傾き m を視覚的にわかりやすく設定
+  \coordinate (Q) at (0, 0);
+  \coordinate (R) at (2.5, 2.0);
+  \coordinate (H) at (2.5, 0); % 直角を作る頂点
+
+  % --- 2. 領域/直角三角形の描画 ---
+  % 線分 QR (長さ L)
+  \draw[ultra thick, red!80!black] (Q) -- (R) node[midway, above left, font=\large] {$L$};
+
+  % 直角三角形の底辺 (beta - alpha) と高さ m*(beta - alpha)
+  \draw[thick, dashed, gray] (Q) -- (H) node[midway, below, black] {$\beta - \alpha$};
+  \draw[thick, dashed, gray] (H) -- (R) node[midway, right, black] {$(4t^3 - 4at)(\beta - \alpha)$};
+
+  % 直角記号
+  \draw[thin, gray] (2.3, 0) -- (2.3, 0.2) -- (2.5, 0.2);
+
+  % --- 3. 点 Q, R のプロットと座標表示 ---
+  \fill[black] (Q) circle (1.8pt) node[left] {$Q(\alpha, f(\alpha))$};
+  \fill[black] (R) circle (1.8pt) node[right] {$R(\beta, f(\beta))$};
+
+  % --- 4. 傾き m の概念を示す補助矢印 ---
+  \draw[->, thin, blue!80!black] (0.8, 0) arc (0:38.66:0.8);
+  \node[blue!80!black, font=\small] at (1.2, 0.3) {傾き $m = 4t^3 - 4at$};
+
+\end{tikzpicture}
+\end{center}
+\caption{ピタゴラスの定理による線分長 $L$ の導出}
+\end{figure}
+
+したがってピタゴラスの定理から
 \begin{align}
 \begin{split}
-L^2&=(\beta-\alpha)^2+(\beta-\alpha)^2(4t^3-4at)^2 \\
-&=\{1+16t^2(t^2-a)^2\}\{(\alpha+\beta)^2-4\alpha\beta\} \\
-&=\{1+16t^2(t^2-a)^2\}\{(-2t)^2-4(3t^2-2a)\} \quad(\because(1)) \\
-&=\{1+16t^2(t^2-a)^2\}(8a-8t^2)
-\end{split}
+L^2
+  &=(\beta-\alpha)^2+(\beta-\alpha)^2(4t^3-4at)^2 \\
+  &=\{1+16t^2(t^2-a)^2\}\{(\alpha+\beta)^2-4\alpha\beta\} \\
+  &=\{1+16t^2(t^2-a)^2\}\{(-2t)^2-4(3t^2-2a)\} \quad(\because(1)) \\
+  &=\{1+16t^2(t^2-a)^2\}(8a-8t^2)
+\end{split} \label{eq:6}
 \end{align}
 
-\textbf{(4)} $L^2\equiv h(p)\ (p=t^2)$とすると，$-\sqrt{a}\le t\le\sqrt{a}$から$0\le p\le a\ \cdots$③である（(3)より）．
+\paragraph{(4)}
+(3)より$L^2$は$p=t^2$のみに依存するのでこれを$h(p)$とおく．
+$-\sqrt{a}\le t\le\sqrt{a}$から
 \begin{align}
-h(p)=\{1+16p(p-a)^2\}(8a-8p)=-8(p-a)\{1+16p(p-a)^2\}
+ 0\le p\le a \label{eq:7}
+\end{align}
+である．\cref{eq:6}より
+\begin{align}
+ h(p)=-8(p-a)\{1+16p(p-a)^2\}
 \end{align}
 だから，
 \begin{align}
 \begin{split}
--\dfrac{1}{8}h'(p)&=1+16p(p-a)^2+(p-a)\cdot16(3p^2-4ap+a^2) \\
+-\dfrac{1}{8}h'(p)
+&=1+16p(p-a)^2+(p-a)\cdot16(3p^2-4ap+a^2) \\
 &=16(p-a)\{p(p-a)+3p^2-4ap+a^2\}+1 \\
-&=16(p-a)^2(4p-a)+1
+&=16(p-a)^2(4p-a)+1 \\
+&=64p^3-9\cdot 16 ap^2 + 6\cdot 16a^2p -16a^3 + 1 
 \end{split}
 \end{align}
-$a=\dfrac{7}{12}$の時，$p=\dfrac{1}{12}$を代入すると，$p-a=-\dfrac{1}{2},\ 4p-a=-\dfrac{1}{4}$から
+と展開できる．$a=\dfrac{7}{12}$を代入してさらに整理して
 \begin{align}
-16\left(-\dfrac{1}{2}\right)^2\left(-\dfrac{1}{4}\right)+1=16\cdot\dfrac{1}{4}\cdot\left(-\dfrac{1}{4}\right)+1=-1+1=0
+ -\dfrac{1}{8}h'(p) 
+  &=2^6p^3 - 2^2\cdot 3\cdot 7 p^2 + \dfrac{2\cdot 7^2}{3}p - \dfrac{7^3}{2^{2}3^3} + 1
 \end{align}
-となり，$h'(1/12)=0$である．$0\le p\le a=7/12$での$h'(p)$の符号を調べると，下表のようになり，
+両辺に$2^{2}3^{3}$をかけると
+\begin{align}
+ -\dfrac{27}{2}h'(p) 
+  &=2^{8}3^{3}p^3 - 2^{4}\cdot 3^{4}\cdot 7 p^2 + 2^{3}7^{2}3^{2}p - 7^{3} + 2^{2}3^{3} 
+\end{align}
+簡単のため
+\begin{align}
+ q = 12 p
+\end{align}
+とおいて代入すると
+\begin{align}
+ -\dfrac{27}{2}h'(p) 
+  &=4q^3 - 63q^2 + 2\cdot 3\cdot 7q - 3^{3}\cdot 5 \\
+  &=\left(q-1\right)\left(4q^2-59q+135\right) \\
+  &=4\left(q-1\right)\left[\left(q-\dfrac{59}{8}\right)^2+\dfrac{2101}{16}\right] 
+\end{align}
+だから，$h(p)$の増減表は以下のようになる．
+
 \begin{table}[htb]
   \centering
+\caption{$h(p)$の増減表}
 \begin{tabular}{c|ccccc}
-$p$ & $0$ & & $1/12$ & & $7/12$ \\
+$q$ & $0$ & & $1$ & & $7$ \\
+\hline
+$p$ & $0$ & & $1/12$ & & $7/12(=a)$ \\
 \hline
 $h'$ & & $+$ & $0$ & $-$ & \\
 \hline
 $h$ & & $\nearrow$ & & $\searrow$ &
 \end{tabular}
 \end{table}
-したがって，$h(p)$は$p=\dfrac{1}{12}$でmaxで，
+
+したがって，$h(p)$は$p=\dfrac{1}{12}$で最大値をとる．その最大値は
 \begin{align}
 \begin{split}
-\max L^2&=-8\left(\dfrac{1}{12}-\dfrac{7}{12}\right)\left\{1+16\cdot\dfrac{1}{12}\left(\dfrac{1}{12}-\dfrac{7}{12}\right)^2\right\} \\
-&=4\left(1+\dfrac{4}{3}\cdot\dfrac{1}{4}\right)=\dfrac{16}{3}
+\max h(p) 
+  &= \max L^2 \\
+  &= h\left(\dfrac{1}{12}\right) \\
+  &=-8\left(\dfrac{1}{12}-\dfrac{7}{12}\right)\left\{1+16\cdot\dfrac{1}{12}\left(\dfrac{1}{12}-\dfrac{7}{12}\right)^2\right\} \\
+  &=4\left(1+\dfrac{4}{3}\cdot\dfrac{1}{4}\right)=\dfrac{16}{3}
 \end{split}
 \end{align}
-これから
+である．従って$L\ge 0$より
 \begin{align}
-\max L=\sqrt{\dfrac{16}{3}}=\dfrac{4\sqrt{3}}{3}
+ \max L=\sqrt{\dfrac{16}{3}}=\dfrac{4\sqrt{3}}{3}
 \end{align}
+が求める$L$の最大値である．
 
 
 \newpage
