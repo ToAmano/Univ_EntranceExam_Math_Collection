@@ -1,82 +1,202 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-$x\ge0$で$f'(x)>0\ \cdots\bigstar$，$f(0)=a\ (a>1)$
+条件(イ)(ロ)は
+\begin{align}
+ \begin{cases}
+ f'(x)>0 \quad (x \ge 0) \\
+ f(0)=a\ (a>1)  
+ \end{cases} \label{eq:1}
+\end{align}
+である．
 
-$P$での接線$\ell: y=f'(t)(x-t)+f(t)$，法線$m: y=-\dfrac{1}{f'(t)}(x-t)+f(t)$だから，
+そこで条件(ハ)について考えよう．
+点$P(t,f(t))$での接線は$\ell: y=f'(t)(x-t)+f(t)$だからこれと垂直な法線の方程式は$m: y=-\dfrac{1}{f'(t)}(x-t)+f(t)$である．
+$\ell$と$x$軸の交点が$Q$，$m$と$x$軸の交点が$R$だから
 \begin{align}
-Q\left(-\dfrac{f(t)}{f'(t)}+t,0\right), \qquad R(f(t)f'(t)+t,0)
+ Q\left(-\dfrac{f(t)}{f'(t)}+t,0\right), \qquad R(f(t)f'(t)+t,0) \label{eq:2}
 \end{align}
-とおける．$f(x)$は単調増加なことから，
+である．ここで\cref{eq:1}より$0 \le x$で$f(x)$は単調増加で，$f(0)>0$と合わせて$f(x)>0$である．従って常に$R$の$x$座標の方が$Q$のそれよりも大きく，線分$QR$の長さ$F(t)$は
 \begin{align}
-F(t)=f(t)f'(t)+\dfrac{f(t)}{f'(t)}
+F(t)=f(t)f'(t)+\dfrac{f(t)}{f'(t)} \label{eq:3}
 \end{align}
-したがって，(ハ)から
+である．これを(ハ)に代入して
 \begin{align}
-f'(t)+\dfrac{1}{f'(t)}=\dfrac{f(t)}{f'(t)} \quad\cdots\text{①}
+f'(t)+\dfrac{1}{f'(t)}=\dfrac{f(t)}{f'(t)} \quad\cdots\text{①} \label{eq:4}
 \end{align}
+である．
 
-\textbf{(1)} ①から
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-1.5, 0) -- (5, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.5) -- (0, 3.5) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % パラメータ設定 (例: a = 1.5, t = 1.2)
+  \def\aVal{1.5}
+  \def\tVal{1.2}
+
+  % f(t) = 0.25*t^2 + sqrt(a-1)*t + a
+  \pgfmathsetmacro{\cVal}{sqrt(\aVal - 1)}
+  \pgfmathsetmacro{\ft}{0.25*\tVal*\tVal + \cVal*\tVal + \aVal} % f(t)
+  \pgfmathsetmacro{\fpt}{0.5*\tVal + \cVal}                    % f'(t)
+
+  % 座標定義
+  \coordinate (P) at (\tVal, \ft);
+  
+  % Q の x 座標: t - f(t)/f'(t)
+  \pgfmathsetmacro{\xQ}{\tVal - \ft/\fpt}
+  \coordinate (Q) at (\xQ, 0);
+
+  % R の x 座標: t + f(t)*f'(t)
+  \pgfmathsetmacro{\xR}{\tVal + \ft*\fpt}
+  \coordinate (R) at (\xR, 0);
+
+  % --- 2. 曲線 y = f(x) ---
+  \draw[ultra thick, blue!80!black, domain=-0.2:2.2, samples=100] 
+    plot (\x, {0.25*\x*\x + \cVal*\x + \aVal});
+  \node[blue!80!black, right] at (2.0, 3.2) {$y = f(x)$};
+
+  % y 切片 f(0) = a
+  \fill[black] (0, \aVal) circle (1.2pt) node[left, font=\small] {$a$};
+
+  % --- 3. 接線 \ell と 法線 m ---
+  % 接线 \ell (赤色)
+  \draw[thick, red!80!black, domain=\xQ-0.3:\tVal+0.6] 
+    plot (\x, {\fpt*(\x - \tVal) + \ft});
+  \node[red!80!black, above left] at (\xQ+0.2, 0.3) {$\ell$};
+
+  % 法線 m (緑色)
+  \draw[thick, green!50!black] ($(P)!-0.2!(R)$) -- ($(P)!1.15!(R)$);
+  \node[green!50!black, above right] at (\xR-0.4, 0.4) {$m$};
+
+  % 直角マーク (接線 \ell と 法線 m)
+  \pgfmathsetmacro{\ang}{atan(\fpt)}
+  \draw[thin, gray] ($(P) + ({180+\ang}:0.25)$) -- 
+                    ($(P) + ({180+\ang}:0.25) + ({270+\ang}:0.25)$) -- 
+                    ($(P) + ({270+\ang}:0.25)$);
+
+  % --- 4. 線分 QR の強調 (F(t)) ---
+  \draw[ultra thick, purple, <->] (\xQ, -0.2) -- (\xR, -0.2) 
+    node[midway, below, font=\small] {$F(t) = |QR|$};
+  \draw[dashed, gray] (Q) -- (\xQ, -0.25);
+  \draw[dashed, gray] (R) -- (\xR, -0.25);
+
+  % --- 5. 点 P, Q, R のプロットと補助線 ---
+  % 点 P(t, f(t))
+  \fill[black] (P) circle (1.8pt) node[above left] {$P(t, f(t))$};
+  \draw[dashed, gray] (\tVal, 0) node[below, font=\small] {$t$} -- (P);
+
+  % 点 Q, R
+  \fill[red!80!black] (Q) circle (1.8pt) node[above left, font=\small] {$Q$};
+  \fill[green!50!black] (R) circle (1.8pt) node[above right, font=\small] {$R$};
+
+\end{tikzpicture}
+\end{center}
+\caption{曲線 $y=f(x)$ 上の点 $P$ における接線 $\ell$、法線 $m$ と交点 $Q, R$ の関係}
+\end{figure}
+
+\paragraph{(1)}
+
+\cref{eq:4}の両辺に$f'(t)$をかけて整理すると
 \begin{align}
-\{f'(t)\}^2=f(t)-1 \quad\cdots\text{☆}
+\{f'(t)\}^2=f(t)-1 \label{eq:5}
 \end{align}
-両辺$t$で微分して，
+だから両辺$t$で微分して，
 \begin{align}
 \begin{split}
 2f'(t)f''(t)&=f'(t) \\
-f''(t)&=\dfrac{1}{2} \quad(\because f'(t)>0) \quad\cdots\text{②}
+f''(t)&=\dfrac{1}{2} \quad(\because f'(t)>0) \quad\cdots\text{②} \label{eq:6}
 \end{split}
 \end{align}
-したがって，$f'(t)$は単調増加で，②の両辺積分して
+である．
+
+したがって$f'(t)$は単調増加である．
+\cref{eq:6}の両辺積分して
 \begin{align}
-f'(t)=\dfrac{1}{2}t+C \quad\cdots\text{③}
+f'(t)=\dfrac{1}{2}t+C \quad\cdots\text{③} \label{eq:7}
 \end{align}
-とおける．$\bigstar$から，$f'(0)=C>0\ \cdots$④である．③の両辺積分して
+とおける．ただし$C$は積分定数である．
+\cref{eq:1}より$f'(0)=C>0\ \cdots$④である．
+
+引き続き\cref{eq:7}の両辺を積分して\cref{eq:1}より$f(0)=a$だから
 \begin{align}
-f(t)=\dfrac{1}{4}t^2+Ct+a \quad\cdots\text{⑤}
+f(t)=\dfrac{1}{4}t^2+Ct+a \quad\cdots\text{⑤} \label{eq:8}
 \end{align}
-とおける（$\bigstar$，$f(0)=a$）．③，⑤を☆に代入
+とおける．
+
+\cref{eq:7,eq:8}を\cref{eq:5}に代入して
 \begin{align}
 \begin{split}
 \left(\dfrac{1}{2}t+C\right)^2&=\dfrac{1}{4}t^2+Ct+a-1 \\
+\therefore
 C^2&=a-1
 \end{split}
 \end{align}
-④から，$C=\sqrt{a-1}$である．$f(x)$の$[x,x+h]$に平均値の定理を適用して（微分可能かつ連続），
+となる．$C>0$だから$C=\sqrt{a-1}$である．従って\cref{eq:8}に代入して
+\begin{align}
+ f(t)=\dfrac{1}{4}t^2+\sqrt{a-1}t+a \label{eq:9}
+\end{align}
+である．
+
+さて，$f(x)$は微分可能かつ連続だから$[x,x+h]$に平均値の定理を適用して
 \begin{align}
 f(x+h)-f(x)=f'(p)\cdot h
 \end{align}
-となる$p\ (x<p<x+h)$がある．②とあわせて
+となる$p\ (x<p<x+h)$がある．ここで$f'(x)$は単調増加だったから，$C=\sqrt{a-1}$にも注意して
 \begin{align}
-f(x+h)-f(x)\ge\sqrt{a-1}\cdot h
+f(x+h)-f(x)\ge f'(0)h = Ch = \sqrt{a-1}\cdot h
 \end{align}
+である．
 
-\textbf{(2)} (1)から，$f(t)=\dfrac{1}{4}t^2+\sqrt{a-1}\,t+a$である．$F(t)=\dfrac{\{f(t)\}^2}{f'(t)}$から
+以上から題意は示された．
+
+\paragraph{(2)}
+
+$F(t)$の最小値を求めるため，一階微分から$F(t)$の振る舞いを調べよう．
+$F(t)=\dfrac{\{f(t)\}^2}{f'(t)}$の両辺を微分すると
 \begin{align}
-F'(t)=\dfrac{2f(t)\{f'(t)\}^2-f''(t)\{f(t)\}^2}{\{f'(t)\}^2}=\dfrac{f(t)}{\{f'(t)\}^2}\left\{2\{f'(t)\}^2-f(t)f''(t)\right\}
+ F'(t)=\dfrac{2f(t)\{f'(t)\}^2-f''(t)\{f(t)\}^2}{\{f'(t)\}^2} = \dfrac{f(t)}{\{f'(t)\}^2}\left\{2\{f'(t)\}^2-f(t)f''(t)\right\}
 \end{align}
-の符号は$t\ge0$の時，$\{\ \}$部の符号に等しい．
+である．$t\ge 0$の時$f(x), f'(x)>0$だからこの符号は$\{\ \}$部の符号に等しい．これを$G(t)$とおいて\cref{eq:9}を代入して
 \begin{align}
 \begin{split}
-\{\ \}&=2\left\{\dfrac{1}{2}t+\sqrt{a-1}\right\}^2-\left(\dfrac{1}{4}t^2+\sqrt{a-1}\,t+a\right)\cdot\dfrac{1}{2} \\
-&=2\left[\dfrac{1}{4}t^2+\sqrt{a-1}\cdot t+(a-1)\right]-\dfrac{1}{8}t^2-\dfrac{1}{2}\sqrt{a-1}\cdot t-\dfrac{1}{2}a \\
-&=\dfrac{3}{8}t^2+\dfrac{3}{2}\sqrt{a-1}\cdot t+\dfrac{3}{2}a-2\equiv g(t)
+ G(t)
+  &=2\left\{\dfrac{1}{2}t+\sqrt{a-1}\right\}^2-\left(\dfrac{1}{4}t^2+\sqrt{a-1}\,t+a\right)\cdot\dfrac{1}{2} \\
+  &=2\left[\dfrac{1}{4}t^2+\sqrt{a-1}\cdot t+(a-1)\right]-\dfrac{1}{8}t^2-\dfrac{1}{2}\sqrt{a-1}\cdot t-\dfrac{1}{2}a \\
+  &=\dfrac{3}{8}t^2+\dfrac{3}{2}\sqrt{a-1}\cdot t+\dfrac{3}{2}a-2
 \end{split}
 \end{align}
-$g(t)=0$の2解を$\alpha,\beta$として，下表を得る（$\alpha<\beta$）．
+を得る．$G(t)=0$は$t$の二次式で，判別式$D$とすると
+\begin{align}
+ D = \dfrac{9(a-1)}{4} - \dfrac{3(3a-4)}{4} = \dfrac{3}{4} \ge 0
+\end{align}
+となって，これは$a$にかかわらず異なる2実数解を持つ．そこでこれを$\alpha,\beta, (\alpha<\beta)$とする．
+$G(t)$の軸は$t=-2\sqrt{a-1}<0$だから，$\alpha<\beta\le0$または$$\alpha<0\le\beta$$となる．
+以下この両者について考える．
 
-\subparagraph{$1^\circ$ $\alpha<\beta\le0$つまり$\dfrac{4}{3}\le a$の時}
+\subparagraph{$1^\circ$ $\alpha<\beta\le0$つまり$f(0)\ge 0 \therefore \dfrac{4}{3}\le a$の時}
 
-$t\ge0$で$F(t)$は単調増加で，$\min F(t)=F(0)=\dfrac{a^2}{\sqrt{a-1}}$
+この時は$t \ge 0$で$G(t) \ge 0$となり，$F(t)$の増減表は以下のようになる．
 
-\subparagraph{$2^\circ$ $\alpha<0\le\beta$つまり$1<a\le\dfrac{4}{3}$の時}
+従って$t\ge0$で$F(t)$は単調増加で求める最小値は$t=0$の時の
+\begin{align}
+ \min F(t)=F(0)=\dfrac{\{f(0)\}^2}{f'(0)} = \dfrac{a^2}{C} = \dfrac{a^2}{\sqrt{a-1}}
+\end{align}
+である．
+
+\subparagraph{$2^\circ$ $\alpha<0\le\beta$つまり$f(0) \le 0 \therefore 1<a\le\dfrac{4}{3}$の時}
+
+この時の$F(t)$の増減表は以下のようになる．
+
 \begin{table}[htb]
   \centering
+\caption{$F(t)$の増減表}
 \begin{tabular}{c|ccccc}
 $t$ & $0$ & & $\beta$ & & \\
 \hline
@@ -85,12 +205,30 @@ $F'$ & & $-$ & $0$ & $+$ & \\
 $F$ & & $\searrow$ & & $\nearrow$ &
 \end{tabular}
 \end{table}
-$g(\beta)=0$と☆から，$f'(\beta)^2=1/3$，$f(\beta)=4f'(\beta)^2=4/3$となり，
+
+従って$F(t)$が最小値をとるのは$t=\beta$の時である．$G(t)=2\{f'(t)\}^2-f(t)f''(t)$より$G(\beta)=0$から
 \begin{align}
-\min F(t)=F(\beta)=\dfrac{16}{9}\sqrt{3}
+ 2\{f'(\beta)\}^2-f(\beta)f''(\beta) = 0
+\end{align}
+である．\cref{eq:6}より$f''(\beta)=\dfrac{1}{2}$だから
+\begin{align}
+ f(\beta) = 4\{f'(\beta)\}^2 
+\end{align}
+であり，これと\cref{eq:5}より
+\begin{align}
+ \{f'(\beta)\}^2 = f(\beta)-1
+\end{align}
+だから，連立して解くと
+\begin{align}
+ f'(\beta) = \dfrac{1}{\sqrt{3}}\quad f(\beta) = \dfrac{4}{3}
+\end{align}
+となり，
+\begin{align}
+\min F(t)=F(\beta)= \dfrac{\{f(\beta)\}^2}{f'(\beta)} = \dfrac{16}{9}\sqrt{3}
 \end{align}
 \casesend
-以上まとめて，
+
+以上まとめて，求める最小値は
 \begin{align}
 \min F(t)=
 \begin{cases}\displaystyle
@@ -98,6 +236,22 @@ $g(\beta)=0$と☆から，$f'(\beta)^2=1/3$，$f(\beta)=4f'(\beta)^2=4/3$とな
 \dfrac{a^2}{\sqrt{a-1}} & \left(\dfrac{4}{3}\le a\right)
 \end{cases}
 \end{align}
+である．
+
+{\bf [別解]}
+
+\paragraph{(2)}
+\cref{eq:5}より$F(t)=\dfrac{\{f(t)\}^2}{f'(t)}$の両辺を二乗すると
+\begin{align}
+ F^2(t) = \dfrac{\{f(t)\}^4}{f(t)-1}
+\end{align}
+である．そこで$y=f(t)$とおいて
+\begin{align}
+ F^2(t) = \dfrac{(y+1)^4}{y} 
+\end{align}
+の最小値を求めに行く方が簡単に解けるだろう．
+
+
 
 
 \end{document}

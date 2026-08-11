@@ -1,133 +1,295 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-\textbf{(1)} $0<\alpha<\beta$の時，グラフの概形は右図（$p\ne0\ \cdots$①）．又，
+題意の関数
+\begin{align}
+ f(x) = px^7(x-\alpha)(x-\beta) \label{eq:1}
+\end{align}
+について考える．
+
+$f(x)$が極値をとるので$f(x)$は定数ではなく，よって
+\begin{align}
+ p \neq 0 \label{eq:2}
+\end{align}
+である．この時$f(x)$の一階微分は
+\begin{align}
+ f'(x)
+  &=7px^6(x-\alpha)(x-\beta)+px^7\{(x-\beta)+(x-\alpha)\} \\
+  &=px^6\left\{9x^2-8(\alpha+\beta)x+7\alpha\beta\right\} \quad\cdots\text{②} \label{eq:3}
+\end{align}
+である．
+
+$f(x)$が$x=1$で極値$1$をとるので
+\begin{align}
+ \begin{cases}
+  f(1) = 1 \\
+  f'(1) = 0 
+ \end{cases}
+\end{align}
+であることが必要である．\cref{eq:1,eq:3}を代入して
+\begin{align}
+ \begin{cases}
+  p\left\{9-8(\alpha+\beta)+7\alpha\beta\right\}=0 \\
+  p(1-\alpha)(1-\beta)=1 \quad\cdots\text{④}  
+ \end{cases}
+\end{align}
+である．\cref{eq:2}より$p\neq 0$だから
+\begin{align}
+\begin{cases}
+ 9-8(\alpha+\beta)+7\alpha\beta=0 \quad\cdots\text{③} \\
+ p(1-\alpha)(1-\beta)=1
+\end{cases} \label{eq:4}
+\end{align}
+である．
+
+\paragraph{(1)}
+
+$0<\alpha<\beta$の時のグラフの概形は下図である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=2.0, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-0.3, 0) -- (1.8, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.6) -- (0, 1.4) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 2. 面積 \int_0^\beta f(x)dx = 0 (S_1 = S_2) の斜線ハッチング ---
+  % S_1: 0 < x < alpha (正の領域)
+  \begin{scope}
+    \clip (0, 0) rectangle (1.2, 1.3);
+    \fill[pattern=north east lines, pattern color=blue!60] 
+      plot[domain=0:1.2, samples=100] (\x, {10*(\x^7)*(\x - 1.2)*(\x - 1.5)}) -- (0,0) -- cycle;
+  \end{scope}
+
+  % S_2: alpha < x < beta (負の領域)
+  \begin{scope}
+    % \clip (1.2, -0.6) rectangle (1.5, 0);
+    \fill[pattern=north west lines, pattern color=red!60] 
+      plot[domain=1.2:1.5, samples=100] (\x, {10*(\x^7)*(\x - 1.2)*(\x - 1.5)}) -- cycle;
+  \end{scope}
+
+  % --- 3. 曲線 f(x) の描画 ---
+  \draw[ultra thick, blue!80!black, domain=-0.1:1.51, samples=150] 
+    plot (\x, {10*(\x^7)*(\x - 1.2)*(\x - 1.5)});
+  \node[blue!80!black, above right] at (1.1, 1.0) {$y = f(x)$};
+
+  % --- 4. 極大点・交点・補助線 ---
+  % 極大点 (1, 1)
+  \draw[dashed, gray] (1, 0) node[below, font=\small, black] {$1$} -- (1, 1) -- (0, 1) node[left, font=\small, black] {$1$};
+  \fill[black] (1, 1) circle (1.2pt);
+
+  % 極小点 x = 7/5 = 1.4
+  \pgfmathsetmacro{\xMin}{1.4}
+  \pgfmathsetmacro{\yMin}{10*(\xMin^7)*(\xMin - 1.2)*(\xMin - 1.5)}
+  % \draw[dashed, gray] (\xMin, 0) node[above, font=\small, yshift=2pt, black] {$\frac{7}{5}$} -- (\xMin, \yMin);
+  \fill[black] (\xMin, \yMin) circle (1.2pt);
+
+  % x 軸との交点 alpha, beta
+  \fill[black] (1.2, 0) circle (1.2pt) node[below left, font=\small] {$\alpha$};
+  \fill[black] (1.5, 0) circle (1.2pt) node[below right, font=\small] {$\beta$};
+
+  % 面積ラベル
+  \node[blue!80!black, font=\small] at (0.8, 0.4) {$S_1$};
+  \node[red!80!black, font=\small] at (1.35, -0.15) {$S_2$};
+
+\end{tikzpicture}
+\end{center}
+\caption{$0<\alpha<\beta$の時の $f(x)$の概形}
+\end{figure}
+
+題意の面積に関する条件はグラフより$\displaystyle\int_0^\beta f(x)dx=0$だから，\cref{eq:1}を代入して
 \begin{align}
 \begin{split}
-f'(x)&=7px^6(x-\alpha)(x-\beta)+px^7\{(x-\beta)+(x-\alpha)\} \\
-&=px^6\left\{9x^2-8(\alpha+\beta)x+7\alpha\beta\right\} \quad\cdots\text{②}
+\int_0^\beta f(x)dx
+ &=p\int_0^\beta\left\{x^9-(\alpha+\beta)x^8+\alpha\beta x^7\right\}dx \\
+ &=p\left[\dfrac{1}{10}x^{10}-\dfrac{1}{9}(\alpha+\beta)x^9+\dfrac{\alpha\beta}{8}x^8\right]_0^\beta \\
+ &=p\left(\dfrac{1}{10}\beta^{10}-\dfrac{1}{9}(\alpha+\beta)\beta^9+\dfrac{\alpha\beta}{8}\beta^8\right)=0
 \end{split}
 \end{align}
-である．$f'(1)=0$から②に代入して
+\cref{eq:2}および$\beta \neq 0$より両辺を$p\beta^9$で割って
 \begin{align}
-p\left\{9-8(\alpha+\beta)+7\alpha\beta\right\}=0
+ &\dfrac{1}{10}\beta-\dfrac{1}{9}(\alpha+\beta)+\dfrac{1}{8}\alpha=0 \\ 
+\therefore\ 
+ &\beta=\dfrac{90}{72}\alpha=\dfrac{5}{4}\alpha \quad\cdots\text{⑤} \label{eq:5} 
 \end{align}
-$p\ne0$から
+を得る．\cref{eq:5}を\cref{eq:4}の第一式に代入して
 \begin{align}
-9-8(\alpha+\beta)+7\alpha\beta=0 \quad\cdots\text{③}
+ &(5\alpha-6)(7\alpha-6)=0 \\
+\therefore 
+ &\alpha = \dfrac{6}{5}, \dfrac{6}{7}
 \end{align}
-$f(1)=1$から，
+だから，$(\alpha,\beta)$の組は
 \begin{align}
-p(1-\alpha)(1-\beta)=1 \quad\cdots\text{④}
+  (\alpha,\beta)=\left(\dfrac{6}{5},\dfrac{3}{2}\right),\left(\dfrac{6}{7},\dfrac{15}{14}\right) 
 \end{align}
-題意から$\displaystyle\int_0^\beta f(x)dx=0$で，
-\begin{align}
-\begin{split}
-\int_0^\beta f(x)dx&=p\int_0^\beta\left\{x^9-(\alpha+\beta)x^8+\alpha\beta x^7\right\}dx=p\left[\dfrac{1}{10}x^{10}-\dfrac{1}{9}(\alpha+\beta)x^9+\dfrac{\alpha\beta}{8}x^8\right]_0^\beta \\
-&=p\left(\dfrac{1}{10}\beta^{10}-\dfrac{1}{9}(\alpha+\beta)\beta^9+\dfrac{\alpha\beta}{8}\beta^8\right)=0
-\end{split}
-\end{align}
-$p\beta\ne0$から
-\begin{align}
-\dfrac{1}{10}\beta-\dfrac{1}{9}(\alpha+\beta)+\dfrac{1}{8}\alpha=0 \quad\therefore\ \beta=\dfrac{90}{72}\alpha=\dfrac{5}{4}\alpha \quad\cdots\text{⑤}
-\end{align}
-⑤を③に代入して，
-\begin{align}
-(5\alpha-6)(7\alpha-6)=0 \quad\therefore\ (\alpha,\beta)=\left(\dfrac{6}{5},\dfrac{3}{2}\right),\left(\dfrac{6}{7},\dfrac{15}{14}\right)
-\end{align}
-④から，順に$p=10,-98$である．以上から
+である．\cref{eq:4}の第二式に代入すると順に$p=10,-98$である．以上から
 \begin{align}
 (\alpha,\beta,p)=\left(\dfrac{6}{5},\dfrac{3}{2},10\right),\left(\dfrac{6}{7},\dfrac{15}{14},-98\right)
 \end{align}
 が必要．逆にこの時，$x=1$で極大値1をとることを確認する．
 
-\subparagraph{⑥の時}
+\subparagraph{1. $(\alpha,\beta,p)=\left(\dfrac{6}{5},\dfrac{3}{2},10\right)$の時}
+この時\cref{eq:3}より
 \begin{align}
 f'(x)=px^6\left(9x^2-\dfrac{108}{5}x+\dfrac{63}{5}\right)=\dfrac{9}{5}px^6(5x-7)(x-1)
 \end{align}
-から下表をうる．
+だから，増減表は以下のようになる．
+
 \begin{table}[htb]
   \centering
-\begin{tabular}{c|ccccccc}
-$x$ & $0$ & & $1$ & & $7/5$ & & \\
+\caption{$f(x)$の増減表}
+\begin{tabular}{c|ccccccccc}
+$x$ & $\cdots$ & $0$ & $\cdots$ & $1$ & $\cdots$ & $7/5$ & $\cdots$ \\
 \hline
 $f'$ & $+$ & $0$ & $+$ & $0$ & $-$ & $0$ & $+$ \\
 \hline
-$f$ & $\nearrow$ & & $\nearrow$ & & $\searrow$ & & $\nearrow$
+$f$ & $\nearrow$ & $0$ & $\nearrow$ & $1$ & $\searrow$ & 極小 & $\nearrow$
 \end{tabular}
 \end{table}
-上図から十分．
 
-\subparagraph{⑦の時}
+従ってこの場合は$f(x)$は$x=1$で極値をとって十分である．
+
+\subparagraph{2. $(\alpha,\beta,p)=\left(\dfrac{6}{7},\dfrac{15}{14},-98\right)$の時}
+この時\cref{eq:3}より
 \begin{align}
 f'(x)=px^6\left(9x^2-\dfrac{108}{7}x+\dfrac{45}{7}\right)=\dfrac{9}{7}px^6(7x-5)(x-1)
 \end{align}
-から下表をうる．
+だから，$f(x)$の増減表は以下のようになる．
+
 \begin{table}[htb]
   \centering
-\begin{tabular}{c|ccccccc}
-$x$ & $0$ & & $5/7$ & & $1$ & & \\
+\caption{$f(x)$の増減表}
+\begin{tabular}{c|ccccccccc}
+$x$ & $\cdots$ & $0$ & $\cdots$ & $5/7$ & $\cdots$ & $1$ & $\cdots$ \\
 \hline
-$f'$ & $-$ & $0$ & $-$ & & $+$ & $0$ & $-$ \\
+$f'$ & $-$ & $0$ & $-$ & $0$ & $+$ & $0$ & $-$ \\
 \hline
-$f$ & $\searrow$ & & $\searrow$ & & $\nearrow$ & & $\searrow$
+$f$ & $\searrow$ & $0$ & $\searrow$ & 極小 & $\nearrow$ & $1$ & $\searrow$
 \end{tabular}
 \end{table}
-上図から十分．
+
+従ってこの場合も$f(x)$は$x=1$で極値をとり十分である．
 \casesend
 
-以上から，もとめるのは
+以上から，もとめる$f(x)$は
 \begin{align}
 f(x)=10x^7\left(x-\dfrac{6}{5}\right)\left(x-\dfrac{3}{2}\right), \qquad f(x)=-98x^7\left(x-\dfrac{6}{7}\right)\left(x-\dfrac{15}{14}\right)
 \end{align}
+である．
 
-\textbf{(2)} $\alpha<0<\beta$の時，グラフは右図（$p\ne0$）で，$x=1$で極大なことから，
+\paragraph{(2)}
+
+$\alpha<0<\beta$の時はグラフは下図のようになる．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.6, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-1.5, 0) -- (1.5, 0) node[right] {$x$};
+  \draw[->, thick] (0, -1.4) -- (0, 1.4) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  \def\aVal{-1.13389} % -3*sqrt(7)/7
+  \def\bVal{1.13389}  %  3*sqrt(7)/7
+
+  % --- 2. 面積 \int_\alpha^\beta f(x)dx = 0 (S_1 = S_2) のハッチング ---
+  % S_1: alpha < x < 0 (負の領域)
+  \begin{scope}
+    \clip (\aVal, -1.3) rectangle (0, 0);
+    \fill[pattern=north west lines, pattern color=red!60] 
+      plot[domain=\aVal:0, samples=100] (\x, {-3.5*(\x^7)*(\x*\x - 9/7)}) -- cycle;
+  \end{scope}
+
+  % S_2: 0 < x < beta (正の領域)
+  \begin{scope}
+    \clip (0, 0) rectangle (\bVal, 1.3);
+    \fill[pattern=north east lines, pattern color=blue!60] 
+      plot[domain=0:\bVal, samples=100] (\x, {-3.5*(\x^7)*(\x*\x - 9/7)}) -- cycle;
+  \end{scope}
+
+  % --- 3. 曲線 f(x) の描画 ---
+  \draw[ultra thick, blue!80!black, domain=-1.2:1.2, samples=150] 
+    plot (\x, {-3.5*(\x^7)*(\x*\x - 9/7)});
+  \node[blue!80!black, right] at (0.8, 1.1) {$y = f(x)$};
+
+  % --- 4. 極値・交点プロット ---
+  % 極大点 (1, 1)
+  \draw[dashed, gray] (1, 0) node[below, font=\small, black] {$1$} -- (1, 1) -- (0, 1) node[left, font=\small, black] {$1$};
+  \fill[black] (1, 1) circle (1.2pt);
+
+  % 極小点 (-1, -1)
+  % \draw[dashed, gray] (-1, 0) node[above, font=\small, black] {$-1$} -- (-1, -1) -- (0, -1) node[right, font=\small, black] {$-1$};
+  % \fill[black] (-1, -1) circle (1.2pt);
+
+  % x 軸交点 alpha, beta
+  \fill[black] (\aVal, 0) circle (1.2pt) node[above left, font=\small] {$\alpha$};
+  \fill[black] (\bVal, 0) circle (1.2pt) node[below right, font=\small] {$\beta$};
+
+  % 面積ラベル
+  \node[red!80!black, font=\small] at (-0.6, -0.3) {$S_1$};
+  \node[blue!80!black, font=\small] at (0.6, 0.3) {$S_2$};
+
+\end{tikzpicture}
+\end{center}
+\caption{$\alpha<0<\beta$の時の $f(x)$ の概形}
+\end{figure}
+
+題意の面積に関する条件はグラフより$\displaystyle \int_\alpha^\beta f(x)dx=0$だから
 \begin{align}
-p<0, \qquad 0<\beta<1 \quad\cdots\text{⑧}
+&\int_\alpha^\beta f(x)dx
+  =  \left[\dfrac{1}{10}x^{10}-\dfrac{1}{9}(\alpha+\beta)x^9+\dfrac{\alpha\beta}{8}x^8\right]_\alpha^\beta =0 \\
+\therefore 
+ & \dfrac{1}{10}(\beta^{10}-\alpha^{10})-\dfrac{1}{9}(\alpha+\beta)(\beta^9-\alpha^9)+\dfrac{\alpha\beta}{8}(\beta^8-\alpha^8)=0 
 \end{align}
-が必要である．題意から③④は成立し，さらに
+$\beta\neq 0$より両辺を$\beta^{10}$で割ると
 \begin{align}
-\begin{split}
-\int_\alpha^\beta f(x)dx&=0 \\
-\left[\dfrac{1}{10}x^{10}-\dfrac{1}{9}(\alpha+\beta)x^9+\dfrac{\alpha\beta}{8}x^8\right]_\alpha^\beta&=0 \quad(\because②) \\
-\dfrac{1}{10}(\beta^{10}-\alpha^{10})-\dfrac{1}{9}(\alpha+\beta)(\beta^9-\alpha^9)+\dfrac{\alpha\beta}{8}(\beta^8-\alpha^8)&=0
-\end{split}
+ \dfrac{1}{10}(1-\left(\dfrac{\alpha}{\beta}\right)^{10})-\dfrac{1}{9}(\dfrac{\alpha}{\beta}+1)(1-\left(\dfrac{\alpha}{\beta}\right)^{9})+\dfrac{1}{8}\dfrac{\alpha}{\beta}(1-\left(\dfrac{\alpha}{\beta}\right)^{8})=0
 \end{align}
-$t=\dfrac{\alpha}{\beta}$とおく（$t<0$）と，
+$t=\dfrac{\alpha}{\beta}$とおくと，
 \begin{align}
-\begin{split}
--4t^{10}+4+5t^9-5t&=0 \\
-4(1-t^{10})+5t(t^8-1)&=0
-\end{split}
+& \dfrac{1}{10}(1-t^{10})-\dfrac{1}{9}(t+1)(1-t^{9})+\dfrac{1}{8}t(1-t^{8})=0 \\
+& \left(-\dfrac{1}{10}+\dfrac{1}{9}\right)t^{10} +\left(\dfrac{1}{9}-\dfrac{1}{8}\right)t^{9}+\left(-\dfrac{1}{9}+\dfrac{1}{8}\right)t +\left(\dfrac{1}{10}-\dfrac{1}{9}\right) = 0 \\
+& \dfrac{1}{90}t^{10} - \dfrac{1}{72}t^{9} + \dfrac{1}{72}t - \dfrac{1}{90} = 0 \\
+& -4t^{10}+4+5t^9-5t=0 \\
+& 4(1-t^{10})+5t(t^8-1)=0
 \end{align}
-$-1<t<0$の時，左辺は正，$t<-1$の時，左辺は負でいずれも不適で，$t=-1$のみ解．この時$\beta=-\alpha$で，③④に代入して，
+さて，$\alpha<0<\beta$より$t<0$であるが，$-1<t<0$の時は左辺は正，$t<-1$の時は左辺は負でいずれも不適である．
+従って$t=-1$のみが解である．この時$\beta=-\alpha$である．
+これを\cref{eq:4}に代入すると
 \begin{align}
-\begin{split}
-9-7\alpha^2&=0, \qquad p(1-\alpha^2)=1 \\
-&\therefore\ (\alpha,\beta,p)=\left(-\dfrac{3\sqrt{7}}{7},\dfrac{3\sqrt{7}}{7},-\dfrac{7}{2}\right) \quad(\alpha<0<\beta\text{を確認})
-\end{split}
+ \begin{cases}
+  9-7\alpha^2=0 \\
+  p(1-\alpha^2)=1
+ \end{cases}
+\therefore\ 
+& (\alpha,\beta,p)=\left(-\dfrac{3\sqrt{7}}{7},\dfrac{3\sqrt{7}}{7},-\dfrac{7}{2}\right) 
 \end{align}
-逆にこの時，$f'(x)=px^6\{9x^2-9\}$となり，下表をうる．
+が$\alpha<0<\beta$を満たす解である．
+
+逆にこの時\cref{eq:2}より$f'(x)=px^6\{9x^2-9\}$となり，$f(x)$の増減表は以下のようになる．
+
 \begin{table}[htb]
   \centering
-\begin{tabular}{c|ccccccc}
-$x$ & & $-1$ & & $0$ & & $1$ & \\
+\caption{$f(x)$の増減表}
+\begin{tabular}{c|ccccccccc}
+$x$ & $\cdots$ & $-1$ & $\cdots$ & $0$ & $\cdots$ & $1$ & $\cdots$ \\
 \hline
 $f'$ & $-$ & $0$ & $+$ & $0$ & $+$ & $0$ & $-$ \\
 \hline
-$f$ & $\searrow$ & & $\nearrow$ & & $\nearrow$ & & $\searrow$
+$f$ & $\searrow$ & 極小 & $\nearrow$ & $0$ & $\nearrow$ & $1$ & $\searrow$
 \end{tabular}
 \end{table}
-よって$x=1$で極大となり十分．以上から
-\begin{align}
-f(x)=-\dfrac{7}{2}x^7\left(x^2-\dfrac{9}{7}\right)
-\end{align}
 
+よって$x=1$で極大となり十分である．以上から求める$f(x)$は
+\begin{align}
+ f(x)=-\dfrac{7}{2}x^7\left(x^2-\dfrac{9}{7}\right)
+\end{align}
+である．
 
 \newpage
 
