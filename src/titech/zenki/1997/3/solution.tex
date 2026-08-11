@@ -1,43 +1,71 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-\textbf{(1)}
+
+\paragraph{(1)}
+
+与えられた方程式を整理すると
 \begin{align}
 \begin{split}
-\dfrac{1}{x}+\dfrac{1}{y}&=\dfrac{1}{2} \\
-xy-2x-2y&=0 \quad\therefore\ (x-2)(y-2)=4
+ \dfrac{1}{x}+\dfrac{1}{y}&=\dfrac{1}{2} \\
+ xy-2x-2y&=0 \\
+\therefore\ 
+ &(x-2)(y-2)=4
 \end{split}
 \end{align}
-対称性から$x\le y$とすると，$x,y\in\mathbb{N}$から$x-2\ge-1,\ y-2\ge-1$．$(x-2)(y-2)=4>0$から，$x-2,y-2$は同符号で，共に負なら積は高々1だから，共に正で$x-2,y-2\in\mathbb{N}$．だから
+である．$x, y$が自然数だから$x-2, y-2 \ge -1$であって，これを満たすのは
 \begin{align}
-(x-2,y-2)=(1,4),(2,2) \quad\therefore\ (x,y)=(3,6),(4,4)
+(x-2,y-2)=(1,4),(2,2),(4,1) \quad\therefore\ (x,y)=(3,6),(4,4),(6,3)
 \end{align}
-$x\le y$の場合もかんがえて
-\begin{align}
-(x,y)=(3,6),(6,3),(4,4)
-\end{align}
+である．
 
-\textbf{(2)} まず$x_1\ge x_2\ge\cdots\ge x_n$とする．$n=1$で明らかで，以下$n=i$での成立を仮定し，$n=i+1$での成立を示す（$i\in\mathbb{N}$）．
+\paragraph{(2)}
+
+題意の方程式
+\begin{align}
+ \dfrac{1}{x_1}+\cdots+\dfrac{1}{x_{n}} = r
+\end{align}
+を満たす解の個数を$a_n(r)$とおく．
+
+$n=1$の時は
+\begin{align}
+ \dfrac{1}{x_1} = r \quad\therefore x_1 = \dfrac{1}{r}
+\end{align}
+だから解はたかだか一つしかない．
+
+そこで以下$n=i\in\mathbb{N}$での題意の成立を仮定して$n=i+1$での成立を示す．
+題意の方程式で$n=i+1$とした
+\begin{align}
+ \dfrac{1}{x_1}+\cdots+\dfrac{1}{x_{i+1}} = r \label{eq:1}
+\end{align}
+を考える．
+
+まず$1 \le x_1\ge x_2\ge\cdots\ge x_{i+1}$として考えると，\cref{eq:1}より
 \begin{align}
 \begin{split}
 r&=\dfrac{1}{x_1}+\cdots+\dfrac{1}{x_{i+1}}\le\dfrac{i+1}{x_{i+1}} \\
 &\therefore\ x_{i+1}\le\dfrac{i+1}{r}
 \end{split}
 \end{align}
-これをみたす最大の自然数$N$とし，$x_{i+1}$の値で場合分けして$(x_1,x_2,\cdots,x_i,x_{i+1})$の組をかぞえれば良く，
+
+である．これを満たす最大の自然数を$N$とすれば，$x_{i+1}$は たかだか$1,2,\cdots, N$の$N$通りの値をとる．
+そこで$x_{i+1}=\ell\ (\ell=1,2,\cdots, N)$で固定すると$(x_1,\cdots,x_i)$は
 \begin{align}
-\sum_{\ell=1}^Na_i\left(r-\dfrac{1}{\ell}\right)
+ \dfrac{1}{x_1}+\cdots+\dfrac{1}{x_{i}} = r-\dfrac{1}{x_{i+1}}
 \end{align}
-とかける．ここで$a_i(r)$は$n=i$の時の$\sum\dfrac{1}{x_k}=r$をみたす$(x_1,\cdots,x_i)$の組の数であり，仮定から$a_i(r-1/\ell)$は有限．したがって$n=i+1$でも成立．
+の解である．
+$x_{i+1}$が自然数だから右辺の$r-\dfrac{1}{x_{i+1}}$も有理数であるから仮定よりこの解の個数$a_{i}\left(r-\dfrac{1}{x_{i+1}}\right)$は有限である．従って$(x_1,x_2,\cdots,x_{i+1})$全体の\cref{eq:1}の解の数は
+\begin{align}
+ \sum_{\epsilon=1}^{N}a_{i}\left(r-\dfrac{1}{\ell}\right)
+\end{align}
+である．$x_1,\cdots,x_{i+1}$の大小関係の制限を外すと全体で解の個数は
+\begin{align}
+ a_{i+1}\left(r\right) = (i+1)!\sum_{\epsilon=1}^{N}a_{i}\left(r-\dfrac{1}{\ell}\right)
+\end{align}
+であって，これも有限である．したがって$n=i+1$でも題意は成立する．
 
-以上から$x_1\ge x_2\ge\cdots\ge x_n$では有限個だから，この条件をはずしても高々（有限）$\times n!$通りで，有限である．
-
-（＊一応，条件が$r\le x_{i+1}\le\cdots\le x_1$となっているので）
+以上から数学的帰納法により題意は示された．
 
 
 \newpage

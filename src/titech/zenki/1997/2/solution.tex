@@ -1,27 +1,164 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-$y=f(x)=\dfrac{1}{a+x}\ (a\ge0)$のグラフは下図で，斜線部は
+
+$a \ge 0$に対して
 \begin{align}
-S_n=\sum_{k=n}^{2n}\dfrac{1}{a+k}
+ \lim_{n\to\infty}\sum_{k=n}^{2n}\dfrac{1}{a+k} \label{eq:1}
 \end{align}
-の面積である．面積比較して
+が$a$にかかわらず同じ値に収束することを示し，その値を求めれば(1), (2)を解いたことになる．
+
+新しく
 \begin{align}
-\begin{split}
-\int_n^{2n}f(x)dx+\dfrac{1}{a+2n}&<S_n<\int_n^{2n}f(x)dx+\dfrac{1}{a+n} \quad\cdots\text{①} \\
-\int_n^{2n}f(x)dx&=\left[\log(x+a)\right]_n^{2n}=\log\dfrac{2n+a}{n+a}=\log2+\log\dfrac{1+a/2n}{1+a/n}
-\end{split}
+ f(x) = \dfrac{1}{a+x}\ (a\ge0)
 \end{align}
-だから，①の最左右辺は共に$\log2$に収束するので，はさみうちの定理から
+を考えると$y=f(x)$のグラフは以下のようになる．
+ここで斜線部の面積は
 \begin{align}
-S_n\longrightarrow\log2 \quad\cdots(1)
+S_n=\sum_{k=n}^{2n}\dfrac{1}{a+k} \label{eq:2}
 \end{align}
-これは$a$によらない．$\cdots(2)$
+である．
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+
+  % 1. 長方形 S_n (k = n から 2n まで) の斜線塗りつぶし
+  % n, n+1, n+2, ..., 2n-1 の各区間で高さ f(k)
+  \foreach \k/\x in {1.0/0.8, 1.5/1.2, 2.0/1.5, 2.5/2.0} {
+    % 簡単のため k の数値をノード位置にマッピング
+  }
+
+  % 具体的な数値スケール: x = 1 (n), 1.6 (n+1), 2.2 (n+2), ..., 3.4 (2n-1), 4.0 (2n)
+  % f(x) = 3 / (x + 0.8)
+  
+  % 各長方形 (k=n -> 2n)
+  \fill[pattern=north east lines, pattern color=black!40] (1.0,0) rectangle (1.6, 1.667);
+  \fill[pattern=north east lines, pattern color=black!40] (1.6,0) rectangle (2.2, 1.250);
+  \fill[pattern=north east lines, pattern color=black!40] (2.2,0) rectangle (2.8, 1.000);
+  \fill[pattern=north east lines, pattern color=black!40] (3.4,0) rectangle (4.0, 0.714);
+  % 2n の長方形 (幅 1 相当、図示用の最後)
+  \fill[pattern=north east lines, pattern color=black!40] (4.0,0) rectangle (4.6, 0.625);
+
+  % 2. 定積分領域 (曲線下の影)
+  \draw[thick, blue!80!black, domain=1.0:4.0, smooth, samples=50] 
+    plot (\x, {3/(\x + 0.8)});
+
+  % 3. 長方形の外枠
+  \draw[thick] (1.0,0) rectangle (1.6, 1.667);
+  \draw[thick] (1.6,0) rectangle (2.2, 1.250);
+  \draw[thick] (2.2,0) rectangle (2.8, 1.000);
+  \draw[thick] (3.4,0) rectangle (4.0, 0.714);
+  \draw[thick] (4.0,0) rectangle (4.6, 0.625);
+
+  % ドット（省略記号）
+  \node at (3.1, 0.4) {$\dots$};
+  \node at (3.1, 0.8) {$\dots$};
+
+  % 4. 座標軸
+  \draw[->, thick] (-0.2, 0) -- (5.0, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.2) -- (0, 2.2) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 曲線ラベル
+  \node[blue!80!black, above right] at (2.2, 1.0) {$y = \dfrac{1}{a+x}$};
+
+  % 5. 軸上の目盛りと点線
+  \draw[dashed, gray!70] (1.0, 0) -- (1.0, 1.667);
+  \draw[dashed, gray!70] (1.6, 0) -- (1.6, 1.250);
+  \draw[dashed, gray!70] (2.2, 0) -- (2.2, 1.000);
+  \draw[dashed, gray!70] (4.0, 0) -- (4.0, 0.714);
+
+  \node[below] at (1.0, 0) {$n$};
+  \node[below] at (1.6, 0) {$n+1$};
+  \node[below] at (2.2, 0) {$n+2$};
+  \node[below] at (4.0, 0) {$2n$};
+
+  % Y軸上の高さ
+  \draw[dashed, gray!70] (0, 1.667) -- (1.0, 1.667);
+  \draw[dashed, gray!70] (0, 0.625) -- (4.6, 0.625);
+  \node[left] at (0, 1.667) {$\frac{1}{a+n}$};
+  \node[left] at (0, 0.625) {$\frac{1}{a+2n}$};
+
+\end{tikzpicture}
+\caption{$S_n > \int_n^{2n} f(x)dx + \frac{1}{a+2n}$ の幾何学的比較}
+\end{figure}
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+
+  % 各区間の右端の高さを利用した下側和の長方形
+  % x = 1.0 (n) から 4.0 (2n)
+  
+  % 先頭の長方形 (k=n: 高さ 1/(a+n))
+  \fill[pattern=north east lines, pattern color=black!40] (0.4,0) rectangle (1.0, 1.667);
+  \draw[thick] (0.4,0) rectangle (1.0, 1.667);
+
+  % 積分と比較する内接長方形群 (k = n+1 から 2n)
+  \fill[pattern=north east lines, pattern color=black!40] (1.0,0) rectangle (1.6, 1.250);
+  \fill[pattern=north east lines, pattern color=black!40] (1.6,0) rectangle (2.2, 1.000);
+  \fill[pattern=north east lines, pattern color=black!40] (2.2,0) rectangle (2.8, 0.833);
+  \fill[pattern=north east lines, pattern color=black!40] (3.4,0) rectangle (4.0, 0.625);
+
+  % 曲線
+  \draw[thick, blue!80!black, domain=1.0:4.0, smooth, samples=50] 
+    plot (\x, {3/(\x + 0.8)});
+
+  % 長方形外枠
+  \draw[thick] (1.0,0) rectangle (1.6, 1.250);
+  \draw[thick] (1.6,0) rectangle (2.2, 1.000);
+  \draw[thick] (2.2,0) rectangle (2.8, 0.833);
+  \draw[thick] (3.4,0) rectangle (4.0, 0.625);
+
+  % ドット（省略記号）
+  \node at (3.1, 0.4) {$\dots$};
+
+  % 座標軸
+  \draw[->, thick] (-0.2, 0) -- (4.8, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.2) -- (0, 2.2) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 曲線ラベル
+  \node[blue!80!black, above right] at (2.0, 1.0) {$y = \dfrac{1}{a+x}$};
+
+  % 軸上の目盛りと点線
+  \draw[dashed, gray!70] (1.0, 0) -- (1.0, 1.667);
+  \draw[dashed, gray!70] (1.6, 0) -- (1.6, 1.250);
+  \draw[dashed, gray!70] (4.0, 0) -- (4.0, 0.625);
+
+  \node[below] at (0.4, 0) {\scriptsize $n-1$};
+  \node[below] at (1.0, 0) {$n$};
+  \node[below] at (1.6, 0) {$n+1$};
+  \node[below] at (4.0, 0) {$2n$};
+
+  % Y軸上の高さ
+  \draw[dashed, gray!70] (0, 1.667) -- (0.4, 1.667);
+  \draw[dashed, gray!70] (0, 0.625) -- (4.0, 0.625);
+  \node[left] at (0, 1.667) {$\frac{1}{a+n}$};
+  \node[left] at (0, 0.625) {$\frac{1}{a+2n}$};
+
+\end{tikzpicture}
+\caption{$S_n < \int_n^{2n} f(x)dx + \frac{1}{a+n}$ の幾何学的比較}
+\end{figure}
+
+
+$f(x)$の積分部分と面積を比較すると
+\begin{align}
+ \int_n^{2n}f(x)dx+\dfrac{1}{a+2n}<S_n<\int_n^{2n}f(x)dx+\dfrac{1}{a+n} \quad\cdots\text{①}  \label{eq:3}
+\end{align}
+である．ここで積分部分は
+\begin{align}
+ \int_n^{2n}f(x)dx=\left[\log(x+a)\right]_n^{2n}=\log\dfrac{2n+a}{n+a}=\log2+\log\dfrac{1+a/2n}{1+a/n}
+\end{align}
+だから\cref{eq:3}の左辺と右辺は$n\to\infty$で共に$\log2$に収束するので，はさみうちの定理から
+\begin{align}
+\lim_{n\to\infty}S_n = \log2 
+\end{align}
+である．
+これは$a$によらないので(2)は示された．また(1)で求める極限値は$\log 2$である．
 
 
 \newpage
