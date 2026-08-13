@@ -426,6 +426,13 @@ const ogImageUrl = new URL(`${baseUrl}/ogp-default.png`, Astro.site).href;
 
 			figure img {
 				max-width: 100%;
+				/* TikZ 図は standalone クラスで実寸コンパイルされるため、元原稿の
+				   scale= 指定によって SVG の内在サイズがまちまち（幅 51pt〜416pt）。
+				   下限を設けないと小さい図がラベルも読めないサイズで表示されてしまう
+				   ため min-width で底上げする。min() で囲むことで、モバイル幅など
+				   コンテナが220pxより狭い場面でも max-width:100% 側が優先され、
+				   はみ出し（横スクロール）が起きないようにしている。 */
+				min-width: min(220px, 100%);
 				height: auto;
 				border-radius: 8px;
 				margin-bottom: 0.75rem;
