@@ -1,46 +1,142 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-三角柱の底面（正三角形，1辺1）を$DEF$，対応する上面を$ABC$（$AD=BE=CF=2$，各々垂直な辺）とする．断面の直角三角形$PQR$の頂点は辺$AD,BE,CF$上に1つずつあり，対称性からそのうちの1つが$E$（底面の頂点）に一致する場合を考えれば良い．$P=E$，$Q$が辺$AD$上，$R$が辺$CF$上にあるとし，
+三角柱の底面（正三角形，1辺1）を$DEF$，対応する上面を$ABC$（$AD=BE=CF=2$，各々垂直な辺）とする．
+断面の直角三角形$PQR$の頂点は辺$BE,AD, CF$上に1つずつあり，対称性からそのうちの1つが$E$（底面の頂点）に一致する場合を考えれば良い．
+$P=E$，$Q$が辺$AD$上，$R$が辺$CF$上にあるとし，
 \begin{align}
-DQ=x,\qquad FR=x+t \qquad(0\le x\le x+t\le2)\ \cdots(\ast)
+DQ=x,\qquad FR=x+t \qquad(0\le x\le x+t\le2)\ \cdots(\ast) \label{eq:1}
 \end{align}
-とおく（$D,E,F$は底面の3頂点で互いの距離は1）．
+とおく，この様子を下図に示す．
 
-$P=E$は高さ$0$，$Q$は高さ$x$，$R$は高さ$x+t$にあり，$D,E,F$間の水平距離はいずれも$1$だから
-\begin{align}
-PQ=\sqrt{1+x^2},\qquad QR=\sqrt{1+t^2},\qquad PR=\sqrt{1+(x+t)^2}
-\end{align}
-$(\ast)$より$PR$が最大辺だから，$PR$が斜辺，すなわち直角は$Q$にある．$\triangle PQR$の面積$S$は
-\begin{align}
-S=\dfrac{1}{2}\,QP\cdot QR=\dfrac{1}{2}\sqrt{(1+x^2)(1+t^2)} \quad\cdots\text{①}
-\end{align}
-また，ピタゴラスの定理$PQ^2+QR^2=PR^2$から
-\begin{align}
-\begin{split}
-(1+x^2)+(1+t^2)&=1+(x+t)^2 \iff 2+x^2+t^2=1+x^2+2xt+t^2 \iff 2xt=1 \\
-&\therefore\ xt=\dfrac{1}{2} \quad\cdots\text{②}
-\end{split}
-\end{align}
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.8, >=stealth]
 
-$(\ast)$，②のもとで①の値域をもとめる．$k=x+t$とおくと，②から$x,t$は2次方程式
+  % --- 1. 底面 DEF の座標 (正三角形, 1辺 1) ---
+  % 斜めから見た投影画面上の座標
+  \coordinate (D) at (0, 0);
+  \coordinate (E) at (1.2, -0.4);
+  \coordinate (F) at (1.8, 0.4);
+
+  % 高さは 2 (スケール比に合わせて y 方向に 2.2 離す)
+  \def\H{2.2}
+
+  % --- 2. 上面 ABC の座標 ---
+  \coordinate (A) at ($(D) + (0, \H)$);
+  \coordinate (B) at ($(E) + (0, \H)$);
+  \coordinate (C) at ($(F) + (0, \H)$);
+
+  % --- 3. 断面の頂点 P(=E), Q, R の座標 ---
+  % P = E (高さ 0)
+  \coordinate (P) at (E);
+  
+  % Q on AD (高さ DQ = x = 0.6*H 付近の例)
+  \coordinate (Q) at ($(D) + (0, 0.7)$);
+  
+  % R on CF (高さ FR = x + t = 1.5 付近の例)
+  \coordinate (R) at ($(F) + (0, 1.6)$);
+
+  % --- 4. 三角柱の稜線描画 ---
+  % 隠れ線 (奥の辺) は破線
+  \draw[dashed, gray] (D) -- (F);
+  \draw[dashed, gray] (F) -- (C);
+
+  % 手前の辺 (実線)
+  \draw[thick] (D) -- (E) -- (F);
+  \draw[thick] (A) -- (B) -- (C) -- cycle;
+  \draw[thick] (A) -- (D);
+  \draw[thick] (B) -- (E);
+
+  % --- 5. 断面直角三角形 PQR の描画 ---
+  % 面塗り (半透明)
+  \fill[red!20, opacity=0.6] (P) -- (Q) -- (R) -- cycle;
+  % 枠線
+  \draw[ultra thick, red!80!black] (P) -- (Q) -- (R) -- cycle;
+
+  % 直角マーク (angle PQR = 90度)
+  % Q から P, R への単位ベクトル方向を使って直角記号を作成
+  \draw[thin, red!80!black] 
+    ($(Q)!6pt!(P)$) -- 
+    ($($(Q)!6pt!(P)$) + ($(Q)!6pt!(R)$) - (Q)$) -- 
+    ($(Q)!6pt!(R)$);
+
+  % --- 6. 各点のプロットとラベル ---
+  % 三角柱の頂点
+  \fill[black] (A) circle (1.0pt) node[above left] {$A$};
+  \fill[black] (B) circle (1.0pt) node[above] {$B$};
+  \fill[black] (C) circle (1.0pt) node[above right] {$C$};
+  \fill[black] (D) circle (1.0pt) node[below left] {$D$};
+  \fill[black] (E) circle (1.0pt) node[below] {$E$};
+  \fill[black] (F) circle (1.0pt) node[right] {$F$};
+
+  % 断面の頂点
+  \fill[red!80!black] (P) circle (1.5pt) node[below right, font=\small] {$P(=E)$};
+  \fill[red!80!black] (Q) circle (1.5pt) node[left, font=\small] {$Q$};
+  \fill[red!80!black] (R) circle (1.5pt) node[right, font=\small] {$R$};
+
+  % --- 7. 長さ・高さのガイドとラベル ---
+  % 高さ DQ = x
+  \draw[<->, thin, blue!80!black] ($(D)+(-0.15,0)$) -- ($(Q)+(-0.15,0)$) 
+    node[midway, left, font=\small] {$x$};
+
+  % 高さ FR = x + t
+  \draw[<->, thin, blue!80!black] ($(F)+(0.15,0)$) -- ($(R)+(0.15,0)$) 
+    node[midway, right, font=\small] {$x+t$};
+
+  % 底辺 1 (DE, EF)
+  \node[font=\scriptsize, below left] at ($(D)!0.5!(E)$) {$1$};
+  \node[font=\scriptsize, below right] at ($(E)!0.5!(F)$) {$1$};
+
+\end{tikzpicture}
+\end{center}
+\caption{正三角柱と断面の直角三角形 $\triangle PQR$}
+\end{figure}
+
+$P=E$は高さ$0$，$Q$は高さ$x$，$R$は高さ$x+t$にあり，$D,E,F$間の水平距離はいずれも$1$だから三角形PQRの各辺の長さは
 \begin{align}
-p^2-kp+\dfrac{1}{2}=0 \quad(0\le k\le2)
+PQ=\sqrt{1+x^2},\qquad QR=\sqrt{1+t^2},\qquad PR=\sqrt{1+(x+t)^2} \label{eq:2}
 \end{align}
-の2つの正の実解であり（$xt=1/2>0$から$x,t$は同符号，かつ$k\ge0$から正），判別式$D=k^2-2\ge0$が必要十分．$0\le k\le2$とあわせて
+である．
+ピタゴラスの定理$PQ^2+QR^2=PR^2$から$x,t$は
 \begin{align}
-\sqrt{2}\le k\le2 \quad\cdots\text{③}
+& (1+x^2)+(1+t^2)=1+(x+t)^2 \\
+& 2+x^2+t^2=1+x^2+2xt+t^2 \\
+& 2xt=1 \\
+\therefore\ 
+& xt=\dfrac{1}{2} \quad\cdots\text{②} \label{eq:3}
 \end{align}
-①より
+を満たす．
+
+さて，\cref{eq:1}より$PR$が最大辺だから，直角三角形$PQR$において$PR$が斜辺，すなわち直角は$\angle PQR$である．
+従って$\triangle PQR$の面積$S$は
 \begin{align}
-S=\dfrac{1}{2}\sqrt{1+x^2+t^2+x^2t^2}=\dfrac{1}{2}\sqrt{1+\{(x+t)^2-2xt\}+x^2t^2}=\dfrac{1}{2}\sqrt{1+(k^2-1)+\dfrac{1}{4}}=\dfrac{1}{2}\sqrt{k^2+\dfrac{1}{4}}
+S=\dfrac{1}{2}\,QP\cdot QR=\dfrac{1}{2}\sqrt{(1+x^2)(1+t^2)} \quad\cdots\text{①} \label{eq:4}
 \end{align}
-これは$k>0$で単調増加だから，③より$k=\sqrt{2}$で最小，$k=2$で最大：
+である．\cref{eq:1,eq:3}の元で\cref{eq:4}のとりうる範囲を求めれば良い．
+
+$k=x+t$とおくと\cref{eq:1}より$0\le k\le 2$であって，\cref{eq:1,eq:3}から$x,t$は2次方程式
+\begin{align}
+ p^2-kp+\dfrac{1}{2}=0 
+\end{align}
+の2つの正の実解であり，$x,t$が存在するためには判別式$D$が非負であればよく$0\le k\le 2$と合わせて
+\begin{align}
+ D = k^2 -2 \ge 0 \therefore \sqrt{2}\le k\le 2 \label{eq:5}
+\end{align}
+が$k$の条件である．
+
+\cref{eq:4}を$k$で表すと，\cref{eq:3}に注意して
+\begin{align}
+ S
+  &=\dfrac{1}{2}\sqrt{1+x^2+t^2+x^2t^2} \\
+  &=\dfrac{1}{2}\sqrt{1+\{(x+t)^2-2xt\}+x^2t^2} \\
+  &=\dfrac{1}{2}\sqrt{1+(k^2-1)+\dfrac{1}{4}} \\
+  &=\dfrac{1}{2}\sqrt{k^2+\dfrac{1}{4}}
+\end{align}
+である．
+これは$k>0$で単調増加だから\cref{eq:5}より$k=\sqrt{2}$で最小，$k=2$で最大であって
 \begin{align}
 S_{\min}=\dfrac{1}{2}\sqrt{2+\dfrac{1}{4}}=\dfrac{1}{2}\cdot\dfrac{3}{2}=\dfrac{3}{4},\qquad
 S_{\max}=\dfrac{1}{2}\sqrt{4+\dfrac{1}{4}}=\dfrac{1}{2}\cdot\dfrac{\sqrt{17}}{2}=\dfrac{\sqrt{17}}{4}
@@ -49,7 +145,7 @@ S_{\max}=\dfrac{1}{2}\sqrt{4+\dfrac{1}{4}}=\dfrac{1}{2}\cdot\dfrac{\sqrt{17}}{2}
 \begin{align}
 \dfrac{3}{4}\le S\le\dfrac{\sqrt{17}}{4}
 \end{align}
-
+である．
 
 \newpage
 

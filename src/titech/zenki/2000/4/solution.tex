@@ -1,61 +1,268 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$f(x)=e^{nx}-1-e^x$，$t=e^x$とおく．
 
-\textbf{(1)} $f'(x)=ne^{nx}-e^x=nt^n-t=t(nt^{n-1}-1)$．$x\ge0$では$t=e^x\ge1$だから，$n\ge2$より$nt^{n-1}\ge n\ge2>1$，よって$nt^{n-1}-1>0$，$t>0$とあわせて$f'(x)>0$（$x\ge0$）．
+二つの関数の差分を
+\begin{align}
+ f_n(x)=e^{nx}-1-e^x \label{eq:1}
+\end{align}
+とおく．
+
+\paragraph{(1)}
+
+(ア)と(イ)の交点の$x$座標は方程式$f_n(x)=0$の解で与えられるから，$f_n(x)$の挙動について調べる．
+一階微分は
+\begin{align}
+ f_n'(x)=ne^{nx}-e^x=ne^{nx}-e^{x}=e^{x}(ne^{(n-1)x}-1)
+\end{align}
+である．$x \ge 0$では$e^x\ge1$だから，$n\ge2$より$ne^{(n-1)x}\ge n\ge2>1$である．
+従って$f_n'(x)>0$であり，増減表は以下のようになる．
+
 \begin{table}[htb]
   \centering
-\begin{tabular}{c|cc}
-$x$ & $0$ & \\
+\caption{$f(x)$の増減表}
+\begin{tabular}{c|ccc}
+$x$ & $0$ & & $\infty$\\
 \hline
-$f'$ & & $+$ \\
+$f'$ & & $+$ & \\
 \hline
-$f$ & & $\nearrow$
+$f$ & $-1$ & $\nearrow$ &$\infty$
 \end{tabular}
 \end{table}
-これと$f(0)=1-1-1=-1<0$，$f(x)\to\infty\ (x\to\infty)$から，$f(x)=0$は$x>0$にただ1つの実解を持つ（$f$は$x\ge0$で狭義単調増加だから一意）．したがって(ア)，(イ)は第1象限にただ1つの交点を持つ．
 
-\textbf{(2)} 交点の$x$座標を$a_n$とする（$f(a_n)=0,\ a_n>0$）．
+これと\cref{eq:1}より$f_n(0)=1-1-1=-1<0$および$f_n(x)\to\infty\ (x\to\infty)$から$f_n(x)=0$は$x>0$にただ1つの実解を持つ．
+したがって(ア)，(イ)は第1象限にただ1つの交点を持つ．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[xscale=2.0, yscale=1.5, >=stealth]
+
+  % --- パラメータ設定 (n >= 2 の例として n = 3) ---
+  \def\nVal{3}
+
+  % 1. 座標軸
+  \draw[->, thick] (-0.3, 0) -- (0.8, 0) node[right] {$x$};
+  \draw[->, thick] (0, -1.3) -- (0, 1.5) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % 交点 a_n の値（数値計算上の近似値: e^(3x) - 1 - e^x = 0 => x ≒ 0.285）
+  \pgfmathsetmacro{\anVal}{0.285}
+  \pgfmathsetmacro{\oneOverN}{1/\nVal} % 1/n = 1/3 ≒ 0.333
+
+  % % --- 2. 面積 S_n の斜線ハッチング ---
+  % % 0 <= x <= a_n で -f_n(x) = 1 + e^x - e^(nx) の領域
+  % \begin{scope}
+  %   \clip (0, -1.3) rectangle (\anVal, 0);
+  %   \fill[pattern=north east lines, pattern color=blue!70]
+  %     (0, -1) -- plot[domain=0:\anVal, samples=50] (\x, {exp(\nVal*\x) - 1 - exp(\x)})
+  %     -- (0, 0) -- cycle;
+  % \end{scope}
+
+  % --- 3. 関数 y = f_n(x) = e^(nx) - 1 - e^x の描画 ---
+  \draw[ultra thick, blue!80!black, domain=0:0.48, samples=100] 
+    plot (\x, {exp(\nVal*\x) - 1 - exp(\x)}) node[above left] {$y = f_n(x)$};
+
+  % --- 4. 特徴的な点と目盛りのプロット ---
+
+  % y 切片 f_n(0) = -1
+  \fill[black] (0, -1) circle (1.2pt) node[left, font=\small] {$-1$};
+
+  % 交点 (a_n, 0)
+  \fill[red!80!black] (\anVal, 0) circle (1.5pt) node[above left, font=\small] {$a_n$};
+
+  % 面積ラベル S_n
+  % \node[blue!80!black, font=\large] at (0.1, -0.4) {$S_n$};
+
+\end{tikzpicture}
+\end{center}
+\caption{$f_n(x) = e^{nx} - 1 - e^x$ の概形}
+\end{figure}
+
+\paragraph{(2)}
+(1)の交点を$P_n(a_n,b_n)$とおくと(1)より
+\begin{align}
+ \begin{cases}
+  f_n(a_n) = 0 \\
+  0 < a_n
+ \end{cases} \label{eq:2}
+\end{align}
+である．
+
+まず$a_n$の極限値から考えよう．$x=\dfrac{1}{n}$の時の$f_n(x)$の値は
 \begin{align}
 f\left(\dfrac{1}{n}\right)=e-1-e^{1/n}
 \end{align}
-$n\ge2$より$1/n\le1/2$，よって$e^{1/n}\le e^{1/2}$，したがって
+であり，$n\ge 2$より$\dfrac{1}{n}\le \dfrac{1}{2}$だから$e^{1/n}\le e^{1/2}$であることを用いて
 \begin{align}
 f\left(\dfrac{1}{n}\right)=e-1-e^{1/n}\ge e-1-e^{1/2}
 \end{align}
-$(1.7)^2=2.89>e$より$e^{1/2}<1.7$，また$e>2.7$だから
+である．
+ここで$(1.7)^2=2.89>e$より$e^{1/2}<1.7$，また$e>2.7$だから右辺は下から評価できて
 \begin{align}
-e-1-e^{1/2}>2.7-1-1.7=0
+ e-1-e^{1/2}>2.7-1-1.7=0 \\
+\therefore
+f\left(\dfrac{1}{n}\right) > 0 
 \end{align}
-よって$f(1/n)\ge e-1-e^{1/2}>0$．(1)の単調性と$f(a_n)=0$から$a_n<1/n$，$a_n>0$とあわせて
+である．(1)より$0<x$では$f_n(x)$は単調増加だから$a_n<\dfrac{1}{n}$で，\cref{eq:2}と合わせて
 \begin{align}
 0<a_n<\dfrac{1}{n}
 \end{align}
-はさみうちの定理から$a_n\to0\ (n\to\infty)$．
-
-また，$f(a_n)=0$より$e^{na_n}=e^{a_n}+1$．両辺の自然対数をとって
+である．右辺は$n\to\infty$で$0$に収束するからはさみうちの定理から
 \begin{align}
-na_n=\log(e^{a_n}+1) \xrightarrow{n\to\infty}\log2 \quad(\because a_n\to0)
+ \lim_{n\to\infty}a_n = 0 \label{eq:3}
 \end{align}
+である．
 
-\textbf{(3)} 第1象限で(ア)が(イ)より上（$0<x<a_n$で$e^x>e^{nx}-1$）だから，
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[xscale=2.0, yscale=1.5, >=stealth]
+
+  % --- パラメータ設定 (n >= 2 の例として n = 3) ---
+  \def\nVal{3}
+
+  % 1. 座標軸
+  \draw[->, thick] (-0.3, 0) -- (0.8, 0) node[right] {$x$};
+  \draw[->, thick] (0, -1.3) -- (0, 1.5) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % 交点 a_n の値（数値計算上の近似値: e^(3x) - 1 - e^x = 0 => x ≒ 0.285）
+  \pgfmathsetmacro{\anVal}{0.285}
+  \pgfmathsetmacro{\oneOverN}{1/\nVal} % 1/n = 1/3 ≒ 0.333
+
+  % --- 3. 関数 y = f_n(x) = e^(nx) - 1 - e^x の描画 ---
+  \draw[ultra thick, blue!80!black, domain=0:0.48, samples=100] 
+    plot (\x, {exp(\nVal*\x) - 1 - exp(\x)}) node[above left] {$y = f_n(x)$};
+
+  % --- 4. 特徴的な点と目盛りのプロット ---
+
+  % y 切片 f_n(0) = -1
+  \fill[black] (0, -1) circle (1.2pt) node[left, font=\small] {$-1$};
+
+  % 交点 (a_n, 0)
+  \fill[red!80!black] (\anVal, 0) circle (1.5pt) node[above left, font=\small] {$a_n$};
+
+  % (2) の評価で使われる点 x = 1/n と f_n(1/n) > 0 の関係
+  \pgfmathsetmacro{\fOneOverN}{exp(1) - 1 - exp(1/\nVal)} % f_n(1/n) の値
+  \draw[dashed, gray] (\oneOverN, 0) node[below, font=\small] {$\dfrac{1}{n}$} 
+    -- (\oneOverN, \fOneOverN) 
+    -- (0, \fOneOverN) node[left, font=\small] {$f_n\left(\dfrac{1}{n}\right)$};
+  \fill[gray] (\oneOverN, \fOneOverN) circle (1.2pt);
+
+\end{tikzpicture}
+\end{center}
+\caption{$f_n(x)$と$a_n,\dfrac{1}{n}$の関係}
+\end{figure}
+
+
+次に$na_n$の極限値を考える．$f(a_n)=0$に\cref{eq:1}を代入して
+\begin{align}
+ e^{na_n}=e^{a_n}+1
+\end{align}
+である．両辺正だから自然対数をとって
+\begin{align}
+ na_n=\log(e^{a_n}+1) 
+\end{align}
+である．両辺の$n\to\infty$の極限をとって右辺に\cref{eq:3}を用いると
+\begin{align}
+ \lim_{n\to\infty}na_n = \lim_{n\to\infty} \log(e^{a_n}+1) = \log(e^{\lim_{n\to\infty}a_n}+1) = \log 2 \label{eq:4}
+\end{align}
+である．
+
+\cref{eq:3,eq:4}をまとめて
+\begin{align}
+ \begin{cases}
+  \lim_{n\to\infty}a_n = 0 \\
+  \lim_{n\to\infty}na_n = \log 2
+ \end{cases} \label{eq:5}
+\end{align}
+である．
+
+
+\paragraph{(3)}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=2.0, >=stealth]
+
+  % --- パラメータ設定 (n = 3 の例) ---
+  \def\nVal{3}
+  % 交点 a_n (n=3 のとき a_n ≒ 0.285, 交点の y 座標 b_n ≒ 1.33)
+  \pgfmathsetmacro{\anVal}{0.285}
+  \pgfmathsetmacro{\bnVal}{exp(\anVal)}
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-0.3, 0) -- (0.8, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.3) -- (0, 2.0) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % --- 2. 面積 S_n の斜線ハッチング (2曲線の間の領域) ---
+  % 0 <= x <= a_n において y = e^x (上) と y = e^(nx) - 1 (下) で囲まれた部分
+  \begin{scope}
+    \clip (0, 0) -- plot[domain=0:\anVal, samples=50] (\x, {exp(\x)})
+          -- plot[domain=\anVal:0, samples=50] (\x, {exp(\nVal*\x) - 1}) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!70] 
+      (0, 0) rectangle (0.8, 2.0);
+  \end{scope}
+
+  % --- 3. 2つの曲線の描画 ---
+  % (ア) y = e^(nx) - 1
+  \draw[ultra thick, red!80!black, domain=0:0.42, samples=100] 
+    plot (\x, {exp(\nVal*\x) - 1}) node[right] {(ア) $y = e^{nx}-1$};
+
+  % (イ) y = e^x
+  \draw[ultra thick, blue!80!black, domain=0:0.65, samples=100] 
+    plot (\x, {exp(\x)}) node[right] {(イ) $y = e^x$};
+
+  % --- 4. 特徴的な点と目盛りのプロット ---
+
+  % y 軸切片 (ア) (0, 0) と (イ) (0, 1)
+  \fill[black] (0, 1) circle (1.2pt) node[left, font=\small] {$1$};
+
+  % 交点 P_n(a_n, b_n)
+  \coordinate (Pn) at (\anVal, \bnVal);
+  \fill[purple!80!black] (Pn) circle (1.5pt) node[above left, font=\small] {$P_n$};
+
+  % 交点からのガイド線
+  \draw[dashed, gray] (\anVal, 0) node[below, black, font=\small] {$a_n$} -- (Pn);
+  \draw[dashed, gray] (0, \bnVal) node[left, black, font=\small] {$b_n$} -- (Pn);
+
+  % 面積ラベル S_n
+  \node[blue!80!black, font=\large] at (0.12, 0.5) {$S_n$};
+
+\end{tikzpicture}
+\end{center}
+\caption{曲線 (ア) $y=e^{nx}-1$ と (イ) $y=e^x$ の交点$(a_n,b_n)$および囲まれる領域 $S_n$}
+\end{figure}
+
+$0<x<a_n$では$f_n(x)<0$つまり$e^x>e^{nx}-1$である．よってこの区間では(ア)が(イ)より上にある．
+従って求める面積$S_n$は
 \begin{align}
 \begin{split}
-S_n&=\int_0^{a_n}\left\{e^x-(e^{nx}-1)\right\}dx=\left[e^x-\dfrac{1}{n}e^{nx}+x\right]_0^{a_n}
-=e^{a_n}-\dfrac{1}{n}e^{na_n}+a_n-1+\dfrac{1}{n} \\
-&\therefore\ nS_n=n(e^{a_n}-1)+na_n+1-e^{na_n}=na_n\cdot\dfrac{e^{a_n}-1}{a_n}+na_n+1-e^{na_n}
+S_n
+ &=\int_0^{a_n}\left\{-f_n(x)\right\}dx\\
+ &=\int_0^{a_n}\left\{e^x-(e^{nx}-1)\right\}dx\\
+ &=\left[e^x-\dfrac{1}{n}e^{nx}+x\right]_0^{a_n} \\
+ &=e^{a_n}-\dfrac{1}{n}e^{na_n}+a_n-1+\dfrac{1}{n} 
 \end{split}
 \end{align}
-$n\to\infty$の時，$a_n\to0$より$\dfrac{e^{a_n}-1}{a_n}\to1$，$na_n\to\log2$，$e^{na_n}\to e^{\log2}=2$だから
+と書けるから，両辺に$n$をかけて
 \begin{align}
-nS_n\longrightarrow(\log2)\cdot1+\log2+1-2=2\log2-1
+nS_n
+ &=n(e^{a_n}-1)+na_n+1-e^{na_n} \\
+ &=na_n\cdot\dfrac{e^{a_n}-1}{a_n}+na_n+1-e^{na_n} \label{eq:6}
 \end{align}
+である．
+$n\to\infty$の時の各項の振る舞いを考えると\cref{eq:5}より
+\begin{align}
+ \lim_{n\to\infty} \dfrac{e^{a_n}-1}{a_n} = 1 \\
+ \lim_{n\to\infty} e^{na_n} = e^{\log 2} = 2
+\end{align}
+だから\cref{eq:6}に代入して
+\begin{align}
+ \lim_{n\to\infty} nS_n = \log 2 + \log 2 +1 -2 = 2\log 2-1
+\end{align}
+である．
 
 
 \end{document}

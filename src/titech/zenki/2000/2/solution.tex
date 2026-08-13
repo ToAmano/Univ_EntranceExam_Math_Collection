@@ -1,75 +1,166 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$\cos\theta=c,\ \sin\theta=s$と書く．
+簡単のため$\cos\theta=c,\ \sin\theta=s$と書く．
 
-\textbf{(1)}
+\paragraph{(1)}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=2.2, >=stealth]
+
+  % --- 1. 座標軸 (複素数平面) ---
+  \draw[->, thick] (-1.4, 0) -- (0.8, 0) node[right] {$\mathrm{Re}(z)$};
+  \draw[->, thick] (0, -0.9) -- (0, 0.9) node[above] {$\mathrm{Im}(z)$};
+  \node[below right, font=\small] at (0,0) {$O$};
+
+  % --- 2. 求める領域 ( |z + 1/2| < 1/2 ) の斜線ハッチング ---
+  % 中心 (-1/2, 0), 半径 1/2 の円内部 (境界は含まない)
+  \begin{scope}
+    \clip (-0.5, 0) circle (0.5);
+    \fill[pattern=north east lines, pattern color=blue!70] 
+      (-1.1, -0.6) rectangle (0.1, 0.6);
+  \end{scope}
+
+  % --- 3. 境界円 |z + 1/2| = 1/2 (境界を含まないため破線) ---
+  \draw[thick, dashed, blue!80!black] (-0.5, 0) circle (0.5);
+
+  % --- 4. 特徴的な点と目盛り ---
+  % 中心 (-1/2, 0)
+  \coordinate (Center) at (-0.5, 0);
+  \fill[black] (Center) circle (1.2pt) node[below, font=\small] {$-\dfrac{1}{2}$};
+
+  % 端点 z = -1 (境界上の点、r = -cos(pi) = 1 に対応)
+  \coordinate (LeftEnd) at (-1.0, 0);
+  \draw[blue!80!black, fill=white, thick] (LeftEnd) circle (1.2pt);
+  \node[below left, font=\small] at (-1.0, 0) {$-1$};
+
+  % 原点 z = 0 (r = 0 は除外されるため白丸)
+  \draw[blue!80!black, fill=white, thick] (0,0) circle (1.2pt);
+
+  % --- 5. 極形式 r < -cos(theta) の解説補助表現 ---
+  % 動点 z の動径 r と 偏角 theta
+  \pgfmathsetmacro{\angVal}{135} % 例: theta = 135度 (3*pi/4)
+  \pgfmathsetmacro{\rBound}{-cos(\angVal)} % r = -cos(135) = 1/sqrt(2) ≒ 0.707
+  
+  \coordinate (BoundaryP) at ({\rBound*cos(\angVal)}, {\rBound*sin(\angVal)});
+  \coordinate (SampleZ) at ({0.6*\rBound*cos(\angVal)}, {0.6*\rBound*sin(\angVal)});
+
+  % 動径 r の描画
+  \draw[thick, red!80!black, ->] (0,0) -- (SampleZ) node[midway, above right, font=\scriptsize] {$r$};
+  \fill[red!80!black] (SampleZ) circle (1.2pt) node[above left, font=\small] {$z$};
+
+  % 偏角 theta の弧
+  \draw[->, thin, gray] (0.25, 0) arc (0:\angVal:0.25);
+  \node[gray, font=\scriptsize] at (0.15, 0.22) {$\theta$};
+
+  % 領域ラベル
+  \node[blue!80!black, font=\small] at (-0.5, 0.7) {$\left|z+\dfrac{1}{2}\right|<\dfrac{1}{2}$};
+
+\end{tikzpicture}
+\end{center}
+\caption{(1) 題意の条件を満たす複素数 $z$ の領域（斜線部・境界を除く）}
+\end{figure}
+
+題意の条件を$r,\theta$であらわすと
 \begin{align}
 \begin{split}
-\left|z+\dfrac{1}{2}\right|&<\dfrac{1}{2} \iff \left|(rc+\tfrac12)+irs\right|<\dfrac{1}{2} \iff \left(rc+\dfrac{1}{2}\right)^2+(rs)^2<\dfrac{1}{4} \quad(\because\text{両辺}\ge0) \\
-&\iff r^2+rc<0 \iff r(r+\cos\theta)<0
+\left|z+\dfrac{1}{2}\right|<\dfrac{1}{2} 
+ &\iff \left|(rc+\tfrac12)+irs\right|<\dfrac{1}{2} \\
+ &\iff \left(rc+\dfrac{1}{2}\right)^2+(rs)^2<\dfrac{1}{4} \quad(\because\text{両辺}\ge0) \\
+ &\iff r^2+rc<0 \\
+ &\iff r(r+\cos\theta)<0
 \end{split}
 \end{align}
-$r\ge0$だから，これは$r\ne0$かつ$r+\cos\theta<0$と同値．すなわち
+である．
+$r\ge0$だから，これは$r\ne0$かつ$r+\cos\theta<0$と同値である．
+すなわち
 \begin{align}
-r>0\ \text{かつ}\ r<-\cos\theta \quad(\text{したがって}\ \cos\theta<0\ \text{も必要})
+r>0\ \text{かつ}\ r<-\cos\theta \label{eq:1}
 \end{align}
+が求める条件である．
 
-\textbf{(2)} $z\ne1$の時，$1+z+\cdots+z^n=\dfrac{z^{n+1}-1}{z-1}$だから
-\begin{align}
-\left|1+z+\cdots+z^n\right|^2=\dfrac{|z^{n+1}-1|^2}{|z-1|^2}
-\end{align}
-$|z-1|^2=(rc-1)^2+(rs)^2=r^2-2rc+1=r^2-2r\cos\theta+1$．
-\begin{align}
-|z^{n+1}-1|^2=\left(r^{n+1}\cos(n+1)\theta-1\right)^2+\left(r^{n+1}\sin(n+1)\theta\right)^2=r^{2n+2}-2r^{n+1}\cos(n+1)\theta+1
-\end{align}
-よって
-\begin{align}
-|1+z+\cdots+z^n|^2=\dfrac{r^{2n+2}-2r^{n+1}\cos(n+1)\theta+1}{r^2-2r\cos\theta+1}
-\end{align}
-（$z=1$（$r=1,\theta=0$）の時は直接$|1+z+\cdots+z^n|^2=(n+1)^2$．）
+\paragraph{(2)}
 
-\textbf{(3)} $Z_n=1+z+\cdots+z^n$とおく．(1)の条件から$0<r<-\cos\theta$，特に$\cos\theta<0$．まず
+$Z_n=1+z+\cdots+z^n$とおく．
+(1)より$z \neq 1$であるから以下この元で考える．
+等比数列の公式から
 \begin{align}
-r^2-2r\cos\theta+1=(r-1)^2+2r(1-\cos\theta)>0 \quad(\because\cos\theta<0\ \text{より}\ 1-\cos\theta>0,\ r>0)
+ Z_n =\dfrac{z^{n+1}-1}{z-1}
 \end{align}
-だから(2)の分母は正．$|Z_n|<1\iff|Z_n|^2<1\iff$（分母を払って）
+だから，与式は
 \begin{align}
-\begin{split}
-r^{2n+2}-2r^{n+1}\cos(n+1)\theta+1&<r^2-2r\cos\theta+1 \\
+ \left|Z_n\right|^2=\dfrac{|z^{n+1}-1|^2}{|z-1|^2} \label{eq:2}
+\end{align}
+である．
+
+分母分子に$z=r\left(\cos\theta+i\sin\theta\right)$を代入すると
+\begin{align}
+ \begin{cases}
+  |z-1|^2 &=(rc-1)^2+(rs)^2=r^2-2rc+1=r^2-2r\cos\theta+1 \\
+  |z^{n+1}-1|^2 &=\left(r^{n+1}\cos(n+1)\theta-1\right)^2+\left(r^{n+1}\sin(n+1)\theta\right)^2=r^{2n+2}-2r^{n+1}\cos(n+1)\theta+1
+ \end{cases}
+\end{align}
+であるから\cref{eq:2}に代入して
+\begin{align}
+|Z_n|^2=\dfrac{r^{2n+2}-2r^{n+1}\cos(n+1)\theta+1}{r^2-2r\cos\theta+1} \label{eq:3}
+\end{align}
+である．
+
+\paragraph{(3)}
+
+示すべき条件$|Z_n|<1$は二乗した$|Z_n|^2<1$と同値で，ここに\cref{eq:3}を代入すると
+\begin{align}
+ \dfrac{r^{2n+2}-2r^{n+1}\cos(n+1)\theta+1}{r^2-2r\cos\theta+1} < 1
+\end{align}
+ここで(2)の導出の過程から左辺の分母は$|z-1|^2$と等しくてよって正である．両辺にこれをかけて
+\begin{align}
+& r^{2n+2}-2r^{n+1}\cos(n+1)\theta+1 < r^2-2r\cos\theta+1 \\
 &\iff r^{2n+2}-2r^{n+1}\cos(n+1)\theta<r^2-2r\cos\theta
-\end{split}
 \end{align}
+である．
 両辺を$r>0$で割って，示すべき式は
 \begin{align}
-r^{2n+1}-2r^n\cos(n+1)\theta<r-2\cos\theta \quad\cdots\text{①}
+r^{2n+1}-2r^n\cos(n+1)\theta-r+2\cos\theta<0 \quad\cdots\text{①} \label{eq:4}
 \end{align}
-これを示す．$r+\cos\theta<0$（(1)）から$2\cos\theta<-2r$，よって
+であるから以下これを示す．左辺を$f(r,\theta)$とする．
+\cref{eq:1}より$\cos\theta<-r$だから第四項を上から評価して
 \begin{align}
-\begin{split}
-r^{2n+1}-2r^n\cos(n+1)\theta-r+2\cos\theta&<r^{2n+1}-2r^n\cos(n+1)\theta-r-2r \\
-&=r\left(r^{2n}-2r^{n-1}\cos(n+1)\theta-3\right)
-\end{split}
+ f(r,\theta) 
+  &< r^{2n+1}-2r^n\cos(n+1)\theta-r+2(-r) \\
+  &= r^{2n+1}-2r^n\cos(n+1)\theta-3r
 \end{align}
-$|\cos(n+1)\theta|\le1$より$-\cos(n+1)\theta\le1$だから
+さらに$\cos$の性質から$-\cos(n+1)\theta\le1$だから第二項に適用して
 \begin{align}
-<r\left(r^{2n}+2r^{n-1}-3\right)
+ f(r,\theta)
+  &<\left(r^{2n+1}+2r^{n}-3r\right) \\
+  &<r\left(r^{2n}+2r^{n-1}-3\right) \label{eq:5}
 \end{align}
-さらに$0<r<-\cos\theta\le1$から$0<r<1$，よって$r^{2n}<1,\ r^{n-1}\le1$（$n\ge1$）だから
-\begin{align}
-r^{2n}+2r^{n-1}-3<1+2-3=0
-\end{align}
-以上から
-\begin{align}
-r^{2n+1}-2r^n\cos(n+1)\theta-r+2\cos\theta<r\cdot(\text{負})<0
-\end{align}
-すなわち①が成り立ち，したがって$|Z_n|^2<1$，すなわち$|1+z+\cdots+z^n|<1$が全ての自然数$n$で成り立つ．
+と，$r$だけで上から評価できる．
 
+ここでさらに\cref{eq:1}より$0<r<-\cos\theta\le1$だから
+\begin{align}
+ 0 < r < 1
+\end{align}
+なので，$n \ge 1$の時は$r^{2n}<1,\ r^{n-1}\le1$だからさらに\cref{eq:5}を上から評価して
+\begin{align}
+ f(r,\theta)
+  &<r\left(1+2-3\right) \\
+  &=0 \\
+\therefore
+ f(r,\theta) < 0
+\end{align}
+である．以上から題意が示された．
+
+
+{\bf [解説]}
+
+問題文がわかりにくくて(2)は(1)の前提で計算したため$z\neq 1$としたが，$z=1$の時は
+\begin{align}
+ |Z_n|^2 = (1+1+\cdots +1)^{2} = (n+1)^2
+\end{align}
+である．
 
 \newpage
 
