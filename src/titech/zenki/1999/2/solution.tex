@@ -1,58 +1,83 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$O$から底面へ下ろした垂線の足を$H$（正$n$角形$A_1\cdots A_n$の中心）とし，$A_1H=x$（$0<x<1$）とおく．対称性から，
-\begin{align}
-V_n=n\times(\text{三角錐 } O\text{-}HA_1A_2) \quad\cdots\text{①}
-\end{align}
-である．$\triangle OHA_1$は$H$が直角，斜辺$OA_1=1$だから，ピタゴラスの定理より
-\begin{align}
-OH=\sqrt{1-x^2} \quad\cdots\text{②}
-\end{align}
-また，$\angle A_1HA_2=2\pi/n$（$H$を中心とした隣接2頂点のなす角）で，二等辺三角形$A_1A_2H$（$HA_1=HA_2=x$）の面積は
-\begin{align}
-\triangle A_1A_2H=\dfrac{1}{2}x^2\sin\dfrac{2\pi}{n}=x^2\sin\dfrac{\pi}{n}\cos\dfrac{\pi}{n} \quad\cdots\text{③}
-\end{align}
-$OH$は底面に垂直だから，三角錐$O$-$HA_1A_2$の高さは$OH$であり，②③から
-\begin{align}
-(O\text{-}HA_1A_2)=\dfrac{1}{3}\sqrt{1-x^2}\cdot x^2\sin\dfrac{\pi}{n}\cos\dfrac{\pi}{n} \quad\cdots\text{④}
-\end{align}
 
-①④から
-\begin{align}
-V_n=\dfrac{n}{3}\sin\dfrac{\pi}{n}\cos\dfrac{\pi}{n}\cdot x^2\sqrt{1-x^2}
-\end{align}
+\paragraph{(1)}
+$O$から底面へ下ろした垂線の足を$H$（正$n$角形$A_1\cdots A_n$の中心）として$A_1H=x$（$0<x<1$）とおく．
 
-$x^2\sqrt{1-x^2}$を$x\in(0,1)$で最大化する．$t=x^2\in(0,1)$とおくと$x^2\sqrt{1-x^2}=\sqrt{t^2(1-t)}=\sqrt{t^2-t^3}$だから，$f(t)=t^2-t^3$の最大値を考えれば良い．$f'(t)=2t-3t^2=t(2-3t)$より，
+
+正$n$角錐の体積を$f_n(x)$とする．対称性から，
+\begin{align}
+f_n(x)=n\times(\text{三角錐 } O\text{-}HA_1A_2) 
+\end{align}
+である．さらに三角錐$O\text{-}HA_1A_2$は高さが$OH$，底面が三角形$HA_1A_2$だから
+\begin{align}
+ f_n(x)=n\times \dfrac{|OH|\times \triangle HA_1A_2}{3} \label{eq:1}
+\end{align}
+である．各項順番に求めよう．
+
+
+
+まず$|OH|$について考える．$\triangle OHA_1$は$\angle H$が直角で斜辺$OA_1=1$で下図である．
+
+
+よってピタゴラスの定理より
+\begin{align}
+OH=\sqrt{|OA_1|^2-|A_1H|^2}=\sqrt{1-x^2} \quad\cdots\text{②} \label{eq:2}
+\end{align}
+である．
+
+
+次に $\triangle HA_1A_2$について，$\angle A_1HA_2=2\pi/n$ で，二等辺三角形$A_1A_2H$（$HA_1=HA_2=x$）の面積は
+\begin{align}
+\triangle A_1A_2H=\dfrac{1}{2}x^2\sin\dfrac{2\pi}{n}=x^2\sin\dfrac{\pi}{n}\cos\dfrac{\pi}{n} \quad\cdots\text{③} \label{eq:3}
+\end{align}
+である．
+
+以上\cref{eq:2,eq:3}を\cref{eq:1}に代入して
+\begin{align}
+  f_n(x)=\dfrac{n}{3}\sqrt{1-x^2}\cdot x^2\sin\dfrac{\pi}{n}\cos\dfrac{\pi}{n} \label{eq:4}
+\end{align}
+である．
+$f_n(x)$を$x\in(0,1)$で最大化するようなものが$C_n$であり，その時の$f_n(x)$が$V_n$に等しい．
+$t=x^2\in(0,1)$とおくと$x^2\sqrt{1-x^2}=\sqrt{t^2(1-t)}=\sqrt{t^2-t^3}$だから，$g(t)=t^2-t^3$が最大になるときに\cref{eq:4}の$f_n(x)$も最大である．
+一階微分は$f'(t)=2t-3t^2=t(2-3t)$だから増減表は以下のようになる．
+
 \begin{table}[htb]
   \centering
+\caption{$f_n(x)$の増減表}
 \begin{tabular}{c|ccccc}
 $t$ & $0$ & & $2/3$ & & $1$ \\
 \hline
-$f'$ & & $+$ & $0$ & $-$ & \\
+$g'$ & & $+$ & $0$ & $-$ & \\
 \hline
-$f$ & & $\nearrow$ & & $\searrow$ &
+$f_n(x)$ & & $\nearrow$ & & $\searrow$ &
 \end{tabular}
 \end{table}
-より$t=2/3$（$x^2=2/3$）で最大．この時
-\begin{align}
-x^2\sqrt{1-x^2}=\sqrt{f(2/3)}=\dfrac{2}{3}\sqrt{1-\dfrac{2}{3}}=\dfrac{2}{3}\cdot\dfrac{1}{\sqrt{3}}=\dfrac{2\sqrt{3}}{9}
-\end{align}
-したがって，
-\begin{align}
-V_n=\dfrac{n}{3}\sin\dfrac{\pi}{n}\cos\dfrac{\pi}{n}\cdot\dfrac{2\sqrt{3}}{9}=\dfrac{2\sqrt{3}}{27}\,n\sin\dfrac{\pi}{n}\cos\dfrac{\pi}{n}
-\end{align}
 
-\textbf{(2)} $n\sin(\pi/n)=\pi\cdot\dfrac{\sin(\pi/n)}{\pi/n}\to\pi$（$n\to\infty$），$\cos(\pi/n)\to1$だから，
+従って$f_n(x)$は$t=\dfrac{2}{3}$ すなわち $x=\sqrt{\dfrac{2}{3}}$ で最大値をとる．
+この時
+\begin{align}
+ x^2\sqrt{1-x^2}=\sqrt{g(2/3)}=\dfrac{2}{3}\sqrt{1-\dfrac{2}{3}}=\dfrac{2}{3}\cdot\dfrac{1}{\sqrt{3}}=\dfrac{2\sqrt{3}}{9}
+\end{align}
+だから\cref{eq:4}に代入して求める$V_n$は
+\begin{align}
+V_n=\max f_n(x) = f_n\left(\sqrt{\dfrac{2}{3}}\right) = \dfrac{n}{3}\sin\dfrac{\pi}{n}\cos\dfrac{\pi}{n}\cdot\dfrac{2\sqrt{3}}{9}=\dfrac{2\sqrt{3}}{27}\,n\sin\dfrac{\pi}{n}\cos\dfrac{\pi}{n} \label{eq:5}
+\end{align}
+である．
+
+\paragraph{(2)}
+$n\to\infty$の時
+\begin{align}
+ \lim_{n\to\infty}n\sin(\pi/n)&=\pi\cdot\dfrac{\sin(\pi/n)}{\pi/n}=\pi \\
+ \lim_{n\to\infty}\cos(\pi/n) &=1 
+\end{align}
+だから\cref{eq:5}に代入して
 \begin{align}
 \lim_{n\to\infty}V_n=\dfrac{2\sqrt{3}}{27}\cdot\pi\cdot1=\dfrac{2\sqrt{3}\,\pi}{27}
 \end{align}
-
+である．
 
 \newpage
 

@@ -1,36 +1,44 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-$a_n=\displaystyle\int_0^1t^{2n-1}e^t\,dt$，$b_n=\displaystyle\sum_{k=1}^{n-1}\dfrac{{}_{2n-1}P_{2n-2k}}{2k+1}$とおき，
-\begin{align}
-a_n+e\,b_n=(2n-1)! \quad\cdots\Diamond
-\end{align}
-を示す（$n\ge2$）．
 
 {\bf [解]}
-$n=2$の時，
+
+数列
 \begin{align}
-\begin{split}
+ \begin{cases}
+  a_n&=\displaystyle\int_0^1t^{2n-1}e^t\,dt \\
+  b_n&=\displaystyle\sum_{k=1}^{n-1}\dfrac{{}_{2n-1}P_{2n-2k}}{2k+1}
+ \end{cases} \label{eq:1}
+\end{align}
+とおくと題意の関係式は
+\begin{align}
+a_n+e\,b_n=(2n-1)! \quad\cdots\Diamond \label{eq:2}
+\end{align}
+である．以下$n\ge 2$に対して\cref{eq:2}を数学的帰納法で示す．
+
+$n=2$の時は\cref{eq:1}より
+\begin{align}
+\begin{cases}
 a_2&=\int_0^1t^3e^t\,dt=\left[e^t(t^3-3t^2+6t-6)\right]_0^1=(-2e)-(-6)=6-2e \\
-b_2&=\dfrac{1}{3}\,{}_3P_2=\dfrac{1}{3}\cdot3\cdot2=2
-\end{split}
+b_2&=\dfrac{1}{3}\,{}_3P_2=\dfrac{1}{3}\cdot3\cdot2=2 
+\end{cases}
 \end{align}
-だから$a_2+eb_2=6-2e+2e=6=3!$となり，$\Diamond$は$n=2$で成立．
+だから$a_2+eb_2=6-2e+2e=6=3!$となり\cref{eq:2}は$n=2$で成立する．
 
-以下，$n=m\ (m\ge2)$で$\Diamond$の成立を仮定し，$n=m+1$での成立を示す．部分積分を2回用いて，
+そこで以下$n=m\ (m\ge2)$での\cref{eq:2}の成立を仮定して$n=m+1$での成立を示す．部分積分を2回用いて$a_{m+1}$を変形すると
 \begin{align}
-\begin{split}
-a_{m+1}&=\int_0^1t^{2m+1}e^t\,dt=\left[t^{2m+1}e^t\right]_0^1-(2m+1)\int_0^1t^{2m}e^t\,dt \\
-&=e-(2m+1)\left\{\left[t^{2m}e^t\right]_0^1-2m\int_0^1t^{2m-1}e^t\,dt\right\}=e-(2m+1)\{e-2m\,a_m\} \\
-&\therefore\ a_{m+1}=-2m\,e+(2m+1)(2m)a_m \quad\cdots\text{①}
-\end{split}
+a_{m+1}
+ &=\int_0^1t^{2m+1}e^t\,dt \\
+ &=\left[t^{2m+1}e^t\right]_0^1-(2m+1)\int_0^1t^{2m}e^t\,dt \\
+ &=e-(2m+1)\left\{\left[t^{2m}e^t\right]_0^1-2m\int_0^1t^{2m-1}e^t\,dt\right\} \\
+ &=e-(2m+1)\{e-2m\,a_m\} \\
+ \therefore\ 
+a_{m+1}&=-2m\,e+(2m+1)(2m)a_m \quad\cdots\text{①} \label{eq:3}
 \end{align}
+である．
 
-また，順列の定義${}_nP_r=n!/(n-r)!$から${}_{2m-1}P_{2m-2k}=(2m-1)!/(2k-1)!$であり，
+次に$b_{m+1}$について，順列の定義${}_nP_r=n!/(n-r)!$から${}_{2m-1}P_{2m-2k}=(2m-1)!/(2k-1)!$であり，
 \begin{align}
 {}_{2m+1}P_{2m+2-2k}=\dfrac{(2m+1)!}{(2k-1)!}=(2m+1)(2m)\cdot\dfrac{(2m-1)!}{(2k-1)!}=(2m+1)(2m)\cdot{}_{2m-1}P_{2m-2k}
 \end{align}
@@ -38,46 +46,62 @@ a_{m+1}&=\int_0^1t^{2m+1}e^t\,dt=\left[t^{2m+1}e^t\right]_0^1-(2m+1)\int_0^1t^{2
 \begin{align}
 b_{m+1}=\sum_{k=1}^m\dfrac{{}_{2m+1}P_{2m+2-2k}}{2k+1}=(2m+1)(2m)\sum_{k=1}^m\dfrac{{}_{2m-1}P_{2m-2k}}{2k+1}
 \end{align}
+となる．
 和を$k=m$の項（${}_{2m-1}P_0/(2m+1)=1/(2m+1)$）と残り（$=b_m$）に分けて，
 \begin{align}
-b_{m+1}=(2m+1)(2m)\left\{b_m+\dfrac{1}{2m+1}\right\}=2m+(2m+1)(2m)b_m \quad\cdots\text{②}
+b_{m+1}=(2m+1)(2m)\left\{b_m+\dfrac{1}{2m+1}\right\}=2m+(2m+1)(2m)b_m \quad\cdots\text{②} \label{eq:4}
 \end{align}
+とかける．
 
-①，②から
+\cref{eq:3,eq:4}から
 \begin{align}
 \begin{split}
-a_{m+1}+e\,b_{m+1}&=\{-2me+(2m+1)(2m)a_m\}+e\{2m+(2m+1)(2m)b_m\} \\
-&=(2m+1)(2m)(a_m+e\,b_m)=(2m+1)(2m)(2m-1)!\quad(\because\text{仮定})=(2m+1)!
+ a_{m+1}+e\,b_{m+1}
+  &=\{-2me+(2m+1)(2m)a_m\}+e\{2m+(2m+1)(2m)b_m\} \\
+  &=(2m+1)(2m)(a_m+e\,b_m)=(2m+1)(2m)(2m-1)!\quad(\because\text{仮定})=(2m+1)!
 \end{split}
 \end{align}
-となり，$n=m+1$でも$\Diamond$が成立．以上，数学的帰納法により$\Diamond$は全ての$n\ge2$で成立する．
+となり，$n=m+1$でも\cref{eq:2}が成立する．
 
+以上から数学的帰納法により\cref{eq:2}は全ての$n\ge2$で成立する．
 
-\bigskip
-\noindent\textbf{[解2]}
 
 {\bf [解2]}
-${}_{2n-1}P_{2n-2k}=(2n-1)!/(2k-1)!$だから
-\begin{align}
-b_n=(2n-1)!\sum_{k=1}^{n-1}\dfrac{1}{(2k+1)(2k-1)!}=(2n-1)!\sum_{k=1}^{n-1}\dfrac{2k}{(2k+1)!}
-\end{align}
-（$(2k+1)!=(2k+1)(2k)(2k-1)!$より$2k/(2k+1)!=1/[(2k+1)(2k-1)!]$）．さらに$2k=(2k+1)-1$から
-\begin{align}
-b_n=(2n-1)!\sum_{k=1}^{n-1}\left\{\dfrac{1}{(2k)!}-\dfrac{1}{(2k+1)!}\right\}
-\end{align}
-したがって，$\Diamond$を$(2n-1)!$で割った式として
-\begin{align}
-\Diamond\iff\dfrac{a_n}{(2n-1)!}+e\sum_{k=1}^{n-1}\left\{\dfrac{1}{(2k)!}-\dfrac{1}{(2k+1)!}\right\}=1 \quad\cdots\text{③}
-\end{align}
-を示せば良い．①（$n=m$を単に$n$と書き直して）から
+解答では帰納法を利用したが，もっと直接的に数列の一般項を求めることもできるのでその方法も紹介する．
+というのも，実は\cref{eq:3}から$a_n$の一般項を求められるからだ．\cref{eq:3}の両辺を$(2m+1)!$で割って$m$を$n$で書き直すと
 \begin{align}
 \dfrac{a_{n+1}}{(2n+1)!}=\dfrac{a_n}{(2n-1)!}-\dfrac{2n}{(2n+1)!}\,e=\dfrac{a_n}{(2n-1)!}-e\left\{\dfrac{1}{(2n)!}-\dfrac{1}{(2n+1)!}\right\}
 \end{align}
-（$2n/(2n+1)!=1/(2n)!-1/(2n+1)!$）．これを$n=1,2,\dots$と繰り返し用いて（$n\ge2$の時）
+だからこれを$n=1,2,\cdots$と繰り返し用いて
 \begin{align}
-\dfrac{a_n}{(2n-1)!}=a_1-e\sum_{k=1}^{n-1}\left\{\dfrac{1}{(2k)!}-\dfrac{1}{(2k+1)!}\right\}
+ \dfrac{a_n}{(2n-1)!}=a_1-e\sum_{k=1}^{n-1}\left\{\dfrac{1}{(2k)!}-\dfrac{1}{(2k+1)!}\right\} 
 \end{align}
-$a_1=\displaystyle\int_0^1te^t\,dt=\left[e^t(t-1)\right]_0^1=0-(-1)=1$だから，これは③に他ならない．以上により$\Diamond$が示された．
+である．
+ここで$a_1$は
+\begin{align}
+ a_1=\int_0^1te^t\,dt=\left[e^t(t-1)\right]_0^1=0-(-1)=1
+\end{align}
+だから代入して
+\begin{align}
+ \dfrac{a_n}{(2n-1)!}=1-e\sum_{k=1}^{n-1}\left\{\dfrac{1}{(2k)!}-\dfrac{1}{(2k+1)!}\right\} \\
+\therefore
+  a_n + e(2n-1)!\sum_{k=1}^{n-1}\left\{\dfrac{1}{(2k)!}-\dfrac{1}{(2k+1)!}\right\} = (2n-1)! \label{eq:5} 
+\end{align}
+である．
+\cref{eq:5}と\cref{eq:2}を比較すると
+\begin{align}
+ b_n = e(2n-1)!\sum_{k=1}^{n-1}\left\{\dfrac{1}{(2k)!}-\dfrac{1}{(2k+1)!}\right\} \label{eq:6}
+\end{align}
+であれば題意は示されるから以下これを示す．
+
+${}_{2n-1}P_{2n-2k}=(2n-1)!/(2k-1)!$だから
+\begin{align}
+b_n
+ &=(2n-1)!\sum_{k=1}^{n-1}\dfrac{1}{(2k+1)(2k-1)!} \\
+ &=(2n-1)!\sum_{k=1}^{n-1}\dfrac{2k}{(2k+1)!} \\
+ &=(2n-1)!\sum_{k=1}^{n-1}\left\{\dfrac{1}{(2k)!}-\dfrac{1}{(2k+1)!}\right\} \label{eq:7}
+\end{align}
+となり，\cref{eq:6}と一致する．よって示された．
 
 
 \newpage
