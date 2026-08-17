@@ -448,7 +448,13 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
 
             if caption_text:
                 caption_label = f"表 {tab_count}" + (f": {caption_text}" if caption_text else "")
-                tbl_html = f'\n\n<figure id="{label_id}" class="table-wrapper">\n{tabular_html}\n  <figcaption>{caption_label}</figcaption>\n</figure>\n\n'
+                # <figcaption> の開始・終了タグと本文を空行で分離する。
+                # remark/CommonMark は生 HTML ブロックの中身を丸ごと1つの
+                # 不透明な文字列として扱い、markdown/remark-math によるインライン
+                # 解析（$...$ の数式変換）を一切行わない。タグと空行で区切ることで
+                # 本文だけを通常の段落として認識させ、キャプション中の数式
+                # （例: $h(t)$）が正しくレンダリングされるようにする（Issue #4）。
+                tbl_html = f'\n\n<figure id="{label_id}" class="table-wrapper">\n{tabular_html}\n  <figcaption>\n\n{caption_label}\n\n  </figcaption>\n</figure>\n\n'
             else:
                 tbl_html = f'\n\n<div id="{label_id}" class="table-wrapper">\n{tabular_html}\n</div>\n\n'
 
@@ -476,7 +482,8 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
 
                 web_img_src = f"{public_img_dir_rel}/{svg_filename}"
                 caption_label = f"図 {fig_count}" + (f": {caption_text}" if caption_text else "")
-                fig_html = f'\n\n<figure id="{label_id}">\n  <img src="{web_img_src}" alt="図 {fig_count}" />\n  <figcaption>{caption_label}</figcaption>\n</figure>\n\n'
+                # 表と同様、<figcaption> のタグと本文を空行で分離する（Issue #4）。
+                fig_html = f'\n\n<figure id="{label_id}">\n  <img src="{web_img_src}" alt="図 {fig_count}" />\n  <figcaption>\n\n{caption_label}\n\n  </figcaption>\n</figure>\n\n'
                 fig.replace_with(fig_html)
                 fig_count += 1
 
@@ -550,7 +557,8 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
 
                 web_img_src = f"{public_img_dir_rel}/{svg_filename}"
                 caption_label = f"図 {fig_count}" + (f": {cap_text}" if cap_text else "")
-                fig_html = f'\n\n<figure id="{lbl_id}">\n  <img src="{web_img_src}" alt="図 {fig_count}" />\n  <figcaption>{caption_label}</figcaption>\n</figure>\n\n'
+                # 表・図(メインパス)と同様、<figcaption> のタグと本文を空行で分離する（Issue #4）。
+                fig_html = f'\n\n<figure id="{lbl_id}">\n  <img src="{web_img_src}" alt="図 {fig_count}" />\n  <figcaption>\n\n{caption_label}\n\n  </figcaption>\n</figure>\n\n'
                 fig_count += 1
                 return fig_html
             return fig_content
