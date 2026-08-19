@@ -1,65 +1,227 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$N\ge3$とする．$k$回の試行で$j$回目までの和を$X_j$とし，$X_1,\dots,X_k$のいずれかが$k$となる確率を$P_N(k)$とする．
 
-\textbf{(1)} $P_N(1)$：1回目で$1$が出れば良く，$P_N(1)=\dfrac{1}{N}$．
+初めから$j$回目（$j=1,\cdots,k$）に取り出したカードの番号を$Y_{j}$とする．
 
-$P_N(2)$：$X_1=2$（1回目に2，確率$1/N$）または$X_1=1,X_2=2$（確率$1/N^2$，これらは排反）：
+\paragraph{(1)}
+$k=1,2,3$に対して$P_{N}(k)$を個別に考えよう．$N \ge 3$だから$1,2,3$のカードは存在することに注意しよう．
+
+\subparagraph{$k=1$の時}
+この時は$1$回目で$1$が出れば良いから
 \begin{align}
-P_N(2)=\dfrac{1}{N}+\dfrac{1}{N^2}
+ P_N(1)=\dfrac{1}{N}
 \end{align}
+である．
 
-$P_N(3)$：長さ1のケース（1回目=3）：$1/N$．長さ2のケース（$X_2=3$，かつ$X_1\ne3$）：$(1,2),(2,1)$の2通り，$2/N^2$．長さ3のケース（$X_3=3$，かつ途中で3にならない）：$(1,1,1)$の1通り，$1/N^3$．
+\subparagraph{$k=2$の時}
+この時は$2$回目までに出した$Y_1,Y_2$の和が$2$になれば良いから
+\begin{align}
+ X_1 = 2 \iff Y_1 = 2 \\
+ X_2 = 2 \iff Y_1 = Y_2 = 1
+\end{align}
+の二通りのみである．前者の確率は$\dfrac{1}{N}$，後者の確率は$\dfrac{1}{N^2}$でお互い排反だから求める確率は
+\begin{align}
+ P_N(2)=\dfrac{1}{N}+\dfrac{1}{N^2}
+\end{align}
+である．
+
+\subparagraph{$k=3$の時}
+この時は$3$回目までに出した$Y_1,Y_2,Y_3$の和が$3$になれば良いから
+\begin{align}
+ X_1 = 3 \iff Y_1 = 3 \\
+ X_2 = 3 \iff (Y_1,Y_2) = (1,2), (2,1) \\
+ X_3 = 3 \iff (Y_1,Y_2,Y_3) = (1,1,1) 
+\end{align}
+の三通りで，それぞれの確率は$\dfrac{1}{N}$, $\dfrac{2}{N^2}$, $\dfrac{1}{N^3}$であって
 \begin{align}
 P_N(3)=\dfrac{1}{N}+\dfrac{2}{N^2}+\dfrac{1}{N^3}
 \end{align}
-
-\textbf{(2)} $N=3$として，同様に和がちょうど4，5となる最初の到達までの数列を数え上げる．
-
-\subparagraph{$P_3(4)$：} 長さ2（和4，$\{1,3\},\{2,2\}$）：$(1,3),(3,1),(2,2)$の3通り．長さ3（和4，最小値1が3つ以上必要，分割$1+1+2$）：$3$通り．長さ4（分割$1+1+1+1$）：$1$通り．
-\begin{align}
-P_3(4)=3\left(\dfrac{1}{3}\right)^2+3\left(\dfrac{1}{3}\right)^3+\left(\dfrac{1}{3}\right)^4=\dfrac{27+9+1}{81}=\dfrac{37}{81}
-\end{align}
-
-\subparagraph{$P_3(5)$：} 長さ2（分割$2+3$）：2通り．長さ3（分割$1+1+3$：3通り，$1+2+2$：3通り，計6通り）．長さ4（分割$1+1+1+2$）：4通り．長さ5（分割$1+1+1+1+1$）：1通り．
-\begin{align}
-P_3(5)=2\left(\dfrac{1}{3}\right)^2+6\left(\dfrac{1}{3}\right)^3+4\left(\dfrac{1}{3}\right)^4+\left(\dfrac{1}{3}\right)^5=\dfrac{54+54+12+1}{243}=\dfrac{121}{243}
-\end{align}
+である．
 \casesend
 
-\textbf{(3)} $k\le N$とする．$S_k=\displaystyle\sum_{\ell=1}^kP_N(\ell)$とおく．1回目に引いた札の値で場合分けすると，$1\le k+1\le N$の時
+
+\paragraph{(2)}
+$N=3$として(1)と同様に$k=4,5$の場合を個別に考える．
+
+\subparagraph{$k=4$の時}
+この時は$4$回目までに出した$Y_1,Y_2,Y_3,Y_4$の和が$4$になれば良いが，$N=3$より$X_1=4$となることはないから
 \begin{align}
-P_N(k+1)=\dfrac{1}{N}\sum_{\ell=1}^kP_N(\ell)+\dfrac{1}{N}=\dfrac{1}{N}S_k+\dfrac{1}{N} \quad\cdots\text{①}
+ X_2 = 4 \iff (Y_1,Y_2) = \{1,3\}, \{2,2\} \\
+ X_3 = 4 \iff (Y_1,Y_2,Y_3) = \{1,1,2\} \\
+ X_4 = 4 \iff (Y_1,Y_2,Y_3,Y_4) = (1,1,1,1) 
 \end{align}
-（1回目が$k+1$なら直ちに達成，1回目が$m\le k$なら残り$k$回で「$k+1-m$を達成する」確率$P_N(k+1-m)$に帰着，1回目が$m>k+1$なら達成不可能）．$k\ge2$の時，①と，①で$k$を$k-1$に置き換えた式$P_N(k)=\dfrac{1}{N}S_{k-1}+\dfrac{1}{N}$の差をとると，$S_k-S_{k-1}=P_N(k)$だから
+の三通りである．個別に確率を計算して
 \begin{align}
-P_N(k+1)-P_N(k)=\dfrac{1}{N}P_N(k) \quad\therefore\ P_N(k+1)=\left(1+\dfrac{1}{N}\right)P_N(k) \quad(k\ge2)
+ P_3(4) 
+  &= 3\left(\dfrac{1}{3}\right)^{2} + 3\left(\dfrac{1}{3}\right)^{3} + \left(\dfrac{1}{3}\right)^{4} \\
+  &= \dfrac{37}{81}
 \end{align}
-$P_N(2)=\dfrac{1}{N}\left(1+\dfrac{1}{N}\right)$（(1)，または①に$k=1$を代入）を初項として，帰納的に
+である．
+
+\subparagraph{$k=5$の時}
+この時は$5$回目までに出した$Y_1,Y_2,Y_3,Y_4,Y_5$の和が$5$になれば良いが，$N=3$に注意して
 \begin{align}
-P_N(k)=\left(1+\dfrac{1}{N}\right)^{k-2}P_N(2)=\dfrac{1}{N}\left(1+\dfrac{1}{N}\right)^{k-1} \quad(k\ge2)
+ X_2 = 5 \iff (Y_1,Y_2) = \{2,3\} \\
+ X_3 = 5 \iff (Y_1,Y_2,Y_3) = \{1,1,3\}, \{1,2,2\} \\
+ X_4 = 5 \iff (Y_1,Y_2,Y_3,Y_4) = \{1,1,1,2\} \\
+ X_5 = 5 \iff (Y_1,Y_2,Y_3,Y_4) = (1,1,1,1,1) 
 \end{align}
-これは$k=1$でも成立する（$P_N(1)=1/N$）．以上から
+の四通りである．個別に確率を計算して
 \begin{align}
-P_N(k)=\dfrac{1}{N}\left(1+\dfrac{1}{N}\right)^{k-1}
+ P_3(5)
+  &=2\left(\dfrac{1}{3}\right)^2+6\left(\dfrac{1}{3}\right)^3+4\left(\dfrac{1}{3}\right)^4+\left(\dfrac{1}{3}\right)^5 \\
+  &=\dfrac{54+54+12+1}{243} \\
+  &=\dfrac{121}{243} 
 \end{align}
+である．
+\casesend
 
 
-\bigskip
-\noindent\textbf{[別解]（(3)の別証明）}
+\paragraph{(3)}
+
+まず$P_{N}(k)$について考えよう．
+\begin{align}
+ S_{k} &= \sum_{\ell=1}^{k}P_{N}(\ell) \label{eq:1}
+\end{align}
+とおく．
+$2 \le k \le N$の時，1回目に引いた札の値で場合分けすると $1$回目に$\ell\, (1 \le \ell \le k-1)$を引くと残りの$k-1$回で$k-\ell$を目指せばよいから確率$P_{N}(k-\ell)$である．一方$1$回目に$k$を引いたら残りの試行は関係ない．従って
+\begin{align}
+ P_{N}(k)
+  &= \dfrac{1}{N}\sum_{\ell=1}^{k-1}P_{N}(k-\ell)+\dfrac{1}{N} \\
+  &= \dfrac{1}{N}\sum_{\ell=1}^{k-1}P_{N}(\ell)+\dfrac{1}{N} \quad (\ell \to k-\ell)\\
+  &= \dfrac{1}{N}S_{k-1}+\dfrac{1}{N} \quad\cdots\text{①} \label{eq:2}
+\end{align}
+を得る．$k\to k-1$と置き換えて
+\begin{align}
+ P_{N}(k-1) &= \dfrac{1}{N}S_{k-2}+\dfrac{1}{N} \label{eq:3}
+\end{align}
+を得る．ここで$k=2$の時は(1)の結果$P_{N}(1)=1/N$より$S_{0}=0$とすれば成立するから\cref{eq:3}は$2 \le k$で有効である．
+$2 \le k$に対して$S_{k-1} - S_{k-2}=P_{N}(k-1)$に注意して\cref{eq:2,eq:3}の辺々を引くと
+\begin{align}
+ P_{N}(k) - P_{N}(k-1) 
+  &= \dfrac{1}{N}S_{k-1} - \dfrac{1}{N}S_{k-2} \\
+  &= \dfrac{1}{N}P_{N}(k-1) \\
+\therefore
+  P_{N}(k) &= \left(1+\dfrac{1}{N}\right)P_{N}(k-1) \label{eq:4}
+\end{align}
+を得る．\cref{eq:4}を$k=2,3,\cdots$について繰り返し用いて
+\begin{align}
+ P_N(k)=\left(1+\dfrac{1}{N}\right)^{k-2}P_N(2) \label{eq:5}
+\end{align}
+である．ここで$P_N(2)$に(1)の結果を代入して
+\begin{align}
+ P_N(k)=\dfrac{1}{N}\left(1+\dfrac{1}{N}\right)^{k-1} \quad(k\ge2)  \label{eq:6}
+\end{align}
+を得る．(1)より$P_N(1)=1/N$だから\cref{eq:6}は$k=1$でも成立する．
+以上から求める$P_N(k)$は
+\begin{align}
+P_N(k)=\dfrac{1}{N}\left(1+\dfrac{1}{N}\right)^{k-1} \quad (1 \le k \le N)
+\end{align}
+である．
 
 {\bf [別解]}
-$X_j=\displaystyle\sum_{\ell=1}^jx_\ell=k$となる場合を直接数える（$x_\ell$は$\ell$番目に引いた札の番号）．$k\le N$だから，札の値の上限$N$は制約として効かず，$x_1,\dots,x_j$（各々$1$以上の整数）の和が$k$となる組の数は，$k$個の○と$j-1$本の仕切りを並べる場合の数（両端に仕切りは来ない）に等しく，${}_{k-1}C_{j-1}$通り．したがって，長さ$j$の数列で和が$k$となるものが起こる確率は$\dfrac{1}{N^j}\,{}_{k-1}C_{j-1}$であり，
+(3)では漸化式を立ててから一般項を求めたが，より直接的に求められるのでそちらも紹介しよう．
+
+$x_{\ell}$を$\ell$番目に引いた札の番号とすると，
 \begin{align}
-P_N(k)=\sum_{j=1}^k\dfrac{1}{N^j}\,{}_{k-1}C_{j-1}=\sum_{j=0}^{k-1}\dfrac{1}{N^{j+1}}\,{}_{k-1}C_j=\dfrac{1}{N}\sum_{j=0}^{k-1}{}_{k-1}C_j\left(\dfrac{1}{N}\right)^j=\dfrac{1}{N}\left(1+\dfrac{1}{N}\right)^{k-1}
+ X_j= \sum_{\ell=1}^jx_{\ell}
 \end{align}
-（最後は二項定理）．
+である．以下$X_j=k$となる場合を直接数えよう．
+
+$k\le N$だから，これは $1$ 以上の整数 $x_1,\dots,x_j$ の和が$k$となる組の数に等しく，　$k$個の玉と$j-1$個の仕切りを並べることに対応する．仕切りの間の玉の数が$x_{\ell}\, (\ell=1,2,\cdots)$に対応する．ただし仕切り同士は隣合わず，両端にもこない．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.1, >=stealth]
+
+  % --- 1. 玉の描画 (合計 k 個のモデル: x1=2, x2=3, ..., xj=2) ---
+  % グループ 1: x_1 = 2 個
+  \foreach \i in {1, 2} {
+    \fill[blue!70!black] (\i*1.0, 0) circle (0.28);
+    \fill[white] (\i*1.0 + 0.08, 0.08) circle (0.07); % 光沢
+  }
+
+  % グループ 2: x_2 = 3 個
+  \foreach \i in {3, 4, 5} {
+    \fill[blue!70!black] (\i*1.0 + 0.3, 0) circle (0.28);
+    \fill[white] (\i*1.0 + 0.38, 0.08) circle (0.07);
+  }
+
+  % 省略記号 (dots)
+  \node[font=\Large] at (6.3, 0) {$\cdots$};
+
+  % グループ j: x_j = 2 個
+  \foreach \i in {7, 8} {
+    \fill[blue!70!black] (\i*1.0 + 0.3, 0) circle (0.28);
+    \fill[white] (\i*1.0 + 0.38, 0.08) circle (0.07);
+  }
+
+  % --- 2. 仕切りの描画 (赤の太線) ---
+  % 仕切り 1 (x1 と x2 の間)
+  \draw[ultra thick, red!80!black] (2.65, -0.6) -- (2.65, 0.6);
+  % 仕切り 2 (x2 の右)
+  \draw[ultra thick, red!80!black] (5.65, -0.6) -- (5.65, 0.6);
+  % 仕切り j-1 (xj の左)
+  \draw[ultra thick, red!80!black] (6.95, -0.6) -- (6.95, 0.6);
+
+  % --- 3. 各グループの玉の個数 (x_1, x_2, ..., x_j) のブラケット ---
+  % x_1
+  \draw[thick, decoration={brace, mirror, raise=5pt}, decorate] 
+    (0.8, -0.4) -- (2.2, -0.4) 
+    node[midway, below=8pt, font=\small] {$x_1$ 個};
+
+  % x_2
+  \draw[thick, decoration={brace, mirror, raise=5pt}, decorate] 
+    (3.1, -0.4) -- (5.5, -0.4) 
+    node[midway, below=8pt, font=\small] {$x_2$ 個};
+
+  % x_j
+  \draw[thick, decoration={brace, mirror, raise=5pt}, decorate] 
+    (7.1, -0.4) -- (8.5, -0.4) 
+    node[midway, below=8pt, font=\small] {$x_j$ 個};
+
+  % --- 4. 全体の玉の個数 (合計 k 個) ---
+  \draw[thick, decoration={brace, raise=6pt}, decorate] 
+    (0.8, 0.4) -- (8.5, 0.4) 
+    node[midway, above=9pt, font=\small] {玉の合計 $k$ 個 ($x_1 + x_2 + \cdots + x_j = k$)};
+
+  % --- 5. 仕切りを入れる候補位置 (k-1 箇所) の矢印 ---
+  \node[orange!90!black, font=\scriptsize, above] at (1.5, 0.7) {間};
+  \draw[->, thin, orange!90!black] (1.5, 0.7) -- (1.5, 0.35);
+
+  \node[orange!90!black, font=\scriptsize, above] at (3.8, 0.7) {間};
+  \draw[->, thin, orange!90!black] (3.8, 0.7) -- (3.8, 0.35);
+
+  \node[orange!90!black, font=\scriptsize, above] at (4.8, 0.7) {間};
+  \draw[->, thin, orange!90!black] (4.8, 0.7) -- (4.8, 0.35);
+
+  % 注記
+  \node[red!80!black, font=\scriptsize, below] at (2.65, -0.65) {仕切り};
+
+\end{tikzpicture}
+\end{center}
+\caption{$k$ 個の玉の間の $k-1$ 箇所から $j-1$ 個の仕切りを選ぶ組み合わせ (${}_{k-1}\mathrm{C}_{j-1}$ 通り)}
+\end{figure}
+
+このような場合の数は，$k-1$箇所ある玉の間から$j-1$箇所を選んで仕切りを設置する場合の数なので
+\begin{align}
+ {}_{k-1}C_{j-1}
+\end{align}
+通りである．全体では$j$回引く場合の数は$N^{j}$通りあるから，確率は
+\begin{align}
+ \dfrac{1}{N^j}\,{}_{k-1}C_{j-1}
+\end{align}
+である．よってこれを$j=1,2,\cdots,k$について足し合わせれば求める確率$P_{N}(k)$であり，
+\begin{align}
+P_N(k)
+ &=\sum_{j=1}^k\dfrac{1}{N^j}\,{}_{k-1}C_{j-1} \\
+ &=\sum_{j=0}^{k-1}\dfrac{1}{N^{j+1}}\,{}_{k-1}C_j \\
+ &=\dfrac{1}{N}\sum_{j=0}^{k-1}{}_{k-1}C_j\left(\dfrac{1}{N}\right)^j \\
+ &=\dfrac{1}{N}\left(1+\dfrac{1}{N}\right)^{k-1}
+\end{align}
+を得る．ただし最後の変形で二項定理を用いた．この結果は解答で得たものと一致している．
 
 
 \newpage

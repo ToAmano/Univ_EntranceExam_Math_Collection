@@ -1,73 +1,356 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-動点$P$は原点を出発し，$z\le0$では最大秒速$a$，$z>0$では最大秒速$1$で動ける（$a>1$）．求める領域は$z$軸のまわりに回転対称だから，$xz$平面（$X\ge0$）内での断面$E$を求め，それを$z$軸のまわりに回転すれば良い．
+動点$P$は原点を出発し，$z\le0$では最大秒速$a$，$z>0$では最大秒速$1$で動ける（$a>1$）．求める領域は$z$軸のまわりに回転対称だから，$xz$平面（$X\ge0$）内での断面$E$を求め，それを$z$軸のまわりに回転すれば良い．そこで以下$E$について考える．$x=0$に関する対称性から$0 \le x$について考えれば良い．
 
-\subparagraph{$z\le0$の部分：} 原点から$z\le0$の点へは，そこへ向かう直線が常に$z\le0$内にあるから，速さ$a$で直進するのが最適で，1秒で到達できるのは半径$a$の球内．よってこの部分は半球$x^2+y^2+z^2\le a^2,\ z\le0$．
+まず$z \le 0$のとき，原点から$z\le0$の点へは，そこへ向かう直線が常に$z\le0$内にあるから，速さ$a$で直進するのが最適で$1$秒で到達できるのは半径$a$の円内である．よってこの部分は
+\begin{align}
+ x^2+z^2 \le a^2,\ z \le 0 \label{eq:1}
+\end{align}
+である．
 
-\subparagraph{$z>0$の部分：} 点$Q(X,Z)$（$Z>0$）へ到達する一つの方法として，時刻$t$（$0\le t\le1$）まで$x$軸の正方向（$z=0$の境界，速さ$a$が使える）へ進み点$(at,0)$に達し，そこから残り時間$1-t$でまっすぐ$Q$へ向かう（速さ$1$以下）という進み方を考える．これで$Q$に到達できる条件は，ある$t\in[0,1]$に対して
-\begin{align}
-(X-at)^2+Z^2\le(1-t)^2
-\end{align}
-整理すると
-\begin{align}
-(a^2-1)t^2+(2-2aX)t+X^2+Z^2-1\le0 \quad\cdots\text{⑤}
-\end{align}
-この左辺を$f(t)$とおくと，$a^2-1>0$だから$f$は下に凸な2次式．$Q$が到達可能である条件$(\ast)$は，$f(t)\le0$をみたす$t\in[0,1]$が存在すること，すなわち$[0,1]$上での$f$の最小値が$0$以下であること．
-\begin{align}
-f(0)=X^2+Z^2-1,\qquad f(1)=(X-a)^2+Z^2\ge0 \quad\cdots\text{⑥}
-\end{align}
-軸の位置は$t_0=\dfrac{aX-1}{a^2-1}$で，$0\le X\le a$から$t_0\le1$（⑦）．判別式（の$1/4$）は
-\begin{align}
-D=(1-aX)^2-(a^2-1)(X^2+Z^2-1) \quad\cdots\text{⑧}
-\end{align}
-$f(1)\ge0$は常に成立するから，軸$t_0\ge1$となるのは$(X,Z)=(a,0)$の場合のみで，このとき$(\ast)$は等号で成立．以下，それ以外の場合を，軸の位置$t_0$で場合分けして考える．
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=2.2, >=stealth]
 
-\subparagraph{$1^\circ$ $t_0\le0\iff X\le1/a$の時：} $f$は$[0,1]$で単調増加だから，条件は$f(0)\le0$：
-\begin{align}
-X^2+Z^2\le1 \quad\cdots\text{⑨}
-\end{align}
+  % --- 1. 座標軸 (xz 平面) ---
+  \draw[->, thick] (-0.5, 0) -- (2.6, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.5) -- (0, 1.8) node[above] {$z$};
+  \node[below left, font=\small] at (0,0) {$O$};
 
-\subparagraph{$2^\circ$ $0\le t_0\le1\iff1/a\le X\le a$の時：} 条件は$D\ge0$：
+  % 媒質（速さの異なる領域）の境界線と注記
+  \node[above right, gray!80!black, font=\scriptsize] at (0, 1.5) {$z > 0$（最大速さ $1$）};
+  \node[below right, gray!80!black, font=\scriptsize] at (0, -0.3) {$z \le 0$（最大速さ $a > 1$）};
+
+  % --- 2. 各点の座標設定 ---
+  % 中継点 (at, 0)
+  \coordinate (M) at (1.0, 0);
+  % 目的点 Q(X, Z)
+  \coordinate (Q) at (1.8, 1.2);
+
+  % --- 3. 動点 P の移動経路 ---
+  % (1) 原点 O から (at, 0) までの x 軸上の移動 (赤太線矢印)
+  \draw[line width=2.0pt, red!80!black, ->] (0, 0) -- (0.6, 0);
+  \draw[line width=2.0pt, red!80!black] (0.5, 0) -- (M);
+
+  % (2) (at, 0) から Q(X, Z) への直線移動 (青太線矢印)
+  \draw[line width=2.0pt, blue!80!black, ->] (M) -- ($(M)!0.6!(Q)$);
+  \draw[line width=2.0pt, blue!80!black] ($(M)!0.5!(Q)$) -- (Q);
+
+  % --- 4. 補助線と座標のガイド線 ---
+  \draw[dashed, gray] (1.8, 0) -- (Q);
+  \draw[dashed, gray] (0, 1.2) -- (Q);
+
+  \fill[black] (1.8, 0) circle (1.0pt) node[below, font=\small] {$X$};
+  \fill[black] (0, 1.2) circle (1.0pt) node[left, font=\small] {$Z$};
+
+  % 直角三角形の水平・垂直成分
+  \draw[dashed, blue!60!black] (M) -- (1.8, 0) 
+    node[midway, below, font=\scriptsize] {$X - at$};
+  \draw[dashed, blue!60!black] (1.8, 0) -- (Q) 
+    node[midway, right, font=\scriptsize] {$Z$};
+
+  % --- 5. 移動パラメータ・距離・時間の注記 ---
+  % 第1区間: 距離 at (時間 t, 速さ a)
+  \draw[<->, thin, red!80!black] (0, -0.15) -- (1.0, -0.15) 
+    node[midway, below, font=\scriptsize] {$at$} ;
+
+  % 第2区間: 距離 <= 1-t (時間 1-t, 速さ 1)
+  %\node[blue!80!black, font=\scriptsize, above left, rotate=56.3] 
+  %  at ($(M)!0.5!(Q) + (-0.05, 0.05)$) {距離 $\sqrt{(X-at)^2+Z^2} \le 1-t$};
+
+  % --- 6. 各点のプロットとラベル ---
+  \fill[red!80!black] (M) circle (1.5pt) node[above, yshift=2pt, font=\small] {$(at, 0)$};
+  \fill[blue!80!black] (Q) circle (1.8pt) node[above right, font=\small] {$Q(X, Z)$};
+
+\end{tikzpicture}
+\end{center}
+\caption{点 $Q(X,Z)$ へ到達する経路（$x$ 軸上を時間 $t$ 進んだ後、残り時間 $1-t$ で直進）}
+\end{figure}
+
+そこで以下$z\ge 0$の部分について考える．点$Q(X,Z)$（$Z>0$）へ到達する方法としては，時刻$t$（$0\le t\le1$）まで$x$軸の正方向へ速さ$a$で進み点$(at,0)$に達し，そこから残り時間$1-t$で速さ$1$でまっすぐ$Q$へ向かうという進み方が最速である．これで$Q$に到達できる条件はある$t\in[0,1]$に対して
 \begin{align}
-(X-a)^2-(a^2-1)Z^2\ge0 \iff \left(X-a+\sqrt{a^2-1}\,Z\right)\left(X-a-\sqrt{a^2-1}\,Z\right)\ge0
+(X-at)^2+Z^2\le(1-t)^2 \\
+(a^2-1)t^2+(2-2aX)t+X^2+Z^2-1\le0 \quad\cdots\text{⑤} \label{eq:2}
 \end{align}
-$X\le a,\ Z\ge0$から第2因子は$\le0$，よって第1因子も$\le0$が必要：
+が満たされることである．この左辺を$f(t)$とおくと，$a^2-1>0$だから$f$は下に凸な2次関数である．$Q$が到達可能である条件は$f(t)\le0$をみたす$t\in[0,1]$が存在すること，すなわち$[0,1]$上での$f$の最小値が$0$以下であることである．
+
+端点$t=0,1$での値は\cref{eq:2}より
 \begin{align}
-X-a+\sqrt{a^2-1}\,Z\le0 \quad\cdots\text{⑩}
+ f(0)=X^2+Z^2-1,\qquad f(1)=(X-a)^2+Z^2\ge0 \label{eq:3}
 \end{align}
+であり，また軸の位置は
+\begin{align}
+ t_0 = \dfrac{aX-1}{a^2-1} \label{eq:4}
+\end{align}
+であり，これは$0 \le X \le a$より$t_0 \le 1$を満たす．
+
+従って$f(t)\le 0$を満たす$t\in[0,1]$が存在するかどうかについて以下のように軸の位置で場合分けできる．
+
+\subparagraph{$1^\circ$ $t_0\le0\iff X\le1/a$の時：} 
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.4, >=stealth]
+
+  % ==========================================
+  % 1. 上段: 1^\circ (軸 t_0 <= 0 の場合)
+  % ==========================================
+   % \node[above right, font=\bfseries] at (-2.2, 1.4) 
+   %   {$1^\circ \quad t_0 \le 0$（区間 $[0, 1]$ で単調増加 $\implies$ 最小値は $f(0)$）};
+
+    % 放物線 y = f(t)
+    \draw[thick, gray!60, domain=-1.8:1.6, samples=60] 
+      plot (\x, {0.6*(\x + 0.6)^2 - 0.4});
+    \node[above, gray!80!black] at (1.6, 2.5) {$f(t)$};
+
+    % 定義域 [0, 1] 内のグラフ（太線で強調）
+    \draw[ultra thick, blue!80!black, domain=0:1.0, samples=40] 
+      plot (\x, {0.6*(\x + 0.6)^2 - 0.4});
+
+    % 軸 t_0 (t = -0.6)
+    \draw[dashed, red!80!black, thick] (-0.6, -0.6) -- (-0.6, 1.2)
+      node[above, font=\small, text=red!80!black] {軸 $t_0$};
+
+    % 端点 t = 0 (最小値点)
+    \coordinate (Top0) at (0, {0.6*(0 + 0.6)^2 - 0.4});
+    \draw[dashed, gray] (0, -0.6) node[below, black, font=\small] {$0$} -- (Top0);
+    \fill[red!80!black] (Top0) circle (2.0pt) 
+      node[right, font=\scriptsize, xshift=2pt] {最小値 $f(0)$};
+
+    % 端点 t = 1
+    \coordinate (Top1) at (1.0, {0.6*(1.0 + 0.6)^2 - 0.4});
+    \draw[dashed, gray] (1.0, -0.6) node[below, black, font=\small] {$1$} -- (Top1);
+    \fill[black] (Top1) circle (1.5pt);
+
+    % 条件の注記
+    %\node[right, font=\small, blue!80!black] at (2.2, 0.4) 
+    %  {$\iff f(0) \le 0 \iff X^2 + Z^2 \le 1$};
+
+\end{tikzpicture}
+\end{center}
+\caption{軸 $t_0$ の位置による $f(t)$ の最小値の分類}
+\end{figure}
+
+$f(t)$は$[0,1]$で単調増加だから，条件は
+\begin{align}
+f(0) \le 0 \iff X^2+Z^2\le1 \quad\cdots\text{⑨} \label{eq:5}
+\end{align}
+である．
+
+\subparagraph{$2^\circ$ $0\le t_0\le1\iff1/a\le X\le a$の時：} 
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.4, >=stealth]
+
+  % ==========================================
+  % 2. 下段: 2^\circ (軸 0 <= t_0 <= 1 の場合)
+  % ==========================================
+  %  \node[above right, font=\bfseries] at (-2.2, 1.4) 
+  %    {$2^\circ \quad 0 \le t_0 \le 1$（頂点が区間内 $\implies$ 最小値は頂点 $f(t_0)$）};
+
+    % 放物線 y = f(t)
+    \draw[thick, gray!60, domain=-1.2:2.2, samples=60] 
+      plot (\x, {0.6*(\x - 0.5)^2 - 0.4});
+    \node[above, gray!80!black] at (2.2, 1.33) {$f(t)$};
+
+    % 定義域 [0, 1] 内のグラフ（太線で強調）
+    \draw[ultra thick, blue!80!black, domain=0:1.0, samples=40] 
+      plot (\x, {0.6*(\x - 0.5)^2 - 0.4});
+
+    % 軸 t_0 (t = 0.5)
+    \coordinate (BotMin) at (0.5, -0.4);
+    \draw[dashed, red!80!black, thick] (0.5, -0.6) -- (0.5, 1.2)
+      node[above, font=\small, text=red!80!black] {軸 $t_0$};
+    \fill[red!80!black] (BotMin) circle (2.0pt) 
+      node[below right, font=\scriptsize] {最小値 $f(t_0)$};
+
+    % 端点 t = 0
+    \coordinate (Bot0) at (0, {0.6*(0 - 0.5)^2 - 0.4});
+    \draw[dashed, gray] (0, -0.6) node[below, black, font=\small] {$0$} -- (Bot0);
+    \fill[black] (Bot0) circle (1.5pt);
+
+    % 端点 t = 1
+    \coordinate (Bot1) at (1.0, {0.6*(1.0 - 0.5)^2 - 0.4});
+    \draw[dashed, gray] (1.0, -0.6) node[below, black, font=\small] {$1$} -- (Bot1);
+    \fill[black] (Bot1) circle (1.5pt);
+
+    % 条件の注記
+   % \node[right, font=\small, blue!80!black] at (2.2, 0.4) 
+   %   {$\iff D \ge 0 \iff X - a + \sqrt{a^2-1}\,Z \le 0$};
+
+\end{tikzpicture}
+\end{center}
+\caption{軸 $t_0$ の位置による $f(t)$ の最小値の分類}
+\end{figure}
+
+この時の条件は$f(t)=0$の判別式$D$として$D\ge0$であり，
+\begin{align}
+  D = (X-a)^2-(a^2-1)Z^2\ge0 
+\iff \left(X-a+\sqrt{a^2-1}\,Z\right)\left(X-a-\sqrt{a^2-1}\,Z\right)\ge 0
+\end{align}
+である．$X\le a,\ Z\ge0$から第2因子は$\le0$だからこの条件は
+\begin{align}
+X-a+\sqrt{a^2-1}\,Z\le0 \quad\cdots\text{⑩} \label{eq:6}
+\end{align}
+である．
 \casesend
 
-以上から，$(\ast)\iff(X,Z)=(a,0)$，または⑨（$X\le1/a$の時），または⑩（$1/a\le X\le a$の時）．これが$E$（境界を含む）である．⑨は原点中心半径1の円（の一部），⑩は2点$(1/a,\sqrt{1-1/a^2})$と$(a,0)$を結ぶ直線であり，$Z=\sqrt{1-1/a^2}$でなめらかに接続する．
-
-これを$z$軸のまわりに回転した立体の体積$V$を，$-a\le z\le0$（A），$0\le z\le\sqrt{1-1/a^2}$（B），$\sqrt{1-1/a^2}\le z\le1$（C）に分けてもとめる．
-
-\subparagraph{A（半球）：} $V_A=\dfrac{4}{3}\pi a^3\cdot\dfrac{1}{2}=\dfrac{2}{3}\pi a^3$
-
-\subparagraph{B（円錐台，⑩の直線を回転）：} 底円半径$a$，高さ$a/\sqrt{a^2-1}$の円錐から，底円半径$1/a$，高さ$\dfrac{1}{a\sqrt{a^2-1}}$の円錐を引いたもの：
+以上から求める範囲$E$のうち$x\ge 0$の部分は$z \le 0$の時\cref{eq:1}，$z \ge 0$の時は\cref{eq:5,eq:6}つまり
 \begin{align}
-V_B=\dfrac{\pi}{3}\cdot\dfrac{1}{\sqrt{a^2-1}}\left(a^3-\dfrac{1}{a^3}\right)
+ \begin{cases}
+  X^2+Z^2\le1 & X\le \dfrac{1}{a} \\
+  X-a+\sqrt{a^2-1}\,Z\le0 & \dfrac{1}{a} \le X\le a
+ \end{cases}
+\end{align}
+である．$x$軸に関する対称性より，これを$z$軸に折り返したものが$E$であり，図示すると下図斜線部である．
+
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.8, >=stealth]
+
+  % --- 1. パラメータ設定 (描画例として a = 2) ---
+  \def\a{2}
+  \def\invA{0.5}   % 1/a = 0.5
+  \def\h{0.866}    % sqrt(1 - 1/a^2) = sqrt(3)/2 ≒ 0.866
+
+  % --- 2. 面積の斜線ハッチング (領域 E) ---
+  \begin{scope}
+    \fill[pattern=north east lines, pattern color=blue!70]
+      (\invA, \h) arc (60:120:1)   % 上部の半径 1 の円弧 (x^2+z^2 <= 1)
+      -- (-\a, 0)                  % 左側の接線
+      arc (180:360:\a)             % 下部の半径 a の半円 (x^2+z^2 <= a^2)
+      -- cycle;                    % 右側の接線で閉じる
+  \end{scope}
+
+  % --- 3. 座標軸 ---
+  \draw[->, thick] (-\a-1.2, 0) -- (\a+1.2, 0) node[right] {$x$};
+  \draw[->, thick] (0, -\a-0.5) -- (0, 1.6) node[above] {$z$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % --- 4. 境界となる円の補助線（破線） ---
+  \draw[dashed, gray] (0,0) circle (1);
+  \draw[dashed, gray] (0,0) circle (\a);
+
+  % --- 5. 領域 E の境界線（太線） ---
+  \draw[ultra thick, blue!80!black]
+    (\a, 0) -- (\invA, \h) arc (60:120:1) -- (-\a, 0) arc (180:360:\a);
+
+  % --- 6. 接線の延長補助線 ---
+  % 右側の接線 X - a + sqrt(a^2-1)Z = 0
+  \draw[thin, gray!80!black, domain=\invA-0.1:\a+0.4]
+    plot (\x, {(-\x + \a)/1.732});
+  \node[right, font=\scriptsize, gray!80!black] at (\a+0.4, -0.4/1.732) {接線};
+
+  % --- 7. 重要な接点と座標軸の目盛り ---
+  % 点 (1/a, sqrt(1-1/a^2))
+  \draw[dashed, red!80!black] (\invA, \h) -- (\invA, 0) node[below] {$\dfrac{1}{a}$};
+  \draw[dashed, red!80!black] (\invA, \h) -- (0, \h) node[above right] {$\sqrt{1-\dfrac{1}{a^2}}$};
+  \fill[red!80!black] (\invA, \h) circle (1.5pt);
+
+  % 点 (-1/a, sqrt(1-1/a^2))
+  \draw[dashed, red!80!black] (-\invA, \h) -- (-\invA, 0) node[below] {$-\dfrac{1}{a}$};
+  \fill[red!80!black] (-\invA, \h) circle (1.5pt);
+
+  % 軸の切片
+  \fill[black] (\a, 0) circle (1.5pt) node[above right] {$a$};
+  \fill[black] (-\a, 0) circle (1.5pt) node[above left] {$-a$};
+  \fill[black] (0, 1) circle (1.5pt) node[above right] {$1$};
+  \fill[black] (0, -\a) circle (1.5pt) node[below right] {$-a$};
+
+  % --- 8. 体積積分の区間 A, B, C のガイド ---
+  % C 区間 (球欠部分)
+  \draw[<->, thick, orange!90!black] (-\a-0.5, \h) -- (-\a-0.5, 1)
+    node[midway, left] {C};
+  \draw[dashed, orange!90!black] (-\a-0.5, 1) -- (0, 1);
+  \draw[dashed, orange!90!black] (-\a-0.5, \h) -- (-\invA, \h);
+
+  % B 区間 (円錐台部分)
+  \draw[<->, thick, orange!90!black] (-\a-0.5, 0) -- (-\a-0.5, \h)
+    node[midway, left] {B};
+  \draw[dashed, orange!90!black] (-\a-0.5, 0) -- (-\a, 0);
+
+  % A 区間 (半球部分)
+  \draw[<->, thick, orange!90!black] (-\a-0.5, -\a) -- (-\a-0.5, 0)
+    node[midway, left] {A};
+  \draw[dashed, orange!90!black] (-\a-0.5, -\a) -- (0, -\a);
+
+  % --- 9. 領域ラベル ---
+  \node[blue!80!black, font=\large] at (1.0, -1.0) {$E$};
+
+\end{tikzpicture}
+\end{center}
+\caption{$xz$ 平面における到達可能な領域 $E$ と体積計算の分割（A, B, C）}
+\end{figure}
+
+以下これを$z$軸周りに回転した領域$D$の体積$V$を求めよう．
+$V$を$z$の範囲で分割して$-a\le z\le0$（A），$0\le z\le\sqrt{1-1/a^2}$（B），$\sqrt{1-1/a^2}\le z\le1$（C）の三つの領域に分けて計算する．
+
+\subparagraph{A $-a\le z\le0$：} 
+
+この領域は半径$a$の半球であって，その体積$V_A$は
+\begin{align}
+ V_A=\dfrac{4}{3}\pi a^3\cdot\dfrac{1}{2}=\dfrac{2}{3}\pi a^3 \label{eq:7}
+\end{align}
+である．
+
+\subparagraph{B $0\le z\le\sqrt{1-1/a^2}$}
+
+この領域は円錐台である．すなわち底円半径$a$，高さ$a/\sqrt{a^2-1}$の円錐から，底円半径$1/a$，高さ$\dfrac{1}{a\sqrt{a^2-1}}$の円錐を引いたもので，体積$V_B$は
+\begin{align}
+V_B=\dfrac{\pi}{3}\cdot\dfrac{1}{\sqrt{a^2-1}}\left(a^3-\dfrac{1}{a^3}\right) \label{eq:8}
 \end{align}
 
-\subparagraph{C（球冠，⑨の円弧を回転）：}
+\subparagraph{C $\sqrt{1-1/a^2}\le z\le1$}
+
+この領域は半径$1$の球の一部を切り取ったもので，その体積$V_C$は
 \begin{align}
-V_C=\int_{\sqrt{1-1/a^2}}^1\pi(1-z^2)\,dz=\pi\left[z-\dfrac{z^3}{3}\right]_{\sqrt{1-1/a^2}}^1=\pi\left\{\dfrac{2}{3}-\sqrt{1-\dfrac{1}{a^2}}\left(\dfrac{2}{3}+\dfrac{1}{3a^2}\right)\right\}
+V_C
+ &=\int_{\sqrt{1-1/a^2}}^1\pi(1-z^2)\,dz \\
+ &=\pi\left[z-\dfrac{z^3}{3}\right]_{\sqrt{1-1/a^2}}^1 \\
+ &=\pi\left\{\dfrac{2}{3}-\sqrt{1-\dfrac{1}{a^2}}\left(\dfrac{2}{3}+\dfrac{1}{3a^2}\right)\right\} \label{eq:9}
 \end{align}
+である．
 \casesend
 
-以上をまとめて，$\sqrt{1-1/a^2}=\sqrt{a^2-1}/a$に注意して
+以上\cref{eq:7,eq:8,eq:9}より求める体積$V$は
 \begin{align}
-V=V_A+V_B+V_C=\dfrac{2}{3}\pi a^3+\dfrac{\pi}{3}\cdot\dfrac{1}{\sqrt{a^2-1}}\left(a^3-\dfrac{1}{a^3}\right)+\dfrac{2}{3}\pi-\dfrac{\sqrt{a^2-1}}{a}\pi\left(\dfrac{2}{3}+\dfrac{1}{3a^2}\right)
+ V
+ &=V_A+V_B+V_C \\
+ &=\dfrac{2}{3}\pi a^3+\dfrac{\pi}{3}\cdot\dfrac{1}{\sqrt{a^2-1}}\left(a^3-\dfrac{1}{a^3}\right)+\dfrac{2}{3}\pi-\dfrac{\sqrt{a^2-1}}{a}\pi\left(\dfrac{2}{3}+\dfrac{1}{3a^2}\right) \\
+ &=\dfrac{\pi}{3}\left(2a^3+2+\dfrac{(a^2-1)\sqrt{a^2-1}}{a}\right)
 \end{align}
-整理すると
+である．
+
+{\bf [解説]}
+解答中では逆手流で$t$を消したが，\cref{eq:2}以下順手流でやるとどうなるかを簡単に示す．
+\cref{eq:2}より
 \begin{align}
-V=\dfrac{\pi}{3}\left(2a^3+2+\dfrac{(a^2-1)\sqrt{a^2-1}}{a}\right)
+ z^2 = -(a^2-1)t^2-2(1-aX)t+1-X^2
 \end{align}
+だから，右辺を$t$の二次関数と見て$z^2$の値域を求めれば良い．よって
+
+\subparagraph{$t_0\le 0$の時}
+この時は
+\begin{align}
+ z^2 \le f(0) \iff Z^2 \le 1-X^2
+\end{align}
+である．
+
+\subparagraph{$0 \le t_0 \le 1$の時}
+
+この時は
+\begin{align}
+ Z^2 \le f\left(t_0\right) \iff Z^2 \le \dfrac{(X-a)^2}{a^2-1}
+\end{align}
+である．
+\casesend
+
+これは解答中で求めた領域と同じだ．
+
 
 
 \newpage

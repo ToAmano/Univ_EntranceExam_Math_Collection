@@ -1,51 +1,419 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-1辺1の正方形$ABCD$を1本の折り目で折り，線対称な五角形$P$（二重になる部分）ができるようにする．図のように，折り返しでできる各点・角を定める（$O$は正方形の対角線の交点とし，折り目は$O$を通る）．$B,C$の像を$B',A'$とし，折り目と辺の交点を$E,F,I,H,G$などとする．$0<x\le1/2,\ 0<\theta\le\pi/4$（$x$は折り返し部分の一辺，$\theta$は折り目の傾き）とする．
+1辺1の正方形$ABCD$を1本の折り目で折り，線対称な五角形$P$（二重になる部分）ができるようにする．
 
-求める面積$T$，$\triangle EB'F$の面積$S_1$，$\triangle EA'G(\cong\triangle CEF)$の面積$S_2$とおくと
-\begin{align}
-T=\dfrac{1}{2}-(S_1+S_2) \quad\cdots\text{②}
-\end{align}
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=5.0, >=stealth]
 
-$OC=OB'$（対称性）から$\triangle OCB'$は二等辺三角形で$\angle OB'C=\angle OCB'$（③-1）．また$\angle OB'F=\angle OCF=\pi/4$（③-2，正方形の対角線の角度）．③-1,③-2から$\angle B'CF=\angle CB'F$となり，$\triangle FCB'$は二等辺三角形で$CF=B'F$．これと$\triangle IB'F\equiv\triangle ECF$（対称性）から，
-\begin{align}
-S_1=S_2=\dfrac{1}{2}x^2\tan\theta
-\end{align}
-②に代入して
-\begin{align}
-T=\dfrac{1}{2}-x^2\tan\theta \quad\cdots\text{④}
-\end{align}
+  % --- 1. パラメータ設定 (theta = 35度 の一般例) ---
+  \def\thetaVal{35}
+  
+  % x = cos(theta) / (sin(theta) + cos(theta) + 1)
+  \pgfmathsetmacro{\xVal}{cos(\thetaVal)/(sin(\thetaVal) + cos(\thetaVal) + 1)}
 
-また，辺$\overline{AB}$の長さを$2$通りに表して（折り返し部分の幾何関係から）
-\begin{align}
-\begin{split}
-1&=x\tan\theta+\dfrac{x}{\cos\theta}+x \\
-&\therefore\ x=\dfrac{\cos\theta}{\sin\theta+\cos\theta+1} \quad(C=\cos\theta,\ S=\sin\theta\ \text{として}\ x=\dfrac{C}{S+C+1}) \quad\cdots\text{⑤}
-\end{split}
-\end{align}
+  % --- 2. 正方形 ABCD の座標 (1辺 1) ---
+  \coordinate (B) at (0, 0);
+  \coordinate (A) at (1, 0);
+  \coordinate (D) at (1, 1);
+  \coordinate (C) at (0, 1);
 
-④から，$T$は$P=x^2\tan\theta$が最大の時最小．⑤から
-\begin{align}
-P=x^2\tan\theta=\dfrac{C^2}{(S+C+1)^2}\cdot\dfrac{S}{C}=\dfrac{SC}{(S+C+1)^2}
-\end{align}
-$t=C+S$とおくと，$S+C+1=t+1$，$SC=\dfrac{t^2-1}{2}$（$\because(S+C)^2=S^2+2SC+C^2=1+2SC$）だから
-\begin{align}
-P=\dfrac{(t^2-1)/2}{(t+1)^2}=\dfrac{t-1}{2(t+1)}=\dfrac{1}{2}\left(1-\dfrac{2}{t+1}\right)
-\end{align}
-これは$t$の単調増加関数．$t=\sin\theta+\cos\theta=\sqrt{2}\sin\left(\theta+\dfrac{\pi}{4}\right)$は，$0<\theta\le\pi/4$で単調増加し$t\in(1,\sqrt{2}]$．よって$P$は$\theta=\pi/4$（$t=\sqrt{2}$）で最大：
-\begin{align}
-\max P=\dfrac{1}{2}\left(1-\dfrac{2}{\sqrt{2}+1}\right)
-\end{align}
-したがって
-\begin{align}
-\min T=\dfrac{1}{2}-\max P=\dfrac{1}{2}\cdot\dfrac{2}{\sqrt{2}+1}=\dfrac{1}{\sqrt{2}+1}=\sqrt{2}-1
-\end{align}
+  % 各基準点の座標
+  \coordinate (I) at (0, \xVal);
+  \coordinate (H) at (1, 1 - \xVal);
+  \coordinate (O) at (0.5, 0.5);
 
+  % --- 3. 折り返した点の厳密な幾何座標 ---
+  % B' = I + x * (-sin theta, cos theta)
+  \pgfmathsetmacro{\Bpx}{-\xVal * sin(\thetaVal)}
+  \pgfmathsetmacro{\Bpy}{\xVal + \xVal * cos(\thetaVal)}
+  \coordinate (Bprime) at (\Bpx, \Bpy);
+
+  % F on BC: y = x + x/cos(theta)
+  \pgfmathsetmacro{\Fy}{\xVal + \xVal / cos(\thetaVal)}
+  \coordinate (F) at (0, \Fy);
+
+  % E (直線 A'B' と 辺 CD: y=1 の交点) => x = x*cos(theta)
+  \pgfmathsetmacro{\Ex}{\xVal}
+  \coordinate (E) at (\Ex, 1);
+
+  % G (直線 A'H と 辺 CD: y=1 の交点) => x = 1 - x*tan(theta)
+  \pgfmathsetmacro{\Gx}{1 - \xVal * tan(\thetaVal)}
+  \coordinate (G) at (\Gx, 1);
+
+  % A' = B' + 1 * (cos theta, sin theta)
+  %\pgfmathsetmacro{\Apx}{\Bpx + cos(\thetaVal)}
+  %\pgfmathsetmacro{\Apy}{\Bpy + sin(\thetaVal)}
+  %\coordinate (Aprime) at (\Apx, \Apy);
+
+  % 直線 B'A' は傾き角 theta 方向（単位ベクトル: (cos theta, sin theta)）
+  % A' = B' + 1 * (cos theta, sin theta)
+  \pgfmathsetmacro{\Apx}{\Bpx + cos(\thetaVal)}
+  \pgfmathsetmacro{\Apy}{\Bpy + sin(\thetaVal)}
+  \coordinate (Aprime) at (\Apx, \Apy);
+
+
+  % --- 4. 重なり部分：五角形 P の斜線ハッチング ---
+  % 五角形の頂点: I - F - E - G - H
+  \begin{scope}
+    \fill[pattern=north east lines, pattern color=blue!60] 
+      (I) -- (F) -- (E) -- (G) -- (H) -- cycle;
+  \end{scope}
+
+  % --- 5. 正方形 ABCD の枠線 ---
+  \draw[thick] (B) -- (A) -- (D) -- (C) -- cycle;
+
+  % --- 6. 折り目 IH ---
+  \draw[thick, red!80!black] (I) -- (H);
+
+  % --- 7. 折り返された部分の線分 ---
+  % 三角形 I B' F
+  \draw[thick] (I) -- (Bprime) -- (F);
+  \draw[dashed, gray] (Bprime) -- (C) -- (Aprime) -- (D);
+
+  % 線分 B' - A' - H
+  \draw[thick] (Bprime) -- (Aprime) -- (H);
+
+
+  % 直角マーク (B' における角)
+  \draw[thin, gray] 
+    ($(Bprime)!4pt!(I)$) -- 
+    ($($(Bprime)!4pt!(I)$) + ($(Bprime)!4pt!(Aprime)$) - (Bprime)$) -- 
+    ($(Bprime)!4pt!(Aprime)$);
+
+  % 対称軸の補助線 (O から E, F への破線)
+  \draw[dashed, gray!80] (O) -- (E);
+  \draw[dashed, gray!80] (O) -- (F);
+  \draw[dashed, gray!80] (O) -- (G);
+
+
+  % --- 8. 角度と長さのラベル ---
+  % 角度 theta (角 B'IC)
+  \draw[->, thin, orange!90!black] ($(I) + (90:0.12)$) arc (90:{90 + \thetaVal}:0.12);
+  \node[orange!90!black, font=\scriptsize] at ($(I) + ({90 + \thetaVal/2}:0.16)$) {$\theta$};
+
+  % 長さ x (|BI|, |IB'|, |DH|)
+  \node[left, font=\scriptsize] at ($(B)!0.5!(I)$) {$x$};
+  \node[below left, font=\scriptsize] at ($(I)!0.5!(Bprime)$) {$x$};
+  \node[right, font=\scriptsize] at ($(D)!0.5!(H)$) {$x$};
+  \node[right, font=\scriptsize] at ($(A)!0.5!(H)$) {$1-x$};
+
+  % 長さ x tan theta (|B'F|)
+  \node[above left, font=\scriptsize] at ($(Bprime)!0.5!(F)$) {$x\tan\theta$};
+
+  % 長さ x / cos theta (|IF|)
+  \node[right, font=\scriptsize, xshift=2pt] at ($(I)!0.5!(F)$) {$\dfrac{x}{\cos\theta}$};
+
+  % --- 9. 各点のプロットと頂点名 ---
+  \fill[black] (A) circle (0.8pt) node[below right] {$A$};
+  \fill[black] (B) circle (0.8pt) node[below left] {$B$};
+  \fill[black] (C) circle (0.8pt) node[above left] {$C$};
+  \fill[black] (D) circle (0.8pt) node[above right] {$D$};
+
+  \fill[black] (I) circle (0.9pt) node[left] {$I$};
+  \fill[black] (H) circle (0.9pt) node[right] {$H$};
+  \fill[black] (O) circle (0.9pt) node[below right] {$O$};
+
+  \fill[black] (Bprime) circle (0.9pt) node[left] {$B'$};
+  \fill[black] (Aprime) circle (0.9pt) node[above] {$A'$};
+  \fill[black] (F) circle (0.8pt) node[left] {$F$};
+  \fill[black] (E) circle (0.8pt) node[above] {$E$};
+  \fill[black] (G) circle (0.8pt) node[above] {$G$};
+
+\end{tikzpicture}
+\end{center}
+\caption{正方形 $ABCD$ を折り目 $IH$ で折り返したときの様子（五角形 $IFEGH$ が重なり部分）}
+\end{figure}
+
+図のように，辺BC上に点I，辺AD上に点Hをとり，線分IHで正方形を折り返す．
+この時対称性から
+\begin{align}
+ |BI| = x & (0 < x < \dfrac{1}{2}) \label{eq:1}
+\end{align}
+とおいて良い．
+折り返して出来た$B,C$の像を$B',A'$とする．
+すると$P$が線対称だから
+\begin{align}
+ |BI'| = |DH| = x \label{eq:2}
+\end{align}
+である．
+折り目と辺の交点を$E,F,G$とおく．$E$は$BC$上，$E$と$G$は$CD$上にそれぞれ配置する．
+ここで$IH$の中点を$O$とすると，$P$は線分$EO$を軸に線対称である．
+\cref{eq:1,eq:2}から，$O$は四角形の対角線の交点と一致する．
+
+新しく
+\begin{align}
+ \angle B'IC = \theta & \left(0 < \theta < \dfrac{\pi}{2}\right)\label{eq:3}
+\end{align}
+とおく．
+
+$P$の面積を$T$，$\triangle IB'F$の面積$S_1$，$\triangle EA'G$の面積$S_2$とおくと，これら3つの面積の和が台形$B'IHA'$の面積$\dfrac{1}{2}$に等しいことから
+\begin{align}
+T=\dfrac{1}{2}-(S_1+S_2) \quad\cdots\text{②} \label{eq:4}
+\end{align}
+である．そこで以下$S_1,S_2$を$x,\theta$で表すことで$T$の最小値を計算しよう．
+
+さて，$O$が対角線の交点だから$OC=OB'$で，$\triangle OCB'$は二等辺三角形である．従って
+\begin{align}
+ \angle OB'C=\angle OCB' \label{eq:5}
+\end{align}
+である．
+同様に正方形の対角線の角度に着目して
+\begin{align}
+ \angle OB'F=\angle OCF=\dfrac{\pi}{4} \label{eq:6}
+\end{align}
+だから，\cref{eq:5,eq:6}から
+\begin{align}
+ \angle B'CF=\angle CB'F 
+\end{align}
+となる．従って$\triangle FCB'$は二等辺三角形で$CF=B'F$となる．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=5.0, >=stealth]
+
+  % --- 1. パラメータ設定 (theta = 35度) ---
+  \def\thetaVal{35}
+  \pgfmathsetmacro{\xVal}{cos(\thetaVal)/(sin(\thetaVal) + cos(\thetaVal) + 1)}
+
+  % --- 2. 各点の厳密な幾何座標 ---
+  \coordinate (C) at (0, 1);
+  \coordinate (O) at (0.5, 0.5);
+
+  % B' = (-x*sin theta, x + x*cos theta)
+  \pgfmathsetmacro{\Bpx}{-\xVal * sin(\thetaVal)}
+  \pgfmathsetmacro{\Bpy}{\xVal + \xVal * cos(\thetaVal)}
+  \coordinate (Bprime) at (\Bpx, \Bpy);
+
+  % F on BC: y = x + x/cos(theta)
+  \pgfmathsetmacro{\Fy}{\xVal + \xVal / cos(\thetaVal)}
+  \coordinate (F) at (0, \Fy);
+
+  % --- 3. 着目三角形 OCB' の塗りつぶし ---
+  \fill[orange!15] (O) -- (C) -- (Bprime) -- cycle;
+
+  % --- 4. 線分の描画 ---
+  % 外枠の二等辺三角形 OCB'
+  \draw[ultra thick, orange!80!black] (C) -- (O) -- (Bprime) -- cycle;
+
+  % 内部の線分 CF (正方形の辺の一部) と B'F (折り返された辺の一部)
+  \draw[thick, blue!80!black] (C) -- (F);
+  \draw[thick, blue!80!black] (Bprime) -- (F);
+  \draw[dashed, gray!80] (Bprime) -- (C);
+
+  % --- 5. 角度の表示とラベル ---
+
+  % (i) 角 OCF = pi/4 (点 C における外側の角)
+  % 線分 CO (ベクトル (0.5, -0.5) => -45度) から 線分 CF (真下 => -90度)
+  \draw[->, thin, gray!80!black] ($(C) + (-45:0.16)$) arc (-45:-90:0.16);
+  \node[gray!80!black, font=\scriptsize] at ($(C) + (-65:0.24)$) {$\dfrac{\pi}{4}$};
+
+  % (ii) 角 OB'F = pi/4 (点 B' における外側の角)
+  % ベクトル B'O の方向角と B'F の方向角
+  \pgfmathsetmacro{\angBpO}{atan2(0.5 - \Bpy, 0.5 - \Bpx)}
+  \pgfmathsetmacro{\angBpF}{atan2(\Fy - \Bpy, 0 - \Bpx)}
+  \draw[->, thin, gray!80!black] ($(Bprime) + ({\angBpO}:0.16)$) arc ({\angBpO}:{\angBpF}:0.16);
+  \node[gray!80!black, font=\scriptsize] at ($(Bprime) + ({\angBpO + 22.5}:0.24)$) {$\dfrac{\pi}{4}$};
+
+  % (iii) 等しい内角 角 B'CF と 角 CB'F (二重弧)
+  % 角 B'CF (点 C)
+  \pgfmathsetmacro{\angCBp}{atan2(\Bpy - 1, \Bpx - 0)}
+  \draw[double, thick, red!80!black] ($(C) + (-90:0.11)$) arc (-90:{\angCBp}:0.11);
+
+  % 角 CB'F (点 B')
+  \pgfmathsetmacro{\angBpC}{atan2(1 - \Bpy, 0 - \Bpx)}
+  \draw[double, thick, red!80!black] ($(Bprime) + ({\angBpF}:0.11)$) arc ({\angBpF}:{\angBpC}:0.11);
+
+  % --- 6. 辺長が等しいマーク (OC = OB' および CF = B'F) ---
+  % OC = OB' の二等辺マーク
+  \draw[thick, orange!80!black] ($(O)!0.5!(C) + (-0.02, -0.02)$) -- ($(O)!0.5!(C) + (0.02, 0.02)$);
+  \draw[thick, orange!80!black] ($(O)!0.5!(Bprime) + (-0.02, 0.02)$) -- ($(O)!0.5!(Bprime) + (0.02, -0.02)$);
+
+  % --- 7. 各点のプロットとラベル ---
+  \fill[black] (C) circle (0.8pt) node[above] {$C$};
+  \fill[black] (O) circle (0.8pt) node[right] {$O$};
+  \fill[black] (Bprime) circle (0.8pt) node[below left] {$B'$};
+  \fill[black] (F) circle (0.8pt) node[right, font=\small] {$F$};
+
+\end{tikzpicture}
+\end{center}
+\caption{$\triangle OCB'$ に着目した角度関係（$\angle OB'F = \angle OCF = \dfrac{\pi}{4}$ より $\triangle FCB'$ は二等辺三角形）}
+\end{figure}
+
+また，対称性から$\triangle IB'F\equiv\triangle ECF$だからこれら二つの三角形は合同で
+\begin{align}
+ \triangle IB'F\equiv\triangle ECF \label{eq:7}
+\end{align}
+つまり
+\begin{align}
+ S_1 = S_2 \label{eq:8}
+\end{align}
+である．
+$\triangle IB'F$の面積$S_1$は$|IB'|=x, |B'F|=x\tan\theta$より
+\begin{align}
+ S_1 = \dfrac{1}{2}|IB'||B'F| = \dfrac{1}{2}x^2\tan\theta \label{eq:9}
+\end{align}
+である．
+
+従って\cref{eq:4,eq:8,eq:9}より面積$T$は
+\begin{align}
+ T=\dfrac{1}{2}-x^2\tan\theta \quad\cdots\text{④} \label{eq:10}
+\end{align}
+である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=5.2, >=stealth]
+
+  % --- 1. パラメータ設定 (theta = 35度) ---
+  \def\thetaVal{35}
+  \pgfmathsetmacro{\xVal}{cos(\thetaVal)/(sin(\thetaVal) + cos(\thetaVal) + 1)}
+
+  % --- 2. 各点の幾何座標 ---
+  \coordinate (B) at (0, 0);
+  \coordinate (A) at (1, 0);
+  \coordinate (D) at (1, 1);
+  \coordinate (C) at (0, 1);
+
+  \coordinate (I) at (0, \xVal);
+  \coordinate (H) at (1, 1 - \xVal);
+
+  % B'
+  \pgfmathsetmacro{\Bpx}{-\xVal * sin(\thetaVal)}
+  \pgfmathsetmacro{\Bpy}{\xVal + \xVal * cos(\thetaVal)}
+  \coordinate (Bprime) at (\Bpx, \Bpy);
+
+  % A'
+  \pgfmathsetmacro{\Apx}{\Bpx + cos(\thetaVal)}
+  \pgfmathsetmacro{\Apy}{\Bpy + sin(\thetaVal)}
+  \coordinate (Aprime) at (\Apx, \Apy);
+
+  % F on BC (y = x + x/cos theta)
+  \pgfmathsetmacro{\Fy}{\xVal + \xVal / cos(\thetaVal)}
+  \coordinate (F) at (0, \Fy);
+
+  % E on CD (x = x*cos theta)
+  \pgfmathsetmacro{\Ex}{\xVal}
+  \coordinate (E) at (\Ex, 1);
+
+  % G on CD (x = 1 - x*tan theta)
+  \pgfmathsetmacro{\Gx}{1 - \xVal * tan(\thetaVal)}
+  \coordinate (G) at (\Gx, 1);
+
+  % --- 3. 正方形の背景枠（薄線） ---
+  \draw[thick, gray!30] (B) -- (A) -- (D) -- (C) -- cycle;
+  \draw[thick, gray!30] (I) -- (H);
+
+  % --- 4. 合同な三角形の着色ハイライト ---
+  % (i) 三角形 IB'F と 三角形 ECF (合同: S1)
+  \fill[blue!15] (I) -- (Bprime) -- (F) -- cycle;
+  \fill[blue!15] (E) -- (C) -- (F) -- cycle;
+  \draw[thick, blue!80!black] (I) -- (Bprime) -- (F) -- cycle;
+  \draw[thick, blue!80!black] (E) -- (C) -- (F) -- cycle;
+
+  % (ii) 三角形 DGH と 三角形 A'GE (合同: S2)
+  \fill[orange!20] (D) -- (G) -- (H) -- cycle;
+  \fill[orange!20] (Aprime) -- (G) -- (E) -- cycle;
+  \draw[thick, orange!80!black] (D) -- (G) -- (H) -- cycle;
+  \draw[thick, orange!80!black] (Aprime) -- (G) -- (E) -- cycle;
+
+  % --- 5. 線分 A'B' の分割強調 (3色の太線) ---
+  % B'F = x tan theta
+  \draw[line width=2.5pt, red!80!black] (Bprime) -- (F);
+  % FE = x / cos theta
+  \draw[line width=2.5pt, purple!80!black] (F) -- (E);
+  % EA' = x
+  \draw[line width=2.5pt, green!60!black] (E) -- (Aprime);
+
+  % --- 6. 各分割区間の寸法線とラベル ---
+  % (1) 全長 |A'B'| = 1
+  \draw[<->, thick, black] ($(Bprime)+(-0.06, 0.08)$) -- ($(Aprime)+(-0.06, 0.08)$)
+    node[midway, above left, font=\small] {$|A'B'| = 1$};
+
+  % (2) 区間 B'F = x tan theta
+  \node[red!80!black, font=\scriptsize, below right] at ($(Bprime)!0.5!(F) + (0.02, -0.02)$) {$x\tan\theta$};
+
+  % (3) 区間 FE = x / cos theta
+  \node[purple!80!black, font=\scriptsize, above left] at ($(F)!0.5!(E) + (-0.02, 0.02)$) {$\dfrac{x}{\cos\theta}$};
+
+  % (4) 区間 EA' = x
+  \node[green!50!black, font=\scriptsize, above left] at ($(E)!0.5!(Aprime) + (-0.02, 0.02)$) {$x$};
+
+  % --- 7. 合同による長さの対応マーク ---
+  % |EA'| = |DH| = x
+  \node[right, font=\scriptsize, gray] at ($(D)!0.5!(H)$) {$x$};
+  % |IB'| = x
+  \node[below left, font=\scriptsize, gray] at ($(I)!0.5!(Bprime)$) {$x$};
+
+  % --- 8. 各点のプロットとラベル ---
+  \fill[black] (Bprime) circle (0.9pt) node[below left] {$B'$};
+  \fill[black] (Aprime) circle (0.9pt) node[above right] {$A'$};
+  \fill[black] (F) circle (0.8pt) node[left] {$F$};
+  \fill[black] (E) circle (0.8pt) node[above] {$E$};
+  \fill[gray] (G) circle (0.8pt) node[above, font=\scriptsize] {$G$};
+  \fill[gray] (C) circle (0.8pt) node[above left, font=\scriptsize] {$C$};
+  \fill[gray] (D) circle (0.8pt) node[above right, font=\scriptsize] {$D$};
+  \fill[gray] (I) circle (0.8pt) node[left, font=\scriptsize] {$I$};
+  \fill[gray] (H) circle (0.8pt) node[right, font=\scriptsize] {$H$};
+
+\end{tikzpicture}
+\end{center}
+\caption{線分 $A'B'$ の 3 分割（$|A'B'| = |B'F| + |FE| + |EA'| = 1$）と合同な直角三角形}
+\end{figure}
+
+さて，次に$x$を$\theta$であらわして，\cref{eq:10}を$\theta$の関数としてみなす．
+まず\cref{eq:7}から$|EF|=|FI|=\dfrac{x}{\cos\theta}$である．
+また\cref{eq:7}と同様に
+\begin{align}
+ \triangle DGH \equiv \triangle A'GE
+\end{align}
+だから，$|EA'|=|DH|=x$であり，辺$A'B'$の長さを$2$通りに表すと
+\begin{align}
+ |A'B'| &= |B'F|+|FE|+|EA'| \\
+ 1&=x\tan\theta+\dfrac{x}{\cos\theta}+x \\
+\therefore\ 
+ x=&\dfrac{\cos\theta}{\sin\theta+\cos\theta+1} \label{eq:11}
+\end{align}
+となる．
+
+\cref{eq:10}より$T$は$f(\theta)=x^2\tan\theta$が最大の時最小である．\cref{eq:11}より
+\begin{align}
+f(\theta)
+ &=x^2\tan\theta \\
+ &=\dfrac{\cos^2\theta}{(\sin\theta+\cos\theta+1)^2}\cdot\dfrac{\sin\theta}{\cos\theta} \\
+ &=\dfrac{\sin\theta\cos\theta}{(\sin\theta+\cos\theta+1)^2} \label{eq:12}
+\end{align}
+となる．
+新しく
+\begin{align}
+ t = \sin\theta + \cos\theta
+\end{align}
+とおくと，$t=\sin\theta+\cos\theta=\sqrt{2}\sin\left(\theta+\dfrac{\pi}{4}\right)$は，$0<\theta\le\pi/4$で単調増加して
+\begin{align}
+ t\in(1,\sqrt{2}] \label{eq:13}
+\end{align}
+をとる．
+また$t^2=(\sin\theta+\cos\theta)^2=1+2\sin\theta\cos\theta$より
+\begin{align}
+ \sin\theta\cos\theta=\dfrac{t^2-1}{2}
+\end{align}
+であるから\cref{eq:12}に代入して
+\begin{align}
+ f(\theta) 
+  &= \dfrac{t^2-1}{2(t+1)^2} \\
+  &=\dfrac{t-1}{2(t+1)} \\
+  &=\dfrac{1}{2}\left(1-\dfrac{2}{t+1}\right)
+\end{align}
+となる．これは\cref{eq:13}の範囲で$t$の単調増加関数だから，$f(\theta)$は$\theta=\pi/4$（$t=\sqrt{2}$）で最大値をとる：
+\begin{align}
+\max f(\theta)= f\left(\dfrac{\pi}{4}\right)= \dfrac{1}{2}\left(1-\dfrac{2}{\sqrt{2}+1}\right)
+\end{align}
+したがって\cref{eq:10}に代入して求める最小値は
+\begin{align}
+\min T=\dfrac{1}{2}-\max f(\theta)=\dfrac{1}{2}\cdot\dfrac{2}{\sqrt{2}+1}=\dfrac{1}{\sqrt{2}+1}=\sqrt{2}-1
+\end{align}
+である．
 
 \end{document}

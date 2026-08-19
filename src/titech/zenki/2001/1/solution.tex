@@ -1,48 +1,68 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$S(a,t)=\displaystyle\int_0^a\left|e^{-x}-\dfrac{1}{t}\right|dx$．$y=e^{-x}$は$[0,a]$で$1$から$e^{-a}$まで単調減少する．
 
-\textbf{(1)} 直線$y=1/t$と曲線の位置関係で場合分けする．
+与えられた定積分
+\begin{align}
+ S(a,t) &= \int_0^a\left|e^{-x}-\dfrac{1}{t}\right|dx \label{eq:1}
+\end{align}
+について考える．被積分関数は$y=e^{-x}$と直線$y=\dfrac{1}{t}$の差として図形的に理解できる．
+$y=e^{-x}$は$[0,a]$で$1$から$e^{-a}$まで単調減少することに注意すると，グラフは以下のようになる．
 
-\subparagraph{$1/t\ge1$（$t\le1$）の時：} $[0,a]$上で常に$e^{-x}\le1\le1/t$だから
+
+\paragraph{(1)}
+$0 \le x \le a$において$e^{-a} \le e^{-x} \le 1$だから，$\dfrac{1}{t}$とこの大小関係によって以下のように場合分けする．
+
+\subparagraph{$1/t\ge1$（$t\le1$）の時} 
+$[0,a]$上で常に$e^{-x} \le \dfrac{1}{t}$だから
 \begin{align}
 S(a,t)=\int_0^a\left(\dfrac{1}{t}-e^{-x}\right)dx=\dfrac{a}{t}+e^{-a}-1
 \end{align}
-これは$(1/t)$の1次関数で係数$a>0$だから，$(1/t)$の単調増加関数．
+である．
+これは$(1/t)$の1次関数で係数$a>0$だから，$(1/t)$の単調増加関数すなわち$t$の単調減少関数である．
 
-\subparagraph{$1/t\le e^{-a}$（$t\ge e^a$）の時：} 常に$e^{-x}\ge e^{-a}\ge1/t$だから
+\subparagraph{$1/t\le e^{-a}$（$t\ge e^a$）の時}
+$[0,a]$上で常に$e^{-x}\ge \dfrac{1}{t}$だから
 \begin{align}
 S(a,t)=\int_0^a\left(e^{-x}-\dfrac{1}{t}\right)dx=(1-e^{-a})-\dfrac{a}{t}
 \end{align}
-これは$(1/t)$の単調減少関数．
+である．
+これは$(1/t)$の単調減少関数すなわち$t$の単調増加関数である．
 \casesend
 
-$S(a,t)$は明らかに連続だから，$e^{-a}\le1/t\le1$（$1\le t\le e^a$）の範囲で最小値をとる．この範囲では，$e^{-\alpha}=1/t$をみたす$\alpha\in[0,a]$がただ1つ存在し，$x<\alpha$で$e^{-x}>1/t$，$x>\alpha$で$e^{-x}<1/t$だから
+さて$S(a,t)$は明らかに連続だから，以上の場合分けを踏まえて$e^{-a}\le1/t\le1$（$1\le t\le e^a$）の範囲で最小値をとる．
+この範囲では，
+\begin{align}
+ e^{-\alpha}=\dfrac{1}{t} \label{eq:2}
+\end{align}
+をみたす$\alpha\in[0,a]$がただ1つ存在して$x<\alpha$で$e^{-x}>1/t$，$x>\alpha$で$e^{-x}<1/t$だから$S(a,t)$は
 \begin{align}
 \begin{split}
-S(a,t)&=\int_0^\alpha\left(e^{-x}-\dfrac{1}{t}\right)dx+\int_\alpha^a\left(\dfrac{1}{t}-e^{-x}\right)dx \\
-&=\left[-e^{-x}-\dfrac{x}{t}\right]_0^\alpha+\left[\dfrac{x}{t}+e^{-x}\right]_\alpha^a
-=\left(1-e^{-\alpha}-\dfrac{\alpha}{t}\right)+\left(\dfrac{a}{t}+e^{-a}-\dfrac{\alpha}{t}-e^{-\alpha}\right) \\
-&=1+e^{-a}-2e^{-\alpha}+\dfrac{a-2\alpha}{t} \quad\cdots\text{①}
-\end{split}
+S(a,t)
+ &=\int_0^\alpha\left(e^{-x}-\dfrac{1}{t}\right)dx+\int_\alpha^a\left(\dfrac{1}{t}-e^{-x}\right)dx \\
+ &=\left[-e^{-x}-\dfrac{x}{t}\right]_0^\alpha+\left[\dfrac{x}{t}+e^{-x}\right]_\alpha^a \\
+ &=\left(1-e^{-\alpha}-\dfrac{\alpha}{t}\right)+\left(\dfrac{a}{t}+e^{-a}-\dfrac{\alpha}{t}-e^{-\alpha}\right) \\
+ &=1+e^{-a}-2e^{-\alpha}+\dfrac{a-2\alpha}{t} \quad\cdots\text{①}
+\end{split} \label{eq:3}
 \end{align}
+と書ける．\cref{eq:2}より$\alpha = \log t$に注意して\cref{eq:3}から$\alpha$を消去すると
+\begin{align}
+ S(a,t)
+  &= 1+e^{-a}+\dfrac{-2+a-2\log t}{t} \label{eq:4}
+\end{align}
+である．以下$a$を固定した時の$S(a,t)$の最小値を求めよう．
+$t$で微分して
+\begin{align}
+\dfrac{dS}{dt}
+  &= \dfrac{\left(-\dfrac{2}{t}\cdot t -\left(-2+a-2\log t\right) \right)}{t^2} \\
+  &= \dfrac{- a + 2\log t}{t^2} 
+\end{align}
+である．従って増減表は以下のようになる．
 
-$a$を固定し，$\alpha=\log t$（$e^{-\alpha}=1/t$より）として①を$t$の関数とみて微分する．$e^{-\alpha}=1/t$を使って
-\begin{align}
-\begin{split}
-S&=1+e^{-a}-\dfrac{2}{t}+\dfrac{a-2\log t}{t} \\
-\dfrac{dS}{dt}&=\dfrac{2}{t^2}-\dfrac{-\dfrac{2}{t}\cdot t-(a-2\log t)}{t^2}=\dfrac{2-\{-2-(a-2\log t)\}}{t^2}=\dfrac{2\log t-a}{t^2}=\dfrac{2\alpha-a}{t^2}
-\end{split}
-\end{align}
-これは$\alpha<a/2$（$t<e^{a/2}$）で負，$\alpha>a/2$（$t>e^{a/2}$）で正だから，下表のように$t=e^{a/2}$（$\alpha=a/2$）で最小．
 \begin{table}[htb]
   \centering
+\caption{$S$の増減表}
 \begin{tabular}{c|ccccc}
 $t$ & $1$ & & $e^{a/2}$ & & $e^a$ \\
 \hline
@@ -51,20 +71,28 @@ $S'$ & & $-$ & $0$ & $+$ & \\
 $S$ & & $\searrow$ & & $\nearrow$ &
 \end{tabular}
 \end{table}
-したがって①に$\alpha=a/2$を代入して
-\begin{align}
-m(a)=1+e^{-a}-2e^{-a/2}=\left(1-e^{-a/2}\right)^2
-\end{align}
 
-\textbf{(2)} $p=-a/2$とおくと，$a\to0$で$p\to0$，
+従って$S$は$t=e^{a/2}$で最小値$m(a)$をとるから\cref{eq:4}に代入して
+\begin{align}
+  m(a)=\min S\left(e^{a/2}\right) = 1+e^{-a}-2e^{-a/2}=\left(1-e^{-a/2}\right)^2
+\end{align}
+である．
+
+\paragraph{(2)}
+簡単のため
+\begin{align}
+ p = \dfrac{-a}{2}
+\end{align}
+とおくと$a\to0$で$p\to0$であって
 \begin{align}
 \dfrac{m(a)}{a^2}=\dfrac{\left(1-e^{-a/2}\right)^2}{a^2}=\dfrac{\left(e^{p}-1\right)^2}{(-2p)^2}=\dfrac{1}{4}\left(\dfrac{e^p-1}{p}\right)^2
 \end{align}
-$\dfrac{e^p-1}{p}\to1$（$p\to0$）だから
+となる．ここで$e^{x}$の微分を考えると
+$\dfrac{e^p-1}{p}\to1$（$p\to0$）だから求める極限値は
 \begin{align}
 \lim_{a\to0}\dfrac{m(a)}{a^2}=\dfrac{1}{4}
 \end{align}
-
+である．
 
 \newpage
 
