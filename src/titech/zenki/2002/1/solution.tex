@@ -1,68 +1,222 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$S=\sin x,\ C=\cos x$と書き，$g(x)=S-aC$（$=\sin x-a\cos x$）とおく．$g'(x)=C+aS$．
+被積分関数の絶対値の中身を
+\begin{align}
+ g(x) = \sin x-a\cos x \label{eq:1}
+\end{align}
+とおくと一階微分は
+\begin{align}
+ g'(x) = \cos x + a \sin x \label{eq:2}
+\end{align}
+である．
+これは$[0,\pi/4]$では$a$の正負に応じて以下のように挙動が変わる．
 
-\subparagraph{$1^\circ$ $a\le0$の時：} $[0,\pi/4]$で$S\ge0,\ C\ge0$だから$g(x)=S-aC\ge0$．
-
-\subparagraph{$2^\circ$ $a\ge0$の時：} $g'(x)=C+aS\ge0$（$C,S\ge0,\ a\ge0$）だから$g$は単調増加．$g(0)=-a,\ g(\pi/4)=\dfrac{\sqrt{2}}{2}(1-a)$．
-\casesend
-
-したがって，
 \begin{itemize}
-\item $a\le0$の時：$g(x)\ge0$（$[0,\pi/4]$で）だから
-\begin{align}
-f(a)=\int_0^{\pi/4}(S-aC)\,dx=a\int_0^{\pi/4}(-C)\,dx+\int_0^{\pi/4}S\,dx=-\dfrac{\sqrt{2}}{2}a+\left(1-\dfrac{\sqrt{2}}{2}\right)
-\end{align}
-これは$a$の単調減少関数．
-\item $a\ge1$の時：$g(\pi/4)\le0$，$g$単調増加で$g(0)=-a\le0$だから$g(x)\le0$（$[0,\pi/4]$で）．
-\begin{align}
-f(a)=-\int_0^{\pi/4}(S-aC)\,dx=\dfrac{\sqrt{2}}{2}a-\left(1-\dfrac{\sqrt{2}}{2}\right)
-\end{align}
-これは$a$の単調増加関数．
-\item $0\le a\le1$の時：$g(0)\le0\le g(\pi/4)$，$g$単調増加だから，$g(\alpha)=0$なる$\alpha\in[0,\pi/4]$がただ1つ存在し
-\begin{align}
-f(a)=-\int_0^\alpha g(x)\,dx+\int_\alpha^{\pi/4}g(x)\,dx=G(\pi/4)+G(0)-2G(\alpha) \quad\cdots\text{①}
-\end{align}
-（$G(x)=-\cos x-a\sin x$は$g$の原始関数の一つ）．
+ \item[$a\le 0$の時] この時は$g(x) \ge 0$で$g(x)$は非負．
+ \item[$0\le a$の時] この時は$g'(x) \ge 0$で$g(x)$は単調増加．$g(0)=-a \le 0, g(\pi/4)=\dfrac{\sqrt{2}}{2}(1-a)$であるから$a$が$1$以上か否かで構造が変わる．
 \end{itemize}
 
-$G(0)=-1,\ G(\pi/4)=-\dfrac{\sqrt{2}}{2}(a+1),\ G(\alpha)=-(\cos\alpha+a\sin\alpha)$を①に代入して
+従って，$f(a)$は$a$の値によって以下のように場合分けできる．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.4, >=stealth]
+
+  % 定数 pi/4 ≒ 0.7854
+  \def\pifour{0.7854}
+
+  % ========================================================
+  % 1. 左図: a <= 0 の場合 (例: a = -0.5)
+  % ========================================================
+  \begin{scope}[shift={(0, 0)}]
+    \node[above, font=\bfseries] at (1.0, 1.4) {$a \le 0$（常に $g(x) \ge 0$）};
+
+    % 座標軸
+    \draw[->, thick] (-0.3, 0) -- (2.2, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.6) -- (0, 1.6) node[above] {$y$};
+    \node[below left, font=\scriptsize] at (0,0) {$O$};
+
+    % a = -0.5: g(x) = sin(x) + 0.5 cos(x)
+    % x はスケールに合わせて 2 倍して描画 (pi/4 -> 2*0.7854 ≒ 1.57)
+    \pgfmathsetmacro{\xEnd}{2*\pifour}
+    \pgfmathsetmacro{\yEnd}{sin(\pifour r) - (-0.5)*cos(\pifour r)}
+
+    \fill[blue!15] (0,0) -- plot[domain=0:\xEnd, samples=40] (\x, {sin((\x/2) r) - (-0.5)*cos((\x/2) r)}) -- (\xEnd, 0) -- cycle;
+    \draw[ultra thick, blue!80!black, domain=0:\xEnd, samples=40] 
+      plot (\x, {sin((\x/2) r) - (-0.5)*cos((\x/2) r)}) node[above left, font=\small] {$y = g(x)$};
+
+    % 端点 pi/4
+    \draw[dashed, gray] (\xEnd, 0) node[below, black, font=\small] {$\dfrac{\pi}{4}$} -- (\xEnd, \yEnd);
+    \fill[black] (0, 0.5) circle (1.2pt) node[left, font=\scriptsize] {$-a \ge 0$};
+
+    \node[blue!80!black, font=\small] at (0.8, 0.4) {$g(x) \ge 0$};
+  \end{scope}
+
+  % ========================================================
+  % 2. 中央図: 0 < a < 1 の場合 (例: a = 0.5 -> alpha = atan(0.5) ≒ 0.4636 rad)
+  % ========================================================
+  \begin{scope}[shift={(3.8, 0)}]
+    \node[above, font=\bfseries] at (1.0, 1.4) {$0 < a < 1$（$x=\alpha$ で符号反転）};
+
+    % 座標軸
+    \draw[->, thick] (-0.3, 0) -- (2.2, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.8) -- (0, 1.4) node[above] {$y$};
+    \node[below left, font=\scriptsize] at (0,0) {$O$};
+
+    % パラメータ
+    \def\aVal{0.5}
+    \pgfmathsetmacro{\alphaVal}{rad(atan(\aVal))} % alpha ≒ 0.4636 rad
+    \pgfmathsetmacro{\xAlpha}{2*\alphaVal}         % 描画上の x 座標 ≒ 0.927
+    \pgfmathsetmacro{\xEnd}{2*\pifour}            % 描画上の pi/4 ≒ 1.57
+    \pgfmathsetmacro{\yEnd}{sin(\pifour r) - \aVal*cos(\pifour r)}
+
+    % 負の領域 [0, alpha]
+    \fill[red!15] (0, -\aVal) -- plot[domain=0:\xAlpha, samples=25] (\x, {sin((\x/2) r) - \aVal*cos((\x/2) r)}) -- (\xAlpha, 0) -- (0,0) -- cycle;
+    % 正の領域 [alpha, pi/4]
+    \fill[blue!15] (\xAlpha, 0) -- plot[domain=\xAlpha:\xEnd, samples=25] (\x, {sin((\x/2) r) - \aVal*cos((\x/2) r)}) -- (\xEnd, 0) -- cycle;
+
+    \draw[ultra thick, blue!80!black, domain=0:\xEnd, samples=50] 
+      plot (\x, {sin((\x/2) r) - \aVal*cos((\x/2) r)}) node[above left, font=\small] {$y = g(x)$};
+
+    % 端点 pi/4 と 交点 alpha
+    \draw[dashed, gray] (\xEnd, 0) node[below, black, font=\small] {$\dfrac{\pi}{4}$} -- (\xEnd, \yEnd);
+    \fill[black] (0, -\aVal) circle (1.2pt) node[left, font=\scriptsize] {$-a < 0$};
+    \fill[red!80!black] (\xAlpha, 0) circle (1.5pt) node[below, font=\small] {$\alpha$};
+
+    \node[red!80!black, font=\scriptsize] at (0.4, -0.25) {$-$};
+    \node[blue!80!black, font=\scriptsize] at (1.3, 0.2) {$+$};
+  \end{scope}
+
+  % ========================================================
+  % 3. 右図: a >= 1 の場合 (例: a = 1.4 -> g(pi/4) = (1-1.4)/sqrt(2) ≒ -0.28 < 0)
+  % ========================================================
+  \begin{scope}[shift={(7.6, 0)}]
+    \node[above, font=\bfseries] at (1.0, 1.4) {$a \ge 1$（常に $g(x) \le 0$）};
+
+    % 座標軸
+    \draw[->, thick] (-0.3, 0) -- (2.2, 0) node[right] {$x$};
+    \draw[->, thick] (0, -1.7) -- (0, 0.8) node[above] {$y$};
+    \node[above left, font=\scriptsize] at (0,0) {$O$};
+
+    % a = 1.4
+    \def\aBig{1.4}
+    \pgfmathsetmacro{\xEnd}{2*\pifour}
+    \pgfmathsetmacro{\yEnd}{sin(\pifour r) - \aBig*cos(\pifour r)} % ≒ -0.283 < 0
+
+    % 常に負の領域 [0, pi/4]
+    \fill[red!15] (0,0) -- (0, -\aBig) -- plot[domain=0:\xEnd, samples=40] (\x, {sin((\x/2) r) - \aBig*cos((\x/2) r)}) -- (\xEnd, 0) -- cycle;
+    \draw[ultra thick, blue!80!black, domain=0:\xEnd, samples=40] 
+      plot (\x, {sin((\x/2) r) - \aBig*cos((\x/2) r)}) node[right, font=\small] {$y = g(x)$};
+
+    % 端点 pi/4 (g(pi/4) < 0 の位置で破線結線)
+    \draw[dashed, gray] (\xEnd, 0) node[above, black, font=\small] {$\dfrac{\pi}{4}$} -- (\xEnd, \yEnd);
+    \fill[black] (0, -\aBig) circle (1.2pt) node[left, font=\scriptsize] {$-a \le -1$};
+    \fill[black] (\xEnd, \yEnd) circle (1.2pt);
+
+    \node[red!80!black, font=\small] at (0.8, -0.6) {$g(x) \le 0$};
+  \end{scope}
+
+\end{tikzpicture}
+\end{center}
+\caption{区間 $\left[0, \dfrac{\pi}{4}\right]$ における $g(x)=\sin x - a\cos x$ の $a$ による場合分け}
+\end{figure}
+
+\subparagraph{$a\le0$の時}
+この時は$g(x) \ge 0$だから絶対値をはずせて
 \begin{align}
-f(a)=-1-\dfrac{\sqrt{2}}{2}(a+1)+2\cos\alpha+2a\sin\alpha \quad\cdots\text{③}
+f(a)
+  &=\int_0^{\pi/4}(\sin x-a\cos x)\,dx \\
+  &=-a\int_0^{\pi/4}\cos x\,dx+\int_0^{\pi/4}\sin x\,dx 
 \end{align}
-$g(\alpha)=0$から$a=\tan\alpha$（$0\le\alpha<\pi/4$）．これを③に代入して$\alpha$の関数とみると
+で，これは$a$の単調減少関数である．
+
+\subparagraph{$a\ge1$の時}
+この時は$g(\pi/4)=\dfrac{\sqrt{2}}{2}(1-a)\le0$だから$g(x)\le 0$である．
+従って絶対値をはずせて
 \begin{align}
-\begin{split}
-f&=-1-\dfrac{\sqrt{2}}{2}(\tan\alpha+1)+2\cos\alpha+2\tan\alpha\sin\alpha \\
-\dfrac{df}{d\alpha}&=-\dfrac{\sqrt{2}}{2}\cdot\dfrac{1}{\cos^2\alpha}-2\sin\alpha+2\left(\dfrac{\sin\alpha}{\cos^2\alpha}+\sin\alpha\right)=\dfrac{4\sin\alpha-\sqrt{2}}{2\cos^2\alpha}
-\end{split}
+f(a)
+ &=-\int_0^{\pi/4}(\sin x-a\cos x)\,dx \\
+ &=a\int_0^{\pi/4}\cos x\,dx-\int_0^{\pi/4}\sin x\,dx 
 \end{align}
-これは$\sin\alpha=\sqrt{2}/4$で符号が$-$から$+$に変わるので，下表のように$f$はこの点で最小．
+だから，これは$a$の単調増加関数である．
+
+\subparagraph{$0 \le a \le 1$の時}
+以上より，$f(a)$はその最小値を$0 \le a \le 1$でとる．
+$g(0)\le0\le g(\pi/4)$であることと$g(x)$が単調増加であることから，
+$g(\alpha)=0$なる$\alpha\in[0,\pi/4]$がただ1つ存在する．
+従って絶対値を外すと
+\begin{align}
+f(a)
+ &=-\int_0^\alpha g(x)\,dx+\int_\alpha^{\pi/4}g(x)\,dx \\
+ &=G(\pi/4)+G(0)-2G(\alpha) \quad\cdots\text{①} \label{eq:3}
+\end{align}
+である．ただしここで
+\begin{align}
+ G(x)=-\cos x-a\sin x
+\end{align}
+は$g(x)$の原始関数の一つである．$x=0,\alpha,\pi/4$を代入すると
+\begin{align}
+ \begin{cases}
+  G(0)&=-1 \\
+  G(\pi/4)&=-\dfrac{\sqrt{2}}{2}(a+1) \\
+  G(\alpha)&=-(\cos\alpha+a\sin\alpha)  
+ \end{cases}
+\end{align}
+である．これを\cref{eq:3}に代入して
+\begin{align}
+ f(a)=-1-\dfrac{\sqrt{2}}{2}(a+1)+2\cos\alpha+2a\sin\alpha \quad\cdots\text{③} \label{eq:4}
+\end{align}
+である．
+
+また，$g(\alpha)=0$および$0\le a \le 1$より
+\begin{align}
+ a=\tan\alpha \quad \left(0\le\alpha<\dfrac{\pi}{4}\right) \label{eq:5}
+\end{align}
+である．これを\cref{eq:4}に代入して$f(a)$を$\alpha$の関数とみると
+\begin{align}
+ f(a)
+  &=-1-\dfrac{\sqrt{2}}{2}(\tan\alpha+1)+2\cos\alpha+2\tan\alpha\sin\alpha  \label{eq:6}
+\end{align}
+である．最小値を求めるため一階微分を計算すると
+\begin{align}
+ \dfrac{df}{d\alpha}
+  &=-\dfrac{\sqrt{2}}{2}\cdot\dfrac{1}{\cos^2\alpha}-2\sin\alpha+2\left(\dfrac{\sin\alpha}{\cos^2\alpha}+\sin\alpha\right) \\
+  &=\dfrac{4\sin\alpha-\sqrt{2}}{2\cos^2\alpha} 
+\end{align}
+となる．
+
+これは$\sin\alpha_0=\dfrac{\sqrt{2}}{4}$なる点$\alpha_0$で符号が$-$から$+$に変わるので，増減表は以下のようになる．
+
 \begin{table}[htb]
   \centering
+\caption{$f(a)$の増減表}
 \begin{tabular}{c|ccccc}
-$\alpha$ & $0$ & & (\ $\sin\alpha=\sqrt{2}/4$\ ) & & $\pi/4$ \\
+$\alpha$ & $0$ & & $\alpha_0$ & & $\pi/4$ \\
 \hline
 $f'$ & & $-$ & $0$ & $+$ & \\
 \hline
 $f$ & & $\searrow$ & & $\nearrow$ &
 \end{tabular}
 \end{table}
-この時，$\sin\alpha=\sqrt{2}/4$，$\cos\alpha=\sqrt{1-2/16}=\sqrt{14}/4$，$\tan\alpha=\dfrac{\sqrt{2}/4}{\sqrt{14}/4}=\dfrac{1}{\sqrt{7}}=\dfrac{\sqrt{7}}{7}$だから，③に代入して
-\begin{align}
-\min f=-1-\dfrac{\sqrt{2}}{2}\left(\dfrac{\sqrt{7}}{7}+1\right)+2\cdot\dfrac{\sqrt{14}}{4}+2\cdot\dfrac{\sqrt{7}}{7}\cdot\dfrac{\sqrt{2}}{4}
-\end{align}
-$-\dfrac{\sqrt{2}}{2}\cdot\dfrac{\sqrt{7}}{7}=-\dfrac{\sqrt{14}}{14}$と$2\cdot\dfrac{\sqrt{7}}{7}\cdot\dfrac{\sqrt{2}}{4}=\dfrac{\sqrt{14}}{14}$が打ち消し合うので
-\begin{align}
-\min f=-1-\dfrac{\sqrt{2}}{2}+\dfrac{\sqrt{14}}{2}=\dfrac{\sqrt{14}}{2}-\dfrac{\sqrt{2}}{2}-1
-\end{align}
 
+従って$\alpha=\alpha_0$で$f(a)$は最小である．この時\cref{eq:5}の範囲にも注意して
+\begin{align}
+ \begin{cases}
+  \sin\alpha=\dfrac{\sqrt{2}}{4} \\
+  \cos\alpha=\sqrt{1-2/16}=\dfrac{\sqrt{14}}{4} \\
+  \tan\alpha=\dfrac{\sqrt{2}/4}{\sqrt{14}/4}=\dfrac{1}{\sqrt{7}}=\dfrac{\sqrt{7}}{7} 
+ \end{cases}
+\end{align}
+だから\cref{eq:6}に代入して求める最小値は
+\begin{align}
+ \min f
+  &=-1-\dfrac{\sqrt{2}}{2}\left(\dfrac{\sqrt{7}}{7}+1\right)+2\cdot\dfrac{\sqrt{14}}{4}+2\cdot\dfrac{\sqrt{7}}{7}\cdot\dfrac{\sqrt{2}}{4} \\
+  &=-1-\dfrac{\sqrt{2}}{2}+\dfrac{\sqrt{14}}{2} \\
+  &=\dfrac{\sqrt{14}}{2}-\dfrac{\sqrt{2}}{2}-1
+\end{align}
+である．
 
 \newpage
 

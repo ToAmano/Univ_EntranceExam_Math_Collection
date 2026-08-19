@@ -1,84 +1,146 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-\textbf{(1)} $y=1/x$は単調減少だから，区間$[k,k+1]$での面積比較により
+
+\paragraph{(1)}
+
+$n\to\infty$の極限を考えるので$n$が十分大きいとして良い．
+$y=1/x$は単調減少だから，区間$[k,k+1]$での面積比較により
 \begin{align}
-\sum_{k=1}^n\dfrac{1}{k}<1+\int_1^n\dfrac{1}{x}\,dx \quad\cdots\text{①}, \qquad
-\int_1^n\dfrac{1}{x}\,dx+\dfrac{1}{n+1}<\sum_{k=1}^n\dfrac{1}{k} \quad\cdots\text{②}
+\sum_{k=1}^n\dfrac{1}{k}<1+\int_1^n\dfrac{1}{x}\,dx \quad\cdots\text{①}\label{eq:1} \\
+\int_1^n\dfrac{1}{x}\,dx+\dfrac{1}{n+1}<\sum_{k=1}^n\dfrac{1}{k} \quad\cdots\text{②} \label{eq:2}
 \end{align}
-①②から（$\int_1^n(1/x)dx=\log n$）
+を得る．積分は
+\begin{align}
+ \int_1^n(1/x)dx=\log n
+\end{align}
+だから，\cref{eq:1,eq:2}をまとめて
 \begin{align}
 \log n+\dfrac{1}{n+1}<\sum_{k=1}^n\dfrac{1}{k}<\log n+1
 \end{align}
-両辺$\log n$（$>0$）で割って
+を得る．両辺$\log n$（$>0$）で割って
 \begin{align}
-1+\dfrac{1}{(n+1)\log n}<\dfrac{1}{\log n}\sum_{k=1}^n\dfrac{1}{k}<1+\dfrac{1}{\log n} \quad\cdots\text{③}
+1+\dfrac{1}{(n+1)\log n}<\dfrac{1}{\log n}\sum_{k=1}^n\dfrac{1}{k}<1+\dfrac{1}{\log n} \quad\cdots\text{③} 
 \end{align}
-③の両辺は$n\to\infty$で$1$に収束するから，はさみうちの定理から
+を得る．
+この両辺は$n\to\infty$で$1$に収束するから，はさみうちの定理から
 \begin{align}
 \lim_{n\to\infty}\dfrac{1}{\log n}\sum_{k=1}^n\dfrac{1}{k}=1
 \end{align}
+である．
 
-\textbf{(2)} $f_n(x)=\displaystyle\prod_{k=0}^n(x-k)$とおく．積の微分法から
+\paragraph{(2)}
+
+与えられた関数を
 \begin{align}
-f_n'(x)=(x-1)\cdots(x-n)+x(x-2)\cdots(x-n)+\cdots+x(x-1)\cdots(x-(n-1))
+ f_n(x)=\displaystyle\prod_{k=0}^n(x-k) \label{eq:3}
 \end{align}
-（各項は$k$番目の因子$(x-k)$を除いた積）．$0\le k\le n$なる整数$k$に対し$f_n(k)\ne0$（$x_n$は整数でない）だから，極値を与える$x=x_n$では$f_n(x_n)\ne0$であり，$f_n'(x_n)=0$の両辺を$f_n(x_n)$で割って
+とおくと積の微分法から
 \begin{align}
-0=\dfrac{1}{x_n}+\dfrac{1}{x_n-1}+\cdots+\dfrac{1}{x_n-n}
+f_n'(x)=(x-1)\cdots(x-n)+x(x-2)\cdots(x-n)+\cdots+x(x-1)\cdots(x-(n-1)) \label{eq:4}
 \end{align}
-すなわち
+となる．ここで各項は$k$番目の因子$(x-k)$を除いた積である．
+$y=f_n(x)$の極値を与える$x_n$は$f_n'(x)=0$の解である．すなわち
 \begin{align}
-\dfrac{1}{x_n}=\dfrac{1}{1-x_n}+\dfrac{1}{2-x_n}+\cdots+\dfrac{1}{n-x_n}
+ f_n'(x_n)=(x_n-1)\cdots(x_n-n)+x_n(x_n-2)\cdots(x_n-n)+\cdots+x_n(x_n-1)\cdots(x_n-(n-1)) = 0 \label{eq:5}
 \end{align}
-
-次に$0<x_n\le1/2$を示す．$f_n(0)=f_n(1)=0$（$x=0,1$がともに$f_n$の根）だから，平均値の定理（ロルの定理）より，$f_n'(c)=\dfrac{f_n(1)-f_n(0)}{1-0}=0$をみたす$c\in(0,1)$が存在する．$x_n$は極値を与える最小の$x$であり，この$c$は$(0,1)$内にあるので，$0<x_n<1$である．
-
-次に$1/2<x_n<1$と仮定すると，$1<1/x_n<2$であり，$0<1-x_n<1/2$より$1/(1-x_n)>2$，また$k\ge2$では$k-x_n>k-1\ge1>0$より$1/(k-x_n)>0$．したがって定義式の右辺は
+である．
+さて，\cref{eq:4}より$0\le k\le n$なる整数$k$に対し$f'_n(k)\ne 0$だから，$x_n$はこれらに該当せず，従って\cref{eq:3}より$f_n(x_n)\neq 0$だから\cref{eq:5}の両辺を$f_n(x_n)$で割って
 \begin{align}
-\dfrac{1}{1-x_n}+\dfrac{1}{2-x_n}+\cdots+\dfrac{1}{n-x_n}>\dfrac{1}{1-x_n}>2
+  &0=\dfrac{1}{x_n}+\dfrac{1}{x_n-1}+\cdots+\dfrac{1}{x_n-n} \\
+\therefore
+  &\dfrac{1}{x_n}=\dfrac{1}{1-x_n}+\dfrac{1}{2-x_n}+\cdots+\dfrac{1}{n-x_n} \label{eq:6}
 \end{align}
-となり，左辺$1/x_n<2$と矛盾する．よって$1/2<x_n<1$ではあり得ず，$0<x_n\le1/2$である．
+である．これで題意の前半は示された．
 
-
-\bigskip
-\noindent\textbf{[解2]}（(2)の別証明の一部：$f_n'(0)$，$f_n'(1/2)$を直接評価する方法）
-
-{\bf [解2]}
-$f_n(0)=(-1)(-2)\cdots(-n)=(-1)^n\,n!$
-
-$n=1$の時，$f_1(x)=x(x-1)$は放物線で，頂点（極値点）はちょうど$x=1/2$にあり，$x_1=1/2$．
-
-$n\ge2$の時，$f_n'(0)$と$f_n'(1/2)$を直接計算すると符号が異なることが確かめられ（$f_n'(0)f_n'(1/2)<0$），$f_n'$は連続だから中間値の定理により$f_n'(x)=0$となる$x$が$(0,1/2)$内に存在する．以上いずれの場合も，$0<x_n\le1/2$に極値を与える$x$がある．
-
-
-{\bf [解]}
-\textbf{(3)} $0<x_n\le1/2$より，$n$が十分大きいとして，各$k\ge1$で$k-1<k-x_n\le k-\dfrac{1}{2}$（$k\ge1$では$k-x_n<k$，$k\ge1$では$x_n\le1/2$から$k-x_n\ge k-1/2$）に注意すると，
+次に$0<x_n\le\dfrac{1}{2}$を示す．
+まず$x_n<0$と仮定すると\cref{eq:6}で左辺が負，右辺が正となって不適である．また前半の議論より$x_n \neq 0$だから$0 < x_n$である．\cref{eq:4}より
 \begin{align}
-\sum_{k=1}^n\dfrac{1}{k}<\dfrac{1}{x_n}=\sum_{k=1}^n\dfrac{1}{k-x_n}<\dfrac{1}{1-x_n}+\sum_{k=2}^n\dfrac{1}{k-1}\le\dfrac{1}{1-1/2}+\sum_{k=2}^n\dfrac{1}{k-1}=2+\sum_{j=1}^{n-1}\dfrac{1}{j}
+ f'_n(0) &= (-1)(-2)\cdots (-n) = (-1)^{n}n! \label{eq:7}\\
+ f'_n\left(\dfrac{1}{2}\right) 
+   &= \left(\dfrac{1}{1/2}+\dfrac{1}{1/2-1}+\cdots+\dfrac{1}{1/2-n}\right)f_n\left(\dfrac{1}{2}\right) \\
+   &= \left(\dfrac{1}{1/2}+\dfrac{1}{1/2-1}+\cdots+\dfrac{1}{1/2-n}\right)\dfrac{(-1)^{n}}{2}\prod_{k=1}^{n}\left(k-\dfrac{1}{2}\right) \label{eq:8}
 \end{align}
-（左の不等式は$k-x_n<k$から$1/(k-x_n)>1/k$を各項について足し合わせたもの，右は$k\ge2$で$k-x_n>k-1$から$1/(k-x_n)<1/(k-1)$，$k=1$の項は$1/(1-x_n)\le1/(1-1/2)=2$による．）
-$\displaystyle\sum_{j=1}^{n-1}\dfrac{1}{j}=\sum_{k=1}^n\dfrac{1}{k}-\dfrac{1}{n}$だから
+である．$f'_n(x)$が連続であることにも注意すると，
+
+\subparagraph{$n=1$の時}
+
+\cref{eq:7,eq:8}より$f'_n(0)<0, f'_n(1/2)=0$より必ず$0<x \le \dfrac{1}{2}$に$f'_n(x)=0$なる$x$が存在するから
 \begin{align}
-\sum_{k=1}^n\dfrac{1}{k}<\dfrac{1}{x_n}<\sum_{k=1}^n\dfrac{1}{k}+2-\dfrac{1}{n}
+ 0< x_n \le \dfrac{1}{2}
 \end{align}
+である．
+
+\subparagraph{$n \ge 2$の時}
+
+この時は\cref{eq:7,eq:8}より
+\begin{align}
+ f'_n(0)f'_n\left(\dfrac{1}{2}\right) 
+   &= (-1)^{n}n!\left(\dfrac{1}{1/2}+\dfrac{1}{1/2-1}+\cdots+\dfrac{1}{1/2-n}\right)\dfrac{(-1)^{n}}{2}\prod_{k=1}^{n}\left(k-\dfrac{1}{2}\right) \\
+   &= \left(\dfrac{1}{1/2}+\dfrac{1}{1/2-1}+\cdots+\dfrac{1}{1/2-n}\right)\dfrac{n!}{2}\prod_{k=1}^{n}\left(k-\dfrac{1}{2}\right) 
+\end{align}
+において第一因子が負でそれ以外が正だから
+\begin{align}
+ f'_n(0)f'_n < 0
+\end{align}
+である．従って$0<x \le \dfrac{1}{2}$に$f'_n(x)=0$なる$x$が存在するから
+\begin{align}
+ 0< x_n \le \dfrac{1}{2}
+\end{align}
+である．
+\casesend
+
+以上からいずれの$n$に対しても$0<x_n \le \dfrac{1}{2}$である．
+
+\subparagraph{(3)}
+$n\to\infty$を考えるので$n$が十分大きいとする．
+\cref{eq:6}において$0<x_n\le \dfrac{1}{2}$より各$k\ge1$で
+\begin{align}
+ k - 1 < k-\dfrac{1}{2}\le k-x_n <  k
+\end{align}
+だから
+\begin{align}
+& \sum_{k=1}^n\dfrac{1}{k}<\dfrac{1}{x_n} \le \sum_{k=1}^n\dfrac{1}{k-1/2} < \dfrac{1}{1-1/2} + \sum_{k=2}^n\dfrac{1}{k-1} \\
+\therefore
+& \sum_{k=1}^n\dfrac{1}{k}<\dfrac{1}{x_n} < 2 + \sum_{k=1}^n\dfrac{1}{k} - \dfrac{1}{n}
+\end{align}
+となる．ただし2行目では右辺の和に$k-1\to k$の変換を行った．
 両辺を$\log n$（$>0$）で割って
 \begin{align}
-\dfrac{1}{\log n}\sum_{k=1}^n\dfrac{1}{k}<\dfrac{1}{x_n\log n}<\dfrac{1}{\log n}\sum_{k=1}^n\dfrac{1}{k}+\dfrac{1}{\log n}\left(2-\dfrac{1}{n}\right) \quad\cdots\text{⑦}
+\dfrac{1}{\log n}\sum_{k=1}^n\dfrac{1}{k}<\dfrac{1}{x_n\log n}<\dfrac{1}{\log n}\sum_{k=1}^n\dfrac{1}{k}+\dfrac{1}{\log n}\left(2-\dfrac{1}{n}\right) \quad\cdots\text{⑦} 
 \end{align}
-⑦の両辺は(1)から$n\to\infty$で$1$に収束するので，はさみうちの定理から
+を得る．この両辺は(1)から$n\to\infty$で$1$に収束するので，はさみうちの定理から
 \begin{align}
-\dfrac{1}{x_n\log n}\longrightarrow1 \quad(n\to\infty)
+\lim_{n\to\infty} \dfrac{1}{x_n\log n} = 1 
 \end{align}
-$1/x$は$x>0$で連続だから
+である．$1/x$は$x>0$で連続だから
 \begin{align}
-x_n\log n\longrightarrow1 \quad(n\to\infty)
+\lim_{n\to\infty} x_n\log n = 1
 \end{align}
+が求める極限値である．
+
+{\bf [別解]}
+(2)の後半部分，$0<x_n\le\dfrac{1}{2}$は平均値の定理を用いると以下のように少し簡単に評価できる．まず解答と同じように$0<x_n$の前提で，
+\begin{align}
+ f_n(0) = f_n(1) = 0
+\end{align}
+より，平均値の定理から$0<c<1$かつ
+\begin{align}
+ f'_n(c) = \dfrac{f_n(1)-f_n(0)}{1-0} = 0
+\end{align}
+を満たす実数$c$がある．よって$0<x_n<1$である．
+
+次に$\dfrac{1}{2}<x_n<1$と仮定すると
+\begin{align}
+ 1<\dfrac{1}{x_n}<2, 2<\dfrac{1}{1-x_n}, 0<\dfrac{1}{2-x_n}, \cdots, 0<\dfrac{1}{n-x_n}
+\end{align}
+より\cref{eq:6}の左辺が$2$より小さく，右辺が$2$より大きくなって矛盾する．以上より
+\begin{align}
+ 0 < x_n \le \dfrac{1}{2}
+\end{align}
+である．
+
 
 
 \end{document}
