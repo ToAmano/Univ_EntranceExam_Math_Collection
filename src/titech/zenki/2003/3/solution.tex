@@ -1,47 +1,187 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-$A,B,C$の位置ベクトルを$\vec a,\vec b,\vec c$とする．$P$は$AB$を$x:(1-x)$に内分するから$\vec p=(1-x)\vec a+x\vec b$，$Q$は$AC$を$y:(1-y)$に内分するから$\vec q=(1-y)\vec a+y\vec c$（$0\le x,y<1$）．
 
-$R$は直線$BQ$と直線$CP$の交点．$\vec r=t(1-x)\vec a+tx\vec b+(1-t)\vec c$（直線$CP$上，パラメータ$t$）とおき，直線$BQ$上の点としての表示 $\vec r=s(1-y)\vec a+(1-s)\vec b+sy\vec c$ と係数比較すると
-\begin{align}
-tx=1-s,\qquad 1-t=sy
-\end{align}
-から$s=1-tx$を代入して$1-t=(1-tx)y$，整理して$t=\dfrac{1-y}{1-xy}$．このとき$R$の重心座標（$A,B,C$に関する係数）は
-\begin{align}
-\left(\dfrac{(1-x)(1-y)}{1-xy},\ \dfrac{x(1-y)}{1-xy},\ \dfrac{y(1-x)}{1-xy}\right)
-\end{align}
-（和が$1$であることは容易に確かめられる）．
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=2.2, >=stealth]
 
-$M,N$はそれぞれ$AB,AC$の中点だから，重心座標で$M=(1/2,1/2,0)$，$N=(1/2,0,1/2)$，$A=(1,0,0)$．$R=\lambda A+\mu M+\nu N$（$\lambda+\mu+\nu=1$）とおくと，$R$の$B,C$成分から$\mu=2\cdot\dfrac{x(1-y)}{1-xy}$，$\nu=2\cdot\dfrac{y(1-x)}{1-xy}$であり，$R\in\triangle AMN$（境界を含む）となる条件は$\lambda,\mu,\nu\ge0$．$\mu,\nu\ge0$は$0\le x,y<1$から自動的にみたされるので，本質的な条件は$\lambda\ge0$，すなわち$R$の$A$成分が$1/2$以上であること：
-\begin{align}
-\dfrac{(1-x)(1-y)}{1-xy}\ge\dfrac{1}{2}
-\end{align}
-（$1-xy>0$に注意して）これは
-\begin{align}
-2(1-x)(1-y)\ge1-xy \iff 1-2x-2y+3xy\ge0 \iff y(2-3x)\le1-2x \quad\cdots\text{②}
-\end{align}
-と同値．
+  % --- 1. 三角形 ABC の頂点座標 ---
+  \coordinate (A) at (1.2, 2.2);
+  \coordinate (B) at (0, 0);
+  \coordinate (C) at (2.8, 0);
 
-$0\le x<1,\ 0\le y<1$，②をみたす$(x,y)$の領域を考える．$x=1/2$で右辺$=0$，$2-3x=1/2>0$だから$y\le0$，すなわち$y=0$のみ．$1/2<x<2/3$では右辺$1-2x<0$かつ$2-3x>0$だから$y\le(\text{負})$となり不適（$y\ge0$と両立しない）．$x\ge2/3$も同様に不適．よって，領域は$0\le x\le1/2$，$0\le y\le\dfrac{1-2x}{2-3x}$（境界を含む）である．
+  % --- 2. 内分パラメータ設定 (例: x = 0.4, y = 0.35) ---
+  \def\xVal{0.4}
+  \def\yVal{0.35}
 
-この面積$S$は
-\begin{align}
-S=\int_0^{1/2}\dfrac{1-2x}{2-3x}\,dx
-\end{align}
-$\dfrac{1-2x}{2-3x}=\dfrac{2}{3}+\dfrac{1}{3(3x-2)}$（実際，$\dfrac{2}{3}+\dfrac{1}{3(3x-2)}=\dfrac{2(3x-2)+1}{3(3x-2)}=\dfrac{6x-3}{3(3x-2)}=\dfrac{2x-1}{3x-2}=\dfrac{1-2x}{2-3x}$）だから
-\begin{align}
-\begin{split}
-S&=\int_0^{1/2}\left(\dfrac{2}{3}+\dfrac{1}{3(3x-2)}\right)dx=\left[\dfrac{2}{3}x+\dfrac{1}{9}\log|3x-2|\right]_0^{1/2} \\
-&=\left(\dfrac{1}{3}+\dfrac{1}{9}\log\dfrac{1}{2}\right)-\dfrac{1}{9}\log2=\dfrac{1}{3}+\dfrac{1}{9}\left(\log\dfrac{1}{2}-\log2\right)=\dfrac{1}{3}+\dfrac{1}{9}\log\dfrac{1}{4}=\dfrac{1}{3}-\dfrac{2}{9}\log2
-\end{split}
-\end{align}
+  % P on AB (AP:PB = x : 1-x), Q on AC (AQ:QC = y : 1-y)
+  \coordinate (P) at ($(A)!\xVal!(B)$);
+  \coordinate (Q) at ($(A)!\yVal!(C)$);
 
+  % 中点 M on AB, N on AC
+  \coordinate (M) at ($(A)!0.5!(B)$);
+  \coordinate (N) at ($(A)!0.5!(C)$);
+
+  % 交点 R のパラメータ s, t の計算: s = y(1-x)/(1-xy), t = x(1-y)/(1-xy)
+  \pgfmathsetmacro{\sVal}{\yVal*(1-\xVal)/(1 - \xVal*\yVal)}
+  \coordinate (R) at ($(P)!\sVal!(C)$);
+
+  % --- 3. 領域 triangle AMN の着色ハイライト ---
+  \fill[orange!15] (A) -- (M) -- (N) -- cycle;
+  \draw[thick, dashed, orange!80!black] (M) -- (N);
+
+  % --- 4. 三角形 ABC の描画 ---
+  \draw[thick] (A) -- (B) -- (C) -- cycle;
+
+  % --- 5. 線分 PC と BQ (交点が R) ---
+  \draw[thick, blue!80!black] (P) -- (C);
+  \draw[thick, blue!80!black] (B) -- (Q);
+
+  % ベクトル AR
+  \draw[->, thick, red!80!black] (A) -- (R) node[midway, left, font=\scriptsize] {$\vec{r}$};
+
+  % --- 6. 内分比のラベル ---
+  % AB 上: x と 1-x
+  \node[left, font=\scriptsize] at ($(A)!0.5!(P)$) {$x$};
+  \node[left, font=\scriptsize] at ($(P)!0.5!(B)$) {$1-x$};
+
+  % AC 上: y と 1-y
+  \node[right, font=\scriptsize] at ($(A)!0.5!(Q)$) {$y$};
+  \node[right, font=\scriptsize] at ($(Q)!0.5!(C)$) {$1-y$};
+
+  % --- 7. 各点のプロットとラベル ---
+  \fill[black] (A) circle (1.0pt) node[above] {$A$};
+  \fill[black] (B) circle (1.0pt) node[below left] {$B$};
+  \fill[black] (C) circle (1.0pt) node[below right] {$C$};
+  
+  \fill[blue!80!black] (P) circle (1.2pt) node[above left, font=\small] {$P$};
+  \fill[blue!80!black] (Q) circle (1.2pt) node[above right, font=\small] {$Q$};
+  \fill[red!80!black] (R) circle (1.5pt) node[below, font=\small] {$R$};
+
+  \fill[orange!90!black] (M) circle (1.0pt) node[left, font=\scriptsize] {$M$};
+  \fill[orange!90!black] (N) circle (1.0pt) node[right, font=\scriptsize] {$N$};
+
+  \node[orange!90!black, font=\scriptsize] at (1.2, 1.5) {$\triangle AMN$};
+
+\end{tikzpicture}
+\end{center}
+\caption{$\triangle ABC$ 内における点 $P, Q$ と交点 $R$、および条件となる領域 $\triangle AMN$}
+\end{figure}
+
+点$X$に対してベクトル$\overrightarrow{AX}=\vec{x}$と表す．
+$P$は$AB$を$x:(1-x)$に，$Q$は$AC$を$y:(1-y)$に，それぞれ内分するから
+\begin{align}
+ \begin{cases}
+   \vec{p} = x \vec{b} \\  
+   \vec{q} = y \vec{c} \\  
+ \end{cases} \label{eq:1}
+\end{align}
+である．$R$は線分$PC$の上の点だから$0\le s \le 1$なる実数$s$を用いて\cref{eq:1}を代入して
+\begin{align}
+ \vec{r} 
+   &= s \vec{c} + (1-s) \vec{p} \\
+   &= s \vec{c} + (1-s) x \vec{b} \label{eq:2}
+\end{align}
+と書ける．同様に$R$は線分$BQ$の上の点でもあるから$0\le t \le 1$なる実数$t$を用いて\cref{eq:1}を代入して
+\begin{align}
+\vec{r} 
+   &= t \vec{b} + (1-t) \vec{q} \\
+   &= t \vec{b} + (1-t) y \vec{c} \label{eq:3}
+\end{align}
+と書ける．
+$\vec{b},\vec{c}$は一次独立で，かつ\cref{eq:2,eq:3}が等しいので 係数を比較して
+\begin{align}
+ \begin{cases}
+  s = (1-t) y \\
+  t = (1-s) x
+ \end{cases} \\
+\therefore
+ \begin{cases}
+  s = \dfrac{y(1-x)}{1-xy} \\
+  t = \dfrac{x(1-y)}{1-xy}
+ \end{cases} \label{eq:4}
+\end{align}
+であり，\cref{eq:2}に代入して
+\begin{align}
+ \vec{r} = \dfrac{x(1-y)}{1-xy} \vec{b} + \dfrac{y(1-x)}{1-xy} \vec{c} \label{eq:5}
+\end{align}
+である．
+
+$0\le x,y < 1$より，これが$\triangle AMN$の内側にある条件は係数の和が$\dfrac{1}{2}$以下であることで
+\begin{align}
+ \dfrac{x(1-y)}{1-xy} + \dfrac{y(1-x)}{1-xy} \le \dfrac{1}{2} \label{eq:6}
+\end{align}
+である．$1-xy>0$より両辺にかけて整理して
+\begin{align}
+ 2\left(x+y-2xy\right) \le 1-xy \\
+ 2x+2y - 3xy \le 1 \\
+ y\left(2-3x\right) \le 1-2x \label{eq:7}
+\end{align}
+である．これと$0\le x,y < 1$を合わせて図示すると下図の斜線部（境界含む）である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=4.5, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-0.15, 0) -- (1.1, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.15) -- (0, 1.1) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % --- 2. 面積 S の斜線ハッチング ---
+  % 0 <= x <= 1/2 において y = (1-2x)/(2-3x) と x軸, y軸 で囲まれた部分
+  \begin{scope}
+    \clip (0, 0) rectangle (0.5, 0.6);
+    \fill[pattern=north east lines, pattern color=blue!70]
+      (0, 0.5) -- plot[domain=0:0.5, samples=50] (\x, {(1 - 2*\x)/(2 - 3*\x)})
+      -- (0.5, 0) -- (0,0) -- cycle;
+  \end{scope}
+
+  % --- 3. 境界曲線 y = (1-2x)/(2-3x) の描画 ---
+  \draw[ultra thick, blue!80!black, domain=0:0.5, samples=80] 
+    plot (\x, {(1 - 2*\x)/(2 - 3*\x)}) node[above right, font=\small] {$y = \dfrac{1-2x}{2-3x}$};
+
+  % 漸近線 x = 2/3 (破線)
+  \draw[dashed, gray!70] (2/3, -0.1) -- (2/3, 1.0) 
+    node[above, font=\scriptsize] {$x = \dfrac{2}{3}$};
+
+  % 正方形領域 0 <= x, y < 1 の枠（参考）
+  \draw[dashed, gray!40] (1, 0) -- (1, 1) -- (0, 1);
+  \node[below, font=\scriptsize, gray] at (1, 0) {$1$};
+  \node[left, font=\scriptsize, gray] at (0, 1) {$1$};
+
+  % --- 4. 境界・交点のプロットと目盛り ---
+  % y 軸切片 (0, 1/2)
+  \fill[black] (0, 0.5) circle (0.8pt) node[left, font=\small] {$\dfrac{1}{2}$};
+
+  % x 軸切片 (1/2, 0)
+  \fill[black] (0.5, 0) circle (0.8pt) node[below, font=\small] {$\dfrac{1}{2}$};
+
+  % 面積ラベル S
+  \node[blue!90!black, font=\large] at (0.16, 0.16) {$S$};
+
+\end{tikzpicture}
+\end{center}
+\caption{条件を満たす領域（斜線部・境界含む）}
+\end{figure}
+
+以下この領域の面積$S$を求める．領域の方程式は
+\begin{align}
+ y = \dfrac{1-2x}{2-3x}
+\end{align}
+だから求める面積は
+\begin{align}
+ S
+   &=\int_0^{1/2}\dfrac{1-2x}{2-3x}\,dx \\
+   &=\int_0^{1/2}\left(\dfrac{2}{3}+\dfrac{1}{3(3x-2)}\right)dx \\
+   &=\left[\dfrac{2}{3}x+\dfrac{1}{9}\log|3x-2|\right]_0^{1/2} \\
+   &=\dfrac{1}{3}+\dfrac{1}{9}\left(\log\dfrac{1}{2}-\log2 \right)\\
+   &=\dfrac{1}{3}-\dfrac{2}{9}\log2
+\end{align}
+である．
 
 \newpage
 

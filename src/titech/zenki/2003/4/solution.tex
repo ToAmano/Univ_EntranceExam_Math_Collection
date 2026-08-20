@@ -1,55 +1,104 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$f_1(x)=x^2$，$f_{n+1}(x)=f_n(x)+x^3f_n^{(2)}(x)$ ($f_n^{(k)}$は$k$次導関数) $\cdots$①
+与えられた漸化式
+\begin{align}
+ \begin{cases}
+  f_1(x)=x^2 \\
+  f_{n+1}(x)=f_n(x)+x^3f_n^{(2)}(x)
+ \end{cases} \label{eq:1}
+\end{align}
+について考える．
 
-\textbf{(1)} $f_n(x)$が$(n+1)$次多項式であり，その$x^{n+1}$の係数を$a_n$とかけることを帰納的に示す．$n=1$の時は$a_1=1$として成立するので，以下$n=k$での成立を仮定する．①から，$f_k(x)=a_kx^{k+1}+\cdots$（$k+1$次）なら，$f_k^{(2)}(x)$は$(k-1)$次で最高次の項は$k(k+1)a_kx^{k-1}$，したがって$x^3f_k^{(2)}(x)$の最高次は$k(k+1)a_kx^{k+2}$．これは$f_k(x)$（$k+1$次）より高次だから，$f_{k+1}(x)=f_k(x)+x^3f_k^{(2)}(x)$は$k+2=(k+1)+1$次であり，最高次係数は
-\begin{align}
-a_{k+1}=k(k+1)a_k
-\end{align}
-よって$n=k+1$でも成立する．以上から，$f_n(x)$は$(n+1)$次多項式である．
+\paragraph{(1)}
 
-漸化式$a_{k+1}=k(k+1)a_k$（$a_1=1$）をくり返し用いて
-\begin{align}
-a_n=\prod_{k=1}^{n-1}k(k+1)=\left(\prod_{k=1}^{n-1}k\right)\left(\prod_{k=1}^{n-1}(k+1)\right)=(n-1)!\cdot n!=\dfrac{(n!)^2}{n}
-\end{align}
+$f_n(x)$が$(n+1)$次多項式であり，その$x^{n+1}$の係数は$a_n=\dfrac{(n!)^2}{n}$とかけることを帰納的に示す．
 
-\textbf{(2)} $f_n(x)$の$x,x^2,x^3,x^4$の係数をそれぞれ$b_n,c_n,d_n,e_n$とおくと，$f_n^{(k)}(0)=k!\times(x^k\text{の係数})$である．$f_1(x)=x^2$から
+$n=1$の時は$a_1=1$で成立するので，以下$n=k$での成立を仮定する．
+\cref{eq:1}から$f_{k+1}(x)$の最高次は第二項からの寄与$(k+1)ka_kx^{k+1}$だからまず次数については成立する．係数については
 \begin{align}
-b_1=d_1=e_1=0,\qquad c_1=1 \quad\cdots\text{②}
+ a_{k+1} = (k+1)ka_k
 \end{align}
+だが，仮定から$a_k=\dfrac{(k!)^2}{k}$だから
+\begin{align}
+ a_{k+1} = \dfrac{(k!)^2(k+1)k}{k} = \dfrac{((k+1)!)^2}{k+1}
+\end{align}
+となり成立する．
 
-①の右辺$x^3f_n^{(2)}(x)$において，$f_n(x)=\sum_jp_jx^j$なら$f_n^{(2)}(x)=\sum_jp_jj(j-1)x^{j-2}$，$x^3f_n^{(2)}(x)=\sum_jp_jj(j-1)x^{j+1}$だから，$x^m$の係数は$p_{m-1}(m-1)(m-2)$（$f_n(x)$の$x^{m-1}$の係数の$(m-1)(m-2)$倍）．$m=1,2,3,4$に適用して
+以上から数学的帰納法により題意は示された．求めるべき係数は
 \begin{align}
-b_{n+1}=b_n,\qquad c_{n+1}=c_n,\qquad d_{n+1}=d_n+2c_n,\qquad e_{n+1}=e_n+6d_n \quad\cdots\text{③}
+ a_n = \dfrac{(n!)^2}{n}
 \end{align}
-（$m=1$：$(0)(-1)=0$，$m=2$：$(1)(0)=0$，$m=3$：$(2)(1)=2$，$m=4$：$(3)(2)=6$．）
+である．
 
-②③から
-\begin{align}
-b_n=0,\qquad c_n=1,\qquad d_n=2(n-1),\qquad e_n=6(n-1)(n-2) \quad\cdots\text{④}
-\end{align}
-（$d_n$は初項$0$，公差$2c_n=2$の等差数列．$e_n$は$e_{n+1}-e_n=6d_n=12(n-1)$の累積和：$e_n=\sum_{j=1}^{n-1}12(j-1)=12\cdot\dfrac{(n-2)(n-1)}{2}=6(n-1)(n-2)$．）
+\paragraph{(2)}
 
-$f_n(x)=\cdots+e_nx^4+d_nx^3+c_nx^2+b_nx+A$だから
+$f_n^{(k)}(0)$は$f_n^{(k)}(x)$の定数項だから
 \begin{align}
-\begin{split}
-f_n^{(1)}(x)&=\cdots+4e_nx^3+3d_nx^2+2c_nx+b_n,\quad f_n^{(2)}(x)=\cdots+12e_nx^2+6d_nx+2c_n, \\
-f_n^{(3)}(x)&=\cdots+24e_nx+6d_n,\qquad f_n^{(4)}(x)=\cdots+24e_n
-\end{split}
+ f_n^{(k)}(0)=k!\times(x^k\text{の係数}) \label{eq:2}
 \end{align}
-④から
+である．そこで，$f_n(x)$の$k$次の係数を$p^{k}_{n}$とおく．
+\cref{eq:1}より$f_1(x)=x^2$だから
 \begin{align}
-\begin{split}
-f_n^{(1)}(0)&=b_n=0,\qquad f_n^{(2)}(0)=2c_n=2, \\
-f_n^{(3)}(0)&=6d_n=12(n-1),\qquad f_n^{(4)}(0)=24e_n=144(n-1)(n-2)
-\end{split}
+ p^{1}_{1}=p^{3}_{1}=p^{4}_{1}=0,\qquad p^{2}_{1}=1 \label{eq:3}
 \end{align}
+である．
+
+\cref{eq:1}で$1$から$4$次までの部分を考えると
+\begin{align}
+ \sum_{k=1}^{4}p^{k}_{n+1}x^{k} = \sum_{k=1}^{4}p^{k}_{n}x^{k} + \left(6p^{3}_{n}x^4+2p^{2}_{n}x^3\right)
+\end{align}
+だから係数を比較して
+\begin{align}
+ \begin{cases}
+  p^{4}_{n+1} = p^{4}_{n} + 6p^{3}_{n} \\
+  p^{3}_{n+1} = p^{3}_{n} + 2p^{2}_{n} \\
+  p^{2}_{n+1} = p^{2}_{n} \\
+  p^{1}_{n+1} = p^{1}_{n}   
+ \end{cases} \label{eq:4}
+\end{align} 
+なる漸化式を得る．\cref{eq:3}と合わせて，まず
+\begin{align}
+ p^{1}_{n} = 0, p^{2}_{n} = 1 \label{eq:5}
+\end{align}
+である．これを\cref{eq:4}に代入して$p^{3}_{n}$について
+\begin{align}
+ p^{3}_{n+1} = p^{3}_{n} + 2
+\end{align}
+だから\cref{eq:3}より$p^{3}_{1}=0$と合わせて
+\begin{align}
+ p^{3}_{n} = 2(n-1) \label{eq:6}
+\end{align}
+である．これを\cref{eq:4}に代入して$p^{4}_{n}$について
+\begin{align}
+ p^{4}_{n+1} = p^{4}_{n} + 12(n-1)
+\end{align}
+だから\cref{eq:3}より$p^{4}_{1}=0$と合わせて
+\begin{align}
+ p^{4}_{n} = \sum_{k=1}^{n-1} 12(n-1) = 6(n-1)(n-2) \label{eq:7}
+\end{align}
+である．\cref{eq:5,eq:6,eq:7}をまとめて
+\begin{align}
+ \begin{cases}
+  p^{1}_{n} = 0 \\
+  p^{2}_{n} = 1 \\
+  p^{3}_{n} = 2(n-1) \\
+  p^{4}_{n} = 6(n-1)(n-2)
+ \end{cases}
+\end{align}
+である．
+
+従って\cref{eq:2}より求める値は
+\begin{align}
+\begin{cases}
+ f_n^{(1)}(0)=p^{1}_{n}=0 \\
+ f_n^{(2)}(0)=2p^{2}_{n}=2 \\
+ f_n^{(3)}(0)=6p^{3}_{n}=12(n-1) \\
+ f_n^{(4)}(0)=24p^{4}_{n}=144(n-1)(n-2)
+\end{cases}
+\end{align}
+である．
 
 
 \end{document}

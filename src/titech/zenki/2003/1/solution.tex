@@ -1,50 +1,173 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$C:y=f(x)=-x^3+ax^2+bx$（$a>0$）とし，$y=mx$（$m\in\mathbb R$）が$C$と2点を共有するとする．この時
+\paragraph{(1)}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.8, >=stealth]
+
+  % --- 1. パラメータ設定 (例: a = 2, b = 0.5) ---
+  \def\aVal{2.0}
+  \def\bVal{0.5}
+  
+  % 各直線の傾き: m1 = a^2/4 + b = 1.5, m2 = b = 0.5
+  \pgfmathsetmacro{\mOne}{\aVal*\aVal/4 + \bVal}
+  \pgfmathsetmacro{\mTwo}{\bVal}
+  \pgfmathsetmacro{\halfA}{\aVal/2} % a/2 = 1.0
+
+  % --- 2. 面積 S_1 の斜線ハッチング (0 <= x <= a/2 で l1 と C で囲まれる部分) ---
+  \begin{scope}
+    \fill[pattern=north east lines, pattern color=blue!70]
+      (0,0) -- plot[domain=0:\halfA, samples=50] (\x, {-\x*\x*\x + \aVal*\x*\x + \bVal*\x})
+      -- cycle;
+  \end{scope}
+
+  % --- 3. 面積 S_2 の斜線ハッチング (0 <= x <= a で C と l2 で囲まれる部分) ---
+  \begin{scope}
+    \fill[pattern=north west lines, pattern color=red!70]
+      (0,0) -- plot[domain=0:\aVal, samples=50] (\x, {-\x*\x*\x + \aVal*\x*\x + \bVal*\x})
+      -- (\aVal, {\mTwo*\aVal}) -- cycle;
+  \end{scope}
+
+  % --- 4. 座標軸 ---
+  \draw[->, thick] (-0.6, 0) -- (2.6, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.6) -- (0, 2.5) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % --- 5. 3次関数 C: y = -x^3 + ax^2 + bx の描画 ---
+  \draw[ultra thick, black, domain=-0.3:2.2, samples=100] 
+    plot (\x, {-\x*\x*\x + \aVal*\x*\x + \bVal*\x}) node[right] {$C: y = f(x)$};
+
+  % --- 6. 2本の接線 l1, l2 の描画 ---
+  % 直線 l1: y = (a^2/4 + b)x (x = a/2 で接する)
+  \draw[thick, blue!80!black, domain=-0.2:1.5] 
+    plot (\x, {\mOne*\x}) node[above left, font=\small] {$\ell_1$}; % : y = \left(\dfrac{a^2}{4}+b\right)x$};
+
+  % 直線 l2: y = bx (x = 0 で接し, x = a で交わる)
+  \draw[thick, red!80!black, domain=-0.4:2.4] 
+    plot (\x, {\mTwo*\x}) node[below right, font=\small] {$\ell_2$}; % : y = bx$};
+
+  % --- 7. 交点・接点のプロットとガイド線 ---
+  % 接点 (a/2, f(a/2)) on l1
+  \coordinate (T1) at (\halfA, {\mOne*\halfA});
+  \draw[dashed, gray] (\halfA, 0) node[below, black, font=\small] {$\dfrac{a}{2}$} -- (T1);
+  \fill[blue!80!black] (T1) circle (1.5pt);
+
+  % 交点 (a, f(a)) on l2
+  \coordinate (T2) at (\aVal, {\mTwo*\aVal});
+  \draw[dashed, gray] (\aVal, 0) node[below, black, font=\small] {$a$} -- (T2);
+  \fill[red!80!black] (T2) circle (1.5pt);
+
+  % 原点 (接点 on l2, 交点 on l1)
+  \fill[black] (0,0) circle (1.5pt);
+
+  % --- 8. 面積ラベル ---
+  \node[blue!90!black, font=\bfseries] at (0.45, 0.75) {$S_1$};
+  \node[red!90!black, font=\bfseries] at (1.35, 0.95) {$S_2$};
+
+\end{tikzpicture}
+\end{center}
+\caption{3次曲線 $C$ と2本の接線 $\ell_1, \ell_2$ および囲まれる面積 $S_1, S_2$}
+\end{figure}
+
+題意の三次関数を
 \begin{align}
--x^3+ax^2+bx=mx \iff x^3-ax^2+(m-b)x=0 \iff x\left\{x^2-ax+(m-b)\right\}=0 \quad\cdots\text{①}
+ C:y=f(x)=-x^3+ax^2+bx \quad (a>0) \label{eq:1}
 \end{align}
+とする．原点を通る直線を
+\begin{align}
+ y=mx \quad (m\in\mathbb R) \label{eq:2}
+\end{align}
+とおいて，これが$C$と2点を共有するとする．
+すると\cref{eq:1,eq:2}を連立した$x$の方程式がちょうど二つの異なる実数解を持つ：
+\begin{align}
+ & -x^3+ax^2+bx=mx \\
+ & x^3-ax^2+(m-b)x=0 \\
+ & x\left\{x^2-ax+(m-b)\right\}=0 \quad\cdots\text{①} \label{eq:3}
+\end{align}
+これは$x=0$を必ず解を持つので，残りの二次方程式
+\begin{align}
+ x^2-ax+(m-b) = 0 \label{eq:4}
+\end{align}
+が$x=0$と$x\neq 0$に解を持つか，あるいは$x\neq 0$に重解を持つかのいずれかである．
 
-\textbf{(1)} \subparagraph{$1^\circ$ $x^2-ax+m-b=0$が$x=0$を解に持つ時：} 代入して$m=b$．この時方程式は$x^2-ax=0$すなわち$x(x-a)=0$となり，残りの解は$x=a\ne0$（$a>0$）．①全体の解は$\{0,a\}$（$x=0$は重解），ちょうど2点を共有する．
+\subparagraph{$1^\circ$ $x^2-ax+m-b=0$が$x=0$を解に持つ時：}
 
-\subparagraph{$2^\circ$ $x^2-ax+m-b=0$が$x\ne0$に重解を持つ時：} 判別式$=0$：$a^2-4(m-b)=0$，すなわち$m=\dfrac{1}{4}a^2+b$．この時の重解は$x=\dfrac{a}{2}\ne0$（$a>0$）．①全体の解は$\{0,a/2\}$（$a/2$が重解），ちょうど2点を共有する．
+\cref{eq:4}に$x=0$を代入して
+\begin{align}
+ m = b
+\end{align}
+である．これを\cref{eq:4}に代入して
+\begin{align}
+ &x^2-ax=0 \\
+ &x(x-a)=0 \\
+ & x = 0, a
+\end{align}
+である．ここで\cref{eq:1}より$a>0$だから\cref{eq:3}の全体の解は$\{0,a\}$（$x=0$は重解）となりちょうど2点を共有する．
+
+\subparagraph{$2^\circ$ $x^2-ax+m-b=0$が$x\ne0$に重解を持つ時：} 
+
+まず\cref{eq:4}の判別式$D$が$0$であるから
+\begin{align}
+ a^2-4(m-b)=0 \quad \therefore m=\dfrac{1}{4}a^2+b
+\end{align}
+である．この時の重解は$x=\dfrac{a}{2}\ne0$（$a>0$）である．
+よって\cref{eq:3}の解は$\{0,a/2\}$（$a/2$が重解）となりちょうど2点を共有する．
 \casesend
 
 以上から，もとめる2本の直線は
 \begin{align}
 y=bx,\qquad y=\left(\dfrac{1}{4}a^2+b\right)x
 \end{align}
+である．
 
-\textbf{(2)} $\dfrac{1}{4}a^2>0$（$a>0$）だから，傾きの大きい方は$\ell_1:y=\left(\dfrac{1}{4}a^2+b\right)x$，小さい方は$\ell_2:y=bx$．
+\paragraph{(2)}
 
-$\ell_2$と$C$の交点は$x=0$（重解，接点）と$x=a$．$C$と$\ell_2$の差
+$\dfrac{1}{4}a^2>0$（$a>0$）だから，傾きの大きい方は
 \begin{align}
-f(x)-bx=-x^3+ax^2=x^2(a-x)
+ \ell_1: y=\ell_1(x) = \left(\dfrac{1}{4}a^2+b\right)x
 \end{align}
-は$[0,a]$で符号一定だから
+であり，小さい方は
 \begin{align}
-S_2=\left|\int_0^a x^2(a-x)\,dx\right|=\left|a\cdot\dfrac{a^3}{3}-\dfrac{a^4}{4}\right|=\dfrac{1}{12}a^4
+ \ell_2: y=\ell_2(x) = bx
 \end{align}
+である．$S_1,S_2$を図示すると下図の斜線部となる．
 
-$\ell_1$と$C$の交点は$x=0$と$x=a/2$（重解，接点）．$\ell_1$と$C$の差
-\begin{align}
-\left(\dfrac{1}{4}a^2+b\right)x-f(x)=x^3-ax^2+\dfrac{1}{4}a^2x=x\left(x-\dfrac{a}{2}\right)^2
-\end{align}
-は$[0,a/2]$で符号一定だから
-\begin{align}
-S_1=\left|\int_0^{a/2}x\left(x-\dfrac{a}{2}\right)^2dx\right|=\dfrac{1}{12}\left(\dfrac{a}{2}\right)^4=\dfrac{1}{192}a^4
-\end{align}
 
-したがって
+$\ell_2$と$C$の交点は$x=0$（重解，接点）と$x=a$だから二つの関数の差は
+\begin{align}
+ f(x) - \ell_2(x) = x^2(a-x)
+\end{align}
+であり，$[0,a]$で符号は正で一定だから$S_2$は
+\begin{align}
+S_2
+  &= \int_0^a \left(f(x) - \ell_2(x)\right)\,dx \\
+  &= \int_0^a x^2(a-x)\,dx \\
+  &= \dfrac{1}{12}a^4 \label{eq:5}
+\end{align}
+である．
+
+同様に$\ell_1$と$C$の交点は$x=0$と$x=a/2$（重解，接点）だから二つの関数の差は
+\begin{align}
+ \ell_1(x) - f(x) = x\left(x-\dfrac{a}{2}\right)^2
+\end{align}
+であり，$[0,a/2]$で符号は正で一定だから$S_1$は
+\begin{align}
+S_1
+ &=\int_0^{a/2}\left(\ell_1(x) - f(x)\right) dx \\
+ &=\int_0^{a/2}x\left(x-\dfrac{a}{2}\right)^2dx \\
+ &=\dfrac{1}{12}\left(\dfrac{a}{2}\right)^4 \\
+ &=\dfrac{1}{192}a^4 \label{eq:6}
+\end{align}
+である．
+
+したがって\cref{eq:5,eq:6}から求める面積の比は
 \begin{align}
 S_1:S_2=\dfrac{1}{192}:\dfrac{1}{12}=1:16
 \end{align}
+である．
 
 
 \newpage
