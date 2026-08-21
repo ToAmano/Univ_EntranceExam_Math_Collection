@@ -11,6 +11,21 @@ from TexSoup import TexSoup
 
 TOPIC_TAGS_PATH = "data/topic_tags.yaml"
 
+UNIV_JA = {"titech": "東京工業大学", "utokyo": "東京大学", "ukyoto": "京都大学"}
+CATEGORY_JA = {"zenki": "前期", "kouki": "後期"}
+TYPE_JA = {"problem": "問題", "solution": "解答解説"}
+
+
+def build_title(uni, category, year, q_num, type_str):
+    """Web側の解答ページ見出し（web/src/pages/solutions/[...slug].astro の
+    pageTitle フォールバック）と表記を揃えた、自然な日本語タイトルを組み立てる。"""
+    if q_num == "0" or type_str == "summary":
+        return f"{year}年 全体サマリ"
+    univ_ja = UNIV_JA.get(uni, uni)
+    cat_ja = CATEGORY_JA.get(category, category)
+    type_ja = TYPE_JA.get(type_str, type_str)
+    return f"{univ_ja} {cat_ja} {year}年 第{q_num}問 ({type_ja})"
+
 
 def load_topic_tags():
     """data/topic_tags.yaml を読み込み、'uni/category/year/question' キーで
@@ -863,12 +878,8 @@ def process_all_src():
                 parts = os.path.normpath(root).split(os.sep)
                 if len(parts) == 5:
                     uni, category, year, q_num = parts[1], parts[2], parts[3], parts[4]
-                    if q_num == "0":
-                        type_str = "summary"
-                        title_str = f"{year}年 全体サマリ"
-                    else:
-                        type_str = "problem" if file == "problem.tex" else "solution"
-                        title_str = f"{uni.upper()} {year} {category} Q{q_num} ({type_str})"
+                    type_str = "summary" if q_num == "0" else ("problem" if file == "problem.tex" else "solution")
+                    title_str = build_title(uni, category, year, q_num, type_str)
 
                     frontmatter = {
                         "university": uni,
@@ -915,12 +926,8 @@ if __name__ == '__main__':
             # src/titech/zenki/2000/1/problem.tex
             uni, category, year, q_num = parts[1], parts[2], parts[3], parts[4]
             file = parts[5]
-            if q_num == "0":
-                type_str = "summary"
-                title_str = f"{year}年 全体サマリ"
-            else:
-                type_str = "problem" if file == "problem.tex" else "solution"
-                title_str = f"{uni.upper()} {year} {category} Q{q_num} ({type_str})"
+            type_str = "summary" if q_num == "0" else ("problem" if file == "problem.tex" else "solution")
+            title_str = build_title(uni, category, year, q_num, type_str)
             frontmatter = {
                 "university": uni,
                 "category": category,
