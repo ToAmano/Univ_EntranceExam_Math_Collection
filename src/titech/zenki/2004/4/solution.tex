@@ -1,60 +1,238 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-2球は$x^2+y^2+z^2=r^2$，$(x-1)^2+y^2+z^2=1-r^2$．辺々引くと，交面は$x=r^2$である（$0<r<1$より$0<r^2<r<1$）．
+題意の二つの球の方程式は
+\begin{align}
+ \begin{cases}
+  C_1: x^2+y^2+z^2=r^2 \\
+  C_2: (x-1)^2+y^2+z^2=1-r^2 
+ \end{cases} \label{eq:1}
+\end{align}
+である．辺々引くと
+\begin{align}
+ 2x-1 = 2r^2-1 \quad x = r^2 \label{eq:2}
+\end{align}
+だからこれが交面である．
 
-\textbf{(1)} 交わりの立体は，球1（中心$0$，半径$r$）の$x\ge r^2$の部分（球欠）と，球2（中心$1$，半径$\sqrt{1-r^2}$）の$x\le r^2$の部分（球欠）の和である．球$i$を単位球に正規化した時の対応する球欠の体積（$\pi$倍する前）を$V_i$とすると，スケーリングにより
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=3.2, >=stealth]
+
+  % --- 1. パラメータ設定 (r = 1/sqrt(2) ≒ 0.7071) ---
+  \pgfmathsetmacro{\rVal}{1/sqrt(2)}
+  \pgfmathsetmacro{\rSq}{\rVal*\rVal} % x = r^2 = 0.5
+  \pgfmathsetmacro{\rTwo}{sqrt(1 - \rSq)} % 半径 sqrt(1-r^2) = 1/sqrt(2)
+  \pgfmathsetmacro{\yIntersect}{sqrt(\rSq - \rSq*\rSq)} % y = sqrt(r^2 - r^4) = 0.5
+
+  % 中心座標
+  \coordinate (O1) at (0, 0);
+  \coordinate (O2) at (1, 0);
+
+  % --- 2. 共通部分の斜線ハッチング ---
+  % 円 C1 の右側 (x >= r^2) かつ 円 C2 の左側 (x <= r^2)
+  \begin{scope}
+    \clip (O1) circle (\rVal);
+    \clip (O2) circle (\rTwo);
+    \fill[pattern=north east lines, pattern color=blue!70] 
+      (-0.2, -0.9) rectangle (1.2, 0.9);
+  \end{scope}
+
+  % --- 3. 座標軸 ---
+  \draw[->, thick] (-0.9, 0) -- (1.9, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.9) -- (0, 0.9) node[above] {$y$};
+  \node[below left, font=\small] at (O1) {$O$};
+
+  % --- 4. 2つの円の描画 ---
+  % 円 C1 (中心 原点, 半径 r)
+  \draw[ultra thick, blue!80!black] (O1) circle (\rVal);
+  \node[blue!80!black, font=\small, above left] at (-0.45, 0.5) {$C_1: x^2+y^2=r^2$};
+
+  % 円 C2 (中心 (1,0), 半径 sqrt(1-r^2))
+  \draw[ultra thick, red!80!black] (O2) circle (\rTwo);
+  \node[red!80!black, font=\small, above right] at (1.45, 0.5) {$C_2: (x-1)^2+y^2=1-r^2$};
+
+  % --- 5. 交線 x = r^2 (破線) ---
+  \draw[thick, dashed, purple!80!black] (\rSq, -0.75) -- (\rSq, 0.75)
+    node[above, font=\small] {交線 $x = r^2$};
+
+  % --- 6. 各点のプロットと目盛り ---
+  % 中心 O2(1, 0)
+  \fill[black] (O2) circle (1.0pt) node[below] {$1$};
+
+  % 交点の x 座標 x = r^2
+  \fill[purple!80!black] (\rSq, 0) circle (1.0pt) node[below left, font=\small] {$r^2$};
+
+  % 2つの交点
+  \coordinate (IntTop) at (\rSq, \yIntersect);
+  \coordinate (IntBot) at (\rSq, -\yIntersect);
+  \fill[purple!80!black] (IntTop) circle (1.2pt);
+  \fill[purple!80!black] (IntBot) circle (1.2pt);
+
+  % 半径の注記 (C1: 半径 r, C2: 半径 sqrt(1-r^2))
+  \draw[<->, thin, blue!80!black] (O1) -- ({-\rVal*cos(45)}, {-\rVal*sin(45)})
+    node[midway, above left, font=\scriptsize] {$r$};
+  \draw[<->, thin, red!80!black] (O2) -- ({1 + \rTwo*cos(45)}, {-\rTwo*sin(45)})
+    node[midway, above right, font=\scriptsize] {$\sqrt{1-r^2}$};
+
+\end{tikzpicture}
+\end{center}
+\caption{$xy$ 平面における2つの円 $C_1, C_2$ と共通部分および交線 $x=r^2$}
+\end{figure}
+
+\paragraph{(1)}
+
+共通部分の立体は，球$C_1$の$x\ge r^2$の部分と，球$C_2$の$x\le r^2$の部分の和である．球$i$を単位球に正規化した時の対応する球欠の体積（$\pi$倍する前）を$V_i$とすると，スケーリングにより
 \begin{align}
-V(r)=r^3V_1+(1-r^2)^{3/2}V_2 \quad\cdots\text{①}
+V(r)=r^3V_1+(1-r^2)^{3/2}V_2 \quad\cdots\text{①} \label{eq:3}
 \end{align}
-球1の交面$x=r^2$は，半径$r$で正規化すると$x'=r^2/r=r$（単位球上）に対応するので
+である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=2.2, >=stealth]
+
+  % パラメータ設定 (例: r = 0.6 -> sqrt(1-r^2) = 0.8)
+  \def\rVal{0.6}
+  \def\rTwo{0.8}
+
+  % ========================================================
+  % 1. 左図: 球欠 V1 (交面 x = r, 積分区間 [r, 1])
+  % ========================================================
+  \begin{scope}[shift={(0, 0)}]
+    \node[above, font=\bfseries] at (0, 1.35) {球 $C_1$ 側の正規化（$V_1$）};
+
+    % 球欠部分の斜線ハッチング (r <= x <= 1)
+    \begin{scope}
+      \clip (\rVal, -1.0) rectangle (1.1, 1.0);
+      \fill[pattern=north east lines, pattern color=blue!70] (0,0) circle (1.0);
+    \end{scope}
+
+    % 座標軸
+    \draw[->, thick] (-1.3, 0) -- (1.4, 0) node[right] {$x$};
+    \draw[->, thick] (0, -1.3) -- (0, 1.4) node[above] {$y$};
+    \node[below left, font=\small] at (0,0) {$O$};
+
+    % 単位円 x^2 + y^2 = 1
+    \draw[ultra thick, blue!80!black] (0,0) circle (1.0);
+    \node[blue!80!black, font=\small, above left] at (-0.6, 0.7) {$x^2+y^2=1$};
+
+    % 切り口 x = r (破線)
+    \pgfmathsetmacro{\yCutOne}{sqrt(1 - \rVal*\rVal)}
+    \draw[thick, dashed, red!80!black] (\rVal, -\yCutOne) -- (\rVal, \yCutOne);
+    \draw[dashed, gray] (\rVal, -\yCutOne) -- (\rVal, -1.1);
+
+    % 目盛りとラベル
+    \fill[red!80!black] (\rVal, 0) circle (1.2pt) node[below left, font=\small] {$r$};
+    \fill[black] (1, 0) circle (1.0pt) node[below right, font=\small] {$1$};
+    \fill[black] (0, 1) circle (1.0pt) node[above left, font=\small] {$1$};
+
+    % 球欠ラベル
+    \node[blue!80!black, font=\large] at (0.8, 0.3) {$V_1$};
+  \end{scope}
+
+  % ========================================================
+  % 2. 右図: 球欠 V2 (交面 x = sqrt(1-r^2), 積分区間 [sqrt(1-r^2), 1])
+  % ========================================================
+  \begin{scope}[shift={(3.4, 0)}]
+    \node[above, font=\bfseries] at (0, 1.35) {球 $C_2$ 側の正規化（$V_2$）};
+
+    % 球欠部分の斜線ハッチング (sqrt(1-r^2) <= x <= 1)
+    \begin{scope}
+      \clip (\rTwo, -1.0) rectangle (1.1, 1.0);
+      \fill[pattern=north east lines, pattern color=blue!70] (0,0) circle (1.0);
+    \end{scope}
+
+    % 座標軸
+    \draw[->, thick] (-1.3, 0) -- (1.4, 0) node[right] {$x$};
+    \draw[->, thick] (0, -1.3) -- (0, 1.4) node[above] {$y$};
+    \node[below left, font=\small] at (0,0) {$O$};
+
+    % 単位円 x^2 + y^2 = 1
+    \draw[ultra thick, blue!80!black] (0,0) circle (1.0);
+    \node[blue!80!black, font=\small, above left] at (-0.6, 0.7) {$x^2+y^2=1$};
+
+    % 切り口 x = sqrt(1-r^2) (破線)
+    \pgfmathsetmacro{\yCutTwo}{sqrt(1 - \rTwo*\rTwo)}
+    \draw[thick, dashed, red!80!black] (\rTwo, -\yCutTwo) -- (\rTwo, \yCutTwo);
+    \draw[dashed, gray] (\rTwo, -\yCutTwo) -- (\rTwo, -1.1);
+
+    % 目盛りとラベル
+    \fill[red!80!black] (\rTwo, 0) circle (1.2pt) node[below left, font=\small] {$\sqrt{1-r^2}$};
+    \fill[black] (1, 0) circle (1.0pt) node[below right, font=\small] {$1$};
+    \fill[black] (0, 1) circle (1.0pt) node[above left, font=\small] {$1$};
+
+    % 球欠ラベル
+    \node[blue!80!black, font=\large] at (0.9, 0.3) {$V_2$};
+  \end{scope}
+
+\end{tikzpicture}
+\end{center}
+\caption{単位球に正規化したときの球欠 $V_1$（区間 $[r, 1]$）と $V_2$（区間 $[\sqrt{1-r^2}, 1]$）の比較}
+\end{figure}
+
+球$C_1$の交面$x=r^2$は正規化すると$x'=r^2/r=r$に対応するので
 \begin{align}
-V_1=\int_r^1(1-x^2)\,dx=\left[x-\dfrac{x^3}{3}\right]_r^1=\dfrac{2}{3}-r+\dfrac{1}{3}r^3
+ \dfrac{V_1}{\pi}
+  &=\int_r^1(1-x^2)\,dx \\
+  &=\left[x-\dfrac{x^3}{3}\right]_r^1 \\
+  &=\dfrac{2}{3}-r+\dfrac{1}{3}r^3 \label{eq:4}
 \end{align}
-球2の交面$x=r^2$は，中心$1$，半径$d:=\sqrt{1-r^2}$で正規化すると，中心からの距離が$1-r^2=d^2$，正規化座標で$-d$に対応するので，対称性から同じ形で
+である．
+
+同様に球$C_2$の交面$x=r^2$は中心原点で正規化すると$x'=\dfrac{1-r^2}{\sqrt{1-r^2}}=\sqrt{1-r^2}$に対応するので\cref{eq:4}と同じ形で
 \begin{align}
-V_2=\dfrac{2}{3}-d+\dfrac{1}{3}d^3 \quad(d=\sqrt{1-r^2})
+\dfrac{V_2}{\pi}
+  &=\dfrac{2}{3}-\sqrt{1-r^2}+\dfrac{1}{3}\sqrt{1-r^2}^3 \label{eq:5}
 \end{align}
-①に代入して（$d^2=1-r^2,\ d^4=(1-r^2)^2,\ d^6=(1-r^2)^3$に注意）
+である．
+
+\cref{eq:4,eq:5}を\cref{eq:3}に代入して
+\begin{align}
+ \dfrac{V(r)}{\pi}
+  &=r^3\left(\dfrac{2}{3}-r+\dfrac{1}{3}r^3\right)+\sqrt{1-r^2}^3\left(\dfrac{2}{3}-\sqrt{1-r^2}+\dfrac{1}{3}\sqrt{1-r^2}^3\right) \\
+  &=\dfrac{2}{3}r^3-r^4+\dfrac{1}{3}r^6+\dfrac{2}{3}\sqrt{1-r^2}^3-(1-r^2)^2+\dfrac{1}{3}(1-r^2)^3 \\
+\therefore
+ V(r)&=\left(-r^4+\dfrac{2}{3}r^3+r^2-\dfrac{2}{3}+\dfrac{2}{3}(1-r^2)^{3/2}\right)\pi  \label{eq:6}
+\end{align}
+である．
+
+\paragraph{(2)}
+
+$V(r)$の挙動を調べるため一階微分を計算すると
 \begin{align}
 \begin{split}
-V(r)&=r^3\left(\dfrac{2}{3}-r+\dfrac{1}{3}r^3\right)+d^3\left(\dfrac{2}{3}-d+\dfrac{1}{3}d^3\right) \\
-&=\dfrac{2}{3}r^3-r^4+\dfrac{1}{3}r^6+\dfrac{2}{3}d^3-(1-r^2)^2+\dfrac{1}{3}(1-r^2)^3
+\dfrac{V'(r)}{\pi}
+  &=-4r^3+2r^2+2r+\dfrac{2}{3}\cdot\dfrac{3}{2}(1-r^2)^{1/2}\cdot(-2r) \\
+  &=-4r^3+2r^2+2r-2r(1-r^2)^{1/2} \\
+  &=-2r\left[2r^2-r-1+(1-r^2)^{1/2}\right]
 \end{split}
 \end{align}
-整理して（$\pi$倍を忘れずに）
+である．
+$0<r<1$では$-2r<0$だから，$f(r):=2r^2-r-1+\sqrt{1-r^2}$とおくと，$V'(r)$の符号は$-f(r)$の符号に等しい．この符号について
 \begin{align}
-V(r)=\left(-r^4+\dfrac{2}{3}r^3+r^2-\dfrac{2}{3}+\dfrac{2}{3}(1-r^2)^{3/2}\right)\pi
+ f(r)\ge0 \iff \sqrt{1-r^2} \ge 1+r-2r^2 
 \end{align}
-
-\textbf{(2)}
+この右辺は$0<r<1$で正だから両辺二乗してよく，整理を続けて
 \begin{align}
 \begin{split}
-\dfrac{V'(r)}{\pi}&=-4r^3+2r^2+2r+\dfrac{2}{3}\cdot\dfrac{3}{2}(1-r^2)^{1/2}\cdot(-2r)=-4r^3+2r^2+2r-2r(1-r^2)^{1/2} \\
-&=-2r\left[2r^2-r-1+(1-r^2)^{1/2}\right]
+ 1-r^2& \ge(1+r-2r^2)^2\\
+      &=4r^4-4r^2(r+1)+(r+1)^2 \\
+      &=4r^4-4r^3-3r^2+2r+1 \\
+\iff
+ & 4r^4-4r^3-2r^2+2r\le 0 \\
+\iff
+ & 2r(2r^3-2r^2-r+1)\le0 \\
+\iff
+ &2r(r-1)(2r^2-1)\le 0
 \end{split}
 \end{align}
-$0<r<1$では$-2r<0$だから，$f(r):=2r^2-r-1+\sqrt{1-r^2}$とおくと，$V'(r)$の符号は$-f(r)$の符号に等しい．
+を得る．従って$V(r)$の増減表は以下のようになる．
 
-$f(r)\ge0\iff\sqrt{1-r^2}\ge1+r-2r^2$．$0<r<1$で右辺が正であることを確かめた上で両辺を2乗すると
-\begin{align}
-\begin{split}
-1-r^2&\ge(1+r-2r^2)^2=4r^4-4r^2(r+1)+(r+1)^2=4r^4-4r^3-3r^2+2r+1 \\
-&\iff4r^4-4r^3-2r^2+2r\le0\iff2r(2r^3-2r^2-r+1)\le0\iff2r(r-1)(2r^2-1)\le0
-\end{split}
-\end{align}
-（$2r^3-2r^2-r+1=(r-1)(2r^2-1)$は$r=1$が根であることを確認して因数分解）．$0<r<1$では$2r>0,\ (r-1)<0$だから$2r(r-1)<0$，したがって
-\begin{align}
-2r(r-1)(2r^2-1)\le0\iff2r^2-1\ge0\iff r\ge\dfrac{1}{\sqrt{2}}
-\end{align}
-すなわち，$f(r)\ge0\iff r\ge1/\sqrt{2}$．下表を得る．
 \begin{table}[htb]
   \centering
+\caption{$V(r)$の増減表}
 \begin{tabular}{c|ccccc}
 $r$ & $0$ & & $1/\sqrt{2}$ & & $1$ \\
 \hline
@@ -65,15 +243,17 @@ $V'$ & & $+$ & $0$ & $-$ & \\
 $V$ & & $\nearrow$ & & $\searrow$ &
 \end{tabular}
 \end{table}
-よって$V(r)$は$r=1/\sqrt{2}=\sqrt{2}/2$で最大．この時$r^2=1/2,\ r^3=\sqrt{2}/4,\ r^4=1/4,\ 1-r^2=1/2,\ (1-r^2)^{3/2}=\sqrt{2}/4$だから
-\begin{align}
-\dfrac{V(1/\sqrt{2})}{\pi}=-\dfrac{1}{4}+\dfrac{2}{3}\cdot\dfrac{\sqrt{2}}{4}+\dfrac{1}{2}-\dfrac{2}{3}+\dfrac{2}{3}\cdot\dfrac{\sqrt{2}}{4}=\left(-\dfrac{1}{4}+\dfrac{1}{2}-\dfrac{2}{3}\right)+\dfrac{4}{3}\cdot\dfrac{\sqrt{2}}{4}=-\dfrac{5}{12}+\dfrac{\sqrt{2}}{3}
-\end{align}
-したがって，$r=\dfrac{\sqrt{2}}{2}$で最大値
-\begin{align}
-\max V=\left(\dfrac{\sqrt{2}}{3}-\dfrac{5}{12}\right)\pi
-\end{align}
-をとる．
 
+よって$V(r)$は$r=1/\sqrt{2}=\sqrt{2}/2$で最大値をとる．\cref{eq:6}に代入してこの時の最大値は
+$r^2=1/2,\ r^3=\sqrt{2}/4,\ r^4=1/4,\ 1-r^2=1/2,\ (1-r^2)^{3/2}=\sqrt{2}/4$だから
+\begin{align}
+\dfrac{V(1/\sqrt{2})}{\pi}
+  &=-\dfrac{1}{4}+\dfrac{2}{3}\cdot\dfrac{\sqrt{2}}{4}+\dfrac{1}{2}-\dfrac{2}{3}+\dfrac{2}{3}\cdot\dfrac{\sqrt{2}}{4} \\
+  &=\left(-\dfrac{1}{4}+\dfrac{1}{2}-\dfrac{2}{3}\right)+\dfrac{4}{3}\cdot\dfrac{\sqrt{2}}{4} \\
+  &=-\dfrac{5}{12}+\dfrac{\sqrt{2}}{3} \\
+\therefore
+ \max V&= V\left(\dfrac{\sqrt{2}}{2}\right) = \left(\dfrac{\sqrt{2}}{3}-\dfrac{5}{12}\right)\pi
+\end{align}
+である．
 
 \end{document}

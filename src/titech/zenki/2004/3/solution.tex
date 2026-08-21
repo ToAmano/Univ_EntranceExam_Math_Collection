@@ -1,50 +1,158 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 コイン$P,Q,R$の表の出る確率を$p,q,r$とする．各回で，まず$P$を投げ，表（確率$p$）なら$Q$を，裏（確率$1-p$）なら$R$を選び，選んだコインの表（$Q$なら確率$q$，$R$なら確率$r$）で赤玉，裏で白玉を入れる．したがって1回の試行で
 \begin{align}
-P(Q\text{選択・赤})=pq,\quad P(Q\text{選択・白})=p(1-q),\quad P(R\text{選択・赤})=(1-p)r,\quad P(R\text{選択・白})=(1-p)(1-r)
+ \begin{cases}
+  P(Q\text{・赤})=pq \\
+  P(Q\text{・白})=p(1-q) \\
+  P(R\text{・赤})=(1-p)r \\
+  P(R\text{・白})=(1-p)(1-r)
+ \end{cases}
 \end{align}
+となる．
 
-\textbf{(1)} $n$回とも$Q$を選び，そのうち$k$回赤（$n-k$回白）となる確率は，どの$k$回が赤かを選ぶ場合の数をかけて
-\begin{align}
-{}_nC_k(pq)^k\{p(1-q)\}^{n-k}={}_nC_k\,p^n\,q^k(1-q)^{n-k}
-\end{align}
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[
+    scale=1.1,
+    >=stealth,
+    node distance=1.8cm,
+    font=\small
+  ]
 
-\textbf{(2)} $n$回とも赤玉が出る（コインの選択によらない）確率を求める．$k$回が「$Q$選択・赤」，残り$n-k$回が「$R$選択・赤」となる確率は${}_nC_k(pq)^k\{(1-p)r\}^{n-k}$であり，これを$k=0,\dots,n$について足すと，二項定理から
-\begin{align}
-\sum_{k=0}^n{}_nC_k(pq)^k\{(1-p)r\}^{n-k}=\{pq+(1-p)r\}^n
-\end{align}
-がもとめる確率である．
+  % --- 1. ノードの配置 (樹形図) ---
+  % スタート (コイン P)
+  \node[font=\normalsize\bfseries] (P) at (0, 0) {$P$};
 
-\textbf{(3)} $n=2004$，$p=q=\dfrac{1}{2}$，$r=\dfrac{1}{5}$とする．$b_k$を，$n$回の試行の結果，赤玉がちょうど$k$個になる確率とする．赤玉$k$個のうち，どの回が「$Q$選択・赤」でどの回が「$R$選択・赤」かを$\ell$で，白玉$n-k$個のうち「$Q$選択・白」「$R$選択・白」の内訳を同様に足し合わせると，(2)と同じ二項定理の要領で
-\begin{align}
-b_k={}_nC_k\{pq+(1-p)r\}^k\{p(1-q)+(1-p)(1-r)\}^{n-k}
-\end{align}
-$pq=\dfrac{1}{4}$，$(1-p)r=\dfrac{1}{10}$から$pq+(1-p)r=\dfrac{1}{4}+\dfrac{1}{10}=\dfrac{7}{20}$．$p(1-q)=\dfrac{1}{4}$，$(1-p)(1-r)=\dfrac{1}{2}\cdot\dfrac{4}{5}=\dfrac{2}{5}$から$p(1-q)+(1-p)(1-r)=\dfrac{1}{4}+\dfrac{2}{5}=\dfrac{13}{20}$．したがって
-\begin{align}
-b_k={}_nC_k\left(\dfrac{7}{20}\right)^k\left(\dfrac{13}{20}\right)^{n-k}={}_nC_k\left(\dfrac{13}{20}\right)^n\left(\dfrac{7}{13}\right)^k
-\end{align}
+  % 第1段階: コイン Q, R の選択
+  \node[font=\normalsize\bfseries] (Q) at (2.2,  1.2) {$Q$};
+  \node[font=\normalsize\bfseries] (R) at (2.2, -1.2) {$R$};
 
-$b_k$を最大にする$k$をもとめる．
+  % 第2段階: 玉の色の決定 (Q から)
+  \node[font=\bfseries, text=red!80!black]  (Q_red)   at (4.6,  1.8) {赤};
+  \node[font=\bfseries, text=blue!80!black] (Q_white) at (4.6,  0.6) {白};
+
+  % 第2段階: 玉の色の決定 (R から)
+  \node[font=\bfseries, text=red!80!black]  (R_red)   at (4.6, -0.6) {赤};
+  \node[font=\bfseries, text=blue!80!black] (R_white) at (4.6, -1.8) {白};
+
+  % --- 2. 矢印と確率・条件ラベル ---
+  % P -> Q, R
+  \draw[->, thick] (P) -- (Q) node[midway, above left] {表 ($p$)};
+  \draw[->, thick] (P) -- (R) node[midway, below left] {裏 ($1-p$)};
+
+  % Q -> 赤, 白
+  \draw[->, thick] (Q) -- (Q_red)   node[midway, above] {表 ($q$)};
+  \draw[->, thick] (Q) -- (Q_white) node[midway, below] {裏 ($1-q$)};
+
+  % R -> 赤, 白
+  \draw[->, thick] (R) -- (R_red)   node[midway, above] {表 ($r$)};
+  \draw[->, thick] (R) -- (R_white) node[midway, below] {裏 ($1-r$)};
+
+  % --- 3. 縦仕切り線とヘッダー ---
+  \draw[thick, gray!70] (5.4, 2.3) -- (5.4, -2.3);
+  \node[font=\bfseries] at (6.8, 2.3) {確 率};
+
+  % --- 4. 各結果の確率と番号 ①〜④ ---
+  % (1) Q・赤
+  \node[right, font=\normalsize] at (5.7,  1.8) {$pq$};
+  \node[right, font=\small, gray!80!black] at (7.8,  1.8) {$\cdots$ \textcircled{\scriptsize 1}};
+
+  % (2) Q・白
+  \node[right, font=\normalsize] at (5.7,  0.6) {$p(1-q)$};
+  \node[right, font=\small, gray!80!black] at (7.8,  0.6) {$\cdots$ \textcircled{\scriptsize 2}};
+
+  % (3) R・赤
+  \node[right, font=\normalsize] at (5.7, -0.6) {$(1-p)r$};
+  \node[right, font=\small, gray!80!black] at (7.8, -0.6) {$\cdots$ \textcircled{\scriptsize 3}};
+
+  % (4) R・白
+  \node[right, font=\normalsize] at (5.7, -1.8) {$(1-p)(1-r)$};
+  \node[right, font=\small, gray!80!black] at (7.8, -1.8) {$\cdots$ \textcircled{\scriptsize 4}};
+
+\end{tikzpicture}
+\end{center}
+\caption{1回の試行におけるコイン選択と玉の色の樹形図および確率}
+\end{figure}
+
+\paragraph{(1)}
+
+$n$回とも$Q$を選んでそのうち$k$回赤（$n-k$回白）となる確率$A$は，どの$k$回が赤かを選ぶ場合の数${}_nC_{k}$を用いて
 \begin{align}
-\dfrac{b_k}{b_{k+1}}=\dfrac{{}_nC_k(7/13)^k}{{}_nC_{k+1}(7/13)^{k+1}}=\dfrac{13}{7}\cdot\dfrac{{}_nC_k}{{}_nC_{k+1}}=\dfrac{13}{7}\cdot\dfrac{k+1}{n-k}=:f(k)
+  A 
+   &={}_nC_k(P(Q\text{・赤}))^k\{P(Q\text{・白})\}^{n-k} \\
+   &={}_nC_k(pq)^k\{p(1-q)\}^{n-k} \\
+   &={}_nC_k\,p^n\,q^k(1-q)^{n-k}
 \end{align}
-$f(k)\ge1\iff13(k+1)\ge7(n-k)$（$k\le n-1=2003$，$n-k>0$）．$n=2004$を代入して
+である．
+
+\paragraph{(2)}
+
+$n$回とも赤玉が出る確率$B$を求める．
+$k$回が「$Q$・赤」，残り$n-k$回が「$R$・赤」となる確率は
 \begin{align}
-13(k+1)\ge7(2004-k)\iff13k+13\ge14028-7k\iff20k\ge14015\iff k\ge700.75
+ {}_nC_k\left(P(Q\text{・赤})\right)^{k}\left(P(R\text{・赤})=(1-p)r\right)^{n-k} = {}_nC_k(pq)^k\{(1-p)r\}^{n-k}
 \end{align}
-したがって，整数$k$について，$k\ge701$で$f(k)\ge1$（$b_k\ge b_{k+1}$，減少），$k\le700$で$f(k)<1$（$b_k<b_{k+1}$，増加）．よって
+であり，これを$k=0,\dots,n$について足せば良いから，二項定理から
+\begin{align}
+ B=\sum_{k=0}^n{}_nC_k(pq)^k\{(1-p)r\}^{n-k}=\{pq+(1-p)r\}^n
+\end{align}
+である．
+
+\paragraph{(3)}
+まず，$n$回の試行の結果赤玉がちょうど$k$個になる確率を$b_k$とおき，これを求める．
+このような確率は以下の要素の掛け算で求められる．
+\begin{itemize}
+ \item $n$回のうち，どの$k$回で赤玉を引くか
+ \item 赤玉$k$回のうち，どの回が「$Q$選択・赤」でどの回が「$R$選択・赤」か
+ \item 白玉$n-k$回のうち，どの回が「$Q$選択・白」でどの回が「$R$選択・白」か
+\end{itemize}
+従って$b_k$は
+\begin{align}
+ b_{k} 
+  &= {}_nC_{k}\left(\sum_{\ell=0}^{k}{}_kC_{\ell}P(Q\text{・赤})^{\ell}P(R\text{・赤})^{k-\ell}\right)\cdot\left(\sum_{\ell=0}^{n-k}{}_{n-k}C_{\ell}P(Q\text{・白})^{\ell}P(R\text{・白})^{n-k-\ell}\right) \\
+  &= {}_nC_{k}\left(\sum_{\ell=0}^{k}{}_kC_{\ell}(pq)^{\ell}((1-p)r)^{k-\ell}\right)\cdot\left(\sum_{\ell=0}^{n-k}{}_{n-k}C_{\ell}(p(1-q))^{\ell}((1-p)(1-r))^{n-k-\ell}\right) 
+\end{align}
+であり，(2)と同様に二項定理を用いて
+\begin{align}
+ b_k={}_nC_k\{pq+(1-p)r\}^k\{p(1-q)+(1-p)(1-r)\}^{n-k} \label{eq:1}
+\end{align}
+となる．
+ここに与えられた条件$p=q=\dfrac{1}{2}$，$r=\dfrac{1}{5}$を代入する．
+\begin{align}
+ pq+(1-p)r=\dfrac{1}{4}+\dfrac{1}{10}=\dfrac{7}{20} \\
+ p(1-q)+(1-p)(1-r)=\dfrac{1}{4}+\dfrac{2}{5}=\dfrac{13}{20}
+\end{align}
+だから\cref{eq:1}に代入して
+\begin{align}
+b_k
+ &={}_nC_k\left(\dfrac{7}{20}\right)^k\left(\dfrac{13}{20}\right)^{n-k}\\
+ &={}_nC_k\left(\dfrac{13}{20}\right)^n\left(\dfrac{7}{13}\right)^k \label{eq:2}
+\end{align}
+を得る．
+
+以下\cref{eq:2}を最大にする$k$を求めれば良い．$k=0,1,\cdots,n-1$に対して比$f(k)=\dfrac{b_{k}}{b_{k+1}}$を計算すると
+\begin{align}
+  f(k)
+  &=\dfrac{b_k}{b_{k+1}} \\
+  &=\dfrac{{}_nC_k(7/13)^k}{{}_nC_{k+1}(7/13)^{k+1}} \\
+  &=\dfrac{13}{7}\cdot\dfrac{{}_nC_k}{{}_nC_{k+1}} \\
+  &=\dfrac{13}{7}\cdot\dfrac{n!}{k!(n-k)!}\dfrac{(k+1)!(n-k-1)!}{n!} \\
+  &=\dfrac{13}{7}\cdot\dfrac{k+1}{n-k}
+\end{align}
+となる．$n-k>0$に注意して，$n=2004$を代入してこれが$1$以上となる条件を考えると
+\begin{align}
+ f(k)\ge 1 \iff 13(k+1)\ge 7(n-k) \iff k \ge \dfrac{7n-13}{20}=\dfrac{14015}{20}=700.75
+\end{align}
+である．
+
+したがって整数$k$について，$k\ge701$で$f(k)\ge1$（$b_k\ge b_{k+1}$），$k\le700$で$f(k)<1$（$b_k<b_{k+1}$）となるから$b_k$たちの大小関係は
 \begin{align}
 b_1<b_2<\cdots<b_{700}<b_{701}>b_{702}>\cdots>b_{2004}
 \end{align}
 となり，$b_k$は$k=701$で最大となる．すなわち，もっとも起こりやすいのは赤玉が\textbf{701個}の時である．
-
 
 \newpage
 

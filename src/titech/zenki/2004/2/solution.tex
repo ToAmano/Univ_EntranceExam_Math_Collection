@@ -1,12 +1,22 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-\textbf{(1)} $F(x)=\displaystyle\int_0^{mx}f(\sin x)g(\cos x)dx$（左辺），$G(x)=m\displaystyle\int_0^\pi f(\sin x)g(\cos x)dx$（右辺）とおく．$I_k=\displaystyle\int_{(k-1)\pi}^{k\pi}f(\sin x)g(\cos x)dx$（$k\in\mathbb N$）とおき，$t=x-(k-1)\pi$とおくと
+\paragraph{(1)}
+
+与えられた方程式の左辺を$F$，右辺を$G$とおく：
+\begin{align}
+ \begin{cases}
+ F=\displaystyle\int_0^{m\pi}f(\sin x)g(\cos x)dx \\
+ G=m\displaystyle\int_0^\pi f(\sin x)g(\cos x)dx
+ \end{cases} \label{eq:1}
+\end{align}
+さらに自然数$k$に対して左辺で積分区間を$[(k-1)\pi,k\pi]$に絞ったものを$I_k$とおく：
+\begin{align}
+ I_k=\displaystyle\int_{(k-1)\pi}^{k\pi}f(\sin x)g(\cos x)dx \label{eq:2}
+\end{align}
+\cref{eq:2}において$t=x-(k-1)\pi$と置換すると
 \begin{align}
 I_k=\int_0^\pi f\bigl(\sin(t+(k-1)\pi)\bigr)g\bigl(\cos(t+(k-1)\pi)\bigr)dt
 \end{align}
@@ -14,45 +24,107 @@ $\sin(t+(k-1)\pi)=(-1)^{k-1}\sin t$，$\cos(t+(k-1)\pi)=(-1)^{k-1}\cos t$であ�
 \begin{align}
 I_k=\int_0^\pi f(\sin t)g(\cos t)\,dt
 \end{align}
-（$k$によらず一定）．$k=1,\dots,m$について足して
+となりこれが$k$によらず一定である．
+$k=1,\dots,m$について足すと
 \begin{align}
-F(\pi)=\sum_{k=1}^mI_k=m\int_0^\pi f(\sin t)g(\cos t)dt=G(\pi)
+F=\sum_{k=1}^mI_k=m\int_0^\pi f(\sin t)g(\cos t)dt=G
 \end{align}
-（一般に$mx$を$m\pi$と読み替えて同じ議論を用いれば良い）．
+となり，$F=G$である．よって題意は示された．
 
-\textbf{(2)} $D=\displaystyle\int_0^\pi\dfrac{|\sin x|}{(1+\cos^2x)^2}dx$とおく．$[0,\pi]$で$\sin x\ge0$だから$D=\displaystyle\int_0^\pi\dfrac{\sin x}{(1+\cos^2x)^2}dx$．$f(x)=|x|$，$g(x)=\dfrac{1}{(1+x^2)^2}$（ともに偶関数）として，(1)から
+\paragraph{(2)}
+新しく
 \begin{align}
-\int_0^{m\pi}f(\sin x)g(\cos x)\,dx=mD \quad\cdots\text{②}
+ D= \int_0^\pi\dfrac{|\sin x|}{(1+\cos^2x)^2}dx
 \end{align}
-$P_t=\displaystyle\int_0^tf(\sin x)g(\cos x)dx$とおくと，$f,g\ge0$だから$P_t\ge0$で$t$について単調増加．②から$P_{m\pi}=mD$，$P_{(m+1)\pi}=(m+1)D$である．
+とおくと被積分関数は偶関数である．$[0,\pi]$で$\sin x\ge0$だから分子の絶対値ははずせて
+\begin{align}
+ D= \int_0^\pi\dfrac{\sin x}{(1+\cos^2x)^2}dx
+\end{align}
+である．
 
-$B=\displaystyle\int_0^1\dfrac{|\sin nx|}{(1+\cos^2nx)^2}dx$について，$t=nx$とおくと
+よって題意の不等式を左辺から順に$A,B,C$とおくと
 \begin{align}
-B=\dfrac{1}{n}\int_0^nf(\sin t)g(\cos t)dt=\dfrac{1}{n}P_n
+ \begin{cases}
+ A &= \dfrac{m}{(m+1)\pi} D \\
+ B &= \int_0^1\dfrac{|\sin nx|}{(1+\cos^2 nx)^2}dx \\
+ C &= \dfrac{m+1}{m\pi} D
+ \end{cases} \label{eq:3}
 \end{align}
-$m\pi\le n<(m+1)\pi$と$P_t$の単調性から$P_{m\pi}\le P_n\le P_{(m+1)\pi}$，すなわち$mD\le P_n\le(m+1)D$．したがって
-\begin{align}
-\dfrac{mD}{(m+1)\pi}\le\dfrac{P_n}{n}=B\le\dfrac{(m+1)D}{m\pi}
-\end{align}
-（左は$P_n\ge mD$と$n<(m+1)\pi$から，右は$P_n\le(m+1)D$と$n\ge m\pi$から）．これがもとめる不等式である．
+である．
 
-\textbf{(3)} $n\to\infty$の時，$m\pi\le n$から$m\to\infty$でもあり，(2)の両辺は$m\to\infty$でともに$D/\pi$に収束する（$m/(m+1)\to1$）．はさみうちの定理から
+(1)で$f(x)=|x|$，$g(x)=\dfrac{1}{(1+x^2)^2}$（ともに偶関数）とすると，積分区間を$[0,m\pi]$, $[0,(m+1)\pi]$として
 \begin{align}
-\lim_{n\to\infty}\int_0^1\dfrac{|\sin nx|}{(1+\cos^2nx)^2}dx=\dfrac{D}{\pi}
+ D 
+   &= \dfrac{1}{m}\int_0^{m\pi}f(\sin x)g(\cos x)\,dx \\
+   &= \dfrac{1}{m+1}\int_0^{(m+1)\pi}f(\sin x)g(\cos x)\,dx  \label{eq:4}
 \end{align}
-$D$を求める．$t=\cos x$とおくと（$dt=-\sin x\,dx$，$x:0\to\pi$で$t:1\to-1$）
-\begin{align}
-D=\int_1^{-1}\dfrac{1}{(1+t^2)^2}(-1)\,dt=\int_{-1}^1\dfrac{1}{(1+t^2)^2}dt=2\int_0^1\dfrac{1}{(1+t^2)^2}dt
-\end{align}
-$t=\tan\theta$とおくと$dt=d\theta/\cos^2\theta$，$1+t^2=1/\cos^2\theta$，$\theta:0\to\pi/4$で
-\begin{align}
-D=2\int_0^{\pi/4}\cos^4\theta\cdot\dfrac{1}{\cos^2\theta}d\theta=2\int_0^{\pi/4}\cos^2\theta\,d\theta=2\left[\dfrac{\theta}{2}+\dfrac{\sin2\theta}{4}\right]_0^{\pi/4}=2\left(\dfrac{\pi}{8}+\dfrac{1}{4}\right)=\dfrac{\pi}{4}+\dfrac{1}{2}
-\end{align}
-したがって
-\begin{align}
-\lim_{n\to\infty}\int_0^1\dfrac{|\sin nx|}{(1+\cos^2nx)^2}dx=\dfrac{D}{\pi}=\dfrac{\pi/4+1/2}{\pi}=\dfrac{1}{4}+\dfrac{1}{2\pi}
-\end{align}
+である．
 
+また，\cref{eq:3}の$B$において$t=nx$と置換積分して
+\begin{align}
+ B=\dfrac{1}{n}\int_0^nf(\sin t)g(\cos t)dt \label{eq:5} 
+\end{align}
+である．
+
+さて，ここで新しい関数
+\begin{align}
+ P(t) = \int_0^tf(\sin x)g(\cos x)dx
+\end{align}
+を考えると，$f,g\ge0$だから$P(t)$は正かつ$t$について単調増加である．
+\cref{eq:3,eq:4,eq:5}より$A,B,C$を$P(t)$で表すと
+\begin{align}
+ A = \dfrac{P(m\pi)}{(m+1)\pi}, \quad B = \dfrac{P(n)}{n}, \quad C = \dfrac{P((m+1)\pi)}{m\pi} \label{eq:6}
+\end{align}
+であるが，ここで題意より
+\begin{align}
+ m\pi \le n < (m+1)\pi
+\end{align}
+および$P(t)$の単調増加性より
+\begin{align}
+ P(m\pi) \le P(n) \le P((m+1)\pi)
+\end{align}
+だから\cref{eq:6}を大小で並べると
+\begin{align}
+ &\dfrac{P(m\pi)}{(m+1)\pi} \le \dfrac{P(n)}{n} \le \dfrac{P((m+1)\pi)}{m\pi} \\
+\therefore
+ & A \le B \le C
+\end{align}
+である．よって題意は示された．
+
+\paragraph{(3)}
+
+まず$D$を具体的に求めよう．$t = \cos x$と置換すると
+\begin{align}
+ D 
+  &= \int_0^\pi\dfrac{\sin x}{(1+\cos^2x)^2}dx \\
+  &= \int_1^{-1}\dfrac{1}{(1+t^2)^2}(-1)\,dt \\
+  &=\int_{-1}^1\dfrac{1}{(1+t^2)^2}dt \\
+  &=2\int_0^1\dfrac{1}{(1+t^2)^2}dt
+\end{align}
+となる．さらに$t=\tan\theta$とおくと
+$dt=d\theta/\cos^2\theta$，$1+t^2=1/\cos^2\theta$，$\theta:0\to\pi/4$だから
+\begin{align}
+D
+ &=2\int_0^{\pi/4}\cos^4\theta\cdot\dfrac{1}{\cos^2\theta}d\theta \\
+ &=2\int_0^{\pi/4}\cos^2\theta\,d\theta \\
+ &=2\left[\dfrac{\theta}{2}+\dfrac{\sin2\theta}{4}\right]_0^{\pi/4} \\
+ &=2\left(\dfrac{\pi}{8}+\dfrac{1}{4}\right) \\
+ &=\dfrac{\pi}{4}+\dfrac{1}{2} \label{eq:7}
+\end{align}
+である．
+
+(2)で得られた不等式において
+$n\to\infty$の時，$n < (m+1)\pi$から$m\to\infty$でもあり，
+(2)の両辺は$m\to\infty$で$m/(m+1)\to1$よりともに$D/\pi$に収束する．
+
+
+これと\cref{eq:7}およびはさみうちの定理から求める極限値は
+\begin{align}
+\lim_{n\to\infty}\int_0^1\dfrac{|\sin nx|}{(1+\cos^2nx)^2}dx
+  &=\dfrac{D}{\pi} \\
+  &= \dfrac{1}{4}+\dfrac{1}{2\pi}
+\end{align}
+である．
 
 \newpage
 
