@@ -1,0 +1,251 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { TOPIC_TAGS } from '../../lib/tags';
+
+export async function getStaticPaths() {
+	const solutions = await getCollection('solutions');
+
+	return TOPIC_TAGS.map((tag) => {
+		const items = solutions.filter(
+			(item) => item.data.type === 'solution' && (item.data.tags ?? []).includes(tag)
+		);
+		return {
+			params: { tag },
+			props: { tag, items, allSolutions: solutions },
+		};
+	});
+}
+
+const { tag, items, allSolutions } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const UNIVERSITY_NAMES: Record<string, string> = {
+	utokyo: '東京大学',
+	titech: '東京工業大学',
+	ukyoto: '京都大学',
+};
+
+const CATEGORY_NAMES: Record<string, string> = {
+	zenki: '前期',
+	kouki: '後期',
+};
+
+interface Row {
+	university: string;
+	category: string;
+	year: string;
+	question: string;
+	solutionSlug: string;
+	problemSlug: string | null;
+}
+
+const rows: Row[] = items.map((item) => {
+	const problemEntry = allSolutions.find(
+		(p) =>
+			p.data.type === 'problem' &&
+			p.data.university === item.data.university &&
+			p.data.category === item.data.category &&
+			p.data.year === item.data.year &&
+			p.data.question === item.data.question
+	);
+	return {
+		university: item.data.university,
+		category: item.data.category,
+		year: item.data.year,
+		question: item.data.question,
+		solutionSlug: item.slug,
+		problemSlug: problemEntry ? problemEntry.slug : null,
+	};
+});
+
+rows.sort((a, b) => {
+	const yearDiff = parseInt(b.year, 10) - parseInt(a.year, 10);
+	if (yearDiff !== 0) return yearDiff;
+	if (a.university !== b.university) return a.university.localeCompare(b.university);
+	if (a.category !== b.category) return a.category.localeCompare(b.category);
+	return parseInt(a.question, 10) - parseInt(b.question, 10);
+});
+---
+
+<Layout title={`「${tag}」の問題一覧 | Math Solutions`} description={`分野タグ「${tag}」が付いた過去問の一覧（${rows.length}件）。`}>
+	<div class="tag-page">
+		<nav class="breadcrumb">
+			<a href={`${baseUrl}/`}>トップ</a>
+			<span class="sep">/</span>
+			<a href={`${baseUrl}/tags/`}>分野タグ</a>
+			<span class="sep">/</span>
+			<span class="current">{tag}</span>
+		</nav>
+
+		<header class="tag-header glass">
+			<h1>分野タグ: <span class="highlight">{tag}</span></h1>
+			<p class="count-info">該当問題数: <strong>{rows.length}</strong> 件</p>
+		</header>
+
+		{rows.length === 0 ? (
+			<div class="empty-state glass">
+				<div class="empty-icon">📝</div>
+				<h2>該当する問題はまだありません</h2>
+				<a href={`${baseUrl}/tags/`} class="btn-primary">タグ一覧へ戻る</a>
+			</div>
+		) : (
+			<div class="row-list glass">
+				{rows.map((row) => (
+					<div class="tag-row">
+						<div class="tag-row-labels">
+							<span class={row.university.includes('utokyo') ? 'badge badge-utokyo' : row.university.includes('ukyoto') ? 'badge badge-ukyoto' : 'badge badge-titech'}>
+								{UNIVERSITY_NAMES[row.university] || row.university}
+							</span>
+							<span class="badge badge-cat">{CATEGORY_NAMES[row.category] || row.category}</span>
+							<span class="year-label">{row.year}年</span>
+							<span class="q-label">第{row.question}問</span>
+						</div>
+						<div class="tag-row-actions">
+							{row.problemSlug && (
+								<a href={`${baseUrl}/solutions/${row.problemSlug}/`} class="action-btn problem">問題 ➔</a>
+							)}
+							<a href={`${baseUrl}/solutions/${row.solutionSlug}/`} class="action-btn solution">解答・解説 ➔</a>
+						</div>
+					</div>
+				))}
+			</div>
+		)}
+	</div>
+</Layout>
+
+<style>
+	.tag-page {
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: 2rem 1.5rem 4rem;
+	}
+
+	.breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.9rem;
+		color: var(--text-muted);
+		margin-bottom: 2rem;
+		flex-wrap: wrap;
+	}
+	.breadcrumb a {
+		color: var(--primary);
+		text-decoration: none;
+	}
+	.breadcrumb a:hover {
+		text-decoration: underline;
+	}
+	.breadcrumb .current {
+		color: var(--text-main);
+		font-weight: 600;
+	}
+
+	.tag-header {
+		padding: 2rem 2.5rem;
+		border-radius: 20px;
+		margin-bottom: 2rem;
+	}
+	.tag-header h1 {
+		margin: 0 0 0.5rem;
+		font-size: 1.9rem;
+		font-weight: 800;
+	}
+	.tag-header .highlight {
+		color: var(--primary);
+	}
+	.count-info {
+		color: var(--text-muted);
+		margin: 0;
+	}
+
+	.empty-state {
+		text-align: center;
+		padding: 4rem 2rem;
+		border-radius: 16px;
+	}
+	.empty-icon {
+		font-size: 3rem;
+		margin-bottom: 1rem;
+	}
+	.btn-primary {
+		display: inline-block;
+		margin-top: 1.5rem;
+		padding: 0.75rem 1.5rem;
+		background: var(--primary);
+		color: #000;
+		font-weight: 700;
+		border-radius: 10px;
+		text-decoration: none;
+	}
+
+	.row-list {
+		border-radius: 16px;
+		padding: 0.75rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.tag-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		padding: 0.75rem 1rem;
+		background: rgba(30, 41, 59, 0.4);
+		border-radius: 10px;
+	}
+
+	.tag-row-labels {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		flex-wrap: wrap;
+	}
+
+	.badge-cat {
+		background: rgba(255, 255, 255, 0.1);
+		color: var(--text-main);
+		border: 1px solid rgba(255, 255, 255, 0.15);
+	}
+
+	.year-label {
+		font-weight: 700;
+		color: var(--text-main);
+	}
+
+	.q-label {
+		color: var(--text-muted);
+		font-size: 0.9rem;
+	}
+
+	.tag-row-actions {
+		display: flex;
+		gap: 0.5rem;
+	}
+	.action-btn {
+		padding: 0.4rem 0.8rem;
+		border-radius: 8px;
+		text-decoration: none;
+		font-size: 0.85rem;
+		font-weight: 600;
+		transition: all 0.2s;
+	}
+	.action-btn.problem {
+		background: rgba(96, 165, 250, 0.15);
+		color: var(--primary);
+		border: 1px solid rgba(96, 165, 250, 0.3);
+	}
+	.action-btn.solution {
+		background: rgba(52, 211, 153, 0.15);
+		color: var(--secondary);
+		border: 1px solid rgba(52, 211, 153, 0.3);
+	}
+	.action-btn:hover {
+		transform: translateY(-2px);
+		filter: brightness(1.2);
+	}
+</style>

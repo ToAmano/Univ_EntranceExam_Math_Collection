@@ -9,6 +9,7 @@ const solutionsCollection = defineCollection({
 		question: z.string(),
 		type: z.string().optional(),
 		title: z.string().optional(),
+		tags: z.array(z.string()).optional(),
 	}),
 });
 

@@ -5,8 +5,22 @@ import subprocess
 import shutil
 import tempfile
 import pypandoc
+import yaml
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from TexSoup import TexSoup
+
+TOPIC_TAGS_PATH = "data/topic_tags.yaml"
+
+
+def load_topic_tags():
+    """data/topic_tags.yaml を読み込み、'uni/category/year/question' キーで
+    タグ配列を引けるようにする。ファイルが無い/壊れている場合はタグなし
+    として扱い、変換自体は止めない。"""
+    if not os.path.exists(TOPIC_TAGS_PATH):
+        return {}
+    with open(TOPIC_TAGS_PATH, encoding='utf-8') as f:
+        data = yaml.safe_load(f)
+    return data or {}
 
 
 def _extract_braced(text, start):
@@ -814,8 +828,12 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
 
     fm_str = "---\n"
     for k, v in frontmatter.items():
-        escaped_v = str(v).replace('"', '\\"')
-        fm_str += f'{k}: "{escaped_v}"\n'
+        if isinstance(v, list):
+            items = ", ".join('"' + str(item).replace('"', '\\"') + '"' for item in v)
+            fm_str += f'{k}: [{items}]\n'
+        else:
+            escaped_v = str(v).replace('"', '\\"')
+            fm_str += f'{k}: "{escaped_v}"\n'
     fm_str += "---\n\n"
 
     os.makedirs(os.path.dirname(output_md_path), exist_ok=True)
@@ -836,6 +854,7 @@ def _convert_one_task(task):
 def process_all_src():
     src_root = "src"
     dest_root = "web/src/content/solutions"
+    topic_tags = load_topic_tags()
 
     tasks = []
     for root, _, files in os.walk(src_root):
@@ -859,6 +878,11 @@ def process_all_src():
                         "type": type_str,
                         "title": title_str
                     }
+
+                    if type_str == "solution":
+                        tags = topic_tags.get(f"{uni}/{category}/{year}/{q_num}")
+                        if tags:
+                            frontmatter["tags"] = tags
 
                     filename = f"{uni}-{category}-{year}-{q_num}-{type_str}.md"
                     output_md_path = os.path.join(dest_root, filename)
@@ -891,8 +915,12 @@ if __name__ == '__main__':
             # src/titech/zenki/2000/1/problem.tex
             uni, category, year, q_num = parts[1], parts[2], parts[3], parts[4]
             file = parts[5]
-            type_str = "problem" if file == "problem.tex" else "solution"
-            title_str = f"{uni.upper()} {year} {category} Q{q_num} ({type_str})"
+            if q_num == "0":
+                type_str = "summary"
+                title_str = f"{year}年 全体サマリ"
+            else:
+                type_str = "problem" if file == "problem.tex" else "solution"
+                title_str = f"{uni.upper()} {year} {category} Q{q_num} ({type_str})"
             frontmatter = {
                 "university": uni,
                 "category": category,
@@ -901,6 +929,10 @@ if __name__ == '__main__':
                 "type": type_str,
                 "title": title_str
             }
+            if type_str == "solution":
+                tags = load_topic_tags().get(f"{uni}/{category}/{year}/{q_num}")
+                if tags:
+                    frontmatter["tags"] = tags
             dest_root = "web/src/content/solutions"
             filename = f"{uni}-{category}-{year}-{q_num}-{type_str}.md"
             output_md_path = os.path.join(dest_root, filename)

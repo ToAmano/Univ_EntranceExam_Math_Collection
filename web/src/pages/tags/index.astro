@@ -1,0 +1,113 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { TOPIC_TAGS } from '../../lib/tags';
+
+const solutions = await getCollection('solutions');
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const counts = new Map<string, number>();
+for (const tag of TOPIC_TAGS) counts.set(tag, 0);
+for (const item of solutions) {
+	if (item.data.type !== 'solution') continue;
+	for (const tag of item.data.tags ?? []) {
+		counts.set(tag, (counts.get(tag) ?? 0) + 1);
+	}
+}
+---
+
+<Layout title="分野タグ一覧 | Math Solutions" description="出題分野ごとに過去問を一覧できるタグページ。">
+	<div class="tags-index-page">
+		<nav class="breadcrumb">
+			<a href={`${baseUrl}/`}>トップ</a>
+			<span class="sep">/</span>
+			<span class="current">分野タグ</span>
+		</nav>
+
+		<header class="page-header glass">
+			<h1>分野タグ一覧</h1>
+			<p class="count-info">分野ごとに過去問を横断して探せます。</p>
+		</header>
+
+		<div class="tag-grid">
+			{TOPIC_TAGS.map((tag) => (
+				<a href={`${baseUrl}/tags/${encodeURIComponent(tag)}/`} class="tag-card glass glass-hover">
+					<span class="tag-name">{tag}</span>
+					<span class="tag-count">{counts.get(tag) ?? 0}問</span>
+				</a>
+			))}
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.tags-index-page {
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: 2rem 1.5rem 4rem;
+	}
+
+	.breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.9rem;
+		color: var(--text-muted);
+		margin-bottom: 2rem;
+	}
+	.breadcrumb a {
+		color: var(--primary);
+		text-decoration: none;
+	}
+	.breadcrumb a:hover {
+		text-decoration: underline;
+	}
+	.breadcrumb .current {
+		color: var(--text-main);
+		font-weight: 600;
+	}
+
+	.page-header {
+		padding: 2.5rem;
+		border-radius: 20px;
+		margin-bottom: 2rem;
+	}
+	.page-header h1 {
+		margin: 0 0 0.5rem;
+		font-size: 2.2rem;
+		font-weight: 800;
+	}
+	.count-info {
+		color: var(--text-muted);
+		margin: 0;
+	}
+
+	.tag-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+		gap: 1rem;
+	}
+
+	.tag-card {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1.25rem 1.5rem;
+		border-radius: 14px;
+		text-decoration: none;
+		color: var(--text-main);
+	}
+
+	.tag-name {
+		font-weight: 700;
+		font-size: 1.05rem;
+	}
+
+	.tag-count {
+		font-size: 0.85rem;
+		color: var(--text-muted);
+		background: rgba(255, 255, 255, 0.08);
+		padding: 0.2rem 0.6rem;
+		border-radius: 999px;
+	}
+</style>
