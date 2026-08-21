@@ -1,57 +1,231 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-$D$の中心は$C:x^2+y^2=1$上にあるから，$C=\cos\theta,\ S=\sin\theta$として$P(C,S,0)$（$0\le\theta<2\pi$）とかける．$D$のある平面は常に$(0,1,0)$と直交するので，平面$y=S$内にあり
-\begin{align}
-D:\ (x-C)^2+z^2\le1,\quad y=S
-\end{align}
 
-平面$y=k$（$-1\le k\le1$）による断面を考える．$\sin\theta=k$をみたす$\theta\in[0,\pi]$に対応して$\cos\theta=\pm\sqrt{1-k^2}$の2値をとり得るが，対称性からどちらも同じ形の断面を与える．$c=\sqrt{1-k^2}\ (=|\cos\theta|)$とすると，断面は$xz$平面内の2つの単位円板（中心$(\pm c,0)$）の和集合であり，この面積を$V(\theta)$とおく（$c=\cos\theta$，$0\le\theta\le\pi/2$として良い）．
+$C$の方程式は
+\begin{align}
+ C:x^2+y^2=1
+\end{align}
+である．題意の1より$D$の中心は$C$上にあるから，$P(\cos\theta,\sin\theta,0)$（$0\le\theta<2\pi$）とかける．
+題意の2より$D$のある平面は常に$(0,1,0)$すなわち$y$軸と直交するので常に$y=\sin\theta$上にあり，方程式は
+\begin{align}
+ D: (x-\cos\theta)^2+z^2\le1,\quad y=\sin\theta \label{eq:1}
+\end{align}
+と書ける．$\theta$を動かした時に\cref{eq:1}の動く領域$S$の体積$V$を求めれば良い．
+この図形は$y=0$を軸に対称だから，以下$y \ge 0$の領域のみ考え，その体積を二倍すれば$V$が求まる．
 
-2円板の共通部分（レンズ形）の面積は，対称性から
-\begin{align}
-4\int_c^1\sqrt{1-x^2}\,dx
-\end{align}
-に等しいから
-\begin{align}
-V(\theta)=2\pi-4\int_c^1\sqrt{1-x^2}\,dx
-\end{align}
-$x=\cos\alpha$（$\alpha:\theta\to0$として$x:c\to1$）とおくと，$dx=-\sin\alpha\,d\alpha$，$\sqrt{1-x^2}=\sin\alpha$（$0\le\alpha\le\pi/2$）だから
-\begin{align}
-\int_c^1\sqrt{1-x^2}\,dx=\int_0^\theta\sin^2\alpha\,d\alpha=\left[\dfrac{\alpha}{2}-\dfrac{\sin2\alpha}{4}\right]_0^\theta=\dfrac{\theta}{2}-\dfrac{\sin2\theta}{4}
-\end{align}
-したがって
-\begin{align}
-V(\theta)=2\pi-4\left(\dfrac{\theta}{2}-\dfrac{\sin2\theta}{4}\right)=2\pi+\sin2\theta-2\theta
-\end{align}
 
-もとめる体積$V$は，$y=\sin\theta$の対称性（$0\le\theta\le\pi/2$で$y:0\to1$，残りは対称）から
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[
+    scale=1.8,
+    >=stealth,
+    % 3D 投影ベクトル (x: 手前斜め左, y: 右, z: 上)
+    x={(-0.6cm,-0.35cm)},
+    y={(1.0cm,0.0cm)},
+    z={(0cm,1.0cm)}
+  ]
+
+  % --- 1. パラメータ設定 (theta = 45度の例) ---
+  \def\thetaVal{45}
+  \pgfmathsetmacro{\cosT}{cos(\thetaVal)}
+  \pgfmathsetmacro{\sinT}{sin(\thetaVal)}
+
+  % 中心点 P
+  \coordinate (P) at (\cosT, \sinT, 0);
+
+  % --- 2. xy 平面の座標軸 ---
+  \draw[->, thick, gray!80] (-1.6,0,0) -- (1.8,0,0) node[below left, black] {$x$};
+  \draw[->, thick, gray!80] (0,-1.6,0) -- (0,2.2,0) node[right, black] {$y$};
+  \draw[->, thick, gray!80] (0,0,-1.4) -- (0,0,1.8) node[above, black] {$z$};
+  \node[below left, font=\scriptsize] at (0,0,0) {$O$};
+
+  % --- 3. xy 平面上の基準円 C: x^2 + y^2 = 1 ---
+  \draw[thick, gray!60, domain=0:360, samples=60] 
+    plot ({cos(\x)}, {sin(\x)}, 0);
+  \node[gray!80!black, font=\scriptsize, below] at (-0.7, -0.7, 0) {$C: x^2+y^2=1$};
+
+  % --- 4. 切断面 y = sin theta (xz 平面に平行な面) ---
+  \draw[dashed, blue!40] (-1.8, \sinT, -1.3) -- (1.8, \sinT, -1.3) -- (1.8, \sinT, 1.3) -- (-1.8, \sinT, 1.3) -- cycle;
+  \node[blue!70!black, font=\scriptsize, above right] at (1.8, \sinT, 1.3) {平面 $y = \sin\theta$};
+
+  % --- 5. 円板 D: (x - cos theta)^2 + z^2 <= 1 on y = sin theta ---
+  \fill[blue!20, opacity=0.7] 
+    plot[domain=0:360, samples=60] ({\cosT + cos(\x)}, \sinT, {sin(\x)}) -- cycle;
+  \draw[ultra thick, blue!80!black, domain=0:360, samples=60] 
+    plot ({\cosT + cos(\x)}, \sinT, {sin(\x)});
+
+  % --- 6. 中心 P とガイド線 ---
+  \draw[dashed, red!80!black] (0,0,0) -- (P);
+  \fill[red!80!black] (P) circle (1.2pt) node[below right, font=\small] {$P(\cos\theta, \sin\theta, 0)$};
+
+  % 円板 D の半径 1
+  \draw[<->, thin, blue!90!black] (P) -- ({\cosT}, \sinT, 1.0)
+    node[midway, right, font=\scriptsize] {半径 $1$};
+
+  % 角度 theta
+  \draw[->, thin, red!80!black] (0.4, 0, 0) arc (0:\thetaVal:0.4);
+  \node[red!80!black, font=\scriptsize] at (0.45, 0.25, 0) {$\theta$};
+
+  % 円板ラベル
+  \node[blue!90!black, font=\small] at (\cosT, \sinT, -0.5) {$D$};
+
+\end{tikzpicture}
+\end{center}
+\caption{立体 $S$ の構成：$xy$ 平面上の円 $C$ に中心をもち $y$ 軸に直交する単位円板 $D$}
+\end{figure}
+
+そこで$S$を断面$y=k\, (0 \le k \le 1)$で切った時を考える．$0 \le \theta < 2\pi$より$\sin\theta = k$を満たす$\theta$に対して\cref{eq:1}で対応するのは$\theta,2\pi-\theta$の時で，断面は下図のように二つの円の内側（斜線部）になる．対称性より$0 \le \theta \le \dfrac{\pi}{2}$で考えれば良い．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=2.2, >=stealth]
+
+  % --- 1. パラメータ設定 (theta = 50度) ---
+  \def\thetaVal{50}
+  \pgfmathsetmacro{\cVal}{cos(\thetaVal)} % cos(theta) ≒ 0.643
+
+  % --- 2. 2円の和集合領域の斜線ハッチング (V(theta)) ---
+  \begin{scope}
+    \clip (-\cVal, 0) circle (1.0) (\cVal, 0) circle (1.0);
+    \fill[pattern=north east lines, pattern color=blue!70] 
+      (-1.8, -1.2) rectangle (1.8, 1.2);
+  \end{scope}
+
+  % --- 3. 座標軸 (xz 平面) ---
+  \draw[->, thick] (-2.0, 0) -- (2.0, 0) node[right] {$x$};
+  \draw[->, thick] (0, -1.3) -- (0, 1.4) node[above] {$z$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % --- 4. 2つの円の輪郭 ---
+  % 右側の円: 中心 (cos theta, 0)
+  \draw[ultra thick, blue!80!black] (\cVal, 0) circle (1.0);
+  % 左側の円: 中心 (-cos theta, 0)
+  \draw[ultra thick, blue!80!black] (-\cVal, 0) circle (1.0);
+
+  % --- 5. 重なり部分（共通部分）の境界強調 ---
+  \draw[dashed, red!80!black, thick] 
+    plot[domain=-65:65, samples=40] ({-\cVal + cos(\x)}, {sin(\x)});
+  \draw[dashed, red!80!black, thick] 
+    plot[domain=115:245, samples=40] ({\cVal + cos(\x)}, {sin(\x)});
+
+  % --- 6. 中心・目盛りプロット ---
+  \fill[red!80!black] (\cVal, 0) circle (1.2pt) node[below, font=\small] {$\cos\theta$};
+  \fill[red!80!black] (-\cVal, 0) circle (1.2pt) node[below, font=\small] {$-\cos\theta$};
+
+  \fill[black] (0, 1) circle (1.0pt) node[above left, font=\scriptsize] {$1$};
+  \fill[black] (0, -1) circle (1.0pt) node[below left, font=\scriptsize] {$-1$};
+
+  % 面積ラベル
+  \node[blue!90!black, font=\large] at (1.1, 0.4) {$V(\theta)$};
+  \node[red!80!black, font=\scriptsize] at (0, 0.4) {共通部分};
+
+\end{tikzpicture}
+\end{center}
+\caption{断面 $y=k$（$k=\sin\theta$）における断面積 $V(\theta)$}
+\end{figure}
+
+この部分の面積$V(\theta)$とすると，これは二つの円の合計の面積$2\pi$から共通部分の面積を引いたもので
+\begin{align}
+ V(\theta) 
+  &= 2\pi - 4\int_{\cos\theta}^{1}\sqrt{1-x^2}\,dx 
+\end{align}
+である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=3.5, >=stealth]
+
+  % --- 1. パラメータ設定 (theta = 55度) ---
+  \def\thetaVal{55}
+  \pgfmathsetmacro{\cVal}{cos(\thetaVal)} % cos(theta) ≒ 0.5735
+  \pgfmathsetmacro{\yCut}{sqrt(1 - \cVal*\cVal)} % sin(theta)
+
+  % --- 2. 第 1 象限の積分領域のハッチング (cos theta <= x <= 1, y = sqrt(1-x^2)) ---
+  \begin{scope}
+    \clip (\cVal, 0) -- plot[domain=\cVal:1.0, samples=40] (\x, {sqrt(1 - \x*\x)}) -- (1.0, 0) -- cycle;
+    \fill[pattern=north east lines, pattern color=red!80] 
+      (\cVal, 0) rectangle (1.05, 1.05);
+  \end{scope}
+
+  % 残りの 3 つの対称領域（薄いハッチング）
+  \begin{scope}
+    \clip (\cVal, 0) -- plot[domain=\cVal:1.0, samples=40] (\x, {-sqrt(1 - \x*\x)}) -- (1.0, 0) -- cycle;
+    \fill[pattern=north west lines, pattern color=red!40] (\cVal, -1.0) rectangle (1.0, 0);
+  \end{scope}
+
+  % --- 3. 座標軸 ---
+  \draw[->, thick] (-1.2, 0) -- (1.3, 0) node[right] {$x$};
+  \draw[->, thick] (0, -1.1) -- (0, 1.2) node[above] {$z$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % --- 4. 2つの円弧の描画 ---
+  % (x + cos theta)^2 + z^2 = 1 の右半分（原点から見ると x^2+z^2=1 を -cos theta ずらしたもの）
+  % 原点を中心として見た単位円弧 x^2 + z^2 = 1
+  \draw[ultra thick, blue!80!black, domain=-180:180, samples=50] 
+    plot ({cos(\x)}, {sin(\x)}) node[above right, font=\small] {$z = \sqrt{1-x^2}$};
+
+  % --- 5. 積分区間 [cos theta, 1] のガイド線 ---
+  \draw[thick, dashed, red!80!black] (\cVal, -\yCut) -- (\cVal, \yCut);
+  \fill[red!80!black] (\cVal, 0) circle (0.9pt) node[below left, font=\small] {$\cos\theta$};
+  \fill[black] (1.0, 0) circle (0.9pt) node[below right, font=\small] {$1$};
+
+  % 境界点
+  \fill[red!80!black] (\cVal, \yCut) circle (1.0pt);
+  \fill[red!80!black] (\cVal, -\yCut) circle (1.0pt);
+
+  % --- 6. 積分記号と注記 ---
+  \draw[<-, thick, red!80!black] (0.75, 0.3) to[bend left=20] (0.9, 0.75);
+  \node[right, font=\small, red!80!black] at (0.9, 0.8) 
+    {$\displaystyle \int_{\cos\theta}^1 \sqrt{1-x^2}\,dx$};
+
+  % \node[font=\footnotesize, gray!80!black] at (0, -0.6) {（全体で $4$ 倍）};
+
+\end{tikzpicture}
+\end{center}
+\caption{共通部分の面積計算}
+\end{figure}
+
+$x=\cos\alpha$（$\alpha:\theta\to 0$として$x:c\to 1$）と置換すると，$dx=-\sin\alpha\,d\alpha$，$\sqrt{1-x^2}=\sin\alpha$（$0\le\alpha\le\pi/2$）だから
+\begin{align}
+ V(\theta)
+  &= 2\pi - 4\int_0^\theta\sin^2\alpha\,d\alpha \\
+  &= 2\pi - 4\int_0^\theta\left(\dfrac{1-2\cos 2\alpha}{2}\right)\,d\alpha \\
+  &= 2\pi - 4\left[\dfrac{\alpha}{2}-\dfrac{\sin2\alpha}{4}\right]_0^{\theta} \\
+  &= 2\pi + \sin 2\theta - 2\theta \label{eq:2}
+\end{align}
+である．
+
+したがって求める体積$V$は\cref{eq:2}を$0\le k=\sin\theta \le 1$で積分した上で$2$倍したもので
 \begin{align}
 \begin{split}
-\dfrac{V}{2}&=\int_0^1V(\theta)\,dy=\int_0^{\pi/2}V(\theta)\cdot\dfrac{dy}{d\theta}\,d\theta=\int_0^{\pi/2}(2\pi+\sin2\theta-2\theta)\cos\theta\,d\theta \\
-&=\int_0^{\pi/2}\bigl(2\pi C+C\sin2\theta-2C\theta\bigr)d\theta \quad(C=\cos\theta) \quad\cdots\text{①}
+ \dfrac{V}{2}
+   &=\int_0^1V(\theta)\,dk \\
+   &=\int_0^{\pi/2}V(\theta)\cdot\dfrac{dk}{d\theta}\,d\theta \\
+   &=\int_0^{\pi/2}(2\pi+\sin2\theta-2\theta)\cos\theta\,d\theta \\
+   &=\int_0^{\pi/2}\bigl(2\pi\cos\theta+\cos\theta\sin2\theta-2\theta\cos\theta\bigr)d\theta \label{eq:3}
 \end{split}
 \end{align}
-各項を計算する．
+である．
+以下各項を計算すると
 \begin{align}
 \begin{split}
-\int_0^{\pi/2}C\,d\theta&=\bigl[\sin\theta\bigr]_0^{\pi/2}=1 \\
-\int_0^{\pi/2}C\theta\,d\theta&=\bigl[\theta\sin\theta+\cos\theta\bigr]_0^{\pi/2}=\left(\dfrac{\pi}{2}+0\right)-(0+1)=\dfrac{\pi}{2}-1 \\
-\int_0^{\pi/2}C\sin2\theta\,d\theta&=2\int_0^{\pi/2}\sin\theta\cos^2\theta\,d\theta=2\left[-\dfrac{\cos^3\theta}{3}\right]_0^{\pi/2}=2\cdot\dfrac{1}{3}=\dfrac{2}{3}
+\int_0^{\pi/2}\cos\theta \,d\theta&=\bigl[\sin\theta\bigr]_0^{\pi/2}=1 \\
+\int_0^{\pi/2}\theta\cos\theta\,d\theta&=\bigl[\theta\sin\theta+\cos\theta\bigr]_0^{\pi/2}=\left(\dfrac{\pi}{2}+0\right)-(0+1)=\dfrac{\pi}{2}-1 \\
+\int_0^{\pi/2}\cos\theta\sin2\theta\,d\theta&=2\int_0^{\pi/2}\sin\theta\cos^2\theta\,d\theta=2\left[-\dfrac{\cos^3\theta}{3}\right]_0^{\pi/2}=\dfrac{2}{3}
 \end{split}
 \end{align}
-①に代入して
+だから\cref{eq:3}に代入して
 \begin{align}
 \begin{split}
 \dfrac{V}{2}&=2\pi\cdot1+\dfrac{2}{3}-2\left(\dfrac{\pi}{2}-1\right)=2\pi+\dfrac{2}{3}-\pi+2=\pi+\dfrac{8}{3} \\
-&\therefore\ V=2\pi+\dfrac{16}{3}
+\therefore\ 
+ V&=2\pi+\dfrac{16}{3}
 \end{split}
 \end{align}
+が求める体積である．
 
 
 \newpage

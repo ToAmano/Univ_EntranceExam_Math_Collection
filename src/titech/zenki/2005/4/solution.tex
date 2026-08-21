@@ -1,54 +1,237 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-実数$x,y$が$x^2+y^2\le1$をみたすとする．
+実数$x,y$が
+\begin{align}
+ x^2+y^2\le1 \label{eq:1}
+\end{align}
+をみたす場合を考える．
 
 \paragraph{(1)}
 
-$s=x+y,\ t=xy$とおく．$x,y$は$z^2-sz+t=0$の2実解だから，判別式条件
+$s=x+y,\ t=xy$とおく．$x,y$は二次方程式$z^2-sz+t=0$の2実解だから，判別式$D$が$0$以上であることが必要で
 \begin{align}
-s^2-4t\ge0
+s^2-4t\ge0 \label{eq:2}
 \end{align}
-また$x^2+y^2=s^2-2t\le1$だから
+である．このもとで$x^2+y^2=s^2-2t$を\cref{eq:1}に代入して
 \begin{align}
-s^2-2t\le1 \iff t\ge\dfrac{s^2-1}{2}
+ s^2-2t\le1 \label{eq:3}
 \end{align}
-2式をまとめて，$(s,t)$の動く範囲は
+である．
+以上\cref{eq:2,eq:3}が求めるべき$(s,t)$の存在範囲で，まとめると
 \begin{align}
-\dfrac{s^2-1}{2}\le t\le\dfrac{s^2}{4}
+ \dfrac{s^2-1}{2}\le t\le\dfrac{s^2}{4} \label{eq:4}
 \end{align}
-（境界は$t=\dfrac{1}{4}s^2$と$t=\dfrac{1}{2}(s^2-1)$，交点は$\dfrac{1}{4}s^2=\dfrac{1}{2}s^2-\dfrac{1}{2}\iff s^2=2\iff s=\pm\sqrt{2}$）．これは$-\sqrt{2}\le s\le\sqrt{2}$の範囲の，2つの放物線に挟まれた領域（境界を含む）である．
+である．これを図示すると下図斜線部（境界含む）である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=2.2, >=stealth]
+
+  % --- 1. 幾何パラメータ ---
+  % 交点 s = +-sqrt(2), t = 1/2
+  \pgfmathsetmacro{\sqrtTwo}{sqrt(2)} % ≒ 1.414
+
+  % --- 2. 存在範囲の斜線ハッチング ---
+  % 区間 [-sqrt(2), sqrt(2)] において (s^2-1)/2 <= t <= s^2/4
+  \begin{scope}
+    \clip plot[domain=-\sqrtTwo:\sqrtTwo, samples=50] (\x, {\x*\x/4}) 
+          -- plot[domain=\sqrtTwo:-\sqrtTwo, samples=50] (\x, {(\x*\x - 1)/2}) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!70] 
+      (-1.6, -0.6) rectangle (1.6, 0.7);
+  \end{scope}
+
+  % --- 3. 座標軸 (st 平面) ---
+  \draw[->, thick] (-1.9, 0) -- (1.9, 0) node[right] {$s$};
+  \draw[->, thick] (0, -0.8) -- (0, 0.9) node[above] {$t$};
+  \node[below right, font=\small] at (0,0) {$O$};
+
+  % --- 4. 境界放物線の描画 ---
+  % (i) t = s^2 / 4 (実数条件判別式 D >= 0)
+  \draw[ultra thick, blue!80!black, domain=-1.7:1.7, samples=60] 
+    plot (\x, {\x*\x/4}) node[above right, font=\small] {$t = \dfrac{s^2}{4}$};
+
+  % (ii) t = (s^2 - 1) / 2 (円 x^2+y^2 <= 1)
+  \draw[ultra thick, red!80!black, domain=-1.6:1.6, samples=60] 
+    plot (\x, {(\x*\x - 1)/2}) node[below right, font=\small] {$t = \dfrac{s^2-1}{2}$};
+
+  % --- 5. 交点と特徴的な目盛り ---
+  % 交点 (+-sqrt(2), 1/2)
+  \coordinate (IntL) at (-\sqrtTwo, 0.5);
+  \coordinate (IntR) at (\sqrtTwo, 0.5);
+
+  \draw[dashed, gray] (-\sqrtTwo, 0) node[below, black, font=\small] {$-\sqrt{2}$} -- (IntL) -- (0, 0.5) node[above left, black, font=\small] {$\dfrac{1}{2}$};
+  \draw[dashed, gray] (\sqrtTwo, 0) node[below, black, font=\small] {$\sqrt{2}$} -- (IntR) -- (0, 0.5);
+
+  \fill[black] (IntL) circle (1.2pt);
+  \fill[black] (IntR) circle (1.2pt);
+
+  % 切片
+  \fill[black] (0, -0.5) circle (1.0pt) node[left, font=\small] {$-\dfrac{1}{2}$};
+  \fill[black] (1, 0) circle (0.8pt) node[below right, font=\scriptsize] {$1$};
+  \fill[black] (-1, 0) circle (0.8pt) node[below left, font=\scriptsize] {$-1$};
+
+  % 領域ラベル
+  % \node[blue!80!black, font=\bfseries] at (0, -0.15) {領域};
+
+\end{tikzpicture}
+\end{center}
+\caption{$(s,t)$ の存在範囲（斜線部・境界含む）}
+\end{figure}
 
 \paragraph{(2)}
 
-$f(s,t)=t+ms$とおく．(1)から$\dfrac{s^2-1}{2}\le t\le\dfrac{s^2}{4}$（$-\sqrt{2}\le s\le\sqrt{2}$）．$s$を固定すると，$f$は$t$の増加関数だから
+新しく
 \begin{align}
-\dfrac{s^2-1}{2}+ms\le f(s,t)\le\dfrac{s^2}{4}+ms
+ f(s,t)=t+ms
 \end{align}
-左辺を$g(s)$，右辺を$h(s)$とおく（$-\sqrt{2}\le s\le\sqrt{2}$）．
+とおいて，この最大最小値を求めれば良い．
+$s$を固定すると$f$は$t$の増加関数だから\cref{eq:4}から
 \begin{align}
-\begin{split}
+ \dfrac{s^2-1}{2}+ms\le f(s,t)\le\dfrac{s^2}{4}+ms \quad (\sqrt{2} \le s \le \sqrt{2})
+\end{align}
+である．
+この左辺を$g(s)$，右辺を$h(s)$とおく: 
+\begin{align}
+\begin{cases}
 g(s)&=\dfrac{1}{2}(s^2-1)+ms=\dfrac{1}{2}(s+m)^2-\dfrac{1}{2}m^2-\dfrac{1}{2} \\
 h(s)&=\dfrac{1}{4}s^2+ms=\dfrac{1}{4}(s+2m)^2-m^2
-\end{split}
+\end{cases}
 \end{align}
-$m\ge0$に注意する．
+以下$m \ge 0$に注意して$g(s)$の最小値および$h(s)$の最大値を求めれば良い．
 
-\subparagraph{最小値について：} $g$は$s=-m$で最小の下に凸な放物線．
+
+\subparagraph{$g(s)$の最小値について：} 
+
+$g$は$s=-m$で最小の下に凸な放物線だから，$\sqrt{2} \le s \le \sqrt{2}$と$m$の大小関係に注意して
 \begin{itemize}
 \item $-\sqrt{2}\le-m$（$m\le\sqrt{2}$）の時：頂点が区間内にあり，$\min g=g(-m)=-\dfrac{1}{2}m^2-\dfrac{1}{2}$
 \item $-m<-\sqrt{2}$（$m>\sqrt{2}$）の時：$g$は区間内で単調増加，$\min g=g(-\sqrt{2})=\dfrac{1}{2}(m-\sqrt{2})^2-\dfrac{1}{2}m^2-\dfrac{1}{2}=-\sqrt{2}m+\dfrac{1}{2}$
 \end{itemize}
+となる．
 
-\subparagraph{最大値について：} $h$は$s=-2m\le0$で最小をとる下に凸な放物線だから，区間$[-\sqrt{2},\sqrt{2}]$上の最大値は端点でとる．$m\ge0$では頂点$-2m$から遠いのは常に$s=\sqrt{2}$の側（$|\sqrt{2}-(-2m)|=\sqrt{2}+2m\ge|-\sqrt{2}-(-2m)|=|2m-\sqrt{2}|$，$m\ge0$で常に成立）だから
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.15, >=stealth]
+
+  % ========================================================
+  % 1. 左図: g(s) の最小値 (m <= sqrt(2) のとき: 頂点)
+  % ========================================================
+  \begin{scope}[shift={(0, 0)}]
+    \node[above, font=\bfseries] at (0, 2.6) {$g(s)$ の最小値 ($0 \le m \le \sqrt{2}$)};
+
+    % 座標軸
+    \draw[->, thick] (-2.2, 0) -- (2.2, 0) node[right] {$s$};
+    \draw[->, thick] (0, -1.2) -- (0, 2.6) node[above] {$y$};
+    \node[below right, font=\scriptsize] at (0,0) {$O$};
+
+    % 定義域 [-\sqrt{2}, \sqrt{2}] の境界線
+    \draw[dashed, gray!70] (-1.414, -1.0) -- (-1.414, 2.2);
+    \draw[dashed, gray!70] (1.414, -1.0) -- (1.414, 2.2);
+    \node[below, font=\scriptsize] at (-1.414, 0) {$-\sqrt{2}$};
+    \node[below, font=\scriptsize] at (1.414, 0) {$\sqrt{2}$};
+
+    % 放物線 y = g(s) (例: m = 0.6 -> 軸 -m = -0.6)
+    \draw[thick, gray!50, domain=-1.9:1.9, samples=50] plot (\x, {0.5*(\x + 0.6)^2 - 0.68});
+    % 定義域内の太線強調
+    \draw[ultra thick, red!80!black, domain=-1.414:1.414, samples=40] 
+      plot (\x, {0.5*(\x + 0.6)^2 - 0.68}) node[above right, font=\scriptsize] {$y = g(s)$};
+
+    % 軸 s = -m (頂点で最小)
+    \draw[dashed, red!80!black, thick] (-0.6, -1.0) -- (-0.6, 1.8) 
+      node[above, font=\scriptsize, text=red!80!black] {軸 $-m$};
+    \fill[red!80!black] (-0.6, -0.68) circle (1.8pt) 
+      node[below, font=\scriptsize, yshift=-2pt] {最小値 $g(-m)$};
+  \end{scope}
+
+  % ========================================================
+  % 2. 中央図: g(s) の最小値 (m > sqrt(2) のとき: 端点)
+  % ========================================================
+  \begin{scope}[shift={(5.2, 0)}]
+    \node[above, font=\bfseries] at (0, 2.6) {$g(s)$ の最小値 ($m > \sqrt{2}$)};
+
+    % 座標軸
+    \draw[->, thick] (-2.5, 0) -- (2.2, 0) node[right] {$s$};
+    \draw[->, thick] (0, -1.2) -- (0, 2.6) node[above] {$y$};
+    \node[below right, font=\scriptsize] at (0,0) {$O$};
+
+    % 定義域 [-\sqrt{2}, \sqrt{2}]
+    \draw[dashed, gray!70] (-1.414, -1.0) -- (-1.414, 2.2);
+    \draw[dashed, gray!70] (1.414, -1.0) -- (1.414, 2.2);
+    \node[below, font=\scriptsize] at (-1.414, 0) {$-\sqrt{2}$};
+    \node[below, font=\scriptsize] at (1.414, 0) {$\sqrt{2}$};
+
+    % 放物線 y = g(s) (例: m = 1.9 -> 軸 -m = -1.9)
+    \draw[thick, gray!50, domain=-2.3:1.6, samples=50] plot (\x, {0.5*(\x + 1.9)^2 - 0.9});
+    % 定義域内の太線強調
+    \draw[ultra thick, red!80!black, domain=-1.414:1.414, samples=40] 
+      plot (\x, {0.5*(\x + 1.9)^2 - 0.9}) node[above right, font=\scriptsize] {$y = g(s)$};
+
+    % 軸 s = -m (定義域外)
+    \draw[dashed, gray, thick] (-1.9, -1.0) -- (-1.9, 1.8) 
+      node[above, font=\scriptsize] {軸 $-m$};
+
+    % 端点 s = -\sqrt{2} で最小
+    \coordinate (MinEnd) at (-1.414, {0.5*(-1.414 + 1.9)^2 - 0.9});
+    \fill[red!80!black] (MinEnd) circle (1.8pt) 
+      node[below right, font=\scriptsize] {最小値 $g(-\sqrt{2})$};
+  \end{scope}
+
+\end{tikzpicture}
+\end{center}
+\caption{$g(s)$ の最小値の場合分け}
+\end{figure}
+
+\subparagraph{$h(s)$の最大値について：} 
+
+$h$は$s=-2m\le0$で最小をとる下に凸な放物線だから，区間$[-\sqrt{2},\sqrt{2}]$上の最大値は頂点$-2m$から遠い方の端点$s=\sqrt{2}$でとる．
+よって
 \begin{align}
 \max h=h(\sqrt{2})=\dfrac{1}{4}(\sqrt{2}+2m)^2-m^2=\sqrt{2}m+\dfrac{1}{2}
 \end{align}
+である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.15, >=stealth]
+
+  % ========================================================
+  % 3. 右図: h(s) の最大値 (軸 s = -2m <= 0 より s = sqrt(2) で最大)
+  % ========================================================
+    \node[above, font=\bfseries] at (0, 2.6) {$h(s)$ の最大値（常に端点 $\sqrt{2}$）};
+
+    % 座標軸
+    \draw[->, thick] (-2.2, 0) -- (2.2, 0) node[right] {$s$};
+    \draw[->, thick] (0, -1.2) -- (0, 2.6) node[above] {$y$};
+    \node[below right, font=\scriptsize] at (0,0) {$O$};
+
+    % 定義域 [-\sqrt{2}, \sqrt{2}]
+    \draw[dashed, gray!70] (-1.414, -1.0) -- (-1.414, 2.2);
+    \draw[dashed, gray!70] (1.414, -1.0) -- (1.414, 2.2);
+    \node[below, font=\scriptsize] at (-1.414, 0) {$-\sqrt{2}$};
+    \node[below, font=\scriptsize] at (1.414, 0) {$\sqrt{2}$};
+
+    % 放物線 y = h(s) (例: m = 0.5 -> 軸 -2m = -1.0)
+    \draw[thick, gray!50, domain=-1.8:1.8, samples=50] plot (\x, {0.25*(\x + 1.0)^2 - 0.25});
+    % 定義域内の太線強調
+    \draw[ultra thick, blue!80!black, domain=-1.414:1.414, samples=40] 
+      plot (\x, {0.25*(\x + 1.0)^2 - 0.25}) node[above right, font=\scriptsize] {$y = h(s)$};
+
+    % 軸 s = -2m <= 0
+    \draw[dashed, blue!80!black, thick] (-1.0, -1.0) -- (-1.0, 1.8) 
+      node[above, font=\scriptsize, text=blue!80!black] {軸 $-2m \le 0$};
+
+    % 端点 s = \sqrt{2} で最大
+    \coordinate (MaxEnd) at (1.414, {0.25*(1.414 + 1.0)^2 - 0.25});
+    \fill[blue!80!black] (MaxEnd) circle (1.8pt) 
+      node[above left, font=\scriptsize] {最大値 $h(\sqrt{2})$};
+
+\end{tikzpicture}
+\end{center}
+\caption{$h(s)$ の最大値}
+\end{figure}
+
 \casesend
 
 以上をまとめて，もとめる最大値・最小値は
@@ -60,6 +243,6 @@ $m\ge0$に注意する．
 -\sqrt{2}\,m+\dfrac{1}{2} & (m\ge\sqrt{2})
 \end{cases}
 \end{align}
-
+である．
 
 \end{document}
