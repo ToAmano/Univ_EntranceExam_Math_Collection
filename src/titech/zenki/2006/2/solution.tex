@@ -1,46 +1,164 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 \paragraph{(1)}
 
-$a,b>0$とし$g(t)=\dfrac{1}{b}t^a-\log t$（$t>0$）とおく．
+$a,b>0$とし$g(t)=\dfrac{1}{b}t^a-\log t$（$t>0$）とすると
 \begin{align}
-g'(t)=\dfrac{a}{b}t^{a-1}-\dfrac{1}{t}=\dfrac{1}{t}\Bigl(\dfrac{a}{b}t^a-1\Bigr)
+ g'(t)=\dfrac{a}{b}t^{a-1}-\dfrac{1}{t}=\dfrac{1}{t}\Bigl(\dfrac{a}{b}t^a-1\Bigr)
 \end{align}
-より，$g'(t)=0\iff t=\bigl(\dfrac{b}{a}\bigr)^{\frac{1}{a}}$．この点の前後で$g'$は$-$から$+$に変わるので，$g$は$t=\bigl(\dfrac{b}{a}\bigr)^{1/a}$で極小値
+だから$g(t)$の増減表は以下のようになる．
+
+\begin{table}[htb]
+\centering
+\caption{$g(t)$ の増減表}
+\label{tab:g_t}
+\begin{tabular}{c|ccccc}
+$t$     & $(0)$ & $\cdots$ & $\left(\dfrac{b}{a}\right)^{\frac{1}{a}}$ & $\cdots$ & $\infty$\\ \hline
+$g'(t)$ & & $-$ & $0$ & $+$ & \\ \hline
+$g(t)$  & $\infty$& $\searrow$ & 極小 & $\nearrow$ & $\infty$
+\end{tabular}
+\end{table}
+
+従って$g$は$t=\bigl(\dfrac{b}{a}\bigr)^{1/a}$で極小値
 \begin{align}
-g\Bigl(\Bigl(\dfrac{b}{a}\Bigr)^{\frac{1}{a}}\Bigr)=\dfrac{1}{a}-\dfrac{1}{a}\log\dfrac{b}{a}
+ g\Bigl(\Bigl(\dfrac{b}{a}\Bigr)^{\frac{1}{a}}\Bigr)=\dfrac{1}{a}-\dfrac{1}{a}\log\dfrac{b}{a}
 \end{align}
-をとる（$t\to0^+,\,t\to\infty$でともに$g(t)\to+\infty$なのでこれは最小値でもある）．
+をとる．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.8, >=stealth]
+
+  % --- 1. パラメータ設定 (描画例として a=1, b=1.5 を使用) ---
+  % g(t) = (1/b)*t^a - log(t)
+  % このとき、極小点は t_0 = (b/a)^(1/a) = 1.5
+  % 極小値 g(t_0) = 1/a - (1/a)*log(b/a) = 1 - log(1.5) ≒ 0.59 > 0
+  \def\aVal{1.0}
+  \def\bVal{1.5}
+  \pgfmathsetmacro{\tZero}{{(\bVal/\aVal)^(1/\aVal)}} % t_0 ≒ 1.5
+  \pgfmathsetmacro{\gMin}{1/\aVal - (1/\aVal)*ln(\bVal/\aVal)} % g(t_0) ≒ 0.59
+
+  % --- 2. 座標軸 ---
+  \draw[->, thick] (-0.3, 0) -- (4.2, 0) node[right] {$t$};
+  \draw[->, thick] (0, -0.4) -- (0, 3.2) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % --- 3. グラフ y = g(t) の描画 ---
+  % スケールに合わせてドメインとサンプル数を調整
+  \draw[ultra thick, blue!80!black, domain=0.25:4.0, samples=80] 
+    plot (\x, { (1/\bVal)*(\x^\aVal) - ln(\x) }) 
+    node[right, font=\small] {$y = g(t)$};
+
+  % --- 4. 極小点 (t_0, g(t_0)) のプロットとガイド線 ---
+  \coordinate (MinPt) at (\tZero, \gMin);
+  
+  \draw[dashed, gray] (\tZero, 0) node[below, black, font=\small] {$\left(\dfrac{b}{a}\right)^{\frac{1}{a}}$} -- (MinPt);
+  \draw[dashed, gray] (0, \gMin) node[left, black, font=\small] {$\min g(t)$} -- (MinPt);
+  
+  \fill[red!80!black] (MinPt) circle (1.8pt) node[above right, font=\scriptsize] {極小};
+
+\end{tikzpicture}
+\end{center}
+\caption{$g(t)$（$t>0$）の概形}
+\end{figure}
 
 \paragraph{(2)}
 
-$m>0$とする．条件(b)は$t>0$すべてで成り立つ不等式なので，(1)の結果を$a=x,\ b=y$として用いて言い換える．$g(t)=\dfrac{1}{y}t^x-\log t$の最小値は$t=(y/x)^{1/x}$で$\dfrac{1}{x}\bigl(1-\log\dfrac{y}{x}\bigr)$だから，条件(b)は
+$m>0$とする．条件(a)より$x,y>0$だから条件(b)は(1)で$a=x,\ b=y$と置き換えて
 \begin{align}
-\dfrac{1}{x}\Bigl(1-\log\dfrac{y}{x}\Bigr)\ge m
+ g(t) \ge m
 \end{align}
-と同値．$x>0$に注意して整理すると$\log\dfrac{y}{x}\le1-mx$，すなわち
+である．これが全ての$t>0$で成り立つためには
 \begin{align}
-y\le x\cdot e^{1-mx}\equiv f(x)
+ \min g(t) \ge m
 \end{align}
-となる．よって$D$は
+であればよく，(1)より$\min g(t)=g\Bigl(\Bigl(\dfrac{y}{x}\Bigr)^{\frac{1}{x}}\Bigr)$だから
 \begin{align}
-0<x<y\le f(x)=x\,e^{1-mx}
+ \dfrac{1}{x}-\dfrac{1}{x}\log\dfrac{y}{x} \ge m
 \end{align}
-で定まる領域である．
+である．$x>0$より両辺に$x$をかけて
+\begin{align}
+ 1 - \log\dfrac{y}{x} \ge mx \\
+ 1 - \log y + \log x \ge mx \\
+ 1 - mx + \log x \ge \log y
+\end{align}
+である．$\log x$は単調増加関数だから
+\begin{align}
+ y \le x e^{1-mx} \label{eq:1}
+\end{align}
+である．これと一つ目の条件を合わせて，求める領域$D$は
+\begin{align}
+ 0 < x < y \le x e^{1-mx} \label{eq:2}
+\end{align}
+である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.8, >=stealth]
+
+  % --- 1. パラメータ設定 (描画例として接する状況 m = min g(t) を作図) ---
+  % (1) と同じパラメータ: a=1, b=1.5
+  \def\aVal{1.0}
+  \def\bVal{1.5}
+  \pgfmathsetmacro{\tZero}{{(\bVal/\aVal)^(1/\aVal)}} % t_0 = (y/x)^(1/x) ≒ 1.5
+  \pgfmathsetmacro{\mVal}{1/\aVal - (1/\aVal)*ln(\bVal/\aVal)} % m = g(t_0) ≒ 0.59
+
+  % --- 2. 座標軸 ---
+  \draw[->, thick] (-0.3, 0) -- (4.2, 0) node[right] {$t$};
+  \draw[->, thick] (0, -0.4) -- (0, 3.2) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % --- 3. グラフ y = g(t) の描画 ---
+  \draw[ultra thick, blue!80!black, domain=0.25:4.0, samples=80] 
+    plot (\x, { (1/\bVal)*(\x^\aVal) - ln(\x) }) 
+    node[right, font=\small] {$y = g(t)$};
+
+  % --- 4. 直線 y = m の描画 ---
+  \draw[thick, red!80!black] (-0.1, \mVal) -- (4.0, \mVal)
+    node[above right, font=\small] {$y = m$};
+
+  % --- 5. 条件 g(t) >= m の視覚化 ---
+  % 直線 y=m より上の領域に色を付ける
+  \begin{scope}
+    \clip (0.2, 0.4) rectangle (4.0, 3.0); % 描画範囲をクリップ
+    \fill[pattern=north east lines, pattern color=blue!30, domain=0.25:4.0, samples=80]
+      plot (\x, { (1/\bVal)*(\x^\aVal) - ln(\x) }) -- (4.0, \mVal) -- (0.25, \mVal) -- cycle;
+  \end{scope}
+
+  % --- 6. 接点・極小点 (t_0, m) のプロットとラベル ---
+  \coordinate (ContactPt) at (\tZero, \mVal);
+  
+  \draw[dashed, gray] (\tZero, 0) node[below, black, font=\small] {$\left(\dfrac{y}{x}\right)^{\frac{1}{x}}$} -- (ContactPt);
+  
+  % y軸の目盛り m 兼 min g(t)
+  \fill[purple!80!black] (0, \mVal) circle (1.2pt) node[left, font=\small] {$m = \min g(t)$};
+  \fill[purple!80!black] (ContactPt) circle (1.8pt);
+
+\end{tikzpicture}
+\end{center}
+\caption{$y = g(t)$（$a,b \to x,y$）と直線 $y = m$ の関係}
+\end{figure}
+
+そこでこの右辺$f(x) = xe^{1-mx}$の形を調べよう．一階微分は
 \begin{align}
 f'(x)=e^{1-mx}(1-mx)
 \end{align}
-より$f$は$x=\dfrac{1}{m}$で最大値$f(\dfrac{1}{m})=\dfrac{1}{m}$をとり，$x\to0^+$と$x\to\infty$でともに$f(x)\to0$．また
-\begin{align}
-f(x)\ge x\iff e^{1-mx}\ge1\iff x\le\dfrac{1}{m}
-\end{align}
-（$x>0$より）．したがって$0<x\le\dfrac{1}{m}$では直線$y=x$と曲線$y=f(x)$の間（$x<y\le f(x)$）が存在し，$x>\dfrac{1}{m}$では$f(x)<x$となるので$D$は空である．よって$D$は図の斜線部分（境界は太線部を含み，点線部および$x=0$は含まない）．
+より増減表は以下のようになる．
+
+\begin{table}[htb]
+\centering
+\caption{$f(x)$ の増減表}
+\label{tab:f_x}
+\begin{tabular}{c|ccccc}
+$x$ & $0$ & $\cdots$ & $\dfrac{1}{m}$ & $\cdots$ & $\infty$ \\ \hline
+$f'(x)$ & & $+$ & $0$ & $-$ & \\ \hline
+$f(x)$ & $0$ & $\nearrow$ & $\dfrac{1}{m}$（極大） & $\searrow$ & $0$
+\end{tabular}
+\end{table}
+
+従ってグラフの概形および$D$の領域は下図の斜線部である．境界は実線のみ含む．
 
 \begin{figure}[htb]
 \centering
@@ -57,23 +175,21 @@ f(x)\ge x\iff e^{1-mx}\ge1\iff x\le\dfrac{1}{m}
   \node[left] at (0,1) {$\frac{1}{m}$};
   \filldraw (1,1) circle(0.46pt);
 \end{tikzpicture}
-\caption{領域$D$（斜線部，$m=1$の場合の概形）}
+\caption{領域$D$（斜線部，境界は実線のみ含む）}
 \end{figure}
 
 \paragraph{(3)}
 
-面積$S$は
+領域$D$の面積$S$は$y=f(x)$の$\left[0,\dfrac{1}{m}\right]$での積分から，底辺$\dfrac{1}{m}$，高さ$\dfrac{1}{m}$の三角形の面積を引いたもので
 \begin{align}
-S=\int_0^{\frac{1}{m}}\bigl(x\,e^{1-mx}-x\bigr)\,dx=e\int_0^{\frac{1}{m}}x\,e^{-mx}\,dx-\dfrac{1}{2}\Bigl(\dfrac{1}{m}\Bigr)^2
+ S
+  &=\int_0^{\frac{1}{m}} x e^{1-mx} \,dx - \dfrac{1}{2m^2} \\
+  &=e\int_0^{\frac{1}{m}}x\,e^{-mx}\,dx-\dfrac{1}{2m^2} \\
+  &=e\Bigl[e^{-mx}\Bigl(\dfrac{x}{-m}-\dfrac{1}{m^2}\Bigr)\Bigr]_0^{\frac{1}{m}} - \dfrac{1}{2m^2} \\
+  &=e\left[e^{-1}\left(\dfrac{-2}{m^2}\right) + \dfrac{1}{m^2}\right] - \dfrac{1}{2m^2} \\
+  &=\left(e-\dfrac{5}{2}\right)\dfrac{1}{m^2}
 \end{align}
-部分積分により$\displaystyle\int xe^{-mx}\,dx=-e^{-mx}\Bigl(\dfrac{x}{m}+\dfrac{1}{m^2}\Bigr)+C$なので
-\begin{align}
-\int_0^{\frac{1}{m}}xe^{-mx}\,dx=\Bigl[-e^{-mx}\Bigl(\dfrac{x}{m}+\dfrac{1}{m^2}\Bigr)\Bigr]_0^{\frac{1}{m}}=-e^{-1}\cdot\dfrac{2}{m^2}+\dfrac{1}{m^2}=\dfrac{1}{m^2}\Bigl(1-\dfrac{2}{e}\Bigr)
-\end{align}
-ゆえに
-\begin{align}
-S=e\cdot\dfrac{1}{m^2}\Bigl(1-\dfrac{2}{e}\Bigr)-\dfrac{1}{2m^2}=\dfrac{e-2}{m^2}-\dfrac{1}{2m^2}=\Bigl(e-\dfrac{5}{2}\Bigr)\dfrac{1}{m^2}
-\end{align}
+である．
 
 
 \newpage
