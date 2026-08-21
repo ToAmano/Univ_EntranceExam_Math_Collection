@@ -1,43 +1,137 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$a,b>0$とし，$f(x)=x^a$，$g(x)=\log bx$（$x>0$）とおく．$f'(x)=ax^{a-1}$，$g'(x)=\dfrac{1}{x}$である．接点を$P(s,t)$とすると，$f(s)=g(s)$，$f'(s)=g'(s)$がともに成り立つ：
+$a,b>0$として与えられた関数を
 \begin{align}
-s^a=\log bs=t,\qquad as^{a-1}=\dfrac{1}{s}.
+ \begin{cases}
+  f(x)=x^a \\
+  g(x)=\log bx & (x>0) 
+ \end{cases} \label{eq:1}
 \end{align}
-第2式の両辺に$s$をかけて$as^a=1$，すなわち$s^a=\dfrac{1}{a}$（$s>0$）だから$s=\bigl(\dfrac{1}{a}\bigr)^{1/a}$．第1式に代入すると
+とおく．一階微分は
 \begin{align}
-t=s^a=\dfrac{1}{a},\qquad b=\dfrac{1}{s}e^{1/a}=(ae)^{1/a}.
+ \begin{cases}
+  f'(x)=ax^{a-1} \\
+  g'(x)=\dfrac{1}{x}
+ \end{cases} \label{eq:2}
 \end{align}
+である．
+
+\paragraph{(1)}
+接点を$P(s,t)$とすると，$f(s)=g(s)=t$，$f'(s)=g'(s)$が成り立つから\cref{eq:1,eq:2}より
+\begin{align}
+ s^a=\log bs=t,\qquad as^{a-1}=\dfrac{1}{s} \label{eq:3}
+\end{align}
+である．\cref{eq:3}の第2式から
+\begin{align}
+ as^a=1 \quad \therefore s = \left(\dfrac{1}{a}\right)^{1/a} \label{eq:4}
+\end{align}
+である．これを\cref{eq:3}の第一式に代入して
+\begin{align}
+ t=s^a=\dfrac{1}{a},\qquad b=\dfrac{1}{s}e^{1/a}=(ae)^{1/a} \label{eq:5}
+\end{align}
+である．\cref{eq:4,eq:5}をまとめて
+\begin{align}
+ \begin{cases}
+  s = \left(\dfrac{1}{a}\right)^{1/a} \\
+  t = \dfrac{1}{a} \\
+  b = (ae)^{1/a}
+ \end{cases} \label{eq:6}
+\end{align}
+である．
 
 \paragraph{(2)}
 
-$y=g(x)$，$y=f(x)$のグラフは，$0<x<s$で$f(x)>g(x)$（$g(x)\to-\infty\ (x\to0^+)$に対し$f(x)\to0$）．$0<h<\dfrac{1}{a}$のもとで考えれば十分で，
-\begin{align}
-A(h)=\int_h^s\bigl(f(x)-g(x)\bigr)dx=\Bigl[\dfrac{1}{a+1}x^{a+1}-x(\log b+\log x-1)\Bigr]_h^s.
-\end{align}
-これを展開すると
-\begin{align}
-A(h)=\dfrac{1}{a+1}\bigl(s^{a+1}-h^{a+1}\bigr)-s(\log b+\log s-1)+h(\log b+\log h-1).
-\end{align}
-$h\to0^+$のとき$h^{a+1}\to0$（$a+1>0$），$h\log h\to0$より$h(\log b+\log h-1)\to0$なので
-\begin{align}
-\lim_{h\to0}A(h)=\dfrac{1}{a+1}s^{a+1}-s(\log b+\log s-1).
-\end{align}
-ここで$\log b+\log s=\dfrac{1}{a}(\log a+1)+\Bigl(-\dfrac{1}{a}\log a\Bigr)=\dfrac{1}{a}$だから$\log b+\log s-1=\dfrac{1-a}{a}$．また$s^{a+1}=s^a\cdot s=\dfrac{s}{a}$．よって
-\begin{align}
-\lim_{h\to0}A(h)=\dfrac{s}{a(a+1)}-s\cdot\dfrac{1-a}{a}=\dfrac{s}{a}\Bigl(\dfrac{1}{a+1}-(1-a)\Bigr)=\dfrac{s}{a}\cdot\dfrac{1-(1-a)(a+1)}{a+1}=\dfrac{s}{a}\cdot\dfrac{a^2}{a+1}=\dfrac{a}{a+1}s.
-\end{align}
-$s=\bigl(\dfrac{1}{a}\bigr)^{1/a}$だから
-\begin{align}
-\lim_{h\to0}A(h)=\dfrac{a}{a+1}\Bigl(\dfrac{1}{a}\Bigr)^{1/a}.
-\end{align}
+$h\to 0$を考えるので，$h$が接点の$x$座標$t$よりも小さい場合を考えれば良い．
+この時$y=g(x)$，$y=f(x)$, $x=h$のグラフは下図であり，求める面積$A(h)$は斜線部である．
 
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=2.2, >=stealth]
+
+  % --- 1. パラメータ設定 (例: a = 1 -> s = 1, t = 1, b = e) ---
+  \def\sVal{1.0}
+  \def\tVal{1.0}
+  \def\hVal{0.25} % 0 < h < s
+
+  % --- 2. 面積 A(h) の斜線ハッチング (h <= x <= s) ---
+  \fill[pattern=north east lines, pattern color=blue!70]
+    (\hVal, \hVal) -- plot[domain=\hVal:\sVal, samples=60] (\x, \x)
+    -- plot[domain=\sVal:\hVal, samples=60] (\x, {1 + ln(\x)})
+    -- cycle;
+
+  % --- 3. 座標軸 ---
+  \draw[->, thick] (-0.3, 0) -- (2.3, 0) node[right] {$x$};
+  \draw[->, thick] (0, -1.2) -- (0, 2.0) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % --- 4. 曲線 y = f(x) と y = g(x) の描画 ---
+  % y = f(x) = x^a (例: y = x)
+  \draw[ultra thick, blue!80!black, domain=0:1.7, samples=60] 
+    plot (\x, \x) node[above right, font=\small] {$y = f(x) = x^a$};
+
+  % y = g(x) = log(bx) (例: y = 1 + ln(x))
+  \draw[ultra thick, red!80!black, domain=0.15:1.7, samples=80] 
+    plot (\x, {1 + ln(\x)}) node[right, font=\small] {$y = g(x) = \log bx$};
+
+  % 共通接線 (破線)
+  \draw[dashed, gray!80!black, domain=0.3:1.6]
+    plot (\x, {\x});
+
+  % --- 5. 直線 x = h (緑色破線) ---
+  \draw[thick, dashed, green!50!black] (\hVal, -1.0) -- (\hVal, 1.2)
+    node[above, font=\small] {$x = h$};
+
+  % --- 6. 接点 P(s, t) のプロットとガイド線 ---
+  \coordinate (P) at (\sVal, \tVal);
+  \draw[dashed, gray] (\sVal, 0) node[below, black, font=\small] {$s$} -- (P);
+  \draw[dashed, gray] (0, \tVal) node[left, black, font=\small] {$t$} -- (P);
+  
+  \fill[purple!80!black] (P) circle (1.5pt) 
+    node[above left, font=\small, text=purple!80!black] {$P(s,t)$};
+
+  % --- 7. 目盛りと面積ラベル ---
+  \fill[green!50!black] (\hVal, 0) circle (1.0pt) node[below left, font=\small] {$h$};
+  
+  % g(x) の x 切片 (x = 1/b = 1/e ≒ 0.368)
+  \fill[red!80!black] (0.368, 0) circle (1.0pt) node[below right, font=\scriptsize] {$\dfrac{1}{b}$};
+
+  % 面積ラベル A(h)
+  \node[blue!90!black, font=\large] at (0.55, 0.25) {$A(h)$};
+
+\end{tikzpicture}
+\end{center}
+\caption{2曲線 $y=f(x), y=g(x)$ の接点 $P(s,t)$ と直線 $x=h$ で囲まれる領域 $A(h)$（斜線部）}
+\end{figure}
+
+
+従って
+\begin{align}
+A(h)
+ &=\int_h^s\bigl(f(x)-g(x)\bigr)dx \\
+ &=\Bigl[\dfrac{1}{a+1}x^{a+1}-x(\log b+\log x-1)\Bigr]_h^s \\
+ &=\dfrac{1}{a+1}\bigl(s^{a+1}-h^{a+1}\bigr)-s(\log b+\log s-1)+h(\log b+\log h-1) \\
+ &=\Bigl[\dfrac{-h^{a+1}}{a+1}+h\left(\log b + \log h -1\right)\Bigr] + \dfrac{s^{a+1}}{a+1} - s(\log b+\log s-1) \label{eq:7}
+\end{align}
+となる．
+$h$に依存するのは最初の大括弧の項のみである．
+$h\to0^+$のとき，$a+1>0$より$h^{a+1}\to0$，また$h\log h\to0$より$h(\log b+\log h-1)\to0$なので大括弧の項は$0$に収束し
+\begin{align}
+\lim_{h\to0}A(h)=\dfrac{s^{a+1}}{a+1}-s(\log b+\log s-1) \label{eq:8}
+\end{align}
+である．
+\cref{eq:6}を代入すると
+\begin{align}
+ \lim_{h\to0}A(h)
+   &= \dfrac{s^{a+1}}{a+1} - s\left(\dfrac{1}{a}\log ae - \dfrac{1}{a}\log a -1\right) \\
+   &= s \Bigl[\dfrac{s^{a}}{a+1} - \dfrac{1}{a} + 1 \Bigr] \\
+   &= s \Bigl[\dfrac{1}{a(a+1)} - \dfrac{1}{a} + 1 \Bigr] \\
+   &= s \Bigl[\dfrac{1}{a(a+1)} - \dfrac{1}{a} + 1 \Bigr] \\
+   &= s \dfrac{a}{a+1} \\
+   &= \dfrac{a}{a+1} \left(\dfrac{1}{a}\right)^{1/a}
+\end{align}
+である．
 
 \newpage
 
