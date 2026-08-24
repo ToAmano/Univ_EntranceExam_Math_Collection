@@ -1,74 +1,177 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$f(x)=1-\cos x-x\sin x=1-C-xS$（$C=\cos x,\ S=\sin x$）とおく．
+与えられた関数
+\begin{align}
+ f(x)=1-\cos x-x\sin x \label{eq:1}
+\end{align}
+について考える．
 
 \paragraph{(1)}
 
-$f'(x)=S-S-xC=-xC$．$0<x<\dfrac{\pi}{2}$で$C>0$より$f'(x)<0$，$x=\dfrac{\pi}{2}$で$f'=0$，$\dfrac{\pi}{2}<x<\pi$で$C<0$より$f'(x)>0$．よって$f$は$[0,\pi/2]$で減少，$[\pi/2,\pi]$で増加．
+一階微分を計算すると
 \begin{align}
-f(0)=0,\qquad f\Bigl(\dfrac{\pi}{2}\Bigr)=1-\dfrac{\pi}{2}<0,\qquad f(\pi)=1-(-1)-0=2.
+ f'(x)=\sin x -\sin x -x\cos x = -x\cos x \label{eq:2}
 \end{align}
-$f(0)=0$かつ$(0,\pi/2)$で$f$は狭義単調減少だから$(0,\pi/2)$に解はなく，$[\pi/2,\pi]$では$f$が$1-\pi/2<0$から$2>0$へ狭義単調増加するので中間値の定理よりただ1つの解$\alpha\in(\pi/2,\pi)$を持つ．よって$0<x<\pi$で$f(x)=0$はただ1つの実解を持つ．
+である．よって$f(x)$の増減表は以下のようになる．
+
+\begin{table}[htb]
+\centering
+\caption{$f(x)$ の増減表（$0 \le x \le \pi$）}
+\label{tab:f_x_trig}
+\begin{tabular}{c|ccccccc}
+$x$ & $0$ & $\cdots$ & $\dfrac{\pi}{2}$ & $\cdots$ & $\alpha$ & $\cdots$ & $\pi$ \\ \hline
+$f'(x)$ & $0$ & $-$ & $0$ & $+$ & $+$ & $+$ & $\pi$ \\ \hline
+$f(x)$ & $0$ & $\searrow$ & $1 - \dfrac{\pi}{2}$（極小） & $\nearrow$ & $0$ & $\nearrow$ & $2$
+\end{tabular}
+\end{table}
+
+$f(0)=0$かつ$(0,\pi/2)$で$f$は単調減少だから$(0,\pi/2)$に解はなく，$[\pi/2,\pi]$では$f$が$1-\pi/2<0$から$2>0$へ単調増加するので中間値の定理よりただ1つの解$\alpha\in(\pi/2,\pi)$を持つ．よって$0<x<\pi$で$f(x)=0$はただ1つの実解を持つ．以上で題意は示された．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=2.0, >=stealth]
+
+  % 定数設定 (pi ≒ 3.14159, alpha ≒ 2.028757 rad ≒ 116.24 deg)
+  \def\piVal{3.14159}
+  \def\halfPi{1.570796}
+  \def\alphaVal{2.331122}
+  \def\threeQuarterPi{2.356194}
+
+  % 座標点
+  \coordinate (O) at (0, 0);
+  \coordinate (MinPt) at (\halfPi, {1 - \halfPi});
+  \coordinate (AlphaPt) at (\alphaVal, 0);
+  \coordinate (PiPt) at (\piVal, 2);
+
+  % --- 1. 積分領域のハッチング (J の内訳) ---
+  % [0, alpha]: f(x) <= 0
+  \fill[pattern=north east lines, pattern color=blue!60]
+    plot[domain=0:\alphaVal, samples=60] (\x, {1 - cos(\x r) - \x*sin(\x r)}) -- cycle;
+
+  % [alpha, pi]: f(x) >= 0
+  \fill[pattern=north west lines, pattern color=red!60]
+    (\alphaVal, 0) -- plot[domain=\alphaVal:\piVal, samples=60] (\x, {1 - cos(\x r) - \x*sin(\x r)}) 
+    -- (\piVal, 0) -- cycle;
+
+  % --- 2. 座標軸 ---
+  \draw[->, thick] (-0.3, 0) -- (3.6, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.9) -- (0, 2.4) node[above] {$y$};
+  \node[below left, font=\small] at (O) {$O$};
+
+  % --- 3. グラフ y = f(x) の描画 ---
+  \draw[ultra thick, blue!80!black, domain=0:\piVal, samples=100]
+    plot (\x, {1 - cos(\x r) - \x*sin(\x r)})
+    node[above left, font=\small] {$y = f(x)$};
+
+  % --- 4. ガイド線と各点のプロット ---
+  % 極小点 x = pi/2
+  \draw[dashed, gray] (\halfPi, 0) node[above, black, font=\small] {$\dfrac{\pi}{2}$} -- (MinPt);
+  \draw[dashed, gray] (0, {1 - \halfPi}) node[left, black, font=\small] {$1-\dfrac{\pi}{2}$} -- (MinPt);
+  \fill[blue!80!black] (MinPt) circle (1.2pt) node[below right, font=\scriptsize] {極小};
+
+  % 解 x = alpha
+  \fill[purple!80!black] (AlphaPt) circle (1.5pt) 
+    node[above left, font=\small, text=purple!80!black] {$\alpha$};
+
+  % 評価点 x = 3pi/4 (参考点)
+  \draw[dashed, gray!60] (\threeQuarterPi, 0) node[below, font=\scriptsize, gray!80!black] {$\dfrac{3\pi}{4}$}
+    -- (\threeQuarterPi, {1 - cos(\threeQuarterPi r) - \threeQuarterPi*sin(\threeQuarterPi r)});
+  \fill[gray!80!black] (\threeQuarterPi, {1 - cos(\threeQuarterPi r) - \threeQuarterPi*sin(\threeQuarterPi r)}) circle (1.0pt);
+
+  % 端点 x = pi
+  \draw[dashed, gray] (\piVal, 0) node[below, black, font=\small] {$\pi$} -- (PiPt);
+  \draw[dashed, gray] (0, 2) node[left, black, font=\small] {$2$} -- (PiPt);
+  \fill[black] (PiPt) circle (1.2pt);
+
+\end{tikzpicture}
+\end{center}
+\caption{$f(x) = 1 - \cos x - x\sin x$（$0 \le x \le \pi$）の概形と解 $\alpha$}
+\end{figure}
 
 \paragraph{(2)}
 
-(1)より$0\le x\le\alpha$で$f(x)\le0$，$\alpha\le x\le\pi$で$f(x)\ge0$だから
+(1)より$0\le x\le\alpha$で$f(x)\le0$，$\alpha\le x\le\pi$で$f(x)\ge0$だから$J(x)$は
 \begin{align}
-J=-\int_0^\alpha f(x)dx+\int_\alpha^\pi f(x)dx.\tag{①}
+ J=-\int_0^\alpha f(x)dx+\int_\alpha^\pi f(x)dx \label{eq:3}
 \end{align}
-$f$の原始関数の1つを$F(x)$とすると
+と書ける．
+$f$の原始関数の1つを$F(x)$とする：
 \begin{align}
-F(x)=\int f(x)dx=x-S-(-xC+S)=x(1+C)-2S
+F(x)
+  &=\int f(x)dx \\
+  &=x-\sin x-(-x\cos x+\sin x) \\
+  &=x(1+\cos x)-2\sin x \label{eq:4}
 \end{align}
-であり，$F(0)=0$，$F(\pi)=\pi(1+(-1))-0=0$だから
+であり，$F(0)=0$，$F(\pi)=\pi(1+(-1))-0=0$だから\cref{eq:3}に代入して
 \begin{align}
-J=F(\pi)+F(0)-2F(\alpha)=-2F(\alpha)=-2\alpha(1+\cos\alpha)+4\sin\alpha.
+ J
+  &=F(\pi)+F(0)-2F(\alpha) \\
+  &=-2F(\alpha) \\
+  &=-2\alpha(1+\cos\alpha)+4\sin\alpha \label{eq:5}
 \end{align}
-一方，$f(\alpha)=0$より$\cos\alpha=1-\alpha\sin\alpha$（②）だから，これを代入して
+である．
+さて，$\alpha$は$f(\alpha)=0$を満たすから\cref{eq:1}より
 \begin{align}
-J=-2\alpha(2-\alpha\sin\alpha)+4\sin\alpha=2\alpha^2\sin\alpha-4\alpha+4\sin\alpha.
+ \cos\alpha=1-\alpha\sin\alpha \label{eq:6}
 \end{align}
+である．\cref{eq:6}を\cref{eq:5}に代入して
+\begin{align}
+ J
+  &=-2\alpha(2-\alpha\sin\alpha)+4\sin\alpha \\
+  &=2\alpha^2\sin\alpha-4\alpha+4\sin\alpha \label{eq:7}
+\end{align}
+である．
 
 \paragraph{(3)}
 
-$K=\dfrac{J-\sqrt{2}}{\sqrt{2}}$とおく．(2)の結果より
+新しく
 \begin{align}
-K=\sqrt{2}\alpha^2\sin\alpha-2\sqrt{2}\alpha+2\sqrt{2}\sin\alpha-1.\tag{③}
+ K=\dfrac{J-\sqrt{2}}{\sqrt{2}} \label{eq:8}
 \end{align}
-②と$\sin^2\alpha+\cos^2\alpha=1$より$\sin^2\alpha+(1-\alpha\sin\alpha)^2=1$，整理して
+とおいて，この正負を考えれば良い．
+\cref{eq:7}を代入して
 \begin{align}
-(\alpha^2+1)\sin^2\alpha-2\alpha\sin\alpha=0.
+ K =\sqrt{2}\alpha^2\sin\alpha-2\sqrt{2}\alpha+2\sqrt{2}\sin\alpha-1 \label{eq:9}
 \end{align}
+さて，$\sin^2\alpha+\cos^2\alpha=1$に\cref{eq:6}を代入すると
+\begin{align}
+ \sin^2\alpha+(1-\alpha\sin\alpha)^2=1 \\
+ (\alpha^2+1)\sin^2\alpha-2\alpha\sin\alpha=0
+\end{align}
+である．
 $0<\alpha<\pi$より$\sin\alpha\neq0$なので，両辺を$\sin\alpha$で割って
 \begin{align}
-(\alpha^2+1)\sin\alpha=2\alpha.\tag{④}
+(\alpha^2+1)\sin\alpha=2\alpha \label{eq:10}
 \end{align}
-③に④を用いると
-\begin{align}
-K=\sqrt{2}\bigl[(\alpha^2+1)\sin\alpha-2\alpha\bigr]+2\sqrt{2}\sin\alpha-1-2\sqrt{2}\sin\alpha+2\sqrt{2}\sin\alpha
-\end{align}
-すなわち，$\sqrt{2}\alpha^2\sin\alpha-2\sqrt{2}\alpha=\sqrt{2}[(\alpha^2+1)\sin\alpha-2\alpha]=\sqrt{2}\cdot0=0$（④より）だから
-\begin{align}
-K=2\sqrt{2}\sin\alpha-1.
-\end{align}
-（③の$\sqrt{2}\alpha^2\sin\alpha-2\sqrt{2}\alpha$の部分が④によって消え，$2\sqrt{2}\sin\alpha-1$のみ残る．）
+を得る．
 
-さて，(1)の増減表と$f\Bigl(\dfrac{3\pi}{4}\Bigr)=1+\dfrac{\sqrt{2}}{2}-\dfrac{3\sqrt{2}}{8}\pi>0$（実際$1+\dfrac{\sqrt{2}}{2}\approx1.71$，$\dfrac{3\sqrt{2}}{8}\pi\approx1.67$）から，$f$は$[\pi/2,\pi]$で単調増加で$f(\alpha)=0$，$f(3\pi/4)>0$なので$\alpha<\dfrac{3\pi}{4}$．よって$\dfrac{\pi}{2}<\alpha<\dfrac{3\pi}{4}$．この範囲で$\sin\alpha$は単調減少だから
+\cref{eq:10}を\cref{eq:9}に代入すると
 \begin{align}
-\sin\alpha>\sin\dfrac{3\pi}{4}=\dfrac{\sqrt{2}}{2}.
+ K
+  &=\sqrt{2}\bigl[(\alpha^2+1)\sin\alpha-2\alpha\bigr]+\sqrt{2}\sin\alpha-1 \\
+  &=\sqrt{2}\sin\alpha-1 \label{eq:11}
 \end{align}
-したがって
-\begin{align}
-K=2\sqrt{2}\sin\alpha-1>2\sqrt{2}\cdot\dfrac{\sqrt{2}}{2}-1=2-1=1>0.
-\end{align}
-$K=\dfrac{J-\sqrt{2}}{\sqrt{2}}>0$より$J>\sqrt{2}$．
+である．
 
+さて，(1)の増減表と
+\begin{align}
+ f\Bigl(\dfrac{3\pi}{4}\Bigr)=1+\dfrac{\sqrt{2}}{2}-\dfrac{3\sqrt{2}}{8}\pi>0
+\end{align}
+より，$\alpha$は
+\begin{align}
+ \dfrac{\pi}{2} < \alpha < \dfrac{3\pi}{4}
+\end{align}
+を満たすから，\cref{eq:11}は下から評価できて
+\begin{align}
+ K > \sqrt{2}\sin\dfrac{3\pi}{4} - 1  = 0 
+\end{align}
+だから\cref{eq:8}より
+\begin{align}
+ J > \sqrt{2}
+\end{align}
+である．
 
 \newpage
 
