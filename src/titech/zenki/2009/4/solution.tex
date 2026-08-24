@@ -1,10 +1,6 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 $l$の方向ベクトルは$\vec a=(1,1,1)$である．
 
@@ -12,55 +8,269 @@ $l$の方向ベクトルは$\vec a=(1,1,1)$である．
 
 点$\bigl(\dfrac{t}{3},\dfrac{t}{3},\dfrac{t}{3}\bigr)$を通り$l$と垂直な平面$\pi$は，法線ベクトル$(1,1,1)$を持つから
 \begin{align}
-\pi:\ x+y+z=\dfrac{t}{3}+\dfrac{t}{3}+\dfrac{t}{3}=t.
+\pi:\ x+y+z=\dfrac{t}{3}+\dfrac{t}{3}+\dfrac{t}{3}=t
 \end{align}
-これと$xy$平面（$z=0$）との交線は
+である．これと$xy$平面（$z=0$）との交線は$z=0$を代入して
 \begin{align}
-x+y=t,\qquad z=0.
+x+y=t,\qquad z=0
 \end{align}
+である．
 
 \paragraph{(2)}
 
-$l$上に$\overrightarrow{OP}=\dfrac{t}{3}(1,1,1)$なる点$P$（$t\in\mathbb R$）をとる．$P$を通り$l$と垂直な平面による回転体の切り口を考える．この平面と$xy$平面の交線$x+y=t,\ z=0$は，(1)で見た通り$\pi\cap\{z=0\}$そのものである．
+領域$D$は図示すると下図斜線部である．
 
-直線$x+y=t$と放物線$y=x(1-x)$の交点$Q$は，$x+x(1-x)=t$すなわち$x^2-2x+t=0$を解いて$x=1\pm\sqrt{1-t}$のうち$[0,1]$内の解
-\begin{align}
-x=1-\sqrt{1-t}\qquad(0\le t\le1)
-\end{align}
-に対応する点で，$Q=\bigl(1-\sqrt{1-t},\,(1-\sqrt{1-t})\sqrt{1-t},\,0\bigr)$．また直線$x+y=t$と$x$軸（$y=0$）の交点を$R=(t,0,0)$とする．
 
-\begin{align}
-\overrightarrow{PR}=\Bigl(\dfrac{2}{3}t,-\dfrac{1}{3}t,-\dfrac{1}{3}t\Bigr),\qquad|\overrightarrow{PR}|^2=\dfrac{4}{9}t^2+\dfrac{1}{9}t^2+\dfrac{1}{9}t^2=\dfrac{2}{3}t^2.
-\end{align}
-また
-\begin{align}
-\overrightarrow{PQ}=\Bigl(1-\sqrt{1-t}-\dfrac{t}{3},\ (1-\sqrt{1-t})\sqrt{1-t}-\dfrac{t}{3},\ -\dfrac{t}{3}\Bigr)
-\end{align}
-より，$|\overrightarrow{PQ}|^2$を計算すると
-\begin{align}
-|\overrightarrow{PQ}|^2=\dfrac{2}{3}t^2-4t+4-2(2-t)\sqrt{1-t}.
-\end{align}
-（$t=0,1$で検算すると，$t=0$で$0$，$t=1$で$\dfrac{2}{3}$となり，直接計算とも一致する．）
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[
+    scale=2.8,
+    >=stealth,
+    x={(-0.65cm,-0.35cm)},
+    y={(0.95cm,-0.10cm)},
+    z={(0cm,1.15cm)}
+  ]
 
-領域$D$の平面$\pi$による切り口は，線分$QR$（$P$を中心とする半径$|\overrightarrow{PQ}|$から$|\overrightarrow{PR}|$までの範囲；$|\overrightarrow{PQ}|\le|\overrightarrow{PR}|$）に対応し，これを$l$のまわりに回転させると，半径$|\overrightarrow{PQ}|$から$|\overrightarrow{PR}|$までの円環（アニュラス）になる．よってこの平面での立体の断面積$S(t)$は
-\begin{align}
-\dfrac{S(t)}{\pi}=|\overrightarrow{PR}|^2-|\overrightarrow{PQ}|^2=\dfrac{2}{3}t^2-\Bigl(\dfrac{2}{3}t^2-4t+4-2(2-t)\sqrt{1-t}\Bigr)=4t-4+2(2-t)\sqrt{1-t}.
-\end{align}
+  % --- 1. 座標軸 ---
+  \draw[->, thick, gray!80] (-0.3,0,0) -- (1.6,0,0) node[below left, black] {$x$};
+  \draw[->, thick, gray!80] (0,-0.3,0) -- (0,1.6,0) node[below right, black] {$y$};
+  \draw[->, thick, gray!80] (0,0,-0.2) -- (0,0,1.4) node[above, black] {$z$};
+  \node[below left, font=\scriptsize] at (0,0,0) {$O$};
 
-$t$は平面$\pi$を指定するパラメータであり，$l$の単位方向ベクトルは$\dfrac{1}{\sqrt{3}}(1,1,1)$，$\pi$上の点$\bigl(\dfrac{t}{3},\dfrac{t}{3},\dfrac{t}{3}\bigr)$の$l$に沿った弧長は$\dfrac{t}{\sqrt{3}}=\dfrac{\sqrt{3}}{3}t$だから，もとめる体積$V$は
+  % --- 2. xy 平面上の領域 D (放物線 y = x(1-x) と x 軸で囲まれる領域) ---
+  \fill[blue!15, opacity=0.8] 
+    plot[domain=0:1, samples=40] (\x, {\x*(1-\x)}, 0) -- (0,0,0) -- cycle;
+  \draw[thick, blue!80!black] 
+    plot[domain=0:1, samples=40] (\x, {\x*(1-\x)}, 0) node[above left, font=\scriptsize] {$y=x(1-x)$};
+  \draw[thick, blue!80!black] (0,0,0) -- (1,0,0);
+  \node[blue!90!black, font=\scriptsize] at (0.45, 0.15, 0) {$D$};
+
+  % --- 3. 回転軸 l (方向ベクトル (1,1,1)) ---
+  \draw[ultra thick, red!80!black] (-0.3,-0.3,-0.3) -- (1.3,1.3,1.3)
+    node[above right, font=\small] {回転軸 $l$};
+
+  % パラメータ t の設定 (例: t = 0.6)
+  \def\tVal{0.6}
+  \pgfmathsetmacro{\xQ}{1 - sqrt(1 - \tVal)} % x = 1 - sqrt(1-t)
+  \pgfmathsetmacro{\yQ}{\tVal - \xQ}        % y = x(1-x)
+
+  % 各点の定義
+  \coordinate (P) at ({\tVal/3}, {\tVal/3}, {\tVal/3});
+  \coordinate (Q) at (\xQ, \yQ, 0);
+  \coordinate (R) at (\tVal, 0, 0);
+
+  % --- 4. 平面 pi (x+y+z = t) の枠線 (半透明) ---
+  \coordinate (PiX) at (\tVal, 0, 0);
+  \coordinate (PiY) at (0, \tVal, 0);
+  \coordinate (PiZ) at (0, 0, \tVal);
+  \fill[orange!20, opacity=0.4] (PiX) -- (PiY) -- (PiZ) -- cycle;
+  \draw[thin, orange!80!black] (PiX) -- (PiY) -- (PiZ) -- cycle;
+  \node[orange!90!black, font=\scriptsize, above right] at (0, 0.2, {\tVal-0.2}) {平面 $\pi: x+y+z=t$};
+
+  % --- 5. 線分 QR (交線 x+y=t 上の領域 D の切り口) ---
+  \draw[ultra thick, purple!90!black] (Q) -- (R);
+  \draw[dashed, thin, purple!80!black] (PiY) -- (Q);
+
+  % 点 P から Q, R への動径ベクトル
+  \draw[thick, dashed, purple!80!black] (P) -- (Q);
+  \draw[thick, dashed, purple!80!black] (P) -- (R);
+
+  % --- 6. 各点のプロット ---
+  \fill[red!80!black] (P) circle (1.2pt) node[above left, font=\scriptsize] {$P\bigl(\frac{t}{3},\frac{t}{3},\frac{t}{3}\bigr)$};
+  \fill[purple!80!black] (Q) circle (1.2pt) node[below left, font=\scriptsize] {$Q$};
+  \fill[purple!80!black] (R) circle (1.2pt) node[below right, font=\scriptsize] {$R(t,0,0)$};
+
+\end{tikzpicture}
+\end{center}
+\caption{線分$l$と$\pi$、領域 $D$ }
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=5, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-0.2, 0) -- (1.3, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.1) -- (0, 0.45) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % --- 2. 領域 D のハッチング ---
+  \fill[pattern=north east lines, pattern color=blue!60] 
+    (0,0) -- plot[domain=0:1, samples=60] (\x, {\x*(1-\x)}) -- cycle;
+
+  % --- 3. 境界線の描画 ---
+  % 放物線 y = x(1-x)
+  \draw[ultra thick, blue!80!black, domain=-0.1:1.1, samples=70] 
+    plot (\x, {\x*(1-\x)}) node[above right, font=\small] {$y = x(1-x)$};
+
+  % x 軸の境界 (0 <= x <= 1)
+  \draw[ultra thick, blue!80!black] (0,0) -- (1,0);
+
+  % --- 4. 目盛りと頂点 ---
+  % 頂点 (1/2, 1/4)
+  \draw[dashed, gray] (0.5, 0) node[below, font=\small, black] {$\dfrac{1}{2}$} -- (0.5, 0.25);
+  \draw[dashed, gray] (0, 0.25) node[left, font=\small, black] {$\dfrac{1}{4}$} -- (0.5, 0.25);
+  \fill[blue!80!black] (0.5, 0.25) circle (0.8pt);
+
+  % 端点 x = 1
+  \fill[black] (1,0) circle (0.8pt) node[below right, font=\small] {$1$};
+
+  % 領域ラベル
+  \node[blue!90!black, font=\large] at (0.35, 0.08) {$D$};
+
+\end{tikzpicture}
+\end{center}
+\caption{$xy$ 平面上の領域 $D$（$0 \le x \le 1,\ 0 \le y \le x(1-x)$）}
+\end{figure}
+
+
+$l$上に$\overrightarrow{OP}=\dfrac{t}{3}(1,1,1)$なる点$P$（$t\in\mathbb R$）をとる．$P$を通り$l$と垂直な平面による回転体の切り口を考える．この平面と$xy$平面の交線は(1)から$x+y=t,\ z=0$であり，与えられた領域$D$との様子は以下のようになる．
+
+ここで直線$x+y=t$と放物線$y=x(1-x)$が交わるためには，連立した$x$の二次方程式：
 \begin{align}
-V=\int_0^1S(t)\cdot\dfrac{\sqrt{3}}{3}\,dt=\dfrac{\sqrt{3}}{3}\pi\int_0^1\bigl\{4(t-1)+2(2-t)\sqrt{1-t}\bigr\}dt.
+ x + x(1-x) = t \\
+ x^2 -2x +t = 0 \label{eq:1}
 \end{align}
-$2(2-t)\sqrt{1-t}=2(1-t)\sqrt{1-t}+2\sqrt{1-t}$と分けて，
+が実数解を持てばよく，判別式が$0$以上であれば良いから
 \begin{align}
-\int_0^1(t-1)dt=\Bigl[\dfrac{1}{2}t^2-t\Bigr]_0^1=-\dfrac{1}{2},\quad
-\int_0^1\sqrt{1-t}\,dt=\Bigl[-\dfrac{2}{3}(1-t)^{3/2}\Bigr]_0^1=\dfrac{2}{3},\quad
+ 1-t \ge 0 \quad \therefore t \le 1 \label{eq:2}
+\end{align}
+である．このもとで領域$D$内にある交点$Q$の$x$座標は\cref{eq:1}の解で
+\begin{align}
+ x = 1 \pm\sqrt{1-t}
+\end{align}
+だが，領域$D$は$0 \le x \le 1$なので，複合負をとって
+\begin{align}
+ x = 1 - \sqrt{1-t} 
+\end{align}
+である．これが$0 \le x \le 1$を満たすので
+\begin{align}
+ 0 \le t \le 1 \label{eq:3}
+\end{align}
+である．
+以上から$Q$の座標は
+\begin{align}
+ Q(1-\sqrt{1-t}, t-1 + \sqrt{1-t})\label{eq:4}
+\end{align}
+である．
+
+次に直線$x+y=t$と直線$y=0$の交点$R$の$x$座標は連立して
+\begin{align}
+ x = t
+\end{align}
+だから$R$の座標は
+\begin{align}
+ R(t,0) \label{eq:5}
+\end{align}
+である．これが$0\le x \le 1$を満たす$t$の条件は\cref{eq:3}と全く同じである．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=5, >=stealth]
+
+  % --- 1. パラメータ設定 (例: t = 0.6) ---
+  \def\tVal{0.6}
+  \pgfmathsetmacro{\xQ}{1 - sqrt(1 - \tVal)} % 1 - sqrt(0.4) ≒ 0.3675
+  \pgfmathsetmacro{\yQ}{\tVal - \xQ}        % ≒ 0.2325
+
+  % 各点の定義
+  \coordinate (Q) at (\xQ, \yQ);
+  \coordinate (R) at (\tVal, 0);
+
+  % --- 2. 座標軸 ---
+  \draw[->, thick] (-0.2, 0) -- (1.3, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.1) -- (0, 0.5) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % --- 3. 領域 D (薄い背景) ---
+  \fill[blue!10] (0,0) -- plot[domain=0:1, samples=50] (\x, {\x*(1-\x)}) -- cycle;
+  \draw[thick, blue!80!black, domain=-0.05:1.05, samples=60] 
+    plot (\x, {\x*(1-\x)}) node[above right, font=\small] {$y = x(1-x)$};
+
+  % --- 4. 直線 x + y = t の描画 ---
+  \draw[thick, orange!80!black, domain=-0.05:{\tVal+0.05}] 
+    plot (\x, {\tVal - \x}) node[above right, font=\small] {$x + y = t$};
+
+  % --- 5. 切り口の線分 QR（強調） ---
+  \draw[ultra thick, red!80!black] (Q) -- (R);
+  % \node[red!80!black, font=\small, midway, above right] at ($(Q)!0.5!(R)$) {線分 $QR$};
+
+  % --- 6. 各点のプロットとガイド線 ---
+  % 点 Q
+  \draw[dashed, gray] (\xQ, 0) node[below, font=\scriptsize, black] {$1-\sqrt{1-t}$} -- (Q);
+  \draw[dashed, gray] (0, \yQ) node[left, font=\scriptsize, black] {$t-1+\sqrt{1-t}$} -- (Q);
+  \fill[red!80!black] (Q) circle (1.0pt) node[above left, font=\small] {$Q$};
+
+  % 点 R
+  \fill[red!80!black] (R) circle (1.0pt) node[below, font=\small] {$R(t,0)$};
+
+  % 端点 1
+  \fill[black] (1,0) circle (0.8pt) node[below right, font=\small] {$1$};
+
+\end{tikzpicture}
+\end{center}
+\caption{領域 $D$ と交線 $x+y=t$ の共有点 $Q, R$（線分 $QR$）}
+\end{figure}
+
+$t=1$で放物線と切断面が$(1,0)$で接するから，領域$D$と切断面の共有点の端点は常に$Q,R$である．
+従って領域$D$を$l$周りに回転させた立体$E$の平面$\pi$による切り口は，半径半径$|\overrightarrow{PQ}|$から$|\overrightarrow{PR}|$までの円環になる．よって$|\overrightarrow{PQ}|$と$|\overrightarrow{PR}|$を\cref{eq:4,eq:5}から計算すると
+\begin{align}
+\overrightarrow{PQ}
+ &=\Bigl(1-\sqrt{1-t}-\dfrac{t}{3},\ t-1 + \sqrt{1-t}-\dfrac{t}{3},\ -\dfrac{t}{3}\Bigr) \\
+\therefore
+|\overrightarrow{PQ}|^2
+ &=\left[1-\dfrac{t}{3}-\sqrt{1-t}\right]^2 + \left[-1+\dfrac{2t}{3} + \sqrt{1-t}\right]^2 + \dfrac{t^2}{9} \\
+ &=\left(1-\dfrac{t}{3}\right)^2 + (1-t) -2\left(1-\dfrac{t}{3}\right)\sqrt{1-t} 
+   + \left(-1+\dfrac{2t}{3}\right)^2 + (1-t) + 2\left(-1+\dfrac{2t}{3}\right)\sqrt{1-t} 
+   + \dfrac{t^2}{9} \\
+ &=\dfrac{2t^2}{3} - 4t + 4 + 2\left(-2 + t\right)\sqrt{1-t} \label{eq:6}
+\end{align}
+\begin{align}
+\overrightarrow{PR}
+ &=\Bigl(\dfrac{2}{3}t,-\dfrac{1}{3}t,-\dfrac{1}{3}t\Bigr) \\
+\therefore
+|\overrightarrow{PR}|^2
+ &=\dfrac{4}{9}t^2+\dfrac{1}{9}t^2+\dfrac{1}{9}t^2 \\
+ &=\dfrac{2}{3}t^2 \label{eq:7}
+\end{align}
+である．
+
+よってこの平面での立体の断面積$S(t)$は\cref{eq:6,eq:7}より
+\begin{align}
+\dfrac{S(t)}{\pi}
+ &=|\overrightarrow{PR}|^2-|\overrightarrow{PQ}|^2 \\
+ &=\dfrac{2}{3}t^2-\Bigl(\dfrac{2}{3}t^2-4t+4-2(2-t)\sqrt{1-t}\Bigr) \\
+ &=4t-4+2(2-t)\sqrt{1-t} \label{eq:8}
+\end{align}
+である．
+
+$t$は平面$\pi$を指定するパラメータであり，$l$の単位方向ベクトルは$\dfrac{1}{\sqrt{3}}(1,1,1)$なので，線素は
+\begin{align}
+ d \ell = \sqrt{3} dt \label{eq:9}
+\end{align}
+であり，$t$の範囲\cref{eq:3}に注意して求める体積$V$は
+\begin{align}
+ V
+ &=\int_0^1S(t)\cdot d\ell  \\
+ &=\int_0^1S(t)\dfrac{\sqrt{3}}{3}\,dt \quad (\because\text{\cref{eq:9}})\\
+ &=\dfrac{\sqrt{3}}{3}\pi\int_0^1\bigl\{4(t-1)+2(2-t)\sqrt{1-t}\bigr\}dt \quad (\because\text{\cref{eq:8}})\\
+ &=\dfrac{\sqrt{3}}{3}\pi\int_0^1\bigl\{4(t-1)+2\sqrt{1-t} + 2(1-t)\sqrt{1-t}\bigr\}dt \label{eq:10}
+\end{align}
+である．各項計算すると
+\begin{align}
+\int_0^1(t-1)dt=\Bigl[\dfrac{1}{2}t^2-t\Bigr]_0^1=-\dfrac{1}{2} \\
+\int_0^1\sqrt{1-t}\,dt=\Bigl[-\dfrac{2}{3}(1-t)^{3/2}\Bigr]_0^1=\dfrac{2}{3} \\
 \int_0^1(1-t)\sqrt{1-t}\,dt=\Bigl[-\dfrac{2}{5}(1-t)^{5/2}\Bigr]_0^1=\dfrac{2}{5}
 \end{align}
-を用いると
+だから\cref{eq:10}に代入して
 \begin{align}
-V=\dfrac{\sqrt{3}}{3}\pi\Bigl[4\Bigl(-\dfrac{1}{2}\Bigr)+2\cdot\dfrac{2}{5}+2\cdot\dfrac{2}{3}\Bigr]=\dfrac{\sqrt{3}}{3}\pi\Bigl[-2+\dfrac{4}{5}+\dfrac{4}{3}\Bigr]=\dfrac{\sqrt{3}}{3}\pi\cdot\dfrac{2}{15}=\dfrac{2\sqrt{3}}{45}\pi.
+ V
+  &=\dfrac{\sqrt{3}}{3}\pi\Bigl[4\Bigl(-\dfrac{1}{2}\Bigr)+2\cdot\dfrac{2}{5}+2\cdot\dfrac{2}{3}\Bigr] \\
+  &=\dfrac{\sqrt{3}}{3}\pi\Bigl[-2+\dfrac{4}{5}+\dfrac{4}{3}\Bigr] \\
+  &=\dfrac{\sqrt{3}}{3}\pi\cdot\dfrac{2}{15} \\
+  &=\dfrac{2\sqrt{3}}{45}\pi
 \end{align}
+が求める体積である．
 
 
 \end{document}

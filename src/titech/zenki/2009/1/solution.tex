@@ -1,35 +1,138 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-接点を$A\bigl(\alpha,\dfrac{1}{2}\alpha^2\bigr)$，$B\bigl(\beta,\dfrac{1}{2}\beta^2\bigr)$（$\alpha<\beta$）とおく．$y=\dfrac{1}{2}x^2$より$y'=x$だから，2接線は
-\begin{align}
-l_A:\ y=\alpha x-\dfrac{1}{2}\alpha^2,\qquad l_B:\ y=\beta x-\dfrac{1}{2}\beta^2.
-\end{align}
-$PA\perp PB$（すなわち$l_A\perp l_B$）は$\alpha\beta=-1$（①）と同値．$l_A,l_B$の交点$P$の$x$座標は，$\alpha x-\dfrac{1}{2}\alpha^2=\beta x-\dfrac{1}{2}\beta^2$を解いて$x=\dfrac{\alpha+\beta}{2}$．
 
-放物線は自身の接線より常に上にあり，その差は$\dfrac{1}{2}x^2-\bigl(\alpha x-\dfrac{1}{2}\alpha^2\bigr)=\dfrac{1}{2}(x-\alpha)^2$（$l_B$についても同様）だから
+放物線を$f(x)=\dfrac{1}{2}x^2$，接点を$A\bigl(\alpha,\dfrac{1}{2}\alpha^2\bigr)$，$B\bigl(\beta,\dfrac{1}{2}\beta^2\bigr)$（$\alpha<\beta$）とおく．$f'(x)=x$だから2接線は$y$軸平行ではなく，方程式は
 \begin{align}
-S=\int_\alpha^{\frac{\alpha+\beta}{2}}\dfrac{1}{2}(x-\alpha)^2dx+\int_{\frac{\alpha+\beta}{2}}^\beta\dfrac{1}{2}(x-\beta)^2dx
-=\dfrac{1}{12}\Bigl(\dfrac{\beta-\alpha}{2}\Bigr)^3\cdot2=\dfrac{1}{24}(\beta-\alpha)^3.\tag{②}
+l_A:\ y=g_A(x)=\alpha x-\dfrac{1}{2}\alpha^2,\qquad l_B:\ y=g_B(x)=\beta x-\dfrac{1}{2}\beta^2 \label{eq:1}
 \end{align}
-①より$\beta=-\dfrac{1}{\alpha}$（$\alpha\neq0$）なので，②に代入して
+とおける．$PA\perp PB$すなわち$l_A\perp l_B$の時は傾きの積が$-1$だから
 \begin{align}
-S=\dfrac{1}{24}\Bigl(-\dfrac{1}{\alpha}-\alpha\Bigr)^3=-\dfrac{1}{24}\Bigl(\alpha+\dfrac{1}{\alpha}\Bigr)^3.\tag{②$'$}
+ \alpha\beta=-1 \label{eq:2}
 \end{align}
-また$\alpha<\beta=-\dfrac{1}{\alpha}$より，$\alpha>0$なら$-\dfrac{1}{\alpha}<0<\alpha$となり矛盾するので$\alpha<0$（③）．$t=-\alpha>0$とおくと，②$'$は
+である．
+
+さて，$l_A,l_B$の交点$P(X,Y)$の$x$座標は\cref{eq:1}の二つの式を連立して
 \begin{align}
-S=-\dfrac{1}{24}\Bigl(-t-\dfrac{1}{t}\Bigr)^3=\dfrac{1}{24}\Bigl(t+\dfrac{1}{t}\Bigr)^3.
+ & \alpha X-\dfrac{1}{2}\alpha^2=\beta X-\dfrac{1}{2}\beta^2 \\
+\therefore 
+ & X = \dfrac{\alpha+\beta}{2} \label{eq:3}
 \end{align}
-$t>0$より相加相乗平均から$t+\dfrac{1}{t}\ge2$（等号は$t=1$）だから
+である．よって放物線と接線の概形は以下のグラフのようになる．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.6, >=stealth]
+
+  % --- 1. パラメータ設定 (例: alpha = -0.6, beta = -1/alpha ≒ 1.667) ---
+  % 直交条件 alpha * beta = -1 を満たす一般的な非対称の例
+  \def\alphaVal{-0.6}
+  \pgfmathsetmacro{\betaVal}{-1/\alphaVal} % beta ≒ 1.667
+  \pgfmathsetmacro{\XVal}{(\alphaVal + \betaVal)/2} % X = (alpha+beta)/2 ≒ 0.533
+  \pgfmathsetmacro{\YVal}{0.5*\alphaVal*\betaVal}   % Y = -0.5 (準線 y = -1/2 上)
+
+  % 各点の座標
+  \coordinate (A) at (\alphaVal, {0.5*\alphaVal*\alphaVal});
+  \coordinate (B) at (\betaVal,  {0.5*\betaVal*\betaVal});
+  \coordinate (P) at (\XVal, \YVal);
+
+  % --- 2. 面積 S の斜線ハッチング ---
+  % 区間 [alpha, X]: 放物線と接線 l_A の間
+  \fill[pattern=north east lines, pattern color=blue!70]
+    (\alphaVal, {0.5*\alphaVal*\alphaVal}) 
+    -- plot[domain=\alphaVal:\XVal, samples=40] (\x, {0.5*\x*\x})
+    -- (P) -- cycle;
+
+  % 区間 [X, beta]: 放物線と接線 l_B の間
+  \fill[pattern=north west lines, pattern color=red!70]
+    (P) 
+    -- plot[domain=\XVal:\betaVal, samples=40] (\x, {0.5*\x*\x})
+    -- (P) -- cycle;
+
+  % --- 3. 座標軸 ---
+  \draw[->, thick] (-1.8, 0) -- (2.6, 0) node[right] {$x$};
+  \draw[->, thick] (0, -1.0) -- (0, 2.2) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % --- 4. 放物線 y = 1/2 x^2 の描画 ---
+  \draw[ultra thick, black, domain=-1.6:2.1, samples=80] 
+    plot (\x, {0.5*\x*\x}) node[above right, font=\small] {$y = \dfrac{1}{2}x^2$};
+
+  % --- 5. 2本の接線 l_A, l_B の描画 ---
+  % 接線 l_A: y = alpha*x - 1/2*alpha^2
+  \draw[thick, blue!80!black, domain=-1.4:1.2] 
+    plot (\x, {\alphaVal*\x - 0.5*\alphaVal*\alphaVal}) 
+    node[below left, font=\small] {$l_A$};
+
+  % 接線 l_B: y = beta*x - 1/2*beta^2
+  \draw[thick, red!80!black, domain=0.0:2.1] 
+    plot (\x, {\betaVal*\x - 0.5*\betaVal*\betaVal}) 
+    node[below right, font=\small] {$l_B$};
+
+  % --- 6. 点 P における直角マーク (l_A \perp l_B) ---
+  % l_A の方向ベクトル (1, alpha), l_B の方向ベクトル (1, beta)
+
+  \coordinate (uA) at ($(P)!-7pt!(A)$); % P から A への向きに 7pt
+  \coordinate (uB) at ($(P)!-7pt!(B)$); % P から B への向きに 7pt
+  \draw[thin, black] 
+    (uA) -- ($ (uA) + (uB) - (P) $) -- (uB);
+
+  % --- 7. 各点のプロットとガイド線（垂線） ---
+  % 接点 A(alpha, 1/2 alpha^2)
+  \draw[dashed, gray] (\alphaVal, 0) node[above left, black, font=\small] {$\alpha$} -- (A);
+  \fill[blue!80!black] (A) circle (1.5pt) node[above left, font=\small] {$A$};
+
+  % 接点 B(beta, 1/2 beta^2)
+  \draw[dashed, gray] (\betaVal, 0) node[below, black, font=\small] {$\beta$} -- (B);
+  \fill[red!80!black] (B) circle (1.5pt) node[right, font=\small] {$B$};
+
+  % 交点 P(X, Y)
+  \draw[dashed, purple!80!black] (\XVal, 0) node[above, font=\small] {$X$} -- (P);
+  \fill[purple!80!black] (P) circle (1.8pt) node[below left, font=\small] {$P(X,Y)$};
+
+  % 面積ラベル S
+  \node[blue!90!black, font=\large] at (0.35, 0.4) {$S$};
+
+\end{tikzpicture}
+\end{center}
+\caption{放物線 $y=\dfrac{1}{2}x^2$ への2本の直交接線 $l_A, l_B$ と囲まれる面積 $S$}
+\end{figure}
+
+放物線は自身の接線より常に上にあるから題意の面積$S$は
 \begin{align}
-S\ge\dfrac{1}{24}\cdot2^3=\dfrac{1}{3}.
+ S
+  &=\int_\alpha^{X}\left(f(x)-l_A(x)\right) dx+\int_{X}^\beta \left(f(x)-l_B(x)\right) dx \\
+  &=\int_\alpha^{X}\dfrac{1}{2}(x-\alpha)^2dx+\int_{X}^\beta\dfrac{1}{2}(\beta-x)^2dx \\
+  &=\dfrac{1}{6}\Bigl(X-\alpha\Bigr)^3 + \dfrac{1}{6}\Bigl(\beta-X\Bigr)^3 \\
+  &=\dfrac{1}{6}\Bigl(\dfrac{\beta-\alpha}{2}\Bigr)^3\cdot2 \quad (\because\text{\cref{eq:3}})\\
+  &=\dfrac{1}{24}(\beta-\alpha)^3 \label{eq:4}
 \end{align}
-よって$S$の最小値は$\dfrac{1}{3}$（$t=1$，すなわち$\alpha=-1,\beta=1$のとき）．
+と書ける．\cref{eq:2}の元でこの最小値を求めれば良い．
+\cref{eq:2}より$\beta$を消去すると
+\begin{align}
+ \beta=-\dfrac{1}{\alpha} \label{eq:5}
+\end{align}
+であり，$\alpha<\beta$に代入して
+\begin{align}
+ \alpha < -\dfrac{1}{\alpha} \quad \therefore\ \alpha<0 \label{eq:6}
+\end{align}
+である．\cref{eq:4}に\cref{eq:5}を代入して
+\begin{align}
+S
+  &=\dfrac{1}{24}\Bigl(-\dfrac{1}{\alpha}-\alpha\Bigr)^3 \\
+  &=\dfrac{1}{24}\Bigl(-\alpha+\dfrac{-}{\alpha}\Bigr)^3 \label{eq:7}
+\end{align}
+となる．\cref{eq:6}より$-\alpha>0$だから，相加相乗平均の不等式より
+\begin{align}
+ (-\alpha)+\dfrac{1}{-\alpha} \ge 2
+\end{align}
+で等号成立は$-alpha=\dfrac{1}{-\alpha}$つまり$\alpha=-1$，\cref{eq:2}より$\beta=1$である．
+この時$S$は最小値
+\begin{align}
+ S\ge\dfrac{1}{24}\cdot2^3=\dfrac{1}{3}
+\end{align}
+をとる．
 
 
 \newpage
