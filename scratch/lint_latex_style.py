@@ -98,6 +98,26 @@ def check_proof_env(text):
     return errors
 
 
+def check_duplicate_labels(text):
+    """同一ファイル内で \\label{...} が重複していないかチェックする。
+    各 solution.tex は最終的に main.tex に \\subfile で束ねられ本全体が1つの
+    LaTeX 文書になるため、ラベル名自体は他ファイルと衝突していても実害はない
+    （\\cref は常に自分の solution.tex 内の式しか参照しない書き方が徹底されて
+    いるため）。しかし同一ファイル内の重複は \\cref の参照先が最後に定義された
+    方に化けて曖昧になる実害のあるバグなので、ここだけを検出する。"""
+    errors = []
+    seen = {}
+    for m in re.finditer(r'\\label\{([^}]*)\}', text):
+        name = m.group(1)
+        seen.setdefault(name, []).append(m.start())
+    for name, positions in seen.items():
+        if len(positions) > 1:
+            for pos in positions:
+                errors.append((line_of(text, pos),
+                                f"\\label{{{name}}} が同一ファイル内で重複している（\\cref の参照先が曖昧になる）"))
+    return errors
+
+
 def check_documentclass(text):
     """kouki 系の problem.tex は \\begin{document} を持たない中身だけの
     フラグメントで、solution.tex 側から \\input{problem.tex} される設計
@@ -334,6 +354,7 @@ def lint_file(path):
     errors += check_tabular_nesting(text)
     errors += check_documentclass(text)
     errors += check_proof_env(text)
+    errors += check_duplicate_labels(text)
     errors += check_frac_subscript_rule(text)
     warnings = check_overline_warning(text)
     return errors, warnings
