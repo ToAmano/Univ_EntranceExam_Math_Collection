@@ -52,13 +52,22 @@ const ogImageUrl = new URL(`${baseUrl}/ogp-default.png`, Astro.site).href;
 			window.gtag = gtag;
 			gtag('js', new Date());
 
+			// gtag('config', ...) はページ読み込み直後に同期的に呼ぶ（Google 公式の
+			// 推奨パターン）。以前は astro:page-load イベント内まで config 自体を
+			// 遅延させていたが、これだと Google タグ側が期待するタイミングに
+			// 間に合わず実際にヒットが送信されないことが Tag Assistant で確認できた
+			// ため、config はここで即時に呼び、自動送信されるページビューだけ止める。
+			gtag('config', 'G-SELJLBC32E', { send_page_view: false });
+
 			// ViewTransitions によるクライアントサイド遷移は通常のページロードを
-			// 起こさないため、gtag('config', ...) を一度だけ呼ぶと2ページ目以降の
-			// 閲覧が記録されない。astro:page-load は初回ロード・遷移後の両方で
-			// 発火するので、ここで毎回 page_path 付きで config し直す。
+			// 起こさないため、実際の page_view イベントは astro:page-load で毎回
+			// 明示的に送る（初回ロード・遷移後の両方で発火するので、これで
+			// 初回分と2ページ目以降の両方をカバーできる）。
 			document.addEventListener('astro:page-load', () => {
-				gtag('config', 'G-SELJLBC32E', {
+				gtag('event', 'page_view', {
 					page_path: window.location.pathname,
+					page_location: window.location.href,
+					page_title: document.title,
 				});
 			});
 		</script>
