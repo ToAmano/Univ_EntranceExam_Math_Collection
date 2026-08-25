@@ -50,6 +50,19 @@ const ogImageUrl = new URL(`${baseUrl}/ogp-default.png`, Astro.site).href;
 			function gtag(...args: unknown[]) { window.dataLayer.push(args); }
 			// @ts-ignore
 			window.gtag = gtag;
+
+			// Consent Mode: 明示的な同意宣言がないと analytics_storage が既定で
+			// denied 扱いになり、config/page_view イベント自体は正常に発火して
+			// いても実際のヒット送信だけ抑制される（Tag Assistant で確認済み）。
+			// 広告・パーソナライズ用途は使わないため ad_* は denied のまま、
+			// 閲覧解析用の analytics_storage だけ明示的に許可する。
+			gtag('consent', 'default', {
+				ad_storage: 'denied',
+				ad_user_data: 'denied',
+				ad_personalization: 'denied',
+				analytics_storage: 'granted',
+			});
+
 			gtag('js', new Date());
 
 			// gtag('config', ...) はページ読み込み直後に同期的に呼ぶ（Google 公式の
