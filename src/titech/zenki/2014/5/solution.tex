@@ -1,63 +1,219 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-$f(x)=x^3+x^2+1$とおく．$f'(x)=3x^2+2x$より，増減表から$f$は$x=-\dfrac{2}{3}$で極大値$\dfrac{31}{27}$，$x=0$で極小値$1$をとる．
+まずは$S_k$の一般項を求める．
+\begin{align}
+ f(x)=x^3+x^2+1 \label{eq:1}
+\end{align}
+とおくと，一階微分は
+\begin{align}
+ f'(x)=3x^2+2x=x(3x+2) \label{eq:2}
+\end{align}
+だから$f(x)$の増減表は以下のようになる．
 
-点$(x_k,f(x_k))$における$C$の接線$l_k$は
+\begin{table}[htb]
+\centering
+\caption{$f(x) = x^3+x^2+1$ の増減表}
+\label{tab:f_x_cubic}
+\begin{tabular}{c|ccccc}
+$x$ & $\cdots$ & $-\dfrac{2}{3}$ & $\cdots$ & $0$ & $\cdots$ \\ \hline
+$f'(x)$ & $+$ & $0$ & $-$ & $0$ & $+$ \\ \hline
+$f(x)$ & $\nearrow$ & $\dfrac{31}{27}$（極大） & $\searrow$ & $1$（極小） & $\nearrow$
+\end{tabular}
+\end{table}
+
+従ってグラフの概形は下図のようになる．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=1.8, >=stealth]
+
+  % --- 1. 座標軸 ---
+  \draw[->, thick] (-2.2, 0) -- (1.5, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.6) -- (0, 2.4) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % --- 2. 曲線 y = f(x) の描画 ---
+  % f(x) = x^3 + x^2 + 1
+  \draw[ultra thick, blue!80!black, domain=-1.6:0.8, samples=80]
+    plot (\x, {\x*\x*\x + \x*\x + 1})
+    node[above right, font=\small] {$y = x^3+x^2+1$};
+
+  % --- 3. ガイド線と特徴点のプロット ---
+  % 極大点 (-2/3, 31/27)
+  \coordinate (MaxPt) at ({-2/3}, {31/27});
+  \draw[dashed, gray] ({-2/3}, 0) node[below, black, font=\small] {$-\dfrac{2}{3}$} -- (MaxPt);
+  \draw[dashed, gray] (0, {31/27}) node[above right, black, font=\small] {$\dfrac{31}{27}$} -- (MaxPt);
+  \fill[red!80!black] (MaxPt) circle (1.2pt) node[above left, font=\scriptsize] {極大};
+
+  % 極小点 (0, 1)
+  \coordinate (MinPt) at (0, 1);
+  \fill[red!80!black] (MinPt) circle (1.2pt) node[below right, font=\scriptsize] {極小 $(0,1)$};
+
+  % $x$ 軸との交点の実数解 (x ≒ -1.46557)
+  \fill[black] (-1.4656, 0) circle (1.0pt);
+
+\end{tikzpicture}
+\end{center}
+\caption{$y = f(x) = x^3+x^2+1$ の概形}
+\end{figure}
+
+増減表から$f$は$x=-\dfrac{2}{3}$で極大値$\dfrac{31}{27}$，$x=0$で極小値$1$をとる．
+
+さて，点$(x_k,f(x_k))$における$C$の接線$l_k$は\label{eq:1,eq:2}より
 \begin{align}
 l_k:\ y=g_k(x)=(3x_k^2+2x_k)x-2x_k^3-x_k^2+1
 \end{align}
-である．$C$と$l_k$の共有点の$x$座標のうち$x_k$でないものを求める．$f(x)=g_k(x)$より
+である．$C$と$l_k$の共有点の$x$座標のうち$x_k$でないものを求める．それは$f(x)=g_k(x)$の解である．
 \begin{align}
-x^3+x^2-(3x_k^2+2x_k)x+2x_k^3+x_k^2=0
+ f(x)-g_k(x) = x^3+x^2-(3x_k^2+2x_k)x+2x_k^3+x_k^2=0
 \end{align}
-は$x=x_k$を重解に持つから，$(x-x_k)^2(x-r)=0$の形に因数分解でき，係数比較（$x^2$の係数）より$-(2x_k+r)=1$，すなわち$r=-(2x_k+1)$．よって
+は$x=x_k$を重解に持つから，$(x-x_k)^2(x-x_{k+1})=0$の形に因数分解できることを念頭に変形して
 \begin{align}
-x_{k+1}=-(2x_k+1).\tag{①}
+ & \left(x-x_k(x)\right)^2\left(x + 2x_k+1\right) = 0 \\
+\therefore
+ x_{k+1}=-(2x_k+1) \label{eq:3}
 \end{align}
-また
+である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[yscale=0.3, >=stealth]
+
+  % --- 1. 定数設定 (k=1 の例: x0 = 1, x1 = -3) ---
+  % f(x) = x^3 + x^2 + 1
+  % x0 = 1 => f(1) = 3, f'(1) = 5
+  % 接線 l0: y = 5(x-1) + 3 = 5x - 2
+  % 交点 x1 = -3 => f(-3) = -17, l0(-3) = -17
+  \def\xZero{1.0}
+  \def\xOne{-3.0}
+
+  \coordinate (P0) at (\xZero, 3);
+  \coordinate (P1) at (\xOne, -17);
+
+  % --- 2. 面積 S_1 (S_k) の斜線ハッチング ---
+  % 区間 [-3, 1] で接線 l0 が曲線 f(x) の上側
+  \fill[pattern=north east lines, pattern color=blue!60]
+    (\xOne, -17) 
+    -- plot[domain=\xOne:\xZero, samples=60] (\x, {\x*\x*\x + \x*\x + 1})
+    -- (\xZero, 3) -- cycle;
+
+  % --- 3. 座標軸 ---
+  \draw[->, thick] (-4.0, 0) -- (2.4, 0) node[right] {$x$};
+  \draw[->, thick] (0, -20.0) -- (0, 7.0) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % --- 4. 曲線 C: y = f(x) の描画 ---
+  \draw[ultra thick, blue!80!black, domain=-3.3:1.4, samples=80]
+    plot (\x, {\x*\x*\x + \x*\x + 1})
+    node[above left, font=\small] {$C: y=f(x)$};
+
+  % --- 5. 接線 l_0 (l_{k-1}) の描画 ---
+  % y = 5x - 2
+  \draw[thick, red!80!black, domain=-3.5:1.6]
+    plot (\x, {5*\x - 2})
+    node[below right, font=\small] {$l_{k-1}$};
+
+  % --- 6. 各点のプロットとガイド線 ---
+  % 接点 P_{k-1}(x_{k-1}, f(x_{k-1}))
+  \draw[dashed, gray] (\xZero, 0) node[below, black, font=\small] {$x_{k-1}$} -- (P0);
+  \draw[dashed, gray] (0, 3) node[left, black, font=\scriptsize] {$f(x_{k-1})$} -- (P0);
+  \fill[red!80!black] (P0) circle (2.0pt) 
+    node[above right, font=\small] {$P_{k-1}(x_{k-1}, f(x_{k-1}))$};
+
+  % 交点 (x_k, f(x_k))
+  \draw[dashed, gray] (\xOne, 0) node[above, black, font=\small] {$x_k$} -- (P1);
+  \draw[dashed, gray] (0, -17) node[right, black, font=\scriptsize] {$f(x_k)$} -- (P1);
+  \fill[blue!80!black] (P1) circle (2.0pt) 
+    node[below left, font=\small] {$(x_k, f(x_k))$};
+
+  % 面積ラベル S_k
+  \node[blue!90!black, font=\large] at (-1.5, -4.5) {$S_k$};
+
+\end{tikzpicture}
+\end{center}
+\caption{接線 $l_{k-1}$ と 3 次曲線 $C$ で囲まれる面積 $S_k$}
+\end{figure}
+
+題意の面積$S_k$は
 \begin{align}
-S_k=\Bigl|\int_{x_{k-1}}^{x_k}\{f(x)-g_{k-1}(x)\}dx\Bigr|=\Bigl|\int_{x_{k-1}}^{x_k}(x-x_{k-1})^2(x-x_k)\,dx\Bigr|=\dfrac{1}{12}(x_k-x_{k-1})^4\tag{②}
+S_k
+ &=\Bigl|\int_{x_{k-1}}^{x_k}\left| f(x)-g_{k-1}(x)\right| dx\Bigr| \\
+ &=\Bigl|\int_{x_{k-1}}^{x_k}(x-x_{k-1})^2(x-x_k)\,dx\Bigr| \\
+ &=\dfrac{1}{12}(x_k-x_{k-1})^4 \label{eq:4}
 \end{align}
-（標準公式$\int_p^q(x-p)^2(x-q)dx=-\dfrac{(q-p)^4}{12}$を用いた）．
+である．
+
+
 
 \paragraph{(1)}
 
-$x_0=1$だから，①より$x_1=-(2\cdot1+1)=-3$．②に代入して
+題意より$P_0(1,3)$だから$x_0=1$である．
+\cref{eq:3}に代入して
 \begin{align}
-S_1=\dfrac{(-3-1)^4}{12}=\dfrac{4^4}{12}=\dfrac{4^3}{3}=\dfrac{64}{3}.
+ x_1=-(2\cdot1+1)=-3
 \end{align}
+だから，\cref{eq:4}に代入して
+\begin{align}
+ S_1=\dfrac{(-3-1)^4}{12}=\dfrac{4^4}{12}=\dfrac{4^3}{3}=\dfrac{64}{3} \label{eq:5}
+\end{align}
+である．
 
 \paragraph{(2)}
 
-①より$x_{k+1}+\dfrac{1}{3}=-2\Bigl(x_k+\dfrac{1}{3}\Bigr)$だから，$x_k+\dfrac{1}{3}$は公比$-2$の等比数列．$x_0+\dfrac{1}{3}=\dfrac{4}{3}$だから
+\cref{eq:3}を初期条件$x_0=1$の元でとけば良い．
+\cref{eq:3}を変形して
 \begin{align}
-x_k+\dfrac{1}{3}=\dfrac{4}{3}(-2)^k\quad\therefore\ x_k=\dfrac{4}{3}(-2)^k-\dfrac{1}{3}=\dfrac{1}{3}\bigl\{(-2)^{k+2}-1\bigr\}.
+ x_{k+1}+\dfrac{1}{3}=-2\Bigl(x_k+\dfrac{1}{3}\Bigr)
 \end{align}
+だから，$x_k+\dfrac{1}{3}$は公比$-2$の等比数列で，
+$x_0+\dfrac{1}{3}=\dfrac{4}{3}$だから
+\begin{align}
+x_k+\dfrac{1}{3}
+ &= (-2)^{k} \left(x_0 + \dfrac{1}{3}\right) \\
+ &=\dfrac{4}{3}(-2)^k \\
+\therefore
+ x_k&=\dfrac{4}{3}(-2)^k-\dfrac{1}{3} \\
+    &=\dfrac{1}{3}\bigl\{(-2)^{k+2}-1\bigr\} \label{eq:6}
+\end{align}
+である．
 
 \paragraph{(3)}
 
-(2)より
+\cref{eq:6}より
 \begin{align}
-x_k-x_{k-1}=\dfrac{1}{3}\bigl\{(-2)^{k+2}-(-2)^{k+1}\bigr\}=\dfrac{1}{3}(-2)^{k+1}(-3)=-(-2)^{k+1}
+ x_k-x_{k-1}
+  &=\dfrac{1}{3}\bigl\{(-2)^{k+2}-(-2)^{k+1}\bigr\} \\
+  &=\dfrac{1}{3}(-2)^{k+1}(-3) \\
+  &=-(-2)^{k+1}
 \end{align}
-だから，②より
+だから，\cref{eq:4}に代入して
 \begin{align}
-S_k=\dfrac{1}{12}(x_k-x_{k-1})^4=\dfrac{1}{12}\{-(-2)^{k+1}\}^4=\dfrac{1}{12}(-2)^{4(k+1)}=\dfrac{1}{12}\cdot16\cdot2^{4k}=\dfrac{4}{3}\cdot2^{4k}.
+S_k
+  &=\dfrac{1}{12}(x_k-x_{k-1})^4 \\
+  &=\dfrac{1}{12}\{-(-2)^{k+1}\}^4 \\
+  &=\dfrac{1}{12}(-2)^{4(k+1)} \\
+  &=\dfrac{1}{12}\cdot16\cdot2^{4k} \\
+  &=\dfrac{4}{3}\cdot2^{4k}
 \end{align}
-よって
+である．よって
 \begin{align}
 \dfrac{1}{S_k}=\dfrac{3}{4}\Bigl(\dfrac{1}{2}\Bigr)^{4k}=\dfrac{3}{4}\Bigl(\dfrac{1}{16}\Bigr)^k
 \end{align}
 であり，等比級数の和の公式から
 \begin{align}
-\sum_{k=1}^\infty\dfrac{1}{S_k}=\dfrac{3}{4}\cdot\dfrac{1/16}{1-1/16}=\dfrac{3}{4}\cdot\dfrac{1}{15}=\dfrac{1}{20}.
+\sum_{k=1}^{n} \dfrac{1}{S_k}
+  &=\sum_{k=1}^{n} \dfrac{3}{4}\Bigl(\dfrac{1}{2}\Bigr)^{4k} \\
+  &=\dfrac{3}{4}\left(\dfrac{1}{2}\right)^{4}\dfrac{1-\left(\dfrac{1}{2}\right)^{4n}}{1-\left(\dfrac{1}{2}\right)^4} \\
+  &\xrightarrow[n\to\infty]{} \dfrac{3}{4}\left(\dfrac{1}{2}\right)^{4}\dfrac{1}{1-\left(\dfrac{1}{2}\right)^4} \\
+  &=\dfrac{3}{4}\cdot\dfrac{1/16}{1-1/16} \\
+  &=\dfrac{3}{4}\cdot\dfrac{1}{15} \\
+  &=\dfrac{1}{20}
 \end{align}
+が求める極限値である．
 
+{\bf [解説]}
 
 \end{document}

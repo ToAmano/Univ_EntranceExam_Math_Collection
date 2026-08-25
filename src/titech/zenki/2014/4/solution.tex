@@ -1,63 +1,183 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 \paragraph{(1)}
 
-題意から，複素数平面上で$45^\circ$回転を考えると
+題意から，複素数平面上で$\dfrac{\pi}{4}$回転を考えると
 \begin{align}
 x+yi&=\Bigl(\cos\dfrac{\pi}{4}+i\sin\dfrac{\pi}{4}\Bigr)(t+si)=\dfrac{\sqrt{2}}{2}(1+i)(t+si)=\dfrac{\sqrt{2}}{2}\bigl\{(t-s)+i(t+s)\bigr\}
 \end{align}
-であり，$x,y,s,t$は実数だから
+であり，$x,y,s,t$は実数だから係数を比較して
 \begin{align}
-x=\dfrac{\sqrt{2}}{2}(t-s)=\dfrac{\sqrt{2}}{2}(-\sqrt{2}t^2+3t)\equiv f(t),\qquad
-y=\dfrac{\sqrt{2}}{2}(s+t)=\dfrac{\sqrt{2}}{2}(\sqrt{2}t^2-t)\equiv g(t).
+\begin{cases}
+x=\dfrac{\sqrt{2}}{2}(t-s)=\dfrac{\sqrt{2}}{2}(-\sqrt{2}t^2+3t)\equiv f(t) \\
+y=\dfrac{\sqrt{2}}{2}(s+t)=\dfrac{\sqrt{2}}{2}(\sqrt{2}t^2-t)\equiv g(t) 
+\end{cases} \label{eq:1}
 \end{align}
+である．
 
 \paragraph{(2)}
 
-$g(t)=\dfrac{\sqrt{2}}{2}\Bigl[\sqrt{2}\Bigl(t-\dfrac{1}{2\sqrt{2}}\Bigr)^2-\dfrac{\sqrt{2}}{8}\Bigr]$だから，$g$は$t=\dfrac{1}{2\sqrt{2}}=\dfrac{\sqrt{2}}{4}$で最小値
+\cref{eq:1}の$g(t)$は下に凸な$t$の二次関数であり，平方完成すると
+\begin{align}
+ g(t)
+  &=\dfrac{\sqrt{2}}{2}\Bigl[\sqrt{2}\Bigl(t-\dfrac{1}{2\sqrt{2}}\Bigr)^2-\dfrac{\sqrt{2}}{8}\Bigr]
+\end{align}
+だから，$g$は$t=\dfrac{1}{2\sqrt{2}}=\dfrac{\sqrt{2}}{4}$で最小値
 \begin{align}
 \dfrac{\sqrt{2}}{2}\cdot\Bigl(-\dfrac{\sqrt{2}}{8}\Bigr)=-\dfrac{1}{8}
 \end{align}
-をとる．$g(t)$は$t$の2次関数（上に凸ではなく下に凸）で，直線$y=a$が曲線$C$とただ1点で交わるのは，この最小値の位置，すなわち
+をとる．$g(t)$が下に凸な$t$の二次関数だから，直線$y=a$が曲線$C$とただ1点で交わるのはこの最小値の位置：
 \begin{align}
 a=-\dfrac{1}{8}
 \end{align}
-のときである．
+である．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=3, >=stealth]
+
+  % --- 1. 定数設定 ---
+  \pgfmathsetmacro{\rTwo}{sqrt(2)}          % ≒ 1.4142
+  \pgfmathsetmacro{\tMin}{\rTwo/4}          % sqrt(2)/4 ≒ 0.3536
+  \pgfmathsetmacro{\tRoot}{\rTwo/2}         % sqrt(2)/2 ≒ 0.7071
+  \pgfmathsetmacro{\yMin}{-1/8}             % -0.125
+
+  % --- 2. 座標軸 ---
+  \draw[->, thick] (-0.3, 0) -- (1.2, 0) node[right] {$t$};
+  \draw[->, thick] (0, -0.6) -- (0, 0.9) node[above] {$y$};
+  \node[below left, font=\small] at (0,0) {$O$};
+
+  % --- 3. 放物線 y = g(t) の描画 ---
+  % g(t) = t^2 - (sqrt(2)/2)*t
+  \draw[ultra thick, blue!80!black, domain=-0.18:0.9, samples=80]
+    plot (\x, {\x*\x - (\rTwo/2)*\x})
+    node[above right, font=\small] {$y = g(t)$};
+
+  % --- 4. 接線 y = a = -1/8 (最小値) ---
+  \draw[thick, red!80!black, dashed] (-0.2, \yMin) -- (1.0, \yMin)
+    node[right, font=\small] {$y = a = -\dfrac{1}{8}$};
+
+  % --- 5. 頂点・交点のプロットとガイド線 ---
+  % 頂点 (sqrt(2)/4, -1/8)
+  \draw[dashed, gray] (\tMin, 0) node[above, font=\small, black] {$\dfrac{\sqrt{2}}{4}$} -- (\tMin, \yMin);
+  \fill[red!80!black] (\tMin, \yMin) circle (1.2pt) node[below right, font=\scriptsize] {最小点};
+  \fill[red!80!black] (0, \yMin) circle (1.0pt) node[left, font=\small] {$-\dfrac{1}{8}$};
+
+  % 零点 t = sqrt(2)/2
+  \fill[black] (\tRoot, 0) circle (1.2pt) node[below right, font=\small] {$\dfrac{\sqrt{2}}{2}$};
+
+\end{tikzpicture}
+\end{center}
+\caption{$y = g(t) = t^2 - \dfrac{\sqrt{2}}{2}t$ の概形と最小値 $a = -\dfrac{1}{8}$}
+\end{figure}
 
 \paragraph{(3)}
 
-$g(t)=0\iff t=0,\ \dfrac{\sqrt{2}}{2}$（$\sqrt{2}t^2-t=t(\sqrt{2}t-1)=0$より）．よって$0\le t\le\dfrac{\sqrt{2}}{2}$の部分がグラフと$x$軸で囲む領域$D$の境界を与え，$t\in\bigl(0,\dfrac{\sqrt{2}}{4}\bigr)$で$x_-(y)$（左側の枝），$t\in\bigl(\dfrac{\sqrt{2}}{4},\dfrac{\sqrt{2}}{2}\bigr)$で$x_+(y)$（右側の枝）を与える．$D$を$y$軸のまわりに回転した体積$V$は
+\cref{eq:1}より$g(t)=0\iff t=0,\ \dfrac{\sqrt{2}}{2}$である．グラフの概形は以下のようになる．
+
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[scale=3, >=stealth]
+
+  % --- 1. 定数・パラメータ ---
+  \pgfmathsetmacro{\rTwo}{sqrt(2)}
+  \pgfmathsetmacro{\tRoot}{\rTwo/2}         % sqrt(2)/2 ≒ 0.7071
+  \pgfmathsetmacro{\tMin}{\rTwo/4}          % sqrt(2)/4 ≒ 0.3536
+
+  % 特徴点の座標 (x(t), y(t))
+  % t = 0 -> (0, 0)
+  % t = sqrt(2)/4 -> x = 5/8 = 0.625, y = -1/8 = -0.125
+  % t = sqrt(2)/2 -> x = 1, y = 0
+  \coordinate (O) at (0, 0);
+  \coordinate (BottomPt) at (0.625, -0.125);
+  \coordinate (RightPt) at (1.0, 0);
+
+  % --- 2. 領域 D のハッチング (0 <= t <= sqrt(2)/2 の曲線と x 軸で囲まれる部分) ---
+  \fill[pattern=north east lines, pattern color=blue!60]
+    (O) -- plot[domain=0:\tRoot, samples=60] 
+      ({-\x*\x + 1.5*\rTwo*\x}, {\x*\x - 0.5*\rTwo*\x}) -- cycle;
+
+  % --- 3. 座標軸 ---
+  \draw[->, thick] (-0.3, 0) -- (1.4, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.4) -- (0, 0.5) node[above] {$y$};
+  \node[below left, font=\small] at (O) {$O$};
+
+  % --- 4. 曲線 C の描画 (0 <= t <= sqrt(2)/2) ---
+  \draw[ultra thick, blue!80!black, domain=0:\tRoot, samples=80]
+    plot ({-\x*\x + 1.5*\rTwo*\x}, {\x*\x - 0.5*\rTwo*\x});
+
+  % 曲線 C の延長（薄い線）
+  \draw[thick, blue!40, dashed, domain=-0.4:1.2, samples=50]
+    plot ({-\x*\x + 1.5*\rTwo*\x}, {\x*\x - 0.5*\rTwo*\x})
+    node[above right, font=\scriptsize, blue!80!black] {$C$};
+
+  % --- 5. ガイド線と境界ラベル ---
+  % 最下点 y = a = -1/8
+  \draw[dashed, gray] (0, -0.125) node[left, font=\small, black] {$a = -\dfrac{1}{8}$} -- (BottomPt);
+  \draw[dashed, gray] (0.625, 0) node[above, font=\scriptsize, black] {$\dfrac{5}{8}$} -- (BottomPt);
+  \fill[red!80!black] (BottomPt) circle (1.2pt) 
+    node[below, font=\scriptsize] {$t=\dfrac{\sqrt{2}}{4}$};
+
+  % 右端の交点 (1, 0)
+  \fill[black] (RightPt) circle (1.2pt) 
+    node[above, font=\small] {$1$};
+  \node[below right, font=\scriptsize] at (RightPt) {$\left(t=\dfrac{\sqrt{2}}{2}\right)$};
+
+  % 原点 (0,0)
+  \node[above left, font=\scriptsize] at (0.05, 0.05) {$t=0$};
+
+  % --- 6. 左右の枝 x_-(y) と x_+(y) のラベル ---
+  \node[blue!80!black, font=\scriptsize] at (0.22, -0.1) {$x_-(y)$};
+  \node[blue!80!black, font=\scriptsize] at (0.85, -0.1) {$x_+(y)$};
+
+  % 領域ラベル D
+  \node[blue!90!black, font=\Large] at (0.55, -0.05) {$D$};
+
+  % y軸回転の矢印
+  \draw[->, thick, purple!80!black] (-0.12, 0.25) arc (160:-160:0.12 and 0.06);
+  \node[purple!80!black, font=\scriptsize, left] at (-0.15, 0.25) {$y$軸回転};
+
+\end{tikzpicture}
+\end{center}
+\caption{曲線 $C$ と $x$ 軸で囲まれる領域 $D$（斜線部）と左右の枝 $x_\pm(y)$}
+\end{figure}
+
+従って$0\le t\le\dfrac{\sqrt{2}}{2}$の部分がグラフと$x$軸で囲む領域$D$の境界を与え，$t\in\bigl(0,\dfrac{\sqrt{2}}{4}\bigr)$で$x_-(y)$（左側の枝），$t\in\bigl(\dfrac{\sqrt{2}}{4},\dfrac{\sqrt{2}}{2}\bigr)$で$x_+(y)$（右側の枝）を与える．
+
+$D$を$y$軸のまわりに回転した体積$V$は
 \begin{align}
-\dfrac{V}{\pi}=\int_a^0\bigl(x_+^2-x_-^2\bigr)dy=\int_0^{\sqrt{2}/2}x(t)^2\dfrac{dy}{dt}dt\tag{①}
+\dfrac{V}{\pi}
+  &=\int_a^0\bigl(x_+^2-x_-^2\bigr)dy \\
+  &=\int_{\sqrt{2}/4}^{\sqrt{2}/2}x_{+}(t)^2\dfrac{dy}{dt}dt - \int_{\sqrt{2}/4}^{0}x_{-}(t)^2\dfrac{dy}{dt}dt \\
+  &=\int_{0}^{\sqrt{2}/2}x(t)^2\dfrac{dy}{dt}dt \label{eq:2}
 \end{align}
-（両方の枝の寄与が$t=0$から$\dfrac{\sqrt{2}}{2}$までの一つの積分にまとまる）．$g'(t)=\dfrac{\sqrt{2}}{2}(2\sqrt{2}t-1)$であり，$x(t)=\dfrac{\sqrt{2}}{2}t(3-\sqrt{2}t)$だから
+と書ける．
+\cref{eq:1}より
 \begin{align}
-x(t)^2g'(t)&=\dfrac{1}{2}t^2(3-\sqrt{2}t)^2\cdot\dfrac{\sqrt{2}}{2}(2\sqrt{2}t-1)=\dfrac{\sqrt{2}}{4}t^2(3-\sqrt{2}t)^2(2\sqrt{2}t-1)\\
-&=\dfrac{\sqrt{2}}{4}t^2(4\sqrt{2}t^3-26t^2+24\sqrt{2}t-9)
+ y'=g'(t)=\dfrac{\sqrt{2}}{2}(2\sqrt{2}t-1)
 \end{align}
-（$(3-\sqrt{2}t)^2(2\sqrt{2}t-1)=4\sqrt{2}t^3-26t^2+24\sqrt{2}t-9$を展開して得た）．①に代入して
+であり，$x(t)=f(t)$も代入して
 \begin{align}
-\dfrac{V}{\pi}&=\dfrac{\sqrt{2}}{4}\Bigl[\dfrac{4\sqrt{2}}{6}t^6-\dfrac{26}{5}t^5+\dfrac{24\sqrt{2}}{4}t^4-\dfrac{9}{3}t^3\Bigr]_0^{\sqrt{2}/2}\\
-&=\dfrac{\sqrt{2}}{4}\Bigl[\dfrac{2\sqrt{2}}{3}t^6-\dfrac{26}{5}t^5+6\sqrt{2}t^4-3t^3\Bigr]_0^{\sqrt{2}/2}
+ x(t)^2g'(t)
+ &=\dfrac{1}{2}t^2(3-\sqrt{2}t)^2\cdot\dfrac{\sqrt{2}}{2}(2\sqrt{2}t-1) \\
+ &=\dfrac{\sqrt{2}}{4}t^2(3-\sqrt{2}t)^2(2\sqrt{2}t-1)\\
+ &=\dfrac{\sqrt{2}}{4}t^2(4\sqrt{2}t^3-26t^2+24\sqrt{2}t-9) 
 \end{align}
-$t=\dfrac{\sqrt{2}}{2}$のとき$t^2=\dfrac{1}{2},t^3=\dfrac{\sqrt{2}}{4},t^4=\dfrac{1}{4},t^5=\dfrac{\sqrt{2}}{8},t^6=\dfrac{1}{8}$を代入すると
+なので，\cref{eq:2}に代入して
 \begin{align}
-\dfrac{2\sqrt{2}}{3}\cdot\dfrac{1}{8}-\dfrac{26}{5}\cdot\dfrac{\sqrt{2}}{8}+6\sqrt{2}\cdot\dfrac{1}{4}-3\cdot\dfrac{\sqrt{2}}{4}=\dfrac{\sqrt{2}}{12}-\dfrac{13\sqrt{2}}{20}+\dfrac{3\sqrt{2}}{2}-\dfrac{3\sqrt{2}}{4}=\dfrac{11\sqrt{2}}{60}
+\dfrac{V}{\pi}
+ &=\dfrac{\sqrt{2}}{4}\Bigl[\dfrac{2\sqrt{2}}{3}t^6-\dfrac{26}{5}t^5+6\sqrt{2}t^4-3t^3\Bigr]_0^{\sqrt{2}/2} \\
+ &=\dfrac{\sqrt{2}}{4}\left(\dfrac{\sqrt{2}}{2}\right)^{3}\Bigl[\dfrac{2\sqrt{2}}{3}\left(\dfrac{\sqrt{2}}{2}\right)^3-\dfrac{26}{5}\left(\dfrac{\sqrt{2}}{2}\right)^2+6\sqrt{2}\left(\dfrac{\sqrt{2}}{2}\right) -3 \Bigr] \\
+ &=\dfrac{1}{8}\left[\dfrac{1}{3}-\dfrac{13}{5}+6-3\right] \\
+ &=\dfrac{11}{120}
 \end{align}
-（通分すると$\dfrac{5-39+90-45}{60}\sqrt{2}=\dfrac{11}{60}\sqrt{2}$）．よって
+だから
 \begin{align}
-\dfrac{V}{\pi}=\dfrac{\sqrt{2}}{4}\cdot\dfrac{11\sqrt{2}}{60}=\dfrac{11\cdot2}{240}=\dfrac{11}{120}
+V=\dfrac{11}{120}\pi
 \end{align}
-より
-\begin{align}
-V=\dfrac{11}{120}\pi.
-\end{align}
+である．
 
 
 \newpage
