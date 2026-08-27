@@ -129,6 +129,12 @@ const nextYearEntry = pickEntryForYear(nextYearNum);
 
 // Page Title
 const pageTitle = entry.data.title || `${univName} ${catName} ${year}年 ${questionLabel} (${typeLabel})`;
+
+// GoatCounter の公開カウンターバッジ。count.js が記録するパス
+// (location.pathname + search + hash) と一致させる必要があるため、
+// このページ自身の絶対パスをそのまま組み立てる。
+const counterPath = `${baseUrl}/solutions/${entry.slug}/`;
+const counterUrl = `https://toamano.goatcounter.com/counter${counterPath}.svg?no_branding=1`;
 ---
 
 <Layout title={pageTitle} description={`${univName} ${catName} ${year}年 ${questionLabel}の過去問解答解説。`} ogType="article">
@@ -175,6 +181,7 @@ const pageTitle = entry.data.title || `${univName} ${catName} ${year}年 ${quest
 			{entryType === 'summary' && <span class="badge badge-summary">全体サマリ</span>}
 			{entryType === 'problem' && <span class="badge badge-problem">問題文</span>}
 			{entryType === 'solution' && <span class="badge badge-solution">解答解説</span>}
+			<img src={counterUrl} alt="このページの閲覧数" style="height: 20px; border-radius: 4px;" loading="lazy" />
 		</div>
 	</div>
 

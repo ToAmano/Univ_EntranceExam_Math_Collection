@@ -85,6 +85,28 @@ const ogImageUrl = new URL(`${baseUrl}/ogp-default.png`, Astro.site).href;
 			});
 		</script>
 
+		<!-- GoatCounter (問題ごとのアクセス数バッジ用) -->
+		<script>
+			// @ts-ignore
+			window.goatcounter = { no_onload: true };
+		</script>
+		<script data-goatcounter="https://toamano.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+		<script>
+			// count.js は async 読み込みのため、astro:page-load 発火時点ではまだ
+			// window.goatcounter.count が存在しない場合がある（GA4 のタグでも同様の
+			// タイミング問題が実際に起きたため、ここでは短い間隔でリトライする）。
+			function sendGoatCounterHit(retriesLeft: number) {
+				// @ts-ignore
+				const gc = window.goatcounter;
+				if (gc && typeof gc.count === 'function') {
+					gc.count({ path: location.pathname + location.search + location.hash });
+				} else if (retriesLeft > 0) {
+					setTimeout(() => sendGoatCounterHit(retriesLeft - 1), 200);
+				}
+			}
+			document.addEventListener('astro:page-load', () => sendGoatCounterHit(20));
+		</script>
+
 		<!-- Google Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
