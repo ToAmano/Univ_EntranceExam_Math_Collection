@@ -271,19 +271,17 @@ const ogImageUrl = new URL(`${baseUrl}/ogp-default.png`, Astro.site).href;
 			   （スマホ幅で実際に発生を確認）ため、はみ出した場合は数式単体だけ
 			   横スクロールさせ、ページ自体は広がらないようにする。 */
 			mjx-container {
-				max-width: 100% !important;
+				max-width: 100%;
 				overflow-x: auto;
 				/* MathJax は各 mjx-container 要素に SVG の実寸に合わせた
 				   min-width をインライン style として直接埋め込んでいる
 				   （例: style="min-width: 421px"）。CSS 仕様上 min-width は
 				   max-width より優先されるため、!important で上書きしないと
-				   幅の広い数式でページ全体が横に押し広げられてしまう。 */
+				   幅の広い数式でページ全体が横に押し広げられてしまう。
+				   display は MathJax 自身の値（flex 等、行内数式の縦位置合わせに
+				   使っている）に触らない — inline-block に強制すると縦位置が
+				   ずれてしまうことが判明した。 */
 				min-width: 0 !important;
-				/* MathJax 自身が動的に注入する mjx-container 用スタイルシートが
-				   display:flex を指定しており（cascade 上こちらのルールより後に
-				   挿入されるため）、単に display:inline-block を指定するだけでは
-				   上書きされてしまう。!important で確実に横幅を制限する。 */
-				display: inline-block !important;
 			}
 
 			mjx-container[display="true"] {
