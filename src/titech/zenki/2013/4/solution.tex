@@ -1,35 +1,121 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$0\le x\le\dfrac{\pi}{2}$のとき$0\le4nx\le2n\pi$であり，$\sin4nx\ge\sin x$となる条件は，整数$k$を用いて
 \begin{align}
-2k\pi+x\le4nx\le2k\pi+(\pi-x)
+ 0\le x\le\dfrac{\pi}{2} \label{eq:1} 
 \end{align}
-と表せる（正弦の値がある値以上になる一般解）．これを$x$について解くと
+の範囲で考えよう．この時自然数$n$に対して
 \begin{align}
-\dfrac{2k\pi}{4n-1}\le x\le\dfrac{(2k+1)\pi}{4n+1}.\tag{②}
+ 0\le4nx\le2n\pi \label{eq:2}
 \end{align}
-この区間を$D_k$とする．区間が空でない条件は$\dfrac{2k\pi}{4n-1}\le\dfrac{(2k+1)\pi}{4n+1}$，整理して$4k\le4n-1$，すなわち$k\le n-\dfrac{1}{4}$，$k$は整数だから$k\le n-1$．さらに$k=0,1,\dots,n-1$のとき$D_k\subset[0,\pi/2]$に含まれ，それ以外の$k$では$D_k$は$[0,\pi/2]$からはみ出す（または空）．よって
+であり，$\sin4nx\ge\sin x$となる条件は非負の整数$k$を用いて
 \begin{align}
-S_n=\sum_{k=0}^{n-1}\ell_k\tag{③}
+2k\pi+x\le 4nx \le 2k\pi+(\pi-x)
 \end{align}
-（$\ell_k$は$D_k$の長さ）．②より
+と表せる．
+これを$x$について解くと
 \begin{align}
-\ell_k=\Bigl(\dfrac{2k+1}{4n+1}-\dfrac{2k}{4n-1}\Bigr)\pi=\dfrac{(2k+1)(4n-1)-2k(4n+1)}{(4n+1)(4n-1)}\pi=\dfrac{4n-4k-1}{(4n+1)(4n-1)}\pi.
+\dfrac{2k\pi}{4n-1}\le x\le\dfrac{(2k+1)\pi}{4n+1} \label{eq:3}
 \end{align}
-よって
+である．$x$が題意の条件を満たすとは，\cref{eq:3}なる非負整数$k$が存在することと同値である．
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+
+  % 1. 角度パラメータ (例: x = 35°)
+  \def\ang{35}
+  \def\r{1.0}
+
+  % 2. 弧の帯状ハッチング (x から \pi - x までの領域)
+  % 半径 0.95 から 1.05 の帯をハッチング
+  \fill[pattern=north east lines, pattern color=black!50]
+    (\ang:0.92) arc[start angle=\ang, end angle={180-\ang}, radius=0.92]
+    -- ({180-\ang}:1.08) arc[start angle={180-\ang}, end angle=\ang, radius=1.08]
+    -- cycle;
+
+  % 3. 単位円の上半分（半円）
+  \draw[thick, gray!60] (1.0, 0) arc[start angle=0, end angle=180, radius=1.0];
+
+  % 4. 座標軸
+  \draw[->, thick] (-1.3, 0) -- (1.4, 0) node[right] {$X$};
+  \draw[->, thick] (0, -0.2) -- (0, 1.35) node[above] {$Y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 5. 動径の描画
+  % 角 x の動径
+  \draw[thick] (0,0) -- (\ang:1.0);
+  % 角 \pi - x の動径
+  \draw[thick] (0,0) -- ({180-\ang}:1.0);
+
+  % 条件を満たす弧 (x から \pi - x まで) を太線で強調
+  \draw[very thick, blue!80!black] (\ang:1.0) arc[start angle=\ang, end angle={180-\ang}, radius=1.0];
+
+  % 補助線: sin x の高さ (水平破線)
+  \draw[dashed, gray!70] ({180-\ang}:1.0) -- (\ang:1.0);
+  \node[left, font=\footnotesize] at (0, {sin(\ang)}) {$\sin x$};
+
+  % 6. 角度のアークとラベル
+  % 角 x
+  \draw[->, red!80!black, thick] (0.35, 0) arc[start angle=0, end angle=\ang, radius=0.35];
+  \node[red!80!black] at (17:0.48) {$x$};
+
+  % 角 \pi - x
+  \draw[->, gray!80!black] (0.22, 0) arc[start angle=0, end angle={180-\ang}, radius=0.22];
+  \node[above] at (90:0.3) {$\pi - x$};
+
+  % 7. 特徴点・目盛り
+  \fill (\ang:1.0) circle (0.8pt);
+  \fill ({180-\ang}:1.0) circle (0.8pt);
+  
+  \node[below right] at (1.0, 0) {$1$};
+  \node[below left] at (-1.0, 0) {$-1$};
+  \node[above left] at (0, 1.0) {$1$};
+
+  % 8. 弧の範囲の注記ラベル
+  \node[blue!80!black, above, font=\footnotesize] at (90:1.15) {$2k\pi + x \le 4nx \le 2k\pi + (\pi - x)$};
+
+\end{tikzpicture}
+\caption{単位円上における角 $4nx$ の満たすべき範囲}
+\end{figure}
+
+さて，$k$が与えられた時\cref{eq:3}の表す区間$\left[\dfrac{2k\pi}{4n-1},\dfrac{(2k+1)\pi}{4n+1}\right]$を$D_k$とおく．\cref{eq:3}なる$x$が存在するための必要条件として区間が空でない条件は
 \begin{align}
-\sum_{k=0}^{n-1}\ell_k=\dfrac{\pi}{(4n+1)(4n-1)}\sum_{k=0}^{n-1}(4n-4k-1)=\dfrac{\pi}{16n^2-1}\Bigl\{n(4n-1)-4\cdot\dfrac{n(n-1)}{2}\Bigr\}=\dfrac{\pi}{16n^2-1}\cdot n(2n+1)
+ & \dfrac{2k\pi}{4n-1}\le\dfrac{(2k+1)\pi}{4n+1} \\
+\therefore 
+ & k\le n-\dfrac{1}{4} 
 \end{align}
-（$\sum_{k=0}^{n-1}(4n-1-4k)=n(4n-1)-2n(n-1)=n\{(4n-1)-2(n-1)\}=n(2n+1)$を用いた）．よって③より
+である．$k$は非負の整数だから
 \begin{align}
-S_n=\dfrac{n(2n+1)\pi}{16n^2-1}=\dfrac{(2n^2+n)\pi}{16n^2-1}\xrightarrow[n\to\infty]{}\dfrac{2}{16}\pi=\dfrac{\pi}{8}.
+ 0 \le k \le n-1 \label{eq:4}
 \end{align}
+である．この範囲で$k$を$k=0,1,\cdots, n-1$で動かした時には$D_k$は\cref{eq:1}の範囲に含まれる．
+以上から，$D_k$の範囲の長さを$\ell_k$として求める長さは
+\begin{align}
+ S_n=\sum_{k=0}^{n-1}\ell_k \label{eq:5}
+\end{align}
+である．\cref{eq:3}を代入して
+\begin{align}
+ \ell_k
+  &=\Bigl(\dfrac{2k+1}{4n+1}-\dfrac{2k}{4n-1}\Bigr)\pi \\
+  &=\dfrac{(2k+1)(4n-1)-2k(4n+1)}{(4n+1)(4n-1)}\pi \\
+  &=\dfrac{4n-4k-1}{(4n+1)(4n-1)}\pi
+\end{align}
+である．これを\cref{eq:5}に代入して
+\begin{align}
+ S_n 
+  &=\sum_{k=0}^{n-1}\ell_k \\
+  &=\dfrac{\pi}{(4n+1)(4n-1)}\sum_{k=0}^{n-1}(4n-4k-1) \\
+  &=\dfrac{\pi}{16n^2-1}\Bigl\{n(4n-1)-4\cdot\dfrac{n(n-1)}{2}\Bigr\} \\
+  &=\dfrac{\pi}{16n^2-1}\cdot n(2n+1) \\
+  &=\dfrac{\pi\left(2+\dfrac{1}{n}\right)}{16-\dfrac{1}{n^2}}
+\end{align}
+だから，$n\to\infty$の極限をとって
+\begin{align}
+\lim_{n\to\infty}S_n= \dfrac{2\pi}{16} = \dfrac{\pi}{8}
+\end{align}
+である．
 
 
 \newpage

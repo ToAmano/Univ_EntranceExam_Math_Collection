@@ -1,40 +1,97 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
 \paragraph{(1)}
 
-$x^2-3x+5=0$の2解を$\alpha,\beta$とすると$\alpha+\beta=3$，$\alpha\beta=5$．$b_n=\alpha^n+\beta^n$とおくと，漸化式
+$x^2-3x+5=0$の2解を$\alpha,\beta$とすると解と係数の関係より
 \begin{align}
-b_{n+2}=(\alpha+\beta)b_{n+1}-\alpha\beta b_n=3b_{n+1}-5b_n\tag{①}
+ \begin{cases}
+  \alpha+\beta=3 \\
+  \alpha\beta=5
+ \end{cases} \label{eq:1}
 \end{align}
-が成り立つ．$a_n=b_n-3^n$とおき，すべての正の整数$n$で$a_n\equiv0\pmod5$（②）であることを2項ずつの数学的帰納法で示す．
-
-$n=1,2$のとき：$b_1=3$，$b_2=(\alpha+\beta)^2-2\alpha\beta=9-10=-1$より，$a_1=3-3=0\equiv0$，$a_2=-1-9=-10\equiv0\pmod5$．よって②は成立．
-
-$n=k,k+1$（$k\in\mathbb N$）で②が成立すると仮定する．①より
+である．新しく
 \begin{align}
-a_{k+2}&=b_{k+2}-3^{k+2}=3b_{k+1}-5b_k-3^{k+2}\\
-&=3(a_{k+1}+3^{k+1})-5(a_k+3^k)-3^{k+2}=3a_{k+1}-5a_k-5\cdot3^k\equiv0\pmod5
+ \begin{cases}
+  b_n=\alpha^n+\beta^n \\
+  a_n=b_n-3^n
+ \end{cases} \label{eq:2}
 \end{align}
-（仮定より$a_{k+1}\equiv a_k\equiv0$，かつ$-5a_k$，$-5\cdot3^k$はともに$5$の倍数）．よって$n=k+2$でも②は成立し，数学的帰納法によりすべての正の整数$n$で$\alpha^n+\beta^n-3^n$は$5$の倍数である．
+とおくと，\cref{eq:1}より$b_n$の漸化式は
+\begin{align}
+ b_{n+2}
+  &=\alpha^{n+2}+\beta^{n+2} \\
+  &=(\alpha+\beta)b_{n+1}-\alpha\beta b_n \\
+  &=3b_{n+1}-5b_n \label{eq:3}
+\end{align}
+である．また，$n=1,2$の時
+\begin{align}
+ \begin{cases}
+   b_1 = \alpha + \beta = 3 \\
+   b_2 = \alpha^2 + \beta^2 = (\alpha+\beta)^2 - 2\alpha\beta = -1 
+ \end{cases} \label{eq:4}
+\end{align}
+である．
+以下$2$項づつの数学的帰納法によりすべての正の整数$n$で$a_n\equiv0\pmod5$であることを示す．
+
+まず$n=1,2$の時，\cref{eq:4}より
+\begin{align}
+ \begin{cases}
+  a_1 = b_1 - 3^{1} = 3-3 = 0 \equiv0\pmod5 \\
+  a_2 = b_2 - 3^{2} = -1 -9 = -10 \equiv0\pmod5
+ \end{cases}
+\end{align}
+より成立する．
+
+そこで$n=k,k+1$（$k\in\mathbb N$）での成立を仮定する．
+\cref{eq:3}より
+\begin{align}
+a_{k+2}
+ &=b_{k+2}-3^{k+2} \\
+ &=3b_{k+1}-5b_k-3^{k+2}\\
+ &=3(a_{k+1}+3^{k+1})-5(a_k+3^k)-3^{k+2} \\
+ &=3a_{k+1}-5a_k-5\cdot3^k
+\end{align}
+だが，仮定より$a_{k+1}\equiv a_k\equiv0$で，かつ$-5\cdot3^k$は$5$の倍数だから$a_{k+2}$も$5$の倍数である．よって$n=k+2$でも仮定が成立する．
+
+以上より数学的帰納法によりすべての正の整数$n$で$\alpha^n+\beta^n-3^n$は$5$の倍数である．
 
 \paragraph{(2)}
 
 4種類の目$a,b,c,d$が出る場合，6個の出目の内訳（重複度の分割）は$3+1+1+1$または$2+2+1+1$の2パターンに限る．6個のさいころを区別すれば全事象は$6^6$通りで同様に確からしい．
 
-$1^\circ$ 内訳が$3,1,1,1$のとき：$4$個の目のうちどれが$3$回出るかで$6$通り，残り$3$つの目を残り$5$種類の目から選ぶ方法が${}_5C_3=10$通りだから，目の選び方は$6\times10=60$通り．各選び方について，どのさいころがどの目になるかの割り当ては$\dfrac{6!}{3!1!1!1!}={}_6C_3\cdot3!=20\times6=120$通り．よってこのパターンの場合の数は$60\times120=7200=2\cdot6^2\cdot100$．
+\subparagraph{$1^\circ$ 内訳が$3,1,1,1$のとき}
 
-$2^\circ$ 内訳が$2,2,1,1$のとき：$2$回出る目の選び方が${}_6C_2=15$通り，残りから$1$回ずつ出る目の選び方が${}_4C_2=6$通りで，目の選び方は$15\times6=90$通り．割り当ては$\dfrac{6!}{2!2!1!1!}={}_6C_2\cdot{}_4C_2\cdot2!=15\times6\times2=180$通り．よってこのパターンの場合の数は$90\times180=16200=2\cdot9^2\cdot100$．
+$4$個の目のうちどれが$3$回出るかで$6$通り，残り$3$つの目を残り$5$種類の目から選ぶ方法が${}_5C_3=10$通りだから，目の選び方は$6\times10=60$通りある．
+
+各選び方についてどのさいころがどの目になるかの割り当ては，まず$6$つのうちで$3$つある同じ目を選ぶのが${}_6C_{3}$通り．さらに残り$3$つの目の割り当てが$3!$通りで，合計${}_6C_3\cdot3!=20\times6=120$通りである．
+
+以上からこのパターンの場合の数は
+\begin{align}
+ 60\times120=7200=2\cdot6^2\cdot100
+\end{align}
+である．
+
+\subparagraph{$2^\circ$ 内訳が$2,2,1,1$のとき}
+
+$2$回出る目の選び方が${}_6C_2=15$通り，残りから$1$回ずつ出る目の選び方が${}_4C_2=6$通りで，目の選び方は$15\times6=90$通りある．
+
+割り当てはまず$6$つのうちで$2$つある同じ目を選ぶのが${}_6C_2\cdot{}_4C_2$通りで，残りの$2$つの目を割り当てるのが$2!$通りだから合計で${}_6C_2\cdot{}_4C_2\cdot2!=15\times6\times2=180$通りである．
+
+以上からこのパターンの場合の数は
+\begin{align}
+ 90\times180=16200=2\cdot9^2\cdot100
+\end{align}
+である．
+\casesend
 
 以上より，求める確率は
 \begin{align}
-\dfrac{2\cdot6^2\cdot100+2\cdot9^2\cdot100}{6^6}=\dfrac{(72+162)\times100}{46656}=\dfrac{23400}{46656}=\dfrac{325}{648}.
+\dfrac{2\cdot6^2\cdot100+2\cdot9^2\cdot100}{6^6}=\dfrac{(72+162)\times100}{46656}=\dfrac{23400}{46656}=\dfrac{325}{648}
 \end{align}
+である．
 
 
 \newpage

@@ -1,84 +1,560 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-$C=\cos\chi$，$S=\sin\chi$とし，$C_2$上の点$P(C,bS)$（$0\le C\le1$）とおく．また$A(a,0)$（$C_1$の中心）とする．
+$C_2$上の点を$P(\cos\theta, b\sin\theta), (0 \le \theta < 2\pi)$とおく．
+また$C_1$の中心を$A(a,0)$とおく．
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=4.5, >=stealth, every node/.style={font=\small}]
+
+  % --- パラメータ設定 ( (2) の具体値: b = 1/\sqrt{3}, a = \sqrt{2}/3 ) ---
+  % a = sqrt(2)/3 \approx 0.4714, b = 1/sqrt(3) \approx 0.5774
+  % 接点 P(p, q): p = sqrt(2)/2 \approx 0.7071, q = sqrt(6)/6 \approx 0.4082
+  \def\a{0.4714}
+  \def\b{0.5774}
+  \def\p{0.7071}
+  \def\q{0.4082}
+
+  % 1. 座標の定義
+  \coordinate (O) at (0, 0);
+  \coordinate (A) at (\a, 0);
+  \coordinate (P) at (\p, \q);
+  \coordinate (Pneg) at (\p, -\q);
+
+  % 2. 補助線（点線）
+  % 中心 A からの垂線および y 軸への点線
+  \draw[dashed, gray!70] (\a, -\a) -- (\a, \a) -- (0, \a);
+  \draw[dashed, gray!70] (\a, -\a) -- (0, -\a);
+
+  % 接点 P からの垂線・水平線
+  \draw[dashed, gray!70] (\p, 0) -- (P) -- (0, \q);
+
+  % 3. 座標軸
+  \draw[->, thick] (-0.15, 0) -- (1.25, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.75) -- (0, 0.75) node[above] {$y$};
+  \node[below left] at (O) {$O$};
+
+  % 4. 曲線描画
+  % 楕円 C_2: x^2 + 3y^2 = 1 (第1・第4象限)
+  \draw[very thick, blue!80!black, domain=-90:90, samples=80] 
+    plot ({cos(\x)}, {\b*sin(\x)});
+  \node[blue!80!black, above right] at (0.35, 0.55) {$C_2: x^2 + \dfrac{y^2}{b^2} = 1$};
+
+  % 円 C_1: (x-a)^2 + y^2 = a^2 (中心 A(a,0), 半径 a)
+  \draw[very thick, red!80!black] (A) circle (\a);
+  \node[red!80!black, left] at (0.28, 0.35) {$C_1$};
+
+  % 5. 半径 AP と 共通接線
+  % 半径 AP (法線: 傾き sqrt(3) \approx 1.732)
+  \draw[thick, gray!80!black] (A) -- (P);
+
+  % 共通接線 (傾き -1/sqrt(3) \approx -0.5774)
+  % y = -0.57735 * (x - 0.7071) + 0.4082
+  \draw[thick, gray!70, domain=0.42:0.98] 
+    plot (\x, {-0.57735*(\x - \p) + \q});
+
+  % 直角記号 (AP と共通接線の垂直マーク)
+  % 接線方向単位ベクトル: (cos(-30°), sin(-30°)) = (sqrt(3)/2, -1/2) \approx (0.866, -0.5)
+  % 法線方向(A->P)単位ベクトル: (cos(60°), sin(60°)) = (1/2, sqrt(3)/2) \approx (0.5, 0.866)
+  \draw[thick, gray!80!black] 
+    ($(P) + (-0.03*0.5, -0.03*0.866)$) -- 
+    ($(P) + (-0.03*0.5 + 0.03*0.866, -0.03*0.866 - 0.03*0.5)$) -- 
+    ($(P) + (0.03*0.866, -0.03*0.5)$);
+
+  % 6. 軸上の目盛りテキスト
+  \node[below left] at (\a, 0) {$a$};
+  \node[below left] at ({2*\a}, 0) {$2a$};
+  \node[below right] at (1.0, 0) {$1$};
+  
+  \node[left] at (0, \b) {$b$};
+  \node[left] at (0, \a) {$a$};
+  \node[left] at (0, -\a) {$-a$};
+  \node[left] at (0, -\b) {$-b$};
+
+  % 7. プロット点とラベル
+  \fill (A) circle (0.7pt) node[below] {$A$};
+  \fill (1.0, 0) circle (0.7pt);
+  \fill (0, \b) circle (0.7pt);
+  \fill (0, -\b) circle (0.7pt);
+  \fill ({2*\a}, 0) circle (0.7pt);
+
+  % 接点 P
+  \fill[red!80!black] (P) circle (0.9pt) node[above right] {$P(p, q)$};
+  \fill[red!80!black] (Pneg) circle (0.9pt);
+
+\end{tikzpicture}
+\caption{楕円 $C_2$ に内接する円 $C_1$ と接点 $P$}
+\end{figure}
 
 \paragraph{(1)}
 
-$C_1$が$C_2$に内接する条件は
+$C_1$が$C_2$に内接するためには
 \begin{align}
-\min_P|AP|=(C_1\text{の半径})=a\tag{①}
+\min_P|AP|=(C_1\text{の半径})=a \label{eq:1}
+\end{align}
+であることが必要である．実際に$\overrightarrow{AP}$を計算すると
+\begin{align}
+|AP|^2
+ &=(\cos\theta-a)^2+b^2\sin^2\theta \\
+ &=(\cos\theta-a)^2+b^2(1-\cos^2\theta) \\
+ &=(1-b^2)\cos^2\theta-2a\cos\theta+(a^2+b^2) \label{eq:2}
+\end{align}
+である．これを$f(\cos\theta)$とおく．
+$a>0$より接点は$x \ge 0$側にあるから，
+\begin{align}
+ 0 \le \cos\theta \le 1 \label{eq:3}
+\end{align}
+としてよく，このもとで$x=\cos\theta$として
+\begin{align}
+ f(x) = (1-b^2)x^2 -2ax + (a^2+b^2) \label{eq:4}
+\end{align}
+の最小値を考えよう．
+
+$f(x)$は高々$2$次式であり，二次係数の大きさで場合分けする．
+
+\subparagraph{$1-b^2=0$すなわち$b=1$の時（$\because b>0$）}
+
+この時は\cref{eq:4}は
+\begin{align}
+ f(x) = -2ax +a^2
+\end{align}
+となり，$a>0$よりこれは$[0,1]$で単調減少だから
+\begin{align}
+ \min f(x) = f(1) = -2a + a^2 + 1 = (a-1)^2 \label{eq:5}
 \end{align}
 である．
-\begin{align}
-|AP|^2=(C-a)^2+b^2S^2=(C-a)^2+b^2(1-C^2)=(1-b^2)C^2-2aC+(a^2+b^2)\equiv f(C)
-\end{align}
-とおく（$0\le C\le1$で考えればよい：$a>0$より対称性から接点は$x\ge0$側）．$f'(C)=2(1-b^2)C-2a$であり，$f'(0)=-2a<0$．$f'(1)=2(1-a-b^2)$の正負で場合分けする．
 
-$1^\circ$ $f'(1)\le0\iff1\le a+b^2$のとき：$f'(C)$は$C$の1次式で両端が非正だから区間内で$f'(C)\le0$，すなわち$f$は単調減少で
-\begin{align}
-\min f(C)=f(1)=(1-b^2)-2a+(a^2+b^2)=(1-a)^2.
-\end{align}
+\subparagraph{$1-b^2 > 0$すなわち$0 < b < 1$の時（$\because b>0$）}
 
-$2^\circ$ $f'(1)\ge0\iff1\ge a+b^2$のとき：このとき$1-b^2\ge a>0$だから，$f(C)$は下に凸な$C$の2次関数で，$C=\dfrac{a}{1-b^2}\in(0,1]$で最小となり
+この時は$f(x)$は下に凸な二次式であり，\cref{eq:4}を平方完成して
 \begin{align}
-\min f(C)=f\Bigl(\dfrac{a}{1-b^2}\Bigr)=\dfrac{a^2}{1-b^2}-\dfrac{2a^2}{1-b^2}+(a^2+b^2)=(a^2+b^2)-\dfrac{a^2}{1-b^2}.
+ f(x) = \left(1-b^2\right)\left(x-\dfrac{a}{1-b^2}\right)^2 -\dfrac{a^2}{1-b^2} +a^2+b^2
 \end{align}
+である．$a>0$および$1-b^2>0$より軸$\dfrac{a}{1-b^2}$は正だから，この最小値は軸が$[0,1]$に含まれるかどうかを考えて
+\begin{align}
+ \min f(x) 
+ &=
+ \begin{cases}
+  f\left(\dfrac{a}{1-b^2}\right)  & 0<\dfrac{a}{1-b^2}<1 \\
+  f\left(1\right) & 1 \le \dfrac{a}{1-b^2}  
+ \end{cases}  \\
+ &=
+ \begin{cases}
+  a^2+b^2 -\dfrac{a^2}{1-b^2} & 0< a <1-b^2 \\
+  (a-1)^2 & 1-b^2 \le a 
+ \end{cases} \label{eq:6}
+\end{align}
+である．
 
-①（$\min f(C)=a^2$）より，$1^\circ$では$(1-a)^2=a^2$，すなわち$a=\dfrac{1}{2}$，$2^\circ$では$(a^2+b^2)-\dfrac{a^2}{1-b^2}=a^2$，整理して$b^2(1-b^2)=a^2$．これらはいずれも$C_1$が$C_2$の内側にあり接することに対応し，まとめると条件は
+\subparagraph{$1-b^2 < 0$すなわち$1 < b$の時（$\because b>0$）}
+
+この時は$f(x)$は上に凸な二次式であり，\cref{eq:4}を平方完成して
 \begin{align}
-a=\dfrac{1}{2}\ \text{かつ}\ \dfrac{1}{2}\le b^2\quad(\text{接点}(1,0))\qquad\text{または}\qquad b^2\le\dfrac{1}{2}\ \text{かつ}\ a^2=b^2(1-b^2)\quad\Bigl(\text{接点は}C=\dfrac{a}{1-b^2}\text{となる点}\Bigr).
+ f(x) = \left(1-b^2\right)\left(x-\dfrac{a}{1-b^2}\right)^2 -\dfrac{a^2}{1-b^2} +a^2+b^2
 \end{align}
+である．$a>0$および$1-b^2<0$より軸$\dfrac{a}{1-b^2}$は負だから，この$[0,1]$での最小値は常に$f(1)$である．よって
+\begin{align}
+ \min f(x) = f(1) = (a-1)^2 \label{eq:7}
+\end{align}
+である．
+\casesend
+
+以上\cref{eq:5,eq:6,eq:7}をまとめて
+\begin{align}
+ \min f(x)
+ &=
+ \begin{cases}
+  a^2+b^2 -\dfrac{a^2}{1-b^2} & 0< a <1-b^2, 0<b<1  \\
+  (a-1)^2 & 1-b^2 \le a
+ \end{cases} \label{eq:8}
+\end{align}
+である．よって\cref{eq:1}に代入して求める条件は
+\begin{align}
+ &\begin{cases}
+  a^2+b^2 -\dfrac{a^2}{1-b^2} = a^2 & 0< a <1-b^2, 0<b<1 \\
+  (a-1)^2 = a^2 & 1-b^2 \le a
+ \end{cases} \\
+\therefore
+ &\begin{cases}
+  a^2 = b^2(1-b^2) & b^2 < \dfrac{1}{2} \\
+  a = \dfrac{1}{2} & \dfrac{1}{2} \le b^2
+ \end{cases} \label{eq:9}
+\end{align}
+である．前者の時は接点は$\cos\theta=\dfrac{a}{1-b^2}$となる点，後者は接点$(1,0)$である．
+この時，いずれも$C_1$が$C_2$の内側にあり，$C_1$が$C_2$に内接しており十分である．
+
 
 \paragraph{(2)}
 
-$b=\dfrac{1}{\sqrt{3}}$のとき$b^2=\dfrac{1}{3}\le\dfrac{1}{2}$だから後者の場合に該当し，
+$b=\dfrac{1}{\sqrt{3}}$のとき$b^2=\dfrac{1}{3}\le\dfrac{1}{2}$だから\cref{eq:9}の前者の場合に該当する．この時$a$は\cref{eq:9}より
 \begin{align}
-a^2=b^2(1-b^2)=\dfrac{1}{3}\cdot\dfrac{2}{3}=\dfrac{2}{9}\quad\therefore\ a=\dfrac{\sqrt{2}}{3}.
+ a^2
+  &=b^2(1-b^2) \\
+  &=\dfrac{1}{3}\cdot\dfrac{2}{3} \\
+  &=\dfrac{2}{9} \\
+\therefore\ 
+ a&=\dfrac{\sqrt{2}}{3} \label{eq:10}
 \end{align}
+となるから，接点の座標$P(p,q)=(\cos\theta,b\sin\theta)$は
 接点の$x$座標は
 \begin{align}
-p=\dfrac{a}{1-b^2}=\dfrac{\sqrt{2}/3}{2/3}=\dfrac{\sqrt{2}}{2}
+ p &=\cos\theta \\
+   &= \dfrac{a}{1-b^2} \\
+   &=\dfrac{\sqrt{2}/3}{2/3} \\
+   &=\dfrac{\sqrt{2}}{2} 
 \end{align}
-であり，$q=b\sqrt{1-p^2}=\dfrac{1}{\sqrt{3}}\sqrt{1-\dfrac{1}{2}}=\dfrac{1}{\sqrt{3}}\cdot\dfrac{1}{\sqrt{2}}=\dfrac{1}{\sqrt{6}}=\dfrac{\sqrt{6}}{6}$（第1象限より$q>0$）．よって
+であり，$P$は第一象限にあるので$q>0$だから
 \begin{align}
-(p,q)=\Bigl(\dfrac{\sqrt{2}}{2},\ \dfrac{\sqrt{6}}{6}\Bigr).
+ q &= b\sin\theta \\
+   &= b\sqrt{1-\cos^2\theta} \\
+   &= b\sqrt{1-p^2}  \\
+   &=\dfrac{1}{\sqrt{3}}\sqrt{1-\dfrac{1}{2}} \\
+   &=\dfrac{1}{\sqrt{6}} \\
+   &=\dfrac{\sqrt{6}}{6}
 \end{align}
+である．これらをまとめて求める座標は
+\begin{align}
+ P\left(\dfrac{\sqrt{2}}{2},\dfrac{\sqrt{6}}{6}\right) \label{eq:11}
+\end{align}
+である．
 
 \paragraph{(3)}
 
-$x\ge p$の範囲で$C_1$と$C_2$に囲まれた部分の面積を$T$とする．$y$軸に関する対称性（$x\ge p>0$の範囲は上下対称）から，上半分（$y\ge0$）の面積を$T'$として$T=2T'$．
+$x\ge p$の範囲で$C_1$と$C_2$に囲まれた部分の面積を$T$とする．$C_1,C_2$の$y$軸に関する対称性から，上半分（$y\ge0$）の面積を$T'$として
+\begin{align}
+ T = 2 T' \label{eq:12}
+\end{align}
+であり，$T'$の領域は下図の斜線部である．
 
-$C_2$の上半分は$y=b\sqrt{1-x^2}$（$p\le x\le1$），$C_1$の上半分は$y=\sqrt{a^2-(x-a)^2}$（$p\le x\le2a$，$C_1$は$x\le2a$までしか存在しない）．よって
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=4.5, >=stealth, every node/.style={font=\small}]
+
+  % --- パラメータ定義 ---
+  % a = sqrt(2)/3 \approx 0.4714, b = sqrt(3)/3 \approx 0.5774
+  % 接点 P: (p, q) = (sqrt(2)/2, sqrt(6)/6) \approx (0.7071, 0.4082)
+  % 2a = 2*sqrt(2)/3 \approx 0.9428
+  \def\a{0.4714}
+  \def\b{0.5774}
+  \def\p{0.7071}
+  \def\q{0.4082}
+  \def\twoa{0.9428}
+
+  % 1. 座標定義
+  \coordinate (O) at (0, 0);
+  \coordinate (A) at (\a, 0);        % A(a, 0)
+  \coordinate (B) at (\twoa, 0);     % B(2a, 0)
+  \coordinate (Q) at (\p, 0);        % Q(p, 0)
+  \coordinate (P) at (\p, \q);       % 接点 P(p, q)
+  \coordinate (C) at (1,0);          % C(1,0)
+
+  % 2. 求める領域 T' の斜線塗りつぶし
+  \fill[pattern=north east lines, pattern color=black!50]
+    plot[domain=45:0, samples=40] ({cos(\x)}, {\b*sin(\x)})
+    -- (B)
+    arc[start angle=0, end angle=60, radius=\a]
+    -- cycle;
+
+  % 3. 補助点線
+  % 中心 A から最高点 (a, a) への垂線と y 軸への点線
+  \draw[dashed, gray!70] (\a, 0) -- (\a, \a) -- (0, \a);
+  % 接点 P からの垂線と水平線
+  \draw[dashed, gray!70] (\p, 0) -- (P) -- (0, \q);
+  % 中心 A から接点 P への半径線
+  \draw[dashed, gray!80!black, thick] (A) -- (P);
+  % OP
+  \draw[dashed, gray!80!black, thick] (O) -- (P);
+
+  % 4. 座標軸描画
+  \draw[->, thick] (-0.1, 0) -- (1.25, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.1) -- (0, 0.75) node[above] {$y$};
+  \node[below left] at (O) {$O$};
+
+  % 5. 曲線描画 (第1象限部分)
+  % 楕円 C_2: x^2 + 3y^2 = 1 (0° から 90°)
+  \draw[very thick, blue!80!black, domain=0:90, samples=60] 
+    plot ({cos(\x)}, {\b*sin(\x)});
+  \node[blue!80!black, above right] at (0.45, 0.52) {$C_2$};
+
+  % 円 C_1: (x-a)^2 + y^2 = a^2 (上半分 0° から 180°)
+  \draw[very thick, red!80!black] (\twoa, 0) arc[start angle=0, end angle=180, radius=\a];
+  \node[red!80!black, above left] at (0.22, 0.42) {$C_1$};
+
+  % 6. 中心角のアーク (pi/3)
+  \draw[->, gray!80!black, thick] ($(A) + (0.12, 0)$) arc[start angle=0, end angle=60, radius=0.12];
+  \node[font=\footnotesize] at ($(A) + (30:0.18)$) {$\frac{\pi}{3}$};
+
+  % 7. 軸上の目盛りテキスト
+  \node[below] at (\p, 0) {$\frac{\sqrt{2}}{2}$};
+  \node[below] at (\a, 0) {$\frac{\sqrt{2}}{3}$};
+  \node[left] at (0, \q) {$\frac{\sqrt{6}}{6}$};
+  \node[left] at (0, \b) {$\frac{\sqrt{3}}{3}$};
+  \node[below] at (1,0) {$1$};
+
+  % 8. プロット点とラベル
+  \fill (O) circle (0.7pt);
+  \fill (A) circle (0.7pt) node[above left] {$A$};
+  \fill (B) circle (0.7pt) node[below] {$B$};
+  \fill (Q) circle (0.7pt) node[above right] {$Q$};
+  \fill (C) circle (0.7pt) node[above right] {$C$};
+  \fill (0, \b) circle (0.7pt);
+  \fill[red!80!black] (P) circle (0.9pt) node[above right] {$P$};
+
+  % 領域 T' のラベル
+  \node[fill=white, inner sep=1pt, font=\bfseries] at (0.82, 0.15) {$T'$};
+
+\end{tikzpicture}
+\caption{第1象限における囲まれた部分の面積 $T'$（斜線部）}
+\end{figure}
+
+$T'$は楕円の扇形$OPC$から三角形$OPQ$と円の一部$PQB$を差し引いたものである．
+さらに円の一部$PQB$は扇形$APB$から三角形$APQ$を引いたものである．
+
 \begin{align}
-T'=\int_p^1b\sqrt{1-x^2}\,dx-\int_p^{2a}\sqrt{a^2-(x-a)^2}\,dx.
+T' &=
+  \left( \text{\begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.85]
+    % 1. 楕円の扇形 OCP
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (1.1,0) arc[start angle=0, end angle=45, radius=1.1] -- cycle;
+    \draw[thick] (0,0) -- (1.1,0) arc[start angle=0, end angle=45, radius=1.1] -- cycle;
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$O$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (1.1,0) {$C$};
+    \node[above right, font=\scriptsize, inner sep=1pt] at (45:1.1) {$P$};
+    \fill (0,0) circle (0.6pt);
+    \fill (1.1,0) circle (0.6pt);
+    \fill (45:1.1) circle (0.6pt);
+  \end{tikzpicture}} \right)
+  -
+  \left( \text{\begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.85]
+    % 2. 直角三角形 OPQ
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (0.9,0) -- (0.9,0.65) -- cycle;
+    \draw[thick] (0,0) -- (0.9,0) -- (0.9,0.65) -- cycle;
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$O$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (0.9,0) {$Q$};
+    \node[above, font=\scriptsize, inner sep=1pt] at (0.9,0.65) {$P$};
+    \fill (0,0) circle (0.6pt);
+    \fill (0.9,0) circle (0.6pt);
+    \fill (0.9,0.65) circle (0.6pt);
+  \end{tikzpicture}} \right)
+  -
+  \left( \text{\begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.85]
+    % 3. 円の一部 PQB
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (0.5,0) arc[start angle=0, end angle=60, radius=0.7] -- (0,0.61) -- cycle;
+    \draw[thick] (0,0) -- (0.5,0) arc[start angle=0, end angle=60, radius=0.7] -- (0,0.61) -- cycle;
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$Q$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (0.5,0) {$B$};
+    \node[above left, font=\scriptsize, inner sep=1pt] at (0,0.61) {$P$};
+    \fill (0,0) circle (0.6pt);
+    \fill (0.5,0) circle (0.6pt);
+    \fill (0,0.61) circle (0.6pt);
+  \end{tikzpicture}} \right) 
 \end{align}
-第1項：$\displaystyle\int\sqrt{1-x^2}dx=\dfrac{1}{2}\bigl[x\sqrt{1-x^2}+\arcsin x\bigr]$を用いて，$x=1$で$\dfrac{1}{2}\cdot\dfrac{\pi}{2}=\dfrac{\pi}{4}$，$x=p=\dfrac{\sqrt{2}}{2}$で$\sqrt{1-p^2}=\dfrac{\sqrt{2}}{2}$だから$\dfrac{1}{2}\bigl[\dfrac{\sqrt{2}}{2}\cdot\dfrac{\sqrt{2}}{2}+\dfrac{\pi}{4}\bigr]=\dfrac{1}{2}\bigl[\dfrac{1}{2}+\dfrac{\pi}{4}\bigr]=\dfrac{1}{4}+\dfrac{\pi}{8}$．よって
 \begin{align}
-\int_p^1\sqrt{1-x^2}dx=\dfrac{\pi}{4}-\Bigl(\dfrac{1}{4}+\dfrac{\pi}{8}\Bigr)=\dfrac{\pi}{8}-\dfrac{1}{4},\qquad
-b\int_p^1\sqrt{1-x^2}dx=\dfrac{1}{\sqrt{3}}\Bigl(\dfrac{\pi}{8}-\dfrac{1}{4}\Bigr)=\dfrac{\sqrt{3}}{24}\pi-\dfrac{\sqrt{3}}{12}.
+\mathord{\vcenter{\hbox{\begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.85]
+    % 1. 円の一部 PQB
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (0.5,0) arc[start angle=0, end angle=60, radius=0.7] -- (0,0.61) -- cycle;
+    \draw[thick] (0,0) -- (0.5,0) arc[start angle=0, end angle=60, radius=0.7] -- (0,0.61) -- cycle;
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$Q$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (0.5,0) {$B$};
+    \node[above left, font=\scriptsize, inner sep=1pt] at (0,0.61) {$P$};
+    \fill (0,0) circle (0.6pt);
+    \fill (0.5,0) circle (0.6pt);
+    \fill (0,0.61) circle (0.6pt);
+\end{tikzpicture}}}}
+&=
+\left(
+\mathord{\vcenter{\hbox{\begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.85]
+    % 2. 扇形 APB (中心 A, 半径 a, 偏角 60°)
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (0.7,0) arc[start angle=0, end angle=60, radius=0.7] -- cycle;
+    \draw[thick] (0,0) -- (0.7,0) arc[start angle=0, end angle=60, radius=0.7] -- cycle;
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$A$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (0.7,0) {$B$};
+    \node[above right, font=\scriptsize, inner sep=1pt] at (60:0.7) {$P$};
+    \fill (0,0) circle (0.6pt);
+    \fill (0.7,0) circle (0.6pt);
+    \fill (60:0.7) circle (0.6pt);
+\end{tikzpicture}}}}\right)
+-
+\left(\mathord{\vcenter{\hbox{\begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.85]
+    % 3. 直角三角形 APQ (底辺 AQ, 高さ PQ)
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (0.35,0) -- (0.35,0.61) -- cycle;
+    \draw[thick] (0,0) -- (0.35,0) -- (0.35,0.61) -- cycle;
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$A$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (0.35,0) {$Q$};
+    \node[above, font=\scriptsize, inner sep=1pt] at (0.35,0.61) {$P$};
+    \fill (0,0) circle (0.6pt);
+    \fill (0.35,0) circle (0.6pt);
+    \fill (0.35,0.61) circle (0.6pt);
+\end{tikzpicture}}}}
+\right)
 \end{align}
-第2項：$u=x-a$と置換すると，$x=p$で$u=p-a=\dfrac{\sqrt{2}}{2}-\dfrac{\sqrt{2}}{3}=\dfrac{\sqrt{2}}{6}$，$x=2a$で$u=a$．$\displaystyle\int\sqrt{a^2-u^2}du=\dfrac{1}{2}\bigl[u\sqrt{a^2-u^2}+a^2\arcsin\dfrac{u}{a}\bigr]$を用いる．$u=a$で$\dfrac{1}{2}\cdot a^2\cdot\dfrac{\pi}{2}=\dfrac{a^2\pi}{4}$．$u=\dfrac{\sqrt{2}}{6}$のとき，$\sqrt{a^2-u^2}=q=\dfrac{\sqrt{6}}{6}$（接点の$y$座標）であり，$\dfrac{u}{a}=\dfrac{\sqrt{2}/6}{\sqrt{2}/3}=\dfrac{1}{2}$より$\arcsin\dfrac{1}{2}=\dfrac{\pi}{6}$だから
+より，まとめて
 \begin{align}
-\dfrac{1}{2}\Bigl[\dfrac{\sqrt{2}}{6}\cdot\dfrac{\sqrt{6}}{6}+a^2\cdot\dfrac{\pi}{6}\Bigr]=\dfrac{1}{2}\Bigl[\dfrac{\sqrt{12}}{36}+\dfrac{2}{9}\cdot\dfrac{\pi}{6}\Bigr]=\dfrac{1}{2}\Bigl[\dfrac{\sqrt{3}}{18}+\dfrac{\pi}{27}\Bigr]=\dfrac{\sqrt{3}}{36}+\dfrac{\pi}{54}.
+T' &=
+  \left( \text{\begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.85]
+    % 1. 楕円の扇形 OCP
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (1.1,0) arc[start angle=0, end angle=45, radius=1.1] -- cycle;
+    \draw[thick] (0,0) -- (1.1,0) arc[start angle=0, end angle=45, radius=1.1] -- cycle;
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$O$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (1.1,0) {$C$};
+    \node[above right, font=\scriptsize, inner sep=1pt] at (45:1.1) {$P$};
+    \fill (0,0) circle (0.6pt);
+    \fill (1.1,0) circle (0.6pt);
+    \fill (45:1.1) circle (0.6pt);
+  \end{tikzpicture}} \right)
+  -
+  \left( \text{\begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.85]
+    % 2. 直角三角形 OPQ
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (0.9,0) -- (0.9,0.65) -- cycle;
+    \draw[thick] (0,0) -- (0.9,0) -- (0.9,0.65) -- cycle;
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$O$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (0.9,0) {$Q$};
+    \node[above, font=\scriptsize, inner sep=1pt] at (0.9,0.65) {$P$};
+    \fill (0,0) circle (0.6pt);
+    \fill (0.9,0) circle (0.6pt);
+    \fill (0.9,0.65) circle (0.6pt);
+  \end{tikzpicture}} \right)
+  -
+\left(
+\mathord{\vcenter{\hbox{\begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.85]
+    % 2. 扇形 APB (中心 A, 半径 a, 偏角 60°)
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (0.7,0) arc[start angle=0, end angle=60, radius=0.7] -- cycle;
+    \draw[thick] (0,0) -- (0.7,0) arc[start angle=0, end angle=60, radius=0.7] -- cycle;
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$A$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (0.7,0) {$B$};
+    \node[above right, font=\scriptsize, inner sep=1pt] at (60:0.7) {$P$};
+    \fill (0,0) circle (0.6pt);
+    \fill (0.7,0) circle (0.6pt);
+    \fill (60:0.7) circle (0.6pt);
+\end{tikzpicture}}}}
+-
+\mathord{\vcenter{\hbox{\begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.85]
+    % 3. 直角三角形 APQ (底辺 AQ, 高さ PQ)
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (0.35,0) -- (0.35,0.61) -- cycle;
+    \draw[thick] (0,0) -- (0.35,0) -- (0.35,0.61) -- cycle;
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$A$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (0.35,0) {$Q$};
+    \node[above, font=\scriptsize, inner sep=1pt] at (0.35,0.61) {$P$};
+    \fill (0,0) circle (0.6pt);
+    \fill (0.35,0) circle (0.6pt);
+    \fill (0.35,0.61) circle (0.6pt);
+\end{tikzpicture}}}}
+\right) \label{eq:13}
 \end{align}
-よって
+である．
+以下各項を個別に計算しよう．
+
+まず扇形$OCP$は座標変換$X=x,Y=\dfrac{y}{b}$をすると接点$P\left(\dfrac{\sqrt{2}}{2},\dfrac{\sqrt{6}}{6}\right)$は$P'\left(\dfrac{\sqrt{2}}{2},\dfrac{\sqrt{2}}{2}\right)$に変換されるから半径$1$，偏角$\dfrac{\pi}{4}$の扇形に変換される．この面積は$\dfrac{\pi}{8}$だから元の扇形$OCP$の面積は
 \begin{align}
-\int_p^{2a}\sqrt{a^2-(x-a)^2}dx=\dfrac{a^2\pi}{4}-\Bigl(\dfrac{\sqrt{3}}{36}+\dfrac{\pi}{54}\Bigr)=\dfrac{2}{9}\cdot\dfrac{\pi}{4}-\dfrac{\sqrt{3}}{36}-\dfrac{\pi}{54}=\dfrac{\pi}{18}-\dfrac{\sqrt{3}}{36}-\dfrac{\pi}{54}=\dfrac{\pi}{27}-\dfrac{\sqrt{3}}{36}
+   \left( \text{\begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.85]
+    % 1. 楕円の扇形 OCP
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (1.1,0) arc[start angle=0, end angle=45, radius=1.1] -- cycle;
+    \draw[thick] (0,0) -- (1.1,0) arc[start angle=0, end angle=45, radius=1.1] -- cycle;
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$O$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (1.1,0) {$C$};
+    \node[above right, font=\scriptsize, inner sep=1pt] at (45:1.1) {$P$};
+    \fill (0,0) circle (0.6pt);
+    \fill (1.1,0) circle (0.6pt);
+    \fill (45:1.1) circle (0.6pt);
+  \end{tikzpicture}} \right)
+  = b\dfrac{\pi}{8} = \dfrac{\sqrt{3}}{24}\pi \label{eq:14}
 \end{align}
-（$\pi/18-\pi/54=3\pi/54-\pi/54=2\pi/54=\pi/27$を用いた）．以上より
+となる．そのほかの部分は，まず二つの三角形の面積は
 \begin{align}
-T'=\Bigl(\dfrac{\sqrt{3}}{24}\pi-\dfrac{\sqrt{3}}{12}\Bigr)-\Bigl(\dfrac{\pi}{27}-\dfrac{\sqrt{3}}{36}\Bigr)=\dfrac{\sqrt{3}}{24}\pi-\dfrac{\sqrt{3}}{12}+\dfrac{\sqrt{3}}{36}-\dfrac{\pi}{27}=\Bigl(\dfrac{\pi}{24}-\dfrac{1}{18}\Bigr)\sqrt{3}-\dfrac{\pi}{27}
+ \triangle OPQ &= \dfrac{pq}{2} = \dfrac{1}{2}\dfrac{\sqrt{2}}{2}\dfrac{\sqrt{6}}{6} = \dfrac{\sqrt{3}}{12} \label{eq:15}\\
+ \triangle APQ &= \dfrac{|AQ||PQ|}{2} = \dfrac{(p-a)q}{2} = \dfrac{1}{2}\dfrac{\sqrt{2}}{6}\dfrac{\sqrt{6}}{6} = \dfrac{\sqrt{3}}{36} \label{eq:16}
 \end{align}
-（$-\sqrt{3}/12+\sqrt{3}/36=-3\sqrt{3}/36+\sqrt{3}/36=-2\sqrt{3}/36=-\sqrt{3}/18$を用いた）．よって
+である．
+扇形$APB$は$\angle PAQ=\dfrac{\pi}{3}$より偏角$\dfrac{\pi}{3}$の扇形で，その面積は
 \begin{align}
-T=2T'=\Bigl(\dfrac{\pi}{12}-\dfrac{1}{9}\Bigr)\sqrt{3}-\dfrac{2\pi}{27}.
+\left(
+\mathord{\vcenter{\hbox{\begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.85]
+    % 2. 扇形 APB (中心 A, 半径 a, 偏角 60°)
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (0.7,0) arc[start angle=0, end angle=60, radius=0.7] -- cycle;
+    \draw[thick] (0,0) -- (0.7,0) arc[start angle=0, end angle=60, radius=0.7] -- cycle;
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$A$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (0.7,0) {$B$};
+    \node[above right, font=\scriptsize, inner sep=1pt] at (60:0.7) {$P$};
+    \fill (0,0) circle (0.6pt);
+    \fill (0.7,0) circle (0.6pt);
+    \fill (60:0.7) circle (0.6pt);
+\end{tikzpicture}}}}
+\right)
+  &= \dfrac{1}{2}\dfrac{\pi}{3}a^2 \\
+  &= \dfrac{1}{2}\dfrac{\pi}{3}\left(\dfrac{\sqrt{2}}{3}\right)^2 \quad (\because\text{\cref{eq:10}})\\
+  &= \dfrac{\pi}{27} \label{eq:17}
 \end{align}
+である．
+
+以上\cref{eq:14,eq:15,eq:16,eq:17}を\cref{eq:13}に代入して$T'$は
+\begin{align}
+ T' 
+  &= \dfrac{\sqrt{3}}{24}\pi - \dfrac{\sqrt{3}}{12} - \left(\dfrac{\pi}{27} - \dfrac{\sqrt{3}}{36} \right) \\
+  &= \Bigl(\dfrac{\pi}{24}-\dfrac{1}{18}\Bigr)\sqrt{3}-\dfrac{\pi}{27} 
+\end{align}
+だから，求める面積$T$は\cref{eq:12}に代入して
+\begin{align}
+ T 
+  &= \Bigl(\dfrac{\pi}{12}-\dfrac{1}{9}\Bigr)\sqrt{3}-\dfrac{2\pi}{27} 
+\end{align}
+である．
+
+
+{\bf [別解]}
+
+(3)は極力通常の積分を避けて単純な扇形と三角形の面積のみで計算を実行した．
+比較のため通常の積分を用いるとどうなるかを示す．
+
+$C_2$の上半分は$y=b\sqrt{1-x^2}$（$p\le x\le1$），$C_1$の上半分は$y=\sqrt{a^2-(x-a)^2}$（$p\le x\le2a$，$C_1$は$x\le2a$までしか存在しない）．よって$T'$は
+\begin{align}
+T'=\int_p^1b\sqrt{1-x^2}\,dx-\int_p^{2a}\sqrt{a^2-(x-a)^2}\,dx
+\end{align}
+である．
+第二項は$u=\dfrac{x-a}{a}$と置換すると$a du = dx$より
+\begin{align}
+T'=b \int_p^1\sqrt{1-x^2}\,dx-a^2 \int_{p/a-1}^{1}\sqrt{1-u^2}\,du
+\end{align}
+である．ここで$\sqrt{1-x^2}$の原始関数は
+\begin{align}
+ \int\sqrt{1-x^2}dx=\dfrac{1}{2}\bigl[x\sqrt{1-x^2}+\arcsin x\bigr] \equiv f(x)
+\end{align}
+だから代入して
+\begin{align}
+ T'
+  &= b\left(f(1) - f(p)\right) - a^2 \left(f(1)-f\left(\dfrac{p}{a}-1\right)\right) \\
+  &= (b-a^2)f(1) -bf(p) + a^2f\left(\dfrac{p}{a}-1\right)
+\end{align}
+である．各項個別に計算すると，$p=\dfrac{\sqrt{2}}{2}$，$\dfrac{p}{a}-1 = \dfrac{3}{2}-1 = \dfrac{1}{2}$より
+\begin{align}
+ f(1) &= \dfrac{1}{2}\arcsin 1 = \dfrac{\pi}{4} \\
+ f(p) &= \dfrac{1}{2}\bigl[\dfrac{\sqrt{2}}{2}\cdot\dfrac{\sqrt{2}}{2}+\dfrac{\pi}{4}\bigr]  \\
+      &=\dfrac{1}{4}+\dfrac{\pi}{8} \\
+ f\left(\dfrac{p}{a}-1\right) 
+      &= \dfrac{1}{2}\bigl[\dfrac{1}{2}\cdot\dfrac{\sqrt{3}}{2}+\dfrac{\pi}{6}\bigr] \\
+      &= \dfrac{\sqrt{3}}{8} + \dfrac{\pi}{12}
+\end{align}
+だから代入して
+\begin{align}
+ T' 
+  &= \left(\dfrac{\sqrt{3}}{3} - \dfrac{2}{9}\right) \dfrac{\pi}{4} - \dfrac{\sqrt{3}}{3}\left[\dfrac{1}{4}+\dfrac{\pi}{8}\right] + \dfrac{2}{9}\left[\dfrac{\sqrt{3}}{8} + \dfrac{\pi}{12}\right] \\
+  &= \sqrt{3}\left(\dfrac{\pi}{12}-\dfrac{1}{12} - \dfrac{\pi}{24} + \dfrac{1}{36}\right) + \pi\left(\dfrac{-1}{18}+\dfrac{1}{54}\right) \\
+  &= \sqrt{3}\left(\dfrac{\pi}{24} - \dfrac{1}{18}\right) - \dfrac{\pi}{27}
+\end{align}
+となって本解答と一致する．
 
 
 \end{document}
