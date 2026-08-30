@@ -5,8 +5,6 @@
 \footnotesize\textit{【自動文字起こし・要確認】}
 \end{flushright}
 
-{\bf [解]}
-
 $O$を原点とする．$|OA|=2$，$|OB|=|OC|=\sqrt{3+1}=2$だから$A,B,C$は原点を中心とする半径$2$の円周上にあり，$3$点は$120^\circ$おきに配置されている（実際$A,B,C$の偏角はそれぞれ$90^\circ,-30^\circ,210^\circ$）．したがって$\triangle ABC$は原点$O$を中心とする外接円半径$2$の正三角形であり，その内接円の半径（中心から各辺までの距離）は
 \begin{align}
  \dfrac{2}{2}=1
@@ -21,12 +19,18 @@ $O$を原点とする．$|OA|=2$，$|OB|=|OC|=\sqrt{3+1}=2$だから$A,B,C$は�
   \coordinate (B) at (1.7320508, -1);
   \coordinate (C) at (-1.7320508, -1);
   \coordinate (O) at (0, 0);
+  \coordinate (H) at (0.8660254, 0.5);
 
   % 単位円の外側・三角形の内側（斜線部＝x^2+y^2>=1 を満たす部分の断面）
   \begin{scope}
     \clip (A) -- (B) -- (C) -- cycle;
     \fill[pattern=north east lines, pattern color=blue!70] (0,0) circle (2.2);
   \end{scope}
+
+  % 6分割の1つ分 O-A-H を強調
+  \fill[orange!25] (O) -- (A) -- (H) -- cycle;
+  \draw[dashed, orange!80!black] (O) -- (A);
+  \draw[dashed, orange!80!black] (O) -- (H);
 
   \draw[thick] (A) -- (B) -- (C) -- cycle;
   \draw[thick, blue!70!black] (0,0) circle (1);
@@ -35,11 +39,95 @@ $O$を原点とする．$|OA|=2$，$|OB|=|OC|=\sqrt{3+1}=2$だから$A,B,C$は�
   \fill (A) circle (1pt) node[above, font=\small] {$A$};
   \fill (B) circle (1pt) node[below right, font=\small] {$B$};
   \fill (C) circle (1pt) node[below left, font=\small] {$C$};
+  \fill[orange!80!black] (H) circle (1pt) node[right, font=\small] {$H$};
 
 \end{tikzpicture}
 \end{center}
-\caption{$z=0$ における断面（$\triangle ABC$）と円 $x^2+y^2=1$．斜線部が求める領域の底面}
+\caption{$z=0$ における断面（$\triangle ABC$）と円 $x^2+y^2=1$．斜線部が求める領域の底面，$H$ は $AB$ の中点で，橙色の$\triangle OAH$が$1/6$分割の1つ}
 \end{figure}
+
+{\bf [解]}
+
+$AB$の中点を$H$とする．$O$は正三角形$ABC$の外心（$=$内心）だから，$O$から$AB$へ下ろした垂線の足はちょうど$H$である．よって
+\begin{align}
+ H=\Bigl(\dfrac{\sqrt{3}}{2},\dfrac{1}{2},0\Bigr)
+\end{align}
+である．四面体$PABC$は$z$軸のまわりの$3$回対称と，各頂点と$z$軸を含む$3$枚の平面に関する鏡映対称をあわせもつ（あわせて$6$個の合同な小四面体$P\text{-}O\text{-}(\text{頂点})\text{-}(\text{隣接辺の中点})$に分割される）．条件$x^2+y^2\ge1$もこの対称性を保つから，四面体$P\text{-}OAH$のうち$x^2+y^2\ge1$をみたす部分の体積を$V'$とすると，求める体積$V$は
+\begin{align}
+ V=6V' \label{eq:m1}
+\end{align}
+である．
+
+四面体$P\text{-}OAH$の$4$頂点$P(0,0,2)$，$O(0,0,0)$，$A(0,2,0)$は$x=0$平面上にあり，$H\Bigl(\dfrac{\sqrt{3}}{2},\dfrac{1}{2},0\Bigr)$のみ$x=\dfrac{\sqrt{3}}{2}$にある．したがって平面$x=c$（$0\le c\le\dfrac{\sqrt{3}}{2}$）による断面は，$H$を中心に$\triangle POA$を$1-\dfrac{2c}{\sqrt{3}}$倍した相似な三角形で，その頂点は
+\begin{align}
+ O'=\Bigl(\dfrac{c}{\sqrt{3}},0\Bigr),\quad
+ A'=(2-\sqrt{3}c,\,0),\quad
+ P'=\Bigl(\dfrac{c}{\sqrt{3}},\,2-\dfrac{4c}{\sqrt{3}}\Bigr)
+\end{align}
+（$y,z$座標で表記）である．$O'$と$P'$は$y$座標が等しく，$O'$と$A'$は$z=0$で共通だから，$\triangle O'A'P'$は$O'$を直角の頂点とする直角二等辺三角形で，斜辺$A'P'$は
+\begin{align}
+ y+z=2-\sqrt{3}c
+\end{align}
+上にある．
+
+この断面のうち$x^2+y^2\ge1$（$y\ge0$の範囲なので$y\ge\sqrt{1-c^2}$）をみたす部分は，直線$y=\sqrt{1-c^2}$で$\triangle O'A'P'$を切り取った，$A'$側の小さな直角二等辺三角形になる．その直角をはさむ辺の長さは
+\begin{align}
+ (2-\sqrt{3}c)-\sqrt{1-c^2}
+\end{align}
+だから，面積$T(c)$は
+\begin{align}
+ T(c)=\dfrac{1}{2}\Bigl\{(2-\sqrt{3}c)-\sqrt{1-c^2}\Bigr\}^2 \label{eq:m2}
+\end{align}
+である．したがって
+\begin{align}
+ V'=\int_0^{\sqrt{3}/2}T(c)\,dc \label{eq:m3}
+\end{align}
+である．
+
+\cref{eq:m3}で$c=\cos\theta$とおくと$dc=-\sin\theta\,d\theta$，$c:0\to\dfrac{\sqrt{3}}{2}$は$\theta:\dfrac{\pi}{2}\to\dfrac{\pi}{6}$に対応するから，$s=\sin\theta$，$C=\cos\theta$として\cref{eq:m2}を代入して
+\begin{align}
+ V'=\int_{\pi/6}^{\pi/2}\dfrac{1}{2}(2-\sqrt{3}C-s)^2\,s\,d\theta \label{eq:m4}
+\end{align}
+となる．ここで$s^2+C^2=1$より
+\begin{align}
+ (2-\sqrt{3}C-s)^2=5+2C^2-4\sqrt{3}C-4s+2\sqrt{3}Cs
+\end{align}
+だから，\cref{eq:m4}の被積分関数は
+\begin{align}
+ \dfrac{1}{2}(2-\sqrt{3}C-s)^2s=\dfrac{1}{2}\Bigl(5s+2C^2s-4\sqrt{3}Cs-4s^2+2\sqrt{3}Cs^2\Bigr) \label{eq:m5}
+\end{align}
+である．\cref{eq:m5}の各項を$[\pi/6,\pi/2]$で積分すると
+\begin{align}
+ \int_{\pi/6}^{\pi/2}5s\,d\theta=5\Bigl[-C\Bigr]_{\pi/6}^{\pi/2}=\dfrac{5\sqrt{3}}{2}
+\end{align}
+\begin{align}
+ \int_{\pi/6}^{\pi/2}2C^2s\,d\theta=2\Bigl[-\dfrac{C^3}{3}\Bigr]_{\pi/6}^{\pi/2}=\dfrac{\sqrt{3}}{4}
+\end{align}
+\begin{align}
+ \int_{\pi/6}^{\pi/2}-4\sqrt{3}Cs\,d\theta=-4\sqrt{3}\Bigl[\dfrac{s^2}{2}\Bigr]_{\pi/6}^{\pi/2}=-\dfrac{3\sqrt{3}}{2}
+\end{align}
+\begin{align}
+ \int_{\pi/6}^{\pi/2}-4s^2\,d\theta=-2\Bigl[\theta-\dfrac{\sin2\theta}{2}\Bigr]_{\pi/6}^{\pi/2}=-\dfrac{2\pi}{3}-\dfrac{\sqrt{3}}{2}
+\end{align}
+\begin{align}
+ \int_{\pi/6}^{\pi/2}2\sqrt{3}Cs^2\,d\theta=2\sqrt{3}\Bigl[\dfrac{s^3}{3}\Bigr]_{\pi/6}^{\pi/2}=\dfrac{7\sqrt{3}}{12}
+\end{align}
+だから，これらを合計して
+\begin{align}
+ \int_{\pi/6}^{\pi/2}\Bigl(5s+2C^2s-4\sqrt{3}Cs-4s^2+2\sqrt{3}Cs^2\Bigr)d\theta
+  =\dfrac{4\sqrt{3}}{3}-\dfrac{2\pi}{3}
+\end{align}
+である．よって\cref{eq:m4}，\cref{eq:m5}より
+\begin{align}
+ V'=\dfrac{1}{2}\Bigl(\dfrac{4\sqrt{3}}{3}-\dfrac{2\pi}{3}\Bigr)=\dfrac{2\sqrt{3}}{3}-\dfrac{\pi}{3}
+\end{align}
+だから，\cref{eq:m1}に代入して求める体積は
+\begin{align}
+ V=6\Bigl(\dfrac{2\sqrt{3}}{3}-\dfrac{\pi}{3}\Bigr)=4\sqrt{3}-2\pi
+\end{align}
+である．
+
+{\bf [別解]}
 
 四面体$PABC$を高さ$z$（$0\le z\le2$）で水平に切った断面を考える．頂点$P(0,0,2)$から底面$z=0$までの各辺（$PA,PB,PC$）上の点は
 \begin{align}
