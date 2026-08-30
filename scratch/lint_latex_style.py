@@ -6,7 +6,7 @@ AGENT.md 8.3.6「LaTeX フォーマットの注意事項」を機械的にチェ
 対象は src/**/solution.tex と src/**/problem.tex。
 目視判断が必要なルール（大カッコを \\Bigl 化すべきか、enumerate/itemize が小問
 ラベリング目的か場合分け目的か等）は対象外。
-違反が1件でもあれば exit code 1 で終了する（\\overline{} の使用のみ警告扱いで非ブロッキング）。
+違反が1件でもあれば exit code 1 で終了する（\\overline{} の使用と align 内の長い行のみ警告扱いで非ブロッキング）。
 """
 import re
 import sys
@@ -18,6 +18,9 @@ SRC_DIR = REPO_ROOT / 'src'
 ENV_TOKEN_RE = re.compile(r'\\begin\{([a-zA-Z*]+)\}|\\end\{([a-zA-Z*]+)\}')
 
 FRAC_CMD_RE = re.compile(r'\\(d?frac)(?![a-zA-Z])')
+
+ALIGN_LINE_LENGTH_LIMIT = 100
+ALIGN_LINE_MIN_EQUALS = 2
 
 
 def line_of(text, pos):
@@ -343,6 +346,29 @@ def check_overline_warning(text):
     return warnings
 
 
+def check_long_align_lines(text):
+    """align/align* 環境内で、1行が長く（ALIGN_LINE_LENGTH_LIMIT 超）かつ
+    '=' を複数個（ALIGN_LINE_MIN_EQUALS 個以上）含む行を警告する。
+    AI文字起こしの結果、a=b=c=d=... のように = で全部つないだ1行になって
+    いることが多く、\\\\ と &= で複数行に分けた方が読みやすい。ただし
+    どこで区切るのが数式的に自然かは機械的には判断できない（\\left(...\\right)
+    や \\substack{} 内の = まで割ってしまうと壊れる）ため、ここでは検出のみ
+    行い、実際の改行挿入はエラーではなく警告として目視判断に委ねる。"""
+    warnings = []
+    for env_m in re.finditer(r'\\begin\{align\*?\}(.*?)\\end\{align\*?\}', text, re.DOTALL):
+        body_start = env_m.start(1)
+        body = env_m.group(1)
+        offset = 0
+        for line in body.split('\n'):
+            if len(line) > ALIGN_LINE_LENGTH_LIMIT and line.count('=') >= ALIGN_LINE_MIN_EQUALS:
+                pos = body_start + offset
+                warnings.append((line_of(text, pos),
+                                  f"align 内の行が長く（{len(line)}文字）'=' が{line.count('=')}個ある。"
+                                  "\\\\ と &= で複数行に分けた方が読みやすい可能性がある"))
+            offset += len(line) + 1
+    return warnings
+
+
 def lint_file(path):
     text = strip_comments(path.read_text(encoding='utf-8'))
     errors = []
@@ -357,6 +383,7 @@ def lint_file(path):
     errors += check_duplicate_labels(text)
     errors += check_frac_subscript_rule(text)
     warnings = check_overline_warning(text)
+    warnings += check_long_align_lines(text)
     return errors, warnings
 
 
