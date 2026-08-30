@@ -55,6 +55,12 @@ jobs:
         run: cd web && npm ci
 
       - name: Build Astro site
+        # ubuntu-latest ランナーの物理メモリ(約7GB)に収まる範囲で V8 のヒープ上限を
+        # 引き上げる。ページ数が増えるにつれてデフォルト上限では
+        # "JavaScript heap out of memory" で稀に落ちるようになったため
+        # （2026-08-30 に発生、再実行では成功した一時的な事象）。
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
         run: cd web && npm run build
 
       - name: Upload Pages Artifact
