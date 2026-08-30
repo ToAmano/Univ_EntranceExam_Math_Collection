@@ -527,7 +527,14 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
                     tab_num = tab_map.get(target, 1)
                     ref_node.replace_with(f'[表{tab_num}](#{target})')
                 else:
-                    ref_node.replace_with(f'$\\eqref{{{target}}}$')
+                    # $...$ で包むと、後段でこの \eqref がリンク化された際に、
+                    # たまたま前後に隣接する（無関係な）別の数式スパンの $ と
+                    # 誤ってペアリングされ、複数のインライン数式が 1 つに
+                    # 誤結合されてしまう恐れがある（\cref が地の文中で他の
+                    # 数式に囲まれている場合に発生）。$ の代わりに他の場所に
+                    # 出現し得ない制御文字のセンチネルで囲んでおき、リンク化
+                    # 後に一意に剥ぎ取れるようにする。
+                    ref_node.replace_with(f'\x00EQREF\x00\\eqref{{{target}}}\x00EQREF\x00')
 
         # 6. \begin{enumerate} / \begin{description} / \begin{itemize} は MathJax の TeX 表示用に完全保持する
 
@@ -817,8 +824,12 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         rebuilt.append(_convert_refs(block, in_math=True))
         rebuilt.append(_convert_refs(part, in_math=False))
     md_content = ''.join(rebuilt)
-    # $...$ で囲まれた Markdown リンク $[(...)](#id)$ の $ 剥ぎ取り
-    md_content = re.sub(r'\$\s*(\[.*?\]\(#[^)]+\))\s*\$', r'\1', md_content)
+    # \x00EQREF\x00...\x00EQREF\x00 で囲まれた（cref を \eqref 経由でリンク化
+    # するために一時的に包んだ）センチネルの剥ぎ取り。$ ではなくセンチネルを
+    # 使っているため、前後に隣接する無関係なインライン数式スパンを巻き込む
+    # 心配がなく安全に取り除ける。$$...$$ ブロック内（in_math=True）では
+    # リンクではなく素のラベルテキストになるため、中身の形は問わず剥ぎ取る。
+    md_content = re.sub(r'\x00EQREF\x00(.*?)\x00EQREF\x00', r'\1', md_content, flags=re.DOTALL)
 
     # --------------------------------------------------------------------------
     # 数式ブロック $$ ... $$ の中のネストされた不要な $ や \displaystyle の除去
