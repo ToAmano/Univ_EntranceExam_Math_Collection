@@ -369,6 +369,33 @@ def check_long_align_lines(text):
     return warnings
 
 
+LEFT_CMD_RE = re.compile(r'\\left(?![a-zA-Z])')
+RIGHT_CMD_RE = re.compile(r'\\right(?![a-zA-Z])')
+
+
+def check_left_right_balance(text):
+    """align/align* 環境1ブロックまるごとの中で \\left と \\right の出現数が
+    一致するかをチェックする。\\left[...\\right) のように \\left と \\right を
+    書き間違えて片方だけ余分/不足になっていると、MathJax は "Missing \\left or
+    extra \\right" エラーで丸ごと未レンダリングになる（2009年前期2番で発見）。
+    array/matrix/cases 環境が \\left\\{ ... \\right. でネストされているとその
+    内部に独自の \\\\ 行区切りがあり、行単位や \\\\ 区切り単位で数えると
+    \\left...\\right のペアがその区切りをまたいでいるだけの正常なケースまで
+    誤検知してしまう（実測で多数の誤検知が発生した）。align ブロック全体での
+    合計比較であればネスト構造を気にせず安全に検出でき、誤検知を避けられる。
+    行単位の粒度は失うが、実際に崩れている場合はブロック全体でも数が
+    合わないことがほとんどのため実用上十分。"""
+    errors = []
+    for env_m in re.finditer(r'\\begin\{align\*?\}(.*?)\\end\{align\*?\}', text, re.DOTALL):
+        body = env_m.group(1)
+        n_left = len(LEFT_CMD_RE.findall(body))
+        n_right = len(RIGHT_CMD_RE.findall(body))
+        if n_left != n_right:
+            errors.append((line_of(text, env_m.start()),
+                            f"align ブロック内で \\left が{n_left}個、\\right が{n_right}個で数が一致しない"))
+    return errors
+
+
 def lint_file(path):
     text = strip_comments(path.read_text(encoding='utf-8'))
     errors = []
@@ -382,6 +409,7 @@ def lint_file(path):
     errors += check_proof_env(text)
     errors += check_duplicate_labels(text)
     errors += check_frac_subscript_rule(text)
+    errors += check_left_right_balance(text)
     warnings = check_overline_warning(text)
     warnings += check_long_align_lines(text)
     return errors, warnings
