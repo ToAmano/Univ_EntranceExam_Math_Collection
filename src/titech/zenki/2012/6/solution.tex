@@ -1,15 +1,78 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-$O$を原点とする．$|OA|=2$，$|OB|=|OC|=\sqrt{3+1}=2$だから$A,B,C$は原点を中心とする半径$2$の円周上にあり，$3$点は$120^\circ$おきに配置されている（実際$A,B,C$の偏角はそれぞれ$90^\circ,-30^\circ,210^\circ$）．したがって$\triangle ABC$は原点$O$を中心とする外接円半径$2$の正三角形であり，その内接円の半径（中心から各辺までの距離）は
-\begin{align}
- \dfrac{2}{2}=1
-\end{align}
-である．つまり円柱面$x^2+y^2=1$は$z=0$平面上でちょうど$\triangle ABC$の各辺の中点に内接する円である．
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
+
+  % --- 投影アングル (x, y, z) の基底ベクトル設定 ---
+  \tikzset{
+    x={(-0.866cm, -0.45cm)},
+    y={(1.0cm, 0.0cm)},
+    z={(0.0cm, 1.2cm)}
+  }
+
+  % 1. 頂点座標の定義
+  % P(0,0,2), A(0,2,0), B(sqrt(3), -1, 0), C(-sqrt(3), -1, 0), O(0,0,0)
+  % H(sqrt(3)/2, 1/2, 0)
+  \coordinate (O) at (0, 0, 0);
+  \coordinate (P) at (0, 0, 2);
+  \coordinate (A) at (0, 2, 0);
+  \coordinate (B) at (1.732, -1, 0);
+  \coordinate (C) at (-1.732, -1, 0);
+  \coordinate (H) at (0.866, 0.5, 0);
+
+  % 2. 円柱 (x^2 + y^2 = 1, z in [0, 1]) の補助線
+  % 底面の円 (z = 0)
+  \draw[thick, blue!80!black, domain=0:360, samples=60] 
+    plot ({cos(\x)}, {sin(\x)}, 0);
+  % 上面の円 (z = 1)
+  \draw[dashed, blue!50!black, domain=0:360, samples=60] 
+    plot ({cos(\x)}, {sin(\x)}, 1);
+  % 円柱の母線
+  \draw[dashed, blue!50!black] (1, 0, 0) -- (1, 0, 1);
+  \draw[dashed, blue!50!black] (-1, 0, 0) -- (-1, 0, 1);
+
+  % 3. 1/6 分割領域 (O-A-H) の強調
+  \fill[orange!25, opacity=0.8] (O) -- (A) -- (H) -- cycle;
+  \draw[dashed, orange!80!black, thick] (O) -- (A);
+  \draw[dashed, orange!80!black, thick] (O) -- (H);
+  \draw[dashed, orange!80!black, thick] (P) -- (H);
+
+  % 4. 座標軸描画
+  \draw[->, thick, gray!70] (O) -- (2.5, 0, 0) node[below left] {$x$};
+  \draw[->, thick, gray!70] (O) -- (0, 2.7, 0) node[right] {$y$};
+  \draw[->, thick, gray!70] (O) -- (0, 0, 2.5) node[above] {$z$};
+
+  % 5. 四面体の稜線
+  % 底面 ABC
+  \draw[very thick] (A) -- (B);
+  \draw[very thick, dashed] (B) -- (C) -- (A);
+  % 側面
+  \draw[very thick] (P) -- (A);
+  \draw[very thick] (P) -- (B);
+  \draw[very thick,dashed] (P) -- (C);
+
+  % 6. プロット点とラベル
+  \fill (O) circle (1.0pt) node[below left] {$O$};
+  \fill (P) circle (1.0pt) node[above left] {$P(0,0,2)$};
+  \fill (A) circle (1.0pt) node[right] {$A$};
+  \fill (B) circle (1.0pt) node[below right] {$B$};
+  \fill (C) circle (1.0pt) node[above left] {$C$};
+  \fill[orange!80!black] (H) circle (1.2pt) node[below] {$H$};
+
+  % 円柱のラベル
+  \node[blue!80!black, right, font=\footnotesize] at (0, 1.15, 0.4) {$x^2+y^2=1$};
+
+\end{tikzpicture}
+\caption{四面体 $P\text{-}ABC$ と円柱 $x^2+y^2=1$}
+\end{figure}
+
+$O$を原点とする．$|OA|=2$，$|OB|=|OC|=\sqrt{3+1}=2$だから
+$\triangle ABC$は原点$O$を中心とする外接円半径$2$の正三角形であり，その内接円の半径は$1$である．
+つまり円柱面$x^2+y^2=1$は$z=0$平面上でちょうど$\triangle ABC$の各辺の中点に内接する円である．
 
 \begin{figure}[htb]
 \begin{center}
@@ -21,193 +84,431 @@ $O$を原点とする．$|OA|=2$，$|OB|=|OC|=\sqrt{3+1}=2$だから$A,B,C$は�
   \coordinate (O) at (0, 0);
   \coordinate (H) at (0.8660254, 0.5);
 
-  % 単位円の外側・三角形の内側（斜線部＝x^2+y^2>=1 を満たす部分の断面）
+  % 1. 単位円の外側 かつ 三角形の内側（斜線部：x^2+y^2 >= 1）
   \begin{scope}
     \clip (A) -- (B) -- (C) -- cycle;
     \fill[pattern=north east lines, pattern color=blue!70] (0,0) circle (2.2);
+    % 単位円の内部を白抜き
+    \fill[white] (0,0) circle (1.0);
   \end{scope}
 
-  % 6分割の1つ分 O-A-H を強調
-  \fill[orange!25] (O) -- (A) -- (H) -- cycle;
-  \draw[dashed, orange!80!black] (O) -- (A);
-  \draw[dashed, orange!80!black] (O) -- (H);
+  % 2. 6分割の1つ分 \triangle OAH を強調（薄い背景＋破線枠）
+  \fill[orange!15, opacity=0.6] (O) -- (A) -- (H) -- cycle;
+  \draw[dashed, thick, orange!90!black] (O) -- (A);
+  \draw[dashed, thick, orange!90!black] (O) -- (H);
+  \draw[dashed, thick, orange!90!black] (A) -- (H);
 
+  % 3. 三角形 ABC と 単位円の輪郭
   \draw[thick] (A) -- (B) -- (C) -- cycle;
-  \draw[thick, blue!70!black] (0,0) circle (1);
+  \draw[thick, blue!80!black] (0,0) circle (1.0);
 
+  % 4. 頂点プロットとラベル
   \fill (O) circle (1pt) node[below right, font=\small] {$O$};
   \fill (A) circle (1pt) node[above, font=\small] {$A$};
   \fill (B) circle (1pt) node[below right, font=\small] {$B$};
   \fill (C) circle (1pt) node[below left, font=\small] {$C$};
-  \fill[orange!80!black] (H) circle (1pt) node[right, font=\small] {$H$};
+  \fill[orange!90!black] (H) circle (1.2pt) node[above right, font=\small] {$H$};
 
 \end{tikzpicture}
 \end{center}
-\caption{$z=0$ における断面（$\triangle ABC$）と円 $x^2+y^2=1$．斜線部が求める領域の底面，$H$ は $AB$ の中点で，橙色の$\triangle OAH$が$1/6$分割の1つ}
+\caption{$z=0$ における断面（$\triangle ABC$）と円 $x^2+y^2=1$．斜線部が求める領域の底面（円の外側），$H$ は $AB$ の中点で，橙色の領域が $1/6$ 分割の1つ．}
 \end{figure}
 
-{\bf [解]}
-
-$AB$の中点を$H$とする．$O$は正三角形$ABC$の外心（$=$内心）だから，$O$から$AB$へ下ろした垂線の足はちょうど$H$である．よって
+$AB$の中点を$H$とするとその座標は
 \begin{align}
  H=\Bigl(\dfrac{\sqrt{3}}{2},\dfrac{1}{2},0\Bigr)
 \end{align}
-である．四面体$PABC$は$z$軸のまわりの$3$回対称と，各頂点と$z$軸を含む$3$枚の平面に関する鏡映対称をあわせもつ（あわせて$6$個の合同な小四面体$P\text{-}O\text{-}(\text{頂点})\text{-}(\text{隣接辺の中点})$に分割される）．条件$x^2+y^2\ge1$もこの対称性を保つから，四面体$P\text{-}OAH$のうち$x^2+y^2\ge1$をみたす部分の体積を$V'$とすると，求める体積$V$は
+である．
+
+対称性から，四面体$P\text{-}OAH$のうち$x^2+y^2\ge1$をみたす部分の体積を$V'$とすると，求める体積$V$は
 \begin{align}
- V=6V' \label{eq:m1}
+ V=6V' \label{eq:1}
 \end{align}
 である．
 
-四面体$P\text{-}OAH$の$4$頂点$P(0,0,2)$，$O(0,0,0)$，$A(0,2,0)$は$x=0$平面上にあり，$H\Bigl(\dfrac{\sqrt{3}}{2},\dfrac{1}{2},0\Bigr)$のみ$x=\dfrac{\sqrt{3}}{2}$にある．したがって平面$x=c$（$0\le c\le\dfrac{\sqrt{3}}{2}$）による断面は，$H$を中心に$\triangle POA$を$1-\dfrac{2c}{\sqrt{3}}$倍した相似な三角形で，その頂点は
+さて，図形を$x=\cos\theta$で切断しよう．$H$の座標から$0 \le x \le \dfrac{\sqrt{3}}{2}$すなわち
 \begin{align}
- O'=\Bigl(\dfrac{c}{\sqrt{3}},0\Bigr),\quad
- A'=(2-\sqrt{3}c,\,0),\quad
- P'=\Bigl(\dfrac{c}{\sqrt{3}},\,2-\dfrac{4c}{\sqrt{3}}\Bigr)
+ \dfrac{\pi}{6} \le \theta \le \dfrac{\pi}{2} \label{eq:2}
 \end{align}
-（$y,z$座標で表記）である．$O'$と$P'$は$y$座標が等しく，$O'$と$A'$は$z=0$で共通だから，$\triangle O'A'P'$は$O'$を直角の頂点とする直角二等辺三角形で，斜辺$A'P'$は
-\begin{align}
- y+z=2-\sqrt{3}c
-\end{align}
-上にある．
+で考えれば良い．
 
-この断面のうち$x^2+y^2\ge1$（$y\ge0$の範囲なので$y\ge\sqrt{1-c^2}$）をみたす部分は，直線$y=\sqrt{1-c^2}$で$\triangle O'A'P'$を切り取った，$A'$側の小さな直角二等辺三角形になる．その直角をはさむ辺の長さは
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+
+  % --- 投影アングル (x, y, z) の設定 ---
+  \tikzset{
+    x={(-0.866cm, -0.45cm)},
+    y={(1.1cm, 0.0cm)},
+    z={(0.0cm, 1.3cm)}
+  }
+
+  % 1. 四面体 P-OAH の頂点座標
+  % O(0,0,0), P(0,0,2), A(0,2,0) は x=0 上
+  % H(sqrt(3)/2, 1/2, 0)
+  \coordinate (O) at (0, 0, 0);
+  \coordinate (P) at (0, 0, 2);
+  \coordinate (A) at (0, 2, 0);
+  \coordinate (H) at (0.866, 0.5, 0);
+
+  % 2. 相似な断面 P'O'A' (x = cos\theta \approx 0.433、相似比 1 - 2c/\sqrt{3} = 0.5 の例)
+  % H を中心とする縮小比率 ratio = 0.5
+  \coordinate (Oprime) at (0.433, 0.25, 0);
+  \coordinate (Aprime) at (0.433, 1.25, 0);
+  \coordinate (Pprime) at (0.433, 0.25, 1.0);
+
+  % 3. 切断面 P'O'A' の塗りつぶし（ハッチング＋青枠）
+  \fill[pattern=north east lines, pattern color=blue!60, opacity=0.7] 
+    (Oprime) -- (Aprime) -- (Pprime) -- cycle;
+  \draw[very thick, blue!80!black] (Oprime) -- (Aprime) -- (Pprime) -- cycle;
+
+  % 4. 座標軸 (薄く描画)
+  \draw[->, gray!60, thick] (O) -- (1.3, 0, 0) node[below left] {$x$};
+  \draw[->, gray!60, thick] (O) -- (0, 2.4, 0) node[right] {$y$};
+  \draw[->, gray!60, thick] (O) -- (0, 0, 2.3) node[above] {$z$};
+
+  % 5. 四面体 P-OAH の稜線
+  % x=0 平面上の基準三角形 POA (直角二等辺三角形)
+  \draw[very thick, red!80!black] (O) -- (A) -- (P) -- cycle;
+  
+  % H から各頂点への稜線
+  \draw[thick] (O) -- (H);
+  \draw[thick] (A) -- (H);
+  \draw[thick] (P) -- (H);
+
+  % 6. 平面 x = \cos\theta の位置を示す補助線
+  \draw[dashed, gray!70] (0.433, 0, 0) -- (Oprime);
+  \node[below left, font=\scriptsize] at (0.433, 0, 0) {$x = \cos\theta$};
+  \node[below left, font=\scriptsize] at (0.866, 0, 0) {$\frac{\sqrt{3}}{2}$};
+  \draw[dashed, gray!50] (0.866, 0, 0) -- (H);
+
+  % 7. 頂点プロットとラベル
+  \fill (O) circle (0.8pt) node[below left] {$O$};
+  \fill (P) circle (0.8pt) node[above left] {$P$};
+  \fill (A) circle (0.8pt) node[right] {$A$};
+  \fill (H) circle (0.9pt) node[below] {$H\left(\frac{\sqrt{3}}{2}, \frac{1}{2}, 0\right)$};
+
+  \fill[blue!80!black] (Oprime) circle (0.8pt) node[below left] {$O'$};
+  \fill[blue!80!black] (Aprime) circle (0.8pt) node[below right] {$A'$};
+  \fill[blue!80!black] (Pprime) circle (0.8pt) node[above right] {$P'$};
+
+  % 相似の注記
+  \node[blue!80!black, font=\footnotesize] at (0.433, 0.75, 0.5) {$\triangle P'O'A' \sim \triangle POA$};
+
+\end{tikzpicture}
+\caption{四面体 $P\text{-}OAH$ と平面 $x = \cos\theta$ による切断面 $\triangle P'O'A'$}
+\end{figure}
+
+四面体$P\text{-}OAH$の$4$頂点$P(0,0,2)$，$O(0,0,0)$，$A(0,2,0)$は$x=0$平面上にあり，$H\Bigl(\dfrac{\sqrt{3}}{2},\dfrac{1}{2},0\Bigr)$のみ$x=\dfrac{\sqrt{3}}{2}$にある．したがって平面$x=\cos\theta$による断面は，$H$を中心に$\triangle POA$を$1-\dfrac{2\cos\theta}{\sqrt{3}}$倍した相似な三角形で，その頂点は$yz$平面で
 \begin{align}
- (2-\sqrt{3}c)-\sqrt{1-c^2}
+ O'=\Bigl(\dfrac{\cos\theta}{\sqrt{3}},0\Bigr),\quad
+ A'=(2-\sqrt{3}\cos\theta,\,0),\quad
+ P'=\Bigl(\dfrac{\cos\theta}{\sqrt{3}},\,2-\dfrac{4\cos\theta}{\sqrt{3}}\Bigr)
 \end{align}
-だから，面積$T(c)$は
+にある．これを図示すると下図のようになる．
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=6, >=stealth, every node/.style={font=\small}]
+
+  % --- 1. パラメータ設定と解析的座標計算 ---
+  % \theta は 30° から 90° の範囲。
+  \def\ang{60} 
+
+  \pgfmathsetmacro{\cth}{cos(\ang)}
+  \pgfmathsetmacro{\sth}{sin(\ang)}
+  
+  % 各点の座標計算
+  \pgfmathsetmacro{\yo}{\cth / sqrt(3)}
+  \pgfmathsetmacro{\ya}{2.0 - sqrt(3)*\cth}
+  \pgfmathsetmacro{\zp}{2.0 - 4.0*\cth / sqrt(3)}
+  \pgfmathsetmacro{\ys}{\sth}
+  \pgfmathsetmacro{\zs}{\ya - \ys} % 直角二等辺三角形の高さ (ya - sin\theta)
+
+  % --- 3. 断面三角形 \triangle P'O'A' 全体 ---
+  \draw[thick, blue!80!black] (\yo, 0) -- (\ya, 0) -- (\yo, \zp) -- cycle;
+  \draw[dashed, blue!80!black] (\yo, 0) -- (\yo, \zp);
+  \draw[dashed] (0,\ya) -- (\yo, \zp);
+
+  % 直角記号 (O' の角)
+  \draw[thick, gray!80!black] (\yo, 0.03) -- (\yo+0.03, 0.03) -- (\yo+0.03, 0);
+
+  % --- 4. 座標軸 (y, z) ---
+  \draw[->, thick] (-0.05, 0) -- (1.4, 0) node[right] {$y$};
+  \draw[->, thick] (0, -0.05) -- (0, 1.4) node[above] {$z$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 6. 軸上の目盛りとラベル ---
+  \node[below] at (\yo, 0) {$O'$};
+  \node[below] at (\ya, 0) {$A'$};
+  \node[left] at (0, \zp) {$P'$};
+
+  \draw[dashed, gray!50] (0, \zp) -- (\yo, \zp);
+
+  % 頂点座標の文字表記
+  \node[below, font=\scriptsize, gray!80!black] at (\yo, -0.05) {$\frac{\cos\theta}{\sqrt{3}}$};
+  \node[below, font=\scriptsize, gray!80!black] at (\ya, -0.05) {$2-\sqrt{3}\cos\theta$};
+  \node[left, font=\scriptsize, gray!80!black] at (0,\ya) {$2-\sqrt{3}\cos\theta$};
+
+  % --- 8. プロット点 ---
+  \fill[blue!80!black] (\yo, 0) circle (0.5pt);
+  \fill[blue!80!black] (\ya, 0) circle (0.5pt);
+  \fill[blue!80!black] (\yo, \zp) circle (0.5pt);
+
+  % 平面ラベル
+  \node[above right] at (0.8, 1.35) {$x = \cos\theta$};
+
+\end{tikzpicture}
+\caption{平面 $x = \cos\theta$ による切断面}
+\end{figure}
+
+この断面のうち$x^2+y^2\ge 1$をみたす部分は，$x=\cos\theta$および$y \ge 0$, \cref{eq:2}より
 \begin{align}
- T(c)=\dfrac{1}{2}\Bigl\{(2-\sqrt{3}c)-\sqrt{1-c^2}\Bigr\}^2 \label{eq:m2}
+ y \ge \sqrt{1-x^2} = \sqrt{1-\cos^2\theta} = \sin\theta \label{eq:3}
 \end{align}
-である．したがって
+である．従って，題意を満たす領域は下図の斜線部である．
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=6, >=stealth, every node/.style={font=\small}]
+
+  % --- 1. パラメータ設定と解析的座標計算 ---
+  % \theta は 30° から 90° の範囲。
+  \def\ang{60} 
+
+  \pgfmathsetmacro{\cth}{cos(\ang)}
+  \pgfmathsetmacro{\sth}{sin(\ang)}
+  
+  % 各点の座標計算
+  \pgfmathsetmacro{\yo}{\cth / sqrt(3)}
+  \pgfmathsetmacro{\ya}{2.0 - sqrt(3)*\cth}
+  \pgfmathsetmacro{\zp}{2.0 - 4.0*\cth / sqrt(3)}
+  \pgfmathsetmacro{\ys}{\sth}
+  \pgfmathsetmacro{\zs}{\ya - \ys} % 直角二等辺三角形の高さ (ya - sin\theta)
+
+  % --- 2. 求める断面積 T(\cos\theta) の斜線塗りつぶし ---
+  % 頂点: (\ys, 0), (\ya, 0), (\ys, \zs)
+  \fill[pattern=north east lines, pattern color=black!40]
+    (\ys, 0) -- (\ya, 0) -- (\ys, \zs) -- cycle;
+  \draw[very thick, red!80!black] (\ys, 0) -- (\ya, 0) -- (\ys, \zs) -- cycle;
+
+  % --- 3. 断面三角形 \triangle P'O'A' 全体 ---
+  \draw[thick, blue!80!black] (\yo, 0) -- (\ya, 0) -- (\yo, \zp) -- cycle;
+  \draw[dashed, blue!80!black] (\yo, 0) -- (\yo, \zp);
+  \draw[dashed] (0,\ya) -- (\yo, \zp);
+
+
+  % 直角記号 (O' の角)
+  \draw[thick, gray!80!black] (\yo, 0.03) -- (\yo+0.03, 0.03) -- (\yo+0.03, 0);
+
+  % --- 4. 座標軸 (y, z) ---
+  \draw[->, thick] (-0.05, 0) -- (1.4, 0) node[right] {$y$};
+  \draw[->, thick] (0, -0.05) -- (0, 1.4) node[above] {$z$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 5. 境界線 y = \sin\theta ---
+  \draw[dashed, thick, gray!80!black] (\ys, -0.03) -- (\ys, {\zp + 0.05});
+  \node[above, font=\footnotesize] at (\ys, {\zp + 0.05}) {$y = \sin\theta$};
+
+  % --- 6. 軸上の目盛りとラベル ---
+  \node[below] at (\yo, 0) {$O'$};
+  \node[below] at (\ya, 0) {$A'$};
+  \node[below] at (\ys, 0) {$\sin\theta$};
+  \node[left] at (0, \zp) {$P'$};
+
+  \draw[dashed, gray!50] (0, \zp) -- (\yo, \zp);
+
+  % 頂点座標の文字表記
+  \node[below, font=\scriptsize, gray!80!black] at (\yo, -0.05) {$\frac{\cos\theta}{\sqrt{3}}$};
+  \node[below, font=\scriptsize, gray!80!black] at (\ya, -0.05) {$2-\sqrt{3}\cos\theta$};
+  \node[left, font=\scriptsize, gray!80!black] at (0,\ya) {$2-\sqrt{3}\cos\theta$};
+
+  % --- 7. 底辺の長さ（寸法線） ---
+  \draw[<->, red!80!black] (\ys, -0.12) -- (\ya, -0.12) 
+    node[midway, below, font=\scriptsize] {$(2-\sqrt{3}\cos\theta) - \sin\theta$};
+
+  % --- 8. プロット点 ---
+  \fill[blue!80!black] (\yo, 0) circle (0.5pt);
+  \fill[blue!80!black] (\ya, 0) circle (0.5pt);
+  \fill[blue!80!black] (\yo, \zp) circle (0.5pt);
+  \fill[red!80!black] (\ys, 0) circle (0.5pt);
+  \fill[red!80!black] (\ys, \zs) circle (0.5pt);
+
+  % 領域名ラベル
+  \node[fill=white, inner sep=1pt, font=\bfseries] at ({\ys + (\ya-\ys)/3}, {\zs/3}) {$T$};
+
+  % 平面ラベル
+  \node[above right] at (0.8, 1.35) {$x = \cos\theta$};
+
+\end{tikzpicture}
+\caption{平面 $x = \cos\theta$ による切断面と断面積 $T(\cos\theta)$（斜線部）}
+\end{figure}
+
+この領域もまた直角二等辺三角形であり，その辺の長さは
 \begin{align}
- V'=\int_0^{\sqrt{3}/2}T(c)\,dc \label{eq:m3}
+ \left(2-\sqrt{3}\cos\theta\right) - \sin\theta
+\end{align}
+である．
+従って断面の面積を$T(\cos\theta)$とすると
+\begin{align}
+ T(\cos\theta)=\dfrac{1}{2}\Bigl\{(2-\sqrt{3}\cos\theta)-\sin\theta \Bigr\}^2 \label{eq:4}
+\end{align}
+である．したがって体積$V'$は
+\begin{align}
+ V'
+  &=\int_0^{\sqrt{3}/2}T(x)\,dx 
+\end{align}
+と書ける．$x=\cos\theta$の置換積分を行うと，$\dfrac{dx}{d\theta}=-\sin\theta$であることに注意して，また$T(\cos\theta)$に\cref{eq:4}を代入して
+\begin{align}
+ V'
+  &=\int_{\frac{\pi}{2}}^{\frac{\pi}{6}}T(\cos\theta)\dfrac{dx}{d\theta}d\theta \\
+  &=\int_{\frac{\pi}{2}}^{\frac{\pi}{6}}\left[\dfrac{1}{2}\Bigl\{(2-\sqrt{3}\cos\theta)-\sin\theta \Bigr\}^2\right]\left(-\sin\theta\right) d\theta \\
+  &=\dfrac{1}{2}\int_{\frac{\pi}{6}}^{\frac{\pi}{2}} \Bigl[\sin^3\theta -2(2-\sqrt{3}\cos\theta)\sin^2\theta + (2-\sqrt{3}\cos\theta)^2 \sin\theta \Bigr] d\theta
+\end{align}
+である．第一項を$\sin^2\theta=1-\cos^2\theta$を使って変形して
+\begin{align}
+ V'
+ &=\dfrac{1}{2}\int_{\frac{\pi}{6}}^{\frac{\pi}{2}} \Bigl[\sin\theta -\sin\theta\cos^2\theta -4 \sin^2\theta + 2\sqrt{3}\cos\theta\sin^2\theta + (2-\sqrt{3}\cos\theta)^2\sin\theta \Bigr] d\theta \label{eq:5}
+\end{align}
+だから各項を積分して
+\begin{align}
+ \int_{\pi/6}^{\pi/2}\sin\theta \,d\theta= \Bigl[-\cos\theta\Bigr]_{\pi/6}^{\pi/2} = \dfrac{\sqrt{3}}{2} \\
+ \int_{\pi/6}^{\pi/2}\sin\theta\cos^2\theta \,d\theta= \Bigl[-\dfrac{1}{3}\cos^3\theta\Bigr]_{\pi/6}^{\pi/2} = \dfrac{\sqrt{3}}{8} \\ 
+ \int_{\pi/6}^{\pi/2}\sin^2\theta \,d\theta= \dfrac{1}{2}\Bigl[\theta-\dfrac{\sin2\theta}{2}\Bigr]_{\pi/6}^{\pi/2} =  \dfrac{\pi}{6} + \dfrac{\sqrt{3}}{8} \\
+ \int_{\pi/6}^{\pi/2}\cos\theta\sin^2\theta \,d\theta= \Bigl[\dfrac{1}{3}\sin^3\theta\Bigr]_{\pi/6}^{\pi/2} = \dfrac{1}{3}\left[1-\dfrac{1}{8}\right] = \dfrac{7}{24}\\
+ \int_{\pi/6}^{\pi/2}(2-\sqrt{3}\cos\theta)^2\sin\theta \,d\theta= \Bigl[\dfrac{1}{3\sqrt{3}}(2-\sqrt{3}\cos\theta)^3\Bigr]_{\pi/6}^{\pi/2} = \dfrac{1}{3\sqrt{3}}\Bigl[2^3-\left(\dfrac{1}{2}\right)^3\Bigr] = \dfrac{7\sqrt{3}}{8}
+\end{align}
+を\cref{eq:5}に代入して
+\begin{align}
+ 2V' 
+  &= \dfrac{\sqrt{3}}{2} - \dfrac{\sqrt{3}}{8} - 4\Bigl[\dfrac{\pi}{6} + \dfrac{\sqrt{3}}{8}\Bigr] + 2\sqrt{3}\dfrac{7}{24} + \dfrac{7\sqrt{3}}{8} \\
+  &= \dfrac{4\sqrt{3}}{3} - \dfrac{2\pi}{3} 
+\end{align}
+だから，\cref{eq:1}に代入して求める面積は
+\begin{align}
+ V 
+  &= 3\left(\dfrac{4\sqrt{3}}{3} - \dfrac{2\pi}{3}\right) \\
+  &=4\sqrt{3} - 2\pi
 \end{align}
 である．
 
-\cref{eq:m3}で$c=\cos\theta$とおくと$dc=-\sin\theta\,d\theta$，$c:0\to\dfrac{\sqrt{3}}{2}$は$\theta:\dfrac{\pi}{2}\to\dfrac{\pi}{6}$に対応するから，$s=\sin\theta$，$C=\cos\theta$として\cref{eq:m2}を代入して
-\begin{align}
- V'=\int_{\pi/6}^{\pi/2}\dfrac{1}{2}(2-\sqrt{3}C-s)^2\,s\,d\theta \label{eq:m4}
-\end{align}
-となる．ここで$s^2+C^2=1$より
-\begin{align}
- (2-\sqrt{3}C-s)^2=5+2C^2-4\sqrt{3}C-4s+2\sqrt{3}Cs
-\end{align}
-だから，\cref{eq:m4}の被積分関数は
-\begin{align}
- \dfrac{1}{2}(2-\sqrt{3}C-s)^2s=\dfrac{1}{2}\Bigl(5s+2C^2s-4\sqrt{3}Cs-4s^2+2\sqrt{3}Cs^2\Bigr) \label{eq:m5}
-\end{align}
-である．\cref{eq:m5}の各項を$[\pi/6,\pi/2]$で積分すると
-\begin{align}
- \int_{\pi/6}^{\pi/2}5s\,d\theta=5\Bigl[-C\Bigr]_{\pi/6}^{\pi/2}=\dfrac{5\sqrt{3}}{2}
-\end{align}
-\begin{align}
- \int_{\pi/6}^{\pi/2}2C^2s\,d\theta=2\Bigl[-\dfrac{C^3}{3}\Bigr]_{\pi/6}^{\pi/2}=\dfrac{\sqrt{3}}{4}
-\end{align}
-\begin{align}
- \int_{\pi/6}^{\pi/2}-4\sqrt{3}Cs\,d\theta=-4\sqrt{3}\Bigl[\dfrac{s^2}{2}\Bigr]_{\pi/6}^{\pi/2}=-\dfrac{3\sqrt{3}}{2}
-\end{align}
-\begin{align}
- \int_{\pi/6}^{\pi/2}-4s^2\,d\theta=-2\Bigl[\theta-\dfrac{\sin2\theta}{2}\Bigr]_{\pi/6}^{\pi/2}=-\dfrac{2\pi}{3}-\dfrac{\sqrt{3}}{2}
-\end{align}
-\begin{align}
- \int_{\pi/6}^{\pi/2}2\sqrt{3}Cs^2\,d\theta=2\sqrt{3}\Bigl[\dfrac{s^3}{3}\Bigr]_{\pi/6}^{\pi/2}=\dfrac{7\sqrt{3}}{12}
-\end{align}
-だから，これらを合計して
-\begin{align}
- \int_{\pi/6}^{\pi/2}\Bigl(5s+2C^2s-4\sqrt{3}Cs-4s^2+2\sqrt{3}Cs^2\Bigr)d\theta
-  =\dfrac{4\sqrt{3}}{3}-\dfrac{2\pi}{3}
-\end{align}
-である．よって\cref{eq:m4}，\cref{eq:m5}より
-\begin{align}
- V'=\dfrac{1}{2}\Bigl(\dfrac{4\sqrt{3}}{3}-\dfrac{2\pi}{3}\Bigr)=\dfrac{2\sqrt{3}}{3}-\dfrac{\pi}{3}
-\end{align}
-だから，\cref{eq:m1}に代入して求める体積は
-\begin{align}
- V=6\Bigl(\dfrac{2\sqrt{3}}{3}-\dfrac{\pi}{3}\Bigr)=4\sqrt{3}-2\pi
-\end{align}
-である．
 
 {\bf [別解]}
 
-四面体$PABC$を高さ$z$（$0\le z\le2$）で水平に切った断面を考える．頂点$P(0,0,2)$から底面$z=0$までの各辺（$PA,PB,PC$）上の点は
-\begin{align}
- P+t(A-P),\quad P+t(B-P),\quad P+t(C-P) \qquad (0\le t\le1)
-\end{align}
-と書け，これらの$z$座標は$2-2t$である．よって高さ$z$の断面は$t=\dfrac{2-z}{2}$のときの3点を頂点とする三角形で，$x,y$座標は$A,B,C$を原点中心に$t$倍に縮小した
-\begin{align}
- tA,\ tB,\ tC
-\end{align}
-となる．つまり高さ$z$の断面は$\triangle ABC$を原点中心に$t=\dfrac{2-z}{2}$倍した相似な正三角形であり，その外接円半径は
-\begin{align}
- R(z)=2t=2-z \label{eq:1}
-\end{align}
-である．
+本解答では$x=\cos\theta$で切断することで切断面を三角形にすることで簡単に切断面の面積$T(x)$が求まるように工夫した．
+より普通に解こうとすると$z$一定面で切断することになる．これでも解けるので以下紹介しよう．
 
-$R(z)\ge1\iff z\le1$なので，$z>1$では断面の外接円半径が$1$未満となり断面全体が$x^2+y^2<1$に含まれ，求める部分の面積は$0$である．したがって求める体積は
-\begin{align}
- V=\int_0^1 S(z)\,dz \label{eq:2}
-\end{align}
-であり，$S(z)$は高さ$z$の断面（外接円半径$R=R(z)\in[1,2]$の正三角形）のうち$x^2+y^2\ge1$を満たす部分の面積である．
 
-外接円半径$R$の正三角形の面積は$\dfrac{3\sqrt{3}}{4}R^2$，各辺と中心の距離（内接円半径）は$\dfrac{R}{2}$である．単位円の中心から辺までの距離$\dfrac{R}{2}$（$0\le \dfrac{R}{2}\le1$）に対し，$\cos\varphi=\dfrac{R}{2}$を満たす$\varphi\in\bigl[0,\dfrac{\pi}{3}\bigr]$をとると，単位円のうち各辺の外側にはみ出す弓形の面積は
-\begin{align}
- \varphi-\sin\varphi\cos\varphi
-\end{align}
-だから（3辺分で）
-\begin{align}
- \bigl(\text{単位円}\cap\triangle\bigr)=\pi-3(\varphi-\sin\varphi\cos\varphi)
-\end{align}
-である．よって
-\begin{align}
- S(z)=\dfrac{3\sqrt{3}}{4}R^2-\pi+3\varphi-3\sin\varphi\cos\varphi \qquad \Bigl(\cos\varphi=\dfrac{R}{2},\ R=R(z)\Bigr) \label{eq:3}
-\end{align}
-である．
+四面体$PABC$を高さ$z=2-k$（$1\le k \le2$）で水平に切った断面を考える．
+この時の切断面は相似により一辺の長さ$\sqrt{3}k$の正三角形であり，図示すると下図のようになる．
+斜線部が求める立体の部分である．
 
-\cref{eq:1}より$R=2-z$，$dz=-dR$で，$z:0\to1$は$R:2\to1$に対応するから\cref{eq:2}は
-\begin{align}
- V=\int_{R=1}^{2}S\,dR
-\end{align}
-となる．さらに$\cos\varphi=\dfrac{R}{2}$すなわち$R=2\cos\varphi$とおくと$dR=-2\sin\varphi\,d\varphi$で，$R:1\to2$は$\varphi:\dfrac{\pi}{3}\to0$に対応するから，\cref{eq:3}を代入して
-\begin{align}
- V
-  &=\int_{\varphi=\pi/3}^{0}\Bigl(3\sqrt{3}\cos^2\varphi-\pi+3\varphi-3\sin\varphi\cos\varphi\Bigr)(-2\sin\varphi)\,d\varphi \\
-  &=\int_0^{\pi/3}\Bigl(6\sqrt{3}\sin\varphi\cos^2\varphi-2\pi\sin\varphi+6\varphi\sin\varphi-6\sin^2\varphi\cos\varphi\Bigr)d\varphi \label{eq:4}
-\end{align}
-である．\cref{eq:4}の各項を計算する．
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
 
-\begin{align}
- \int_0^{\pi/3}\sin\varphi\cos^2\varphi\,d\varphi
-  =\Bigl[-\dfrac{\cos^3\varphi}{3}\Bigr]_0^{\pi/3}
-  =-\dfrac{1}{3}\Bigl(\dfrac{1}{8}-1\Bigr)=\dfrac{7}{24}
-\end{align}
-\begin{align}
- \int_0^{\pi/3}\sin\varphi\,d\varphi
-  =\bigl[-\cos\varphi\bigr]_0^{\pi/3}=-\dfrac{1}{2}+1=\dfrac{1}{2}
-\end{align}
-\begin{align}
- \int_0^{\pi/3}\varphi\sin\varphi\,d\varphi
-  =\bigl[-\varphi\cos\varphi+\sin\varphi\bigr]_0^{\pi/3}
-  =-\dfrac{\pi}{6}+\dfrac{\sqrt{3}}{2}
-\end{align}
-\begin{align}
- \int_0^{\pi/3}\sin^2\varphi\cos\varphi\,d\varphi
-  =\Bigl[\dfrac{\sin^3\varphi}{3}\Bigr]_0^{\pi/3}
-  =\dfrac{1}{3}\Bigl(\dfrac{\sqrt{3}}{2}\Bigr)^3=\dfrac{\sqrt{3}}{8}
-\end{align}
+  % --- 1. パラメータ設定と解析計算 ---
+  % k は 1 <= k <= 2 の範囲 (例: k = 1.35)
+  \def\k{1.35}
 
-以上を\cref{eq:4}に代入して
+  % 正三角形の頂点 (外接円半径は k, 辺長は \sqrt{3}k)
+  % 上の頂点 A: (0, k)
+  % 右下の頂点 B: (cos(-30°)*k, sin(-30°)*k) = (k*sqrt(3)/2, -k/2)
+  % 左下の頂点 C: (cos(210°)*k, sin(210°)*k) = (-k*sqrt(3)/2, -k/2)
+  \coordinate (O) at (0, 0);
+  \coordinate (A) at (0, \k);
+  \coordinate (B) at ({\k*sqrt(3)/2}, {-\k/2});
+  \coordinate (C) at ({-\k*sqrt(3)/2}, {-\k/2});
+
+  % 辺 AB への垂線の足 M (偏角 30°, 原点からの距離 k/2)
+  % 辺 AB と単位円 (半径 1) の交点 P1 (角 30° - \theta), P2 (角 30° + \theta)
+  % cos(\theta) = (k/2) / 1 = k/2
+  \pgfmathsetmacro{\thetaDeg}{acos(\k / 2.0)}
+  \pgfmathsetmacro{\angOne}{30.0 - \thetaDeg}
+  \pgfmathsetmacro{\angTwo}{30.0 + \thetaDeg}
+  \coordinate (M) at ({(\k/2)*cos(30)}, {(\k/2)*sin(30)});
+  \coordinate (P1) at ({cos(\angOne)}, {sin(\angOne)});
+  \coordinate (P2) at ({cos(\angTwo)}, {sin(\angTwo)});
+
+  % --- 2. 求める領域（正三角形の内側かつ単位円の外側）の斜線塗りつぶし ---
+  \begin{scope}
+    \clip (A) -- (B) -- (C) -- cycle;
+    \fill[pattern=north east lines, pattern color=black!40] (O) circle (1.8);
+    % 単位円の内部を白抜き
+    \fill[white] (O) circle (1.0);
+  \end{scope}
+
+  % --- 3. 座標軸 ---
+  \draw[->, thick, gray!70] (-1.6, 0) -- (1.7, 0) node[right, black] {$x$};
+  \draw[->, thick, gray!70] (0, -1.2) -- (0, 1.7) node[above, black] {$y$};
+  \node[below left] at (O) {$O$};
+
+  % --- 4. 正三角形と単位円の輪郭 ---
+  \draw[very thick] (A) -- (B) -- (C) -- cycle;
+  \draw[very thick, blue!80!black] (O) circle (1.0);
+
+  % --- 5. 手書き図の補助線（垂線と動径） ---
+  % (i) 辺 AB への垂線 OM (長さ k/2)
+  \draw[dashed, thick, red!80!black] (O) -- (M) 
+    node[midway, below right, font=\footnotesize] {$\frac{k}{2}$};
+
+  % 直角記号 (M における直角)
+  % 垂線方向単位ベクトル: (cos 30°, sin 30°)
+  % 辺 AB 方向単位ベクトル: (-sin 30°, cos 30°) = (-1/2, sqrt(3)/2)
+  \coordinate (u1) at ({0.07*cos(30)}, {0.07*sin(30)});
+  \coordinate (u2) at ({-0.07*sin(30)}, {0.07*cos(30)});
+  \draw[thick, gray!80!black] 
+    ($(M) - (u1)$) -- ($(M) - (u1) + (u2)$) -- ($(M) + (u2)$);
+
+  % (ii) 交点 P2 への動径 (長さ 1)
+  \draw[dashed, thick, gray!80!black] (O) -- (P2)
+    node[midway, left, font=\footnotesize] {$1$};
+
+  % --- 6. 角 \theta のアーク ---
+  % 辺への垂線 OM (30°) と 交点 P2 (30° + \theta) の間の角
+  \draw[->, red!80!black, thick] 
+    ({0.35*cos(30)}, {0.35*sin(30)}) 
+    arc[start angle=30, end angle=\angTwo, radius=0.35];
+  \node[red!80!black, font=\footnotesize] at ({0.48*cos(30 + \thetaDeg/2)}, {0.48*sin(30 + \thetaDeg/2)}) {$\theta$};
+
+  % --- 7. プロット点とラベル ---
+  \fill (O) circle (0.7pt);
+  \fill (A) circle (0.7pt);
+  \fill (B) circle (0.7pt);
+  \fill (C) circle (0.7pt);
+  \fill[red!80!black] (M) circle (0.7pt);
+  \fill[blue!80!black] (P2) circle (0.7pt);
+
+  % メモのラベル
+  \node[above right] at (0.8, 1.35) {$z = 2-k$};
+  \node[right] at ({\k*sqrt(3)/4 + 0.3}, {\k/4}) {$\sqrt{3}k$};
+
+  % 頂点 A の高さ補助線
+  \draw[gray!50] (-0.2, \k) -- (0.2, \k);
+
+\end{tikzpicture}
+\caption{高さ $z = 2-k$ における断面（一辺 $\sqrt{3}k$ の正三角形）}
+\end{figure}
+
+図のように$\theta$をおくと正三角形の性質から
 \begin{align}
- V
-  &=6\sqrt{3}\cdot\dfrac{7}{24}-2\pi\cdot\dfrac{1}{2}+6\Bigl(-\dfrac{\pi}{6}+\dfrac{\sqrt{3}}{2}\Bigr)-6\cdot\dfrac{\sqrt{3}}{8} \\
-  &=\dfrac{7\sqrt{3}}{4}-\pi-\pi+3\sqrt{3}-\dfrac{3\sqrt{3}}{4} \\
-  &=\Bigl(\dfrac{7}{4}-\dfrac{3}{4}\Bigr)\sqrt{3}+3\sqrt{3}-2\pi \\
-  &=\sqrt{3}+3\sqrt{3}-2\pi
+ \cos\theta = \dfrac{k}{2}
 \end{align}
-だから，求める体積は
+であり，斜線部の面積$S(\theta)$とおくと，これは正三角形の面積から円の面積を差し引き，余分な円帽の部分を足したもので
 \begin{align}
- V=4\sqrt{3}-2\pi
+ S(\theta) = \dfrac{3\sqrt{3}}{4}k^2 - \pi + \left(3\theta - 3\cos\theta\sin\theta \right)
 \end{align}
-である．
+だから，求める体積$V$はこれを$k$について積分して
+\begin{align}
+ V 
+ &= \int_{0}^{1} S(z) dz \\
+ &= \int_{2}^{1} S(k) \dfrac{dz}{dk} dk \\
+ &= \int_{1}^{2} S(k) dk \\
+ &= \int_{\pi/3}^{0} S(\theta) \dfrac{dk}{d\theta} d\theta \\
+ &= \int_{\pi/3}^{0} S(\theta) (-2\sin\theta ) d\theta \\
+ &= 2\int_{0}^{\pi/3} \Bigl[3\sqrt{3}\cos^2\theta - \pi + \left(3\theta - 3\cos\theta\sin\theta \right)\Bigr] d\theta 
+\end{align}
+である．以下はこれを積分すれば本解答と同じ結果を得る．
 
 \newpage
 

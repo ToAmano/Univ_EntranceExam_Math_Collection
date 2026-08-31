@@ -1,55 +1,252 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-$f(x)=x^3-3x^2+2x$とおく．$f'(x)=3x^2-6x+2$．
+与えられた関数を
+\begin{align}
+ f(x)=x^3-3x^2+2x \label{eq:1}
+\end{align}  
+とおく．
 
 \paragraph{(1)}
 
-$x\neq0$のとき，$f(x)=ax\iff x^2-3x+2=a$（①）．①が実数解を持てばよく，左辺$=(x-\dfrac{3}{2})^2-\dfrac{1}{4}$の値域は$\ge-\dfrac{1}{4}$なので，①が解を持つ条件は
+方程式$f(x)=ax$の$x\neq 0$の解を求めれば良い．\cref{eq:1}を代入して
 \begin{align}
-a\ge-\dfrac{1}{4}.
+ x^3-3x^2+2x = ax 
 \end{align}
+$x\neq 0$より両辺$x$で割って
+\begin{align}
+ x^2-3x+2=a \label{eq:2}
+\end{align}
+である．これが$x \neq 0$に実数解を持てば良い．
+左辺を平方完成すると
+\begin{align}
+ \text{左辺} = \left(x-\dfrac{3}{2}\right)^2-\dfrac{1}{4} \ge \dfrac{-1}{4}
+\end{align}
+だから，このような条件は
+\begin{align}
+a\ge-\dfrac{1}{4} \label{eq:3}
+\end{align}
+である．
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+
+  % 1. 補助線（点線）
+  \draw[dashed, gray!70] (1.5, 0) -- (1.5, -0.25) -- (0, -0.25);
+
+  % 2. 座標軸
+  \draw[->, thick] (-0.8, 0) -- (3.6, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.8) -- (0, 2.8) node[above] {$y$};
+  \node[above left] at (0,0) {$O$};
+
+  % 3. 放物線 y = x^2 - 3x + 2
+  \draw[domain=-0.3:3.3, smooth, very thick, blue!80!black, samples=60] 
+    plot (\x, {\x*\x - 3*\x + 2}) node[right] {$y = x^2 - 3x + 2$};
+
+  % 4. 直線 y = a (代表例: a > -1/4)
+  \draw[thick, red!80!black] (-0.6, 0.8) -- (3.4, 0.8) node[right] {$y = a$};
+  
+  % 境界の直線 y = -1/4
+  \draw[dashed, red!80!black] (-0.6, -0.25) -- (3.4, -0.25) node[right] {$y = -\dfrac{1}{4}$};
+
+  % 5. 軸上の目盛りラベル
+  \node[below] at (1.0, 0) {$1$};
+  \node[below] at (2.0, 0) {$2$};
+  \node[below] at (1.5, 0) {$\frac{3}{2}$};
+  \node[left] at (0, 2.0) {$2$};
+  \node[left] at (0, -0.25) {$-\frac{1}{4}$};
+
+  % 6. 特徴的な点
+  \fill (1.0, 0) circle (1.0pt);
+  \fill (2.0, 0) circle (1.0pt);
+  \fill (0, 2.0) circle (1.0pt);
+  \fill[blue!80!black] (1.5, -0.25) circle (1.2pt) node[below] {\footnotesize $\left(\frac{3}{2}, -\frac{1}{4}\right)$};
+
+  % 交点 \alpha, \beta の垂線とプロット
+  \fill[red!80!black] (0.47, 0.8) circle (1.0pt);
+  \fill[red!80!black] (2.53, 0.8) circle (1.0pt);
+  \draw[dashed, gray!70] (0.47, 0.8) -- (0.47, 0) node[below] {$\alpha$};
+  \draw[dashed, gray!70] (2.53, 0.8) -- (2.53, 0) node[below] {$\beta$};
+
+\end{tikzpicture}
+\caption{放物線 $y = x^2-3x+2$ と直線 $y = a$ の交点}
+\end{figure}
 
 \paragraph{(2)}
 
-$2\le a$のとき$S(a)$は単調に増加するので，$-\dfrac{1}{4}\le a\le2$の範囲で考えれば十分である．①の2実解を$\alpha\le\beta$とすると，解と係数の関係より$\alpha+\beta=3$，$\alpha\beta=2-a$．$a<2$では$\alpha\beta>0$かつ$\alpha+\beta=3>0$より$0<\alpha\le\beta$（$a=2$では$\alpha=0$）．
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
+
+  % --- 1. 解析的パラメータ計算 ---
+  % 直線の傾き a (-1/4 <= a <= 2 の代表値として a = 0.5)
+  \def\a{0.5}
+
+  % alpha, beta の解析解: (3 \pm \sqrt{4a+1}) / 2
+  \pgfmathsetmacro{\alphaval}{(3.0 - sqrt(4.0*\a + 1.0)) / 2.0}
+  \pgfmathsetmacro{\betaval}{(3.0 + sqrt(4.0*\a + 1.0)) / 2.0}
+  \pgfmathsetmacro{\yalpha}{\a * \alphaval}
+  \pgfmathsetmacro{\ybeta}{\a * \betaval}
+
+  % --- 2. 囲む領域 S(a) の斜線ハッチング ---
+  % 区間 [0, \alpha]: f(x) >= ax
+  \fill[pattern=north east lines, pattern color=black!40]
+    (0,0) -- plot[domain=0:\alphaval, samples=50] (\x, {\x*(\x-1.0)*(\x-2.0)})
+    -- (\alphaval, \yalpha) -- cycle;
+
+  % 区間 [\alpha, \beta]: ax >= f(x)
+  \fill[pattern=north east lines, pattern color=black!40]
+    (\alphaval, \yalpha) -- (\betaval, \ybeta)
+    -- plot[domain=\betaval:\alphaval, samples=50] (\x, {\x*(\x-1.0)*(\x-2.0)})
+    -- cycle;
+
+  % --- 3. 座標軸 ---
+  \draw[->, thick] (-0.8, 0) -- (3.6, 0) node[right] {$x$};
+  \draw[->, thick] (0, -1.2) -- (0, 3.8) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % --- 4. 3次曲線 y = f(x) = x^3 - 3x^2 + 2x ---
+  \draw[domain=-0.45:2.8, smooth, very thick, blue!80!black, samples=80] 
+    plot (\x, {\x*(\x-1.0)*(\x-2.0)}) node[above left] {$y = f(x)$};
+
+  % --- 5. 直線群 ---
+  % (i) 直線 y = ax
+  \draw[domain=-0.4:3.1, thick, red!80!black] 
+    plot (\x, {\a*\x}) node[right] {$y = ax$};
+
+  % (ii) 境界直線 a = -1/4 (点線: 重解をもつ接線)
+  \draw[domain=-0.5:3.2, dashed, thick, gray!80!black] 
+    plot (\x, {-0.25*\x}) node[right] {$a = -\dfrac{1}{4}$};
+
+  % (iii) 境界直線 a = 2 (点線: 原点での接線)
+  \draw[domain=-0.3:1.8, dashed, thick, gray!80!black] 
+    plot (\x, {2.0*\x}) node[above] {$a = 2$};
+
+  % --- 6. 交点 \alpha, \beta の補助点線とプロット ---
+  \draw[dashed, gray!70] (\alphaval, \yalpha) -- (\alphaval, 0) node[below] {$\alpha$};
+  \draw[dashed, gray!70] (\betaval, \ybeta) -- (\betaval, 0) node[below] {$\beta$};
+
+  \fill[red!80!black] (\alphaval, \yalpha) circle (1.0pt);
+  \fill[red!80!black] (\betaval, \ybeta) circle (1.0pt);
+
+  % 軸上の目盛り (固定点 1, 2)
+  \node[below] at (1.0, 0) {$1$};
+  \node[below] at (2.0, 0) {$2$};
+  \fill (1.0, 0) circle (0.8pt);
+  \fill (2.0, 0) circle (0.8pt);
+
+  % 領域ラベル S(a)
+  %\node[fill=white, inner sep=1pt, font=\bfseries] at (0.35, 0.28) {$S(a)$};
+  \node[fill=white, inner sep=1pt, font=\bfseries] at (1.5, 0.2) {$S(a)$};
+
+\end{tikzpicture}
+\caption{$y=f(x)$ と直線 $y=ax$（および $a=-\frac{1}{4}, 2$ の境界）}
+\end{figure}
+
+\cref{eq:3}の範囲で考えよう．\cref{eq:2}の重解を含む二つの実数解を$\alpha,\beta$とする．ただし$\alpha\le\beta$とする．
+$a=2$の時\cref{eq:2}より$\alpha=0,\beta=3$となり$C$と$\ell$は$x=0$で接し，$a$がそれ以上になれば図より$S(a)$は単調増加するから，
+最小値は
 \begin{align}
-\alpha=\dfrac{3-\sqrt{4a+1}}{2},\qquad\beta=\dfrac{3+\sqrt{4a+1}}{2}.
+ -\dfrac{1}{4} \le a \le 2 \label{eq:4}
 \end{align}
-$g(x)=f(x)-ax=x(x-\alpha)(x-\beta)$は，$0<x<\alpha$で正，$\alpha<x<\beta$で負だから，$C$と$l$で囲まれる面積は
+でとる．従って以下この範囲で考える．この時解と係数の関係から
 \begin{align}
-S(a)=\int_0^\alpha g(x)dx-\int_\alpha^\beta g(x)dx=\int_0^\alpha f(x)dx-\int_0^\alpha ax\,dx-\int_\alpha^\beta f(x)dx+\int_\alpha^\beta ax\,dx.\tag{①}
+ \begin{cases}
+  \alpha+\beta=3 \\
+  \alpha\beta=2-a
+ \end{cases} \label{eq:5}
 \end{align}
-$\alpha,\beta$は$a$の関数であることに注意して両辺を$a$で微分する．$f(\alpha)=a\alpha$，$f(\beta)=a\beta$（①の定義より）を用いると
+だから，$\alpha,\beta$は常に$0$以上である．
+
+$C$と$\ell$の差を
+\begin{align}
+ g(x) = f(x) - ax \label{eq:5}
+\end{align}
+とおくと，$g(x)=0$の解が$0,\alpha,\beta$だから因数定理より
+\begin{align}
+ g(x) = x(x-\alpha)(x-\beta) \label{eq:6}
+\end{align}
+と書ける．これは$0<x<\alpha$で正，$\alpha<x<\beta$で負だから，$C$と$l$で囲まれる面積は
+\begin{align}
+  S(a)
+   &=\int_0^\alpha g(x)dx-\int_\alpha^\beta g(x)dx \\
+   &=\int_0^\alpha f(x)dx-\int_0^\alpha ax\,dx-\int_\alpha^\beta f(x)dx+\int_\alpha^\beta ax\,dx \label{eq:7}
+\end{align}
+と書ける．
+$\alpha,\beta$は$a$の関数であることに注意して両辺を$a$で微分する．
+まず\cref{eq:5,eq:6}より
+\begin{align}
+ f(x) = x(x-\alpha)(x-\beta) + ax
+\end{align}
+だから，
+\begin{align}
+ f(\alpha)=a\alpha, \quad f(\beta)=a\beta \label{eq:8}
+\end{align}
+なので，右辺の各項を微分すると
 \begin{align}
 \dfrac{d}{da}\int_0^\alpha f(x)dx&=f(\alpha)\alpha'=a\alpha\alpha',\\
 \dfrac{d}{da}\int_\alpha^\beta f(x)dx&=f(\beta)\beta'-f(\alpha)\alpha'=a(\beta\beta'-\alpha\alpha'),\\
 \dfrac{d}{da}\int_0^\alpha ax\,dx&=\int_0^\alpha x\,dx+a\alpha\alpha'=\dfrac{1}{2}\alpha^2+a\alpha\alpha',\\
-\dfrac{d}{da}\int_\alpha^\beta ax\,dx&=\int_\alpha^\beta x\,dx+a(\beta\beta'-\alpha\alpha').
+\dfrac{d}{da}\int_\alpha^\beta ax\,dx&=\int_\alpha^\beta x\,dx+a(\beta\beta'-\alpha\alpha') = \dfrac{\beta^2-\alpha^2}{2} +a(\beta\beta'-\alpha\alpha')
 \end{align}
-よって①の両辺を$a$で微分して
+となる．
+よって\cref{eq:7}の両辺を$a$で微分してこれらを代入すると
 \begin{align}
-S'(a)&=a\alpha\alpha'-\Bigl(\dfrac{1}{2}\alpha^2+a\alpha\alpha'\Bigr)-a(\beta\beta'-\alpha\alpha')+\int_\alpha^\beta x\,dx+a(\beta\beta'-\alpha\alpha')\\
-&=-\dfrac{1}{2}\alpha^2+\int_\alpha^\beta x\,dx=-\dfrac{1}{2}\alpha^2+\dfrac{1}{2}(\beta^2-\alpha^2)=\dfrac{1}{2}(\beta^2-2\alpha^2)=\dfrac{1}{2}(\beta-\sqrt{2}\alpha)(\beta+\sqrt{2}\alpha).\tag{②}
+S'(a)
+  &=a\alpha\alpha'-\Bigl(\dfrac{1}{2}\alpha^2+a\alpha\alpha'\Bigr)-a(\beta\beta'-\alpha\alpha')+\dfrac{\beta^2-\alpha^2}{2}+a(\beta\beta'-\alpha\alpha')\\
+  &=-\dfrac{1}{2}\alpha^2+\dfrac{1}{2}(\beta^2-\alpha^2) \\
+  &=\dfrac{1}{2}(\beta^2-2\alpha^2) \\
+  &=\dfrac{1}{2}(\beta-\sqrt{2}\alpha)(\beta+\sqrt{2}\alpha) \label{eq:8}
 \end{align}
-$0\le\alpha\le\beta$より$\beta+\sqrt{2}\alpha\ge0$（等号は$\alpha=\beta=0$のときのみ）だから，$S'(a)$の符号は$\beta-\sqrt{2}\alpha$の符号で決まる．$A=\sqrt{4a+1}$（$0\le A\le3$）とおくと$\alpha=\dfrac{3-A}{2}$，$\beta=\dfrac{3+A}{2}$だから
+となる．
+さて，$0\le\alpha\le\beta$より$\beta+\sqrt{2}\alpha\ge0$（等号は$\alpha=\beta=0$のときのみ）だから，$S'(a)$の符号は$\beta-\sqrt{2}\alpha$の符号で決まる．
+簡単のため
 \begin{align}
-\beta-\sqrt{2}\alpha=\dfrac{1}{2}\bigl\{(3+A)-\sqrt{2}(3-A)\bigr\}=\dfrac{1+\sqrt{2}}{2}\bigl\{A-3(3-2\sqrt{2})\bigr\}
+ A=\sqrt{4a+1} \label{eq:9}
 \end{align}
-（$3(1-\sqrt{2})/(-(1+\sqrt{2}))$の整理により$3(\sqrt{2}-1)/(1+\sqrt{2})=3(\sqrt{2}-1)^2=3(3-2\sqrt{2})$を用いた）．よって$S'(a)$は$A=3(3-2\sqrt{2})=9-6\sqrt{2}$を境に符号が$-$から$+$に変わる．このとき
+とおくと
+\begin{align}
+ \begin{cases}
+   \alpha&=\dfrac{3-A}{2} \\
+   \beta&=\dfrac{3+A}{2}
+  \end{cases}
+\end{align}
+だから，
+\begin{align}
+\beta-\sqrt{2}\alpha
+  &=\dfrac{1}{2}\bigl\{(3+A)-\sqrt{2}(3-A)\bigr\} \\
+  &=\dfrac{1+\sqrt{2}}{2}\bigl\{A-3(3-2\sqrt{2})\bigr\}
+\end{align}
+よって$S'(a)$は$A=3(3-2\sqrt{2})=9-6\sqrt{2}$を境に符号が$-$から$+$に変わる．
+このとき
 \begin{align}
 4a+1=A^2=(9-6\sqrt{2})^2=81-108\sqrt{2}+72=153-108\sqrt{2}
 \end{align}
 より
 \begin{align}
-a=\dfrac{152-108\sqrt{2}}{4}=38-27\sqrt{2}.
+a=\dfrac{152-108\sqrt{2}}{4}=38-27\sqrt{2}
 \end{align}
-（$38-27\sqrt{2}\approx-0.18$は$[-1/4,2]$の範囲内．）$S'(a)$は$-\dfrac{1}{4}\le a<38-27\sqrt{2}$で負，$38-27\sqrt{2}<a\le2$で正だから，$S(a)$は
+であり，これは\cref{eq:4}の範囲内である．
+以上から$S(a)$の増減表は以下のようになる．
+
+\begin{table}[htb]
+\centering
+\caption{$S(a)$ の増減表 $\left(-\dfrac{1}{4} \le a \le 2\right)$}
+\begin{tabular}{c|ccccc}
+$a$ & $-\dfrac{1}{4}$ & $\cdots$ & $38-27\sqrt{2}$ & $\cdots$ & $2$ \\
+\hline
+$A$ & &  & $3(3-2\sqrt{2})$ &  & \\
+\hline
+$S'(a)$ & & $-$ & $0$ & $+$ & \\
+\hline
+$S(a)$ & & $\searrow$ & 極小 & $\nearrow$ & 
+\end{tabular}
+\end{table}
+
+従って$S(a)$は
 \begin{align}
 a=38-27\sqrt{2}
 \end{align}

@@ -1,39 +1,143 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 \paragraph{(1)}
 
-$O$を原点とし，$\vec a=\overrightarrow{OA}$，$\vec b=\overrightarrow{OB}$，$\vec c=\overrightarrow{OC}$（$|\vec a|=|\vec b|=|\vec c|=1$，$\vec a\cdot\vec b=\vec b\cdot\vec c=\vec c\cdot\vec a=\dfrac{1}{2}$）とおく．$D$は$AB$の中点，$E$は$OC$の中点だから
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+  % 1. 各頂点の座標設定（立体的に見やすい投影座標）
+  \coordinate (O) at (0, 0);          % 原点 O
+  \coordinate (A) at (1.8, -0.6);     % 手前の頂点 A
+  \coordinate (B) at (2.4, 0.4);      % 右奥の頂点 B
+  \coordinate (C) at (1.1, 1.8);      % 上の頂点 C
+
+  % 2. 中点 D, E の計算
+  \coordinate (D) at ($(A)!0.5!(B)$); % AB の中点 D
+  \coordinate (E) at ($(O)!0.5!(C)$); % OC の中点 E
+
+  % 3. 奥側の稜線（点線）
+  \draw[dashed, thick, gray!70] (O) -- (B);
+
+  % 4. ベクトル DE の描画（青色の太い矢印）
+  \draw[->, very thick, blue!80!black] (D) -- (E) node[midway, above, font=\footnotesize] {$\overrightarrow{DE}$};
+
+  % 5. 手前・外側の稜線（実線）
+  \draw[thick] (O) -- (A) -- (B) -- (C) -- cycle;
+  \draw[thick] (O) -- (C);
+
+  % 6. ベクトル AC の描画（赤色の太い矢印）
+  \draw[->, very thick, red!80!black] (A) -- (C) node[midway, right, font=\footnotesize] {$\overrightarrow{AC}$};
+
+  % 7. 中点マーク（等長記号など、必要に応じて）
+  % D は AB の中点
+  \draw[thick] ($(A)!0.48!(D)$) -- ++(0.04, 0.08);
+  \draw[thick] ($(D)!0.48!(B)$) -- ++(0.04, 0.08);
+
+  % 8. 頂点プロットとラベル
+  \fill (O) circle (0.8pt) node[below left] {$O$};
+  \fill (A) circle (0.8pt) node[below left] {$A$};
+  \fill (B) circle (0.8pt) node[right] {$B$};
+  \fill (C) circle (0.8pt) node[above] {$C$};
+
+  \fill[blue!80!black] (D) circle (0.9pt) node[below right] {$D$};
+  \fill[blue!80!black] (E) circle (0.9pt) node[above left] {$E$};
+
+  % 9. ベクトルの注記
+  \node[font=\footnotesize, gray!80!black] at ($(O)!0.5!(A) + (-0.1,-0.15)$) {$\vec{a}$};
+  \node[font=\footnotesize, gray!80!black] at ($(O)!0.5!(B) + (0.05,0.15)$) {$\vec{b}$};
+  \node[font=\footnotesize, gray!80!black] at ($(O)!0.5!(C) + (-0.15,0.05)$) {$\vec{c}$};
+
+\end{tikzpicture}
+\caption{正四面体 $OABC$ とベクトル $\overrightarrow{AC}$, $\overrightarrow{DE}$}
+\end{figure}
+
+$O$を原点として考えて，点$X$に対して小文字$\vec{x}$を用いて
 \begin{align}
-\overrightarrow{AC}=\vec c-\vec a,\qquad\overrightarrow{DE}=\dfrac{\vec c}{2}-\dfrac{\vec a+\vec b}{2}=\dfrac{1}{2}(\vec c-\vec a-\vec b).
+ \vec x=\overrightarrow{OX} \label{eq:1}
 \end{align}
-よって
+とおく．すると正四面体$OABC$の性質より，各面は辺の長さ$1$の正三角形であり
 \begin{align}
-\overrightarrow{AC}\cdot\overrightarrow{DE}&=\dfrac{1}{2}\bigl\{(\vec c-\vec a)\cdot(\vec c-\vec a)-(\vec c-\vec a)\cdot\vec b\bigr\}=\dfrac{1}{2}\bigl\{|\vec c-\vec a|^2-\vec b\cdot\vec c+\vec a\cdot\vec b\bigr\}.
+ \begin{cases}
+ |\vec a|=|\vec b|=|\vec c|=1 \\
+ \vec a\cdot\vec b=\vec b\cdot\vec c=\vec c\cdot\vec a = \cos\dfrac{\pi}{3} = \dfrac{1}{2}  
+ \end{cases} \label{eq:1}
 \end{align}
-$|\vec c-\vec a|^2=|\vec c|^2-2\vec a\cdot\vec c+|\vec a|^2=1-1+1=1$，$\vec b\cdot\vec c=\vec a\cdot\vec b=\dfrac{1}{2}$だから
+である．
+
+$D$は$AB$の中点，$E$は$OC$の中点だから
 \begin{align}
-\overrightarrow{AC}\cdot\overrightarrow{DE}=\dfrac{1}{2}\Bigl(1-\dfrac{1}{2}+\dfrac{1}{2}\Bigr)=\dfrac{1}{2}.
+ \begin{cases}
+ \overrightarrow{AC}=\vec c-\vec a \\
+ \overrightarrow{DE}=\dfrac{\vec c}{2}-\dfrac{\vec a+\vec b}{2}=\dfrac{1}{2}(\vec c-\vec a-\vec b)  
+ \end{cases} 
 \end{align}
+なので，これらの内積をとって
+\begin{align}
+\overrightarrow{AC}\cdot\overrightarrow{DE}
+  &=\dfrac{1}{2}\bigl\{(\vec c-\vec a)\cdot(\vec c-\vec a)-(\vec c-\vec a)\cdot\vec b\bigr\} \\
+  &=\dfrac{1}{2}\bigl\{|\vec c-\vec a|^2-\vec b\cdot\vec c+\vec a\cdot\vec b\bigr\} \\
+  &=\dfrac{1}{2}\bigl\{|AC|^2-\vec b\cdot\vec c+\vec a\cdot\vec b\bigr\} \\
+  &=\dfrac{1}{2}\bigl\{ 1-\dfrac{1}{2}+\dfrac{1}{2} \bigr\} \quad (\because \text{\cref{eq:1}})\\
+  &=\dfrac{1}{2}
+\end{align}
+である．
 
 \paragraph{(2)}
 
-目の積が10の倍数（$2$の倍数かつ$5$の倍数）にならない事象を考える．$B$:「3回とも偶数の目が出ない（目が$1,3,5$のみ）」，$C$:「3回とも$5$が出ない（目が$1,2,3,4,6$のみ）」，$A=B\cap C$:「3回とも目が$1,3$のみ」とすると，求める事象の余事象は$B\cup C$である．
+以下のように事象を定める．
+\begin{enumerate}
+ \item[$B$] 3回とも偶数の目が出ない（目が$1,3,5$のみ）\\
+ \item[$C$] 3回とも$5$が出ない（目が$1,2,3,4,6$のみ）\\
+ \item[$A$] $A=B\cap C$，すなわち3回とも目が$1,3$のみ．
+\end{enumerate}
+さて，目の積が10の倍数（$2$の倍数かつ$5$の倍数）にならない事象を考えると，この事象は$B\cup C$で表される．従って求める事象$\overline{B\cup C}$の確率は
 \begin{align}
-P(A)=\Bigl(\dfrac{2}{6}\Bigr)^3=\Bigl(\dfrac{1}{3}\Bigr)^3,\qquad P(B)=\Bigl(\dfrac{3}{6}\Bigr)^3=\Bigl(\dfrac{1}{2}\Bigr)^3,\qquad P(C)=\Bigl(\dfrac{5}{6}\Bigr)^3.
+ P(\overline{B\cup C}) = 1 - P(B\cup C) \label{eq:2}
 \end{align}
-包除原理より$P(B\cup C)=P(B)+P(C)-P(B\cap C)=P(B)+P(C)-P(A)$だから，求める確率は
+で求められる．
+さて，$A,B,C$について発生する確率はそれぞれ
 \begin{align}
-P(\overline{B\cup C})=1-P(B)-P(C)+P(A)=1-\Bigl(\dfrac{1}{2}\Bigr)^3-\Bigl(\dfrac{5}{6}\Bigr)^3+\Bigl(\dfrac{1}{3}\Bigr)^3=1-\dfrac{1}{8}-\dfrac{125}{216}+\dfrac{1}{27}=\dfrac{216-27-125+8}{216}=\dfrac{72}{216}=\dfrac{1}{3}.
+ P(A)&=\Bigl(\dfrac{2}{6}\Bigr)^3=\Bigl(\dfrac{1}{3}\Bigr)^3 \\
+ P(B)&=\Bigl(\dfrac{3}{6}\Bigr)^3=\Bigl(\dfrac{1}{2}\Bigr)^3 \\
+ P(C)&=\Bigl(\dfrac{5}{6}\Bigr)^3
 \end{align}
+だから，包除原理より$P(B\cup C)=P(B)+P(C)-P(B\cap C)=P(B)+P(C)-P(A)$によって
+\begin{align}
+ P(B\cup C) = \Bigl(\dfrac{1}{2}\Bigr)^3 + \Bigl(\dfrac{5}{6}\Bigr)^3 - \Bigl(\dfrac{1}{3}\Bigr)^3
+\end{align}
+だから，\cref{eq:2}に代入して求める確率は
+\begin{align}
+ P(\overline{B\cup C})
+ &=1-\Bigl(\dfrac{1}{2}\Bigr)^3-\Bigl(\dfrac{5}{6}\Bigr)^3+\Bigl(\dfrac{1}{3}\Bigr)^3 \\
+ &=1-\dfrac{1}{8}-\dfrac{125}{216}+\dfrac{1}{27} \\
+ &=\dfrac{216-27-125+8}{216} \\
+ &=\dfrac{72}{216} \\
+ &=\dfrac{1}{3}
+\end{align}
+である．
 
-（別解：直接数え上げる．3個の目の中に「5の倍数」（=5）と「2の倍数」（=2,4,6）が少なくとも1つずつ含まれる場合を数える．5の倍数の個数と2の倍数の個数の内訳で場合分けすると，$3!\cdot1\cdot3\cdot2=36$，${}_3C_1\cdot3\cdot1=9$，${}_3C_1\cdot1\cdot3=27$の3通りの内訳があり，合計$36+9+27=72$通り．よって確率は$72/6^3=72/216=1/3$．）
+{\bf [別解]}
 
+\paragraph{(2)}
+
+サイコロが$3$つだけなので直接数え上げても解ける．以下の3パターンに分けられる．
+\begin{enumerate}
+ \item $5$の倍数が$1$つ，$2$の倍数が$1$つ，残りが$1$か$3$．\\
+ \item $5$の倍数が$2$つ，$2$の倍数が$1$つ．\\
+ \item $5$の倍数が$1$つ，$2$の倍数が$2$つ．
+\end{enumerate}
+それぞれ数え上げると
+\begin{align}
+ 3!\cdot1\cdot3\cdot2 + {}_3C_1\cdot3\cdot1 + {}_3C_1\cdot1\cdot3 = 36 + 9 + 27 = 72
+\end{align}
+通りだから，求める確率は
+\begin{align}
+ 72/6^3=72/216=1/3
+\end{align}
+である．
 
 \newpage
 

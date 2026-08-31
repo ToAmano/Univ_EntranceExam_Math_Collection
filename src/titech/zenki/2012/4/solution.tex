@@ -1,57 +1,103 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
+
+与えられた漸化式
 \begin{align}
-a_1=\dfrac{1}{n(n+1)},\qquad a_{k+1}=-\dfrac{1}{k+n+1}+\dfrac{n}{k}\sum_{i=1}^ka_i\qquad(k=1,2,\dots).\tag{①}
+ \begin{cases}
+   a_1=\dfrac{1}{n(n+1)} \\  
+   a_{k+1}=-\dfrac{1}{k+n+1}+\dfrac{n}{k}\sum_{i=1}^ka_i\qquad(k=1,2,\dots).\tag{①}
+ \end{cases} \label{eq:1}
 \end{align}
+について考える．
 
 \paragraph{(1)}
 
-①より
+\cref{eq:1}に$k=1,2$を順に代入すると
 \begin{align}
-a_2&=-\dfrac{1}{n+2}+n\cdot\dfrac{1}{n(n+1)}=-\dfrac{1}{n+2}+\dfrac{1}{n+1}=\dfrac{1}{(n+1)(n+2)},\\
-a_3&=-\dfrac{1}{n+3}+\dfrac{n}{2}\Bigl(\dfrac{1}{n(n+1)}+\dfrac{1}{(n+1)(n+2)}\Bigr)=-\dfrac{1}{n+3}+\dfrac{n}{2}\cdot\dfrac{1}{n+1}\cdot\dfrac{2(n+1)}{n(n+2)}=-\dfrac{1}{n+3}+\dfrac{1}{n+2}=\dfrac{1}{(n+2)(n+3)}.
+a_2
+  &=-\dfrac{1}{n+2}+n\cdot\dfrac{1}{n(n+1)} \\
+  &=-\dfrac{1}{n+2}+\dfrac{1}{n+1} \\
+  &=\dfrac{1}{(n+1)(n+2)}
 \end{align}
+および
+\begin{align}
+ a_3
+  &=-\dfrac{1}{n+3}+\dfrac{n}{2}\Bigl(\dfrac{1}{n(n+1)}+\dfrac{1}{(n+1)(n+2)}\Bigr) \\
+  &=-\dfrac{1}{n+3}+\dfrac{n}{2}\cdot\dfrac{1}{n+1}\cdot\dfrac{2(n+1)}{n(n+2)} \\
+  &=-\dfrac{1}{n+3}+\dfrac{1}{n+2}=\dfrac{1}{(n+2)(n+3)}
+\end{align}
+を得る．
 
 \paragraph{(2)}
 
-$a_k=\dfrac{1}{(n+k-1)(n+k)}$であることを数学的帰納法で示す．$k=1$のときは$a_1=\dfrac{1}{n(n+1)}$と一致し成立．$k\le m$（$m\in\mathbb N$）なる全ての$k$で成立すると仮定する．$S_m=\displaystyle\sum_{i=1}^ma_i$は望遠鏡和で
+数学的帰納法により
 \begin{align}
-S_m=\sum_{i=1}^m\Bigl(\dfrac{1}{n+i-1}-\dfrac{1}{n+i}\Bigr)=\dfrac{1}{n}-\dfrac{1}{n+m}.
+ a_k=\dfrac{1}{(n+k-1)(n+k)} \label{eq:2}
 \end{align}
-①より
+であることを示す．
+$k=1$のときは(1)より$a_1=\dfrac{1}{n(n+1)}$と一致して成立する．
+そこで$k\le m$（$m\in\mathbb N$）なる全ての$k$で成立すると仮定する．すると$a_i$の和
 \begin{align}
-a_{m+1}=-\dfrac{1}{n+m+1}+\dfrac{n}{m}\Bigl(\dfrac{1}{n}-\dfrac{1}{n+m}\Bigr)=-\dfrac{1}{n+m+1}+\dfrac{n}{m}\cdot\dfrac{m}{n(n+m)}=-\dfrac{1}{n+m+1}+\dfrac{1}{n+m}=\dfrac{1}{(n+m)(n+m+1)}
+ S_m=\displaystyle\sum_{i=1}^ma_i
 \end{align}
-となり，これは$k=m+1$でも公式が成立することを示す．よって数学的帰納法により，すべての$k$で
+は
 \begin{align}
-a_k=\dfrac{1}{(n+k-1)(n+k)}.
+ S_m
+  &=\sum_{i=1}^m\Bigl(\dfrac{1}{n+i-1}-\dfrac{1}{n+i}\Bigr) \\
+  &=\dfrac{1}{n}-\dfrac{1}{n+m}
 \end{align}
+と計算できるから，\cref{eq:1}の漸化式に代入して$a_{m+1}$は
+\begin{align}
+ a_{m+1}
+  &=-\dfrac{1}{n+m+1}+\dfrac{n}{m}\Bigl(\dfrac{1}{n}-\dfrac{1}{n+m}\Bigr) \\
+  &=-\dfrac{1}{n+m+1}+\dfrac{n}{m}\cdot\dfrac{m}{n(n+m)} \\
+  &=-\dfrac{1}{n+m+1}+\dfrac{1}{n+m} \\
+  &=\dfrac{1}{(n+m)(n+m+1)}
+\end{align}
+となり，これは$k=m+1$でも\cref{eq:2}が成立することを示す．よって数学的帰納法により，すべての$k$で
+\begin{align}
+a_k=\dfrac{1}{(n+k-1)(n+k)}
+\end{align}
+である．
 
 \paragraph{(3)}
 
-$b_n=\displaystyle\sum_{k=1}^n\sqrt{a_k}$とする．
 \begin{align}
-\sum_{k=1}^n\dfrac{1}{n+k}=\dfrac{1}{n}\sum_{k=1}^n\dfrac{1}{1+\dfrac{k}{n}}\xrightarrow[n\to\infty]{}\int_0^1\dfrac{dx}{1+x}=\log2,\qquad
-\sum_{k=1}^n\dfrac{1}{n+k-1}=\dfrac{1}{n}\sum_{k=1}^n\dfrac{1}{1+\dfrac{k-1}{n}}\xrightarrow[n\to\infty]{}\int_0^1\dfrac{dx}{1+x}=\log2
+ b_n=\displaystyle\sum_{k=1}^n\sqrt{a_k} \label{eq:3}
 \end{align}
-（区分求積法）．一方，$(n+k-1)^2<(n+k-1)(n+k)<(n+k)^2$（$n+k-1<n+k$より）から逆数をとって
+について考える．
+
+自明な関係式$(n+k-1)^2<(n+k-1)(n+k)<(n+k)^2$の逆数をとって，\cref{eq:2}より
 \begin{align}
-\dfrac{1}{(n+k)^2}<a_k<\dfrac{1}{(n+k-1)^2}\quad\therefore\ \dfrac{1}{n+k}<\sqrt{a_k}<\dfrac{1}{n+k-1}
+ &\dfrac{1}{(n+k)^2}<a_k<\dfrac{1}{(n+k-1)^2} \\
+\therefore\ 
+ &\dfrac{1}{n+k}<\sqrt{a_k}<\dfrac{1}{n+k-1} \label{eq:4}
 \end{align}
-となり，$k=1,\dots,n$について和をとると
+だから，$k=1,2,\cdots,n$について和をとって\cref{eq:3}を代入すると
 \begin{align}
-\sum_{k=1}^n\dfrac{1}{n+k}<b_n<\sum_{k=1}^n\dfrac{1}{n+k-1}.
+ \sum_{k=1}^n\dfrac{1}{n+k}<b_n<\sum_{k=1}^n\dfrac{1}{n+k-1} \label{eq:5}
 \end{align}
-両端はともに$n\to\infty$で$\log2$に収束するから，はさみうちの原理より
+である．
+
+さて，両端の和は$n\to\infty$とすると区分求積法により
 \begin{align}
-\lim_{n\to\infty}b_n=\log2.
+\sum_{k=1}^n\dfrac{1}{n+k} 
+  &=\dfrac{1}{n}\sum_{k=1}^n\dfrac{1}{1+\dfrac{k}{n}} \\
+  &\xrightarrow[n\to\infty]{}\int_0^1\dfrac{dx}{1+x} =\log2
 \end{align}
+\begin{align}
+ \sum_{k=1}^n\dfrac{1}{n+k-1}
+  &=\dfrac{1}{n}\sum_{k=1}^n\dfrac{1}{1+\dfrac{k-1}{n}} \\
+  &\xrightarrow[n\to\infty]{}\int_0^1\dfrac{dx}{1+x} =\log2
+\end{align}
+だから，両方$\log 2$に収束する．従って\cref{eq:5}において挟み撃ちの原理より
+\begin{align}
+\lim_{n\to\infty}b_n=\log2
+\end{align}
+である．
+
 
 
 \newpage
