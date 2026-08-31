@@ -1,52 +1,118 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$f(x)=\dfrac{3}{4}x^2-3x+4=\dfrac{3}{4}(x-2)^2+1$ とおく．
-$y=x$ と $y=f(x)$ の交点は $x=\dfrac{4}{3},4$ でグラフは右図．
+
+与えられた二次関数を
+\begin{align}
+ f(x)
+   &=\dfrac{3}{4}x^2-3x+4 \\
+   &=\dfrac{3}{4}(x-2)^2+1 \label{eq:1}
+\end{align}
+とおく．
+$y=x$ と $y=f(x)$ の交点は $x=\dfrac{4}{3},4$ だからグラフは下図のようになる．
 
 \begin{figure}[htb]
-\begin{center}
-\begin{tikzpicture}[scale=1.1, >=stealth]
-  \draw[->] (-0.3,0) -- (5,0) node[right] {$x$};
-  \draw[->] (0,-0.3) -- (0,5) node[above] {$y$};
+\centering
+\begin{tikzpicture}[scale=1.6, >=stealth, every node/.style={font=\small}]
+
+  % 1. 解となる正方形領域 [1, 4] x [1, 4] の補助表示（薄いハッチング/背景）
+  %\fill[blue!5, opacity=0.8] (1, 1) rectangle (4, 4);
+  %\draw[dashed, blue!40!black] (1, 0) -- (1, 4) -- (0, 4);
+
+  % 2. 補助点線（頂点・交点の位置関係）
+  % 頂点 (2, 1)
+  \draw[dashed, gray!70] (2, 0) -- (2, 1) -- (0, 1);
+  % 交点 (4/3, 4/3)
+  \draw[dashed, gray!70] (1.333, 0) -- (1.333, 1.333) -- (0, 1.333);
+  % 交点 (4, 4)
+  \draw[dashed, gray!70] (4, 0) -- (4, 4) -- (0, 4);
+
+  % 3. 座標軸
+  \draw[->, thick] (-0.4, 0) -- (5.0, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.4) -- (0, 5.0) node[above] {$y$};
   \node[below left] at (0,0) {$O$};
-  \draw[dashed] (0,0) -- (4.5,4.5) node[above right] {$y=x$};
-  \draw[domain=0:4.6, smooth, thick] plot (\x, {0.75*(\x-2)*(\x-2)+1});
-  \node[below] at (1.33,0) {$\frac{4}{3}$};
-  \node[below] at (4,0) {$4$};
-  \fill (1.33,1.33) circle (1.2pt);
-  \fill (4,4) circle (1.2pt);
+
+  % 4. 直線 y = x
+  \draw[thick, gray!80!black] (-0.2, -0.2) -- (4.6, 4.6) node[above right] {$y = x$};
+
+  % 5. 放物線 y = f(x) = 3/4(x-2)^2 + 1
+  \draw[very thick, blue!80!black, domain=-0.1:4.55, smooth, samples=80] 
+    plot (\x, {0.75*(\x - 2.0)*(\x - 2.0) + 1.0}) node[right] {$y = f(x)$};
+
+  % 6. 解 (a,b)=(1,4) の区間上でのグラフ強調
+  %\draw[line width=1.6pt, red!80!black, domain=1:4, smooth, samples=60] 
+  %  plot (\x, {0.75*(\x - 2.0)*(\x - 2.0) + 1.0});
+
+  % 7. 軸上の目盛りテキスト
+  \node[below] at (1.0, 0) {$1$};
+  \node[below] at (1.333, 0) {$\frac{4}{3}$};
+  \node[below] at (2.0, 0) {$2$};
+  \node[below] at (4.0, 0) {$4$};
+
+  \node[left] at (0, 1.0) {$1$};
+  \node[left] at (0, 1.333) {$\frac{4}{3}$};
+  \node[left] at (0, 4.0) {$4$};
+
+  % 8. プロット点とラベル
+  % y切片
+  \fill (0, 4.0) circle (0.8pt);
+  % 頂点 (2, 1)
+  \fill[blue!80!black] (2.0, 1.0) circle (0.9pt) node[below right, font=\footnotesize] {$(2,1)$};
+  % 交点 (4/3, 4/3)
+  \fill[red!80!black] (1.333, 1.333) circle (1.0pt) node[above left, font=\footnotesize] {$\left(\frac{4}{3},\frac{4}{3}\right)$};
+  % 交点 (4, 4)
+  \fill[red!80!black] (4.0, 4.0) circle (1.0pt) node[below right, font=\footnotesize] {$(4,4)$};
+  % 定義域端点 (1, 7/4)
+  %\fill[red!80!black] (1.0, 1.75) circle (0.9pt);
+
 \end{tikzpicture}
-\end{center}
-\caption{$y=x$と$y=f(x)$のグラフ}
+\caption{$y=x$ と $y=f(x)$ のグラフ}
 \end{figure}
 
-したがって，$4<b$ の時，$f(b)>b$ で不適．次に $[a,b]$ に $2$ を含むかで場合分けする．
+したがって，$4<b$ の時は$f(b)>b$ となり，値域が$b$をはみ出てしまうため不適である．
+従って$b \le 4$で考えれば良い．
+次に $[a,b]$ に $2$ を含むかで場合分けする．
 
 \subparagraph{$1^\circ\ a\le2\le b$ の時}
 
-$[a,b]$ での $\min f=f(2)=1$ だから，$a=1$ である．$f(1)=\dfrac{7}{4}$ だから $b=4$ のみ適する．
+この時は$[a,b]$ での$f(x)$の最小値は軸$x=2$の時の$f(2)=1$だから，$a=1$であることが必要である．
+$f(1)=\dfrac{7}{4}$ だから $b=\dfrac{7}{4}$とはできない（$2 \le b$より）ため，$b=4$のみが条件を満たして十分である．
+以上より
+\begin{align}
+ (a,b) = \left(1,4\right) \label{eq:2}
+\end{align}
+である．
 
 \subparagraph{$2^\circ\ a\ge2$ の時}
 
-$[a,b]$ では $f(a)\le f(x)\le f(b)$ だから，$f(a)=a$ かつ $f(b)=b$ とならば良いが，図からこれをみたす $(a,b)$ はない．
+この時 $[a,b]$ では $f(a)\le f(x)\le f(b)$ だから，$f(a)=a$ かつ $f(b)=b$ となれば良いが，図からこれをみたす $(a,b)$ はない．
 
 \subparagraph{$3^\circ\ b<2$ の時}
 
 $[a,b]$ では $f(b)\le f(x)\le f(a)$ だから $f(b)=a$ かつ $f(a)=b$ となる．
+よって\cref{eq:1}より
 \begin{align}
 f(b)-f(a)=\dfrac{3}{4}(b^2-a^2)-3(b-a)=(a-b)
 \end{align}
-$a\ne b$ から
+である．
+$a\ne b$ から両辺を$b-a \neq 0$で割ると
 \begin{align}
-\dfrac{3}{4}(a+b)-3=-1 \quad\therefore\ a+b=\dfrac{8}{3}
+ \dfrac{3}{4}(a+b)-3=-1 \quad\therefore\ a+b=\dfrac{8}{3}
 \end{align}
-これを $f(a)=b$ に代入すると $a=b=\dfrac{4}{3}$ となり，$a=b$ に反し矛盾．
+となる．これを$f(a)=b$に代入すると
+\begin{align}
+ &\dfrac{3}{4}a^2-3a+4 = b = \dfrac{8}{3} - a \\
+ &\dfrac{3}{4}a^2-2a+\dfrac{4}{3} = 0 \\
+ &a^2-\dfrac{8}{3}a+\dfrac{16}{9} = 0 \\
+\therefore
+ &a = \dfrac{4}{3}
+\end{align}
+だから，
+\begin{align}
+ b = \dfrac{8}{3} - a = \dfrac{4}{3}
+\end{align}
+となり，$a=b$となるがこれは$a\neq b$に反して不適である．
 \casesend
 
 以上から，もとめるのは $(a,b)=(1,4)$ である．

@@ -1,52 +1,85 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-$F(a)=\displaystyle\int_0^{\pi/2}|\sin x-a\cos x|dx$，$S=\sin x,\ C=\cos x,\ f(x)=S-aC$ とおく．$f'(x)=C+aS$
+与えられた関数
+\begin{align}
+ F(a)= \int_0^{\pi/2}|\sin x-a\cos x|dx \label{eq:1}
+\end{align}
+について考える．$F(a)$は明らかに連続関数である．
+被積分関数の絶対値の中身を
+\begin{align}
+ f(x)=\sin x - a \cos x \label{eq:2}
+\end{align}
+とする．一階微分は
+\begin{align}
+ f'(x) = \cos x + a\cos x \label{eq:3}
+\end{align}
+である．
 
-$a\le0$ の時，$f(x)\ge0$ とでき，
+まず，$a \le 0$の時は\cref{eq:2}より$f(x) \ge 0$だから\cref{eq:1}の絶対値ははずせて
 \begin{align}
-F(a)=\int_0^{\pi/2}S-a\int_0^{\pi/2}C\,dx=1-a
+ F(a)
+   &=\int_0^{\pi/2}f(x) dx \\
+   &=\int_0^{\pi/2}(\sin x - a \cos x) dx \\
+   &=1-a
 \end{align}
-これは $a$ の単調減少関数であるから，連続性も考えて，$0\le a$ で考えれば良い．この時
-$f(0)=-a\le0$，$f(\pi/2)=1$，$f'(x)\ge0$ から，$[0,\pi/2]$ に $f(\alpha)=0$ なる $\alpha$ がただ1つあって，
+である．
+これは $a$ の単調減少関数であるから，最大値を考えるときは連続性も考慮に入れて
 \begin{align}
-F(a)=-\int_0^\alpha f(x)dx+\int_\alpha^{\pi/2}f(x)dx
-= -\int_0^\alpha S\,dx+\int_0^\alpha aC\,dx+\int_\alpha^{\pi/2}S\,dx-\int_\alpha^{\pi/2}aC\,dx \quad \cdots \text{①}
+ 0\le a \label{eq:4}
 \end{align}
-とかける．
+として良い．
+
+この時は\cref{eq:3}より$f'(x) \ge 0$となって$f(x)$は単調増加である．
+また端点では$f(0)=-a\le0$，$f(\pi/2)=1>0$となるから，中間値の定理より
+$[0,\pi/2]$ に $f(\alpha)=0$ なる $\alpha$ がただ1つあって，
+\begin{align}
+ F(a)
+  &=-\int_0^\alpha f(x)dx+\int_\alpha^{\pi/2}f(x)dx \\
+  &= -\int_0^\alpha \sin x\,dx+\int_0^\alpha a\cos x\,dx+\int_\alpha^{\pi/2}\sin x\,dx-\int_\alpha^{\pi/2}a\cos x\,dx \label{eq:5}
+\end{align}
+とかける．$\alpha$も$a$の関数であることに注意して両辺を$a$で微分すると
 \begin{align}
 \begin{split}
-F'(a) &= -\sin\alpha\cdot\alpha'+a\cos\alpha\cdot\alpha'+\int_0^\alpha C\,dx-\sin\alpha\cdot\alpha'+a\cos\alpha\cdot\alpha'-\int_\alpha^{\pi/2}C\,dx \\
-&=2(a\cos\alpha-\sin\alpha)\alpha'+2\sin\alpha-1 = 2\sin\alpha-1 \quad (\because f(\alpha)=0)
+ F'(a) 
+   &= -\sin\alpha\cdot\alpha'+a\cos\alpha\cdot\alpha'+\int_0^\alpha \cos x\,dx-\sin\alpha\cdot\alpha'+a\cos\alpha\cdot\alpha'-\int_\alpha^{\pi/2}\cos x\,dx \\
+   &=2(a\cos\alpha-\sin\alpha)\alpha'+2\sin\alpha-1 \\
+   &= 2\sin\alpha-1 \quad (\because f(\alpha)=0)
 \end{split}
 \end{align}
-から下表をうる．
+となって$F(a)$の増減表は以下のようになる．
 
 \begin{table}[htb]
-  \centering
-\begin{tabular}{c|c|c|c|c}
-$a$ & $0$ & & & $+\infty$ \\
+\centering
+\caption{$F(a)$ の増減表 ($a \ge 0$)}
+\begin{tabular}{c|ccccc}
+$a$ & $0$ & $\cdots$ & $\dfrac{\sqrt{3}}{3}$ & $\cdots$ & $(+\infty)$ \\
 \hline
-$\alpha$ & $0$ & \multicolumn{2}{c|}{$\nearrow$} & $(\pi/2)$ \\
+$\alpha$ & $0$ & $\cdots$ & $\dfrac{\pi}{6}$ & $\cdots$ & $\left(\dfrac{\pi}{2}\right)$ \\
 \hline
-$F'$ & & $-$ & $0$ & $+$ \\
+$F'(a)$ & $-1$ & $-$ & $0$ & $+$ & $(1)$ \\
 \hline
-$F$ & & $\searrow$ & $\dfrac{\pi}{6}$ & $\nearrow$
+$F(a)$ & $1$ & $\searrow$ & $\sqrt{3}-1$ & $\nearrow$ & 
 \end{tabular}
 \end{table}
 
-したがって，$\alpha=\dfrac{\pi}{6}$ で $F(a)$ は最小で，この時，$f(\alpha)=0$ より，$a=\dfrac{\sqrt{3}}{3}$ でこの時，①から
+したがって，$\alpha=\dfrac{\pi}{6}$ で $F(a)$ は最小値をとる．
+この時，$f(\alpha)=0$ および\cref{eq:2}より，
+\begin{align}
+ \dfrac{1}{2} - a \dfrac{\sqrt{3}}{2} = 0 \quad \therefore a = \dfrac{\sqrt{3}}{3} \label{eq:5}
+\end{align}
+である．
+
+従って\cref{eq:1}から$F\left(\dfrac{\sqrt{3}}{3}\right)$を計算すると
 \begin{align}
 \begin{split}
-F\left(\dfrac{\sqrt{3}}{3}\right) &= -\int_0^{\pi/6}\left(S-\dfrac{\sqrt{3}}{3}C\right)dx+\int_{\pi/6}^{\pi/2}\left(S-\dfrac{\sqrt{3}}{3}C\right)dx \\
-&= -\left[-C-\dfrac{\sqrt{3}}{3}S\right]_0^{\pi/6}+\left[-C-\dfrac{\sqrt{3}}{3}S\right]_{\pi/6}^{\pi/2}
-= \left(\dfrac{\sqrt{3}}{2}+\dfrac{\sqrt{3}}{6}-1\right)-\left(\dfrac{\sqrt{3}}{3}-\dfrac{\sqrt{3}}{2}-\dfrac{\sqrt{3}}{6}\right) \\
-&= \sqrt{3}-1
+ F\left(\dfrac{\sqrt{3}}{3}\right) 
+  &= -\int_0^{\pi/6}\left(\sin x-\dfrac{\sqrt{3}}{3}\cos x\right)dx+\int_{\pi/6}^{\pi/2}\left(\sin x-\dfrac{\sqrt{3}}{3}\cos x\right)dx \\
+  &= -\left[-\cos x-\dfrac{\sqrt{3}}{3}\sin x\right]_0^{\pi/6}+\left[-\cos x-\dfrac{\sqrt{3}}{3}\sin x\right]_{\pi/6}^{\pi/2} \\
+  &= \left(\dfrac{\sqrt{3}}{2}+\dfrac{\sqrt{3}}{6}-1\right)-\left(\dfrac{\sqrt{3}}{3}-\dfrac{\sqrt{3}}{2}-\dfrac{\sqrt{3}}{6}\right) \\
+  &= \sqrt{3}-1
 \end{split}
 \end{align}
 となる．

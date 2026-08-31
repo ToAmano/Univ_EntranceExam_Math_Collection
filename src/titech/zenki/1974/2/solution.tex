@@ -1,80 +1,219 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
+
+\paragraph{(1)}
+
 $|\alpha|=k$ とおく．
+$k\ne0,1$ と仮定するする．題意から $x=\alpha,\alpha^2,\alpha^4,\cdots,\alpha^{2^n},\cdots$ が $f(x)=0$ の解であり，$k\ne0,1$ から，これらは全て異なる．
+これは $f(x)$ が3次であることに反し矛盾する．以上から$k=0,1$ である．
 
-\begin{enumerate}
-  \item[(1)] $k\ne0,1$ とする．題意から $x=\alpha,\alpha^2,\alpha^4,\cdots,\alpha^{2^n},\cdots$ が $f(x)=0$ の解であり，$k\ne0,1$ から，これらは全て異なる．これは $f(x)$ が3次であることに反し矛盾．以上から，$k=0,1$ である．
 
-  \item[(2)] $a,b,c\in\mathbb{R}$ として，$f(x)=x^3+ax^2+bx+c$ とおく．$f(x)=0$ の3解を $\alpha,\beta,\gamma$ とおく．
+\paragraph{(2)}
 
-  \subparagraph{$1^\circ$ $\alpha,\beta,\gamma\in\mathbb{R}$ の時}
+$f(x)=0$ の3解を $\alpha,\beta,\gamma$ とおくと，題意よりこれらは全て異なり
+\begin{align}
+ \alpha\ne\beta,\beta\ne\gamma,\gamma\ne\alpha \label{eq:1}
+\end{align}
+である．
 
-  $\alpha\ne\beta,\beta\ne\gamma,\gamma\ne\alpha$ 及び (1) から，$\{\alpha,\beta,\gamma\}=\{0,\pm1\}$ となり，この時，十分である．
-  \begin{align}
-  f(x)=x^3-x \quad \cdots \text{①}
-  \end{align}
+因数定理より
+\begin{align}
+ f(x) 
+   &= (x-\alpha)(x-\beta)(x-\gamma) \\
+   &= x^3 - (\alpha+\beta+\gamma)x^2 + (\alpha\beta+\beta\gamma+\gamma\alpha)x - \alpha\beta\gamma \label{eq:2}
+\end{align}
+と書けるので，この$x^2$の係数が$1$だから
+\begin{align}
+ \alpha+\beta+\gamma = 1 \label{eq:3}
+\end{align}
+である．
 
-  \subparagraph{$2^\circ$ $\alpha,\beta,\gamma$ のうち1つのみ実数の時}
+さて，(1)より，$\alpha,\beta,\gamma$の絶対値は$0$または$1$である．解が絶対値$0$を含むかどうかで場合分けする．
 
-  対称性から，$\alpha\in\mathbb{R}$ として良い．この時，$\gamma=\bar\beta$ となる（$\because a,b,c\in\mathbb{R}$）．又題意から，
-  \begin{align}
-  \alpha=0,1
-  \end{align}
-  である．（(1) 及び，$\alpha=-1$ ならば $\alpha^2=1$ が解になるので）
+\begin{figure}[htb]
+\centering
+% --- 左図: \beta^2 = \beta の場合 (\theta = 0) ---
+\begin{minipage}[b]{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.9, >=stealth, every node/.style={font=\small}]
 
-  \subparagraph{(i) $\alpha=0$}
+  % 1. 座標軸（複素平面）
+  \draw[->, thick, gray!70] (-1.4, 0) -- (1.5, 0) node[right, black] {$\text{Re}$};
+  \draw[->, thick, gray!70] (0, -1.3) -- (0, 1.4) node[above, black] {$\text{Im}$};
+  \node[below left] at (0,0) {$O$};
 
-  題意から，$\beta^2$ も $f(x)=0$ の解だから，
-  \begin{align}
-  \beta^2=0,\beta,\bar\beta
-  \end{align}
-  $\beta\ne0,1$ より，
-  \begin{align}
-  \beta^2=\bar\beta \quad \cdots (\star)
-  \end{align}
-  ここで，$e(\theta)=\cos\theta+i\sin\theta$ として，$\beta=e(\theta)$ とすると，$(0\le\theta<2\pi)$，$(\star)$ から，（$\because(1)$）
-  \begin{align}
-  e(2\theta)=e(-\theta) \quad\therefore\ 2\theta=-\theta+2n\pi\ (n\in\mathbb{Z}) \quad\therefore\ \theta=\dfrac{2}{3}n\pi
-  \end{align}
-  $0\le\theta<2\pi$ から，$n=0,1,2$ として，
-  \begin{align}
-  \theta=0,\dfrac{2\pi}{3},\dfrac{4\pi}{3}
-  \end{align}
-  このうち，$\theta=0$ は $\beta=1$ となって不適で，その他の時は十分である．この時
-  \begin{align}
-  f(x)=x^3+x^2+x \quad \cdots \text{②}
-  \end{align}
-  となる．
+  % 2. 単位円
+  \draw[thick, blue!80!black] (0,0) circle (1.0);
 
-  \subparagraph{(ii) $\alpha=1$}
+  % 3. 解のプロット
+  % \beta = \gamma = 1
+  \fill[red!80!black] (1.0, 0) circle (1.2pt) node[above right] {$\beta = \gamma = 1$};
+  
+  % 2乗写像のループ矢印 (\beta -> \beta^2 = \beta)
+  \draw[->, very thick, red!80!black] 
+    (1.05, 0.15) to[out=60, in=300, looseness=8] 
+    node[right, font=\footnotesize] {$\beta^2 = \beta$} (1.05, -0.15);
 
-  (i) と同じく，
-  \begin{align}
-  \beta^2=1,\beta,\bar\beta
-  \end{align}
-  $\beta\ne0,1$ から，
-  \begin{align}
-  \beta^2=1,\bar\beta
-  \end{align}
-  $\beta^2=\bar\beta$ の時，(i) と同じく，$\{\beta,\gamma\}=\left\{e\left(\dfrac{2}{3}\pi\right),e\left(\dfrac{4}{3}\pi\right)\right\}$ で，
-  \begin{align}
-  f(x)=(x-1)(x^2+x+1)=x^3-1 \quad \cdots \text{③}
-  \end{align}
-  $\beta^2=1$ の時，$\beta=\pm1$ で，$\beta\in\mathbb{R}$ となり矛盾．
+  % 目盛り
+  \node[below left] at (-1.0, 0) {$-1$};
+  \node[above left] at (0, 1.0) {$i$};
+  \node[below left] at (0, -1.0) {$-i$};
+  \fill (-1.0, 0) circle (0.6pt);
+
+  \node[below=5pt, font=\bfseries] at (0, -1.4) {(a) $\beta^2 = \beta$ ($\theta = 0$)};
+
+\end{tikzpicture}
+\end{minipage}
+\hfill
+% --- 右図: \beta^2 = \gamma の場合 (\theta = 2\pi/3) ---
+\begin{minipage}[b]{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.9, >=stealth, every node/.style={font=\small}]
+
+  % 1. 座標軸（複素平面）
+  \draw[->, thick, gray!70] (-1.4, 0) -- (1.5, 0) node[right, black] {$\text{Re}$};
+  \draw[->, thick, gray!70] (0, -1.3) -- (0, 1.4) node[above, black] {$\text{Im}$};
+  \node[below left] at (0,0) {$O$};
+
+  % 2. 単位円
+  \draw[thick, blue!80!black] (0,0) circle (1.0);
+
+  % 3. 動径
+  \draw[dashed, gray!70] (0,0) -- (120:1.0);
+  \draw[dashed, gray!70] (0,0) -- (240:1.0);
+
+  % 4. 解のプロット
+  \fill[red!80!black] (120:1.0) circle (1.2pt) node[above left] {$\beta = e\left(\frac{2\pi}{3}\right)$};
+  \fill[red!80!black] (240:1.0) circle (1.2pt) node[below left] {$\gamma = e\left(-\frac{2\pi}{3}\right)$};
+
+  % 5. 偏角 \theta のアーク
+  \draw[->, thick, gray!80!black] (0.35, 0) arc[start angle=0, end angle=120, radius=0.35];
+  \node[font=\footnotesize] at (60:0.48) {$\theta = \frac{2\pi}{3}$};
+
+  \draw[->, thick, gray!80!black] (0.25, 0) arc[start angle=0, end angle=-120, radius=0.25];
+  \node[font=\footnotesize] at (-60:0.42) {$-\theta$};
+
+  % 6. 2乗写像の矢印 (\beta -> \beta^2 = \gamma)
+  \draw[->, very thick, red!80!black] 
+    (115:1.15) arc[start angle=115, end angle=245, radius=1.15]
+    node[midway, left, font=\footnotesize] {$\beta^2 = e\left(\frac{4\pi}{3}\right) = \gamma$};
+
+  % 目盛り
+  \node[below right] at (1.0, 0) {$1$};
+  \fill (1.0, 0) circle (0.6pt);
+
+  \node[below=5pt, font=\bfseries] at (0, -1.4) {(b) $\beta^2 = \gamma$ ($\theta = \frac{2\pi}{3}$)};
+
+\end{tikzpicture}
+\end{minipage}
+
+\caption{複素数平面上の単位円における $\beta^2 = \beta$ と $\beta^2 = \gamma$ の対応}
+\end{figure}
+
+\subparagraph{解が絶対値$0$を含む場合}
+
+絶対値$0$の解を$\alpha$とすると
+\begin{align}
+ \alpha = 0 \label{eq:4}
+\end{align}
+であり，\cref{eq:1}より$\beta,\gamma$の絶対値は$1$である．そこで
+\begin{align}
+ e\left(\theta\right) = \cos\theta + i\sin\theta \label{eq:5}
+\end{align}
+とおくと，
+\begin{align}
+ \beta = e\left(\theta\right) & (0 \le \theta < 2\pi) \label{eq:6}
+\end{align}
+とおける．まず$\beta=\pm 1$の場合を考える．$\beta=-1$ならば$\beta^2=1$も解なので$3$つの解は
+\begin{align}
+ \{\alpha,\beta,\gamma\} = \{0,1,-1\}
+\end{align}
+であり，この時の方程式は
+\begin{align}
+ f(x) = x^3 - x \label{eq:7}
+\end{align}
+である．
+
+次に$\beta=1$の時は\cref{eq:2}および$f(x)$の係数が全て実数なことより$\gamma$も実数である必要があるから，$\gamma=-1$となり，これは先の解と合流する．
+
+そこで以下これ以外の場合を考える．
+\cref{eq:2}で全ての係数が実数だから，$\gamma=\bar{\beta}$であることが必要で，
+\begin{align}
+ \gamma = e\left(-\theta\right) \label{eq:8}
+\end{align}
+となる．
+題意より$\beta^2=e(2\theta)$もまた解だからこれが$\beta,\gamma$のいずれかに等しいから
+\begin{align}
+ e(2\theta) = e(\theta) \quad \text{or} e(2\theta) = e(-\theta)
+\end{align}
+である．整数$m$を用いて
+\begin{align}
+ 2\theta = \theta + 2m\pi \quad \text{or} 2\theta = -\theta + 2m\pi \\
+\therefore 
+ \theta = 2m\pi, \dfrac{2m\pi}{3}
+\end{align}
+だから，$0\le theta < 2\pi, \theta \neq 0,\pi$と合わせてこれを満たすのは
+\begin{align}
+ \theta = \dfrac{2\pi}{3}, \dfrac{4\pi}{3} \label{eq:9}
+\end{align}
+の$2$つである．これら二つは同じ解の組に対応するから，この時の解は
+\begin{align}
+ \{\alpha,\beta,\gamma\} = \left\{0,e\left(\dfrac{2\pi}{3}\right), e\left(\dfrac{4\pi}{3}\right)\right\}
+\end{align}
+であり，方程式は
+\begin{align}
+ f(x) &= x^3 + x^2 + x \label{eq:10}
+\end{align}
+となる．\cref{eq:7,eq:10}をまとめて
+\begin{align}
+ \begin{cases}
+ f(x) &=  x^3 -x \\
+ f(x) &= x^3 + x^2 + x  
+ \end{cases} \label{eq:11}
+\end{align}
+である．
+
+\subparagraph{解が絶対値$0$を含まない時}
+
+この時全ての解は$e(\theta)$の形で表せる．
+題意より\cref{eq:2}で全ての係数が実数だから，$(\alpha,\beta,\gamma)$は全て実数かまたは一つだけ実数である．
+絶対値$1$で実数の数は$\pm 1$であるが，このうち$-1$は二乗した$1$も解にならなければならない．そうすると残りの解も実数になるがこれは\cref{eq:1}に矛盾する．
+
+そこで$1$が解になるので，
+\begin{align}
+ \alpha = 1
+\end{align}
+とおく．残りの解は複素数であり，今までと同様の議論によって，
+\begin{align}
+ \beta = e(\theta) \quad \gamma = e(-\theta) & (0< \theta < 2\pi, \theta \neq \theta)
+\end{align}
+とおける．よって$\beta^2=e(2\theta)$がこれらのどちらかと等しく，
+\begin{align}
+ e(2\theta) = e(\theta) \quad \text{or} e(2\theta) = e(-\theta)
+\end{align}
+である．以下\cref{eq:9}と同様の議論によって
+\begin{align}
+ \theta = \dfrac{2\pi}{3}, \dfrac{4\pi}{3}
+\end{align}
+となって，解の組は
+\begin{align}
+ \{\alpha,\beta,\gamma\} = \left\{1,e\left(\dfrac{2\pi}{3}\right), e\left(\dfrac{4\pi}{3}\right)\right\}
+\end{align}
+である．この時の方程式は
+\begin{align}
+ f(x) = x^3-1 \label{eq:12}
+\end{align}
+である．
 \casesend
 
-  $a,b,c\in\mathbb{R}$ から，以上で全ての場合がつくせる．よって①②③より，
+以上で全ての場合がつくされた．よって\cref{eq:11,eq:12}より，
   \begin{align}
   f(x)=x^3-x,\ x^3+x^2+x,\ x^3-1
   \end{align}
-\end{enumerate}
-
+が求める方程式である．
 
 \newpage
 

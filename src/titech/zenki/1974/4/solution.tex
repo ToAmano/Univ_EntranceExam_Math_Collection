@@ -1,76 +1,288 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-対称性から，立体のうち $y\ge0$ の部分の体積 $V_1$，もとめる体積 $V_2$ として，
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+
+  % --- 1. パラメータ設定と解析座標 ---
+  % a = 1.6, b = 1.2
+  \def\a{1.6}
+  \def\b{1.2}
+
+  % 各頂点座標
+  \coordinate (O) at (0, 0);
+  \coordinate (A) at ({2*\a}, 0);                                  % A(2a, 0)
+  \coordinate (Q) at (\a, 0);                                      % 楕円の端点 Q(a, 0)
+  \coordinate (P) at ({0.5*\a}, {0.5*sqrt(3)*\b});                 % 接点 P(a/2, sqrt(3)/2 * b)
+  \coordinate (B) at (0, {2*sqrt(3)/3*\b});                        % 接線のy切片 B(0, 2sqrt(3)/3 * b)
+  \coordinate (R) at (0, {0.5*sqrt(3)*\b});                        % P の y 軸への射影 R(0, sqrt(3)/2 * b)
+  \coordinate (TopE) at (0, \b);                                   % 楕円の頂点 (0, b)
+
+  % --- 2. y 軸周りの回転領域の斜線塗りつぶし ---
+  % 境界: 線分 QA (x軸) -> 線分 AP (接線) -> 楕円弧 PQ
+  \fill[pattern=north east lines, pattern color=black!40]
+    (Q) -- (A) -- (P)
+    arc[start angle=60, end angle=0, x radius=\a, y radius=\b]
+    -- cycle;
+
+  % --- 3. 補助点線 ---
+  % 点 P から各軸への垂線 (P -> R, P -> x軸)
+  \draw[dashed, gray!70] (R) -- (P) -- ({0.5*\a}, 0);
+  % 楕円の頂点 (0, b)
+  \draw[dashed, gray!50] (TopE) -- ++(0.3, 0);
+
+  % --- 4. 座標軸 ---
+  \draw[->, thick] (-0.4, 0) -- ({2.3*\a}, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.4) -- (0, {1.6*\b}) node[above] {$y$};
+  \node[below left] at (O) {$O$};
+
+  % y軸周りの回転を表す矢印
+  \draw[->, very thick, red!80!black] (-0.25, {1.4*\b}) arc[start angle=150, end angle=390, x radius=0.25, y radius=0.08];
+  \node[left, red!80!black, font=\footnotesize] at (-0.28, {1.4*\b}) {回転軸};
+
+  % --- 5. 曲線・直線の描画 ---
+  % 楕円: x^2/a^2 + y^2/b^2 = 1 (第1・第4象限)
+  \draw[very thick, blue!80!black, domain=-90:90, samples=80] 
+    plot ({\a*cos(\x)}, {\b*sin(\x)});
+  \node[blue!80!black, above right] at (0.35, \b) {$\dfrac{x^2}{a^2} + \dfrac{y^2}{b^2} = 1$};
+
+  % 接線 \ell (点 B から 点 A へ)
+  \draw[very thick, red!80!black] (B) -- (A) node[midway, above right] {$\ell$};
+
+  % --- 6. 軸上の目盛りラベル ---
+  \node[below right] at (\a, 0) {$a$};
+  \node[below] at ({2*\a}, 0) {$2a$};
+  \node[below] at ({0.5*\a}, 0) {$\frac{a}{2}$};
+
+  \node[left] at (TopE) {$b$};
+  \node[left] at (R) {$\frac{\sqrt{3}}{2}b$};
+  \node[left] at (B) {$\frac{2\sqrt{3}}{3}b$};
+
+  % --- 7. プロット点とラベル ---
+  \fill (O) circle (0.7pt);
+  \fill (A) circle (0.7pt) node[above] {$A$};
+  \fill (Q) circle (0.7pt) node[below left] {$Q$};
+  \fill (B) circle (0.7pt) node[right] {$B$};
+  \fill (R) circle (0.7pt) node[right] {$R$};
+  \fill[red!80!black] (P) circle (0.9pt) node[above right] {$P\left(\frac{a}{2},\,\frac{\sqrt{3}}{2}b\right)$};
+
+  % 回転させる領域のラベル
+  % \node[fill=white, inner sep=1pt, font=\bfseries] at ({1.2*\a}, {0.35*\b}) {$V_1$ 断面};
+
+\end{tikzpicture}
+\caption{楕円と接線 $\ell$、および $y$ 軸周りに回転させる領域（斜線部）}
+\end{figure}
+
+
+対称性から，立体のうち $y\ge0$ の部分の体積 $V_1$，もとめる体積 $V$ として，
 \begin{align}
-V_2=2V_1 \quad \cdots \text{①}
+ V=2V_1 \label{eq:1}
 \end{align}
-である．接線は $y$ 軸平行でないので，$m$ を傾きとして
+である．接線は $y$ 軸平行でないので，傾きを$m$として
 \begin{align}
-\ell: y=m(x-2a)
+\ell: y=m(x-2a) \label{eq:2}
 \end{align}
 とおける．これが楕円と接するので，$X=x/a,\ Y=y/b$ とおき直した座標で，
 \begin{align}
-bY=m(aX-2a)
+\ell': bY=m(aX-2a) \label{eq:3}
 \end{align}
-と $X^2+Y^2=1$ が接する．したがって
+と $X^2+Y^2=1$ が接する．したがって円の中心$(0,0)$と直線$\ell'$の距離が$1$だから
 \begin{align}
-\dfrac{|2am|}{\sqrt{(am)^2+b^2}}=1
+ \dfrac{|2am|}{\sqrt{(am)^2+b^2}}=1
 \end{align}
-各辺0以上から2乗して，
+各辺$0$以上なので2乗して，
 \begin{align}
-4a^2m^2=a^2m^2+b^2 \quad\therefore\ m=\pm\dfrac{\sqrt{3}}{3}\dfrac{b}{a}
+ 4a^2m^2=a^2m^2+b^2 \quad\therefore\ m=\pm\dfrac{\sqrt{3}}{3}\dfrac{b}{a}
 \end{align}
-図の接線の傾きは負だから，$a,b>0$ より複号負をとって，
+となる．
+図から接線の傾きは負だから，$a,b>0$ より複号負をとって，
 \begin{align}
-\ell: y=-\dfrac{\sqrt{3}}{3}\dfrac{b}{a}(x-2a)
+ \ell: y=-\dfrac{\sqrt{3}}{3}\dfrac{b}{a}(x-2a) \label{eq:4}
 \end{align}
-である．この時接点 $P\left(\dfrac{a}{2},\dfrac{\sqrt{3}}{2}b\right)$ となる．したがって，
+である．
+
+この時接点は $P\left(\dfrac{a}{2},\dfrac{\sqrt{3}}{2}b\right)$ となる．
+図のように各点をおくと，$V_1$は台形$OAPR$を$y$軸周りに一回転してできる円錐の一部から，楕円弧$PQ$を$y$軸周りに回転してできる立体の体積を引いたものである．
+数式で表すと
 \begin{align}
-V_1 = (\text{円錐部分}) - (\text{楕円部分}) \quad \cdots \text{②}
+V_1 &=
+  \left( \text{\begin{tikzpicture}[baseline={(0,0.3)}, scale=0.85, >=stealth]
+    % 1. 台形部分 OAPR（円錐台部分）
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (1.2,0) -- (0.3,0.7) -- (0,0.7) -- cycle;
+    \draw[thick] (0,0) -- (1.2,0) -- (0.3,0.7) -- (0,0.7) -- cycle;
+    \draw[dashed, gray!70] (0,0) -- (0,0.9);
+    % y軸回転を表す矢印
+    \draw[->, thick, red!80!black] (-0.2, 1.0) arc[start angle=150, end angle=390, x radius=0.2, y radius=0.06];
+    % ラベルとプロット点
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$O$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (1.2,0) {$A$};
+    \node[above right, font=\scriptsize, inner sep=1pt] at (0.3,0.7) {$P$};
+    \node[left, font=\scriptsize, inner sep=1pt] at (0,0.7) {$R$};
+    \fill (0,0) circle (0.6pt);
+    \fill (1.2,0) circle (0.6pt);
+    \fill (0.3,0.7) circle (0.6pt);
+    \fill (0,0.7) circle (0.6pt);
+  \end{tikzpicture}} \right)
+  -
+  \left( \text{\begin{tikzpicture}[baseline={(0,0.3)}, scale=0.85, >=stealth]
+    % 2. 楕円弧下の部分 OQPR
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (0.8,0) arc[start angle=0, end angle=60, x radius=0.8, y radius=0.8] -- (0,0.7) -- cycle;
+    \draw[thick] (0,0) -- (0.8,0) arc[start angle=0, end angle=60, x radius=0.8, y radius=0.8] -- (0,0.7) -- cycle;
+    \draw[dashed, gray!70] (0,0) -- (0,0.9);
+    % y軸回転を表す矢印
+    \draw[->, thick, red!80!black] (-0.2, 1.0) arc[start angle=150, end angle=390, x radius=0.2, y radius=0.06];
+    % ラベルとプロット点
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$O$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (0.8,0) {$Q$};
+    \node[above right, font=\scriptsize, inner sep=1pt] at (0.4,0.7) {$P$};
+    \node[left, font=\scriptsize, inner sep=1pt] at (0,0.7) {$R$};
+    \fill (0,0) circle (0.6pt);
+    \fill (0.8,0) circle (0.6pt);
+    \fill (0.4,0.7) circle (0.6pt);
+    \fill (0,0.7) circle (0.6pt);
+  \end{tikzpicture}} \right) \label{eq:5}
 \end{align}
-において，
-\begin{align}
-\begin{split}
-(\text{円錐部分}) &= \dfrac{1}{3}\pi(2a)^2\dfrac{2\sqrt{3}}{3}b-\dfrac{1}{3}\pi\left(\dfrac{1}{2}a\right)^2\left(\dfrac{2\sqrt{3}}{3}b-\dfrac{\sqrt{3}}{2}b\right)
-= \dfrac{1}{3}\pi\left[\dfrac{8\sqrt{3}}{3}a^2b-\dfrac{\sqrt{3}}{24}a^2b\right] = \dfrac{7\sqrt{3}}{8}\pi a^2b \\
-(\text{楕円部分}) &= \pi\int_0^{\frac{\sqrt{3}}{2}b}a^2\left(1-\dfrac{y^2}{b^2}\right)dy=a^2\pi\left[y-\dfrac{1}{3b^2}y^3\right]_0^{\frac{\sqrt{3}}{2}b}=\dfrac{3\sqrt{3}}{8}\pi a^2b
-\end{split}
-\end{align}
-を②に代入して
-\begin{align}
-V_1=\dfrac{7-3}{8}\sqrt{3}\pi a^2b=\dfrac{\sqrt{3}}{2}\pi a^2b
-\end{align}
-①から
-\begin{align}
-V_2=\sqrt{3}\pi a^2b
-\end{align}
+である．
+
+各項を個別に計算しよう．まず第一項は，$\triangle OAB$を一回転してできる円錐から$\triangle BPR$を一回転してできる円錐を差し引いたものである．
+これらの辺の長さは下図の通りである．
 
 \begin{figure}[htb]
-\begin{center}
-\begin{tikzpicture}[scale=0.9, >=stealth]
-  \draw[->] (-0.3,0) -- (4.5,0) node[right] {$x$};
-  \draw[->] (0,-0.3) -- (0,3) node[above] {$y$};
-  \draw[thick] (0,0) ellipse (1.5cm and 1.3cm);
-  \node[below] at (1.5,0) {$a$};
-  \node[left] at (0,1.3) {$b$};
-  \fill (3,0) circle (1pt) node[below] {$2a$};
-  \draw[thick] (0,1.13) -- (3,0);
-  \fill (0.75,1.13) circle (1pt) node[above] {$P$};
-  \begin{scope}
-    \clip (0,0) rectangle (3,1.3);
-    \fill[pattern=north east lines, pattern color=gray!50] (1.5,0) -- (3,0) -- (0.75,1.13) arc (37:0:1.5 and 1.3) -- cycle;
-  \end{scope}
+\centering
+\begin{tikzpicture}[scale=2.4, >=stealth, every node/.style={font=\small}]
+
+  % --- 1. パラメータ設定と座標 ---
+  \def\a{1.6}
+  \def\b{1.2}
+
+  \coordinate (O) at (0, 0);
+  \coordinate (A) at ({2*\a}, 0);                          % A(2a, 0)
+  \coordinate (B) at (0, {2*sqrt(3)/3*\b});                % B(0, 2\sqrt{3}/3 * b)
+  \coordinate (R) at (0, {0.5*sqrt(3)*\b});                % R(0, \sqrt{3}/2 * b)
+  \coordinate (P) at ({0.5*\a}, {0.5*sqrt(3)*\b});         % P(a/2, \sqrt{3}/2 * b)
+
+  % --- 2. 相似な2つの三角形の強調 ---
+  % 小さい三角形 \triangle RPB (薄い青色)
+  \fill[blue!20, opacity=0.8] (R) -- (P) -- (B) -- cycle;
+  % 大きい三角形 \triangle OAB の枠線
+  \draw[very thick, red!80!black] (O) -- (A) -- (B) -- cycle;
+  % 共通の斜線上の線分 RP
+  \draw[very thick, blue!80!black] (R) -- (P);
+
+  % --- 3. 座標軸 ---
+  \draw[->, thick, gray!70] (-0.3, 0) -- ({2.3*\a}, 0) node[right, black] {$x$};
+  \draw[->, thick, gray!70] (0, -0.3) -- (0, {1.5*\b}) node[above, black] {$y$};
+  \node[below left] at (O) {$O$};
+
+  % --- 4. 直角記号 ---
+  % 角 O (0,0)
+  \draw[thick, gray!80!black] (0.12, 0) -- (0.12, 0.12) -- (0, 0.12);
+  % 角 R (0, \sqrt{3}/2 * b)
+  \draw[thick, gray!80!black] (0.12, {0.5*sqrt(3)*\b}) -- (0.12, {0.5*sqrt(3)*\b + 0.12}) -- (0, {0.5*sqrt(3)*\b + 0.12});
+
+  % --- 5. 寸法線（各辺の長さ） ---
+  % (i) 底辺 OA = 2a
+  \draw[<->, gray!80!black] (0, -0.2) -- ({2*\a}, -0.2)
+    node[midway, below] {$2a$};
+
+  % (ii) 底辺 RP = a/2
+  \draw[<->, blue!80!black] (0, {0.5*sqrt(3)*\b - 0.15}) -- ({0.5*\a}, {0.5*sqrt(3)*\b - 0.15})
+    node[midway, below, font=\footnotesize] {$\frac{a}{2}$};
+
+  % (iii) 高さ OB = 2\sqrt{3}/3 * b
+  \draw[<->, gray!80!black] (-0.25, 0) -- (-0.25, {2*sqrt(3)/3*\b})
+    node[midway, left] {$\frac{2\sqrt{3}}{3}b$};
+
+  % (iv) 高さ RB = (2\sqrt{3}/3 - \sqrt{3}/2)b
+  \draw[<->, blue!80!black] ({0.5*\a + 0.25}, {0.5*sqrt(3)*\b}) -- ({0.5*\a + 0.25}, {2*sqrt(3)/3*\b})
+    node[midway, right, font=\footnotesize] {$\frac{2\sqrt{3}}{3}b - \frac{\sqrt{3}}{2}b$};
+  \draw[dashed, gray!50] (R) -- ({0.5*\a + 0.3}, {0.5*sqrt(3)*\b});
+  \draw[dashed, gray!50] (B) -- ({0.5*\a + 0.3}, {2*sqrt(3)/3*\b});
+
+  % --- 6. 頂点プロットとラベル ---
+  \fill (O) circle (0.7pt);
+  \fill (A) circle (0.7pt) node[below] {$A$};
+  \fill (B) circle (0.7pt) node[left] {$B$};
+  \fill (R) circle (0.7pt) node[left] {$R$};
+  \fill[red!80!black] (P) circle (0.9pt) node[above right] {$P$};
+
+  % 相似の注記テキスト
+  \node[font=\bfseries, red!80!black] at ({1.1*\a}, {0.6*\b}) {$\triangle OAB \sim \triangle RPB$};
+
 \end{tikzpicture}
-\end{center}
-\caption{回転体の体積$V_1$，$V_2$を求めるための図}
+\caption{円錐部分の体積計算に用いる直角三角形の相似 $\triangle OAB \sim \triangle RPB$}
 \end{figure}
 
+従ってこの体積は
+\begin{align}
+\begin{split}
+  \left( \text{\begin{tikzpicture}[baseline={(0,0.3)}, scale=0.85, >=stealth]
+    % 1. 台形部分 OAPR（円錐台部分）
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (1.2,0) -- (0.3,0.7) -- (0,0.7) -- cycle;
+    \draw[thick] (0,0) -- (1.2,0) -- (0.3,0.7) -- (0,0.7) -- cycle;
+    \draw[dashed, gray!70] (0,0) -- (0,0.9);
+    % y軸回転を表す矢印
+    \draw[->, thick, red!80!black] (-0.2, 1.0) arc[start angle=150, end angle=390, x radius=0.2, y radius=0.06];
+    % ラベルとプロット点
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$O$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (1.2,0) {$A$};
+    \node[above right, font=\scriptsize, inner sep=1pt] at (0.3,0.7) {$P$};
+    \node[left, font=\scriptsize, inner sep=1pt] at (0,0.7) {$R$};
+    \fill (0,0) circle (0.6pt);
+    \fill (1.2,0) circle (0.6pt);
+    \fill (0.3,0.7) circle (0.6pt);
+    \fill (0,0.7) circle (0.6pt);
+  \end{tikzpicture}} \right)
+  &= \dfrac{1}{3}\pi(2a)^2\dfrac{2\sqrt{3}}{3}b-\dfrac{1}{3}\pi\left(\dfrac{1}{2}a\right)^2\left(\dfrac{2\sqrt{3}}{3}b-\dfrac{\sqrt{3}}{2}b\right) \\
+  &= \dfrac{1}{3}\pi\left[\dfrac{8\sqrt{3}}{3}a^2b-\dfrac{\sqrt{3}}{24}a^2b\right] \\
+  &= \dfrac{7\sqrt{3}}{8}\pi a^2b 
+\end{split} \label{eq:6}
+\end{align}
+である．
+
+次に\cref{eq:5}の第二項の楕円弧を回転した部分の体積は
+\begin{align}
+ \begin{split} 
+ \left( \text{\begin{tikzpicture}[baseline={(0,0.3)}, scale=0.85, >=stealth]
+    % 2. 楕円弧下の部分 OQPR
+    \fill[pattern=north east lines, pattern color=black!50] 
+      (0,0) -- (0.8,0) arc[start angle=0, end angle=60, x radius=0.8, y radius=0.8] -- (0,0.7) -- cycle;
+    \draw[thick] (0,0) -- (0.8,0) arc[start angle=0, end angle=60, x radius=0.8, y radius=0.8] -- (0,0.7) -- cycle;
+    \draw[dashed, gray!70] (0,0) -- (0,0.9);
+    % y軸回転を表す矢印
+    \draw[->, thick, red!80!black] (-0.2, 1.0) arc[start angle=150, end angle=390, x radius=0.2, y radius=0.06];
+    % ラベルとプロット点
+    \node[below left, font=\scriptsize, inner sep=1pt] at (0,0) {$O$};
+    \node[below right, font=\scriptsize, inner sep=1pt] at (0.8,0) {$Q$};
+    \node[above right, font=\scriptsize, inner sep=1pt] at (0.4,0.7) {$P$};
+    \node[left, font=\scriptsize, inner sep=1pt] at (0,0.7) {$R$};
+    \fill (0,0) circle (0.6pt);
+    \fill (0.8,0) circle (0.6pt);
+    \fill (0.4,0.7) circle (0.6pt);
+    \fill (0,0.7) circle (0.6pt);
+  \end{tikzpicture}} \right) 
+   &= \pi\int_0^{\frac{\sqrt{3}}{2}b}a^2\left(1-\dfrac{y^2}{b^2}\right)dy \\
+   &=a^2\pi\left[y-\dfrac{1}{3b^2}y^3\right]_0^{\frac{\sqrt{3}}{2}b} \\
+   &=\dfrac{3\sqrt{3}}{8}\pi a^2b
+\end{split} \label{eq:7}
+\end{align}
+である．
+
+\cref{eq:6,eq:7}を\cref{eq:5}に代入して
+\begin{align}
+ V_1=\dfrac{7-3}{8}\sqrt{3}\pi a^2b = \dfrac{\sqrt{3}}{2}\pi a^2b
+\end{align}
+だから，\cref{eq:1}に代入して求める体積は
+\begin{align}
+ V=\sqrt{3}\pi a^2b
+\end{align}
+である．
 
 \newpage
 
