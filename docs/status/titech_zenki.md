@@ -240,10 +240,10 @@
 | 2006年 | 第2問 | finish | finish | あり | 完了 |
 | 2006年 | 第3問 | finish | finish | あり | 完了 |
 | 2006年 | 第4問 | finish | finish | あり | 完了 |
-| 2007年 | 第1問 | finish | 文字起こし済 | あり | 未完成 |
-| 2007年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
-| 2007年 | 第3問 | finish | 文字起こし済 | あり | 未完成 |
-| 2007年 | 第4問 | finish | 文字起こし済 | あり | 未完成 |
+| 2007年 | 第1問 | finish | finish | あり | 完了 |
+| 2007年 | 第2問 | finish | finish | あり | 完了 |
+| 2007年 | 第3問 | finish | unfinish | あり | 未完成 |
+| 2007年 | 第4問 | finish | finish | あり | 完了 |
 | 2008年 | 第1問 | finish | finish | あり | 完了 |
 | 2008年 | 第2問 | finish | finish | あり | 完了 |
 | 2008年 | 第3問 | finish | finish | あり | 完了 |
