@@ -257,9 +257,9 @@
 | 2010年 | 第3問 | finish | finish | あり | 完了 |
 | 2010年 | 第4問 | finish | finish | あり | 完了 |
 | 2011年 | 第1問 | finish | unfinish | あり | 未完成 |
-| 2011年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
-| 2011年 | 第3問 | finish | 文字起こし済 | あり | 未完成 |
-| 2011年 | 第4問 | finish | 文字起こし済 | あり | 未完成 |
+| 2011年 | 第2問 | finish | finish | あり | 完了 |
+| 2011年 | 第3問 | finish | finish | あり | 完了 |
+| 2011年 | 第4問 | finish | unfinish | あり | 未完成 |
 | 2012年 | 第1問 | finish | finish | あり | 完了 |
 | 2012年 | 第2問 | finish | finish | あり | 完了 |
 | 2012年 | 第3問 | finish | finish | あり | 完了 |

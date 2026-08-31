@@ -1,32 +1,136 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$k>1$とする．$\angle AOX=\alpha$，$\angle AOY=\beta$，$\angle XOY=\theta$とおくと，$\theta=\beta-\alpha$（②）．$t=\tan\alpha$とおくと，$X=(1,t)$，$AX=t$，$AY=kt$（$k>1,\ t>0$より$AY=kAX$）だから$\tan\beta=kt$．②より
+$\angle AOX=\alpha$，$\angle AOY=\beta$，$\angle XOY=\theta$とおくと，$k>1$より
 \begin{align}
-\tan\theta=\tan(\beta-\alpha)=\dfrac{kt-t}{1+t\cdot kt}=\dfrac{(k-1)t}{1+kt^2}.
+ \theta=\beta-\alpha \label{eq:1}
 \end{align}
-$0\le\theta<\pi/2$より$\sin\theta=\dfrac{\tan\theta}{\sqrt{1+\tan^2\theta}}$（③）であり，これは$\tan\theta\ge0$の増加関数だから，$\tan\theta$が最大のとき$\sin\theta$も最大．
+である．各点の座標は$A(1,0)$, $X(1,\tan\alpha)$，$Y(1, \tan\beta)$だから題意の条件$|AY|=k|AX|$は
+\begin{align}
+ \tan\beta = k \tan \alpha \label{eq:2}
+\end{align}
+である．
 
-$\tan\theta=\dfrac{k-1}{kt+\dfrac{1}{t}}$であり，$t>0$より相加相乗平均から$kt+\dfrac{1}{t}\ge2\sqrt{k}$（等号は$t=\dfrac{1}{\sqrt{k}}$）だから
-\begin{align}
-\tan\theta\le\dfrac{k-1}{2\sqrt{k}}
-\end{align}
-が$\tan\theta$の最大値．このとき③より
-\begin{align}
-\sin\theta=\dfrac{\dfrac{k-1}{2\sqrt{k}}}{\sqrt{1+\dfrac{(k-1)^2}{4k}}}=\dfrac{k-1}{2\sqrt{k}}\cdot\dfrac{2\sqrt{k}}{\sqrt{(k+1)^2}}=\dfrac{k-1}{k+1}
-\end{align}
-（$1+\dfrac{(k-1)^2}{4k}=\dfrac{4k+(k-1)^2}{4k}=\dfrac{(k+1)^2}{4k}$を用いた）．
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=3.2, >=stealth, every node/.style={font=\small}]
 
-$OP=OQ=1$（単位円上）だから，$\triangle OPQ$の面積は$\dfrac{1}{2}\sin\theta$であり，その最大値は
-\begin{align}
-\dfrac{1}{2}\cdot\dfrac{k-1}{k+1}=\dfrac{k-1}{2(k+1)}.
-\end{align}
+  % --- 1. パラメータ設定 (例: \alpha = 25°, k = 2.5) ---
+  \def\alphaDeg{22}
+  \def\k{2.6}
+  
+  \pgfmathsetmacro{\tanAlpha}{tan(\alphaDeg)}
+  \pgfmathsetmacro{\tanBeta}{\k * \tanAlpha}
+  \pgfmathsetmacro{\betaDeg}{atan(\tanBeta)}
+  \pgfmathsetmacro{\thetaDeg}{\betaDeg - \alphaDeg}
 
+  % 頂点座標の定義
+  \coordinate (O) at (0, 0);
+  \coordinate (A) at (1.0, 0);
+  \coordinate (X) at (1.0, \tanAlpha);
+  \coordinate (Y) at (1.0, \tanBeta);
+  
+  % 単位円上の交点 P, Q (動径 OX, OY と単位円の交点)
+  \coordinate (P) at ({\alphaDeg}:1.0);
+  \coordinate (Q) at ({\betaDeg}:1.0);
+
+  % --- 2. 面積 S(\theta) の三角形 OPQ の斜線ハッチング ---
+  \fill[pattern=north east lines, pattern color=blue!60, opacity=0.7] 
+    (O) -- (P) -- (Q) -- cycle;
+  \draw[thick, blue!80!black] (P) -- (Q);
+
+  % --- 3. 単位円弧の描画 ---
+  \draw[thick, gray!60] (1.0, 0) arc[start angle=0, end angle=60, radius=1.0];
+
+  % --- 4. 直線 x = 1 (接線) と 座標軸 ---
+  \draw[thick, red!80!black] (1.0, -0.1) -- (1.0, 1.35) node[above] {$x = 1$};
+  \draw[->, thick] (-0.15, 0) -- (1.35, 0) node[right] {$x$};
+  \draw[->, thick] (0, -0.15) -- (0, 1.35) node[above] {$y$};
+  \node[below left] at (O) {$O$};
+
+  % --- 5. 動径の描画 ---
+  \draw[thick] (O) -- (Y);
+  \draw[thick] (O) -- (X);
+
+  % --- 6. 各種角度のアーク ---
+  % (i) 角 \alpha (0° から \alpha)
+  \draw[->, gray!80!black] (0.35, 0) arc[start angle=0, end angle=\alphaDeg, radius=0.35];
+  \node[gray!80!black, font=\footnotesize] at ({0.5*\alphaDeg}:0.45) {$\alpha$};
+
+  % (ii) 角 \beta (0° から \beta)
+  \draw[->, gray!80!black] (0.22, 0) arc[start angle=0, end angle=\betaDeg, radius=0.22];
+  \node[gray!80!black, font=\footnotesize] at ({0.75*\betaDeg}:0.3) {$\beta$};
+
+  % (iii) 角 \theta (\alpha から \beta)
+  \draw[->, red!80!black, thick] ({\alphaDeg}:0.6) arc[start angle=\alphaDeg, end angle=\betaDeg, radius=0.6];
+  \node[red!80!black, font=\footnotesize] at ({(\alphaDeg+\betaDeg)/2}:0.72) {$\theta$};
+
+  % --- 7. 寸法線・長さのラベル ---
+  %\draw[<->, gray!70] (1.08, 0) -- (1.08, \tanAlpha) 
+  %  node[midway, right, font=\footnotesize] {$|AX|$};
+  %\draw[<->, gray!70] (1.23, 0) -- (1.23, \tanBeta) 
+  %  node[midway, right, font=\footnotesize] {$|AY| = k|AX|$};
+
+  % --- 8. プロット点とラベル ---
+  \fill (O) circle (0.8pt);
+  \fill (A) circle (0.8pt) node[below right] {$A(1,0)$};
+  \fill (X) circle (0.8pt) node[right] {$X(1, \tan\alpha)$};
+  \fill (Y) circle (0.8pt) node[right] {$Y(1, \tan\beta)$};
+  \fill[blue!80!black] (P) circle (0.9pt) node[below] {$P$};
+  \fill[blue!80!black] (Q) circle (0.9pt) node[above left] {$Q$};
+
+  % 三角形 OPQ の面積ラベル
+  \node[blue!80!black, font=\bfseries, above left] at ({(\alphaDeg+\betaDeg)/2}:0.42) {$S(\theta)$};
+
+\end{tikzpicture}
+\caption{直線 $x=1$ 上の点 $X, Y$ と単位円上の点 $P, Q$ による $\triangle OPQ$}
+\end{figure}
+
+題意の三角形$OPQ$の面積を$S(\theta)$とおくと，$|OP|=|OQ|=1$, $\angle POQ=\theta$より
+\begin{align}
+ S(\theta) = \dfrac{1}{2}\sin\theta \label{eq:3}
+\end{align}
+だから，\cref{eq:1,eq:2}の元でこの最大値を求めれば良い．
+
+\cref{eq:1}と$\tan$の加法定理より
+\begin{align}
+ \tan\theta
+   &=\tan(\beta-\alpha) \\
+   &= \dfrac{\tan\beta - \tan\alpha}{1+\tan\alpha\tan\beta} \\ 
+   &= \dfrac{k\tan\alpha - \tan\alpha}{1+k\tan^2\alpha} \\ 
+   &= \dfrac{(k-1)\tan\alpha}{1+k\tan^2\alpha}  \label{eq:4}
+\end{align}
+である．
+
+さて，$0\le\theta<\dfrac{\pi}{2}$より
+\begin{align}
+ \sin\theta=\dfrac{\tan\theta}{\sqrt{1+\tan^2\theta}}
+\end{align}
+であり，これは$\tan\theta\ge0$の増加関数だから，$\tan\theta$が最大のとき$\sin\theta$も最大になる．
+\cref{eq:3}よりその時$S(\theta)$も最大である．よって\cref{eq:4}が最大になる時を考えれば良い．
+
+$\tan\alpha>0$より相加相乗平均の不等式から
+\begin{align}
+ \tan\theta 
+   &= (k-1)\dfrac{1}{k\tan\alpha+\dfrac{1}{\tan\alpha}} \\
+   &\le (k-1)\dfrac{1}{2\sqrt{k\tan\alpha\cdot\dfrac{1}{\tan\alpha}}}\\
+   & = \dfrac{k-1}{2\sqrt{k}}
+\end{align}
+である．等号成立は
+\begin{align}
+ \tan\theta = \dfrac{1}{\sqrt{k}}
+\end{align}
+の時である．従って\cref{eq:3}に代入して求める最大の$S(\theta)$は
+\begin{align}
+ \max S(\theta) 
+  &= \dfrac{1}{2} \dfrac{\tan\theta}{\sqrt{1+\tan^2\theta}} \\
+  &= \dfrac{1}{2} \dfrac{(k-1)/2\sqrt{k}}{\sqrt{1+(k-1)^2/4k}} \\
+  &= \dfrac{1}{4} \dfrac{k-1}{\sqrt{k}}\dfrac{\sqrt{4k}}{\sqrt{4k+(k-1)^2}} \\
+  &= \dfrac{1}{2} \dfrac{k-1}{\sqrt{(k+1)^2}} \\
+  &= \dfrac{1}{2} \dfrac{k-1}{k+1} 
+\end{align}
+である．
 
 \newpage
 
