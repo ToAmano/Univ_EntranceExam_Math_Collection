@@ -203,10 +203,10 @@
 | 1997年 | 第2問 | finish | finish | あり | 完了 |
 | 1997年 | 第3問 | finish | finish | あり | 完了 |
 | 1997年 | 第4問 | finish | finish | あり | 完了 |
-| 1998年 | 第1問 | finish | 文字起こし済 | あり | 未完成 |
-| 1998年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
-| 1998年 | 第3問 | finish | 文字起こし済 | あり | 未完成 |
-| 1998年 | 第4問 | finish | 文字起こし済 | あり | 未完成 |
+| 1998年 | 第1問 | finish | finish | あり | 完了 |
+| 1998年 | 第2問 | finish | finish | あり | 完了 |
+| 1998年 | 第3問 | finish | finish | あり | 完了 |
+| 1998年 | 第4問 | finish | finish | あり | 完了 |
 | 1999年 | 第1問 | finish | finish | あり | 完了 |
 | 1999年 | 第2問 | finish | finish | あり | 完了 |
 | 1999年 | 第3問 | finish | finish | あり | 完了 |
