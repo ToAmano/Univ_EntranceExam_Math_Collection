@@ -5,25 +5,26 @@
 \footnotesize\textit{【自動文字起こし・要確認】}
 \end{flushright}
 
-[解] 第 $n$ 世代に 1 個あるのは, 常に 1 個ずつの個体をのこす時で,
-\[
+{\bf [解]} 第 $n$ 世代に 1 個あるのは，常に 1 個ずつの個体をのこす時で，
+\begin{align}
 P_n(1) = p^n \quad (1 \text{以下にも } z \ge 0 \text{ に拡張する})
-\]
+\end{align}
 
-第 $n$ 世代に 2 個とするのは, 第 $m$ 世代になった時に ($m=1, 2, \dots, n$) 1 個から 2 個になる. この時第 $n$ 世代に 2 個である確率は
-\[
+第 $n$ 世代に 2 個とするのは，第 $m$ 世代になった時に ($m=1, 2, \dots, n$) 1 個から 2 個になる．この時第 $n$ 世代に 2 個である確率は
+\begin{align}
 P_{m-1}(1) \cdot (1-p) \{ p^{n-m} \}^2
-\]
-だから, $m$ について足して,
+\end{align}
+だから，$m$ について足して，
 \begin{align}
 P_n(2) &= \sum_{m=1}^n P_{m-1}(1) (1-p) p^{2n-2m} \\
 &= \sum_{m=1}^n p^{m-1} (1-p) p^{2n-2m} \\
-&= (1-p) p^{2n-1} \sum_{m=1}^n \left(\dfrac{1}{p}\right)^m \\
+&= (1-p) p^{2n-1} \sum_{m=1}^n \Bigl(\dfrac{1}{p}\Bigr)^m \\
 &= \dfrac{1}{p} \dfrac{1-(1/p)^n}{1-1/p} (1-p) p^{2n-1} \\
 &= (1-p^n) p^{n-1}
 \end{align}
 
-\begin{center}
+\begin{figure}[htb]
+\centering
 \begin{tikzpicture}[scale=1.0, >=stealth]
   \node (o) at (0,0) {$o$};
   \node (m1) at (2,0.5) {$m-1$};
@@ -42,40 +43,37 @@ P_n(2) &= \sum_{m=1}^n P_{m-1}(1) (1-p) p^{2n-2m} \\
   \fill (n1) circle (1.5pt);
   \fill (n2) circle (1.5pt);
 \end{tikzpicture}
-\end{center}
+\caption{世代 $0$ から世代 $m-1$，$m$ を経て世代 $n$ に至る分岐の模式図}
+\end{figure}
 
-さいごに, 第 $n$ 世代で 3 個となる時, 第 $m$ 世代の時にはじめて 2 個から 3 個となるような $m$ ($m=2, 3, \dots, n$) がある. このような確率は
-\[
-P_{m-1}(2) \cdot 2 \cdot p (1-p) \{ p^{n-m} \}^3 \quad (\text{※ 2個のうちどちらかが2個に分裂するか})
-\]
-\[
-= 2(1-p^{m-1}) p^{m-2} \cdot p(1-p) p^{3n-3m} = 2(1-p) p^{3n-1} (1-p^{m-1}) p^{-2m}
-\]
-\[
-= 2(1-p) p^{3n-1} (p^{-2m} - p^{-m-1})
-\]
-より, $n \ge 2$ に対して,
-\[
-P_n(3) = 2(1-p) p^{3n-1} \sum_{m=2}^n \left\{ \left(\dfrac{1}{p^2}\right)^m - \left(\dfrac{1}{p}\right)^{m+1} \right\} \quad \dots \text{①}
-\]
-ここで,
-\[
+さいごに，第 $n$ 世代で 3 個となる時，第 $m$ 世代の時にはじめて 2 個から 3 個となるような $m$ ($m=2, 3, \dots, n$) がある．このような確率は
+\begin{align}
+&P_{m-1}(2) \cdot 2 \cdot p (1-p) \{ p^{n-m} \}^3 \quad (\text{※ 2個のうちどちらかが2個に分裂するか}) \\
+&= 2(1-p^{m-1}) p^{m-2} \cdot p(1-p) p^{3n-3m} = 2(1-p) p^{3n-1} (1-p^{m-1}) p^{-2m} \\
+&= 2(1-p) p^{3n-1} (p^{-2m} - p^{-m-1})
+\end{align}
+より，$n \ge 2$ に対して，
+\begin{align}
+P_n(3) = 2(1-p) p^{3n-1} \sum_{m=2}^n \Bigl\{ \Bigl(\dfrac{1}{p^2}\Bigr)^m - \Bigl(\dfrac{1}{p}\Bigr)^{m+1} \Bigr\} \quad \dots \text{①}
+\end{align}
+ここで，
+\begin{align}
 \begin{cases}
-\sum_{m=2}^n \left(\dfrac{1}{p^2}\right)^m = \dfrac{1}{p^4} \dfrac{1-(1/p^2)^{n-1}}{1-1/p^2} = \dfrac{1-(1/p^2)^{n-1}}{(p^2-1)p^2} \\
-\sum_{m=2}^n \left(\dfrac{1}{p}\right)^{m+1} = \dfrac{1}{p^3} \dfrac{1-(1/p)^{n-1}}{1-1/p} = \dfrac{1-(1/p)^{n-1}}{(p-1)p^2}
+\sum_{m=2}^n \Bigl(\dfrac{1}{p^2}\Bigr)^m = \dfrac{1}{p^4} \dfrac{1-(1/p^2)^{n-1}}{1-1/p^2} = \dfrac{1-(1/p^2)^{n-1}}{(p^2-1)p^2} \\
+\sum_{m=2}^n \Bigl(\dfrac{1}{p}\Bigr)^{m+1} = \dfrac{1}{p^3} \dfrac{1-(1/p)^{n-1}}{1-1/p} = \dfrac{1-(1/p)^{n-1}}{(p-1)p^2}
 \end{cases}
-\]
+\end{align}
 を①に代入して
 \begin{align}
-P_n(3) &= 2(1-p) p^{3n-1} \left[ \dfrac{1-(1/p^2)^{n-1}}{(p^2-1)p^2} - \dfrac{1-(1/p)^{n-1}}{(p-1)p^2} \right] \\
-&= 2 p^{3n-3} \left[ 1 - (1/p)^{n-1} - \dfrac{1-(1/p^2)^{n-1}}{1+p} \right] \\
-&= 2 \left[ p^{3n-3} - p^{2n-2} - \dfrac{p^{3n-3}-p^{n-1}}{1+p} \right] \\
-&= \dfrac{2}{1+p} \left[ p^{3n-2} - (1+p) p^{2n-2} + p^{n-1} \right] \quad \dots \text{②}
+P_n(3) &= 2(1-p) p^{3n-1} \Bigl[ \dfrac{1-(1/p^2)^{n-1}}{(p^2-1)p^2} - \dfrac{1-(1/p)^{n-1}}{(p-1)p^2} \Bigr] \\
+&= 2 p^{3n-3} \Bigl[ 1 - (1/p)^{n-1} - \dfrac{1-(1/p^2)^{n-1}}{1+p} \Bigr] \\
+&= 2 \Bigl[ p^{3n-3} - p^{2n-2} - \dfrac{p^{3n-3}-p^{n-1}}{1+p} \Bigr] \\
+&= \dfrac{2}{1+p} \Bigl[ p^{3n-2} - (1+p) p^{2n-2} + p^{n-1} \Bigr] \quad \dots \text{②}
 \end{align}
 
-$n=1$ の時, $P_1(3)=0$ で, ②の表示で良い. よって
-\[
-P_n(3) = \dfrac{2}{1+p} \left[ p^{3n-2} - (1+p) p^{2n-2} + p^{n-1} \right]
-\]
+$n=1$ の時，$P_1(3)=0$ で，②の表示で良い．よって
+\begin{align}
+P_n(3) = \dfrac{2}{1+p} \Bigl[ p^{3n-2} - (1+p) p^{2n-2} + p^{n-1} \Bigr]
+\end{align}
 
 \end{document}
