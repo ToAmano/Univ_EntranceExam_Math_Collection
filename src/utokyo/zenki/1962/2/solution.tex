@@ -1,111 +1,309 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-$\mathrm{PQ} \mathbin{/\!/} \mathrm{BC}$ より，$\angle \mathrm{BQP} = \dfrac{\pi}{4}$ だから，
-\begin{align}
-\cos \angle \mathrm{AQR} &= \dfrac{1}{\sqrt{2}} \cdot \dfrac{1}{\sqrt{2}} = \dfrac{1}{2} \\
-\therefore \angle \mathrm{AQR} &= \dfrac{\pi}{3} \quad \left(0 < \angle \mathrm{AQR} < \pi\right)
-\end{align}
-従って，$\angle \mathrm{BRQ} = \angle \mathrm{CRS}$ より $\triangle \mathrm{CSR} \mathbin{\sim} \triangle \mathrm{BQR}$ なので，
-\begin{align}
-\angle \mathrm{ASR} = \angle \mathrm{AQR} = \dfrac{\pi}{3}
-\end{align}
-となり，最後の条件から $\angle \mathrm{CST} = \dfrac{5}{6}\pi$ となる．図は下図．
+題意の三角形$ABC$は下図のようになる．
 
 \begin{figure}[htb]
 \centering
-\begin{tikzpicture}[scale=2, >=stealth]
-  % Triangle ABC
-  \coordinate (A) at (0,0);
-  \coordinate (B) at (2,0);
-  \coordinate (C) at (0,2);
+\begin{tikzpicture}[scale=3.6, >=stealth, every node/.style={font=\small}]
 
-  \draw[thick] (A) -- (B) -- (C) -- cycle;
-  \node[below left] at (A) {A};
-  \node[below right] at (B) {B};
-  \node[above left] at (C) {C};
+  % --- 1. 基本パラメータ設定 (対称配置 x = y の例) ---
+  % AB = AC = 2, BC: X + Y = 2
+  % x + y = \sqrt{2}(1 - 1/\sqrt{3}) より x = y = (1 - 1/\sqrt{3}) / \sqrt{2}
+  % \alpha = \beta = 2 - \sqrt{2}x = 1 + 1/\sqrt{3} \approx 1.577
+  \def\alphaVal{1.57735}
+  \def\betaVal{1.57735}
+  
+  % R は直線 BC: X+Y=2 上にあり、対称性より R(1, 1)
+  \coordinate (A)  at (0, 0);
+  \coordinate (B)  at (2, 0);
+  \coordinate (C)  at (0, 2);
+  \coordinate (Q)  at (\alphaVal, 0);
+  \coordinate (S)  at (0, \betaVal);
+  \coordinate (R)  at (1.0, 1.0);
 
-  % Right angle mark at A
-  \draw (0,0.15) -- (0.15,0.15) -- (0.15,0);
 
-  % Points Q on AB, S on AC, R inside
-  \coordinate (Q) at (1.1, 0);
-  \coordinate (S) at (0, 1.1);
-  \coordinate (R) at (0.68, 0.72);
-  \coordinate (H) at (0, 0.72);
-  \coordinate (Hp) at (0.68, 0);
-  \coordinate (T) at (-0.3, 1.4);
-  \coordinate (D) at (1.5, -0.3);
+  % 外側の直角二等辺三角形 BPQ (PQ // BC, 傾き -1)
+  % B(2,0), Q(\alpha, 0) -> 中点から外側へ直角二等辺を構成
+  \coordinate (P)  at ({(\alphaVal + 2)/2}, {- (2 - \alphaVal)/2});
 
-  \draw (R) -- (Q);
-  \draw (R) -- (S);
-  \draw[dashed] (R) -- (H);
-  \draw[dashed] (R) -- (Hp);
-  \draw (S) -- (T);
-  \draw (B) -- (D);
-  \draw (Q) -- (D);
+  % 外側の直角二等辺三角形 CST (ST // BC, 傾き -1)
+  % C(0,2), S(0, \beta) -> 外側へ直角二等辺を構成
+  \coordinate (T)  at ({- (2 - \betaVal)/2}, {(\betaVal + 2)/2});
 
-  \node[below] at (Q) {Q};
-  \node[left] at (S) {S};
-  \node[above right] at (R) {R};
-  \node[left] at (H) {H};
-  \node[below] at (Hp) {H'};
-  \node[above left] at (T) {T};
-  \node[below right] at (D) {D};
+  
+  % --- 3. 主な三角形と線分 ---
+  % 三角形 ABC
+  \draw[very thick] (A) -- (B) -- (C) -- cycle;
 
-  % Angles
-  \node at (0.78, 0.25) {\small $60^\circ$};
-  \node at (0.22, 0.85) {\small $60^\circ$};
+  % 直線 QR, SR
+  \draw[thick, blue!80!black] (Q) -- (R);
+  \draw[thick, blue!80!black] (S) -- (R);
 
-  % Labels
-  \node[above right] at (0.89, 0.36) {$\alpha$};
-  \node[above left] at (0.34, 0.91) {$\beta$};
-  \node[below] at (1.5, 0) {$x$};
-  \node[right] at (2.0, 1.0) {$\sqrt{2}$};
-  \node[below] at (0.6, -0.1) {$2-\sqrt{2}x$};
+  % 外側の直角二等辺三角形 BPQ, CST
+  \draw[thick, red!80!black] (B) -- (P) -- (Q);
+  \draw[thick, red!80!black] (C) -- (T) -- (S);
+
+  % 平行線 PQ // BC, ST // BC の補助表示（薄い線）
+  \draw[dashed, red!50] (P) -- ++(0.3, -0.3);
+  \draw[dashed, red!50] (T) -- ++(-0.3, 0.3);
+
+  % --- 4. 直角記号 ---
+  % 角 A
+  \draw[thick] (0.08, 0) -- (0.08, 0.08) -- (0, 0.08);
+
+  % --- 6. 頂点プロットとラベル ---
+  \fill (A) circle (0.8pt) node[below left] {$A$};
+  \fill (B) circle (0.8pt) node[below right] {$B$};
+  \fill (C) circle (0.8pt) node[above left] {$C$};
+  \fill[blue!80!black] (Q) circle (0.9pt) node[below] {$Q$};
+  \fill[blue!80!black] (S) circle (0.9pt) node[left] {$S$};
+  \fill[blue!80!black] (R) circle (1.0pt) node[above right=1pt] {$R$};
+  \fill[red!80!black] (P) circle (0.8pt) node[below right] {$P$};
+  \fill[red!80!black] (T) circle (0.8pt) node[above left] {$T$};
+
+  % --- 7. 長さのラベル ---
+  \node[below, red!80!black, font=\footnotesize] at ($(B)!0.5!(P)$) {$x$};
+  \node[left, red!80!black, font=\footnotesize] at ($(C)!0.5!(T)$) {$y$};
+
 \end{tikzpicture}
-\caption{三角形 $\mathrm{ABC}$ と点 $\mathrm{Q}, \mathrm{S}, \mathrm{R}$}
+\caption{三角形 $ABC$ と各点 $Q, S, R, P, T$ の位置関係}
 \end{figure}
 
-$\mathrm{R}$ から $\mathrm{AC}, \mathrm{AB}$ に下ろした垂足を $\mathrm{H}, \mathrm{H'}$ とおき，$|\mathrm{RQ}| = \alpha, |\mathrm{SR}| = \beta$ とおく．$|\mathrm{AB}| = 2$ だから，
+与えられた条件
 \begin{align}
-\begin{cases}
-\mathrm{H'Q} = \dfrac{1}{2}\alpha, & \mathrm{RH'} = \mathrm{H'B} = \dfrac{\sqrt{3}}{2}\alpha \\[1ex]
-\mathrm{HR} = \dfrac{\sqrt{3}}{2}\beta, & \mathrm{HS} = \dfrac{1}{2}\beta
-\end{cases}
+ & PQ // BC \label{eq:1}\\
+ & \frac{\cos\angle BQP}{\cos\angle AQR}=\sqrt{2} \label{eq:2} \\
+ & \angle BRQ = \angle CRS \label{eq:3}\\ 
+ & \frac{\cos\angle CST}{\cos\angle ASR}=\sqrt{2} \label{eq:4}
 \end{align}
-\begin{align}
-\therefore \begin{cases}
-2 - \sqrt{2}x = \dfrac{1}{2}\alpha + \dfrac{\sqrt{3}}{2}\beta & \dots \text{①} \\[1ex]
-2 - \sqrt{2}y = \dfrac{\sqrt{3}}{2}\alpha + \dfrac{1}{2}\beta & \dots \text{②} \\[1ex]
-\dfrac{\sqrt{3}}{2}\alpha + \dfrac{\sqrt{3}}{2}\beta = 2 & \dots \text{③}
-\end{cases}
-\end{align}
-③より，$\alpha + \beta = \dfrac{4}{\sqrt{3}} = \dfrac{4}{3}\sqrt{3}$ だから，①+②に代入して求める関係式は
-\begin{align}
-4 - \sqrt{2}x - \sqrt{2}y &= \left( \dfrac{\sqrt{3}}{2} + \dfrac{1}{2} \right) \cdot \dfrac{4}{3}\sqrt{3} \\
-\therefore x + y &= \dfrac{1}{\sqrt{2}} \left\{ 4 - \dfrac{2}{3}(3+\sqrt{3}) \right\} \\
-x + y &= \sqrt{2}\left( 1 - \dfrac{\sqrt{3}}{3} \right) \quad (x, y > 0)
-\end{align}
+を一つづつ考えていこう．
 
-\bigskip
+まず\cref{eq:1}より，$\angle BPQ = \dfrac{\pi}{2}$だから，$\angle PBQ = \dfrac{\pi}{4}$と合わせて
+\begin{align}
+ \angle \mathrm{BQP} = \dfrac{\pi}{4} \label{eq:5}
+\end{align}
+となる．
+% TODO :: この部分を強調した絵
 
-続いて，$\mathrm{A}$ を原点とし，$\mathrm{AB}$ を $x$ 軸とする座標を設定すると
+
+これを\cref{eq:2}に代入すると
 \begin{align}
-\mathrm{RQ} &: y = -\sqrt{3}(x - A) \quad (A = 2 - \sqrt{2}x) \\
-\mathrm{RS} &: y = -\dfrac{1}{\sqrt{3}}x + B \quad (B = 2 - \sqrt{2}y)
+ \cos\angle \mathrm{AQR}
+   &= \dfrac{\cos\angle \mathrm{BQP}}{\sqrt{2}} = \dfrac{\cos\dfrac{\pi}{4}}{\sqrt{2}} = \dfrac{1}{2} \\
+\therefore
+  \angle \mathrm{AQR} &= \dfrac{\pi}{3} \quad \left(\because 0 < \angle \mathrm{AQR} < \pi\right) \label{eq:6}
 \end{align}
-この交点 $\left( \dfrac{3A - \sqrt{3}B}{2}, \dfrac{-\sqrt{3}A + 3B}{2} \right)$ が $x + y = 2$ 上にあることが必要十分．
+となる．
+
+さて，ここで三つ目の条件\cref{eq:3}より，$\triangle \mathrm{CSR}$と$\triangle \mathrm{BQR}$は
 \begin{align}
-\dfrac{3A - \sqrt{3}B}{2} + \dfrac{-\sqrt{3}A + 3B}{2} &= 2 \\
-(3 - \sqrt{3})(A + B) &= 4 \\
-\therefore x + y &= \sqrt{2} \left( 1 - \dfrac{\sqrt{3}}{3} \right)
+  \angle BRQ = \angle CRS, \angle RBQ = \angle RCS = \dfrac{\pi}{4}
 \end{align}
+と二つの内角が一致するから相似であり，
+\begin{align}
+\angle \mathrm{ASR} = \angle \mathrm{AQR} = \dfrac{\pi}{3} \label{eq:7}
+\end{align}
+が従う．ただし二つ目の等号に\cref{eq:6}を用いた．
+これを\cref{eq:4}に代入して
+\begin{align}
+ \cos\angle CST 
+   &=\sqrt{2}\cos\angle ASR = \sqrt{2}\cos\angle\dfrac{\pi}{3} = \dfrac{\sqrt{2}}{2} \\
+\therefore 
+ \angle CST = \dfrac{\pi}{4} \label{eq:8}
+\end{align}
+となる．\cref{eq:5,eq:6,eq:7,eq:8}を反映すると三角形$ABC$は下図のようになる．
+
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=3.6, >=stealth, every node/.style={font=\small}]
+
+  % --- 1. 基本パラメータ設定 (対称配置 x = y の例) ---
+  % AB = AC = 2, BC: X + Y = 2
+  % x + y = \sqrt{2}(1 - 1/\sqrt{3}) より x = y = (1 - 1/\sqrt{3}) / \sqrt{2}
+  % \alpha = \beta = 2 - \sqrt{2}x = 1 + 1/\sqrt{3} \approx 1.577
+  \def\alphaVal{1.57735}
+  \def\betaVal{1.57735}
+  
+  % R は直線 BC: X+Y=2 上にあり、対称性より R(1, 1)
+  \coordinate (A)  at (0, 0);
+  \coordinate (B)  at (2, 0);
+  \coordinate (C)  at (0, 2);
+  \coordinate (Q)  at (\alphaVal, 0);
+  \coordinate (S)  at (0, \betaVal);
+  \coordinate (R)  at (1.0, 1.0);
+  
+  % 垂足 H(0, y_R), H'(x_R, 0)
+  \coordinate (H)  at (0, 1.0);
+  \coordinate (Hp) at (1.0, 0);
+
+  % 外側の直角二等辺三角形 BPQ (PQ // BC, 傾き -1)
+  % B(2,0), Q(\alpha, 0) -> 中点から外側へ直角二等辺を構成
+  \coordinate (P)  at ({(\alphaVal + 2)/2}, {- (2 - \alphaVal)/2});
+
+  % 外側の直角二等辺三角形 CST (ST // BC, 傾き -1)
+  % C(0,2), S(0, \beta) -> 外側へ直角二等辺を構成
+  \coordinate (T)  at ({- (2 - \betaVal)/2}, {(\betaVal + 2)/2});
+
+  % --- 2. 補助点線（垂線と長方形 AH'RH） ---
+  \draw[dashed, gray!70, thick] (R) -- (H);
+  \draw[dashed, gray!70, thick] (R) -- (Hp);
+
+  % --- 3. 主な三角形と線分 ---
+  % 三角形 ABC
+  \draw[very thick] (A) -- (B) -- (C) -- cycle;
+
+  % 直線 QR, SR
+  \draw[thick, blue!80!black] (Q) -- (R);
+  \draw[thick, blue!80!black] (S) -- (R);
+
+  % 外側の直角二等辺三角形 BPQ, CST
+  \draw[thick, red!80!black] (B) -- (P) -- (Q);
+  \draw[thick, red!80!black] (C) -- (T) -- (S);
+
+  % 平行線 PQ // BC, ST // BC の補助表示（薄い線）
+  \draw[dashed, red!50] (P) -- ++(0.3, -0.3);
+  \draw[dashed, red!50] (T) -- ++(-0.3, 0.3);
+
+  % --- 4. 直角記号 ---
+  % 角 A
+  \draw[thick] (0.08, 0) -- (0.08, 0.08) -- (0, 0.08);
+  % 角 H (0, 1)
+  \draw[thick, gray!80!black] (0.08, 1.0) -- (0.08, 0.92) -- (0, 0.92);
+  % 角 H' (1, 0)
+  \draw[thick, gray!80!black] (1.0, 0.08) -- (0.92, 0.08) -- (0.92, 0);
+  % 角 P
+  \draw[thick, red!80!black] ($(P)!0.07!(Q)$) -- ++($(P)!0.07!(B)-(P)$) -- ($(P)!0.07!(B)$);
+  % 角 T
+  \draw[thick, red!80!black] ($(T)!0.07!(S)$) -- ++($(T)!0.07!(C)-(T)$) -- ($(T)!0.07!(C)$);
+
+% 角 P (\angle BPQ = 90^\circ)
+  % P から B への単位方向と P から Q への単位方向を用いて直角正方形を描画
+  \draw[thick, red!80!black] 
+    ($ (P) + ({0.07/sqrt(2)}, {0.07/sqrt(2)}) $) -- 
+    ($ (P) + ({0.07/sqrt(2) - 0.07/sqrt(2)}, {0.07/sqrt(2) + 0.07/sqrt(2)}) $) -- 
+    ($ (P) + ({-0.07/sqrt(2)}, {0.07/sqrt(2)}) $);
+
+  % 角 T (\angle CTS = 90^\circ)
+  \draw[thick, red!80!black] 
+    ($ (T) + ({0.07/sqrt(2)}, {0.07/sqrt(2)}) $) -- 
+    ($ (T) + ({0.07/sqrt(2) + 0.07/sqrt(2)}, {0.07/sqrt(2) - 0.07/sqrt(2)}) $) -- 
+    ($ (T) + ({0.07/sqrt(2)}, {-0.07/sqrt(2)}) $);
+
+
+  % --- 5. 角度のアークとラベル ---
+  % \angle AQR = 60°
+  \draw[thick, blue!80!black] ($ (Q) + (-0.18, 0) $) arc[start angle=180, end angle=120, radius=0.18];
+  \node[blue!80!black, font=\footnotesize] at ($(Q) + (-0.23, 0.13)$) {$60^\circ$};
+
+  % \angle ASR = 60°
+  \draw[thick, blue!80!black] ($ (S) + (0, -0.18) $) arc[start angle=270, end angle=330, radius=0.18];
+  \node[blue!80!black, font=\footnotesize] at ($(S) + (0.13, -0.23)$) {$60^\circ$};
+
+  % \angle BQP = 45°
+  \draw[thick, red!80!black] ($ (Q) + (0.15, 0) $) arc[start angle=0, end angle=-45, radius=0.15];
+  \node[red!80!black, font=\scriptsize] at ($(Q) + (0.18, -0.09)$) {$45^\circ$};
+
+  % \angle CST = 45°
+  \draw[thick, red!80!black] ($ (S) + (0, 0.15) $) arc[start angle=90, end angle=135, radius=0.15];
+  \node[red!80!black, font=\scriptsize] at ($(S) + (-0.09, 0.18)$) {$45^\circ$};
+
+  % --- 6. 頂点プロットとラベル ---
+  \fill (A) circle (0.8pt) node[below left] {$A$};
+  \fill (B) circle (0.8pt) node[below right] {$B$};
+  \fill (C) circle (0.8pt) node[above left] {$C$};
+  \fill[blue!80!black] (Q) circle (0.9pt) node[below] {$Q$};
+  \fill[blue!80!black] (S) circle (0.9pt) node[left] {$S$};
+  \fill[blue!80!black] (R) circle (1.0pt) node[above right=1pt] {$R$};
+  \fill[gray!80!black] (H) circle (0.8pt) node[left] {$H$};
+  \fill[gray!80!black] (Hp) circle (0.8pt) node[below] {$H'$};
+  \fill[red!80!black] (P) circle (0.8pt) node[below right] {$P$};
+  \fill[red!80!black] (T) circle (0.8pt) node[above left] {$T$};
+
+  % --- 7. 長さのラベル ---
+  \node[below, red!80!black, font=\footnotesize] at ($(B)!0.5!(P)$) {$x$};
+  \node[left, red!80!black, font=\footnotesize] at ($(C)!0.5!(T)$) {$y$};
+  % \node[below=3pt, font=\footnotesize] at ($(A)!0.5!(Q)$) {$\alpha = 2-\sqrt{2}x$};
+  % \node[left=3pt, font=\footnotesize] at ($(A)!0.5!(S)$) {$\beta = 2-\sqrt{2}y$};
+
+\end{tikzpicture}
+\caption{三角形 $ABC$ と各点 $Q, S, R, P, T$ の位置関係}
+\end{figure}
+
+
+
+さて，以下三角形の三辺$|AB|,|BC|,|CA|$を二通りで表すことで$x,y$の間の関係式を導く．
+図のように$\mathrm{R}$ から $\mathrm{AC}, \mathrm{AB}$ に下ろした垂足を $\mathrm{H}, \mathrm{H'}$ とおく．
+$|\mathrm{AB}| = 2$ だから，
+\begin{align}
+ \begin{cases}
+ \mathrm{H'Q} = |RQ|\cos\angle\mathrm{RQA} = |RQ|\cos\dfrac{\pi}{3} = \dfrac{1}{2}|RQ| \\
+ \mathrm{RH'} = \mathrm{H'B} = |RQ|\sin\angle\mathrm{RQA} |RQ|\sin\dfrac{\pi}{3} =  \dfrac{\sqrt{3}}{2}|RQ| 
+ \end{cases} \label{eq:9}
+\end{align}
+および
+\begin{align}
+ \begin{cases}
+ \mathrm{HS} = |SR|\cos\angle\mathrm{RSA} = |SR|\cos\dfrac{\pi}{3} = \dfrac{1}{2}|SR| \\
+ \mathrm{HR} = \mathrm{CS} = |SR|\sin\angle\mathrm{RSA}= |SR|\sin\dfrac{\pi}{3} = \dfrac{\sqrt{3}}{2}|SR|
+ \end{cases} \label{eq:10}
+\end{align}
+である．また，三角形$\mathrm{BPQ}$，$\mathrm{CTS}$がいずれも直角二等辺三角形だから
+\begin{align}
+ |QB| = \sqrt{2}x \quad |CS| = \sqrt{2}y \label{eq:11}
+\end{align}
+である．
+
+さて，$|AB|=|AH'|+|H'Q|+|QB|=|HR|+|H'Q|+|QB|$，$|AC|=|AH|+|HS|+|SC|=|RH'|+|HS|+|SC|$だから\cref{eq:9,eq:10}を代入して
+\begin{align}
+ \begin{cases}
+  2 = \dfrac{\sqrt{3}}{2}|SR| + \dfrac{1}{2}|RQ| + \sqrt{2}x \\
+  2 = \dfrac{\sqrt{3}}{2}|RQ| + \dfrac{1}{2}|SR| + \sqrt{2}y
+ \end{cases} \label{eq:12}
+\end{align}
+である．同様に$|AB|=|SR|+|H'B|$に\cref{eq:9,eq:10}を代入すると
+\begin{align}
+ 2 & = \dfrac{\sqrt{3}}{2}|SR| + \dfrac{\sqrt{3}}{2}|RQ| \\
+\therefore
+ 4\sqrt{3} &= |SR| + |RQ| \label{eq:13}
+\end{align}
+である．一方\cref{eq:12}を辺々足して
+\begin{align}
+ 4 = \left( \dfrac{\sqrt{3}}{2} + \dfrac{1}{2} \right)\left(|SR|+|RQ|\right) + \sqrt{2}\left(x+y\right) \label{eq:14}
+\end{align}
+だから\cref{eq:13}を代入して
+\begin{align}
+ & 4 = \left( \dfrac{\sqrt{3}}{2} + \dfrac{1}{2} \right)\cdot 4\sqrt{3} + \sqrt{2}\left(x+y\right) \\
+ & x+ y = \dfrac{1}{\sqrt{2}} \left\{ 4 - \dfrac{2}{3}(3+\sqrt{3}) \right\} = \sqrt{2}\left( 1 - \dfrac{\sqrt{3}}{3} \right) \\
+\therefore
+ & x+ y = \sqrt{2}\left( 1 - \dfrac{\sqrt{3}}{3} \right)
+\end{align}
+が求める関係式である．
+
+
+{\bf [別解]}
+
+ほぼ同じことだが，座標を設定してもとける．
+$\mathrm{A}$ を原点とて$\mathrm{AB}$ を $X$ 軸，$\mathrm{AC}$を$Y$軸とする座標を設定すると
+\begin{align}
+\mathrm{RQ} &: Y = -\sqrt{3}(X - \alpha) \quad (\alpha = 2 - \sqrt{2}x) \\
+\mathrm{RS} &: Y = -\dfrac{1}{\sqrt{3}}Y + \beta \quad (\beta = 2 - \sqrt{2}y)
+\end{align}
+と書ける．この交点が点$R$であり，その座標は
+\begin{align}
+ \left( \dfrac{3\alpha - \sqrt{3}\beta}{2}, \dfrac{-\sqrt{3}\alpha + 3\beta}{2} \right)
+\end{align}
+である．これが直線$\mathrm{BC}$上にあれば良い．この方程式は$X+Y=2$だから，
+\begin{align}
+ & \dfrac{3\alpha  - \sqrt{3}\beta}{2} + \dfrac{-\sqrt{3}\alpha + 3\beta}{2} = 2 \\
+ & (3 - \sqrt{3})(\alpha + \beta) = 4 \\
+\therefore 
+ &x + y = \sqrt{2} \left( 1 - \dfrac{\sqrt{3}}{3} \right)
+\end{align}
+が求める条件である．
 
 \newpage
 
