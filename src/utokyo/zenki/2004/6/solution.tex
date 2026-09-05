@@ -1,0 +1,66 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+\footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+\noindent
+{\bf [解]}
+3枚の板を左から$A,B,C$とし，1回目の試行から順に，裏返した板を書いて数列$\{P_n\}$を定める（例えば，1回目で1が出れば$P_1=A$）．
+
+\paragraph{(1)}
+
+$A$を奇数回，かつ$B,C$を偶数回裏返せば良い．
+
+$1^\circ$ $A$を1回裏返す時：あとは$B$2回，または$C$2回で，これらの場合の数は
+\begin{align}
+\underbrace{2}_{B\text{か}C\text{か}}\times\underbrace{{}_3C_1}_{3\text{回のならべ方}}=6\text{通り}
+\end{align}
+
+$2^\circ$ $A$を3回裏返す時：場合の数は1通り．
+
+全事象は$3^3=27$通りで同様に確からしいから，もとめる確率は
+\begin{align}
+\dfrac{6+1}{27}=\dfrac{7}{27}
+\end{align}
+
+\paragraph{(2)}
+
+$n$回目の操作後の状態を，
+\begin{align}
+\text{白}\bigcirc\text{白}&\ \cdots\ a_n\\
+\text{黒}\bigcirc\text{黒}&\ \cdots\ b_n\\
+\text{それ以外}&\ \cdots\ c_n
+\end{align}
+（$\bigcirc$は$B$の色を問わないことを表す；すなわち$a_n$は「$A,C$がともに白」，$b_n$は「$A,C$がともに黒」，$c_n$は「$A,C$の色が異なる」確率）と定める．求める確率は，「白白白または白黒白」＝「$A,C$がともに白」の確率だから，まさに$a_n$である．
+
+各操作で$A,B,C$はそれぞれ確率$\dfrac{1}{3}$で裏返るから，
+\begin{align}
+a_{n+1}&=\dfrac{1}{3}a_n+\dfrac{1}{3}c_n\\
+b_{n+1}&=\dfrac{1}{3}b_n+\dfrac{1}{3}c_n
+\end{align}
+（$a_n$の状態から$B$を裏返せば$a_{n+1}$のまま，$A$または$C$を裏返せば「異なる」状態に移る．$c_n$の状態から$B$を裏返せばそのまま，$A,C$のうち黒い方を裏返せば$a_{n+1}$，白い方を裏返せば$b_{n+1}$に移る．）である．$a_n+b_n+c_n=1$より$c_n$を消して，
+\begin{align}
+a_{n+1}&=\dfrac{1}{3}(1-b_n)\\
+b_{n+1}&=\dfrac{1}{3}(1-a_n)
+\end{align}
+
+辺々足し引きして，$d_n=a_n+b_n$，$\beta_n=a_n-b_n$とすると，
+\begin{align}
+d_{n+1}&=\dfrac{1}{3}(2-d_n)\\
+\beta_{n+1}&=\dfrac{1}{3}\beta_n
+\end{align}
+
+だから，$a_0=1$，$b_0=0$から$d_0=\beta_0=1$に注意して漸化式をとくと，
+\begin{align}
+d_n&=\left(-\dfrac{1}{3}\right)^n\left(1-\dfrac{1}{2}\right)+\dfrac{1}{2}\\
+\beta_n&=\left(\dfrac{1}{3}\right)^n
+\end{align}
+
+だから，もとめる確率$a_n$は
+\begin{align}
+a_n=\dfrac{1}{2}(d_n+\beta_n)=\dfrac{1}{2}\left(\dfrac{1}{3}\right)^n+\dfrac{1}{4}\left(-\dfrac{1}{3}\right)^n+\dfrac{1}{4}
+\end{align}
+
+\end{document}
