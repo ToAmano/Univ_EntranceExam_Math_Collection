@@ -224,6 +224,7 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs=""):
 
     full_tex = f"""\\documentclass[tikz,border=2pt]{{standalone}}
 \\usepackage{{amsmath,amssymb,amsfonts,amsthm}}
+\\usepackage{{fancybox}}
 \\usepackage{{luatexja}}
 \\usepackage[haranoaji]{{luatexja-preset}}
 \\usepackage{{tikz,pgfplots}}
