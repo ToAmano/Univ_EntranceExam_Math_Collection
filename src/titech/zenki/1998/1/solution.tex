@@ -1,72 +1,295 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-$a>0$のもとで，$x\ge0,\ y\ge0,\ 2x+3y\le12,\ ax+\left(4-\dfrac{3a}{2}\right)y\le8$の表す領域を$D_a$とし，$D_a$上で$f=x+y$の最大値$f(a)$をもとめる．
-
-\textbf{（鍵となる事実）} 直線$\ell_a:\ ax+\left(4-\dfrac{3a}{2}\right)y=8$は，$a$の値によらず定点$P(3,2)$を通る．実際
-\begin{align}
-3a+2\left(4-\dfrac{3a}{2}\right)=3a+8-3a=8
-\end{align}
-であり，これは常に成立する．また$P(3,2)$は$2\cdot3+3\cdot2=12$より直線$2x+3y=12$上にもある．したがって2直線は常に$P(3,2)$で交わり，
-\begin{align}
-f(3,2)=5
-\end{align}
-
-$f$は線形だから，$D_a$上の最大値は頂点でとる．$y=0$上では，$2x+3y\le12$から$x\le6$，$\ell_a$の制約$ax\le8$から$x\le8/a$であり，効くのは小さい方．$x=0$上では，$2x+3y\le12$から$y\le4$，$\ell_a$から$y\le16/(8-3a)$（$a<8/3$の時）であり，これも小さい方が効く．$16/(8-3a)$と$4$を比較すると$16-4(8-3a)=12a>0$（$a>0$）より常に$16/(8-3a)>4$なので，$x=0$上では常に$2x+3y\le12$の方が効き，$y$軸方向の頂点は常に$(0,4)$である（$f=4$，これが最大になることはない）．
-
-\subparagraph{$1^\circ$ $0<a\le\dfrac{4}{3}$の時}
-
-$6a\le8$だから$x=6$（$y=0$上）は$\ell_a$の制約もみたし，$D_a$の頂点は$(6,0)$．$f(6,0)=6$であり，これは$(0,4)$の$4$，$P$の$5$より大きいので
-\begin{align}
-f(a)=6
-\end{align}
-
-\subparagraph{$2^\circ$ $\dfrac{4}{3}\le a\le\dfrac{8}{5}$の時}
-
-$6a\ge8$だから$x=6$は不適で，$y=0$上の頂点は$\ell_a$の$x$切片$\left(\dfrac{8}{a},0\right)$になる．$a\le8/5\iff8/a\ge5$だから，この頂点での値$8/a$は$P$での値$5$以上であり，$(0,4)$の$4$より大きいので
-\begin{align}
-f(a)=\dfrac{8}{a}
-\end{align}
-
-\subparagraph{$3^\circ$ $a\ge\dfrac{8}{5}$の時}
-
-$8/a\le5$となり，$y=0$上の頂点（存在する場合）での値は$P$の値$5$を超えない．実際，$a\ge8/3$では$4-\dfrac{3a}{2}\le0$となって$\ell_a$の$y$の係数の符号が反転し，制約$ax+(4-\tfrac{3a}2)y\le8$は$y\ge\dfrac{2ax-8}{3a-8}$の形（$y$の下限）に変わるが，このときも$D_a$の頂点は$(0,0),\left(\dfrac{8}{a},0\right),P(3,2),(0,4)$のままで（$a=8/3$では$\ell_a$は垂直線$x=3$となり頂点は$(0,0),(3,0),P,(0,4)$），いずれの場合も最大値は$P$でとる．以上より
-\begin{align}
-f(a)=5
-\end{align}
-\casesend
-
-以上をまとめて，
-\begin{align}
-f(a)=
-\begin{cases}\displaystyle
-6 & \left(0<a\le\dfrac{4}{3}\right)\\[2mm]
-\dfrac{8}{a} & \left(\dfrac{4}{3}\le a\le\dfrac{8}{5}\right)\\[2mm]
-5 & \left(a\ge\dfrac{8}{5}\right)
-\end{cases}
-\end{align}
 
 \begin{figure}[htb]
 \begin{center}
-\begin{tikzpicture}[scale=0.7, >=stealth]
+ % --- 1. 0 < a <= 4/3 の時 (例: a=1) ---
+\begin{tikzpicture}[scale=0.5, >=stealth, every node/.style={font=\scriptsize}]
+  % 解析パラメータ (a=1) -> A1(6,0), A2(8,0), B1(0,4), B2(0,3.2)
+  % D_a: OA1PB2
+  
+  % 塗りつぶし領域 D_a
+  \fill[pattern=north east lines, pattern color=gray!60] (0,0) -- (6,0) -- (3,2) -- (0,3.2) -- cycle;
+
+  % 座標軸
+  \draw[->] (-0.5,0) -- (8.5,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,5.5) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 直線 ell_1: 2x+3y=12 -> 切片 (6,0), (0,4)
+  \draw[thick] (6,0) -- (0,4);
+  \node[blue, anchor=south west] at (1,3.3) {$\ell_1$};
+  
+  % 直線 ell_2: x + 2.5y = 8 (a=1) -> 切片 (8,0), (0,3.2)
+  \draw[thick, red] (8,0) -- (0,3.2);
+  \node[red, anchor=north east] at (7.5,0.8) {$\ell_2$};
+
+  % 定点 P(3,2)
+  \fill (3,2) circle (2.5pt);
+  \node[above right] at (3,2) {$P(3,2)$};
+
+  % 頂点ラベル
+  \node[below] at (6,0) {$A_1$};
+  \node[below, red] at (8,0) {$A_2$};
+  \node[left] at (0,4) {$B_1$};
+  \node[left, red] at (0,3.2) {$B_2$};
+
+\end{tikzpicture}
+\caption{二直線$\ell_1,\ell_2$と領域$D_a$（斜線部）の様子}
+\end{center}
+\end{figure}
+
+
+$a>0$のもとで，
+\begin{align}
+ \begin{cases}
+  x\ge 0 \\
+  y\ge 0 \\
+  2x+3y\le 12 \\
+  ax+\left(4-\dfrac{3a}{2}\right)y\le 8
+ \end{cases} \label{eq:1}
+\end{align}
+の表す領域を$D_a$とし，$D_a$上で$g(x,y)=x+y$の最大値$f(a)$をもとめる．\cref{eq:1}の後者二つの領域の境界の直線を$l_1,l_2$とおく：
+\begin{align}
+ \begin{cases}
+  \ell_1: 2x + 3y - 12 = 0 \\
+  \ell_2: ax + \left(4-\dfrac{3a}{2}\right)y -8 = 0
+ \end{cases} \label{eq:2}
+\end{align}
+と，これらは$a$の値によらず定点$P(3,2)$を通る．よって$P$は常に$D_a$上にあり，
+\begin{align}
+ g(x,y) = g(3,2) = 5 \label{eq:3}
+\end{align}
+である．
+両者は直線で，かつ$a$を動かしても$\ell_2$が$\ell_1$と一致することはないから交点はこの点のみである．
+従って，$D_a$は原点$O(0,0)$，$x$軸上の$\ell_1,\ell_2$の切片$A_1,A_2$のうち$x$座標の小さい方，$P$，$y$軸上の$\ell_1,\ell_2$の切片$B_1,B_2$のうち$y$座標の小さい方の4点からなる四角形をなす．
+\cref{eq:2}より
+\begin{align}
+ A_1(6,0), A_2\left(\dfrac{8}{a},0\right), B_1\left(0,4\right), B_2\left(0,\dfrac{8}{4-\frac{3a}{2}}\right) \label{eq:4}
+\end{align}
+である．ただし$B_2$は$a=\dfrac{8}{3}$の時には存在しない．
+従って$a$の値に応じて以下のように領域が切り替わる．
+$g$も線形だからその最大値は$D_a$の端点でとることに注意する．
+
+
+\subparagraph{$1^\circ$ $0<a\le\dfrac{4}{3}$の時}
+
+\begin{figure}[htb]
+\begin{center}
+ % --- 1. 0 < a <= 4/3 の時 (例: a=1) ---
+\begin{tikzpicture}[scale=0.5, >=stealth, every node/.style={font=\scriptsize}]
+  % 解析パラメータ (a=1) -> A1(6,0), A2(8,0), B1(0,4), B2(0,3.2)
+  % D_a: OA1PB2
+  
+  % 塗りつぶし領域 D_a
+  \fill[pattern=north east lines, pattern color=gray!60] (0,0) -- (6,0) -- (3,2) -- (0,3.2) -- cycle;
+
+  % 座標軸
+  \draw[->] (-0.5,0) -- (8.5,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,5.5) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 直線 ell_1: 2x+3y=12 -> 切片 (6,0), (0,4)
+  \draw[thick] (6,0) -- (0,4);
+  \node[blue, anchor=south west] at (1,3.3) {$\ell_1$};
+  
+  % 直線 ell_2: x + 2.5y = 8 (a=1) -> 切片 (8,0), (0,3.2)
+  \draw[thick, red] (8,0) -- (0,3.2);
+  \node[red, anchor=north east] at (7.5,0.8) {$\ell_2$};
+
+  % 定点 P(3,2)
+  \fill (3,2) circle (2.5pt);
+  \node[above right] at (3,2) {$P(3,2)$};
+
+  % 頂点ラベル
+  \node[below] at (6,0) {$A_1$};
+  \node[below, red] at (8,0) {$A_2$};
+  \node[left] at (0,4) {$B_1$};
+  \node[left, red] at (0,3.2) {$B_2$};
+
+\end{tikzpicture}
+\caption{$0<a\le\dfrac{4}{3}$の時の$D_a$．}
+\end{center}
+\end{figure}
+
+この時は$6 \le \dfrac{8}{a}$だから$A_2$よりも$A_1$が原点に近く，また$\dfrac{8}{4-\frac{3a}{2}} \le 4$より$B_2$が$B_1$より原点に近いので$D_a$は四角形$OA_1PB_2$になる．
+頂点での$g(x,y)$の値は
+\begin{align}
+ \begin{cases}
+  g(A_1) = g\left(6,0\right) = 6 \\
+  g(P)   = g(3,2) = 5 \\
+  g(B_2) = g\left(0,\dfrac{8}{4-\frac{3a}{2}}\right) = \dfrac{8}{4-\frac{3a}{2}}
+ \end{cases}
+\end{align}
+となるから，最大値は
+\begin{align}
+ \max g(x,y) = g(A_1) = 6 \label{eq:5}
+\end{align}
+である．
+
+\subparagraph{$2^\circ$ $\dfrac{4}{3}\le a < \dfrac{8}{3}$の時}
+
+\begin{figure}[htb]
+ \begin{center}
+  \begin{tikzpicture}[scale=0.5, >=stealth, every node/.style={font=\scriptsize}]
+  % 解析パラメータ (a=2) -> A1(6,0), A2(4,0), B1(0,4), B2(0,8)
+  % D_a: OA2PB1
+  
+  % 塗りつぶし領域 D_a
+  \fill[pattern=north east lines, pattern color=gray!60] (0,0) -- (4,0) -- (3,2) -- (0,4) -- cycle;
+
   % 座標軸
   \draw[->] (-0.5,0) -- (7,0) node[right] {$x$};
-  \draw[->] (0,-0.5) -- (0,5) node[above] {$y$};
-  % 直線 2x+3y=12
-  \draw[thick] (6,0) -- (0,4) node[above left] {$2x+3y=12$};
-  % ell_a の例 (a=3/2): 1.5x+1.75y=8, 定点P(3,2)を通る
-  \draw[thick,dashed] (5.333,0) -- (0,4.571) node[above left] {$\ell_a$（例）};
-  \fill (3,2) circle (1.71pt) node[above right] {$P(3,2)$};
-  \node[below] at (6,0) {$6$};
+  \draw[->] (0,-0.5) -- (0,8.5) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 直線 ell_1: 2x+3y=12 -> 切片 (6,0), (0,4)
+  \draw[thick] (6,0) -- (0,4);
+  \node[blue, anchor=south west] at (4.5,1.1) {$\ell_1$};
+  
+  % 直線 ell_2: 2x + y = 8 (a=2) -> 切片 (4,0), (0,8)
+  \draw[thick, red] (4,0) -- (0,8);
+  \node[red, anchor=south west] at (1,6.5) {$\ell_2$};
+
+  % 定点 P(3,2)
+  \fill (3,2) circle (2.5pt);
+  \node[above right] at (3,2) {$P$};
+
+  % 頂点ラベル
+  \node[below] at (6,0) {$A_1$};
+  \node[below, red] at (4,0) {$A_2$};
+  \node[left] at (0,4) {$B_1$};
+  \node[left, red] at (0,8) {$B_2$};
 \end{tikzpicture}
-\end{center}
-\caption{直線$2x+3y=12$と点$P$の関係}
+\caption{$\dfrac{4}{3}\le a < \dfrac{8}{3}$の時の$D_a$}
+ \end{center}
 \end{figure}
+
+この時は$6 \ge \dfrac{8}{a}$だから$A_1$よりも$A_2$が原点に近く，また$\dfrac{8}{4-\frac{3a}{2}} \ge 4$より$B_1$が$B_2$より原点に近いので$D_a$は四角形$OA_2PB_1$になる．
+頂点での$g(x,y)$の値は
+\begin{align}
+ \begin{cases}
+  g(A_2) = g\left(\dfrac{8}{a},0\right) = \dfrac{8}{a} \\
+  g(P)   = g(3,2) = 5 \\
+  g(B_1) = g\left(0,4\right) = 4
+ \end{cases}
+\end{align}
+となるから，最大値は
+\begin{align}
+ \max g(x,y) 
+   &= \max \{g(A_2), g(P)\} \\
+   &= 
+   \begin{cases}
+     5 & \left(\dfrac{8}{5} \le a\right) \\
+     \dfrac{8}{a} & \left( a \le \dfrac{8}{5} \right)
+   \end{cases} \label{eq:6}
+\end{align}
+である．
+
+\subparagraph{$3^\circ$ $\dfrac{8}{3}\le a$の時}
+
+
+\begin{figure}[htb]
+\centering
+
+% --- 左図: a = 8/3 の時 ---
+\begin{minipage}[b]{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.6, >=stealth, every node/.style={font=\scriptsize}]
+  % 解析パラメータ (a=8/3) -> A1(6,0), A2(3,0), B1(0,4), B2(存在しない, x=3の垂直線)
+  % D_a: OA2PB1 (四角形、ただしA2Pは垂直)
+  
+  % 塗りつぶし領域 D_a
+  \fill[pattern=north east lines, pattern color=gray!60] (0,0) -- (3,0) -- (3,2) -- (0,4) -- cycle;
+
+  % 座標軸
+  \draw[->] (-0.5,0) -- (7.5,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,5.5) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 直線 ell_1: 2x+3y=12 -> 切片 (6,0), (0,4)
+  \draw[thick, blue] (6,0) -- (0,4);
+  \node[blue, anchor=south west] at (4.5,1.1) {$\ell_1$};
+  
+  % 直線 ell_2: (8/3)x + 0y = 8 -> x = 3 (垂直線)
+  \draw[thick, red] (3,-0.5) -- (3,5.0);
+  \node[red, anchor=south east] at (3,4.5) {$\ell_2$};
+
+  % 定点 P(3,2)
+  \fill (3,2) circle (2.5pt);
+  \node[above right] at (3,2) {$P(3,2)$};
+
+  % 頂点ラベル
+  \node[below] at (6,0) {$A_1$};
+  \node[below left, red] at (3,0) {$A_2(3,0)$};
+  \node[left] at (0,4) {$B_1(0,4)$};
+  % B2 は存在しない
+\end{tikzpicture}
+\caption{$a=\dfrac{8}{3}$の時の$D_a$}
+\end{minipage}
+\hfill
+% --- 右図: a > 8/3 の時 (例: a=4) ---
+\begin{minipage}[b]{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.6, >=stealth, every node/.style={font=\scriptsize}]
+  % 解析パラメータ (a=4) -> A1(6,0), A2(2,0), B1(0,4), B2(0,-4) [不採用]
+  % D_a: OA2PB1
+  
+  % 塗りつぶし領域 D_a
+  \fill[pattern=north east lines, pattern color=gray!60] (0,0) -- (2,0) -- (3,2) -- (0,4) -- cycle;
+
+  % 座標軸
+  \draw[->] (-0.5,0) -- (7.5,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,5.5) node[above] {$y$};
+  \node[below left] at (0,0) {$O$};
+
+  % 直線 ell_1: 2x+3y=12 -> 切片 (6,0), (0,4)
+  \draw[thick, blue] (6,0) -- (0,4);
+  \node[blue, anchor=south west] at (4.5,1.1) {$\ell_1$};
+  
+  % 直線 ell_2: 4x - 2y = 8 (a=4) -> 切片 (2,0), (0,-4)
+  \draw[thick, red] (1.6, -0.8) -- (3.8, 3.6) node[above right] {$\ell_2$};
+  \node[red, anchor=south west] at (2.5,2.5) {$\ell_2$};
+
+  % 定点 P(3,2)
+  \fill (3,2) circle (2.5pt);
+  \node[above right] at (3,2) {$P$};
+
+  % 頂点ラベル
+  \node[below] at (6,0) {$A_1$};
+  \node[below, red] at (2,0) {$A_2$};
+  \node[left] at (0,4) {$B_1$};
+ % \node[left, red] at (0,-4) {$B_2$};
+
+\end{tikzpicture}
+\caption{$a>\dfrac{8}{3}$の時の$D_a$}
+\end{minipage}
+\end{figure}
+
+この時は$y$軸上の頂点に関して，$B_2$が存在しないまたは$y<0$の領域にあるため$D_a$の頂点としては$B_1$が採用される．
+$x$軸上の点に関しては$6 \ge \dfrac{8}{a}$だから$A_1$よりも$A_2$が原点に近い．
+従って$D_a$は四角形$OA_2PB_1$になる．よって$2^{\circ}$の場合と全く同じで\cref{eq:6}より
+\begin{align}
+ \max g(x,y) = g(P) = 5 \label{eq:7}
+\end{align}
+である．
+\casesend
+
+
+以上の場合わけで全ての場合が尽くされた．\cref{eq:5,eq:6,eq:7}より
+\begin{align}
+ \max g(x,y) &=
+  \begin{cases}
+   g(A_1) = 6 & \left( 0<a\le\dfrac{4}{3} \right) \\
+   g(A_2) = \dfrac{8}{a} & \left(\dfrac{4}{3} \le a \le \dfrac{8}{5} \right) \\
+   g(P) = 5   & \left(\dfrac{8}{5} \le a\right)
+  \end{cases}
+\end{align}
+が求める最大値である．
+
 
 
 \newpage

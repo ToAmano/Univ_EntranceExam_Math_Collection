@@ -1,58 +1,127 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-$f(x)=\dfrac{2x-1}{x}$，$f_0(t)=t$，$f_n(t)=f(f_{n-1}(t))$とする．
+与えられた漸化式
+\begin{align}
+ \begin{cases}
+ f(x)=\dfrac{2x-1}{x} \\
+ f_0(t)=t, \quad f_n(t)=f(f_{n-1}(t))   
+ \end{cases} \label{eq:1}
+\end{align}
+について考える．
 
-\textbf{(1)} $f_{n+1}(t)$が定義できるためには$f_n(t)\ne0$が必要（分母）．そこで各$n\ge0$に対し$f_n(t)=0$となる$t$を帰納的にもとめる．
+\paragraph{(1)}
 
-$f_0(t)=0\iff t=0=\dfrac{0}{0+1}$．$n=k$で「$f_k(t)=0\iff t=\dfrac{k}{k+1}$」が成り立つと仮定する．$f_{k+1}(t)=0$の時，$f_k(t)=t'$とおくと$f_{k+1}(t)=f(t')=\dfrac{2t'-1}{t'}=0\iff t'=\dfrac{1}{2}$．すなわち$f_k(t)=\dfrac{1}{2}$．仮定の漸化式の構造から（$f_k$の定義式を用いて逆算すると）これをみたす$t$は
+\cref{eq:1}より
 \begin{align}
-t=\dfrac{k+1}{k+2}
+ f_{n}(t) = \dfrac{2f_{n-1}(x)-1}{f_{n-1}(x)} \label{eq:2}
 \end{align}
-となる．以上により$n\in\mathbb N$のすべてに対し
+が帰納的に全ての非負整数$n$に対して定義できるための条件は全ての$n$に対して
 \begin{align}
-f_n(t)=0\iff t=\dfrac{n}{n+1}
+ f_n(t) \neq 0 \label{eq:3}
 \end{align}
-が成り立つ．したがって，すべての$n$に対し$f_n(t)$が矛盾なく（分母が$0$にならず）定義できるための$t$の条件は
-\begin{align}
-t\ne\dfrac{n}{n+1}\quad(n\in\mathbb N)
-\end{align}
+であることである．
 
-\textbf{(2)} $g_n(t)=f_n(t)-1$とおく．$f_{n+1}=2-\dfrac{1}{f_n}$だから
+以下，数学的帰納法により，非負整数$n$に対して
 \begin{align}
-g_{n+1}(t)=f_{n+1}(t)-1=1-\dfrac{1}{f_n(t)}=\dfrac{f_n(t)-1}{f_n(t)}=\dfrac{g_n(t)}{g_n(t)+1}\quad\cdots\text{①}
+ f_n(t)=0 \iff t=\dfrac{n}{n+1} \label{eq:4}
 \end{align}
-$g_0(t)=t-1$である．$g_k(t)=\dfrac{t-1}{k(t-1)+1}$と予想して帰納法で示す．$k=0$で成立．①に代入すると
-\begin{align}
-g_{k+1}(t)=\dfrac{\dfrac{t-1}{k(t-1)+1}}{\dfrac{t-1}{k(t-1)+1}+1}=\dfrac{t-1}{(t-1)+k(t-1)+1}=\dfrac{t-1}{(k+1)(t-1)+1}
-\end{align}
-となり，$k+1$でも成立．よって
-\begin{align}
-g_n(t)=\dfrac{t-1}{n(t-1)+1}=\dfrac{1}{n}-\dfrac{1}{n^2(t-1)+n}
-\end{align}
+であることを示す．
 
-$a\ge1$として，
+まず$n=0$の時，\cref{eq:1}より$f_0(t)=t$だから\cref{eq:4}で$n=0$として
 \begin{align}
-\begin{split}
-n^2\int_a^{a+\frac{1}{n}}g_n(t)\,dt&=n^2\left[\dfrac{t}{n}-\dfrac{1}{n^2}\log\bigl(n(t-1)+1\bigr)\right]_a^{a+\frac{1}{n}} \\
-&=n^2\left[\dfrac{1}{n^2}-\dfrac{1}{n^2}\log\dfrac{n(a-1)+2}{n(a-1)+1}\right]=1-\log\left(a-1+\dfrac{2}{n}\right)+\log\left(a-1+\dfrac{1}{n}\right)
-\end{split}
+ t = \dfrac{0}{0+1} = 0
 \end{align}
+となり成立する．
 
-$a>1$の時，$n\to\infty$で$\log(a-1+2/n)\to\log(a-1)$，$\log(a-1+1/n)\to\log(a-1)$となるので
+そこで，$n=k$での成立を仮定して$n=k+1$での成立を示す．
 \begin{align}
-n^2\int_a^{a+\frac{1}{n}}(f_n(t)-1)\,dt\longrightarrow1
+ f_{k+1}(t) = 0 \label{eq:5}
 \end{align}
-$a=1$の時は
+の場合を考えると，$f_{1}(t)=t'$によって$n=1,2,\cdots$に対して以下のように漸化式を定義し直す：
 \begin{align}
-1-\log\dfrac{2}{n}+\log\dfrac{1}{n}=1+\log\dfrac{1/n}{2/n}=1+\log\dfrac{1}{2}=1-\log2
+ f'_{0}(t') &= t' \\
+ f'_{n}(t') &= \dfrac{2f'_{n-1}(x)-1}{f'_{n-1}(x)}
 \end{align}
-（$n$によらず一定）．以上をまとめて，もとめる極限値は
+と，$f'_{k}=0$であり，この数列$\{f'_{0}(t'),f'_{1}(t'),\cdots,f'_{2}(t'),\cdots,f'_{k}(t')\}$に対して仮定が使えて
+\begin{align}
+ f'_{0}(t') = t' = \dfrac{k}{k+1} \label{eq:6}
+\end{align}
+である．$f_{1}(t)=t'$に\cref{eq:6}を代入して
+\begin{align}
+ f_{1}(t) = \dfrac{2t-1}{t} = \dfrac{k}{k+1} \\
+\therefore
+ t = \dfrac{k+1}{k+2} 
+\end{align}
+となって，\cref{eq:4}は$n=k+1$でも成立する．
+
+以上より数学的帰納法により求める条件は
+\begin{align}
+t\ne\dfrac{n}{n+1}\quad(n\in\mathbb N) \label{eq:7}
+\end{align}
+である．
+
+\paragraph{(2)}
+被積分関数を
+\begin{align}
+ g_n(t)=f_n(t)-1 \label{eq:8}
+\end{align}
+とおく．\cref{eq:1}より$f_{n+1}=2-\dfrac{1}{f_n}$だから$g_n(t)$の漸化式は
+\begin{align}
+ g_{n+1}(t)
+   &=f_{n+1}(t)-1 \\
+   &=1-\dfrac{1}{f_n(t)} \\
+   &=\dfrac{f_n(t)-1}{f_n(t)} \\
+   &=\dfrac{g_n(t)}{g_n(t)+1} \label{eq:9}
+\end{align}
+であり，初項は
+\begin{align}
+ g_0(t)=t-1 \label{eq:10}
+\end{align}
+となる．
+
+以下，
+\begin{align}
+ g_n(t)=\dfrac{t-1}{n(t-1)+1} \label{eq:11}
+\end{align}
+となることを数学的帰納法で示す．\cref{eq:10}より$n=0$では成立するから，
+以下$n=k$での成立を仮定して$n=k+1$での成立を示す．\cref{eq:9}より
+\begin{align}
+ g_{k+1}(t)
+   &=\dfrac{\dfrac{t-1}{k(t-1)+1}}{\dfrac{t-1}{k(t-1)+1}+1} \\
+   &=\dfrac{t-1}{(t-1)+k(t-1)+1} \\
+   &=\dfrac{t-1}{(k+1)(t-1)+1}
+\end{align}
+となり，$k+1$でも成立する．以上から全ての$n$に対して\cref{eq:11}である．
+
+$a \ge 1$に対して与えられた定積分を$A_n$とおく：
+\begin{align}
+ A_n = n^2 \int_{a}^{a+\frac{1}{n}} g_n(t) dt. \label{eq:12}
+\end{align}
+\cref{eq:11}を代入して
+\begin{align}
+ A_n 
+  &= n^2 \int_{a}^{a+\frac{1}{n}} \Bigl[\dfrac{t-1}{n(t-1)+1}\Bigr] dt \\
+  &= n^2 \int_{a}^{a+\frac{1}{n}} \Bigl[\dfrac{1}{n}-\dfrac{1}{n^2(t-1)+n} \Bigr] dt \\
+  &= n^2 \left[\dfrac{t}{n}-\dfrac{1}{n^2}\log\bigl(n(t-1)+1\bigr)\right]_a^{a+\frac{1}{n}} \\
+  &= n^2\left[\dfrac{1}{n^2}-\dfrac{1}{n^2}\log\dfrac{n(a-1)+2}{n(a-1)+1}\right] \\
+  &= 1-\log\left(a-1+\dfrac{2}{n}\right)+\log\left(a-1+\dfrac{1}{n}\right) \label{eq:13}
+\end{align}
+を得る．
+
+この極限値は$a=1$かいなかで場合分けして
+\begin{align}
+ \lim_{n\to\infty} A_n &=
+ \begin{cases}
+  \lim_{n\to\infty} 1-\log\dfrac{2}{n}+\log\dfrac{1}{n}=1+\log\dfrac{1}{2}=1-\log2 & (a=1) \\
+  1 - \log(a-1) + \log(a-1) = 1 & (a \neq 1)
+ \end{cases} 
+\end{align}
+である．
+
+以上をまとめて求める極限値は
 \begin{align}
 \lim_{n\to\infty}n^2\int_a^{a+\frac{1}{n}}(f_n(t)-1)\,dt=
 \begin{cases}\displaystyle
@@ -60,7 +129,7 @@ $a=1$の時は
 1 & (a>1)
 \end{cases}
 \end{align}
-
+である．
 
 \newpage
 

@@ -1,92 +1,240 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-\footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
-楕円$C:\dfrac{x^2}{a^2}+y^2=1$（$a>1$），$A(a,0)$，$B(a\cos\theta,\sin\theta)$（$0<\theta<\pi$，$q=\sin\theta>0$）とし，$c=\cos\theta,\ s=\sin\theta$と書く．$B$における接線は
+楕円$C:\dfrac{x^2}{a^2}+y^2=1$（$a>1$）上に点$A(a,0)$および$B(p,q)$をとる．この時
 \begin{align}
-\ell:\ \dfrac{p}{a^2}x+qy=1,\qquad p=ac,\ q=s
+ \begin{cases}
+  p = a\cos\theta, q = \sin\theta \\
+  0<\theta<\pi   
+ \end{cases} \label{eq:1}
 \end{align}
+とおく．まずは接点の座標を求める．
 
-$\ell$の方向ベクトルは$\vec\ell=(-as,c)$，直線$x=p$の方向ベクトルは$(0,1)$，$\overrightarrow{BA}=(a(1-c),-s)$である．2直線のなす角の正接は，方向ベクトル$\vec u,\vec v$に対し$\tan=\dfrac{|\vec u\times\vec v|}{\vec u\cdot\vec v}$（外積は$z$成分）で計算できるから，
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=2, >=stealth]
+  % 解析パラメータ設定
+  \def\aVal{2.0}
+  % 問題の設定条件を満たす \theta を解析的に計算（(6)式）
+  \pgfmathsetmacro{\aSq}{\aVal * \aVal}
+  \pgfmathsetmacro{\cosTheta}{(1.0 - sqrt(1.0 + \aSq * (\aSq - 1.0))) / (\aSq - 1.0)}
+  \pgfmathsetmacro{\sinTheta}{sqrt(1.0 - \cosTheta * \cosTheta)}
+  \pgfmathsetmacro{\pVal}{\aVal * \cosTheta}
+  \pgfmathsetmacro{\qVal}{\sinTheta}
+  \pgfmathsetmacro{\thetaVal}{acos(\cosTheta)}
+
+  % 1. 座標軸と楕円の描画
+  \draw[->] (-2.5, 0) -- (2.5, 0) node[right] {$x$};
+  \draw[->] (0, -1.5) -- (0, 1.5) node[above] {$y$};
+  \draw[thick, blue!70!black] (0,0) ellipse ({\aVal} and 1);
+  
+  % 2. 特徴的な点のプロット
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (\aVal, 0);
+  \coordinate (B) at (\pVal, \qVal);
+  \coordinate (P_x) at (\pVal, 0); % 直線 x=p とx軸の交点
+  
+  \fill (O) circle (1pt) node[below left] {$O$};
+  \fill (A) circle (1pt) node[below right] {$A(a,0)$};
+  \fill[red!80!black] (B) circle (1.2pt) node[above left, black] {$B(p,q)$};
+
+  % 3. 直線 BA の描画
+  \draw[gray, thick] (B) -- (A);
+
+  % 4. 接線 \ell の描画
+  % 接線の傾きは -\cosTheta / (aVal * \sinTheta)
+  \pgfmathsetmacro{\slopeL}{-\cosTheta / (\aVal * \sinTheta)}
+  \draw[red!80!black, thick, domain=\pVal-1:\pVal+1.5] plot (\x, {\slopeL * (\x - \pVal) + \qVal}) node[below right] {$\ell$};
+
+  % 5. 直線 x = p の描画
+  \draw[dashed, gray] (\pVal, -1.3) -- (\pVal, 1.3) node[below] {$x=p$};
+
+  % 6. 角 \alpha, \beta の描画 (鋭角)
+  % 接線のx軸正方向とのなす角
+  \pgfmathsetmacro{\angleL}{atan(\slopeL)}
+  % BAのx軸正方向とのなす角
+  \pgfmathsetmacro{\angleBA}{atan((\qVal - 0)/(\pVal - \aVal))}
+  
+  % 角 \beta: \ell と x=p (垂直) のなす角
+  % \angleL は負（第2象限向き）、垂直は90度
+  \pgfmathsetmacro{\startBeta}{90}
+  \pgfmathsetmacro{\endBeta}{\angleL}
+  \draw[->, thick, green!60!black] (B) +(\startBeta:0.3) arc (\startBeta:\endBeta:0.3);
+  \node[green!60!black] at ($(B) + ({(\startBeta+\endBeta)/2}:0.4)$) {$\beta$};
+
+  % 角 \alpha: \ell と BA のなす角
+  \pgfmathsetmacro{\startAlpha}{\angleL}
+  \pgfmathsetmacro{\endAlpha}{\angleBA}
+  \draw[->, thick, orange] (B) +(\startAlpha:0.3) arc (\startAlpha:\endAlpha:0.3);
+  \node[orange] at ($(B) + ({(\startAlpha+\endAlpha)/2}:0.45)$) {$\alpha$};
+\end{tikzpicture}
+\end{figure}
+
+$B$における接線は
+\begin{align}
+\ell:\ \dfrac{\cos\theta}{a}x+\sin\theta y=1 \label{eq:2}
+\end{align}
+である．
+
+$\ell$の方向ベクトルは
+\begin{align}
+ \vec\ell=
+   \begin{pmatrix}
+    -a\sin\theta \\
+    \cos\theta
+   \end{pmatrix}
+\end{align}
+であり，直線$x=p$の方向ベクトルは
+\begin{align}
+ \vec{n} = 
+   \begin{pmatrix}
+    0 \\
+    1
+   \end{pmatrix}
+\end{align}
+である．また
+\begin{align}
+  \overrightarrow{BA} = 
+ \begin{pmatrix}
+  a(1-\cos\theta) \\
+  \sin\theta
+ \end{pmatrix}
+\end{align}
+である．
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+
+  % 頂点座標の定義
+  \coordinate (X) at (0, 0);
+  \coordinate (Y) at (2.4, 1.2);
+  \coordinate (Z) at (1.2, 2.5);
+
+  % 三角形 XYZ の描画
+  \draw[very thick, blue!80!black] (X) -- (Y) -- (Z) -- cycle;
+
+  % 各頂点のプロット
+  \fill (X) circle (1.2pt) node[below left] {$X$};
+  \fill (Y) circle (1.2pt) node[below right] {$Y$};
+  \fill (Z) circle (1.2pt) node[above right] {$Z$};
+
+  % 角 \theta の円弧とラベル
+  % XY の偏角は約 26.57°、XZ の偏角は約 64.36°
+  \draw[thick, red!80!black] (26.57:0.7) arc[start angle=26.57, end angle=64.36, radius=0.7];
+  \node[red!80!black, font=\normalsize] at (45.46:0.95) {$\theta$};
+
+\end{tikzpicture}
+\caption{3点 $X, Y, Z$ となす角 $\theta$}
+\label{fig:tan_theta_triangle}
+\end{figure}
+
+さて，ここで上図のような$3$点について
+\begin{align}
+ \tan\theta = \dfrac{\sin\theta}{\cos\theta} = \dfrac{|XY||XZ|\sin\theta}{|XY||XZ|\cos\theta} = \frac{2\triangle XYZ}{\overrightarrow{XY}\cdot\overrightarrow{XZ}}
+\end{align}
+だから，
 
 $\ell$と$x=p$のなす角$\beta$について，角は鋭角にとるので絶対値を用いて
 \begin{align}
-\vec\ell\times(0,1)=-as,\qquad \vec\ell\cdot(0,1)=c \quad\therefore\ \tan\beta=\dfrac{as}{|c|}
+ \tan\beta = \left|\dfrac{-a\sin\theta}{\cos\theta}\right| = \dfrac{a\sin\theta}{\left|\cos\theta\right|} \label{eq:3}
 \end{align}
+である．
 
-$\ell$と$BA$のなす角$\alpha$について，
+同様に$\ell$と$BA$のなす角$\alpha$について，角は鋭角にとるので絶対値を用いて
 \begin{align}
-\begin{split}
-\vec\ell\times\overrightarrow{BA}&=(-as)(-s)-c\cdot a(1-c)=a(s^2-c+c^2)=a(1-c) \\
-\vec\ell\cdot\overrightarrow{BA}&=-a^2s(1-c)-cs=-s\{a^2(1-c)+c\}
-\end{split}
+ \tan\alpha 
+   &= \left|\dfrac{a\cos\theta(1-\cos\theta)-a\sin^2\theta}{-a^2\sin\theta(1-\cos\theta)-\sin\theta\cos\theta}\right| \\
+   &= \left|\dfrac{a(\cos\theta-1)}{-\sin\theta\{(1-a^2)\cos\theta + a^2\}}\right| \\
+   &= \dfrac{a(1-\cos\theta)}{\sin\theta\{(1-a^2)\cos\theta + a^2\}} \label{eq:4}
 \end{align}
-$a^2(1-c)+c>0$（$1-c>0$かつ$a>1$から常に成立）なので
-\begin{align}
-\therefore\ \tan\alpha=\dfrac{a(1-c)}{s\{a^2(1-c)+c\}}
-\end{align}
+である．ただし最後の行で$a>1$, $-1 < \cos\theta < 1$より絶対値を外した．
 
-条件$\alpha=\beta$（ともに鋭角）より$\tan\alpha=\tan\beta$：
+題意の条件は鋭角$\alpha,\beta$について$\alpha=\beta$だから，$\tan\alpha=\tan\beta$と同値である．
+従って\cref{eq:3,eq:4}が等しいから
 \begin{align}
-\begin{split}
-\dfrac{a(1-c)}{s\{a^2(1-c)+c\}}&=\dfrac{as}{|c|} \\
-|c|(1-c)&=s^2\{a^2(1-c)+c\}=(1-c)(1+c)\{a^2(1-c)+c\}
-\end{split}
+ \dfrac{a\sin\theta}{\left|\cos\theta\right|} = \dfrac{a(1-\cos\theta)}{\sin\theta\{(1-a^2)\cos\theta + a^2\}} \\
+  a\sin^2\theta\Bigl[(1-a^2)\cos\theta + a^2\Bigr] = a(1-\cos\theta)\left|\cos\theta \right| 
 \end{align}
-$1-c\ne0$（$B\ne A$）で両辺を割って
+左辺に$\sin^2\theta = 1-\cos^2\theta$を用いて
 \begin{align}
-|c|=(1+c)\{a^2(1-c)+c\}
+ a\left(1-\cos^2\theta\right)\Bigl[(1-a^2)\cos\theta + a^2\Bigr] = a(1-\cos\theta)\left|\cos\theta \right| 
 \end{align}
-まず$c>0$（$|c|=c$）と仮定すると，$c=(1+c)\{a^2(1-c)+c\}$を整理して$a^2+(1-a^2)c^2=0\ \therefore\ c^2=\dfrac{a^2}{a^2-1}>1$となり$0<c<1$に反し不適．よって$c<0$（$|c|=-c$）であり，
+$a>0$および\cref{eq:1}より$\cos\theta\neq 1$だから両辺を$a(1-\cos\theta) (\neq 0)$で割って
 \begin{align}
-\begin{split}
--c&=(1+c)\{a^2(1-c)+c\} \\
-0&=c+(1+c)\{a^2(1-c)+c\}
-\end{split}
+ \left(1+\cos\theta\right)\Bigl[(1-a^2)\cos\theta + a^2\Bigr] = \left|\cos\theta \right| \label{eq:5}
 \end{align}
-右辺を展開すると（$a^2(1-c)+c=a^2-a^2c+c$に注意して）
-\begin{align}
-(1+c)\{a^2(1-c)+c\}=(a^2-a^2c+c)+c(a^2-a^2c+c)=a^2+c+(1-a^2)c^2
-\end{align}
-だから
-\begin{align}
-\begin{split}
-0&=c+a^2+c+(1-a^2)c^2=(1-a^2)c^2+2c+a^2 \quad\therefore\ (a^2-1)c^2-2c-a^2=0 \\
-c&=\dfrac{1\pm\sqrt{1+a^2(a^2-1)}}{a^2-1}
-\end{split}
-\end{align}
-$c<0$かつ$a>1$（$a^2-1>0$）より，$+$の解は常に正だから不適．よって
-\begin{align}
-c=\dfrac{1-\sqrt{1+a^2(a^2-1)}}{a^2-1}
-\end{align}
-（これは確かに負：$\sqrt{1+a^2(a^2-1)}>1$だから分子は負．）
+である．
 
-\textbf{(1)} 求める$p$は
+まず$\cos\theta\ge 0$の時は\cref{eq:5}は
 \begin{align}
-p=ac=\dfrac{a\left\{1-\sqrt{1+a^2(a^2-1)}\right\}}{a^2-1}
+ (1-a^2)\cos^2\theta + a^2 = 0 \quad \therefore \cos^2\theta=\dfrac{a^2}{a^2-1}>1
 \end{align}
+となり$0\le \cos\theta<1$に反して不適である．
 
-\textbf{(2)} 分子を有理化すると
+よって$\cos\theta<0$であり，この時\cref{eq:5}は
 \begin{align}
-p=\dfrac{a\left\{1-\bigl(1+a^2(a^2-1)\bigr)\right\}}{(a^2-1)\left\{1+\sqrt{1+a^2(a^2-1)}\right\}}=\dfrac{-a^3(a^2-1)}{(a^2-1)\left\{1+\sqrt{1+a^2(a^2-1)}\right\}}=\dfrac{-a^3}{1+\sqrt{1+a^2(a^2-1)}}
+ (1-a^2)\cos^2\theta + 2\cos\theta + a^2 = 0 \\
+\therefore
+ \cos\theta = \dfrac{1\pm \sqrt{1+a^2(a^2-1)}}{a^2-1} 
 \end{align}
-したがって
+である．$\cos\theta<0$より複合負が正しく，
+\begin{align}
+ \cos\theta = \dfrac{1 - \sqrt{1+a^2(a^2-1)}}{a^2-1} \label{eq:6}
+\end{align}
+となる．これは確かに以下のように$-1<\cos\theta < 0$を満たす．
+同値変形していくと
+\begin{align}
+  & -1 < \cos\theta < 0 \\
+\iff
+  & -1 < \dfrac{1 - \sqrt{1+a^2(a^2-1)}}{a^2-1} < 0 \\
+\iff
+  & -(a^2-1) < 1 - \sqrt{1+a^2(a^2-1)} < 0 \\
+\iff
+  & 1 < \sqrt{1+a^2(a^2-1)} < a^2 \\
+\iff
+  & 1 < 1 + a^2(a^2-1) < a^4 \\
+\iff
+  & 0 < a^2(a^2-1) < a^4 -1 = (a^2+1)(a^2-1)\\ 
+\iff
+  & 0 < a^2 < a^2+1 \quad (\because a^2 > 1)
+\end{align}
+で，最後の行は自明だから$-1<\cos\theta<0$を満たす．
+
+
+\paragraph{(1)}
+
+求める$p$は\cref{eq:1,eq:6}より
+\begin{align}
+p=a\cos\theta=\dfrac{a\left\{1-\sqrt{1+a^2(a^2-1)}\right\}}{a^2-1}
+\end{align}
+である．
+
+\paragraph{(2)}
+
+まず$p$の$a\to 1$の極限を考える．
+分子を有理化すると
+\begin{align}
+ p
+  &= \dfrac{a\left\{1-\bigl(1+a^2(a^2-1)\bigr)\right\}}{(a^2-1)\left\{1+\sqrt{1+a^2(a^2-1)}\right\}} \\
+  &= \dfrac{-a^3(a^2-1)}{(a^2-1)\left\{1+\sqrt{1+a^2(a^2-1)}\right\}}=\dfrac{-a^3}{1+\sqrt{1+a^2(a^2-1)}}
+\end{align}
+したがって極限をとって
 \begin{align}
 \lim_{a\to1}p=\dfrac{-1}{1+\sqrt{1}}=-\dfrac{1}{2}
 \end{align}
+である．
 
-また，
+次に$\dfrac{p}{a}$の$a\to\infty$の極限を考えると
 \begin{align}
-\dfrac{p}{a}=\dfrac{1-\sqrt{1+a^2(a^2-1)}}{a^2-1}=\dfrac{\dfrac{1}{a^2}-\sqrt{\dfrac{1}{a^4}+1-\dfrac{1}{a^2}}}{1-\dfrac{1}{a^2}}
+ \dfrac{p}{a}
+   &=\dfrac{1-\sqrt{1+a^2(a^2-1)}}{a^2-1} \\
+   &=\dfrac{\dfrac{1}{a^2}-\sqrt{\dfrac{1}{a^4}+1-\dfrac{1}{a^2}}}{1-\dfrac{1}{a^2}} \\
+   &\xrightarrow{a\to\infty} \dfrac{0-\sqrt{1}}{1-0}=-1
 \end{align}
-$a\to\infty$の時，$1/a^2\to0,\ 1/a^4\to0$だから
-\begin{align}
-\lim_{a\to\infty}\dfrac{p}{a}=\dfrac{0-\sqrt{1}}{1-0}=-1
-\end{align}
+である．
 
 
 \end{document}
