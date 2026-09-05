@@ -7,6 +7,8 @@
 
 $\triangleright$ はじめは...
 
+\begin{figure}[htb]
+\centering
 \begin{tikzpicture}[x=2cm, y=-1.5cm, >={stealth}]
 % Headers
 \node at (1, 0) {\textcircled{1}};
@@ -14,18 +16,18 @@ $\triangleright$ はじめは...
 \node at (3, 0) {\textcircled{3}};
 
 % Initial
-\node (init) at (0, 1) {\begin{tabular}{|cc|}\multicolumn{2}{c}{白\ \ 赤}\\ $a+2$ & $1$\\ \hline\end{tabular}};
+\node (init) at (0, 1) {\shadowbox{\begin{tabular}{|cc|}\multicolumn{2}{c}{白\ \ 赤}\\ $a+2$ & $1$\\ \hline\end{tabular}}};
 
 % Step 1
-\node (1_top) at (1, 0.5) {\begin{tabular}{|c|}\multicolumn{1}{c}{白}\\ $a+2$\\ \hline\end{tabular}};
-\node (1_bot) at (1, 1.5) {\begin{tabular}{|cc|}\multicolumn{2}{c}{白\ \ 赤}\\ $a$ & $1$\\ \hline\end{tabular}};
+\node (1_top) at (1, 0.5) {\shadowbox{\begin{tabular}{|c|}\multicolumn{1}{c}{白}\\ $a+2$\\ \hline\end{tabular}}};
+\node (1_bot) at (1, 1.5) {\shadowbox{\begin{tabular}{|cc|}\multicolumn{2}{c}{白\ \ 赤}\\ $a$ & $1$\\ \hline\end{tabular}}};
 \draw[->] (init) -- node[above] {$\frac{1}{a+3}$} (1_top);
 \draw[->] (init) -- node[below left] {$\frac{a+2}{a+3}$} (1_bot);
 
 % Step 2
-\node (2_top) at (2, 0.5) {\begin{tabular}{|cc|}\multicolumn{2}{c}{白\ \ 赤}\\ $a$ & $1$\\ \hline\end{tabular}};
-\node (2_mid) at (2, 1.5) {\begin{tabular}{|c|}\multicolumn{1}{c}{白}\\ $a$\\ \hline\end{tabular}};
-\node (2_bot) at (2, 2.5) {\begin{tabular}{|cc|}\multicolumn{2}{c}{白\ \ 赤}\\ $a$ & $1$\\ \hline\end{tabular}};
+\node (2_top) at (2, 0.5) {\shadowbox{\begin{tabular}{|cc|}\multicolumn{2}{c}{白\ \ 赤}\\ $a$ & $1$\\ \hline\end{tabular}}};
+\node (2_mid) at (2, 1.5) {\shadowbox{\begin{tabular}{|c|}\multicolumn{1}{c}{白}\\ $a$\\ \hline\end{tabular}}};
+\node (2_bot) at (2, 2.5) {\shadowbox{\begin{tabular}{|cc|}\multicolumn{2}{c}{白\ \ 赤}\\ $a$ & $1$\\ \hline\end{tabular}}};
 
 \draw[->] (1_top) -- node[above] {$1$} (2_top);
 \draw[->] (1_bot) -- node[above] {$\frac{1}{a+1}$} (2_mid);
@@ -34,7 +36,7 @@ $\triangleright$ はじめは...
 % Step 3
 \node (3_top1) at (3, 0.2) {白・赤};
 \node (3_top2) at (3, 0.8) {白};
-\node (3_mid) at (3, 1.5) {\begin{tabular}{|cc|}\multicolumn{2}{c}{白\ \ 赤}\\ $a$ & $1$\\ \hline\end{tabular}};
+\node (3_mid) at (3, 1.5) {\shadowbox{\begin{tabular}{|cc|}\multicolumn{2}{c}{白\ \ 赤}\\ $a$ & $1$\\ \hline\end{tabular}}};
 \node (3_bot1) at (3, 2.2) {白・赤};
 \node (3_bot2) at (3, 2.8) {白};
 
@@ -45,12 +47,19 @@ $\triangleright$ はじめは...
 \draw[->] (2_bot) -- node[below left] {$\frac{1}{a+1}$} (3_bot2);
 
 \end{tikzpicture}
+\caption{赤玉・白玉を引く操作の推移図}
+\end{figure}
 
-\[
-p_1 = \dfrac{1}{a+3}, \quad p_2 = \dfrac{a+2}{a+3} \dfrac{1}{a+1}, \quad p_3 = \dfrac{1}{(a+1)(a+3)} + \dfrac{a(a+2)}{(a+1)^2(a+3)} = \dfrac{a^2+3a+1}{(a+1)^2(a+3)}
-\]
+\begin{align}
+p_1 = \dfrac{1}{a+3}, \quad p_2 = \dfrac{a+2}{a+3} \dfrac{1}{a+1}, \\
+\quad p_3 = \dfrac{1}{(a+1)(a+3)} + \dfrac{a(a+2)}{(a+1)^2(a+3)} = \dfrac{a^2+3a+1}{(a+1)^2(a+3)}
+\end{align}
 
-[解] (1) $p_1 = \dfrac{1}{a+3}, p_2 = \dfrac{a+2}{(a+3)(a+1)}$
+{\bf [解]}
+
+\paragraph{(1)}
+
+$p_1 = \dfrac{1}{a+3}, p_2 = \dfrac{a+2}{(a+3)(a+1)}$
 
 \paragraph{(2)}
 
@@ -61,13 +70,13 @@ p_1 = \dfrac{1}{a+3}, \quad p_2 = \dfrac{a+2}{a+3} \dfrac{1}{a+1}, \quad p_3 = \
 \end{itemize}
 
 したがって，$n+1$回目に赤を引くのは，
-\[
+\begin{align}
 p_{n+1} = \dfrac{1}{a+1} (1-p_n) \quad (n \ge 2)
-\]
+\end{align}
 である．変形して
-\[
+\begin{align}
 p_{n+1} - \dfrac{1}{a+2} = \dfrac{-1}{a+1} \left( p_n - \dfrac{1}{a+2} \right)
-\]
+\end{align}
 くり返し用いて，$n \ge 2$のとき，
 \begin{align}
 p_n &= \left(-\dfrac{1}{a+1}\right)^{n-2} \left( p_2 - \dfrac{1}{a+2} \right) + \dfrac{1}{a+2} \\
@@ -84,8 +93,8 @@ p_n &= \left(-\dfrac{1}{a+1}\right)^{n-2} \left( p_2 - \dfrac{1}{a+2} \right) + 
 &= m - \dfrac{1}{a+3} \dfrac{a+1}{a+2} \left\{ 1 - \left(-\dfrac{1}{a+1}\right)^m \right\}
 \end{align}
 だから，$a \in \mathbb{N}$より，
-\[
+\begin{align}
 \dfrac{1}{m} A_m = \dfrac{1}{a+2} - \dfrac{1}{m} \dfrac{a+1}{(a+2)(a+3)} \left\{ 1 - \left(-\dfrac{1}{a+1}\right)^m \right\} \to \dfrac{1}{a+2}
-\]
+\end{align}
 
 \end{document}
