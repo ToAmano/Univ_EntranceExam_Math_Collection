@@ -145,6 +145,7 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 * **`build-pdf.yml`**（`v*` タグ push / 手動実行）: 大学・区分の 6 通りを matrix ビルドし、各ジョブで `generate_main_tex.py` → `latexmk -lualatex` → `{univ}_{cat}.pdf`（例: `utokyo_zenki.pdf`）にリネームして artifact化。最後に release ジョブが全 artifact を集約して GitHub Release に添付する。
 * **`lint-tex.yml`**（`src/**/*.tex` を含む push / PR）: `scratch/lint_latex_style.py` で 8.3.6 節のルール（機械的に判定可能なもののみ）を **差分に入った `solution.tex` のみ** に対してチェックする。`problem.tex`（原題の問題文）はCIの対象外——著者が書く解答文とは性質が違い、`\caption` 必須などの一部ルールがそもそも馴染まないため。TeX Live 不要の軽量ジョブ。既存コーパスには本ルール導入以前からの違反が大量にあるため（2026年時点で約6800件）、リポジトリ全体を対象にはせず、変更・新規追加された `solution.tex` のみを厳格化する「ratchet」方式を採用している。ローカルでの単体実行は `python3 scratch/lint_latex_style.py [対象ファイル...]`（引数なしならリポジトリ全体を `problem.tex` も含めてスキャンし集計のみ表示。`problem.tex` も個別に指定すれば手動でチェック可能）。
 * **`lint-tex-full.yml`**（毎週月曜 00:00 UTC の `schedule` / 手動実行）: `scratch/lint_full_report.py` でリポジトリ全体の `solution.tex`（`lint-tex.yml` と同じスコープ）を走査し、ルール別・書籍別の内訳を Markdown レポートとして生成、`LaTeX Lint Backlog Report` という固定タイトルの Issue を検索して見つかれば本文を更新、無ければ新規作成する（PR ごとに Issue を乱発しない）。違反があってもジョブ自体は失敗しない非ブロッキングの可視化用ワークフローで、`lint-tex.yml`（差分のみを強制）とは役割が異なる。
+* **`pre-commit.yml`**（`**/*.tex` を含む push / PR）: [pre-commit](https://pre-commit.com/) フレームワーク経由で [tex-fmt](https://github.com/WGUNDERWOOD/tex-fmt)（Rust製 LaTeX フォーマッタ）を実行する。設定は `.pre-commit-config.yaml`（対象は `solution.tex`/`problem.tex`/`handwritten_tex.tex` のみ、`generate_main_tex.py` が再生成する `main.tex` は対象外）と `tex-fmt.toml`（2 スペースインデント、`wrap = false` で自動80桁折返しは無効化——`align` 内の改行位置は `scratch/lint_latex_style.py` の長い行警告に従って人間が選ぶ方針のため）。`lint-tex.yml` と異なりリポジトリ全体を対象にした「ratchet でない」強制チェックだが、導入時（2026年9月）に全 `.tex` へ一括適用済みのため全体適用でも問題ない。ローカルでは初回に `pre-commit install` を実行しておけば、以後 `git commit` のたびに変更した `.tex` ファイルが自動整形される（整形が入るとコミットは一旦中断されるので、`git add` し直して再コミットする）。
 
 ---
 
@@ -232,6 +233,7 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 * Python 3.x（`pypandoc`, `TexSoup` が必須）
 * Pandoc, poppler-utils（`pdftocairo`）, TeX Live（LuaLaTeX / pdflatex, 日本語対応。統合マスター PDF ビルドには `texlive-lang-japanese texlive-luatex texlive-latex-extra texlive-latex-recommended texlive-pictures texlive-science texlive-fonts-extra` 相当が必要）
 * `gh` CLI（Issue 駆動の進捗管理・デプロイ確認に使用、認証済みであること）
+* [`pre-commit`](https://pre-commit.com/)（`pip install pre-commit` 等）と Rust ツールチェイン（`tex-fmt` フックが `language: rust` で自身をビルドするため）。クローン後に一度 `pre-commit install` を実行しておくと、以後のコミットで `.tex` ファイルが自動整形される（6節参照）。
 
 ---
 
