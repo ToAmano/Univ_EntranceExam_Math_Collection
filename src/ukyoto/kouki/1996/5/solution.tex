@@ -63,7 +63,6 @@
     \label{1996-5:fig:0}
   \end{figure}
 
-
   直線 PQ と原点の距離 $r$ とおく．
   辺 PQの長さが$2a$だから，辺 PQが単位円の中を動く時
   \begin{align}
@@ -244,7 +243,6 @@
     \label{1996-5:fig:3}
   \end{figure}
 
-
   \begin{figure}[H]
     \centering
     \begin{tikzpicture}[scale=1.2]
@@ -268,100 +266,99 @@
 
         \pgfplotsset{
           declare function={
-              y_upper(\x) = (max(0, sqrt(3*(1-\x*\x)) - \kval)) / sqrt(3);
-              y_lower(\x) = -(max(0, sqrt(3*(1-\x*\x)) - \kval)) / sqrt(3);
-              % もし sqrt(3*(1-x^2)) - k が負の場合も描画したいなら
-              % y_upper_alt(\x) = (sqrt(3*(1-\x*\x)) - \kval) / sqrt(3);
-              % y_lower_alt(\x) = -(sqrt(3*(1-\x*\x)) - \kval) / sqrt(3);
-            },
+            y_upper(\x) = (max(0, sqrt(3*(1-\x*\x)) - \kval)) / sqrt(3);
+            y_lower(\x) = -(max(0, sqrt(3*(1-\x*\x)) - \kval)) / sqrt(3);
+            % もし sqrt(3*(1-x^2)) - k が負の場合も描画したいなら
+            % y_upper_alt(\x) = (sqrt(3*(1-\x*\x)) - \kval) / sqrt(3);
+            % y_lower_alt(\x) = -(sqrt(3*(1-\x*\x)) - \kval) / sqrt(3);
+          },
           samples=100
         }
         % 描画範囲 (x軸) を明示的に設定
-        \addplot[name path=upper, thick,domain=0:\xmaxval] {sqrt(3*(1-\x*\x)) - \kval) / sqrt(3)};
-        \addplot[name path=lower, thick,domain=0:\xmaxval] {-sqrt(3*(1-\x*\x)) + \kval) / sqrt(3)};
-        \addplot[dashed,domain=\xmaxval:\xlimitval] {sqrt(3*(1-\x*\x)) - \kval) / sqrt(3)};
-        \addplot[dashed,domain=\xmaxval:\xlimitval] {-sqrt(3*(1-\x*\x)) + \kval) / sqrt(3)};
-        % 領域の塗りつぶし
-        \addplot[pattern=north west lines, fill opacity=0.4] fill between[of=upper and lower];
+      \addplot[name path=upper, thick,domain=0:\xmaxval] {sqrt(3*(1-\x*\x)) - \kval) / sqrt(3)};
+    \addplot[name path=lower, thick,domain=0:\xmaxval] {-sqrt(3*(1-\x*\x)) + \kval) / sqrt(3)};
+  \addplot[dashed,domain=\xmaxval:\xlimitval] {sqrt(3*(1-\x*\x)) - \kval) / sqrt(3)};
+\addplot[dashed,domain=\xmaxval:\xlimitval] {-sqrt(3*(1-\x*\x)) + \kval) / sqrt(3)};
+% 領域の塗りつぶし
+\addplot[pattern=north west lines, fill opacity=0.4] fill between[of=upper and lower];
 
+\coordinate (O) at (0,0);
+\coordinate (A) at (\xmaxval,\ymaxval);
+\coordinate (B) at (\xmaxval,-\ymaxval);
+\coordinate (C) at (\xmaxval,0);
+\coordinate (D) at (0,\ymaxval);
 
-        \coordinate (O) at (0,0);
-        \coordinate (A) at (\xmaxval,\ymaxval);
-        \coordinate (B) at (\xmaxval,-\ymaxval);
-        \coordinate (C) at (\xmaxval,0);
-        \coordinate (D) at (0,\ymaxval);
+\draw[thick, dashed] (O) -- (A) ;
+\draw[thick, dashed] (C) -- (A) -- (D) ;
+\fill (O) circle (1.5pt);
+\fill (A) circle (1.5pt);
+\fill (B) circle (1.5pt);
 
-        \draw[thick, dashed] (O) -- (A) ;
-        \draw[thick, dashed] (C) -- (A) -- (D) ;
-        \fill (O) circle (1.5pt);
-        \fill (A) circle (1.5pt);
-        \fill (B) circle (1.5pt);
+\node[left,font=\tiny] at (D) {$a - k/\sqrt{3}$};
+\node[below left,fill=white, font=\tiny] at (C) {$\sqrt{1-a^2}$};
+\node[above,fill=white, font=\tiny] at ($0.5*(O)+0.5*(A)$) {$r(k)$};
+\end{axis}
+\end{tikzpicture}
+\caption{$z=k$での切断面の様子．これをz軸周りに一回転したものが求める図形の断面に等しい．
+計算すると，$r(k)$を半径とする円になる．}
+\label{1996-5:fig:4}
+\end{figure}
 
-        \node[left,font=\tiny] at (D) {$a - k/\sqrt{3}$};
-        \node[below left,fill=white, font=\tiny] at (C) {$\sqrt{1-a^2}$};
-        \node[above,fill=white, font=\tiny] at ($0.5*(O)+0.5*(A)$) {$r(k)$};
-      \end{axis}
-    \end{tikzpicture}
-    \caption{$z=k$での切断面の様子．これをz軸周りに一回転したものが求める図形の断面に等しい．
-      計算すると，$r(k)$を半径とする円になる．}
-    \label{1996-5:fig:4}
-  \end{figure}
+従ってこれを$z$軸周りに一回転させたものが求める立体の$z=k$での切り口である．
+境界の曲線\cref{1996-5:eq:2}上の点$(X,Y)$とすると，原点からの距離の二乗は
+\begin{align}
+X^2+Y^2
+& = X^2 + \dfrac{1}{3}\left(\sqrt{3(1-X^2)}-k\right)^2          \\
+& = X^2 + (1-X^2) -\dfrac{2k}{3}\sqrt{3(1-X^2)} + \dfrac{k^2}{3} \\
+& = 1 -\dfrac{2k}{3}\sqrt{3(1-X^2)} + \dfrac{k^2}{3}
+\end{align}
+でこれは$X$の単調増加関数だから，$X=\sqrt{1-a^2}$で最大値
+\begin{align}
+r(k)                                                  \\
+& = \max (X^2+Y^2)
+& =  (1-a^2) + \dfrac{1}{3}\left(\sqrt{3}a-k\right)^2
+\end{align}
+をとる．
+従って回転した領域は半径$r(k)$の円だから，
+この面積$S(k)$として，
+\begin{align}
+S(k)
+& = \pi r^2(k)                                                          \\
+& = \pi \left( (1-a^2) + \dfrac{1}{3} \left(\sqrt{3}a-k\right)^2 \right)
+\end{align}
+だから，求める体積$V$はこれを$0\le z\le \sqrt{3}a$で積分したもので
+\begin{align}
+V
+& = \int_0^{\sqrt{3}a} S(k) dk                                                         \\
+& = \pi \left[ (1-a^2)k + \dfrac{1}{9} \left(k-\sqrt{3}a\right)^3 \right]_0^{\sqrt{3}a} \\
+& = \pi \left[ \sqrt{3}a(1-a^2) + \dfrac{\sqrt{3}}{3}a^3 \right]                        \\
+& = \dfrac{\sqrt{3}\pi}{3}(3a-2a^3)
+\end{align}
+が求める体積である．$\cdots$(答)
 
-  従ってこれを$z$軸周りに一回転させたものが求める立体の$z=k$での切り口である．
-  境界の曲線\cref{1996-5:eq:2}上の点$(X,Y)$とすると，原点からの距離の二乗は
-  \begin{align}
-    X^2+Y^2
-     & = X^2 + \dfrac{1}{3}\left(\sqrt{3(1-X^2)}-k\right)^2          \\
-     & = X^2 + (1-X^2) -\dfrac{2k}{3}\sqrt{3(1-X^2)} + \dfrac{k^2}{3} \\
-     & = 1 -\dfrac{2k}{3}\sqrt{3(1-X^2)} + \dfrac{k^2}{3}
-  \end{align}
-  でこれは$X$の単調増加関数だから，$X=\sqrt{1-a^2}$で最大値
-  \begin{align}
-    r(k)                                                  \\
-     & = \max (X^2+Y^2)
-     & =  (1-a^2) + \dfrac{1}{3}\left(\sqrt{3}a-k\right)^2
-  \end{align}
-  をとる．
-  従って回転した領域は半径$r(k)$の円だから，
-  この面積$S(k)$として，
-  \begin{align}
-    S(k)
-     & = \pi r^2(k)                                                          \\
-     & = \pi \left( (1-a^2) + \dfrac{1}{3} \left(\sqrt{3}a-k\right)^2 \right)
-  \end{align}
-  だから，求める体積$V$はこれを$0\le z\le \sqrt{3}a$で積分したもので
-  \begin{align}
-    V
-     & = \int_0^{\sqrt{3}a} S(k) dk                                                         \\
-     & = \pi \left[ (1-a^2)k + \dfrac{1}{9} \left(k-\sqrt{3}a\right)^3 \right]_0^{\sqrt{3}a} \\
-     & = \pi \left[ \sqrt{3}a(1-a^2) + \dfrac{\sqrt{3}}{3}a^3 \right]                        \\
-     & = \dfrac{\sqrt{3}\pi}{3}(3a-2a^3)
-  \end{align}
-  が求める体積である．$\cdots$(答)
+\vspace{10pt}
+\paragraph{(2)}
 
-  \vspace{10pt}
-  \paragraph{(2)}
+$\dfrac{dV}{da}\dfrac{1}{\pi} = \sqrt{3} (1 - 2a^2)$ から下表を得る
+\begin{tabular}{|c||c|c|c|c|c|}
+\hline
+$a$  & $0$ & $\dots$    & $\dfrac{1}{\sqrt{2}}$ & $\dots$    & $1$ \\
+\hline
+$V'$ &     & $+$        & $0$                  & $-$        &     \\
+\hline
+$V$  &     & $\nearrow$ &                      & $\searrow$ &     \\
+\hline
+\end{tabular}
 
-  $\dfrac{dV}{da}\dfrac{1}{\pi} = \sqrt{3} (1 - 2a^2)$ から下表を得る
-  \begin{tabular}{|c||c|c|c|c|c|}
-    \hline
-    $a$  & $0$ & $\dots$    & $\dfrac{1}{\sqrt{2}}$ & $\dots$    & $1$ \\
-    \hline
-    $V'$ &     & $+$        & $0$                  & $-$        &     \\
-    \hline
-    $V$  &     & $\nearrow$ &                      & $\searrow$ &     \\
-    \hline
-  \end{tabular}
+従って V は $a=\dfrac{1}{\sqrt{2}}$ の時，max $\dfrac{1}{3}\sqrt{6}\pi$ をとる．
 
-  従って V は $a=\dfrac{1}{\sqrt{2}}$ の時，max $\dfrac{1}{3}\sqrt{6}\pi$ をとる．
+\vspace{10pt}
+{\bf[解説]}
+解答ではかなり丁寧に$z=k$での断面図を求めたが，
+対称性からPQの中点が$x$軸にある場合だけを考えれば良いので，
+実践的にはそれで十分だと思われる．
+% TODO この場合の回答
 
-  \vspace{10pt}
-  {\bf[解説]}
-  解答ではかなり丁寧に$z=k$での断面図を求めたが，
-  対称性からPQの中点が$x$軸にある場合だけを考えれば良いので，
-  実践的にはそれで十分だと思われる．
-  % TODO この場合の回答
-
-  \newpage
+\newpage
 \end{multicols}
 \end{document}

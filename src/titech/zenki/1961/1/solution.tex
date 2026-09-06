@@ -2,72 +2,71 @@
 \usetikzlibrary{patterns}
 \begin{document}
 
- {\bf[解]}
+{\bf[解]}
 定数$p$, $q$の条件
 \begin{align}
   &0 < p,q \label{eq:1}\\
   &p+q = 1 \label{eq:2}
 \end{align}
-に注意する．2変数$(A,B)$に対して方程式 
+に注意する．2変数$(A,B)$に対して方程式
 \begin{align}
- Ap + Bq = 1
+  Ap + Bq = 1
 \end{align}
 を考えると，\cref{eq:2}より$(A,B)=(1,1)$は解であり，$AB$平面上でこの直線は$(1,1)$を通る．
 これを図示したのが下図である．
 \cref{eq:1}より，この直線は$0\le A\le 1$および$0\le B\le 1$なる正方形（以下これを$T$とおく）と点$(1,1)$のみ共有することに注意する．
 
 \begin{figure}[htb]
- \begin{center}
-\begin{tikzpicture}[scale=1.5, >=stealth]
-    % 軸の描画
-    \draw[->, thick] (-0.8, 0) -- (3.2, 0) node[right] {$A$};
-    \draw[->, thick] (0, -0.6) -- (0, 2.5) node[above] {$B$};
-    \node[below left, font=\small] at (0,0) {$0$};
+  \begin{center}
+    \begin{tikzpicture}[scale=1.5, >=stealth]
+      % 軸の描画
+      \draw[->, thick] (-0.8, 0) -- (3.2, 0) node[right] {$A$};
+      \draw[->, thick] (0, -0.6) -- (0, 2.5) node[above] {$B$};
+      \node[below left, font=\small] at (0,0) {$0$};
 
+      % 正方形領域 (0,0)-(1,0)-(1,1)-(0,1) の斜線塗りつぶし
+      % pattern = north west lines (北西方向の斜線)
+      % pattern color = gray!40 (斜線の色)
+      \fill[pattern=north west lines, pattern color=gray!50] (0,0) rectangle (1,1);
 
-    % 正方形領域 (0,0)-(1,0)-(1,1)-(0,1) の斜線塗りつぶし
-    % pattern = north west lines (北西方向の斜線)
-    % pattern color = gray!40 (斜線の色)
-    \fill[pattern=north west lines, pattern color=gray!50] (0,0) rectangle (1,1);
+      % 直線 Ap + Bq = 1 の描画
+      % A切片 = 1/p (≒ 2.4), B切片 = 1/q (≒ 1.6)
+      % (1,1) を通るように傾きを調整
+      \coordinate (InterceptA) at (2.33, 0); % 1/p
+      \coordinate (InterceptB) at (0, 1.75); % 1/q
+      \coordinate (P) at (1, 1);             % 点 (1,1)
 
-    % 直線 Ap + Bq = 1 の描画
-    % A切片 = 1/p (≒ 2.4), B切片 = 1/q (≒ 1.6)
-    % (1,1) を通るように傾きを調整
-    \coordinate (InterceptA) at (2.33, 0); % 1/p
-    \coordinate (InterceptB) at (0, 1.75); % 1/q
-    \coordinate (P) at (1, 1);             % 点 (1,1)
+      % 直線の描画 (少し領域をはみ出して延長)
+      \draw[thick, blue!80!black, domain=-0.6:2.7, samples=2]
+      plot (\x, {1.75 - 0.75*\x});
 
-    % 直線の描画 (少し領域をはみ出して延長)
-    \draw[thick, blue!80!black, domain=-0.6:2.7, samples=2] 
-        plot (\x, {1.75 - 0.75*\x});
+      % 点 (1,1) からの点線とラベル
+      \draw[dashed, gray!80] (1, 0) node[below, font=\small, black] {$1$} -- (P);
+      \draw[dashed, gray!80] (0, 1) node[left, font=\small, black] {$1$} -- (P);
+      \fill[black] (P) circle (1.8pt);
 
-    % 点 (1,1) からの点線とラベル
-    \draw[dashed, gray!80] (1, 0) node[below, font=\small, black] {$1$} -- (P);
-    \draw[dashed, gray!80] (0, 1) node[left, font=\small, black] {$1$} -- (P);
-    \fill[black] (P) circle (1.8pt);
+      % A切片 1/p, B切片 1/q のマーカーとラベル
+      \fill[black] (InterceptA) circle (1.5pt);
+      \node[below, font=\small] at (InterceptA) {$\frac{1}{p}$};
 
-    % A切片 1/p, B切片 1/q のマーカーとラベル
-    \fill[black] (InterceptA) circle (1.5pt);
-    \node[below, font=\small] at (InterceptA) {$\frac{1}{p}$};
+      \fill[black] (InterceptB) circle (1.5pt);
+      \node[above right, font=\small] at (InterceptB) {$\frac{1}{q}$};
 
-    \fill[black] (InterceptB) circle (1.5pt);
-    \node[above right, font=\small] at (InterceptB) {$\frac{1}{q}$};
+      % 下部の注釈条件 (1 < 1/p, 1 < 1/q)
+      \node[below, font=\small] at (1.2, -0.8) {$\left( 1 < \frac{1}{p}, \; 1 < \frac{1}{q} \right)$};
 
-    % 下部の注釈条件 (1 < 1/p, 1 < 1/q)
-    \node[below, font=\small] at (1.2, -0.8) {$\left( 1 < \frac{1}{p}, \; 1 < \frac{1}{q} \right)$};
-
-\end{tikzpicture}
-\caption{直線の様子．}
-\end{center}
+    \end{tikzpicture}
+    \caption{直線の様子．}
+  \end{center}
 \end{figure}
 
 さて，$A=\cos ax$, $B=\cos bx$とおいて題意のように方程式が$x=u,v$に対して成立すると仮定すると，この直線は二つの点
 \begin{align}
-  (A, B) = (\cos au, \cos bu), (\cos av, \cos bv) 
+  (A, B) = (\cos au, \cos bu), (\cos av, \cos bv)
 \end{align}
 も通過する．ここで三角関数の性質から
 \begin{align}
- -1 \le \cos au, \cos bu, \cos av, \cos bv \le 1
+  -1 \le \cos au, \cos bu, \cos av, \cos bv \le 1
 \end{align}
 なので，直線と$T$の共有点の議論から，$2$点が直線上であるためにはこの2点が$(1,1)$である必要がある．
 
@@ -76,11 +75,11 @@
   \begin{cases}
     \cos au = \cos av = 1 \\
     \cos bu = \cos bv = 1
-  \end{cases} 
+  \end{cases}
 \end{align}
 だから，整数 $k_1,k_2,k_3,k_4$ を用いて
 \begin{align}
-   \begin{cases}
+  \begin{cases}
     au = 2k_1 \pi, & bu = 2k_2 \pi \\
     av = 2k_3 \pi, & bv = 2k_4 \pi
   \end{cases}

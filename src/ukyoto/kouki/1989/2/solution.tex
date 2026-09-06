@@ -48,12 +48,10 @@
         \addplot[domain=-1.5:1.5, samples=100, blue] {x*x};
         \node[above right, blue] at (1.0, 0.8^2) {$y=x^2$};
 
-
         % --- 円 x^2 + (y-Y)^2 = r^2 を描画 ---
         % 中心 (0, Yval)、半径 r の円
         % パラメータ表示: (r*cos(theta), r*sin(theta) + Yval)
         \addplot[domain=0:360, samples=200, red] ({ \r * cos(x) }, { \r * sin(x) + \Yval });
-
 
         % % --- 点とラベルを描画 ---
         % \fill (0,0) circle (1.5pt) node[below left] {$O$};
@@ -88,30 +86,35 @@
   球の中心を$O'(0,Y)$ とおくと点Qが接点である条件は，
   $\vec{l}=(1,2t)$を点Qでの $y=x^2$の接線ベクトルとして
   \begin{align}
-     & \begin{dcases}
-         \vec{O'Q}^2=r^2 \\
-         \vec{O'Q} \perp \vec{l}
-       \end{dcases}                                                                                              \\
+    &
+    \begin{dcases}
+      \vec{O'Q}^2=r^2 \\
+      \vec{O'Q} \perp \vec{l}
+    \end{dcases}                                                                                              \\
     \therefore
-     & \begin{dcases}
-         t^2 + (t^2-Y)^2 = r^2 & \quad \dots \textcircled{1} \\
-         \mqty(t                                             \\ t^2-Y) \cdot \mqty(1 \\ 2t) = 0 & \quad \dots \textcircled{2}
-       \end{dcases} \\
+    &
+    \begin{dcases}
+      t^2 + (t^2-Y)^2 = r^2 & \quad \dots \textcircled{1} \\
+      \mqty(t                                             \\ t^2-Y) \cdot \mqty(1 \\ 2t) = 0 & \quad \dots \textcircled{2}
+    \end{dcases} \\
     \therefore
-     & \begin{dcases}
-         t^2 + (t^2-Y)^2 = r^2                   \\
-         1 + 2(t^2-Y) = 0 & \quad (\because t>0)
-       \end{dcases}                                                                             \\
+    &
+    \begin{dcases}
+      t^2 + (t^2-Y)^2 = r^2                   \\
+      1 + 2(t^2-Y) = 0 & \quad (\because t>0)
+    \end{dcases}                                                                             \\
     \therefore
-     & \begin{dcases}
-         t^2 + \dfrac{1}{4} = r^2 \\
-         t^2-Y = -\dfrac{1}{2}
-       \end{dcases}  \label{1989-2:eq:1}                                                                                   \\
+    &
+    \begin{dcases}
+      t^2 + \dfrac{1}{4} = r^2 \\
+      t^2-Y = -\dfrac{1}{2}
+    \end{dcases}  \label{1989-2:eq:1}                                                                                   \\
     \therefore
-     & \begin{dcases}
-         t = \sqrt{r^2-\dfrac{1}{4}} & \quad (\because t>0) \\
-         Y = r^2+\dfrac{1}{4}
-       \end{dcases}
+    &
+    \begin{dcases}
+      t = \sqrt{r^2-\dfrac{1}{4}} & \quad (\because t>0) \\
+      Y = r^2+\dfrac{1}{4}
+    \end{dcases}
   \end{align}
   となる．
 
@@ -120,16 +123,16 @@
   これは二つの部分に分割して考えることができて
   \begin{align}
     V = & (\text{放物線} POQ \text{を} y \text{軸回りに回転した体積 } V_1)                           \\
-        & - (\text{円弧} PQ \text{を} y \text{軸回りに回転した体積 } \quad V_2) \label{1989-2:eq:2}
+    & - (\text{円弧} PQ \text{を} y \text{軸回りに回転した体積 } \quad V_2) \label{1989-2:eq:2}
   \end{align}
   となる．以下$V_1,V_2$を別個に求める．
 
   まず$V_1$にはバームクーヘン積分法を用いると
   \begin{align}
     V_1
-     & = \int_0^t 2\pi x \cdot x^2 dx       \\
-     & = \dfrac{1}{2}\pi t^4                 \\
-     & = \dfrac{1}{2}\pi (r^2-\dfrac{1}{4})^2
+    & = \int_0^t 2\pi x \cdot x^2 dx       \\
+    & = \dfrac{1}{2}\pi t^4                 \\
+    & = \dfrac{1}{2}\pi (r^2-\dfrac{1}{4})^2
   \end{align}
   である．
 
@@ -156,14 +159,13 @@
         \pgfmathsetmacro{\xmin}{0.5}
 
         % Calculate y using \pgfmathsetmacro
-        \pgfmathsetmacro{\yvalue}{sqrt(\r*\r - \xmin*\xmin)} % 
+        \pgfmathsetmacro{\yvalue}{sqrt(\r*\r - \xmin*\xmin)} %
 
         % Draw the circle
         \addplot [domain=0:360, samples=200] ({\r*cos(x)}, {\r*sin(x)});
         \addplot [draw=none, name path=B] coordinates {(0.5,-0.866) (0.5,0.866)};
         \addplot [domain=-60:60, draw=none, name path=A] ({\r*cos(x)}, {\r*sin(x)});
         \addplot [pattern=north east lines] fill between [of=A and B];
-
 
         % Mark x = 1/2
         \draw [dashed] (\xmin, -\yvalue) -- (\xmin, \yvalue);
@@ -180,18 +182,18 @@
   従って
   \begin{align}
     V_2
-     & = \int_{\dfrac{1}{2}}^r \pi (r^2-x^2) dx                             \\
-     & = \pi \left[ r^2x - \dfrac{1}{3}x^3 \right]_{\dfrac{1}{2}}^r          \\
-     & = \pi \left( \dfrac{2}{3}r^3 - \dfrac{1}{2}r^2 + \dfrac{1}{24} \right)
+    & = \int_{\dfrac{1}{2}}^r \pi (r^2-x^2) dx                             \\
+    & = \pi \left[ r^2x - \dfrac{1}{3}x^3 \right]_{\dfrac{1}{2}}^r          \\
+    & = \pi \left( \dfrac{2}{3}r^3 - \dfrac{1}{2}r^2 + \dfrac{1}{24} \right)
   \end{align}
   となる．
 
   以上$V_1$と$V_2$の表現を\cref{1989-2:eq:2}に代入して
   \begin{align}
     V
-     & = \pi \left[ \dfrac{1}{2}\left(r^2-\dfrac{1}{4}\right)^2 - \left(\dfrac{2}{3}r^3 - \dfrac{1}{2}r^2 + \dfrac{1}{24}\right) \right] \\
-     & = \pi \left[ \dfrac{1}{2}r^4 - \dfrac{1}{4}r^2 + \dfrac{1}{32} - \dfrac{2}{3}r^3 + \dfrac{1}{2}r^2 - \dfrac{1}{24} \right]         \\
-     & = \pi \left[ \dfrac{1}{2}r^4 - \dfrac{2}{3}r^3 + \dfrac{1}{4}r^2 - \dfrac{1}{96} \right]
+    & = \pi \left[ \dfrac{1}{2}\left(r^2-\dfrac{1}{4}\right)^2 - \left(\dfrac{2}{3}r^3 - \dfrac{1}{2}r^2 + \dfrac{1}{24}\right) \right] \\
+    & = \pi \left[ \dfrac{1}{2}r^4 - \dfrac{1}{4}r^2 + \dfrac{1}{32} - \dfrac{2}{3}r^3 + \dfrac{1}{2}r^2 - \dfrac{1}{24} \right]         \\
+    & = \pi \left[ \dfrac{1}{2}r^4 - \dfrac{2}{3}r^3 + \dfrac{1}{4}r^2 - \dfrac{1}{96} \right]
   \end{align}
   が求める面積である．$\cdots$(答)
 

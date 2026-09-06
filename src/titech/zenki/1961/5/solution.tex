@@ -1,44 +1,44 @@
 \documentclass[../../main.tex]{subfiles}
-\usepackage{amsmath}	% required for `\align' (yatex added)
+\usepackage{amsmath}  % required for `\align' (yatex added)
 \begin{document}
 
 {\bf [解]}
 $F(x) = \int_0^x f(t) dt$ とおくと，具体的な$f(x)$の表式から
 \begin{align}
-F(x) = \dfrac{1}{4}x^4 + \dfrac{p}{3}x^3 + \dfrac{q}{2}x^2 + rx \label{eq:1}
+  F(x) = \dfrac{1}{4}x^4 + \dfrac{p}{3}x^3 + \dfrac{q}{2}x^2 + rx \label{eq:1}
 \end{align}
 である．与えられた不等式は$F(x)$を用いて
 \begin{align}
-   2F(x) \le F(x+y) + F(x-y) \label{eq:2}
+  2F(x) \le F(x+y) + F(x-y) \label{eq:2}
 \end{align}
 と書ける．右辺に\cref{eq:1}を代入して
 \begin{align}
-  \mathrm{RHS} 
-  & = \dfrac{1}{4}\left[(x+y)^4 + (x-y)^4 \right] + \dfrac{p}{3}\left[(x+y)^3 + (x-y)^3 \right] 
+  \mathrm{RHS}
+  & = \dfrac{1}{4}\left[(x+y)^4 + (x-y)^4 \right] + \dfrac{p}{3}\left[(x+y)^3 + (x-y)^3 \right]
   + \dfrac{q}{2}\left[(x+y)^2 + (x-y)^2 \right] + r\left[(x+y) + (x-y) \right] \\
   & = \dfrac{1}{4}\left[2x^4 + 12x^2 y^2 + 2y^4\right] + \dfrac{p}{3}\left[2x^3 + 6xy^2\right] + \dfrac{q}{2}\left[2x^2+2y^2\right] + 2rx
 \end{align}
 だから左辺との差をとると
 \begin{align}
- \mathrm{RHS}-\mathrm{LHS} 
- &= \dfrac{1}{4}\left[12x^2 y^2 + 2y^4\right] + \dfrac{p}{3}\left[6xy^2\right] + \dfrac{q}{2}\left[2y^2\right] \\
- &= y^2\left(3x^2 + \dfrac{1}{2}y^2 + 2px + q\right)
+  \mathrm{RHS}-\mathrm{LHS}
+  &= \dfrac{1}{4}\left[12x^2 y^2 + 2y^4\right] + \dfrac{p}{3}\left[6xy^2\right] + \dfrac{q}{2}\left[2y^2\right] \\
+  &= y^2\left(3x^2 + \dfrac{1}{2}y^2 + 2px + q\right)
 \end{align}
 となる．これが非負になる条件を求めれば良い．
 
 この式は$y=0$の時は$0$であり与えられた不等式\cref{eq:2}は成り立つ．$y\neq 0$の時は $y^2 > 0$だから両辺$y^2$で割ると
 \begin{align}
- \left(3x^2 + 2px + q\right) + \dfrac{1}{2}y^2 \ge 0
+  \left(3x^2 + 2px + q\right) + \dfrac{1}{2}y^2 \ge 0
 \end{align}
 が任意の$(x,y)$に対して成り立てば良い．そのためには$3x^2 + 2px + q = 0$ の判別式 $D$ として$D\le 0$であれば良い．
 \begin{align}
-  D \le 0 
+  D \le 0
   & \iff p^2 - 3q \le 0 \\
-  &\iff p^2 \le 3q 
+  &\iff p^2 \le 3q
 \end{align}
 だから，求める条件は
 \begin{align}
- p^2 \le 3q 
+  p^2 \le 3q
 \end{align}
 である．
 
@@ -47,86 +47,85 @@ F(x) = \dfrac{1}{4}x^4 + \dfrac{p}{3}x^3 + \dfrac{q}{2}x^2 + rx \label{eq:1}
 右辺で$[0,x+y]$,$[0,x-y]$まで積分したものの和は等しくなって必ず打ち消しあうので条件として現れない．
 
 \begin{figure}[htb]
- \begin{center}
-  \begin{tikzpicture}[scale=1.2, >=stealth]
-    % 軸の描画
-    \draw[->, thick] (-0.5, 0) -- (5.2, 0) node[right] {$x$};
-    \draw[->, thick] (0, -0.5) -- (0, 4.5) node[above] {$F(x)$};
-    \node[below left] at (0,0) {$O$};
+  \begin{center}
+    \begin{tikzpicture}[scale=1.2, >=stealth]
+      % 軸の描画
+      \draw[->, thick] (-0.5, 0) -- (5.2, 0) node[right] {$x$};
+      \draw[->, thick] (0, -0.5) -- (0, 4.5) node[above] {$F(x)$};
+      \node[below left] at (0,0) {$O$};
 
-    % 下に凸な曲線 (二次関数 F(x) = 0.3*(x-1)^2 + 0.5)
-    \draw[very thick, blue!80!black, domain=0.3:4.6, samples=100] 
-        plot (\x, {0.3*(\x-1)^2 + 0.5}) node[right] {$y = F(x)$};
+      % 下に凸な曲線 (二次関数 F(x) = 0.3*(x-1)^2 + 0.5)
+      \draw[very thick, blue!80!black, domain=0.3:4.6, samples=100]
+      plot (\x, {0.3*(\x-1)^2 + 0.5}) node[right] {$y = F(x)$};
 
-    % 座標の定義
-    % x_0 = 2.5, y_val = 1.2 と設定
-    \def\xval{2.5}
-    \def\yval{1.2}
-    
-    \coordinate (X)   at (\xval, 0);
-    \coordinate (XmY) at (\xval-\yval, 0);
-    \coordinate (XpY) at (\xval+\yval, 0);
+      % 座標の定義
+      % x_0 = 2.5, y_val = 1.2 と設定
+      \def\xval{2.5}
+      \def\yval{1.2}
 
-    % 曲線上の点 (x-y, F(x-y)), (x, F(x)), (x+y, F(x+y))
-    \coordinate (P1) at (\xval-\yval, {0.3*(\xval-\yval-1)^2 + 0.5}); % (x-y, F(x-y))
-    \coordinate (P2) at (\xval,       {0.3*(\xval-1)^2 + 0.5});        % (x, F(x))
-    \coordinate (P3) at (\xval+\yval, {0.3*(\xval+\yval-1)^2 + 0.5}); % (x+y, F(x+y))
+      \coordinate (X)   at (\xval, 0);
+      \coordinate (XmY) at (\xval-\yval, 0);
+      \coordinate (XpY) at (\xval+\yval, 0);
 
-    % P1 と P3 を結ぶ割線（弦）とその中点 M
-    \draw[thick, red!80!black] (P1) -- (P3);
-    \coordinate (M) at ($(P1)!0.5!(P3)$); % 中点 = (F(x+y) + F(x-y))/2
+      % 曲線上の点 (x-y, F(x-y)), (x, F(x)), (x+y, F(x+y))
+      \coordinate (P1) at (\xval-\yval, {0.3*(\xval-\yval-1)^2 + 0.5}); % (x-y, F(x-y))
+      \coordinate (P2) at (\xval,       {0.3*(\xval-1)^2 + 0.5});        % (x, F(x))
+      \coordinate (P3) at (\xval+\yval, {0.3*(\xval+\yval-1)^2 + 0.5}); % (x+y, F(x+y))
 
-    % x軸からの垂線（点線）
-    \draw[dashed, gray] (XmY) -- (P1);
-    \draw[dashed, gray] (X)   -- (M);
-    \draw[dashed, gray] (XpY) -- (P3);
+      % P1 と P3 を結ぶ割線（弦）とその中点 M
+      \draw[thick, red!80!black] (P1) -- (P3);
+      \coordinate (M) at ($(P1)!0.5!(P3)$); % 中点 = (F(x+y) + F(x-y))/2
 
-    % y軸への垂線（点線）とラベル
-    \draw[dashed, gray] (0, {0.3*(\xval-1)^2 + 0.5}) -- (P2);
-    \draw[dashed, gray] (0, {0.3*((\xval+\yval)-1)^2 + 0.5 - 0.5*(0.3*((\xval+\yval)-1)^2 + 0.5 - (0.3*((\xval-\yval)-1)^2 + 0.5))}) -- (M); % 中点のy座標
+      % x軸からの垂線（点線）
+      \draw[dashed, gray] (XmY) -- (P1);
+      \draw[dashed, gray] (X)   -- (M);
+      \draw[dashed, gray] (XpY) -- (P3);
 
-    % 各点のプロット
-    \fill[blue!80!black] (P1) circle (2pt) node[above left, font=\small] {$F(x-y)$};
-    \fill[blue!80!black] (P2) circle (2pt);
-    \fill[blue!80!black] (P3) circle (2pt) node[right, font=\small] {$F(x+y)$};
-    \fill[red!80!black]  (M)  circle (2pt);
+      % y軸への垂線（点線）とラベル
+      \draw[dashed, gray] (0, {0.3*(\xval-1)^2 + 0.5}) -- (P2);
+      \draw[dashed, gray] (0, {0.3*((\xval+\yval)-1)^2 + 0.5 - 0.5*(0.3*((\xval+\yval)-1)^2 + 0.5 - (0.3*((\xval-\yval)-1)^2 + 0.5))}) -- (M); % 中点のy座標
 
-    % F(x) と 中点 (F(x+y)+F(x-y))/2 を結ぶ縦矢印（凸性の強調）
-    \draw[<->, thick, purple] (P2) -- (M) 
-        node[midway, right, font=\footnotesize] {$\ge 0$};
+      % 各点のプロット
+      \fill[blue!80!black] (P1) circle (2pt) node[above left, font=\small] {$F(x-y)$};
+      \fill[blue!80!black] (P2) circle (2pt);
+      \fill[blue!80!black] (P3) circle (2pt) node[right, font=\small] {$F(x+y)$};
+      \fill[red!80!black]  (M)  circle (2pt);
 
-    % x軸上のラベルと y の幅（<-> 矢印）
-    \node[below, font=\small] at (XmY) {$x-y$};
-    \node[below, font=\small] at (X)   {$x$};
-    \node[below, font=\small] at (XpY) {$x+y$};
+      % F(x) と 中点 (F(x+y)+F(x-y))/2 を結ぶ縦矢印（凸性の強調）
+      \draw[<->, thick, purple] (P2) -- (M)
+      node[midway, right, font=\footnotesize] {$\ge 0$};
 
-    \draw[<->, >=stealth, font=\footnotesize] (\xval-\yval, -0.35) -- (\xval, -0.35) node[midway, fill=white] {$y$};
-    \draw[<->, >=stealth, font=\footnotesize] (\xval, -0.35) -- (\xval+\yval, -0.35) node[midway, fill=white] {$y$};
+      % x軸上のラベルと y の幅（<-> 矢印）
+      \node[below, font=\small] at (XmY) {$x-y$};
+      \node[below, font=\small] at (X)   {$x$};
+      \node[below, font=\small] at (XpY) {$x+y$};
 
-    % y軸上のラベル
-    \node[left, font=\small, blue!80!black] at (0, {0.3*(\xval-1)^2 + 0.5}) {$F(x)$};
-    \node[left, font=\small, red!80!black]  at (0, {0.3*(\xval-\yval-1)^2 + 0.5 + 0.5*(0.3*(\xval+\yval-1)^2 - 0.3*(\xval-\yval-1)^2)}) {$\frac{F(x+y)+F(x-y)}{2}$};
+      \draw[<->, >=stealth, font=\footnotesize] (\xval-\yval, -0.35) -- (\xval, -0.35) node[midway, fill=white] {$y$};
+      \draw[<->, >=stealth, font=\footnotesize] (\xval, -0.35) -- (\xval+\yval, -0.35) node[midway, fill=white] {$y$};
 
-\end{tikzpicture}
-\caption{不等式\cref{eq:2}の様子．}
- \end{center}
+      % y軸上のラベル
+      \node[left, font=\small, blue!80!black] at (0, {0.3*(\xval-1)^2 + 0.5}) {$F(x)$};
+      \node[left, font=\small, red!80!black]  at (0, {0.3*(\xval-\yval-1)^2 + 0.5 + 0.5*(0.3*(\xval+\yval-1)^2 - 0.3*(\xval-\yval-1)^2)}) {$\frac{F(x+y)+F(x-y)}{2}$};
+
+    \end{tikzpicture}
+    \caption{不等式\cref{eq:2}の様子．}
+  \end{center}
 \end{figure}
-
 
 途中で出てきた式\eqref{eq:2}はまさに凸不等式であり，要するに$F(x)$が下に凸である条件を求めれば良い．
 以下その方針にたった解答を示す．こちらの方が数学的な背景がわかってる感があって綺麗だろう．
 
 $F(x)$が下に凸なための条件は2階微分が非負であること，すなわち$F''(x)\ge 0$である．実際計算すると
 \begin{align}
- F''(x) = 3x^2+2px+q
+  F''(x) = 3x^2+2px+q
 \end{align}
 だから$f'(x)=0$の判別式
 \begin{align}
- D = p^2-3q
+  D = p^2-3q
 \end{align}
 が非正であればよく，
 \begin{align}
- p^2 \le 3q
+  p^2 \le 3q
 \end{align}
 が求める条件である．
 

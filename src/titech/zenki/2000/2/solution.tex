@@ -7,77 +7,77 @@
 \paragraph{(1)}
 
 \begin{figure}[htb]
-\begin{center}
-\begin{tikzpicture}[scale=2.2, >=stealth]
+  \begin{center}
+    \begin{tikzpicture}[scale=2.2, >=stealth]
 
-  % --- 1. 座標軸 (複素数平面) ---
-  \draw[->, thick] (-1.4, 0) -- (0.8, 0) node[right] {$\mathrm{Re}(z)$};
-  \draw[->, thick] (0, -0.9) -- (0, 0.9) node[above] {$\mathrm{Im}(z)$};
-  \node[below right, font=\small] at (0,0) {$O$};
+      % --- 1. 座標軸 (複素数平面) ---
+      \draw[->, thick] (-1.4, 0) -- (0.8, 0) node[right] {$\mathrm{Re}(z)$};
+      \draw[->, thick] (0, -0.9) -- (0, 0.9) node[above] {$\mathrm{Im}(z)$};
+      \node[below right, font=\small] at (0,0) {$O$};
 
-  % --- 2. 求める領域 ( |z + 1/2| < 1/2 ) の斜線ハッチング ---
-  % 中心 (-1/2, 0), 半径 1/2 の円内部 (境界は含まない)
-  \begin{scope}
-    \clip (-0.5, 0) circle (0.5);
-    \fill[pattern=north east lines, pattern color=blue!70] 
-      (-1.1, -0.6) rectangle (0.1, 0.6);
-  \end{scope}
+      % --- 2. 求める領域 ( |z + 1/2| < 1/2 ) の斜線ハッチング ---
+      % 中心 (-1/2, 0), 半径 1/2 の円内部 (境界は含まない)
+      \begin{scope}
+        \clip (-0.5, 0) circle (0.5);
+        \fill[pattern=north east lines, pattern color=blue!70]
+        (-1.1, -0.6) rectangle (0.1, 0.6);
+      \end{scope}
 
-  % --- 3. 境界円 |z + 1/2| = 1/2 (境界を含まないため破線) ---
-  \draw[thick, dashed, blue!80!black] (-0.5, 0) circle (0.5);
+      % --- 3. 境界円 |z + 1/2| = 1/2 (境界を含まないため破線) ---
+      \draw[thick, dashed, blue!80!black] (-0.5, 0) circle (0.5);
 
-  % --- 4. 特徴的な点と目盛り ---
-  % 中心 (-1/2, 0)
-  \coordinate (Center) at (-0.5, 0);
-  \fill[black] (Center) circle (1.2pt) node[below, font=\small] {$-\frac{1}{2}$};
+      % --- 4. 特徴的な点と目盛り ---
+      % 中心 (-1/2, 0)
+      \coordinate (Center) at (-0.5, 0);
+      \fill[black] (Center) circle (1.2pt) node[below, font=\small] {$-\frac{1}{2}$};
 
-  % 端点 z = -1 (境界上の点、r = -cos(pi) = 1 に対応)
-  \coordinate (LeftEnd) at (-1.0, 0);
-  \draw[blue!80!black, fill=white, thick] (LeftEnd) circle (1.2pt);
-  \node[below left, font=\small] at (-1.0, 0) {$-1$};
+      % 端点 z = -1 (境界上の点、r = -cos(pi) = 1 に対応)
+      \coordinate (LeftEnd) at (-1.0, 0);
+      \draw[blue!80!black, fill=white, thick] (LeftEnd) circle (1.2pt);
+      \node[below left, font=\small] at (-1.0, 0) {$-1$};
 
-  % 原点 z = 0 (r = 0 は除外されるため白丸)
-  \draw[blue!80!black, fill=white, thick] (0,0) circle (1.2pt);
+      % 原点 z = 0 (r = 0 は除外されるため白丸)
+      \draw[blue!80!black, fill=white, thick] (0,0) circle (1.2pt);
 
-  % --- 5. 極形式 r < -cos(theta) の解説補助表現 ---
-  % 動点 z の動径 r と 偏角 theta
-  \pgfmathsetmacro{\angVal}{135} % 例: theta = 135度 (3*pi/4)
-  \pgfmathsetmacro{\rBound}{-cos(\angVal)} % r = -cos(135) = 1/sqrt(2) ≒ 0.707
-  
-  \coordinate (BoundaryP) at ({\rBound*cos(\angVal)}, {\rBound*sin(\angVal)});
-  \coordinate (SampleZ) at ({0.6*\rBound*cos(\angVal)}, {0.6*\rBound*sin(\angVal)});
+      % --- 5. 極形式 r < -cos(theta) の解説補助表現 ---
+      % 動点 z の動径 r と 偏角 theta
+      \pgfmathsetmacro{\angVal}{135} % 例: theta = 135度 (3*pi/4)
+      \pgfmathsetmacro{\rBound}{-cos(\angVal)} % r = -cos(135) = 1/sqrt(2) ≒ 0.707
 
-  % 動径 r の描画
-  \draw[thick, red!80!black, ->] (0,0) -- (SampleZ) node[midway, above right, font=\scriptsize] {$r$};
-  \fill[red!80!black] (SampleZ) circle (1.2pt) node[above left, font=\small] {$z$};
+      \coordinate (BoundaryP) at ({\rBound*cos(\angVal)}, {\rBound*sin(\angVal)});
+      \coordinate (SampleZ) at ({0.6*\rBound*cos(\angVal)}, {0.6*\rBound*sin(\angVal)});
 
-  % 偏角 theta の弧
-  \draw[->, thin, gray] (0.25, 0) arc (0:\angVal:0.25);
-  \node[gray, font=\scriptsize] at (0.15, 0.22) {$\theta$};
+      % 動径 r の描画
+      \draw[thick, red!80!black, ->] (0,0) -- (SampleZ) node[midway, above right, font=\scriptsize] {$r$};
+      \fill[red!80!black] (SampleZ) circle (1.2pt) node[above left, font=\small] {$z$};
 
-  % 領域ラベル
-  \node[blue!80!black, font=\small] at (-0.5, 0.7) {$\left|z+\frac{1}{2}\right|<\frac{1}{2}$};
+      % 偏角 theta の弧
+      \draw[->, thin, gray] (0.25, 0) arc (0:\angVal:0.25);
+      \node[gray, font=\scriptsize] at (0.15, 0.22) {$\theta$};
 
-\end{tikzpicture}
-\end{center}
-\caption{(1) 題意の条件を満たす複素数 $z$ の領域（斜線部・境界を除く）}
+      % 領域ラベル
+      \node[blue!80!black, font=\small] at (-0.5, 0.7) {$\left|z+\frac{1}{2}\right|<\frac{1}{2}$};
+
+    \end{tikzpicture}
+  \end{center}
+  \caption{(1) 題意の条件を満たす複素数 $z$ の領域（斜線部・境界を除く）}
 \end{figure}
 
 題意の条件を$r,\theta$であらわすと
 \begin{align}
-\begin{split}
-\left|z+\dfrac{1}{2}\right|<\dfrac{1}{2} 
- &\iff \left|(rc+\tfrac12)+irs\right|<\dfrac{1}{2} \\
- &\iff \left(rc+\dfrac{1}{2}\right)^2+(rs)^2<\dfrac{1}{4} \quad(\because\text{両辺}\ge0) \\
- &\iff r^2+rc<0 \\
- &\iff r(r+\cos\theta)<0
-\end{split}
+  \begin{split}
+    \left|z+\dfrac{1}{2}\right|<\dfrac{1}{2}
+    &\iff \left|(rc+\tfrac12)+irs\right|<\dfrac{1}{2} \\
+    &\iff \left(rc+\dfrac{1}{2}\right)^2+(rs)^2<\dfrac{1}{4} \quad(\because\text{両辺}\ge0) \\
+    &\iff r^2+rc<0 \\
+    &\iff r(r+\cos\theta)<0
+  \end{split}
 \end{align}
 である．
 $r\ge0$だから，これは$r\ne0$かつ$r+\cos\theta<0$と同値である．
 すなわち
 \begin{align}
-r>0\ \text{かつ}\ r<-\cos\theta \label{eq:1}
+  r>0\ \text{かつ}\ r<-\cos\theta \label{eq:1}
 \end{align}
 が求める条件である．
 
@@ -87,24 +87,24 @@ $Z_n=1+z+\cdots+z^n$とおく．
 (1)より$z \neq 1$であるから以下この元で考える．
 等比数列の公式から
 \begin{align}
- Z_n =\dfrac{z^{n+1}-1}{z-1}
+  Z_n =\dfrac{z^{n+1}-1}{z-1}
 \end{align}
 だから，与式は
 \begin{align}
- \left|Z_n\right|^2=\dfrac{|z^{n+1}-1|^2}{|z-1|^2} \label{eq:2}
+  \left|Z_n\right|^2=\dfrac{|z^{n+1}-1|^2}{|z-1|^2} \label{eq:2}
 \end{align}
 である．
 
 分母分子に$z=r\left(\cos\theta+i\sin\theta\right)$を代入すると
 \begin{align}
- \begin{cases}
-  |z-1|^2 &=(rc-1)^2+(rs)^2=r^2-2rc+1=r^2-2r\cos\theta+1 \\
-  |z^{n+1}-1|^2 &=\left(r^{n+1}\cos(n+1)\theta-1\right)^2+\left(r^{n+1}\sin(n+1)\theta\right)^2=r^{2n+2}-2r^{n+1}\cos(n+1)\theta+1
- \end{cases}
+  \begin{cases}
+    |z-1|^2 &=(rc-1)^2+(rs)^2=r^2-2rc+1=r^2-2r\cos\theta+1 \\
+    |z^{n+1}-1|^2 &=\left(r^{n+1}\cos(n+1)\theta-1\right)^2+\left(r^{n+1}\sin(n+1)\theta\right)^2=r^{2n+2}-2r^{n+1}\cos(n+1)\theta+1
+  \end{cases}
 \end{align}
 であるから\cref{eq:2}に代入して
 \begin{align}
-|Z_n|^2=\dfrac{r^{2n+2}-2r^{n+1}\cos(n+1)\theta+1}{r^2-2r\cos\theta+1} \label{eq:3}
+  |Z_n|^2=\dfrac{r^{2n+2}-2r^{n+1}\cos(n+1)\theta+1}{r^2-2r\cos\theta+1} \label{eq:3}
 \end{align}
 である．
 
@@ -112,28 +112,28 @@ $Z_n=1+z+\cdots+z^n$とおく．
 
 示すべき条件$|Z_n|<1$は二乗した$|Z_n|^2<1$と同値で，ここに\cref{eq:3}を代入すると
 \begin{align}
- \dfrac{r^{2n+2}-2r^{n+1}\cos(n+1)\theta+1}{r^2-2r\cos\theta+1} < 1
+  \dfrac{r^{2n+2}-2r^{n+1}\cos(n+1)\theta+1}{r^2-2r\cos\theta+1} < 1
 \end{align}
 ここで(2)の導出の過程から左辺の分母は$|z-1|^2$と等しくてよって正である．両辺にこれをかけて
 \begin{align}
-& r^{2n+2}-2r^{n+1}\cos(n+1)\theta+1 < r^2-2r\cos\theta+1 \\
-&\iff r^{2n+2}-2r^{n+1}\cos(n+1)\theta<r^2-2r\cos\theta
+  & r^{2n+2}-2r^{n+1}\cos(n+1)\theta+1 < r^2-2r\cos\theta+1 \\
+  &\iff r^{2n+2}-2r^{n+1}\cos(n+1)\theta<r^2-2r\cos\theta
 \end{align}
 である．
 両辺を$r>0$で割って，示すべき式は
 \begin{align}
-r^{2n+1}-2r^n\cos(n+1)\theta-r+2\cos\theta<0 \quad\cdots\text{①} \label{eq:4}
+  r^{2n+1}-2r^n\cos(n+1)\theta-r+2\cos\theta<0 \quad\cdots\text{①} \label{eq:4}
 \end{align}
 であるから以下これを示す．左辺を$f(r,\theta)$とする．
 \cref{eq:1}より$\cos\theta<-r$だから第四項を上から評価して
 \begin{align}
- f(r,\theta) 
+  f(r,\theta)
   &< r^{2n+1}-2r^n\cos(n+1)\theta-r+2(-r) \\
   &= r^{2n+1}-2r^n\cos(n+1)\theta-3r
 \end{align}
 さらに$\cos$の性質から$-\cos(n+1)\theta\le1$だから第二項に適用して
 \begin{align}
- f(r,\theta)
+  f(r,\theta)
   &<\left(r^{2n+1}+2r^{n}-3r\right) \\
   &<r\left(r^{2n}+2r^{n-1}-3\right) \label{eq:5}
 \end{align}
@@ -141,24 +141,23 @@ r^{2n+1}-2r^n\cos(n+1)\theta-r+2\cos\theta<0 \quad\cdots\text{①} \label{eq:4}
 
 ここでさらに\cref{eq:1}より$0<r<-\cos\theta\le1$だから
 \begin{align}
- 0 < r < 1
+  0 < r < 1
 \end{align}
 なので，$n \ge 1$の時は$r^{2n}<1,\ r^{n-1}\le1$だからさらに\cref{eq:5}を上から評価して
 \begin{align}
- f(r,\theta)
+  f(r,\theta)
   &<r\left(1+2-3\right) \\
   &=0 \\
-\therefore
- f(r,\theta) < 0
+  \therefore
+  f(r,\theta) < 0
 \end{align}
 である．以上から題意が示された．
-
 
 {\bf [解説]}
 
 問題文がわかりにくくて(2)は(1)の前提で計算したため$z\neq 1$としたが，$z=1$の時は
 \begin{align}
- |Z_n|^2 = (1+1+\cdots +1)^{2} = (n+1)^2
+  |Z_n|^2 = (1+1+\cdots +1)^{2} = (n+1)^2
 \end{align}
 である．
 

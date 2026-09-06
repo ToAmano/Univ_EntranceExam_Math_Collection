@@ -5,166 +5,166 @@
 $A=(0,0,1)$，$L=(0,0,1+\sqrt{2})$とする．$z$軸に関する対称性から，$B,C$は$xz$平面に関して対称（$y$座標の符号のみ逆）としてよい．
 $BC$の中点を$M$として，$M$が$x\ge 0$にあるとして良い．
 \begin{align}
- \angle OAM = \theta \quad (0 \le \theta \le \pi) \label{eq:1}
+  \angle OAM = \theta \quad (0 \le \theta \le \pi) \label{eq:1}
 \end{align}
 とおく．
 
 \begin{figure}[htb]
-\begin{center}
-\begin{tikzpicture}[
-    scale=1.4,
-    >=stealth,
-    % 3D 投影ベクトルの定義 (x: 斜め手前, y: 右, z: 上)
-    x={(-0.6cm,-0.35cm)},
-    y={(0.9cm,-0.15cm)},
-    z={(0cm,1.0cm)}
-  ]
+  \begin{center}
+    \begin{tikzpicture}[
+        scale=1.4,
+        >=stealth,
+        % 3D 投影ベクトルの定義 (x: 斜め手前, y: 右, z: 上)
+        x={(-0.6cm,-0.35cm)},
+        y={(0.9cm,-0.15cm)},
+        z={(0cm,1.0cm)}
+      ]
 
-  % --- 1. 幾何パラメータ設定 (theta = 60度の例) ---
-  \def\thetaVal{60}
-  \pgfmathsetmacro{\sinT}{sin(\thetaVal)}
-  \pgfmathsetmacro{\cosT}{cos(\thetaVal)}
-  \pgfmathsetmacro{\sqrtThree}{1.73205}
-  \pgfmathsetmacro{\sqrtTwo}{1.41421}
+      % --- 1. 幾何パラメータ設定 (theta = 60度の例) ---
+      \def\thetaVal{60}
+      \pgfmathsetmacro{\sinT}{sin(\thetaVal)}
+      \pgfmathsetmacro{\cosT}{cos(\thetaVal)}
+      \pgfmathsetmacro{\sqrtThree}{1.73205}
+      \pgfmathsetmacro{\sqrtTwo}{1.41421}
 
-  % 座標定義
-  \coordinate (O) at (0, 0, 0);
-  \coordinate (A) at (0, 0, 1.0);
-  \pgfmathsetmacro{\zL}{1.0 + \sqrtTwo}
-  \coordinate (L) at (0, 0, \zL);
+      % 座標定義
+      \coordinate (O) at (0, 0, 0);
+      \coordinate (A) at (0, 0, 1.0);
+      \pgfmathsetmacro{\zL}{1.0 + \sqrtTwo}
+      \coordinate (L) at (0, 0, \zL);
 
-  % 正三角形の頂点 B, C, 中点 M
-  \pgfmathsetmacro{\Mx}{0.5 * \sqrtThree * \sinT}
-  \pgfmathsetmacro{\Mz}{1.0 - 0.5 * \sqrtThree * \cosT}
-  \coordinate (M) at (\Mx, 0, \Mz);
-  \coordinate (B) at (\Mx,  0.5, \Mz);
-  \coordinate (C) at (\Mx, -0.5, \Mz);
+      % 正三角形の頂点 B, C, 中点 M
+      \pgfmathsetmacro{\Mx}{0.5 * \sqrtThree * \sinT}
+      \pgfmathsetmacro{\Mz}{1.0 - 0.5 * \sqrtThree * \cosT}
+      \coordinate (M) at (\Mx, 0, \Mz);
+      \coordinate (B) at (\Mx,  0.5, \Mz);
+      \coordinate (C) at (\Mx, -0.5, \Mz);
 
-  % 影の射影倍率 t_B
-  \pgfmathsetmacro{\tB}{(1.0 + \sqrtTwo) / (\sqrtTwo + 0.5 * \sqrtThree * \cosT)}
-  \pgfmathsetmacro{\Bpx}{\tB * \Mx}
-  \pgfmathsetmacro{\Bpy}{\tB * 0.5}
-  \coordinate (Bprime) at (\Bpx,  \Bpy, 0);
-  \coordinate (Cprime) at (\Bpx, -\Bpy, 0);
-  \coordinate (Mprime) at (\Bpx, 0, 0);
+      % 影の射影倍率 t_B
+      \pgfmathsetmacro{\tB}{(1.0 + \sqrtTwo) / (\sqrtTwo + 0.5 * \sqrtThree * \cosT)}
+      \pgfmathsetmacro{\Bpx}{\tB * \Mx}
+      \pgfmathsetmacro{\Bpy}{\tB * 0.5}
+      \coordinate (Bprime) at (\Bpx,  \Bpy, 0);
+      \coordinate (Cprime) at (\Bpx, -\Bpy, 0);
+      \coordinate (Mprime) at (\Bpx, 0, 0);
 
-  % --- 2. xy 平面（地面）グリッド ---
-  \draw[thin, gray!40] (-1.0,-2.0,0) -- (3.5,-2.0,0) -- (3.5,2.0,0) -- (-1.0,2.0,0) -- cycle;
-  \node[gray!70, font=\scriptsize, above left] at (3.5, 2.0, 0) {$xy$ 平面 ($z=0$)};
+      % --- 2. xy 平面（地面）グリッド ---
+      \draw[thin, gray!40] (-1.0,-2.0,0) -- (3.5,-2.0,0) -- (3.5,2.0,0) -- (-1.0,2.0,0) -- cycle;
+      \node[gray!70, font=\scriptsize, above left] at (3.5, 2.0, 0) {$xy$ 平面 ($z=0$)};
 
-  % --- 3. 座標軸 ---
-  \draw[->, thick, gray!80] (0,0,0) -- (3.5,0,0) node[below left, black] {$x$};
-  \draw[->, thick, gray!80] (0,0,0) -- (0,2.2,0) node[right, black] {$y$};
-  \draw[->, thick, gray!80] (0,0,0) -- (0,0,3.2) node[above, black] {$z$};
-  \node[below, font=\small] at (O) {$O (A')$};
+      % --- 3. 座標軸 ---
+      \draw[->, thick, gray!80] (0,0,0) -- (3.5,0,0) node[below left, black] {$x$};
+      \draw[->, thick, gray!80] (0,0,0) -- (0,2.2,0) node[right, black] {$y$};
+      \draw[->, thick, gray!80] (0,0,0) -- (0,0,3.2) node[above, black] {$z$};
+      \node[below, font=\small] at (O) {$O (A')$};
 
-  % --- 4. 影の三角形 A'B'C' (xy 平面上) ---
-  \fill[gray!30, opacity=0.7] (O) -- (Bprime) -- (Cprime) -- cycle;
-  \draw[ultra thick, black!70] (O) -- (Bprime) -- (Cprime) -- cycle;
-  \draw[dashed, black!50] (O) -- (Mprime);
+      % --- 4. 影の三角形 A'B'C' (xy 平面上) ---
+      \fill[gray!30, opacity=0.7] (O) -- (Bprime) -- (Cprime) -- cycle;
+      \draw[ultra thick, black!70] (O) -- (Bprime) -- (Cprime) -- cycle;
+      \draw[dashed, black!50] (O) -- (Mprime);
 
-  % --- 5. 投影光線 (L から各頂点を通り影へ) ---
-  \draw[dashed, orange!90!black, thin] (L) -- (Bprime);
-  \draw[dashed, orange!90!black, thin] (L) -- (Cprime);
-  \draw[dashed, orange!90!black, thick] (L) -- (A) -- (O);
+      % --- 5. 投影光線 (L から各頂点を通り影へ) ---
+      \draw[dashed, orange!90!black, thin] (L) -- (Bprime);
+      \draw[dashed, orange!90!black, thin] (L) -- (Cprime);
+      \draw[dashed, orange!90!black, thick] (L) -- (A) -- (O);
 
-  % --- 6. 正三角形 ABC の描画 ---
-  \fill[blue!20, opacity=0.85] (A) -- (B) -- (C) -- cycle;
-  \draw[ultra thick, blue!80!black] (A) -- (B) -- (C) -- cycle;
-  \draw[thick, dashed, blue!80!black] (A) -- (M);
-  \draw[thick, blue!80!black] (B) -- (C);
+      % --- 6. 正三角形 ABC の描画 ---
+      \fill[blue!20, opacity=0.85] (A) -- (B) -- (C) -- cycle;
+      \draw[ultra thick, blue!80!black] (A) -- (B) -- (C) -- cycle;
+      \draw[thick, dashed, blue!80!black] (A) -- (M);
+      \draw[thick, blue!80!black] (B) -- (C);
 
-  % --- 7. 角度 theta の表示 (\angle OAM) ---
-  % A から真下 (0,0,-1) への方向と AM のなす角
-  \draw[->, thin, red!80!black] ($(A) + (0, 0, -0.35)$) 
-    to[bend right=25] ($(A) + (0.2*\sinT, 0, -0.2*\cosT)$);
-  \node[red!80!black, font=\scriptsize, right] at ($(A) + (0.1, 0, -0.3)$) {$\theta$};
+      % --- 7. 角度 theta の表示 (\angle OAM) ---
+      % A から真下 (0,0,-1) への方向と AM のなす角
+      \draw[->, thin, red!80!black] ($(A) + (0, 0, -0.35)$)
+      to[bend right=25] ($(A) + (0.2*\sinT, 0, -0.2*\cosT)$);
+      \node[red!80!black, font=\scriptsize, right] at ($(A) + (0.1, 0, -0.3)$) {$\theta$};
 
-  % --- 8. 各点のプロットとラベル ---
-  % 光源 L
-  \fill[orange!90!black] (L) circle (1.5pt) node[above right, font=\small] {$L(0,0,1+\sqrt{2})$};
+      % --- 8. 各点のプロットとラベル ---
+      % 光源 L
+      \fill[orange!90!black] (L) circle (1.5pt) node[above right, font=\small] {$L(0,0,1+\sqrt{2})$};
 
-  % 三角形 ABC の頂点
-  \fill[blue!80!black] (A) circle (1.5pt) node[left, font=\small] {$A(0,0,1)$};
-  \fill[blue!80!black] (B) circle (1.2pt) node[right, font=\small] {$B$};
-  \fill[blue!80!black] (C) circle (1.2pt) node[above left, font=\small] {$C$};
-  \fill[blue!80!black] (M) circle (1.0pt) node[above, font=\scriptsize] {$M$};
+      % 三角形 ABC の頂点
+      \fill[blue!80!black] (A) circle (1.5pt) node[left, font=\small] {$A(0,0,1)$};
+      \fill[blue!80!black] (B) circle (1.2pt) node[right, font=\small] {$B$};
+      \fill[blue!80!black] (C) circle (1.2pt) node[above left, font=\small] {$C$};
+      \fill[blue!80!black] (M) circle (1.0pt) node[above, font=\scriptsize] {$M$};
 
-  % 影 A'B'C' の頂点
-  \fill[black] (Bprime) circle (1.2pt) node[right, font=\small] {$B'$};
-  \fill[black] (Cprime) circle (1.2pt) node[left, font=\small] {$C'$};
-  \fill[black] (Mprime) circle (1.0pt) node[below, font=\scriptsize] {$M'$};
+      % 影 A'B'C' の頂点
+      \fill[black] (Bprime) circle (1.2pt) node[right, font=\small] {$B'$};
+      \fill[black] (Cprime) circle (1.2pt) node[left, font=\small] {$C'$};
+      \fill[black] (Mprime) circle (1.0pt) node[below, font=\scriptsize] {$M'$};
 
-  % 影の面積ラベル T
-  \node[black!80, font=\large] at ($(O)!0.5!(Mprime)$) {$T$};
+      % 影の面積ラベル T
+      \node[black!80, font=\large] at ($(O)!0.5!(Mprime)$) {$T$};
 
-\end{tikzpicture}
-\end{center}
-\caption{点光源 $L$ による正三角形 $\triangle ABC$ の影 $\triangle A'B'C'$（$xy$ 平面上）}
+    \end{tikzpicture}
+  \end{center}
+  \caption{点光源 $L$ による正三角形 $\triangle ABC$ の影 $\triangle A'B'C'$（$xy$ 平面上）}
 \end{figure}
 
 $\triangle ABC$は1辺1の正三角形だから$AM=\sqrt{3}/2$，$BM=CM=1/2$，$AM\perp BC$だから
 \begin{align}
- \overrightarrow{AM}=\dfrac{\sqrt{3}}{2}(\sin\theta,\,0,\,-\cos\theta) \label{eq:2}
+  \overrightarrow{AM}=\dfrac{\sqrt{3}}{2}(\sin\theta,\,0,\,-\cos\theta) \label{eq:2}
 \end{align}
 と書ける．従って$B,C$へのベクトルは
 \begin{align}
- \overrightarrow{OB}&=\overrightarrow{OA}+\overrightarrow{AM}+\overrightarrow{MB}=\left(\dfrac{\sqrt{3}}{2}\sin\theta,\ \dfrac{1}{2},\ 1-\dfrac{\sqrt{3}}{2}\cos\theta\right) \label{eq:3}\\
- \overrightarrow{OC}&=\overrightarrow{OA}+\overrightarrow{AM}+\overrightarrow{MC}
+  \overrightarrow{OB}&=\overrightarrow{OA}+\overrightarrow{AM}+\overrightarrow{MB}=\left(\dfrac{\sqrt{3}}{2}\sin\theta,\ \dfrac{1}{2},\ 1-\dfrac{\sqrt{3}}{2}\cos\theta\right) \label{eq:3}\\
+  \overrightarrow{OC}&=\overrightarrow{OA}+\overrightarrow{AM}+\overrightarrow{MC}
   =\left(\dfrac{\sqrt{3}}{2}\sin\theta,\ -\dfrac{1}{2},\ 1-\dfrac{\sqrt{3}}{2}\cos\theta\right) \label{eq:4}
 \end{align}
 となる．
 
 さて，光源$L$から点$P=(p_x,p_y,p_z)$を通る直線が$xy$平面（$z=0$）と交わる点$P'$は
 \begin{align}
- P'=t\,(p_x,p_y,0) \quad t=\dfrac{1+\sqrt{2}}{1+\sqrt{2}-p_z}
+  P'=t\,(p_x,p_y,0) \quad t=\dfrac{1+\sqrt{2}}{1+\sqrt{2}-p_z}
 \end{align}
 で与えられる．\cref{eq:3,eq:4}より$B',C'$に対応する$t_B,t_C$は
 \begin{align}
- t_B
+  t_B
   &=t_C \\
   &=\dfrac{1+\sqrt{2}}{1+\sqrt{2}-\left(1-\dfrac{\sqrt{3}}{2}\cos\theta\right)} \\
   &=\dfrac{1+\sqrt{2}}{\sqrt{2}+\dfrac{\sqrt{3}}{2}\cos\theta} \label{eq:5}
 \end{align}
 で，座標は
 \begin{align}
-B'=\left(t_B\cdot\dfrac{\sqrt{3}}{2}\sin\theta,\ \dfrac{t_B}{2},0\right),\qquad 
-C'=\left(t_B\cdot\dfrac{\sqrt{3}}{2}\sin\theta,\ -\dfrac{t_B}{2},0\right) \label{eq:6}
+  B'=\left(t_B\cdot\dfrac{\sqrt{3}}{2}\sin\theta,\ \dfrac{t_B}{2},0\right),\qquad
+  C'=\left(t_B\cdot\dfrac{\sqrt{3}}{2}\sin\theta,\ -\dfrac{t_B}{2},0\right) \label{eq:6}
 \end{align}
 となる．
 
 影の三角形$A'B'C'$（$A'=O$）は，底辺$B'C'$を底辺，高さ$A'M'$とする二等辺三角形で面積は
 \begin{align}
- T
+  T
   &=\dfrac{1}{2}|B'C'||A'M'| \\
   &=\dfrac{1}{2} \cdot t_B \cdot t_B\dfrac{\sqrt{3}}{2}\sin\theta \\
   &=\dfrac{\sqrt{3}}{4}t_B^2\sin\theta
 \end{align}
 だから\cref{eq:5}を代入して
 \begin{align}
- T
+  T
   &= \dfrac{\sqrt{3}}{4} \left(\dfrac{1+\sqrt{2}}{\sqrt{2}+\dfrac{\sqrt{3}}{2}\cos\theta}\right)^2\sin\theta \\
   &= \dfrac{\sqrt{3}\left(1+\sqrt{2}\right)^2}{4} \dfrac{\sin\theta}{\left(\sqrt{2}+\dfrac{\sqrt{3}}{2}\cos\theta\right)^2} \label{eq:7}
 \end{align}
 である．新しく
 \begin{align}
- f(\theta) = \dfrac{\sin\theta}{\left(\sqrt{2}+\dfrac{\sqrt{3}}{2}\cos\theta\right)^2} \label{eq:8}
+  f(\theta) = \dfrac{\sin\theta}{\left(\sqrt{2}+\dfrac{\sqrt{3}}{2}\cos\theta\right)^2} \label{eq:8}
 \end{align}
 とおくと
 \begin{align}
- T = \dfrac{\sqrt{3}\left(1+\sqrt{2}\right)^2}{4} f(\theta) \label{eq:9}
+  T = \dfrac{\sqrt{3}\left(1+\sqrt{2}\right)^2}{4} f(\theta) \label{eq:9}
 \end{align}
 である．さらに簡単のため
 \begin{align}
- g(\theta) = \sqrt{2}+\dfrac{\sqrt{3}}{2}\cos\theta \label{eq:10}
+  g(\theta) = \sqrt{2}+\dfrac{\sqrt{3}}{2}\cos\theta \label{eq:10}
 \end{align}
 とおくと
 \begin{align}
- g'(\theta) = - \dfrac{\sqrt{3}}{2}\sin\theta
+  g'(\theta) = - \dfrac{\sqrt{3}}{2}\sin\theta
 \end{align}
 だから$f$の一階微分は
 \begin{align}
- f'(\theta) 
+  f'(\theta)
   &= \dfrac{\cos\theta g^2 - 2gg'\sin\theta}{g^4} \\
   &= \dfrac{\cos\theta\left(\sqrt{2}+\dfrac{\sqrt{3}}{2}\cos\theta\right) - 2\dfrac{\sqrt{3}}{2}\sin^2\theta}{g^3} \\
   &= \dfrac{-\dfrac{\sqrt{3}}{2}\cos^2\theta + \sqrt{2}\cos\theta+\sqrt{3}}{g^3} \\
@@ -173,19 +173,19 @@ C'=\left(t_B\cdot\dfrac{\sqrt{3}}{2}\sin\theta,\ -\dfrac{t_B}{2},0\right) \label
 となり，$f(\theta)$の増減表は以下のようになる．
 
 \begin{table}[htb]
-\centering
-\caption{$f(\theta)$ の増減表}
-\label{tab:variation}
-\begin{tabular}{c|ccccc}
-$\theta$ & $0$ & $\cdots$ & $\theta_0$ & $\cdots$ & $\pi$ \\ \hline
-$f'(\theta)$ & & $+$ & $0$ & $-$ & \\ \hline
-$f(\theta)$ & $0$ & $\nearrow$ & 最大 & $\searrow$ & $0$
-\end{tabular}
+  \centering
+  \caption{$f(\theta)$ の増減表}
+  \label{tab:variation}
+  \begin{tabular}{c|ccccc}
+    $\theta$ & $0$ & $\cdots$ & $\theta_0$ & $\cdots$ & $\pi$ \\ \hline
+    $f'(\theta)$ & & $+$ & $0$ & $-$ & \\ \hline
+    $f(\theta)$ & $0$ & $\nearrow$ & 最大 & $\searrow$ & $0$
+  \end{tabular}
 \end{table}
 
 従って，$f(\theta)$および$T$は$\cos\theta=-\sqrt{\dfrac{2}{3}}$で最大値を取る．この時$\sin\theta=\dfrac{1}{3}$だから求める最大値は\cref{eq:9}より
 \begin{align}
- \max T 
+  \max T
   &= \dfrac{\sqrt{3}\left(1+\sqrt{2}\right)^2}{4} \dfrac{\sqrt{\dfrac{1}{3}}}{\left(\sqrt{2}-\dfrac{\sqrt{2}}{2}\right)^2} \\
   &= \dfrac{\left(\sqrt{2}+1\right)^2}{2}
 \end{align}
