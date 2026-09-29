@@ -1,15 +1,11 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 \paragraph{(1)}
 
-時刻 $t=0$ に穴をとび出した水の，時刻 $t$ でのイチを $(X,Y)$ とする．\\
-ただし，右のように $XY$ 平面をとる．
+時刻 $t=0$ に穴をとび出した水の時刻 $t$ での位置を $(X,Y)$ とする．
+ただし，下図のように $XY$ 平面をとる．
 
 \begin{figure}[htb]
   \centering
@@ -26,30 +22,104 @@
   \caption{噴出口から放物線状に落下する水の軌道}
 \end{figure}
 
+時刻$t=0$で噴出口からでた水の時刻$t$における水の座標$(X,Y)$を考える．
+水平方向には等速度運動するから
 \begin{align}
-  \begin{cases}
-    X = \sqrt{2gh} \, t \\
-    Y = a - h - \dfrac{1}{2}gt^2
-  \end{cases}
+  X = \sqrt{2gh} \, t \label{eq:1}
 \end{align}
-$\sqrt{2gh} \neq 0$ から，$t$ をけして
+であり，鉛直方向には等加速度運動するから
 \begin{align}
-  Y &= -\dfrac{1}{2}g \cdot \dfrac{X^2}{2gh} + a - h \\
-  &= -\dfrac{1}{4h} X^2 - h + a \quad \cdots \text{①}
+  Y = a - h - \dfrac{1}{2}gt^2 \label{eq:2}
 \end{align}
-したがって，水平到達キョリは $X = 2\sqrt{h(a-h)}$
+である．
+$\sqrt{2gh} \neq 0$ から，\cref{eq:1}で $t$ をけして\cref{eq:2}に代入すると
+\begin{align}
+  Y
+  &= -\dfrac{1}{2}g \cdot \dfrac{X^2}{2gh} + a - h \\
+  &= -\dfrac{1}{4h} X^2 - h + a \label{eq:3}
+\end{align}
+である．
+従って水平到達距離は\cref{eq:3}で$Y=0$として
+\begin{align}
+  X = 2\sqrt{h(a-h)} \label{eq:4}
+\end{align}
+である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数パラメータ ---
+    % a = 2.4, h = 0.8
+    % 頂点 (0, a - h) = (0, 1.6)
+    % 水平到達点 (2*sqrt(h*(a-h)), 0) = (2.263, 0)
+    \def\a{2.4}
+    \def\h{0.8}
+    \pgfmathsetmacro{\yPeak}{\a - \h}
+    \pgfmathsetmacro{\xReach}{2.0 * sqrt(\h * (\a - \h))}
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick] (-0.5, 0) -- (3.0, 0) node[right] {$X$};
+    \draw[->, thick] (0, -0.4) -- (0, 2.3) node[above] {$Y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 3. 放物線 Y = - 1/(4h) X^2 + a - h の描画 ---
+    % 第一象限の軌道部分（実線）
+    \draw[very thick, blue!80!black, domain=0:\xReach, samples=80]
+    plot (\x, {-(1.0 / (4.0 * \h)) * (\x)^2 + \yPeak});
+
+    % 数学的な放物線全体の対称性を示す点線 (X < 0 および床面通過後)
+    \draw[thick, dashed, blue!40, domain=-1.2:0, samples=40]
+    plot (\x, {-(1.0 / (4.0 * \h)) * (\x)^2 + \yPeak});
+    \draw[thick, dashed, blue!40, domain=\xReach:2.6, samples=20]
+    plot (\x, {-(1.0 / (4.0 * \h)) * (\x)^2 + \yPeak});
+
+    % --- 4. 頂点・切片のプロットとラベル ---
+    % 頂点 (0, a - h)
+    \fill[red!80!black] (0, \yPeak) circle (1.2pt);
+    \node[left=2pt, red!80!black] at (0, \yPeak) {$a - h$};
+    \node[above right, font=\footnotesize] at (0.05, \yPeak) {頂点 $(0,\, a-h)$};
+
+    % X 軸との交点 (水平到達点)
+    \fill[blue!80!black] (\xReach, 0) circle (1.2pt);
+    \node[below=3pt, blue!80!black] at (\xReach, 0) {$2\sqrt{h(a-h)}$};
+
+    % --- 5. 放物線上の任意の時刻 t における点 (X, Y) ---
+    \def\tRatio{0.55} % 0 < t < 1
+    \pgfmathsetmacro{\ptX}{\tRatio * \xReach}
+    \pgfmathsetmacro{\ptY}{-(1.0 / (4.0 * \h)) * (\ptX)^2 + \yPeak}
+
+    \coordinate (P) at (\ptX, \ptY);
+    \fill[purple!80!black] (P) circle (1.3pt);
+    \node[above right=1pt, purple!80!black] at (P) {$(X,\, Y)$};
+
+    % 座標軸への投影点線
+    \draw[dashed, gray!80!black] (\ptX, 0) -- (P) -- (0, \ptY);
+    \node[below=2pt, font=\footnotesize] at (\ptX, 0) {$X$};
+    \node[left=2pt, font=\footnotesize] at (0, \ptY) {$Y$};
+
+    % --- 6. 曲線の方程式ラベル ---
+    %\node[blue!80!black, font=\normalsize] at (1.9, 1.4)
+    %  {$Y = -\dfrac{1}{4h}X^2 + a - h$};
+
+  \end{tikzpicture}
+  \caption{軌道を表す放物線 $Y = -\dfrac{1}{4h}X^2 + a - h$}
+  \label{fig:parabola_xy}
+\end{figure}
 
 \paragraph{(2)}
 
-(1)の値を最大にするのは $h = \dfrac{1}{2}a$，つまり水槽の中点．
+\cref{eq:4}の値を最大にするのは $h = \dfrac{1}{2}a$の時である．
+つまり噴出口が水槽の中点にある時である．
 
 \paragraph{(3)}
 
-①で $0 < h < a$ とするときの $(X,Y)$ のとる値を考える．
+\cref{eq:1}で $0 < h < a$ とするときの $(X,Y)$ のとる値を考える．
+$Y$を微分すると
 \begin{align}
-  Y' = -1 + \dfrac{X^2}{4h^2} =
+  Y' = -1 + \dfrac{X^2}{4h^2}
 \end{align}
-だから，下表をとる． ($\because$ (2)から $0 \leqq X < a$)
+だから増減表は以下のようになる．
 
 \begin{table}[htb]
   \centering
@@ -68,5 +138,55 @@ $\sqrt{2gh} \neq 0$ から，$t$ をけして
   0 < Y \leqq a - X
 \end{align}
 が求める領域である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数パラメータ ---
+    % a = 2.4
+    \def\a{2.4}
+
+    % --- 2. 求める領域のハッチング (0 < Y <= a - X かつ X > 0) ---
+    \fill[pattern=north east lines, pattern color=blue!50]
+    (0, 0) -- (\a, 0) -- (0, \a) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-0.4, 0) -- (3.0, 0) node[right] {$X$};
+    \draw[->, thick] (0, -0.4) -- (0, 3.0) node[above] {$Y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 4. 包絡線 (境界線) Y = a - X ---
+    \draw[very thick, red!80!black] (0, \a) -- (\a, 0)
+    node[midway, above right, font=\footnotesize] {$Y = a - X$ (包絡線)};
+
+    % --- 5. 各種 h に対する軌道群 (族のイメージ) ---
+    % h = 0.2a, 0.4a, 0.5a, 0.7a
+    \foreach \hFrac in {0.2, 0.35, 0.5, 0.7} {
+      \pgfmathsetmacro{\hVal}{\hFrac * \a}
+      \pgfmathsetmacro{\yInit}{\a - \hVal}
+      \pgfmathsetmacro{\xEnd}{2.0 * sqrt(\hVal * (\a - \hVal))}
+      \draw[thick, blue!60!black, dashed, domain=0:\xEnd, samples=40]
+      plot (\x, {-(1.0 / (4.0 * \hVal)) * (\x)^2 + \yInit});
+    }
+
+    % h = a/2 (最大到達距離 X = a) の軌道（実線で強調）
+    \pgfmathsetmacro{\hMid}{0.5 * \a}
+    \draw[very thick, blue!90!black, domain=0:\a, samples=50]
+    plot (\x, {-(1.0 / (4.0 * \hMid)) * (\x)^2 + (\a - \hMid)})
+    node[pos=0.6, below left=1pt, font=\scriptsize] {$h = \dfrac{a}{2}$};
+
+    % --- 6. 境界点と目盛り ---
+    \fill (0, \a) circle (1.2pt) node[left=2pt] {$a$};
+    \fill (\a, 0) circle (1.2pt) node[below=2pt] {$a$};
+
+    % 領域ラベル
+    %\node[fill=white, inner sep=2pt, font=\normalsize\bfseries, blue!80!black]
+    %  at (0.7, 0.7) {$0 < Y \leqq a - X$};
+
+  \end{tikzpicture}
+  \caption{さまざまな $h$ に対する流出軌道群と通過領域（斜線部）}
+  \label{fig:water_envelope_region}
+\end{figure}
 
 \end{document}
