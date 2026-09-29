@@ -1,155 +1,321 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 \noindent
-{\bf [解]} $l$ が $x$ 軸に一致し，$P(0, \sqrt{3}+1)$ となるよう $xy$ 平面をおく．
+{\bf [解]} $l$ が $x$ 軸に一致し，$P(0, \sqrt{3}+1)$ となるように $xy$ 平面をおくと下図のようになる．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.8, >=stealth]
-    \draw[->] (-0.5,0) -- (4.0,0) node[right] {$x$};
-    \draw[->] (0,-1.5) -- (0,2.5) node[above] {$y$};
-    \node[above left] at (0,0) {$O$};
-    \fill (0,1.8) circle (1.5pt) node[above left] {$P$};
-    \node[left] at (0,1.8) {$\sqrt{3}+1$};
-    \fill (2.2,-0.8) circle (1.5pt) node[below right] {$Q$};
-    \node[below] at (1.1,-0.4) {$2+\sqrt{2}$};
-    \fill (3.2,0.8) circle (1.5pt) node[above right] {$R$};
-    \node[above right] at (2.7,0.0) {$\sqrt{3}-1$};
-    \fill (3.2,0) circle (1.5pt) node[below] {$S$};
-    \draw (0,1.8) -- (2.2,-0.8) -- (3.2,0.8);
-    \draw[dashed] (3.2,0.8) -- (3.2,0);
+  \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 数値パラメータ（実寸準拠） ---
+    % P(0, \sqrt{3}+1) \approx (0, 2.732)
+    \def\yP{2.732}
+    \def\lenPQ{3.414} % 2 + \sqrt{2}
+    \def\lenQR{0.586} % 2 - \sqrt{2}
+    \def\lenRS{0.732} % \sqrt{3} - 1
+
+    % 配置角の例:
+    % P から Q へは斜め右下（例えば -55° 方向）
+    % Q から R へはさらに斜め右（例えば 20° 方向）
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (0, \yP);
+    \coordinate (Q) at ($ (P) + (-55:\lenPQ) $);
+    \coordinate (R) at ($ (Q) + (25:\lenQR) $);
+    % S は R から x 軸 (y=0) への垂足
+    \coordinate (S) at (R |- 0,0);
+    % \coordinate (S) at ({$(R)+(0,0)$ |- 0,0});
+
+    % --- 2. 座標軸 (直線 l = x 軸) ---
+    \draw[->, thick] (-0.8, 0) -- (4.2, 0) node[right] {$x\ (l)$};
+    \draw[->, thick] (0, -0.6) -- (0, 3.4) node[above] {$y$};
+    \node[below left] at (O) {$O$};
+
+    % --- 3. リンク機構 P - Q - R の描画 ---
+    % 線分 PQ
+    \draw[very thick, blue!80!black] (P) -- (Q);
+    % 線分 QR
+    \draw[very thick, red!80!black] (Q) -- (R);
+    % 線分 RS (距離: R から x 軸への垂線)
+    \draw[thick, dashed, gray!80!black] (R) -- (S);
+
+    % --- 4. 直角記号 (S における垂直) ---
+    % \draw[thick, gray!80!black] ($ (S) + (0, 0.15) $) -- ($ (S) + (0.15, 0.15) $) -- ($ (S) + (0.15, 0) $);
+
+    % --- 5. 点のプロットとラベル ---
+    \fill (P) circle (1.5pt) node[left=2pt] {$P(0,\, \sqrt{3}+1)$};
+    \fill[blue!80!black] (Q) circle (1.5pt) node[below left=1pt] {$Q$};
+    \fill[red!80!black] (R) circle (1.5pt) node[above right=1pt] {$R$};
+    \fill (S) circle (1.5pt) node[below=2pt] {$S$};
+
+    % --- 6. 各線分の長さラベル ---
+    % PQ の長さ
+    \node[blue!80!black, fill=white, inner sep=1.5pt, font=\footnotesize]
+    at ($ (P)!0.48!(Q) + (-0.35, 0) $) {$2+\sqrt{2}$};
+
+    % QR の長さ (短いので引出線で見やすく配置)
+    \draw[->, thick, red!80!black] ($ (Q)!0.5!(R) + (0.05, -0.5) $) -- ($ (Q)!0.5!(R) + (0.05, -0.05) $);
+    \node[red!80!black, below, font=\footnotesize] at ($ (Q)!0.5!(R) + (0.10, -0.55) $) {$2-\sqrt{2}$};
+
+    % RS の長さ (距離)
+    \draw[->, thick, gray!90!black] ($ (R)!0.5!(S) + (0.5, 0.1) $) -- ($ (R)!0.5!(S) + (0.05, 0.05) $);
+    \node[gray!80!black, right, font=\footnotesize] at ($ (R)!0.5!(S) + (0.5, 0.1) $) {$\sqrt{3}-1$};
+
   \end{tikzpicture}
-  \caption{点 $P,Q,R,S$ の配置と与えられた辺の長さ}
+  \caption{点 $P, Q, R, S$ の位置関係と各線分の長さ}
+  \label{fig:link_pqrs}
 \end{figure}
 
-\noindent
-まず，$|PQ| = 2+\sqrt{2}$ より，$Q$ は半径 $2+\sqrt{2}$ の円
+与えられた条件
 \begin{align}
-  x^2 + (y - \sqrt{3} - 1)^2 = (2 + \sqrt{2})^2
+  |PQ| &= 2+\sqrt{2} \label{eq:1}\\
+  |QR| &= 2-\sqrt{2} \label{eq:2}\\
+  |RS| &= \sqrt{3} -1\label{eq:3}
 \end{align}
-上をうごく．同様に
+について考える．
+
+まず，点 $Q$ について，\cref{eq:1}より$Q$ は中心を $P$, 半径を $2+\sqrt{2}$ とする円
 \begin{align}
+  x^2 + (y - \sqrt{3} - 1)^2 = (2 + \sqrt{2})^2 \label{eq:4}
+\end{align}
+上をうごく．同様に点$R$について考えると，$|PR|$の長さは$|PQ|-|QR|$と$|PQ|+|QR|$の間だから
+\begin{align}
+  |PQ|-|QR| &\le |PR| \le |PQ|+|QR| \\
   2+\sqrt{2} - (2-\sqrt{2}) &\le |PR| \le (2+\sqrt{2}) + (2-\sqrt{2}) \\
-  2\sqrt{2} &\le |PR| \le 4 \quad (\text{間の値もすべてとる})
+  2\sqrt{2} &\le |PR| \le 4
 \end{align}
-だから，$R$ は，
+となる．従って点 $R$ は，$P$を中心とする半径$2\sqrt{2}$から$4$の円の間のドーナツ型の領域：
 \begin{align}
-  8 \le x^2 + (y - \sqrt{3} - 1)^2 \le 16
+  8 \le x^2 + (y - \sqrt{3} - 1)^2 \le 16 \label{eq:5}
 \end{align}
-上をうごく．このうち，$R$ と $x$ 軸との距離が $\sqrt{3}-1$ 以下である部分が求める領域で，右図斜線部（境界含む）．
+上をうごく．
+
+最後に点$S$が$x$軸上にあり，かつ\cref{eq:3}を満たすから，このような$S$が存在するための条件は
+$R$と$x$軸の距離が\cref{eq:3}以下であることで，\cref{eq:5}と合わせて
+\begin{align}
+  \begin{cases}
+    8 \le x^2 + (y - \sqrt{3} - 1)^2 \le 16 \\
+    |y| \le \sqrt{3} -1
+  \end{cases}
+\end{align}
+である．これを図示すると下図斜線部（境界含む）である．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.8, >=stealth]
-    % Axes
-    \draw[->] (-4.5,0) -- (4.5,0) node[right] {$x$};
-    \draw[->] (0,-2.5) -- (0,3.2) node[above] {$y$};
-    \node[below left] at (0,0) {$0$};
+  \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
 
-    % Center P(0, sqrt(3)+1) ~ (0, 2.73)
-    \coordinate (P) at (0, 2.732);
+    % --- 1. 定数定義 ---
+    % P(0, yP)
+    \def\yP{2.73205}     % sqrt(3) + 1
+    \def\rIn{2.82843}    % 2*sqrt(2)
+    \def\rOut{4.0}       % 4.0
+    \def\yTop{0.73205}   % sqrt(3) - 1
+    \def\yBot{-0.73205}  % -sqrt(3) + 1
 
-    % Outer arc R=4, Inner arc R=2*sqrt(2) ~ 2.828
-    % Center at y = 2.732.
-    % Outer circle passes through (0, -1.268) which is sqrt(3)-3.
-    % Line y = sqrt(3)-1 ~ 0.732.
-    % Line y = -sqrt(3)+1 ~ -0.732.
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (0, \yP);
 
-    % Shaded region bounded by outer arc, inner arc, y = sqrt(3)-1
+    % --- 2. 領域の塗りつぶし (clip を利用) ---
     \begin{scope}
-      \clip (-4.2, -2.0) rectangle (4.2, 0.732);
-      \fill[pattern=north east lines, pattern color=gray] (P) circle (4);
-      \fill[white] (P) circle (2.828);
+      % 水平帯 -(\sqrt{3}-1) <= y <= \sqrt{3}-1 でクリップ
+      \clip (-4.3, \yBot) rectangle (4.3, \yTop);
+
+      % 外円を斜線で塗り、内円を白で抜く
+      \fill[pattern=north east lines, pattern color=gray!80] (P) circle (\rOut);
+      \fill[white] (P) circle (\rIn);
     \end{scope}
 
-    % Draw arcs
-    \draw[thick] (P) ++(-60:4) arc (-60:-120:4);
-    \draw[thick] (P) ++(-45:2.828) arc (-45:-135:2.828);
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-4.5, 0) -- (4.5, 0) node[right] {$x$};
+    \draw[->, thick] (0, -2.2) -- (0, 3.6) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
 
-    % Horizontal boundary line y = sqrt(3)-1
-    \draw[dashed] (-4.2, 0.732) -- (4.2, 0.732);
-    \node[right] at (4.2, 0.732) {$\sqrt{3}-1$};
+    % --- 4. 円弧境界線の描画 ---
+    % 外円の弧 (表示範囲に合わせて描画)
+    \draw[thick, blue!80!black] (P) ++(-25:\rOut) arc[start angle=-25, end angle=-155, radius=\rOut];
+    % 内円の弧
+    \draw[thick, blue!80!black] (P) ++(-25:\rIn) arc[start angle=-25, end angle=-155, radius=\rIn];
 
-    % Labels on y-axis
-    \fill (0,2.732) circle (1.5pt) node[left] {$\sqrt{3}+1$};
-    \node[right] at (0,0.732) {$\sqrt{3}-1$};
-    \node[right] at (0,-0.096) {$\sqrt{3}+1-2\sqrt{2}$};
-    \node[right] at (0,-1.268) {$\sqrt{3}-3$};
-    \node[left] at (-0.2,-0.732) {$-\sqrt{3}+1$};
+    % --- 5. 水平境界線 y = \pm (\sqrt{3}-1) ---
+    \draw[thick, dashed, red!80!black] (-4.2, \yTop) -- (4.2, \yTop)
+    node[right, font=\footnotesize] {$y = \sqrt{3}-1$};
+    \draw[thick, dashed, red!80!black] (-4.2, \yBot) -- (4.2, \yBot)
+    node[right, font=\footnotesize] {$y = -(\sqrt{3}-1)$};
 
-    % Labels on x-axis
-    \node[below] at (-4,0) {$-4$};
-    \node[below] at (-2.828,0) {$-2\sqrt{2}$};
-    \node[below] at (2.828,0) {$2\sqrt{2}$};
-    \node[below] at (4,0) {$4$};
+    % --- 6. y 軸上の主要な点とラベル ---
+    % 中心 P
+    \fill (P) circle (1.5pt) node[right=2pt] {$P(0,\, \sqrt{3}+1)$};
 
-    % Angle labels
-    \node at (-1.5,2.2) {$45^\circ$};
-    \node at (1.8,2.5) {$60^\circ$};
-    \node at (0.5,1.8) {$30^\circ$};
+    % y軸上の切片・境界位置の目盛り
+    \draw (-0.08, \yTop) -- (0.08, \yTop);
+    \node[above right, font=\scriptsize] at (0, \yTop) {$\sqrt{3}-1$};
+
+    \draw (-0.08, \yBot) -- (0.08, \yBot);
+    \node[below left, font=\scriptsize] at (0, \yBot) {$-(\sqrt{3}-1)$};
+
+    % 内円最下点: \sqrt{3}+1 - 2\sqrt{2} \approx -0.096
+    \fill (0, {\yP - \rIn}) circle (1.0pt);
+    \node[right, font=\tiny, gray!80!black] at (0.05, {\yP - \rIn - 0.1}) {$\sqrt{3}+1-2\sqrt{2}$};
+
+    % 外円最下点: \sqrt{3}-3 \approx -1.268
+    \fill (0, {\yP - \rOut}) circle (1.0pt);
+    \node[below left, font=\tiny, gray!80!black] at (-0.05, {\yP - \rOut}) {$\sqrt{3}-3$};
+
+    % 半径の寸法表示
+    \draw[<->, gray!80!black] (P) -- ++(-60:\rIn)
+    node[midway, fill=white, inner sep=1pt, font=\scriptsize] {$2\sqrt{2}$};
+    \draw[<->, gray!80!black] (P) -- ++(-120:\rOut)
+    node[midway, fill=white, inner sep=1pt, font=\scriptsize] {$4$};
+
   \end{tikzpicture}
-  \caption{点 $R$ が描く領域（斜線部）}
+  \caption{点 $R$ の満たす領域（斜線部境界含む）}
+  \label{fig:region_R}
 \end{figure}
 
-\noindent
-この面積 $S$ とする．右下図で，
+この面積 $S$ を求める．$S$は下図のようにおいた半径$4$の円の一部$S_1$から半径$2\sqrt{2}$の弓形$S_2$を引いたもの：
 \begin{align}
-  S = S_1 - S_2 \tag{1}
+  S = S_1 - S_2 \label{eq:6}
 \end{align}
-となり，
-\begin{align}
-  S_1 &= 2 \int_{2}^{2\sqrt{3}} \sqrt{16-x^2} \, dx \\
-  &= 2 \int_{\frac{\pi}{6}}^{\frac{\pi}{3}} 16 \cos^2 \theta \, d\theta \\
-  &= 16 \Bigl[ \theta + \dfrac{1}{2} \sin 2\theta \Bigr]_{\pi/6}^{\pi/3} \\
-  &= \dfrac{8}{3}\pi
-\end{align}
+である．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.7, >=stealth]
-    % S1 diagram
+  \begin{tikzpicture}[scale=0.9, >=stealth, every node/.style={font=\small}]
+
+    % ========================================================
+    % 1. S_1 の図: 半径 4 の円が 2 つの水平境界で切られた帯状領域
+    % ========================================================
     \begin{scope}[shift={(0,0)}]
-      \draw (-3,0) -- (3,0);
-      \draw (0,-1.5) -- (0,0);
-      \draw (-2.5,0) arc (-150:-30:2.89);
-      \fill[pattern=north east lines, pattern color=gray] (-2.5,0) arc (-150:-30:2.89) -- cycle;
-      \node at (0,-0.8) {$S_1$};
-      \node[above] at (-2.5,0) {$-2\sqrt{3}$};
-      \node[above] at (2.5,0) {$2\sqrt{3}$};
-      \node at (0, 0.4) {$30^\circ$};
-      \node at (-1.5, 0.4) {$4$};
-      \node at (1.5, 0.4) {$4$};
+      % 中心 P を (0,0) とみなして下向きに描画
+      % d_top = 2 (y_top 相当), d_bot = 2*sqrt(3) \approx 3.464 (y_bot 相当)
+      \def\R{4.0}
+      \def\dTop{2.0}
+      \def\dBot{3.4641}
+      \def\xTop{3.4641} % 2*sqrt(3)
+      \def\xBot{2.0}    % 2
+
+      % 斜線ハッチング領域 S_1
+      % 上の境界: (-\xTop, -\dTop) から (\xTop, -\dTop)
+      % 右の円弧: 偏角 -60° (幅 xTop) から -30° (幅 xBot)
+      % 下の境界: (\xBot, -\dBot) から (-\xBot, -\dBot)
+      % 左の円弧: 偏角 -150° から -120°
+      \fill[pattern=north east lines, pattern color=gray!80]
+      (-\xTop, -\dTop) -- (\xTop, -\dTop)
+      arc[start angle=-30, end angle=-60, radius=\R]
+      -- (-\xBot, -\dBot)
+      arc[start angle=-120, end angle=-150, radius=\R]
+      -- cycle;
+
+      % 円弧の輪郭
+      \draw[thick, blue!80!black] (0,0) ++(-0:\R) arc[start angle=-0, end angle=-180, radius=\R];
+
+      % 2本の切断水平線
+      \draw[thick, dashed, red!80!black] (-3.8, -\dTop) -- (3.8, -\dTop)
+      node[right, font=\footnotesize] {$d = 2$};
+      \draw[thick, dashed, red!80!black] (-3.0, -\dBot) -- (3.0, -\dBot)
+      node[right, font=\footnotesize] {$d = 2\sqrt{3}$};
+
+      % 中心 P からの動径（角度 60° と 30° の補助線）
+      \draw[gray!70] (0,0) -- (\xTop, -\dTop) node[midway, above right, font=\scriptsize] {$4$};
+      \draw[gray!70] (0,0) -- (-\xTop, -\dTop);
+      \draw[gray!70] (0,0) -- (\xBot, -\dBot);
+      \draw[gray!70] (0,0) -- (-\xBot, -\dBot);
+
+      % 中心 P
+      \fill (0,0) circle (1.3pt) node[above] {$P$};
+      \draw[dashed, gray!60] (0,0) -- (0, -3.8);
+
+      % 角度の表示
+      \draw (0, -0.7) arc[start angle=-90, end angle=-60, radius=0.7];
+      \node[font=\tiny] at (0.28, -0.85) {$30^\circ$};
+      \draw (0, -1.1) arc[start angle=-90, end angle=-30, radius=1.1];
+      \node[font=\tiny] at (0.65, -1.25) {$60^\circ$};
+
+      % 端点の x 座標ラベル
+      \node[above, font=\footnotesize] at (\xTop, -\dTop) {$2\sqrt{3}$};
+      \node[above, font=\footnotesize] at (-\xTop, -\dTop) {$-2\sqrt{3}$};
+      \node[below, font=\footnotesize] at (\xBot, -\dBot) {$2$};
+      \node[below, font=\footnotesize] at (-\xBot, -\dBot) {$-2$};
+
+      % 領域ラベル
+      \node[fill=white, inner sep=2pt, font=\bfseries] at (0, -2.7) {$S_1$};
+      \node[below=8pt, font=\small\bfseries] at (0, -4.2) {(a) $S_1$（外円 $R=4$ の帯部）};
     \end{scope}
 
-    % S2 diagram
-    \begin{scope}[shift={(7,0)}]
-      \draw (-2.5,0) -- (2.5,0);
-      \draw (0,-1.5) -- (0,0);
-      \draw (-2,0) arc (-135:-45:2.828);
-      \fill[pattern=north east lines, pattern color=gray] (-2,0) arc (-135:-45:2.828) -- cycle;
-      \node at (0,-0.8) {$S_2$};
-      \node[above] at (-2,0) {$-2\sqrt{2}$};
-      \node[above] at (2,0) {$2\sqrt{2}$};
-      \node at (1.2, 0.4) {$45^\circ$};
+    % ========================================================
+    % 2. S_2 の図: 半径 2\sqrt{2} の円が 1 つの水平境界で切られた弓形
+    % ========================================================
+    \begin{scope}[shift={(8.0,0)}]
+      \def\rIn{2.8284}  % 2*sqrt(2)
+      \def\dTop{2.0}    % 2
+      \def\xChord{2.0}  % sqrt(8 - 4) = 2
+
+      % 斜線ハッチング領域 S_2 (弓形)
+      \fill[pattern=north east lines, pattern color=gray!80]
+      (-\xChord, -\dTop) -- (\xChord, -\dTop)
+      arc[start angle=-45, end angle=-135, radius=\rIn]
+      -- cycle;
+
+      % 円弧の輪郭
+      \draw[thick, blue!80!black] (0,0) ++(-0:\rIn) arc[start angle=-0, end angle=-180, radius=\rIn];
+
+      % 切断水平線
+      \draw[thick, dashed, red!80!black] (-2.8, -\dTop) -- (2.8, -\dTop)
+      node[right, font=\footnotesize] {$d = 2$};
+
+      % 中心 P からの動径（角度 45°）
+      \draw[gray!70] (0,0) -- (\xChord, -\dTop) node[midway, above right, font=\scriptsize] {$2\sqrt{2}$};
+      \draw[gray!70] (0,0) -- (-\xChord, -\dTop);
+
+      % 中心 P
+      \fill (0,0) circle (1.3pt) node[above] {$P$};
+      \draw[dashed, gray!60] (0,0) -- (0, -3.0);
+
+      % 角度の表示 (片側 45°、中心角 90°)
+      \draw (0, -0.8) arc[start angle=-90, end angle=-45, radius=0.8];
+      \node[font=\tiny] at (0.35, -0.95) {$45^\circ$};
+      \draw (0, -0.8) arc[start angle=-90, end angle=-135, radius=0.8];
+      \node[font=\tiny] at (-0.35, -0.95) {$45^\circ$};
+
+      % 端点の x 座標ラベル
+      \node[above, font=\footnotesize] at (\xChord, -\dTop) {$2$};
+      \node[above, font=\footnotesize] at (-\xChord, -\dTop) {$-2$};
+
+      % 領域ラベル
+      \node[fill=white, inner sep=2pt, font=\bfseries] at (0, -2.4) {$S_2$};
+      \node[below=8pt, font=\small\bfseries] at (0, -4.2) {(b) $S_2$（内円 $r=2\sqrt{2}$ の弓形）};
     \end{scope}
+
   \end{tikzpicture}
-  \caption{面積 $S_1$，$S_2$ を求めるための扇形の図}
+  \caption{面積 $S_1$（2直線で切り取られた円片）と $S_2$（弓形）の幾何学的構成}
+  \label{fig:s1_s2_breakdown}
 \end{figure}
 
+それぞれの面積を個別に求めると，まず$S_1$は円の関数を積分して
 \begin{align}
-  S_2 &= (\text{扇形}) - (\text{三角形}) \\
-  &= \dfrac{1}{2} \cdot \dfrac{\pi}{2} \cdot (2\sqrt{2})^2 - \dfrac{1}{2} \cdot 2 \cdot 2 \cdot 2 \\
-  &= 2\pi - 4
+  S_1
+  &= 2 \int_{2}^{2\sqrt{3}} \sqrt{16-x^2} \, dx \\
+  &= 2 \int_{\frac{\pi}{6}}^{\frac{\pi}{3}} 16 \cos^2 \theta \, d\theta \\
+  &= 16 \int_{\frac{\pi}{6}}^{\frac{\pi}{3}} \left(1+\cos 2\theta\right)\, d\theta \\
+  &= 16 \Bigl[ \theta + \dfrac{1}{2} \sin 2\theta \Bigr]_{\pi/6}^{\pi/3} \\
+  &= \dfrac{8}{3}\pi \label{eq:7}
 \end{align}
-(1)に代入して
+である．
+
+次に$S_2$は成す角$\dfrac{\pi}{2}$の扇形から対応する三角形の面積を減じたもので
+\begin{align}
+  S_2
+  &= (\text{扇形}) - (\text{三角形}) \\
+  &= \dfrac{1}{2} \cdot \dfrac{\pi}{2} \cdot (2\sqrt{2})^2 - \dfrac{1}{2} \cdot 2 \cdot 2 \cdot 2 \\
+  &= 2\pi - 4 \label{eq:8}
+\end{align}
+である．
+
+\cref{eq:7,eq:8}を\cref{eq:6}に代入して求める面積は
 \begin{align}
   S = 4 + \dfrac{2}{3}\pi
 \end{align}
+である．
 
 \newpage
 
