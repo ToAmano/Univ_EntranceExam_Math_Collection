@@ -1,29 +1,133 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-\noindent
-{\bf [解]} 題意の“ある時刻”に自動車が原点にいるとし，自動車は $x$ 軸正方向へ動くものとする．また飛行機は平面 $z=k\ \text{[km]}\ (>0)$ 上をとるとする．
+題意の“ある時刻”に自動車が原点にいるとし，自動車は $x$ 軸正方向へ動くものとする．また飛行機は平面 $z=k\ \text{[km]}\ (>0)$ 上を飛ぶとする．
+$3$つの点を
 \begin{align}
   \begin{cases}
     A \cdots \text{“ある時刻”における飛行機の座標．} yz \text{平面上にとる．} \\
-    B \cdots 36 \text{秒後の} \qquad \qquad \text{〃} \\
-    C \cdots \qquad \quad \text{〃} \quad \text{自動車の座標}
+    B \cdots 36 \text{秒後における飛行機の座標．}  \\
+    C \cdots 36 \text{秒後における自動車の座標}
   \end{cases}
 \end{align}
 とする．また点 $X$ に対し，$X$ の $xy$ 平面への正射影を $X'$ で表す．
+$B'$から$x$軸におろした垂足を$B''$とする．
+図は以下のようになる．
 
-\noindent
-まず $\angle A O A' = 30^\circ$ から，$A(0, \sqrt{3}k, k)$ である．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[
+      scale=1.4,
+      >=stealth,
+      every node/.style={font=\small},
+      x={(0.9cm, -0.25cm)},   % x軸（東・車の進行方向）
+      y={(0.55cm, 0.45cm)},   % y軸（北方向）
+      z={(0cm, 1.35cm)}       % z軸（鉛直上向き・高度）
+    ]
 
-\noindent
-時速 $100\ \text{[km]} = \dfrac{10^5}{36}\ \text{[m/s]}$ ； $\sqrt{7} \times 100\ \text{[km/h]} = \dfrac{\sqrt{7} \cdot 10^5}{36}\ \text{[m/s]}$
+    % --- 1. 数値・パラメータ設定 (k = 1.0) ---
+    % A(0, sqrt(3), 1)
+    % C(1, 0, 0)
+    % B(1 + 1.5, sqrt(3)/2, 1) = (2.5, 0.866, 1)
+    \def\kVal{1.0}
+    \pgfmathsetmacro{\sqrtThree}{sqrt(3)}
 
-\noindent
-だから，$C(1, 0, 0)$ となる．題意から，
+    % 各点の空間座標
+    \coordinate (O)   at (0, 0, 0);
+    \coordinate (Ap)  at (0, \sqrtThree, 0);
+    \coordinate (A)   at (0, \sqrtThree, \kVal);
+    \coordinate (C)   at (1.0, 0, 0);
+    \coordinate (Bp)  at (2.5, {\sqrtThree/2}, 0);
+    \coordinate (B)   at (2.5, {\sqrtThree/2}, \kVal);
+    \coordinate (Bpp) at (2.5,0,0);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick] (-0.3, 0, 0) -- (3.3, 0, 0) node[below right] {$x$ (北)};
+    \draw[->, thick] (0, -0.3, 0) -- (0, 2.5, 0) node[above right] {$y$ (西)};
+    \draw[->, thick] (0, 0, -0.2) -- (0, 0, 1.7) node[above] {$z$ (上)};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. xy 平面上の補助線（破線） ---
+    \draw[thick, dashed, gray!70] (O) -- (Ap) node[midway, left=2pt] {$\sqrt{3}k$};
+    \draw[thick, dashed, gray!70] (C) -- (Bp);
+    \draw[dashed, gray!50] (Ap) -- (Bp);
+    \draw[thick,dashed,gray!50] (Bp) -- (Bpp);
+
+    % C から北向き（y軸平行）の基準点線（方位角表示用）
+    \draw[dashed, gray!60] (C) -- ++(0, 1.2, 0);
+
+    % --- 4. 鉛直垂線（高度 k） ---
+    \draw[thick, dashed, blue!70!black] (Ap) -- (A) node[midway, left=1pt] {$k$};
+    \draw[thick, dashed, blue!70!black] (Bp) -- (B) node[midway, right=1pt] {$k$};
+
+    % --- 5. 視線および移動軌跡（実線） ---
+    % t = 0 での視線 OA
+    \draw[very thick, orange!80!black] (O) -- (A);
+    % 36秒後での視線 CB
+    \draw[very thick, orange!80!black] (C) -- (B);
+    % 飛行機の軌跡 AB
+    \draw[very thick, magenta!90!black] (A) -- (B)
+    node[midway, above, font=\footnotesize] {$|AB|=\sqrt{7}$};
+    % 自動車の軌跡 OC
+    \draw[very thick, cyan!80!black] (O) -- (C)
+    node[midway, below, font=\footnotesize] {$1\text{km}$};
+
+    % --- 6. 直角記号 ---
+    % A' における垂直
+    \draw[gray!70] ($ (Ap) + (0, -0.15, 0) $) -- ($ (Ap) + (0, -0.15, 0.15) $) -- ($ (Ap) + (0, 0, 0.15) $);
+    % B' における垂直
+    \draw[gray!70] ($ (Bp) + (-0.15, 0, 0) $) -- ($ (Bp) + (-0.15, 0, 0.15) $) -- ($ (Bp) + (0, 0, 0.15) $);
+
+    % --- 7. 角度の円弧とラベル ---
+    % (1) t = 0 での仰角 \angle AOA' = 30°
+    \draw[thick, green!60!black] ($ (O)!0.32!(Ap) $) to[bend right=15] ($ (O)!0.32!(A) $);
+    \node[green!60!black, font=\footnotesize, left=2pt] at ($ (O)!0.35!(A) + (0, 0.05, 0.05) $) {$30^\circ$};
+
+    % (2) 36秒後 C での仰角 \angle BCB' = 30°
+    \draw[thick, green!60!black] ($ (C)!0.28!(Bp) $) to[bend left=-18] ($ (C)!0.28!(B) $);
+    \node[green!60!black, font=\footnotesize, right=1pt] at ($ (C)!0.3!(B) $) {$30^\circ$};
+
+    % (3) 36秒後 C での仰角 \angle B'CB'' = 30°
+    \draw[thick, green!60!black] ($ (C)!0.28!(Bpp) $) to[bend left=-18] ($ (C)!0.28!(Bp) $);
+    \node[green!60!black, font=\footnotesize, right=1pt] at ($ (C)!0.3!(Bpp) $) {$30^\circ$};
+
+    % --- 8. 点のプロットとラベル ---
+    \fill (O) circle (1.2pt);
+    \fill (Ap) circle (1.2pt) node[below=2pt] {$A'$};
+    \fill[blue!80!black] (A) circle (1.4pt) node[above left] {$A(0, \sqrt{3}k, k)$};
+    \fill[cyan!80!black] (C) circle (1.4pt) node[below=2pt] {$C(1,0,0)$};
+    \fill (Bp) circle (1.2pt) node[below right] {$B'$};
+    \fill[blue!80!black] (B) circle (1.4pt) node[above right] {$B$};
+    \fill[blue!80!black] (Bpp) circle (1.4pt) node[below right] {$B''$};
+
+  \end{tikzpicture}
+  \caption{自動車（$O \to C$）と飛行機（$A \to B$）の空間配置および仰角関係}
+  \label{fig:airplane_car_3d}
+\end{figure}
+
+題意より，$t=0$での車から飛行機への仰角，すなわち $\angle A O A'$が $30^\circ$ だから $A(0, \sqrt{3}k, k)$ である．車と飛行機の速度を秒速に直すと，
+\begin{align}
+  100\ \text{[km/h]} = \dfrac{10^3}{36}\ \text{[m/s]} \\
+  \sqrt{7} \times 100\ \text{[km/h]} = \dfrac{\sqrt{7} \cdot 10^3}{36}\ \text{[m/s]}
+\end{align}
+だから，$C(1 \text{[km]},0,0)$である．
+
+この時点での車から飛行機の角度は北から30度西の方向に仰角$30^{\circ}$である．
+従って，まず
+\begin{align}
+  |B'C| = \dfrac{|BB'|}{\tan \angle BCB'} = \dfrac{k}{\tan 30^{\circ}} = \sqrt{3}k \label{eq:1}
+\end{align}
+である．よって
+\begin{align}
+  |B''C| = |B'C|\cos\angle B'CB'' = \cos\angle 30^{\circ} \sqrt{3}k = \dfrac{3}{2}k
+\end{align}
+および
+\begin{align}
+  |B'B''| = |B'C|\sin\angle B'CB'' = \sin\angle 30^{\circ} \sqrt{3}k = \dfrac{\sqrt{3}}{2}k
+\end{align}
+だから，$B$の座標は
 \begin{align}
   B\Bigl( 1 + \dfrac{3}{2}k, \dfrac{\sqrt{3}}{2}k, k \Bigr)
 \end{align}
@@ -33,58 +137,15 @@
   \begin{pmatrix} 1 + \dfrac{3}{2}k \\ -\dfrac{\sqrt{3}}{2}k \\ 0
   \end{pmatrix}
 \end{align}
-となる．$|\vec{AB}| = \sqrt{7}\ \text{[km]}$ だから，2乗して整理して，
+となる．題意より$|\vec{AB}| = \sqrt{7}\ \text{[km]}$ だから，2乗して整理して，
 \begin{align}
-  7 &= \Bigl(1 + \dfrac{3}{2}k\Bigr)^2 + \Bigl(\dfrac{\sqrt{3}}{2}k\Bigr)^2 \\
-  &= 3k^2 + 3k + 1
+  7 &= |AB|^2 \\
+  &= \Bigl(1 + \dfrac{3}{2}k\Bigr)^2 + \Bigl(\dfrac{\sqrt{3}}{2}k\Bigr)^2 \\
+  &= 3k^2 + 3k + 1 \\
+  \therefore
+  k &= 1\ (>0)\ \text{[km]}
 \end{align}
-\begin{align}
-  \therefore k = 1\ (>0)\ \text{[km]}
-\end{align}
-したがって，求める高度は $k = 1000\ \text{[m]}$ である．
-
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}[scale=1.2, >=stealth]
-    % Axes
-    \draw[->] (0,0,0) -- (2.5,0,0) node[below left] {$x$};
-    \draw[->] (0,0,0) -- (0,3.5,0) node[right] {$y$};
-    \draw[->] (0,0,0) -- (0,0,3) node[above] {$z$};
-
-    % Points
-    \coordinate (O) at (0,0,0);
-    \coordinate (Ap) at (0, 1.732, 0);
-    \coordinate (A) at (0, 1.732, 1.5);
-    \coordinate (Bp) at (1.2, 0.866, 0);
-    \coordinate (B) at (1.2, 0.866, 1.5);
-    \coordinate (C) at (1.0, 0, 0);
-
-    % Lines
-    \draw[dashed] (O) -- (Ap);
-    \draw[dashed] (Ap) -- (A);
-    \draw[thick] (O) -- (A);
-    \draw[dashed] (Bp) -- (B);
-    \draw[thick] (A) -- (B);
-    \draw[dashed] (Ap) -- (Bp);
-    \draw[fill] (C) circle (1.5pt) node[below] {$C$};
-
-    % Labels
-    \node[right] at (A) {$A$};
-    \node[right] at (Ap) {$A'$};
-    \node[above] at (B) {$B$};
-    \node[below] at (Bp) {$B'$};
-    \node[left] at (0, 1.732, 0.75) {$k$};
-    \node[right] at (0, 2.3, 0) {$\sqrt{3}k$};
-
-    % Angle arcs
-    \draw (0,0.4,0) arc (90:60:0.4);
-    \node at (0.2,0.5,0) {$30^\circ$};
-
-    \draw (0.3, 0, 0) arc (0:30:0.4);
-    \node at (0.5, 0.2, 0) {$30^\circ$};
-  \end{tikzpicture}
-  \caption{点 $O,A,B,C$ の空間配置}
-\end{figure}
+である．したがって，求める高度は $k = 1000\ \text{[m]}$ である．
 
 \newpage
 
