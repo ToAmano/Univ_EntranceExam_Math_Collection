@@ -1,50 +1,81 @@
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1966$年$5old$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  二つの一次式$3ax+2$，$2x+b$に対して，$\dint{0}{1}(3ax+2)(2x+b)dx=0$が成り立つ時，
-  $a+b$はどのような範囲にあるか．
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}題意の積分$S$として
-  \begin{align}
-    S&=\left[2ax^3+\dfrac{4+3ab}{2}x^2+2bx\right]_0^1 \nonumber\\
-    &=2(a+b)+\dfrac{3}{2}ab+2=0\label{1}
-  \end{align}
-  が成り立つ．そこで$p=a+b$，$q=ab$とおいて，$a$，$b$の存在条件を調べる．
-  まず\eqref{1}から
-  \begin{align}
-    q=\dfrac{-4}{3}(1+p)\label{2}
-  \end{align}
-  となる．
-  さて，$a$，$b$は$x$の$2$次方程式$x^2-px+q=0$の$2$実解であるからこの判別式$D$として，
-  \begin{align}
-    &D\ge 0 \Longleftrightarrow p^2-4q\ge0 \\
-    \Longleftrightarrow
-    &p^2+\dfrac{16}{3}(1+p)\ge0 \Longleftrightarrow p\le -4,\dfrac{4}{3}\le p
-  \end{align}
-  となる．故に求める範囲は
-  \begin{align}
-    a+b\le -4,\dfrac{4}{3}\le a+b\tag{答}
-  \end{align}
-  である．
-  \newpage
-\end{multicols}
+\paragraph{【新課程】}
+{\bf [解]}
+時刻$0$で$OX$を$x$軸正方向とし，$OX$が$x$軸から$y$軸正方向へと回転する座標系をとる．このとき，時刻$t$での点$P$の座標$(X, Y)$は
+\begin{align}
+  \begin{cases}
+    X = e^{2t} \cos t \\
+    Y = e^{2t} \sin t
+  \end{cases}
+\end{align}
+と表される．
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[scale=1.2, >=stealth]
+    \draw[->] (-0.3,0) -- (2.5,0) node[right] {$x$};
+    \draw[->] (0,-0.3) -- (0,2.0) node[above] {$y$};
+    \node[below left] at (0,0) {$O$};
+    \coordinate (P) at (1.8, 1.2);
+    \draw[thick] (0,0) -- (P) node[above right] {$P$};
+    \fill (P) circle (1.5pt);
+    \draw[->] (0.6,0) arc (0:33.69:0.6);
+    \node at (0.8,0.2) {$t$};
+  \end{tikzpicture}
+  \caption{点$P$の運動と座標系}
+\end{figure}
+
+両辺を$t$で微分すると，
+\begin{align}
+  \begin{cases}
+    \dfrac{dX}{dt} = e^{2t} (2\cos t - \sin t) \\
+    \dfrac{dY}{dt} = e^{2t} (2\sin t + \cos t)
+  \end{cases}
+\end{align}
+となる．$0 \le t \le 2\pi$の区間で点$P$が同じ位置を通過することはないので，求める道のり$L$は
+\begin{align}
+  L &= \int_0^{2\pi} \sqrt{\left(\dfrac{dX}{dt}\right)^2 + \left(\dfrac{dY}{dt}\right)^2} \, dt \nonumber\\
+  &= \int_0^{2\pi} e^{2t} \sqrt{(2\cos t - \sin t)^2 + (2\sin t + \cos t)^2} \, dt \nonumber\\
+  &= \int_0^{2\pi} \sqrt{5} e^{2t} \, dt \nonumber\\
+  &= \dfrac{\sqrt{5}}{2} \Bigl[ e^{2t} \Bigr]_0^{2\pi} \nonumber\\
+  &= \dfrac{\sqrt{5}}{2} \left( e^{4\pi} - 1 \right) \tag{答}
+\end{align}
+である．
+
+\paragraph{【旧課程】}
+題意の定積分を$S$とおくと，
+\begin{align}
+  S &= \int_0^1 (3ax+2)(2x+b) \, dx \nonumber\\
+  &= \int_0^1 \left\{ 6ax^2 + (3ab+4)x + 2b \right\} \, dx \nonumber\\
+  &= \left[ 2ax^3 + \dfrac{3ab+4}{2}x^2 + 2bx \right]_0^1 \nonumber\\
+  &= 2a + \dfrac{3ab+4}{2} + 2b \nonumber\\
+  &= 2(a+b) + \dfrac{3}{2}ab + 2 = 0 \label{eq:1}
+\end{align}
+が成り立つ．
+ここで$p = a+b$，$q = ab$とおいて，$a$，$b$が存在するための条件を調べる．
+まず\eqref{eq:1}を$p,q$で表すと
+\begin{align}
+  2p + \dfrac{3}{2}q + 2 = 0 \Longleftrightarrow q = -\dfrac{4}{3}(p+1) \label{eq:2}
+\end{align}
+となる．
+$a$，$b$は$t$についての$2$次方程式
+\begin{align}
+  t^2 - pt + q = 0
+\end{align}
+の$2$実数解であるから，判別式を$D$とすると$D \ge 0$が必要十分である．
+\begin{align}
+  D \ge 0 &\Longleftrightarrow p^2 - 4q \ge 0 \nonumber\\
+  &\Longleftrightarrow p^2 + \dfrac{16}{3}(p+1) \ge 0 \nonumber\\
+  &\Longleftrightarrow 3p^2 + 16p + 16 \ge 0 \nonumber\\
+  &\Longleftrightarrow (3p+4)(p+4) \ge 0 \nonumber\\
+  &\Longleftrightarrow p \le -4, \quad \dfrac{4}{3} \le p
+\end{align}
+となる．したがって，求める$a+b$の範囲は
+\begin{align}
+  a+b \le -4, \quad \dfrac{4}{3} \le a+b \tag{答}
+\end{align}
+である．
+
 \end{document}
