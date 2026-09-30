@@ -1,64 +1,164 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} $B, C$ から $k, h$ に下ろした垂線の足を順に $P, Q$ とおく．正射影から，
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標定義 (例として theta = 120°, |b| = 1.6, |c| = 1.6) ---
+    \coordinate (A) at (0, 0);
+
+    % AB の偏角 -115°, AC の偏角 -55° (なす角 theta = 60° ではなく鈍角にするため、
+    % AB を -120°、AC を -40° に設定 -> なす角 80°〜120° 程度が見やすい)
+    % ここでは手描き図に合わせて AB: -125°, AC: -45° (なす角 80° 程度で描くか、解の 120° に準拠)
+    % 解の条件: theta は鈍角 (例えば 110°)
+    \def\angB{-135}
+    \def\angC{-25}
+    \def\lenB{1.8}
+    \def\lenC{1.8}
+
+    \coordinate (B) at (\angB:\lenB);
+    \coordinate (C) at (\angC:\lenC);
+
+    % 直線 k: A を通り AC に垂直 (偏角 angC + 90° = 65°)
+    \def\angK{\angC + 90}
+    \coordinate (K_dir) at (\angK:1);
+
+    % 直線 h: A を通り AB に垂直 (偏角 angB + 90° = -45° または -35°)
+    \def\angH{\angB + 90}
+    \coordinate (H_dir) at (\angH:1);
+
+    % --- 2. 垂足 P, Q および対称点 B' の幾何計算 ---
+    % P: B から直線 k (A を通り方向 K_dir) への垂足
+    \coordinate (P) at ($ (A)!(B)!($ (A) + (K_dir) $) $);
+
+    % Q: C から直線 h (A を通り方向 H_dir) への垂足
+    \coordinate (Q) at ($ (A)!(C)!($ (A) + (H_dir) $) $);
+
+    % B': B の直線 k に関する鏡映点 (B + 2*BP)
+    \coordinate (Bprime) at ($ (B)!2.0!(P) $);
+
+    % --- 3. 直線 k と h の描画 ---
+    \draw[thick, dashed, gray!80!black]
+    ($ (A) - 2.4*(K_dir) $) -- ($ (A) + 2.4*(K_dir) $) node[above right] {$k$};
+    \draw[thick, dashed, gray!80!black]
+    ($ (A) - 2.2*(H_dir) $) -- ($ (A) + 2.2*(H_dir) $) node[below right] {$h$};
+
+    % --- 4. 三角形の辺 AB, AC ---
+    \draw[very thick] (B) -- (A) -- (C);
+
+    % --- 5. 垂線 BP(B') および CQ ---
+    % B から P を経て B' への垂線（破線）
+    \draw[thick, dashed, blue!80!black] (B) -- (Bprime);
+    \draw[thick, dotted, gray!70] (A) -- (Bprime);
+
+    % C から Q への垂線
+    \draw[thick, dashed, blue!80!black] (C) -- (Q);
+    \draw[thick, dotted, gray!70] (Q) -- ++($ 0.5*(Q) - 0.5*(C) $);
+
+    % --- 6. 直角記号 ---
+    % (1) 点 A における k \perp AC
+    \coordinate (unitAC) at ($ (A)!0.15!(C) $);
+    \coordinate (unitK)  at ($ (A)!0.15!($ (A) + (K_dir) $) $);
+    \draw[thick] (unitAC) -- ($ (unitAC) + (unitK) $) -- (unitK);
+
+    % (2) 点 A における h \perp AB
+    \coordinate (unitAB) at ($ (A)!0.15!(B) $);
+    \coordinate (unitH)  at ($ (A)!0.15!($ (A) - (H_dir) $) $);
+    \draw[thick] (unitAB) -- ($ (unitAB) + (unitH) $) -- (unitH);
+
+    % (3) 点 P における垂足直角記号 (BP \perp k)
+    \coordinate (uP_B) at ($ (P)!0.15!(B) $);
+    \coordinate (uP_K) at ($ (P)!0.15!(A) $);
+    \draw[thick, blue!80!black] (uP_B) -- ($ (uP_B) + (uP_K) - (P) $) -- (uP_K);
+
+    % (4) 点 Q における垂足直角記号 (CQ \perp h)
+    \coordinate (uQ_C) at ($ (Q)!0.15!(C) $);
+    \coordinate (uQ_H) at ($ (Q)!0.15!(A) $);
+    \draw[thick, blue!80!black] (uQ_C) -- ($ (uQ_C) + (uQ_H) - (Q) $) -- (uQ_H);
+
+    % --- 7. 頂点・点プロットとラベル ---
+    \fill (A) circle (1.2pt) node[above=3pt] {$A$};
+    \fill (B) circle (1.4pt) node[below left] {$B$};
+    \fill (C) circle (1.4pt) node[below right] {$C$};
+    \fill[blue!80!black] (P) circle (1.2pt) node[below left=2pt] {$P$};
+    \fill[blue!80!black] (Q) circle (1.2pt) node[below right=2pt] {$Q$};
+    \fill[red!80!black] (Bprime) circle (1.3pt) node[above left] {$B'$};
+
+  \end{tikzpicture}
+  \caption{直線 $k \perp AC$，$h \perp AB$ および各頂点からの垂線と対称点 $B'$}
+  \label{fig:triangle_perpendicular_reflections}
+\end{figure}
+
+$B, C$ から $k, h$ に下ろした垂線の足を順に $P, Q$ とおく．
+正射影ベクトルの公式から
 \begin{align}
   \vec{BP} &= -\dfrac{\vec{b} \cdot \vec{c}}{|\vec{c}|^2} \vec{c} \\
   \vec{CQ} &= -\dfrac{\vec{b} \cdot \vec{c}}{|\vec{b}|^2} \vec{b}
 \end{align}
-だから，$\vec{BB'} = 2\vec{BP}$，$\vec{CC'} = 2\vec{CQ}$ より，
+だから，$\vec{BB'} = 2\vec{BP}$，$\vec{CC'} = 2\vec{CQ}$ に注意して
 \begin{align}
   \begin{cases}
     \vec{b'} = \vec{b} + 2\vec{BP} = \vec{b} - 2\dfrac{\vec{b} \cdot \vec{c}}{|\vec{c}|^2} \vec{c} \\
     \vec{c'} = \vec{c} + 2\vec{CQ} = -2\dfrac{\vec{b} \cdot \vec{c}}{|\vec{b}|^2} \vec{b} + \vec{c}
+  \end{cases} \label{eq:1}
+\end{align}
+である．
+
+ここで$\angle BAC = \theta \; (0 < \theta < \pi)$ とおく．
+題意より$\vec{b}, \vec{c}$ は三角形をなすから一次独立である．
+よって\cref{eq:1}および題意の式
+\begin{align}
+  \begin{cases}
+    \vec{b'} = \vec{b} + \vec{c} \\
+    \vec{c'} = m\vec{b} + \vec{c}
   \end{cases}
-  \quad \cdots \text{①}
 \end{align}
-である．$\angle BAC = \theta \; (0 < \theta < \pi)$ とおく．$\vec{b}, \vec{c}$ は三角形をなし，一次独立だから，①および題意から，
+で係数を比較してよく，
 \begin{align}
-  -2\dfrac{\vec{b} \cdot \vec{c}}{|\vec{c}|^2} &= 1, \\
-  m &= -2\vec{b} \cdot \vec{c}
+  &
+  \begin{cases}
+    -2\dfrac{\vec{b} \cdot \vec{c}}{|\vec{c}|^2} = 1 \\
+    m &= -2\vec{b} \cdot \vec{c}
+  \end{cases}
+  \therefore
+  &
+  \begin{cases}
+    -2 \dfrac{|\vec{b}||\vec{c}|\cos\theta}{|\vec{c}|^2} = 1 \\
+    m &= -2|\vec{b}||\vec{c}|\cos\theta
+  \end{cases}
+  \therefore
+  &
+  \begin{cases}
+    -2 \dfrac{\cos\theta}{|\vec{c}|} = 1 \\
+    m &= -2|\vec{c}|\cos\theta
+  \end{cases} \label{eq:2}
 \end{align}
+となる．ただし最終行で題意の条件$|\vec{b}|=1$を用いた．
+
+前者から
 \begin{align}
-  \therefore -2 \dfrac{\cos\theta}{|\vec{c}|} &= 1, \\
-  m &= -2|\vec{c}|\cos\theta \quad \cdots \text{②}
+  |\vec{c}| = -2\cos\theta
 \end{align}
-前者から $|\vec{c}| = -2\cos\theta$ だから，$|\vec{c}| > 0$ より $\dfrac{\pi}{2} < \theta < \pi \quad \cdots \text{③}$ である．このもとで②の後者に代入して
+だから，$|\vec{c}| > 0$ より
 \begin{align}
-  m = 4\cos^2\theta
+  \dfrac{\pi}{2} < \theta < \pi \label{eq:3}
 \end{align}
-$-1 < \cos\theta < 0$ 及び $m \in \mathbb{Z}_{>0}$ から，$(m, \cos\theta) = \left(1, -\dfrac{1}{2}\right), \left(2, -\dfrac{1}{\sqrt{2}}\right), \left(3, -\dfrac{\sqrt{3}}{2}\right)$ で②とあわせて
+である．このもとで\cref{eq:2}の第二式に代入して
+\begin{align}
+  m = 4\cos^2\theta \label{eq:4}
+\end{align}
+となる．$-1 < \cos\theta < 0$ 及び $m \in \mathbb{Z}_{>0}$ より
+あり得る$(m,\cos\theta)$の組み合わせは
+\begin{align}
+  (m, \cos\theta) = \left(1, -\dfrac{1}{2}\right), \left(2, -\dfrac{1}{\sqrt{2}}\right), \left(3, -\dfrac{\sqrt{3}}{2}\right)
+\end{align}
+である．それぞれのケースで\cref{eq:2}により$|\vec{c}|$を求めて
 \begin{align}
   (m, \theta, |\vec{c}|) = \left(1, \dfrac{2}{3}\pi, 1\right), \left(2, \dfrac{3}{4}\pi, \sqrt{2}\right), \left(3, \dfrac{5}{6}\pi, \sqrt{3}\right)
 \end{align}
-となる．
-
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}[scale=1.2]
-    \coordinate (A) at (0,0);
-    \coordinate (B) at (-1.5,-1);
-    \coordinate (C) at (1.5,-0.5);
-
-    \draw[thick] (B) node[left] {$B$} -- (A) node[above] {$A$} -- (C) node[right] {$C$};
-
-    % Lines k and h perpendicular to AC and AB
-    \draw[dashed] (-1,2) -- (1,-2) node[below] {$h$};
-    \draw[dashed] (-2,1) -- (2,-1) node[below] {$k$};
-
-    % Right angle marks at A
-    \draw (0.2,-0.067) -- (0.133,-0.333) -- (-0.067,-0.267);
-
-    \coordinate (P) at (-0.8,0.4);
-    \coordinate (Q) at (0.4,-0.8);
-    \draw[dotted] (B) -- (P) node[above left] {$P$};
-    \draw[dotted] (C) -- (Q) node[below right] {$Q$};
-  \end{tikzpicture}
-  \caption{頂点 $B,C$ から直線 $k,h$ に下ろした垂線の足 $P,Q$}
-\end{figure}
+が求める組である．
 
 \end{document}

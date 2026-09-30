@@ -1,22 +1,36 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} $g(x) = 0 \iff x = \pm 1, -4$ であり，この時，等式は成立しないので，$x \neq \pm 1, -4 \quad \cdots \text{①}$ となる．したがって，$g(x) \neq 0$ だから
+$g(x) = 0 \iff x = \pm 1, -4$ であり，この時題意の等式
 \begin{align}
-  k &= \dfrac{f(x)}{g(x)} = \dfrac{x^2(x+8)}{(x^2-1)(x+4)} \\
-  &= 1 + \dfrac{4x^2+x+4}{(x^2-1)(x+4)} \equiv h(x) \quad \cdots \text{②}
+  f(x) - k g(x) = 0 \label{eq:1}
 \end{align}
-となる．以下 $xy$ 平面で $y=k$ と $y=h(x)$ の共地点の数を求める．
+は成立しないので，
 \begin{align}
-  h'(x) &= \dfrac{(8x+1)(x^2-1)(x+4) - (3x^2+8x-1)(4x^2+x+4)}{(x^2-1)^2 (x+4)^2} \\
+  x \neq \pm 1, -4 \label{eq:2}
+\end{align}
+で考えれば良い．このときは$g(x) \neq 0$だから\cref{eq:1}の両辺を$g(x)$で割って
+\begin{align}
+  k
+  &= \dfrac{f(x)}{g(x)} = \dfrac{x^2(x+8)}{(x^2-1)(x+4)} \\
+  &= 1 + \dfrac{4x^2+x+4}{(x^2-1)(x+4)} \equiv h(x) \label{eq:3}
+\end{align}
+の相異なる実根の個数を考えれば良い．
+これは $xy$ 平面での二つの曲線 $y=k$ と $y=h(x)$ の交点の数と等しい．
+そこで$h(x)$の挙動を調べよう．一階微分は
+\begin{align}
+  h'(x)
+  &= \dfrac{(8x+1)(x^2-1)(x+4) - (3x^2+8x-1)(4x^2+x+4)}{(x^2-1)^2 (x+4)^2} \\
   &= \dfrac{-4x^4 - 2x^3 - 20x^2 - 64x}{(x^2-1)^2 (x+4)^2} \\
   &= \dfrac{-2x(x+2)(2x^2 - 3x + 16)}{(x^2-1)^2 (x+4)^2}
 \end{align}
-であり，$2x^2 - 3x + 16 = 2\left(x - \dfrac{3}{4}\right)^2 + \dfrac{119}{8} > 0$ だから，下表をうる．
+である．ここで分子の第三因子について
+\begin{align}
+  2x^2 - 3x + 16 = 2\left(x - \dfrac{3}{4}\right)^2 + \dfrac{119}{8} > 0
+\end{align}
+だから増減表は以下のようになる．
 
 \begin{table}[htb]
   \centering
@@ -28,49 +42,87 @@
   \end{tabular}
 \end{table}
 
-及び，極限値として以下をうる．
+また，極限値として以下をうる．
 \begin{align}
   h(x) &\to +\infty \quad (x \to -4+0, -1-0, 1+0) \\
   h(x) &\to -\infty \quad (x \to -4-0, -1+0, 1-0) \\
   h(x) &\to 1 \quad (x \to \pm\infty)
 \end{align}
-したがって $y=h(x)$ のグラフは右図．
-
-もとめる解の数は
-\begin{itemize}
-  \item $0 < k < 1, 1 < k < 4$ の時 1コ
-  \item $k = 1$ の時 0コ
-  \item $k = 0, 4$ の時 2コ
-  \item $k < 0, 4 < k$ の時 3コ
-\end{itemize}
+したがって $y=h(x)$ のグラフは下図のようになる．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.7]
-    \draw[->] (-6,0) -- (4,0) node[right] {$x$};
-    \draw[->] (0,-4) -- (0,6) node[above] {$y$};
-    \node[below left] at (0,0) {$0$};
+  \begin{tikzpicture}[scale=0.9, >=stealth, every node/.style={font=\small}]
 
-    % Asymptotes
-    \draw[dashed] (-4,-4) -- (-4,6);
-    \node[below] at (-4,0) {$-4$};
-    \draw[dashed] (-1,-4) -- (-1,6);
-    \node[below left] at (-1,0) {$-1$};
-    \draw[dashed] (1,-4) -- (1,6);
-    \node[below right] at (1,0) {$1$};
-    \draw[dashed] (-6,1) -- (4,1) node[right] {$y=1$};
+    % --- 1. クリッピング領域の設定 (描画範囲の外れを防ぐ) ---
+    \clip (-9.8, -4.6) rectangle (4.6, 6.6);
 
-    % Points
-    \fill (-2,4) circle (2pt) node[above] {$4$};
-    \node[below] at (-2,0) {$-2$};
+    % --- 2. 漸近線 (Asymptotes) ---
+    % 水平漸近線 y = 1
+    \draw[thick, dashed, red!80!black] (-9.8, 1) -- (4.6, 1)
+    node[pos=0.04, above, font=\footnotesize] {$y = 1$};
 
-    % Branches
-    \draw[thick, domain=-6:-4.2, samples=50] plot (\x, {(\x*\x*(\x+8))/((\x*\x-1)*(\x+4))});
-    \draw[thick, domain=-3.8:-1.2, samples=50] plot (\x, {(\x*\x*(\x+8))/((\x*\x-1)*(\x+4))});
-    \draw[thick, domain=-0.8:0.8, samples=50] plot (\x, {(\x*\x*(\x+8))/((\x*\x-1)*(\x+4))});
-    \draw[thick, domain=1.3:3.8, samples=50] plot (\x, {(\x*\x*(\x+8))/((\x*\x-1)*(\x+4))});
+    % 鉛直漸近線 x = -4, x = -1, x = 1
+    \draw[thick, dashed, gray!70] (-4, -4.6) -- (-4, 6.6);
+    \draw[thick, dashed, gray!70] (-1, -4.6) -- (-1, 6.6);
+    \draw[thick, dashed, gray!70] ( 1, -4.6) -- ( 1, 6.6);
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-9.6, 0) -- (4.3, 0) node[right] {$x$};
+    \draw[->, thick] (0, -4.3) -- (0, 6.3) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 4. 曲線 y = h(x) の各枝の描画 ---
+    % (1) x < -4
+    \draw[very thick, blue!80!black, domain=-9.5:-4.35, samples=90, smooth]
+    plot (\x, {(\x*\x*(\x+8)) / ((\x*\x - 1)*(\x + 4))});
+
+    % (2) -4 < x < -1 (極小値 (-2, 4))
+    \draw[very thick, blue!80!black, domain=-3.68:-1.32, samples=90, smooth]
+    plot (\x, {(\x*\x*(\x+8)) / ((\x*\x - 1)*(\x + 4))});
+
+    % (3) -1 < x < 1 (極大値 (0, 0))
+    \draw[very thick, blue!80!black, domain=-0.82:0.82, samples=90, smooth]
+    plot (\x, {(\x*\x*(\x+8)) / ((\x*\x - 1)*(\x + 4))});
+
+    % (4) x > 1
+    \draw[very thick, blue!80!black, domain=1.28:4.2, samples=90, smooth]
+    plot (\x, {(\x*\x*(\x+8)) / ((\x*\x - 1)*(\x + 4))});
+
+    % --- 5. 特徴点・極値・交点 ---
+    % 極小点 (-2, 4)
+    \coordinate (MinPt) at (-2, 4);
+    \draw[dashed, gray!80!black] (-2, 0) -- (MinPt) -- (0, 4);
+    \fill[purple!80!black] (MinPt) circle (1.6pt);
+    \node[above=2pt, purple!80!black, font=\footnotesize] at (MinPt) {$(-2,\, 4)$};
+    \node[right=2pt, font=\footnotesize] at (0, 4) {$4$};
+    \node[below=2pt, font=\footnotesize] at (-2, 0) {$-2$};
+
+    % 極大点 (0, 0)
+    \fill[purple!80!black] (0, 0) circle (1.6pt);
+
+    % x 切片 (-8, 0)
+    \fill (-8, 0) circle (1.4pt) node[below=2pt, font=\footnotesize] {$-8$};
+
+    % 漸近線の x 座標ラベル
+    \node[below left=1pt, font=\footnotesize] at (-4, 0) {$-4$};
+    \node[below left=1pt, font=\footnotesize] at (-1, 0) {$-1$};
+    \node[below right=1pt, font=\footnotesize] at ( 1, 0) {$1$};
+
+    % 曲線名ラベル
+    \node[blue!80!black, font=\normalsize] at (3.2, 3.8) {$y = h(x)$};
+
   \end{tikzpicture}
-  \caption{$y=h(x)$ のグラフ}
+  \caption{$y = h(x)$ のグラフと漸近線（実数解の個数は直線 $y = k$ との交点数に対応）}
+  \label{fig:rational_func_graph}
 \end{figure}
+
+従ってもとめる解の数は以下の通りである．
+\begin{itemize}
+  \item $0 < k < 1, 1 < k < 4$ の時 1個
+  \item $k = 1$ の時 0個
+  \item $k = 0, 4$ の時 2個
+  \item $k < 0, 4 < k$ の時 3個
+\end{itemize}
 
 \end{document}

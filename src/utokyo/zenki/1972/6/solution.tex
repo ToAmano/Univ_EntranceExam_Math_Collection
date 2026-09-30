@@ -1,13 +1,105 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 格子と対角線（道路網） ---
+    \foreach \x in {0,...,8} {
+      \draw[gray!60] (\x, 0) -- (\x, 4);
+    }
+    \foreach \y in {0,...,4} {
+      \draw[gray!60] (0, \y) -- (8, \y);
+    }
+    \foreach \x in {0,...,7} {
+      \foreach \y in {0,...,3} {
+        \draw[gray!50] (\x, \y) -- (\x+1, \y+1);
+      }
+    }
+
+    % 外枠を強調
+    \draw[thick] (0, 0) rectangle (8, 4);
+
+    % --- 2. 始点・基準点 ---
+    \fill (0, 4) circle (1.5pt);
+    \node[left=2pt, font=\normalsize\bfseries] at (0, 4) {$A$};
+    \fill (0, 0) circle (1.5pt);
+    \node[left=2pt, font=\normalsize\bfseries] at (0, 0) {$B$};
+
+    % --- 3. 点 P_j (到達境界の点) ---
+    % 東側境界 (x = 8)
+    \coordinate (P1) at (8, 0);
+    \coordinate (P2) at (8, 1);
+    \coordinate (P3) at (8, 2);
+    \coordinate (P4) at (8, 3);
+    \coordinate (P5) at (8, 4);
+
+    % 北側境界 (y = 4)
+    \coordinate (P6) at (7, 4);
+    \coordinate (P7) at (6, 4);
+    \coordinate (P8) at (5, 4);
+    \coordinate (P9) at (4, 4);
+
+    \foreach \j in {1,...,5} {
+      \fill[blue!80!black] (P\j) circle (1.8pt);
+    }
+    \foreach \j in {6,...,9} {
+      \fill[blue!80!black] (P\j) circle (1.8pt);
+    }
+
+    \node[below right] at (P1) {$P_1$};
+    \node[right=2pt]   at (P2) {$P_2$};
+    \node[right=2pt]   at (P3) {$P_3$};
+    \node[right=2pt]   at (P4) {$P_4$};
+    \node[above right] at (P5) {$P_5$};
+    \node[above=2pt]   at (P6) {$P_6$};
+    \node[above=2pt]   at (P7) {$P_7$};
+    \node[above=2pt]   at (P8) {$P_8$};
+    \node[above=2pt]   at (P9) {$P_9$};
+
+    % --- 4. 点 Q_j (1 手手前の点) ---
+    % x = 7 上 (東向き・北東向きの分岐点)
+    \coordinate (Q1) at (7, 0);
+    \coordinate (Q2) at (7, 1);
+    \coordinate (Q3) at (7, 2);
+    \coordinate (Q4) at (7, 3);
+
+    % y = 3 上 (北東向きで北端へ抜ける直前の点)
+    \coordinate (Q5) at (6, 3);
+    \coordinate (Q6) at (5, 3);
+    \coordinate (Q7) at (4, 3);
+    \coordinate (Q8) at (3, 3);
+
+    \foreach \j in {1,...,8} {
+      \fill[red!80!black] (Q\j) circle (1.6pt);
+    }
+
+    % Q のラベル配置
+    \node[below=2pt, red!80!black]       at (Q1) {$Q_1$};
+    \node[below right=1pt, red!80!black] at (Q2) {$Q_2$};
+    \node[below right=1pt, red!80!black] at (Q3) {$Q_3$};
+    \node[above left=1pt, red!80!black]  at (Q4) {$Q_4$};
+    \node[above left=1pt, red!80!black]  at (Q5) {$Q_5$};
+    \node[above left=1pt, red!80!black]  at (Q6) {$Q_6$};
+    \node[above left=1pt, red!80!black]  at (Q7) {$Q_7$};
+    \node[above left=1pt, red!80!black]  at (Q8) {$Q_8$};
+
+    % --- 5. 方位記号 ---
+    \begin{scope}[shift={(1.0, -1.3)}]
+      \draw[->, thick] (0, -0.6) -- (0, 0.6) node[above] {北};
+      \draw[->, thick] (-0.6, 0) -- (0.6, 0) node[right] {東};
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{道路網と各地点 $P_j$ および $Q_j$ の位置関係}
+  \label{fig:grid_pj_qj}
+\end{figure}
+
 $P_j$ にくる確率 $a_j$，$Q_j$ にくる確率 $b_j$ とおくと，
+題意の犯人の移動確率より，以下のような関係が成り立つ．
 
 \begin{align}
   a_1 &= \left(\dfrac{1}{2}\right)^8, & a_5 &= \dfrac{1}{2} b_4 \\
@@ -16,7 +108,8 @@ $P_j$ にくる確率 $a_j$，$Q_j$ にくる確率 $b_j$ とおくと，
   a_4 &= \dfrac{1}{2}(b_3 + b_4), & a_8 &= \dfrac{1}{2} b_7 \\
   & & a_9 &= \dfrac{1}{2} b_8
 \end{align}
-であり，各 $b_j$ は以下のようになる
+
+また，各$b_j$は何回北東方向に移動するかを考えることで以下のように場合の数・確率を計算できる．
 
 \begin{table}[htb]
   \centering
@@ -40,7 +133,7 @@ $P_j$ にくる確率 $a_j$，$Q_j$ にくる確率 $b_j$ とおくと，
   \centering
   \caption{各点 $P_j$ に到達する確率 $a_j$ の一覧（$\alpha^8$ 倍した値）}
   \begin{tabular}{c|c || c|c}
-    $j$ & $a_j / \alpha^8$ & $j$ & $a_j / \alpha^8$ \\ \hline
+    $j$ & $a_j \alpha^8$ & $j$ & $a_j \alpha^8$ \\ \hline
     $1$ & $1$ & $5$ & $35$ \\
     $2$ & $8$ & $6$ & $40$ \\
     $3$ & $28$ & $7$ & $40$ \\
@@ -49,9 +142,12 @@ $P_j$ にくる確率 $a_j$，$Q_j$ にくる確率 $b_j$ とおくと，
   \end{tabular}
 \end{table}
 
-従って，$a_j$ の最も大きい地点に police を配置すればよく，$P_4, P_6, P_7$ で，この時，もとめる確率 $p$ は
+従って，$a_j$ の最も大きい地点に警官を配置すればよく，
+よって$P_4, P_6, P_7$ である．
+この時，もとめる確率 $p$ は
 \begin{align}
-  p = \dfrac{136}{2^8} = \dfrac{17}{2^5} = 0.531 \fallingdotseq 0.53
+  p = \dfrac{56+40+40}{2^8}= \dfrac{136}{2^8} = \dfrac{17}{2^5} = 0.531 \fallingdotseq 0.53
 \end{align}
+である．
 
 \end{document}

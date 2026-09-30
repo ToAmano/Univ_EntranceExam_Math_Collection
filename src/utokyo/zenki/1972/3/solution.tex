@@ -1,60 +1,160 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} $C, C', C_n$ と $l$ の接点を $H, H', H_n$ とする．($C' = C_0, H' = H_0$ とする)
-
-右図から，ピタゴラスの定理より，$|HH_n|$ を2通りで表して
-\begin{align}
-  |HH_n| &= \sqrt{(R+r_n)^2 - (R-r_n)^2} \\
-  |HH_n| &= |HH_{n+1}| + |H_{n+1}H_n| \\
-  &= \sqrt{(R+r_{n+1})^2 - (R-r_{n+1})^2} + \sqrt{(r_n+r_{n+1})^2 - (r_n-r_{n+1})^2}
-\end{align}
-だから，
-\begin{align}
-  2\sqrt{Rr_n} = 2\sqrt{Rr_{n+1}} + 2\sqrt{r_n r_{n+1}} \quad \cdots \text{①}
-\end{align}
-$C_n = \dfrac{1}{\sqrt{r_n}}$ とする．①の両辺 $\sqrt{r_n r_{n+1}} \; (\neq 0)$ でわって，
-\begin{align}
-  C_{n+1} = C_n + \sqrt{1/R}
-\end{align}
-$C_0 = \sqrt{1/R}$ とあわせて，くり返し用いて，
-\begin{align}
-  C_n = n\sqrt{1/R} + \sqrt{1/R}
-\end{align}
-だから，
-\begin{align}
-  r_n = \dfrac{1}{C_n^2} = \dfrac{1}{(n\sqrt{1/R} + \sqrt{1/R})^2}
-\end{align}
-より，
-\begin{align}
-  n^2 r_n = \dfrac{1}{\Bigl(\sqrt{1/R} + \dfrac{1}{n}\sqrt{1/R}\Bigr)^2} \to R \quad (n \to +\infty)
-\end{align}
+$C, C', C_n$ と $l$ の接点を $H, H', H_n$，円の中身を$O,O',O_n$ とする．
+また，簡単のため$C' = C_0, H' = H_0$ とする．
+$C, C_{n}, C_{n+1}$を図示すると下図のようになる．
+ここで簡単のために$O_{n+1}$から$OH$, $O_nH_n$におろした垂足を$P_n,Q_n$とする．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.5]
-    % Line l
-    \draw[thick] (-0.5,0) -- (4,0) node[right] {$l$};
+  \begin{tikzpicture}[scale=1.6, >=stealth, every node/.style={font=\small}]
 
-    % Large circle C (radius R = 1)
-    \draw (0,1) circle (1);
-    \fill (0,0) circle (1pt) node[below] {$H$};
-    \node at (0,1) {$R$};
+    % --- 1. 定数パラメータ設定 ---
+    \def\R{1.5}
+    \def\rn{1.0}
 
-    % Circle C_{n+1} (smaller)
-    \draw (1.6,0.3) circle (0.3);
-    \fill (1.6,0) circle (1pt) node[below] {$H_{n+1}$};
+    % r_{n+1} の厳密な幾何計算: 1/sqrt(r_{n+1}) = 1/sqrt(R) + 1/sqrt(rn)
+    \pgfmathsetmacro{\invSqrtRn}{(1.0 / sqrt(\R)) + (1.0 / sqrt(\rn))}
+    \pgfmathsetmacro{\rnOne}{1.0 / (\invSqrtRn * \invSqrtRn)}
 
-    % Circle C_n (medium)
-    \draw (2.8,0.5) circle (0.5);
-    \fill (2.8,0) circle (1pt) node[below] {$H_n$};
-    \node at (2.8,0.5) {$r_n$};
+    % 接点の x 座標
+    \def\xH{0.0}
+    \pgfmathsetmacro{\xHnOne}{2.0 * sqrt(\R * \rnOne)}
+    \pgfmathsetmacro{\xHn}{2.0 * sqrt(\R * \rn)}
+
+    % 各円の中心座標 O, O_{n+1}, O_n
+    \coordinate (O)     at (\xH, \R);
+    \coordinate (OnOne) at (\xHnOne, \rnOne);
+    \coordinate (On)    at (\xHn, \rn);
+
+    % 各接点 H, H_{n+1}, H_n
+    \coordinate (H)     at (\xH, 0);
+    \coordinate (HnOne) at (\xHnOne, 0);
+    \coordinate (Hn)    at (\xHn, 0);
+
+    % 垂足の定義
+    % O_{n+1} から OH, O_n H_n におろした垂足 P_n, Q_n
+    \coordinate (Pn) at (\xH, \rnOne);
+    \coordinate (Qn) at (\xHn, \rnOne);
+    % O_n から OH におろした垂足 S_n
+    \coordinate (Sn) at (\xH, \rn);
+
+    % --- 2. 直線 l (共通接線) ---
+    \draw[thick] (-0.8, 0) -- ({\xHn + 1.2}, 0) node[right] {$l$};
+
+    % --- 3. 円 C, C_{n+1}, C_n の描画 ---
+    \draw[very thick, blue!80!black] (O) circle (\R);
+    \draw[very thick, orange!80!black] (On) circle (\rn);
+    \draw[very thick, red!80!black] (OnOne) circle (\rnOne);
+
+    % --- 4. 補助線 ---
+    % 中心間線分
+    \draw[thick, dashed, gray!70] (O) -- (On);
+    \draw[thick, dashed, gray!70] (O) -- (OnOne);
+    \draw[thick, dashed, gray!70] (On) -- (OnOne);
+
+    % 鉛直半径 OH, OnHn, OnOneHnOne
+    \draw[thick, dashed, gray!80!black] (O) -- (H);
+    \draw[thick, dashed, gray!80!black] (On) -- (Hn);
+    \draw[thick, dashed, gray!80!black] (OnOne) -- (HnOne);
+
+    % O_{n+1} からの水平垂線 (O_{n+1} -> P_n, O_{n+1} -> Q_n)
+    \draw[thick, dashed, purple!80!black] (Pn) -- (OnOne) -- (Qn);
+
+    % O_n から OH への水平垂線 (O_n -> S_n)
+    \draw[thick, dashed, teal!80!black] (On) -- (Sn);
+
+    % --- 5. 直角記号 ---
+    % P_n における直角記号
+    \draw[purple!80!black] ($ (Pn) + (0.12, 0) $) -- ($ (Pn) + (0.12, 0.12) $) -- ($ (Pn) + (0, 0.12) $);
+
+    % Q_n における直角記号
+    \draw[purple!80!black] ($ (Qn) + (-0.12, 0) $) -- ($ (Qn) + (-0.12, 0.12) $) -- ($ (Qn) + (0, 0.12) $);
+
+    % S_n における直角記号
+    \draw[teal!80!black] ($ (Sn) + (0.12, 0) $) -- ($ (Sn) + (0.12, 0.12) $) -- ($ (Sn) + (0, 0.12) $);
+
+    % --- 6. 点のプロットとラベル ---
+    % 接点
+    \fill (H) circle (1.2pt) node[below=2pt] {$H$};
+    \fill (HnOne) circle (1.2pt) node[below=2pt] {$H_{n+1}$};
+    \fill (Hn) circle (1.2pt) node[below=2pt] {$H_n$};
+
+    % 中心
+    \fill[blue!80!black] (O) circle (1.2pt);
+    \node[above left=1pt, font=\footnotesize] at (O) {$O$};
+    \fill[orange!80!black] (On) circle (1.2pt);
+    \node[above right=1pt, font=\footnotesize] at (On) {$O_n$};
+    \fill[red!80!black] (OnOne) circle (1.0pt);
+    \node[above=2pt, font=\scriptsize, red!80!black] at (OnOne) {$O_{n+1}$};
+
+    % 垂足 P_n, Q_n, S_n
+    \fill[purple!80!black] (Pn) circle (1.1pt);
+    \node[left=2pt, font=\footnotesize, purple!80!black] at (Pn) {$P_{n+1}$};
+    \fill[purple!80!black] (Qn) circle (1.1pt);
+    \node[right=2pt, font=\footnotesize, purple!80!black] at (Qn) {$Q_{n+1}$};
+    \fill[teal!80!black] (Sn) circle (1.1pt);
+    \node[left=2pt, font=\footnotesize, teal!80!black] at (Sn) {$P_n$};
+
+    % --- 7. 半径・寸法ラベル ---
+    \node[left, font=\footnotesize] at ($ (O)!0.5!(Sn) $) {$R$};
+    \node[right, font=\footnotesize] at ($ (On)!0.5!(Hn) $) {$r_n$};
+
+    % 円の名称ラベル
+    \node[above, blue!80!black] at (\xH, {2*\R}) {$C$};
+    \node[above, orange!80!black] at (\xHn, {2*\rn}) {$C_n$};
+    \node[above, red!80!black, font=\scriptsize] at (\xHnOne, {2*\rnOne}) {$C_{n+1}$};
+
   \end{tikzpicture}
-  \caption{直線 $l$ に接する円 $C, C_{n+1}, C_n$ の配置}
+  \caption{円$C_{n}$の様子}
+  \label{fig:three_touching_circles_all_feet}
 \end{figure}
+
+ピタゴラスの定理を用いて$|HH_n|$ を2通りで表す．
+三角形$OO_nP_n$に着目すると
+\begin{align}
+  |HH_n|
+  &= \sqrt{|OO_n|^2-|OP_n|^2} \\
+  &= \sqrt{(R+r_n)^2 - (R-r_n)^2} \\
+  &= 2\sqrt{Rr_n} \label{eq:1}
+\end{align}
+である．一方三角形$OO_{n+1}P_{n+1}$と三角形$OO_{n+1}Q_{n+1}$に着目すると
+\begin{align}
+  |HH_n|
+  &= |HH_{n+1}| + |H_{n+1}H_n| \\
+  &= \sqrt{|OO_{n+1}|^2-|OP_{n+1}|^2} + \sqrt{|O_nO_{n+1}|^2-|O_nQ_{n+1}|^2} \\
+  &= \sqrt{(R+r_{n+1})^2 - (R-r_{n+1})^2} + \sqrt{(r_n+r_{n+1})^2 - (r_n-r_{n+1})^2} \\
+  &= 2\sqrt{Rr_{n+1}} + 2\sqrt{r_n r_{n+1}} \label{eq:2}
+\end{align}
+である．\cref{eq:1,eq:2}が等しいから
+\begin{align}
+  2\sqrt{Rr_n} = 2\sqrt{Rr_{n+1}} + 2\sqrt{r_n r_{n+1}} \label{eq:3}
+\end{align}
+である．新しく
+\begin{align}
+  C_n = \dfrac{1}{\sqrt{r_n}} \label{eq:4}
+\end{align}
+として\cref{eq:3}の両辺を $\sqrt{Rr_n r_{n+1}} \; (\neq 0)$で割ると
+\begin{align}
+  C_{n+1} = C_n + \sqrt{\dfrac{1}{R}} \label{eq:5}
+\end{align}
+となる．初項は$C_0 = \sqrt{1/R'}$だから\cref{eq:5}を繰り返し用いて
+\begin{align}
+  C_n = n\sqrt{\dfrac{1}{R}} + \sqrt{\dfrac{1}{R'}} \label{eq:6}
+\end{align}
+である．従って\cref{eq:4}より
+\begin{align}
+  r_n = \dfrac{1}{C_n^2} = \dfrac{1}{(n\sqrt{1/R} + \sqrt{1/R})^2}
+\end{align}
+となる．
+
+よって求める極限値は
+\begin{align}
+  n^2 r_n = \dfrac{1}{\Bigl(\sqrt{1/R} + \dfrac{1}{n}\sqrt{1/R}\Bigr)^2} \to R \quad (n \to +\infty)
+\end{align}
+である．
 
 \end{document}
