@@ -1,0 +1,222 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+\paragraph{【新課程】}
+{\bf [解]}
+
+$A=
+\begin{pmatrix} a & b \\ c & d
+\end{pmatrix}$，$I=
+\begin{pmatrix} 1 & 0 \\ 0 & 1
+\end{pmatrix}$，$J=
+\begin{pmatrix} 0 & -1 \\ 1 & 0
+\end{pmatrix}$ より，
+\begin{align}
+  A(I-tJ) &= A - tAJ \nonumber\\
+  &=
+  \begin{pmatrix} a & b \\ c & d
+  \end{pmatrix} - t
+  \begin{pmatrix} a & b \\ c & d
+  \end{pmatrix}
+  \begin{pmatrix} 0 & -1 \\ 1 & 0
+  \end{pmatrix} \nonumber\\
+  &=
+  \begin{pmatrix} a & b \\ c & d
+  \end{pmatrix} - t
+  \begin{pmatrix} b & -a \\ d & -c
+  \end{pmatrix} \nonumber\\
+  &=
+  \begin{pmatrix} a-bt & b+at \\ c-dt & d+ct
+  \end{pmatrix}
+\end{align}
+また，
+\begin{align}
+  I+tJ &=
+  \begin{pmatrix} 1 & 0 \\ 0 & 1
+  \end{pmatrix} + t
+  \begin{pmatrix} 0 & -1 \\ 1 & 0
+  \end{pmatrix} \nonumber\\
+  &=
+  \begin{pmatrix} 1 & -t \\ t & 1
+  \end{pmatrix}
+\end{align}
+である．$A(I-tJ)=I+tJ$ の各成分を比較して，
+\begin{align}
+  a-bt &= 1 \label{eq:5-1} \\
+  b+at &= -t \label{eq:5-2} \\
+  c-dt &= t \label{eq:5-3} \\
+  d+ct &= 1 \label{eq:5-4}
+\end{align}
+\eqref{eq:5-1} $\times 1$ と \eqref{eq:5-2} $\times t$ より
+\begin{align}
+  (1+t^2)a = 1-t^2 \iff a = \dfrac{1-t^2}{1+t^2}
+\end{align}
+これを\eqref{eq:5-1}に代入して
+\begin{align}
+  bt = a-1 = \dfrac{1-t^2}{1+t^2} - 1 = -\dfrac{2t^2}{1+t^2} \implies b = -\dfrac{2t}{1+t^2}
+\end{align}
+（$t=0$のときも\eqref{eq:5-2}より$b=0$となり成立する）．
+
+同様に，\eqref{eq:5-3} $\times 1$ と \eqref{eq:5-4} $\times t$ より
+\begin{align}
+  (1+t^2)c = 2t \iff c = \dfrac{2t}{1+t^2}
+\end{align}
+これを\eqref{eq:5-4}に代入して
+\begin{align}
+  d = 1-ct = 1-\dfrac{2t^2}{1+t^2} = \dfrac{1-t^2}{1+t^2}
+\end{align}
+以上より，
+\begin{align}
+  a = d = \dfrac{1-t^2}{1+t^2}, \qquad b = -c = -\dfrac{2t}{1+t^2} \quad \cdots\text{（答）}
+\end{align}
+である．
+
+次に，$-\pi < \theta < \pi$ に対し $t = \tan\dfrac{\theta}{2}$ とおくと，$t$ は実数全体を動き，
+\begin{align}
+  \cos\theta = \dfrac{1-t^2}{1+t^2} = a = d, \qquad \sin\theta = \dfrac{2t}{1+t^2} = c = -b
+\end{align}
+が成り立つ．したがって，
+\begin{align}
+  A =
+  \begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta
+  \end{pmatrix} \quad (-\pi < \theta < \pi)
+\end{align}
+となるから，行列$A$は原点のまわりに角$\theta$だけ回転する移動を表す．
+
+ゆえに，$
+\begin{pmatrix} x \\ y
+\end{pmatrix} = A
+\begin{pmatrix} 3 \\ 4
+\end{pmatrix}$ で定まる点$(x,y)$は，点$(3,4)$を原点のまわりに角$\theta$だけ回転した点である．
+点$(3,4)$と原点との距離は $\sqrt{3^2+4^2}=5$ であるから，点$(x,y)$は原点を中心とする半径$5$の円周上を動く．
+
+ここで，$-\pi < \theta < \pi$ より $\theta \neq \pm\pi$ であるから，点$(3,4)$を原点まわりに$\pi$回転した点
+\begin{align}
+  \begin{pmatrix} \cos\pi & -\sin\pi \\ \sin\pi & \cos\pi
+  \end{pmatrix}
+  \begin{pmatrix} 3 \\ 4
+  \end{pmatrix} =
+  \begin{pmatrix} -3 \\ -4
+  \end{pmatrix}
+\end{align}
+のみ動くことができない（$t \to \pm\infty$ のときの極限に対応する）．
+
+したがって，求める図形は
+\begin{align}
+  \text{円 } x^2+y^2=25 \text{ （ただし点 } (-3,-4) \text{ を除く）} \quad \cdots\text{（答）}
+\end{align}
+であり，これを図示すると下図のようになる．
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=0.6, >=stealth]
+    \draw[->] (-6.5,0) -- (6.5,0) node[right] {$x$};
+    \draw[->] (0,-6.5) -- (0,6.5) node[above] {$y$};
+    \node[below left] at (0,0) {$O$};
+
+    \draw[thick] (0,0) circle (5);
+
+    \node[below right] at (5,0) {$5$};
+    \node[below left] at (-5,0) {$-5$};
+    \node[above left] at (0,5) {$5$};
+    \node[below right] at (0,-5) {$-5$};
+
+    \coordinate (P0) at (3,4);
+    \fill (P0) circle (2.5pt);
+    \draw[dashed] (3,0) -- (3,4) -- (0,4);
+    \node[below] at (3,0) {$3$};
+    \node[left] at (0,4) {$4$};
+    \node[above right] at (P0) {$(3,4)$};
+
+    \coordinate (Pexc) at (-3,-4);
+    \fill[white] (Pexc) circle (3.5pt);
+    \draw[thick] (Pexc) circle (3.5pt);
+    \draw[dashed] (-3,0) -- (-3,-4) -- (0,-4);
+    \node[above] at (-3,0) {$-3$};
+    \node[right] at (0,-4) {$-4$};
+    \node[below left] at (Pexc) {$(-3,-4)$};
+  \end{tikzpicture}
+  \caption{点$(x,y)$の軌跡}
+\end{figure}
+
+\paragraph{【旧課程】}
+{\bf [解]}
+
+円に内接する5角形$A_1A_2A_3A_4A_5$の頂点は円周上に反時計回りに並んでいるとする．
+円の中心を$O$とし，各弧$A_iA_{i+1}$（ただし$A_6=A_1$）に対する中心角の大きさを$2\alpha_i$とする（$1 \leqq i \leqq 5$）．
+頂点が円周上にこの順に並ぶことから，
+\begin{align}
+  \alpha_i > 0 \quad (1 \leqq i \leqq 5), \qquad \sum_{i=1}^5 \alpha_i = \pi \label{eq:5-alpha}
+\end{align}
+である．円周角の定理により，頂点$A_i$における内角の大きさ$\theta_i$は，弧$A_i A_{i+1}$および弧$A_{i-1} A_i$以外の円周部分に対する円周角であるから，
+\begin{align}
+  \theta_i = \dfrac{1}{2}(2\pi - 2\alpha_{i-1} - 2\alpha_i) = \pi - \alpha_{i-1} - \alpha_i \label{eq:5-theta}
+\end{align}
+が成り立つ（ただし添字は $\bmod 5$ とし，$\alpha_0 = \alpha_5$ とする）．
+
+\medskip
+\noindent
+{\bf (1) 必要性の証明}
+
+\eqref{eq:5-theta}を$i=1,2,3,4,5$について加えると，\eqref{eq:5-alpha}より
+\begin{align}
+  \sum_{i=1}^5 \theta_i = 5\pi - 2\sum_{i=1}^5 \alpha_i = 5\pi - 2\pi = 3\pi
+\end{align}
+が成り立つ．また，
+\begin{align}
+  \theta_1 + \theta_3 &= (\pi - \alpha_5 - \alpha_1) + (\pi - \alpha_2 - \alpha_3) \nonumber\\
+  &= 2\pi - (\alpha_1 + \alpha_2 + \alpha_3 + \alpha_5) \nonumber\\
+  &= 2\pi - (\pi - \alpha_4) \nonumber\\
+  &= \pi + \alpha_4
+\end{align}
+であり，$\alpha_4 > 0$ であるから $\theta_1 + \theta_3 > \pi$ が成り立つ．
+添字を巡回させることにより，同様にして
+\begin{align}
+  \theta_2 + \theta_4 &= \pi + \alpha_5 > \pi, \nonumber\\
+  \theta_3 + \theta_5 &= \pi + \alpha_1 > \pi, \nonumber\\
+  \theta_1 + \theta_4 &= \pi + \alpha_2 > \pi, \nonumber\\
+  \theta_2 + \theta_5 &= \pi + \alpha_3 > \pi
+\end{align}
+が成り立つ．したがって，与えられた条件が成り立つことは必要である．
+
+\medskip
+\noindent
+{\bf (2) 十分性の証明}
+
+逆に，正の数 $\theta_1, \theta_2, \theta_3, \theta_4, \theta_5$ が
+\begin{align}
+  \sum_{i=1}^5 \theta_i = 3\pi, \qquad \theta_i + \theta_{i+2} > \pi \quad (1 \leqq i \leqq 5, \text{ 添字は } \bmod 5) \label{eq:5-hyp}
+\end{align}
+を満たすと仮定する．ここで
+\begin{align}
+  \begin{cases}
+    \alpha_1 = \theta_3 + \theta_5 - \pi \\
+    \alpha_2 = \theta_4 + \theta_1 - \pi \\
+    \alpha_3 = \theta_5 + \theta_2 - \pi \\
+    \alpha_4 = \theta_1 + \theta_3 - \pi \\
+    \alpha_5 = \theta_2 + \theta_4 - \pi
+  \end{cases}
+\end{align}
+とおくと，仮定\eqref{eq:5-hyp}より $\alpha_i > 0$（$1 \leqq i \leqq 5$）である．
+また，これらの和をとると
+\begin{align}
+  \sum_{i=1}^5 \alpha_i &= 2\sum_{i=1}^5 \theta_i - 5\pi \nonumber\\
+  &= 2(3\pi) - 5\pi \nonumber\\
+  &= \pi
+\end{align}
+である．さらに，
+\begin{align}
+  \pi - \alpha_5 - \alpha_1 &= \pi - (\theta_2 + \theta_4 - \pi) - (\theta_3 + \theta_5 - \pi) \nonumber\\
+  &= 3\pi - (\theta_2 + \theta_3 + \theta_4 + \theta_5) \nonumber\\
+  &= \theta_1
+\end{align}
+となり，同様にしてすべての $i=1,2,3,4,5$ に対し $\theta_i = \pi - \alpha_{i-1} - \alpha_i$ が成り立つ．
+
+そこで，任意の円を1つとり，その円周上に弧$A_i A_{i+1}$に対する中心角が$2\alpha_i$となるように点$A_1, A_2, A_3, A_4, A_5$を反時計回りに順にとる．
+$\sum_{i=1}^5 2\alpha_i = 2\pi$ かつ各 $2\alpha_i > 0$ であるから，これらは円周上に相異なる5点としてこの順に並び，凸5角形をなす．
+このとき，各内角の大きさは円周角の定理より $\pi - \alpha_{i-1} - \alpha_i = \theta_i$ となり，各角の大きさが $\theta_i$ である円に内接する5角形が存在する．
+したがって，十分である．
+
+以上より，題意は証明された．
+
+\end{document}

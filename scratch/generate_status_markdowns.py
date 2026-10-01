@@ -102,6 +102,8 @@ def generate_markdowns():
         md_lines = []
         md_lines.append(f"# 問題・解答ステータス一覧: {display_name}\n")
         md_lines.append(f"更新日: `{today}`\n")
+        if uni == 'utokyo':
+            md_lines.append("注意: 1969は東大紛争のため実施されず\n")
         md_lines.append(
             "解答列: `unfinish`(未着手) → `文字起こし済`(AI文字起こし・自己検証済/人手未チェック) → `finish`(人手チェック済)。"
             "`finish` は自動生成では付与されず、人間が手動で書き換えた場合のみ維持される。\n"
@@ -119,6 +121,8 @@ def generate_markdowns():
 
         for year in years:
             if int(year) > 2015:
+                continue
+            if uni == 'utokyo' and year == '1969':
                 continue
             year_dir = cat_dir / year
             has_pdf = (year_dir / 'handwritten.pdf').exists()

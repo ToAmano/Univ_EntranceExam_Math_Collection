@@ -1,0 +1,118 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+{\bf [解]}
+
+正方形$S$が滑らずにころがるとき，点$P$の軌跡$C$を考える．
+\begin{enumerate}[(i)]
+  \item $S$が点$(2,0)$を中心として時計回りに$90^\circ$回転するとき：
+    点$P$は点$(2,0)$を中心とし，半径$\sqrt{(1-2)^2+a^2}=\sqrt{1+a^2}$の円弧を描く．
+    $x$座標は$1$から$2+a$まで変化するから，この区間の曲線$C$の方程式は
+    \begin{align}
+      (x-2)^2+y^2=1+a^2 \quad (1 \leqq x \leqq 2+a)
+    \end{align}
+    である．
+  \item $S$の次の頂点が$(4,0)$に接地し，この点を中心として時計回りに$90^\circ$回転するとき：
+    点$P$と点$(4,0)$との距離は$\sqrt{(1-2)^2+(a-2)^2}=\sqrt{1+(2-a)^2}$である．
+    $x$座標は$2+a$から$5$まで変化するから，この区間の曲線$C$の方程式は
+    \begin{align}
+      (x-4)^2+y^2=1+(2-a)^2 \quad (2+a \leqq x \leqq 5)
+    \end{align}
+    である．
+  \item 同様に，さらに$S$がころがるとき，曲線$C$は直線$x=5$に関して対称である．
+    実際，各区間の方程式は
+    \begin{align}
+      \begin{cases}
+        (x-6)^2+y^2=1+(2-a)^2 & (5 \leqq x \leqq 6+a) \\
+        (x-8)^2+y^2=1+a^2 & (6+a \leqq x \leqq 9)
+      \end{cases}
+    \end{align}
+    となる．
+\end{enumerate}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.0, >=stealth]
+    \draw[->] (-0.5,0) -- (10,0) node[right] {$x$};
+    \draw[->] (0,-0.5) -- (0,3.2) node[above] {$y$};
+    \node[below left] at (0,0) {$O$};
+
+    % Points on x-axis
+    \foreach \x in {1,2,4,5,6,8,9} {
+      \draw (\x, 0.08) -- (\x, -0.08);
+    }
+    \node[below] at (1,0) {$1$};
+    \node[below] at (2,0) {$2$};
+    \node[below] at (4,0) {$4$};
+    \node[below] at (5,0) {$5$};
+    \node[below] at (6,0) {$6$};
+    \node[below] at (8,0) {$8$};
+    \node[below] at (9,0) {$9$};
+
+    % Draw curves for a = 0.8 as an illustration
+    \draw[dashed] (1,0) -- (1,0.8);
+    \draw[dashed] (9,0) -- (9,0.8);
+    \draw[dashed] (5,0) -- (5,1.2);
+
+    \draw[thick, domain=1:2.8, samples=50] plot (\x, {sqrt(max(0, 1.64 - (\x-2)^2))});
+    \draw[thick, domain=2.8:5, samples=50] plot (\x, {sqrt(max(0, 2.44 - (\x-4)^2))});
+    \draw[thick, domain=5:7.2, samples=50] plot (\x, {sqrt(max(0, 2.44 - (\x-6)^2))});
+    \draw[thick, domain=7.2:9, samples=50] plot (\x, {sqrt(max(0, 1.64 - (\x-8)^2))});
+
+    \node[above] at (2.8, 1.0) {$C$};
+    \node[below] at (2.8, -0.4) {$2+a$};
+    \node[below] at (7.2, -0.4) {$6+a$};
+    \draw[dotted] (2.8,0) -- (2.8,1.0);
+    \draw[dotted] (7.2,0) -- (7.2,1.0);
+  \end{tikzpicture}
+  \caption{正方形の回転に伴う曲線$C$の概形}
+\end{figure}
+
+曲線$C$が直線$x=5$に関して対称であることから，求める立体の体積$V(a)$は，$1 \leqq x \leqq 5$の部分の回転体の体積$V_1(a)$の$2$倍に等しい．すなわち
+\begin{align}
+  V(a) = 2V_1(a) = 2\pi \int_1^5 y^2 \, dx
+\end{align}
+である．ここで
+\begin{align}
+  V_1(a) &= \pi \int_1^{2+a} \left\{(1+a^2)-(x-2)^2\right\} \, dx + \pi \int_{2+a}^5 \left\{(a^2-4a+5)-(x-4)^2\right\} \, dx
+\end{align}
+第1項の積分において$u = x-2$とおくと，$x$が$1 \to 2+a$と動くとき$u$は$-1 \to a$と動くから，
+\begin{align}
+  \int_1^{2+a} \left\{(1+a^2)-(x-2)^2\right\} \, dx
+  &= \int_{-1}^a (1+a^2-u^2) \, du \nonumber\\
+  &= \left[ (1+a^2)u - \dfrac{u^3}{3} \right]_{-1}^a \nonumber\\
+  &= \left( a+a^3-\dfrac{a^3}{3} \right) - \left( -(1+a^2)+\dfrac{1}{3} \right) \nonumber\\
+  &= \dfrac{2}{3}a^3 + a^2 + a + \dfrac{2}{3}
+\end{align}
+第2項の積分において$v = x-4$とおくと，$x$が$2+a \to 5$と動くとき$v$は$a-2 \to 1$と動くから，
+\begin{align}
+  \int_{2+a}^5 \left\{(a^2-4a+5)-(x-4)^2\right\} \, dx
+  &= \int_{a-2}^1 (a^2-4a+5-v^2) \, dv \nonumber\\
+  &= \left[ (a^2-4a+5)v - \dfrac{v^3}{3} \right]_{a-2}^1 \nonumber\\
+  &= \left( a^2-4a+5-\dfrac{1}{3} \right) - (a-2)\left( a^2-4a+5 - \dfrac{(a-2)^2}{3} \right) \nonumber\\
+  &= a^2-4a+\dfrac{14}{3} - (a-2)\left( \dfrac{2}{3}a^2 - \dfrac{8}{3}a + \dfrac{11}{3} \right) \nonumber\\
+  &= a^2-4a+\dfrac{14}{3} - \left( \dfrac{2}{3}a^3 - 4a^2 + 9a - \dfrac{22}{3} \right) \nonumber\\
+  &= -\dfrac{2}{3}a^3 + 5a^2 - 13a + 12
+\end{align}
+したがって
+\begin{align}
+  V_1(a) &= \pi \left\{ \left( \dfrac{2}{3}a^3 + a^2 + a + \dfrac{2}{3} \right) + \left( -\dfrac{2}{3}a^3 + 5a^2 - 13a + 12 \right) \right\} \nonumber\\
+  &= \pi \left( 6a^2 - 12a + \dfrac{38}{3} \right) \nonumber\\
+  &= \pi \left\{ 6(a-1)^2 + \dfrac{20}{3} \right\}
+\end{align}
+これより，求める体積$V(a)$は
+\begin{align}
+  V(a) &= 2V_1(a) \nonumber\\
+  &= \pi \left( 12a^2 - 24a + \dfrac{76}{3} \right) \nonumber\\
+  &= \pi \left\{ 12(a-1)^2 + \dfrac{40}{3} \right\}
+\end{align}
+である．
+
+$0 \leqq a \leqq 2$において，$(a-1)^2 \geqq 0$であり，等号は$a=1$のとき成り立つ．
+よって，$V(a)$が最小となる$a$の値およびその最小値は
+\begin{align}
+  a=1 \text{ のとき最小値 } \dfrac{40}{3}\pi \quad \cdots\text{（答）}
+\end{align}
+である．
+
+\end{document}
