@@ -5,42 +5,269 @@
   \footnotesize\textit{【自動文字起こし・要確認】}
 \end{flushright}
 
-{\bf [解]} $P, Q$ が2辺 $CA, AB$ 上にある時，$P$ が $CA$，$Q$ が $AB$ 上にあるとして良い．
-$|PA|=x, |QA|=y \quad (0 \le x \le 36, 0 \le y \le 25 \quad \cdots \text{①})$ とする．題意から
+{\bf [解]}
+
+\subparagraph{$P, Q$ が2辺 $CA, AB$ 上にある時}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.15, >=stealth, every node/.style={font=\small}]
+
+    % --- 基準となる三角形 ABC の実寸座標定義 ---
+    % AB = 25, BC = 32, CA = 36
+    % B を原点 (0, 0) に配置し、BC を x 軸上にとる
+    % cos(B) = 353 / 1600 ≈ 0.220625
+    % sin(B) = sqrt(1 - cos^2) ≈ 0.975358
+    % A の座標: (25 * cos B, 25 * sin B) = (5.5156, 24.3840)
+    % C の座標: (32, 0)
+    \def\xA{5.5156}
+    \def\yA{24.3840}
+    \def\xB{0.0}
+    \def\yB{0.0}
+    \def\xC{32.0}
+    \def\yC{0.0}
+
+    % ========================================================
+    % ケース 1: P, Q が辺 CA, AB 上にある時 (x = y = 15*sqrt(2) ≈ 21.213)
+    % ========================================================
+    \coordinate (A1) at (\xA, \yA);
+    \coordinate (B1) at (\xB, \yB);
+    \coordinate (C1) at (\xC, \yC);
+
+    % Q on AB: AQ = 15*sqrt(2) (A から B への比率 21.213 / 25 ≈ 0.8485)
+    \coordinate (Q1) at ($ (A1)!0.8485!(B1) $);
+    % P on AC: AP = 15*sqrt(2) (A から C への比率 21.213 / 36 ≈ 0.5893)
+    \coordinate (P1) at ($ (A1)!0.5893!(C1) $);
+
+    % 面積半分部分の塗りつぶし
+    \fill[pattern=north east lines, pattern color=blue!40] (A1) -- (P1) -- (Q1) -- cycle;
+
+    % 外枠 ABC
+    \draw[thick] (A1) -- (B1) -- (C1) -- cycle;
+    % 線分 PQ
+    \draw[very thick, red!80!black] (P1) -- (Q1);
+
+    % 各頂点・点のラベル
+    \node[above] at (A1) {$A$};
+    \node[below left] at (B1) {$B$};
+    \node[below right] at (C1) {$C$};
+    \fill (P1) circle (10pt) node[above right] {$P$};
+    \fill (Q1) circle (10pt) node[left] {$Q$};
+
+    % 寸法表示
+    \node[font=\footnotesize, left] at ($ (A1)!0.5!(Q1) $) {$x$};
+    \node[font=\footnotesize, right] at ($ (A1)!0.5!(P1) $) {$y$};
+    \node[below=8pt, font=\bfseries] at (16, -4) {(1) $P, Q \in CA, AB$};
+    % \node[below=20pt, font=\footnotesize] at (16, -4) {$|PQ|_{\min} = \sqrt{\dfrac{903}{2}}$};
+
+  \end{tikzpicture}
+  \caption{3つの角における $\triangle ABC$ の面積を二等分する線分 $PQ$ とその最小配置}
+  \label{fig:triangle_half_area_three_cases}
+\end{figure}
+
+$P, Q$ が2辺 $CA, AB$ 上にある時，$P$ が $CA$，$Q$ が $AB$ 上にあるとして良い．
+$|PA|=x, |QA|=y \quad (0 \le x \le 36, 0 \le y \le 25)$ とする．
+題意から三角形$PAQ$の面積が三角形$ABC$の面積の半分だから
 \begin{align}
-  xy = \dfrac{1}{2} \cdot 25 \cdot 36 = 450 \quad \cdots \text{②}
+  \dfrac{1}{2}|PA||QA|\sin BAC = \dfrac{1}{2}\cdot\dfrac{1}{2}|AB||AC|\sin BAC
+  \quad \therefore
+  xy = \dfrac{1}{2} \cdot 25 \cdot 36 = 450 \label{eq:1}
 \end{align}
-$\triangle APQ$ で余弦定理から，
+が成り立つ．
+
+さらに$\triangle APQ$ に余弦定理を用いて
 \begin{align}
-  |PQ|^2 &= |AP|^2 + |AQ|^2 - 2 AP \cdot AQ \cos \angle PAQ \\
-  &= x^2 + y^2 - 900 \cos \angle PAQ
+  |PQ|^2
+  &= |AP|^2 + |AQ|^2 - 2 AP \cdot AQ \cos \angle PAQ \\
+  &= x^2 + y^2 - 900 \cos \angle PAQ \label{eq:2}
 \end{align}
-$x^2, y^2 > 0$ から，AM-GM 及び ② から，
+である．ここで $x^2, y^2 > 0$ だから\cref{eq:2}の右辺にAM-GM不等式を適用して
 \begin{align}
-  |PQ|^2 \ge 900 (1 - \cos \angle PAQ) \quad \cdots \text{③}
+  |PQ|^2
+  \ge 2\sqrt{x^2y^2} - 900 \cos \angle PAQ \\
+  = 2xy - 900 \cos \angle PAQ \\
+  = 900 (1 - \cos \angle PAQ) \label{eq:3}
 \end{align}
-等号成立は $x=y=15\sqrt{2}$ の時成立する．ここで $\triangle ABC$ について余弦定理から，
+である．ただし最終行で\cref{eq:1}を用いた．
+等号成立は $x=y=15\sqrt{2}$ の時である．
+
+ここで $\triangle ABC$ について余弦定理を用いて
 \begin{align}
   \cos \angle CAB = \dfrac{36^2 + 25^2 - 32^2}{2 \cdot 36 \cdot 25} = \dfrac{897}{2 \cdot 900}
 \end{align}
-から，③より，
+だから\cref{eq:3}に代入して
 \begin{align}
-  |PQ|^2 \ge \dfrac{903}{2} \quad \cdots \text{④}
+  |PQ|^2 \ge \dfrac{903}{2} \label{eq:4}
 \end{align}
-以下同様にして，
-\begin{itemize}
-  \item $P, Q$ が2辺 $AB, BC$ 上にある時
-    \begin{align}
-      |PQ|^2 \ge \dfrac{1247}{2} \quad (\text{等号成立は } |PB|=|QB|=20) \quad \cdots \text{⑤}
-    \end{align}
-  \item $P, Q$ が2辺 $BC, CA$ 上にある時
-    \begin{align}
-      |PQ|^2 \ge \dfrac{609}{2} \quad (\text{等号成立は } |PC|=|QC|=24) \quad \cdots \text{⑥}
-    \end{align}
-\end{itemize}
-④，⑤，⑥から，もとめるのは，
+であり，この場合の$|PQ|$の最小値は
 \begin{align}
-  \text{2辺 } BC, CA \text{上の，} C \text{からの距離が } 24 \text{である2点．}
+  \min |PQ| = \sqrt{\dfrac{903}{2}} \label{eq:5}
 \end{align}
+である．
+
+\subparagraph{$P, Q$ が2辺 $AB, BC$ 上にある時}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.15, >=stealth, every node/.style={font=\small}]
+
+    % --- 基準となる三角形 ABC の実寸座標定義 ---
+    % AB = 25, BC = 32, CA = 36
+    % B を原点 (0, 0) に配置し、BC を x 軸上にとる
+    % cos(B) = 353 / 1600 ≈ 0.220625
+    % sin(B) = sqrt(1 - cos^2) ≈ 0.975358
+    % A の座標: (25 * cos B, 25 * sin B) = (5.5156, 24.3840)
+    % C の座標: (32, 0)
+    \def\xA{5.5156}
+    \def\yA{24.3840}
+    \def\xB{0.0}
+    \def\yB{0.0}
+    \def\xC{32.0}
+    \def\yC{0.0}
+
+    % ========================================================
+    % ケース 2: P, Q が辺 AB, BC 上にある時 (|BP| = |BQ| = 20)
+    % ========================================================
+
+    \coordinate (A2) at (\xA, \yA);
+    \coordinate (B2) at (\xB, \yB);
+    \coordinate (C2) at (\xC, \yC);
+
+    % P on AB: BP = 20 (B から A への比率 20 / 25 = 0.8)
+    \coordinate (P2) at ($ (B2)!0.8!(A2) $);
+    % Q on BC: BQ = 20 (B から C への比率 20 / 32 = 0.625)
+    \coordinate (Q2) at ($ (B2)!0.625!(C2) $);
+
+    % 面積半分部分の塗りつぶし
+    \fill[pattern=north east lines, pattern color=orange!40] (B2) -- (P2) -- (Q2) -- cycle;
+
+    % 外枠 ABC
+    \draw[thick] (A2) -- (B2) -- (C2) -- cycle;
+    % 線分 PQ
+    \draw[very thick, red!80!black] (P2) -- (Q2);
+
+    % 各頂点・点のラベル
+    \node[above] at (A2) {$A$};
+    \node[below left] at (B2) {$B$};
+    \node[below right] at (C2) {$C$};
+    \fill (P2) circle (10pt) node[above left] {$P$};
+    \fill (Q2) circle (10pt) node[below] {$Q$};
+
+    % 寸法表示
+    \node[font=\footnotesize, left] at ($ (B2)!0.5!(P2) $) {$20$};
+    \node[font=\footnotesize, below] at ($ (B2)!0.5!(Q2) $) {$20$};
+    \node[below=8pt, font=\bfseries] at (16, -4) {(2) $P, Q \in AB, BC$};
+    % \node[below=20pt, font=\footnotesize] at (16, -4) {$|PQ|_{\min} = \sqrt{\dfrac{1247}{2}}$};
+
+  \end{tikzpicture}
+  \caption{3つの角における $\triangle ABC$ の面積を二等分する線分 $PQ$ とその最小配置}
+  \label{fig:triangle_half_area_three_cases}
+\end{figure}
+
+最初のケースと全く同様に考えると，まず三角形の面積の条件より
+\begin{align}
+  |PB||QB| = \dfrac{|AB||CB|}{2} = 400
+\end{align}
+であり，$\angle ABC$について余弦定理より
+\begin{align}
+  \cos \angle ABC = \dfrac{|AB|^2+|BC|^2-|AC|^2}{2|AB||BC|} = \dfrac{25^2+32^2-36^2}{2\cdot 25\cdot 32} = \dfrac{353}{1600}
+\end{align}
+である．従って\cref{eq:2,eq:3}に対応して
+\begin{align}
+  |PQ|^2
+  &= |BP|^2 + |BQ|^2 - 2 |BP||BQ| \cos \angle ABC \\
+  &\ge 2|BP||BQ| \left(1-\cos \angle ABC\right) \\
+  &= 800\left(1-\dfrac{353}{1600}\right) \\
+  &=\dfrac{1247}{2}
+\end{align}
+より
+\begin{align}
+  \min |PQ| = \sqrt{\dfrac{1247}{2}} \label{eq:6}
+\end{align}
+である．等号成立は$|PB|=|QB|=20$の時である．
+
+\subparagraph{$P, Q$ が2辺 $BC, CA$ 上にある時}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.15, >=stealth, every node/.style={font=\small}]
+
+    % --- 基準となる三角形 ABC の実寸座標定義 ---
+    % AB = 25, BC = 32, CA = 36
+    % B を原点 (0, 0) に配置し、BC を x 軸上にとる
+    % cos(B) = 353 / 1600 ≈ 0.220625
+    % sin(B) = sqrt(1 - cos^2) ≈ 0.975358
+    % A の座標: (25 * cos B, 25 * sin B) = (5.5156, 24.3840)
+    % C の座標: (32, 0)
+    \def\xA{5.5156}
+    \def\yA{24.3840}
+    \def\xB{0.0}
+    \def\yB{0.0}
+    \def\xC{32.0}
+    \def\yC{0.0}
+
+    % ========================================================
+    % ケース 3: P, Q が辺 BC, CA 上にある時 (|CP| = |CQ| = 24) [最小]
+    % ========================================================
+    \coordinate (A3) at (\xA, \yA);
+    \coordinate (B3) at (\xB, \yB);
+    \coordinate (C3) at (\xC, \yC);
+
+    % P on CA: CP = 24 (C から A への比率 24 / 36 = 2/3 ≈ 0.6667)
+    \coordinate (P3) at ($ (C3)!0.6667!(A3) $);
+    % Q on CB: CQ = 24 (C から B への比率 24 / 32 = 0.75)
+    \coordinate (Q3) at ($ (C3)!0.75!(B3) $);
+
+    % 面積半分部分の塗りつぶし (最小構成を強調)
+    \fill[pattern=north east lines, pattern color=teal!50] (C3) -- (P3) -- (Q3) -- cycle;
+
+    % 外枠 ABC
+    \draw[thick] (A3) -- (B3) -- (C3) -- cycle;
+    % 線分 PQ
+    \draw[very thick, red!80!black] (P3) -- (Q3);
+
+    % 各頂点・点のラベル
+    \node[above] at (A3) {$A$};
+    \node[below left] at (B3) {$B$};
+    \node[below right] at (C3) {$C$};
+    \fill (P3) circle (10pt) node[above right] {$P$};
+    \fill (Q3) circle (10pt) node[below] {$Q$};
+
+    % 寸法表示
+    \node[font=\footnotesize, right] at ($ (C3)!0.5!(P3) $) {$24$};
+    \node[font=\footnotesize, below] at ($ (C3)!0.5!(Q3) $) {$24$};
+    \node[below=8pt, font=\bfseries] at (16, -4) {(3) $P, Q \in BC, CA$};
+    % \node[below=20pt, font=\footnotesize] at (16, -4) {$|PQ|_{\min} = \sqrt{\dfrac{609}{2}}$};
+
+  \end{tikzpicture}
+  \caption{3つの角における $\triangle ABC$ の面積を二等分する線分 $PQ$ とその最小配置}
+  \label{fig:triangle_half_area_three_cases}
+\end{figure}
+
+最初のケースと全く同様に考えると，まず三角形の面積の条件より
+\begin{align}
+  |PC||QC| = \dfrac{|AC||BC|}{2} = 576
+\end{align}
+であり，$\angle ACB$について余弦定理より
+\begin{align}
+  \cos \angle ACB = \dfrac{|AC|^2+|CB|^2-|AB|^2}{2|AC||CB|} = \dfrac{36^2+32^2-25^2}{2\cdot 36\cdot 32} = \dfrac{1695}{2304}
+\end{align}
+である．従って\cref{eq:2,eq:3}に対応して
+\begin{align}
+  |PQ|^2
+  &= |CP|^2 + |CQ|^2 - 2 |CP||CQ| \cos \angle ACB \\
+  &\ge 2|CP||CQ| \left(1-\cos \angle ACB\right) \\
+  &= 1152\left(1-\dfrac{1695}{2304}\right) \\
+  &= \dfrac{609}{2}
+\end{align}
+より
+\begin{align}
+  \min |PQ| = \sqrt{\dfrac{609}{2}} \label{eq:7}
+\end{align}
+である．等号成立は$|PC|=|QC|=24$の時である．
+\casesend
+
+以上\cref{eq:5,eq:6,eq:7}の最小値が求める答えに対応するから，
+2辺BC, CA上のCからの距離が$24$である2点である．
 
 \end{document}

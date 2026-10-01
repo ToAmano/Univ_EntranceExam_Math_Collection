@@ -1,6 +1,8 @@
 # 問題・解答ステータス一覧: 東大 前期
 
-更新日: `2026-09-04`
+更新日: `2026-09-29`
+
+注意: 1969は東大紛争のため実施されず
 
 解答列: `unfinish`(未着手) → `文字起こし済`(AI文字起こし・自己検証済/人手未チェック) → `finish`(人手チェック済)。`finish` は自動生成では付与されず、人間が手動で書き換えた場合のみ維持される。
 
@@ -30,8 +32,8 @@
 | 1964年 | 第4問 | finish | finish | あり | 完了 |
 | 1964年 | 第5問 | finish | finish | あり | 完了 |
 | 1964年 | 第6問 | finish | finish | あり | 完了 |
-| 1965年 | 第1問 | finish | unfinish | あり | 未完成 |
-| 1965年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
+| 1965年 | 第1問 | finish | finish | あり | 完了 |
+| 1965年 | 第2問 | finish | finish | あり | 完了 |
 | 1965年 | 第3問 | finish | finish | あり | 完了 |
 | 1965年 | 第4問 | finish | finish | あり | 完了 |
 | 1965年 | 第5問 | finish | finish | あり | 完了 |
@@ -40,30 +42,24 @@
 | 1966年 | 第2問 | finish | finish | あり | 完了 |
 | 1966年 | 第3問 | finish | finish | あり | 完了 |
 | 1966年 | 第4問 | finish | finish | あり | 完了 |
-| 1966年 | 第5問 | unfinish | finish | あり | 未完成 |
-| 1966年 | 第6問 | unfinish | finish | あり | 未完成 |
+| 1966年 | 第5問 | finish | finish | あり | 完了 |
+| 1966年 | 第6問 | finish | finish | あり | 完了 |
 | 1967年 | 第1問 | finish | finish | あり | 完了 |
-| 1967年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
+| 1967年 | 第2問 | finish | finish | あり | 完了 |
 | 1967年 | 第3問 | finish | finish | あり | 完了 |
 | 1967年 | 第4問 | finish | finish | あり | 完了 |
-| 1967年 | 第5問 | unfinish | finish | あり | 未完成 |
-| 1967年 | 第6問 | unfinish | finish | あり | 未完成 |
+| 1967年 | 第5問 | finish | finish | あり | 完了 |
+| 1967年 | 第6問 | finish | finish | あり | 完了 |
 | 1968年 | 第1問 | finish | finish | あり | 完了 |
 | 1968年 | 第2問 | finish | finish | あり | 完了 |
 | 1968年 | 第3問 | finish | finish | あり | 完了 |
 | 1968年 | 第4問 | finish | finish | あり | 完了 |
 | 1968年 | 第5問 | finish | finish | あり | 完了 |
 | 1968年 | 第6問 | finish | finish | あり | 完了 |
-| 1969年 | 第1問 | unfinish | unfinish | なし | 未着手 |
-| 1969年 | 第2問 | unfinish | unfinish | なし | 未着手 |
-| 1969年 | 第3問 | unfinish | unfinish | なし | 未着手 |
-| 1969年 | 第4問 | unfinish | unfinish | なし | 未着手 |
-| 1969年 | 第5問 | unfinish | unfinish | なし | 未着手 |
-| 1969年 | 第6問 | unfinish | unfinish | なし | 未着手 |
 | 1970年 | 第1問 | finish | finish | あり | 完了 |
 | 1970年 | 第2問 | finish | finish | あり | 完了 |
 | 1970年 | 第3問 | finish | finish | あり | 完了 |
-| 1970年 | 第4問 | finish | 文字起こし済 | あり | 未完成 |
+| 1970年 | 第4問 | finish | finish | あり | 完了 |
 | 1971年 | 第1問 | finish | finish | あり | 完了 |
 | 1971年 | 第2問 | finish | finish | あり | 完了 |
 | 1971年 | 第3問 | finish | finish | あり | 完了 |
@@ -71,11 +67,11 @@
 | 1971年 | 第5問 | finish | finish | あり | 完了 |
 | 1971年 | 第6問 | finish | finish | あり | 完了 |
 | 1972年 | 第1問 | finish | finish | あり | 完了 |
-| 1972年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
-| 1972年 | 第3問 | finish | 文字起こし済 | あり | 未完成 |
-| 1972年 | 第4問 | finish | 文字起こし済 | あり | 未完成 |
+| 1972年 | 第2問 | finish | finish | あり | 完了 |
+| 1972年 | 第3問 | finish | finish | あり | 完了 |
+| 1972年 | 第4問 | finish | finish | あり | 完了 |
 | 1972年 | 第5問 | finish | finish | あり | 完了 |
-| 1972年 | 第6問 | finish | 文字起こし済 | あり | 未完成 |
+| 1972年 | 第6問 | finish | finish | あり | 完了 |
 | 1973年 | 第1問 | finish | finish | あり | 完了 |
 | 1973年 | 第2問 | finish | finish | あり | 完了 |
 | 1973年 | 第3問 | finish | finish | あり | 完了 |
@@ -88,12 +84,12 @@
 | 1974年 | 第4問 | finish | finish | あり | 完了 |
 | 1974年 | 第5問 | finish | finish | あり | 完了 |
 | 1974年 | 第6問 | finish | finish | あり | 完了 |
-| 1975年 | 第1問 | finish | 文字起こし済 | あり | 未完成 |
+| 1975年 | 第1問 | finish | finish | あり | 完了 |
 | 1975年 | 第2問 | finish | finish | あり | 完了 |
 | 1975年 | 第3問 | finish | finish | あり | 完了 |
 | 1975年 | 第4問 | finish | finish | あり | 完了 |
-| 1975年 | 第5問 | finish | 文字起こし済 | あり | 未完成 |
-| 1975年 | 第6問 | finish | 文字起こし済 | あり | 未完成 |
+| 1975年 | 第5問 | finish | finish | あり | 完了 |
+| 1975年 | 第6問 | finish | finish | あり | 完了 |
 | 1976年 | 第1問 | finish | finish | あり | 完了 |
 | 1976年 | 第2問 | finish | finish | あり | 完了 |
 | 1976年 | 第3問 | unfinish | finish | あり | 未完成 |

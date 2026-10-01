@@ -1,89 +1,209 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
+\paragraph{(1)}
 
-{\bf [解]} (1) $r(n) = \dfrac{a}{2^n}$ とおく． $O_n$ を原点とし，$\vec{O_n O_{n+1}}$ を $x$ 軸とする下図のような平面をとる．この平面での $S_n, S_{n+1}$ の断面は
+題意の$S_n$の半径を
 \begin{align}
-  C_n &: x^2 + y^2 = r(n)^2 \\
-  C_{n+1} &: (x - r(n))^2 + y^2 = r(n+1)^2
+  r_n = \dfrac{a}{2^n} \label{eq:1}
 \end{align}
-であり，これらの交点の $x$ 座標は，
-\begin{align}
-  x = \dfrac{-r(n+1)^2 + 2r(n)^2}{2r(n)} = \dfrac{7a}{2^{n+3}}
-\end{align}
-である．ここで，$x, y$ 軸へ $\dfrac{2^n}{a}$ 倍した座標で考えれば，もとめる体積 $V_n$ は
-\begin{align}
-  \Bigl( \dfrac{2^n}{a} \Bigr)^3 V_n &= \pi \int_{\frac{7}{8}}^{\frac{1}{2}} \Bigl\{ \dfrac{1}{4} - (x-1)^2 \Bigr\} dx + \pi \int_{\frac{7}{8}}^1 (1 - x^2) dx \\
-  &= \pi \int_{\frac{1}{8}}^{\frac{1}{2}} \Bigl( \dfrac{1}{4} - x^2 \Bigr) dx + \pi \int_{\frac{7}{8}}^1 (1 - x^2) dx \quad \cdots \text{①}
-\end{align}
-各項計算して，
-\begin{itemize}
-  \item $\displaystyle \int_{\frac{1}{8}}^{\frac{1}{2}} \Bigl(\dfrac{1}{4} - x^2\Bigr) dx = \Bigl[ \dfrac{1}{4} x - \dfrac{1}{3} x^3 \Bigr]_{\frac{1}{8}}^{\frac{1}{2}} = \dfrac{1}{4} \Bigl( \dfrac{1}{2} - \dfrac{1}{8} \Bigr) - \dfrac{1}{3} \Bigl( \dfrac{1}{8} - \dfrac{1}{8^3} \Bigr) = \dfrac{27}{8 \cdot 64}$
-  \item $\displaystyle \int_{\frac{7}{8}}^1 (1 - x^2) dx = \Bigl[ x - \dfrac{1}{3} x^3 \Bigr]_{\frac{7}{8}}^1 = \dfrac{2}{3} - \Bigl( \dfrac{7}{8} - \dfrac{1}{3} \Bigl( \dfrac{7}{8} \Bigr)^3 \Bigr) = \dfrac{23}{3 \cdot 8^3}$
-\end{itemize}
-だから，①より
-\begin{align}
-  V_n &= \pi \Bigl(\dfrac{a}{2^n}\Bigr)^3 \Bigl\{ \dfrac{27}{8^3} + \dfrac{23}{3 \cdot 8^3} \Bigr\} \\
-  &= \pi \Bigl(\dfrac{a}{2^{n+3}}\Bigr)^3 \cdot \dfrac{104}{3}
-\end{align}
+とおく．
 
-\paragraph{(2)}
-\begin{align}
-  V_m &= \dfrac{104 a^3 \pi}{3} \sum_{n=1}^m \Bigl(\dfrac{1}{2^{n+3}}\Bigr)^3 \\
-  &= \dfrac{104 a^3 \pi}{3} \Bigl(\dfrac{1}{2^4}\Bigr)^3 \dfrac{1 - (1/2)^{3m}}{1 - (1/2)^3} \\
-  &\xrightarrow{m \to \infty} \dfrac{13}{1344} a^3 \pi
-\end{align}
-
-\bigskip\noindent{\bf [解注]}
-$V_n$ の求値に球帽公式を用いると，
-\begin{itemize}
-  \item $\displaystyle \int_{\frac{1}{8}}^{\frac{1}{2}} \Bigl(\dfrac{1}{4} - x^2\Bigr) dx = \dfrac{3/8}{2 \cdot 1/2} \cdot \dfrac{4}{3} \pi \Bigl(\dfrac{1}{2}\Bigr)^3 - \dfrac{1}{3} \Bigl(\dfrac{\sqrt{15}}{8}\Bigr)^2 \cdot \pi \cdot \dfrac{1}{8} = \dfrac{27 \pi}{8^3}$
-  \item $\displaystyle \int_{\frac{7}{8}}^1 (1 - x^2) dx = \dfrac{1/8}{2 \cdot 1} \cdot \dfrac{4}{3} \pi - \dfrac{1}{3} \Bigl(\dfrac{\sqrt{15}}{8}\Bigr)^2 \cdot \pi \cdot \dfrac{7}{8} = \dfrac{23 \pi}{3 \cdot 8^3}$
-\end{itemize}
-と計算出来る．
+円$S_n$と$S_{n+1}$について考えよう．
+$O_n$ を原点とし，$\vec{O_n O_{n+1}}$ を $x$ 軸とする下図のような平面をとる．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=2.0]
-    \draw[->] (-0.3,0) -- (1.6,0) node[right] {$x$};
-    \draw[->] (0,-1.2) -- (0,1.2) node[above] {$y$};
-    \node[below left] at (0,0) {$O_n$};
+  \begin{tikzpicture}[scale=2.4, >=stealth, every node/.style={font=\small}]
 
-    \draw (0,0) circle (1);
-    \draw (1,0) circle (0.5);
-    \node[below] at (1,0) {$O_{n+1}$};
-    \node[below right] at (0.5,0) {$\frac{a}{2^n}$};
+    % --- 1. 定数パラメータ (r_n = 1.0, r_{n+1} = 0.5) ---
+    \def\rn{1.0}
+    \def\rnOne{0.5}
+    % 交点の x 座標: 7/8 = 0.875
+    \def\xInt{0.875}
+    % 交点の y 座標: sqrt(1 - 49/64) = sqrt(15)/8 \approx 0.4841
+    \def\yInt{0.48412}
 
+    % 中心座標
+    \coordinate (On) at (0, 0);
+    \coordinate (OnOne) at (\rn, 0);
+
+    % --- 2. 共通部分の塗りつぶし (ハッチング) ---
     \begin{scope}
-      \clip (0,0) circle (1);
-      \clip (1,0) circle (0.5);
-      \fill[gray!30] (-1,-1) rectangle (2,1);
+      \clip (On) circle (\rn);
+      \fill[pattern=north east lines, pattern color=blue!60] (OnOne) circle (\rnOne);
     \end{scope}
-    \draw (0,0) circle (1);
-    \draw (1,0) circle (0.5);
 
-    \begin{scope}[shift={(0,-2.5)}]
-      \draw[->] (-0.3,0) -- (1.4,0) node[right] {$x'$};
-      \draw[->] (0,-0.3) -- (0,1.3) node[above] {$y'$};
-      \node[below left] at (0,0) {$0$};
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-1.25, 0) -- (1.75, 0) node[right] {$x$};
+    \draw[->, thick] (0, -1.25) -- (0, 1.25) node[above] {$y$};
+    \node[below left=2pt] at (On) {$O_n$};
 
-      \draw[domain=0:1,samples=100] plot (\x, {sqrt(1-\x*\x)});
-      \draw[domain=0.5:1.5,samples=100] plot (\x, {sqrt(0.25-(\x-1)*(\x-1))});
+    % --- 4. 断面円 C_n, C_{n+1} ---
+    % 円 C_n (半径 r_n)
+    \draw[very thick, blue!80!black] (On) circle (\rn);
+    % 円 C_{n+1} (半径 r_{n+1} = r_n/2, 中心 (r_n, 0))
+    \draw[very thick, orange!90!black] (OnOne) circle (\rnOne);
 
-      \node[above left] at (0.7,0.7) {$x'^2+y'^2=1$};
-      \node[above right] at (1.1,0.4) {$(x'-1)^2+y'^2=\frac{1}{4}$};
+    % --- 5. 交線（球欠の境界面） ---
+    \draw[thick, dashed, purple!80!black] (\xInt, -\yInt) -- (\xInt, \yInt)
+    node[pos=0.95, right, font=\footnotesize] {$x = \dfrac{7a}{2^{n+3}}$};
 
-      \draw[dashed] (7/8,0) -- (7/8, {sqrt(1-49/64)});
-      \node[below] at (7/8,0) {$7/8$};
-      \node[below] at (1/2,0) {$1/2$};
-      \node[below] at (1,0) {$1$};
-      \node[left] at (0, {sqrt(15)/8}) {$\frac{\sqrt{15}}{8}$};
-    \end{scope}
+    % --- 6. 中心・主要点のプロットとラベル ---
+    \fill (On) circle (1.0pt);
+    \fill[orange!90!black] (OnOne) circle (1.0pt);
+    \node[below=3pt] at (OnOne) {$O_{n+1}$};
+
+    % 交点のプロット
+    \fill[purple!80!black] (\xInt, \yInt) circle (0.9pt);
+    \fill[purple!80!black] (\xInt, -\yInt) circle (0.9pt);
+
+    % 半径の寸法線
+    \draw[<->, gray!80!black] (On) -- ++(135:\rn)
+    node[midway, fill=white, inner sep=1pt, font=\footnotesize] {$r_n$};
+    \draw[<->, gray!80!black] (OnOne) -- ++(45:\rnOne)
+    node[midway, fill=white, inner sep=1pt, font=\footnotesize] {$r_{n+1}$};
+
+    % 共通領域ラベル
+    \node[blue!80!black, font=\bfseries] at (0.8, 0.18) {$V_n$};
+
   \end{tikzpicture}
-  \caption{球 $S_n, S_{n+1}$ の断面円 $C_n, C_{n+1}$ の交点}
+  \caption{球 $S_n, S_{n+1}$ の断面円 $C_n, C_{n+1}$ と交差領域（回転軸：$x$ 軸）}
+  \label{fig:sphere_intersection_cross_section}
 \end{figure}
+
+この平面での $S_n, S_{n+1}$ の断面の方程式は，$S_{n+1}$の中心が$S_{n}$の表面上にあることから
+\begin{align}
+  C_n &: x^2 + y^2 = r_n^2 \\
+  C_{n+1} &: (x - r_n)^2 + y^2 = r_{n+1}^2
+\end{align}
+である．これらの交点の $x$ 座標は，二つの方程式を辺々引いて
+\begin{align}
+  & (x - r_n)^2 - x^2 = r_{n+1}^2 - r_{n}^2 \\
+  & -2xr_n + r_n^2 = r_{n+1}^2 - r_{n}^2 \\
+  \therefore
+  & x = \dfrac{-r(n+1)^2 + 2r(n)^2}{2r(n)} = \dfrac{7a}{2^{n+3}}
+\end{align}
+である．
+
+従って求める体積$V_n$は二つの球欠の体積の和であり，$x, y$ 軸へ$1/r_n$倍した座標で考えると，
+\begin{align}
+  \Bigl( \dfrac{2^n}{a} \Bigr)^3 V_n
+  &= \pi \int_{\frac{7}{8}}^{\frac{1}{2}} \Bigl\{ \dfrac{1}{4} - (x-1)^2 \Bigr\} dx + \pi \int_{\frac{7}{8}}^1 (1 - x^2) dx \\
+  &= \pi \int_{\frac{1}{8}}^{\frac{1}{2}} \Bigl( \dfrac{1}{4} - x^2 \Bigr) dx + \pi \int_{\frac{7}{8}}^1 (1 - x^2) dx \label{eq:2}
+\end{align}
+とかける．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数定義 ---
+    \def\xInt{0.875} % 7/8
+    \def\yInt{0.48412} % sqrt(15)/8
+
+    % --- 2. 積分領域のハッチング（2つの球欠部分を区別） ---
+    % (i) 1/2 <= x' <= 7/8: 小円 (x'-1)^2 + y'^2 = 1/4 による領域
+    \fill[pattern=north east lines, pattern color=orange!70]
+    (0.5, 0) -- plot[domain=0.5:\xInt, samples=50] (\x, {sqrt(0.25 - (\x - 1.0)*(\x - 1.0))})
+    -- (\xInt, 0) -- cycle;
+
+    % (ii) 7/8 <= x' <= 1: 大円 x'^2 + y'^2 = 1 による領域
+    \fill[pattern=north west lines, pattern color=blue!70]
+    (\xInt, 0) -- plot[domain=\xInt:1.0, samples=50] (\x, {sqrt(1.0 - \x*\x)})
+    -- (1.0, 0) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-0.15, 0) -- (1.3, 0) node[right] {$x'$};
+    \draw[->, thick] (0, -0.15) -- (0, 1.15) node[above] {$y'$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 4. 曲線プロット (第1象限の上半分) ---
+    % 大円の弧
+    \draw[very thick, blue!80!black, domain=0:1.0, samples=80]
+    plot (\x, {sqrt(max(0, 1.0 - \x*\x))});
+    \node[blue!80!black, above right, font=\footnotesize] at (0.35, 0.93) {$x'^2 + y'^2 = 1$};
+
+    % 小円の弧
+    \draw[very thick, orange!90!black, domain=0.5:1.2, samples=60]
+    plot (\x, {sqrt(max(0, 0.25 - (\x - 1.0)*(\x - 1.0)))});
+    \node[orange!90!black, above right, font=\footnotesize] at (1.0, 0.52) {$(x'-1)^2 + y'^2 = \dfrac{1}{4}$};
+
+    % --- 5. 交点と境界の補助線 ---
+    \draw[thick, dashed, purple!80!black] (\xInt, 0) -- (\xInt, \yInt) -- (0, \yInt);
+
+    % --- 6. 目盛りとラベル ---
+    % 交点
+    \fill[purple!80!black] (\xInt, \yInt) circle (0.6pt);
+    % \node[above=2pt, font=\scriptsize, purple!80!black] at (\xInt, \yInt) {$\left(\dfrac{7}{8},\,\dfrac{\sqrt{15}}{8}\right)$};
+
+    % x' 軸上の目盛り
+    \fill (0.5, 0) circle (0.6pt) node[below=2pt] {$\dfrac{1}{2}$};
+    \fill (\xInt, 0) circle (0.6pt) node[below=2pt] {$\dfrac{7}{8}$};
+    \fill (1.0, 0) circle (0.6pt) node[below=2pt] {$1$};
+
+    % y' 軸上の目盛り
+    \fill (0, \yInt) circle (0.6pt) node[left=2pt] {$\dfrac{\sqrt{15}}{8}$};
+    \fill (0, 1.0) circle (0.6pt) node[left=2pt] {$1$};
+
+    % 領域ラベル（各積分の対応関係）
+    % \node[orange!90!black, font=\scriptsize] at (0.70, 0.14) {$\displaystyle\int_{\frac{1}{2}}^{\frac{7}{8}}$};
+    % \node[blue!80!black, font=\scriptsize] at (0.93, 0.14) {$\displaystyle\int_{\frac{7}{8}}^{1}$};
+
+  \end{tikzpicture}
+  \caption{規格化座標 $(x', y')$ における積分領域の分割}
+  \label{fig:normalized_cross_section_integral}
+\end{figure}
+
+各項計算すると
+\begin{align}
+  \int_{\frac{1}{8}}^{\frac{1}{2}} \Bigl(\dfrac{1}{4} - x^2\Bigr) dx
+  & = \Bigl[ \dfrac{1}{4} x - \dfrac{1}{3} x^3 \Bigr]_{\frac{1}{8}}^{\frac{1}{2}}  \\
+  & = \dfrac{1}{4} \Bigl( \dfrac{1}{2} - \dfrac{1}{8} \Bigr) - \dfrac{1}{3} \Bigl( \dfrac{1}{8} - \dfrac{1}{8^3} \Bigr) \\
+  &= \dfrac{27}{8 \cdot 64} \label{eq:3}
+\end{align}
+\begin{align}
+  \int_{\frac{7}{8}}^1 (1 - x^2) dx
+  &= \Bigl[ x - \dfrac{1}{3} x^3 \Bigr]_{\frac{7}{8}}^1  \\
+  &= \dfrac{2}{3} - \Bigl( \dfrac{7}{8} - \dfrac{1}{3} \Bigl( \dfrac{7}{8} \Bigr)^3 \Bigr) \\
+  &= \dfrac{23}{3 \cdot 8^3} \label{eq:4}
+\end{align}
+だから，\cref{eq:2}に代入して求める体積は
+\begin{align}
+  V_n
+  &= \pi \Bigl(\dfrac{a}{2^n}\Bigr)^3 \Bigl\{ \dfrac{27}{8^3} + \dfrac{23}{3 \cdot 8^3} \Bigr\} \\
+  &= \pi \Bigl(\dfrac{a}{2^{n+3}}\Bigr)^3 \cdot \dfrac{104}{3} \label{eq:5}
+\end{align}
+である．
+
+\paragraph{(2)}
+\cref{eq:5}を$n=1,2,\cdots,m$と和をとってから$m\to\infty$の極限をとると
+\begin{align}
+  V_m
+  &= \dfrac{104 a^3 \pi}{3} \sum_{n=1}^m \Bigl(\dfrac{1}{2^{n+3}}\Bigr)^3 \\
+  &= \dfrac{104 a^3 \pi}{3} \Bigl(\dfrac{1}{2^4}\Bigr)^3 \dfrac{1 - (1/2)^{3m}}{1 - (1/2)^3} \\
+  &\xrightarrow{m \to \infty} \dfrac{13}{1344} a^3 \pi
+\end{align}
+となる．
+
+{\bf [解説]}
+覚えておくと便利なのが球欠の体積公式である．半径$R$の球を中心からの距離$d$のところで切断した球欠の体積$V$は
+対応する球扇から円錐の体積を引けば良いので
+\begin{align}
+  V = \left( \dfrac{R-d}{2R} \cdot \dfrac{4}{3}\pi R^3 \right) - \dfrac{1}{3}\pi (R^2-d^2) d
+\end{align}
+と書ける．\cref{eq:3,eq:4}に実際にこの公式を用いると
+\begin{align}
+  \int_{\frac{1}{8}}^{\frac{1}{2}} \Bigl(\dfrac{1}{4} - x^2\Bigr) dx
+  & = \dfrac{3/8}{2 \cdot 1/2} \cdot \dfrac{4}{3} \pi \Bigl(\dfrac{1}{2}\Bigr)^3 - \dfrac{1}{3} \Bigl(\dfrac{\sqrt{15}}{8}\Bigr)^2 \cdot \pi \cdot \dfrac{1}{8}  \\
+  &= \dfrac{27 \pi}{8^3}
+\end{align}
+\begin{align}
+  \int_{\frac{7}{8}}^1 (1 - x^2) dx
+  &= \dfrac{1/8}{2 \cdot 1} \cdot \dfrac{4}{3} \pi - \dfrac{1}{3} \Bigl(\dfrac{\sqrt{15}}{8}\Bigr)^2 \cdot \pi \cdot \dfrac{7}{8} \\
+  &= \dfrac{23 \pi}{3 \cdot 8^3}
+\end{align}
+と計算出来る．
 
 \end{document}
