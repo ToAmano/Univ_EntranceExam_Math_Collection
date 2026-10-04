@@ -1,134 +1,398 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\paragraph{【新課程】}
 {\bf [解]}
-$\cos\theta = c$，$s = \sin\theta$とおく．すると$P(5+rc, 5+rs)$とおけるから，
+
+\paragraph{【新課程】}
+
+実数$\theta\, (0\le\theta <2\pi)$について簡単のため$\cos\theta = c$，$s = \sin\theta$とおく．すると円
 \begin{align}
-  Q(13-rc, -5-rs), \quad R(-5-rs, 5+rc)
+  \left(x-5\right)^2 + \left(y-5\right)^2 = r^2 \label{eq:1}
 \end{align}
-である．ゆえに
+の上の点$P$は$P(5+rc, 5+rs)$と書ける．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.35, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・中心座標の定義 ---
+    % 円 C1 の中心 O1(5, 5), 半径 r = 3 (視認性重視)
+    \def\rVal{3.0}
+    \def\tVal{40} % パラメータ theta = 40°
+
+    \coordinate (O1) at (5, 5);
+    \coordinate (A)  at (9, 0);
+
+    % P の座標: (5 + r*cos t, 5 + r*sin t)
+    \coordinate (P) at ($ (O1) + ({\tVal}:{\rVal}) $);
+
+    % Q: A(9,0) に関する P の対称点 (中心 O2(13, -5))
+    \coordinate (O2) at (13, -5);
+    \coordinate (Q) at ($ (O2) + ({180+\tVal}:{\rVal}) $);
+
+    % R: P を原点まわりに +90° 回転 (中心 O3(-5, 5))
+    \coordinate (O3) at (-5, 5);
+    \coordinate (R) at ($ (O3) + ({90+\tVal}:{\rVal}) $);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick] (-11, 0) -- (19, 0) node[right] {$x$};
+    \draw[->, thick] (0, -10) -- (0, 11) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 3. 3つの円 (C1: P の軌跡, C2: Q の軌跡, C3: R の軌跡) ---
+    % 元の円 C1
+    \draw[very thick, blue!80!black] (O1) circle (\rVal);
+    \node[blue!80!black, above right] at ($ (O1) + (45:\rVal) $) {$C_1$};
+
+    % Q の軌跡 C2 (中心 (13, -5))
+    \draw[thick, dashed, purple!80!black] (O2) circle (\rVal);
+    \node[purple!80!black, below right] at ($ (O2) + (-45:\rVal) $) {$C_2$ ($Q$ の軌跡)};
+
+    % R の軌跡 C3 (中心 (-5, 5))
+    \draw[thick, dashed, teal!80!black] (O3) circle (\rVal);
+    \node[teal!80!black, above left] at ($ (O3) + (135:\rVal) $) {$C_3$ ($R$ の軌跡)};
+
+    % --- 4. 幾何変換の補助線 ---
+    % (1) P と Q の点対称変換 (点 A に関する対称)
+    \draw[thick, dashed, gray!70] (P) -- (Q);
+    \fill[red!80!black] (A) circle (3pt) node[below=3pt] {$A(9,\, 0)$};
+
+    % (2) P から R への +90° 回転
+    \draw[thick, dashed, gray!60] (0, 0) -- (P);
+    \draw[thick, dashed, gray!60] (0, 0) -- (R);
+    \draw[->, thick, teal!80!black] (2.2, 2.2) arc[start angle=45, end angle=135, radius=3.1];
+    \node[teal!80!black, above=2pt, font=\footnotesize] at (0, 3.2) {$+90^\circ$ 回転};
+
+    % (3) 線分 QR (|QR| の最小・最大を考える対象)
+    \draw[very thick, red!85!black] (Q) -- (R)
+    node[midway, fill=white, inner sep=1.5pt, font=\normalsize\bfseries] {$|QR|$};
+
+    % --- 5. 各点と中心のプロットとラベル ---
+    % 中心
+    \fill (O1) circle (2.5pt) node[above right=1pt, font=\footnotesize] {$(5,5)$};
+    \fill (O2) circle (2.5pt) node[below left=1pt, font=\footnotesize] {$(13,-5)$};
+    \fill (O3) circle (2.5pt) node[above left=1pt, font=\footnotesize] {$(-5,5)$};
+
+    % 点 P, Q, R
+    \fill[blue!80!black] (P) circle (3.5pt) node[above right] {$P$};
+    \fill[purple!80!black] (Q) circle (3.5pt) node[below left] {$Q$};
+    \fill[teal!80!black] (R) circle (3.5pt) node[above left] {$R$};
+
+    % 各中心間を結ぶ基準線（中心間距離 \sqrt{18^2 + 10^2} = 2\sqrt{53}）
+    \draw[dotted, gray!80!black, thick] (O3) -- (O2)
+    node[pos=0.25, below left, font=\footnotesize] {$|O_3 O_2| = 2\sqrt{53}$};
+
+  \end{tikzpicture}
+  \caption{円 $C_1$ 上の点 $P$、点 $A$ に関する対称点 $Q$、原点中心 $+90^\circ$ 回転点 $R$ の幾何配置}
+  \label{fig:p_q_r_geometry}
+\end{figure}
+
+従って $A(9,0)$ に関する$P$の対称点は
 \begin{align}
-  |QR|^2 &= \{(13-rc) - (-5-rs)\}^2 + \{(-5-rs) - (5+rc)\}^2 \nonumber\\
-  &= (18-rc+rs)^2 + (-10-rs-rc)^2 \nonumber\\
-  &= 18^2 + 10^2 + 2r^2 + 56rs - 16rc \nonumber\\
-  &= 424 + 2r^2 + 8\sqrt{53}r\sin(\theta-\alpha)
+  Q(13-rc, -5-rs) \label{eq:2}
 \end{align}
-である．ここで，$\alpha$は
+である．
+
+$R$を正の方向に$\dfrac{\pi}{2}$回転させた$R$は
 \begin{align}
-  \tan\alpha = \dfrac{2}{7}
+  R\left(-5-rs,5+rc\right) \label{eq:3}
+\end{align}
+である．
+
+従って\cref{eq:2,eq:3}から$|QR|^2$は
+\begin{align}
+  |QR|^2
+  &= \{(13-rc) - (-5-rs)\}^2 + \{(-5-rs) - (5+rc)\}^2 \\
+  &= (18-rc+rs)^2 + (-10-rs-rc)^2 \\
+  &= 18^2 + 10^2 + 2r^2 + 56rs - 16rc \\
+  &= 424 + 2r^2 + 8\sqrt{53}r\sin(\theta-\alpha) \label{eq:4}
+\end{align}
+とかける．ここで $\alpha$ は
+\begin{align}
+  \tan\alpha = \dfrac{2}{7} \label{eq:5}
 \end{align}
 を満たす数である．$0 \leqq \theta < 2\pi$から，
 \begin{align}
   -\alpha \leqq \theta - \alpha < 2\pi - \alpha
 \end{align}
-であるから，$-1 \leqq \sin(\theta-\alpha) \leqq 1$である．ゆえに$r>0$から，
+であるから，$-1 \leqq \sin(\theta-\alpha) \leqq 1$である．
+ゆえに$r>0$から，$|QR|^2$の最小最大値$f(r),g(r)$は
 \begin{align}
   \begin{cases}
     f(r) = \sqrt{424-8\sqrt{53}r+2r^2} = \sqrt{2}|r-2\sqrt{53}| \\
     g(r) = \sqrt{424+8\sqrt{53}r+2r^2} = \sqrt{2}(r+2\sqrt{53})
   \end{cases}
 \end{align}
-である．また，$f(r)=0$のとき，$r=2\sqrt{53}$である．$\cdots\text{（答）}$
+とかける．
+また$f(r)=0$のときは$r=2\sqrt{53}$である．$\cdots\text{（答）}$
 
 \paragraph{【旧課程】}
-{\bf [解]}
-点$P$の座標を$(x, y)$とする．
-中心$K$，半径$R$の円に対して，点$P$からその円に接線が引けるための必要十分条件は，点$P$が円の外部または周上にあること，すなわち$|PK|^2 \geqq R^2$である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.75, >=stealth, every node/.style={font=\small}]
+
+    % --- 座標軸 ---
+    \draw[->, thick, gray!60] (-4.5, 0) -- (10.0, 0) node[right] {$X$};
+    \draw[->, thick, gray!60] (0, -5.5) -- (0, 7.5) node[above] {$Y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 各円の中心と半径 ---
+    \coordinate (CenterA) at (0, 0);
+    \coordinate (CenterB) at (4, 3);
+    \coordinate (CenterC) at (5, -3);
+
+    \def\rA{3.0}
+    \def\rB{2.0}
+    \def\rC{1.0}
+
+    % 円の描画
+    \draw[very thick, blue!75!black] (CenterA) circle (\rA);
+    \node[blue!75!black, left] at (-3, 0.5) {円 $A$};
+
+    \draw[very thick, orange!85!black] (CenterB) circle (\rB);
+    \node[orange!85!black, right] at (4, 5.5) {円 $B$};
+
+    \draw[very thick, teal!85!black] (CenterC) circle (\rC);
+    \node[teal!85!black, right] at (6, -3) {円 $C$};
+
+    % 各円の中心
+    \fill (CenterA) circle (1.8pt);
+    \fill (CenterB) circle (1.8pt) node[below=2pt] {$(4,3)$};
+    \fill (CenterC) circle (1.8pt) node[below=2pt] {$(5,-3)$};
+
+    % --- 点 P の配置 (軌跡 Gamma 上の一例として theta = 50° を採用) ---
+    % Gamma: (X-3)^2 + Y^2 = 27 (半径 3*sqrt(3) ≈ 5.196)
+    \coordinate (M) at (3, 0);
+    \def\rGamma{5.19615}
+    \coordinate (P) at ($ (M) + (50:\rGamma) $); % 概ね (6.34, 3.98)
+
+    \fill[purple!80!black] (P) circle (2.2pt) node[above right] {$P(X,Y)$};
+
+    % --- 接線と接点 (幾何計算) ---
+    % P から円 A への接点 TA
+    \pgfmathsetmacro{\distPA}{sqrt((6.34)^2 + (3.98)^2)} % ≈ 7.487
+    \pgfmathsetmacro{\angPA}{atan2(3.98, 6.34)}
+    \pgfmathsetmacro{\dAngA}{acos(\rA / \distPA)}
+    \coordinate (TA) at ($ (CenterA) + ({\angPA + \dAngA}:\rA) $);
+
+    % P から円 B への接点 TB
+    \pgfmathsetmacro{\distPB}{sqrt((6.34 - 4)^2 + (3.98 - 3)^2)} % ≈ 2.541
+    \pgfmathsetmacro{\angPB}{atan2(3.98 - 3, 6.34 - 4)}
+    \pgfmathsetmacro{\dAngB}{acos(\rB / \distPB)}
+    \coordinate (TB) at ($ (CenterB) + ({\angPB - \dAngB}:\rB) $);
+
+    % P から円 C への接点 TC
+    \pgfmathsetmacro{\distPC}{sqrt((6.34 - 5)^2 + (3.98 - (-3))^2)} % ≈ 7.107
+    \pgfmathsetmacro{\angPC}{atan2(3.98 - (-3), 6.34 - 5)}
+    \pgfmathsetmacro{\dAngC}{acos(\rC / \distPC)}
+    \coordinate (TC) at ($ (CenterC) + ({\angPC + \dAngC}:\rC) $);
+
+    % 接線の描画
+    \draw[thick, blue!80!black] (P) -- (TA) node[midway, above left, font=\footnotesize] {$\alpha(P)$};
+    \draw[thick, orange!90!black] (P) -- (TB) node[midway, right=1pt, font=\footnotesize] {$\beta(P)$};
+    \draw[thick, teal!80!black] (P) -- (TC) node[midway, right=1pt, font=\footnotesize] {$\gamma(P)$};
+
+    % 接点のプロットと半径（直角記号用点線）
+    \fill (TA) circle (1.4pt) node[above left, font=\scriptsize] {$T_A$};
+    \fill (TB) circle (1.4pt) node[below=2pt, font=\scriptsize] {$T_B$};
+    \fill (TC) circle (1.4pt) node[below left, font=\scriptsize] {$T_C$};
+
+    \draw[dashed, gray!70] (CenterA) -- (TA);
+    \draw[dashed, gray!70] (CenterB) -- (TB);
+    \draw[dashed, gray!70] (CenterC) -- (TC);
+
+    % 条件式の注記
+    \node[draw=purple!80!black, rounded corners=3pt, fill=white, inner sep=4pt, font=\footnotesize]
+    at (1.0, -4.5) {$\alpha(P)^2 + \beta(P)^2 + \gamma(P)^2 = 99$};
+
+  \end{tikzpicture}
+  \caption{点 $P$ から 3 つの円 $A, B, C$ への接線とその距離}
+  \label{fig:three_circles_tangents_concept}
+\end{figure}
+
+点$P$の座標を$(X, Y)$とする．
+中心$K$，半径$R$の円に対して点$P$からその円に接線が引けるための必要十分条件は，点$P$が円の外部または周上にあること，すなわち$|PK|^2 \geqq R^2$である．
 このとき，接点までの距離の$2$乗は三平方の定理より$|PK|^2 - R^2$に等しい．
-したがって，各円について以下の通りとなる．
-\begin{itemize}
-  \item 円$A$: 中心$(0, 0)$，半径$3$であるから，接線が引ける条件は$x^2 + y^2 \geqq 9$であり，
-    \begin{align}
-      \alpha(P)^2 = x^2 + y^2 - 9
-    \end{align}
-  \item 円$B$: 中心$(4, 3)$，半径$2$であるから，接線が引ける条件は$(x-4)^2 + (y-3)^2 \geqq 4$であり，
-    \begin{align}
-      \beta(P)^2 = (x-4)^2 + (y-3)^2 - 4
-    \end{align}
-  \item 円$C$: 中心$(5, -3)$，半径$1$であるから，接線が引ける条件は$(x-5)^2 + (y+3)^2 \geqq 1$であり，
-    \begin{align}
-      \gamma(P)^2 = (x-5)^2 + (y+3)^2 - 1
-    \end{align}
-\end{itemize}
-条件式$\alpha(P)^2 + \beta(P)^2 + \gamma(P)^2 = 99$に代入して整理すると，
+したがって，各円について条件は以下の通りとなる．
+
+\subparagraph{円$A$}
+中心$(0, 0)$，半径$3$であるから，接線が引ける条件は
 \begin{align}
-  &(x^2 + y^2 - 9) + \{(x-4)^2 + (y-3)^2 - 4\} + \{(x-5)^2 + (y+3)^2 - 1\} = 99 \nonumber\\
-  &\Longleftrightarrow 3x^2 + 3y^2 - 18x + 45 = 99 \nonumber\\
-  &\Longleftrightarrow x^2 - 6x + y^2 = 18 \nonumber\\
-  &\Longleftrightarrow (x-3)^2 + y^2 = 27
-  \label{eq:1976-3old-circle}
+  X^2 + Y^2 \geqq 9 \label{eq:5}
 \end{align}
-を得る．この円を$\Gamma$とし，中心を$M(3, 0)$，半径を$\rho = 3\sqrt{3}$とおく．
-点$P$が円$A, B, C$のすべてに接線を引くことができる条件を確認する．
-\begin{itemize}
-  \item 円$B$について: 中心$K_B(4, 3)$と$M(3, 0)$の距離は$|MK_B| = \sqrt{1^2 + 3^2} = \sqrt{10}$である．
-    $\Gamma$上の点$P$に対し
-    \begin{align}
-      |PK_B| \geqq |PM| - |MK_B| = 3\sqrt{3} - \sqrt{10} > 5.19 - 3.17 = 2.02 > 2
-    \end{align}
-    であるから，$\Gamma$上のすべての点は円$B$の外部にある．
-  \item 円$C$について: 中心$K_C(5, -3)$と$M(3, 0)$の距離は$|MK_C| = \sqrt{2^2 + (-3)^2} = \sqrt{13}$である．
-    $\Gamma$上の点$P$に対し
-    \begin{align}
-      |PK_C| \geqq |PM| - |MK_C| = 3\sqrt{3} - \sqrt{13} > 5.19 - 3.61 = 1.58 > 1
-    \end{align}
-    であるから，$\Gamma$上のすべての点は円$C$の外部にある．
-  \item 円$A$について: \eqref{eq:1976-3old-circle}より$x^2 + y^2 = 18 + 6x$であるから，
-    \begin{align}
-      x^2 + y^2 \geqq 9 \Longleftrightarrow 18 + 6x \geqq 9 \Longleftrightarrow x \geqq -\dfrac{3}{2}
-    \end{align}
-    である．
-\end{itemize}
-円$\Gamma$と円$A$の交点は，$x = -\dfrac{3}{2}$を$x^2 + y^2 = 9$に代入して
+であり，距離は
 \begin{align}
-  y = \pm \sqrt{9 - \dfrac{9}{4}} = \pm \dfrac{3\sqrt{3}}{2}
-\end{align}
-となり，$P_1\left(-\dfrac{3}{2}, \dfrac{3\sqrt{3}}{2}\right)$，$P_2\left(-\dfrac{3}{2}, -\dfrac{3\sqrt{3}}{2}\right)$である．
-中心$M(3, 0)$から見た$P_1$の偏角$\theta_1$は
-\begin{align}
-  \cos\theta_1 &= \dfrac{-\dfrac{3}{2} - 3}{3\sqrt{3}} = -\dfrac{\sqrt{3}}{2} \nonumber\\
-  \sin\theta_1 &= \dfrac{\dfrac{3\sqrt{3}}{2}}{3\sqrt{3}} = \dfrac{1}{2}
-\end{align}
-より$\theta_1 = \dfrac{5\pi}{6}$であり，同様に$P_2$の偏角は$\theta_2 = -\dfrac{5\pi}{6}$である．
-したがって，除外される劣弧（$x < -\dfrac{3}{2}$の部分）の中心角は
-\begin{align}
-  2\pi - 2 \times \dfrac{5\pi}{6} = \dfrac{\pi}{3}
-\end{align}
-であるから，条件$x \geqq -\dfrac{3}{2}$を満たす優弧の中心角$\Theta$は
-\begin{align}
-  \Theta = 2\pi - \dfrac{\pi}{3} = \dfrac{5\pi}{3}
+  \alpha(P)^2 = X^2 + Y^2 - 9 \label{eq:6}
 \end{align}
 である．
-ゆえに，求める曲線の長さ$L$は
+
+\subparagraph{円$B$}
+中心$(4, 3)$，半径$2$であるから，接線が引ける条件は
 \begin{align}
-  L = 3\sqrt{3} \times \dfrac{5\pi}{3} = 5\sqrt{3}\pi \tag{答}
+  (X-4)^2 + (Y-3)^2 \geqq 4 \label{eq:7}
 \end{align}
-である．点$P$の全体が作る曲線は下図の太線部である（円$A$の内部に含まれる破線部は除く）．
+であり，距離は
+\begin{align}
+  \beta(P)^2 = (X-4)^2 + (Y-3)^2 - 4 \label{eq:8}
+\end{align}
+である．
 
-\begin{figure}[h]
+\subparagraph{円$C$}
+中心$(5, -3)$，半径$1$であるから，接線が引ける条件は
+\begin{align}
+  (X-5)^2 + (Y+3)^2 \geqq 1 \label{eq:9}
+\end{align}
+であり，距離は
+\begin{align}
+  \gamma(P)^2 = (X-5)^2 + (Y+3)^2 - 1 \label{eq:10}
+\end{align}
+である．
+\casesend
+
+\cref{eq:6,eq:8,eq:10}を題意の条件式$\alpha(P)^2 + \beta(P)^2 + \gamma(P)^2 = 99$に代入して整理すると，
+\begin{align}
+  &(X^2 + Y^2 - 9) + \{(X-4)^2 + (Y-3)^2 - 4\} + \{(X-5)^2 + (Y+3)^2 - 1\} = 99 \nonumber\\
+  &\Longleftrightarrow 3X^2 + 3Y^2 - 18X + 45 = 99 \nonumber\\
+  &\Longleftrightarrow X^2 - 6X + Y^2 = 18 \nonumber\\
+  &\Longleftrightarrow (X-3)^2 + Y^2 = 27 \label{eq:11}
+\end{align}
+を得る．この円を$\Gamma$とし，中心を$M(3, 0)$，半径を$r = 3\sqrt{3}$とおく．
+従って求める点$P$の条件は$\Gamma$の円周上で\cref{eq:5,eq:7,eq:9}を満たす部分である．それぞれの条件について個別に確認する．
+
+\subparagraph{円$A$: \cref{eq:5}}
+
+円$\Gamma$上の点を$P(X,Y)=(r\cos\theta+3,r\sin\theta)$とおくと円$A$の中心$(0,0)$との距離の二乗は
+\begin{align}
+  X^2 + Y^2
+  &= (r\cos\theta+3)^2+\left(r\sin\theta\right)^2 \\
+  &= r^2 + 9 + 6r\cos\theta \\
+\end{align}
+であり，これが円$A$の半径の二乗$9$より大きい条件は
+\begin{align}
+  r^2 + 9 + 6r\cos\theta \ge 9 \iff r^2 + 6r\cos\theta \ge 0 \iff \cos\theta \ge -\dfrac{r}{6} = -\dfrac{\sqrt{3}}{2}
+\end{align}
+であり，従って円$A$の外側の条件は
+\begin{align}
+  0 \le \theta \dfrac{5\pi}{6}, \dfrac{7\pi}{6}\le \theta < 2\pi \label{eq:12}
+\end{align}
+である．
+
+\subparagraph{円$B$: \cref{eq:7}}
+
+円$\Gamma$上の点を$P(X,Y)=(r\cos\theta+3,r\sin\theta)$とおくと円$B$の中心$(4,3)$との距離の二乗は
+\begin{align}
+  (X-4)^2 + (Y-3)^2
+  &= (r\cos\theta+3-4)^2+\left(r\sin\theta-3\right)^2 \\
+  &= r^2 + 10 - 2r(\cos\theta + 4\sin\theta) \\
+  &\ge r^2 + 10 - 2r\sqrt{5} \\
+  &= 27 + 10 -6\sqrt{15} \\
+  &= 37 - 6\sqrt{15} \ge 4
+\end{align}
+となり，\cref{eq:7}を満たす．ただし3行目で三角関数の合成を用いた．
+よって円$\Gamma$上の点は全て円$B$の外側にある．
+
+\subparagraph{円$C$: \cref{eq:9}}
+
+円$\Gamma$上の点を$P(X,Y)=(r\cos\theta+3,r\sin\theta)$とおくと円$C$の中心$(5,-3)$との距離の二乗は
+\begin{align}
+  (X-5)^2 + (Y+3)^2
+  &= (r\cos\theta+3-5)^2+\left(r\sin\theta+3\right)^2 \\
+  &= r^2 + 13 + 2r(-2\cos\theta + 3\sin\theta) \\
+  &\ge r^2 + 13 - 2r\sqrt{13} \\
+  &= 27 + 13 -6\sqrt{39} \\
+  &= 40 - 6\sqrt{39} \ge 1
+\end{align}
+となり，\cref{eq:9}を満たす．ただし3行目で三角関数の合成を用いた．
+よって円$\Gamma$上の点は全て円$C$の外側にある．
+\casesend
+
+以上全ての場合分けから，求める条件は\cref{eq:12}である．
+この領域を図示すると下図の太線部である（円の内部に含まれる破線部は除く）．
+
+\begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.7, >=stealth]
-    \draw[->] (-3.5,0) -- (9.5,0) node[right] {$x$};
-    \draw[->] (0,-5.5) -- (0,6.0) node[above] {$y$};
-    \node[below left] at (0,0) {$O$};
+  \begin{tikzpicture}[scale=0.85, >=stealth, every node/.style={font=\small}]
 
-    \draw[thick] (0,0) circle (3);
-    \node at (0,2.3) {$A$};
-    \draw[thick] (4,3) circle (2);
-    \node at (4,3) {$B$};
-    \draw[thick] (5,-3) circle (1);
-    \node at (5,-3) {$C$};
+    % --- 1. 定数定義 ---
+    % Gamma: 中心 M(3, 0), 半径 r = 3*sqrt(3) ≈ 5.196
+    % 円 A: 中心 (0, 0), 半径 3
+    % 円 A と Gamma の交点:
+    % X = -1.5, Y = ± 3*sqrt(3)/2 ≈ ± 2.598 (偏角 θ = ±150°)
+    \coordinate (O)  at (0, 0);
+    \coordinate (M)  at (3, 0);
+    \coordinate (B)  at (4, 3);
+    \coordinate (C)  at (5, -3);
 
-    \draw[very thick] (3,0) ++(-150:5.196) arc (-150:150:5.196);
-    \draw[dashed] (3,0) ++(150:5.196) arc (150:210:5.196);
+    \def\rGamma{5.19615} % 3*sqrt(3)
+    \coordinate (P1) at (-1.5,  2.59808);
+    \coordinate (P2) at (-1.5, -2.59808);
 
-    \fill (3,0) circle (1.5pt) node[below] {$M(3,0)$};
-    \fill (-1.5, 2.598) circle (1.5pt) node[above left] {$P_1$};
-    \fill (-1.5, -2.598) circle (1.5pt) node[below left] {$P_2$};
-    \draw[dotted] (-1.5, -3.5) -- (-1.5, 3.5) node[above] {$x=-\frac{3}{2}$};
+    % --- 2. 座標軸 ---
+    \draw[->, thick] (-4.0, 0) -- (9.8, 0) node[right] {$X$};
+    \draw[->, thick] (0, -5.5) -- (0, 6.2) node[above] {$Y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 円 A, B, C の描画 ---
+    % 円 A (半径 3)
+    \draw[thick, gray!70] (O) circle (3);
+    \node[gray!80!black, left] at (-3, 0.4) {円 $A$};
+
+    % 円 B (中心 (4,3), 半径 2)
+    \draw[thick, gray!70] (B) circle (2);
+    \fill[gray!70] (B) circle (1.2pt);
+    \node[gray!80!black, above right] at (B) {円 $B(4,3)$};
+
+    % 円 C (中心 (5,-3), 半径 1)
+    \draw[thick, gray!70] (C) circle (1);
+    \fill[gray!70] (C) circle (1.2pt);
+    \node[gray!80!black, below right] at (C) {円 $C(5,-3)$};
+
+    % --- 4. 境界直線 X = -3/2 ---
+    \draw[thick, dashed, gray!60] (-1.5, -4.5) -- (-1.5, 4.5)
+    node[above, font=\footnotesize, black] {$X = -\dfrac{3}{2}$};
+
+    % --- 5. 点 P の軌跡 Gamma ---
+    % 円 A の外部: 偏角 -150° から +150° (実線・太線)
+    \draw[line width=1.6pt, blue!80!black]
+    (M) ++(-150:\rGamma) arc[start angle=-150, end angle=150, radius=\rGamma];
+
+    % 円 A の内部: 偏角 150° から 210° (-150°) (破線・除外部分)
+    \draw[thick, dashed, red!70!black]
+    (M) ++(150:\rGamma) arc[start angle=150, end angle=210, radius=\rGamma];
+
+    % --- 6. 中心 M から交点 P1, P2 への動径補助線と角度 ---
+    \draw[dashed, blue!50!black] (M) -- (P1);
+    \draw[dashed, blue!50!black] (M) -- (P2);
+    \draw[thick, blue!60!black] (M) +(0:0.9) arc[start angle=0, end angle=150, radius=0.9];
+    \node[blue!70!black, font=\footnotesize] at ($(M) + (75:1.2)$) {$\dfrac{5\pi}{6}$};
+
+    % --- 7. 主要点・ラベル ---
+    % 中心 M
+    \fill (M) circle (1.6pt) node[below=2pt] {$M(3,0)$};
+
+    % 交点 P1, P2 (白抜き丸で除外境界を明示、または黒丸)
+    \fill[purple!80!black] (P1) circle (1.8pt) node[above left] {$P_1\left(-\frac{3}{2},\, \frac{3\sqrt{3}}{2}\right)$};
+    \fill[purple!80!black] (P2) circle (1.8pt) node[below left] {$P_2\left(-\frac{3}{2},\, -\frac{3\sqrt{3}}{2}\right)$};
+
+    % 軌跡ラベル
+    \node[blue!80!black, right, font=\bfseries] at (8.2, 0.4) {$\Gamma$};
+    % \node[blue!80!black, fill=white, inner sep=2pt, font=\footnotesize]
+    % at (6.2, 3.8) {軌跡（太線部 $L=5\sqrt{3}\pi$）};
+
   \end{tikzpicture}
-  \caption{点$P$の軌跡（太線部）と円$A, B, C$}
+  \caption{点 $P$ の軌跡 $\Gamma$（太線部）と除外される円弧（破線部）}
+  \label{fig:locus_gamma_final}
 \end{figure}
+
+この円弧の中心角は
+\begin{align}
+  \Theta = 2\pi - \dfrac{2\pi}{6} = \dfrac{5\pi}{3}
+\end{align}
+であり，円の半径$r$だから円弧の長さは
+\begin{align}
+  L = r \dfrac{5\pi}{3} = 5\sqrt{3}\pi
+\end{align}
+である．
 
 \end{document}

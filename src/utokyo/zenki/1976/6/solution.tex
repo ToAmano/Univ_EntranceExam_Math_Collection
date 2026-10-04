@@ -1,24 +1,24 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\paragraph{【新課程】}
 {\bf [解]}
-\subparagraph{(i)}
+\paragraph{【新課程】}
+\paragraph{(i)}
 行列$A =
 \begin{pmatrix} 0 & a \\ 1 & b
-\end{pmatrix}$について，ケーリー・ハミルトンの定理より
+\end{pmatrix}$
+について，ケーリー・ハミルトンの定理より
 \begin{align}
   A^2 - bA - aI = O \Longleftrightarrow A^2 = aI + bA
-  \label{eq:1976-6new-ch}
+  \label{eq:1}
 \end{align}
 が成り立つ．
-$R$に属する任意の$2$つの行列を$X_1 = x_1 I + y_1 A$，$X_2 = x_2 I + y_2 A$（$x_1, y_1, x_2, y_2$は実数）とする．
-単位行列$I$は任意の行列と可換（$IA = AI = A$，$I^2 = I$）であるから，その積$X_1 X_2$を展開すると
+$R$に属する任意の$2$つの行列を$X_1 = x_1 I + y_1 A$，$X_2 = x_2 I + y_2 A$（$x_1, y_1, x_2, y_2$は実数）とする．これらの積$X_1 X_2$を展開すると
 \begin{align}
   X_1 X_2 &= (x_1 I + y_1 A)(x_2 I + y_2 A) \nonumber\\
-  &= x_1 x_2 I + (x_1 y_2 + y_1 x_2) A + y_1 y_2 A^2
+  &= x_1 x_2 I + (x_1 y_2 + y_1 x_2) A + y_1 y_2 A^2 \label{eq:2}
 \end{align}
-となる．ここに\eqref{eq:1976-6new-ch}を代入すると
+となる．ここに\cref{eq:1}を代入すると
 \begin{align}
   X_1 X_2 &= x_1 x_2 I + (x_1 y_2 + y_1 x_2) A + y_1 y_2 (aI + bA) \nonumber\\
   &= (x_1 x_2 + a y_1 y_2) I + (x_1 y_2 + y_1 x_2 + b y_1 y_2) A
@@ -26,7 +26,7 @@ $R$に属する任意の$2$つの行列を$X_1 = x_1 I + y_1 A$，$X_2 = x_2 I +
 となる．$x_1 x_2 + a y_1 y_2$および$x_1 y_2 + y_1 x_2 + b y_1 y_2$はいずれも実数であるから，$X_1 X_2$も$xI+yA$の形に表される．
 したがって，$X_1 X_2 \in R$であり，題意は示された．
 
-\subparagraph{(ii)}
+\paragraph{(ii)}
 $X = xI + yA \in R$を成分で表すと
 \begin{align}
   X &= x
@@ -72,36 +72,56 @@ $X$の行列式を計算すると
 \end{align}
 であり，これを図示すると下図の斜線部分となる（境界線は含まない）．
 
-\begin{figure}[h]
+\begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.0, >=stealth]
-    \draw[->] (-3.5,0) -- (1.5,0) node[right] {$a$};
-    \draw[->] (0,-3.0) -- (0,3.0) node[above] {$b$};
-    \node[below right] at (0,0) {$O$};
+  \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
 
-    \fill[gray!20, domain=-2.8:2.8, samples=50] plot ({-0.25*\x*\x}, \x) -- (-3.5, 2.8) -- (-3.5, -2.8) -- cycle;
-    \draw[thick, dashed, domain=-2.8:2.8, samples=50] plot ({-0.25*\x*\x}, \x);
-    \node[right] at (-1.96, 2.8) {$a = -\frac{1}{4}b^2$};
-    \node at (-2.0, 0) {$a < -\frac{1}{4}b^2$};
+    % --- 1. クリッピング領域の設定 ---
+    \clip (-3.8, -3.2) rectangle (1.8, 3.2);
+
+    % --- 2. 求める領域のハッチング (斜線部: a < -1/4 b^2) ---
+    % b を -3.0 から 3.0 まで動かして左端 (-3.8) と結ぶ
+    \fill[pattern=north east lines, pattern color=blue!60]
+    (-3.8, -3.0) -- plot[domain=-3.0:3.0, samples=60] ({-0.25*(\x)^2}, {\x})
+    -- (-3.8, 3.0) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-3.8, 0) -- (1.5, 0) node[right] {$a$};
+    \draw[->, thick] (0, -3.0) -- (0, 3.0) node[above] {$b$};
+    \node[below right=2pt] at (0, 0) {$O$};
+
+    % --- 4. 境界線 a = -1/4 b^2 (等号を含まないため破線) ---
+    \draw[thick, dashed, blue!85!black, domain=-3.0:3.0, samples=80]
+    plot ({-0.25*(\x)^2}, {\x});
+
+    % 境界線の名称ラベル
+    \node[above left=2pt, blue!85!black, font=\footnotesize]
+    at ({-0.25*(2.6)^2}, 2.6) {$a = -\dfrac{1}{4}b^2$};
+
+    % --- 6. 領域ラベルと境界条件の注記 ---
+    \node[inner sep=2pt, font=\normalsize\bfseries, blue!90!black]
+    at (-2.1, 0) {$a < -\dfrac{1}{4}b^2$};
+
   \end{tikzpicture}
-  \caption{点$(a, b)$の存在範囲（斜線部，境界線は含まない）}
+  \caption{点$(a, b)$の存在範囲（境界線は含まない）}
+  \label{fig:matrix_invertible_region}
 \end{figure}
 
 \paragraph{【旧課程】}
-{\bf [解]}
-\subparagraph{(i)}
+\paragraph{(i)}
 方程式$f(x) = 0$の相異なる$4$実根を$\alpha_1 < \alpha_2 < \alpha_3 < \alpha_4$とする．
 最高次の係数が$1$であるから
 \begin{align}
   f(x) = (x - \alpha_1)(x - \alpha_2)(x - \alpha_3)(x - \alpha_4)
 \end{align}
 と因数分解される．
-実数$k$に対して方程式$F(x) = f(x) + kf'(x) = 0$の実根の個数を調べる．
+実数$k$に対して方程式
+\begin{align}
+  F(x) = f(x) + kf'(x) = 0
+\end{align}
+の実根の個数を調べる．
 
-$1^\circ$ $k = 0$のとき:
-$F(x) = f(x) = 0$であるから，実根は$\alpha_1, \alpha_2, \alpha_3, \alpha_4$の$4$個である．
-
-$2^\circ$ $k \neq 0$のとき:
+まず$k=0$の時は$F(x) = f(x) = 0$であるから，実根は$\alpha_1, \alpha_2, \alpha_3, \alpha_4$の$4$個である．そこで以下$k \neq 0$の場合を考える．
 $x = \alpha_i$ ($i = 1, 2, 3, 4$)のとき，$f(\alpha_i) = 0$かつ$f'(\alpha_i) \neq 0$（重根をもたないため）であるから，$F(\alpha_i) = kf'(\alpha_i) \neq 0$となり，$\alpha_i$は$F(x) = 0$の根ではない．
 したがって，$x \neq \alpha_i$のもとで両辺を$kf(x)$で割ると，
 \begin{align}
@@ -111,23 +131,86 @@ $x = \alpha_i$ ($i = 1, 2, 3, 4$)のとき，$f(\alpha_i) = 0$かつ$f'(\alpha_i
 \begin{align}
   h(x) = \dfrac{f'(x)}{f(x)} = \sum_{i=1}^4 \dfrac{1}{x - \alpha_i}
 \end{align}
-とおく．各開区間$(-\infty, \alpha_1)$，$(\alpha_1, \alpha_2)$，$(\alpha_2, \alpha_3)$，$(\alpha_3, \alpha_4)$，$(\alpha_4, \infty)$において，
+とおく．一階微分は
 \begin{align}
   h'(x) = -\sum_{i=1}^4 \dfrac{1}{(x - \alpha_i)^2} < 0
 \end{align}
-であるから，$h(x)$はこれらの各区間で単調に減少する．
-\begin{itemize}
-  \item 各区間$(\alpha_i, \alpha_{i+1})$ ($i = 1, 2, 3$)において:
-    $\lim_{x \to \alpha_i + 0} h(x) = +\infty$かつ$\lim_{x \to \alpha_{i+1} - 0} h(x) = -\infty$であるから，中間値の定理および単調性より，実数$-\dfrac{1}{k}$に対して$h(x) = -\dfrac{1}{k}$は各区間にただ$1$つの実根をもつ（計$3$個）．
-  \item 区間$(-\infty, \alpha_1)$において:
-    $\lim_{x \to -\infty} h(x) = 0$，$\lim_{x \to \alpha_1 - 0} h(x) = -\infty$であるから，$h(x)$は負の実数全体を値域とする．
-    したがって，$k > 0$（$-\dfrac{1}{k} < 0$）のとき，この区間にただ$1$つの実根をもつ．
-  \item 区間$(\alpha_4, \infty)$において:
-    $\lim_{x \to \alpha_4 + 0} h(x) = +\infty$，$\lim_{x \to \infty} h(x) = 0$であるから，$h(x)$は正の実数全体を値域とする．
-    したがって，$k < 0$（$-\dfrac{1}{k} > 0$）のとき，この区間にただ$1$つの実根をもつ．
-\end{itemize}
-$F(x)$は$4$次多項式であるから，実根は高々$4$個である．
-以上より，$k > 0$のときも$k < 0$のときも実根はちょうど$4$個存在する．\casesend
+であるから，$h(x)$は定義された各区間で単調に減少する．極限値と合わせて増減表は以下のようになる．
+\begin{table}[htb]
+  \centering
+  \caption{$h(x)$ の増減表}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c}
+    $x$ & $\dots$ & $\alpha_1$ & $\dots$ & $\alpha_2$ & $\dots$ & $\alpha_3$ & $\dots$ & $\alpha_4$ & $\dots$ \\ \hline
+    $h'(x)$ & $-$ & $\times$ & $-$ & $\times$ & $-$ & $\times$ & $-$ & $\times$ & $-$ \\ \hline
+    $h(x)$ & $\searrow$ & $\times$ & $\searrow$ & $\times$ & $\searrow$ & $\times$ & $\searrow$ & $\times$ & $\searrow$
+  \end{tabular}
+\end{table}
+
+各$x=\alpha_i$では，左側極限は$-\infty$，右側極限は$+\infty$である．
+また，$x\to\pm\infty$では$h(x)\to 0$であるから，グラフは下図のようになる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標軸 ---
+    \draw[->, thick] (-1.0, 0) -- (9.0, 0) node[right] {$x$};
+    \draw[->, thick] (0, -3.2) -- (0, 3.2) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 2. 漸近線 x = \alpha_i (i = 1, 2, 3, 4) ---
+    \def\aOne{1.0}
+    \def\aTwo{3.0}
+    \def\aThree{5.0}
+    \def\aFour{7.0}
+
+    \foreach \a/\i in {\aOne/1, \aTwo/2, \aThree/3, \aFour/4} {
+      \draw[thick, dashed, gray!70] (\a, -3.0) -- (\a, 3.0);
+      \node[below=2pt] at (\a, 0) {$\alpha_{\i}$};
+    }
+
+    % --- 3. 水平直線 y = -1/k （交点数 4 の例） ---
+    \def\yConst{0.8}
+    \draw[thick, dashed, red!80!black] (-0.8, \yConst) -- (8.8, \yConst)
+    node[right, font=\footnotesize] {$y = -\dfrac{1}{k}$};
+
+    % --- 4. 曲線 y = h(x) の各枝（単調減少） ---
+    % (i) x < \alpha_1
+    \draw[very thick, blue!80!black, domain=-0.8:0.75, samples=50, smooth]
+    plot (\x, {1.0/(\x - \aOne) + 1.0/(\x - \aTwo) + 1.0/(\x - \aThree) + 1.0/(\x - \aFour)});
+
+    % (ii) \alpha_1 < x < \alpha_2
+    \draw[very thick, blue!80!black, domain=1.25:2.75, samples=60, smooth]
+    plot (\x, {1.0/(\x - \aOne) + 1.0/(\x - \aTwo) + 1.0/(\x - \aThree) + 1.0/(\x - \aFour)});
+
+    % (iii) \alpha_2 < x < \alpha_3
+    \draw[very thick, blue!80!black, domain=3.25:4.75, samples=60, smooth]
+    plot (\x, {1.0/(\x - \aOne) + 1.0/(\x - \aTwo) + 1.0/(\x - \aThree) + 1.0/(\x - \aFour)});
+
+    % (iv) \alpha_3 < x < \alpha_4
+    \draw[very thick, blue!80!black, domain=5.25:6.75, samples=60, smooth]
+    plot (\x, {1.0/(\x - \aOne) + 1.0/(\x - \aTwo) + 1.0/(\x - \aThree) + 1.0/(\x - \aFour)});
+
+    % (v) x > \alpha_4
+    \draw[very thick, blue!80!black, domain=7.25:8.6, samples=50, smooth]
+    plot (\x, {1.0/(\x - \aOne) + 1.0/(\x - \aTwo) + 1.0/(\x - \aThree) + 1.0/(\x - \aFour)});
+
+    % --- 5. y = h(x) と y = -1/k の交点（実根） ---
+    \fill[purple!80!black] (0.28, \yConst) circle (1.8pt);
+    \fill[purple!80!black] (1.82, \yConst) circle (1.8pt);
+    \fill[purple!80!black] (3.86, \yConst) circle (1.8pt);
+    \fill[purple!80!black] (5.92, \yConst) circle (1.8pt);
+
+    % 曲線ラベル
+    \node[blue!80!black, font=\normalsize] at (8.2, 2.3) {$y = h(x)$};
+
+  \end{tikzpicture}
+  \caption{$y = h(x)$ のグラフと直線 $y = -\dfrac{1}{k}$ との交点（相異なる 4 実根）}
+  \label{fig:log_derivative_graph}
+\end{figure}
+
+よって$k\neq 0$の時は解の数は$4$つである．
 
 よって，すべての実数$k$に対して実根の個数は
 \begin{align}
@@ -135,70 +218,137 @@ $F(x)$は$4$次多項式であるから，実根は高々$4$個である．
 \end{align}
 である．
 
-\subparagraph{(ii)}
-$f(x) = x^4 + ax^3 + bx^2 + cx + d$について，
-\begin{align}
-  f'(x) &= 4x^3 + 3ax^2 + 2bx + c \nonumber\\
-  f''(x) &= 12x^2 + 6ax + 2b = 12\left(x^2 + \dfrac{a}{2}x + \dfrac{b}{6}\right)
-\end{align}
-である．$f(x) = 0$と$f''(x) = 0$が共有する$2$つの相異なる実根を$r_1, r_2$ ($r_1 \neq r_2$)とする．
-解と係数の関係より
-\begin{align}
-  r_1 + r_2 = -\dfrac{a}{2}
-\end{align}
-である．ここで，$x$軸方向に平行移動して$3$次の項を消去するため，
-\begin{align}
-  X = x + \dfrac{a}{4} \Longleftrightarrow x = X - \dfrac{a}{4}
-\end{align}
-とおく．このとき
-\begin{align}
-  \left(r_1 + \dfrac{a}{4}\right) + \left(r_2 + \dfrac{a}{4}\right) = r_1 + r_2 + \dfrac{a}{2} = 0
-\end{align}
-であるから，$R_1 = r_1 + \dfrac{a}{4}$とおけば，$R_2 = r_2 + \dfrac{a}{4} = -R_1$である．
-$r_1 \neq r_2$より$R_1 \neq 0$であるから，$p = R_1 \neq 0$とおくと，共有根は$X = \pm p$と表される．
-$X$の関数として$F(X) = f\left(X - \dfrac{a}{4}\right)$とおくと，$F(X)$の$3$次の係数は$0$であるから，実数$B, C, D$を用いて
-\begin{align}
-  F(X) = X^4 + BX^2 + CX + D
-\end{align}
-とおける．このとき
-\begin{align}
-  F''(X) = 12X^2 + 2B
-\end{align}
-である．$F''(X) = 0$の根が$X = \pm p$であるから，
-\begin{align}
-  12p^2 + 2B = 0 \Longleftrightarrow B = -6p^2
-\end{align}
-である．
-また，$X = \pm p$は$F(X) = 0$の根でもあるから，$F(p) = 0$かつ$F(-p) = 0$が成り立つ．
-これらを代入すると
+\paragraph{(ii)}
+
+$f(x)=0$と$f'(x)=0$が相異なる$x=\alpha,\beta$を解に持つとする．ただし$\alpha<\beta$とする．
+$f(x)$が$4$次のモニック多項式だから$p,q$を実数として
 \begin{align}
   \begin{cases}
-    F(p) = p^4 + Bp^2 + Cp + D = -5p^4 + Cp + D = 0 \\
-    F(-p) = p^4 + Bp^2 - Cp + D = -5p^4 - Cp + D = 0
+    f(x)   = (x-\alpha)(x-\beta)(x^2+px+q) \\
+    f''(x) = 12(x-\alpha)(x-\beta)
+  \end{cases} \label{eq:3}
+\end{align}
+と書ける．\cref{eq:3}で$f(x)$を実際に2階微分すると
+\begin{align}
+  f'(x) &= (x-\beta)(x^2+px+q) + (x-\alpha)(x^2+px+q) + (x-\alpha)(x-\beta)(2x+p) \\
+  f''(x)
+  &= (x-\beta)(2x+p) + (x^2+px+q) + (x-\alpha)(2x+p) + (x^2+px+q) \\
+  &+ (x-\beta)(2x+p) + (x-\alpha)(2x+p) + 2(x-\alpha)(x-\beta) \\
+  &= 2(x^2+px+q) + 2(x-\beta)(2x+p) + 2(x-\alpha)(2x+p) + 2(x-\alpha)(x-\beta) \label{eq:4}
+\end{align}
+となる．ここに$f''(\alpha)=f''(\beta)=0$を代入すると
+\begin{align}
+  \begin{cases}
+    f''(\alpha) = 2(\alpha^2+p\alpha+q) + 2(\alpha-\beta)(2\alpha+p) = 0 \\
+    f''(\beta)  = 2(\beta^2+p\beta+q) + 2(\beta-\alpha)(2\beta+p) = 0
   \end{cases}
 \end{align}
-である．辺々を引くと
+だから，辺々足し引きして
 \begin{align}
-  2Cp = 0
+  \begin{cases}
+    2\left(\alpha^2+\beta^2+p(\alpha+\beta)+2q\right) + 4(\beta-\alpha)^2 = 0 \\
+    2\left(\beta^2-\alpha^2+p(\beta-\alpha)\right) + 4(\beta-\alpha)(\alpha+\beta+p) = 0
+  \end{cases} \label{eq:5}
 \end{align}
-を得る．$p \neq 0$であるから，$C = 0$である．
-したがって
+第二式を両辺$\beta-\alpha \neq 0$で割って
 \begin{align}
-  F(X) = X^4 + BX^2 + D
+  2(\beta+\alpha+p) + 4(\alpha+\beta+p) = 0 \quad \therefore p = -(\alpha+\beta)\label{eq:6}
 \end{align}
-となり，$F(X)$は偶関数であるから，すべての$X$に対して
+だから第一式に代入して
 \begin{align}
-  F(-X) = F(X)
+  2\left(\alpha^2+\beta^2 - (\alpha+\beta)^2 + 2q\right) + 4(\beta-\alpha)^2 = 0 \\
+  \left(- \alpha\beta + q\right) + (\beta-\alpha)^2 = 0 \\
+  q = \alpha\beta - (\beta-\alpha)^2 \label{eq:7}
 \end{align}
-が成り立つ．もとの変数$x$に戻せば，
+である．以上を\cref{eq:3}に代入すると
 \begin{align}
-  f\left(-\dfrac{a}{4} - X\right) = f\left(-\dfrac{a}{4} + X\right)
+  f(x)
+  &= (x-\alpha)(x-\beta)\left[x^2 - (\alpha+\beta)x + (\alpha\beta - \alpha^2-\beta^2)\right] \\
+  &= (x-\alpha)(x-\beta)\left[(x-\alpha)(x-\beta) - \alpha^2-\beta^2\right]
 \end{align}
-が任意の$X$について成り立つことを意味する．
-したがって，曲線$y = f(x)$は直線
+である．$X=\dfrac{\alpha+\beta}{2}$での折り返しを考えて$x' = 2X-x$とすると
 \begin{align}
-  x = -\dfrac{a}{4}
+  f(x') = \left(\beta-x\right)\left(\alpha-x\right)\left[(\beta-x)(\alpha-x) - \alpha^2-\beta^2 \right] = f(x)
 \end{align}
-に関して線対称である．この直線は$y$軸に平行であるから，題意は示された．
+だから，$f(x)$は$x=\dfrac{\alpha+\beta}{2}$を境に対称である．
+この直線は$y$軸に平行であるから，題意は示された．
 
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.0, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・変数の完全パラメータ化 ---
+    \def\a{-1.0}
+    \def\b{1.5}
+
+    % 対称軸: X_sym = (a + b) / 2
+    \pgfmathsetmacro{\xSym}{(\a + \b) / 2.0}
+
+    % 解答中の式より:
+    % p = -(a + b)
+    % q = a*b - (b - a)^2
+    % f(x) = (x - a)(x - b)(x^2 + p*x + q)
+    \pgfmathsetmacro{\pVal}{-(\a + \b)}
+    \pgfmathsetmacro{\qVal}{\a * \b - (\b - \a)*(\b - \a)}
+
+    % その他の零点の x 座標: x^2 + px + q = 0 の解
+    % (x - xSym)^2 = (b - a)^2 + (b - a)^2/4 = 5/4 * (b - a)^2
+    \pgfmathsetmacro{\xOtherLeft}{\xSym - sqrt(5.0) * (\b - \a) / 2.0}
+    \pgfmathsetmacro{\xOtherRight}{\xSym + sqrt(5.0) * (\b - \a) / 2.0}
+
+    % プロット範囲・描画限界
+    \pgfmathsetmacro{\xPlotMin}{\xSym - 1.25 * (\b - \a)}
+    \pgfmathsetmacro{\xPlotMax}{\xSym + 1.25 * (\b - \a)}
+    \pgfmathsetmacro{\xAxMin}{\xSym - 1.45 * (\b - \a)}
+    \pgfmathsetmacro{\xAxMax}{\xSym + 1.45 * (\b - \a)}
+
+    % 変曲点での傾き: f'(b) = (b - a)(b^2 + p*b + q) = -(b - a)^3
+    \pgfmathsetmacro{\slopeB}{-pow(\b - \a, 3)}
+    \pgfmathsetmacro{\slopeA}{pow(\b - \a, 3)}
+    \pgfmathsetmacro{\tangentLen}{0.2 * (\b - \a)}
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick] (\xAxMin, 0) -- (\xAxMax, 0) node[right] {$x$};
+    \draw[->, thick] (0, -1.6) -- (0, 3.8) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 3. 対称軸 x = (\alpha+\beta)/2 ---
+    \draw[thick, dashed, red!80!black] (\xSym, -1.4) -- (\xSym, 3.5)
+    node[above, font=\footnotesize] {$x = \dfrac{\alpha+\beta}{2}$ (対称軸)};
+
+    % --- 4. 4次関数 y = f(x) の描画 (全変数を a, b から導出) ---
+    % 描画のため縦軸方向を0.25倍に圧縮
+    \draw[very thick, blue!80!black, domain=\xPlotMin:\xPlotMax, samples=120, smooth]
+    plot (\x, {0.25*(\x - \a) * (\x - \b) * ((\x)^2 + \pVal * \x + \qVal)});
+    \node[blue!80!black, right] at (\xPlotMax, 2.8) {$y = f(x)$};
+
+    % --- 5. 変曲点かつ零点である \alpha, \beta ---
+    % f(\alpha) = 0, f''(\alpha) = 0
+    \fill[purple!80!black] (\a, 0) circle (1.5pt);
+    \node[above left=1pt, purple!80!black] at (\a, 0) {$\alpha$};
+    \node[below=4pt, font=\scriptsize, purple!80!black, align=center] at (\a, 0)
+    {変曲点\\$(f''(\alpha)=0)$};
+
+    % f(\beta) = 0, f''(\beta) = 0
+    \fill[purple!80!black] (\b, 0) circle (1.5pt);
+    \node[above right=1pt, purple!80!black] at (\b, 0) {$\beta$};
+    \node[below=4pt, font=\scriptsize, purple!80!black, align=center] at (\b, 0)
+    {変曲点\\$(f''(\beta)=0)$};
+
+    % --- 6. その他の零点 (2次因数の解) ---
+    \fill (\xOtherLeft, 0) circle (1.0pt);
+    \fill (\xOtherRight, 0) circle (1.0pt);
+
+    % --- 8. 左右対称性の対応を示す矢印 ---
+    \pgfmathsetmacro{\ySymArrow}{0.4 * pow(\b - \a, 2)}
+    \pgfmathsetmacro{\xOffset}{0.45 * (\b - \a)}
+    \draw[<->, gray!80!black] ({\xSym - \xOffset}, \ySymArrow) -- ({\xSym + \xOffset}, \ySymArrow)
+    node[midway, fill=white, inner sep=1pt, font=\scriptsize] {対称};
+
+  \end{tikzpicture}
+  \caption{$f(x)=0$ と $f''(x)=0$ の共通解 $\alpha, \beta$ をもつ線対称な 4 次関数}
+  \label{fig:quartic_symmetry}
+\end{figure}
+
+% TODO :: (i)の図の解の点の座標の調整
 \end{document}

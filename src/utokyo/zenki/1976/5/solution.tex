@@ -1,74 +1,223 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\paragraph{【新課程】}
 {\bf [解]}
-$\cos\theta = c$，$s = \sin\theta$とおく．円柱側面の点$P$は$P(c, s, z)$とおける．ただし$0 \leqq \theta < 2\pi$とする．すると，$D$は
+
+\paragraph{【新課程】}
+$\theta$を$0\le\theta<2\pi$なる実数とする．
+簡単のため$\cos\theta = c$，$s = \sin\theta$とおくと，
+円柱側面の点$P$は$P(c, s, z)$とおける．
+$P$が$D$の領域にある時，
 \begin{align}
-  0 \leqq z \leqq 1 - c + \sqrt{3}s
+  0\le z \le 1-x+\sqrt{3}y \label{eq:1}
 \end{align}
-で与えられる．$z$の存在条件から
+を満たすから代入して
+\begin{align}
+  0 \leqq z \leqq 1 - c + \sqrt{3}s \label{eq:2}
+\end{align}
+である．
+
+\tdplotsetmaincoords{70}{110} % 視点の角度設定
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.2, tdplot_main_coords, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数と座標の定義 ---
+    % R: 円柱の半径 (1.0), h: z の最大高度 ≈ 3.0 (1 + 1 + sqrt(3)*1)
+    \def\R{1.0}
+
+    % A(1, 0, 0): theta = 0 の点
+    \coordinate (A) at (\R, 0, 0);
+    % B(-1/2, sqrt(3)/2, 0): theta = 2*pi/3 の点
+    \coordinate (B) at (-0.5*\R, 0.866*\R, 0);
+    % C(-1/2, -sqrt(3)/2, 0): theta = 4*pi/3 の点
+    \coordinate (C) at (-0.5*\R, -0.866*\R, 0);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-1.3, 0, 0) -- (1.6, 0, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.3, 0) -- (0, 1.3, 0) node[above] {$y$};
+    \draw[->, thick, gray!80!black] (0, 0, -0.3) -- (0, 0, 3.4) node[above] {$z$};
+    \node[below left=2pt] at (0, 0, 0) {$O$};
+
+    % --- 3. 底面の円柱断面 (z=0) と存在条件の範囲 ---
+    % theta = 0 から theta = 4*pi/3 までの円弧（存在条件の範囲）
+    \draw[very thick, blue!80!black, ->]
+    (\R, 0, 0) arc (0:240:\R)
+    node[pos=0.1, above, blue!80!black, font=\scriptsize] {$\theta \in [0, \frac{4\pi}{3}]$};
+
+    % theta = 4*pi/3 から 2*pi (=0) までの円弧（除外範囲: dashed）
+    \draw[thick, dashed, gray!60]
+    (C) arc (240:360:\R);
+
+    % --- 4. 円柱側面の曲面領域 T の描画 (パラメータプロット) ---
+    % T = { (cos theta, sin theta, z) | 0 <= theta <= 4*pi/3, 0 <= z <= 1 - cos theta + sqrt(3)*sin theta }
+
+    % パラメータ表示 (theta = 0 から 240, z は 0 から f(theta))
+    % z の高度 f(theta) = 1 - cos t + sqrt(3)*sin t
+    % (tikz の samples を増やすと滑らかになる)
+    \foreach \angle in {0, 10, ..., 240} {
+      \pgfmathsetmacro{\rad}{\angle * pi / 180.0}
+      \pgfmathsetmacro{\zMax}{1.0 - cos(\angle) + sqrt(3.0)*sin(\angle)}
+
+      % z = 0 の点から z = zMax への鉛直な生成線 (灰色)
+      \draw[gray!60, opacity=0.8]
+      ({ \R * cos(\angle) }, { \R * sin(\angle) }, 0) --
+      ({ \R * cos(\angle) }, { \R * sin(\angle) }, \zMax);
+    }
+
+    % --- 5. 領域 T の上部境界曲線 (パラメータプロット: samples=100) ---
+    % z = 1 - c + sqrt(3)s
+    \draw[very thick, red!85!black, samples=120, domain=0:240, smooth]
+    plot ({ \R * cos(\x) }, { \R * sin(\x) }, { 1.0 - cos(\x) + sqrt(3.0)*sin(\x) });
+
+    % --- 6. 主要な点とラベルの追加 ---
+    % A (1, 0, 0), P(0,0,0) の高度ラベルなど
+    \fill[red!85!black] (\R, 0, 0) circle (1.2pt) node[below=2pt, blue!80!black] {$A$};
+    \fill[red!85!black] (B) circle (1.2pt) node[above left, blue!80!black, font=\scriptsize] {$\theta = \frac{2\pi}{3}$};
+    \fill[red!85!black] (C) circle (1.2pt) node[below right, blue!80!black] {$C$};
+
+    % P(c,s,z) の高度を表示する点線一例 (\theta=60°)
+    \def\tEg{60}
+    \pgfmathsetmacro{\zEg}{1.0 - cos(\tEg) + sqrt(3.0)*sin(\tEg)} % = 1 - 0.5 + 1.5 = 2.0
+
+    \coordinate (PEgBase) at ({ \R * cos(\tEg) }, { \R * sin(\tEg) }, 0);
+    \coordinate (PEgMax) at ({ \R * cos(\tEg) }, { \R * sin(\tEg) }, \zEg);
+
+    \draw[dashed, blue!80!black] (PEgBase) -- (PEgMax);
+    \fill[red!85!black] (PEgMax) circle (1.5pt)
+    node[above right, font=\footnotesize] {$P(c,s,z)$};
+    \draw[<->, gray!80!black] ($ (PEgBase) + (-0.15, 0.15, 0) $) -- ($ (PEgMax) + (-0.15, 0.15, 0) $)
+    node[midway, left=2pt, gray!80!black, font=\scriptsize] {$z \leqq 1 - c + \sqrt{3}s$};
+
+    % 領域 T のラベル
+    % \node[fill=white, inner sep=2pt, font=\normalsize\bfseries] at (0, 0, 1.5) {$T$};
+    %\node[below=8pt, font=\small\bfseries] at (0.5, -0.6, 0)
+    %  {$T = \displaystyle \int_0^{\frac{4\pi}{3}} (1 - c + \sqrt{3}s) \, d\theta$};
+
+  \end{tikzpicture}
+  \caption{円柱側面 $x^2+y^2=1$ 上の $0 \leqq z \leqq 1 - x + \sqrt{3}y$ による領域}
+  \label{fig:cylinder_height_area}
+\end{figure}
+
+$z$の存在条件から
 \begin{align}
   &0 \leqq 1 - c + \sqrt{3}s \nonumber\\
   &\Longleftrightarrow \cos\left(\theta+\dfrac{\pi}{3}\right) \leqq \dfrac{1}{2} \nonumber\\
   &\Longleftrightarrow 0 \leqq \theta \leqq \dfrac{4\pi}{3}
 \end{align}
-となる．
+となる．ただし$2$行目で三角関数の合成を用いた．
 
-したがって，求める面積$S$は
+したがって，求める面積$T$は
 \begin{align}
-  S &= \int_0^{\frac{4\pi}{3}} (1 - c + \sqrt{3}s) \, d\theta \nonumber\\
+  T
+  &= \int_0^{\frac{4\pi}{3}} (1 - c + \sqrt{3}s) \, d\theta \nonumber\\
   &= \Bigl[ \theta - s - \sqrt{3}c \Bigr]_0^{\frac{4\pi}{3}} \nonumber\\
   &= 2\sqrt{3} + \dfrac{4\pi}{3}
 \end{align}
 となる．$\cdots\text{（答）}$
 
 \paragraph{【旧課程】}
-{\bf [解]}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・代表点のパラメータ ---
+    % 関数: y = (u^2 + 1) / (u + 1) = u - 1 + 2 / (u + 1)
+    % 時刻 t における点 P(x, 0) の代表値として x = 2.2 を採用
+    \def\xP{2.2}
+    \pgfmathsetmacro{\yP}{(\xP*\xP + 1.0) / (\xP + 1.0)} % (2.2^2+1)/3.2 = 5.84/3.2 = 1.825
+
+    % --- 2. 面積 S のハッチング (0 <= u <= x) ---
+    \fill[pattern=north east lines, pattern color=blue!50]
+    (0, 0) -- plot[domain=0:\xP, samples=60] (\x, {((\x)^2 + 1.0) / (\x + 1.0)})
+    -- (\xP, 0) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-0.5, 0) -- (3.6, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.4) -- (0, 3.2) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 4. 曲線 y = (u^2+1)/(u+1) の描画 ---
+    \draw[very thick, blue!80!black, domain=0:3.2, samples=80]
+    plot (\x, {((\x)^2 + 1.0) / (\x + 1.0)})
+    node[above right, font=\footnotesize] {$y = \dfrac{x^2+1}{x+1}$};
+
+    % --- 5. 点 P(x(t), 0) と境界線 ---
+    \draw[thick, dashed, gray!80!black] (\xP, 0) -- (\xP, \yP);
+
+    % 点 P(x, 0) のプロット
+    \fill[red!80!black] (\xP, 0) circle (1.3pt);
+    \node[below=3pt, red!80!black] at (\xP, 0) {$P(x(t),\, 0)$};
+
+    % 点 P の進行方向矢印（x 軸正の向きへの運動）
+    \draw[->, very thick, red!80!black] (\xP, 0) -- ++(0.65, 0)
+    node[above, font=\scriptsize] {$\dfrac{dx}{dt} > 0$};
+
+    % --- 6. y 軸切片および目盛り ---
+    \fill (0, 1) circle (1.0pt);
+    \node[left=2pt] at (0, 1) {$1$};
+
+    % --- 7. 面積 S と微小増加率のイメージラベル ---
+    \node[inner sep=2pt, font=\normalsize\bfseries, blue!85!black]
+    at (1.0, 0.55) {$S$};
+
+    % 境界における変化率 dS/dt の注記吹き出し
+    % \node[align=left, font=\scriptsize, draw=gray!60, rounded corners=3pt, fill=white, inner sep=3pt]
+    %  at (2.5, 2.5) {$\dfrac{dS}{dt} = \dfrac{dS}{dx}\dfrac{dx}{dt} = x^2+1$\\[2pt] $x(t) = e^t - 1$};
+    % \draw[->, gray!70] (2.1, 2.3) -- (1.6, 1.4);
+
+  \end{tikzpicture}
+  \caption{曲線 $y = \dfrac{x^2+1}{x+1}$ と運動する点 $P(x(t), 0)$ が囲む面積 $S$}
+  \label{fig:moving_area_integral}
+\end{figure}
+
 時刻$t$における点$P$の座標を$(x(t), 0)$とする．
 条件より$x(0) = 0$であり，$P$は$x$軸上を正の向きに動くから，$t > 0$において$x(t) > 0$である．
 $x \geqq 0$において$\dfrac{x^2+1}{x+1} > 0$であるから，時刻$t$において囲まれる図形の面積$S$は
 \begin{align}
-  S = \int_0^x \dfrac{u^2+1}{u+1} \, du
+  S = \int_0^x \dfrac{u^2+1}{u+1} \, du \label{eq:3}
 \end{align}
-と表される．微分積分学の基本定理より
+と表される．両辺を$x$で微分すると
 \begin{align}
   \dfrac{dS}{dx} = \dfrac{x^2+1}{x+1}
 \end{align}
 である．合成関数の微分法により
 \begin{align}
-  \dfrac{dS}{dt} = \dfrac{dS}{dx} \cdot \dfrac{dx}{dt} = \dfrac{x^2+1}{x+1} \dfrac{dx}{dt}
+  \dfrac{dS}{dt} = \dfrac{dS}{dx} \cdot \dfrac{dx}{dt} = \dfrac{x^2+1}{x+1} \dfrac{dx}{dt} \label{eq:4}
 \end{align}
-となる．題意より$P$が点$(x, 0)$を通過するときの変化率は$\dfrac{dS}{dt} = x^2+1$であるから，
+となる．題意より$P$が点$(x, 0)$を通過するときの変化率は$\dfrac{dS}{dt} = x^2+1$であるから，\cref{eq:4}の左辺に代入して
 \begin{align}
   \dfrac{x^2+1}{x+1} \dfrac{dx}{dt} = x^2+1
 \end{align}
 が成り立つ．$x^2+1 > 0$であるから両辺を$x^2+1$で割ると
 \begin{align}
-  \dfrac{1}{x+1} \dfrac{dx}{dt} = 1 \Longleftrightarrow \dfrac{dx}{dt} = x + 1
+  \dfrac{1}{x+1} \dfrac{dx}{dt} = 1 \Longleftrightarrow \dfrac{1}{x+1}dx = dt
 \end{align}
 を得る．変数分離形として両辺を$t$で積分すると
 \begin{align}
-  \int \dfrac{1}{x+1} \, dx = \int 1 \, dt
+  \int \dfrac{1}{x+1} \, dx = \int \, dt
 \end{align}
-より，$\log_e(x+1) = t + C$（$C$は積分定数）となる（$x \geqq 0$より$x+1 > 0$）．
+より，
+\begin{align}
+  \log_e(x+1) = t + C
+\end{align}
+である．ただし$C$は積分定数である．
 $t = 0$のとき$x = 0$であるから，$\log_e 1 = 0 + C$より$C = 0$である．
 したがって
 \begin{align}
-  \log_e(x+1) = t \Longleftrightarrow x+1 = e^t \Longleftrightarrow x = e^t - 1
+  \log(x+1) = t \Longleftrightarrow x+1 = e^t \Longleftrightarrow x = e^t - 1 \label{eq:5}
 \end{align}
-である．
-ここで，面積$S$の定積分を計算すると，
+である．これを\cref{eq:3}に代入して面積$S$は
 \begin{align}
-  \dfrac{u^2+1}{u+1} = \dfrac{(u^2-1) + 2}{u+1} = u - 1 + \dfrac{2}{u+1}
+  S
+  &= \int_0^x \dfrac{u^2+1}{u+1} \, du \\
+  &= \int_0^x \left[u - 1 + \dfrac{2}{u+1}\right]\, du \\
+  &= \left[ \dfrac{u^2}{2} - u + 2\log(u+1) \right]_0^x \\
+  &= \dfrac{x^2}{2} - x + 2\log(x+1)
 \end{align}
-であるから，
-\begin{align}
-  S &= \int_0^x \left( u - 1 + \dfrac{2}{u+1} \right) \, du \nonumber\\
-  &= \left[ \dfrac{u^2}{2} - u + 2\log_e(u+1) \right]_0^x \nonumber\\
-  &= \dfrac{x^2}{2} - x + 2\log_e(x+1)
-\end{align}
-となる．$x = e^t - 1$，および$\log_e(x+1) = t$を代入して整理すると，
+である．\cref{eq:5}を代入して
 \begin{align}
   S &= \dfrac{(e^t - 1)^2}{2} - (e^t - 1) + 2t \nonumber\\
   &= \dfrac{e^{2t} - 2e^t + 1}{2} - e^t + 1 + 2t \nonumber\\
