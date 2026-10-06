@@ -1,38 +1,35 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
 {\bf [解]}
 
+\paragraph{(1)}
 単位行列を $I$ とおく．ケーリー・ハミルトンの定理から，
 \begin{align}
-  A^2 - \Bigl(\dfrac{1}{3} + 3\Bigr) A + \det(A) \cdot I &= 0 \\
-  \implies A^2 &= \dfrac{10}{3}A - I \quad \cdots \text{①}
+  & A^2 - \Bigl(\dfrac{1}{3} + 3\Bigr) A + \det(A) \cdot I = 0 \\
+  \therefore
+  &A^2 = \dfrac{10}{3}A - I \label{eq:1}
 \end{align}
-である．したがって，$n \in \mathbb{N}_{\ge 2}$ に対し，
+である．したがって，$n \in \mathbb{N}_{\ge 2}$ に対して$A^{n+1}$を考えると
 \begin{align}
-  A^{n+1} &= A^{n-1} \cdot A^2 = A^{n-1} \Bigl( \dfrac{10}{3} A - I \Bigr) \\
-  &= \dfrac{10}{3} A^n - A^{n-1} \quad \cdots \text{②}
+  A^{n+1}
+  &= A^{n-1} \cdot A^2 \\
+  &= A^{n-1} \Bigl( \dfrac{10}{3} A - I \Bigr) \quad (\because \text{\cref{eq:1}})\\
+  &= \dfrac{10}{3} A^n - A^{n-1} \label{eq:2}
 \end{align}
-となる．ここで，数列 $c_n$ が $c_{n+2} = \dfrac{10}{3} c_{n+1} - c_n$ を満たすとき，その一般項は $p, q$ を定数として
+なる漸化式を満たす．
+
+ここで，数列 $c_n$ が $c_{n+2} = \dfrac{10}{3} c_{n+1} - c_n$ を満たすとき，その一般項は $p, q$ を定数として
 \begin{align}
   c_n = 3^n p + \Bigl(\dfrac{1}{3}\Bigr)^n q
 \end{align}
 で与えられることに注意する．
 
-\medskip
-\noindent
-\paragraph{(1)}
-
 $A =
 \begin{pmatrix} 1/3 & 5 \\ 0 & 3
-\end{pmatrix}$，$A^2 =
+\end{pmatrix}$，および$A^2 =
 \begin{pmatrix} 1/9 & 50/9 \\ 0 & 9
-\end{pmatrix}$ である．ここで
+\end{pmatrix}$ に注意する．ここで
 \begin{align}
   A^n &= 3^{n-1}
   \begin{pmatrix} 0 & 45/8 \\ 0 & 3
@@ -41,9 +38,11 @@ $A =
   \end{pmatrix} \\
   &=
   \begin{pmatrix} (1/3)^n & (3^n - (1/3)^n)\dfrac{15}{8} \\ 0 & 3^n
-  \end{pmatrix} \quad \cdots \text{③}
+  \end{pmatrix} \label{eq:3}
 \end{align}
-であることを帰納的に示す．$n=1,2$ の時は成立する．そこで $n=k, k+1 \ (k \in \mathbb{N})$ での③の成立を仮定すると，②から
+であることを帰納的に示す．まず$n=1,2$ の時は初項と比較して成立する．
+そこで $n=k, k+1 \ (k \in \mathbb{N})$ での\cref{eq:3}の成立を仮定すると，
+\cref{eq:2}から$A^{k+2}$は
 \begin{align}
   A^{k+2} &= \dfrac{10}{3}
   \begin{pmatrix} (1/3)^{k+1} & (3^{k+1} - (1/3)^{k+1})\dfrac{15}{8} \\ 0 & 3^{k+1}
@@ -54,15 +53,20 @@ $A =
   \begin{pmatrix} (1/3)^{k+2} & (3^{k+2} - (1/3)^{k+2})\dfrac{15}{8} \\ 0 & 3^{k+2}
   \end{pmatrix}
 \end{align}
-となり，$n=k+2$ でも成立する．以上より示された．
+となり，$n=k+2$ でも\cref{eq:3}は成立する．
+以上より数学的帰納法により\cref{eq:3}が示された．
 
-したがって，
+したがって求める$A^n$の一般項は
 \begin{align}
   A^n =
   \begin{pmatrix} (1/3)^n & (3^n - (1/3)^n)\dfrac{15}{8} \\ 0 & 3^n
   \end{pmatrix}
 \end{align}
-である．さらに
+である．
+
+\paragraph{(2)}
+
+\cref{eq:3}より$a_n,b_n$は
 \begin{align}
   \begin{pmatrix} a_n \\ b_n
   \end{pmatrix} &= A^n
@@ -70,34 +74,46 @@ $A =
   \end{pmatrix} \\
   &=
   \begin{pmatrix} (1/3)^n a + \dfrac{15}{8}(3^n - (1/3)^n) b \\ 3^n b
-  \end{pmatrix} \quad \cdots \text{④}
+  \end{pmatrix} \label{eq:4}
 \end{align}
-だから，$\alpha = 3^n$ とおくと，
+だから，簡単のために$\alpha = 3^n$ とおくと，
 \begin{align}
-  a_n^2 + b_n^2 = \Bigl\{ \dfrac{15}{8} b \alpha + \Bigl(a - \dfrac{15}{8}b\Bigr) \dfrac{1}{\alpha} \Bigr\}^2 + (b\alpha)^2
+  a_n^2 + b_n^2 = \Bigl\{ \dfrac{15}{8} b \alpha + \Bigl(a - \dfrac{15}{8}b\Bigr) \dfrac{1}{\alpha} \Bigr\}^2 + (b\alpha)^2 \label{eq:5}
 \end{align}
-であり，$n \to \infty$ ($\alpha \to \infty$) において，
+である．$n \to \infty$ ($\alpha \to \infty$) において$b$が非零かどうかで場合分けする．
 
-\paragraph{$b \ne 0$ のとき}
+\subparagraph{$b \ne 0$ のとき}
+
+この時は\cref{eq:4,eq:5}より
 \begin{align}
-  u &= \lim_{n \to \infty} \dfrac{a_n}{\sqrt{a_n^2 + b_n^2}} \\
+  u
+  &= \lim_{n \to \infty} \dfrac{a_n}{\sqrt{a_n^2 + b_n^2}} \\
+  &= \lim_{n \to \infty} \dfrac{a\alpha + \dfrac{15}{8}(\alpha - 1/\alpha) b}{\sqrt{\Bigl\{ \dfrac{15}{8} b \alpha + \Bigl(a - \dfrac{15}{8}b\Bigr) \dfrac{1}{\alpha} \Bigr\}^2 + (b\alpha)^2}}\\
   &= \dfrac{\dfrac{15}{8}b}{\sqrt{\Bigl(\dfrac{15}{8}b\Bigr)^2 + b^2}} \\
   &= \dfrac{15}{17}\dfrac{b}{|b|}
 \end{align}
+および
 \begin{align}
-  v &= \lim_{n \to \infty} \dfrac{b_n}{\sqrt{a_n^2 + b_n^2}} \\
+  v
+  &= \lim_{n \to \infty} \dfrac{b_n}{\sqrt{a_n^2 + b_n^2}} \\
+  &= \lim_{n \to \infty} \dfrac{b\alpha}{\sqrt{\Bigl\{ \dfrac{15}{8} b \alpha + \Bigl(a - \dfrac{15}{8}b\Bigr) \dfrac{1}{\alpha} \Bigr\}^2 + (b\alpha)^2}} \\
   &= \dfrac{b}{\sqrt{\Bigl(\dfrac{15}{8}b\Bigr)^2 + b^2}} \\
   &= \dfrac{8}{17}\dfrac{b}{|b|}
 \end{align}
+である．
 
-\paragraph{$b = 0$ のとき}
-④に代入して $
-\begin{pmatrix} a_n \\ b_n
-\end{pmatrix} =
-\begin{pmatrix} a/\alpha \\ 0
-\end{pmatrix}$ だから，$v=0, u = \dfrac{a}{|a|}$ となる．
+\subparagraph{$b = 0$ のとき}
 
-\medskip
+$b=0$を直接\cref{eq:4,eq:5}に代入して
+\begin{align}
+  \begin{pmatrix} a_n \\ b_n
+  \end{pmatrix} =
+  \begin{pmatrix} a/\alpha \\ 0
+  \end{pmatrix}
+\end{align}
+だから，$v=0, u = \dfrac{a}{|a|}$ となる．
+\casesend
+
 以上をまとめて，
 \begin{align}
   \begin{cases}

@@ -1,74 +1,398 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
 {\bf [解]}
 
 \paragraph{(1)}
 
-$P(t, t^2)$ とおく．$P$ での $y=x^2$ の接線は $y = 2tx - t^2$ だから，
+$P(t, t^2)$ とおく．ただし$0 \le t \le 1$とする．
+点 $P$ での $y=x^2$ の接線は $y = 2tx - t^2$ だから，この接線と$y=0,x=1$の交点$A,B$の座標は
 \begin{align}
-  A\Bigl(\dfrac{t}{2}, 0\Bigr), \quad B(0, -t^2)
+  A\Bigl(\dfrac{t}{2}, 0\Bigr), \quad B(1, 2t-t^2) \label{eq:1}
 \end{align}
-となる．したがって，
+となる．また，簡単のため$P$から$x$軸，および$BC$に下ろした垂足を$P',P''$とする．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=4.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ定義 ---
+    % 例として t = 0.55 を採用
+    \def\tVal{0.55}
+    \pgfmathsetmacro{\tSq}{\tVal * \tVal}              % t^2
+    \pgfmathsetmacro{\xA}{0.5 * \tVal}                 % t/2
+    \pgfmathsetmacro{\yB}{-\tSq}                       % -t^2
+    \pgfmathsetmacro{\yTanAtOne}{2.0*\tVal*1.0 - \tSq} % 2t - t^2
+
+    % 主要点の座標定義
+    \coordinate (O)   at (0, 0);
+    \coordinate (C)   at (1, 0);
+    \coordinate (D)   at (1, 1);
+    \coordinate (P)   at (\tVal, \tSq);
+    \coordinate (A)   at (\xA, 0);
+    \coordinate (B)   at (0, \yB);
+    \coordinate (Pprime)  at (\tVal, 0);               % P から x 軸 (AC) への垂足
+    \coordinate (Pdprime) at (\tVal, \yTanAtOne);       % P から直線 x=1 (BC) への垂足と同じ高さ
+    \coordinate (T1)  at (1, \yTanAtOne);              % 接線と x = 1 の交点
+
+    % --- 2. 三角形 PAC, PCB の領域色分け・ハッチング ---
+    % \triangle PAC: 底辺 AC (長さ 1 - t/2), 高さ PP' (長さ t^2)
+    \fill[pattern=north east lines, pattern color=blue!60, opacity=0.8] (P) -- (A) -- (C) -- cycle;
+
+    % \triangle PCB (接線上の交点 T1 を用いた実質的な対象 \triangle P C T1)
+    \fill[pattern=north west lines, pattern color=orange!70, opacity=0.8] (P) -- (C) -- (T1) -- cycle;
+
+    % --- 3. 領域 M の境界線・補助線 ---
+    % 直線 x = 1, y = 1
+    \draw[thick, gray!50] (C) -- (D) -- (0, 1);
+    \draw[dashed, gray!50] (0, 0) -- (0, 1);
+
+    % 放物線 y = x^2 (0 <= x <= 1)
+    \draw[very thick, blue!85!black, domain=0:1.05, samples=60] plot (\x, {\x*\x});
+    \node[blue!85!black, above left=1pt, font=\footnotesize] at (0.95, 0.95) {$y = x^2$};
+
+    % --- 4. 点 P における接線 y = 2tx - t^2 ---
+    \draw[thick, red!80!black, domain=-0.05:1.15] plot (\x, {2.0*\tVal*\x - \tSq});
+    \node[red!80!black, below right=1pt, font=\scriptsize] at (1.1, {2.0*\tVal*1.1 - \tSq}) {接線: $y = 2tx - t^2$};
+
+    % --- 5. 座標軸 ---
+    \draw[->, thick] (-0.15, 0) -- (1.25, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.45) -- (0, 1.15) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 6. 垂線・点線 ---
+    % P から x 軸への垂線 PP'
+    \draw[densely dashed, purple!80!black] (P) -- (Pprime);
+    % 直角マーク (P')
+    \draw[purple!80!black] ($ (Pprime) + (0, 0.035) $) -- ($ (Pprime) + (-0.035, 0.035) $) -- ($ (Pprime) + (-0.035, 0) $);
+
+    % P から直線 x = 1 への垂線 (長さ 1 - t)
+    \draw[densely dashed, purple!80!black] (P) -- (\tVal, \tSq - 0.01) -- (1, \tSq);
+    \coordinate (Ppp) at (1, \tSq);
+    % 直角マーク (x = 1 側)
+    \draw[purple!80!black] ($ (Ppp) + (-0.035, 0) $) -- ($ (Ppp) + (-0.035, -0.035) $) -- ($ (Ppp) + (0, -0.035) $);
+
+    % 接線と x=1 の交線 T1 から C への縦線分 (長さ 2t - t^2)
+    \draw[line width=1.1pt, orange!90!black] (C) -- (T1);
+
+    % --- 7. 主要点のプロットとラベル ---
+    % P(t, t^2)
+    \fill[black] (P) circle (0.6pt);
+    \node[above left=1pt] at (P) {$P(t, t^2)$};
+
+    % A(t/2, 0)
+    \fill[black] (A) circle (0.6pt);
+    \node[below=2pt, font=\footnotesize] at (A) {$A\Bigl(\dfrac{t}{2}, 0\Bigr)$};
+
+    % C(1, 0)
+    \fill[black] (C) circle (0.6pt);
+    \node[below right=1pt] at (C) {$C(1,0)$};
+
+    % 垂足 P'
+    \node[below=2pt, font=\scriptsize, purple!80!black] at (Pprime) {$P'(t, 0)$};
+
+    % 接線上の点 T1 (解の記法における B 側に対応)
+    \fill[black] (T1) circle (0.6pt);
+    \node[right=2pt, font=\footnotesize] at (T1) {$B(1, 2t-t^2)$};
+
+  \end{tikzpicture}
+  \caption{放物線 $y = x^2$ の接線と点 $P(t, t^2)$ における三角形 $\triangle PAC$ および $\triangle PCB$ の配置}
+  \label{fig:tangent_triangles}
+\end{figure}
+
+したがって，$\triangle PAC, \triangle PCB$の面積$g(t), h(t)$はそれぞれ
 \begin{align}
   \begin{cases}
-    g(t) = \dfrac{1}{2}\Bigl(1 - \dfrac{t}{2}\Bigr) t^2 = \dfrac{1}{4}(2-t)t^2 \\[1ex]
-    h(t) = \dfrac{1}{2}(2t - t^2)(1-t)
+    g(t) = \dfrac{1}{2}|AC||PP'| = \dfrac{1}{2}\Bigl(1 - \dfrac{t}{2}\Bigr) t^2 = \dfrac{1}{4}(2-t)t^2 \\[1ex]
+    h(t) = \dfrac{1}{2}|BC||PP''| = \dfrac{1}{2}(2t - t^2)(1-t)
   \end{cases}
 \end{align}
-となる．$0 < t \le 1$ のとき
+となる．$0 < t \le 1$ のとき，これらの大小関係は
 \begin{align}
-  g(t) \le h(t) &\iff \dfrac{1}{2}(2t - t^2)(1-t) - \dfrac{1}{4}(2-t)t^2 \ge 0 \\
+  g(t) \le h(t)
+  &\iff \dfrac{1}{2}(2t - t^2)(1-t) - \dfrac{1}{4}(2-t)t^2 \ge 0 \\
   &\iff 2(2-t)(1-t)t - (2-t)t^2 \ge 0 \\
   &\iff (2-t)t(2-3t) \ge 0 \\
   &\iff 0 \le t \le \dfrac{2}{3}
 \end{align}
-だから，$t$ を $x$ に置き換えて，$0 < x \le \dfrac{2}{3}$ である．
+だから，$t$ を $x$ に置き換えて，$g(t)\le h(t)$となるのは
+\begin{align}
+  0 < x \le \dfrac{2}{3}
+\end{align}
+の時である．
 
-\medskip
-\noindent
 \paragraph{(2)}
 
-三角形の頂点が $M$ の弧上にある時，辺の延長上の点と $M$ の周囲の交点を新たな頂点とすれば，面積はより大きくなる．したがって三角形の面積が最大の時，3頂点 $\alpha, \beta, P$ は $M$ の周上にある．
+三角形の頂点が $M$ の弧上にある時，辺の延長上の点と $M$ の境界線の交点を新たな頂点とすれば，面積はより大きくなる．したがって三角形の面積が最大の時，3頂点 $\alpha, \beta, P$ は $M$ の周上にある．
 
-$P(t, t^2)$ で $\triangle \alpha \beta P$ が $M$ の周または内部にあるから，対称性より $\alpha$ が $OC$ 上，$\beta$ が $CD$ 上にあるとして，$\alpha(a,0), \beta(1,b)$ とおくと ($y=x^2$ が下に凸より)
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=4.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ定義 ---
+    \def\tVal{0.6}
+    \pgfmathsetmacro{\tSq}{\tVal * \tVal}               % 0.36
+    \pgfmathsetmacro{\xA}{0.5 * \tVal}                  % 0.30
+    \pgfmathsetmacro{\yTanAtOne}{2.0*\tVal*1.0 - \tSq}  % 0.84
+
+    % M の内側（領域内部）にとる点 alpha, beta
+    \def\xAlpha{0.48}
+    \def\yAlpha{0.12}
+    \def\xBeta{0.82}
+    \def\yBeta{0.38}
+
+    % 座標定義
+    \coordinate (O)     at (0, 0);
+    \coordinate (C)     at (1, 0);
+    \coordinate (D)     at (1, 1);
+    \coordinate (P)     at (\tVal, \tSq);
+    \coordinate (Alpha) at (\xAlpha, \yAlpha);
+    \coordinate (Beta)  at (\xBeta, \yBeta);
+
+    % --- 2. 領域 M の下地ハッチング (放物線 y = x^2 の下側かつ正方形内) ---
+    \fill[gray!15] (0, 0) -- plot[domain=0:1.0, samples=40] (\x, {\x*\x}) -- (1, 0) -- cycle;
+
+    % --- 3. 三角形 P \alpha \beta の領域ハッチング ---
+    \fill[pattern=north east lines, pattern color=blue!60, opacity=0.85]
+    (P) -- (Alpha) -- (Beta) -- cycle;
+    \draw[thick, blue!85!black] (P) -- (Alpha) -- (Beta) -- cycle;
+
+    % --- 4. 領域 M の境界線 ---
+    % 正方形枠の線分 (x=1, y=1)
+    \draw[thick, gray!50] (C) -- (D) -- (0, 1);
+    \draw[dashed, gray!40] (0, 0) -- (0, 1);
+
+    % 放物線 y = x^2 (0 <= x <= 1)
+    \draw[very thick, blue!85!black, domain=0:1.05, samples=60] plot (\x, {\x*\x});
+    \node[blue!85!black, above left=1pt, font=\footnotesize] at (0.95, 0.95) {$y = x^2$};
+
+    % 領域 M のラベル
+    \node[gray!70!black, font=\bfseries] at (0.78, 0.15) {$M$};
+
+    % --- 5. 点 P における接線 (境界条件の基準線) ---
+    \draw[thick, dashed, red!75!black, domain=0.25:1.05] plot (\x, {2.0*\tVal*\x - \tSq});
+    \node[red!75!black, below right=1pt, font=\scriptsize] at (1.02, {2.0*\tVal*1.02 - \tSq}) {接線};
+
+    % --- 6. 座標軸 ---
+    \draw[->, thick] (-0.1, 0) -- (1.18, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.15) -- (0, 1.15) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 7. 主要点のプロットとラベル ---
+    % 点 P
+    \fill[black] (P) circle (0.6pt);
+    \node[above left=1pt] at (P) {$P(t, t^2)$};
+
+    % 点 alpha (M の内部)
+    \fill[purple!80!black] (Alpha) circle (0.6pt);
+    \node[below=2pt, purple!80!black] at (Alpha) {$\alpha$};
+
+    % 点 beta (M の内部)
+    \fill[purple!80!black] (Beta) circle (0.6pt);
+    \node[above right=1pt, purple!80!black] at (Beta) {$\beta$};
+
+    % 頂点 C, D
+    \fill[black] (C) circle (0.5pt);
+    \node[below right=1pt] at (C) {$C(1,0)$};
+    \fill[black] (D) circle (0.5pt);
+    \node[above right=1pt] at (D) {$D(1,1)$};
+
+    % 三角形の注記
+    \node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=2.5pt, font=\footnotesize]
+    at (0.42, 0.42) {$\triangle P\alpha\beta \subset M$};
+
+  \end{tikzpicture}
+  \caption{領域 $M$（$y \leqq x^2$ かつ正方形内部）の内側に頂点 $\alpha, \beta$ をとった三角形 $\triangle P\alpha\beta$}
+  \label{fig:triangle_inside_M}
+\end{figure}
+
+$P(t, t^2)$ で $\triangle \alpha \beta P$ が $M$ の周または内部にあるから，対称性より $\alpha$ が $OC$ 上，$\beta$ が $CD$ 上にあるとして $\alpha(a,0), \beta(1,b)$ とおく．
+二点$\alpha,\beta$が同じ辺上にあるケースは，$\alpha,\beta$のいずれかが$C$に一致するケースよりも必ず面積が小さくなるから考えなくて良い．
+
+放物線$y=x^2$ が下に凸だから，線分$P\alpha,P\beta$が$M$の内部にあるためには$\alpha,\beta$が$P$での接線よりも下側になければならない．従って\cref{eq:1}より
 \begin{align}
-  \dfrac{t}{2} \le a \le 1, \quad 0 \le b \le 2t - t^2
+  \dfrac{t}{2} \le a \le 1, \quad 0 \le b \le 2t - t^2 \label{eq:2}
 \end{align}
 である．以下 $t$ の値を固定して考える．
 
-\paragraph{$1^\circ \ \dfrac{t}{2} \le a \le t$ の時}
-$a$ を固定して $\triangle P \alpha \beta$ を考えると，$P\alpha$ を底辺とみれば $\beta = C$ の時高さが最大となる．
-次に $\alpha$ を動かすと同じく $a = A$ で最大となる．よってこの時
+\subparagraph{$1^\circ \ \dfrac{t}{2} \le a \le t$ の時}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.8, >=stealth, every node/.style={font=\small}]
+
+    % ========================================================
+    % ケース 1: 1^\circ ( t/2 <= a <= t のとき -> 最大値は \triangle PAC )
+    % ========================================================
+    \def\tVal{0.6}
+    \pgfmathsetmacro{\tSq}{\tVal * \tVal}               % 0.36
+    \pgfmathsetmacro{\xA}{0.5 * \tVal}                  % 0.30
+    \pgfmathsetmacro{\yTanAtOne}{2.0*\tVal*1.0 - \tSq}  % 0.84
+    \def\aVal{0.45}                                     % t/2 <= a <= t の例
+    \def\bVal{0.40}                                     % 一般の点 beta の高さ
+
+    % 座標の定義
+    \coordinate (O)       at (0, 0);
+    \coordinate (C)       at (1, 0);
+    \coordinate (D)       at (1, 1);
+    \coordinate (P)       at (\tVal, \tSq);
+    \coordinate (Pprime)  at (\tVal, 0);                % P から x 軸への垂足
+    \coordinate (A)       at (\xA, 0);
+    \coordinate (Alpha)   at (\aVal, 0);
+    \coordinate (Beta)    at (1, \bVal);
+    \coordinate (T1)      at (1, \yTanAtOne);
+
+    % 最大となる三角形 \triangle PAC のハッチング
+    \fill[pattern=north east lines, pattern color=blue!50, opacity=0.7] (P) -- (A) -- (C) -- cycle;
+
+    % 任意の三角形 \triangle P \alpha \beta (細点線)
+    \draw[thick, densely dotted, gray!80!black] (P) -- (Alpha) -- (Beta) -- cycle;
+    \fill[gray!80!black] (Alpha) circle (0.4pt) node[below=1pt, font=\scriptsize] {$\alpha$};
+    \fill[gray!80!black] (Beta)  circle (0.4pt) node[right=1pt, font=\scriptsize] {$\beta$};
+
+    % 直線 P\alpha に平行で C(1,0) を通る平行線
+    % P\alpha の方向ベクトル: (t - a, t^2) = (0.15, 0.36)
+    \draw[thick, dashed, teal!85!black]
+    ($ (C) - 1.2*(\tVal - \aVal, \tSq) $) -- ($ (C) + 1.2*(\tVal - \aVal, \tSq) $);
+    \node[teal!85!black, font=\scriptsize, align=left, above right]
+    at ($ (C) + 0.9*(\tVal - \aVal, \tSq) $) {$P\alpha \parallel (\text{直線})$};
+
+    % 正方形枠・放物線 y = x^2
+    \draw[thick, gray!40] (O) rectangle (D);
+    \draw[very thick, blue!85!black, domain=0:1.0] plot (\x, {\x*\x});
+
+    % 点 P における接線
+    \draw[thick, red!80!black, domain=0.25:1.05] plot (\x, {2.0*\tVal*\x - \tSq});
+
+    % 最大三角形 PAC の外枠
+    \draw[line width=1.1pt, blue!90!black] (P) -- (A) -- (C) -- cycle;
+
+    % 座標軸
+    \draw[->, thick] (-0.1, 0) -- (1.2, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.1) -- (0, 1.15) node[above] {$y$};
+    \node[below left=1pt] at (O) {$O$};
+
+    % 垂線 PP' と直角マーク
+    \draw[densely dashed, purple!80!black, thick] (P) -- (Pprime);
+    \draw[purple!80!black] ($ (Pprime) + (0, 0.035) $) -- ($ (Pprime) + (-0.035, 0.035) $) -- ($ (Pprime) + (-0.035, 0) $);
+
+    % 主要点プロット
+    \fill (P) circle (0.5pt) node[above left=1pt] {$P(t, t^2)$};
+    \fill[purple!80!black] (Pprime) circle (0.5pt);
+    \node[below=1pt, font=\scriptsize, purple!80!black] at (Pprime) {$P'(t,0)$};
+    \fill (A) circle (0.5pt) node[below=1pt, font=\scriptsize] {$A\Bigl(\dfrac{t}{2},0\Bigr)$};
+    \fill (C) circle (0.5pt) node[below right=1pt] {$C(1,0)$};
+  \end{tikzpicture}
+  \caption{$1^\circ$ における動点 $\alpha(a,0), \beta(1,b)$ と最大面積三角形 $\triangle PAC$（$P\alpha$ に平行な線から $\beta = C$ で高さ最大）}
+  \label{fig:case1_alpha_beta_max}
+\end{figure}
+
+$a$ を固定して $\triangle P \alpha \beta$ を考えると，$P\alpha$ を底辺とみれば $\beta = C$ の時にこの三角形の高さが最大となる．
+次に $\alpha$ を動かすと明らかに面積は $a = A$ で最大となる．よってこの時
 \begin{align}
-  f(x) = \text{Area}(\triangle PAC) = g(t)
+  f(x) = \triangle PAC = g(t) \label{eq:3}
 \end{align}
+である．
 
 \paragraph{$2^\circ \ t \le a \le 1$ の時}
-同様にして $f(x) = \text{Area}(\triangle PCB) = h(t)$
 
-\medskip
-$\alpha, \beta$ が同一辺上にある時も明らかに $\max \text{Area}(\triangle P\alpha\beta)$ は $g(t)$ か $h(t)$ だから，次に $t$ を動かして，
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.8, >=stealth, every node/.style={font=\small}]
+
+    % ========================================================
+    % ケース 2: 2^\circ ( t <= a <= 1 のとき -> 最大値は \triangle PCB )
+    % ========================================================
+    \def\tVal{0.6}
+    \pgfmathsetmacro{\tSq}{\tVal * \tVal}               % 0.36
+    \pgfmathsetmacro{\xA}{0.5 * \tVal}                  % 0.30
+    \pgfmathsetmacro{\yTanAtOne}{2.0*\tVal*1.0 - \tSq}  % 2t - t^2 = 0.84
+    \def\aVal{0.80}                                     % t <= a <= 1 の例
+    \def\bVal{0.35}                                     % 一般の点 beta の高さ
+
+    % 座標の定義
+    \coordinate (O)       at (0, 0);
+    \coordinate (C)       at (1, 0);
+    \coordinate (D)       at (1, 1);
+    \coordinate (P)       at (\tVal, \tSq);
+    \coordinate (Pprime)  at (\tVal, 0);                % P から x 軸への垂足
+    \coordinate (A)       at (\xA, 0);
+    \coordinate (Alpha)   at (\aVal, 0);
+    \coordinate (Beta)    at (1, \bVal);
+    \coordinate (T1)      at (1, \yTanAtOne);           % 接線上の点 B (x=1)
+
+    % 最大となる三角形 \triangle PCB (P-C-T1) のハッチング
+    \fill[pattern=north west lines, pattern color=orange!60, opacity=0.7] (P) -- (C) -- (T1) -- cycle;
+
+    % 任意の三角形 \triangle P \alpha \beta (細点線)
+    \draw[thick, densely dotted, gray!80!black] (P) -- (Alpha) -- (Beta) -- cycle;
+    \fill[gray!80!black] (Alpha) circle (0.4pt) node[below=1pt, font=\scriptsize] {$\alpha$};
+    \fill[gray!80!black] (Beta)  circle (0.4pt) node[right=1pt, font=\scriptsize] {$\beta$};
+
+    % 直線 P\alpha に平行で点 B(1, 2t-t^2) を通る平行線
+    % P\alpha の方向ベクトル: (\aVal - \tVal, -\tSq) = (0.20, -0.36)
+    \draw[thick, dashed, teal!85!black]
+    ($ (T1) - 1.2*(\aVal - \tVal, -\tSq) $) -- ($ (T1) + 0.8*(\aVal - \tVal, -\tSq) $);
+    \node[teal!85!black, font=\scriptsize, align=left, above right]
+    at ($ (T1) - 1.15*(\aVal - \tVal, -\tSq) $) {$P\alpha \parallel (\text{直線})$};
+
+    % 正方形枠・放物線 y = x^2
+    \draw[thick, gray!40] (O) rectangle (D);
+    \draw[very thick, blue!85!black, domain=0:1.0] plot (\x, {\x*\x});
+
+    % 点 P における接線
+    \draw[thick, red!80!black, domain=0.25:1.05] plot (\x, {2.0*\tVal*\x - \tSq});
+
+    % 最大三角形 PCB の外枠
+    \draw[line width=1.1pt, orange!90!black] (P) -- (C) -- (T1) -- cycle;
+
+    % 座標軸
+    \draw[->, thick] (-0.1, 0) -- (1.2, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.1) -- (0, 1.15) node[above] {$y$};
+    \node[below left=1pt] at (O) {$O$};
+
+    % 垂線 PP' と直角マーク
+    \draw[densely dashed, purple!80!black, thick] (P) -- (Pprime);
+    \draw[purple!80!black] ($ (Pprime) + (0, 0.035) $) -- ($ (Pprime) + (-0.035, 0.035) $) -- ($ (Pprime) + (-0.035, 0) $);
+
+    % 主要点プロット
+    \fill (P) circle (0.5pt) node[above left=1pt] {$P(t, t^2)$};
+    \fill[purple!80!black] (Pprime) circle (0.5pt);
+    \node[below=1pt, font=\scriptsize, purple!80!black] at (Pprime) {$P'(t,0)$};
+    \fill (C) circle (0.5pt) node[below=1pt] {$C(1,0)$};
+    \fill (T1) circle (0.5pt) node[right=1pt, font=\scriptsize] {$B(1, 2t-t^2)$};
+
+  \end{tikzpicture}
+  \caption{$2^\circ$ における動点 $\alpha(a,0), \beta(1,b)$ と最大面積三角形 $\triangle PCB$（$P\alpha$ に平行な線から $\beta = B$ で高さ最大）}
+  \label{fig:case2_alpha_beta_max}
+\end{figure}
+
+$1^{\circ}$と同様に考える．$\triangle P \alpha \beta$ において $P\alpha$ を底辺と見れば$\beta=B$の時にこの三角形の高さが最大となる．
+次に$\alpha$ を動かすと明らかに面積は $a = C$ で最大となる．よってこの時
+\begin{align}
+  f(x) = \triangle PCB = h(t) \label{eq:4}
+\end{align}
+である．
+\casesend
+
+以上\cref{eq:3,eq:4}をまとめて，(1)の結果と合わせて
 \begin{align}
   f(t) = \max \{ g(t), h(t) \} =
   \begin{cases}
     h(x) & (0 < x \le 2/3) \\
     g(x) & (2/3 \le x < 1)
-  \end{cases}
+  \end{cases} \label{eq:5}
 \end{align}
-増減を調べる：
+である．
+
+次に$g(t), h(t)$の増減を調べるために一階微分を計算すると
 \begin{align}
   g'(t) = \dfrac{1}{4}(4t - 3t^2) = \dfrac{1}{4}t(4-3t) > 0 \quad \Bigl(0 < t < 1\Bigr)
 \end{align}
 \begin{align}
   h'(t) = \dfrac{1}{2}(t^2 - 2t) + \dfrac{1}{2}(2 - 2t)(1-t) = \dfrac{1}{2}(3t^2 - 6t + 2)
 \end{align}
-$h'(t) = 0$ の根は $t = \dfrac{3 \pm \sqrt{3}}{3}$ である．
+だから，$g(t)$は単調増加で，$h(t)$の増減表は以下のようになる．
 
 \begin{table}[htb]
   \centering
@@ -82,24 +406,88 @@ $h'(t) = 0$ の根は $t = \dfrac{3 \pm \sqrt{3}}{3}$ である．
   \end{tabular}
 \end{table}
 
-グラフを図示すると以下のようになる（極大値: $\dfrac{\sqrt{3}}{9}$，極小値: $\dfrac{4}{27}$）．
+従って$f(t)$のグラフを図示すると以下のようになる（極大値: $\dfrac{\sqrt{3}}{9}$，極小値: $\dfrac{4}{27}$）．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=3]
-    \draw[->] (-0.1,0) -- (1.2,0) node[right] {$x$};
-    \draw[->] (0,-0.1) -- (0,0.3) node[above] {$y$};
+  \begin{tikzpicture}[
+      scale=10.0,
+      >=stealth,
+      every node/.style={font=\small}
+    ]
 
-    % h(x) from 0 to 2/3
-    \draw[domain=0:0.6667, smooth, variable=\x, blue, thick] plot ({\x}, {0.5*(2*\x - \x*\x)*(1-\x)});
-    % g(x) from 2/3 to 1
-    \draw[domain=0.6667:1, smooth, variable=\x, blue, thick] plot ({\x}, {0.25*(2-\x)*\x*\x});
+    % --- 1. 代表点の座標・関数値の定義 ---
+    % 極大点: t_max = (3 - sqrt(3))/3 ≈ 0.4226, y_max = sqrt(3)/9 ≈ 0.1925
+    \def\xMax{0.42265}
+    \def\yMax{0.19245}
 
-    \draw[dashed] ({ (3-sqrt(3))/3 }, 0) node[below] {$\frac{3-\sqrt{3}}{3}$} -- ({ (3-sqrt(3))/3 }, {sqrt(3)/9}) -- (0, {sqrt(3)/9}) node[left] {$\frac{\sqrt{3}}{9}$};
-    \draw[dashed] (0.6667, 0) node[below] {$2/3$} -- (0.6667, 4/27) -- (0, 4/27) node[left] {$\frac{4}{27}$};
-    \draw[dashed] (1, 0) node[below] {$1$} -- (1, 0.25) -- (0, 0.25) node[left] {$\frac{1}{4}$};
+    % 接続点 (交点): t_cross = 2/3 ≈ 0.6667, y_cross = 4/27 ≈ 0.1481
+    \def\xCross{0.66667}
+    \def\yCross{0.14815}
+
+    % 右端点: t = 1, y = 1/4 = 0.25
+    \def\xEnd{1.0}
+    \def\yEnd{0.25}
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick] (-0.08, 0) -- (1.18, 0) node[right] {$t$};
+    \draw[->, thick] (0, -0.02) -- (0, 0.30) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 3. 背景の各関数曲線（参考破線） ---
+    % h(t) = 1/2 * (2t - t^2)(1 - t) (2/3 <= t <= 1 の区間)
+    \draw[thick, dashed, orange!70, domain=\xCross:1.0, samples=40]
+    plot (\x, {0.5*(2*\x - \x*\x)*(1 - \x)});
+    \node[right=2pt, font=\scriptsize, orange!80!black] at (1.0, 0) {$h(t)$};
+
+    % g(t) = 1/4 * (2 - t)t^2 (0 <= t <= 2/3 の区間)
+    \draw[thick, dashed, teal!70, domain=0:\xCross, samples=40]
+    plot (\x, {0.25*(2 - \x)*\x*\x});
+    \node[below right=1pt, font=\scriptsize, teal!80!black] at (0.35, {0.25*(2-0.35)*0.35*0.35}) {$g(t)$};
+
+    % --- 4. f(t) のグラフ本体（太線実線） ---
+    % 区間 1: 0 <= t <= 2/3 ( h(t) を採用 )
+    \draw[line width=1.4pt, blue!85!black, domain=0:\xCross, samples=60]
+    plot (\x, {0.5*(2*\x - \x*\x)*(1 - \x)});
+
+    % 区間 2: 2/3 <= t <= 1 ( g(t) を採用 )
+    \draw[line width=1.4pt, blue!85!black, domain=\xCross:1.0, samples=40]
+    plot (\x, {0.25*(2 - \x)*\x*\x});
+
+    % グラフ名ラベル
+    \node[blue!85!black, font=\normalsize\bfseries] at (0.82, 0.23) {$y = f(t)$};
+
+    % --- 5. 補助線（極大値・接続点・端点） ---
+    % 極大点
+    \draw[dashed, gray!70] (\xMax, 0) -- (\xMax, \yMax) -- (0, \yMax);
+    \fill[red!80!black] (\xMax, \yMax) circle (0.35pt);
+
+    % 接続点 (t = 2/3)
+    \draw[dashed, gray!70] (\xCross, 0) -- (\xCross, \yCross) -- (0, \yCross);
+    \fill[blue!85!black] (\xCross, \yCross) circle (0.35pt);
+
+    % 端点 (t = 1)
+    \draw[dashed, gray!70] (\xEnd, 0) -- (\xEnd, \yEnd) -- (0, \yEnd);
+    \fill[blue!85!black] (\xEnd, \yEnd) circle (0.35pt);
+
+    % --- 6. 軸目盛りラベル ---
+    % x 軸側
+    \node[below=3pt, font=\scriptsize] at (\xMax, 0) {$\dfrac{3-\sqrt{3}}{3}$};
+    \node[below=3pt, font=\scriptsize] at (\xCross, 0) {$\dfrac{2}{3}$};
+    \node[below=3pt, font=\scriptsize] at (\xEnd, 0) {$1$};
+
+    % y 軸側
+    \node[left=3pt, font=\scriptsize] at (0, \yCross) {$\dfrac{4}{27}$};
+    \node[left=3pt, font=\scriptsize] at (0, \yMax) {$\dfrac{\sqrt{3}}{9}$};
+    \node[left=3pt, font=\scriptsize] at (0, \yEnd) {$\dfrac{1}{4}$};
+
+    % 極大値の引き出し注釈
+    \draw[<-, thin, red!80!black] (\xMax + 0.015, \yMax + 0.005) -- ++(0.12, 0.045)
+    node[right, font=\scriptsize, align=left] {極大値 $\dfrac{\sqrt{3}}{9}$};
+
   \end{tikzpicture}
-  \caption{$y = f(x)$ のグラフ}
+  \caption{$y = f(t) = \max\{g(t), h(t)\}$ のグラフ（青実線部）}
+  \label{fig:graph_ft}
 \end{figure}
 
 \end{document}

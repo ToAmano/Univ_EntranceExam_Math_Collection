@@ -1,124 +1,289 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}[scale=2.5]
-    % Coordinates
-    \coordinate (O) at (0,0);
-    \draw (O) circle (1);
-
-    % Radius 1 circle points A1 to A6
-    \foreach \i in {1,...,6} {
-      \coordinate (A\i) at ({90 - (\i-1)*60}:1);
-    }
-
-    % Draw radii to A1, A6, A3, A4, A5
-    \draw (O) -- (A1) node[above] {$A_1$};
-    \draw (O) -- (A6) node[above right] {$A_6$};
-    \draw (O) -- (A3) node[below left] {$A_3$};
-    \draw (O) -- (A4) node[below] {$A_4$};
-    \draw (O) -- (A5) node[below right] {$A_5$};
-    \draw (O) -- (A2) node[above left] {$A_2$};
-
-    % Small circle inside angle A1-O-A6
-    % Angle is 60 deg, bisector is 60 deg (pi/3) from x-axis, i.e., 60 deg in standard angle (between 90 and 30 deg) -> 60 deg angle relative to origin
-    % Radius r = 2\sqrt{3} - 3 \approx 0.4641
-    % OP = r / sin(30) = 2r \approx 0.9282 at angle 60 deg
-    \coordinate (P) at (60:0.5359); % OP = 1 - r = 1 - 0.4641 = 0.5359
-    \draw (P) circle (0.4641);
-    \node[above] at (P) {$P$};
-    \node[right] at (P) {$r$};
-
-    % Points C, Q
-    \coordinate (C) at (120:0.5359);
-    \coordinate (Q) at (240:0.5359);
-    \coordinate (B) at (0, 0.2);
-
-    \draw (O) -- (P);
-    \draw (O) -- (C);
-    \draw (P) -- (C);
-    \draw (C) -- (Q);
-    \draw (P) -- (Q);
-
-    \node[below left] at (Q) {$Q$};
-    \node[left] at (C) {$C$};
-    \node[left] at (O) {$O$};
-
-    % Shaded region indicator
-    \draw[thick, red, opacity=0.5] (A1) arc (90:210:1) -- (Q) -- (P) -- cycle;
-  \end{tikzpicture}
-  \caption{六角形 $A_1 \dots A_6$ と円 $P$，および補助点 $C,Q$}
-\end{figure}
-
-\noindent
 {\bf [解]}
 
-$P$ を中心とする円の半径を $r$ とすると，$OA_1 = OP + PA_1$ より
-\begin{align}
-  1 &= r + \dfrac{r}{\sin \dfrac{\pi}{3}} = \Bigl( \dfrac{2}{\sqrt{3}} + 1 \Bigr) r \\
-  &= \Bigl( \dfrac{2}{3}\sqrt{3} + 1 \Bigr) r
-\end{align}
-\begin{align}
-  \therefore r = -3 + 2\sqrt{3} \quad \cdots \text{①}
-\end{align}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=4.5, >=stealth, every node/.style={font=\small}]
 
-題意から，$QC = OP$，$CP = QO$ だから，$\square OPCQ$ は平行四辺形である．
+    % --- 1. 定数・幾何パラメータの計算 ---
+    % 外円の半径 R = 1
+    % 円 P の半径: r = 2*sqrt(3) - 3 ≈ 0.4641
+    % OP の距離:   d = 1 - r = 4 - 2*sqrt(3) ≈ 0.5359
+    \def\R{1.0}
+    \pgfmathsetmacro{\rVal}{2.0*sqrt(3) - 3.0}
+    \pgfmathsetmacro{\dVal}{4.0 - 2.0*sqrt(3)}
 
-求める面積を $S$ とすると，図形の和・差に分解して考える：
+    % 各頂点・中心の座標定義
+    \coordinate (O)  at (0, 0);
+    \coordinate (A1) at (0, \R);                          % 90°
+    \coordinate (A2) at ({cos(150)}, {sin(150)});        % 150°
+    \coordinate (A3) at ({cos(210)}, {sin(210)});        % 210°
+    \coordinate (A4) at (0, -\R);                         % 270°
+    \coordinate (A5) at ({cos(330)}, {sin(330)});        % 330°
+    \coordinate (A6) at ({cos(30)}, {sin(30)});          % 30°
+
+    \coordinate (P)  at (0, \dVal);
+    \coordinate (B)  at (0, {\dVal - \rVal});             % 円 P の最下点 (y 軸上)
+    \coordinate (Q)  at ({\rVal*cos(210)}, {\rVal*sin(210)}); % OA_3 上の点 (OQ = r)
+
+    % 平行四辺形 OPCQ より C = P + (Q - O)
+    \coordinate (C)  at ({\rVal*cos(210)}, {\dVal + \rVal*sin(210)});
+
+    % --- 2. 求める領域（斜線ハッチング） ---
+    % 境界:
+    % (1) 円 O の弧 A_1 -> A_2 -> A_3 (90° から 210°)
+    % (2) 円 Q の弧 A_3 -> C (中心 Q, 半径 dVal, 偏角 210° から 90°)
+    % (3) 円 P の弧 C -> B -> A_1 (中心 P, 半径 rVal, 偏角 210° から 270° を経て 90°：反時計回り 210°->450°)
+    \fill[pattern=north east lines, pattern color=blue!50, opacity=0.7]
+    (A1) arc (90:210:\R)
+    arc (210:90:\dVal)
+    arc (-150:90:\rVal) -- cycle;
+
+    % --- 3. 円および円弧の描画 ---
+    % 外円 O
+    \draw[thick, gray!70] (O) circle (\R);
+
+    % 円 P (全体を細線、境界弧を太線)
+    \draw[thin, teal!70] (P) circle (\rVal);
+
+    % 円 Q の弧 A_3 C (中心 Q, 半径 dVal)
+    \draw[thin, purple!60] ([shift=(210:\dVal)]Q) arc (210:75:\dVal);
+
+    % 領域の輪郭線（太線で強調）
+    \draw[very thick, blue!90!black] (A1) arc (90:210:\R);
+    \draw[very thick, blue!90!black] ([shift=(210:\dVal)]Q) arc (210:90:\dVal);
+    \draw[very thick, blue!90!black] ([shift=(-150:\rVal)]P) arc (-150:90:\rVal);
+
+    % --- 4. 直径・半径・骨格線 ---
+    % 円 O の 6等分線
+    \draw[gray!60] (A1) -- (A4);
+    \draw[gray!60] (A2) -- (A5);
+    \draw[gray!60] (A3) -- (A6);
+
+    % 平行四辺形 OPCQ の骨格
+    \draw[thick, orange!90!black] (O) -- (P) -- (C) -- (Q) -- cycle;
+
+    % 接点への半径・補助線 (P から OA_6 への垂線)
+    \coordinate (T6) at ($ (O)!(P)!(A6) $);
+    \draw[dashed, teal!80!black] (P) -- (T6);
+    \node[font=\tiny, teal!90!black, above right=0pt] at ($ (P)!0.4!(T6) $) {$r$};
+
+    % 直角マーク (T6)
+    \draw[thin, gray!70] ($ (T6) + (-0.03, {0.03*sqrt(3)}) $) -- ++({0.03*sqrt(3)}, 0.03) -- ++(0.03, {-0.03*sqrt(3)});
+
+    % --- 5. 角度マークとラベル ---
+    % 角 A1-O-A6 = 60°
+    \draw[thin, gray!80!black] (0, 0.15) arc (90:30:0.15);
+    \node[font=\tiny, gray!90!black] at (60:0.23) {$60^\circ$};
+
+    % 角 P-Q-A3 = 2/3\pi (120°)
+    \draw[thin, orange!80!black] ($ (Q) + (0, 0.12) $) arc (90:210:0.12);
+    \node[font=\tiny, orange!90!black, left] at ($ (Q) + (-0.05, 0.08) $) {$\dfrac{2}{3}\pi$};
+
+    % --- 6. 主要点のプロットとラベル ---
+    % 円 O の周上の点
+    \fill (A1) circle (0.4pt) node[above=1pt] {$A_1$};
+    \fill (A2) circle (0.4pt) node[above left=1pt] {$A_2$};
+    \fill (A3) circle (0.4pt) node[below left=1pt] {$A_3$};
+    \fill (A4) circle (0.4pt) node[below=1pt] {$A_4$};
+    \fill (A5) circle (0.4pt) node[below right=1pt] {$A_5$};
+    \fill (A6) circle (0.4pt) node[above right=1pt] {$A_6$};
+
+    % 内部の重要点
+    \fill (O) circle (0.4pt) node[below right=1pt] {$O$};
+    \fill (P) circle (0.4pt) node[right=1pt] {$P$};
+    \fill (B) circle (0.4pt) node[below right=1pt] {$B$};
+    \fill (Q) circle (0.4pt) node[below left=1pt] {$Q$};
+    \fill (C) circle (0.4pt) node[above left=1pt] {$C$};
+
+    % 寸法ラベルの例
+    \node[font=\tiny, gray!70!black, below] at (0.5, 0.28) {$1$};
+
+  \end{tikzpicture}
+  \caption{円 $O$ と円 $P$、平行四辺形 $OPCQ$ および求める領域（斜線部）}
+  \label{fig:hexagon_inscribed_circles}
+\end{figure}
+
+$\square OPCQ$ が平行四辺形であることを示すには，$QC = OP$，$CP = QO$であることを示せば良い．
+$P$ を中心とする円の半径を $r$ とする．すると題意より
+\begin{align}
+  r = |PA_1| = |OQ| \label{eq:1}
+\end{align}
+だから，二つ目の円の半径は
+\begin{align}
+  |QA_3| = |OA_3| - |OQ| = 1 - r  \label{eq:2}
+\end{align}
+である．従って$C$の決定方法から
+\begin{align}
+  \begin{cases}
+    |QC| = |QA_3| = 1-r \\
+    |PC| = r
+  \end{cases}\label{eq:3}
+\end{align}
+が従う．\cref{eq:1,eq:2,eq:3}より
+\begin{align}
+  \begin{cases}
+    |OP| = |QC| = 1 - r \\
+    |PC| = |OQ| = r
+  \end{cases}
+\end{align}
+となって，$\square OPCQ$は平行四辺形である．
+
+以下，題意の領域$D$の面積$S$を求める．
+そのためにまず$r$を計算する．半径$r$の円と$OA_6$の交点を$R$とする．
+$|OA_1| = |OP| + |PA_1|$ において，
+\begin{align}
+  1 &= \dfrac{|PR|}{\sin \dfrac{\pi}{3}} + |PA_1| \\
+  &= \dfrac{r}{\sin \dfrac{\pi}{3}} +r \\
+  &= \Bigl(\dfrac{2}{\sqrt{3}} + 1 \Bigr) r \\
+  \therefore
+  r &= -3 + 2\sqrt{3} \label{eq:4}
+\end{align}
+と$r$が計算できる．
+
+$S$は以下のような図形の和・差に分解して考えられる．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.2]
-    % Diagrams of decomposition
-    % Sector OA1A3
-    \draw (0,0) node[below]{$O$} -- (1,0) node[right]{$A_3$} arc(0:120:1) node[above]{$A_1$} -- cycle;
-    \node at (1.5, 0.5) {$+$};
+  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
 
-    % Region D
-    \draw (2,0) node[below]{$B$} -- (3,0) arc(0:180:0.5) -- cycle;
-    \node at (2.5, 0.6) {$D$};
-    \node at (3.5, 0.5) {$-$};
+    % --- 共通パラメータ ---
+    \def\R{1.0}
+    \pgfmathsetmacro{\rVal}{2.0*sqrt(3) - 3.0} % 約 0.4641
+    \pgfmathsetmacro{\dVal}{4.0 - 2.0*sqrt(3)} % 約 0.5359
 
-    % Region CQ A3
-    \draw (4,0) node[below]{$A_3$} -- (5,0) node[below]{$Q$} arc(0:60:0.8) node[above]{$C$} -- cycle;
-    \node at (5.5, 0.5) {$-$};
+    % =========================================================
+    % 1. 扇形 O A_3 A_1 (中心角 2/3\pi = 120°)
+    % =========================================================
+    \begin{scope}[shift={(0, 0)}]
+      \node[left=3pt] at (0, 0.45) {$S = $};
 
-    % Parallelogram region
-    \draw (6,0) -- (6.8, 0.5) -- (6.8, 1.2) -- (6, 0.7) -- cycle;
+      \coordinate (O1) at (0, 0);
+      \coordinate (A1_1) at (0, \R);
+      \coordinate (A3_1) at ({cos(210)*\R}, {sin(210)*\R});
+
+      \fill[blue!15] (O1) -- (A1_1) arc (90:210:\R) -- cycle;
+      \draw[thick, blue!85!black] (O1) -- (A1_1) arc (90:210:\R) -- cycle;
+
+      % 角度表示 (中心角 120°)
+      \draw[purple!80!black, thin] (0, 0.22) arc (90:210:0.22);
+      \node[purple!90!black, font=\tiny] at (150:0.38) {$\dfrac{2}{3}\pi$};
+
+      \node[below right=1pt, font=\scriptsize] at (O1) {$O$};
+      \node[above=1pt, font=\scriptsize] at (A1_1) {$A_1$};
+      \node[below left=1pt, font=\scriptsize] at (A3_1) {$A_3$};
+    \end{scope}
+
+    % 演算子 (+)
+    \node[font=\large\bfseries] at (0.8, 0.45) {$+$};
+
+    % =========================================================
+    % 2. 半円 A_1 B (直径 A_1 B = 2r)
+    % =========================================================
+    \begin{scope}[shift={(1.4, 0.45)}]
+      \coordinate (P2) at (0, 0);
+      \coordinate (Top) at (0, \rVal);
+      \coordinate (Bot) at (0, -\rVal);
+
+      \fill[blue!15] (Top) arc (90:-90:\rVal) -- cycle;
+      \draw[thick, blue!85!black] (Top) arc (90:-90:\rVal) -- cycle;
+
+      \node[above=1pt, font=\scriptsize] at (Top) {$A_1$};
+      \node[below=1pt, font=\scriptsize] at (Bot) {$B$};
+    \end{scope}
+
+    % 演算子 (-)
+    \node[font=\large\bfseries] at (2.25, 0.45) {$-$};
+
+    % =========================================================
+    % 3. 扇形 Q C A_3 (半径 1-r, 中心角 2/3\pi = 120°)
+    % =========================================================
+    \begin{scope}[shift={(3.1, 0.1)}]
+      \coordinate (Q3) at (0, 0);
+      \coordinate (C3) at (0, \dVal);
+      \coordinate (A3_3) at ({cos(210)*\dVal}, {sin(210)*\dVal});
+
+      \fill[blue!15] (Q3) -- (C3) arc (90:210:\dVal) -- cycle;
+      \draw[thick, blue!85!black] (Q3) -- (C3) arc (90:210:\dVal) -- cycle;
+
+      % 角度表示 (中心角 120°)
+      \draw[purple!80!black, thin] (0, 0.18) arc (90:210:0.18);
+      \node[purple!90!black, font=\tiny] at (150:0.32) {$\dfrac{2}{3}\pi$};
+
+      \node[below right=1pt, font=\scriptsize] at (Q3) {$Q$};
+      \node[above=1pt, font=\scriptsize] at (C3) {$C$};
+      \node[below left=1pt, font=\scriptsize] at (A3_3) {$A_3$};
+    \end{scope}
+
+    % 演算子 (-)
+    \node[font=\large\bfseries] at (3.8, 0.45) {$-$};
+
+    % =========================================================
+    % 4. 平行四辺形 OPCQ から 扇形 P-BC (中心角 60°) を除いた図形
+    % =========================================================
+    \begin{scope}[shift={(4.5, 0.05)}]
+      \coordinate (O4) at (0, 0);
+      \coordinate (P4) at (0, \dVal);
+      \coordinate (Q4) at ({\rVal*cos(210)}, {\rVal*sin(210)});
+      \coordinate (C4) at ({\rVal*cos(210)}, {\dVal + \rVal*sin(210)});
+      \coordinate (B4) at (0, {\dVal - \rVal});
+
+      % 領域ハッチング
+      \fill[blue!15]
+      (O4) -- (Q4) -- (C4)
+      arc (210:270:\rVal) -- cycle;
+
+      % 外枠線
+      \draw[thick, blue!85!black] (O4) -- (Q4) -- (C4);
+      \draw[thick, blue!85!black] (B4) -- (O4);
+      \draw[thick, blue!85!black] (C4) arc (210:270:\rVal);
+
+      % 平行四辺形自体の輪郭
+      \draw[dashed, gray!60] (C4) -- (P4) -- (B4);
+      \draw[dotted, gray!50] (P4) -- (O4);
+
+      % 除かれる扇形の角度表示 (中心 P4 における角 C-P-B = 60°)
+      \draw[purple!80!black, thin] ($ (P4) + (-150:0.16) $) arc (-150:-90:0.16);
+      \node[purple!90!black, font=\tiny] at ($ (P4) + (-120:0.25) $) {$\dfrac{\pi}{3}$};
+
+      % 主要点ラベル
+      \node[below right=1pt, font=\tiny] at (O4) {$O$};
+      \node[above right=1pt, font=\tiny, gray!70!black] at (P4) {$P$};
+      \node[above left=1pt, font=\tiny] at (C4) {$C$};
+      \node[below left=1pt, font=\tiny] at (Q4) {$Q$};
+      \node[right=1pt, font=\tiny] at (B4) {$B$};
+    \end{scope}
+
   \end{tikzpicture}
-  \caption{面積 $S$ を扇形・半円・平行四辺形の和差に分解した図}
+  \caption{面積 $S$ の分解図}
+  \label{fig:area_decomposition_angles}
 \end{figure}
 
-各部分の面積は：
-\begin{itemize}
-  \item 扇形 $OA_1A_3$: $\dfrac{1}{2} \cdot \dfrac{2}{3}\pi = \dfrac{\pi}{3}$
-  \item 半円領域 $D$: $\dfrac{1}{2}\pi r^2$
-  \item 扇形 $Q C A_3$: $\dfrac{1}{2} \cdot \dfrac{2}{3}\pi (1-r)^2 = \dfrac{1}{3}\pi (1-r)^2$
-  \item 平行四辺形 $OPCQ$ から扇形を除いた部分:
-    \begin{align}
-      (1-r) \cdot r \cdot \sin \dfrac{\pi}{3} - \dfrac{1}{6}\pi r^2 = \dfrac{\sqrt{3}}{2}(r - r^2) - \dfrac{1}{6}\pi r^2
-    \end{align}
-\end{itemize}
-
-だから，代入して
+各部分の面積は以下のように計算できる．
+\begin{align}
+  (\text{扇形}OA_1A_3) &= \dfrac{1}{2} \cdot \dfrac{2}{3}\pi = \dfrac{\pi}{3} \label{eq:5} \\
+  (\text{半円}A_1PB)   &= \dfrac{1}{2}\pi r^2 \label{eq:6} \\
+  \text{扇形}Q C A_3   &=\dfrac{1}{2} \cdot \dfrac{2}{3}\pi (1-r)^2 = \dfrac{1}{3}\pi(1-r)^2 \label{eq:7} \\
+  \square OPCQ -\text{扇型}PCB &= (1-r) \cdot r \cdot \sin \dfrac{\pi}{3} - \dfrac{1}{6}\pi r^2 = \dfrac{\sqrt{3}}{2}(r - r^2) - \dfrac{1}{6}\pi r^2 \label{eq:8}
+\end{align}
+だから，\cref{eq:5,eq:6,eq:7,eq:8}を$S$に代入して
 \begin{align}
   S &= \dfrac{\pi}{3} + \dfrac{1}{2}\pi r^2 - \dfrac{1}{3}(1-r)^2\pi - \Bigl\{ \dfrac{\sqrt{3}}{2}(r-r^2) - \dfrac{1}{6}\pi r^2 \Bigr\} \\
   &= \pi \Bigl\{ \dfrac{1}{3} + \dfrac{1}{2}r^2 - \dfrac{1}{3}(1-r)^2 + \dfrac{1}{6}r^2 \Bigr\} - \dfrac{\sqrt{3}}{2}(r-r^2) \\
   &= \dfrac{\pi}{6} \Bigl[ 2r^2 + 4r \Bigr] - \dfrac{\sqrt{3}}{2} r (1-r)
 \end{align}
-
-ここで，①より $r^2 = (-3+2\sqrt{3})^2 = 21 - 12\sqrt{3}$ だから
+を得る．
+\cref{eq:4}より $r^2 = (-3+2\sqrt{3})^2 = 21 - 12\sqrt{3}$ だから代入して
 \begin{align}
-  S &= \dfrac{\pi}{3} \Bigl\{ (21 - 12\sqrt{3}) + 2(-3 + 2\sqrt{3}) \Bigr\} - \dfrac{\sqrt{3}}{2} \Bigl\{ (-3 + 2\sqrt{3}) - (21 - 12\sqrt{3}) \Bigr\} \\
+  S
+  &= \dfrac{\pi}{3} \Bigl\{ (21 - 12\sqrt{3}) + 2(-3 + 2\sqrt{3}) \Bigr\} - \dfrac{\sqrt{3}}{2} \Bigl\{ (-3 + 2\sqrt{3}) - (21 - 12\sqrt{3}) \Bigr\} \\
   &= \dfrac{\pi}{3} \Bigl[ 15 - 8\sqrt{3} \Bigr] - \dfrac{\sqrt{3}}{2} \Bigl( -24 + 14\sqrt{3} \Bigr) \\
   &= (15 - 8\sqrt{3})\dfrac{\pi}{3} - 21 + 12\sqrt{3} \\
   &= (5\pi - 21) + \Bigl( 12 - \dfrac{8}{3}\pi \Bigr)\sqrt{3}
 \end{align}
+が求める面積である．
 
 \newpage
 

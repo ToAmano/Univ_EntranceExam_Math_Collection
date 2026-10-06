@@ -1,69 +1,119 @@
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\usepackage{emath}
-\usepackage{emathPp}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1978$年$5$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\preEqlabel{$\cdots$}
-\begin{oframed}
-  三角形ABCにおいて，各辺の長さを$\mathrm{BC}=a$，$\mathrm{CA}=b$，$\mathrm{BA}=c$と記す．
-  いま辺BCを$n$等分する点を$\mathrm{P_1}$，$\mathrm{P_2}$，$\cdots$，$\mathrm{P_{n-1}}$とし，
-  $\mathrm{P_n}=\mathrm{C}$とする．
-  このとき極限
-  \[\lim_{n\to\infty}\dfrac{1}{n}(\mathrm{AP_1}^2+\mathrm{AP_2}^2+\cdots+\mathrm{AP_n})\]
-  を求め，これを$a$，$b$，$c$で表せ．
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]} 題意から$k=1,2,\cdots,n-1$に対して
-  \begin{align}
-    \mathrm{P_kP_{k+1}}=\dfrac{a}{n}
-  \end{align}
-  である．そこで三角形$\mathrm{ABP_k}$に余弦定理を用いて
-  \begin{align}
-    \mathrm{AP_k}^2&=\mathrm{AB}^2+\mathrm{BP_k}^2-2\mathrm{AB}\cdot\mathrm{BP_k}\cos \angle\mathrm{B} \\
-    &=c^2+\left(\dfrac{ak}{n}\right)^2-2c\dfrac{ak}{n}\cos\angle\mathrm{B}\atag\label{1}
-  \end{align}
-  また，三角形ABCに余弦定理を用いて
-  \begin{align}
-    \mathrm{AC}^2&=\mathrm{AB}^2+\mathrm{BC}^2-2\mathrm{AB}\cdot\mathrm{BC}\cos \angle\mathrm{B} \\
-    b^2&=c^2+a^2-2ac\cos\angle\mathrm{B}\atag\label{2}
-  \end{align}
-  \eqref{1}，\eqref{2}から
-  \begin{align}
-    \mathrm{AP_k}^2=c^2+\left(\dfrac{ak}{n}\right)^2-(a^2+c^2-b^2)\dfrac{k}{n}
-  \end{align}
-  $A=a^2+c^2-b^2$とおいて，これを$k$について足して
-  \begin{align}
-    \dfrac{1}{n}\sum_{k=1}^n\mathrm{AP_k}^2=c^2+\dfrac{1}{n}\sum_{k=1}^n\left(%
-    \left(\dfrac{ak}{n}\right)^2-A\dfrac{k}{n}\right)
-  \end{align}
-  であるから，
-  \begin{align}
-    \lim_{n\to\infty}\dfrac{1}{n}\sum_{k=1}^n\mathrm{AP_k}^2&= %
-    c^2+\int_0^1(a^2x^2-Ax)\, dx \\
-    &=c^2+\teisekibun{\dfrac{a^2}{3}x^3-\dfrac{1}{2}Ax^2}{0}{1} \\
-    &=c^2+\dfrac{a^2}{3}-\dfrac{1}{2}(a^2+c^2-b^2) \\
-    &=\dfrac{1}{6}(-a^2+3b^2+3c^2)
-  \end{align}
-  となる．$\cdots$(答)
-  \newpage
-\end{multicols}
+{\bf [解]}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 三角形の各頂点の定義 ---
+    % B を原点、BC を x 軸上にとる (a = 5.0, c = 3.6, B = 55°)
+    \coordinate (B) at (0, 0);
+    \coordinate (C) at (5.0, 0);
+    \coordinate (A) at (55:3.6);
+
+    % --- 2. 辺 BC の n 等分点 P_k の配置 ---
+    % n = 7 と見立てた分割例
+    \coordinate (P1) at ($ (B)!1/7!(C) $);
+    \coordinate (P2) at ($ (B)!2/7!(C) $);
+    \coordinate (Pk) at ($ (B)!4/7!(C) $); % 代表点 P_k (k=4)
+    \coordinate (Pk1) at ($ (B)!5/7!(C) $); % P_{k+1}
+
+    % --- 3. 角 B の円弧 ---
+    \draw[thick, purple!80!black] (0.55, 0) arc (0:55:0.55);
+    \node[purple!80!black, font=\footnotesize] at (27.5:0.8) {$B$};
+
+    % --- 4. 三角形 ABC の枠線 ---
+    \draw[very thick, black] (A) -- (B) -- (C) -- cycle;
+
+    % 辺の長さラベル
+    \node[left=2pt] at ($ (A)!0.5!(B) $) {$c$};
+    \node[above right=2pt] at ($ (A)!0.5!(C) $) {$b$};
+
+    % --- 5. 線分 AP_k および補助線 ---
+    % A から P_k への線分（主役）
+    \draw[very thick, red!85!black] (A) -- (Pk);
+    \node[red!85!black, font=\footnotesize, above right=-1pt] at ($ (A)!0.48!(Pk) $) {$\mathrm{AP}_k$};
+
+    % その他の分割点への細い点線
+    \draw[dashed, gray!60] (A) -- (P1);
+    \draw[dashed, gray!60] (A) -- (P2);
+    \draw[dashed, gray!60] (A) -- (Pk1);
+
+    % --- 6. 各点のプロットとラベル ---
+    \fill (A) circle (1.2pt) node[above=2pt] {$\mathrm{A}$};
+    \fill (B) circle (1.2pt) node[below left=2pt] {$\mathrm{B} = \mathrm{P}_0$};
+    \fill (C) circle (1.2pt) node[below right=2pt] {$\mathrm{C} = \mathrm{P}_n$};
+
+    \fill[gray!80!black] (P1) circle (1.0pt) node[below=2pt, font=\scriptsize] {$\mathrm{P}_1$};
+    \fill[gray!80!black] (P2) circle (1.0pt) node[below=2pt, font=\scriptsize] {$\mathrm{P}_2$};
+    \node[below=2pt, font=\scriptsize, gray!80!black] at ($ (P2)!0.5!(Pk) $) {$\dots$};
+
+    \fill[red!85!black] (Pk) circle (1.3pt) node[below=2pt, font=\footnotesize, red!85!black] {$\mathrm{P}_k$};
+    \fill[gray!80!black] (Pk1) circle (1.0pt) node[below=2pt, font=\scriptsize] {$\mathrm{P}_{k+1}$};
+    \node[below=2pt, font=\scriptsize, gray!80!black] at ($ (Pk1)!0.5!(C) $) {$\dots$};
+
+    % --- 7. 長さの寸法線 (BC = a, BP_k = ak/n, P_k P_{k+1} = a/n) ---
+    % 1区間の長さ P_k P_{k+1}
+    \draw[<->, teal!85!black, thick] ($ (Pk) + (0, 0.22) $) -- ($ (Pk1) + (0, 0.22) $)
+    node[midway, above=1pt, font=\scriptsize] {$\dfrac{a}{n}$};
+
+    % BP_k の長さ
+    \draw[<->, blue!85!black] ($ (B) + (0, -0.6) $) -- ($ (Pk) + (0, -0.6) $)
+    node[midway, fill=white, inner sep=1pt, font=\scriptsize] {$\mathrm{BP}_k = \dfrac{ak}{n}$};
+    \draw[dotted, gray!70] (Pk) -- ($ (Pk) + (0, -0.65) $);
+
+    % 辺 BC 全体の長さ a
+    \draw[<->, gray!80!black] ($ (B) + (0, -1.05) $) -- ($ (C) + (0, -1.05) $)
+    node[midway, fill=white, inner sep=1pt, font=\footnotesize] {$\mathrm{BC} = a$};
+    \draw[dotted, gray!70] (B) -- ($ (B) + (0, -1.1) $);
+    \draw[dotted, gray!70] (C) -- ($ (C) + (0, -1.1) $);
+
+  \end{tikzpicture}
+  \caption{辺 $\mathrm{BC}$ の $n$ 等分点 $\mathrm{P}_k$ と $\triangle \mathrm{ABP}_k$ における幾何配置}
+  \label{fig:triangle_division_APk}
+\end{figure}
+
+題意から$k=1,2,\cdots,n-1$に対して
+\begin{align}
+  \mathrm{P_kP_{k+1}}=\dfrac{a}{n} \label{eq:1}
+\end{align}
+である．
+三角形$\mathrm{ABP_k}$に余弦定理を用いて
+\begin{align}
+  \mathrm{AP_k}^2
+  &=\mathrm{AB}^2+\mathrm{BP_k}^2-2\mathrm{AB}\cdot\mathrm{BP_k}\cos \angle\mathrm{B} \\
+  &=c^2+\left(\dfrac{ak}{n}\right)^2-2c\dfrac{ak}{n}\cos\angle\mathrm{B} \label{eq:2}
+\end{align}
+となる．
+また，三角形ABCに余弦定理を用いて
+\begin{align}
+  \mathrm{AC}^2
+  &=\mathrm{AB}^2+\mathrm{BC}^2-2\mathrm{AB}\cdot\mathrm{BC}\cos \angle\mathrm{B} \\
+  \therefore
+  b^2&=c^2+a^2-2ac\cos\angle\mathrm{B} \label{eq:3}
+\end{align}
+となる．
+
+\cref{eq:2,eq:3}から$\cos\angle\mathrm{B}$を消去して
+\begin{align}
+  \mathrm{AP_k}^2=c^2+\left(\dfrac{ak}{n}\right)^2-(a^2+c^2-b^2)\dfrac{k}{n} \label{eq:4}
+\end{align}
+を得る．
+$A=a^2+c^2-b^2$とおいて，\cref{eq:4}を$k=1,2,\cdots,n$について足して
+\begin{align}
+  \dfrac{1}{n}\sum_{k=1}^n\mathrm{AP_k}^2
+  =c^2+\dfrac{1}{n}\sum_{k=1}^n\left(\left(\dfrac{ak}{n}\right)^2-A\dfrac{k}{n}\right)
+\end{align}
+であるから，$n\to\infty$の極限をとって区分求積法を用いて
+\begin{align}
+  \lim_{n\to\infty}\dfrac{1}{n}\sum_{k=1}^n\mathrm{AP_k}^2&= %
+  c^2+\int_0^1(a^2x^2-Ax)\, dx \\
+  &=c^2+\left[\dfrac{a^2}{3}x^3-\dfrac{1}{2}Ax^2\right]_{0}^{1} \\
+  &=c^2+\dfrac{a^2}{3}-\dfrac{1}{2}(a^2+c^2-b^2) \\
+  &=\dfrac{1}{6}(-a^2+3b^2+3c^2)
+\end{align}
+となる．$\cdots$(答)
+\newpage
 \end{document}
