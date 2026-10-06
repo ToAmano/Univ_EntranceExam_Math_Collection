@@ -1,10 +1,6 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 % [構想メモ]
 % r(P)は X， Y の2変数関数。
 % → 円が A， B， C に含まれる条件
@@ -12,184 +8,806 @@
 % の値域を1変数消してグラフに表し， そのうち max をとっていけば良いが．.．
 % 1つ注意すべきは
 
-{\bf [解]} $P(X,Y)$ とおく．$l: y = -\sqrt{3}x + \sqrt{3}$ とおく．
+{\bf [解]}
+
+円の中心を$P(X,Y)$ とおく．また，$C$の境界を与える直線を
+\begin{align}
+  l: y = -\sqrt{3}x + \sqrt{3}
+\end{align}
+とおく．$A,B,C$の各領域：
+\begin{align}
+  \begin{cases}
+    A: x \ge 0 \\
+    B: y \ge 0 \\
+    C: y \ge -\sqrt{3}x + \sqrt{3}
+  \end{cases}
+\end{align}
+は以下の斜線部である．ただし境界を含む．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.8]
-    % Region A
-    \begin{scope}[shift={(0,0)}]
-      \fill[gray!20] (-1.2,-1.2) rectangle (0,1.5);
-      \draw[->] (-1.2,0) -- (1.2,0) node[right] {$x$};
-      \draw[->] (0,-1.2) -- (0,1.5) node[above] {$y$};
-      \node[above left] at (-0.5,1.0) {$A$};
+  \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
+
+    % ========================================================
+    % 領域 A: x >= 0 (右半平面)
+    % ========================================================
+    \begin{scope}[shift={(0, 0)}]
+      % クリッピング枠
+      \begin{scope}
+        \clip (-1.3, -1.3) rectangle (1.5, 2.2);
+        % 斜線ハッチング (x >= 0)
+        \fill[pattern=north east lines, pattern color=blue!60] (0, -1.3) rectangle (1.5, 2.2);
+      \end{scope}
+
+      % 座標軸
+      \draw[->, thick] (-1.3, 0) -- (1.5, 0) node[right] {$x$};
+      \draw[->, thick] (0, -1.3) -- (0, 2.2) node[above] {$y$};
+      \node[below left=2pt] at (0, 0) {$O$};
+
+      % 境界線 x = 0 (境界を含む実線強調)
+      \draw[line width=1.2pt, blue!85!black] (0, -1.3) -- (0, 2.0);
+
+      % ラベル
+      \node[draw=blue!80!black, rounded corners=2pt, fill=white, inner sep=2pt, font=\bfseries]
+      at (0.7, 1.2) {$A$};
+      \node[below=4pt, font=\footnotesize] at (0, -1.3) {$x \geqq 0$};
     \end{scope}
 
-    % Region B
-    \begin{scope}[shift={(3.5,0)}]
-      \fill[gray!20] (-1.2,-1.2) rectangle (1.5,0);
-      \draw[->] (-1.2,0) -- (1.5,0) node[right] {$x$};
-      \draw[->] (0,-1.2) -- (0,1.5) node[above] {$y$};
-      \node[above left] at (1.0,0.5) {$B$};
+    % ========================================================
+    % 領域 B: y >= 0 (上半平面)
+    % ========================================================
+    \begin{scope}[shift={(3.6, 0)}]
+      % クリッピング枠
+      \begin{scope}
+        \clip (-1.3, -1.3) rectangle (1.5, 2.2);
+        % 斜線ハッチング (y >= 0)
+        \fill[pattern=north east lines, pattern color=orange!70] (-1.3, 0) rectangle (1.5, 2.2);
+      \end{scope}
+
+      % 座標軸
+      \draw[->, thick] (-1.3, 0) -- (1.5, 0) node[right] {$x$};
+      \draw[->, thick] (0, -1.3) -- (0, 2.2) node[above] {$y$};
+      \node[below left=2pt] at (0, 0) {$O$};
+
+      % 境界線 y = 0 (境界を含む実線強調)
+      \draw[line width=1.2pt, orange!90!black] (-1.3, 0) -- (1.3, 0);
+
+      % ラベル
+      \node[draw=orange!90!black, rounded corners=2pt, fill=white, inner sep=2pt, font=\bfseries]
+      at (0.6, 1.2) {$B$};
+      \node[below=4pt, font=\footnotesize] at (0, -1.3) {$y \geqq 0$};
     \end{scope}
 
-    % Region C
-    \begin{scope}[shift={(7.5,0)}]
-      \fill[gray!20] (-0.8,{sqrt(3)*(1+0.8)}) -- (1.8,{sqrt(3)*(1-1.8)}) -- (1.8,1.8) -- (-0.8,1.8) -- cycle;
-      \draw[->] (-0.8,0) -- (1.8,0) node[right] {$x$};
-      \draw[->] (0,-0.8) -- (0,1.8) node[above] {$y$};
-      \draw[thick] (-0.2,{sqrt(3)*(1+0.2)}) -- (1.4,{sqrt(3)*(1-1.4)}) node[right] {$l$};
-      \node[above right] at (0.8,0.8) {$C$};
-      \node[left] at (0,{sqrt(3)}) {$\sqrt{3}$};
-      \node[below] at (1,0) {$1$};
-      \fill (0,{sqrt(3)}) circle (1.5pt);
-      \fill (1,0) circle (1.5pt);
+    % ========================================================
+    % 領域 C: y <= -sqrt(3)x + sqrt(3) (直線 l の下側)
+    % ========================================================
+    \begin{scope}[shift={(7.4, 0)}]
+      % クリッピング枠
+      \begin{scope}
+        \clip (-0.7, -1.3) rectangle (2.0, 2.2);
+        % 直線下側の斜線ハッチング
+        \fill[pattern=north east lines, pattern color=teal!70]
+        (-0.7, -1.3) -- (2.0, -1.3) -- (2.0, {sqrt(3)*(1 - 2.0)}) -- (-0.7, {sqrt(3)*(1 - (-0.7))}) -- cycle;
+      \end{scope}
+
+      % 座標軸
+      \draw[->, thick] (-0.7, 0) -- (2.0, 0) node[right] {$x$};
+      \draw[->, thick] (0, -1.3) -- (0, 2.2) node[above] {$y$};
+      \node[below left=2pt] at (0, 0) {$O$};
+
+      % 直線 l の描画 (境界を含む実線)
+      \draw[line width=1.2pt, teal!85!black] (-0.2, {sqrt(3)*(1 - (-0.2))}) -- (1.6, {sqrt(3)*(1 - 1.6)})
+      node[right, font=\footnotesize] {$l$};
+
+      % 切片のプロットとラベル
+      \fill (0, {sqrt(3)}) circle (1.2pt);
+      \node[left=2pt, font=\footnotesize] at (0, {sqrt(3)}) {$\sqrt{3}$};
+
+      \fill (1, 0) circle (1.2pt);
+      \node[below=2pt, font=\footnotesize] at (1, 0) {$1$};
+
+      % ラベル
+      \node[draw=teal!85!black, rounded corners=2pt, fill=white, inner sep=2pt, font=\bfseries]
+      at (0.3, -0.65) {$C$};
+      \node[below=4pt, font=\footnotesize] at (0.6, -1.3) {$y \leqq -\sqrt{3}x + \sqrt{3}$};
     \end{scope}
+
   \end{tikzpicture}
-  \caption{領域 $A,B,C$ と直線 $l$}
+  \caption{各領域 $A, B, C$（斜線部，いずれも境界を含む）}
+  \label{fig:regions_A_B_C}
 \end{figure}
 
 \paragraph{(1)}
 
-$P$ が下図斜線部をうごく時，$Y < 0 \quad (0 \le X \le 1)$ または $Y \le -\sqrt{3}X + \sqrt{3} \quad (1 < X)$ とかける．
-
-\begin{enumerate}
-  \item[$1^\circ$] 円が $A$ に含まれる時
-    \begin{align}
-      r \le X
-    \end{align}
-  \item[$2^\circ$] 円が $C$ に含まれる時
-    \begin{align}
-      r \le \dfrac{|\sqrt{3}X + Y - \sqrt{3}|}{\sqrt{1+3}} = \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3})
-    \end{align}
-\end{enumerate}
-
-だから，$\alpha, \beta$ のうち小さくない方を $\max\{\alpha, \beta\}$ と表すと，
+与えられた条件は
 \begin{align}
-  r(P) = \max\Bigl\{ X, \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3}) \Bigr\}
+  \begin{cases}
+    Y < 0 \\
+    0 \le X \\
+    Y \le -\sqrt{3}X + \sqrt{3}
+  \end{cases} \label{eq:1}
 \end{align}
-である．$X$ を固定して，$Y$ をうごかすと $-\sqrt{3}X - Y + \sqrt{3}$ は $Y$ の単調減少関数だから，
+と書ける．
+
+さて，円の中心が$B$の外側にあるから，円が含まれるのは$A$または$C$である．
+この領域に円が含まれる条件は，領域の境界の直線と円の中心$P(X,Y)$の距離が円の半径$r$以下であることで
 \begin{align}
-  -\sqrt{3}X - Y + \sqrt{3}
-  \begin{cases} > -\sqrt{3}X + \sqrt{3} & (0 \le X \le 1) \\ \ge 0 & (1 < X)
+  \begin{cases}
+    A: r \le X \\
+    C: r \le \dfrac{|\sqrt{3}X + Y - \sqrt{3}|}{\sqrt{1+3}} = \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3})
+  \end{cases} \label{eq:2}
+\end{align}
+である．$r$がこのどちらかを満たせば良い．
+ある実数$\alpha, \beta$ に対して小さくない方を $\max\{\alpha, \beta\}$ と表すと，
+求める半径$r(P)$は
+\begin{align}
+  r(P) = \max\Bigl\{ X, \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3}) \Bigr\} \label{eq:3}
+\end{align}
+である．
+
+$X$ を固定して，$Y$ をうごかして\cref{eq:3}の後者について考える．
+\cref{eq:1}および$-\sqrt{3}X - Y + \sqrt{3}$ は $Y$ の単調減少関数だから，
+\begin{align}
+  \begin{cases}
+    -\sqrt{3}X - Y + \sqrt{3} > -\sqrt{3}X + \sqrt{3} & (0 \le X \le 1) \\
+    -\sqrt{3}X - Y + \sqrt{3} \ge 0 & (1 < X)
   \end{cases}
 \end{align}
-だから，$r(P)$ のグラフは右図のようになり，
-\begin{align}
-  r(P) \ge -3 + 2\sqrt{3}
-\end{align}
+である．
 
-\paragraph{(2)}
-
-$P$ の場所を以下のように場合分けする．この時，$A \cup B \cup C$ は平面全体を表すことに注意する．又，以下境界は全て含むとする．
+従って$X$および$\dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3})$の通る領域は以下の斜線部である．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.0]
-    \draw[thick] (0,0) circle (1.2cm);
-    \draw (0,0) -- (0,1.2);
-    \draw (0,0) -- (-1.2,0);
-    \draw (0,0) -- (120:1.2cm);
-    \draw (0,0) -- (-60:1.2cm);
-    \node at (60:0.7cm) {$1^\circ$};
-    \node at (15:0.7cm) {$2^\circ$};
-    \node at (150:0.7cm) {$4^\circ$};
-    \node at (210:0.7cm) {$5^\circ$};
-    \node at (270:0.7cm) {$6^\circ$};
-    \node at (330:0.7cm) {$3^\circ$};
-    \node[left] at (-1.2,0.3) {$A$};
-    \node[below] at (-0.5,-1.2) {$B$};
-    \node[right] at (1.2,0.5) {$C$};
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・代表点のパラメータ定義 ---
+    % 境界直線 1: r = X (傾き 1 の直線)
+    % 境界曲線/折れ線: g(X)
+    % 0 <= X <= 1 では Y < 0 より g(X) > (-sqrt(3)*X + sqrt(3))/2
+    %   y1(X) = (-sqrt(3)*X + sqrt(3))/2 (右下がり直線)
+    % X >= 1 では Y <= -sqrt(3)X + sqrt(3) より g(X) >= 0
+    %   y2(X) = 0
+    %
+    % 交点 (最小値を与える点):
+    % X = (-sqrt(3)*X + sqrt(3))/2  <=>  (2 + sqrt(3))X = sqrt(3)
+    % X_min = sqrt(3)/(2 + sqrt(3)) = 2*sqrt(3) - 3 ≈ 0.4641
+    % r_min = 2*sqrt(3) - 3 ≈ 0.4641
+
+    \def\xMin{0.4641}
+    \def\rMin{0.4641}
+
+    % --- 2. 領域のハッチング (斜線部: r >= r(P) のとり得る値の領域) ---
+    % X 方向: 0 <= X <= 2.2
+    % r 方向の領域:
+    % 0 <= X <= xMin: r >= (-sqrt(3)*X + sqrt(3))/2
+    % xMin <= X:     r >= X
+    \begin{scope}
+      \clip (0, 0) rectangle (2.2, 2.2);
+      \fill[pattern=north east lines, pattern color=blue!50]
+      (0, {0.5*sqrt(3)}) -- (\xMin, \rMin) -- (2.2, 2.2) -- (0, 2.2) -- cycle;
+    \end{scope}
+
+    % --- 3. 座標軸 (横軸: X, 縦軸: r) ---
+    \draw[->, thick] (-0.2, 0) -- (2.3, 0) node[right] {$X$};
+    \draw[->, thick] (0, -0.2) -- (0, 2.3) node[above] {$r$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 4. 2つの境界線 ---
+    % (i) 直線 r = X
+    \draw[very thick, orange!90!black, domain=0:2.1] plot (\x, {\x})
+    node[above right=1pt, font=\footnotesize] {$r = X$};
+
+    % (ii) 直線 r = (-sqrt(3)*X + sqrt(3))/2 (0 <= X <= 1)
+    \draw[very thick, teal!85!black, domain=0:1.0] plot (\x, {0.5*(-sqrt(3)*\x + sqrt(3))})
+    node[pos=0.15, above right=1pt,font=\scriptsize] {$r = (-\sqrt{3}X + \sqrt{3})/2$};
+
+    % X >= 1 における下限 r = 0 (X軸上)
+    \draw[thick, dashed, teal!85!black] (1.0, 0) -- (2.1, 0);
+
+    % --- 5. 最小値の点 (X_min, r_min) ---
+    \draw[dashed, red!80!black] (\xMin, 0) -- (\xMin, \rMin) -- (0, \rMin);
+    \fill[red!80!black] (\xMin, \rMin) circle (1.2pt);
+
+    % 軸目盛りラベル
+    \node[below=2pt, font=\scriptsize, red!80!black] at (\xMin, 0) {$2\sqrt{3}-3$};
+    \node[left=2pt, font=\scriptsize, red!80!black] at (0, \rMin) {$2\sqrt{3}-3$};
+
+    % 主要な切片
+    \node[left=2pt, font=\scriptsize] at (0, {0.5*sqrt(3)}) {$\dfrac{\sqrt{3}}{2}$};
+    \fill (0, {0.5*sqrt(3)}) circle (1.0pt);
+
+    \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
+    \fill (1, 0) circle (1.0pt);
+
+    % --- 6. 領域ラベル・最小値の明示 ---
+    %\node[draw=blue!80!black, rounded corners=2pt, fill=white, inner sep=3pt, font=\bfseries, blue!90!black]
+    %  at (0.85, 1.45) {$r(P) \geqq 2\sqrt{3}-3$};
+
+    % 最小値の案内矢印
+    \draw[<-, thick, red!80!black] (\xMin + 0.03, \rMin + 0.03) -- ++(0.35, 0.35)
+    node[right, font=\scriptsize, align=left] {最小点\\$r_{\min} = 2\sqrt{3}-3$};
+
   \end{tikzpicture}
-  \caption{領域 $A,B,C$ の重なりによる場合分け $1^\circ \sim 6^\circ$}
+  \caption{$X$ と $r(P) = \max\left\{X,\, \dfrac{-\sqrt{3}X - Y + \sqrt{3}}{2}\right\}$ の関係およびとり得る領域（斜線部）}
+  \label{fig:rP_region}
 \end{figure}
 
-\begin{enumerate}
-  \item[$1^\circ$] $P$ が $A \cap B \cap C$ をうごく時
-    \begin{align}
-      0 \le Y \le -\sqrt{3}X + \sqrt{3} \quad (0 \le X \le 1)
-    \end{align}
-    である．
-    \begin{align}
-      A \text{ に含まれる} &\dots r \le X \\
-      B \text{ に含まれる} &\dots r \le Y \\
-      C \text{ に含まれる} &\dots r \le \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3})
-    \end{align}
-    だから，$r(P) = \max\Bigl\{ X, Y, \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3}) \Bigr\}$ である．まず，
-    \begin{align}
-      Y \ge \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3}) \iff Y \ge \dfrac{1}{3}(-\sqrt{3}X + \sqrt{3})
-    \end{align}
-    だから，
-    \begin{align}
-      \begin{cases}
-        0 \le Y \le \dfrac{1}{3}(-\sqrt{3}X + \sqrt{3}) \text{ の時 } r(P) = \max\Bigl\{ X, \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3}) \Bigr\} & \dots \text{1-①} \\
-        \dfrac{1}{3}(-\sqrt{3}X + \sqrt{3}) \le Y \le \sqrt{3}(-X + 1) \text{ の時 } r(P) = \max \{ X, Y \} & \dots \text{1-②}
-      \end{cases}
-    \end{align}
-    で $X$ を固定して $Y$ をうごかすと，
-    \begin{align}
-      \text{1-①の時} \quad &\dfrac{1}{3}\sqrt{3}(-X+1) \le \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3}) \le \dfrac{\sqrt{3}}{2}(-X+1) \\
-      \text{1-②の時} \quad &\dfrac{1}{3}\sqrt{3}(-X+1) \le Y \le \sqrt{3}(-X+1)
-    \end{align}
-    でグラフは右図で
-    \begin{align}
-      r(P) \ge \dfrac{-1 + \sqrt{3}}{2} \quad \dots *
-    \end{align}
+よって，$r(P)$の動く領域は
+\begin{align}
+  r(P) \ge -3 + 2\sqrt{3}
+\end{align}
+である．
 
-  \item[$2^\circ$] $P$ が $A \cap B \cap \overline{C}$ をうごく時
+\paragraph{(2)}
 
-    $A$ に含まれる $\dots r \le X$，$B$ に含まれる $\dots r \le Y$ から，
-    $r(P) = \max(X, Y)$ であり，又
-    \begin{align}
-      \begin{cases}
-        \dfrac{1}{\sqrt{3}}(-\sqrt{3}X + \sqrt{3}) \le Y & (0 \le X \le 1) \\
-        0 \le Y & (1 \le X)
-      \end{cases}
-    \end{align}
-    だから，グラフは右図で
-    \begin{align}
-      r(P) \ge \dfrac{1}{2}(3 - \sqrt{3}) \quad \dots *
-    \end{align}
+(1)の\cref{eq:2}と同様に考えると，円が$A,B,C$のいずれかに含まれる条件は
+\begin{align}
+  \begin{cases}
+    A: r \le |X| \\
+    B: r \le |Y| \\
+    C: r \le \dfrac{|\sqrt{3}X + Y - \sqrt{3}|}{\sqrt{1+3}} = \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3})
+  \end{cases} \label{eq:4}
+\end{align}
+のいずれかを満たし，かつ点$P$がそれぞれの領域に含まれる場合である．
 
-  \item[$3^\circ$] $P$ が $\overline{A} \cap B \cap C$ をうごく時
+そこで$P$ の場所を以下のように場合分けする．
+この時$A \cup B \cup C$ は平面全体を表すことに注意する．
+また以下境界は全て含むとする．
 
-    $B$ に含まれる $\dots r \le Y$，$C$ に含まれる $\dots r \le \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3})$ で，$0 \le Y \le \sqrt{3}(-X+1) \quad (X \le 0)$ である．よって，
-    \begin{align}
-      \begin{cases}
-        0 \le Y \le \dfrac{\sqrt{3}}{3}(-X+1) \text{ の時 } r(P) = \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3}) \\
-        \dfrac{\sqrt{3}}{3}(-X+1) \le Y \le \sqrt{3}(-X+1) \text{ の時 } r(P) = Y
-      \end{cases}
-    \end{align}
-    左図から，
-    \begin{align}
-      r(P) \ge \dfrac{\sqrt{3}}{3} \quad \dots *
-    \end{align}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\normalsize}]
 
-  \item[$4^\circ$] $P$ が $A \cap \overline{B} \cap \overline{C}$ をうごく時
+    % --- 1. 3つの集合円の中心と半径の定義 ---
+    \def\R{1.5}
+    \coordinate (A) at (90:1.0);   % 上: 集合 A
+    \coordinate (B) at (210:1.0);  % 左下: 集合 B
+    \coordinate (C) at (330:1.0);  % 右下: 集合 C
 
-    $1 \le X$ で，$r(P) = X$ から
-    \begin{align}
-      r(P) \ge 1 \quad \dots *
-    \end{align}
+    % --- 2. 円の描画 ---
+    \draw[thick] (A) circle (\R);
+    \draw[thick] (B) circle (\R);
+    \draw[thick] (C) circle (\R);
 
-  \item[$5^\circ$] $P$ が $\overline{A} \cap \overline{B} \cap \overline{C}$ をうごく時
+    % --- 3. 集合のラベル (A, B, C) ---
+    \node[above=2pt, font=\large\bfseries] at ($ (A) + (90:\R) $) {$A$};
+    \node[above left=2pt, font=\large\bfseries] at ($ (B) + (135:\R) $) {$B$};
+    \node[above right=2pt, font=\large\bfseries] at ($ (C) + (45:\R) $) {$C$};
 
-    $1 \le Y$ で，$r(P) = Y$ から
-    \begin{align}
-      r(P) \ge 1 \quad \dots *
-    \end{align}
+    % --- 4. 各領域の番号/記号 ---
+    % (i) 単独領域
+    \node at ($ (A) + (0, 0.4) $) {$4^\circ$};
+    \node at ($ (B) + (-0.3, -0.2) $) {$5^\circ$};
+    \node at ($ (C) + (0.3, -0.2) $) {$6^\circ$};
 
-  \item[$6^\circ$] $P$ が $\overline{A} \cap \overline{B} \cap C$ をうごく時
+    % (ii) 2つの集合の共通部分（中央の3重共通部分を除く）
+    \node at (-0.8, 0.2) {$2^\circ$};   % A and B
+    \node at (0.8, 0.2)  {$(1)$};         % A and C
+    \node at (0, -0.8)   {$3^\circ$};       % B and C
 
-    $X, Y \le 0$ で，$r(P) = \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3})$ から
-    \begin{align}
-      r(P) \ge \dfrac{\sqrt{3}}{2} \quad \dots *
-    \end{align}
-\end{enumerate}
+    % (iii) 3つの集合の共通部分 (中央)
+    \node at (0,0) {$1^\circ$};
 
-以上 $1^\circ \sim 6^\circ$ から，
+  \end{tikzpicture}
+  \caption{3つの集合 $A, B, C$ のベン図}
+  \label{fig:venn_diagram_3sets}
+\end{figure}
+
+\subparagraph{$1^\circ$ $P$ が $A \cap B \cap C$ をうごく時}
+
+$P$ が $A \cap B \cap C$ をうごく時，\cref{eq:1}より
+\begin{align}
+  0 \le Y \le -\sqrt{3}X + \sqrt{3} \quad (0 \le X \le 1) \label{eq:5}
+\end{align}
+である．このもとで\cref{eq:4}を考えれば良い．点$P$が$A,B,C$のいずれにも含まれるから，
+\begin{align}
+  r(P) = \max\Bigl\{ X, Y, \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3}) \Bigr\} \label{eq:6}
+\end{align}
+である．\cref{eq:5}より$X$を固定して$Y$を動かした時，
+\begin{align}
+  \dfrac{\sqrt{3}}{3}(-X+1) \le \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3}) \le \dfrac{\sqrt{3}}{2}(-X+1) \quad (0 \le X \le 1)
+\end{align}
+だから，$X$を固定して$Y$を動かした時の$r(P)$の値は$0 \le X \le 1$において
+\begin{align}
+  r(P) = \max
+  \begin{cases}
+    X \\
+    \left[0,\sqrt{3}(-X+1)\right] \\
+    \left[\dfrac{\sqrt{3}}{3}(-X+1), \dfrac{\sqrt{3}}{2}(-X+1)\right]
+  \end{cases}
+\end{align}
+である．これを$X-r$平面に図示すると下図のようになる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・代表点のパラメータ定義 ---
+    % X の範囲: 0 <= X <= 1
+    % (1) r = X (赤実線)
+    % (2) r = sqrt(3)/3 * (1 - X)  (下限を与える折れ線)
+    % (3) r = sqrt(3)/2 * (1 - X)  (Y = 0 のときの参考線)
+    % (4) r = sqrt(3)   * (1 - X)  (上限線)
+    %
+    % 最小値交点: X = sqrt(3)/3 * (1 - X) <=> (1 + sqrt(3)/3)X = sqrt(3)/3
+    % X_min = (sqrt(3) - 1) / 2 ≈ 0.3660
+    % r_min = (sqrt(3) - 1) / 2 ≈ 0.3660
+    \def\xMin{0.3660}
+    \def\rMin{0.3660}
+    % 次の交点
+    % X_mid = (sqrt(3))/(sqrt(3)+1) ~ 0.6340
+    % Y_mid = (sqrt(3))/(sqrt(3)+1) ~ 0.6340
+    \def\xMid{0.6340}
+    \def\yMid{0.6340}
+
+    % --- 2. r(P) のとり得る領域の斜線ハッチング ---
+    \begin{scope}
+      \clip (0, 0) rectangle (1.2, 2.0);
+      \fill[pattern=north east lines, pattern color=blue!50]
+      (0, {sqrt(3)/3}) -- (\xMin, \rMin) -- (\xMid, \yMid) -- (0, {sqrt(3)}) -- cycle;
+    \end{scope}
+
+    % --- 3. 座標軸 (横軸: X, 縦軸: r) ---
+    \draw[->, thick] (-0.15, 0) -- (1.3, 0) node[right] {$X$};
+    \draw[->, thick] (0, -0.15) -- (0, 2.0) node[above] {$r$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 4. 境界直線群の描画 (node を plot から分離して直接座標指定) ---
+    % (i) 下限を与える折れ線の一部: r = X
+    \draw[very thick, orange!90!black, domain=0:1.15] plot (\x, {\x});
+    \node[above right=1pt, font=\scriptsize, orange!90!black] at (1.15, 1.15) {$r = X$};
+
+    % (ii) 下限を与える折れ線の一部: r = sqrt(3)/3 * (1 - X)
+    \draw[very thick, teal!85!black, domain=0:1.0] plot (\x, {sqrt(3)/3.0 * (1.0 - \x)});
+    \node[below left=1pt, font=\scriptsize, teal!85!black]
+    at (0.1, {sqrt(3)/3.0 * (1.0 - 0.1)}) {$r = \dfrac{\sqrt{3}}{3}(1-X)$};
+
+    % (iii) 参考上限線 1: r = sqrt(3)/2 * (1 - X) (Y = 0 における値)
+    \draw[thick, dashed, gray!70, domain=0:1.0] plot (\x, {0.5*sqrt(3) * (1.0 - \x)});
+    \node[above right=1pt, font=\scriptsize, gray!80!black]
+    at (0.45, {0.5*sqrt(3) * (1.0 - 0.45)}) {$r = \dfrac{\sqrt{3}}{2}(1-X)$};
+
+    % (iv) 上限線: r = sqrt(3) * (1 - X) (Y = sqrt(3)(1-X) における最大値)
+    \draw[thick, dashed, purple!80!black, domain=0:1.0] plot (\x, {sqrt(3) * (1.0 - \x)});
+    \node[above right=1pt, font=\scriptsize, purple!80!black]
+    at (0.3, {sqrt(3) * (1.0 - 0.3)}) {$r = \sqrt{3}(1-X)$};
+
+    % --- 5. 最小値の点 (X_min, r_min) ---
+    \draw[dashed, red!80!black] (\xMin, 0) -- (\xMin, \rMin) -- (0, \rMin);
+    \fill[red!80!black] (\xMin, \rMin) circle (1.2pt);
+
+    % 軸目盛りラベル
+    \node[below=3pt, font=\scriptsize, red!80!black] at (\xMin, 0) {$\dfrac{\sqrt{3}-1}{2}$};
+    \node[left=3pt, font=\scriptsize, red!80!black] at (0, \rMin) {$\dfrac{\sqrt{3}-1}{2}$};
+
+    % 主要な切片
+    \node[left=2pt, font=\scriptsize] at (0, {sqrt(3)/3}) {$\dfrac{\sqrt{3}}{3}$};
+    \fill (0, {sqrt(3)/3}) circle (0.8pt);
+
+    \node[left=2pt, font=\scriptsize] at (0, {0.5*sqrt(3)}) {$\dfrac{\sqrt{3}}{2}$};
+    \fill (0, {0.5*sqrt(3)}) circle (0.8pt);
+
+    \node[left=2pt, font=\scriptsize] at (0, {sqrt(3)}) {$\sqrt{3}$};
+    \fill (0, {sqrt(3)}) circle (0.8pt);
+
+    \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
+    \fill (1, 0) circle (0.8pt);
+    \fill (1, 1) circle (1.0pt);
+    \draw[dotted, gray!70] (1, 0) -- (1, 1) -- (0, 1);
+    \node[left=2pt, font=\scriptsize] at (0, 1) {$1$};
+
+  \end{tikzpicture}
+  \caption{$1^\circ$（$P \in A \cap B \cap C$）における $r(P)$ のとり得る領域（斜線部）}
+  \label{fig:rP_case1_region}
+\end{figure}
+
+従って$r(P)$のとりうる領域は
+\begin{align}
+  \dfrac{-1 + \sqrt{3}}{2} \le r(P) \le \sqrt{3} \label{eq:9}
+\end{align}
+である．
+
+% まず，$Y$と$\dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3})$の大小を比べると
+% \begin{align}
+%   Y \ge \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3}) \iff Y \ge \dfrac{1}{3}(-\sqrt{3}X + \sqrt{3}) \label{eq:7}
+% \end{align}
+% だから$(X,Y)$の関係に応じて$r(P)$は以下のようになる．
+% \begin{align}
+%   r(P) =
+%   \begin{cases}
+%     \max\Bigl\{ X, \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3}) \Bigr\} & \left( 0 \le Y \le \dfrac{1}{3}(-\sqrt{3}X + \sqrt{3})\right) \\
+%     \max \{ X, Y \} & \left( \dfrac{1}{3}(-\sqrt{3}X + \sqrt{3}) \le Y \le \sqrt{3}(-X + 1) \right)
+%   \end{cases} \label{eq:8}
+% \end{align}
+% $X$ を固定して $Y$ をうごかすと
+% \begin{align}
+%  \begin{cases}
+%   \dfrac{\sqrt{3}}{3}(-X+1) \le \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3}) \le \dfrac{\sqrt{3}}{2}(-X+1) & \left( 0 \le Y \le \dfrac{\sqrt{3}}{3}(-X + 1), X \le 1 \right) \\
+%   \dfrac{\sqrt{3}}{3}(-X+1) \le Y \le \sqrt{3}(-X+1) & \left( \dfrac{\sqrt{3}}{3}(-X+1) \le Y \le \sqrt{3}(-X+1), X \le 1\right)
+%  \end{cases}
+% \end{align}
+% だから，\cref{eq:8}は
+% \begin{align}
+%  r(P) =
+% \end{align}
+
+% $r(P)$を図示すると下図のようになる．
+
+\subparagraph{$2^\circ$ $P$ が $A \cap B \cap \overline{C}$ をうごく時}
+
+$P$ が $A \cap B \cap \overline{C}$ をうごく時，$P(X,Y)$のとりうる領域は\cref{eq:1}より
+\begin{align}
+  \begin{cases}
+    \dfrac{1}{\sqrt{3}}(-\sqrt{3}X + \sqrt{3}) \le Y & (0 \le X \le 1) \\
+    0 \le Y & (1 \le X)
+  \end{cases}
+\end{align}
+である．
+この時に\cref{eq:4}において$A$または$B$の時の条件を考えれば良いから
+\begin{align}
+  r(P) = \max(X,Y)
+\end{align}
+であり，$r(P)$のグラフは下図のようになる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・代表点のパラメータ定義 ---
+    % 境界直線 l: Y = -sqrt(3)X + sqrt(3) (※解の式の傾き -sqrt(3))
+    % r(P) = max(X, Y)
+    % 各 X (X >= 0) に対する Y の下限:
+    %   0 <= X <= 1 では Y >= -sqrt(3)X + sqrt(3)
+    %   X >= 1 では Y >= 0
+    % したがって下限を与える直線:
+    %   r = -sqrt(3)X + sqrt(3) と r = X の交点が最小点
+    %   X = -sqrt(3)X + sqrt(3) <=> (1 + sqrt(3))X = sqrt(3)
+    %   X_min = sqrt(3) / (sqrt(3) + 1) = (3 - sqrt(3)) / 2 ≈ 0.6340
+    %   r_min = (3 - sqrt(3)) / 2 ≈ 0.6340
+    \def\xMin{0.6340}
+    \def\rMin{0.6340}
+
+    % --- 2. r(P) のとり得る領域の斜線ハッチング ---
+    % X 方向: 0 <= X <= 2.2
+    % 下限:
+    %   0 <= X <= xMin: r >= -sqrt(3)X + sqrt(3)
+    %   xMin <= X:     r >= X
+    \begin{scope}
+      \clip (0, 0) rectangle (2.2, 2.5);
+      \fill[pattern=north east lines, pattern color=blue!50]
+      (0, {sqrt(3)}) -- (\xMin, \rMin) -- (2.2, 2.2) -- (2.2, 2.5) -- (0, 2.5) -- cycle;
+    \end{scope}
+
+    % --- 3. 座標軸 (横軸: X, 縦軸: r) ---
+    \draw[->, thick] (-0.2, 0) -- (2.3, 0) node[right] {$X$};
+    \draw[->, thick] (0, -0.2) -- (0, 2.5) node[above] {$r$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 4. 境界直線群の描画 ---
+    % (i) 下限を与える境界線の一部: r = X
+    \draw[very thick, orange!90!black, domain=0:2.1] plot (\x, {\x});
+    \node[above right=1pt, font=\scriptsize, orange!90!black] at (2.1, 2.1) {$r = X$};
+
+    % (ii) 下限を与える境界線の一部: r = -\sqrt{3}X + \sqrt{3} (0 <= X <= 1: 実線, X > 1: 破線)
+    \draw[very thick, teal!85!black, domain=0:1.0] plot (\x, {-sqrt(3)*\x + sqrt(3)});
+    \draw[thick, dashed, teal!50, domain=1.0:1.4] plot (\x, {-sqrt(3)*\x + sqrt(3)});
+    \node[below left=1pt, font=\scriptsize, teal!85!black]
+    at (0.2, {-sqrt(3)*0.2 + sqrt(3)}) {$r = -\sqrt{3}X + \sqrt{3}$};
+
+    % --- 5. 最小値の点 (X_min, r_min) ---
+    \draw[dashed, red!80!black] (\xMin, 0) -- (\xMin, \rMin) -- (0, \rMin);
+    \fill[red!80!black] (\xMin, \rMin) circle (1.2pt);
+
+    % 軸目盛りラベル
+    \node[below=3pt, font=\scriptsize, red!80!black] at (\xMin, 0) {$\dfrac{3-\sqrt{3}}{2}$};
+    \node[left=3pt, font=\scriptsize, red!80!black] at (0, \rMin) {$\dfrac{3-\sqrt{3}}{2}$};
+
+    % 主要な切片
+    \node[left=2pt, font=\scriptsize] at (0, {sqrt(3)}) {$\sqrt{3}$};
+    \fill (0, {sqrt(3)}) circle (0.9pt);
+
+    \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
+    \fill (1, 0) circle (0.9pt);
+
+    % 最小点への案内矢印
+    \draw[<-, thick, red!80!black] (\xMin + 0.02, \rMin + 0.02) -- ++(0.35, 0.1)
+    node[right, font=\scriptsize, align=left] {最小点\\$r_{\min} = \dfrac{3-\sqrt{3}}{2}$};
+
+  \end{tikzpicture}
+  \caption{$2^\circ$（$P \in A \cap B \cap \overline{C}$）における $r(P) = \max(X, Y)$ のとり得る領域（斜線部）}
+  \label{fig:case2_rP_region}
+\end{figure}
+
+従って$r(P)$のとりうる領域は
+\begin{align}
+  r(P) \ge \dfrac{1}{2}(3 - \sqrt{3}) \label{eq:10}
+\end{align}
+である．
+
+\subparagraph{$3^\circ$ $P$ が $\overline{A} \cap B \cap C$ をうごく時}
+
+$P$ が $\overline{A} \cap B \cap C$ をうごく時，$P(X,Y)$のとりうる領域は
+\begin{align}
+  0 \le Y \le \sqrt{3}(-X+1) \quad (X \le 0)
+\end{align}
+である．
+この時に\cref{eq:4}において$B$または$C$の時の条件を考えれば良いから
+\begin{align}
+  r(P) = \max\left(Y, \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3})\right)
+\end{align}
+である．\cref{eq:7}よりこの大小関係は
+\begin{align}
+  \begin{cases}
+    r(P) = \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3}) & \left(0 \le Y \le \dfrac{\sqrt{3}}{3}(-X+1) \right) \\
+    r(P) = Y & \left(\dfrac{\sqrt{3}}{3}(-X+1) \le Y \le \sqrt{3}(-X+1) \right)
+  \end{cases}
+\end{align}
+である．よって$X$を固定して$Y$を動かした時の$r(P)$のとりうる範囲は
+\begin{align}
+  &
+  \begin{cases}
+    \dfrac{\sqrt{3}}{3}(-X + 1) \le r(P) \le \dfrac{\sqrt{3}}{2}(-X + 1) & (X \le 0) \\
+    \dfrac{\sqrt{3}}{3}(-X+1) \le r(P) \le \sqrt{3}(-X+1) & (X \le 0)
+  \end{cases} \\
+  \therefore
+  & \dfrac{\sqrt{3}}{3}(-X+1) \le r(P) \le \sqrt{3}(-X+1) \quad (X \le 0)
+\end{align}
+である．これを図示して$r(P)$のグラフは下図のようになる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.0, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・代表点のパラメータ定義 ---
+    % X <= 0 において各 X に対する r(P) のとり得る値の範囲:
+    % 下限: r = sqrt(3)/3 * (1 - X)  (Y = sqrt(3)/3 * (1 - X) のとき)
+    % 上限: r = sqrt(3)   * (1 - X)  (Y = sqrt(3)   * (1 - X) のとき)
+    % 最小点: X = 0 のとき r_min = sqrt(3)/3
+
+    % --- 2. 領域のハッチング (X <= 0 における r(P) の存在範囲) ---
+    \begin{scope}
+      \clip (-2.2, 0) rectangle (0.8, 3.2);
+      \fill[pattern=north east lines, pattern color=blue!50]
+      (0, {sqrt(3)/3}) -- (-1.8, {sqrt(3)/3 * (1.0 - (-1.8))}) -- (-1.8, 3.2) -- (-0.85, 3.2) -- (0, {sqrt(3)}) -- cycle;
+    \end{scope}
+
+    % --- 3. 座標軸 (横軸: X, 縦軸: r) ---
+    \draw[->, thick] (-2.2, 0) -- (0.8, 0) node[right] {$X$};
+    \draw[->, thick] (0, -0.2) -- (0, 3.2) node[above] {$r$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 4. 境界直線群 ---
+    % (i) 下限を与える境界線: r = sqrt(3)/3 * (1 - X) (X <= 0: 実線, X > 0: 破線補助線)
+    \draw[very thick, teal!85!black, domain=-1.8:0] plot (\x, {sqrt(3)/3.0 * (1.0 - \x)});
+    \draw[thick, dashed, teal!50, domain=0:0.6] plot (\x, {sqrt(3)/3.0 * (1.0 - \x)})
+    node[right=1pt, font=\scriptsize, teal!80!black] {$r = \dfrac{\sqrt{3}}{3}(1-X)$};
+
+    % (ii) 参考線 (Y = 0 のときの下限側の値): r = sqrt(3)/2 * (1 - X)
+    \draw[thick, dashed, gray!60, domain=-1.8:0] plot (\x, {0.5*sqrt(3) * (1.0 - \x)});
+
+    % 直接座標 (-1.0, ...) を指定してノードを置く
+    \node[above right=1pt, font=\scriptsize, black]
+    at (-1.2, {0.5*sqrt(3)*(1.0 - (-1.0))}) {$r = \dfrac{\sqrt{3}}{2}(1-X)$};
+
+    % (iii) 上限を与える境界線: r = sqrt(3) * (1 - X) (X <= 0: 実線, X > 0: 破線補助線)
+    \draw[very thick, purple!80!black, domain=-0.85:0] plot (\x, {sqrt(3) * (1.0 - \x)});
+    \draw[thick, dashed, purple!50, domain=0:0.6] plot (\x, {sqrt(3) * (1.0 - \x)})
+    node[below right=1pt, font=\scriptsize, purple!80!black] {$r = \sqrt{3}(1-X)$};
+
+    % --- 5. 最小値の点 (X = 0, r = sqrt(3)/3) ---
+    \fill[red!80!black] (0, {sqrt(3)/3}) circle (1.3pt);
+    \node[left=3pt, font=\footnotesize, red!80!black] at (0, {sqrt(3)/3}) {$\dfrac{\sqrt{3}}{3}$};
+
+    % 主要な切片 (r 軸上)
+    \fill (0, {0.5*sqrt(3)}) circle (0.9pt);
+    \node[right=2pt, font=\scriptsize, gray!80!black] at (0, {0.5*sqrt(3)}) {$\dfrac{\sqrt{3}}{2}$};
+
+    \fill (0, {sqrt(3)}) circle (1.0pt);
+    \node[right=2pt, font=\footnotesize] at (0, {sqrt(3)}) {$\sqrt{3}$};
+
+    % 最小点への案内矢印
+    \draw[<-, thick, red!80!black] (0.02, {sqrt(3)/3 + 0.02}) -- ++(0.35, 0.35)
+    node[right, font=\scriptsize, align=left] {最小点 ($X = 0$)\\$r_{\min} = \dfrac{\sqrt{3}}{3}$};
+
+  \end{tikzpicture}
+  \caption{$3^\circ$（$P \in \overline{A} \cap B \cap C$）における $r(P)$ のとり得る領域（斜線部，$X \leqq 0$）}
+  \label{fig:case3_rP_region}
+\end{figure}
+
+従って$r(P)$のとりうる領域は
+\begin{align}
+  r(P) \ge \dfrac{\sqrt{3}}{3} \label{eq:11}
+\end{align}
+である．
+
+\subparagraph{$4^\circ$ $P$ が $A \cap \overline{B} \cap \overline{C}$ をうごく時}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. クリッピング領域の設定 ---
+    \clip (-0.5, -2.5) rectangle (3.0, 1.2);
+
+    % --- 2. 領域 A ∩ \bar{B} ∩ \bar{C} の斜線ハッチング ---
+    % 条件: X >= 1, -\sqrt{3}X + \sqrt{3} <= Y <= 0
+    \fill[pattern=north east lines, pattern color=blue!60]
+    (1.0, 0) -- (3.0, 0) -- (3.0, {-sqrt(3)*(3.0 - 1.0)}) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-0.5, 0) -- (3.0, 0) node[right] {$X$};
+    \draw[->, thick] (0, -2.5) -- (0, 1.2) node[above] {$Y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 4. 境界直線 ---
+    % 直線 l: Y = -\sqrt{3}X + \sqrt{3}
+    \draw[thick, teal!85!black, domain=0.3:2.4] plot (\x, {-sqrt(3)*(\x - 1.0)})
+    node[below left=1pt, font=\footnotesize] {$l: Y = -\sqrt{3}X + \sqrt{3}$};
+
+    % 領域境界線（実線で強調）
+    \draw[line width=1.2pt, blue!85!black] (1.0, 0) -- (3.0, 0);
+    \draw[line width=1.2pt, blue!85!black] (1.0, 0) -- (2.4, {-sqrt(3)*(2.4 - 1.0)});
+
+    % --- 5. 主要点のプロットと目盛り ---
+    % x 切片 (1, 0)
+    \fill (1.0, 0) circle (1.2pt);
+    \node[above=2pt, font=\footnotesize] at (1.0, 0) {$1$};
+
+    % y 切片 (0, \sqrt{3})
+    \fill (0, {sqrt(3)}) circle (1.0pt);
+    \node[left=2pt, font=\footnotesize] at (0, {sqrt(3)}) {$\sqrt{3}$};
+
+    % r(P) の結果注記
+    \node[draw=red!80!black, fill=white, rounded corners=2pt, font=\scriptsize, align=center]
+    at (1.8, 0.6) {$r(P) = X \geqq 1$};
+
+  \end{tikzpicture}
+  \caption{$4^\circ$ における点 $P(X, Y)$ の動く領域 $A \cap \overline{B} \cap \overline{C}$（斜線部，境界を含む）}
+  \label{fig:case4_region}
+\end{figure}
+
+$P$が$A \cap \overline{B} \cap \overline{C}$ をうごく時，$P(X,Y)$のとりうる領域は
+\begin{align}
+  -\sqrt{3}X + \sqrt{3} \le Y \le 0 \quad (1 \le X)
+\end{align}
+である．
+この時に\cref{eq:4}で$A$の条件のみ考えれば良いから
+\begin{align}
+  r(P) = X
+\end{align}
+である．従って求める$r(P)$の領域は
+\begin{align}
+  r(P) = X \ge 1 \label{eq:12}
+\end{align}
+である．
+
+\subparagraph{$5^\circ$ $P$ が $\overline{A} \cap B \cap \overline{C}$ をうごく時}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. クリッピング領域の設定 ---
+    \clip (-2.2, -0.6) rectangle (1.5, 3.8);
+
+    % --- 2. 領域 \bar{A} ∩ B ∩ \bar{C} の斜線ハッチング ---
+    % 条件: X <= 0, Y >= -\sqrt{3}X + \sqrt{3}
+    \fill[pattern=north east lines, pattern color=blue!60]
+    (0, {sqrt(3)}) -- (-2.2, {sqrt(3)*(1 - (-2.2))}) -- (-2.2, 3.8) -- (0, 3.8) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-2.2, 0) -- (1.5, 0) node[right] {$X$};
+    \draw[->, thick] (0, -0.6) -- (0, 3.8) node[above] {$Y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 4. 境界直線 ---
+    % 直線 l: Y = -\sqrt{3}X + \sqrt{3}
+    \draw[thick, teal!85!black, domain=-1.2:1.4] plot (\x, {-sqrt(3)*(\x - 1.0)})
+    node[below right=1pt, font=\footnotesize] {$l: Y = -\sqrt{3}X + \sqrt{3}$};
+
+    % 領域境界線（実線で強調）
+    \draw[line width=1.2pt, blue!85!black] (0, {sqrt(3)}) -- (0, 3.6);
+    \draw[line width=1.2pt, blue!85!black] (0, {sqrt(3)}) -- (-1.1, {sqrt(3)*(1 - (-1.1))});
+
+    % --- 5. 主要点のプロットと目盛り ---
+    % y 切片 (0, \sqrt{3})
+    \fill (0, {sqrt(3)}) circle (1.2pt);
+    \node[below right=2pt, font=\footnotesize] at (0, {sqrt(3)}) {$\sqrt{3}$};
+
+    % x 切片 (1, 0)
+    \fill (1.0, 0) circle (1.0pt);
+    \node[below=2pt, font=\footnotesize] at (1.0, 0) {$1$};
+
+    % Y = \sqrt{3} の補助点線（下限値の可視化）
+    \draw[dashed, gray!70] (-2.0, {sqrt(3)}) -- (0, {sqrt(3)});
+
+    % r(P) の結果注記
+    \node[draw=red!80!black, fill=white, rounded corners=2pt, font=\scriptsize, align=center]
+    at (0.7, 2.5) {$r(P) = Y \geqq \sqrt{3}$};
+
+  \end{tikzpicture}
+  \caption{$5^\circ$ における点 $P(X, Y)$ の動く領域 $\overline{A} \cap B \cap \overline{C}$（斜線部，境界を含む）}
+  \label{fig:case5_region}
+\end{figure}
+
+$P$が$\overline{A} \cap B \cap \overline{C}$を動く時，$P(X,Y)$のとりうる領域は
+\begin{align}
+  -\sqrt{3}X +\sqrt{3} \le Y \quad (X \le 0)
+\end{align}
+である．よって$Y \ge \sqrt{3}$である．
+この時に\cref{eq:4}で$B$の条件のみ考えれば良いから
+\begin{align}
+  r(P) = Y \ge \sqrt{3} \label{eq:13}
+\end{align}
+である．
+
+\subparagraph{$6^\circ$ $P$ が $\overline{A} \cap \overline{B} \cap C$ をうごく時}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. クリッピング領域の設定 ---
+    \clip (-2.2, -2.2) rectangle (1.8, 2.2);
+
+    % --- 2. 領域 \bar{A} ∩ \bar{B} ∩ C の斜線ハッチング ---
+    % 条件: X <= 0, Y <= 0 (第3象限全体，境界を含む)
+    \fill[pattern=north east lines, pattern color=blue!60]
+    (-2.2, -2.2) rectangle (0, 0);
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-2.2, 0) -- (1.8, 0) node[right] {$X$};
+    \draw[->, thick] (0, -2.2) -- (0, 2.2) node[above] {$Y$};
+    \node[above right=2pt] at (0, 0) {$O$};
+
+    % --- 4. 境界直線 ---
+    % 直線 l: Y = -\sqrt{3}X + \sqrt{3} (領域 C の境界)
+    \draw[thick, teal!85!black, domain=-0.25:1.6] plot (\x, {-sqrt(3)*(\x - 1.0)})
+    node[above right=1pt, font=\footnotesize] {$l: Y = -\sqrt{3}X + \sqrt{3}$};
+
+    % 領域境界線（実線で強調：負のX軸および負のY軸）
+    \draw[line width=1.2pt, blue!85!black] (-2.2, 0) -- (0, 0);
+    \draw[line width=1.2pt, blue!85!black] (0, -2.2) -- (0, 0);
+
+    % --- 5. 主要点のプロットと目盛り ---
+    % x 切片 (1, 0)
+    \fill (1.0, 0) circle (1.0pt);
+    \node[below=2pt, font=\footnotesize] at (1.0, 0) {$1$};
+
+    % y 切片 (0, \sqrt{3})
+    \fill (0, {sqrt(3)}) circle (1.0pt);
+    \node[left=2pt, font=\footnotesize] at (0, {sqrt(3)}) {$\sqrt{3}$};
+
+    % 原点 (0, 0) のプロット（r(P) の最小値を与える点）
+    \fill[red!80!black] (0, 0) circle (1.4pt);
+
+    % r(P) の結果および原点での最小値注記
+    \draw[<-, thick, red!80!black] (-0.03, -0.03) -- (-0.8, 0.7)
+    node[above left, font=\scriptsize, align=left, draw=red!80!black, fill=white, rounded corners=2pt]
+    {$(0,0)$ でmin\\$r(P) = \dfrac{\sqrt{3}}{2}$};
+
+  \end{tikzpicture}
+  \caption{$6^\circ$ における点 $P(X, Y)$ の動く領域 $\overline{A} \cap \overline{B} \cap C$（第3象限，斜線部，境界を含む）}
+  \label{fig:case6_region}
+\end{figure}
+
+$P$が$\overline{A} \cap \overline{B} \cap C$ をうごく時，$P(X,Y)$のとりうる領域は
+\begin{align}
+  X, Y \le 0
+\end{align}
+である．
+この時に\cref{eq:4}で$C$の条件のみ考えれば良いから
+\begin{align}
+  r(P) = \dfrac{1}{2}(-\sqrt{3}X - Y + \sqrt{3}) \ge \dfrac{\sqrt{3}}{2} \label{eq:14}
+\end{align}
+である．
+\casesend
+
+以上 $1^\circ \sim 6^\circ$ の場合分けから
 \begin{align}
   \min r(P) = \dfrac{-1 + \sqrt{3}}{2}
 \end{align}
+である．
 
 \end{document}

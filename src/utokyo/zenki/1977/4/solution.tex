@@ -3,20 +3,126 @@
 
 {\bf [解]}
 
-正方形$S$が滑らずにころがるとき，点$P$の軌跡$C$を考える．
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.25, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・パラメータ定義 ---
+    % a = 0.8, 正方形の一辺は 2
+    \def\aVal{0.8}
+    \def\sLen{2.0}
+
+    \pgfmathsetmacro{\rOneSq}{1.0 + \aVal*\aVal}
+    \pgfmathsetmacro{\rTwoSq}{1.0 + (2.0 - \aVal)*(2.0 - \aVal)}
+    \pgfmathsetmacro{\xConnOne}{2.0 + \aVal}      % 2 + a = 2.8
+    \pgfmathsetmacro{\xConnTwoSym}{8.0 - \aVal}   % 8 - a = 7.2
+    \def\yConn{1.0}
+
+    % --- 2. 曲線 C と x 軸で囲まれた領域のハッチング ---
+    \fill[pattern=north east lines, pattern color=blue!40]
+    (1, 0) --
+    plot[domain=1:\xConnOne, samples=40] (\x, {sqrt(max(0, \rOneSq - (\x - 2.0)^2))}) --
+    plot[domain=\xConnOne:5.0, samples=40] (\x, {sqrt(max(0, \rTwoSq - (\x - 4.0)^2))}) --
+    plot[domain=5.0:\xConnTwoSym, samples=40] (\x, {sqrt(max(0, \rTwoSq - (\x - 6.0)^2))}) --
+    plot[domain=\xConnTwoSym:9.0, samples=40] (\x, {sqrt(max(0, \rOneSq - (\x - 8.0)^2))}) --
+    (9, 0) -- cycle;
+
+    % --- 3. 正方形 S の各要所での姿勢（破線表示） ---
+    % (1) 初期状態: 底辺 [0, 2], 高さ 2 (P は (1, a))
+    \draw[thick, dashed, gray!60] (0, 0) rectangle (2, \sLen);
+    \node[gray!70!black, font=\scriptsize] at (0.6, 1.7) {$S$ (初期)};
+
+    % (2) (2,0) まわりに 90° 回転直後: 底辺 [2, 4], 高さ 2 (P は (2+a, 1))
+    \draw[thick, dashed, gray!60] (2, 0) rectangle (4, \sLen);
+
+    % (3) (4,0) まわりに 90° 回転直後（対称軸 x=5）: 底辺 [4, 6], 高さ 2 (P は (5, 2-a))
+    \draw[thick, dashed, gray!60] (4, 0) rectangle (6, \sLen);
+
+    % (4) (6,0) まわりに 90° 回転直後: 底辺 [6, 8], 高さ 2 (P は (8-a, 1))
+    \draw[thick, dashed, gray!60] (6, 0) rectangle (8, \sLen);
+
+    % (5) (8,0) まわりに 90° 回転直後（1周完了）: 底辺 [8, 10], 高さ 2 (P は (9, a))
+    \draw[thick, dashed, gray!60] (8, 0) rectangle (10, \sLen);
+
+    % --- 4. 座標軸 ---
+    \draw[->, thick] (-0.5, 0) -- (10.6, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.4) -- (0, 2.6) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 5. 対称軸 x = 5 ---
+    \draw[thick, dashed, red!80!black] (5.0, -0.2) -- (5.0, 2.3)
+    node[above, font=\footnotesize] {$x = 5$ (対称軸)};
+
+    % --- 6. 曲線 C の各円弧 ---
+    \draw[very thick, blue!85!black, domain=1:\xConnOne, samples=50]
+    plot (\x, {sqrt(max(0, \rOneSq - (\x - 2.0)^2))});
+    \draw[very thick, blue!85!black, domain=\xConnOne:5.0, samples=50]
+    plot (\x, {sqrt(max(0, \rTwoSq - (\x - 4.0)^2))});
+    \draw[very thick, blue!85!black, domain=5.0:\xConnTwoSym, samples=50]
+    plot (\x, {sqrt(max(0, \rTwoSq - (\x - 6.0)^2))});
+    \draw[very thick, blue!85!black, domain=\xConnTwoSym:9.0, samples=50]
+    plot (\x, {sqrt(max(0, \rOneSq - (\x - 8.0)^2))});
+    \node[blue!85!black, font=\normalsize\bfseries] at (2.6, 1.65) {$C$};
+
+    % --- 7. 境界・接続点の補助点線 ---
+    \draw[dashed, gray!70] (1, 0) -- (1, \aVal) -- (0, \aVal);
+    \node[left=2pt, font=\scriptsize] at (0, \aVal) {$a$};
+
+    \draw[dashed, gray!70] (9, 0) -- (9, \aVal);
+
+    \draw[dotted, gray!80!black, thick] (\xConnOne, 0) -- (\xConnOne, \yConn);
+    \draw[dotted, gray!80!black, thick] (\xConnTwoSym, 0) -- (\xConnTwoSym, \yConn);
+    \draw[dashed, gray!60] (0, \yConn) -- (10, \yConn);
+    \node[left=2pt, font=\scriptsize] at (0, \yConn) {$1$};
+
+    % 回転中心から接続点への半径動径
+    \draw[densely dotted, purple!75!black] (2, 0) -- (\xConnOne, \yConn);
+    \draw[densely dotted, purple!75!black] (4, 0) -- (\xConnOne, \yConn);
+
+    % --- 8. 主要点プロット ---
+    % 回転中心
+    \foreach \xc in {2, 4, 6, 8} {
+      \fill[black] (\xc, 0) circle (1.2pt);
+      \node[below=2pt] at (\xc, 0) {$\xc$};
+    }
+
+    % 各姿勢における点 P の位置
+    \fill[red!80!black] (1, \aVal) circle (1.4pt) node[above left, font=\scriptsize] {$P$};
+    \fill[red!80!black] (\xConnOne, \yConn) circle (1.4pt);
+    \fill[red!80!black] (5.0, {2.0 - \aVal}) circle (1.4pt);
+    \fill[red!80!black] (\xConnTwoSym, \yConn) circle (1.4pt);
+    \fill[red!80!black] (9, \aVal) circle (1.4pt);
+
+    % x 軸上の主要目盛りラベル
+    \node[below=2pt] at (1, 0) {$1$};
+    \node[below=2pt] at (5, 0) {$5$};
+    \node[below=2pt] at (9, 0) {$9$};
+    \node[below=3pt, purple!80!black, font=\footnotesize] at (\xConnOne, 0) {$2+a$};
+    \node[below=3pt, purple!80!black, font=\footnotesize] at (\xConnTwoSym, 0) {$8-a$};
+
+    % 正方形の一辺の長さガイド（高さ 2）
+    \draw[<->, gray!70!black] (-0.2, 0) -- (-0.2, \sLen)
+    node[midway, left=1pt, font=\scriptsize] {$2$};
+
+  \end{tikzpicture}
+  \caption{正方形 $S$（一辺 $2$）の転がりに伴う各姿勢（点線）と点 $P$ の軌跡 $C$}
+  \label{fig:square_rolling_trajectory_with_squares}
+\end{figure}
+
+半径$2$の正方形$S$が滑らずにころがるとき，点$P(1,a)$の軌跡$C$を考える．
 \begin{enumerate}[(i)]
   \item $S$が点$(2,0)$を中心として時計回りに$90^\circ$回転するとき：
     点$P$は点$(2,0)$を中心とし，半径$\sqrt{(1-2)^2+a^2}=\sqrt{1+a^2}$の円弧を描く．
     $x$座標は$1$から$2+a$まで変化するから，この区間の曲線$C$の方程式は
     \begin{align}
-      (x-2)^2+y^2=1+a^2 \quad (1 \leqq x \leqq 2+a)
+      (x-2)^2+y^2=1+a^2 \quad (1 \leqq x \leqq 2+a) \label{eq:1}
     \end{align}
     である．
   \item $S$の次の頂点が$(4,0)$に接地し，この点を中心として時計回りに$90^\circ$回転するとき：
     点$P$と点$(4,0)$との距離は$\sqrt{(1-2)^2+(a-2)^2}=\sqrt{1+(2-a)^2}$である．
     $x$座標は$2+a$から$5$まで変化するから，この区間の曲線$C$の方程式は
     \begin{align}
-      (x-4)^2+y^2=1+(2-a)^2 \quad (2+a \leqq x \leqq 5)
+      (x-4)^2+y^2=1+(2-a)^2 \quad (2+a \leqq x \leqq 5) \label{eq:2}
     \end{align}
     である．
   \item 同様に，さらに$S$がころがるとき，曲線$C$は直線$x=5$に関して対称である．
@@ -25,76 +131,42 @@
       \begin{cases}
         (x-6)^2+y^2=1+(2-a)^2 & (5 \leqq x \leqq 6+a) \\
         (x-8)^2+y^2=1+a^2 & (6+a \leqq x \leqq 9)
-      \end{cases}
+      \end{cases} \label{eq:3}
     \end{align}
     となる．
 \end{enumerate}
 
-\begin{figure}[htbp]
-  \centering
-  \begin{tikzpicture}[scale=1.0, >=stealth]
-    \draw[->] (-0.5,0) -- (10,0) node[right] {$x$};
-    \draw[->] (0,-0.5) -- (0,3.2) node[above] {$y$};
-    \node[below left] at (0,0) {$O$};
-
-    % Points on x-axis
-    \foreach \x in {1,2,4,5,6,8,9} {
-      \draw (\x, 0.08) -- (\x, -0.08);
-    }
-    \node[below] at (1,0) {$1$};
-    \node[below] at (2,0) {$2$};
-    \node[below] at (4,0) {$4$};
-    \node[below] at (5,0) {$5$};
-    \node[below] at (6,0) {$6$};
-    \node[below] at (8,0) {$8$};
-    \node[below] at (9,0) {$9$};
-
-    % Draw curves for a = 0.8 as an illustration
-    \draw[dashed] (1,0) -- (1,0.8);
-    \draw[dashed] (9,0) -- (9,0.8);
-    \draw[dashed] (5,0) -- (5,1.2);
-
-    \draw[thick, domain=1:2.8, samples=50] plot (\x, {sqrt(max(0, 1.64 - (\x-2)^2))});
-    \draw[thick, domain=2.8:5, samples=50] plot (\x, {sqrt(max(0, 2.44 - (\x-4)^2))});
-    \draw[thick, domain=5:7.2, samples=50] plot (\x, {sqrt(max(0, 2.44 - (\x-6)^2))});
-    \draw[thick, domain=7.2:9, samples=50] plot (\x, {sqrt(max(0, 1.64 - (\x-8)^2))});
-
-    \node[above] at (2.8, 1.0) {$C$};
-    \node[below] at (2.8, -0.4) {$2+a$};
-    \node[below] at (7.2, -0.4) {$6+a$};
-    \draw[dotted] (2.8,0) -- (2.8,1.0);
-    \draw[dotted] (7.2,0) -- (7.2,1.0);
-  \end{tikzpicture}
-  \caption{正方形の回転に伴う曲線$C$の概形}
-\end{figure}
-
 曲線$C$が直線$x=5$に関して対称であることから，求める立体の体積$V(a)$は，$1 \leqq x \leqq 5$の部分の回転体の体積$V_1(a)$の$2$倍に等しい．すなわち
 \begin{align}
-  V(a) = 2V_1(a) = 2\pi \int_1^5 y^2 \, dx
+  V(a) = 2V_1(a) = 2\pi \int_1^5 y^2 \, dx \label{eq:4}
 \end{align}
-である．ここで
+である．そこで以下$V_1(a)$を計算する．
 \begin{align}
-  V_1(a) &= \pi \int_1^{2+a} \left\{(1+a^2)-(x-2)^2\right\} \, dx + \pi \int_{2+a}^5 \left\{(a^2-4a+5)-(x-4)^2\right\} \, dx
+  V_1(a)
+  &= \pi \int_1^{2+a} \left\{(1+a^2)-(x-2)^2\right\} \, dx + \pi \int_{2+a}^5 \left\{(a^2-4a+5)-(x-4)^2\right\} \, dx \\
+  &= \pi \int_{-1}^a (1+a^2-x^2) \, dx + \pi \int_{a-2}^1 (a^2-4a+5-x^2) \, dx \label{eq:5}
 \end{align}
-第1項の積分において$u = x-2$とおくと，$x$が$1 \to 2+a$と動くとき$u$は$-1 \to a$と動くから，
+を各項計算すると
 \begin{align}
-  \int_1^{2+a} \left\{(1+a^2)-(x-2)^2\right\} \, dx
-  &= \int_{-1}^a (1+a^2-u^2) \, du \nonumber\\
-  &= \left[ (1+a^2)u - \dfrac{u^3}{3} \right]_{-1}^a \nonumber\\
-  &= \left( a+a^3-\dfrac{a^3}{3} \right) - \left( -(1+a^2)+\dfrac{1}{3} \right) \nonumber\\
-  &= \dfrac{2}{3}a^3 + a^2 + a + \dfrac{2}{3}
+  (\text{第1項})
+  &= \int_{-1}^a (1+a^2-x^2) \, dx \nonumber\\
+  &= \left[ (1+a^2)x - \dfrac{x^3}{3} \right]_{-1}^a \nonumber\\
+  &= \left( (1+a^2)a-\dfrac{a^3}{3} \right) - \left( -(1+a^2)+\dfrac{1}{3} \right) \nonumber\\
+  &= \dfrac{2}{3}a^3 + a^2 + a + \dfrac{2}{3} \label{eq:6}
 \end{align}
-第2項の積分において$v = x-4$とおくと，$x$が$2+a \to 5$と動くとき$v$は$a-2 \to 1$と動くから，
+および
 \begin{align}
-  \int_{2+a}^5 \left\{(a^2-4a+5)-(x-4)^2\right\} \, dx
-  &= \int_{a-2}^1 (a^2-4a+5-v^2) \, dv \nonumber\\
-  &= \left[ (a^2-4a+5)v - \dfrac{v^3}{3} \right]_{a-2}^1 \nonumber\\
+  (\text{第2項})
+  &= \int_{a-2}^1 (a^2-4a+5-x^2) \, dx \nonumber\\
+  &= \left[ (a^2-4a+5)x - \dfrac{x^3}{3} \right]_{a-2}^1 \nonumber\\
   &= \left( a^2-4a+5-\dfrac{1}{3} \right) - (a-2)\left( a^2-4a+5 - \dfrac{(a-2)^2}{3} \right) \nonumber\\
   &= a^2-4a+\dfrac{14}{3} - (a-2)\left( \dfrac{2}{3}a^2 - \dfrac{8}{3}a + \dfrac{11}{3} \right) \nonumber\\
   &= a^2-4a+\dfrac{14}{3} - \left( \dfrac{2}{3}a^3 - 4a^2 + 9a - \dfrac{22}{3} \right) \nonumber\\
-  &= -\dfrac{2}{3}a^3 + 5a^2 - 13a + 12
+  &= -\dfrac{2}{3}a^3 + 5a^2 - 13a + 12 \label{eq:7}
 \end{align}
-したがって
+である．
+
+したがって\cref{eq:6,eq:7}を\cref{eq:5}に代入して
 \begin{align}
   V_1(a) &= \pi \left\{ \left( \dfrac{2}{3}a^3 + a^2 + a + \dfrac{2}{3} \right) + \left( -\dfrac{2}{3}a^3 + 5a^2 - 13a + 12 \right) \right\} \nonumber\\
   &= \pi \left( 6a^2 - 12a + \dfrac{38}{3} \right) \nonumber\\

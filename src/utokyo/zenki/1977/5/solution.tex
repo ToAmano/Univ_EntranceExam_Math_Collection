@@ -1,8 +1,8 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\paragraph{【新課程】}
 {\bf [解]}
+\paragraph{【新課程】}
 
 $A=
 \begin{pmatrix} a & b \\ c & d
@@ -10,7 +10,11 @@ $A=
 \begin{pmatrix} 1 & 0 \\ 0 & 1
 \end{pmatrix}$，$J=
 \begin{pmatrix} 0 & -1 \\ 1 & 0
-\end{pmatrix}$ より，
+\end{pmatrix}$ より，題意の関係式
+\begin{align}
+  A(I-tJ) = I + tJ \label{eq:1}
+\end{align}
+を成分表示で考える．まず左辺は
 \begin{align}
   A(I-tJ) &= A - tAJ \nonumber\\
   &=
@@ -24,23 +28,17 @@ $A=
   \begin{pmatrix} a & b \\ c & d
   \end{pmatrix} - t
   \begin{pmatrix} b & -a \\ d & -c
-  \end{pmatrix} \nonumber\\
-  &=
-  \begin{pmatrix} a-bt & b+at \\ c-dt & d+ct
-  \end{pmatrix}
+  \end{pmatrix} \label{eq:2}
 \end{align}
-また，
+であり，右辺は
 \begin{align}
   I+tJ &=
   \begin{pmatrix} 1 & 0 \\ 0 & 1
   \end{pmatrix} + t
   \begin{pmatrix} 0 & -1 \\ 1 & 0
-  \end{pmatrix} \nonumber\\
-  &=
-  \begin{pmatrix} 1 & -t \\ t & 1
-  \end{pmatrix}
+  \end{pmatrix} \label{eq:3}
 \end{align}
-である．$A(I-tJ)=I+tJ$ の各成分を比較して，
+である．\cref{eq:2,eq:3}の各成分を比較して，
 \begin{align}
   a-bt &= 1 \label{eq:5-1} \\
   b+at &= -t \label{eq:5-2} \\
@@ -142,6 +140,94 @@ $A=
 \paragraph{【旧課程】}
 {\bf [解]}
 
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・中心角の定義 ---
+    % 半径 R = 1.0, 中心 O(0, 0)
+    \def\R{1.0}
+    \coordinate (O) at (0, 0);
+
+    % 各弧の中心角 2\alpha_i (合計 360°)
+    % 2\alpha_1 = 64°, 2\alpha_2 = 82°, 2\alpha_3 = 68°, 2\alpha_4 = 76°, 2\alpha_5 = 70°
+    \def\twoA{64}
+    \def\twoB{82}
+    \def\twoC{68}
+    \def\twoD{76}
+    \def\twoE{70}
+
+    % 頂点 A_i の極角 (反時計回り)
+    \pgfmathsetmacro{\angA}{18}
+    \pgfmathsetmacro{\angB}{\angA + \twoA}
+    \pgfmathsetmacro{\angC}{\angB + \twoB}
+    \pgfmathsetmacro{\angD}{\angC + \twoC}
+    \pgfmathsetmacro{\angE}{\angD + \twoD}
+
+    % 各頂点座標
+    \coordinate (A1) at (\angA:\R);
+    \coordinate (A2) at (\angB:\R);
+    \coordinate (A3) at (\angC:\R);
+    \coordinate (A4) at (\angD:\R);
+    \coordinate (A5) at (\angE:\R);
+
+    % --- 2. 外接円と内接5角形の描画 ---
+    \draw[thick, gray!70] (O) circle (\R);
+    \draw[very thick, blue!85!black] (A1) -- (A2) -- (A3) -- (A4) -- (A5) -- cycle;
+
+    % --- 3. 中心 O と動径 (中心角 2\alpha_i の分割) ---
+    \draw[dashed, gray!80!black] (O) -- (A1);
+    \draw[dashed, gray!80!black] (O) -- (A2);
+    \draw[dashed, gray!80!black] (O) -- (A3);
+    \draw[dashed, gray!80!black] (O) -- (A4);
+    \draw[dashed, gray!80!black] (O) -- (A5);
+
+    % --- 4. 中心角 2\alpha_i の円弧ラベル ---
+    \draw[->, thick, purple!80!black] (O) +(\angA:0.32) arc (\angA:\angB:0.32);
+    \node[purple!80!black, font=\footnotesize] at ({(\angA + \angB)/2}:0.42) {$2\alpha_1$};
+
+    \draw[->, thick, purple!80!black] (O) +(\angB:0.32) arc (\angB:\angC:0.32);
+    \node[purple!80!black, font=\footnotesize] at ({(\angB + \angC)/2}:0.42) {$2\alpha_2$};
+
+    \draw[->, thick, purple!80!black] (O) +(\angC:0.32) arc (\angC:\angD:0.32);
+    \node[purple!80!black, font=\footnotesize] at ({(\angC + \angD)/2}:0.42) {$2\alpha_3$};
+
+    \draw[->, thick, purple!80!black] (O) +(\angD:0.32) arc (\angD:\angE:0.32);
+    \node[purple!80!black, font=\footnotesize] at ({(\angD + \angE)/2}:0.42) {$2\alpha_4$};
+
+    \draw[->, thick, purple!80!black] (O) +(\angE:0.32) arc (\angE:{360+\angA}:0.32);
+    \node[purple!80!black, font=\footnotesize] at ({((\angE + 360 + \angA)/2)}:0.42) {$2\alpha_5$};
+
+    % --- 5. 内角 \theta_1 (円周角による構成) の明示 ---
+    % A1 における内角弧
+    \path
+    let
+    \p1 = ($ (A5) - (A1) $),
+    \p2 = ($ (A2) - (A1) $),
+    \n1 = {atan2(\y1,\x1)},
+    \n2 = {atan2(\y2,\x2)}
+    in
+    \pgfextra{
+      \pgfmathsetmacro{\startAng}{\n1 < 0 ? \n1 + 360 : \n1}
+      \pgfmathsetmacro{\endAng}{\n2 < 0 ? \n2 + 360 : \n2}
+    }
+    (A1) +(\startAng:0.18) arc (\startAng:\endAng:0.18);
+    \node[blue!85!black, font=\footnotesize] at ($ (A1) + (175:0.28) $) {$\theta_1$};
+
+    % --- 6. 頂点・中心のプロットとラベル ---
+    \fill (O) circle (0.8pt) node[below=2pt, font=\footnotesize] {$O$};
+
+    \fill[blue!85!black] (A1) circle (1.0pt) node[above right=1pt] {$A_1$};
+    \fill[blue!85!black] (A2) circle (1.0pt) node[above=2pt] {$A_2$};
+    \fill[blue!85!black] (A3) circle (1.0pt) node[above left=1pt] {$A_3$};
+    \fill[blue!85!black] (A4) circle (1.0pt) node[below left=1pt] {$A_4$};
+    \fill[blue!85!black] (A5) circle (1.0pt) node[below right=1pt] {$A_5$};
+
+  \end{tikzpicture}
+  \caption{円に内接する5角形 $A_1A_2A_3A_4A_5$ における中心角 $2\alpha_i$ と内角 $\theta_i$}
+  \label{fig:cyclic_pentagon_angles}
+\end{figure}
+
 円に内接する5角形$A_1A_2A_3A_4A_5$の頂点は円周上に反時計回りに並んでいるとする．
 円の中心を$O$とし，各弧$A_iA_{i+1}$（ただし$A_6=A_1$）に対する中心角の大きさを$2\alpha_i$とする（$1 \leqq i \leqq 5$）．
 頂点が円周上にこの順に並ぶことから，
@@ -154,9 +240,7 @@ $A=
 \end{align}
 が成り立つ（ただし添字は $\bmod 5$ とし，$\alpha_0 = \alpha_5$ とする）．
 
-\medskip
-\noindent
-{\bf (1) 必要性の証明}
+\subparagraph{(i) 必要性の証明}
 
 \eqref{eq:5-theta}を$i=1,2,3,4,5$について加えると，\eqref{eq:5-alpha}より
 \begin{align}
@@ -179,9 +263,7 @@ $A=
 \end{align}
 が成り立つ．したがって，与えられた条件が成り立つことは必要である．
 
-\medskip
-\noindent
-{\bf (2) 十分性の証明}
+\subparagraph{(ii) 十分性の証明}
 
 逆に，正の数 $\theta_1, \theta_2, \theta_3, \theta_4, \theta_5$ が
 \begin{align}
