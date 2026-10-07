@@ -1,93 +1,788 @@
 \documentclass[../main.tex]{subfiles}
-
 \begin{document}
+\section*{第1問}
 
-\subsection*{第2問}
+% (原稿において第1問の解答は空欄)
 
-[解] $P$ から $\alpha$ に下ろした垂足を $H$ とし, $PH = h$ とおく。又, 球の中心を $O$ とする。$O, P$ を含む平面で切ると, 対称性から右下図のようになる。ここで, $O$ を原点, $OP$ を $x$ 軸正方向とする $xy$ 平面を定める。右図のように $\theta$ を定める ($0 < \theta < \pi/2$)。又以下, $c = \cos\theta, s = \sin\theta$ とする。$P$ は, 円の接線 $cx + sy = 1$ と $x$ 軸の交点で, $P\left(\frac{1}{c}, 0\right)$ となる。したがって
-\[
-  h = \frac{1}{c} - c \quad \dots \text{①}
-\]
-であり, $D$ は斜線部分を $x$ 軸まわりに回転したもので, 体積 $V_D$ として
-\begin{align*}
-  V_D &= \frac{1}{3} \cdot \pi s^2 \cdot h - \pi \int_c^1 (1-x^2) \, dx \\
-  &= \frac{1}{3} \pi s^2 \left(\frac{1}{c} - c\right) - \pi \left[ \frac{2}{3} - c + \frac{1}{3} c^3 \right] \quad (\because \text{①}) \\
-  &= \frac{1}{3} \pi \left[ \frac{s^2(1-c^2)}{c} + 3c - c^3 - 2 \right] = \frac{1}{3}\pi \frac{c^2-2c+1}{c} \quad \dots \text{②}
-\end{align*}
-これが球の体積の $\frac{1}{2}$ 倍にひとしいので,
-\begin{align*}
-  & V_D = \frac{2}{3}\pi \\
-  \iff &\frac{c^2-2c+1}{c} = 2 \\
-  \iff &c = 2 - \sqrt{3} \quad (\because 0 < c < 1) \quad \dots \text{③}
-\end{align*}
-となる。この時, $K$ の体積 $V_K$ は
-\[
-  V_K = \int_c^1 (1-x^2) \cdot \pi \, dx = \frac{2}{3}\pi \left(11 - 6\sqrt{3}\right) \quad (\because \text{③})
-\]
+\newpage
+\section*{第2問}
 
-\begin{center}
-  \begin{tikzpicture}[scale=1.0, >=stealth]
-    % Upper 3D/2D cone figure
-    \begin{scope}[shift={(0,3.5)}]
-      \draw[thick] (0,-1.8) -- (-1.0,1.0);
-      \draw[thick] (0,-1.8) -- (1.0,1.0);
-      \draw[thick] (0,0) circle (0.8);
-      \draw[dashed] (0,0) ellipse (0.8 and 0.2);
-      \draw (-0.65,-0.35) -- (0.65,-0.35) node[right] {$\alpha$};
-      \draw[dashed] (0,0) -- (0,-1.8);
-      \fill (0,0) circle (1.2pt) node[above right] {$O$};
-      \fill (0,-0.35) circle (1.2pt) node[left] {$H$};
-      \fill (0,-1.8) circle (1.2pt) node[below] {$P$};
-    \end{scope}
+{\bf [解]}
 
-    % Lower 2D coordinate diagram
-    \begin{scope}[scale=1.5]
-      % Axes
-      \draw[->] (-0.3,0) -- (2.3,0) node[right] {$x$};
-      \draw[->] (0,-0.3) -- (0,1.3) node[above] {$y$};
-      \node[below left] at (0,0) {$O$};
+$P$から$\alpha$に下ろした垂足を$H$とし，$|PH|=h$とおく．また球の中心を$O$とする．
 
-      % Shaded region D
-      % Fill between vertical line x=c, line SP, x-axis, and arc
-      \begin{scope}
-        \clip (0.6,0) -- (0.6,0.8) -- (2.0,0) -- cycle;
-        \fill[gray!30] (0.6,0) -- (0.6,0.8) -- (2.0,0) -- cycle;
-        \fill[white] (0,0) circle (1.0);
-      \end{scope}
-      % Hatch lines in shaded region
-      \begin{scope}
-        \clip (0.6,0) -- (0.6,0.8) -- (2.0,0) -- cycle;
-        \clip (0,0) circle (1.0) (2,2) -- (2,-2) -- (-2,-2) -- (-2,2) -- cycle;
-        \foreach \x in {0.5, 0.7, ..., 2.2} {
-          \draw[gray] (\x, -0.2) -- (\x+0.5, 1.2);
-        }
-      \end{scope}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
 
-      % Circle arc
-      \draw[thick] (0,1) arc (90:0:1);
+    % --- 1. 定数・幾何パラメータの定義 ---
+    % 球の中心 O を原点とする (半径 R = 1.0)
+    % 接点の高さ: z = cos\theta = 0.6
+    % 接円の半径: r_c = sin\theta = 0.8
+    % 頂点 P の高さ: z = -1 / cos\theta = -1 / 0.6 ≈ -1.667
+    % 視線角に応じた接円楕円の短軸スケール比: b = 0.22
+    \def\R{1.0}
+    \def\zH{-0.6}       % スケッチに合わせて P を下向き (-z 方向) に配置
+    \def\zP{-1.75}      % 頂点 P
+    \def\rH{0.8}        % 平面 \alpha における接円の半径
+    \def\bH{0.20}       % 楕円の短軸半径
 
-      % Tangent line SP: S=(0.6, 0.8), P=(2.0, 0)
-      \draw[thick] (-0.1, 1.2) -- (2.25, -0.143);
+    % 座標定義
+    \coordinate (O) at (0, 0);          % 球の中心
+    \coordinate (H) at (0, \zH);        % 垂足（接円の中心）
+    \coordinate (P) at (0, \zP);        % 円錐の頂点
+    \coordinate (Q_L) at (-\rH, \zH);   % 接円の左端
+    \coordinate (Q_R) at (\rH, \zH);    % 接円の右端
 
-      % Vertical line x = c
-      \draw[dashed] (0.6,0) -- (0.6,0.8);
+    % --- 2. 円錐の母線（延長部を含む） ---
+    % P から接点 Q_L, Q_R を通って上方に広がる母線
+    \draw[thick, black] (P) -- ($ (P)!1.55!(Q_L) $);
+    \draw[thick, black] (P) -- ($ (P)!1.55!(Q_R) $);
 
-      % Line OS
-      \draw (0,0) -- (0.6,0.8);
+    % --- 3. 球の輪郭線 ---
+    \draw[thick, black] (O) circle (\R);
 
-      % Angle theta
-      \draw (0.3,0) arc (0:53.13:0.3);
-      \node at (0.42,0.2) {$\theta$};
+    % --- 4. 平面 \alpha の接円（切り口の楕円） ---
+    % 奥側 (破線)
+    \draw[thick, dashed, teal!85!black]
+    (Q_R) arc (0:180:{\rH} and {\bH});
 
-      % Points and labels
-      \fill (0,0) circle (1pt);
-      \fill (0.6,0.8) circle (1pt) node[above left] {$S$};
-      \fill (2.0,0) circle (1pt) node[above right] {$P$};
-      \fill (0.6,0) circle (1pt) node[below] {$c$};
-      \fill (1,0) circle (1pt) node[below] {$1$};
-      \node at (0.8,0.3) {$H$};
-    \end{scope}
+    % 手前側 (実線)
+    \draw[thick, teal!85!black]
+    (Q_L) arc (180:360:{\rH} and {\bH});
+
+    % --- 5. 中心軸・垂線 (O - H - P) ---
+    % 球内部・奥側を通るため破線で描画
+    \draw[dashed, gray!80!black, thick] (O) -- (P);
+
+    % --- 6. 主要点のプロット ---
+    \fill (O) circle (0.7pt);
+    \fill (H) circle (0.7pt);
+    \fill (P) circle (0.8pt) node[below=2pt] {$P$};
+
+    % --- 7. ラベル・引き出し線 ---
+    % 球の中心 O
+    \draw[<-, thin, gray!80!black] (0.02, 0.05) -- (0.5, 0.6)
+    node[above right, font=\footnotesize] {$O$};
+
+    % 垂足 H
+    \node[above right=1pt, font=\footnotesize] at (H) {$H$};
+
+    % 平面 \alpha (接円)
+    \draw[<-, thin, teal!85!black] (0.45, \zH - 0.12) -- (0.85, \zH - 0.18)
+    node[right, font=\footnotesize, teal!90!black] {$\alpha$};
+
   \end{tikzpicture}
-\end{center}
+  \caption{円錐に内接する球と接円（平面 $\alpha$），および対称軸 $OP$ の3次元配置}
+  \label{fig:sphere_cone_3d}
+\end{figure}
 
+この立体を$O$，$P$を含む平面で切ると，切断面は対称性から下図のようになる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ定義 ---
+    % 説明図として見やすい角度: cos\theta = 0.6, sin\theta = 0.8 (\theta ≈ 53.13°)
+    \def\cVal{0.6}
+    \def\sVal{0.8}
+    \pgfmathsetmacro{\xP}{1.0 / \cVal} % 1 / cos\theta ≈ 1.6667
+    \def\thetaDeg{53.1301}
+
+    % 主要点の座標定義
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (\xP, 0);
+    \coordinate (Q) at (\cVal, \sVal);
+    \coordinate (Qprime) at (\cVal, -\sVal);
+    \coordinate (H) at (\cVal, 0);
+
+    % --- 2. 立体 D の断面（斜線ハッチング領域） ---
+    % 円錐の母線 PQ, PQ' と 球欠の弧 Q' -> (1,0) -> Q で囲まれた領域
+    \fill[pattern=north east lines, pattern color=blue!60, opacity=0.7]
+    (Q) -- (P) -- (Qprime) arc (-\thetaDeg:\thetaDeg:1) -- cycle;
+
+    % --- 3. 単位円（球の断面）の描画 ---
+    \draw[thick, gray!70] (O) circle (1);
+
+    % --- 4. 座標軸 ---
+    \draw[->, thick] (-1.25, 0) -- (2.05, 0) node[right] {$x$};
+    \draw[->, thick] (0, -1.25) -- (0, 1.35) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 5. 接線・母線および平面 \alpha (線分 QQ') ---
+    % 接線（円錐の母線）
+    \draw[very thick, red!85!black] ($ (P)!1.15!(Q) $) -- (P) -- ($ (P)!1.15!(Qprime) $);
+
+    % 平面 \alpha の断面 (直線 x = \cos\theta)
+    \draw[thick, dashed, teal!85!black] (\cVal, -1.15) -- (\cVal, 1.15)
+    node[above, font=\footnotesize] {平面 $\alpha: x = \cos\theta$};
+
+    % 半径 OQ
+    \draw[thick, gray!80!black] (O) -- (Q);
+
+    % --- 6. 直角マーク ---
+    % 接点 Q における接線と半径の垂直マーク (OQ ⊥ QP)
+    % 方向: OQ 方向 (\cVal, \sVal), QP 方向 (\cVal - \xP, \sVal)
+    \draw[gray!80!black]
+    ($ (Q) + (-0.06*\cVal, -0.06*\sVal) $) --
+    ($ (Q) + (-0.06*\cVal - 0.08*\sVal, -0.06*\sVal + 0.08*\cVal) $) --
+    ($ (Q) + (-0.08*\sVal, 0.08*\cVal) $);
+
+    % 垂足 H における垂直マーク
+    \draw[gray!80!black]
+    ($ (H) + (0.06, 0) $) -- ($ (H) + (0.06, 0.06) $) -- ($ (H) + (0, 0.06) $);
+
+    % --- 7. 角度 \theta ---
+    \draw[purple!80!black, thick] (0.28, 0) arc (0:\thetaDeg:0.28);
+    \node[purple!90!black, font=\footnotesize] at (0.42, 0.16) {$\theta$};
+
+    % --- 8. 主要点のプロットとラベル ---
+    \fill (O) circle (0.6pt);
+    \fill (P) circle (0.7pt) node[below right=1pt, red!85!black] {$P\Bigl(\frac{1}{\cos\theta}, 0\Bigr)$};
+    \fill (Q) circle (0.7pt) node[above right=1pt] {$Q(\cos\theta, \sin\theta)$};
+    \fill (Qprime) circle (0.7pt) node[below right=1pt] {$Q'$};
+    \fill (H) circle (0.7pt) node[below left=1pt] {$H(\cos\theta, 0)$};
+    \fill (1, 0) circle (0.6pt) node[below right=1pt, font=\scriptsize] {$1$};
+
+    % --- 9. 長さの寸法線 (高さ h = |PH|) ---
+    %\draw[<->, blue!85!black, thick] ($ (H) + (0, -0.22) $) -- ($ (P) + (0, -0.22) $)
+    %  node[midway, fill=white, inner sep=1pt, font=\scriptsize] {$h = \frac{1}{\cos\theta} - \cos\theta$};
+    \draw[dotted, gray!60] (H) -- ($ (H) + (0, -0.25) $);
+    \draw[dotted, gray!60] (P) -- ($ (P) + (0, -0.25) $);
+
+    % 半径 1 の注記
+    \node[gray!70!black, font=\scriptsize, above left] at ($ (O)!0.5!(Q) $) {$1$};
+
+  \end{tikzpicture}
+  \caption{球と円錐の対称軸を含む断面，および回転して立体 $D$ を得る領域（斜線部）}
+  \label{fig:sphere_cone_section}
+\end{figure}
+
+ここで$O$を原点，$OP$を$x$軸正方向とする座標平面を定め，接点を$Q$として$\angle POQ=\theta$とする．ただし$0<\theta<\dfrac{\pi}{2}$とする．
+
+$P$は円の接線$\cos\theta x+\sin\theta y=1$と$x$軸の交点だから，$P(1/\cos\theta,0)$となる．従って
+\begin{align}
+  |PH| = h = |OP| - |OH| =\dfrac{1}{\cos\theta}-\cos\theta \label{eq:1}
+\end{align}
+である．$D$は図の斜線部分を$x$軸のまわりに回転した立体であるから，その体積$V_D$は円錐から球欠を取り除いたもので
+\begin{align}
+  V_D
+  &=\dfrac{1}{3}\pi \sin^2\theta h-\pi\int_{\cos\theta}^{1}(1-x^2)\,dx\\
+  &=\dfrac{1}{3}\pi \sin^2\theta \Bigl(\dfrac{1}{\cos\theta}-\cos\theta\Bigr)
+  -\pi\Bigl[\dfrac{2}{3}-\cos\theta+\dfrac{1}{3}\cos^3\theta\Bigr]\\
+  &=\dfrac{\pi}{3}\Bigl[\dfrac{\sin^2\theta(1-\cos^2\theta)}{\cos\theta}+3\cos\theta-\cos^3\theta-2\Bigr]\\
+  &=\dfrac{\pi}{3}\dfrac{\cos^2\theta-2\cos\theta+1}{\cos\theta} \label{eq:2}
+\end{align}
+となる．
+これが球の体積の半分$\dfrac{2\pi}{3}$に等しいので，
+\begin{align}
+  V_D=\dfrac{2}{3}\pi
+  \quad\Longleftrightarrow\quad
+  \dfrac{\cos^2\theta-2\cos\theta+1}{\cos\theta}=2
+  \quad\Longleftrightarrow\quad
+  \cos\theta=2-\sqrt{3}\qquad(0<\cos\theta<1) \label{eq:3}
+\end{align}
+となる．このとき$K$の体積$V_K$は
+\begin{align}
+  V_K=\pi\int_{\cos\theta}^{1}(1-x^2)\,dx
+  =\dfrac{2}{3}\pi\Bigl(11-6\sqrt{3}\Bigr)
+\end{align}
+である．
+
+\newpage
+\section*{第3問}
+
+{\bf [解]}
+
+漸化式
+\begin{align}
+  \begin{cases}
+    u_1 = 2 \\
+    u_2 = a^2+2 \\
+    u_{n+2} = au_{n}-u_{n+1}
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．
+初めの4項は
+\begin{align}
+  u_1=2，\quad u_2=a^2+2，\quad u_3=2a-a^2-2，\quad
+  u_4=a^3+a^2+2 \label{eq:2}
+\end{align}
+となる．以下，合同式はすべて法4で考える
+\cref{eq:2}において$a\equiv1$のとき$u_4\equiv0$となるので不適である．
+従って$a\equiv0,2,-1$が必要である．以下各ケースについて個別に考える．
+
+\subparagraph{$a\equiv0$のとき．}
+
+すべての$n$について$u_n\not\equiv0$となることを数学的帰納法で示す．
+$n=1,2$では$u_1\equiv u_2\equiv2$である．
+そこで$k\in\mathbb{N}$に対して$n=k,k+1$での成立を仮定すれば，漸化式\cref{eq:1}から
+\begin{align}
+  u_{k+2}\equiv au_k - u_{k+1} \equiv -u_{k+1}\not\equiv0
+\end{align}
+となり，$n=k+2$でも成立する．従って数学的帰納法によりすべての$n$で$u_n\not\equiv0$であり，$4$の倍数でない．
+
+\subparagraph{$a\equiv2$のとき．}
+すべての$n$について$u_n\equiv2$となることを数学的帰納法で示す．
+$n=1,2$では\cref{eq:2}より成立する．
+そこで$k\in\mathbb{N}$に対して$n=k,k+1$での成立を仮定すれば，漸化式\cref{eq:1}から
+\begin{align}
+  u_{k+2} \equiv au_k - u_{k+1} \equiv 2u_k-u_{k+1}\equiv 4-2 \equiv 2
+\end{align}
+となり，$n=k+2$でも成立する．従って数学的帰納法によりすべての$n$で$u_n\equiv2$である．よって全ての$u_n$は$4$の倍数でない．
+
+\subparagraph{$a\equiv-1$のとき．}
+$u_n$は法4の剰余類で$(2,-1,-1)$の周期数列となることを数学的帰納法で示す．
+$n=1,2,3$では実際に$(u_1,u_2,u_3)\equiv(2,-1,-1)$である．
+ある$k\geqq1$について，$u_{3k-2},u_{3k-1},u_{3k}$での成立を仮定すると，漸化式から
+\begin{align}
+  u_{3k+1}&\equiv au_{3k-1} - u_{3k}   \equiv-(-1)-(-1)\equiv2，\\
+  u_{3k+2}&\equiv au_{3k}   - u_{3k+1} \equiv -2-(-1)\equiv-1，\\
+  u_{3k+3}&\equiv au_{3k+1} - u_{3k+2} \equiv -(-1)-2\equiv-1
+\end{align}
+となる．従って数学的帰納法により$(2,-1,-1)$の周期数列となり，$4$の倍数となる項は存在しない．
+\casesend
+
+以上より，必要十分条件は
+\begin{align}
+  a\equiv-1,0,2\pmod{4}
+\end{align}
+である．
+
+\newpage
+\section*{第4問}
+
+{\bf [解]}
+
+$O$を原点とする座標平面で考える．対称性から$P(1,0)$としてよい．
+$O$を原点とする半径$1$の円を$C_1$，$P$を中心とする半径$2/\sqrt{3}$の円を$C_2$とすると，これらの方程式は
+\begin{align}
+  \begin{cases}
+    C_1:x^2+y^2=1
+    C_2:(x-1)^2+y^2=\dfrac{4}{3}
+  \end{cases} \label{eq:1}
+\end{align}
+であり，$Q$，$R$は$C_2$上にある．
+
+また，$C_1$，$C_2$の二つの交点$A,B$とすると，この$x$座標は$1/3$である．$A$を$y$座標が正の方とすると
+\begin{align}
+  A\Bigl(\dfrac{1}{3},\dfrac{2\sqrt{2}}{3}\Bigr) \label{eq:2}
+\end{align}
+となる．$\angle APO=\alpha$（$0<\alpha<\pi/2$）とすると
+\begin{align}
+  \tan\alpha=\dfrac{2\sqrt{2}/3}{2/3}=\sqrt{2} \label{eq:3}
+\end{align}
+である．
+
+$\angle OPQ=\theta$とおくと，$Q$，$R$の座標は
+\begin{align}
+  \begin{cases}
+    Q&=\Bigl(1-\dfrac{2}{\sqrt{3}}\cos\theta，\dfrac{2}{\sqrt{3}}\sin\theta\Bigr)，\\
+    R&=\Bigl(1-\dfrac{2}{\sqrt{3}}\cos(\theta-\pi/3)，
+    \dfrac{2}{\sqrt{3}}\sin(\theta-\pi/3)\Bigr)
+  \end{cases} \label{eq:4}
+\end{align}
+となる．これらの様子を下図に示す．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータの定義 ---
+    % C1: 原点 O(0,0), 半径 R1 = 1
+    % C2: 中心 P(1,0), 半径 R2 = 2/sqrt(3) ≈ 1.1547
+    % 交点 A, B: x = 1/3, y = ±2*sqrt(2)/3 ≈ ±0.9428
+    % \cos\alpha = 1/\sqrt{3} => \alpha ≈ 54.7356°
+    \def\Rone{1.0}
+    \pgfmathsetmacro{\Rtwo}{2.0 / sqrt(3)}       % 2/sqrt(3) ≈ 1.1547
+    \def\alphaDeg{54.7356}                       % \alpha
+    \pgfmathsetmacro{\angA}{180.0 - \alphaDeg}   % A の偏角 ≈ 125.2644°
+    \pgfmathsetmacro{\angB}{180.0 + \alphaDeg}   % B の偏角 ≈ 234.7356°
+
+    % 一般の \theta (例: \theta = 46° と設定，許容範囲 -\alpha+60° <= \theta <= \alpha を満たす)
+    \def\thetaDeg{46.0}
+    \pgfmathsetmacro{\angQ}{180.0 - \thetaDeg}                 % Q の偏角 (P基準): 134°
+    \pgfmathsetmacro{\angR}{180.0 - (\thetaDeg - 60.0)}        % R の偏角 (P基準): 194°
+
+    % 主要座標の定義
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (1, 0);
+    \coordinate (A) at (1.0/3.0, {2.0*sqrt(2)/3.0});
+    \coordinate (B) at (1.0/3.0, {-2.0*sqrt(2)/3.0});
+
+    % 一般の Q, R の座標
+    \coordinate (Q) at ($ (P) + (\angQ:\Rtwo) $);
+    \coordinate (R) at ($ (P) + (\angR:\Rtwo) $);
+
+    % --- 2. 単位円 C_1 内部に存在する許容弧 AB の強調 ---
+    \draw[line width=1.8pt, teal!80!black]
+    ([shift=(\angA:\Rtwo)]P) arc (\angA:\angB:\Rtwo);
+
+    % --- 3. 円 C_1, C_2 の全体描画 ---
+    % 単位円 C_1
+    \draw[thick, gray!75!black] (O) circle (\Rone);
+    \node[gray!75!black, font=\footnotesize, above left] at (-0.75, 0.75) {$C_1: x^2+y^2=1$};
+
+    % 円 C_2 (C_1 外部は薄い破線で表示)
+    \draw[thick, dashed, teal!50]
+    ([shift=(\angB:\Rtwo)]P) arc (\angB:{360+\angA}:\Rtwo);
+    \node[teal!85!black, font=\footnotesize, right] at ($ (P) + (35:\Rtwo) $) {$C_2: (x-1)^2+y^2=\frac{4}{3}$};
+
+    % --- 4. 座標軸 ---
+    \draw[->, thick] (-1.35, 0) -- (2.45, 0) node[right] {$x$};
+    \draw[->, thick] (0, -1.35) -- (0, 1.35) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 5. 正三角形 PQR（一般の \theta のとき）---
+    \fill[blue!15, opacity=0.7] (P) -- (Q) -- (R) -- cycle;
+    \draw[very thick, blue!85!black] (P) -- (Q) -- (R) -- cycle;
+
+    % 線分 OQ, OR
+    \draw[thick, densely dashed, blue!75!black] (O) -- (Q);
+    \draw[thick, densely dashed, blue!75!black] (O) -- (R);
+
+    % 正三角形の頂角 (60°)
+    \draw[thin, blue!90!black] ($ (P) + (\angQ:0.35) $) arc (\angQ:\angR:0.35);
+    \node[blue!90!black, font=\tiny, left=1pt] at ($ (P) + ({0.5*(\angQ+\angR)}:0.42) $) {$\frac{\pi}{3}$};
+
+    % --- 6. 角度 \alpha, \theta の表示 ---
+    % 線分 PA, PB
+    \draw[thick, gray!70] (P) -- (A);
+    \draw[thick, gray!70] (P) -- (B);
+
+    % \angle APO = \alpha (P を中心とする負の x 軸からの限界角)
+    \draw[thin, purple!80!black] ($ (P) + (180:0.52) $) arc (180:\angA:0.52);
+    \node[purple!90!black, font=\tiny] at ($ (P) + (155:0.60) $) {$\alpha$};
+
+    % \theta = \angle OPQ (一般角)
+    \draw[thin, orange!90!black] ($ (P) + (180:0.68) $) arc (180:\angQ:0.68);
+    \node[orange!90!black, font=\tiny] at ($ (P) + ({180 - 0.5*\thetaDeg}:0.78) $) {$\theta$};
+
+    % --- 7. 交点 A, B の座標射影補助線 ---
+    \draw[dotted, gray!70] (A) -- (1.0/3.0, 0) -- (B);
+    \draw[dotted, gray!70] (A) -- (0, {2.0*sqrt(2)/3.0});
+    \fill (1.0/3.0, 0) circle (0.5pt);
+    \node[below=2pt, font=\scriptsize] at (1.0/3.0, 0) {$\frac{1}{3}$};
+    \node[left=2pt, font=\tiny] at (0, {2.0*sqrt(2)/3.0}) {$\frac{2\sqrt{2}}{3}$};
+
+    % --- 8. 主要点のプロットとラベル ---
+    \fill (P) circle (0.7pt) node[below right=1pt] {$P(1,0)$};
+    \fill (A) circle (0.7pt) node[above=2pt] {$A\Bigl(\frac{1}{3}, \frac{2\sqrt{2}}{3}\Bigr)$};
+    \fill (B) circle (0.7pt) node[below=2pt] {$B$};
+    \fill[blue!85!black] (Q) circle (0.7pt) node[above left=1pt] {$Q$};
+    \fill[blue!85!black] (R) circle (0.7pt) node[below left=1pt] {$R$};
+    \fill (O) circle (0.6pt);
+
+  \end{tikzpicture}
+  \caption{円 $C_1, C_2$ の許容弧 $AB$ と一般の角 $\theta$ における正三角形 $PQR$}
+  \label{fig:circle_C1_C2_general_theta}
+\end{figure}
+
+さて，$Q,R$が単位円の内部または周上にある条件は
+\begin{align}
+  -\alpha\leqq\theta-\pi/3<\theta\leqq\alpha
+  \quad\Longleftrightarrow\quad
+  -\alpha+\pi/3\leqq\theta\leqq\alpha \label{eq:5}
+\end{align}
+である．以下簡単のために$c=\cos\theta$，$s=\sin\theta$とすると$|OQ|^2,|OR|^2$は
+\begin{align}
+  |OQ|^2
+  &=\Bigl(1-\dfrac{2}{\sqrt{3}}c\Bigr)^2
+  +\Bigl(\dfrac{2}{\sqrt{3}}s\Bigr)^2
+  =\dfrac{7}{3}-\dfrac{4}{\sqrt{3}}c，\label{eq:6}\\
+  |OR|^2&=\dfrac{7}{3}-\dfrac{4}{\sqrt{3}}\cos(\theta-\pi/3)
+  =\dfrac{7}{3}-\dfrac{4}{\sqrt{3}}\Bigl(\dfrac{1}{2}c+\dfrac{\sqrt{3}}{2}s\Bigr)．\label{eq:7}
+\end{align}
+である．従って$f(\theta)=|OQ|^2+|OR|^2$として\cref{eq:6,eq:7}を代入すると
+\begin{align}
+  \begin{split}
+    f(\theta)&=\dfrac{14}{3} - \dfrac{4\sqrt{3}}{3}\Bigl(\dfrac{3}{2}c+\dfrac{\sqrt{3}}{2}s\Bigr)\\
+    &=\dfrac{14}{3}-4\sin(\theta+\pi/3)
+  \end{split} \label{eq:8}
+\end{align}
+である．\cref{eq:5}より
+\begin{align}
+  -\alpha+2\pi/3\leqq\theta+\pi/3\leqq\alpha+\pi/3
+\end{align}
+であり，この区間は$\theta+\dfrac{\pi}{3}=\dfrac{\pi}{2}$を含む．
+よってこの時$\theta=\dfrac{\pi}{6}$で最小となり，
+最大値は区間の両端の値のうち大きい方である．
+最小値は
+\begin{align}
+  \min f=f\left(\dfrac{\pi}{6}\right) = \dfrac{14}{3}-4=\dfrac{2}{3}
+\end{align}
+である．また\cref{eq:3}から$\sin\alpha=\sqrt{2/3}$，$\cos\alpha=1/\sqrt{3}$なので
+\begin{align}
+  f(\alpha)&=\dfrac{14}{3}
+  -4\Bigl(\dfrac{1}{2}\sqrt{\dfrac{2}{3}}+\dfrac{\sqrt{3}}{2}\dfrac{1}{\sqrt{3}}\Bigr)
+  =\dfrac{2}{3}(4-\sqrt{6})，\\
+  f(\pi/3-\alpha)&=\dfrac{14}{3}-4\sin(2\pi/3-\alpha)
+  =\dfrac{2}{3}(4-\sqrt{6})
+\end{align}
+となり両端での値は同じで，これらが同時に最大値となる．
+
+以上から求める最大値と最小値は
+\begin{align}
+  \text{最大値 }\dfrac{2}{3}(4-\sqrt{6})，\qquad\text{最小値 }\dfrac{2}{3}
+\end{align}
+である．
+
+\newpage
+\section*{第5問}
+
+{\bf [解]}
+
+$f(x)$は3次式であり，条件(B)から，$a\neq0$として
+\begin{align}
+  f''(x)=2ax+2 \label{eq:1}
+\end{align}
+と書ける．積分して条件$f'(0)=0$を用いると
+\begin{align}
+  f'(x)=ax^2+2x \label{eq:2}
+\end{align}
+だから，さらに積分して実数$b$を用いて
+\begin{align}
+  f(x)=\dfrac{a}{3}x^3+x^2+b \label{eq:3}
+\end{align}
+と書ける．
+
+一方で条件(A)より$f(x)-x$は$x=-t$，$x=0$を根にもつので
+\begin{align}
+  &
+  \begin{cases}
+    f(-t)+t = 0 \\
+    f(0) = 0
+  \end{cases} \\
+  \therefore
+  &
+  \begin{cases}
+    -\dfrac{a}{3}t^3+t^2+t+b=0 \\
+    b=0
+  \end{cases} \\
+  \therefore
+  &
+  \begin{cases}
+    t\left(-\dfrac{a}{3}t^2+t+1\right) = 0 \\
+    b=0
+  \end{cases} \label{eq:4}
+\end{align}
+である．$t>0$から第一式は
+\begin{align}
+  a=\dfrac{3(t+1)}{t^2} \label{eq:5}
+\end{align}
+となる．以上\cref{eq:4,eq:5}より$f(x)$は
+\begin{align}
+  f(x) = \dfrac{a}{3}x^3+x^2 \label{eq:6}
+\end{align}
+であり，$f(x)-x$を$g(x)$とおくと
+\begin{align}
+  g(x)
+  &=f(x)-x \\
+  &=\dfrac{t+1}{t^2}x^3+x^2-x\\
+  &=\dfrac{1}{t^2}x(x+t)\Bigl((t+1)x-t\Bigr)
+\end{align}
+と因数分解できる．これを図示すると下図であり，求める面積$S(t)$は斜線部の領域の面積である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.0, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・代表点のパラメータ定義 ---
+    % t = 1 のとき:
+    % a = 3*(1+1)/1^2 = 6  =>  f(x) = 2x^3 + x^2
+    % d = t/(t+1) = 1/2 = 0.5
+    % 交点: x = -1 (-t), x = 0 (原点), x = 0.5 (d)
+    \def\tVal{1.0}
+    \def\dVal{0.5}
+
+    % --- 2. 求める面積 S(t) のハッチング領域 (0 <= x <= d) ---
+    % 直線 y = x が上、曲線 y = f(x) が下
+    \fill[pattern=north east lines, pattern color=blue!60, opacity=0.7]
+    (0, 0) -- (\dVal, \dVal)
+    -- plot[domain=\dVal:0, samples=60] (\x, {2.0*\x*\x*\x + \x*\x})
+    -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-1.35, 0) -- (0.95, 0) node[right] {$x$};
+    \draw[->, thick] (0, -1.35) -- (0, 1.15) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 4. 直線 y = x ---
+    \draw[thick, orange!90!black, domain=-1.25:0.85]
+    plot (\x, {\x});
+    \node[orange!90!black, font=\footnotesize, above right] at (0.75, 0.75) {$y = x$};
+
+    % --- 5. 3次曲線 y = f(x) ---
+    \draw[very thick, blue!85!black, domain=-1.18:0.65, samples=100]
+    plot (\x, {2.0*\x*\x*\x + \x*\x});
+    \node[blue!85!black, font=\footnotesize, left] at (0.62, {2.0*0.62^3 + 0.62^2}) {$y = f(x)$};
+
+    % --- 6. 交点および射影補助線 ---
+    % (i) 交点 P(-t, -t)
+    \draw[dashed, gray!70] (-\tVal, 0) -- (-\tVal, -\tVal) -- (0, -\tVal);
+    \fill[red!80!black] (-\tVal, -\tVal) circle (0.7pt);
+    \node[above left=1pt, font=\footnotesize, red!80!black] at (-\tVal, -\tVal) {$P$};
+    \node[above=2pt, font=\scriptsize] at (-\tVal, 0) {$-t$};
+    \fill (-\tVal, 0) circle (0.5pt);
+
+    % (ii) 原点 O(0, 0)
+    \fill[black] (0, 0) circle (0.6pt);
+
+    % (iii) 交点 Q(d, d)
+    \draw[dashed, gray!70] (\dVal, 0) -- (\dVal, \dVal) -- (0, \dVal);
+    \fill[red!80!black] (\dVal, \dVal) circle (0.7pt);
+    \node[above left=1pt, font=\footnotesize, red!80!black] at (\dVal, \dVal) {$Q$};
+    \node[below=2pt, font=\scriptsize] at (\dVal, 0) {$d = \frac{t}{t+1}$};
+    \fill (\dVal, 0) circle (0.5pt);
+
+  \end{tikzpicture}
+  \caption{3次曲線 $y = f(x)$ と直線 $y = x$，および面積 $S(t)$ を与える領域（斜線部）}
+  \label{fig:cubic_line_area_St}
+\end{figure}
+
+簡単のために$d=t/(t+1)$とおくと求める面積$S(t)$は
+\begin{align}
+  S(t)
+  &=-\int_0^dg(x)\,dx\\
+  &=\Bigl[-\dfrac{t+1}{4t^2}x^4-\dfrac{1}{3}x^3+\dfrac{1}{2}x^2\Bigr]_0^d\\
+  &=-\dfrac{1}{4}\Bigl(\dfrac{1}{t}+\dfrac{1}{t^2}\Bigr)
+  \Bigl(\dfrac{1}{1+1/t}\Bigr)^4
+  -\dfrac{1}{3}\Bigl(\dfrac{1}{1+1/t}\Bigr)^3
+  +\dfrac{1}{2}\Bigl(\dfrac{1}{1+1/t}\Bigr)^2
+\end{align}
+となる．よって$t\to\infty$の極限をとって
+\begin{align}
+  \lim_{t\to\infty}S(t)=\dfrac{1}{2}-\dfrac{1}{3}=\dfrac{1}{6}
+\end{align}
+である．
+
+\newpage
+\section*{第6問}
+
+{\bf [解]}
+
+題意から三角形$P_nP_{n+1}P_{n+2}$はすべて辺の長さ$1,a,\sqrt{1+a^2}$の相似である．
+$\angle P_1P_0P_2=\alpha$，$\angle P_0P_1P_2=\beta$とする．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=4.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータの定義 ---
+    % a の値を設定（1 : a の比率がわかりやすい値として a = 1.35）
+    \def\aVal{1.35}
+
+    % P_0, P_1, P_2 の定義
+    \coordinate (P0) at (1, 0);
+    \coordinate (P1) at (0, \aVal);
+    \coordinate (P2) at (0, 0);
+
+    % P3: P2 から P0P1 への垂足
+    \coordinate (P3) at ($ (P0)!(P2)!(P1) $);
+    % P4: P3 から P1P2 (y軸) への垂足
+    \coordinate (P4) at ($ (P1)!(P3)!(P2) $);
+    % P5: P4 から P2P3 への垂足
+    \coordinate (P5) at ($ (P2)!(P4)!(P3) $);
+    % P6: P5 から P3P4 への垂足
+    \coordinate (P6) at ($ (P3)!(P5)!(P4) $);
+    % P7: P6 から P4P5 への垂足（収束方向の参考用）
+    \coordinate (P7) at ($ (P4)!(P6)!(P5) $);
+
+    % --- 2. 相似三角形の着色（第1世代と第2世代の対比） ---
+    % \triangle P_0 P_1 P_2
+    \fill[blue!8] (P0) -- (P1) -- (P2) -- cycle;
+    % \triangle P_4 P_5 P_6（180度逆向きに相似）
+    \fill[orange!25] (P4) -- (P5) -- (P6) -- cycle;
+
+    % --- 3. 骨格線・垂線の描画 ---
+    % 初期の直角三角形 P0P1P2
+    \draw[very thick, black] (P0) -- (P1) -- (P2) -- cycle;
+
+    % 垂線の軌跡 (P2 -> P3 -> P4 -> P5 -> P6 -> P7)
+    \draw[thick, blue!85!black] (P2) -- (P3) -- (P4) -- (P5) -- (P6) -- (P7);
+
+    % \triangle P_4P_5P_6 の斜辺 P4P5 以外の辺（補助線）
+    \draw[dashed, orange!90!black, thick] (P4) -- (P6);
+
+    % --- 4. 直角マーク (P2, P3, P4, P5, P6) ---
+    % P2: (0,0)
+    \draw[thin, gray!70] (0.06, 0) -- (0.06, 0.06) -- (0, 0.06);
+
+    % P3: P2-P3 ⊥ P0-P1
+    \coordinate (u3) at ($ (P1) - (P0) $);
+    \coordinate (v3) at ($ (P2) - (P3) $);
+    \draw[thin, gray!70]
+    ($ (P3) + 0.045*({-1/\aVal}, 1) $) --
+    ($ (P3) + 0.045*({-1/\aVal}, 1) + 0.045*(1, {1/\aVal}) $) --
+    ($ (P3) + 0.045*(1, {1/\aVal}) $);
+
+    % P4: P3-P4 ⊥ y軸
+    \draw[thin, gray!70] ($ (P4) + (0.05, 0) $) -- ($ (P4) + (0.05, -0.05) $) -- ($ (P4) + (0, -0.05) $);
+
+    % P5: P4-P5 ⊥ P2-P3
+    \draw[thin, gray!70]
+    ($ (P5) + 0.035*(1, {1/\aVal}) $) --
+    ($ (P5) + 0.035*(1, {1/\aVal}) + 0.035*({-1/\aVal}, 1) $) --
+    ($ (P5) + 0.035*({-1/\aVal}, 1) $);
+
+    % P6: P5-P6 ⊥ P3-P4
+    \draw[thin, gray!70] ($ (P6) + (0, 0.035) $) -- ($ (P6) + (-0.035, 0.035) $) -- ($ (P6) + (-0.035, 0) $);
+
+    % --- 5. 角度 \alpha, \beta の表示 ---
+    % \alpha = \angle P1 P0 P2
+    \draw[purple!85!black, thick] ($ (P0) + (180:0.18) $) arc (180:{180 - atan(\aVal)}:0.18);
+    \node[purple!90!black, font=\footnotesize] at ($ (P0) + (160:0.25) $) {$\alpha$};
+
+    % \beta = \angle P0 P1 P2
+    \draw[teal!85!black, thick] ($ (P1) + (-90:0.18) $) arc (-90:{atan(1/\aVal) - 90}:0.18);
+    \node[teal!90!black, font=\footnotesize] at ($ (P1) + (-70:0.26) $) {$\beta$};
+
+    % --- 6. 辺長ラベル ---
+    \node[below=2pt] at ($ (P2)!0.5!(P0) $) {$1$};
+    \node[left=2pt] at ($ (P2)!0.5!(P1) $) {$a$};
+    \node[above right=1pt] at ($ (P0)!0.5!(P1) $) {$\sqrt{a^2+1}$};
+
+    % --- 7. 主要点のプロットとラベル ---
+    \fill (P0) circle (0.6pt) node[below right=1pt] {$P_0(1,0)$};
+    \fill (P1) circle (0.6pt) node[above left=1pt] {$P_1(0,a)$};
+    \fill (P2) circle (0.6pt) node[below left=1pt] {$P_2(0,0)$};
+    \fill (P3) circle (0.5pt) node[above right=1pt] {$P_3$};
+    \fill (P4) circle (0.5pt) node[left=1pt] {$P_4$};
+    \fill (P5) circle (0.5pt) node[below=2pt] {$P_5$};
+    \fill[red!85!black] (P6) circle (0.6pt) node[above=2pt, red!85!black] {$P_6$};
+
+  \end{tikzpicture}
+  \caption{繰り返される垂線と相似な直角三角形の連鎖（$\triangle P_0P_1P_2$ と $\triangle P_4P_5P_6$）}
+  \label{fig:perpendicular_triangles}
+\end{figure}
+
+$x$軸を実軸，$y$軸を虚軸とする複素数平面で考える．
+簡単のために
+\begin{align}
+  e(\theta)=\cos\theta+i\sin\theta
+\end{align}
+とおく．
+ベクトル$\overrightarrow{P_nP_{n+1}}$を表す複素数を$q_n$とする．
+題意より
+\begin{align}
+  \begin{cases}
+    q_{2k+2}&=\dfrac{1}{\sqrt{a^2+1}}e(\pi-\beta)q_{2k+1}，\\
+    q_{2k+1}&=\dfrac{a}{\sqrt{a^2+1}}e(\pi-\alpha)q_{2k}
+  \end{cases} \label{eq:1}
+\end{align}
+だから$n$の偶奇にかかわらず
+\begin{align}
+  q_{n+2}=\dfrac{a}{a^2+1}e(\pi-\alpha)e(\pi-\beta)q_n \label{eq:2}
+\end{align}
+である．簡単のためにこの係数を
+\begin{align}
+  A=\dfrac{a}{a^2+1}e(\pi-\alpha)e(\pi-\beta) \label{eq:A-definition}
+\end{align}
+とおくと，\cref{eq:2}を繰り返し用いて
+\begin{align}
+  q_{2k}=A^kq_0，\qquad q_{2k+1}=A^kq_1 \label{eq:3}
+\end{align}
+を得る．初期条件から
+\begin{align}
+  q_0=-1+ai，\qquad q_1=-ai． \label{eq:4}
+\end{align}
+だから\cref{eq:3}に代入すると
+\begin{align}
+  q_{2k}=A^k(-1+ai)，\qquad q_{2k+1}=A^k(-ai) \label{eq:5}
+\end{align}
+
+ついで$A$を具体的に計算する．$\alpha+\beta=\pi/2$に注意して
+\begin{align}
+  e(\pi-\alpha)e(\pi-\beta)
+  =e(2\pi-\alpha-\beta)=e(3\pi/2)=-i
+\end{align}
+だから，\cref{eq:2}に代入して
+\begin{align}
+  A=-ai/(a^2+1) \label{eq:6}
+\end{align}
+である．
+
+点$P_n$を表す複素数を$p_n$とすると，$n\geqq1$について
+\begin{align}
+  p_{2n}
+  &=p_0+\sum_{k=0}^{n-1}(q_{2k}+q_{2k+1})\\
+  &=1-\sum_{k=0}^{n-1}A^k \quad (\because \text{\cref{eq:5}}) \\
+  &=1-\dfrac{1-A^n}{1-A} \\
+  &=\dfrac{-A+A^n}{1-A} \label{eq:7}
+\end{align}
+\begin{align}
+  p_{2n+1}
+  &=p_{2n}+q_{2n}
+  =\dfrac{-A+A^n}{1-A}+A^n(-1+ai) \label{eq:8}
+\end{align}
+がなりたつ．
+
+\paragraph{(1)}
+$p_6$は\cref{eq:7}に$n=3$を代入して
+\begin{align}
+  \begin{split}
+    p_6&=\dfrac{-A+A^3}{1-A}=-(1+A)A\\
+    &=\dfrac{a^2}{(a^2+1)^2}+\dfrac{a}{a^2+1}i
+  \end{split}
+\end{align}
+となる．従って
+\begin{align}
+  P_6\Bigl(\dfrac{a^2}{(a^2+1)^2}，\dfrac{a}{a^2+1}\Bigr)
+\end{align}
+である．
+
+\paragraph{(2)}
+$|A|=\dfrac{a}{a^2+1}<1$であるから，$n\to\infty$では$A^n\to 0$である．
+従って\cref{eq:7,eq:8}より偶数番目，奇数番目ともに
+\begin{align}
+  \begin{split}
+    \lim_{n\to\infty}p_n
+    &= \dfrac{-A}{1-A}=\dfrac{ai}{a^2+1+ai}\\
+    &=\dfrac{a^2+a(a^2+1)i}{(a^2+1)^2+a^2}
+  \end{split}
+\end{align}
+となる．従って求める点は
+\begin{align}
+  \Bigl(\dfrac{a^2}{a^4+3a^2+1}，
+  \dfrac{a(a^2+1)}{a^4+3a^2+1}\Bigr)
+\end{align}
+である．
+
+{\bf [別解]}
+
+$\triangle P_0P_1P_2$と$\triangle P_4P_5P_6$は180度逆向きで相似比は
+$\bigl(a/(a^2+1)\bigr)^2$である．従って
+\begin{align}
+  \overrightarrow{P_6P_{10}}
+  =-\Bigl(\dfrac{a}{a^2+1}\Bigr)^2\overrightarrow{P_2P_6}．
+\end{align}
+同様に繰り返して，$k\geqq1$について
+\begin{align}
+  \overrightarrow{P_{4k-2}P_{4k+2}}
+  =\Bigl\{-\Bigl(\dfrac{a}{a^2+1}\Bigr)^2\Bigr\}^{k-1}
+  \overrightarrow{P_2P_6}
+\end{align}
+となる．ここで
+\begin{align}
+  \overrightarrow{P_2P_6}
+  =\Bigl(\dfrac{a^2}{(a^2+1)^2}，\dfrac{a}{a^2+1}\Bigr)
+\end{align}
+であるから
+\begin{align}
+  \begin{split}
+    \overrightarrow{P_2P_{4n+2}}
+    &=\sum_{k=1}^n
+    \Bigl\{-\Bigl(\dfrac{a}{a^2+1}\Bigr)^2\Bigr\}^{k-1}
+    \overrightarrow{P_2P_6}\\
+    &\longrightarrow\dfrac{1}{1+\bigl(a/(a^2+1)\bigr)^2}
+    \overrightarrow{P_2P_6}\\
+    &=\Bigl(\dfrac{a^2}{a^4+3a^2+1}，
+    \dfrac{a(a^2+1)}{a^4+3a^2+1}\Bigr)
+  \end{split}
+\end{align}
+となる．相似比から各辺$|P_nP_{n+1}|$は0に収束するので，
+残りの添字の点列も同じ点に収束する．
+
+\newpage
 \end{document}
