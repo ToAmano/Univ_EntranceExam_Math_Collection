@@ -1,0 +1,283 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+{\bf[解]}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.9, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータの定義 ---
+    % 二等辺三角形 OAB: O(0,0), B(t,0), A(t/2, 2s/t)
+    % 双曲線: xy = 1 <=> y = 1/x
+    % 設定例: t = 4.0, s = 1.8 (s > 1)
+    % A(2.0, 0.9)  =>  XY = 1.8 > 1
+    % 交点 Q (OA上): b = t / (2*sqrt(s)) = 4 / (2*sqrt(1.8)) ≈ 1.4907, yQ = 1/b ≈ 0.6708
+    % 交点 P (AB上): a = t/2 * (1 + sqrt(1 - 1/s)) = 2 * (1 + sqrt(4/9)) = 2 * (1 + 2/3) = 10/3 ≈ 3.3333
+    %              yP = 1/a = 0.3000
+    \def\tVal{4.0}
+    \def\sVal{3}
+    \pgfmathsetmacro{\bVal}{\tVal / (2.0 * sqrt(\sVal))}                             % b ≈ 1.4907
+    \pgfmathsetmacro{\aVal}{0.5 * \tVal * (1.0 + sqrt(1.0 - 1.0/\sVal))}             % a ≈ 3.3333
+    \pgfmathsetmacro{\yA}{2.0 * \sVal / \tVal}                                       % yA = 0.9
+    \pgfmathsetmacro{\yQ}{1.0 / \bVal}                                               % yQ ≈ 0.6708
+    \pgfmathsetmacro{\yP}{1.0 / \aVal}                                               % yP = 0.3000
+
+    % 座標の定義
+    \coordinate (O)  at (0, 0);
+    \coordinate (B)  at (\tVal, 0);
+    \coordinate (A)  at ({0.5*\tVal}, \yA);
+    \coordinate (Q)  at (\bVal, \yQ);
+    \coordinate (P)  at (\aVal, \yP);
+    \coordinate (Qp) at (\bVal, 0);
+    \coordinate (Pp) at (\aVal, 0);
+
+    % --- 2. 共通部分の領域ハッチング（3分割） ---
+    % (i) 三角形 OQ'Q
+    \fill[pattern=north east lines, pattern color=blue!60, opacity=0.7]
+    (O) -- (Qp) -- (Q) -- cycle;
+
+    % (ii) 曲線部 QQ'P'P (x = b から a までの 1/x の下部)
+    \fill[pattern=north east lines, pattern color=blue!60, opacity=0.7]
+    (Qp) -- plot[domain=\bVal:\aVal, samples=60] (\x, {1.0/\x}) -- (Pp) -- cycle;
+
+    % (iii) 三角形 P'PB
+    \fill[pattern=north east lines, pattern color=blue!60, opacity=0.7]
+    (Pp) -- (P) -- (B) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-0.4, 0) -- (4.6, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.3) -- (0, 1.6) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 双曲線 xy = 1 ---
+    \draw[very thick, teal!85!black, domain=0.75:4.35, samples=100]
+    plot (\x, {1.0/\x});
+    \node[teal!85!black, font=\footnotesize, right] at (4.0, 0.45) {$xy = 1$};
+
+    % --- 5. 二等辺三角形 OAB の輪郭線 ---
+    \draw[very thick, black] (O) -- (A) -- (B) -- cycle;
+
+    % --- 6. 分割境界線（垂直な補助線） ---
+    \draw[thick, dashed, gray!70] (Q) -- (Qp);
+    \draw[thick, dashed, gray!70] (P) -- (Pp);
+
+    % --- 7. 主要点のプロットと座標ラベル ---
+    \fill (O)  circle (0.7pt);
+    \fill (B)  circle (0.7pt) node[below right=1pt] {$B(t, 0)$};
+    \fill (A)  circle (0.7pt) node[above=2pt] {$A\Bigl(\dfrac{t}{2},\, \dfrac{2s}{t}\Bigr)$};
+    \fill[red!80!black] (Q)  circle (0.7pt) node[above=1pt, red!80!black] {$Q\Bigl(b,\, \dfrac{1}{b}\Bigr)$};
+    \fill[red!80!black] (P)  circle (0.7pt) node[above=1pt, red!80!black] {$P\Bigl(a,\, \dfrac{1}{a}\Bigr)$};
+    \fill (Qp) circle (0.5pt) node[below=2pt, font=\scriptsize] {$Q'(b, 0)$};
+    \fill (Pp) circle (0.5pt) node[below=2pt, font=\scriptsize] {$P'(a, 0)$};
+
+  \end{tikzpicture}
+  \caption{$\triangle OAB$ と双曲線 $xy = 1$ の共通部分}
+  \label{fig:hyperbola_triangle_intersection}
+\end{figure}
+
+$B(t,0)$とおく．ただし$0<t$とする．
+$A(X,Y)$とおくと，$AO=AB$より$A$は線分$OB$の垂直二等分線上にあるから
+\begin{align}
+  X=\dfrac{t}{2} \label{eq:1}
+\end{align}
+である．また，$\triangle OAB$の面積が$s$であることから，底辺$OB=t$，高さ$Y$として
+\begin{align}
+  \dfrac{1}{2}tY=s \iff Y=\dfrac{2s}{t} \label{eq:2}
+\end{align}
+である．よって\cref{eq:1,eq:2}から
+\begin{align}
+  A\left(\dfrac{t}{2},\ \dfrac{2s}{t}\right) \label{eq:3}
+\end{align}
+であり，特に
+\begin{align}
+  XY=\dfrac{t}{2}\cdot\dfrac{2s}{t}=s \label{eq:4}
+\end{align}
+が成り立つ．以下この$XY$の大きさで場合分けして$f(s)$を計算する．
+
+\subparagraph{$XY=s\le1$の時}
+
+線分$AB$上の点は，\cref{eq:3}から
+\begin{align}
+  \begin{pmatrix} X \\ Y
+  \end{pmatrix}
+  =
+  \begin{pmatrix} t \\ 0
+  \end{pmatrix} + \alpha
+  \begin{pmatrix} -\dfrac{t}{2} \\[6pt] \dfrac{2s}{t}
+  \end{pmatrix}
+  =
+  \begin{pmatrix} \left(1-\dfrac{\alpha}{2}\right)t \\[6pt] \dfrac{2\alpha s}{t}
+  \end{pmatrix} \quad (0\le\alpha\le1) \label{eq:5}
+\end{align}
+と表せるから，この上で
+\begin{align}
+  XY=\left(1-\dfrac{\alpha}{2}\right)t\cdot\dfrac{2\alpha s}{t}=\alpha(2-\alpha)s \label{eq:6}
+\end{align}
+である．$\alpha(2-\alpha)$は$0\le\alpha\le1$で単調増加だから，$\alpha(2-\alpha)\le1\cdot(2-1)=1$．よって点$A$は
+\begin{align}
+  XY\le s\le1
+\end{align}
+が成り立ち$xy=1$の曲線の下側にある．点$O,B$も同様だから，
+共通部分は$\triangle OAB$自身に一致する．
+よって求める面積$f(s)$は
+\begin{align}
+  f(s)=s \label{eq:7}
+\end{align}
+である．
+
+\subparagraph{$s\ge1$の時}
+
+\cref{eq:4}より$A$自身が$XY=s\ge1$を満たすから，$A$は領域$xy\le1$の外側（境界を含む）にある．よって双曲線$xy=1$は辺$OA$，辺$AB$とそれぞれ一点で交わる．
+そこで辺$AB$と$xy=1$の交点を$P(X,Y)=(a,1/a)$，辺$OA$と$xy=1$の交点を$Q(b,1/b)$として$a,b$を求めよう．
+
+まず$a$については\cref{eq:4}より
+\begin{align}
+  XY = \alpha(2-\alpha)s = a\cdot\dfrac{1}{a} = 1 \iff \alpha=1\pm\sqrt{1-\dfrac{1}{s}}
+\end{align}
+となるが，$0\le\alpha\le1$を満たすのは複合負の方で
+\begin{align}
+  \alpha=1-\sqrt{1-\dfrac{1}{s}} \label{eq:8}
+\end{align}
+の方だから，\cref{eq:6}より
+\begin{align}
+  a=\left(1-\dfrac{\alpha}{2}\right)t=\dfrac{1}{2}\left(1+\sqrt{1-\dfrac{1}{s}}\right)t \label{eq:9}
+\end{align}
+である．
+
+同様に，辺$OA$上の点は
+\begin{align}
+  (X,Y)&=\beta\left(-\dfrac{t}{2},\ \dfrac{2s}{t}\right) \quad (\beta>0)
+\end{align}
+と表せるからこれが$Q$に一致する時
+\begin{align}
+  & XY = b\cdot\dfrac{1}{b} = -\dfrac{t\beta}{2}\cdot\dfrac{2s\beta}{t} = 1 \\
+  \therefore
+  & \beta^2s = 1 \\
+  \therefore
+  & \beta = \sqrt{\dfrac{1}{s}} \quad (>0)
+\end{align}
+となるから
+\begin{align}
+  b = \beta\cdot\dfrac{t}{2}=\dfrac{t}{2\sqrt{s}} \label{eq:10}
+\end{align}
+である．
+
+さて，$Q$，$P$から$x$軸へ下ろした垂線の足をそれぞれ$Q'(b,0)$，$P'(a,0)$とすると，共通部分は$\triangle OQ'Q$，曲線部分$QQ'P'P$，$\triangle P'PB$の三つに分割できる．
+\begin{align}
+  f(s) = \triangle OQQ' + \triangle BPP' + \square QQ'P'P \label{eq:10-2}
+\end{align}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータの定義 ---
+    % t = 4, s = 1.8 の設定
+    % A(t/2, 2s/t) = (2, 0.9)
+    % Q: b = t/(2*sqrt(s)) ≈ 1.4907, y = 1/b ≈ 0.6708
+    % P: a = t/2 * (1 + sqrt(1 - 1/s)) ≈ 3.3333, y = 1/a = 0.3
+    \def\tVal{4.0}
+    \def\sVal{1.8}
+    \pgfmathsetmacro{\bVal}{\tVal / (2.0 * sqrt(\sVal))}
+    \pgfmathsetmacro{\aVal}{0.5 * \tVal * (1.0 + sqrt(1.0 - 1.0/\sVal))}
+    \pgfmathsetmacro{\yA}{2.0 * \sVal / \tVal}
+    \pgfmathsetmacro{\yQ}{1.0 / \bVal}
+    \pgfmathsetmacro{\yP}{1.0 / \aVal}
+
+    % 主要座標
+    \coordinate (O)  at (0, 0);
+    \coordinate (B)  at (\tVal, 0);
+    \coordinate (A)  at ({0.5*\tVal}, \yA);
+    \coordinate (Q)  at (\bVal, \yQ);
+    \coordinate (P)  at (\aVal, \yP);
+    \coordinate (Qp) at (\bVal, 0);
+    \coordinate (Pp) at (\aVal, 0);
+
+    % --- 2. 共通部分の斜線ハッチング (xy <= 1 かつ 三角形内部) ---
+    % O -> Q' -> P' -> B -> P -> 双曲線(PからQ) -> cycle
+    \fill[pattern=north east lines, pattern color=blue!60, opacity=0.7]
+    (O) -- (Qp) -- (Pp) -- (B) -- (P)
+    -- plot[domain=\aVal:\bVal, samples=60] (\x, {1.0/\x})
+    -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-0.3, 0) -- (4.6, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.3) -- (0, 1.4) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 三角形 OAB と双曲線 xy = 1 ---
+    % 双曲線 xy = 1
+    \draw[very thick, teal!85!black, domain=0.8:4.3, samples=100]
+    plot (\x, {1.0/\x});
+    \node[teal!85!black, font=\footnotesize, right] at (4.0, 0.45) {$xy = 1$};
+
+    % 三角形 OAB
+    \draw[very thick, black] (O) -- (A) -- (B) -- cycle;
+
+    % --- 5. 分割の補助線 (破線) ---
+    \draw[thick, dashed, gray!70] (Q) -- (Qp);
+    \draw[thick, dashed, gray!70] (P) -- (Pp);
+
+    % --- 6. 主要点のプロットとラベル ---
+    \fill (O)  circle (0.6pt);
+    \fill (B)  circle (0.6pt) node[below right=1pt] {$B(t, 0)$};
+    \fill (A)  circle (0.6pt) node[above=2pt] {$A$};
+    \fill[red!80!black] (Q) circle (0.7pt) node[above left=1pt, red!80!black] {$Q$};
+    \fill[red!80!black] (P) circle (0.7pt) node[above right=1pt, red!80!black] {$P$};
+    \fill (Qp) circle (0.5pt) node[below=2pt, font=\scriptsize] {$Q'(b, 0)$};
+    \fill (Pp) circle (0.5pt) node[below=2pt, font=\scriptsize] {$P'(a, 0)$};
+
+  \end{tikzpicture}
+  \caption{$\triangle OAB$ と双曲線 $xy = 1$ の共通部分（$s \geqq 1$ の場合）}
+  \label{fig:hyperbola_triangle_common_region}
+\end{figure}
+
+以下各項を順番に計算する．
+まずは三角形$OQQ'$について考えると
+\begin{align}
+  \triangle OQQ'
+  = \dfrac{|QQ'||OQ'|}{2}
+  = \dfrac{1}{2}b\cdot\dfrac{1}{b}
+  = \dfrac{1}{2} \label{eq:11}
+\end{align}
+である．ついで三角形$BPP'$は
+\begin{align}
+  \triangle BPP'
+  &= \dfrac{|PP'||BP'|}{2} \\
+  &= \dfrac{1}{2}(t-a)\dfrac{1}{a} \\
+  &= \dfrac{1}{2}\left(\dfrac{t}{a}-1\right) \\
+  &= \dfrac{1}{2}\left(\dfrac{t}{\dfrac{1}{2}\left(1+\sqrt{1-\dfrac{1}{s}}\right)t}-1\right) \\
+  &= \dfrac{1}{2}\left(\dfrac{2}{\left(1+\sqrt{1-\dfrac{1}{s}}\right)}-1\right) \\
+  &= \dfrac{1}{2}\left(2(s-\sqrt{s^2-s})-1\right) \label{eq:12}
+\end{align}
+である．最後に曲線部分$QQ'P'P$の面積は
+\begin{align}
+  \square QQ'P'P
+  &= \int_b^a\dfrac{1}{x}\,dx=\log\dfrac{a}{b} \\
+  &= \log\dfrac{\dfrac{1}{2}\left(1+\sqrt{1-\dfrac{1}{s}}\right)t}{\dfrac{t}{2\sqrt{s}}} \\
+  &= \log\left\{\sqrt{s}\left(1+\sqrt{1-\dfrac{1}{s}}\right)\right\} \\
+  &= \log\left(\sqrt{s} + \sqrt{s-1}\right) \label{eq:13}
+\end{align}
+である．
+
+これら\cref{eq:11,eq:12,eq:13}を\cref{eq:10-2}に代入して求める面積は$f(s)$は
+\begin{align}
+  f(s)
+  &= \dfrac{1}{2} + \dfrac{1}{2}\left(2(s-\sqrt{s^2-s})-1\right) + \log\left(\sqrt{s} + \sqrt{s-1}\right) \\
+  &= (s-\sqrt{s^2-s}) + \log\left(\sqrt{s} + \sqrt{s-1}\right) \label{eq:14}
+\end{align}
+である．
+\casesend
+
+以上\cref{eq:7,eq:14}をまとめて，求める面積$f(s)$は
+\begin{align}
+  f(s)=
+  \begin{cases}
+    s & (0\le s\le1) \\
+    s-\sqrt{s^2-s}+\log\left(\sqrt{s}+\sqrt{s-1}\right) & (s\ge1)
+  \end{cases}
+  \quad\cdots\text{(答)}
+\end{align}
+
+\end{document}

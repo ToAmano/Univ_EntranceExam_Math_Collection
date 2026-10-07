@@ -1,81 +1,247 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
-{\bf [解]} $NA, NB$ と $k$ の交点を $C, D$ とする．$NP$ と $k$ の交点を $Q$ とする．
-
-$AB$ 上を $P$ がうごく時，$Q$ は $C, D$ を両端とする大円の劣弧上を動く．この長さは，半径 1 の四分円の弧長にひとしく，
-\begin{align}
-  \dfrac{1}{4} \cdot 2\pi = \dfrac{1}{2}\pi \quad \cdots \text{①}
-\end{align}
-
-次に $AB$ 上を $P$ がうごく時，平面 $ABN$ で $k$ を切ると下図で $\text{+++}$ 上を $Q$ がくまなくうごく．この円は，1 辺の長さ $2\sqrt{2}$ の正三角形の外接円で，その半径 $\dfrac{2\sqrt{6}}{3}$ だから
-\begin{align}
-  \stackrel{\frown}{CD} &= \dfrac{1}{3} \cdot \dfrac{2\sqrt{6}}{3} \pi \\
-  &= \dfrac{2\sqrt{6}}{9}\pi \quad \cdots \text{②}
-\end{align}
+{\bf [解]}
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.3]
-    % Diagram 1: Sphere sketch
-    \begin{scope}[shift={(0,0)}]
-      \draw (0,0) circle (1.2);
-      \draw (-1.2,0) arc (180:360:1.2 and 0.4);
-      \draw[dashed] (-1.2,0) arc (180:0:1.2 and 0.4);
+  % 3Dの視線設定: 俯角 65°，方位角 220°
+  \tdplotsetmaincoords{65}{220}
+  \begin{tikzpicture}[scale=2.3, >=stealth, every node/.style={font=\small}]
 
-      \coordinate (N) at (0,1.2);
-      \coordinate (A) at (-1.8,-1.5);
-      \coordinate (B) at (1.8,-1.5);
+    % --- 1. 定数・幾何パラメータの定義 ---
+    \def\R{1.0}
+    \def\zTan{-1.0}
+    \def\rTan{2.0}
+    \def\angA{210}
+    \def\angB{120}
 
-      \draw (N) -- (A);
-      \draw (N) -- (B);
-      \draw (A) -- (B);
+    % 3D座標系で主要点を計算
+    \begin{scope}[tdplot_main_coords]
+      \coordinate (O) at (0, 0, 0);
+      \coordinate (N) at (0, 0, \R);
+      \coordinate (S) at (0, 0, -\R);
 
-      \node[above] at (N) {$N$};
-      \node[below left] at (A) {$A$};
-      \node[below right] at (B) {$B$};
+      \coordinate (A) at ({\rTan*cos(\angA)}, {\rTan*sin(\angA)}, \zTan);
+      \coordinate (B) at ({\rTan*cos(\angB)}, {\rTan*sin(\angB)}, \zTan);
+
+      % C, D は NA, NB の中点 (z = 0, 赤道上)
+      \coordinate (C) at ($ (N)!0.5!(A) $);
+      \coordinate (D) at ($ (N)!0.5!(B) $);
+
+      % --- 動点 P と、球面との正確な交点 Q ---
+      % 線分 AB の内分パラメータ u = 0.45
+      \def\uVal{0.45}
+      \pgfmathsetmacro{\xP}{(1.0 - \uVal)*\rTan*cos(\angA) + \uVal*\rTan*cos(\angB)}
+      \pgfmathsetmacro{\yP}{(1.0 - \uVal)*\rTan*sin(\angA) + \uVal*\rTan*sin(\angB)}
+      \coordinate (P) at (\xP, \yP, \zTan);
+
+      % 球面との交点の正確な媒介変数 t = 4 / (xP^2 + yP^2 + 4)
+      \pgfmathsetmacro{\distSq}{\xP*\xP + \yP*\yP}
+      \pgfmathsetmacro{\tVal}{4.0 / (\distSq + 4.0)}
+      \coordinate (Q) at ({\tVal*\xP}, {\tVal*\yP}, {1.0 - 2.0*\tVal});
     \end{scope}
 
-    % Diagram 2: Triangle ABN section
-    \begin{scope}[shift={(5,0)}]
-      \coordinate (N) at (0, 2.45);
-      \coordinate (A) at (-2, 0);
-      \coordinate (B) at (2, 0);
+    % --- 2. 点 S における接平面 z = -1 ---
+    \begin{scope}[tdplot_main_coords]
+      \fill[gray!10, opacity=0.7]
+      (-2.4, -2.4, \zTan) -- (2.4, -2.4, \zTan) -- (2.4, 2.4, \zTan) -- (-2.4, 2.4, \zTan) -- cycle;
+      \draw[thin, gray!50]
+      (-2.4, -2.4, \zTan) -- (2.4, -2.4, \zTan) -- (2.4, 2.4, \zTan) -- (-2.4, 2.4, \zTan) -- cycle;
+      \node[gray!60!black, font=\scriptsize, right] at (2.4, 0.4, \zTan) {接平面 $z=-1$};
 
-      \draw[thick] (N) -- (A) -- (B) -- cycle;
+      % 接平面上の直角マーク（SA ⊥ SB）
+      \draw[dashed, gray!60] (S) -- (A);
+      \draw[dashed, gray!60] (S) -- (B);
+      \draw[thin, gray!70]
+      ($ (S) + 0.18*({cos(\angA)}, {sin(\angA)}, 0) $) --
+      ($ (S) + 0.18*({cos(\angA)}, {sin(\angA)}, 0) + 0.18*({cos(\angB)}, {sin(\angB)}, 0) $) --
+      ($ (S) + 0.18*({cos(\angB)}, {sin(\angB)}, 0) $);
 
-      \coordinate (C) at ($(N)!0.5!(A)$);
-      \coordinate (D) at ($(N)!0.5!(B)$);
+      % 点 P が動く経路
+      % (i) 四分円弧 AB
+      \draw[very thick, teal!85!black]
+      plot[domain=\angB:\angA, samples=40] ({\rTan*cos(\x)}, {\rTan*sin(\x)}, \zTan);
+      \node[teal!90!black, font=\footnotesize, below left] at ($ (A)!0.5!(B) $) {四分円弧 $\stackrel{\frown}{AB}$};
 
-      % Outer circle / arc CD
-      \draw[thick] (C) arc (210:330:2.3);
-
-      \node[above] at (N) {$N$};
-      \node[below left] at (A) {$A$};
-      \node[below right] at (B) {$B$};
-      \node[left] at (C) {$C$};
-      \node[right] at (D) {$D$};
-
-      \node[left] at ($(N)!0.5!(C)$) {$\sqrt{2}$};
-      \node[left] at ($(C)!0.5!(A)$) {$\sqrt{2}$};
-      \node[right] at ($(N)!0.5!(D)$) {$\sqrt{2}$};
-      \node[right] at ($(D)!0.5!(B)$) {$2\sqrt{2}$};
-      \node[below] at ($(A)!0.5!(B)$) {$2\sqrt{2}$};
-
-      \node[below] at (0,1.0) {$\frac{2}{3}\pi$};
+      % (ii) 線分 AB
+      \draw[very thick, teal!85!black] (A) -- (B);
     \end{scope}
+
+    % --- 3. 球面 K 本体の描画（見かけの真円輪郭と球面シェーディング）---
+    \shadedraw[ball color=blue!10, opacity=0.45, draw=black, thick] (O) circle (\R);
+
+    % --- 4. 球面上の幾何要素・基準線 ---
+    \begin{scope}[tdplot_main_coords]
+      % (1) 赤道円 (z = 0)
+      \tdplotdrawarc[thick, gray!70]{(0,0,0)}{\R}{-45}{135}{}{}
+      \tdplotdrawarc[dashed, gray!40]{(0,0,0)}{\R}{135}{315}{}{}
+
+      % (2) 経線（N と S を結ぶ大円）
+      \draw[dashed, gray!50] (N) to[bend left=28] (S);
+      \draw[gray!70] (N) to[bend right=28] (S);
+
+      % (3) 中心軸 NS
+      \draw[thick, dashed, gray!70] (N) -- (S);
+
+      % --- 5. 点 Q の描く軌跡 ---
+      % (i) 赤道上の大円弧 CD (P が弧 AB を動くとき)
+      \draw[line width=2.0pt, blue!85!black]
+      plot[domain=\angB:\angA, samples=30] ({\R*cos(\x)}, {\R*sin(\x)}, 0);
+
+      % (ii) 平面 ABN による小円弧 CD (P が線分 AB を動くとき)
+      % 正確なパラメトリック描画
+      \draw[line width=1.6pt, blue!75!black, dashed, samples=30, domain=0:1, variable=\u]
+      plot (
+        { (4.0 / ( ((1-\u)*\rTan*cos(\angA) + \u*\rTan*cos(\angB))^2 + ((1-\u)*\rTan*sin(\angA) + \u*\rTan*sin(\angB))^2 + 4.0 )) * ((1-\u)*\rTan*cos(\angA) + \u*\rTan*cos(\angB)) },
+        { (4.0 / ( ((1-\u)*\rTan*cos(\angA) + \u*\rTan*cos(\angB))^2 + ((1-\u)*\rTan*sin(\angA) + \u*\rTan*sin(\angB))^2 + 4.0 )) * ((1-\u)*\rTan*sin(\angA) + \u*\rTan*sin(\angB)) },
+        { 1.0 - 2.0 * (4.0 / ( ((1-\u)*\rTan*cos(\angA) + \u*\rTan*cos(\angB))^2 + ((1-\u)*\rTan*sin(\angA) + \u*\rTan*sin(\angB))^2 + 4.0 )) }
+      );
+
+      % --- 6. 視線・母線 (N から A, B, P への線分) ---
+      % NC, ND, NQ (球面内部)
+      \draw[thick, black] (N) -- (C);
+      \draw[thick, black] (N) -- (D);
+      \draw[thick, orange!90!black] (N) -- (Q);
+
+      % CA, DB, QP (球外部)
+      \draw[thick, black] (C) -- (A);
+      \draw[thick, black] (D) -- (B);
+      \draw[thick, orange!90!black] (Q) -- (P);
+
+      % 動点 P と交点 Q のプロット
+      \fill[orange!90!black] (P) circle (0.7pt) node[below=1pt] {$P$};
+      \fill[orange!90!black] (Q) circle (0.7pt) node[above left=1pt] {$Q$};
+
+      % --- 7. 主要点のプロットとラベル ---
+      \fill (N) circle (0.8pt) node[above=2pt] {$N$};
+      \fill (S) circle (0.7pt) node[below right=1pt] {$S$};
+      \fill (A) circle (0.8pt) node[below left=2pt] {$A$};
+      \fill (B) circle (0.8pt) node[above right=2pt] {$B$};
+      \fill[red!85!black] (C) circle (0.9pt) node[left=2pt, red!85!black] {$C$};
+      \fill[red!85!black] (D) circle (0.9pt) node[above right=1pt, red!85!black] {$D$};
+
+      % 寸法ラベル
+      \node[left=2pt, font=\scriptsize, gray!70!black] at ($ (S)!0.5!(A) $) {$2$};
+      \node[above=2pt, font=\scriptsize, gray!70!black] at ($ (S)!0.5!(B) $) {$2$};
+      \node[right=2pt, font=\scriptsize, gray!70!black] at ($ (N)!0.5!(S) $) {$2$};
+      \node[blue!85!black, font=\footnotesize, above left] at ($ (C)!0.5!(D) + (0,0,0.15) $) {大円弧 $CD$};
+    \end{scope}
+
   \end{tikzpicture}
-  \caption{球 $N$ と平面 $ABN$ による断面図}
+  \caption{接平面上の四分円弧 $\stackrel{\frown}{AB}$・線分 $AB$ と，球面 $K$ 上に交点 $Q$ が描く曲線（大円弧および小円弧 $CD$）}
+  \label{fig:sphere_projection_3d_exact}
 \end{figure}
 
-以上の ①，② から，もとめる長さは，(これらが $C, D$ 以外で交わらないことから)
+$NA, NB$ と $k$ の交点を $C, D$ とする．$NP$ と $k$ の交点を $Q$ とする．
+弧$AB$ 上を $P$ がうごく時，$Q$ は $C, D$ を両端とする大円の劣弧上を動く．
+この長さは，半径 $1$ の四分円の弧長にひとしく，
+\begin{align}
+  \dfrac{1}{4} \cdot 2\pi = \dfrac{1}{2}\pi \label{eq:1}
+\end{align}
+である．
+
+次に 線分$AB$ 上を $P$ がうごく時，平面 $ABN$ で $k$ を切ると下図の太線部，円弧$CD$上を$Q$がくまなく動く．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.4, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータの定義 ---
+    % 正三角形 NAB: 1辺 L = 2\sqrt{2} ≈ 2.8284
+    % 高さ h = L * sqrt(3)/2 = sqrt(6) ≈ 2.4495
+    % 円の半径 r = sqrt(6)/3 ≈ 0.8165
+    \def\side{2.8284}
+    \pgfmathsetmacro{\hTri}{sqrt(6)}                  % 高さ ≈ 2.4495
+    \pgfmathsetmacro{\rCirc}{sqrt(6)/3.0}             % 半径 ≈ 0.8165
+
+    % N を一番上、AB の中点を原点 (0, 0) とする
+    \coordinate (M) at (0, 0);                        % 辺 AB の中点
+    \coordinate (N) at (0, \hTri);                    % 頂点 N (円周上の最上点)
+    \coordinate (A) at ({-0.5*\side}, 0);             % 頂点 A
+    \coordinate (B) at ({0.5*\side}, 0);              % 頂点 B
+
+    % 円の中心 O_c: N が円周上に来るように N から半径 r だけ真下に下げる
+    % O_c = (0, hTri - rCirc) = (0, 2*sqrt(6)/3)
+    \coordinate (Oc) at (0, {\hTri - \rCirc});
+
+    % 中心角 2/3\pi (120°) をなす交点 C, D:
+    % 中心 Oc から見て 210° (-150°) と 330° (-30°)
+    \coordinate (C) at ($ (Oc) + (210:\rCirc) $);
+    \coordinate (D) at ($ (Oc) + (330:\rCirc) $);
+
+    % --- 2. 円の描画（半径 sqrt(6)/3，N を通る）---
+    % 円の全体（細線）
+    \draw[thick, gray!70] (Oc) circle (\rCirc);
+
+    % 弧 CD（下側に膨らむ円弧、太線強調）
+    \draw[line width=1.8pt, blue!85!black]
+    ([shift=(210:\rCirc)]Oc) arc (210:330:\rCirc);
+
+    % 弧 CD に沿った目盛りハッチング線
+    \foreach \ang in {218, 226, 234, 242, 250, 258, 266, 274, 282, 290, 298, 306, 314, 322} {
+      \draw[blue!85!black, thin]
+      ($ (Oc) + (\ang:\rCirc) $) -- ++(\ang:-0.08);
+    }
+
+    % --- 3. 正三角形 NAB の枠線 ---
+    \draw[very thick, black] (A) -- (B) -- (N) -- cycle;
+
+    % 弦 CD (破線)
+    \draw[dashed, gray!70] (C) -- (D);
+
+    % 頂点 N から底辺への垂線（対称軸）
+    \draw[dotted, gray!60] (N) -- (M);
+
+    % --- 4. 中心 Oc からの半径線と中心角 2/3\pi ---
+    \draw[dashed, teal!85!black] (Oc) -- (C);
+    \draw[dashed, teal!85!black] (Oc) -- (D);
+    \draw[dashed, teal!85!black] (Oc) -- (N);
+
+    % 中心角の円弧 (偏角 210° から 330°: 120° = 2/3\pi)
+    \draw[purple!85!black, thick] ($ (Oc) + (210:0.20) $) arc (210:330:0.20);
+    \node[purple!90!black, font=\footnotesize] at ($ (Oc) + (270:0.35) $) {$\frac{2}{3}\pi$};
+
+    % 半径の引き出し線
+    \draw[<-, thin, gray!80!black] ($ (Oc) + (55:\rCirc) $) -- ++(0.35, 0.22)
+    node[right, font=\footnotesize] {半径 $\frac{\sqrt{6}}{3}$};
+
+    % --- 5. 長さラベル ---
+    % 底辺 AB
+    \node[below=3pt, font=\footnotesize] at (M) {$2\sqrt{2}$};
+
+    % 辺 NA, NB
+    \node[left=3pt, font=\footnotesize] at ($ (A)!0.5!(N) $) {$2\sqrt{2}$};
+    \node[right=3pt, font=\footnotesize] at ($ (B)!0.5!(N) $) {$2\sqrt{2}$};
+
+    % --- 6. 主要点のプロットとラベル ---
+    \fill (N) circle (0.8pt) node[above=2pt] {$N$};
+    \fill (A) circle (0.8pt) node[below left=2pt] {$A$};
+    \fill (B) circle (0.8pt) node[below right=2pt] {$B$};
+    \fill (Oc) circle (0.6pt);
+    \fill[red!85!black] (C) circle (0.9pt) node[left=2pt, red!85!black] {$C$};
+    \fill[red!85!black] (D) circle (0.9pt) node[right=2pt, red!85!black] {$D$};
+
+    % 円弧 CD の注記
+    \node[blue!85!black, font=\footnotesize, below] at ($ (Oc) + (0, -\rCirc - 0.12) $) {円弧 $\stackrel{\frown}{CD}$};
+
+  \end{tikzpicture}
+  \caption{正三角形 $NAB$（1辺 $2\sqrt{2}$）と頂点 $N$ を通る半径 $\dfrac{\sqrt{6}}{3}$ の円，および中心角 $\dfrac{2}{3}\pi$ の円弧 $CD$}
+  \label{fig:triangle_NAB_circle_section}
+\end{figure}
+
+この円は $1$ 辺の長さ $2\sqrt{2}$ の正三角形の外接円だからその半径 $\dfrac{2\sqrt{6}}{3}$ である．
+円弧$CD$は偏角$\dfrac{2\pi}{3}$だからその長さは
+\begin{align}
+  \stackrel{\frown}{CD}
+  = \dfrac{1}{3} \cdot \dfrac{2\sqrt{6}}{3} \pi
+  = \dfrac{2\sqrt{6}}{9}\pi \label{eq:2}
+\end{align}
+である．
+
+以上の\cref{eq:1,eq:2}を足したものが求める長さで(これらが $C, D$ 以外で交わらないことから)
 \begin{align}
   \dfrac{1}{2}\pi + \dfrac{2\sqrt{6}}{9}\pi = \Bigl(\dfrac{1}{2} + \dfrac{2\sqrt{6}}{9}\Bigr)\pi
 \end{align}
+である．
 
 \end{document}

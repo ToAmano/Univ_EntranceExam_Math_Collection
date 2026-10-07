@@ -1,60 +1,109 @@
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1980$年$5$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  $1$辺の長さが$1$の正四面体$A_0A_1A_2A_3$がある．点$P$はこの正四面体の返上を毎秒
-  $1$の速さで動き，各頂点にたっしたとき，そこから出る$3$辺のうちの$1$辺を$\dfrac{1}{3}$
-  ずつの確率で選んで進む，$P$は時刻$0$において頂点$A_0$にあるとする．また$n$を$0$または
-  正の整数とし，点$P$が時刻$t=n$において頂点$A_i$にある確率を$p_i(n)$で表す．$(i=0,1,2,3)$．
-  \begin{enumerate}[(1)]
-    \item 数学的昨日法を用いて，$p_1(n)=p_2(n)=p_3(n)$を証明せよ．
-    \item $p_0(n)$と$p_1(n)$の値を求めよ．
-  \end{enumerate}
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}まず，題意から以下の漸化式を得る．
-  \begin{align}
-    p_i(n+1)=\dfrac{1}{3}(1-p_i(n)) \label{1}
-  \end{align}
-  \begin{enumerate}[(1)]
-    \item 題意から$p_1(0)=p_2(0)=p_3(0)$であるから$n=0$では成立．次に$n=k$での成立を仮定すれ
-      ば\eqref{1}から$n=k+1$でも成立．以上から示された．$\Box$
-    \item \eqref{1}から，
-      \begin{align}
-        p_i(n+1)-\dfrac{1}{4}=\dfrac{-1}{3}\left(p_i(n)-\dfrac{1}{4}\right)
-      \end{align}
-      だから，繰り返し用いて
-      \begin{align}
-        p_i(n)=\left(\dfrac{-1}{3}\right)^n\left(p_i(0)-\dfrac{1}{4}\right)+\dfrac{1}{4}
-      \end{align}
-      となる．初期条件$p_1(0)=0$，$p_0(1)=1$から
-      \begin{align}
-        \left\{
-          \begin{array}{l}
-            p_0(n)=\dfrac{3}{4}\left(\dfrac{-1}{3}\right)^n+\dfrac{1}{4} \\
-            p_1(n)=\dfrac{1}{4}\left\{1-\left(\dfrac{-1}{3}\right)^n\right\}
-          \end{array}
-          \right.
-        \end{align}
-        が求める値である．$\cdots$(答)
-    \end{enumerate}
-    \newpage
-  \end{multicols}
-  \end{document}
+{\bf[解]}
+
+\begin{figure}[htb]
+  \centering
+  % Idisso ti panagkita iti 3D (tdplotsetmaincoords{theta}{phi})
+  \tdplotsetmaincoords{70}{115}
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.4, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. Koordinada dagiti uppat a vertex (Tetrahedron) ---
+    % A0 ti tuktok (apex), A1, A2, A3 ti base
+    \coordinate (A0) at (0, 0, 1.6);
+    \coordinate (A1) at ({1.3*cos(210)}, {1.3*sin(210)}, 0);
+    \coordinate (A2) at ({1.3*cos(330)}, {1.3*sin(330)}, 0);
+    \coordinate (A3) at ({1.3*cos(90)},  {1.3*sin(90)},  0);
+
+    % --- 2. Kolor ti rabaw (Faces shading) ---
+    % Rabaw iti likud: A1-A2-A3 (base)
+    \fill[blue!5, opacity=0.6] (A1) -- (A2) -- (A3) -- cycle;
+    % Rabaw iti sanguanan: A0-A1-A2
+    \fill[blue!15, opacity=0.6] (A0) -- (A1) -- (A2) -- cycle;
+    % Rabaw iti kanigid: A0-A1-A3
+    \fill[blue!10, opacity=0.4] (A0) -- (A1) -- (A3) -- cycle;
+
+    % --- 3. Dagiti igid (Edges) ---
+    % Nailemmeng nga igid iti likud (dashed lines)
+    \draw[thick, dashed, gray!70] (A1) -- (A3);
+    \draw[thick, dashed, gray!70] (A2) -- (A1);
+    \draw[thick, dashed, gray!70] (A0) -- (A1);
+
+    % Nalitnaw nga igid iti sanguanan (solid lines)
+    \draw[very thick, black] (A0) -- (A2) -- (A3) -- cycle;
+
+    % --- 4. Dagiti pana ti transision (Probability 1/3) ---
+    % Manipud A0 agturong iti A1
+    \draw[->, thick, red!85!black]
+    ($ (A0)!0.25!(A1) $) -- ($ (A0)!0.75!(A1) $)
+    node[midway, above left=1pt, font=\footnotesize] {$\dfrac{1}{3}$};
+
+    % Manipud A0 agturong iti A2
+    \draw[->, thick, red!85!black]
+    ($ (A0)!0.25!(A2) $) -- ($ (A0)!0.75!(A2) $)
+    node[midway, above right=1pt, font=\footnotesize] {$\dfrac{1}{3}$};
+
+    % Manipud A0 agturong iti A3 (dashed ta adda iti likud)
+    \draw[->, thick, dashed, red!70!black]
+    ($ (A0)!0.25!(A3) $) -- ($ (A0)!0.75!(A3) $)
+    node[midway, right=2pt, font=\footnotesize] {$\dfrac{1}{3}$};
+
+    % --- 5. Dagiti marka ken nagan ti Vertex ---
+    % A0 (Irugi iti t = 0)
+    \fill[red!85!black] (A0) circle (1.0pt);
+    \node[above=3pt, red!85!black, font=\bfseries] at (A0) {$A_0$ ($t=0$)};
+
+    % A1, A2, A3
+    \fill (A1) circle (0.8pt) node[below left=2pt] {$A_1$};
+    \fill (A2) circle (0.8pt) node[below right=2pt] {$A_2$};
+    \fill (A3) circle (0.8pt) node[above=2pt] {$A_3$};
+
+  \end{tikzpicture}
+  \caption{四面体 $A_i$ 上の各頂点間の遷移}
+  \label{fig:tetrahedron_random_walk}
+\end{figure}
+
+まず$p_i(n+1)$について考えると，$t=n+1$で頂点$i$にいるのは，$t=n$で頂点$i$以外にいて，そこから確率$\dfrac{1}{3}$で頂点$i$に来た時だから，
+\begin{align}
+  p_i(n+1)=\dfrac{1}{3}(1-p_i(n)) \label{eq:1}
+\end{align}
+となる．
+初期条件は題意より，$t=0$において頂点$i=0$にあることから
+\begin{align}
+  p_0(0) = 1 \quad p_{k}(0)=0\, (k=1,2,3) \label{eq:2}
+\end{align}
+である．
+
+\subparagraph{(1)}
+
+数学的帰納法で$p_1(n)=p_2(n)=p_3(n)$を証明する．
+\cref{eq:2}から$n=0$では題意が成立する．
+そこで$n=k$での成立を仮定すれば，\cref{eq:1}より自明に$n=k+1$でもこの条件は成立する．
+従って数学的帰納法により．
+\begin{align}
+  p_1(n)=p_2(n)=p_3(n)
+\end{align}
+である．
+
+\subparagraph{(2)}
+
+\cref{eq:1}を変形して
+\begin{align}
+  p_i(n+1)-\dfrac{1}{4}=\dfrac{-1}{3}\left(p_i(n)-\dfrac{1}{4}\right) \label{eq:3}
+\end{align}
+だから繰り返し用いて
+\begin{align}
+  p_i(n)=\left(\dfrac{-1}{3}\right)^n\left(p_i(0)-\dfrac{1}{4}\right)+\dfrac{1}{4}
+\end{align}
+である．
+初期条件は\cref{eq:2}より$p_1(0)=0$，$p_0(1)=1$だから代入して
+\begin{align}
+  \begin{cases}
+    p_0(n)=\dfrac{3}{4}\left(\dfrac{-1}{3}\right)^n+\dfrac{1}{4} \\
+    p_1(n)=\dfrac{1}{4}\left\{1-\left(\dfrac{-1}{3}\right)^n\right\}
+  \end{cases}
+\end{align}
+が求める値である．$\cdots$(答)
+\newpage
+\end{document}

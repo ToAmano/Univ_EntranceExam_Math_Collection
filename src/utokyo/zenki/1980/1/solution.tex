@@ -1,12 +1,6 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
-
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
-{\bf [解]} $0 < x < \dfrac{1}{2} \quad \cdots \text{①}$
+{\bf [解]}
 
 \begin{figure}[htb]
   \centering
@@ -67,68 +61,202 @@
   \caption{正三角形 $\triangle A'B'C'$ を作る補助線 $AP,BQ,CR$}
 \end{figure}
 
+題意の条件
+\begin{align}
+  0 < x < \dfrac{1}{2} \label{eq:1}
+\end{align}
+の元で考える．
+
 \paragraph{(1)}
-対称性から $|BB'| = |CC'| = |AA'| = p$，
-$|PB'| = |QC'| = |RA'| = q$，$|AB'| = |BC'| = |CA'| = r$
-とおける．メネラウスの定理から
-\begin{align}
-  \dfrac{B'C'}{BB'} \cdot \dfrac{A'R}{C'A'} \cdot \dfrac{AB}{RA} = 1 \quad \cdots \text{②}
-\end{align}
-\begin{align}
-  \dfrac{QA}{CQ} \cdot \dfrac{B'P}{AB'} \cdot \dfrac{BC}{PB} = 1 \quad \cdots \text{③}
-\end{align}
-まず ③ から
-\begin{align}
-  \dfrac{1-x}{x} \cdot \dfrac{q}{p+r} \cdot \dfrac{1}{x} = 1
-\end{align}
-② から
-\begin{align}
-  \dfrac{r}{p} \cdot \dfrac{q}{r} \cdot \dfrac{1}{x} = 1
-\end{align}
-したがって
+
+対称性から実数$p,q,r$を用いて
 \begin{align}
   \begin{cases}
-    q = xp \\
-    r = \dfrac{1-2x}{x} p
+    |BB'| = |CC'| = |AA'| = p \\
+    |PB'| = |QC'| = |RA'| = q \\
+    |AB'| = |BC'| = |CA'| = r \\
+    |BP | = |CQ|  = |AR|  = x
+  \end{cases}\label{eq:2}
+\end{align}
+とおける．
+
+\begin{figure}[htb]
+  \centering
+  % =========================================================
+  % (a) 三角形 BC'R と直線 AP (点 B', A', A)
+  % =========================================================
+  \begin{tikzpicture}[scale=1.7, >=stealth, every node/.style={font=\small}]
+
+    % 座標定義
+    \coordinate (A) at (60:3);
+    \coordinate (B) at (0,0);
+    \coordinate (C) at (3,0);
+
+    \coordinate (P) at (0.8,0);
+    \coordinate (Q) at ($(C)!0.267!(A)$);
+    \coordinate (R) at ($(A)!0.267!(B)$);
+
+    \coordinate (A') at (intersection of A--P and C--R);
+    \coordinate (B') at (intersection of A--P and B--Q);
+    \coordinate (C') at (intersection of B--Q and C--R);
+
+    % 対象三角形 \triangle BC'R の着色
+    \fill[blue!12] (B) -- (C') -- (R) -- cycle;
+
+    % \triangle BC'R の輪郭
+    \draw[very thick, blue!85!black] (B) -- (C') -- (R) -- cycle;
+
+    % 辺の延長部 (BR の延長上に A がある)
+    \draw[dashed, gray!70] (R) -- (A);
+
+    % メネラウス線 (直線 AP: 直線 A-A'-B'-P)
+    \draw[line width=1.4pt, red!85!black] (A) -- (P);
+
+    % 主要点のプロット
+    \fill (B) circle (1.0pt) node[below left] {$B$};
+    \fill (C') circle (1.0pt) node[below] {$C'$};
+    \fill (R) circle (1.0pt) node[left] {$R$};
+    \fill[red!85!black] (A) circle (1.0pt) node[above] {$A$};
+    \fill[red!85!black] (B') circle (1.0pt) node[left] {$B'$};
+    \fill[red!85!black] (A') circle (1.0pt) node[above right] {$A'$};
+
+    % 長さ・比のラベル
+    \node[blue!90!black, font=\scriptsize, above left] at ($(B)!0.5!(B')$) {$p$};
+    \node[blue!90!black, font=\scriptsize, above left] at ($(B')!0.5!(C')$) {$r$};
+    \node[teal!90!black, font=\scriptsize, left] at ($(C')!0.5!(A')$) {$r$};
+    \node[teal!90!black, font=\scriptsize, left] at ($(A')!0.5!(R)$) {$q$};
+    \node[purple!90!black, font=\scriptsize, left] at ($(A)!0.5!(R)$) {$x$};
+    \node[purple!90!black, font=\scriptsize, left] at ($(B)!0.4!(A)$) {$1$};
+
+    % タイトル・定理式
+    \node[font=\footnotesize\bfseries, align=center] at (1.2, -0.6)
+    {$\triangle BC'R$ と直線 $AP$\\[2pt]
+    $\dfrac{B'C'}{BB'} \cdot \dfrac{A'R}{C'A'} \cdot \dfrac{AB}{RA} = 1$};
+
+  \end{tikzpicture}
+  \hspace{0.5cm}
+  % =========================================================
+  % (b) 三角形 APC と直線 BQ (点 B', Q, B)
+  % =========================================================
+  \begin{tikzpicture}[scale=1.7, >=stealth, every node/.style={font=\small}]
+
+    % 座標定義
+    \coordinate (A) at (60:3);
+    \coordinate (B) at (0,0);
+    \coordinate (C) at (3,0);
+
+    \coordinate (P) at (0.8,0);
+    \coordinate (Q) at ($(C)!0.267!(A)$);
+    \coordinate (R) at ($(A)!0.267!(B)$);
+
+    \coordinate (A') at (intersection of A--P and C--R);
+    \coordinate (B') at (intersection of A--P and B--Q);
+    \coordinate (C') at (intersection of B--Q and C--R);
+
+    % 対象三角形 \triangle APC の着色
+    \fill[orange!15] (A) -- (P) -- (C) -- cycle;
+
+    % \triangle APC の輪郭
+    \draw[very thick, orange!90!black] (A) -- (P) -- (C) -- cycle;
+
+    % 辺の延長部 (CP の延長上に B がある)
+    \draw[dashed, gray!70] (P) -- (B);
+
+    % メネラウス線 (直線 BQ: 直線 B-B'-C'-Q)
+    \draw[line width=1.4pt, red!85!black] (B) -- (Q);
+
+    % 主要点のプロット
+    \fill (A) circle (1.0pt) node[above] {$A$};
+    \fill (P) circle (1.0pt) node[below] {$P$};
+    \fill (C) circle (1.0pt) node[below right] {$C$};
+    \fill[red!85!black] (B) circle (1.0pt) node[below left] {$B$};
+    \fill[red!85!black] (B') circle (1.0pt) node[left] {$B'$};
+    \fill[red!85!black] (Q) circle (1.0pt) node[right] {$Q$};
+
+    % 長さ・比のラベル
+    \node[orange!90!black, font=\scriptsize, right] at ($(A)!0.5!(B')$) {$p+r$};
+    \node[orange!90!black, font=\scriptsize, right] at ($(B')!0.5!(P)$) {$q$};
+    \node[teal!90!black, font=\scriptsize, right] at ($(C)!0.5!(Q)$) {$x$};
+    \node[teal!90!black, font=\scriptsize, right] at ($(Q)!0.5!(A)$) {$1-x$};
+    \node[purple!90!black, font=\scriptsize, below] at ($(B)!0.5!(P)$) {$x$};
+    \node[purple!90!black, font=\scriptsize, below] at ($(B)!0.5!(C)$) {$1$};
+
+    % タイトル・定理式
+    \node[font=\footnotesize\bfseries, align=center] at (1.6, -0.6)
+    {$\triangle APC$ と直線 $BQ$\\[2pt]
+    $\dfrac{QA}{CQ} \cdot \dfrac{B'P}{AB'} \cdot \dfrac{BC}{PB} = 1$};
+
+  \end{tikzpicture}
+  \caption{メネラウスの定理を適用する2つの三角形と直線}
+  \label{fig:menelaus_decomposition}
+\end{figure}
+
+三角形$BC'R, ABP$，および三角形$APC, BQC$にメネラウスの定理を用いて
+\begin{align}
+  & \dfrac{B'C'}{BB'} \cdot \dfrac{A'R}{C'A'} \cdot \dfrac{AB}{RA} = 1 \label{eq:2} \\
+  & \dfrac{QA}{CQ} \cdot \dfrac{B'P}{AB'} \cdot \dfrac{BC}{PB} = 1 \label{eq:3}
+\end{align}
+とかける．ここに\cref{eq:2}を代入して
+\begin{align}
+  \begin{cases}
+    \dfrac{r}{p} \cdot \dfrac{q}{r} \cdot \dfrac{1}{x} = 1 \\
+    \dfrac{1-x}{x} \cdot \dfrac{q}{p+r} \cdot \dfrac{1}{x} = 1
   \end{cases}
-  \quad \cdots \text{④}
+  \therefore
+  \begin{cases}
+    r = \dfrac{1-2x}{x} p \\
+    q = xp
+  \end{cases} \label{eq:4}
 \end{align}
-一方，$\triangle BCR$ に余弦定理を用いて，
+である．
+
+一方，$\triangle BCQ$ に余弦定理を用いて，
 \begin{align}
-  p + q + r = \sqrt{x^2 - x + 1} \quad \cdots \text{⑤}
+  |BQ|^2    &= |BC|^2+|CQ|^2 - 2|BC|CQ|\cos\angle BCQ \\
+  (p+q+r)^2 &= 1 + x^2 - 2x\cos\dfrac{\pi}{3} \\
+  \therefore
+  p + q + r &= \sqrt{x^2 - x + 1} \label{eq:5}
 \end{align}
-④ を ⑤ に代入して，
+である．
+
+\cref{eq:4}を\cref{eq:5}に代入して，
 \begin{align}
-  \Bigl( 1 + x + \dfrac{1-2x}{x} \Bigr) p &= \sqrt{x^2 - x + 1} \\
-  \therefore p &= \dfrac{x}{\sqrt{x^2 - x + 1}}
+  \Bigl( 1 + x + \dfrac{1-2x}{x} \Bigr) p = \sqrt{x^2 - x + 1}
+  \therefore p = \dfrac{x}{\sqrt{x^2 - x + 1}} \label{eq:6}
 \end{align}
-④ から
+となる．従って\cref{eq:4}に代入して
 \begin{align}
-  r = \dfrac{1-2x}{\sqrt{x^2 - x + 1}}, \quad q = \dfrac{x^2}{\sqrt{x^2 - x + 1}}
+  r = \dfrac{1-2x}{\sqrt{x^2 - x + 1}}, \quad q = \dfrac{x^2}{\sqrt{x^2 - x + 1}} \label{eq:7}
 \end{align}
-以上から，$|BB'| = p = \dfrac{x}{\sqrt{x^2 - x + 1}}$，$|PB'| = q = \dfrac{x^2}{\sqrt{x^2 - x + 1}}$
+となる．
+\cref{eq:6,eq:7}をまとめて，求める長さは
+\begin{align}
+  \begin{cases}
+    |BB'| = p = \dfrac{x}{\sqrt{x^2 - x + 1}} \\
+    |PB'| = q = \dfrac{x^2}{\sqrt{x^2 - x + 1}}
+  \end{cases} \label{eq:8}
+\end{align}
+である．
 
 \paragraph{(2)}
-$\triangle A'B'C'$ は一辺の長さ $r$ の正三角形でその面積 $T$ は
+
+$\triangle A'B'C'$ は一辺の長さ $r$ の正三角形でその面積 $T$ は\cref{eq:7}より
 \begin{align}
   T = \dfrac{\sqrt{3}}{4} r^2 = \dfrac{\sqrt{3}}{4} \cdot \dfrac{4x^2 - 4x + 1}{x^2 - x + 1}
 \end{align}
 と表せる．これが $\dfrac{1}{2} \cdot \dfrac{\sqrt{3}}{4}$ に等しいので
 \begin{align}
-  \dfrac{1}{2} = \dfrac{4x^2 - 4x + 1}{x^2 - x + 1}
+  & \dfrac{1}{2} = \dfrac{4x^2 - 4x + 1}{x^2 - x + 1} \\
+  & 8x^2 - 8x + 2 = x^2 - x + 1 \\
+  & 7x^2 - 7x + 1 = 0 \\
+  \therefore
+  & x = \dfrac{7 \pm \sqrt{21}}{14}
 \end{align}
-\begin{align}
-  8x^2 - 8x + 2 = x^2 - x + 1
-\end{align}
-\begin{align}
-  7x^2 - 7x + 1 = 0
-\end{align}
-\begin{align}
-  \therefore x = \dfrac{7 \pm \sqrt{21}}{14}
-\end{align}
-$0 < x < \dfrac{1}{2}$ から複号負を採用して，
+である．
+このうち\cref{eq:1}を満たすのは複合負で，求める$x$は
 \begin{align}
   x = \dfrac{7 - \sqrt{21}}{14}
 \end{align}
+である．
 
 \end{document}
