@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { markdownToPlainText, buildQAPageJsonLd } from '../../utils/seo';
 
 export async function getStaticPaths() {
 	const solutions = await getCollection('solutions');
@@ -17,6 +18,7 @@ const { Content } = await entry.render();
 // 解答の直前に埋め込む（tex_to_md.py側の変換や個別ページ自体は変えず、
 // このページの描画時にだけ両者を合成する）。
 let ProblemContent: typeof Content | null = null;
+let problemEntryForJsonLd: (typeof allSolutions)[number] | null = null;
 if ((entry.data.type || 'solution') === 'solution') {
 	const problemEntry = allSolutions.find(
 		(item) =>
@@ -29,6 +31,7 @@ if ((entry.data.type || 'solution') === 'solution') {
 	if (problemEntry) {
 		const rendered = await problemEntry.render();
 		ProblemContent = rendered.Content;
+		problemEntryForJsonLd = problemEntry;
 	}
 }
 
@@ -153,9 +156,23 @@ const pageTitle = entry.data.title || `${univName} ${catName} ${year}年 ${quest
 // このページ自身の絶対パスをそのまま組み立てる。
 const counterPath = `${baseUrl}/solutions/${entry.slug}/`;
 const counterUrl = `https://toamano.goatcounter.com/counter${counterPath}.svg?no_branding=1`;
+
+// 解答ページ(かつ対応する問題文が見つかった場合)のみ、QAPage構造化データ(JSON-LD)を
+// 埋め込む。問題文ページ(-problem)はcanonicalで解答ページに評価を譲っているため
+// ここでは構造化データを付与しない。
+let jsonLd: ReturnType<typeof buildQAPageJsonLd> | null = null;
+if (entryType === 'solution' && problemEntryForJsonLd) {
+	const pageUrlForJsonLd = new URL(`${baseUrl}/solutions/${entry.slug}/`, Astro.site).href;
+	jsonLd = buildQAPageJsonLd({
+		url: pageUrlForJsonLd,
+		questionName: `${univName} ${catName} ${year}年 ${questionLabel}`,
+		questionText: markdownToPlainText(problemEntryForJsonLd.body),
+		answerText: markdownToPlainText(entry.body),
+	});
+}
 ---
 
-<Layout title={pageTitle} description={`${univName} ${catName} ${year}年 ${questionLabel}の過去問解答解説。`} ogType="article" canonicalUrl={canonicalOverrideUrl}>
+<Layout title={pageTitle} description={`${univName} ${catName} ${year}年 ${questionLabel}の過去問解答解説。`} ogType="article" canonicalUrl={canonicalOverrideUrl} jsonLd={jsonLd}>
 	<!-- Breadcrumb Navigation -->
 	<nav aria-label="Breadcrumb" style="margin-bottom: 2rem;">
 		<ol class="breadcrumb" style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; list-style: none; padding: 0; margin: 0; font-size: 0.9rem; color: var(--text-muted);">

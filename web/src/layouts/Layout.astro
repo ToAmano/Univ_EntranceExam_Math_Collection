@@ -10,6 +10,8 @@ interface Props {
 	// 重複コンテンツ評価分散を避けるため正規URLを明示的に上書きするためのもの。
 	// 省略時は自分自身のURLを正規URLとする(従来通り)。
 	canonicalUrl?: string;
+	// QAPage構造化データ(JSON-LD)。該当ページが無ければ省略可。
+	jsonLd?: Record<string, unknown> | null;
 }
 
 const {
@@ -17,6 +19,7 @@ const {
 	description = "東大・京大・東工大などの大学入試数学過去問解答アーカイブ。MathJax描画による高品質な数式と解答解説。",
 	ogType = 'website',
 	canonicalUrl = Astro.url.href,
+	jsonLd = null,
 } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 const fullTitle = `${title} | Math Solutions`;
@@ -35,6 +38,9 @@ const ogImageUrl = new URL(`${baseUrl}/ogp-default.png`, Astro.site).href;
 		<meta name="google-site-verification" content="ln8dYR-Jf-TTw5pvDyCe5vkziWE6VWTNKAdq4fG7RLk" />
 		<link rel="canonical" href={canonicalUrl} />
 		<link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
+		{jsonLd && (
+			<script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />
+		)}
 
 		<!-- OGP / Twitter Card -->
 		<meta property="og:type" content={ogType} />
