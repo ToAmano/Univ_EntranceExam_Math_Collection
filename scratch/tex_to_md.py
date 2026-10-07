@@ -103,6 +103,23 @@ _EQ_NUMBER_ENV_RE = re.compile(r'\\begin\{(align|gather|eqnarray|equation)(\*?)\
 _EQ_NUMBER_LABEL_RE = re.compile(r'\\label\{([^}]+)\}')
 
 
+def build_fig_alt_text(caption_text, fig_count):
+    """<img alt="..."> 用のテキストを作る。SEO上、意味の無い「図 1」のような
+    連番だけより、キャプションの内容を使った方が画像検索・クローラーへの
+    文脈提供として有効なため、キャプションがあればそれを優先する。
+    HTML属性値として安全に埋め込めるよう最低限のエスケープのみ行う
+    （LaTeXコマンドそのものは除去しない。完全なプレーンテキスト化は
+    markdownToPlainText 相当の仕事であり、alt はそこまでの労力をかける
+    対象ではないため）。"""
+    base = caption_text.strip() if caption_text else f"図 {fig_count}"
+    return (
+        base.replace('&', '&amp;')
+        .replace('"', '&quot;')
+        .replace('<', '&lt;')
+        .replace('>', '&gt;')
+    )
+
+
 def compute_eq_numbers(raw_tex):
     """MathJax (tags:'ams') の数式自動採番を模倣し、\\label{...} が実際に画面上
     表示される番号を計算して {ラベル名: 番号} の辞書として返す。
@@ -512,8 +529,9 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
 
                 web_img_src = f"{public_img_dir_rel}/{svg_filename}"
                 caption_label = f"図 {fig_count}" + (f": {caption_text}" if caption_text else "")
+                alt_text = build_fig_alt_text(caption_text, fig_count)
                 # 表と同様、<figcaption> のタグと本文を空行で分離する（Issue #4）。
-                fig_html = f'\n\n<figure id="{label_id}">\n  <img src="{web_img_src}" alt="図 {fig_count}" />\n  <figcaption>\n\n{caption_label}\n\n  </figcaption>\n</figure>\n\n'
+                fig_html = f'\n\n<figure id="{label_id}">\n  <img src="{web_img_src}" alt="{alt_text}" />\n  <figcaption>\n\n{caption_label}\n\n  </figcaption>\n</figure>\n\n'
                 fig.replace_with(fig_html)
                 fig_count += 1
 
@@ -594,8 +612,9 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
 
                 web_img_src = f"{public_img_dir_rel}/{svg_filename}"
                 caption_label = f"図 {fig_count}" + (f": {cap_text}" if cap_text else "")
+                alt_text = build_fig_alt_text(cap_text, fig_count)
                 # 表・図(メインパス)と同様、<figcaption> のタグと本文を空行で分離する（Issue #4）。
-                fig_html = f'\n\n<figure id="{lbl_id}">\n  <img src="{web_img_src}" alt="図 {fig_count}" />\n  <figcaption>\n\n{caption_label}\n\n  </figcaption>\n</figure>\n\n'
+                fig_html = f'\n\n<figure id="{lbl_id}">\n  <img src="{web_img_src}" alt="{alt_text}" />\n  <figcaption>\n\n{caption_label}\n\n  </figcaption>\n</figure>\n\n'
                 fig_count += 1
                 return fig_html
             return fig_content

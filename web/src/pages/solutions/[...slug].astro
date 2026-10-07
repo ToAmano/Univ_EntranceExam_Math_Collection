@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import { markdownToPlainText, buildQAPageJsonLd } from '../../utils/seo';
+import { markdownToPlainText, buildQAPageJsonLd, buildBreadcrumbListJsonLd } from '../../utils/seo';
 
 export async function getStaticPaths() {
 	const solutions = await getCollection('solutions');
@@ -160,19 +160,34 @@ const counterUrl = `https://toamano.goatcounter.com/counter${counterPath}.svg?no
 // 解答ページ(かつ対応する問題文が見つかった場合)のみ、QAPage構造化データ(JSON-LD)を
 // 埋め込む。問題文ページ(-problem)はcanonicalで解答ページに評価を譲っているため
 // ここでは構造化データを付与しない。
-let jsonLd: ReturnType<typeof buildQAPageJsonLd> | null = null;
+const pageUrlForJsonLd = new URL(`${baseUrl}/solutions/${entry.slug}/`, Astro.site).href;
+const jsonLdItems: Record<string, unknown>[] = [];
 if (entryType === 'solution' && problemEntryForJsonLd) {
-	const pageUrlForJsonLd = new URL(`${baseUrl}/solutions/${entry.slug}/`, Astro.site).href;
-	jsonLd = buildQAPageJsonLd({
-		url: pageUrlForJsonLd,
-		questionName: `${univName} ${catName} ${year}年 ${questionLabel}`,
-		questionText: markdownToPlainText(problemEntryForJsonLd.body),
-		answerText: markdownToPlainText(entry.body),
-	});
+	jsonLdItems.push(
+		buildQAPageJsonLd({
+			url: pageUrlForJsonLd,
+			questionName: `${univName} ${catName} ${year}年 ${questionLabel}`,
+			questionText: markdownToPlainText(problemEntryForJsonLd.body),
+			answerText: markdownToPlainText(entry.body),
+		})
+	);
 }
+
+// パンくずリストの構造化データ。画面上のパンくずナビ(下の<nav aria-label="Breadcrumb">)と
+// 同じ階層(トップ > 大学・区分 > 年度/問題)を表す。
+jsonLdItems.push(
+	buildBreadcrumbListJsonLd([
+		{ name: 'トップ', url: new URL(`${baseUrl}/`, Astro.site).href },
+		{
+			name: `${univName} ${catName}`,
+			url: new URL(`${baseUrl}/category/${entry.data.university.replace(/^sample_/, '')}/${entry.data.category}`, Astro.site).href,
+		},
+		{ name: `${year}年 ${questionLabel}`, url: pageUrlForJsonLd },
+	])
+);
 ---
 
-<Layout title={pageTitle} description={`${univName} ${catName} ${year}年 ${questionLabel}の過去問解答解説。`} ogType="article" canonicalUrl={canonicalOverrideUrl} jsonLd={jsonLd}>
+<Layout title={pageTitle} description={`${univName} ${catName} ${year}年 ${questionLabel}の過去問解答解説。`} ogType="article" canonicalUrl={canonicalOverrideUrl} jsonLd={jsonLdItems}>
 	<!-- Breadcrumb Navigation -->
 	<nav aria-label="Breadcrumb" style="margin-bottom: 2rem;">
 		<ol class="breadcrumb" style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; list-style: none; padding: 0; margin: 0; font-size: 0.9rem; color: var(--text-muted);">

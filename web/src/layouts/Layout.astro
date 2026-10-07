@@ -10,8 +10,9 @@ interface Props {
 	// 重複コンテンツ評価分散を避けるため正規URLを明示的に上書きするためのもの。
 	// 省略時は自分自身のURLを正規URLとする(従来通り)。
 	canonicalUrl?: string;
-	// QAPage構造化データ(JSON-LD)。該当ページが無ければ省略可。
-	jsonLd?: Record<string, unknown> | null;
+	// 構造化データ(JSON-LD)。QAPage・BreadcrumbList等を複数渡せるよう配列も許容する。
+	// 該当ページが無ければ省略可。
+	jsonLd?: Record<string, unknown> | Record<string, unknown>[] | null;
 }
 
 const {
@@ -21,6 +22,7 @@ const {
 	canonicalUrl = Astro.url.href,
 	jsonLd = null,
 } = Astro.props;
+const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 const fullTitle = `${title} | Math Solutions`;
 // OGP の og:url は「このURLが共有された」という実際のページを指すべきなので、
@@ -38,9 +40,9 @@ const ogImageUrl = new URL(`${baseUrl}/ogp-default.png`, Astro.site).href;
 		<meta name="google-site-verification" content="ln8dYR-Jf-TTw5pvDyCe5vkziWE6VWTNKAdq4fG7RLk" />
 		<link rel="canonical" href={canonicalUrl} />
 		<link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
-		{jsonLd && (
-			<script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />
-		)}
+		{jsonLdList.map((item) => (
+			<script type="application/ld+json" set:html={JSON.stringify(item).replace(/</g, '\\u003c')} />
+		))}
 
 		<!-- OGP / Twitter Card -->
 		<meta property="og:type" content={ogType} />
