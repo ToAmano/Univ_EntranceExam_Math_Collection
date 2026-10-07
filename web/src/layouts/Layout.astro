@@ -5,16 +5,24 @@ interface Props {
 	title: string;
 	description?: string;
 	ogType?: 'website' | 'article';
+	// 問題文ページ(-problem)のように、内容が別ページ(-solution、問題文を
+	// 内包しさらに解答解説を含む)の部分集合になっている場合に、検索エンジンの
+	// 重複コンテンツ評価分散を避けるため正規URLを明示的に上書きするためのもの。
+	// 省略時は自分自身のURLを正規URLとする(従来通り)。
+	canonicalUrl?: string;
 }
 
 const {
 	title,
 	description = "東大・京大・東工大などの大学入試数学過去問解答アーカイブ。MathJax描画による高品質な数式と解答解説。",
 	ogType = 'website',
+	canonicalUrl = Astro.url.href,
 } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 const fullTitle = `${title} | Math Solutions`;
-const canonicalUrl = Astro.url.href;
+// OGP の og:url は「このURLが共有された」という実際のページを指すべきなので、
+// canonicalUrl(SEO上の正規URL)とは独立に、常に実際のページURLを使う。
+const pageUrl = Astro.url.href;
 const ogImageUrl = new URL(`${baseUrl}/ogp-default.png`, Astro.site).href;
 ---
 <!doctype html>
@@ -33,7 +41,7 @@ const ogImageUrl = new URL(`${baseUrl}/ogp-default.png`, Astro.site).href;
 		<meta property="og:site_name" content="Math Solutions" />
 		<meta property="og:title" content={fullTitle} />
 		<meta property="og:description" content={description} />
-		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:url" content={pageUrl} />
 		<meta property="og:image" content={ogImageUrl} />
 		<meta property="og:locale" content="ja_JP" />
 		<meta name="twitter:card" content="summary_large_image" />
