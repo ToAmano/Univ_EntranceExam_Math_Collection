@@ -1,0 +1,177 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+{\bf [解]}
+
+$O$を原点とする座標平面で考える．対称性から$P(1,0)$としてよい．
+$O$を原点とする半径$1$の円を$C_1$，$P$を中心とする半径$2/\sqrt{3}$の円を$C_2$とすると，これらの方程式は
+\begin{align}
+  \begin{cases}
+    C_1:x^2+y^2=1
+    C_2:(x-1)^2+y^2=\dfrac{4}{3}
+  \end{cases} \label{eq:1}
+\end{align}
+であり，$Q$，$R$は$C_2$上にある．
+
+また，$C_1$，$C_2$の二つの交点$A,B$とすると，この$x$座標は$1/3$である．$A$を$y$座標が正の方とすると
+\begin{align}
+  A\Bigl(\dfrac{1}{3},\dfrac{2\sqrt{2}}{3}\Bigr) \label{eq:2}
+\end{align}
+となる．$\angle APO=\alpha$（$0<\alpha<\pi/2$）とすると
+\begin{align}
+  \tan\alpha=\dfrac{2\sqrt{2}/3}{2/3}=\sqrt{2} \label{eq:3}
+\end{align}
+である．
+
+$\angle OPQ=\theta$とおくと，$Q$，$R$の座標は
+\begin{align}
+  \begin{cases}
+    Q&=\Bigl(1-\dfrac{2}{\sqrt{3}}\cos\theta，\dfrac{2}{\sqrt{3}}\sin\theta\Bigr)，\\
+    R&=\Bigl(1-\dfrac{2}{\sqrt{3}}\cos(\theta-\pi/3)，
+    \dfrac{2}{\sqrt{3}}\sin(\theta-\pi/3)\Bigr)
+  \end{cases} \label{eq:4}
+\end{align}
+となる．これらの様子を下図に示す．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータの定義 ---
+    % C1: 原点 O(0,0), 半径 R1 = 1
+    % C2: 中心 P(1,0), 半径 R2 = 2/sqrt(3) ≈ 1.1547
+    % 交点 A, B: x = 1/3, y = ±2*sqrt(2)/3 ≈ ±0.9428
+    % \cos\alpha = 1/\sqrt{3} => \alpha ≈ 54.7356°
+    \def\Rone{1.0}
+    \pgfmathsetmacro{\Rtwo}{2.0 / sqrt(3)}       % 2/sqrt(3) ≈ 1.1547
+    \def\alphaDeg{54.7356}                       % \alpha
+    \pgfmathsetmacro{\angA}{180.0 - \alphaDeg}   % A の偏角 ≈ 125.2644°
+    \pgfmathsetmacro{\angB}{180.0 + \alphaDeg}   % B の偏角 ≈ 234.7356°
+
+    % 一般の \theta (例: \theta = 46° と設定，許容範囲 -\alpha+60° <= \theta <= \alpha を満たす)
+    \def\thetaDeg{46.0}
+    \pgfmathsetmacro{\angQ}{180.0 - \thetaDeg}                 % Q の偏角 (P基準): 134°
+    \pgfmathsetmacro{\angR}{180.0 - (\thetaDeg - 60.0)}        % R の偏角 (P基準): 194°
+
+    % 主要座標の定義
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (1, 0);
+    \coordinate (A) at (1.0/3.0, {2.0*sqrt(2)/3.0});
+    \coordinate (B) at (1.0/3.0, {-2.0*sqrt(2)/3.0});
+
+    % 一般の Q, R の座標
+    \coordinate (Q) at ($ (P) + (\angQ:\Rtwo) $);
+    \coordinate (R) at ($ (P) + (\angR:\Rtwo) $);
+
+    % --- 2. 単位円 C_1 内部に存在する許容弧 AB の強調 ---
+    \draw[line width=1.8pt, teal!80!black]
+    ([shift=(\angA:\Rtwo)]P) arc (\angA:\angB:\Rtwo);
+
+    % --- 3. 円 C_1, C_2 の全体描画 ---
+    % 単位円 C_1
+    \draw[thick, gray!75!black] (O) circle (\Rone);
+    \node[gray!75!black, font=\footnotesize, above left] at (-0.75, 0.75) {$C_1: x^2+y^2=1$};
+
+    % 円 C_2 (C_1 外部は薄い破線で表示)
+    \draw[thick, dashed, teal!50]
+    ([shift=(\angB:\Rtwo)]P) arc (\angB:{360+\angA}:\Rtwo);
+    \node[teal!85!black, font=\footnotesize, right] at ($ (P) + (35:\Rtwo) $) {$C_2: (x-1)^2+y^2=\dfrac{4}{3}$};
+
+    % --- 4. 座標軸 ---
+    \draw[->, thick] (-1.35, 0) -- (2.45, 0) node[right] {$x$};
+    \draw[->, thick] (0, -1.35) -- (0, 1.35) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 5. 正三角形 PQR（一般の \theta のとき）---
+    \fill[blue!15, opacity=0.7] (P) -- (Q) -- (R) -- cycle;
+    \draw[very thick, blue!85!black] (P) -- (Q) -- (R) -- cycle;
+
+    % 線分 OQ, OR
+    \draw[thick, densely dashed, blue!75!black] (O) -- (Q);
+    \draw[thick, densely dashed, blue!75!black] (O) -- (R);
+
+    % 正三角形の頂角 (60°)
+    \draw[thin, blue!90!black] ($ (P) + (\angQ:0.35) $) arc (\angQ:\angR:0.35);
+    \node[blue!90!black, font=\tiny, left=1pt] at ($ (P) + ({0.5*(\angQ+\angR)}:0.42) $) {$\dfrac{\pi}{3}$};
+
+    % --- 6. 角度 \alpha, \theta の表示 ---
+    % 線分 PA, PB
+    \draw[thick, gray!70] (P) -- (A);
+    \draw[thick, gray!70] (P) -- (B);
+
+    % \angle APO = \alpha (P を中心とする負の x 軸からの限界角)
+    \draw[thin, purple!80!black] ($ (P) + (180:0.52) $) arc (180:\angA:0.52);
+    \node[purple!90!black, font=\tiny] at ($ (P) + (155:0.60) $) {$\alpha$};
+
+    % \theta = \angle OPQ (一般角)
+    \draw[thin, orange!90!black] ($ (P) + (180:0.68) $) arc (180:\angQ:0.68);
+    \node[orange!90!black, font=\tiny] at ($ (P) + ({180 - 0.5*\thetaDeg}:0.78) $) {$\theta$};
+
+    % --- 7. 交点 A, B の座標射影補助線 ---
+    \draw[dotted, gray!70] (A) -- (1.0/3.0, 0) -- (B);
+    \draw[dotted, gray!70] (A) -- (0, {2.0*sqrt(2)/3.0});
+    \fill (1.0/3.0, 0) circle (0.5pt);
+    \node[below=2pt, font=\scriptsize] at (1.0/3.0, 0) {$\dfrac{1}{3}$};
+    \node[left=2pt, font=\tiny] at (0, {2.0*sqrt(2)/3.0}) {$\dfrac{2\sqrt{2}}{3}$};
+
+    % --- 8. 主要点のプロットとラベル ---
+    \fill (P) circle (0.7pt) node[below right=1pt] {$P(1,0)$};
+    \fill (A) circle (0.7pt) node[above=2pt] {$A\Bigl(\dfrac{1}{3}, \dfrac{2\sqrt{2}}{3}\Bigr)$};
+    \fill (B) circle (0.7pt) node[below=2pt] {$B$};
+    \fill[blue!85!black] (Q) circle (0.7pt) node[above left=1pt] {$Q$};
+    \fill[blue!85!black] (R) circle (0.7pt) node[below left=1pt] {$R$};
+    \fill (O) circle (0.6pt);
+
+  \end{tikzpicture}
+  \caption{円 $C_1, C_2$ の許容弧 $AB$ と一般の角 $\theta$ における正三角形 $PQR$}
+  \label{fig:circle_C1_C2_general_theta}
+\end{figure}
+
+さて，$Q,R$が単位円の内部または周上にある条件は
+\begin{align}
+  -\alpha\leqq\theta-\pi/3<\theta\leqq\alpha
+  \quad\Longleftrightarrow\quad
+  -\alpha+\pi/3\leqq\theta\leqq\alpha \label{eq:5}
+\end{align}
+である．以下簡単のために$c=\cos\theta$，$s=\sin\theta$とすると$|OQ|^2,|OR|^2$は
+\begin{align}
+  |OQ|^2
+  &=\Bigl(1-\dfrac{2}{\sqrt{3}}c\Bigr)^2
+  +\Bigl(\dfrac{2}{\sqrt{3}}s\Bigr)^2
+  =\dfrac{7}{3}-\dfrac{4}{\sqrt{3}}c，\label{eq:6}\\
+  |OR|^2&=\dfrac{7}{3}-\dfrac{4}{\sqrt{3}}\cos(\theta-\pi/3)
+  =\dfrac{7}{3}-\dfrac{4}{\sqrt{3}}\Bigl(\dfrac{1}{2}c+\dfrac{\sqrt{3}}{2}s\Bigr)．\label{eq:7}
+\end{align}
+である．従って$f(\theta)=|OQ|^2+|OR|^2$として\cref{eq:6,eq:7}を代入すると
+\begin{align}
+  f(\theta)=\dfrac{14}{3} - \dfrac{4\sqrt{3}}{3}\left(\dfrac{3}{2}c+\dfrac{\sqrt{3}}{2}s\right) = \dfrac{14}{3}-4\sin(\theta+\pi/3) \label{eq:8}
+\end{align}
+である．\cref{eq:5}より
+\begin{align}
+  -\alpha+2\pi/3\leqq\theta+\pi/3\leqq\alpha+\pi/3
+\end{align}
+であり，この区間は$\theta+\dfrac{\pi}{3}=\dfrac{\pi}{2}$を含む．
+よってこの時$\theta=\dfrac{\pi}{6}$で最小となり，
+最大値は区間の両端の値のうち大きい方である．
+最小値は
+\begin{align}
+  \min f=f\left(\dfrac{\pi}{6}\right) = \dfrac{14}{3}-4=\dfrac{2}{3}
+\end{align}
+である．また\cref{eq:3}から$\sin\alpha=\sqrt{2/3}$，$\cos\alpha=1/\sqrt{3}$なので
+\begin{align}
+  f(\alpha)&=\dfrac{14}{3}
+  -4\Bigl(\dfrac{1}{2}\sqrt{\dfrac{2}{3}}+\dfrac{\sqrt{3}}{2}\dfrac{1}{\sqrt{3}}\Bigr)
+  =\dfrac{2}{3}(4-\sqrt{6})，\\
+  f(\pi/3-\alpha)&=\dfrac{14}{3}-4\sin(2\pi/3-\alpha)
+  =\dfrac{2}{3}(4-\sqrt{6})
+\end{align}
+となり両端での値は同じで，これらが同時に最大値となる．
+
+以上から求める最大値と最小値は
+\begin{align}
+  \text{最大値 }\dfrac{2}{3}(4-\sqrt{6})，\qquad\text{最小値 }\dfrac{2}{3}
+\end{align}
+である．
+
+\newpage
+\end{document}

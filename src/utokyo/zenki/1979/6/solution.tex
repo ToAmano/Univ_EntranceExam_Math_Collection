@@ -1,0 +1,229 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+{\bf [解]}
+
+題意から三角形$P_nP_{n+1}P_{n+2}$はすべて辺の長さ$1,a,\sqrt{1+a^2}$の相似である．
+$\angle P_1P_0P_2=\alpha$，$\angle P_0P_1P_2=\beta$とする．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=4.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータの定義 ---
+    % a の値を設定（1 : a の比率がわかりやすい値として a = 1.35）
+    \def\aVal{1.35}
+
+    % P_0, P_1, P_2 の定義
+    \coordinate (P0) at (1, 0);
+    \coordinate (P1) at (0, \aVal);
+    \coordinate (P2) at (0, 0);
+
+    % P3: P2 から P0P1 への垂足
+    \coordinate (P3) at ($ (P0)!(P2)!(P1) $);
+    % P4: P3 から P1P2 (y軸) への垂足
+    \coordinate (P4) at ($ (P1)!(P3)!(P2) $);
+    % P5: P4 から P2P3 への垂足
+    \coordinate (P5) at ($ (P2)!(P4)!(P3) $);
+    % P6: P5 から P3P4 への垂足
+    \coordinate (P6) at ($ (P3)!(P5)!(P4) $);
+    % P7: P6 から P4P5 への垂足（収束方向の参考用）
+    \coordinate (P7) at ($ (P4)!(P6)!(P5) $);
+
+    % --- 2. 相似三角形の着色（第1世代と第2世代の対比） ---
+    % \triangle P_0 P_1 P_2
+    \fill[blue!8] (P0) -- (P1) -- (P2) -- cycle;
+    % \triangle P_4 P_5 P_6（180度逆向きに相似）
+    \fill[orange!25] (P4) -- (P5) -- (P6) -- cycle;
+
+    % --- 3. 骨格線・垂線の描画 ---
+    % 初期の直角三角形 P0P1P2
+    \draw[very thick, black] (P0) -- (P1) -- (P2) -- cycle;
+
+    % 垂線の軌跡 (P2 -> P3 -> P4 -> P5 -> P6 -> P7)
+    \draw[thick, blue!85!black] (P2) -- (P3) -- (P4) -- (P5) -- (P6) -- (P7);
+
+    % \triangle P_4P_5P_6 の斜辺 P4P5 以外の辺（補助線）
+    \draw[dashed, orange!90!black, thick] (P4) -- (P6);
+
+    % --- 4. 直角マーク (P2, P3, P4, P5, P6) ---
+    % P2: (0,0)
+    \draw[thin, gray!70] (0.06, 0) -- (0.06, 0.06) -- (0, 0.06);
+
+    % P3: P2-P3 ⊥ P0-P1
+    \coordinate (u3) at ($ (P1) - (P0) $);
+    \coordinate (v3) at ($ (P2) - (P3) $);
+    \draw[thin, gray!70]
+    ($ (P3) + 0.045*({-1/\aVal}, 1) $) --
+    ($ (P3) + 0.045*({-1/\aVal}, 1) + 0.045*(1, {1/\aVal}) $) --
+    ($ (P3) + 0.045*(1, {1/\aVal}) $);
+
+    % P4: P3-P4 ⊥ y軸
+    \draw[thin, gray!70] ($ (P4) + (0.05, 0) $) -- ($ (P4) + (0.05, -0.05) $) -- ($ (P4) + (0, -0.05) $);
+
+    % P5: P4-P5 ⊥ P2-P3
+    \draw[thin, gray!70]
+    ($ (P5) + 0.035*(1, {1/\aVal}) $) --
+    ($ (P5) + 0.035*(1, {1/\aVal}) + 0.035*({-1/\aVal}, 1) $) --
+    ($ (P5) + 0.035*({-1/\aVal}, 1) $);
+
+    % P6: P5-P6 ⊥ P3-P4
+    \draw[thin, gray!70] ($ (P6) + (0, 0.035) $) -- ($ (P6) + (-0.035, 0.035) $) -- ($ (P6) + (-0.035, 0) $);
+
+    % --- 5. 角度 \alpha, \beta の表示 ---
+    % \alpha = \angle P1 P0 P2
+    \draw[purple!85!black, thick] ($ (P0) + (180:0.18) $) arc (180:{180 - atan(\aVal)}:0.18);
+    \node[purple!90!black, font=\footnotesize] at ($ (P0) + (160:0.25) $) {$\alpha$};
+
+    % \beta = \angle P0 P1 P2
+    \draw[teal!85!black, thick] ($ (P1) + (-90:0.18) $) arc (-90:{atan(1/\aVal) - 90}:0.18);
+    \node[teal!90!black, font=\footnotesize] at ($ (P1) + (-70:0.26) $) {$\beta$};
+
+    % --- 6. 辺長ラベル ---
+    \node[below=2pt] at ($ (P2)!0.5!(P0) $) {$1$};
+    \node[left=2pt] at ($ (P2)!0.5!(P1) $) {$a$};
+    \node[above right=1pt] at ($ (P0)!0.5!(P1) $) {$\sqrt{a^2+1}$};
+
+    % --- 7. 主要点のプロットとラベル ---
+    \fill (P0) circle (0.6pt) node[below right=1pt] {$P_0(1,0)$};
+    \fill (P1) circle (0.6pt) node[above left=1pt] {$P_1(0,a)$};
+    \fill (P2) circle (0.6pt) node[below left=1pt] {$P_2(0,0)$};
+    \fill (P3) circle (0.5pt) node[above right=1pt] {$P_3$};
+    \fill (P4) circle (0.5pt) node[left=1pt] {$P_4$};
+    \fill (P5) circle (0.5pt) node[below=2pt] {$P_5$};
+    \fill[red!85!black] (P6) circle (0.6pt) node[above=2pt, red!85!black] {$P_6$};
+
+  \end{tikzpicture}
+  \caption{繰り返される垂線と相似な直角三角形の連鎖（$\triangle P_0P_1P_2$ と $\triangle P_4P_5P_6$）}
+  \label{fig:perpendicular_triangles}
+\end{figure}
+
+$x$軸を実軸，$y$軸を虚軸とする複素数平面で考える．
+簡単のために
+\begin{align}
+  e(\theta)=\cos\theta+i\sin\theta
+\end{align}
+とおく．
+ベクトル$\overrightarrow{P_nP_{n+1}}$を表す複素数を$q_n$とする．
+題意より
+\begin{align}
+  \begin{cases}
+    q_{2k+2}&=\dfrac{1}{\sqrt{a^2+1}}e(\pi-\beta)q_{2k+1}，\\
+    q_{2k+1}&=\dfrac{a}{\sqrt{a^2+1}}e(\pi-\alpha)q_{2k}
+  \end{cases} \label{eq:1}
+\end{align}
+だから$n$の偶奇にかかわらず
+\begin{align}
+  q_{n+2}=\dfrac{a}{a^2+1}e(\pi-\alpha)e(\pi-\beta)q_n \label{eq:2}
+\end{align}
+である．簡単のためにこの係数を
+\begin{align}
+  A=\dfrac{a}{a^2+1}e(\pi-\alpha)e(\pi-\beta) \label{eq:3}
+\end{align}
+とおくと，\cref{eq:2}を繰り返し用いて
+\begin{align}
+  q_{2k}=A^kq_0，\qquad q_{2k+1}=A^kq_1 \label{eq:3}
+\end{align}
+を得る．初期条件から
+\begin{align}
+  q_0=-1+ai，\qquad q_1=-ai． \label{eq:4}
+\end{align}
+だから\cref{eq:3}に代入すると
+\begin{align}
+  q_{2k}=A^k(-1+ai)，\qquad q_{2k+1}=A^k(-ai) \label{eq:5}
+\end{align}
+
+ついで$A$を具体的に計算する．$\alpha+\beta=\pi/2$に注意して
+\begin{align}
+  e(\pi-\alpha)e(\pi-\beta)
+  =e(2\pi-\alpha-\beta)=e(3\pi/2)=-i
+\end{align}
+だから，\cref{eq:2}に代入して
+\begin{align}
+  A=-ai/(a^2+1) \label{eq:6}
+\end{align}
+である．
+
+点$P_n$を表す複素数を$p_n$とすると，$n\geqq1$について
+\begin{align}
+  p_{2n}
+  &=p_0+\sum_{k=0}^{n-1}(q_{2k}+q_{2k+1})\\
+  &=1-\sum_{k=0}^{n-1}A^k \quad (\because \text{\cref{eq:5}}) \\
+  &=1-\dfrac{1-A^n}{1-A} \\
+  &=\dfrac{-A+A^n}{1-A} \label{eq:7}
+\end{align}
+\begin{align}
+  p_{2n+1}
+  &=p_{2n}+q_{2n}
+  =\dfrac{-A+A^n}{1-A}+A^n(-1+ai) \label{eq:8}
+\end{align}
+がなりたつ．
+
+\paragraph{(1)}
+$p_6$は\cref{eq:7}に$n=3$を代入して
+\begin{align}
+  \begin{split}
+    p_6&=\dfrac{-A+A^3}{1-A}=-(1+A)A\\
+    &=\dfrac{a^2}{(a^2+1)^2}+\dfrac{a}{a^2+1}i
+  \end{split}
+\end{align}
+となる．従って
+\begin{align}
+  P_6\Bigl(\dfrac{a^2}{(a^2+1)^2}，\dfrac{a}{a^2+1}\Bigr)
+\end{align}
+である．
+
+\paragraph{(2)}
+$|A|=\dfrac{a}{a^2+1}<1$であるから，$n\to\infty$では$A^n\to 0$である．
+従って\cref{eq:7,eq:8}より偶数番目，奇数番目ともに
+\begin{align}
+  \begin{split}
+    \lim_{n\to\infty}p_n
+    &= \dfrac{-A}{1-A}=\dfrac{ai}{a^2+1+ai}\\
+    &=\dfrac{a^2+a(a^2+1)i}{(a^2+1)^2+a^2}
+  \end{split}
+\end{align}
+となる．従って求める点は
+\begin{align}
+  \Bigl(\dfrac{a^2}{a^4+3a^2+1}，
+  \dfrac{a(a^2+1)}{a^4+3a^2+1}\Bigr)
+\end{align}
+である．
+
+{\bf [別解]}
+
+$\triangle P_0P_1P_2$と$\triangle P_4P_5P_6$は180度逆向きで相似比は
+$\bigl(a/(a^2+1)\bigr)^2$である．従って
+\begin{align}
+  \overrightarrow{P_6P_{10}}
+  =-\Bigl(\dfrac{a}{a^2+1}\Bigr)^2\overrightarrow{P_2P_6}．
+\end{align}
+同様に繰り返して，$k\geqq1$について
+\begin{align}
+  \overrightarrow{P_{4k-2}P_{4k+2}}
+  =\Bigl\{-\Bigl(\dfrac{a}{a^2+1}\Bigr)^2\Bigr\}^{k-1}
+  \overrightarrow{P_2P_6}
+\end{align}
+となる．ここで
+\begin{align}
+  \overrightarrow{P_2P_6}
+  =\Bigl(\dfrac{a^2}{(a^2+1)^2}，\dfrac{a}{a^2+1}\Bigr)
+\end{align}
+であるから
+\begin{align}
+  \begin{split}
+    \overrightarrow{P_2P_{4n+2}}
+    &=\sum_{k=1}^n
+    \Bigl\{-\Bigl(\dfrac{a}{a^2+1}\Bigr)^2\Bigr\}^{k-1}
+    \overrightarrow{P_2P_6}\\
+    &\longrightarrow\dfrac{1}{1+\bigl(a/(a^2+1)\bigr)^2}
+    \overrightarrow{P_2P_6}\\
+    &=\Bigl(\dfrac{a^2}{a^4+3a^2+1}，
+    \dfrac{a(a^2+1)}{a^4+3a^2+1}\Bigr)
+  \end{split}
+\end{align}
+となる．相似比から各辺$|P_nP_{n+1}|$は0に収束するので，
+残りの添字の点列も同じ点に収束する．
+
+\newpage
+\end{document}

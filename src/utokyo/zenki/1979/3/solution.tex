@@ -1,41 +1,62 @@
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\usepackage{emath}
-\usepackage{emathPp}
-\usepackage{cases}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1979$年$3$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\preEqlabel{$\cdots$}
-\begin{oframed}
-  $a$を正の整数とし，数列$\{u_n\}$を次のように定める．
-  \begin{align}
-    \begin{array}{llll}
-      u_1=2&u_2=a^2+2&u_n=au_{n-2}-u_{n-1}&n=3,4,5,\cdots
-    \end{array}
-  \end{align}
-  このとき，数列$\{u_n\}$の項に$4$の倍数が現れないために，$a$のみたすべき必要十分条件を求め
-  よ．
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}
+{\bf [解]}
 
-  \newpage
-\end{multicols}
+漸化式
+\begin{align}
+  \begin{cases}
+    u_1 = 2 \\
+    u_2 = a^2+2 \\
+    u_{n+2} = au_{n}-u_{n+1}
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．
+初めの4項は
+\begin{align}
+  u_1=2，\quad u_2=a^2+2，\quad u_3=2a-a^2-2，\quad
+  u_4=a^3+a^2+2 \label{eq:2}
+\end{align}
+となる．以下，合同式はすべて法4で考える
+\cref{eq:2}において$a\equiv1$のとき$u_4\equiv0$となるので不適である．
+従って$a\equiv0,2,-1$が必要である．以下各ケースについて個別に考える．
+
+\subparagraph{$a\equiv0$のとき．}
+
+すべての$n$について$u_n\not\equiv0$となることを数学的帰納法で示す．
+$n=1,2$では$u_1\equiv u_2\equiv2$である．
+そこで$k\in\mathbb{N}$に対して$n=k,k+1$での成立を仮定すれば，漸化式\cref{eq:1}から
+\begin{align}
+  u_{k+2}\equiv au_k - u_{k+1} \equiv -u_{k+1}\not\equiv0
+\end{align}
+となり，$n=k+2$でも成立する．従って数学的帰納法によりすべての$n$で$u_n\not\equiv0$であり，$4$の倍数でない．
+
+\subparagraph{$a\equiv2$のとき．}
+すべての$n$について$u_n\equiv2$となることを数学的帰納法で示す．
+$n=1,2$では\cref{eq:2}より成立する．
+そこで$k\in\mathbb{N}$に対して$n=k,k+1$での成立を仮定すれば，漸化式\cref{eq:1}から
+\begin{align}
+  u_{k+2} \equiv au_k - u_{k+1} \equiv 2u_k-u_{k+1}\equiv 4-2 \equiv 2
+\end{align}
+となり，$n=k+2$でも成立する．従って数学的帰納法によりすべての$n$で$u_n\equiv2$である．よって全ての$u_n$は$4$の倍数でない．
+
+\subparagraph{$a\equiv-1$のとき．}
+$u_n$は法4の剰余類で$(2,-1,-1)$の周期数列となることを数学的帰納法で示す．
+$n=1,2,3$では実際に$(u_1,u_2,u_3)\equiv(2,-1,-1)$である．
+ある$k\geqq1$について，$u_{3k-2},u_{3k-1},u_{3k}$での成立を仮定すると，漸化式から
+\begin{align}
+  u_{3k+1}&\equiv au_{3k-1} - u_{3k}   \equiv-(-1)-(-1)\equiv2，\\
+  u_{3k+2}&\equiv au_{3k}   - u_{3k+1} \equiv -2-(-1)\equiv-1，\\
+  u_{3k+3}&\equiv au_{3k+1} - u_{3k+2} \equiv -(-1)-2\equiv-1
+\end{align}
+となる．従って数学的帰納法により$(2,-1,-1)$の周期数列となり，$4$の倍数となる項は存在しない．
+\casesend
+
+以上より，必要十分条件は
+\begin{align}
+  a\equiv-1,0,2\pmod{4}
+\end{align}
+である．
+
+\newpage
 \end{document}

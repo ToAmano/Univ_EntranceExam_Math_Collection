@@ -1,98 +1,188 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} $P$ から $\alpha$ に下ろした垂足を $H$ とし，$PH = h$ とおく．又，球の中心を $O$ とする．$O, P$ を含む平面で切ると，対称性から右下図のようになる．ここで，$O$ を原点，$OP$ を $x$ 軸正方向とする $xy$ 平面を定める．右図のように $\theta$ を定める ($0 < \theta < \pi/2$)．又以下，$c = \cos\theta, s = \sin\theta$ とする．$P$ は，円の接線 $cx + sy = 1$ と $x$ 軸の交点で，$P\left(\dfrac{1}{c}, 0\right)$ となる．したがって
-\begin{align}
-  h = \dfrac{1}{c} - c \quad \dots \text{①}
-\end{align}
-であり，$D$ は斜線部分を $x$ 軸まわりに回転したもので，体積 $V_D$ として
-\begin{align}
-  V_D &= \dfrac{1}{3} \cdot \pi s^2 \cdot h - \pi \int_c^1 (1-x^2) \, dx \\
-  &= \dfrac{1}{3} \pi s^2 \Bigl(\dfrac{1}{c} - c\Bigr) - \pi \Bigl[ \dfrac{2}{3} - c + \dfrac{1}{3} c^3 \Bigr] \quad (\because \text{①}) \\
-  &= \dfrac{1}{3} \pi \Bigl[ \dfrac{s^2(1-c^2)}{c} + 3c - c^3 - 2 \Bigr] \\
-  &= \dfrac{1}{3}\pi \dfrac{c^2-2c+1}{c} \quad \dots \text{②}
-\end{align}
-これが球の体積の $\dfrac{1}{2}$ 倍にひとしいので，
-\begin{align}
-  & V_D = \dfrac{2}{3}\pi \\
-  \iff &\dfrac{c^2-2c+1}{c} = 2 \\
-  \iff &c = 2 - \sqrt{3} \quad (\because 0 < c < 1) \quad \dots \text{③}
-\end{align}
-となる．この時，$K$ の体積 $V_K$ は
-\begin{align}
-  V_K &= \int_c^1 (1-x^2) \cdot \pi \, dx \\
-  &= \dfrac{2}{3}\pi \Bigl(11 - 6\sqrt{3}\Bigr) \quad (\because \text{③})
-\end{align}
+$P$から$\alpha$に下ろした垂足を$H$とし，$|PH|=h$とおく．また球の中心を$O$とする．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.0, >=stealth]
-    % Upper 3D/2D cone figure
-    \begin{scope}[shift={(0,3.5)}]
-      \draw[thick] (0,-1.8) -- (-1.0,1.0);
-      \draw[thick] (0,-1.8) -- (1.0,1.0);
-      \draw[thick] (0,0) circle (0.8);
-      \draw[dashed] (0,0) ellipse (0.8 and 0.2);
-      \draw (-0.65,-0.35) -- (0.65,-0.35) node[right] {$\alpha$};
-      \draw[dashed] (0,0) -- (0,-1.8);
-      \fill (0,0) circle (1.2pt) node[above right] {$O$};
-      \fill (0,-0.35) circle (1.2pt) node[left] {$H$};
-      \fill (0,-1.8) circle (1.2pt) node[below] {$P$};
-    \end{scope}
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
 
-    % Lower 2D coordinate diagram
-    \begin{scope}[scale=1.5]
-      % Axes
-      \draw[->] (-0.3,0) -- (2.3,0) node[right] {$x$};
-      \draw[->] (0,-0.3) -- (0,1.3) node[above] {$y$};
-      \node[below left] at (0,0) {$O$};
+    % --- 1. 定数・幾何パラメータの定義 ---
+    % 球の中心 O を原点とする (半径 R = 1.0)
+    % 接点の高さ: z = cos\theta = 0.6
+    % 接円の半径: r_c = sin\theta = 0.8
+    % 頂点 P の高さ: z = -1 / cos\theta = -1 / 0.6 ≈ -1.667
+    % 視線角に応じた接円楕円の短軸スケール比: b = 0.22
+    \def\R{1.0}
+    \def\zH{-0.6}       % スケッチに合わせて P を下向き (-z 方向) に配置
+    \def\zP{-1.75}      % 頂点 P
+    \def\rH{0.8}        % 平面 \alpha における接円の半径
+    \def\bH{0.20}       % 楕円の短軸半径
 
-      % Shaded region D
-      % Fill between vertical line x=c, line SP, x-axis, and arc
-      \begin{scope}
-        \clip (0.6,0) -- (0.6,0.8) -- (2.0,0) -- cycle;
-        \fill[gray!30] (0.6,0) -- (0.6,0.8) -- (2.0,0) -- cycle;
-        \fill[white] (0,0) circle (1.0);
-      \end{scope}
-      % Hatch lines in shaded region
-      \begin{scope}
-        \clip (0.6,0) -- (0.6,0.8) -- (2.0,0) -- cycle;
-        \clip (0,0) circle (1.0) (2,2) -- (2,-2) -- (-2,-2) -- (-2,2) -- cycle;
-        \foreach \x in {0.5, 0.7, ..., 2.2} {
-          \draw[gray] (\x, -0.2) -- (\x+0.5, 1.2);
-        }
-      \end{scope}
+    % 座標定義
+    \coordinate (O) at (0, 0);          % 球の中心
+    \coordinate (H) at (0, \zH);        % 垂足（接円の中心）
+    \coordinate (P) at (0, \zP);        % 円錐の頂点
+    \coordinate (Q_L) at (-\rH, \zH);   % 接円の左端
+    \coordinate (Q_R) at (\rH, \zH);    % 接円の右端
 
-      % Circle arc
-      \draw[thick] (0,1) arc (90:0:1);
+    % --- 2. 円錐の母線（延長部を含む） ---
+    % P から接点 Q_L, Q_R を通って上方に広がる母線
+    \draw[thick, black] (P) -- ($ (P)!1.55!(Q_L) $);
+    \draw[thick, black] (P) -- ($ (P)!1.55!(Q_R) $);
 
-      % Tangent line SP: S=(0.6, 0.8), P=(2.0, 0)
-      \draw[thick] (-0.1, 1.2) -- (2.25, -0.143);
+    % --- 3. 球の輪郭線 ---
+    \draw[thick, black] (O) circle (\R);
 
-      % Vertical line x = c
-      \draw[dashed] (0.6,0) -- (0.6,0.8);
+    % --- 4. 平面 \alpha の接円（切り口の楕円） ---
+    % 奥側 (破線)
+    \draw[thick, dashed, teal!85!black]
+    (Q_R) arc (0:180:{\rH} and {\bH});
 
-      % Line OS
-      \draw (0,0) -- (0.6,0.8);
+    % 手前側 (実線)
+    \draw[thick, teal!85!black]
+    (Q_L) arc (180:360:{\rH} and {\bH});
 
-      % Angle theta
-      \draw (0.3,0) arc (0:53.13:0.3);
-      \node at (0.42,0.2) {$\theta$};
+    % --- 5. 中心軸・垂線 (O - H - P) ---
+    % 球内部・奥側を通るため破線で描画
+    \draw[dashed, gray!80!black, thick] (O) -- (P);
 
-      % Points and labels
-      \fill (0,0) circle (1pt);
-      \fill (0.6,0.8) circle (1pt) node[above left] {$S$};
-      \fill (2.0,0) circle (1pt) node[above right] {$P$};
-      \fill (0.6,0) circle (1pt) node[below] {$c$};
-      \fill (1,0) circle (1pt) node[below] {$1$};
-      \node at (0.8,0.3) {$H$};
-    \end{scope}
+    % --- 6. 主要点のプロット ---
+    \fill (O) circle (0.7pt);
+    \fill (H) circle (0.7pt);
+    \fill (P) circle (0.8pt) node[below=2pt] {$P$};
+
+    % --- 7. ラベル・引き出し線 ---
+    % 球の中心 O
+    \draw[<-, thin, gray!80!black] (0.02, 0.05) -- (0.5, 0.6)
+    node[above right, font=\footnotesize] {$O$};
+
+    % 垂足 H
+    \node[above right=1pt, font=\footnotesize] at (H) {$H$};
+
+    % 平面 \alpha (接円)
+    \draw[<-, thin, teal!85!black] (0.45, \zH - 0.12) -- (0.85, \zH - 0.18)
+    node[right, font=\footnotesize, teal!90!black] {$\alpha$};
+
   \end{tikzpicture}
-  \caption{切り口の3次元図と$xy$平面上の断面図}
+  \caption{円錐に内接する球と接円（平面 $\alpha$），および対称軸 $OP$ の3次元配置}
+  \label{fig:sphere_cone_3d}
 \end{figure}
 
+この立体を$O$，$P$を含む平面で切ると，切断面は対称性から下図のようになる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ定義 ---
+    % 説明図として見やすい角度: cos\theta = 0.6, sin\theta = 0.8 (\theta ≈ 53.13°)
+    \def\cVal{0.6}
+    \def\sVal{0.8}
+    \pgfmathsetmacro{\xP}{1.0 / \cVal} % 1 / cos\theta ≈ 1.6667
+    \def\thetaDeg{53.1301}
+
+    % 主要点の座標定義
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (\xP, 0);
+    \coordinate (Q) at (\cVal, \sVal);
+    \coordinate (Qprime) at (\cVal, -\sVal);
+    \coordinate (H) at (\cVal, 0);
+
+    % --- 2. 立体 D の断面（斜線ハッチング領域） ---
+    % 円錐の母線 PQ, PQ' と 球欠の弧 Q' -> (1,0) -> Q で囲まれた領域
+    \fill[pattern=north east lines, pattern color=blue!60, opacity=0.7]
+    (Q) -- (P) -- (Qprime) arc (-\thetaDeg:\thetaDeg:1) -- cycle;
+
+    % --- 3. 単位円（球の断面）の描画 ---
+    \draw[thick, gray!70] (O) circle (1);
+
+    % --- 4. 座標軸 ---
+    \draw[->, thick] (-1.25, 0) -- (2.05, 0) node[right] {$x$};
+    \draw[->, thick] (0, -1.25) -- (0, 1.35) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 5. 接線・母線および平面 \alpha (線分 QQ') ---
+    % 接線（円錐の母線）
+    \draw[very thick, red!85!black] ($ (P)!1.15!(Q) $) -- (P) -- ($ (P)!1.15!(Qprime) $);
+
+    % 平面 \alpha の断面 (直線 x = \cos\theta)
+    \draw[thick, dashed, teal!85!black] (\cVal, -1.15) -- (\cVal, 1.15)
+    node[above, font=\footnotesize] {平面 $\alpha: x = \cos\theta$};
+
+    % 半径 OQ
+    \draw[thick, gray!80!black] (O) -- (Q);
+
+    % --- 6. 直角マーク ---
+    % 接点 Q における接線と半径の垂直マーク (OQ ⊥ QP)
+    % 方向: OQ 方向 (\cVal, \sVal), QP 方向 (\cVal - \xP, \sVal)
+    \draw[gray!80!black]
+    ($ (Q) + (-0.06*\cVal, -0.06*\sVal) $) --
+    ($ (Q) + (-0.06*\cVal - 0.08*\sVal, -0.06*\sVal + 0.08*\cVal) $) --
+    ($ (Q) + (-0.08*\sVal, 0.08*\cVal) $);
+
+    % 垂足 H における垂直マーク
+    \draw[gray!80!black]
+    ($ (H) + (0.06, 0) $) -- ($ (H) + (0.06, 0.06) $) -- ($ (H) + (0, 0.06) $);
+
+    % --- 7. 角度 \theta ---
+    \draw[purple!80!black, thick] (0.28, 0) arc (0:\thetaDeg:0.28);
+    \node[purple!90!black, font=\footnotesize] at (0.42, 0.16) {$\theta$};
+
+    % --- 8. 主要点のプロットとラベル ---
+    \fill (O) circle (0.6pt);
+    \fill (P) circle (0.7pt) node[below right=1pt, red!85!black] {$P\Bigl(\dfrac{1}{\cos\theta}, 0\Bigr)$};
+    \fill (Q) circle (0.7pt) node[above right=1pt] {$Q(\cos\theta, \sin\theta)$};
+    \fill (Qprime) circle (0.7pt) node[below right=1pt] {$Q'$};
+    \fill (H) circle (0.7pt) node[below left=1pt] {$H(\cos\theta, 0)$};
+    \fill (1, 0) circle (0.6pt) node[below right=1pt, font=\scriptsize] {$1$};
+
+    % --- 9. 長さの寸法線 (高さ h = |PH|) ---
+    %\draw[<->, blue!85!black, thick] ($ (H) + (0, -0.22) $) -- ($ (P) + (0, -0.22) $)
+    %  node[midway, fill=white, inner sep=1pt, font=\scriptsize] {$h = \dfrac{1}{\cos\theta} - \cos\theta$};
+    \draw[dotted, gray!60] (H) -- ($ (H) + (0, -0.25) $);
+    \draw[dotted, gray!60] (P) -- ($ (P) + (0, -0.25) $);
+
+    % 半径 1 の注記
+    \node[gray!70!black, font=\scriptsize, above left] at ($ (O)!0.5!(Q) $) {$1$};
+
+  \end{tikzpicture}
+  \caption{球と円錐の対称軸を含む断面，および回転して立体 $D$ を得る領域（斜線部）}
+  \label{fig:sphere_cone_section}
+\end{figure}
+
+ここで$O$を原点，$OP$を$x$軸正方向とする座標平面を定め，接点を$Q$として$\angle POQ=\theta$とする．ただし$0<\theta<\dfrac{\pi}{2}$とする．
+
+$P$は円の接線$\cos\theta x+\sin\theta y=1$と$x$軸の交点だから，$P(1/\cos\theta,0)$となる．従って
+\begin{align}
+  |PH| = h = |OP| - |OH| =\dfrac{1}{\cos\theta}-\cos\theta \label{eq:1}
+\end{align}
+である．$D$は図の斜線部分を$x$軸のまわりに回転した立体であるから，その体積$V_D$は円錐から球欠を取り除いたもので
+\begin{align}
+  V_D
+  &=\dfrac{1}{3}\pi \sin^2\theta h-\pi\int_{\cos\theta}^{1}(1-x^2)\,dx\\
+  &=\dfrac{1}{3}\pi \sin^2\theta \Bigl(\dfrac{1}{\cos\theta}-\cos\theta\Bigr)
+  -\pi\Bigl[\dfrac{2}{3}-\cos\theta+\dfrac{1}{3}\cos^3\theta\Bigr]\\
+  &=\dfrac{\pi}{3}\Bigl[\dfrac{\sin^2\theta(1-\cos^2\theta)}{\cos\theta}+3\cos\theta-\cos^3\theta-2\Bigr]\\
+  &=\dfrac{\pi}{3}\dfrac{\cos^2\theta-2\cos\theta+1}{\cos\theta} \label{eq:2}
+\end{align}
+となる．
+これが球の体積の半分$\dfrac{2\pi}{3}$に等しいので，
+\begin{align}
+  V_D=\dfrac{2}{3}\pi
+  \quad\Longleftrightarrow\quad
+  \dfrac{\cos^2\theta-2\cos\theta+1}{c}=2
+  \quad\Longleftrightarrow\quad
+  \cos\theta=2-\sqrt{3}\qquad(0<\cos\theta<1) \label{eq:3}
+\end{align}
+となる．このとき$K$の体積$V_K$は
+\begin{align}
+  V_K=\pi\int_{\cos\theta}^{1}(1-x^2)\,dx
+  =\dfrac{2}{3}\pi\Bigl(11-6\sqrt{3}\Bigr)
+\end{align}
+である．
+
+\newpage
 \end{document}

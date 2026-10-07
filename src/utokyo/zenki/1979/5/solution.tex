@@ -1,88 +1,131 @@
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\usepackage{emath}
-\usepackage{emathPp}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1979$年$5$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  $t$を正の数とし，次の条件(A)，(B)によって定まる$x$の$3$次式を$f(x)$とする．
-  \begin{enumerate}[(A)]
-    \item 曲線$y=f(x)\cdots (1)$は直線$y=x\cdots (2)$の上の$2$点P$(-t,-t)$，O$(0,0)$を通る．
-    \item $f'(0)=0$，$f''(0)=2$
-  \end{enumerate}
-  さて，曲線(1)と曲線(2)との交点のうちで，$x$座標が最大のものをQとし，曲線(1)の点Oから点Qまでの部分と，
-  線分OQとで囲まれた領域の面積を$S(t)$とする．このとき$\dlim{t}{\infty}S(t)$を求めよ．
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]} 条件(A)から$a,\a\in\mathbb{R}$として，
-  \begin{align}
-    f(x)-x=a(x+t)x(x-\a) \\
-    f(x)=x(ax^2+a(t-\a)x-at\a+1)
-  \end{align}
-  と書ける．従って
-  \begin{align}
-    f'(x)&=3ax^2+2a(t-\a)x+(1-at\a)\\
-    f''(x)&=6ax+2a(t-\a)
-  \end{align}
-  となるので，条件(B)から，
-  \begin{align}
-    &
-    \begin{cases}
-      f'(0)=(1-at\a)=0 \\
-      f''(0)=2a(t-\a)=2
-    \end{cases}\\
-    \Longleftrightarrow
-    &
-    \begin{cases}
-      \a=\dfrac{t}{1+t} \\
-      a=\dfrac{t^2}{t+1}
-    \end{cases}
-  \end{align}
-  である．以上から，
-  \begin{align}
-    f(x)-x=\dfrac{t^2}{t+1}(x+t)x\left(x-\dfrac{t}{t+1}\right)
-  \end{align}
-  となる．$t>0$からグラフの概形は下図．ただし$d=t/(t+1)$とした．
+{\bf [解]}
 
-  \begin{zahyou}[ul=10mm](-2,2)(-2,2)
-    \def\Fx{2*X**3+X**2}
-    \def\Gx{X}
-    \YKouten\Fx\Gx{}{-0.5}\tmpxi\P
-    \YKouten\Fx\Gx{0.1}{}\tempxii\Q
-    \YGurafu*\Fx
-    \YGurafu*\Gx
-    \Put\P[syaei=x,xlabel=-t]{}
-    \Put\Q[syaei=x,xlabel=d]{}
-  \end{zahyou}
+$f(x)$は3次式であり，条件(B)から，$a\neq0$として
+\begin{align}
+  f''(x)=2ax+2 \label{eq:1}
+\end{align}
+と書ける．積分して条件$f'(0)=0$を用いると
+\begin{align}
+  f'(x)=ax^2+2x \label{eq:2}
+\end{align}
+だから，さらに積分して実数$b$を用いて
+\begin{align}
+  f(x)=\dfrac{a}{3}x^3+x^2+b \label{eq:3}
+\end{align}
+と書ける．
 
-  従って，
-  \begin{align}
-    S(t)&=\int_0^d(f(x)-x)\,dx \\
-    &=\int_0^d\left(\dfrac{t^2}{t+1}(x+t)x\left(x-\dfrac{t}{t+1}\right)\right)\,dx \\
-    &=\teisekibun{-\dfrac{t+1}{4t^2}x^4-\dfrac{1}{3}x^3+\dfrac{1}{2}x^2}{0}{d} \\
-    &=\dfrac{-1}{4}\left(\dfrac{1}{t}+\dfrac{1}{t^2}\right)d^4-\dfrac{1}{3}d^3+\dfrac{1}{2}d^2 \\
-    &\limit{t}{\infty}\dfrac{1}{2}-\dfrac{1}{3}=\dfrac{1}{6}
-  \end{align}
-  となる．$\cdots$(答)
+一方で条件(A)より$f(x)-x$は$x=-t$，$x=0$を根にもつので
+\begin{align}
+  &
+  \begin{cases}
+    f(-t)+t = 0 \\
+    f(0) = 0
+  \end{cases} \\
+  \therefore
+  &
+  \begin{cases}
+    -\dfrac{a}{3}t^3+t^2+t+b=0 \\
+    b=0
+  \end{cases} \\
+  \therefore
+  &
+  \begin{cases}
+    t\left(-\dfrac{a}{3}t^2+t+1\right) = 0 \\
+    b=0
+  \end{cases} \label{eq:4}
+\end{align}
+である．$t>0$から第一式は
+\begin{align}
+  a=\dfrac{3(t+1)}{t^2} \label{eq:5}
+\end{align}
+となる．以上\cref{eq:4,eq:5}より$f(x)$は
+\begin{align}
+  f(x) = \dfrac{a}{3}x^3+x^2 \label{eq:6}
+\end{align}
+であり，$f(x)-x$を$g(x)$とおくと
+\begin{align}
+  g(x)
+  &=f(x)-x \\
+  &=\dfrac{t+1}{t^2}x^3+x^2-x\\
+  &=\dfrac{1}{t^2}x(x+t)\Bigl((t+1)x-t\Bigr)
+\end{align}
+と因数分解できる．これを図示すると下図であり，求める面積$S(t)$は斜線部の領域の面積である．
 
-  \newpage
-\end{multicols}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.0, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・代表点のパラメータ定義 ---
+    % t = 1 のとき:
+    % a = 3*(1+1)/1^2 = 6  =>  f(x) = 2x^3 + x^2
+    % d = t/(t+1) = 1/2 = 0.5
+    % 交点: x = -1 (-t), x = 0 (原点), x = 0.5 (d)
+    \def\tVal{1.0}
+    \def\dVal{0.5}
+
+    % --- 2. 求める面積 S(t) のハッチング領域 (0 <= x <= d) ---
+    % 直線 y = x が上、曲線 y = f(x) が下
+    \fill[pattern=north east lines, pattern color=blue!60, opacity=0.7]
+    (0, 0) -- (\dVal, \dVal)
+    -- plot[domain=\dVal:0, samples=60] (\x, {2.0*\x*\x*\x + \x*\x})
+    -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-1.35, 0) -- (0.95, 0) node[right] {$x$};
+    \draw[->, thick] (0, -1.35) -- (0, 1.15) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 4. 直線 y = x ---
+    \draw[thick, orange!90!black, domain=-1.25:0.85]
+    plot (\x, {\x});
+    \node[orange!90!black, font=\footnotesize, above right] at (0.75, 0.75) {$y = x$};
+
+    % --- 5. 3次曲線 y = f(x) ---
+    \draw[very thick, blue!85!black, domain=-1.18:0.65, samples=100]
+    plot (\x, {2.0*\x*\x*\x + \x*\x});
+    \node[blue!85!black, font=\footnotesize, left] at (0.62, {2.0*0.62^3 + 0.62^2}) {$y = f(x)$};
+
+    % --- 6. 交点および射影補助線 ---
+    % (i) 交点 P(-t, -t)
+    \draw[dashed, gray!70] (-\tVal, 0) -- (-\tVal, -\tVal) -- (0, -\tVal);
+    \fill[red!80!black] (-\tVal, -\tVal) circle (0.7pt);
+    \node[above left=1pt, font=\footnotesize, red!80!black] at (-\tVal, -\tVal) {$P$};
+    \node[above=2pt, font=\scriptsize] at (-\tVal, 0) {$-t$};
+    \fill (-\tVal, 0) circle (0.5pt);
+
+    % (ii) 原点 O(0, 0)
+    \fill[black] (0, 0) circle (0.6pt);
+
+    % (iii) 交点 Q(d, d)
+    \draw[dashed, gray!70] (\dVal, 0) -- (\dVal, \dVal) -- (0, \dVal);
+    \fill[red!80!black] (\dVal, \dVal) circle (0.7pt);
+    \node[above left=1pt, font=\footnotesize, red!80!black] at (\dVal, \dVal) {$Q$};
+    \node[below=2pt, font=\scriptsize] at (\dVal, 0) {$d = \dfrac{t}{t+1}$};
+    \fill (\dVal, 0) circle (0.5pt);
+
+  \end{tikzpicture}
+  \caption{3次曲線 $y = f(x)$ と直線 $y = x$，および面積 $S(t)$ を与える領域（斜線部）}
+  \label{fig:cubic_line_area_St}
+\end{figure}
+
+簡単のために$d=t/(t+1)$とおくと求める面積$S(t)$は
+\begin{align}
+  S(t)
+  &=-\int_0^dg(x)\,dx\\
+  &=\Bigl[-\dfrac{t+1}{4t^2}x^4-\dfrac{1}{3}x^3+\dfrac{1}{2}x^2\Bigr]_0^d\\
+  &=-\dfrac{1}{4}\Bigl(\dfrac{1}{t}+\dfrac{1}{t^2}\Bigr)
+  \Bigl(\dfrac{1}{1+1/t}\Bigr)^4
+  -\dfrac{1}{3}\Bigl(\dfrac{1}{1+1/t}\Bigr)^3
+  +\dfrac{1}{2}\Bigl(\dfrac{1}{1+1/t}\Bigr)^2
+\end{align}
+となる．よって$t\to\infty$の極限をとって
+\begin{align}
+  \lim_{t\to\infty}S(t)=\dfrac{1}{2}-\dfrac{1}{3}=\dfrac{1}{6}
+\end{align}
+である．
+
+\newpage
 \end{document}
