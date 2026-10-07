@@ -225,6 +225,7 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 * 元の手書き図は TikZ で簡略化して再現する。厳密な形状の一致より、問題の理解を妨げない程度の忠実さを優先する。
 * 曲線や領域は `\draw[domain=...] plot` で近似し、塗りつぶし領域は `\fill[gray!15] plot ... -- cycle;` のようなパスで表現する。
 * 近接する2点のラベルは `node[above left]` / `node[below]` 等でアンカー位置を調整し、重ならないようにする（実際に本作業で座標が近い2点のラベルが重なる不具合が発生したため、要注意）。
+* **空間図形（立体・切断面など3次元の図）は通常の2次元 `tikzpicture` で無理に描かず，`tikz-3dplot`（3D TikZ）を使う**。`src/titech/zenki/1985/2/solution.tex` の記法に従うこと：`\begin{tikzpicture}` の直前に視点を `\tdplotsetmaincoords{65}{120}`（極角・方位角。手書きのスケッチに近い見え方になる角度を選ぶ）で設定し，`\begin{tikzpicture}[tdplot_main_coords, scale=1.5]` のオプションに `tdplot_main_coords` を指定する。座標は `\coordinate (A) at (x,y,z);` のように3成分で与え，`\draw[dashed, thick] ...` で隠れ線（奥の辺）を，`\draw[thick] ...` で見える辺を描き分ける。断面や領域は `\fill[red!25, opacity=0.6] (P1) -- (P2) -- (P3) -- cycle;` のように半透明で塗ると奥行きが分かりやすい。メインプリアンブル（`scratch/generate_main_tex.py` の `PREAMBLE`）側で `\tdplotsetmaincoords{70}{110}` を既定値として一度呼んでいるが（5節参照），個々の図でそれと異なる視点を使う場合は図の直前で明示的に呼び直すこと。
 
 ---
 
