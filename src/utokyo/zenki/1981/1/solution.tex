@@ -1,46 +1,68 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} $n$ 個から $2k$ 個をとり出し，これを $2$ つずつの組に分ける場合の数と同じである．
+題意のように2つの要素から成る$S$の部分集合を$k$個とり出し，そのうちのどの2つも交わりが空集合であるようにする方法について考える．この時，取り出した$2k$個がいずれも相異なるから，$S$の要素$n$ 個から $2k$ 個をとり出し，これを $2$ つずつの組に分ける場合の数と同じである．
 
-したがって，$n \ge 2k$ のもとで
+したがって，$n \ge 2k$ のもとで求める場合の数$f(n,k)$は
 \begin{align}
-  &\dfrac{{}_n\mathrm{C}_{2k} \cdot {}_{2k}\mathrm{C}_2 \cdot {}_{2k-2}\mathrm{C}_2 \cdots {}_4\mathrm{C}_2 \cdot {}_2\mathrm{C}_2}{k!} \\
+  f(n,k)
+  &= \dfrac{{}_n\mathrm{C}_{2k} \cdot {}_{2k}\mathrm{C}_2 \cdot {}_{2k-2}\mathrm{C}_2 \cdots {}_4\mathrm{C}_2 \cdot {}_2\mathrm{C}_2}{k!} \\
   &= \dfrac{\dfrac{n!}{2k!(n-2k)!} \cdot \dfrac{2k(2k-1)}{2} \dfrac{4\cdot 3}{2} \cdots \dfrac{2\cdot 1}{2}}{k!} \\
   &= \dfrac{n!}{k!(n-2k)!} \cdot \dfrac{1}{2^k} \quad \text{通り}
 \end{align}
-であり，$n < 2k$ の時は $0$ 通り．以上まとめて，
+である．
+一方で$n < 2k$ の時は $0$ 通りである．以上まとめて，
 \begin{align}
   f(n, k) =
   \begin{cases}
     \dfrac{n!}{(n-2k)! \cdot k!} \dfrac{1}{2^k} \, \text{通り} & (n \ge 2k) \\
     0 \, \text{通り} & (n < 2k)
-  \end{cases}
+  \end{cases} \label{eq:1}
 \end{align}
+である．
 
-次に，$f(n, k) = f(n, 1)$ について，$n \ge 2$ から $f(n, 1) \neq 0$ だから，$n \ge 2k$ のもとで考えれば良い．
+次に$f(n, k) = f(n, 1)$ について考える．
+$n \ge 2$ だから $f(n, 1) \neq 0$ だから，$n \ge 2k$ のもとで考えれば良い．
+\cref{eq:1}から
 \begin{align}
-  f(n, k) = f(n, 1) &\iff \dfrac{1}{2^k} \dfrac{n!}{k!(n-2k)!} = \dfrac{1}{2} \dfrac{n!}{(n-2)!} \\
+  f(n, k) = f(n, 1)
+  &\iff \dfrac{1}{2^k} \dfrac{n!}{k!(n-2k)!} = \dfrac{1}{2} \dfrac{n!}{(n-2)!} \\
   &\iff 2^{k-1} k! (n-2k)! = (n-2)! \\
-  &\iff 2^{k-1} = \dfrac{(n-2)(n-3) \dots (n+1-2k)}{k!} \quad \dots \text{①}
+  &\iff 2^{k-1} = \dfrac{(n-2)(n-3) \dots (n+1-2k)}{k!} \label{eq:2}
 \end{align}
-ここで，連続した整数は $k!$ で割り切れるから，$A \in \mathbb{N}$ として，
+である．
+ここで，連続した$p$個の整数は $p!$ で割り切れるから，
+$(n-2),\cdots,(n+1-2k)$は$\left\{(n-2)-(n+1-2k)+1\right\}!=(2k-2)!$で割り切れる．
+よって$A \in \mathbb{N}$ として，
 \begin{align}
   (n-2) \cdots (n+1-2k) = A(2k-2)!
 \end{align}
-とおける．①から
+とおける．
+\cref{eq:2}に代入して
 \begin{align}
-  \text{①} \iff 2^{k-1} = A \cdot (2k-2)(2k-3) \cdots (k+1) \quad \dots \text{②}
+  2^{k-1} = \dfrac{A(2k-2)!}{k!} = A \cdot (2k-2)(2k-3) \cdots (k+1) \label{eq:3}
 \end{align}
-同様に，$(2k-2) \dots (k+1)$ は $(k-2)!$ で割り切れるから，$k \ge 5$ の時 $2^{k-1}$ が $3$ で割り切れることになり不適．又，$k=2, 4$ の時は ②から，$2^{k-1}$ が各々 $3$ ($k=2$)，$5$ ($k=4$) で割り切れることになり不適．以上から $k=3$ が必要．この時①から，
+を得る．
+また同様に$(2k-2) \dots (k+1)$ は $(k-2)!$ で割り切れるから，$k \ge 5$ の時 $2^{k-1}$ が $3$ で割り切れることになり不適である．よって$k=2,3,4$のいずれかが必要である．
+
+\subparagraph{$k=2,4$の時}
+
+\cref{eq:3}の右辺に$k+1$が因数としてあるが，$k$が偶数の時$k+1$は奇数になる．
+よって$2^{k-1}$が奇数で割り切れることになり不適である．
+
+\subparagraph{$k=3$の時}
+
+\cref{eq:2}に直接$k=3$を代入すると
 \begin{align}
-  3 \cdot 2 \cdot 2^2 &= (n-2) \cdots (n-5) \\
-  1 \cdot 2 \cdot 3 \cdot 4 &= (n-2) \cdots (n-5)
+  2^2 &= \dfrac{(n-2)(n-3)(n-4)(n-5)}{3!} \\
+  \therefore
+  24  &= (n-2)(n-3)(n-4)(n-5)
 \end{align}
-となり，$n=6$ とすれば十分．以上から，もとめるのは $(n, k) = (6, 3)$ である．
+となり，これを満たすのは$n=6$のみである．
+\casesend
+
+以上から，求める$(n,k)$の組は $(n, k) = (6, 3)$ である．
 
 \end{document}

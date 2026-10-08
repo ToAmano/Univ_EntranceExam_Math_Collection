@@ -1,79 +1,185 @@
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1981$年$3$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  放物線$y=x^2$を$C$で表す．$C$上の点$Q$を通り，$Q$における$C$の接線に垂直な直線
-  を，$Q$における$C$の接線という．$0\le t\le1$とし，つぎの$3$条件をみたす点$P$を考える．
-  \begin{itemize}
-    \item[(イ)] $C$上の点$Q(t,t^2)$における$C$の法線上にある．
-    \item[(ロ)] 領域$y\ge x^2$に含まれる．
-    \item[(ハ)] $P$と$Q$の距離は$(t-t^2)\sqrt{1+4t^2}$である．
-  \end{itemize}
-  $t$が$0$から$1$まで嚥下する時，$P$の描く曲線を$C'$とする．このとき，$C$と$C'$とで囲ま
-  れた部分の面積を求めよ．
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}$(x^2)'=2x$だから，$Q$での法線方向のベクトル$\vec{l}$は，
-  \[\vec{l}=\vtwo{-2t}{1}\]
-  と書ける．故に$P(X,Y)$は
-  \[\vtwo{X}{Y}=\vtwo{t}{t^2}+s\vtwo{-2t}{1}\]
-  と書ける．(ハ)の条件から，
-  \begin{align}
-    &\left|s\vtwo{-2t}{1}\right|=(t-t^2)\sqrt{1+4t^2} \\
-    \Longleftrightarrow &s=\pm(t-t^2)
-  \end{align}
-  である．条件(ロ)から複合正をとって，
-  \[\vtwo{X}{Y}=\vtwo{t}{t^2}+(t-t^2)\vtwo{-2t}{1}\]
-  である．従って
-  \begin{align}
-    C:
-    &
-    \begin{cases}
-      X=2t^3-2t^2+t \\
-      Y=t
-    \end{cases} \\
-    \Longleftrightarrow
-    &X=2Y^3-2Y^2+Y&(0\le Y\le 1)
-  \end{align}
-  である．図示して右上図．
-  \begin{center}
-    \scalebox{.7}{\input{ut-81-3p}}
-  \end{center}
+{\bf[解]}
 
-  故に求める面積$S$は，上のように$S_1$，$S_2$をおいて，
-  \begin{align}
-    S=1-S_1-S_2\label{1}
-  \end{align}
-  と書ける．各項計算して
-  \begin{align}
-    S_1&=\int_0^1x^2dx=\dfrac{1}{3} \\
-    S_2&=\int_0^1(2Y^3-2Y^2+Y)dY \\
-    =&\left[\dfrac{Y^4}{2}-\dfrac{2Y^3}{3}+\dfrac{Y^2}{2}\right]_0^1 \\
-    =&\dfrac{1}{3}
-  \end{align}
-  であるから，\eqref{1}に代入して
-  \[S=\dfrac{1}{3}\]
-  である．$\cdots$(答)
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.8, >=stealth, every node/.style={font=\small}]
 
-  \newpage
-\end{multicols}
+    % --- 1. 定数・パラメータ定義 ---
+    % 視認性の良い t の値 (0 < t < 1 の範囲で t = 0.55 を採用)
+    \def\tVal{0.55}
+    \pgfmathsetmacro{\xQ}{\tVal}
+    \pgfmathsetmacro{\yQ}{\tVal*\tVal}                       % t^2 = 0.3025
+    \pgfmathsetmacro{\sVal}{\tVal - \tVal*\tVal}             % s = t - t^2 = 0.2475
+    \pgfmathsetmacro{\xP}{\xQ - 2.0*\tVal*\sVal}             % X = t - 2t(t-t^2) ≈ 0.2778
+    \pgfmathsetmacro{\yP}{\yQ + \sVal}                       % Y = t^2 + (t-t^2) = t = 0.5500
+
+    \coordinate (O) at (0, 0);
+    \coordinate (Q) at (\xQ, \yQ);
+    \coordinate (P) at (\xP, \yP);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick] (-0.3, 0) -- (1.3, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.2) -- (0, 1.35) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 放物線 y = x^2 ---
+    \draw[very thick, black, domain=-0.25:1.12, samples=80]
+    plot (\x, {\x*\x});
+    \node[black, font=\footnotesize, above right=6pt] at (0.95, 0.95*0.95) {$y = x^2$};
+
+    % --- 5. 接線 (傾き 2t) ---
+    % 接線: y - yQ = 2t(x - xQ)
+    \draw[thick, gray!70, domain=0.2:0.9]
+    plot (\x, {\yQ + 2.0*\tVal*(\x - \xQ)});
+    % \node[gray!70!black, font=\scriptsize, below right] at (0.85, {\yQ + 2.0*\tVal*(0.85 - \xQ)}) {接線};
+
+    % --- 6. 法線および法線ベクトル \vec{l} ---
+    % 法線全体 (直線)
+    \draw[thick, blue!80!black]
+    ($ (Q)!-0.35!(P) $) -- ($ (Q)!1.45!(P) $) node[above left, font=\footnotesize] {法線};
+
+    % 線分 PQ (太線で強調)
+    \draw[line width=1.8pt, orange!90!black] (Q) -- (P);
+
+    % 点 Q を始点とする法線ベクトル \vec{l}
+    \coordinate (VecL) at ($ (Q) + 0.35*(-2.0*\tVal, 1.0) $);
+    \draw[->, very thick, red!85!black] (Q) -- (VecL)
+    node[below left=1pt, font=\scriptsize] {$\vec{l} =
+      \begin{pmatrix} -2t \\ 1
+    \end{pmatrix}$};
+
+    % 直角マーク (接線 ⊥ 法線)
+    % 接線方向単位ベクトル (1, 2t)/sqrt(1+4t^2), 法線方向 (-2t, 1)/sqrt(1+4t^2)
+    \pgfmathsetmacro{\lenNorm}{sqrt(1.0 + 4.0*\tVal*\tVal)}
+    \pgfmathsetmacro{\dxT}{0.06 / \lenNorm}
+    \pgfmathsetmacro{\dyT}{0.06 * 2.0*\tVal / \lenNorm}
+    \pgfmathsetmacro{\dxN}{-0.06 * 2.0*\tVal / \lenNorm}
+    \pgfmathsetmacro{\dyN}{0.06 / \lenNorm}
+    \draw[thin, gray!70]
+    ($ (Q) + (\dxT, \dyT) $) --
+    ($ (Q) + (\dxT + \dxN, \dyT + \dyN) $) --
+    ($ (Q) + (\dxN, \dyN) $);
+
+    % --- 7. 座標補助線 ---
+    \draw[dashed, gray!80!black] (\xQ, 0) -- (Q) -- (0, \yQ);
+    \fill (\xQ, 0) circle (0.4pt) node[below=2pt, font=\scriptsize] {$t$};
+    \fill (0, \yQ) circle (0.4pt) node[left=2pt, font=\scriptsize] {$t^2$};
+
+    % --- 8. 主要点のプロットとラベル ---
+    \fill[black] (Q) circle (0.7pt) node[below right=1pt] {$Q(t, t^2)$};
+    \fill[orange!90!black] (P) circle (0.8pt) node[above right=1pt, orange!90!black] {$P(X, Y)$};
+
+    % 長さ |PQ| の寸法表示
+    \draw[<->, orange!90!black, thin]
+    ($ (Q) + (0.05, 0.03) $) -- ($ (P) + (0.05, 0.03) $)
+    node[midway, right=1pt, font=\tiny] {$|\overrightarrow{PQ}| = (t-t^2)\sqrt{1+4t^2}$};
+
+    % 条件 y >= x^2 の領域注記
+    \node[gray!60!black, font=\scriptsize] at (0.12, 0.95) {$y \ge x^2$};
+
+  \end{tikzpicture}
+  \caption{放物線 $y = x^2$ 上の点 $Q(t, t^2)$ における法線と動点 $P$}
+  \label{fig:parabola_normal_vector_P}
+\end{figure}
+
+$(x^2)'=2x$だから，$Q$での法線方向のベクトル$\vec{l}$は，
+\begin{align}
+  \vec{l}=
+  \begin{pmatrix} -2t \\ 1
+  \end{pmatrix} \label{eq:1}
+\end{align}
+と書ける．故に法線上の点$P(X,Y)$は
+\begin{align}
+  \begin{pmatrix} X \\ Y
+  \end{pmatrix}=
+  \begin{pmatrix} t \\ t^2
+  \end{pmatrix}+s
+  \begin{pmatrix} -2t \\ 1
+  \end{pmatrix} \label{eq:2}
+\end{align}
+と書ける．
+この時
+\begin{align}
+  |\overrightarrow{PQ}| = |s|\sqrt{4t^2+1} \label{eq:3}
+\end{align}
+である．従って(ハ)の条件から，
+\begin{align}
+  &\left|s
+  \begin{pmatrix} -2t \\ 1
+  \end{pmatrix}\right|=(t-t^2)\sqrt{1+4t^2} \\
+  \Longleftrightarrow &s=\pm(t-t^2) \label{eq:4}
+\end{align}
+である．ただし条件(ロ)から$s>0$だから絶対値を外した．
+
+\cref{eq:4}を\cref{eq:2}に代入して，$P$は
+\begin{align}
+  \begin{pmatrix} X \\ Y
+  \end{pmatrix}
+  =
+  \begin{pmatrix} t \\ t^2
+  \end{pmatrix}+(t-t^2)
+  \begin{pmatrix} -2t \\ 1
+  \end{pmatrix}
+\end{align}
+で表されるパラメータ曲線のうち$y\ge x^2$の部分を動く．
+$t$を消去して
+\begin{align}
+  X=2Y^3-2Y^2+Y \quad (0\le Y\le 1)
+\end{align}
+である．グラフの概形は下図のようになる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 求める面積 S の斜線ハッチング領域 (0 <= y <= 1) ---
+    % x の範囲: 左側が x = f(y) = 2y^3 - 2y^2 + y, 右側が x = sqrt(y)
+    \fill[pattern=north east lines, pattern color=blue!60, opacity=0.7]
+    plot[domain=0:1, samples=60, variable=\y] ({2.0*\y*\y*\y - 2.0*\y*\y + \y}, {\y})
+    -- plot[domain=1:0, samples=60, variable=\y] ({sqrt(\y)}, {\y})
+    -- cycle;
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick] (-0.2, 0) -- (1.35, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.2) -- (0, 1.45) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 3. 曲線 y = x^2 (x = \sqrt{y}) ---
+    \draw[very thick, black, domain=-0.2:1.15, samples=80]
+    plot (\x, {\x*\x});
+    \node[black, font=\footnotesize, above right] at (0.8, 1.18) {$y = x^2$};
+
+    % --- 4. 曲線 x = f(y) = 2y^3 - 2y^2 + y ---
+    \draw[very thick, blue!85!black, domain=0:1.08, samples=80, variable=\y]
+    plot ({2.0*\y*\y*\y - 2.0*\y*\y + \y}, {\y});
+
+    % --- 5. 点 (1, 1) と座標補助線 ---
+    \draw[dashed, gray!70] (1, 0) -- (1, 1) -- (0, 1);
+    \fill (1, 1) circle (0.6pt);
+    \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
+    \node[left=2pt, font=\scriptsize] at (0, 1) {$1$};
+
+    % --- 6. ラベル・引き出し線 ---
+    % 曲線 f(y) への引き出し線（手書き図の配置に準拠）
+    \draw[<-, thin, blue!85!black] (0.28, 0.42) to[bend right=20] (0.42, 0.15)
+    node[right, font=\footnotesize, blue!90!black] {$x = f(y)$};
+
+  \end{tikzpicture}
+  \caption{放物線 $y = x^2$ と曲線 $x = f(y)$，および囲まれた領域の面積 $S$（斜線部）}
+  \label{fig:parabola_normal_locus_area}
+\end{figure}
+
+求める面積$S$は上図の斜線部で，
+\begin{align}
+  S
+  &= \int_{0}^{1} \left(\sqrt{y}-f(y)\right) dy \\
+  &= \left[\dfrac{2}{3}y^{3/2}-\dfrac{1}{2}y^4+\dfrac{2}{3}y^3-\dfrac{1}{2}y^2\right]_{0}^{1} \\
+  &= \dfrac{1}{3}
+\end{align}
+である．$\cdots$(答)
+
+\newpage
 \end{document}

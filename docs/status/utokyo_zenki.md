@@ -120,12 +120,12 @@
 | 1980年 | 第4問 | finish | finish | あり | 完了 |
 | 1980年 | 第5問 | finish | finish | あり | 完了 |
 | 1980年 | 第6問 | finish | finish | あり | 完了 |
-| 1981年 | 第1問 | finish | 文字起こし済 | あり | 未完成 |
-| 1981年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
+| 1981年 | 第1問 | finish | finish | あり | 完了 |
+| 1981年 | 第2問 | finish | finish | あり | 完了 |
 | 1981年 | 第3問 | finish | finish | あり | 完了 |
-| 1981年 | 第4問 | finish | 文字起こし済 | あり | 未完成 |
-| 1981年 | 第5問 | finish | 文字起こし済 | あり | 未完成 |
-| 1981年 | 第6問 | finish | 文字起こし済 | あり | 未完成 |
+| 1981年 | 第4問 | finish | finish | あり | 完了 |
+| 1981年 | 第5問 | finish | finish | あり | 完了 |
+| 1981年 | 第6問 | finish | finish | あり | 完了 |
 | 1982年 | 第1問 | finish | unfinish | あり | 未完成 |
 | 1982年 | 第2問 | finish | finish | あり | 完了 |
 | 1982年 | 第3問 | finish | finish | あり | 完了 |

@@ -1,42 +1,7 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-{\bf [解]} 正六角形の一辺の長さは $1$ であり，三角形ができる時，その面積は
-\begin{enumerate}
-  \item[$1^\circ$] $A_1 A_2 A_6$ 形 $\dots \dfrac{\sqrt{3}}{4}$
-  \item[$2^\circ$] $A_1 A_2 A_5$ 形 $\dots \dfrac{\sqrt{3}}{2}$
-  \item[$3^\circ$] $A_1 A_3 A_5$ 形 $\dots \dfrac{3}{4}\sqrt{3}$
-\end{enumerate}
-のいずれかである．$3$ つの頂点のえらび方 $6^3$ 通りが同様にたしからしい．以下，$1$ つ目に $A_1$ がえらばれたとして
-
-$1^\circ$ の時
-\begin{quote}
-  どの点が頂点になるかで $2 \times 3 = 6$ 通り
-\end{quote}
-
-$2^\circ$ の時
-\begin{quote}
-  $1$ つの頂点に対し，のこりの頂点が $2$ 通りあるから
-  \begin{align}
-    4 \times 2 + 2 \times 2 = 12 \text{ 通り}
-  \end{align}
-\end{quote}
-
-$3^\circ$ の時
-\begin{quote}
-  $2$ 通り
-\end{quote}
-
-だから，これらの $6$ 倍ずつえらび方があるので，もとめる期待値として
-\begin{align}
-  E &= \dfrac{6}{36} \cdot \dfrac{\sqrt{3}}{4} + \dfrac{12}{36} \cdot \dfrac{\sqrt{3}}{2} + \dfrac{2}{36} \cdot \dfrac{3}{4}\sqrt{3} \\
-  &= \dfrac{\sqrt{3}}{36} \Bigl( \dfrac{3}{2} + 6 + \dfrac{3}{2} \Bigr) \\
-  &= \dfrac{\sqrt{3}}{4}
-\end{align}
+{\bf [解]}
 
 \begin{figure}[htb]
   \centering
@@ -65,5 +30,167 @@ $3^\circ$ の時
   \end{tikzpicture}
   \caption{正六角形 $A_1 \dots A_6$ と対角線}
 \end{figure}
+
+題意から正六角形の一辺の長さは $1$ である．
+三角形ができる時の形は以下の$3$つのパターンに分けられる．
+\begin{enumerate}
+  \item[$1^\circ$] $A_1 A_2 A_6$ 形, 面積 $\dfrac{\sqrt{3}}{4}$
+  \item[$2^\circ$] $A_1 A_2 A_5$ 形, 面積 $\dfrac{\sqrt{3}}{2}$
+  \item[$3^\circ$] $A_1 A_3 A_5$ 形, 面積 $\dfrac{3}{4}\sqrt{3}$
+\end{enumerate}
+のいずれかである．
+一つづつ順番に頂点を選んで，順番まで考慮して考えることとすると，$3$ つの頂点のえらび方 $6^3$ 通りが同様にたしからしいことに注意する．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
+
+    % --- 共通マクロ: 正六角形の輪郭と頂点座標の定義 ---
+    % 半径 R = 1.6
+    \def\R{1.6}
+
+    % =========================================================
+    % パターン 1: A1 A2 A6 形 (二等辺三角形, 面積 \sqrt{3}/4)
+    % =========================================================
+    \begin{scope}[shift={(0, 0)}]
+      % 頂点定義 (A1: 90°, A2: 30°, A3: -30°, A4: -90°, A5: -150°, A6: 150°)
+      \foreach \i/\ang in {1/90, 2/30, 3/-30, 4/-90, 5/-150, 6/150} {
+        \coordinate (A\i) at (\ang:\R);
+      }
+
+      % 正六角形の外枠
+      \draw[thick, gray!60] (A1) -- (A2) -- (A3) -- (A4) -- (A5) -- (A6) -- cycle;
+
+      % 対象三角形 \triangle A1 A2 A6
+      \fill[blue!15] (A1) -- (A2) -- (A6) -- cycle;
+      \draw[very thick, blue!85!black] (A1) -- (A2) -- (A6) -- cycle;
+
+      % 頂点プロットとラベル
+      \foreach \i/\pos in {1/above, 2/above right, 3/right, 4/below, 5/left, 6/above left} {
+        \fill (A\i) circle (0.6pt) node[\pos=1pt, font=\scriptsize] {$A_{\i}$};
+      }
+      \fill[red!85!black] (A1) circle (0.9pt);
+      \fill[blue!85!black] (A2) circle (0.8pt);
+      \fill[blue!85!black] (A6) circle (0.8pt);
+
+      % パターン名と面積
+      \node[align=center, font=\footnotesize\bfseries] at (0, -\R - 0.5)
+      {$1^\circ$: $A_1A_2A_6$ 型\\[2pt]
+      \normalfont\footnotesize 面積: $\dfrac{\sqrt{3}}{4}$};
+    \end{scope}
+
+    % =========================================================
+    % パターン 2: A1 A2 A5 形 (直角三角形, 面積 \sqrt{3}/2)
+    % =========================================================
+    \begin{scope}[shift={(4.2, 0)}]
+      \foreach \i/\ang in {1/90, 2/30, 3/-30, 4/-90, 5/-150, 6/150} {
+        \coordinate (B\i) at (\ang:\R);
+      }
+
+      % 正六角形の外枠
+      \draw[thick, gray!60] (B1) -- (B2) -- (B3) -- (B4) -- (B5) -- (B6) -- cycle;
+
+      % 対象三角形 \triangle A1 A2 A5
+      \fill[orange!20] (B1) -- (B2) -- (B5) -- cycle;
+      \draw[very thick, orange!90!black] (B1) -- (B2) -- (B5) -- cycle;
+
+      % 直角マーク (∠A1 A2 A5 = 90°)
+      % A2-A1 方向と A2-A5 方向
+      \coordinate (u) at ($ (B1) - (B2) $);
+      \coordinate (v) at ($ (B5) - (B2) $);
+      \draw[thin, gray!70]
+      ($ (B2) + 0.16*(0, 1) $) --
+      ($ (B2) + 0.16*(0, 1) + 0.16*({-sqrt(3)/2}, -0.5) $) --
+      ($ (B2) + 0.16*({-sqrt(3)/2}, -0.5) $);
+
+      % 頂点プロットとラベル
+      \foreach \i/\pos in {1/above, 2/above right, 3/right, 4/below, 5/left, 6/above left} {
+        \fill (B\i) circle (0.6pt) node[\pos=1pt, font=\scriptsize] {$A_{\i}$};
+      }
+      \fill[red!85!black] (B1) circle (0.9pt);
+      \fill[orange!90!black] (B2) circle (0.8pt);
+      \fill[orange!90!black] (B5) circle (0.8pt);
+
+      % パターン名と面積
+      \node[align=center, font=\footnotesize\bfseries] at (0, -\R - 0.5)
+      {$2^\circ$: $A_1A_2A_5$ 型\\[2pt]
+      \normalfont\footnotesize 面積: $\dfrac{\sqrt{3}}{2}$};
+    \end{scope}
+
+    % =========================================================
+    % パターン 3: A1 A3 A5 形 (正三角形, 面積 3\sqrt{3}/4)
+    % =========================================================
+    \begin{scope}[shift={(8.4, 0)}]
+      \foreach \i/\ang in {1/90, 2/30, 3/-30, 4/-90, 5/-150, 6/150} {
+        \coordinate (C\i) at (\ang:\R);
+      }
+
+      % 正六角形の外枠
+      \draw[thick, gray!60] (C1) -- (C2) -- (C3) -- (C4) -- (C5) -- (C6) -- cycle;
+
+      % 対象三角形 \triangle A1 A3 A5
+      \fill[teal!20] (C1) -- (C3) -- (C5) -- cycle;
+      \draw[very thick, teal!85!black] (C1) -- (C3) -- (C5) -- cycle;
+
+      % 頂点プロットとラベル
+      \foreach \i/\pos in {1/above, 2/above right, 3/right, 4/below, 5/left, 6/above left} {
+        \fill (C\i) circle (0.6pt) node[\pos=1pt, font=\scriptsize] {$A_{\i}$};
+      }
+      \fill[red!85!black] (C1) circle (0.9pt);
+      \fill[teal!85!black] (C3) circle (0.8pt);
+      \fill[teal!85!black] (C5) circle (0.8pt);
+
+      % パターン名と面積
+      \node[align=center, font=\footnotesize\bfseries] at (0, -\R - 0.5)
+      {$3^\circ$: $A_1A_3A_5$ 型\\[2pt]
+      \normalfont\footnotesize 面積: $\dfrac{3\sqrt{3}}{4}$};
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{正六角形の3頂点を選んで作られる三角形の3パターンとその面積}
+  \label{fig:hexagon_triangles_3patterns}
+\end{figure}
+
+以下 $1$ つ目に $A_1$ がえらばれたとして残りの二つの頂点の場合の数を数える．
+
+\subparagraph{$1^\circ$ の時}
+
+$A_1$を頂点に含み，$\triangle A_1 A_2 A_6$と相似なのは
+他に$\triangle A_1A_2A_3, \triangle A_1A_5A_6$の合計$3$つである．
+各三角形について二番目に頂点を選んだら三番目の頂点は決定するので，
+どの頂点を二番目に選ぶかを考えれば，場合の数は
+\begin{align}
+  2 \times 3 = 6 \text{通り} \label{eq:1}
+\end{align}
+である．
+
+\subparagraph{$2^\circ$ の時}
+
+$A_1$を頂点に含み，$\triangle A_1 A_2 A_5$と相似なのは
+他に$\triangle A_1A_2A_4, \triangle A_1A_6A_3, \triangle A_1A_6A_4, \triangle A_1A_3A_4, \triangle A_1A_5A_4$の合計$6$つである．
+従って場合の数は
+\begin{align}
+  2 \times 6 = 12 \text{通り} \label{eq:2}
+\end{align}
+である．
+
+\subparagraph{$3^\circ$ の時}
+
+このパターンの三角形で$A_1$を頂点に含むのは一通りしかないので，場合の数は
+\begin{align}
+  2 \text{通り} \label{eq:3}
+\end{align}
+である．
+\casesend
+
+\cref{eq:1,eq:2,eq:3}をまとめて，かつ一つ目に選ぶ頂点は$A_1,\cdots,A_6$のどれでも良いのでこれらの$6$ 倍ずつえらび方がある．
+よってもとめる面積の期待値は
+\begin{align}
+  E
+  &= \dfrac{6}{36} \cdot \dfrac{\sqrt{3}}{4} + \dfrac{12}{36} \cdot \dfrac{\sqrt{3}}{2} + \dfrac{2}{36} \cdot \dfrac{3}{4}\sqrt{3} \\
+  &= \dfrac{\sqrt{3}}{36} \Bigl( \dfrac{3}{2} + 6 + \dfrac{3}{2} \Bigr) \\
+  &= \dfrac{3\sqrt{3}}{4}
+\end{align}
+である．
 
 \end{document}
