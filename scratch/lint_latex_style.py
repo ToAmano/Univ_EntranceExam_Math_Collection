@@ -95,9 +95,16 @@ def check_punctuation(text):
 
 
 def check_proof_env(text):
+    """\\begin{proof}[解] / \\begin{proof}[別解] のように、解答冒頭の見出し
+    として proof 環境が使われているケースだけを検出する（AGENT.md 8.3.6
+    の趣旨は「解答冒頭を {\\bf [解]} にする」ことであり、\\begin{lemma}...
+    \\end{lemma} に対する本物の \\begin{proof}...\\end{proof}（補題の証明）
+    はそもそも対象外）。ラベル無しの素の \\begin{proof} まで拾うと
+    utokyo/kouki/2005/2 のような正当な用法を誤検知するため、[...] 引数の
+    有無で判別する。"""
     errors = []
-    for m in re.finditer(r'\\begin\{proof\}', text):
-        errors.append((line_of(text, m.start()), "\\begin{proof} は使わない（{\\bf [解]} を使う）"))
+    for m in re.finditer(r'\\begin\{proof\}\[', text):
+        errors.append((line_of(text, m.start()), "\\begin{proof}[...] は解答冒頭に使わない（{\\bf [...]} を使う）"))
     return errors
 
 
