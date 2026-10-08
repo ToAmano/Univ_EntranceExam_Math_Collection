@@ -208,6 +208,7 @@ latexmk -lualatex -interaction=nonstopmode main.tex
   * **例外: 図形の面積分解を数式中にピクトグラムとして表す場合は，`align` 環境内に小さな `tikzpicture` を直接埋め込んでよい**。`src/titech/zenki/1971/4/solution.tex` の `S(\theta) = (図形1) + (図形2) - (図形3) = \int ... = ...` の記法に従うこと：各項を `\left( \text{\begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.8] ... \end{tikzpicture}} \right)` のように `\left(\ \text{...}\ \right)` で包み，`baseline={(0,-0.1)}` で周囲のテキストとベースラインを揃え，`scale=0.8` 程度の小さなアイコンにする。図形内部は `\fill[gray!20] ... -- cycle;` で塗りつぶし，`\draw[thick] ...;` で輪郭を描き，境界の値（積分区間の端点など）は `\node[below, font=\tiny] at (...) {$...$};` で小さく添える。これらは「この項がどの図形の面積を表すか」を視覚的に示す補助記法であり，`figure` 環境ではないため `\caption` や図の通し番号は付けない。
 * **`tabular` 環境も同様に必ず `table` → `center` → `tabular` の順にネストする**（`\begin{table}[htb]\centering\begin{tabular}...\end{tabular}\end{table}` の形）。増減表なども `\begin{center}\begin{tabular}...\end{tabular}\end{center}` のように `table` を省略しない（`table` があると `\caption` で「表1: ...」の通し番号が付き，`figure`/`\caption` との扱いが揃う）。ただし `\shadowbox{...}` で表全体を枠囲みにする凡例的な用法（年度サマリファイル等）は対象外。
 * **図を挿入する際は必ず `\caption{}` を付ける**。`\begin{figure}...\end{figure}` の中に `\caption{...}` を含め、何を表す図かを一言で示す。
+* **表（`table`）にも同様に必ず `\caption{}` を付ける**。`\begin{table}...\end{table}` の中に `\caption{...}` を含め、何を表す表かを一言で示す（増減表なら「$f(x)$ の増減表」等）。ただし `\shadowbox{...}` で囲む凡例的な `tabular`（`table` 化の対象外）は対象外。
 * **句読点は全角の「．」「，」を使う**（「。」「、」は使わない）。既存の人手作成 `solution.tex` もこの慣習に従っている。
 * **解答冒頭は `{\bf [解]}` とする**（`\begin{proof}[解]...\end{proof}` は使わない）。
 * **分数は `\frac` ではなく `\dfrac` を使う**。`align` 環境内でも `\frac` はディスプレイスタイルでも小さく組まれてしまうことがあるため、常に `\dfrac` で統一する。

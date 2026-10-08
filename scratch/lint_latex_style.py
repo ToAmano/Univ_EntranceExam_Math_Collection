@@ -178,20 +178,33 @@ def check_bare_args(text):
     return errors
 
 
-def check_figure_caption(text):
-    """figure 環境には \\caption{} が必要。ただし subcaptionblock で複数図を
-    並べる形式では、個々のパネルに \\subcaption{} が付いていれば
-    （figure 全体としての \\caption が無くても）説明責務は果たされている
+def check_env_caption(text, env_name, error_msg):
+    """figure/table 環境には \\caption{} が必要。ただし subcaptionblock で
+    複数図/表を並べる形式では、個々のパネルに \\subcaption{} が付いていれば
+    （環境全体としての \\caption が無くても）説明責務は果たされている
     とみなし、\\subcaption{} の存在も許容する。"""
     errors = []
-    for m in re.finditer(r'\\begin\{figure\}', text):
-        end_m = re.search(r'\\end\{figure\}', text[m.end():])
+    for m in re.finditer(r'\\begin\{' + env_name + r'\}', text):
+        end_m = re.search(r'\\end\{' + env_name + r'\}', text[m.end():])
         body = text[m.end():m.end() + end_m.start()] if end_m else text[m.end():]
         has_caption = '\\caption{' in body or '\\caption ' in body
         has_subcaption = '\\subcaption{' in body or '\\subcaption ' in body
         if not has_caption and not has_subcaption:
-            errors.append((line_of(text, m.start()), "figure 環境に \\caption{} がない"))
+            errors.append((line_of(text, m.start()), error_msg))
     return errors
+
+
+def check_figure_caption(text):
+    return check_env_caption(text, 'figure', "figure 環境に \\caption{} がない")
+
+
+def check_table_caption(text):
+    """table 環境にも figure と同じ理由で \\caption{} を必須にする
+    （AGENT.md 8.3.6: table があると \\caption で「表N: ...」の通し番号が
+    付き、figure/\\caption の扱いが揃う、という意図を明示的なルールにした）。
+    \\shadowbox{...} で囲む凡例的な tabular は check_tabular_nesting 側で
+    そもそも table 化の対象外なので、ここにも出現しない。"""
+    return check_env_caption(text, 'table', "table 環境に \\caption{} がない")
 
 
 MATH_DISPLAY_ENVS = {'align', 'align*', 'equation', 'equation*', 'gather', 'gather*',
@@ -413,6 +426,7 @@ def lint_file(path):
     errors += check_punctuation(text)
     errors += check_bare_args(text)
     errors += check_figure_caption(text)
+    errors += check_table_caption(text)
     errors += check_tikz_nesting(text)
     errors += check_tabular_nesting(text)
     errors += check_documentclass(text)
