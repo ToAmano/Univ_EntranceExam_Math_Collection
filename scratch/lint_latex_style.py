@@ -17,6 +17,14 @@ SRC_DIR = REPO_ROOT / 'src'
 
 ENV_TOKEN_RE = re.compile(r'\\begin\{([a-zA-Z*]+)\}|\\end\{([a-zA-Z*]+)\}')
 
+# ファイル先頭などに `% lint-skip: 理由` を書いておくと、このファイルの
+# lint チェックを丸ごとスキップできる。旧jarticle形式のまま未移行で
+# documentclass 等が構造的に house style と異なる（Issue #593）など、
+# 直す予定はあるが今直すのは別作業というファイルを、直るまでの間
+# ratchet の対象から外すための避難ハッチ。空のまま放置されると気づかれず
+# 違反が溜まり続けるため、理由を書くことを必須にしている。
+LINT_SKIP_RE = re.compile(r'%\s*lint-skip\s*:\s*(\S.*)')
+
 FRAC_CMD_RE = re.compile(r'\\(d?frac)(?![a-zA-Z])')
 
 ALIGN_LINE_LENGTH_LIMIT = 100
@@ -427,7 +435,11 @@ def check_left_right_balance(text):
 
 
 def lint_file(path):
-    text = strip_comments(path.read_text(encoding='utf-8'))
+    raw = path.read_text(encoding='utf-8')
+    skip_m = LINT_SKIP_RE.search(raw)
+    if skip_m:
+        return [], [], skip_m.group(1).strip()
+    text = strip_comments(raw)
     errors = []
     errors += check_align_star(text)
     errors += check_punctuation(text)
@@ -443,7 +455,7 @@ def lint_file(path):
     errors += check_left_right_balance(text)
     warnings = check_overline_warning(text)
     warnings += check_long_align_lines(text)
-    return errors, warnings
+    return errors, warnings, None
 
 
 def main():
@@ -455,14 +467,19 @@ def main():
     total_errors = 0
     total_warnings = 0
     files_checked = 0
+    files_skipped = 0
     for path in targets:
         if path.name not in ('solution.tex', 'problem.tex'):
             continue
         if only_changed is not None and path.resolve() not in only_changed:
             continue
         files_checked += 1
-        errors, warnings = lint_file(path)
+        errors, warnings, skip_reason = lint_file(path)
         rel = path.relative_to(REPO_ROOT)
+        if skip_reason is not None:
+            files_skipped += 1
+            print(f"::notice file={rel}::lint-skip: {skip_reason}")
+            continue
         for lineno, msg in sorted(errors):
             print(f"::error file={rel},line={lineno}::{msg}")
             total_errors += 1
@@ -470,7 +487,8 @@ def main():
             print(f"::warning file={rel},line={lineno}::{msg}")
             total_warnings += 1
 
-    print(f"\n{files_checked} 個の .tex を走査。エラー {total_errors} 件、警告 {total_warnings} 件。")
+    skipped_note = f"（うち lint-skip {files_skipped} 件）" if files_skipped else ""
+    print(f"\n{files_checked} 個の .tex を走査{skipped_note}。エラー {total_errors} 件、警告 {total_warnings} 件。")
     if total_errors > 0:
         sys.exit(1)
 

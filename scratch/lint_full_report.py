@@ -46,7 +46,9 @@ def main():
     total_warnings = 0
 
     for path in targets:
-        errors, warnings = lint_file(path)
+        errors, warnings, skip_reason = lint_file(path)
+        if skip_reason is not None:
+            continue
         rel = path.relative_to(REPO_ROOT)
         parts = rel.parts  # src, {univ}, {cat}, {year}, {q}, solution.tex
         book = f"{parts[1]}/{parts[2]}" if len(parts) > 2 else "?"
