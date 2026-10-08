@@ -61,6 +61,197 @@ def _extract_braced(text, start):
     return text[start:], n
 
 
+_LIST_ENVS = ('enumerate', 'description', 'itemize')
+_LIST_ENV_TOKEN_RE = re.compile(r'\\(begin|end)\{(' + '|'.join(_LIST_ENVS) + r')\}')
+_ITEM_RE = re.compile(r'\\item\b\s*')
+
+
+def _find_balanced_list_env(text, start):
+    """text[start:] が \\begin{enumerate|description|itemize} で始まっている
+    前提で、入れ子になった同種環境の深さを数えながら対応する \\end{...} を
+    見つけ、(body_start, body_end, env終了直後のインデックス) を返す。
+    深さを数えずに非貪欲な正規表現で最初の \\end{...} に飛びつくと、入れ子の
+    内側の \\end で止まってしまい、外側の残りが生の LaTeX としてページに
+    漏れる（実例: utokyo zenki 1981/6 の `3条件 -> (イ)(ロ)(ハ)` のネスト）。"""
+    m = _LIST_ENV_TOKEN_RE.match(text, start)
+    depth = 1
+    pos = m.end()
+    body_start = pos
+    while depth > 0:
+        m2 = _LIST_ENV_TOKEN_RE.search(text, pos)
+        if not m2:
+            raise ValueError('unbalanced list environment')
+        depth += 1 if m2.group(1) == 'begin' else -1
+        pos = m2.end()
+    return body_start, m2.start(), pos
+
+
+def _split_top_level_list_items(body):
+    """body (ある1つのリスト環境の中身) を \\item で分割するが、入れ子になった
+    リスト環境の内部にある \\item は外側の項目区切りとしてカウントしない。"""
+    items = []
+    buf = []
+    i = 0
+    n = len(body)
+    depth = 0
+    while i < n:
+        tok = _LIST_ENV_TOKEN_RE.match(body, i)
+        if tok:
+            depth += 1 if tok.group(1) == 'begin' else -1
+            buf.append(body[i:tok.end()])
+            i = tok.end()
+            continue
+        if depth == 0:
+            m = _ITEM_RE.match(body, i)
+            if m:
+                items.append(''.join(buf))
+                buf = []
+                i = m.end()
+                continue
+        buf.append(body[i])
+        i += 1
+    items.append(''.join(buf))
+    return items
+
+
+_DOLLAR_DOLLAR_RE = re.compile(r'\$\$')
+
+
+def _next_begin_list_env(text, pos):
+    """text[pos:] 以降で次に現れる \\begin{enumerate|description|itemize} を探す。
+    \\end{...} の迷子（壊れた入力）に当たっても無限ループしないよう、
+    'begin' が見つかるまで読み飛ばす。"""
+    while True:
+        m = _LIST_ENV_TOKEN_RE.search(text, pos)
+        if not m:
+            return None
+        if m.group(1) == 'begin':
+            return m
+        pos = m.end()
+
+
+def _reindent_all_lines(text, indent):
+    """text の全ての行に indent を付与する。空行はそのまま空行として残す。
+    （各行の既存の先頭空白は、LaTeX ソース側の折り返し位置による単なる
+    偶然の産物でしかないため、まず lstrip してから indent を付け直す。
+    さもないと元の折り返しインデントの上に二重に indent が乗ってしまう。）"""
+    return '\n'.join(indent + line.lstrip() if line.strip() else '' for line in text.split('\n'))
+
+
+def _extract_block_pieces(text, depth):
+    """1項目分の本文 text を、素のテキスト片と「ブロック片」（既に正しく
+    字下げ済みの文字列）のリストに分解する。ブロック片として扱うのは
+    (a) ネストしたリスト環境（再帰的に Markdown 化）と
+    (b) `$$ ... $$` 形式の数式ブロック（align/gather 等を内包する）。
+    どちらも、リスト項目の『継続行』としてインデント無しでそのまま
+    出力すると、CommonMark 的に字下げ不足でリスト項目から抜けてしまい、
+    以降の行が（4 スペース以上の字下げにより）意図しないコードブロックとして
+    解釈されてしまう（実例: utokyo zenki 2011/6 の、入れ子の enumerate
+    項目内に align* を含むケース）。"""
+    content_indent = '    ' * (depth + 1)
+    pieces = []
+    buf = []
+    pos = 0
+    n = len(text)
+    while pos < n:
+        m_list = _next_begin_list_env(text, pos)
+        m_math = _DOLLAR_DOLLAR_RE.search(text, pos)
+        candidates = [c for c in ((m_list.start(), 'list', m_list) if m_list else None,
+                                   (m_math.start(), 'math', m_math) if m_math else None) if c]
+        if not candidates:
+            buf.append(text[pos:])
+            break
+        start, kind, m = min(candidates, key=lambda c: c[0])
+        buf.append(text[pos:start])
+        if kind == 'list':
+            body_start, body_end, end_pos = _find_balanced_list_env(text, start)
+            block_text = _render_list_items(text[body_start:body_end], depth + 1).strip('\n')
+        else:
+            end_m = _DOLLAR_DOLLAR_RE.search(text, m.end())
+            if not end_m:
+                # 閉じる $$ が見つからない壊れた入力はそのまま残す
+                buf.append(text[start:])
+                pos = n
+                continue
+            end_pos = end_m.end()
+            block_text = _reindent_all_lines(text[start:end_pos].strip('\n'), content_indent)
+        if buf:
+            pieces.append(('text', ''.join(buf)))
+            buf = []
+        pieces.append(('block', block_text))
+        pos = end_pos
+    if buf:
+        pieces.append(('text', ''.join(buf)))
+    return pieces
+
+
+def _render_list_items(body, depth):
+    """\\begin{enumerate|description|itemize}...\\end{...} の中身 body を
+    Markdown の番号付きリストへ変換する。ネストしたリスト環境や $$ 数式
+    ブロックがあれば、親項目の下に正しく字下げして差し込む
+    （CommonMark がネストしたリスト/継続行と認識するよう、マーカー幅
+    `N.  ` に合わせて depth * 4 スペースで字下げする）。"""
+    items = _split_top_level_list_items(body)[1:]  # 先頭要素は最初の \item より前の空文字列
+    indent = '    ' * depth
+    content_indent = '    ' * (depth + 1)
+    res = []
+    count = 1
+    for raw in items:
+        raw = raw.strip('\n')
+        if not raw.strip():
+            continue
+        pieces = _extract_block_pieces(raw, depth)
+        chunks = []
+        started = False
+        for kind, val in pieces:
+            if kind == 'text':
+                val = val.strip('\n')
+                if not started:
+                    # 残存する項目オプションラベル [(1)] や [(イ)] 等のストリップ
+                    # （簡単なラベルは scratch/batch_import_all_problems.py の
+                    # 取り込み時点で既に除去済みだが、「注1.」「(＊)」等の
+                    # 非定型ラベルは生き残ることがある）
+                    val = re.sub(r'^\s*\[\s*\(?.*?\)?\s*\]\s*', '', val.lstrip('\n'))
+                if not val.strip():
+                    continue
+                if not started:
+                    # 先頭のテキスト片は旧来通りそのまま（内部の折り返しは
+                    # 元の LaTeX ソースの改行位置そのままで、既存の大多数の
+                    # 単純な項目（ネスト無し）の見た目を変えないため）。
+                    chunks.append(val.strip())
+                    started = True
+                else:
+                    # ブロック片の直後に続くテキストは、字下げしないと
+                    # リスト項目から抜けてしまうため全行に indent を付与する。
+                    chunks.append(_reindent_all_lines(val.strip(), content_indent))
+            else:
+                chunks.append(val)
+        text_block = '\n\n'.join(c for c in chunks if c.strip())
+        if not text_block:
+            continue
+        res.append(f"{indent}{count}.  {text_block}")
+        count += 1
+    return "\n\n" + "\n\n".join(res) + "\n\n"
+
+
+def _convert_all_list_envs(text):
+    """text 中のトップレベルの \\begin{enumerate|description|itemize} を
+    すべて見つけて Markdown リストに変換する（ネストは _render_list_items が
+    再帰的に処理する）。"""
+    out = []
+    pos = 0
+    while True:
+        m = _LIST_ENV_TOKEN_RE.search(text, pos)
+        if not m or m.group(1) != 'begin':
+            out.append(text[pos:])
+            break
+        out.append(text[pos:m.start()])
+        body_start, body_end, end_pos = _find_balanced_list_env(text, m.start())
+        out.append(_render_list_items(text[body_start:body_end], 0))
+        pos = end_pos
+    return ''.join(out)
+
+
 def _split_top_level_rows(content):
     """align/gather 系環境の中身を、トップレベルの \\\\ でのみ行分割する。
     \\begin{cases}/\\begin{split}/\\begin{pmatrix} などネストした環境内部の \\\\ は
@@ -693,22 +884,11 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     md_content = re.sub(r'\*\*([^*]+)\*\*\s*\*\*([^*]+)\*\*', r'**\1\2**', md_content)
 
     # リスト環境 (\begin{enumerate}, \begin{description}, \begin{itemize}) の HTML/Markdown 番号付きリスト変換 (Issue #509)
-    def convert_enumerate_to_md_list(m):
-        block = m.group(2)
-        items = re.split(r'\\item\s*', block)
-        res = []
-        count = 1
-        for it in items:
-            it = it.strip()
-            if not it:
-                continue
-            # 残存する項目オプションラベル [(1)] や [(イ)] 等のストリップ
-            it = re.sub(r'^\[\s*\(?.*?\)?\s*\]\s*', '', it)
-            res.append(f"{count}.  {it}")
-            count += 1
-        return "\n\n" + "\n\n".join(res) + "\n\n"
-
-    md_content = re.sub(r'\\begin\{(enumerate|description|itemize)\}(.*?)\\end\{\1\}', convert_enumerate_to_md_list, md_content, flags=re.DOTALL)
+    # ネストしたリスト環境も _convert_all_list_envs / _render_list_items が
+    # 再帰的に処理する（単純な非貪欲正規表現は入れ子の内側の \end で止まって
+    # しまい、外側の残りが生の LaTeX として漏れていた。実例: utokyo zenki
+    # 1981/6, 1968/6, 1994/6, 2011/6 等）。
+    md_content = _convert_all_list_envs(md_content)
 
     # ディスプレイ数式 \[ ... \] の \begin{align*} ... \end{align*} への統一
     md_content = re.sub(r'\\\[\s*(.*?)\s*\\\]', r'\n$$\n\\begin{align*}\n\1\n\\end{align*}\n$$\n', md_content, flags=re.DOTALL)
