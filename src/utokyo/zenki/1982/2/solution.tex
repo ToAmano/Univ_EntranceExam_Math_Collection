@@ -1,34 +1,172 @@
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1982$年$2$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  正四面体$T$と半径$1$の球面$S$があって，$T$の$6$つの辺がすべて$S$に接しているという．
-  $T$の一辺の長さを求めよ．つぎに，$T$の外側にあって$S$の内側にある部分の体積を求めよ．
-\end{oframed}
+{\bf[解]}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]} 四面体の$4$頂点$A$，$B$，$C$，$D$とする．球面$S$の中心$O$とする．$T$の一辺の長さ$r$とする．$CD$の中点を$M$とし，平面$ABM$で図形を切断する．対称性から$O$はこの平面内にあって，下図のようになる．
+正四面体$T$の$4$頂点を$A,B,C,D$とし，$1$辺の長さを$r$とする．正四面体の対称性より，球面$S$は$T$の各辺をその中点で接するから，特に辺$AB,CD$の中点をそれぞれ$N,M$とすると，$S$は$N,M$で接する．また，対称性から$S$の中心$O$は$CD$の中点$M$を通り辺$AB$に垂直な平面（平面$ABM$）内にある．
 
-  上図のように$x$をおく．
+% TODO:: 3Dの図に書き直す
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.2]
+    \coordinate (A) at (0, 2.5);
+    \coordinate (B) at (-2, -0.5);
+    \coordinate (C) at (1.5, -0.8);
+    \coordinate (D) at (2.2, 0.8);
+    \coordinate (M) at ($(C)!0.5!(D)$);
+    \coordinate (N) at ($(A)!0.5!(B)$);
+    \coordinate (O) at (0.2, 0.6);
 
-  \newpage
-\end{multicols}
+    \draw[thick] (A) -- (B);
+    \draw[thick] (B) -- (C);
+    \draw[thick] (C) -- (D);
+    \draw[thick] (A) -- (C);
+    \draw[thick] (A) -- (D);
+    \draw[dashed] (B) -- (D);
+    \draw[dashed] (A) -- (M);
+    \draw[dashed] (B) -- (M);
+
+    \draw[dashed] (O) circle (0.95);
+    \fill (O) circle (1.2pt) node[left] {$O$};
+
+    \node[above] at (A) {$A$};
+    \node[below left] at (B) {$B$};
+    \node[below] at (C) {$C$};
+    \node[right] at (D) {$D$};
+    \node[right] at (M) {$M$};
+    \fill (N) circle (1.0pt) node[above left] {$N$};
+    \node[left] at (-1, 1) {$r$};
+
+    \node[right] at ($(C)!0.5!(M)$) {$\shortparallel$};
+    \node[right] at ($(M)!0.5!(D)$) {$\shortparallel$};
+  \end{tikzpicture}
+  \caption{正四面体 $T$ と，辺 $AB,CD$ の中点 $N,M$ における球面 $S$ の接点}
+  \label{fig:tetrahedron_overview}
+\end{figure}
+
+$\triangle ACD,\triangle BCD$はいずれも$1$辺$r$の正三角形で，$M$はその底辺$CD$の中点だから，その高さとして
+\begin{align}
+  AM=BM=\dfrac{\sqrt{3}}{2}r \label{eq:1}
+\end{align}
+である．\cref{eq:1}より$\triangle ABM$は$AM=BM$の二等辺三角形だから，$AB$の中点$N$に対して$MN\perp AB$である．また，$AN=BN=\dfrac{r}{2}$だから，$\triangle ANM$にピタゴラスの定理を用いて，
+\begin{align}
+  |MN|&=\sqrt{|AM|^2-|AN|^2} \\
+  &=\sqrt{\left(\dfrac{\sqrt{3}}{2}r\right)^2-\left(\dfrac{r}{2}\right)^2} \\
+  &=\dfrac{\sqrt{2}}{2}r \label{eq:2}
+\end{align}
+である．
+
+一方，球の中心$O$は平面$ABM$内にあって$ON\perp AB$だから，$O$は平面$ABM$内で点$N$を通り$AB$に垂直な直線上にある．この直線は$MN\perp AB$よりちょうど直線$MN$であるから，$O,N,M$は同一直線上にある．すなわち$MN$は$S$の直径であり，
+\begin{align}
+  MN=2 \label{eq:3}
+\end{align}
+である．\cref{eq:2,eq:3}より，
+\begin{align}
+  \dfrac{\sqrt{2}}{2}r=2 \quad\therefore r=2\sqrt{2} \label{eq:4}
+\end{align}
+である．$\cdots$(答)
+
+次に$T$の外側にあって$S$の内側にある部分の体積$V$を求める．
+\cref{eq:1,eq:4}より$AM=BM=\sqrt{6}$，$AB=r=2\sqrt{2}$であり，$AN=BN=\sqrt{2}$である．また$O$は$MN$上にあって$OM=ON=1$（球の半径）である．
+
+そこで平面$ABM$内に，$O$を原点とし直線$MN$を$y$軸として，$N(0,1)$，$M(0,-1)$をとる．$AB\perp MN$で$AN=BN=\sqrt{2}$だから，$A(\sqrt{2},1)$，$B(-\sqrt{2},1)$とおける．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.6, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0,0);
+    \coordinate (N) at (0,1);
+    \coordinate (M) at (0,-1);
+    \coordinate (A) at (1.414,1);
+    \coordinate (B) at (-1.414,1);
+    \coordinate (H) at (0.471,-0.333);
+
+    \draw[thick] (A) -- (B) -- (M) -- cycle;
+    \draw[thick, gray!60] (O) circle (1);
+
+    \draw[dashed, blue!70!black] (O) -- (N);
+    \draw[dashed, blue!70!black] (O) -- (M);
+    \draw[dashed, red!70!black] (O) -- (H);
+
+    \fill (O) circle (1pt) node[below right] {$O$};
+    \fill (N) circle (1pt) node[above right] {$N$};
+    \fill (M) circle (1pt) node[below right] {$M$};
+    \fill (A) circle (1pt) node[above] {$A$};
+    \fill (B) circle (1pt) node[above] {$B$};
+    \fill[red!70!black] (H) circle (1pt) node[below right] {$H$};
+
+    \node[blue!70!black, left=1pt] at ($(O)!0.5!(N)$) {$1$};
+    \node[blue!70!black, left=1pt] at ($(O)!0.5!(M)$) {$1$};
+    \node[red!70!black, below=1pt] at ($(O)!0.5!(H)$) {$p$};
+    \node[left=1pt] at ($(M)!0.5!(H)$) {$t$};
+  \end{tikzpicture}
+  \caption{断面三角形 $\triangle ABM$ と球の中心 $O$，接点 $N,M$，および $O$ から直線 $AM$ へ下ろした垂線の足 $H$}
+  \label{fig:cross_section_ABM}
+\end{figure}
+
+$O$から直線$AM$に下ろした垂線の足を$H$とし，$OH=p$，$MH=t$とおく．座標から
+\begin{align}
+  OA=\sqrt{(\sqrt{2})^2+1^2}=\sqrt{3}
+\end{align}
+である．$\triangle OMH,\triangle OAH$はいずれも$H$で直角だから，ピタゴラスの定理より
+\begin{align}
+  \begin{cases}
+    OM^2=OH^2+MH^2 \\
+    OA^2=OH^2+AH^2
+  \end{cases}
+  \Longleftrightarrow
+  \begin{cases}
+    1-p^2=t^2 \\
+    3-p^2=(\sqrt{6}-t)^2
+  \end{cases} \quad(\because AH=AM-MH=\sqrt{6}-t) \label{eq:5}
+\end{align}
+となる．\cref{eq:5}の$2$式の辺々を引いて，
+\begin{align}
+  2=6-2\sqrt{6}\,t \quad\therefore t=\dfrac{\sqrt{6}}{3} \label{eq:6}
+\end{align}
+を得る．\cref{eq:6}を\cref{eq:5}の第$1$式に代入して，
+\begin{align}
+  p^2=1-t^2=1-\dfrac{2}{3}=\dfrac{1}{3} \quad\therefore p=\dfrac{1}{\sqrt{3}} \label{eq:7}
+\end{align}
+である．
+
+正四面体の対称性から，面$ABM$は面$ACD$に直交し，かつ両者の交線は直線$AM$である．したがって$H$は$O$から平面$ACD$へ下ろした垂線の足に一致し，\cref{eq:7}の$p=\dfrac{1}{\sqrt{3}}$は$O$から$T$の各面までの距離である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth]
+    \draw[->] (-0.3,0) -- (1.5,0) node[right] {$x$};
+    \draw[->] (0,-1.3) -- (0,1.3) node[above] {$y$};
+    \node[below left] at (0,0) {$O$};
+
+    \draw[thick, domain=-90:90, samples=100] plot ({cos(\x)}, {sin(\x)});
+    \node[above right] at (0.7,0.7) {$x^2+y^2=1$};
+
+    \draw[thick] (0.577, -0.816) -- (0.577, 0.816);
+
+    \fill[pattern=north east lines, pattern color=gray!60]
+    (0.577, -0.816) -- plot[domain=-54.7:54.7, samples=50] ({cos(\x)}, {sin(\x)}) -- cycle;
+
+    \fill (0.577,0) circle (1pt) node[below right] {$H$};
+    \fill (1,0) circle (1pt) node[below right] {$1$};
+
+    \node[left] at (0, 0.577) {$p=\frac{1}{\sqrt{3}}$};
+    \draw[dashed] (0, 0.577) -- (0.577, 0.577);
+    \draw[dashed] (0.577, 0) -- (0.577, 0.816);
+  \end{tikzpicture}
+  \caption{$O$ を原点，半直線 $OH$ を $x$ 軸正方向とする $xy$ 平面における $S$ の切り口の円 $x^2+y^2=1$ と，回転させる斜線部分}
+  \label{fig:revolution_region}
+\end{figure}
+
+$O$を原点，半直線$OH$を$x$軸の正方向とする$xy$平面を考える．$S$の切り口の円$x^2+y^2=1$のうち$x\ge p$の部分（図の斜線部分）を$x$軸のまわりに回転させると，$T$の面$ACD$より外側で$S$の内側にある部分が得られる．この体積を$V'$とすると，
+\begin{align}
+  V'&=\pi\int_{1/\sqrt{3}}^1(1-x^2)\,dx \\
+  &=\pi\left[x-\dfrac{1}{3}x^3\right]_{1/\sqrt{3}}^1 \\
+  &=\dfrac{2}{3}\pi\left(1-\dfrac{4\sqrt{3}}{9}\right) \label{eq:8}
+\end{align}
+である．$T$は$4$つの面をもち，対称性から各面について\cref{eq:8}と同じ体積$V'$の部分がちょうど$1$つずつ生じるから，求める体積$V$は
+\begin{align}
+  V=4V'=\dfrac{8}{3}\pi\left(1-\dfrac{4\sqrt{3}}{9}\right)
+\end{align}
+である．$\cdots$(答)
+
 \end{document}
