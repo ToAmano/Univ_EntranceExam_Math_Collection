@@ -207,11 +207,24 @@ def _render_list_items(body, depth):
             if kind == 'text':
                 val = val.strip('\n')
                 if not started:
-                    # 残存する項目オプションラベル [(1)] や [(イ)] 等のストリップ
-                    # （簡単なラベルは scratch/batch_import_all_problems.py の
-                    # 取り込み時点で既に除去済みだが、「注1.」「(＊)」等の
-                    # 非定型ラベルは生き残ることがある）
-                    val = re.sub(r'^\s*\[\s*\(?.*?\)?\s*\]\s*', '', val.lstrip('\n'))
+                    # 項目オプションラベル [(イ)] や [(＊)] 等は、後続の地の文
+                    # から「条件(イ)，(ロ)，(ハ)をみたす」のように名前で
+                    # 参照されることがあるため、削除せず太字プレフィックスとして
+                    # 残す（実例: utokyo zenki 1981/6, 2009/3 等）。
+                    label_m = re.match(r'^\s*\[([^\]]*)\]\s*', val.lstrip('\n'))
+                    if label_m:
+                        label_text = label_m.group(1).strip()
+                        rest = val.lstrip('\n')[label_m.end():]
+                        # \ding{"AC} 等の pifont 丸数字コードは、太字化しても
+                        # 生の LaTeX コマンド文字列がそのまま表示されるだけで
+                        # 改善にならない（① ② への変換は別タスクで対応予定）。
+                        # この場合のみ、旧来通り黙って取り除く。
+                        if not label_text or label_text.startswith('\\ding'):
+                            val = rest
+                        else:
+                            val = f'**{label_text}**　{rest}'
+                    else:
+                        val = val.lstrip('\n')
                 if not val.strip():
                     continue
                 if not started:
