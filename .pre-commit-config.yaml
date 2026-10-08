@@ -10,3 +10,16 @@ repos:
         # scratch/generate_main_tex.py and intentionally excluded: hand
         # -formatting it would just be clobbered on the next regeneration.
         files: '(^|/)(solution|problem|handwritten_tex)\.tex$'
+  - repo: local
+    hooks:
+      - id: lint-latex-style
+        name: Lint LaTeX style (AGENT.md 8.3.6)
+        description: >-
+          Mirrors .github/workflows/lint-tex.yml locally: only staged
+          solution.tex files are checked (problem.tex is source text, not
+          authored solution prose, so it's out of scope here too). The
+          existing corpus has a large pre-existing backlog (see AGENT.md
+          6節), so this only ratchets on files you actually touch.
+        entry: python3 scratch/lint_latex_style.py
+        language: system
+        files: '(^|/)solution\.tex$'

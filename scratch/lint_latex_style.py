@@ -211,17 +211,27 @@ def find_command_arg_spans(text, command):
     return spans
 
 
+#  figure/table と中身の間に挟まっても構造上は無害な「透過的」レイアウト
+#  コンテナ。center は centering 目的、subcaptionblock は複数図/表を
+#  並べる目的、minipage は図を横に並べる際の列レイアウト目的で使われ、
+#  どれだけ重ねて使っても（例: figure > minipage > center > tikzpicture）
+#  入れ子としては許容する（実例: titech zenki 1974/2 の左右2枚の図）。
+TRANSPARENT_NESTING_ENVS = ('center', 'subcaptionblock', 'minipage')
+
+
 def check_env_nesting(text, target_env, required_ancestor, error_msg,
                        allow_subcaptionblock=True, allow_math_exempt=False,
                        exempt_spans=()):
-    """target_env が required_ancestor の直下、required_ancestor > center
-    （\\centering 利用時は center 環境自体が無いので直下でもよい）、または
-    required_ancestor > subcaptionblock（複数図/表を並べる場合、許可時）の
-    いずれかにネストされているかを、環境の開始・終了トークンをスタックで
-    追跡してチェックする汎用ロジック。tikzpicture・tabular 両方の
-    ネストチェックがこれを呼ぶ（別々に実装すると2箇所が食い違うバグの元）。
+    """target_env が required_ancestor の直下、または
+    TRANSPARENT_NESTING_ENVS（center/subcaptionblock/minipage）を何重に
+    挟んだ先の required_ancestor の下にネストされているかを、環境の
+    開始・終了トークンをスタックで追跡してチェックする汎用ロジック。
+    tikzpicture・tabular 両方のネストチェックがこれを呼ぶ（別々に実装すると
+    2箇所が食い違うバグの元）。
     exempt_spans は find_command_arg_spans 等で求めた (start,end) の
     一覧で、その範囲内にある target_env は無条件で許容する。"""
+    transparent = TRANSPARENT_NESTING_ENVS if allow_subcaptionblock else \
+        tuple(e for e in TRANSPARENT_NESTING_ENVS if e != 'subcaptionblock')
     errors = []
     stack = []
     for m in ENV_TOKEN_RE.finditer(text):
@@ -230,11 +240,11 @@ def check_env_nesting(text, target_env, required_ancestor, error_msg,
             if begin_name == target_env:
                 pos = m.start()
                 ok = any(s <= pos < e for s, e in exempt_spans)
-                ok = ok or (len(stack) >= 1 and stack[-1] == required_ancestor) or \
-                     (len(stack) >= 2 and stack[-1] == 'center' and stack[-2] == required_ancestor)
-                if allow_subcaptionblock:
-                    ok = ok or (len(stack) >= 1 and stack[-1] == 'subcaptionblock') or \
-                         (len(stack) >= 2 and stack[-1] == 'center' and stack[-2] == 'subcaptionblock')
+                if not ok:
+                    i = len(stack) - 1
+                    while i >= 0 and stack[i] in transparent:
+                        i -= 1
+                    ok = i >= 0 and stack[i] == required_ancestor
                 if allow_math_exempt:
                     ok = ok or any(s in MATH_DISPLAY_ENVS for s in stack)
                 if not ok:
