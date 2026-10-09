@@ -1,83 +1,53 @@
-\documentclass[a4j]{jarticle}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\usepackage{emath}
-\usepackage{emathPp}
-\usepackage{cases}
-\usepackage{amsmath}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1982$年$4$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\preEqlabel{$\cdots$}
-\begin{oframed}
-  $xy$平面上の曲線$y=\sin x$にそって，図のように左から右へ進む動点Pがある．
-  Pの速さが一定$V\,\,(V>0)$であるとき，Pの加速度ベクトル$\beku{\a}$の大きさの
-  最大値を求めよ．ただし，Pの速さとはPの速度ベクトル$\beku{v}=(v_1,v_2)$の大きさ
-  であり，また$t$を時間として$\beku{\a}=\left(\dfrac{dv_1}{dt},\dfrac{dv_2}{dt}\right)$である．
 
-  \begin{zahyou}[ul=10mm](-0.5,8)(-1.2,1.2)
-    \YGurafu*{sin(X)}
-    \tenretu*<perl>{P($pi/2,1)}
-    \Put\P[n]{P}
-    \kuromaru{\P}
-  \end{zahyou}
+{\bf[解]}
 
-\end{oframed}
+時刻$t$でのPの座標を$(x(t),\sin x(t))$で表すと，
+速度は
+\begin{align}
+  \vec{v} = (x'(t),x'(t)\cos x(t)) \label{eq:1}
+\end{align}
+だから，題意の速度一定の条件は
+\begin{align}
+  V^2=x'^2(t)(1+\cos^2 x(t)) \label{eq:2}
+\end{align}
+となる．以下簡単のため$x(t)$を$x$と略記する．
+\cref{eq:2}の両辺を$t$で微分して
+\begin{align}
+  0
+  & =2x'x''(1+\cos^2 x)-2x'^3\cos x\sin x \\
+  & =2x'\left[x''(1+\cos^2 x)-x'^2\cos x\sin x\right] \label{eq:3}
+\end{align}
+である．$x'=0$とすると\cref{eq:2}で$V=0$となり題意の$V>0$に反して矛盾だから$x'\neq 0$で両辺をわつて
+\begin{align}
+  &x''(1+\cos^2 x)-x'^2\cos x\sin x=0 \\
+  \therefore
+  &x''=\dfrac{x'^2\cos x\sin x}{1+\cos^2 x}  \label{eq:4}
+\end{align}
+である．
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]} 時刻$t$でのPの座標を$(x,\sin x)$で表す．そこで以下
-  \begin{align}
-    c=\cos x&s=\sin x
-  \end{align}
-  とする．速度は
-  \[\beku{v}=(x',x'c )\]
-  であるから，題意より
-  \begin{align}
-    V^2=x'^2(1+c^2)\label{1}
-  \end{align}
-  となる．\eqref{1}の両辺$t$で微分して
-  \begin{align}
-    0=2x'x''(1+c^2)-2x'^3cs
-  \end{align}
-  $V>0$から$x'\not=0$だから
-  \begin{align}
-    &x''(1+c^2)-x'^2cs=0 \\
-    &x''=\dfrac{x'^2cs}{1+c^2}\atag\label{2}
-  \end{align}
-  さらに，
-  \begin{align}
-    \beku{\a}=\left(x'',-x'^2s+x''c\right)
-  \end{align}
-  だから，加速度ベクトルの大きさ$L$として
-  \begin{align}
-    L^2&=x''^2+(-x'^2s+x''c)^2 \\
-    &=x''^2+x'^4s^2-2x'^2x''cs+x''^2c^2 \\
-    &=x''^2(1+c^2)-2x'^2csx''+x'^4s^2 \\
-    &=\left(\dfrac{x'^2cs}{1+c^2}\right)^2(1+c^2)-2x'^2cs\dfrac{x'^2cs}{1+c^2}+x'^4s^2 \\
-    &\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad%
-    \quad\quad\quad\quad\quad(\because\eqref{2}) \\
-    &=\dfrac{-x'^4c^2s^2}{1+c^2}+x'^4s^2 \\
-    &=\left(\dfrac{x'^4s^2}{1+c^2}\right) \\
-    &=\dfrac{s^2}{1+c^2}\dfrac{V^4}{(1+c^2)^2} \quad\quad(\because\eqref{1})\\
-    &=\dfrac{1-c^2}{(1+c^2)^3}V^4
-  \end{align}
-  である．ここで$0\le c^2\le1$で，同区間内で$L^2$は$c^2$について単調減少．
-  故に$L^2$は$c^2=0$で最大値$V^4$をとるので
-  \[\max L=V^2(>0)\]
-  である．$\cdots$(答)
-  \newpage
-\end{multicols}
+さて，ここで加速度$\alpha$は
+\begin{align}
+  \vec{\alpha}=\left(x'',-x'^2\sin x+x''\cos x\right)
+\end{align}
+より大きさの二乗は
+\begin{align}
+  |\alpha|^2
+  &=x''^2+(-x'^2\sin x+x''\cos x)^2 \\
+  &=\left(\dfrac{x'^2\cos x\sin x}{1+\cos^2 x}\right)^2+\left[-x'^2\sin x+\dfrac{x'^2\cos x\sin x}{1+\cos^2 x}\cos x\right]^2 \quad (\because \text{\cref{eq:4}})\\
+  &= \dfrac{x'^4}{(1+\cos^2 x)^2} \left[\sin^2x\cos^2x + \sin^2 x\right]  \\
+  &= \dfrac{V^4}{(1+\cos^2 x)^6}\sin^2 x (1+\cos^2 x) \quad (\because \text{\cref{eq:2}})\\
+  &= \dfrac{V^4\sin^2 x }{(1+\cos^2x)^3} \\
+  &= \dfrac{V^4(1-\cos^2 x)}{(1+\cos^2x)^3}  \label{eq:5}
+\end{align}
+である．
+
+ここで$0\le \cos^2x\le1$で，同区間内で$|\alpha|^2$は$\cos^2x$について単調減少だから，
+$\cos^2=0$で最大値をとる．この時の最大値の値は
+\begin{align}
+  \max |\alpha|^2 = V^4 \quad \therefore \max |\alpha| = V^2
+\end{align}
+である．$\cdots$(答)
+\newpage
 \end{document}

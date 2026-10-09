@@ -1,103 +1,284 @@
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1982$年$3$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  $xy$平面において，点$A$は原点$O$を中心とする半径$1$の円周の第一象限にある部分を動き，
-  点$B$は$x$軸上を動く．ただし線分$AB$の長さは$1$であり，線分$AB$は両端$A$，$B$以外の
-  点$C$で円周と交わるものとする．
-  \begin{enumerate}[(1)]
-    \item $\theta=\angle AOB$の取りうる値の範囲を求めよ．
-    \item $BC$の長さを$\theta$で表せ．
-    \item 線分$OB$の中点を$M$とするとき，線分$CM$の長さの範囲を求めよ．
-  \end{enumerate}
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}
-  \begin{enumerate}[(1)]
-    \item
-      \1 ただし，題意から$0<\theta<\pi/2$である．また$A(c,s)$である．
-      この時$\triangle ABO$は$OA=AB=1$の二等辺三角形だから$B(2c,0)$となる．故に線分$AB$の方程式は，$c\not=0$に注意して，
-      \begin{align}
-        &(2c-c)(y-s)-(0-s)(x-s)=0     \nonumber\\
-        &sx+cy-2sc=0                     \nonumber\\
-        &y=\dfrac{s}{c}(-x+2c) \,\,\,\,\ (c\le x\le2c) \label{3}
-      \end{align}
-      である．これが円周と交わるので，$y$を消した
-      \begin{align}
-        &x^2+\left(\dfrac{s}{c}\right)^2(-x+2c)^2=1  \nonumber\\
-        &c^2x^2+s^2(-x+2c)^2=c^2 \nonumber\\
-        &x^2-4s^2cx+c^2(4s^2-1)=0  \nonumber\\
-        &(x-c)\left(x-c(4s^2-1)\right)=0  \label{1}
-      \end{align}
-      が$c\le x\le2c$に解を持つ．従って$0<\theta<\pi/2$に注意して
-      \begin{align}
-        c<c(4s^2-1)<2c \nonumber\\
-        1<4s^2-1<2 \nonumber\\
-        \dfrac{1}{2}<s^2<\dfrac{3}{4} \label{4}\\
-        \dfrac{\pi}{4}<\theta<\dfrac{\pi}{3}\label{2}
-      \end{align}
-      である．$\cdots$(答)
+{\bf[解]}
 
-    \item\eqref{1}から$C$の$x$座標は$c(4s^2-1)$である．さらに$AB$の傾きは\eqref{3}から
-      $\dfrac{-s}{c}$であるから，
-      \[|BC|=\sqrt{1+\left(\dfrac{s}{c}\right)^2}(2c-c(4s^2-1))=3-4s^2\]
-      である．$\cdots$(答)
+\subparagraph{(1)}
 
-    \item $M(c,0)$である．故に$|MB|=c$．これと前問の結果，及び二等辺三角形の性質より
-      $\angle ABO=\angle AOB=\theta$であることから，
-      $\triangle BCM$に余弦定理を用いて
-      \begin{align}
-        &|MC|^2 \\
-        =&|MB|^2+|BC|^2-2|MB||BC|\cos\angle MBC  \\
-        =&c^2+(3-4s^2)^2-2c(3-4s^2)\cos\angle ABO \\
-        =&c^2+(3-4s^2)^2-2c(3-4s^2)c　\\
-        =&c^2(-5+8s^2)+(3-4s^2)^2 \\
-        =&(1-p)(8p-5)+(4p-3)^2   \tag{$p=s^2$}\\
-        =&8p^2+11p+4  \\
-        =&8\left(p-\dfrac{11}{16}\right)^2+\dfrac{7}{32}
-      \end{align}
-      である．\eqref{4}から$\dfrac{1}{2}<p<\dfrac{3}{4}$であることを考慮すると，
-      \begin{align}
-        \left\{
-          \begin{array}{l}
-            p=11/16\text{で}\min7/32 \\
-            p\to 1/2\text{で}\max 1/2
-          \end{array}
-          \right.
-        \end{align}
-        である．$|MC|>0$から，
-        \begin{align}
-          &\sqrt{\dfrac{7}{32}}\le|MC|<\sqrt{\dfrac{1}{2}} \\
-          \therefore \ &\dfrac{\sqrt{14}}{8}\le|MC|<\dfrac{\sqrt{2}}{2}
-        \end{align}
-        である．$\cdots$(答)
-    \end{enumerate}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.2, >=stealth, every node/.style={font=\small}]
 
-    {\bf[別解]}(1)について，$A(c,s)$での円の接線
-    \[cx+sy=1\]
-    の$x$切片は$1/c$であるから，
-    円周と$AB$が交わるための条件は
-    \[1<2c<\dfrac{1}{c}\Longleftrightarrow \dfrac{1}{2}<c<\dfrac{\sqrt{2}}{2}\]
-    であり，これを解いて
-    \[\dfrac{\pi}{4}<\theta<\dfrac{\pi}{3}\]
-    となる．$\cdots$(答)
-    \newpage
-  \end{multicols}
-  \end{document}
+    % --- 1. 定数・座標パラメータ (theta = 50° ≈ 0.8727 rad, pi/4 < theta < pi/3) ---
+    \def\thVal{50}
+    \pgfmathsetmacro{\cVal}{cos(\thVal)}
+    \pgfmathsetmacro{\sVal}{sin(\thVal)}
+    % 点 C の x 座標: c(4s^2 - 1)
+    \pgfmathsetmacro{\xC}{\cVal*(4.0*\sVal*\sVal - 1.0)}
+    \pgfmathsetmacro{\yC}{sqrt(max(0, 1.0 - \xC*\xC))}
+
+    % 主要座標
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at ({\cVal}, {\sVal});
+    \coordinate (B) at ({2.0*\cVal}, 0);
+    \coordinate (M) at ({\cVal}, 0);
+    \coordinate (C) at (\xC, \yC);
+
+    % --- 2. 座標軸と第1象限の単位円弧 ---
+    \draw[->, thick] (-0.2, 0) -- (1.55, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.2) -- (0, 1.3) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 二等辺三角形 OAB (OA = AB = 1) ---
+    \fill[blue!6, opacity=0.8] (O) -- (A) -- (B) -- cycle;
+    \draw[very thick, black] (O) -- (A);
+    \draw[very thick, black] (A) -- (B);
+    \draw[thick, black] (O) -- (B);
+
+    % --- 4. 線分 MC と注目する三角形 BCM ---
+    \fill[orange!18, opacity=0.8] (B) -- (C) -- (M) -- cycle;
+    \draw[very thick, red!85!black] (M) -- (C);
+    \draw[dashed, gray!60] (A) -- (M); % A から底辺への垂線
+
+    % --- 5. 角度・寸法表示 ---
+    % 角 AOB = \theta
+    \draw[purple!85!black, thick] (0.22, 0) arc (0:\thVal:0.22);
+    \node[purple!90!black, font=\footnotesize] at (25:0.32) {$\theta$};
+
+    % 角 ABO = \theta
+    \draw[purple!85!black, thick] ($ (B) + (-0.22, 0) $) arc (180:{180-\thVal}:0.22);
+    \node[purple!90!black, font=\footnotesize] at ($ (B) + (-0.32, 0.1) $) {$\theta$};
+
+    % 線分の長さ |OA|=1, |AB|=1
+    \node[above left=1pt, font=\scriptsize] at ($ (O)!0.5!(A) $) {$1$};
+    \node[above right=1pt, font=\scriptsize] at ($ (A)!0.5!(B) $) {$1$};
+
+    % --- 6. 主要点のプロットとラベル ---
+    \fill (O) circle (0.6pt);
+    \fill (A) circle (0.7pt) node[above=2pt] {$A(\cos\theta, \sin\theta)$};
+    \fill (B) circle (0.7pt) node[below=2pt] {$B(2c, 0)$};
+    \fill[teal!85!black] (M) circle (0.7pt) node[below=2pt, teal!85!black] {$M(c, 0)$};
+    \fill[red!85!black]  (C) circle (0.8pt) node[right=3pt, red!85!black] {$C$};
+    \fill (1.0, 0) circle (0.5pt) node[below=2pt, font=\scriptsize] {$1$};
+
+    % 線分 MC のラベル
+    \node[red!85!black, font=\footnotesize, left=2pt] at ($ (M)!0.5!(C) $) {$|MC|$};
+
+    % 単位円弧 (0° から 90°)
+    \draw[thick, gray!70] (1.0, 0) arc (0:90:1.0);
+    \node[gray!70!black, font=\scriptsize, above right] at (0.7, 0.7) {$x^2+y^2=1$};
+
+  \end{tikzpicture}
+  \caption{二等辺三角形 $\triangle OAB$ と線分 $AB$ 上の交点 $C$，および線分 $MC$}
+  \label{fig:triangle_OAB_and_point_C}
+\end{figure}
+
+題意より$0<\theta<\pi/2$の範囲で考える．円周上の点$A$は$A(\cos\theta,\sin\theta)$と表せる．
+題意より，$\triangle ABO$は$OA=AB=1$の二等辺三角形だから$B(2\cos\theta,0)$となる．
+以下，簡単のため$c=\cos\theta,s=\sin\theta$と略記する．
+線分$AB$の方程式は，$\cos\theta\not=0$に注意して，
+\begin{align}
+  &(2c-c)(y-s)-(0-s)(x-s)=0     \nonumber\\
+  &sx+cy-2sc=0                     \nonumber\\
+  &y=\dfrac{s}{c}(-x+2c) \quad (c\le x\le2c) \label{eq:1}
+\end{align}
+である．これが円周と交わるので，$x^2+y^2=1$と連立して$y$を消去した
+\begin{align}
+  &x^2+\left(\dfrac{s}{c}\right)^2(-x+2c)^2=1  \nonumber\\
+  &c^2x^2+s^2(-x+2c)^2=c^2 \nonumber\\
+  &x^2-4s^2cx+c^2(4s^2-1)=0  \nonumber\\
+  &(x-c)\left(x-c(4s^2-1)\right)=0
+\end{align}
+が$c\le x\le2c$に解を持つ．従って$0<\theta<\pi/2$に注意して$\theta$のとりうる範囲は
+\begin{align}
+  & c<c(4s^2-1)<2c \nonumber\\
+  & 1<4s^2-1<2 \nonumber\\
+  & \dfrac{1}{2}<s^2<\dfrac{3}{4} \label{eq:2}\\
+  \therefore
+  & \dfrac{\pi}{4}<\theta<\dfrac{\pi}{3}\label{eq:3}
+\end{align}
+である．$\cdots$(答)
+
+\subparagraph{(2)}
+
+(1)から点$C$の$x$座標は$c(4s^2-1)$である．さらに$AB$の傾きは\cref{eq:1}から
+$\dfrac{-s}{c}$であるから，$|BC|$は
+\begin{align}
+  |BC|=\sqrt{1+\left(\dfrac{s}{c}\right)^2}(2c-c(4s^2-1))=3-4s^2
+\end{align}
+である．$\cdots$(答)
+
+\subparagraph{(3)}
+
+$B(2c,0)$より$M(c,0)$である．故に$|MB|=c$である．
+また，$\triangle ABO$が二等辺三角形だから
+$\angle ABO=\angle AOB=\theta$である．
+これらに注意して$\triangle BCM$に余弦定理を用いて
+\begin{align}
+  |MC|^2
+  =&|MB|^2+|BC|^2-2|MB||BC|\cos\angle MBC  \\
+  =&c^2+(3-4s^2)^2-2c(3-4s^2)\cos\angle ABO \\
+  =&c^2+(3-4s^2)^2-2c(3-4s^2)c　\\
+  =&c^2(-5+8s^2)+(3-4s^2)^2 \\
+  =&(1-p)(8p-5)+(4p-3)^2 \quad (p=s^2)\\
+  =&8p^2+11p+4  \\
+  =&8\left(p-\dfrac{11}{16}\right)^2+\dfrac{7}{32}
+\end{align}
+となる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=10, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・関数定義 ---
+    % F(p) = 8*(p - 11/16)^2 + 7/32
+    % p の範囲: 0.5 < p < 0.75
+    \pgfmathsetmacro{\pMin}{0.45}
+    \pgfmathsetmacro{\pMax}{0.78}
+    \pgfmathsetmacro{\pVertex}{11.0/16.0}             % 0.6875
+    \pgfmathsetmacro{\yVertex}{7.0/32.0}              % 0.21875
+    \pgfmathsetmacro{\yLeft}{0.5}                     % p = 1/2 の極限値
+    \pgfmathsetmacro{\yRight}{8.0*(0.75-\pVertex)^2 + \yVertex} % 0.25
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick] (0.42, 0) -- (0.84, 0) node[right] {$p = \sin^2\theta$};
+    \draw[->, thick] (0.44, -0.05) -- (0.44, 0.62) node[above] {$|MC|^2$};
+
+    % --- 3. 定義域 1/2 < p < 3/4 の背景帯 ---
+    \fill[blue!6, opacity=0.7] (0.5, 0) rectangle (0.75, 0.56);
+    \node[blue!80!black, font=\scriptsize] at (0.625, 0.53) {定義域: $\frac{1}{2} < p < \frac{3}{4}$};
+
+    % --- 4. 2次関数のグラフ ---
+    % 定義域外（点線）
+    \draw[dashed, gray!60, domain=0.46:0.5, samples=30]
+    plot (\x, {8.0*(\x - \pVertex)*(\x - \pVertex) + \yVertex});
+    \draw[dashed, gray!60, domain=0.75:0.78, samples=30]
+    plot (\x, {8.0*(\x - \pVertex)*(\x - \pVertex) + \yVertex});
+
+    % 定義域内（太線実線）
+    \draw[very thick, blue!85!black, domain=0.5:0.75, samples=60]
+    plot (\x, {8.0*(\x - \pVertex)*(\x - \pVertex) + \yVertex});
+
+    % --- 5. 頂点（最小値）---
+    \draw[dashed, gray!60] (\pVertex, 0) -- (\pVertex, \yVertex) -- (0.44, \yVertex);
+    \fill[red!85!black] (\pVertex, \yVertex) circle (0.2pt);
+    \node[above=2pt, font=\scriptsize, red!85!black] at (\pVertex, \yVertex)
+    {最小値 $\frac{7}{32}$};
+
+    % --- 6. 端点（最大値・境界）---
+    % 左端点 p = 1/2 (白丸)
+    \draw[dashed, gray!60] (0.5, 0) -- (0.5, \yLeft) -- (0.44, \yLeft);
+    \draw[fill=white, draw=blue!85!black, thick] (0.5, \yLeft) circle (0.2pt);
+
+    % 右端点 p = 3/4 (白丸)
+    \draw[dashed, gray!60] (0.75, 0) -- (0.75, \yRight) -- (0.44, \yRight);
+    \draw[fill=white, draw=blue!85!black, thick] (0.75, \yRight) circle (0.2pt);
+
+    % --- 7. 目盛りラベル ---
+    \node[below=2pt, font=\scriptsize] at (0.5, 0) {$\frac{1}{2}$};
+    \node[below=2pt, font=\scriptsize] at (\pVertex, 0) {$\frac{11}{16}$};
+    \node[below=2pt, font=\scriptsize] at (0.75, 0) {$\frac{3}{4}$};
+
+    \node[left=2pt, font=\scriptsize] at (0.44, \yVertex) {$\frac{7}{32}$};
+    \node[left=2pt, font=\scriptsize] at (0.44, \yRight) {$\frac{1}{4}$};
+    \node[left=2pt, font=\scriptsize] at (0.44, \yLeft) {$\frac{1}{2}$};
+
+  \end{tikzpicture}
+  \caption{$p = \sin^2\theta$ に対する $|MC|^2 = 8\left(p - \dfrac{11}{16}\right)^2 + \dfrac{7}{32}$ の増減と最大・最小}
+  \label{fig:mc_squared_graph}
+\end{figure}
+
+\cref{eq:2}から$\dfrac{1}{2}<p<\dfrac{3}{4}$であることを考慮すると，$|MC|^2$の最大最小は
+\begin{align}
+  \begin{cases}
+    \max |MC|^2 = \dfrac{1}{2} & \left(p \to \dfrac{1}{2}\right) \\
+    \min |MC|^2 = \dfrac{7}{32} & \left(p = \dfrac{11}{16}\right)
+  \end{cases}
+\end{align}
+である．$|MC|>0$から，
+\begin{align}
+  &\sqrt{\dfrac{7}{32}}\le|MC|<\sqrt{\dfrac{1}{2}} \\
+  \therefore \
+  &\dfrac{\sqrt{14}}{8}\le|MC|<\dfrac{\sqrt{2}}{2}
+\end{align}
+である．$\cdots$(答)
+
+{\bf[別解]}
+
+\subparagraph{(1)}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ (theta = 50°) ---
+    \def\thVal{50}
+    \pgfmathsetmacro{\cVal}{cos(\thVal)}              % c ≈ 0.6428
+    \pgfmathsetmacro{\sVal}{sin(\thVal)}              % s ≈ 0.7660
+    \pgfmathsetmacro{\xB}{2.0*\cVal}                  % 2c ≈ 1.2856
+    \pgfmathsetmacro{\xTan}{1.0/\cVal}                % 1/c ≈ 1.5557
+
+    \coordinate (O)    at (0, 0);
+    \coordinate (A)    at ({\cVal}, {\sVal});
+    \coordinate (B)    at (\xB, 0);
+    \coordinate (T)    at (\xTan, 0);
+    \coordinate (E)    at (1.0, 0);
+
+    % --- 2. 座標軸と第1象限の単位円弧 ---
+    \draw[->, thick] (-0.2, 0) -- (1.8, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.2) -- (0, 1.25) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 単位円弧
+    \draw[thick, gray!70] (1.0, 0) arc (0:90:1.0);
+
+    % --- 3. 線分 OA, 直線 AB (交線), 点 A での接線 ---
+    % 半径 OA
+    \draw[thick, black] (O) -- (A);
+
+    % (i) 点 A での接線 cx + sy = 1 (点 T(1/c, 0) を通る)
+    \draw[thick, red!85!black, domain=0.35:1.7, samples=30]
+    plot (\x, {(1.0 - \cVal*\x)/\sVal});
+    \node[red!85!black, font=\footnotesize, above right] at (1.2, {(1.0 - \cVal*1.2)/\sVal}) {接線};
+
+    % 接線の直角記号 (OA ⊥ 接線)
+    \draw[thin, gray!70]
+    ($ (A) + 0.08*({cos(\thVal-90)}, {sin(\thVal-90)}) $) --
+    ($ (A) + 0.08*({cos(\thVal-90)}, {sin(\thVal-90)}) + 0.08*({cos(\thVal+180)}, {sin(\thVal+180)}) $) --
+    ($ (A) + 0.08*({cos(\thVal+180)}, {sin(\thVal+180)}) $);
+
+    % (ii) 線分 AB (B(2c, 0) を通る割線)
+    \draw[very thick, blue!85!black] (A) -- (B);
+    \node[blue!85!black, font=\footnotesize, above] at ($ (A)!0.5!(B) $) {$AB$};
+
+    % (iii) 線分 A-(1,0) (円周との境界線)
+    \draw[dashed, gray!70] (A) -- (E);
+
+    % --- 4. x 軸上の3つの重要点 (1, 2c, 1/c) の配置と不等式 ---
+    % 境界点 (1, 0)
+    \fill (E) circle (0.6pt) node[below=2pt] {$1$};
+
+    % 点 B(2c, 0)
+    \fill[blue!85!black] (B) circle (0.7pt) node[below=2pt, blue!85!black] {$2c$};
+
+    % 接線の切片 (1/c, 0)
+    \fill[red!85!black] (T) circle (0.7pt) node[below=2pt, red!85!black] {$\frac{1}{c}$};
+
+    % 主要点 A
+    \fill (A) circle (0.7pt) node[above=2pt] {$A$};
+
+  \end{tikzpicture}
+  \caption{点 $A$ での接線の $x$ 切片 $\dfrac{1}{c}$，点 $B(2c, 0)$，および交差条件 $1 < 2c < \dfrac{1}{c}$}
+  \label{fig:alternative_solution_tangent}
+\end{figure}
+
+$A(c,s)$での円の接線$cx+sy=1$の$x$切片は$1/c$であるから，
+円周が上に凸であることに注意して，$AB$が交わるための条件は
+\begin{align}
+  & 1<2c<\dfrac{1}{c}\Longleftrightarrow \dfrac{1}{2}<c<\dfrac{\sqrt{2}}{2} \\
+  \therefore
+  & \dfrac{\pi}{4}<\theta<\dfrac{\pi}{3}
+\end{align}
+である．$\cdots$(答)
+\newpage
+\end{document}
