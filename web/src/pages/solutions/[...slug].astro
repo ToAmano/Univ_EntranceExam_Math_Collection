@@ -151,6 +151,25 @@ const nextYearEntry = pickEntryForYear(nextYearNum);
 // Page Title
 const pageTitle = entry.data.title || `${univName} ${catName} ${year}年 ${questionLabel} (${typeLabel})`;
 
+// 「この解答を報告する」リンク: GitHub の new issue 画面に、ページ情報と
+// 該当ソースファイルのパスをあらかじめ入力した状態で開く。bug ラベルを
+// 付与しておくことで、[TeX化] などの既存issueと区別して一覧できる。
+const reportPageUrl = new URL(`${baseUrl}/solutions/${entry.slug}/`, Astro.site).href;
+const uniSlugForReport = entry.data.university.replace(/^sample_/, '');
+const reportSourcePath = `src/${uniSlugForReport}/${entry.data.category}/${entry.data.year}/${entry.data.question}/solution.tex`;
+const reportIssueTitle = `[報告] ${univName} ${catName} ${year}年 ${questionLabel}`;
+const reportIssueBody = [
+	'## 報告内容',
+	'<!-- どの部分に誤りや分かりにくい点があるか、具体的にご記入ください -->',
+	'',
+	'',
+	'',
+	'---',
+	`- ページ: ${reportPageUrl}`,
+	`- 該当ファイル: \`${reportSourcePath}\``,
+].join('\n');
+const reportIssueUrl = `https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/new?title=${encodeURIComponent(reportIssueTitle)}&body=${encodeURIComponent(reportIssueBody)}&labels=${encodeURIComponent('bug')}`;
+
 // GoatCounter の公開カウンターバッジ。count.js が記録するパス
 // (location.pathname + search + hash) と一致させる必要があるため、
 // このページ自身の絶対パスをそのまま組み立てる。
@@ -337,6 +356,22 @@ jsonLdItems.push(
 			<Content />
 		</div>
 	</article>
+
+	<!-- Report an issue -->
+	<div class="report-issue-bar glass">
+		<span class="report-issue-text">
+			この解答の誤りや分かりにくい点に気づきましたか？
+		</span>
+		<a
+			href={reportIssueUrl}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="report-issue-link"
+		>
+			<svg style="width: 1rem; height: 1rem; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+			GitHubで報告する
+		</a>
+	</div>
 </Layout>
 
 <style is:global>
@@ -411,6 +446,41 @@ jsonLdItems.push(
 		line-height: 1.3;
 	}
 
+	.report-issue-bar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1rem 1.5rem;
+		margin-bottom: 3rem;
+	}
+
+	.report-issue-text {
+		font-size: 0.9rem;
+		color: var(--text-muted);
+	}
+
+	.report-issue-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		flex-shrink: 0;
+		padding: 0.5rem 1rem;
+		border-radius: 10px;
+		background: rgba(248, 113, 113, 0.12);
+		color: #f87171;
+		border: 1px solid rgba(248, 113, 113, 0.3);
+		text-decoration: none;
+		font-weight: 600;
+		font-size: 0.85rem;
+		transition: all 0.2s ease;
+	}
+
+	.report-issue-link:hover {
+		background: rgba(248, 113, 113, 0.22);
+	}
+
 	/* スマホ幅では左右のパディング・見出しサイズが大きすぎて実質の読める幅が
 	   かなり狭くなる（本文カードの左右パディングだけで約70px消費していた）ため、
 	   ここで縮める。数式(mjx-container)側は Layout.astro のグローバル @media で
@@ -436,6 +506,16 @@ jsonLdItems.push(
 
 		.problem-block {
 			padding: 1rem 0.75rem;
+		}
+
+		.report-issue-bar {
+			padding: 0.9rem 1rem;
+			justify-content: flex-start;
+		}
+
+		.report-issue-link {
+			width: 100%;
+			justify-content: center;
 		}
 	}
 </style>
