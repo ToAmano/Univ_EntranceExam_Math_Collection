@@ -1,51 +1,74 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-\noindent
-{\bf [解]} $X=m, Y=n$ である事象を $X_m, Y_n$ とおく．$X_m, Y_n$ が独立だから
+$X=m, Y=n$ である事象を $X_m, Y_n$ とおくと，題意より$X_m, Y_n$ が独立だから
 \begin{align}
-  P(X_m \wedge Y_n) = P(X_m) P(Y_n) \quad \dots \text{①}
+  P(X_m \wedge Y_n) = P(X_m) P(Y_n) = p_mp_n \label{eq:1}
 \end{align}
-又，$X+Y=n$ となる確率が $(n+1) P_{n+1}$ に等しく，この時 $(X, Y) = (k, n-k) \ (k=0, 1, \dots, n)$ だから
+となる．
+
+また$X+Y=n$ となるのは$(X, Y) = (k, n-k) \ (k=0, 1, \dots, n)$なる時だから
 \begin{align}
-  & P(X+Y=n) = (n+1) P_{n+1} \\
-  \therefore & \sum_{k=0}^n P(X_k \wedge Y_{n-k}) = (n+1) P_{n+1} \quad \dots \text{②}
+  P(X+Y=n) = \sum_{k=0}^n P(X_k \wedge Y_{n-k}) \label{eq:2}
 \end{align}
-①を②に代入して
+であり，題意よりこれが$(n+1) p_{n+1}$ に等しいから
 \begin{align}
-  \sum_{k=0}^n P_k P_{n-k} = (n+1) P_{n+1} \quad \dots \text{③}
+  P(X+Y=n) = (n+1) p_{n+1} \quad \therefore \sum_{k=0}^n P(X_k \wedge Y_{n-k}) = (n+1) p_{n+1} \label{eq:3}
 \end{align}
-以下，任意の $n \in \mathbb{Z}_{\ge 0}$ に対し，$P_n = P_0^{n+1} \dots \text{◆}$ であること $\dots$ ④ を帰納的に示す． \\
-$n=0$ の時は明らかに成立する．以下 $n \le l \ (l \in \mathbb{Z}_{\ge 0})$ での◆の成立を仮定する． \\
-③から
+である．
+
+\cref{eq:1}を\cref{eq:3}の左辺に代入して
 \begin{align}
-  (l+1) P_{l+1} = \sum_{k=0}^l P_0^{k+1} P_0^{l-k+1} = (l+1) P_0^{l+2}
+  \sum_{k=0}^n p_k p_{n-k} = (n+1) p_{n+1} \label{eq:4}
 \end{align}
-$l+1 \neq 0$ から
+である．
+
+以下，任意の $n \in \mathbb{Z}_{\ge 0}$ に対して
 \begin{align}
-  P_{l+1} = P_0^{l+2}
+  p_n = p_0^{n+1} \label{eq:5}
 \end{align}
-となり，$n=l+1$ でも◆は成立．以上から④は示された．これを $\sum_{n=0}^\infty P_n = 1$ に代入する． \\
-$P_0 = 1$ は明らかに不適なので，$P_0 \neq 1$ とすると，
+であることを数学的帰納法により示す．
+
+$n=0$ の時は明らかに成立するから，
+以下 $n \le l \ (l \in \mathbb{Z}_{\ge 0})$ での\cref{eq:5}の成立を仮定する．
+\cref{eq:4}に$n=l$を代入して，\cref{eq:5}から
 \begin{align}
-  \sum_{n=0}^N P_n = P_0 \dfrac{1 - P_0^{N+1}}{1 - P_0} \quad \dots \text{⑤}
+  (l+1) p_{l+1} = \sum_{k=0}^{l} p_k p_{l-k} = \sum_{k=0}^l p_0^{k+1} p_0^{l-k+1} = (l+1) p_0^{l+2}
 \end{align}
-これが収束するのは，$|P_0| < 1$ の時で，このもとで⑤は $\dfrac{P_0}{1-P_0}$ に収束する．
+である．$l+1 \neq 0$で両辺を割ると
 \begin{align}
-  \dfrac{P_0}{1-P_0} = 1 \iff P_0 = \dfrac{1}{2} \quad (|P_0| < 1 \text{をみたす})
+  p_{l+1} = p_0^{l+2}
 \end{align}
-だから◆に代入して
+となり，$n=l+1$ でも\cref{eq:5}は成立する．
+以上から数学的帰納法により任意の非負整数で\cref{eq:5}が成立する．
+
+確率が全体で$1$になる条件 $\sum_{n=0}^\infty p_n = 1$ に\cref{eq:5}を代入する．
+$p_0 = 1$ は明らかに不適なので，$p_0 \neq 1$ として非負整数$N$までの和を計算すると
 \begin{align}
-  P_n = \Bigl(\dfrac{1}{2}\Bigr)^{n+1}
+  \sum_{n=0}^N p_n = p_0 \dfrac{1 - p_0^{N+1}}{1 - p_0} \label{eq:6}
 \end{align}
-だから，$r = \dfrac{1}{2}$ として
+である．
+これが$N\to\infty$で収束するのは，$|p_0| < 1$ の時で，このもとで\cref{eq:6}は
 \begin{align}
-  \sum_{k=0}^n k \cdot P_k &= \dfrac{1}{1-r} r - \dfrac{1}{(1-r)^2} r^{n+1} + \dfrac{r}{1-r} \\
-  &\xrightarrow{n \to \infty} \dfrac{r}{1-r} = 1 \quad (|r| < 1)
+  \lim_{N\to\infty} \sum_{n=0}^N p_n = \dfrac{p_0}{1-p_0}
+\end{align}
+に収束する．これが$1$に等しいから
+\begin{align}
+  \dfrac{p_0}{1-p_0} = 1 \iff p_0 = \dfrac{1}{2}
+\end{align}
+である．これは $|p_0| < 1$ をみたすので十分である．
+
+\cref{eq:5}に代入して
+\begin{align}
+  p_n = \Bigl(\dfrac{1}{2}\Bigr)^{n+1} \label{eq:7}
+\end{align}
+だから，$r = \dfrac{1}{2}$ として題意の無限和は
+\begin{align}
+  \sum_{k=0}^n k \cdot p_k
+  &= \dfrac{1}{1-r} r - \dfrac{1}{(1-r)^2} r^{n+1} + \dfrac{r}{1-r} \\
+  &\xrightarrow{n \to \infty} \dfrac{r}{1-r} = 1 \quad (\because |r| < 1)
 \end{align}
 となる．
 
