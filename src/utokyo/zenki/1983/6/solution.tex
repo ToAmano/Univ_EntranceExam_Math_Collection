@@ -1,122 +1,262 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\usepackage{emath}
-\usepackage{emathPp}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1983$年$6$番}
-
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  放物線$y=3/4-x^2$を$y$軸のまわりに回転して得られる曲面$K$を，原点を通り回転軸と
-  $45^\circ$の角をなす平面$H$で切る．曲面$K$と平面$H$で囲まれた立体の体積を求めよ．
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}題意の放物線が偶関数であることから，曲面$K$の方程式は，$x^2$を$x^2+z^2$で置き換えて
-  \[y=\dfrac{3}{4}-(x^2+z^2) \]
-  である．また，対称性から$H$の方程式は
-  \[y=x \]
-  としてよい．
+{\bf[解]}
 
-  これらを平面$x=k$で切断すると
-  \begin{align}
-    \begin{array}{l}
-      K:y=\left\{ \dfrac{3}{4}-k^2\right\}-z^2\equiv f(z)\\
-      H:y=k
-    \end{array}
-  \end{align}
-  となる．
+題意の放物線が偶関数であることから，曲面$K$の方程式は$x^2$を$x^2+z^2$で置き換えて
+\begin{align}
+  K: y=\dfrac{3}{4}-(x^2+z^2) \label{eq:1}
+\end{align}
+である．また対称性から$H$の方程式は
+\begin{align}
+  H: y = x \label{eq:2}
+\end{align}
+として良い．
 
-  \begin{zahyou}[ul=10mm](-1.5,1.5)(-0.5,1.5)
-    \def\Fx{1-X**2}
-    \def\Gx{0.5}
-    \YGurafu*\Fx
-    \YGurafu*\Gx
-    \YKouten\Fx\Gx{}{0}\tempi\A
-    \YKouten\Fx\Gx{0}{}\tempii\B
-    \YNurii*\Fx\Gx{\tempi}{\tempii}
-    \Put\A[syaei=x,xlabel=-\a]{}
-    \Put\B[syaei=x,xlabel=\a]{}
-    \Put{(0,0.5)}[se]{k}
-  \end{zahyou}
+\begin{figure}[htb]
+  \centering
+  \tdplotsetmaincoords{65}{200}
+  \begin{tikzpicture}[scale=2.0, >=stealth, every node/.style={font=\small}]
+    % tdplot の座標タプルは (x, z, y) の順で渡し，回転軸 y が画面の鉛直方向になるようにする
+    \begin{scope}[tdplot_main_coords]
+      % 底面の円（y=0 における K の輪郭，半径 sqrt(3)/2）
+      \draw[thick, gray!55!black] plot[domain=0:360, samples=80, variable=\t]
+      ({0.866*cos(\t)}, {0.866*sin(\t)}, {0});
 
-  故に曲面$K$と平面$H$で囲まれた立体$L$のこの平面での断面は
-  \[ k\le y\le \left\{ \dfrac{3}{4}-k^2\right\}-z^2 \]
-  となる．このような$y$の存在条件は
-  \begin{align}
-    \alpha=\sqrt{\dfrac{3}{4}-k-k^2} \label{a}
-  \end{align}
-  とおけば
-  \begin{align}
-    k&\le \left\{ \dfrac{3}{4}-k^2\right\}-z^2 \nonumber\\
-    \therefore -\alpha&\le z\le \alpha \label{b}
-  \end{align}
-  となり，この平面内での$L$の断面積$S(k)$は
-  \begin{align}
-    S(k)&=\int_{-\alpha}^\alpha \left\{ f(z)-k\right\}dz \\
-    &=\dfrac{1}{6}(\alpha+\alpha)^3 \\
-    &=\dfrac{4}{3}\left(\dfrac{3}{4}-k-k^2\right)^{3/2} \\
-    &=\dfrac{4}{3}\left\{1-\left(k+\dfrac{1}{2}\right)^2\right\}^{3/2}
-  \end{align}
-  である．\eqref{b}から$z$の存在条件は実数$\alpha$の存在条件に等しく，\eqref{a}から
-  \begin{align}
-    &\dfrac{3}{4}-k-k^2\ge0 \\
-    \therefore&\dfrac{-3}{2}\le k \le\dfrac{1}{2}
-  \end{align}
-  となる．以上から，もとめる体積$V$は
-  \begin{align}
-    V&=\int_{-3/2}^{1/2}S(k)dk \\
-    &=\dfrac{4}{3}\int_{-3/2}^{1/2}\left\{1-\left(k+\dfrac{1}{2}\right)^2\right\}^{3/2}dk \\
-    &=\dfrac{4}{3}\int_{-1}^{1}\left(1-t^2\right)^{3/2}dt \ \ \ \ \ \ \ \ \ \ \ \ \ (t=k+\dfrac{1}{2}) \\
-    &=\dfrac{8}{3}\int_0^{\pi/2}\left(1-s^2\right)^{3/2}\dfrac{ds}{d\theta}d\theta \ \ \ \ \ \ \ \ \ (t=s=\sin\theta%
-    ,c=\cos\theta) \\
-    &=\dfrac{8}{3}\int_0^{\pi/2}c^2(1-s^2)d\theta \\
-    &=\dfrac{\pi}{2}\cdots\text{(答)}
-  \end{align}
-  となる．
-  \vspace{2\zh}
+      % 正面の断面（z=0 平面: y=3/4-x^2）
+      \draw[thick] plot[domain=-0.866:0.866, samples=60, variable=\x]
+      ({\x}, {0}, {0.75-\x*\x});
 
-  {\bf[解2]}[解]と同様に，
-  \[x\le y\le \dfrac{3}{4}-(x^2+z^2)\]
-  の体積を求める．
-  $y=x+k$で立体を切断した断面の面積を$S(k)$とする．まず，$k$の範囲を求める．
-  \begin{align}
-    \exists x\exists y\exists z\, ,\, &x\le y\le \dfrac{3}{4}-(x^2+z^2)，y=x+k \\
-    \exists x \exists z \, ,\, &x\le x+k\le \dfrac{3}{4}-(x^2+z^2) \\
-    \exists x \exists z \, ,\, &0\le k\land \left(x+\dfrac{1}{2}\right)^2+z^2\le 1-k \\
-    &0\le k\le 1
-  \end{align}
-  である．また，切断面の$xz$平面への正射影は，$y$を消去して，
-  \[ \left(x+\dfrac{1}{2}\right)^2+z^2\le 1-k \]
-  であり，これは半径$\sqrt{1-k}$の円である．故に正射影の面積は
-  \[(1-k)\pi\]
-  $y=x+k$と$xz$平面の成す角は$\pi/4$であるから，
-  \begin{align}
-    S(k)\cos \left(\dfrac{\pi}{4}\right)=(1-k)\pi \\
-    S(k)=\sqrt{2}(1-k)\pi
-  \end{align}
-  である．$k$が$\Delta k$だけ変化すると，$y=x+k$は自身と垂直な方向へ$\Delta k/\sqrt{2}$だけ移動するから，
-  \begin{align}
-    \int_0^1S(k)\dfrac{\sqrt{2}}{2}\,dk=\dfrac{\pi}{2}
-  \end{align}
-  が求める体積である．$\cdots$(答)
-  \newpage
-\end{multicols}
+      % 側面の断面（x=0 平面: y=3/4-z^2）
+      \draw[thick, gray!40] plot[domain=-0.866:0.866, samples=60, variable=\z]
+      ({0}, {\z}, {0.75-\z*\z});
+
+      % 座標軸
+      \draw[->] (-1.3,0,0) -- (1.3,0,0) node[right] {$x$};
+      \draw[->] (0,0,-0.25) -- (0,0,1.0) node[above] {$y$};
+      \draw[->] (0,-1.3,0) -- (0,1.3,0) node[below right=1pt] {$z$};
+      \node[below left=1pt] at (0,0,0) {$O$};
+
+      % 平面 H: y=x （z=0 平面内の対角線として図示）
+      \draw[dashed, red!70!black] (-1.05,0,-1.05) -- (1.05,0,1.05) node[above right=1pt] {$H:y=x$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{放物線$y=\dfrac{3}{4}-x^2$の回転面$K$と，原点を通り回転軸と$45^\circ$をなす平面$H$}
+  \label{fig:overview_3d}
+\end{figure}
+
+これらを平面$x=k\, (0\le t)$で切断すると
+\begin{align}
+  \begin{array}{l}
+    K:y=\left\{ \dfrac{3}{4}-k^2\right\}-z^2\equiv f(z)\\
+    H:y=k
+  \end{array}
+\end{align}
+となり，題意の立体の断面の領域は
+\begin{align}
+  k\le y\le \left\{ \dfrac{3}{4}-k^2\right\}-z^2 \label{eq:3}
+\end{align}
+，図示すると下図の斜線部となる．
+ただし，二つの曲線の交点の$z$座標を$\alpha,-\alpha\, (\alpha\ge 0)$として
+\begin{align}
+  \alpha=\sqrt{\dfrac{3}{4}-k-k^2} \label{eq:4}
+\end{align}
+である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.6, >=stealth, every node/.style={font=\small}]
+    % k=0.2 の場合を代表例として図示（3/4-k^2=0.71, alpha=sqrt(0.71-0.2)=0.714）
+    \draw[->] (-1.0,-0.25) -- (1.0,-0.25) node[right] {$z$};
+    \draw[->] (0,-0.4) -- (0,0.8) node[above] {$y$};
+    \node[below left=1pt] at (0,-0.25) {$O$};
+
+    \fill[pattern=north east lines, pattern color=gray!60]
+    plot[domain=-0.714:0.714, samples=80] (\x,{0.71-\x*\x})
+    -- (0.714,0.2) -- (-0.714,0.2) -- cycle;
+
+    \draw[thick, domain=-0.9:0.9, samples=80] plot (\x,{0.71-\x*\x});
+    \draw[thick] (-0.9,0.2) -- (0.9,0.2) node[right] {$y=k$};
+
+    \draw[dashed] (-0.714,-0.25) -- (-0.714,0.2);
+    \draw[dashed] (0.714,-0.25) -- (0.714,0.2);
+    \node[below] at (-0.714,-0.25) {$-\alpha$};
+    \node[below] at (0.714,-0.25) {$\alpha$};
+  \end{tikzpicture}
+  \caption{平面$x=k$による断面（斜線部）}
+  \label{fig:cross_section_xk}
+\end{figure}
+
+さて，$z$の存在条件は実数$\alpha$の存在条件と同じで，\cref{eq:4}から
+\begin{align}
+  &\dfrac{3}{4}-k-k^2\ge0 \\
+  \therefore&\dfrac{-3}{2}\le k \le\dfrac{1}{2} \label{eq:5}
+\end{align}
+である．
+
+\cref{eq:4,eq:5}のもとで，この平面内での断面積$S(k)$は
+\begin{align}
+  S(k)
+  &=\int_{-\alpha}^\alpha \left\{ f(z)-k\right\}dz \\
+  &=\dfrac{1}{6}(\alpha+\alpha)^3 \\
+  &=\dfrac{1}{6}(2\alpha)^3 \\
+  &=\dfrac{4}{3}\left(\dfrac{3}{4}-k-k^2\right)^{3/2} \quad (\because \text{\cref{eq:4}})\\
+  &=\dfrac{4}{3}\left\{1-\left(k+\dfrac{1}{2}\right)^2\right\}^{3/2}
+\end{align}
+である．従ってこれを$k$について積分して，求める体積は
+\begin{align}
+  V
+  &=\int_{-3/2}^{1/2}S(k)dk \\
+  &=\dfrac{4}{3}\int_{-3/2}^{1/2}\left\{1-\left(k+\dfrac{1}{2}\right)^2\right\}^{3/2}dk \\
+  &=\dfrac{4}{3}\int_{-1}^{1}\left(1-t^2\right)^{3/2}dt \quad \left(t=k+\dfrac{1}{2}\right) \\
+  &=\dfrac{8}{3}\int_0^{\pi/2}\left(1-s^2\right)^{3/2}\dfrac{ds}{d\theta}d\theta
+  \quad \left(t=s=\sin\theta,c=\cos\theta\right) \\
+  &=\dfrac{8}{3}\int_0^{\pi/2}c^4 d\theta \\
+  &=\dfrac{8}{3}\int_0^{\pi/2}c^2(1-s^2) d\theta \\
+  &=\dfrac{8}{3}\int_0^{\pi/2}\left(c^2-c^2s^2\right) d\theta  \label{eq:6}
+\end{align}
+だが，各項計算すると
+\begin{align}
+  (\text{第一項})
+  &= \int_0^{\pi/2}c^2d\theta \\
+  &= \int_0^{\pi/2}\dfrac{\cos 2\theta+1}{2} d\theta\\
+  &= \dfrac{1}{2}\left[\dfrac{\sin 2\theta}{2}+\theta\right]_{0}^{\pi/2} \\
+  &= \dfrac{\pi}{4}
+\end{align}
+および
+\begin{align}
+  (\text{第二項})
+  &= \int_0^{\pi/2} c^2s^2 d\theta \\
+  &= \int_0^{\pi/2} \dfrac{1}{4}\sin^2 2\theta d\theta \\
+  &= \int_0^{\pi/2} \dfrac{1}{4}\dfrac{-\cos 4\theta+1}{2} d\theta \\
+  &= \int_0^{\pi/2} \dfrac{1}{8}\left[\dfrac{1}{4}\sin 4\theta+\theta\right]_{0}^{\pi/2} \\
+  &= \dfrac{\pi}{16}
+\end{align}
+だから\cref{eq:6}に代入して
+\begin{align}
+  V &= \dfrac{8}{3}\left(\dfrac{\pi}{4}-\dfrac{\pi}{16}\right) = \dfrac{\pi}{2} \cdots\text{(答)}
+\end{align}
+となる．
+
+{\bf [別解]}
+
+[解]では$x$一定の平面で切断したが，問題の立体が単純なので他の平面で切ってもうまくいく．ここでは$z$一定平面で切断する例を示す．
+
+平面$z=t\ (0\le t)$で立体を切断する．この平面内で\cref{eq:1}から$K$は
+\begin{align}
+  y=\left(\dfrac{3}{4}-t^2\right)-x^2 \equiv g(x) \label{eq:7}
+\end{align}
+と表され，\cref{eq:2}から$H$は$z$によらず$y=x$のままである．
+
+$K,H$の交点の$x$座標は$x=g(x)$，すなわち
+\begin{align}
+  x^2+x-\left(\dfrac{3}{4}-t^2\right)=0
+\end{align}
+の解であり，これを解いて
+\begin{align}
+  x=\dfrac{-1\pm\sqrt{1+4\left(\dfrac{3}{4}-t^2\right)}}{2}=\dfrac{-1\pm2\sqrt{1-t^2}}{2}
+\end{align}
+となる．この2解を$\alpha<\beta$とすると，$\beta-\alpha=2\sqrt{1-t^2}$であり，また$\alpha,\beta$の存在条件から$z \le 1$である．
+この平面内での断面（$x\le y\le g(x)$となる領域）は下図斜線部である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
+    % t=0.3 の場合を代表例として図示（3/4-t^2=0.66, alpha=-1.454, beta=0.454）
+    \draw[->] (-1.9,0) -- (1.3,0) node[right] {$x$};
+    \draw[->] (0,-1.6) -- (0,0.8) node[above] {$y$};
+    \node[below left=1pt] at (0,0) {$O$};
+
+    \fill[pattern=north east lines, pattern color=gray!60]
+    plot[domain=-1.454:0.454, samples=80] (\x,{0.66-\x*\x})
+    -- plot[domain=0.454:-1.454, samples=80] (\x,{\x}) -- cycle;
+
+    \draw[thick, domain=-1.75:1.1, samples=80] plot (\x,{0.66-\x*\x});
+    \draw[thick] (-1.7,-1.7) -- (1.1,1.1) node[right] {$y=x$};
+
+    \draw[dashed] (-1.454,0) -- (-1.454,-1.454);
+    \draw[dashed] (0.454,0) -- (0.454,0.454);
+    \node[below] at (-1.454,0) {$\alpha$};
+    \node[below] at (0.454,0) {$\beta$};
+  \end{tikzpicture}
+  \caption{平面$z=t$による断面（斜線部）}
+  \label{fig:cross_section_zt}
+\end{figure}
+
+この面積を$S(t)$とすると，
+\begin{align}
+  S(t)
+  &=\int_{\alpha}^{\beta}\left(g(x)-x\right)dx \\
+  &=\dfrac{1}{6}(\beta-\alpha)^3 \\
+  &=\dfrac{1}{6}\left(2\sqrt{1-t^2}\right)^3 \\
+  &=\dfrac{4}{3}(1-t^2)^{3/2} \label{eq:8}
+\end{align}
+である．
+
+\cref{eq:1,eq:2}はいずれも$z$を$-z$に置き換えても不変だから，$S(t)=S(-t)$である．したがって対称性より，求める体積$V$は
+\begin{align}
+  \dfrac{1}{2}V
+  &=\int_0^1 S(t)\,dt \\
+  &=\dfrac{4}{3}\int_0^1(1-t^2)^{3/2}\,dt \\
+  &=\dfrac{4}{3}\int_0^1\sqrt{1-t^2}\,dt-\dfrac{4}{3}\int_0^1t^2\sqrt{1-t^2}\,dt \label{eq:9}
+\end{align}
+となる．
+
+以下，$t=\cos\theta\ \left(0\le\theta\le\dfrac{\pi}{2}\right)$とおき，$c=\cos\theta,\,s=\sin\theta$と略記する．$dt=-s\,d\theta$であり，$t:0\to1$のとき$\theta:\pi/2\to0$に注意する．まず第一項は半径$1$の四分円の面積だから
+\begin{align}
+  (\text{第一項})
+  &=\int_0^1\sqrt{1-t^2}\,dt
+  =\dfrac{\pi}{4} \label{eq:10}
+\end{align}
+である．次に
+\begin{align}
+  (\text{第二項})
+  &=\int_0^1t^2\sqrt{1-t^2}\,dt \\
+  &=\int_0^{\pi/2}c^2s^2\,d\theta \\
+  &=\int_0^{\pi/2}\dfrac{1}{4}\sin^22\theta\,d\theta \\
+  &=\dfrac{1}{8}\int_0^{\pi/2}(1-\cos4\theta)\,d\theta \\
+  &=\dfrac{1}{8}\left[\theta-\dfrac{\sin4\theta}{4}\right]_0^{\pi/2} \\
+  &=\dfrac{\pi}{16} \label{eq:11}
+\end{align}
+である．\cref{eq:10,eq:11}を\cref{eq:9}に代入して
+\begin{align}
+  \dfrac{1}{2}V
+  &=\dfrac{4}{3}\cdot\dfrac{\pi}{4}-\dfrac{4}{3}\cdot\dfrac{\pi}{16} \\
+  &=\dfrac{\pi}{3}-\dfrac{\pi}{12}
+  =\dfrac{\pi}{4}
+\end{align}
+となるから，
+\begin{align}
+  V=\dfrac{\pi}{2}
+\end{align}
+である．$\cdots$(答)
+
+% TODO :: 以下の別解2をちゃんと示す
+% {\bf [別解2]}
+
+% [解]と同様に，
+% \[x\le y\le \dfrac{3}{4}-(x^2+z^2)\]
+% の体積を求める．
+% $y=x+k$で立体を切断した断面の面積を$S(k)$とする．まず，$k$の範囲を求める．
+% \begin{align}
+%   \exists x\exists y\exists z\, ,\, &x\le y\le \dfrac{3}{4}-(x^2+z^2)，y=x+k \\
+%   \exists x \exists z \, ,\, &x\le x+k\le \dfrac{3}{4}-(x^2+z^2) \\
+%   \exists x \exists z \, ,\, &0\le k\land \left(x+\dfrac{1}{2}\right)^2+z^2\le 1-k \\
+%   &0\le k\le 1
+% \end{align}
+% である．また，切断面の$xz$平面への正射影は，$y$を消去して，
+% \[ \left(x+\dfrac{1}{2}\right)^2+z^2\le 1-k \]
+% であり，これは半径$\sqrt{1-k}$の円である．故に正射影の面積は
+% \[(1-k)\pi\]
+% $y=x+k$と$xz$平面の成す角は$\pi/4$であるから，
+% \begin{align}
+%   S(k)\cos \left(\dfrac{\pi}{4}\right)=(1-k)\pi \\
+%   S(k)=\sqrt{2}(1-k)\pi
+% \end{align}
+% である．$k$が$\Delta k$だけ変化すると，$y=x+k$は自身と垂直な方向へ$\Delta k/\sqrt{2}$だけ移動するから，
+% \begin{align}
+%   \int_0^1S(k)\dfrac{\sqrt{2}}{2}\,dk=\dfrac{\pi}{2}
+% \end{align}
+% が求める体積である．$\cdots$(答)
+\newpage
 \end{document}
