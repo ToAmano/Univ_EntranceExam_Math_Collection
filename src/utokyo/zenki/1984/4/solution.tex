@@ -1,71 +1,216 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$2005$年$6$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  空間内に$3$点$P\left(1,\dfrac{1}{2},0\right)$，$Q\left(1,-\dfrac{1}{2},0\right)$，
-  $R\left(\dfrac{1}{4},0,\dfrac{\sqrt{3}}{4}\right)$
-  を頂点とする正$3$角形の板$S$がある．$S$を$z$軸のまわりに$1$回転させた時，$S$が通過する
-  点全体のつくる立体の体積を求めよ．
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}辺$PR$，$QR$の方程式はそれぞれ以下のようになる．
-  \begin{align}
-    PR&:\vthree{x}{y}{z}=\vthree{1}{1/2}{0}+t\vthree{-3/4}{-1/2}{\sqrt{3}/4} \\
-    QR&:\vthree{x}{y}{z}=\vthree{1}{-1/2}{0}+t\vthree{-3/4}{1/2}{\sqrt{3}/4}
-  \end{align}
-  これらと平面$z=k$の交点は順に,
-  \begin{align}
+{\bf[解]}
+
+\begin{figure}[htb]
+  \centering
+  % 俯角 70°，方位角 120° で視認性を確保
+  \tdplotsetmaincoords{70}{120}
+  \begin{tikzpicture}[tdplot_main_coords, scale=3.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 頂点座標の定義 ---
+    % P(1, 0.5, 0), Q(1, -0.5, 0), R(0.25, 0, sqrt(3)/4 ≈ 0.4330)
+    \coordinate (O) at (0, 0, 0);
+    \coordinate (P) at (1.0,  0.5, 0.0);
+    \coordinate (Q) at (1.0, -0.5, 0.0);
+    \coordinate (R) at (0.25, 0.0, 0.4330);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick] (0, 0, 0) -- (1.4, 0, 0) node[below left=2pt] {$x$};
+    \draw[->, thick] (0, -0.9, 0) -- (0, 0.9, 0) node[right=2pt] {$y$};
+    \draw[->, very thick, red!80!black] (0, 0, -0.15) -- (0, 0, 0.8) node[above=2pt] {$z$ (回転軸)};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 回転軸の回転矢印
+    \tdplotdrawarc[->, thick, red!85!black]{(0,0,0.65)}{0.15}{30}{320}{anchor=south}{}
+
+    % --- 3. xy 平面への投影・基準補助線 ---
+    \draw[dotted, gray!60] (P) -- (1.0, 0, 0) -- (Q);
+    \draw[dashed, gray!60] (R) -- (0.25, 0, 0);
+    \draw[dotted, gray!60] (0.25, 0, 0) -- (1.0, 0, 0);
+    \draw[dashed, gray!50] (R) -- (0, 0, 0.4330);
+    \fill (0, 0, 0.4330) circle (0.4pt) node[left=1pt, font=\scriptsize] {$\frac{\sqrt{3}}{4}$};
+
+    % --- 4. 正三角形の板 S (PQR) ---
+    \fill[blue!15, opacity=0.75] (P) -- (Q) -- (R) -- cycle;
+    \draw[very thick, blue!85!black] (P) -- (Q) -- (R) -- cycle;
+
+    % 板の重心/内部ラベル
+    \node[blue!90!black, font=\footnotesize] at ($ (P)!0.333!(Q)!0.333!(R) + (0.1, 0, 0.02) $) {$S$};
+
+    % --- 5. 頂点プロットとラベル ---
+    \fill (P) circle (0.7pt) node[right=2pt] {$P\left(1, \frac{1}{2}, 0\right)$};
+    \fill (Q) circle (0.7pt) node[below left=1pt] {$Q\left(1, -\frac{1}{2}, 0\right)$};
+    \fill (R) circle (0.7pt) node[above right=1pt] {$R\left(\frac{1}{4}, 0, \frac{\sqrt{3}}{4}\right)$};
+
+  \end{tikzpicture}
+  \caption{正三角形の板 $S$（頂点 $P, Q, R$）と回転軸（$z$ 軸）の空間配置}
+  \label{fig:triangle_plate_3d}
+\end{figure}
+
+辺$PR$，$QR$の方程式はそれぞれ以下のようになる．
+\begin{align}
+  PR&:
+  \begin{pmatrix}x\\y\\z
+  \end{pmatrix}=
+  \begin{pmatrix}1\\1/2\\0
+  \end{pmatrix}+t
+  \begin{pmatrix}-3/4\\-1/2\\\sqrt{3}/4
+  \end{pmatrix} \\
+  QR&:
+  \begin{pmatrix}x\\y\\z
+  \end{pmatrix}=
+  \begin{pmatrix}1\\-1/2\\0
+  \end{pmatrix}+t
+  \begin{pmatrix}-3/4\\1/2\\\sqrt{3}/4
+  \end{pmatrix}
+\end{align}
+これらと平面$z=k$の交点を$P_{k},Q_{k}$とすると，いずれも
+\begin{align}
+  k = \dfrac{\sqrt{3}t}{4} \quad \therefore t = \dfrac{4k}{\sqrt{3}}
+\end{align}
+に対応するから，
+\begin{align}
+  \begin{cases}
     p&=\dfrac{1}{2}\left(1-\dfrac{4\sqrt{3}}{3}k\right)  \\
     q&=1-\sqrt{3}k
-  \end{align}
-  として
-  \begin{align}
-    (q,p,k), (q,-p,k)
-  \end{align}
-  である．
-  故に，図形の$z=k(0\le k\le \dfrac{\sqrt{3}}{4})$での切断面は
-  \begin{align}
-    &x=q \\
-    &|y|\le p
-  \end{align}
-  となる．したがって，切断面上の点と原点との距離の最大小値は
-  \begin{align}
-    r_{max}^2&=p^2+q^2 \\
-    r_{min}^2&=q^2
-  \end{align}
-  である．故にこの平面での切断面の面積$S(k)$は
-  \begin{align}
-    S(k)&=\pi(r_{max}^2- r_{min}^2) \\
-    &=\pi p^2
-  \end{align}
-  となる．求める体積$V$は
-  \begin{align}
-    V&=\int_0^{\sqrt{3}/4}S(k)dk \\
-    &=\dfrac{\pi}{4}\int_0^{\sqrt{3}/4}\left(1-\dfrac{4\sqrt{3}}{3}k\right)^2dk \\
-    &=\dfrac{\pi}{4}\left[\dfrac{\sqrt{3}}{12}\left(\dfrac{4\sqrt{3}}{3}k-1\right)^3\right]_0^{\sqrt{3}/4} \\
-    &=\dfrac{\sqrt{3}\pi}{48}\cdots\text{(答)}
-  \end{align}
-  となる．
-  \newpage
-\end{multicols}
+  \end{cases}
+\end{align}
+として
+\begin{align}
+  P_{k}(q,p,k), Q_{k}(q,-p,k)
+\end{align}
+である．
+故に，図形の$z=k(0\le k\le \dfrac{\sqrt{3}}{4})$での切断面は
+\begin{align}
+  &x=q \\
+  &|y|\le p
+\end{align}
+となる．これを図示すると下図の太線部である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=4, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・代表値 (k = 0.2 のとき q = 0.6536, p = 0.3614) ---
+    \def\qVal{0.6536}
+    \def\pVal{0.3614}
+
+    \coordinate (O)      at (0, 0);
+    \coordinate (Qmid)   at (\qVal, 0);
+    \coordinate (Qtop)   at (\qVal, \pVal);
+    \coordinate (Qbot)   at (\qVal, -\pVal);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick] (-0.2, 0) -- (1.1, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.65) -- (0, 0.65) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 座標補助線 (破線) ---
+    \draw[dashed, gray!70] (0, \pVal) -- (Qtop);
+    \draw[dashed, gray!70] (0, -\pVal) -- (Qbot);
+
+    % --- 4. 切断面の線分 (x = q, |y| <= p) ---
+    \draw[line width=2.4pt, blue!85!black] (Qbot) -- (Qtop);
+
+    % --- 5. 点プロットとラベル ---
+    \fill (Qmid) circle (0.6pt) node[below left=1pt] {$q$};
+    \fill[red!85!black] (Qtop) circle (0.7pt) node[right=2pt, red!85!black] {$(q, p)$};
+    \fill[red!85!black] (Qbot) circle (0.7pt) node[right=2pt, red!85!black] {$(q, -p)$};
+
+    % y 軸上の目盛り
+    \draw[gray!80!black] (-0.03, \pVal) -- (0.03, \pVal);
+    \node[left=2pt, font=\scriptsize] at (0, \pVal) {$p$};
+    \draw[gray!80!black] (-0.03, -\pVal) -- (0.03, -\pVal);
+    \node[left=2pt, font=\scriptsize] at (0, -\pVal) {$-p$};
+
+    % 領域の注釈
+    \draw[<-, thin, blue!85!black] (\qVal, 0.18) to[bend left=18] (0.85, 0.35)
+    node[right, font=\footnotesize, blue!90!black] {切断面: $x=q, \; |y| \le p$};
+
+  \end{tikzpicture}
+  \caption{平面 $z=k$ による板 $S$ の切断面（線分部）}
+  \label{fig:cross_section_line}
+\end{figure}
+
+したがって，切断面上の点と原点との距離の最大小値はそれぞれ$(q,p)$および$(q,0)$で
+\begin{align}
+  r_{max}^2&=p^2+q^2 \\
+  r_{min}^2&=q^2
+\end{align}
+である．故にこの平面での回転体の切断面は，下図のようにドーナツ型の領域になる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・半径パラメータ (k = 0.2 の代表値) ---
+    \def\qVal{0.6536}                             % x 座標 / 内径 r_min
+    \def\pVal{0.3614}                             % y 半幅
+    \def\rMax{0.7469}                             % 外径 r_max = sqrt(p^2 + q^2)
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (Qmid)  at (\qVal, 0);
+    \coordinate (Qtop)  at (\qVal, \pVal);
+    \coordinate (Qbot)  at (\qVal, -\pVal);
+
+    % --- 2. ドーナツ型（円環）領域の斜線ハッチング ---
+    % 外円から内円をくり抜いた領域
+    \fill[pattern=north east lines, pattern color=blue!55, opacity=0.7, even odd rule]
+    (O) circle (\rMax)
+    (O) circle (\qVal);
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-1.05, 0) -- (1.15, 0) node[right] {$x$};
+    \draw[->, thick] (0, -1.05) -- (0, 1.15) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 境界円 ---
+    % 内円 (最小半径: 破線)
+    \draw[thick, dashed, teal!85!black] (O) circle (\qVal);
+    % 外円 (最大半径: 実線)
+    \draw[very thick, blue!85!black] (O) circle (\rMax);
+
+    % --- 5. 図2の元となる切断線分 (x = q, |y| <= p) の重畳表示 ---
+    % 太い実線で円環内に配置
+    \draw[line width=2.6pt, orange!90!black] (Qbot) -- (Qtop);
+
+    % 線分上の重要点プロット
+    \fill[teal!85!black] (Qmid) circle (0.7pt) node[below left=1pt, font=\scriptsize] {$(q, 0)$};
+    \fill[red!85!black]  (Qtop) circle (0.7pt) node[above right=1pt, font=\scriptsize, red!85!black] {$(q, p)$};
+    \fill[red!85!black]  (Qbot) circle (0.7pt) node[below right=1pt, font=\scriptsize, red!85!black] {$(q, -p)$};
+
+    % --- 6. 半径ベクトルと距離の対応関係 ---
+    % (i) 最小距離: 原点から (q, 0) へのベクトル (内円との接点)
+    \draw[->, thick, teal!85!black] (O) -- (Qmid);
+    \node[teal!95!black, font=\footnotesize, above=2pt] at ($ (O)!0.5!(Qmid) $) {$r_{\min} = q$};
+
+    % (ii) 最大距離: 原点から端点 (q, p) への動径ベクトル (外円上の点)
+    \draw[->, thick, red!85!black] (O) -- (Qtop);
+    \node[red!90!black, font=\footnotesize, above left=1pt] at ($ (O)!0.55!(Qtop) $) {$r_{\max} = \sqrt{p^2+q^2}$};
+
+    % 線分の引き出し線と注釈
+    \draw[<-, thin, orange!90!black] ($ (Qtop)!0.5!(Qmid) $) to[bend left=20] (1.05, 0.28)
+    node[right, font=\footnotesize, orange!90!black, align=left] {回転させる線分\\($x=q, \, |y| \le p$)};
+
+  \end{tikzpicture}
+  \caption{平面 $z=k$ での回転体の切断面（円環・斜線部）}
+  \label{fig:cross_section_annulus_with_segment}
+\end{figure}
+
+この面積$S(k)$は
+\begin{align}
+  S(k)=\pi(r_{max}^2- r_{min}^2) =\pi p^2
+\end{align}
+となる．従って求める体積$V$は
+\begin{align}
+  V
+  &=\int_0^{\sqrt{3}/4}S(k)dk \\
+  &=\dfrac{\pi}{4}\int_0^{\sqrt{3}/4}\left(1-\dfrac{4\sqrt{3}}{3}k\right)^2dk \\
+  &=\dfrac{\pi}{4}\left[\dfrac{\sqrt{3}}{12}\left(\dfrac{4\sqrt{3}}{3}k-1\right)^3\right]_0^{\sqrt{3}/4} \\
+  &=\dfrac{\sqrt{3}\pi}{48}\cdots\text{(答)}
+\end{align}
+となる．
+\newpage
 \end{document}

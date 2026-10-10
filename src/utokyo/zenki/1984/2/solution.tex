@@ -1,118 +1,111 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\usepackage{emath}
-\usepackage{emathPp}
-\usepackage{cases}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1984$年$2$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\preEqlabel{$\cdots$}
-\begin{oframed}
-  $xy$平面において，直線$x=0$を$L$とし，曲線$y=\log x$を$C$とする．さらに，$L$上，または
-  $C$上，または$L$と$C$に挟まれた部分にある点全体の集合を$A$とする．$A$に含まれ，直線
-  $L$に接し，かつ曲線$C$と点$(t,\log t)\quad (0<t)$において共通の接線を持つ　円の中心を
-  $\mathrm{P_t}$とする．
 
-  $\mathrm{P_t}$の$x$座標，$y$座標を$t$の関数として$x=f(t)$，$y=g(t)$と表した時，次の極限値は
-  どのような数となるか．
-\begin{enumerate}[i)]
-  \item $\dlim{t}{0}\dfrac{f(t)}{g(t)}$ \\
-  \item $\dlim{t}{+\infty}\dfrac{f(t)}{g(t)}$
-\end{enumerate}
-\end{oframed}
+{\bf[解]}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-{\bf[解]} $f(t)=f$などと略記する．グラフの概形は下のようになる．
+関数の引数をのぞいて$f(t)=f$などと略記する．グラフの概形は下のようになる．
 
-\begin{zahyou}[ul=10mm,Migiyohaku=45pt](-0.5,4)(-2,2)
-  \calcval{sqrt(2)/(1+sqrt(2))}\f
-  \calcval{1/(1+sqrt(2))}\g
-  \def\Fx{log (X)}
-  \def\Gx{X-1}
-  \def\Ft{\f+\f*cos(T)}
-  \def\Gt{\g+\f*sin(T)}
-  \YGurafu*[hidarix=0]\Fx
-  \YGurafu*\Gx
-  \BGurafu\Ft\Gt{0}{2*$pi}
-  \Put{(1,0)}[se]{$t$}
-  \tenretu*<perl>{P(\f,\g);Q(2,log(2))}
-  \Put\P[s]{$\mathrm{P_t}$}
-  \Put\migiT[se]{$l$}
-  \Put\Q[s]{$C$}
-  \kuromaru\P
-\end{zahyou}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
+    % t=2 の場合を代表例として図示
+    \draw[->] (-1.5,-1.1) -- (4,-1.1) node[right] {$x$};
+    \draw[->] (0,-1.3) -- (0,3.3) node[above] {$y$};
+    \node[below left] at (0,-1.1) {$O$};
 
-$C$のQ$(t,\log t)$での接線$l$は，
+    % 曲線 C: y=log x
+    \draw[thick, blue, domain=0.14:3.6, samples=60] plot ({\x}, {ln(\x)}) node[right] {$C$};
+
+    % 接線 l: y=x/t+\log t-1 (t=2)
+    \draw[thick] (-1.3,-0.957) -- (3.3,1.343) node[above right] {$l$};
+
+    % 円（中心 P_t，半径 f(t)）
+    \draw[thick] (1.382,1.929) circle (1.382);
+    \node at (1.382,2.6) {$A$};
+
+    % 接点 Q(t,\log t) と t 軸への垂線
+    \fill (2,0.693) circle (1.2pt) node[above left=1pt] {$Q$};
+    \draw[dashed] (2,0.693) -- (2,-1.1) node[below] {$t$};
+
+    % 円の中心 P_t と座標軸への垂線
+    \fill (1.382,1.929) circle (1.2pt) node[above right=1pt] {$\mathrm{P_t}$};
+    \draw[dashed] (1.382,1.929) -- (1.382,-1.1) node[below] {$f$};
+    \draw[dashed] (1.382,1.929) -- (0,1.929) node[left] {$g$};
+  \end{tikzpicture}
+  \caption{曲線 $C:y=\log x$ 上の点 $Q(t,\log t)$ における接線 $\ell$ と，$\ell$ に接し $Q$ を通る円（中心 $\mathrm{P_t}(f,g)$，半径 $f$）}
+\end{figure}
+
+$C$のQ$(t,\log t)$での接線$\ell$は，
 \begin{align}
-  l:y=\dfrac{1}{t}x+\log t-1
+  \ell:y=\dfrac{1}{t}x+\log t-1 \label{eq:1}
 \end{align}
 である．円が$L$と接することから，半径$r$として
 \begin{align}
-  r=f
+  r(t)=f(t) \label{eq:2}
 \end{align}
 である．故に円の方程式は
 \begin{align}
-  (x-f)^2+(y-g)^2=f^2
+  (x-f)^2+(y-g)^2=f^2 \label{eq:3}
 \end{align}
-さらに，円がQを通る条件から
+である．
+
+さらに，円が点$Q$を通る条件から
 \begin{align}
-  (t-f)^2+(\log t-g)^2=f^2\label{1}
+  (t-f)^2+(\log t-g)^2=f^2 \label{eq:4}
 \end{align}
-Qでの接線が$l$に一致することから
+である．また，Qでの接線が$l$に一致することから
 \begin{align}
   &l \perp\mathrm{P_tQ} \\
-  &\vtwo{t}{1}\cdot\vtwo{t-f}{\log t-g}=0 \\
-  &t(t-f)+(\log t-g)=0\atag\label{2}
+  &
+  \begin{pmatrix}t\\1
+  \end{pmatrix}\cdot
+  \begin{pmatrix}t-f\\\log t-g
+  \end{pmatrix}=0 \\
+  &t(t-f)+(\log t-g)=0 \label{eq:5}
 \end{align}
-である．\eqref{2}を\eqref{1}に代入して$g$を消去して
+である．
+
+\cref{eq:5}を\cref{eq:4}に代入して$g$を消去して
 \begin{align}
   &(t-f)^2+t^2(t-f)^2=f^2 \\
+  \therefore
   &(1+t^2)(t-f)^2=f^2
 \end{align}
-ここで，円が$A$に含まれることから
-\begin{align}
-  &t-f>0&f>0
-\end{align}
-だから
-\begin{align}
-  \sqrt{1+t^2}(t-f)=f \\
-  \therefore \,\, f=\dfrac{t\sqrt{1+t^2}}{1+\sqrt{1+t^2}}\atag\label{3}
-\end{align}
-である．\eqref{2}に代入して
-\begin{align}
-  g(t)=\dfrac{tf}{\sqrt{1+t^2}}+\log t\label{4}
-\end{align}
+を得る．
 
-さて，$h(t)=f(t)/g(t)$とおく．\eqref{4}の両辺$f(>0)$でわると
+ここで，円が$A$に含まれることから$t-f>0, f>0$だから両辺の平方根をとって
 \begin{align}
-  \dfrac{1}{h}&=\dfrac{t}{\sqrt{1+t^2}}+\dfrac{\log t}{f} \\
-  &=\dfrac{t}{\sqrt{1+t^2}}+\dfrac{1+\sqrt{1+t^2}}{t\sqrt{1+t^2}}\log t &(\because \eqref{3}) \\
-  &=\dfrac{t^2+(1+t^2)\log t}{t\sqrt{1+t^2}} \\
-  \therefore\,\, h&=\dfrac{t\sqrt{1+t^2}}{t^2+(1+t^2)\log t}
+  &\sqrt{1+t^2}(t-f)=f \\
+  \therefore
+  &f=\dfrac{t\sqrt{1+t^2}}{1+\sqrt{1+t^2}} \label{eq:6}
 \end{align}
-だから，
-\[h\limit{t}{+0}0\]
+である．
+
+\cref{eq:6}を\cref{eq:5}に代入して$g(t)$は
+\begin{align}
+  g(t)=\dfrac{tf}{\sqrt{1+t^2}}+\log t\label{eq:7}
+\end{align}
+とわかる．
+
+さて，$h(t)=f(t)/g(t)$とおく．\cref{eq:7}の両辺$f(>0)$でわると
+\begin{align}
+  \dfrac{1}{h}
+  &=\dfrac{t}{\sqrt{1+t^2}}+\dfrac{\log t}{f} \\
+  &=\dfrac{t}{\sqrt{1+t^2}}+\dfrac{1+\sqrt{1+t^2}}{t\sqrt{1+t^2}}\log t \quad (\because \text{\cref{eq:6}}) \\
+  &=\dfrac{t^2+(1+\sqrt{1+t^2})\log t}{t\sqrt{1+t^2}} \\
+  \therefore
+  h&=\dfrac{t\sqrt{1+t^2}}{t^2+(1+\sqrt{1+t^2})\log t}
+\end{align}
+だから，$t\to +0,\infty$での極限値は
+\begin{align}
+  \lim_{t\to +0}h(t) = 0
+\end{align}
 および
 \begin{align}
-  h=\dfrac{1}{\dfrac{t}{1\sqrt{1+t^2}}+\dfrac{\log t}{t}\dfrac{1+\sqrt{1+t^2}}{\sqrt{1+t^2}}}\limit{t}{\infty}1
+  h(t)
+  &=\dfrac{1}{\dfrac{t}{1\sqrt{1+t^2}}+\dfrac{\log t}{t}\dfrac{1+\sqrt{1+t^2}}{\sqrt{1+t^2}}} \\
+  &\xrightarrow{t\to\infty}1
 \end{align}
 である．$\cdots$(答)
 \newpage
-\end{multicols}
 \end{document}
