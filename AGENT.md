@@ -68,7 +68,13 @@ python3 scratch/tex_to_md.py src/titech/zenki/2000/1/problem.tex
 
 ## 4. 事前検証・目視検品プロトコル（必須手順）
 
-変換処理や変換コードを修正した後は、**必ず以下を順番に実行**すること：
+**通常の `solution.tex`/`problem.tex` の内容修正（数式・図・文章の訂正）では、以下の軽量フローで十分であり、全件変換・Astro フルビルドは不要**：
+1. `python3 scratch/lint_latex_style.py <対象ファイル>` で対象ファイルのみ lint
+2. `cd <対象ディレクトリ> && latexmk -lualatex -interaction=nonstopmode solution.tex` で単体コンパイル確認（図を直した場合は `pdftoppm` で PNG 化して目視確認。テスト成果物は8.1節8.の通り削除する）
+3. 必要なら `python3 scratch/tex_to_md.py <対象ファイルのパス>`（ピンポイントモード）で markdown 側も確認
+4. 全件変換・Astro フルビルドは「コミット直前の最終確認」または下記の「変換処理や変換コードを修正した後」にのみ行う
+
+変換処理や変換コードそのもの（`scratch/tex_to_md.py` 等）を修正した後は、**必ず以下を順番に実行**すること：
 
 1. **一括変換**:
    ```bash
