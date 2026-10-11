@@ -241,6 +241,102 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 * 近接する2点のラベルは `node[above left]` / `node[below]` 等でアンカー位置を調整し、重ならないようにする（実際に本作業で座標が近い2点のラベルが重なる不具合が発生したため、要注意）。
 * **空間図形（立体・切断面など3次元の図）は通常の2次元 `tikzpicture` で無理に描かず，`tikz-3dplot`（3D TikZ）を使う**。`src/titech/zenki/1985/2/solution.tex` の記法に従うこと：`\begin{tikzpicture}` の直前に視点を `\tdplotsetmaincoords{65}{120}`（極角・方位角。手書きのスケッチに近い見え方になる角度を選ぶ）で設定し，`\begin{tikzpicture}[tdplot_main_coords, scale=1.5]` のオプションに `tdplot_main_coords` を指定する。座標は `\coordinate (A) at (x,y,z);` のように3成分で与え，`\draw[dashed, thick] ...` で隠れ線（奥の辺）を，`\draw[thick] ...` で見える辺を描き分ける。断面や領域は `\fill[red!25, opacity=0.6] (P1) -- (P2) -- (P3) -- cycle;` のように半透明で塗ると奥行きが分かりやすい。メインプリアンブル（`scratch/generate_main_tex.py` の `PREAMBLE`）側で `\tdplotsetmaincoords{70}{110}` を既定値として一度呼んでいるが（5節参照），個々の図でそれと異なる視点を使う場合は図の直前で明示的に呼び直すこと。
 
+### 8.4.1. 基本方針・必須パッケージ
+
+* すべての TikZ コードは `\begin{figure}[htb] ... \end{figure}` で囲み、単独でコンパイル可能な最小構成（MWE）または埋め込み用ブロックとして出力する。
+* 必須ライブラリ:
+* 2D: `\usetikzlibrary{calc, patterns, angles, quotes}`
+* 3D: `\usepackage{tikz-3dplot}`
+* 共通オプション:
+* 基本設定: `\begin{tikzpicture}[scale=2.0, >=stealth, every node/.style={font=\small}]`* 縮尺は描画内容に応じて $1.2 \sim 3.2$ の範囲で視認性よく調整する。
+
+### 8.4.2. デザインシステム（視覚スタイル規約）
+
+#### 8.4.2.1 カラーパレット
+
+* **主曲線・主輪郭**: `blue!85!black`（太さ: `very thick`）
+* **副曲線・境界・対比線**: `red!85!black`, `teal!85!black`, `orange!90!black`（太さ: `thick` または `very thick`）
+* **座標軸**: `black`（太さ: `thick`, 矢印: `->`）
+* **補助線・投影線・切片ガイド**: `gray!70` または `gray!60`（線種: `dashed`）
+* **漸近線・参考線**: `gray!50`（線種: `dotted`）
+* **領域塗りつぶし（共通・重複領域）**:
+* ハッチング: `\fill[pattern=north east lines, pattern color=blue!60, opacity=0.8]`
+* 比較用別パターン: `horizontal lines`（`teal!70` や `blue!70`）
+* 複数面の重なり: `opacity=0.5 ～ 0.75` の薄いベタ塗り（例: `teal!15`, `blue!15`, `orange!25`）
+
+#### 8.4.2.2 点・ノードの表現
+
+* **一般プロット点 / 座標上の点**:
+* 黒塗り小丸: `\fill (coord) circle (0.5pt);`（重要点は `0.6pt ～ 0.8pt`）
+* 色付き強調点: `\fill[red!85!black] (coord) circle (0.7pt);`
+* **確率過程・木構造（世代木）のノード**:
+* **必ず白抜きの丸**を使用: `\draw[thick, fill=white] (coord) circle (2.5pt);`
+* 省略表現: 実線 $\rightarrow$ 中間白丸 $\rightarrow$ `\node at (...) {$\cdots$};` $\rightarrow$ 破線（`thick, dashed`） $\rightarrow$ 終端白丸
+* **白丸（端点・定義域外境界）**:
+* `\draw[fill=white, draw=blue!85!black, thick] (coord) circle (0.6pt);`
+
+#### 8.4.2.3 ラベル・注釈ボックス
+
+* **グラフ上の重要注釈**:
+* 白背景＋枠線付き角丸ボックスで背景と被らないように配置する。
+```latex
+\node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=2.5pt, font=\footnotesize, align=center]
+  at (x, y) {注釈テキスト};
+```
+* **引き出し線**:
+* `\draw[<-, thin, blue!85!black] (target) to[bend left=15] (label_pos) node[right, font=\footnotesize] {説明};`
+
+### 8.4.3. 分野別実装ルール
+
+#### 8.4.3.1 2D パラメータ平面・不等式領域
+
+* 不等式の境界が切り替わる折れ曲がり点や交点は、必ず交点座標を計算して破線で各軸へ投影する。
+* 領域ハッチングの閉路は `plot` と `-- cycle` を組み合わせて確実に閉じる。
+```latex
+\fill[pattern=north east lines, pattern color=blue!60, opacity=0.8]
+  plot[domain=x1:x2, samples=50] (\x, {f(\x)})
+  -- plot[domain=x2:x3, samples=50] (\x, {g(\x)})
+  -- (x3, y_top) -- (x1, y_top) -- cycle;
+
+```
+
+#### 8.4.3.2 3D 幾何および回転体
+
+* **視線角の設定**:
+* `\tdplotsetmaincoords{65}{115}` または `{70}{120}` を標準とし、各頂点や面が重なって潰れない角度を選ぶ。
+
+* **立体の前後関係**:
+* 奥に隠れる稜線・投影線は必ず `dashed, gray!60` で描く。
+* 手前の面は薄いカラー（`opacity=0.6` 程度）で透過塗りつぶしを行う。
+
+* **直交・等長記号**:
+* 中点等長マーク: ベクトル方向を算出し、短い2本線（`||`）を各線分中央に描画。
+* 面と直線の直交: 単位方向ベクトルを用いて立体的に整合する直角マークを描く。
+
+* **回転体の切断面**:
+* 円環領域は `even odd rule` でくり抜いてハッチングする。
+
+```latex
+\fill[pattern=north east lines, pattern color=blue!55, opacity=0.7, even odd rule]
+  (O) circle (r_max)
+  (O) circle (r_min);
+
+```
+* 外径 $r_{\max}$、内径 $r_{\min}$ の動径ベクトル矢印と、元の切断線分を重ねて表示する。
+
+### 8.4.4. 自動検証・ワークフロー（CLI 実行時）
+
+1. **構文の事前チェック**:
+* `pgfmath` の trigonometric 関数において、ラジアン指定時は引数に `r` を付ける（例: `sin(\x r)`）。
+* `\x` の累乗展開エラーを防ぐため、`\x^2` ではなく `(\x*\x)` を優先する。
+
+2. **コンパイル検証**:
+* コード生成後、CLI 側でテンポラリ `.tex` を作成し、`pdflatex -interaction=nonstopmode` または `lualatex` でコンパイルを実行する。
+* エラーが出た場合はログの行番号とエラーメッセージを解析し、自動でコードを修正・再実行する。
+
+3. **成果物**:
+* 修正済み LaTeX コードブロックと、成功した確認用 PNG 画像を出力する。
+
 ---
 
 ## 9. 開発環境の前提
