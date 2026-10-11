@@ -15,35 +15,81 @@ $x$軸($y=z=0$)を含み$(t,t,1)$を通る平面は
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \draw[->] (0,0,0) -- (2.5,0,0) node[right] {$y$};
-    \draw[->] (0,0,0) -- (0,2.5,0) node[above] {$z$};
-    \draw[->] (0,0,0) -- (0,0,2.5) node[below left] {$x$};
-    \node[below left] at (0,0,0) {$O$};
+  % 俯角 65°，方位角 115° で視認性を確保
+  \tdplotsetmaincoords{65}{115}
+  \begin{tikzpicture}[tdplot_main_coords, scale=1.8, >=stealth, every node/.style={font=\small}]
+    % $t=1.5$ を例にとり，$Y,Z$ も実際の式から計算する
+    \pgfmathsetmacro{\tval}{1.5}
+    \pgfmathsetmacro{\Yval}{\tval*(\tval*\tval-1)/(1+\tval*\tval)}
+    \pgfmathsetmacro{\Zval}{2*\tval*\tval/(1+\tval*\tval)}
 
-    \coordinate (P) at (1.5,0,1.5);
-    \coordinate (Q) at (1.5,0.8,0);
-    \coordinate (R) at (0.8,1.5,0);
-    \coordinate (N) at (1.15,1.15,0);
+    \coordinate (O) at (0,0,0);
+    \coordinate (P) at (\tval,\tval,0);
+    \coordinate (Q) at (\tval,\Yval,\Zval);
+    \coordinate (R) at (\Yval,\tval,\Zval);
+    \coordinate (N) at ({(\tval+\Yval)/2},{(\tval+\Yval)/2},\Zval);
 
-    \draw[dashed] (0,0,0) -- (P);
-    \draw[dashed] (0,0,0) -- (N);
-    \draw (Q) -- (R);
-    \draw (P) -- (Q);
-    \draw (P) -- (R);
-    \draw (P) -- (N);
+    % 対称の軸となる2平面 z=y/t（x軸を含む），z=x/t（y軸を含む）を薄く示す
+    \fill[blue!15, opacity=0.5] (0,0,0) -- (2.3,0,0) -- (2.3,2.3,{2.3/\tval}) -- (0,2.3,{2.3/\tval}) -- cycle;
+    \fill[orange!15, opacity=0.5] (0,0,0) -- (0,2.3,0) -- (2.3,2.3,{2.3/\tval}) -- (2.3,0,{2.3/\tval}) -- cycle;
+    \node[blue!55!black] at (2.0,0.6,{0.6/\tval}) {$z=\frac{y}{t}$};
+    \node[orange!70!black] at (0.6,2.0,{0.6/\tval}) {$z=\frac{x}{t}$};
 
-    \node[right] at (Q) {$Q$};
-    \node[above] at (R) {$R$};
-    \node[right] at (N) {$N$};
-    \node[below] at (P) {$P$};
+    % 座標軸
+    \draw[->, thick] (0,0,0) -- (2.6,0,0) node[right=2pt] {$x$};
+    \draw[->, thick] (0,0,0) -- (0,2.6,0) node[above right=2pt] {$y$};
+    \draw[->, thick] (0,0,0) -- (0,0,2.0) node[above=2pt] {$z$};
+    \node[below=6pt] at (O) {$O$};
+
+    % 四面体 O-PQR（$O$ から出る辺は奥に隠れるので破線）
+    \draw[dashed, gray!70] (O) -- (P);
+    \draw[dashed, gray!70] (O) -- (Q);
+    \draw[dashed, gray!70] (O) -- (R);
+    \fill[teal!15, opacity=0.75] (P) -- (Q) -- (R) -- cycle;
+    \draw[very thick, teal!70!black] (P) -- (Q) -- (R) -- cycle;
+
+    % 補助線：辺 QR の中点 N（体積計算で用いる）
+    \draw[dashed, gray!70] (O) -- (N);
+    \draw[thick] (P) -- (N);
+
+    \fill (O) circle (0.8pt);
+    \fill (P) circle (0.8pt) node[above right=1pt] {$P(t,t,0)$};
+    \fill (Q) circle (0.8pt) node[above left=2pt] {$Q(t,Y,Z)$};
+    \fill (R) circle (0.8pt) node[above right=2pt] {$R(Y,t,Z)$};
+    \fill (N) circle (0.8pt) node[below=3pt] {$N$};
   \end{tikzpicture}
-  \caption{四面体 $O$-$PQR$ と中点 $N$ の位置関係}
+  \caption{四面体$O$-$PQR$と，対称の軸となる2平面$z=\dfrac{y}{t}$（$x$軸を含む），$z=\dfrac{x}{t}$（$y$軸を含む）．$N$は辺$QR$の中点}
 \end{figure}
 
 $Q$の座標について考える．\cref{eq:1}が$x$を含まないから，$Q$も$x=t$上にあり，この平面でみた時の切断面は以下のようになる．
 
-% TODO: P, Q, z=y/tの2D図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
+    \pgfmathsetmacro{\tval}{1.5}
+    \pgfmathsetmacro{\Yval}{\tval*(\tval*\tval-1)/(1+\tval*\tval)}
+    \pgfmathsetmacro{\Zval}{2*\tval*\tval/(1+\tval*\tval)}
+
+    \draw[->] (-0.3,0) -- (2.2,0) node[right] {$y$};
+    \draw[->] (0,-0.3) -- (0,2.0) node[above] {$z$};
+
+    % 直線 z=y/t
+    \draw[thick] (-0.2,{-0.2/\tval}) -- (2.0,{2.0/\tval}) node[right] {$z=\frac{y}{t}$};
+
+    \coordinate (P) at (\tval,0);
+    \coordinate (Q) at (\Yval,\Zval);
+    \coordinate (M) at ({(\tval+\Yval)/2},{\Zval/2});
+    \coordinate (L) at ({(\tval+\Yval)/2+0.3},{\Zval/2+0.3/\tval});
+
+    \draw[dashed] (P) -- (Q);
+    \pic[draw, angle radius=5pt] {right angle=L--M--Q};
+
+    \fill (P) circle (1.2pt) node[below right=1pt] {$P(t,0)$};
+    \fill (Q) circle (1.2pt) node[above right=1pt] {$Q(Y,Z)$};
+    \fill (M) circle (1.2pt) node[below left=2pt] {$M$};
+  \end{tikzpicture}
+  \caption{平面$x=t$による切断面（$y$-$z$平面）．直線$z=\dfrac{y}{t}$に関して$P(t,0)$と対称な点が$Q(Y,Z)$であり，中点$M$はこの直線上にあり，線分$PQ$はこの直線と直交する}
+\end{figure}
 
 そこで$Q(t,Y,Z)$とおくと，$Q$と$P$が対称な点である条件は，$PQ$の中点$M$が\cref{eq:1}上にあることと，$\overrightarrow{PQ}$が\cref{eq:1}と直交することで
 \begin{align}
@@ -58,6 +104,98 @@ $Q$の座標について考える．\cref{eq:1}が$x$を含まないから，$Q$
   \end{cases} \label{eq:3}
 \end{align}
 となる．また，\cref{eq:1,eq:2}の対称性から$R$の座標は $R(Y, t, Z)$ となる．
+
+\begin{figure}[htb]
+  \centering
+  % 俯角 65°，方位角 120° で対称面 OPN と線分 QR の直交関係を明瞭に表示
+  \tdplotsetmaincoords{65}{120}
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. パラメータ設定 (t = 1.5) ---
+    \pgfmathsetmacro{\tval}{1.5}
+    \pgfmathsetmacro{\Yval}{\tval*(\tval*\tval - 1.0)/(1.0 + \tval*\tval)}
+    \pgfmathsetmacro{\Zval}{2.0*\tval*\tval/(1.0 + \tval*\tval)}
+    \pgfmathsetmacro{\Nxy}{(\tval + \Yval)/2.0}
+
+    % 各頂点・主要点の座標
+    \coordinate (O) at (0, 0, 0);
+    \coordinate (P) at (\tval, \tval, 0);
+    \coordinate (Q) at (\tval, \Yval, \Zval);
+    \coordinate (R) at (\Yval, \tval, \Zval);
+    \coordinate (N) at (\Nxy, \Nxy, \Zval);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!70] (0,0,0) -- (2.5, 0, 0) node[below left=1pt] {$x$};
+    \draw[->, thick, gray!70] (0,0,0) -- (0, 2.5, 0) node[right=2pt] {$y$};
+    \draw[->, thick, gray!70] (0,0,0) -- (0, 0, 2.2) node[above=2pt] {$z$};
+    \node[below=4pt] at (O) {$O$};
+
+    % --- 3. 四面体の奥側稜線（破線）---
+    \draw[dashed, gray!60] (O) -- (P);
+    \draw[dashed, gray!60] (O) -- (Q);
+    \draw[dashed, gray!60] (O) -- (R);
+
+    % --- 4. 対称面 三角形 OPN の塗りつぶし（キーとなる断面）---
+    \fill[orange!25, opacity=0.8] (O) -- (P) -- (N) -- cycle;
+    \draw[dashed, orange!80!black, thick] (O) -- (N);
+    \draw[very thick, orange!90!black] (P) -- (N);
+
+    % 面 OPN のラベル
+    \node[orange!90!black, font=\footnotesize] at ($ (O)!0.35!(P)!0.35!(N) $) {$\triangle OPN$};
+
+    % --- 5. 四面体 O-PQR の側面・底面の描画 ---
+    % 手前側の面 P-Q-R
+    \fill[teal!15, opacity=0.6] (P) -- (Q) -- (R) -- cycle;
+    \draw[very thick, teal!75!black] (P) -- (Q);
+    \draw[very thick, teal!75!black] (P) -- (R);
+
+    % 線分 QR（N で貫く）
+    \draw[very thick, blue!85!black] (Q) -- (R);
+
+    % --- 6. 直交マーク (PN ⊥ QR および ON ⊥ QR) ---
+    % N から P への単位方向ベクトル、および Q への単位方向ベクトルを用いて直角マークを作成
+    \path let
+    \p{NP} = ($ (P) - (N) $),
+    \p{NQ} = ($ (Q) - (N) $)
+    in
+    coordinate (uNP) at ({0.18*\x{NP}/veclen(\x{NP},\y{NP})}, {0.18*\y{NP}/veclen(\x{NP},\y{NP})})
+    coordinate (uNQ) at ({0.18*\x{NQ}/veclen(\x{NQ},\y{NQ})}, {0.18*\y{NQ}/veclen(\x{NQ},\y{NQ})});
+
+    % 直角記号（PN と QR）
+    \draw[thick, red!85!black]
+    ($ (N) + 0.18*(0, -1, 0) $) --
+    ($ (N) + 0.18*(0, -1, 0) + 0.18*(0.35, 0.35, -0.8) $) --
+    ($ (N) + 0.18*(0.35, 0.35, -0.8) $);
+
+    % 直角注釈
+    \node[red!85!black, font=\scriptsize, above right=1pt] at (N) {$QR \perp \text{面}OPN$};
+
+    % --- 7. 等長マーク（N が QR の中点：QN = NR）---
+    % QN の中央に2本線 (||)
+    \coordinate (midQN) at ($ (Q)!0.5!(N) $);
+    \draw[thick, blue!85!black] ($ (midQN) + (-0.03, -0.03, 0.07) $) -- ($ (midQN) + (0.03, 0.03, -0.07) $);
+    \draw[thick, blue!85!black] ($ (midQN) + (-0.01, -0.01, 0.07) $) -- ($ (midQN) + (0.05, 0.05, -0.07) $);
+
+    % NR の中央に2本線 (||)
+    \coordinate (midNR) at ($ (N)!0.5!(R) $);
+    \draw[thick, blue!85!black] ($ (midNR) + (-0.03, -0.03, 0.07) $) -- ($ (midNR) + (0.03, 0.03, -0.07) $);
+    \draw[thick, blue!85!black] ($ (midNR) + (-0.01, -0.01, 0.07) $) -- ($ (midNR) + (0.05, 0.05, -0.07) $);
+
+    % --- 8. 頂点プロットとラベル ---
+    \fill (O) circle (0.7pt);
+    \fill (P) circle (0.7pt) node[below right=1pt] {$P(t,t,0)$};
+    \fill[blue!85!black] (Q) circle (0.8pt) node[below left=2pt] {$Q(t,Y,Z)$};
+    \fill[blue!85!black] (R) circle (0.8pt) node[above right=2pt] {$R(Y,t,Z)$};
+    \fill[red!85!black]  (N) circle (0.8pt) node[above=4pt, red!85!black] {$N$};
+
+    % 中点であることの注釈
+    \draw[<-, thin, blue!80!black] (midNR) to[bend left=18] ($ (R) + (0.5, 0.2, 0.2) $)
+    node[right, font=\scriptsize, blue!90!black] {$QN = NR$};
+
+  \end{tikzpicture}
+  \caption{四面体 $O\text{-}PQR$ と対称面 $\triangle OPN$．$N$ は辺 $QR$ の中点であり，線分 $QR$ は平面 $OPN$ と垂直である}
+  \label{fig:tetrahedron_OPQR_midpoint_N}
+\end{figure}
 
 さて，以上より$O(0,0,0), P(t,t,0), Q(t,Y,Z), R(Y,t,Z)$を頂点とする四面体の体積$V$を求めれば良い．線分$QR$ の中点を $N((t+Y)/2,(t+Y)/2,Z)$ とすると，平面 $OPN$ に関して立体は対称かつ，線分$RN$は平面$OPN$と垂直だから，求める体積$V$は
 \begin{align}

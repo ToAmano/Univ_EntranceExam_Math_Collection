@@ -1,6 +1,528 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\newpage
-\end{multicols}
-\end{document}
+{\bf[解]}
+
+\begin{figure}[htb]
+  \centering
+  \tdplotsetmaincoords{70}{110}
+  \begin{tikzpicture}[scale=0.8, tdplot_main_coords, >=stealth, every node/.style={font=\small}]
+    % 三角形 ABC は平面 z=0 上にある
+    \coordinate (A) at (0,0,0);
+    \coordinate (B) at (8,0,0);
+    \coordinate (C) at (6,{2*sqrt(3)},0);
+    \coordinate (P) at (5,0,0);
+
+    % xy 平面を薄く示す
+    \draw[gray!40] (-2.5,-2.5,0) -- (10.5,-2.5,0) -- (10.5,6,0) -- (-2.5,6,0) -- cycle;
+
+    % 座標軸
+    \draw[->, gray] (0,0,0) -- (10.5,0,0) node[right] {$x$};
+    \draw[->, gray] (0,0,0) -- (0,6,0) node[above] {$y$};
+    \draw[->, gray] (0,0,0) -- (0,0,3) node[above] {$z$};
+
+    % 三角形 ABC
+    \draw[thick] (A) -- (B) -- (C) -- cycle;
+    \fill (A) circle (1.2pt) node[below left=1pt] {$A$};
+    \fill (B) circle (1.2pt) node[below right=1pt] {$B$};
+    \fill (C) circle (1.2pt) node[above=1pt] {$C$};
+
+    % 辺 AB 上に適当にとった点 P と，P を中心とする半径1の球
+    % （球の輪郭は常に真円になるよう，tdplot の傾いた基底ではなく
+    % 通常の等方なスケールに戻したスコープ内で円を描く）
+    \begin{scope}[x={(0.8cm,0cm)}, y={(0cm,0.8cm)}]
+      \shade[ball color=cyan!70, opacity=0.5] (P) circle (1);
+      \draw[gray] (P) circle (1);
+    \end{scope}
+    \fill (P) circle (1.2pt) node[below=2pt] {$P$};
+  \end{tikzpicture}
+  \caption{三角形$ABC$は平面上にあり，辺上の点$P$を中心とする半径$1$の球を考える．点$P$が三角形$ABC$の辺上を動くとき，この球が通過する部分全体が立体$K$である}
+\end{figure}
+
+三角形$ABC$の辺の長さを求めると，
+\begin{align}
+  AB &= 8 \\
+  BC &= \sqrt{(8-6)^2+(2\sqrt{3})^2} = \sqrt{4+12} = 4 \\
+  CA &= \sqrt{6^2+(2\sqrt{3})^2} = \sqrt{36+12} = 4\sqrt{3}
+\end{align}
+である．$BC^2+CA^2=16+48=64=AB^2$だから，三角形$ABC$は$\angle C=90°$の直角三角形であり，
+$\sin A=BC/AB=1/2$，$\sin B=CA/AB=\sqrt{3}/2$から$\angle A=30°$，$\angle B=60°$である．この様子を下図に示す．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.0, >=stealth, every node/.style={font=\small}]
+    \draw[->] (-1.5,0) -- (9,0) node[right] {$x$};
+    \draw[->] (0,-0.8) -- (0,4.4) node[above] {$y$};
+    \draw[thick] (0,0) -- (8,0) -- (6,{2*sqrt(3)}) -- cycle;
+    \fill (0,0) circle (1.5pt) node[below left=1pt] {$A$};
+    \fill (8,0) circle (1.5pt) node[below right=1pt] {$B$};
+    \fill (6,{2*sqrt(3)}) circle (1.5pt) node[above=1pt] {$C$};
+    \node[below=1pt] at (4,0) {$8$};
+    \node[above right=1pt] at (7,1.7) {$4$};
+    \node[above left=1pt] at (3,1.7) {$4\sqrt{3}$};
+    \node at (0.68,0.17) {$\frac{\pi}{6}$};
+    \node at (7.34,0.23) {$\frac{\pi}{3}$};
+    \node at (5.65,2.86) {$\frac{\pi}{2}$};
+  \end{tikzpicture}
+  \caption{三角形$ABC$．$\angle A=\dfrac{\pi}{6}$，$\angle B=\dfrac{\pi}{3}$，$\angle C=\dfrac{\pi}{2}$の直角三角形}
+\end{figure}
+
+点$P$が辺上を動くときにできる半径$1$の円の通過部分は下図の斜線部のようになる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.55, >=stealth, every node/.style={font=\small}]
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (8,0);
+    \coordinate (C) at (6,{2*sqrt(3)});
+    \coordinate (Ap) at ({2+sqrt(3)},1);
+    \coordinate (Bp) at ({8-sqrt(3)},1);
+    \coordinate (Cp) at ({(13-sqrt(3))/2},{(3*sqrt(3)-1)/2});
+    \coordinate (OAB1) at (0,-1);
+    \coordinate (OAB2) at (8,-1);
+    \coordinate (OBC2) at ({6+sqrt(3)/2},{2*sqrt(3)+0.5});
+    \coordinate (OCA2) at (-0.5,{sqrt(3)/2});
+
+    % 帯状部分を塗りつぶす
+    \path[fill=gray!25, even odd rule]
+    (OAB1) -- (OAB2) arc (-90:30:1) -- (OBC2) arc (30:120:1) -- (OCA2) arc (120:270:1) -- cycle
+    (Ap) -- (Bp) -- (Cp) -- cycle;
+
+    \draw[dashed] (OAB1) -- (OAB2) arc (-90:30:1) -- (OBC2) arc (30:120:1) -- (OCA2) arc (120:270:1) -- cycle;
+    \draw[dashed] (Ap) -- (Bp) -- (Cp) -- cycle;
+
+    \draw[thick] (A) -- (B) -- (C) -- cycle;
+    \fill (A) circle (1.5pt) node[below left=1pt] {$A$};
+    \fill (B) circle (1.5pt) node[below right=1pt] {$B$};
+    \fill (C) circle (1.5pt) node[above=1pt] {$C$};
+
+    \draw[<->] (2,0) -- (2,-1) node[midway, right=1pt] {$1$};
+  \end{tikzpicture}
+  \caption{半径$1$の円の通過部分（灰色部，面積$S$）．内側の破線が，辺を内側に$1$だけ移した小さい相似な三角形$\triangle$の境界}
+\end{figure}
+
+\subparagraph{(1)}
+
+下図のように，点$P$が辺上を動くときにできる半径$1$の円の通過部分の面積$S$は，三角形$ABC$から各辺を内側に距離$1$だけ移した小さい相似な三角形を除いた部分($\triangle P$）と，半径$1$の円（各頂点における扇形の中心角の和は外角の和$2\pi$に等しいから，合わせてちょうど1つの円になる，$\bigcirc Q$）と，3辺に沿った3つの長方形($\square X, \square Y, \square Z$)に分けられる．すなわち
+  \begin{align}
+    S = \triangle P + \bigcirc Q + \square X + \square Y + \square Z \label{eq:1}
+  \end{align}
+  である．
+
+  \begin{figure}[htb]
+    \centering
+    \begin{tikzpicture}[scale=1.3, >=stealth, every node/.style={font=\small}]
+      % 三角形 ABC の頂点
+      \coordinate (A) at (0,0);
+      \coordinate (B) at (8,0);
+      \coordinate (C) at (6,{2*sqrt(3)});
+
+      % 辺を内側に1だけ移した三角形 A'B'C'
+      \coordinate (Ap) at ({2+sqrt(3)},1);
+      \coordinate (Bp) at ({8-sqrt(3)},1);
+      \coordinate (Cp) at ({(13-sqrt(3))/2},{(3*sqrt(3)-1)/2});
+
+      % 外側に1だけ膨らませた境界上の点（各辺の外向き単位法線方向に1だけ移動）
+      \coordinate (OAB1) at (0,-1);
+      \coordinate (OAB2) at (8,-1);
+      \coordinate (OBC1) at ({8+sqrt(3)/2},0.5);
+      \coordinate (OBC2) at ({6+sqrt(3)/2},{2*sqrt(3)+0.5});
+      \coordinate (OCA1) at (5.5,{5*sqrt(3)/2});
+      \coordinate (OCA2) at (-0.5,{sqrt(3)/2});
+
+      % 直線 A'C', B'C', A'B' をそれぞれ延長した直線と三角形 ABC の辺との交点
+      \coordinate (EacAB) at (2,0);
+      \coordinate (EacBC) at (6.5,{3*sqrt(3)/2});
+      \coordinate (EbcCA) at ({(12-sqrt(3))/2},{(4*sqrt(3)-1)/2});
+      \coordinate (EbcAB) at ({8-2*sqrt(3)/3},0);
+      \coordinate (EabCA) at ({sqrt(3)},1);
+      \coordinate (EabBC) at ({8-sqrt(3)/3},1);
+
+      % A', B' から辺 AB への垂線の足（C' から CA, BC への垂線の足はそれぞれ EbcCA, EacBC と一致する）
+      \coordinate (FapAB) at ({2+sqrt(3)},0);
+      \coordinate (FapCA) at ({1.5+sqrt(3)},{1+sqrt(3)/2});
+      \coordinate (FbpAB) at ({8-sqrt(3)},0);
+      \coordinate (FbpBC) at ({8-sqrt(3)/2},1.5);
+
+      % \triangle P：三角形 ABC から A'B'C' を除いた部分を塗りつぶす
+      \path[fill=violet!12, even odd rule] (A) -- (B) -- (C) -- cycle (Ap) -- (Bp) -- (Cp) -- cycle;
+      \node[violet!55!black] at (1.3,0.5) {$\triangle P$};
+
+      % 扇形部分（3頂点分，合わせて \bigcirc Q）を共通の色で薄く塗りつぶす
+      \fill[red!15] (A) -- (OCA2) arc (120:270:1) -- cycle;
+      \fill[red!15] (B) -- (OAB2) arc (-90:30:1) -- cycle;
+      \fill[red!15] (C) -- (OBC2) arc (30:120:1) -- cycle;
+      \node[red!70!black] at (-0.63,-0.17) {$\bigcirc Q$};
+      \node[red!70!black] at (8.56,-0.33) {$\bigcirc Q$};
+      \node[red!70!black] at (6.17,4.09) {$\bigcirc Q$};
+
+      % 長方形部分 \square X, \square Y, \square Z を異なる色で薄く塗りつぶす
+      \fill[blue!15] (A) -- (B) -- (OAB2) -- (OAB1) -- cycle;
+      \fill[green!20] (B) -- (OBC1) -- (OBC2) -- (C) -- cycle;
+      \fill[orange!20] (C) -- (OCA1) -- (OCA2) -- (A) -- cycle;
+      \node[blue!70!black] at (4.0,-0.5) {$\square X$};
+      \node[green!50!black] at (7.433,1.982) {$\square Y$};
+      \node[orange!80!black] at (2.75,2.165) {$\square Z$};
+
+      % xy 座標軸（塗りつぶしより後に描き，隠れないようにする）
+      \draw[->] (-1.7,0) -- (9.3,0) node[right] {$x$};
+      \draw[->] (0,-1.3) -- (0,4.5) node[above] {$y$};
+
+      % 外側に1だけ膨らませた境界（破線）
+      \draw[dashed] (OAB1) -- (OAB2) arc (-90:30:1) -- (OBC2) arc (30:120:1) -- (OCA2) arc (120:270:1) -- cycle;
+
+      % 三角形 ABC
+      \draw[thick] (A) -- (B) -- (C) -- cycle;
+      \fill (A) circle (1.5pt) node[below left=1pt] {$A$};
+      \fill (B) circle (1.5pt) node[below right=1pt] {$B$};
+      \fill (C) circle (1.5pt) node[above=1pt] {$C$};
+
+      % A'C', C'B', B'A' をそれぞれ ABC の辺まで延長した点線
+      \draw[thick, dotted] (EacAB) -- (EacBC);
+      \draw[thick, dotted] (EbcCA) -- (EbcAB);
+      \draw[thick, dotted] (EabCA) -- (EabBC);
+
+      % 三角形 A'B'C'（実線）
+      \draw[thick] (Ap) -- (Bp) -- (Cp) -- cycle;
+
+      % A', B', C' から三角形 ABC の各辺に下ろした垂線（長さ1）
+      \draw[thick,dotted] (Ap) -- (FapAB);
+      \draw[thick,dotted] (Ap) -- (FapCA);
+      \draw[thick,dotted] (Bp) -- (FbpAB);
+      \draw[thick,dotted] (Bp) -- (FbpBC);
+      \draw[thick,dotted] (Cp) -- (EbcCA);
+      \draw[thick,dotted] (Cp) -- (EacBC);
+
+      \fill (Ap) circle (1.2pt) node[below=1pt] {$A'$};
+      \fill (Bp) circle (1.2pt) node[below=1pt] {$B'$};
+      \fill (Cp) circle (1.2pt) node[above=1pt] {$C'$};
+
+      % 各頂点から，延長線が三角形 ABC の辺と交わる点までの距離を両矢印で明示
+      \tikzset{dimarrow/.style={teal, very thick, {Stealth[length=3mm]}-{Stealth[length=3mm]}}}
+      %\draw[dimarrow] (A) -- (EacAB) node[midway, below=2pt, teal!70!black] {$2$};
+      %\draw[dimarrow] (A) -- (EabCA) node[midway, above left=0pt, teal!70!black] {$2$};
+      %\draw[dimarrow] (B) -- (EbcAB) node[midway, below=2pt, teal!70!black] {$\frac{2\sqrt{3}}{3}$};
+      %\draw[dimarrow] (B) -- (EabBC) node[midway, above right=0pt, teal!70!black] {$\frac{2\sqrt{3}}{3}$};
+      \draw[dimarrow] (C) -- (EbcCA) node[midway, above left=0pt, teal!70!black] {$1$};
+      \draw[dimarrow] (C) -- (EacBC) node[midway, above right=0pt, teal!70!black] {$1$};
+      % A, B, C からそれぞれ外側の境界へ下ろした垂線（扇形と長方形の境目，長さ1）
+      %\draw[dimarrow] (A) -- (OAB1) node[midway, right=1pt] {$1$};
+      %\draw[dimarrow] (A) -- (OCA2) node[midway, below right=-1pt] {$1$};
+      %\draw[dimarrow] (B) -- (OAB2) node[midway, left=1pt] {$1$};
+      %\draw[dimarrow] (B) -- (OBC1) node[midway, below left=-1pt] {$1$};
+      \draw[dimarrow] (C) -- (OCA1) node[midway, left=0pt, teal!70!black] {$1$};
+      \draw[dimarrow] (C) -- (OBC2) node[midway, above left=0pt, teal!70!black] {$1$};
+      \draw[dimarrow] (Ap) -- (FapAB) node[midway, left=0pt, teal!70!black] {$1$};
+    \end{tikzpicture}
+    \caption{三角形$ABC$と，辺を内側に$1$だけ移した三角形$A'B'C'$，円の通過領域．}
+  \end{figure}
+
+  \begin{figure}[htb]
+    \centering
+    \begin{tikzpicture}[scale=0.6, >=stealth, every node/.style={font=\small}]
+      % \triangle P（内側をくり抜く）
+      \path[fill=violet!12, even odd rule]
+      (0,0) -- (1.8,0) -- (0.9,1.4) -- cycle
+      (0.495,0.257) -- (1.305,0.257) -- (0.9,0.887) -- cycle;
+      \draw[thick] (0,0) -- (1.8,0) -- (0.9,1.4) -- cycle;
+      \draw[thin] (0.495,0.257) -- (1.305,0.257) -- (0.9,0.887) -- cycle;
+      \node[below=10pt] at (0.9,0) {$\triangle P$};
+      \node at (2.4,0.5) {$+$};
+
+      % \bigcirc Q
+      \fill[red!15] (3.4,0.6) circle (0.7);
+      \draw[thick] (3.4,0.6) circle (0.7);
+      \node[below=10pt] at (3.4,0) {$\bigcirc Q$};
+      \node at (4.5,0.5) {$+$};
+
+      % \square X
+      \fill[blue!15] (5.1,0) rectangle (7.5,0.5);
+      \draw[thick] (5.1,0) rectangle (7.5,0.5);
+      \node[below=4pt] at (6.3,0) {$\square X$};
+      \node at (7.9,0.3) {$+$};
+
+      % \square Y
+      \fill[green!20] (8.3,0) rectangle (9.5,0.5);
+      \draw[thick] (8.3,0) rectangle (9.5,0.5);
+      \node[below=4pt] at (8.9,0) {$\square Y$};
+      \node at (9.9,0.3) {$+$};
+
+      % \square Z
+      \fill[orange!20] (10.3,0) rectangle (12.4,0.5);
+      \draw[thick] (10.3,0) rectangle (12.4,0.5);
+      \node[below=4pt] at (11.35,0) {$\square Z$};
+    \end{tikzpicture}
+    \caption{$S$を構成する5つの部分．$\triangle P$：辺を内側に$1$だけ移した小三角形$A'B'C'$を$\triangle ABC$から除いた部分，$\bigcirc Q$：3頂点の扇形を合わせた半径$1$の円，$\square X,\square Y,\square Z$：辺$AB,BC,CA$に沿った幅$1$の長方形}
+  \end{figure}
+
+  以下各項を個別に考えよう．まず$\bigcirc Q$は半径$1$の円だから
+  \begin{align}
+    \bigcirc Q = \pi \label{eq:2}
+  \end{align}
+  である．ついで$\square X, \square Y, \square Z$はそれぞれ幅$1$, 長さは$AB,BC,CA$だから
+  \begin{align}
+    \square X+\square Y+\square Z
+    = 1\cdot\left(|AB|+|BC|+|CA|\right)
+    = 8+4+4\sqrt{3}
+    = 12 + 4\sqrt{3} \label{eq:3}
+  \end{align}
+  である．
+
+  \begin{figure}[htb]
+    \centering
+    \begin{tikzpicture}[scale=0.9, >=stealth, every node/.style={font=\small}]
+      % 三角形 ABC と，辺を内側に1だけ移した三角形 A'B'C'（図3と同じ座標）
+      \coordinate (A) at (0,0);
+      \coordinate (B) at (8,0);
+      \coordinate (C) at (6,{2*sqrt(3)});
+      \coordinate (Ap) at ({2+sqrt(3)},1);
+      \coordinate (Bp) at ({8-sqrt(3)},1);
+      \coordinate (Cp) at ({(13-sqrt(3))/2},{(3*sqrt(3)-1)/2});
+
+      \draw[thick] (A) -- (B) -- (C) -- cycle;
+      \draw[thick] (Ap) -- (Bp) -- (Cp) -- cycle;
+
+      \fill (A) circle (1.5pt) node[below left=1pt] {$A$};
+      \fill (B) circle (1.5pt) node[below right=1pt] {$B$};
+      \fill (C) circle (1.5pt) node[above=1pt] {$C$};
+      \fill (Ap) circle (1.2pt) node[below=1pt] {$A'$};
+      \fill (Bp) circle (1.2pt) node[below=1pt] {$B'$};
+      \fill (Cp) circle (1.2pt) node[above=1pt] {$C'$};
+
+      % 頂点 A（内角 theta=pi/6）を例に，直線 A'B' の延長が辺 AC と交わる点を M，
+      % A' から辺 AC へ下ろした垂線の足を N とする．
+      \draw (0.6,0) arc (0:30:0.6);
+      \node at (0.72,0.19) {$\theta$};
+
+      \coordinate (M) at ({sqrt(3)},1);
+      \coordinate (N) at ({1.5+sqrt(3)},{1+sqrt(3)/2});
+      \coordinate (H) at ({(12-sqrt(3))/2},{(4*sqrt(3)-1)/2});
+      \coordinate (K) at ({sqrt(3)},0);
+
+      \draw[thin,dotted] (Ap) -- (M);
+      \fill (M) circle (1.2pt) node[above left=-1pt] {$M$};
+
+      % M から辺 AB へ下ろした垂線の足が K（長さ1）
+      \draw[dashed] (M) -- (K) node[midway, right=1pt] {$1$};
+      \fill (K) circle (1.2pt) node[below=1pt] {$K$};
+
+      % A' から AC へ下ろした垂線の足が N（長さ1）
+      \draw[dashed] (Ap) -- (N) node[midway, right=1pt] {$1$};
+      \fill (N) circle (1.2pt) node[above left=-1pt] {$N$};
+
+      % C' から AC へ下ろした垂線の足が H（長さ1）
+      \draw[dashed] (Cp) -- (H) node[pos=0.3, left=1pt] {$1$};
+      \fill (H) circle (1.2pt) node[above left=1pt] {$H$};
+
+      % |AM|=1/sinθ，|MN|=1/tanθ，|CH|=1 を辺 AC 上で両矢印で明示
+      \tikzset{dimarrow/.style={teal, very thick, {Stealth[length=2.5mm]}-{Stealth[length=2.5mm]}}}
+      \draw[dimarrow] (A) -- (M) node[midway, above left=0pt, teal!70!black] {$\frac{1}{\sin\theta}$};
+      \draw[dimarrow] (M) -- (N) node[midway, above left=0pt, teal!70!black] {$\frac{1}{\tan\theta}$};
+      \draw[dimarrow] (C) -- (H) node[midway, above left=0pt, teal!70!black] {$1$};
+    \end{tikzpicture}
+    \caption{三角形$ABC$と，辺を内側に$1$だけ移した三角形$A'B'C'$．頂点$A$（内角$\theta=\dfrac{\pi}{6}$の場合を例示．一般の頂点，内角$\theta$でも同様）について，直線$A'B'$の延長が辺$AC$と交わる点を$M$とする．$M$から辺$AB$へ下ろした垂線の足を$K$とすると，垂線$MK$の長さが$1$であることから$|AM|=\dfrac{1}{\sin\theta}$．また，$A'$から辺$AC$へ下ろした垂線の足を$N$とすると，垂線$A'N$の長さが$1$であることから$|MN|=\dfrac{1}{\tan\theta}$．同様に$C'$から辺$AC$へ下ろした垂線の足を$H$とすると，垂線$C'H$の長さが$1$であることから$|CH|=1$}
+    \label{fig:tangent-construction}
+  \end{figure}
+
+  最後に$\triangle P$について考える．上図で内側の小さい三角形$A'B'C'$について考えると
+  \begin{align}
+    \begin{cases}
+      |A'C'| = |AC| - 1 - \dfrac{1}{\sin \pi/6} - \dfrac{1}{\tan \pi/6} = 4\sqrt{3}-(3+\sqrt{3}) = 3\sqrt{3} - 3\\
+      |B'C'| = |BC| - 1 - \dfrac{1}{\sin \pi/3} - \dfrac{1}{\tan \pi/3} = 4 - \left(1 +\dfrac{2}{\sqrt{3}} + \dfrac{1}{\sqrt{3}}\right) = 4- \left(1+\sqrt{3}\right)= 3 - \sqrt{3}
+    \end{cases}
+  \end{align}
+  だから，$\triangle P$は$\triangle ABC$から$\triangle A'B'C'$の面積を引いたもので
+  \begin{align}
+    \triangle P
+    &= \triangle ABC - \triangle A'B'C' \\
+    &= \dfrac{|AC||CB|}{2} - \dfrac{|A'C'||C'B'|}{2} \\
+    &= \dfrac{16\sqrt{3}}{2} - \dfrac{(3\sqrt{3}-3)(3-\sqrt{3})}{2} \\
+    &= 8\sqrt{3} - (-9+6\sqrt{3}) \\
+    &= 9+2\sqrt{3} \label{eq:4}
+  \end{align}
+  である．
+
+  \cref{eq:2,eq:3,eq:4}を\cref{eq:1}に代入して求める面積は
+  \begin{align}
+    S &= (9+2\sqrt{3}) + \pi + (12+4\sqrt{3}) \\
+    &= 21+6\sqrt{3}+\pi \quad \cdots\text{(答)}
+  \end{align}
+  である．
+
+  \subparagraph{(2)}
+
+  表記の簡略化のため$c=\cos\theta$，$s=\sin\theta$（$0\le\theta\le\pi$）とおく．
+  平面$z=c$による立体$K$の切り口を考える．
+  この平面での球の切り口は半径$\sqrt{1-c^2}=s$の円である．
+  よって(1)と同様に考えると，
+  三角形$ABC$のまわりを半径$s$の円が通過した部分である．
+  この面積を$S(z)$とすると，(1)の計算の$1$を$s$に置き換えて計算すれば良い．
+
+  \begin{figure}[htb]
+    \centering
+    \begin{tikzpicture}[scale=1.3, >=stealth, every node/.style={font=\small}]
+      \pgfmathsetmacro{\soff}{0.8}
+      % 三角形 ABC の頂点
+      \coordinate (A) at (0,0);
+      \coordinate (B) at (8,0);
+      \coordinate (C) at (6,{2*sqrt(3)});
+
+      % 辺を内側に s だけ移した三角形 A'B'C'
+      \coordinate (Ap) at ({\soff*(2+sqrt(3))},\soff);
+      \coordinate (Bp) at ({8-\soff*sqrt(3)},\soff);
+      \coordinate (Cp) at ({2*\soff+6-\soff*(sqrt(3)+3)/2},{(4*sqrt(3)-\soff*(1+sqrt(3)))/2});
+
+      % 外側に s だけ膨らませた境界上の点
+      \coordinate (OAB1) at (0,{-\soff});
+      \coordinate (OAB2) at (8,{-\soff});
+      \coordinate (OBC1) at ({8+\soff*sqrt(3)/2},{\soff/2});
+      \coordinate (OBC2) at ({6+\soff*sqrt(3)/2},{2*sqrt(3)+\soff/2});
+      \coordinate (OCA1) at ({6-\soff/2},{2*sqrt(3)+\soff*sqrt(3)/2});
+      \coordinate (OCA2) at ({-\soff/2},{\soff*sqrt(3)/2});
+
+      % 直線 A'C', B'C', A'B' をそれぞれ延長した直線と三角形 ABC の辺との交点
+      \coordinate (EacAB) at ({2*\soff},0);
+      \coordinate (EacBC) at ({6+\soff/2},{sqrt(3)*(4-\soff)/2});
+      \coordinate (EbcCA) at ({6-sqrt(3)*\soff/2},{2*sqrt(3)-\soff/2});
+      \coordinate (EbcAB) at ({8-2*sqrt(3)*\soff/3},0);
+      \coordinate (EabCA) at ({sqrt(3)*\soff},\soff);
+      \coordinate (EabBC) at ({8-sqrt(3)*\soff/3},\soff);
+
+      % A', B' から辺 AB への垂線の足（C' から CA, BC への垂線の足はそれぞれ EbcCA, EacBC と一致する）
+      \coordinate (FapAB) at ({\soff*(2+sqrt(3))},0);
+      \coordinate (FapCA) at ({\soff*(1.5+sqrt(3))},{\soff*(1+sqrt(3)/2)});
+      \coordinate (FbpAB) at ({8-\soff*sqrt(3)},0);
+      \coordinate (FbpBC) at ({8-\soff*sqrt(3)/2},{1.5*\soff});
+
+      % \triangle P：三角形 ABC から A'B'C' を除いた部分を塗りつぶす
+      \path[fill=violet!12, even odd rule] (A) -- (B) -- (C) -- cycle (Ap) -- (Bp) -- (Cp) -- cycle;
+      \node[violet!55!black] at (1.1,0.45) {$\triangle P$};
+
+      % 扇形部分（半径 s，3頂点分，合わせて \bigcirc Q）を共通の色で薄く塗りつぶす
+      \fill[red!15] (A) -- (OCA2) arc (120:270:\soff) -- cycle;
+      \fill[red!15] (B) -- (OAB2) arc (-90:30:\soff) -- cycle;
+      \fill[red!15] (C) -- (OBC2) arc (30:120:\soff) -- cycle;
+      \node[red!70!black] at (-0.5,-0.14) {$\bigcirc Q$};
+      \node[red!70!black] at (8.45,-0.26) {$\bigcirc Q$};
+      \node[red!70!black] at (6.14,3.97) {$\bigcirc Q$};
+
+      % 長方形部分（幅 s）\square X, \square Y, \square Z を異なる色で薄く塗りつぶす
+      \fill[blue!15] (A) -- (B) -- (OAB2) -- (OAB1) -- cycle;
+      \fill[green!20] (B) -- (OBC1) -- (OBC2) -- (C) -- cycle;
+      \fill[orange!20] (C) -- (OCA1) -- (OCA2) -- (A) -- cycle;
+      \node[blue!70!black] at (4.0,-0.4) {$\square X$};
+      \node[green!50!black] at (7.35,1.93) {$\square Y$};
+      \node[orange!80!black] at (2.8,2.08) {$\square Z$};
+
+      % xy 座標軸（塗りつぶしより後に描き，隠れないようにする）
+      \draw[->] (-1.7,0) -- (9.3,0) node[right] {$x$};
+      \draw[->] (0,-1.3) -- (0,4.5) node[above] {$y$};
+
+      % 外側に s だけ膨らませた境界（破線）
+      \draw[dashed] (OAB1) -- (OAB2) arc (-90:30:\soff) -- (OBC2) arc (30:120:\soff) -- (OCA2) arc (120:270:\soff) -- cycle;
+
+      % 三角形 ABC
+      \draw[thick] (A) -- (B) -- (C) -- cycle;
+      \fill (A) circle (1.5pt) node[below left=1pt] {$A$};
+      \fill (B) circle (1.5pt) node[below right=1pt] {$B$};
+      \fill (C) circle (1.5pt) node[above=1pt] {$C$};
+
+      % A'C', C'B', B'A' をそれぞれ ABC の辺まで延長した点線
+      \draw[thick, dotted] (EacAB) -- (EacBC);
+      \draw[thick, dotted] (EbcCA) -- (EbcAB);
+      \draw[thick, dotted] (EabCA) -- (EabBC);
+
+      % 三角形 A'B'C'（実線）
+      \draw[thick] (Ap) -- (Bp) -- (Cp) -- cycle;
+
+      % A', B', C' から三角形 ABC の各辺に下ろした垂線（長さ s）
+      \draw[thick,dotted] (Ap) -- (FapAB);
+      \draw[thick,dotted] (Ap) -- (FapCA);
+      \draw[thick,dotted] (Bp) -- (FbpAB);
+      \draw[thick,dotted] (Bp) -- (FbpBC);
+      \draw[thick,dotted] (Cp) -- (EbcCA);
+      \draw[thick,dotted] (Cp) -- (EacBC);
+
+      \fill (Ap) circle (1.2pt) node[below=1pt] {$A'$};
+      \fill (Bp) circle (1.2pt) node[below right=-1pt] {$B'$};
+      \fill (Cp) circle (1.2pt) node[above=1pt] {$C'$};
+
+      % 各頂点から，延長線が三角形 ABC の辺と交わる点までの距離を両矢印で明示
+      \tikzset{dimarrow/.style={teal, very thick, {Stealth[length=3mm]}-{Stealth[length=3mm]}}}
+      %\draw[dimarrow] (A) -- (EacAB) node[midway, below=2pt, teal!70!black] {$2s$};
+      %\draw[dimarrow] (A) -- (EabCA) node[midway, above left=0pt, teal!70!black] {$2s$};
+      %\draw[dimarrow] (B) -- (EbcAB) node[midway, below=2pt, teal!70!black] {$\frac{2\sqrt{3}}{3}s$};
+      %\draw[dimarrow] (B) -- (EabBC) node[midway, above right=0pt, teal!70!black] {$\frac{2\sqrt{3}}{3}s$};
+      \draw[dimarrow] (C) -- (EbcCA) node[pos=0.7, above left=0pt, teal!70!black] {$s$};
+      \draw[dimarrow] (C) -- (EacBC) node[pos=0.7, above right=0pt, teal!70!black] {$s$};
+      % A, B, C からそれぞれ外側の境界へ下ろした垂線（扇形と長方形の境目，長さ s）
+      %\draw[dimarrow] (A) -- (OAB1) node[midway, right=1pt] {$s$};
+      %\draw[dimarrow] (A) -- (OCA2) node[midway, below right=-1pt] {$s$};
+      %\draw[dimarrow] (B) -- (OAB2) node[midway, left=1pt] {$s$};
+      %\draw[dimarrow] (B) -- (OBC1) node[midway, below left=-1pt] {$s$};
+      \draw[dimarrow] (C) -- (OCA1) node[pos=0.7, above left=0pt, teal!70!black] {$s$};
+      \draw[dimarrow] (C) -- (OBC2) node[pos=0.7, above right=0pt, teal!70!black] {$s$};
+      \draw[dimarrow] (Ap) -- (FapAB) node[midway, left=0pt, teal!70!black] {$s$};
+    \end{tikzpicture}
+    \caption{半径$s$の円が三角形$ABC$の辺上を通過した部分．三角形$ABC$から各辺を内側に距離$s$だけ移した三角形$A'B'C'$を除いた部分$\triangle P$，半径$s$の扇形を合わせた円$\bigcirc Q$，幅$s$の長方形$\square X,\square Y,\square Z$に分けられる}
+  \end{figure}
+
+  (1)と同様に図形をラベルすると，それぞれの面積は
+  \begin{align}
+    \bigcirc Q = s^2 \pi
+  \end{align}
+  \begin{align}
+    \square X+\square Y+\square Z = s\left(12+4\sqrt{3}\right)
+  \end{align}
+  \begin{align}
+    \triangle P
+    &= 8\sqrt{3} - \dfrac{1}{2}\left[4\sqrt{3}-\left(3+\sqrt{3}\right)s\right]\left[4 - \left(1+\sqrt{3}\right)s\right] \\
+    &= 2\sqrt{3}\left(1+\sqrt{3}\right)s + 2\left(3+\sqrt{3}\right)s - \dfrac{1}{2}\left(3+\sqrt{3}\right)\left(1+\sqrt{3}\right)s^2 \\
+    &= 4\sqrt{3}\left(1+\sqrt{3}\right)s - \left(3+2\sqrt{3}\right)s^2
+  \end{align}
+  だから，
+  \begin{align}
+    S(z)
+    &= - \left(3+2\sqrt{3}\right)s^2 + 4\sqrt{3}\left(1+\sqrt{3}\right)s + s^2 \pi + s\left(12+4\sqrt{3}\right) \\
+    &= - \left(3+2\sqrt{3}\right)s^2 + 8\sqrt{3}\left(1+\sqrt{3}\right)s + s^2 \pi \label{eq:5}
+  \end{align}
+  である．
+
+  もとめる体積$V$は対称性（$S(z)$は$z$の偶関数）から
+  \begin{align}
+    \dfrac{1}{2}V = \int_0^1 S(z)\,dz \label{eq:6}
+  \end{align}
+  である．
+
+  $z=c=\cos\theta$と置換すると，$dz=-s\,d\theta$であり，$z:0\to1$は$\theta:\dfrac{\pi}{2}\to0$に対応するから，\cref{eq:5,eq:6}より
+  \begin{align}
+    \dfrac{1}{2}V = \int_0^{\frac{\pi}{2}} \left[\left\{-(3+2\sqrt{3})+\pi\right\}s^2+2(12+4\sqrt{3})s \right]s\,d\theta \label{eq:7}
+  \end{align}
+  となる．各項を個別に計算すると
+  \begin{align}
+    (\text{第一項})
+    &= \int_0^{\frac{\pi}{2}} s^3\,d\theta \\
+    &= \int_0^{\frac{\pi}{2}} \dfrac{1}{4}(3s-\sin3\theta)\,d\theta \\
+    &= \left[-\dfrac{3}{4}c+\dfrac{1}{12}\cos3\theta\right]_0^{\frac{\pi}{2}} \\
+    &= \dfrac{3}{4}-\dfrac{1}{12} \\
+    &= \dfrac{2}{3} \\
+    (\text{第二項})
+    &= \int_0^{\frac{\pi}{2}} s^2\,d\theta \\
+    &= \dfrac{1}{2}\left[\theta-\dfrac{1}{2}\sin2\theta\right]_0^{\frac{\pi}{2}} \\
+    &= \dfrac{\pi}{4}
+  \end{align}
+  だから，\cref{eq:7}に代入して
+  \begin{align}
+    \dfrac{1}{2}V
+    = (\pi-3-2\sqrt{3})\cdot\dfrac{2}{3} + 2(12+4\sqrt{3})\cdot\dfrac{\pi}{4}
+  \end{align}
+  となり，
+  \begin{align}
+    V
+    &= \dfrac{4}{3}(\pi-3-2\sqrt{3}) + (12+4\sqrt{3})\pi \\
+    &= 4\left(\dfrac{10}{3}+\sqrt{3}\right)\pi - 4\left(1+\dfrac{2}{3}\sqrt{3}\right) \quad \cdots\text{(答)}
+  \end{align}
+  である．
+
+  \newpage
+  \end{document}

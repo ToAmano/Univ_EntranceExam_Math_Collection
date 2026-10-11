@@ -3,6 +3,66 @@
 
 {\bf[解]}
 
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・角度パラメータ (t = 55° の配置) ---
+    \def\tVal{55}
+    \pgfmathsetmacro{\xP}{cos(\tVal)}
+    \pgfmathsetmacro{\yP}{sin(\tVal)}
+    \pgfmathsetmacro{\xQ}{cos(2*\tVal)}
+    \pgfmathsetmacro{\yQ}{sin(2*\tVal)}
+
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (1.0, 0);
+    \coordinate (P) at (\xP, \yP);
+    \coordinate (Q) at (\xQ, \yQ);
+    \coordinate (R) at (\xP, 0);
+    \coordinate (S) at (\xQ, 0);
+
+    % --- 2. 座標軸と単位円 ---
+    \draw[->, thick] (-1.25, 0) -- (1.35, 0) node[right] {$x$};
+    \draw[->, thick] (0, -1.25) -- (0, 1.35) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 単位円
+    \draw[thick, gray!75] (O) circle (1.0);
+
+    % --- 3. 動径 OP, OQ ---
+    \draw[very thick, black] (O) -- (P);
+    \draw[very thick, black] (O) -- (Q);
+
+    % --- 4. x 軸への垂線と線分 RS ---
+    \draw[dashed, blue!80!black] (P) -- (R);
+    \draw[dashed, blue!80!black] (Q) -- (S);
+
+    % 線分 RS の強調 (太線)
+    \draw[line width=2.2pt, red!85!black] (S) -- (R);
+    \node[red!85!black, font=\scriptsize, below=3pt] at ($ (S)!0.5!(R) $) {$|RS|$};
+
+    % --- 5. 角度の表示 (A から P への t、P から Q への t) ---
+    % 角 AOP = t
+    \draw[purple!85!black, thick] (0.28, 0) arc (0:\tVal:0.28);
+    \node[purple!90!black, font=\footnotesize] at (27:0.4) {$t$};
+
+    % 角 POQ = t
+    \draw[purple!85!black, thick] (\tVal:0.32) arc (\tVal:{2*\tVal}:0.32);
+    \node[purple!90!black, font=\footnotesize] at ({1.5*\tVal}:0.46) {$t$};
+
+    % --- 6. 点のプロットとラベル ---
+    \fill (O) circle (0.6pt);
+    \fill (A) circle (0.7pt) node[below right=1pt] {$A(1,0)$};
+    \fill[blue!85!black] (P) circle (0.8pt) node[above right=1pt, blue!90!black] {$P(\cos t, \sin t)$};
+    \fill[blue!85!black] (Q) circle (0.8pt) node[above left=1pt, blue!90!black] {$Q(\cos 2t, \sin 2t)$};
+    \fill[red!85!black]  (R) circle (0.7pt) node[below=2pt, red!85!black] {$R$};
+    \fill[red!85!black]  (S) circle (0.7pt) node[below=2pt, red!85!black] {$S$};
+
+  \end{tikzpicture}
+  \caption{単位円上の動点 $P, Q$ と $x$ 軸への垂足 $R, S$}
+  \label{fig:circle_points_P_Q_R_S}
+\end{figure}
+
 線分$OA$から線分$OP$へ向かう角度を$t\, (0\le t<2\pi)$とする．
 すると題意より$P,Q$の座標は$P(\cos t,\sin t)$，$Q(\cos 2t,\sin 2t )$となる．
 故にこれらの$x$軸の垂足は$R(\cos t,0)$，$Q(\cos 2t,0)$であるから，線分$|RS|$の長さは
@@ -12,30 +72,129 @@
 \end{align}
 である．$y=f(t)$のグラフは横軸を$\cos t$にとると以下のようになる．
 
-% TODO: 図
-% \begin{center}
-%   \scalebox{0.7}{\input{ut-85-2p}}
-% \end{center}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
 
-従って，$\cos t$と$l$の対応関係は以下のようになる．
-% TODO: 表
+    % --- 1. 座標軸 (横軸 u = cos t, 縦軸 y) ---
+    \draw[->, thick] (-1.35, 0) -- (1.35, 0) node[right] {$u = \cos t$};
+    \draw[->, thick] (0, -1.35) -- (0, 2.35) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
 
-$t$と$\cos t$の数の対応関係は以下のようである．
-% TODO: 表
+    % --- 2. 2次関数の折り返し前 (破線) ---
+    % y = 2u^2 - u - 1 on [-0.5, 1]
+    \draw[dashed, gray!60, domain=-0.5:1.0, samples=50]
+    plot (\x, {2.0*\x*\x - \x - 1.0});
+
+    % --- 3. グラフ y = |2u^2 - u - 1| (実線・太線) ---
+    % 区間 [-1, -0.5]: y = 2u^2 - u - 1
+    \draw[very thick, blue!85!black, domain=-1.0:-0.5, samples=40]
+    plot (\x, {2.0*\x*\x - \x - 1.0});
+
+    % 区間 [-0.5, 1]: y = -(2u^2 - u - 1)
+    \draw[very thick, blue!85!black, domain=-0.5:1.0, samples=60]
+    plot (\x, {-(2.0*\x*\x - \x - 1.0)});
+
+    % --- 4. 直線 y = l の描画 (0 < l < 9/8 の代表例として l = 0.65) ---
+    \def\lVal{0.65}
+    \draw[thick, red!85!black] (-1.25, \lVal) -- (1.25, \lVal)
+    node[right=2pt, red!85!black, font=\footnotesize] {$y = l$};
+    \draw[gray!80!black] (-0.03, \lVal) -- (0.03, \lVal);
+    \node[above left=2pt, font=\scriptsize, red!85!black] at (0, \lVal) {$l$};
+
+    % 直線 y = l とグラフの3つの交点プロット
+    % 2u^2 - u - 1 = l  => u = (1 - sqrt(1 + 8(1+l))) / 4
+    % -(2u^2 - u - 1) = l => 2u^2 - u - (1-l) = 0 => u = (1 \pm sqrt(1 + 8(1-l))) / 4
+    \pgfmathsetmacro{\uOne}{(1.0 - sqrt(9.0 + 8.0*\lVal)) / 4.0}
+    \pgfmathsetmacro{\uTwo}{(1.0 - sqrt(9.0 - 8.0*\lVal)) / 4.0}
+    \pgfmathsetmacro{\uThree}{(1.0 + sqrt(9.0 - 8.0*\lVal)) / 4.0}
+
+    \fill[red!85!black] (\uOne, \lVal) circle (0.6pt);
+    \fill[red!85!black] (\uTwo, \lVal) circle (0.6pt);
+    \fill[red!85!black] (\uThree, \lVal) circle (0.6pt);
+
+    % --- 5. 特徴的な点と座標補助線 ---
+    % (i) 端点 (-1, 2)
+    \draw[dashed, gray!70] (-1.0, 0) -- (-1.0, 2.0) -- (0, 2.0);
+    \fill[blue!85!black] (-1.0, 2.0) circle (0.7pt);
+    \node[left=2pt, font=\scriptsize] at (0, 2.0) {$2$};
+    \node[below=2pt, font=\scriptsize] at (-1.0, 0) {$-1$};
+
+    % (ii) 頂点 (1/4, 9/8)
+    \draw[dashed, gray!70] (0.25, 0) -- (0.25, 1.125) -- (0, 1.125);
+    \fill[blue!85!black] (0.25, 1.125) circle (0.7pt);
+    \node[left=2pt, font=\scriptsize] at (0, 1.125) {$\frac{9}{8}$};
+    \node[below=2pt, font=\scriptsize] at (0.25, 0) {$\frac{1}{4}$};
+
+    % (iii) 零点 u = -1/2, u = 1
+    \fill[blue!85!black] (-0.5, 0) circle (0.7pt);
+    \node[below left=1pt, font=\scriptsize] at (-0.5, 0) {$-\frac{1}{2}$};
+
+    \fill[blue!85!black] (1.0, 0) circle (0.7pt);
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+
+    % --- 6. グラフのラベル ---
+    \node[blue!90!black, font=\footnotesize, right] at (0.55, 1.25)
+    {$y = |(2u+1)(u-1)|$};
+
+  \end{tikzpicture}
+  \caption{関数 $y = |2\cos^2 t - \cos t - 1|$ のグラフと直線 $y = l$ の交点}
+  \label{fig:graph_cos_t_f_with_line}
+\end{figure}
+
+線分$|RS|$の長さと$l$の対応関係は，$y=f(t)$と$y=l$の共有点である．
+従って図から$\cos t$と$l$の対応関係は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$\cos t$ と $l$ の対応関係}
+  \label{tab:cos_t_and_l}
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabular}{c|c|l}
+    \hline
+    $l$ の値・範囲 & $\cos t$ の個数 & \multicolumn{1}{c}{$\cos t$ の具体的な値・範囲} \\ \hline\hline
+    $l = 0$ & $2$ & $\cos t = -\dfrac{1}{2}, \; 1$ \\[4pt]
+    $0 < l < \dfrac{9}{8}$ & $3$ & $-1 < \cos t < 1$に$3$個 \\[4pt]
+    $l = \dfrac{9}{8}$     & $2$ & $-1 < \cos t < 1$に$2$個 \\[4pt]
+    $\dfrac{9}{8} < l < 2$ & $1$ & $-1 < \cos t < 1$ に $1$ 個 \\[4pt]
+    $l = 2$ & $1$ & $\cos t = -1$ \\[4pt]
+    $l > 2$ & $0$ & なし \\ \hline
+  \end{tabular}
+\end{table}
+
+また，$t$と$\cos t$の数の対応関係は以下のようである．
+
+\begin{table}[htb]
+  \centering
+  \caption{$\cos t$ の値と $t$ ($0 \le t < 2\pi$) の個数の対応}
+  \label{tab:cos_t_correspondence}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{c|c|l}
+    \hline
+    $\cos t$ の値 & $t$ の個数 & \multicolumn{1}{c}{具体例・備考} \\ \hline
+    $\cos t = \pm 1 $ & $1$ 個 & $t = 0, \pi$ \\ \hline
+    $-1 < \cos t < 1$ & $2$ 個 & otherwise \\ \hline
+  \end{tabular}
+\end{table}
 
 よって，$t$と$P, Q$の位置関係が一対一対応であることより，求める場合の数は以下の通りである．$\cdots$(答)
 
-\begin{align}
-  \begin{array}{|c|c|c|c|} \hline
-    l              & \cos t  & t & \text{$P,Q$の位置の数}　\\ \hline
-    0             & 2 & 3 & 3 \\ \hline
-    0<l<9/8   & 3 & 6 & 6 \\ \hline
-    9/8          & 2 & 4 & 4 \\ \hline
-    9/8<l<2   & 1 & 2 & 2 \\ \hline
-    2             & 1 & 1 & 1 \\ \hline
-    2<l          & 0 & 0 & 0 \\ \hline
-  \end{array}
-\end{align}
+\begin{table}[htb]
+  \centering
+  \caption{$l$ の値に対する解の個数の対応}
+  \label{tab:l_solution_counts}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{c|c|c|c}
+    \hline
+    $l$ & $\cos t$ の個数 & $t$ の個数 & $P, Q$ の位置の数 \\ \hline
+    $0$ & $2$ & $3$ & $3$ \\ \hline
+    $0 < l < \dfrac{9}{8}$ & $3$ & $6$ & $6$ \\ \hline
+    $\dfrac{9}{8}$ & $2$ & $4$ & $4$ \\ \hline
+    $\dfrac{9}{8} < l < 2$ & $1$ & $2$ & $2$ \\ \hline
+    $2$ & $1$ & $1$ & $1$ \\ \hline
+    $2 < l$ & $0$ & $0$ & $0$ \\ \hline
+  \end{tabular}
+\end{table}
 
 \newpage
 \end{document}

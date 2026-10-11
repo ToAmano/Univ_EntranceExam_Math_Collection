@@ -6,19 +6,76 @@
 $y=a\sin x$と$y=1$は$0\le x \le \dfrac{\pi}{2}$にただ一つの共有点$P(t,1)$を持つ．
 グラフの概形は下図である．
 
-% \begin{zahyou}[ul=10mm,gentenhaiti={[se]}](-0.5,4)(-0.5,2.5)
-%   \def\Fx{2*sin(X/2)}
-%   \def\Gx{1}
-%   \calcval{$pi}\A
-%   \calcval{$pi/3}\B
-%   \calcval{3*$pi/4}\C
-%   \YGurafu*\Fx
-%   \YGurafu*\Gx
-%   \Put{(\A,2)}[syaei=xy,xlabel=\dfrac{\pi}{2},ylabel=a]{}
-%   \Put{(\B,1)}[syaei=x,xlabel=t,]{}
-%   \Put{(\C,1.2)}[n]{$S_1$}
-%   \Put{(\C,0.8)}[s]{$S_2$}
-% \end{zahyou}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.6, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・パラメータ定義 (極大値 t = pi/3, a = 2*sqrt(3)/3 ≈ 1.155 付近の形状) ---
+    % 視認性向上のため、グラフの比率として a = 1.6, t = 40° (rad ≈ 0.698) を採用
+    \def\aVal{1.6}
+    \def\tVal{0.675}           % a * sin(t) = 1 となる交点の x 座標
+    \def\piHalf{1.5708}        % pi / 2
+
+    \coordinate (O) at (0, 0);
+    \coordinate (T) at (\tVal, 0);
+    \coordinate (P) at (\tVal, 1.0);
+    \coordinate (H) at (\piHalf, 0);
+    \coordinate (A) at (\piHalf, \aVal);
+
+    % --- 2. 領域のハッチング塗り分け ---
+    % (i) S1: y = 1 より上、y = a*sin(x) より下の領域 (水平ストライプ)
+    \fill[pattern=horizontal lines, pattern color=blue!70, opacity=0.8]
+    (\tVal, 1.0) -- plot[domain=\tVal:\piHalf, samples=50] (\x, {\aVal*sin(\x r)})
+    -- (\piHalf, 1.0) -- cycle;
+
+    % (ii) S2: 曲線 y = a*sin(x) (0 <= x <= t) および 直線 y = 1 (t <= x <= pi/2) の下側領域 (斜線)
+    \fill[pattern=north east lines, pattern color=teal!70, opacity=0.7]
+    (0, 0) -- plot[domain=0:\tVal, samples=40] (\x, {\aVal*sin(\x r)})
+    -- (\piHalf, 1.0) -- (\piHalf, 0) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-0.2, 0) -- (2.05, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.2) -- (0, 1.95) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 曲線 y = a*sin(x) および 直線群 ---
+    % 曲線 y = a sin x (0 <= x <= pi/2)
+    \draw[very thick, blue!85!black, domain=0:\piHalf, samples=80]
+    plot (\x, {\aVal*sin(\x r)});
+    \node[blue!85!black, font=\footnotesize, above] at (1.05, 1.6) {$y = a\sin x$};
+
+    % 直線 y = 1
+    \draw[thick, black] (-0.1, 1.0) -- (1.9, 1.0);
+
+    % 境界線 x = pi/2
+    \draw[dashed, gray!70] (\piHalf, 0) -- (\piHalf, \aVal);
+
+    % --- 5. 補助線と目盛り ---
+    % 交点 P(t, 1) からの垂線
+    \draw[dashed, gray!70] (\tVal, 0) -- (P);
+    \fill[red!85!black] (P) circle (0.7pt) node[above left=1pt, font=\scriptsize] {$P(t,1)$};
+
+    % y 軸上の目盛り (y = 1, y = a)
+    \draw[dashed, gray!60] (0, \aVal) -- (\piHalf, \aVal);
+    \draw[gray!80!black] (-0.03, 1.0) -- (0.03, 1.0);
+    \node[left=2pt] at (0, 1.0) {$1$};
+    \draw[gray!80!black] (-0.03, \aVal) -- (0.03, \aVal);
+    \node[left=2pt] at (0, \aVal) {$a$};
+
+    % x 軸上の目盛り (x = t, x = pi/2)
+    \fill (T) circle (0.5pt) node[below=2pt] {$t$};
+    \fill (H) circle (0.5pt) node[below=2pt] {$\frac{\pi}{2}$};
+
+    % --- 6. 領域ラベル S1, S2 ---
+    \node[draw=blue!85!black, rounded corners=2pt, inner sep=2pt, font=\footnotesize\bfseries, blue!90!black]
+    at (1.18, 1.25) {$S_1$};
+    \node[draw=teal!85!black, rounded corners=2pt, inner sep=2pt, font=\footnotesize\bfseries, teal!90!black]
+    at (1.05, 0.45) {$S_2$};
+
+  \end{tikzpicture}
+  \caption{曲線 $y=a\sin x$ と直線 $y=1$ で分割される2つの領域 $S_1, S_2$}
+  \label{fig:sine_curve_regions}
+\end{figure}
 
 $P(t,1)$は$y=a\sin t$の上にあるから
 \begin{align}
