@@ -1,3 +1,5 @@
+% TODO: 多分，普通に積分する方が簡単なのでそれを[解]にして，\pi/12を使うのは別解に回そう
+
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
@@ -5,22 +7,70 @@
 
 題意の領域$A,B$の境界を与える楕円を$P,Q$とするとこれらの方程式は
 \begin{align}
-  P &: \Bigl(\dfrac{x}{2}\Bigr)^2 + y^2 = 1, \\
-  Q &: \Bigl(\dfrac{x}{2}\Bigr)^2 + \Bigl(y - \dfrac{\sqrt{6}-\sqrt{2}}{2}\Bigr)^2 = 1
+  \begin{cases}
+    P: \Bigl(\dfrac{x}{2}\Bigr)^2 + y^2 = 1, \\
+    Q: \Bigl(\dfrac{x}{2}\Bigr)^2 + \Bigl(y - \dfrac{\sqrt{6}-\sqrt{2}}{2}\Bigr)^2 = 1
+  \end{cases}
 \end{align}
-とおいて，$P, Q$ の囲む領域の面積が $M$ である．そこで次のような各点，$X = \dfrac{x}{2}, Y = y$ なる変換を行い，$P, Q$ を $P', Q'$ のように表す．
-\begin{align}
-  P' : X^2 + Y^2 = 1, \quad Q' : X^2 + \Bigl(Y - \dfrac{\sqrt{6}-\sqrt{2}}{2}\Bigr)^2 = 1
-\end{align}
-又，この変換で $M'$ の面積は $M$ の $\dfrac{1}{2}$ 倍にあたる $\dots$ ①
+である．$P,Q$の交点のうち$x>0$にあるものを$T$,$x<0$にあるものを$S$とする．
+題意より$P, Q$ の囲む領域の面積が $M$ である．$M$の面積$S_M$を求めよう．
 
-$S', T'$ は $\Bigl(\mp \dfrac{\sqrt{6}+\sqrt{2}}{4}, \dfrac{\sqrt{6}-\sqrt{2}}{4}\Bigr)$ だから，図の $\theta$ は $\dfrac{\pi}{12}$ であり，したがって斜線部の面積 (対称性から $M'$ のそれの $\dfrac{1}{2}$ 倍) は，
+% TODO: P,Q,S,T,Mの図
+
+そこで $X = \dfrac{x}{2}, Y = y$ なる変換を行い，変換された各点や図形を$'$をつけて$P, Q$ を $P', Q'$ のように表す．すると$P,Q$は変換後に円になる：
 \begin{align}
-  \dfrac{1}{2} (\pi - 2\theta) - 2 \cdot \dfrac{1}{2} \cdot \dfrac{\sqrt{6}+\sqrt{2}}{4} \cdot \dfrac{\sqrt{6}-\sqrt{2}}{4} = \dfrac{5}{12}\pi - \dfrac{1}{4}
+  \begin{cases}
+    P' : X^2 + Y^2 = 1 \\
+    Q' : X^2 + \Bigl(Y - \dfrac{\sqrt{6}-\sqrt{2}}{2}\Bigr)^2 = 1
+  \end{cases} \label{eq:1}
 \end{align}
-であり，
+また，この変換で $M'$ の面積$S_{M'}$は $M$ の面積の $\dfrac{1}{2}$ 倍にあたる：
 \begin{align}
-  (M \text{ の面積}) = 4 \cdot \Bigl(\dfrac{5}{12}\pi - \dfrac{1}{4}\Bigr) = \dfrac{5}{3}\pi - 1
+  S_{M} = 2S_{M'} \label{eq:2}
+\end{align}
+
+さて，$S', T'$ の座標は\cref{eq:1}を連立してまず$x$を消去すると
+\begin{align}
+  \Bigl(Y - \dfrac{\sqrt{6}-\sqrt{2}}{2}\Bigr)^2 = Y^2
+  \quad \therefore
+  Y = \dfrac{\sqrt{6}-\sqrt{2}}{4}
+\end{align}
+だから，\cref{eq:1}に代入して$X$座標を計算すると
+\begin{align}
+  S'\left(-\dfrac{\sqrt{6}+\sqrt{2}}{4}, \dfrac{\sqrt{6}-\sqrt{2}}{4}\right) \quad
+  T'\left( \dfrac{\sqrt{6}+\sqrt{2}}{4}, \dfrac{\sqrt{6}-\sqrt{2}}{4}\right)
+\end{align}
+だから，図のように$X$軸と線分$O'T'$のなす角$\theta$とすると
+\begin{align}
+  \tan \theta
+  = \dfrac{(\sqrt{6}-\sqrt{2})/4}{(\sqrt{6}+\sqrt{2})/4}
+  = \dfrac{(\sqrt{6}-\sqrt{2})}{\sqrt{6}+\sqrt{2}}
+  = \dfrac{(\sqrt{6}-\sqrt{2})^2}{4}
+  = 2-\sqrt{3}
+\end{align}
+だから，$\tan$の半角公式より
+\begin{align}
+  \cos 2\theta
+  &= \dfrac{1-\tan^2\theta}{1+\tan^2\theta} \\
+  &= \dfrac{1-(7-4\sqrt{3})}{1+(7-4\sqrt{3})} \\
+  &= \dfrac{-6+4\sqrt{3}}{8-4\sqrt{3}} \\
+  &= \dfrac{-3+2\sqrt{3}}{4-2\sqrt{3}} \\
+  &= \dfrac{(-3+2\sqrt{3})(4+2\sqrt{3})}{4} \\
+  &= \dfrac{\sqrt{3}}{2} \\
+  \therefore
+  2\theta = \dfrac{\pi}{6} \\
+  \therefore
+  \theta = \dfrac{\pi}{12}
+\end{align}
+である．従って図の斜線部の面積（対称性から$S_{M'}/2$）は
+\begin{align}
+  \dfrac{S_{M'}}{2}
+  &= \dfrac{1}{2} (\pi - 2\theta) - 2 \cdot \dfrac{1}{2} \cdot \dfrac{\sqrt{6}+\sqrt{2}}{4} \cdot \dfrac{\sqrt{6}-\sqrt{2}}{4} \\
+  &= \dfrac{5}{12}\pi - \dfrac{1}{4}
+\end{align}
+であり，\cref{eq:2}に代入して
+\begin{align}
+  S_{M} = 4 \cdot \Bigl(\dfrac{5}{12}\pi - \dfrac{1}{4}\Bigr) = \dfrac{5}{3}\pi - 1
 \end{align}
 である．
 
