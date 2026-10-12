@@ -1,90 +1,222 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} 以下の解では，ゲームが終了する場合は含めないものとする．ただし，ちょうど終わる時は含む．
+以下の解ではゲームが終了した場合は含めないものとする．ただし，ちょうど終わる時は含む．
 
 \paragraph{(1)}
 
-$n$ 回じゃんけんして，同じ手が出ているのは，ゲームが終了せず，かつ 2 人の勝ち数の合計が $k$ 回になっている時である．求める確率 $q$ は，$k \ge 2$ の時
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
 
-$\text{i)} \ n < k \text{ の時}$
-\begin{align}
-q = 0
-\end{align}
+    % --- 1. ベンチの配置 (0 から k までの k+1 個) ---
+    \foreach \i in {0, 1, 2, 4, 5} {
+      % ベンチ台の長方形
+      \draw[thick, fill=gray!12, rounded corners=2pt] (\i*1.5 - 0.5, -0.25) rectangle (\i*1.5 + 0.5, 0.25);
+      % ノード (白抜き丸)
+      \draw[thick, fill=white] (\i*1.5, 0) circle (3pt);
+    }
 
-$\text{ii)} \ n = k \text{ の時}$
-$n$ 回とも引き分けがない時であるから，
-\begin{align}
-q = \Bigl(1 - \dfrac{1}{3}\Bigr)^n = \Bigl(\dfrac{2}{3}\Bigr)^n
-\end{align}
+    % 省略記号 (中央のベンチ間)
+    \node at (4.5, 0) {\Large $\cdots$};
 
-$\text{iii)} \ n > k \text{ の時}$
-2 人の勝ちの合計が $k$ 回かつ，片方が先に勝たなければ良い．ゆえに，
+    % 各ベンチのインデックスラベル (align=center を指定して改行を有効化)
+    \node[below=8pt, font=\footnotesize, align=center] at (0*1.5, -0.25) {ベンチ $0$\\[1pt]\scriptsize ($A$の初期位置)};
+    \node[below=8pt, font=\footnotesize] at (1*1.5, -0.25) {ベンチ $1$};
+    \node[below=8pt, font=\footnotesize] at (2*1.5, -0.25) {ベンチ $2$};
+    \node[below=8pt, font=\footnotesize] at (4*1.5, -0.25) {ベンチ $k-1$};
+    \node[below=8pt, font=\footnotesize, align=center] at (5*1.5, -0.25) {ベンチ $k$\\[1pt]\scriptsize ($B$の初期位置)};
+
+    % --- 2. プレイヤー A と B の初期配置と移動方向 ---
+    % プレイヤー A (左端)
+    \node[draw=blue!85!black, fill=blue!10, circle, inner sep=2pt, font=\small\bfseries, blue!85!black]
+    (playerA) at (0, 0.8) {$A$};
+    \draw[->, thick, blue!85!black] (playerA) -- (0, 0.25);
+
+    % プレイヤー B (右端)
+    \node[draw=red!85!black, fill=red!10, circle, inner sep=2pt, font=\small\bfseries, red!85!black]
+    (playerB) at (7.5, 0.8) {$B$};
+    \draw[->, thick, red!85!black] (playerB) -- (7.5, 0.25);
+
+    % --- 3. 1 回のじゃんけんによる移動ルール ---
+    % A の前進 (確率 1/3 で右へ 1 歩)
+    \draw[->, very thick, blue!85!black] (0, 0.45) to[bend left=25]
+    node[above, font=\scriptsize] {$A$勝利 $\left(\frac{1}{3}\right)$} (1.5, 0.45);
+
+    % B の前進 (確率 1/3 で左へ 1 歩)
+    \draw[->, very thick, red!85!black] (7.5, 0.45) to[bend right=25]
+    node[above, font=\scriptsize] {$B$勝利 $\left(\frac{1}{3}\right)$} (6.0, 0.45);
+
+    % 引き分け (その場に留まる)
+    \draw[->, thick, gray!70] (1.5, -0.3) arc[start angle=90, end angle=-190, radius=0.22];
+    \node[below=4pt, font=\scriptsize, gray!80!black] at (1.5, -0.7) {あいこ $\left(\frac{1}{3}\right)$};
+
+    % --- 5. ゲーム終了 (勝利) 条件のガイド ---
+    % A のゴール
+    \draw[->, very thick, dashed, blue!70] (0.5, 1.1) -- (7.0, 1.1)
+    node[midway, above, font=\scriptsize, blue!85!black] {$A$ が累計 $k$ 回勝利 $\implies$ 反対端に到達してゲーム終了};
+
+    % B のゴール
+    \draw[->, very thick, dashed, red!70] (7.0, -1.2) -- (0.5, -1.2)
+    node[midway, below, font=\scriptsize, red!85!black] {$B$ が累計 $k$ 回勝利 $\implies$ 反対端に到達してゲーム終了};
+
+  \end{tikzpicture}
+  \caption{じゃんけんによるベンチ移動ゲーム}
+  \label{fig:janken_bench_overview}
+\end{figure}
+
+$n$ 回じゃんけんして同じベンチに座っているのは，ゲームが終了せず，かつ 2 人の勝ち数の合計が $k$ 回になっている時である．求める確率 $q$ は，$k \ge 2$ に対して以下のようになる．
+
+\subparagraph{$n < k$の時}
+
+この時はじゃんけんの回数が足りず，$A,B$が隣あうことはないから，
 \begin{align}
-q &= {}_n\text{C}_k \Bigl(\dfrac{2}{3}\Bigr)^k \Bigl(\dfrac{1}{3}\Bigr)^{n-k} - 2 \cdot {}_{n-1}\text{C}_{k-1} \Bigl(\dfrac{1}{3}\Bigr)^k \Bigl(\dfrac{1}{3}\Bigr)^{n-k-1} \cdot \Bigl(\dfrac{1}{3}\Bigr) \\
-&= {}_n\text{C}_k \Bigl(\dfrac{1}{3}\Bigr)^n \cdot 2^k - 2 \Bigl(\dfrac{n-k}{n}\Bigr) {}_n\text{C}_k \Bigl(\dfrac{1}{3}\Bigr)^n \\
-&= 2 {}_n\text{C}_k \Bigl(\dfrac{1}{3}\Bigr)^n \Bigl( 2^{k-1} - 1 + \dfrac{k}{n} \Bigr)
+  q = 0 \label{eq:1}
 \end{align}
-これをまとめて，$n < k$ の時 ${}_n\text{C}_k = 0$，又，$k=1$ の時もこれで良いから，
+である．
+
+\subparagraph{$n=k$の時}
+
+この時は両者が隣あうためには引き分けがあってはならない．
+よって$n$ 回とも引き分けがない時であるから，確率は
 \begin{align}
-q = \dfrac{2}{3^n} {}_n\text{C}_k \Bigl( 2^{k-1} - 1 + \dfrac{k}{n} \Bigr)
+  q = \Bigl(1 - \dfrac{1}{3}\Bigr)^n = \Bigl(\dfrac{2}{3}\Bigr)^n \label{eq:2}
 \end{align}
+である．
+
+\subparagraph{$n>k$の時}
+
+この時は両者がとなりあうための条件は，2 人の勝ちの合計が $k$ 回かつ，片方が先にゲームに勝たないこと．まず二人の勝ちの合計が$k$回である確率は
+\begin{align}
+  {}_n\text{C}_k \Bigl(\dfrac{2}{3}\Bigr)^k \Bigl(\dfrac{1}{3}\Bigr)^{n-k}
+\end{align}
+である．ここで$2/3$は勝ち負けが決まる時，$1/3$は引き分けの時である．
+
+次に片方が$n$回目のじゃんけんですでにゲームに勝利している（かつ両者が同じベンチに座っている）のは，
+$n-1$回目のじゃんけんまでに片方が$k$回勝利して，もう片方が$1$回も勝たない，かつ$n$回目も引き分けになっているケースだから
+\begin{align}
+  2 \cdot {}_{n-1}\text{C}_{k-1} \Bigl(\dfrac{1}{3}\Bigr)^k \Bigl(\dfrac{1}{3}\Bigr)^{n-k-1} \cdot \Bigl(\dfrac{1}{3}\Bigr)
+\end{align}
+である．ここで$(1/3)^{k}$は片方が$k$回勝つ確率，$(1/3)^{n-k-1}$は残りの$n-k-1$回引き分ける確率，因子$2$はどちらが勝つかの因子である．
+
+よって求める確率$q$は
+\begin{align}
+  q &= {}_n\text{C}_k \Bigl(\dfrac{2}{3}\Bigr)^k \Bigl(\dfrac{1}{3}\Bigr)^{n-k} - 2 \cdot {}_{n-1}\text{C}_{k-1} \Bigl(\dfrac{1}{3}\Bigr)^k \Bigl(\dfrac{1}{3}\Bigr)^{n-k-1} \cdot \Bigl(\dfrac{1}{3}\Bigr) \\
+  &= {}_n\text{C}_k \Bigl(\dfrac{1}{3}\Bigr)^n \cdot 2^k - 2 \Bigl(\dfrac{n-k}{n}\Bigr) {}_n\text{C}_k \Bigl(\dfrac{1}{3}\Bigr)^n \\
+  &= 2 {}_n\text{C}_k \Bigl(\dfrac{1}{3}\Bigr)^n \Bigl( 2^{k-1} - 1 + \dfrac{k}{n} \Bigr) \label{eq:3}
+\end{align}
+である．
+\casesend
+
+\cref{eq:1,eq:2,eq:3}をまとめて，$n < k$ の時 ${}_n\text{C}_k = 0$，又，$k=1$ の時もこれで良いから，
+\begin{align}
+  q = \dfrac{2}{3^n} {}_n\text{C}_k \Bigl( 2^{k-1} - 1 + \dfrac{k}{n} \Bigr) \label{eq:4}
+\end{align}
+である．
 
 \paragraph{(2)}
 
-$x, y$ は，$A, B$ の勝利回数を表す．ゆえに
+$x, y$ は，$A, B$ の勝利回数を表す．合計のじゃんけんの回数は$n$回だから
 \begin{align}
-x + y \le n \quad \dots \text{①}
+  x + y \le n \label{eq:5}
 \end{align}
-又，$k$ 回までしか移動できないから，
+である．
+
+また，移動回数は最大でも$k$ 回だから，
 \begin{align}
-x, y \le k \quad \dots \text{②}
+  x, y \le k \label{eq:6}
 \end{align}
-このもとで考える．$n$ 回じゃんけんをしたということは，$n-1$ 回目までゲームは終了しなかったということだから，まず $x, y \le k-1$ の時，
+である．ただし，両者が同時に$x=y=k$となることはない．
+
+以上\cref{eq:5,eq:6}のもとで考える．
+% $n$ 回じゃんけんをしたということは，$n-1$ 回目までゲームは終了しなかったということである．
+
+まず $x, y \le k-1$ の時，どちらも反対側の端のベンチまでは到達しないから，確率は$n$回中$x$回は$A$が勝利し，$y$回は$B$が勝利し，残りの$n-x-y$回は引き分けなので
 \begin{align}
-P(x, y) &= {}_n\text{C}_x {}_{n-x}\text{C}_y \Bigl(\dfrac{1}{3}\Bigr)^x \Bigl(\dfrac{1}{3}\Bigr)^y \Bigl(\dfrac{1}{3}\Bigr)^{n-x-y} \\
-&= {}_n\text{C}_x {}_{n-x}\text{C}_y \Bigl(\dfrac{1}{3}\Bigr)^n \quad \dots \text{③}
+  P(x, y) &= {}_n\text{C}_x {}_{n-x}\text{C}_y \Bigl(\dfrac{1}{3}\Bigr)^x \Bigl(\dfrac{1}{3}\Bigr)^y \Bigl(\dfrac{1}{3}\Bigr)^{n-x-y} \\
+  &= {}_n\text{C}_x {}_{n-x}\text{C}_y \Bigl(\dfrac{1}{3}\Bigr)^n \label{eq:7}
 \end{align}
-$x = y = k$ となることはありえない (ゲームが終了している) ので，たとえば $x \le k-1, y = k$ の時，$B$ が最後に1勝しなければならないから，
+である．
+
+次に，$x=k$または$y=k$でちょうどゲームが終了する場合を考える．
+まず$A$が勝利して$x =k, y \le k-1$となる場合を考える．この時は，最後にゲームが終了することから，最初の$n-1$回で$x=k-1$となっており，最後の$1$回で$A$が勝利する．任意の$n$に対して$p(x,y)$を$p_n(x,y)$と書くと，この場合の確率$p(x,k)$は$n-1$回目までで$(x,y)=(k-1,y)$となり（確率$p_{n-1}(k-1,y)$），最後の一回で$A$が確率$1/3$で勝つ時だから
 \begin{align}
-P(x, k) &= {}_{n-1}\text{C}_{k-1} {}_{(n-1)-(k-1)}\text{C}_x \Bigl(\dfrac{1}{3}\Bigr)^n \\
-&= {}_{n-1}\text{C}_{k-1} {}_{n-k}\text{C}_x \Bigl(\dfrac{1}{3}\Bigr)^n \quad (\text{①，②から } k \le n)
+  p(x,k)
+  &= p_{n-1}(k-1,x)\cdot \dfrac{1}{3} \\
+  &= {}_{n-1}\text{C}_{k-1} {}_{n-k}\text{C}_{y}\Bigl(\dfrac{1}{3}\Bigr)^n \label{eq:8}
 \end{align}
-これは対称性により，$x = k, y \le k-1$ にも同じことが言える．よって ①，②のもとで，
+である．
+
+逆に$B$が勝利して$x\le k-1,y=k$となるのは，対称性より\cref{eq:8}で$x$と$y$を入れ替えて
 \begin{align}
-P(x, y) =
-\begin{cases}
-{}_n\text{C}_x {}_{n-x}\text{C}_y \Bigl(\dfrac{1}{3}\Bigr)^n & (x, y \le k-1) \\
-{}_{n-1}\text{C}_{k-1} {}_{n-k}\text{C}_x \Bigl(\dfrac{1}{3}\Bigr)^n & (x \le k-1, y = k) \\
-{}_{n-1}\text{C}_{k-1} {}_{n-k}\text{C}_y \Bigl(\dfrac{1}{3}\Bigr)^n & (y \le k-1, x = k) \\
-0 & (\text{otherwise})
-\end{cases}
+  p(k,y) = {}_{n-1}\text{C}_{k-1} {}_{n-k}\text{C}_{x}\Bigl(\dfrac{1}{3}\Bigr)^n \label{eq:9}
 \end{align}
+である．
+
+以上\cref{eq:7,eq:8,eq:9}をまとめて
+\begin{align}
+  P(x, y) =
+  \begin{cases}
+    {}_n\text{C}_x {}_{n-x}\text{C}_y \Bigl(\dfrac{1}{3}\Bigr)^n & (x, y \le k-1) \\
+    {}_{n-1}\text{C}_{k-1} {}_{n-k}\text{C}_x \Bigl(\dfrac{1}{3}\Bigr)^n & (x \le k-1, y = k) \\
+    {}_{n-1}\text{C}_{k-1} {}_{n-k}\text{C}_y \Bigl(\dfrac{1}{3}\Bigr)^n & (y \le k-1, x = k) \\
+    0 & (\text{otherwise})
+  \end{cases} \label{eq:10}
+\end{align}
+である．
 
 \paragraph{(3)}
 
-$k = 2$ とする．(2) の $P(x, y)$ を用いて，
-\begin{align}
-P &= \sum_{x, y \le 2} P(x, y) \\
-&= P(0,0) + P(1,0) + P(0,1) + P(2,0) + P(1,1) + P(0,2) + P(2,1) + P(1,2) + P(2,2) \\
-&= P(0,0) + 2 P(1,0) + 2 P(2,0) + P(1,1) + 2 P(2,1) + P(2,2) \\
-&= \Bigl(\dfrac{1}{3}\Bigr)^n \Bigl[ 1 + 2n + n(n-1) + n(n-1) + n(n-1)(n-2) + \dfrac{1}{4}n(n-1)(n-2)(n-3) \Bigr] \\
-&= \Bigl(\dfrac{1}{3}\Bigr)^n \dfrac{1}{4} \Bigl[ n^4 - 2n^3 + 7n^2 + 2n + 4 \Bigr] \quad \dots \text{④}
-\end{align}
-一方 $n=3$ の時，余事象を考えて，
-\begin{align}
-P = 1 - 2\Bigl(\dfrac{1}{3}\Bigr)^3 = \dfrac{25}{27}
-\end{align}
-だから，$n=3$ でも ④は成立．以上から
-\begin{align}
-P = \dfrac{1}{4} \Bigl(\dfrac{1}{3}\Bigr)^n \Bigl[ n^4 - 2n^3 + 7n^2 + 2n + 4 \Bigr]
-\end{align}
+$k=3$および$n \ge 3$の時を考える．
+まだゲームの勝敗が決まらないということは，$A,B$の移動回数を$x,y$としたときに$x,y\le k-1=2$であるということである．(2)の$p(x,y)$は\cref{eq:5}の元で成立するから，$n$の値に応じて以下のように場合分けする．
 
-\noindent
-[* 問題文が悪い！ ゲーム終了の扱いをどうするのかが不明瞭．この解答では，50年の解をとった．]
+\subparagraph{$n \ge 4$の時}
+
+この時は\cref{eq:5}の条件が満たされるから，$x,y \le 2$を満たす$p(x,y)$について足し合わせればゲームの勝敗が決まらない確率が求まるから
+\begin{align}
+  P
+  &= \sum_{x, y \le 2} P(x, y) \\
+  &= P(0,0) + P(1,0) + P(0,1) + P(2,0) + P(1,1) + P(0,2) + P(2,1) + P(1,2) + P(2,2) \\
+  &= P(0,0) + 2 P(1,0) + 2 P(2,0) + P(1,1) + 2 P(2,1) + P(2,2) \\
+  &= \Bigl(\dfrac{1}{3}\Bigr)^n \Bigl[ 1 + 2n + n(n-1) + n(n-1) + n(n-1)(n-2) + \dfrac{1}{4}n(n-1)(n-2)(n-3) \Bigr] \\
+  &= \Bigl(\dfrac{1}{3}\Bigr)^n \dfrac{1}{4} \Bigl[ n^4 - 2n^3 + 7n^2 + 2n + 4 \Bigr] \label{eq:11}
+\end{align}
+である．
+
+\subparagraph{$n = 3$の時}
+
+この時は余事象，つまり$n=3$回目のじゃんけんの段階でゲームが終了している　場合を考えよう．$k=n=3$より，ゲームが終了するのはどちらかが$3$連勝したときに限られるから，その確率は
+\begin{align}
+  2\Bigl(\dfrac{1}{3}\Bigr)^3 = \dfrac{2}{27}
+\end{align}
+である．よって求める確率はこれを$1$から減じて
+\begin{align}
+  p = 1 - \dfrac{2}{27} = \dfrac{25}{27} \label{eq:12}
+\end{align}
+である．一方で\cref{eq:11}で$n=3$とすると
+\begin{align}
+  p
+  &= \Bigl(\dfrac{1}{3}\Bigr)^3 \dfrac{1}{4} \Bigl[ 3^4 - 2\cdot 3^3 + 7\cdot 3^2 + 2\cdot 3 + 4 \Bigr] \\
+  &= \Bigl(\dfrac{1}{3}\Bigr)^3 \dfrac{1}{4} \Bigl[ 81 - 54 + 63 + 6 + 4 \Bigr] \\
+  &= \dfrac{1}{4\cdot 27} \Bigl[ 81 - 54 + 63 + 6 + 4 \Bigr] \\
+  &= \dfrac{25}{27}
+\end{align}
+で\cref{eq:12}と一致するから，$n=3$の時も\cref{eq:11}で良い．
+\casesend
+
+以上から求める確率$p$は\cref{eq:11}で
+\begin{align}
+  p = \Bigl(\dfrac{1}{3}\Bigr)^n \dfrac{1}{4} \Bigl[ n^4 - 2n^3 + 7n^2 + 2n + 4 \Bigr]
+\end{align}
+である．
+
+{\bf [解説]}
+
+問題文の記述が悪いように思う．ゲーム終了の扱いをどうするのかが不明瞭だ．ここではゲーム終了後のケースは考えないようにした．
+また，ゲームの勝利条件である「他の隣のベンチ」も若干日本語が謎である．ここでは「出発点と反対端のベンチ」についた時と解釈した．
+
+こういう場合は，立場を解答の先頭で明確にしておいて，その設定に沿って答えるのが良いだろう．
 
 \end{document}

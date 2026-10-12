@@ -21,7 +21,49 @@
 \end{align}
 である．
 
-% TODO: 図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.6, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標定義 (見やすい比率で配置) ---
+    \coordinate (O) at (0, 0);
+    \coordinate (D) at (1.1, 0.9);
+    \coordinate (A) at (2.4, 0.9);
+    \coordinate (B) at (2.4, 1.8);
+    \coordinate (C) at (1.1, 1.8);
+
+    % --- 2. 内部塗りつぶしと長方形境界 ---
+    \fill[blue!15, opacity=0.7] (D) rectangle (B);
+    \draw[very thick, blue!85!black] (D) rectangle (B);
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-0.2, 0) -- (2.9, 0) node[right] {$u$};
+    \draw[->, thick] (0, -0.2) -- (0, 2.2) node[above] {$v$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 座標軸への投影補助線 (dashed) ---
+    % u 軸方向
+    \draw[dashed, gray!60] (1.1, 0) -- (C);
+    \draw[dashed, gray!60] (2.4, 0) -- (B);
+    \node[below=2pt, font=\scriptsize] at (1.1, 0) {$\frac{2.7}{a}$};
+    \node[below=2pt, font=\scriptsize] at (2.4, 0) {$\frac{3.3}{a}$};
+
+    % v 軸方向
+    \draw[dashed, gray!60] (0, 0.9) -- (A);
+    \draw[dashed, gray!60] (0, 1.8) -- (B);
+    \node[left=2pt, font=\scriptsize] at (0, 0.9) {$\frac{4.5}{a}$};
+    \node[left=2pt, font=\scriptsize] at (0, 1.8) {$\frac{5.4}{a}$};
+
+    % --- 5. 頂点プロットとラベル ---
+    \fill[red!85!black] (A) circle (0.6pt) node[below right=1pt, red!85!black] {$A$};
+    \fill[red!85!black] (B) circle (0.6pt) node[above right=1pt, red!85!black] {$B$};
+    \fill[red!85!black] (C) circle (0.6pt) node[above left=1pt, red!85!black] {$C$};
+    \fill[red!85!black] (D) circle (0.6pt) node[below left=1pt, red!85!black] {$D$};
+
+  \end{tikzpicture}
+  \caption{固定された $a > 0$ に対する $(u,v)$ 平面上の長方形領域 $ABCD$}
+  \label{fig:fixed_a_rectangle}
+\end{figure}
 
 次に $0.9 \le a \le 1.1$ の範囲で $a$ を動かす．長方形の頂点$A, B, C, D$ はそれぞれ
 \begin{align}
@@ -36,38 +78,99 @@
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.2, >=stealth]
-    % Rectangle for fixed a
-    \begin{scope}[shift={(-2.5,0)}, scale=0.9]
-      \draw[thick] (0,0) rectangle (2,1.2);
-      \node[below left] at (0,0) {$D(\frac{2.7}{a}, \frac{4.5}{a})$};
-      \node[below right] at (2,0) {$A(\frac{3.3}{a}, \frac{4.5}{a})$};
-      \node[above right] at (2,1.2) {$B(\frac{3.3}{a}, \frac{5.4}{a})$};
-      \node[above left] at (0,1.2) {$C(\frac{2.7}{a}, \frac{5.4}{a})$};
-    \end{scope}
+  \begin{tikzpicture}[scale=1.75, >=stealth, every node/.style={font=\small}]
 
-    % Region in uv-plane
-    \begin{scope}[shift={(2.5,0)}, scale=1.1]
-      \draw[->] (-0.3,0) -- (3.8,0) node[right] {$u$};
-      \draw[->] (0,-0.3) -- (0,3.2) node[above] {$v$};
-      \node[below left] at (0,0) {$0$};
+    % --- 1. 定数・主要座標パラメータ ---
+    % 縦軸のスケール係数 vScale = 0.72 (図全体のプロポーションを整える)
+    \def\vScale{0.72}
 
-      % Points
-      % u_1 = 27/11 = 2.45, u_2 = 3, u_3 = 11/3 = 3.67
-      % v_1 = 45/11 = 4.09, v_2 = 2*u, etc.
-      \draw[dashed] (2.45,0) node[below] {$\frac{27}{11}$} -- (2.45,2.45);
-      \draw[dashed] (3.0,0) node[below] {$3$} -- (3.0,2.7);
-      \draw[dashed] (3.67,0) node[below] {$\frac{11}{3}$} -- (3.67,2.5);
+    % u 座標:
+    % u_1 = 27/11 ≈ 2.455
+    % u_2 = 3.0
+    % u_3 = 11/3 ≈ 3.667
+    \def\uOne{2.455}
+    \def\uTwo{3.0}
+    \def\uThree{3.667}
 
-      % Shaded region
-      \fill[pattern=north east lines, pattern color=gray] (2.45, 2.05) -- (3.0, 2.7) -- (3.67, 2.7) -- (3.67, 2.25) -- (3.0, 1.8) -- (2.45, 1.8) -- cycle;
-      \draw[thick] (2.45, 2.05) -- (3.0, 2.7) -- (3.67, 2.7) -- (3.67, 2.25) -- (3.0, 1.8) -- (2.45, 1.8) -- cycle;
+    % v 座標値:
+    % v_D1 = 45/11 ≈ 4.091
+    % v_C1 = 54/11 ≈ 4.909
+    % v_A0 = 5.0
+    % v_B0 = 6.0
+    \pgfmathsetmacro{\yDOne}{45.0/11.0 * \vScale}
+    \pgfmathsetmacro{\yCOne}{54.0/11.0 * \vScale}
+    \pgfmathsetmacro{\yAZero}{5.0 * \vScale}
+    \pgfmathsetmacro{\yBZero}{6.0 * \vScale}
 
-      \draw (0,0) -- (3.5, 2.87) node[right] {$v = \frac{15}{11}u$};
-      \draw (0,0) -- (1.5, 3.0) node[above] {$v = 2u$};
-    \end{scope}
+    % 領域の6つの頂点 (u, v)
+    \coordinate (P_D1) at (\uOne, \yDOne);   % (27/11, 45/11) : a=1.1 の D
+    \coordinate (P_A1) at (\uTwo, \yDOne);   % (3, 45/11)     : a=1.1 の A
+    \coordinate (P_A0) at (\uThree, \yAZero); % (11/3, 5)     : a=0.9 の A
+    \coordinate (P_B0) at (\uThree, \yBZero); % (11/3, 6)     : a=0.9 の B
+    \coordinate (P_C0) at (\uTwo, \yBZero);   % (3, 6)        : a=0.9 の C
+    \coordinate (P_C1) at (\uOne, \yCOne);   % (27/11, 54/11) : a=1.1 の C
+
+    \coordinate (O) at (0, 0);
+
+    % --- 2. 通過領域のハッチング塗りつぶし ---
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75]
+    (P_D1) -- (P_A1) -- (P_A0) -- (P_B0) -- (P_C0) -- (P_C1) -- cycle;
+
+    % 領域の輪郭線
+    \draw[very thick, blue!85!black]
+    (P_D1) -- (P_A1) -- (P_A0) -- (P_B0) -- (P_C0) -- (P_C1) -- cycle;
+
+    % --- 3. 頂点の軌跡直線（原点からの直線ガイド）---
+    \draw[thin, gray!50] (O) -- ($ (O)!1.15!(P_C0) $) node[above, font=\scriptsize, black] {$v = 2u$};
+    \draw[thin, gray!50] (O) -- ($ (O)!1.12!(P_A0) $) node[below right=-1pt, font=\scriptsize, black] {$v = \frac{15}{11}u$};
+
+    % --- 4. 座標軸 ---
+    \draw[->, thick] (-0.3, 0) -- (4.4, 0) node[right] {$u$};
+    \draw[->, thick] (0, -0.3) -- (0, 5.0) node[above] {$v$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 5. u 軸への垂線・目盛り ---
+    \draw[dashed, gray!60] (\uOne, 0) -- (P_C1);
+    \draw[dashed, gray!60] (\uTwo, 0) -- (P_C0);
+    \draw[dashed, gray!60] (\uThree, 0) -- (P_B0);
+
+    \node[below=2pt, font=\scriptsize] at (\uOne, 0) {$\frac{27}{11}$};
+    \node[below=2pt, font=\scriptsize] at (\uTwo, 0) {$3$};
+    \node[below=2pt, font=\scriptsize] at (\uThree, 0) {$\frac{11}{3}$};
+
+    % --- 6. v 軸への垂線（折れ曲がる各頂点から y 軸方向へ）および目盛り ---
+    % (1) v = 45/11 (P_D1, P_A1 の下端境界)
+    \draw[dashed, gray!60] (0, \yDOne) -- (P_A1);
+    \node[left=2pt, font=\scriptsize] at (0, \yDOne) {$\frac{45}{11}$};
+
+    % (2) v = 54/11 (P_C1: u=27/11 での折れ曲がり点)
+    \draw[dashed, gray!60] (0, \yCOne) -- (P_C1);
+    \node[left=2pt, font=\scriptsize] at (0, \yCOne) {$\frac{54}{11}$};
+
+    % (3) v = 5 (P_A0: u=11/3 での折れ曲がり点)
+    \draw[dashed, gray!60] (0, \yAZero) -- (P_A0);
+    \node[above right=2pt, font=\scriptsize] at (0, \yAZero) {$5$};
+
+    % (4) v = 6 (P_C0, P_B0 の上端境界)
+    \draw[dashed, gray!60] (0, \yBZero) -- (P_B0);
+    \node[left=2pt, font=\scriptsize] at (0, \yBZero) {$6$};
+
+    % --- 7. 境界頂点のプロット ---
+    \fill[blue!85!black] (P_D1) circle (0.6pt);
+    \fill[blue!85!black] (P_A1) circle (0.6pt);
+    \fill[blue!85!black] (P_A0) circle (0.6pt);
+    \fill[blue!85!black] (P_B0) circle (0.6pt);
+    \fill[blue!85!black] (P_C0) circle (0.6pt);
+    \fill[blue!85!black] (P_C1) circle (0.6pt);
+
+    % --- 8. 注釈ボックス ---
+    \node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=3pt, font=\footnotesize, align=center]
+    at (3.05, 2.3) {$(u, v)$ の存在領域\\[2pt]
+    \scriptsize ($0.9 \le a \le 1.1$)};
+
   \end{tikzpicture}
-  \caption{固定された $a$ に対する長方形 $ABCD$ と，$a$ を動かした時の $uv$ 平面上の存在領域}
+  \caption{$0.9 \le a \le 1.1$ で $a$ を動かしたときの $(u,v)$ 平面上の存在領域（境界含む斜線部）}
+  \label{fig:uv_plane_swept_region_with_v_projections}
 \end{figure}
 
 \paragraph{(2)}
@@ -83,6 +186,75 @@
 である．
 
 % TODO: (1)の領域+\cref{eq:2}の図
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.75, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・主要座標パラメータ ---
+    \def\vScale{0.68}
+
+    \def\uOne{2.455}  % 27/11
+    \def\uTwo{3.0}    % 3
+    \def\uThree{3.667}% 11/3
+
+    \pgfmathsetmacro{\yDOne}{45.0/11.0 * \vScale}
+    \pgfmathsetmacro{\yCOne}{54.0/11.0 * \vScale}
+    \pgfmathsetmacro{\yAZero}{5.0 * \vScale}
+    \pgfmathsetmacro{\yBZero}{6.0 * \vScale}
+
+    \coordinate (O)    at (0, 0);
+    \coordinate (P_D1) at (\uOne, \yDOne);
+    \coordinate (P_A1) at (\uTwo, \yDOne);
+    \coordinate (P_A0) at (\uThree, \yAZero);
+    \coordinate (P_B0) at (\uThree, \yBZero);
+    \coordinate (P_C0) at (\uTwo, \yBZero);
+    \coordinate (P_C1) at (\uOne, \yCOne);
+
+    % --- 2. 放物線 v = u^2 の下側領域 (u^2 - v >= 0) の薄い塗りつぶし ---
+    \fill[green!25!teal!10, opacity=0.7, domain=0:2.7, samples=60]
+    (0, 0) -- plot (\x, {\x*\x * \vScale}) -- (4.1,{2.7*2.7*\vScale}) -- (4.1, 0) -- cycle;
+
+    % --- 3. (1) の通過領域のハッチング ---
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75]
+    (P_D1) -- (P_A1) -- (P_A0) -- (P_B0) -- (P_C0) -- (P_C1) -- cycle;
+    \draw[very thick, blue!85!black]
+    (P_D1) -- (P_A1) -- (P_A0) -- (P_B0) -- (P_C0) -- (P_C1) -- cycle;
+
+    % --- 4. 放物線 v = u^2 の描画 ---
+    \draw[very thick, teal!80!black, domain=0:2.7, samples=50]
+    plot (\x, {\x*\x*\vScale});
+    \node[teal!90!black, font=\footnotesize, above left] at (3.5, {3.5*3.5 * \vScale * 0.45})
+    {$v = u^2 \quad (u^2 - v = 0)$};
+
+    % --- 5. 座標軸 ---
+    \draw[->, thick] (-0.3, 0) -- (4.5, 0) node[right] {$u$};
+    \draw[->, thick] (0, -0.3) -- (0, 5.5) node[above] {$v$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 6. 境界投影破線と目盛り ---
+    \draw[dashed, gray!60] (\uOne, 0) -- (P_C1);
+    \draw[dashed, gray!60] (\uTwo, 0) -- (P_C0);
+    \draw[dashed, gray!60] (\uThree, 0) -- (P_B0);
+
+    \node[below=2pt, font=\scriptsize] at (\uOne, 0) {$\frac{27}{11}$};
+    \node[below=2pt, font=\scriptsize] at (\uTwo, 0) {$3$};
+    \node[below=2pt, font=\scriptsize] at (\uThree, 0) {$\frac{11}{3}$};
+
+    \draw[dashed, gray!60] (0, \yDOne) -- (P_A1);
+    \draw[dashed, gray!60] (0, \yBZero) -- (P_B0);
+    \node[left=2pt, font=\scriptsize] at (0, \yDOne) {$\frac{45}{11}$};
+    \node[left=2pt, font=\scriptsize] at (0, \yBZero) {$6$};
+
+    % --- 7. 注釈ボックス ---
+    \node[draw=teal!80!black, fill=white, rounded corners=2pt, inner sep=3pt, font=\footnotesize, align=left]
+    at (1.6, 3.8) {領域全体で $v \le u^2$\\[2pt]
+    $\therefore u^2 - v \ge 0$ は常に成立};
+
+  \end{tikzpicture}
+  \caption{$(u,v)$ の存在領域と判別式条件 $u^2 - v \ge 0$}
+  \label{fig:uv_region_and_parabola}
+\end{figure}
 
 上図から，(1)で求めた領域を $(u, v)$ が動く時，\cref{eq:2}は常に満たされる．
 
@@ -109,6 +281,104 @@
 である．
 
 % TODO: z(u)のグラフ
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・関数値計算 ---
+    % u_1 = 27/11 ≈ 2.455
+    % u_2 = 3.0
+    % u_3 = 11/3 ≈ 3.667
+
+    % z_min(27/11) = (27 + 3*sqrt(15))/11 ≈ 3.511
+    % z_min(3)     = 3 + sqrt(9 - 6) = 3 + sqrt(3) ≈ 4.732
+    % z_min(11/3)  = 11/3 + sqrt(121/9 - 6) = 11/3 + sqrt(67)/3 ≈ 6.395
+
+    % z_max(27/11) = 27/11 + sqrt(729/121 - 45/11) = 27/11 + sqrt(234)/11 ≈ 3.845
+    % z_max(3)     = 3 + sqrt(9 - 45/11) = 3 + sqrt(54/11) ≈ 5.216
+    % z_max(11/3)  = (11 + 2*sqrt(19))/3 ≈ 6.573
+
+    % 表示用のスケーリング変換:
+    % x_plot = (u - 2.0) * 2.2
+    % y_plot = (z - 3.0) * 1.0
+    \def\xScale{2.2}
+    \def\yScale{0.95}
+
+    \coordinate (O) at (0, 0);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick] (-0.3, 0) -- (4.2, 0) node[right] {$u$};
+    \draw[->, thick] (0, -0.3) -- (0, 4.0) node[above] {$z$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. グラフ描画 (z_max と z_min) ---
+    % (i) z_max(u) のプロット (赤線)
+    % 区間 1: u in [27/11, 3], z = u + sqrt(u^2 - 45/11)
+    \draw[very thick, red!85!black, domain=2.455:3.0, samples=30]
+    plot ({(\x - 2.0)*\xScale}, {(\x + sqrt(\x*\x - 45.0/11.0) - 3.0)*\yScale});
+
+    % 区間 2: u in [3, 11/3], z = u + sqrt(u^2 - 15/11*u)
+    \draw[very thick, red!85!black, domain=3.0:3.667, samples=30]
+    plot ({(\x - 2.0)*\xScale}, {(\x + sqrt(\x*\x - 15.0/11.0*\x) - 3.0)*\yScale});
+
+    \node[red!90!black, font=\footnotesize, above left]
+    at ({(3.667 - 2.0)*\xScale}, {(6.573 - 3.0)*\yScale}) {$\max z(u)$};
+
+    % (ii) z_min(u) のプロット (青線)
+    % 区間 1: u in [27/11, 3], z = u + sqrt(u^2 - 2u)
+    \draw[very thick, blue!85!black, domain=2.455:3.0, samples=30]
+    plot ({(\x - 2.0)*\xScale}, {(\x + sqrt(\x*\x - 2.0*\x) - 3.0)*\yScale});
+
+    % 区間 2: u in [3, 11/3], z = u + sqrt(u^2 - 6)
+    \draw[very thick, blue!85!black, domain=3.0:3.667, samples=30]
+    plot ({(\x - 2.0)*\xScale}, {(\x + sqrt(\x*\x - 6.0) - 3.0)*\yScale});
+
+    \node[blue!90!black, font=\footnotesize, below right]
+    at ({(3.667 - 2.0)*\xScale}, {(6.395 - 3.0)*\yScale}) {$\min z(u)$};
+
+    % --- 4. 領域内の値域（z_min と z_max の間）を薄く塗りつぶし ---
+    \fill[purple!15, opacity=0.4]
+    plot[domain=2.455:3.0, samples=20] ({(\x - 2.0)*\xScale}, {(\x + sqrt(\x*\x - 2.0*\x) - 3.0)*\yScale})
+    -- plot[domain=3.0:3.667, samples=20] ({(\x - 2.0)*\xScale}, {(\x + sqrt(\x*\x - 6.0) - 3.0)*\yScale})
+    -- plot[domain=3.667:3.0, samples=20] ({(\x - 2.0)*\xScale}, {(\x + sqrt(\x*\x - 15.0/11.0*\x) - 3.0)*\yScale})
+    -- plot[domain=3.0:2.455, samples=20] ({(\x - 2.0)*\xScale}, {(\x + sqrt(\x*\x - 45.0/11.0) - 3.0)*\yScale})
+    -- cycle;
+
+    % --- 5. 最小点・最大点および補助線 ---
+    % 最小点: u = 27/11 での min z
+    \coordinate (MinPt) at ({(2.455 - 2.0)*\xScale}, {(3.511 - 3.0)*\yScale});
+    \draw[dashed, gray!60] ({(2.455 - 2.0)*\xScale}, 0) -- (MinPt);
+    \draw[dashed, blue!70] (0, {(3.511 - 3.0)*\yScale}) -- (MinPt);
+    \fill[blue!85!black] (MinPt) circle (0.7pt);
+    \node[left=2pt, font=\scriptsize, blue!90!black] at (0, {(3.511 - 3.0)*\yScale})
+    {$\min z = \frac{27+3\sqrt{15}}{11}$};
+
+    % 最大点: u = 11/3 での max z
+    \coordinate (MaxPt) at ({(3.667 - 2.0)*\xScale}, {(6.573 - 3.0)*\yScale});
+    \draw[dashed, gray!60] ({(3.667 - 2.0)*\xScale}, 0) -- (MaxPt);
+    \draw[dashed, red!70] (0, {(6.573 - 3.0)*\yScale}) -- (MaxPt);
+    \fill[red!85!black] (MaxPt) circle (0.7pt);
+    \node[left=2pt, font=\scriptsize, red!90!black] at (0, {(6.573 - 3.0)*\yScale})
+    {$\max z = \frac{11+2\sqrt{19}}{3}$};
+
+    % つなぎ目 u = 3 の補助破線
+    \draw[dashed, gray!50] ({(3.0 - 2.0)*\xScale}, 0) -- ({(3.0 - 2.0)*\xScale}, 3.5);
+
+    % --- 6. u 軸の目盛り ---
+    \node[below=2pt, font=\scriptsize] at ({(2.455 - 2.0)*\xScale}, 0) {$\frac{27}{11}$};
+    \node[below=2pt, font=\scriptsize] at ({(3.0 - 2.0)*\xScale}, 0) {$3$};
+    \node[below=2pt, font=\scriptsize] at ({(3.667 - 2.0)*\xScale}, 0) {$\frac{11}{3}$};
+
+    % --- 7. 注釈ボックス ---
+    \node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=3pt, font=\footnotesize, align=left]
+    at (1.1, 2.7) {単調増加性より\\[2pt]
+      $\min z = z\left(\frac{27}{11}\right)$\\[2pt]
+    $\max z = z\left(\frac{11}{3}\right)$};
+
+  \end{tikzpicture}
+  \caption{$u$ に対する $z$ の最大値・最小値のグラフ}
+  \label{fig:z_u_extremum_graphs}
+\end{figure}
 
 次に $u$ を動かす．\cref{eq:5}はいずれも$u$の範囲では単調増加で，かつ$u=3$で連続であるから，$z$が最小値をとるのは$u=\dfrac{27}{11}$の時，最大値をとるのは$u=\dfrac{11}{3}$の時で，それぞれ値は
 \begin{align}

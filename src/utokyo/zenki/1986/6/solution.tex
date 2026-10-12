@@ -1,39 +1,652 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\usepackage{emath}
-\usepackage{emathPp}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1972$年$2$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  直円錐形のグラスに水が満ちている．水面の円の半径は$1$,深さも$1$である．　
-  \begin{enumerate}[(1)]
-    \item このグラスを角度$\alpha$だけ傾けた時，できる水面は楕円である．この楕円の中心からグラスのふちを含む
-      平面までの距離$l$と，楕円の長半径$a$および短半径$b$を，$m=tan\alpha$で表せ．ただし楕円の長半径，短半
-      径とは，それぞれ長軸，短軸の長さの$1/2$のことである．　
-    \item 傾けた時こぼれた水の量が，最初の水の量の$1/2$である時，$m$の値を求めよ．ただし，グラスの円
-      錐の頂点から，新しい水面までの距離を$h$とするとき，残った水の量は$\pi abh/3$に等しいことを用い
-      よ．
-  \end{enumerate}
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-\end{multicols}
+{\bf[解]}
+
+\subparagraph{(1)}
+
+% TODO: 改良する
+\begin{figure}[htb]
+  \centering
+  % 俯角 65°，方位角 115° で水面楕円と円錐母線の関係を明瞭に表示
+  \tdplotsetmaincoords{65}{115}
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. パラメータ定義 ---
+    % m = tan(alpha) = 0.35, alpha ≈ 19.29°
+    \pgfmathsetmacro{\mval}{0.35}
+    \pgfmathsetmacro{\angAlpha}{atan(\mval)}
+    \pgfmathsetmacro{\angAxis}{90.0 + \angAlpha}
+
+    % 頂点 O
+    \coordinate (O) at (0, 0, 0);
+
+    % 母線 OA, OB (xz平面内)
+    \pgfmathsetmacro{\lenOA}{sqrt(2.0)}
+    \pgfmathsetmacro{\angOA}{135.0 + \angAlpha}
+    \pgfmathsetmacro{\angOB}{45.0 + \angAlpha}
+
+    % A, B の座標成分
+    \pgfmathsetmacro{\Ax}{\lenOA * cos(\angOA)}
+    \pgfmathsetmacro{\Az}{\lenOA * sin(\angOA)}
+    \coordinate (A) at (\Ax, 0, \Az);
+
+    \pgfmathsetmacro{\Bx}{\lenOA * cos(\angOB)}
+    \pgfmathsetmacro{\Bz}{\lenOA * sin(\angOB)}
+    \coordinate (B) at (\Bx, 0, \Bz);
+
+    % 点 C: 母線 OB 上で水面と交わる点 (長さ x = sqrt(2)*(1-m)/(1+m))
+    \pgfmathsetmacro{\lenOC}{\lenOA * (1.0 - \mval) / (1.0 + \mval)}
+    \pgfmathsetmacro{\Cx}{\lenOC * cos(\angOB)}
+    \pgfmathsetmacro{\Cz}{\lenOC * sin(\angOB)}
+    \coordinate (C) at (\Cx, 0, \Cz);
+
+    % 楕円中心 D (AC の中点) の座標成分
+    \pgfmathsetmacro{\Dx}{(\Ax + \Cx) / 2.0}
+    \pgfmathsetmacro{\Dz}{(\Az + \Cz) / 2.0}
+    \coordinate (D) at (\Dx, 0, \Dz);
+
+    % 水面楕円の長軸方向ベクトル (D から C へのベクトル)
+    \pgfmathsetmacro{\ux}{\Cx - \Dx}
+    \pgfmathsetmacro{\uz}{\Cz - \Dz}
+
+    % 水面楕円の短軸半径 b (y 軸方向)
+    \pgfmathsetmacro{\semiB}{sqrt(1.0 - \mval*\mval) / (1.0 + \mval)}
+
+    % 元の水面円の中心 H (AB の中点)
+    \pgfmathsetmacro{\Hx}{(\Ax + \Bx) / 2.0}
+    \pgfmathsetmacro{\Hz}{(\Az + \Bz) / 2.0}
+    \coordinate (H) at (\Hx, 0, \Hz);
+
+    % 元の水面円の半径ベクトル成分 (H から B)
+    \pgfmathsetmacro{\vx}{\Bx - \Hx}
+    \pgfmathsetmacro{\vz}{\Bz - \Hz}
+
+    % 中心軸終端
+    \coordinate (L_top) at ($ (O)!1.45!(H) $);
+
+    % --- 1b. 円錐側面全体を淡く塗って立体感を出す ---
+    \fill[teal!8, opacity=0.8]
+    (O) -- plot[domain=0:360, samples=60]
+    ({\Hx + \vx*cos(\x)}, {1.0*sin(\x)}, {\Hz + \vz*cos(\x)}) -- cycle;
+
+    % --- 2. 残っている水（円錐下部）の塗りつぶし ---
+    \fill[blue!15, opacity=0.7] (O) -- (A) -- (C) -- cycle;
+
+    % 水面楕円 AC の塗りつぶし (半透明)
+    \fill[blue!25, opacity=0.55]
+    plot[domain=0:360, samples=40]
+    ({\Dx + \ux*cos(\x)}, {\semiB*sin(\x)}, {\Dz + \uz*cos(\x)});
+
+    % --- 3. 円錐の側面（母線と見かけの輪郭線）---
+    \draw[very thick, teal!85!black] (O) -- (A);
+    \draw[very thick, teal!85!black] (O) -- (B);
+    \draw[thick, teal!70!black] (O) -- (C);
+
+    % 奥行き方向の見かけの輪郭母線
+    \coordinate (Cone_y_pos) at ($ (H) + (0, 1.0, 0) $);
+    \coordinate (Cone_y_neg) at ($ (H) + (0, -1.0, 0) $);
+    \draw[thin, gray!50] (O) -- (Cone_y_pos);
+    \draw[thin, gray!50] (O) -- (Cone_y_neg);
+
+    % --- 4. 元の水面（上端の円: 半径 1）---
+    \draw[dashed, gray!60]
+    plot[domain=0:360, samples=40]
+    ({\Hx + \vx*cos(\x)}, {1.0*sin(\x)}, {\Hz + \vz*cos(\x)});
+    \draw[dashed, gray!70] (A) -- (B);
+
+    % --- 5. 新しい水面（楕円の周縁）---
+    \draw[very thick, blue!85!black]
+    plot[domain=0:360, samples=40]
+    ({\Dx + \ux*cos(\x)}, {\semiB*sin(\x)}, {\Dz + \uz*cos(\x)});
+
+    % 長軸 AC
+    \draw[line width=1.5pt, blue!90!black] (A) -- (C);
+
+    % 短軸 (D を通り y 軸平行)
+    \draw[thick, orange!90!black]
+    ($ (D) - (0, \semiB, 0) $) -- ($ (D) + (0, \semiB, 0) $);
+    \node[orange!95!black, font=\scriptsize, below right=1pt] at ($ (D) + (0, \semiB, 0) $) {短軸 $2b$};
+
+    % --- 6. 円錐の中心軸 ---
+    \draw[dashed, teal!70!black] (O) -- (H);
+    \draw[->, thick, teal!85!black] (H) -- (L_top)
+    node[above left=1pt] {円錐中心軸};
+
+    % --- 7. 主要点のプロットとラベル ---
+    \fill (O) circle (0.6pt) node[below left=2pt] {$O$};
+    \fill[teal!85!black] (A) circle (0.7pt) node[below left=2pt] {$A$};
+    \fill[teal!85!black] (B) circle (0.7pt) node[above right=1pt] {$B$};
+    \fill[blue!85!black] (C) circle (0.7pt) node[above right=1pt, blue!90!black] {$C$};
+    \fill[red!85!black]  (D) circle (0.7pt) node[below=2pt, red!85!black] {$D$};
+    \fill (H) circle (0.5pt) node[above=2pt, font=\scriptsize] {$H$};
+
+  \end{tikzpicture}
+  \caption{傾けた円錐と水面楕円切断面}
+  \label{fig:tilted_cone_3d_overview}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.7, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. パラメータ定義 ---
+    \pgfmathsetmacro{\mval}{0.35}
+    \pgfmathsetmacro{\angAlpha}{atan(\mval)}                        % 約 19.29°
+    \pgfmathsetmacro{\angOAC}{45.0 - \angAlpha}                     % 約 25.71° (pi/4 - alpha)
+    \pgfmathsetmacro{\lenOA}{sqrt(2.0)}                            % 約 1.4142
+    \pgfmathsetmacro{\lenOC}{\lenOA * (1.0-\mval)/(1.0+\mval)}      % x = |OC|
+    \pgfmathsetmacro{\lenAC}{sqrt(\lenOA*\lenOA + \lenOC*\lenOC)}  % 水面 AC の長さ
+
+    % 基準点 A (0,0)
+    \coordinate (A) at (0, 0);
+
+    % 水面上の点 C および中点 D (水平方向)
+    \coordinate (C) at (\lenAC, 0);
+    \coordinate (D) at ({\lenAC/2.0}, 0);
+
+    % 頂点 O の座標: A から角度 -\angOAC, 距離 \lenOA
+    \coordinate (O) at ({-\angOAC}:\lenOA);
+
+    % 縁 B の座標: A から角度 \angAlpha 方向に距離 2.0 (AB = 2)
+    \coordinate (B) at ({\angAlpha}:2.0);
+
+    % D から直線 AB への垂線の足 (距離 l の終点)
+    \pgfmathsetmacro{\projD}{(\lenAC/2.0) * cos(\angAlpha)}
+    \coordinate (D_proj) at ({\angAlpha}:\projD);
+
+    % --- 交点計算用の補助座標 ---
+    \coordinate (D_dir) at ($ (D) + ({\angAlpha}:2.0) $);
+    \coordinate (O_axis_dir) at ($ (O) + ({\angAlpha + 90}:2.0) $);
+
+    % 軸と平行線の交点 E
+    \coordinate (E) at (intersection of D--D_dir and O--O_axis_dir);
+
+    % D を通り AB に平行な直線と母線 OB の交点
+    \coordinate (par_end) at (intersection of D--D_dir and O--B);
+
+    % OE の延長線（円錐中心軸）と直線 AB の交点 = 垂線の足 H
+    \coordinate (H) at (intersection of O--O_axis_dir and A--B);
+
+    % --- 2. 残った水 (三角形 OAC) のハッチング塗りつぶし ---
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75]
+    (A) -- (O) -- (C) -- cycle;
+
+    % 水面 AC の境界線
+    \draw[line width=1.6pt, blue!85!black] (A) -- (C);
+
+    % 水平基準線（水面 AC の延長線、破線）
+    \draw[dashed, blue!40] ($ (A) + (-0.3, 0) $) -- (A);
+    \draw[dashed, blue!40] (C) -- ($ (C) + (0.4, 0) $);
+
+    % --- 3. 円錐の母線 OA, OB ---
+    \draw[very thick, teal!85!black] (A) -- (O);
+    \draw[very thick, teal!85!black] (O) -- (B);
+    \node[teal!90!black, font=\scriptsize, below left] at ($ (A)!0.5!(O) $) {$\sqrt{2}$};
+    \node[teal!90!black, font=\scriptsize, right=2pt] at ($ (O)!0.5!(C) $) {$x$};
+
+    % 元の水面 AB
+    \draw[thick, black] (A) -- (B);
+    \node[black, font=\scriptsize, above=2pt] at ($ (A)!0.5!(H) $) {$1$};
+    \node[black, font=\scriptsize, above=2pt] at ($ (H)!0.5!(B) $) {$1$};
+
+    % --- 4. D からの垂線 l および平行線 ---
+    % D から AB への垂線 (長さ l)
+    \draw[very thick, red!85!black] (D) -- (D_proj);
+    \node[red!90!black, font=\footnotesize, above right=1pt] at ($ (D)!0.5!(D_proj) $) {$l$};
+
+    % 直角マーク (D_proj)
+    \coordinate (sqP1) at ($ (D_proj) + ({\angAlpha}:-0.08) $);
+    \coordinate (sqP2) at ($ (sqP1) + ({\angAlpha - 90}:0.08) $);
+    \coordinate (sqP3) at ($ (D_proj) + ({\angAlpha - 90}:0.08) $);
+    \draw[thin, gray!70] (sqP1) -- (sqP2) -- (sqP3);
+
+    % D を通り AB に平行な線 (交点 E を通過し母線 OB へ)
+    \draw[thick, orange!90!black] (D) -- (par_end);
+    % 平行矢印記号
+    \draw[-{Latex[length=3pt, width=3pt]}, thick, orange!90!black]
+    ($ (D)!0.6!(E) $) -- ($ (D)!0.65!(E) $);
+    \draw[-{Latex[length=3pt, width=3pt]}, thick, black]
+    ($ (A)!0.65!(B) $) -- ($ (A)!0.70!(B) $);
+
+    % --- 5. 円錐の中心軸 (O - E - H) ---
+    \coordinate (axis_top) at ($ (H) + ({\angAlpha + 90}:0.45) $);
+    \coordinate (axis_bot) at ($ (O) + ({\angAlpha - 90}:0.45) $);
+    \draw[dashed, gray!60] (axis_bot) -- (axis_top);
+    \node[right=1pt, font=\scriptsize, gray!80!black] at (axis_top) {中心軸};
+
+    % H における直角記号 (OH ⊥ AB)
+    \coordinate (sqH1) at ($ (H) + ({\angAlpha}:-0.08) $);
+    \coordinate (sqH2) at ($ (sqH1) + ({\angAlpha - 90}:0.08) $);
+    \coordinate (sqH3) at ($ (H) + ({\angAlpha - 90}:0.08) $);
+    \draw[thin, gray!70] (sqH1) -- (sqH2) -- (sqH3);
+
+    % 頂点 O における直角マーク (OA ⊥ OB)
+    \draw[thin, gray!70]
+    ($ (O)!0.1!(A) $) --
+    ($ ($ (O)!0.1!(A) $) + ($ (O)!0.1!(B) $) - (O) $) --
+    ($ (O)!0.1!(B) $);
+
+    % --- 6. 角度弧とラベル ---
+    % 角 alpha (AC と AB のなす角)
+    \draw[thick, purple!85!black] (0.55, 0) arc[start angle=0, end angle=\angAlpha, radius=0.55];
+    \node[purple!90!black, font=\scriptsize] at ({\angAlpha/2}:0.7) {$\alpha$};
+
+    % 角 pi/4 - alpha (水面 AC と母線 OA のなす角)
+    \draw[thick, purple!85!black] (0.45, 0) arc[start angle=0, end angle={-\angOAC}, radius=0.45];
+    \node[purple!90!black, font=\scriptsize] at ({-\angOAC/2}:0.68) {$\frac{\pi}{4}-\alpha$};
+
+    % O における水平基準線とのなす角 pi/4 - alpha
+    \draw[dashed, gray!50] ($ (O) + (-0.6, 0) $) -- (O);
+    \draw[thick, purple!85!black] ($ (O) + (-0.35, 0) $)
+    arc[start angle=180, end angle={180 - \angOAC}, radius=0.35];
+    \node[purple!90!black, font=\scriptsize] at ($ (O) + (-0.55, 0.12) $) {$\frac{\pi}{4}-\alpha$};
+
+    % --- 7. 主要点のプロットとラベル ---
+    \fill (A) circle (0.7pt) node[left=2pt] {$A$};
+    \fill (B) circle (0.7pt) node[above right=1pt] {$B$};
+    \fill[blue!85!black] (C) circle (0.7pt) node[right=2pt, blue!90!black] {$C$};
+    \fill[red!85!black]  (D) circle (0.7pt) node[below=2pt, red!85!black] {$D$};
+    \fill[orange!90!black] (E) circle (0.7pt) node[above right=1pt, orange!90!black] {$E$};
+    \fill (H) circle (0.7pt) node[above=2pt] {$H$};
+    \fill (O) circle (0.7pt) node[below left=2pt] {$O$};
+
+  \end{tikzpicture}
+  \caption{水面 $AC$ を水平にしたときの円錐の傾き断面（$H$ は中心軸と $AB$ の交点）}
+  \label{fig:tilted_cone_horizontal_water_surface}
+\end{figure}
+
+上図のように各点，図形量をおく．円錐の軸と母線のなす角は$\dfrac{\pi}{4}$であり，もとの水面の縁の円のうち，傾ける向きで最も低い点を$A$，最も高い点を$B$とすると，$\angle AOB=\angle{\rm R}$である．題意より
+\begin{align}
+  |AB| = 2, \quad |OA|=|OB|= \sqrt{2} \label{eq:1}
+\end{align}
+である．
+
+新しい水面は$A$を通り，もとの水面（直線$AB$）とのなす角が$\alpha$の直線で，辺$OB$と点$C$で交わる．
+\begin{align}
+  |OC| = x \label{eq:2}
+\end{align}
+とおくと，$\triangle OAC$に注目して加法定理より
+\begin{align}
+  x = |OA| \tan\left(\dfrac{\pi}{4}-\alpha\right)
+  = \sqrt{2}\tan\left(\dfrac{\pi}{4}-\alpha\right) = \dfrac{1-m}{1+m}\sqrt{2} \label{eq:3}
+\end{align}
+だから，$\triangle OAC$に三平方の定理を用いて
+\begin{align}
+  |AC| = \sqrt{|OA|^2+|OC|^2} = \sqrt{x^2+2} = \dfrac{2}{1+m}\sqrt{m^2+1} \label{eq:4}
+\end{align}
+である．
+
+さて，楕円の中心$D$は$AC$の中点だから\cref{eq:4}より
+\begin{align}
+  |AD| = \dfrac{1}{2}|AC| = \dfrac{1}{1+m}\sqrt{m^2+1} \label{eq:5}
+\end{align}
+となる．また$0<\alpha<\pi/2$から
+\begin{align}
+  \sin\alpha
+  = \tan\alpha \cos\alpha
+  = \sqrt{\tan^2\alpha \cos^2\alpha}
+  = \sqrt{\dfrac{\tan^2\alpha}{1+\tan^2\alpha}}
+  = \sqrt{\dfrac{m^2}{m^2+1}} \label{eq:6}
+\end{align}
+である．
+以上\cref{eq:5,eq:6}より，楕円の中心$D$から直線ABへの距離$l$は
+\begin{align}
+  l = |AD| \sin\angle DAB = |AD|\sin\alpha = \dfrac{\sqrt{m^2+1}}{1+m}\sqrt{\dfrac{m^2}{m^2+1}} = \dfrac{m}{1+m} \quad\cdots\text{(答)} \label{eq:7}
+\end{align}
+となる．
+
+次に楕円の長半径$a$, 短半径$b$を検討する．
+まず，$D$を通り$AB$に平行な直線と円錐の軸の交点を$E$とすると，
+\begin{align}
+  |OE| = |OH| - l = 1-\ell = \dfrac{1}{m+1} \label{eq:8}
+\end{align}
+である．
+
+また，楕円の中心$D$と$E$の距離は
+\begin{align}
+  |DE|
+  &= |AH| - |AD|\cos\alpha \\
+  &= 1-|AD|\cos\alpha \\
+  &= 1-\dfrac{\sqrt{m^2+1}}{1+m}\dfrac{1}{\sqrt{m^2+1}} = \dfrac{m}{1+m} \quad (\because 0<\alpha<\pi/2) \label{eq:9}
+\end{align}
+である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. パラメータ定義 ---
+    \pgfmathsetmacro{\mval}{0.35}
+    \pgfmathsetmacro{\radR}{1.0 / (1.0 + \mval)}
+    \pgfmathsetmacro{\distD}{\mval / (1.0 + \mval)}
+    \pgfmathsetmacro{\lenF}{sqrt(1.0 - \mval*\mval) / (1.0 + \mval)}
+
+    \coordinate (E) at (0, 0);                 % 円の中心 (軸との交点)
+    \coordinate (D) at (-\distD, 0);            % 楕円中心
+    \coordinate (F) at (-\distD, \lenF);        % 円周上の点 (DF ⊥ DE)
+    \coordinate (F_sym) at (-\distD, -\lenF);   % 反対側の円周点
+
+    % --- 2. 円錐の水平切断円の塗りつぶしと輪郭線 ---
+    \fill[teal!10, opacity=0.6] (E) circle (\radR);
+    \draw[very thick, teal!85!black] (E) circle (\radR);
+
+    % --- 3. 弦 F-D-F_sym (水面楕円の短軸方向) ---
+    \draw[dashed, blue!40] (F) -- (F_sym);
+    % 短半径 DF (太線強調)
+    \draw[line width=1.8pt, blue!85!black] (D) -- (F);
+    \node[blue!90!black, font=\footnotesize, left=2pt] at ($ (D)!0.5!(F) $) {$b = |DF|$};
+
+    % --- 4. 直角三角形 EDF の各辺 ---
+    % 底辺 ED (中心 E から D への変位)
+    \draw[very thick, orange!90!black] (E) -- (D);
+
+    % 斜辺 EF (円の半径 R)
+    \draw[thick, black] (E) -- (F);
+    \node[black, font=\scriptsize, above right=1pt] at ($ (E)!0.5!(F) $) {$R = \frac{1}{1+m}$};
+
+    % --- 5. 直角記号 (ED ⊥ DF) ---
+    \draw[thin, gray!70]
+    ($ (D) + (0.08, 0) $) --
+    ($ (D) + (0.08, 0.08) $) --
+    ($ (D) + (0, 0.08) $);
+
+    % --- 6. 各主要点のプロットとラベル ---
+    \fill (E) circle (0.6pt) node[below right=1pt] {$E$};
+    \fill[red!85!black] (D) circle (0.7pt) node[below left=1pt, red!85!black] {$D$};
+    \fill[blue!85!black] (F) circle (0.7pt) node[above=2pt, blue!85!black] {$F$};
+
+  \end{tikzpicture}
+  \caption{点 $D$ を含み中心軸に垂直な円錐断面（半径 $\dfrac{1}{1+m}$ の円）と短半径 $b = |DF|$}
+  \label{fig:cone_cross_section_horizontal_circle}
+\end{figure}
+
+従って$D$を含み軸に垂直な平面での円錐切り口は上図のような，半径$\dfrac{1}{m+1}$の円である．ここで図のように$F$を定めると，$|DF|$が長半径または単半径に当たる．
+$\triangle DEF$に三平方の定理を用いて，\cref{eq:8,eq:9}より
+\begin{align}
+  |DF|
+  = \sqrt{|EF|^2-|DE|^2}
+  = \sqrt{\left(\dfrac{1}{1+m}\right)^2-\left(\dfrac{m}{1+m}\right)^2}
+  = \dfrac{\sqrt{1-m^2}}{1+m} \label{eq:10}
+\end{align}
+である．
+
+$|AD|,|DF|$のうち大きい方が$a$であり，もう一方が$b$だから\cref{eq:7,eq:10}より
+\begin{align}
+  a = \dfrac{\sqrt{1+m^2}}{1+m}, \quad b = \dfrac{\sqrt{1-m^2}}{1+m} \quad\cdots\text{(答)} \label{eq:11}
+\end{align}
+である．
+
+\subparagraph{(2)}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. パラメータ定義 ---
+    % m = tan(alpha) = 0.35
+    % OA = sqrt(2), OC = x = sqrt(2)*(1-m)/(1+m)
+    \pgfmathsetmacro{\mval}{0.35}
+    \pgfmathsetmacro{\angAlpha}{atan(\mval)}                        % 約 19.29°
+    \pgfmathsetmacro{\angOAC}{45.0 - \angAlpha}                     % 約 25.71°
+    \pgfmathsetmacro{\lenOA}{sqrt(2.0)}
+    \pgfmathsetmacro{\lenOC}{\lenOA * (1.0-\mval)/(1.0+\mval)}      % x
+    \pgfmathsetmacro{\lenAC}{sqrt(\lenOA*\lenOA + \lenOC*\lenOC)}  % 斜辺 AC
+
+    % 基準点 A (0,0)
+    \coordinate (A) at (0, 0);
+
+    % 水面 AC (水平配置)
+    \coordinate (C) at (\lenAC, 0);
+
+    % 円錐の頂点 O: A から角度 -\angOAC, 距離 \lenOA
+    \coordinate (O) at ({-\angOAC}:\lenOA);
+
+    % O から斜辺 AC への垂線の足 H_AC: 水平座標は O の x 座標と同一
+    \path let \p{O} = (O) in coordinate (H_AC) at (\x{O}, 0);
+
+    % --- 2. 残った水 (直角三角形 OAC) のハッチング塗りつぶし ---
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75]
+    (A) -- (O) -- (C) -- cycle;
+
+    % 水面 AC (斜辺)
+    \draw[line width=1.6pt, blue!85!black] (A) -- (C);
+
+    % 水平基準線（水面 AC の延長線、破線）
+    \draw[dashed, blue!40] ($ (A) + (-0.3, 0) $) -- (A);
+    \draw[dashed, blue!40] (C) -- ($ (C) + (0.35, 0) $);
+
+    % --- 3. 直角三角形 OAC の直交する 2 辺 (OA, OC) ---
+    \draw[very thick, teal!85!black] (A) -- (O);
+    \draw[very thick, teal!85!black] (O) -- (C);
+
+    \node[teal!90!black, font=\footnotesize, below left=1pt] at ($ (A)!0.5!(O) $) {$|OA| = \sqrt{2}$};
+    \node[teal!90!black, font=\footnotesize, below right=1pt] at ($ (O)!0.5!(C) $) {$|OC| = x$};
+
+    % --- 4. 頂点 O における直角記号 (OA ⊥ OC) ---
+    \draw[thin, gray!70]
+    ($ (O)!0.1!(A) $) --
+    ($ ($ (O)!0.1!(A) $) + ($ (O)!0.1!(C) $) - (O) $) --
+    ($ (O)!0.1!(C) $);
+
+    % --- 5. O から水面 AC への垂線 h ---
+    \draw[line width=1.8pt, purple!85!black] (O) -- (H_AC);
+    \node[purple!90!black, font=\normalsize, right=2pt] at ($ (O)!0.5!(H_AC) $) {$h$};
+
+    % 垂線の足 H_AC における直角記号
+    \draw[thin, gray!70]
+    ($ (H_AC) + (-0.08, 0) $) --
+    ($ (H_AC) + (-0.08, -0.08) $) --
+    ($ (H_AC) + (0, -0.08) $);
+
+    % --- 6. 斜辺 AC の寸法補助線 ---
+    \draw[<->, thick, gray!80!black] ($ (A) + (0, 0.22) $) -- ($ (C) + (0, 0.22) $);
+    \node[above=2pt, font=\scriptsize, gray!90!black] at ($ ($ (A)!0.5!(C) $) + (0, 0.22) $) {$|AC| = \sqrt{x^2+2}$};
+
+    % --- 7. 主要点のプロットとラベル ---
+    \fill (A) circle (0.7pt) node[left=2pt] {$A$};
+    \fill[blue!85!black] (C) circle (0.7pt) node[right=2pt, blue!90!black] {$C$};
+    \fill (O) circle (0.7pt) node[below=2pt] {$O$};
+    \fill[purple!85!black] (H_AC) circle (0.6pt) node[above=2pt, purple!90!black, font=\scriptsize] {$H_{AC}$};
+
+  \end{tikzpicture}
+  \caption{(2) における直角三角形 $\triangle OAC$ と水面への垂線の高さ $h$}
+  \label{fig:cone_water_height_h}
+\end{figure}
+
+最初円錐に入っていた水の量$V$は
+\begin{align}
+  V = \dfrac{1}{3}\pi|AH|^2|DH| = \dfrac{\pi}{3}
+\end{align}
+だから，残った水の量$V'$はこの半分で
+\begin{align}
+  V' = \dfrac{V}{2} = \dfrac{\pi}{6} \label{eq:12}
+\end{align}
+である．題意よりこれが$\dfrac{\pi abh}{3}$に等しいから
+\begin{align}
+  \dfrac{1}{6}\pi = \dfrac{1}{3}\pi abh \quad \therefore 1 = 2abh \label{eq:13}
+\end{align}
+である．
+
+$a,b$は(1)で求めているので$h$について検討する．
+$\triangle OAC$の面積を2通りで表して，
+\begin{align}
+  \dfrac{|AC|h}{2} = \dfrac{|OA||OC|}{2} \therefore |AC|\cdot h = \sqrt{2} x
+\end{align}
+である．ここに\cref{eq:3,eq:4}を代入して
+\begin{align}
+  h = \dfrac{\sqrt{2}x}{|AC|}
+  = \dfrac{\sqrt{2}\cdot\sqrt{2}(1-m)/(1+m)}{2\sqrt{1+m^2}/(1+m)}
+  = \dfrac{1-m}{\sqrt{1+m^2}}
+\end{align}
+である．
+
+従って\cref{eq:11}と合わせて\cref{eq:13}に代入して
+\begin{align}
+  1 = \dfrac{2\sqrt{1-m^2}}{(1+m)^2}(1-m)
+\end{align}
+$1-m>0$だから両辺を2乗して，
+\begin{align}
+  (1+m)^4 &= 4(1-m)^2(1-m^2) \\
+  (1+m)^3 &= 4(1-m)^3 \\
+  1+m     &= 2^{\frac{2}{3}}(1-m) \\
+  \therefore
+  m &= \dfrac{2^{\frac{2}{3}}-1}{2^{\frac{2}{3}}+1} \quad\cdots\text{(答)}
+\end{align}
+である．
+
+{\bf[別解]}
+
+[解答]では幾何学的な計算を一貫したが，座標系をおいた(1)の解答も示す．
+
+\subparagraph{(1)}
+
+$O$を原点，新たな水面が$xy$平面と平行になるように$xyz$空間をおく．
+もとの$\triangle OAB$が$xz$平面にあるようにした．
+
+% TODO: 改良したい
+\begin{figure}[htb]
+  \centering
+  % 俯角 65°，方位角 120° で水面 (xy平面) と xz平面上の三角形 OAB を見やすく配置
+  \tdplotsetmaincoords{65}{120}
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.6, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. パラメータ定義 ---
+    \pgfmathsetmacro{\mval}{0.35}
+    \pgfmathsetmacro{\angAlpha}{atan(\mval)}             % 約 19.29°
+    \pgfmathsetmacro{\angAxis}{90.0 + \angAlpha}         % xz 平面内での方向角 (90° + alpha)
+
+    \pgfmathsetmacro{\angOA}{135.0 + \angAlpha}
+    \pgfmathsetmacro{\angOB}{45.0 + \angAlpha}
+    \pgfmathsetmacro{\lenR}{sqrt(2.0)}                   % |OA| = |OB| = sqrt(2)
+
+    \coordinate (O) at (0, 0, 0);
+
+    % xz 平面上の各点 (y = 0)
+    \coordinate (A) at ({\lenR * cos(\angOA)}, 0, {\lenR * sin(\angOA)});
+    \coordinate (B) at ({\lenR * cos(\angOB)}, 0, {\lenR * sin(\angOB)});
+
+    % 中心軸 l の方向ベクトル（単位ベクトル）
+    \pgfmathsetmacro{\invNorm}{1.0 / sqrt(1.0 + \mval*\mval)}
+    \coordinate (L_vec) at ({-\mval * \invNorm * 1.8}, 0, {1.0 * \invNorm * 1.8});
+
+    % AB の中点 H (軸と AB の交点)
+    \coordinate (H) at ($ (A)!0.5!(B) $);
+
+    % --- 2. 水面 (xy 平面, z=0) の基準パッチ ---
+    \fill[blue!10, opacity=0.5] (-1.8, -1.2, 0) -- (1.5, -1.2, 0) -- (1.5, 1.5, 0) -- (-1.8, 1.5, 0) -- cycle;
+    \draw[dashed, blue!40] (-1.8, -1.2, 0) -- (1.5, -1.2, 0) -- (1.5, 1.5, 0) -- (-1.8, 1.5, 0) -- cycle;
+    \node[blue!80!black, font=\scriptsize] at (1.2, 1.2, 0) {水面 ($xy$ 平面)};
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!70] (-1.7, 0, 0) -- (1.8, 0, 0) node[below right=1pt] {$x$};
+    \draw[->, thick, gray!70] (0, -0.6, 0) -- (0, 1.8, 0) node[right=2pt] {$y$};
+    \draw[->, thick, gray!70] (0, 0, -0.2) -- (0, 0, 2.0) node[above=2pt] {$z$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 円錐断面の母線・元の水面 AB ---
+    \draw[very thick, teal!85!black] (O) -- (A);
+    \draw[very thick, teal!85!black] (O) -- (B);
+
+    % 元の水面境界線 AB
+    \draw[thick, black] (A) -- (B);
+
+    % 中心軸 (O から H を通り L_vec への半直線)
+    \draw[dashed, teal!70!black] (O) -- (H);
+    \draw[->, line width=1.5pt, teal!85!black] (H) -- (L_vec)
+    node[above left=1pt] {$\vec{l}$};
+
+    % --- 5. 直角記号 ---
+    % (i) 軸と AB の直交記号 (H における直角: 線分比で安全に生成)
+    \coordinate (sqH_A) at ($ (H)!0.08!(A) $);
+    \coordinate (sqH_O) at ($ (H)!0.08!(O) $);
+    \coordinate (sqH_AO) at ($ (sqH_A) + (sqH_O) - (H) $);
+    \draw[thin, gray!70] (sqH_A) -- (sqH_AO) -- (sqH_O);
+
+    % (ii) 頂点 O における直角記号 (OA ⊥ OB)
+    \coordinate (sqO_A) at ($ (O)!0.1!(A) $);
+    \coordinate (sqO_B) at ($ (O)!0.1!(B) $);
+    \coordinate (sqO_AB) at ($ (sqO_A) + (sqO_B) - (O) $);
+    \draw[thin, gray!70] (sqO_A) -- (sqO_AB) -- (sqO_B);
+
+    % --- 6. 角度弧 (軸と z 軸のなす角 alpha) ---
+    % xz平面（y=0）内で z 軸から l 方向まで，O を中心とする円弧を直接パラメトリックに描く
+    \pgfmathsetmacro{\arcR}{0.6}
+    \draw[very thick, purple!85!black] plot[domain=0:\angAlpha, samples=25, variable=\t]
+    ({-\arcR*sin(\t)}, 0, {\arcR*cos(\t)});
+    \pgfmathsetmacro{\labelR}{0.82}
+    \node[purple!90!black, font=\small] at
+    ({-\labelR*sin(\angAlpha/2)}, 0, {\labelR*cos(\angAlpha/2)}) {$\alpha$};
+
+    % --- 7. 主要点のプロットとラベル ---
+    \fill (O) circle (0.6pt);
+    \fill[teal!85!black] (A) circle (0.7pt) node[below left=2pt] {$A$};
+    \fill[teal!85!black] (B) circle (0.7pt) node[above right=1pt] {$B$};
+    \fill (H) circle (0.6pt) node[above left=1pt, font=\scriptsize] {$H$};
+
+    % --- 8. 注釈ボックス (軸ベクトルの成分表示) ---
+    \node[draw=teal!85!black, fill=white, rounded corners=2pt, inner sep=3.5pt, font=\footnotesize, align=left]
+    at (-0.8, 0, 2.2) {
+      $\vec{l} = \frac{1}{\sqrt{m^2+1}}
+      \begin{pmatrix}-m\\0\\1
+      \end{pmatrix}$\\[3pt]
+      $\left(m = \tan\alpha, \quad \triangle OAB \subset xz\text{平面}\right)$
+    };
+
+  \end{tikzpicture}
+  \caption{別解用：水面を $xy$ 平面にとった $xyz$ 直交座標系と中心軸ベクトル $\vec{l}$}
+  \label{fig:cone_3d_xyz_coordinate_system}
+\end{figure}
+
+この時軸の方向ベクトル$\vec{l}$は，
+\begin{align}
+  \vec{l} =
+  \begin{pmatrix}\cos\left(\dfrac{\pi}{2}+\alpha\right)\\0\\\sin\left(\dfrac{\pi}{2}+\alpha\right)
+  \end{pmatrix}
+  =
+  \begin{pmatrix}-\sin\alpha\\0\\\cos\alpha
+  \end{pmatrix}
+  \parallel
+  \begin{pmatrix}-m\\0\\1
+  \end{pmatrix} \label{eq:14}
+\end{align}
+である．円錐側面上の点$P(X,Y,Z)$について，
+\begin{align}
+  \overrightarrow{OP}\cdot\vec{l} = |\overrightarrow{OP}||\vec{l}|\cos\dfrac{\pi}{4}
+\end{align}
+が成り立つから，\cref{eq:14}を代入して
+\begin{align}
+  -mX+Z = \sqrt{X^2+Y^2+Z^2}\sqrt{m^2+1}\dfrac{\sqrt{2}}{2}
+\end{align}
+となる．両辺2乗して，
+\begin{align}
+  (mX-Z)^2 &= \dfrac{m^2+1}{2}(X^2+Y^2+Z^2) \\
+  \dfrac{1-m^2}{2}Z^2 &= \dfrac{1-m^2}{2}X^2+2mZX+\dfrac{1+m^2}{2}Y^2 \label{eq:15}
+\end{align}
+である．
+
+特に水面の点は$Z=\sqrt{2}\sin\left(\dfrac{\pi}{4}-\alpha\right)=\dfrac{1-m}{\sqrt{1+m^2}}$だから，\cref{eq:15}に代入して
+\begin{align}
+  &\dfrac{1-m^2}{2}X^2+\dfrac{2m(1-m)}{\sqrt{1+m^2}}X+\dfrac{1+m^2}{2}Y^2 = \dfrac{1-m^2}{2}\dfrac{(1-m)^2}{1+m^2} \\
+  &\dfrac{1-m^2}{2}\left(X+\dfrac{2m}{(1+m)\sqrt{1+m^2}}\right)^2+\dfrac{1+m^2}{2}Y^2 = \dfrac{(1-m)(m^2+1)}{2(1+m)}
+\end{align}
+である．これが水面の楕円の方程式である．
+
+従って中心が（$xy$平面への正射影で）$P'\left(-\dfrac{2m}{(1+m)\sqrt{1+m^2}},0\right)$，長半径，短半径が
+\begin{align}
+  \sqrt{\dfrac{2}{1-m^2}\cdot\dfrac{(1-m)(m^2+1)}{2(1+m)}} = \dfrac{\sqrt{1+m^2}}{1+m}
+\end{align}
+\begin{align}
+  \sqrt{\dfrac{2}{1+m^2}\cdot\dfrac{(1-m)(m^2+1)}{2(1+m)}} = \dfrac{\sqrt{1-m^2}}{1+m}
+\end{align}
+の楕円である．
+
+楕円の中心$D$と，平面$AB$（$Z=m\left(X+\dfrac{m}{\sqrt{1+m^2}}\right)+\dfrac{1}{\sqrt{m^2+1}}$）との距離が$l$だから，点と直線の距離の公式から
+\begin{align}
+  l=\dfrac{\left|\left(-\dfrac{2m}{1+m}+m\right)\dfrac{m}{\sqrt{1+m^2}}+\dfrac{1}{\sqrt{1+m^2}}-\dfrac{1-m}{\sqrt{1+m^2}}\right|}{\sqrt{m^2+1}}
+  = \dfrac{1}{1+m^2}\cdot\dfrac{m}{1+m}(1+m^2) = \dfrac{m}{1+m}
+\end{align}
+である．
+
+\newpage
 \end{document}

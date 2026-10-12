@@ -1,12 +1,527 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{enumerate}[(1)]
-  \item$\vec{n_0}$は互いに反対を向いた$2$つのベクトルである．$S_0$の法線ベクトルの一つに
-    $\vec{n}=(1,2,-2)$があるから，求めるベクトルは$k\in\mathbb{R}$として$k\vec{n}$の形で書ける．この絶対値が$1$であるから，$k=\pm\dfrac{1}{3}$.故に
-    $\vec{n_0}=\pm\dfrac{1}{3}(1,2,-2)\cdots\text{(答)}$が求める答えである．
+{\bf[解]}
 
-  \item$l$の方向ベクトル$\vec{l}=(-1,1,0)$である．又，$\vec{n_0}=$を$\vec{l}$の周りに回転させたベクトルを考えればよい．$l$上に点$A$をとる．以下位置ベクトルの基準点を$A$として，点
-\end{enumerate}
+\subparagraph{(1)}
+
+\begin{figure}[htb]
+  \centering
+  % 俯角 68°，方位角 115° で法線ベクトルと張る平面の直交関係を明瞭に表示
+  \tdplotsetmaincoords{68}{115}
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標定義 ---
+    \coordinate (O) at (0, 0, 0);
+
+    % 平面 S0 上の基準点 A(0, 1/2, 1)
+    \coordinate (A) at (0, 0.5, 1.0);
+
+    % 平面を張る2ベクトル p = (0, -0.5, -0.5), q = (1, -0.5, 0)
+    % A を始点とした終点
+    \coordinate (P_end) at ($ (A) + (0, -0.5, -0.5) $);
+    \coordinate (Q_end) at ($ (A) + (1.0, -0.5, 0.0) $);
+
+    % 平面 S0 の平行四辺形パッチの頂点
+    \coordinate (S_c1) at ($ (A) - (0.4, -0.2, 0.0) - (0.0, -0.2, -0.2) $);
+    \coordinate (S_c2) at ($ (A) + (1.2, -0.6, 0.0) - (0.0, -0.2, -0.2) $);
+    \coordinate (S_c3) at ($ (A) + (1.2, -0.6, 0.0) + (0.0, -0.6, -0.6) $);
+    \coordinate (S_c4) at ($ (A) - (0.4, -0.2, 0.0) + (0.0, -0.6, -0.6) $);
+
+    % 単位法線ベクトル n0 = 1/3 (1, 2, -2)
+    \coordinate (N0_end)  at ($ (A) + (1/3, 2/3, -2/3) $);
+    \coordinate (N0m_end) at ($ (A) - (1/3, 2/3, -2/3) $);
+
+    % 回転軸 l の方向ベクトル (1,0,0) と (0,1,0) を結ぶ直線
+    \coordinate (L1) at (1.0, 0.0, 0.0);
+    \coordinate (L2) at (0.0, 1.0, 0.0);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!70] (0, 0, 0) -- (1.5, 0, 0) node[below left=1pt] {$x$};
+    \draw[->, thick, gray!70] (0, 0, 0) -- (0, 1.5, 0) node[right=2pt] {$y$};
+    \draw[->, thick, gray!70] (0, 0, 0) -- (0, 0, 1.4) node[above=2pt] {$z$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 平面 S0 (半透明パッチ) ---
+    \fill[blue!15, opacity=0.65] (S_c1) -- (S_c2) -- (S_c3) -- (S_c4) -- cycle;
+    \draw[dashed, blue!50!black] (S_c1) -- (S_c2) -- (S_c3) -- (S_c4) -- cycle;
+    \node[blue!85!black, font=\footnotesize] at ($ (S_c3) + (0.1, 0, 0.1) $) {平面 $S_0$};
+
+    % --- 4. 平面を張るベクトル p, q ---
+    \draw[->, thick, teal!85!black] (A) -- (P_end)
+    node[midway, below left=1pt, font=\footnotesize] {$\vec{p}$};
+    \draw[->, thick, teal!85!black] (A) -- (Q_end)
+    node[midway, above=2pt, font=\footnotesize] {$\vec{q}$};
+
+    % --- 5. 法線ベクトル n0 (表裏の 2 方向) ---
+    % + 方向: n0 = +1/3 (1, 2, -2)
+    \draw[->, line width=1.6pt, red!85!black] (A) -- (N0_end)
+    node[above right=1pt] {$\vec{n}_0 = \frac{1}{3}
+      \begin{pmatrix}1\\2\\-2
+    \end{pmatrix}$};
+
+    % - 方向: -n0
+    \draw[->, line width=1.4pt, dashed, red!70!black] (A) -- (N0m_end)
+    node[below left=1pt, font=\footnotesize] {$-\vec{n}_0$};
+
+    % 法線直角マーク (A において法線と p, q のなす角)
+    \draw[thin, gray!70]
+    ($ (A) + 0.1*(1/3, 2/3, -2/3) $) --
+    ($ (A) + 0.1*(1/3, 2/3, -2/3) + 0.1*(1.0, -0.5, 0.0) $) --
+    ($ (A) + 0.1*(1.0, -0.5, 0.0) $);
+
+    % --- 6. (2) で用いる回転軸 l の表示 ---
+    \draw[thick, dashed, purple!80!black] ($ (L1)!-0.3!(L2) $) -- ($ (L1)!1.3!(L2) $);
+    \fill (L1) circle (0.6pt) node[below=2pt, font=\scriptsize] {$(1,0,0)$};
+    \fill (L2) circle (0.6pt) node[right=2pt, font=\scriptsize] {$(0,1,0)$};
+    \node[purple!90!black, font=\footnotesize, above right] at ($ (L1)!1.2!(L2) $) {回転軸 $l$};
+
+    % --- 7. 主要点プロット ---
+    \fill (A) circle (0.7pt) node[below right=1pt, font=\scriptsize] {$A\left(0, \frac{1}{2}, 1\right)$};
+
+  \end{tikzpicture}
+  \caption{平面 $S_0$ を張るベクトル $\vec{p}, \vec{q}$ とその単位法線ベクトル $\vec{n}_0$（および回転軸 $l$）}
+  \label{fig:plane_s0_normal_vectors}
+\end{figure}
+
+$S_0$は2ベクトル
+\begin{align}
+  \vec{p} =
+  \begin{pmatrix}0-0\\0-\dfrac{1}{2}\\\dfrac{1}{2}-1
+  \end{pmatrix} = \dfrac{1}{2}
+  \begin{pmatrix}0\\-1\\-1
+  \end{pmatrix}, \quad
+  \vec{q} =
+  \begin{pmatrix}1-0\\0-\dfrac{1}{2}\\1-1
+  \end{pmatrix} = \dfrac{1}{2}
+  \begin{pmatrix}2\\-1\\0
+  \end{pmatrix}
+\end{align}
+のはる平面と平行である．この法線ベクトルの一つに
+$
+\begin{pmatrix}1\\2\\-2
+\end{pmatrix}$
+があるから，もとめる法線ベクトルは，$k\in\mathbb{R}$として
+\begin{align}
+  \vec{n_0} = k
+  \begin{pmatrix}1\\2\\-2
+  \end{pmatrix}
+\end{align}
+とかける．$|\vec{n_0}|=1$から$3|k|=1\, \therefore k=\pm\dfrac{1}{3}$だから，
+\begin{align}
+  \vec{n_0} = \pm\dfrac{1}{3}
+  \begin{pmatrix}1\\2\\-2
+  \end{pmatrix} \quad \cdots\text{(答)} \label{eq:1}
+\end{align}
+である．
+
+\subparagraph{(2)}
+
+% TODO: 綺麗にupgrade
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.4, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標定義 ---
+    \coordinate (O) at (0, 0);
+
+    % 回転軸 l の方向角 (18.435°: 傾き 1/3。手書きに近づけるため約 32° とする)
+    \def\angL{32}
+    \coordinate (L_dir) at (\angL:4.0);
+
+    % 底面円の中心 H (軸 l 上の正射影点)
+    \coordinate (H) at (\angL:2.15);
+
+    % 円錐の幾何学的パラメータ
+    % R (底面半径) = 1.45。3D投影時の短軸 R_b = 0.52
+    \def\radR{1.45}
+    \def\radB{0.52}
+
+    % 円を張る2つの直交方向ベクトルの「見かけ上（投影後）」の座標。
+    % 長軸方向 (軸 l と直交): (\angL + 90) 方向の長さ \radR
+    \coordinate (U1) at ({\angL + 90}:\radR);
+    % 短軸方向 (軸 l の向き): \angL 方向の長さ \radB
+    \coordinate (U2) at (\angL:\radB);
+
+    % --- 円周上の点 T0, T の厳密な計算 ---
+    % 円軌道上の点 T_0 (\phi = 90°: 長軸頂点)
+    \coordinate (T0) at ($ (H) + (U1) $);
+
+    % 円軌道上の点 T (\phi = -35° 付近)。
+    % 楕円方程式 H + cos(phi)*U2 + sin(phi)*U1 から、T の正確な位置を算出
+    % U2 方向に cos(-35°)=0.819、U1 方向に sin(-35°)=-0.574 を加算
+    \coordinate (T) at ($ (H) + 0.819*(U2) - 0.574*(U1) $);
+
+    % 円錐の見かけ上の輪郭線 (接線) 用
+    \coordinate (C_top) at ($ (H) + ({\angL + 105}:\radR) $);
+    \coordinate (C_bot) at ($ (H) + ({\angL - 85}:\radR) $);
+
+    % --- 2. 円錐の側面（薄い塗りつぶし）---
+    \fill[blue!8, opacity=0.6] (O) -- (C_top) -- (C_bot) -- cycle;
+
+    % --- 3. 回転軸 l (直線) ---
+    \draw[dashed, gray!50] ($ (O)!-0.3!(L_dir) $) -- (O);
+
+    % 原点から H への軸（円錐内部は破線）
+    \draw[dashed, teal!70!black] (O) -- (H);
+    \draw[->, very thick, teal!85!black] (H) -- (L_dir)
+    node[above right=2pt] {$\vec{l}$};
+
+    % --- 4. 底面の回転軌道円 (H を中心とする楕円) ---
+    % 奥側半分 (破線)
+    \begin{scope}[rotate around={{\angL}:(H)}]
+      \draw[dashed, blue!60]
+      ($ (H) + (90:{\radB} and {\radR}) $)
+      arc[start angle=90, end angle=270, x radius=\radB, y radius=\radR];
+    \end{scope}
+
+    % 手前側半分 (実線)
+    \begin{scope}[rotate around={{\angL}:(H)}]
+      \draw[thick, blue!75!black]
+      ($ (H) + (-90:{\radB} and {\radR}) $)
+      arc[start angle=-90, end angle=90, x radius=\radB, y radius=\radR];
+    \end{scope}
+
+    % --- 5. 正射影と底面内の動径（T0, T は楕円周に完全一致）---
+    \draw[dashed, gray!60] (H) -- (T0);
+    \draw[dashed, gray!60] (H) -- (T);
+
+    % --- 6. 母線ベクトル n0, n ---
+    % 元の単位法線ベクトル n0
+    \draw[->, very thick, blue!85!black] (O) -- (T0);
+    \node[blue!90!black, font=\normalsize, above left=2pt] at ($ (O)!0.85!(T0) $) {$\vec{n}_0$};
+
+    % 回転後の単位法線ベクトル n
+    \draw[->, very thick, red!85!black] (O) -- (T);
+    \node[red!90!black, font=\normalsize, below right=1pt] at ($ (O)!0.85!(T) $) {$\vec{n}$};
+
+    % --- 7. コンパクトな角度 theta の表示 ---
+    % (i) 軸 l と n0 のなす角
+    \draw[thick, purple!85!black] (\angL:0.42) to[bend right=22] ($ (O)!0.42!(T0) $);
+    \node[purple!90!black, font=\scriptsize] at ($ (\angL:0.42)!0.5!($ (O)!0.42!(T0) $) + (-0.06, 0.08) $) {$\theta$};
+
+    % (ii) 軸 l と n のなす角
+    \draw[thick, purple!85!black] (\angL:0.48) to[bend left=20] ($ (O)!0.48!(T) $);
+    \node[purple!90!black, font=\scriptsize] at ($ (\angL:0.48)!0.5!($ (O)!0.48!(T) $) + (0.08, -0.04) $) {$\theta$};
+
+    % --- 8. 各主要点のプロットとラベル ---
+    \fill (O) circle (0.7pt) node[left=3pt] {$O$};
+    \fill[teal!85!black] (H) circle (0.6pt) node[above left=1pt, teal!90!black] {$H$};
+    \fill[blue!85!black] (T0) circle (0.6pt) node[above=2pt] {$T_0$};
+    \fill[red!85!black]  (T)  circle (0.6pt) node[below right=1pt] {$T$};
+
+    % 直角マーク (HT0 ⊥ l)
+    \coordinate (sqL)  at ($ (H) + (\angL:-0.14) $);
+    \coordinate (sqT0) at ($ (H) + ({\angL + 90}:0.14) $);
+    \coordinate (sqLT) at ($ (sqL) + ({\angL + 90}:0.14) $);
+    \draw[thin, gray!70] (sqL) -- (sqLT) -- (sqT0);
+
+  \end{tikzpicture}
+  \caption{$\vec{n}_0$ を軸 $\vec{l}$ の周りに回転させたときの円錐面と成す角 $\theta$}
+  \label{fig:vector_cone_theta}
+\end{figure}
+
+$l$の方向ベクトルを
+\begin{align}
+  \vec{l} =
+  \begin{pmatrix}0\\1\\0
+  \end{pmatrix}-
+  \begin{pmatrix}1\\0\\0
+  \end{pmatrix}=
+  \begin{pmatrix}-1\\1\\0
+  \end{pmatrix}\label{eq:2}
+\end{align}
+とおく．$\vec{n_0}$を$\vec{l}$のまわりに回転した時に出来るベクトルが$\vec{n}$である．
+$\vec{n}_0$と$\vec{l}$のなす角を$\theta$とすると，回転した$\vec{n}$と$\vec{l}$のなす角も$\theta$でひとしいので，ベクトルの内積の定義より
+\begin{align}
+  \vec{n} \cdot \vec{l} = |\vec{n}||\vec{l}|\cos\theta = \sqrt{2}\cos\theta \label{eq:3}
+\end{align}
+である．ただし$|\vec{n}|=1,|\vec{l}|=\sqrt{2}$を用いた．
+
+一方で$\vec{n}_0,\vec{l}$にも同様に内積の定義より
+\begin{align}
+  \vec{n_0}\cdot\vec{l} = |\vec{n_0}||\vec{l}|\cos\theta \label{eq:4}
+\end{align}
+だから，ここに\cref{eq:1,eq:2}を代入すると
+\begin{align}
+  & \pm\dfrac{1}{3}
+  \begin{pmatrix}1\\2\\-2
+  \end{pmatrix}\cdot
+  \begin{pmatrix}-1\\1\\0
+  \end{pmatrix} = \sqrt{2}\cos\theta \\
+  & \dfrac{\pm 1}{3} = \sqrt{2}\cos\theta \\
+  \therefore
+  & \cos\theta = \dfrac{\pm1}{3\sqrt{2}} \label{eq:5}
+\end{align}
+である．\cref{eq:5}を\cref{eq:4}に代入して
+\begin{align}
+  \vec{n} \cdot \vec{l} = \dfrac{\pm 1}{3} \label{eq:6}
+\end{align}
+である．
+
+ここで
+$\vec{n}=
+\begin{pmatrix}X\\Y\\Z
+\end{pmatrix}$
+とおいて\cref{eq:6}に代入して
+\begin{align}
+  -X+Y=\pm\dfrac{1}{3} \label{eq:7}
+\end{align}
+であり，またベクトルの大きさについて$|\vec{n}|=1$だから
+\begin{align}
+  X^2+Y^2+Z^2=1 \label{eq:8}
+\end{align}
+である．\cref{eq:7,eq:8}を満たす実数$(X,Y,Z)$を考えれば良い．
+
+まず\cref{eq:8}において$Z\in\mathbb{R}$から，
+\begin{align}
+  X^2+Y^2\le1 \label{eq:9}
+\end{align}
+である．\cref{eq:7,eq:9}をみたす$(X,Y)$を図示すると下図太線部である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. パラメータ定義 ---
+    % Y_max = (1 + sqrt(17)) / 6 ≈ 0.8538
+    % X_max = Y_max - 1/3 = (-1 + sqrt(17)) / 6 ≈ 0.5205
+    \pgfmathsetmacro{\yMax}{(1.0 + sqrt(17.0)) / 6.0}
+    \pgfmathsetmacro{\xMax}{\yMax - (1.0/3.0)}
+    \pgfmathsetmacro{\yMin}{-\yMax}
+    \pgfmathsetmacro{\xMin}{-\xMax}
+
+    \coordinate (O)   at (0, 0);
+    \coordinate (P1)  at (\xMax, \yMax);
+    \coordinate (P2)  at (-\yMax, -\xMax);
+    \coordinate (Q1)  at (\yMax, \xMax);
+    \coordinate (Q2)  at (-\xMax, -\yMax);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick] (-1.4, 0) -- (1.5, 0) node[right] {$X$};
+    \draw[->, thick] (0, -1.4) -- (0, 1.5) node[above] {$Y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 単位円 X^2 + Y^2 = 1 ---
+    \draw[thick, gray!75] (O) circle (1.0);
+    \node[gray!70!black, font=\scriptsize, above right] at (0.7, 0.7) {$X^2 + Y^2 \le 1$};
+
+    % --- 4. 平行直線群 ---
+    % (i) -X + Y = 1/3 (Y = X + 1/3)
+    \draw[dashed, blue!40, domain=-1.2:0.9] plot (\x, {\x + 1.0/3.0});
+    \draw[line width=2.2pt, blue!85!black] (P2) -- (P1);
+    \node[blue!85!black, font=\footnotesize, above left] at (-0.6, 0.2) {$-X+Y=\frac{1}{3}$};
+
+    % (ii) -X + Y = -1/3 (Y = X - 1/3)
+    \draw[dashed, teal!40, domain=-0.9:1.2] plot (\x, {\x - 1.0/3.0});
+    \draw[line width=2.2pt, teal!85!black] (Q2) -- (Q1);
+    \node[teal!85!black, font=\footnotesize, below right] at (0.4, -0.4) {$-X+Y=-\frac{1}{3}$};
+
+    % --- 5. 最大値・最小値の投影補助線 ---
+    % Y = Y_max
+    \draw[dashed, red!85!black] (-1.3, \yMax) -- (1.2, \yMax);
+    \draw[dashed, gray!60] (P1) -- (\xMax, 0);
+    \fill[red!85!black] (P1) circle (0.7pt);
+    \node[left=2pt, font=\scriptsize, red!85!black] at (-1.3, \yMax) {$Y = \frac{1+\sqrt{17}}{6}$};
+
+    % Y = Y_min
+    \draw[dashed, red!85!black] (-1.3, \yMin) -- (1.2, \yMin);
+    \draw[dashed, gray!60] (Q2) -- (-\xMax, 0);
+    \fill[red!85!black] (Q2) circle (0.7pt);
+    \node[left=2pt, font=\scriptsize, red!85!black] at (-1.3, \yMin) {$Y = -\frac{1+\sqrt{17}}{6}$};
+
+    % 他方の端点
+    \fill[blue!85!black] (P2) circle (0.6pt);
+    \fill[teal!85!black] (Q1) circle (0.6pt);
+
+    % --- 6. 軸の目盛り ---
+    % 切片 Y = 1/3, -1/3
+    \fill (0, {1.0/3.0}) circle (0.5pt);
+    \node[left=2pt, font=\scriptsize] at (0, {1.0/3.0}) {$\frac{1}{3}$};
+    \fill (0, {-1.0/3.0}) circle (0.5pt);
+    \node[left=2pt, font=\scriptsize] at (0, {-1.0/3.0}) {$-\frac{1}{3}$};
+
+    % 単位円の交点 (1, 0), (-1, 0)
+    \fill (1.0, 0) circle (0.5pt) node[below=2pt, font=\scriptsize] {$1$};
+    \fill (-1.0, 0) circle (0.5pt) node[below=2pt, font=\scriptsize] {$-1$};
+
+  \end{tikzpicture}
+  \caption{直線 $-X+Y=\pm\dfrac{1}{3}$ と円 $X^2+Y^2\le 1$ の交差線分（太線部）と $Y$ の最大・最小値}
+  \label{fig:circle_lines_intersection}
+\end{figure}
+
+従って，この範囲では
+\begin{align}
+  -\dfrac{1+\sqrt{17}}{6}\le Y\le\dfrac{1+\sqrt{17}}{6}
+\end{align}
+より，求める最小，最大値は
+\begin{align}
+  \min|Y|=0, \quad \max|Y|=\dfrac{1+\sqrt{17}}{6} \quad\cdots\text{(答)}
+\end{align}
+である．
+
+{\bf[解2]}
+
+\subparagraph{(2)}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.4, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 幾何学的に整合する座標系の定義 ---
+    \coordinate (O) at (0, 0);
+
+    % 軸 l: 水平から約 18.9° 傾いた方向 (傾き 1/3)
+    % 方向角 alpha ≈ 18.435°
+    \def\angL{18.435}
+    \coordinate (L_dir) at (\angL:4.0);
+
+    % 正射影の足 H (軸 l 上の点)
+    \coordinate (H) at (\angL:1.8);
+
+    % 回転半径 R = |HT| = 1.7
+    \def\radR{1.7}
+    % 短軸比率 (見取り図の傾き角に対応する係数 0.42)
+    \def\ratioB{0.42}
+    \pgfmathsetmacro{\radB}{\radR * \ratioB}
+
+    % 点 T: 楕円上の長軸頂点 (軸 l と厳密に垂直な方向: angL + 90°)
+    \coordinate (T) at ($ (H) + ({\angL + 90}:\radR) $);
+
+    % もう一つの直交方向ベクトル u_perp (楕円の短軸方向、奥行き/手前側)
+    \coordinate (Uperp) at ($ (H) + (\angL:{\radB * 1.5}) + ({\angL - 90}:0.2) $);
+
+    % --- 2. 回転軸 l (直線) ---
+    \draw[dashed, gray!50] ($ (O)!-0.3!(L_dir) $) -- (O);
+    \draw[->, very thick, teal!85!black] (O) -- (L_dir)
+    node[below right=2pt] {回転軸 $\vec{l}$};
+
+    % 正射影ベクトル OH
+    \draw[very thick, teal!70!black] (O) -- (H);
+    \node[teal!90!black, font=\footnotesize, below right=1pt] at ($ (O)!0.5!(H) $) {$\overrightarrow{OH}$};
+
+    % --- 3. 点 T が描く回転円軌道 (H を中心とし、T を正確に通る楕円) ---
+    % 楕円の長軸は軸 l と直交する方向 (angL + 90°)
+    \begin{scope}[rotate around={{\angL}:(H)}]
+      % 軌道楕円 (x: 軸方向成分, y: 垂直方向成分 = T の方向)
+      \draw[dashed, blue!65] (H) ellipse ({\radB} and {\radR});
+
+      % 回転方向を示す矢印 (T 付近の円弧)
+      \draw[->, thick, blue!85!black]
+      ($ (H) + (90:{\radB} and {\radR}) $) arc[start angle=90, end angle=40, x radius=\radB, y radius=\radR];
+      \node[blue!85!black, font=\scriptsize, above right]
+      at ($ (H) + (65:{\radB} and {\radR}) $) {回転軌道};
+    \end{scope}
+
+    % --- 4. ベクトル n0 (OT) および 垂線 HT (動径) ---
+    % 単位法線ベクトル n0
+    \draw[->, very thick, blue!85!black] (O) -- (T)
+    node[midway, above left=2pt] {$\vec{n}_0$};
+
+    % 垂線 HT (回転動径)
+    \draw[thick, orange!90!black] (H) -- (T)
+    node[midway, right=2pt, font=\footnotesize] {$\overrightarrow{HT}$};
+
+    % もう一つの直交基底ベクトル u_perp の表示
+    \coordinate (Uvec) at ($ (H) + ({\angL}:0.9) $); % 楕円の短軸手前方向
+    \draw[->, very thick, purple!85!black] (H) -- ($ (H) + (-0.2, -0.6) $)
+    node[below left=1pt, font=\footnotesize] {$\vec{u}_\perp$};
+
+    % --- 5. 直角記号 (HT ⊥ l および HT ⊥ u_perp) ---
+    % HT ⊥ l の直角マーク
+    \coordinate (sqL)  at ($ (H) + (\angL:0.18) $);
+    \coordinate (sqT)  at ($ (H) + ({\angL + 90}:0.18) $);
+    \coordinate (sqLT) at ($ (sqL) + ({\angL + 90}:0.18) $);
+    \draw[thin, gray!70] (sqL) -- (sqLT) -- (sqT);
+
+    % --- 6. 角度 theta の弧 (軸 l からベクトル n0 へ) ---
+    % ベクトル OT の偏角を計算
+    \path let \p{OT} = (T) in
+    \pgfextra{\pgfmathsetmacro{\angOT}{atan2(\y{OT},\x{OT})}};
+    \pgfmathsetmacro{\angOT}{atan2(sin(\angL+90)*\radR + sin(\angL)*1.8, cos(\angL+90)*\radR + cos(\angL)*1.8)}
+
+    \draw[thick, purple!85!black]
+    (\angL:0.6) arc[start angle=\angL, end angle=\angOT, radius=0.6];
+    \node[purple!90!black, font=\footnotesize]
+    at ({(\angL + \angOT)/2}:0.78) {$\theta$};
+
+    % --- 7. 主要点のプロットとラベル ---
+    \fill (O) circle (0.6pt) node[below left=2pt] {$O$};
+    \fill[teal!85!black] (H) circle (0.7pt) node[below=3pt, teal!90!black] {$H$};
+    \fill[blue!85!black] (T) circle (0.8pt) node[above=2pt, blue!90!black] {$T$};
+
+    % --- 8. 注釈ボックス ---
+    \node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=3pt, font=\footnotesize, align=left]
+    at (3.1, 0.4) {$\vec{n}(\theta) = \overrightarrow{OH} + \cos\theta\,\overrightarrow{HT} + \sin\theta\,\vec{u}_\perp$\\[3pt]
+    $\left(\overrightarrow{HT} \perp \vec{l}, \quad \vec{u}_\perp \perp \vec{l}, \quad \vec{u}_\perp \perp \overrightarrow{HT}\right)$};
+
+  \end{tikzpicture}
+  \caption{$\vec{n}_0$ を軸 $\vec{l}$ の周りに回転させたときの円軌道と直交基底}
+  \label{fig:vector_rotation_around_axis}
+\end{figure}
+
+$\vec{n}$を別の方法で表現する別解を示す．$\vec{l}$上に原点$O$をとり，$\vec{n}_0$の終点が表す点を$T$とする．対称性から，\cref{eq:1}で複合正だけ考えれば良い．
+$T$から$\vec{l}$に下ろした垂足を$H$とする．正射影ベクトルの公式より
+\begin{align}
+  \overrightarrow{OH}
+  = \dfrac{\vec{n_0}\cdot\vec{l}}{|\vec{l}|^2}\vec{l}
+  = \dfrac{1}{6}
+  \begin{pmatrix}-1\\1\\0
+  \end{pmatrix}
+\end{align}
+だから，
+\begin{align}
+  \overrightarrow{HT}
+  = \overrightarrow{OT} - \overrightarrow{OH}
+  = \vec{n}_{0} - \vec{OH}
+  =
+  \dfrac{1}{3}
+  \begin{pmatrix}1\\2\\-2
+  \end{pmatrix}-\dfrac{1}{6}
+  \begin{pmatrix}-1\\1\\0
+  \end{pmatrix}
+  = \dfrac{1}{6}
+  \begin{pmatrix}3\\3\\-4
+  \end{pmatrix}
+\end{align}
+である．
+
+さて，$\overrightarrow{HT}$，$\vec{l}$に垂直な単位ベクトルの一つに
+$\dfrac{1}{3\sqrt{2}}
+\begin{pmatrix}2\\2\\3
+\end{pmatrix}$
+があるので，$\vec{n}_{0}$を$\vec{l}$の周りに回転してできるベクトル$\vec{n}$の一般形は，パラメータ$\theta$として
+\begin{align}
+  \vec{n}
+  &= \overrightarrow{OH}+\cos\theta\cdot\overrightarrow{HT}+\sin\theta\cdot\dfrac{1}{3\sqrt{2}}
+  \begin{pmatrix}2\\2\\3
+  \end{pmatrix}\\
+  &= \dfrac{1}{6}
+  \begin{pmatrix}-1\\1\\0
+  \end{pmatrix}+\dfrac{1}{6}\cos\theta
+  \begin{pmatrix}3\\3\\-4
+  \end{pmatrix}+\dfrac{\sqrt{2}}{6}\sin\theta
+  \begin{pmatrix}2\\2\\3
+  \end{pmatrix}
+\end{align}
+と表せる．従って$Y$成分は
+\begin{align}
+  Y = \dfrac{1}{6}(1+3\cos\theta+2\sqrt{2}\sin\theta)
+  = \dfrac{1}{6}\left\{1+
+    \begin{pmatrix}3\\2\sqrt{2}
+    \end{pmatrix}\cdot
+    \begin{pmatrix}\cos\theta\\\sin\theta
+  \end{pmatrix}\right\}
+\end{align}
+だから，コーシー・シュワルツの不等式より
+\begin{align}
+  \dfrac{1-\sqrt{17}}{6}\le Y\le\dfrac{1+\sqrt{17}}{6}
+\end{align}
+となり，
+\begin{align}
+  0\le|Y|\le\dfrac{1+\sqrt{17}}{6} \quad\cdots\text{(答)}
+\end{align}
+である．
+
 \newpage
 \end{document}
