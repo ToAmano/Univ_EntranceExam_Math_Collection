@@ -1,44 +1,168 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} $C$ を $
+曲線$C$ を
+$
 \begin{pmatrix} a \\ b
-\end{pmatrix}$ だけ平行移動した図形は，
+\end{pmatrix} \neq
+\begin{pmatrix} 0 \\ 0
+\end{pmatrix}
+$
+だけ平行移動した図形は，
 \begin{align}
-  y-b = (x-a)^3 - (x-a) \quad (-1+a \le x \le 1+a) \quad \dots \text{①}
+  y-b = (x-a)^3 - (x-a) \quad (-1+a \le x \le 1+a) \label{eq:1}
 \end{align}
-である．これと $y=x^3-x$ との共有点がただ1つある時，まず $y$ を消去して，
+である．
+
+これと $y=x^3-x$ との共有点がただ1つある時，まず $y$ を消去して，
 \begin{align}
   x^3 - x - b &= (x-a)^3 - (x-a) \\
   -x - b &= -3a x^2 + (3a^2-1) x - a^3 + a \\
-  b &= 3a x^2 - 3a^2 x + a^3 - a \equiv f(x)
+  \therefore
+  b &= 3a x^2 - 3a^2 x + a^3 - a \equiv f(x) \label{eq:2}
 \end{align}
-これが，$-1 \le x \le 1$ かつ $-1+a \le x \le 1+a$ にただ1つ解を持つ条件を調べる．
-右図及び，$f(x)$ の軸が $x = \dfrac{a}{2}$ であることから，条件は
+である．この二次方程式$b=f(x)$が$-1 \le x \le 1$ かつ $-1+a \le x \le 1+a$ にただ1つ解を持つ条件を調べる．下図のように，$f(x)$の軸$x = \dfrac{a}{2}$ は常にこの範囲にある．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.9, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標軸 ---
+    \draw[->, thick] (-2.5, 0) -- (2.6, 0) node[right] {$a$};
+    \draw[->, thick] (0, -1.5) -- (0, 1.5) node[above] {$x$};
+    \node[below left=2pt] at (0,0) {$O$};
+
+    % --- 2. 共通領域の平行四辺形 ---
+    % 境界線: x = 1, x = -1, x = a-1, x = a+1
+    % 頂点: (-2, -1), (0, -1), (2, 1), (0, 1)
+    \coordinate (V1) at (-2, -1);
+    \coordinate (V2) at (0, -1);
+    \coordinate (V3) at (2, 1);
+    \coordinate (V4) at (0, 1);
+
+    % 斜線ハッチング塗りつぶし
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75]
+    (V1) -- (V2) -- (V3) -- (V4) -- cycle;
+
+    % 領域の境界線
+    \draw[thick, gray!70] (-2.3, 1) -- (2.3, 1) node[right, font=\scriptsize] {$x = 1$};
+    \draw[thick, gray!70] (-2.3, -1) -- (2.3, -1) node[right, font=\scriptsize] {$x = -1$};
+    \draw[thick, blue!80!black] (-2.3, -1.3) -- (0.5, 1.5) node[above right, font=\scriptsize] {$x = a+1$};
+    \draw[thick, blue!80!black] (-0.5, -1.5) -- (2.3, 1.3) node[below right, font=\scriptsize] {$x = a-1$};
+
+    % --- 3. 放物線の軸直線 x = a/2 ---
+    \draw[line width=1.6pt, red!85!black] (-2.2, -1.1) -- (2.2, 1.1);
+    \node[red!90!black, font=\footnotesize, above left] at (1.5, 0.75) {$x = \frac{a}{2}$};
+
+    % --- 4. 補助線と目盛り ---
+    \draw[dashed, gray!60] (-2, 0) -- (-2, -1) -- (0, -1);
+    \draw[dashed, gray!60] (2, 0) -- (2, 1) -- (0, 1);
+
+    \node[below=2pt, font=\scriptsize] at (-2, 0) {$-2$};
+    \node[below=2pt, font=\scriptsize] at (-1, 0) {$-1$};
+    \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
+    \node[below=2pt, font=\scriptsize] at (2, 0) {$2$};
+
+    \node[left=2pt, font=\scriptsize] at (0, 1) {$1$};
+    \node[left=2pt, font=\scriptsize] at (0, -1) {$-1$};
+
+  \end{tikzpicture}
+  \caption{共通定義域（斜線部）と放物線 $f(x)$ の軸 $x = \dfrac{a}{2}$ の関係}
+  \label{fig:common_domain_axis}
+\end{figure}
+
+よって唯一つ解を持つ条件は$b$が$f(x)$の頂点に等しい時で
 \begin{align}
-  f\Bigl(\dfrac{a}{2}\Bigr) = b \iff b = \dfrac{1}{4}a^3 - a \quad \dots \text{②}
+  f\Bigl(\dfrac{a}{2}\Bigr) = b \iff b = \dfrac{1}{4}a^3 - a \label{eq:3}
 \end{align}
-この時 $(a,b) \ne (0,0)$ だから $a \ne 0$ で，①に代入して，
+である．
+この時 $(a,b) \ne (0,0)$ だから $a \ne 0$ である．
+\cref{eq:1}に代入して，
 \begin{align}
-  y = (x-a)^3 - (x-a) + \dfrac{1}{4}a^3 - a \quad (-1+a \le x \le 1+a) \quad \dots \text{③}
+  y = (x-a)^3 - (x-a) + \dfrac{1}{4}a^3 - a \quad (-1+a \le x \le 1+a) \label{eq:4}
 \end{align}
-で，$P(X, Y)$ とおくと ③が $P$ を通ることから，
+である．
+$P(X, Y)$ とおくと\cref{eq:4}が $P$ を通ることから，
 \begin{align}
-  Y = (X-a)^3 - (X-a) + \dfrac{1}{4}a^3 - a \quad (-1+a \le X \le a+1) \quad \dots \text{④}
+  Y = (X-a)^3 - (X-a) + \dfrac{1}{4}a^3 - a \quad (-1+a \le X \le a+1) \label{eq:5}
 \end{align}
-これをみたす $a(\ne 0)$ がただ1つ存在する条件を考える．④の右辺を $g(a)$ とおく．
+である．
+これをみたす $a(\ne 0)$ がただ3つ存在する条件を考える．
+\cref{eq:5}の右辺を $g(a)$ とおいて$a$についての三次方程式とみなして考える．
 \begin{align}
   g(a) &= -\dfrac{3}{4}a^3 + 3X a^2 - 3X^2 a + X^3 - X \\
   g'(a) &= -\dfrac{9}{4}a^2 + 6X a - 3X^2 \\
   &= -\dfrac{3}{4}(3a-2X)(a-2X)
 \end{align}
-したがって，右表とあわせて，④が $a$ について3実解を持つには，$-1 < X < 1 \ (X \ne 0)$ が必要で，$X$ の正負で場合分けする．
+である．\cref{eq:5}が$a$について$3$つの解を持つには，$g'(a)=0$なる点$a=\dfrac{2X}{3},2X$が区間内$(-1+a \le X \le a+1)$に存在しないといけない．
+これらを図示すると下図である．
 
-\paragraph{$1^\circ \ -1 < X < 0$}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標軸 ---
+    \draw[->, thick] (-3.3, 0) -- (3.3, 0) node[right] {$X$};
+    \draw[->, thick] (0, -2.8) -- (0, 2.8) node[above] {$a$};
+    \node[below left=2pt] at (0,0) {$O$};
+
+    % --- 2. 帯領域 X-1 <= a <= X+1 ---
+    % 帯のハッチング塗りつぶし
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75]
+    (-3.2, -2.2) -- (-3.2, -4.2) -- (3.2, 2.2) -- (3.2, 4.2) -- cycle;
+
+    % 境界線
+    \draw[very thick, blue!85!black, domain=-3.2:1.7]
+    plot (\x, {\x + 1}) node[above right, font=\scriptsize] {$a = X+1$};
+    \draw[very thick, blue!85!black, domain=-1.7:3.2]
+    plot (\x, {\x - 1}) node[below right, font=\scriptsize] {$a = X-1$};
+
+    % --- 3. 停留点の直線 ---
+    % a = 2X
+    \draw[line width=1.5pt, red!85!black, domain=-1.35:1.35]
+    plot (\x, {2*\x}) node[above, font=\footnotesize] {$a = 2X$};
+
+    % a = (2/3)X
+    \draw[line width=1.5pt, teal!85!black, domain=-3.0:3.0]
+    plot (\x, {2.0/3.0*\x}) node[above right, font=\footnotesize] {$a = \frac{2}{3}X$};
+
+    % --- 4. 交点・端点のプロットと補助破線 ---
+    % a = 2X と a = X+1 の交点: (1, 2)
+    % a = 2X と a = X-1 の交点: (-1, -2)
+    \draw[dashed, gray!60] (1, 0) -- (1, 2) -- (0, 2);
+    \draw[dashed, gray!60] (-1, 0) -- (-1, -2) -- (0, -2);
+
+    % a = (2/3)X と a = X-1 の交点: (3, 2)
+    % a = (2/3)X と a = X+1 の交点: (-3, -2)
+    \draw[dashed, gray!60] (3, 0) -- (3, 2);
+    \draw[dashed, gray!60] (-3, 0) -- (-3, -2);
+
+    % 目盛り
+    \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
+    \node[above=2pt, font=\scriptsize] at (-1, 0) {$-1$};
+    \node[below=2pt, font=\scriptsize] at (3, 0) {$3$};
+    \node[above=2pt, font=\scriptsize] at (-3, 0) {$-3$};
+    \node[left=2pt, font=\scriptsize]  at (0, 2) {$2$};
+    \node[right=2pt, font=\scriptsize] at (0, -2) {$-2$};
+
+    % 端点の白抜き丸 (開区間)
+    \draw[thick, fill=white, red!85!black] (1, 2) circle (1.2pt);
+    \draw[thick, fill=white, red!85!black] (-1, -2) circle (1.2pt);
+    \draw[thick, fill=white, teal!85!black] (3, 2) circle (1.2pt);
+    \draw[thick, fill=white, teal!85!black] (-3, -2) circle (1.2pt);
+
+  \end{tikzpicture}
+  \caption{帯領域 $X-1 \le a \le X+1$ と停留点直線 $a=2X, a=\dfrac{2}{3}X$ の関係}
+  \label{fig:stationary_points_in_strip}
+\end{figure}
+
+従って，図から$-1 < X < 1 \ (X \ne 0)$ が必要で，$X$ の正負で場合分けする．
+
+\subparagraph{$1^\circ \ -1 < X < 0$ の時}
+
+この時の$g(a)$の増減表は以下のようになる．
 
 \begin{table}[htb]
   \centering
@@ -50,13 +174,20 @@
   \caption{$1^\circ$ における $g$ の増減表}
 \end{table}
 
-したがって，④が $a \ne 0$ に3実解を持つ条件は，$\alpha, \beta$ のうち，小さくない方 $\max(\alpha,\beta)$，大きくない方 $\min(\alpha,\beta)$ として
+したがって，\cref{eq:5}が $a \ne 0$ に3実解を持つ条件は，
 \begin{align}
-  \min\Bigl(g(2X), g(X+1)\Bigr) \le Y \le \max\Bigl(g(X-1), g\Bigl(\dfrac{2}{3}X\Bigr)\Bigr) \land g(0) \ne Y \quad \dots \text{⑤}
+  \begin{cases}
+    \min\Bigl(g(2X), g(X+1)\Bigr) \le Y \le \max\Bigl(g(X-1), g\Bigl(\dfrac{2}{3}X\Bigr)\Bigr) \\
+    Y \ne g(0) \\
+    Y \ne g(2X) \\
+    Y \ne g(X+1)
+  \end{cases}\label{eq:6}
 \end{align}
-ただし，$Y \ne g(2X), Y \ne g(X+1)$ である．
+である．
 
-\paragraph{$2^\circ \ 0 < X < 1$}
+\paragraph{$2^\circ \ 0 < X < 1$ の時}
+
+この時の$g(a)$の増減表は以下のようになる．
 
 \begin{table}[htb]
   \centering
@@ -68,47 +199,118 @@
   \caption{$2^\circ$ における $g$ の増減表}
 \end{table}
 
-したがって，④が $a \ne 0$ に3実解を持つ条件は
+したがって，\cref{eq:5}が $a \ne 0$ に3実解を持つ条件は
 \begin{align}
-  \min\Bigl(g\Bigl(\dfrac{2}{3}X\Bigr), g(X+1)\Bigr) \le Y \le \max\Bigl(g(2X), g(X-1)\Bigr) \land g(0) \ne Y \quad \dots \text{⑥}
+  \begin{cases}
+    \min\Bigl(g\Bigl(\dfrac{2}{3}X\Bigr), g(X+1)\Bigr) \le Y \le \max\Bigl(g(2X), g(X-1)\Bigr) \\
+    Y \ne g(0) \\
+    Y \ne g(2X) \\
+    Y \ne g\Bigl(\dfrac{2}{3}X\Bigr)
+  \end{cases} \label{eq:7}
 \end{align}
-ただし，$Y \ne g(2X), Y \ne g\Bigl(\dfrac{2}{3}X\Bigr)$ である．
+である．
+\casesend
 
-$1^\circ$ および $2^\circ$:
+$g$の値は以下のようになる．
 \begin{align}
   g(X+1) &= \dfrac{1}{4}(X+1)^3 - (X+1) + (-1)^3 - (-1) \\
-  &= \dfrac{1}{4}(X+1)(X+3)(X-1) \quad \dots \text{⑦} \\
+  &= \dfrac{1}{4}(X+1)(X+3)(X-1) \label{eq:8} \\
   g(X-1) &= \dfrac{1}{4}(X-1)^3 - (X-1) \\
-  &= \dfrac{1}{4}(X-1)(X+1)(X-3) \quad \dots \text{⑧} \\
+  &= \dfrac{1}{4}(X-1)(X+1)(X-3) \label{eq:9} \\
   g(2X) &= \dfrac{1}{4} \cdot 8 X^3 - 2X + (-X)^3 - (-X) \\
-  &= X^3 - X \quad \dots \text{⑨} \\
+  &= X^3 - X \label{eq:10} \\
   g\Bigl(\dfrac{2}{3}X\Bigr) &= \dfrac{1}{4}\Bigl(\dfrac{2}{3}X\Bigr)^3 - \Bigl(\dfrac{2}{3}X\Bigr) + \Bigl(\dfrac{1}{3}X\Bigr)^3 - \Bigl(\dfrac{1}{3}X\Bigr) \\
-  &= \dfrac{1}{9}X^3 - X \quad \dots \text{⑩}
+  &= \dfrac{1}{9}X^3 - X \label{eq:11} \\
+  g(0) &= X^3-X
 \end{align}
-又，$g(0) = X^3 - X$ から，もとめるのは下図斜線部 (境界は実線のみ含む)．
+従って，もとめる領域は下図斜線部 (境界は実線のみ含む)である．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$};
-    \draw[->] (0,-1.5) -- (0,1.5) node[above] {$y$};
-    \node[below left] at (0,0) {$O$};
+  \begin{tikzpicture}[scale=3.5, >=stealth, every node/.style={font=\small}]
 
-    \draw[domain=-1.2:1.2, samples=100, thick] plot (\x, {\x*\x*\x - \x}) node[right] {①};
-    \draw[domain=-1.2:1.2, samples=100, dashed] plot (\x, {(1/9)*\x*\x*\x - \x}) node[right] {④};
-    \draw[domain=-1.2:1.1, samples=100, dotted] plot (\x, {0.25*(\x+1)*(\x+3)*(\x-1)}) node[above] {③};
-    \draw[domain=-1.1:1.2, samples=100, dash pattern=on 3pt off 2pt] plot (\x, {0.25*(\x-1)*(\x+1)*(\x-3)}) node[below] {②};
+    % --- 1. 座標軸と目盛り ---
+    \draw[->, thick] (-1.6, 0) -- (1.7, 0) node[right] {$x$};
+    \draw[->, thick] (0, -1.6) -- (0, 1.6) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
 
-    \node at (-1,0) [below left] {$-1$};
-    \node at (1,0) [below right] {$1$};
+    \node[below=3pt, font=\scriptsize] at (-1, 0) {$-1$};
+    \node[below=3pt, font=\scriptsize] at (1, 0) {$1$};
+
+    % y 軸の -1/4 の目盛り (手書きスケッチの「-1/4」を反映)
+    \draw[gray!70] (-0.05, -0.25) -- (0.05, -0.25);
+    \node[left=2pt, font=\scriptsize, gray!90!black] at (0, -0.25) {$-\frac{1}{4}$};
+
+    % --- 2. 求める領域のハッチング塗りつぶし (手書き image_8.png の影部分を忠実に再現) ---
+    % 領域 1: -1 < x < 0 の範囲
+    %   上端: y = g(x-1) = 0.25*(x-1)*(x+1)*(x-3)  (境界②)
+    %   下端: y = max( g(2x), g(0) ) = x^3 - x     (境界①)  および y = g(2x/3) = (1/9)x^3 - x (境界④)
+    %   ※ -0.577 < x < 0 では y = (1/9)x^3 - x が上に来るため、そこが下端境界。
+    %   ※ -1 < x < -0.577 では y = x^3 - x が下端境界。
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.8]
+    plot[domain=-1:-0.57735, samples=20] (\x, {0.25*(\x-1)*(\x+1)*(\x-3)})
+    -- plot[domain=-0.57735:0, samples=20] (\x, {(1.0/9.0)*\x*\x*\x - \x})
+    -- plot[domain=0:-1, samples=20] (\x, {\x*\x*\x - \x})
+    -- cycle;
+
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.8]
+    (0, 0)
+    -- plot[domain=0:0.57735, samples=20] (\x, {(1.0/9.0)*\x*\x*\x - \x})
+    -- plot[domain=0.57735:1, samples=20] (\x, {0.25*(\x-1)*(\x+1)*(\x+3)})
+    -- plot[domain=1:0, samples=20] (\x, {\x*\x*\x - \x})
+    -- cycle;
+
+    % --- 3. 境界曲線のプロットと詳細な数式ラベル ---
+    % ①: y = x^3 - x (実線)
+    \draw[very thick, blue!85!black, domain=-1.25:1.25, samples=70]
+    plot (\x, {\x*\x*\x - \x});
+    \node[blue!95!black, font=\scriptsize, right=3pt] at (1.1, {1.1^3 - 1.1}) {$y = x^3 - x$};
+
+    % ②: y = 0.25(x-1)(x+1)(x-3) (破線)
+    \draw[thick, red!85!black, dashed, domain=-1.25:1.15, samples=60]
+    plot (\x, {0.25*(\x-1)*(\x+1)*(\x-3)});
+    \node[red!95!black, font=\scriptsize, below=4pt] at (0.9, 1.0) {$y = \frac{1}{4}(x-1)(x+1)(x-3)$};
+
+    % ③: y = 0.25(x+1)(x+3)(x-1) (点線/二点鎖線のように細かい破線)
+    \draw[thick, teal!85!black, dotted, domain=-1.15:1.25, samples=60]
+    plot (\x, {0.25*(\x+1)*(\x+3)*(\x-1)});
+    \node[teal!95!black, font=\scriptsize, above right=1pt] at (-1.05, -1) {$y = \frac{1}{4}(x+1)(x+3)(x-1)$};
+
+    % ④: y = (1/9)x^3 - x (一点鎖線状の破線)
+    \draw[thick, gray!70, dash pattern=on 4pt off 3pt, domain=-1.35:1.35, samples=60]
+    plot (\x, {(1.0/9.0)*\x*\x*\x - \x});
+    \node[gray!90!black, font=\scriptsize, above left=1pt] at (1.2, {(1.0/9.0)*1.2^3 - 1.2}) {$y = \frac{1}{9}x^3 - x$};
+
+    % --- 4. 領域に含まれない除外点 (白抜き丸: draw=black, fill=white で完全に白抜き) ---
+    % 横軸上の端点・原点: (-1,0), (0,0), (1,0)
+    \draw[thick, black, fill=white] (-1, 0) circle (1pt);
+    \draw[thick, black, fill=white] (0, 0)  circle (1pt);
+    \draw[thick, black, fill=white] (1, 0)  circle (1pt);
+
+    % 左側の極大周辺の主要交点 (x = -1/sqrt(3) ≈ -0.577, y = 0.25*(-1.577)*(-0.577)*(-3.577)? )
+    % 交点として曲線②と④の交点に該当する点
+    \coordinate (P_ex1) at (-0.57735, {0.25*(-1.57735)*(0.42265)*(-3.57735)});
+    \draw[thick, black, fill=white] (P_ex1) circle (1pt);
+
+    % 右側の極小周辺の主要交点 (x = 1/sqrt(3) ≈ 0.577)
+    % 曲線①と③の交点に該当する点
+    \coordinate (P_ex2) at (0.57735, {0.25*(1.57735)*(3.57735)*(-0.42265)});
+    \draw[thick, black, fill=white] (P_ex2) circle (1pt);
+
   \end{tikzpicture}
-  \caption{$g(0), g(X\pm1), g(2X), g(\dfrac{2}{3}X)$ のグラフと，条件⑤・⑥を満たす $(X,Y)$ の領域}
+  \caption{条件を満たす点 $P(X,Y)$ の存在領域（斜線部）．境界は実線部のみ含み白抜きの点は含まない．}
+  \label{fig:xy_swept_region_final}
 \end{figure}
 
-\bigskip\noindent{\bf [解2] (前半部，②をみちびく)}
+{\bf [別解]}
+
+前半の\cref{eq:3}を別の方法で導く．
+
 $\vec{A} =
 \begin{pmatrix} a \\ b
-\end{pmatrix}$ だけ平行移動とする．$OA$ の中点 $M\Bigl(\dfrac{1}{2}a, \dfrac{1}{2}b\Bigr)$ とする．$C$ の任意の点 $(x,y)$ の，$M$ に関する対称点を $(x',y')$ とすると，
+\end{pmatrix}$ だけ平行移動するとする．
+$OA$ の中点 $M\Bigl(\dfrac{1}{2}a, \dfrac{1}{2}b\Bigr)$ とする．
+$C$ の任意の点 $(x,y)$ の，$M$ に関する対称点を $(x',y')$ とすると，
 \begin{align}
   x = a - x', \quad y = b - y'
 \end{align}
@@ -116,14 +318,16 @@ $\vec{A} =
 \begin{align}
   y - b = (x'-a)^3 - (x'-a)
 \end{align}
-つまり，$(x',y')$ は $C'$ 上の点である．したがって，$C, C'$ は $M$ を中心として点対称である．
+である．
+つまり $(x',y')$ は $C'$ 上の点である．
+したがって，$C, C'$ は $M$ を中心として点対称である．
 よって，$C, C'$ の共有点も $M$ を中心として点対称だから，
 \begin{align}
   \text{「共有点がただ1つ} \iff \text{共有点が} M\text{」}
 \end{align}
 となり，
 \begin{align}
-  \dfrac{b}{2} = f\Bigl(\dfrac{a}{2}\Bigr) \quad \therefore b = \dfrac{1}{4}a^3 - a
+  \dfrac{b}{2} = \left(\dfrac{a}{2}\right)^3-\dfrac{a}{2} \quad \therefore b = \dfrac{1}{4}a^3 - a
 \end{align}
 を得る．
 

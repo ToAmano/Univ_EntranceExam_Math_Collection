@@ -1,90 +1,228 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} $OB = OC = OD = 4$ より，$B, C, D$ は，$O$ を中心とする半径4の球面 $S$ 上に存在す．まず，$\triangle BCD$ を固定して，$A$ をとる時，明らかに $OA \perp \triangle BCD$ の法線ベクトルと等しく，かつ $\triangle BCD$ と $A$ が $O$ に関して反対側にある時，四面体 $ABCD$ の体積は最大 $\dots \text{①}$．
-
-以下 $\triangle BCD$ について，$O$ から下ろした垂線 $H$，$OH = h$ とすると，四面体 $ABCD$ の体積 $V$ の最大値は，($0 \le h < 4$)
-\begin{align}
-  V = \dfrac{1}{3} \triangle BCD \cdot AH \quad \dots \text{①}'
-\end{align}
-で与えられる ($\because \text{①}$)．$AH = 4+h$ で一定だから，次に $\triangle BCD$ の面積の最大値をかんがえる．$HB = HC = HD = \sqrt{16-h^2} \equiv t$ とおく．
+$OB = OC = OD = 4$ より，$B, C, D$ は，$O$ を中心とする半径4の球面 $S$ 上に存在する．
+まず$\triangle BCD$ を固定して，$A$ を動かす時，
+明らかに $\overrightarrow{OA}$ が $\triangle BCD$ の法線方向に平行で，
+かつ $\triangle BCD$ と $A$ が $O$ に関して反対側にある時に四面体 $ABCD$ の体積は最大である．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.2, >=stealth]
-    \coordinate (O) at (0,0);
-    \coordinate (A) at (0,1.5);
-    \coordinate (H) at (0,-0.8);
-    \coordinate (B) at (-1.2,-1.2);
-    \coordinate (C) at (1.2,-1.2);
-    \coordinate (D) at (0.4,-0.5);
+  % 俯角 65°，方位角 115°
+  \tdplotsetmaincoords{65}{115}
+  \begin{tikzpicture}[tdplot_main_coords, scale=0.85, >=stealth, every node/.style={font=\small}]
 
-    \draw[dashed] (O) circle (1.5);
-    \draw (A) -- (B) -- (C) -- cycle;
-    \draw (A) -- (D);
-    \draw (B) -- (D) -- (C);
-    \draw[dashed] (A) -- (H);
+    % --- 1. 定数・座標パラメータ ---
+    % 球半径 R = 4, |OA| = 1, h = 2 の場合 (最大体積時の代表図)
+    \pgfmathsetmacro{\radR}{4.0}
+    \pgfmathsetmacro{\baseRadius}{sqrt(16.0 - 4.0)} % t = sqrt(12) ≈ 3.464
 
-    \node[above] at (A) {$A'$};
-    \node[above left] at (A) {$A$};
-    \node[right] at (O) {$O$};
-    \node[below] at (H) {$H$};
-    \node[left] at (B) {$B$};
-    \node[right] at (C) {$C$};
-    \node[above right] at (D) {$D$};
-    \node[right] at (0,0.7) {$S$};
-    \node[right] at (0,-0.4) {$h$};
+    \coordinate (O)  at (0, 0, 0);
+    \coordinate (H)  at (0, 0, -2.0);      % 底面への垂線の足 (高さ h = 2)
+    \coordinate (Ap) at (0, 0, 1.0);       % 最大高さを与える A' (OH の反対向き)
+    \coordinate (A)  at (0.75, 0.45, 0.5); % 一般の位置にある A (|OA| = 1)
+
+    % 底面 BCD (z = -2 平面上の円周上)
+    \coordinate (B) at ({\baseRadius*cos(210)}, {\baseRadius*sin(210)}, -2.0);
+    \coordinate (C) at ({\baseRadius*cos(330)}, {\baseRadius*sin(330)}, -2.0);
+    \coordinate (D) at ({\baseRadius*cos(80)},  {\baseRadius*sin(80)},  -2.0);
+
+    % --- 2. 球面 S の輪郭と赤道・切断円 ---
+    % 球面 S の外形輪郭円 (スクリーン座標)
+    \draw[thick, blue!80!black, tdplot_screen_coords] (O) circle (\radR);
+    \node[blue!85!black, tdplot_screen_coords, font=\normalsize] at (3.4, 3.2, 0) {$S$};
+
+    % 赤道円 (z = 0, 半径 4)
+    \draw[dashed, gray!45, domain=0:360, samples=60]
+    plot ({\radR*cos(\x)}, {\radR*sin(\x)}, 0);
+
+    % 底面断面円 (z = -2, 半径 t = sqrt(12))
+    \draw[dashed, blue!50, domain=0:360, samples=60]
+    plot ({\baseRadius*cos(\x)}, {\baseRadius*sin(\x)}, -2.0);
+
+    % 点 A が動く半径 1 の球面（スクリーン座標での破線）
+    \draw[dotted, teal!70!black, tdplot_screen_coords] (O) circle (1.0);
+
+    % --- 3. 底面三角形 BCD ---
+    \fill[blue!15, opacity=0.65] (B) -- (C) -- (D) -- cycle;
+    \draw[very thick, blue!85!black] (B) -- (C) -- (D) -- cycle;
+
+    % 中心 O からの動径 OB, OC, OD (長さ 4)
+    \draw[dashed, gray!60] (O) -- (B);
+    \draw[dashed, gray!60] (O) -- (C);
+    \draw[dashed, gray!60] (O) -- (D);
+    \node[gray!80!black, font=\scriptsize, left=1pt] at ($ (O)!0.6!(B) $) {$4$};
+
+    % --- 4. 垂線 OH および最大高さ A'H ---
+    % 垂線 OH (長さ h)
+    \draw[very thick, red!85!black] (O) -- (H);
+    \node[red!90!black, font=\footnotesize, right=2pt] at ($ (O)!0.5!(H) $) {$h$};
+
+    % 最大高さを与える軸 (OH の延長線上の A')
+    \draw[very thick, dashed, red!85!black] (O) -- (Ap);
+    \node[red!90!black, font=\scriptsize, right=2pt] at ($ (O)!0.5!(Ap) $) {$1$};
+
+    % 四面体 A'BCD の母線 (最大時)
+    \draw[thick, red!70!black] (Ap) -- (B);
+    \draw[thick, red!70!black] (Ap) -- (C);
+    \draw[dashed, red!50!black] (Ap) -- (D);
+
+    % 一般の点 A (|OA|=1) との比較
+    \draw[thick, teal!85!black] (O) -- (A);
+    \draw[dashed, gray!60] (A) -- (B);
+    \draw[dashed, gray!60] (A) -- (C);
+
+    % H における直角記号 (OH ⊥ 底面)
+    \draw[thin, gray!70]
+    ($ (H) + (0.2, 0, 0) $) --
+    ($ (H) + (0.2, 0, 0.2) $) --
+    ($ (H) + (0, 0, 0.2) $);
+
+    % --- 5. 各点のプロットとラベル ---
+    \fill (O)  circle (0.8pt) node[below left=1pt] {$O$};
+    \fill[red!85!black] (H)  circle (0.8pt) node[below=2pt, red!90!black] {$H$};
+    \fill[red!85!black] (Ap) circle (0.9pt) node[above=2pt, red!90!black] {$A'$};
+    \fill[teal!85!black] (A)  circle (0.8pt) node[right=2pt, teal!90!black] {$A$};
+    \fill[blue!85!black] (B)  circle (0.8pt) node[below left=2pt] {$B$};
+    \fill[blue!85!black] (C)  circle (0.8pt) node[below right=2pt] {$C$};
+    \fill[blue!85!black] (D)  circle (0.8pt) node[above right=1pt] {$D$};
+
   \end{tikzpicture}
-  \qquad
-  \begin{tikzpicture}[scale=1.2, >=stealth]
-    \coordinate (H) at (0,0);
-    \coordinate (B) at (0,1.5);
-    \coordinate (C) at (-1.3,-0.75);
-    \coordinate (D) at (1.3,-0.75);
-    \coordinate (H') at (0,-0.75);
-
-    \draw (B) -- (C) -- (D) -- cycle;
-    \draw (B) -- (H');
-    \draw[dashed] (H) circle (1.5);
-
-    \node[above] at (B) {$B$};
-    \node[left] at (C) {$C$};
-    \node[right] at (D) {$D$};
-    \node[above right] at (H) {$H$};
-    \node[below] at (H') {$H'$};
-
-    \node[left] at (0.8,0.75) {$t$};
-    \node[left] at (-0.65,0.375) {$t$};
-    \node at (0.2,-0.5) {$\theta$};
-  \end{tikzpicture}
-  \caption{球面 $S$ と四面体 $ABCD$（左），底面 $\triangle BCD$ の二等辺三角形配置（右）}
+  \caption{底面 $\triangle BCD$ を固定したときの四面体 $ABCD$ と最大高さを与える点 $A'$}
+  \label{fig:tetrahedron_max_height_3d}
 \end{figure}
 
-$CD$ を固定すると，$B$ は $O$ を中心とする半径 $t$ の円周上をうごくので，$\triangle BCD$ の最大値を与えるのは $BH \perp CD$ かつ $CD$ と $B$ が $H$ に関して反対にある時．つまり $\triangle BCD$ が $BC=BD$ の二等辺三角形の時．この時 $\angle HCD = \theta$ とおく ($0 < \theta < \pi/2$)．
+$O$ から $\triangle BCD$ に下ろした垂足を $H$，長さを$|OH| = h$ とすると$0 \le h < 4$である．
+四面体 $ABCD$ の体積 $V$ の$A$をこの点で固定した時の最大値は，
 \begin{align}
-  \triangle BCD &= \dfrac{1}{2} CD \cdot BH' \\
+  V = \dfrac{1}{3} \triangle BCD \cdot |AH| \label{eq:1}
+\end{align}
+で与えられる．この時
+\begin{align}
+  |AH| = |AO| + |OH| = 1 + h \label{eq:2}
+\end{align}
+だから，次に $\triangle BCD$ の面積の最大値をかんがえる．
+$\triangle OBH$などに三平方の定理を用いることで
+\begin{align}
+  |HB| = |HC| = |HD| = \sqrt{4^2-h^2} = \sqrt{16-h^2} \equiv t \label{eq:3}
+\end{align}
+とおける．従って，球を三角形$BCD$を含む平面で切断すると，下図のように中心$H$，半径$t$の円となる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ ---
+    % 半径 t = 1.7 (作図用スケーリング)
+    % 角度 theta = 30° (最大面積時の正三角形配置)
+    \def\radT{1.7}
+    \def\angTheta{30}
+
+    \coordinate (H)  at (0, 0);                                               % 底面の外心 H
+    \coordinate (B)  at (0, \radT);                                           % 頂点 B (y 軸上)
+    \coordinate (C)  at ({-\radT*cos(\angTheta)}, {-\radT*sin(\angTheta)});   % 頂点 C
+    \coordinate (D)  at ({\radT*cos(\angTheta)}, {-\radT*sin(\angTheta)});    % 頂点 D
+    \coordinate (Hp) at (0, {-\radT*sin(\angTheta)});                         % CD の中点 H'
+
+    % --- 2. 底面断面の外接円（破線）---
+    \draw[thick, dashed, blue!70!black] (H) circle (\radT);
+
+    % 三角形 BCD の塗りつぶしと輪郭線
+    \fill[blue!10, opacity=0.6] (B) -- (C) -- (D) -- cycle;
+    \draw[very thick, blue!85!black] (B) -- (C) -- (D) -- cycle;
+
+    % --- 3. 中心 H から各頂点への動径 t ---
+    \draw[thick, red!85!black] (H) -- (B) node[midway, right=1pt, red!90!black] {$t$};
+    \draw[thick, red!85!black] (H) -- (C) node[midway, above left=1pt, red!90!black] {$t$};
+    \draw[thick, red!85!black] (H) -- (D) node[midway, above right=1pt, red!90!black] {$t$};
+
+    % --- 4. 軸線 BH' (三角形の高さ) ---
+    \draw[dashed, gray!70] (H) -- (Hp);
+
+    % H' における直角記号 (BH' ⊥ CD)
+    \draw[thin, gray!70]
+    ($ (Hp) + (0.1, 0) $) --
+    ($ (Hp) + (0.1, 0.1) $) --
+    ($ (Hp) + (0, 0.1) $);
+
+    % --- 5. 角度 theta の弧とラベル ---
+    % 角 HCD = theta
+    \draw[thick, purple!85!black]
+    ($ (C) + (0.45, 0) $) arc[start angle=0, end angle=\angTheta, radius=0.45];
+    \node[purple!90!black, font=\footnotesize] at ($ (C) + (0.6, 0.15) $) {$\theta$};
+
+    % --- 6. 各点のプロットとラベル ---
+    \fill[red!85!black] (H)  circle (0.7pt) node[below right=2pt, red!90!black] {$H$};
+    \fill[blue!85!black] (B) circle (0.8pt) node[above=2pt] {$B$};
+    \fill[blue!85!black] (C) circle (0.8pt) node[below left=2pt] {$C$};
+    \fill[blue!85!black] (D) circle (0.8pt) node[below right=2pt] {$D$};
+    \fill (Hp) circle (0.6pt) node[below=2pt] {$H'$};
+
+  \end{tikzpicture}
+  \caption{底面 $\triangle BCD$ を含む平面での切断面（外接円と二等辺三角形の配置）[cite: 7]}
+  \label{fig:base_triangle_circumcircle}
+\end{figure}
+
+$CD$ を固定して $B$ を動かした時の$\triangle BCD$の面積の最大値を考える．
+$B$が中心$H$，半径$t$上の円周上を動くので$BH \perp CD$ かつ $CD$ と $B$ が $H$ に関して反対にある時，つまり $\triangle BCD$ が $BC=BD$ の二等辺三角形の時である．
+この時 $\angle HCD = \angle HDC = \theta$ とおく ($0 < \theta < \pi/2$)と，$\triangle BCD$の面積$f(\theta)$は
+\begin{align}
+  f(\theta)
+  &= \dfrac{1}{2} |CD| \cdot |BH'| \\
   &= \dfrac{1}{2} \cdot (2 t \cos\theta) \cdot (t + t \sin\theta) \\
-  &= t^2 (1 + \sin\theta) \cos\theta \equiv f(\theta) \\
-  f'(\theta) &= t^2 (-2\sin^2\theta - \sin\theta + 1) \quad (s = \sin\theta) \\
-  &= t^2 (-2s+1)(s+1)
+  &= t^2 (1 + \sin\theta) \cos\theta
 \end{align}
-よって $t^2 > 0, 0 < \theta < \pi/2$ より，$f(\theta)$ は $\theta = \pi/6$ で最大値 $\dfrac{3\sqrt{3}}{4} t^2$ をとる．
-この時，$\triangle BCD$ は正三角形 $\dots \text{②}$．
-
-以上より，$h$ が一定の時の $V$ の最大値は，($\because \text{①②}$)
+である．$\theta$による一階微分を計算すると
 \begin{align}
-  V &= \dfrac{1}{3} \cdot \dfrac{3\sqrt{3}}{4} (16-h^2) (4+h) \\
-  &= \dfrac{\sqrt{3}}{4} (16-h^2) (4+h)
+  f'(\theta)
+  &= t^2 (-2\sin^2\theta - \sin\theta + 1) \\
+  &= t^2 (-2\sin\theta+1)(\sin\theta+1)
 \end{align}
-で与えられる．$f(h) = (4+h)(16-h^2)$ とおくと，$f(h)$ が最大の時 $V$ も最大で，$f'(h) = -(3h+8)(h-2)$ より，$f(h)$ は $0 \le h < 4$ で，$h=2$ で最大．
+である．$t^2 > 0, 0 < \theta < \pi/2$ より$f(\theta)$の増減表は以下のようになる．
 
-以上より，もとめる最大値は
+\begin{table}[htb]
+  \centering
+  \caption{$f(\theta)$の増減表}
+  \label{tab:utokyo1988q6_base_area}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabular}{c|c|c|c|c|c}
+    $\theta$ & $(0)$ & $\dots$ & $\dfrac{\pi}{6}$ & $\dots$ & $\Bigl(\dfrac{\pi}{2}\Bigr)$ \\ \hline
+    $f'(\theta)$ & & $+$ & $0$ & $-$ & \\ \hline
+    $f(\theta)$ & $(t^2)$ & $\nearrow$ & $\dfrac{3\sqrt{3}}{4}t^2$ & $\searrow$ & $(0)$
+  \end{tabular}
+\end{table}
+
+従って$f(\theta)$ は $\theta = \pi/6$ で最大値 $\dfrac{3\sqrt{3}}{4} t^2$ をとる．
+この時，$\triangle BCD$ は正三角形である．
+
+以上より，$h$ が一定の時の $V$ の最大値は\cref{eq:1}に代入して
 \begin{align}
-  V = \dfrac{\sqrt{3}}{4} \cdot 12 \cdot 3 = 9\sqrt{3}
+  V &= \dfrac{1}{3} \cdot \dfrac{3\sqrt{3}}{4} (16-h^2) (1+h) \\
+  &= \dfrac{\sqrt{3}}{4} (16-h^2) (1+h)
+\end{align}
+で与えられる．$h$で微分すると
+\begin{align}
+  \dfrac{dV}{dh} = -\dfrac{\sqrt{3}}{4}(3h+8)(h-2)
+\end{align}
+より，$0 \le h < 4$ での増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$V(h)$の増減表}
+  \label{tab:utokyo1988q6_volume}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabular}{c|c|c|c|c|c}
+    $h$ & $0$ & $\dots$ & $2$ & $\dots$ & $(4)$ \\ \hline
+    $V'(h)$ & & $+$ & $0$ & $-$ & \\ \hline
+    $V(h)$ & $4\sqrt{3}$ & $\nearrow$ & $9\sqrt{3}$ & $\searrow$ & $(0)$
+  \end{tabular}
+\end{table}
+
+従って$V$は$h=2$で最大値をとり，その最大値は
+\begin{align}
+  \max V = \dfrac{\sqrt{3}}{4} \cdot 12 \cdot 3 = 9\sqrt{3}
 \end{align}
 である．
 
