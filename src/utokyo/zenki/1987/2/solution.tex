@@ -1,110 +1,162 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage{wrapfig}
-\usepackage[dvipdfmx]{graphics}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1987$年$2$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  点$(x,y)$を点$(x+a,y+b)$にうつす平行移動によって曲線$y=x^2$を移動して得られる曲線を$C$とする．$C$と曲線$y=\cfrac{1}{x}$
-  ，$x>0$が接するような$a$，$b$を座標とする点$(a,b)$の存在する範囲の概形を図示せよ．
 
-  また，この二曲線が接する点以外に共有点を持たないような$a$，$b$の値を求めよ．ただし，二曲線がある点で接するとは，
-  その点で共通の接線を持つことである．
-\end{oframed}
+{\bf[解]}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]} 題意から$C:y=(x-a)^2+b$である．接点の$x$座標を$t_{>0}$とすれば，$\left(\cfrac{1}{x}\right)'=\cfrac{-1}{x^2}$だから，求める条件は，
-  \begin{align}
-    &\exists t \left\{
-      \begin{array}{l}
-        t>0 \\
-        (t-a)^2+b=\cfrac{1}{t} \\
-        2(t-a)=\cfrac{-1}{t^2}
-      \end{array}
-      \right. \nonumber\\
-      \Longleftrightarrow
-      &\exists t \left\{
-        \begin{array}{l}
-          t>0 \\
-          b=\cfrac{1}{t}-\left(\cfrac{-1}{2t^2}\right)^2 \\
-          a=t+\cfrac{1}{2t^2}
-        \end{array}
-        \right.\nonumber \\
-        \Longleftrightarrow
-        &\exists t \left\{
-          \begin{array}{l}
-            t>0 \\
-            b=\cfrac{1}{t}-\cfrac{1}{4t^4} \\
-            a=t+\cfrac{1}{2t^2}
-          \end{array}
-          \right. \label{1}
-        \end{align}
-        従って，$(a,b)$が\eqref{1}で表されるパラメータ曲線上にあればよい．
-        \begin{align}
-          a'&=1-\dfrac{1}{t^3}=\dfrac{t^3-1}{t^3} \\
-          b'&=\dfrac{-1}{t^2}+\dfrac{1}{t^5}=\dfrac{1-t^3}{t^5}
-        \end{align}
-        だから下表を得る．
-        \begin{align}
-          \begin{array}{|c|c|c|c|c|}\hline
-            t       & 0 &     &1                                                  &      \\ \hline
-            a'     &    &-    &0                                                  &+    \\ \hline
-            b'     &    &+   &                                                  0&-     \\ \hline
-            (a,b)&    &\nw&\left(\cfrac{3}{2},\cfrac{3}{4}\right)&\se \\ \hline
-          \end{array}
-        \end{align}
-        また，\eqref{1}から極限値は以下のようになる．
-        \begin{align}
-          t\to+0\text{のとき}&\left\{
-            \begin{array}{l}
-              a\to+\infty \\
-              b\to-\infty
-            \end{array}
-            \right. \\
-            t\to+\infty\text{のとき}&\left\{
-              \begin{array}{l}
-                a\to+\infty \\
-                b\to+0
-              \end{array}
-              \right.
-            \end{align}
-            故にグラフの概形は以下．
-            \begin{center}
-              \scalebox{.6}{\includegraphics{ut-87-2.eps}}
-            \end{center}
-            次に，接点以外に交点を持たない時，
-            \begin{align}
-              (x-a)^2+b=\cfrac{1}{x}
-            \end{align}
-            を満たす$x_{>0}$が唯一つ$x=t$のみであればよい．\eqref{1}を代入して
-            \begin{align}
-              &\left(x-\left(t+\cfrac{1}{2t^2}\right)\right)^2+\left(\cfrac{1}{t}-\cfrac{1}{4t^4}\right)=\cfrac{1}{x} \\
-              \Longleftrightarrow%
-              &x^2-2\left(t+\cfrac{1}{2t^2}\right)x+\left(t+\cfrac{1}{2t^2}\right)^2+\left(\cfrac{1}{t}-\cfrac{1}{4t^4}\right)=\cfrac{1}{x} \\
-              \Longleftrightarrow%
-              &x^3-2\left(t+\cfrac{1}{2t^2}\right)x^2+\left(t^2+\cfrac{2}{t}\right)x-1=0 \\
-              \Longleftrightarrow%
-              &(x-t)^2\left(x-\cfrac{1}{t^2}\right)=0
-            \end{align}
-            だから，条件は$t>0$も考慮して
-            \[t=\cfrac{1}{t^2}\Longleftrightarrow t=1\]
-            である．この時，\eqref{1}から，$(a,b)=\left(\dfrac{3}{2},\dfrac{3}{4}\right)$となる．$\cdots$(答)
-            \newpage
-          \end{multicols}
-          \end{document}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2, >=stealth, every node/.style={font=\small}]
+    % t=0.8，a=t+1/(2t^2)，b=1/t-1/(4t^4)の例．
+    \pgfmathsetmacro{\contactT}{0.8}
+    \pgfmathsetmacro{\shiftA}{\contactT+1/(2*\contactT^2)}
+    \pgfmathsetmacro{\shiftB}{1/\contactT-1/(4*\contactT^4)}
+    \coordinate (T) at (\contactT,{1/\contactT});
+    \draw[->,thick] (-0.2,0) -- (3.4,0) node[right] {$x$};
+    \draw[->,thick] (0,-0.3) -- (0,3.4) node[above] {$y$};
+    \node[below left] at (0,0) {$O$};
+    \begin{scope}
+      \clip (0.04,-0.2) rectangle (3.15,3.1);
+      \draw[very thick,blue!85!black,domain=0.05:3.15,samples=101]
+      plot (\x,{(\x-\shiftA)^2+\shiftB});
+      \draw[very thick,teal!85!black,domain=0.25:3.15,samples=121]
+      plot (\x,{1/\x});
+      \draw[thick,red!85!black,domain=0.05:1.72]
+      plot (\x,{2/\contactT-\x/(\contactT^2)});
+    \end{scope}
+    \draw[dashed,gray!60] (\contactT,0) -- (T) -- (0,{1/\contactT});
+    \fill (T) circle (0.8pt);
+    \node[above right] at (T) {$\Bigl(t,\frac{1}{t}\Bigr)$};
+    \node[below] at (\contactT,0) {$t$};
+    \node[left] at (0,{1/\contactT}) {$\frac{1}{t}$};
+    \node[right,blue!85!black] at (2.75,2.20) {$C$};
+    \node[above,teal!85!black] at (2.65,0.40) {$C'$};
+    \node[right,red!85!black] at (1.38,0.22) {共通接線};
+  \end{tikzpicture}
+  \caption{放物線$C$と曲線$C'$が$x=t$で接し，共通接線をもつ様子}
+  \label{fig:utokyo1987q2_common_tangent}
+\end{figure}
+
+\paragraph{$(a,b)$の範囲の図示}
+
+$y=x^2$を$(a,b)$だけ並行移動して，$C$の方程式は
+\begin{align}
+  C:y=(x-a)^2+b \label{eq:1}
+\end{align}
+である．
+また
+\begin{align}
+  C': y = \dfrac{1}{x} \label{eq:2}
+\end{align}
+である．
+\cref{eq:1,eq:2}の$x=t\,(>0)$での接線が一致する時
+$\left(\cfrac{1}{x}\right)'=\cfrac{-1}{x^2}$だから条件は，
+\begin{align}
+  \begin{cases}
+    t>0 \\
+    (t-a)^2+b=\cfrac{1}{t} \\
+    2(t-a)=\cfrac{-1}{t^2}
+  \end{cases}
+  \Longleftrightarrow
+  \begin{cases}
+    t>0 \\
+    b=\cfrac{1}{t}-\left(\cfrac{-1}{2t^2}\right)^2 \\
+    a=t+\cfrac{1}{2t^2}
+  \end{cases}
+  \Longleftrightarrow
+  \begin{cases}
+    t>0 \\
+    b=\cfrac{1}{t}-\cfrac{1}{4t^4} \\
+    a=t+\cfrac{1}{2t^2} \label{eq:3}
+  \end{cases}
+\end{align}
+なる$t$が存在することである．
+従って，$(a,b)$が\cref{eq:3}で表されるパラメータ曲線上にあればよい．
+$a,b$を$t$で一階微分すると
+\begin{align}
+  \begin{cases}
+    a'=1-\dfrac{1}{t^3}=\dfrac{t^3-1}{t^3} \\
+    b'=\dfrac{-1}{t^2}+\dfrac{1}{t^5}=\dfrac{1-t^3}{t^5}
+  \end{cases}
+\end{align}
+だから下表を得る．
+
+\begin{table}[htb]
+  \centering
+  \caption{$a(t)$，$b(t)$ の増減表}
+  \label{tab:utokyo1987q2_increase_decrease}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabular}{c|c|c|c|c|c}
+    $t$ & $(0)$ & $\dots$ & $1$ & $\dots$ & $(+\infty)$ \\ \hline
+    $a'$ & & $-$ & $0$ & $+$ & \\ \hline
+    $b'$ & & $+$ & $0$ & $-$ & \\ \hline
+    $(a,b)$ & & $\nwarrow$ & $\Bigl(\dfrac{3}{2},\dfrac{3}{4}\Bigr)$ & $\searrow$ &
+  \end{tabular}
+\end{table}
+
+また，\cref{eq:3}から極限値は以下のようになる．
+\begin{align}
+  t\to+0\text{のとき}&
+  \begin{cases}
+    a\to+\infty \\
+    b\to-\infty
+  \end{cases}\\
+  t\to+\infty\text{のとき}&
+  \begin{cases}
+    a\to+\infty \\
+    b\to+0
+  \end{cases}
+\end{align}
+
+従って，$(a,b)$のグラフの概形は以下のようになる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.25, >=stealth, every node/.style={font=\small}]
+    \draw[->] (-0.25,0) -- (5.2,0) node[right] {$a$};
+    \draw[->] (0,-2.45) -- (0,1.35) node[above] {$b$};
+    \node[below left] at (0,0) {$O$};
+    \begin{scope}
+      \clip (0.1,-2.3) rectangle (5,1.15);
+      \draw[very thick, blue!85!black, domain=0.45:1, samples=121, variable=\t]
+      plot ({\t+1/(2*\t^2)},{1/\t-1/(4*\t^4)});
+      \draw[very thick, blue!85!black, domain=1:5.1, samples=121, variable=\t]
+      plot ({\t+1/(2*\t^2)},{1/\t-1/(4*\t^4)});
+    \end{scope}
+    \draw[dashed, gray!60] (1.5,0) -- (1.5,0.75) -- (0,0.75);
+    \fill[blue!85!black] (1.5,0.75) circle (0.8pt);
+    \node[below] at (1.5,0) {$\frac{3}{2}$};
+    \node[left] at (0,0.75) {$\frac{3}{4}$};
+    \node[above right] at (1.5,0.75) {$\Bigl(\frac{3}{2},\frac{3}{4}\Bigr)$};
+    \node[above, blue!85!black] at (3.5,0.42) {$t>1$};
+    \node[right, blue!85!black] at (2.65,-1.7) {$0<t<1$};
+  \end{tikzpicture}
+  \caption{$a=t+\dfrac{1}{2t^2}$，$b=\dfrac{1}{t}-\dfrac{1}{4t^4}$（$t>0$）で表される$(a,b)$の軌跡}
+  \label{fig:utokyo1987q2_locus}
+\end{figure}
+
+\paragraph{接点以外に共有点を持たないような$(a,b)$の値}
+
+次に，接点以外に交点を持たない時を考えよう．これは\cref{eq:1,eq:2}を連立した方程式
+\begin{align}
+  (x-a)^2+b=\cfrac{1}{x} \quad (x>0) \label{eq:4}
+\end{align}
+を満たす$x$が唯一つ$x=t$のみであればよい．
+
+\cref{eq:3}を代入して
+\begin{align}
+  &\left(x-\left(t+\cfrac{1}{2t^2}\right)\right)^2+\left(\cfrac{1}{t}-\cfrac{1}{4t^4}\right)=\cfrac{1}{x} \\
+  \Longleftrightarrow%
+  &x^2-2\left(t+\cfrac{1}{2t^2}\right)x+\left(t+\cfrac{1}{2t^2}\right)^2+\left(\cfrac{1}{t}-\cfrac{1}{4t^4}\right)=\cfrac{1}{x} \\
+  \Longleftrightarrow%
+  &x^3-2\left(t+\cfrac{1}{2t^2}\right)x^2+\left(t^2+\cfrac{2}{t}\right)x-1=0 \\
+  \Longleftrightarrow%
+  &(x-t)^2\left(x-\cfrac{1}{t^2}\right)=0
+\end{align}
+だから，この解が$x=t$のみである条件は$t>0$も考慮して
+\begin{align}
+  t=\cfrac{1}{t^2}\Longleftrightarrow t=1
+\end{align}
+である．
+この時\cref{eq:3}から，$(a,b)=\left(\dfrac{3}{2},\dfrac{3}{4}\right)$となる．$\cdots$(答)
+\newpage
+\end{document}
