@@ -1,0 +1,406 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+{\bf [解]}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.35, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 玉の半径と配置パラメータ ---
+    \def\rBall{0.26}
+
+    % 玉の x 座標
+    % 左端赤玉: x = 0
+    % 白玉1: x = 1.3
+    % 白玉2: x = 2.6
+    % 白玉 a: x = 4.8
+    % 白玉 b-1: x = 7.0
+    % 白玉 n: x = 9.2
+    % 右端赤玉: x = 10.5
+
+    % --- 2. 左右両端の赤玉 (円環の同一赤玉に対応) ---
+    \draw[thick, fill=red!80!black] (0, 0) circle (\rBall);
+    \node[above=6pt, red!90!black, font=\footnotesize\bfseries] at (0, \rBall) {左端（赤）};
+
+    \draw[thick, fill=red!80!black] (10.5, 0) circle (\rBall);
+    \node[above=6pt, red!90!black, font=\footnotesize\bfseries] at (10.5, \rBall) {右端（赤）};
+
+    % --- 3. 間の白玉列 (n 個) ---
+    % 白玉 1, 2
+    \draw[thick, fill=white] (1.3, 0) circle (\rBall);
+    \node[below=5pt, font=\scriptsize] at (1.3, -\rBall) {白 $1$};
+
+    \draw[thick, fill=white] (2.6, 0) circle (\rBall);
+    \node[below=5pt, font=\scriptsize] at (2.6, -\rBall) {白 $2$};
+
+    % 省略
+    \node at (3.5, 0) {$\dots$};
+
+    % 白玉 a 付近
+    \draw[thick, fill=white] (4.8, 0) circle (\rBall);
+    \node[below=5pt, font=\scriptsize] at (4.8, -\rBall) {白 $a$};
+
+    % 省略
+    \node at (5.9, 0) {$\dots$};
+
+    % 白玉 b-1 付近
+    \draw[thick, fill=white] (7.0, 0) circle (\rBall);
+    \node[below=5pt, font=\scriptsize] at (7.0, -\rBall) {白 $b-1$};
+
+    % 省略
+    \node at (8.1, 0) {$\dots$};
+
+    % 白玉 n
+    \draw[thick, fill=white] (9.2, 0) circle (\rBall);
+    \node[below=5pt, font=\scriptsize] at (9.2, -\rBall) {白 $n$};
+
+    % --- 4. n+1 箇所の挿入隙間（スロット）の表示 ---
+    % 隙間の x 座標: 0.65, 1.95, 4.15, 7.85, 9.85 など
+    \foreach \x/\label in {0.65/{$1$}, 1.95/{$2$}, 4.15/{$a$}, 7.85/{$b$}, 9.85/{$n+1$}} {
+      \draw[dashed, gray!50] (\x, -0.7) -- (\x, 0.7);
+      \node[fill=blue!8, draw=blue!70, rounded corners=1.5pt, inner sep=1.5pt, font=\scriptsize]
+      at (\x, -0.9) {隙間 \label};
+    }
+
+    % --- 5. 追加する 2 つの赤玉の挿入 (場所 a と場所 b) ---
+    % (i) 隙間 a への赤玉挿入
+    \draw[thick, fill=red!80!black] (4.15, 1.5) circle (\rBall);
+    \draw[->, very thick, red!85!black] (4.15, 1.2) -- (4.15, 0.35);
+    \node[above=2pt, font=\footnotesize\bfseries, red!85!black] at (4.15, 1.5+\rBall) {赤玉 ($a$)};
+
+    % (ii) 隙間 b への赤玉挿入
+    \draw[thick, fill=red!80!black] (7.85, 1.5) circle (\rBall);
+    \draw[->, very thick, red!85!black] (7.85, 1.2) -- (7.85, 0.35);
+    \node[above=2pt, font=\footnotesize\bfseries, red!85!black] at (7.85, 1.5+\rBall) {赤玉 ($b$)};
+
+    % --- 6. 3 つの区間に分かれる白玉の個数（下部ブレース）---
+    % 第 1 区間: 隙間 1 〜 隙間 a の直前 (a-1 個の白玉)
+    \draw[decorate, decoration={brace, mirror, amplitude=5pt}, thick, teal!85!black]
+    (0.8, -1.3) -- (3.9, -1.3)
+    node[midway, below=6pt, font=\footnotesize, teal!90!black] {$a-1$ 個};
+
+    % 第 2 区間: 隙間 a 〜 隙間 b の直前 (b-a 個の白玉)
+    \draw[decorate, decoration={brace, mirror, amplitude=5pt}, thick, teal!85!black]
+    (4.4, -1.3) -- (7.6, -1.3)
+    node[midway, below=6pt, font=\footnotesize, teal!90!black] {$b-a$ 個};
+
+    % 第 3 区間: 隙間 b 〜 右端 (n+1-b 個の白玉)
+    \draw[decorate, decoration={brace, mirror, amplitude=5pt}, thick, teal!85!black]
+    (8.1, -1.3) -- (10.0, -1.3)
+    node[midway, below=6pt, font=\footnotesize, teal!90!black] {$n+1-b$ 個};
+
+    % --- 7. 注釈ボックス ---
+    \node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=3.5pt, font=\footnotesize, align=left]
+    at (5.25, -2.4) {
+      \textbf{重複組合せによる配置モデル}:\\[2pt]
+      $\bullet\ n$ 個の白玉がつくる $n+1$ 箇所の隙間から重複を許して $2$ 箇所（$a \le b$）を選ぶ $\implies {}_{n+1}\mathrm{H}_2 = {}_{n+2}\mathrm{C}_2$ 通り\\[2pt]
+      $\bullet\ $ 赤玉間の白玉がすべて $k$ 個以下 $\iff 0 \le a-1 \le k,\quad 0 \le b-a \le k,\quad 0 \le n+1-b \le k$
+    };
+
+  \end{tikzpicture}
+  \caption{両端に赤玉を置き，白玉の隙間 $n+1$ 箇所に 2 個の赤玉を挿入する様子}
+  \label{fig:red_white_balls_insertion}
+\end{figure}
+
+横一列に赤玉と白玉を並べることを考える．
+左端と右端に赤玉を配置し，その間に$n$個の白玉を並べる．
+左右端の赤玉が円に並べた時の一つの赤玉に対応する．
+白玉の前後にある$n+1$箇所の隙間から，残りの二つの赤玉を入れる場所を選ぶ．
+同じ隙間に$2$個入れることも許すので，その選び方は重複組合せにより
+\begin{align}
+  {}_{n+1}H_{2} = {}_{n+2}C_{2} = \dfrac{1}{2}(n+2)(n+1) \label{eq:1}
+\end{align}
+通りであり，同様に確からしい．
+隙間の番号を左から$1,\dots,n+1$とし，赤玉を入れる場所を$a,b$（$1\le a\le b\le n+1$）とする．
+
+3か所の白玉の個数は$a-1,b-a,n+1-b$だから，赤玉の間の白玉が$k$個以下である条件は
+\begin{align}
+  \begin{cases}
+    0\le a-1\le k \\
+    0\le b-a\le k \\
+    0\le n+1-b\le k
+  \end{cases} \label{eq:2}
+\end{align}
+となる．
+$n\ge2k$より$n+1-k\ge k+1$だから\cref{eq:2}を満たす$(a,b)$を$ab$平面上に図示すると下図の斜線部となる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.85, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ (n = 10, k = 4 の場合) ---
+    % a の基準目盛り: 1, n+1-2k = 3, k+1 = 5
+    % b の基準目盛り: k = 4, k+1 = 5, n+1-k = 7, 2k+1 = 9, n+1 = 11
+    \coordinate (O) at (0, 0);
+
+    % 三角形領域の3頂点
+    \coordinate (P_left)  at (3, 7);  % (n+1-2k, n+1-k)
+    \coordinate (P_right) at (5, 7);  % (k+1, n+1-k)
+    \coordinate (P_top)   at (5, 9);  % (k+1, 2k+1)
+
+    % --- 2. 斜線領域（条件を満たす直角三角形）---
+    \fill[blue!12] (P_left) -- (P_right) -- (P_top) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.8]
+    (P_left) -- (P_right) -- (P_top) -- cycle;
+    \draw[very thick, blue!85!black] (P_left) -- (P_right) -- (P_top) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-0.6, 0) -- (7.2, 0) node[right] {$a$};
+    \draw[->, thick] (0, -0.6) -- (0, 12.4) node[above] {$b$};
+    \node[below left=2pt] at (O) {$0$};
+
+    % --- 4. 境界直線 ---
+    % (i) 直線 b = a + k
+    \draw[thick, teal!85!black, domain=0:5.8] plot (\x, {\x + 4});
+    \node[teal!90!black, font=\footnotesize, above right=1pt] at (5.3, 9.3) {$b = a + k$};
+
+    % (ii) 基準線 b = a
+    \draw[dashed, gray!60, thick] (0, 0) -- (6.2, 6.2) node[below right, font=\scriptsize] {$b = a$};
+
+    % --- 5. 手書きスケッチにあるすべての補助破線 ---
+    % (i) a = 1 に関連する破線
+    \draw[dashed, gray!60] (1, 0) -- (1, 5);
+    \draw[dashed, gray!60] (0, 5) -- (1, 5); % b = 1 + k = 5 への投影
+    \fill (1, 5) circle (1.2pt);
+
+    % (ii) a = n+1-2k (= 3) に関連する破線 (三角形の左頂点 P_left)
+    \draw[dashed, gray!60] (3, 0) -- (P_left);
+    \draw[dashed, gray!60] (0, 7) -- (P_left);
+
+    % (iii) a = k+1 (= 5) に関連する破線・境界線 (垂直線)
+    \draw[dashed, gray!60] (5, 0) -- (P_right);
+    \draw[dashed, gray!60] (P_top) -- (5, 11);
+
+    % (iv) b = 2k+1 (= 9) への水平破線 (三角形の頂点 P_top)
+    \draw[dashed, gray!60] (0, 9) -- (P_top);
+
+    % (v) b = n+1 (= 11) の全体上限破線
+    \draw[dashed, gray!60] (0, 11) -- (5, 11);
+
+    % --- 6. 3頂点のプロット ---
+    \fill[blue!85!black] (P_left)  circle (2.2pt);
+    \fill[blue!85!black] (P_right) circle (2.2pt);
+    \fill[blue!85!black] (P_top)   circle (2.2pt);
+
+    % --- 7. 軸上の目盛りとラベル ---
+    % a 軸
+    \node[below=3pt, font=\scriptsize] at (1, 0) {$1$};
+    \node[below=3pt, font=\scriptsize] at (3, 0) {$n+1-2k$};
+    \node[below=3pt, font=\scriptsize] at (5, 0) {$k+1$};
+
+    % b 軸
+    \node[left=3pt, font=\scriptsize] at (0, 4) {$k$};
+    \node[left=3pt, font=\scriptsize] at (0, 5) {$k+1$};
+    \node[left=3pt, font=\scriptsize] at (0, 7) {$n+1-k$};
+    \node[left=3pt, font=\scriptsize] at (0, 9) {$2k+1$};
+    \node[left=3pt, font=\scriptsize] at (0, 11) {$n+1$};
+
+    % 軸上の目盛り点
+    \fill (0, 4)  circle (1.2pt);
+    \fill (0, 5)  circle (1.2pt);
+    \fill (0, 7)  circle (1.2pt);
+    \fill (0, 9)  circle (1.2pt);
+    \fill (0, 11) circle (1.2pt);
+    \fill (1, 0)  circle (1.2pt);
+    \fill (3, 0)  circle (1.2pt);
+    \fill (5, 0)  circle (1.2pt);
+
+  \end{tikzpicture}
+  \caption{条件を満たす領域（斜線部）}
+  \label{fig:utokyo1989q6_complete_lattice_region}
+\end{figure}
+
+よって車線部の領域（境界含む）にある格子点の数があり得る配置の数で，これは
+\begin{align}
+  1+2+\dots+(3k-n+1)
+  =\dfrac{(3k-n+1)(3k-n+2)}{2}
+\end{align}
+である．
+よって求める確率は全体の場合の数${}_{n+2}C_{2}$で割って
+\begin{align}
+  \dfrac{(3k-n+1)(3k-n+2)}{(n+2)(n+1)}
+\end{align}
+となる．
+
+% ちなみにのコメント: $n,k$についての条件についてだが，$n=2k$のときは$a=b=k+1$も含まれ，この配置では残りの2個の赤玉が隣り合う．
+
+{\bf [別解]}
+
+赤玉を1個固定する．全事象は同様に確からしい${}_{n+2}C_{2}$通りである．
+題意より$2k<n\le 3n\,\therefore 2k+1 \le n \le 3k$だから，
+\begin{align}
+  n = 3k - m \quad (0\le m \le k-1)
+\end{align}
+とおける．
+
+下図のように3個の赤玉によって区切られる3か所の白玉の個数を，順に$k-a,k-b,k-c$とする．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・半径パラメータ ---
+    \def\radR{1.4}
+    \def\rBall{0.14}
+
+    \coordinate (O) at (0, 0);
+
+    % --- 2. 円周の補助線 (破線) ---
+    \draw[dashed, gray!60, thick] (O) circle (\radR);
+
+    % --- 3. 3つの赤丸 (塗りつぶし) ---
+    % 上側 (約 110°)、右下 (約 345°)、左下 (約 225°)
+    \draw[thick, fill=red!80!black] (110:\radR) circle (\rBall);
+    \draw[thick, fill=red!80!black] (345:\radR) circle (\rBall);
+    \draw[thick, fill=red!80!black] (225:\radR) circle (\rBall);
+
+    % --- 4. 白丸 (白抜き・境界線あり) ---
+    % 上側赤丸の隣 (約 80°)
+    \draw[thick, fill=white] (80:\radR) circle (\rBall);
+
+    % 右側赤丸の上 (約 15°)
+    \draw[thick, fill=white] (15:\radR) circle (\rBall);
+
+    % 各区間内に続く白丸の省略表現 (点線/ドット)
+    \node[gray!70, rotate=45] at (50:\radR) {$\cdots$};
+    \node[gray!70] at (285:\radR) {$\cdots$};
+    \node[gray!70, rotate=-45] at (170:\radR) {$\cdots$};
+
+    % --- 5. 各区間のラベル A, B, C ---
+    % スケッチの配置: 下が A、右上が B、左が C
+    \node[font=\normalsize\bfseries] at (270:{\radR + 0.45}) {$A$};
+    \node[font=\normalsize\bfseries] at (45:{\radR + 0.45})  {$B$};
+    \node[font=\normalsize\bfseries] at (165:{\radR + 0.45}) {$C$};
+
+    % 各区間の白玉の個数（解説に合わせた注釈）
+    \node[font=\scriptsize, teal!85!black] at (270:{\radR + 0.75}) {$k-b$ 個};
+    \node[font=\scriptsize, teal!85!black] at (45:{\radR + 0.75})  {$k-c$ 個};
+    \node[font=\scriptsize, teal!85!black] at (165:{\radR + 0.75}) {$k-a$ 個};
+
+    % --- 6. 凡例ボックス ---
+    \node[draw=gray!60, fill=white, rounded corners=2pt, inner sep=3pt, font=\scriptsize, align=left]
+    at (0, 0) {
+      \tikz\draw[thick, fill=red!80!black] (0,0) circle (3pt); : 赤玉 (3個)\\[2pt]
+      \tikz\draw[thick, fill=white] (0,0) circle (3pt); : 白玉 ($n$個)
+    };
+
+  \end{tikzpicture}
+  \caption{円周上に並ぶ赤玉と白玉，および3分割された各区間 $A, B, C$}
+  \label{fig:circular_balls_distribution}
+\end{figure}
+
+白玉の総数が$n$であるための条件は
+\begin{align}
+  a+b+c=3k-n=m
+\end{align}
+である．$a,b,c\ge0$であれば$a,b,c\le m\le k$も自動的に成り立つため，各部分の白玉の個数は$0$以上$k$以下となる．
+従って条件を満たす配置の数は，$A,B$から合わせて$m$個以下の白玉を減らす方法の数，すなわち
+\begin{align}
+  a+b\le m，\quad a,b\in\mathbb{Z}_{\ge0}
+\end{align}
+を満たす$(a,b)$の個数である．この時$c$は$a+b+c=m$により自動的に決定される．
+場合の数は
+\begin{align}
+  {}_{m+2}C_{2}
+  =\dfrac{(m+1)(m+2)}{2}
+  =\dfrac{(3k-n+1)(3k-n+2)}{2}
+\end{align}
+通りだから，求める確率は
+\begin{align}
+  \dfrac{(3k-n+1)(3k-n+2)}{(n+2)(n+1)}
+\end{align}
+である．
+
+% ===========
+% 以下，originalの手書きの解1だが，わかりにくいのでコメントアウト
+% ===========
+
+% 円周上の位置を順に$A_1,A_2,\dots,A_{n+3}$とする．赤玉を1個固定してその位置を$A_1$とすれば，残りの2個の赤玉の位置を選ぶ方法は${}_{n+2}C_{2}$通りで，いずれも同様に確からしい．残りの赤玉の位置を$A_i,A_j$（$2\le i<j\le n+3$）とする．
+
+% \begin{figure}[htb]
+%   \centering
+%   \begin{tikzpicture}[scale=2,>=stealth,every node/.style={font=\small}]
+%     \draw[dotted,gray!50] (0,0) circle (1);
+%     \foreach \angle/\name in {90/1,20/i,210/j} {
+%       \coordinate (\name) at (\angle:1);
+%       \draw[thick,fill=red!70] (\name) circle (1.5pt);
+%     }
+%     \node[above] at (1) {$A_1$};
+%     \node[right] at (i) {$A_i$};
+%     \node[below left] at (j) {$A_j$};
+%     \node[right] at (0.5,0.72) {$i-2$個};
+%     \node[below] at (0.05,-0.72) {$j-i-1$個};
+%     \node[left] at (-0.5,0.45) {$n+3-j$個};
+%     \draw[->,gray!70] (65:1.15) arc (65:35:1.15);
+%   \end{tikzpicture}
+%   \caption{赤玉の位置を固定したときの3か所の白玉の個数}
+%   \label{fig:utokyo1989q6_positions}
+% \end{figure}
+
+% まず，$A_1$と$A_i$の間の白玉が$k$個以下であることから
+% \begin{align}
+%   2\le i\le k+2 \label{eq:1}
+% \end{align}
+% である．
+% さらに，$A_i$と$A_j$の間，$A_j$と$A_1$の間の白玉も$k$個以下だから
+% \begin{align}
+%   j-i-1\le k，\quad n+3-j\le k \\
+% \therefore
+%   n+3-k \le j\le i+k+1  \label{eq:2}
+% \end{align}
+% である．以下\cref{eq:1,eq:2}を満たす$(i,j)$の場合の数を考える．
+
+% まず\cref{eq:2}の範囲に整数$j$が存在する条件から
+% \begin{align}
+%   n+3-k\le i+k+1
+%   \quad\Longleftrightarrow\quad
+%   n+2-2k\le i \label{eq:3}
+% \end{align}
+% である．
+
+% ここで題意から
+% \begin{align}
+%  \dfrac{n}{3} \le k \le \dfrac{n}{2} \quad \therefore 2k\le n\le 3k \label{eq:4}
+% \end{align}
+% だから\cref{eq:3}において
+% \begin{align}
+%  2 \le n+2-2k \label{eq:5}
+% \end{align}
+% である．よって\cref{eq:1}より\cref{eq:3}の下端の方が厳しい条件を与え，
+% \cref{eq:1,eq:3,eq:5}から$i$が満たすべき条件は
+% \begin{align}
+%   n+2-2k\le i\le k+2 \label{eq:6}
+% \end{align}
+% となる．
+
+% この時各々の$i$に対して，$j$は\cref{eq:2}をとる．
+% \cref{eq:4}より\cref{eq:2}の下端は
+% \begin{align}
+%     n+3-k \ge 2k+3-k = k + 3
+% \end{align}
+% であり，\cref{eq:6}と合わせて\cref{eq:4}の上端・下端は
+% \begin{align}
+%  i < k+3 \le n+3-k \le j \le i+k+1 \le (k+2)+k+1 = 2k+3 \le n+3 \\
+% \therefore
+%  i < j \le n+3
+% \end{align}
+% となり，最初の条件も満たす．
+
+% 各$i$に対して，$j$の選び方は\cref{eq:2}より
+% \begin{align}
+%   (i+k+1)-(n+3-k)+1=i+2k-n-1 \label{eq:7}
+% \end{align}
+% 通りであるから，条件を満たす配置の数は\cref{eq:6}の各$i$に対して\cref{eq:7}を足し合わせて
+% \begin{align}
+%     \sum_{i=n+2-2k}^{k+2}(i+2k-n-1)
+%     &=\sum_{r=1}^{3k-n+1}r\\
+%     &=\dfrac{(3k-n+1)(3k-n+2)}{2}
+% \end{align}
+% 通りである．従って，求める確率は全体の場合の数${}_{n+2}C_{2}$で割って
+% \begin{align}
+%   \boxed{\dfrac{(3k-n+1)(3k-n+2)}{(n+2)(n+1)}}
+% \end{align}
+% である．
+
+\end{document}

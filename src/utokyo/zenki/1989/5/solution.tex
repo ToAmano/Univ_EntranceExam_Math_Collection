@@ -1,67 +1,227 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1989$年$5$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  $f(x)=\pi x^2\sin\pi x^2$とする．$y=f(x)$のグラフの$0\le x\le1$の部分と$x$軸とで囲まれた
-  図形を$y$軸のまわりに回転させてできる立体の体積$V$は$V=2\pi\dint{0}{1}xf(x)dx$で与えられる
-  ことを示し，この値を求めよ．
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]} 区間内で$f(x)\ge0$に注意する．区間内に$X$，$X+\Delta x$をとり，($\Delta x>0$)
-  $0\le x\le X$の範囲での回転体の体積を$V(X)$と書く．また，同区間での$f(x)$の最大小
-  値をそれぞれ$M(X)$，$m(X)$とおくと，
-  \[0\le m(X)\le f(x)\le M(X) \]
-  ゆえ，これを$y$軸の周りに回転させれば，
-  \begin{align}
-    P&=\left\{(X+\Delta x)^2-X^2\right\}\\
-    &=2X\Delta x+(\Delta x)^2 \\
-    &=\Delta x(2X+\Delta x) \\
-    Q&=2X+\Delta x
-  \end{align}
-  として
-  \begin{align}
-    \pi Pm(X)\le V(X+\Delta x)-V(X)\le\pi PM(X) \nonumber\\
-    \pi Qm(X)\le \dfrac{V(X+\Delta x)-V(X)}{\Delta x}\le \pi QM(X) \label{1}
-  \end{align}
-  である．ここで$\Delta x\to0$とすれば
-  \begin{align}
+{\bf[解]}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.6, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 関数定義と厳密なパラメータ設定 ---
+    % f(x) = pi * x^2 * sin(pi * x^2 rad)
+    % ※ TikZ の三角関数は通常度数法(deg)のため、角度は (pi * x^2) r または 180 * x^2 で指定
+    \def\funcF(#1){(pi * (#1) * (#1) * sin(180 * (#1) * (#1)))}
+
+    % 代表区間 [X, X + \Delta x] (単調増加区間内)
+    \def\xX{0.45}
+    \def\xDelta{0.25}
+    \pgfmathsetmacro{\xXDelta}{\xX + \xDelta} % 0.70
+
+    % 厳密な最小値 m(X) と最大値 M(X)
+    \pgfmathsetmacro{\mVal}{\funcF(\xX)}       % 約 0.378
+    \pgfmathsetmacro{\MVal}{\funcF(\xXDelta)}  % 約 1.539
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (X0)    at (\xX, 0);
+    \coordinate (X1)    at (\xXDelta, 0);
+    \coordinate (m_pt0) at (\xX, \mVal);
+    \coordinate (m_pt1) at (\xXDelta, \mVal);
+    \coordinate (M_pt0) at (\xX, \MVal);
+    \coordinate (M_pt1) at (\xXDelta, \MVal);
+
+    % --- 2. 面積・評価領域の塗りつぶし ---
+    % (i) 外接長方形 (高さ M(X)): 薄い赤色透過
+    \fill[red!12, opacity=0.7] (X0) rectangle (M_pt1);
+
+    % (ii) 曲線下の面積 (f(x)): 青色ハッチング
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.7]
+    (\xX, 0) -- plot[domain=\xX:\xXDelta, samples=35] (\x, {\funcF(\x)})
+    -- (\xXDelta, 0) -- cycle;
+
+    % (iii) 内接長方形 (高さ m(X)): 薄い青色透過
+    \fill[blue!20, opacity=0.8] (X0) rectangle (m_pt1);
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-0.1, 0) -- (1.25, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.1) -- (0, 2.1) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \draw[gray!60] (1.0, -0.03) -- (1.0, 0.03);
+
+    % --- 4. 曲線 y = f(x) = \pi x^2 \sin(\pi x^2) の描画 ---
+    \draw[line width=1.6pt, blue!85!black, domain=0:0.98, samples=90]
+    plot (\x, {\funcF(\x)});
+    \node[blue!90!black, font=\footnotesize, above right] at (0.8, 1.82) {$y = \pi x^2 \sin(\pi x^2)$};
+
+    % --- 5. 上下評価の水平線 y = M(X), y = m(X) ---
+    % y = M(X) (外接長方形上端)
+    \draw[very thick, red!85!black] (M_pt0) -- (M_pt1);
+    \draw[dashed, red!70] (0, \MVal) -- (M_pt0);
+    \node[left=2pt, font=\scriptsize, red!85!black] at (0, \MVal) {$M(X)$};
+    \node[right=2pt, font=\scriptsize, red!85!black] at (M_pt1) {$y = M(X)$};
+
+    % y = m(X) (内接長方形上端)
+    \draw[very thick, teal!85!black] (m_pt0) -- (m_pt1);
+    \draw[dashed, teal!70] (0, \mVal) -- (m_pt0);
+    \node[left=2pt, font=\scriptsize, teal!85!black] at (0, \mVal) {$m(X)$};
+    \node[right=2pt, font=\scriptsize, teal!85!black] at (m_pt1) {$y = m(X)$};
+
+    % --- 6. 区間端の垂直境界線 ---
+    \draw[dashed, gray!70] (X0) -- (M_pt0);
+    \draw[dashed, gray!70] (X1) -- (M_pt1);
+
+    % x 軸上の目盛りラベル
+    \node[below=2pt, font=\scriptsize] at (X0) {$X$};
+    \node[below=2pt, font=\scriptsize] at (X1) {$X + \Delta x$};
+
+    % 区間幅 \Delta x の寸法線
+    \draw[<->, thick, gray!80!black] ($ (X0) + (0, -0.15) $) -- ($ (X1) + (0, -0.15) $);
+    \node[below=1pt, font=\scriptsize, gray!90!black] at ($ ($ (X0)!0.5!(X1) $) + (0, -0.15) $) {$\Delta x$};
+
+  \end{tikzpicture}
+  \caption{微小区間 $[X, X+\Delta x]$ における $f(x) = \pi x^2 \sin(\pi x^2)$ と評価線 $y=m(X),\, y=M(X)$}
+  \label{fig:cylinder_shell_estimation_2d_exact}
+\end{figure}
+
+$[0,1]$で$f(x)\ge0$に注意する．区間内に$X$，$X+\Delta x$をとり，($\Delta x>0$)
+$0\le x\le X$の範囲での回転体の体積を$V(X)$と書く．また，同区間での$f(x)$の最大小
+値をそれぞれ$M(X)$，$m(X)$とおくと，
+\begin{align}
+  0\le m(X)\le f(x)\le M(X)
+\end{align}
+が成り立つ．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. パラメータ定義 ---
+    % 回転半径: 内半径 R1 = X, 外半径 R2 = X + \Delta x
+    \def\rIn{1.7}
+    \def\rOut{2.2}
+    % 見取り図の短軸比率 (俯角を表現する楕円の扁平率)
+    \def\ratioB{0.32}
+    \pgfmathsetmacro{\bIn}{\rIn * \ratioB}
+    \pgfmathsetmacro{\bOut}{\rOut * \ratioB}
+
+    % 高さ: 内側 h1 = f(X), 外側 h2 = f(X + \Delta x)
+    \def\hIn{1.75}
+    \def\hOut{1.95}
+
+    \coordinate (O_bot) at (0, 0);
+    \coordinate (O_top) at (0, \hOut + 0.35);
+
+    % 右端の微小縦断面の基準点
+    \coordinate (P_bot_in)  at (\rIn, 0);
+    \coordinate (P_bot_out) at (\rOut, 0);
+    \coordinate (P_top_in)  at (\rIn, \hIn);
+    \coordinate (P_top_out) at (\rOut, \hOut);
+
+    % --- 2. 底面の同心円環 (z = 0) ---
+    % (i) 奥側半分 (破線)
+    \draw[dashed, gray!60]
+    (\rIn, 0) arc[start angle=0, end angle=180, x radius=\rIn, y radius=\bIn];
+    \draw[dashed, gray!60]
+    (\rOut, 0) arc[start angle=0, end angle=180, x radius=\rOut, y radius=\bOut];
+
+    % (ii) 手前側半分 (実線)
+    \draw[thick, gray!80!black]
+    (-\rIn, 0) arc[start angle=180, end angle=360, x radius=\rIn, y radius=\bIn];
+    \draw[thick, gray!80!black]
+    (-\rOut, 0) arc[start angle=180, end angle=360, x radius=\rOut, y radius=\bOut];
+
+    % --- 3. 中心回転軸 (y 軸) ---
+    \draw[dashed, gray!50] (0, -0.3) -- (O_bot);
+    \draw[dashed, gray!50] (O_bot) -- (0, \hIn);
+    \draw[->, thick, gray!80!black] (0, \hIn) -- (O_top) node[above] {$y$ (回転軸)};
+
+    % --- 4. 外側・内側の円筒側面輪郭線 ---
+    % 左側の母線
+    \draw[very thick, blue!85!black] (-\rOut, 0) -- (-\rOut, \hOut);
+    \draw[dashed, blue!50] (-\rIn, 0) -- (-\rIn, \hIn);
+
+    % --- 5. 上面の同心円 (z = hIn, hOut) ---
+    % 角括弧オプション [x radius=..., y radius=...] で安全に記述
+    % 内側円筒の上面円 (高さ hIn)
+    \draw[thick, teal!85!black]
+    (0, \hIn) ellipse [x radius=\rIn, y radius=\bIn];
+
+    % 外側円筒の上面円 (高さ hOut)
+    \draw[very thick, blue!85!black]
+    (0, \hOut) ellipse [x radius=\rOut, y radius=\bOut];
+
+    % --- 6. 右側の微小縦断面 [X, X+\Delta x] ---
+    % 断面のハッチング塗りつぶし
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.7]
+    (P_bot_in) -- (P_bot_out) -- (P_top_out) -- (P_top_in) -- cycle;
+
+    % 断面の輪郭線
+    \draw[very thick, blue!90!black]
+    (P_bot_in) -- (P_bot_out) -- (P_top_out) -- (P_top_in) -- cycle;
+
+    % 右端母線 (外側円筒の手前右端)
+    \draw[very thick, blue!85!black] (P_bot_out) -- (P_top_out);
+
+    % --- 7. 各種ラベルと寸法補助線 ---
+    % (i) 高さラベル f(X), f(X+\Delta x)
+    \node[teal!90!black, font=\normalsize, left=3pt] at ($ (P_bot_in)!0.55!(P_top_in) $) {$f(X)$};
+    \node[blue!90!black, font=\normalsize, right=3pt] at ($ (P_bot_out)!0.55!(P_top_out) $) {$f(X+\Delta x)$};
+
+    % (ii) 底面の微小幅 \Delta x
+    \draw[<->, thick, gray!80!black]
+    ($ (P_bot_in) + (0, -0.15) $) -- ($ (P_bot_out) + (0, -0.15) $);
+    \node[below=2pt, font=\footnotesize] at ($ ($ (P_bot_in)!0.5!(P_bot_out) $) + (0, -0.15) $) {$\Delta x$};
+
+    % (iii) 半径 X, X+\Delta x の水平破線表示
+    \draw[dashed, gray!60] (O_bot) -- (P_bot_in);
+    \node[below, font=\scriptsize, gray!80!black] at ($ (O_bot)!0.5!(P_bot_in) $) {$X$};
+
+  \end{tikzpicture}
+  \caption{区間 $[X, X+\Delta x]$ を $y$ 軸の周りに回転させた円筒殻（バウムクーヘン分割の微小体積要素）}
+  \label{fig:cylindrical_shell_3d}
+\end{figure}
+
+$[X,X+\Delta x]$の区間で$y=f(x)$を$y$軸周りに回転させた立体の体積は$V(X+\Delta x)-V(X)$である．一方でこの区間で定数関数$y=m(X), y=M(X)$を$y$軸周りに回転させた筒状の体積で上下から評価すると
+\begin{align}
+  \pi\left[(X+\Delta x)^2-X^2\right] m(X)
+  \le V(X+\Delta x)-V(X) \le
+  \pi\left[(X+\Delta x)^2-X^2\right] M(X) \\
+  \pi\left[2X\Delta x +(\Delta x)^2\right] m(X)
+  \le V(X+\Delta x)-V(X) \le
+  \pi\left[2X\Delta x +(\Delta x)^2\right] M(X)
+\end{align}
+である．両辺を$\Delta x (>0)$で割って
+\begin{align}
+  \pi\left[2X + \Delta x\right] m(X) \le \dfrac{V(X+\Delta x)-V(X)}{\Delta x}
+  \le \pi\left[2X + \Delta x\right] M(X) \label{eq:1}
+\end{align}
+である．ここで$\Delta x\to0$とすれば
+\begin{align}
+  \begin{cases}
     M(X),m(x)\to f(X) \\
     \dfrac{V(X+\Delta x)-V(X)}{\Delta x}\to V'(X)
-  \end{align}
-  だから，\eqref{1}の両辺は$2\pi Xf(X)$に，真ん中は$V'(X)$に，それぞれ収束する．
-  挟み撃ちの定理から
-  \begin{align}
-    V'(X)=2\pi Xf(X)
-  \end{align}
-  となるので，両辺積分して$V(0)=0$より
-  \[V=2\pi\int_0^1xf(x)dx\]
-  である．$\Box$　　
+  \end{cases}
+\end{align}
+だから，\cref{eq:1}の両辺は$2\pi Xf(X)$に，真ん中は$V'(X)$に，それぞれ収束する．
+従って挟み撃ちの定理から
+\begin{align}
+  V'(X)=2\pi Xf(X)
+\end{align}
+となるので，両辺$[0,1]$で積分して$V(0)=0$より，求める立体の体積$V$は
+\begin{align}
+  V = 2\pi\int_0^1xf(x)dx
+\end{align}
+である．$\Box$　　
 
-  次に値を計算する．$t=\pi x^2$とすれば$\dfrac{dt}{dx}=2\pi x$，$t:0\to\pi$だから
-  \begin{align}
-    V&=\int_0^\pi t\sin tdt \\
-    &=\left[-t\cos t+\sin t\right]_0^\pi \\
-    &=\pi
-  \end{align}
-  である．$\cdots$(答)
-  \newpage
-\end{multicols}
+次にこの値を計算する．$f(x)=\pi x^2\sin(\pi x^2)$において
+$t=\pi x^2$とすれば$\dfrac{dt}{dx}=2\pi x$，$t:0\to\pi$だから
+求める体積は
+\begin{align}
+  V&=\int_0^\pi t\sin tdt \\
+  &=\left[-t\cos t+\sin t\right]_0^\pi \\
+  &=\pi
+\end{align}
+である．$\cdots$(答)
+
+\newpage
 \end{document}

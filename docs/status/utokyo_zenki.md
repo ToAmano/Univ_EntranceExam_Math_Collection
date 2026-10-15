@@ -1,6 +1,6 @@
 # 問題・解答ステータス一覧: 東大 前期
 
-更新日: `2026-10-11`
+更新日: `2026-10-13`
 
 注意: 1969は東大紛争のため実施されず
 
@@ -162,18 +162,18 @@
 | 1987年 | 第4問 | finish | finish | あり | 完了 |
 | 1987年 | 第5問 | finish | finish | あり | 完了 |
 | 1987年 | 第6問 | finish | finish | あり | 完了 |
-| 1988年 | 第1問 | finish | finish | あり | 完了 |
+| 1988年 | 第1問 | finish | unfinish | あり | 未完成 |
 | 1988年 | 第2問 | finish | finish | あり | 完了 |
 | 1988年 | 第3問 | finish | finish | あり | 完了 |
 | 1988年 | 第4問 | finish | finish | あり | 完了 |
 | 1988年 | 第5問 | finish | finish | あり | 完了 |
-| 1988年 | 第6問 | finish | 文字起こし済 | あり | 未完成 |
+| 1988年 | 第6問 | finish | finish | あり | 完了 |
 | 1989年 | 第1問 | finish | finish | あり | 完了 |
-| 1989年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
-| 1989年 | 第3問 | finish | unfinish | あり | 未完成 |
+| 1989年 | 第2問 | finish |finish | あり | 完了 |
+| 1989年 | 第3問 | finish | finish | あり | 完了 |
 | 1989年 | 第4問 | finish | finish | あり | 完了 |
 | 1989年 | 第5問 | finish | finish | あり | 完了 |
-| 1989年 | 第6問 | finish | unfinish | あり | 未完成 |
+| 1989年 | 第6問 | finish | finish | あり | 完了 |
 | 1990年 | 第1問 | finish | finish | あり | 完了 |
 | 1990年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
 | 1990年 | 第3問 | finish | unfinish | あり | 未完成 |
