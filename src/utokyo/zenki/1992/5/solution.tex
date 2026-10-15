@@ -1,80 +1,133 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1992$年$5$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  $xy$平面において，曲線$=x^3/6+1/(2x)$上の点，$(1,2/3)$を出発し，この曲線上を進む点$P$があ
-  る．出発してから$t$秒後の$P$の速度$\vec{v}$の大きさは$t/2$に等しく，$\vec{v}$の$x$成分は
-  正または$0$であるとする．
-  \begin{enumerate}[(1)]
-    \item 出発してから$t$秒後の$P$の位置を$(x,y)$として，$x$と$t$の関係式を求めよ．
-    \item $\vec{v}$がベクトル$(8,15)$と平行になるのは出発してから何秒後か．
-  \end{enumerate}
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}
-  \begin{enumerate}[(1)]
-    \item 題意から，時刻$t$までに$P$は，
-      \begin{align}
-        \int_0^t\dfrac{s}{2}ds=\dfrac{t^2}{4}\label{1}
-      \end{align}
-      だけ進む．これが，曲線上で$(1,2/3)$から$(x,y)$までの長さ$L$に等しい．
-      \begin{align}
-        \dfrac{dy}{dx}
-        &=\dfrac{x^2}{2}-\dfrac{1}{2x^2}=\dfrac{1}{2}\left(x^2-\dfrac{1}{x^2}\right)  \\
-        \therefore
-        1+\dfrac{dy}{dx}
-        &=1+\dfrac{1}{4}\left(x^4-2+\dfrac{1}{x^4}\right) \nonumber\\
-        &=\dfrac{1}{4}\left(x^2+\dfrac{1}{x^2}\right)\label{2}
-      \end{align}
-      であるから，
-      \begin{align}
-        L&=\int_1^x\sqrt{1+(dy/ds)^2}ds \nonumber\\
-        &=\dfrac{1}{2}\int_1^s\left(s^2+\dfrac{1}{s^2}\right)ds\tag{$\because\eqref{2}$}\\
-        &=\dfrac{1}{2}\left[\dfrac{s^3}{3}-\dfrac{1}{s}\right]_1^x \nonumber\\
-        &=\dfrac{1}{2}\left(\dfrac{x^3}{3}-\dfrac{1}{x}+\dfrac{2}{3}\label{3}\right)
-      \end{align}
-      となる．　\eqref{1}と\eqref{3}が等しいので，
-      \[t^2=2\left(\dfrac{x^3}{3}-\dfrac{1}{x}+\dfrac{2}{3}\right)\]
-      である．$\cdots$(答)
+{\bf[解]}
 
-    \item $\vec{v}$は$P$での曲線の接線方向のベクトルと平行である．
-      \begin{align}
-        \dfrac{dy}{dx}=\dfrac{1}{2}\left(x^2-\dfrac{1}{x^2}\right)\label{4}
-      \end{align}
-      故，$(1,dy/dx)\parallel(8,15)$の時，
-      \begin{align}
-        &\dfrac{dy}{dx}=\dfrac{15}{8} \\
-        &\left(x^2-\dfrac{1}{x^2}\right)=\dfrac{15}{4}\tag{$\because\eqref{4}$} \\
-        &p^2-\dfrac{15}{4}p-1=0\tag{$\because p=x^2$} \\
-        &(4p+1)(p-4)=0 \\
-        &p=4,\dfrac{-1}{4}
-      \end{align}
-      である．題意から$x<1$ゆえ$p=x^2\ge0$であるから，$p=4$つまり$x=2$が従う．
-      この時，前問の結果より，
-      \[t^2=2\left(\dfrac{2^3}{3}-\dfrac{1}{2}+\dfrac{2}{3}\right)=\dfrac{17}{3}\]
-      $t>0$より，求める　$t$は$t=\sqrt{17/3}$である．$\cdots$(答)
-  \end{enumerate}
+\subparagraph{(1)}
 
-  \newpage
-\end{multicols}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.6, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 関数定義・座標パラメータ ---
+    % f(x) = x^3/6 + 1/(2x)
+    % A: 初期点 (x = 1, y = 2/3 ≈ 0.667)
+    % P: (2) で求める点 (x = 2, y = 8/6 + 1/4 = 19/12 ≈ 1.583)
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (1.0, {2.0/3.0});
+    \coordinate (P) at (2.0, {19.0/12.0});
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick] (-0.3, 0) -- (2.8, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.3) -- (0, 2.5) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 曲線 y = f(x) の描画 ---
+    % 全体の曲線（細い実線）
+    \draw[thick, gray!50, domain=0.65:2.5, samples=70]
+    plot (\x, {\x*\x*\x/6.0 + 1.0/(2.0*\x)});
+    \node[gray!70!black, font=\footnotesize, right] at (2.4, {2.4^3/6.0 + 1.0/(4.8)})
+    {$y = \frac{x^3}{6} + \frac{1}{2x}$};
+
+    % 点 P が走破した区間 [1, 2] の曲線（太線で強調）
+    \draw[line width=2.2pt, blue!85!black, domain=1.0:2.0, samples=50]
+    plot (\x, {\x*\x*\x/6.0 + 1.0/(2.0*\x)});
+
+    % --- 4. 走破した弧長 L の表示 ---
+    \node[blue!90!black, font=\normalsize, above left=1pt] at (1.45, 1.05) {$L = \frac{t^2}{4}$};
+
+    % --- 5. 始点 A(1, 2/3) と座標投影破線 ---
+    \draw[dashed, gray!60] (1.0, 0) -- (A) -- (0, {2.0/3.0});
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[left=2pt, font=\scriptsize]  at (0, {2.0/3.0}) {$\frac{2}{3}$};
+    \fill[black] (A) circle (0.8pt) node[below right=1pt] {$A\left(1, \frac{2}{3}\right)$ ($t=0$)};
+
+    % --- 6. 到達点 P(2, 19/12) と座標投影破線 ---
+    \draw[dashed, gray!60] (2.0, 0) -- (P) -- (0, {19.0/12.0});
+    \node[below=2pt, font=\scriptsize] at (2.0, 0) {$2$};
+    \node[left=2pt, font=\scriptsize]  at (0, {19.0/12.0}) {$\frac{19}{12}$};
+    \fill[red!85!black] (P) circle (0.9pt) node[below right=2pt, red!90!black] {$P(x(t), y(t))$};
+
+    % --- 7. 点 P における速度ベクトル v (接線方向) ---
+    % 傾き dy/dx = 15/8 = 1.875
+    % 方向角: atan(15/8) ≈ 61.93°
+    % ベクトルの長さ = 0.75
+    \pgfmathsetmacro{\angTan}{atan(15.0/8.0)}
+    \coordinate (V_end) at ($ (P) + ({\angTan}:0.75) $);
+
+    % 接線（延長破線）
+    \draw[dashed, teal!70!black] ($ (P) - ({\angTan}:0.5) $) -- (P);
+    % 速度ベクトル矢印
+    \draw[->, line width=1.8pt, teal!85!black] (P) -- (V_end);
+    %  node[above right=1pt, font=\normalsize] {$\vec{v} \parallel \begin{pmatrix}8\\15\end{pmatrix}$};
+
+    % % 傾き比率を示す直角三角形 (8 : 15)
+    % \coordinate (T_dx) at ($ (P) + (0.35, 0) $);
+    % \coordinate (T_dy) at ($ (P) + (0.35, {0.35*15.0/8.0}) $);
+    % \draw[thin, teal!70!black] (P) -- (T_dx) -- (T_dy);
+    % \node[below, font=\tiny, teal!90!black] at ($ (P)!0.5!(T_dx) $) {$8$};
+    % \node[right, font=\tiny, teal!90!black] at ($ (T_dx)!0.5!(T_dy) $) {$15$};
+
+  \end{tikzpicture}
+  \caption{曲線 $y=\dfrac{x^3}{6}+\dfrac{1}{2x}$ 上を運動する点 $P$ と速度ベクトル $\vec{v}$}
+  \label{fig:curve_motion_tangent}
+\end{figure}
+
+題意の曲線
+\begin{align}
+  y = f(x) = \dfrac{x^3}{6} + \dfrac{1}{2x} \label{eq:1}
+\end{align}
+について考える．
+
+時刻$s$での点$P$の速度の大きさは$\dfrac{s}{2}$だから，点$P$は$[0,t]$の間に$y=f(x)$上を
+\begin{align}
+  \int_0^t\dfrac{s}{2}ds=\dfrac{t^2}{4} \label{eq:2}
+\end{align}
+だけ進む．これが，曲線上で$(1,2/3)$から$(x,y)$までの長さ$L$に等しい．
+ここで
+\begin{align}
+  \dfrac{dy}{dx} = f'(x) = 2x^2 - \dfrac{1}{2x^2} \label{eq:3}
+\end{align}
+だから具体的に$L$を計算すると
+\begin{align}
+  L
+  &=\int_{1}^{x}\sqrt{1+(dy/dx)^2}dx \nonumber\\
+  &=\int_{1}^{x}\sqrt{1+\left(2x^2 - \dfrac{1}{2x^2}\right)^2}dx \nonumber\\
+  &=\int_{1}^{x}\sqrt{1+4x^4 + \dfrac{1}{4x^4} - \dfrac{1}{2}}dx \nonumber\\
+  &=\int_{1}^{x}\sqrt{\dfrac{(x^2+1/x^2)^2}{4}}dx \nonumber\\
+  &=\dfrac{1}{2}\int_{1}^{x}\left(x^2+\dfrac{1}{x^2}\right) dx \nonumber\\
+  &=\dfrac{1}{2}\left[\dfrac{x^3}{3}-\dfrac{1}{x}\right]_{1}^{x} \nonumber\\
+  &=\dfrac{1}{2}\left(\dfrac{x^3}{3}-\dfrac{1}{x}+\dfrac{2}{3}\right) \label{eq:4}
+\end{align}
+である．\cref{eq:2,eq:4}が等しいので，求める$t$と$x$の関係は
+\begin{align}
+  t^2=2\left(\dfrac{x^3}{3}-\dfrac{1}{x}+\dfrac{2}{3}\right) \label{eq:5}
+\end{align}
+である．$\cdots$(答)
+
+\subparagraph{(2)}
+
+$\vec{v}$は$P$での曲線の接線方向のベクトルと平行である．
+\cref{eq:3}から，$(1,f(x))\parallel(8,15)$の時，
+\begin{align}
+  &f(x)=\dfrac{15}{8} \\
+  &\left(x^2-\dfrac{1}{x^2}\right)=\dfrac{15}{4} \quad (\because \text{\cref{eq:3}})
+\end{align}
+である．両辺$x^2$倍して，$p=x^2$とおくと
+\begin{align}
+  &x^4 - \dfrac{15}{4}x^2 - 1 = 0 \\
+  &p^2 - \dfrac{15}{4}p - 1 = 0 \\
+  &(4p+1)(p-4)=0 \\
+  &p=4,\dfrac{-1}{4}
+\end{align}
+である．題意から$x>1$より$p=x^2>1$だからこれを満たすのは$p=4$つまり$x=2$の時である．
+この時の$t$は\cref{eq:5}に$x=2$を代入して
+\begin{align}
+  t^2=2\left(\dfrac{2^3}{3}-\dfrac{1}{2}+\dfrac{2}{3}\right)=\dfrac{17}{3}
+  \quad \therefore
+  t = \sqrt{17/3}
+\end{align}
+である．$\cdots$(答)
+
+\newpage
 \end{document}

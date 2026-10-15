@@ -1,84 +1,166 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage[dvips]{graphicx}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1992$年$3$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  $a$，$b$を正の実数とする．座標空間の$4$点$P(0,0,0)$，$Q(a,0,0)$，$R(0,1,0)$，$S(0,1,b)$が半径$1$の同一球面上にあるとき，
-  $P$，$Q$，$R$，$S$を頂点とする四面体に内接する球の半径を$r$とすれば，次の二つの不等式が成り立つことを示せ．
-  \begin{align}
-    &\left(\dfrac{1}{r}-\dfrac{1}{a}-\dfrac{1}{b}\right)^2\ge\dfrac{20}{3}&\dfrac{1}{r}\ge2\sqrt{\dfrac{2}{3}}+2\sqrt{\dfrac{5}{3}}
-  \end{align}
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]} 半径$1$の円$C$の中心$T(X,Y,Z)$とする．$T$は$PQ$，$RS$，$PR$の垂直二等分面上にあるので，$(X,Y,Z)=(a/2,1/2,b/2)$
-  である．
+{\bf[解]}
 
-  $|PT|=1$であるから，
-  \begin{align}
-    \sqrt{X^2+Y^2+Z^2}=1 \nonumber\\
-    \sqrt{1+a^2+b^2}=2 \nonumber\\
-    a^2+b^2=3\label{1}
-  \end{align}
-  である．
+\begin{figure}[htb]
+  \centering
+  % 俯角 68°，方位角 115°
+  \tdplotsetmaincoords{68}{115}
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.4, >=stealth, every node/.style={font=\small}]
 
-  また，四面体$PQRS$の体積$V$を$2$通りで表して，
-  \begin{align}
-    &V=\dfrac{1}{3}(\triangle PQR)×b \nonumber\\
-    &=\dfrac{r}{3}(\triangle PQR+\triangle PQS+\triangle PRS+\triangle QRS) \nonumber\\
-    \Longleftrightarrow
-    &\dfrac{1}{2}ab=\dfrac{r}{2}(a+a\sqrt{b^2+1}+b+b\sqrt{a^2+1})\nonumber \\
-    \Longleftrightarrow
-    &ab=r(a+b+a\sqrt{1+b^2}+b\sqrt{1+a^2})\label{2}
-  \end{align}
-  である．\eqref{1}，\eqref{2}のもとで題意の不等式を示す．
+    % --- 1. 定数・座標パラメータ (a^2 + b^2 = 3 の一例: a = 1.3, b = sqrt(3 - 1.69) ≈ 1.145) ---
+    \def\aX{1.3}
+    \def\yR{1.0}
+    \pgfmathsetmacro{\bZ}{sqrt(3.0 - \aX*\aX)} % 約 1.145
 
-  まず，AM-GMおよび\eqref{1}より，
-  \begin{align}
-    ab\le\dfrac{a^2+b^2}{2}=\dfrac{3}{2}\label{3}
-  \end{align}
-  である．次いでコーシーシュワルツの不等式から，
-  \begin{align}
-    A=\dfrac{1}{a^2}+\dfrac{1}{b^2}\ge\dfrac{(1+1)^2}{a^2+b^2}=\dfrac{4}{3}\label{4}
-  \end{align}
-  である．以上に注意する．
+    % 四面体 PQRS の 4 頂点
+    \coordinate (P) at (0, 0, 0);          % 原点 P(0,0,0)
+    \coordinate (Q) at (\aX, 0, 0);        % Q(a, 0, 0)
+    \coordinate (R) at (0, \yR, 0);        % R(0, 1, 0)
+    \coordinate (S) at (0, \yR, \bZ);       % S(0, 1, b)
 
-  \eqref{2}の両辺$abr_{\not=0}$で割って整理して，
-  \begin{align}
-    &\dfrac{1}{r}=\dfrac{1}{b}+\dfrac{1}{a}+\dfrac{\sqrt{1+b^2}}{b}+\dfrac{\sqrt{1+a^2}}{a} \label{5}\tag{5}\\
-    &\left(\dfrac{1}{r}-\dfrac{1}{a}-\dfrac{1}{b}\right)^2=\left(\dfrac{\sqrt{1+b^2}}{b}+\dfrac{\sqrt{1+a^2}}{a}\right)^2 \\
-    &=\dfrac{1+b^2}{b^2}+\dfrac{1+a^2}{a^2}+2\dfrac{\sqrt{(1+a^2)(1+b^2)}}{ab} \\
-    &=2+A+2\sqrt{1+A+\dfrac{1}{(ab)^2}} \\
-    &\ge1+\dfrac{4}{3}+2\sqrt{1+\dfrac{4}{3}+\dfrac{4}{9}} \tag{$\because \eqref{1},\eqref{2}$}\\
-    &=\dfrac{20}{3}
-  \end{align}
-  より一つ目の不等式が示された．$\Box$
+    % 外心 T(a/2, 1/2, b/2)
+    \coordinate (T) at ({\aX/2.0}, {\yR/2.0}, {\bZ/2.0});
 
-  次の不等式を示す．一つ目の不等式の両辺平方根をとって，\eqref{5}より左辺の中身が非負であることから，
-  \begin{align}
-    &\dfrac{1}{r}-\dfrac{1}{a}-\dfrac{1}{b}\ge 2\sqrt{\dfrac{5}{3}} \\
-    &\dfrac{1}{r}\ge2\sqrt{\dfrac{1}{ab}}+2\sqrt{\dfrac{5}{3}} \tag{$\because$ AM-GM} \\
-    &\dfrac{1}{r}\ge2\sqrt{\dfrac{2}{3}}+2\sqrt{\dfrac{5}{3}} \tag{$\because \eqref{1}$}
-  \end{align}
-  となる．故に示された．$\Box$
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!70] (0, 0, 0) -- (\aX + 0.5, 0, 0) node[below left=1pt] {$x$};
+    \draw[->, thick, gray!70] (0, 0, 0) -- (0, \yR + 0.5, 0) node[right=2pt] {$y$};
+    \draw[->, thick, gray!70] (0, 0, 0) -- (0, 0, \bZ + 0.45) node[above=2pt] {$z$};
 
-  \newpage
-\end{multicols}
+    % --- 3. 四面体 PQRS の面（薄い透過ハッチング・塗りつぶし）---
+    % 底面 PQR (xy 平面内, 直角三角形)
+    \fill[teal!15, opacity=0.7] (P) -- (Q) -- (R) -- cycle;
+    % 側面 PRS (yz 平面内, 直角三角形)
+    \fill[blue!10, opacity=0.6] (P) -- (R) -- (S) -- cycle;
+    % 手前の傾斜面 QRS
+    \fill[blue!20, opacity=0.4] (Q) -- (R) -- (S) -- cycle;
+
+    % --- 4. 稜線（奥側の隠れ線を破線に）---
+    % 輪郭・手前の実線稜線
+    \draw[very thick, blue!85!black] (P) -- (Q);
+    \draw[very thick, blue!85!black] (Q) -- (S);
+    \draw[very thick, blue!85!black] (P) -- (S);
+    \draw[very thick, blue!85!black] (R) -- (S);
+    \draw[very thick, blue!85!black] (Q) -- (R);
+
+    % 奥側の稜線 PR (y 軸上)
+    \draw[dashed, blue!85!black, thick] (P) -- (R);
+
+    % --- 5. 直角記号 ---
+    % (i) P における直角 (PQ ⊥ PR)
+    \draw[thin, gray!70]
+    (0.12, 0, 0) -- (0.12, 0.12, 0) -- (0, 0.12, 0);
+
+    % (ii) R における直角 (PR ⊥ RS: yz 平面内)
+    \draw[thin, gray!70]
+    (0, \yR - 0.12, 0) -- (0, \yR - 0.12, 0.12) -- (0, \yR, 0.12);
+
+    % --- 6. 外接球の中心 T(a/2, 1/2, b/2) と補助直方体破線 ---
+    % xy 平面への投影
+    \draw[dashed, gray!50] (T) -- ({\aX/2.0}, {\yR/2.0}, 0);
+    \draw[dashed, gray!50] ({\aX/2.0}, {\yR/2.0}, 0) -- ({\aX/2.0}, 0, 0);
+    \draw[dashed, gray!50] ({\aX/2.0}, {\yR/2.0}, 0) -- (0, {\yR/2.0}, 0);
+    \draw[dashed, gray!50] (T) -- (0, 0, {\bZ/2.0});
+
+    % 中心 T から頂点 P への動径 (半径 1)
+    \draw[thick, dashed, red!85!black] (P) -- (T);
+    \node[red!90!black, font=\scriptsize, below right=1pt] at ($ (P)!0.5!(T) $) {$|PT|=1$};
+
+    % --- 7. 各頂点のプロットと座標ラベル ---
+    \fill[black] (P) circle (0.8pt) node[below left=2pt] {$P(0,0,0)$};
+    \fill[black] (Q) circle (0.8pt) node[below right=2pt] {$Q(a,0,0)$};
+    \fill[black] (R) circle (0.8pt) node[above right=1pt] {$R(0,1,0)$};
+    \fill[blue!85!black] (S) circle (0.9pt) node[above=2pt, blue!90!black] {$S(0,1,b)$};
+    \fill[red!85!black]  (T) circle (0.8pt) node[above left=1pt, red!90!black] {$T\left(\frac{a}{2}, \frac{1}{2}, \frac{b}{2}\right)$};
+
+    % 辺の長さラベル
+    \node[below=2pt, font=\scriptsize, gray!80!black] at ($ (P)!0.5!(Q) $) {$a$};
+    \node[left=2pt, font=\scriptsize, gray!80!black]  at ($ (P)!0.5!(R) $) {$1$};
+    \node[right=2pt, font=\scriptsize, gray!80!black] at ($ (R)!0.5!(S) $) {$b$};
+
+  \end{tikzpicture}
+  \caption{四面体 $PQRS$ と外接球の中心 $T\left(\dfrac{a}{2}, \dfrac{1}{2}, \dfrac{b}{2}\right)$}
+  \label{fig:tetrahedron_pqrs_3d}
+\end{figure}
+
+$P(0,0,0),Q(a,0,0),R(0,1,0),S(0,1,b)$を通る半径$1$の円$C$の中心$T(X,Y,Z)$とする．
+$|PT|=|QT|$より$T$は線分$PQ$の垂直二等分面上にある．
+同様に考えて，$T$は$RS$，$PR$の垂直二等分面上でもある．
+
+$PQ$の垂直二等分面は$x=a/2$, $RS$の垂直二等分面は$z=b/2$，
+$PR$の垂直二等分面は$y=1/2$だから，
+$T(X,Y,Z)=(a/2,1/2,b/2)$である．
+
+ここで$|PT|=1$であるから，
+\begin{align}
+  \sqrt{X^2+Y^2+Z^2}=1 \therefore \sqrt{1+a^2+b^2}=2 \therefore  a^2+b^2=3 \label{eq:1}
+\end{align}
+である．
+
+また，四面体$PQRS$の体積$V$を$2$通りで表して，
+\begin{align}
+  &V=\dfrac{1}{3}(\triangle PQR)×b \nonumber\\
+  &=\dfrac{r}{3}(\triangle PQR+\triangle PQS+\triangle PRS+\triangle QRS) \nonumber\\
+  \Longleftrightarrow
+  &\dfrac{1}{2}ab=\dfrac{r}{2}(a+a\sqrt{b^2+1}+b+b\sqrt{a^2+1})\nonumber \\
+  \Longleftrightarrow
+  &ab=r(a+b+a\sqrt{1+b^2}+b\sqrt{1+a^2})\label{eq:2}
+\end{align}
+である．\cref{eq:1}，\cref{eq:2}のもとで題意の不等式
+\begin{align}
+  & { \left( \dfrac{1}{r}-\dfrac{1}{a}-\dfrac{1}{b} \right) }^2 \geqq \dfrac{20}{3} \label{eq:3}\\
+  & \dfrac{1}{r} \geqq 2\sqrt{\dfrac{2}{3}}+2\sqrt{\dfrac{5}{3}} \label{eq:4}
+\end{align}
+を示す．
+
+さて，AM-GMおよび\cref{eq:1}より，
+\begin{align}
+  ab\le\dfrac{a^2+b^2}{2}=\dfrac{3}{2} \label{eq:5}
+\end{align}
+である．
+
+また，コーシーシュワルツの不等式から，
+\begin{align}
+  A=\dfrac{1}{a^2}+\dfrac{1}{b^2}\ge\dfrac{(1+1)^2}{a^2+b^2}=\dfrac{4}{3} \label{eq:6}
+\end{align}
+である．以上に注意する．
+
+\subparagraph{\cref{eq:3}について}
+
+\cref{eq:2}の両辺を$abr_{\not=0}$で割って整理して，
+\begin{align}
+  &\dfrac{1}{r}=\dfrac{1}{b}+\dfrac{1}{a}+\dfrac{\sqrt{1+b^2}}{b}+\dfrac{\sqrt{1+a^2}}{a} \\
+  &\dfrac{1}{r} - \dfrac{1}{b} - \dfrac{1}{a} = \dfrac{\sqrt{1+b^2}}{b}+\dfrac{\sqrt{1+a^2}}{a} > 0  \label{eq:7}
+\end{align}
+だから，両辺二乗して
+\begin{align}
+  \left(\dfrac{1}{r}-\dfrac{1}{a}-\dfrac{1}{b}\right)^2
+  & =\left(\dfrac{\sqrt{1+b^2}}{b}+\dfrac{\sqrt{1+a^2}}{a}\right)^2 \\
+  &=\dfrac{1+b^2}{b^2}+\dfrac{1+a^2}{a^2}+2\dfrac{\sqrt{(1+a^2)(1+b^2)}}{ab} \\
+  &=2+A+2\sqrt{1+A+\dfrac{1}{(ab)^2}} \\
+  &\ge1+\dfrac{4}{3}+2\sqrt{1+\dfrac{4}{3}+\dfrac{4}{9}} \quad (\because \text{\cref{eq:5,eq:6}}) \\
+  &=\dfrac{20}{3}
+\end{align}
+より，\cref{eq:3}が示された．$\Box$
+
+\subparagraph{\cref{eq:4}について}
+
+\cref{eq:3}の左辺は\cref{eq:7}より正だから両辺平方根をとって，
+\begin{align}
+  & \dfrac{1}{r}-\dfrac{1}{a}-\dfrac{1}{b}\ge 2\sqrt{\dfrac{5}{3}} \\
+  \therefore
+  & \dfrac{1}{r} \ge \dfrac{1}{a} + \dfrac{1}{b} + 2\sqrt{\dfrac{5}{3}} \label{eq:8}
+\end{align}
+である．ここで右辺についてAM-GMおよび\cref{eq:5}を用いると
+\begin{align}
+  \dfrac{1}{a} + \dfrac{1}{b} \ge 2\sqrt{\dfrac{1}{ab}} \ge 2\sqrt{\dfrac{2}{3}}
+\end{align}
+だから\cref{eq:8}に代入して
+\begin{align}
+  \dfrac{1}{r} \ge 2\sqrt{\dfrac{2}{3}} + 2\sqrt{\dfrac{5}{3}}
+\end{align}
+となる．故に示された．$\Box$
+
+\newpage
 \end{document}

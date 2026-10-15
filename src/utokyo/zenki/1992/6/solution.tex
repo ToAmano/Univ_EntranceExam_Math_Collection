@@ -1,19 +1,25 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-\noindent
-{\bf [解]} Aがグー，チョキ，パーを出す確率を $p, q, r$ とする．これらは排反だから
+まずは一般的な状況を考える．
+Aがグー，チョキ，パーを出す確率を $p, q, r$，
+Bがグー，チョキ，パーを出す確率を $a, b, c$，
+とする．これらは排反だから
 \begin{align}
-  p + q + r = 1 \quad \dots \text{①}
+  \begin{cases}
+    p + q + r = 1 \\
+    a + b + c = 1
+  \end{cases} \label{eq:1}
 \end{align}
-さらに，$a + b + c = 1 \ \dots \text{②}$ と規格化して考えて良い．
+である．
+
+題意で与えられたじゃんけんの手の組み合わせと歩数を表にまとめると下のようになる．
 
 \begin{table}[htb]
   \centering
+  \caption{じゃんけんの手の組み合わせと歩数}
   \begin{tabular}{|c|c|c|c|}
     \hline
     A \textbackslash{} B & グー & チョキ & パー \\ \hline
@@ -21,45 +27,75 @@
     チョキ & Aが3歩 & $\times$ & Bが5歩 \\ \hline
     パー & Bが6歩 & Aが5歩 & $\times$ \\ \hline
   \end{tabular}
-  \caption{じゃんけんの手の組み合わせと歩数}
 \end{table}
 
-\bigskip
-
-A，Bの歩数の期待値を $E_A, E_B$ とすると，上表から
+A，Bの一回のじゃんけんでの歩数を$X_A,X_B$，その期待値を $E_A, E_B$ とすると，上表から
 \begin{align}
-  E_A &= r \cdot a \cdot 6 + p \cdot b \cdot 3 + q \cdot c \cdot 5 \\
-  E_B &= q \cdot a \cdot 3 + r \cdot b \cdot 5 + p \cdot c \cdot 6
+  \begin{cases}
+    E_A = E(X_A) = r \cdot a \cdot 6 + p \cdot b \cdot 3 + q \cdot c \cdot 5 \\
+    E_B = E(X_B) = q \cdot a \cdot 3 + r \cdot b \cdot 5 + p \cdot c \cdot 6
+  \end{cases} \label{eq:2}
 \end{align}
-だから，
+である．Aの進む歩数からBの進む歩数を引いた値の期待値$E$は，期待値の性質から
 \begin{align}
-  E = E_A - E_B &= (6r - 3q) a + (3p - 5r) b + (5q - 6p) c \quad \dots \text{③} \\
-  &= (3b - 6c) p + (5c - 3a) q + (6a - 5b) r \quad \dots \text{④}
+  E = E(X_A-X_B) = E(X_A) -E(X_B) = E_A-E_B
+\end{align}
+だから，\cref{eq:2}を代入して
+\begin{align}
+  E
+  &= (6r - 3q) a + (3p - 5r) b + (5q - 6p) c \label{eq:3} \\
+  &= (3b - 6c) p + (5c - 3a) q + (6a - 5b) r \label{eq:4}
 \end{align}
 となる．
 
-\bigskip
-
 \paragraph{(1)}
 
-④で，$a = b = c = \dfrac{1}{3}$ として
+Bがグーチョキパーを出す確率がすべて等しい，つまり$a=b=c=\dfrac{1}{3}$の時，
+\cref{eq:4}に代入して
 \begin{align}
-  E = -p + \dfrac{2}{3} q + \dfrac{1}{3} r \le \dfrac{2}{3} \quad (\text{等号成立は } p=r=0, q=1)
+  E = -p + \dfrac{2}{3} q + \dfrac{1}{3} r \le \dfrac{2}{3}
 \end{align}
-から $(p, q, r) = (0, 1, 0)$．
-
-\bigskip
+である．等号成立は$p=r=0, q=1$の時である．
+よって$E$が最大になるのは
+\begin{align}
+  (p, q, r) = (0, 1, 0)
+\end{align}
+の時である．
 
 \paragraph{(2)}
 
-③及び④から，$(a,b,c) = (1,0,0), (0,1,0), (0,0,1)$ での成立が必要で，
+\cref{eq:3}が任意の$(a,b,c)$で成立することが必要である．
+\cref{eq:1}にも注意して，$(a,b,c) = (1,0,0), (0,1,0), (0,0,1)$ での成立が必要だから
 \begin{align}
-  \begin{cases} 6r - 3q \ge 0 \\ 3p - 5r \ge 0 \\ 5q - 6p \ge 0
-  \end{cases} \quad \therefore r \ge \dfrac{1}{2} q \ge \dfrac{3}{5} p \ge r \quad \dots \text{⑤}
+  &
+  \begin{cases}
+    6r - 3q \ge 0 \\
+    3p - 5r \ge 0 \\
+    5q - 6p \ge 0
+  \end{cases}
+  \quad \therefore
+  & r \ge \dfrac{1}{2} q \ge \dfrac{3}{5} p \ge r \label{eq:5}
 \end{align}
-から，⑤で全ての等号が成立し，$r = \dfrac{1}{2} q = \dfrac{3}{5} p$ で，①に代入して $(p, q, r) = \Bigl( \dfrac{5}{14}, \dfrac{3}{7}, \dfrac{3}{14} \Bigr)$ となる．逆にこの時⑤の右辺は0となり，以上から，
+である．\cref{eq:5}が成り立つためには全ての等号が成立することが必要で
+\begin{align}
+  r = \dfrac{1}{2} q = \dfrac{3}{5} p
+\end{align}
+が必要である．
+\cref{eq:1}に代入して成立すると
+\begin{align}
+  (p, q, r) = \Bigl( \dfrac{5}{14}, \dfrac{3}{7}, \dfrac{3}{14} \Bigr) \label{eq:6}
+\end{align}
+である．
+
+逆にこの時，\cref{eq:3}は
+\begin{align}
+  E = 0
+\end{align}
+となり条件を満たす．
+よって求める$(p,q,r)$の条件は
 \begin{align}
   (p, q, r) = \Bigl( \dfrac{5}{14}, \dfrac{3}{7}, \dfrac{3}{14} \Bigr)
 \end{align}
+である．
 
 \end{document}

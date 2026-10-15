@@ -1,44 +1,251 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1992$年$4$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  $xyz$空間において，$x$軸の平行な柱面
-  \[A=\{(x,y,z)|y^2+z^2=1,x,y,z\text{は実数}\}\]
-  から，$y$軸と平行な柱面
-  \[B=\{(x,y,z)|x^2-\sqrt{3}xz+z^2=\dfrac{1}{4},x,y,z\text{は実数}\}\]
-  により囲まれる部分を切り抜いた残りの図形を$C$とする．図形$C$の展開図を描け．ただし
-  点$(0,1,0)$を通り$x$軸と平行な直線に沿って$C$を切り開くものとする．
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}  \1 ただし，$0\le\theta<2\pi$とする．柱面$B$により囲まれる部分は，
-  \[x^2-\sqrt{3}xz+z^2\le\dfrac{1}{4}\]
-  である．そこで，$A$上の点$P(x,c,s)$とすれば，$(0,1,0)$には$\theta=0$が対応する．
-  $C$を表すのは従って，
-  \begin{align}
-    \dfrac{1}{4}<x^2-\sqrt{3}xs+s^2
-  \end{align}
-  である．$a=$，$b=$とおけば，
+{\bf [解]}
 
-  \newpage
-\end{multicols}
+\begin{figure}[htb]
+  \centering
+  % 俯角 65°，方位角 120°
+  \tdplotsetmaincoords{65}{120}
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.4, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・厳密な楕円パラメータ ---
+    % 長半径 a = (sqrt(3)+1)/2 ≈ 1.3660
+    % 短半径 b = (sqrt(3)-1)/2 ≈ 0.3660
+    % 1/sqrt(2) ≈ 0.7071
+    % x(u) = (1/sqrt(2)) * [ a*cos(u) - b*sin(u) ]
+    % z(u) = (1/sqrt(2)) * [ a*cos(u) + b*sin(u) ]
+    \pgfmathsetmacro{\invSqTwo}{1.0 / sqrt(2.0)}
+    \pgfmathsetmacro{\semiA}{(sqrt(3.0) + 1.0) / 2.0} % 1.3660
+    \pgfmathsetmacro{\semiB}{(sqrt(3.0) - 1.0) / 2.0} % 0.3660
+
+    \coordinate (O) at (0, 0, 0);
+
+    % --- 2. 座標軸（奥側の軸は破線）---
+    \draw[dashed, gray!40] (-1.2, 0, 0) -- (0, 0, 0);
+    \draw[dashed, gray!40] (0, -1.3, 0) -- (0, 0, 0);
+    \draw[dashed, gray!40] (0, 0, -1.3) -- (0, 0, 0);
+
+    % --- 3. 円柱面 A: y^2 + z^2 = 1 (青系ワイヤーフレーム) ---
+    % (i) x 軸方向の母線（円周上に 30° 刻み）
+    \foreach \ang in {0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330} {
+      \draw[blue!20, thin] (-0.3, {cos(\ang)}, {sin(\ang)}) -- (1.6, {cos(\ang)}, {sin(\ang)});
+    }
+    % 最外縁の代表母線
+    \draw[thick, blue!75!black] (-0.3, 0, 1) -- (1.6, 0, 1);
+    \draw[thick, blue!75!black] (-0.3, 0, -1) -- (1.6, 0, -1);
+    \draw[thick, blue!75!black] (-0.3, 1, 0) -- (1.6, 1, 0);
+    \draw[dashed, blue!40] (-0.3, -1, 0) -- (1.6, -1, 0);
+
+    % (ii) 多層スライス円断面 (x = -0.3 から 1.6 まで 0.2 刻み)
+    \foreach \xi in {-0.3, -0.1, 0.1, 0.3, 0.5, 0.7, 0.9, 1.1, 1.3, 1.5} {
+      \draw[blue!35, thin, domain=0:360, samples=40]
+      plot (\xi, {cos(\x)}, {sin(\x)});
+    }
+    % 基準面 x = 0 と端面 x = 1.6
+    \draw[very thick, blue!85!black, domain=0:360, samples=60]
+    plot (0, {cos(\x)}, {sin(\x)});
+    \draw[thick, blue!70!black, domain=0:360, samples=50]
+    plot (1.6, {cos(\x)}, {sin(\x)});
+
+    % --- 4. 柱面 B: x^2 - \sqrt{3}xz + z^2 = 1/4 (厳密な 45° 傾斜楕円スライス) ---
+    % (i) y 軸方向の母線（長軸・短軸の端点を通る 4 本の直線）
+    % 長軸頂点 (u = 0, 180°): (x, z) = ± (a/sqrt(2), a/sqrt(2)) ≈ ± (0.966, 0.966)
+    % 短軸頂点 (u = 90, 270°): (x, z) = ± (-b/sqrt(2), b/sqrt(2)) ≈ ± (-0.259, 0.259)
+    \pgfmathsetmacro{\xAmax}{\semiA * \invSqTwo} % ≈ 0.9659
+    \pgfmathsetmacro{\zAmax}{\semiA * \invSqTwo}
+    \pgfmathsetmacro{\xBmax}{-\semiB * \invSqTwo} % ≈ -0.2588
+    \pgfmathsetmacro{\zBmax}{\semiB * \invSqTwo}
+
+    % 柱面 B の母線
+    \draw[thick, red!75!black] (\xAmax, -0.85, \zAmax) -- (\xAmax, 0.85, \zAmax);
+    \draw[thick, red!75!black] (-\xAmax, -0.85, -\zAmax) -- (-\xAmax, 0.85, -\zAmax);
+    \draw[red!45, thin] (\xBmax, -0.85, \zBmax) -- (\xBmax, 0.85, \zBmax);
+    \draw[red!45, thin] (-\xBmax, -0.85, -\zBmax) -- (-\xBmax, 0.85, -\zBmax);
+
+    % (ii) 細密多層スライス楕円断面 (y = -0.8 から 0.8 まで 0.1 刻み)
+    \foreach \yi in {-0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8} {
+      \draw[red!35, thin, domain=0:360, samples=40]
+      plot ({\invSqTwo*(\semiA*cos(\x) - \semiB*sin(\x))},
+        \yi,
+      {\invSqTwo*(\semiA*cos(\x) + \semiB*sin(\x))});
+    }
+    % 両端面の輪郭強調
+    \draw[very thick, red!85!black, domain=0:360, samples=50]
+    plot ({\invSqTwo*(\semiA*cos(\x) - \semiB*sin(\x))},
+      -0.85,
+    {\invSqTwo*(\semiA*cos(\x) + \semiB*sin(\x))});
+    \draw[very thick, red!85!black, domain=0:360, samples=50]
+    plot ({\invSqTwo*(\semiA*cos(\x) - \semiB*sin(\x))},
+      0.85,
+    {\invSqTwo*(\semiA*cos(\x) + \semiB*sin(\x))});
+
+    % --- 5. 座標軸（前面の正の軸）---
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (2.0, 0, 0) node[below left=1pt] {$x$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 1.7, 0) node[right=2pt] {$y$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 0, 1.7) node[above=2pt] {$z$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 6. ラベルと注釈ボックス ---
+    \node[blue!90!black, font=\footnotesize, above] at (1.1, 0, 1.05) {円柱面 $A$};
+    \node[red!90!black, font=\footnotesize, right] at (\xAmax, 0.85, \zAmax) {柱面 $B$（長軸 $z=x$ 方向）};
+
+    % 楕円断面の中心軸（z = x 方向のガイド線）
+    \draw[dashed, red!60, thin] (-\xAmax, 0, -\zAmax) -- (\xAmax, 0, \zAmax);
+
+  \end{tikzpicture}
+  \caption{円柱面 $A$（青） と楕円柱面 $B$（オレンジ） の全体像}
+  \label{fig:surfaces_a_b_exact_wireframe}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  % 俯角 65°，方位角 115°
+  \tdplotsetmaincoords{65}{115}
+  % yz平面を水平底面、x軸を鉛直上向きとする座標系マッピング:
+  % TikZ-3Dplot の [X_plot, Y_plot, Z_plot] に対して (y, z, x) を対応させる
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.4, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・パラメータ定義 ---
+    % theta = 65°
+    \def\angTheta{65}
+    \pgfmathsetmacro{\yQ}{cos(\angTheta)}
+    \pgfmathsetmacro{\zQ}{sin(\angTheta)}
+
+    % B との交点を与える 2 つの x 座標
+    % x1 = sin(theta + 30°), x2 = sin(theta - 30°)
+    \pgfmathsetmacro{\xOne}{sin(\angTheta + 30)} % sin(95°) ≈ 0.996
+    \pgfmathsetmacro{\xTwo}{sin(\angTheta - 30)} % sin(35°) ≈ 0.574
+
+    % 座標の割り当て: (y, z, x)
+    \coordinate (O)  at (0, 0, 0);
+    \coordinate (R)  at (1.0, 0, 0);          % y=1, z=0, x=0
+    \coordinate (Q)  at (\yQ, \zQ, 0);        % y=cos theta, z=sin theta, x=0
+    \coordinate (Q1) at (\yQ, \zQ, \xOne);     % 上側交点
+    \coordinate (Q2) at (\yQ, \zQ, \xTwo);     % 下側交点
+
+    % --- 2. 座標軸 (x 軸を鉛直上方に配置) ---
+    % 水平面の y 軸・z 軸
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (1.6, 0, 0) node[below right=1pt] {$y$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 1.6, 0) node[above right=1pt] {$z$};
+    % 鉛直上向きの x 軸
+    \draw[->, very thick, gray!85!black] (0, 0, 0) -- (0, 0, 1.7) node[above=2pt] {$x$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 水平面 (yz平面) 上の円 y^2 + z^2 = 1 ---
+    % 円の内部を薄く塗りつぶし
+    \fill[blue!8, opacity=0.55]
+    plot[domain=0:360, samples=60] ({cos(\x)}, {sin(\x)}, 0);
+    \draw[very thick, blue!85!black]
+    plot[domain=0:360, samples=60] ({cos(\x)}, {sin(\x)}, 0);
+    \node[blue!90!black, font=\scriptsize, above left] at (-0.5, 0.7, 0) {$y^2+z^2=1$};
+
+    % 円柱 A の側面ガイドライン（鉛直上方への薄い破線）
+    \draw[dashed, blue!35] (1, 0, 0) -- (1, 0, 1.4);
+    \draw[dashed, blue!35] (-1, 0, 0) -- (-1, 0, 1.4);
+    \draw[dashed, blue!35] (0, 1, 0) -- (0, 1, 1.4);
+    \draw[dashed, blue!35] (0, -1, 0) -- (0, -1, 1.4);
+
+    % --- 4. 動径 OQ と基準点 R ---
+    \draw[thick, gray!70] (O) -- (R);
+    \draw[very thick, teal!85!black] (O) -- (Q);
+
+    % 角度 theta の弧 (y 軸から z 軸方向へ)
+    \draw[thick, purple!85!black]
+    plot[domain=0:\angTheta, samples=30] ({0.35*cos(\x)}, {0.35*sin(\x)}, 0);
+    \node[purple!90!black, font=\footnotesize]
+    at ({0.48*cos(\angTheta/2)}, {0.48*sin(\angTheta/2)}, 0) {$\theta$};
+
+    % --- 5. 点 Q を通り x 軸に平行な直線 (鉛直上向き) ---
+    % x 負方向 (破線)
+    \draw[dashed, red!60, thick] (\yQ, \zQ, -0.4) -- (Q);
+    % x 正方向 (実線・強調)
+    \draw[line width=1.6pt, red!85!black] (Q) -- (\yQ, \zQ, 1.45)
+    node[above=2pt, font=\footnotesize] {直線 $(y,z)=(\cos\theta,\sin\theta)$};
+
+    % --- 7. 主要点のプロットとラベル ---
+    \fill[black] (O) circle (0.6pt);
+    \fill[black] (R) circle (0.8pt) node[below right=1pt] {$R(0, 1, 0)$};
+    \fill[teal!85!black] (Q) circle (0.8pt) node[below left=1pt, teal!90!black] {$Q(0, \cos\theta, \sin\theta)$};
+
+  \end{tikzpicture}
+  \caption{$\theta$，点 $Q$ と平行直線}
+  \label{fig:cylinder_q_line_vertical_x}
+\end{figure}
+
+与えられた曲面
+\begin{align}
+  \begin{cases}
+    A: y^2+z^2 = 1 \\
+    B: x^2 - \sqrt{3}xz + z^2 =\dfrac{1}{4}
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．
+
+パラメータ$\theta\, (0\le\theta\le 2\pi)$を用いて，
+$A$の$x=0$上での切断面の円上に$R(0,1,0)$，$Q(0,\cos\theta,\sin\theta)$をとる．
+
+$Q$を通り$x$軸に平行な直線$(y,z)=(\cos\theta,\sin\theta)$上での$B$の様子を考える．
+\cref{eq:1}に代入して
+\begin{align}
+  x^2-\sqrt{3}\sin\theta x+\sin^2\theta-\dfrac{1}{4}=0
+\end{align}
+となる．これを$x$について解くと，
+\begin{align}
+  x
+  &=\dfrac{\sqrt{3}\sin\theta\pm\sqrt{1-\sin^2\theta}}{2}\\
+  &=\sin\left(\theta\pm\dfrac{\pi}{6}\right)
+\end{align}
+を得る．
+
+円の半径は$1$なので，点$R$からの弧の長さを$\theta$として切り開けば，展開図の座標は$(\theta,x)$となる．
+したがって，$0\le\theta\le2\pi$の範囲に2曲線
+\begin{align}
+  x=\sin\left(\theta+\dfrac{\pi}{6}\right)，\qquad
+  x=\sin\left(\theta-\dfrac{\pi}{6}\right)
+\end{align}
+を描き，その間の部分を切り抜けばよい．求める展開図は下図の斜線部である（境界は実線の部分を含み，破線の部分を含まない）．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.65cm,y=1.65cm,>=stealth,every node/.style={font=\small}]
+    \begin{scope}
+      \clip (0,-1.5) rectangle (2*pi,1.5);
+      \fill[pattern=north east lines,pattern color=blue!60]
+      (0,1.5) -- (2*pi,1.5) -- (2*pi,0.5)
+      -- plot[domain=2*pi:3*pi/2,samples=60] (\x,{sin((\x+pi/6) r)})
+      -- plot[domain=3*pi/2:pi/2,samples=100] (\x,{sin((\x-pi/6) r)})
+      -- plot[domain=pi/2:0,samples=60] (\x,{sin((\x+pi/6) r)}) -- cycle;
+      \fill[pattern=north east lines,pattern color=blue!60]
+      (0,-1.5) -- (2*pi,-1.5) -- (2*pi,-0.5)
+      -- plot[domain=2*pi:3*pi/2,samples=60] (\x,{sin((\x-pi/6) r)})
+      -- plot[domain=3*pi/2:pi/2,samples=100] (\x,{sin((\x+pi/6) r)})
+      -- plot[domain=pi/2:0,samples=60] (\x,{sin((\x-pi/6) r)}) -- cycle;
+    \end{scope}
+    \foreach \t/\lab in {0.523599/\frac{\pi}{6},1.047198/\frac{\pi}{3},1.570796/\frac{\pi}{2},2.617994/\frac{5\pi}{6},3.141593/\pi,3.665191/\frac{7\pi}{6},4.188790/\frac{4\pi}{3},4.712389/\frac{3\pi}{2},5.759587/\frac{11\pi}{6}} {
+      \draw[gray!60,dotted] (\t,-1.05) -- (\t,1.05);
+      \node[below,fill=white,inner sep=1pt,font=\scriptsize] at (\t,0) {$\lab$};
+    }
+    \foreach \v/\lab in {-1/-1,-0.866025/-\frac{\sqrt{3}}{2},-0.5/-\frac{1}{2},0.5/\frac{1}{2},0.866025/\frac{\sqrt{3}}{2},1/1} {
+      \draw[gray!50,dotted] (0,\v) -- (2*pi,\v);
+      \node[left,font=\scriptsize] at (0,\v) {$\lab$};
+    }
+    \draw[->,thick] (0,0) -- (6.65,0) node[right] {$\theta$};
+    \draw[->,thick] (0,-1.5) -- (0,1.65) node[above] {$x$};
+    \node[below left] at (0,0) {$O$};
+    \node[below right,fill=white] at (2*pi,0) {$2\pi$};
+    \draw[blue!85!black,thick,dashed,domain=0:2*pi,samples=150] plot (\x,{sin((\x+pi/6) r)});
+    \draw[red!85!black,thick,dashed,domain=0:2*pi,samples=150] plot (\x,{sin((\x-pi/6) r)});
+    \foreach \t in {0,6.283185} {
+      \draw[thick] (\t,0.5) -- (\t,1.5);
+      \draw[thick] (\t,-0.5) -- (\t,-1.5);
+      \foreach \v in {-0.5,0.5} {\draw[fill=white,thick] (\t,\v) circle (1.3pt);}
+    }
+    \foreach \t/\v in {1.570796/0.866025,4.712389/-0.866025} {\draw[fill=white,thick] (\t,\v) circle (1.3pt);}
+    \node[above,blue!85!black] at (1.05,1.55) {$x=\sin\left(\theta+\frac{\pi}{6}\right)$};
+    \node[below,red!85!black] at (4.7,-1.55) {$x=\sin\left(\theta-\frac{\pi}{6}\right)$};
+  \end{tikzpicture}
+  \caption{図形$C$の展開図}
+\end{figure}
+
 \end{document}

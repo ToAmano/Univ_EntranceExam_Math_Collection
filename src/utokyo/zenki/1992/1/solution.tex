@@ -1,89 +1,180 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
-{\bf [解]} $S_1 - \int_1^a \log x \, dx = a(\log a - 1) + 1 \quad \dots \text{① である．}$
-
-\bigskip
-
-\paragraph{(1)}
-
-$\square ABCD$ の面積を $S'$ とすると，
-\begin{align}
-  S' &= \triangle ABD D' + \triangle D' B C \\
-  &= \dfrac{1}{2}(\log a + \log b)(a - b) + \dfrac{1}{2} \log b \cdot (b - 1)
-\end{align}
-図より明らかに $S' < S_1$ だから，$S'$ の最大値こそ $S_2$ である．
+{\bf [解]}
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.2, >=stealth]
-    \draw[->] (-0.5,0) -- (4,0) node[right] {$x$};
-    \draw[->] (0,-0.5) -- (0,2.5) node[above] {$y$};
-    \draw[domain=0.5:3.8, smooth, variable=\x, thick] plot ({\x}, {log2(\x)});
-    \node[above left] at (3.5, {log2(3.5)}) {$y = \log x$};
-    \coordinate (C) at (1,0);
-    \coordinate (Dp) at (2.2,0);
-    \coordinate (A) at (3.2,0);
-    \coordinate (D) at (2.2,{log2(2.2)});
-    \coordinate (B) at (3.2,{log2(3.2)});
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
 
-    \draw[dashed] (D) -- (Dp);
-    \draw[dashed] (B) -- (A);
-    \draw[thick] (C) -- (D) -- (B) -- (A) -- cycle;
+    % --- 1. 定数・座標パラメータ (自然対数 ln(x) を使用) ---
+    % 例として a = 3.2, b = 2.0 (1 < b < a)
+    \def\aX{3.2}
+    \def\bX{2.0}
+    \pgfmathsetmacro{\yA}{ln(\aX)} % ln(3.2) ≈ 1.163
+    \pgfmathsetmacro{\yD}{ln(\bX)} % ln(2.0) ≈ 0.693
 
-    \node[below] at (C) {$C$};
-    \node[below] at (Dp) {$D'$};
-    \node[below] at (A) {$A$};
-    \node[above left] at (D) {$D$};
-    \node[above left] at (B) {$B$};
+    \coordinate (O)  at (0, 0);
+    \coordinate (C)  at (1.0, 0);
+    \coordinate (Dp) at (\bX, 0);
+    \coordinate (A)  at (\aX, 0);
+    \coordinate (D)  at (\bX, \yD);
+    \coordinate (B)  at (\aX, \yA);
+
+    % --- 2. 面積 S' (四角形 ACDB) の塗りつぶし ---
+    % (i) 直角三角形 CD'D
+    \fill[teal!15, opacity=0.7] (C) -- (Dp) -- (D) -- cycle;
+    % (ii) 台形 ABDD' (青色ハッチング)
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.7]
+    (Dp) -- (A) -- (B) -- (D) -- cycle;
+
+    % 四角形 ACDB の境界線 (弦 CD, 弦 DB, 垂直境界 BA, 底辺 AC)
+    \draw[very thick, blue!85!black] (C) -- (D) -- (B) -- (A) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-0.3, 0) -- (3.8, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.4) -- (0, 1.6) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 曲線 y = \log x の描画 (自然対数) ---
+    \draw[line width=1.6pt, black, domain=0.6:3.6, samples=70]
+    plot (\x, {ln(\x)});
+    \node[black, font=\footnotesize, above left] at (3.6, {ln(3.6)}) {$y = \log x$};
+
+    % --- 5. 境界投影破線 ---
+    % D から D'(b, 0) および y 軸への垂線
+    \draw[dashed, gray!60] (D) -- (Dp);
+    \draw[dashed, gray!60] (D) -- (0, \yD);
+    \node[left=2pt, font=\scriptsize, gray!90!black] at (0, \yD) {$\log b$};
+
+    % B から A(a, 0) および y 軸への垂線
+    \draw[dashed, gray!60] (B) -- (A);
+    \draw[dashed, gray!60] (B) -- (0, \yA);
+    \node[left=2pt, font=\scriptsize, gray!90!black] at (0, \yA) {$\log a$};
+
+    % --- 6. 各主要点のプロットとラベル ---
+    \fill (C)  circle (0.6pt) node[below=2pt] {$C(1,0)$};
+    \fill (Dp) circle (0.6pt) node[below=2pt] {$D'(b,0)$};
+    \fill (A)  circle (0.6pt) node[below=2pt] {$A(a,0)$};
+    \fill[blue!85!black] (D) circle (0.7pt) node[above left=1pt, blue!90!black] {$D(b,\log b)$};
+    \fill[blue!85!black] (B) circle (0.7pt) node[above left=1pt, blue!90!black] {$B(a,\log a)$};
+
   \end{tikzpicture}
-  \caption{対数曲線 $y=\log x$ と四角形 $CDBA$}
+  \caption{対数曲線 $y=\log x$ と内接四角形 $CDBA$}
+  \label{fig:log_trapezoid_approximation}
 \end{figure}
 
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ ---
+    \def\aX{3.2}
+    \pgfmathsetmacro{\yA}{ln(\aX)} % ln(3.2) ≈ 1.163
+
+    \coordinate (O) at (0, 0);
+    \coordinate (C) at (1.0, 0);
+    \coordinate (A) at (\aX, 0);
+    \coordinate (B) at (\aX, \yA);
+
+    % --- 2. 面積 S_1 (定積分領域) の塗りつぶし ---
+    % y = ln(x), x in [1, a]
+    \fill[blue!15, opacity=0.6]
+    (1.0, 0) -- plot[domain=1.0:\aX, samples=50] (\x, {ln(\x)}) -- (\aX, 0) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.75]
+    (1.0, 0) -- plot[domain=1.0:\aX, samples=50] (\x, {ln(\x)}) -- (\aX, 0) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-0.3, 0) -- (3.8, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.4) -- (0, 1.6) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 曲線 y = \log x の描画 ---
+    \draw[line width=1.6pt, blue!85!black, domain=0.6:3.6, samples=70]
+    plot (\x, {ln(\x)});
+    \node[blue!90!black, font=\footnotesize, above left] at (3.6, {ln(3.6)}) {$y = \log x$};
+
+    % --- 5. 境界直線 x = a ---
+    \draw[very thick, gray!80!black] (A) -- (B);
+    \draw[dashed, gray!60] (B) -- (0, \yA);
+    \node[left=2pt, font=\scriptsize, gray!90!black] at (0, \yA) {$\log a$};
+
+    % --- 6. 目盛りと主要点プロット ---
+    \fill (C) circle (0.6pt) node[below=2pt] {$1$};
+    \fill (A) circle (0.6pt) node[below=2pt] {$a$};
+    \fill[blue!85!black] (B) circle (0.7pt) node[above left=1pt, blue!90!black] {$(a, \log a)$};
+
+    % 領域ラベル S_1
+    \node[draw=blue!85!black, rounded corners=2pt, inner sep=2.5pt, font=\normalsize\bfseries, blue!90!black]
+    at (2.1, 0.35) {$S_1$};
+
+  \end{tikzpicture}
+  \caption{曲線 $y=\log x$ と $x$ 軸および直線 $x=a$ で囲まれた面積 $S_1$}
+  \label{fig:log_true_area_s1}
+\end{figure}
+
+題意より面積$S_1$は
+\begin{align}
+  S_1 - \int_1^a \log x \, dx = a(\log a - 1) + 1 \label{eq:1}
+\end{align}
+で与えられる．
+
+\paragraph{(1)}
+
+$D(b,\log b)$から$x$軸に下ろした垂足$D'(b,0)$とすると，
+$\square ABCD$ の面積 $S'$ は
+\begin{align}
+  S'
+  &= \square ABD D' + \triangle D' C C \\
+  &= \dfrac{1}{2}\left(|AB|+|DD'|\right)|AD'| + \dfrac{1}{2}|DD'||D'C| \\
+  &= \dfrac{1}{2}(\log a + \log b)(a - b) + \dfrac{1}{2} \log b \cdot (b - 1) \label{eq:2}
+\end{align}
+である．
+
+図より明らかに $S' < S_1$ だから，$S'$ が最大値をとる時最も$S_1$に近づき，これが $S_2$ である．
+\cref{eq:2}を$b$で微分すると
 \begin{align}
   \dfrac{d}{db} S' = \dfrac{1}{2b}(a - 1) - \dfrac{1}{2} \log a
 \end{align}
-より，極大を与える $\Bigl(\because \dfrac{a-1}{\log a} < a\Bigr)$
+だから，$S'$の増減表は以下のようになる．
+ただし題意より$1<a$であることから，$\dfrac{a-1}{\log a} < a$に注意した．
 
 \begin{table}[htb]
   \centering
+  \caption{$S'$ の増減表}
   \begin{tabular}{c|ccccc}
     $b$ & $(1)$ & $\dots$ & $\dfrac{a-1}{\log a}$ & $\dots$ & $a$ \\ \hline
     $S'$ & & $+$ & $0$ & $-$ & \\ \hline
     $S$ & & $\nearrow$ & 極大 & $\searrow$ &
   \end{tabular}
-  \caption{$S'$ の増減表}
 \end{table}
 
-従って，
+従って求める$S_2$は
 \begin{align}
-  S_2 &= S'\Big|_{b = \frac{a-1}{\log a}} \\
-  &= \dfrac{1}{2}(a \log a - a + 1) + \dfrac{1}{2} \dfrac{a-1}{\log a} \log\Bigl(\dfrac{a-1}{\log a}\Bigr)
+  S_2
+  &= S'\left(b = \dfrac{a-1}{\log a}\right) \\
+  &= \dfrac{1}{2}(a \log a - a + 1) + \dfrac{1}{2} \dfrac{a-1}{\log a} \log\Bigl(\dfrac{a-1}{\log a}\Bigr) \label{eq:3}
 \end{align}
-
-\bigskip
+である．
 
 \paragraph{(2)}
-\begin{align}
-  \dfrac{S_2}{S_1} &= \dfrac{\dfrac{1}{2}(a \log a - a + 1) + \dfrac{1}{2}(a-1)\{\log(a-1) - \log\log a\}}{a \log a - a + 1} \\
-  &= \dfrac{1}{2} + \dfrac{1}{2} \underbrace{\dfrac{(a-1)\{\log(a-1) - \log\log a\}}{a \log a - a + 1}}_{T}
-\end{align}
 
+\cref{eq:1,eq:3}から，$S_2/S_1$を計算すると
 \begin{align}
-  T = \dfrac{\Bigl(1 - \dfrac{1}{a}\Bigr) \Bigl\{ 1 + \dfrac{\log(1 - \dfrac{1}{a})}{\log a} - \dfrac{\log\log a}{\log a} \Bigr\}}{1 - \dfrac{1}{\log a} + \dfrac{1}{a \log a}} \longrightarrow 1 \quad (a \to \infty)
+  \dfrac{S_2}{S_1}
+  &= \dfrac{\dfrac{1}{2}(a \log a - a + 1) + \dfrac{1}{2}(a-1)\{\log(a-1) - \log\log a\}}{a \log a - a + 1} \\
+  &= \dfrac{1}{2} + \dfrac{1}{2} \dfrac{(a-1)\{\log(a-1) - \log\log a\}}{a \log a - a + 1}
 \end{align}
+である．第二項の分母分子を$a\log a$で割ると
 \begin{align}
-  \Bigl[ \log a = A \to \infty \text{ より } \dfrac{\log(\log a)}{\log a} = \dfrac{\log A}{A} \to 0 \Bigr]
+  \dfrac{S_2}{S_1}
+  &= \dfrac{1}{2} + \dfrac{1}{2} \dfrac{\Bigl(1 - \dfrac{1}{a}\Bigr) \Bigl\{ 1 + \dfrac{\log(1 - \dfrac{1}{a})}{\log a} - \dfrac{\log\log a}{\log a} \Bigr\}}{1 - \dfrac{1}{\log a} + \dfrac{1}{a \log a}}
 \end{align}
-より，
+であって，$a\to\infty$の極限では$\log a\to\infty, \dfrac{\log(\log a)}{\log a}\to 0$より
 \begin{align}
-  \dfrac{S_2}{S_1} \longrightarrow 1 \quad (a \to \infty) \text{ である．}
+  \lim_{a\to\infty}\dfrac{S_2}{S_1} = 1
 \end{align}
+である．
 
 \newpage
 
