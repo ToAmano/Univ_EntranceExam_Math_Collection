@@ -1,56 +1,66 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-\noindent
-{\bf [解]} $p,q \in \mathbb{R}$ とする．
+$p,q \in \mathbb{R}$ として，与えられた関数
+\begin{align}
+  f(x) = x^n + px + q \label{eq:1}
+\end{align}
+について考える．両辺二乗して
 \begin{align}
   (f(x))^2 = x^{2n} + p^2 x^2 + q^2 + 2(p x^{n+1} + q x^n + pq x)
 \end{align}
-だから，
+だから，与えられた定積分は
 \begin{align}
-  I = \int_0^1 (x^{2n} + p^2 x^2 + q^2) \, dx + \int_{-1}^1 (p x^{n+1} + q x^n) \, dx \quad \dots \text{①}
+  I
+  & = \int_0^1 (x^{2n} + p^2 x^2 + q^2) \, dx + \int_{-1}^1 (p x^{n+1} + q x^n) \, dx \\
+  & = \left[\dfrac{x^{2n+1}}{2n+1} + \dfrac{p^2x^3}{3} + q^2 x\right]_{0}^{1} + \int_{-1}^1 (p x^{n+1} + q x^n) \, dx \\
+  & = \dfrac{1}{2n+1} + \dfrac{p^2}{3} + q^2 + \int_{-1}^1 (p x^{n+1} + q x^n) \, dx \label{eq:2}
 \end{align}
-である．
+である．以下，$n$の偶奇で場合分けして考える．
 
-\bigskip
-\noindent
-$1^\circ$ $n \in \text{odd}$ の時
+\subparagraph{$1^\circ$ $n \in \text{odd}$ の時}
 
-①から
+\cref{eq:2}で$x^{n+1}$の項のみが非零の寄与を与えるから
 \begin{align}
-  I &= \int_0^1 (x^{2n} + p^2 x^2 + q^2) \, dx + 2 \int_0^1 p x^{n+1} \, dx \\
-  &= p^2 \int_0^1 x^2 \, dx + 2p \int_0^1 x^{n+1} \, dx + q^2 \int_0^1 1 \, dx + \int_0^1 x^{2n} \, dx \\
+  I
+  &= \dfrac{1}{2n+1} + \dfrac{p^2}{3} + q^2 + 2 \int_0^1 p x^{n+1} \, dx \\
+  &= \dfrac{1}{2n+1} + \dfrac{p^2}{3} + q^2 + 2 \left[\dfrac{px^{n+2}}{n+2}\right]_{0}^{1} \\
   &= \dfrac{1}{3} p^2 + \dfrac{2}{n+2} p + q^2 + \dfrac{1}{2n+1} \\
   &= \dfrac{1}{3} \Bigl( p + \dfrac{3}{n+2} \Bigr)^2 + q^2 - \dfrac{3}{(n+2)^2} + \dfrac{1}{2n+1}
 \end{align}
-だから，$n \in \mathbb{N}$ より $(p,q) = \Bigl(-\dfrac{3}{n+2}, 0\Bigr)$ で $\min I = \dfrac{1}{2n+1} - \dfrac{3}{(n+2)^2}$
-
-\bigskip
-\noindent
-$2^\circ$ $n \in \text{even}$ の時
-
-①から
+だから，$n \in \mathbb{N}$ より $(p,q) = \Bigl(-\dfrac{3}{n+2}, 0\Bigr)$ で$I$は最小値
 \begin{align}
-  I &= \int_0^1 (x^{2n} + p^2 x^2 + q^2 + 2q x^n) \, dx \\
+  \min I = \dfrac{1}{2n+1} - \dfrac{3}{(n+2)^2} \label{eq:3}
+\end{align}
+をとる．
+
+\subparagraph{$2^\circ$ $n \in \text{even}$ の時}
+
+\cref{eq:2}で$x^{n}$の項のみが非零の寄与を与えるから
+\begin{align}
+  I
+  &= \dfrac{1}{2n+1} + \dfrac{p^2}{3} + q^2 + 2\int_0^1 q x^n \, dx \\
+  &= \dfrac{1}{2n+1} + \dfrac{p^2}{3} + q^2 + 2\left[\dfrac{qx^{n+1}}{n+1}\right]_{0}^{1} \\
   &= q^2 + \dfrac{2q}{n+1} + \dfrac{1}{3} p^2 + \dfrac{1}{2n+1} \\
   &= \Bigl( q + \dfrac{1}{n+1} \Bigr)^2 + \dfrac{1}{3} p^2 + \dfrac{1}{2n+1} - \dfrac{1}{(n+1)^2}
 \end{align}
-から $(p,q) = \Bigl(0, -\dfrac{1}{n+1}\Bigr)$ で $\min I = \dfrac{1}{2n+1} - \dfrac{1}{(n+1)^2}$
+だから，$n \in \mathbb{N}$ より $(p,q) = \Bigl(0, -\dfrac{1}{n+1}\Bigr)$ で $I$ は最小値
+\begin{align}
+  \min I = \dfrac{1}{2n+1} - \dfrac{1}{(n+1)^2} \label{eq:4}
+\end{align}
+をとる．
+\casesend
 
-\bigskip
-\noindent
-以上まとめて，
+以上\cref{eq:3,eq:4}をまとめて，求める最小値は
 \begin{align}
   \begin{cases}
     n \in \text{odd} \dots (p,q) = \Bigl(-\dfrac{3}{n+2}, 0\Bigr) \text{の時} \quad \min I = \dfrac{(n-1)^2}{(2n+1)(n+2)^2} \\[1.5ex]
     n \in \text{even} \dots (p,q) = \Bigl(0, -\dfrac{1}{n+1}\Bigr) \text{の時} \quad \min I = \dfrac{n^2}{(2n+1)(n+1)^2}
   \end{cases}
-  \quad \text{\#\#}
 \end{align}
+である．
 
 \newpage
 

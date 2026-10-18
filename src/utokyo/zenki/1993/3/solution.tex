@@ -1,169 +1,454 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-\noindent
-$\triangleright$ まず，楕円，双曲線の図形的定義での書き方．
-
-\begin{framed}
-  \noindent
-  \textbf{[楕円]}
-
-  $|AP| + |BP| = 2a$ の時，右のようになる．
-  \begin{align}
-    \dfrac{x^2}{a^2} + \dfrac{y^2}{a^2-c^2} = 1
-  \end{align}
-  $\star$ まず，$a$ から手前的に端点をとる．
-
-  $\longrightarrow$ $c, a$ から $b$ をキメル
-
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=1.0, >=stealth]
-      \draw[->] (-2.5,0) -- (2.5,0) node[right] {$x$};
-      \draw[->] (0,-1.5) -- (0,1.5) node[above] {$y$};
-      \draw[thick, blue] (0,0) ellipse (2cm and 1.2cm);
-      \filldraw (-1.2,0) circle (1.5pt) node[above] {$A$} (1.2,0) circle (1.5pt) node[above] {$C$};
-      \node[below left] at (0,0) {$O$};
-      \node[below] at (-2,0) {$-a$};
-      \node[below] at (2,0) {$a$};
-      \node[above left] at (0,1.2) {$\sqrt{a^2-c^2}$};
-    \end{tikzpicture}
-    \caption{楕円 $|AP|+|BP|=2a$ の概形}
-  \end{figure}
-\end{framed}
-
-\begin{framed}
-  \noindent
-  \textbf{[双曲線]}
-
-  $||AP| - |BP|| = 2a$ の時，右のようになる．
-  \begin{align}
-    \dfrac{x^2}{a^2} - \dfrac{y^2}{c^2-a^2} = 1
-  \end{align}
-  $\star$ $a$ から端点 $\to$ $c, a$ から $b$
-
-  $\longrightarrow$ 漸近線 $\dfrac{x}{a} \pm \dfrac{y}{\sqrt{c^2-a^2}} = 0$
-
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=1.0, >=stealth]
-      \draw[->] (-2.5,0) -- (2.5,0) node[right] {$x$};
-      \draw[->] (0,-1.8) -- (0,1.8) node[above] {$y$};
-      \draw[dashed] (-2,-1.5) -- (2,1.5);
-      \draw[dashed] (-2,1.5) -- (2,-1.5);
-      \draw[thick, blue, domain=-1.3:1.3, samples=50] plot ({1*cosh(\x)}, {1.2*sinh(\x)});
-      \draw[thick, blue, domain=-1.3:1.3, samples=50] plot ({-1*cosh(\x)}, {1.2*sinh(\x)});
-      \filldraw (-1.6,0) circle (1.5pt) node[below] {$A$} (1.6,0) circle (1.5pt) node[below] {$B$};
-      \node[below left] at (0,0) {$O$};
-      \node[below left] at (-1,0) {$-a$};
-      \node[below right] at (1,0) {$a$};
-    \end{tikzpicture}
-    \caption{双曲線 $||AP|-|BP||=2a$ の概形}
-  \end{figure}
-\end{framed}
-
-\newpage
-
-\noindent
-{\bf [解]} $R(x,y)$ とおく．下図のように，$xy$ 平面を分割する．ただし $\square PTQS$ は正方形．
+$R(X,Y)$とおく．
+題意で与えられた二つの領域$l,m$
+\begin{align}
+  \begin{cases}
+    l=\{(-5,y)|-5<y<5\} \\
+    m=\{(5,y)|-5<y<5\}
+  \end{cases}
+\end{align}
+および，二つの点$P(-9,-3). Q(9,3)$，これらと点$R$の距離$d(P,R), d(Q,R)$を図示すると下図のようになる．
+ここで，$l,m$の端点を$L_1(5,5), L_2(5,-5),L_3(-5,-5),L_4(-5,5)$とした．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.35, >=stealth]
-    \draw[->] (-12,0) -- (12,0) node[right] {$x$};
-    \draw[->] (0,-12) -- (0,12) node[above] {$y$};
+  \begin{tikzpicture}[scale=0.48, >=stealth, every node/.style={font=\small}]
 
-    \filldraw (-9,-3) circle (3pt) node[left] {$P$};
-    \filldraw (9,3) circle (3pt) node[right] {$Q$};
-    \filldraw (-5,5) circle (2pt) node[left] {$L_4$};
-    \filldraw (-5,-5) circle (2pt) node[left] {$L_3$};
-    \filldraw (5,5) circle (2pt) node[right] {$L_1$};
-    \filldraw (5,-5) circle (2pt) node[right] {$L_2$};
+    % --- 1. 座標定義 ---
+    \coordinate (O)  at (0, 0);
+    \coordinate (P)  at (-9, -3);
+    \coordinate (Q)  at (9, 3);
 
-    \draw[dashed] (-5,-5) -- (-5,5) -- (5,5) -- (5,-5) -- cycle;
-    \draw[dashed] (-9,-3) -- (9,3);
-    \draw[thick] (-5,-5) -- (-5,5);
-    \draw[thick] (5,-5) -- (5,5);
+    % 壁の端点 L_1, L_2, L_3, L_4
+    \coordinate (L1) at (5, 5);
+    \coordinate (L2) at (5, -5);
+    \coordinate (L3) at (-5, -5);
+    \coordinate (L4) at (-5, 5);
 
-    \node at (0,0) {$C$};
-    \node at (-9,5) {$A$};
-    \node at (9,-5) {$B$};
+    % 代表的な点 R (C_3 領域内の例)
+    \coordinate (R)  at (1.5, -1.0);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!70] (-11.5, 0) -- (11.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!70] (0, -8.5) -- (0, 8.5) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 領域 l, m（通れない 2 つの線分壁）---
+    % 線分 l (x = -5, -5 < y < 5)
+    \draw[line width=2.5pt, red!80!black] (L3) -- (L4);
+    \node[red!90!black, font=\footnotesize\bfseries, left=3pt] at (-5, 0) {壁 $l$};
+
+    % 線分 m (x = 5, -5 < y < 5)
+    \draw[line width=2.5pt, red!80!black] (L2) -- (L1);
+    \node[red!90!black, font=\footnotesize\bfseries, right=3pt] at (5, 0) {壁 $m$};
+
+    % 端点の白抜き丸（開区間 -5 < y < 5）
+    \foreach \pt in {L1, L2, L3, L4} {
+      \draw[thick, red!85!black, fill=white] (\pt) circle (3pt);
+    }
+    \node[above left=1pt, font=\scriptsize]  at (L4) {$L_4(-5,5)$};
+    \node[below left=1pt, font=\scriptsize]  at (L3) {$L_3(-5,-5)$};
+    \node[above right=1pt, font=\scriptsize] at (L1) {$L_1(5,5)$};
+    \node[below right=1pt, font=\scriptsize] at (L2) {$L_2(5,-5)$};
+
+    % 正方形枠の補助線 (破線)
+    \draw[dashed, gray!45] (L4) -- (L1) (L3) -- (L2);
+
+    % --- 4. 点 P, Q から点 R への最短経路（迂回経路の例）---
+    % P から R への経路: P -> L3 -> R
+    \draw[thick, dashed, teal!85!black] (P) -- (L3);
+    \draw[very thick, teal!85!black] (L3) -- (R);
+    \node[teal!90!black, font=\scriptsize, below=2pt] at ($ (P)!0.5!(L3) $) {$2\sqrt{5}$};
+    \node[teal!90!black, font=\scriptsize, below=2pt] at ($ (L3)!0.5!(R) $) {$|L_3R|$};
+
+    % Q から R への経路: Q -> L1 -> R
+    \draw[thick, dashed, blue!85!black] (Q) -- (L1);
+    \draw[very thick, blue!85!black] (L1) -- (R);
+    \node[blue!90!black, font=\scriptsize, above=2pt] at ($ (Q)!0.5!(L1) $) {$2\sqrt{5}$};
+    \node[blue!90!black, font=\scriptsize, above=2pt] at ($ (L1)!0.5!(R) $) {$|L_1R|$};
+
+    % --- 5. 点 P, Q, R のプロットとラベル ---
+    \fill[black] (P) circle (3.5pt) node[below left=2pt] {$P(-9, -3)$};
+    \fill[black] (Q) circle (3.5pt) node[above right=2pt] {$Q(9, 3)$};
+    \fill[purple!90!black] (R) circle (3.5pt) node[right=3pt, purple!90!black] {$R(X, Y)$};
+
+    % 直線 PQ (参考点線)
+    \draw[dotted, gray!60] (P) -- (Q);
+
   \end{tikzpicture}
-  \caption{$xy$ 平面の分割（正方形 $PTQS$ と点 $A,B,C$ の領域）}
+  \caption{進入できない線分壁 $l, m$ と点 $P, Q$ および点 $R$ への迂回最短経路}
+  \label{fig:obstacle_shortest_path_setup}
 \end{figure}
 
-\noindent
-左図で，斜線部は明らかに $d(P,R) = d(Q,R)$ とならない．
+$d(P,R)$が折れ線になるかどうかは，線分$PR$と$l$が交わるかどうかによる．
+よって半直線$PL_3, PL_4$が区切る領域のうち，$l$よりも$x$軸が大きい部分に$R$が含まれる時は折れ線になり，それ以外の時は直線になる．
+$d(Q,R)$についても同様だから，$xy$平面は$d(P,R), d(Q,R)$がそれぞれ折れ線になるかどうかで$4$種類の領域に以下のように分けられる．
 
-まず，$A, B$ について，$d(P,R) = d(Q,R)$ となるのは，線分 $PQ$ の垂直二等分線 $y = -3x$ 上である． \quad \dots \text{①}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.45, >=stealth, every node/.style={font=\small}]
 
-次に $C$ について，$\alpha,\beta$ のうち大きくない方を $\min\{\alpha,\beta\}$ と表すと，
+    % --- 1. 座標定義 ---
+    \coordinate (O)  at (0, 0);
+    \coordinate (P)  at (-9, -3);
+    \coordinate (Q)  at (9, 3);
+
+    % 壁の端点
+    \coordinate (L1) at (5, 5);
+    \coordinate (L2) at (5, -5);
+    \coordinate (L3) at (-5, -5);
+    \coordinate (L4) at (-5, 5);
+
+    % 正方形 PSQT の残り2頂点 S(-3, 9), T(3, -9)
+    \coordinate (S)  at (-3, 9);
+    \coordinate (T)  at (3, -9);
+
+    % --- 2. 斜線部 D, E のハッチング塗りつぶし ---
+    % 描画枠クリッピング: [-13, 13] x [-13, 13]
+    \begin{scope}
+      \clip (-13, -13) rectangle (13, 13);
+
+      % ----------------------------------------------------
+      % 【領域 D】直線 AB (y = -3x) より左側の除外領域
+      % （右上上がり斜線: north east lines）
+      % ----------------------------------------------------
+      \fill[pattern=north east lines, pattern color=blue!75, opacity=0.7]
+      (-14, 14) -- (-13,14) -- (S) -- (L4) -- (L3) -- (T) -- (0.5,-14) -- (-14, -14) -- cycle;
+
+      % ----------------------------------------------------
+      % 【領域 E】直線 AB (y = -3x) より右側の除外領域
+      % （左上上がり斜線: north west lines）
+      % ----------------------------------------------------
+      \fill[pattern=north west lines, pattern color=red!75, opacity=0.7]
+      (14,-14) -- (13,-14) -- (T) -- (L2) -- (L1) -- (S) -- (-0.5,14) -- (14,14) -- cycle;
+
+    \end{scope}
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-13, 0) -- (13, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -12.5) -- (0, 12.5) node[above] {$y$};
+    \node[below left=2pt] at (O) {$0$};
+
+    % --- 4. 正方形 PSQT の 4 辺および見通し境界線 ---
+    % 辺 PS (y = 2x + 15) とその延長
+    \draw[thick, dashed] ($ (P)!-0.25!(S) $) -- ($ (P)!1.3!(S) $);
+    % 辺 PT (y = -1/2 x - 7.5) とその延長
+    \draw[thick, dashed] ($ (P)!-0.25!(T) $) -- ($ (P)!1.3!(T) $);
+    % 辺 SQ (y = -1/2 x + 7.5) とその延長
+    \draw[thick, dashed] ($ (Q)!-0.25!(S) $) -- ($ (Q)!1.3!(S) $);
+    % 辺 TQ (y = 2x - 15) とその延長
+    \draw[thick, dashed] ($ (Q)!-0.25!(T) $) -- ($ (Q)!1.3!(T) $);
+
+    % 領域 C の上下境界線 (L4-S-L1 および L3-T-L2)
+    \draw[thick] (L4) -- (S) -- (L1);
+    \draw[thick] (L3) -- (T) -- (L2);
+    \draw[dashed, gray!45] (L4) -- (L1);
+    \draw[dashed, gray!45] (L3) -- (L2);
+
+    % --- 5. 直線 AB (y = -3x, 点線で結ぶ) ---
+    \draw[line width=1.4pt, dotted, black]
+    (-4.1, 12.3) -- (4.1, -12.3) node[below right, font=\footnotesize] {直線 $AB$ ($y = -3x$)};
+
+    % --- 6. 直角記号（4頂点: P, Q, S, T）---
+    % (i) P における直角 (PL4 ⊥ PL3)
+    \draw[thin, black]
+    ($ (P) + (0.4, 0.8) $) --
+    ($ (P) + (0.4, 0.8) + (0.8, -0.4) $) --
+    ($ (P) + (0.8, -0.4) $);
+
+    % (ii) Q における直角 (QL1 ⊥ QL2)
+    \draw[thin, black]
+    ($ (Q) + (-0.8, 0.4) $) --
+    ($ (Q) + (-0.8, 0.4) + (-0.4, -0.8) $) --
+    ($ (Q) + (-0.4, -0.8) $);
+
+    % (iii) S における直角 (PS ⊥ SQ, これにより領域 A は 90° の扇形領域となる)
+    \draw[thin, black]
+    ($ (S) + (-0.4, -0.8) $) --
+    ($ (S) + (-0.4, -0.8) + (0.8, -0.4) $) --
+    ($ (S) + (0.8, -0.4) $);
+
+    % (iv) T における直角 (PT ⊥ TQ, これにより領域 B は 90° の扇形領域となる)
+    \draw[thin, black]
+    ($ (T) + (-0.8, 0.4) $) --
+    ($ (T) + (-0.8, 0.4) + (0.4, 0.8) $) --
+    ($ (T) + (0.4, 0.8) $);
+
+    % --- 7. 通行不能な壁 l, m ---
+    \draw[line width=3.2pt, red!85!black] (L3) -- (L4);
+    \draw[line width=3.2pt, red!85!black] (L2) -- (L1);
+
+    % 端点の白抜き丸
+    \foreach \pt in {L1, L2, L3, L4} {
+      \draw[thick, red!85!black, fill=white] (\pt) circle (3.5pt);
+    }
+
+    % --- 8. 目盛り破線と数値ラベル ---
+    \draw[dotted, gray!60] (-5, 0) -- (L4) -- (0, 5);
+    \draw[dotted, gray!60] (5, 0) -- (L1) -- (0, 5);
+    \draw[dotted, gray!60] (-5, 0) -- (L3) -- (0, -5);
+    \draw[dotted, gray!60] (5, 0) -- (L2) -- (0, -5);
+
+    \draw[dotted, thick, gray!60] (-9, 0) -- (P) -- (0, -3);
+    \draw[dotted, thick, gray!60] (9, 0) -- (Q) -- (0, 3);
+
+    \node[below=2pt, font=\scriptsize] at (-9, 0) {$-9$};
+    \node[below=2pt, font=\scriptsize] at (-5, 0) {$-5$};
+    \node[below=2pt, font=\scriptsize] at (5, 0)  {$5$};
+    \node[below=2pt, font=\scriptsize] at (9, 0)  {$9$};
+
+    \node[left=2pt, font=\scriptsize] at (0, 5)  {$5$};
+    \node[left=2pt, font=\scriptsize] at (0, 3)  {$3$};
+    \node[left=2pt, font=\scriptsize] at (0, -3) {$-3$};
+    \node[left=2pt, font=\scriptsize] at (0, -5) {$-5$};
+
+    % --- 9. 点のプロットとラベル ---
+    \fill[black] (P) circle (3.5pt) node[below left=2pt] {$P$};
+    \fill[black] (Q) circle (3.5pt) node[above right=2pt] {$Q$};
+    \fill[black] (S) circle (3.0pt) node[above left=2pt] {$S(-3,9)$};
+    \fill[black] (T) circle (3.0pt) node[below right=2pt] {$T(3,-9)$};
+
+    \node[above left=2pt, font=\scriptsize]  at (L4) {$L_4$};
+    \node[below left=2pt, font=\scriptsize]  at (L3) {$L_3$};
+    \node[above right=2pt, font=\scriptsize] at (L1) {$L_1$};
+    \node[below right=2pt, font=\scriptsize] at (L2) {$L_2$};
+
+    % --- 10. 各領域の明確なラベル (A, B, C, D, E) ---
+    % 中央の折れ線領域 C
+    \node[font=\Large\bfseries, blue!85!black] at (0, 0) {$C$};
+
+    % 頂角 90° の白抜き領域 A, B
+    \node[font=\Large\bfseries, black] at (-3.5, 11) {$A$};
+    \node[font=\Large\bfseries, black] at (3.5, -11) {$B$};
+
+    % 直線 AB の左側除外領域 D (青系斜線)
+    \node[draw=blue!85!black, rounded corners=2pt, inner sep=3pt, font=\large\bfseries, blue!90!black]
+    at (-8.5, 5.0) {$D$};
+
+    % 直線 AB の右側除外領域 E (赤系斜線)
+    \node[draw=red!85!black, rounded corners=2pt, inner sep=3pt, font=\large\bfseries, red!90!black]
+    at (8.5, -5.0) {$E$};
+
+  \end{tikzpicture}
+  \caption{$xy$ 平面の領域分割（直線 $AB$，角度 $90^\circ$ の領域 $A, B$，および除外領域 $D, E$）}
+  \label{fig:xy_plane_partition_ab_de}
+\end{figure}
+
+ここで，$A,B,C,D,e$は以下のような領域である．ただし，$A,B,C$のみ境界を含むとする．
+$A,B,C,D,E$で$xy$平面上の全ての点を網羅する．
+
+\begin{itemize}
+  \item[A,B] $d(P,R),d(Q,R)$がいずれも直線となる領域
+  \item[C]   $d(P,R),d(Q,R)$がいずれも折れ線となる領域
+  \item[D]   $d(P,R)$は直線，$d(Q,R)$が折れ線となる領域
+  \item[E]   $d(P,R)$は折れ線，$d(Q,R)$が直線となる領域
+\end{itemize}
+
+さて，まずは$D$について考えよう．この領域は$PQ$の垂直二等分線よりも左側にあるから，
+常に$|PR|<|QR|$が成立する．さらに$d(Q,R)$は折れ線となるから$|QR|<d(Q,R)$であり，よって
+\begin{align}
+  d(P,R)=|PR|<|QR|<d(Q,R) \quad \therefore d(P,R)<d(Q,R)
+\end{align}
+となり，題意の条件を満たすことはない．よって考えなくて良い．
+全く同様に$E$についても$d(P,R)>d(Q,R)$となって考える必要はないから，以下$A,B,C$について考える．
+
+次に$A,B$について考える．この領域では$d(P,R),d(Q,R)$がいずれも直線だから，
+\begin{align}
+  d(P,R)=d(Q,R) \iff |PR| = |QR|
+\end{align}
+であり，これを満たすのは$PQ$の垂直二等分線$y=-3x$上の点のみである．よってこの領域で条件を満たすのは
+\begin{align}
+  y = -3x \quad (x\le -3,3 \le x) \label{eq:1}
+\end{align}
+である．
+
+次に$C$について考える．この領域では$d(P,R),d(Q,R)$はいずれも折れ線で，折れ線は$L_k\,(k=1,2,3,4)$のいずれかを経由する．
+すなわち
 \begin{align}
   \begin{cases}
     d(P,R) = \min \{ |PL_3| + |L_3R|, |PL_4| + |L_4R| \} \\
     d(Q,R) = \min \{ |QL_1| + |L_1R|, |QL_2| + |L_2R| \}
-  \end{cases}
-  \quad \dots \text{②}
+  \end{cases} \label{eq:2}
 \end{align}
-である．$|PL_3| = |QL_1| = 2\sqrt{5}$， $|PL_4| = |QL_2| = 4\sqrt{5}$ \dots ③ だから，
+である．
+これらの要素が等しくなる境界を考えると，$|PL_3| = |QL_1| = 2\sqrt{5}$， $|PL_4| = |QL_2| = 4\sqrt{5}$ だから
 \begin{align}
-  |PL_3| + |L_3R| = |PL_4| + |L_4R| &\iff |L_3R| - |L_4R| = 2\sqrt{5} \quad \dots \text{④} \\
-  |QL_1| + |L_1R| = |QL_2| + |L_2R| &\iff |L_1R| - |L_2R| = 2\sqrt{5} \quad \dots \text{⑤}
+  |PL_3| + |L_3R| = |PL_4| + |L_4R| &\iff |L_3R| - |L_4R| = 2\sqrt{5} \label{eq:3} \\
+  |QL_1| + |L_1R| = |QL_2| + |L_2R| &\iff |L_1R| - |L_2R| = 2\sqrt{5} \label{eq:4}
 \end{align}
-なので，$C$ をさらに，以下のように分割できる．
+である．よってこれらを満たす点$R$の集合は点$L_3,L_4$および点$L_1,L_2$を焦点とする双曲線で，
+\begin{align}
+  \begin{cases}
+    \dfrac{(x+5)^2}{20} - \dfrac{y^2}{5} = -1 & (|L_3R| - |L_4R| = 2\sqrt{5}) \\
+    \dfrac{(x-5)^2}{20} - \dfrac{y^2}{5} = -1 & (|L_1R| - |L_2R| = 2\sqrt{5})
+  \end{cases} \label{eq:5}
+\end{align}
+と与えられる．
+
+そこで領域$C$をさらに\cref{eq:2}に基づく$d(P,R),d(Q,R)$の表式によって$C_1,C_2,C_3$に分割する．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.35, >=stealth]
-    \draw[->] (-8,0) -- (8,0) node[right] {$x$};
-    \draw[->] (0,-8) -- (0,8) node[above] {$y$};
+  \begin{tikzpicture}[scale=0.55, >=stealth, every node/.style={font=\small}]
 
-    \draw[dashed] (-5,-5) -- (-5,5) -- (5,5) -- (5,-5) -- cycle;
-    \node at (0,6) {$C_1$};
-    \node at (0,-6) {$C_2$};
-    \node at (0,0) {$C_3$};
+    % --- 1. 座標定義 ---
+    \coordinate (O)  at (0, 0);
+    \coordinate (L1) at (5, 5);
+    \coordinate (L2) at (5, -5);
+    \coordinate (L3) at (-5, -5);
+    \coordinate (L4) at (-5, 5);
 
-    \draw[thick, domain=-5:5, samples=50] plot (\x, {sqrt(5*(1 + (\x+5)^2/20))});
-    \draw[thick, domain=-5:5, samples=50] plot (\x, {-sqrt(5*(1 + (\x-5)^2/20))});
+    % 領域 C の外枠頂点 (前の図の S, T)
+    \coordinate (S) at (-3, 9);
+    \coordinate (T) at (3, -9);
+
+    % --- 2. 領域 C1, C2, C3 の塗りつぶし ---
+    % (i) 領域 C1 (上側: 双曲線の上部)
+    \fill[teal!12, opacity=0.7]
+    (-5, 5) -- (S) -- (L1) --
+    plot[domain=5:-5, samples=50] (\x, {sqrt(5*(1 + (\x+5)*(\x+5)/20))}) -- cycle;
+
+    % (ii) 領域 C2 (下側: 双曲線の下部)
+    \fill[orange!12, opacity=0.7]
+    (-5, -5) -- (T) -- (L2) --
+    plot[domain=5:-5, samples=50] (\x, {-sqrt(5*(1 + (\x-5)*(\x-5)/20))}) -- cycle;
+
+    % (iii) 領域 C3 (中央部: 2本の双曲線に挟まれた領域)
+    \fill[blue!10, opacity=0.6]
+    (-5, -5) -- (-5, 5) --
+    plot[domain=-5:5, samples=50] (\x, {sqrt(5*(1 + (\x+5)*(\x+5)/20))}) --
+    (5, 5) -- (5, -5) --
+    plot[domain=5:-5, samples=50] (\x, {-sqrt(5*(1 + (\x-5)*(\x-5)/20))}) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!70] (-9, 0) -- (9, 0) node[right] {$x$};
+    \draw[->, thick, gray!70] (0, -10) -- (0, 10.5) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 領域 C の外枠補助線 ---
+    % 正方形枠 [-5, 5] x [-5, 5]
+    \draw[dashed, gray!40] (-5, -5) rectangle (5, 5);
+
+    % 領域 C の上限・下限屋根型境界 (L4-S-L1, L3-T-L2)
+    \draw[thick, dashed, gray!60] (L4) -- (S) -- (L1);
+    \draw[thick, dashed, gray!60] (L3) -- (T) -- (L2);
+
+    % --- 5. 通行不能な壁 l, m ---
+    \draw[line width=3.0pt, red!85!black] (L3) -- (L4);
+    \draw[line width=3.0pt, red!85!black] (L2) -- (L1);
+    \node[red!90!black, font=\scriptsize\bfseries, left=4pt]  at (-5, 0) {壁 $l$};
+    \node[red!90!black, font=\scriptsize\bfseries, right=4pt] at (5, 0)  {壁 $m$};
+
+    % 壁の端点（白抜き丸）
+    \foreach \pt in {L1, L2, L3, L4} {
+      \draw[thick, red!85!black, fill=white] (\pt) circle (3pt);
+    }
+    \node[above left=1pt, font=\scriptsize]  at (L4) {$L_4(-5,5)$};
+    \node[below left=1pt, font=\scriptsize]  at (L3) {$L_3(-5,-5)$};
+    \node[above right=1pt, font=\scriptsize] at (L1) {$L_1(5,5)$};
+    \node[below right=1pt, font=\scriptsize] at (L2) {$L_2(5,-5)$};
+
+    % --- 6. 境界双曲線の描画 ---
+    % (i) 焦点 L3, L4 の双曲線 (上側境界)
+    \draw[very thick, teal!85!black, domain=-5:5, samples=70]
+    plot (\x, {sqrt(5*(1 + (\x+5)*(\x+5)/20))});
+    \node[teal!95!black, font=\scriptsize, above left] at (2.5, 4.3)
+    {$\frac{(x+5)^2}{20} - \frac{y^2}{5} = -1$};
+
+    % (ii) 焦点 L1, L2 の双曲線 (下側境界)
+    \draw[very thick, orange!90!black, domain=-5:5, samples=70]
+    plot (\x, {-sqrt(5*(1 + (\x-5)*(\x-5)/20))});
+    \node[orange!95!black, font=\scriptsize, below right] at (-2.5, -4.3)
+    {$\frac{(x-5)^2}{20} - \frac{y^2}{5} = -1$};
+
+    % 頂点のプロット
+    \fill[teal!85!black] (-5, {sqrt(5)}) circle (2pt)
+    node[above left=1pt, font=\tiny] {$(-5, \sqrt{5})$};
+    \fill[orange!90!black] (5, {-sqrt(5)}) circle (2pt)
+    node[below right=1pt, font=\tiny] {$(5, -\sqrt{5})$};
+
+    % --- 7. 領域ラベル C1, C2, C3 ---
+    \node[draw=teal!85!black, rounded corners=2pt, inner sep=2.5pt, font=\normalsize\bfseries, teal!90!black]
+    at (0, 6.2) {$C_1$};
+    \node[draw=orange!90!black, rounded corners=2pt, inner sep=2.5pt, font=\normalsize\bfseries, orange!95!black]
+    at (0, -6.2) {$C_2$};
+    \node[draw=blue!85!black,, rounded corners=2pt, inner sep=2.5pt, font=\normalsize\bfseries, blue!90!black]
+    at (0, 0) {$C_3$};
+
+    % --- 8. 注釈ボックス ---
+    \node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=3.5pt, font=\footnotesize, align=left]
+    at (-8.0, -8.6) {
+      $\bullet\ C_1$: $d(P,R) = |PL_4|+|L_4R|,\quad d(Q,R) = |QL_1|+|L_1R|$\\[2pt]
+      $\bullet\ C_2$: $d(P,R) = |PL_3|+|L_3R|,\quad d(Q,R) = |QL_2|+|L_2R|$\\[2pt]
+      $\bullet\ C_3$: $d(P,R) = |PL_3|+|L_3R|,\quad d(Q,R) = |QL_1|+|L_1R|$
+    };
+
   \end{tikzpicture}
-  \caption{$C$ 内の領域 $C_1, C_2, C_3$ への分割}
+  \caption{領域 $C$ 内における $d(P,R), d(Q,R)$ の表式に応じた小領域 $C_1, C_2, C_3$ の分割}
+  \label{fig:region_c_subdivision}
 \end{figure}
 
+ただし，各領域での$d(P,R),d(Q,R)$は
 \begin{align}
   \begin{cases}
     C_1 : d(P,R) = |PL_4| + |L_4R|, \quad d(Q,R) = |QL_1| + |L_1R| \\
     C_2 : d(P,R) = |PL_3| + |L_3R|, \quad d(Q,R) = |QL_2| + |L_2R| \\
     C_3 : d(P,R) = |PL_3| + |L_3R|, \quad d(Q,R) = |QL_1| + |L_1R|
-  \end{cases}
+  \end{cases} \label{eq:6}
 \end{align}
-境界は
-\begin{align}
-  \dfrac{(x+5)^2}{20} - \dfrac{y^2}{5} = -1, \quad \dfrac{(x-5)^2}{20} - \dfrac{y^2}{5} = -1
-\end{align}
+で与えられる．
 
-まず $C_1, C_2$ について，対称性から $C_1$ のみ考える．$C_1$ から
+まず $C_1, C_2$ について，対称性から $C_1$ のみ考える．
+\cref{eq:6}から題意の条件は
 \begin{align}
   d(P,R) = d(Q,R) \iff |PL_4| + |L_4R| = |QL_1| + |L_1R| \iff |L_1R| - |L_4R| = 2\sqrt{5}
 \end{align}
-を満たす $R$ は，双曲線
+であり，これを満たす点 $R$ は，双曲線
 \begin{align}
-  \dfrac{x^2}{5} - \dfrac{(y-5)^2}{20} = 1
+  \dfrac{x^2}{5} - \dfrac{(y-5)^2}{20} = 1 \label{eq:7}
+\end{align}
+上にある．
+対称性から$C_2$については題意を満たす点$R$は，双曲線
+\begin{align}
+  \dfrac{x^2}{5} - \dfrac{(y+5)^2}{20} = 1 \label{eq:8}
 \end{align}
 上にある．
 
-$C_3$ について，④から，
+次に$C_3$ について，\cref{eq:6}から題意の条件は
 \begin{align}
   d(P,R) = d(Q,R) \iff |PL_3| + |L_3R| = |QL_1| + |L_1R| \iff |L_3R| = |L_1R|
 \end{align}
-だから，$R$ は $|L_1L_3|$ の垂直二等分線 $y = -x$ 上にある．
+であり，これを満たす点$R$は $|L_1L_3|$ の垂直二等分線 $y = -x$ 上にある．
+これと$C_2$の境界\cref{eq:5}との交点を考えると$y$を消去して
+\begin{align}
+  \begin{cases}
+    \dfrac{(x+5)^2}{20} - \dfrac{(-x)^2}{5} = -1 \\
+    \dfrac{(x-5)^2}{20} - \dfrac{(-x)^2}{5} = -1
+  \end{cases} \\
+  \begin{cases}
+    3x^2 - 10x - 45 = 0 \\
+    3x^2 + 10x - 45  = 0
+  \end{cases} \\
+  \begin{cases}
+    x = \dfrac{5 \pm 4\sqrt{10}}{3} \\
+    x = \dfrac{-5 \pm 4\sqrt{10}}{3}
+  \end{cases}
+\end{align}
+であり，$-5 \le x \le 5$であることと合わせると
+\begin{align}
+  x = \dfrac{5 - 4\sqrt{10}}{3}, \dfrac{-5 + 4\sqrt{10}}{3}
+\end{align}
+であるから領域は
+\begin{align}
+  y = -x \quad \left(\dfrac{5 - 4\sqrt{10}}{3} \le x \le \dfrac{-5 + 4\sqrt{10}}{3}\right) \label{eq:9}
+\end{align}
+である．
 
-\bigskip
-\noindent
-以上まとめて，
+以上\cref{eq:1,eq:7,eq:8,eq:9}をまとめて，求める軌跡は
 \begin{align}
   \begin{cases}
     y = -3x & (|x| \ge 3) \\
@@ -172,37 +457,219 @@ $C_3$ について，④から，
     \dfrac{x^2}{5} - \dfrac{(y+5)^2}{20} = 1 & (C_2 \text{内})
   \end{cases}
 \end{align}
-だから，図示して下図太線部．
+だから，図示して下図太線部である．
 
-\begin{framed}
-  \begin{align}
-    &y = -x \text{ と } \dfrac{x^2}{5} - \dfrac{(y-5)^2}{20} = 1 \text{ の交点は } 3x^2 - 10x - 45 = 0 \text{ の解} \\
-    &\text{共に } \Bigl( \dfrac{5-4\sqrt{10}}{3}, \dfrac{-5+4\sqrt{10}}{3} \Bigr) \text{ である．}
-  \end{align}
-\end{framed}
+% TODO: 図のupdate
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.52, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・厳密な交点座標パラメータ ---
+    % x_cross = (5 - 4*sqrt(10))/3 ≈ -2.5498
+    % y_cross = (-5 + 4*sqrt(10))/3 ≈ 2.5498
+    \pgfmathsetmacro{\xCross}{(5.0 - 4.0*sqrt(10.0)) / 3.0} % ≈ -2.550
+    \pgfmathsetmacro{\yCross}{-\xCross}                     % ≈ 2.550
+    \pgfmathsetmacro{\sqFive}{sqrt(5.0)}                    % ≈ 2.236
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (S)     at (-3, 9);
+    \coordinate (T)     at (3, -9);
+    \coordinate (P_c1)  at (\xCross, \yCross);
+    \coordinate (P_c2)  at ({-\xCross}, {-\yCross});
+    \coordinate (V_top) at ({-\sqFive}, 5);
+    \coordinate (V_bot) at (\sqFive, -5);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!70] (-8.5, 0) -- (8.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!70] (0, -12.5) -- (0, 12.5) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 領域 C の外枠と壁の補助破線 ---
+    % 正方形枠 [-5, 5] x [-5, 5]
+    \draw[dashed, gray!35] (-5, -5) rectangle (5, 5);
+
+    % 領域 C の上限・下限屋根型境界線 (L4-S-L1, L3-T-L2)
+    \draw[dashed, gray!50] (-5, 5) -- (S) -- (5, 5);
+    \draw[dashed, gray!50] (-5, -5) -- (T) -- (5, -5);
+
+    % 壁 l, m (基準破線)
+    \draw[dashed, red!50] (-5, -5) -- (-5, 5);
+    \draw[dashed, red!50] (5, -5) -- (5, 5);
+
+    % 基準直線 y = -x, y = -3x の全体ガイド破線
+    \draw[dashed, gray!45, domain=-6.5:6.5] plot (\x, {-\x});
+    \draw[dashed, gray!45, domain=-4:4] plot (\x, {-3*\x});
+
+    % --- 4. 点 R の軌跡 (太線で連続描画) ---
+    % (i) 領域 A 内: 直線 y = -3x (x <= -3)
+    \draw[line width=2.4pt, blue!85!black] (-3.8, 11.4) -- (S);
+
+    % (ii) 領域 C_1 内: 双曲線 x^2/5 - (y-5)^2/20 = 1 (-3 <= x <= xCross)
+    % 媒介変数 y を用いてプロット: y は 9 から yCross まで
+    \draw[line width=2.4pt, blue!85!black, domain=\yCross:9, samples=50]
+    plot ({-sqrt(5*(1 + (\x-5)*(\x-5)/20))}, \x);
+
+    % (iii) 領域 C_3 内: 直線 y = -x (xCross <= x <= -xCross)
+    \draw[line width=2.4pt, blue!85!black] (P_c1) -- (P_c2);
+
+    % (iv) 領域 C_2 内: 双曲線 x^2/5 - (y+5)^2/20 = 1 (-xCross <= x <= 3)
+    % 媒介変数 y: -yCross から -9 まで
+    \draw[line width=2.4pt, blue!85!black, domain=-9:-\yCross, samples=50]
+    plot ({sqrt(5*(1 + (\x+5)*(\x+5)/20))}, \x);
+
+    % (v) 領域 B 内: 直線 y = -3x (x >= 3)
+    \draw[line width=2.4pt, blue!85!black] (T) -- (3.8, -11.4);
+
+    % --- 5. 接続点・特徴点のプロット ---
+    \fill[blue!90!black] (S)     circle (3.2pt);
+    \fill[blue!90!black] (T)     circle (3.2pt);
+    \fill[blue!90!black] (P_c1)  circle (2.8pt);
+    \fill[blue!90!black] (P_c2)  circle (2.8pt);
+    \fill[teal!85!black] (V_top) circle (2.2pt);
+    \fill[teal!85!black] (V_bot) circle (2.2pt);
+
+    % --- 6. 目盛り破線と座標ラベル (手書きスケッチの完全再現) ---
+    % (i) 点 S(-3, 9)
+    \draw[dotted, gray!65] (-3, 0) -- (S) -- (0, 9);
+    \node[below=2pt, font=\scriptsize] at (-3, 0) {$-3$};
+    \node[right=2pt, font=\scriptsize] at (0, 9)  {$9$};
+
+    % (ii) 点 T(3, -9)
+    \draw[dotted, gray!65] (3, 0) -- (T) -- (0, -9);
+    \node[above=2pt, font=\scriptsize] at (3, 0)  {$3$};
+    \node[left=2pt, font=\scriptsize]  at (0, -9) {$-9$};
+
+    % (iii) 頂点 y = 5, y = -5 と x = -sqrt(5), sqrt(5)
+    \draw[dotted, gray!65] (V_top) -- (0, 5);
+    \draw[dotted, gray!65] (V_top) -- ({-\sqFive}, 0);
+    \draw[dotted, gray!65] (V_bot) -- (0, -5);
+    \draw[dotted, gray!65] (V_bot) -- ({\sqFive}, 0);
+    \node[right=2pt, font=\scriptsize] at (0, 5)  {$5$};
+    \node[left=2pt, font=\scriptsize]  at (0, -5) {$-5$};
+    \node[below=2pt, font=\scriptsize] at ({-\sqFive}, 0) {$-\sqrt{5}$};
+    \node[above=2pt, font=\scriptsize] at ({\sqFive}, 0)  {$\sqrt{5}$};
+
+    % (iv) 交点 ( (5-4sqrt(10))/3, (-5+4sqrt(10))/3 )
+    \draw[dotted, gray!65] (P_c1) -- (\xCross, 0);
+    \draw[dotted, gray!65] (P_c1) -- (0, \yCross);
+    \node[below=14pt, font=\scriptsize, align=center] at (\xCross, 0) {$\frac{5-4\sqrt{10}}{3}$};
+    \draw[->, thin, gray!70] (\xCross, -1.2) -- (\xCross, -0.1);
+
+    \node[right=22pt, font=\scriptsize, align=center] at (0, \yCross) {$\frac{-5+4\sqrt{10}}{3}$};
+    \draw[->, thin, gray!70] (1.8, \yCross) -- (0.1, \yCross);
+
+    % 正方形枠の ±5 目盛り
+    \node[below=2pt, font=\scriptsize] at (-5, 0) {$-5$};
+    \node[below=2pt, font=\scriptsize] at (5, 0)  {$5$};
+
+    % --- 7. 曲線の数式ラベル (引き出し線付き) ---
+    % 直線 y = -x
+    \node[font=\footnotesize, above right] at (1.0, -1.0) {$y = -x$};
+
+    % 直線 y = -3x (下部)
+    \node[font=\footnotesize, right=2pt] at (3.5, -10.5) {$y = -3x$};
+
+    % 上側双曲線
+    \node[font=\footnotesize, align=center, above right] at (1.8, 8.5)
+    {$\frac{x^2}{5} - \frac{(y-5)^2}{20} = 1$};
+    \draw[->, thin, gray!70] (1.8, 8.5) to[bend left=15] (-1.5, 7.8);
+
+    % 下側双曲線
+    \node[font=\footnotesize, align=center, below right] at (2.5, -3.2)
+    {$\frac{x^2}{5} - \frac{(y+5)^2}{20} = 1$};
+    \draw[->, thin, gray!70] (2.5, -3.2) to[bend right=15] (1.5, -7.8);
+
+  \end{tikzpicture}
+  \caption{$d(P,R) = d(Q,R)$ を満たす点 $R$ の軌跡（太線部）}
+  \label{fig:trajectory_of_point_r}
+\end{figure}
+
+{\bf [解説]}
+
+楕円と双曲線の図形的定義が使える問題だ．
+この機会に復習しておこう．
+
+まず楕円について，焦点$A(-c,0),B(c,0)$に対して動点$P$が$|AP| + |BP| = 2a$ を満たす時，
+その軌跡は楕円
+\begin{align}
+  \dfrac{x^2}{a^2} + \dfrac{y^2}{a^2-c^2} = 1
+\end{align}
+となる．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.5, >=stealth]
-    \draw[->] (-8,0) -- (8,0) node[right] {$x$};
-    \draw[->] (0,-10) -- (0,10) node[above] {$y$};
-
-    \draw[dashed] (-5,-5) -- (-5,5) -- (5,5) -- (5,-5) -- cycle;
-    \draw[dashed, domain=-8:8] plot (\x, {-3*\x});
-    \draw[dashed, domain=-7:7] plot (\x, {-\x});
-
-    % Trajectory of R
-    \draw[ultra thick, blue, domain=-8:-3] plot (\x, {-3*\x});
-    \draw[ultra thick, blue, domain=3:8] plot (\x, {-3*\x});
-    \draw[ultra thick, blue, domain=-2.55:2.55] plot (\x, {-\x});
-    \draw[ultra thick, blue, domain=-3:-2.55, samples=50] plot (\x, {5 + sqrt(20*(1 + (\x)^2/5))});
-    \draw[ultra thick, blue, domain=2.55:3, samples=50] plot (\x, {-5 - sqrt(20*(1 + (\x)^2/5))});
-
-    \node[left] at (-3,9) {$y=-3x$};
-    \node[right] at (3,-9) {$y=-3x$};
-    \node[right] at (2,-2) {$y=-x$};
+  \begin{tikzpicture}[scale=1.0, >=stealth]
+    \draw[->] (-2.5,0) -- (2.5,0) node[right] {$x$};
+    \draw[->] (0,-1.5) -- (0,1.5) node[above] {$y$};
+    \draw[thick, blue] (0,0) ellipse (2cm and 1.2cm);
+    \filldraw (-1.2,0) circle (1.5pt) node[above] {$A$} (1.2,0) circle (1.5pt) node[above] {$C$};
+    \node[below left] at (0,0) {$O$};
+    \node[below] at (-2,0) {$-a$};
+    \node[below] at (2,0) {$a$};
+    \node[above left] at (0,1.2) {$\sqrt{a^2-c^2}$};
   \end{tikzpicture}
-  \caption{$d(P,R)=d(Q,R)$ を満たす点 $R$ の軌跡（太線部）}
+  \caption{楕円 $|AP|+|BP|=2a$ の概形}
+\end{figure}
+
+次に双曲線について，同じく焦点$A(-c,0),B(c,0)$に対して動点$P$が$||AP| - |BP|| = 2a$ を満たす時，
+その軌跡は双曲線
+\begin{align}
+  \dfrac{x^2}{a^2} - \dfrac{y^2}{c^2-a^2} = 1
+\end{align}
+となる．漸近線は
+\begin{align}
+  \dfrac{x}{a} \pm \dfrac{y}{\sqrt{c^2-a^2}} = 0
+\end{align}
+である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.3, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. パラメータ設定 ---
+    % a = 1.0, b = 1.2
+    % c = sqrt(a^2 + b^2) = sqrt(1.0 + 1.44) ≈ 1.562
+    % 漸近線の傾き m = b/a = 1.2
+    \def\aVal{1.0}
+    \def\bVal{1.2}
+    \pgfmathsetmacro{\cVal}{sqrt(\aVal*\aVal + \bVal*\bVal)} % ≈ 1.562
+
+    % --- 2. 漸近線 y = ± (b/a) x (傾き ±1.2) ---
+    % x in [-1.5, 1.5] のとき y = ±1.8
+    \draw[dashed, gray!60, thick] (-1.5, -1.8) -- (1.5, 1.8)
+    node[above right=-1pt, font=\scriptsize, black] {$\frac{x}{a} - \frac{y}{b} = 0$};
+    \draw[dashed, gray!60, thick] (-1.5, 1.8) -- (1.5, -1.8)
+    node[below right=-1pt, font=\scriptsize, black] {$\frac{x}{a} + \frac{y}{b} = 0$};
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-2.6, 0) -- (2.6, 0) node[right] {$x$};
+    \draw[->, thick] (0, -2.1) -- (0, 2.1) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % --- 4. 双曲線の描画 (x = ± a cosh t, y = b sinh t) ---
+    % 右側の分枝
+    \draw[very thick, blue!85!black, domain=-1.15:1.15, samples=60]
+    plot ({\aVal*cosh(\x)}, {\bVal*sinh(\x)});
+    % 左側の分枝
+    \draw[very thick, blue!85!black, domain=-1.15:1.15, samples=60]
+    plot ({-\aVal*cosh(\x)}, {\bVal*sinh(\x)});
+
+    % --- 5. 頂点と焦点 ---
+    % 頂点 (±a, 0)
+    \fill[black] (\aVal, 0) circle (1.2pt) node[below right=1pt, font=\footnotesize] {$a$};
+    \fill[black] (-\aVal, 0) circle (1.2pt) node[below left=1pt, font=\footnotesize] {$-a$};
+
+    % 焦点 A(-c, 0), B(c, 0)
+    \fill[red!85!black] (-\cVal, 0) circle (1.5pt) node[below=2pt, red!90!black] {$A(-c, 0)$};
+    \fill[red!85!black] (\cVal, 0) circle (1.5pt) node[below=2pt, red!90!black] {$B(c, 0)$};
+
+    % 補助目盛り b = sqrt(c^2 - a^2)
+    \draw[dotted, gray!60] (\aVal, 0) -- (\aVal, \bVal) -- (0, \bVal);
+    \node[left=2pt, font=\scriptsize, gray!90!black] at (0, \bVal) {$b$};
+
+  \end{tikzpicture}
+  \caption{双曲線 $||AP|-|BP||=2a$の概形}
+  \label{fig:hyperbola_asymptotes_corrected}
 \end{figure}
 
 \newpage

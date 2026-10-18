@@ -1,50 +1,175 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-\noindent
-{\bf [解]} 左から $k$ 番目の数の，$S_n$ での値が $S$ と一致する確率を $t_k(n)$ とする．
+左から $k\, (k=1,2,3,4,5)$ 番目の数の $S_n$ での値が $S$ と一致する確率を $t_k(n)$ とする．
+最初の数列が$10110$だから，最初の数が$1$か$0$かに応じて，状態遷移図は以下のようになる．
 
-\bigskip
-\noindent
-$1^\circ$ $k=1,3,4$ の時
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
 
-$S$ では 1 だったから，$n+1$ 回目について，$n$ 回目で場合分けして
+    % ============================================================
+    % 【左側】1° 最初の数が 1 の場合 (k = 1, 3, 4)
+    % ============================================================
+    \begin{scope}[xshift=0cm]
+      % 見出し
+      \node[font=\footnotesize\bfseries, blue!85!black] at (1.5, 2.5)
+      {$1^\circ$ 初項が $1$ のとき ($k=1,3,4$)};
+
+      % ステップラベル (列ヘッダー)
+      \node[font=\small\bfseries, gray!80!black] at (0, 1.8) {ステップ $n$};
+      \node[font=\small\bfseries, gray!80!black] at (3.0, 1.8) {ステップ $n+1$};
+
+      % ノード配置
+      % 上段: 状態 1 (一致)
+      \node[draw=blue!85!black, fill=blue!12, very thick, circle, minimum size=0.9cm, font=\normalsize\bfseries]
+      (L_1_n) at (0, 0.9) {$1$};
+      \node[draw=blue!85!black, fill=blue!12, very thick, circle, minimum size=0.9cm, font=\normalsize\bfseries]
+      (L_1_next) at (3.0, 0.9) {$1$};
+      \node[left=3pt, font=\scriptsize, blue!90!black] at (L_1_n.west) {一致: $t_k(n)$};
+      \node[right=3pt, font=\scriptsize, blue!90!black] at (L_1_next.east) {$t_k(n+1)$};
+
+      % 下段: 状態 0 (不一致)
+      \node[draw=gray!70, fill=white, thick, circle, minimum size=0.9cm, font=\normalsize\bfseries]
+      (L_0_n) at (0, -0.9) {$0$};
+      \node[draw=gray!70, fill=white, thick, circle, minimum size=0.9cm, font=\normalsize\bfseries]
+      (L_0_next) at (3.0, -0.9) {$0$};
+      \node[left=3pt, font=\scriptsize, gray!70!black] at (L_0_n.west) {不一致: $1-t_k(n)$};
+      \node[right=3pt, font=\scriptsize, gray!70!black] at (L_0_next.east) {$1-t_k(n+1)$};
+
+      % 遷移矢印 (n -> n+1)
+      % 1 -> 1 (維持: 1-q)
+      \draw[->, line width=1.4pt, blue!85!black] (L_1_n) -- (L_1_next)
+      node[midway, above=1pt, font=\footnotesize] {$1-q$};
+      % 0 -> 1 (反転: p)
+      \draw[->, line width=1.4pt, teal!85!black] (L_0_n) -- (L_1_next)
+      node[midway, above left=-1pt, font=\footnotesize] {$p$};
+
+      % 1 -> 0 (反転: q)
+      \draw[->, dashed, thick, red!75!black] (L_1_n) -- (L_0_next)
+      node[midway, below left=-1pt, font=\footnotesize] {$q$};
+      % 0 -> 0 (維持: 1-p)
+      \draw[->, dashed, thick, gray!60] (L_0_n) -- (L_0_next)
+      node[midway, below=1pt, font=\footnotesize] {$1-p$};
+
+      % 漸化式のまとめボックス
+      \node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=3.5pt, font=\scriptsize, align=left]
+      at (1.5, -2.1) {
+        $t_k(n+1) = (1-q)t_k(n) + p(1-t_k(n))$
+      };
+    \end{scope}
+
+    % 中央の境界区切り線
+    \draw[dashed, gray!35] (5.4, 2.6) -- (5.4, -2.5);
+
+    % ============================================================
+    % 【右側】2° 最初の数が 0 の場合 (k = 2, 5)
+    % ============================================================
+    \begin{scope}[xshift=7.0cm]
+      % 見出し
+      \node[font=\footnotesize\bfseries, blue!85!black] at (1.5, 2.5)
+      {$2^\circ$ 初項が $0$ のとき ($k=2,5$)};
+
+      % ステップラベル (列ヘッダー)
+      \node[font=\small\bfseries, gray!80!black] at (0, 1.8) {ステップ $n$};
+      \node[font=\small\bfseries, gray!80!black] at (3.0, 1.8) {ステップ $n+1$};
+
+      % ノード配置
+      % 上段: 状態 0 (一致)
+      \node[draw=blue!85!black, fill=blue!12, very thick, circle, minimum size=0.9cm, font=\normalsize\bfseries]
+      (R_0_n) at (0, 0.9) {$0$};
+      \node[draw=blue!85!black, fill=blue!12, very thick, circle, minimum size=0.9cm, font=\normalsize\bfseries]
+      (R_0_next) at (3.0, 0.9) {$0$};
+      \node[left=3pt, font=\scriptsize, blue!90!black] at (R_0_n.west) {一致: $t_k(n)$};
+      \node[right=3pt, font=\scriptsize, blue!90!black] at (R_0_next.east) {$t_k(n+1)$};
+
+      % 下段: 状態 1 (不一致)
+      \node[draw=gray!70, fill=white, thick, circle, minimum size=0.9cm, font=\normalsize\bfseries]
+      (R_1_n) at (0, -0.9) {$1$};
+      \node[draw=gray!70, fill=white, thick, circle, minimum size=0.9cm, font=\normalsize\bfseries]
+      (R_1_next) at (3.0, -0.9) {$1$};
+      \node[left=3pt, font=\scriptsize, gray!70!black] at (R_1_n.west) {不一致: $1-t_k(n)$};
+      \node[right=3pt, font=\scriptsize, gray!70!black] at (R_1_next.east) {$1-t_k(n+1)$};
+
+      % 遷移矢印 (n -> n+1)
+      % 0 -> 0 (維持: 1-p)
+      \draw[->, line width=1.4pt, blue!85!black] (R_0_n) -- (R_0_next)
+      node[midway, above=1pt, font=\footnotesize] {$1-p$};
+      % 1 -> 0 (反転: q)
+      \draw[->, line width=1.4pt, red!80!black] (R_1_n) -- (R_0_next)
+      node[midway, above left=-1pt, font=\footnotesize] {$q$};
+
+      % 0 -> 1 (反転: p)
+      \draw[->, dashed, thick, teal!75!black] (R_0_n) -- (R_1_next)
+      node[midway, below left=-1pt, font=\footnotesize] {$p$};
+      % 1 -> 1 (維持: 1-q)
+      \draw[->, dashed, thick, gray!60] (R_1_n) -- (R_1_next)
+      node[midway, below=1pt, font=\footnotesize] {$1-q$};
+
+      % 漸化式のまとめボックス
+      \node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=3.5pt, font=\scriptsize, align=left]
+      at (1.5, -2.1) {
+        $t_k(n+1) = (1-p)t_k(n) + q(1-t_k(n))$
+      };
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{ステップ $n$ から $n+1$ への状態遷移と一致確率 $t_k(n+1)$ の漸化関係}
+  \label{fig:step_transition_lattice}
+\end{figure}
+
+従って$t_k(n)$に関する漸化式は最初の数に応じて以下のようになる．
+
+\subparagraph{$1^\circ$ 最初の数が$1$の時，すなわち$k=1,3,4$ の時}
+
+$S$ では 1 だったから，$n+1$ 回目について$n$ 回目で場合分けして
 \begin{align}
-  t_k(n+1) &= (1-q) t_k(n) + p(1 - t_k(n)) \\
+  t_k(n+1)
+  &= (1-q) t_k(n) + p(1 - t_k(n)) \\
   &= (1-p-q) t_k(n) + p \\
-  t_k(n+1) - \dfrac{p}{p+q} &= (1-p-q) \Bigl( t_k(n) - \dfrac{p}{p+q} \Bigr)
+  \therefore
+  t_k(n+1) - \dfrac{p}{p+q}
+  &= (1-p-q) \Bigl( t_k(n) - \dfrac{p}{p+q} \Bigr)
 \end{align}
-$t_k(0) = 1$ から，くり返し用いて
+を得る．$t_k(0) = 1$ からくり返し用いて
 \begin{align}
-  t_k(n) &= (1-p-q)^n \Bigl( 1 - \dfrac{p}{p+q} \Bigr) + \dfrac{p}{p+q} \\
-  &= \dfrac{1}{p+q} \{ p + q(1-p-q)^n \} \quad \dots \text{①}
+  t_k(n)
+  &= (1-p-q)^n \Bigl( 1 - \dfrac{p}{p+q} \Bigr) + \dfrac{p}{p+q} \\
+  &= \dfrac{1}{p+q} \{ p + q(1-p-q)^n \} \label{eq:1}
 \end{align}
 
-\bigskip
-\noindent
-$2^\circ$ $k=2,5$ の時
+\subparagraph{$2^\circ$ 最初の数が$0$の時，すなわち$k=2,5$ の時}
 
-$1^\circ$ と同様に，
+$1^\circ$ と同様に考えて
 \begin{align}
-  t_k(n+1) &= (1-p) t_k(n) + q(1 - t_k(n)) \\
+  t_k(n+1)
+  &= (1-p) t_k(n) + q(1 - t_k(n)) \\
   &= (1-p-q) t_k(n) + q \\
-  t_k(n+1) - \dfrac{q}{p+q} &= (1-p-q) \Bigl( t_k(n) - \dfrac{q}{p+q} \Bigr)
+  \therefore
+  t_k(n+1) - \dfrac{q}{p+q}
+  &= (1-p-q) \Bigl( t_k(n) - \dfrac{q}{p+q} \Bigr)
 \end{align}
-$t_k(0) = 1$ から，くり返し用いて
+を得る．$t_k(0) = 1$ からくり返し用いて
 \begin{align}
-  t_k(n) = \dfrac{1}{p+q} \{ q + p(1-p-q)^n \} \quad \dots \text{②}
+  t_k(n) = \dfrac{1}{p+q} \{ q + p(1-p-q)^n \} \label{eq:2}
 \end{align}
+である．
+\casesend
 
-\bigskip
-\noindent
-①，② から，
+\cref{eq:1,eq:2}から，第$n$回目の書写しで$S$と一致する確率$C(n)$は，
+$t_k(n)\, (k=1,2,3,4,5)$の積で
 \begin{align}
-  C(n) = \prod_{k=1}^5 t_k(n) \xrightarrow{n \to \infty} \dfrac{p^3 q^2}{(p+q)^5} \quad \text{\#\#}
+  C(n)
+  &= \prod_{k=1}^5 t_k(n) \\
+  &= \left(\dfrac{p + q(1-p-q)^n}{p+q} \right)^3\left(\dfrac{q + p(1-p-q)^n}{p+q}\right)^2
 \end{align}
+である．$|1-p-q|<1$だから，$n\to\infty$での極限値は
+\begin{align}
+  \lim_{n\to\infty} C(n) =  \dfrac{p^3 q^2}{(p+q)^5}
+\end{align}
+である．
 
 \newpage
 
