@@ -1,100 +1,284 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} 以下 $C = \cos\theta, S = \sin\theta \ (0 \le \theta < 2\pi)$ とする．$C$上の点$P$は $P(\sqrt{\alpha}C, \sqrt{\beta}(S+1))$ とかける．
+パラメータ$\theta\, (0\le\theta<2\pi)$を用いて
+$C$上の点$P$は $P(\sqrt{\alpha}\cos\theta, \sqrt{\beta}(\sin\theta+1))$ とかける．また題意より$\alpha,\beta >0$である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ ---
+    % D: 単位円盤 x^2 + y^2 <= 1
+    % C: 中心 (0, sqrt(beta)), 長半径・短半径 sqrt(alpha), sqrt(beta)
+    % 例として (2) で最大面積を与えるパラメータ付近を採用:
+    % alpha = 2/3 ≈ 0.667 => sqrt(alpha) ≈ 0.816
+    % beta = 2/9 ≈ 0.222  => sqrt(beta)  ≈ 0.471
+    % 中心 y_0 = sqrt(beta) ≈ 0.471
+    \def\aParam{0.6667}
+    \def\bParam{0.2222}
+    \pgfmathsetmacro{\radA}{sqrt(\aParam)} % ≈ 0.816
+    \pgfmathsetmacro{\radB}{sqrt(\bParam)} % ≈ 0.471
+    \pgfmathsetmacro{\yC}{\radB}           % 中心 y 座標 ≈ 0.471
+
+    % 代表点 P (theta = 50°)
+    \def\angTheta{50}
+    \pgfmathsetmacro{\xP}{\radA * cos(\angTheta)}
+    \pgfmathsetmacro{\yP}{\radB * (sin(\angTheta) + 1.0)}
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (Center) at (0, \yC);
+    \coordinate (P)     at (\xP, \yP);
+
+    % --- 2. 領域 D (単位円盤) の塗りつぶしと輪郭線 ---
+    \fill[gray!10, opacity=0.7] (O) circle (1.0);
+    \draw[thick, gray!70] (O) circle (1.0);
+    \node[gray!80!black, font=\footnotesize] at (-0.68, -0.68) {領域 $D: x^2+y^2 \le 1$};
+
+    % --- 3. 楕円 C (中心 (0, sqrt(beta))) の塗りつぶしと輪郭線 ---
+    % 楕円の方程式: x^2/alpha + (y - sqrt(beta))^2/beta = 1
+    \fill[blue!15, opacity=0.7] (Center) ellipse [x radius=\radA, y radius=\radB];
+    \draw[very thick, blue!85!black] (Center) ellipse [x radius=\radA, y radius=\radB];
+    \node[blue!90!black, font=\footnotesize\bfseries] at (-0.28, 0.47) {$C$};
+
+    % --- 4. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-1.35, 0) -- (1.45, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.25) -- (0, 1.4) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 単位円の目盛り (±1)
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[below=2pt, font=\scriptsize] at (-1.0, 0) {$-1$};
+    \node[left=2pt, font=\scriptsize]  at (0, 1.0) {$1$};
+    \node[left=2pt, font=\scriptsize]  at (0, -1.0) {$-1$};
+    \fill (1.0, 0)  circle (0.5pt);
+    \fill (-1.0, 0) circle (0.5pt);
+    \fill (0, 1.0)  circle (0.5pt);
+    \fill (0, -1.0) circle (0.5pt);
+
+    % --- 5. 楕円の中心と軸半径の寸法表示 ---
+    % 中心 (0, sqrt(beta))
+    \fill[teal!85!black] (Center) circle (1.0pt);
+    \node[left=2pt, font=\scriptsize, teal!90!black] at (Center) {$(0, \sqrt{\beta})$};
+
+    % 半径 sqrt(alpha) (水平方向)
+    \draw[<->, thick, teal!85!black] (Center) -- (\radA, \yC);
+    \node[teal!90!black, font=\scriptsize, above] at ($ (Center)!0.5!(\radA, \yC) $) {$\sqrt{\alpha}$};
+
+    % 半径 sqrt(beta) (垂直方向)
+    \draw[<->, thick, teal!85!black] (Center) -- (0, {\yC + \radB});
+    \node[teal!90!black, font=\scriptsize, right] at ($ (Center)!0.5!(0, {\yC + \radB}) $) {$\sqrt{\beta}$};
+
+    % --- 6. 動点 P と原点からの距離ベクトル OP ---
+    \draw[->, line width=1.4pt, red!85!black] (O) -- (P);
+    \fill[red!85!black] (P) circle (1.2pt);
+    \node[above right=1pt, red!90!black, font=\footnotesize]
+    at (P) {$P\left(\sqrt{\alpha}\cos\theta, \sqrt{\beta}(\sin\theta+1)\right)$};
+
+    % 距離 |OP| <= 1 の注記
+    \node[red!90!black, font=\scriptsize, left=1pt] at ($ (O)!0.55!(P) $) {$|OP| \le 1$};
+
+  \end{tikzpicture}
+  \caption{単位円盤 $D$ とそれに含まれる楕円 $C$ および動点 $P$}
+  \label{fig:ellipse_in_disk_overview}
+\end{figure}
 
 \paragraph{(1)}
 
-$C$が$D$に含まれる条件は
+$C$が$D$に含まれる条件は，$C$上の任意の点$P$が原点との距離が$1$以下であること，
+すなわち
 \begin{align}
-  (\sqrt{\alpha}C)^2 + (\sqrt{\beta}(S+1))^2 &\le 1
+  (\sqrt{\alpha}\cos\theta)^2 + (\sqrt{\beta}(\sin\theta+1))^2 &\le 1
 \end{align}
-が任意の$\theta$で成立すること．
+が任意の$\theta$で成立することである．
+展開して整理して
 \begin{align}
-  \alpha (1 - S^2) + \beta (S+1)^2 - 1 &\le 0 \\
-  (\beta - \alpha) S^2 + 2\beta S + \alpha + \beta - 1 &\le 0 \cdots \text{①}
+  \alpha (1 - \sin^2\theta) + \beta (\sin\theta+1)^2 - 1 &\le 0 \\
+  \therefore
+  (\beta - \alpha) \sin^2\theta + 2\beta \sin\theta + \alpha + \beta - 1 &\le 0 \label{eq:1}
 \end{align}
-①の左辺 $f(S) \ (-1 \le S \le 1)$ とおく． $f'(S) = 2(\beta - \alpha)S + 2\beta$ で $f'(-1) = 2\alpha > 0$, $f'(1) = 2(2\beta - \alpha)$ となる．
-
-$1^\circ \ f'(1) \ge 0 \iff 2\beta \ge \alpha$ の時
-
-$f(S)$は高々1次関数であるから，$[-1, 1]$で$f'(S) \ge 0$であり，$f(S)$は単調増加．したがって，$f(1) \le 0$ ならば①をみたす．
+である．\cref{eq:1}の左辺を$f(\sin\theta)\, (-1\le \sin\theta \le 1)$とおくと
 \begin{align}
-  f(1) = 4\beta - 1 \le 0 \iff \beta \le \dfrac{1}{4} \cdots \text{②}
+  f(x) = (\beta - \alpha) x^2 + 2\beta x + \alpha + \beta - 1 \label{eq:2}
 \end{align}
+だから，一階微分は
+\begin{align}
+  f'(x) = 2(\beta - \alpha)x + 2\beta \label{eq:3}
+\end{align}
+である．$f'(x)$はたかだか一次関数で，両端での値は
+\begin{align}
+  \begin{cases}
+    f'(1) = 2(2\beta-\alpha) \\
+    f'(-1) = 2\alpha >0
+  \end{cases}
+\end{align}
+である．$f'(-1)>0$だから，$f'(1)$の正負に応じて$f(x)$の増減表は変化する．
 
-$2^\circ \ f'(1) \le 0 \iff 2\beta \le \alpha$ の時
+\subparagraph{$1^\circ \ f'(1) \ge 0 \iff 2\beta \ge \alpha$ の時}
 
-$f(S)$は高々$S$の2次関数で，$\beta \ne \alpha$ だから，下表をうる．
+$f(x)$は高々1次関数であるから，$[-1, 1]$で$f'(x) \ge 0$であり，$f(x)$は単調増加であり，増減表は以下のようになる．
+
 \begin{table}[htb]
   \centering
+  \caption{$f(x)$ の増減表 ($2\beta \ge \alpha$ のとき)}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    $x$    & $-1$       & $\cdots$   & $1$       \\ \hline
+    $f'$   & $+$        & $+$        & $+$       \\ \hline
+    $f$    & $f(-1)$    & $\nearrow$ & $f(1)$    \\ \hline
+  \end{tabular}
+\end{table}
+
+したがって，この区間での$f(x)$の最大値は$f(1)$だから，$f(1) \le 0$ ならば\cref{eq:1}をみたす．よって求める条件は
+\begin{align}
+  f(1) = 4\beta - 1 \le 0 \iff \beta \le \dfrac{1}{4} \label{eq:4}
+\end{align}
+である．
+
+\subparagraph{$2^\circ \ f'(1) \le 0 \iff 2\beta \le \alpha$ の時}
+
+$f'(x)$は高々$S$の1次関数だから$[-1,1]$で一回だけ符号を変える．
+$\beta \ne \alpha$ だから，$f(x)$の増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$f(x)$の増減表}
   \begin{tabular}{|c|c|c|c|c|c|}
     \hline
-    $S$ & $-1$ & $\cdots$ & $-\dfrac{\beta}{\beta-\alpha}$ & $\cdots$ & $1$ \\
+    $x$ & $-1$ & $\cdots$ & $-\dfrac{\beta}{\beta-\alpha}$ & $\cdots$ & $1$ \\
     \hline
     $f'$ & $+$ & $+$ & $0$ & $-$ & $-$ \\
     \hline
     $f$ & & $\nearrow$ & & $\searrow$ & \\
     \hline
   \end{tabular}
-  \caption{$f(S)$の増減表}
 \end{table}
 
 したがって，$f\left(-\dfrac{\beta}{\alpha-\beta}\right) \le 0$ なら条件をみたす．
 \begin{align}
   f\left(-\dfrac{\beta}{\alpha-\beta}\right) = \dfrac{\beta^2}{\alpha-\beta} + \alpha + \beta - 1 &\le 0
 \end{align}
-$0 < 2\beta \le \alpha$ から，$\alpha - \beta > 0$ だから，両辺 $\alpha - \beta$ をかけて，
+$0 < 2\beta \le \alpha$ より $\alpha - \beta > 0$ だから，両辺 $\alpha - \beta$ をかけて，求める条件は
 \begin{align}
-  \beta \le -\alpha^2 + \alpha \cdots \text{③}
+  \beta \le -\alpha^2 + \alpha \label{eq:5}
 \end{align}
+である．
+\casesend
 
-②, ③から，求める条件は，
+\cref{eq:4,eq:5}をまとめて求める条件は，
 \begin{align}
-  \begin{cases} \alpha \le 2\beta \text{ の時， } \beta \le \dfrac{1}{4} \\ 2\beta \le \alpha \text{ の時， } \beta \le -\alpha^2 + \alpha
-  \end{cases} \cdots \text{④}
+  \begin{cases}
+    \alpha \le 2\beta \text{ の時， } \beta \le \dfrac{1}{4} \\
+    2\beta \le \alpha \text{ の時， } \beta \le -\alpha^2 + \alpha
+  \end{cases} \label{eq:6}
 \end{align}
-④を図示して下図斜線部（境界は$\alpha, \beta$軸のみ含まず）
+である．これを図示して下図斜線部（境界は$\alpha, \beta$軸のみ含まず）である．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}
-    \draw[->] (-0.5, 0) -- (2.5, 0) node[right] {$\alpha$};
-    \draw[->] (0, -0.5) -- (0, 1.5) node[above] {$\beta$};
-    \draw (0, 0) -- (1, 0.5) node[right] {$\beta = \frac{1}{2}\alpha$};
-    \draw (0, 0.5) -- (2, 0.5);
-    \node at (0, 0.5) [left] {$\frac{1}{4}$};
-    \draw[domain=0.5:1, smooth, variable=\x] plot ({\x}, {-\x*\x + \x});
-    \node at (1.2, 0.2) {$\beta = -\alpha^2 + \alpha$};
-    \node at (0.5, 0) [below] {$\frac{1}{2}$};
-    \node at (1, 0) [below] {$1$};
+  \begin{tikzpicture}[scale=6, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ ---
+    % 接続点: alpha = 1/2, beta = 1/4 (直線 beta = 1/2*alpha と放物線 beta = -alpha^2 + alpha の交点)
+    \coordinate (O)       at (0, 0);
+    \coordinate (P_joint) at (0.5, 0.25);
+    \coordinate (P_alpha1) at (1.0, 0);
+    \coordinate (P_beta14) at (0, 0.25);
+
+    % --- 2. 求める領域のハッチング塗りつぶし ---
+    % 0 < alpha <= 1/2 では beta <= 1/4
+    % 1/2 <= alpha < 1 では beta <= -alpha^2 + alpha
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75]
+    (0, 0) -- (0, 0.25) -- (P_joint)
+    -- plot[domain=0.5:1.0, samples=50] (\x, {-\x*\x + \x})
+    -- cycle;
+
+    % --- 3. 領域の境界線 ---
+    % (i) beta = 1/4 (0 <= alpha <= 1/2) (実線)
+    \draw[very thick, blue!85!black] (0, 0.25) -- (P_joint);
+
+    % (ii) 放物線 beta = -alpha^2 + alpha (1/2 <= alpha <= 1) (実線)
+    \draw[very thick, blue!85!black, domain=0.5:1.0, samples=60]
+    plot (\x, {-\x*\x + \x});
+
+    % 放物線の延長点線 (0 <= alpha <= 0.5)
+    \draw[dotted, teal!70!black, thick, domain=0.1:0.5, samples=30]
+    plot (\x, {-\x*\x + \x});
+    \node[teal!85!black, font=\scriptsize, above right] at (0.7, 0.2) {$\beta = -\alpha^2 + \alpha$};
+
+    % --- 4. 境界条件の補助直線 beta = 1/2*alpha (破線) ---
+    \draw[dashed, gray!60, thick] (0, 0) -- (0.9, 0.45)
+    node[above right=-1pt, font=\scriptsize, black] {$\beta = \frac{1}{2}\alpha$};
+
+    % --- 5. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.1, 0) -- (1.25, 0) node[right] {$\alpha$};
+    \draw[->, thick, gray!80!black] (0, -0.08) -- (0, 0.48) node[above] {$\beta$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 6. 座標投影破線と目盛り ---
+    % alpha = 1/2, beta = 1/4 の投影
+    \draw[dashed, gray!50] (0.5, 0) -- (P_joint) -- (0, 0.25);
+    \node[below=2pt, font=\scriptsize] at (0.5, 0) {$\frac{1}{2}$};
+    \node[left=2pt, font=\scriptsize]  at (0, 0.25) {$\frac{1}{4}$};
+
+    % alpha = 1 の目盛り
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+
+    % --- 7. 特徴点・除外点のプロット ---
+    % 接続点 (1/2, 1/4) (境界に含まれる実点)
+    \fill[blue!90!black] (P_joint) circle (0.6pt);
+    \node[above=2pt, font=\scriptsize, blue!90!black] at (P_joint) {$\left(\frac{1}{2}, \frac{1}{4}\right)$};
+
+    % 除外点 (alpha > 0, beta > 0 より軸上の境界点は含まない: 白抜き丸)
+    \draw[thick, fill=white] (O) circle (0.7pt);
+    \draw[thick, fill=white] (P_beta14) circle (0.7pt);
+    \draw[thick, fill=white] (P_alpha1) circle (0.7pt);
+
   \end{tikzpicture}
-  \caption{④の条件を満たす$(\alpha,\beta)$の領域}
+  \caption{\cref{eq:6}の条件を満たす $(\alpha,\beta)$ の存在領域}
+  \label{fig:alpha_beta_region_part1}
 \end{figure}
+
+これは\cref{eq:6}をまとめ直せば
+\begin{align}
+  \begin{cases}
+    \beta \le \dfrac{1}{4} & \left(0 < \alpha \le \dfrac{1}{2}\right) \\
+    \beta \le -\alpha^2+\alpha & \left(\dfrac{1}{2} \le \alpha < 1\right)
+  \end{cases} \label{eq:7}
+\end{align}
+である．
 
 \paragraph{(2)}
 
-$C$の面積は $T = \sqrt{\alpha\beta} \pi$ だから，$\alpha\beta$が最大の時，$T$も最大 $\cdots \text{⑤}$
+楕円$C$の面積は $T = \sqrt{\alpha\beta} \pi$ だから，$\alpha\beta$が最大の時に$T$も最大である．以下$\alpha$を固定して考える．\cref{eq:7}から$\alpha$が$\dfrac{1}{2}$より大きいかどうかで場合分けして考える．
 
-以下$\alpha$を固定して考える．
+\subparagraph{$1^\circ \ 0 \le \alpha \le \dfrac{1}{2}$}
 
-$1^\circ \ 0 \le \alpha \le \dfrac{1}{2}$
+この時は$0 < \beta \le \dfrac{1}{4}$ だから，$(\alpha, \beta) = \left(\dfrac{1}{2}, \dfrac{1}{4}\right)$ で最大値
+\begin{align}
+  \max \alpha\beta = \dfrac{1}{8} \label{eq:8}
+\end{align}
+をとる．
 
-$0 < \beta \le \dfrac{1}{4}$ から，$(\alpha, \beta) = (\dfrac{1}{2}, \dfrac{1}{4})$ で最大値 $\dfrac{1}{8}$
+\subparagraph{$2^\circ \ \dfrac{1}{2} \le \alpha < 1$}
 
-$2^\circ \ \dfrac{1}{2} \le \alpha < 1$
-
-$\beta = -\alpha^2 + \alpha$ で $\alpha\beta$は最大値 $f(\alpha) = -\alpha^3 + \alpha^2$ をとる．
+$\beta = -\alpha^2 + \alpha$ で $\alpha\beta$は最大値
+\begin{align}
+  \max \alpha\beta = \alpha(-\alpha^2 + \alpha) = -\alpha^3+\alpha^2
+\end{align}
+をとる．この右辺を$g(\alpha)$とおいて次に$\alpha$を動かす．
+一階微分は
 \begin{align}
   f'(\alpha) &= -3\alpha^2 + 2\alpha
 \end{align}
-から下表をうる．
+だから$f(\alpha)$の増減表は以下のようになる．
+
 \begin{table}[htb]
   \centering
+  \caption{$f(\alpha)$の増減表}
   \begin{tabular}{|c|c|c|c|c|c|}
     \hline
     $\alpha$ & $\dfrac{1}{2}$ & $\cdots$ & $\dfrac{2}{3}$ & $\cdots$ & $1$ \\
@@ -104,13 +288,22 @@ $\beta = -\alpha^2 + \alpha$ で $\alpha\beta$は最大値 $f(\alpha) = -\alpha^
     $f$ & & $\nearrow$ & & $\searrow$ & \\
     \hline
   \end{tabular}
-  \caption{$f(\alpha)$の増減表}
 \end{table}
-したがって，$\max \alpha\beta = f(2/3) = \dfrac{4}{27} \ (> \dfrac{1}{8})$
 
-以上 $1^\circ, 2^\circ$ から，$\max \alpha\beta = \dfrac{4}{27}$ だから，⑤から
+したがって，$\alpha=\dfrac{2}{3}$の時に
 \begin{align}
-  \max T &= \dfrac{2}{9} \sqrt{3} \pi \quad \text{（終）}
+  \max \alpha\beta = f(2/3) = \dfrac{4}{27} \ (> \dfrac{1}{8})
 \end{align}
+をとる．これは$0 \le \alpha \le \dfrac{1}{2}$の時の最大値\cref{eq:8}よりも大きい．
+\casesend
+
+以上 $1^\circ, 2^\circ$ から $\max \alpha\beta = \dfrac{4}{27}$ だから，
+求める$T$の最大値は
+\begin{align}
+  \max T
+  = \pi\sqrt{\max \alpha\beta}
+  = \dfrac{2}{9} \sqrt{3} \pi
+\end{align}
+である．
 
 \end{document}

@@ -1,85 +1,179 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\usepackage{emath}
-\usepackage{emathPp}
-\usepackage{cases}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1996$年$2$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\preEqlabel{$\cdots$}
-\begin{oframed}
-  $a$，$b$，$c$，$d$を正の数とする．不等式
-  \begin{align}
-    \begin{cases}
-      s(1-a)-tb>0 \\
-      -sc+t(1-d)>0
-    \end{cases}
-  \end{align}
-  を同時に満たす正の数$s$，$t$があるとき，$2$次方程式
-  \[x^2-(a+d)x+(ad-bc)=0\]
-  は$-1<x<1$の範囲に異なる$2$つの実数解を持つことを示せ．
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]} 与方程式の左辺$f(x)$とする．また
-  \begin{numcases}
-    {}s(1-a)-tb>0 \label{1}\\
-    -sc+t(1-d)>0\label{2}
-  \end{numcases}
-  とする．
+{\bf[解]}
 
-  $1-a\le 0$つまり$1\le a$の時，\eqref{1}が満たされず不適．故に
-  \begin{align}
-    0<a<1\label{5}
-  \end{align}
-  このもとで，\eqref{1}を変形して
-  \begin{align}
-    s>\dfrac{b}{1-a}t\label{3}
-  \end{align}
-  また，$c>0$だから，\eqref{2}を変形して
-  \begin{align}
-    s<\dfrac{1-d}{c}t\label{4}
-  \end{align}
-  である．ここで，$s>0$だから，
-  \begin{align}
-    1-d>0 \nonumber\\
-    0<d<1\label{6}
-  \end{align}
-  である．
+与えられた不等式
+\begin{align}
+  a,b,c,d > 0 \label{eq:1}\\
+  s(1-a)-tb>0 \label{eq:2}\\
+  -sc+t(1-d)>0 \label{eq:3}
+\end{align}
+について考える．与えられた二次方程式の左辺を$f(x)$とおき：
+\begin{align}
+  f(x) = x^2-(a+d)x+(ad-bc)
+\end{align}
+$f(x)=0$について考える．
 
-  以上から
-  \begin{align}
-    &\exists s_{>0},\exists t_{>0}，\eqref{1}\land\eqref{2} \\
-    \Longleftrightarrow&\exists s_{>0},\exists t_{>0}，\eqref{3}\land\eqref{4}\land\eqref{5} \\
-    \Longleftrightarrow&\exists t_{>0}，\dfrac{b}{1-a}t<\dfrac{1-d}{c}t \land\eqref{5} \\
-    \Longleftrightarrow& \dfrac{b}{1-a}<\dfrac{1-d}{c} \land\eqref{5} \\
-    \Longleftrightarrow& bc<(1-a)(1-d) \land \eqref{5} &(\because c>0)
-  \end{align}
-  である．
+まずは\cref{eq:1,eq:2,eq:3}を満たす$t,s>0$が存在する$a,b,c,d$の条件について考える．\cref{eq:2,eq:3}より
+\begin{align}
+  \begin{cases}
+    s(1-a) > tb \\
+    t(1-d) > sc
+  \end{cases}
+\end{align}
+だが，$t,b,s,c>0$よりこれらの右辺は正だから
+\begin{align}
+  \begin{cases}
+    s(1-a)>0 \\
+    t(1-d)>0
+  \end{cases}
+  \therefore
+  \begin{cases}
+    a<1 \\
+    d<1
+  \end{cases} \label{eq:4}
+\end{align}
+である．よって再度\cref{eq:2,eq:3}をこのもとで整理して
+\begin{align}
+  \dfrac{c}{1-d}s < t < \dfrac{1-a}{b}s
+\end{align}
+だから，このような$s,t>0$が存在する条件は
+\begin{align}
+  \dfrac{c}{1-d} < \dfrac{1-a}{b} \quad \therefore bc < (1-a)(1-d) \label{eq:5}
+\end{align}
+である．\cref{eq:4}と合わせて$a,b,c,d$の条件は
+\begin{align}
+  \begin{cases}
+    0<a,d<1 \\
+    0<b,c \\
+    bc < (1-a)(1-d)
+  \end{cases} \label{eq:6}
+\end{align}
+である．
 
-  故に，$a$から$d$までが正であることと併せて，
-  \begin{align}
-    f(\pm 1)&=(1+ad-bc)\mp (a+d) \\
-    &>(a+d)\mp (a+d)>0 \\
-    f(a)&=-bc<0&(-1<a<1)
-  \end{align}
-  であるから，題意は示された．$\Box$
-  \newpage
-\end{multicols}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標定義 ---
+    \coordinate (O) at (0, 0);
+
+    % 直線の傾き: m1 = c/(1-d), m2 = (1-a)/b  (m1 < m2)
+    % 例として m1 = 0.45, m2 = 1.15
+    \def\mOne{0.45}
+    \def\mTwo{1.15}
+    \def\sMax{3.0}
+
+    % --- 2. 満たすべき領域 (m1*s < t < m2*s, s > 0) のハッチング ---
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.7]
+    (O) -- (\sMax, {\mOne*\sMax}) -- (\sMax, {\mTwo*\sMax}) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (3.5, 0) node[right] {$s$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 3.8) node[above] {$t$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 境界直線（境界は含まないので破線）---
+    % (i) 下側境界: t = c/(1-d) s
+    \draw[very thick, dashed, teal!85!black] (O) -- (3.2, {\mOne*3.2});
+    \node[teal!90!black, font=\footnotesize, right] at (3.2, {\mOne*3.2})
+    {$t = \frac{c}{1-d}s$};
+
+    % (ii) 上側境界: t = (1-a)/b s
+    \draw[very thick, dashed, blue!85!black] (O) -- (2.8, {\mTwo*2.8});
+    \node[blue!90!black, font=\footnotesize, above left] at (2.7, {\mTwo*2.7})
+    {$t = \frac{1-a}{b}s$};
+
+    % 原点 (除外点: 白抜き丸)
+    \draw[thick, fill=white] (O) circle (1.3pt);
+
+  \end{tikzpicture}
+  \caption{$(s,t)$ 平面において不等式を満たす正の点 $(s,t)$ の存在領域(斜線部境界を含まず)}
+  \label{fig:st_plane_region}
+\end{figure}
+
+\cref{eq:6}の元で$f(x)=0$について考えると，判別式$D$として
+\begin{align}
+  \begin{cases}
+    \text{端点}: f(\pm 1) = (1+ad-bc)\mp (a+d) >(a+d)\mp (a+d)>0 \\
+    \text{軸}: -1 < \dfrac{a+d}{2} < 1 \\
+    \text{判別式}: D = (a+d)^2-4(ad-bc) = (a-d)^2 + 4bc > 0
+  \end{cases}
+\end{align}
+だから，$y=f(x)$のグラフの概形は下図のようになり，$f(x)=0$は$-1<x<1$に二つの異なる実数解を持つ．$\Box$
+
+% TODO: y=f(x)の概形
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ ---
+    % 0 < a, d < 1, bc < (1-a)(1-d) の一例:
+    % a = 0.5, d = 0.3 => a+d = 0.8 (軸 x_axis = 0.4)
+    % ad = 0.15, bc = 0.10 => ad - bc = 0.05
+    % f(x) = x^2 - 0.8x + 0.05
+    % 頂点: (0.4, 0.05 - 0.16) = (0.4, -0.11)
+    % f(1) = 1 - 0.8 + 0.05 = 0.25 > 0
+    % f(-1) = 1 + 0.8 + 0.05 = 1.85 > 0
+    % 解: x = 0.4 ± sqrt(0.16 - 0.05) = 0.4 ± sqrt(0.11) ≈ 0.4 ± 0.3317 (0.068, 0.732)
+    \def\sumAD{0.8}
+    \def\prodDet{0.05}
+    \pgfmathsetmacro{\xAxis}{\sumAD / 2.0}                        % 0.4
+    \pgfmathsetmacro{\yVertex}{\prodDet - \xAxis*\xAxis}          % -0.11
+    \pgfmathsetmacro{\xSolOne}{\xAxis - sqrt(\xAxis*\xAxis - \prodDet)} % ≈ 0.068
+    \pgfmathsetmacro{\xSolTwo}{\xAxis + sqrt(\xAxis*\xAxis - \prodDet)} % ≈ 0.732
+    \pgfmathsetmacro{\yPosOne}{1.0 - \sumAD + \prodDet}           % 0.25
+    \pgfmathsetmacro{\yNegOne}{1.0 + \sumAD + \prodDet}           % 1.85
+
+    \coordinate (O)      at (0, 0);
+    \coordinate (Vertex) at (\xAxis, \yVertex);
+    \coordinate (P_neg1) at (-1.0, \yNegOne);
+    \coordinate (P_pos1) at (1.0, \yPosOne);
+
+    % --- 2. 区間 (-1, 1) のハイライト背景 ---
+    \fill[blue!5, opacity=0.8] (-1.0, -0.4) rectangle (1.0, 2.1);
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-1.4, 0) -- (1.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 2.2) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 軸 x = (a+d)/2 の破線 ---
+    \draw[dashed, teal!85!black, thick] (\xAxis, -0.35) -- (\xAxis, 1.9);
+    \node[below=2pt, font=\scriptsize, teal!90!black] at (\xAxis, 0) {$\frac{a+d}{2}$};
+
+    % --- 5. 放物線 y = f(x) のプロット ---
+    \draw[line width=1.8pt, blue!85!black, domain=-1.1:1.35, samples=70]
+    plot (\x, {\x*\x - \sumAD*\x + \prodDet});
+    \node[blue!90!black, font=\footnotesize\bfseries, right] at (1.15, 1.25)
+    {$y = f(x)$};
+
+    % --- 6. 端点 x = ±1 における値 f(±1) ---
+    % x = 1
+    \draw[dashed, gray!60] (1.0, 0) -- (P_pos1) -- (0, \yPosOne);
+    \fill[black] (P_pos1) circle (1.2pt);
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[left=2pt, font=\scriptsize, gray!90!black] at (0, \yPosOne) {$f(1) > 0$};
+
+    % x = -1
+    \draw[dashed, gray!60] (-1.0, 0) -- (P_neg1) -- (0, \yNegOne);
+    \fill[black] (P_neg1) circle (1.2pt);
+    \node[below=2pt, font=\scriptsize] at (-1.0, 0) {$-1$};
+    \node[right=2pt, font=\scriptsize, gray!90!black] at (0, \yNegOne) {$f(-1) > 0$};
+
+    % --- 7. 2つの実数解 (x 軸との交点) ---
+    \fill[red!85!black] (\xSolOne, 0) circle (1.4pt);
+    \fill[red!85!black] (\xSolTwo, 0) circle (1.4pt);
+
+    % --- 8. 頂点 (y < 0) ---
+    \fill[blue!90!black] (Vertex) circle (1.2pt);
+    \node[below right=1pt, font=\scriptsize, blue!90!black] at (Vertex) {頂点 ($D > 0$)};
+
+  \end{tikzpicture}
+  \caption{放物線 $y = f(x)$ の概形と開区間 $(-1, 1)$ 内の 2 つの実数解}
+  \label{fig:fx_two_real_roots}
+\end{figure}
+
+\newpage
 \end{document}

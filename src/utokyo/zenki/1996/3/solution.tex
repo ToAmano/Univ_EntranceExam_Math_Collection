@@ -1,77 +1,466 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 \paragraph{(1)}
 
-$2r > \ell$ とすると，立方体の表面の正方形に平行な$S$の接平面の接点(下図の$P$)から1点も見えないから，与えられた条件を満たさない．よって $0 < r \le \dfrac{\ell}{2}$ が必要．
+立方体の一辺の長さ$\ell$，球の半径$r$とする．
+まず立方体の各面が球と接する場合を考えると，下図から球の直径が立方体の一辺に等しく
+\begin{align}
+  2r = \ell \quad \therefore r = \dfrac{\ell}{2}
+\end{align}
+である．
 
-逆に $0 < r \le \dfrac{\ell}{2}$ の時，球面$S$上の点は立方体の内部又は表面にある．この時，全ての頂点が見えない$S$上の点$P$が存在すると仮定すると，点$P$における$S$の接平面に関して$A_1 \sim A_8$が同じ側にあることになる．
-すなわち立方体が点$P$の接平面に対し片側（接平面を含まない）だけにあることになるが，この時点$P$は立方体の外部（表面を含まず）の点となり矛盾．よって，$0 < r \le \dfrac{\ell}{2}$ （終）
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標 ---
+    \def\lenL{2.0} % l
+    \def\radR{1.0} % r = l/2
+
+    \coordinate (O)   at (0, 0);
+    \coordinate (BL)  at (-\radR, -\radR);
+    \coordinate (BR)  at (\radR, -\radR);
+    \coordinate (TR)  at (\radR, \radR);
+    \coordinate (TL)  at (-\radR, \radR);
+
+    % --- 2. 断面正方形（立方体の中心断面）---
+    \fill[gray!10] (BL) rectangle (TR);
+    \draw[very thick, gray!80!black] (BL) rectangle (TR);
+
+    % --- 3. 内接円（球 S の大円）---
+    \fill[blue!15, opacity=0.7] (O) circle (\radR);
+    \draw[very thick, blue!85!black] (O) circle (\radR);
+    \node[blue!90!black, font=\footnotesize] at (0, 0.4) {球面 $S$};
+
+    % 接点 4 箇所
+    \fill[red!85!black] (0, \radR) circle (1.2pt);
+    \fill[red!85!black] (0, -\radR) circle (1.2pt);
+    \fill[red!85!black] (\radR, 0) circle (1.2pt);
+    \fill[red!85!black] (-\radR, 0) circle (1.2pt);
+
+    % --- 4. 半径と一辺の長さの表示 ---
+    \draw[->, thick, teal!85!black] (O) -- (40:\radR) node[midway, above left=-1pt] {$r$};
+    \fill[black] (O) circle (0.8pt) node[below left=1pt] {$O$};
+
+    % 一辺 l のブレース
+    \draw[decorate, decoration={brace, amplitude=5pt}, thick, gray!80!black]
+    (\radR + 0.15, -\radR) -- (\radR + 0.15, \radR)
+    node[midway, right=6pt] {一辺 $\ell$};
+
+    % 直径 2r の表示
+    \draw[<->, thick, red!85!black] (-\radR, 0) -- (\radR, 0)
+    node[midway, below=1pt, font=\scriptsize] {$2r = \ell$};
+
+  \end{tikzpicture}
+  \caption{立方体の各面に球が接する様子（中心を通る主断面）}
+  \label{fig:cube_inscribed_sphere_cross_section}
+\end{figure}
+
+$r$がこれより大きいか小さいかで場合分けする．
+
+\subparagraph{$r > \dfrac{\ell}{2}$の時}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.9, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ ---
+    \def\lenL{1.8}     % 立方体の幅
+    \def\radR{1.25}    % r > l/2 = 0.90
+    \pgfmathsetmacro{\halfL}{\lenL / 2.0}
+
+    \coordinate (O)  at (0, 0);
+    \coordinate (P)  at (0, \radR); % 外に飛び出た頂点近傍の点 P
+
+    % 立方体の 4 頂点（断面）
+    \coordinate (A1) at (-\halfL, \halfL);
+    \coordinate (A2) at (\halfL, \halfL);
+    \coordinate (A3) at (\halfL, -\halfL);
+    \coordinate (A4) at (-\halfL, -\halfL);
+
+    % --- 2. 断面正方形（立方体）---
+    \fill[gray!12] (A4) rectangle (A2);
+    \draw[thick, gray!80!black] (A4) rectangle (A2);
+
+    % --- 3. 球面 S (r > l/2) ---
+    \draw[very thick, blue!85!black] (O) circle (\radR);
+    \node[blue!90!black, font=\footnotesize] at (-0.6, -0.6) {球面 $S$};
+
+    % --- 4. 点 P における接平面（直線）---
+    \draw[line width=1.6pt, red!85!black] (-1.8, \radR) -- (1.8, \radR)
+    node[right=2pt, font=\footnotesize] {点 $P$ での接平面};
+    \fill[red!85!black] (P) circle (1.4pt) node[above=2pt] {$P(0, r)$};
+
+    % --- 5. 点 P から立方体への視線（接平面の下側に隠れる）---
+    \draw[dashed, teal!85!black] (P) -- (A1);
+    \draw[dashed, teal!85!black] (P) -- (A2);
+
+    % 頂点プロット
+    \fill[black] (A1) circle (1.2pt) node[above left=1pt] {$A_1$};
+    \fill[black] (A2) circle (1.2pt) node[above right=1pt] {$A_2$};
+    \fill[black] (A3) circle (1.2pt);
+    \fill[black] (A4) circle (1.2pt);
+    \fill[black] (O)  circle (0.8pt) node[below left=1pt] {$O$};
+
+    % 接線マーク
+    \draw[thin, gray!70] (0, \radR - 0.12) -- (0.12, \radR - 0.12) -- (0.12, \radR);
+
+  \end{tikzpicture}
+  \caption{$r > \dfrac{\ell}{2}$ のとき，点 $P$ から頂点が1つも見えない状況}
+  \label{fig:sphere_larger_than_half_l}
+\end{figure}
+
+この時は立方体の表面の正方形に平行な$S$の接平面の接点(下図の$P$)から立方体の頂点が1点も見えないから，与えられた条件を満たさない．
+
+\subparagraph{$0 < r \le \dfrac{\ell}{2}$の時}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.9, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ ---
+    \def\lenL{2.2}     % 立方体の幅
+    \def\radR{0.8}     % r < l/2 = 1.1
+    \pgfmathsetmacro{\halfL}{\lenL / 2.0}
+
+    \coordinate (O)  at (0, 0);
+    \coordinate (P)  at (45:\radR); % 球面上の点 P (北東方向)
+
+    % 立方体の 4 頂点
+    \coordinate (A1) at (-\halfL, \halfL);
+    \coordinate (A2) at (\halfL, \halfL);
+    \coordinate (A3) at (\halfL, -\halfL);
+    \coordinate (A4) at (-\halfL, -\halfL);
+
+    % --- 2. 断面正方形（立方体）---
+    \fill[gray!10] (A4) rectangle (A2);
+    \draw[very thick, gray!80!black] (A4) rectangle (A2);
+
+    % --- 3. 球面 S (r <= l/2) ---
+    \fill[blue!15, opacity=0.7] (O) circle (\radR);
+    \draw[very thick, blue!85!black] (O) circle (\radR);
+    \node[blue!90!black, font=\footnotesize] at (-0.2, -0.3) {球面 $S$};
+
+    % --- 4. 点 P における接平面（接線）---
+    % 法線方向は 45° なので、接線方向は 135° - 315°
+    \draw[line width=1.6pt, red!85!black]
+    ($ (P) + (135:1.5) $) -- ($ (P) + (-45:1.5) $)
+    node[above right=1pt, font=\footnotesize] {点 $P$ での接平面};
+    \fill[red!85!black] (P) circle (1.4pt) node[above right=2pt] {$P$};
+
+    % 接平面の法線 OP
+    \draw[thick, dashed, teal!85!black] (O) -- (P);
+
+    % --- 5. 点 P から見える頂点 A2 ---
+    \draw[very thick, teal!85!black] (P) -- (A2);
+    \fill[teal!85!black] (A2) circle (1.5pt) node[above right=1pt] {$A_2$（見える）};
+
+    % 他の頂点
+    \fill[black] (A1) circle (1.2pt) node[above left=1pt] {$A_1$};
+    \fill[black] (A3) circle (1.2pt) node[below right=1pt] {$A_3$};
+    \fill[black] (A4) circle (1.2pt) node[below left=1pt] {$A_4$};
+    \fill[black] (O)  circle (0.8pt) node[below left=1pt] {$O$};
+
+  \end{tikzpicture}
+  \caption{$0 < r \le \dfrac{\ell}{2}$ のとき，任意の点 $P$ から頂点が見える様子}
+  \label{fig:sphere_smaller_than_half_l}
+\end{figure}
+
+この時は球面$S$上の任意の点は立方体の内部又は表面にある．
+この時，全ての頂点が見えない$S$上の点$P$が存在すると仮定すると，点$P$における$S$の接平面に関して$A_1 \sim A_8$が同じ側にあることになる．
+すなわち立方体が点$P$の接平面に対し片側（接平面を含まない）だけにあることになるが，この時点$P$は立方体の外部（表面を含まず）の点となり矛盾する．
+よって背理法により，この時は$S$上の任意の点からいずれかの頂点が見える．
+\casesend
+
+以上の場合分けより求める条件は
+\begin{align}
+  0 < r \le \dfrac{\ell}{2}
+\end{align}
+である．
 
 \paragraph{(2)}
 
-正四面体$A_2 A_4 A_5 A_7$を考える．この1辺は $\sqrt{2}\ell$ である．この内接球の半径を$r_0$とすると，体積比較により
+立方体の頂点$A_1,\cdots,A_8$を以下のように配置する．
+
+\begin{figure}[htb]
+  \centering
+  \tdplotsetmaincoords{70}{125}
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標定義 (一辺 l = 1.6) ---
+    \def\aL{1.6}
+    % 下面: A5, A6, A7, A8
+    % 上面: A1, A2, A3, A4
+    \coordinate (A5) at (0, 0, 0);
+    \coordinate (A6) at (\aL, 0, 0);
+    \coordinate (A7) at (\aL, \aL, 0);
+    \coordinate (A8) at (0, \aL, 0);
+
+    \coordinate (A1) at (0, 0, \aL);
+    \coordinate (A2) at (\aL, 0, \aL);
+    \coordinate (A3) at (\aL, \aL, \aL);
+    \coordinate (A4) at (0, \aL, \aL);
+
+    % --- 2. 稜線の描画（奥側破線、手前実線）---
+    % 奥側の稜線 (点 A5 から出る 3 辺)
+    \draw[dashed, gray!60, thick] (A5) -- (A6);
+    \draw[dashed, gray!60, thick] (A5) -- (A8);
+    \draw[dashed, gray!60, thick] (A5) -- (A1);
+
+    % 手前・外側の稜線
+    \draw[very thick, blue!85!black] (A6) -- (A7) -- (A8);
+    \draw[very thick, blue!85!black] (A1) -- (A2) -- (A3) -- (A4) -- cycle;
+    \draw[very thick, blue!85!black] (A6) -- (A2);
+    \draw[very thick, blue!85!black] (A7) -- (A3);
+    \draw[very thick, blue!85!black] (A8) -- (A4);
+
+    % 四面体
+    \draw[very thick, red!85!black] (A2) -- (A4) -- (A7) -- cycle;
+    \draw[dashed, red!85!black] (A2) -- (A5);
+    \draw[dashed, red!85!black] (A4) -- (A5);
+    \draw[dashed, red!85!black] (A7) -- (A5);
+
+    % --- 3. 頂点のプロットとラベル ---
+    \fill[black] (A1) circle (1.2pt) node[above left=1pt] {$A_1$};
+    \fill[red!85!black] (A2) circle (1.4pt) node[below left=1pt] {$A_2$};
+    \fill[black] (A3) circle (1.2pt) node[above right=1pt] {$A_3$};
+    \fill[red!85!black] (A4) circle (1.4pt) node[above=2pt] {$A_4$};
+    \fill[red!85!black] (A5) circle (1.4pt) node[below left=1pt] {$A_5$};
+    \fill[black] (A6) circle (1.2pt) node[below right=1pt] {$A_6$};
+    \fill[red!85!black] (A7) circle (1.4pt) node[below right=1pt] {$A_7$};
+    \fill[black] (A8) circle (1.2pt) node[right=2pt] {$A_8$};
+
+  \end{tikzpicture}
+  \caption{立方体の頂点 $A_1 \sim A_8$ の配置と四面体$A_2A_4A_5A_7$}
+  \label{fig:cube_vertices_labeling}
+\end{figure}
+
+正四面体$A_2 A_4 A_5 A_7$を考えるとこの1辺は $\sqrt{2}\ell$ である．
+この内接球の半径を$r_0$とする．四面体$A_2 A_4 A_5 A_7$の体積は，底面\triangle$A_2A_5A_7$，高さ$r_0$の三角錐$4$つの体積であり，または一辺$\ell$の立方体から$4$つの三角錐$A_2A_5A_6A_7$を取り除いた部分の体積でもある．
+
+% TODO: 体積ふたとおりで計算する図
+\begin{figure}[htb]
+  \centering
+  \tdplotsetmaincoords{70}{125}
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標定義 (一辺 l = 1.8) ---
+    \def\aL{1.8}
+    % 下面: A5(0,0,0), A6(l,0,0), A7(l,l,0), A8(0,l,0)
+    % 上面: A1(0,0,l), A2(l,0,l), A3(l,l,l), A4(0,l,l)
+    \coordinate (A5) at (0, 0, 0);
+    \coordinate (A6) at (\aL, 0, 0);
+    \coordinate (A7) at (\aL, \aL, 0);
+    \coordinate (A8) at (0, \aL, 0);
+
+    \coordinate (A1) at (0, 0, \aL);
+    \coordinate (A2) at (\aL, 0, \aL);
+    \coordinate (A3) at (\aL, \aL, \aL);
+    \coordinate (A4) at (0, \aL, \aL);
+
+    % 中心 O (l/2, l/2, l/2)
+    \coordinate (O) at ({\aL/2}, {\aL/2}, {\aL/2});
+
+    % 正四面体の面 A2-A5-A7 の重心 M
+    % M = (A2 + A5 + A7) / 3 = ( (l+0+l)/3, (0+0+l)/3, (l+0+0)/3 ) = (2l/3, l/3, l/3)
+    \coordinate (M) at ({2*\aL/3}, {\aL/3}, {\aL/3});
+
+    % --- 2. 立方体の外枠（薄いグレーの補助線）---
+    % 奥側の稜線
+    \draw[dashed, gray!40] (A5) -- (A6);
+    \draw[dashed, gray!40] (A5) -- (A8);
+    \draw[dashed, gray!40] (A5) -- (A1);
+    % 手前・外側の稜線
+    \draw[gray!50, thick] (A6) -- (A7) -- (A8);
+    \draw[gray!50, thick] (A1) -- (A2) -- (A3) -- (A4) -- cycle;
+    \draw[gray!50, thick] (A6) -- (A2);
+    \draw[gray!50, thick] (A7) -- (A3);
+    \draw[gray!50, thick] (A8) -- (A4);
+
+    % Oから
+    \draw[gray!50, thick,dashed] (O) -- (A2);
+    \draw[gray!50, thick,dashed] (O) -- (A4);
+    \draw[gray!50, thick,dashed] (O) -- (A7);
+
+    % --- 3. 正四面体 A2-A4-A5-A7 の面（薄い透過塗りつぶし）---
+    % 面 A4-A5-A7 (奥側)
+    \fill[orange!15, opacity=0.45] (A4) -- (A5) -- (A7) -- cycle;
+    % 面 A2-A4-A7 (上面側)
+    \fill[blue!15, opacity=0.55] (A2) -- (A4) -- (A7) -- cycle;
+    % 面 A2-A5-A7 (手前底面側: 重心 M が乗る面)
+    \fill[teal!20, opacity=0.65] (A2) -- (A5) -- (A7) -- cycle;
+
+    % --- 4. 正四面体の稜線 ---
+    % 奥側の稜線
+    \draw[line width=1.4pt, dashed, red!85!black] (A4) -- (A5);
+
+    % 手前の稜線（実線強調）
+    \draw[line width=1.6pt, red!85!black] (A2) -- (A7);
+    \draw[line width=1.6pt, red!85!black] (A2) -- (A5);
+    \draw[line width=1.6pt, red!85!black] (A5) -- (A7);
+    \draw[line width=1.6pt, red!85!black] (A4) -- (A7);
+    \draw[line width=1.6pt, red!85!black] (A2) -- (A4);
+
+    % --- 5. 中心 O から面 A2A5A7 への垂線 r_0 ---
+    % 中心 O から重心 M への垂線
+    \draw[line width=2.0pt, purple!90!black] (O) -- (M);
+    \node[purple!90!black, font=\footnotesize\bfseries, above right=1pt] at ($ (O)!0.5!(M) $) {$r_0$};
+
+    % 重心 M における直角記号 (OM ⊥ 面 A2A5A7)
+    % 面上の2方向ベクトルとして A5A7 と A5A2 を使用
+    \coordinate (dir1) at ($ (A7) - (A5) $);
+    \coordinate (dir2) at ($ (A2) - (A5) $);
+    \draw[thin, gray!70]
+    ($ (M) + 0.08*(O) - 0.08*(M) $) --
+    ($ (M) + 0.08*(O) - 0.08*(M) + 0.08*(A2) - 0.08*(M) $) --
+    ($ (M) + 0.08*(A2) - 0.08*(M) $);
+
+    % 重心 M と各頂点を結ぶ補助線（面の分割・高さの理解用）
+    \draw[dashed, teal!70!black] (A2) -- (M);
+    \draw[dashed, teal!70!black] (A5) -- (M);
+    \draw[dashed, teal!70!black] (A7) -- (M);
+
+    % --- 6. 頂点プロットとラベル ---
+    % 正四面体の 4 頂点
+    \fill[red!85!black] (A2) circle (1.4pt) node[below left=1pt] {$A_2$};
+    \fill[red!85!black] (A4) circle (1.4pt) node[above=2pt] {$A_4$};
+    \fill[red!85!black] (A5) circle (1.4pt) node[below left=1pt] {$A_5$};
+    \fill[red!85!black] (A7) circle (1.4pt) node[below right=1pt] {$A_7$};
+
+    % 中心 O と面の重心 M
+    \fill[purple!90!black] (O) circle (1.5pt) node[above left=1pt, purple!95!black] {$O$};
+    \fill[teal!85!black]   (M) circle (1.2pt) node[below right=1pt, font=\scriptsize, teal!90!black] {$M$};
+
+    % 立方体のその他の頂点（薄く表示）
+    \fill[gray!60] (A1) circle (0.8pt) node[above left=1pt, font=\tiny, gray!70] {$A_1$};
+    \fill[gray!60] (A3) circle (0.8pt) node[above right=1pt, font=\tiny, gray!70] {$A_3$};
+    \fill[gray!60] (A6) circle (0.8pt) node[below right=1pt, font=\tiny, gray!70] {$A_6$};
+    \fill[gray!60] (A8) circle (0.8pt) node[right=1pt, font=\tiny, gray!70] {$A_8$};
+
+  \end{tikzpicture}
+  \caption{立方体内部の正四面体 $A_2A_4A_5A_7$ と中心 $O$ から面への垂線 $r_0$}
+  \label{fig:cube_inscribed_tetrahedron_r0}
+\end{figure}
+
+従って
 \begin{align}
-  \dfrac{\sqrt{3}}{4}(\sqrt{2}\ell)^2 \cdot r_0 \dfrac{1}{3} \cdot 4 &= \ell^3 - \dfrac{\ell^2}{2} \cdot \ell \dfrac{1}{3} \cdot 4 \\
+  & 4\cdot \left[\dfrac{1}{3}\triangle A_2A_5A_7\cdot r_0\right] = (\text{立方体}A_1\cdots A_8) - 4\cdots \left[\dfrac{1}{3}\triangle A_5A_6A_7 \cdot |A_2A_6|\right] \\
+  & 4\cdot \dfrac{1}{3} \dfrac{\sqrt{3}}{4}(\sqrt{2}\ell)^2 r_0 = \ell^3 - \dfrac{1}{3}\dfrac{\ell^2}{2} \cdot \ell \cdot 4 \\
+  & \dfrac{2\sqrt{3}}{3}\ell^2r_0 = \dfrac{\ell^3}{3} \\
+  \therefore
   r_0 &= \dfrac{\sqrt{3}}{6}\ell
 \end{align}
-ここで，$r > r_0$ とすると平面$A_2 A_4 A_5$に平行な$S$の接平面の接点からは高々点$A_1$しかみえないから，少なくとも2点がみえるには $0 < r \le \dfrac{\sqrt{3}}{6}\ell$ が必要．
+である．$r$がこれより大きいか小さいかで場合分けする．
 
-逆に $0 < r \le \dfrac{\sqrt{3}}{6}\ell$ の時，まず $r < \dfrac{\ell}{2}$ をみたすから(1)より$S$上の全ての点から少なくとも1つの頂点がみえる．ここで，$S$上のある点に対し，1点しかみえないと仮定し，それを$A_1$とすると，線分$A_1 O$ と$S$との交点のうち$A_1$に近い点$P_0$において，辺$A_1A_2, A_1A_4, A_1A_5$ ($A_2, A_4, A_5$は含まず)と交わり，かつ平面$A_2 A_4 A_5$に平行な$S$の接平面が存在する．この時 $P_0O (=r) > \dfrac{\sqrt{3}}{6}\ell$ となり，$0 < r \le \dfrac{\sqrt{3}}{6}\ell$に矛盾．
-以上から，もとめる条件は $0 < r \le \dfrac{\sqrt{3}}{6}\ell$ （終）
-
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}
-    \draw (0,0) rectangle (4,4);
-    \draw (2,2) circle (2);
-    \draw (0,4) -- (4,0);
-    \draw (0,0) -- (4,4);
-    \node at (2,4.3) {$P$};
-    \node at (4.5,4.3) {接面};
-    \draw (2,2) -- (3.414, 3.414);
-    \node at (2.6, 2.9) {$r$};
-  \end{tikzpicture}
-  \caption{球面$S$と立方体の接平面の接点$P$}
-\end{figure}
+\subparagraph{$r>r_0$の時}
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}
-    % Cube outline roughly
-    \coordinate (A1) at (0, 2.5);
-    \coordinate (A4) at (2, 5);
-    \coordinate (A3) at (5, 4);
-    \coordinate (A2) at (3, 1.5);
-    \coordinate (A5) at (0, -0.5);
-    \coordinate (A6) at (3, -2);
-    \coordinate (A7) at (5, 0.5);
-    \coordinate (A8) at (2, 2); % back vertex
+  \begin{tikzpicture}[scale=2.0, >=stealth, every node/.style={font=\small}]
 
-    \draw (A1) -- (A4) -- (A3);
-    \draw (A1) -- (A5) -- (A6) -- (A7) -- (A3);
-    \draw (A4) -- (A2) -- (A7);
-    \draw (A5) -- (A2);
-    \draw (A1) -- (A2);
-    \draw[dashed] (A4) -- (A8) -- (A1);
-    \draw[dashed] (A8) -- (A3);
-    \draw[dashed] (A8) -- (A5);
-    \draw[dashed] (A8) -- (A6);
+    % --- 1. 定数・座標パラメータ ---
+    % 正三角形 A2-A4-A5 を底面とする断面（頂点 A1 が上）
+    \coordinate (O)   at (0, 0);          % 正四面体の中心
+    \coordinate (A1)  at (0, 1.8);        % 頂点 A1 (上の手前)
+    \coordinate (M)   at (0, -0.6);       % 面 A2A4A5 の中心 (重心)
+    \coordinate (B_L) at (-1.5, -0.6);    % 底面の端
+    \coordinate (B_R) at (1.5, -0.6);     % 底面の端
 
-    \node[left] at (A1) {$A_1$};
-    \node[above] at (A4) {$A_4$};
-    \node[right] at (A3) {$A_3$};
-    \node[below] at (A6) {$A_6$};
-    \node[right] at (A7) {$A_7$};
-    \node[left] at (A5) {$A_5$};
-    \node[right] at (A2) {$A_2$};
+    % r0 = OM = 0.6
+    \def\radRzero{0.6}
+    \def\radR{0.9} % r > r0
+
+    % --- 2. 底面 A2A4A5 (水平線) ---
+    \draw[very thick, gray!70] (B_L) -- (B_R) node[right=2pt] {面 $A_2A_4A_5$};
+
+    % 頂点 A1 から底面への四面体の稜線
+    \draw[thick, gray!60] (A1) -- (B_L);
+    \draw[thick, gray!60] (A1) -- (B_R);
+    \draw[dashed, gray!50] (A1) -- (M);
+
+    % --- 3. 球面 S (r > r0) ---
+    \draw[very thick, blue!85!black] (O) circle (\radR);
+    \node[blue!90!black, font=\footnotesize] at (1.0, 0.4) {球面 $S$};
+
+    % --- 4. 面 A2A4A5 に平行な接平面 (下側) ---
+    \coordinate (P) at (0, -\radR);
+    \draw[line width=1.6pt, red!85!black] (-1.8, -\radR) -- (1.8, -\radR)
+    node[right=2pt, font=\footnotesize] {接平面};
+    \fill[red!85!black] (P) circle (1.4pt) node[below=2pt] {$P$};
+
+    % --- 5. 頂点プロットとラベル ---
+    \fill[black] (A1) circle (1.2pt) node[above=2pt] {$A_1$};
+    \fill[black] (O)  circle (0.8pt) node[right=2pt] {$O$};
+    \fill[gray!70] (M) circle (1.0pt) node[above right=1pt, font=\scriptsize] {$r_0 = \frac{\sqrt{3}}{6}\ell$};
+
+    % 半径 r の矢印
+    \draw[->, thick, teal!85!black] (O) -- (P) node[midway, left=1pt] {$r$};
+
   \end{tikzpicture}
-  \caption{立方体の頂点$A_1,\dots,A_8$の位置関係}
+  \caption{$r > r_0$ のとき，接点 $P$ から高々1頂点しか見えない状況}
+  \label{fig:sphere_larger_than_r0}
 \end{figure}
+
+この時，平面$A_2 A_4 A_5$に平行な$S$の接平面の接点からは高々点$A_1$しかみえないから不適である．
+
+\subparagraph{$0 < r \le \dfrac{\sqrt{3}}{6}\ell$ の時}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.0, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ ---
+    \coordinate (O)   at (0, 0);          % 中心
+    \coordinate (A1)  at (0, 1.8);        % 頂点 A1
+    \coordinate (M)   at (0, -0.6);       % 面 A2A4A5 の中心
+    \coordinate (B_L) at (-1.5, -0.6);
+    \coordinate (B_R) at (1.5, -0.6);
+
+    \def\radR{0.48} % r <= r0 = 0.6
+
+    % --- 2. 正四面体の断面枠 ---
+    \draw[thick, gray!60] (A1) -- (B_L) -- (B_R) -- cycle;
+    \draw[dashed, gray!45] (A1) -- (M);
+
+    % --- 3. 球面 S (r <= r0) ---
+    \fill[blue!15, opacity=0.7] (O) circle (\radR);
+    \draw[very thick, blue!85!black] (O) circle (\radR);
+    \node[blue!90!black, font=\footnotesize] at (0.2, 0.15) {球面 $S$};
+
+    % --- 4. 球面上の点 P とその接平面 ---
+    % 任意の点 P (例として斜め下向き)
+    \coordinate (P) at (-35:\radR);
+    \draw[line width=1.6pt, red!85!black]
+    ($ (P) + (55:1.4) $) -- ($ (P) + (-125:1.4) $)
+    node[below right=1pt, font=\footnotesize] {接平面};
+    \fill[red!85!black] (P) circle (1.4pt) node[above right=1pt] {$P$};
+
+    % 接平面の外側に見える 2 頂点への視線
+    \draw[very thick, teal!85!black] (P) -- (B_R) node[midway, above right=-1pt, font=\scriptsize] {見える};
+    \draw[very thick, teal!85!black] (P) -- (A1);
+
+    % --- 5. 頂点プロット ---
+    \fill[teal!85!black] (A1) circle (1.3pt) node[above=2pt] {$A_1$};
+    \fill[teal!85!black] (B_R) circle (1.3pt) node[below right=1pt] {$A_2$};
+    \fill[black] (B_L) circle (1.2pt) node[below left=1pt] {$A_4$};
+    \fill[black] (O)  circle (0.8pt) node[left=2pt] {$O$};
+
+  \end{tikzpicture}
+  \caption{$0 < r \le \dfrac{\sqrt{3}}{6}\ell$ のとき，常に2点以上の頂点が見える様子}
+  \label{fig:sphere_smaller_than_r0}
+\end{figure}
+
+この時はまず $r < \dfrac{\ell}{2}$ をみたすから(1)より$S$上の全ての点から少なくとも1つの頂点がみえる．ここで，$S$上のある点に対して1点しかみえないと仮定し，対称性からそれを$A_1$とする．
+線分$A_1 O$ と$S$との交点のうち$A_1$に近い点$P_0$において，辺$A_1A_2, A_1A_4, A_1A_5$ ($A_2, A_4, A_5$は含まず)と交わり，かつ平面$A_2 A_4 A_5$に平行な$S$の接平面が存在する．この時 $|P_0O| (=r) > \dfrac{\sqrt{3}}{6}\ell$ となり，$0 < r \le \dfrac{\sqrt{3}}{6}\ell$に矛盾する．
+よって背理法より，この時は少なくとも$2$点が見える．
+\casesend
+
+以上から，もとめる条件は
+\begin{align}
+  0 < r \le \dfrac{\sqrt{3}}{6}\ell
+\end{align}
+である．
 
 \end{document}
