@@ -1,57 +1,138 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  二辺の長さが$1$と$2$の長方形一辺の長さが$2$の正方形の$2$種類のタイルがある．縦$2$，横$n$
-  の長方形の部屋をこれらのタイルで過不足なく敷き詰めることを考える．そのような並べ方の総数を
-  $A_n$で表す．ただし$n$は正の整数である．例えば$A_1=1$，$A_2=3$，$A_3=5$である．このとき以下の問いに答えよ．
-  \begin{enumerate}[(1)]
-    \item $n\le3$のとき，$A_n$を$A_{n-1}$，$A_{n-2}$を用いて表せ．
-    \item $A_n$を$n$で表せ．
-  \end{enumerate}
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}
-  \begin{enumerate}[(1)]
-    \item 右端のタイルの敷き詰め方で場合分けして考えれば，
-      \begin{align}
-        A_n=A_{n-1}+2A_{n-2}\cdots\text{(答)}
-      \end{align}
-      である．
+{\bf[解]}
 
-    \item (1)で得た漸化式を変形する．
-      \begin{align}
-        \left\{
-          \begin{array}{l}
-            A_{n+2}-2A_{n+1}=-(A_{n+1}-2A_{n}) \\
-            A_{n+2}+A_{n+1}=2( A_{n+1}+A_{n})
-          \end{array}
-          \right.
-        \end{align}
-        これを繰り返し用いて，初期条件$A_1=1$，$A_2=3$から
-        \begin{align}
-          \left\{
-            \begin{array}{l}
-              A_{n+1}-2A_{n}=(-1)^{n-1}(3-2) \\
-              A_{n+1}+A_{n}=2^{n-1}(3+1)
-            \end{array}
-            \right.
-          \end{align}
-          辺々引いて整理すれば
-          \begin{align}
-            A_n=\dfrac{1}{3}\left(2^{n+1}+(-1)^n\right)\cdots\text{(答)}
-          \end{align}
-          を得る．
-      \end{enumerate}
-      \newpage
-    \end{multicols}
-    \end{document}
+\subparagraph{(1)}
+
+% TODO: 3通りの右端タイルの埋め方
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.9, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % パターン 1: 右端に 1×2 (縦置き) タイルを 1 個置く (幅 1)
+    % 残り: 幅 n-1 の敷き詰め -> A_{n-1} 通り
+    % ============================================================
+    \begin{scope}[yshift=4.6cm]
+      % 残りの領域 (幅 n-1): 薄いグレー＋ハッチング
+      \fill[gray!12] (0, 0) rectangle (4.5, 2.0);
+      \draw[dashed, gray!60] (0, 0) rectangle (4.5, 2.0);
+      \node[font=\normalsize\bfseries, gray!75!black] at (2.25, 1.0) {$A_{n-1}$ 通り};
+
+      % 右端のタイル: 1×2 (縦置き)
+      \fill[blue!20] (4.5, 0) rectangle (5.5, 2.0);
+      \draw[very thick, blue!85!black] (4.5, 0) rectangle (5.5, 2.0);
+      \node[blue!90!black, font=\scriptsize, align=center] at (5.0, 1.0) {縦\\$1\times 2$};
+
+      % 全体枠線
+      \draw[thick] (0, 0) rectangle (5.5, 2.0);
+
+      % 寸法ブレース
+      \draw[decorate, decoration={brace, amplitude=4pt}, thick, gray!70]
+      (0, 2.15) -- (4.5, 2.15) node[midway, above=4pt, font=\footnotesize] {$n-1$};
+      \draw[decorate, decoration={brace, amplitude=3pt}, thick, blue!85!black]
+      (4.5, 2.15) -- (5.5, 2.15) node[midway, above=4pt, font=\footnotesize, blue!90!black] {$1$};
+      \draw[decorate, decoration={brace, mirror, amplitude=4pt}, thick, gray!70]
+      (-0.15, 0) -- (-0.15, 2.0) node[midway, left=4pt, font=\footnotesize] {$2$};
+
+      % パターン見出し
+      \node[left=18pt, font=\footnotesize\bfseries, align=right] at (-0.15, 1.0)
+      {ケース 1\\[1pt]\scriptsize (右端幅 $1$)};
+    \end{scope}
+
+    % ============================================================
+    % パターン 2: 右端に 2×1 (横置き) タイルを 2 個置く (幅 2)
+    % 残り: 幅 n-2 の敷き詰め -> A_{n-2} 通り
+    % ============================================================
+    \begin{scope}[yshift=2.3cm]
+      % 残りの領域 (幅 n-2)
+      \fill[gray!12] (0, 0) rectangle (3.5, 2.0);
+      \draw[dashed, gray!60] (0, 0) rectangle (3.5, 2.0);
+      \node[font=\normalsize\bfseries, gray!75!black] at (1.75, 1.0) {$A_{n-2}$ 通り};
+
+      % 右端のタイル: 2×1 (横置き 2 段)
+      \fill[teal!20] (3.5, 0) rectangle (5.5, 2.0);
+      \draw[very thick, teal!85!black] (3.5, 0) rectangle (5.5, 1.0);
+      \draw[very thick, teal!85!black] (3.5, 1.0) rectangle (5.5, 2.0);
+      \node[teal!90!black, font=\scriptsize] at (4.5, 1.5) {横 $2\times 1$};
+      \node[teal!90!black, font=\scriptsize] at (4.5, 0.5) {横 $2\times 1$};
+
+      % 全体枠線
+      \draw[thick] (0, 0) rectangle (5.5, 2.0);
+
+      % 寸法ブレース
+      \draw[decorate, decoration={brace, amplitude=4pt}, thick, gray!70]
+      (0, 2.15) -- (3.5, 2.15) node[midway, above=4pt, font=\footnotesize] {$n-2$};
+      \draw[decorate, decoration={brace, amplitude=4pt}, thick, teal!85!black]
+      (3.5, 2.15) -- (5.5, 2.15) node[midway, above=4pt, font=\footnotesize, teal!90!black] {$2$};
+
+      % パターン見出し
+      \node[left=18pt, font=\footnotesize\bfseries, align=right] at (-0.15, 1.0)
+      {ケース 2\\[1pt]\scriptsize (右端幅 $2$)};
+    \end{scope}
+
+    % ============================================================
+    % パターン 3: 右端に 2×2 (正方形) タイルを 1 個置く (幅 2)
+    % 残り: 幅 n-2 の敷き詰め -> A_{n-2} 通り
+    % ============================================================
+    \begin{scope}[yshift=0.0cm]
+      % 残りの領域 (幅 n-2)
+      \fill[gray!12] (0, 0) rectangle (3.5, 2.0);
+      \draw[dashed, gray!60] (0, 0) rectangle (3.5, 2.0);
+      \node[font=\normalsize\bfseries, gray!75!black] at (1.75, 1.0) {$A_{n-2}$ 通り};
+
+      % 右端のタイル: 2×2 (正方形)
+      \fill[orange!20] (3.5, 0) rectangle (5.5, 2.0);
+      \draw[very thick, orange!90!black] (3.5, 0) rectangle (5.5, 2.0);
+      \node[orange!95!black, font=\scriptsize, align=center] at (4.5, 1.0) {正方形\\$2\times 2$};
+
+      % 全体枠線
+      \draw[thick] (0, 0) rectangle (5.5, 2.0);
+
+      % 寸法ブレース
+      \draw[decorate, decoration={brace, amplitude=4pt}, thick, gray!70]
+      (0, 2.15) -- (3.5, 2.15) node[midway, above=4pt, font=\footnotesize] {$n-2$};
+      \draw[decorate, decoration={brace, amplitude=4pt}, thick, orange!90!black]
+      (3.5, 2.15) -- (5.5, 2.15) node[midway, above=4pt, font=\footnotesize, orange!95!black] {$2$};
+
+      % パターン見出し
+      \node[left=18pt, font=\footnotesize\bfseries, align=right] at (-0.15, 1.0)
+      {ケース 3\\[1pt]\scriptsize (右端幅 $2$)};
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{右端のタイルの敷き詰め方による場合分け}
+  \label{fig:tiling_recurrence_cases}
+\end{figure}
+
+$A_n$の時の右端のタイルの敷き詰め方で場合分けして考える．
+右端1または2マスの敷き詰め方は図の3通りであり，それぞれ対応する並べ方は$A_{n-1},A_{n-2},A_{n-2}$だから
+\begin{align}
+  A_n=A_{n-1}+2A_{n-2}\cdots\text{(答)} \label{eq:1}
+\end{align}
+である．
+
+\subparagraph{(2)}
+
+\cref{eq:1}を変形すると
+\begin{align}
+  \begin{cases}
+    A_{n+2}-2A_{n+1}=-(A_{n+1}-2A_{n}) \\
+    A_{n+2}+A_{n+1}=2( A_{n+1}+A_{n})
+  \end{cases}
+\end{align}
+これを繰り返し用いて，初期条件$A_1=1$，$A_2=3$から
+\begin{align}
+  \begin{cases}
+    A_{n+1}-2A_{n}=(-1)^{n-1}(3-2) \\
+    A_{n+1}+A_{n}=2^{n-1}(3+1)
+  \end{cases}
+\end{align}
+辺々引いて整理すれば
+\begin{align}
+  A_n=\dfrac{1}{3}\left(2^{n+1}+(-1)^n\right)\cdots\text{(答)}
+\end{align}
+を得る．
+\newpage
+\end{document}

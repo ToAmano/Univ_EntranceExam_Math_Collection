@@ -1,69 +1,158 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{latexsym}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  原点を$O$とする$xy$平面上の双曲線
-  \[\dfrac{x^2}{a^2}-\dfrac{y^2}{b^2}=1 \ \ \ \ \ (a>0,b>0) \]
-  上の点$P$における接線と$2$つの漸近線との交点を$Q$，$R$とする．このとき以下の問いに答えよ．
-  \begin{enumerate}[(1)]
-    \item 三角形$QOR$の面積$S$は，点$P$の取り方にはよらず，$a$，$b$によって定まることを
-      示せ．
-    \item $a=5e^{2t}+e^{-t}$，$b=e^{2t}+e^{-t}$として実数$t$を変化させるときの$S$の最小値を求め
-      よ．
-  \end{enumerate}
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}
-  \begin{enumerate}[(1)]
-    \item $2$本の漸近線は$y=\pm\dfrac{b}{a}x$であり，$P(X,Y)$での双曲線の接線$l$は
-      \[\dfrac{Xx}{a^2}-\dfrac{Yy}{b^2}=1 \]
-      である．故にこれらの交点は
-      \[A=\dfrac{X}{a}+\dfrac{Y}{b} , B=\dfrac{X}{a}-\dfrac{Y}{b} \]
-      として
-      \[ \left(\dfrac{a}{A},\dfrac{-b}{A}\right),\left(\dfrac{a}{B},\dfrac{b}{B}\right)\]
-      である．したがってサラスの公式から
-      \begin{align}
-        S&=\dfrac{1}{2}\left|\dfrac{ab}{AB}+\dfrac{ab}{AB}\right|  \nonumber\\
-        &=\dfrac{ab}{AB}  \nonumber\\
-        &=ab \ \ \ \left(\because AB=\dfrac{X^2}{a^2}-\dfrac{Y^2}{b^2}=1\right)  \label{1}
-      \end{align}
-      となる．これは$X$，$Y$によらない定数である．$\Box$
-    \item $p=e^t$とする．$t$が任意実数だから$p>0$である．\eqref{1}に値を代入して
-      \begin{align}
-        S&=(5p^2+p^{-1})(p^2+p^{-1})\nonumber \\
-        &=5p^4+6p+p^{-2} \label{2}
-      \end{align}
-      であるから，
-      \begin{align}
-        \dfrac{dS}{dp}&=20p^3+6=\dfrac{2}{p^3} \\
-        &=\dfrac{2}{p^3}(5p^3-1)(2p^3+1)
-      \end{align}
-      となって，下表をうる．
-      \begin{align}
-        \begin{array}{|c|c|c|c|c|} \hline
-          p & 0 &   & \left(\dfrac{1}{5}\right)^{1/3} &   \\ \hline
-          S' &   & - & 0                          & + \\ \hline
-          S  &   & \se&                          &\ne \\ \hline
-        \end{array}
-      \end{align}
-      したがって\eqref{2}とあわせて
-      \begin{align}
-        \min S&=5\left(\dfrac{1}{5}\right)^{4/3}+6\left(\dfrac{1}{5}\right)^{1/3}+5^{2/3} \\
-        &=7\left(\dfrac{1}{5}\right)^{1/3}+5^{2/3}\cdots\text{(答)}
-      \end{align}
-      となる．
+{\bf[解]}
 
-  \end{enumerate}
-  \newpage
-\end{multicols}
+\paragraph{(1)}
+
+% TODO: 双曲線，接戦とtriangle OQR
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.7, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ ---
+    % a = 1.6, b = 1.2
+    % 接点 P(X, Y): X = a*cosh(t), Y = b*sinh(t) (t = 0.55 とする)
+    \def\aVal{1.6}
+    \def\bVal{1.2}
+    \def\tVal{0.55}
+
+    \pgfmathsetmacro{\xP}{\aVal * cosh(\tVal)} % ≈ 1.849
+    \pgfmathsetmacro{\yP}{\bVal * sinh(\tVal)} % ≈ 0.694
+
+    % A = X/a + Y/b = cosh(t) + sinh(t) = e^t
+    % B = X/a - Y/b = cosh(t) - sinh(t) = e^(-t)
+    \pgfmathsetmacro{\valA}{exp(\tVal)}
+    \pgfmathsetmacro{\valB}{exp(-\tVal)}
+
+    % 交点 Q(a/A, -b/A) : y = -b/a x との交点
+    % 交点 R(a/B, b/B)  : y =  b/a x との交点
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (\xP, \yP);
+    \coordinate (Q) at ({\aVal/\valA}, {-\bVal/\valA});
+    \coordinate (R) at ({\aVal/\valB}, {\bVal/\valB});
+
+    % --- 2. 三角形 OQR の塗りつぶし ---
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.7]
+    (O) -- (Q) -- (R) -- cycle;
+    \node[draw=blue!85!black, rounded corners=2pt, inner sep=2.5pt, font=\footnotesize\bfseries, blue!90!black]
+    at (1.1, 0.45) {$\triangle OQR$};
+
+    % --- 3. 漸近線 y = ± (b/a) x ---
+    \draw[dashed, gray!60, thick] (-2.2, {-2.2*\bVal/\aVal}) -- (3.2, {3.2*\bVal/\aVal})
+    node[above right=-1pt, font=\scriptsize, gray!90!black] {$y = \frac{b}{a}x$};
+    \draw[dashed, gray!60, thick] (-2.2, {2.2*\bVal/\aVal}) -- (3.2, {-3.2*\bVal/\aVal})
+    node[below right=-1pt, font=\scriptsize, gray!90!black] {$y = -\frac{b}{a}x$};
+
+    % --- 4. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-2.4, 0) -- (3.4, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -2.0) -- (0, 2.2) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 5. 双曲線 x^2/a^2 - y^2/b^2 = 1 ---
+    % 右側の分枝
+    \draw[very thick, blue!85!black, domain=-1.2:1.2, samples=60]
+    plot ({\aVal*cosh(\x)}, {\bVal*sinh(\x)});
+    % 左側の分枝（参考）
+    \draw[thick, gray!45, domain=-1.2:1.2, samples=60]
+    plot ({-\aVal*cosh(\x)}, {\bVal*sinh(\x)});
+    \node[blue!90!black, font=\footnotesize, right] at (2.4, 1.6) {$\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1$};
+
+    % --- 6. 点 P における接線 l (Q と R を結ぶ直線) ---
+    % 接線分およびその延長
+    \draw[line width=1.6pt, red!85!black] ($ (Q)!-0.2!(R) $) -- ($ (Q)!1.2!(R) $);
+    \node[red!90!black, font=\footnotesize, above right] at ($ (Q)!1.15!(R) $) {接線 $l$};
+
+    % 接点 P の座標投影破線
+    \draw[dotted, gray!60] (\xP, 0) -- (P) -- (0, \yP);
+    \node[below=2pt, font=\scriptsize] at (\xP, 0) {$X$};
+    \node[left=2pt, font=\scriptsize]  at (0, \yP) {$Y$};
+
+    % 頂点 (a, 0)
+    \node[below left=1pt, font=\scriptsize] at (\aVal, 0) {$a$};
+    \fill (\aVal, 0) circle (0.8pt);
+
+    % --- 7. 主要点のプロットとラベル ---
+    \fill (O) circle (0.8pt);
+    \fill[red!85!black]  (P) circle (1.2pt) node[above left=1pt, red!95!black] {$P(X, Y)$};
+    \fill[teal!85!black] (Q) circle (1.2pt) node[below right=1pt, teal!95!black] {$Q$};
+    \fill[teal!85!black] (R) circle (1.2pt) node[above left=1pt, teal!95!black] {$R$};
+
+  \end{tikzpicture}
+  \caption{双曲線 $\dfrac{x^2}{a^2} - \dfrac{y^2}{b^2} = 1$ の接線 $l$ と漸近線の交点 $Q, R$ がなす三角形 $\triangle OQR$}
+  \label{fig:hyperbola_tangent_triangle}
+\end{figure}
+
+$2$本の漸近線は
+\begin{align}
+  y=\pm\dfrac{b}{a}x \label{eq:1}
+\end{align}
+であり，$P(X,Y)$での双曲線の接線$l$は
+\begin{align}
+  \dfrac{Xx}{a^2}-\dfrac{Yy}{b^2}=1 \label{eq:2}
+\end{align}
+である．\cref{eq:1,eq:2}の交点はまず$y$を消去して
+\begin{align}
+  \dfrac{Xx}{a^2}\mp\dfrac{Y}{b^2}\dfrac{b}{a}x =1 \\
+  \dfrac{Xx}{a^2}\mp\dfrac{Yx}{ab} =1 \\
+  x = \dfrac{a}{X/a \mp Y/b}
+\end{align}
+だから対応して$y$は
+\begin{align}
+  y = \pm\dfrac{b}{a} \dfrac{a}{X/a \mp Y/b} = \dfrac{\pm b}{X/a \mp Y/b}
+\end{align}
+である．ここで簡単のために
+\begin{align}
+  A=\dfrac{X}{a}+\dfrac{Y}{b} , B=\dfrac{X}{a}-\dfrac{Y}{b} \label{eq:3}
+\end{align}
+とおくと，これらは
+\begin{align}
+  Q\left(\dfrac{a}{A},\dfrac{-b}{A}\right),R\left(\dfrac{a}{B},\dfrac{b}{B}\right)
+\end{align}
+である．したがってサラスの公式から三角形$OQR$の面積は
+\begin{align}
+  S&=\dfrac{1}{2}\left|\dfrac{ab}{AB}+\dfrac{ab}{AB}\right|  \nonumber\\
+  &=\dfrac{ab}{AB}  \nonumber\\
+  &=ab \ \ \ \left(\because AB=\dfrac{X^2}{a^2}-\dfrac{Y^2}{b^2}=1\right)  \label{eq:4}
+\end{align}
+となる．これは$X$，$Y$によらない定数であるから題意は示された．$\Box$
+
+\paragraph{(2)}
+
+$p=e^t$とすると$t$が任意実数だから$p>0$である．\cref{eq:4}に代入して
+\begin{align}
+  S&=(5p^2+p^{-1})(p^2+p^{-1})\nonumber \\
+  &=5p^4+6p+p^{-2} \label{eq:5}
+\end{align}
+であるから以下この最小値を求める．
+一階微分を計算すると
+\begin{align}
+  \dfrac{dS}{dp}&=20p^3+6-\dfrac{2}{p^3} \\
+  &=\dfrac{2}{p^3}(5p^3-1)(2p^3+1)
+\end{align}
+だから$S$の増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$S(p)$ の増減表}
+  \label{tab:sp_monotonicity}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{c|ccccc}
+    $p$ & $(0)$ & $\dots$ & $\left(\dfrac{1}{5}\right)^{1/3}$ & $\dots$ \\ \hline
+    $S'$ & & $-$ & $0$ & $+$ \\ \hline
+    $S$  & & $\searrow$ & \text{極小} & $\nearrow$
+  \end{tabular}
+\end{table}
+
+したがって$S$が最小になるのは$p=\left(\dfrac{1}{5}\right)^{1/3}$の時で
+\cref{eq:5}に代入して求める最小値は
+\begin{align}
+  \min S
+  &=S\left(p=\left(\dfrac{1}{5}\right)^{1/3}\right) \\
+  &=5\left(\dfrac{1}{5}\right)^{4/3}+6\left(\dfrac{1}{5}\right)^{1/3}+5^{2/3} \\
+  &=7\left(\dfrac{1}{5}\right)^{1/3}+5^{2/3}\cdots\text{(答)}
+\end{align}
+となる．
+
+\newpage
 \end{document}

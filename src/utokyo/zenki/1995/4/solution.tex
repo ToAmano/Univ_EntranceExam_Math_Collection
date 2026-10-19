@@ -1,0 +1,157 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+{\bf [解]}
+
+正の実数$x$に対して
+\begin{align}
+  f(x)=x+\dfrac{N}{x} \label{eq:1}
+\end{align}
+とおくと，$y=f(x)$のグラフは下図のようになる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.7, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ (N=1 を基準スケールとする) ---
+    % x_min = sqrt(N) = 1.4
+    % y_min = 2*sqrt(N) = 2.8
+    \def\sqN{1.4}
+    \pgfmathsetmacro{\yMin}{2.0 * \sqN} % 2.8
+
+    % 近傍の約数候補点 n_s, n_l の例
+    % n_s < sqrt(N) < n_l かつ n_s * n_l = N のとき f(n_s) = f(n_l)
+    \def\nS{0.95}
+    \pgfmathsetmacro{\nL}{\sqN*\sqN / \nS} % 1.96 / 0.95 ≈ 2.063
+    \pgfmathsetmacro{\yNL}{\nS + \sqN*\sqN / \nS} % ≈ 3.013
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (P_min) at (\sqN, \yMin);
+    \coordinate (P_ns)  at (\nS, \yNL);
+    \coordinate (P_nl)  at (\nL, \yNL);
+
+    % --- 2. 漸近線 y = x ---
+    \draw[dashed, gray!55, thick] (0, 0) -- (3.6, 3.6)
+    node[above right=-1pt, font=\scriptsize, gray!90!black] {漸近線 $y = x$};
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (4.0, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 4.4) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 曲線 y = f(x) = x + N/x ---
+    \draw[line width=1.8pt, blue!85!black, domain=0.48:3.6, samples=90]
+    plot (\x, {\x + \sqN*\sqN / \x});
+    \node[blue!90!black, font=\footnotesize\bfseries, right=2pt] at (3.5, {3.5 + \sqN*\sqN / 3.5})
+    {$y = x + \frac{N}{x}$};
+
+    % --- 5. 最小点 (sqrt(N), 2*sqrt(N)) の投影破線 ---
+    \draw[dashed, gray!60] (\sqN, 0) -- (P_min) -- (0, \yMin);
+    \node[below=2pt, font=\scriptsize] at (\sqN, 0) {$\sqrt{N}$};
+    \node[left=2pt, font=\scriptsize]  at (0, \yMin) {$2\sqrt{N}$};
+    \fill[red!85!black] (P_min) circle (1.5pt);
+    \node[above=2pt, font=\scriptsize, red!90!black] at (P_min) {極小値 $2\sqrt{N}$};
+
+    % % --- 6. 約数の近傍候補 n_s, n_l と等しい値 f(n_s) = f(n_l) ---
+    % % 水平線 f(n_s) = f(n_l)
+    % \draw[dotted, teal!80!black, thick] (0, \yNL) -- (\nL, \yNL);
+    \draw[dotted, gray!60] (\nS, 0) -- (P_ns);
+    \draw[dotted, gray!60] (\nL, 0) -- (P_nl);
+
+    % \node[left=2pt, font=\scriptsize, teal!90!black] at (0, \yNL) {$n_s + n_\ell$};
+    \node[below=2pt, font=\scriptsize, teal!90!black] at (\nS, 0) {$n_s$};
+    \node[below=2pt, font=\scriptsize, teal!90!black] at (\nL, 0) {$n_\ell$};
+
+    \fill[teal!85!black] (P_ns) circle (1.3pt);
+    \fill[teal!85!black] (P_nl) circle (1.3pt);
+
+  \end{tikzpicture}
+  \caption{$y = x + \dfrac{N}{x}$ のグラフ}
+  \label{fig:fx_min_and_divisors}
+\end{figure}
+
+したがって$\sqrt{N}$が$N$の約数のときは$f(n)$の最小値は$f(\sqrt{N})=2\sqrt{N}$である．
+$\sqrt{N}$が$N$の約数でないときは，$N$の正の約数のうち$\sqrt{N}$より小さいものの最大値を$n_s$，$\sqrt{N}$より大きいものの最小値を$n_\ell$とすれば，$f(n)$の最小値は$f(n_s)$，$f(n_\ell)$のうち大きくない方である．
+\begin{align}
+  \min f(n) =
+  \begin{cases}
+    f\left(\sqrt{N}\right) & (\text{$\sqrt{N}$が$N$の約数の時}) \\
+    \min \left\{f(n_{s}), f(n_{\ell})\right\} & (\text{otherwise})
+  \end{cases} \label{eq:2}
+\end{align}
+
+\paragraph{(1)}
+
+$N=2^k$のときを考えると$\sqrt{N}=2^{\frac{k}{2}}$であり，$N$の正の約数は$2^0,2^1,\dots,2^k$である．$\sqrt{N}$が約数になるかどうかは$k$の偶奇によるので，個別に考える．
+
+\subparagraph{$k$が偶数のとき}
+
+$\dfrac{k}{2}$は整数だから$\sqrt{N}$は$N$の約数である．したがって，
+\begin{align}
+  \min_{n\mid N}f(n)=f(\sqrt{N})=2\sqrt{N} \label{eq:3}
+\end{align}
+となる．
+
+\subparagraph{$k$が奇数のとき}
+
+$\dfrac{k}{2}$は整数でないので，$\sqrt{N}$は$N$の約数ではない．
+$\dfrac{k\pm 1}{2}$が整数であることと，
+$2^t$は$t$について単調増加するから，
+\begin{align}
+  n_s=2^{\frac{k-1}{2}}，\qquad n_\ell=2^{\frac{k+1}{2}}
+\end{align}
+となる．このとき$n_sn_\ell=2^k=N$より，
+\begin{align}
+  f(n_s)&=n_s+\dfrac{N}{n_s}=n_s+n_\ell，\\
+  f(n_\ell)&=n_\ell+\dfrac{N}{n_\ell}=n_s+n_\ell
+\end{align}
+で両者の値は等しいから
+\begin{align}
+  \min f(n)
+  =n_s+n_\ell
+  =3\cdot2^{\frac{k-1}{2}}=\dfrac{3}{2}\sqrt{2N} \label{eq:4}
+\end{align}
+である．
+\casesend
+
+以上\cref{eq:3,eq:4}をまとめて求める最小値は
+\begin{align}
+  \begin{cases}
+    2\sqrt{N}             & (k\text{が偶数})，\\
+    \dfrac{3}{2}\sqrt{2N} & (k\text{が奇数})
+  \end{cases}
+\end{align}
+である．
+
+\paragraph{(2)}
+
+$N=7!=70\cdot72$だから，
+\begin{align}
+  70^2<N<72^2\quad\therefore\quad70<\sqrt{N}<72
+\end{align}
+である．
+$71$は$N$の約数でないので，$\sqrt{N}$は$N$の約数ではない．
+また$70$，$72$はともに$N$の約数だから，
+\begin{align}
+  n_s=70，\qquad n_\ell=72
+\end{align}
+となる．このとき，
+\begin{align}
+  f(n_s)=f(n_\ell)=70+72=142
+\end{align}
+だから，\cref{eq:1}より求める最小値は
+\begin{align}
+  \min f(n) = f(n_s) = f(n_{\ell}) = 142
+\end{align}
+である．
+
+{\bf [解説]}
+
+(1)も(2)も$f(n_s)=f(n_{\ell})$になっているが，これには理由があって，$\sqrt{N}$前後の最も近い二つの約数$n_{s}, n_{\ell}$はお互いがペアになって$n_{s}n_{\ell}=N$を満たすから
+\begin{align}
+  f(n_s) = n_s + \dfrac{N}{n_s} = n_{s} + n_{\ell} \\
+  f(n_{\ell}) = n_{\ell} + \dfrac{N}{n_{\ell}} = n_{\ell} + n_{s}
+\end{align}
+となってこれらは等しくなる．
+
+\end{document}
