@@ -1,72 +1,253 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1994$年$3$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  $xyz$空間において，条件
-  \begin{align}
-    \begin{array}{lll}
-      x^2+y^2\le z^2&z^2\le x&0\le z\le1
-    \end{array}
-  \end{align}
-  を満たす点$P(x,y,z)$の全体からなる立体を考える．この立体の体積を$V$とし，$0\le k\le 1$に対し，$z$軸と直交する平面
-  $z=k$による切り口の面積を$S(k)$とする．
-  \begin{enumerate}[(1)]
-    \item $k=\cos\theta$とおくとき$S(k)$を$\theta$で表せ．ただし$0\le\theta\pi/2$とする．
-    \item $V$の値を求めよ．
-  \end{enumerate}
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]} \1 $z=c$での切断面は，
-  \begin{align}
-    \begin{cases}
-      x^2+y^2\le c^2 \\
-      c^2\le x
-    \end{cases}
-  \end{align}
-  である．従って図示して下図．
-  \begin{center}
-    \scalebox{.7}{\input{ut-94-3p}}
-  \end{center}
+{\bf[解]}
 
-  $S(k)$は斜線部の面積で
-  \begin{align}
-    S(k)=\theta c^2-c^3s
-  \end{align}
-  である．$\cdots$((1)の答)
+題意の領域
+\begin{align}
+  \begin{cases}
+    x^2+y^2 \leqq z^2 \\
+    z^2 \leqq x \\
+    0 \leqq z \leqq 1
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．
 
-  従って，求める体積$V$は
-  \begin{align}
-    V&=\int_0^1S(k)dk \\
-    &=\int_{\pi/2}^0(\theta c^2-c^3s)\dfrac{dk}{d\theta}d\theta\\
-    &=\int_0^{\pi/2}(c^2s\theta-c^3s^2)d\theta\\
-    &=-\left[\dfrac{1}{3}c^3\theta \right]_0^{\pi/2}+\dfrac{1}{3}\int_0^{\pi/2}c^3d\theta-\int_0^{\pi/2}c^3s^2d\theta \\
-    &=\int_0^{\pi/2}c(1-s^2)\left(\dfrac{1}{3}-s^2\right)d\theta \\
-    &=\int_0^1(1-x^2)\left(\dfrac{1}{3}-x^2\right)dx \\
-    &=\left[\dfrac{1}{5}x^5-\dfrac{4}{9}x^3+\dfrac{1}{3}x\right]_0^1 \\
-    &=\dfrac{4}{45}
-  \end{align}
-  である．$\cdots$((2)の答)
+\subparagraph{(1)}
 
-  \newpage
-\end{multicols}
+$z=k=\cos\theta\, \left(0 \le \theta \le \dfrac{\pi}{2}\right)$についての切断面を考える．
+$\theta$の範囲から\cref{eq:1}の第三式$0 \le z \le 1$は満たされるので残りの二つに代入して
+\begin{align}
+  \begin{cases}
+    x^2+y^2\le \cos^2\theta \\
+    \cos^2\theta \le x
+  \end{cases} \label{eq:2}
+\end{align}
+である．これを図示すると下図の斜線部となる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.6, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ ---
+    % 例として theta = 42° (見やすい比率)
+    % 半径 k = cos(42°) ≈ 0.7431
+    % 境界線 x = k^2 = cos^2(42°) ≈ 0.5523
+    % 交点 Q の偏角 alpha は cos(alpha) = x/k = k = cos(theta) より alpha = theta = 42°
+    \def\angTheta{42}
+    \pgfmathsetmacro{\kVal}{cos(\angTheta)}          % 半径 k ≈ 0.7431
+    \pgfmathsetmacro{\xCut}{\kVal * \kVal}           % x = k^2 ≈ 0.5523
+    \pgfmathsetmacro{\yCut}{\kVal * sin(\angTheta)}  % y_Q = k sin(theta) ≈ 0.4972
+
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (\kVal, 0);                  % 円と x 軸の交点 (k, 0)
+    \coordinate (R) at (\xCut, 0);                  % 直線 x = k^2 と x 軸の交点
+    \coordinate (Q) at (\xCut, \yCut);              % 上側交点 (k^2, k sin theta)
+    \coordinate (Q_sym) at (\xCut, -\yCut);         % 下側交点
+
+    % --- 2. 求める弓形領域 S(k) のハッチング塗りつぶし ---
+    % x^2 + y^2 <= k^2 かつ x >= k^2
+    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.8]
+    (\xCut, -\yCut) -- (\xCut, \yCut)
+    arc[start angle=\angTheta, end angle=-\angTheta, radius=\kVal] -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-0.25, 0) -- (1.1, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.95) -- (0, 0.95) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 円 x^2 + y^2 = k^2 (点線＋実線) ---
+    % 全体の円周（細い破線）
+    \draw[dashed, gray!50] (O) circle (\kVal);
+    % 弓形の円弧部分（太線強調）
+    \draw[very thick, blue!85!black]
+    (\angTheta:\kVal) arc[start angle=\angTheta, end angle=-\angTheta, radius=\kVal];
+    \node[blue!90!black, font=\scriptsize, above left] at ({135}:\kVal) {$x^2+y^2=k^2$};
+
+    % --- 5. 境界直線 x = k^2 (cos^2\theta) ---
+    \draw[very thick, red!85!black] (\xCut, -0.85) -- (\xCut, 0.85);
+    \node[red!90!black, font=\footnotesize, above right] at (\xCut, 0.65) {$x = k^2$};
+
+    % --- 6. 幾何学的補助線 (別解用: 扇形 OPQ と直角三角形 ORQ) ---
+    \draw[thick, teal!85!black] (O) -- (Q);
+    \node[teal!90!black, font=\scriptsize, above left] at ($ (O)!0.55!(Q) $) {$k$};
+
+    % 直角記号 (R における直角)
+    \draw[thin, gray!70]
+    ($ (R) + (-0.06, 0) $) --
+    ($ (R) + (-0.06, 0.06) $) --
+    ($ (R) + (0, 0.06) $);
+
+    % 角度 theta の弧
+    \draw[thick, purple!85!black] (0.28, 0) arc[start angle=0, end angle=\angTheta, radius=0.28];
+    \node[purple!90!black, font=\footnotesize] at (19:0.38) {$\theta$};
+
+    % --- 7. 目盛りと主要点のプロット ---
+    \fill (O) circle (0.6pt);
+    \fill[red!85!black] (R) circle (0.7pt) node[below left=1pt, font=\scriptsize, red!90!black] {$R(k^2, 0)$};
+    \fill[black] (P) circle (0.7pt) node[below right=1pt, font=\scriptsize] {$P(k, 0)$};
+    \fill[teal!85!black] (Q) circle (0.8pt) node[above right=1pt, teal!90!black] {$Q$};
+    \fill[teal!85!black] (Q_sym) circle (0.8pt);
+
+    % 領域ラベル S(k)
+    % \node[draw=blue!85!black, rounded corners=2pt, inner sep=2.5pt, font=\normalsize\bfseries, blue!90!black]
+    % at (0.72, 0) {$S(k)$};
+
+  \end{tikzpicture}
+  \caption{平面 $z=k=\cos\theta$ による切断面の領域 $S(k)$（斜線部の弓形）}
+  \label{fig:cross_section_sk}
+\end{figure}
+
+この斜線部の面積$S(k)$は半径$k=\cos\theta$の円の弓形の面積で
+\begin{align}
+  S(k)
+  &= 2\int_{k^2}^{k}\sqrt{k^2-x^2} dx \\
+  &= 2k^2\int_{\theta}^{0}\sin^2\alpha (-d\alpha) \quad (x=k\cos\alpha) \\
+  &= 2k^2\int_{0}^{\theta} \sin^2\alpha d\alpha \\
+  &= k^2\left[\alpha-\dfrac{1}{2}\sin 2\alpha\right]_{0}^{\theta} \\
+  &= k^2\left(\theta - \dfrac{1}{2}\sin 2\theta\right) \\
+  &= \cos^2\theta\left(\theta - \dfrac{1}{2}\sin 2\theta\right) \\
+  &= \cos^2\theta\left(\theta - \sin \theta\cos\theta\right) \label{eq:3}
+\end{align}
+である．
+
+\subparagraph{(2)}
+
+\cref{eq:3}を$0\le k\le 1$で積分したものが求める体積$V$で，
+\begin{align}
+  V
+  &=\int_{0}^{1} S(k)dk \\
+  &=\int_{\pi/2}^{0}(\theta \cos^2\theta-\cos^3\theta\sin\theta)\dfrac{dk}{d\theta}d\theta \\
+  &=\int_0^{\pi/2}(\theta \cos^2\theta\sin\theta -\cos^3\theta\sin^2\theta)d\theta \\
+  &=\int_0^{\pi/2}(\theta \sin\theta - \theta \sin^3\theta -\cos^3\theta\sin^2\theta)d\theta \label{eq:4}
+\end{align}
+である．各項計算すると
+\begin{align}
+  (\text{第1項})
+  &= \int_{0}^{\pi/2} \left(\theta \sin\theta \right) d\theta \\
+  &= \left[-\theta\cos\theta + \sin\theta\right]_{0}^{\pi/2}
+  &= 1 \label{eq:5}
+\end{align}
+\begin{align}
+  (\text{第2項})
+  &= \int_{0}^{\pi/2} \left(\theta \sin^3\theta \right) d\theta \\
+  &= \int_{0}^{\pi/2} \dfrac{1}{4}\theta\left(3 \sin\theta - \sin 3\theta\right) d\theta \\
+  &= \dfrac{3}{4}\int_{0}^{\pi/2}\theta\sin\theta d\theta - \dfrac{1}{4}\int_{0}^{\pi/2}\theta\sin 3\theta d\theta \\
+  &= \dfrac{3}{4} - \dfrac{1}{4}\left[-\dfrac{1}{3}\theta\cos 3\theta + \dfrac{1}{9}\sin 3\theta \right]_{0}^{\pi/2} \\
+  &= \dfrac{3}{4} - \dfrac{1}{4}\left(-\dfrac{1}{9}\right) = \dfrac{28}{36} = \dfrac{7}{9} \label{eq:6}
+\end{align}
+\begin{align}
+  (\text{第3項})
+  &= \int_{0}^{\pi/2}\cos^3\theta \sin^2\theta d\theta \\
+  &= \int_{0}^{\pi/2}\cos\theta (1-\sin^2\theta)\sin^2\theta d\theta \\
+  &= \int_{0}^{1} (1-s^2)s^2 ds \quad (s = \sin\theta) \\
+  &= \left[\dfrac{1}{3}s^3 - \dfrac{1}{5}s^5\right]_{0}^{\pi/2} \\
+  &= \dfrac{2}{15} \label{eq:7}
+\end{align}
+である．\cref{eq:5,eq:6,eq:7}を\cref{eq:4}に代入して
+\begin{align}
+  V = 1 - \dfrac{7}{9} - \dfrac{2}{15} = \dfrac{4}{45}
+\end{align}
+である．
+
+{\bf [別解]}
+
+(1)で弓形の面積を計算する時は，積分を使わずに下図のような扇形と三角形の差分として
+初等的にも計算できる．
+\begin{align}
+  \dfrac{1}{2}S(k) &= \text{扇形}OPQ - \triangle ORQ = \dfrac{1}{2}\theta\cos^2\theta - \dfrac{1}{2}\cos^3\theta\sin\theta \\
+  \therefore
+  S(k) &= \theta\cos^2\theta - \cos^3\theta\sin\theta
+\end{align}
+となって一致する．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ ---
+    % theta = 42°
+    % 半径 k = cos(theta) ≈ 0.7431
+    % 境界線 x = k^2 = cos^2(theta) ≈ 0.5523
+    % y 座標 = k * sin(theta) = cos(theta) * sin(theta) ≈ 0.4972
+    \def\angTheta{42}
+    \pgfmathsetmacro{\kVal}{cos(\angTheta)}
+    \pgfmathsetmacro{\xCut}{\kVal * \kVal}
+    \pgfmathsetmacro{\yCut}{\kVal * sin(\angTheta)}
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (P)     at (\kVal, 0);              % (k, 0)
+    \coordinate (R)     at (\xCut, 0);              % (k^2, 0)
+    \coordinate (Q)     at (\xCut, \yCut);          % 交点 (cos^2\theta, cos\theta sin\theta)
+    \coordinate (Q_sym) at (\xCut, -\yCut);
+    \coordinate (Y_proj) at (0, \yCut);             % y 軸への垂線の足
+
+    % --- 2. 弓形領域 S(k) のハッチング塗りつぶし ---
+    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.8]
+    (\xCut, -\yCut) -- (\xCut, \yCut)
+    arc[start angle=\angTheta, end angle=-\angTheta, radius=\kVal] -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick] (-0.35, 0) -- (1.1, 0) node[right] {$x$};
+    \draw[->, thick] (0, -0.95) -- (0, 1.05) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 円 x^2 + y^2 = k^2 ---
+    \draw[dashed, gray!50] (O) circle (\kVal);
+    % 弓形の円弧部
+    \draw[very thick, blue!85!black]
+    (\angTheta:\kVal) arc[start angle=\angTheta, end angle=-\angTheta, radius=\kVal];
+    \node[blue!90!black, font=\scriptsize, above left] at ({135}:\kVal) {$x^2+y^2=k^2$};
+
+    % --- 5. 境界直線 x = k^2 (cos^2\theta) ---
+    \draw[very thick, red!85!black] (\xCut, -0.85) -- (\xCut, 0.85);
+    \node[red!90!black, font=\footnotesize, above right] at (\xCut, 0.65) {$x = \cos^2\theta$};
+
+    % --- 6. 交点 Q から y 軸への垂線とラベル ---
+    \draw[dashed, purple!80!black, thick] (Q) -- (Y_proj);
+    \fill[purple!85!black] (Y_proj) circle (0.6pt);
+    \node[left=2pt, font=\scriptsize, purple!90!black] at (Y_proj) {$\cos\theta\sin\theta$};
+
+    % y 軸側の直角記号
+    \draw[thin, gray!70]
+    ($ (Y_proj) + (0.05, 0) $) --
+    ($ (Y_proj) + (0.05, -0.05) $) --
+    ($ (Y_proj) + (0, -0.05) $);
+
+    % --- 7. 動径 OQ と直角三角形 ORQ ---
+    \draw[thick, teal!85!black] (O) -- (Q);
+    \node[teal!90!black, font=\scriptsize, above left] at ($ (O)!0.55!(Q) $) {$k$};
+
+    % R における直角記号 (QR ⊥ x 軸)
+    \draw[thin, gray!70]
+    ($ (R) + (-0.05, 0) $) --
+    ($ (R) + (-0.05, 0.05) $) --
+    ($ (R) + (0, 0.05) $);
+
+    % 中心角 theta の弧
+    \draw[thick, purple!85!black] (0.26, 0) arc[start angle=0, end angle=\angTheta, radius=0.26];
+    \node[purple!90!black, font=\footnotesize] at (18:0.35) {$\theta$};
+
+    % --- 8. 主要点のプロットと目盛り ---
+    \fill (O) circle (0.6pt);
+    \fill[red!85!black] (R) circle (0.7pt) node[below=2pt, font=\scriptsize, red!90!black] {$\cos^2\theta$};
+    \fill[black] (P) circle (0.7pt) node[below right=1pt, font=\scriptsize] {$k$};
+    \fill[teal!85!black] (Q) circle (0.8pt) node[above right=1pt, teal!90!black] {$Q$};
+    \fill[teal!85!black] (Q_sym) circle (0.8pt);
+
+    % --- 9. 注釈ボックス ---
+    \node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=3.5pt, font=\footnotesize, align=left]
+    at (-0.08, -0.62) {
+      \textbf{直角三角形 $\triangle ORQ$ の寸法}:\\[2pt]
+      $\bullet\ \text{底辺 } |OR| = \cos^2\theta$\\[2pt]
+      $\bullet\ \text{高さ } |RQ| = \cos\theta\sin\theta$\\[2pt]
+      $\bullet\ \text{面積 } \triangle ORQ = \frac{1}{2}\cos^3\theta\sin\theta$
+    };
+
+  \end{tikzpicture}
+  \caption{切断面における弓形 $S(k)$}
+  \label{fig:cross_section_sk_with_projection}
+\end{figure}
+
+\newpage
 \end{document}
