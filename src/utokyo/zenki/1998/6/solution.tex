@@ -1,40 +1,385 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-
-\title{東大96-6}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\maketitle
 
-\begin{oframed}
-  $xyz$空間に5点$A(1,1,0)$,$B(-1,1,0)$,$C(-1,-1,0)$,$D(1,-1,0)$,$P(0,0,3)$をとる．
-  四角錐$PABCD$の$x^2+y^2\ge1$を満たす部分の体積を求めよ．
-\end{oframed}
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  \textgt{[解]} 対称性から，
-  \begin{align}
-    0\le y\le x             \label{eq:eq1}
-  \end{align}
-  の部分で題意を満たす部分の体積$V'$,求める体積$V$として
-  \begin{align}
-    V=8V'
-  \end{align}
-  となる．以下$V'$について考える．
+{\bf [解1]}
 
-  さて，$0\le\theta\le\pi/2$に対して$c=\cos\theta$,
-  $s=\sin\theta$とおき，四角錐を$x=s$で切断すると，題意の不等式は以下のようになる．
-  ただし，\eqref{eq:eq1}に注意した．
-  \begin{align}
-    c\le y\le s \\
-    0\le z\le
-  \end{align}
+% TODO: この解は全体的に図をupgradeしたい
+\begin{figure}[htb]
+  \centering
+  % 手書きスケッチの見取り図に合わせたアングル（俯角 65°，方位角 120°）
+  \tdplotsetmaincoords{65}{120}
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.2, line join=round, >=stealth, every node/.style={font=\small}]
 
-  \newpage
-\end{multicols}{2}
+    % --- 1. 定数・座標パラメータ ---
+    % 頂点 P(0,0,3) と底面正方形 ABCD (一辺 2)
+    % A(1,1,0), B(-1,1,0), C(-1,-1,0), D(1,-1,0)
+    \coordinate (O) at (0, 0, 0);
+    \coordinate (P) at (0, 0, 3.0);
+    \coordinate (A) at (1.0, 1.0, 0);
+    \coordinate (B) at (-1.0, 1.0, 0);
+    \coordinate (C) at (-1.0, -1.0, 0);
+    \coordinate (D) at (1.0, -1.0, 0);
+
+    % --- 2. 座標軸（奥側の負の軸は破線）---
+    \draw[dashed, gray!40] (-1.4, 0, 0) -- (0, 0, 0);
+    \draw[dashed, gray!40] (0, -1.4, 0) -- (0, 0, 0);
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (2.0, 0, 0) node[below left=1pt] {$x$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 2.0, 0) node[right=2pt] {$y$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 0, 3.6) node[above=2pt] {$z$};
+    \node[below left=2pt] at (O) {$O$};
+    \node[left=2pt, font=\scriptsize] at (0, 0, 3.0) {$3$};
+
+    % --- 3. 奥側の稜線（点 B, C 周りの隠れ線）---
+    \draw[dashed, gray!55, thick] (A) -- (B) -- (C);
+    \draw[dashed, gray!55, thick] (P) -- (B);
+
+    % --- 4. 円柱側面のうち四角錐の下側の部分（斜線・縦縞ハッチング）---
+    % 円周上の点: (cos theta, sin theta)
+    % 四角錐の側面の高さ: z = 3 * (1 - max(|x|, |y|))
+    % (i) 奥側 (theta: 45° -> 225°, B, C 側) の円柱面（薄いハッチング）
+    \foreach \ang in {50, 60, ..., 220} {
+      \pgfmathsetmacro{\xVal}{cos(\ang)}
+      \pgfmathsetmacro{\yVal}{sin(\ang)}
+      \pgfmathsetmacro{\zMax}{3.0 * (1.0 - max(abs(\xVal), abs(\yVal)))}
+      \draw[blue!40, thin] (\xVal, \yVal, 0) -- (\xVal, \yVal, \zMax);
+    }
+    % 奥側の交線（波打つ稜線）
+    \draw[dashed, blue!50, thick, domain=45:225, samples=60]
+    plot ({cos(\x)}, {sin(\x)}, {3.0*(1.0 - max(abs(cos(\x)), abs(sin(\x))))});
+
+    % (ii) 手前側 (theta: -135° -> 45°, D, A 側) の円柱面（手書き風の密な斜線・縦縞）
+    \foreach \ang in {-130, -120, ..., 40} {
+      \pgfmathsetmacro{\xVal}{cos(\ang)}
+      \pgfmathsetmacro{\yVal}{sin(\ang)}
+      \pgfmathsetmacro{\zMax}{3.0 * (1.0 - max(abs(\xVal), abs(\yVal)))}
+      \draw[blue!85!black, thick] (\xVal, \yVal, 0) -- (\xVal, \yVal, \zMax);
+    }
+    % 手前側の交線（正四角錐側面と円柱面の交線: 実線強調）
+    \draw[line width=1.6pt, blue!90!black, domain=-135:45, samples=70]
+    plot ({cos(\x)}, {sin(\x)}, {3.0*(1.0 - max(abs(cos(\x)), abs(sin(\x))))});
+
+    % --- 5. 対象領域 0 <= y <= x (V') のハイライト ---
+    % 単位円の外側かつ正四角錐の内側の角領域 (手前 A 側)
+    % 底面での扇形/弓形: x in [cos 45°, 1], y in [sqrt(1-x^2), x]
+    \fill[teal!25, opacity=0.75]
+    plot[domain=0:45, samples=30] ({cos(\x)}, {sin(\x)}, 0)
+    -- (1.0, 1.0, 0) -- (1.0, 0, 0) -- cycle;
+
+    % --- 5. 底面の単位円 x^2 + y^2 = 1 ---
+    % 手前側 (実線)
+    \draw[line width=1.5pt, blue!85!black, domain=-135:45, samples=60]
+    plot ({cos(\x)}, {sin(\x)}, 0);
+    % 奥側 (破線)
+    \draw[dashed, blue!60, thick, domain=45:225, samples=60]
+    plot ({cos(\x)}, {sin(\x)}, 0);
+
+    % --- 6. 正四角錐の前面稜線（手前実線強調）---
+    \draw[very thick, black] (C) -- (D) -- (A);
+    \draw[very thick, black] (P) -- (A);
+    \draw[very thick, black] (P) -- (C);
+    \draw[very thick, black] (P) -- (D);
+
+    % 対称線 y = x (O から A(1,1,0) への赤破線)
+    \draw[thick, dashed, red!85!black] (O) -- (A);
+    \node[red!90!black, font=\scriptsize, below right=1pt] at (0.5, 0.5, 0) {$y = x$};
+
+    % --- 7. 頂点プロットとラベル ---
+    \fill[black] (P) circle (1.2pt) node[above left=1pt] {$P(0,0,3)$};
+    \fill[black] (A) circle (1.2pt) node[below right=1pt] {$A(1,1,0)$};
+    \fill[black] (B) circle (1.0pt) node[above right=1pt] {$B$};
+    \fill[black] (C) circle (1.0pt) node[above left=1pt]  {$C$};
+    \fill[black] (D) circle (1.2pt) node[below left=1pt]  {$D$};
+
+    % 軸の目盛り ±1
+    \node[below=2pt, font=\scriptsize] at (1, 0, 0) {$1$};
+    \node[below=2pt, font=\scriptsize] at (0, 1, 0) {$1$};
+    \node[above=2pt, font=\scriptsize] at (-1, 0, 0) {$-1$};
+    \node[left=2pt, font=\scriptsize]  at (0, -1, 0) {$-1$};
+
+  \end{tikzpicture}
+  \caption{正四角錐 $P\text{-}ABCD$ の内部に収まる円柱側面 $x^2+y^2=1$ の部分}
+  \label{fig:cylinder_wall_under_pyramid}
+\end{figure}
+
+対称性から$0\le y\le x$の部分の体積を$V'$とすると，求める体積$V$は
+\begin{align}
+  V=8V' \label{eq:1}
+\end{align}
+である．
+
+以下簡単のため$c=\cos\theta, s=\sin\theta$と表して$x=c$での切断面を考える．
+$z=0$での切り口は下図のようになるから，共通領域があるのは
+\begin{align}
+  0\le\theta\le\dfrac{\pi}{4} \label{eq:2}
+\end{align}
+の範囲である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ ---
+    % 単位円: 半径 1
+    % 正方形の角: (1, 1)
+    % 対称軸 y = x (45° 方向): 円との交点 (1/sqrt(2), 1/sqrt(2)) ≈ (0.7071, 0.7071)
+    \pgfmathsetmacro{\invSqTwo}{1.0 / sqrt(2.0)} % ≈ 0.7071
+
+    % 任意のスライス x = c = cos(theta) (例: theta = 25° => c ≈ 0.9063, s ≈ 0.4226)
+    \def\angTheta{25}
+    \pgfmathsetmacro{\cVal}{cos(\angTheta)}
+    \pgfmathsetmacro{\sVal}{sin(\angTheta)}
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (A)     at (1.0, 1.0);
+    \coordinate (E_int) at (\invSqTwo, \invSqTwo);
+
+    % --- 2. 領域 V' の底面 (0 <= y <= x かつ x^2+y^2 >= 1) のハッチング ---
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75]
+    (\invSqTwo, \invSqTwo)
+    -- (1.0, 1.0) -- (1.0, 0)
+    -- plot[domain=0:45, samples=40] ({cos(\x)}, {sin(\x)})
+    -- cycle;
+
+    % --- 3. 正方形の境界線と対称線 y = x ---
+    % 正方形枠 [0, 1] x [0, 1]
+    \draw[thick, gray!60] (0, 1.0) -- (1.0, 1.0) -- (1.0, 0);
+    \draw[dashed, gray!40] (-1.0, -1.0) rectangle (1.0, 1.0); % 全体の底面正方形 ABCD (参考点線)
+
+    % 対称線 y = x (45° 線分)
+    \draw[very thick, red!85!black] (O) -- (A);
+    \node[red!90!black, font=\footnotesize\bfseries, above left] at (0.85, 0.85) {$y = x$};
+
+    % --- 4. 単位円 x^2 + y^2 = 1 (円弧) ---
+    \draw[very thick, blue!85!black, domain=0:90, samples=60]
+    plot ({cos(\x)}, {sin(\x)});
+    \node[blue!90!black, font=\footnotesize\bfseries, below left] at (0.45, 0.85) {$x^2+y^2=1$};
+
+    % --- 5. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.2, 0) -- (1.3, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 1.3) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 6. スライス x = c (cos theta) の線分 ---
+    % y in [s, c] の区間 (赤太線)
+    \draw[dashed, gray!60] (\cVal, 0) -- (\cVal, 1.05);
+    \draw[line width=2.4pt, teal!85!black] (\cVal, \sVal) -- (\cVal, \cVal);
+    \node[teal!95!black, font=\scriptsize\bfseries, right] at (\cVal, {(\sVal+\cVal)/2}) {切断線分 $s \le y \le c$};
+
+    \fill[teal!85!black] (\cVal, \sVal) circle (0.8pt);
+    \fill[teal!85!black] (\cVal, \cVal) circle (0.8pt);
+
+    % --- 7. 目盛りと主要点のプロット ---
+    \fill[black] (A) circle (0.8pt) node[above right=1pt] {$A(1, 1)$};
+    \fill[red!85!black] (E_int) circle (0.8pt);
+    \node[above=2pt, font=\scriptsize, red!90!black] at (E_int) {$\left(\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}\right)$};
+
+    % 軸目盛り
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[left=2pt, font=\scriptsize]  at (0, 1.0) {$1$};
+    \node[below=2pt, font=\scriptsize, teal!90!black] at (\cVal, 0) {$c = \cos\theta$};
+    \node[left=2pt, font=\scriptsize, teal!90!black]  at (0, \sVal) {$s = \sin\theta$};
+    \draw[dotted, gray!60] (0, \sVal) -- (\cVal, \sVal);
+
+    % 角度 theta の弧
+    \draw[thick, purple!85!black] (0.35, 0) arc (0:\angTheta:0.35);
+    \node[purple!90!black, font=\scriptsize] at (12:0.45) {$\theta$};
+    \draw[thick, dotted, purple!85!black] (0, 0) -- (\cVal, \sVal);
+
+    % 45° の限界点
+    \node[below=2pt, font=\scriptsize, gray!80!black] at (\invSqTwo, 0) {$\frac{1}{\sqrt{2}}$};
+    \draw[dotted, gray!60] (\invSqTwo, 0) -- (E_int);
+
+  \end{tikzpicture}
+  \caption{底面 $z=0$ における切り口とスライス区間 $s \le y \le c$（$0 \le \theta \le \dfrac{\pi}{4}$）}
+  \label{fig:bottom_plane_z0_slice}
+\end{figure}
+
+$AP$の方程式は
+\begin{align}
+  \begin{pmatrix}
+    x \\ y \\ z
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    0 \\ 0 \\ 3
+  \end{pmatrix}
+  + t
+  \begin{pmatrix}
+    1 \\ 1 \\ -3
+  \end{pmatrix}
+\end{align}
+だから，$AP$と$x=c$の共通点は$t=c$の時の$(c,c,3(1-c))$である．
+よって$x=c$での切断面は
+\begin{align}
+  s\le y\le c，\qquad0\le z\le3(1-c)
+\end{align}
+であり，下図の斜線部である．
+
+% TODO
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=3cm,y=2cm,>=stealth,every node/.style={font=\small}]
+    \draw[->,thick] (0,0) -- (1.1,0) node[right] {$y$};
+    \draw[->,thick] (0,0) -- (0,0.8) node[above] {$z$};
+    \fill[pattern=north east lines,pattern color=blue!60] (0.35,0) rectangle (0.85,0.45);
+    \draw[very thick,blue!85!black] (0.35,0) rectangle (0.85,0.45);
+    \draw[dashed,gray!60] (0,0.45) -- (0.35,0.45);
+    \node[below] at (0.35,0) {$s$};
+    \node[below] at (0.85,0) {$c$};
+    \node[left] at (0,0.45) {$3(1-c)$};
+    \node[below left] at (0,0) {$O$};
+  \end{tikzpicture}
+  \caption{および$0\le y\le x$での切断面}
+\end{figure}
+
+この面積を$S(\theta)$とすると，
+\begin{align}
+  S(\theta)=(c-s)\cdot3(1-c)
+\end{align}
+となるから，求める体積$v'$は
+\begin{align}
+  V'
+  &=\int_{\frac{\sqrt{2}}{2}}^1 S(\theta)\,dc\\
+  &=\int_0^{\frac{\pi}{4}}S(\theta)\left(-\dfrac{dc}{d\theta}\right)\,d\theta\\
+  &=\int_0^{\frac{\pi}{4}}3(1-c)(c-s)s\,d\theta\\
+  &=3\int_0^{\frac{\pi}{4}}(cs-s^2-c^2s+cs^2)\,d\theta \label{eq:3}
+\end{align}
+である．各項を個別に計算すると
+\begin{align}
+  (\text{第一項})
+  &= \int_0^{\frac{\pi}{4}}sc\,d\theta \\
+  &=\left[-\dfrac{1}{4}\cos2\theta\right]_0^{\frac{\pi}{4}}=\dfrac{1}{4}
+\end{align}
+\begin{align}
+  (\text{第二項})
+  &=  \int_0^{\frac{\pi}{4}}s^2\,d\theta \\
+  &=\dfrac{1}{2}\left[\theta-\dfrac{1}{2}\sin2\theta\right]_0^{\frac{\pi}{4}}
+  =\dfrac{1}{2}\left(\dfrac{\pi}{4}-\dfrac{1}{2}\right)
+\end{align}
+\begin{align}
+  (\text{第三項})
+  &=  \int_0^{\frac{\pi}{4}}c^2s\,d\theta \\
+  &=\left[-\dfrac{1}{3}c^3\right]_0^{\frac{\pi}{4}}
+  =\dfrac{1}{3}\left(1-\dfrac{1}{2\sqrt{2}}\right)
+\end{align}
+\begin{align}
+  (\text{第四項})
+  &=  \int_0^{\frac{\pi}{4}}s^2c\,d\theta \\
+  &=\left[\dfrac{1}{3}s^3\right]_0^{\frac{\pi}{4}}
+  =\dfrac{1}{3}\cdot\dfrac{1}{2\sqrt{2}}
+\end{align}
+だから\cref{eq:3}に代入して，
+\begin{align}
+  V'
+  &=3\left\{\dfrac{1}{4}-\dfrac{1}{2}\left(\dfrac{\pi}{4}-\dfrac{1}{2}\right)
+    -\dfrac{1}{3}\left(1-\dfrac{1}{2\sqrt{2}}\right)
+  +\dfrac{1}{3}\cdot\dfrac{1}{2\sqrt{2}}\right\}\\
+  &=\dfrac{1}{2}(\sqrt{2}+1)-\dfrac{3}{8}\pi
+\end{align}
+を得る．\cref{eq:1}より，
+\begin{align}
+  V=4(\sqrt{2}+1)-3\pi
+\end{align}
+である．
+
+\noindent{\bf [解2]}
+
+解答では$0 \le x \le y$まで対称性を使って計算量を減らしている．
+もう少しゆるく第一象限の体積の$4$倍として求めるとどれくらいの計算量になるのか例示しよう．
+
+$x\ge0$，$y\ge0$の部分の体積を改めて$V'$とすると，
+\begin{align}
+  V=4V' \label{eq:4}
+\end{align}
+である．$0\le\theta\le\dfrac{\pi}{2}$として，$x=c$での切断面を考える．辺$AP$と円柱$x^2+y^2=1$との交点は
+\begin{align}
+  E\left(\dfrac{1}{\sqrt{2}},\dfrac{1}{\sqrt{2}},\dfrac{3}{2}(2-\sqrt{2})\right)
+\end{align}
+である．$x=c$の断面は，$c\le s$か$c\ge s$かによって，下図のように変わる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=3cm,y=1cm,>=stealth,every node/.style={font=\small}]
+    \draw[->,thick] (0,0) -- (1.25,0) node[right] {$y$};
+    \draw[->,thick] (0,0) -- (0,1.8) node[above] {$z$};
+    \fill[pattern=north east lines,pattern color=blue!60] (0.7,0) -- (1,0) -- (0.7,0.9) -- cycle;
+    \draw[very thick,blue!85!black] (0.7,0) -- (1,0) -- (0.7,0.9) -- cycle;
+    \node[below] at (0.7,0) {$s$};
+    \node[below] at (1,0) {$1$};
+    \node[above left] at (0.7,0.9) {$3(1-s)$};
+    \node[below left] at (0,0) {$O$};
+    \node[above] at (0.6,1.9) {$\frac{\pi}{4}\le\theta\le\frac{\pi}{2}$};
+  \end{tikzpicture}
+  \qquad
+  \begin{tikzpicture}[x=3cm,y=1cm,>=stealth,every node/.style={font=\small}]
+    \draw[->,thick] (0,0) -- (1.25,0) node[right] {$y$};
+    \draw[->,thick] (0,0) -- (0,1.8) node[above] {$z$};
+    \fill[pattern=north east lines,pattern color=blue!60] (0.3,0) -- (1,0) -- (0.7,0.9) -- (0.3,0.9) -- cycle;
+    \draw[very thick,blue!85!black] (0.3,0) -- (1,0) -- (0.7,0.9) -- (0.3,0.9) -- cycle;
+    \draw[dashed,gray!60] (0.7,0) -- (0.7,0.9);
+    \node[below] at (0.3,0) {$s$};
+    \node[below] at (0.7,0) {$c$};
+    \node[below] at (1,0) {$1$};
+    \node[above] at (0.5,0.9) {$3(1-c)$};
+    \node[below left] at (0,0) {$O$};
+    \node[above] at (0.6,1.9) {$0\le\theta\le\frac{\pi}{4}$};
+  \end{tikzpicture}
+  \caption{第1象限にある部分の切断面（三角形と台形）}
+\end{figure}
+
+したがって，切断面の面積$S(\theta)$は
+\begin{align}
+  S(\theta)=
+  \begin{cases}
+    \dfrac{3}{2}(1-s)^2
+    & \left(\dfrac{\pi}{4}\le\theta\le\dfrac{\pi}{2}\right)，\\
+    \dfrac{3}{2}(1-c)^2+3(1-c)(c-s)
+    & \left(0\le\theta\le\dfrac{\pi}{4}\right)
+  \end{cases}
+\end{align}
+となる．よって体積$V'$は
+\begin{align}
+  V'&=\int_0^1 S(\theta)\,dc\\
+  &=\dfrac{3}{2}\int_{\frac{\pi}{4}}^{\frac{\pi}{2}}(1-s)^2s\,d\theta
+  +\dfrac{3}{2}\int_0^{\frac{\pi}{4}}(1-c)^2s\,d\theta\\
+  &\quad+\int_0^{\frac{\pi}{4}}3s(1-c)(c-s)\,d\theta
+  \label{eq:5}
+\end{align}
+である．各積分は，
+\begin{align}
+  (\text{第一項})
+  &=\int_{\frac{\pi}{4}}^{\frac{\pi}{2}}(1-s)^2s\,d\theta \\
+  &=2[-c]_{\frac{\pi}{4}}^{\frac{\pi}{2}}
+  +\dfrac{1}{3}[c^3]_{\frac{\pi}{4}}^{\frac{\pi}{2}}
+  -\left[\theta-\dfrac{1}{2}\sin2\theta\right]_{\frac{\pi}{4}}^{\frac{\pi}{2}}\\
+  &=\dfrac{11}{12}\sqrt{2}-\dfrac{1}{2}-\dfrac{\pi}{4}
+\end{align}
+\begin{align}
+  (\text{第二項})
+  &=\int_0^{\frac{\pi}{4}}(1-c)^2s\,d\theta \\
+  &=\left[\dfrac{1}{3}(1-c)^3\right]_0^{\frac{\pi}{4}} \\
+  &=\dfrac{5}{6}-\dfrac{7}{12}\sqrt{2}
+\end{align}
+\begin{align}
+  (\text{第三項})
+  &=\int_0^{\frac{\pi}{4}}3s(1-c)(c-s)\,d\theta \\
+  &=\dfrac{\sqrt{2}+1}{2}-\dfrac{3}{8}\pi
+\end{align}
+である．これらを\cref{eq:5}に代入して，
+\begin{align}
+  V'&=\dfrac{3}{2}\left(\dfrac{11}{12}\sqrt{2}-\dfrac{1}{2}-\dfrac{\pi}{4}
+  +\dfrac{5}{6}-\dfrac{7}{12}\sqrt{2}\right)
+  +\dfrac{\sqrt{2}+1}{2}-\dfrac{3}{8}\pi\\
+  &=\sqrt{2}+1-\dfrac{3}{4}\pi
+\end{align}
+だから，\cref{eq:4}より，
+\begin{align}
+  V=4(\sqrt{2}+1)-3\pi
+\end{align}
+となる．
+
+{\bf [解説]}
+
+この問題は円が現れるが，$z=\text{const.}$で切断して扇形の差から断面積を求めようとすると（出来なくはないが）計算が大変である．上の解法では，$x$を固定して，切断面を長方形・三角形・台形として求めている．
+
 \end{document}

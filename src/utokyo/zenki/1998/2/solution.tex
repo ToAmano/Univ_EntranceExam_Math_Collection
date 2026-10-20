@@ -1,11 +1,20 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} $z = k \in \mathbb{Z}$ と固定すると，
+与えられた領域
+\begin{align}
+  \begin{cases}
+    x+y+z \leqq n \\
+    -x+y-z \leqq n \\
+    x-y-z \leqq n \\
+    -x-y+z \leqq n
+  \end{cases}
+\end{align}
+について考える．
+
+$z = k \in \mathbb{Z}$ と固定すると，
 \begin{align}
   \begin{cases}
     x + y \le n - k \\
@@ -14,92 +23,266 @@
     -x - y \le n - k
   \end{cases}
   \iff
-  \begin{cases} -(n-k) \le x + y \le n - k \\ -(n+k) \le x - y \le n + k
-  \end{cases} \quad \dots \text{①}
+  \begin{cases}
+    -(n-k) \le x + y \le n - k \\
+    -(n+k) \le x - y \le n + k
+  \end{cases} \label{eq:1}
 \end{align}
-これをみたす $(x, y)$ の存在条件から， $-n \le k \le n \ \dots \text{②}$ である． このもとで①を図示すると右図斜線部(境界含む)． この内部にある格子点の数を $S(k)$ とおく． ここで 1辺 $2n$ の正方形から， 三角形4つを取り去ることで $S(k)$ をもとめる． まず， 右図1のような正方形の周及び内部の格子点は
-\begin{align}
-  (2n + 1)^2 \quad \dots \text{③}
-\end{align}
-である． 対称性から， 以下 $k \ge 0$ とする． 右の図のように各点を定める． ここで， $\triangle ABH, \triangle BCD, \triangle DEF, \triangle FGH$ は， 各々1辺が $n-k, n+k, n-k, n+k$ の直角2等辺三角形である． $\dots \text{④}$
+である．
 
-ここで， 1辺 $p \in \mathbb{N}$ の直角2等辺三角形の周及び内部(斜辺をのぞく)の格子点は， 右図2から，
-\begin{align}
-  1 + 2 + \dots + p &= \dfrac{1}{2} p (p + 1) \quad \dots \text{⑤}
-\end{align}
-である． よって， ④⑤から， $\triangle ABH, \triangle BCD, \triangle DEF, \triangle FGH$ の周及び内部(斜辺除く)にある格子点はあわせて
-\begin{align}
-  (n+k)(n+k+1) + (n-k)(n+1-k) \quad \dots \text{⑥}
-\end{align}
-である． ③⑥から，
-\begin{align}
-  S(k) &= (2n+1)^2 - (n+k)(n+1+k) - (n-k)(n+1-k) \quad \dots \text{⑦}
-\end{align}
-である． したがって対称性から， もとめる格子点の数は， ②とあわせて，
-\begin{align}
-  f(n) &= S(0) + 2 \sum_{k=1}^n S(k) \quad \dots \text{⑧}
-\end{align}
-である． ⑦から
+これをみたす $(x, y)$ の存在条件から，
 \begin{align}
   \begin{cases}
-    S(0) = 2n^2 + 2n + 1 \\
-    \displaystyle\sum_{k=1}^n S(k) = n(2n+1)^2 - \sum_{k=1}^n (k+n)(k+1+n) - \sum_{k=1}^n (n-k)(n-1-k)
-  \end{cases} \quad \dots \text{⑨}
+    -(n-k) \le n - k \\
+    -(n+k) \le n + k
+  \end{cases}
+  \therefore
+  -n \le k \le n \label{eq:2}
 \end{align}
-であり，
-\begin{align}
-  \sum_{k=1}^n (k+n)(k+1+n) &= \dfrac{1}{3} \sum_{k=1}^n \left\{ (k+n)(k+1+n)(k+n+2) - (k+n-1)(k+n)(k+n+1) \right\} \\
-  &= \dfrac{1}{3} \left\{ (2n)(2n+1)(2n+2) - n(n+1)(n+2) \right\} \\
-  &= \dfrac{n(n+1)}{3} (7n + 2) \\
-  \sum_{k=1}^n (k-n)(k-n-1) &= \dfrac{1}{3} \sum_{k=1}^n \left\{ (k+1-n)(k-n)(k-1-n) - (k-n)(k-1-n)(k-2-n) \right\} \\
-  &= \dfrac{1}{3} \left\{ -(-1)(-n)(-1-n) \right\} \\
-  &= \dfrac{1}{3} n(n+1)(n-1)
-\end{align}
-を⑨に代入して，
-\begin{align}
-  \sum_{k=1}^n S(k) &= (2n+1)^2 \cdot n - \dfrac{1}{3} n(n+1)(7n+2) - \dfrac{1}{3} n(n+1)(n-1)
-\end{align}
-だから， ⑧とあわせて
-\begin{align}
-  \dfrac{f(n)}{n^3} &= \dfrac{S(0)}{n^3} + 2 \left[ \left(2 + \dfrac{1}{n}\right)^2 - \dfrac{1}{3}\left(1 + \dfrac{1}{n}\right)\left(7 + \dfrac{2}{n}\right) - \dfrac{1}{3}\left(1 + \dfrac{1}{n}\right)\left(1 - \dfrac{1}{n}\right) \right] \\
-  &\xrightarrow{n \to \infty} 0 + 2 \left[ 4 - \dfrac{7}{3} - \dfrac{1}{3} \right] = \dfrac{8}{3} \quad \left( \because \dfrac{S(0)}{n^3} \to 0 \right)
-\end{align}
+である．
+このもとで\cref{eq:1}を図示すると下図斜線部である(境界含む)．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.7, >=stealth]
-    \draw[->] (-4,0) -- (4,0) node[right] {$x$};
-    \draw[->] (0,-4) -- (0,4) node[above] {$y$};
-    \fill[gray!20] (-3,1) -- (-1,3) -- (3,1) -- (3,-1) -- (1,-3) -- (-3,-1) -- cycle;
-    \draw[thick] (-3,1) -- (-1,3) -- (3,1) -- (3,-1) -- (1,-3) -- (-3,-1) -- cycle;
-    \draw[dashed] (-3,-3) rectangle (3,3);
-    \node[above left] at (-3,1) {$A$};
-    \node[above] at (-1,3) {$B$};
-    \node[above right] at (3,3) {$C$};
-    \node[right] at (3,1) {$D$};
-    \node[below right] at (3,-3) {$E$};
-    \node[below] at (1,-3) {$F$};
-    \node[below left] at (-3,-3) {$G$};
-    \node[left] at (-3,-1) {$H$};
-    \node[below] at (-3,0) {$-n$};
-    \node[below] at (3,0) {$n$};
-    \node[left] at (0,3) {$n$};
-    \node[left] at (0,-3) {$-n$};
-    \node[above] at (0,3.3) {(図1)};
+  \begin{tikzpicture}[scale=1.55, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・パラメータ (n = 3, k = 1 の例) ---
+    \def\nVal{3.0}
+    \def\kVal{1.0}
+
+    \coordinate (O) at (0, 0);
+
+    % 外枠正方形 AGEC の頂点 (手書きスケッチの頂点ラベル配置)
+    % A(左上), C(右上), E(右下), G(左下)
+    \coordinate (A_sq) at (-\nVal, \nVal);
+    \coordinate (C_sq) at (\nVal, \nVal);
+    \coordinate (E_sq) at (\nVal, -\nVal);
+    \coordinate (G_sq) at (-\nVal, -\nVal);
+
+    % 4つの切断頂点 B, D, F, H
+    \coordinate (B) at (-\kVal, \nVal);
+    \coordinate (D) at (\nVal, -\kVal);
+    \coordinate (F) at (\kVal, -\nVal);
+    \coordinate (H) at (-\nVal, \kVal);
+
+    % --- 2. 内部領域のハッチング塗りつぶし ---
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75]
+    (B) -- (D) -- (F) -- (H) -- cycle;
+    \draw[very thick, blue!85!black] (B) -- (D) -- (F) -- (H) -- cycle;
+
+    % --- 3. 外枠正方形の描画 ---
+    \draw[very thick, gray!80!black] (A_sq) -- (C_sq) -- (E_sq) -- (G_sq) -- cycle;
+
+    % --- 4. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-4.2, 0) -- (4.4, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -4.2) -- (0, 4.4) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 5. 各辺の境界直線の方程式ラベル ---
+    % (i) 辺 HB: y = x + n + k (傾き 1)
+    \node[purple!90!black, font=\scriptsize\bfseries, rotate=45, above left]
+    at ($ (H)!0.5!(B) $) {$y = x + n + k$};
+
+    % (ii) 辺 BD: x + y = n - k <=> y = -x + n - k (傾き -1)
+    \node[teal!90!black, font=\scriptsize\bfseries, rotate=-45, above right]
+    at ($ (B)!0.5!(D) $) {$x + y = n - k$};
+
+    % (iii) 辺 DF: y = x - (n + k) (傾き 1)
+    \node[purple!90!black, font=\scriptsize\bfseries, rotate=45, below right]
+    at ($ (D)!0.5!(F) $) {$y = x - (n + k)$};
+
+    % (iv) 辺 FH: x + y = -(n - k) <=> y = -x - (n - k) (傾き -1)
+    \node[teal!90!black, font=\scriptsize\bfseries, rotate=-45, below left]
+    at ($ (F)!0.5!(H) $) {$x + y = -(n - k)$};
+
+    % --- 6. 頂点からの投影破線と内部座標 (-k, k) ---
+    \draw[dashed, gray!60] (B) -- (-\kVal, 0);
+    \draw[dashed, gray!60] (H) -- (0, \kVal);
+    \draw[dashed, gray!60] (D) -- (0, -\kVal);
+    \draw[dashed, gray!60] (F) -- (\kVal, 0);
+
+    % 内部の -k, k ラベル
+    \node[right=2pt, font=\scriptsize, teal!90!black] at (0, \kVal) {$k$};
+    \node[below=2pt, font=\scriptsize, teal!90!black] at (-\kVal, 0) {$-k$};
+    \node[right=2pt, font=\scriptsize, teal!90!black] at (0, -\kVal) {$-k$};
+    \node[above=2pt, font=\scriptsize, teal!90!black] at (\kVal, 0) {$k$};
+
+    % --- 7. 頂点プロットとラベル ---
+    % 4隅の正方形頂点 (A, C, E, G)
+    \node[above left=2pt, font=\footnotesize\bfseries]  at (A_sq) {$A$};
+    \node[above right=2pt, font=\footnotesize\bfseries] at (C_sq) {$C$};
+    \node[below right=2pt, font=\footnotesize\bfseries] at (E_sq) {$E$};
+    \node[below left=2pt, font=\footnotesize\bfseries]  at (G_sq) {$G$};
+
+    % 切断境界の頂点 (B, D, F, H)
+    \fill[black] (B) circle (1.8pt) node[above=2pt, font=\footnotesize\bfseries] {$B$};
+    \fill[black] (D) circle (1.8pt) node[right=2pt, font=\footnotesize\bfseries] {$D$};
+    \fill[black] (F) circle (1.8pt) node[below=2pt, font=\footnotesize\bfseries] {$F$};
+    \fill[black] (H) circle (1.8pt) node[left=2pt, font=\footnotesize\bfseries]  {$H$};
+
+    % 正方形の辺長ラベル n, -n
+    \node[above=2pt, font=\scriptsize] at (0, \nVal) {$n$};
+    \node[below=2pt, font=\scriptsize] at (0, -\nVal) {$-n$};
+    \node[below=2pt, font=\scriptsize] at (\nVal, 0) {$n$};
+    \node[below=2pt, font=\scriptsize] at (-\nVal, 0) {$-n$};
+
+    % 4隅の直角二等辺三角形の各辺の寸法 (n-k と n+k)
+    % 上側
+    \node[teal!90!black, font=\scriptsize\bfseries] at ($ (A_sq)!0.5!(B) + (0, 0.25) $) {$n-k$};
+    \node[teal!90!black, font=\scriptsize\bfseries] at ($ (A_sq)!0.5!(H) + (-0.35, 0) $) {$n-k$};
+    \node[orange!95!black, font=\scriptsize\bfseries] at ($ (C_sq)!0.5!(B) + (0, 0.25) $) {$n+k$};
+    \node[orange!95!black, font=\scriptsize\bfseries] at ($ (C_sq)!0.5!(D) + (0.35, 0) $) {$n+k$};
+
+    % 下側
+    \node[teal!90!black, font=\scriptsize\bfseries] at ($ (E_sq)!0.5!(D) + (0.35, 0) $) {$n-k$};
+    \node[teal!90!black, font=\scriptsize\bfseries] at ($ (E_sq)!0.5!(F) + (0, -0.25) $) {$n-k$};
+    \node[orange!95!black, font=\scriptsize\bfseries] at ($ (G_sq)!0.5!(F) + (0, -0.25) $) {$n+k$};
+    \node[orange!95!black, font=\scriptsize\bfseries] at ($ (G_sq)!0.5!(H) + (-0.35, 0) $) {$n+k$};
+
   \end{tikzpicture}
-  \qquad
-  \begin{tikzpicture}[scale=0.7, >=stealth]
-    \draw[->] (-0.5,0) -- (4,0) node[right] {$x$};
-    \draw[->] (0,-0.5) -- (0,4) node[above] {$y$};
-    \draw[thick] (0,3) -- (3,0) node[midway, above right] {$x+y=p$};
-    \draw[dashed] (0,3) -- (0,0) -- (3,0);
-    \filldraw (0,3) circle (2pt) node[left] {$p$};
-    \filldraw (3,0) circle (2pt) node[below] {$p$};
-    \node[below left] at (0,0) {$0$};
-    \node[above] at (1.5,3.3) {(図2)};
-  \end{tikzpicture}
-  \caption{条件①を満たす領域（左）と直角2等辺三角形の格子点の数え方（右）}
+  \caption{平面 $z=k$ による切断面における条件を満たす領域}
+  \label{fig:square_four_triangles_decomposition_labeled_with_lines}
 \end{figure}
+
+この内部にある格子点の数を $S(k)$ とおく．
+ここで1辺 $2n$ の正方形から，三角形4つを取り去ることで $S(k)$ をもとめる．
+
+まず一辺$2n$の正方形の周及び内部の格子点の数は
+\begin{align}
+  (2n + 1)^2 \label{eq:3}
+\end{align}
+である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.6, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ ---
+    % 一辺 p (例: p = 3.6)
+    \def\pVal{3.6}
+    \def\kVal{1.4}
+    \pgfmathsetmacro{\yOnLine}{\pVal - \kVal} % 2.2
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (Pt_pY) at (0, \pVal);
+    \coordinate (Pt_pX) at (\pVal, 0);
+    \coordinate (Pt_kX) at (\kVal, 0);
+    \coordinate (Pt_kLine) at (\kVal, \yOnLine);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.4, 0) -- (4.4, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 4.4) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 直角二等辺三角形の境界線 ---
+    % 斜辺 x + y = p
+    \draw[very thick, red!85!black] (Pt_pY) -- (Pt_pX);
+    \node[red!90!black, font=\footnotesize\bfseries, above right]
+    at ($ (Pt_pY)!0.45!(Pt_pX) $) {$x + y = p$};
+
+    % 軸上の境界
+    \draw[thick, gray!70] (0, 0) -- (0, \pVal);
+    \draw[thick, gray!70] (0, 0) -- (\pVal, 0);
+
+    % --- 4. 斜辺上の除外点（白抜き丸）---
+    % 斜辺上の格子点は除外されるため白抜き丸で明示
+    \draw[thick, red!85!black, fill=white] (Pt_pY) circle (2.2pt);
+    \draw[thick, red!85!black, fill=white] (Pt_pX) circle (2.2pt);
+    \draw[thick, red!85!black, fill=white] (Pt_kLine) circle (2.2pt);
+
+    % その他の斜辺上のサンプル点（白抜き丸）
+    \draw[thick, red!85!black, fill=white] (0.6, {\pVal - 0.6}) circle (1.8pt);
+    \draw[thick, red!85!black, fill=white] (2.8, {\pVal - 2.8}) circle (1.8pt);
+
+    % --- 5. x = 0 における格子点 (p 個) ---
+    % 含まれる点: (0, 0), (0, 1), ..., (0, p-1)
+    \fill[black] (0, 0) circle (1.8pt);
+    \fill[black] (0, 1.0) circle (1.8pt);
+    \fill[black] (0, {\pVal - 0.5}) circle (1.8pt);
+    \node[left=3pt, font=\scriptsize] at (0, {\pVal - 0.5}) {$p-1$};
+    \node[left=3pt, font=\scriptsize] at (Pt_pY) {$p$};
+
+    % --- 6. 任意の位置 x = k における格子点数のカウント ---
+    % 垂直破線
+    \draw[dashed, teal!85!black, thick] (Pt_kX) -- (Pt_kLine);
+    \fill[black] (Pt_kX) circle (1.8pt);
+    \node[below=2pt, font=\scriptsize] at (Pt_kX) {$k$};
+
+    % 含まれる格子点の例 (黒丸)
+    \fill[teal!85!black] (\kVal, 0.6) circle (1.8pt);
+    \fill[teal!85!black] (\kVal, 1.2) circle (1.8pt);
+    \fill[teal!85!black] (\kVal, {\yOnLine - 0.5}) circle (1.8pt);
+
+    % 手書きの波括弧（引き出し線）
+    \draw[->, thick, teal!90!black]
+    ($ (\kVal, 0.9) + (-0.3, 0) $) to[out=180, in=90]
+    (0.6, -0.6) node[below=1pt, font=\footnotesize\bfseries, align=left]
+    {$p - k$ 個の格子点\\ \scriptsize ($y = 0, 1, \dots, p-k-1$)};
+
+    % 目盛り p
+    \node[below=2pt, font=\scriptsize] at (Pt_pX) {$p$};
+
+  \end{tikzpicture}
+  \caption{直角二等辺三角形の周および内部（斜辺を除く）にある格子点の数え方}
+  \label{fig:triangle_lattice_counting}
+\end{figure}
+
+次に三角形の周および内部（斜辺上を除く）の格子点の数を数える．
+上図の $\triangle ABH, \triangle DEF$ は一辺が$n-k$の，$\triangle BCD, \triangle GFH$は一辺が$n+k$の直角二等辺三角形である．一般に一辺$p \in \mathbb{N}$ の直角2等辺三角形の周及び内部(斜辺をのぞく)の格子点の数は
+\begin{align}
+  1 + 2 + \dots + p &= \dfrac{1}{2} p (p + 1)
+\end{align}
+である．よって，$\triangle ABH, DEF, BCD, FGH$ の周及び内部(斜辺除く)にある格子点はあわせて
+\begin{align}
+  2\cdot\dfrac{(n-k)(n+1-k)}{2} + 2\cdot\dfrac{(n+k)(n+k+1)}{2}
+  = (n+k)(n+k+1) + (n-k)(n+1-k) \label{eq:4}
+\end{align}
+である．\cref{eq:3,eq:4}から$S(k)$は
+\begin{align}
+  S(k) &= (2n+1)^2 - (n+k)(n+1+k) - (n-k)(n+1-k) \label{eq:5}
+\end{align}
+である．よって求める格子点の合計は\cref{eq:2}より
+\begin{align}
+  f(n)
+  &= \sum_{k=-n}^{n} S(k) \\
+  &= S(0) + 2 \sum_{k=1}^n S(k) \\
+  &= (2n^2+2n+1) + 2\sum_{k=1}^{n}(2n+1)^2 - 2\sum_{k=1}^{n}(n+k)(n+1+k) - 2\sum_{k=1}^{n}(n-k)(n+1-k) \label{eq:6}
+\end{align}
+である．各項計算すると
+\begin{align}
+  (\text{第二項})
+  &= 2\sum_{k=1}^{n}(2n+1)^2 \\
+  &= 2n(2n+1)^2 \label{eq:7}
+\end{align}
+\begin{align}
+  (\text{第三項})
+  &= \sum_{k=1}^n (k+n)(k+1+n) \\
+  &= \dfrac{1}{3} \sum_{k=1}^n \left\{ (k+n)(k+1+n)(k+n+2) - (k+n-1)(k+n)(k+n+1) \right\} \\
+  &= \dfrac{1}{3} \left\{ (2n)(2n+1)(2n+2) - n(n+1)(n+2) \right\} \\
+  &= \dfrac{1}{3} n(n+1)(7n + 2) \label{eq:8}
+\end{align}
+\begin{align}
+  (\text{第四項})
+  &=  \sum_{k=1}^n (k-n)(k-n-1) \\
+  &= \dfrac{1}{3} \sum_{k=1}^n \left\{ (k+1-n)(k-n)(k-1-n) - (k-n)(k-1-n)(k-2-n) \right\} \\
+  &= \dfrac{1}{3} \left\{ -(-1)(-n)(-1-n) \right\} \\
+  &= \dfrac{1}{3} n(n+1)(n-1) \label{eq:9}
+\end{align}
+である．
+
+\cref{eq:7,eq:8,eq:9}を\cref{eq:6}に代入して
+\begin{align}
+  f(n)
+  &= (2n^2+2n+1) +  2n(2n+1)^2 - \dfrac{2}{3} n(n+1)(7n+2) - \dfrac{2}{3} n(n+1)(n-1)
+\end{align}
+である．両辺を$n^3$で割って
+\begin{align}
+  \dfrac{f(n)}{n^3}
+  &= \dfrac{2n^2+2n+1}{n^3} + 2 \left[ \left(2 + \dfrac{1}{n}\right)^2 - \dfrac{1}{3}\left(1 + \dfrac{1}{n}\right)\left(7 + \dfrac{2}{n}\right) - \dfrac{1}{3}\left(1 + \dfrac{1}{n}\right)\left(1 - \dfrac{1}{n}\right) \right] \\
+  &\xrightarrow{n \to \infty} 0 + 2 \left[ 4 - \dfrac{7}{3} - \dfrac{1}{3} \right] \\
+  &= \dfrac{8}{3}
+\end{align}
+が求める極限値である．
 
 \newpage
 

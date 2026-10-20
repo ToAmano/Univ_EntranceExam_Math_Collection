@@ -1,85 +1,354 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} $C = \cos\theta, S = \sin\theta$ とおく． $x_1 = 1, y_1 = 0$ である $\dots \text{①}$． $A_n = \vec{a} \cdot \vec{OP_n}$， $B_n = \vec{b} \cdot \vec{OP_n}$ とすると，
+% TODO: 状況の概要
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ ---
+    % 単位ベクトル a: 偏角 theta = 70°
+    % 単位ベクトル b: 偏角 30° ((sqrt(3)/2, 1/2))
+    \def\angTheta{70}
+    \def\angB{30}
+
+    \coordinate (O) at (0, 0);
+
+    % 初期点または代表点 P_n (例として (1.2, 0.5))
+    \coordinate (Pn) at (1.2, 0.5);
+
+    % a 方向の単位ベクトルと直交方向
+    \coordinate (vec_a) at ({\angTheta}:1.0);
+    \coordinate (vec_b) at ({\angB}:1.0);
+
+    % P_n から a への正射影成分: (Pn . a) a
+    % Q_n = P_n - (Pn . a) a (a に直交する直線への正射影)
+    % Q_n の方向角は theta + 90° = 160° または theta - 90° = -20°
+    % Pn = (1.2, 0.5), a = (cos 70°, sin 70°) ≈ (0.342, 0.940)
+    % Pn . a ≈ 1.2*0.342 + 0.5*0.940 = 0.410 + 0.470 = 0.880
+    \pgfmathsetmacro{\projA}{1.2*cos(\angTheta) + 0.5*sin(\angTheta)}
+    \coordinate (Proj_a) at ({\projA*cos(\angTheta)}, {\projA*sin(\angTheta)});
+    \coordinate (Qn)     at ($ (Pn) - (Proj_a) $);
+
+    % Q_n から b への正射影成分: (Qn . b) b
+    % R_n = Q_n - (Qn . b) b (b に直交する直線への正射影)
+    \pgfmathsetmacro{\xQ}{1.2 - \projA*cos(\angTheta)}
+    \pgfmathsetmacro{\yQ}{0.5 - \projA*sin(\angTheta)}
+    \pgfmathsetmacro{\projB}{\xQ*cos(\angB) + \yQ*sin(\angB)}
+    \coordinate (Proj_b) at ({\projB*cos(\angB)}, {\projB*sin(\angB)});
+    \coordinate (Rn)     at ($ (Qn) - (Proj_b) $);
+
+    % P_{n+1} = 4 * R_n
+    \coordinate (Pn1)    at ($ 4*(Rn) $);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!70] (-1.2, 0) -- (1.8, 0) node[right] {$x$};
+    \draw[->, thick, gray!70] (0, -1.0) -- (0, 1.8) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 単位ベクトル a, b の直線と矢印 ---
+    % 直線 a の方向 (薄い破線)
+    \draw[dashed, gray!45] ($ -1.1*(vec_a) $) -- ($ 1.5*(vec_a) $);
+    \draw[->, line width=1.4pt, teal!85!black] (O) -- (vec_a)
+    node[above=2pt, teal!90!black] {$\vec{a} = (\cos\theta, \sin\theta)$};
+
+    % 直線 b の方向 (薄い破線)
+    \draw[dashed, gray!45] ($ -0.8*(vec_b) $) -- ($ 1.6*(vec_b) $);
+    \draw[->, line width=1.4pt, orange!90!black] (O) -- (vec_b)
+    node[above right=1pt, orange!95!black] {$\vec{b} = \left(\frac{\sqrt{3}}{2}, \frac{1}{2}\right)$};
+
+    % a の偏角 theta
+    \draw[thick, teal!80!black] (0.4, 0) arc (0:\angTheta:0.4);
+    \node[teal!90!black, font=\scriptsize] at (35:0.55) {$\theta$};
+
+    % --- 4. 点 P_n と Q_n の幾何的関係 (a に直交する直線への正射影) ---
+    % a に直交する直線 (O を通り偏角 theta - 90°)
+    \draw[dashed, blue!40, thick] ($ -1.5*(0.9397, -0.3420) $) -- ($ 1.5*(0.9397, -0.3420) $)
+    node[below right=-2pt, font=\tiny, blue!75!black] {$\vec{a}$ の直交補空間};
+
+    % ベクトル OP_n
+    \draw[->, line width=1.5pt, black] (O) -- (Pn) node[above right=1pt] {$P_n$};
+    \fill[black] (Pn) circle (1.2pt);
+
+    % P_n から直線 a への垂線 (射影線: 差引くベクトル (a . OP_n) a)
+    \draw[thick, dashed, red!85!black] (Pn) -- (Qn);
+    \draw[->, line width=1.5pt, blue!85!black] (O) -- (Qn) node[below left=1pt] {$Q_n$};
+    \fill[blue!85!black] (Qn) circle (1.2pt);
+
+    % 直角記号 (OQ_n ⊥ a)
+    \draw[thin, gray!70]
+    ($ (Qn) + ({\angTheta}:0.08) $) --
+    ($ (Qn) + ({\angTheta}:0.08) + ({\angTheta+90}:0.08) $) --
+    ($ (Qn) + ({\angTheta+90}:0.08) $);
+
+    % --- 5. Q_n から P_{n+1} への変換 ---
+    % Q_n から b に直交する方向への射影と 4 倍伸長
+    \draw[thick, dashed, orange!85!black] (Qn) -- (Rn);
+    \draw[->, line width=1.8pt, purple!85!black] (O) -- (Pn1) node[below=2pt] {$P_{n+1}$};
+    \fill[purple!85!black] (Pn1) circle (1.3pt);
+
+    % --- 6. 注釈ボックス ---
+    \node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=3.5pt, font=\footnotesize, align=left]
+    at (-1.4, -1.45) {
+      \textbf{変換の意味}:\\[2pt]
+      $\bullet\ \overrightarrow{OQ_n} = \overrightarrow{OP_n} - (\vec{a}\cdot\overrightarrow{OP_n})\vec{a}$\\[1pt]
+      \quad ($\overrightarrow{OP_n}$ を $\vec{a}$ に垂直な直線へ正射影，$\overrightarrow{OQ_n}\perp\vec{a}$)\\[3pt]
+      $\bullet\ \overrightarrow{OP_{n+1}} = 4\left\{\overrightarrow{OQ_n} - (\vec{b}\cdot\overrightarrow{OQ_n})\vec{b}\right\}$\\[1pt]
+      \quad ($\overrightarrow{OQ_n}$ をさらに $\vec{b}$ に垂直な直線へ射影して $4$ 倍)
+    };
+
+  \end{tikzpicture}
+  \caption{漸化式による点 $P_n \to Q_n \to P_{n+1}$ の射影と変換の様子}
+  \label{fig:projection_sequence_overview}
+\end{figure}
+
+与えられた漸化式
 \begin{align}
-  \vec{OP_{n+1}} &= 4(\vec{OP_n} - A_n \vec{a}) - 4(B_n - A_n \vec{a} \cdot \vec{b}) \vec{b} \quad \dots \text{②}
+  \begin{cases}
+    \overrightarrow{OQ_n}=\overrightarrow{OP_n}-(\vec{a}\cdot\overrightarrow{OP_n})\vec{a} \\
+    \overrightarrow{OP_{n+1}}=4\{ \overrightarrow{OQ_n}-(\vec{b}\cdot\overrightarrow{OQ_n})\vec{b} \} \\
+    x_1 = 1, y_1 = 0
+  \end{cases} \label{eq:1}
 \end{align}
-であり，
+について考える．
+
+簡単のため$c = \cos\theta, s = \sin\theta$ とおく．
+また，
 \begin{align}
-  A_n &= C x_n + S y_n, \\
-  B_n &= \dfrac{1}{2}(\sqrt{3} x_n + y_n), \\
-  \vec{a} \cdot \vec{b} &= \dfrac{1}{2}(\sqrt{3} C + S) \quad \dots \text{③}
+  \begin{cases}
+    A_n = \vec{a} \cdot \vec{OP_n} \\
+    B_n = \vec{b} \cdot \vec{OP_n} \\
+    T = \vec{a} \cdot \vec{b}
+  \end{cases}\label{eq:2}
 \end{align}
-より， $T = \vec{a} \cdot \vec{b}$ とおいて， ②から
+とおくと，$P_n(x_n,y_n)$より
 \begin{align}
-  x_{n+1} &= (4 - 4C^2 - 3 + 2\sqrt{3}CT) x_n + (-4SC - \sqrt{3} + 2\sqrt{3}ST) y_n \\
-  &= (1 - C^2 + \sqrt{3}SC) x_n + (-SC - \sqrt{3}C^2) y_n \\
-  &= S(S + \sqrt{3}C) x_n - C(S + \sqrt{3}C) y_n \quad \dots \text{④} \\
-  y_{n+1} &= (-4CS - \sqrt{3} + 2CT) x_n + (4 - 4S^2 - 1 + 2ST) y_n \\
-  &= (-\sqrt{3}S^2 - 3CS) x_n + (3C^2 + \sqrt{3}CS) y_n \\
-  &= -\sqrt{3} S(S + \sqrt{3}C) x_n + \sqrt{3} C(S + \sqrt{3}C) y_n \quad \dots \text{⑤}
+  \begin{cases}
+    A_n = cx_n + sy_n \\
+    B_n = \dfrac{1}{2}\left(\sqrt{3}x_n+y_n\right) \\
+    T   = \dfrac{1}{2}\left(\sqrt{3}c+s\right)
+  \end{cases}
+\end{align} \label{eq:3}
+である．
+
+\cref{eq:1}の第一式に\cref{eq:2}を代入すると
+\begin{align}
+  \overrightarrow{OQ_n}=\overrightarrow{OP_n}-A_n\vec{a} \label{eq:4}
 \end{align}
-ここで， $\alpha = S(S + \sqrt{3}C), \ \beta = C(S + \sqrt{3}C)$ とすると，
+だから，$\vec{b}$との内積をとって\cref{eq:2}に注意して
+\begin{align}
+  \vec{b}\cdot\overrightarrow{OQ_n}=B_n - TA_n \label{eq:5}
+\end{align}
+である．よって\cref{eq:1}で$P_n$の漸化式を立てると
+\begin{align}
+  \vec{OP_{n+1}}
+  &= 4\{ \overrightarrow{OQ_n}-(B_n - TA_n)\vec{b} \} \quad (\because\text{\cref{eq:5}})\\
+  &= 4\{ \overrightarrow{OP_n}-A_n\vec{a} - (B_n - TA_n)\vec{b}\} \quad (\because\text{\cref{eq:4}})
+\end{align}
+だから，\cref{eq:3}を代入して成分表示すると
+\begin{align}
+  \overrightarrow{OP_{n+1}} =
+  \begin{pmatrix}
+    x_{n+1} \\ y_{n+1}
+  \end{pmatrix}
+  &= 4
+  \begin{pmatrix}
+    x_{n} \\ y_{n}
+  \end{pmatrix}
+  -4A_n
+  \begin{pmatrix}
+    c \\ s
+  \end{pmatrix}
+  -2(B_n-TA_n)
+  \begin{pmatrix}
+    \sqrt{3} \\ 1
+  \end{pmatrix} \\
+  \therefore
+  &
+  \begin{cases}
+    x_{n+1} = 4x_{n} - 4A_nc - 2\sqrt{3}(B_n-TA_n) \\
+    y_{n+1} = 4y_{n} - 4A_ns - 2(B_n-TA_n)
+  \end{cases}
+\end{align}
+である．さらに\cref{eq:3}を代入して
+\begin{align}
+  x_{n+1}
+  &= 4x_{n} - 4(cx_n+sy_n)c - \sqrt{3}\left[\sqrt{3}x_n+y_n-(\sqrt{3}c+s)(cx_n+sy_n)\right] \\
+  &= (4 - 4c^2 - 3 + \sqrt{3}c(\sqrt{3}c+s)) x_n
+  + (-4sc - \sqrt{3} + \sqrt{3}s(\sqrt{3}c+s)) y_n \\
+  &= (1 - c^2 + \sqrt{3}sc) x_n + (-sc - \sqrt{3}c^2) y_n \\
+  &= s(s + \sqrt{3}s) x_n - c(s + \sqrt{3}c) y_n \label{eq:6}
+\end{align}
+および
+\begin{align}
+  y_{n+1}
+  &= 4y_{n} - 4(cx_n+sy_n)s - \left[\sqrt{3}x_n+y_n-(\sqrt{3}c+s)(cx_n+sy_n)\right] \\
+  &= (-4cs-\sqrt{3}+c(\sqrt{3}c+s))x_n
+  + (4-4s^2-1 +s(\sqrt{3}c+s))y_n \\
+  &= (-3sc-\sqrt{3}s^2)x_n + (3c^2+\sqrt{3}cs)y_n \\
+  &= -\sqrt{3}s(s+\sqrt{3}c)x_n + \sqrt{3}c(\sqrt{3}c+s)y_n \label{eq:7}
+\end{align}
+である．
+ここで
+\begin{align}
+  \begin{cases}
+    \alpha = s(s + \sqrt{3}c) \\
+    \beta = c(s + \sqrt{3}c)
+  \end{cases} \label{eq:8}
+\end{align}
+とすると，
+\cref{eq:6,eq:7}は
 \begin{align}
   \begin{cases}
     x_{n+1} = \alpha x_n - \beta y_n \\
-    y_{n+1} = -\sqrt{3} (\alpha x_n - \beta y_n)
-  \end{cases}
-  \quad \dots \text{①'}
+    y_{n+1} = -\sqrt{3} (\alpha x_n - \beta y_n) = -\sqrt{3}x_{n+1}
+  \end{cases} \label{eq:9}
 \end{align}
-だから， $y_{n+1} = -\sqrt{3} x_{n+1} \ (n \ge 1)$ なので，
+を得る．第二式を第一式に代入して
 \begin{align}
   x_{n+1} &= (\alpha + \sqrt{3}\beta) x_n \quad (n \ge 2)
 \end{align}
-くり返し用いて，
+だからくり返し用いて，
 \begin{align}
   \begin{cases}
     x_n = (\alpha + \sqrt{3}\beta)^{n-2} x_2 & (n \ge 2) \\
     y_n = -\sqrt{3} (\alpha + \sqrt{3}\beta)^{n-2} x_2 & (n \ge 2)
   \end{cases}
-  \quad \dots \text{⑦}
 \end{align}
-ここで， ①'から $x_2 = \alpha x_1 = \alpha$ だから， ①'から
+を得る．ここで\cref{eq:1,eq:9}より$x_2$は
+\begin{align}
+  x_2 = \alpha x_1 = \alpha
+\end{align}
+だから
 \begin{align}
   \begin{cases}
-    x_n = \alpha (\alpha + \sqrt{3}\beta)^{n-2} \\
-    y_n = -\sqrt{3}\alpha (\alpha + \sqrt{3}\beta)^{n-2}
-  \end{cases}
-  \quad (n \ge 2) \quad \dots \text{⑦'}
+    x_n = \alpha (\alpha + \sqrt{3}\beta)^{n-2} & (n \ge 2)\\
+    y_n = -\sqrt{3}\alpha (\alpha + \sqrt{3}\beta)^{n-2} & (n \ge 2)
+  \end{cases} \label{eq:10}
 \end{align}
-したがって， 数列 $\{x_n\}, \{y_n\}$ が収束する条件は，
+である．
+
+したがって数列 $\{x_n\}, \{y_n\}$ が収束する条件は，
 \begin{align}
   -1 < \alpha + \sqrt{3}\beta \le 1 \quad \text{or} \quad \alpha = 0
 \end{align}
-である． $\alpha, \beta$ に値を代入して
+である． $\alpha, \beta$ に\cref{eq:8}を代入して
 \begin{align}
-  -1 < (S + \sqrt{3}C)^2 \le 1 \quad \text{or} \quad S = 0 \text{ or } S + \sqrt{3}C = 0
+  \begin{cases}
+    -1 < (s + \sqrt{3}c)^2 \le 1 \\
+    s = 0 \\
+    s + \sqrt{3}c = 0
+  \end{cases}
 \end{align}
+ここで第三式は第一式の場合に含まれるから
 \begin{align}
-  \iff -1 \le S + \sqrt{3}C \le 1 \quad \text{or} \quad S = 0 \quad \dots \text{⑧}
+  \begin{cases}
+    -1 \le s + \sqrt{3}c \le 1 \\
+    s = 0
+  \end{cases}
+  \begin{cases}
+    -1 \le 2\sin\left(\theta+\dfrac{\pi}{3}\right) \le 1 \\
+    s = 0
+  \end{cases}
+  \begin{cases}
+    \dfrac{5}{6}\pi \le \theta + \dfrac{\pi}{3} \le \dfrac{7}{6}\pi \\
+    \dfrac{11}{6}\pi \le \theta + \dfrac{\pi}{3} \le \dfrac{13}{6}\pi \\
+    \theta = 0, \pi
+  \end{cases}
+  \begin{cases}
+    \dfrac{1}{2}\pi \le \theta \le \dfrac{5}{6}\pi \\
+    \dfrac{3}{2}\pi \le \theta \le \dfrac{11}{6}\pi \\
+    \theta = 0, \pi
+  \end{cases}
 \end{align}
-ここで， $S + \sqrt{3}C = 2 \sin\left(\theta + \dfrac{\pi}{3}\right)$ だから， $-1 \le S + \sqrt{3}C \le 1 \iff -\dfrac{1}{2} \le \sin\left(\theta + \dfrac{\pi}{3}\right) \le \dfrac{1}{2}$ に注意して，
-\begin{align}
-  ⑧ &\iff \dfrac{5}{6}\pi \le \theta + \dfrac{\pi}{3} \le \dfrac{7}{6}\pi, \ \dfrac{11}{6}\pi \le \theta + \dfrac{\pi}{3} \le \dfrac{13}{6}\pi \quad \text{or} \quad \theta = 0, \pi \\
-  &\iff \dfrac{1}{2}\pi \le \theta \le \dfrac{5}{6}\pi \quad \text{or} \quad \dfrac{3}{2}\pi \le \theta \le \dfrac{11}{6}\pi \quad \text{or} \quad \theta = 0, \pi
-\end{align}
-だから， ①'に注意して， $\sin\left(\theta + \dfrac{\pi}{3}\right) = \pm \dfrac{1}{2} \iff \theta = \dfrac{1}{2}\pi, \dfrac{5}{6}\pi, \dfrac{3}{2}\pi, \dfrac{11}{6}\pi$ より
-
-$1^\circ$ $\dfrac{1}{2}\pi < \theta < \dfrac{5}{6}\pi, \ \dfrac{3}{2}\pi < \theta < \dfrac{11}{6}\pi, \ \theta = 0, \pi$ の時
-$x_n, y_n$ 共に 0 に収束．
-
-$2^\circ$ $\theta = \dfrac{1}{2}\pi, \dfrac{5}{6}\pi, \dfrac{3}{2}\pi, \dfrac{11}{6}\pi$ の時
-$x_n \to \alpha, \ y_n \to -\sqrt{3}\alpha$ となるから， $\alpha = S(S + \sqrt{3}C)$ から，
-$\theta = \dfrac{1}{2}\pi, \dfrac{3}{2}\pi$ の時， $x_n \to 1, \ y_n \to -\sqrt{3}$
-$\theta = \dfrac{5}{6}\pi, \dfrac{11}{6}\pi$ の時， $x_n \to -\dfrac{1}{2}, \ y_n \to \dfrac{\sqrt{3}}{2}$
 である．
 
-以上まとめて，
+% TODO: -1 \le 2\sin\left(\theta+\dfrac{\pi}{3}\right) \le 1の図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.4, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・半径 ---
+    \def\radR{1.2}
+    \coordinate (O) at (0, 0);
+
+    % --- 2. (x_n, y_n) -> (0, 0) となる扇形領域のハッチング ---
+    % (i) pi/2 < theta < 5pi/6 (90° から 150°)
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.7]
+    (O) -- (90:\radR) arc (90:150:\radR) -- cycle;
+
+    % (ii) 3pi/2 < theta < 11pi/6 (270° から 330°)
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.7]
+    (O) -- (270:\radR) arc (270:330:\radR) -- cycle;
+
+    % --- 3. 単位円周 (点線) ---
+    \draw[gray!50, dashed] (O) circle (\radR);
+
+    % --- 4. 扇形の境界動径線 ---
+    \draw[thick, gray!70] (O) -- (90:\radR);
+    \draw[thick, gray!70] (O) -- (150:\radR);
+    \draw[thick, gray!70] (O) -- (270:\radR);
+    \draw[thick, gray!70] (O) -- (330:\radR);
+
+    % 円弧の境界線（開区間を強調）
+    \draw[very thick, blue!85!black] (90:\radR) arc (90:150:\radR);
+    \draw[very thick, blue!85!black] (270:\radR) arc (270:330:\radR);
+
+    % --- 5. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-1.6, 0) -- (1.75, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.6) -- (0, 1.65) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 6. 各角度の点プロットとラベル ---
+    % (i) 孤立して (0, 0) に収束する点: theta = 0, pi
+    \fill[blue!90!black] (0:\radR) circle (1.2pt)
+    node[above right=1pt, font=\footnotesize, blue!90!black] {$\theta = 0$};
+    \fill[blue!90!black] (180:\radR) circle (1.2pt)
+    node[above left=1pt, font=\footnotesize, blue!90!black] {$\theta = \pi$};
+
+    % (ii) 端点 (alpha + sqrt(3)beta = 1 となり非零に収束する点)
+    % theta = pi/2, 3pi/2 => (1, -sqrt(3)) に収束
+    \fill[red!85!black] (90:\radR) circle (1.3pt)
+    node[above right=1pt, font=\footnotesize, red!90!black] {$\theta = \frac{\pi}{2}$};
+    \fill[red!85!black] (270:\radR) circle (1.3pt)
+    node[below left=1pt, font=\footnotesize, red!90!black] {$\theta = \frac{3\pi}{2}$};
+
+    % theta = 5pi/6, 11pi/6 => (-1/2, sqrt(3)/2) に収束
+    \fill[orange!90!black] (150:\radR) circle (1.3pt)
+    node[above left=1pt, font=\footnotesize, orange!95!black] {$\theta = \frac{5\pi}{6}$};
+    \fill[orange!90!black] (330:\radR) circle (1.3pt)
+    node[below right=1pt, font=\footnotesize, orange!95!black] {$\theta = \frac{11\pi}{6}$};
+
+    % 領域ラベル
+    \node[blue!90!black, font=\scriptsize\bfseries] at (120:0.75) {$(0,0)$};
+    \node[blue!90!black, font=\scriptsize\bfseries] at (300:0.75) {$(0,0)$};
+
+  \end{tikzpicture}
+  \caption{数列 $(x_n, y_n)$ が収束するパラメータ $\theta$ の範囲および収束先の分類}
+  \label{fig:convergence_theta_range}
+\end{figure}
+
+収束値は\cref{eq:10}において$\alpha+\sqrt{3}\beta=1$かどうかで異なるので以下場合分けする．
+
+\subparagraph{$\alpha+\sqrt{3}\beta\neq 1$即ち $\dfrac{1}{2}\pi < \theta < \dfrac{5}{6}\pi, \ \dfrac{3}{2}\pi < \theta < \dfrac{11}{6}\pi, \ \theta = 0, \pi$ の時}
+
+この時は$x_n, y_n$ 共に 0 に収束する．
+
+\subparagraph{$\alpha+\sqrt{3}\beta=1$即ち $\theta = \dfrac{1}{2}\pi, \dfrac{5}{6}\pi, \dfrac{3}{2}\pi, \dfrac{11}{6}\pi$ の時}
+
+\cref{eq:10}から$x_n \to \alpha, \ y_n \to -\sqrt{3}\alpha$ となるから，$\alpha = s(s + \sqrt{3}c)$ において$\alpha$の値で場合分けして
+\begin{align}
+  \begin{cases}
+    \theta = \dfrac{1}{2}\pi, \dfrac{3}{2}\pi \text{の時，} x_n \to 1, \ y_n \to -\sqrt{3} \\
+    \theta = \dfrac{5}{6}\pi, \dfrac{11}{6}\pi \text{の時，} x_n \to -\dfrac{1}{2}, \ y_n \to \dfrac{\sqrt{3}}{2}
+  \end{cases}
+\end{align}
+である．
+\casesend
+
+以上をまとめて求める極限値は
 \begin{align}
   \begin{cases}
     \theta = 0, \ \dfrac{1}{2}\pi < \theta < \dfrac{5}{6}\pi, \ \theta = \pi, \ \dfrac{3}{2}\pi < \theta < \dfrac{11}{6}\pi \text{ の時}, & (x_n, y_n) \longrightarrow (0, 0) \\
@@ -87,20 +356,7 @@ $\theta = \dfrac{5}{6}\pi, \dfrac{11}{6}\pi$ の時， $x_n \to -\dfrac{1}{2}, \
     \theta = \dfrac{5}{6}\pi, \ \dfrac{11}{6}\pi & (x_n, y_n) \longrightarrow \left(-\dfrac{1}{2}, \dfrac{\sqrt{3}}{2}\right)
   \end{cases}
 \end{align}
-
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}[scale=1.2, >=stealth]
-    \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$};
-    \draw[->] (0,-1.5) -- (0,1.5) node[above] {$y$};
-    \draw (0,0) circle (1);
-    \draw[thick, fill=gray!30] (0,0) -- (90:1) arc (90:150:1) -- cycle;
-    \draw[thick, fill=gray!30] (0,0) -- (270:1) arc (270:330:1) -- cycle;
-    \filldraw (1,0) circle (1.5pt) node[above right] {$\theta=0$};
-    \filldraw (-1,0) circle (1.5pt) node[above left] {$\theta=\pi$};
-  \end{tikzpicture}
-  \caption{$(x_n, y_n)$が$(0,0)$に収束する$\theta$の範囲（斜線部）}
-\end{figure}
+である．
 
 \newpage
 

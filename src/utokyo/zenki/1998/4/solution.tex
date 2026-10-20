@@ -1,84 +1,330 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解1]} $f(x) = \dfrac{x^2(2 \cdot 3^3 \cdot n - x)}{2^5 \cdot 3^2 \cdot n^2}$ において， $k \in \mathbb{Z}$ として，
+与えられた関数
+\begin{align}
+  f(x) = \dfrac{x^2(2 \cdot 3^3 \cdot n - x)}{2^5 \cdot 3^2 \cdot n^2} \label{eq:1}
+\end{align}
+について考える．一階微分は
+\begin{align}
+  2^5 \cdot 3^2 \cdot n^2 \cdot f'(x)
+  = 3x(2^2 \cdot 3^2 \cdot n - x) \\
+  = 3x\left(36n-x\right)
+\end{align}
+だから，$0\le x \le 36n$では$f'(x)\ge 0$となり$f(x)$は単調増加であり，グラフの概形は以下のようになる．
+
+% TODO: y=f(x)のグラフ
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.6, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. スケール正規化パラメータ (10n を 1.0 に対応させる) ---
+    % 12n -> x = 1.2
+    % 24n -> x = 2.4
+    % 36n -> x = 3.6 (極大点)
+    % 54n -> x = 5.4 (x 切片)
+    % y は 10n を 1.0 に対応させ、極大値 27n -> y = 2.7
+    \def\xTwelve{1.2}
+    \def\xTwentyFour{2.4}
+    \def\xThirtySix{3.6}
+
+    % 数式: y = 0.1157 * x^2 * (5.4 - x)
+    % x = 3.6 のとき y = 0.1157 * 12.96 * 1.8 ≈ 2.70 (極大値 27n に対応)
+    % x = 1.2 のとき y = 0.1157 * 1.44 * 4.2 ≈ 0.70  (7n に対応)
+    % x = 2.4 のとき y = 0.1157 * 5.76 * 3.0 ≈ 2.00  (20n に対応)
+    \coordinate (O)     at (0, 0);
+    \coordinate (Pt_12) at (\xTwelve, 0.70);
+    \coordinate (Pt_24) at (\xTwentyFour, 2.00);
+    \coordinate (Pt_36) at (\xThirtySix, 2.70);
+
+    % --- 2. 考察対象区間 [0, 36n] の背景ハイライト ---
+    \fill[blue!5, opacity=0.8] (0, 0) rectangle (\xThirtySix, 2.85);
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (4.4, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 3.2) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 曲線 y = f(x) のプロット (オーバーフローしない小スケール計算) ---
+    \draw[line width=1.8pt, blue!85!black, domain=0:4.1, samples=70]
+    plot (\x, {0.1157 * \x * \x * (5.4 - \x)});
+    \node[blue!90!black, font=\footnotesize\bfseries, right] at (3.8, 2.4) {$y = f(x)$};
+
+    % --- 5. 投影破線と目盛り ---
+    % x = 12n
+    \draw[dashed, gray!60] (\xTwelve, 0) -- (Pt_12) -- (0, 0.70);
+    \node[below=2pt, font=\scriptsize] at (\xTwelve, 0) {$12n$};
+    \node[left=2pt, font=\scriptsize]  at (0, 0.70) {$7n$};
+    \fill[blue!85!black] (Pt_12) circle (1.2pt);
+
+    % x = 24n
+    \draw[dashed, gray!60] (\xTwentyFour, 0) -- (Pt_24) -- (0, 2.00);
+    \node[below=2pt, font=\scriptsize] at (\xTwentyFour, 0) {$24n$};
+    \node[left=2pt, font=\scriptsize]  at (0, 2.00) {$20n$};
+    \fill[blue!85!black] (Pt_24) circle (1.2pt);
+
+    % x = 36n (極大点)
+    \draw[dashed, gray!60] (\xThirtySix, 0) -- (Pt_36) -- (0, 2.70);
+    \node[below=2pt, font=\scriptsize] at (\xThirtySix, 0) {$36n$};
+    \node[left=2pt, font=\scriptsize]  at (0, 2.70) {$27n$};
+    \fill[red!85!black] (Pt_36) circle (1.5pt);
+    \node[above=2pt, font=\scriptsize, red!90!black] at (Pt_36) {極大 $(36n, 27n)$};
+
+  \end{tikzpicture}
+  \caption{関数 $y = f(x)$ の概形と主要点における値}
+  \label{fig:fx_cubic_graph_safe}
+\end{figure}
+
+従って，$k=0,1,2,\cdots,36n-1$に対して
 \begin{align}
   \begin{cases}
-    |f(k+1) - f(k)| \le 1 \text{ なら, } [f(k+1)] = [f(k)], [f(k)] \pm 1 \\
-    |f(k+1) - f(k)| \ge 1 \text{ なら, } [f(k+1)] \neq [f(k)]
+    f(k+1) - f(k) \le 1 \text{ なら, } [f(k+1)] = [f(k)], [f(k)] + 1 \\
+    f(k+1) - f(k)  > 1 \text{ なら, } [f(k+1)] \neq [f(k)]
   \end{cases}
-  \quad \dots \text{＊}
+  \begin{cases}
+    g(k) \le 0 \text{ なら, } [f(k+1)] = [f(k)], [f(k)] \pm 1 \\
+    g(k)  >   0 \text{ なら, } [f(k+1)] \neq [f(k)]
+  \end{cases} \label{eq:2}
+\end{align}
+である．ただし
+\begin{align}
+  g(k) = f(k+1) - f(k) - 1
+\end{align}
+とした．
+具体的に$f(k+1)-f(k)$を計算すると
+\begin{align}
+  f(k+1) - f(k)
+  &= \dfrac{1}{2^5 \cdot 3^2 \cdot n^2} \left[ (k+1)^2(2 \cdot 3^3 \cdot n - k - 1) - k^2(2 \cdot 3^3 \cdot n - k) \right] \\
+  &= \dfrac{1}{2^5 \cdot 3^2 \cdot n^2} \left[ (2k+1)(2 \cdot 3^3 \cdot n - k) - (k+1)^2 \right] \\
+  &= \dfrac{1}{2^5 \cdot 3^2 \cdot n^2} \left[ -3k^2 + 3(2 \cdot 3^2 \cdot n - 1)k + (2 \cdot 3^3 \cdot n - 1) \right]
+\end{align}
+だから$g(k)$は
+\begin{align}
+  2^5 \cdot 3^2 \cdot n^2 g(k)
+  &= -3k^2 + 3(2^2 \cdot 3^2 \cdot n - 1)k + 2 \cdot 3^3 \cdot n - 1 - 2^5 \cdot 3^2 \cdot n^2
 \end{align}
 である．
+よって$g(k) = 0$ の解は，二次方程式の解の公式より
 \begin{align}
-  f(k+1) - f(k) &= \dfrac{1}{2^5 \cdot 3^2 \cdot n^2} \left[ (k+1)^2(2 \cdot 3^3 \cdot n - k - 1) - k^2(2 \cdot 3^3 \cdot n - k) \right] \\
-  &= \dfrac{1}{2^5 \cdot 3^2 \cdot n^2} \left[ (2k+1)(2 \cdot 3^3 \cdot n - k) - (k+1)^2 \right] \\
-  &= \dfrac{1}{2^5 \cdot 3^2 \cdot n^2} \left[ -3k^2 + (2 \cdot 3^3 \cdot n - 3)k + 2 \cdot 3^3 \cdot n - 1 \right] \quad \dots \text{①}
+  k_{\pm}
+  &= \dfrac{1}{6} \left[ 3(2^2 \cdot 3^2 \cdot n - 1) \pm \sqrt{9(2^2 \cdot 3^2 \cdot n - 1)^2 - 12\left(2^5 \cdot 3^2 \cdot n^2 + 1 - 2 \cdot 3^3 \cdot n\right)} \right] \\
+  &= \dfrac{1}{6} \left[ 3(2^2 \cdot 3^2 \cdot n - 1) \pm \sqrt{2^4 \cdot 3^4 \cdot n^2 - 3} \right] \label{eq:3}
 \end{align}
-ここで， $2^5 \cdot 3^2 \cdot n^2 \cdot f'(x) = 3x(2^2 \cdot 3^2 \cdot n - x)$ から， $0 \le x \le 36n$ では $f'(x) \ge 0$ となり， $f(x)$ は単調増加である． $g(k) = f(k+1) - f(k) - 1$ とおくと， ①から，
+となる．
+ここで
 \begin{align}
-  2^5 \cdot 3^2 \cdot n^2 g(k) &= -3k^2 + 3(2^2 \cdot 3^2 \cdot n - 1)k + 2 \cdot 3^3 \cdot n - 1 - 2^5 \cdot 3^2 \cdot n^2
+  2^2 \cdot 3^2 \cdot n - 3 < \sqrt{2^4 \cdot 3^4 \cdot n^2 - 3} < 2^2 \cdot 3^2 \cdot n
 \end{align}
-なので， $g(k) = 0$ の解は，
+だから
 \begin{align}
-  k &= \dfrac{1}{6} \left[ 3(2^2 \cdot 3^2 \cdot n - 1) \pm \sqrt{9(2^2 \cdot 3^2 \cdot n - 1)^2 - 12\left(2^5 \cdot 3^2 \cdot n^2 + 1 - 2 \cdot 3^3 \cdot n\right)} \right] \\
-  &= \dfrac{1}{6} \left[ 3(2^2 \cdot 3^2 \cdot n - 1) \pm \sqrt{2^4 \cdot 3^4 \cdot n^2 - 3} \right] \quad \dots \text{②}
+  \dfrac{1}{6} \left[ 3(2^2 \cdot 3^2 \cdot n - 1) - 2^2 \cdot 3^2 \cdot n\right]
+  < k_{-} <
+  \dfrac{1}{6} \left[ 3(2^2 \cdot 3^2 \cdot n - 1) - (2^2 \cdot 3^2 \cdot n-3)\right] \\
+  12n-\dfrac{1}{2} < k_{-} < 12n
 \end{align}
-ここで $2^2 \cdot 3^2 \cdot n - 3 < \sqrt{2^4 \cdot 3^4 \cdot n^2 - 3} < 2^2 \cdot 3^2 \cdot n$ だから， $0 \le k$ の範囲で $g(k) \ge 0$ となる $k \in \mathbb{Z}$ は， ②から，
+および
 \begin{align}
-  12n \le k \le 24n - 1 \quad \dots \text{③}
+  \dfrac{1}{6} \left[ 3(2^2 \cdot 3^2 \cdot n - 1) + (2^2 \cdot 3^2 \cdot n-3)\right]
+  < k_{+} <
+  \dfrac{1}{6} \left[ 3(2^2 \cdot 3^2 \cdot n - 1) + (2^2 \cdot 3^2 \cdot n)\right] \\
+  24n-1 < k_{+} < 24n-\dfrac{1}{2}
 \end{align}
-である． $f(x)$ の単調性および ＊ から，
-\begin{align}
-  \begin{cases}
-    k = 0, 1, \dots, 12n-1 \text{ の時, } [f(k+1)] = [f(k)], [f(k)] + 1 \\
-    k = 12n, \dots, 24n-1 \text{ の時, } [f(k+1)] > [f(k)] \\
-    k = 24n, \dots, 36n \text{ の時, } [f(k+1)] = [f(k)], [f(k)] + 1
-  \end{cases}
-\end{align}
-だから，
-\begin{align}
-  [f(0)] \le [f(1)] \le \dots \le [f(12n)] < [f(12n+1)] < \dots < [f(24n)] \le \dots \le [f(36n)]
-\end{align}
-となり，
-\begin{align}
-  [f(0)] = 0, \quad [f(12n)] = 7n, \quad [f(24n)] = 20n, \quad [f(36n)] = 27n
-\end{align}
-だから求めるのは
-\begin{align}
-  (7n + 1) + (24n - 1 - 12n) + (27n + 1 - 20n) &= 26n + 1 \text{ 個}
-\end{align}
+となって，$y=g(x)$のグラフは下図のようになる．
+
+% TODO: y=g(x)のグラフ
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標パラメータ ---
+    % k_- ≈ 1.8 (12n - 1/2 < k_- < 12n)
+    % k_+ ≈ 4.2 (24n - 1 < k_+ < 24n - 1/2)
+    \def\kMinus{1.8}
+    \def\kPlus{4.2}
+    \def\xVertex{3.0} % 軸: 18n 付近
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (P_km)  at (\kMinus, 0);
+    \coordinate (P_kp)  at (\kPlus, 0);
+
+    % --- 2. g(x) > 0 の領域（斜線ハッチング）---
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.7]
+    plot[domain=\kMinus:\kPlus, samples=50] (\x, {-1.1*(\x - \kMinus)*(\x - \kPlus)})
+    -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.4, 0) -- (5.2, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.3) -- (0, 2.2) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 放物線 y = g(x) のプロット (上に凸) ---
+    \draw[line width=1.8pt, blue!85!black, domain=1.0:4.8, samples=70]
+    plot (\x, {-1.1*(\x - \kMinus)*(\x - \kPlus)});
+    \node[blue!90!black, font=\footnotesize\bfseries, above] at (\xVertex, 1.6)
+    {$y = g(x) = f(x+1) - f(x) - 1$};
+
+    % --- 5. ゼロ点 k_-, k_+ のプロット ---
+    \fill[red!85!black] (P_km) circle (1.5pt);
+    \fill[red!85!black] (P_kp) circle (1.5pt);
+
+    \node[above left=1pt, font=\scriptsize, red!90!black] at (P_km) {$k_-$};
+    \node[above right=1pt, font=\scriptsize, red!90!black] at (P_kp) {$k_+$};
+
+    % --- 6. 整数境界の目盛り線と不等式の明示 ---
+    % 左側の挟み込み: 12n - 1/2 < k_- < 12n
+    \draw[dashed, gray!60] (1.4, -0.7) -- (1.4, 0);
+    \draw[dashed, teal!85!black, thick] (2.1, 0) -- (2.1, {-1.1*(2.1 - \kMinus)*(2.1 - \kPlus)});
+    \node[below=2pt, font=\scriptsize] at (1.4, -0.7) {$12n - \frac{1}{2}$};
+    \node[below=2pt, font=\scriptsize, teal!90!black] at (2.1, 0) {$12n$};
+
+    % 右側の挟み込み: 24n - 1 < k_+ < 24n - 1/2
+    \draw[dashed, teal!85!black, thick] (3.9, 0) -- (3.9, {-1.1*(3.9 - \kMinus)*(3.9 - \kPlus)});
+    \draw[dashed, gray!60] (4.5, -0.7) -- (4.5, 0);
+    \node[below=2pt, font=\scriptsize, teal!90!black] at (3.9, 0) {$24n - 1$};
+    \node[below=2pt, font=\scriptsize] at (4.5, -0.7) {$24n - \frac{1}{2}$};
+
+    % 含まれる整数区間 [12n, 24n-1] の寸法線
+    \draw[<->, line width=1.2pt, teal!85!black] (2.1, -0.35) -- (3.9, -0.35)
+    node[midway, below=1pt, font=\scriptsize\bfseries] {$g(k) > 0$ となる整数 $k$};
+
+  \end{tikzpicture}
+  \caption{$y = g(x)$ の概形と $g(k) \ge 0$ を満たす整数 $k$ の範囲}
+  \label{fig:gx_parabola_range}
+\end{figure}
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.8, >=stealth]
-    \draw[->] (-0.5,0) -- (5,0) node[right] {$x$};
-    \draw[->] (0,-1.5) -- (0,2) node[above] {$y$};
-    \draw[domain=0.2:4.5, smooth, variable=\x, thick] plot ({\x}, {-1.2*(\x-1.5)*(\x-3.8)});
-    \node[above] at (2.5, 1.3) {$y = g(x)$};
-    \filldraw (1.5,0) circle (1.5pt) node[below left] {$12n - \frac{1}{2}$};
-    \filldraw (3.8,0) circle (1.5pt) node[below right] {$24n - \frac{1}{2}$};
-    \draw[dashed] (1.3, -1) -- (1.3, 0) node[above] {$12n-1$};
-    \draw[dashed] (4.0, -1) -- (4.0, 0) node[above] {$24n$};
-    \node[below left] at (0,0) {$0$};
+  \begin{tikzpicture}[>=stealth, scale=0.95, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 背景のカラーハイライト（3つの独立したブロック）
+    % ============================================================
+    % 第1区間: [0, 12n]
+    \fill[teal!8, rounded corners=4pt] (-6.7, -0.45) rectangle (-1.7, 0.55);
+
+    % 第2区間: (12n, 24n]
+    \fill[red!8, rounded corners=4pt] (-1.1, -0.45) rectangle (2.8, 0.55);
+
+    % 第3区間: [24n, 36n]
+    \fill[blue!8, rounded corners=4pt] (3.4, -0.45) rectangle (7.8, 0.55);
+
+    % ============================================================
+    % 2. メインの数式行（重なりを防ぐため各座標を独立配置）
+    % ============================================================
+    % (i) 第 1 区間
+    \node (sec1) at (-4.2, 0) {
+      $[f(0)] \le [f(1)] \le \dots \le [f(12n)]$
+    };
+
+    % 厳密不等号 (<)
+    \node[font=\bfseries, red!85!black] at (-1.4, 0) {$<$};
+
+    % (ii) 第 2 区間
+    \node (sec2) at (0.85, 0) {
+      $[f(12n+1)] < \dots < [f(24n)]$
+    };
+
+    % 接続部 (<=)
+    \node[font=\bfseries, blue!85!black] at (3.1, 0) {$\le$};
+
+    % (iii) 第 3 区間
+    \node (sec3) at (5.6, 0) {
+      $\dots \le [f(36n)]$
+    };
+
+    % ============================================================
+    % 3. 下向きブレースと説明文（十分な縦幅を確保）
+    % ============================================================
+
+    % --- (1) 第 1 区間ブレース ---
+    \draw[decorate, decoration={brace, mirror, amplitude=6pt}, thick, teal!85!black]
+    (-6.5, -0.65) -- (-1.9, -0.65);
+    \node[below=8pt, teal!95!black, font=\footnotesize, align=center] at (-4.2, -0.65) {
+      $[f(0)]$ から $[f(12n)]$ まで\\[2pt]
+      \textbf{くまなくとる}（跳びなし）\\[3pt]
+      \scriptsize 個数: $7n + 1$ 個
+    };
+
+    % --- (2) 第 2 区間ブレース ---
+    \draw[decorate, decoration={brace, mirror, amplitude=6pt}, thick, red!85!black]
+    (-0.9, -0.65) -- (2.6, -0.65);
+    \node[below=8pt, red!95!black, font=\footnotesize, align=center] at (0.85, -0.65) {
+      各項の差 $> 1$ より\\[2pt]
+      \textbf{すべて異なる値}\\[3pt]
+      \scriptsize 個数: $12n - 1$ 個
+    };
+
+    % --- (3) 第 3 区間ブレース ---
+    \draw[decorate, decoration={brace, mirror, amplitude=6pt}, thick, blue!85!black]
+    (3.6, -0.65) -- (7.6, -0.65);
+    \node[below=8pt, blue!95!black, font=\footnotesize, align=center] at (5.6, -0.65) {
+      $[f(24n)]$ から $[f(36n)]$ まで\\[2pt]
+      \textbf{くまなくとる}（跳びなし）\\[3pt]
+      \scriptsize 個数: $7n + 1$ 個
+    };
+
+    % ============================================================
+    % 4. 下部のまとめ注釈ボックス（さらに下へ配置して分離）
+    % ============================================================
+    \node[draw=blue!85!black, fill=white, rounded corners=3pt, inner sep=4.5pt, font=\footnotesize, align=left]
+    at (0.85, -2.7) {
+      \textbf{値 $[f(k)]$ がとりうる値の総数}:\\[3pt]
+      $\text{合計} = \underbrace{(7n + 1)}_{[0, 12n]} + \underbrace{(12n - 1)}_{(12n, 24n)} + \underbrace{(7n + 1)}_{[24n, 36n]} = \mathbf{26n + 1} \text{ 個}$
+    };
+
   \end{tikzpicture}
-  \caption{$y=g(x)$のグラフの概形}
+  \caption{数列 $[f(k)]$ の単調性と各区間における値の分布状況}
+  \label{fig:fk_integer_value_distribution_clean}
 \end{figure}
 
-\bigskip\noindent{\bf [解2]} (以下) 平均値の定理から，
+従って$k=0,1,\cdots,36n-1$ の範囲で $g(k) \ge 0$ すなわち$f(k+1)-f(k) \ge 1$ となる $k \in \mathbb{Z}$ は，
 \begin{align}
-  f(k+1) - f(k) &= f'(a_k) \quad (k < a_k < k+1) \quad \dots \text{①'}
+  12n \le k \le 24n - 1 \label{eq:4}
 \end{align}
-を満たす $a_k$ がある．
+である．\cref{eq:1} より
 \begin{align}
-  f'(x) = \dfrac{x(2^2 \cdot 3^2 \cdot n - x)}{2^5 \cdot 3^2 \cdot n^2} \le 1 &\iff -x^2 + 2^2 \cdot 3^2 \cdot n \cdot x - 2^5 \cdot 3^2 \cdot n^2 \le 0 \\
-  &\iff x \le 12n, 24n \le x
+  &
+  \begin{cases}
+    k = 0, 1, \dots, 12n-1 \text{ の時, } [f(k+1)] = [f(k)], [f(k)] + 1 \\
+    k = 12n, \dots, 24n-1 \text{ の時, }  [f(k+1)] > [f(k)] \\
+    k = 24n, \dots, 36n \text{ の時, }    [f(k+1)] = [f(k)], [f(k)] + 1
+  \end{cases} \\
+  \therefore
+  &
+  \begin{cases}
+    k = 0, 1, \dots, 12n-1 \text{ の時, $[f(k)]$たちは$[f(0)]$から$[f(12n-1)]$の範囲内全ての整数を取る} \\
+    k = 12n, \dots, 24n-1 \text{ の時, $[f(k)]$たちは全て異なる値を取る} \\
+    k = 24n, \dots, 36n \text{ の時, $[f(k)]$たちは$[f(24n)]$から$[f(36n)]$の範囲内全ての整数を取る}
+  \end{cases}
 \end{align}
-だから， ①'とあわせて
+となり，特に
+\begin{align}
+  [f(0)] = 0, \quad [f(12n)] = 7n, \quad [f(24n)] = 20n, \quad [f(36n)] = 27n
+\end{align}
+だから求める個数は
+\begin{align}
+  (7n + 1) + (24n - 1 - 12n) + (27n + 1 - 20n) &= 26n + 1 \text{ 個}
+\end{align}
+である．
+
+{\bf [別解]}
+
+$f(k+1)-f(k)$の評価に平均値の定理を使える．
+平均値の定理から
+\begin{align}
+  f(k+1) - f(k) &= f'(a_k) \quad (k < a_k < k+1) \label{eq:5}
+\end{align}
+を満たす $a_k$ がある．$f'(a_k)$と$1$の大小を比べると
+\begin{align}
+  & f'(x) = \dfrac{x(2^2 \cdot 3^2 \cdot n - x)}{2^5 \cdot 3^2 \cdot n^2} \le 1
+  \iff
+  & -x^2 + 2^2 \cdot 3^2 \cdot n \cdot x - 2^5 \cdot 3^2 \cdot n^2 \le 0 \\
+  \iff
+  & x \le 12n, 24n \le x
+\end{align}
+だから，
 \begin{align}
   \begin{cases}
     k = 0, 1, \dots, 12n-1 \text{ の時, } f(k+1) - f(k) < 1 \\
@@ -86,7 +332,7 @@
     k = 24n, 24n+1, \dots, 36n \text{ の時, } f(k+1) - f(k) < 1
   \end{cases}
 \end{align}
-となって[解1]の③に帰着する．
+となって[解答]に帰着する．
 
 \newpage
 

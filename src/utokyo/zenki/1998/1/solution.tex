@@ -1,65 +1,95 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\usepackage{emath}
-\usepackage{emathPp}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1998$年$1$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  $a$は$0$でない実数とする．関数
-  \[f(x)=(3x^2-4)\left(x-a+\dfrac{1}{a}\right)\]
-  の極大値と極小値の差が最小となる$a$の値を求めよ．
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]} まず，
-  \begin{align}
-    t=a-\dfrac{1}{a}\label{1}
-  \end{align}
-  とおく．すると，
-  \begin{align}
-    f'(x)=9x^2-6tx-4
-  \end{align}
-  である．$f'(0)<0$および$2$次係数正から，$f'(x)=0$は$2$異実解$\a$，$\b$($\a<\b$)を持ち，下表を
-  得る．
-  \[
-    \begin{array}{|c|c|c|c|c|c|}\hline
-      x &      & \a &   &\b &      \\\hline
-      f' &+    &0  & -  & 0 &+      \\\hline
-      f &  \ne&    &\se&    &\ne \\\hline
-    \end{array}
-  \]
-  従って，極大値と極小値の差$L$として，
-  \begin{align}
-    L=&f(\a)-f(\b) \\
-    =&\int_{\b}^{\a}f'(x)\,dx \\
-    =&\int_{\a}^{\b}9(x-\a)(\b-x)\,dx \\
-    =&\dfrac{3}{2}(\b-\a)^3
-  \end{align}
-  である．故に$\b-\a(>0)$の最小値を求めればよい．
+{\bf[解]}
 
-  ここで，$\a$，$\b$は$f'(x)=0$の$2$解であるから，
-  \[\b-\a=\dfrac{2\sqrt{9t^2+36}}{9}=\dfrac{2\sqrt{t^2+4}}{3}\]
-  である．従って$t^2$が最小の時$L$は最小である．
-  \[t=0\Longleftrightarrow a=\pm1\]
-  であるから，$t^2$の最小値は$0$で，この時の値$a=\pm1$が求める答えである．$\cdots$(答)
-  \newpage
-\end{multicols}
+簡単のため
+\begin{align}
+  t=a-\dfrac{1}{a} \label{eq:1}
+\end{align}
+とおく．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標定義 ---
+    \coordinate (O)     at (0, 0);
+    \coordinate (Pt_p1) at (1.0, 0);   % a = 1, t = 0
+    \coordinate (Pt_m1) at (-1.0, 0);  % a = -1, t = 0
+
+    % --- 2. 漸近線 t = a (斜め45度) ---
+    \draw[dashed, gray!55, thick] (-2.8, -2.8) -- (2.8, 2.8)
+    node[above right=-1pt, font=\scriptsize, gray!90!black] {漸近線 $t = a$};
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-3.2, 0) -- (3.3, 0) node[right] {$a$};
+    \draw[->, thick, gray!80!black] (0, -3.2) -- (0, 3.3) node[above] {$t$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 曲線 t = a - 1/a の描画 ---
+    % 右側の分枝 (a > 0)
+    \draw[line width=1.8pt, blue!85!black, domain=0.31:2.9, samples=80]
+    plot (\x, {\x - 1.0/\x});
+    \node[blue!90!black, font=\footnotesize\bfseries, right] at (2.6, {2.6 - 1.0/2.6})
+    {$t = a - \frac{1}{a}$};
+
+    % 左側の分枝 (a < 0)
+    \draw[line width=1.8pt, blue!85!black, domain=-2.9:-0.31, samples=80]
+    plot (\x, {\x - 1.0/\x});
+
+    % --- 5. a 切片 a = ±1 (t = 0, t^2 が最小となる点) ---
+    \fill[red!85!black] (Pt_p1) circle (1.5pt);
+    \fill[red!85!black] (Pt_m1) circle (1.5pt);
+    \node[below right=1pt, font=\footnotesize\bfseries, red!90!black] at (Pt_p1) {$1$};
+    \node[above left=1pt, font=\footnotesize\bfseries, red!90!black]  at (Pt_m1) {$-1$};
+
+  \end{tikzpicture}
+  \caption{関数 $t = a - \dfrac{1}{a}$ のグラフ}
+  \label{fig:t_a_minus_inv_a}
+\end{figure}
+
+題意の関数は
+\begin{align}
+  f(x) = (3x^2-4)(x-t) = 3x^3 -3tx^2-4x+4t \label{eq:2}
+\end{align}
+だから，一階微分は
+\begin{align}
+  f'(x)=9x^2-6tx-4 \label{eq:3}
+\end{align}
+である．$f'(0)<0$および$2$次係数が正だから$f'(x)=0$は$2$つの異なる実解$\alpha$，$\beta$($\alpha<\beta$)を持つ．
+よって$f(x)$の増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$f(x)$ の増減表}
+  \label{tab:fx_monotonicity}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabular}{c|ccccc}
+    $x$     & $\dots$    & $\alpha$   & $\dots$    & $\beta$    & $\dots$    \\ \hline
+    $f'(x)$ & $+$        & $0$        & $-$        & $0$        & $+$        \\ \hline
+    $f(x)$  & $\nearrow$ & \text{極大} & $\searrow$ & \text{極小} & $\nearrow$
+  \end{tabular}
+\end{table}
+
+従って，極大値と極小値の差$L$として，
+\begin{align}
+  L=&f(\alpha)-f(\beta) \\
+  =&\int_{\beta}^{\alpha}f'(x)\,dx \\
+  =&\int_{\alpha}^{\beta}9(x-\alpha)(\beta-x)\,dx \\
+  =&\dfrac{3}{2}(\beta-\alpha)^3
+\end{align}
+である．故に$\beta-\alpha(>0)$の最小値を求めればよい．
+
+ここで，$\alpha$，$\beta$は$f'(x)=0$の$2$解であるから，\cref{eq:3}より
+\begin{align}
+  \beta-\alpha=\dfrac{2\sqrt{9t^2+36}}{9}=\dfrac{2\sqrt{t^2+4}}{3}
+\end{align}
+である．従って$t^2$が最小の時$L$は最小である．
+$t=a-\dfrac{1}{a}$の図から，$t^2$が最小となるのは$t^2=0$の時で，この時
+\begin{align}
+  a = \pm 1
+\end{align}
+である．$\cdots$(答)
+\newpage
 \end{document}
