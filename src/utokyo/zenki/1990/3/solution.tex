@@ -1,0 +1,373 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+{\bf [解]}
+
+\paragraph{(1)}
+
+対称性により，面$ADE$に平行な平面で切る場合を考えればよい．切り口を六角形$PQRSTU$とする．頂点の配置と切断面は下図のとおりである．
+
+\begin{figure}[htb]
+  \centering
+  % 俯角 68°，方位角 118°（切断面の六角形が最も明瞭に見えるアングル）
+  \tdplotsetmaincoords{68}{100}
+  \begin{tikzpicture}[tdplot_main_coords, scale=3.3, line join=round, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 正八面体の頂点座標 (一辺 1, 外接球半径 1/sqrt(2) ≈ 0.7071) ---
+    \def\cVal{0.707107}
+    \coordinate (A) at (0, 0, \cVal);
+    \coordinate (B) at (-\cVal, 0, 0);
+    \coordinate (C) at (0, -\cVal, 0);
+    \coordinate (D) at (\cVal, 0, 0);
+    \coordinate (E) at (0, \cVal, 0);
+    \coordinate (F) at (0, 0, -\cVal);
+
+    % --- 2. 切断面六角形 PQRSTU の頂点座標 (t = 0.4 の例) ---
+    % 稜線の内分点:
+    % P on AC (A から比 t), Q on CD (C から比 1-t)
+    % R on DF (D から比 t), S on EF (F から比 1-t)
+    % T on BE (E から比 t), U on AB (B から比 1-t)
+    \coordinate (P) at (0, -0.282843, 0.424264);
+    \coordinate (Q) at (0.424264, -0.282843, 0);
+    \coordinate (R) at (0.424264, 0, -0.282843);
+    \coordinate (S) at (0, 0.424264, -0.282843);
+    \coordinate (T) at (-0.282843, 0.424264, 0);
+    \coordinate (U) at (-0.282843, 0, 0.424264);
+
+    % --- 3. 奥側の面と稜線（破線・薄い描画）---
+    % 平行面 ADE (基準面) の薄い色付け
+    \fill[orange!15, opacity=0.4] (A) -- (D) -- (E) -- cycle;
+
+    % 奥側の稜線 (頂点 E, B に接続する隠れ線)
+    \draw[dashed, gray!60, thick] (A) -- (E);
+    \draw[dashed, gray!60, thick] (B) -- (E);
+    \draw[dashed, gray!60, thick] (C) -- (D);
+    \draw[dashed, gray!60, thick] (A) -- (D);
+    \draw[dashed, gray!60, thick] (B) -- (D);
+    \draw[dashed, gray!60, thick] (D) -- (E);
+    \draw[dashed, gray!60, thick] (D) -- (F);
+    \draw[dashed, gray!60, thick] (F) -- (E);
+
+    % --- 4. 切断面六角形 PQRSTU の描画 ---
+    \fill[blue!20, opacity=0.75] (P) -- (Q) -- (R) -- (S) -- (T) -- (U) -- cycle;
+    \draw[very thick, blue!85!black] (P) -- (Q) -- (R) -- (S) -- (T) -- (U) -- cycle;
+
+    % --- 5. 手前側の稜線（実線強調）---
+    % 平行面 BCF (手前底面側)
+    \fill[teal!12, opacity=0.4] (B) -- (C) -- (F) -- cycle;
+
+    \draw[line width=1.5pt, black] (A) -- (B) -- (E) -- cycle;
+    \draw[line width=1.5pt, black] (B) -- (E) -- (F) -- cycle;
+    \draw[line width=1.5pt, black] (A) -- (C);
+    \draw[line width=1.5pt, black] (B) -- (C);
+    \draw[line width=1.5pt, black] (B) -- (F);
+    \draw[line width=1.5pt, black] (C) -- (F);
+
+    % --- 6. 六角形頂点のプロットとラベル ---
+    \foreach \pt/\pos in {P/{above left}, Q/{below left}, R/{below right}, S/{below}, T/{above right}, U/{above}} {
+      \fill[blue!90!black] (\pt) circle (0.7pt);
+      \node[\pos=1pt, font=\scriptsize\bfseries, blue!85!black] at (\pt) {$\pt$};
+    }
+
+    % --- 7. 正八面体頂点のプロットとラベル ---
+    \fill[black] (A) circle (0.8pt) node[above=2pt] {$A$};
+    \fill[black] (B) circle (0.8pt) node[left=2pt] {$B$};
+    \fill[black] (C) circle (0.8pt) node[below left=2pt] {$C$};
+    \fill[black] (D) circle (0.8pt) node[right=2pt] {$D$};
+    \fill[gray!70] (E) circle (0.7pt) node[above right=1pt, gray!80!black] {$E$};
+    \fill[black] (F) circle (0.8pt) node[below=2pt] {$F$};
+
+    % --- 8. 辺の長さ t, 1-t の補助表示 ---
+    \node[teal!90!black, font=\tiny, above right=-2pt] at ($ (A)!0.5!(P) $) {$t$};
+    \node[purple!90!black, font=\tiny, below left=-2pt] at ($ (P)!0.5!(C) $) {$1-t$};
+
+  \end{tikzpicture}
+  \caption{正八面体の面 $ADE$ に平行な六角形 $PQRSTU$ の様子}
+  \label{fig:octahedron_hexagonal_section_3d}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.6, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ (t = 0.4 の例) ---
+    % 内角 120° の等角六角形
+    % 辺長: PQ = 1-t = 0.6, QR = t = 0.4, RS = 1-t = 0.6
+    %       ST = t = 0.4,   TU = 1-t = 0.6, UP = t = 0.4
+    \def\tVal{0.4}
+    \pgfmathsetmacro{\oneMinusT}{1.0 - \tVal} % 0.6
+
+    % 基準点 P を原点付近に配置
+    \coordinate (P) at (0, 0);
+    % 辺 PQ (右向き, 長さ 1-t)
+    \coordinate (Q) at (\oneMinusT, 0);
+    % 辺 QR (60° 向き, 長さ t)
+    \coordinate (R) at ($ (Q) + (60:\tVal) $);
+    % 辺 RS (120° 向き, 長さ 1-t)
+    \coordinate (S) at ($ (R) + (120:\oneMinusT) $);
+    % 辺 ST (180° 向き, 長さ t)
+    \coordinate (T) at ($ (S) + (180:\tVal) $);
+    % 辺 TU (240° 向き, 長さ 1-t)
+    \coordinate (U) at ($ (T) + (240:\oneMinusT) $);
+
+    % --- 2. 各隅の小正三角形（仮想延長線）---
+    % 正三角形 APU (一辺 t)
+    \coordinate (vA) at ($ (P) + (-60:\tVal) $);
+    \draw[dashed, gray!60, thick] (U) -- (vA) -- (P);
+    \fill[teal!10, opacity=0.6] (U) -- (vA) -- (P) -- cycle;
+    \node[below=2pt, font=\scriptsize, gray!80!black] at (vA) {頂点 $A$};
+
+    % 正三角形 CPQ (一辺 1-t)
+    \coordinate (vC) at ($ (P) + (60:{-\oneMinusT}) $); % 辺を延長した交点
+    % 正確な正三角形の外側頂点
+    \coordinate (extC) at ($ (Q) + (-120:\oneMinusT) $);
+    \draw[dashed, gray!60, thick] (P) -- (extC) -- (Q);
+    \fill[orange!10, opacity=0.6] (P) -- (extC) -- (Q) -- cycle;
+    \node[below=2pt, font=\scriptsize, gray!80!black] at (extC) {頂点 $C$};
+
+    % 正三角形 DQR (一辺 t)
+    \coordinate (extD) at ($ (Q) + (0:\tVal) $);
+    \coordinate (vD)   at ($ (R) + (-60:\tVal) $);
+    \draw[dashed, gray!60, thick] (Q) -- (vD) -- (R);
+    \fill[teal!10, opacity=0.6] (Q) -- (vD) -- (R) -- cycle;
+    \node[right=2pt, font=\scriptsize, gray!80!black] at (vD) {頂点 $D$};
+
+    % --- 3. 切断面六角形 PQRSTU の塗りつぶしと輪郭線 ---
+    \fill[blue!15, opacity=0.75] (P) -- (Q) -- (R) -- (S) -- (T) -- (U) -- cycle;
+    \draw[very thick, blue!85!black] (P) -- (Q) -- (R) -- (S) -- (T) -- (U) -- cycle;
+
+    % --- 4. 頂点プロットとラベル ---
+    \fill[blue!90!black] (P) circle (0.8pt) node[below left=1pt] {$P$};
+    \fill[blue!90!black] (Q) circle (0.8pt) node[below right=1pt] {$Q$};
+    \fill[blue!90!black] (R) circle (0.8pt) node[right=2pt] {$R$};
+    \fill[blue!90!black] (S) circle (0.8pt) node[above right=1pt] {$S$};
+    \fill[blue!90!black] (T) circle (0.8pt) node[above left=1pt] {$T$};
+    \fill[blue!90!black] (U) circle (0.8pt) node[left=2pt] {$U$};
+
+    % --- 5. 辺長ラベル（t と 1-t の交互配列）---
+    \node[below=2pt, font=\footnotesize\bfseries, purple!90!black] at ($ (P)!0.5!(Q) $) {$1-t$};
+    \node[above left=-1pt, font=\footnotesize\bfseries, teal!90!black] at ($ (Q)!0.5!(R) $) {$t$};
+    \node[above right=-1pt, font=\footnotesize\bfseries, purple!90!black] at ($ (R)!0.5!(S) $) {$1-t$};
+    \node[above=2pt, font=\footnotesize\bfseries, teal!90!black] at ($ (S)!0.5!(T) $) {$t$};
+    \node[below left=-1pt, font=\footnotesize\bfseries, purple!90!black] at ($ (T)!0.5!(U) $) {$1-t$};
+    \node[below right=-1pt, font=\footnotesize\bfseries, teal!90!black] at ($ (U)!0.5!(P) $) {$t$};
+
+    % 内角 120° の表示
+    \draw[thin, gray!70] ($ (Q) + (180:0.08) $) arc (180:60:0.08);
+    \node[above=2pt, font=\tiny, gray!80!black] at ($ (Q) + (120:0.12) $) {$120^\circ$};
+
+  \end{tikzpicture}
+  \caption{六角形 $PQRSTU$ の様子}
+  \label{fig:hexagonal_section_2d_detail}
+\end{figure}
+
+面$BCF$と面$ADE$は平行だから，六角形$PQRSTU$もこれらに平行である．
+平行な二平面とこれらに交わる各面との二つの交線も平行になる．
+したがって三角形の相似より
+\begin{align}
+  \triangle APU，\quad\triangle CPQ，\quad\triangle DQR，\quad
+  \triangle FRS，\quad\triangle EST，\quad\triangle BTU
+\end{align}
+はすべて正三角形である．
+$|AP|=t$（$0<t<1$）とおくと，切り口の辺の長さは$t$と$1-t$が交互に並ぶから，
+\begin{align}
+  |PQ|+|QR|+|RS|+|ST|+|TU|+|UP|
+  =3t+3(1-t)=3
+\end{align}
+で一定である．切断面が端の面と一致する場合も一辺の長さ$1$の正三角形の周の長さは$3$であるから，切断面の長さは$3$で一定である．
+
+\paragraph{(2)}
+
+穴の面と面$BCF$が常に平行になるように正八面体を通過させることを考えると，
+穴の面での立体の切断面は一辺$1$の正三角形（$\triangle BCF, ADE$）か(1)で検討した六角形$PQRSTU$になる．そこでこれら二つが一辺$1$の正方形の内部におさまることを示れば良い．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=4.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・厳密パラメータ ---
+    % 正方形 HIJK の対角線長 L_diag = (sqrt(3) + 1)/2 ≈ 1.3660
+    % 一辺長 s = L_diag / sqrt(2) = (sqrt(6) + sqrt(2))/4 ≈ 0.9659 < 1
+    \pgfmathsetmacro{\diagL}{(sqrt(3.0) + 1.0) / 2.0}
+    \pgfmathsetmacro{\sVal}{\diagL / sqrt(2.0)}
+
+    % 正方形 HIJK の頂点
+    \coordinate (I) at (0, 0);
+    \coordinate (J) at (\sVal, 0);
+    \coordinate (K) at (\sVal, \sVal);
+    \coordinate (H) at (0, \sVal);
+
+    % 正三角形 ABC (一辺 1)
+    % A は K に一致
+    % 対角線 KI は傾き 1 (45° 方向): K から I へ向かう方向
+    % AM の長さは sqrt(3)/2 ≈ 0.8660
+    \coordinate (A) at (K);
+    \pgfmathsetmacro{\hTri}{sqrt(3.0) / 2.0}
+    \coordinate (M) at ($ (K) + (-135:{\hTri}) $);
+
+    % 底辺 BC (M を通り対角線に直交、両側に 0.5)
+    \coordinate (B) at ($ (M) + (135:0.5) $);
+    \coordinate (C) at ($ (M) + (-45:0.5) $);
+
+    % --- 2. 一辺 1 の穴（参考外枠: 点線）---
+    % 正方形 HIJK の中心と一辺 1 の正方形の中心を一致させて描画
+    \coordinate (Center) at ($ (I)!0.5!(K) $);
+    \draw[dashed, gray!45, thick]
+    ($ (Center) + (-0.5, -0.5) $) rectangle ($ (Center) + (0.5, 0.5) $);
+    \node[gray!65!black, font=\scriptsize, above left]
+    at ($ (Center) + (0.5, 0.5) $) {一辺 $1$ の正方形の穴};
+
+    % --- 3. 正方形 HIJK (一辺 s < 1) ---
+    \draw[very thick, gray!80!black] (I) -- (J) -- (K) -- (H) -- cycle;
+    \node[below left=1pt]  at (I) {$I$};
+    \node[below right=1pt] at (J) {$J$};
+    \node[above right=1pt] at (K) {$K(A)$};
+    \node[above left=1pt]  at (H) {$H$};
+
+    % 対角線 KI
+    \draw[dashed, gray!60, thick] (I) -- (K);
+
+    % --- 4. 正三角形 ABC (一辺 1) ---
+    \fill[blue!15, opacity=0.7] (A) -- (B) -- (C) -- cycle;
+    \draw[very thick, blue!85!black] (A) -- (B) -- (C) -- cycle;
+
+    % 頂点・中点プロット
+    \fill[blue!90!black] (B) circle (0.6pt) node[left=1pt] {$B$};
+    \fill[blue!90!black] (C) circle (0.6pt) node[below=1pt] {$C$};
+    \fill[red!85!black]  (M) circle (0.6pt) node[above left=-1pt, font=\scriptsize, red!90!black] {$M$};
+
+    % --- 5. 寸法線・直角記号 ---
+    % M における直角記号 (BC ⊥ KI)
+    \draw[thin, gray!70]
+    ($ (M) + (135:0.05) $) --
+    ($ (M) + (135:0.05) + (45:0.05) $) --
+    ($ (M) + (45:0.05) $);
+
+    % 長さ |AM| = sqrt(3)/2 と |MI| = 1/2
+    \node[teal!90!black, font=\scriptsize, below left=-1pt] at ($ (A)!0.5!(M) $) {$|AM| = \frac{\sqrt{3}}{2}$};
+    \node[teal!90!black, font=\scriptsize, below left=-1pt] at ($ (M)!0.5!(I) $) {$|MI| = \frac{1}{2}$};
+
+  \end{tikzpicture}
+  \caption{正方形 $HIJK$（一辺 $<1$）に内接させた一辺 $1$ の正三角形 $ABC$}
+  \label{fig:equilateral_triangle_in_square}
+\end{figure}
+
+まずは一辺$1$の正三角形を図のように正方形$HIJK$に内接させる．
+点$A$が$K$と一致するようにし，$BC$の中点$M$が対角線$KI$上にくるように配置すると，
+対角線の長さ$|KI|$は
+\begin{align}
+  |KI|
+  &= |AM|+|MI| \\
+  &= \dfrac{\sqrt{3}}{2}+\dfrac{1}{2} < \sqrt{2}
+\end{align}
+だから，正方形$KHIJ$の一辺の長さは$1$未満である．よってこの三角形は一辺の長さ$1$の穴の縁にふれないように置くことができる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=4.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・厳密パラメータ ---
+    % 対角線長 L_diag = (sqrt(3) + 1)/2 ≈ 1.3660
+    % 一辺長 s = (sqrt(6) + sqrt(2))/4 ≈ 0.9659
+    \pgfmathsetmacro{\diagL}{(sqrt(3.0) + 1.0) / 2.0}
+    \pgfmathsetmacro{\sVal}{\diagL / sqrt(2.0)}
+
+    % 正方形 HIJK の頂点
+    \coordinate (I) at (0, 0);
+    \coordinate (J) at (\sVal, 0);
+    \coordinate (K) at (\sVal, \sVal);
+    \coordinate (H) at (0, \sVal);
+
+    % パラメータ t (0 < t < 1, 例として t = 0.4)
+    \def\tVal{0.4}
+    \pgfmathsetmacro{\oneMinusT}{1.0 - \tVal}
+
+    % 対角線上の分点:
+    % K から I へ向かう単位方向ベクトル: u = (-1/sqrt(2), -1/sqrt(2))
+    % Y: K からの距離 |KY| = t/2
+    % X: I からの距離 |XI| = (1-t)/2
+    \coordinate (Y) at ($ (K) + (-135:{\tVal / 2.0}) $);
+    \coordinate (X) at ($ (I) + (45:{\oneMinusT / 2.0}) $);
+
+    % 六角形 PQRSTU の頂点座標 (中点 X, Y との相対位置)
+    % 辺 PQ: 中点 Y, 長さ t, 対角線と直交 (傾き 135°)
+    \coordinate (P) at ($ (Y) + (-45:{\tVal / 2.0}) $);
+    \coordinate (Q) at ($ (Y) + (135:{\tVal / 2.0}) $);
+
+    % 辺 ST: 中点 X, 長さ 1-t, 対角線と直交 (傾き 135°)
+    \coordinate (T) at ($ (X) + (-45:{\oneMinusT / 2.0}) $);
+    \coordinate (S) at ($ (X) + (135:{\oneMinusT / 2.0}) $);
+
+    % 頂点 R, U: 正六角形的な 60°/120° 角の接続点
+    % QR は長さ 1-t, UP は長さ 1-t, RS は長さ t, TU は長さ t
+    \coordinate (R) at ($ (Q) + (-165:{\oneMinusT}) $);
+    \coordinate (U) at ($ (T) + (15:{\tVal}) $);
+
+    % --- 2. 一辺 1 の穴（参考外枠: 点線）---
+    \coordinate (Center) at ($ (I)!0.5!(K) $);
+    \draw[dashed, gray!45, thick]
+    ($ (Center) + (-0.5, -0.5) $) rectangle ($ (Center) + (0.5, 0.5) $);
+    \node[gray!65!black, font=\scriptsize, above left]
+    at ($ (Center) + (0.5, 0.5) $) {一辺 $1$ の正方形の穴};
+
+    % --- 3. 正方形 HIJK ---
+    \draw[very thick, gray!80!black] (I) -- (J) -- (K) -- (H) -- cycle;
+    \node[below left=1pt]  at (I) {$I$};
+    \node[below right=1pt] at (J) {$J$};
+    \node[above right=1pt] at (K) {$K$};
+    \node[above left=1pt]  at (H) {$H$};
+
+    % 対角線 KI
+    \draw[dashed, gray!60, thick] (I) -- (K);
+
+    % --- 4. 六角形 PQRSTU ---
+    \fill[blue!15, opacity=0.7] (P) -- (Q) -- (R) -- (S) -- (T) -- (U) -- cycle;
+    \draw[very thick, blue!85!black] (P) -- (Q) -- (R) -- (S) -- (T) -- (U) -- cycle;
+
+    % 辺の長さラベル
+    \path (P) -- node[above right=-2pt, font=\scriptsize, teal!90!black] {$t$} (Q);
+    \path (Q) -- node[above left=-2pt, font=\scriptsize, teal!90!black] {$1-t$} (R);
+    \path (R) -- node[left=1pt, font=\scriptsize, teal!90!black] {$t$} (S);
+    \path (S) -- node[below left=-2pt, font=\scriptsize, teal!90!black] {$1-t$} (T);
+    \path (T) -- node[below right=-2pt, font=\scriptsize, teal!90!black] {$t$} (U);
+    \path (U) -- node[right=1pt, font=\scriptsize, teal!90!black] {$1-t$} (P);
+
+    % --- 5. 中点 X, Y と頂点のプロット ---
+    \fill[red!85!black] (Y) circle (0.6pt) node[below left=-1pt, font=\tiny, red!90!black] {$Y$};
+    \fill[red!85!black] (X) circle (0.6pt) node[above right=-1pt, font=\tiny, red!90!black] {$X$};
+
+    \fill[blue!90!black] (P) circle (0.6pt) node[right=2pt, font=\scriptsize] {$P$};
+    \fill[blue!90!black] (Q) circle (0.6pt) node[above=2pt, font=\scriptsize] {$Q$};
+    \fill[blue!90!black] (R) circle (0.6pt) node[above left=1pt, font=\scriptsize] {$R$};
+    \fill[blue!90!black] (S) circle (0.6pt) node[left=2pt, font=\scriptsize] {$S$};
+    \fill[blue!90!black] (T) circle (0.6pt) node[below=2pt, font=\scriptsize] {$T$};
+    \fill[blue!90!black] (U) circle (0.6pt) node[below right=1pt, font=\scriptsize] {$U$};
+
+    % --- 6. 寸法補助線とブレース ---
+    % 対角線上の 3 区間
+    \node[teal!90!black, font=\tiny, below left=-2pt] at ($ (K)!0.5!(Y) $) {$|KY|=\frac{t}{2}$};
+    \node[teal!90!black, font=\tiny, below left=-2pt] at ($ (Y)!0.5!(X) $) {$|YX|=\frac{\sqrt{3}}{2}$};
+    \node[teal!90!black, font=\tiny, below left=-2pt] at ($ (X)!0.5!(I) $) {$|XI|=\frac{1-t}{2}$};
+
+  \end{tikzpicture}
+  \caption{正方形 $HIJK$（一辺 $<1$）に対角線対称で内接させた六角形 $PQRSTU$}
+  \label{fig:hexagon_in_square}
+\end{figure}
+
+次に，切り口の六角形$PQRSTU$を上図のように正方形$KHIJ$に内接させる．
+辺$ST$と$PQ$の中点$X,Y$が対角線$KI$上にくるようにする．
+このとき，対角線の長さ$|KI|$を計算すると
+\begin{align}
+  |KI|
+  &= |KY| + |YX| + |XI| \\
+  &=\dfrac{t}{2}+(1-t)\sin60^\circ
+  +t\sin60^\circ+\dfrac{1-t}{2}\\
+  &=\dfrac{\sqrt{3}+1}{2}<\sqrt{2}
+\end{align}
+である．
+
+したがって，正方形$KHIJ$の一辺の長さは$1$未満である．よって，この六角形も一辺の長さ$1$の穴の縁にふれないように置くことができる．
+
+以上から，穴のある平面と正八面体の一つの面$BCF$が常に平行になるようにし，各切り口が穴の内部に収まるように動かせば，正八面体$V$を平面にふれずに通過させることができる．
+
+\end{document}

@@ -1,0 +1,222 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+% Source PDF page 9
+{\bf [解]}
+
+\paragraph{(1)}
+$\alpha=\dfrac{41}{333}$とおくと，
+\begin{align}
+  \alpha=0.\dot{1}2\dot{3}=0.123123\cdots
+\end{align}
+と小数点以下は$123$の繰り返しになる．
+$k$回目に出た目の数を$b_k$とする．$a_n\le\alpha$となるかどうかは，$b_k$が何回目に初めて$\alpha$の対応する桁と異なるかを考えればよい．
+
+$a_n\le\alpha$となる場合のうち，小数第$n$位まで$\alpha$と一致する確率を$q_n$，第$n$位までに初めて小さい数字が現れ，完全には一致しない確率を$r_n$とする．
+すると題意の確率$p_n(\alpha)$とは，
+\begin{align}
+  p_n(\alpha)=q_n+r_n \label{eq:1}
+\end{align}
+という関係にある．
+次の桁が$1,2,3$のどれであるかによって下図のように遷移する．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[>=stealth, scale=1.0, every node/.style={font=\small}]
+
+    % ============================================================
+    % 3つの周期ステップの遷移図を横並びに展開
+    % ループ変数: オフセット / 見出し / 次の桁 / 確率 / 理由
+    % ============================================================
+    \foreach \offset/\stepTitle/\digit/\rate/\desc in {
+      0/{$3i-2 \longrightarrow 3i-1$}/{2}/{\frac{1}{6}}/{出目が $1$},
+      4.8/{$3i-1 \longrightarrow 3i$}/{3}/{\frac{1}{3}}/{出目が $1, 2$},
+      9.6/{$3i \longrightarrow 3i+1$}/{1}/{0}/{出目 $<1$ はなし}
+    } {
+      \begin{scope}[xshift=\offset cm]
+
+        % --- ヘッダー枠（ステップと次の桁）---
+        \node[draw=gray!40, fill=gray!8, rounded corners=2pt, inner sep=3pt, font=\footnotesize\bfseries, align=center]
+        at (1.35, 1.8) {\stepTitle\\[1pt]\scriptsize 次の桁: $\mathbf{\digit}$};
+
+        % --- ノード配置 ---
+        % 上段: 一致状態 q_n (青色)
+        \node[draw=blue!85!black, fill=blue!10, very thick, circle, minimum size=0.85cm, font=\footnotesize\bfseries]
+        (qn) at (0, 0.65) {$q_n$};
+        \node[draw=blue!85!black, fill=blue!10, very thick, circle, minimum size=0.85cm, font=\footnotesize\bfseries]
+        (qn1) at (2.7, 0.65) {$q_{n+1}$};
+
+        % 下段: 確定状態 r_n (緑色・吸収状態)
+        \node[draw=teal!85!black, fill=teal!10, very thick, circle, minimum size=0.85cm, font=\footnotesize\bfseries]
+        (rn) at (0, -0.75) {$r_n$};
+        \node[draw=teal!85!black, fill=teal!10, very thick, circle, minimum size=0.85cm, font=\footnotesize\bfseries]
+        (rn1) at (2.7, -0.75) {$r_{n+1}$};
+
+        % --- 状態ラベル ---
+        \node[left=2pt, font=\tiny, blue!90!black] at (qn.west) {一致};
+        \node[left=2pt, font=\tiny, teal!90!black] at (rn.west) {確定};
+
+        % --- 遷移矢印 ---
+        % 1. 一致維持: q_n -> q_{n+1} (確率 1/6)
+        \draw[->, line width=1.3pt, blue!85!black] (qn) -- (qn1)
+        node[midway, above=1pt, font=\scriptsize] {$\frac{1}{6}$};
+
+        % 2. 確定状態の維持: r_n -> r_{n+1} (確率 1)
+        \draw[->, line width=1.3pt, gray!70] (rn) -- (rn1)
+        node[midway, below=1pt, font=\scriptsize] {$1$};
+
+        % 3. 新たに小さい目が現れて確定へ分岐: q_n -> r_{n+1}
+        % 確率 0（digit が 1 のケース）と正の確率を ifthen で安全に切り替え
+        \if\digit1
+        \draw[->, thick, dashed, gray!50] (qn) -- (rn1)
+        node[midway, above right=-2pt, font=\scriptsize, gray!60] {$\rate$};
+        \else
+        \draw[->, line width=1.5pt, red!85!black] (qn) -- (rn1)
+        node[midway, above right=-2pt, font=\scriptsize, red!90!black] {$\rate$};
+        \fi
+
+        % 下部の分岐理由ラベル
+        \node[font=\tiny, gray!70!black] at (1.35, -1.45) {\desc};
+
+      \end{scope}
+    }
+
+    % --- 注釈ボックス ---
+    \node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=3.5pt, font=\footnotesize, align=left]
+    at (6.15, -2.35) {
+      \textbf{状態の分類と漸化式の意味}:\\[2pt]
+      $\bullet\ q_n$: 小数第 $n$ 位まで $\alpha = 0.123123\dots$ と完全に一致している確率（常に次の出目が一致する確率 $\frac{1}{6}$ で推移）\\[3pt]
+      $\bullet\ r_n$: 小数第 $n$ 位までに初めて $\alpha$ より小さい出目が出て $a_n < \alpha$ が確定した確率（一度確定すると以降確率 $1$ で維持）\\[3pt]
+      $\bullet\ $ 求める確率: $p_n(\alpha) = q_n + r_n$
+    };
+
+  \end{tikzpicture}
+  \caption{$\alpha=0.123123\dots$ に対する一致状態 $q_n$ と確定状態 $r_n$ の推移}
+  \label{fig:ut1990q6_transitions_upgraded}
+\end{figure}
+
+したがって，$q_n,r_n$の漸化式は以下のようになる．
+\begin{align}
+  \begin{cases}
+    q_{n+1}=\dfrac{1}{6}q_n，\\
+    r_{3i+1}=r_{3i}，\\
+    r_{3i}  =r_{3i-1}+\dfrac{1}{3}q_{3i-1}，\\
+    r_{3i-1}=r_{3i-2}+\dfrac{1}{6}q_{3i-2}
+  \end{cases} \label{eq:2}
+\end{align}
+である．従って
+\begin{align}
+  r_{3i+1} = r_{3i-2} + \dfrac{1}{3}q_{3i-1} + \dfrac{1}{6}q_{3i-2} \label{eq:3}
+\end{align}
+である．初期条件は$q_1=\dfrac{1}{6}$，$r_1=0$である．
+まず\cref{eq:2}から$q_{n}$の一般項は
+\begin{align}
+  q_n&=\Bigl(\dfrac{1}{6}\Bigr)^n \label{eq:4}
+\end{align}
+である．これを\cref{eq:3}に代入して
+\begin{align}
+  r_{3i+1}&=r_{3i-2}+\dfrac{4}{3}\Bigl(\dfrac{1}{6}\Bigr)^{3i-1}
+\end{align}
+だから繰り返し用いて
+\begin{align}
+  r_{3i-2} &=
+  \begin{cases}
+    0 & (i=1) \\
+    \sum_{k=1}^{i-1}\dfrac{4}{3}\Bigl(\dfrac{1}{6}\Bigr)^{3k-1} & (i \ge 2)
+  \end{cases} \\
+  &= \dfrac{8}{6^3-1}\Bigl\{1-\Bigl(\dfrac{1}{6}\Bigr)^{3(i-1)}\Bigr\} \label{eq:5}
+\end{align}
+となる．
+
+よって\cref{eq:4,eq:5}において，$n\to\infty$すなわち$i\to\infty$の時
+\begin{align}
+  \begin{cases}
+    \lim_{n\to\infty}q_{n}   = 0  \\
+    \lim_{i\to\infty}r_{3i-2}= \dfrac{8}{6^3-1}
+  \end{cases}
+\end{align}
+である．\cref{eq:2}より$n=3i-2,3i-1,3i$のいずれも$r_{n}$の極限は等しい．
+従って\cref{eq:1}から求める極限値は
+\begin{align}
+  \lim_{n\to\infty}p_n\Bigl(\dfrac{41}{333}\Bigr)
+  = \lim_{n\to\infty}(q_n+r_n)
+  = \dfrac{8}{215}
+\end{align}
+である．
+
+\paragraph{(2)}
+
+$p_n(\alpha)$は$\alpha$について単調非減少である．また，$a_n$は$n$について増加するので，$p_n(\alpha)$は$n$について非増加で，極限が存在する．その極限を$F(\alpha)$と書く．$F(\alpha)=\dfrac{1}{2}$となる$\alpha$の上限と下限を求めれば良い．
+
+\subparagraph{$1^\circ$ 上限}
+
+$\beta=0.4\dot{1}=0.4111\cdots$とおく．
+$n\ge2$に対して最初の目が$3$以下の場合と，最初の目が$4$で残りがすべて$1$の場合を数えると，
+\begin{align}
+  p_n(\beta)
+  =\dfrac{3}{6}+\Bigl(\dfrac{1}{6}\Bigr)^n
+  \xrightarrow{n\to\infty}\dfrac{1}{2}
+\end{align}
+である．
+
+一方で$t>\beta$を任意にとると，ある$k\ge1$に対して，
+\begin{align}
+  \beta<v_k=0.4\underbrace{11\cdots1}_{k-1\text{個}}2<t
+\end{align}
+となる．ここでは$v_k$を小数第$k+1$位までの有限小数とする．$n\ge k+2$ならば，最初の目が$3$以下の場合に加え，第$k+1$位までが$4,1,\ldots,1$である場合が数えられるので，
+\begin{align}
+  p_n(t)\ge p_n(v_k)
+  =\dfrac{3}{6}+\Bigl(\dfrac{1}{6}\Bigr)^{k+1}
+  >\dfrac{1}{2}
+\end{align}
+となる．$k$を固定して極限をとれば$F(t)>\dfrac{1}{2}$である．
+したがって上限についての条件は
+\begin{align}
+  \alpha\le 0.4\dot{1} \label{eq:6}
+\end{align}
+である．
+
+\subparagraph{$2^\circ$ 下限}
+
+$\gamma=0.3\dot{6}=0.3666\cdots$とおくと，$p_n(\alpha)$は最初の目が$3$以下であれば良いから
+\begin{align}
+  p_n(\gamma)=\dfrac{1}{2}
+\end{align}
+である．
+
+一方で$t<\gamma$を任意にとると，ある$k\ge1$に対して，
+\begin{align}
+  t<u_k=0.3\underbrace{66\cdots6}_{k\text{個}}<\gamma
+\end{align}
+となる．$u_k$は小数第$k+1$位までの有限小数である．
+$n\ge k+2$に対して，$p_n(u_k)$は最初の目が$2$以下である場合に加えて，$i=2,3,\cdots,k+1$桁目が$6$より小さい場合も考えて
+\begin{align}
+  p_n(t)&\le p_n(u_k)\\
+  &=\dfrac{2}{6}
+  +\dfrac{1}{6}\dfrac{5}{6}
+  +\Bigl(\dfrac{1}{6}\Bigr)^2\dfrac{5}{6}
+  +\cdots+\Bigl(\dfrac{1}{6}\Bigr)^k\dfrac{5}{6}\\
+  &=\dfrac{2}{6}
+  +\dfrac{5}{6}\cdot\dfrac{1}{6}
+  \dfrac{1-(1/6)^k}{1-1/6}\\
+  &=\dfrac{1}{2}-\Bigl(\dfrac{1}{6}\Bigr)^{k+1}
+  <\dfrac{1}{2}
+\end{align}
+だから，$F(t)<\dfrac{1}{2}$である．したがって，下限についての条件は
+\begin{align}
+  \gamma = 0.3\dot{6} \le \alpha \label{eq:7}
+\end{align}
+である．
+\casesend
+
+\cref{eq:6,eq:7}と単調性より，求める$\alpha$の条件は
+\begin{align}
+  0.3\dot{6}\le\alpha\le0.4\dot{1}
+  \quad \therefore
+  \dfrac{11}{30}\le\alpha\le\dfrac{37}{90}
+\end{align}
+である．
+
+% \medskip\noindent\textbf{原稿の計算表記について．}
+% 原稿の等比数列の和には総和の添字と指数の誤記があるため，漸化式に合わせて上では$3k-1$，$3(i-1)$とした．また，(2)の比較用有限小数は桁数を明記し，それに合わせて確率の指数を整理した．単調性から直接いえる不等号は非減少の向きなので，原稿の狭義の不等号を$\le$，$\ge$に改めた．いずれも原稿の解法を保った計算上の補正である．
+
+\end{document}

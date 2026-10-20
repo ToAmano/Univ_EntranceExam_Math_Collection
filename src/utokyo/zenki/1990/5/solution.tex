@@ -1,0 +1,330 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+{\bf [解]}
+
+% TODO: 概要図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.2, line join=round, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ (a = sqrt(3) ≈ 1.732, b = sqrt(1.5) ≈ 1.225) ---
+    % 1/a^2 + 1/b^2 = 1/3 + 2/3 = 1 (a^2 + b^2 = a^2*b^2 = 4.5 を厳密に満たす)
+    \pgfmathsetmacro{\aVal}{sqrt(3.0)}
+    \pgfmathsetmacro{\bVal}{sqrt(1.5)}
+
+    % 頂点 P, Q, R, S の座標 (theta ≈ 25° の回転菱形)
+    \coordinate (O)  at (0, 0);
+    \coordinate (P)  at (1.445946, 0.674256);
+    \coordinate (Q)  at (-0.542384, 1.163146);
+    \coordinate (R)  at (-1.445946, -0.674256);
+    \coordinate (S)  at (0.542384, -1.163146);
+
+    % 円 C_0 への接点 A, B, C, D
+    \coordinate (A)  at (0.238768, 0.971077);
+    \coordinate (B)  at (-0.897365, 0.441289);
+    \coordinate (C)  at (-0.238768, -0.971077);
+    \coordinate (D)  at (0.897365, -0.441289);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-2.2, 0) -- (2.35, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.6) -- (0, 1.7) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 曲線 C_0 (円) と C_1 (楕円) ---
+    % 楕円 C_1
+    \draw[very thick, gray!75!black] (O) ellipse [x radius=\aVal, y radius=\bVal];
+    \node[gray!90!black, font=\footnotesize\bfseries, above right] at (1.35, 0.95) {$C_1$};
+
+    % 単位円 C_0 (薄い透過塗りつぶし)
+    \fill[blue!8, opacity=0.6] (O) circle (1.0);
+    \draw[line width=1.5pt, blue!85!black] (O) circle (1.0);
+    \node[blue!90!black, font=\footnotesize\bfseries] at (-0.55, -0.55) {$C_0$};
+
+    % --- 4. 菱形 PQRS の描画 ---
+    \draw[line width=1.6pt, purple!85!black] (P) -- (Q) -- (R) -- (S) -- cycle;
+
+    % 対角線 PR, QS (直交する対角線)
+    \draw[dashed, gray!60, thick] (P) -- (R);
+    \draw[dashed, gray!60, thick] (Q) -- (S);
+
+    % 対角線の直交記号 (原点 O)
+    \pgfmathsetmacro{\angP}{atan2(0.674256, 1.445946)}
+    \draw[thin, gray!70]
+    ($ (O) + ({\angP}:0.1) $) --
+    ($ (O) + ({\angP}:0.1) + ({\angP+90}:0.1) $) --
+    ($ (O) + ({\angP+90}:0.1) $);
+
+    % --- 5. 接点 A, B, C, D への半径と直角記号 ---
+    \foreach \pt/\lab/\pos in {A/A/{above right}, B/B/{above left}, C/C/{below left}, D/D/{below right}} {
+      \draw[dashed, teal!85!black, thick] (O) -- (\pt);
+      \fill[teal!85!black] (\pt) circle (1.0pt);
+      \node[\pos=1pt, font=\scriptsize, teal!90!black] at (\pt) {$\lab$};
+    }
+
+    % 接点 A における直角記号 (OA ⊥ PQ)
+    \pgfmathsetmacro{\angA}{atan2(0.971077, 0.238768)}
+    \draw[thin, teal!70!black]
+    ($ (A) + ({\angA+180}:0.08) $) --
+    ($ (A) + ({\angA+180}:0.08) + ({\angA+90}:0.08) $) --
+    ($ (A) + ({\angA+90}:0.08) $);
+
+    % --- 6. 頂点プロットとラベル ---
+    \fill[purple!90!black] (P) circle (1.2pt) node[above right=1pt] {$P$};
+    \fill[purple!90!black] (Q) circle (1.2pt) node[above left=1pt]  {$Q$};
+    \fill[purple!90!black] (R) circle (1.2pt) node[below left=1pt]  {$R$};
+    \fill[purple!90!black] (S) circle (1.2pt) node[below right=1pt] {$S$};
+
+    % 楕円の軸端点ラベル
+    \node[below=2pt, font=\scriptsize] at (\aVal, 0) {$a$};
+    \node[left=2pt, font=\scriptsize]  at (0, \bVal) {$b$};
+    \fill (\aVal, 0) circle (0.6pt);
+    \fill (0, \bVal) circle (0.6pt);
+
+  \end{tikzpicture}
+  \caption{楕円 $C_1$ に内接し，円 $C_0$ に外接する菱形 $PQRS$ と各接点}
+  \label{fig:ut1990q5_tangent_upgraded}
+\end{figure}
+
+与えられた円と楕円
+\begin{align}
+  \begin{cases}
+    C_0: x^2+y^2 = 1 \\
+    C_1: \dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．
+
+まず，$C_0$の外側に$C_1$があることから
+\begin{align}
+  1<a, b \label{eq:2}
+\end{align}
+が必要である．以下このもとで考える．
+
+% TODO: 円に引いた接線の長さが等しい様子
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.0, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ ---
+    % 円半径 r = 1, 点 E(2, 0)
+    % cos(theta) = 1/2 => theta = 60°
+    \coordinate (O) at (0, 0);
+    \coordinate (E) at (2.0, 0);
+    \coordinate (A) at (0.5, {sqrt(3)/2});   % (0.5, 0.866)
+    \coordinate (B) at (0.5, {-sqrt(3)/2});  % (0.5, -0.866)
+
+    % --- 2. 2つの直角三角形の塗りつぶし (合同性) ---
+    \fill[teal!12, opacity=0.7] (O) -- (A) -- (E) -- cycle;
+    \fill[blue!10, opacity=0.7] (O) -- (B) -- (E) -- cycle;
+
+    % --- 3. 円の描画 ---
+    \draw[very thick, blue!85!black] (O) circle (1.0);
+    \node[blue!90!black, font=\scriptsize] at (-0.5, 0.5) {円 $C_0$};
+
+    % --- 4. 接線 EA, EB ---
+    \draw[line width=1.6pt, purple!85!black] (A) -- (E);
+    \draw[line width=1.6pt, purple!85!black] (B) -- (E);
+
+    % 半径 OA, OB および線分 OE
+    \draw[thick, dashed, teal!85!black] (O) -- (A) node[midway, above left=-1pt] {$1$};
+    \draw[thick, dashed, teal!85!black] (O) -- (B) node[midway, below left=-1pt] {$1$};
+    \draw[thick, dashed, gray!70] (O) -- (E);
+
+    % --- 5. 直角記号 (A, B における接線と半径の垂直性) ---
+    % OA ⊥ EA
+    \draw[thin, gray!70]
+    ($ (A) + (-60:0.09) $) --
+    ($ (A) + (-60:0.09) + (-150:0.09) $) --
+    ($ (A) + (-150:0.09) $);
+
+    % OB ⊥ EB
+    \draw[thin, gray!70]
+    ($ (B) + (60:0.09) $) --
+    ($ (B) + (60:0.09) + (150:0.09) $) --
+    ($ (B) + (150:0.09) $);
+
+    % --- 6. 接線の等長マーク（チョンチョン線）---
+    \draw[thick, purple!90!black] ($ ($ (A)!0.5!(E) $) + (120:0.05) $) -- ($ ($ (A)!0.5!(E) $) + (-60:0.05) $);
+    \draw[thick, purple!90!black] ($ ($ (A)!0.5!(E) $) + (120:0.05) + (30:0.03) $) -- ($ ($ (A)!0.5!(E) $) + (-60:0.05) + (30:0.03) $);
+
+    \draw[thick, purple!90!black] ($ ($ (B)!0.5!(E) $) + (60:0.05) $) -- ($ ($ (B)!0.5!(E) $) + (-120:0.05) $);
+    \draw[thick, purple!90!black] ($ ($ (B)!0.5!(E) $) + (60:0.05) + (-30:0.03) $) -- ($ ($ (B)!0.5!(E) $) + (-120:0.05) + (-30:0.03) $);
+
+    % --- 7. 点のプロットとラベル ---
+    \fill[black] (O) circle (0.8pt) node[left=2pt] {$O$};
+    \fill[purple!90!black] (E) circle (1.2pt) node[right=2pt] {$E$};
+    \fill[teal!85!black]   (A) circle (1.0pt) node[above right=1pt] {$A$};
+    \fill[teal!85!black]   (B) circle (1.0pt) node[below right=1pt] {$B$};
+
+  \end{tikzpicture}
+  \caption{円の外の同一点から引いた2本の接線の長さが等しい性質}
+  \label{fig:ut1990q5_equal_tangents_upgraded}
+\end{figure}
+
+題意の平行四辺形が存在するとしてその頂点を$P,Q,R,S$とし，辺$PQ,QR,RS,SP$と円$C_0$との接点を，それぞれ$A,B,C,D$とする．円外の点から円に引いた二本の接線の長さは等しいので，
+\begin{align}
+  |PA|=|PD|，\quad |QA|=|QB|，\quad
+  |RB|=|RC|，\quad |SC|=|SD| \label{eq:3}
+\end{align}
+である．
+一方で平行四辺形の対辺の長さは等しいから，
+\begin{align}
+  |PQ|=|RS|, |QR|=|SP| \label{eq:4}
+\end{align}
+である．ここに\cref{eq:3}を代入して
+\begin{align}
+  \begin{cases}
+    |PA|+|AQ| = |RC|+|CS| \\
+    |QB|+|BR| = |SD|+|DP|
+  \end{cases}
+  \therefore
+  \begin{cases}
+    |PD|+|QB| = |BR|+|SD| \\
+    |QB|+|BR| = |SD|+|DP|
+  \end{cases}
+\end{align}
+だから辺々足し引きして
+\begin{align}
+  \begin{cases}
+    |QB| = |SD| \\
+    |PD| = |BR|
+  \end{cases}
+\end{align}
+である．従って
+\begin{align}
+  |PQ| = |PA| + |AQ| = |PD|+|QB| = |PD|+|SD|=|PS|
+\end{align}
+だから\cref{eq:4}に代入して，平行四辺形$PQRS$の各辺は
+\begin{align}
+  |PQ|=|RS|=|QR|=|SP| \label{eq:5}
+\end{align}
+と全て同じ長さになる．つまり$\square PQRS$はひし形である．
+
+% TODO: P(a,0)の時の図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ (a = sqrt(3) ≈ 1.732, b = sqrt(1.5) ≈ 1.225) ---
+    \pgfmathsetmacro{\aVal}{sqrt(3.0)}
+    \pgfmathsetmacro{\bVal}{sqrt(1.5)}
+
+    % 接点 A の座標: x_A = a / (a^2/b^2 + 1) = a * b^2 / (a^2+b^2)
+    % a^2 + b^2 = a^2*b^2 より x_A = a*b^2 / (a^2*b^2) = 1/a = 1/sqrt(3) ≈ 0.5774
+    % y_A = 1/b = 1/sqrt(1.5) = sqrt(2/3) ≈ 0.8165
+    \pgfmathsetmacro{\xA}{1.0 / \aVal}
+    \pgfmathsetmacro{\yA}{1.0 / \bVal}
+
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (\aVal, 0);
+    \coordinate (Q) at (0, \bVal);
+    \coordinate (A) at (\xA, \yA);
+
+    % --- 2. 直角三角形 OPQ の塗りつぶし ---
+    \fill[teal!12, opacity=0.7] (O) -- (P) -- (Q) -- cycle;
+    \draw[line width=1.6pt, purple!85!black] (P) -- (Q);
+    \draw[thick, gray!80!black] (O) -- (P);
+    \draw[thick, gray!80!black] (O) -- (Q);
+
+    % --- 3. 単位円 C_0 (第1象限の円弧) ---
+    \draw[very thick, blue!85!black] (1.0, 0) arc[start angle=0, end angle=90, radius=1.0];
+    \node[blue!90!black, font=\scriptsize] at (0.45, 0.45) {$C_0$};
+
+    % --- 4. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.2, 0) -- (2.1, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 1.55) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 5. 垂線 OA (円の半径 = 1) ---
+    \draw[very thick, dashed, teal!85!black] (O) -- (A);
+    \node[teal!90!black, font=\footnotesize\bfseries, below right=-1pt] at ($ (O)!0.5!(A) $) {$1$};
+    \fill[teal!85!black] (A) circle (1.0pt) node[above right=1pt, teal!95!black] {$A$};
+
+    % --- 6. 直角記号 ---
+    % O における直角
+    \draw[thin, gray!70] (0.1, 0) -- (0.1, 0.1) -- (0, 0.1);
+
+    % A における直角 (OA ⊥ PQ)
+    \pgfmathsetmacro{\angOA}{atan2(\yA, \xA)}
+    \draw[thin, gray!70]
+    ($ (A) + ({\angOA+180}:0.09) $) --
+    ($ (A) + ({\angOA+180}:0.09) + ({\angOA-90}:0.09) $) --
+    ($ (A) + ({\angOA-90}:0.09) $);
+
+    % --- 7. 長さ・頂点ラベル ---
+    \fill[purple!90!black] (P) circle (1.2pt) node[below=2pt] {$P(a, 0)$};
+    \fill[purple!90!black] (Q) circle (1.2pt) node[left=2pt]  {$Q(0, b)$};
+
+    % 辺の長さ
+    \node[below=2pt, font=\scriptsize] at ($ (O)!0.5!(P) $) {$a$};
+    \node[left=2pt, font=\scriptsize]  at ($ (O)!0.5!(Q) $) {$b$};
+    \node[above right=1pt, font=\footnotesize, purple!90!black] at ($ (P)!0.5!(Q) $)
+    {$|PQ| = \sqrt{a^2+b^2}$};
+
+  \end{tikzpicture}
+  \caption{直角三角形 $\triangle OPQ$ の面積を2辺 $a,b$ と斜辺への高さ $1$ で表す関係}
+  \label{fig:ut1990q5_area_upgraded}
+\end{figure}
+
+さて，以下具体的に$a,b$の条件を考える．
+まず$P=(a,0)$での成立が必要である．このとき残りの頂点は対称性と\cref{eq:5}から$(-a,0)$と$(0,\pm b)$である．そこで$Q=(0,b)$とおいて$\triangle OPQ$の面積を二通りに表すと，
+\begin{align}
+  & \dfrac{1}{2}|OP||OQ| = \dfrac{1}{2}|PQ||OA| \\
+  & ab=\sqrt{a^2+b^2} \\
+  & a^2b^2=a^2+b^2 \quad (\because a,b>0)\label{eq:6}
+\end{align}
+が必要である．
+
+逆に\cref{eq:6}が成立するとする．
+パラメータ$\theta\, (0\le \theta < 2\pi)$と$p,q>0$を用いて極座標表示で$C_1$上の任意の点$P,Q,R,S$を
+\begin{align}
+  P(p\cos\theta,p\sin\theta), Q(-q\sin\theta,q\cos\theta), \\
+  R(-p\cos\theta,-p\sin\theta), S(q\sin\theta,-q\cos\theta)
+\end{align}
+とおく．
+これらの点が$C_1$上にあるから\cref{eq:1}に代入して
+\begin{align}
+  \begin{cases}
+    \displaystyle p^2\Bigl(\dfrac{\cos^2\theta}{a^2}+\dfrac{\sin^2\theta}{b^2}\Bigr)=1，\\[2mm]
+    \displaystyle q^2\Bigl(\dfrac{\sin^2\theta}{a^2}+\dfrac{\cos^2\theta}{b^2}\Bigr)=1
+  \end{cases} \label{eq:7}
+\end{align}
+を満たす．この時
+\begin{align}
+  \begin{cases}
+    |OP|=|OR|, |OQ|=|OS| \\
+    \vec{PR} \perp \vec{QS}
+  \end{cases}
+\end{align}
+だから，$\square PQRS$は菱形である．
+
+次に辺$PQ$の方程式は
+\begin{align}
+  (p\sin\theta-q\cos\theta)(x+q\sin\theta)-(p\cos\theta+q\sin\theta)(y-q\cos\theta)=0
+\end{align}
+だから原点$O$とこの直線との距離を$\ell$とすると，
+\begin{align}
+  \ell
+  &=\dfrac{|q\sin\theta(p\sin\theta-q\cos\theta)+q\cos\theta(p\cos\theta+q\sin\theta)|}{\sqrt{(p\sin\theta-q\cos\theta)^2+(p\cos\theta+q\sin\theta)^2}}\\
+  &=\dfrac{pq}{\sqrt{p^2+q^2}}
+  =\sqrt{\dfrac{1}{\dfrac{1}{p^2}+\dfrac{1}{q^2}}} \label{eq:8}
+\end{align}
+となる．
+\cref{eq:6}を代入して
+\begin{align}
+  \dfrac{1}{p^2}+\dfrac{1}{q^2}
+  =\dfrac{1}{a^2}+\dfrac{1}{b^2}=1
+\end{align}
+であるから\cref{eq:8}に代入して$\ell=1$である．
+したがって$PQ$は$C_0$に接する．対称性から他の三辺も$C_0$に接するので，題意の平行四辺形が存在する．
+
+以上から，求める必要十分条件は\cref{eq:6}であり
+\begin{align}
+  a^2+b^2=a^2b^2
+\end{align}
+である．
+
+%TODO: 解説: Poncelet's theorem
+
+\end{document}
