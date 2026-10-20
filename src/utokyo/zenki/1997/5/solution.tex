@@ -1,0 +1,300 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+{\bf [解答]}
+
+与えられた条件
+\begin{align}
+  0<a<\dfrac{1}{4} \label{eq:1}
+\end{align}
+の元で与えられた領域
+\begin{align}
+  x^4 -x^2 + y^2+a \le 0 \label{eq:2}
+\end{align}
+を考える．
+
+まずはこの領域の形を考える．
+$t=x^2 \ge 0$とおくと，\cref{eq:2}は
+\begin{align}
+  t^2-t+y^2+a\le0 \label{eq:3}
+\end{align}
+となる．このような実数$t (\ge 0)$が存在するための条件から，
+$f(t)=t^2-t+y^2+a=0$の判別式を$D$として
+\begin{align}
+  &
+  \begin{cases}
+    \text{判別式}: D \ge 0 \\
+    \text{軸}: 0< \dfrac{1}{2}
+  \end{cases}
+  & D=1-4(y^2+a)\ge 0 \\
+  & y^2 \le \dfrac{1}{4} -a \\
+  & -\sqrt{\dfrac{1}{4}-a}\le y\le\sqrt{\dfrac{1}{4}-a} \quad (\because \text{\cref{eq:1}}) \label{eq:4}
+\end{align}
+である．このもとで\cref{eq:3}を解いて
+\begin{align}
+  \dfrac{1-\sqrt{1-4a-4y^2}}{2}
+  \le t\le
+  \dfrac{1+\sqrt{1-4a-4y^2}}{2} \label{eq:5}
+\end{align}
+であり，領域の概形は下図の斜線部である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・パラメータ (a = 3/16 = 0.1875 の例) ---
+    \def\aVal{0.1875}
+    \def\yMax{0.25}
+    \def\sqAlpha{0.5}
+    \pgfmathsetmacro{\sqBeta}{sqrt(0.75)}
+    \pgfmathsetmacro{\xPeak}{1.0 / sqrt(2.0)}
+
+    % 切断する高さ y_0 (0 < y_0 < yMax, 例として y_0 = 0.14)
+    \def\yConst{0.14}
+    % この高さでの内半径・外半径
+    % 1 - 4a - 4y^2 = 1 - 0.75 - 4*(0.14)^2 = 0.25 - 0.0784 = 0.1716
+    \pgfmathsetmacro{\termSqrt}{sqrt(1.0 - 4.0*\aVal - 4.0*\yConst*\yConst)}
+    \pgfmathsetmacro{\rIn}{sqrt((1.0 - \termSqrt)/2.0)}   % ≈ 0.643
+    \pgfmathsetmacro{\rOut}{sqrt((1.0 + \termSqrt)/2.0)}  % ≈ 0.765
+
+    \coordinate (O) at (0, 0);
+
+    % --- 2. 領域のハッチング塗りつぶし（左右対称）---
+    % 右側 (x > 0)
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75]
+    plot[domain=-90:90, samples=80] ({sqrt((1.0 + 0.5*cos(\x))/2.0)}, {0.25*sin(\x)})
+    -- plot[domain=90:-90, samples=80] ({sqrt((1.0 - 0.5*cos(\x))/2.0)}, {0.25*sin(\x)})
+    -- cycle;
+
+    % 左側 (x < 0)
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75]
+    plot[domain=-90:90, samples=80] ({-sqrt((1.0 + 0.5*cos(\x))/2.0)}, {0.25*sin(\x)})
+    -- plot[domain=90:-90, samples=80] ({-sqrt((1.0 - 0.5*cos(\x))/2.0)}, {0.25*sin(\x)})
+    -- cycle;
+
+    % --- 3. 領域の輪郭線 ---
+    \foreach \sgn in {1, -1} {
+      \draw[very thick, blue!85!black, domain=-90:90, samples=80]
+      plot ({\sgn*sqrt((1.0 + 0.5*cos(\x))/2.0)}, {0.25*sin(\x)});
+      \draw[very thick, blue!85!black, domain=-90:90, samples=80]
+      plot ({\sgn*sqrt((1.0 - 0.5*cos(\x))/2.0)}, {0.25*sin(\x)});
+    }
+
+    % --- 4. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-1.18, 0) -- (1.25, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.42) -- (0, 0.45) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 5. y = const の横線と領域内部分の太線強調 ---
+    % 全体の補助破線 y = yConst
+    \draw[dashed, gray!60] (-1.15, \yConst) -- (1.15, \yConst)
+    node[right=2pt, font=\scriptsize, gray!90!black] {$y = \text{const}$};
+    \node[left=2pt, font=\scriptsize, red!90!black] at (0, \yConst) {$y$};
+
+    % 領域内の部分を太線（赤）で強調
+    % 右側: r_in <= x <= r_out
+    \draw[line width=2.4pt, red!85!black] (\rIn, \yConst) -- (\rOut, \yConst);
+    \fill[red!90!black] (\rIn, \yConst) circle (0.7pt);
+    \fill[red!90!black] (\rOut, \yConst) circle (0.7pt);
+
+    % 左側: -r_out <= x <= -r_in
+    \draw[line width=2.4pt, red!85!black] (-\rOut, \yConst) -- (-\rIn, \yConst);
+    \fill[red!90!black] (-\rOut, \yConst) circle (0.7pt);
+    \fill[red!90!black] (-\rIn, \yConst) circle (0.7pt);
+
+    % 端点の投影破線
+    \draw[dotted, gray!60] (\rIn, 0) -- (\rIn, \yConst);
+    \draw[dotted, gray!60] (\rOut, 0) -- (\rOut, \yConst);
+    \node[below=2pt, font=\scriptsize, red!90!black] at (\rIn, 0) {$r_{\text{in}}$};
+    \node[below=2pt, font=\scriptsize, red!90!black] at (\rOut, 0) {$r_{\text{out}}$};
+
+    % --- 6. 領域端点の目盛り ---
+    \node[below=2pt, font=\scriptsize] at (\sqAlpha, 0) {$\sqrt{\alpha}$};
+    \node[below=2pt, font=\scriptsize] at (\sqBeta, 0) {$\sqrt{\beta}$};
+    \node[below=2pt, font=\scriptsize] at (-\sqAlpha, 0) {$-\sqrt{\alpha}$};
+    \node[below=2pt, font=\scriptsize] at (-\sqBeta, 0) {$-\sqrt{\beta}$};
+
+    \fill (\sqAlpha, 0)  circle (0.5pt);
+    \fill (\sqBeta, 0)   circle (0.5pt);
+    \fill (-\sqAlpha, 0) circle (0.5pt);
+    \fill (-\sqBeta, 0)  circle (0.5pt);
+
+    % 最大高さ y = ±sqrt(1/4 - a)
+    \draw[dashed, gray!45] (-\xPeak, \yMax) -- (\xPeak, \yMax);
+    \draw[dashed, gray!45] (-\xPeak, -\yMax) -- (\xPeak, -\yMax);
+    \node[left=2pt, font=\scriptsize, gray!90!black] at (0, \yMax) {$\sqrt{\frac{1}{4}-a}$};
+    \node[left=2pt, font=\scriptsize, gray!90!black] at (0, -\yMax) {$-\sqrt{\frac{1}{4}-a}$};
+
+  \end{tikzpicture}
+  \caption{回転領域の概形と高さ $y = \text{const}$ における切断線分（赤太線部）}
+  \label{fig:torus_like_region_with_y_slice}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.4, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・半径パラメータ ---
+    \def\rIn{0.62}
+    \def\rOut{1.18}
+
+    % x = r_in における円環内の z 座標交点
+    % z^2 = r_out^2 - r_in^2 => z_top = sqrt(r_out^2 - r_in^2)
+    \pgfmathsetmacro{\zTop}{sqrt(\rOut*\rOut - \rIn*\rIn)} % ≈ 1.002
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (P_top) at (\rIn, \zTop);
+    \coordinate (P_bot) at (\rIn, -\zTop);
+
+    % --- 2. 円環領域（ドーナツ型）のハッチング塗りつぶし ---
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75, even odd rule]
+    (O) circle (\rOut) (O) circle (\rIn);
+
+    % --- 3. 境界円の輪郭線 ---
+    \draw[very thick, blue!85!black] (O) circle (\rOut);
+    \draw[very thick, teal!85!black] (O) circle (\rIn);
+
+    % --- 4. 座標軸 (xz 平面) ---
+    \draw[->, thick, gray!80!black] (-1.45, 0) -- (1.55, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.45) -- (0, 1.55) node[above] {$z$};
+    \node[below left=2pt] at (O) {$O$ ($y$ 軸)};
+
+    % --- 5. x = r_in の縦線と円環内部分の太線強調 ---
+    % 全体の補助縦線 x = r_in (破線)
+    \draw[dashed, gray!60] (\rIn, -1.35) -- (\rIn, 1.35)
+    node[above=2pt, font=\scriptsize, gray!90!black] {$x = r_{\text{in}}$};
+    \node[below=2pt, font=\scriptsize, red!90!black] at (\rIn, 0) {$r_{\text{in}}$};
+
+    % 円環領域内部を通過する部分（赤太線で強調）
+    % 内円周上の接点 (r_in, 0) から外円周 (r_in, ±z_top) まで
+    \draw[line width=2.4pt, red!85!black] (P_bot) -- (P_top);
+    \fill[red!90!black] (P_top) circle (1.0pt);
+    \fill[red!90!black] (P_bot) circle (1.0pt);
+    \fill[teal!85!black] (\rIn, 0) circle (0.8pt);
+
+    % --- 6. 内半径・外半径の矢印表示 ---
+    % 内半径 r_in
+    \draw[->, line width=1.3pt, teal!85!black] (O) -- (140:\rIn)
+    node[midway, below left=-1pt, font=\scriptsize] {$r_{\text{in}}$};
+
+    % 外半径 r_out
+    \draw[->, line width=1.3pt, blue!85!black] (O) -- (35:\rOut)
+    node[midway, above left=-1pt, font=\scriptsize] {$r_{\text{out}}$};
+
+    % 外円との交点での z 座標補助線
+    \draw[dotted, gray!60] (P_top) -- (0, \zTop);
+    \node[left=2pt, font=\tiny, gray!80!black] at (0, \zTop) {$\sqrt{r_{\text{out}}^2 - r_{\text{in}}^2}$};
+
+  \end{tikzpicture}
+  \caption{高さ $y$ での切断円環（$xz$ 平面）}
+  \label{fig:cross_section_xz_annulus_with_vertical_line}
+\end{figure}
+
+求める回転体の体積を$V$とする．
+この領域は$x,y$軸に関して対称だから，$x\ge 0, y\ge 0$の部分を回転させた体積が$\dfrac{V}{2}$である．高さ$y$での断面は\cref{eq:5}より半径$\sqrt{\dfrac{1+\sqrt{1-4a-4y^2}}{2}}$と$\sqrt{\dfrac{1-\sqrt{1-4a-4y^2}}{2}}$の円によるドーナツ型の領域で
+\begin{align}
+  \dfrac{V}{2\pi}
+  &=\int_0^{\sqrt{\frac{1}{4}-a}}2\sqrt{\left(\dfrac{1}{4}-a\right)-y^2}\,dy
+  \label{eq:6}
+\end{align}
+となる．この積分は半径$\sqrt{\dfrac{1}{4}-a}$の四分円の面積だから，$\dfrac{\pi}{4}\left(\dfrac{1}{4}-a\right)$に等しい．したがって，\cref{eq:6}から
+\begin{align}
+  V=\pi^2\left(\dfrac{1}{4}-a\right)
+\end{align}
+である．
+
+{\bf [別解]}
+
+与式は$x$を$-x$，$y$を$-y$に変えても不変だから，領域は$x$軸・$y$軸について対称である．そこで，$x\ge0$，$y\ge0$の範囲で考える．$y$が実数であるための条件から，
+\begin{align}
+  0\le-x^4+x^2-a
+  \quad \therefore
+  \dfrac{1-\sqrt{1-4a}}{2}\le x^2\le\dfrac{1+\sqrt{1-4a}}{2}
+\end{align}
+である．
+\begin{align}
+  \alpha=\dfrac{1-\sqrt{1-4a}}{2}，\qquad
+  \beta=\dfrac{1+\sqrt{1-4a}}{2}
+\end{align}
+とおけば，第1象限では
+\begin{align}
+  \sqrt{\alpha}\le x\le\sqrt{\beta}，\qquad
+  0\le y\le\sqrt{x^2(1-x^2)-a}
+\end{align}
+であり，その概形は下図のようになる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=4.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・パラメータ (a = 3/16 の例) ---
+    \def\aVal{0.1875}
+    \def\yMax{0.25}
+    \def\sqAlpha{0.5}
+    \pgfmathsetmacro{\sqBeta}{sqrt(0.75)}
+    \pgfmathsetmacro{\xPeak}{1.0 / sqrt(2.0)} % 1/sqrt(2) ≈ 0.7071
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (P_in)  at (\sqAlpha, 0);
+    \coordinate (P_out) at (\sqBeta, 0);
+    \coordinate (P_top) at (\xPeak, \yMax);
+
+    % --- 2. 第1象限領域のハッチング塗りつぶし ---
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75]
+    (\sqAlpha, 0)
+    -- plot[domain=180:0, samples=90] ({sqrt((1.0 + 0.5*cos(\x))/2.0)}, {0.25*sin(\x)})
+    -- (\sqBeta, 0)
+    -- cycle;
+
+    % 領域の境界線 (太線実線)
+    \draw[very thick, blue!85!black, domain=180:0, samples=90]
+    plot ({sqrt((1.0 + 0.5*cos(\x))/2.0)}, {0.25*sin(\x)});
+    \draw[very thick, blue!85!black] (\sqAlpha, 0) -- (\sqBeta, 0);
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.1, 0) -- (1.1, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.05) -- (0, 0.38) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 投影破線と目盛り ---
+    % x = sqrt(alpha), sqrt(beta)
+    \fill[blue!90!black] (P_in)  circle (0.6pt);
+    \fill[blue!90!black] (P_out) circle (0.6pt);
+    \node[below=2pt, font=\scriptsize] at (P_in)  {$\sqrt{\alpha}$};
+    \node[below=2pt, font=\scriptsize] at (P_out) {$\sqrt{\beta}$};
+
+    % 頂点 (1/sqrt(2), sqrt(1/4 - a))
+    \draw[dashed, gray!60] (0, \yMax) -- (P_top) -- (\xPeak, 0);
+    \fill[red!85!black] (P_top) circle (0.7pt);
+    \node[left=2pt, font=\scriptsize, gray!90!black] at (0, \yMax) {$\sqrt{\frac{1}{4}-a}$};
+    \node[below=2pt, font=\scriptsize, gray!90!black] at (\xPeak, 0) {$\frac{1}{\sqrt{2}}$};
+
+    % 曲線の方程式ラベル
+    \node[blue!90!black, font=\footnotesize, above right] at (0.72, 0.25)
+    {$y = \sqrt{x^2(1-x^2)-a}$};
+
+  \end{tikzpicture}
+  \caption{第1象限にある部分の概形}
+  \label{fig:first_quadrant_region_2d}
+\end{figure}
+
+求める体積を$V$とすると，バームクーヘン積分の公式から
+\begin{align}
+  \dfrac{V}{2}
+  &=2\pi\int_{\sqrt{\alpha}}^{\sqrt{\beta}}x\sqrt{x^2(1-x^2)-a}\,dx，\\
+  \dfrac{V}{4\pi}
+  &=\dfrac{1}{2}\int_\alpha^\beta\sqrt{t(1-t)-a}\,dt
+  \qquad(t=x^2)，\\
+  \dfrac{V}{2\pi}
+  &=\int_\alpha^\beta\sqrt{-\left(t-\dfrac{1}{2}\right)^2+\left(\dfrac{1}{4}-a\right)}\,dt\\
+  &=\int_{-\frac{1}{2}\sqrt{1-4a}}^{\frac{1}{2}\sqrt{1-4a}}
+  \sqrt{\left(\dfrac{1}{4}-a\right)-p^2}\,dp
+  \qquad\left(p=t-\dfrac{1}{2}\right)
+\end{align}
+となる．最後の積分は半径$\sqrt{\dfrac{1}{4}-a}$の半円の面積だから，$\dfrac{\pi}{2}\left(\dfrac{1}{4}-a\right)$に等しい．したがって，
+\begin{align}
+  V=\pi^2\left(\dfrac{1}{4}-a\right)
+\end{align}
+を得る．
+
+\end{document}

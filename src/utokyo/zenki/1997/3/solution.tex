@@ -1,68 +1,102 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} $0 < r < 1 \quad \cdots \text{①}$
-
-\bigskip
-
-\noindent
-\paragraph{(1)}
-
-$|\vec{PA}| = |\vec{PB}|$ から， $P$ は線分 $AB$ の垂直2等分面 $x=y$ 上にあるので， $P(p,p,q)$ と表せる． この時
+与えられた条件
 \begin{align}
-  |\vec{PA}| = r |\vec{PO}| \iff |\vec{PA}|^2 &= r^2 |\vec{PO}|^2
+  0 < r < 1 \label{eq:1}
 \end{align}
-で，
-\begin{align}
-  (p-1)^2 + p^2 + q^2 &= r^2 (2p^2 + q^2)
-\end{align}
-を満たす $p, q$ の存在条件をしらべれば良い．
-\begin{align}
-  2(1-r^2)p^2 - 2p + (1-r^2)q^2 + 1 &= 0 \quad \cdots \text{②}
-\end{align}
-\begin{align}
-  2(1-r^2)\left[ p - \dfrac{1}{2(1-r^2)} \right]^2 + (1-r^2)q^2 + 1 - \dfrac{1}{2(1-r^2)} &= 0
-\end{align}
-①及び $p, q \in \mathbb{R}$ から， $p, q$ の存在条件は
-\begin{align}
-  1 - \dfrac{1}{2(1-r^2)} \le 0 \iff \dfrac{\sqrt{2}}{2} &\le r < 1 \quad (\because \text{①})
-\end{align}
+について考える．
+また，$A(1,0,0), B(0,1,0)$である．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.2, >=stealth]
-    \draw[->] (0,0,0) -- (3,0,0) node[right] {$y$};
-    \draw[->] (0,0,0) -- (0,3,0) node[above] {$z$};
-    \draw[->] (0,0,0) -- (0,0,3) node[below left] {$x$};
+  \tdplotsetmaincoords{68}{120}
+  \begin{tikzpicture}[tdplot_main_coords, scale=3, >=stealth, every node/.style={font=\small}]
 
-    \coordinate (O) at (0,0,0);
-    \coordinate (A) at (0,0,2);
-    \coordinate (B) at (2,0,0);
-    \coordinate (P) at (1.5, 2.0, 1.5);
+    % --- 1. 定数・座標パラメータ ---
+    \coordinate (O) at (0, 0, 0);
+    \coordinate (A) at (1.0, 0, 0);
+    \coordinate (B) at (0, 1.0, 0);
 
-    \draw[dashed] (0,0,0) -- (2,0,2);
-    \draw[thick] (O) -- (A) node[below left] {$A$};
-    \draw[thick] (O) -- (B) node[below right] {$B$};
+    % 点 P(p, p, q) の例 (p = 0.9, q = 1.1)
+    \def\pVal{0.9}
+    \def\qVal{1.1}
+    \coordinate (P)      at (\pVal, \pVal, \qVal);
+    \coordinate (P_xy)   at (\pVal, \pVal, 0);
+    \coordinate (AB_mid) at (0.5, 0.5, 0);
 
-    \draw[thick] (P) circle (1pt) node[above right] {$P$};
-    \draw (P) -- (A);
-    \draw (P) -- (B);
-    \draw (P) -- (O);
-    \draw[dashed] (P) -- (1.5, 0, 1.5);
+    % --- 2. 垂直二等分面 x = y のパッチ（半透明）---
+    \fill[blue!10, opacity=0.6] (0, 0, 0) -- (1.5, 1.5, 0) -- (1.5, 1.5, 1.5) -- (0, 0, 1.5) -- cycle;
+    \draw[dashed, blue!60] (0, 0, 0) -- (1.5, 1.5, 0) -- (1.5, 1.5, 1.5) -- (0, 0, 1.5) -- cycle;
+    \node[blue!90!black, font=\scriptsize, above right] at (1.1, 1.1, 1.2) {面 $x = y$};
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (1.7, 0, 0) node[below left=1pt] {$x$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 1.7, 0) node[right=2pt] {$y$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 0, 1.6) node[above=2pt] {$z$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 線分 AB と垂直関係 ---
+    \draw[very thick, teal!85!black] (A) -- (B);
+    \node[teal!90!black, font=\footnotesize, above right] at ($ (A)!0.5!(B) $) {$AB$};
+
+    % 面 x=y 上の線分 (原点から中点への線分)
+    \draw[dashed, blue!75!black, thick] (O) -- (AB_mid);
+
+    % --- 5. 点 P(p, p, q) と距離ベクトル ---
+    % P から A, B, O への線分
+    \draw[line width=1.4pt, red!85!black] (P) -- (A);
+    \draw[line width=1.4pt, red!85!black] (P) -- (B);
+    \draw[line width=1.4pt, purple!85!black] (P) -- (O);
+
+    % P から xy 平面への投影破線
+    \draw[dashed, gray!60] (P) -- (P_xy);
+    \draw[dashed, gray!60] (P_xy) -- (\pVal, 0, 0);
+    \draw[dashed, gray!60] (P_xy) -- (0, \pVal, 0);
+
+    % --- 6. 主要点のプロットとラベル ---
+    \fill[black] (O) circle (0.7pt);
+    \fill[teal!85!black] (A) circle (1.0pt) node[below left=1pt] {$A(1,0,0)$};
+    \fill[teal!85!black] (B) circle (1.0pt) node[below right=1pt] {$B(0,1,0)$};
+    \fill[red!85!black]  (P) circle (1.2pt) node[above right=1pt, red!95!black] {$P(p,p,q)$};
+
+    % 座標目盛り
+    \node[below=2pt, font=\scriptsize] at (\pVal, 0, 0) {$p$};
+    \node[right=2pt, font=\scriptsize] at (0, \pVal, 0) {$p$};
+    \node[left=2pt, font=\scriptsize]  at (0, 0, \qVal) {$q$};
+    \draw[dashed, gray!50] (0, 0, \qVal) -- (P);
+
   \end{tikzpicture}
-  \caption{点$O,A,B,P$の空間配置}
+  \caption{点 $O, A, B$ と垂直二等分面 $x=y$ 上の点 $P(p,p,q)$ の空間配置}
+  \label{fig:points_oab_p_spatial_setup}
 \end{figure}
 
-\bigskip
+\paragraph{(1)}
 
-\noindent
+まず題意の条件$|\vec{PA}| = |\vec{PB}|$ から $P$ は線分 $AB$ の垂直2等分面 $x=y$ 上にあるので，実数$p,q$を用いて$P(p,p,q)$ と表せる．
+この時最後の条件$|\vec{PA}| = r |\vec{PO}|$について考えると
+\begin{align}
+  |\vec{PA}| = r |\vec{PO}| \iff |\vec{PA}|^2 &= r^2 |\vec{PO}|^2
+\end{align}
+に具体的な座標を代入して
+\begin{align}
+  & (p-1)^2 + p^2 + q^2 = r^2 (2p^2 + q^2) \\
+  & 2(1-r^2)p^2 - 2p + (1-r^2)q^2 + 1 = 0  \label{eq:2} \\
+  & 2(1-r^2)\left[ p - \dfrac{1}{2(1-r^2)} \right]^2 + (1-r^2)q^2 =  - 1 + \dfrac{1}{2(1-r^2)} \label{eq:3}
+\end{align}
+であるから，これを満たす$(p,q)$ の存在条件をしらべれば良い．
+
+\cref{eq:3}において\cref{eq:1}から左辺は$0$以上だから，右辺も$0$以上であることが必要である．逆にこの時\cref{eq:3}は楕円の方程式になって必ずこれを満たす$(p,q)$が存在して十分である．以上から求める$(p,q)$ の存在条件は\cref{eq:1}と合わせて
+\begin{align}
+  1 - \dfrac{1}{2(1-r^2)} \le 0 \iff \dfrac{\sqrt{2}}{2} \le r < 1 \label{eq:4}
+\end{align}
+である．
+
 \paragraph{(2)}
 
-②が満たされているとする． また $r \to 1-0$ をかんがえるので， $r$ は(1)の条件を満たすとして良い．
+$r$が(1)の条件を満たしているとして以下話を進める．$\vec{PA},\vec{PB}$の内積を計算すると
 \begin{align}
   \vec{PA} \cdot \vec{PB} &=
   \begin{pmatrix} 1-p \\ -p \\ -q
@@ -71,31 +105,101 @@ $|\vec{PA}| = |\vec{PB}|$ から， $P$ は線分 $AB$ の垂直2等分面 $x=y$
   \end{pmatrix} \\
   &= 2p(p-1) + q^2 \\
   &= 2p(p-1) + \left[ \dfrac{2}{1-r^2}p - \dfrac{1}{1-r^2} - 2p^2 \right] \\
-  &= \dfrac{2r^2}{1-r^2}p - \dfrac{1}{1-r^2} \quad \cdots \text{③}
+  &= \dfrac{2r^2}{1-r^2}p - \dfrac{1}{1-r^2} \label{eq:5}
 \end{align}
-ここで， ②から
+であるから，以下この最大最小について考える．
+
+\cref{eq:3}を$(p,q)$平面に図示すると以下のようになる．
+
+% TODO: (p,q)の図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.4, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・パラメータ設定 (r = 0.85 の場合) ---
+    % r^2 ≈ 0.7225 (1/sqrt(2) ≈ 0.707 < r < 1)
+    % 1 - r^2 ≈ 0.2775
+    % 2r^2 - 1 ≈ 0.445
+    % p0 = 1 / (2*(1-r^2)) ≈ 1.802
+    % 半径 a = sqrt(2r^2-1) / (2*(1-r^2)) ≈ 0.667 / 0.555 ≈ 1.201
+    % 半径 b = sqrt(2)*a ≈ 1.699
+    % 見やすい描画スケールに調整した値:
+    \def\pZero{2.1}   % 中心 p0
+    \def\semiA{1.2}   % p 軸方向半軸 a
+    \def\semiB{1.7}   % q 軸方向半軸 b = sqrt(2)*a
+
+    \coordinate (O)      at (0, 0);
+    \coordinate (Center) at (\pZero, 0);
+    \coordinate (P_left) at ({\pZero - \semiA}, 0);
+    \coordinate (P_right) at ({\pZero + \semiA}, 0);
+
+    % --- 2. 楕円内部のハッチング塗りつぶし ---
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.7]
+    (Center) ellipse [x radius=\semiA, y radius=\semiB];
+    \draw[very thick, blue!85!black]
+    (Center) ellipse [x radius=\semiA, y radius=\semiB];
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (4.0, 0) node[right] {$p$};
+    \draw[->, thick, gray!80!black] (0, -2.1) -- (0, 2.2) node[above] {$q$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 中心および半軸寸法の補助線 ---
+    % 垂直対称軸 p = p0
+    \draw[dashed, gray!60] (\pZero, -\semiB - 0.2) -- (\pZero, \semiB + 0.2);
+
+    % p 軸方向の半長 a
+    \draw[<->, thick, teal!85!black] (Center) -- (P_right);
+    \node[teal!90!black, font=\scriptsize, above] at ($ (Center)!0.5!(P_right) $) {$\frac{\sqrt{2r^2-1}}{2(1-r^2)}$};
+
+    % q 軸方向の半長 b
+    \draw[<->, thick, teal!85!black] (Center) -- (\pZero, \semiB);
+    \node[teal!90!black, font=\scriptsize, right] at ($ (Center)!0.5!(\pZero, \semiB) $) {$\frac{\sqrt{2r^2-1}}{\sqrt{2}(1-r^2)}$};
+
+    % --- 5. 範囲端点の境界破線とラベル ---
+    % p 最小点 a
+    \draw[dashed, red!85!black, thick] (P_left) -- ({\pZero - \semiA}, -1.8);
+    \node[below=3pt, font=\scriptsize, red!90!black, align=center] at (P_left)
+    {$p_{\min} = \frac{1-\sqrt{2r^2-1}}{2(1-r^2)}$};
+
+    % p 最大点 b
+    \draw[dashed, red!85!black, thick] (P_right) -- ({\pZero + \semiA}, -1.8);
+    \node[below=3pt, font=\scriptsize, red!90!black, align=center] at (P_right)
+    {$p_{\max} = \frac{1+\sqrt{2r^2-1}}{2(1-r^2)}$};
+
+    % 中心 p0
+    \node[above left=2pt, font=\scriptsize, black] at (Center)
+    {$p_0 = \frac{1}{2(1-r^2)}$};
+
+    % --- 6. 主要点のプロット ---
+    \fill[black] (Center) circle (1.2pt);
+    \fill[red!85!black] (P_left) circle (1.4pt);
+    \fill[red!85!black] (P_right) circle (1.4pt);
+
+  \end{tikzpicture}
+  \caption{$(p, q)$ 平面における楕円軌跡と $p$ の取りうる範囲}
+  \label{fig:pq_ellipse_trajectory}
+\end{figure}
+
+従って図から$p$のとりうる値は
 \begin{align}
-  p &= \dfrac{1}{2(1-r^2)}\left[ 1 \pm \sqrt{1 - 2(1-r^2)\left\{(1-r^2)q^2+1\right\}} \right] \\
-  &= \dfrac{1}{2(1-r^2)}\left[ 1 \pm \sqrt{2r^2-1 - 2(1-r^2)^2 q^2} \right]
+  \dfrac{1}{2(1-r^2)} \left[ 1 - \sqrt{2r^2-1} \right] \le p \le
+  \dfrac{1}{2(1-r^2)} \left[ 1 + \sqrt{2r^2-1} \right]
 \end{align}
-これを $\alpha, \beta$ ($\alpha \le \beta$) とすると， ①から
+だから，この両端を$p_{\min},p_{\max}$として\cref{eq:5}から
 \begin{align}
-  \begin{cases}
-    \max \beta = \dfrac{1}{2(1-r^2)} \left[ 1 + \sqrt{2r^2-1} \right] \equiv a \\
-    \min \alpha = \dfrac{1}{2(1-r^2)} \left[ 1 - \sqrt{2r^2-1} \right] \equiv b
-  \end{cases}
-\end{align}
-で， $b \le p \le a$ である． ②， ③から
-\begin{align}
-  M(r) - m(r) &= \dfrac{2r^2}{1-r^2}(a-b) \\
+  M(r) - m(r)
+  &= \dfrac{2r^2}{1-r^2}(p_{\max}-p_{\min}) \\
   &= \dfrac{2r^2 \cdot 2}{2(1-r^2)^2} \sqrt{2r^2-1}
 \end{align}
-だから
+となる．両辺に$1-r^2$をかけて$r\to 1-0$の極限を取ると
 \begin{align}
-  (1-r)^2 \{ M(r) - m(r) \} &= \dfrac{2(1-r)^2 r^2}{(1+r)^2(1-r)^2} \sqrt{2r^2-1} \\
-  &= 2 \left(\dfrac{r}{1+r}\right)^2 \sqrt{2r^2-1} \longrightarrow \dfrac{1}{2} \quad (r \to 1-0)
+  (1-r)^2 \{ M(r) - m(r) \}
+  &= \dfrac{2(1-r)^2 r^2}{(1+r)^2(1-r)^2} \sqrt{2r^2-1} \\
+  &= 2 \left(\dfrac{r}{1+r}\right)^2 \sqrt{2r^2-1} \\
+  \xrightarrow{r\to 1-0} \dfrac{1}{2}
 \end{align}
+である．
 
 \newpage
-
 \end{document}

@@ -1,0 +1,250 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+{\bf [解]}
+
+\paragraph{(1)}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.0cm, y=0.6cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・厳密パラメータ (a = -1/4) ---
+    % t_1 = (3 - 3/sqrt(2))/2 ≈ 0.4393,  t_2 = (3 + 3/sqrt(2))/2 ≈ 2.5607
+    % alpha = 7/4 - sqrt(2) ≈ 0.3358,    beta = 7/4 + sqrt(2) ≈ 3.1642
+    % delta = 1.75,                      y_int = 0.25
+    \pgfmathsetmacro{\tOne}{(3.0 - 3.0/sqrt(2.0)) / 2.0}
+    \pgfmathsetmacro{\tTwo}{(3.0 + 3.0/sqrt(2.0)) / 2.0}
+    \pgfmathsetmacro{\alphaVal}{1.75 - sqrt(2.0)}
+    \pgfmathsetmacro{\betaVal}{1.75 + sqrt(2.0)}
+
+    % 接点の y 座標
+    \pgfmathsetmacro{\yFtOne}{(8.0/27.0)*\tOne*\tOne*\tOne}
+    \pgfmathsetmacro{\yFtTwo}{(8.0/27.0)*\tTwo*\tTwo*\tTwo}
+    \pgfmathsetmacro{\yGAlpha}{(\alphaVal - 0.25)*(\alphaVal - 0.25)}
+    \pgfmathsetmacro{\yGBeta}{(\betaVal - 0.25)*(\betaVal - 0.25)}
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (P1)    at (\tOne, \yFtOne);
+    \coordinate (Q1)    at (\alphaVal, \yGAlpha);
+    \coordinate (P2)    at (\tTwo, \yFtTwo);
+    \coordinate (Q2)    at (\betaVal, \yGBeta);
+    \coordinate (Inter) at (1.75, 0.25);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.8, 0) -- (3.8, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.2) -- (0, 10.2) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 曲線 y = f(x) と y = g(x) ---
+    % y = f(x) = (8/27) x^3 (青太線)
+    \draw[line width=1.6pt, blue!85!black, domain=-0.7:3.2, samples=80]
+    plot (\x, {(8.0/27.0)*\x*\x*\x});
+    \node[blue!90!black, font=\footnotesize\bfseries, above left] at (3.2, 9.7)
+    {$y = f(x) = \frac{8}{27}x^3$};
+
+    % y = g(x) = (x - 1/4)^2 (紫太線)
+    \draw[line width=1.6pt, purple!85!black, domain=-0.7:3.35, samples=80]
+    plot (\x, {(\x - 0.25)*(\x - 0.25)});
+    \node[purple!90!black, font=\footnotesize\bfseries, above right] at (-0.7, 0.9)
+    {$y = g(x) = (x+a)^2$};
+
+    % --- 4. 共通接線 ---
+    % (i) 共通接線 l_{t1}: 傾き 3 - 2*sqrt(2) ≈ 0.1716 (赤)
+    \draw[line width=1.3pt, red!85!black, domain=-0.6:3.6]
+    plot (\x, {(3.0 - 2.0*sqrt(2.0))*(\x - 1.75) + 0.25});
+    \node[red!90!black, font=\scriptsize, above right] at (2.4, 0.5) {$\ell_{t_1}(x)$};
+
+    % (ii) 共通接線 l_{t2}: 傾き 3 + 2*sqrt(2) ≈ 5.8284 (青緑)
+    \draw[line width=1.3pt, teal!85!black, domain=1.45:3.35]
+    plot (\x, {(3.0 + 2.0*sqrt(2.0))*(\x - 1.75) + 0.25});
+    \node[teal!95!black, font=\scriptsize, right] at (3.1, 8.2) {$\ell_{t_2}(x)$};
+
+    % (iii) 自明な共通接線 y = 0 (x 軸, t=0)
+    \node[gray!70!black, font=\tiny, below=2pt] at (0.25, 0) {$t=0$ での接線};
+
+    % --- 5. 接点のプロットと投影破線 ---
+    % 接線 l_{t1} 上の接点
+    \fill[red!85!black] (P1) circle (1.2pt) node[below=2pt, font=\tiny, red!90!black] {$P_1(t_1)$};
+    \fill[red!85!black] (Q1) circle (1.2pt) node[above=2pt, font=\tiny, red!90!black] {$Q_1(\alpha)$};
+
+    % 接線 l_{t2} 上の接点
+    \fill[teal!85!black] (P2) circle (1.2pt) node[left=2pt, font=\tiny, teal!90!black] {$P_2(t_2)$};
+    \fill[teal!85!black] (Q2) circle (1.2pt) node[right=2pt, font=\tiny, teal!90!black] {$Q_2(\beta)$};
+
+    % 放物線の頂点 (1/4, 0)
+    \fill (0.25, 0) circle (0.8pt) node[below=2pt, font=\scriptsize] {$-a$};
+
+  \end{tikzpicture}
+  \caption{3次関数 $y=f(x)$ と放物線 $y=g(x)$，および共通接線 $\ell_{t_1}, \ell_{t_2}$}
+  \label{fig:common_tangents_f_and_g}
+\end{figure}
+
+与えられた二つの関数を
+\begin{align}
+  \begin{cases}
+    f(x)=\dfrac{8}{27}x^3 \\
+    g(x)=(x+a)^2
+  \end{cases} \label{eq:1}
+\end{align}
+とおく．
+$y=f(x)$の$x=t$における接線は，$f'(x)=\dfrac{8}{9}x^2$より，
+\begin{align}
+  y=\ell_t(x)=\dfrac{8}{9}t^2x-\dfrac{16}{27}t^3 \label{eq:2}
+\end{align}
+と書ける．これが$y=g(x)$にも接するとき，連立した$\ell_t(x)=g(x)$は$x$について重解をもつ．
+\begin{align}
+  & g(x) = \ell_t(x) \\
+  & (x+a)^2=\dfrac{8}{9}t^2x-\dfrac{16}{27}t^3，\\
+  & x^2+2\left(a-\dfrac{4}{9}t^2\right)x+a^2+\dfrac{16}{27}t^3=0 \label{eq:3}
+\end{align}
+の判別式を$D$として，
+\begin{align}
+  \dfrac{D}{4}
+  &=\left(a-\dfrac{4}{9}t^2\right)^2
+  -\left(a^2+\dfrac{16}{27}t^3\right)\\
+  &=\dfrac{16}{81}t^4-\dfrac{16}{27}t^3-\dfrac{8}{9}at^2=0 \label{eq:4}
+\end{align}
+となる．$y=\ell_t(x)$が$x$軸であることは$t=0$と同値であり，また3次関数では異なる接点$t$における接線は異なる．したがって求める条件は，\cref{eq:4}を満たす$t\ne 0$がちょうど2つあることである．$t\ne0$として両辺$t^2$で割ると，
+\begin{align}
+  \dfrac{16}{81}t^2-\dfrac{16}{27}t-\dfrac{8}{9}a&=0，\\
+  2t^2-6t-9a&=0 \label{eq:5}
+\end{align}
+を得る．この2次方程式が異なる2つの非零実数解をもつ条件は，判別式$D'$として
+\begin{align}
+  \begin{cases}
+    \text{判別式}: D' > 0 \\
+    \text{非零}: a \neq 0
+  \end{cases}
+  \begin{cases}
+    9+18a>0，\\
+    a\ne0
+  \end{cases}
+  \therefore
+  \begin{cases}
+    a>-\dfrac{1}{2} \\
+    a\ne0
+  \end{cases} \label{eq:6}
+\end{align}
+である．
+
+\paragraph{(2)}
+
+\cref{eq:4}の2解を$t_1,t_2$（$t_1<t_2$）とすると，2接線の方程式は\cref{eq:2}より
+\begin{align}
+  y=\ell_{t_k}(x)=\dfrac{8}{9}t_k^2x-\dfrac{16}{27}t_k^3
+  \qquad(k=1,2) \label{eq:7}
+\end{align}
+である．これらと放物線$y=g(x)$との接点の$x$座標を順に$\alpha,\beta$とすると，
+\cref{eq:3}の重解だから，
+\begin{align}
+  \alpha=\dfrac{4}{9}t_1^2-a，\qquad
+  \beta=\dfrac{4}{9}t_2^2-a \label{eq:8}
+\end{align}
+である．また，$y=\ell_{t_1}(x)$と$y=\ell_{t_2}(x)$の交点の$x$座標を$\delta$とすると，放物線の接線の性質から
+\begin{align}
+  \delta=\dfrac{\alpha+\beta}{2} \label{eq:9}
+\end{align}
+となる．
+$t_1<t_2$より$\alpha<\beta$であり，グラフの概形は下図のようになる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=0.65cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・厳密パラメータ ---
+    \pgfmathsetmacro{\alphaVal}{1.75 - sqrt(2.0)} % ≈ 0.3358
+    \pgfmathsetmacro{\betaVal}{1.75 + sqrt(2.0)}  % ≈ 3.1642
+    \def\deltaVal{1.75}
+
+    \pgfmathsetmacro{\yAlpha}{(\alphaVal - 0.25)*(\alphaVal - 0.25)} % ≈ 0.0074
+    \pgfmathsetmacro{\yBeta}{(\betaVal - 0.25)*(\betaVal - 0.25)}   % ≈ 8.4926
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (Pt_A)  at (\alphaVal, \yAlpha);
+    \coordinate (Pt_B)  at (\betaVal, \yBeta);
+    \coordinate (Pt_D)  at (\deltaVal, 0.25);
+
+    % --- 2. 面積 S (斜線部) のハッチング塗りつぶし ---
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75]
+    plot[domain=\alphaVal:\betaVal, samples=70] (\x, {(\x - 0.25)*(\x - 0.25)})
+    -- (Pt_D) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.5, 0) -- (3.8, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.2) -- (0, 10.5) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 放物線 y = g(x) = (x - 1/4)^2 ---
+    \draw[line width=1.8pt, blue!85!black, domain=-0.3:3.45, samples=80]
+    plot (\x, {(\x - 0.25)*(\x - 0.25)});
+    \node[blue!90!black, font=\footnotesize\bfseries, above] at (3.35, 9.8) {$y = g(x)$};
+
+    % --- 5. 2本の接線 ---
+    % l_{t1}(x): 接点 (alpha, g(alpha)), 交点 (delta, 0.25)
+    \draw[very thick, red!85!black, domain=-0.2:3.2]
+    plot (\x, {(3.0 - 2.0*sqrt(2.0))*(\x - 1.75) + 0.25});
+    \node[red!90!black, font=\footnotesize, above right] at (2.4, 0.5) {$y = \ell_{t_1}(x)$};
+
+    % l_{t2}(x): 接点 (beta, g(beta)), 交点 (delta, 0.25)
+    \draw[very thick, teal!85!black, domain=1.45:3.45]
+    plot (\x, {(3.0 + 2.0*sqrt(2.0))*(\x - 1.75) + 0.25});
+    \node[teal!95!black, font=\footnotesize, right] at (3.35, 9.6) {$y = \ell_{t_2}(x)$};
+
+    % --- 6. 投影破線と目盛り ---
+    % x = alpha
+    \draw[dashed, gray!60] (\alphaVal, 0) -- (Pt_A);
+    \node[below=2pt, font=\scriptsize] at (\alphaVal, 0) {$\alpha$};
+
+    % x = delta (交点)
+    \draw[dashed, gray!60] (\deltaVal, 0) -- (Pt_D);
+    \node[below=2pt, font=\scriptsize] at (\deltaVal, 0) {$\delta = \frac{\alpha+\beta}{2}$};
+
+    % x = beta
+    \draw[dashed, gray!60] (\betaVal, 0) -- (Pt_B);
+    \node[below=2pt, font=\scriptsize] at (\betaVal, 0) {$\beta$};
+
+    % --- 7. 主要点プロット ---
+    \fill[red!85!black]  (Pt_A) circle (1.3pt) node[above left=1pt, font=\scriptsize] {$(\alpha, g(\alpha))$};
+    \fill[teal!85!black] (Pt_B) circle (1.3pt) node[above left=1pt, font=\scriptsize] {$(\beta, g(\beta))$};
+    \fill[black]         (Pt_D) circle (1.3pt);
+
+    % 領域ラベル S
+    \node[draw=blue!85!black, rounded corners=2pt, inner sep=2.5pt, font=\normalsize\bfseries, blue!90!black]
+    at (2.05, 1.6) {$S$};
+
+  \end{tikzpicture}
+  \caption{放物線 $y=g(x)$ と2接線で囲まれた面積 $S$}
+  \label{fig:parabola_two_tangents_area}
+\end{figure}
+
+求める面積$S$は斜線部だから，
+\begin{align}
+  S&=\int_\alpha^\delta\{g(x)-\ell_{t_1}(x)\}\,dx
+  +\int_\delta^\beta\{g(x)-\ell_{t_2}(x)\}\,dx\\
+  &=\int_\alpha^\delta(x-\alpha)^2\,dx
+  +\int_\delta^\beta(x-\beta)^2\,dx\\
+  &=\dfrac{1}{12}(\beta-\alpha)^3
+  \qquad\left(\because\cref{eq:9}\right)\\
+  &=\dfrac{1}{12}\left\{\dfrac{4}{9}(t_2^2-t_1^2)\right\}^3
+  \qquad\left(\because\cref{eq:8}\right)\\
+  &=\dfrac{4^2}{3^7}(t_2^2-t_1^2)^3 \label{eq:10}
+\end{align}
+となる．
+
+ここで，$t_1,t_2$は\cref{eq:5}の解だから，
+\begin{align}
+  t_k^2=3t_k+\dfrac{9}{2}a\qquad(k=1,2)
+\end{align}
+および$t_1<t_2$より
+\begin{align}
+  t_2-t_1=\sqrt{9+18a}=3\sqrt{1+2a}
+\end{align}
+を満たす．これらを\cref{eq:10}に代入して，
+\begin{align}
+  S&=\dfrac{4^2}{3^7}\{3(t_2-t_1)\}^3\\
+  &=\dfrac{16}{3}(1+2a)^{\frac{3}{2}}
+\end{align}
+を得る．
+
+\end{document}

@@ -1,16 +1,84 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 \paragraph{(1)}
 
-$\triangle OAB$ の中点を $M$ とする． $MC = \dfrac{\sqrt{3}}{2} AB$ 及び $MC \perp AB$ だから， $\vec{AB} =
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ (a = 0.85, b = 0.65) ---
+    \def\aVal{0.85}
+    \def\bVal{0.65}
+
+    % C = ( (a + sqrt(3)*b)/2, (b + sqrt(3)*a)/2 )
+    \pgfmathsetmacro{\xC}{(\aVal + sqrt(3.0)*\bVal)/2.0}
+    \pgfmathsetmacro{\yC}{(\bVal + sqrt(3.0)*\aVal)/2.0}
+
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (\aVal, 0);
+    \coordinate (B) at (0, \bVal);
+    \coordinate (C) at (\xC, \yC);
+    \coordinate (M) at ({\aVal/2.0}, {\bVal/2.0});
+
+    % --- 2. 単位正方形領域 D: [0, 1] x [0, 1] (背景) ---
+    \fill[gray!6, opacity=0.8] (0, 0) rectangle (1.2, 1.2);
+    \draw[dashed, gray!60, thick] (0, 0) rectangle (1.0, 1.0);
+    \node[gray!75!black, font=\scriptsize] at (1.05, 0.95) {領域 $D$};
+    \node[below=2pt, font=\scriptsize, gray!80!black] at (1.0, 0) {$1$};
+    \node[left=2pt, font=\scriptsize, gray!80!black]  at (0, 1.0) {$1$};
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.2, 0) -- (1.4, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 1.35) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 三角形の塗りつぶしと輪郭線 ---
+    % 直角三角形 OAB
+    \fill[teal!12, opacity=0.7] (O) -- (A) -- (B) -- cycle;
+    \draw[thick, teal!85!black] (O) -- (A) node[midway, below=1pt] {$a$};
+    \draw[thick, teal!85!black] (O) -- (B) node[midway, left=1pt] {$b$};
+
+    % 正三角形 ABC
+    \fill[blue!15, opacity=0.65] (A) -- (B) -- (C) -- cycle;
+    \draw[very thick, blue!85!black] (A) -- (B) -- (C) -- cycle;
+
+    % 中線 MC (高さ: MC ⊥ AB)
+    \draw[dashed, red!80!black, thick] (M) -- (C);
+    \node[red!90!black, font=\scriptsize, above left] at ($ (M)!0.45!(C) $) {$\frac{\sqrt{3}}{2}AB$};
+
+    % --- 5. 直角記号 ---
+    % O における直角 (OA ⊥ OB)
+    \draw[thin, gray!70] (0.08, 0) -- (0.08, 0.08) -- (0, 0.08);
+
+    % M における直角 (MC ⊥ AB)
+    % AB の方向角
+    \pgfmathsetmacro{\angAB}{atan2(\bVal, -\aVal)} % B - A
+    \coordinate (sqM1) at ($ (M) + ({\angAB}:0.07) $);
+    \coordinate (sqM2) at ($ (sqM1) + ({\angAB - 90}:0.07) $);
+    \coordinate (sqM3) at ($ (M) + ({\angAB - 90}:0.07) $);
+    \draw[thin, gray!70] (sqM1) -- (sqM2) -- (sqM3);
+
+    % --- 6. 主要点のプロットとラベル ---
+    \fill[black] (O) circle (0.7pt);
+    \fill[teal!85!black] (A) circle (1.0pt) node[below=2pt] {$A(a,0)$};
+    \fill[teal!85!black] (B) circle (1.0pt) node[left=2pt] {$B(0,b)$};
+    \fill[red!85!black]  (M) circle (0.8pt) node[below left=-1pt, red!90!black, font=\scriptsize] {$M$};
+    \fill[blue!85!black] (C) circle (1.2pt) node[above right=1pt, blue!90!black]
+    {$C\left(\frac{a+\sqrt{3}b}{2}, \frac{b+\sqrt{3}a}{2}\right)$};
+
+  \end{tikzpicture}
+  \caption{正三角形 $\triangle ABC$と領域$D$}
+  \label{fig:triangle_abc_setup}
+\end{figure}
+
+題意の点$A(a,0),B(0,b)$の中点を $M$ とすると，正三角形の性質から
+$|MC| = \dfrac{\sqrt{3}}{2} AB$ 及び $|MC| \perp |AB|$ だから，
+$\vec{AB} =
 \begin{pmatrix} -a \\ b
-\end{pmatrix}$ より
+\end{pmatrix}$
+より
 \begin{align}
   \vec{MC} &= \pm \dfrac{\sqrt{3}}{2}
   \begin{pmatrix} b \\ a
@@ -28,89 +96,170 @@ $\triangle OAB$ の中点を $M$ とする． $MC = \dfrac{\sqrt{3}}{2} AB$ 及�
   \begin{pmatrix} a \pm \sqrt{3}b \\ b \pm \sqrt{3}a
   \end{pmatrix} \quad (\text{複号同順})
 \end{align}
-$C$ は第1象限の点だから， 複号正を採用して， $C\left(\dfrac{a + \sqrt{3}b}{2}, \dfrac{b + \sqrt{3}a}{2}\right)$ である． $\triangle ABC$ が $D$ に含まれるには， $A, B, C$ が $D$ に含まれていれば良い． $a, b > 0$ とあわせて，
+である．
+
+題意より$C$ は第1象限の点だから複号正を採用して，
+$C\left(\dfrac{a + \sqrt{3}b}{2}, \dfrac{b + \sqrt{3}a}{2}\right)$ である．
+$\triangle ABC$ が $D$ に含まれるには， $A, B, C$ が $D$ に含まれていれば良い．
+$a, b > 0$ とあわせてこのような条件は
 \begin{align}
   \begin{cases}
     0 < a \le 1, \quad 0 < b \le 1 \\
     0 \le a + \sqrt{3}b \le 2, \quad 0 \le b + \sqrt{3}a \le 2
-  \end{cases} \quad \cdots *
+  \end{cases} \label{eq:1}
 \end{align}
-これを図示して， 右図斜線部 (境界含む， が軸除く)．
+である．これを図示して求めるのは下図斜線部である．ただし境界は含むが軸は除く．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=4, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・厳密な交点座標パラメータ ---
+    % sqrt(3) ≈ 1.73205
+    % 2 - sqrt(3) ≈ 0.26795
+    % sqrt(3) - 1 ≈ 0.73205
+    \pgfmathsetmacro{\sqThree}{sqrt(3.0)}
+    \pgfmathsetmacro{\twoMinusSq}{2.0 - \sqThree}  % ≈ 0.268
+    \pgfmathsetmacro{\sqMinusOne}{\sqThree - 1.0}  % ≈ 0.732
+
+    % 領域の頂点座標
+    \coordinate (O)  at (0, 0);
+    \coordinate (P1) at (0, 1.0);
+    \coordinate (P2) at (\twoMinusSq, 1.0);
+    \coordinate (P3) at (\sqMinusOne, \sqMinusOne);
+    \coordinate (P4) at (1.0, \twoMinusSq);
+    \coordinate (P5) at (1.0, 0);
+
+    % (2) で最大距離を与える円弧の半径 R_max = sqrt(8 - 4*sqrt(3)) = sqrt(6) - sqrt(2) ≈ 1.035
+    \pgfmathsetmacro{\radMax}{sqrt(8.0 - 4.0*\sqThree)}
+
+    % --- 2. 求める領域のハッチング塗りつぶし (境界含む、軸除く) ---
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75]
+    (O) -- (P1) -- (P2) -- (P3) -- (P4) -- (P5) -- cycle;
+
+    % 境界線 (実線: 領域に含まれる境界)
+    \draw[very thick, blue!85!black] (P1) -- (P2) -- (P3) -- (P4) -- (P5);
+
+    % 除外される軸境界 (a=0, b=0 は含まないため破線)
+    \draw[thick, dashed, red!70!black] (O) -- (P1);
+    \draw[thick, dashed, red!70!black] (O) -- (P5);
+
+    % --- 3. 境界直線の延長（参考破線）---
+    % a + sqrt(3)b = 2 <=> b = (2 - a)/sqrt(3)
+    \draw[thick, gray!55, dashed, domain=0.1:1.35] plot (\x, {(2.0 - \x)/\sqThree});
+    \node[gray!85!black, font=\scriptsize, above right] at (1.1, {(2.0 - 1.1)/\sqThree})
+    {$a + \sqrt{3}b = 2$};
+
+    % sqrt(3)a + b = 2 <=> b = 2 - sqrt(3)a
+    \draw[thick, gray!55, dashed, domain=0.45:1.15] plot (\x, {2.0 - \sqThree*\x});
+    \node[gray!85!black, font=\scriptsize, above right] at (0.45, {2.0 - \sqThree*0.45})
+    {$\sqrt{3}a + b = 2$};
+
+    % 正方形枠 a <= 1, b <= 1 の補助破線
+    \draw[dashed, gray!45] (1.0, 0) -- (1.0, 1.2);
+    \draw[dashed, gray!45] (0, 1.0) -- (1.2, 1.0);
+
+    % --- 4. (2) 最大値を与える等高線円弧 a^2 + b^2 = 8 - 4*sqrt(3) ---
+    \draw[thick, orange!90!black, dash pattern=on 3pt off 2pt]
+    (\radMax, 0) arc[start angle=0, end angle=90, radius=\radMax];
+    \node[orange!95!black, font=\scriptsize, above right] at (0.78, 0.78)
+    {$a^2 + b^2 = 8 - 4\sqrt{3}$};
+
+    % --- 5. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.15, 0) -- (1.5, 0) node[right] {$a$};
+    \draw[->, thick, gray!80!black] (0, -0.15) -- (0, 1.45) node[above] {$b$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 6. 座標投影破線と目盛り ---
+    % 2 - sqrt(3)
+    \draw[dotted, gray!60] (0, \twoMinusSq) -- (P4);
+    \draw[dotted, gray!60] (\twoMinusSq, 0) -- (P2);
+    \node[left=2pt, font=\scriptsize]  at (0, \twoMinusSq) {$2-\sqrt{3}$};
+    \node[below=2pt, font=\scriptsize] at (\twoMinusSq, 0) {$2-\sqrt{3}$};
+
+    % sqrt(3) - 1
+    \draw[dotted, gray!60] (0, \sqMinusOne) -- (P3) -- (\sqMinusOne, 0);
+    \node[left=2pt, font=\scriptsize]  at (0, \sqMinusOne) {$\sqrt{3}-1$};
+    \node[below=2pt, font=\scriptsize] at (\sqMinusOne, 0) {$\sqrt{3}-1$};
+
+    % 1
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[left=2pt, font=\scriptsize]  at (0, 1.0) {$1$};
+
+    % --- 7. 主要頂点のプロット ---
+    \fill[blue!90!black] (P2) circle (1.1pt);
+    \fill[blue!90!black] (P3) circle (1.1pt);
+    \fill[blue!90!black] (P4) circle (1.1pt);
+
+    \node[above right=1pt, font=\scriptsize, blue!95!black] at (P2) {$(2-\sqrt{3}, 1)$};
+    \node[above right=1pt, font=\scriptsize, blue!95!black] at (P3) {$(\sqrt{3}-1, \sqrt{3}-1)$};
+    \node[above right=1pt, font=\scriptsize, blue!95!black] at (P4) {$(1, 2-\sqrt{3})$};
+
+    % 境界に含まれない端点（軸との交点・原点は白抜き丸）
+    \draw[thick, red!85!black, fill=white] (O)  circle (1.1pt);
+    \draw[thick, blue!85!black, fill=white] (P1) circle (1.1pt);
+    \draw[thick, blue!85!black, fill=white] (P5) circle (1.1pt);
+
+  \end{tikzpicture}
+  \caption{条件を満たす $(a,b)$ の存在領域および $a^2+b^2$ の最大値を与える頂点}
+  \label{fig:ab_parameter_region}
+\end{figure}
 
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[scale=2.0, >=stealth]
-    % First diagram: Triangle ABC
-    \begin{scope}[xshift=-2.5cm]
-      \draw[->] (-0.2,0) -- (1.5,0) node[right] {$x$};
-      \draw[->] (0,-0.2) -- (1.5,0) node[above] {$y$};
-      \node[below left] at (0,0) {$O$};
-      \coordinate (A) at (1,0);
-      \coordinate (B) at (0,0.8);
-      \coordinate (M) at (0.5,0.4);
-      \coordinate (C) at (1.1928, 1.266); % ( (1+sqrt(3)*0.8)/2, (0.8+sqrt(3)*1)/2 )
-      \draw[thick] (0,0) -- (A) node[below] {$A$} -- (B) node[left] {$B$} -- cycle;
-      \draw[thick] (A) -- (C) node[above right] {$C$} -- (B);
-      \draw[dashed] (M) -- (C);
-      \node[below right] at (M) {$M$};
-      \node[below] at (0.5,0) {$a$};
-      \node[left] at (0,0.4) {$b$};
-    \end{scope}
-
     % Second diagram: Region for (a,b)
-    \begin{scope}[xshift=1.5cm]
-      \draw[->] (-0.2,0) -- (1.6,0) node[right] {$a$};
-      \draw[->] (0,-0.2) -- (1.6,0) node[above] {$b$};
-      \node[below left] at (0,0) {$O$};
+    \draw[->] (-0.2,0) -- (1.6,0) node[right] {$a$};
+    \draw[->] (0,-0.2) -- (1.6,0) node[above] {$b$};
+    \node[below left] at (0,0) {$O$};
 
-      % Lines
-      \draw[dashed] (1,0) node[below] {$1$} -- (1,1.2);
-      \draw[dashed] (0,1) node[left] {$1$} -- (1.2,1);
+    % Lines
+    \draw[dashed] (1,0) node[below] {$1$} -- (1,1.2);
+    \draw[dashed] (0,1) node[left] {$1$} -- (1.2,1);
 
-      % Boundaries b = 2 - sqrt(3)*a and b = (2-a)/sqrt(3)
-      \draw[thick, domain=0.577:1.1547] plot (\x, {2 - 1.732*\x});
-      \draw[thick, domain=0.2:1.1547] plot (\x, {(2 - \x)/1.732});
+    % Boundaries b = 2 - sqrt(3)*a and b = (2-a)/sqrt(3)
+    \draw[thick, domain=0.577:1.1547] plot (\x, {2 - 1.732*\x});
+    \draw[thick, domain=0.2:1.1547] plot (\x, {(2 - \x)/1.732});
 
-      % Intersection points
-      % (1, 2-sqrt(3)) = (1, 0.268)
-      % (2-sqrt(3), 1) = (0.268, 1)
-      % (sqrt(3)-1, sqrt(3)-1) = (0.732, 0.732)
+    % Intersection points
+    % (1, 2-sqrt(3)) = (1, 0.268)
+    % (2-sqrt(3), 1) = (0.268, 1)
+    % (sqrt(3)-1, sqrt(3)-1) = (0.732, 0.732)
 
-      \fill[pattern=north east lines, pattern color=gray!60]
-      (0,0) -- (0,1) -- (0.268,1) -- (0.732,0.732) -- (1,0.268) -- (1,0) -- cycle;
+    \fill[pattern=north east lines, pattern color=gray!60]
+    (0,0) -- (0,1) -- (0.268,1) -- (0.732,0.732) -- (1,0.268) -- (1,0) -- cycle;
 
-      \draw[thick] (0,0) -- (0,1) -- (0.268,1) -- (0.732,0.732) -- (1,0.268) -- (1,0) -- cycle;
+    \draw[thick] (0,0) -- (0,1) -- (0.268,1) -- (0.732,0.732) -- (1,0.268) -- (1,0) -- cycle;
 
-      \filldraw (0.268,1) circle (1pt) node[above right] {$(2-\sqrt{3}, 1)$};
-      \filldraw (0.732,0.732) circle (1pt) node[above right] {$(\sqrt{3}-1, \sqrt{3}-1)$};
-      \filldraw (1,0.268) circle (1pt) node[right] {$(1, 2-\sqrt{3})$};
+    \filldraw (0.268,1) circle (1pt) node[above right] {$(2-\sqrt{3}, 1)$};
+    \filldraw (0.732,0.732) circle (1pt) node[above right] {$(\sqrt{3}-1, \sqrt{3}-1)$};
+    \filldraw (1,0.268) circle (1pt) node[right] {$(1, 2-\sqrt{3})$};
 
-      \node[left] at (0, 0.268) {$2-\sqrt{3}$};
-      \draw[dotted] (0,0.268) -- (1,0.268);
-      \node[below] at (0.268, 0) {$2-\sqrt{3}$};
-      \draw[dotted] (0.268,0) -- (0.268,1);
+    \node[left] at (0, 0.268) {$2-\sqrt{3}$};
+    \draw[dotted] (0,0.268) -- (1,0.268);
+    \node[below] at (0.268, 0) {$2-\sqrt{3}$};
+    \draw[dotted] (0.268,0) -- (0.268,1);
 
-      \node[right] at (1.1, 0.5) {$b = \frac{\sqrt{3}}{3}(2-a)$};
-      \node[right] at (0.6, 1.3) {$b = 2 - \sqrt{3}a$};
-    \end{scope}
+    \node[right] at (1.1, 0.5) {$b = \frac{\sqrt{3}}{3}(2-a)$};
+    \node[right] at (0.6, 1.3) {$b = 2 - \sqrt{3}a$};
   \end{tikzpicture}
-  \caption{三角形$ABC$の作図と条件を満たす$(a,b)$の存在領域}
+  \caption{条件を満たす$(a,b)$の存在領域}
 \end{figure}
 
-\bigskip
-
-\noindent
 \paragraph{(2)}
 
-$\triangle ABC$ の一辺は $\sqrt{a^2+b^2}$ だから
+$\triangle ABC$ の一辺は $\sqrt{a^2+b^2}$ だからこの面積は
 \begin{align}
-  S &= \dfrac{\sqrt{3}}{4}(a^2+b^2) \quad \cdots \text{①}
+  S &= \dfrac{\sqrt{3}}{4}(a^2+b^2) \label{eq:2}
 \end{align}
-となり， $a^2+b^2$ ($\equiv T$ とする)が最大の時 $S$ も最大． $T$ は $(a,b)$ と $(0,0)$ の距離の2乗に等しく， (1)の図から， 最大値の候補は $(1, 2-\sqrt{3})$， $(2-\sqrt{3}, 1)$， $(\sqrt{3}-1, \sqrt{3}-1)$ であり， 各々について $T$ を計算すると， 順に $8-4\sqrt{3}$， $8-4\sqrt{3}$， $8-4\sqrt{3}$ で全て等しいので， ①に代入して
+となり， $a^2+b^2$ ($\equiv T$ とする)が最大の時 $S$ も最大である．
+$T$ は $(a,b)$ と $(0,0)$ の距離の2乗に等しく，(1)の$ab$平面の領域図から，
+最大値の候補は領域の頂点 $(1, 2-\sqrt{3})$， $(2-\sqrt{3}, 1)$， $(\sqrt{3}-1, \sqrt{3}-1)$ である．
+各々について $T$ を計算すると， 順に $8-4\sqrt{3}$， $8-4\sqrt{3}$， $8-4\sqrt{3}$ で全て等しいので\cref{eq:2}に代入して求める最大値は
 \begin{align}
   \max S &= -3 + 2\sqrt{3}
 \end{align}
-この時， $(a,b) = (1, 2-\sqrt{3}), (2-\sqrt{3}, 1), (\sqrt{3}-1, \sqrt{3}-1)$ である．
+である．この時 $(a,b) = (1, 2-\sqrt{3}), (2-\sqrt{3}, 1), (\sqrt{3}-1, \sqrt{3}-1)$ である．
 
 \newpage
 
