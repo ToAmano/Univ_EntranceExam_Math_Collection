@@ -8,6 +8,8 @@ AGENT.md 8.3.6「LaTeX フォーマットの注意事項」を機械的にチェ
 ラベリング目的か場合分け目的か等）は対象外。
 違反が1件でもあれば exit code 1 で終了する（\\overline{} の使用と align 内の長い行のみ警告扱いで非ブロッキング）。
 """
+import argparse
+import difflib
 import re
 import sys
 from pathlib import Path
@@ -434,6 +436,79 @@ def check_left_right_balance(text):
     return errors
 
 
+def fix_text(raw):
+    """Apply only punctuation and fraction-style fixes; preserve opaque TeX regions."""
+    if LINT_SKIP_RE.search(raw):
+        return raw
+    masked = list(strip_comments(raw))
+
+    def protect(start, end):
+        masked[start:end] = ' ' * (end - start)
+
+    # Scan original text in order so commands inside verbatim/comments are ignored.
+    token = re.compile(
+        r'\\begin\{(verbatim\*?|Verbatim|lstlisting|minted)\}'
+        r'|\\verb\*?([^a-zA-Z\s])'
+        r'|\\(?:newcommand|renewcommand|providecommand|DeclareRobustCommand|def|gdef|edef|xdef)\b'
+        r'|\\(?:url|path|href|label|ref|eqref|cref|Cref|input|include|includegraphics|texttt)\b')
+    pos = 0
+    while True:
+        m = token.search(''.join(masked), pos)
+        if not m:
+            break
+        end = m.end()
+        if m.group(1):
+            closing = raw.find('\\end{' + m.group(1) + '}', end)
+            end = len(raw) if closing < 0 else closing + len('\\end{' + m.group(1) + '}')
+        elif m.group(2):
+            closing = raw.find(m.group(2), end)
+            end = len(raw) if closing < 0 else closing + 1
+        elif re.match(r'\\(?:newcommand|renewcommand|providecommand|DeclareRobustCommand|[egx]?def)\b', m.group()):
+            # Conservatively keep whole definition lines, including multiline bodies.
+            brace = raw.find('{', end)
+            end = extract_braced(raw, brace)[1] if brace >= 0 else end
+            # newcommand's first group can be the macro name; preserve its body too.
+            if (not re.match(r'\\[egx]?def\b', m.group())
+                    and raw[m.end():brace].strip() in ('', '*')):
+                while end < len(raw) and raw[end].isspace():
+                    end += 1
+                while end < len(raw) and raw[end] == '[':
+                    closing = raw.find(']', end)
+                    if closing < 0:
+                        end = len(raw)
+                        break
+                    end = closing + 1
+                    while end < len(raw) and raw[end].isspace():
+                        end += 1
+                if end < len(raw) and raw[end] == '{':
+                    end = extract_braced(raw, end)[1]
+        else:
+            while end < len(raw) and raw[end].isspace():
+                end += 1
+            if end < len(raw) and raw[end] == '[':
+                closing = raw.find(']', end)
+                end = len(raw) if closing < 0 else closing + 1
+                while end < len(raw) and raw[end].isspace():
+                    end += 1
+            if end < len(raw) and raw[end] == '{':
+                end = extract_braced(raw, end)[1]
+        protect(m.start(), end)
+        pos = end
+
+    text = ''.join(masked)
+    edits = [(m.start(), m.end(), {'。': '．', '、': '，'}[m.group()])
+             for m in re.finditer('[。、]', text)]
+    spans = find_frac_exempt_spans(text)
+    for m in FRAC_CMD_RE.finditer(text):
+        inside = any(a <= m.start() < b for a, b in spans)
+        replacement = r'\frac' if inside else r'\dfrac'
+        if m.group() != replacement:
+            edits.append((m.start(), m.end(), replacement))
+    for start, end, replacement in sorted(edits, reverse=True):
+        raw = raw[:start] + replacement + raw[end:]
+    return raw
+
+
 def lint_file(path):
     raw = path.read_text(encoding='utf-8')
     skip_m = LINT_SKIP_RE.search(raw)
@@ -459,11 +534,19 @@ def lint_file(path):
 
 
 def main():
-    only_changed = None
-    if len(sys.argv) > 1:
-        only_changed = set(Path(p).resolve() for p in sys.argv[1:])
-
-    targets = sorted(SRC_DIR.rglob('*.tex'))
+    parser = argparse.ArgumentParser(description=__doc__)
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--fix', action='store_true', help='Apply mechanical style fixes, then lint')
+    mode.add_argument('--diff', action='store_true', help='Preview mechanical fixes without writing')
+    parser.add_argument('files', nargs='*')
+    args = parser.parse_args()
+    if (args.fix or args.diff) and not args.files:
+        parser.error('--fix/--diff requires explicit file paths')
+    targets = sorted(set(Path(p).resolve() for p in args.files)) if args.files else sorted(SRC_DIR.rglob('*.tex'))
+    for path in targets:
+        if not path.is_file():
+            parser.error(f'file not found: {path}')
+    differences = False
     total_errors = 0
     total_warnings = 0
     files_checked = 0
@@ -471,11 +554,26 @@ def main():
     for path in targets:
         if path.name not in ('solution.tex', 'problem.tex'):
             continue
-        if only_changed is not None and path.resolve() not in only_changed:
-            continue
+        if args.fix or args.diff:
+            with path.open(encoding='utf-8', newline='') as stream:
+                original = stream.read()
+            fixed = fix_text(original)
+            if original != fixed:
+                differences = True
+                if args.diff:
+                    print(''.join(difflib.unified_diff(
+                        original.splitlines(keepends=True), fixed.splitlines(keepends=True),
+                        fromfile=str(path), tofile=str(path))), end='')
+                else:
+                    with path.open('w', encoding='utf-8', newline='') as stream:
+                        stream.write(fixed)
+                    print(f'Fixed: {path}')
         files_checked += 1
         errors, warnings, skip_reason = lint_file(path)
-        rel = path.relative_to(REPO_ROOT)
+        try:
+            rel = path.relative_to(REPO_ROOT)
+        except ValueError:
+            rel = path
         if skip_reason is not None:
             files_skipped += 1
             print(f"::notice file={rel}::lint-skip: {skip_reason}")
@@ -489,7 +587,7 @@ def main():
 
     skipped_note = f"（うち lint-skip {files_skipped} 件）" if files_skipped else ""
     print(f"\n{files_checked} 個の .tex を走査{skipped_note}。エラー {total_errors} 件、警告 {total_warnings} 件。")
-    if total_errors > 0:
+    if total_errors > 0 or (args.diff and differences):
         sys.exit(1)
 
 

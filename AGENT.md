@@ -152,6 +152,17 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 * **`lint-tex.yml`**（`src/**/*.tex` を含む push / PR）: `scratch/lint_latex_style.py` で 8.3.6 節のルール（機械的に判定可能なもののみ）を **差分に入った `solution.tex` のみ** に対してチェックする。`problem.tex`（原題の問題文）はCIの対象外——著者が書く解答文とは性質が違い、`\caption` 必須などの一部ルールがそもそも馴染まないため。TeX Live 不要の軽量ジョブ。既存コーパスには本ルール導入以前からの違反が大量にあるため（2026年時点で約6800件）、リポジトリ全体を対象にはせず、変更・新規追加された `solution.tex` のみを厳格化する「ratchet」方式を採用している。ローカルでの単体実行は `python3 scratch/lint_latex_style.py [対象ファイル...]`（引数なしならリポジトリ全体を `problem.tex` も含めてスキャンし集計のみ表示。`problem.tex` も個別に指定すれば手動でチェック可能）。
   * **`% lint-skip: 理由`** をファイル中のどこか（通常は1行目）に書いておくと、そのファイルの lint チェックを丸ごとスキップできる（`--no-verify` でのコミットを都度要求する代わりの避難ハッチ）。理由コメントは省略不可——空だとマーカーとして認識されない。旧jarticle形式のまま未移行（Issue #593）のように「直す予定はあるが対応は別作業」と分かっているファイルに使う想定で、個別のバグ修正時に無関係な既存違反でブロックされるのを避けられる。乱用すると ratchet の意味が薄れるため、本当に別issueで追跡済みの既知の問題にのみ使うこと。
 * **`lint-tex-full.yml`**（毎週月曜 00:00 UTC の `schedule` / 手動実行）: `scratch/lint_full_report.py` でリポジトリ全体の `solution.tex`（`lint-tex.yml` と同じスコープ）を走査し、ルール別・書籍別の内訳を Markdown レポートとして生成、`LaTeX Lint Backlog Report` という固定タイトルの Issue を検索して見つかれば本文を更新、無ければ新規作成する（PR ごとに Issue を乱発しない）。違反があってもジョブ自体は失敗しない非ブロッキングの可視化用ワークフローで、`lint-tex.yml`（差分のみを強制）とは役割が異なる。
+ローカルの独自 lint は `--fix` で句読点（`。`/`、` → `．`/`，`）と分数の `\frac` / `\dfrac` を機械修正できる。添字・TikZ 内では `\frac`、それ以外では `\dfrac` とする。コメント、URL・参照先・ファイルパス、verbatim 系のコード、マクロ定義は自動修正から除外し、`lint-skip` も尊重する。裸引数、式番号、図表構造、ラベル等は修正しない。既存 lint の検査範囲は変わらないため、保護した箇所の指摘が残ることもある。
+
+```bash
+# 差分だけ表示（変更候補または lint エラーがあれば終了コード1）
+python3 scratch/lint_latex_style.py --diff src/utokyo/zenki/2000/1/solution.tex
+# 修正してから通常の lint（残るエラーがあれば終了コード1）
+python3 scratch/lint_latex_style.py --fix src/utokyo/zenki/2000/1/solution.tex
+```
+
+`--fix` / `--diff` は対象ファイルの明示指定が必須。一括書き換えを既定動作にはしない。pre-commit では対象の `solution.tex` に `--fix` を実行してから `tex-fmt` を実行する。自動修正された場合は差分確認・`git add`・再commit が必要。CI の `lint-tex.yml` は引き続き検査のみで、原稿を書き換えない。
+
 * **`pre-commit.yml`**（`**/*.tex` を含む push / PR）: [pre-commit](https://pre-commit.com/) フレームワーク経由で [tex-fmt](https://github.com/WGUNDERWOOD/tex-fmt)（Rust製 LaTeX フォーマッタ）を実行する。設定は `.pre-commit-config.yaml`（対象は `solution.tex`/`problem.tex`/`handwritten_tex.tex` のみ、`generate_main_tex.py` が再生成する `main.tex` は対象外）と `tex-fmt.toml`（2 スペースインデント、`wrap = false` で自動80桁折返しは無効化——`align` 内の改行位置は `scratch/lint_latex_style.py` の長い行警告に従って人間が選ぶ方針のため）。`lint-tex.yml` と異なりリポジトリ全体を対象にした「ratchet でない」強制チェックだが、導入時（2026年9月）に全 `.tex` へ一括適用済みのため全体適用でも問題ない。ローカルでは初回に `pre-commit install` を実行しておけば、以後 `git commit` のたびに変更した `.tex` ファイルが自動整形される（整形が入るとコミットは一旦中断されるので、`git add` し直して再コミットする）。
 
 ---
