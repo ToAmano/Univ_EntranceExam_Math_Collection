@@ -674,6 +674,11 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
 
     fig_count = 1
     fig_map = {}
+    # 問題と解答は同じ画像ディレクトリを使うため、問題図だけ名前を分ける。
+    # 一括・単体変換の両方がこの関数を通る。解答の既存URLは維持する。
+    problem_figures = frontmatter.get('type') == 'problem'
+    fig_prefix = 'fig_problem_' if problem_figures else 'fig_'
+    fig_anchors = {}
     tab_count = 1
     tab_map = {}
 
@@ -719,14 +724,16 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
             label_node = fig.find('label')
             
             caption_text = str(caption_node.args[0]).strip('{}') if caption_node and caption_node.args else ''
-            label_id = str(label_node.args[0]).strip('{}') if label_node and label_node.args else f'fig_{fig_count}'
+            label_id = str(label_node.args[0]).strip('{}') if label_node and label_node.args else f'{fig_prefix}{fig_count}'
+            anchor_id = f'problem_{label_id}' if problem_figures and label_node else label_id
 
             fig_map[label_id] = fig_count
+            fig_anchors[label_id] = anchor_id
 
             tikz_node = fig.find('tikzpicture')
             if tikz_node:
                 tikz_code = str(tikz_node)
-                svg_filename = f"fig_{fig_count}.svg"
+                svg_filename = f"{fig_prefix}{fig_count}.svg"
                 svg_dest_path = os.path.join(output_svg_dir, svg_filename)
                 os.makedirs(output_svg_dir, exist_ok=True)
                 compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs)
@@ -735,7 +742,7 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
                 caption_label = f"図 {fig_count}" + (f": {caption_text}" if caption_text else "")
                 alt_text = build_fig_alt_text(caption_text, fig_count)
                 # 表と同様、<figcaption> のタグと本文を空行で分離する（Issue #4）。
-                fig_html = f'\n\n<figure id="{label_id}">\n  <img src="{web_img_src}" alt="{alt_text}" />\n  <figcaption>\n\n{caption_label}\n\n  </figcaption>\n</figure>\n\n'
+                fig_html = f'\n\n<figure id="{anchor_id}">\n  <img src="{web_img_src}" alt="{alt_text}" />\n  <figcaption>\n\n{caption_label}\n\n  </figcaption>\n</figure>\n\n'
                 fig.replace_with(fig_html)
                 fig_count += 1
 
@@ -745,7 +752,7 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
                 target = str(ref_node.args[0]).strip('{}')
                 if 'fig:' in target or target in fig_map:
                     fig_num = fig_map.get(target, 1)
-                    ref_node.replace_with(f'[図{fig_num}](#{target})')
+                    ref_node.replace_with(f'[図{fig_num}](#{fig_anchors.get(target, target)})')
                 elif 'tab:' in target or target in tab_map:
                     tab_num = tab_map.get(target, 1)
                     ref_node.replace_with(f'[表{tab_num}](#{target})')
@@ -805,11 +812,12 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
             m_lbl = re.search(r'\\label\{([^}]+)\}', fig_content)
 
             cap_text = m_cap.group(1) if m_cap else ''
-            lbl_id = m_lbl.group(1) if m_lbl else f'fig_{fig_count}'
+            lbl_id = m_lbl.group(1) if m_lbl else f'{fig_prefix}{fig_count}'
+            anchor_id = f'problem_{lbl_id}' if problem_figures and m_lbl else lbl_id
 
             if m_tikz:
                 tikz_code = m_tikz.group(0)
-                svg_filename = f"fig_{fig_count}.svg"
+                svg_filename = f"{fig_prefix}{fig_count}.svg"
                 svg_dest_path = os.path.join(output_svg_dir, svg_filename)
                 os.makedirs(output_svg_dir, exist_ok=True)
                 compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs)
@@ -818,12 +826,21 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
                 caption_label = f"図 {fig_count}" + (f": {cap_text}" if cap_text else "")
                 alt_text = build_fig_alt_text(cap_text, fig_count)
                 # 表・図(メインパス)と同様、<figcaption> のタグと本文を空行で分離する（Issue #4）。
-                fig_html = f'\n\n<figure id="{lbl_id}">\n  <img src="{web_img_src}" alt="{alt_text}" />\n  <figcaption>\n\n{caption_label}\n\n  </figcaption>\n</figure>\n\n'
+                fig_html = f'\n\n<figure id="{anchor_id}">\n  <img src="{web_img_src}" alt="{alt_text}" />\n  <figcaption>\n\n{caption_label}\n\n  </figcaption>\n</figure>\n\n'
+                fig_map[lbl_id] = fig_count
+                fig_anchors[lbl_id] = anchor_id
                 fig_count += 1
                 return fig_html
             return fig_content
 
         md_body = re.sub(r'\\begin\{figure\}.*?\\end\{figure\}', replace_figure_fallback, md_body, flags=re.DOTALL)
+        # パーサ失敗時も、図のラベル参照を生成したアンカーへ向ける。
+        md_body = re.sub(
+            r'\\(?:cref|ref)\{([^}]+)\}',
+            lambda m: f'[図{fig_map[m.group(1)]}](#{fig_anchors[m.group(1)]})'
+            if m.group(1) in fig_anchors else m.group(0),
+            md_body,
+        )
         md_body = re.sub(r'\\begin\{(align\*?|gather\*?|equation\*?)\}(.*?)\\end\{\1\}', r'\n$$\n\\begin{\1}\2\\end{\1}\n$$\n', md_body, flags=re.DOTALL)
 
     # physics パッケージ \mqty マクロの標準 LaTeX 行列環境への変換
