@@ -1,36 +1,183 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
 {\bf [解]}
-$Q_k(0,0,q_k)$とおく．$\triangle OP_kQ_k$に三平方の定理を用いて，
-\begin{align}
-  1&=q_k^2+\left(\dfrac{k}{n}\right)^2+\left(1-\dfrac{k}{n}\right)^2\\
-  \therefore\ q_k&=\sqrt{2\cdot\dfrac{k}{n}-2\left(\dfrac{k}{n}\right)^2}\quad(>0)
-\end{align}
 
-さらに，$\triangle OP_kP_{k+1}$の面積$S_k$は，サラスの公式により
-\begin{align}
-  S_k&=\dfrac{1}{2}\left|\dfrac{k}{n}\left(1-\dfrac{k+1}{n}\right)-\dfrac{k+1}{n}\left(1-\dfrac{k}{n}\right)\right|\\
-  &=\dfrac{1}{2}\cdot\dfrac{1}{n}
-\end{align}
+% TODO: P_k,Q_kの様子
+\begin{figure}[htb]
+  \centering
+  % 俯角 65°，方位角 115°
+  \tdplotsetmaincoords{65}{115}
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.8, line join=round, >=stealth, every node/.style={font=\small}]
 
-だから，
-\begin{align}
-  V_k&=\dfrac{1}{3}S_kq_k\\
-  &=\dfrac{\sqrt{2}}{6}\cdot\dfrac{1}{n}\sqrt{\dfrac{k}{n}-\left(\dfrac{k}{n}\right)^2}
-\end{align}
+    % --- 1. 定数・座標パラメータ (例: k/n = 0.35) ---
+    % x_k = 0.35, y_k = 0.65 (x_k + y_k = 1)
+    % |OP_k|^2 = 0.35^2 + 0.65^2 = 0.1225 + 0.4225 = 0.545
+    % q_k = sqrt(1 - 0.545) = sqrt(0.455) ≈ 0.6745
+    \def\kRatio{0.35}
+    \pgfmathsetmacro{\xP}{\kRatio}
+    \pgfmathsetmacro{\yP}{1.0 - \kRatio}
+    \pgfmathsetmacro{\qK}{sqrt(2.0*\kRatio - 2.0*\kRatio*\kRatio)} % ≈ 0.6745
 
-より，
+    \coordinate (O)  at (0, 0, 0);
+    \coordinate (Pk) at (\xP, \yP, 0);
+    \coordinate (Qk) at (0, 0, \qK);
+    \coordinate (Ax) at (1, 0, 0);
+    \coordinate (Ay) at (0, 1, 0);
+
+    % --- 2. 座標軸 ---
+    \draw[dashed, gray!40] (-0.3, 0, 0) -- (0, 0, 0);
+    \draw[dashed, gray!40] (0, -0.3, 0) -- (0, 0, 0);
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (1.4, 0, 0) node[below left=1pt] {$x$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 1.4, 0) node[right=2pt] {$y$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 0, 1.2) node[above=2pt] {$z$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. xy 平面上の線分 x + y = 1 ---
+    \draw[thick, gray!60] (Ax) -- (Ay);
+    \node[below=2pt, font=\scriptsize] at (Ax) {$1$};
+    \node[right=2pt, font=\scriptsize] at (Ay) {$1$};
+    \node[gray!75!black, font=\scriptsize, above right] at ($ (Ax)!0.7!(Ay) $) {$x+y=1$};
+
+    % --- 4. 直角三角形 OP_k Q_k (薄い着色) ---
+    \fill[teal!15, opacity=0.7] (O) -- (Pk) -- (Qk) -- cycle;
+    \draw[very thick, teal!85!black] (O) -- (Pk);
+    \draw[very thick, teal!85!black] (O) -- (Qk);
+    \draw[line width=1.8pt, red!85!black] (Pk) -- (Qk);
+    \node[red!90!black, font=\scriptsize\bfseries, above right] at ($ (Pk)!0.45!(Qk) $) {$|P_kQ_k| = 1$};
+
+    % --- 5. 直角記号 (O における OP_k ⊥ OQ_k) ---
+    % OP_k 方向と z 軸方向の直角
+    \draw[thin, gray!70]
+    ($ (O) + 0.08*(Pk) $) --
+    ($ (O) + 0.08*(Pk) + (0, 0, 0.08) $) --
+    (0, 0, 0.08);
+
+    % --- 6. 頂点プロットと座標投影 ---
+    % P_k の投影破線
+    \draw[dashed, gray!50] (\xP, 0, 0) -- (Pk) -- (0, \yP, 0);
+    \node[below=2pt, font=\scriptsize] at (\xP, 0, 0) {$\frac{k}{n}$};
+    \node[right=2pt, font=\scriptsize] at (0, \yP, 0) {$1 - \frac{k}{n}$};
+
+    \fill[teal!85!black] (Pk) circle (1.2pt) node[below right=1pt, font=\footnotesize\bfseries, teal!95!black] {$P_k$};
+    \fill[red!85!black]  (Qk) circle (1.2pt) node[left=2pt, font=\footnotesize\bfseries, red!95!black] {$Q_k(0,0,q_k)$};
+
+    % 高さ q_k の目盛り
+    \node[left=2pt, font=\scriptsize] at (0, 0, \qK) {$q_k$};
+
+  \end{tikzpicture}
+  \caption{直角三角形 $\triangle OP_kQ_k$ と $z$ 軸上の高さ $q_k$}
+  \label{fig:triangle_opk_qk_3d}
+\end{figure}
+
+$Q_k$は$z$軸上にあるから$Q_k(0,0,q_k)$とおく．$P_k$は$xy$平面上にあるから
+$\overrightarrow{OP_k} \perp \overrightarrow{OQ_k}$であり，
+よって$\triangle OP_kQ_k$は直角三角形であり，三平方の定理を用いて
 \begin{align}
-  \lim_{n\to\infty}\sum_{k=0}^{n-1}V_k&=\dfrac{\sqrt{2}}{6}\int_0^1\sqrt{x-x^2}\,dx\\
+  |P_kQ_k|^2 = |OP_k|^2 + |OQ_k|^2
+\end{align}
+である．ここで題意より$|P_kQ_k|=1$と合わせて具体的な座標を代入すると
+\begin{align}
+  1&=q_k^2+\left(\dfrac{k}{n}\right)^2+\left(1-\dfrac{k}{n}\right)^2 \\
+  \therefore\
+  q_k&=\sqrt{2\cdot\dfrac{k}{n}-2\left(\dfrac{k}{n}\right)^2}\quad(>0)
+\end{align}
+である．
+
+% TODO: 三角錐OP_kP_{k+1}Q_k
+\begin{figure}[htb]
+  \centering
+  % 俯角 65°，方位角 115°
+  \tdplotsetmaincoords{65}{115}
+  \begin{tikzpicture}[tdplot_main_coords, scale=3.0, line join=round, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ ---
+    % k/n = 0.35, (k+1)/n = 0.50 (図示用に幅を少し誇張)
+    \def\kRatio{0.32}
+    \def\kNextRatio{0.48}
+
+    \pgfmathsetmacro{\xPk}{\kRatio}
+    \pgfmathsetmacro{\yPk}{1.0 - \kRatio}
+    \pgfmathsetmacro{\qK}{sqrt(2.0*\kRatio - 2.0*\kRatio*\kRatio)}
+
+    \pgfmathsetmacro{\xPkNext}{\kNextRatio}
+    \pgfmathsetmacro{\yPkNext}{1.0 - \kNextRatio}
+
+    \coordinate (O)      at (0, 0, 0);
+    \coordinate (Pk)     at (\xPk, \yPk, 0);
+    \coordinate (PkNext) at (\xPkNext, \yPkNext, 0);
+    \coordinate (Qk)     at (0, 0, \qK);
+
+    % --- 2. 座標軸 ---
+    \draw[dashed, gray!40] (-0.2, 0, 0) -- (0, 0, 0);
+    \draw[dashed, gray!40] (0, -0.2, 0) -- (0, 0, 0);
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (1.35, 0, 0) node[below left=1pt] {$x$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 1.35, 0) node[right=2pt] {$y$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 0, 1.1) node[above=2pt] {$z$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 線分 x + y = 1 (xy 平面) ---
+    \draw[thick, gray!55] (1, 0, 0) -- (0, 1, 0);
+    \node[below=2pt, font=\scriptsize] at (1, 0, 0) {$1$};
+    \node[right=2pt, font=\scriptsize] at (0, 1, 0) {$1$};
+
+    % --- 4. 三角錐 OP_k P_{k+1} Q_k の面と稜線 ---
+    % (i) 底面 O-P_k-P_{k+1} (xy 平面内: 青色)
+    \fill[blue!20, opacity=0.75] (O) -- (Pk) -- (PkNext) -- cycle;
+    \draw[very thick, blue!85!black] (O) -- (Pk);
+    \draw[very thick, blue!85!black] (O) -- (PkNext);
+    \draw[very thick, blue!85!black] (Pk) -- (PkNext);
+    \node[blue!90!black, font=\scriptsize\bfseries] at ($ (O)!0.6!($ (Pk)!0.5!(PkNext) $) $) {$S_k$};
+
+    % (ii) 側面 (透過色)
+    \fill[teal!15, opacity=0.55] (O) -- (Pk) -- (Qk) -- cycle;
+    \fill[orange!15, opacity=0.5] (Pk) -- (PkNext) -- (Qk) -- cycle;
+    \fill[purple!15, opacity=0.4] (O) -- (PkNext) -- (Qk) -- cycle;
+
+    % (iii) 三角錐の稜線
+    \draw[thick, teal!85!black] (O) -- (Qk);     % 高さ q_k
+    \draw[line width=1.4pt, red!85!black] (Qk) -- (Pk);
+    \draw[line width=1.4pt, red!85!black] (Qk) -- (PkNext);
+
+    % --- 5. 直角記号 (OQ_k ⊥ 底面) ---
+    \draw[thin, gray!70]
+    (0, 0.07, 0) -- (0, 0.07, 0.07) -- (0, 0, 0.07);
+
+    % --- 6. 頂点プロットとラベル ---
+    \fill[black]         (O)      circle (0.8pt);
+    \fill[blue!90!black] (Pk)     circle (1.1pt) node[below right=-1pt, font=\scriptsize\bfseries] {$P_k$};
+    \fill[blue!90!black] (PkNext) circle (1.1pt) node[above right=-1pt, font=\scriptsize\bfseries] {$P_{k+1}$};
+    \fill[red!85!black]  (Qk)     circle (1.2pt) node[left=2pt, font=\scriptsize\bfseries, red!95!black] {$Q_k(0,0,q_k)$};
+
+    % 高さラベル
+    \node[left=2pt, font=\scriptsize, teal!90!black] at ($ (O)!0.5!(Qk) $) {$q_k$};
+
+  \end{tikzpicture}
+  \caption{微小三角錐 $OP_kP_{k+1}Q_k$}
+  \label{fig:element_tetrahedron_3d}
+\end{figure}
+
+さて三角錐$OP_kP_{k+1}Q_k$の体積は底面$\triangle OP_kP_{k+1}$，高さ$q_k$として計算できる．$\triangle OP_kP_{k+1}$の面積$S_k$は，サラスの公式により
+\begin{align}
+  S_k
+  =\dfrac{1}{2}\left|\dfrac{k}{n}\left(1-\dfrac{k+1}{n}\right)-\dfrac{k+1}{n}\left(1-\dfrac{k}{n}\right)\right|
+  =\dfrac{1}{2}\cdot\dfrac{1}{n}
+\end{align}
+だから三角錐$OP_kP_{k+1}Q_k$の体積$V_k$は
+\begin{align}
+  V_k
+  =\dfrac{1}{3}S_kq_k
+  =\dfrac{\sqrt{2}}{6}\dfrac{1}{n}\sqrt{\dfrac{k}{n}-\left(\dfrac{k}{n}\right)^2}
+\end{align}
+より，求める極限値は区分求積法により
+\begin{align}
+  \lim_{n\to\infty}\sum_{k=0}^{n-1}V_k
+  &=\lim_{n\to\infty}\sum_{k=0}^{n-1}\dfrac{\sqrt{2}}{6}\dfrac{1}{n}\sqrt{\dfrac{k}{n}-\left(\dfrac{k}{n}\right)^2} \\
+  &=\dfrac{\sqrt{2}}{6}\int_0^1\sqrt{x-x^2}\,dx\\
   &=\dfrac{\sqrt{2}}{6}\int_0^1\sqrt{\dfrac{1}{4}-\left(x-\dfrac{1}{2}\right)^2}\,dx\\
   &=\dfrac{\sqrt{2}}{48}\pi
 \end{align}
+である．
 
 \bigskip
 

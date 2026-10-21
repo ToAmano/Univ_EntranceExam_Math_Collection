@@ -1,78 +1,259 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
 {\bf [解]}
-$P(X,Y,Z)$とおく．題意の球面$T$の方程式は，
-\begin{align}
-  T:x^2-Xx+y^2-Yy+z^2-Zz=0\quad(\text{左辺を}f(x,y,z)\text{とする})
-\end{align}
-である．一方，$S$は
-\begin{align}
-  S:x^2+y^2+z^2-1=0\quad(\text{左辺を}g(x,y,z)\text{とする})
-\end{align}
-である．$P$は$S$の外部より，
-\begin{align}
-  g(X,Y,Z)>0\quad\cdots①
-\end{align}
-が成立する．このもとで，$T,S$は必ず交円を持つ．ここで，$k\in\mathbb R$に対し
-\begin{align}
-  f(x,y,z)+kg(x,y,z)=0\quad\cdots②
-\end{align}
-で表される方程式は，この交円を通る．$k=-1$の時②は平面の方程式になり，またLはただ1通りに定まるからこれが$L$に他ならない．したがって，
-\begin{align}
-  L:Xx+Yy+Zz-1=0\quad\cdots③
-\end{align}
 
-したがって，
-\begin{align}
-  |PQ|&=\dfrac{|X^2+Y^2+Z^2-1|}{\sqrt{X^2+Y^2+Z^2}}\\
-  &=\dfrac{X^2+Y^2+Z^2-1}{\sqrt{X^2+Y^2+Z^2}}\quad(\because①)\\
-  |AR|&=\dfrac{|{-Z-1}|}{\sqrt{X^2+Y^2+Z^2}}=\dfrac{|Z+1|}{\sqrt{X^2+Y^2+Z^2}}
-\end{align}
-
-だから，$|PQ|\le|AR|$に代入して，
-\begin{align}
-  X^2+Y^2+Z^2-1&\le|Z+1|\\
-  \iff X^2+Y^2+Z^2-Z&\le2\quad(\because①\text{および}Z\ge-1\text{の場合；}Z<-1\text{の場合は解なし，後述})\\
-  \iff X^2+Y^2+\left(Z-\dfrac{1}{2}\right)^2&\le\dfrac{9}{4}\quad\cdots④
-\end{align}
-
-（注：$Z<-1$として$|Z+1|=-Z-1$を用いると，$X^2+Y^2+Z^2-1\le-Z-1\iff X^2+Y^2+\left(Z+\dfrac{1}{2}\right)^2\le\dfrac{1}{4}$となるが，この球は$-1\le Z\le0$の範囲にしかないので$Z<-1$をみたす点はなく，この場合は空である．）
-
-よって，求める条件は①④で，図示して下図斜線部（$xz$平面の切断面）のようになる：
-\begin{align}
-  V:\quad X^2+Y^2+Z^2>1,\qquad X^2+Y^2+\left(Z-\dfrac{1}{2}\right)^2\le\dfrac{9}{4}
-\end{align}
-
+% TODO: S,Tの概要
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.3, >=stealth]
-    \draw[->] (-2.1,0) -- (2.1,0) node[right] {$x$};
-    \draw[->] (0,-1.7) -- (0,2.6) node[above] {$z$};
-    \begin{scope}
-      \clip (0,0.5) circle (1.5);
-      \fill[gray!25] (0,0.5) circle (1.5);
-      \fill[white] (0,0) circle (1);
-    \end{scope}
-    \draw (0,0.5) circle (1.5);
-    \draw[dashed] (0,0) circle (1);
-    \fill (0,-1) circle (0.6pt);
-    \node[below] at (0,-1) {\scriptsize$A(-1)$};
-    \node[right] at (1.5,0.5) {\scriptsize$3/2$};
-    \node[above left] at (0,2) {\scriptsize$2$};
+  % 俯角 65°，方位角 120°
+  \tdplotsetmaincoords{65}{120}
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.2, line join=round, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標設定 ---
+    % 点 P = (0.9, 0.9, 1.4) (OP^2 = 0.81 + 0.81 + 1.96 = 3.58 > 1)
+    \coordinate (O) at (0, 0, 0);
+    \coordinate (A) at (0, 0, -1.0);
+    \coordinate (P) at (0.9, 0.9, 1.4);
+
+    % OP の中点 M (球面 T の中心)
+    \coordinate (M) at (0.45, 0.45, 0.7);
+
+    % 平面 L: Xx + Yy + Zz = 1
+    % 原点から平面 L への垂線の足 H_L: H_L = (1 / |OP|^2) * P
+    \pgfmathsetmacro{\opSq}{0.9*0.9 + 0.9*0.9 + 1.4*1.4} % 3.58
+    \pgfmathsetmacro{\scaleH}{1.0 / \opSq}               % ≈ 0.2793
+    \pgfmathsetmacro{\xHL}{\scaleH * 0.9}                % ≈ 0.2514
+    \pgfmathsetmacro{\yHL}{\scaleH * 0.9}                % ≈ 0.2514
+    \pgfmathsetmacro{\zHL}{\scaleH * 1.4}                % ≈ 0.3911
+    \coordinate (HL) at (\xHL, \yHL, \zHL);
+
+    % 点 P から平面 L への垂線の足 Q (= HL)
+    \coordinate (Q) at (HL);
+
+    % 点 A(0, 0, -1) から平面 L への垂線の足 R:
+    \pgfmathsetmacro{\scaleR}{(1.4 + 1.0) / \opSq}       % 2.4 / 3.58 ≈ 0.6704
+    \coordinate (R_pt) at ({\scaleR*0.9}, {\scaleR*0.9}, {-1.0 + \scaleR*1.4});
+
+    % --- 2. 座標軸 ---
+    \draw[dashed, gray!40] (-1.3, 0, 0) -- (0, 0, 0);
+    \draw[dashed, gray!40] (0, -1.3, 0) -- (0, 0, 0);
+    \draw[dashed, gray!40] (0, 0, -1.4) -- (0, 0, 0);
+
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (1.8, 0, 0) node[below left=1pt] {$x$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 1.8, 0) node[right=2pt] {$y$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 0, 2.0) node[above=2pt] {$z$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 球面 S (単位球) の大円 ---
+    \draw[thick, gray!55] plot[domain=0:360, samples=60] ({cos(\x)}, {sin(\x)}, 0);
+    \draw[dashed, gray!45] plot[domain=0:360, samples=60] ({cos(\x)}, 0, {sin(\x)});
+    \draw[dashed, gray!45] plot[domain=0:360, samples=60] (0, {cos(\x)}, {sin(\x)});
+    \node[gray!70!black, font=\scriptsize, below left] at (-0.6, -0.6, 0) {球面 $S$};
+
+    % --- 4. 球面 T (OP を直径とする球面) の円周 ---
+    \pgfmathsetmacro{\radT}{sqrt(\opSq)/2.0}
+    \draw[dashed, teal!65, thick]
+    plot[domain=0:360, samples=50] ({0.45 + \radT*cos(\x)}, {0.45 + \radT*sin(\x)}, 0.7);
+    \node[teal!90!black, font=\scriptsize] at ($(M) + (0.5, 0.5, 0.7)$) {球面 $T$};
+
+    % --- 5. 平面 L (交円を含む平面パッチ) ---
+    \coordinate (P_L1) at ($(HL) + (-0.9, 0.9, 0)$);
+    \coordinate (P_L2) at ($(HL) + (0.6, 0.9, -0.77)$);
+    \coordinate (P_L3) at ($(HL) + (0.9, -0.9, 0)$);
+    \coordinate (P_L4) at ($(HL) + (-0.6, -0.9, 0.77)$);
+
+    \fill[blue!15, opacity=0.55] (P_L1) -- (P_L2) -- (P_L3) -- (P_L4) -- cycle;
+    \draw[line width=1.2pt, blue!75!black] (P_L1) -- (P_L2) -- (P_L3) -- (P_L4) -- cycle;
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (P_L2) {平面 $L$};
+
+    % S と T の交円（成分ごとに直接計算して安全にプロット）
+    % 半径 r_c = 0.849, 基底ベクトル u = (0.7071, -0.7071, 0), v = (-0.516, -0.516, 0.68)
+    \draw[very thick, blue!85!black, domain=0:360, samples=70]
+    plot ({ \xHL + 0.849*cos(\x)*0.7071 - 0.849*sin(\x)*0.516 },
+      { \yHL - 0.849*cos(\x)*0.7071 - 0.849*sin(\x)*0.516 },
+    { \zHL + 0.849*sin(\x)*0.68 });
+
+    % --- 6. 点 P, Q, A, R の関係線 ---
+    % 直線 OP (直径、平面 L に直交)
+    \draw[thick, gray!70] (O) -- (Q);
+    \draw[line width=1.8pt, red!85!black] (Q) -- (P);
+    \node[red!90!black, font=\scriptsize\bfseries, right] at ($ (Q)!0.5!(P) $) {$|PQ|$};
+
+    % 点 A(0,0,-1) と平面 L への垂線 AR
+    \draw[line width=1.8pt, purple!85!black] (A) -- (R_pt);
+    \node[purple!90!black, font=\scriptsize\bfseries, right] at ($ (A)!0.5!(R_pt) $) {$|AR|$};
+
+    % 垂線の直角マーク
+    \draw[thin, gray!70]
+    ($ (Q) + (0.08, -0.08, 0) $) --
+    ($ (Q) + (0.08, -0.08, 0) + (0.06, 0.06, 0.09) $) --
+    ($ (Q) + (0.06, 0.06, 0.09) $);
+
+    % --- 7. 主要点のプロットとラベル ---
+    \fill[black]         (O)    circle (1.0pt);
+    \fill[black]         (A)    circle (1.2pt) node[below left=1pt] {$A(0,0,-1)$};
+    \fill[red!85!black]  (P)    circle (1.4pt) node[above right=1pt, red!95!black] {$P(X,Y,Z)$};
+    \fill[teal!85!black] (M)    circle (0.9pt) node[above left=1pt, font=\scriptsize] {$M$};
+    \fill[blue!90!black] (Q)    circle (1.2pt) node[above left=1pt, font=\scriptsize] {$Q$};
+    \fill[purple!90!black] (R_pt) circle (1.2pt) node[above right=1pt, font=\scriptsize] {$R$};
+
   \end{tikzpicture}
-  \caption{$V$の$xz$平面での切断面（外側の円が半径$3/2$，中心$(0,1/2)$；内側の点線円が単位球$S$の断面，点$A$で内接）}
+  \caption{球面 $S, T$，点 $P, A$ および平面 $L$ への垂線 $PQ, AR$ の空間配置}
+  \label{fig:spheres_plane_orthogonal_projection_3d}
 \end{figure}
 
-この体積$V$は，$S$が半径$3/2$の球（中心$(0,0,1/2)$）に点$A$で内接し完全に含まれることから，
+$A(0,0,-1)$だから$|OA|=1$であり，よって球面$S$は半径$1$でその方程式は
 \begin{align}
-  V&=\dfrac{4}{3}\pi\left\{\left(\dfrac{3}{2}\right)^3-1\right\}=\dfrac{19}{6}\pi\\
-  &<\dfrac{19}{6}\times3.15=\dfrac{19.95}{2}<10
+  S: f(x,y,z) = x^2+y^2+z^2 = 1 \label{eq:1}
+\end{align}
+である．
+$OP$を直径とする球面を$T$とすると，$T$の中心は$OP$の中点$M$で，$P(X,Y,Z)$とおくと$M(X/2,Y/2,Z/2)$であるから$T$の方程式は
+\begin{align}
+  & T:\left(x-\dfrac{X}{2}\right)^2 + \left(y-\dfrac{Y}{2}\right)^2
+  +\left(z-\dfrac{Z}{2}\right)^2
+  = \left(\dfrac{X}{2}\right)^2 + \left(\dfrac{Y}{2}\right)^2 + \left(\dfrac{Z}{2}\right)^2 \\
+  \therefore
+  & T: g(x,y,z) = x^2-Xx+y^2-Yy+z^2-Zz=0 \label{eq:2}
+\end{align}
+である．
+点$P$は$S$の外部だから
+\begin{align}
+  f(X,Y,Z)>0 \label{eq:3}
+\end{align}
+が成立する．
+このもとで$T,S$は必ず交円を持つ．ここで$k\in\mathbb R$に対し
+\begin{align}
+  f(x,y,z)+kg(x,y,z)=0 \label{eq:4}
+\end{align}
+で表される方程式は$f=g=0$を解に持つから$S,T$の交円を通る．
+$k=-1$の時\cref{eq:4}は平面の方程式になり，またLはただ1通りに定まるからこれが$L$に他ならない．したがって，\cref{eq:1,eq:2}を代入して
+\begin{align}
+  L:Xx+Yy+Zz-1=0 \label{eq:5}
+\end{align}
+である．$|PQ|$と$|AR|$はそれぞれ点$P, A$と平面$L$との距離だから，点と平面の距離の公式から
+\begin{align}
+  \begin{cases}
+    |PQ|&=\dfrac{|X^2+Y^2+Z^2-1|}{\sqrt{X^2+Y^2+Z^2}}
+    =\dfrac{X^2+Y^2+Z^2-1}{\sqrt{X^2+Y^2+Z^2}}\quad(\because\text{\cref{eq:3}})\\
+    |AR|&=\dfrac{|{-Z-1}|}{\sqrt{X^2+Y^2+Z^2}}=\dfrac{|Z+1|}{\sqrt{X^2+Y^2+Z^2}}
+  \end{cases}
+\end{align}
+である．
+
+だから題意の条件$|PQ|\le|AR|$に代入して，
+\begin{align}
+  X^2+Y^2+Z^2-1\le|Z+1|
+\end{align}
+である．絶対値を外して
+\begin{align}
+  &
+  \begin{cases}
+    X^2+Y^2+Z^2-1 \le Z+1  & (Z+1 \ge 0) \\
+    X^2+Y^2+Z^2-1 \le -Z-1 & (Z+1 \le 0)
+  \end{cases} \\
+  \therefore
+  &
+  \begin{cases}
+    X^2+Y^2+Z^2-Z \le 2  & (Z \ge -1) \\
+    X^2+Y^2+Z^2+Z \le 0  & (Z \le -1)
+  \end{cases} \\
+  \therefore
+  &
+  \begin{cases}
+    X^2+Y^2+\left(Z-\dfrac{1}{2}\right)^2  \le \left(\dfrac{3}{2}\right)^2 & (Z \ge -1) \\
+    X^2+Y^2+\left(Z+\dfrac{1}{2}\right)^2  \le \left(\dfrac{1}{2}\right)^2 & (Z \le -1)
+  \end{cases}
+  \therefore
+  &
+  \begin{cases}
+    X^2+Y^2+\left(Z-\dfrac{1}{2}\right)^2  \le \left(\dfrac{3}{2}\right)^2 & (Z \ge -1) \\
+    (X,Y,Z)=(0,0,-1)
+  \end{cases}
+\end{align}
+である．後者は前者に含まれるから
+\begin{align}
+  X^2+Y^2+\left(Z-\dfrac{1}{2}\right)^2  \le \left(\dfrac{3}{2}\right)^2 & (Z \ge -1) \label{eq:6}
+\end{align}
+である．
+
+従って\cref{eq:3,eq:6}が求める条件で
+\begin{align}
+  \begin{cases}
+    X^2+Y^2+Z^2 > 1 \\
+    X^2+Y^2+\left(Z-\dfrac{1}{2}\right)^2 \le \left(\dfrac{3}{2}\right)^2
+  \end{cases} \label{eq:7}
+\end{align}
+である．これを図示すると下図の斜線部のようになる（$XZ$平面の切断面）．
+
+% TODO: XZでの\cref{eq:7}の切断面
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ ---
+    \coordinate (O) at (0, 0);          % 原点 O(0, 0)
+    \coordinate (M) at (0, 0.5);        % 外側球の中心 M(0, 1/2)
+    \coordinate (A) at (0, -1.0);       % 接点 A(0, -1)
+    \coordinate (Top) at (0, 2.0);      % 外側球の最上点 (0, 2)
+
+    % --- 2. 求める領域のハッチング塗りつぶし (even odd rule) ---
+    % 外円 (半径 1.5, 中心 (0, 0.5)) から 内円 (半径 1.0, 中心 (0, 0)) を除外
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.75, even odd rule]
+    (M) circle (1.5) (O) circle (1.0);
+
+    % --- 3. 境界円の描画 ---
+    % 外側の円 (境界を含むため実線)
+    \draw[very thick, blue!85!black] (M) circle (1.5);
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (1.1, 1.4)
+    {$X^2 + \left(Z - \frac{1}{2}\right)^2 = \left(\frac{3}{2}\right)^2$};
+
+    % 内側の円 (単位円 S の大円, 境界を含まないため破線)
+    \draw[thick, dashed, red!80!black] (O) circle (1.0);
+    \node[red!90!black, font=\footnotesize\bfseries, above left] at (-0.6, 0.6)
+    {$S: X^2 + Z^2 = 1$};
+
+    % --- 4. 座標軸 (XZ 平面) ---
+    \draw[->, thick, gray!80!black] (-2.2, 0) -- (2.3, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -1.6) -- (0, 2.6) node[above] {$Z$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 5. 中心・接点・頂点のプロットと寸法線 ---
+    % 内接点 A(0, -1)
+    \fill[red!85!black] (A) circle (1.3pt);
+    \node[below right=1pt, font=\scriptsize, red!90!black] at (A) {$A(0, -1)$（内接点）};
+
+    % 外側円の中心 M(0, 1/2)
+    \fill[blue!90!black] (M) circle (1.2pt);
+    \node[left=2pt, font=\scriptsize, blue!90!black] at (M) {$\frac{1}{2}$};
+
+    % 外側円の半径 3/2 (矢印表示)
+    \draw[<->,line width=1pt, teal!85!black] (M) -- (35:1.7)
+    node[midway, above left=-1pt, font=\scriptsize] {$\frac{3}{2}$};
+
+    % 内側円の半径 1 (矢印表示)
+    \draw[<->, line width=1pt, red!80!black] (O) -- (145:1.0)
+    node[midway, below left=-1pt, font=\scriptsize] {$1$};
+
+    % 軸の目盛り
+    \node[left=2pt, font=\scriptsize] at (0, 1.0) {$1$};
+    \node[left=2pt, font=\scriptsize] at (0, 2.0) {$2$};
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[below=2pt, font=\scriptsize] at (-1.0, 0) {$-1$};
+    \node[below=2pt, font=\scriptsize] at (1.414, 0) {$\sqrt{2}$}; % X 切片: X^2 + 1/4 = 9/4 => X = sqrt(2)
+    \fill (1.414, 0) circle (0.6pt);
+
+  \end{tikzpicture}
+  \caption{領域 $V$ の $XZ$ 平面における切断面（点 $A$ で内接する 2 つの球の差）}
+  \label{fig:xz_cross_section_inscribed_spheres}
+\end{figure}
+
+この体積$V$は$S$が半径$3/2$の球（中心$(0,0,1/2)$）に点$A$で内接し完全に含まれることから，
+この二つの球の体積の差で
+\begin{align}
+  V
+  =\dfrac{4}{3}\pi\left\{\left(\dfrac{3}{2}\right)^3-1\right\}=\dfrac{19}{6}\pi
+  <\dfrac{19}{6}\times3.15=\dfrac{19.95}{2}<10
 \end{align}
 となる．
 

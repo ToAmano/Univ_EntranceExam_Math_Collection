@@ -1,67 +1,56 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-\noindent
-{\bf [解]} $x^{n+1} = (x^2-x-1) P_n(x) + a_n x + b_n \quad \cdots \textcircled{1}$ とおく．
+題意より$x^{n-1}$次関数$P_n(x)$として
+\begin{align}
+  x^{n+1} = (x^2-x-1) P_n(x) + a_n x + b_n \label{eq:1}
+\end{align}
+とおく．
 
-\bigskip
-
-\noindent
 \paragraph{(1)}
 
-\textcircled{1} の両辺に $x$ をかけて
+\cref{eq:1}の両辺に $x$ をかけて
 \begin{align}
-  x^{n+2} &= x(x^2-x-1) P_n(x) + a_n x^2 + b_n x \\
-  &= (x^2-x-1) [x P_n(x) + a_n] + (a_n + b_n) x + a_n
+  x^{n+2}
+  &= x(x^2-x-1) P_n(x) + a_n x^2 + b_n x \\
+  &= (x^2-x-1) [x P_n(x) + a_n] + (a_n + b_n) x + a_n \label{eq:2}
 \end{align}
-一方，この右辺は $(x^2-x-1) P_{n+1}(x) + a_{n+1} x + b_{n+1}$ だから 係数比較して
+である．一方で\cref{eq:1}で$n\to n+1$として
+\begin{align}
+  x^{n+2} = (x^2-x-1) P_{n+1}(x) + a_{n+1} x + b_{n+1} \label{eq:3}
+\end{align}
+である．従って\cref{eq:2,eq:3}で係数を比較して
 \begin{align}
   \begin{cases}
     a_{n+1} = a_n + b_n \\
     b_{n+1} = a_n
-  \end{cases} \quad \text{\#}
+  \end{cases} \label{eq:4}
 \end{align}
+である．よって題意は示された．
 
-\bigskip
-
-\noindent
 \paragraph{(2)}
 
-$x^2 = (x^2-x-1) + x + 1$ から，$a_1 = b_1 = 1$ であり，(1)から
+\cref{eq:1}で$n=1$として
 \begin{align}
-  \begin{cases}
-    a_{n+2} = a_{n+1} + a_n \\
-    b_{n+1} = a_n
-  \end{cases}
+  x^2 = (x^2-x-1) + x + 1
 \end{align}
-であるから，帰納的に $a_n, b_n \in \mathbb{Z}_{>0}$ である．
+だから，初項は
+\begin{align}
+  a_1 = b_1 = 1 \label{eq:5}
+\end{align}
+である．\cref{eq:4}から帰納的に$a_n, b_n \in \mathbb{Z}_{>0}$ である．
 
-\begin{quote}
-  \small
-  ［帰納法を使ってもいいけど，自明と言ってもいい気がする．一応「書き漏らしていること」を言う方が良いかも\dots{}］
-\end{quote}
+そこで以下$a_n$と$b_n$が互いに素であることを示す．
+数学的帰納法によって題意を示す．
 
-\noindent
-次に，「$a_n$ と $b_n$ が互いに素」 $\iff$ 「$a_{n+1}$ と $a_n$ が互いに素」であるから ($\because a_1 = b_1 = 1$) 以下これを帰納的に示す．
+$n=1$の時，\cref{eq:5}より$(a_n,b_n)$は互いに素である．
 
-\begin{itemize}
-  \item[$1^\circ$] $n=1$ の時
+次に$k\in\mathbb{N}$に対して$a_{k}$と$b_{k}$が互いに素であると仮定する．
+\cref{eq:4}より「$a_{k+1}$ と $b_{k+1}$ が互いに素」$iff$ 「$b_{k}$ と $a_{k}$ が互いに素」だから，仮定より$a_{k+1}$ と $b_{k+1}$も互いに素である．
 
-    $a_1=1, a_2=2$ から成立
-  \item[$2^\circ$] $n=k$ での成立仮定
-
-    $a_{k+2} = a_{k+1} + a_k$ と $a_{k+1}$ が互いに素であることを示す．
-    \begin{align}
-      (a_{k+1} + a_k, a_{k+1}) = (a_{k+1}, a_k) = 1 \quad (\because \text{仮定})
-    \end{align}
-    から示された．よって $n=k+1$ で成立
-\end{itemize}
-
-\noindent
-以上から示された． \hfill \text{固}
+以上から数学的帰納法により任意の$n$について$(a_n,b_n)$は互いに素である．
+よって題意は示された．
 
 \end{document}

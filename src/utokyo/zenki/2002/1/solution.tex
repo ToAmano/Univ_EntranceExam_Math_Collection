@@ -1,56 +1,137 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-\noindent
-{\bf [解]} まず，$0 \le \theta < 2\pi$ で考える．($\because$ 与式は $\theta$ について $2\pi$ 周期)
+与えられた放物線
+\begin{align}
+  \begin{cases}
+    y=2\sqrt{3}(x-\cos\theta)^2+\sin\theta \\
+    y=-2\sqrt{3}(x+\cos\theta)^2-\sin\theta
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．
+これらは$\theta$ について $2\pi$ 周期だから，
+\begin{align}
+  0 \le \theta < 2\pi \label{eq:2}
+\end{align}
+で考える．
 
-\noindent
-これが異2交点をもつので，$C = \cos\theta, S = \sin\theta$ として，
+以下簡単のため $c = \cos\theta, s = \sin\theta$ とおく．
+\cref{eq:1}が異なる二つの交点を持つので，$y$を消去して連立した二次方程式が二つの解を持つ．実際に連立して
 \begin{align}
-  2\sqrt{3}(x-C)^2 + S + 2\sqrt{3}(x+C)^2 + S &= 0 \\
-  4\sqrt{3}(x^2 + C^2) + 2S &= 0 \\
-  2\sqrt{3}x^2 + 2\sqrt{3}C^2 + S &= 0
+  & 2\sqrt{3}(x-c)^2 + s + 2\sqrt{3}(x+c)^2 + s = 0 \\
+  & 4\sqrt{3}(x^2 + c^2) + 2s = 0 \\
+  & 2\sqrt{3}x^2 + 2\sqrt{3}c^2 + s = 0
 \end{align}
-が $x$ について異2実解をもつので，
+である．これが異なる2実解をもつ条件は
 \begin{align}
-  2\sqrt{3}C^2 + S &< 0 \\
-  2\sqrt{3}(1-S^2) + S &< 0 \\
-  2\sqrt{3}S^2 - S - 2\sqrt{3} &> 0 \quad \cdots \textcircled{1}
+  & 2\sqrt{3}c^2 + s < 0 \\
+  & 2\sqrt{3}(1-s^2) + s < 0 \\
+  & 2\sqrt{3}s^2 - s - 2\sqrt{3} > 0 \label{eq:3}
 \end{align}
+である．この左辺を$f(s)$とおいて：
+\begin{align}
+  f(s) = 2\sqrt{3}s^2 - s - 2\sqrt{3} \label{eq:4}
+\end{align}
+$(s)$が正となる条件を調べよう．
+$y=f(s)$のグラフは下図のようになる．
 
-\noindent
-\textcircled{1} の左辺 $f(S)$ とおくと，$y = f(S)$ のグラフは右図で，$-1 \le S \le 1$ も考えて，\textcircled{1} をみたす条件は
-\begin{align}
-  -1 \le S < -\dfrac{\sqrt{3}}{2}
-\end{align}
-\begin{align}
-  \therefore \quad \dfrac{4}{3}\pi < \theta < \dfrac{5}{3}\pi
-\end{align}
-したがって，一般角でまとめると，
-\begin{align}
-  \dfrac{4}{3}\pi + 2n\pi < \theta < \dfrac{5}{3}\pi + 2n\pi \quad (n \in \mathbb{Z}) \hfill \text{\#}
-\end{align}
-
+% y=f(x)のグラフ
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \draw[->] (-1.8, 0) -- (1.8, 0) node[right] {$S$};
-    \draw[->] (0, -1.5) -- (0, 1.8) node[above] {$y$};
-    \node[below left] at (0,0) {$O$};
-    \draw[domain=-1.15:1.28, smooth, variable=\x, thick] plot ({\x}, {2*sqrt(3)*\x*\x - \x - 2*sqrt(3)});
-    \draw[dashed] (-1,0) node[above] {$-1$} -- (-1,1) -- (0,1);
-    \filldraw (-1,1) circle (1.2pt);
-    \filldraw ({-sqrt(3)/2},0) circle (1.2pt) node[below left] {$-\frac{\sqrt{3}}{2}$};
-    \filldraw ({2*sqrt(3)/3},0) circle (1.2pt) node[below right] {$\frac{2}{3}\sqrt{3}$};
-    \draw[dashed] (1,0) node[above] {$1$} -- (1,-1) -- (0,-1);
-    \filldraw (1,-1) circle (1.2pt);
+  \begin{tikzpicture}[x=2.8cm, y=0.85cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・厳密パラメータ ---
+    % sqrt(3) ≈ 1.73205
+    % 零点: s1 = -sqrt(3)/2 ≈ -0.8660, s2 = 2*sqrt(3)/3 ≈ 1.1547
+    % 頂点: s = 1/(4*sqrt(3)) ≈ 0.1443, y ≈ -3.5365
+    \pgfmathsetmacro{\sqThree}{sqrt(3.0)}
+    \pgfmathsetmacro{\sRootLeft}{-\sqThree / 2.0}
+    \pgfmathsetmacro{\sRootRight}{2.0 * \sqThree / 3.0}
+
+    \coordinate (O)        at (0, 0);
+    \coordinate (Pt_neg1)  at (-1.0, 1.0);  % (-1, 1)
+    \coordinate (Pt_pos1)  at (1.0, -1.0);  % (1, -1)
+    \coordinate (R_left)   at (\sRootLeft, 0);
+    \coordinate (R_right)  at (\sRootRight, 0);
+
+    % --- 2. sin theta の定義域 [-1, 1] の背景ハイライト ---
+    \fill[blue!5, opacity=0.8] (-1.0, -3.8) rectangle (1.0, 2.2);
+    \draw[dashed, gray!45] (-1.0, -3.8) -- (-1.0, 2.2);
+    \draw[dashed, gray!45] (1.0, -3.8) -- (1.0, 2.2);
+
+    % --- 3. 不等式 f(s) > 0 かつ -1 <= s <= 1 を満たす領域のハッチング ---
+    \fill[pattern=north east lines, pattern color=red!70, opacity=0.7]
+    (-1.0, 0) -- (-1.0, 1.0)
+    -- plot[domain=-1.0:\sRootLeft, samples=30] (\x, {2.0*\sqThree*\x*\x - \x - 2.0*\sqThree})
+    -- cycle;
+
+    % --- 4. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-1.45, 0) -- (1.55, 0) node[right] {$s$};
+    \draw[->, thick, gray!80!black] (0, -4.0) -- (0, 2.4) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 5. 放物線 y = f(s) = 2*sqrt(3)s^2 - s - 2*sqrt(3) ---
+    % 全体曲線
+    \draw[line width=1.6pt, blue!85!black, domain=-1.2:1.35, samples=90]
+    plot (\x, {2.0*\sqThree*\x*\x - \x - 2.0*\sqThree});
+    \node[blue!90!black, font=\footnotesize\bfseries, right] at (1.25, 2.0)
+    {$y = f(s) = 2\sqrt{3}s^2 - s - 2\sqrt{3}$};
+
+    % 条件を満たす部分 (f(s) > 0 かつ -1 <= s < -sqrt(3)/2) の太線強調
+    \draw[line width=2.4pt, red!85!black, domain=-1.0:\sRootLeft, samples=30]
+    plot (\x, {2.0*\sqThree*\x*\x - \x - 2.0*\sqThree});
+
+    % --- 6. 境界点・端点のプロットと投影破線 ---
+    % s = -1 における点 (-1, 1)
+    \draw[dashed, gray!60] (-1.0, 0) -- (Pt_neg1) -- (0, 1.0);
+    \fill[red!85!black] (Pt_neg1) circle (1.3pt);
+    \node[above left=1pt, font=\scriptsize, red!90!black] at (Pt_neg1) {$(-1, 1)$};
+    \node[below=2pt, font=\scriptsize] at (-1.0, 0) {$-1$};
+    \node[left=2pt, font=\scriptsize]  at (0, 1.0) {$1$};
+
+    % s = 1 における点 (1, -1)
+    \draw[dashed, gray!60] (1.0, 0) -- (Pt_pos1) -- (0, -1.0);
+    \fill[black] (Pt_pos1) circle (1.2pt);
+    \node[below right=1pt, font=\scriptsize] at (Pt_pos1) {$(1, -1)$};
+    \node[above=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[left=2pt, font=\scriptsize]  at (0, -1.0) {$-1$};
+
+    % 零点 s = -sqrt(3)/2 (開点: 白抜き丸)
+    \draw[thick, red!85!black, fill=white] (R_left) circle (1.5pt);
+    \node[below=4pt, font=\scriptsize\bfseries, red!90!black] at (R_left) {$-\frac{\sqrt{3}}{2}$};
+
+    % 零点 s = 2*sqrt(3)/3 (定義域外: 実点)
+    \fill[gray!70] (R_right) circle (1.2pt);
+    \node[below right=1pt, font=\scriptsize, gray!80!black] at (R_right) {$\frac{2\sqrt{3}}{3} > 1$};
+
+    % y 軸切片 (0, -2*sqrt(3))
+    \fill (0, {-2.0*\sqThree}) circle (1.0pt);
+    \node[right=2pt, font=\scriptsize, gray!80!black] at (0, {-2.0*\sqThree}) {$-2\sqrt{3}$};
+
+    % --- 7. 条件を満たす s の区間の矢印表示 ---
+    \draw[<->, line width=1.4pt, red!85!black] (-1.0, -0.45) -- (\sRootLeft, -0.45)
+    node[midway, below=1pt, font=\scriptsize\bfseries] {$-1 \le s < -\frac{\sqrt{3}}{2}$};
+
   \end{tikzpicture}
-  \caption{$y = f(S) = 2\sqrt{3}S^2 - S - 2\sqrt{3}$ のグラフ}
+  \caption{$y = f(s) = 2\sqrt{3}s^2 - s - 2\sqrt{3}$ のグラフと $f(s) > 0$ を満たす $s$ の範囲}
+  \label{fig:quadratic_inequality_sin_range}
 \end{figure}
+
+$-1 \le s \le 1$ も考えて，\cref{eq:3}をみたす条件は
+\begin{align}
+  -1 \le s < -\dfrac{\sqrt{3}}{2}
+  \therefore \quad
+  \dfrac{4}{3}\pi < \theta < \dfrac{5}{3}\pi
+\end{align}
+である．
+
+したがって一般角でまとめると，
+\begin{align}
+  \dfrac{4}{3}\pi + 2n\pi < \theta < \dfrac{5}{3}\pi + 2n\pi \quad (n \in \mathbb{Z})
+\end{align}
+である．
 
 \newpage
 

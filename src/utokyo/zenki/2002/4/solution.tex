@@ -1,48 +1,209 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
 {\bf [解]}
-$f(x)=\dfrac{x^2}{x^2+1}$，$f'(x)=\dfrac{2x}{(x^2+1)^2}$だから，$x=t$（$t\ne0$）での$C$の接線$\ell$の方向ベクトル$\vec\ell$は
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ ---
+    % 曲線: y = x^2 / (x^2 + 1)
+    % 例として t = 1.0 とする
+    % Q = (1, 1/2) = (1.0, 0.5)
+    % f'(1) = 2(1) / (1 + 1)^2 = 2/4 = 1/2
+    % 接線の傾き m = 1/2, 方向角 theta = atan(0.5) ≈ 26.565°
+    % 法線の傾き = -2
+    % 法線の方程式: y - 0.5 = -2(x - 1) => y = -2x + 2.5
+    % x = 0 のとき y = a = 2.5 (点 P(0, a))
+    \def\tVal{1.0}
+    \def\aVal{2.5}
+
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (0, \aVal);
+    \coordinate (Q) at (\tVal, 0.5);
+
+    % --- 2. 漸近線 y = 1 (破線) ---
+    \draw[dashed, gray!60, thick] (-2.2, 1.0) -- (2.4, 1.0)
+    node[right=2pt, font=\scriptsize, gray!90!black] {漸近線 $y = 1$};
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-2.3, 0) -- (2.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 3.1) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 曲線 C: y = x^2 / (x^2 + 1) ---
+    \draw[line width=1.8pt, blue!85!black, domain=-2.2:2.3, samples=100]
+    plot (\x, {(\x*\x)/(\x*\x + 1.0)});
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (1.6, {1.6*1.6/(1.6*1.6 + 1.0)})
+    {$C: y = \frac{x^2}{x^2+1}$};
+
+    % --- 5. 点 Q における接線 ell ---
+    % Q(1, 0.5) を通り傾き 0.5
+    \draw[thick, teal!85!black, domain=0.0:2.1]
+    plot (\x, {0.5*(\x - 1.0) + 0.5});
+    \node[teal!90!black, font=\footnotesize\bfseries, right] at (2.1, {0.5*(2.1 - 1.0) + 0.5})
+    {接線 $\ell$};
+
+    % --- 6. 法線 PQ (P と Q を結ぶ線分) ---
+    \draw[line width=1.6pt, red!85!black] (P) -- (Q);
+    \node[red!90!black, font=\scriptsize\bfseries, above right=1pt] at ($ (P)!0.45!(Q) $) {法線 $PQ$};
+
+    % --- 7. 直角記号 (PQ ⊥ ell) ---
+    % 接線の方向角 ≈ 26.57°
+    \pgfmathsetmacro{\angTan}{atan(0.5)}
+    \draw[thin, gray!70]
+    ($ (Q) + ({\angTan}:0.09) $) --
+    ($ (Q) + ({\angTan}:0.09) + ({\angTan+90}:0.09) $) --
+    ($ (Q) + ({\angTan+90}:0.09) $);
+
+    % --- 8. 投影破線と目盛り ---
+    % 点 Q から x 軸への投影
+    \draw[dashed, gray!60] (\tVal, 0) -- (Q) -- (0, 0.5);
+    \node[below=2pt, font=\scriptsize] at (\tVal, 0) {$t$};
+    \node[left=2pt, font=\scriptsize]  at (0, 0.5) {$f(t)$};
+
+    % 点 P(0, a)
+    \node[left=2pt, font=\scriptsize, red!90!black] at (P) {$a$};
+    \fill[red!85!black] (P) circle (1.2pt) node[above right=1pt, red!95!black] {$P(0, a)$};
+
+    % 点 Q(t, f(t))
+    \fill[black] (Q) circle (1.2pt) node[below right=2pt] {$Q(t, f(t))$};
+
+    % 漸近線の目盛り 1
+    \node[left=2pt, font=\scriptsize, gray!80!black] at (0, 1.0) {$1$};
+
+  \end{tikzpicture}
+  \caption{曲線 $y = f(x)$，点 $Q$ における接線 $\ell$，および法線 $PQ$ の配置}
+  \label{fig:normal_line_setup}
+\end{figure}
+
+与えられた曲線を
 \begin{align}
-  \vec\ell=
-  \begin{pmatrix}1\\\dfrac{2t}{(t^2+1)^2}
-  \end{pmatrix}
+  C: y = f(x) = \dfrac{x^2}{x^2+1} \label{eq:1}
 \end{align}
-である．また，
+とする．点$Q$を$Q(t,f(t))$とおく．
+\begin{align}
+  f'(x)=\dfrac{2x}{(x^2+1)^2}
+\end{align}
+だから，点$Q$における$C$の接線$\ell$の方向ベクトル$\vec\ell$は
+\begin{align}
+  \vec{\ell}=
+  \begin{pmatrix}1\\\dfrac{2t}{(t^2+1)^2}
+  \end{pmatrix} \label{eq:2}
+\end{align}
+である．
+一方で
 \begin{align}
   \overrightarrow{PQ}=
   \begin{pmatrix}t\\\dfrac{t^2}{t^2+1}-a
-  \end{pmatrix}
+  \end{pmatrix} \label{eq:3}
 \end{align}
-だから，$PQ\perp\ell$となる時，
+だから，$PQ\perp\ell$となる時，すなわち$\vec\ell\cdot\overrightarrow{PQ}=0$となる時
 \begin{align}
-  \vec\ell\cdot\overrightarrow{PQ}&=t+\dfrac{2t}{(t^2+1)^2}\left(\dfrac{t^2}{t^2+1}-a\right)\\
-  &=0\quad\cdots①
+  \vec\ell\cdot\overrightarrow{PQ}
+  =t+\dfrac{2t}{(t^2+1)^2}\left(\dfrac{t^2}{t^2+1}-a\right)
+  =0 \label{eq:4}
 \end{align}
+である．
 
-①をみたす$t\ne0$の存在条件をもとめる．$t\ne0$だから，①を変形して，
+\cref{eq:4}と$t\ne0$を満たす実数$t$の存在条件をもとめる．
+\cref{eq:4}の両辺を$t\ne 0$で割って
 \begin{align}
-  a=\dfrac{1}{2}(t^2+1)^2+\dfrac{t^2}{t^2+1}
+  a=\dfrac{1}{2}(t^2+1)^2+\dfrac{t^2}{t^2+1} \equiv g(t) \label{eq:5}
 \end{align}
-
-$y=a$と$y=(\text{右辺})$が$t\ne0$に共有点をもてばよい．$p=t^2+1$とおくと，$t\ne0\iff p>1$であり，右辺を$g(p)$とおくと，
+である．\cref{eq:5}の解は$ty$平面上での$y=a,y=g(t)$の共有点と等しいから，
+$t\ne 0$に共有点を持つ条件を調べる．
+そこで$g(t)$の挙動を調べる．
+$p=t^2+1$とおくと $t\ne0\iff p>1$ であり
 \begin{align}
   g(p)=\dfrac{1}{2}p^2+\dfrac{p-1}{p}=\dfrac{1}{2}p^2+1-\dfrac{1}{p}
 \end{align}
+および一階微分は
 \begin{align}
-  g'(p)=p+\dfrac{1}{p^2}
+  g'(p)=p+\dfrac{1}{p^2} > 0 \quad (p>1)
 \end{align}
+だから，$g(p)$従って$f(t)$は単調増加である．増減表およびグラフは以下のようになる．
 
-$p>0$で$g'(p)>0$だから，$g(p)$は単調増加．したがって，もとめる条件は，$p>1$の範囲で$g(p)$が$a$の値をとることと同値で，$g$が$(1,\infty)$上連続かつ単調増加であることから，
+\begin{table}[htb]
+  \centering
+  \caption{$g(t)$ の増減表 ($t \ge 0$)}
+  \label{tab:gt_monotonicity}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    $t$      & $0$         & $\cdots$   & $(\infty)$ \\ \hline
+    $p$      & $1$         & $\cdots$   & $(\infty)$ \\ \hline
+    $g'(p)$  &             & $+$        &            \\ \hline
+    $g(t)$   & $\dfrac{1}{2}$ & $\nearrow$ & $(\infty)$ \\ \hline
+  \end{tabular}
+\end{table}
+
+% TODO: y=g(t), y=aのグラフ
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=1.4cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 厳密なパラメータ設定 ---
+    % t_0 = 1.0 のとき:
+    % g(1) = 0.5*(1+1)^2 + 1/(1+1) = 2.0 + 0.5 = 2.5
+    % a = 2.5 とすれば厳密に一致する
+    \def\tZero{1.0}
+    \def\aVal{2.5}
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (MinPt) at (0, 0.5);
+    \coordinate (P_pos) at (\tZero, \aVal);
+    \coordinate (P_neg) at (-\tZero, \aVal);
+
+    % --- 2. a > 1/2 の許容領域（薄いハイライト）---
+    \fill[teal!6, opacity=0.8] (-2.2, 0.5) rectangle (2.2, 3.2);
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-2.3, 0) -- (2.4, 0) node[right] {$t$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 3.4) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 曲線 y = g(t) のプロット (偶関数) ---
+    % g(t) = 0.5*(t^2+1)^2 + t^2/(t^2+1)
+    \draw[line width=1.8pt, blue!85!black, domain=-1.2:1.2, samples=90]
+    plot (\x, {0.5*(\x*\x + 1.0)*(\x*\x + 1.0) + (\x*\x)/(\x*\x + 1.0)});
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (0.95, 2.9)
+    {$y = g(t) = \frac{1}{2}(t^2+1)^2 + \frac{t^2}{t^2+1}$};
+
+    % --- 5. 水平線 y = a (a = 2.5) ---
+    \draw[very thick, red!85!black] (-2.0, \aVal) -- (2.0, \aVal);
+    \node[red!90!black, font=\footnotesize\bfseries, right] at (2.0, \aVal) {$y = a$};
+    \node[left=2pt, font=\scriptsize, red!90!black] at (0, \aVal) {$a$};
+
+    % 下限の境界線 y = 1/2 (破線)
+    \draw[dashed, gray!60, thick] (-2.0, 0.5) -- (2.0, 0.5)
+    node[right=2pt, font=\scriptsize, gray!90!black] {$y = \frac{1}{2}$};
+
+    % --- 6. 厳密な交点 (±t_0, a) = (±1, 2.5) のプロットと投影破線 ---
+    \draw[dashed, gray!60] (\tZero, 0) -- (P_pos);
+    \draw[dashed, gray!60] (-\tZero, 0) -- (P_neg);
+
+    \fill[red!85!black] (P_pos) circle (1.3pt);
+    \fill[red!85!black] (P_neg) circle (1.3pt);
+
+    \node[below=2pt, font=\scriptsize, red!90!black] at (\tZero, 0) {$t_0 = 1$};
+    \node[below=2pt, font=\scriptsize, red!90!black] at (-\tZero, 0) {$-t_0 = -1$};
+
+    % 最小点 (0, 1/2) (t != 0 のため白抜き丸で明示)
+    \draw[thick, blue!85!black, fill=white] (MinPt) circle (1.4pt);
+    \node[left=2pt, font=\scriptsize, blue!90!black] at (0, 0.5) {$\frac{1}{2}$};
+    \node[below right=1pt, font=\tiny, blue!90!black] at (MinPt) {最小値 ($t=0$ 除外)};
+
+  \end{tikzpicture}
+  \caption{$y = g(t)$ のグラフと直線 $y = a$ の共有点（$a > \dfrac{1}{2}$ の条件）}
+  \label{fig:gt_level_set_intersection_exact}
+\end{figure}
+
+従って求める条件は
 \begin{align}
-  a>g(1)=\dfrac{1}{2}
+  a > g(t=0) = \dfrac{1}{2}
 \end{align}
-
-\bigskip
+である．
 
 \end{document}
