@@ -835,25 +835,9 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
                 fig.replace_with(fig_html)
                 fig_count += 1
 
-        # 6. \cref / \ref ノード置換 (図・表のスマート参照)
-        for ref_node in list(soup.find_all(['cref', 'ref'])):
-            if ref_node.args:
-                target = str(ref_node.args[0]).strip('{}')
-                if 'fig:' in target or target in fig_map:
-                    fig_num = fig_map.get(target, 1)
-                    ref_node.replace_with(f'[図{fig_num}](#{fig_anchors.get(target, target)})')
-                elif 'tab:' in target or target in tab_map:
-                    tab_num = tab_map.get(target, 1)
-                    ref_node.replace_with(f'[表{tab_num}](#{target})')
-                else:
-                    # $...$ で包むと、後段でこの \eqref がリンク化された際に、
-                    # たまたま前後に隣接する（無関係な）別の数式スパンの $ と
-                    # 誤ってペアリングされ、複数のインライン数式が 1 つに
-                    # 誤結合されてしまう恐れがある（\cref が地の文中で他の
-                    # 数式に囲まれている場合に発生）。$ の代わりに他の場所に
-                    # 出現し得ない制御文字のセンチネルで囲んでおき、リンク化
-                    # 後に一意に剥ぎ取れるようにする。
-                    ref_node.replace_with(f'\x00EQREF\x00\\eqref{{{target}}}\x00EQREF\x00')
+        # Resolve all references after parsing and fallback have collected the
+        # same figure/table maps. Resolving a comma-separated list here used to
+        # mistake it for one label and bypass the shared resolver below.
 
         # 6. \begin{enumerate} / \begin{description} / \begin{itemize} は MathJax の TeX 表示用に完全保持する
 
@@ -940,13 +924,28 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
             return fig_content
 
         md_body = re.sub(r'\\begin\{figure\}.*?\\end\{figure\}', replace_figure_fallback, md_body, flags=re.DOTALL)
-        # パーサ失敗時も、図のラベル参照を生成したアンカーへ向ける。
-        md_body = re.sub(
-            r'\\(?:cref|ref)\{([^}]+)\}',
-            lambda m: f'[図{fig_map[m.group(1)]}](#{fig_anchors[m.group(1)]})'
-            if m.group(1) in fig_anchors else m.group(0),
-            md_body,
-        )
+        # Tables need the same numbering map in the fallback path as in the
+        # parser path; leave references untouched until the shared final pass.
+        def replace_table_fallback(match):
+            nonlocal tab_count
+            code = match.group(0)
+            def argument(command):
+                found = re.search(r'\\' + command + r'\s*\{', code)
+                return _extract_braced(code, found.end() - 1)[0][1:-1] if found else ''
+            caption = argument('caption')
+            label = argument('label') or f'tab_{tab_count}'
+            tab_map[label] = tab_count
+            tabular = re.search(r'\\begin\{tabular\}.*?\\end\{tabular\}', code, re.DOTALL)
+            content = convert_tabular_block(tabular.group(0)) if tabular else ''
+            if caption:
+                html = (f'\n\n<figure id="{label}" class="table-wrapper">\n{content}\n'
+                        f'  <figcaption>\n\n表 {tab_count}: {caption}\n\n  </figcaption>\n</figure>\n\n')
+            else:
+                html = f'\n\n<div id="{label}" class="table-wrapper">\n{content}\n</div>\n\n'
+            tab_count += 1
+            return html
+
+        md_body = re.sub(r'\\begin\{table\}.*?\\end\{table\}', replace_table_fallback, md_body, flags=re.DOTALL)
         md_body = re.sub(r'\\begin\{(align\*?|gather\*?|equation\*?)\}(.*?)\\end\{\1\}', r'\n$$\n\\begin{\1}\2\\end{\1}\n$$\n', md_body, flags=re.DOTALL)
 
     # physics パッケージ \mqty マクロの標準 LaTeX 行列環境への変換
@@ -1127,7 +1126,13 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
             # 位置を計算済みの eq_numbers を最優先で使う。これに無ければ
             # 数式ラベルではない（図表ラベル等）とみなし、名前ベースの
             # 従来ロジックにフォールバックする。
-            if lbl in eq_numbers:
+            anchor = lbl
+            if lbl in fig_map:
+                label = f'図{fig_map[lbl]}'
+                anchor = fig_anchors.get(lbl, lbl)
+            elif lbl in tab_map:
+                label = f'表{tab_map[lbl]}'
+            elif lbl in eq_numbers:
                 label = f'(式{eq_numbers[lbl]})'
             elif 'eq' in lbl:
                 print(f"[tex_to_md] WARNING: no computed number for label '{lbl}' in {tex_path}; "
@@ -1143,12 +1148,16 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
                 label = lbl
             if in_math:
                 return label
-            return f'[{label}](#{lbl})'
+            return f'[{label}](#{anchor})'
 
         return ','.join(one(lbl) for lbl in raw_lbls)
 
     REF_RE = re.compile(r'\\(eqref|ref|cref)\{([^}]+)\}')
-    MATH_BLOCK_RE = re.compile(r'\$\$\n.*?\n\$\$', re.DOTALL)
+    # Both display and inline math must receive plain reference text, never
+    # Markdown links embedded inside TeX expressions.
+    MATH_BLOCK_RE = re.compile(
+        r'(?<!\\)\$\$.*?(?<!\\)\$\$|(?<!\\)\$(?!\$)(?:\\.|[^$\\])*(?<!\\)\$',
+        re.DOTALL)
 
     def _convert_refs(text, in_math):
         return REF_RE.sub(lambda m: replace_ref_links(m, in_math=in_math), text)

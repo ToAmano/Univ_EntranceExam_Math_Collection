@@ -9,8 +9,9 @@ from scratch import tex_to_md as converter
 
 
 @pytest.mark.parametrize('fallback', [False, True])
-def test_real_1989_6_keeps_three_separate_figures(tmp_path, fallback):
-    source = Path(__file__).resolve().parents[2] / 'src/utokyo/zenki/1989/6/solution.tex'
+@pytest.mark.parametrize('relative,count', [('src/utokyo/zenki/1989/6/solution.tex', 3), ('src/titech/zenki/1979/2/solution.tex', 1)])
+def test_real_tikz_loop_variables_keep_source_intact(tmp_path, fallback, relative, count):
+    source = Path(__file__).resolve().parents[2] / relative
     original = source.read_bytes()
     # Match the converter's comment removal, including the commented-out fourth figure.
     text = '\n'.join(re.sub(r'(?<!\\)%.*', '', line)
@@ -30,11 +31,11 @@ def test_real_1989_6_keeps_three_separate_figures(tmp_path, fallback):
     output = tmp_path / 'out.md'
     with patch.object(converter, 'compile_tikz_to_svg', compile_diagram), patch.object(converter, 'TexSoup', parse):
         converter.convert_tex_clean(str(source), str(output), {'type': 'solution'}, '/images', str(tmp_path / 'images'))
-    assert len(calls) == len(expected) == 3
+    assert len(calls) == len(expected) == count
     for (code, options), raw in zip(calls, expected):
         assert code == raw
         assert not options.get('figure_layout')
-    assert output.read_text().count('<img ') == 3
+    assert output.read_text().count('<img ') == count
     assert source.read_bytes() == original
 
 
