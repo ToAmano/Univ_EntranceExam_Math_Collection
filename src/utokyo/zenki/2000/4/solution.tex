@@ -1,113 +1,497 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} 以下 $y = \cos t, y = 1-vt$ とおく．
-P と線分 QR がぶつかるのは，$k \in \mathbb{Z}$ として，
+% 概要図: x^2+y^2=1と，y=1, \sqrt{3}/2の線
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ ---
+    \pgfmathsetmacro{\yMin}{sqrt(3.0)/2.0} % ≈ 0.8660
+    \coordinate (O) at (0, 0);
+
+    % 端点座標 (t = pi/3, 2pi/3)
+    \coordinate (End1) at (60:1.0);  % (0.5, sqrt(3)/2)
+    \coordinate (End2) at (120:1.0); % (-0.5, sqrt(3)/2)
+
+    % --- 2. 角度マーク用の動径（点線） ---
+    \draw[dashed, gray!60, thin] (O) -- (End1);
+    \draw[dashed, gray!60, thin] (O) -- (End2);
+
+    % 角度 pi/3 の弧 (内側: 半径 0.32)
+    \draw[->, thick, purple!80!black] (0.32, 0) arc (0:60:0.32);
+    \node[purple!90!black, font=\scriptsize] at (30:0.41) {$\frac{\pi}{3}$};
+
+    % 角度 2pi/3 の弧 (外側: 半径 0.48)
+    \draw[->, thick, teal!80!black] (0.48, 0) arc (0:120:0.48);
+    \node[teal!90!black, font=\scriptsize] at (105:0.58) {$\frac{2}{3}\pi$};
+
+    % --- 3. 衝突可能ゾーン（円弧のハイライト）---
+    % pi/3 <= t <= 2pi/3
+    \draw[line width=2.8pt, red!85!black] (60:1.0) arc (60:120:1.0);
+    \fill[red!85!black] (End1) circle (0.7pt);
+    \fill[red!85!black] (End2) circle (0.7pt);
+
+    % 端点の投影破線
+    \draw[dotted, gray!60] (0.5, 0) -- (End1);
+    \draw[dotted, gray!60] (-0.5, 0) -- (End2);
+    \node[below=2pt, font=\scriptsize, gray!80!black] at (0.5, 0) {$\frac{1}{2}$};
+    \node[below=2pt, font=\scriptsize, gray!80!black] at (-0.5, 0) {$-\frac{1}{2}$};
+
+    % タイトル表示（上方に十分な余白をとって配置）
+    \node[red!90!black, font=\footnotesize\bfseries, above=10pt] at (0, 1.05)
+    {衝突可能区間 $\left[\frac{\pi}{3}, \frac{2}{3}\pi\right]$};
+    \draw[->, thin, red!70!black] (0, 1.15) -- (0, 1.02);
+
+    % --- 4. 単位円 x^2 + y^2 = 1 (上半円) ---
+    \draw[thick, gray!55] (1.0, 0) arc (0:180:1.0);
+    \node[gray!75!black, font=\scriptsize, above left] at (-0.85, 0.55) {$x^2+y^2=1$};
+
+    % --- 5. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-1.35, 0) -- (1.55, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.15) -- (0, 1.45) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 軸目盛り
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[below=2pt, font=\scriptsize] at (-1.0, 0) {$-1$};
+    \node[left=2pt, font=\scriptsize, teal!90!black] at (0, 1.0) {$1$};
+    \node[left=2pt, font=\scriptsize, teal!90!black] at (0, \yMin) {$\frac{\sqrt{3}}{2}$};
+
+    % --- 6. 水平境界線 y = sqrt(3)/2 と y = 1 ---
+    \draw[dashed, teal!70!black] (-1.15, \yMin) -- (1.25, \yMin)
+    node[right=2pt, font=\scriptsize] {$y = \frac{\sqrt{3}}{2}$};
+    \draw[dashed, teal!70!black] (-1.15, 1.0) -- (1.25, 1.0)
+    node[right=2pt, font=\scriptsize] {$y = 1$};
+
+    % --- 7. 移動する線分 QR (x = 1 - vt) ---
+    % x = 0.18 に配置して Q, R, P のラベルが干渉しないよう調整
+    \def\xPos{0.18}
+    \coordinate (Q_pt) at (\xPos, 1.0);
+    \coordinate (R_pt) at (\xPos, \yMin);
+
+    \draw[line width=2.4pt, blue!85!black] (R_pt) -- (Q_pt);
+    \fill[blue!90!black] (Q_pt) circle (0.8pt);
+    \fill[blue!90!black] (R_pt) circle (0.8pt);
+
+    % ラベル位置を右側に逃がして配置
+    \node[right=3pt, font=\scriptsize, blue!90!black] at (Q_pt) {$Q(1-vt, 1)$};
+    \node[right=3pt, font=\scriptsize, blue!90!black] at (R_pt) {$R\left(1-vt, \frac{\sqrt{3}}{2}\right)$};
+
+    % 左向き速度矢印 (線分の左側にすっきり配置)
+    \draw[->, thick, blue!85!black] (\xPos - 0.04, 0.93) -- (\xPos - 0.28, 0.93)
+    node[midway, below=1pt, font=\tiny] {速度 $v$};
+
+    % --- 8. 動点 P(cos t, sin t) ---
+    % 偏角 78° 付近
+    \coordinate (P_pt) at (78:1.0);
+    \fill[red!85!black] (P_pt) circle (1.1pt);
+    \node[above right=1pt, red!95!black, font=\scriptsize\bfseries] at (P_pt) {$P(\cos t, \sin t)$};
+    % 進行方向矢印
+    \draw[->, thick, red!85!black] (72:1.0) arc (72:86:1.0);
+
+  \end{tikzpicture}
+  \caption{単位円上の動点 $P$ と水平移動する線分 $QR$ の配置}
+  \label{fig:circular_motion_segment_collision}
+\end{figure}
+
+時刻$t$における線分$QR$の方程式は
+\begin{align}
+  x = 1 - vt \\
+  \dfrac{\sqrt{3}}{2} \le y \le 1
+\end{align}
+だから，これと点$P(\cos t,\sin t)$がぶつかる条件は
 \begin{align}
   \begin{cases}
-    2k\pi + \dfrac{\pi}{3} \le t \le 2k\pi + \dfrac{2}{3}\pi \\
-    \cos t = 1 - vt
-  \end{cases} \cdots \text{①}
-\end{align}
-をみたす時である．
-
-\paragraph{(1)}
-
-$0 \le t \le 2\pi$ で①をみたす $t$ がない時，まず $k=0$ として良い．
-$y = \cos t$， $y = 1 - vt$ が共有点を持たない条件をもとめれば良い．
-$t = \alpha$ における $y = \cos t$ の接線は $(y') = -\sin t$ から
-\begin{align}
-  y &= -\sin\alpha(t - \alpha) + \cos\alpha
-\end{align}
-これが $(0,1)$ を通る時，
-\begin{align}
-  \alpha\sin\alpha + \cos\alpha &= 1 \cdots \text{②}
-\end{align}
-この左辺 $f(\alpha)$ とすると
-\begin{align}
-  f'(\alpha) &= \alpha\cos\alpha
-\end{align}
-だから，下表をうる．
-
-\begin{table}[htb]
-  \centering
-  \begin{tabular}{|c|c|c|c|c|c|}
-    \hline
-    $\alpha$ & $0$ & $\cdots$ & $\dfrac{\pi}{2}$ & $\cdots$ & $\dfrac{2}{3}\pi$ \\
-    \hline
-    $f'$ & & $+$ & $0$ & $-$ & \\
-    \hline
-    $f$ & $1$ & $\nearrow$ & $\dfrac{\pi}{2}$ & $\searrow$ & $\dfrac{\sqrt{3}}{3}\pi - \dfrac{1}{2}$ \\
-    \hline
-  \end{tabular}
-  \caption{$f(\alpha)$の増減表（$0\le\alpha\le\dfrac{2}{3}\pi$）}
-\end{table}
-
-$\left( \dfrac{\sqrt{3}}{3}\pi - \dfrac{1}{2} > 1 \iff \pi^2 > \dfrac{27}{4} \text{ で，}\pi=3.14\dots \text{ からこれは成立} \right)$
-したがって，$\left[\dfrac{\pi}{3}, \dfrac{2}{3}\pi\right]$ では $f(\alpha) > 1$ だから，②をみたす $\alpha$ はないので，図から求める条件は，
-\begin{align}
-  -\dfrac{\dfrac{3}{2}}{\dfrac{2}{3}\pi} &> -v, \quad -v > -\dfrac{\dfrac{1}{2}}{\dfrac{1}{3}\pi} \quad \therefore v < \dfrac{3}{2\pi}, v > \dfrac{9}{4\pi}
-\end{align}
-
-\paragraph{(2)}
-
-$y = \cos t$ と $y = 1 - vt$ が，①の区間内でただ1度交わる条件をしらべる．
-ここで，$f(\alpha)$ について，$\left[2k\pi, (2k+\dfrac{2}{3})\pi\right]$ での増減表は下図
-
-\begin{table}[htb]
-  \centering
-  \begin{tabular}{|c|c|c|c|c|c|}
-    \hline
-    $\alpha$ & $2k\pi$ & $\cdots$ & $(2k+\dfrac{1}{2})\pi$ & $\cdots$ & $(2k+\dfrac{2}{3})\pi$ \\
-    \hline
-    $f'$ & & $+$ & $0$ & $-$ & \\
-    \hline
-    $f$ & $1$ & $\nearrow$ & $(2k+\dfrac{1}{2})\pi$ & $\searrow$ & $\sqrt{3}(k+\dfrac{1}{3})\pi - \dfrac{1}{2}$ \\
-    \hline
-  \end{tabular}
-  \caption{$f(\alpha)$の増減表（区間$[2k\pi,(2k+\dfrac{2}{3})\pi]$）}
-\end{table}
-
-$\left( \sqrt{3}(k+\dfrac{1}{3})\pi - \dfrac{1}{2} > \dfrac{\sqrt{3}}{3}\pi - \dfrac{1}{2} > 1 \right)$
-したがって，$\left[(2k+\dfrac{1}{3})\pi, (2k+\dfrac{2}{3})\pi\right]$ では $1 < f(\alpha)$ で，①をみたす $\alpha$ は存在しないので，上のグラフから，
-区間 $[2k\pi, 2(k+1)\pi]$ で1回 P と QR がぶつかる条件は
-\begin{align}
-  \dfrac{-\dfrac{3}{2}}{(2k+\dfrac{2}{3})\pi} \le -v \le \dfrac{-\dfrac{1}{2}}{(2k+\dfrac{1}{3})\pi}
-\end{align}
-\begin{align}
-  \dfrac{1}{2(2k+\dfrac{1}{3})\pi} \le v \le \dfrac{3}{2(2k+\dfrac{2}{3})\pi} \cdots \text{②}
-\end{align}
-である．したがって，②をみたす $k \in \mathbb{Z}_{\ge 0}$ がただ1つある $v$ の範囲を求めれば良い．②を図示すると右上図
-$\left( \dfrac{1}{2(2k+1/3)\pi} \le \dfrac{3}{2(2k+4+2/3)\pi} \iff \dfrac{11}{12} \le k \text{ 及び②の両辺が } k \text{ の単調減少関数であることから } 2 \le k \text{ の時，②をみたす } k \text{ がただ1つあることはありえない．} \right)$
-したがって，求める範囲は，
-\begin{align}
-  \dfrac{9}{28\pi} < v \le \dfrac{9}{16\pi}, \quad \dfrac{3}{2\pi} < v \le \dfrac{9}{4\pi}
+    \cos t = 1 - vt \\
+    \dfrac{\sqrt{3}}{2} \le \sin t \le 1
+  \end{cases}
+  \begin{cases}
+    \cos t = 1 - vt \\
+    2k\pi + \dfrac{\pi}{3} \le t \le 2k\pi + \dfrac{2}{3}\pi \quad (k\in \mathbb{Z}_{\ge 0})
+  \end{cases} \label{eq:1}
 \end{align}
 である．
 
+\paragraph{(1)}
+
+$0 \le t \le 2\pi$ で\cref{eq:1}をみたす $t$ がない時を考える．
+まず\cref{eq:1}で $k=0$ のみ考えれば良い．すると\cref{eq:1}は
+\begin{align}
+  \begin{cases}
+    \cos t = 1 - vt \\
+    \dfrac{\pi}{3} \le t \le \dfrac{2}{3}\pi
+  \end{cases} \label{eq:2}
+\end{align}
+だから，これが解を持たない条件を考えよう．これは$ty$平面において，
+曲線$y=\cos t, y=1-vt$が$\dfrac{\pi}{3} \le t \le \dfrac{2}{3}\pi$
+で共有点を持たなければ良い．
+
+% TODO: $y=\cos t, y=1-vt$が$\dfrac{\pi}{3} \le t \le \dfrac{2}{3}\pi$の図
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}
-    \draw[->] (-0.5,0) -- (6,0) node[right] {$k$};
-    \draw[->] (0,-0.5) -- (0,4) node[above] {$v\pi$};
-    \draw (1,0) -- (1,3.5);
-    \draw (2,0) -- (2,3.5);
-    \node at (1,0) [below] {$1$};
-    \node at (2,0) [below] {$2$};
-    \node at (3,0) [below] {$k$};
-    \node at (4,0) [below] {$k+1$};
-    \node at (5,0) [below] {$k+2$};
-    \draw[dashed] (3,0) -- (3,2);
-    \draw[dashed] (4,0) -- (4,1.5);
-    \draw[dashed] (5,0) -- (5,1);
-    \draw[thick] (0.5,3.5) .. controls (1,1.5) and (3,1) .. (5.5,0.5);
-    \draw[thick] (0.5,2.5) .. controls (1,1) and (3,0.7) .. (5.5,0.3);
+  \begin{tikzpicture}[x=2.2cm, y=1.8cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ ---
+    % pi/3 ≈ 1.047, 2pi/3 ≈ 2.094
+    \def\piOneThird{1.0472}
+    \def\piTwoThird{2.0944}
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (P_top) at (0, 1.0);                              % (0, 1)
+    \coordinate (P_end1) at (\piOneThird, 0.5);                   % (pi/3, 1/2)
+    \coordinate (P_end2) at (\piTwoThird, -0.5);                  % (2pi/3, -1/2)
+
+    % --- 2. 衝突可能区間 [pi/3, 2pi/3] のハイライト背景 ---
+    \fill[red!6, opacity=0.8] (\piOneThird, -1.15) rectangle (\piTwoThird, 1.15);
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (2.6, 0) node[right] {$t$};
+    \draw[->, thick, gray!80!black] (0, -1.25) -- (0, 1.35) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 曲線 y = cos t ---
+    % 全体 (薄い実線)
+    \draw[thick, gray!50, domain=0:3, samples=60] plot (\x, {cos(\x r)});
+    % 衝突区間 [pi/3, 2pi/3] の部分 (赤太線強調)
+    \draw[line width=2.0pt, red!85!black, domain=\piOneThird:\piTwoThird, samples=50]
+    plot (\x, {cos(\x r)});
+    \node[red!90!black, font=\footnotesize\bfseries, above right] at (1.5, {cos(1.5 r)}) {$y = \cos t$};
+
+    % --- 5. 境界直線 y = 1 - vt ---
+    % (i) (pi/3, 1/2) を通る直線: 傾き -v = - (1/2)/(pi/3) = -3/(2pi) => v = 3/(2pi) ≈ 0.477
+    \draw[very thick, teal!85!black, domain=0:2.4]
+    plot (\x, {1.0 - (0.5/\piOneThird)*\x});
+    \node[teal!90!black, font=\scriptsize, right] at (2.4, {1.0 - (0.5/\piOneThird)*2.4})
+    {$v = \frac{3}{2\pi}$};
+
+    % (ii) (2pi/3, -1/2) を通る直線: 傾き -v = - (3/2)/(2pi/3) = -9/(4pi) => v = 9/(4pi) ≈ 0.716
+    \draw[very thick, purple!85!black, domain=0:2.4]
+    plot (\x, {1.0 - (1.5/\piTwoThird)*\x});
+    \node[purple!90!black, font=\scriptsize, right] at (2.4, {1.0 - (1.5/\piTwoThird)*2.4})
+    {$v = \frac{9}{4\pi}$};
+
+    % --- 6. 端点プロットと投影破線 ---
+    % (0, 1)
+    \fill[black] (P_top) circle (1.2pt) node[left=2pt] {$1$};
+
+    % 端点 (pi/3, 1/2)
+    \draw[dashed, gray!60] (\piOneThird, 0) -- (P_end1) -- (0, 0.5);
+    \fill[red!85!black] (P_end1) circle (1.4pt);
+    \node[below=2pt, font=\scriptsize] at (\piOneThird, 0) {$\frac{\pi}{3}$};
+    \node[left=2pt, font=\scriptsize]  at (0, 0.5) {$\frac{1}{2}$};
+
+    % 端点 (2pi/3, -1/2)
+    \draw[dashed, gray!60] (\piTwoThird, 0) -- (P_end2) -- (0, -0.5);
+    \fill[red!85!black] (P_end2) circle (1.4pt);
+    \node[above=2pt, font=\scriptsize] at (\piTwoThird, 0) {$\frac{2}{3}\pi$};
+    \node[left=2pt, font=\scriptsize]  at (0, -0.5) {$-\frac{1}{2}$};
+
   \end{tikzpicture}
-  \caption{条件②を満たす$v\pi$の範囲（$k$を横軸に取った境界曲線）}
+  \caption{$ty$ 平面における $y = \cos t$ と直線 $y = 1 - vt$ の位置関係（解を持たない条件）}
+  \label{fig:cos_linear_intersection}
 \end{figure}
+
+許容される$v$の範囲を調べるため，まずは$y=\cos t$の接線で$(0,1)$を通るものがあるかを調べる．$(\cos t)'=-\sin t$だから$y=\sin t$の$t=\alpha$における接線は
+\begin{align}
+  y &= -\sin\alpha(t - \alpha) + \cos\alpha
+\end{align}
+である．これが $(0,1)$ を通る時，
+\begin{align}
+  \alpha\sin\alpha + \cos\alpha - 1 = 0 \label{eq:3}
+\end{align}
+である．この左辺 $f(\alpha)$ とすると
+\begin{align}
+  f'(\alpha) &= \alpha\cos\alpha
+\end{align}
+だから，$f(x)$の増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$f(\alpha) = \alpha\sin\alpha + \cos\alpha - 1$ の増減表（$\dfrac{\pi}{3} \le \alpha \le \dfrac{2}{3}\pi$）}
+  \label{tab:f_alpha_monotonicity_part1}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    $\alpha$   & $\dfrac{\pi}{3}$ & $\cdots$   & $\dfrac{\pi}{2}$     & $\cdots$   & $\dfrac{2}{3}\pi$ \\ \hline
+    $f'(\alpha)$ & $+$              & $+$        & $0$                  & $-$        & $-$ \\ \hline
+    $f(\alpha)$  & $\dfrac{\sqrt{3}\pi - 3}{6}$ & $\nearrow$ & $\dfrac{\pi}{2} - 1$ & $\searrow$ & $\dfrac{2\sqrt{3}\pi - 9}{6}$ \\ \hline
+  \end{tabular}
+\end{table}
+
+したがって，$\left[\dfrac{\pi}{3}, \dfrac{2}{3}\pi\right]$ では $f(\alpha) > 0$ だから\cref{eq:3}を満たす $\alpha$ は存在しない．
+よって$y=1-vt$の傾きの最大最小値は端点
+\begin{align}
+  (t,p)=\left(\dfrac{\pi}{3},\dfrac{1}{2}\right), \left(\dfrac{2\pi}{3},-\dfrac{1}{2}\right)
+\end{align}
+でとるから，求める条件は
+\begin{align}
+  -\dfrac{3/2}{2\pi/3} &> -v, \quad -v > -\dfrac{1/2}{\pi/3} \quad \therefore v < \dfrac{3}{2\pi}, v > \dfrac{9}{4\pi}
+\end{align}
+である．
+
+\paragraph{(2)}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.1cm, y=1.6cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. グリッド線（手書きスケッチの格子破線）---
+    % 水平グリッド: y = 1, 1/2, 0, -1/2, -1
+    \foreach \y in {-1.0, -0.5, 0.0, 0.5, 1.0} {
+      \draw[dashed, gray!35] (-0.3, \y) -- (14.2, \y);
+    }
+    % 垂直グリッド: 各周期の主要な t
+    % t = pi/3, 2pi/3, 2pi, 2pi+pi/3, 2pi+2pi/3, 4pi, 4pi+pi/3, 4pi+2pi/3
+    \foreach \t in {
+      1.047, 2.094, 6.283, 7.330, 8.378, 12.566, 13.614
+    } {
+      \draw[dashed, gray!30] (\t, -1.15) -- (\t, 1.25);
+    }
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (14.6, 0) node[right] {$t$};
+    \draw[->, thick, gray!80!black] (0, -1.25) -- (0, 1.45) node[above] {$P$ ($y$)};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 目盛り
+    \node[left=2pt, font=\scriptsize] at (0, 1.0) {$1$};
+    \node[left=2pt, font=\scriptsize] at (0, 0.5) {$\frac{1}{2}$};
+    \node[left=2pt, font=\scriptsize] at (0, -0.5) {$-\frac{1}{2}$};
+    \node[left=2pt, font=\scriptsize] at (0, -1.0) {$-1$};
+
+    % --- 3. 曲線 y = cos t (全体は薄い破線) ---
+    \draw[dashed, gray!55, thick, domain=0:14.2, samples=160]
+    plot (\x, {cos(\x r)});
+
+    % --- 4. 衝突可能区間 (太線実線と両端の黒丸) ---
+    % k = 0: [pi/3, 2pi/3]
+    \draw[line width=2.2pt, blue!85!black, domain=1.0472:2.0944, samples=40]
+    plot (\x, {cos(\x r)});
+    \fill[black] (1.0472, 0.5) circle (1.5pt);
+    \fill[black] (2.0944, -0.5) circle (1.5pt);
+
+    % k = 1: [2pi + pi/3, 2pi + 2pi/3] = [7.330, 8.378]
+    \draw[line width=2.2pt, blue!85!black, domain=7.3304:8.3776, samples=40]
+    plot (\x, {cos(\x r)});
+    \fill[black] (7.3304, 0.5) circle (1.5pt);
+    \fill[black] (8.3776, -0.5) circle (1.5pt);
+
+    % k = 2: [4pi + pi/3, 4pi + 2pi/3] = [13.614, 14.661]
+    \draw[line width=2.2pt, blue!85!black, domain=13.6136:14.2, samples=30]
+    plot (\x, {cos(\x r)});
+    \fill[black] (13.6136, 0.5) circle (1.5pt);
+
+    % 周期ラベル
+    \node[below=2pt, font=\scriptsize, teal!90!black] at (1.57, -1.15) {$k=0$};
+    \node[below=2pt, font=\scriptsize, teal!90!black] at (7.85, -1.15) {$k=1$};
+    \node[below=2pt, font=\scriptsize, teal!90!black] at (13.8, -1.15) {$k=2$};
+
+    % --- 5. 点 (0, 1) からの直線 y = 1 - vt (手書きの直線群) ---
+    % (i) k = 0 の区間を通る直線 (例: v = 0.6)
+    \draw[thick, red!85!black, domain=0:3.6]
+    plot (\x, {1.0 - 0.6*\x});
+    \node[red!90!black, font=\scriptsize, below right] at (3.0, -0.8) {$k=0$ と交差};
+
+    % (ii) k = 1 の区間を通る直線 (例: v = 0.16)
+    \draw[thick, dashed, teal!85!black, domain=0:12.5]
+    plot (\x, {1.0 - 0.16*\x});
+    \node[teal!90!black, font=\scriptsize, above right] at (9.5, -0.5) {$k=1$ と交差};
+
+    \fill[black] (0, 1.0) circle (1.4pt);
+
+  \end{tikzpicture}
+  \caption{周期的な余弦波上の衝突区間（太線部）と直線 $y = 1 - vt$ の交差}
+  \label{fig:periodic_cosine_collision_intervals}
+\end{figure}
+
+(1)と同様に考えて $y = \cos t$ と $y = 1 - vt$ が
+\cref{eq:1}の区間内でただ1度交わる条件をしらべる．
+ここで\cref{eq:3}の$f(\alpha)$ について $\left[2k\pi, (2k+\dfrac{2}{3})\pi\right]$ での増減表は下図である．
+
+\begin{table}[htb]
+  \centering
+  \caption{$f(\alpha)$ の増減表（区間 $\left[2k\pi + \dfrac{\pi}{3}, \, 2k\pi + \dfrac{2}{3}\pi\right]$）}
+  \label{tab:f_alpha_general_interval}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    $\alpha$ & $2k\pi + \dfrac{\pi}{3}$ & $\cdots$ & $2k\pi + \dfrac{\pi}{2}$ & $\cdots$ & $2k\pi + \dfrac{2}{3}\pi$ \\ \hline
+    $f'(\alpha)$ & $+$ & $+$ & $0$ & $-$ & $-$ \\ \hline
+    $f(\alpha)$  & $\sqrt{3}(k+\dfrac{1}{3})-\dfrac{1}{2}(>0)$ & $\nearrow$ & 最大値 $(>0)$ & $\searrow$ & $ \sqrt{3}(k+\dfrac{1}{3})\pi - \dfrac{3}{2}(>0)$ \\ \hline
+  \end{tabular}
+\end{table}
+
+したがって，$\left[(2k+\dfrac{1}{3})\pi, (2k+\dfrac{2}{3})\pi\right]$ の区間では $0 < f(\alpha)$ で\cref{eq:3}をみたす $\alpha$ は存在しないので，上のグラフから，区間 $[2k\pi, 2(k+1)\pi]$ で1回 $P$ と $QR$ がぶつかる条件は
+\begin{align}
+  & \dfrac{-\dfrac{3}{2}}{(2k+\dfrac{2}{3})\pi} \le -v \le \dfrac{-\dfrac{1}{2}}{(2k+\dfrac{1}{3})\pi} \\
+  & \dfrac{1}{2(2k+\dfrac{1}{3})\pi} \le v \le \dfrac{3}{2(2k+\dfrac{2}{3})\pi} \label{eq:4}
+\end{align}
+である．
+
+したがって\cref{eq:4}をみたす $k \in \mathbb{Z}_{\ge 0}$ がただ1つある $v$ の範囲を求めれば良い．\cref{eq:4}を図示すると下図のようになる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.8cm, y=1.5cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (4.8, 0) node[right] {$k$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 2.7) node[above] {$v\pi$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 上端関数: v*pi = 3 / [2*(2k + 2/3)] = 9 / [4*(3k + 1)]
+    % 下端関数: v*pi = 1 / [2*(2k + 1/3)] = 3 / [2*(6k + 1)]
+
+    % --- 2. 帯領域のプロット (k >= 0) ---
+    % 上端曲線 (赤実線)
+    \draw[line width=1.6pt, red!85!black, domain=0:4.3, samples=80]
+    plot (\x, {9.0 / (4.0*(3.0*\x + 1.0))});
+    \node[red!90!black, font=\scriptsize\bfseries, right] at (4.3, {9.0/(4.0*(3.0*4.3+1.0))})
+    {上端: $\frac{3}{2(2k+2/3)}$};
+
+    % 下端曲線 (青実線)
+    \draw[line width=1.6pt, blue!85!black, domain=0:4.3, samples=80]
+    plot (\x, {3.0 / (2.0*(6.0*\x + 1.0))});
+    \node[blue!90!black, font=\scriptsize\bfseries, right] at (4.3, {3.0/(2.0*(6.0*4.3+1.0))})
+    {下端: $\frac{1}{2(2k+1/3)}$};
+
+    % --- 3. 各整数点 k = 0, 1, 2 における縦区間（太線バー）---
+    % k = 0: [3/2, 9/4] = [1.5, 2.25]
+    \draw[line width=3.0pt, teal!85!black] (0, 1.5) -- (0, 2.25);
+    \node[left=2pt, font=\scriptsize, teal!90!black] at (0, 2.25) {$\frac{9}{4}$};
+    \node[left=2pt, font=\scriptsize, teal!90!black] at (0, 1.5)  {$\frac{3}{2}$};
+
+    % k = 1: [3/14, 9/16] ≈ [0.214, 0.563]
+    \draw[line width=3.0pt, teal!85!black] (1, {3.0/14.0}) -- (1, {9.0/16.0});
+    \draw[dashed, gray!50] (1, 0) -- (1, {3.0/14.0});
+    \node[above right=-1pt, font=\scriptsize, teal!90!black] at (1, {9.0/16.0}) {$\frac{9}{16}$};
+    \node[below right=-1pt, font=\scriptsize, teal!90!black] at (1, {3.0/14.0}) {$\frac{3}{14}$};
+
+    % k = 2: [3/26, 9/28] ≈ [0.115, 0.321]
+    \draw[line width=3.0pt, teal!85!black] (2, {3.0/26.0}) -- (2, {9.0/28.0});
+    \draw[dashed, gray!50] (2, 0) -- (2, {3.0/26.0});
+    \node[above right=-1pt, font=\scriptsize, teal!90!black] at (2, {9.0/28.0}) {$\frac{9}{28}$};
+
+    % 目盛り
+    \node[below=2pt, font=\scriptsize] at (0, 0) {$0$};
+    \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
+    \node[below=2pt, font=\scriptsize] at (2, 0) {$2$};
+    \node[below=2pt, font=\scriptsize] at (3, 0) {$3$};
+
+  \end{tikzpicture}
+  \caption{条件式を満たす $v\pi$ の範囲と各整数 $k$ での区間}
+  \label{fig:vk_bands_plot}
+\end{figure}
+
+さて，$k \ge 2$の時を考える．\cref{eq:4}において$k,k+2$の時の範囲は
+\begin{align}
+  \dfrac{1}{2(2k+\dfrac{1}{3})\pi} \le v \le \dfrac{3}{2(2k+\dfrac{2}{3})\pi} \\
+  \therefore
+  \dfrac{1}{2(2k+4+\dfrac{1}{3})\pi} \le v \le \dfrac{3}{2(2k+4+\dfrac{2}{3})\pi}
+\end{align}
+で，前者の下端と後者の上端に対して，
+\begin{align}
+  \dfrac{1}{2(2k+1/3)\pi} \le \dfrac{3}{2(2k+4+2/3)\pi} \iff \dfrac{11}{12} \le k
+\end{align}
+だから，常に後者の上端の方が値が大きい．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.0, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ ---
+    % 交点: k = 11/12 ≈ 0.9167 (y_{1,low} = y_{2,up})
+    \def\kCross{0.9167}
+    \def\yCross{0.2308}
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (Cross) at (\kCross, \yCross);
+
+    % --- 2. 帯領域の塗りつぶし ---
+    % (i) k 回目の帯: [y_{1,low}, y_{1,up}] (薄い青)
+    % y_{1,up}  = 2.25 / (3k + 1)
+    % y_{1,low} = 1.5  / (6k + 1)
+    \fill[blue!15, opacity=0.7]
+    plot[domain=0.05:3.6, samples=60] (\x, {2.25 / (3.0*\x + 1.0)})
+    -- plot[domain=3.6:0.05, samples=60] (\x, {1.5 / (6.0*\x + 1.0)})
+    -- cycle;
+
+    % (ii) k+2 回目の帯: [y_{2,low}, y_{2,up}] (薄い赤/オレンジ)
+    % y_{2,up}  = 4.5 / (6k + 14)
+    % y_{2,low} = 1.5 / (6k + 13)
+    \fill[red!15, opacity=0.7]
+    plot[domain=0.05:3.6, samples=60] (\x, {4.5 / (6.0*\x + 14.0)})
+    -- plot[domain=3.6:0.05, samples=60] (\x, {1.5 / (6.0*\x + 13.0)})
+    -- cycle;
+
+    % (iii) 2つの帯が重なる領域: [y_{1,low}, y_{2,up}] (k >= 11/12 で重複, 紫斜線ハッチング)
+    \fill[pattern=north east lines, pattern color=purple!85, opacity=0.7]
+    plot[domain=\kCross:3.6, samples=50] (\x, {4.5 / (6.0*\x + 14.0)})
+    -- plot[domain=3.6:\kCross, samples=50] (\x, {1.5 / (6.0*\x + 1.0)})
+    -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (4.0, 0) node[right] {$k$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 2.5) node[above] {$y$ ($v\pi$)};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 境界曲線のプロット ---
+    % k 回目の上端・下端 (青系)
+    \draw[line width=1.4pt, blue!85!black, domain=0.05:3.7, samples=70]
+    plot (\x, {2.25 / (3.0*\x + 1.0)});
+    \node[blue!90!black, font=\scriptsize\bfseries, above right] at (1.8, {2.25/(3.0*1.8+1.0)})
+    {$k$ 回目の上端};
+
+    \draw[line width=1.4pt, blue!85!black, domain=0.05:3.7, samples=70]
+    plot (\x, {1.5 / (6.0*\x + 1.0)});
+    \node[blue!90!black, font=\scriptsize\bfseries, below right] at (2.4, {1.5/(6.0*2.4+1.0)})
+    {$k$ 回目の下端};
+
+    % k+2 回目の上端・下端 (赤系)
+    \draw[line width=1.4pt, red!85!black, domain=0.05:3.7, samples=70]
+    plot (\x, {4.5 / (6.0*\x + 14.0)});
+    \node[red!90!black, font=\scriptsize\bfseries, above right] at (2.4, {4.5/(6.0*2.4+14.0)})
+    {$k+2$ 回目の上端};
+
+    \draw[line width=1.4pt, red!85!black, domain=0.05:3.7, samples=70]
+    plot (\x, {1.5 / (6.0*\x + 13.0)});
+    \node[red!90!black, font=\scriptsize\bfseries, below right] at (1.8, {1.5/(6.0*1.8+13.0)})
+    {$k+2$ 回目の下端};
+
+    % --- 5. 交点 (11/12, 3/13) のプロットと投影破線 ---
+    \draw[dashed, gray!60] (\kCross, 0) -- (Cross) -- (0, \yCross);
+    \fill[purple!90!black] (Cross) circle (1.5pt);
+    \node[above=3pt, font=\scriptsize\bfseries, purple!95!black] at (Cross)
+    {交点 $\left(\frac{11}{12}, \frac{3}{13}\right)$};
+
+    \node[below=2pt, font=\scriptsize] at (\kCross, 0) {$\frac{11}{12}$};
+    \node[left=2pt, font=\scriptsize]  at (0, \yCross) {$\frac{3}{13}$};
+
+    % --- 6. 整数点 k = 1, 2 での重複バー ---
+    \foreach \kval in {1, 2} {
+      \draw[dotted, gray!60] (\kval, 0) -- (\kval, 0.9);
+      \node[below=2pt, font=\scriptsize] at (\kval, 0) {$k = \kval$};
+    }
+
+  \end{tikzpicture}
+  \caption{$k$ 回目の許容帯と $k+2$ 回目の許容帯の重なり合い（$k \ge \dfrac{11}{12}$ での重複）}
+  \label{fig:ky_plane_bands_overlap}
+\end{figure}
+
+またこれらが単調減少関数であることから，$2 \le k$の時に\cref{eq:4}を満たす$k$がただ一つあることはない．従って$k=0,1$の時のみ考えればよく
+\begin{align}
+  \begin{cases}
+    k=0 \text{の時}: \dfrac{3}{2\pi}  \le v \le \dfrac{9}{4\pi} \\
+    k=1 \text{の時}: \dfrac{3}{14\pi} \le v \le \dfrac{9}{16\pi}
+  \end{cases}
+\end{align}
+である．このうち$k=2$の上端$\dfrac{9}{16\pi}$までは除くので，求める範囲は
+\begin{align}
+  \dfrac{9}{28\pi} < v \le \dfrac{9}{16\pi}, \quad \dfrac{3}{2\pi}  \le v \le \dfrac{9}{4\pi}
+\end{align}
+である．
 
 \end{document}

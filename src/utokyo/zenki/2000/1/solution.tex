@@ -1,79 +1,214 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]}右のような座標をおく．対称性から，
-楕円の中心 $D(0,a)$ とすると，$b>0$ として，
-楕円の方程式は
+% TODO: 三角形ABCとそれに接する楕円
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ (最大面積時の厳密値) ---
+    % b = 1/sqrt(3) ≈ 0.5774
+    % a = (1 - b^2)/2 = 1/3 ≈ 0.3333
+    \pgfmathsetmacro{\bVal}{1.0 / sqrt(3.0)}
+    \pgfmathsetmacro{\aVal}{1.0 / 3.0}
+
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (0, 1.0);
+    \coordinate (B) at (1.0, 0);
+    \coordinate (C) at (-1.0, 0);
+    \coordinate (D) at (0, \aVal); % 楕円の中心 (0, a)
+
+    % 直線 AB (x + y = 1) との接点:
+    % X = b / (a^2+b^2) = (1/sqrt(3)) / (1/9 + 1/3) = (1/sqrt(3)) / (4/9) = (9*sqrt(3))/12 = (3*sqrt(3))/4
+    % x = b*X = (1/sqrt(3)) * ((3*sqrt(3))/4) ... ではなく、
+    % 直接法: x^2/b^2 + (y-a)^2/a^2 = 1 と y = 1 - x を連立:
+    % x_contact = b^2 / (1 - a) = (1/3) / (2/3) = 1/2 = 0.5
+    % y_contact = 1 - 0.5 = 0.5
+    \coordinate (T_R) at (0.5, 0.5);
+    \coordinate (T_L) at (-0.5, 0.5);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-1.35, 0) -- (1.35, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 1.25) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 三角形 ABC ---
+    \fill[gray!8, opacity=0.7] (C) -- (B) -- (A) -- cycle;
+    \draw[very thick, gray!75!black] (C) -- (B) -- (A) -- cycle;
+
+    % --- 4. 楕円 (中心 D(0, a), 半軸 b, a) ---
+    % 方程式: x^2/b^2 + (y-a)^2/a^2 = 1
+    \fill[blue!15, opacity=0.75] (D) ellipse [x radius=\bVal, y radius=\aVal];
+    \draw[very thick, blue!85!black] (D) ellipse [x radius=\bVal, y radius=\aVal];
+
+    % --- 5. 接点と中心のプロット ---
+    % 辺 AB, AC との接点
+    \fill[red!85!black] (T_R) circle (1.0pt) node[above right=1pt, font=\scriptsize, red!90!black] {接点};
+    \fill[red!85!black] (T_L) circle (1.0pt);
+    \draw[dotted, gray!60] (T_R) -- (0.5, 0);
+    \draw[dotted, gray!60] (T_L) -- (-0.5, 0);
+
+    % 楕円の中心 D(0, a)
+    \fill[teal!85!black] (D) circle (1.0pt) node[right=2pt, font=\scriptsize, teal!90!black] {$D(0, a)$};
+
+    % 半径の寸法表示
+    \draw[<->, thick, teal!85!black] (0, \aVal) -- (\bVal, \aVal);
+    \node[teal!90!black, font=\scriptsize, above] at ($ (0, \aVal)!0.5!(\bVal, \aVal) $) {$b$};
+
+    \draw[<->, thick, teal!85!black] (0, 0) -- (0, \aVal);
+    \node[teal!90!black, font=\scriptsize, left] at (0, {\aVal/2}) {$a$};
+
+    % --- 6. 頂点プロットとラベル ---
+    \fill[black] (A) circle (1.0pt) node[above=2pt] {$A(0, 1)$};
+    \fill[black] (B) circle (1.0pt) node[below right=1pt] {$B(1, 0)$};
+    \fill[black] (C) circle (1.0pt) node[below left=1pt] {$C(-1, 0)$};
+
+    % 軸目盛り
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[below=2pt, font=\scriptsize] at (-1.0, 0) {$-1$};
+    \node[left=2pt, font=\scriptsize]  at (0, 1.0) {$1$};
+
+  \end{tikzpicture}
+  \caption{二等辺三角形 $ABC$ に内接する楕円（$xy$ 平面）}
+  \label{fig:inscribed_ellipse_xy}
+\end{figure}
+
+BCの中点$O(0,0)$を原点とする座標系をおき，$A(0,1),B(1,0),C(-1,0)$とする．
+対称性から楕円の中心は$y$軸上にあるのでこれを $D(0,a)$ とすると，$b>0$ として楕円の方程式は
 \begin{align}
   \dfrac{x^2}{b^2} + \dfrac{(y-a)^2}{a^2} &= 1
 \end{align}
-とかける．($\because$ BCと接し，軸がBCと平行) ここで，$X=\dfrac{x}{b}$，$Y=\dfrac{y}{a}$ なる変換を行うと，
-楕円は
+とかける．ただし
 \begin{align}
-  P : X^2 + (Y-1)^2 &= 1
+  0 < a < 1 \label{eq:1}
+\end{align}
+
+ここで$X=\dfrac{x}{b}$，$Y=\dfrac{y}{a}$ なる変換を行うと楕円の方程式は
+\begin{align}
+  P : X^2 + (Y-1)^2 = 1
 \end{align}
 へ，直線AB: $x+y=1$ は，
 \begin{align}
-  l : bX + aY &= 1
+  l : bX + aY = 1
 \end{align}
-へ，各々うつる．以下，ABと楕円が接する条件をかんがえる．(対称性から，この時ACと楕円が接する条件も同じ)．
-$l$ と $(0,1)$ のキョリが $1$ なら良いので，
-\begin{align}
-  \dfrac{|a-1|}{\sqrt{a^2+b^2}} &= 1
-\end{align}
-両辺 $0$ 以上から2乗して，
-\begin{align}
-  b^2 &= 1 - 2a \cdots \text{①}
-\end{align}
+へ各々うつる．
 
-ここで，$a$ は $0 < a = \dfrac{1-b^2}{2} < 1 \iff 0 < 1-b^2 < 2 \implies b^2 < 1$ から
-$0 < b < 1 \cdots \text{②}$ をみたす．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.6, >=stealth, every node/.style={font=\small}]
 
-楕円の面積 $S$ は，
+    % --- 1. 定数・パラメータ (b = 1/sqrt(3) ≈ 0.5774, a = 1/3 ≈ 0.3333) ---
+    % 直線 l: bX + aY = 1
+    % X 切片: 1/b = sqrt(3) ≈ 1.732
+    % Y 切片: 1/a = 3.0
+    \pgfmathsetmacro{\bVal}{1.0 / sqrt(3.0)}
+    \pgfmathsetmacro{\aVal}{1.0 / 3.0}
+
+    % 中心 (0, 1) から直線 l への垂線の足 (接点)
+    % l: b*X + a*(Y-1) + a - 1 = 0
+    % 接点座標:
+    % X_T = b*(1-a) / (a^2+b^2) = b*(2/3) / (4/9) = (3/2)*b = sqrt(3)/2 ≈ 0.8660
+    % Y_T = 1 + a*(1-a) / (a^2+b^2) = 1 + (1/3)*(2/3)/(4/9) = 1 + 1/2 = 1.5
+    \pgfmathsetmacro{\xT}{sqrt(3.0) / 2.0}
+    \def\yT{1.5}
+
+    \coordinate (O)      at (0, 0);
+    \coordinate (Center) at (0, 1.0);     % 円の中心 (0, 1)
+    \coordinate (T)      at (\xT, \yT);   % 直線 l との接点
+    \coordinate (X_int)  at ({sqrt(3.0)}, 0); % 直線 l の X 切片
+    \coordinate (Y_int)  at (0, 3.0);         % 直線 l の Y 切片
+
+    % --- 2. 座標軸 (大文字 X, Y) ---
+    \draw[->, thick, gray!80!black] (-1.35, 0) -- (2.2, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 3.3) node[above] {$Y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 変換後の円 P: X^2 + (Y-1)^2 = 1 ---
+    \fill[blue!15, opacity=0.7] (Center) circle (1.0);
+    \draw[very thick, blue!85!black] (Center) circle (1.0);
+    \node[blue!90!black, font=\footnotesize\bfseries] at (-0.45, 1.0) {$P$};
+
+    % --- 4. 変換後の直線 l: bX + aY = 1 ---
+    \draw[line width=1.6pt, red!85!black, domain=-0.25:2.0]
+    plot (\x, {(1.0 - \bVal*\x)/\aVal});
+    \node[red!90!black, font=\footnotesize\bfseries, above right] at (1.1, 1.1)
+    {$l: bX + aY = 1$};
+
+    % --- 5. 中心 (0, 1) から直線 l への垂線 (半径 = 1) ---
+    \draw[very thick, dashed, teal!85!black] (Center) -- (T);
+    \node[teal!90!black, font=\footnotesize\bfseries, above left=-1pt] at ($ (Center)!0.5!(T) $) {$1$};
+
+    % 接点 T における直角記号 (Center-T ⊥ l)
+    \pgfmathsetmacro{\angL}{atan2(-\bVal, \aVal)} % 直線の方向角
+    \draw[thin, teal!75!black]
+    ($ (T) + ({\angL}:0.09) $) --
+    ($ (T) + ({\angL}:0.09) + ({\angL+90}:0.09) $) --
+    ($ (T) + ({\angL+90}:0.09) $);
+
+    % --- 6. 頂点・切点のプロットと目盛り ---
+    \fill[teal!85!black] (Center) circle (1.0pt) node[left=2pt] {$(0, 1)$};
+    \fill[red!85!black]  (T)      circle (1.2pt) node[above right=1pt, font=\scriptsize, red!90!black] {接点};
+
+    % 切片の目盛り
+    \fill[black] (X_int) circle (0.8pt) node[below=2pt, font=\scriptsize] {$\frac{1}{b}$};
+    \fill[black] (Y_int) circle (0.8pt) node[left=2pt, font=\scriptsize] {$\frac{1}{a}$};
+
+    % 円の目盛り
+    \node[left=2pt, font=\scriptsize] at (0, 2.0) {$2$};
+    \fill (0, 2.0) circle (0.6pt);
+
+  \end{tikzpicture}
+  \caption{変換後の $XY$ 座標平面における単位円 $P$ と直線 $l$ の接点関係}
+  \label{fig:transformed_circle_line_XY}
+\end{figure}
+
+以下，直線ABと楕円が接する条件をかんがえる．対称性から，この時ACと楕円が接する条件も同じである．
+変換後の座標で$l$ と $(0,1)$ の距離が $1$ なら良いので，
 \begin{align}
-  S = \pi a b &= \pi b \dfrac{1-b^2}{2} \quad (\because \text{①})
+  \dfrac{|a-1|}{\sqrt{a^2+b^2}} = 1
 \end{align}
-である．$f(b) = b(1-b^2)$ とすると，$f'(b) = 1 - 3b^2$ から，下表をうる．
+を得る．両辺 $0$ 以上だから2乗して，
+\begin{align}
+  b^2 &= 1 - 2a \label{eq:2}
+\end{align}
+である．
+
+ここで\cref{eq:1}より$b^2<1$だから$b>0$と合わせて
+\begin{align}
+  0<b<1 \label{eq:3}
+\end{align}
+である．
+
+楕円の面積 $S$ は\cref{eq:3}より
+\begin{align}
+  S = \pi a b &= \pi b \dfrac{1-b^2}{2}
+\end{align}
+である．一階微分は
+\begin{align}
+  \dfrac{dS}{db} = \pi\left(1-3b^2\right)
+\end{align}
+だから，増減表は以下のようになる．
 
 \begin{table}[htb]
   \centering
+  \caption{$S(b)$の増減表}
   \begin{tabular}{|c|c|c|c|c|c|}
     \hline
     $b$ & $0$ & $\cdots$ & $\dfrac{1}{\sqrt{3}}$ & $\cdots$ & $1$ \\
     \hline
-    $f'$ & & $+$ & $0$ & $-$ & \\
+    $S'$ & & $+$ & $0$ & $-$ & \\
     \hline
-    $f$ & & $\nearrow$ & & $\searrow$ & \\
+    $S$ & & $\nearrow$ & & $\searrow$ & \\
     \hline
   \end{tabular}
-  \caption{$f(b)$の増減表}
 \end{table}
 
-したがって，$S$ は $b = \dfrac{1}{\sqrt{3}}$ で最大値，$\dfrac{\pi}{2} \cdot \dfrac{1}{\sqrt{3}} \cdot \dfrac{2}{3} = \dfrac{\sqrt{3}}{9}\pi$ をとる．
-\begin{flushright}
-  (終)
-\end{flushright}
-
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}
-    \draw[->] (-2,0) -- (2,0) node[right] {$x$};
-    \draw[->] (0,-1) -- (0,2) node[above] {$y$};
-    \draw (-1,0) -- (1,0) -- (0,1.5) -- cycle;
-    \node at (-1,-0.2) {$-1$};
-    \node at (1,-0.2) {$1$};
-    \node at (0,1.5) [left] {$1$};
-    \node at (-1,0) [above left] {C};
-    \node at (1,0) [above right] {B};
-    \node at (0,1.5) [above right] {A};
-    \draw (0,0.5) ellipse (0.7 and 0.5);
-    \node at (0.7,0.5) [right] {$b$};
-  \end{tikzpicture}
-  \caption{三角形$ABC$に内接する楕円}
-\end{figure}
+したがって，$S$ は $b = \dfrac{1}{\sqrt{3}}$ で最大値
+\begin{align}
+  \max S = \dfrac{\pi}{2} \cdot \dfrac{1}{\sqrt{3}} \cdot \dfrac{2}{3} = \dfrac{\sqrt{3}}{9}\pi
+\end{align}
+をとる．
 
 \end{document}

@@ -1,66 +1,157 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} $0 \sim 9$ のセイスウを，足して $9$ になる2つずつで組をつくると，以下のように5組できる．
-(0，9) (1，8) (2，7) (3，6) (4，5) $\cdots$ ①
-A \quad B \quad C \quad D \quad E
+$0 \sim 9$ の整数を足して $9$ になる2つずつで組をつくると以下の5組が存在する．
+\begin{align}
+  A: (0，9), B: (1，8), C: (2，7),
+  D: (3，6), E:(4，5) \label{eq:1}
+\end{align}
+である．
 
 \paragraph{(1)}
 
-S のうち4ケタのものは，①の中から4つの組をえらび，4位に0がこないよう注意しながら，
-4組のうちいずれか一方を配分したものである．
-4位に0が来てもいい時の場合の数は，
+S のうち4桁の物を以下のように構成できる．
+まず\cref{eq:1}の中から相異なる$4$つの組を選ぶ．
+$4$つの組から数字を一つづつ選び，選んだ$4$つの数字を千の桁に$0$がこないように注意しながら配置した物である．
+
+% TODO: 具体的な1つの要素の構成の仕方
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % ステップ 1: 5つのペアから相異なる4組を選ぶ（5C4）
+    % ============================================================
+    \node[font=\footnotesize\bfseries, blue!85!black, anchor=west] at (-0.5, 3.8)
+    {\textbf{Step 1: 5組から4組のペアを選択} (${}_5\mathrm{C}_4 = 5$ 通り)};
+
+    % 5つのペアのボックス配置
+    % 未選択ペア A
+    \node[draw=gray!50, fill=gray!10, rounded corners=3pt, inner sep=4pt, align=center] (pairA) at (0, 2.7)
+    {\scriptsize $A$\\[1pt]$\{0, 9\}$};
+    % 選択された4つのペア B, C, D, E (ハイライト)
+    \node[draw=blue!85!black, fill=blue!10, very thick, rounded corners=3pt, inner sep=4pt, align=center] (pairB) at (2.2, 2.7)
+    {\scriptsize $B$\\[1pt]$\{\mathbf{1}, 8\}$};
+    \node[draw=blue!85!black, fill=blue!10, very thick, rounded corners=3pt, inner sep=4pt, align=center] (pairC) at (4.4, 2.7)
+    {\scriptsize $C$\\[1pt]$\{2, \mathbf{7}\}$};
+    \node[draw=blue!85!black, fill=blue!10, very thick, rounded corners=3pt, inner sep=4pt, align=center] (pairD) at (6.6, 2.7)
+    {\scriptsize $D$\\[1pt]$\{\mathbf{3}, 6\}$};
+    \node[draw=blue!85!black, fill=blue!10, very thick, rounded corners=3pt, inner sep=4pt, align=center] (pairE) at (8.8, 2.7)
+    {\scriptsize $E$\\[1pt]$\{4, \mathbf{5}\}$};
+
+    \node[font=\tiny, gray!60, below=1pt] at (pairA.south) {(未選択)};
+    \draw[decorate, decoration={brace, amplitude=4pt}, thick, blue!85!black]
+    (1.4, 3.3) -- (9.6, 3.3) node[midway, above=4pt, font=\scriptsize, blue!90!black] {選ばれた4組のペア};
+
+    % ============================================================
+    % ステップ 2: 各ペアから1つずつ数字を選ぶ（2^4）
+    % ============================================================
+    \node[font=\footnotesize\bfseries, teal!85!black, anchor=west] at (-0.5, 1.8)
+    {\textbf{Step 2: 各ペアから数字を1つずつ選択} ($2^4 = 16$ 通り)};
+
+    % 選出された数字のノード
+    \node[draw=teal!85!black, fill=teal!15, very thick, circle, minimum size=0.75cm, font=\normalsize\bfseries] (num1) at (2.2, 0.9) {$1$};
+    \node[draw=teal!85!black, fill=teal!15, very thick, circle, minimum size=0.75cm, font=\normalsize\bfseries] (num7) at (4.4, 0.9) {$7$};
+    \node[draw=teal!85!black, fill=teal!15, very thick, circle, minimum size=0.75cm, font=\normalsize\bfseries] (num3) at (6.6, 0.9) {$3$};
+    \node[draw=teal!85!black, fill=teal!15, very thick, circle, minimum size=0.75cm, font=\normalsize\bfseries] (num5) at (8.8, 0.9) {$5$};
+
+    % 選択の矢印
+    \draw[->, thick, teal!85!black] (pairB) -- (num1);
+    \draw[->, thick, teal!85!black] (pairC) -- (num7);
+    \draw[->, thick, teal!85!black] (pairD) -- (num3);
+    \draw[->, thick, teal!85!black] (pairE) -- (num5);
+
+    % ============================================================
+    % ステップ 3: 4桁の各位に順列配置する（4!、ただし千の位≠0）
+    % ============================================================
+    \node[font=\footnotesize\bfseries, purple!85!black, anchor=west] at (-0.5, -0.1)
+    {\textbf{Step 3: 各桁に配置して4桁の数を構成} ($4! = 24$ 通り，千の位 $\ne 0$)};
+
+    % 4桁の位のボックス
+    \coordinate (boxThous) at (2.7, -1.0);
+    \coordinate (boxHund)  at (4.1, -1.0);
+    \coordinate (boxTens)  at (5.5, -1.0);
+    \coordinate (boxOnes)  at (6.9, -1.0);
+
+    % 枠の描画
+    \foreach \pos/\name/\digit in {
+      boxThous/{千の位}/{$7$},
+      boxHund/{百の位}/{$3$},
+      boxTens/{十の位}/{$1$},
+      boxOnes/{一の位}/{$5$}
+    } {
+      \node[draw=purple!85!black, fill=purple!8, very thick, rounded corners=2pt, minimum width=1.1cm, minimum height=1.1cm, font=\Large\bfseries]
+      (\name) at (\pos) {\digit};
+      \node[below=2pt, font=\scriptsize, gray!75!black] at (\name.south) {\name};
+    }
+
+    % 配置の対応矢印（例として 7 -> 千, 3 -> 百, 1 -> 十, 5 -> 一）
+    \draw[->, dashed, thick, purple!75!black] (num7.south) to[out=250, in=90] (千の位.north);
+    \draw[->, dashed, thick, purple!75!black] (num3.south) to[out=260, in=90] (百の位.north);
+    \draw[->, dashed, thick, purple!75!black] (num1.south) to[out=290, in=100] (十の位.north);
+    \draw[->, dashed, thick, purple!75!black] (num5.south) to[out=280, in=90] (一の位.north);
+
+    % 完成した数値
+    \node[draw=purple!90!black, fill=white, rounded corners=3pt, inner sep=4pt, font=\normalsize\bfseries, purple!95!black]
+    at (9.3, -1.0) {構成例: $\mathbf{7315}$};
+
+  \end{tikzpicture}
+  \caption{4組のペアから相異なる数字を選び4桁の数を構成する手順}
+  \label{fig:four_digit_construction_model}
+\end{figure}
+
+千の位に$0$に来てもいい時の場合の数は，
 \begin{align}
-  {}_5C_4 \times 2^4 \times 4! &= 1920 \text{コ} \cdots \text{②}
+  {}_5C_4 \times 2^4 \times 4! &= 1920 \text{個} \label{eq:2}
 \end{align}
-である．このうち，4位が0であるのは，
+である．このうち千の位が0であるのは，
 \begin{align}
-  {}_4C_3 \times 2^3 \times 3! &= 192 \text{コ} \cdots \text{③}
+  {}_4C_3 \times 2^3 \times 3! &= 192 \text{個} \label{eq:3}
 \end{align}
-だから，求める数は $1920 - 192 = 1728 \text{コ}$ である．
+だから，求める数は $1920 - 192 = 1728 \text{個}$ である．
 
 \paragraph{(2)}
 
 (1)と同様に数えると，
-1ケタのもの $\cdots$ 9コ
-2ケタのもの $\cdots$ 72コ
-3ケタのもの $\cdots$ 432コ
-合わせて 513コ
-だから，Sの要素を小さいものから並べた数列 $\{a_n\}$ において，4ケタの数は，$a_{514} \sim a_{2241}$ で
-ある．つまり，$S_{2000}$ は 4ケタの数．Sの4ケタの数のうち，4ケタ目が $k$ ($1 \le k \le 9$) であるものは
-③と同様に数えて 192コ あるから，
+\begin{itemize}
+  \item 1ケタのもの $\cdots$ 9個 \\
+  \item 2ケタのもの $\cdots$ 72個 \\
+  \item 3ケタのもの $\cdots$ 432個
+\end{itemize}
+だから，Sの要素を小さいものから並べた数列 $\{a_n\}$ において，4桁の数は $a_{514} \sim a_{2241}$ ，つまり$S_{2000}$ は 4桁の数である．
+
+$S$の4桁の数のうち4ケタ目が $k$ ($1 \le k \le 9$) であるものは
+\cref{eq:3}と同様に数えて 192個 あるから，
 \begin{align}
   513 + (k-1) \cdot 192 < 2000 < 513 + k \cdot 192
 \end{align}
-をみたす $k \in \mathbb{N}$ は，$k=8$ であることとあわせて，$S_{2000}$ の4位は 8 である．さらに，$S_{2000}$ は 4位
-が 8 であるもののうち，小さい方から数えて，
+をみたす $k \in \mathbb{N}$ は，$k=8$ であることとあわせて，$S_{2000}$ の千の位は 8 である．さらに，$S_{2000}$ は 千の位 が 8 であるもののうち，小さい方から数えて，
 \begin{align}
   2000 - 1857 &= 143 \text{ 番目}
 \end{align}
 である．
-次に，3位について，4位が8の時は①のうち残り A， C， D， E から 3つをえらぶことより，
-3位が $l$ ($l = 0,2,3,4,5,7,9$) である場合の数は，
+
+次に百の位について千の位が$8$の時は\cref{eq:1}のうち残り A， C， D， E から 3つをえらぶことより，3位が $l$ ($l = 0,2,3,4,5,6,7,9$) である場合の数は，
 \begin{align}
-  {}_3P_2 \times 2^2 &= 24 \text{コ}
+  {}_3P_2 \times 2^2 &= 24 \text{個}
 \end{align}
 である．よって，
 \begin{align}
   24(m-1) < 143 \le 24m
 \end{align}
-をみたす $m \in \mathbb{N}$ は $m = 6$ だから，6番目の数字である $l=6$ である．さらに $S_{2000}$ は，$8 6 \square \square$ の形でかける
-S の要素のうち，一番大きい方から
+をみたす $m \in \mathbb{N}$ は $m = 6$ だから，6番目の数字である $=6$ が百の位である．
+
+$S_{2000}$ は $8 6 \square \square$ の形でかける $S$ の要素のうち大きい方から
 \begin{align}
-  144 - 143 + 1 &= 2 \text{ 番目}
+  144 - 143 + 1 = 2 \text{ 番目}
 \end{align}
-で，順に書き下すと，
-8697， 8695
-だから，$S_{2000} = 8695$
-\begin{flushright}
-  (終)
-\end{flushright}
+で，順に書き下すと，$8697$，$8695$
+だから求めるのは
+\begin{align}
+  S_{2000} = 8695
+\end{align}
+である．
 
 \end{document}
