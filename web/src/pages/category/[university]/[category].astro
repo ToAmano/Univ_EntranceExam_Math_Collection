@@ -13,19 +13,11 @@ export async function getStaticPaths() {
 		{ university: 'titech', category: 'kouki' },
 		{ university: 'ukyoto', category: 'zenki' },
 		{ university: 'ukyoto', category: 'kouki' },
-		{ university: 'sample_utokyo', category: 'zenki' },
-		{ university: 'sample_utokyo', category: 'kouki' },
-		{ university: 'sample_titech', category: 'zenki' },
-		{ university: 'sample_titech', category: 'kouki' },
-		{ university: 'sample_ukyoto', category: 'zenki' },
-		{ university: 'sample_ukyoto', category: 'kouki' },
 	];
 
 	return targetCategories.map(({ university, category }) => {
 		const filteredSolutions = solutions.filter((s) => {
-			const itemUniv = s.data.university;
-			const matchUniv = itemUniv === university || itemUniv === `sample_${university}` || `sample_${itemUniv}` === university;
-			return matchUniv && s.data.category === category;
+			return s.data.university === university && s.data.category === category;
 		});
 
 		return {
@@ -44,9 +36,6 @@ const { university, category, solutions } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const UNIVERSITY_NAMES: Record<string, string> = {
-	sample_utokyo: '東京大学',
-	sample_titech: '東京工業大学',
-	sample_ukyoto: '京都大学',
 	utokyo: '東京大学',
 	titech: '東京工業大学',
 	ukyoto: '京都大学',
