@@ -1,31 +1,99 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 \paragraph{(1)}
 
 $xy$ 座標平面上で，$x$ 軸の正の部分 (原点 $O$ を端点とする半直線) を始線とし，一般角 $\theta$ に対する動径上で $O$ からの距離 $r\, (r>0)$ の点 $P$ の座標を $(x,y)$ とする．そこで $\sin\theta = \dfrac{y}{r}, \cos\theta = \dfrac{x}{r}$ と定義する．
 
-\bigskip
-
-\noindent
 \paragraph{(2)}
 
-2次元ベクトル $\vec{t}_\theta =
+% TODO: e_1,e_2とそれを\alpha回転させたp,q
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.6, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・角度パラメータ ---
+    \def\angAlpha{32}
+    \def\angBeta{38}
+    \pgfmathsetmacro{\angTotal}{\angAlpha + \angBeta} % 70°
+
+    \coordinate (O) at (0, 0);
+
+    % 標準基底 e_1, e_2
+    \coordinate (E1) at (1, 0);
+    \coordinate (E2) at (0, 1);
+
+    % 回転基底 p, q (偏角 alpha, alpha + 90°)
+    \coordinate (P) at ({\angAlpha}:1.0);
+    \coordinate (Q) at ({\angAlpha + 90}:1.0);
+
+    % 合成ベクトル t_{alpha+beta} (偏角 alpha + beta)
+    \coordinate (T) at ({\angTotal}:1.0);
+
+    % --- 2. 単位円 (薄い破線) ---
+    \draw[gray!45, dashed] (O) circle (1.0);
+
+    % --- 3. 座標軸 (xy 軸) ---
+    \draw[->, thick, gray!70] (-1.15, 0) -- (1.35, 0) node[right] {$x$};
+    \draw[->, thick, gray!70] (0, -0.2) -- (0, 1.35) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 標準基底 e1, e2
+    \draw[->, line width=1.1pt, gray!80!black] (O) -- (E1) node[below=2pt] {$\vec{e}_1$};
+    \draw[->, line width=1.1pt, gray!80!black] (O) -- (E2) node[left=2pt] {$\vec{e}_2$};
+
+    % --- 4. 直交基底 p, q (偏角 alpha) ---
+    \draw[->, line width=1.6pt, blue!85!black] (O) -- (P) node[above right=1pt] {$\vec{p}$};
+    \draw[->, line width=1.6pt, blue!85!black] (O) -- (Q) node[above left=1pt] {$\vec{q}$};
+
+    % 直交記号 (p ⊥ q)
+    \draw[thin, blue!70!black]
+    ($ (O) + ({\angAlpha}:0.09) $) --
+    ($ (O) + ({\angAlpha}:0.09) + ({\angAlpha+90}:0.09) $) --
+    ($ (O) + ({\angAlpha+90}:0.09) $);
+
+    % 角度 alpha の円弧 (x 軸から p へ、y 軸から q へ)
+    \draw[thick, teal!85!black] (0.35, 0) arc (0:\angAlpha:0.35);
+    \node[teal!90!black, font=\scriptsize] at ({\angAlpha/2}:0.45) {$\alpha$};
+
+    \draw[thick, teal!85!black] (0, 0.45) arc (90:{\angAlpha+90}:0.45);
+    \node[teal!90!black, font=\scriptsize] at ({90 + \angAlpha/2}:0.57) {$\alpha$};
+
+    % --- 5. 合成動径ベクトル t_{alpha+beta} ---
+    \draw[->, line width=2.0pt, red!85!black] (O) -- (T)
+    node[above right=1pt, font=\normalsize\bfseries, red!90!black] {$\vec{t}_{\alpha+\beta}$};
+
+    % 角度 beta の円弧 (p から t への角)
+    \draw[thick, purple!85!black] ({\angAlpha}:0.55) arc (\angAlpha:\angTotal:0.55);
+    \node[purple!90!black, font=\scriptsize] at ({\angAlpha + \angBeta/2}:0.65) {$\beta$};
+
+    % 投影破線 (pq 座標系での分解)
+    \pgfmathsetmacro{\compP}{cos(\angBeta)} % cos(beta)
+    \pgfmathsetmacro{\compQ}{sin(\angBeta)} % sin(beta)
+    \coordinate (ProjP) at ($ \compP*(P) $);
+    \draw[dashed, blue!60] (T) -- (ProjP);
+
+  \end{tikzpicture}
+  \caption{正規直交基底を $\alpha$ 回転した直交基底 $\vec{p}, \vec{q}$ と動径ベクトル $\vec{t}_{\alpha+\beta}$}
+  \label{fig:basis_rotation_addition_theorem}
+\end{figure}
+
+2次元ベクトル
+$\vec{t}_\theta =
 \begin{pmatrix} \cos\theta \\ \sin\theta
-\end{pmatrix}$ とする．
+\end{pmatrix}$
+とおく．
 正規直交基底 $\vec{e}_1, \vec{e}_2$ を $\alpha$ だけ回転した直交基底 $\vec{p}, \vec{q}$ を考える．つまり，
 \begin{align}
   \begin{cases}
     \cdot \; \vec{p} \text{ は } \vec{e}_1 \text{ を } \alpha \text{ だけ回転したベクトル} \\
-    \cdot \; \vec{q} \text{ は } \vec{e}_2 \quad \text{〃}
+    \cdot \; \vec{q} \text{ は } \vec{e}_2 \text{ を } \beta \text{ だけ回転したベクトル} \\
   \end{cases}
 \end{align}
-とすると，(1)から，
+とする．
+
+(1)から，$\vec{p},\vec{q}$の成分は
 \begin{align}
   \vec{p} &=
   \begin{pmatrix} \cos\alpha \\ \sin\alpha
@@ -34,30 +102,20 @@ $xy$ 座標平面上で，$x$ 軸の正の部分 (原点 $O$ を端点とする�
   \begin{pmatrix} -\sin\alpha \\ \cos\alpha
   \end{pmatrix} \quad \cdots \textcircled{1}
 \end{align}
-ただし，$\vec{q}$ の方は，$y$ 軸を $x$ 軸とみなすことで得られる．次に，$\vec{t}_{\alpha+\beta}$ を考える．
-
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \draw[->] (-1.2, 0) -- (1.5, 0) node[right] {$x$};
-    \draw[->] (0, -1.2) -- (0, 1.5) node[above] {$y$};
-    \draw[dashed] (0,0) circle (1);
-    \node[below left] at (0,0) {$O$};
-    \draw[->, thick] (0,0) -- ({cos(35)}, {sin(35)}) node[above right] {$\vec{p}$};
-    \draw[->, thick] (0,0) -- ({-sin(35)}, {cos(35)}) node[above left] {$\vec{q}$};
-    \draw (0.3, 0) arc (0:35:0.3);
-    \node at (17.5:0.45) {$\alpha$};
-    \draw (0.5, 0) arc (0:125:0.5);
-    \node at (80:0.65) {$\alpha$};
-  \end{tikzpicture}
-  \caption{正規直交基底を$\alpha$回転した直交基底$\vec{p},\vec{q}$}
-\end{figure}
-
-これは，$PQ$ 座標からみれば ``$\vec{t}_\beta$'' である．したがって，
+と書ける．ただし$\vec{q}$ は$y$ 軸を $x$ 軸とみなすことで得られる．
+次に$\vec{t}_{\alpha+\beta}$ を考える．これは
 \begin{align}
-  \vec{t}_{\alpha+\beta} &= \cos\beta \, \vec{p} + \sin\beta \, \vec{q}
+  \vec{t}_{\alpha+\beta} = \cos(\alpha+\beta)\vec{e}_1 + \sin(\alpha+\beta)\vec{e}_2 \label{eq:1}
 \end{align}
-成分比較して
+と書ける．
+
+一方で$PQ$ 座標からみれば $\vec{t}_\beta$ であるから
+\begin{align}
+  \vec{t}_{\alpha+\beta} &= \cos\beta \, \vec{p} + \sin\beta \, \vec{q} \label{eq:2}
+\end{align}
+とも書ける．
+
+\cref{eq:1,eq:2}で成分比較して
 \begin{align}
   \begin{cases}
     \cos(\alpha+\beta) = \cos\beta \cos\alpha - \sin\beta \sin\alpha \\
@@ -66,84 +124,138 @@ $xy$ 座標平面上で，$x$ 軸の正の部分 (原点 $O$ を端点とする�
 \end{align}
 を得る． \hfill $\qed$
 
-\bigskip
+{\bf [別解]}
 
-\noindent
-\begin{align}
-  \cos(\alpha+\beta) &= \cos\alpha \cos\beta - \sin\alpha \sin\beta \hfill \text{固}
-\end{align}
-したがって，
-\begin{align}
-  \sin(\alpha+\beta) &= \cos\left( \dfrac{\pi}{2} - (\alpha+\beta) \right) \hfill (*) \\
-  &= \cos\left\{ \left(\dfrac{\pi}{2} - \alpha\right) - \beta \right\} \\
-  &= \cos\left(\dfrac{\pi}{2} - \alpha\right) \cos(-\beta) - \sin\left(\dfrac{\pi}{2} - \alpha\right) \sin(-\beta) \\
-  &= \sin\alpha \cos\beta + \cos\alpha \sin\beta \hfill (*)
-\end{align}
+\paragraph{(2)}
 
-\noindent
-又，以下 $(*)$ で用いた変形の証明をする．
+先に$\sin, \cos$の基本的な性質を証明する．
 \begin{itemize}
   \item[(I)] $\cos(-\alpha) = \cos\alpha, \quad \sin(-\alpha) = -\sin\alpha$
 
-    点 $(\cos(-\alpha), \sin(-\alpha))$ は点 $(\cos\alpha, \sin\alpha)$ と $x$ 軸対称．
+    点 $(\cos(-\alpha), \sin(-\alpha))$ は点 $(\cos\alpha, \sin\alpha)$ と $x$ 軸対称だから示される．
   \item[(II)] $\sin\left(\dfrac{\pi}{2} - \alpha\right) = \cos\alpha, \quad \cos\left(\dfrac{\pi}{2} - \alpha\right) = \sin\alpha$
 
-    点 $\left(\cos\left(\dfrac{\pi}{2}-\alpha\right), \sin\left(\dfrac{\pi}{2}-\alpha\right)\right)$ は点 $(\cos\alpha, \sin\alpha)$ と $x=y$ 対称．
+    点 $\left(\cos\left(\dfrac{\pi}{2}-\alpha\right), \sin\left(\dfrac{\pi}{2}-\alpha\right)\right)$ は点 $(\cos\alpha, \sin\alpha)$ と $x=y$ 対称だから示される．
 \end{itemize}
 
-\bigskip
+さて$r=1$ として考える．下図で $\vec{OP} = \vec{t}_{\alpha+\beta}$ である．
 
-\bigskip\noindent{\bf [解2]} (2) $r=1$ として考える．右図で $\vec{OP} = \vec{t}_{\alpha+\beta}$ である．
-
+% TODO: triangle OAP, angle POA=\alpha+\beta
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \draw[->] (-0.3, 0) -- (1.5, 0) node[right] {$x$};
-    \draw[->] (0, -0.3) -- (0, 1.5) node[above] {$y$};
-    \draw (1,0) arc (0:90:1);
-    \node[below right] at (1,0) {$A$};
-    \node[below left] at (0,0) {$O$};
-    \draw (0,0) -- ({cos(65)}, {sin(65)}) node[above left] {$P$};
-    \draw (1,0) -- ({cos(65)}, {sin(65)});
-    \draw (0.4, 0) arc (0:65:0.4);
-    \node at (32.5:0.55) {$\alpha+\beta$};
+  % ============================================================
+  % 【左図】点 A, P と中心角 alpha + beta
+  % ============================================================
+  \begin{tikzpicture}[scale=2.0, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標 ---
+    \def\angSum{70}
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (1.0, 0);
+    \coordinate (P) at ({\angSum}:1.0);
+
+    % --- 2. 単位円弧 ---
+    \draw[dashed, gray!45] (O) circle (1.0);
+    \draw[thick, blue!85!black] (1.0, 0) arc (0:90:1.0);
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (1.45, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 1.45) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 動径と弦 AP ---
+    \draw[thick, gray!75!black] (O) -- (P);
+    \draw[line width=1.6pt, red!85!black] (A) -- (P);
+    \node[red!90!black, font=\scriptsize\bfseries, above right] at ($ (A)!0.5!(P) $) {$|AP|$};
+
+    % 中心角 alpha + beta の弧
+    \draw[thick, teal!85!black] (0.35, 0) arc (0:\angSum:0.35);
+    \node[teal!90!black, font=\footnotesize] at ({\angSum/2}:0.5) {$\alpha+\beta$};
+
+    % --- 5. 点プロットとラベル ---
+    \fill[black] (A) circle (1.2pt) node[below right=1pt] {$A(1, 0)$};
+    \fill[black] (P) circle (1.2pt) node[above left=1pt] {$P(\cos(\alpha+\beta), \sin(\alpha+\beta))$};
+
   \end{tikzpicture}
-  \qquad
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \draw[->] (-0.3, 0) -- (1.5, 0) node[right] {$x$};
-    \draw[->] (0, -0.8) -- (0, 1.3) node[above] {$y$};
-    \draw (0,0) -- ({cos(40)}, {sin(40)}) node[above right] {$Q$};
-    \draw (0,0) -- ({cos(-30)}, {sin(-30)}) node[below right] {$R$};
-    \draw ({cos(40)}, {sin(40)}) -- ({cos(-30)}, {sin(-30)});
-    \node[below left] at (0,0) {$O$};
-    \draw (0.3, 0) arc (0:40:0.3);
-    \node at (20:0.45) {$\alpha$};
-    \draw (0.3, 0) arc (0:-30:0.3);
-    \node at (-15:0.45) {$-\beta$};
+  \hspace{0.8cm}
+  % ============================================================
+  % 【右図】全体を -beta 回転した点 Q, R
+  % ============================================================
+  \begin{tikzpicture}[scale=2.0, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標 (alpha = 40°, beta = 30° => なす角 70°) ---
+    \def\angA{40}
+    \def\angB{30}
+    \coordinate (O) at (0, 0);
+    \coordinate (Q) at ({\angA}:1.0);
+    \coordinate (R) at ({-\angB}:1.0);
+
+    % --- 2. 単位円弧 ---
+    \draw[dashed, gray!45] (O) circle (1.0);
+    \draw[thick, blue!85!black] ({-\angB - 10}:1.0) arc ({-\angB - 10}:{\angA + 15}:1.0);
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (1.45, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.8) -- (0, 1.4) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 動径と弦 QR ---
+    \draw[thick, gray!75!black] (O) -- (Q);
+    \draw[thick, gray!75!black] (O) -- (R);
+    \draw[line width=1.6pt, red!85!black] (Q) -- (R);
+    \node[red!90!black, font=\scriptsize\bfseries, right] at ($ (Q)!0.5!(R) $) {$|QR|$};
+
+    % 角度 alpha の弧
+    \draw[thick, teal!85!black] (0.35, 0) arc (0:\angA:0.35);
+    \node[teal!90!black, font=\scriptsize] at ({\angA/2}:0.48) {$\alpha$};
+
+    % 角度 -beta の弧
+    \draw[thick, purple!85!black] (0.35, 0) arc (0:{-\angB}:0.35);
+    \node[purple!90!black, font=\scriptsize] at ({-\angB/2}:0.48) {$-\beta$};
+
+    % --- 5. 点プロットとラベル ---
+    \fill[black] (Q) circle (1.2pt) node[above right=1pt] {$Q(\cos\alpha, \sin\alpha)$};
+    \fill[black] (R) circle (1.2pt) node[below right=1pt] {$R(\cos(-\beta), \sin(-\beta))$};
+
   \end{tikzpicture}
-  \caption{左:点$A,P$の配置と$\alpha+\beta$．右:点$Q,R$の配置と$\alpha,-\beta$}
+  \caption{線分 $AP$ を原点まわりに $-\beta$ 回転させた線分 $QR$ と等長性 $|AP| = |QR|$}
+  \label{fig:trig_distance_rotation_invariance}
 \end{figure}
 
-\noindent
 $\cos^2\theta + \sin^2\theta = 1$ に注意して，
 \begin{align}
-  |AP|^2 &= \{\cos(\alpha+\beta) - 1\}^2 + \sin^2(\alpha+\beta) \\
-  &= 2 - 2\cos(\alpha+\beta) \quad \cdots \textcircled{1}
+  |AP|^2
+  &= \{\cos(\alpha+\beta) - 1\}^2 + \sin^2(\alpha+\beta) \\
+  &= 2 - 2\cos(\alpha+\beta) \label{eq:3}
 \end{align}
-一方，右図で $\vec{OQ} = \vec{t}_\alpha, \vec{OR} = \vec{t}_{-\beta}$ である．
+である．
+
+一方右上図で $\vec{OQ} = \vec{t}_\alpha, \vec{OR} = \vec{t}_{-\beta}$ であるから，$|QR|^2$を計算すると
 \begin{align}
-  |QR|^2 &= \{\cos\alpha - \cos(-\beta)\}^2 + \{\sin\alpha - \sin(-\beta)\}^2 \\
-  &= 2 - 2(\cos\alpha \cos\beta - \sin\alpha \sin\beta) \quad \cdots \textcircled{2} \hfill (*)
+  |QR|^2
+  &= \{\cos\alpha - \cos(-\beta)\}^2 + \{\sin\alpha - \sin(-\beta)\}^2 \\
+  &= 2 - 2(\cos\alpha \cos\beta - \sin\alpha \sin\beta) \label{eq:4}
 \end{align}
+である．
+
 線分 $QR$ を原点まわりに回転すると，線分 $PA$ に重なるので，
 \begin{align}
-  |AP|^2 &= |QR|^2 \quad \cdots \textcircled{3}
+  |AP|^2 &= |QR|^2 \label{eq:5}
 \end{align}
-\textcircled{1}～\textcircled{3}から，
+である．\cref{eq:3,eq:4,eq:5}から
 \begin{align}
   \cos(\alpha+\beta) &= \cos\alpha \cos\beta - \sin\alpha \sin\beta
 \end{align}
-\hfill ($\star$高校まではこんなもんで良い．)
+である．
+
+したがって，
+\begin{align}
+  \sin(\alpha+\beta) &= \cos\left( \dfrac{\pi}{2} - (\alpha+\beta) \right) \\
+  &= \cos\left\{ \left(\dfrac{\pi}{2} - \alpha\right) - \beta \right\} \\
+  &= \cos\left(\dfrac{\pi}{2} - \alpha\right) \cos(-\beta) - \sin\left(\dfrac{\pi}{2} - \alpha\right) \sin(-\beta) \\
+  &= \sin\alpha \cos\beta + \cos\alpha \sin\beta
+\end{align}
+である．
 
 \newpage
 

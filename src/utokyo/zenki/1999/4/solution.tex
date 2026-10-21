@@ -1,110 +1,302 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} $A, B$ が $x^2 + y^2 + z^2 = 1$ と接している場合を考えれば良い．$P$ は $A$ 上かつ $B$ 上だから，$A, B$ が存在する平面の交線 $x$ 軸上にある．そこで $P(t,0,0)$ とおく．対称性から $0 \le t \le 1 \cdots \textcircled{1}$ とし，$A$ の中心が $t \le x, 0 \le y \cdots \textcircled{2}$ にあるとして良い．
-$A, B$ の中心を $O_A, O_B$，半径を $r_A, r_B$ とおく．
+% TODO: 3D-tikz 概要図
+\begin{figure}[htb]
+  \centering
+  % 俯角 68°，方位角 115°
+  \tdplotsetmaincoords{68}{115}
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.4, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ (t = 0.5 の最大時) ---
+    % P = (0.5, 0, 0)
+    % A は xy 平面内: 中心 O_A = (0.5, r_A, 0), r_A = (1 - t^2)/2 = 0.375
+    % B は xz 平面内: 中心 O_B = ((t-1)/2 + ..., 0, ...), theta = 0 のとき O_B = (-0.25, 0, 0)?
+    % 一般の配置例として作図
+    \def\tVal{0.5}
+    \def\rA{0.375}
+    \def\rB{0.45}
+
+    \coordinate (O)   at (0, 0, 0);
+    \coordinate (P)   at (\tVal, 0, 0);
+    \coordinate (O_A) at (\tVal, \rA, 0);
+    \coordinate (O_B) at ({\tVal - 0.35}, 0, 0.38);
+
+    % --- 2. 座標軸 ---
+    \draw[dashed, gray!40] (-1.3, 0, 0) -- (0, 0, 0);
+    \draw[dashed, gray!40] (0, -1.3, 0) -- (0, 0, 0);
+    \draw[dashed, gray!40] (0, 0, -1.2) -- (0, 0, 0);
+
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (1.7, 0, 0) node[below left=1pt] {$x$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 1.7, 0) node[right=2pt] {$y$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 0, 1.6) node[above=2pt] {$z$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 単位球の主大円 (xy平面, xz平面, yz平面) ---
+    % xy 平面 (z=0)
+    \draw[dashed, gray!50] plot[domain=0:360, samples=60] ({cos(\x)}, {sin(\x)}, 0);
+    % xz 平面 (y=0)
+    \draw[dashed, gray!50] plot[domain=0:360, samples=60] ({cos(\x)}, 0, {sin(\x)});
+
+    % --- 4. 球 A (xy 平面内, z = 0) ---
+    \fill[teal!15, opacity=0.6]
+    plot[domain=0:360, samples=50] ({\tVal + \rA*cos(\x)}, {\rA + \rA*sin(\x)}, 0);
+    \draw[very thick, teal!85!black]
+    plot[domain=0:360, samples=50] ({\tVal + \rA*cos(\x)}, {\rA + \rA*sin(\x)}, 0);
+    \node[teal!90!black, font=\footnotesize\bfseries, above right] at (\tVal, {\rA*2}, 0) {球 $A$ ($xy$ 平面)};
+
+    % --- 5. 球 B (xz 平面内, y = 0) ---
+    \fill[blue!15, opacity=0.6]
+    plot[domain=0:360, samples=50] ({\tVal - 0.35 + \rB*cos(\x)}, 0, {0.38 + \rB*sin(\x)});
+    \draw[very thick, blue!85!black]
+    plot[domain=0:360, samples=50] ({\tVal - 0.35 + \rB*cos(\x)}, 0, {0.38 + \rB*sin(\x)});
+    \node[blue!90!black, font=\footnotesize\bfseries, above left] at ({\tVal - 0.35}, 0, {0.38 + \rB}) {球 $B$ ($xz$ 平面)};
+
+    % --- 6. 接点 P(t, 0, 0) のプロット ---
+    \fill[red!85!black] (P) circle (1.2pt);
+    \node[below=3pt, red!90!black, font=\footnotesize\bfseries] at (P) {$P(t,0,0)$};
+
+    % 中心 O_A, O_B
+    \fill[teal!85!black] (O_A) circle (0.8pt) node[right=1pt, font=\scriptsize] {$O_A$};
+    \fill[blue!85!black] (O_B) circle (0.8pt) node[above left=1pt, font=\scriptsize] {$O_B$};
+
+  \end{tikzpicture}
+  \caption{単位球内部の球面 $A$（$xy$ 平面），$B$（$xz$ 平面）および共通点 $P(t,0,0)$ の配置}
+  \label{fig:spheres_ab_3d_setup}
+\end{figure}
+
+題意の条件より$P$ は $A$ 上かつ $B$ 上だから，$A, B$ が存在する平面の交線 $x$ 軸上にある．
+そこで $P(t,0,0)$ とおく．$A,B$は原点中心半径$1$の球の内側だから$-1 \le t \le 1$が必要で，対称性より$t \ge 0$の場合のみ考えればよく
+\begin{align}
+  0 \le t \le 1 \label{eq:1}
+\end{align}
+とする．
+$A,B$の中心を $O_A(x_A,y_A,0), O_B(x_B,0,z_B)$，半径を $r_A, r_B$ とおいて$r_A+r_B$の最大値を求めれば良い．
+対称性から$A$の中心が
+\begin{align}
+  t \le x_A, 0 \le y_A \label{eq:2}
+\end{align}
+にあるとして考えれば十分である．この時$B$の中心についても同様に$0 \le z_B$としてよく，また$A$と一点しか共有しないことから$x_B \le t$である．すなわち
+\begin{align}
+  x_B \le t, 0 \le z_B \label{eq:3}
+\end{align}
+とする．
+
+\subparagraph{$1^\circ$ $A$ について}
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.2, >=stealth]
-    \draw[->] (-0.5,0,0) -- (2,0,0) node[right] {$x$};
-    \draw[->] (0,-0.5,0) -- (0,2,0) node[above] {$y$};
-    \draw[->] (0,0,-0.5) -- (0,0,2) node[above left] {$z$};
-    \draw (0,0) circle (1);
-    \node[below left] at (0,0) {$O$};
-    \fill (0.6,0,0) circle (1.5pt) node[below] {$P$};
-    \draw (1.2,0.8) circle (0.5);
-    \node at (1.4,1) {$A$};
-    \draw (0.3,1.1) circle (0.4);
-    \node at (0.3,1.3) {$B$};
+  \begin{tikzpicture}[scale=3.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ ---
+    % t = 0.5, theta = 115°
+    \def\tVal{0.5}
+    \def\angTheta{115}
+    \pgfmathsetmacro{\rA}{(1.0 - \tVal*\tVal) / (2.0 * (1.0 - \tVal*cos(\angTheta)))}
+    \pgfmathsetmacro{\xOA}{\tVal + \rA * cos(180 - \angTheta)}
+    \pgfmathsetmacro{\yOA}{\rA * sin(180 - \angTheta)}
+
+    \coordinate (O)   at (0, 0);
+    \coordinate (P)   at (\tVal, 0);
+    \coordinate (O_A) at (\xOA, \yOA);
+
+    % O から O_A を通って単位円周へ至る接点 T_A
+    % O_A の方向角: angOA
+    \pgfmathsetmacro{\angOA}{atan2(\yOA, \xOA)}
+    \coordinate (T_A) at ({\angOA}:1.0);
+
+    % --- 2. 単位円 x^2 + y^2 = 1 ---
+    \draw[thick, gray!50] (O) circle (1.0);
+    \node[gray!70!black, font=\scriptsize, above left] at (135:1.0) {$x^2+y^2=1$};
+
+    % --- 3. 円 A (中心 O_A, 半径 r_A) ---
+    \fill[teal!12, opacity=0.7] (O_A) circle (\rA);
+    \draw[very thick, teal!85!black] (O_A) circle (\rA);
+    \node[teal!95!black, font=\footnotesize\bfseries] at ($(O_A) + (45:0.25)$) {円 $A$};
+
+    % --- 4. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-1.2, 0) -- (1.3, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 1.25) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 5. O から O_A を経て接点 T_A へ伸びる直線 ---
+    % 線分 O - O_A (|OO_A| = 1 - r_A)
+    \draw[very thick, blue!85!black] (O) -- (O_A)
+    node[midway, above left=-1pt, font=\scriptsize, blue!90!black] {$1 - r_A$};
+
+    % 線分 O_A - T_A (|O_A T_A| = r_A)
+    \draw[line width=1.5pt, teal!80!black] (O_A) -- (T_A)
+    node[midway, above left=-1pt, font=\scriptsize, teal!95!black] {$r_A$};
+
+    % 接点 T_A のプロット
+    \fill[blue!90!black] (T_A) circle (1.0pt);
+    \node[above right=1pt, font=\scriptsize, blue!90!black] at (T_A) {$T_A$（接点）};
+
+    % --- 6. 三角形 O P O_A と余弦定理 ---
+    % 辺 OP (長さ t)
+    \draw[very thick, black] (O) -- (P);
+    \node[below=2pt, font=\scriptsize] at ($ (O)!0.5!(P) $) {$t$};
+
+    % 辺 P O_A (長さ r_A)
+    \draw[very thick, red!85!black] (P) -- (O_A);
+    \node[below right=-1pt, font=\scriptsize, red!90!black] at ($ (P)!0.5!(O_A) $) {$r_A$};
+
+    % --- 7. 角 theta = angle(O_A P O) の円弧 ---
+    \draw[thick, purple!85!black]
+    ($ (P) + (180:0.18) $) arc (180:{180 - \angTheta}:0.18);
+    \node[purple!90!black, font=\footnotesize] at ($ (P) + ({180 - \angTheta/2}:0.28) $) {$\theta$};
+
+    % --- 8. 点のプロット ---
+    \fill[black] (O) circle (0.7pt);
+    \fill[red!85!black] (P) circle (0.9pt) node[below=2pt, red!90!black] {$P(t,0)$};
+    \fill[teal!85!black] (O_A) circle (1.0pt) node[above=2pt, teal!90!black] {$O_A$};
+
+    % 目盛り 1
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+
   \end{tikzpicture}
-  \caption{球面$A,B$と点$P$の配置}
+  \caption{$xy$ 平面における円 $A$，接点 $T_A$ への動径直線，および角 $\theta = \angle O_A P O$}
+  \label{fig:circle_a_cosine_theorem_extended}
 \end{figure}
 
-\bigskip
+円$A$は$xy$平面にあって，$P(t,0)$を通り，$x^2+y^2 \le 1$の領域にある．
+半径$r_A$が最大の場合を考えれば良いから，$A$が$x^2+y^2 = 1$と接する場合を考えよう．
+すると$|OO_A| = 1 - r_A, |PO_A| = r_A$である．
 
-\noindent
-$1^\circ$ $A$ について
-
-接する条件から $|OO_A| = 1 - r_A, |PO_A| = r_A$ で，
-$\angle O_A PO = \theta$ とおく．\textcircled{2}から $\dfrac{\pi}{2} \le \theta \le \pi \cdots \textcircled{3}$ である．
-
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \draw[->] (-1.3,0) -- (1.5,0) node[right] {$x$};
-    \draw[->] (0,-1.3) -- (0,1.5) node[above] {$y$};
-    \draw (0,0) circle (1);
-    \node[below left] at (0,0) {$O$};
-    \node[below] at (0.5,0) {$t$};
-    \fill (0.5,0) circle (1pt) node[below right] {$P$};
-    \draw (0.5,0.4) circle (0.4);
-    \fill (0.5,0.4) circle (1pt) node[right] {$O_A$};
-    \draw (0.5,0) -- (0.5,0.4);
-    \node[left] at (0.5,0.2) {$r_A$};
-    \node[above] at (0.3,0.5) {$\theta$};
-  \end{tikzpicture}
-  \caption{球$A$の中心$O_A$と角$\theta$}
-\end{figure}
-
-\noindent
-$\theta = \pi$ の時 $r_A = \dfrac{1-t}{2}$ である．$\theta \neq \pi$ の時 $\triangle OO_A P$ が存在し，これに余弦定理を用いて
+また，$\angle O_A PO = \theta$ とおくと\cref{eq:2}から
 \begin{align}
-  (1 - r_A)^2 &= t^2 + r_A^2 - 2t r_A \cos\theta
+  \dfrac{\pi}{2} \le \theta \le \pi \label{eq:4}
 \end{align}
+である．
+
+$\theta = \pi$ の時は $r_A = \dfrac{1-t}{2}$ である．
+一方$\theta \neq \pi$ の時は $\triangle OO_A P$ が存在し，これに余弦定理を用いて
 \begin{align}
-  2 r_A (1 - t\cos\theta) &= 1 - t^2 \quad (\theta = \pi \text{ でも成立})
+  |OO_A|^2 &= |OP|^2 + |PO_A|^2 - 2|OP||PO_A|\cos\theta \\
+  (1 - r_A)^2 &= t^2 + r_A^2 - 2t r_A \cos\theta \\
+  2 r_A (1 - t\cos\theta) &= 1 - t^2 \\
+  r_A = \dfrac{1-t^2}{2(1 - t\cos\theta)}
 \end{align}
-だから $0 \le t \le 1$ 及び \textcircled{3}から，$r_A$ は $\theta = \dfrac{\pi}{2}$ の時
+である．これは$\theta = \pi$でも成立する．
+
+従って $0 \le t \le 1$ 及び \cref{eq:4}から，$r_A$ は $\theta = \dfrac{\pi}{2}$ の時に最大値
 \begin{align}
-  \max r_A &= \dfrac{1 - t^2}{2} \quad \cdots \textcircled{4}
+  \max r_A &= \dfrac{1 - t^2}{2} \label{eq:5}
 \end{align}
 をとる．
 
-\bigskip
+\subparagraph{$2^\circ$ $B$ について}
 
-\noindent
-$2^\circ$ $B$ について
-
-接する条件から $|OO_B| = 1 - r_B, |PO_B| = r_B$ で，\textcircled{2}と同じく $O_B$ は $x \le t$ にあるとして良い．$\angle O_B PO = \theta$ とおくと $0 \le \theta \le \dfrac{\pi}{2} \cdots \textcircled{5}$ である．
-
+% TODO: xz平面
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \draw[->] (-1.3,0) -- (1.5,0) node[right] {$x$};
-    \draw[->] (0,-1.3) -- (0,1.5) node[above] {$z$};
-    \draw (0,0) circle (1);
-    \node[below left] at (0,0) {$O$};
-    \fill (0.5,0) circle (1pt) node[below] {$t$};
-    \draw (-0.1,0.5) circle (0.5);
-    \fill (-0.1,0.5) circle (1pt) node[above] {$O_B$};
-    \node at (0.2,0.3) {$\theta$};
+  \begin{tikzpicture}[scale=3.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・幾何パラメータ ---
+    % t = 0.5, theta = 40°
+    \def\tVal{0.5}
+    \def\angTheta{40}
+    \pgfmathsetmacro{\rB}{(1.0 - \tVal*\tVal) / (2.0 * (1.0 - \tVal*cos(\angTheta)))}
+    \pgfmathsetmacro{\xOB}{\tVal - \rB * cos(\angTheta)}
+    \pgfmathsetmacro{\zOB}{\rB * sin(\angTheta)}
+
+    \coordinate (O)   at (0, 0);
+    \coordinate (P)   at (\tVal, 0);
+    \coordinate (O_B) at (\xOB, \zOB);
+
+    % O から O_B を通って単位円周へ至る接点 T_B
+    \pgfmathsetmacro{\angOB}{atan2(\zOB, \xOB)}
+    \coordinate (T_B) at ({\angOB}:1.0);
+
+    % --- 2. 単位円 x^2 + z^2 = 1 ---
+    \draw[thick, gray!50] (O) circle (1.0);
+    \node[gray!70!black, font=\scriptsize, above left] at (135:1.0) {$x^2+z^2=1$};
+
+    % --- 3. 円 B (中心 O_B, 半径 r_B) ---
+    \fill[blue!12, opacity=0.7] (O_B) circle (\rB);
+    \draw[very thick, blue!85!black] (O_B) circle (\rB);
+    \node[blue!90!black, font=\footnotesize\bfseries] at ($(O_B) + (135:0.25)$) {円 $B$};
+
+    % --- 4. 座標軸 (xz平面) ---
+    \draw[->, thick, gray!80!black] (-1.2, 0) -- (1.3, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 1.25) node[above] {$z$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 5. O から O_B を経て接点 T_B へ伸びる直線 ---
+    % 線分 O - O_B (|OO_B| = 1 - r_B)
+    \draw[very thick, teal!85!black] (O) -- (O_B)
+    node[midway, left=1pt, font=\scriptsize, teal!90!black] {$1 - r_B$};
+
+    % 線分 O_B - T_B (|O_B T_B| = r_B)
+    \draw[line width=1.5pt, blue!80!black] (O_B) -- (T_B)
+    node[midway, above left=-1pt, font=\scriptsize, blue!95!black] {$r_B$};
+
+    % 接点 T_B のプロット
+    \fill[teal!90!black] (T_B) circle (1.0pt);
+    \node[above left=1pt, font=\scriptsize, teal!90!black] at (T_B) {$T_B$（接点）};
+
+    % --- 6. 三角形 O P O_B と余弦定理 ---
+    % 辺 OP (長さ t)
+    \draw[very thick, black] (O) -- (P);
+    \node[below=2pt, font=\scriptsize] at ($ (O)!0.5!(P) $) {$t$};
+
+    % 辺 P O_B (長さ r_B)
+    \draw[very thick, red!85!black] (P) -- (O_B);
+    \node[above right=-1pt, font=\scriptsize, red!90!black] at ($ (P)!0.5!(O_B) $) {$r_B$};
+
+    % --- 7. 角 theta = angle(O_B P O) の円弧 ---
+    \draw[thick, purple!85!black]
+    ($ (P) + (180:0.18) $) arc (180:{180 - \angTheta}:0.18);
+    \node[purple!90!black, font=\footnotesize] at ($ (P) + ({180 - \angTheta/2}:0.28) $) {$\theta$};
+
+    % --- 8. 点のプロット ---
+    \fill[black] (O) circle (0.7pt);
+    \fill[red!85!black] (P) circle (0.9pt) node[below=2pt, red!90!black] {$P(t,0)$};
+    \fill[blue!85!black] (O_B) circle (1.0pt) node[above=2pt, blue!90!black] {$O_B$};
+
+    % 目盛り
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[below=2pt, font=\scriptsize] at (-1.0, 0) {$-1$};
+
   \end{tikzpicture}
-  \caption{球$B$の中心$O_B$と角$\theta$}
+  \caption{$xz$ 平面における円 $B$，接点 $T_B$ への動径直線，および角 $\theta = \angle O_B P O$}
+  \label{fig:circle_b_cosine_theorem_extended}
 \end{figure}
 
-\noindent
-$\theta = 0$ の時 $r_B = \dfrac{1+t}{2}$ である．$\theta \neq 0$ の時 $\triangle OPO_B$ が存在し，余弦定理から
+この場合も，$r_B$を最大にするのは円$B$が$x^2+z^2=1$に接する場合であるからそのケースを考える．
+すると$|OO_B| = 1 - r_B, |PO_B| = r_B$であって，
+$\angle O_B PO = \theta$ とおくと\cref{eq:3}より
 \begin{align}
-  (1 - r_B)^2 &= t^2 + r_B^2 - 2t r_B \cos\theta
+  0 \le \theta \le \dfrac{\pi}{2} \label{eq:6}
 \end{align}
-$1^\circ$ と同様にして，$r_B$ は $\theta = 0$ で $\max r_B = \dfrac{1+t}{2}$ をとる $\cdots \textcircled{6}$
+である．
 
-\bigskip
-
-\noindent
-\textcircled{4}， \textcircled{6}から，半径の和の最大値 $R$ は，$t$ を固定した時，
+$\theta = 0$ の時 $r_B = \dfrac{1+t}{2}$ である．$\theta \neq 0$ の時は $\triangle OPO_B$ が存在し，余弦定理から
 \begin{align}
-  R &= \dfrac{1}{2}(-t^2 + t + 2)
+  |PO_B|^2 &= |OP|^2 + |OO_B|^2 - 2|OP||OO_B|\cos\theta \\
+  (1 - r_B)^2 &= t^2 + r_B^2 - 2t r_B \cos\theta \\
+  2 r_B (1 - t\cos\theta) &= 1 - t^2 \\
+  r_B = \dfrac{1-t^2}{2(1 - t\cos\theta)}
 \end{align}
-とかける．$0 \le t \le 1$ で $t$ を動かして，$t = \dfrac{1}{2}$ の時，
+である．これは$\theta=0$でも成立する．
+従って$r_B$ は $\theta = 0$ で最大値
+\begin{align}
+  \max r_B = \dfrac{1+t}{2} \label{eq:7}
+\end{align}
+をとる．
+\casesend
+
+以上\cref{eq:5,eq:7}から，半径の和の最大値 $R$ は，$t$ を固定した時，
+\begin{align}
+  R &= \max r_A + \max r_B = \dfrac{1}{2}(-t^2 + t + 2)
+\end{align}
+である．$0 \le t \le 1$ で $t$ を動かすと$R$は$t = \dfrac{1}{2}$ の時に最大値
 \begin{align}
   \max R &= \dfrac{9}{8} \hfill \qed
 \end{align}
+をとる．
 
 \newpage
 
