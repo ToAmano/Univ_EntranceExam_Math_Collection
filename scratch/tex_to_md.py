@@ -426,7 +426,50 @@ def extract_global_macro_defs(raw_tex):
     return "\n".join(ordered)
 
 
-def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs=""):
+class FigureCompilationError(RuntimeError):
+    """A figure failed to render; parsing fallback must not hide this failure."""
+
+
+def figure_layout_parts(figure_code):
+    """Keep panel layout and subcaptions; move only the outer caption to HTML."""
+    body = re.sub(r'^\\begin\{figure\}(?:\[[^]]*\])?', '', figure_code.strip())
+    body = re.sub(r'\\end\{figure\}\s*$', '', body)
+    sub_depth = 0
+    caption = label = ''
+    cuts = []
+    sublabels = []
+    consumed = 0
+    tokens = re.finditer(
+        r'\\(begin|end)\{([^}]+)\}|\\(caption\*?|label)(?![A-Za-z])', body)
+    for m in tokens:
+        if m.start() < consumed:
+            continue
+        if m.group(1):
+            if m.group(2) in ('subfigure', 'subcaptionblock', 'subcaptiongroup', 'minipage'):
+                sub_depth += 1 if m.group(1) == 'begin' else -1
+            continue
+        pos = m.end()
+        optional = re.match(r'\s*(?:\[[^]]*\])?\s*', body[pos:])
+        pos += optional.end()
+        if pos >= len(body) or body[pos] != '{':
+            continue
+        arg, end = _extract_braced(body, pos)
+        consumed = end
+        if sub_depth:
+            if m.group(3) == 'label':
+                sublabels.append(arg[1:-1])
+            continue
+        if m.group(3).startswith('caption'):
+            caption = arg[1:-1]
+        else:
+            label = arg[1:-1]
+        cuts.append((m.start(), end))
+    for start, end in reversed(cuts):
+        body = body[:start] + body[end:]
+    return body, caption, label, sublabels
+
+
+def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs="", figure_layout=False):
     """
     TikZコードと大問レベルのマクロ定義を組み合わせてスタンドアロンSVG画像を生成する
     pdftocairo (Poppler) を最優先で使用し、完璧なベクトル描画を行う
@@ -443,13 +486,23 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs=""):
     pdf_filename = os.path.join(temp_dir, "fig.pdf")
     log_filename = os.path.join(temp_dir, "fig.log")
 
-    full_tex = f"""\\documentclass[tikz,border=2pt]{{standalone}}
+    # The master document has a 180mm text area. A single boxed figure preserves
+    # minipage widths, hfill, paragraph breaks and subcaption layout at that width.
+    # Leave room for ink outside minipage boxes (negative caption margins and
+    # overfull diagrams); crop to actual ink afterwards, without reflowing it.
+    standalone_options = 'border=180mm' if figure_layout else 'tikz,border=2pt'
+    if figure_layout:
+        tikz_code = (r'\begin{minipage}{180mm}\captionsetup{type=figure}' + '\n'
+                     + tikz_code + '\n' + r'\end{minipage}')
+    caption_package = r'\usepackage{subcaption}\renewcommand{\figurename}{図}' if figure_layout else ''
+    full_tex = f"""\\documentclass[{standalone_options}]{{standalone}}
 \\usepackage{{amsmath,amssymb,amsfonts,amsthm}}
 \\usepackage{{fancybox}}
 \\usepackage{{luatexja}}
 \\usepackage[haranoaji]{{luatexja-preset}}
 \\usepackage{{tikz,pgfplots}}
 \\usepackage{{tikz-3dplot}}
+{caption_package}
 \\usetikzlibrary{{arrows.meta,calc,intersections,patterns,patterns.meta,angles,quotes,through,positioning,decorations.pathmorphing,decorations.markings,math,3d,perspective,shapes.geometric,backgrounds}}
 \\usepgfplotslibrary{{fillbetween,colormaps,groupplots}}
 \\pgfplotsset{{compat=1.18}}
@@ -502,6 +555,20 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs=""):
                   f"(exit code {result.returncode})")
             print(f"[tex_to_md]   log tail:\n{_log_tail(result)}")
             return False
+
+        if figure_layout:
+            pdfcrop_bin = shutil.which('pdfcrop')
+            if not pdfcrop_bin:
+                print('[tex_to_md] Composite figures require pdfcrop (texlive-extra-utils and Ghostscript).')
+                return False
+            cropped_pdf = os.path.join(temp_dir, 'fig-cropped.pdf')
+            cropped = subprocess.run(
+                [pdfcrop_bin, '--hires', '--margins', '2', pdf_filename, cropped_pdf],
+                capture_output=True, text=True)
+            if cropped.returncode != 0 or not os.path.exists(cropped_pdf):
+                print(f'[tex_to_md] Composite figure cropping failed: {cropped.stderr or cropped.stdout}')
+                return False
+            pdf_filename = cropped_pdf
 
         # 2. pdftocairo (Poppler) による完璧な SVG 変換
         svg_ok = False
@@ -720,29 +787,44 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         # 5. figure 環境の SVG ビルドと HTML <figure> ノード置換
         figs = list(soup.find_all('figure'))
         for fig in figs:
+            composite = len(list(fig.find_all('tikzpicture'))) > 1
+            layout_body, layout_caption, layout_label, sublabels = figure_layout_parts(str(fig)) if composite else ('', '', '', [])
             caption_node = fig.find('caption')
             label_node = fig.find('label')
             
             caption_text = str(caption_node.args[0]).strip('{}') if caption_node and caption_node.args else ''
             label_id = str(label_node.args[0]).strip('{}') if label_node and label_node.args else f'{fig_prefix}{fig_count}'
-            anchor_id = f'problem_{label_id}' if problem_figures and label_node else label_id
+            if composite:
+                caption_text = layout_caption
+                label_id = layout_label or f'{fig_prefix}{fig_count}'
+            has_outer_label = bool(layout_label) if composite else bool(label_node and label_node.args)
+            anchor_id = f'problem_{label_id}' if problem_figures and has_outer_label else label_id
 
             fig_map[label_id] = fig_count
             fig_anchors[label_id] = anchor_id
 
             tikz_node = fig.find('tikzpicture')
             if tikz_node:
-                tikz_code = str(tikz_node)
+                tikz_code = (f'\\setcounter{{figure}}{{{fig_count - 1}}}\n' + layout_body) if composite else str(tikz_node)
                 svg_filename = f"{fig_prefix}{fig_count}.svg"
                 svg_dest_path = os.path.join(output_svg_dir, svg_filename)
                 os.makedirs(output_svg_dir, exist_ok=True)
-                compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs)
+                if composite:
+                    if not compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs, figure_layout=True):
+                        raise FigureCompilationError(f'Composite figure compilation failed: {svg_dest_path}')
+                else:
+                    compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs)
 
                 web_img_src = f"{public_img_dir_rel}/{svg_filename}"
                 caption_label = f"図 {fig_count}" + (f": {caption_text}" if caption_text else "")
                 alt_text = build_fig_alt_text(caption_text, fig_count)
                 # 表と同様、<figcaption> のタグと本文を空行で分離する（Issue #4）。
                 fig_html = f'\n\n<figure id="{anchor_id}">\n  <img src="{web_img_src}" alt="{alt_text}" />\n  <figcaption>\n\n{caption_label}\n\n  </figcaption>\n</figure>\n\n'
+                for sublabel in sublabels:
+                    subanchor = f'problem_{sublabel}' if problem_figures else sublabel
+                    fig_map[sublabel] = fig_count
+                    fig_anchors[sublabel] = subanchor
+                    fig_html = f'<span id="{subanchor}"></span>\n' + fig_html
                 fig.replace_with(fig_html)
                 fig_count += 1
 
@@ -798,6 +880,8 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
                 return f"\n$$\n\\begin{{cases}}\n{body}\n\\end{{cases}}\n$$\n"
 
         md_body = re.sub(r'\\begin\{(?:numcases|subnumcases)\}\s*\{([^}]*)\}(.*?)\\end\{(?:numcases|subnumcases)\}', replace_numcases, md_body, flags=re.DOTALL)
+    except FigureCompilationError:
+        raise
     except Exception as e:
         print(f"TexSoup warning for {tex_path}: {e}")
         # TexSoup が不整合な TeX をパース失敗した際のフォールバック
@@ -807,20 +891,30 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         def replace_figure_fallback(match):
             nonlocal fig_count
             fig_content = match.group(0)
+            composite = len(re.findall(r'\\begin\{tikzpicture\}', fig_content)) > 1
+            layout_body, layout_caption, layout_label, sublabels = figure_layout_parts(fig_content) if composite else ('', '', '', [])
             m_tikz = re.search(r'\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}', fig_content, re.DOTALL)
             m_cap = re.search(r'\\caption\{([^}]+)\}', fig_content)
             m_lbl = re.search(r'\\label\{([^}]+)\}', fig_content)
 
             cap_text = m_cap.group(1) if m_cap else ''
             lbl_id = m_lbl.group(1) if m_lbl else f'{fig_prefix}{fig_count}'
-            anchor_id = f'problem_{lbl_id}' if problem_figures and m_lbl else lbl_id
+            if composite:
+                cap_text = layout_caption
+                lbl_id = layout_label or f'{fig_prefix}{fig_count}'
+            has_outer_label = bool(layout_label) if composite else bool(m_lbl)
+            anchor_id = f'problem_{lbl_id}' if problem_figures and has_outer_label else lbl_id
 
             if m_tikz:
-                tikz_code = m_tikz.group(0)
+                tikz_code = (f'\\setcounter{{figure}}{{{fig_count - 1}}}\n' + layout_body) if composite else m_tikz.group(0)
                 svg_filename = f"{fig_prefix}{fig_count}.svg"
                 svg_dest_path = os.path.join(output_svg_dir, svg_filename)
                 os.makedirs(output_svg_dir, exist_ok=True)
-                compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs)
+                if composite:
+                    if not compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs, figure_layout=True):
+                        raise FigureCompilationError(f'Composite figure compilation failed: {svg_dest_path}')
+                else:
+                    compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs)
 
                 web_img_src = f"{public_img_dir_rel}/{svg_filename}"
                 caption_label = f"図 {fig_count}" + (f": {cap_text}" if cap_text else "")
@@ -829,6 +923,11 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
                 fig_html = f'\n\n<figure id="{anchor_id}">\n  <img src="{web_img_src}" alt="{alt_text}" />\n  <figcaption>\n\n{caption_label}\n\n  </figcaption>\n</figure>\n\n'
                 fig_map[lbl_id] = fig_count
                 fig_anchors[lbl_id] = anchor_id
+                for sublabel in sublabels:
+                    subanchor = f'problem_{sublabel}' if problem_figures else sublabel
+                    fig_map[sublabel] = fig_count
+                    fig_anchors[sublabel] = subanchor
+                    fig_html = f'<span id="{subanchor}"></span>\n' + fig_html
                 fig_count += 1
                 return fig_html
             return fig_content
