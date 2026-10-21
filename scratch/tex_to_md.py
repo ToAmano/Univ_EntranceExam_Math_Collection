@@ -439,10 +439,12 @@ def figure_layout_parts(figure_code):
     cuts = []
     sublabels = []
     consumed = 0
+    tikz_spans = [(m.start(), m.end()) for m in re.finditer(
+        r'\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}', body, re.DOTALL)]
     tokens = re.finditer(
         r'\\(begin|end)\{([^}]+)\}|\\(caption\*?|label)(?![A-Za-z])', body)
     for m in tokens:
-        if m.start() < consumed:
+        if m.start() < consumed or any(a <= m.start() < b for a, b in tikz_spans):
             continue
         if m.group(1):
             if m.group(2) in ('subfigure', 'subcaptionblock', 'subcaptiongroup', 'minipage'):
@@ -546,6 +548,8 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs="", figure_layout
         result = subprocess.run(cmd_compile_pdf, capture_output=True, text=True)
 
         if result.returncode != 0 or not os.path.exists(pdf_filename):
+            print(f"[tex_to_md] LuaLaTeX failed for {output_svg_path} "
+                  f"(exit code {result.returncode}); log before pdfLaTeX fallback:\n{_log_tail(result)}")
             cmd_pdflatex = ["pdflatex", "-interaction=nonstopmode", "-halt-on-error",
                              "-output-directory=" + temp_dir, tex_filename]
             result = subprocess.run(cmd_pdflatex, capture_output=True, text=True)
@@ -750,7 +754,10 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     tab_map = {}
 
     try:
-        soup = TexSoup(raw_tex, tolerance=1)
+        # TikZ can use commands such as \label as local loop variables.
+        # Parsing their contents as document commands corrupts braces and may
+        # swallow subsequent figures; retain each picture as opaque source.
+        soup = TexSoup(raw_tex, tolerance=1, skip_envs=('tikzpicture',))
 
         # 4. table 環境の HTML/Markdown ノード置換
         tables = list(soup.find_all('table'))
