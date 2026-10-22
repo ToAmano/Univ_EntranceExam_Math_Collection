@@ -4,12 +4,14 @@ import re
 import subprocess
 import shutil
 import tempfile
+from xml.etree import ElementTree
 import pypandoc
 import yaml
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from TexSoup import TexSoup
 
 TOPIC_TAGS_PATH = "data/topic_tags.yaml"
+SVG_DVISVGM_THRESHOLD_BYTES = 5_000_000
 
 UNIV_JA = {"titech": "東京工業大学", "utokyo": "東京大学", "ukyoto": "京都大学"}
 CATEGORY_JA = {"zenki": "前期", "kouki": "後期"}
@@ -471,10 +473,54 @@ def figure_layout_parts(figure_code):
     return body, caption, label, sublabels
 
 
+def _replace_oversized_svg_with_dvisvgm(pdf_path, svg_path):
+    """Use dvisvgm for large SVGs only when it produces a smaller valid output file.
+
+    Keep the pdftocairo image in place until the alternate conversion succeeds.
+    The temporary file is on the destination filesystem for an atomic replace.
+    """
+    if os.path.getsize(svg_path) <= SVG_DVISVGM_THRESHOLD_BYTES:
+        return False
+
+    dvisvgm_bin = shutil.which('dvisvgm')
+    if not dvisvgm_bin:
+        print(f'[tex_to_md] dvisvgm unavailable; keeping large SVG: {svg_path}')
+        return False
+
+    original_size = os.path.getsize(svg_path)
+    try:
+        with tempfile.TemporaryDirectory(prefix='dvisvgm_', dir=os.path.dirname(svg_path) or '.') as temp_dir:
+            candidate = os.path.join(temp_dir, 'figure.svg')
+            result = subprocess.run(
+                [dvisvgm_bin, '--pdf', '--no-fonts', '-o', candidate, pdf_path],
+                capture_output=True, text=True)
+            if result.returncode != 0 or not os.path.isfile(candidate):
+                print(f'[tex_to_md] dvisvgm failed; keeping large SVG: {svg_path} '
+                      f'(exit code {result.returncode}): {(result.stderr or "")[-500:]}')
+                return False
+            candidate_size = os.path.getsize(candidate)
+            if not 0 < candidate_size < original_size:
+                print(f'[tex_to_md] dvisvgm did not shrink SVG; keeping original: {svg_path}')
+                return False
+            try:
+                root = ElementTree.parse(candidate).getroot()
+                if root.tag.rsplit('}', 1)[-1] != 'svg':
+                    raise ElementTree.ParseError('root element is not svg')
+            except ElementTree.ParseError as exc:
+                print(f'[tex_to_md] dvisvgm produced invalid SVG; keeping original: {svg_path}: {exc}')
+                return False
+            os.replace(candidate, svg_path)
+            print(f'[tex_to_md] dvisvgm shrank {svg_path}: {original_size} -> {candidate_size} bytes')
+            return True
+    except OSError as exc:
+        print(f'[tex_to_md] dvisvgm replacement failed; keeping large SVG: {svg_path}: {exc}')
+        return False
+
+
 def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs="", figure_layout=False):
     """
     TikZコードと大問レベルのマクロ定義を組み合わせてスタンドアロンSVG画像を生成する
-    pdftocairo (Poppler) を最優先で使用し、完璧なベクトル描画を行う
+    pdftocairo (Poppler) を優先し、5 MB を超えた場合だけ dvisvgm で小さくする
 
     図ごとに独立した一時ディレクトリを使い、コンパイラの終了コードを必ず確認する。
     以前は固定パス scratch/tikz_build/fig.pdf を使い回し、かつ os.path.exists() のみで
@@ -581,6 +627,8 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs="", figure_layout
             cmd_svg = [pdftocairo_bin, "-svg", pdf_filename, output_svg_path]
             r = subprocess.run(cmd_svg, capture_output=True, text=True)
             svg_ok = r.returncode == 0 and os.path.exists(output_svg_path)
+            if svg_ok:
+                _replace_oversized_svg_with_dvisvgm(pdf_filename, output_svg_path)
             if not svg_ok:
                 print(f"[tex_to_md] pdftocairo failed for {output_svg_path} "
                       f"(exit code {r.returncode}): {(r.stderr or '')[-500:]}")
