@@ -1,110 +1,185 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-P，Q，R の $x$ 座標を $\alpha, \beta, \gamma$ とおく．PQ の傾きが $\sqrt{2}$ だから，
+
+% TODO: P,Q,R,M
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 厳密な座標パラメータ ---
+    % alpha + beta = sqrt(2) ≈ 1.4142
+    % beta - alpha = 6*sqrt(3)/5 ≈ 2.0785
+    % alpha = (sqrt(2) - 6*sqrt(3)/5)/2 ≈ -0.3321 => y_P = alpha^2 ≈ 0.1103
+    % beta  = (sqrt(2) + 6*sqrt(3)/5)/2 ≈  1.7463 => y_Q = beta^2  ≈ 3.0500
+    % 中点 M = ((alpha+beta)/2, (y_P+y_Q)/2) = (sqrt(2)/2, (alpha^2+beta^2)/2)
+    %        ≈ (0.7071, 1.5802)
+    %
+    % ベクトル MR = -(sqrt(3)/2)*(beta-alpha) * (-sqrt(2), 1)^T
+    %             = -(9/5) * (-sqrt(2), 1)^T = (9*sqrt(2)/5, -9/5) ≈ (2.5456, -1.8)
+    % => R = M + MR = (sqrt(2)/2 + 9*sqrt(2)/5, 1.5802 - 1.8) ... ではなく、
+    % 複号（手前・上向きの解）を採用すると:
+    % MR = +(sqrt(3)/2)*(beta-alpha) * (-sqrt(2), 1)^T = (-9*sqrt(2)/5, 9/5)
+    % R = (sqrt(2)/2 - 9*sqrt(2)/5, 1.5802 + 1.8) ≈ (-1.8385, 3.3802) (R on y=x^2)
+    %
+    % 見やすい縮尺のため、図示用としてスケールを最適化した厳密値を使用:
+    \pgfmathsetmacro{\alphaVal}{(sqrt(2.0) - 1.2*sqrt(3.0)) / 2.0} % ≈ -0.3321
+    \pgfmathsetmacro{\betaVal}{(sqrt(2.0) + 1.2*sqrt(3.0)) / 2.0}  % ≈  1.7463
+    \pgfmathsetmacro{\gammaVal}{(sqrt(2.0) - 3.6*sqrt(2.0)) / 2.0} % ≈ -1.8385
+
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (\alphaVal, {\alphaVal*\alphaVal});
+    \coordinate (Q) at (\betaVal, {\betaVal*\betaVal});
+    \coordinate (R) at (\gammaVal, {\gammaVal*\gammaVal});
+    \coordinate (M) at ($ (P)!0.5!(Q) $);
+
+    % --- 2. 正三角形 PQR の塗りつぶし ---
+    \fill[blue!10, opacity=0.7] (P) -- (Q) -- (R) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-2.2, 0) -- (2.3, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 3.8) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 放物線 y = x^2 ---
+    \draw[line width=1.8pt, blue!85!black, domain=-2.0:1.9, samples=80]
+    plot (\x, {\x*\x});
+    \node[blue!90!black, font=\footnotesize\bfseries, right] at (1.8, 3.24) {$y = x^2$};
+
+    % --- 5. 正三角形の辺と中線 MR ---
+    \draw[very thick, black] (P) -- (Q);
+    \draw[very thick, black] (Q) -- (R);
+    \draw[very thick, black] (R) -- (P);
+
+    % 中線 MR (破線)
+    \draw[line width=1.6pt, red!85!black, dashed] (M) -- (R);
+    \node[red!90!black, font=\scriptsize\bfseries, above] at ($ (M)!0.5!(R) $) {$MR$};
+
+    % --- 6. 直角記号 (MR ⊥ PQ) ---
+    % PQ の傾きは sqrt(2) ≈ 1.414 (角度 ≈ 54.74°)
+    \pgfmathsetmacro{\angPQ}{atan(sqrt(2.0))}
+    \draw[thin, black]
+    ($ (M) + ({\angPQ}:-0.08) $) --
+    ($ (M) + ({\angPQ}:-0.08) + ({\angPQ+90}:0.08) $) --
+    ($ (M) + ({\angPQ+90}:0.08) $);
+
+    % --- 7. 点プロットとラベル ---
+    \fill[black]         (P) circle (1.2pt) node[below left=1pt] {$P(\alpha, \alpha^2)$};
+    \fill[black]         (Q) circle (1.2pt) node[right=2pt] {$Q(\beta, \beta^2)$};
+    \fill[black]         (R) circle (1.2pt) node[above left=1pt] {$R(\gamma, \gamma^2)$};
+    \fill[teal!85!black] (M) circle (1.2pt) node[below right=1pt, font=\scriptsize, teal!90!black] {$M$};
+
+    % 弦 PQ の傾き表示
+    \node[font=\scriptsize, gray!80!black, below right] at ($ (P)!0.4!(Q) $) {傾き $\sqrt{2}$};
+
+  \end{tikzpicture}
+  \caption{放物線 $y = x^2$ 上に正三角形 $\triangle PQR$ をなす 3 点と中線 $MR$}
+  \label{fig:parabola_equilateral_triangle}
+\end{figure}
+
+$y=x^2$上の点$P,Q,R$の座標を$P(\alpha,\alpha^2), Q(\beta,\beta^2), R(\gamma,\gamma^2)$とおく．これらが正三角形をなすので，$\alpha,\beta,\gamma$は互いに相異なる．
+
+題意の条件から$PQ$の傾き$\dfrac{\beta^2-\alpha^2}{\beta-\alpha}$が$\sqrt{2}$に等しいから
 \begin{align}
-  \alpha + \beta = \sqrt{2} \quad \cdots ①
+  \dfrac{\beta^2-\alpha^2}{\beta-\alpha} = \sqrt{2}
+  \quad \therefore
+  \alpha + \beta = \sqrt{2} \label{eq:1}
 \end{align}
-このもとで $\vec{PQ} =
-\begin{pmatrix} \beta - \alpha \\ \beta^2 - \alpha^2
-\end{pmatrix} = (\beta - \alpha)
-\begin{pmatrix} 1 \\ \sqrt{2}
-\end{pmatrix}$ となり，PQ の中点を M として，$MR \perp PQ$，$MR = \dfrac{\sqrt{3}}{2} PQ$ だから，
+である．
+このもとで
+\begin{align}
+  \vec{PQ} =
+  \begin{pmatrix} \beta - \alpha \\ \beta^2 - \alpha^2
+  \end{pmatrix} = (\beta - \alpha)
+  \begin{pmatrix} 1 \\ \sqrt{2}
+  \end{pmatrix} \label{eq:2}
+\end{align}
+となり，PQ の中点を M として，$MR \perp PQ$，$|MR| = \dfrac{\sqrt{3}}{2} |PQ|$ だから，
 \begin{align}
   \vec{MR} = \pm \dfrac{\sqrt{3}}{2} (\beta - \alpha)
   \begin{pmatrix} -\sqrt{2} \\ 1
-  \end{pmatrix}
+  \end{pmatrix} \label{eq:3}
 \end{align}
-とおける．したがって
+とおける．したがって$\vec{OR}$は
 \begin{align}
-  \vec{OR} = \dfrac{1}{2}
+  \vec{OR}
+  = \vec{OM}+\vec{MR}
+  = \dfrac{1}{2}
   \begin{pmatrix} \alpha + \beta \\ \alpha^2 + \beta^2
   \end{pmatrix} \pm \dfrac{\sqrt{3}}{2} (\beta - \alpha)
   \begin{pmatrix} -\sqrt{2} \\ 1
   \end{pmatrix}
+  = \dfrac{1}{2}
+  \begin{pmatrix}
+    \sqrt{2}  \mp \sqrt{6}(\beta - \alpha) \\
+    (\alpha^2 + \beta^2) \pm \sqrt{3}(\beta - \alpha)
+  \end{pmatrix} \quad (\because{\text{\cref{eq:1}}})
 \end{align}
-R も $y = x^2$ 上にあるから
+と書ける．点$R$が$y=x^2$上にあるから代入して
 \begin{align}
-  \dfrac{1}{2} (\alpha^2 + \beta^2) \pm \dfrac{\sqrt{3}}{2} (\beta - \alpha) = \left\{ \dfrac{1}{2} \sqrt{2} \mp \dfrac{\sqrt{3}}{2} \sqrt{2} (\beta - \alpha) \right\}^2
+  \dfrac{1}{2} (\alpha^2 + \beta^2) \pm \dfrac{\sqrt{3}}{2} (\beta - \alpha)
+  & = \left\{ \dfrac{1}{2} \sqrt{2} \mp \dfrac{\sqrt{3}}{2} \sqrt{2} (\beta - \alpha) \right\}^2 \\
+  (\alpha^2 + \beta^2) \pm \sqrt{3}(\beta - \alpha)
+  &= (1 \mp \sqrt{3}(\beta - \alpha))^2 \\
+  &= 3(\beta - \alpha)^2 \mp 2\sqrt{3}(\beta - \alpha) + 1 \\
+  2(\alpha^2-3\alpha\beta+\beta^2)
+  &= \pm 3\sqrt{3}(\beta - \alpha)-1 \\
+  2(\alpha+\beta)^2-10\alpha\beta
+  &= \pm 3\sqrt{3}(\beta - \alpha)-1 \label{eq:4}
 \end{align}
+である．ここに\cref{eq:1}を代入して$\beta$を消去すると
 \begin{align}
-  (\alpha^2 + \beta^2) \pm \sqrt{3}(\beta - \alpha) &= (1 \mp \sqrt{3}(\beta - \alpha))^2 \\
-  &= 3(\beta - \alpha)^2 \mp 2\sqrt{3}(\beta - \alpha) + 1 \quad \cdots ②
+  & 4 - 10\alpha(\sqrt{2}-\alpha)   = \pm 3\sqrt{3}(\sqrt{2}-2\alpha)-1 \\
+  & 10\alpha^2-10\sqrt{2}\alpha + 5 = \pm 3\sqrt{3}(\sqrt{2}-2\alpha) \\
+  & 10\alpha^2-(10\sqrt{2}\mp 6\sqrt{3})\alpha +(5 \mp 3\sqrt{6}) = 0
+\end{align}
+だから，この解は二次方程式の解の公式から，根号を繋ぐ$\pm$以外は複合同順として
+\begin{align}
+  \alpha
+  &= \dfrac{1}{10}\left[\left(5\sqrt{2}\mp 3\sqrt{3}\right)\pm
+  \sqrt{\left(5\sqrt{2}\mp 3\sqrt{3}\right)^2-10(5\mp 3\sqrt{6})}\right] \\
+  &= \dfrac{1}{10}\left[\left(5\sqrt{2}\mp 3\sqrt{3}\right)\pm
+  \sqrt{77 \mp 30\sqrt{6}-10(5\mp 3\sqrt{6})}\right] \\
+  &= \dfrac{1}{10}\left[\left(5\sqrt{2}\mp 3\sqrt{3}\right)\pm
+\sqrt{27 \mp 30\sqrt{6} \pm 30\sqrt{6})}\right] \\
+&= \dfrac{1}{10}\left[\left(5\sqrt{2}\mp 3\sqrt{3}\right)\pm \sqrt{27}\right] \\
+&= \dfrac{5\sqrt{2}}{10}, \dfrac{5\sqrt{2}\pm 6\sqrt{3}}{10} \label{eq:5}
 \end{align}
 である．
 
-\paragraph{$1^\circ$ 複号同順の時（上辺）}
+さて，$a=|PQ|$は\cref{eq:2}より
 \begin{align}
-  \alpha^2 + \beta^2 - 3(\beta - \alpha)^2 + 3\sqrt{3}(\beta - \alpha) - 1 = 0
+a = |\vec{PQ}| = \sqrt{3}|\beta-\alpha| = \sqrt{3}|\sqrt{2}-2\alpha|
 \end{align}
-①から $\beta = \sqrt{2} - \alpha$ だから，
+だから，\cref{eq:5}を代入して
 \begin{align}
-  (2\alpha^2 - 2\sqrt{2}\alpha + 2) - 3(\sqrt{2} - 2\alpha)^2 + 3\sqrt{3}(\sqrt{2} - 2\alpha) - 1 = 0
+a = 0, \dfrac{18}{5}
 \end{align}
+である．$a\neq 0$だから求めるのは
 \begin{align}
-  (2\alpha^2 - 2\sqrt{2}\alpha + 2) - 3(4\alpha^2 - 4\sqrt{2}\alpha + 2) + 3\sqrt{6} - 6\sqrt{3}\alpha - 1 = 0
+a = \dfrac{18}{5}
 \end{align}
-\begin{align}
-  -10\alpha^2 + (10\sqrt{2} - 6\sqrt{3})\alpha - 5 + 3\sqrt{6} = 0
-\end{align}
-\begin{align}
-  \alpha &= \dfrac{(5\sqrt{2} - 3\sqrt{3}) \pm \sqrt{(5\sqrt{2} - 3\sqrt{3})^2 - 50 + 30\sqrt{6}}}{10} \\
-  &= \dfrac{5\sqrt{2} - 3\sqrt{3} \pm 3\sqrt{3}}{10}
-\end{align}
+である．
 
-\paragraph{$2^\circ$ 複号異順の時}
-\begin{align}
-  \alpha^2 + \beta^2 - 3\sqrt{3}(\beta - \alpha) - 3(\beta - \alpha)^2 - 1 = 0
-\end{align}
-$\beta = \sqrt{2} - \alpha$ より
-\begin{align}
-  (2\alpha^2 - 2\sqrt{2}\alpha + 2) - 3\sqrt{3}(\sqrt{2} - 2\alpha) - 3(\sqrt{2} - 2\alpha)^2 - 1 = 0
-\end{align}
-\begin{align}
-  (2\alpha^2 - 2\sqrt{2}\alpha + 2) - 3\sqrt{6} + 6\sqrt{3}\alpha - 3(4\alpha^2 - 4\sqrt{2}\alpha + 2) - 1 = 0
-\end{align}
-\begin{align}
-  -10\alpha^2 + (10\sqrt{2} + 6\sqrt{3})\alpha - 5 - 3\sqrt{6} = 0
-\end{align}
-\begin{align}
-  \alpha &= \dfrac{(5\sqrt{2} + 3\sqrt{3}) \pm \sqrt{(5\sqrt{2} + 3\sqrt{3})^2 - 50 - 30\sqrt{6}}}{10} \\
-  &= \dfrac{5\sqrt{2} + 3\sqrt{3} \pm 3\sqrt{3}}{10}
-\end{align}
+{\bf [別解]}
 
-したがって，$\alpha = \dfrac{5\sqrt{2}}{10}, \dfrac{5\sqrt{2} \pm 6\sqrt{3}}{10}$ となるから，
+最初から$a=\sqrt{3}|\beta-\alpha|$に着目して，\cref{eq:4}を$\beta-\alpha$について整理する方針も考えられる．\cref{eq:4}の途中式
 \begin{align}
-  a = |\vec{PQ}| = |\beta - \alpha|\sqrt{3} = |\sqrt{2} - 2\alpha|\sqrt{3}
+2(\alpha^2-3\alpha\beta+\beta^2) = \pm 3\sqrt{3}(\beta - \alpha)-1 \\
 \end{align}
-に代入して，
+から，$p=\beta-\alpha$とすると
 \begin{align}
-  a = 0, \dfrac{18}{5}
+& 2(\beta-\alpha)^2-2\alpha\beta = \pm 3\sqrt{3}(\beta - \alpha)-1 \\
+& 2(\beta-\alpha)^2-\dfrac{1}{2}\left[(\alpha+\beta)^2-(\beta-\alpha)^2\right] = \pm 3\sqrt{3}(\beta - \alpha)-1 \\
+& 2p^2 - \dfrac{1}{2}\left[2-p^2\right] = \pm 3\sqrt{3}p - 1 \quad (\because\text{\cref{eq:1}})\\
+& 5p^2 \mp 6\sqrt{3}p = 0 \\
+& p = 0, \pm \dfrac{6\sqrt{3}}{5}
 \end{align}
-$a = 0$ は不適だから，$a = \dfrac{18}{5}$ \quad \text{//}
-
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}[scale=1.5]
-    \draw[->] (-1.5,0) -- (2,0) node[right] {$x$};
-    \draw[->] (0,-0.5) -- (0,2.5) node[above] {$y$};
-    \draw[domain=-1.3:1.3,smooth,variable=\x,blue,thick] plot ({\x},{\x*\x});
-    \coordinate (P) at (-0.8,0.64);
-    \coordinate (Q) at (1.2,1.44);
-    \coordinate (M) at (0.2,1.04);
-    \coordinate (R) at (0.8,0.64);
-    \draw[thick] (P) -- (Q);
-    \draw[thick,dashed] (M) -- (R);
-    \fill (P) circle (1.5pt) node[left] {$P$};
-    \fill (Q) circle (1.5pt) node[right] {$Q$};
-    \fill (M) circle (1.5pt) node[above left] {$M$};
-    \fill (R) circle (1.5pt) node[below right] {$R$};
-    \node at (0,-0.2) {$O$};
-  \end{tikzpicture}
-  \caption{放物線 $y=x^2$ 上の3点 P，Q，R と，PQ の中点 M}
-\end{figure}
+だから，代入して
+\begin{align}
+a = \sqrt{3}p = 0, \dfrac{18}{5}
+\end{align}
+である．こちらの方が計算量は少なくて済む．
 
 \end{document}

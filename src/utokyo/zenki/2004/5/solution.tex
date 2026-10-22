@@ -1,75 +1,254 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
 {\bf [解]}
 \paragraph{(1)}
 
-$xy$平面での切り口は右図（$0\le r\le2$）．まず，$A,B$の共通部分の体積$V'$を求めると，
+半径$1$の二つの球
 \begin{align}
-  V=\dfrac{4}{3}\pi\cdot2-V'=\dfrac{8}{3}\pi-V'\quad\cdots①
+  \begin{cases}
+    A: x^2+y^2+z^2 = 1\\
+    B: (x-r)^2+y^2+z^2 = 1
+  \end{cases} \label{eq:1}
 \end{align}
-である．$V'$は，対称性から，斜線部を$x$軸まわりに回転した立体の体積の2倍で，
+について考える．これらが共有点を持つのはお互いの中心間の距離が半径の和$2$より小さい時で
 \begin{align}
-  V'&=2\int_{r/2}^1\pi(1-x^2)\,dx=2\pi\left[x-\dfrac{1}{3}x^3\right]_{r/2}^1\\
-  &=2\pi\left(\dfrac{2}{3}-\dfrac{r}{2}+\dfrac{1}{3}\cdot\dfrac{r^3}{8}\right)
+  0 < r \le 2 \label{eq:2}
 \end{align}
+である．
 
+$A,B$の共通部分の体積を$V'$とすると，$V$は$A,B$の球の体積から$V'$を減じたもので
+\begin{align}
+  V &=
+  \begin{cases}
+    \dfrac{4}{3}\pi\cdot2-V'=\dfrac{8}{3}\pi-V' & (0<r\le 2)\\
+    \dfrac{8}{3}\pi   & (2 < r)
+  \end{cases}\label{eq:3}
+\end{align}
+である．ただし$2 < r$の時は$V'=0$で$A,B$の球の体積の和が$V$となる．
+
+% TODO: xy平面での断面
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.3, >=stealth]
-    \draw[->] (-1.6,0) -- (2.6,0) node[right] {$x$};
-    \draw[->] (0,-1.4) -- (0,1.4) node[above] {$y$};
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ (例: r = 1.2) ---
+    \def\rVal{1.2}
+    \pgfmathsetmacro{\halfR}{\rVal / 2.0} % 0.6
+    \pgfmathsetmacro{\yInt}{sqrt(1.0 - \halfR*\halfR)} % ≈ 0.8
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (P)     at (\rVal, 0);
+    \coordinate (TopInt) at (\halfR, \yInt);
+    \coordinate (BotInt) at (\halfR, -\yInt);
+
+    % --- 2. 重なり部分 V' のハッチング塗りつぶし ---
     \begin{scope}
-      \clip (0,0) circle (1);
-      \fill[gray!25] (1,0) circle (1);
+      \clip (O) circle (1.0);
+      \fill[pattern=north east lines, pattern color=blue!70, opacity=0.75] (P) circle (1.0);
     \end{scope}
-    \draw (0,0) circle (1);
-    \draw (1,0) circle (1);
-    \draw[dashed] (0.5,-1) -- (0.5,1);
-    \node[below] at (0,0) {$O$};
-    \node[below] at (1,0) {$P$};
-    \node[above] at (0.5,1) {\scriptsize$r/2$};
+
+    % --- 3. 2つの円の輪郭線 ---
+    \draw[very thick, blue!85!black] (O) circle (1.0);
+    \draw[very thick, teal!85!black] (P) circle (1.0);
+
+    % --- 4. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-1.35, 0) -- (2.55, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.35) -- (0, 1.45) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 5. 対称面 x = r/2 の破線 ---
+    \draw[dashed, red!85!black, thick] (\halfR, -1.2) -- (\halfR, 1.2);
+    \node[above=2pt, font=\scriptsize\bfseries, red!90!black] at (\halfR, 1.2) {$x = \frac{r}{2}$};
+
+    % --- 6. 目盛りと点プロット ---
+    \fill[black] (O) circle (1.0pt);
+    \fill[black] (P) circle (1.0pt) node[below=2pt] {$P(r, 0)$};
+    \fill[red!85!black] (TopInt) circle (1.0pt);
+    \fill[red!85!black] (BotInt) circle (1.0pt);
+
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[below=2pt, font=\scriptsize] at ({\rVal + 1.0}, 0) {$r+1$};
+    \node[below=2pt, font=\scriptsize, red!90!black] at (\halfR, 0) {$\frac{r}{2}$};
+
+    % 円の名称ラベル
+    \node[blue!90!black, font=\footnotesize\bfseries, above left] at (135:1.0) {円 $A$};
+    \node[teal!90!black, font=\footnotesize\bfseries, above right] at ($ (P) + (45:1.0) $) {円 $B$};
+
   \end{tikzpicture}
-  \caption{$xy$平面での切り口（$A,B$の重なり部分が斜線部）}
+  \caption{$xy$ 平面における 2 つの球の断面と重なり部分}
+  \label{fig:two_spheres_xy_section}
 \end{figure}
 
-①に代入して
-\begin{align}
-  V(r)&=\pi\left(\dfrac{8}{3}-\dfrac{4}{3}+r-\dfrac{r^3}{12}\right)\\
-  &=\pi\left(-\dfrac{1}{12}r^3+r+\dfrac{4}{3}\right)\quad(0<r<2)
-\end{align}
+% TODO: 積分部分だけ
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.2, >=stealth, every node/.style={font=\small}]
 
-また，$r\ge2$の時，$V(r)=\dfrac{8}{3}\pi$で一定である．
+    % --- 1. 定数・パラメータ ---
+    \def\halfR{0.6} % r/2 = 0.6
+    \pgfmathsetmacro{\yInt}{sqrt(1.0 - \halfR*\halfR)} % 0.8
+    \pgfmathsetmacro{\angInt}{acos(\halfR)}           % ≈ 53.13°
+
+    \coordinate (O)   at (0, 0);
+    \coordinate (Top) at (\halfR, \yInt);
+    \coordinate (Bot) at (\halfR, -\yInt);
+
+    % --- 2. 積分する弓形領域の塗りつぶし ---
+    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.75]
+    (Bot) -- (Top) arc (\angInt:-\angInt:1.0) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.2, 0) -- (1.35, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.1) -- (0, 1.15) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 単位円弧と境界弦 ---
+    % 単位円弧 y = sqrt(1 - x^2)
+    \draw[very thick, blue!85!black] (Top) arc (\angInt:-\angInt:1.0);
+    \draw[dashed, gray!50] (0, 1.0) arc (90:\angInt:1.0);
+    \draw[dashed, gray!50] (0, -1.0) arc (-90:-\angInt:1.0);
+
+    % 弦 x = r/2 (赤太線)
+    \draw[line width=1.8pt, red!85!black] (Bot) -- (Top);
+    \node[red!90!black, font=\scriptsize\bfseries, left] at (\halfR, 0.4) {$x = \frac{r}{2}$};
+
+    % --- 5. 回転軸の矢印と目盛り ---
+    \draw[->, thick, gray!85!black] (1.1, 0.18) arc (80:-260:0.08 and 0.18);
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[below=2pt, font=\scriptsize, red!90!black] at (\halfR, 0) {$\frac{r}{2}$};
+
+    % 円の式ラベル
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (0.75, 0.65)
+    {$y^2 = 1 - x^2$};
+
+  \end{tikzpicture}
+  \caption{回転体積の積分対象となる弓形領域（$\dfrac{r}{2} \le x \le 1$）}
+  \label{fig:spherical_cap_integration_region}
+\end{figure}
+
+そこで以下$V'$を求める．立体の$xy$平面での切り口は上図のようになる．
+対称性から$V'$は斜線部の弓形を$x$軸まわりに回転した立体の体積の2倍で
+\begin{align}
+  V'
+  &=2\int_{r/2}^1\pi(1-x^2)\,dx \\
+  &=2\pi\left[x-\dfrac{1}{3}x^3\right]_{r/2}^1\\
+  &=2\pi\left(\dfrac{2}{3}-\dfrac{r}{2}+\dfrac{1}{3}\cdot\dfrac{r^3}{8}\right)
+\end{align}
+だから\cref{eq:3}に代入して求める体積$V$は$0<r \le 2$の時
+\begin{align}
+  V(r)
+  &=\pi\left(\dfrac{8}{3}-\dfrac{4}{3}+r-\dfrac{r^3}{12}\right)\\
+  &=\pi\left(-\dfrac{1}{12}r^3+r+\dfrac{4}{3}\right) \quad (0<r\le 2) \label{eq:4}
+\end{align}
+である．\cref{eq:3}に代入して
+\begin{align}
+  V &=
+  \begin{cases}
+    \pi\left(-\dfrac{1}{12}r^3+r+\dfrac{4}{3}\right) & (0<r\le 2)\\
+    \dfrac{8}{3}\pi   & (2 < r)
+  \end{cases} \label{eq:5}
+\end{align}
+である．
+
+一階微分を計算すると
 \begin{align}
   V'(r)=\pi\left(-\dfrac{1}{4}r^2+1\right)
 \end{align}
-は$0<r<2$で正だから，$V(r)$は単調増加．$V(0)=\dfrac{4}{3}\pi$，$V(2)=\dfrac{8}{3}\pi$とあわせて，増減表は次のようになる．
+で，これは$0<r<2$で正だから$V(r)$は単調増加である．
+$V(0)=\dfrac{4}{3}\pi$，$V(2)=\dfrac{8}{3}\pi$とあわせて増減表は次のようになる．
+
 \begin{table}[htb]
   \centering
-  \begin{tabular}{c|ccc}
-    $r$ & $0$ & $\cdots$ & $2$\\
-    \hline
-    $V'$ & & $+$ & \\
-    $V$ & $\dfrac{4}{3}\pi$ & $\nearrow$ & $\dfrac{8}{3}\pi$
+  \caption{$V(r)$ の増減表 ($r > 0$)}
+  \label{tab:vr_monotonicity}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{c|ccccc}
+    $r$   & $(0)$             & $\cdots$   & $2$               & $\cdots$    \\ \hline
+    $V'$  & $(/)$             & $+$        & $0$               & $0$         \\ \hline
+    $V$   & $\dfrac{4}{3}\pi$ & $\nearrow$ & $\dfrac{8}{3}\pi$ & \text{一定}（$\dfrac{8}{3}\pi$）
   \end{tabular}
-  \caption{$V(r)$ の増減表}
 \end{table}
 
-よってグラフの概形は，$0\le r\le2$では上の3次関数の一部（$\dfrac{4}{3}\pi$から$\dfrac{8}{3}\pi$まで単調増加），$r\ge2$では一定値$\dfrac{8}{3}\pi$をとる曲線である．
+よってグラフの概形は下図のようになる．
+
+% TODO: y=V(r)のグラフ
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ ---
+    % V(0) = 4/3 * pi ≈ 4.1888
+    % V(2) = 8/3 * pi ≈ 8.3776
+    % V = 8 の水平線: y = 8.0
+    % 8/pi ≈ 2.5465 => r_0 ≈ 1.48
+    \def\piVal{3.14159}
+    \def\rZero{1.48}
+
+    \coordinate (O)      at (0, 0);
+    \coordinate (Pt_0)   at (0, {4.0/3.0 * \piVal});
+    \coordinate (Pt_2)   at (2.0, {8.0/3.0 * \piVal});
+    \coordinate (Pt_sol) at (\rZero, 8.0);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (3.6, 0) node[right] {$r$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 9.6) node[above] {$V(r)$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 水平線 V = 8 (問題(2)の設定線) ---
+    \draw[very thick, red!85!black] (0, 8.0) -- (3.3, 8.0);
+    \node[red!90!black, font=\footnotesize\bfseries, right] at (3.3, 8.0) {$V = 8$};
+    \node[left=2pt, font=\scriptsize, red!90!black] at (0, 8.0) {$8$};
+
+    % 水平漸近/一定線 V = 8pi/3
+    \draw[dashed, gray!60] (0, {8.0/3.0 * \piVal}) -- (2.0, {8.0/3.0 * \piVal});
+
+    % --- 4. グラフ y = V(r) のプロット ---
+    % (i) 0 <= r <= 2 の区間 (単調増加な 3 次曲線)
+    \draw[line width=1.8pt, blue!85!black, domain=0:2.0, samples=70]
+    plot (\x, {\piVal * (-(\x*\x*\x)/12.0 + \x + 4.0/3.0)});
+
+    % (ii) r > 2 の区間 (一定値 8pi/3)
+    \draw[line width=1.8pt, blue!85!black] (2.0, {8.0/3.0 * \piVal}) -- (3.4, {8.0/3.0 * \piVal});
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (1.8, {8.0/3.0 * \piVal + 0.1})
+    {$y = V(r)$};
+
+    % --- 5. 投影破線と主要目盛り ---
+    % r = 2
+    \draw[dashed, gray!60] (2.0, 0) -- (Pt_2);
+    \fill[blue!90!black] (Pt_2) circle (1.2pt);
+    \node[below=2pt, font=\scriptsize] at (2.0, 0) {$2$};
+    \node[left=2pt, font=\scriptsize, blue!90!black] at (0, {8.0/3.0 * \piVal}) {$\frac{8}{3}\pi$};
+
+    % r = 0 (白抜き丸: 定義域 r > 0 のため)
+    \draw[thick, blue!85!black, fill=white] (Pt_0) circle (1.3pt);
+    \node[left=2pt, font=\scriptsize, blue!90!black] at (0, {4.0/3.0 * \piVal}) {$\frac{4}{3}\pi$};
+
+    % 解 r_0 (V = 8 との交点)
+    \draw[dashed, red!70!black, thick] (\rZero, 0) -- (Pt_sol);
+    \fill[red!85!black] (Pt_sol) circle (1.4pt);
+    \node[below=2pt, font=\scriptsize\bfseries, red!90!black] at (\rZero, 0) {$r_0 \approx 1.5$};
+
+  \end{tikzpicture}
+  \caption{体積関数 $V(r)$ のグラフと $V = 8$ を満たす解 $r_0$}
+  \label{fig:vr_graph_and_root}
+\end{figure}
 
 \paragraph{(2)}
 
-$V=8$の時，$3.14<\pi<3.15$から
+$V=8$の時，$3.14<\pi<3.15$から$8<\dfrac{8\pi}{3}$だから$0<r\le 2$である．
+よって\cref{eq:5}に$V=8$を代入して
 \begin{align}
-  2.53<-\dfrac{1}{12}r^3+r+\dfrac{4}{3}<2.54
+  & 2.53<\dfrac{8}{3.15}<\dfrac{8}{\pi}=-\dfrac{1}{12}r^3+r+\dfrac{4}{3}<=\dfrac{8}{3.14}<2.54 \\
+  \therefore
+  & 2.53 < \dfrac{V(r)}{\pi} < 2.54 \label{eq:6}
 \end{align}
-
-ところで，$r=1.45$とすると，$-\dfrac{1}{12}r^3+r+\dfrac{4}{3}\approx2.529$．$r=1.5$の時，同様に$\approx2.55$．だから，$V$が単調増加（$0\le r\le2$）なこととあわせて，もとめる$r$を$r_0$とすると
+である．ここで$r=1.45,1.5$とすると\cref{eq:5}より
+\begin{align}
+  \dfrac{V(r=1.45)}{\pi} = -\dfrac{1}{12}r^3+r+\dfrac{4}{3}\approx2.529 \\
+  \dfrac{V(r=1.5)}{\pi}  = -\dfrac{1}{12}r^3+r+\dfrac{4}{3}\approx2.55
+\end{align}
+だから，$V$が単調増加（$0\le r\le2$）なこととあわせて，もとめる$r$を$r_0$とすると
 \begin{align}
   1.45<r_0<1.50
 \end{align}
@@ -77,6 +256,7 @@ $V=8$の時，$3.14<\pi<3.15$から
 \begin{align}
   r_0\approx1.5
 \end{align}
+である．
 
 \bigskip
 

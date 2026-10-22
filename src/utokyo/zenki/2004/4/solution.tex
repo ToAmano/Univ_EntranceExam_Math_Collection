@@ -1,72 +1,349 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
+
 \paragraph{(1)}
 
-$f_1'(x) = 3x^2 - 3$ から下表をうる．
+与えられた関数
+\begin{align}
+  f_1(x) = x^3-3x
+\end{align}
+を一階微分すると
+\begin{align}
+  f_1'(x) = 3x^2 - 3
+\end{align}
+だから増減表は以下のようになる．
 
 \begin{table}[htb]
   \centering
+  \caption{$f_1(x)=x^3-3x$ の増減表}
   \begin{tabular}{|c|ccccc|}
     \hline
     $x$ & $\dots$ & $-1$ & $\dots$ & $1$ & $\dots$ \\ \hline
     $f_1'$ & $+$ & $0$ & $-$ & $0$ & $+$ \\ \hline
     $f_1$ & $\nearrow$ & $2$ & $\searrow$ & $-2$ & $\nearrow$ \\ \hline
   \end{tabular}
-  \caption{$f_1(x)=x^3-3x$ の増減表}
 \end{table}
 
-よってグラフは右上図．したがって，
+% TODO: y=f_1(x)のグラフ
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.6cm, y=1.0cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標定義 ---
+    \coordinate (O)     at (0, 0);
+    \coordinate (MaxPt) at (-1.0, 2.0);
+    \coordinate (MinPt) at (1.0, -2.0);
+
+    % --- 2. 水平境界線 y = ±2 (極値線) ---
+    \draw[dashed, red!75!black, thick] (-2.4, 2.0) -- (2.4, 2.0)
+    node[right=2pt, font=\scriptsize, red!90!black] {$y = 2$ (2個)};
+    \draw[dashed, red!75!black, thick] (-2.4, -2.0) -- (2.4, -2.0)
+    node[right=2pt, font=\scriptsize, red!90!black] {$y = -2$ (2個)};
+
+    % 3個の交点をもつ代表的な水平線 y = a (|a| < 2, 例: a = 0.8)
+    \draw[thick, teal!85!black] (-2.3, 0.8) -- (2.3, 0.8)
+    node[right=2pt, font=\scriptsize, teal!90!black] {$y = a \ (|a|<2,\text{ 3個})$};
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-2.5, 0) -- (2.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -2.8) -- (0, 2.8) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 曲線 y = x^3 - 3x ---
+    \draw[line width=1.8pt, blue!85!black, domain=-2.2:2.2, samples=90]
+    plot (\x, {\x*\x*\x - 3.0*\x});
+    \node[blue!90!black, font=\footnotesize\bfseries, right] at (1.8, 2.4)
+    {$y = f_1(x) = x^3 - 3x$};
+
+    % --- 5. 極値点・境界点のプロットと投影破線 ---
+    % 極大点 (-1, 2)
+    \draw[dashed, gray!60] (-1.0, 0) -- (MaxPt) -- (0, 2.0);
+    \fill[red!85!black] (MaxPt) circle (1.4pt);
+    \node[above=2pt, font=\scriptsize, red!90!black] at (MaxPt) {極大 $(-1, 2)$};
+    \node[below=2pt, font=\scriptsize] at (-1.0, 0) {$-1$};
+
+    % 極小点 (1, -2)
+    \draw[dashed, gray!60] (1.0, 0) -- (MinPt) -- (0, -2.0);
+    \fill[red!85!black] (MinPt) circle (1.4pt);
+    \node[below=2pt, font=\scriptsize, red!90!black] at (MinPt) {極小 $(1, -2)$};
+    \node[above=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+
+    % 端点 x = ±2 (y = ±2)
+    \fill[black] (2.0, 2.0) circle (1.2pt);
+    \fill[black] (-2.0, -2.0) circle (1.2pt);
+    \draw[dotted, black] (2.0, -2.0) -- (2.0, 2.0);
+    \draw[dotted, black] (-2.0,-2.0 ) -- (-2.0, 2.0);
+    \draw[dotted, black] (-1,-2.0 ) -- (-1, 2.0);
+    \draw[dotted, black] (1,-2.0 ) -- ( 1, 2.0);
+    \node[below=2pt, font=\scriptsize] at (2.0, 0) {$2$};
+    \node[above=2pt, font=\scriptsize] at (-2.0, 0) {$-2$};
+
+    % 軸目盛り
+    \node[left=2pt, font=\scriptsize] at (0, 2.0) {$2$};
+    \node[left=2pt, font=\scriptsize] at (0, -2.0) {$-2$};
+
+  \end{tikzpicture}
+  \caption{$y = f_1(x) = x^3 - 3x$ のグラフと直線 $y = a$ の共有点の個数}
+  \label{fig:f1x_graph_level_sets}
+\end{figure}
+
+よってグラフは上図のようになる．
+$f_1(x)=a$の解の個数は，グラフ上の$y=f_1(x)$と$y=a$の共有点の数に等しいから
 \begin{align}
   \begin{cases}
     |a| > 2 \text{ の時 } 1 \text{ 個} \\
     |a| = 2 \text{ の時 } 2 \text{ 個} \\
     |a| < 2 \text{ の時 } 3 \text{ 個}
-  \end{cases} \quad \text{//}
+  \end{cases}
 \end{align}
+である．
 
-\medskip
 \paragraph{(2)}
 
-(1)と同様にして，
+新しく
 \begin{align}
-  \begin{cases}
-    |a| > 2 \text{ の時 } 1 \text{ 個} \\
-    |a| = 2 \text{ の時 } 5 \text{ 個} \\
-    |a| < 2 \text{ の時 } 9 \text{ 個}
-  \end{cases} \quad \text{//}
+  f(x) = x^3 - 3x
 \end{align}
+とおくと，題意の方程式$f_2(x)=a$は
+\begin{align}
+  f(f_1(x)) = a \label{eq:1}
+\end{align}
+である．従って$x_1=f_1(x)$とおくと
+\begin{align}
+  f(x_1) = a
+\end{align}
+だから，この解は$x_1y$平面上の$y=f(x_1)$と$y=a$の共有点に対応し，(1)の結果で$x\to x_1$とすれば解の個数とその時の解の値は
+\begin{itemize}
+  \item  $|a| > 2$ の時 $|x_1|>2$ に $1$ 個 \\
+  \item  $|a| = 2$ の時 $x_1=-1,2$ または $x_1=-2,1$ の $2$ 個 \\
+  \item  $|a| < 2$ の時 $|x_1|<2$ に $3$ 個
+\end{itemize}
+となる．
 
-\medskip
-\paragraph{(3)}
-
-$f_n(x) = a \ (|a| < 2)$ を満たす実数 $x$ が $3^n$ 個である $\dots \diamondsuit$ ことを帰納的に示す．
-
-$n=1$ の時は(1)から成立するので，以下 $n=k \in \mathbb{N}$ での成立を仮定する．$f_{k+1}(x) = a$ なる $f_k(x)$ は (1)のグラフより $-2 < f_k(x) < 2$ に 3 つあるから，仮定より $f_{k+1}(x) = a$ を満たす $x$ は $3^{k+1}$ 個ある．
-
-よって $n = k+1$ でも $\diamondsuit$ は成立．したがって $\diamondsuit$ は示されたから，$a=0$ として題意の主張は示される．\qed
-
+% TODO: 左: y=f(x_1)のグラフ, 右: x_1 = f_1(x)のグラフ, 左右の対応関係がわかるように
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.8]
-    \draw[->] (-2.5,0) -- (2.5,0) node[right] {$x$};
-    \draw[->] (0,-2.5) -- (0,2.5) node[above] {$y$};
-    \draw[dashed] (-2,-2) rectangle (2,2);
-    \draw[domain=-2.05:2.05,smooth,variable=\x,blue,thick] plot ({\x},{\x*\x*\x - 3*\x});
-    \node at (-1,0) [below] {$-1$};
-    \node at (1,0) [above] {$1$};
-    \node at (2,0) [below] {$2$};
-    \node at (-2,0) [above] {$-2$};
-    \node at (0,2) [left] {$2$};
-    \node at (0,-2) [right] {$-2$};
-    \node at (0,0) [below left] {$O$};
+  \begin{tikzpicture}[x=1.3cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 共通パラメータ (a = 0.6 の例)
+    % x_1^3 - 3*x_1 = 0.6 の 3 解
+    % alpha_1 ≈ -1.628,  alpha_2 ≈ -0.203,  alpha_3 ≈ 1.831
+    % ============================================================
+    \def\aVal{0.6}
+    \def\alOne{-1.628}
+    \def\alTwo{-0.203}
+    \def\alThree{1.831}
+
+    % ============================================================
+    % 【左図】 縦軸が x_1 軸、横軸が y 軸の f(x_1) = a
+    % 曲線: y = x_1^3 - 3*x_1  <=>  plot (y(t), t) with t = x_1
+    % ============================================================
+    \begin{scope}[xshift=0cm]
+      \node[font=\footnotesize\bfseries, blue!85!black] at (0, 3.0)
+      {(I) $f(x_1) = a \implies x_1 = \alpha_1, \alpha_2, \alpha_3$};
+
+      % --- 3次関数の「8等分ボックス」（点線グリッド） ---
+      % 横 (y): -2, 0, 2 / 縦 (x_1): -2, -1, 0, 1, 2
+      \draw[dashed, gray!45] (-2, -2) rectangle (2, 2);
+      \draw[dotted, gray!55] (-2, 0) -- (2, 0);
+      \draw[dotted, gray!55] (0, -2) -- (0, 2);
+      \draw[dotted, gray!55] (-2, 1) -- (2, 1);
+      \draw[dotted, gray!55] (-2, -1) -- (2, -1);
+      \draw[dotted, gray!55] (-2, -2) -- (-2, 2);
+      \draw[dotted, gray!55] (2, -2) -- (2, 2);
+
+      % 座標軸 (横軸 y, 縦軸 x_1)
+      \draw[->, thick, gray!80!black] (-2.4, 0) -- (2.5, 0) node[right] {$y$};
+      \draw[->, thick, gray!80!black] (0, -2.5) -- (0, 2.6) node[above] {$x_1$};
+      \node[below left=2pt] at (0, 0) {$O$};
+
+      % 縦方向の3次曲線: x = t^3 - 3t, y = t (t が x_1)
+      \draw[line width=1.8pt, blue!85!black, domain=-2.15:2.15, samples=90]
+      plot ({\x*\x*\x - 3.0*\x}, {\x});
+      \node[blue!90!black, font=\footnotesize\bfseries, left] at (-1.5, 2.2)
+      {$y = f(x_1)$};
+
+      % 垂直線 y = a (横軸上の値 a から立ち上がる線)
+      \draw[very thick, red!85!black] (\aVal, -2.4) -- (\aVal, 2.5);
+      \node[above=2pt, font=\scriptsize\bfseries, red!90!black] at (\aVal, 2.5) {$y = a$};
+      \node[below=2pt, font=\scriptsize, red!90!black] at (\aVal, 0) {$a$};
+
+      % 3つの交点プロット (y=a と曲線の交点)
+      \fill[red!85!black] (\aVal, \alOne) circle (1.5pt);
+      \fill[red!85!black] (\aVal, \alTwo) circle (1.5pt);
+      \fill[red!85!black] (\aVal, \alThree) circle (1.5pt);
+
+      % 極大・極小・端点マーク
+      \fill[red!75!black] (2, -1) circle (1.2pt); % (y=2, x_1=-1)
+      \fill[red!75!black] (-2, 1) circle (1.2pt); % (y=-2, x_1=1)
+      \node[left=2pt, font=\scriptsize] at (0, 1) {$1$};
+      \node[left=2pt, font=\scriptsize] at (0, -1) {$-1$};
+      \node[left=2pt, font=\scriptsize] at (0, 2) {$2$};
+      \node[left=2pt, font=\scriptsize] at (0, -2) {$-2$};
+      \node[below=2pt, font=\scriptsize] at (2, 0) {$2$};
+      \node[below=2pt, font=\scriptsize] at (-2, 0) {$-2$};
+    \end{scope}
+
+    % ============================================================
+    % 【右図】 横軸が x 軸、縦軸が x_1 軸の x_1 = f_1(x)
+    % 曲線: x_1 = x^3 - 3*x
+    % ============================================================
+    \begin{scope}[xshift=7.2cm] % original 5.8
+      \node[font=\footnotesize\bfseries, teal!85!black] at (0, 3.0)
+      {(II) $f_1(x) = \alpha_i \implies 各 3 \text{ 個} \ (\text{計 } 9 \text{ 個})$};
+
+      % --- 3次関数の「8等分ボックス」（点線グリッド） ---
+      % 横 (x): -2, -1, 0, 1, 2 / 縦 (x_1): -2, 0, 2
+      \draw[dashed, gray!45] (-2, -2) rectangle (2, 2);
+      \draw[dotted, gray!55] (-2, 0) -- (2, 0);
+      \draw[dotted, gray!55] (0, -2) -- (0, 2);
+      \draw[dotted, gray!55] (-1, -2) -- (-1, 2);
+      \draw[dotted, gray!55] (1, -2) -- (1, 2);
+      \draw[dotted, gray!55] (-2, -2) -- (2, -2);
+      \draw[dotted, gray!55] (-2, 2) -- (2, 2);
+
+      % 座標軸 (横軸 x, 縦軸 x_1)
+      \draw[->, thick, gray!80!black] (-2.5, 0) -- (2.6, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -2.5) -- (0, 2.6) node[above] {$x_1$};
+      \node[below left=2pt] at (0, 0) {$O$};
+
+      % 標準的な3次曲線: x_1 = x^3 - 3x
+      \draw[line width=1.8pt, teal!85!black, domain=-2.15:2.15, samples=90]
+      plot (\x, {\x*\x*\x - 3.0*\x});
+      \node[teal!90!black, font=\footnotesize\bfseries, right] at (1.7, 2.3)
+      {$x_1 = f_1(x)$};
+
+      % 極値点
+      \fill[red!75!black] (-1, 2) circle (1.2pt);
+      \fill[red!75!black] (1, -2) circle (1.2pt);
+
+      % 目盛り
+      \node[below=2pt, font=\scriptsize] at (-1, 0) {$-1$};
+      \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
+      \node[below=2pt, font=\scriptsize] at (-2, 0) {$-2$};
+      \node[below=2pt, font=\scriptsize] at (2, 0) {$2$};
+
+      % --- 9個の実数解 (交点) のプロット ---
+      % alpha_1 ≈ -1.628: x ≈ -1.89, -0.60, 1.49
+      \fill[purple!90!black] (-1.89, \alOne) circle (1.3pt);
+      \fill[purple!90!black] (-0.60, \alOne) circle (1.3pt);
+      \fill[purple!90!black] (1.49, \alOne) circle (1.3pt);
+
+      % alpha_2 ≈ -0.203: x ≈ -1.68, -0.07, 1.75
+      \fill[orange!95!black] (-1.68, \alTwo) circle (1.3pt);
+      \fill[orange!95!black] (-0.07, \alTwo) circle (1.3pt);
+      \fill[orange!95!black] (1.75, \alTwo) circle (1.3pt);
+
+      % alpha_3 ≈ 1.831: x ≈ -1.45, 0.67, 1.93
+      \fill[teal!90!black] (-1.45, \alThree) circle (1.3pt);
+      \fill[teal!90!black] (0.67, \alThree) circle (1.3pt);
+      \fill[teal!90!black] (1.93, \alThree) circle (1.3pt);
+    \end{scope}
+
+    % ============================================================
+    % 左側の交点 (alpha_i) から右側へそのまままっすぐ伸ばす水平線
+    % ============================================================
+    % (1) x_1 = alpha_3 (上段)
+    \draw[dashed, teal!90!black, thick] (\aVal, \alThree) -- (5.8 + 2.3, \alThree)
+    node[right=2pt, font=\scriptsize, teal!95!black] {$x_1 = \alpha_3$};
+    \node[left=2pt, font=\scriptsize, teal!90!black] at (0, \alThree) {$\alpha_3$};
+
+    % (2) x_1 = alpha_2 (中段)
+    \draw[dashed, orange!90!black, thick] (\aVal, \alTwo) -- (5.8 + 2.3, \alTwo)
+    node[right=2pt, font=\scriptsize, orange!95!black] {$x_1 = \alpha_2$};
+    \node[left=2pt, font=\scriptsize, orange!90!black] at (0, \alTwo) {$\alpha_2$};
+
+    % (3) x_1 = alpha_1 (下段)
+    \draw[dashed, purple!90!black, thick] (\aVal, \alOne) -- (5.8 + 2.3, \alOne)
+    node[right=2pt, font=\scriptsize, purple!95!black] {$x_1 = \alpha_1$};
+    \node[left=2pt, font=\scriptsize, purple!90!black] at (0, \alOne) {$\alpha_1$};
+
+    % 各ラインの解数ラベル (右図の右外側)
+    \node[font=\tiny, teal!90!black, right=38pt] at (5.8 + 2.3, \alThree) {($3$ 個)};
+    \node[font=\tiny, orange!90!black, right=38pt] at (5.8 + 2.3, \alTwo) {($3$ 個)};
+    \node[font=\tiny, purple!90!black, right=38pt] at (5.8 + 2.3, \alOne) {($3$ 個)};
+
   \end{tikzpicture}
-  \caption{$f_1(x)=x^3-3x$ のグラフ}
+  \caption{$f(x_1) = a$ の解 $\alpha_i$ が水平に伝播して $f_1(x) = \alpha_i$ の 9 個の解を生み出す構造}
+  \label{fig:cubic_horizontal_chain_map}
 \end{figure}
+
+$x_1=f_1(x)$だからさらにこの範囲に気をつけて$x_1$と$x$の対応関係を(1)からまとめて
+\begin{align}
+  \begin{cases}
+    |a| > 2 \text{ の時 } 1*1=1 \text{ 個} \\
+    |a| = 2 \text{ の時 } 2+3=5 \text{ 個} \\
+    |a| < 2 \text{ の時 } 3*3=9 \text{ 個}
+  \end{cases}
+\end{align}
+となる．
+
+\paragraph{(3)}
+
+% TODO: f(f_k(x))=aにそれぞれ3^{k}個解がある様子
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.0, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. ノード配置 ---
+    % ルート: 方程式 f_{k+1}(x) = a
+    \node[draw=blue!85!black, fill=blue!10, very thick, rounded corners=3pt, inner sep=5pt, font=\normalsize\bfseries]
+    (root) at (0, 0) {$f_{k+1}(x) = a$};
+
+    % 第1層: f(X) = a の 3 解 X = a_1, a_2, a_3
+    \node[draw=teal!85!black, fill=teal!10, thick, rounded corners=3pt, inner sep=4pt]
+    (b1) at (4.5, 2.2) {$f_k(x) = a_1$};
+    \node[draw=teal!85!black, fill=teal!10, thick, rounded corners=3pt, inner sep=4pt]
+    (b2) at (4.5, 0.0) {$f_k(x) = a_2$};
+    \node[draw=teal!85!black, fill=teal!10, thick, rounded corners=3pt, inner sep=4pt]
+    (b3) at (4.5, -2.2) {$f_k(x) = a_3$};
+
+    % 第2層: 各方程式の解の個数 (3^k 個)
+    \node[draw=purple!85!black, fill=purple!8, thick, rounded corners=3pt, inner sep=4pt, align=center]
+    (sol1) at (9.0, 2.2) {$x$ の解: $\mathbf{3^k} \text{ 個}$\\[1pt]\scriptsize (帰納法の仮定)};
+    \node[draw=purple!85!black, fill=purple!8, thick, rounded corners=3pt, inner sep=4pt, align=center]
+    (sol2) at (9.0, 0.0) {$x$ の解: $\mathbf{3^k} \text{ 個}$\\[1pt]\scriptsize (帰納法の仮定)};
+    \node[draw=purple!85!black, fill=purple!8, thick, rounded corners=3pt, inner sep=4pt, align=center]
+    (sol3) at (9.0, -2.2) {$x$ の解: $\mathbf{3^k} \text{ 個}$\\[1pt]\scriptsize (帰納法の仮定)};
+
+    % --- 2. 矢印とラベル ---
+    % ルートから第1層への3分岐
+    \draw[->, line width=1.4pt, teal!85!black] (root.east) to[out=25, in=180] (b1.west);
+    \draw[->, line width=1.4pt, teal!85!black] (root.east) -- (b2.west);
+    \draw[->, line width=1.4pt, teal!85!black] (root.east) to[out=-25, in=180] (b3.west);
+
+    \node[teal!90!black, font=\scriptsize\bfseries, above] at (2.2, 1.4) {$f(X) = a$ の $3$ 解};
+    \node[teal!90!black, font=\tiny] at (2.2, 0.9) {($|a_i| < 2$)};
+
+    % 第1層から第2層への展開
+    \draw[->, line width=1.4pt, purple!85!black] (b1.east) -- (sol1.west);
+    \draw[->, line width=1.4pt, purple!85!black] (b2.east) -- (sol2.west);
+    \draw[->, line width=1.4pt, purple!85!black] (b3.east) -- (sol3.west);
+
+    % --- 3. 合計個数をまとめる右側ブレース ---
+    \draw[decorate, decoration={brace, amplitude=6pt}, thick, blue!85!black]
+    (10.6, 2.7) -- (10.6, -2.7);
+
+    \node[blue!90!black, font=\normalsize\bfseries, align=left, right=8pt] at (10.6, 0) {
+      合計解数:\\[3pt]
+      $3^k + 3^k + 3^k = \mathbf{3 \cdot 3^k = 3^{k+1}} \text{ 個}$
+    };
+
+  \end{tikzpicture}
+  \caption{$f_{k+1}(x) = a$ の解が 3 つの方程式に分岐し，各々が $3^k$ 個の解をもつ構造}
+  \label{fig:induction_branching_tree}
+\end{figure}
+
+$f_n(x) = a \ (|a| < 2)$ を満たす実数 $x$ が $3^n$ 個であることを数学的帰納法で示す．
+
+$n=1$ の時は(1)から成立するので，以下 $n=k \in \mathbb{N}$ での成立を仮定する．
+$f_{k+1}(x) = a$ つまり $f(f_k(x))=a$ なる $f_k(x)$ は (1)のグラフより $-2 < f_k(x) < 2$ に 3 つある．それぞれを$a_1,a_2,a_3 \ (|a_1|,|a_2|,|a_3|<2)$とすると，$f_k(x)=a_1, f_k(x)=a_2, f_k(x)=a_3$はそれぞれ仮定より$3^{k}$個の解があるから，$f_{k+1}(x)=a$は$x$について合計で
+\begin{align}
+  3\cdot 3^{k} = 3^{k+1}
+\end{align}
+個の解を持つ．よって$n = k+1$ でも主張は成立し，数学的帰納法により解の数は任意の$n$に対して$3^{n}$個である．$a=0$とすれば題意の主張は示される．\qed
 
 \end{document}
