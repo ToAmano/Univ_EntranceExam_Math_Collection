@@ -1,62 +1,127 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-\begin{align}
-  a(t) &= \dfrac{1}{2} \left| t - \dfrac{1}{t} \right| \\
-  &= \dfrac{1}{2} \left( t - \dfrac{1}{t} \right) \quad (\because t > 1) \quad \cdots \textcircled{1}
-\end{align}
-とする．$P, Q$ から $x$ 軸に下ろした垂足を $P', Q'$ として
-\begin{align}
-  b(t) &= \triangle OPP' - \triangle OQQ' + \text{台形 } PP'Q'Q \\
-  &= \dfrac{1}{2} - \dfrac{1}{2} + \int_1^t \dfrac{1}{x} \, dx = \log t \quad \cdots \textcircled{2}
-\end{align}
 
+% TODO: 概要図
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \draw[->] (-0.3, 0) -- (3.2, 0) node[right] {$x$};
-    \draw[->] (0, -0.3) -- (0, 2.2) node[above] {$y$};
-    \node[below left] at (0,0) {$0$};
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
 
-    \draw[domain=0.5:3.0, smooth, variable=\x, thick] plot ({\x}, {1.5/\x});
+    % --- 1. 定数・座標パラメータ (t = 2.4 の例) ---
+    \def\tVal{2.4}
+    \pgfmathsetmacro{\invT}{1.0 / \tVal} % ≈ 0.4167
 
-    \coordinate (P) at (1, 1.5);
-    \coordinate (Q) at (2.5, 0.6);
-    \coordinate (Pp) at (1, 0);
-    \coordinate (Qp) at (2.5, 0);
+    \coordinate (O)  at (0, 0);
+    \coordinate (P)  at (1.0, 1.0);
+    \coordinate (Q)  at (\tVal, \invT);
+    \coordinate (Pp) at (1.0, 0);
+    \coordinate (Qp) at (\tVal, 0);
 
-    \fill[gray!20] (0,0) -- (P) -- plot[domain=1:2.5] (\x, {1.5/\x}) -- (Q) -- (0,0);
+    % --- 2. 面積 b(t) (線分 OP, OQ と曲線で囲まれた領域) の塗りつぶし ---
+    \fill[blue!15, opacity=0.75]
+    (O) -- (P) -- plot[domain=1.0:\tVal, samples=60] (\x, {1.0/\x}) -- (Q) -- cycle;
 
-    \draw (0,0) -- (P) node[above right] {$P$};
-    \draw (0,0) -- (Q) node[above right] {$Q$};
-    \draw[dashed] (P) -- (Pp) node[below] {$P'$};
-    \draw[dashed] (Q) -- (Qp) node[below] {$Q'$};
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (3.2, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 2.2) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 双曲線 y = 1/x ---
+    \draw[line width=1.8pt, blue!85!black, domain=0.48:3.0, samples=80]
+    plot (\x, {1.0/\x});
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (2.4, 0.48)
+    {$y = \frac{1}{x}$};
+
+    % --- 5. 線分 OP, OQ および三角形 OPQ の弦 PQ ---
+    \draw[very thick, black] (O) -- (P);
+    \draw[very thick, black] (O) -- (Q);
+    % 弦 PQ (三角形 a(t) の境界、破線)
+    \draw[thick, dashed, red!85!black] (P) -- (Q);
+    \node[red!90!black, font=\scriptsize\bfseries] at ($ (P)!0.45!(Q) + (0.15, 0.1) $) {$a(t)$};
+
+    % 領域 b(t) のラベル
+    \node[blue!90!black, font=\normalsize\bfseries] at (1.05, 0.42) {$b(t)$};
+
+    % --- 6. 垂線 PP', QQ' と投影破線 ---
+    \draw[dashed, gray!60] (P) -- (Pp);
+    \draw[dashed, gray!60] (Q) -- (Qp);
+    \draw[dotted, gray!60] (P) -- (0, 1.0);
+    \draw[dotted, gray!60] (Q) -- (0, \invT);
+
+    % --- 7. 点プロットとラベル ---
+    \fill[black] (P)  circle (1.2pt) node[above right=1pt] {$P(1, 1)$};
+    \fill[black] (Q)  circle (1.2pt) node[above right=1pt] {$Q\left(t, \frac{1}{t}\right)$};
+    \fill[gray!80!black] (Pp) circle (0.8pt) node[below=2pt] {$P'(1, 0)$};
+    \fill[gray!80!black] (Qp) circle (0.8pt) node[below=2pt] {$Q'(t, 0)$};
+
+    % 目盛り
+    \node[left=2pt, font=\scriptsize] at (0, 1.0) {$1$};
+    \node[left=2pt, font=\scriptsize] at (0, \invT) {$\frac{1}{t}$};
+
   \end{tikzpicture}
-  \caption{曲線$y=\dfrac{1}{x}$上の点$P,Q$と台形$PP'Q'Q$}
+  \caption{双曲線 $y = \dfrac{1}{x}$ と面積 $a(t)$（$\triangle OPQ$），$b(t)$（扇形領域 $OPQ$）}
+  \label{fig:hyperbolic_sector_triangle_area}
 \end{figure}
 
-\noindent
-\textcircled{1}， \textcircled{2} から
+$O(0,0)$，$P(1,1)$，$Q \left( t,\dfrac{1}{t} \right)$からなる三角形$OPQ$の面積$a(t)$はサラスの公式から
 \begin{align}
-  C(t) &= \dfrac{\log t}{\dfrac{1}{2}\left(t - \dfrac{1}{t}\right)} = \dfrac{2t \log t}{t^2 - 1}
+  a(t) &= \dfrac{1}{2} \left| t - \dfrac{1}{t} \right| \\
+  &= \dfrac{1}{2} \left( t - \dfrac{1}{t} \right) \quad (\because t > 1) \label{eq:1}
 \end{align}
+である．
+
+次に $P, Q$ から $x$ 軸に下ろした垂足を $P', Q'$ とすると
 \begin{align}
-  C'(t) &= \dfrac{2(\log t + 1)(t^2 - 1) - 2t \log t \cdot 2t}{(t^2 - 1)^2} \\
+  b(t)
+  &= \triangle OPP' - \triangle OQQ' + \text{図形} PP'Q'Q \\
+  &= \dfrac{1}{2} - \dfrac{1}{2} + \int_1^t \dfrac{1}{x} \, dx \\
+  &= \log t \label{eq:2}
+\end{align}
+である．\cref{eq:1,eq:2}から$c(t)=\dfrac{b(t)}{a(t)}$は
+\begin{align}
+  c(t)
+  &= \dfrac{\log t}{\dfrac{1}{2}\left(t - \dfrac{1}{t}\right)} = \dfrac{2t \log t}{t^2 - 1} \label{eq:3}
+\end{align}
+である．一階微分を計算すると
+\begin{align}
+  c'(t)
+  &= \dfrac{2(\log t + 1)(t^2 - 1) - 2t \log t \cdot 2t}{(t^2 - 1)^2} \\
   &= \dfrac{2}{(t^2 - 1)^2} \left[ -(t^2 + 1)\log t + (t^2 - 1) \right] \\
-  &= \dfrac{2(t^2 + 1)}{(t^2 - 1)^2} \left[ -\log t + \dfrac{t^2 - 1}{t^2 + 1} \right]
+  &= \dfrac{2(t^2 + 1)}{(t^2 - 1)^2} \left[ -\log t + \dfrac{t^2 - 1}{t^2 + 1} \right] \\
+  &= \dfrac{2(t^2 + 1)}{(t^2 - 1)^2} \left[ -\log t + 1 - \dfrac{2}{t^2 + 1} \right]  \label{eq:4}
 \end{align}
-この符号は $f(t)$ のそれにひとしい．
-ここで $f(t) = -\log t + \dfrac{t^2 - 1}{t^2 + 1}$ とおくと，
+である．この符号は大括弧内の符号に等しいからこれを$f(t)$とおく：
 \begin{align}
-  f'(t) &= -\dfrac{1}{t} + \dfrac{2t(t^2 + 1) - (t^2 - 1)\cdot 2t}{(t^2 + 1)^2} \\
-  &= \dfrac{-(t^2 - 1)^2}{t(t^2 + 1)^2} < 0 \quad (\because t > 1)
+  f(t) = -\log t + 1 - \dfrac{2}{t^2 + 1}
 \end{align}
-より，$f(t)$ は単調減少で，$f(t) < f(1) = 0$．よって $C'(t) < 0$ であるから，$C(t)$ は $1 < t$ で単調減少である． \hfill $\qed$
+と，一階微分は
+\begin{align}
+  f'(t)
+  &= -\dfrac{1}{t} + \dfrac{4t}{(t^2 + 1)^2} \\
+  &= \dfrac{-(t^2+1)^2+4t^2}{t(t^2 + 1)^2} \\
+  &= \dfrac{-(t^2-1)^2}{t(t^2 + 1)^2}
+\end{align}
+であり，$t>1$より$f'(t)<0$を満たす，すなわち$f(t)$は単調減少である．
+よって$t>1$では
+\begin{align}
+  f(t) < f(1) = 0
+\end{align}
+である．従って\cref{eq:4}で$c'(t)<0$となり$c(t)$は$1<t$で単調減少である．よって題意は示された．
+
+\begin{table}[htb]
+  \centering
+  \caption{$f(t)$ および $c(t)$ の増減表 ($t \ge 1$)}
+  \label{tab:ft_ct_monotonicity}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{c|cccc}
+    $t$      & $1$     & $\cdots$   & $(\infty)$ \\ \hline
+    $f'(t)$  & $0$     & $-$        &            \\ \hline
+    $f(t)$   & $0$     & $\searrow$ & $(-\infty)$ \\ \hline
+    $c'(t)$  & $(/)$   & $-$        &            \\ \hline
+    $c(t)$   & $(1)$   & $\searrow$ & $(0)$      \\
+  \end{tabular}
+\end{table}
 
 \bigskip
 

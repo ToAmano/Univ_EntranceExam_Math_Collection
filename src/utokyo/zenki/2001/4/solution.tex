@@ -1,78 +1,143 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} $a_1 = 1, a_2 = i \quad \cdots \textcircled{1}, \quad a_{n+2} = a_{n+1} + a_n \quad \cdots \textcircled{2}$
+与えられた漸化式
+\begin{align}
+  \begin{cases}
+    a_1 = 1, a_2 = i \\
+    a_{n+2} = a_{n+1} + a_n \\
+    b_n = \dfrac{b_{n+1}}{b_n}
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．
 
-\medskip
-
-\noindent
 \paragraph{(1)}
 
-\textcircled{2} から $a_3 = 1+i, a_4 = 1+2i$ だから，
-\begin{align}
-  b_1 &= 1-i, \\
-  b_2 &= \dfrac{1+2i}{1+i} = \dfrac{3+i}{2}, \\
-  b_3 &= \dfrac{2+3i}{1+2i} = \dfrac{8-i}{5}
-\end{align}
-である．これら3点を通る円の中心は，$b_1 b_2, b_1 b_3$ の垂直2等分線の交点で，
-すなわち $\dfrac{1}{2}$．この時，半径は $\sqrt{\left(1 - \dfrac{1}{2}\right)^2 + 1^2} = \dfrac{\sqrt{5}}{2}$ である．
-
+% TODO: 点$b_1,b_2,b_3$を通る円$C$
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \draw[->] (-0.5, 0) -- (2.5, 0) node[right] {$\text{Re}$};
-    \draw[->] (0, -1.5) -- (0, 1.5) node[above] {$\text{Im}$};
-    \node[below left] at (0,0) {$0$};
+  \begin{tikzpicture}[scale=2.4, >=stealth, every node/.style={font=\small}]
 
-    \draw[dashed] (0.5, 0) circle (1.118); % radius sqrt(5)/2 approx 1.118
+    % --- 1. 定数・厳密パラメータ ---
+    % 中心 alpha = 1/2, 半径 r = sqrt(5)/2 ≈ 1.1180
+    \def\alphaVal{0.5}
+    \pgfmathsetmacro{\radR}{sqrt(5.0)/2.0}
 
-    \fill (1, -1) circle (1.5pt) node[below right] {$b_1$};
-    \fill (1.5, 0.5) circle (1.5pt) node[above right] {$b_2$};
-    \fill (1.6, -0.2) circle (1.5pt) node[right] {$b_3$};
-    \fill (0.5, 0) circle (1.5pt) node[below] {$\frac{1}{2}$};
+    % 3点の複素数座標
+    % b_1 = i = (0, 1)
+    % b_2 = 1 - i = (1, -1)
+    % b_3 = (3 + i)/2 = (1.5, 0.5)
+    \coordinate (O)     at (0, 0);
+    \coordinate (Alpha) at (\alphaVal, 0);
+    \coordinate (B1)    at (0, 1.0);
+    \coordinate (B2)    at (1.0, -1.0);
+    \coordinate (B3)    at (1.5, 0.5);
+
+    % --- 2. 円 C の塗りつぶしと境界線 ---
+    \fill[blue!6, opacity=0.8] (Alpha) circle (\radR);
+    \draw[very thick, blue!85!black] (Alpha) circle (\radR);
+    \node[blue!90!black, font=\footnotesize\bfseries, above left] at ($(Alpha) + (130:\radR)$)
+    {$C: \left|z - \frac{1}{2}\right| = \frac{\sqrt{5}}{2}$};
+
+    % --- 3. 座標軸 (複素数平面: 実軸 Re, 虚軸 Im) ---
+    \draw[->, thick, gray!80!black] (-1.0, 0) -- (2.2, 0) node[right] {$\text{Re}$};
+    \draw[->, thick, gray!80!black] (0, -1.5) -- (0, 1.5) node[above] {$\text{Im}$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 垂直二等分線 (中心 alpha を定める補助線: 点線) ---
+    % 線分 b1 b2 の中点 (0.5, 0) はまさに alpha
+    \draw[dashed, gray!50] (B1) -- (B2);
+    % 線分 b1 b3
+    \draw[dashed, gray!50] (B1) -- (B3);
+
+    % 中心 alpha から各点への半径線 (破線)
+    \draw[dashed, teal!85!black, thick] (Alpha) -- (B1);
+    \draw[dashed, teal!85!black, thick] (Alpha) -- (B2);
+    \draw[dashed, teal!85!black, thick] (Alpha) -- (B3);
+    \node[teal!90!black, font=\scriptsize, above right=-1pt] at ($(Alpha)!0.5!(B3)$) {$r$};
+
+    % --- 5. 投影破線と目盛り ---
+    % b_2(1, -1) の投影
+    \draw[dotted, gray!60] (1.0, 0) -- (B2) -- (0, -1.0);
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[left=2pt, font=\scriptsize]  at (0, -1.0) {$-1$};
+
+    % b_3(1.5, 0.5) の投影
+    \draw[dotted, gray!60] (1.5, 0) -- (B3) -- (0, 0.5);
+    \node[below=2pt, font=\scriptsize] at (1.5, 0) {$\frac{3}{2}$};
+    \node[left=2pt, font=\scriptsize]  at (0, 0.5) {$\frac{1}{2}$};
+
+    % b_1(0, 1) の目盛り
+    \node[left=2pt, font=\scriptsize] at (0, 1.0) {$1$};
+
+    % --- 6. 主要点のプロットとラベル ---
+    % 中心 alpha = 1/2
+    \fill[red!85!black] (Alpha) circle (1.2pt);
+    \node[below=3pt, font=\scriptsize\bfseries, red!90!black] at (Alpha) {$\alpha = \frac{1}{2}$};
+
+    % 3点 b1, b2, b3
+    \fill[black] (B1) circle (1.3pt) node[above right=1pt, font=\footnotesize\bfseries] {$b_1(i)$};
+    \fill[black] (B2) circle (1.3pt) node[below right=1pt, font=\footnotesize\bfseries] {$b_2(1-i)$};
+    \fill[black] (B3) circle (1.3pt) node[above right=1pt, font=\footnotesize\bfseries] {$b_3\left(\frac{3+i}{2}\right)$};
+
   \end{tikzpicture}
-  \caption{点$b_1,b_2,b_3$を通る円$C$}
+  \caption{複素数平面における 3 点 $b_1, b_2, b_3$ とそれらを通る円 $C$}
+  \label{fig:complex_points_circumcircle}
 \end{figure}
 
-\noindent
+\cref{eq:1}から $a_3 = 1+i, a_4 = 1+2i$ だから，
+\begin{align}
+  b_1 &= 1, \\
+  b_2 &= \dfrac{i+1}{i} = 1-i \\
+  b_3 &= \dfrac{1+2i}{1+i} = \dfrac{3+i}{2}
+\end{align}
+である．これら3点を通る円の中心$\alpha$は，$b_1 b_2, b_1 b_3$ の垂直2等分線の交点で，
+図から $\alpha=\dfrac{1}{2}$ である．
+この時半径$r$は
+\begin{align}
+  r = |b_1-\alpha| = \sqrt{\left(1 - \dfrac{1}{2}\right)^2 + 1^2} = \dfrac{\sqrt{5}}{2} \label{eq:2}
+\end{align}
+である．
+
 \paragraph{(2)}
 
-任意の $n \in \mathbb{N}$ に対し，「$b_n$ は円 $C$ の周上にある」$\dots \diamondsuit$ ことを示す．(1)から，$n=1,2,3$ では成立するから，以下 $n=k$ での成立を仮定し ($k \in \mathbb{N}$)，$n=k+1$ での成立を示す．$C$ の中心 $\alpha$， 半径 $r$ とする．
+任意の $n \in \mathbb{N}$ に対して $b_n$ は円 $C$ の周上にあることを数学的帰納法で示す．
+(1)から $n=1,2,3$ では成立するから，以下 $n=k$ での成立を仮定し ($k \in \mathbb{N}$)て $n=k+1$ での成立を示す．\cref{eq:1}より
 \begin{align}
-  b_{k+1} &= \dfrac{a_{k+2}}{a_{k+1}} = 1 + \dfrac{a_k}{a_{k+1}} \\
-  &= 1 + \dfrac{1}{b_k} \quad (\because \textcircled{2})
+  b_{k+1}
+  = \dfrac{a_{k+2}}{a_{k+1}}
+  = \dfrac{a_{k+1}+a_{k}}{a_{k+1}}
+  = 1 + \dfrac{a_k}{a_{k+1}}
+  = 1 + \dfrac{1}{b_k}
 \end{align}
-だから，$b_n \neq 1$ である．逆について
+である．よって$b_n \neq 1$ だから逆に解いて
 \begin{align}
-  b_k &= \dfrac{1}{b_{k+1}-1} \quad \cdots \textcircled{3}
+  b_k &= \dfrac{1}{b_{k+1}-1} \label{eq:3}
 \end{align}
-だから，仮定より $|b_k - \alpha| = r$ に代入，両辺 $0$ 以上から2乗して，
+である．
+
+さて，仮定より$b_k$は$C$上にある．
+よって $|b_k - \alpha| = r$ であり，両辺 $0$ 以上から2乗して
 \begin{align}
-  |b_k|^2 - \alpha(b_k + \bar{b}_k) &= r^2 - \alpha^2 \\
-  &= 1
+  |b_k|^2 - \alpha(b_k + \bar{b}_k) = r^2 - \alpha^2 = \left(\dfrac{\sqrt{5}}{2}\right)^2-\left(\dfrac{1}{2}\right)^2 = 1
 \end{align}
-両辺 $|b_k|^2 \quad (\neq 0)$ で割って (\textcircled{1}\textcircled{2}から漸化的に $a_n \neq 0$ だから，$b_n \neq 0$ である)，
+である．
+ここで\cref{eq:1}から漸化的に $a_n \neq 0$ だから，$b_n \neq 0$ である．よって両辺を
+$|b_k|^2 \quad (\neq 0)$ で割って
 \begin{align}
-  \dfrac{1}{|b_k|^2} + \alpha \left( \dfrac{1}{b_k} + \dfrac{1}{\bar{b}_k} \right) - 1 &= 0
+  & \dfrac{1}{|b_k|^2} + \alpha \left( \dfrac{1}{b_k} + \dfrac{1}{\bar{b}_k} \right) - 1 = 0 \\
+  & |b_{k+1}-1|^2 + \alpha( \bar{b}_{k+1}-1 + b_{k+1}-1 ) - 1 = 0 \quad (\because \text{\cref{eq:3}}) \\
+  & |b_{k+1} - \alpha|^2 = r^2
 \end{align}
+である．$|b_{k+1} - \alpha|, r$ 共に $0$ 以上だから，
 \begin{align}
-  |b_{k+1}-1|^2 + \alpha( \bar{b}_{k+1}-1 + b_{k+1}-1 ) - 1 &= 0 \quad (\because \textcircled{3})
+  |b_{k+1} - \alpha| = r
 \end{align}
-\begin{align}
-  |b_{k+1}-1|^2 - \dfrac{1}{2} ( b_{k+1} + \bar{b}_{k+1} ) - 1 &= 0 \quad \left(\because \alpha = \dfrac{1}{2}\right)
-\end{align}
-\begin{align}
-  |b_{k+1} - \alpha|^2 &= r^2
-\end{align}
-$|b_{k+1} - \alpha|, r$ 共に $0$ 以上だから，
-\begin{align}
-  |b_{k+1} - \alpha| &= r
-\end{align}
-したがって，$b_{k+1}$ も $C$ 上にあるので，$n=k+1$ でも $\diamondsuit$ は成立．よって数学的帰納法により，題意は示された． \hfill $\text{固}$
+であり$b_{k+1}$ も $C$ 上にある．
+
+よって数学的帰納法により題意は示された．
 
 \bigskip
 
