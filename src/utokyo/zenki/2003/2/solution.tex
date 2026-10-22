@@ -1,64 +1,194 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} 点Xを表す複素数 $x$ とする．又 $\alpha = (1-i)t - 7$ とする．$t \in \mathbb{R}$ から $\alpha \neq 0$ である．
+% TODO: 概要図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ ---
+    % A = 6 = (6, 0)
+    % B = 7 + 7i = (7, 7)
+    % 例としての動点 P(p) (円周角 45° を見込む円弧上の点)
+    % 中心 C(3, 4), 半径 5 の円周上の点
+    % 例: 偏角 theta = 70° => P = (3 + 5*cos 70°, 4 + 5*sin 70°) ≈ (4.71, 8.70)
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (6, 0);
+    \coordinate (B) at (7, 7);
+    \coordinate (P) at (4.71, 8.70);
+
+    % --- 2. 座標軸 (複素数平面) ---
+    \draw[->, thick, gray!80!black] (-1.5, 0) -- (8.5, 0) node[right] {$\text{Re}$};
+    \draw[->, thick, gray!80!black] (0, -1.5) -- (0, 9.8) node[above] {$\text{Im}$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 線分 PA, PB と弦 AB ---
+    \draw[line width=1.6pt, blue!85!black] (P) -- (A);
+    \draw[line width=1.6pt, blue!85!black] (P) -- (B);
+    \draw[thick, gray!60, dashed] (A) -- (B);
+
+    % --- 4. 動径 OP ---
+    \draw[thick, teal!85!black] (O) -- (P);
+    \node[teal!95!black, font=\scriptsize\bfseries, left] at ($ (O)!0.5!(P) $) {$|p|$};
+
+    % --- 5. 角 APB = pi/4 の円弧マーク ---
+    % P から A, B への方向角
+    \pgfmathsetmacro{\angPA}{atan2(0 - 8.70, 6 - 4.71)}
+    \pgfmathsetmacro{\angPB}{atan2(7 - 8.70, 7 - 4.71)}
+    \draw[thick, red!85!black]
+    ($ (P) + ({\angPA}:0.8) $) arc (\angPA:\angPB:0.8);
+    \node[red!90!black, font=\scriptsize\bfseries] at ($ (P) + (-65:1.15) $) {$\frac{\pi}{4}$};
+
+    % --- 6. 点のプロットとラベル ---
+    \fill[black]         (O) circle (1.5pt);
+    \fill[black]         (A) circle (2.0pt) node[below=2pt, font=\footnotesize\bfseries] {$A(6)$};
+    \fill[black]         (B) circle (2.0pt) node[above right=1pt, font=\footnotesize\bfseries] {$B(7+7i)$};
+    \fill[blue!90!black] (P) circle (2.2pt) node[above=2pt, font=\footnotesize\bfseries, blue!90!black] {$P(p)$};
+
+  \end{tikzpicture}
+  \caption{複素数平面における点 $A, B$ と $\angle APB = \dfrac{\pi}{4}$ を満たす動点 $P$}
+  \label{fig:complex_apb_overview}
+\end{figure}
+
+点Xを表す複素数 $x$ とする．
+又 $\alpha = (1-i)t - 7$ とすると$t \in \mathbb{R}$ から $\alpha \neq 0$ であり，
+また
+\begin{align}
+  p = \dfrac{14(t-3)}{\alpha} \label{eq:1}
+\end{align}
+である．
+
 \paragraph{(1)}
 
-$a-p = \dfrac{6\alpha - 14(t-3)}{\alpha} = \dfrac{2}{\alpha}[-4t-3it]$
-$b-p = \dfrac{7\alpha(1+i) - 14(t-3)}{\alpha} = \dfrac{7}{\alpha}[-1-7i]$
-
-だから
+$\angle APB$の計算をするので，$\dfrac{b-p}{a-p}$を計算すれば良い．
+\cref{eq:1}に注意して
 \begin{align}
-  \dfrac{b-p}{a-p} &= \dfrac{\dfrac{7}{\alpha}(-1-7i)}{\dfrac{2}{\alpha}(-4-3i)t} = \dfrac{7}{2t} \dfrac{1+7i}{4+3i} \\
+  \begin{cases}
+    a-p = \dfrac{6\alpha - 14(t-3)}{\alpha} = \dfrac{2}{\alpha}[-4t-3it] \\
+    b-p = \dfrac{7\alpha(1+i) - 14(t-3)}{\alpha} = \dfrac{7}{\alpha}[-1-7i]
+  \end{cases}
+\end{align}
+だから辺々割り算して
+\begin{align}
+  \dfrac{b-p}{a-p}
+  &= \dfrac{\dfrac{7}{\alpha}(-1-7i)}{\dfrac{2}{\alpha}(-4-3i)t} \\
+  &= \dfrac{7}{2t} \dfrac{1+7i}{4+3i} \\
   &= \dfrac{7}{2t} (1+i) \quad (\because t > 0)
 \end{align}
-となり，$\arg\left(\dfrac{b-p}{a-p}\right) = \dfrac{\pi}{4} + 2n\pi \ (n \in \mathbb{Z})$ だから，$\angle APB = \dfrac{\pi}{4}$
+となり，$t\in\mathbb{R}$から偏角を取ると
+\begin{align}
+  \arg\left(\dfrac{b-p}{a-p}\right) = \dfrac{\pi}{4} + 2n\pi \ (n \in \mathbb{Z})
+\end{align}
+だから
+\begin{align}
+  \angle APB = \dfrac{\pi}{4}
+\end{align}
+である．
 
 \paragraph{(2)}
 
-$\dfrac{1}{OP} = \dfrac{t-3}{(t-7)-ti} = \dfrac{(t-3)\{(t-7)+ti\}}{(t-7)^2+t^2}$ だから，
+線分$OP$の長さは$|p|$に等しいから，\cref{eq:1}より
 \begin{align}
-  \left(\dfrac{1}{14} |OP|\right)^2 &= \left| \dfrac{(t-3)}{(t-7)^2+t^2} \right|^2 \left| (t-7)^2 + t^2 \right| \\
-  &= \dfrac{(t-3)^2}{(t-7)^2+t^2} = \dfrac{s^2}{(s-4)^2+(s+3)^2} \quad (s = t-3) \\
-  &= \dfrac{s^2}{2s^2-2s+25} \equiv f(s) \cdots (1)
+  |p|^2 = \left|\dfrac{14(t-3)}{(t-7)-ti} \right|^2 = \dfrac{14(t-3)^2}{(t-7)^2+t^2}
 \end{align}
-$t=3$ の時，$OP=0$ である．以下 $t \neq 3$ とすると，$s \neq 0$ で
+だから，これが最大になる$t$を求めれば良い．$s=t-3 (> -3)$と変換すると
 \begin{align}
-  f(s) &= \dfrac{1}{25u^2-2u+2} \quad (u = 1/s) \\
+  |p|^2
+  &= \dfrac{s^2}{(s-4)^2+(s+3)^2} \\
+  &= \dfrac{s^2}{2s^2-2s+25}
+\end{align}
+である．$s=0$つまり$t=3$の時は$|p|=0$である．
+そこで以下$s\neq 0$として，右辺を$s^2 \neq 0$で割ると
+\begin{align}
+  |p|^2
+  &=\dfrac{1}{25u^2-2u+2} \quad (u = 1/s) \\
   &= \dfrac{1}{25\left(u-\dfrac{1}{25}\right)^2 + 2 - \dfrac{1}{25}}
 \end{align}
-だから，$u = \dfrac{1}{25} \therefore s=25$，つまり $t=28$ で $f(s)$ は最大で，これは $0$ より大きいので，
-もとめるのは $t=28$
+だから，$u = \dfrac{1}{25} \therefore s=25$，つまり $t=28$ で $|p|^2$ は最大でこれは $0$ より大きいので，もとめる$t$は
+\begin{align}
+  t = 28
+\end{align}
+である．
 
-\bigskip
-\noindent{\bf [解2]}
+\bf [別解]
 \paragraph{(2)}
 
-(1)から，Pは図のような中心 $C=3+4i$，半径5の円弧上を動く．したがって，$OP$ が最大なのは，$P=6+8i$ の時で，
+% 円周角の図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.85, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・厳密パラメータ ---
+    % 中心 C(3, 4), 半径 R = 5
+    % 円の方程式: (x - 3)^2 + (y - 4)^2 = 25
+    % 原点 (0, 0) を通る: (0-3)^2 + (0-4)^2 = 9 + 16 = 25
+    % A(6, 0): (6-3)^2 + (0-4)^2 = 9 + 16 = 25
+    % B(7, 7): (7-3)^2 + (7-4)^2 = 16 + 9 = 25
+    % 最大点 P_max = 2*C = (6, 8) (原点と中心を結ぶ直線の反対側端点)
+    \coordinate (O)     at (0, 0);
+    \coordinate (C)     at (3, 4);
+    \coordinate (A)     at (6, 0);
+    \coordinate (B)     at (7, 7);
+    \coordinate (P_max) at (6, 8);
+
+    % --- 2. 軌跡の円（中心 C, 半径 5）---
+    % 内部の薄いハイライト
+    \fill[blue!5, opacity=0.8] (C) circle (5);
+    \draw[very thick, blue!85!black] (C) circle (5);
+    \node[blue!90!black, font=\footnotesize\bfseries, below left] at (-1.2, 7.5)
+    {$|z - (3+4i)| = 5$};
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-2.5, 0) -- (9.0, 0) node[right] {$\text{Re}$};
+    \draw[->, thick, gray!80!black] (0, -1.8) -- (0, 10.0) node[above] {$\text{Im}$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 直径 OP_max (最大値をとる配置) ---
+    \draw[line width=2.0pt, red!85!black] (O) -- (P_max);
+    \node[red!90!black, font=\footnotesize\bfseries, above left=1pt] at ($ (O)!0.6!(P_max) $)
+    {最大直径 $|OP| = 10$};
+
+    % 弦 AB
+    \draw[dashed, gray!60, thick] (A) -- (B);
+
+    % 円周角の確認線 (P_max から A, B への線分)
+    \draw[thick, gray!50] (P_max) -- (A);
+    \draw[thick, gray!50] (P_max) -- (B);
+
+    % 中心から各点への半径線 (点線)
+    \draw[dotted, teal!85!black, thick] (C) -- (A);
+    \draw[dotted, teal!85!black, thick] (C) -- (B);
+
+    % --- 5. 点プロットと目盛り ---
+    \fill[black]         (O)     circle (1.8pt);
+    \fill[black]         (A)     circle (1.8pt) node[below=2pt, font=\footnotesize\bfseries] {$A(6)$};
+    \fill[black]         (B)     circle (1.8pt) node[above right=1pt, font=\footnotesize\bfseries] {$B(7+7i)$};
+    \fill[teal!85!black] (C)     circle (2.0pt) node[below right=2pt, font=\footnotesize\bfseries, teal!90!black] {$C(3+4i)$};
+    \fill[red!85!black]  (P_max) circle (2.2pt) node[above right=1pt, font=\normalsize\bfseries, red!90!black] {$P(6+8i)$};
+
+    % 座標軸への投影破線
+    \draw[dashed, gray!50] (3, 0) -- (C) -- (0, 4);
+    \node[below=2pt, font=\scriptsize] at (3, 0) {$3$};
+    \node[left=2pt, font=\scriptsize]  at (0, 4) {$4$};
+
+    \draw[dashed, gray!50] (6, 0) -- (P_max) -- (0, 8);
+    \node[left=2pt, font=\scriptsize]  at (0, 8) {$8$};
+
+  \end{tikzpicture}
+  \caption{中心 $C(3+4i)$，半径 $5$ の円と $|OP|$ を最大にする点 $P(6+8i)$}
+  \label{fig:complex_circle_max_distance}
+\end{figure}
+
+(1)の結果$\angle APB=\dfrac{\pi}{4}$より，円周角の定理から
+$P$は図のような中心 $C=3+4i$，半径5の円弧上を動く．この円弧は原点を通る．
+したがって $OP$ が最大なのは，$C$が線分$OP$にある場合つまり$P=6+8i$ の時で，
+この時
 \begin{align}
   \dfrac{14(t-3)}{(t-7)-it} &= 2(3+4i) \\
   7(t-3) &= 7(t-3) + (t-28)i
 \end{align}
 より，$t=28$ である．
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}
-    \draw[->] (-1,0) -- (7,0) node[below] {Re};
-    \draw[->] (0,-1) -- (0,9) node[left] {Im};
-    \draw (3,4) circle (5);
-    \fill (3,4) circle (1.5pt) node[left] {C};
-    \fill (6,8) circle (1.5pt) node[above right] {P};
-    \fill (6,0) circle (1.5pt) node[below] {6};
-    \fill (7,7) circle (1.5pt) node[right] {B};
-    \fill (0,0) circle (1.5pt) node[below left] {0};
-    \draw[dashed] (0,0) -- (6,8);
-    \draw[dashed] (3,4) -- (6,8);
-  \end{tikzpicture}
-  \caption{中心 $C=3+4i$，半径5の円弧上を動く点Pと，原点0から見た距離が最大になる点$P=6+8i$}
-\end{figure}
 
 \end{document}
