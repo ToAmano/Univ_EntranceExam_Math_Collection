@@ -1,0 +1,76 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+{\bf [解1]}
+
+\paragraph{(1)}
+数学的帰納法で示す．$n=1$のときは$p_1(x)=x$，$q_1(x)=1$とすればよい．
+
+$n=k$での成立を仮定する（$k\in\mathbb{N}$）．加法定理より，
+\begin{align}
+  \sin(k+1)\theta
+  &=\sin k\theta\cos\theta+\cos k\theta\sin\theta\\
+  &=p_k(\tan\theta)\cos^{k+1}\theta
+  +q_k(\tan\theta)\cos^k\theta\sin\theta\\
+  &=\bigl\{p_k(\tan\theta)+\tan\theta\,q_k(\tan\theta)\bigr\}
+  \cos^{k+1}\theta,\\
+  \cos(k+1)\theta
+  &=\cos k\theta\cos\theta-\sin k\theta\sin\theta\\
+  &=\bigl\{q_k(\tan\theta)-\tan\theta\,p_k(\tan\theta)\bigr\}
+  \cos^{k+1}\theta.
+\end{align}
+したがって，
+\begin{align}
+  p_{k+1}(x)&=p_k(x)+xq_k(x),\nonumber\\
+  q_{k+1}(x)&=q_k(x)-xp_k(x)\label{eq:ut1991-4-recurrence}
+\end{align}
+とすれば$n=k+1$でも成立する．よって帰納法により題意は示された．
+
+\paragraph{(2)}
+$k=1$として，$p_2(x)=2x$，$q_2(x)=1-x^2$だから，
+\begin{align}
+  p_2'(x)=2=2q_1(x),\qquad q_2'(x)=-2x=-2p_1(x)
+\end{align}
+となり，$n=2$では題意が成立する．$n=k$での成立を仮定する（$k\geqq2$）．\eqref{eq:ut1991-4-recurrence}より，
+\begin{align}
+  p_{k+1}'(x)
+  &=p_k'(x)+q_k(x)+xq_k'(x)\\
+  &=k\bigl(q_{k-1}(x)-xp_{k-1}(x)\bigr)+q_k(x)\\
+  &=(k+1)q_k(x),\\
+  q_{k+1}'(x)
+  &=q_k'(x)-p_k(x)-xp_k'(x)\\
+  &=-k\bigl(p_{k-1}(x)+xq_{k-1}(x)\bigr)-p_k(x)\\
+  &=-(k+1)p_k(x).
+\end{align}
+したがって$n=k+1$でも成立する．よって帰納法により題意は示された．
+
+\bigskip\noindent
+{\bf [解2]}
+
+\paragraph{(2)}
+$h_n(x)=q_n(x)+ip_n(x)$とおく．$h_1(x)=1+ix$であり，\eqref{eq:ut1991-4-recurrence}から
+\begin{align}
+  h_{n+1}(x)
+  &=\bigl(q_n(x)-xp_n(x)\bigr)
+  +i\bigl(p_n(x)+xq_n(x)\bigr)\\
+  &=(1+ix)h_n(x).
+\end{align}
+くり返し用いて，$h_n(x)=(1+ix)^n$を得る．したがって，
+\begin{align}
+  p_n(x)&=\operatorname{Im}h_n(x)
+  =\dfrac{(1+ix)^n-(1-ix)^n}{2i},\\
+  q_n(x)&=\operatorname{Re}h_n(x)
+  =\dfrac{(1+ix)^n+(1-ix)^n}{2}.
+\end{align}
+両辺を微分して，
+\begin{align}
+  p_n'(x)
+  &=\dfrac{n}{2}\bigl\{(1+ix)^{n-1}+(1-ix)^{n-1}\bigr\}
+  =nq_{n-1}(x),\\
+  q_n'(x)
+  &=\dfrac{ni}{2}\bigl\{(1+ix)^{n-1}-(1-ix)^{n-1}\bigr\}
+  =-np_{n-1}(x).
+\end{align}
+を得る．
+
+\end{document}
