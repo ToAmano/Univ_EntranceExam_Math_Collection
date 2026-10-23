@@ -22,7 +22,7 @@ def test_protected_regions_and_skip():
 \label{eq:、。}
 \input{dir/、。.tex}
 '''
-    assert lint.fix_text(protected) == protected.replace('リンク。', 'リンク．')
+    assert lint.fix_text(protected) == protected.replace('リンク。', 'リンク．').replace(r'\label{eq:、。}', r'\label{eq:1}')
     skipped = '% lint-skip: legacy\n本文。'
     assert lint.fix_text(skipped) == skipped
 
@@ -74,3 +74,49 @@ def test_cli_preserves_crlf(tmp_path):
     result = subprocess.run([sys.executable, lint.__file__, '--fix', str(source)], capture_output=True)
     assert result.returncode == 0
     assert source.read_bytes() == '本文．\r\n次．\r\n'.encode()
+
+
+def test_equation_labels_must_be_local_numbered_and_references_defined(tmp_path):
+    source = tmp_path / 'solution.tex'
+    source.write_text(r'\label{2004-2:eq:1} \cref{2004-2:eq:1,eq:missing}', encoding='utf-8')
+    errors, _, _ = lint.lint_file(source)
+    messages = [message for _, message in errors]
+    assert any('eq:1' in message and '形式' in message for message in messages)
+    assert any('eq:missing' in message and '未定義' in message for message in messages)
+
+
+def test_equation_fix_updates_refs_but_leaves_ambiguous_duplicates(tmp_path):
+    source = r'\label{2004-2:eq:3} \cref{2004-2:eq:3} \label{eq:7} \eqref{eq:7}'
+    fixed = lint.fix_text(source)
+    assert fixed == r'\label{eq:1} \cref{eq:1} \label{eq:2} \eqref{eq:2}'
+    duplicate = r'\label{eq:1} \label{eq:1} \cref{eq:1}'
+    assert lint.fix_text(duplicate) == duplicate
+    path = tmp_path / 'solution.tex'
+    path.write_text(duplicate, encoding='utf-8')
+    errors, _, _ = lint.lint_file(path)
+    assert any('重複' in message for _, message in errors)
+
+
+def test_math_environment_rejects_untyped_label(tmp_path):
+    source = tmp_path / 'solution.tex'
+    source.write_text(r'\begin{equation}x=1\label{1}\end{equation} \cref{1}', encoding='utf-8')
+    errors, _, _ = lint.lint_file(source)
+    assert any('eq:1' in message and '形式' in message for _, message in errors)
+
+
+def test_same_label_in_problem_and_solution_is_duplicate(tmp_path):
+    (tmp_path / 'problem.tex').write_text(r'\label{fig:a}', encoding='utf-8')
+    solution = tmp_path / 'solution.tex'
+    solution.write_text(r'\label{fig:a}', encoding='utf-8')
+    errors, _, _ = lint.lint_file(solution)
+    assert any('fig:a' in message and '重複' in message for _, message in errors)
+
+
+def test_legacy_style_skip_does_not_hide_broken_references(tmp_path):
+    source = tmp_path / 'solution.tex'
+    source.write_text('% lint-skip: legacy\n' + r'\begin{align*}x=1\label{old}\end{align*} \cref{missing}', encoding='utf-8')
+    errors, _, reason = lint.lint_file(source)
+    assert reason == 'legacy'
+    assert any('old' in message and '形式' in message for _, message in errors)
+    assert any('missing' in message and '未定義' in message for _, message in errors)
+    assert not any('align* は使わない' in message for _, message in errors)

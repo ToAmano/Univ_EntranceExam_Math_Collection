@@ -35,18 +35,11 @@ jobs:
             texlive-pictures texlive-science texlive-fonts-extra \
             latexmk
 
-      - name: Regenerate main.tex
-        run: python3 scratch/generate_main_tex.py ${{ matrix.target.univ }}/${{ matrix.target.cat }}
-
-      - name: Build ${{ matrix.target.univ }}/${{ matrix.target.cat }}/main.tex
-        working-directory: src/${{ matrix.target.univ }}/${{ matrix.target.cat }}
-        run: latexmk -lualatex -interaction=nonstopmode main.tex
-
-      - name: Rename output PDF
-        run: |
-          mkdir -p dist-pdf
-          cp "src/${{ matrix.target.univ }}/${{ matrix.target.cat }}/main.pdf" \
-             "dist-pdf/${{ matrix.target.univ }}_${{ matrix.target.cat }}.pdf"
+      - name: Build namespaced PDF
+        run: >-
+          python3 scratch/build_pdf_book.py
+          ${{ matrix.target.univ }}/${{ matrix.target.cat }}
+          --output dist-pdf/${{ matrix.target.univ }}_${{ matrix.target.cat }}.pdf
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

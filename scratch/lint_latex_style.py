@@ -14,6 +14,8 @@ import re
 import sys
 from pathlib import Path
 
+from scratch import tex_references
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SRC_DIR = REPO_ROOT / 'src'
 
@@ -135,6 +137,24 @@ def check_duplicate_labels(text):
             for pos in positions:
                 errors.append((line_of(text, pos),
                                 f"\\label{{{name}}} が同一ファイル内で重複している（\\cref の参照先が曖昧になる）"))
+    return errors
+
+
+def check_equation_references(text, problem_text=''):
+    """Require local numeric equation labels and resolvable references."""
+    errors = []
+    definitions = {name for command, name, _, _ in tex_references.commands(text + problem_text)
+                   if command == 'label'}
+    math_positions = tex_references.math_label_positions(text)
+    for command, argument, start, _ in tex_references.commands(text):
+        line = line_of(text, start)
+        if command == 'label':
+            if ('eq:' in argument or start in math_positions) and not re.fullmatch(r'eq:[1-9][0-9]*', argument):
+                errors.append((line, f"数式ラベル \\label{{{argument}}} は eq:1 形式の連番にする"))
+        else:
+            for name in tex_references.references(argument):
+                if name not in definitions:
+                    errors.append((line, f"\\{command}{{{name}}} は未定義のラベルを参照している"))
     return errors
 
 
@@ -506,15 +526,33 @@ def fix_text(raw):
             edits.append((m.start(), m.end(), replacement))
     for start, end, replacement in sorted(edits, reverse=True):
         raw = raw[:start] + replacement + raw[end:]
+    try:
+        raw = tex_references.normalize_equation_labels(raw)
+    except tex_references.AmbiguousLabelError:
+        pass  # Keep duplicate definitions visible to the linter for manual repair.
     return raw
+
+
+def check_local_references(text, problem_text):
+    errors = check_duplicate_labels(text)
+    problem_labels = {name for command, name, _, _ in tex_references.commands(problem_text)
+                      if command == 'label'}
+    for command, name, start, _ in tex_references.commands(text):
+        if command == 'label' and name in problem_labels:
+            errors.append((line_of(text, start), f"\\label{{{name}}} が同じ問題の problem.tex と重複している"))
+    errors += check_equation_references(text, problem_text)
+    return errors
 
 
 def lint_file(path):
     raw = path.read_text(encoding='utf-8')
     skip_m = LINT_SKIP_RE.search(raw)
-    if skip_m:
-        return [], [], skip_m.group(1).strip()
     text = strip_comments(raw)
+    problem = path.with_name('problem.tex') if path.name == 'solution.tex' else None
+    problem_text = strip_comments(problem.read_text(encoding='utf-8')) if problem and problem.exists() else ''
+    reference_errors = check_local_references(text, problem_text)
+    if skip_m:
+        return reference_errors, [], skip_m.group(1).strip()
     errors = []
     errors += check_align_star(text)
     errors += check_punctuation(text)
@@ -525,7 +563,7 @@ def lint_file(path):
     errors += check_tabular_nesting(text)
     errors += check_documentclass(text)
     errors += check_proof_env(text)
-    errors += check_duplicate_labels(text)
+    errors += reference_errors
     errors += check_frac_subscript_rule(text)
     errors += check_left_right_balance(text)
     warnings = check_overline_warning(text)
@@ -577,7 +615,6 @@ def main():
         if skip_reason is not None:
             files_skipped += 1
             print(f"::notice file={rel}::lint-skip: {skip_reason}")
-            continue
         for lineno, msg in sorted(errors):
             print(f"::error file={rel},line={lineno}::{msg}")
             total_errors += 1
