@@ -8,7 +8,10 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-from scratch.tex_references import namespace_references
+if __package__:
+    from .tex_references import namespace_references
+else:
+    from tex_references import namespace_references
 
 
 ROOT = Path(__file__).resolve().parent.parent

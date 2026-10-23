@@ -14,7 +14,10 @@ import re
 import sys
 from pathlib import Path
 
-from scratch import tex_references
+if __package__:
+    from . import tex_references
+else:
+    import tex_references
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SRC_DIR = REPO_ROOT / 'src'

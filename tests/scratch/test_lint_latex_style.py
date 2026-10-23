@@ -1,8 +1,18 @@
+import os
 import subprocess
 import sys
 from pathlib import Path
 
 from scratch import lint_latex_style as lint
+
+
+def test_cli_starts_without_pythonpath(tmp_path):
+    environment = os.environ.copy()
+    environment.pop('PYTHONPATH', None)
+    script = Path(lint.__file__).resolve()
+    result = subprocess.run([sys.executable, str(script), '--help'], cwd=tmp_path,
+                            env=environment, capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
 
 
 def test_safe_fixes_and_idempotence():

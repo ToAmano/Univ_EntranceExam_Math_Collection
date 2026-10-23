@@ -1,4 +1,18 @@
+import os
+import subprocess
+import sys
+from pathlib import Path
+
 from scratch.build_pdf_book import prepare_book
+
+
+def test_cli_starts_without_pythonpath(tmp_path):
+    environment = os.environ.copy()
+    environment.pop('PYTHONPATH', None)
+    script = Path(__file__).resolve().parents[2] / 'scratch' / 'build_pdf_book.py'
+    result = subprocess.run([sys.executable, str(script), '--help'], cwd=tmp_path,
+                            env=environment, capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
 
 
 def test_prepare_book_namespaces_problem_and_solution_without_changing_sources(tmp_path):
