@@ -5,6 +5,7 @@ interface Props {
 	title: string;
 	description?: string;
 	ogType?: 'website' | 'article';
+	ogImagePath?: string;
 	// 問題文ページ(-problem)のように、内容が別ページ(-solution、問題文を
 	// 内包しさらに解答解説を含む)の部分集合になっている場合に、検索エンジンの
 	// 重複コンテンツ評価分散を避けるため正規URLを明示的に上書きするためのもの。
@@ -19,6 +20,7 @@ const {
 	title,
 	description = "東大・京大・東工大などの大学入試数学過去問解答アーカイブ。MathJax描画による高品質な数式と解答解説。",
 	ogType = 'website',
+	ogImagePath,
 	canonicalUrl = Astro.url.href,
 	jsonLd = null,
 } = Astro.props;
@@ -28,7 +30,7 @@ const fullTitle = `${title} | Math Solutions`;
 // OGP の og:url は「このURLが共有された」という実際のページを指すべきなので、
 // canonicalUrl(SEO上の正規URL)とは独立に、常に実際のページURLを使う。
 const pageUrl = Astro.url.href;
-const ogImageUrl = new URL(`${baseUrl}/ogp-default.png`, Astro.site).href;
+const ogImageUrl = new URL(`${baseUrl}${ogImagePath ?? '/ogp-default.png'}`, Astro.site).href;
 ---
 <!doctype html>
 <html lang="ja">

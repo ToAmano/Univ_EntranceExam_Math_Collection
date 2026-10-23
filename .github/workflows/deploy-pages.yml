@@ -34,12 +34,22 @@ jobs:
       - name: Install Pandoc and TikZ dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc poppler-utils mupdf-tools ghostscript texlive-extra-utils texlive-latex-base texlive-latex-extra texlive-luatex texlive-pictures texlive-science texlive-lang-japanese
+          sudo apt-get install -y pandoc poppler-utils mupdf-tools ghostscript librsvg2-bin texlive-extra-utils texlive-latex-base texlive-latex-extra texlive-fonts-recommended texlive-luatex texlive-pictures texlive-science texlive-lang-japanese
 
       - name: Run Tex to MD conversion
         run: |
-          python3 -m pip install TexSoup pypandoc pyyaml
+          python3 -m pip install TexSoup pypandoc pyyaml Pillow
           python3 scratch/tex_to_md.py
+
+      - name: Restore generated problem OGP cards
+        uses: actions/cache@v4
+        with:
+          path: web/public/ogp/problems
+          key: problem-ogp-${{ runner.os }}-${{ hashFiles('src/**/problem.tex', 'scratch/generate_problem_ogp.py') }}
+          restore-keys: problem-ogp-${{ runner.os }}-
+
+      - name: Generate changed problem OGP cards
+        run: python3 scratch/generate_problem_ogp.py
 
       - name: Generate news feed from git history
         run: python3 scratch/generate_news.py
@@ -62,6 +72,9 @@ jobs:
         env:
           NODE_OPTIONS: --max-old-space-size=6144
         run: cd web && npm run build
+
+      - name: Check Pages artifact size
+        run: python3 scratch/check_site_size.py web/dist
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3

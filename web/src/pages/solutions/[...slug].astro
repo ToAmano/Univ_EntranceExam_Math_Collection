@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { existsSync } from 'node:fs';
 import Layout from '../../layouts/Layout.astro';
 import { markdownToPlainText, buildQAPageJsonLd, buildBreadcrumbListJsonLd } from '../../utils/seo';
 
@@ -75,6 +76,8 @@ const catName = CATEGORY_NAMES[entry.data.category] || entry.data.category;
 const year = entry.data.year;
 const questionNum = entry.data.question;
 const entryType = entry.data.type || (questionNum === '0' ? 'summary' : 'solution');
+const ogpCard = `ogp/problems/${entry.data.university}-${entry.data.category}-${year}-${questionNum}.png`;
+const ogImagePath = entryType !== 'summary' && existsSync(`public/${ogpCard}`) ? `/${ogpCard}` : undefined;
 
 // Get question display label
 let questionLabel = '';
@@ -206,7 +209,7 @@ jsonLdItems.push(
 );
 ---
 
-<Layout title={pageTitle} description={`${univName} ${catName} ${year}年 ${questionLabel}の過去問解答解説。`} ogType="article" canonicalUrl={canonicalOverrideUrl} jsonLd={jsonLdItems}>
+<Layout title={pageTitle} description={`${univName} ${catName} ${year}年 ${questionLabel}の過去問解答解説。`} ogType="article" ogImagePath={ogImagePath} canonicalUrl={canonicalOverrideUrl} jsonLd={jsonLdItems}>
 	<!-- Breadcrumb Navigation -->
 	<nav aria-label="Breadcrumb" style="margin-bottom: 2rem;">
 		<ol class="breadcrumb" style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; list-style: none; padding: 0; margin: 0; font-size: 0.9rem; color: var(--text-muted);">
