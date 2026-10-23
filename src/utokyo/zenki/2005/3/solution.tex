@@ -1,67 +1,203 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
 {\bf [解]}
+
+与えられた関数
+\begin{align}
+  f(x)=\dfrac{1}{2}x\{1+e^{-2(x-1)}\} \label{eq:1}
+\end{align}
+について考える．
+
 \paragraph{(1)}
 
-$f(x)=\dfrac{1}{2}x\{1+e^{-2(x-1)}\}$である．
+\cref{eq:1}の両辺を$x$で$2$回まで微分して
 \begin{align}
-  f'(x)&=\dfrac{1}{2}\left[(1+e^{-2(x-1)})+x(-2)e^{-2(x-1)}\right]\\
+  f'(x)
+  &=\dfrac{1}{2}\left[(1+e^{-2(x-1)})+x(-2)e^{-2(x-1)}\right]\\
   &=\dfrac{1}{2}\left[1+(1-2x)e^{-2(x-1)}\right]
 \end{align}
-である．$\dfrac{1}{2}<x$の時，$(1-2x)e^{-2(x-1)}<0$だから，$f'(x)<\dfrac{1}{2}\quad\cdots①$である．
+および
 \begin{align}
   f''(x)&=\dfrac{1}{2}e^{-2(x-1)}\left[-2+(1-2x)(-2)\right]\\
   &=-e^{-2(x-1)}(2-2x)
 \end{align}
-から下表を得る．
+だから，$f(x)$の増減表は以下のようになる．
+
+% 増減表
 \begin{table}[htb]
   \centering
+  \caption{$f(x)$ の増減表 $\left(x \ge \dfrac{1}{2}\right)$}
+  \label{tab:fx_derivative_monotonicity}
+  \renewcommand{\arraystretch}{1.5}
   \begin{tabular}{c|ccccc}
-    $x$ & $\dfrac{1}{2}$ & $\cdots$ & $1$ & $\cdots$ & $\infty$\\
     \hline
-    $f''$ & & $-$ & $0$ & $+$ & \\
-    $f'$ & & $\searrow$ & $0$ & $\nearrow$ & \\
+    $x$    & $\dfrac{1}{2}$ & $\cdots$ & $1$ & $\cdots$ & $(\to\infty)$ \\ \hline
+    $f''$  & $-e$           & $-$      & $0$ & $+$      & $(0)$         \\ \hline
+    $f'$   & $\dfrac{1}{2}$ & $\searrow$ & $0$ & $\nearrow$ & $\left(\dfrac{1}{2}\right)$ \\ \hline
+    $f(x)$ & $\dfrac{1+e}{4}$ & $\rotatebox[origin=c]{-30}{$\curvearrowright$}$（上に凸で増加） & $1$（変曲点） & $\rotatebox[origin=c]{30}{$\curvearrowright$}$（下に凸で増加） & $(\to\infty)$ \\ \hline
   \end{tabular}
-  \caption{$f'(x)$ の増減表}
 \end{table}
-したがって，$\dfrac{1}{2}<x$の時，$0\le f'(x)\quad\cdots②$である．①②から示された．$\blacksquare$
+
+% TODO: y=f(x)のグラフ
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=2.2cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ ---
+    % f(x) = 0.5 * x * (1 + exp(-2*(x-1)))
+    \coordinate (O)       at (0, 0);
+    \coordinate (FixedPt) at (1.0, 1.0);
+    \coordinate (HalfPt)  at (0.5, {0.25*(1.0 + exp(1.0))}); % (0.5, 0.9296)
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.2, 0) -- (3.2, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 2.6) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 補助線と直線 ---
+    % 直線 y = x (対角線: 不動点探索用)
+    \draw[thick, gray!55, dashed] (0, 0) -- (2.5, 2.5)
+    node[above right, font=\footnotesize] {$y = x$};
+
+    % 漸近線 y = 1/2 * x
+    \draw[thick, gray!45, dashdotted] (0, 0) -- (3.1, 1.55)
+    node[right, font=\scriptsize, gray!70!black] {$y = \frac{1}{2}x$};
+
+    % --- 4. 曲線 y = f(x) のプロット ---
+    \draw[line width=1.8pt, blue!85!black, domain=0.45:3.0, samples=80]
+    plot (\x, {0.5 * \x * (1.0 + exp(-2.0*(\x - 1.0)))});
+    \node[blue!90!black, font=\footnotesize\bfseries, above] at (2.2, 1.55)
+    {$y = f(x)$};
+
+    % --- 5. 漸化式 x_{n+1} = f(x_n) のクモの巣状収束プロセス (Cobweb plot) ---
+    % 初期値 x_0 = 2.2
+    \def\xZero{2.2}
+    \pgfmathsetmacro{\xOne}{0.5 * \xZero * (1.0 + exp(-2.0*(\xZero - 1.0)))} % ≈ 1.20
+    \pgfmathsetmacro{\xTwo}{0.5 * \xOne * (1.0 + exp(-2.0*(\xOne - 1.0)))}   % ≈ 1.01
+
+    % --- 6. 主要点・目盛りプロット ---
+    % 不動点 (1, 1)
+    \draw[dashed, red!70!black] (1.0, 0) -- (FixedPt) -- (0, 1.0);
+    \fill[red!85!black] (FixedPt) circle (1.5pt);
+    \node[above left=1pt, font=\footnotesize\bfseries, red!90!black] at (FixedPt) {$(1, 1)$};
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[left=2pt, font=\scriptsize] at (0, 1.0) {$1$};
+
+    % x = 1/2 の境界点
+    \draw[dashed, gray!60] (0.5, 0) -- (HalfPt) -- (0, {0.25*(1.0 + exp(1.0))});
+    \fill[black] (HalfPt) circle (1.2pt);
+    \node[below=2pt, font=\scriptsize] at (0.5, 0) {$\frac{1}{2}$};
+    \node[left=2pt, font=\scriptsize] at (0, {0.25*(1.0 + exp(1.0))}) {$\frac{1+e}{4}$};
+
+  \end{tikzpicture}
+  \caption{$y = f(x)$ のグラフ}
+\end{figure}
+
+従って$\dfrac{1}{2}<x$の範囲では
+\begin{align}
+  0 \le f'(x) < \dfrac{1}{2}
+\end{align}
+である．
 
 \paragraph{(2)}
 
-$f(1)=1$だから，
+$f(1)=1$を\cref{eq:1}から辺々引いて
 \begin{align}
-  x_{n+1}-1=f(x_n)-f(1)\quad\cdots③
+  x_{n+1}-1=f(x_n)-f(1) \label{eq:2}
 \end{align}
+を得る．
 
-$x_n=1$なる$n$がある時，③から$n\le m$なる任意の$m$に対し，$f(x_m)=1$だから，$x_n\to1\ (n\to\infty)$である．
+さて，$x_n=1$なる$n$がある時は\cref{eq:2}から$n\le m$なる任意の$m$に対し，$f(x_m)=1$だから，$x_n\to1\ (n\to\infty)$である．
 
-以下，すべての$n$で$x_n\ne1$の場合を考える．$(1)$の表から$x>\dfrac{1}{2}$の時$f(x)$は単調増加で$f\left(\dfrac{1}{2}\right)=\dfrac{1}{4}(1+e)>\dfrac{1}{2}$だから，$x>\dfrac{1}{2}\implies f(x)>\dfrac{1}{2}$である．$x_0>\dfrac{1}{2}$だから，帰納的に任意の$n$に対し$x_n>\dfrac{1}{2}$である．
-
-このことに注意すると，平均値の定理から（$\because f(x)$が微分可能である），
+そこで以下すべての$n$で$x_n\ne1$の場合を考える．$(1)$の増減表から$x>\dfrac{1}{2}$の時$f(x)$は単調増加で
 \begin{align}
-  f(x_n)-f(1)=f'(c)(x_n-1)\quad\left(c\text{は}\dfrac{1}{2}<c\text{，}1\text{と}x_n\text{の間}\right)
+  f\left(\dfrac{1}{2}\right)=\dfrac{1}{4}(1+e)>\dfrac{1}{2}
 \end{align}
-なる$c$がある．③から，
-\begin{align}
-  |x_{n+1}-1|=|f'(c)||x_n-1|<\dfrac{1}{2}|x_n-1|\quad(\because(1))
-\end{align}
+だから，題意より$x_0>\dfrac{1}{2}$の時，帰納的に任意の$n$に対し$x_n>\dfrac{1}{2}$である．
 
-くり返し用いて，
+このことに注意すると平均値の定理から
+\begin{align}
+  f(x_n)-f(1)=f'(c)(x_n-1)\quad \left(\dfrac{1}{2}<c\text{，}1\text{と}x_n\text{の間}\right)
+\end{align}
+なる$c$がある．\cref{eq:2}および(1)の結果$0\le f'(x) < \dfrac{1}{2}$より
+\begin{align}
+  |x_{n+1}-1|=|f'(c)||x_n-1|<\dfrac{1}{2}|x_n-1|
+\end{align}
+である．よってこれをくり返し用いて，
 \begin{align}
   |x_n-1|<\left(\dfrac{1}{2}\right)^n|x_0-1|\longrightarrow0\quad(n\to\infty)
 \end{align}
-
-はさみうちから
+だから，挟み撃ちの定理より
 \begin{align}
   x_n\longrightarrow1\quad(n\to\infty)
 \end{align}
+である．
 
-\bigskip
+{\bf [解説]}
+
+$f(x)=x$の不動点は$x=1$だから，そこに収束することがわかる．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=2.2cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ ---
+    % f(x) = 0.5 * x * (1 + exp(-2*(x-1)))
+    \coordinate (O)       at (0, 0);
+    \coordinate (FixedPt) at (1.0, 1.0);
+    \coordinate (HalfPt)  at (0.5, {0.25*(1.0 + exp(1.0))}); % (0.5, 0.9296)
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.2, 0) -- (3.2, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 2.6) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 補助線と直線 ---
+    % 直線 y = x (対角線: 不動点探索用)
+    \draw[thick, gray!55, dashed] (0, 0) -- (2.5, 2.5)
+    node[above right, font=\footnotesize] {$y = x$};
+
+    % 漸近線 y = 1/2 * x
+    \draw[thick, gray!45, dashdotted] (0, 0) -- (3.1, 1.55)
+    node[right, font=\scriptsize, gray!70!black] {$y = \frac{1}{2}x$};
+
+    % --- 4. 曲線 y = f(x) のプロット ---
+    \draw[line width=1.8pt, blue!85!black, domain=0.45:3.0, samples=80]
+    plot (\x, {0.5 * \x * (1.0 + exp(-2.0*(\x - 1.0)))});
+    \node[blue!90!black, font=\footnotesize\bfseries, above] at (2.2, 1.55)
+    {$y = f(x)$};
+
+    % --- 5. 漸化式 x_{n+1} = f(x_n) のクモの巣状収束プロセス (Cobweb plot) ---
+    % 初期値 x_0 = 2.2
+    \def\xZero{2.2}
+    \pgfmathsetmacro{\xOne}{0.5 * \xZero * (1.0 + exp(-2.0*(\xZero - 1.0)))} % ≈ 1.20
+    \pgfmathsetmacro{\xTwo}{0.5 * \xOne * (1.0 + exp(-2.0*(\xOne - 1.0)))}   % ≈ 1.01
+
+    \draw[line width=1.1pt, teal!85!black, ->] (\xZero, 0) -- (\xZero, \xOne);
+    \draw[line width=1.1pt, teal!85!black, ->] (\xZero, \xOne) -- (\xOne, \xOne);
+    \draw[line width=1.1pt, teal!85!black, ->] (\xOne, \xOne) -- (\xOne, \xTwo);
+    \draw[line width=1.1pt, teal!85!black, ->] (\xOne, \xTwo) -- (\xTwo, \xTwo);
+
+    \node[below=2pt, font=\scriptsize, teal!90!black] at (\xZero, 0) {$x_0$};
+    \node[below=2pt, font=\scriptsize, teal!90!black] at (\xOne, 0) {$x_1$};
+    \draw[dotted, teal!70] (\xOne, 0) -- (\xOne, \xOne);
+
+    % --- 6. 主要点・目盛りプロット ---
+    % 不動点 (1, 1)
+    \draw[dashed, red!70!black] (1.0, 0) -- (FixedPt) -- (0, 1.0);
+    \fill[red!85!black] (FixedPt) circle (1.5pt);
+    \node[above left=1pt, font=\footnotesize\bfseries, red!90!black] at (FixedPt) {$(1, 1)$};
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[left=2pt, font=\scriptsize] at (0, 1.0) {$1$};
+
+    % x = 1/2 の境界点
+    \draw[dashed, gray!60] (0.5, 0) -- (HalfPt) -- (0, {0.25*(1.0 + exp(1.0))});
+    \fill[black] (HalfPt) circle (1.2pt);
+    \node[below=2pt, font=\scriptsize] at (0.5, 0) {$\frac{1}{2}$};
+    \node[left=2pt, font=\scriptsize] at (0, {0.25*(1.0 + exp(1.0))}) {$\frac{1+e}{4}$};
+
+  \end{tikzpicture}
+  \caption{$y = f(x)$ のグラフと漸化式 $x_{n+1} = f(x_n)$ の収束の様子}
+\end{figure}
 
 \end{document}

@@ -1,94 +1,315 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$2005$年$6$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  $r$を正の実数とする．$xyz$空間において，
-  \begin{align}
-    &x^2+y^2\le r^2 \\
-    &y^2+z^2\ge r^2 \\
-    &z^2+x^2\le r^2
-  \end{align}
-  を満たす点全体からなる立体の体積を求めよ．
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]} 各軸を$1/r$倍して考える．題意の体積を$V$とする．
-  \begin{align}
-    \begin{cases}
-      &x^2+y^2\le1 \\
-      &y^2+z^2\ge1 \\
-      &z^2+x^2\le1
-    \end{cases}
-  \end{align}
-  を満たす立体の体積を$V'$とすると，
-  \begin{align}
-    V=r^3V'\label{1}
-  \end{align}
-  である．対称性から，さらに$x\ge0$，$0\le y\le z$を満たす部分の体積$v$とすると，
-  \begin{align}
-    V'=16v\label{2}
-  \end{align}
-  である．
+{\bf[解]}
 
-  \1 ただし，$0\le\theta\le\pi/4$である．$x=s$での切断面は，
-  \begin{align}
-    \begin{cases}
-      &y^2\le1-s^2=c^2 \\
-      &y^2+z^2\ge1 \\
-      &z^2\le1-s^2=c^2
-    \end{cases}
-  \end{align}
-  であって，下図である．
-  \begin{center}
-    \scalebox{1}{\input{ut-05-6p}}
-  \end{center}
-  この平面での$v$の面積$S(\theta)$として，
-  \begin{align}
-    S(\theta)=\dfrac{1}{2}(c-s)c-\dfrac{1}{2}\left(\dfrac{\pi}{4}-\theta\right)
-  \end{align}
-  であるから，
-  \begin{align}
-    v&=\int_0^{\sqrt{2}/2}S(\theta)ds \\
-    &=\int_0^{\pi/4}S(\theta)\dfrac{ds}{d\theta}d\theta \\
-    &=\dfrac{1}{2}\int_0^{\pi/4}\left\{(c-s)c^2-c\left(\dfrac{\pi}{4}-\theta\right)\right\}d\theta
-  \end{align}
-  各項計算して，
-  \begin{align}
-    &\int_0^{\pi/4}c^3d\theta=\left[s-\dfrac{1}{3}s^3\right]_0^{\pi/4} \\
-    &=\dfrac{5\sqrt{2}}{12} \\
-    &\int_0^{\pi/4}sc^2d\theta=\dfrac{-1}{3}[c^3]_0^{\pi/4} \\
-    &=\dfrac{1}{3}\left(1-\dfrac{\sqrt{2}}{4}\right) \\
-    &\int_0^{\pi/4}cd\theta=\dfrac{\sqrt{2}}{2}  \\
-    &\int_0^{\pi/4}c\theta d\theta=[s\theta+c]_0^{\pi/4}=\dfrac{\sqrt{2}\pi}{8}+\dfrac{\sqrt{2}}{2}-1
-  \end{align}
-  であるから，代入して，
-  \begin{align}
-    v&=\dfrac{1}{2}\left[\dfrac{5\sqrt{2}}{12}-\dfrac{1}{3}\left(1-\dfrac{\sqrt{2}}{4}\right)-\dfrac{\sqrt{2}\pi}{8}+\dfrac{\sqrt{2}\pi}{8}+%
-    \dfrac{\sqrt{2}}{2}-1 \right]    \\
-    &=\dfrac{1}{2}\left(\sqrt{2}-\dfrac{4}{3}\right)
-  \end{align}
-  これを\eqref{1}，\eqref{2}に代入して，
-  \[V=8\left(\sqrt{2}-\dfrac{4}{3}\right)r^3\]
-  である．$\cdots$(答)
-  \newpage
-\end{multicols}
+\begin{figure}[htb]
+  \centering
+  % 手書きスケッチのアングル（俯角 65°，方位角 120°）
+  \tdplotsetmaincoords{65}{100}
+  \begin{tikzpicture}[tdplot_main_coords, scale=3.8, line join=round, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標定義 ---
+    \coordinate (O)      at (0, 0, 0);
+    \coordinate (X1)     at (1, 0, 0);
+    \coordinate (Y1)     at (0, 1, 0);
+    \coordinate (Z1)     at (0, 0, 1);
+    \coordinate (Corner) at (0, 1, 1);
+
+    % 特徴点
+    \pgfmathsetmacro{\rMid}{1.0/sqrt(2)} % sqrt(2)/2 ≈ 0.7071
+    \coordinate (MidArc) at (0, \rMid, \rMid);           % yz面上の y^2+z^2=1 と y=z の交点
+    \coordinate (ApexV)  at (\rMid, \rMid, \rMid);        % 3円柱の交点 (sqrt(2)/2, sqrt(2)/2, sqrt(2)/2)
+
+    % ============================================================
+    % 1. 円柱 y^2 + z^2 = 1 の側面 (x = 0 から 1 まで) の薄い斜線塗り
+    % ============================================================
+    \fill[pattern=north east lines, pattern color=cyan!70!black, opacity=0.35]
+    plot[domain=0:90, samples=30] (0, {cos(\x)}, {sin(\x)}) -- (1, 0, 1)
+    -- plot[domain=90:0, samples=30] (1, {cos(\x)}, {sin(\x)}) -- cycle;
+
+    % ============================================================
+    % 2. 奥の壁面 x = 0 における立体 v の断面 (手書きスケッチの斜線部)
+    % ============================================================
+    \fill[pattern=north east lines, pattern color=blue!85!black, opacity=0.85]
+    (MidArc) -- (Corner) -- (Y1)
+    -- plot[domain=0:45, samples=25] (0, {cos(\x)}, {sin(\x)})
+    -- cycle;
+
+    % ============================================================
+    % 3. 立体 v の外側境界面 (0 <= x <= sqrt(2)/2)
+    % ============================================================
+    \fill[blue!15, opacity=0.5]
+    plot[domain=0:\rMid, samples=25] ({\x}, {sqrt(1.0 - \x*\x)}, {\x})
+    -- (\rMid, \rMid, \rMid)
+    -- plot[domain=\rMid:0, samples=25] ({\x}, {sqrt(1.0 - \x*\x)}, {sqrt(1.0 - \x*\x)})
+    -- (0, 1, 1) -- (0, 1, 0) -- cycle;
+
+    % ============================================================
+    % 4. 骨格線・稜線の厳密描画
+    % ============================================================
+    % yz 平面の枠 (x = 0)
+    \draw[thick, gray!75!black] (Z1) -- (Corner) -- (Y1);
+
+    % x=1
+    \draw[thick, gray!75!black, dashed] (1,0,1) -- (1,0,0) -- (1,1,0);
+
+    % くり抜き円柱 y^2 + z^2 = 1 (x = 0 および x = 1)
+    \draw[very thick, blue!90!black, domain=0:90, samples=40]
+    plot (0, {cos(\x)}, {sin(\x)});
+    \draw[dashed, gray!55, thick, domain=0:90, samples=40]
+    plot (1, {cos(\x)}, {sin(\x)});
+    \draw[dashed, gray!45] (0, 1, 0) -- (1, 1, 0);
+    \draw[dashed, gray!45] (0, 0, 1) -- (1, 0, 1);
+
+    % 底面円弧 x^2 + y^2 = 1 (z = 0)
+    \draw[dashed, gray!55, thick, domain=0:90, samples=30]
+    plot ({cos(\x)}, {sin(\x)}, 0);
+
+    % 側面円弧 z^2 + x^2 = 1 (y = 0)
+    \draw[dashed, gray!55, thick, domain=0:90, samples=30]
+    plot ({cos(\x)}, 0, {sin(\x)});
+
+    % (1,0,0) と (0,1,1) を結ぶ屋根稜線 y = z = sqrt(1-x^2)
+    \draw[line width=1.8pt, red!85!black, domain=0:1, samples=45]
+    plot ({\x}, {sqrt(1.0 - \x*\x)}, {sqrt(1.0 - \x*\x)});
+
+    % 対称面 y = z の破線 (x = 0 の壁面上: MidArc -> Corner)
+    \draw[dashed, red!85!black, line width=1.4pt] (MidArc) -- (Corner);
+
+    % 対称面との交線 (緑太線)
+    % (0,0,1) -> ApexV
+    \draw[line width=1.8pt, teal!85!black, domain=0:\rMid, samples=30]
+    plot ({\x}, {\x}, {sqrt(1.0 - \x*\x)});
+    % (0,1,0) -> ApexV
+    \draw[line width=1.8pt, teal!85!black, domain=0:\rMid, samples=30]
+    plot ({\x}, {sqrt(1.0 - \x*\x)}, {\x});
+
+    % ============================================================
+    % ★追加★ 赤い点 ApexV を通る 2 つの円柱の四分円
+    % ============================================================
+    % (A) 円柱 x^2 + y^2 = 1 の水平スライス (z = sqrt(2)/2 = 一定)
+    % (cos t, sin t, sqrt(2)/2)  t: 0° -> 90°
+    \draw[line width=1.0pt, orange!90!black, dashdotted, domain=0:90, samples=40]
+    plot ({cos(\x)}, {sin(\x)}, {\rMid});
+    \node[orange!95!black, font=\tiny\bfseries, right]
+    at ({cos(20)}, {sin(20)}, {\rMid}) {$x^2+y^2=1$};
+
+    % (B) 円柱 z^2 + x^2 = 1 の鉛直スライス (y = sqrt(2)/2 = 一定)
+    % (cos t, sqrt(2)/2, sin t)  t: 0° -> 90°
+    \draw[line width=1.0pt, magenta!85!black, dashdotted, domain=0:90, samples=40]
+    plot ({cos(\x)}, {\rMid}, {sin(\x)});
+    \node[magenta!90!black, font=\tiny\bfseries, left]
+    at ({cos(70)}, {\rMid}, {sin(70)}) {$x^2+z^2=1$};
+
+    % 頂点 (x = y = z = sqrt(2)/2)
+    \fill[red!85!black] (ApexV) circle (1.5pt);
+    \node[above left=2pt, font=\scriptsize\bfseries, red!90!black] at (ApexV)
+    {$\left(\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2}\right)$};
+
+    % ============================================================
+    % 5. 座標軸と目盛り (最前面)
+    % ============================================================
+    \draw[->, thick, gray!85!black] (0, 0, 0) -- (1.45, 0, 0) node[below left=1pt] {$x$};
+    \draw[->, thick, gray!85!black] (0, 0, 0) -- (0, 1.45, 0) node[right=2pt] {$y$};
+    \draw[->, thick, gray!85!black] (0, 0, 0) -- (0, 0, 1.45) node[above=2pt] {$z$};
+    \node[below left=2pt] at (O) {$O$};
+
+    \node[below left=1pt, font=\scriptsize] at (X1) {$1$};
+    \node[below=2pt, font=\scriptsize]      at (Y1) {$1$};
+    \node[left=2pt, font=\scriptsize]       at (Z1) {$1$};
+
+    % 引き出し線ラベル
+    \draw[->, thick, blue!90!black] (0.1, 1.35, 0.45) to[out=170, in=-15] (0.1, 0.95, 0.52);
+    \node[right=2pt, font=\footnotesize\bfseries, blue!90!black] at (0.1, 1.35, 0.45) {立体 $v$ ($z \le y$ 側)};
+
+  \end{tikzpicture}
+  \caption{体積を求める領域のうち$x,y,z \ge 0$の部分}
+  \label{fig:three_cylinders_apex_slices}
+\end{figure}
+
+簡単のため各軸を$1/r$倍して考える．題意の体積を$V$とする．
+与えられた領域で各軸を$1/r$倍した
+\begin{align}
+  \begin{cases}
+    &x^2+y^2\le1 \\
+    &y^2+z^2\ge1 \\
+    &z^2+x^2\le1
+  \end{cases} \label{eq:1}
+\end{align}
+を満たす立体の体積を$V'$とすると，
+\begin{align}
+  V=r^3V' \label{eq:2}
+\end{align}
+が成り立つ．
+対称性からさらに$x\ge0$，$0\le z\le y$を満たす部分の体積$v$とすると，
+\begin{align}
+  V'=16v \label{eq:3}
+\end{align}
+である．\cref{eq:2,eq:3}より
+\begin{align}
+  V = 16r^3 v \label{eq:4}
+\end{align}
+である．
+
+$x=k \ge 0$での切断面を考えると，\cref{eq:1}に代入してかつ$0 \le y \le z$より
+\begin{align}
+  \begin{cases}
+    y^2 \le 1-k^2 \\
+    z^2 \le 1-k^2 \\
+    y^2 + z^2 \ge 1 \\
+    0 \le z \le y
+  \end{cases}
+\end{align}
+だから，$(y,z)$の存在条件および$k \ge 0$より
+\begin{align}
+  \begin{cases}
+    0 \le 1-k^2 \\
+    1 \le 2-2k^2
+  \end{cases}
+  \therefore
+  0 \le k \le \dfrac{\sqrt{2}}{2}
+\end{align}
+である．
+
+そこでパラメータ$\theta$を$0\le\theta\le\dfrac{\pi}{4}$として，
+$x=k=\sin\theta$での切断面を考える．以下簡単のため$s=\sin\theta, c=\cos\theta$とすると
+\cref{eq:1}より
+\begin{align}
+  \begin{cases}
+    y^2\le1-s^2=c^2 \\
+    y^2+z^2\ge1 \\
+    z^2\le1-s^2=c^2 \\
+    0 \le z \le y
+  \end{cases}
+\end{align}
+であって，この領域は下図斜線部である．
+
+% S(\theta)の様子
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=4.6cm, y=4.6cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・厳密パラメータ (theta = 25° の例) ---
+    % s = sin(theta) ≈ 0.4226,  c = cos(theta) ≈ 0.9063
+    % 点 P: (y, z) = (c, s), 偏角 theta
+    % 点 Q: (y, z) = (c, c) (y = z 上の点)
+    % 点 R: y = z (偏角 45°) と 単位円 y^2 + z^2 = 1 の交点 => (cos 45°, sin 45°) = (sqrt(2)/2, sqrt(2)/2)
+    \def\angT{25}
+    \pgfmathsetmacro{\sVal}{sin(\angT)} % ≈ 0.4226
+    \pgfmathsetmacro{\cVal}{cos(\angT)} % ≈ 0.9063
+    \pgfmathsetmacro{\rCoord}{cos(45)}  % sqrt(2)/2 ≈ 0.7071
+
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (\cVal, \sVal);
+    \coordinate (Q) at (\cVal, \cVal);
+    \coordinate (R) at (\rCoord, \rCoord);
+
+    % --- 2. 求める領域 S(theta) の斜線ハッチング (z <= y 側) ---
+    % 境界: 点 P(c, s) -> 点 Q(c, c) -> 直線 y=z に沿って点 R へ -> 円弧 R から P へ
+    % S(theta) = 三角形 OPQ - 扇形 OPR
+    \fill[pattern=north east lines, pattern color=blue!75, opacity=0.8]
+    (P) -- (Q) -- (R) arc (45:\angT:1.0) -- cycle;
+
+    % --- 3. 座標軸 (手書き図通り: 横軸 y, 縦軸 z) ---
+    \draw[->, thick, gray!80!black] (-0.08, 0) -- (1.18, 0) node[right] {$y$};
+    \draw[->, thick, gray!80!black] (0, -0.08) -- (0, 1.18) node[above] {$z$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 単位円弧 y^2 + z^2 = 1 ---
+    \draw[thick, gray!50, domain=0:90, samples=60] plot ({cos(\x)}, {sin(\x)});
+    % 扇形の円弧境界 (R から P へ: 赤太線)
+    \draw[very thick, red!85!black, domain=\angT:45, samples=30]
+    plot ({cos(\x)}, {sin(\x)});
+
+    % --- 5. 境界枠線 (z <= c, y <= c) ---
+    \draw[very thick, black] (0, \cVal) -- (\cVal, \cVal) -- (\cVal, 0);
+    \draw[dashed, gray!45] (0, 1.0) -- (1.0, 1.0) -- (1.0, 0);
+
+    % --- 6. 動径と直線 ---
+    % 直線 y = z (角度 45°: O から Q を結ぶ線)
+    \draw[thick, teal!85!black] (O) -- (Q);
+
+    % 動径 OP (角度 theta)
+    \draw[very thick, blue!85!black] (O) -- (P);
+
+    % --- 7. 角度弧とラベル ---
+    % 角度 theta (OP の偏角)
+    \draw[thick, black] (0.28, 0) arc (0:\angT:0.28);
+    \node[font=\footnotesize\bfseries] at ({\angT/2}:0.36) {$\theta$};
+
+    % 角度 pi/4 - theta (直線 y=z と OP のなす角)
+    \draw[thick, black] (45:0.42) arc (45:\angT:0.42);
+    \node[font=\scriptsize\bfseries, left] at (35:0.56) {$\frac{\pi}{4}-\theta$};
+
+    % --- 8. 投影破線と目盛り ---
+    % y 軸目盛り
+    \draw[dashed, gray!50] (\sVal, 0) -- (\sVal, \cVal);
+    \node[below=2pt, font=\scriptsize] at (\sVal, 0) {$s$};
+    \node[below=2pt, font=\scriptsize] at (\cVal, 0) {$c$};
+    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+
+    % z 軸目盛り
+    \draw[dashed, gray!50] (0, \sVal) -- (P);
+    \node[left=2pt, font=\scriptsize] at (0, \sVal) {$s$};
+    \node[left=2pt, font=\scriptsize] at (0, \cVal) {$c$};
+    \node[left=2pt, font=\scriptsize] at (0, 1.0) {$1$};
+
+    % 点プロット
+    \fill[black]         (P) circle (1.2pt) node[below right=-1pt, font=\scriptsize] {$P(c, s)$};
+    \fill[black]         (Q) circle (1.2pt) node[above right=-1pt, font=\scriptsize] {$Q(c, c)$};
+    \fill[red!85!black]  (R) circle (1.2pt) node[above left=-1pt, font=\scriptsize, red!90!black] {$R$};
+
+    % 切断面の見出し
+    \node[font=\normalsize\bfseries, above right] at (0.45, 0.95) {$x = s$};
+
+  \end{tikzpicture}
+  \caption{切断面 $x = s$ における斜線部 $S(\theta)$の様子}
+  \label{fig:cross_section_stheta_area_fixed}
+\end{figure}
+
+この斜線部の面積$S(\theta)$として，
+\begin{align}
+  S(\theta)
+  &= \triangle OPQ - \text{扇形}OPR
+  = \dfrac{1}{2}(c-s)c-\dfrac{1}{2}\left(\dfrac{\pi}{4}-\theta\right)
+\end{align}
+であるから，これを積分した体積は
+\begin{align}
+  v
+  &=\int_0^{\sqrt{2}/2}S(\theta)ds \\
+  &=\int_0^{\pi/4}S(\theta)\dfrac{ds}{d\theta}d\theta \\
+  &=\dfrac{1}{2}\int_0^{\pi/4}\left\{(c-s)c^2-c\left(\dfrac{\pi}{4}-\theta\right)\right\}d\theta \label{eq:5}
+\end{align}
+である．
+
+各項を個別に計算して，
+\begin{align}
+  (\text{第一項})
+  &= \int_0^{\pi/4}c^3d\theta=\left[s-\dfrac{1}{3}s^3\right]_0^{\pi/4}
+  =\dfrac{5\sqrt{2}}{12} \\
+  %
+  (\text{第二項})
+  &=\int_0^{\pi/4}sc^2d\theta=\dfrac{-1}{3}[c^3]_0^{\pi/4}
+  =\dfrac{1}{3}\left(1-\dfrac{\sqrt{2}}{4}\right) \\
+  %
+  (\text{第三項})
+  &=\int_0^{\pi/4}cd\theta=\dfrac{\sqrt{2}}{2}  \\
+  %
+  (\text{第四項})
+  &=\int_0^{\pi/4}c\theta d\theta=[s\theta+c]_0^{\pi/4}
+  =\dfrac{\sqrt{2}\pi}{8}+\dfrac{\sqrt{2}}{2}-1
+\end{align}
+であるから\cref{eq:5}に代入して，
+\begin{align}
+  v
+  &=\dfrac{1}{2}\left[\dfrac{5\sqrt{2}}{12}-\dfrac{1}{3}\left(1-\dfrac{\sqrt{2}}{4}\right)-\dfrac{\sqrt{2}\pi}{8}+\dfrac{\sqrt{2}\pi}{8}+\dfrac{\sqrt{2}}{2}-1 \right]    \\
+  &=\dfrac{1}{2}\left(\sqrt{2}-\dfrac{4}{3}\right)
+\end{align}
+である．これを\cref{eq:3}に代入して
+\begin{align}
+  V=8\left(\sqrt{2}-\dfrac{4}{3}\right)r^3
+\end{align}
+である．$\cdots$(答)
+\newpage
 \end{document}

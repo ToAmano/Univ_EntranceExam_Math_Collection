@@ -1,37 +1,126 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
 {\bf [解]}
-$k=a+b$とおく．甲が勝つのは，以下の条件が全て満たされる時である．
+
+甲が引いた二枚のカードの和を
 \begin{align}
-  k&\le N\quad\cdots①\\
-  k&\ge c\quad\cdots②\\
-  k&<c+d\le N\text{とならない}\quad\cdots③
+  k=a+b \label{eq:1}
+\end{align}
+とおく．甲が勝つのは 以下の条件が全て満たされる時である．
+\begin{align}
+  c \le k \le N \label{eq:2} \\
+  k < c+d \le N \text{とならない} \label{eq:3}
 \end{align}
 
-まず③について，①②に注意すると，$c=1,2,\ldots,k$の$k$通りであり，各$c$（$1\le c\le k$）に対し，③をみたす（すなわち$c+d\le k$または$c+d>N$となる）$d\in\{1,\ldots,N\}$の個数を数える．$c+d\le k\iff d\le k-c$から，この範囲の$d$は$1,\ldots,k-c$の$k-c$個．$c+d>N\iff d>N-c$から，この範囲の$d$は$N-c+1,\ldots,N$の$c$個．$k\le N$から$k-c\le N-c$なので，これら2つの範囲は重ならず，あわせて$(k-c)+c=k$個である．したがって，$d$は各$c$に対して$k$通りであり，$c,d$の定め方は，$k$ひとつに対して$k^2$通りである．$\cdots④$
+% TODO: cd平面に\cref{eq:2,eq:3}を満たす領域を図示
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.55, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数パラメータ (図示用の比率: N = 10, k = 6) ---
+    \def\NVal{10}
+    \def\kVal{6}
+
+    \coordinate (O) at (0, 0);
+
+    % --- 2. 甲が勝つ領域のハッチング塗りつぶし ---
+    % (i) 領域 I: c + d <= k かつ c <= k (左下の直角二等辺三角形)
+    \fill[pattern=north east lines, pattern color=blue!75, opacity=0.75]
+    (0, 0) -- (\kVal, 0) -- (0, \kVal) -- cycle;
+
+    % (ii) 領域 II: c + d > N かつ c <= k (右上側の台形/三角形領域)
+    % 頂点: (k - c の境界かつ d <= N): (k, N-k) -> (k, N) -> (0, N) ... は c+d > N
+    % c <= k の範囲で c+d > N, d <= N:
+    % (k, N-k) から (k, N) へ、(0, N) は含まれず (N-N, N)=(0, N) は境界
+    \fill[pattern=north west lines, pattern color=teal!75, opacity=0.75]
+    ({\NVal - \NVal}, \NVal) -- (\kVal, \NVal) -- (\kVal, {\NVal - \kVal}) -- cycle;
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.8, 0) -- (11.8, 0) node[right] {$c$};
+    \draw[->, thick, gray!80!black] (0, -0.8) -- (0, 11.8) node[above] {$d$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 全事象の枠線 [0, N] x [0, N] ---
+    \draw[thick, gray!60] (0, 0) rectangle (\NVal, \NVal);
+    \node[above right, font=\footnotesize, gray!70!black] at (\NVal, \NVal) {全事象 $N \times N$};
+
+    % --- 5. 境界直線 ---
+    % 直線 c = k
+    \draw[line width=1.4pt, red!85!black] (\kVal, 0) -- (\kVal, \NVal);
+    \node[red!90!black, font=\scriptsize\bfseries, above] at (\kVal, \NVal) {$c = k$};
+
+    % 直線 c + d = k
+    \draw[very thick, blue!85!black] (0, \kVal) -- (\kVal, 0);
+    \node[blue!90!black, font=\scriptsize\bfseries, below left] at (2.2, 4.0) {$c + d = k$};
+
+    % 直線 c + d = N
+    \draw[very thick, teal!85!black] (0, \NVal) -- (\NVal, 0);
+    \node[teal!90!black, font=\scriptsize\bfseries, above right] at (4.5, 5.8) {$c + d = N$};
+
+    % --- 6. 目盛りと代表スライスの図示 ---
+    % 軸目盛り
+    \node[below=2pt, font=\scriptsize] at (\kVal, 0) {$k$};
+    \node[below=2pt, font=\scriptsize] at (\NVal, 0) {$N$};
+    \node[left=2pt, font=\scriptsize] at (0, \kVal) {$k$};
+    \node[left=2pt, font=\scriptsize] at (0, \NVal) {$N$};
+    \node[left=2pt, font=\scriptsize] at (0, {\NVal - \kVal}) {$N-k$};
+
+    % c 固定時の d の取りうる範囲のスライス例 (c = 3)
+    \def\cFix{2.6}
+    \draw[line width=1.6pt, purple!85!black] (\cFix, 0) -- (\cFix, {\kVal - \cFix});
+    \draw[line width=1.6pt, purple!85!black] (\cFix, {\NVal - \cFix}) -- (\cFix, \NVal);
+    \draw[dotted, gray!60] (\cFix, {\kVal - \cFix}) -- (\cFix, {\NVal - \cFix});
+    \node[below=2pt, font=\scriptsize, purple!90!black] at (\cFix, 0) {$c$};
+
+    % 矢印による d の個数注記
+    \node[font=\tiny, blue!90!black, left] at (\cFix, {(\kVal - \cFix)/2}) {$k-c$ 個};
+    \node[font=\tiny, teal!90!black, left] at (\cFix, {(\NVal + \NVal - \cFix)/2}) {$c$ 個};
+
+    % 領域ラベル
+    \node[draw=blue!85!black, rounded corners=2pt, inner sep=2.5pt, font=\scriptsize\bfseries, blue!90!black]
+    at (1.4, 1.0) {c+d \le k};
+    \node[draw=teal!85!black, rounded corners=2pt, inner sep=2.5pt, font=\scriptsize\bfseries, teal!90!black]
+    at (4.0, 9.0) {$c+d > N$};
+
+  \end{tikzpicture}
+  \caption{$cd$ 平面において甲が勝つ条件を満たす領域（$k$ 固定時）}
+  \label{fig:cd_plane_winning_region}
+\end{figure}
+
+$k$を$k=1,2,\cdots, N$で固定すると，
+\cref{eq:2}から$c$は
+\begin{align}
+  c = 1,2,\cdots, k
+\end{align}
+の$k$通りである．さらに，$d$は\cref{eq:3}より
+\begin{align}
+  d \le k-c, N-c < d
+\end{align}
+の場合だから，$d=1,2,\cdots,k-c,N-c+1,\cdots,N$の$(k-c)+(N-(N-c))=k$通りである．
+
+以上から，与えられた$k$に対して甲が勝つ時にとりうる$(c,d)$は$k^2$通りである．
 
 \paragraph{(1)}
 
-$k=a$の時，全事象は$N^2$通りだから，
+甲が2回目をひかずに$b=0$，つまり$k=a$の時を考えると，上記の議論から$(c,d)$のとりうる組は$k^2=a^2$通りである．全事象は$N^2$通りだから求める確率は
 \begin{align}
   P=\left(\dfrac{a}{N}\right)^2
 \end{align}
+である．
 
 \paragraph{(2)}
 
-$k=a+1,\ldots,N$の時（$a\ne N$の場合も含め空和で対応），④から，甲が勝つ場合の数は
+甲が2回目をひく時，そもそも$a\neq N$であって，$k=a+1,\ldots,N$をとりうる．
+従って甲が勝つ場合の数は
 \begin{align}
   \sum_{k=a+1}^Nk^2=\dfrac{1}{6}\left[N(N+1)(2N+1)-a(a+1)(2a+1)\right]
 \end{align}
-であり，$a=N$の時の場合の数$0$にも対応している．全事象は$N^3$通りだから，
+である．これは$a=N$の時の場合の数$0$にも対応している．
+全事象は$N^3$通りだから，求める確率は
 \begin{align}
   P=\dfrac{1}{6N^3}\left[N(N+1)(2N+1)-a(a+1)(2a+1)\right]
 \end{align}
+である．
 
 \end{document}

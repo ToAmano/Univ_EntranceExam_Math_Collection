@@ -1,73 +1,223 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-\noindent
-{\bf [解]} $w = z^2 - 2z$ から $z = 1 \pm \sqrt{1+w}$ であるから，
+与えられた条件
 \begin{align}
-  |z| \le \dfrac{5}{4} \iff |1 \pm \sqrt{1+w}| \le \dfrac{5}{4}
+  w = z^2 - 2z
 \end{align}
-だから，$\sqrt{1+w}$ の存在領域は右図斜線部 (境界含む)．$\sqrt{1+w} = x + yi \; (x,y \in \mathbb{R})$ とおくと，
-$w = (x^2 - y^2 - 1) + 2xy i$ で，
+を逆にとくと
 \begin{align}
-  |w|^2 = (x^2 - y^2 - 1)^2 + 4x^2 y^2
+  z = 1 \pm \sqrt{1+w} \label{eq:1}
 \end{align}
-これは $x \to -x, y \to -y$ について対称だから，$x \ge 0, y \ge 0$ で考えれば良い．この時，
+だから，
 \begin{align}
-  0 \le x \le \dfrac{1}{4}, \quad 0 \le y \le \sqrt{\left(\dfrac{5}{4}\right)^2 - (x+1)^2} \quad \cdots \textcircled{1}
+  |z| \le \dfrac{5}{4} \iff |1 \pm \sqrt{1+w}| \le \dfrac{5}{4} \label{eq:2}
 \end{align}
-であり，
+だから，$T$の要素は
 \begin{align}
-  |w|^2 = \Bigl[ y^2 + (x+1)^2 \Bigr]^2 - 4x^2
+  T = \bigg\{ w \bigg| |1 \pm \sqrt{1+w}| \le \dfrac{5}{4} \bigg\} \label{eq:3}
 \end{align}
-\textcircled{1}から $x$ を固定した時，$|w|^2$ は $y = \sqrt{\left(\dfrac{5}{4}\right)^2 - (x+1)^2}$ で最大で (軸が $y>0$ にある)
+である．$t=\sqrt{1+w}$ の存在領域は下図斜線部 (境界含む)になる．
+
+% TODO: tの領域は\pm 1を中心とする半径5/4の円の内側
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・厳密パラメータ ---
+    % 中心: ±1, 半径 R = 5/4 = 1.25
+    % x = 0 での交点: y = ±sqrt((5/4)^2 - 1^2) = ±3/4 = ±0.75
+    \def\radR{1.25}
+    \def\yInt{0.75}
+
+    \coordinate (O)       at (0, 0);
+    \coordinate (CenterR) at (1.0, 0);
+    \coordinate (CenterL) at (-1.0, 0);
+    \coordinate (TopInt)  at (0, \yInt);
+    \coordinate (BotInt)  at (0, -\yInt);
+
+    % --- 2. 共通領域のハッチング塗りつぶし ---
+    \begin{scope}
+      \clip (CenterL) circle (\radR);
+      \fill[pattern=north east lines, pattern color=blue!75, opacity=0.75] (CenterR) circle (\radR);
+    \end{scope}
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-2.6, 0) -- (2.6, 0) node[right] {$\text{Re}$};
+    \draw[->, thick, gray!80!black] (0, -1.8) -- (0, 1.8) node[above] {$\text{Im}$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 2つの円の輪郭線 ---
+    \draw[very thick, blue!85!black] (CenterR) circle (\radR);
+    \draw[very thick, teal!85!black] (CenterL) circle (\radR);
+
+    % --- 5. 点プロットと目盛り ---
+    \fill[black]         (CenterR) circle (1.2pt) node[below right=1pt] {$1$};
+    \fill[black]         (CenterL) circle (1.2pt) node[below left=1pt] {$-1$};
+    \fill[red!85!black]  (TopInt)  circle (1.4pt) node[above right=1pt, red!90!black] {$\frac{3}{4}i$};
+    \fill[red!85!black]  (BotInt)  circle (1.4pt) node[below right=1pt, red!90!black] {$-\frac{3}{4}i$};
+
+    % 端点目盛り
+    \node[below=2pt, font=\scriptsize] at (2.25, 0) {$\frac{9}{4}$};
+    \node[below=2pt, font=\scriptsize] at (-2.25, 0) {$-\frac{9}{4}$};
+
+    % 円の方程式ラベル
+    \node[blue!90!black, font=\footnotesize\bfseries, above right]
+    at ($(CenterR) + (60:\radR)$) {$|t - 1| \le \frac{5}{4}$};
+    \node[teal!90!black, font=\footnotesize\bfseries, above left]
+    at ($(CenterL) + (120:\radR)$) {$|t + 1| \le \frac{5}{4}$};
+
+  \end{tikzpicture}
+  \caption{$t = \sqrt{1+w}$ の存在領域（2 円の共通部分）}
+  \label{fig:complex_t_domain}
+\end{figure}
+
+ここで
 \begin{align}
-  \max |w|^2 &= \left\{ 2x^2 + 2x - \dfrac{15}{16} \right\}^2 + 4x^2 \left\{ \dfrac{25}{16} - (x+1)^2 \right\} \\
+  t = \sqrt{1+w} = x + yi \; (x,y \in \mathbb{R}) \label{eq:4}
+\end{align}
+とおく．\cref{eq:3}に代入すると
+\begin{align}
+  & |(x+iy)\pm 1 | \le \dfrac{5}{4} \\
+  \therefore
+  & \left(x\pm 1\right)^2 + y^2 \le \dfrac{25}{16} \label{eq:5}
+\end{align}
+である．
+\cref{eq:4}を逆に解いて
+\begin{align}
+  w = (x^2 - y^2 - 1) + 2xy i \label{eq:6}
+\end{align}
+だから，
+\begin{align}
+  |w|^2
+  & = (x^2 - y^2 - 1)^2 + 4x^2 y^2 \\
+  & = \Bigl[ y^2 + (x+1)^2 \Bigr]^2 - 4x^2 \label{eq:7}
+\end{align}
+である．以上から，\cref{eq:5}の範囲で\cref{eq:7}の最大値を求めれば良い．
+対称性から，以下$x, y \ge 0$で考える．
+
+% TODO: (左):x,yのとりうる領域の図示(x,y>0) (右): |w|^2の式, y^2の二次式のグラフ
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.0, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 【左図】 第1象限 (x >= 0, y >= 0) における (x, y) の領域
+    % 境界: (x + 1)^2 + y^2 = 25/16 (中心 (-1, 0), 半径 5/4 = 1.25)
+    % x=0 で y = 3/4 = 0.75, y=0 で x = 1/4 = 0.25
+    % ============================================================
+    \begin{scope}[xshift=0cm, x=4.0cm, y=3.0cm]
+      \node[font=\footnotesize\bfseries, blue!85!black] at (0.35, 1.25)
+      {(I) $(x, y)$ の存在領域 ($x \ge 0, y \ge 0$)};
+
+      % 境界円弧のパラメータ
+      % (-1, 0) を中心とする円: (x+1)^2 + y^2 = 1.25^2
+      % x=0 => y=0.75, x=0.25 => y=0
+      % 偏角: x=0 のとき cos(phi) = 1/1.25 = 0.8 => phi = acos(0.8) ≈ 36.87°
+      % x=0.25 のとき phi = 0°
+      \def\angStart{36.87}
+
+      % 領域のハッチング塗りつぶし
+      \fill[pattern=north east lines, pattern color=blue!70, opacity=0.75]
+      (0, 0) -- (0, 0.75)
+      arc (\angStart:0:1.25)
+      -- cycle;
+
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-0.08, 0) -- (0.6, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -0.08) -- (0, 1.05) node[above] {$y$};
+      \node[below left=2pt] at (0, 0) {$O$};
+
+      % 境界円弧 (太線)
+      \draw[very thick, blue!85!black]
+      (0, 0.75) arc (\angStart:0:1.25);
+      \node[blue!90!black, font=\scriptsize\bfseries, above right] at (0.05, 0.75)
+      {$(x+1)^2 + y^2 = \frac{25}{16}$};
+
+      % x 固定時のスライス線 (例: x = 0.1)
+      \def\xFix{0.1}
+      \pgfmathsetmacro{\yMaxFix}{sqrt(1.25*1.25 - (\xFix + 1.0)*(\xFix + 1.0))} % ≈ 0.5937
+      \draw[line width=1.8pt, red!85!black] (\xFix, 0) -- (\xFix, \yMaxFix);
+      \fill[red!85!black] (\xFix, \yMaxFix) circle (1.2pt);
+      \node[red!90!black, font=\scriptsize\bfseries, right=1pt] at (\xFix, \yMaxFix) {$y_{\max}$};
+      \node[below=2pt, font=\scriptsize, red!90!black] at (\xFix, 0) {$x$};
+
+      % 軸目盛り
+      \node[left=2pt, font=\scriptsize] at (0, 0.75) {$\frac{3}{4}$};
+      \node[below=2pt, font=\scriptsize] at (0.25, 0) {$\frac{1}{4}$};
+    \end{scope}
+
+    % ============================================================
+    % 【右図】 Y = y^2 に関する二次関数 |w|^2 のグラフ
+    % F(Y) = (Y + (x+1)^2)^2 - 4x^2  (下に凸な放物線)
+    % 定義域: 0 <= Y <= Y_max = 25/16 - (x+1)^2
+    % ============================================================
+    \begin{scope}[xshift=6.0cm, x=4.0cm, y=1.8cm]
+      \node[font=\footnotesize\bfseries, teal!85!black] at (0.45, 2.1)
+      {(II) $Y = y^2$ に対する $|w|^2$ の増減};
+
+      % 座標軸 (横軸 Y = y^2, 縦軸 |w|^2)
+      \draw[->, thick, gray!80!black] (-0.08, 0) -- (0.65, 0) node[right] {$Y = y^2$};
+      \draw[->, thick, gray!80!black] (0, -0.15) -- (0, 1.8) node[above] {$|w|^2$};
+      \node[below left=2pt] at (0, 0) {$O$};
+
+      % 下に凸な放物線の描画 (頂点は Y < 0 にあるため、Y >= 0 では単調増加)
+      % F(Y) は Y=0 で初期値を持ち、Y とともに単調増加
+      \draw[line width=1.8pt, teal!85!black, domain=0:0.42, samples=50]
+      plot (\x, {0.5 + 1.8*\x + 1.2*\x*\x});
+      \node[teal!90!black, font=\footnotesize\bfseries, right] at (0.35, 1.5)
+      {$|w|^2 = F(Y)$};
+
+      % 定義域の上端 Y_max (例: Y_max = 0.35)
+      \def\YmaxVal{0.35}
+      \pgfmathsetmacro{\wSqMax}{0.5 + 1.8*\YmaxVal + 1.2*\YmaxVal*\YmaxVal} % ≈ 1.277
+      \draw[dashed, red!85!black, thick] (\YmaxVal, 0) -- (\YmaxVal, \wSqMax) -- (0, \wSqMax);
+
+      \fill[red!85!black] (\YmaxVal, \wSqMax) circle (1.4pt);
+      \node[above left=1pt, font=\scriptsize\bfseries, red!90!black] at (\YmaxVal, \wSqMax) {最大値};
+
+      % 目盛り
+      \node[below=2pt, font=\scriptsize, red!90!black] at (\YmaxVal, 0)
+      {$Y_{\max} = \frac{25}{16} - (x+1)^2$};
+      \node[left=2pt, font=\scriptsize] at (0, 0.5) {$F(0)$};
+      \node[left=2pt, font=\scriptsize, red!90!black] at (0, \wSqMax) {$\max |w|^2$};
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{第 1 象限における $(x, y)$ の許容領域と，$x$ 固定時の $|w|^2$ の単調性}
+  \label{fig:optimization_xy_and_parabola}
+\end{figure}
+
+まず$x$を固定して考える．\cref{eq:6}は$y^2$についての二次方程式で，\cref{eq:5}かつ$x \ge 0$の範囲では$y^2=\dfrac{25}{16}-(x+1)^2$で最大で
+\begin{align}
+  \max |w|^2
+  &= \left\{ 2x^2 + 2x - \dfrac{15}{16} \right\}^2 + 4x^2 \left\{ \dfrac{25}{16} - (x+1)^2 \right\} \\
   &= -\dfrac{25}{4} x + \left(\dfrac{5}{4}\right)^2
 \end{align}
-これは $x=0$ で $\max |w| = \dfrac{25}{16}$ をとる．したがって，$|w|$ が最大の時，$x=0, y=\dfrac{3}{4}$ でこの時
+をとる．次に$x$を動かすと $x=0$ で最大値 $\max |w| = \dfrac{25}{16}$ をとる．
+したがって $|w|$ が最大の時 $x=0, y=\dfrac{3}{4}$ でこの時\cref{eq:6}から$w$を求めると
 \begin{align}
-  w = -\dfrac{25}{16}
+  w = -\left(\dfrac{3}{4}\right)^2-1 = -\dfrac{25}{16}
 \end{align}
 である．
 
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \draw[->] (-2.5,0) -- (2.5,0) node[right] {$\text{Re}$};
-    \draw[->] (0,-1.8) -- (0,1.8) node[above] {$\text{Im}$};
-    \begin{scope}
-      \clip (-1,0) circle (1.25);
-      \fill[gray!20] (1,0) circle (1.25);
-    \end{scope}
-    \draw (-1,0) circle (1.25);
-    \draw (1,0) circle (1.25);
-    \node[above left] at ({-1 + 1.25*cos(120)}, {1.25*sin(120)}) {$|z+1|=\frac{5}{4}$};
-    \node[above right] at ({1 + 1.25*cos(60)}, {1.25*sin(60)}) {$|z-1|=\frac{5}{4}$};
-    \fill (-1,0) circle (1pt) node[below left] {$-1$};
-    \fill (1,0) circle (1pt) node[below right] {$1$};
-    \fill (0,0) circle (1pt) node[below left] {$O$};
-  \end{tikzpicture}
-  \caption{$\sqrt{1+w}$ の存在領域（2円 $|z+1|=\dfrac{5}{4}$，$|z-1|=\dfrac{5}{4}$ の重なり部分）}
-\end{figure}
+{\bf [別解]}
 
-\bigskip
-
-\noindent
-{\bf [解2]} $z$ の2次方程式 $z^2 - 2z - w = 0$ の2解を $z_1, z_2$ とする．
+与えられた式$z^2 - 2z - w = 0$を$z$ の2次方程式とみなし，その2解を $z_1, z_2$ とする．
+解と係数の関係より
 \begin{align}
   \begin{cases}
     z_1 + z_2 = 2 \\
     z_1 z_2 = -w
-  \end{cases} \quad \cdots \textcircled{1}
+  \end{cases} \label{eq:8}
 \end{align}
-ならば $|z_1|, |z_2| \le \dfrac{5}{4}$ となるような $w$ をかんがえれば良い．
+だから，これが成り立つなら $|z_1|, |z_2| \le \dfrac{5}{4}$ となるような $w$ をかんがえれば良い．\cref{eq:8}の第二式で絶対値をとると
 \begin{align}
-  |w| = |-z_1 z_2| = |z_1| |z_2| \le \dfrac{25}{16}
+  |w| = |-z_1 z_2| = |z_1| |z_2| \le \dfrac{5}{4}\cdot\dfrac{5}{4} \le \dfrac{25}{16}
 \end{align}
-等号成立する時，$z_1, z_2 = 1 \pm \dfrac{3}{4}i$ で十分．この時 $w = -\dfrac{25}{16}$．\hfill $\qed$
+であり，等号が成立する時は $z_1, z_2 = 1 \pm \dfrac{3}{4}i$ で十分である．
+この時は $w = -\dfrac{25}{16}$ である．\hfill $\qed$
 
 \end{document}
