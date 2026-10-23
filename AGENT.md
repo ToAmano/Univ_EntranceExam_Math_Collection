@@ -18,9 +18,11 @@
 ```
 src/{university}/{category}/
     main.tex          # その大学/区分の統合マスター PDF 用エントリポイント（generate_main_tex.py が生成）
-    {year}/{q_num}/
-        problem.tex     # 問題文
-        solution.tex     # 解答（{q_num}=0 のときは年度サマリ）
+    {year}/
+        handwritten.pdf # 年度別の手書き解答 PDF
+        {q_num}/
+            problem.tex  # 問題文
+            solution.tex # 解答（{q_num}=0 のときは年度サマリ）
 web/
   src/content/solutions/   # tex_to_md.py が生成する Markdown（Astro Content Collections）
   src/content/config.ts    # solutions コレクションの zod スキーマ
@@ -30,7 +32,6 @@ scratch/                   # 変換・移行・データ整備用の使い捨て
 docs/status/                # 大学・区分ごとの進捗ダッシュボード（自動生成）
 docs/superpowers/           # sdd（spec-driven development）の spec / plan 文書
 tests/scratch/               # scratch 配下スクリプトの unit test
-京大_後期/, 東工大_後期/       # 手書き解答の元 PDF（スキャン、区分ごとに直下配置）
 .github/workflows/          # build-pdf.yml（タグ push で PDF リリース）, deploy-pages.yml（main push で Pages デプロイ）
 ```
 
