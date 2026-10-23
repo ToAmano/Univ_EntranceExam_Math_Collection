@@ -1,82 +1,158 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$n \in \mathbb{Z}_{\ge 2} \quad \cdots \text{\textcircled{ア}}$．$\angle OP_0 P_1 = \theta$，$OP_{k-1} = b_k$ とおく．
 
-$\triangle O P_{k-1} P_k$ に正弦定理を用いる:
+題意より$n \in \mathbb{Z}_{\ge 2}, 2 \le k \le n$について考える．
+簡単のため
+\begin{align}
+  \begin{cases}
+    \angle OP_0 P_1 = \angle OP_{k-1}P_{k} = \theta \\
+    |OP_{k-1}| = b_k \\
+  \end{cases} \label{eq:1}
+\end{align}
+とおく．題意より
+\begin{align}
+  \begin{cases}
+    \angle P_{k-1}OP_k = \dfrac{\pi}{n} \\
+    |P_{k-1}P_{k} | = a_{k} \\
+    b_1 = 1 \\
+    b_2 = 1 + \dfrac{1}{n}
+  \end{cases} \label{eq:2}
+\end{align}
+である．
 
+% TODO: fig. 三角形OP_{k-1}P_k
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.2]
-    \coordinate (O) at (0,0);
-    \coordinate (Pk1) at (3,0);
-    \coordinate (Pk) at (2.2, 1.8);
-    \draw[thick] (O) -- (Pk1) node[midway, below] {$b_k$};
-    \draw[thick] (O) -- (Pk) node[midway, above left] {$b_{k+1}$};
-    \draw[thick] (Pk1) -- (Pk) node[midway, above right] {$a_k$};
-    \node[left] at (O) {$O$};
-    \node[right] at (Pk1) {$P_{k-1}$};
-    \node[above] at (Pk) {$P_k$};
-    \node at (2.4, 0.3) {$\frac{\pi}{n}$};
-    \node at (2.1, 1.4) {$\theta$};
+  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標定義 ---
+    % 幾何関係: O=(0,0), P_{k-1}=(3.0, 0)
+    % 角 O = pi/n (見やすくするため約 32° に設定)
+    % 角 P_{k-1} = theta (約 105° の鈍角・外開き方向)
+    \coordinate (O)   at (0, 0);
+    \coordinate (Pk1) at (3.2, 0);
+    \coordinate (Pk)  at (2.1, 1.85);
+
+    % --- 2. 三角形の辺 ---
+    \draw[line width=1.1pt, gray!20!black] (O) -- (Pk1) node[midway, below=2pt] {$b_k$};
+    \draw[line width=1.1pt, gray!20!black] (O) -- (Pk)  node[midway, above left=1pt] {$b_{k+1}$};
+    \draw[line width=1.1pt, blue!85!black] (Pk1) -- (Pk) node[midway, above right=1pt] {$a_k$};
+
+    % --- 3. 角の円弧記号とラベル ---
+    % 角 P_{k-1} O P_k = pi/n
+    \pgfmathsetmacro{\angO}{atan2(1.85, 2.1)} % 約 41.38°
+    \draw[thick, teal!85!black] (0.65, 0) arc (0:\angO:0.65);
+    \node[teal!90!black, font=\footnotesize\bfseries] at ({\angO/2}:0.95) {$\frac{\pi}{n}$};
+
+    % 角 O P_{k-1} P_k = theta
+    \pgfmathsetmacro{\angPkOne}{atan2(1.85, 2.1 - 3.2)} % Pk1 から見た Pk の方向角 (約 120.7°)
+    \draw[thick, red!85!black] ($ (Pk1) + (-0.5, 0) $) arc (180:\angPkOne:0.5);
+    \node[red!90!black, font=\footnotesize\bfseries] at ($ (Pk1) + (150:0.7) $) {$\theta$};
+
+    % --- 4. 頂点プロットとラベル ---
+    \fill[black] (O)   circle (1.2pt) node[below left=2pt] {$O$};
+    \fill[black] (Pk1) circle (1.2pt) node[below right=2pt] {$P_{k-1}$};
+    \fill[black] (Pk)  circle (1.2pt) node[above=2pt] {$P_k$};
+
   \end{tikzpicture}
-  \caption{三角形$OP_{k-1}P_k$における辺と角の関係}
+  \caption{三角形 $OP_{k-1}P_k$ における辺と角の関係}
+  \label{fig:triangle_general_k}
 \end{figure}
 
-\begin{align}
-  \dfrac{a_k}{\sin \dfrac{\pi}{n}} &= \dfrac{b_{k+1}}{\sin \theta} \\
-  &= \dfrac{b_k}{\sin\left(\theta + \dfrac{\pi}{n}\right)} \quad \cdots ①
-\end{align}
-①から
-\begin{align}
-  b_{k+1} = \dfrac{\sin \theta}{\sin\left(\theta + \dfrac{\pi}{n}\right)} b_k \quad \cdots \text{\textcircled{イ}}
-\end{align}
-又 ②から $b_1 = 1, b_2 = 1 + \dfrac{1}{n}$ だから，\textcircled{イ} で $k=1$ として
-
+% TODO: 三角形$OP_0P_1$における辺と角の関係（$k=1$の場合）
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.2]
-    \coordinate (O) at (0,0);
-    \coordinate (P0) at (2.5,0);
-    \coordinate (P1) at (1.8,1.4);
-    \draw[thick] (O) -- (P0) node[midway, below] {$1$};
-    \draw[thick] (O) -- (P1) node[midway, above left] {$1+\frac{1}{n}$};
-    \draw[thick] (P0) -- (P1);
-    \node[left] at (O) {$O$};
-    \node[right] at (P0) {$P_0$};
-    \node[above] at (P1) {$P_1$};
-    \node at (2.0, 0.25) {$\frac{\pi}{n}$};
-    \node at (1.75, 1.1) {$\theta$};
+  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標定義 ---
+    % k=1: b_1 = 1, b_2 = 1 + 1/n
+    % 相似比を保ちつつ、長さをそれぞれ 2.6cm, 3.1cm 程度に設定
+    \coordinate (O)  at (0, 0);
+    \coordinate (P0) at (2.6, 0);
+    \coordinate (P1) at (1.8, 1.6);
+
+    % --- 2. 三角形の辺 ---
+    \draw[line width=1.1pt, gray!20!black] (O) -- (P0) node[midway, below=2pt] {$1$};
+    \draw[line width=1.1pt, gray!20!black] (O) -- (P1) node[midway, above left=1pt] {$1 + \frac{1}{n}$};
+    \draw[line width=1.1pt, blue!85!black] (P0) -- (P1) node[midway, above right=1pt] {$a_1$};
+
+    % --- 3. 角の円弧記号とラベル ---
+    % 角 P_0 O P_1 = pi/n
+    \pgfmathsetmacro{\angO}{atan2(1.6, 1.8)} % 約 41.63°
+    \draw[thick, teal!85!black] (0.6, 0) arc (0:\angO:0.6);
+    \node[teal!90!black, font=\footnotesize\bfseries] at ({\angO/2}:0.9) {$\frac{\pi}{n}$};
+
+    % 角 O P_0 P_1 = theta
+    \pgfmathsetmacro{\angPzero}{atan2(1.6, 1.8 - 2.6)} % P0 から見た P1 の方向角 (約 116.57°)
+    \draw[thick, red!85!black] ($ (P0) + (-0.45, 0) $) arc (180:\angPzero:0.45);
+    \node[red!90!black, font=\footnotesize\bfseries] at ($ (P0) + (148:0.65) $) {$\theta$};
+
+    % --- 4. 頂点プロットとラベル ---
+    \fill[black] (O)  circle (1.2pt) node[below left=2pt] {$O$};
+    \fill[black] (P0) circle (1.2pt) node[below right=2pt] {$P_0$};
+    \fill[black] (P1) circle (1.2pt) node[above=2pt] {$P_1$};
+
   \end{tikzpicture}
-  \caption{三角形$OP_0P_1$における辺と角の関係（$k=1$の場合）}
+  \caption{三角形 $OP_0P_1$ における辺と角の関係（$k=1$ の場合）}
+  \label{fig:triangle_initial_k1}
 \end{figure}
 
+さて$\triangle O P_{k-1} P_k$ に正弦定理を用いると
 \begin{align}
-  1 + \dfrac{1}{n} = \dfrac{\sin \theta}{\sin\left(\theta + \dfrac{\pi}{n}\right)} \quad \cdots \text{\textcircled{ウ}}
+  \dfrac{a_k}{\sin \dfrac{\pi}{n}}
+  = \dfrac{b_{k+1}}{\sin \theta}
+  = \dfrac{b_k}{\sin\left(\theta + \dfrac{\pi}{n}\right)} \label{eq:3}
 \end{align}
-\textcircled{イ}，\textcircled{ウ} と上記の初期条件から
+だから，$b_{k+1},b_{k}$について
 \begin{align}
-  b_k = \left(1 + \dfrac{1}{n}\right)^{k-1} \quad \cdots \text{\textcircled{エ}}
+  b_{k+1} = \dfrac{\sin \theta}{\sin\left(\theta + \dfrac{\pi}{n}\right)} b_k \label{eq:4}
 \end{align}
-$\alpha = 1 + \dfrac{1}{n}$ として $\triangle O P_k P_{k-1}$ に余弦定理を用いて
+である．初期条件\cref{eq:2}より\cref{eq:4}で$k=1$として
 \begin{align}
-  a_k = \alpha^{k-1} \sqrt{1 + \alpha^2 - 2\alpha \cos \dfrac{\pi}{n}}
+  1 + \dfrac{1}{n} = \dfrac{\sin \theta}{\sin\left(\theta + \dfrac{\pi}{n}\right)} \label{eq:5}
 \end{align}
-だから
+だから，\cref{eq:4}に代入して
 \begin{align}
-  S_n = \dfrac{1 - \alpha^n}{1 - \alpha} \sqrt{1 + \alpha^2 - 2\alpha \cos \dfrac{\pi}{n}}
+  b_{k+1} = \left(1 + \dfrac{1}{n}\right) b_k
 \end{align}
-$t = \dfrac{1}{n}$ とおいて整理する
+だから，\cref{eq:2}の初期条件$b_1=1$の元で漸化式を繰り返し用いて
 \begin{align}
-  S_n = (\alpha^n - 1) \sqrt{ 2 \dfrac{1 - \cos t\pi}{t^2} + 1 + \dfrac{2(1 - \cos t\pi)}{t} }
+  b_k = \left(1 + \dfrac{1}{n}\right)^{k-1}b_1 = \left(1 + \dfrac{1}{n}\right)^{k-1} \label{eq:6}
 \end{align}
+である．簡単のため$\alpha=1+\dfrac{1}{n}$とおくと$b_k=\alpha^{k-1}$である．
+
+次に，$a_k$を求めるために$\triangle O P_k P_{k-1}$ に余弦定理を用いて
 \begin{align}
-  \longrightarrow (e - 1) \sqrt{\pi^2 + 1} \quad (n \to \infty) \quad \text{//}
+  |P_{k}P_{k+1}|^2
+  & = |OP_{k}|^2+|OP_{k-1}|^2-2|OP_{k}||OP_{k-1}|\cos\angle P_{k}OP_{k-1} \\
+  a_k^2
+  & = b_{k}^2 + b_{k+1}^2 - 2b_{k}b_{k+1}\cos\dfrac{\pi}{n}  \\
+  \therefore
+  a_{k}
+  & = \alpha^{k-1}\sqrt{1+\alpha^2-2\alpha\cos\dfrac{\pi}{n}}
 \end{align}
+だから，$k=1,2,\cdots,n$ として足し合わせて
+\begin{align}
+  S_n
+  & = \dfrac{1 - \alpha^n}{1 - \alpha} \sqrt{1 + \alpha^2 - 2\alpha \cos \dfrac{\pi}{n}} \\
+  & = n(\alpha^n-1)sqrt{1+\left(1+\dfrac{1}{n}\right)^2-2\left(1+\dfrac{1}{n}\right)\cos \dfrac{\pi}{n}} \\
+  & = (\alpha^n-1)\sqrt{2n^2\left(1-\cos\dfrac{\pi}{n}\right)+2n(1-\cos\dfrac{\pi}{n}) + 1} \label{eq:7}
+\end{align}
+である．ここで$n\to\infty$の時$t=\dfrac{1}{n}\to 0$であって，
+\begin{align}
+  & \lim_{n\to\infty} n^2\left(1-\cos\dfrac{\pi}{n}\right)
+  = \lim_{t\to 0} \pi^2\dfrac{1-\cos t\pi}{\pi^2t^2} = \dfrac{\pi^2}{2} \\
+  & \lim_{n\to\infty} n(1-\cos\dfrac{\pi}{n})
+  = \lim_{t\to 0} \dfrac{1-\cos t\pi}{t} = 0 \\
+  & \lim_{n\to\infty} \alpha^n
+  = e
+\end{align}
+だから\cref{eq:7}に代入して
+\begin{align}
+  \lim_{n\to\infty} S_n (e - 1) \sqrt{\pi^2 + 1}
+\end{align}
+である．
 
 \end{document}

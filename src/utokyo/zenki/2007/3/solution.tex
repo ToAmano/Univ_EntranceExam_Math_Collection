@@ -1,108 +1,233 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 \paragraph{(1)}
 
-$P(\alpha, \alpha^2), Q(\beta, \beta^2) \quad (-1 \le \alpha \le \beta \le 1)$ とおいて良い．$R(a, b)$ とすると
+題意より$P(\alpha, \alpha^2), Q(\beta, \beta^2) \quad (-1 \le \alpha, \beta \le 1)$ と置く．$R(a, b)$ とするとこれは線分$PQ$の$1:2$の内分点だから
 \begin{align}
-  a = \dfrac{1}{3}(2\alpha + \beta), \quad b = \dfrac{1}{3}(2\alpha^2 + \beta^2)
+  a = \dfrac{1}{3}(2\alpha + \beta), \quad b = \dfrac{1}{3}(2\alpha^2 + \beta^2) \label{eq:1}
 \end{align}
-前者から $\beta$ を消去して $\beta = 3a - 2\alpha$ だから，後者，定義域に代入
+である．
+前者から $\beta$ を消去して $\beta = 3a - 2\alpha$ だから，後者と$\beta$の定義域に代入して
 \begin{align}
-  -1 \le 3a - 2\alpha \le 1 \quad \cdots ①
+  &
+  \begin{cases}
+    -1 \le \alpha \le 1 \\
+    -1 \le 3a - 2\alpha \le 1 \\
+    b = \dfrac{1}{3} \Bigl[ 2\alpha^2 + (3a - 2\alpha)^2 \Bigr]
+  \end{cases} \\
+  \therefore
+  &
+  \begin{cases}
+    -1 \le \alpha \le 1 \\
+    \dfrac{2\alpha-1}{3} \le a \le \dfrac{2\alpha + 1}{3} \\
+    b = 2\alpha^2 - 4a\alpha + 3a^2 \equiv f(\alpha)
+  \end{cases} \label{eq:2}
 \end{align}
-\begin{align}
-  b = \dfrac{1}{3} \Bigl[ 2\alpha^2 + (3a - 2\alpha)^2 \Bigr] = 2\alpha^2 - 4a\alpha + 3a^2 \equiv f(\alpha) \quad \cdots ②
-\end{align}
-以下，① の $-1 \le \alpha \le 1$ のもとで $b$ のとりうる値を調べる．
+である．第1,2式の領域を図示すると下図のようになる．
+そこで\cref{eq:2}のもとでの$b$のとりうる値を調べる．
 
+% TODO: upgrade
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=2]
-    \draw[->] (-1.3,0) -- (1.3,0) node[right] {$a$};
-    \draw[->] (0,-1.3) -- (0,1.3) node[above] {$\alpha$};
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
 
-    \fill[gray!20] (-1,-1) -- (-1/3,-1) -- (1,1) -- (1/3,1) -- cycle;
-    \draw[thick] (-1,-1) -- (-1/3,-1) -- (1,1) -- (1/3,1) -- cycle;
+    % --- 1. 座標定義 ---
+    \coordinate (O)  at (0, 0);
+    \coordinate (V1) at (-1, -1);
+    \coordinate (V2) at (-1/3, -1);
+    \coordinate (V3) at (1, 1);
+    \coordinate (V4) at (1/3, 1);
 
-    \draw[dashed] (-1.2,-1.2) -- (1.2,1.2) node[above right] {軸: $\alpha = a$};
-    \draw[dashed] (-1, -1) -- (1/3, 1) node[above] {$\alpha = \frac{1}{2}(3a+1)$};
-    \draw[dashed] (-1/3, -1) -- (1, 1) node[right] {$\alpha = \frac{1}{2}(3a-1)$};
+    % --- 2. 存在領域（平行四辺形）の塗りつぶし ---
+    \fill[cyan!12] (V1) -- (V2) -- (V3) -- (V4) -- cycle;
+    \fill[pattern=north east lines, pattern color=cyan!75!black, opacity=0.7]
+    (V1) -- (V2) -- (V3) -- (V4) -- cycle;
+    \draw[line width=1.4pt, teal!85!black] (V1) -- (V2) -- (V3) -- (V4) -- cycle;
 
-    \node[below] at (-1,0) {$-1$};
-    \node[below] at (-1/3,0) {$-\frac{1}{3}$};
-    \node[below] at (1/3,0) {$\frac{1}{3}$};
-    \node[below] at (1,0) {$1$};
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-1.45, 0) -- (1.45, 0) node[right] {$a$};
+    \draw[->, thick, gray!80!black] (0, -1.45) -- (0, 1.45) node[above] {$\alpha$};
+    \node[below left=2pt] at (O) {$O$};
 
-    \node[left] at (0,-1) {$-1$};
-    \node[left] at (0,1) {$1$};
-    \node[below left] at (0,0) {$O$};
+    % --- 4. 補助線・軸・境界線 ---
+    % 放物線の軸: alpha = a
+    \draw[line width=1.2pt, red!85!black, dashed] (-1.25, -1.25) -- (1.25, 1.25)
+    node[above right=1pt, red!90!black, font=\footnotesize\bfseries] {軸: $\alpha = a$};
+
+    % 境界線: alpha = (3a + 1)/2 (左側の斜辺)
+    \draw[dashed, gray!65] (-1.15, {-1.15*1.5 + 0.5}) -- (0.45, {0.45*1.5 + 0.5});
+    \node[teal!90!black, font=\scriptsize\bfseries, above left] at (-0.2, 0.35)
+    {$\alpha = \frac{3a+1}{2}$};
+
+    % 境界線: alpha = (3a - 1)/2 (右側の斜辺)
+    \draw[dashed, gray!65] (-0.45, {-0.45*1.5 - 0.5}) -- (1.15, {1.15*1.5 - 0.5});
+    \node[teal!90!black, font=\scriptsize\bfseries, below right] at (0.2, -0.35)
+    {$\alpha = \frac{3a-1}{2}$};
+
+    % a の主要境界（投影破線）
+    \draw[dotted, gray!70] (-1/3, -1) -- (-1/3, 0);
+    \draw[dotted, gray!70] (1/3, 0) -- (1/3, 1);
+    \draw[dotted, gray!70] (-1, -1) -- (-1, 0);
+    \draw[dotted, gray!70] (1, 0) -- (1, 1);
+
+    % --- 5. 目盛りとラベル ---
+    \node[below=2pt, font=\scriptsize] at (-1, 0) {$-1$};
+    \node[above=2pt, font=\scriptsize] at (-1/3, 0) {$-\frac{1}{3}$};
+    \node[below=2pt, font=\scriptsize] at (1/3, 0) {$\frac{1}{3}$};
+    \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
+
+    \node[left=2pt, font=\scriptsize] at (0, -1) {$-1$};
+    \node[left=2pt, font=\scriptsize] at (0, 1) {$1$};
+
+    % 頂点プロット
+    \fill[black] (V1) circle (1.2pt);
+    \fill[black] (V2) circle (1.2pt);
+    \fill[black] (V3) circle (1.2pt);
+    \fill[black] (V4) circle (1.2pt);
+
   \end{tikzpicture}
-  \caption{点$R(a,\alpha)$の存在範囲を定める$(a,\alpha)$平面上の斜線部}
+  \caption{点 $R(a,b)$ の存在範囲を定める $(a,\alpha)$ 平面上の定義域}
+  \label{fig:parameter_domain_parallelogram}
 \end{figure}
 
+$b=f(\alpha)$を平方完成すると
 \begin{align}
+  f(\alpha) = 2\left(\alpha - a\right)^2 + a^2 \label{eq:3}
+\end{align}
+だから軸の位置は$\alpha = a$なので，求めるべき$b$のとりうる値は以下のようになる．
+
+\begin{align}
+  &
   \begin{cases}
     -1 \le a \le -\dfrac{1}{3} \text{ の時 } f(a) \le b \le f(-1) \\
     -\dfrac{1}{3} \le a \le 0 \text{ の時 } f(a) \le b \le f\left(\dfrac{3a-1}{2}\right) \\
     0 \le a \le \dfrac{1}{3} \text{ の時 } f(a) \le b \le f\left(\dfrac{3a+1}{2}\right) \\
     \dfrac{1}{3} \le a \le 1 \text{ の時 } f(a) \le b \le f(1)
-  \end{cases}
-\end{align}
-$\iff$
-\begin{align}
+  \end{cases} \\
+  \iff
+  &
   \begin{cases}
     -1 \le a \le -\dfrac{1}{3} \text{ の時 } a^2 \le b \le 3a^2 + 4a + 2 \\
     -\dfrac{1}{3} \le a \le 0 \text{ の時 } a^2 \le b \le \dfrac{3}{2}a^2 - a + \dfrac{1}{2} \\
     0 \le a \le \dfrac{1}{3} \text{ の時 } a^2 \le b \le \dfrac{3}{2}a^2 + a + \dfrac{1}{2} \\
     \dfrac{1}{3} \le a \le 1 \text{ の時 } a^2 \le b \le 3a^2 - 4a + 2
-  \end{cases}
-  \quad \cdots \text{\textcircled{井}}
+  \end{cases} \label{eq:4}
 \end{align}
 
+\paragraph{(2)}
+
+\cref{eq:4}の領域を図示すると下図の斜線部（領域含む）となる．
+
+% TODO: upgrade
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=2.5]
-    \draw[->] (-1.3,0) -- (1.3,0) node[right] {$a$};
-    \draw[->] (0,-0.2) -- (0,1.3) node[above] {$b$};
+  \begin{tikzpicture}[x=4.2cm, y=3.4cm, >=stealth, every node/.style={font=\small}]
 
-    \fill[pattern=north west lines, pattern color=gray]
-    plot[domain=-1:-1/3, smooth] (\x, {3*\x*\x + 4*\x + 2}) --
-    plot[domain=-1/3:0, smooth] (\x, {1.5*\x*\x - \x + 0.5}) --
-    plot[domain=0:1/3, smooth] (\x, {1.5*\x*\x + \x + 0.5}) --
-    plot[domain=1/3:1, smooth] (\x, {3*\x*\x - 4*\x + 2}) --
-    plot[domain=1:-1, smooth] (\x, {\x*\x}) -- cycle;
+    % --- 1. 座標定義 ---
+    \coordinate (O)     at (0, 0);
+    \coordinate (Top0)  at (0, 0.5);                % a = 0 での最大値 1/2
+    \coordinate (J_pos) at (1/3, 1/3);              % a = 1/3 での境界接続点 (1/3, 1/3)
+    \coordinate (J_neg) at (-1/3, 1/3);             % a = -1/3 での境界接続点 (-1/3, 1/3)
+    \coordinate (End_R) at (1, 1);                  % a = 1 での端点 (1, 1)
+    \coordinate (End_L) at (-1, 1);                 % a = -1 での端点 (-1, 1)
+    \coordinate (Min_R) at (2/3, 2/3);              % 3a^2 - 4a + 2 の極小点 (2/3, 2/3)
+    \coordinate (Min_L) at (-2/3, 2/3);             % 3a^2 + 4a + 2 の極小点 (-2/3, 2/3)
 
-    \draw[thick, domain=-1:1, smooth] plot (\x, {\x*\x}) node[right] {$b = a^2$};
-    \draw[thick, domain=-1:-1/3, smooth] plot (\x, {3*\x*\x + 4*\x + 2});
-    \draw[thick, domain=-1/3:0, smooth] plot (\x, {1.5*\x*\x - \x + 0.5});
-    \draw[thick, domain=0:1/3, smooth] plot (\x, {1.5*\x*\x + \x + 0.5});
-    \draw[thick, domain=1/3:1, smooth] plot (\x, {3*\x*\x - 4*\x + 2});
+    % ============================================================
+    % 2. 求める領域の塗りつぶし（斜線ハッチング）
+    % ============================================================
+    \fill[blue!10]
+    plot[domain=-1:-1/3, samples=40] (\x, {3*\x*\x + 4*\x + 2})
+    -- plot[domain=-1/3:0, samples=30] (\x, {1.5*\x*\x - \x + 0.5})
+    -- plot[domain=0:1/3, samples=30]  (\x, {1.5*\x*\x + \x + 0.5})
+    -- plot[domain=1/3:1, samples=40]  (\x, {3*\x*\x - 4*\x + 2})
+    -- plot[domain=1:-1, samples=60]   (\x, {\x*\x})
+    -- cycle;
 
-    \draw[dashed] (-1,0) -- (-1,1);
-    \draw[dashed] (-1/3,0) -- (-1/3,1);
-    \draw[dashed] (1/3,0) -- (1/3,1);
-    \draw[dashed] (1,0) -- (1,1);
-    \draw[dashed] (0,0.5) -- (0.33,0.5);
+    \fill[pattern=north east lines, pattern color=blue!75!black, opacity=0.75]
+    plot[domain=-1:-1/3, samples=40] (\x, {3*\x*\x + 4*\x + 2})
+    -- plot[domain=-1/3:0, samples=30] (\x, {1.5*\x*\x - \x + 0.5})
+    -- plot[domain=0:1/3, samples=30]  (\x, {1.5*\x*\x + \x + 0.5})
+    -- plot[domain=1/3:1, samples=40]  (\x, {3*\x*\x - 4*\x + 2})
+    -- plot[domain=1:-1, samples=60]   (\x, {\x*\x})
+    -- cycle;
 
-    \node[below] at (-1,0) {$-1$};
-    \node[below] at (-2/3,0) {$-\frac{2}{3}$};
-    \node[below] at (-1/3,0) {$-\frac{1}{3}$};
-    \node[below] at (0,0) {$O$};
-    \node[below] at (1/3,0) {$\frac{1}{3}$};
-    \node[below] at (2/3,0) {$\frac{2}{3}$};
-    \node[below] at (1,0) {$1$};
+    % ============================================================
+    % 3. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-1.25, 0) -- (1.25, 0) node[right] {$a$};
+    \draw[->, thick, gray!80!black] (0, -0.15) -- (0, 1.25) node[above] {$b$};
+    \node[below left=2pt] at (O) {$O$};
 
-    \node[left] at (0,1) {$1$};
-    \node[left] at (0,2/3) {$\frac{2}{3}$};
-    \node[left] at (0,1/2) {$\frac{1}{2}$};
+    % ============================================================
+    % 4. 境界曲線のプロット
+    % ============================================================
+    % 下側境界: b = a^2
+    \draw[line width=1.5pt, gray!30!black, domain=-1.05:1.05, samples=70]
+    plot (\x, {\x*\x});
+    \node[gray!30!black, font=\footnotesize\bfseries, below right] at (0.9, 0.72) {$b = a^2$};
+
+    % 上側境界 (4 つの放物線弧)
+    \draw[line width=1.5pt, blue!90!black, domain=-1:-1/3, samples=35]
+    plot (\x, {3*\x*\x + 4*\x + 2});
+    \draw[line width=1.5pt, blue!90!black, domain=-1/3:0, samples=30]
+    plot (\x, {1.5*\x*\x - \x + 0.5});
+    \draw[line width=1.5pt, blue!90!black, domain=0:1/3, samples=30]
+    plot (\x, {1.5*\x*\x + \x + 0.5});
+    \draw[line width=1.5pt, blue!90!black, domain=1/3:1, samples=35]
+    plot (\x, {3*\x*\x - 4*\x + 2});
+
+    % ============================================================
+    % 5. 投影破線と目盛り
+    % ============================================================
+    % a = -1, 1
+    \draw[dashed, gray!55] (-1, 0) -- (End_L);
+    \draw[dashed, gray!55] (1, 0) -- (End_R);
+    \draw[dashed, gray!55] (End_L) -- (End_R);
+
+    % a = -1/3, 1/3
+    \draw[dashed, gray!55] (-1/3, 0) -- (J_neg) -- (0, 1/3);
+    \draw[dashed, gray!55] (1/3, 0) -- (J_pos) -- (0, 1/3);
+
+    % a = -2/3, 2/3 (極小点)
+    \draw[dotted, gray!60] (-2/3, 0) -- (Min_L) -- (0, 2/3);
+    \draw[dotted, gray!60] (2/3, 0) -- (Min_R) -- (0, 2/3);
+
+    % a = 0 (頂点 1/2)
+    \draw[dashed, gray!55] (Top0) -- (0, 0.5);
+
+    % 特徴点プロット
+    \fill[black] (Top0)  circle (1.0pt);
+    \fill[black] (J_pos) circle (1.0pt);
+    \fill[black] (J_neg) circle (1.0pt);
+    \fill[black] (End_R) circle (1.0pt);
+    \fill[black] (End_L) circle (1.0pt);
+    \fill[black] (Min_R) circle (0.9pt);
+    \fill[black] (Min_L) circle (0.9pt);
+
+    % x 軸目盛り
+    \node[below=2pt, font=\scriptsize] at (-1, 0) {$-1$};
+    \node[below=2pt, font=\scriptsize] at (-2/3, 0) {$-\frac{2}{3}$};
+    \node[below=2pt, font=\scriptsize] at (-1/3, 0) {$-\frac{1}{3}$};
+    \node[below=2pt, font=\scriptsize] at (1/3, 0) {$\frac{1}{3}$};
+    \node[below=2pt, font=\scriptsize] at (2/3, 0) {$\frac{2}{3}$};
+    \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
+
+    % y 軸目盛り
+    \node[left=2pt, font=\scriptsize] at (0, 1/3) {$\frac{1}{3}$};
+    \node[left=2pt, font=\scriptsize] at (0, 0.5) {$\frac{1}{2}$};
+    \node[left=2pt, font=\scriptsize] at (0, 2/3) {$\frac{2}{3}$};
+    \node[left=2pt, font=\scriptsize] at (0, 1) {$1$};
+
   \end{tikzpicture}
-  \caption{点$R(a,b)$がとりうる範囲（$(a,b)$平面上の斜線部）}
+  \caption{点 $R(a,b)$ がとりうる存在範囲（$(a,b)$ 平面上の斜線部，境界を含む）}
+  \label{fig:point_r_existence_domain_upgraded}
 \end{figure}
+
+{\bf [解説]}
+
+\cref{eq:2}は$(a,\alpha) \to (-a,-\alpha)$の斑点に対して対称なので，$0\le a$で考えれば十分である． 答えもちゃんと対称になっているので検算として使える．
 
 \end{document}

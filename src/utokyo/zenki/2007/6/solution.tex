@@ -1,111 +1,338 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 \paragraph{(1)}
 
-$y = \dfrac{1}{t}$ のグラフは $t > 0$ の時，下に凸だから，右図で面積を比較して ($\because a-x > 0$)
+% TODO: 面積比較
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=2]
-    \draw[->] (-0.2,0) -- (3,0) node[right] {$t$};
-    \draw[->] (0,-0.2) -- (0,2.5) node[above] {$y$};
+  \begin{tikzpicture}[x=2.8cm, y=2.0cm, >=stealth, every node/.style={font=\small}]
 
-    \draw[domain=0.5:2.5, smooth, variable=\t, blue, thick] plot ({\t}, {1.8/\t}) node[right] {$y = \frac{1}{t}$};
+    % --- 1. 定数・厳密パラメータ ---
+    % a = 1.4, x = 0.6 => a - x = 0.8, a + x = 2.0
+    \def\a{1.4}
+    \def\del{0.6}
+    \pgfmathsetmacro{\amx}{\a - \del} % 0.8
+    \pgfmathsetmacro{\apx}{\a + \del} % 2.0
 
-    \coordinate (P) at (0.8, {1.8/0.8});
-    \coordinate (A) at (1.4, {1.8/1.4});
-    \coordinate (B) at (2.0, {1.8/2.0});
+    % 曲線 y = 1.8 / t
+    \def\K{1.8}
+    \pgfmathsetmacro{\yA}{\K / \a}          % 1.8 / 1.4 ≈ 1.2857
+    \pgfmathsetmacro{\slope}{-\K / (\a*\a)} % -1.8 / 1.96 ≈ -0.9184
 
-    \draw[dashed] (0.8,0) node[below] {$a-x$} -- (P);
-    \draw[dashed] (1.4,0) node[below] {$a$} -- (A);
-    \draw[dashed] (2.0,0) node[below] {$a+x$} -- (B);
+    % 接線 y = slope*(t - a) + yA
+    \pgfmathsetmacro{\yD}{\slope*(\amx - \a) + \yA} % t = a-x での接線の高さ
+    \pgfmathsetmacro{\yC}{\slope*(\apx - \a) + \yA} % t = a+x での接線の高さ
 
-    \draw[red, thick] (0.6, {1.8/1.4 - (-0.918)*(0.6-1.4)}) -- (2.2, {1.8/1.4 - (-0.918)*(2.2-1.4)}) node[right] {点Aでの接線};
+    % 曲線上の点 E, F
+    \pgfmathsetmacro{\yF}{\K / \amx} % 1.8 / 0.8 = 2.25
+    \pgfmathsetmacro{\yE}{\K / \apx} % 1.8 / 2.0 = 0.90
 
-    \draw[green!60!black, thick] (P) -- (B);
+    % 座標の定義
+    \coordinate (O)  at (0, 0);
+    \coordinate (A)  at (\amx, 0);
+    \coordinate (B)  at (\apx, 0);
+    \coordinate (T_a) at (\a, 0);
 
-    \fill (P) circle (1pt) node[above left] {$P$};
-    \fill (A) circle (1pt) node[above right] {$A$};
-    \fill (B) circle (1pt) node[right] {$B$};
-    \node[left] at (0, {1.8/1.4}) {$\frac{1}{a}$};
+    \coordinate (D)  at (\amx, \yD);
+    \coordinate (C)  at (\apx, \yC);
+    \coordinate (Mid) at (\a, \yA);
+
+    \coordinate (F)  at (\amx, \yF);
+    \coordinate (E)  at (\apx, \yE);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.2, 0) -- (2.6, 0) node[right] {$t$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 2.7) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 補助線と垂線 ---
+    \draw[dashed, gray!60] (0, \yA) -- (Mid);
+    \node[left=2pt, font=\scriptsize] at (0, \yA) {$\frac{1}{a}$};
+
+    \draw[dashed, gray!60] (T_a) -- (Mid);
+    \node[below=2pt] at (T_a) {$a$};
+
+    \draw[thick, gray!70!black] (A) -- (F);
+    \draw[thick, gray!70!black] (B) -- (E);
+
+    \node[below=2pt] at (A) {$a-x$};
+    \node[below=2pt] at (B) {$a+x$};
+    \node[below left=1pt, font=\footnotesize] at (A) {$A$};
+    \node[below right=1pt, font=\footnotesize] at (B) {$B$};
+
+    % --- 4. 曲線 y = 1/t ---
+    \draw[line width=1.6pt, blue!85!black, domain=0.55:2.4, samples=80]
+    plot (\x, {\K / \x});
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (2.2, {\K/2.2}) {$y = \frac{1}{t}$};
+
+    % --- 5. 点 a での接線（下側の直線） ---
+    \draw[line width=1.3pt, red!85!black]
+    ($ (D)! -0.2 !(C) $) -- ($ (C)! -0.2 !(D) $);
+    \node[red!90!black, font=\scriptsize\bfseries, above right] at (1.1, 1.7) {点 $a$ での接線};
+
+    % --- 6. 弦 FE（上側の線分） ---
+    \draw[line width=1.4pt, teal!85!black] (F) -- (E);
+
+    % --- 7. 各点のプロットとラベル ---
+    \fill[black] (F) circle (1.2pt) node[above right=1pt] {$F$};
+    \fill[black] (E) circle (1.2pt) node[above right=1pt] {$E$};
+    \fill[black] (Mid) circle (1.2pt) node[above right=1pt] {$P$};
+    \fill[red!85!black] (D) circle (1.2pt) node[left=1pt, font=\scriptsize] {$D$};
+    \fill[red!85!black] (C) circle (1.2pt) node[right=1pt, font=\scriptsize] {$C$};
+
   \end{tikzpicture}
-  \caption{台形による面積評価のようす}
+  \caption{台形による面積評価の幾何学的関係}
+  \label{fig:trapezoid_area_evaluation}
 \end{figure}
 
+$P: y = \dfrac{1}{t}$ のグラフは $t > 0$ の時下に凸である．
+従って点$(a,1/a)$での接線は$(1/t)'=-1/t^2$より
 \begin{align}
-  \text{台形} ABCD < \int_{a-x}^{a+x} \dfrac{1}{t} dt < \text{台形} ABEF
+  \ell: y = \dfrac{-1}{a^2}(t-a)+\dfrac{1}{a}
 \end{align}
-だから
+は$P$の下側にある．
+$\ell$と$t=a+x,a-x$との交点をそれぞれ$C,D$, また$A(a-x,0), B(a+x,0)$とする．
+
+また$E\left(a+x,\dfrac{1}{a+x}\right), F\left(a-x,\dfrac{1}{a-x}\right)$とすると線分$EF$は$P$の上側にある．従って上図で面積を比較して ($\because a-x > 0$)
 \begin{align}
-  \dfrac{2x}{a} < \int_{a-x}^{a+x} \dfrac{1}{t} dt < x \left( \dfrac{1}{a-x} + \dfrac{1}{a+x} \right) \quad \text{\#}
+  & \text{台形} ABCD < \text{図形} ABEF < \text{台形} ABEF \\
+  & \dfrac{|AB|(|BC|+|AD|)}{2} < \int_{a-x}^{a+x} \dfrac{1}{t} dt < \dfrac{|AB|(|BE|+|AF|)}{2} \\
+  & \dfrac{2x}{a} < \int_{a-x}^{a+x} \dfrac{1}{t} dt < x \left( \dfrac{1}{a-x} + \dfrac{1}{a+x} \right) \label{eq:1}
 \end{align}
+である．よって題意は示された．
 
 \paragraph{(2)}
 
-(1) と同様の評価を $[a-x, a]$，$[a, a+x]$ で行うことで以下の不等式を得る．
-\begin{align}
-  \dfrac{x}{a - \dfrac{x}{2}} < \int_{a-x}^a \dfrac{1}{t} dt < \dfrac{1}{2} x \left( \dfrac{1}{a} + \dfrac{1}{a-x} \right)
-\end{align}
-\begin{align}
-  \dfrac{x}{a + \dfrac{x}{2}} < \int_a^{a+x} \dfrac{1}{t} dt < \dfrac{1}{2} x \left( \dfrac{1}{a} + \dfrac{1}{a+x} \right)
-\end{align}
-辺々足して，
-\begin{align}
-  2x \left( \dfrac{1}{2a-x} + \dfrac{1}{2a+x} \right) < \int_{a-x}^{a+x} \dfrac{1}{t} dt < \dfrac{1}{2} x \left( \dfrac{2}{a} + \dfrac{1}{a-x} + \dfrac{1}{a+x} \right) \quad \cdots ①
-\end{align}
-この中辺は $\log \dfrac{a+x}{a-x}$ であることに注意し，$a=3x$ ($0 < x < a$) を ① に代入し，
-\begin{align}
-  \dfrac{2}{5} + \dfrac{2}{7} < \log 2 < \dfrac{1}{2} \left( \dfrac{2}{3} + \dfrac{3}{4} \right)
-\end{align}
-\begin{align}
-  \dfrac{24}{35} < \log 2 < \dfrac{17}{24} \quad \cdots ②
-\end{align}
-ここで，
-\begin{align}
-  \dfrac{24}{35} - \dfrac{68}{100} &= \dfrac{1}{5} \left( \dfrac{24}{7} - \dfrac{17}{5} \right) \\
-  &= \dfrac{1}{5} \cdot \dfrac{1}{35} > 0 \quad \therefore 0.68 < \dfrac{24}{35}
-\end{align}
-\begin{align}
-  \dfrac{71}{100} - \dfrac{17}{24} &= \dfrac{1}{600} (426 - 425) \\
-  &= \dfrac{1}{600} > 0 \quad \therefore 0.71 > \dfrac{17}{24}
-\end{align}
-だから，① とあわせて
-\begin{align}
-  0.68 < \log 2 < 0.71 \quad \text{\#}
-\end{align}
-
-\bigskip\noindent{\bf [(2)の別解]}
-
-（なぜか中点を $\log 2$ にすると解決する）
-$x = (3 - 2\sqrt{2})a$ と推測（条件をみたす！）．(1) に代入して
-\begin{align}
-  6 - 4\sqrt{2} < \dfrac{1}{2} \log 2 < \dfrac{15}{64}
-\end{align}
-\begin{align}
-  4(3 - 2\sqrt{2}) < \log 2 < \dfrac{1}{2}
-\end{align}
-$1.415 < \sqrt{2} < 1.42$ を示して用いることで，所望の不等式を得る．
-
+% TODO: 二つの区間での評価
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.8]
-    \draw[->] (-0.2,0) -- (2.5,0) node[right] {$t$};
-    \draw[->] (0,-0.2) -- (0,2) node[above] {$y$};
-    \draw[domain=0.5:2.2, smooth, variable=\t, blue, thick] plot ({\t}, {1.5/\t});
-    \draw[dashed] (0.8,0) node[below] {$a-x_2$} -- (0.8, {1.5/0.8});
-    \draw[dashed] (1.2,0) node[below] {$a-x_1$} -- (1.2, {1.5/1.2});
-    \draw[dashed] (1.6,0) node[below] {$a$} -- (1.6, {1.5/1.6});
-    \node at (1.0, 1.2) {誤差};
+  \begin{tikzpicture}[x=3.2cm, y=2.0cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・厳密パラメータ ---
+    \def\a{1.4}
+    \def\del{0.6}
+    \pgfmathsetmacro{\amx}{\a - \del} % 0.8
+    \pgfmathsetmacro{\apx}{\a + \del} % 2.0
+    \pgfmathsetmacro{\mOne}{\a - 0.5*\del} % 1.1 (第1区間の中点)
+    \pgfmathsetmacro{\mTwo}{\a + 0.5*\del} % 1.7 (第2区間の中点)
+
+    \def\K{1.8}
+    \pgfmathsetmacro{\yF}{\K / \amx}
+    \pgfmathsetmacro{\yM}{\K / \a}
+    \pgfmathsetmacro{\yE}{\K / \apx}
+
+    % 中点での接線の傾きと値
+    \pgfmathsetmacro{\slOne}{-\K / (\mOne*\mOne)}
+    \pgfmathsetmacro{\slTwo}{-\K / (\mTwo*\mTwo)}
+
+    \coordinate (O)   at (0, 0);
+    \coordinate (A)   at (\amx, 0);
+    \coordinate (M0)  at (\a, 0);
+    \coordinate (B)   at (\apx, 0);
+
+    \coordinate (F)   at (\amx, \yF);
+    \coordinate (Mid) at (\a, \yM);
+    \coordinate (E)   at (\apx, \yE);
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.15, 0) -- (2.4, 0) node[right] {$t$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 2.7) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 垂線と分割境界 ---
+    \draw[thick, gray!70!black] (A) -- (F);
+    \draw[thick, dashed, gray!60] (M0) -- (Mid);
+    \draw[thick, gray!70!black] (B) -- (E);
+
+    \node[below=2pt] at (A) {$a-x$};
+    \node[below=2pt] at (M0) {$a$};
+    \node[below=2pt] at (B) {$a+x$};
+
+    % --- 4. 曲線 y = 1/t ---
+    \draw[line width=1.6pt, blue!85!black, domain=0.6:2.2, samples=80]
+    plot (\x, {\K / \x});
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (2.05, {\K/2.05}) {$y = \frac{1}{t}$};
+
+    % --- 5. 2 つの弦（上側境界） ---
+    \draw[line width=1.3pt, teal!85!black] (F) -- (Mid);
+    \draw[line width=1.3pt, teal!85!black] (Mid) -- (E);
+
+    % --- 6. 2 つの接線（下側境界） ---
+    % 区間 1 の接線 (中点 a - x/2)
+    \draw[line width=1.2pt, red!85!black]
+    (\amx, {\slOne*(\amx - \mOne) + \K/\mOne}) -- (\a, {\slOne*(\a - \mOne) + \K/\mOne});
+    % 区間 2 の接線 (中点 a + x/2)
+    \draw[line width=1.2pt, red!85!black]
+    (\a, {\slTwo*(\a - \mTwo) + \K/\mTwo}) -- (\apx, {\slTwo*(\apx - \mTwo) + \K/\mTwo});
+
+    % 中点マーク
+    \fill[red!85!black] (\mOne, {\K/\mOne}) circle (1.0pt);
+    \fill[red!85!black] (\mTwo, {\K/\mTwo}) circle (1.0pt);
+    \draw[dotted, gray!60] (\mOne, 0) -- (\mOne, {\K/\mOne});
+    \draw[dotted, gray!60] (\mTwo, 0) -- (\mTwo, {\K/\mTwo});
+    \node[below=2pt, font=\tiny, red!85!black] at (\mOne, 0) {$a-\frac{x}{2}$};
+    \node[below=2pt, font=\tiny, red!85!black] at (\mTwo, 0) {$a+\frac{x}{2}$};
+
+    % 点プロット
+    \fill[black] (F)   circle (1.2pt);
+    \fill[black] (Mid) circle (1.2pt);
+    \fill[black] (E)   circle (1.2pt);
+
   \end{tikzpicture}
-  \caption{$x_1$と$x_2$による近似誤差の比較}
+  \caption{区間分割による面積評価の精密化}
+  \label{fig:subdivided_trapezoid_evaluation}
 \end{figure}
-$x_1 = (3-2\sqrt{2})a$，$x_2 = \dfrac{1}{3}a$ において，
-$x_1 < x_2$ となっているので，グラフを考えると，明らかに $x_1$ の方が正確な評価（近似）になっている，という仕掛けかな．
+
+(1) と同様の評価を $[a-x, a]$，$[a, a+x]$ で行うことで以下の不等式を得る．
+\begin{align}
+  & \dfrac{x}{a - \dfrac{x}{2}} < \int_{a-x}^a \dfrac{1}{t} dt < \dfrac{1}{2} x \left( \dfrac{1}{a} + \dfrac{1}{a-x} \right) \\
+  & \dfrac{x}{a + \dfrac{x}{2}} < \int_a^{a+x} \dfrac{1}{t} dt < \dfrac{1}{2} x \left( \dfrac{1}{a} + \dfrac{1}{a+x} \right)
+\end{align}
+これらの辺々足して，
+\begin{align}
+  2x \left( \dfrac{1}{2a-x} + \dfrac{1}{2a+x} \right) < \int_{a-x}^{a+x} \dfrac{1}{t} dt < \dfrac{1}{2} x \left( \dfrac{2}{a} + \dfrac{1}{a-x} + \dfrac{1}{a+x} \right) \label{eq:2}
+\end{align}
+である．この中辺の値は $\log \dfrac{a+x}{a-x}$ であることに注意して $a=3x$ ($0 < x < a$) を代入して
+\begin{align}
+  & \dfrac{2}{5} + \dfrac{2}{7} < \log 2 < \dfrac{1}{2} \left( \dfrac{2}{3} + \dfrac{3}{4} \right) \\
+  & \dfrac{24}{35} < \log 2 < \dfrac{17}{24} \label{eq:3}
+\end{align}
+である．ここで，
+\begin{align}
+  \dfrac{24}{35} - \dfrac{68}{100}
+  &= \dfrac{1}{5} \left( \dfrac{24}{7} - \dfrac{17}{5} \right)
+  = \dfrac{1}{5} \cdot \dfrac{1}{35} > 0 \quad \therefore 0.68 < \dfrac{24}{35} \\
+  \dfrac{71}{100} - \dfrac{17}{24}
+  &= \dfrac{1}{600} (426 - 425)
+  = \dfrac{1}{600} > 0 \quad \therefore 0.71 > \dfrac{17}{24}
+\end{align}
+だから，\cref{eq:3} とあわせて
+\begin{align}
+  0.68 < \log 2 < 0.71
+\end{align}
+である．よって示された．
+
+{\bf [別解]}
+
+\paragraph{(2)}
+
+この問題の肝はうまいこと$a,b$を選んで(1)の評価が題意を示すのに十分正確にすることである．
+積分は$\log \dfrac{a+x}{a-x}$だから，これが$\log 2$に等しいとすると自然に
+\begin{align}
+  \dfrac{a+x}{a-x} = \log 2 \quad \therefore a = 3x
+\end{align}
+となる．ところがこの問題の罠は，単にこれを用いると評価が緩すぎるということである．
+[解答]では不等式の評価区間を二つに分けることで$a=3x$という自然な設定を用いながらも題意を証明できた．
+
+% TODO: x_1<x_2なるx_1,x_2における(1)の面積比較
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=3.4cm, y=2.2cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・厳密パラメータ ---
+    \def\a{1.4}
+    \def\delTwo{0.75} % x_2 (広い) => a - x_2 = 0.65, a + x_2 = 2.15
+    \def\delOne{0.35} % x_1 (狭い) => a - x_1 = 1.05, a + x_1 = 1.75
+
+    \pgfmathsetmacro{\xTwoL}{\a - \delTwo} % 0.65
+    \pgfmathsetmacro{\xTwoR}{\a + \delTwo} % 2.15
+    \pgfmathsetmacro{\xOneL}{\a - \delOne} % 1.05
+    \pgfmathsetmacro{\xOneR}{\a + \delOne} % 1.75
+
+    \def\K{1.8}
+    \pgfmathsetmacro{\yA}{\K / \a}
+    \pgfmathsetmacro{\slope}{-\K / (\a*\a)}
+
+    % 接線関数
+    \def\tanY(#1){\slope*(#1 - \a) + \yA}
+    % 弦 x_2 (xTwoL -> xTwoR)
+    \pgfmathsetmacro{\yLtwo}{\K / \xTwoL}
+    \pgfmathsetmacro{\yRtwo}{\K / \xTwoR}
+    \def\chordTwoY(#1){(\yRtwo - \yLtwo)/(\xTwoR - \xTwoL)*(#1 - \xTwoL) + \yLtwo}
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.15, 0) -- (2.5, 0) node[right] {$t$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 3.2) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % ============================================================
+    % 3. 手書き図の斜線ハッチング領域 (誤差の比較)
+    % ============================================================
+    % (i) 広い区間 x_2 での「外側の削ぎ落とされる誤差（この分正確）」
+    % 左側: [xTwoL, xOneL] での弦と接線の間
+    \fill[pattern=north east lines, pattern color=red!75!black, opacity=0.7]
+    plot[domain=\xTwoL:\xOneL, samples=30] (\x, {\chordTwoY(\x)})
+    -- plot[domain=\xOneL:\xTwoL, samples=30] (\x, {\tanY(\x)})
+    -- cycle;
+
+    % 右側: [xOneR, xTwoR] での弦と接線の間
+    \fill[pattern=north east lines, pattern color=red!75!black, opacity=0.7]
+    plot[domain=\xOneR:\xTwoR, samples=30] (\x, {\chordTwoY(\x)})
+    -- plot[domain=\xTwoR:\xOneR, samples=30] (\x, {\tanY(\x)})
+    -- cycle;
+
+    % (ii) 狭い区間 x_1 でも残る誤差
+    \fill[pattern=north west lines, pattern color=blue!70, opacity=0.6]
+    plot[domain=\xOneL:\xOneR, samples=30] (\x, {\chordTwoY(\x)})
+    -- plot[domain=\xOneR:\xOneL, samples=30] (\x, {\tanY(\x)})
+    -- cycle;
+
+    % --- 4. 曲線・接線・弦のプロット ---
+    % 曲線 y = 1/t
+    \draw[line width=1.6pt, blue!85!black, domain=0.55:2.35, samples=80]
+    plot (\x, {\K / \x});
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (2.15, {\K/2.15}) {$y = \frac{1}{t}$};
+
+    % 点 a での接線
+    \draw[line width=1.3pt, gray!40!black]
+    (\xTwoL - 0.1, {\tanY(\xTwoL - 0.1)}) -- (\xTwoR + 0.1, {\tanY(\xTwoR + 0.1)});
+
+    % x_2 の弦（広い区間の弦）
+    \draw[line width=1.3pt, red!85!black]
+    (\xTwoL, \yLtwo) -- (\xTwoR, \yRtwo);
+
+    % --- 5. 垂線と目盛り ---
+    \draw[thick, gray!70!black] (\xTwoL, 0) -- (\xTwoL, \yLtwo);
+    \draw[thick, gray!70!black] (\xOneL, 0) -- (\xOneL, {\chordTwoY(\xOneL)});
+    \draw[dashed, gray!60] (\a, 0) -- (\a, \yA);
+    \draw[thick, gray!70!black] (\xOneR, 0) -- (\xOneR, {\chordTwoY(\xOneR)});
+    \draw[thick, gray!70!black] (\xTwoR, 0) -- (\xTwoR, \yRtwo);
+
+    \node[below=2pt, font=\scriptsize] at (\xTwoL, 0) {$a-x_2$};
+    \node[below=2pt, font=\scriptsize] at (\xOneL, 0) {$a-x_1$};
+    \node[below=2pt, font=\scriptsize] at (\a, 0) {$a$};
+    \node[below=2pt, font=\scriptsize] at (\xOneR, 0) {$a+x_1$};
+    \node[below=2pt, font=\scriptsize] at (\xTwoR, 0) {$a+x_2$};
+
+    % ============================================================
+    % 6. 手書きスケッチの引き出し丸囲みラベル
+    % ============================================================
+    % 「この分正確」の吹き出し
+    \draw[->, thick, red!85!black] (1.3, 2.7) to[out=170, in=60] (0.85, 2.15);
+    \node[draw=red!85!black, rounded corners=10pt, line width=1pt, inner sep=4pt, font=\scriptsize\bfseries, red!85!black]
+    at (1.45, 2.75) {この分正確};
+
+    % 「誤差」の引き出し
+    \draw[->, thick, blue!85!black] (1.55, 0.45) to[out=135, in=-70] (1.3, 0.95);
+    \node[draw=blue!85!black, rounded corners=10pt, line width=1pt, inner sep=4pt, font=\scriptsize\bfseries, blue!85!black]
+    at (1.65, 0.35) {誤差};
+
+  \end{tikzpicture}
+  \caption{区間幅 $x_1 < x_2$ による近似精度の比較}
+  \label{fig:error_comparison_x1_x2}
+\end{figure}
+
+別の発想としてよりよい$(a,b)$はないか？という解法が考えられる．
+要するに$x=\dfrac{a}{3}$だと台形の幅が大きすぎるのだから，ここがより狭くなるような$x$を選べれば誤差が小さくなるだろうと考えられるから，例えば$\dfrac{a+x}{a-x}=\sqrt{2} \therefore x = (3-2\sqrt{2})a$だと$\log 2$が出てきつつも積分区間が狭くなるだろうと思えば以下のような解法があり得る．
+
+$x = (3 - 2\sqrt{2})a$ とおいて\cref{eq:1}に代入すると
+\begin{align}
+  & 6 - 4\sqrt{2} < \dfrac{1}{2} \log 2 < \dfrac{15}{64} \\
+  & 4(3 - 2\sqrt{2}) < \log 2 < \dfrac{1}{2}
+\end{align}
+である．$1.415 < \sqrt{2} < 1.42$ を示して用いることで，所望の不等式を得る．
 
 \end{document}
