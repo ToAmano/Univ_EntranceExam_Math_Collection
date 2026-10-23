@@ -1,38 +1,111 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
+
 \paragraph{(1)}
 
-$n=2$の時．
+% TODO: 状態遷移の概要
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.0, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. スタート・共通条件（先頭は ×）
+    % ============================================================
+    \node (Start) at (0, 0) [draw=gray!80!black, fill=gray!10, thick, rounded corners=3pt, inner sep=5pt, align=center] {
+      \textbf{開始}\\[2pt]
+      \scriptsize（最初に出る文字は $\times$）
+    };
+
+    % ============================================================
+    % 2. 3 つの主要パターンのノード配置
+    % ============================================================
+    % パターン A: × が 1 つ（残りすべて ○）
+    \node (PatA) at (5.0, 3) [draw=blue!85!black, fill=blue!5, thick, rounded corners=3pt, inner sep=5pt, align=left] {
+      \textbf{(A) $\times$ が 1 個}\\[2pt]
+      列: $\times \underbrace{\bigcirc \bigcirc \cdots \bigcirc}_{n\text{ 個}}$\\[4pt]
+      \scriptsize 確率: $(1-p) \cdot p^{n-1}$
+    };
+
+    % パターン B: × が 2 つ連続（先頭が ××）
+    \node (PatB) at (5.0, 0.0) [draw=teal!85!black, fill=teal!5, thick, rounded corners=3pt, inner sep=5pt, align=left] {
+      \textbf{(B) $\times$ が 2 個連続}\\[2pt]
+      列: $\times \times \underbrace{\bigcirc \bigcirc \cdots \bigcirc}_{n\text{ 個}}$\\[4pt]
+      \scriptsize 確率: $p(1-p) \cdot p^{n-1} = (1-p)p^n$
+    };
+
+    % パターン C: × が 2 つ（離れて出現）
+    \node (PatC) at (5.0, -3) [draw=purple!85!black, fill=purple!5, thick, rounded corners=3pt, inner sep=5pt, align=left] {
+      \textbf{(C) $\times$ が 2 個（離れて出現）}\\[2pt]
+      列: $\times \bigcirc \cdots \bigcirc \times \bigcirc \cdots \bigcirc$\\[4pt]
+      \scriptsize 確率: $(n-1) \cdot (1-p)^3 p^{n-2}$
+    };
+
+    % ============================================================
+    % 3. 分岐矢印とラベル
+    % ============================================================
+    % Start -> PatA
+    \draw[->, very thick, blue!85!black] (Start.east) to[out=25, in=180] (PatA.west);
+    \node[above left, font=\scriptsize\bfseries, blue!90!black] at (3.0, 1.1) {$\times$ が 1 個};
+
+    % Start -> PatB
+    \draw[->, very thick, teal!85!black] (Start.east) -- (PatB.west);
+    \node[above, font=\scriptsize\bfseries, teal!90!black] at (2.6, 0.05) {$\times$ が連続};
+
+    % Start -> PatC
+    \draw[->, very thick, purple!85!black] (Start.east) to[out=-25, in=180] (PatC.west);
+    \node[below left, font=\scriptsize\bfseries, purple!90!black] at (3.0, -1.1) {$\times$ が非連続};
+
+    % ============================================================
+    % 4. 右側の合計ブラケット
+    % ============================================================
+    \draw[decorate, decoration={brace, amplitude=6pt, mirror}, thick, gray!75!black]
+    (8.4, -3.0) -- (8.4, 3.0);
+
+    \node[right=8pt, font=\normalsize\bfseries, blue!90!black, align=left] at (8.4, 0) {
+      $p_n = \text{(A)} + \text{(B)} + \text{(C)}$
+    };
+
+  \end{tikzpicture}
+  \caption{文字系列における $\times$ の出現パターンと確率遷移の概要}
+  \label{fig:sequence_state_transition}
+\end{figure}
+
+$n=2$の時は$\times$の数に応じて以下の二つの場合である．
 \begin{itemize}
-  \item[(ア)] $\times$が1つの時，$\times\bigcirc\bigcirc$ となり，$p(1-p)$
-  \item[(イ)] $\times$が2つの時，$\times\times\bigcirc\bigcirc$，$\times\bigcirc\times\bigcirc$ となり，$p^2(1-p) + (1-p)^3$
+  \item[(ア)] $\times$が1つの時，表示は$\times\bigcirc\bigcirc$ となり，確率$p(1-p)$
+  \item[(イ)] $\times$が2つの時，表示は$\times\times\bigcirc\bigcirc$，$\times\bigcirc\times\bigcirc$ となり，確率$p^2(1-p) + (1-p)^3$
 \end{itemize}
-以上から，
+以上から求める確率は
 \begin{align}
   p_2 = p(1-p) + p^2(1-p) + (1-p)^3 = (1-p)(2p^2-p+1)
 \end{align}
+である．
 
 \paragraph{(2)}
 
-$n \ge 3$の時．$\times$が1つの時，$\times\underbrace{\bigcirc\cdots\bigcirc}_{n\text{コ}}$ となり，確率 $(1-p) \cdot p^{n-1}$ である．$\cdots$ ①
+$n \ge 3$の時を考える．(1)と同様に$\times$の数が$1$つか$2$つかで場合分けして考える．
 
-$\times$が2つの時．
+まず$\times$が1つの時，最初に$\times$が出ているので$\times\underbrace{\bigcirc\cdots\bigcirc}_{n\text{個}}$ となり，確率は
+\begin{align}
+  (1-p) \cdot p^{n-1} \label{eq:1}
+\end{align}
+である．
+
+$\times$が2つの時は，最初の$2$回連続して$\times$が出るかそれ以外かで分けると，
 \begin{align}
   \begin{cases}
     \times\times\bigcirc\cdots\bigcirc \text{ となる時，確率 } p(1-p)p^{n-1} = (1-p)\cdot p^n \\
-    \times\bigcirc\cdots\times\cdots\bigcirc \quad \text{"} \quad \text{ 確率 } (n-1)(1-p)^2 \cdot p^{n-2}
-  \end{cases} \cdots \text{②}
+    \times\bigcirc\cdots\times\cdots\bigcirc \text{ となる時，確率 }  (n-1)(1-p)^3 \cdot p^{n-2}
+  \end{cases} \label{eq:2}
 \end{align}
-
-①，②から
+である．\cref{eq:1,eq:2}から，求める確率は
 \begin{align}
-  p_n = (1-p) \cdot p^{n-1} + (1-p) \cdot p^n + (n-1) \cdot (1-p)^2 p^{n-2}
+  p_n
+  &= (1-p) \cdot p^{n-1} + (1-p) \cdot p^n + (n-1) \cdot (1-p)^3 p^{n-2} \\
+  &= -n p^{n+1} + 3(n-1)p^{n} +(-3n+4)p^{n-1}+(n-1)p^{n-2}
 \end{align}
+である．
 
 \end{document}

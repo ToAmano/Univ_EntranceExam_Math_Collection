@@ -1,107 +1,213 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
+
+与えられた数列
+\begin{align}
+  \begin{cases}
+    a_{n+1}=\dfrac{a_n}{(1+a_n)^2} \\
+    a_1 = \dfrac{1}{2}
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．
+
+\paragraph{(1)}
+
+$b_n=\dfrac{1}{a_n}$を\cref{eq:1}に代入すると
 \begin{align}
   \begin{cases}
     b_1 = 2 \\
     b_{n+1} = b_n + \dfrac{1}{b_n} + 2
-  \end{cases} \quad \cdots \text{①}
+  \end{cases} \label{eq:2}
 \end{align}
+である．
 
-\paragraph{(1)}
-
-$b_n > 2n \quad (n \ge 2) \quad \cdots \Diamond$ を帰納法で示す．$n=2$ の時，①から $b_2 = 4 + \dfrac{1}{2}$ なので $\Diamond$ は成立．$n=k \in \mathbb{N}_{\ge 2}$ での成立をカテイすると，①から
+$b_n > 2n \quad (n \ge 2)$ を数学的帰納法によって示す．
+$n=2$ の時，\cref{eq:2}から
+\begin{align}
+  b_2 = 4 + \dfrac{1}{2}
+\end{align}
+なので題意は成立する．
+そこで$n=k \in \mathbb{N}_{\ge 2}$ での成立を仮定すると$n=k+1$について
 \begin{align}
   b_{k+1} = b_k + \dfrac{1}{b_k} + 2 > 2(k + 1)
 \end{align}
-となり，$n=k+1$ でも $\Diamond$ は成立．よって示された．(終)
+となり，$n=k+1$ でも題意が成立する．
+以上より数学的帰納法によって題意は示された．
 
 \paragraph{(2)}
 
-(1) から $n \ge 2$ に対して $\dfrac{1}{a_n} > 2n \ \therefore \ a_n < \dfrac{1}{2n}$ である．$n \to \infty$ をかんがえるので $n$ は十分大きいとして良く，右図で面積比較して，
-\begin{align}
-  \dfrac{1}{n} \sum_{k=1}^n a_k &< \dfrac{1}{n} \left( \dfrac{1}{2} + \sum_{k=2}^n \dfrac{1}{2k} \right) \\
-  &< \dfrac{1}{2n} \left( 1 + \int_1^n \dfrac{1}{x} dx \right) \\
-  \therefore \ \dfrac{1}{n} \sum_{k=1}^n a_k &< \dfrac{1 + \log n}{2n} \to 0 \quad (n \to \infty)
-\end{align}
-から，$0 < a_k$ とあわせて ($\because$ ①から帰納的に $0 < a_k$)，はさみうちから，
-\begin{align}
-  \dfrac{1}{n} \sum_{k=1}^n a_k \to 0 \quad (\text{終})
-\end{align}
-
+% TODO: 面積比較
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}
-    \draw[->] (0,0) -- (3,0) node[right]{$x$};
-    \draw[->] (0,0) -- (0,2) node[above]{$y$};
-    \draw[domain=0.5:2.5, smooth] plot (\x, {1/\x});
-    \draw (1,0) rectangle (1.5, 1);
-    \draw (1.5,0) rectangle (2, 0.66);
-    \node[below] at (1,0) {$1$};
-    \node[below] at (2,0) {$n$};
-    \node at (0,1) [left] {$\frac{1}{a_n}$}; % rough inclusion based on scratch
+  \begin{tikzpicture}[x=1.8cm, y=2.8cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (4.8, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 1.45) node[above] {$y$};
+    \node[below left=2pt] at (0,0) {$O$};
+
+    % --- 2. 積分領域（曲線下の面積: \int_1^n 1/x dx = log n）の薄い塗りつぶし ---
+    \fill[teal!12, opacity=0.8]
+    (1, 0) -- plot[domain=1:4.2, samples=60] (\x, {1.0/\x}) -- (4.2, 0) -- cycle;
+
+    % --- 3. 長方形（下側リーマン和: 和の各項 1/k）のハッチング描画 ---
+    % k = 2: 区間 [1, 2], 高さ 1/2
+    \fill[pattern=north east lines, pattern color=blue!75, opacity=0.75]
+    (1, 0) rectangle (2, 0.5);
+    \draw[thick, blue!85!black] (1, 0) rectangle (2, 0.5);
+
+    % k = 3: 区間 [2, 3], 高さ 1/3
+    \fill[pattern=north east lines, pattern color=blue!75, opacity=0.75]
+    (2, 0) rectangle (3, {1.0/3.0});
+    \draw[thick, blue!85!black] (2, 0) rectangle (3, {1.0/3.0});
+
+    % k = n: 区間 [3.4, 4.2] (模式的に区間 [n-1, n], 高さ 1/n)
+    \fill[pattern=north east lines, pattern color=blue!75, opacity=0.75]
+    (3.4, 0) rectangle (4.2, {1.0/4.2});
+    \draw[thick, blue!85!black] (3.4, 0) rectangle (4.2, {1.0/4.2});
+
+    % --- 4. 曲線 y = 1/x のプロット ---
+    \draw[line width=1.6pt, gray!30!black, domain=0.75:4.5, samples=80]
+    plot (\x, {1.0/\x});
+    \node[above right, font=\footnotesize\bfseries] at (2.2, {1.0/2.2}) {$y = \frac{1}{x}$};
+
+    % --- 5. 補助点線・目盛り・ラベル ---
+    % x 軸目盛り
+    \node[below=2pt] at (1, 0) {$1$};
+    \node[below=2pt] at (2, 0) {$2$};
+    \node[below=2pt] at (3, 0) {$3$};
+    \node[below=4pt] at (3.2, 0) {$\cdots$};
+    \node[below=2pt] at (3.4, 0) {$n-1$};
+    \node[below=2pt] at (4.2, 0) {$n$};
+
+    % y 軸補助破線と目盛り
+    \draw[dashed, gray!60] (2, 0.5) -- (0, 0.5);
+    \node[left=2pt, font=\scriptsize] at (0, 0.5) {$\frac{1}{2}$};
+
+    \draw[dashed, gray!60] (3, {1.0/3.0}) -- (0, {1.0/3.0});
+    \node[left=2pt, font=\scriptsize] at (0, {1.0/3.0}) {$\frac{1}{3}$};
+
+    \draw[dashed, gray!60] (4.2, {1.0/4.2}) -- (0, {1.0/4.2});
+    \node[left=2pt, font=\scriptsize] at (0, {1.0/4.2}) {$\frac{1}{n}$};
+
+    % 長方形内部の面積ラベル
+    \node[font=\scriptsize, blue!90!black] at (1.5, 0.25) {$\frac{1}{2}$};
+    \node[font=\scriptsize, blue!90!black] at (2.5, 0.16) {$\frac{1}{3}$};
+    \node[font=\scriptsize, blue!90!black] at (3.8, 0.11) {$\frac{1}{n}$};
+
   \end{tikzpicture}
-  \caption{$y=\dfrac{1}{x}$ のグラフと区分求積による面積の評価}
+  \caption{曲線 $y = \dfrac{1}{x}$ と長方形の面積比較による評価}
+  \label{fig:harmonic_integral_comparison}
 \end{figure}
+
+(1) から $n \ge 2$ に対して $b_n=\dfrac{1}{a_n} > 2n \ \therefore \ a_n < \dfrac{1}{2n}$ である．$n \to \infty$ をかんがえるので $n$ は十分大きいとして良く，上図で面積比較して，
+\begin{align}
+  \dfrac{1}{n} \sum_{k=1}^n a_k
+  = \dfrac{a_1}{n} + \dfrac{1}{n} \sum_{k=2}^n a_k
+  &< \dfrac{1}{n} \left( \dfrac{1}{2} + \sum_{k=2}^n \dfrac{1}{2k} \right) \\
+  &< \dfrac{1}{2n} \left( 1 + \int_1^n \dfrac{1}{x} dx \right)
+  = \dfrac{1+\log n}{2n} \\
+  \therefore \ \dfrac{1}{n} \sum_{k=1}^n a_k &< \dfrac{1 + \log n}{2n} \to 0 \quad (n \to \infty)
+\end{align}
+を得る．
+
+さらに，\cref{eq:1}より帰納的に $0 < a_n$が成り立つから，挟み撃ちの定理から
+\begin{align}
+  \lim_{n\to\infty} \dfrac{1}{n} \sum_{k=1}^n a_k = 0
+\end{align}
+である．
 
 \paragraph{(3)}
 
-①から，
+\cref{eq:2}に$a_n=\dfrac{1}{b_n}$を代入して
 \begin{align}
   b_{n+1} - b_n = 2 + a_n
 \end{align}
-$n=1, 2, \cdots, N$ として足して，
+だから，$n=1, 2, \cdots, N$ として足して，
 \begin{align}
   b_{N+1} - b_1 = 2N + \sum_{k=1}^N a_k
 \end{align}
-両辺 $N+1$ でわって，
+を得る．
+両辺を $N+1$ でわって，さらに$b_{N+1}=\dfrac{1}{a_{N+1}}$，$b_1=2$を代入して
 \begin{align}
-  \dfrac{1}{(N+1)a_{N+1}} &= \dfrac{2}{N+1} + 2\dfrac{N}{N+1} \cdot \dfrac{1}{N} \sum_{k=1}^N a_k \\
-  &\xrightarrow{N \to \infty} 2 \quad (\because (2))
+  \dfrac{1}{(N+1)a_{N+1}} &= \dfrac{2}{N+1} + \dfrac{2N}{N+1} + \dfrac{1}{N+1} \sum_{k=1}^N a_k
 \end{align}
-だから，$0 < x$ で $\dfrac{1}{x}$ が連続なことから，
+だから，$N\to\infty$の極限をとると最終項は(2)の結果により$0$に収束するから
 \begin{align}
-  N a_N \to \dfrac{1}{2} \quad (N \to \infty) \quad (\text{終})
+  \lim_{N \to \infty}\dfrac{1}{(N+1)a_{N+1}} = 2
 \end{align}
+を得る．$0 < x$ で $\dfrac{1}{x}$ が連続なことから，求める極限は
+\begin{align}
+  \lim_{n\to\infty} na_n = \dfrac{1}{2}
+\end{align}
+である．
 
-\bigskip
-\noindent{\bf [解2]}
+{\bf [解2]}
 \paragraph{(3)}
 
-$b_n \le 2n + \log n$ を帰納法で示す．$n=1$ の時は成立するので，$1 \le n = k \in \mathbb{N}$ での成立をカテイ．①から
+まず$b_n \le 2n + \log n$ を帰納法で示す．
+$n=1$ の時は
 \begin{align}
-  b_{k+1} = b_k + \dfrac{1}{b_k} + 2 \le 2(k+1) + \log k + \dfrac{1}{2k} \quad (\because 2k \le b_k) \quad \cdots \text{②}
+  b_1 \le 2
 \end{align}
-ここで，$f(x) = \log(x+1) - \log x - \dfrac{1}{2x}$ とすると，
+より成立するので，$n = k \in \mathbb{N}$ での成立を仮定する．
+仮定および\cref{eq:2}より
 \begin{align}
-  f'(x) = \dfrac{1}{x+1} - \dfrac{1}{x} + \dfrac{1}{2x^2} = \dfrac{1-x}{2x^2(x+1)}
+  b_{k+1}
+  = b_k + \dfrac{1}{b_k} + 2
+  \le 2(k+1) + \log k + \dfrac{1}{2k} \quad (\because 2k \le b_k) \label{eq:3}
 \end{align}
-から増減表をうる
+である．
+
+ここで新しく
+\begin{align}
+  f(x) = \log(x+1) - \log x - \dfrac{1}{2x}
+\end{align}
+とおくと，一階微分は
+\begin{align}
+  f'(x)
+  = \dfrac{1}{x+1} - \dfrac{1}{x} + \dfrac{1}{2x^2}
+  = \dfrac{1-x}{2x^2(x+1)}
+\end{align}
+だから，増減表は下表となる．
+
+% 0,\inftyでのfの値を追加
 \begin{table}[htb]
   \centering
-  \begin{tabular}{|c|c|c|c|c|}
+  \caption{$f(x)$ の増減表 $(x > 0)$}
+  \label{tab:fx_monotonicity}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{|c|c|c|c|c|c|}
     \hline
-    $x$ & $0$ & $\cdots$ & $1$ & $\cdots$ \\ \hline
-    $f'(x)$ & & $+$ & $0$ & $-$ \\ \hline
-    $f(x)$ & & $\nearrow$ & & $\searrow$ \\ \hline
+    $x$      & $(0)$       & $\cdots$   & $1$                  & $\cdots$   & $(\to\infty)$ \\ \hline
+    $f'(x)$  & $(/)$       & $+$        & $0$                  & $-$        & $(0)$         \\ \hline
+    $f(x)$   & $(-\infty)$ & $\nearrow$ & $\log 2 - \dfrac{1}{2}$（極大） & $\searrow$ & $(0)$         \\ \hline
   \end{tabular}
-  \caption{$f(x)$ の増減表}
 \end{table}
-$\left( \text{$x \to \infty$ の時，平均値から $x < c < x+1$ なる $c$ に対し，} f(x) = \dfrac{1}{c} - \dfrac{1}{2x} > \dfrac{1}{x+1} - \dfrac{1}{2x} > 0 \right)$
 
-よって $1 \le x$ では $f(x) > 0$ つまり $\log(k+1) > \log k + \dfrac{1}{2k}$ だから，②より
+よって $1 \le x$ では $f(x) > 0$ つまり $\log(k+1) > \log k + \dfrac{1}{2k}$ だから，\cref{eq:3}に代入して
 \begin{align}
   b_{k+1} \le 2(k+1) + \log(k+1)
 \end{align}
-よって $n=k+1$ でも成立．以上から成立し，
+となる．よって $n=k+1$ でも成立する．
+
+以上から数学的帰納法により
 \begin{align}
   2n < \dfrac{1}{a_n} < 2n + \log n
+  \quad \therefore
+  \dfrac{1}{2n+\log n} < a_n < \dfrac{1}{2n}
 \end{align}
-だから，はさみうちより $n a_n \to \dfrac{1}{2}$ (終)
+である．両辺に$n$をかけて
+\begin{align}
+  \dfrac{1}{2+\dfrac{\log n}{n}} < na_n < \dfrac{1}{2}
+\end{align}
+である．$n\to\infty$とすると両辺は$\dfrac{1}{2}$に収束するから，
+挟み撃ちの定理より求める極限値は
+\begin{align}
+  \lim_{n\to\infty} n a_n = \dfrac{1}{2}
+\end{align}
+である．
 
 \end{document}

@@ -1,54 +1,90 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
+
+与えられた$x,y,z$の条件は
+\begin{align}
+  \begin{cases}
+    x^2+y^2+z^2 = xyz \\
+    x \le y \le z \\
+    0<x,y,z
+  \end{cases} \label{eq:1}
+\end{align}
+である．
+
 \paragraph{(1)}
 
-$y=1$の時．$x=1$となり $Z^2 - Z + 2 = 0$ だが，これをみたす $Z \in \mathbb{Z}$ はない．
+$y\le 3$の時を考えるから，$y=1,2,3$で場合分けして考える．
 
-$1^\circ \ y=2$
-$x=1$の時，$Z^2 - 2Z + 5 = 0$ となり，これをみたす $Z$ はない
-$x=2$ " $Z^2 - 4Z + 8 = 0$ "
+\subparagraph{$2^\circ \ y=1$の時}
 
-$2^\circ \ y=3$
-$x=1$の時，$Z^2 - 3Z + 10 = 0$ "
-$x=2$ " $Z^2 - 6Z + 13 = 0$ "
-$x=3$ " $Z^2 - 9Z + 18 = 0$ となり，$Z=3, 6$ が適する．
+\cref{eq:1}の第三式より$x=1$となり，第一式に代入すると
+\begin{align}
+  z^2 -z + 2 = 0
+\end{align}
+だが，これを満たす$1 \le z\in \mathbb{Z}$は存在しない．
 
-以上から，$(x, y, Z) = (3, 3, 3), (3, 3, 6)$ (終)
+\subparagraph{$2^\circ \ y=2$の時}
+
+この時は\cref{eq:1}の第三式より$x=1,2$である．
+\begin{itemize}
+  \item $x=1$の時，第一式は$z^2 - 2z + 5 = 0$ となり，これをみたす自然数 $z$ はない．\\
+  \item $x=2$の時，第一式は$z^2 - 4z + 8 = 0$ となり，これをみたす自然数 $z$ はない．
+\end{itemize}
+より，この時も$z$は存在しない．
+
+\subparagraph{$3^\circ \ y=3$の時}
+
+この時は\cref{eq:1}の第三式より$x=1,2,3$である．
+\begin{itemize}
+  \item $x=1$の時，$z^2 - 3z + 10 = 0$ となり，これをみたす自然数 $z$ はない．\\
+  \item $z=2$の時，$z^2 - 6z + 13 = 0$ となり，これをみたす自然数 $z$ はない．\\
+  \item $z=3$の時，$z^2 - 9z + 18 = 0$ となり，$z=3, 6$ が適する．
+\end{itemize}
+よってこの時は$(x,y,z)=(3, 3, 3), (3, 3, 6)$が解である．
+\casesend
+
+以上から求める解は
+\begin{align}
+  (x, y, z) = (3, 3, 3), (3, 3, 6)
+\end{align}
+である．
 
 \paragraph{(2)}
 
-$a^2 + b^2 + c^2 = abc, \quad a \le b \le c \quad \cdots$ ① とする．$Z = bc - a$ とすると，
+$(a,b,c)$が\cref{eq:1}を満たすとする．新しく
 \begin{align}
-  bc - a \ge c \iff (b - 1)c \ge a
+  z = bc-a \label{eq:2}
 \end{align}
-で，(1)から $b \ge 3$ だから，これは必ず成立し，
+とすると，
 \begin{align}
-  b^2 + c^2 + Z^2 &= b^2 + c^2 + (b^2c^2 + a^2 - 2abc) \\
-  &= b^2c^2 - abc = bcZ
+  z \ge c \iff bc - a \ge c \iff (b - 1)c \ge a
 \end{align}
-から $b^2 + c^2 + Z^2 = bcZ$ も成立．よって $(b, c, bc - a)$ は (A) をみたす．よって示された．(終)
+で，(1)から $b \ge 3$ だからこれは必ず成立する．
+次に\cref{eq:1}の第一式は
+\begin{align}
+  b^2 + c^2 + z^2 &= b^2 + c^2 + (b^2c^2 + a^2 - 2abc) \\
+  &= b^2c^2 - abc = bcz
+\end{align}
+から $b^2 + c^2 + z^2 = bcz$ も成立する．
+以上から $(b, c, bc - a)$ は (A) をみたす．よって題意は示された．
 
 \paragraph{(3)}
 
-漸化式 $\{a_n\}, \{b_n\}, \{c_n\}$ を，
+数列 $\{a_n\}, \{b_n\}, \{c_n\}$ を，
 \begin{align}
   \begin{cases}
     a_{n+1} = b_n \\
     b_{n+1} = c_n \\
     c_{n+1} = b_n c_n - a_n \\
     a_1 = b_1 = c_1 = 3
-  \end{cases} \quad \cdots *
+  \end{cases} \label{eq:3}
 \end{align}
 によって定めると，
 \begin{align}
   c_{n+1} - c_n = (b_n - 1)c_n - a_n > c_n - a_n \ge 0 \quad (\because b_n \ge 3)
 \end{align}
-だから $c_{n+1} > c_n$ となる．つまり，$*$ で生成される $(a_n, b_n, c_n)$ は $n$ によって異なり，かつ (2) から (A) をみたす．よって (A) をみたす $(x, y, z)$ は無数にある．(終)
+だから $c_{n+1} > c_n$ となる．つまり，\cref{eq:3}で生成される $(a_n, b_n, c_n)$ は $n$ によって異なり，かつ (2) から (A) をみたす．よって (A) をみたす $(x, y, z)$ は無数に存在する．
 
 \end{document}

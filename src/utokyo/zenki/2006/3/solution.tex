@@ -1,86 +1,173 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 \paragraph{(1)}
 
-$Q(X, 1)$ ($0 < X$) とおくと，$OQ \perp l$ かつ $OQ$の中点 $M(\dfrac{X}{2}, \dfrac{1}{2})$ を $l$ が通るので，
+% TODO: 題意の状況を説明する図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・厳密パラメータの設定 ---
+    \def\XVal{1.2}
+    \def\alphaVal{-1.2}
+    \def\pVal{1.6}
+
+    \coordinate (O) at (0, 0);
+    \coordinate (Q) at (\XVal, 1.0);
+    \coordinate (M) at ({\XVal/2.0}, 0.5); % OQ の中点
+    \coordinate (P) at (0, \pVal);
+
+    % l の方程式: y = alpha*x + c
+    \pgfmathsetmacro{\cVal}{0.5 - 0.5*\alphaVal*\XVal}
+    \pgfmathsetmacro{\denom}{\alphaVal*\alphaVal + 1.0}
+
+    % P から l への足 HP (PR の中点)
+    \pgfmathsetmacro{\xH}{(-\alphaVal*\cVal - \alphaVal*(-1.0)*\pVal) / \denom}
+    \pgfmathsetmacro{\yH}{(\alphaVal*\alphaVal*\pVal + \cVal) / \denom}
+    \coordinate (HP) at (\xH, \yH);
+
+    % 対称点 R = 2*HP - P
+    \pgfmathsetmacro{\xR}{2.0*\xH}
+    \pgfmathsetmacro{\yR}{2.0*\yH - \pVal}
+    \coordinate (R) at (\xR, \yR);
+
+    % 直線 l 上の参照点（直角記号用）
+    \coordinate (L_top) at (-0.2, {\alphaVal*(-0.2) + \cVal});
+    \coordinate (L_bot) at (1.8, {\alphaVal*(1.8) + \cVal});
+
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.5, 0) -- (2.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 2.2) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 3. 基準直線 ---
+    % 水平直線 y = 1
+    \draw[thick, dashed, gray!60] (-0.3, 1.0) -- (2.3, 1.0)
+    node[right, font=\scriptsize, gray!80!black] {$y = 1$};
+    \node[left=2pt, font=\scriptsize] at (0, 1.0) {$1$};
+
+    % 直線 m: y = (tan theta) x
+    \draw[thick, teal!85!black] (O) -- ($ 1.35*(R) $)
+    node[above right, font=\footnotesize\bfseries] {$m: y = (\tan\theta)x$};
+
+    % 直線 l
+    \draw[line width=1.4pt, red!85!black] (L_top) -- (L_bot)
+    node[right, font=\normalsize\bfseries] {$l$};
+
+    % --- 4. 対称移動の作図線 ---
+    \draw[thick, blue!85!black] (O) -- (Q);
+    \draw[thick, purple!85!black] (P) -- (R);
+
+    % --- 5. 厳密な直角マーク ---
+    % 角 Q - M - L_top (OQ 側)
+    \pic [draw, thin, gray!70!black, angle radius=0.18cm] {right angle = Q--M--L_top};
+    % 角 P - HP - L_bot (PR 側：向きを反転して M と同じ内側・下向きに修正)
+    \pic [draw, thin, gray!70!black, angle radius=0.18cm] {right angle = P--HP--L_bot};
+
+    % 等長マーク (O-M と M-Q)
+    \draw[thick, gray!70!black] ($ (O)!0.5!(M) + (-0.03, 0.03) $) -- ($ (O)!0.5!(M) + (0.03, -0.03) $);
+    \draw[thick, gray!70!black] ($ (M)!0.5!(Q) + (-0.03, 0.03) $) -- ($ (M)!0.5!(Q) + (0.03, -0.03) $);
+
+    % 等長マーク (P-HP と HP-R)
+    \draw[thick, gray!70!black] ($ (P)!0.55!(HP) + (-0.03, 0.03) $) -- ($ (P)!0.55!(HP) + (0.03, -0.03) $);
+    \draw[thick, gray!70!black] ($ (HP)!0.45!(R) + (-0.03, 0.03) $) -- ($ (HP)!0.45!(R) + (0.03, -0.03) $);
+
+    % --- 6. 角度 theta の弧 ---
+    \pgfmathsetmacro{\angR}{atan2(\yR, \xR)}
+    \draw[thick, teal!85!black] (0.45, 0) arc (0:\angR:0.45);
+    \node[teal!90!black, font=\scriptsize\bfseries] at ({\angR/2}:0.6) {$\theta$};
+
+    % --- 7. 点プロットとラベル ---
+    \fill[black]          (O)  circle (1.2pt);
+    \fill[blue!85!black]  (Q)  circle (1.4pt) node[above right=1pt] {$Q(X, 1)$};
+    \fill[purple!85!black](P)  circle (1.4pt) node[left=2pt] {$P(0, p)$};
+    \fill[teal!85!black]  (R)  circle (1.4pt) node[below right=1pt] {$R(\xi, \xi\tan\theta)$};
+    \fill[red!85!black]   (M)  circle (1.0pt) node[above right=1pt, font=\scriptsize, red!90!black] {$M$};
+    \fill[red!85!black]   (HP) circle (1.0pt);
+
+  \end{tikzpicture}
+  \caption{折り目の直線 $l$ に関する対称点 $Q, R$ と直線 $m$ の位置関係}
+  \label{fig:origami_trisect_geometry_aligned}
+\end{figure}
+
+題意より点$Q$は$0<x,y=1$にあるから$Q(X, 1)$ ($0 < X$) とおける．
+$Q$は$l$に関する$O$の対称点だから，$OQ \perp l$ かつ $OQ$の中点 $M(\dfrac{X}{2}, \dfrac{1}{2})$ を $l$ が通るので，
 \begin{align}
   l: y &= -X\left(x - \dfrac{X}{2}\right) + \dfrac{1}{2} \\
   &= -Xx + \dfrac{1}{2}X^2 + \dfrac{1}{2}
 \end{align}
-とかける．$l$のカタムキ $\alpha$ から，$\alpha = -X$ で，
+とかける．
+題意より$l$の傾きが $\alpha$ だから，$\alpha = -X$ となって，
 \begin{align}
-  l: y = \alpha x + \dfrac{1}{2}\alpha^2 + \dfrac{1}{2}, \quad \alpha < 0 \quad \cdots \text{①}
+  l: y = \alpha x + \dfrac{1}{2}\alpha^2 + \dfrac{1}{2}, \quad \alpha < 0 \label{eq:1}
 \end{align}
-となる．$R(t, \tan\theta \cdot t)$ ($0 < t$) とおくと同様に
+となる．
+
+次に点$R$は直線$m$上の$x>0$の部分の点だから$R(\xi, \tan\theta \cdot \xi)$ ($0 < \xi$) とおける．
+$R$は$l$に関する$P(0,p)$の対称点だから同様に，
 \begin{align}
   \begin{cases}
     \overrightarrow{PR} \cdot
     \begin{pmatrix} 1 \\ \alpha
     \end{pmatrix} = 0 \\
-    \dfrac{1}{2}\alpha t + \dfrac{1}{2}\alpha^2 + \dfrac{1}{2} = \dfrac{1}{2}t \cdot \tan\theta + \dfrac{1}{2}p
+    \dfrac{1}{2}\left(\alpha \xi + \alpha^2 +1\right) = \dfrac{1}{2}\left(\xi \cdot \tan\theta + p\right)
   \end{cases}
-\end{align}
-\begin{align}
   \therefore
   \begin{cases}
     (1 + \alpha \cdot \tan\theta) \cdot t = p\alpha \\
-    (\tan\theta - \alpha) \cdot t = \alpha^2 + 1 - p
-  \end{cases}
+    (\tan\theta - \alpha) \cdot \xi = \alpha^2 + 1 - p
+  \end{cases} \label{eq:2}
 \end{align}
-第2式から $t = \dfrac{\alpha^2 + 1 - p}{\tan\theta - \alpha}$ だから，($\tan\theta - \alpha > 0$) 第1式に代入してセイリ
+第2式を$\xi$について解いて
+\begin{align}
+  \xi = \dfrac{\alpha^2 + 1 - p}{\tan\theta - \alpha} \label{eq:3}
+\end{align}
+である．題意より$p>1$だから分子は正で，これと$\xi>0$より分母も正であることが必要で，
+\begin{align}
+  \tan\theta - \alpha > 0 \label{eq:4}
+\end{align}
+となる．\cref{eq:3}を\cref{eq:2}の第一式に代入して整理して
 \begin{align}
   (\alpha^2 - p + 1)(1 + \alpha \tan\theta) &= p\alpha(\tan\theta - \alpha) \\
   (\alpha^2 + 1 - 2p)\cdot \alpha \cdot \tan\theta &= - p\alpha^2 - \alpha^2 + p - 1 \\
-  \tan\theta &= \dfrac{-(p+1)\alpha^2 + p - 1}{\alpha(\alpha^2 + 1 - 2p)}
+  \tan\theta &= \dfrac{-(p+1)\alpha^2 + p - 1}{\alpha(\alpha^2 + 1 - 2p)} \label{eq:5}
 \end{align}
+である．
 
 \paragraph{(2)}
 
-倍角公式から，$t = \tan\dfrac{\theta}{3}$ とおくと，
+まず$\tan\theta$と$\tan\dfrac{\theta}{3}$の関係を導く．簡単のため$t=\tan\dfrac{\theta}{3}$とおくと，三倍角の公式より
 \begin{align}
-  \tan\dfrac{2}{3}\theta &= \dfrac{2t}{1-t^2}, \\
-  \tan\theta &= \dfrac{t + \dfrac{2t}{1-t^2}}{1 - t\cdot\dfrac{2t}{1-t^2}} \\
-  &= \dfrac{3t - t^3}{1 - 3t^2} \quad \cdots \text{②}
+  \tan\theta &= \dfrac{3t - t^3}{1 - 3t^2} \label{eq:6}
 \end{align}
-である．題意から，$\alpha t = -1$ が $0 < \theta < \pi/2$ で常に成立する $p$ があることを言えば良い．
-\paragraph{(1)}
+である．
 
-及び②から
+題意から，$l$の傾き$\alpha$と$y=tx$の傾き$t$の積が$-1$であり，これが$0 < \theta < \pi/2$ で常に成立する $p$ があることを言えば良い．よって
 \begin{align}
-  \dfrac{3t - t^3}{1 - 3t^2} = \dfrac{-(p+1)\alpha^2 + p - 1}{\alpha(\alpha^2 + 1 - 2p)} \quad \cdots \text{③}
+  \alpha t = -1 \label{eq:7}
 \end{align}
-$\alpha = -\dfrac{1}{t}$ を代入
+とする．
+
+まず\cref{eq:5,eq:6}から$t$と$p,\alpha$についての関係式は
+\begin{align}
+  \dfrac{3t - t^3}{1 - 3t^2}
+  = \dfrac{-(p+1)\alpha^2 + p - 1}{\alpha(\alpha^2 + 1 - 2p)} \label{eq:8}
+\end{align}
+となる．ここに\cref{eq:7}から$\alpha = -\dfrac{1}{t}$ を代入すると
 \begin{align}
   \dfrac{3t - t^3}{1 - 3t^2} = \dfrac{(p-1)t^2 - (p+1)}{(1 - 2p)t^2 + 1} \cdot (-t)
 \end{align}
-これが $t$ についての恒等式だから，両辺 $t$ でわって，
+これが $t$ についての恒等式だから，両辺 $t$ でわって分母を払うと
 \begin{align}
-  (3 - t^2)\{(1 - 2p)t^2 + 1\} = -(1 - 3t^2)\{(p - 1)t^2 - (p + 1)\} \quad \cdots \text{④}
+  (3 - t^2)\{(1 - 2p)t^2 + 1\} = -(1 - 3t^2)\{(p - 1)t^2 - (p + 1)\} \label{eq:9}
 \end{align}
-$S = t^2$ とすると
+である．さらに $s = t^2$ とすると
 \begin{align}
-  (2p - 1)S^2 + (2p + 2)S + 3 = 3(p - 1)S^2 - (4p - 2)S + (p + 1) \quad \cdots \text{⑤}
+  & (2p - 1)s^2 - (6p - 2)s + 3 = 3(p - 1)s^2 - (4p + 2)s + (p + 1) \\
+  & (p - 2)s^2 + (2p - 4)s + (p - 2) = 0 \label{eq:10}
 \end{align}
-⑤が $S$ についての恒等式になるのは $p=2$ の時である．よって題意は示された．(終)
-
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}
-    \draw[->] (-1,0) -- (3,0) node[right]{$x$};
-    \draw[->] (0,-1) -- (0,2) node[above]{$y$};
-    \draw (0,1) -- (2.5,1);
-    \draw (0,0) -- (2,1) node[right]{$Q$};
-    \draw (-0.5,1.75) -- (2.5,-0.5) node[right]{$l$};
-    \fill (0,0.5) circle (1.5pt) node[left]{$P$};
-    \node at (0,0) [below left] {O};
-  \end{tikzpicture}
-  \caption{点 $P$，$Q$ と直線 $l$}
-\end{figure}
+である．これが恒等式になるのは $p=2$ の時である．よって題意は示された．
 
 \end{document}
