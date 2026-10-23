@@ -1,0 +1,62 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+  \footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+% Source: handwritten.pdf 第3問．
+{\bf [解]}
+4直線$\ell_k$ $(k=1,2,3,4)$とし，$\ell_k$の方向ベクトルを$\vec{\ell}_k$と表す．
+又，$O$を始点とした点$X$の位置ベクトルを$\vec{x}$と表す．
+$\ell_k$上に点$A_k$ $(A_k\ne O)$をとり，
+\begin{align}\vec{a}_k=t_k\vec{\ell}_k\qquad(t_k\ne0)
+\end{align}
+と表す．この時$t_k$を適当に定めれば，$A_1A_2A_3A_4$が題意をみたすことを示す．
+\begin{figure}[H]
+  \begin{center}
+    \begin{tikzpicture}[scale=1.1]
+      \coordinate (O) at (0,0);
+      \foreach \p/\a/\b/\k in {A/-.15/2.0/1,B/1.1/1.6/2,C/2.1/1.0/3,D/1.2/.6/4} {
+        \coordinate (\p) at (\a,\b);
+        \draw (O)--($(O)!1.3!(\p)$) node[above] {$\ell_{\k}$};
+        \fill (\p) circle (1pt) node[above left] {$A_{\k}$};
+      }
+      \draw (A)--(B)--(C)--(D)--cycle;
+      \node[below] at (O) {$O$};
+      \begin{scope}[xshift=5cm,yshift=.5cm]
+        \coordinate (a) at (0,0); \coordinate (b) at (.6,1.2);
+        \coordinate (c) at (2,1.2); \coordinate (d) at (1.4,0);
+        \draw (a) node[below left] {$A_1$}--(b) node[above left] {$A_2$}--(c) node[above right] {$A_3$}--(d) node[below right] {$A_4$}--cycle;
+        \draw[dashed] (a)--(c);
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  \caption{4直線上の交点と，作るべき平行四辺形}
+\end{figure}
+\begin{align}
+  \overrightarrow{A_1A_2}=t_2\vec{\ell}_2-t_1\vec{\ell}_1,\quad
+  \overrightarrow{A_1A_4}=t_4\vec{\ell}_4-t_1\vec{\ell}_1,\quad
+  \overrightarrow{A_1A_3}=t_3\vec{\ell}_3-t_1\vec{\ell}_1.
+  \label{eq:ky2008-3-diff}
+\end{align}
+$A_1,\ldots,A_4$が条件をみたす時，
+$\overrightarrow{A_1A_3}=\overrightarrow{A_1A_2}+\overrightarrow{A_1A_4}$から，
+\cref{eq:ky2008-3-diff}を代入して
+\begin{align}
+  t_3\vec{\ell}_3=t_2\vec{\ell}_2+t_4\vec{\ell}_4-t_1\vec{\ell}_1.
+  \label{eq:ky2008-3-linear}
+\end{align}
+ここで，$\vec{\ell}_k$ $(k=1,2,3)$は互いに一次独立だから，$a,b,c$を定数として
+\begin{align}
+  \vec{\ell}_3=a\vec{\ell}_1+b\vec{\ell}_2+c\vec{\ell}_3
+  \label{eq:ky2008-3-source}
+\end{align}
+とかける．どの3直線も同一平面上にないので$a,b,c\ne0$だから，
+\cref{eq:ky2008-3-linear,eq:ky2008-3-source}より，
+\begin{align}a=\dfrac{t_2}{t_3},\qquad b=\dfrac{t_4}{t_3},\qquad c=-\dfrac{t_1}{t_3}
+\end{align}
+となるよう$t_k$を定めれば良い．よって示された．
+% 原稿の式（方向ベクトルの添字）と末尾の係数対応に不整合がある．原稿通り転記し，要確認として記録する．
+
+\end{document}

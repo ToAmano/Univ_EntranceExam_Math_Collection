@@ -8,7 +8,7 @@
 | **東大 後期** | [utokyo_kouki.md](./utokyo_kouki.md) | 54問 | 54/54 | 0/54 | 54/54 | `100.0%` |
 | **東工大 前期** | [titech_zenki.md](./titech_zenki.md) | 270問 | 270/270 | 3/270 | 261/270 | `97.8%` |
 | **東工大 後期** | [titech_kouki.md](./titech_kouki.md) | 43問 | 43/43 | 0/43 | 43/43 | `100.0%` |
-| **京大 前期** | [ukyoto_zenki.md](./ukyoto_zenki.md) | 324問 | 294/324 | 274/324 | 0/324 | `84.6%` |
+| **京大 前期** | [ukyoto_zenki.md](./ukyoto_zenki.md) | 324問 | 318/324 | 294/324 | 0/324 | `90.7%` |
 | **京大 後期** | [ukyoto_kouki.md](./ukyoto_kouki.md) | 108問 | 107/108 | 0/108 | 108/108 | `100.0%` |
 
 `unfinish` のまま残る箇所のうち，原稿を確認済みで転記不能と判明しているものの証跡は [transcription_gaps.md](./transcription_gaps.md) を参照。

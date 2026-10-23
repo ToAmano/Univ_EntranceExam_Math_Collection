@@ -1,6 +1,6 @@
 # 問題・解答ステータス一覧: 京大 前期
 
-更新日: `2026-10-07`
+更新日: `2026-10-21`
 
 解答列: `unfinish`(未着手) → `文字起こし済`(AI文字起こし・自己検証済/人手未チェック) → `finish`(人手チェック済)。`finish` は自動生成では付与されず、人間が手動で書き換えた場合のみ維持される。
 
@@ -282,30 +282,30 @@
 | 2006年 | 第4問 | finish | 文字起こし済 | あり | 未完成 |
 | 2006年 | 第5問 | finish | 文字起こし済 | あり | 未完成 |
 | 2006年 | 第6問 | finish | 文字起こし済 | あり | 未完成 |
-| 2007年 | 第1問 | unfinish | unfinish | あり | 未着手 |
-| 2007年 | 第2問 | unfinish | unfinish | あり | 未着手 |
-| 2007年 | 第3問 | unfinish | unfinish | あり | 未着手 |
-| 2007年 | 第4問 | unfinish | unfinish | あり | 未着手 |
-| 2007年 | 第5問 | unfinish | unfinish | あり | 未着手 |
-| 2007年 | 第6問 | unfinish | unfinish | あり | 未着手 |
-| 2008年 | 第1問 | unfinish | unfinish | あり | 未着手 |
-| 2008年 | 第2問 | unfinish | unfinish | あり | 未着手 |
-| 2008年 | 第3問 | unfinish | unfinish | あり | 未着手 |
-| 2008年 | 第4問 | unfinish | unfinish | あり | 未着手 |
-| 2008年 | 第5問 | unfinish | unfinish | あり | 未着手 |
-| 2008年 | 第6問 | unfinish | unfinish | あり | 未着手 |
-| 2009年 | 第1問 | unfinish | unfinish | あり | 未着手 |
-| 2009年 | 第2問 | unfinish | unfinish | あり | 未着手 |
-| 2009年 | 第3問 | unfinish | unfinish | あり | 未着手 |
-| 2009年 | 第4問 | unfinish | unfinish | あり | 未着手 |
-| 2009年 | 第5問 | unfinish | unfinish | あり | 未着手 |
-| 2009年 | 第6問 | unfinish | unfinish | あり | 未着手 |
-| 2010年 | 第1問 | unfinish | unfinish | あり | 未着手 |
-| 2010年 | 第2問 | unfinish | unfinish | あり | 未着手 |
-| 2010年 | 第3問 | unfinish | unfinish | あり | 未着手 |
-| 2010年 | 第4問 | unfinish | unfinish | あり | 未着手 |
-| 2010年 | 第5問 | unfinish | unfinish | あり | 未着手 |
-| 2010年 | 第6問 | unfinish | unfinish | あり | 未着手 |
+| 2007年 | 第1問 | finish | 文字起こし済 | あり | 未完成 |
+| 2007年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
+| 2007年 | 第3問 | finish | 文字起こし済 | あり | 未完成 |
+| 2007年 | 第4問 | finish | 文字起こし済 | あり | 未完成 |
+| 2007年 | 第5問 | finish | unfinish | あり | 未完成 |
+| 2007年 | 第6問 | finish | 文字起こし済 | あり | 未完成 |
+| 2008年 | 第1問 | finish | 文字起こし済 | あり | 未完成 |
+| 2008年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
+| 2008年 | 第3問 | finish | 文字起こし済 | あり | 未完成 |
+| 2008年 | 第4問 | finish | 文字起こし済 | あり | 未完成 |
+| 2008年 | 第5問 | finish | 文字起こし済 | あり | 未完成 |
+| 2008年 | 第6問 | finish | 文字起こし済 | あり | 未完成 |
+| 2009年 | 第1問 | finish | 文字起こし済 | あり | 未完成 |
+| 2009年 | 第2問 | finish | unfinish | あり | 未完成 |
+| 2009年 | 第3問 | finish | 文字起こし済 | あり | 未完成 |
+| 2009年 | 第4問 | finish | unfinish | あり | 未完成 |
+| 2009年 | 第5問 | finish | 文字起こし済 | あり | 未完成 |
+| 2009年 | 第6問 | finish | unfinish | あり | 未完成 |
+| 2010年 | 第1問 | finish | 文字起こし済 | あり | 未完成 |
+| 2010年 | 第2問 | finish | 文字起こし済 | あり | 未完成 |
+| 2010年 | 第3問 | finish | 文字起こし済 | あり | 未完成 |
+| 2010年 | 第4問 | finish | 文字起こし済 | あり | 未完成 |
+| 2010年 | 第5問 | finish | 文字起こし済 | あり | 未完成 |
+| 2010年 | 第6問 | finish | 文字起こし済 | あり | 未完成 |
 | 2011年 | 第1問 | finish | 文字起こし済 | あり | 未完成 |
 | 2011年 | 第2問 | finish | unfinish | あり | 未完成 |
 | 2011年 | 第3問 | finish | 文字起こし済 | あり | 未完成 |

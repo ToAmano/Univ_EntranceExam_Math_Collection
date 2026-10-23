@@ -1,0 +1,361 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+\section*{第1問}
+
+% Source: handwritten.pdf 第1問．
+{\bf [解]}
+\subparagraph{(1)}
+\begin{align}
+  \int_0^2\dfrac{2x}{\sqrt{x^2+4}}\,dx
+\end{align}
+において，$t=\sqrt{x^2+4}$とすると，
+\begin{align}
+  \dfrac{dt}{dx}=\dfrac{x}{t},\qquad
+  \begin{array}{c|cc}x&0&2\\\hline t&2&2\sqrt{2}
+  \end{array}
+\end{align}
+から
+\begin{align}
+  \int_0^2\dfrac{2x}{\sqrt{x^2+4}}\,dx
+  =\int_2^{2\sqrt{2}}2\,dt
+  =2[t]_2^{2\sqrt{2}}=4(\sqrt{2}-1).\label{eq:ky2007-1-a}
+\end{align}
+又，
+\begin{align}
+  \begin{split}
+    \int_0^2\dfrac{1}{\sqrt{x^2+4}}\,dx
+    &=\int_0^{\pi/4}\dfrac{\dfrac{2}{\cos^2\theta}}{\dfrac{2}{\cos\theta}}\,d\theta
+    \qquad(x=2\tan\theta)\\
+    &=\int_0^{\pi/4}\dfrac{1}{\cos\theta}\,d\theta
+    =\int_0^{\pi/4}\dfrac{\cos\theta}{1-\sin^2\theta}\,d\theta\\
+    &=\int_0^{\pi/4}\left(\dfrac{1}{1-\sin\theta}+\dfrac{1}{1+\sin\theta}\right)
+    \dfrac{\cos\theta}{2}\,d\theta\\
+    &=\dfrac{1}{2}\left[-\log(1-\sin\theta)+\log(1+\sin\theta)\right]_0^{\pi/4}\\
+    &=\dfrac{1}{2}\left\{-\log\left(1-\dfrac{\sqrt{2}}{2}\right)
+    +\log\left(1+\dfrac{\sqrt{2}}{2}\right)\right\}.
+  \end{split}\label{eq:ky2007-1-b}
+\end{align}
+\cref{eq:ky2007-1-a,eq:ky2007-1-b}から，
+\begin{align}
+  (\text{与式})=4(\sqrt{2}-1)+\dfrac{1}{2}\log\dfrac{2+\sqrt{2}}{2-\sqrt{2}}.
+\end{align}
+
+\subparagraph{(2) 第1の方法}
+$n$段の昇り方のうち，最後で1段昇ったものを$a_n$，2段昇ったものを$b_n$と表す．
+\begin{figure}[H]
+  \begin{center}
+    \begin{tikzpicture}[>=Stealth,x=1.6cm,y=0.8cm]
+      \node at (0,2) {$n$}; \node at (1,2) {$n+1$};
+      \node (a) at (0,1) {$a_n$}; \node (b) at (0,0) {$b_n$};
+      \node (c) at (1,1) {$a_{n+1}$};
+      \draw[->] (a)--(c); \draw[->] (b)--(c);
+      \node at (2.5,2) {$n$}; \node at (3.5,2) {$n+1$}; \node at (4.5,2) {$n+2$};
+      \node (d) at (2.5,1) {$a_n$}; \node (e) at (4.5,0) {$b_{n+2}$};
+      \draw[->] (d)--(e);
+    \end{tikzpicture}
+  \end{center}
+  \caption{最後に昇る段数による昇り方の対応}
+\end{figure}
+上図から
+\begin{align}
+  \begin{cases}a_{n+1}=a_n+b_n,\\b_{n+2}=a_n.
+  \end{cases}
+\end{align}
+これと$a_1=1$，$b_1=0$，$b_2=1$から，$a_n$，$b_n$を表出すれば
+\begin{align}
+  \begin{array}{c|rrrrrrrrrrrrrr}
+    n&2&3&4&5&6&7&8&9&10&11&12&13&14&15\\\hline
+    a_n&1&2&3&4&6&9&13&19&28&41&60&88&129&189\\
+    b_n&1&1&1&2&3&4&6&9&13&19&28&41&60&88
+  \end{array}
+\end{align}
+よって，求める場合の数は
+\begin{align}189+88=277.
+\end{align}
+
+\subparagraph{第2の方法}
+$A$，$B$を，以下の条件をみたすように同じ大きさのマスに並べればよい．
+\begin{align}
+  &a+2b=15\quad(a,b\text{は}A,B\text{の数}),\\
+  &B\text{はとなりあわない}.
+\end{align}
+$(a,b)=(15,0),(13,1),(11,2),(9,3),(7,4),(5,5)$である．
+それぞれの場合の数は
+\begin{align}
+  1\text{通り},\quad14\text{通り},\quad
+  {}_{12}C_2=66\text{通り},\quad{}_{10}C_3=120\text{通り},\quad
+  {}_8C_4=70\text{通り},\quad{}_6C_5=6\text{通り}.
+\end{align}
+よって
+\begin{align}1+14+66+120+70+6=277.
+\end{align}
+\newpage
+
+\section*{第2問}
+
+% Source: handwritten.pdf 第2問．
+{\bf [解]}
+\begin{align}0<x,y,\qquad y\ne x.\label{eq:ky2007-2-cond}
+\end{align}
+$b_n=\dfrac{a_n}{y^n}$によって$\{b_n\}$を定めると，$b_1=0$で，
+\begin{align}b_{n+1}=\dfrac{x}{y}b_n+1.
+\end{align}
+\cref{eq:ky2007-2-cond}から
+\begin{align}
+  b_{n+1}-\dfrac{y}{y-x}=\dfrac{x}{y}\left(b_n-\dfrac{y}{y-x}\right).
+\end{align}
+くり返し用いて
+\begin{align}
+  b_n=\left(\dfrac{x}{y}\right)^{n-1}\left(-\dfrac{y}{y-x}\right)+\dfrac{y}{y-x},
+\end{align}
+\begin{align}
+  a_n=\dfrac{y}{y-x}\left(y^n-x^{n-1}y\right)
+  =\dfrac{y^2}{y-x}\left(y^{n-1}-x^{n-1}\right).
+\end{align}
+これが収束する条件は，\cref{eq:ky2007-2-cond}から，$y^{n-1}-x^{n-1}$が収束する条件と等しい．
+\subparagraph{(i) $y>x>0$のとき}
+\begin{align}
+  y^{n-1}-x^{n-1}=y^{n-1}\left\{1-\left(\dfrac{x}{y}\right)^{n-1}\right\}
+\end{align}
+が収束するには，$0<y\leqq1$が条件である．
+\subparagraph{(ii) $x>y>0$のとき}
+同じく，$0<x\leqq1$が条件である．
+\casesend
+以上まとめて
+\begin{align}0<x<y\leqq1\quad\text{又は}\quad0<y<x\leqq1.
+\end{align}
+だから，図示して図の斜線部．境界は$x=1$，$y=1$は含み，$x=0$，$y=0$は含まず，$y=x$は含まない．
+\begin{figure}[H]
+  \begin{center}
+    \begin{tikzpicture}[scale=3]
+      \fill[pattern=north east lines] (0,0) rectangle (1,1);
+      \draw[->] (-.18,0)--(1.35,0) node[right] {$x$};
+      \draw[->] (0,-.18)--(0,1.3) node[above] {$y$};
+      \draw (0,1)--(1,1)--(1,0);
+      \draw[dashed,white,line width=2pt] (0,0)--(1,1);
+      \draw[dashed] (0,0)--(1,1);
+      \foreach \x/\y in {0/0,1/0,0/1,1/1} {\draw[fill=white] (\x,\y) circle (.022);}
+      \node[below left] at (0,0) {$O$};
+      \node[below] at (1,0) {$1$}; \node[left] at (0,1) {$1$};
+    \end{tikzpicture}
+  \end{center}
+  \caption{数列が有限の値に収束する$(x,y)$の範囲}
+\end{figure}
+\newpage
+
+\section*{第3問}
+
+% Source: handwritten.pdf 第3問．
+{\bf [解]}
+与式から
+\begin{align}
+  a+d=-(b+c),\label{eq:ky2007-3-a}\\
+  ad-bc=-p,\label{eq:ky2007-3-b}\\
+  d\leqq c\leqq b\leqq a.\label{eq:ky2007-3-c}
+\end{align}
+$a+d=\alpha$，$ad=\beta$とおく．$\alpha,\beta\in\mathbb{Z}$で，\cref{eq:ky2007-3-a,eq:ky2007-3-b}から，
+$a,d$は$X^2-\alpha X+\beta=0$の2解，$b,c$は$X^2+\alpha X+\beta+p=0$の2解である．
+だから
+\begin{align}
+  \begin{cases}
+    a^2-\alpha a+\beta=0,\\
+    d^2-\alpha d+\beta=0,\\
+    c^2+\alpha c+\beta+p=0,\\
+    b^2+\alpha b+\beta+p=0.
+  \end{cases}\label{eq:ky2007-3-roots}
+\end{align}
+$a$と$b$の式を辺々引いて，
+\begin{align}
+  a^2-b^2-\alpha(a+b)=p,\qquad(a+b)(a-b-\alpha)=p,
+\end{align}
+\begin{align}-(a+b)(b+d)=p.
+\end{align}
+ここで$a,b,c,d\in\mathbb{Z}$，$p$は素数であり，\cref{eq:ky2007-3-c}から$b+d\leqq a+b$であることより，
+\begin{align}(b+d,a+b)=(-1,p),(-p,1).\label{eq:ky2007-3-d}
+\end{align}
+同じことを$a$と$c$の式を用いて行えば，
+\begin{align}-(a+c)(c+d)=p
+\end{align}
+から
+\begin{align}(c+d,a+c)=(-1,p),(-p,1).\label{eq:ky2007-3-e}
+\end{align}
+\cref{eq:ky2007-3-c,eq:ky2007-3-d,eq:ky2007-3-e}及び
+$c+d\leqq b+d\leqq a+c\leqq a+b$だから，
+\begin{align}
+  (c+d,b+d,a+c,a+b)=(-1,-1,p,p),\quad(-p,-1,1,p),\quad(-p,-p,1,1)
+\end{align}
+である．
+
+\subparagraph{(i) $(-1,-1,p,p)$のとき}
+$c=-1-d=p-a$，$b=-1-d=p-a$となるから，$a-d=p+1$となる．
+\cref{eq:ky2007-3-a,eq:ky2007-3-b,eq:ky2007-3-c}に代入して，
+\begin{align}
+  \begin{cases}
+    (d+p+1)+d=2(1+d),\\
+    d(d+p+1)-(1+d)^2=-p,\\
+    d\leqq-1-d=-1-d\leqq d+p+1.
+  \end{cases}
+\end{align}
+第1式から$p=1$となって矛盾．
+
+\subparagraph{(ii) $(-p,-1,1,p)$のとき}
+$c=-p-d=1-a$，$b=-1-d=p-a$から，$a=d+p+1$とする．
+\cref{eq:ky2007-3-a,eq:ky2007-3-b,eq:ky2007-3-c}に代入して，
+\begin{align}
+  \begin{cases}
+    2d+p+1=2d+p+1,\\
+    d(d+p+1)-(p+d)(1+d)=-p,\\
+    d\leqq-p-d\leqq-1-d\leqq d+p+1.
+  \end{cases}
+\end{align}
+したがって$d$を$-p-2\leqq2d\leqq-p$であればよく，つまり
+\begin{align}d=-\dfrac{p+1}{2}
+\end{align}
+とすればよい．$p$は3以上の素数であるから，このとき全ての条件がみたされる．
+\begin{align}
+  a=\dfrac{p+1}{2},\qquad b=\dfrac{p-1}{2},\qquad c=-\dfrac{p-1}{2}.
+\end{align}
+
+\subparagraph{(iii) $(-p,-p,1,1)$のとき}
+$c=-p-d=1-a$，$b=-p-d=1-a$から，$a=p+d+1$となる．
+\cref{eq:ky2007-3-a}に代入して
+\begin{align}2d+p+1=2p+2d
+\end{align}
+から$p=1$となって矛盾．
+\casesend
+以上から
+\begin{align}
+  (a,b,c,d)=\left(\dfrac{p+1}{2},\dfrac{p-1}{2},-\dfrac{p-1}{2},-\dfrac{p+1}{2}\right).
+\end{align}
+
+\medskip\noindent{\bf [補足]}
+\cref{eq:ky2007-3-roots}の$a$と$b$の式において，与式から$a+b=-(c+d)$だから，
+\cref{eq:ky2007-3-d}のみに注目する方がよい．
+
+\medskip\noindent{\bf [別解についての原稿メモ]}
+普通に文字消去でもとける．というか，その方が早かった．
+\newpage
+
+\section*{第4問}
+
+% Source: handwritten.pdf 第4問．
+{\bf [解]}
+$O$を始点とする点$X$の位置ベクトルを$\vec{x}$と表す．題意から
+\begin{align}|\vec{a}|=|\vec{b}|=|\vec{c}|.\label{eq:ky2007-4-r}
+\end{align}
+そして
+\begin{align}
+  \vec{p}=\dfrac{1}{5}(2\vec{b}+3\vec{a}),\quad
+  \vec{q}=\dfrac{1}{5}(2\vec{c}+3\vec{b}),\quad
+  \vec{r}=\dfrac{1}{5}(2\vec{a}+3\vec{c}).\label{eq:ky2007-4-div}
+\end{align}
+$\triangle PQR$の外心が$O$のとき，$|\vec{p}|=|\vec{q}|=|\vec{r}|$となる．
+$\triangle ABC$の外接円の半径を1とする．2乗して
+$|\vec{p}|^2=|\vec{q}|^2=|\vec{r}|^2=k$とおくと，\cref{eq:ky2007-4-r}から，$k>0$で
+\begin{align}
+  \begin{cases}
+    25k=4+9+12\vec{a}\cdot\vec{b},\\
+    25k=13+12\vec{b}\cdot\vec{c},\\
+    25k=13+12\vec{c}\cdot\vec{a}.
+  \end{cases}
+\end{align}
+したがって
+\begin{align}
+  \vec{a}\cdot\vec{b}=\vec{b}\cdot\vec{c}=\vec{c}\cdot\vec{a}=\dfrac{25k-13}{12}.
+  \label{eq:ky2007-4-dot}
+\end{align}
+ここで対称性から$O$を原点とする座標平面で$A(1,0)$，
+$B(\cos\alpha,\sin\alpha)$，$C(\cos\beta,\sin\beta)$とおく．
+$0<\alpha<\beta<2\pi$であり，\cref{eq:ky2007-4-dot}から
+\begin{align}\cos\alpha=\cos\beta=\cos(\beta-\alpha).
+\end{align}
+$0<\alpha<\beta<2\pi$から，左側の等号から$\beta=2\pi-\alpha$とかける．
+\begin{align}0<\alpha<2\pi-\alpha<2\pi,\qquad0<\alpha<\pi.\label{eq:ky2007-4-angle}
+\end{align}
+したがって右側の等号から
+\begin{align}
+  \cos\alpha=\cos(2\pi-2\alpha)=\cos2\alpha=2\cos^2\alpha-1,\\
+  (2\cos\alpha+1)(\cos\alpha-1)=0.
+\end{align}
+\cref{eq:ky2007-4-angle}から$\alpha=\dfrac{2\pi}{3}$，$\beta=2\pi-\alpha=\dfrac{4\pi}{3}$．
+したがって$\triangle ABC$は正三角形．
+
+\medskip\noindent{\bf [別解]}
+\cref{eq:ky2007-4-dot}以外に，\cref{eq:ky2007-4-div}から
+\begin{align}|AB|^2=|\vec{b}-\vec{a}|^2
+\end{align}
+などとして，$\vec{a}\cdot\vec{b}=\vec{b}\cdot\vec{c}=\vec{c}\cdot\vec{a}$から
+$|AB|=|BC|=|CA|$となる．この方が早い．
+\newpage
+
+\section*{第5問}
+
+% Source: handwritten.pdf 第5問．
+% Source: handwritten.pdf p.6. 第5問の解答ページは白紙（行列の問題）．
+\newpage
+\newpage
+
+\section*{第6問}
+
+% Source: handwritten.pdf 第6問．
+{\bf [解]}
+\begin{align}f(0)=0,\qquad f'(0)=1\label{eq:ky2007-6-initial}
+\end{align}
+である．任意の$a,b\in\mathbb{R}$に対し
+\begin{align}
+  f(a+b)=\dfrac{f(a)+f(b)}{1+f(a)f(b)},\label{eq:ky2007-6-add}\\
+  1+f(a)f(b)\ne0.\label{eq:ky2007-6-denom}
+\end{align}
+\cref{eq:ky2007-6-add}で$b=-a$とすると，\cref{eq:ky2007-6-initial}から
+\begin{align}f(a)+f(-a)=0.
+\end{align}
+だから\cref{eq:ky2007-6-denom}で$b=-a$として
+\begin{align}1+f(a)f(-a)=1-\{f(a)\}^2\ne0,
+\end{align}
+\begin{align}f(a)\ne\pm1.
+\end{align}
+これが任意の$a\in\mathbb{R}$で成り立つので，$f$が連続かつ$f(0)=0$から
+$-1<f(x)<1$である．
+
+さて，\cref{eq:ky2007-6-add}から
+\begin{align}
+  \begin{split}
+    \dfrac{f(x+h)-f(x)}{h}
+    &=\dfrac{1}{h}\left\{\dfrac{f(x)+f(h)}{1+f(x)f(h)}-f(x)\right\}\\
+    &=\dfrac{f(h)}{h}\dfrac{1-\{f(x)\}^2}{1+f(x)f(h)}\\
+    &\longrightarrow\{1-\{f(x)\}^2\}f'(0)=f'(x)\quad(h\to0).
+  \end{split}
+\end{align}
+\cref{eq:ky2007-6-initial}から
+\begin{align}f'(x)=1-\{f(x)\}^2.\label{eq:ky2007-6-deriv}
+\end{align}
+したがって$y=f(x)$として，\cref{eq:ky2007-6-deriv}をあわせて微分方程式
+\begin{align}\dfrac{1}{1-y^2}\,dy=dx
+\end{align}
+が成り立つ．これをといて，$-1<y<1$から
+\begin{align}\log\dfrac{1+y}{1-y}=2x+C.
+\end{align}
+$x=0$で$y=0$であることから，$C=1$であり，
+% 原稿には「+C」「C=1」とある．ここは原稿内で不整合だが，後続式に合わせて黙って訂正しない．
+\begin{align}
+  \dfrac{1+y}{1-y}=e^{2x},\qquad y=\dfrac{e^{2x}-1}{e^{2x}+1}.
+\end{align}
+逆に，このとき\cref{eq:ky2007-6-initial,eq:ky2007-6-denom}はみたし，\cref{eq:ky2007-6-add}については
+\begin{align}
+  \begin{split}
+    \dfrac{f(a)+f(b)}{1+f(a)f(b)}
+    &=\dfrac{(e^{2a}+1)(e^{2b}-1)+(e^{2a}-1)(e^{2b}+1)}{(e^{2a}+1)(e^{2b}+1)+(e^{2a}-1)(e^{2b}-1)}\\
+    &=\dfrac{2(e^{2a+2b}-1)}{2(e^{2a+2b}+1)}=f(a+b)
+  \end{split}
+\end{align}
+から成立し十分．以上から
+\begin{align}f(x)=\dfrac{e^{2x}-1}{e^{2x}+1}
+\end{align}
+であり，
+\begin{align}f''(x)=\{1-\{f(x)\}^2\}'=-2f(x)f'(x).
+\end{align}
+これは$x>0$で$f(x)>0$，$f'(x)>0$から$f''(x)<0$となり，したがって上に凸である．
+\newpage
+
+\end{document}

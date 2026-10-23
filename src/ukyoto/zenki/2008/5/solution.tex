@@ -1,0 +1,57 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+\begin{flushright}
+  \footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+% Source: handwritten.pdf 第5問．
+{\bf [解]}
+$H$の方程式は$z=y-1$である．
+$y=2\sin\theta$ $(\dfrac{\pi}{6}\leqq\theta\leqq\dfrac{\pi}{2})$で切断する切り口は下図で，
+この面積$S(\theta)$として
+\begin{align}S(\theta)=4\cos\theta(2\sin\theta-1).
+\end{align}
+\begin{figure}[H]
+  \begin{center}
+    \begin{tikzpicture}[x={(-.5cm,-.32cm)},y={(.7cm,0cm)},z={(0cm,1.7cm)}]
+      \draw[->] (0,0,0)--(2.8,0,0) node[below] {$x$};
+      \draw[->] (0,-2.5,0)--(0,2.8,0) node[right] {$y$};
+      \draw[->] (0,0,0)--(0,0,1.5) node[above] {$z$};
+      \draw[domain=0:360,samples=81] plot ({2*cos(\x)},{2*sin(\x)},0);
+      \draw[domain=0:360,samples=81] plot ({2*cos(\x)},{2*sin(\x)},1);
+      \draw (0,-2,0)--(0,-2,1);\draw (0,2,0)--(0,2,1);
+      \fill[gray!20] plot[domain=30:150,samples=61] ({2*cos(\x)},{2*sin(\x)},{2*sin(\x)-1})--cycle;
+      \draw[domain=30:150,samples=61] plot ({2*cos(\x)},{2*sin(\x)},{2*sin(\x)-1});
+      \draw ({sqrt(3)},1,0)--({-sqrt(3)},1,0);
+      \node[right] at (0,2,1) {$H$};\node[below] at (0,2,0) {$2$};
+      \node[left] at (0,-2,0) {$-2$};\node[below] at (2,0,0) {$2$};
+    \end{tikzpicture}
+    \qquad
+    \begin{tikzpicture}[scale=.8]
+      \fill[pattern=north east lines] (-1.6,0) rectangle (1.6,1.1);
+      \draw (-1.6,0) rectangle (1.6,1.1);
+      \draw[->] (-2.1,0)--(2.1,0) node[right] {$x$};
+      \draw[->] (0,-.4)--(0,1.8) node[above] {$z$};
+      \node[below] at (-1.6,0) {$-2\cos\theta$};\node[below] at (1.6,0) {$2\cos\theta$};
+      \node[above right] at (0,1.1) {$2\sin\theta-1$};
+    \end{tikzpicture}
+  \end{center}
+  \caption{円柱を平面$H$で分けた部分と$y=2\sin\theta$での切り口}
+\end{figure}
+だから，以下$c=\cos\theta$，$s=\sin\theta$として，求める体積$V$は
+\begin{align}
+  \begin{split}
+    V&=\int_1^2S(\theta)\,d(2s)\\
+    &=\int_{\pi/6}^{\pi/2}S(\theta)\dfrac{d(2s)}{d\theta}\,d\theta\\
+    &=\int_{\pi/6}^{\pi/2}4c(2s-1)\,2c\,d\theta\\
+    &=8\int_{\pi/6}^{\pi/2}(2c^2s-c^2)\,d\theta\\
+    &=8\left[-\dfrac{2}{3}c^3\right]_{\pi/6}^{\pi/2}
+    -8\cdot\dfrac{1}{2}\left[\theta+\dfrac{1}{2}\sin2\theta\right]_{\pi/6}^{\pi/2}\\
+    &=\dfrac{16}{3}\left(\dfrac{\sqrt{3}}{2}\right)^3
+    -4\left(\dfrac{\pi}{3}-\dfrac{1}{2}\cdot\dfrac{\sqrt{3}}{2}\right)\\
+    &=3\sqrt{3}-\dfrac{4}{3}\pi.
+  \end{split}
+\end{align}
+
+\end{document}
