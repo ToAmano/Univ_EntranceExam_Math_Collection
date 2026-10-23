@@ -4,18 +4,20 @@ import { existsSync } from 'node:fs';
 import Layout from '../../layouts/Layout.astro';
 import ProblemIssues from '../../components/ProblemIssues.astro';
 import { readIssueIndex, problemIssues } from '../../lib/issues.mjs';
+import { matchingSolutionSlug } from '../../lib/canonical-sitemap.mjs';
 import { markdownToPlainText, buildQAPageJsonLd, buildBreadcrumbListJsonLd } from '../../utils/seo';
 
 export async function getStaticPaths() {
 	const solutions = await getCollection('solutions');
 	const issueIndex = readIssueIndex();
+	const solutionSlugs = new Set(solutions.filter((item) => (item.data.type || '') === 'solution').map((item) => item.slug));
 	return solutions.map((entry) => ({
 		params: { slug: entry.slug },
-		props: { entry, allSolutions: solutions, issueInfo: problemIssues(issueIndex, entry.data) },
+		props: { entry, allSolutions: solutions, issueInfo: problemIssues(issueIndex, entry.data), canonicalSolutionSlug: matchingSolutionSlug(entry.slug, solutionSlugs) },
 	}));
 }
 
-const { entry, allSolutions, issueInfo } = Astro.props;
+const { entry, allSolutions, issueInfo, canonicalSolutionSlug } = Astro.props;
 const { Content } = await entry.render();
 
 // 解答ページでは、同じ大学・日程・年度・問題番号の問題文エントリを見つけて
@@ -45,18 +47,8 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 // 内包されているため、検索エンジン向けの重複コンテンツ対策として正規URLを
 // 解答ページ側に向ける（ページ自体は従来通り独立してアクセス可能なまま）。
 let canonicalOverrideUrl: string | undefined;
-if (entry.data.type === 'problem') {
-	const solutionEntry = allSolutions.find(
-		(item) =>
-			item.data.university === entry.data.university &&
-			item.data.category === entry.data.category &&
-			item.data.year === entry.data.year &&
-			item.data.question === entry.data.question &&
-			(item.data.type || '') === 'solution'
-	);
-	if (solutionEntry) {
-		canonicalOverrideUrl = new URL(`${baseUrl}/solutions/${solutionEntry.slug}/`, Astro.site).href;
-	}
+if (entry.data.type === 'problem' && canonicalSolutionSlug) {
+	canonicalOverrideUrl = new URL(`${baseUrl}/solutions/${canonicalSolutionSlug}/`, Astro.site).href;
 }
 
 // Labels mapping

@@ -26,6 +26,7 @@ const {
 } = Astro.props;
 const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonicalHref = canonicalUrl === Astro.url.href && Astro.url.pathname === baseUrl ? `${canonicalUrl}/` : canonicalUrl;
 const fullTitle = `${title} | Math Solutions`;
 // OGP の og:url は「このURLが共有された」という実際のページを指すべきなので、
 // canonicalUrl(SEO上の正規URL)とは独立に、常に実際のページURLを使う。
@@ -40,7 +41,7 @@ const ogImageUrl = new URL(`${baseUrl}${ogImagePath ?? '/ogp-default.png'}`, Ast
 		<title>{fullTitle}</title>
 		<meta name="description" content={description} />
 		<meta name="google-site-verification" content="ln8dYR-Jf-TTw5pvDyCe5vkziWE6VWTNKAdq4fG7RLk" />
-		<link rel="canonical" href={canonicalUrl} />
+		<link rel="canonical" href={canonicalHref} />
 		<link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
 		{jsonLdList.map((item) => (
 			<script type="application/ld+json" set:html={JSON.stringify(item).replace(/</g, '\\u003c')} />
