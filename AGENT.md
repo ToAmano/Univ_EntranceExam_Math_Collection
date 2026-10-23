@@ -171,6 +171,8 @@ python3 scratch/lint_latex_style.py --fix src/utokyo/zenki/2000/1/solution.tex
 
 進捗状況は GitHub Issues と `docs/status/*.md`（`generate_status_markdowns.py` で自動生成、`docs/status/README.md` がダッシュボード）で管理している。
 
+一問単位のIssue識別・分類ラベルは [docs/issue-labels.md](docs/issue-labels.md) を参照。まとめIssue・サイト全体のIssueは対象外。同期は `scratch/sync_issue_labels.py`（既定はdry-run）を使用し、計画を再検証してラベルの追加だけを行う。Web表示用の対応表は `--export web/src/data/issues-by-problem.json` で生成し、通常ビルド時にOpen Issueを問題文・解答へ埋め込む。Issue更新時の自動再ビルドは未導入。
+
 * **手書き解答の文字起こし**: `import_handwritten_*.py`（大学・区分ごと）→ `transcribe_handwritten.py`（PDF を PNG 化し `scratch/handwritten_tasks.json` でタスク管理しつつ TeX 化）
 * **図版の TikZ 化**: `scan_figure_tasks.py`（要 TikZ 化の図を検出）→ `create_all_tikz_issues.py`（`[TikZ化]` prefix で GitHub Issue を一括作成）→ `collect_tikz_tasks.py`（`gh issue list` から Open な `[TikZ化]` Issue を収集し `scratch/tikz_tasks.json` に保存）。直近のコミット履歴はこの Issue 番号を `(fixes #NNN)` として参照する運用になっている。
 * **既存 TeX の取り込み**: `import_existing_tex.py`, `import_zenki_tex.py`, `copy_titech.py`

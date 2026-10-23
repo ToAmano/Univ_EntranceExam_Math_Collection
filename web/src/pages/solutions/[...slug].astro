@@ -2,17 +2,20 @@
 import { getCollection } from 'astro:content';
 import { existsSync } from 'node:fs';
 import Layout from '../../layouts/Layout.astro';
+import ProblemIssues from '../../components/ProblemIssues.astro';
+import { readIssueIndex, problemIssues } from '../../lib/issues.mjs';
 import { markdownToPlainText, buildQAPageJsonLd, buildBreadcrumbListJsonLd } from '../../utils/seo';
 
 export async function getStaticPaths() {
 	const solutions = await getCollection('solutions');
+	const issueIndex = readIssueIndex();
 	return solutions.map((entry) => ({
 		params: { slug: entry.slug },
-		props: { entry, allSolutions: solutions },
+		props: { entry, allSolutions: solutions, issueInfo: problemIssues(issueIndex, entry.data) },
 	}));
 }
 
-const { entry, allSolutions } = Astro.props;
+const { entry, allSolutions, issueInfo } = Astro.props;
 const { Content } = await entry.render();
 
 // 解答ページでは、同じ大学・日程・年度・問題番号の問題文エントリを見つけて
@@ -335,6 +338,8 @@ jsonLdItems.push(
 			</div>
 		</div>
 	)}
+
+	<ProblemIssues info={issueInfo} />
 
 	<!-- Content Article Card -->
 	<article class="glass solution-article">

@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  issues: read
   pages: write
   id-token: write
 
@@ -54,6 +55,11 @@ jobs:
       - name: Generate news feed from git history
         run: python3 scratch/generate_news.py
 
+      - name: Export validated problem Issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scratch/sync_issue_labels.py --repo "$GITHUB_REPOSITORY" --export web/src/data/issues-by-problem.json
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -63,6 +69,9 @@ jobs:
 
       - name: Install dependencies
         run: cd web && npm ci
+
+      - name: Test Issue mapping
+        run: cd web && npm test
 
       - name: Build Astro site
         # ubuntu-latest ランナーの物理メモリ(約7GB)に収まる範囲で V8 のヒープ上限を

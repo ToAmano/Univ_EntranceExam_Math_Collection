@@ -1,0 +1,52 @@
+---
+interface Props {
+  info: {
+    available: boolean;
+    generatedAt: string | null;
+    searchUrl: string;
+    issues: { number: number; title: string; url: string }[];
+  } | null;
+}
+const { info } = Astro.props;
+const checkedAt = info?.generatedAt
+  ? new Date(info.generatedAt).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })
+  : null;
+---
+{info && (
+  <section class:list={['problem-issues', { 'has-open-issues': info.issues.length > 0 }]} aria-labelledby="problem-issues-heading">
+    <div class="issues-heading">
+      <h2 id="problem-issues-heading">この問題のOpen Issue{info.available && `（${info.issues.length}件）`}</h2>
+      <a href={info.searchUrl} target="_blank" rel="noopener noreferrer">GitHubで確認 ↗</a>
+    </div>
+    {info.available ? (
+      info.issues.length > 0 ? (
+        <ul>
+          {info.issues.map((issue) => (
+            <li><a href={issue.url} target="_blank" rel="noopener noreferrer"><span class="issue-number">#{issue.number}</span> {issue.title} ↗</a></li>
+          ))}
+        </ul>
+      ) : <p>この問題に紐づくOpen Issueはありません。</p>
+    ) : <p>Issue一覧を取得できていません。GitHubで確認できます。</p>}
+    {checkedAt && <p class="issues-updated">情報取得：<time datetime={info.generatedAt!}>{checkedAt}（日本時間）</time>。最新の状態はGitHubで確認できます。</p>}
+  </section>
+)}
+
+<style>
+  .problem-issues {
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.5);
+  }
+  .has-open-issues { border-left: 3px solid #fbbf24; }
+  .issues-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem 1rem; }
+  h2 { margin: 0; font-size: 1rem; color: var(--text-main); }
+  a { color: var(--primary); text-underline-offset: 0.2em; overflow-wrap: anywhere; }
+  .issues-heading > a { font-size: 0.85rem; }
+  ul { margin: 0.75rem 0 0; padding-left: 1.3rem; }
+  li { margin: 0.5rem 0; line-height: 1.6; }
+  .issue-number { font-variant-numeric: tabular-nums; color: var(--text-muted); }
+  p { margin: 0.65rem 0 0; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+  .issues-updated { font-size: 0.75rem; }
+</style>

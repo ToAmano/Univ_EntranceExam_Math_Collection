@@ -1,0 +1,54 @@
+name: Single-question issue labels
+on:
+  issues:
+    types: [opened, edited]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue number (blank for all)'
+        required: false
+        type: string
+      apply:
+        description: 'Apply the generated plan'
+        default: false
+        type: boolean
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: issue-labels-${{ github.event.issue.number || 'manual' }}
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Plan and optionally apply
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number || inputs.issue_number }}
+          APPLY: ${{ github.event_name == 'issues' || inputs.apply }}
+        shell: bash
+        run: |
+          args=()
+          if [[ -n "$ISSUE_NUMBER" ]]; then
+            [[ "$ISSUE_NUMBER" =~ ^[1-9][0-9]*$ ]] || exit 1
+            args+=(--issue "$ISSUE_NUMBER")
+          fi
+          python scratch/sync_issue_labels.py --repo "$REPO" "${args[@]}" --plan issue-label-plan.json
+          if [[ "$APPLY" == true ]]; then
+            python scratch/sync_issue_labels.py --repo "$REPO" --apply-plan issue-label-plan.json --report issue-label-result.json
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: issue-label-results-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            issue-label-plan.json
+            issue-label-result.json
