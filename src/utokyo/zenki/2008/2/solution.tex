@@ -1,109 +1,208 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+\textbf{[解]}
 
-\noindent
-\textbf{[解]} 白のカードを白，黒のカードを黒と表す．
-
-\bigskip
-
-\noindent
 \paragraph{(1)}
 
-白のカードの枚数は，帰納的に奇回目の操作後には奇数枚である．$\cdots$ ①
-
+白のカードの枚数は，帰納的に奇回目の操作後には奇数枚である．
+カードの枚数は$4$枚だから，奇回目の操作後には黒も奇数枚である．
 そこで，$2k$ 回目の操作の後について，以下のようになる確率をおく．
 \begin{align}
   \begin{cases}
-    A_k \cdots \text{はじめて白4枚} \\
+    a_k \cdots \text{はじめて白4枚} \\
     b_k \cdots \text{白2枚}
   \end{cases}
 \end{align}
-すると，$2A_k$ をもとめれば良い．$\cdots$ ② 右図から
+すると対称性から初めて黒が$4$枚（つまり初めて白が4枚）になる確率も$A_k$だから，求める確率は$p_n=2A_k$である．
+
+% TODO: 遷移図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=4.0cm, y=1.4cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 列ヘッダー ---
+    \node[font=\normalsize\bfseries, gray!30!black] at (0, 1.8) {$2k$ 回目};
+    \node[font=\normalsize\bfseries, gray!30!black] at (1, 1.8) {$2k+2$ 回目};
+
+    % --- 2. 状態ノード ---
+    % 2k 回目
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=3pt, inner sep=6pt] (b2_prev) at (0, 0) {
+      \textbf{白 2 枚} ($b_k$)
+    };
+
+    % 2k+2 回目
+    \node[draw=red!85!black, fill=red!8, very thick, rounded corners=3pt, inner sep=6pt] (b4_next) at (1, 1.0) {
+      \textbf{白 4 枚} ($a_{k+1}$)
+    };
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=3pt, inner sep=6pt] (b2_next) at (1, 0) {
+      \textbf{白 2 枚} ($b_{k+1}$)
+    };
+    \node[draw=red!85!black, fill=red!8, very thick, rounded corners=3pt, inner sep=6pt] (b0_next) at (1, -1.0) {
+      \textbf{白 0 枚} ($a_{k+1}$)
+    };
+
+    % --- 3. 遷移矢印と確率 ---
+    % 白2 -> 白4 (終了)
+    \draw[->, line width=1.2pt, red!85!black] (b2_prev.east) -- (b4_next.west)
+    node[midway, above left=1pt, font=\normalsize\bfseries] {$\frac{1}{8}$};
+
+    % 白2 -> 白2 (継続)
+    \draw[->, line width=1.4pt, blue!85!black] (b2_prev.east) -- (b2_next.west)
+    node[midway, above=2pt, font=\normalsize\bfseries] {$\frac{3}{4}$};
+
+    % 白2 -> 白0 (終了)
+    \draw[->, line width=1.2pt, red!85!black] (b2_prev.east) -- (b0_next.west)
+    node[midway, below left=1pt, font=\normalsize\bfseries] {$\frac{1}{8}$};
+
+    % --- 4. 注釈 ---
+    \node[right=4pt, font=\scriptsize, red!90!black] at (b4_next.east) {（初めて 1 色に揃う）};
+    \node[right=4pt, font=\scriptsize, red!90!black] at (b0_next.east) {（初めて 1 色に揃う）};
+
+  \end{tikzpicture}
+  \caption{$2k$ 回目の操作から $2k+2$ 回目の操作への状態遷移図}
+  \label{fig:state_transition_n4}
+\end{figure}
+
+上の遷移図から漸化式は
 \begin{align}
   \begin{cases}
-    A_{k+1} = \dfrac{1}{8} b_k \\
+    a_{k+1} = \dfrac{1}{8} b_k \\
     b_{k+1} = \dfrac{3}{4} b_k
   \end{cases}
 \end{align}
-であり，初期条件から $b_0 = 1$ として，$b_k = \left(\dfrac{3}{4}\right)^k$ だから，$A_k = \dfrac{1}{8}\left(\dfrac{3}{4}\right)^{k-1}$ である．①，②から
+であり，初期条件から $b_0 = 1$ である．従って$b_k$の一般項は
+\begin{align}
+  b_k = \left(\dfrac{3}{4}\right)^k
+\end{align}
+だから，第一式に代入して
+\begin{align}
+  a_k = \dfrac{1}{8}\left(\dfrac{3}{4}\right)^{k-1}
+\end{align}
+である．従って求める確率$p_n$は
 \begin{align}
   p_n =
   \begin{cases}
     0 & (n \text{ odd}) \\
     \dfrac{1}{4}\left(\dfrac{3}{4}\right)^{\frac{n}{2}-1} & (n \text{ even})
-  \end{cases}
-  \hfill \text{\#}
+  \end{cases} \label{eq:1}
 \end{align}
+である．
 
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}[scale=1.2, >=stealth]
-    \node[draw, rectangle, inner sep=5pt] (b2_1) at (0, 0) {$2k$: 白2 ($b_k$)};
-
-    \node[draw, rectangle, inner sep=5pt] (b4_2) at (4, 1) {$2k+2$: 白4 ($A_{k+1}$)};
-    \node[draw, rectangle, inner sep=5pt] (b2_2) at (4, 0) {$2k+2$: 白2 ($b_{k+1}$)};
-    \node[draw, rectangle, inner sep=5pt] (b0_2) at (4, -1) {$2k+2$: 白0};
-
-    \draw[->] (b2_1) -- node[above, sloped] {$\frac{1}{8}$} (b4_2);
-    \draw[->] (b2_1) -- node[above] {$\frac{3}{4}$} (b2_2);
-    \draw[->] (b2_1) -- node[below, sloped] {$\frac{1}{8}$} (b0_2);
-  \end{tikzpicture}
-  \caption{$2k$回目の操作から$2k+2$回目の操作への遷移図}
-\end{figure}
-
-\bigskip
-
-\noindent
 \paragraph{(2)}
 
-(1)と同じく，求める確率を $p_n$ とすると，$n \in \text{even}$ の時 $p_n = 0 \quad \cdots$ ③である．$2k+1$ 回目操作後について，以下のようにおく．
-\begin{align}
-  A_k \cdots \text{白2枚}
-\end{align}
-対称性から，白4枚の確率も $A_k$ である．
-右図から，
+求める確率を $p_n$ とすると，(1)と同様に考えると$n \in \text{even}$ の時 $p_n = 0$ である．
+$2k-1$ 回目操作後について，対称性も考慮して以下のようにおく．
 \begin{align}
   \begin{cases}
-    A_{k+1} = \dfrac{11}{18} A_k + \dfrac{1}{3} A_k = \dfrac{17}{18} A_k \\
-    p_{k+1} = 2 \cdot \dfrac{1}{18} A_k = \dfrac{1}{9} A_k
+    a_k \cdots \text{初めて白6枚} \\
+    b_k \cdots \text{白4枚} \\
+    b_k \cdots \text{白2枚} \\
+    a_k \cdots \text{初めて白0枚}
   \end{cases}
 \end{align}
-$A_0 = \dfrac{1}{2}$ だから，くり返し用いて $A_k = \dfrac{1}{2}\left(\dfrac{17}{18}\right)^k$ だから，$k \ge 1$ に対して $P_k = \dfrac{1}{18}\left(\dfrac{17}{18}\right)^{k-1}$．$k=0$ の時 $p_0 = 0$．③とあわせて，
+
+% TODO: 遷移図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=5.0cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 列ヘッダー ---
+    \node[font=\normalsize\bfseries, gray!30!black] at (0, 2.6) {$2k-1$ 回目};
+    \node[font=\normalsize\bfseries, gray!30!black] at (1, 2.6) {$2k+1$ 回目};
+
+    % --- 2. 状態ノード ---
+    % 2k+1 回目 (継続状態)
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=3pt, inner sep=5pt] (b2_prev) at (0, 0.8) {
+      \textbf{白 2 枚} ($b_k$)
+    };
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=3pt, inner sep=5pt] (b4_prev) at (0, -0.8) {
+      \textbf{白 4 枚} ($b_k$)
+    };
+
+    % 2k+3 回目
+    % 終了状態 (白0, 白6)
+    \node[draw=red!85!black, fill=red!8, very thick, rounded corners=3pt, inner sep=5pt] (b0_next) at (1, 2.0) {
+      \textbf{白 0 枚} ($a_{k+1}$)
+    };
+    % 継続状態 (白2, 白4)
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=3pt, inner sep=5pt] (b2_next) at (1, 0.7) {
+      \textbf{白 2 枚} ($b_{k+1}$)
+    };
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=3pt, inner sep=5pt] (b4_next) at (1, -0.7) {
+      \textbf{白 4 枚} ($b_{k+1}$)
+    };
+    % 終了状態 (白6)
+    \node[draw=red!85!black, fill=red!8, very thick, rounded corners=3pt, inner sep=5pt] (b6_next) at (1, -2.0) {
+      \textbf{白 6 枚} ($a_{k+1}$)
+    };
+
+    % --- 3. 遷移矢印 ---
+    % (A) 白2からの遷移
+    \draw[->, line width=1.1pt, red!85!black] (b2_prev.east) -- (b0_next.west)
+    node[midway, above left=1pt, font=\footnotesize\bfseries] {$\frac{1}{18}$};
+
+    \draw[->, line width=1.3pt, blue!85!black] (b2_prev.east) -- (b2_next.west)
+    node[midway, above=1pt, font=\footnotesize\bfseries] {$\frac{11}{18}$};
+
+    \draw[->, line width=1.1pt, teal!85!black] (b2_prev.east) -- (b4_next.west)
+    node[pos=0.35, above=1pt, font=\footnotesize\bfseries, sloped] {$\frac{1}{3}$};
+
+    % (B) 白4からの遷移
+    \draw[->, line width=1.1pt, teal!85!black] (b4_prev.east) -- (b2_next.west)
+    node[pos=0.35, below=1pt, font=\footnotesize\bfseries, sloped] {$\frac{1}{3}$};
+
+    \draw[->, line width=1.3pt, blue!85!black] (b4_prev.east) -- (b4_next.west)
+    node[midway, below=1pt, font=\footnotesize\bfseries] {$\frac{11}{18}$};
+
+    \draw[->, line width=1.1pt, red!85!black] (b4_prev.east) -- (b6_next.west)
+    node[midway, below left=1pt, font=\footnotesize\bfseries] {$\frac{1}{18}$};
+
+    % --- 4. 注釈 ---
+    \node[right=4pt, font=\scriptsize, red!90!black] at (b0_next.east) {（初めて 1 色に揃う）};
+    \node[right=4pt, font=\scriptsize, red!90!black] at (b6_next.east) {（初めて 1 色に揃う）};
+
+  \end{tikzpicture}
+  \caption{$2k-1$ 回目の操作から $2k+1$ 回目の操作への状態遷移図}
+  \label{fig:state_transition_n6}
+\end{figure}
+
+求める確率は$p_{2k-1}=2a_{k}$である．
+遷移図から漸化式は
+\begin{align}
+  \begin{cases}
+    a_{k+1} = \dfrac{1}{18} b_k = \dfrac{1}{18} b_k \\
+    b_{k+1} = \dfrac{11}{18} b_k + \dfrac{1}{3} b_k = \dfrac{17}{18} b_k
+  \end{cases}
+\end{align}
+である．初項は$b_1=\dfrac{1}{2}$だから漸化式を解いて
+\begin{align}
+  b_k = \dfrac{1}{2}\left(\dfrac{17}{18}\right)^{k-1}
+\end{align}
+だから，第一式に代入して
+\begin{align}
+  a_k =
+  \begin{cases}
+    \dfrac{1}{36}\left(\dfrac{17}{18}\right)^{k-2} & (k \ge 2) \\
+    0 & (k=1)
+  \end{cases}
+\end{align}
+である．よって
+\begin{align}
+  p_{2k-1} = 2a_k =
+  \begin{cases}
+    \dfrac{1}{18}\left(\dfrac{17}{18}\right)^{k-2} & (k \ge 2) \\
+    0 & (k=1)
+  \end{cases}
+\end{align}
+だから，$p_{2k}=0$と合わせて求める確率$p_n$は
 \begin{align}
   p_n =
   \begin{cases}
     0 & (n \in \text{even}, n=1) \\
     \dfrac{1}{18}\left(\dfrac{17}{18}\right)^{\frac{n-3}{2}} & (n \in \text{odd} \ge 3)
   \end{cases}
-  \hfill \text{\#}
 \end{align}
-
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}[scale=1.2, >=stealth]
-    \node[draw, rectangle, inner sep=4pt] (b2_1) at (0, 0.6) {$2k+1$: 白2 ($A_k$)};
-    \node[draw, rectangle, inner sep=4pt] (b4_1) at (0, -0.6) {$2k+1$: 白4 ($A_k$)};
-
-    \node[draw, rectangle, inner sep=4pt] (b0_2) at (4.5, 1.8) {$2k+3$: 白0 ($\frac{11}{18}$)};
-    \node[draw, rectangle, inner sep=4pt] (b2_2) at (4.5, 0.6) {$2k+3$: 白2 ($\frac{1}{3}$)};
-    \node[draw, rectangle, inner sep=4pt] (b4_2) at (4.5, -0.6) {$2k+3$: 白4 ($\frac{1}{9}$)};
-    \node[draw, rectangle, inner sep=4pt] (b6_2) at (4.5, -1.8) {$2k+3$: 白6 ($\frac{11}{18}$)};
-
-    \draw[->] (b2_1) -- node[above, sloped, pos=0.6] {$\frac{1}{18}$} (b0_2);
-    \draw[->] (b2_1) -- (b2_2);
-    \draw[->] (b2_1) -- node[above, sloped, pos=0.4] {$\frac{1}{3}$} (b4_2);
-
-    \draw[->] (b4_1) -- node[below, sloped, pos=0.4] {$\frac{1}{3}$} (b2_2);
-    \draw[->] (b4_1) -- (b4_2);
-    \draw[->] (b4_1) -- node[below, sloped, pos=0.6] {$\frac{1}{18}$} (b6_2);
-  \end{tikzpicture}
-  \caption{$2k+1$回目の操作から$2k+3$回目の操作への遷移図}
-\end{figure}
-
-\bigskip
+である．
 
 \end{document}

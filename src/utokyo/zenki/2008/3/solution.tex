@@ -1,108 +1,601 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-\noindent
-{\bf [解]} (1) 正六角形であるから右図．
+\paragraph{(1)}
 
+% TODO: 3D-tikz 正八面体
+% DEFの重心を原点とし，Dがx軸上，BEがx軸と垂直（=y軸に平行）になるように配置する
+% するとDEFの面はz軸と垂直になる
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.8]
-    \draw (0:1) -- (60:1) -- (120:1) -- (180:1) -- (240:1) -- (300:1) -- cycle;
+  \tdplotsetmaincoords{50}{10}
+  \begin{tikzpicture}[tdplot_main_coords,scale=3.0,>=stealth, every node/.style={font=\small}]
+
+    % --- 1. 定数・座標パラメータ (一辺 1) ---
+    % r = 1/sqrt(3) ≈ 0.577,  c = cos(120°) = -0.5, s = sin(120°) ≈ 0.866
+    % Z = sqrt(6)/3 ≈ 0.816 (上面と底面の距離)
+    \def\rVal{1.0}
+    \def\ZVal{1.8}
+
+    % 底面 DEF (z = 0)
+    % D は x 軸上: (r, 0, 0)
+    \coordinate (D) at ({\rVal}, 0, 0);
+    \coordinate (E) at ({-0.5*\rVal}, {0.866*\rVal}, 0);
+    \coordinate (F) at ({-0.5*\rVal}, {-0.866*\rVal}, 0);
+    \coordinate (G2) at (0, 0, 0); % 底面重心
+
+    % 上面 ABC (z = ZVal)
+    % C は x 軸負方向: (-r, 0, Z)
+    \coordinate (C) at ({-\rVal}, 0, \ZVal);
+    \coordinate (B) at ({0.5*\rVal}, {0.866*\rVal}, \ZVal);
+    \coordinate (A) at ({0.5*\rVal}, {-0.866*\rVal}, \ZVal);
+    \coordinate (G1) at (0, 0, \ZVal); % 上面重心
+
+    % --- 底面 DEF の薄い塗りつぶし (青緑系) ---
+    \fill[teal!25, opacity=0.35] (D) -- (E) -- (F) -- cycle;
+
+    % --- 上面 ABC の薄い塗りつぶし (青系) ---
+    \fill[blue!25, opacity=0.35] (A) -- (B) -- (C) -- cycle;
+
+    % --- x, y, z 座標軸 (原点は G_2) ---
+    \draw[->, thick, gray!80!black] ($(G2) - (1.6*\rVal, 0, 0)$) -- ($(G2) + (1.6*\rVal, 0, 0)$)
+    node[right, font=\footnotesize] {$x$};
+    \draw[->, thick, gray!80!black] ($(G2) - (0, 1.4*\rVal, 0)$) -- ($(G2) + (0, 1.4*\rVal, 0)$)
+    node[above right, font=\footnotesize] {$y$};
+    \draw[->, thick, gray!80!black] ($(G2) - (0, 0, 0.5)$) -- ($(G2) + (0, 0, \ZVal + 0.6)$)
+    node[above, font=\footnotesize] {$z$};
+
+    % --- 2. 奥側の稜線 (破線) ---
+    \draw[thick, dashed, gray!60] (D) -- (E) -- (F);
+    \draw[thick, dashed, gray!60] (C) -- (F);
+    \draw[thick, dashed, gray!60] (B) -- (E);
+    \draw[thick, dashed, gray!60] (C) -- (E);
+
+    % 重心軸 l (一点鎖線風)
+    \draw[line width=1.2pt, red!85!black, dash pattern=on 4pt off 2pt on 1pt off 2pt]
+    (G2) -- (G1) node[midway, left=2pt, font=\footnotesize\bfseries] {軸 $l$};
+
+    % --- 3. 手前側の稜線 (実線) ---
+    % 底面残りの辺
+    \draw[line width=1.3pt, teal!85!black] (D) -- (F);
+
+    % 上面 ABC
+    \draw[line width=1.3pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+
+    % 側面の稜線
+    \draw[line width=1.2pt, gray!20!black] (D) -- (A);
+    \draw[line width=1.2pt, gray!20!black] (D) -- (B);
+    \draw[line width=1.2pt, gray!20!black] (C) -- (F);
+    \draw[line width=1.2pt, gray!20!black] (A) -- (F);
+
+    % --- 4. 頂点プロットとラベル ---
+    \fill[teal!85!black] (D) circle (1.3pt) node[right=2pt] {$D(r, 0, 0)$};
+    \fill[teal!85!black] (E) circle (1.3pt) node[above right=1pt] {$E$};
+    \fill[gray!60!black] (F) circle (1.3pt) node[below left=1pt] {$F$};
+
+    \fill[blue!85!black] (A) circle (1.3pt) node[below right=1pt] {$A$};
+    \fill[blue!85!black] (B) circle (1.3pt) node[above=2pt] {$B$};
+    \fill[blue!85!black] (C) circle (1.3pt) node[left=2pt] {$C(-r, 0, Z)$};
+
+    \fill[red!85!black]  (G1) circle (1.3pt) node[above left=1pt, font=\scriptsize, red!90!black] {$G_1$};
+    \fill[red!85!black]  (G2) circle (1.3pt) node[below right=1pt, font=\scriptsize, red!90!black] {$G_2(O)$};
+
+    % 平行面の注釈
+    \node[blue!90!black, font=\scriptsize] at ($(B)!0.5!(C) + (0, 0.4, 0.2)$) {上面 $\triangle ABC$};
+    \node[teal!90!black, font=\scriptsize] at ($(D)!0.5!(E) + (0.3, 0, -0.3)$) {底面 $\triangle DEF$};
+
   \end{tikzpicture}
-  \caption{正八面体を対称面で切った断面（正六角形）}
+  \caption{底面 $\triangle DEF$ の重心を原点とする正八面体の 3D 配置}
+  \label{fig:octahedron_3d_axes}
 \end{figure}
 
-\bigskip
+正八面体は上図のように正三角形が$8$枚繋がってできた立体であり，上面$\triangle ABC$と底面$\triangle DEF$は平行である．真上から正八面体を見た時の図は従って，これらの点が作る図形になる．正三角形の一辺$1$として一般性を失わない．また$\theta=\dfrac{2\pi}{3}$として$c=\cos\theta,s=\sin\theta$とかき，$r=\dfrac{1}{\sqrt{3}}$とする．
 
-\noindent
+上図のように三角形$DEF$の重心を原点$O(0,0,0)$とし，
+\begin{align}
+  D(r,0,0),E(rc,rs,0),F(rc,-rs,0)
+\end{align}
+とする．
+点$C$について考えると$|BC|=|EC|$から$C$は線分$BE$の二等分面$DG_1G_2 (y=0)$の上にある．
+同様に考えると$A$は平面$EG_1G_2$の，$B$は平面$FG_1G_2$の上にある．従ってその座標はこれらの点の$z$座標を$Z$として
+\begin{align}
+  A(-rc,-rs,Z), B(-rc,rs,Z), C(-r,0,Z)
+\end{align}
+と書ける．
+
+% TODO: A,B,Cがそれぞれ平面上にある様子
+\begin{figure}[htb]
+  \centering
+  \tdplotsetmaincoords{50}{10}
+  \begin{tikzpicture}[tdplot_main_coords, scale=3.0, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 定数・厳密パラメータ
+    % ============================================================
+    \def\rVal{1.8}
+    \def\ZVal{2.5}
+
+    % 底面 DEF (z = 0)
+    \coordinate (D)  at ({\rVal}, 0, 0);
+    \coordinate (E)  at ({-0.5*\rVal}, {0.866*\rVal}, 0);
+    \coordinate (F)  at ({-0.5*\rVal}, {-0.866*\rVal}, 0);
+    \coordinate (G2) at (0, 0, 0); % 底面重心 O
+
+    % 上面 ABC (z = ZVal)
+    \coordinate (C)  at ({-\rVal}, 0, \ZVal);
+    \coordinate (B)  at ({0.5*\rVal}, {0.866*\rVal}, \ZVal);
+    \coordinate (A)  at ({0.5*\rVal}, {-0.866*\rVal}, \ZVal);
+    \coordinate (G1) at (0, 0, \ZVal); % 上面重心
+
+    % ============================================================
+    % 2. 座標軸 (x, y, z)
+    % ============================================================
+    \draw[->, thick, gray!80!black] ($(G2) - (1.4*\rVal, 0, 0)$) -- ($(G2) + (1.4*\rVal, 0, 0)$)
+    node[right, font=\footnotesize] {$x$};
+    \draw[->, thick, gray!80!black] ($(G2) - (0, 1.2*\rVal, 0)$) -- ($(G2) + (0, 1.2*\rVal, 0)$)
+    node[above right, font=\footnotesize] {$y$};
+    \draw[->, thick, gray!80!black] ($(G2) - (0, 0, 0.4)$) -- ($(G2) + (0, 0, \ZVal + 0.6)$)
+    node[above, font=\footnotesize] {$z$};
+
+    % ============================================================
+    % 3. 奥側の対称面: 平面 FG1G2 (紫)
+    % 厳密に z=0 から z=Z までの長方形 (F - OF - B_top - B)
+    % ============================================================
+    % 平面 FG1G2: F(rc, -rs, 0) から 反対側の B( -rc, rs, Z) を通る鉛直面
+    \coordinate (F_top) at ({-0.5*\rVal}, {-0.866*\rVal}, \ZVal);
+    \coordinate (B_bot) at ({0.5*\rVal}, {0.866*\rVal}, 0);
+    \fill[purple!25, opacity=0.45]
+    (F) -- (B_bot) -- (B) -- (F_top) -- cycle;
+    \draw[thick, purple!75!black, dashed]
+    (F) -- (B_bot) -- (B) -- (F_top) -- cycle;
+    \node[purple!90!black, font=\scriptsize\bfseries, above right] at (B) {平面 $FG_1G_2$};
+
+    % --- 底面・上面の半透明塗りつぶし ---
+    \fill[teal!25, opacity=0.35] (D) -- (E) -- (F) -- cycle;
+    \fill[blue!25, opacity=0.35] (A) -- (B) -- (C) -- cycle;
+
+    % ============================================================
+    % 4. 奥側の稜線 (破線)
+    % ============================================================
+    \draw[thick, dashed, gray!60] (D) -- (E) -- (F);
+    \draw[thick, dashed, gray!60] (B) -- (E);
+    \draw[thick, dashed, gray!60] (C) -- (E);
+
+    % ============================================================
+    % 5. 手前側の対称面 2 枚 (z=0 から z=Z まで)
+    % ============================================================
+    % --- 平面 1: DG1G2 (赤系・y=0, 点 D と 点 C を含む鉛直面) ---
+    % 4隅の頂点: (D) -> (C_bot) -> (C) -> (D_top)
+    \coordinate (D_top) at ({\rVal}, 0, \ZVal);
+    \coordinate (C_bot) at ({-\rVal}, 0, 0);
+    \fill[red!25, opacity=0.45]
+    (D) -- (C_bot) -- (C) -- (D_top) -- cycle;
+    \draw[line width=1.2pt, red!85!black]
+    (D) -- (C_bot) -- (C) -- (D_top) -- cycle;
+    \node[red!90!black, font=\scriptsize\bfseries, right] at (D_top) {平面 $DG_1G_2$ ($y=0$)};
+
+    % --- 平面 2: EG1G2 (青緑系, 点 E と 点 A を含む鉛直面) ---
+    % 4隅の頂点: (E) -> (A_bot) -> (A) -> (E_top)
+    \coordinate (E_top) at ({-0.5*\rVal}, {0.866*\rVal}, \ZVal);
+    \coordinate (A_bot) at ({0.5*\rVal}, {-0.866*\rVal}, 0);
+    \fill[teal!25, opacity=0.45]
+    (E) -- (A_bot) -- (A) -- (E_top) -- cycle;
+    \draw[line width=1.2pt, teal!85!black]
+    (E) -- (A_bot) -- (A) -- (E_top) -- cycle;
+    \node[teal!90!black, font=\scriptsize\bfseries, below right] at (A) {平面 $EG_1G_2$};
+
+    % ============================================================
+    % 6. 中心対称軸 l = G1G2 (z 軸上の線分)
+    % ============================================================
+    \draw[line width=1.5pt, red!90!black, dash pattern=on 4pt off 2pt]
+    (G2) -- (G1) node[midway, left=2pt, font=\footnotesize\bfseries] {軸 $l$};
+
+    % ============================================================
+    % 7. 正八面体の稜線 (実線強調)
+    % ============================================================
+    % 底面手前辺
+    \draw[line width=1.4pt, teal!85!black] (D) -- (F);
+
+    % 上面 ABC
+    \draw[line width=1.4pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+
+    % 側面の稜線
+    \draw[line width=1.3pt, gray!20!black] (D) -- (A);
+    \draw[line width=1.3pt, gray!20!black] (D) -- (B);
+    \draw[line width=1.3pt, gray!20!black] (C) -- (F);
+    \draw[line width=1.3pt, gray!20!black] (A) -- (F);
+
+    % ============================================================
+    % 8. 各頂点のプロットとラベル
+    % ============================================================
+    % 底面頂点 (z = 0)
+    \fill[teal!85!black] (D) circle (1.5pt) node[right=2pt] {$D$};
+    \fill[teal!85!black] (E) circle (1.5pt) node[above left=1pt] {$E$};
+    \fill[gray!60!black] (F) circle (1.3pt) node[below left=1pt] {$F$};
+
+    % 上面頂点 (z = ZVal)
+    \fill[blue!90!black] (C) circle (1.8pt) node[left=3pt] {$C \in \text{平面 } DG_1G_2$};
+    \fill[blue!90!black] (A) circle (1.8pt) node[below right=2pt] {$A \in \text{平面 } EG_1G_2$};
+    \fill[blue!90!black] (B) circle (1.8pt) node[above left=2pt] {$B \in \text{平面 } FG_1G_2$};
+
+    % 重心
+    \fill[red!90!black] (G1) circle (1.4pt) node[above left=1pt, font=\scriptsize] {$G_1$};
+    \fill[red!90!black] (G2) circle (1.4pt) node[below left=1pt, font=\scriptsize] {$G_2(O)$};
+
+  \end{tikzpicture}
+  \caption{正八面体の3D配置と各頂点 $A, B, C$ を含む3つの垂直二等分面}
+  \label{fig:octahedron_3d_symmetry_planes}
+\end{figure}
+
+従ってこれらの点を$z$軸正の方からみた時の$xy$座標への射影は下図のようになり，これは正六角形である．
+
+% TODO: 正六角形
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
+
+    % 6頂点の偏角: D(0), B(60), E(120), C(180), F(240), A(300)
+    \coordinate (D) at (0:1.4);
+    \coordinate (B) at (60:1.4);
+    \coordinate (E) at (120:1.4);
+    \coordinate (C) at (180:1.4);
+    \coordinate (F) at (240:1.4);
+    \coordinate (A) at (300:1.4);
+    \coordinate (O) at (0, 0);
+
+    % 外周の正六角形
+    \fill[blue!8, opacity=0.7] (D) -- (B) -- (E) -- (C) -- (F) -- (A) -- cycle;
+    \draw[line width=1.5pt, gray!30!black] (D) -- (B) -- (E) -- (C) -- (F) -- (A) -- cycle;
+
+    % 上面 ABC (実線)
+    \draw[line width=1.4pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+    % 底面 DEF (破線)
+    \draw[line width=1.4pt, teal!85!black, dashed] (D) -- (E) -- (F) -- cycle;
+
+    % 頂点プロットとラベル
+    \fill[teal!85!black] (D) circle (1.3pt) node[right=2pt] {$D$};
+    \fill[blue!85!black] (B) circle (1.3pt) node[above right=2pt] {$B$};
+    \fill[teal!85!black] (E) circle (1.3pt) node[above left=2pt] {$E$};
+    \fill[blue!85!black] (C) circle (1.3pt) node[left=2pt] {$C$};
+    \fill[teal!85!black] (F) circle (1.3pt) node[below left=2pt] {$F$};
+    \fill[blue!85!black] (A) circle (1.3pt) node[below right=2pt] {$A$};
+    \fill[black]         (O) circle (1.2pt) node[below left=1pt, font=\scriptsize] {$G_1, G_2$};
+
+    % 辺の比・正六角形のラベル
+    \node[blue!90!black, font=\footnotesize\bfseries] at (0, 0.7) {上面 $\triangle ABC$};
+    \node[teal!90!black, font=\footnotesize\bfseries] at (0, -0.7) {底面 $\triangle DEF$};
+
+  \end{tikzpicture}
+  \caption{正八面体を真上（$z$ 軸正の方向）から見た正射影（外周は正六角形）}
+  \label{fig:octahedron_top_projection_hexagon}
+\end{figure}
+
 \paragraph{(2)}
 
-正八面体の6頂点 $A \sim F$ とし，右図のように面 ABC，面 DEF の重心を $G_1, G_2$ とする．直線 $G_1 G_2$ を $l$ とおく．$l$ は面 ABC，面 DEF と垂直である．$\vec{G_1 G_2} = \vec{a}$ とおき，$\vec{G_1 P} = t \vec{a} \; (0 \le t \le 1)$ なる点 $P$ を含み $l$ に垂直な平面で立体を切断する．この時の断面は右図．この時，右図のように頂点をおくと，相似から
+正八面体の6頂点 $A \sim F$ とし，面 ABC，面 DEF の重心を $G_1, G_2$ とする．直線 $G_1 G_2$ を $l$ とおく．$l$ は面 ABC，面 DEF と垂直である．$\vec{G_1 G_2} = \vec{a}$ とおき，$\vec{G_1 P} = t \vec{a} \; (0 \le t \le 1)$ なる点 $P$ を含み $l$ に垂直な平面で立体を切断する．この時の断面は右図である．下図のように頂点をおく．
+
+% TODO: 切断面
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3.6, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 厳密な座標計算
+    % スケッチでは、六角形の一辺が交互に (1-t) と t になっている。
+    % 外側の大きな正三角形の一辺は (1-t) + t + (1-t) = 2 - t (または 1)
+    % ここでは見やすくするため t = 0.45 とし、
+    % 中心 P を原点 (0, 0) に置いて各頂点を回転対称に直接配置する。
+    % ============================================================
+    % 中心 P
+    \coordinate (P) at (0, 0);
+
+    % 六角形 LKJIHM は 60度刻みの方向性をもつ等角六角形
+    % 水平な上辺 LK, 底辺 IH
+    % 各頂点への距離と角度：
+    % K は右上、L は左上、J は右、I は右下、H は左下、M は左
+    \def\tVal{0.45}
+    \pgfmathsetmacro{\omt}{1.0 - \tVal} % 1 - t = 0.55
+
+    % 幾何学的に、各頂点の座標を定義：
+    % 底辺上の点 H, I (y = -Y0)
+    % 上辺上の点 L, K (y = Y1)
+    % 辺長: LK = 1-t, KJ = t, JI = 1-t, IH = t, HM = 1-t, ML = t
+    % 水平幅と高さを厳密設定:
+    \pgfmathsetmacro{\wOmt}{0.5 * \omt}
+    \pgfmathsetmacro{\wT}{0.5 * \tVal}
+    \pgfmathsetmacro{\hHex}{0.866025} % sqrt(3)/2
+
+    % 頂点座標 (凸六角形 LKJIHM)
+    \coordinate (K) at ({\wOmt}, {0.5 * \hHex});
+    \coordinate (L) at ({-\wOmt}, {0.5 * \hHex});
+
+    \coordinate (J) at ({\wOmt + 0.5*\tVal}, {0.5*\hHex - \tVal*0.866025});
+    \coordinate (I) at ({\wOmt + 0.5*\tVal - 0.5*\omt}, {0.5*\hHex - \hHex});
+
+    \coordinate (H) at ({-\wOmt - 0.5*\tVal + 0.5*\omt}, {0.5*\hHex - \hHex});
+    \coordinate (M) at ({-\wOmt - 0.5*\tVal}, {0.5*\hHex - \tVal*0.866025});
+
+    % --- 辺 KJ の中点 X の定義と垂線 PX ---
+    \coordinate (X) at ($ (K)! 0.5 !(J) $);
+    \draw[dashed, red!85!black, thick] (P) -- (X);
+
+    % 直角マーク (P - X - K)
+    \draw[thin, gray!70!black]
+    ($ (X)! 0.08 !(P) $) --
+    ($ (X)! 0.08 !(P) + ($ (X)! 0.08 !(K) $) - (X) $) --
+    ($ (X)! 0.08 !(K) $);
+
+    % 点 X のプロットとラベル
+    \fill[black] (X) circle (0.5pt);
+    \node[above right=1pt, font=\footnotesize] at (X) {$X$};
+
+    % 外側正三角形の3頂点（切り落とす前の角）
+    % 上の角 V_top (LK を延長した交点)
+    \coordinate (V_top) at (0, {0.5 * \hHex + \omt * 0.866025});
+    % 右下の角 V_botR (KJ と IH を延長した交点)
+    \coordinate (V_botR) at ({\wOmt + 0.5*\tVal + 0.5*\omt}, {0.5*\hHex - \hHex});
+    % 左下の角 V_botL (ML と IH を延長した交点)
+    \coordinate (V_botL) at ({-\wOmt - 0.5*\tVal - 0.5*\omt}, {0.5*\hHex - \hHex});
+
+    % ============================================================
+    % 2. 切り落とされた3隅の小正三角形（破線）
+    % ============================================================
+    \draw[dashed, gray!60, line width=1.1pt] (L) -- (V_top) -- (K);
+    \draw[dashed, gray!60, line width=1.1pt] (J) -- (V_botR) -- (I);
+    \draw[dashed, gray!60, line width=1.1pt] (H) -- (V_botL) -- (M);
+
+    % 外枠の底辺破線 (H と I の間は実線六角形の一部なので外側のみ破線)
+    \draw[dashed, gray!45] (V_botL) -- (H);
+    \draw[dashed, gray!45] (I) -- (V_botR);
+
+    % ============================================================
+    % 3. 六角形切断面 LKJIHM（実線）
+    % ============================================================
+    \fill[blue!8, opacity=0.7] (L) -- (K) -- (J) -- (I) -- (H) -- (M) -- cycle;
+    \draw[line width=1.4pt, blue!85!black] (L) -- (K) -- (J) -- (I) -- (H) -- (M) -- cycle;
+
+    % ============================================================
+    % 4. 中心 P から各頂点への点線
+    % ============================================================
+    \draw[dotted, gray!75, thick] (P) -- (L);
+    \draw[dotted, gray!75, thick] (P) -- (K);
+    \draw[dotted, gray!75, thick] (P) -- (J);
+    \draw[dotted, gray!75, thick] (P) -- (I);
+    \draw[dotted, gray!75, thick] (P) -- (H);
+    \draw[dotted, gray!75, thick] (P) -- (M);
+
+    % ============================================================
+    % 5. 辺 KJ への垂線と直角記号
+    % ============================================================
+    \coordinate (FootKJ) at ($ (K)! 0.5 !(J) $);
+    \draw[dashed, red!85!black, thick] (P) -- (FootKJ);
+
+    % 直角マーク (P - FootKJ - K)
+    \draw[thin, gray!70!black]
+    ($ (FootKJ)! 0.08 !(P) $) --
+    ($ (FootKJ)! 0.08 !(P) + ($ (FootKJ)! 0.08 !(K) $) - (FootKJ) $) --
+    ($ (FootKJ)! 0.08 !(K) $);
+
+    % ============================================================
+    % 6. 頂点プロットとラベル
+    % ============================================================
+    \fill[black] (P) circle (0.5pt) node[below=3pt] {$P$};
+
+    \node[above left=2pt]  at (L) {$L$};
+    \node[above right=2pt] at (K) {$K$};
+    \node[right=3pt]       at (J) {$J$};
+    \node[below=3pt]       at (I) {$I$};
+    \node[below=3pt]       at (H) {$H$};
+    \node[left=3pt]        at (M) {$M$};
+
+    % ============================================================
+    % 7. 手書きスケッチ通りの辺長比ラベル・引き出し
+    % ============================================================
+    % 上の小正三角形の辺長 1-t (引き出し線)
+    \draw[->, thin, gray!80!black] ($(V_top) + (0.35, 0.15)$) node[above right, font=\footnotesize] {$1-t$}
+    -- ($(K)!0.4!(V_top)$);
+
+    % 辺 KJ の長さ t
+    \node[below right=10pt, font=\footnotesize\bfseries] at (FootKJ) {$t$};
+
+    % 右下の小正三角形の辺長 1-t (円弧引き出し)
+    \draw[->, thin, gray!80!black] ($(V_botR) + (0.35, -0.15)$) node[below right, font=\footnotesize] {$1-t$}
+    to[out=135, in=-30] ($(V_botR) + (0.05, 0.08)$);
+
+  \end{tikzpicture}
+  \caption{正三角形から得られる六角形切断面 $LKJIHM$ と辺の比}
+  \label{fig:cross_section_hexagon_sketch_verified}
+\end{figure}
+
+三角形の相似から
 \begin{align}
   \begin{cases}
     |LK| = |MH| = |IJ| = 1-t \\
     |HI| = |KJ| = |LM| = t
   \end{cases}
 \end{align}
-（$H$ は $BD$ 上，$I$ は $BE$ 上，$J$ は $CE$ 上，$K$ は $CF$ 上）
-
 となり，これを回転させた面積 $S(t)$ は
 \begin{align}
-  S(t) = \pi \cdot |PJ|^2 \quad \cdots \text{①}
+  S(t) = \pi \cdot |PJ|^2 \label{eq:1}
 \end{align}
-である．右上図から，
+である．$\triangle PXJ$に三平方の定理を用いて
 \begin{align}
-  |PJ|^2 &= \left(\dfrac{1}{2}t\right)^2 + \left\{ \dfrac{\sqrt{3}}{2}(2-t) \right\}^2 \\
-  &= \dfrac{1}{12}(4t^2 - 4t + 4) = \dfrac{1}{3}(t^2 - t + 1)
+  |PJ|^2
+  &= |PX|^2+|XJ|^2
+  = \left(\dfrac{1}{2}t\right)^2 + \left\{ \dfrac{\sqrt{3}}{2}(2-t) \right\}^2
+  = \dfrac{1}{12}(4t^2 - 4t + 4)
+  = \dfrac{1}{3}(t^2 - t + 1)
 \end{align}
-だから，①に代入して
+だから\cref{eq:1}に代入して
 \begin{align}
-  S(t) = \dfrac{\pi}{3}(t^2 - t + 1)
+  S(t) = \dfrac{\pi}{3}(t^2 - t + 1) \label{eq:2}
 \end{align}
-である．$|G_1 G_2| = \dfrac{\sqrt{6}}{3}$ だから求める体積 $V$ は
-\begin{align}
-  V &= \int_0^1 \dfrac{\pi}{3}(t^2 - t + 1) \cdot \dfrac{\sqrt{6}}{3} \, dt \\
-  &= \dfrac{\sqrt{6}\pi}{9} \left[ \dfrac{1}{3}t^3 - \dfrac{1}{2}t^2 + t \right]_0^1 \\
-  &= \dfrac{5\sqrt{6}}{54}\pi \hfill \text{\#}
-\end{align}
+である．
 
-\bigskip
-
+% TODO: 四角錐
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \coordinate (P) at (0,0);
-    \coordinate (L) at (-0.5, 0.866);
-    \coordinate (K) at (0.5, 0.866);
-    \coordinate (J) at (1, 0);
-    \coordinate (I) at (0.5, -0.866);
-    \coordinate (H) at (-0.5, -0.866);
-    \coordinate (M) at (-1, 0);
+  \begin{tikzpicture}[x={(1.0cm, -0.2cm)}, y={(0.5cm, 0.4cm)}, z={(0cm, 1.4cm)}, scale=2.0, >=stealth, every node/.style={font=\small}]
 
-    \draw[thick] (L) -- (K) -- (J) -- (I) -- (H) -- (M) -- cycle;
-    \draw[dashed] (L) -- (I);
-    \draw[dashed] (K) -- (H);
-    \draw[dashed] (M) -- (J);
+    % --- 1. 定数・四角錐の座標 ---
+    % 正八面体の一辺を 1 とすると、
+    % 正方形底面の対角線長は sqrt(2), 中心 O から頂点までは 1/sqrt(2) ≈ 0.707
+    \coordinate (O) at (0, 0, 0);     % 底面正方形の中心
+    \coordinate (A) at (0, 0, 1.0);   % 四角錐の頂点 A
 
-    \fill (P) circle (1.5pt) node[below left] {$P$};
-    \node[above left] at (L) {$L$};
-    \node[above right] at (K) {$K$};
-    \node[right] at (J) {$J$};
-    \node[below right] at (I) {$I$};
-    \node[below left] at (H) {$H$};
-    \node[left] at (M) {$M$};
+    % 底面正方形の4頂点 (手前、右、奥、左)
+    \coordinate (B1) at (0.8, -0.8, 0);
+    \coordinate (B2) at (0.8, 0.8, 0);
+    \coordinate (B3) at (-0.8, 0.8, 0);
+    \coordinate (B4) at (-0.8, -0.8, 0);
 
-    \node[above] at (0, 0.866) {$k$};
-    \node[above right] at (0.75, 0.433) {$t$};
-    \node[below right] at (0.75, -0.433) {$1-t$};
-    \node[below] at (0, -0.866) {$t$};
-    \node[below left] at (-0.75, -0.433) {$1-t$};
-    \node[above left] at (-0.75, 0.433) {$1-t$};
+    % 手前の側面正三角形 (A - B1 - B2) の重心 G_1
+    \coordinate (G1) at ($ 1/3*(A) + 1/3*(B1) + 1/3*(B2) $);
+
+    % --- 2. 底面正方形と奥側の稜線 ---
+    \draw[thick, gray!70!black] (B4) -- (B1) -- (B2);
+    \draw[dashed, gray!50, thick] (B2) -- (B3) -- (B4);
+    \draw[dashed, gray!50] (B1) -- (B3);
+    \draw[dashed, gray!50] (B4) -- (B2);
+
+    % 奥側の稜線 (A - B3)
+    \draw[dashed, gray!50, thick] (A) -- (B3);
+
+    % --- 3. 手前側の稜線 ---
+    \draw[line width=1.3pt, gray!20!black] (A) -- (B4);
+    \draw[line width=1.3pt, gray!20!black] (A) -- (B1);
+    \draw[line width=1.3pt, gray!20!black] (A) -- (B2);
+
+    % --- 4. スケッチの主要線分 (A-O, A-G1, O-G1) ---
+    % 頂点から底面中心への垂線 AO
+    \draw[line width=1.4pt, blue!85!black] (A) -- (O)
+    node[midway, left=1pt, font=\footnotesize] {};
+
+    % 側面重心 G1 への線分
+    \draw[line width=1.3pt, red!85!black] (A) -- (G1);
+    \draw[dashed, red!85!black, thick] (O) -- (G1);
+
+    % --- 5. 頂点プロットとラベル ---
+    \fill[black] (A)  circle (1.4pt) node[above=2pt] {$A$};
+    \fill[black] (O)  circle (1.3pt) node[below left=1pt] {$O$};
+    \fill[red!85!black] (G1) circle (1.4pt) node[above right=1pt, font=\footnotesize\bfseries, red!90!black] {$G_1$};
+
+    % 補助引き出し
+    \draw[->, thin, gray!80!black] ($(G1)+(0.3,0.3,0.2)$) node[right, font=\scriptsize] {側面正三角形の重心 $G_1$} -- (G1);
+
   \end{tikzpicture}
-  \caption{切断面の様子（頂点$L,K,J,I,H,M$と辺の比）}
+  \caption{正八面体の上半分（四角錐）と中心 $O$・側面重心 $G_1$ の幾何関係}
+  \label{fig:octahedron_half_pyramid_sketch}
 \end{figure}
 
-\bigskip
-
-\noindent
-{\bf [解2]} (2) $G_1 G_2$ の中点を $O$ とし，$\triangle OAG_1$ に三平方の定理を用いて
+次に線分$G_1G_2$の中点を$O$として$\triangle OAG_1$ に三平方の定理を用いて
 \begin{align}
-  |OG_1|^2 = \left(\dfrac{\sqrt{2}}{2}\right)^2 - \left(\dfrac{\sqrt{3}}{3}\right)^2 = \dfrac{1}{6}
+  |OG_1|^2
+  = |OA|^2-|AG_1|^2
+  = \left(\dfrac{\sqrt{2}}{2}\right)^2 - \left(\dfrac{\sqrt{3}}{3}\right)^2
+  = \dfrac{1}{6}
 \end{align}
 だから，
 \begin{align}
-  |G_1 G_2| = 2\sqrt{\dfrac{1}{6}} = \dfrac{\sqrt{6}}{3} \quad \cdots \text{①}
+  |\vec{\ell}| = |G_1 G_2| = 2|OG_1| = 2\sqrt{\dfrac{1}{6}} = \dfrac{\sqrt{6}}{3} \label{eq:3}
 \end{align}
-である．[解1]と同様にして，切断面は右図．
-余弦定理から，
+である．
+
+よって\cref{eq:2,eq:3}を\cref{eq:1}に代入して求める体積 $V$ は
 \begin{align}
-  |PH|^2 &= \left(\dfrac{\sqrt{3}}{3}\right)^2 + \left(\dfrac{\sqrt{3}}{3}t\right)^2 - 2 \cdot \dfrac{\sqrt{3}}{3} \cdot \dfrac{\sqrt{3}}{3}t \cos 60^\circ \\
+  V
+  &= \int_0^1 \dfrac{\pi}{3}(t^2 - t + 1) \cdot |\vec{\ell}| \, dt \\
+  &= \int_0^1 \dfrac{\pi}{3}(t^2 - t + 1) \cdot \dfrac{\sqrt{6}}{3} \, dt \\
+  &= \dfrac{\sqrt{6}\pi}{9} \left[ \dfrac{1}{3}t^3 - \dfrac{1}{2}t^2 + t \right]_0^1 \\
+  &= \dfrac{5\sqrt{6}}{54}\pi
+\end{align}
+である．
+
+{\bf [別解]}
+
+\paragraph{(2)}
+
+% TODO: 正六角形の中に切断面を配置した図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 外側の正六角形 (半径 R = 1.0) ---
+    \def\R{1.25}
+    % 外側正六角形の頂点 (0度から60度刻み)
+    \foreach \i in {0, 1, ..., 5} {
+      \coordinate (Out\i) at ({\i*60}:\R);
+    }
+
+    % 外側正六角形の描画
+    \draw[line width=1.3pt, gray!40!black]
+    (Out0) -- (Out1) -- (Out2) -- (Out3) -- (Out4) -- (Out5) -- cycle;
+
+    % 外枠の一辺の長さラベル sqrt(3)/3
+    \node[right=2pt, font=\scriptsize] at ($(Out0)!0.5!(Out5)$) {$\frac{\sqrt{3}}{3}$};
+
+    % --- 2. 内側の切断面六角形 (スケッチの回転内接配置) ---
+    % 各辺を比率 t で内分 (スケッチに合わせて t = 0.35)
+    \def\tVal{0.35}
+    \foreach \i in {0, 1, ..., 5} {
+      \pgfmathsetmacro{\nextI}{int(mod(\i+1, 6))}
+      \coordinate (In\i) at ($ (Out\i)! \tVal !(Out\nextI) $);
+    }
+
+    % 内側六角形の描画
+    \fill[blue!6, opacity=0.8]
+    (In0) -- (In1) -- (In2) -- (In3) -- (In4) -- (In5) -- cycle;
+    \draw[line width=1.4pt, blue!85!black]
+    (In0) -- (In1) -- (In2) -- (In3) -- (In4) -- (In5) -- cycle;
+
+    % 中心 P
+    \coordinate (P) at (0, 0);
+    \fill[black] (P) circle (1.2pt) node[above left=2pt] {$P$};
+
+    % --- 3. スケッチ下部の三角形（余弦定理の適用領域） ---
+    % スケッチでは下の頂点 H = In4 (辺 Out4-Out5 上の点) 近傍を取り出している
+    \coordinate (H_pt)   at (In4);
+    \coordinate (Corn_pt) at (Out5); % 外枠の右下頂点 (300°)
+
+    % 中心 P から H への破線
+    \draw[dashed, red!85!black, thick] (P) -- (H_pt);
+    % 中心 P から外枠頂点 Corn_pt への破線
+    \draw[dashed, teal!85!black, thick] (P) -- (Corn_pt);
+
+    % 辺 Corn_pt - H_pt (長さ sqrt(3)/3 * t)
+    \draw[line width=1.6pt, purple!85!black] (H_pt) -- (Corn_pt);
+
+    % 点プロット
+    \fill[black] (H_pt) circle (1.4pt) node[below left=2pt] {$H$};
+    \fill[black] (Corn_pt) circle (1.2pt);
+
+    % --- 4. スケッチ通りの角度弧と引き出しラベル ---
+    % 角 60° (正六角形の中心角・内角由来)
+    \draw[thick, gray!20!black] ($ (Corn_pt) + (180:0.22) $) arc (180:120:0.22);
+    \node[font=\scriptsize\bfseries] at ($ (Corn_pt) + (150:0.35) $) {$60^\circ$};
+
+    % 長さ sqrt(3)/3 (P から Corn_pt までの半径)
+    \node[teal!90!black, font=\scriptsize\bfseries, right=1pt] at ($(P)!0.45!(Corn_pt)$) {$\frac{\sqrt{3}}{3}$};
+
+    % 長さ sqrt(3)/3 * t (引き出し線)
+    \draw[->, thin, gray!80!black] ($(H_pt)!0.5!(Corn_pt) + (0.1, -0.35)$)
+    node[below, font=\scriptsize\bfseries] {$\frac{\sqrt{3}}{3}t$} -- ($(H_pt)!0.5!(Corn_pt)$);
+
+  \end{tikzpicture}
+  \caption{正六角形の内接切断面と $\triangle PH(\text{頂点})$ における余弦定理（手書きスケッチの再現）}
+  \label{fig:cross_section_in_hexagon_sketch}
+\end{figure}
+
+(1)を生かすなら，正六角形の中に切断面を配置する解法もありうる．
+上図で$\triangle PQR$に余弦定理を用いて
+\begin{align}
+  |PQ|^2
+  &= |RQ|^2+|RP|^2 - 2|RQ||RP|\cos\dfrac{\pi}{3} \\
+  &=\left(\dfrac{\sqrt{3}}{3}\right)^2 + \left(\dfrac{\sqrt{3}}{3}t\right)^2 - 2 \cdot \dfrac{\sqrt{3}}{3} \cdot \dfrac{\sqrt{3}}{3}t \cos \dfrac{\pi}{3} \\
   &= \dfrac{1}{3}(t^2 - t + 1)
 \end{align}
-(以下略)
+となる(以下略)．
 
 \end{document}
