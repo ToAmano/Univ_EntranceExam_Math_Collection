@@ -1,64 +1,224 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} (1) はじめの操作で場合分けする．
-$1^\circ \ 0 \le x \le 15$
-$P_m(x) = \dfrac{1}{2} P_{m-1}(2x) + \dfrac{1}{2} P_{m-1}(0)$ であり，$P_{m-1}(0) = 0$ だから，
-\begin{align}
-  P_m(x) = \dfrac{1}{2} P_{m-1}(2x)
-\end{align}
+% TODO: 遷移図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=3.8cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
 
-$2^\circ \ 16 \le x \le 30$
-$P_m(x) = \dfrac{1}{2} P_{m-1}(2x-30) + \dfrac{1}{2} P_{m-1}(30)$ であり，$P_{m-1}(30) = 1$ から，
-\begin{align}
-  P_m(x) = \dfrac{1}{2} P_{m-1}(2x-30) + \dfrac{1}{2}
-\end{align}
+    % ============================================================
+    % 上段: 0 <= z <= 15 の場合 (K(z) = z)
+    % ============================================================
+    % 現在の状態 z
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=3pt, inner sep=6pt] (Z1) at (0, 1.8) {
+      状態 $z$ $\;(0 \le z \le 15)$
+    };
 
-以上まとめて，
+    % 遷移先
+    \node[draw=teal!85!black, fill=teal!8, thick, rounded corners=3pt, inner sep=5pt] (Z1_double) at (1.2, 2.5) {
+      $L = 2z$
+    };
+    \node[draw=red!85!black, fill=red!8, very thick, rounded corners=3pt, inner sep=5pt] (Z1_zero) at (1.2, 1.1) {
+      $L = 0$（終了・吸収）
+    };
+
+    % 遷移矢印
+    \draw[->, line width=1.2pt, teal!85!black] (Z1.east) -- (Z1_double.west)
+    node[midway, above left=1pt, font=\normalsize\bfseries] {$\frac{1}{2}$};
+    \draw[->, line width=1.2pt, red!85!black] (Z1.east) -- (Z1_zero.west)
+    node[midway, below left=1pt, font=\normalsize\bfseries] {$\frac{1}{2}$};
+
+    \node[right=3pt, font=\scriptsize, gray!60!black] at (Z1_double.east) {（ボールが $z$ 個増加）};
+    \node[right=3pt, font=\scriptsize, red!90!black] at (Z1_zero.east) {（ボールが $z$ 個減少 $\implies$ 以降変化なし）};
+
+    % ============================================================
+    % 下段: 16 <= z <= 30 の場合 (K(z) = 30 - z)
+    % ============================================================
+    % 現在の状態 z
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=3pt, inner sep=6pt] (Z2) at (0, -1.2) {
+      状態 $z$ $\;(16 \le z \le 30)$
+    };
+
+    % 遷移先
+    \node[draw=red!85!black, fill=red!8, very thick, rounded corners=3pt, inner sep=5pt] (Z2_max) at (1.2, -0.5) {
+      $L = 30$（終了・吸収）
+    };
+    \node[draw=teal!85!black, fill=teal!8, thick, rounded corners=3pt, inner sep=5pt] (Z2_sub) at (1.2, -1.9) {
+      $L = 2z - 30$
+    };
+
+    % 遷移矢印
+    \draw[->, line width=1.2pt, red!85!black] (Z2.east) -- (Z2_max.west)
+    node[midway, above left=1pt, font=\normalsize\bfseries] {$\frac{1}{2}$};
+    \draw[->, line width=1.2pt, teal!85!black] (Z2.east) -- (Z2_sub.west)
+    node[midway, below left=1pt, font=\normalsize\bfseries] {$\frac{1}{2}$};
+
+    \node[right=3pt, font=\scriptsize, red!90!black] at (Z2_max.east) {（ボールが $30-z$ 個増加 $\implies$ 以降変化なし）};
+    \node[right=3pt, font=\scriptsize, gray!60!black] at (Z2_sub.east) {（ボールが $30-z$ 個減少）};
+
+    % 境界点線
+    \draw[dashed, gray!40] (-0.3, 0.3) -- (2.3, 0.3);
+
+  \end{tikzpicture}
+  \caption{1回の操作におけるボールの個数の状態遷移図}
+  \label{fig:ball_state_transition}
+\end{figure}
+
+% TODO: K(z)のグラフ
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=0.22cm, y=0.22cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-2, 0) -- (34, 0) node[right] {$z$};
+    \draw[->, thick, gray!80!black] (0, -2) -- (0, 19) node[above] {$K(z)$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % ============================================================
+    % 2. 関数 K(z) の折れ線グラフ
+    % ============================================================
+    % 0 <= z <= 15: K(z) = z
+    \draw[line width=1.6pt, blue!85!black] (0, 0) -- (15, 15);
+    % 15 <= z <= 30: K(z) = 30 - z
+    \draw[line width=1.6pt, blue!85!black] (15, 15) -- (30, 0);
+
+    % ============================================================
+    % 3. 補助線と特徴点
+    % ============================================================
+    % 頂点 (15, 15)
+    \draw[dashed, gray!60] (15, 0) -- (15, 15) -- (0, 15);
+    \fill[red!85!black] (15, 15) circle (1.8pt) node[above=2pt, font=\footnotesize\bfseries, red!90!black] {$(15, 15)$};
+
+    % 目盛り
+    \node[below=2pt, font=\scriptsize] at (15, 0) {$15$};
+    \node[below=2pt, font=\scriptsize] at (30, 0) {$30$};
+    \node[left=2pt, font=\scriptsize]  at (0, 15) {$15$};
+
+    % 端点 (吸収状態)
+    \fill[black] (0, 0)  circle (1.8pt);
+    \fill[black] (30, 0) circle (1.8pt);
+
+  \end{tikzpicture}
+  \caption{移動するボールの個数を表す関数 $K(z)$ のグラフ}
+  \label{fig:function_Kz_graph}
+\end{figure}
+
+題意の操作をした時の遷移図は上のように$0 \le z \le 15$かどうかで場合分けされる．
+ここで題意より
 \begin{align}
-  P_m(x) =
-  \begin{cases} \dfrac{1}{2} P_{m-1}(2x) & (0 \le x \le 15) \\ \dfrac{1}{2} P_{m-1}(2x-30) + \dfrac{1}{2} & (16 \le x \le 30)
+  K(z) =
+  \begin{cases}
+    z    & (0 \le z \le 15) \\
+    30-z & (16 \le z \le 30)
   \end{cases}
 \end{align}
+であるから，一回$L=0$または$L=30$になった場合はそれ以降にボールの移動は起こらない．
+従って任意の自然数$n$に対して
+\begin{align}
+  P_n(0) = 0, \quad P_n(30) = 1 \label{eq:1}
+\end{align}
+である．
+
+\paragraph{(1)}
+
+$1$回目の操作で場合分けする．$m \ge 2$とする．
+
+\subparagraph{$1^\circ \ 0 \le x \le 15$の時}
+
+$1$回目の操作後，確率$\dfrac{1}{2}$で$L=2x$，残り確率$\dfrac{1}{2}$で$L=0$になるから
+\begin{align}
+  P_m(x) = \dfrac{1}{2} P_{m-1}(2x) + \dfrac{1}{2} P_{m-1}(0)
+\end{align}
+である．\cref{eq:1}より第二項は$0$だから
+\begin{align}
+  P_m(x) = \dfrac{1}{2} P_{m-1}(2x) \label{eq:2}
+\end{align}
+である．
+
+\subparagraph{$2^\circ \ 16 \le x \le 30$の時}
+
+$1$回目の操作後，確率$\dfrac{1}{2}$で$L=2x-30$，残り確率$\dfrac{1}{2}$で$L=30$になるから
+\begin{align}
+  P_m(x) = \dfrac{1}{2} P_{m-1}(2x-30) + \dfrac{1}{2} P_{m-1}(30)
+\end{align}
+である．\cref{eq:1}より第二項は$1$だから
+\begin{align}
+  P_m(x) = \dfrac{1}{2} P_{m-1}(2x-30) + \dfrac{1}{2} \label{eq:3}
+\end{align}
+である．
+\casesend
+
+\cref{eq:2,eq:3}をまとめて，
+\begin{align}
+  P_m(x) =
+  \begin{cases}
+    \dfrac{1}{2} P_{m-1}(2x) & (0 \le x \le 15) \\
+    \dfrac{1}{2} P_{m-1}(2x-30) + \dfrac{1}{2} & (16 \le x \le 30)
+  \end{cases} \label{eq:4}
+\end{align}
+である．
 
 \paragraph{(2)}
 
-(1)から，
+$x=10$からはじめて\cref{eq:4}を繰り返し用いて
 \begin{align}
-  P_{2n+2}(10) &= \dfrac{1}{2} P_{2n+1}(20) \\
+  P_{2n+2}(10)
+  &= \dfrac{1}{2} P_{2n+1}(20) \\
   &= \dfrac{1}{2}\left(\dfrac{1}{2} P_{2n}(10) + \dfrac{1}{2}\right) \\
   &= \dfrac{1}{4} P_{2n}(10) + \dfrac{1}{4}
 \end{align}
-であり，
+であり，変形して
 \begin{align}
-  P_{2n+2}(10) - \dfrac{1}{3} = \dfrac{1}{4} \left(P_{2n}(10) - \dfrac{1}{3}\right)
+  P_{2n+2}(10) - \dfrac{1}{3} = \dfrac{1}{4} \left(P_{2n}(10) - \dfrac{1}{3}\right) \label{eq:5}
 \end{align}
-となる．$P_2(10) = \dfrac{1}{4}$ だから，くり返し用いて，
+となる．
+
+初期条件$P_2(10)$について，\cref{eq:2}より
 \begin{align}
-  P_{2n}(10) &= \left(\dfrac{1}{4}\right)^{n-1} \left(\dfrac{1}{4} - \dfrac{1}{3}\right) + \dfrac{1}{3} \\
+  P_2(10) = \dfrac{1}{2}P_1(20) = \dfrac{1}{2}\cdot\dfrac{1}{2}=\dfrac{1}{4}
+\end{align}
+である．\cref{eq:5}を繰り返し用いて
+\begin{align}
+  P_{2n}(10)
+  &= \left(\dfrac{1}{4}\right)^{n-1} \left(\dfrac{1}{4} - \dfrac{1}{3}\right) + \dfrac{1}{3} \\
   &= \dfrac{1}{3} \left\{ 1 - \left(\dfrac{1}{4}\right)^n \right\}
 \end{align}
+である．
 
 \paragraph{(3)}
 
-(1) から
+$x=6$からはじめて\cref{eq:4}を繰り返し用いて
 \begin{align}
-  P_{4n+4}(6) &= \dfrac{1}{2} P_{4n+3}(12) = \dfrac{1}{4} P_{4n+2}(24) \\
+  P_{4n+4}(6)
+  &= \dfrac{1}{2} P_{4n+3}(12) = \dfrac{1}{4} P_{4n+2}(24) \\
   &= \dfrac{1}{4}\left(\dfrac{1}{2} P_{4n+1}(18) + \dfrac{1}{2}\right) \\
   &= \dfrac{1}{8} \left(\dfrac{1}{2} P_{4n}(6) + \dfrac{1}{2}\right) + \dfrac{1}{8} \\
-  &= \dfrac{1}{16} P_{4n}(6) + \dfrac{3}{16}
+  &= \dfrac{1}{16} P_{4n}(6) + \dfrac{3}{16} \\
+  \therefore
+  P_{4n+4}(6) - \dfrac{1}{5}
+  &= \dfrac{1}{16} \left(P_{4n}(6) - \dfrac{1}{5}\right) \label{eq:6}
 \end{align}
+となる．
+
+初期条件$P_4(6)$について，\cref{eq:2}より
 \begin{align}
-  \therefore P_{4n+4}(6) - \dfrac{1}{5} = \dfrac{1}{16} \left(P_{4n}(6) - \dfrac{1}{5}\right)
+  P_4(6)
+  = \dfrac{1}{2}P_3(12)
+  = \dfrac{1}{4}P_2(24)
+  = \dfrac{1}{8}\left(P_1(18)+1\right)
+  = \dfrac{1}{8}\left(\dfrac{1}{2}+1\right)
+  = \dfrac{3}{16}
 \end{align}
-となる．$P_4(6) = \dfrac{3}{16}$ だから，くり返し用いて，
+だから，\cref{eq:6}をくり返し用いて，
 \begin{align}
-  P_{4n}(6) &= \left(\dfrac{1}{16}\right)^{n-1} \left(\dfrac{3}{16} - \dfrac{1}{5}\right) + \dfrac{1}{5} \\
+  P_{4n}(6)
+  &= \left(\dfrac{1}{16}\right)^{n-1} \left(\dfrac{3}{16} - \dfrac{1}{5}\right) + \dfrac{1}{5} \\
   &= \dfrac{1}{5} \left\{ 1 - \left(\dfrac{1}{16}\right)^n \right\}
 \end{align}
+である．
 
 \end{document}

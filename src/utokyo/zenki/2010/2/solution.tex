@@ -1,72 +1,333 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} (1) $a_k = \int_{0}^{\frac{1}{k}} \dfrac{1-x}{x+k} dx$ とおく．
+\paragraph{(1)}
+
+与えられた不等式
 \begin{align}
-  a_k &= \int_{0}^{\frac{1}{k}} \left\{ -1 + \dfrac{k+1}{x+k} \right\} dx \\
-  &= \left[ -x + (k+1)\log(x+k) \right]_{0}^{\frac{1}{k}} \\
-  &= -\dfrac{1}{k} + (k+1)\log\dfrac{k+1}{k}
+  \dfrac{1}{2(k+1)}<\int_0^1\dfrac{1-x}{k+x}dx<\dfrac{1}{2k} \label{eq:1}
 \end{align}
-だから，$k \in \mathbb{N}$ より
+について考える．真ん中の項について
 \begin{align}
-  \text{(与式)} \Leftrightarrow \dfrac{2k+3}{2(k+1)^2} < \log\dfrac{k+1}{k} < \dfrac{2k+1}{2k(k+1)} \cdots \text{①}
+  a_k = \int_{0}^{1} \dfrac{1-x}{x+k} dx \label{eq:2}
 \end{align}
-である．ここで，右図の面積を比較して，
+とおいて積分すると
 \begin{align}
-  \dfrac{1}{k+1/2} < \int_{k}^{k+1} \dfrac{1}{x} dx < \dfrac{1}{2}\left(\dfrac{1}{k} + \dfrac{1}{k+1}\right) \cdots *
+  a_k
+  &= \int_{0}^{1} \left\{ -1 + \dfrac{k+1}{x+k} \right\} dx \\
+  &= \left[ -x + (k+1)\log(x+k) \right]_{0}^{1} \\
+  &= -1 + (k+1)\left[\log\left(k+1\right)-\log k \right] \\
+  &= -1 + (k+1)\log\dfrac{k+1}{k}
 \end{align}
+だから $k \in \mathbb{N}$ より\cref{eq:1}に代入して
 \begin{align}
-  \dfrac{2}{2k+1} < \log\dfrac{k+1}{k} < \dfrac{2k+1}{2k(k+1)}
+  & \dfrac{1}{2(k+1)} < -1 + (k+1)\log\dfrac{k+1}{k} < \dfrac{1}{2k} \\
+  \therefore
+  & \dfrac{1}{2(k+1)^2}+\dfrac{1}{k+1} <  \log\dfrac{k+1}{k} < \dfrac{1}{2k}+\dfrac{1}{1+k} \label{eq:3}\\
+  \therefore
+  & \dfrac{2k+3}{2(k+1)^2} < \log\dfrac{k+1}{k} < \dfrac{2k+1}{2k(k+1)} \\
+  \therefore
+  & \dfrac{2k+3}{2(k+1)^2} < \int_{k}^{k+1} \dfrac{1}{x} dx < \dfrac{2k+1}{2k(k+1)} \label{eq:4}
 \end{align}
-であり，
+である．
+
+% TODO:
+% \quad \left( y = \dfrac{1}{x}, y'' = \dfrac{2}{x^3} \text{ より } y = \dfrac{1}{x} \text{ は下に凸} \right)
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=4.0cm, y=3.0cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 定数・厳密パラメータ
+    % 例として k = 1.0 (描画上の見やすさのため)
+    % ============================================================
+    \def\kVal{1.0}
+    \pgfmathsetmacro{\kpOne}{\kVal + 1.0}     % 2.0
+    \pgfmathsetmacro{\kMid}{\kVal + 0.5}      % 1.5
+
+    \def\C{2.0} % スケール定数 (y = C / x)
+    \pgfmathsetmacro{\yL}{\C / \kVal}         % 2.0
+    \pgfmathsetmacro{\yR}{\C / \kpOne}        % 1.0
+    \pgfmathsetmacro{\yMid}{\C / \kMid}       % 1.3333
+
+    % 中点での接線の傾きと切片
+    \pgfmathsetmacro{\slope}{-\C / (\kMid * \kMid)} % -2.0 / 2.25 ≈ -0.8889
+    \pgfmathsetmacro{\yTanL}{\slope * (\kVal - \kMid) + \yMid}   % ≈ 1.7778
+    \pgfmathsetmacro{\yTanR}{\slope * (\kpOne - \kMid) + \yMid}  % ≈ 0.8889
+
+    \coordinate (O)     at (0, 0);
+    \coordinate (X_L)   at (\kVal, 0);
+    \coordinate (X_M)   at (\kMid, 0);
+    \coordinate (X_R)   at (\kpOne, 0);
+
+    \coordinate (P_L)   at (\kVal, \yL);
+    \coordinate (P_M)   at (\kMid, \yMid);
+    \coordinate (P_R)   at (\kpOne, \yR);
+
+    \coordinate (T_L)   at (\kVal, \yTanL);
+    \coordinate (T_R)   at (\kpOne, \yTanR);
+
+    % ============================================================
+    % 2. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-0.1, 0) -- (2.3, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.15) -- (0, 2.3) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % ============================================================
+    % 3. 垂線と区間境界
+    % ============================================================
+    \draw[thick, gray!70!black] (X_L) -- (P_L);
+    \draw[thick, gray!70!black] (X_R) -- (P_R);
+    \draw[dotted, gray!60] (X_M) -- (P_M);
+
+    \node[below=2pt] at (X_L) {$k$};
+    \node[below=2pt] at (X_R) {$k+1$};
+    \node[below=2pt, font=\scriptsize] at (X_M) {$k+\frac{1}{2}$};
+
+    % y 軸への投影
+    \draw[dashed, gray!50] (P_L) -- (0, \yL) node[left=2pt, font=\scriptsize] {$\frac{1}{k}$};
+    \draw[dashed, gray!50] (P_R) -- (0, \yR) node[left=2pt, font=\scriptsize] {$\frac{1}{k+1}$};
+
+    % ============================================================
+    % 4. 曲線 y = 1/x (下に凸)
+    % ============================================================
+    \draw[line width=1.5pt, blue!85!black, domain=0.85:2.2, samples=70, smooth]
+    plot (\x, {\C / \x});
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (2.05, 1.05) {$y = \frac{1}{x}$};
+
+    % ============================================================
+    % 5. 弦（上側台形の上底・下底）と 接線（下側台形）
+    % ============================================================
+    % 弦 (緑系)
+    \draw[line width=1.3pt, teal!85!black] (P_L) -- (P_R)
+    node[midway, above right=1pt, font=\scriptsize\bfseries] {弦};
+
+    % 中点での接線 (赤系)
+    \draw[line width=1.2pt, red!85!black] (T_L) -- (T_R)
+    node[midway, below left=1pt, font=\scriptsize\bfseries] {中点での接線};
+
+    % 点プロット
+    \fill[black] (P_L) circle (1.2pt);
+    \fill[black] (P_R) circle (1.2pt);
+    \fill[red!85!black] (P_M) circle (1.3pt);
+
+  \end{tikzpicture}
+  \caption{下に凸な曲線 $y = \dfrac{1}{x}$ と接線台形・弦台形による面積評価}
+  \label{fig:trapezoid_log_evaluation}
+\end{figure}
+
+ここで真ん中の積分について上図のように上下から台形で挟んで面積を比較して，
 \begin{align}
-  \dfrac{2}{2k+1} - \dfrac{2k+3}{2(k+1)^2} = \dfrac{1}{2(k+1)^2(2k+1)} > 0 \quad \left( y = \dfrac{1}{x}, y'' = \dfrac{2}{x^3} \text{ より } y = \dfrac{1}{x} \text{ は下に凸} \right)
+  & \dfrac{1}{k+1/2} < \int_{k}^{k+1} \dfrac{1}{x} dx < \dfrac{1}{2}\left(\dfrac{1}{k} + \dfrac{1}{k+1}\right) \\
+  \therefore
+  & \dfrac{2}{2k+1} < \log\dfrac{k+1}{k} < \dfrac{2k+1}{2k(k+1)} \label{eq:5}
+\end{align}
+であり，\cref{eq:4}と比べて
+\begin{align}
+  \dfrac{2}{2k+1} - \dfrac{2k+3}{2(k+1)^2}
+  = \dfrac{1}{2(k+1)^2(2k+1)} > 0
 \end{align}
 とあわせて，
 \begin{align}
   \dfrac{2k+3}{2(k+1)^2} < \log\dfrac{k+1}{k} < \dfrac{2k+1}{2k(k+1)}
 \end{align}
-だから①は示された．よって不等式は成立．
+だから\cref{eq:4}は示された．
+よって不等式は成立である．
 
 \paragraph{(2)}
 
-①で $k=n, n+1, \dots, m-1$ として足して，
+与えられた不等式
 \begin{align}
-  \sum_{k=n}^{m-1} \dfrac{1}{k+1} + \sum_{k=n}^{m-1} \dfrac{1}{(k+1)^2} < \log\dfrac{m}{n} < \dfrac{1}{2}\sum_{k=n}^{m-1}\left(\dfrac{1}{k} + \dfrac{1}{k+1}\right)
+  \dfrac{m-n}{2(m+1)(n+1)}<\log\dfrac{m}{n}-\sum_{k=n+1}^m\dfrac{1}{k}<\dfrac{m-n}{2mn} \label{eq:6}
 \end{align}
-\begin{align}
-  \sum_{k=n+1}^{m} \dfrac{1}{k} < \log\dfrac{m}{n} - \sum_{k=n+1}^{m} \dfrac{1}{k} < \dfrac{m-n}{2mn} \cdots \text{②}
-\end{align}
-ここで，$\sum_{k=n+1}^{m} \dfrac{1}{k^2}$ は右図斜線部だから，面積比較して，
-\begin{align}
-  \sum_{k=n+1}^{m} \dfrac{1}{k^2} &> \int_{n+1}^{m+1} \dfrac{1}{x^2} dx \\
-  &= \left[ -\dfrac{1}{x} \right]_{n+1}^{m+1} \\
-  &= \dfrac{1}{n+1} - \dfrac{1}{m+1} \\
-  &= \dfrac{m-n}{(m+1)(n+1)}
-\end{align}
-だから，②に代入して
-\begin{align}
-  \dfrac{m-n}{(m+1)(n+1)} < \log\dfrac{m}{n} - \sum_{k=n+1}^{m} \dfrac{1}{k} < \dfrac{m-n}{2mn} \quad \text{終}
-\end{align}
+を示す．
 
-\bigskip\noindent{\bf [別解]}
-① 最後の評価は，
+\cref{eq:3}で$k=n,n+1,\cdots,m-1$として足し合わせて
+\begin{align}
+  \sum_{k=n}^{m-1} \dfrac{1}{k+1} + \sum_{k=n}^{m-1} \dfrac{1}{2(k+1)^2}
+  < \log\dfrac{m}{n}
+  < \dfrac{1}{2}\sum_{k=n}^{m-1}\left(\dfrac{1}{k} + \dfrac{1}{k+1}\right)
+\end{align}
+である．和の区間を$[m+1,n]$に合わせて
+\begin{align}
+  & \sum_{k=n+1}^{m} \dfrac{1}{k} + \sum_{k=n+1}^{m} \dfrac{1}{2k^2}
+  < \log\dfrac{m}{n}
+  < \sum_{k=n+1}^{m}\dfrac{1}{k} + \dfrac{1}{2}\left[\dfrac{1}{n} - \dfrac{1}{m-1}\right] \\
+  \therefore
+  & \sum_{k=n+1}^{m} \dfrac{1}{2k^2}
+  < \log\dfrac{m}{n} - \sum_{k=n+1}^{m} \dfrac{1}{k}
+  < \dfrac{m-n}{2mn} \label{eq:7}
+\end{align}
+である．よって\cref{eq:6}の右側の不等式は示された．
+
+% TODO: 面積
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.8cm, y=4.0cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (5.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.08) -- (0, 1.25) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % ============================================================
+    % 2. 階段状の長方形（和 \sum 1/k^2 の領域：斜線ハッチング）
+    % 区間: x \in [k, k+1] で高さ 1/k^2
+    % 例示として k = 1 (n+1 に対応), k = 2, ..., k = 4 (m に対応)
+    % ============================================================
+    % 曲線関数 y = 1 / x^2
+    % k=1: [1, 2] x [0, 1.0]
+    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.8]
+    (1, 0) rectangle (2, 1.0);
+    \draw[thick, gray!30!black] (1, 0) rectangle (2, 1.0);
+
+    % k=2: [2, 3] x [0, 0.25]
+    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.8]
+    (2, 0) rectangle (3, 0.25);
+    \draw[thick, gray!30!black] (2, 0) rectangle (3, 0.25);
+
+    % k=3: [3, 4] x [0, 0.111] (省略破線部)
+    \node at (3.5, 0.15) {$\cdots$};
+
+    % k=m: [4, 5] x [0, 0.0625]
+    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.8]
+    (4, 0) rectangle (5, 0.08);
+    \draw[thick, gray!30!black] (4, 0) rectangle (5, 0.08);
+
+    % ============================================================
+    % 3. 曲線 y = 1/x^2 のプロット
+    % ============================================================
+    \draw[line width=1.5pt, red!85!black, domain=0.95:5.3, samples=80, smooth]
+    plot (\x, {1.0 / (\x * \x)});
+    \node[red!90!black, font=\footnotesize\bfseries, above right] at (4.8, 0.12) {$y = \frac{1}{x^2}$};
+
+    % ============================================================
+    % 4. 積分領域との境界・目盛り
+    % ============================================================
+    \node[below=2pt] at (1, 0) {$n+1$};
+    \node[below=2pt] at (2, 0) {$n+2$};
+    \node[below=2pt] at (4, 0) {$m$};
+    \node[below=2pt] at (5, 0) {$m+1$};
+
+    % 高さのラベル
+    \draw[dashed, gray!50] (1, 1.0) -- (0, 1.0)
+    node[left=2pt, font=\scriptsize] {$\frac{1}{(n+1)^2}$};
+    \draw[dashed, gray!50] (2, 0.25) -- (0, 0.25)
+    node[left=2pt, font=\scriptsize] {$\frac{1}{(n+2)^2}$};
+
+  \end{tikzpicture}
+  \caption{級数 $\displaystyle\sum_{k=n+1}^m \dfrac{1}{k^2}$ の長方形和（斜線部）と単調減少な曲線 $y = \dfrac{1}{x^2}$ の面積比較}
+  \label{fig:sum_inverse_square_comparison}
+\end{figure}
+
+左辺の$\sum_{k=n+1}^{m} \dfrac{1}{2k^2}$ は上図の斜線部の領域だから，面積を比較して
+\begin{align}
+  \sum_{k=n+1}^{m} \dfrac{1}{k^2}
+  &> \int_{n+1}^{m+1} \dfrac{1}{x^2} dx
+  = \left[ -\dfrac{1}{x} \right]_{n+1}^{m+1} \\
+  &= \dfrac{1}{n+1} - \dfrac{1}{m+1}
+  = \dfrac{m-n}{(m+1)(n+1)}
+\end{align}
+だから，\cref{eq:7}に代入して
+\begin{align}
+  \dfrac{m-n}{2(m+1)(n+1)}
+  < \log\dfrac{m}{n} - \sum_{k=n+1}^{m} \dfrac{1}{k}
+  < \dfrac{m-n}{2mn}
+\end{align}
+である．よって題意は示された．
+
+{\bf [別解]}
+
+\subparagraph{(1)}
+
+% TODO: \dfrac{1-x}{x+k}を上下から評価した図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=4.5cm, y=5.0cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 定数・厳密パラメータ
+    % 例として k = 1.0 (描画のメリハリのため)
+    % g(x) = (1 - x) / (x + k)
+    % ============================================================
+    \def\kVal{1.0}
+    \pgfmathsetmacro{\yB}{1.0 / \kVal}           % B(0, 1/k) = (0, 1.0)
+    \pgfmathsetmacro{\yC}{1.0 / (\kVal + 1.0)}   % C(0, 1/(k+1)) = (0, 0.5)
+
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (1, 0);
+    \coordinate (B) at (0, \yB);
+    \coordinate (C) at (0, \yC);
+
+    % ============================================================
+    % 2. 面積のハッチング（曲線下の定積分領域）
+    % ============================================================
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.7]
+    (O) -- (B)
+    -- plot[domain=0:1, samples=60, smooth] (\x, {(1.0 - \x) / (\x + \kVal)})
+    -- cycle;
+
+    % ============================================================
+    % 3. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-0.15, 0) -- (1.25, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.08) -- (0, 1.25) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % ============================================================
+    % 4. 評価直線（弦 AB と 接線 AC）
+    % ============================================================
+    % 上からの評価: 弦 AB (緑系)
+    \draw[line width=1.3pt, teal!85!black] (A) -- (B);
+
+    % 下からの評価: x=1 での接線 AC (赤系)
+    % 傾き -1/(k+1)
+    \draw[line width=1.3pt, red!85!black] (A) -- (C);
+
+    % ============================================================
+    % 5. 曲線 y = (1-x)/(x+k) の描画 (下に凸)
+    % ============================================================
+    \draw[line width=1.5pt, blue!85!black, domain=0:1, samples=80, smooth]
+    plot (\x, {(1.0 - \x) / (\x + \kVal)});
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (0.35, 0.55)
+    {$y = \frac{1-x}{x+k}$};
+
+    % ============================================================
+    % 6. 各点のプロットとラベル
+    % ============================================================
+    \fill[black] (A) circle (1.2pt) node[below=2pt] {$A(1, 0)$};
+    \fill[teal!85!black] (B) circle (1.3pt) node[left=2pt] {$B\left(0, \frac{1}{k}\right)$};
+    \fill[red!85!black]  (C) circle (1.3pt) node[left=2pt] {$C\left(0, \frac{1}{k+1}\right)$};
+
+  \end{tikzpicture}
+  \caption{下に凸な曲線 $y = \dfrac{1-x}{x+k}$ と2つの直角三角形 $\triangle OAC, \triangle OAB$ による面積評価}
+  \label{fig:alternative_integral_triangle_evaluation}
+\end{figure}
+
+$f(x)=\dfrac{1-x}{x+k}$とおくと，
+\begin{align}
+  f(x) =  -1 + \dfrac{k+1}{x+k}
+\end{align}
+でこれは下に凸だから，$y=f(x)$のグラフの概形は上図のようになる．
+下からは$x=1$での接線で，上からは$(0,1/k),(1,0)$を結んだ線分で挟むと，
+\begin{align}
+  \triangle OAC < \int_{0}^{1}f(x)dx < \triangle OAB
+\end{align}
+である．従って
+\begin{align}
+  \dfrac{1}{2(k+1)} < \int_{0}^{1}f(x)dx < \dfrac{1}{2k}
+\end{align}
+を得る．
+
+\subparagraph{(2)}
+\cref{eq:7}から左側の不等式は以下のように積分なしでも全く同じ評価ができる．
 \begin{align}
   \sum_{k=n+1}^{m} \dfrac{1}{k^2} > \sum_{k=n+1}^{m} \dfrac{1}{k(k+1)} = \dfrac{1}{n+1} - \dfrac{1}{m+1}
 \end{align}
-でも良い．
-
-② $a_k$ の表式から
-\begin{align}
-  \dfrac{1}{2(k+1)} < -1 + (k+1)\log\dfrac{k+1}{k} < \dfrac{1}{2k}
-\end{align}
-\begin{align}
-  \dfrac{1}{2(k+1)^2} < \log\dfrac{k+1}{k} - \dfrac{1}{k+1} < \dfrac{1}{2k(k+1)}
-\end{align}
-として $k$ について和をとっても良い．
 
 \end{document}
