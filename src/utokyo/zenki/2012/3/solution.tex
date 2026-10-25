@@ -1,83 +1,294 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-\noindent
-{\bf [解]} $y \ge \dfrac{1}{2} x^2, \dfrac{x^2}{1/2} + \dfrac{y^2}{1/32} \le 1$ を図示すると下図斜線部．
-
+% TODO: 領域の図示
+% TODO: 領域の図示
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=2.2, >=stealth]
-    \draw[->] (-1.0, 0) -- (1.0, 0) node[right] {$x$};
-    \draw[->] (0, -0.3) -- (0, 0.4) node[above] {$y$};
-    \node[below left] at (0,0) {$0$};
+  \begin{tikzpicture}[x=3.8cm, y=10.0cm, >=stealth, every node/.style={font=\small}]
 
-    \draw[domain=-0.7:0.7, smooth, variable=\x] plot ({\x}, {0.5*\x*\x});
-    \node[above right] at (0.45, 0.1) {$y = \frac{1}{2}x^2$};
+    % ============================================================
+    % 1. 定数・厳密パラメータ
+    % 楕円: x^2 / (1/2) + y^2 / (1/32) = 1
+    % a = 1/sqrt(2) ≈ 0.7071, b = 1/sqrt(32) = sqrt(2)/8 ≈ 0.1768
+    % 交点: x = ±1/2, y = 1/8 = 0.125
+    % ============================================================
+    \def\aEll{0.7071} % 1/sqrt(2)
+    \def\bEll{0.1768} % sqrt(2)/8
 
-    \draw[dashed] (0,0) ellipse ({1/sqrt(2)} and {1/sqrt(32)});
+    \coordinate (O)  at (0, 0);
+    \coordinate (P_R) at (0.5, 0.125);
+    \coordinate (P_L) at (-0.5, 0.125);
 
-    \begin{scope}
-      \clip (0,0) ellipse ({1/sqrt(2)} and {1/sqrt(32)});
-      \fill[gray!30, domain=-0.7:0.7, variable=\x] (-0.7, 0.4) -- plot ({\x}, {0.5*\x*\x}) -- (0.7, 0.4) -- cycle;
-    \end{scope}
-    \draw[domain=-0.5:0.5, smooth, variable=\x] plot ({\x}, {0.5*\x*\x});
-    \draw[dashed] (0,0) ellipse ({1/sqrt(2)} and {1/sqrt(32)});
+    % ============================================================
+    % 2. 領域 S の斜線塗りつぶし (放物線の上側 かつ 楕円の内側)
+    % ============================================================
+    \fill[pattern=north east lines, pattern color=blue!75, opacity=0.8]
+    plot[domain=-0.5:0.5, samples=50, smooth, variable=\x] ({\x}, {0.5*\x*\x})
+    -- plot[domain=0.5:-0.5, samples=50, smooth, variable=\x] ({\x}, {sqrt(1.0/32.0 - \x*\x/16.0)})
+    -- cycle;
 
-    \node at (0, 0.12) {$S$};
-    \node[below] at ({1/sqrt(2)}, 0) {$\frac{1}{\sqrt{2}}$};
-    \node[below] at ({-1/sqrt(2)}, 0) {$-\frac{1}{\sqrt{2}}$};
-    \node[below] at (0.5, 0) {$\frac{1}{2}$};
-    \node[below] at (-0.5, 0) {$-\frac{1}{2}$};
-    \node[above left] at (0, {1/sqrt(32)}) {$\frac{1}{\sqrt{32}}$};
+    % ============================================================
+    % 3. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-0.95, 0) -- (0.95, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.04) -- (0, 0.24) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % ============================================================
+    % 4. 曲線 C1 (放物線) と C2 (楕円)
+    % ============================================================
+    % 楕円全体 (点線)
+    \draw[dashed, gray!50, line width=0.9pt] (0, 0) ellipse ({\aEll} and {\bEll});
+
+    % 領域 S の上蓋となる楕円上弧 (実線強調)
+    \draw[line width=1.4pt, teal!85!black, domain=-0.5:0.5, samples=50, smooth, variable=\x]
+    plot ({\x}, {sqrt(1.0/32.0 - \x*\x/16.0)});
+    \node[teal!90!black, font=\footnotesize\bfseries, above right] at (0.22, 0.17)
+    {$C_2: \frac{x^2}{1/2} + \frac{y^2}{1/32} = 1$};
+
+    % 放物線 y = 1/2 x^2 (実線)
+    \draw[line width=1.4pt, blue!85!black, domain=-0.62:0.62, samples=60, smooth, variable=\x]
+    plot ({\x}, {0.5*\x*\x});
+    \node[blue!90!black, font=\footnotesize\bfseries, right] at (0.55, 0.15)
+    {$C_1: y = \frac{1}{2}x^2$};
+
+    % ============================================================
+    % 5. 交点・特徴点と目盛り
+    % ============================================================
+    % 交点 (±1/2, 1/8)
+    \draw[dashed, gray!60] (-0.5, 0) -- (P_L) -- (0, 0.125) -- (P_R) -- (0.5, 0);
+    \fill[black] (P_R) circle (1.2pt);
+    \fill[black] (P_L) circle (1.2pt);
+
+    % x 軸目盛り
+    \node[below=2pt, font=\scriptsize] at (0.5, 0) {$\frac{1}{2}$};
+    \node[below=2pt, font=\scriptsize] at (-0.5, 0) {$-\frac{1}{2}$};
+    \node[below=2pt, font=\scriptsize, gray!60!black] at ({\aEll}, 0) {$\frac{1}{\sqrt{2}}$};
+    \node[below=2pt, font=\scriptsize, gray!60!black] at ({-\aEll}, 0) {$-\frac{1}{\sqrt{2}}$};
+
+    % y 軸目盛り
+    \node[left=2pt, font=\scriptsize] at (0, 0.125) {$\frac{1}{8}$};
+    \fill[teal!85!black] (0, \bEll) circle (1.2pt);
+    \node[above left=1pt, font=\scriptsize, teal!90!black] at (0, \bEll) {$\frac{\sqrt{2}}{8}$};
+
+    % 領域ラベル S
+    \node[blue!90!black, font=\normalsize\bfseries] at (0, 0.08) {$S$};
+
   \end{tikzpicture}
-  \caption{放物線と楕円で囲まれる領域$S$}
+  \caption{放物線 $C_1$ と楕円 $C_2$ で囲まれる領域 $S$（斜線部）}
+  \label{fig:parabola_ellipse_bounded_region}
 \end{figure}
 
-\noindent
+与えられた領域
+\begin{align}
+  \begin{cases}
+    C_1: y \ge \dfrac{1}{2} x^2 \\
+    C_2: \dfrac{x^2}{1/2} + \dfrac{y^2}{1/32} \le 1
+  \end{cases} \label{eq:1}
+\end{align}
+を図示すると上図の斜線部のようになる．これは$y$軸に関して線対称である．
+簡単のため
+\begin{align}
+  \begin{cases}
+    f(x) = \dfrac{1}{2} x^2 \\
+    g(x) = \sqrt{\dfrac{1}{32} - \dfrac{x^2}{16}}
+  \end{cases} \label{eq:2}
+\end{align}
+および，逆関数を
+\begin{align}
+  \begin{cases}
+    f^{-1}(y) = \sqrt{2y} \\
+    g^{-1}(y) = \sqrt{\dfrac{1}{2}-16y^2}
+  \end{cases} \label{eq:3}
+\end{align}
+
+とおく．
+
 \paragraph{(1)}
 
-対称性から
+% x,y軸周りに回転させる概要図（左: x軸, 右: y軸）
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.0,>=stealth, every node/.style={font=\small}]
+
+    % =========================================================================
+    % 左側: x 軸周りの回転体 V_1
+    % スケール: x方向 3.5cm, y方向 8.0cm (縦長に強調して見やすくする)
+    % =========================================================================
+    \begin{scope}[shift={(-3.4, 0)}, x=3.2cm, y=7.5cm]
+
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-0.2, 0) -- (0.85, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -0.05) -- (0, 0.25) node[above] {$y$};
+      \node[below left=2pt] at (0, 0) {$O$};
+
+      % 回転させる領域 (0 <= x <= 1/2) の斜線ハッチング
+      % f(x) = 0.5*x^2, g(x) = sqrt(1/32 - x^2/16)
+      \fill[pattern=north east lines, pattern color=blue!70, opacity=0.8]
+      (0, 0)
+      -- plot[domain=0:0.5, samples=40, smooth, variable=\x] ({\x}, {0.5*\x*\x})
+      -- plot[domain=0.5:0, samples=40, smooth, variable=\x] ({\x}, {sqrt(1.0/32.0 - \x*\x/16.0)})
+      -- cycle;
+
+      % 曲線 f(x) と g(x)
+      \draw[line width=1.3pt, blue!85!black, domain=0:0.6, samples=50, smooth]
+      plot (\x, {0.5*\x*\x});
+      \node[blue!90!black, font=\scriptsize\bfseries, below right] at (0.45, 0.1) {$y = f(x)$};
+
+      \draw[line width=1.3pt, teal!85!black, domain=0:0.65, samples=50, smooth]
+      plot (\x, {sqrt(1.0/32.0 - \x*\x/16.0)});
+      \node[teal!90!black, font=\scriptsize\bfseries, above right] at (0.2, 0.18) {$y = g(x)$};
+
+      % 交点 (1/2, 1/8)
+      \draw[dashed, gray!60] (0.5, 0) -- (0.5, 0.125) -- (0, 0.125);
+      \fill[black] (0.5, 0.125) circle (1.2pt);
+      \node[below=2pt, font=\scriptsize] at (0.5, 0) {$\frac{1}{2}$};
+      \node[left=2pt, font=\scriptsize] at (0, 0.125) {$\frac{1}{8}$};
+
+      % 微小スライス (x の位置での縦の線分: g(x) - f(x))
+      \def\xSlice{0.28}
+      \pgfmathsetmacro{\yBot}{0.5*\xSlice*\xSlice}
+      \pgfmathsetmacro{\yTop}{sqrt(1.0/32.0 - \xSlice*\xSlice/16.0)}
+      \draw[line width=1.6pt, red!85!black] (\xSlice, \yBot) -- (\xSlice, \yTop);
+      \node[red!90!black, font=\scriptsize\bfseries, right=1pt] at (\xSlice, {0.5*(\yBot+\yTop)}) {断面幅};
+
+      % x 軸周りの回転矢印
+      \draw[->, line width=1.2pt, red!85!black] (0.58, -0.015)
+      arc (-70:250:0.04 and 0.035);
+      \node[red!90!black, font=\footnotesize\bfseries, below=4pt] at (0.58, -0.02) {$x$ 軸回転};
+
+      \node[below=18pt, font=\small\bfseries] at (0.35, -0.04)
+      {(a) $x$ 軸周りの回転体 $V_1$};
+
+    \end{scope}
+
+    % =========================================================================
+    % 右側: y 軸周りの回転体 V_2
+    % スケール: x方向 3.2cm, y方向 7.5cm
+    % =========================================================================
+    \begin{scope}[shift={(1.4, 0)}, x=3.2cm, y=7.5cm]
+
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-0.2, 0) -- (0.85, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -0.05) -- (0, 0.25) node[above] {$y$};
+      \node[below left=2pt] at (0, 0) {$O$};
+
+      % 下段 (0 <= y <= 1/8): 放物線側 (赤系ハッチング)
+      \fill[pattern=north west lines, pattern color=red!70, opacity=0.7]
+      (0, 0)
+      -- plot[domain=0:0.125, samples=30, smooth, variable=\y] ({sqrt(2.0*\y)}, {\y})
+      -- (0, 0.125) -- cycle;
+
+      % 上段 (1/8 <= y <= sqrt(2)/8): 楕円側 (青系ハッチング)
+      \fill[pattern=north east lines, pattern color=blue!70, opacity=0.7]
+      (0, 0.125)
+      -- plot[domain=0.125:0.1768, samples=30, smooth, variable=\y] ({sqrt(0.5 - 16.0*\y*\y)}, {\y})
+      -- (0, 0.1768) -- cycle;
+
+      % 境界曲線
+      \draw[line width=1.3pt, red!85!black, domain=0:0.125, samples=40, smooth, variable=\y]
+      plot ({sqrt(2.0*\y)}, {\y});
+      \draw[line width=1.3pt, blue!85!black, domain=0.125:0.1768, samples=40, smooth, variable=\y]
+      plot ({sqrt(0.5 - 16.0*\y*\y)}, {\y});
+
+      % 分割線 y = 1/8
+      \draw[line width=1.1pt, gray!30!black, dashed] (0, 0.125) -- (0.5, 0.125);
+
+      % y 軸上の目盛り
+      \node[left=2pt, font=\scriptsize] at (0, 0.125) {$\frac{1}{8}$};
+      \fill[black] (0, 0.1768) circle (1.2pt);
+      \node[left=2pt, font=\scriptsize] at (0, 0.1768) {$\frac{\sqrt{2}}{8}$};
+
+      % 微小円盤スライス (横の線分)
+      \def\ySlice{0.065}
+      \draw[line width=1.6pt, red!85!black] (0, \ySlice) -- ({sqrt(2.0*\ySlice)}, \ySlice)
+      node[midway, below=1pt, font=\tiny\bfseries] {$x = f^{-1}(y)$};
+
+      \def\ySliceTwo{0.15}
+      \draw[line width=1.6pt, blue!85!black] (0, \ySliceTwo) -- ({sqrt(0.5 - 16.0*\ySliceTwo*\ySliceTwo)}, \ySliceTwo)
+      node[midway, above=1pt, font=\tiny\bfseries] {$x = g^{-1}(y)$};
+
+      % y 軸周りの回転矢印
+      \draw[->, line width=1.2pt, red!85!black] (-0.03, 0.22)
+      arc (200:-70:0.035 and 0.012);
+      \node[red!90!black, font=\footnotesize\bfseries, above right=1pt] at (0, 0.22) {$y$ 軸回転};
+
+      \node[below=18pt, font=\small\bfseries] at (0.35, -0.04)
+      {(b) $y$ 軸周りの回転体 $V_2$};
+
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{領域 $S$（$x \ge 0$）の $x$ 軸周りおよび $y$ 軸周りの回転による求積の幾何構造}
+  \label{fig:rotation_swept_volume_both_axes}
+\end{figure}
+
+\cref{eq:1}を$x$軸の周りに回転した立体の体積$V_1$は，対称性から$0\le x$の部分を$x$軸周りに回転させた領域の$2$倍だから
 \begin{align}
-  \dfrac{1}{\pi} \dfrac{1}{2} V_1 &= \int_0^{\frac{1}{2}} \left[ \left( \dfrac{1}{32} - \dfrac{x^2}{16} \right) - \dfrac{1}{4} x^4 \right] dx \\
+  \dfrac{1}{2} V_1
+  &= \pi \int_0^{\frac{1}{2}} \left[(g(x))^2-(f(x))^2\right] dx \\
+  &= \pi \int_0^{\frac{1}{2}} \left[ \left( \dfrac{1}{32} - \dfrac{x^2}{16} \right) - \dfrac{1}{4} x^4 \right] dx \\
   &= \left[ -\dfrac{1}{20} x^5 - \dfrac{1}{48} x^3 + \dfrac{1}{32} x \right]_0^{\frac{1}{2}} \\
-  &= \dfrac{11}{15} \left(\dfrac{1}{2}\right)^6
+  &= \dfrac{11\pi}{15} \left(\dfrac{1}{2}\right)^6 \\
+  \therefore
+  V_1 &= \dfrac{11\pi}{15} \left(\dfrac{1}{2}\right)^5 \label{eq:4}
 \end{align}
+である．
 
+ついで\cref{eq:1}を$y$軸の周りに回転した立体の体積$V_2$は，対称性から$0\le x$の部分を$y$軸周りに回転させてれば良いから
 \begin{align}
-  \dfrac{1}{\pi} V_2 &= \int_0^{\frac{1}{8}} (2y) dy + \int_{\frac{1}{8}}^{\frac{1}{\sqrt{32}}} \left( \dfrac{1}{2} - 16y^2 \right) dy \\
-  &= \left[ y^2 \right]_0^{\frac{1}{8}} + \left[ \dfrac{1}{2} y - \dfrac{16}{3} y^3 \right]_{\frac{1}{8}}^{\frac{1}{\sqrt{32}}} \\
-  &= \dfrac{1}{64} + \dfrac{1}{8} \dfrac{\sqrt{2}-1}{2} - \dfrac{16}{3} \dfrac{2\sqrt{2}-1}{8^3} \\
+  \dfrac{1}{\pi} V_2
+  &= \int_0^{\frac{1}{8}} \left(f^{-1}(y)\right)^2 dy
+  + \int_{\frac{1}{8}}^{\frac{\sqrt{2}}{8}} \left(g^{-1}(y)\right)^2 dy \\
+  &= \int_0^{\frac{1}{8}} (2y) dy + \int_{\frac{1}{8}}^{\frac{\sqrt{2}}{8}} \left( \dfrac{1}{2} - 16y^2 \right) dy \\
+  &= \left[ y^2 \right]_0^{\frac{1}{8}} + \left[ \dfrac{1}{2} y - \dfrac{16}{3} y^3 \right]_{\frac{1}{8}}^{\frac{\sqrt{2}}{8}} \\
+  &= \dfrac{1}{64} + \dfrac{1}{1} \dfrac{\sqrt{2}-1}{8} - \dfrac{16}{3} \dfrac{2\sqrt{2}-1}{8^3} \\
   &= \dfrac{1}{64} + \dfrac{\sqrt{2}-1}{16} - \dfrac{1}{3} \dfrac{2\sqrt{2}-1}{32} \\
-  &= \dfrac{1}{3} \dfrac{1}{64} \left[ -7 + 8\sqrt{2} \right]
+  &= \dfrac{1}{3} \dfrac{1}{64} \left[ -7 + 8\sqrt{2} \right] \\
+  \therefore
+  V_2 &= \dfrac{\pi}{192} (-7 + 8\sqrt{2}) \label{eq:5}
 \end{align}
+である．
 
-だから
+\cref{eq:4,eq:5}をまとめて
 \begin{align}
-  V_1 = \dfrac{11}{15} \left(\dfrac{1}{2}\right)^5 \pi, \quad V_2 = \dfrac{\pi}{192} (-7 + 8\sqrt{2})
+  V_1 = \dfrac{11}{15} \left(\dfrac{1}{2}\right)^5 \pi, \quad
+  V_2 = \dfrac{\pi}{192} (-7 + 8\sqrt{2}) \label{eq:6}
 \end{align}
+である．
 
-\bigskip
-
-\noindent
 \paragraph{(2)}
 
-(1) から，
+\cref{eq:6} から，
 \begin{align}
-  \dfrac{V_2}{V_1} &= \dfrac{\dfrac{1}{3} \left(\dfrac{1}{2}\right)^6 (-7 + 8\sqrt{2})}{\dfrac{11}{15} \left(\dfrac{1}{2}\right)^5} \\
+  \dfrac{V_2}{V_1}
+  &= \dfrac{\dfrac{1}{3} \left(\dfrac{1}{2}\right)^6 (-7 + 8\sqrt{2})}{\dfrac{11}{15} \left(\dfrac{1}{2}\right)^5} \\
   &= \dfrac{\dfrac{1}{6}(-7 + 8\sqrt{2})}{\dfrac{11}{15}} \\
-  &= \dfrac{5}{22} (-7 + 8\sqrt{2}) < 1 \\
-  &\iff -7 + 8\sqrt{2} < \dfrac{22}{5} \iff 8\sqrt{2} < \dfrac{57}{5} \quad \cdots \textcircled{1}
+  &= \dfrac{5}{22} (-7 + 8\sqrt{2})
 \end{align}
-だが，①は $64 \cdot 2 \cdot 25 = 3200 < 3249 = (57)^2$ の平方根をとって
-$8\sqrt{2} < \dfrac{57}{5}$ だから成立．よって
+だから
+\begin{align}
+  \dfrac{5}{22} (-7 + 8\sqrt{2}) < 1
+  &\iff
+  -7 + 8\sqrt{2} < \dfrac{22}{5}
+  \iff
+  8\sqrt{2} < \dfrac{57}{5} \label{eq:7}
+\end{align}
+である．ここで
+\begin{align}
+  64 \cdot 2 \cdot 25 = 3200 < 3249 = (57)^2
+\end{align}
+の平方根を取れば
+\begin{align}
+  8\sqrt{2} < \dfrac{57}{5}
+\end{align}
+だから\cref{eq:7}は成立する．よって
 \begin{align}
   \dfrac{V_2}{V_1} < 1
 \end{align}
-
-\bigskip
+である．
 
 \end{document}

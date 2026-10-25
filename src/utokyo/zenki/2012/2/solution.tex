@@ -1,68 +1,121 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-\begin{table}[htb]
-  \centering
-  \begin{tabular}{|p{0.9\textwidth}|}
-    \hline
-    場合の数のこの手のヤツでは，
-    \begin{enumerate}
-      \item[(1)] 対称性
-      \item[(2)] $\bmod$ で場合分け
-    \end{enumerate}
-    ができないかまずチェックせよ． \\
-    \hline
-  \end{tabular}
-  \caption{解答方針のメモ}
-\end{table}
-
-\bigskip
-
-\noindent
-{\bf [解]} $k \in \mathbb{N}$ とする．球は $2k$ 秒後にのみ $P, Q$ にある．右のように $R$ を定める．対称性から，$2k$ 秒後に球が $P, Q, R$ にある確率は，$b_k, b_k, b_k$ とおける．
-又，題意から，以下の漸化式をうる．
-\begin{align}
-  b_{k+1} = \dfrac{2}{3} b_k + \dfrac{1}{6} b_k + \dfrac{1}{6} a_k \quad \cdots \textcircled{1}
-\end{align}
-
+% TODO: upgrade
+% TODO: upgrade
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.2, >=stealth]
-    \draw[thick] (0, 1.5) -- (-1.3, -0.7) -- (1.3, -0.7) -- cycle;
-    \draw (0, 1.5) -- (0, -0.7);
-    \draw (-1.3, -0.7) -- (0.65, 0.4);
-    \draw (1.3, -0.7) -- (-0.65, 0.4);
-    \node at (0, 0.7) {$P$};
-    \node at (0.4, -0.2) {$Q$};
-    \node at (-0.4, -0.2) {$R$};
+  % =========================================================================
+  % 左図: 正三角形の3分割領域 P, Q, R
+  % =========================================================================
+  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
+
+    % 正三角形の頂点 (一辺の長さを 2*sqrt(3), 外接円半径 2)
+    % A: 上頂点 (0, 2), B: 左下 (-sqrt(3), -1), C: 右下 (sqrt(3), -1)
+    \coordinate (A) at (0, 2);
+    \coordinate (B) at (-1.732, -1);
+    \coordinate (C) at (1.732, -1);
+    \coordinate (G) at (0, 0); % 重心
+
+    % 各辺の中点
+    \coordinate (M_BC) at (0, -1);
+    \coordinate (M_CA) at (0.866, 0.5);
+    \coordinate (M_AB) at (-0.866, 0.5);
+
+    % ------------------------------------------------------------
+    % 3つの領域 P, Q, R の塗り分け
+    % P: 上側頂点 A を含む凧形 (A - M_CA - G - M_AB)
+    % Q: 右下頂点 C を含む凧形 (C - M_BC - G - M_CA)
+    % R: 左下頂点 B を含む凧形 (B - M_AB - G - M_BC)
+    % ------------------------------------------------------------
+    \fill[blue!15, opacity=0.7] (A) -- (M_CA) -- (G) -- (M_AB) -- cycle;
+    \fill[red!15, opacity=0.7]  (C) -- (M_BC) -- (G) -- (M_CA) -- cycle;
+    \fill[teal!15, opacity=0.7] (B) -- (M_AB) -- (G) -- (M_BC) -- cycle;
+
+    % 正三角形の外枠
+    \draw[line width=1.4pt, gray!20!black] (A) -- (B) -- (C) -- cycle;
+
+    % 中線・境界線 (各頂点から対辺の中点へ)
+    \draw[thick, gray!50!black] (A) -- (M_BC);
+    \draw[thick, gray!50!black] (B) -- (M_CA);
+    \draw[thick, gray!50!black] (C) -- (M_AB);
+
+    % 重心 G
+    \fill[black] (G) circle (1.2pt);
+
+    % 領域ラベル
+    \node[blue!90!black, font=\large\bfseries] at (0, 0.75) {$P$};
+    \node[red!90!black, font=\large\bfseries]  at (0.6, -0.45) {$Q$};
+    \node[teal!90!black, font=\large\bfseries] at (-0.6, -0.45) {$R$};
+
+    % 図タイトル
+    \node[below=14pt, font=\footnotesize\bfseries] at (0, -1.0) {(a) 正三角形の対称な 3 領域};
+
   \end{tikzpicture}
-  \quad\quad
-  \begin{tikzpicture}[scale=1.2, >=stealth]
-    \node (P) at (0, 1) {$P$};
-    \node (Q) at (2, 0) {$Q$};
-    \node (R) at (0, -1) {$R$};
-    \draw[->] (P) -- node[above right] {$1/6$} (Q);
-    \draw[->] (Q) to[out=30,in=-30,loop] node[right] {$2/3$} (Q);
-    \draw[->] (R) -- node[below right] {$1/6$} (Q);
+  \qquad\quad
+  % =========================================================================
+  % 右図: 2ステップごとの状態遷移図 (P, Q, R)
+  % =========================================================================
+  \begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+
+    % 状態ノード (円形ノードで配置)
+    \node[draw=blue!85!black, fill=blue!8, circle, line width=1.2pt, inner sep=4pt, font=\normalsize\bfseries]
+    (P) at (0, 1.4) {$P$};
+    \node[draw=red!85!black, fill=red!8, circle, line width=1.2pt, inner sep=4pt, font=\normalsize\bfseries]
+    (Q) at (1.8, -0.8) {$Q$};
+    \node[draw=teal!85!black, fill=teal!8, circle, line width=1.2pt, inner sep=4pt, font=\normalsize\bfseries]
+    (R) at (-1.8, -0.8) {$R$};
+
+    % 遷移矢印 (Q への流入を中心に描画)
+    % P -> Q (確率 1/6)
+    \draw[->, line width=1.2pt, blue!85!black] (P) -- (Q)
+    node[midway, above right=1pt, font=\footnotesize\bfseries] {$\frac{1}{6}$};
+
+    % R -> Q (確率 1/6)
+    \draw[->, line width=1.2pt, teal!85!black] (R) -- (Q)
+    node[midway, below=2pt, font=\footnotesize\bfseries] {$\frac{1}{6}$};
+
+    % Q -> Q (自己ループ, 確率 2/3)
+    \draw[->, line width=1.2pt, red!85!black] (Q) to[out=-25, in=45, looseness=4.5]
+    node[right=2pt, font=\footnotesize\bfseries] {$\frac{2}{3}$} (Q);
+
+    % 対称性の補助（破線で他の同等な遷移を示唆）
+    \draw[->, dashed, line width=0.9pt, gray!50] (P) -- (R)
+    node[midway, above left=1pt, font=\scriptsize] {$\frac{1}{6}$};
+    \draw[->, dashed, line width=0.9pt, gray!50] (R) to[out=135, in=-155, looseness=4.5]
+    node[left=2pt, font=\scriptsize] {$\frac{2}{3}$} (R);
+    \draw[->, dashed, line width=0.9pt, gray!50] (P) to[out=120, in=60, looseness=4.5]
+    node[above=2pt, font=\scriptsize] {$\frac{2}{3}$} (P);
+
+    % 図タイトル
+    \node[below=14pt, font=\footnotesize\bfseries] at (0, -1.0) {(b) $2$ 秒ごとの状態遷移確率};
+
   \end{tikzpicture}
-  \caption{正三角形の頂点$P,Q,R$と球の遷移確率}
+  \caption{正三角形内の対称な領域分割と球の状態遷移図}
+  \label{fig:triangle_markov_transition_upgrade}
 \end{figure}
 
-\noindent
-又，$a_k + 2b_k = 1$ から ① で $a_k$ をけして
+上図のように$R$ を定める．
+$k \in \mathbb{N}$ とすると球は $2k$ 秒後にのみ $P, Q, R$ にある．
+対称性から，$2k$ 秒後に球が $P, Q, R$ にある確率は $a_k, b_k, b_k$ とおける．
+題意から以下の漸化式をうる．
 \begin{align}
-  b_{k+1} = \dfrac{1}{2} b_k + \dfrac{1}{6}
+  b_{k+1} = \dfrac{2}{3} b_k + \dfrac{1}{6} b_k + \dfrac{1}{6} a_k \label{eq:1}
 \end{align}
+ここで，$2k$ 秒後には球は$P, Q, R$のいずれかにあるから
 \begin{align}
-  b_{k+1} - \dfrac{1}{3} = \dfrac{1}{2} \left( b_k - \dfrac{1}{3} \right)
+  a_k + 2b_k = 1 \label{eq:2}
 \end{align}
-$b_0 = 0$ だから，これをくり返し用いて，
+である．\cref{eq:1}に代入して$a_k$ を消去すると
 \begin{align}
-  b_k = \left(\dfrac{1}{2}\right)^k \left(-\dfrac{1}{3}\right) + \dfrac{1}{3}
+  & b_{k+1} = \dfrac{1}{2} b_k + \dfrac{1}{6} \\
+  & b_{k+1} - \dfrac{1}{3} = \dfrac{1}{2} \left( b_k - \dfrac{1}{3} \right)
+\end{align}
+である．初期条件は$b_0 = 0$ だから，漸化式を繰り返し用いて
+\begin{align}
+  b_k = -\dfrac{1}{3}\left(\dfrac{1}{2}\right)^k + \dfrac{1}{3}
 \end{align}
 だから，もとめる確率は
 \begin{align}
@@ -71,6 +124,7 @@ $b_0 = 0$ だから，これをくり返し用いて，
     \dfrac{1}{3} \left( 1 - \left(\dfrac{1}{2}\right)^{\frac{n}{2}} \right) & (n \in \text{even})
   \end{cases}
 \end{align}
+である．
 
 \bigskip
 
