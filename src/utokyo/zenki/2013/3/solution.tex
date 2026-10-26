@@ -1,103 +1,252 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
 {\bf [解]}
 
 \paragraph{(1)}
 
-$n$ 回コインを投げた時に A が勝つのは，$n$ 回目の試行の前に A がコインを持ち，かつ投げて表が出る時である．さらに，$n-1$ 回目までに A が1点，B が0点又は1点である．
+以下 $n \ge 2$ とする．各回で誰がコインを投げたかを左から順に並べることにすると，
+この$A, B$が並んだ順列がゲームのパターンに一対一対応する．
 
-以下 $n \ge 2$ とする．
-
-\medskip
-
-\noindent
-$1^\circ$ B が 0 点の時
-
-$n$ は偶数である．以下の表のように $n$ 個の丸の中に，左から $n$ 回目の試行の後に玉を持つ人を書き下すと，この間に1ヶ所だけ A が連続する場所がある．この場所の選び方は $n = 2m$ とおくと，$m$ 通り．
-
-\begin{table}[htb]
+% TODO: ゲームと順列の例
+\begin{figure}[htb]
   \centering
-  \begin{tabular}{ccccccc}
-    1 & 2 & $\dots$ & $2k-1, 2k$ & $\dots$ & $n-1$ & $n$ \\
-    $\circ$ & $\circ$ & $\dots$ & $\circ \quad \circ$ & $\dots$ & $\circ$ & $\circ$ \\
-    B & A & $\dots$ & A \quad A & $\dots$ & A & A
-  \end{tabular}
-  \caption{玉を持つ人の推移（Bが0点の場合）}
-\end{table}
+  \begin{tikzpicture}[x=1.35cm, y=1.0cm, >=stealth, every node/.style={font=\small}]
 
-\medskip
+    % 試行回数のヘッダー
+    \foreach \t/\label in {1/1, 2/2, 3/3, 4/4, 5/5, 6/6} {
+      \node[font=\footnotesize, gray!60!black] at (\t, 2.3) {第 \label 回};
+    }
 
-\noindent
-$2^\circ$ B が 1 点の時
+    % 投げる人 (順列の文字)
+    \node[draw=blue!80, fill=blue!8, circle, font=\bfseries] (A1) at (1, 1.2) {$A$};
+    \node[draw=red!80,  fill=red!8,  circle, font=\bfseries] (B2) at (2, 1.2) {$B$};
+    \node[draw=blue!80, fill=blue!8, circle, font=\bfseries] (A3) at (3, 1.2) {$A$};
+    \node[draw=blue!80, fill=blue!8, circle, font=\bfseries] (A4) at (4, 1.2) {$A$};
+    \node[draw=red!80,  fill=red!8,  circle, font=\bfseries] (B5) at (5, 1.2) {$B$};
+    \node[draw=blue!80, fill=blue!8, circle, font=\bfseries] (A6) at (6, 1.2) {$A$};
 
-$n$ は奇数である．$1^\circ$ と同様に考えると A, B 共に連続する場所が1ヶ所ずつある．
+    % コイントスの結果 (表/裏)
+    \node[font=\footnotesize] at (1, 0.2) {裏 ($\times$)};
+    \node[font=\footnotesize] at (2, 0.2) {裏 ($\times$)};
+    \node[font=\footnotesize, red!85!black, font=\footnotesize\bfseries] at (3, 0.2) {表 ($\circ$)};
+    \node[font=\footnotesize] at (4, 0.2) {裏 ($\times$)};
+    \node[font=\footnotesize] at (5, 0.2) {裏 ($\times$)};
+    \node[font=\footnotesize, blue!85!black, font=\footnotesize\bfseries] at (6, 0.2) {表 ($\circ$)};
 
-この場合の数は，右下のように $n-3$ 個の $\text{BABA} \dots \text{BA}$ の列の中の2ヶ所に，A と B を1つずつ入れる場合の数で，$n-2 = 2m+1$ とおくと，B の入れ方は $m-1$ 通り，A の入れ方は $m$ 通りであわせて $(m-1)m$ 通り．
+    % 遷移矢印
+    \draw[->, thick, gray!60] (A1) -- (B2) node[midway, above, font=\tiny] {交代};
+    \draw[->, thick, gray!60] (B2) -- (A3) node[midway, above, font=\tiny] {交代};
+    \draw[->, thick, red!85!black] (A3) -- (A4) node[midway, above, font=\tiny\bfseries] {連続 (1点)};
+    \draw[->, thick, gray!60] (A4) -- (B5) node[midway, above, font=\tiny] {交代};
+    \draw[->, thick, gray!60] (B5) -- (A6) node[midway, above, font=\tiny] {交代};
 
-\medskip
+    % 終了・勝利の注釈
+    \draw[dashed, red!80!black, rounded corners=3pt] (5.5, -0.2) rectangle (6.5, 1.7);
+    \node[below=2pt, font=\scriptsize\bfseries, red!85!black] at (6, -0.2) {$A$ の2点目（勝利終了）};
 
-\noindent
-全事象は $2^n$ 通りで，同様にたしからしく，$n=1$ の時，$P(1) = 0$ だから $2^\circ$ の表でよく，
+    % 順列表記のまとめ
+    \node[draw=gray!50, fill=white, rounded corners=2pt, inner sep=4pt, font=\footnotesize]
+    at (3.5, -1.0) {順列の並び：$\mathbf{A \to B \to A \to A \to B \to A}$ （文字が連続する箇所でのみ得点が発生）};
+
+  \end{tikzpicture}
+  \caption{コイン投げの推移と順列 $A, B$ の一対一対応の例（$n=6$ で $A$ が勝利する場合）}
+  \label{fig:game_sequence_correspondence}
+\end{figure}
+
+$n$ 回コインを投げた時に A が勝つのは以下の条件を全て満たした時である．
+\begin{itemize}
+  \item $n$ 回目の試行の前に A がコインを持つ．
+  \item $n$ 回目にAがコインを投げて表がでる．
+  \item $n-1$ 回目までに A が1点，B が0点又は1点である．
+\end{itemize}
+そこで$B$の点数で場合分けして考える．
+
+\subparagraph{$1^\circ$ B が 0 点の時}
+
+$B$が$0$点，$A$が$1$点の時，$A$が$1$点をとった時以外は常に相手にコインが渡り続ける．
+最初$A$がコインを持っていて$n$回目にも$A$がコインを持っているから，$n$は偶数である．
+
+% TODO: 並べ方の考え方, (AB)(AB)\cdots,(AB)(A)のどこかにAを追加する
+% TODO: 並べ方の考え方, (AB)(AB)\cdots,(AB)(A)のどこかにAを追加する
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.5cm, y=1.0cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 基本列: (AB) が (m-1) 個並び、最後が A
+    % ============================================================
+    % ブロック 1
+    \node[draw=gray!70, fill=gray!8, rounded corners=3pt, inner sep=4pt] (B1) at (0, 0) {$(AB)_1$};
+    % ブロック 2
+    \node[draw=gray!70, fill=gray!8, rounded corners=3pt, inner sep=4pt] (B2) at (1.2, 0) {$(AB)_2$};
+    % 省略
+    \node at (2.2, 0) {$\cdots\cdots$};
+    % ブロック m-1
+    \node[draw=gray!70, fill=gray!8, rounded corners=3pt, inner sep=4pt] (Bm) at (3.2, 0) {$(AB)_{m-1}$};
+    % 最後の A (固定)
+    \node[draw=blue!80!black, fill=blue!12, rounded corners=3pt, inner sep=4pt, font=\bfseries] (EndA) at (4.5, 0) {$A$ (表)};
+
+    % ============================================================
+    % A を挿入して連続 AA を作る候補位置 (矢印)
+    % ============================================================
+    \draw[<-, line width=1.1pt, red!85!black] (B1.north) -- ++(0, 0.7)
+    node[above, font=\scriptsize\bfseries] {候補 1};
+    \draw[<-, line width=1.1pt, red!85!black] (B2.north) -- ++(0, 0.7)
+    node[above, font=\scriptsize\bfseries] {候補 2};
+    \draw[<-, line width=1.1pt, red!85!black] (Bm.north) -- ++(0, 0.7)
+    node[above, font=\scriptsize\bfseries] {候補 $m-1$};
+    \draw[<-, line width=1.1pt, red!85!black] (EndA.north) -- ++(0, 0.7)
+    node[above, font=\scriptsize\bfseries] {候補 $m$};
+
+  \end{tikzpicture}
+  \caption{$B$ が 0 点の場合（$n=2m$）の順列の構成法}
+  \label{fig:permutation_case1_B_zero}
+\end{figure}
+
+従って$n$回のコイントスを$AB$の順で繰り返し，途中に一回だけ$A$が連続すれば良い．最後$n$回目は必ず$A$がコイントスする．$n=2m \ (m\ge1)$とすると，$AB$が$m-1$回繰り返され，最後が$A$で固定されている順列の中で，どれか一つを選んで連続する$A$を作れば良いから，場合の数は$m$通りである．
+
+\subparagraph{$2^\circ$ B が 1 点の時}
+
+$A,B$が共に1点となるのは，$A,B$が$1$点をとった時以外は常に相手にコインが渡り続ける．
+最初$A$がコインを持っていて$n$回目にも$A$がコインを持っているから，$n$は奇数である．
+
+% TODO: 並べ方の考え方
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.55cm, y=1.1cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 基本列: (AB) が m 個並び、最後が A
+    % ============================================================
+    \node[draw=gray!70, fill=gray!8, rounded corners=3pt, inner sep=4pt] (B1) at (0, 0) {$(AB)_1$};
+    \node[draw=gray!70, fill=gray!8, rounded corners=3pt, inner sep=4pt] (B2) at (1.2, 0) {$(AB)_2$};
+    \node at (2.2, 0) {$\dots\dots$};
+    \node[draw=gray!70, fill=gray!8, rounded corners=3pt, inner sep=4pt] (Bm) at (3.2, 0) {$(AB)_{m-1}$};
+    \node[draw=blue!80!black, fill=blue!12, rounded corners=3pt, inner sep=4pt, font=\bfseries] (EndA) at (4.4, 0) {$A$ (表)};
+
+    % ============================================================
+    % 上側: A の追加位置 (m 通り)
+    % ============================================================
+    \draw[<-, line width=1.1pt, blue!85!black] (B1.north) -- ++(0, 0.6)
+    node[above, font=\scriptsize] {$A$ 候補 1};
+    \draw[<-, line width=1.1pt, blue!85!black] (B2.north) -- ++(0, 0.6)
+    node[above, font=\scriptsize] {$A$ 候補 2};
+    \draw[<-, line width=1.1pt, blue!85!black] (Bm.north) -- ++(0, 0.6)
+    node[above, font=\scriptsize] {$A$ 候補 $m-1$};
+    \draw[<-, line width=1.1pt, blue!85!black] (EndA.north) -- ++(0, 0.6)
+    node[above, font=\scriptsize] {$A$ 候補 $m$};
+
+    % ============================================================
+    % 下側: B の追加位置 (m - 1 通り)
+    % ============================================================
+    \draw[<-, line width=1.1pt, red!85!black] (B1.south) -- ++(0, -0.6)
+    node[below, font=\scriptsize] {$B$ 候補 1};
+    \draw[<-, line width=1.1pt, red!85!black] (B2.south) -- ++(0, -0.6)
+    node[below, font=\scriptsize] {$B$ 候補 2};
+    \draw[<-, line width=1.1pt, red!85!black] (Bm.south) -- ++(0, -0.6)
+    node[below, font=\scriptsize] {$B$ 候補 $m-1$};
+
+    % 末尾の A には B を追加できない注釈 (X印)
+    \node[red!85!black, font=\bfseries] at (4.4, -0.6) {$\times$};
+    \node[below=2pt, font=\tiny, red!85!black] at (4.4, -0.7) {追加不可};
+
+  \end{tikzpicture}
+  \caption{$B$ が 1 点の場合（$n=2m+1$）の順列の構成法}
+  \label{fig:permutation_case2_B_one}
+\end{figure}
+
+従って$n=2m+1 \ (m\ge1)$とすると，$AB$が$m$回繰り返し最後が$A$で固定されている順列の中で，$A$と$B$をどこかに追加すれば良い．$B$は最後の$A$には追加できないから$m-1$通り，$A$の追加場所は$m$通りで，合計$m(m-1)$通りの場合の数がある．
+\casesend
+
+全事象は $2^n$ 通りで同様にたしからしいから求める確率は
 \begin{align}
-  P(n) =
+  p(n) =
   \begin{cases}
     \dfrac{m}{2^{2m}} & (n \text{ even}) \\[10pt]
     \dfrac{(n-1)(n-3)}{2^{n+2}} & (n \text{ odd})
-  \end{cases}
-  \hfill \text{固}
+  \end{cases} \label{eq:1}
 \end{align}
+である．$n=1$ の時も$p(1) = 0$ だからこの表式で良い．
 
-\bigskip
-
-\noindent
 \paragraph{(2)}
 
-$A_N = \sum_{n=1}^N P(n)$ とおきます．まず $N = 2m \; (m \in \mathbb{N})$ の時，(1)から
+$A_N = \sum_{n=1}^N p(n)$ とおく．
+まず $N = 2m \; (m \in \mathbb{N})$ の時，\cref{eq:1}から
 \begin{align}
-  A_N &= \sum_{t=1}^m \{ P(2t-1) + P(2t) \} \\
+  A_N
+  &= \sum_{t=1}^m \{ p(2t-1) + p(2t) \} \\
   &= \sum_{t=1}^m \left( \dfrac{(2t-4)(2t-2)}{2^{2t+1}} + \dfrac{2t}{2^{2t+1}} \right) \\
-  &= \sum_{t=1}^m \dfrac{2t^2 - 5t + 4}{4^t} \quad \cdots \textcircled{1}
+  &= \sum_{t=1}^m \dfrac{2t^2 - 5t + 4}{4^t}
 \end{align}
+である．
 
-\noindent
 ここで，$B_n = \sum_{k=1}^n k \cdot \left(\dfrac{1}{4}\right)^k, \; C_n = \sum_{k=1}^n k^2 \cdot \left(\dfrac{1}{4}\right)^k$ とおくと，
 \begin{align}
-  B_n = \left( -\dfrac{1}{3} n - \dfrac{1}{9} \right) \left(\dfrac{1}{4}\right)^{n+1} + \dfrac{1}{9} \quad \cdots \textcircled{2}
+  A_N
+  & = 2C_N - 5 B_N + \dfrac{1-\left(1/4\right)^N}{1-1/4} \\
+  & = 2C_N - 5 B_N + \dfrac{4}{3}\left\{1-\left(\dfrac{1}{4}\right)^N\right\} \label{eq:2}
 \end{align}
+となる．
+
+$B_n$と$\dfrac{1}{4}B_n$を比較して
+\begin{align}
+  \begin{cases}
+    B_n = 1\cdot\dfrac{1}{4} + 2\cdot\left(\dfrac{1}{4}\right)^2 + \cdots + n\left(\dfrac{1}{4}\right)^n \\
+    \dfrac{1}{4}B_n = 1\cdot\left(\dfrac{1}{4}\right)^2 + 2\cdot\left(\dfrac{1}{4}\right)^3 + \cdots + n\left(\dfrac{1}{4}\right)^{n+1}
+  \end{cases}
+\end{align}
+だから辺々引いて
+\begin{align}
+  \dfrac{3}{4}B_n
+  & = \sum_{k=1}^{n}\left(\dfrac{1}{4}\right)^{k}-n\left(\dfrac{1}{4}\right)^{n+1} \\
+  & = \dfrac{1}{4}\dfrac{1-(1/4)^{n}}{1-1/4} - n\left(\dfrac{1}{4}\right)^{n+1} \\
+  \therefore
+  B_n
+  & = \left(-\dfrac{4}{3}n-\dfrac{16}{9}\right)\left(\dfrac{1}{4}\right)^{n+1} + \dfrac{4}{9} \label{eq:3}
+\end{align}
+である．
+
+同様に$C_n$と$\dfrac{1}{4}C_n$を比較して
 であり，
 \begin{align}
-  C_n &= 1 \cdot \left(\dfrac{1}{4}\right) + \dots + n^2 \left(\dfrac{1}{4}\right)^n \\
-  \dfrac{1}{4} C_n &= \left(\dfrac{1}{4}\right)^2 + \dots + (n-1)^2 \left(\dfrac{1}{4}\right)^n + n^2 \left(\dfrac{1}{4}\right)^{n+1}
+  \begin{cases}
+    C_n  = 1 \cdot \left(\dfrac{1}{4}\right) + \dots + n^2 \left(\dfrac{1}{4}\right)^n \\
+    \dfrac{1}{4} C_n = \left(\dfrac{1}{4}\right)^2 + \dots + (n-1)^2 \left(\dfrac{1}{4}\right)^n + n^2 \left(\dfrac{1}{4}\right)^{n+1}
+  \end{cases}
 \end{align}
 の辺々引いて，
 \begin{align}
-  \dfrac{3}{4} C_n &= \sum_{k=1}^n (2k-1) \left(\dfrac{1}{4}\right)^k \\
-  &\quad - n^2 \left(\dfrac{1}{4}\right)^{n+1} \\
+  \dfrac{3}{4} C_n
+  &= \sum_{k=1}^n (2k-1) \left(\dfrac{1}{4}\right)^k  - n^2 \left(\dfrac{1}{4}\right)^{n+1} \\
   &= 2 B_n - \dfrac{1 - (1/4)^n}{4 \cdot \dfrac{3}{4}} - n^2 \left(\dfrac{1}{4}\right)^{n+1} \\
-  C_n &= \dfrac{8}{3} B_n - \dfrac{4}{9} + \dfrac{4}{9} \left(\dfrac{1}{4}\right)^n \\
-  &\quad - \dfrac{4}{3} n^2 \left(\dfrac{1}{4}\right)^{n+1} \quad \cdots \textcircled{3}
+  \therefore
+  C_n
+  &= \dfrac{8}{3} B_n - \dfrac{4}{9} + \dfrac{4}{9} \left(\dfrac{1}{4}\right)^n
+  - \dfrac{4}{3} n^2 \left(\dfrac{1}{4}\right)^{n+1} \label{eq:4}
 \end{align}
+である．
 
-\noindent
-となる．②，③から，$n \to \infty$ の時，$B_n \to \dfrac{1}{9}, \; C_n \to \dfrac{20}{27}$ となるので，①より
+\cref{eq:3,eq:4}で$n\to\infty$の極限をとると
 \begin{align}
-  A_N \longrightarrow 2 \cdot \dfrac{20}{27} - 5 \cdot \dfrac{1}{9} + \dfrac{1}{1-1/4} = \dfrac{16}{27} \quad \cdots \textcircled{4}
+  \lim_{n\to\infty}B_n = \dfrac{1}{9}, \quad \lim_{n\to\infty}C_n = \dfrac{20}{27}
 \end{align}
-であり，
+だから，\cref{eq:2}に代入して
 \begin{align}
-  A_{2m+1} = A_{2m} + P(2m+1) \longrightarrow \dfrac{16}{27} \quad \cdots \textcircled{5}
+  \lim_{N\to\infty} A_N
+  &=  2 \cdot \dfrac{20}{27} - 5 \cdot \dfrac{1}{9} + \dfrac{1}{1-1/4}
+  = \dfrac{16}{27} \label{eq:5}
 \end{align}
-だから，④⑤から，
-\begin{align}
-  A_n \longrightarrow \dfrac{16}{27} \hfill \text{固}
-\end{align}
+である．
 
-\bigskip
+次に$n=2m+1$の時は$\lim_{m\to\infty}P(2m+1)=0$より
+\begin{align}
+  \lim_{N\to\infty} A_{2m+1} = \lim_{N\to\infty} (A_{2m} + P(2m+1)) = \dfrac{16}{27} \label{eq:6}
+\end{align}
+だから，\cref{eq:5,eq:6}より任意の$n$に対して
+\begin{align}
+  \lim_{N\to\infty} A_N = \dfrac{16}{27}
+\end{align}
+である．
 
 \end{document}

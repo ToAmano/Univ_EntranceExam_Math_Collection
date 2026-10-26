@@ -1,82 +1,93 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-\noindent
-{\bf [解]} $C = \cos x, S = \sin x$ とする．$x > 0$ から
+題意より$x>0$だから，$f(x)=g(x)$を変形して
 \begin{align}
-  f(x) = g(x) \iff \dfrac{C - S x}{x^2} = a \quad \cdots \textcircled{1}
+  f(x) = g(x) \iff \dfrac{\cos x - x\sin x}{x^2} = a \label{eq:1}
 \end{align}
-である．この左辺を $h(x)$ とする．$(C - S x)' = (-S - S - C x) = -(2S + C x)$ から，
+である．この左辺を $h(x)$ とすると，$y=h(x)$と$y=a$の共有点がちょうど$3$つであれば良い．
+一階微分は
 \begin{align}
-  h'(x) &= \dfrac{-(2S + C x) \cdot x^2 - 2x (C - S x)}{x^4} \\
-  &= \dfrac{-(x^2 + 2)}{x^3} C
+  h'(x) &= \dfrac{-(2\sin x + x\cos x) \cdot x^2 - 2x (\cos x - x\sin x)}{x^4} \\
+  &= \dfrac{-(x^2 + 2)\cos x}{x^3}
 \end{align}
-だから，下表をうる．
+だから，$h(x)$の増減表は以下のようになる．
 
 \begin{table}[htb]
   \centering
+  \caption{$h(x)$の増減表}
   \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
     \hline
     $x$ & $0$ & $\cdots$ & $\dfrac{\pi}{2}$ & $\cdots$ & $\dfrac{3}{2}\pi$ & $\cdots$ & $2\pi$ & $\cdots$ \\ \hline
-    $h'$ & & $-$ & $0$ & $+$ & $0$ & $-$ & $0$ & \\ \hline
+    $h'$ & & $-$ & $0$ & $+$ & $0$ & $-$ &  & \\ \hline
     $h$ & & $\searrow$ & & $\nearrow$ & & $\searrow$ & & \\ \hline
   \end{tabular}
-  \caption{$h(x)$の増減表}
 \end{table}
 
-\noindent
-これと，$h(x) = \dfrac{C}{x^2} - \dfrac{S}{x} \to +\infty \; (x \to +0)$ から，グラフの概形は右図
+これと $h(x) = \dfrac{\cos x}{x^2} - \dfrac{\sin x}{x} \to +\infty \; (x \to +0)$ よりグラフの概形は下図のようになる．
 
+% TODO: upgrade
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.0, >=stealth]
-    \draw[->] (-0.5,0) -- (8.5,0) node[right] {$x$};
-    \draw[->] (0,-2.0) -- (0,3.0) node[above] {$y$};
+  \begin{tikzpicture}[xscale=1.1, yscale=5, >=stealth]
+    % caution: y軸が小さいのでscaleした
+
+    % 座標軸
+    \draw[->, thick] (-0.5,0) -- (13,0) node[right] {$x$};
+    \draw[->, thick] (0,-1) -- (0,1) node[above] {$y$};
     \node[below left] at (0,0) {$O$};
 
-    \draw[domain=0.35:8.0, samples=200, smooth, thick, variable=\x]
-    plot ({\x}, {(cos(\x r) - sin(\x r)*\x)/(\x*\x)});
+    % 関数曲線 y = h(x)
+    \draw[domain=0.7:12.0, samples=250, smooth, thick, blue]
+    plot ({\x}, {(cos(\x r) - \x*sin(\x r))/(\x*\x)}) node[right] {$y=h(x)$};
 
-    \draw[dashed] ({pi/2}, 0) -- ({pi/2}, {-2/pi});
-    \node[above] at ({pi/2}, 0) {$\frac{\pi}{2}$};
+    % y=a の直線例（共有点が3つとなる場合を可視化）
+    \draw[domain=0:10.2, red, dash dot, thick]
+    plot ({\x}, {3/(7*pi)}) node[right] {$y = a$};
+
+    % 各極値点のガイドラインとラベル
+    % x = pi/2
+    \draw[dashed, gray] ({pi/2}, 0) -- ({pi/2}, {-2/pi}) -- (0, {-2/pi});
+    \node[above] at ({pi/2}, 0.05) {$\frac{\pi}{2}$};
     \node[left] at (0, {-2/pi}) {$-\frac{2}{\pi}$};
-    \draw[dashed] (0, {-2/pi}) -- ({pi/2}, {-2/pi});
-    \fill ({pi/2}, {-2/pi}) circle (1.5pt);
+    \node[circle, fill=blue, inner sep=1.2pt] at ({pi/2}, {-2/pi}) {};
+    % \filldraw[blue] ({pi/2}, {-2/pi}) circle (1.5pt);
 
-    \draw[dashed] ({3*pi/2}, 0) -- ({3*pi/2}, {2/(3*pi)});
-    \node[below] at ({3*pi/2}, 0) {$\frac{3}{2}\pi$};
+    % x = 3pi/2
+    \draw[dashed, gray] ({3*pi/2}, 0) -- ({3*pi/2}, {2/(3*pi)}) -- (0, {2/(3*pi)});
+    \node[below] at ({3*pi/2}, -0.05) {$\frac{3}{2}\pi$};
     \node[left] at (0, {2/(3*pi)}) {$\frac{2}{3\pi}$};
-    \draw[dashed] (0, {2/(3*pi)}) -- ({3*pi/2}, {2/(3*pi)});
-    \fill ({3*pi/2}, {2/(3*pi)}) circle (1.5pt);
+    \node[circle, fill=blue, inner sep=1.2pt] at ({3*pi/2}, {2/(3*pi)}) {};
+    % \filldraw[blue] ({3*pi/2}, {2/(3*pi)}) circle (1.5pt);
 
-    \draw[dashed] ({5*pi/2}, 0) -- ({5*pi/2}, {-2/(5*pi)});
-    \node[above] at ({5*pi/2}, 0) {$\frac{5}{2}\pi$};
+    % x = 5pi/2
+    \draw[dashed, gray] ({5*pi/2}, 0) -- ({5*pi/2}, {-2/(5*pi)}) -- (0, {-2/(5*pi)});
+    \node[above] at ({5*pi/2}, 0.05) {$\frac{5}{2}\pi$};
     \node[left] at (0, {-2/(5*pi)}) {$-\frac{2}{5\pi}$};
-    \draw[dashed] (0, {-2/(5*pi)}) -- ({5*pi/2}, {-2/(5*pi)});
-    \fill ({5*pi/2}, {-2/(5*pi)}) circle (1.5pt);
+    \node[circle, fill=blue, inner sep=1.2pt] at ({5*pi/2}, {-2/(5*pi)}) {};
+    % \filldraw[blue] ({5*pi/2}, {-2/(5*pi)}) circle (1.5pt);
 
-    \draw[dashed] ({7*pi/2}, 0) -- ({7*pi/2}, {2/(7*pi)});
-    \node[below] at ({7*pi/2}, 0) {$\frac{7}{2}\pi$};
-    \fill ({7*pi/2}, {2/(7*pi)}) circle (1.5pt);
+    % x = 7pi/2
+    \draw[dashed, gray] ({7*pi/2}, 0) -- ({7*pi/2}, {2/(7*pi)}) -- (0, {2/(7*pi)});
+    \node[below] at ({7*pi/2}, -0.05) {$\frac{7}{2}\pi$};
+    \node[left] at (0, {2/(7*pi)}) {$\frac{2}{7\pi}$};
+    \node[circle, fill=blue, inner sep=1.2pt] at ({7*pi/2}, {2/(7*pi)}) {};
+    % \filldraw[blue] ({7*pi/2}, {2/(7*pi)}) circle (1.5pt);
   \end{tikzpicture}
-  \caption{$h(x)$のグラフの概形}
+  \caption{$h(x)$ のグラフの概形と共有点}
 \end{figure}
 
-\noindent
-ここで，極値について，
+ここで極値について，
 \begin{align}
   h\left( 2m\pi + \dfrac{1}{2}\pi \right) &= \dfrac{-1}{2m\pi + \dfrac{1}{2}\pi} \\
   h\left( 2m\pi + \dfrac{3}{2}\pi \right) &= \dfrac{1}{2m\pi + \dfrac{3}{2}\pi}
 \end{align}
-だから，商の絶対値は $m$ について単調減少である．したがって，図から
+だから，これらの絶対値は $m$ について単調減少である．したがって，図から求める$a$は
 \begin{align}
-  a = -\dfrac{2}{5\pi}, \quad \dfrac{2}{5\pi} < a < \dfrac{2}{3\pi} \hfill \text{固}
+  a = -\dfrac{2}{5\pi}, \quad \dfrac{2}{5\pi} < a < \dfrac{2}{3\pi}
 \end{align}
-
-\bigskip
+である．
 
 \end{document}

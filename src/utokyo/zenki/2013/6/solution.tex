@@ -1,111 +1,644 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-\noindent
-{\bf [解]} $V_1$ の表面上の点 $P(x,y,z)$ とする．この立体の $x+y = 2k \; (0 \le k \le 1)$ での切り断面は $H_k(k,k,0)$ を中心とし，半径 $\sqrt{2}(1-k)$ の円であるから，右下図のようである．この時，$x+y = t$ の点は $y$ 座標が $2k - t$ であり，$z$ 座標は，$k$ の正負で以下のようになる．
-
-\medskip
-
-\noindent
-$1^\circ \; k \ge 0$
-\begin{align}
-  (t-k)^2 + (2k-t-k)^2 + z^2 &= 2(1-k)^2 \\
-  z^2 &= 2\{ (1-k)^2 - (t-k)^2 \} = 2(1-t) \{ -2k + (1+t) \}
-\end{align}
-
-\noindent
-$2^\circ \; k \le 0$
-\begin{align}
-  (t-k)^2 + (2k-t-k)^2 + z^2 &= 2(1+k)^2 \\
-  z^2 &= 2\{ (1+k)^2 - (t-k)^2 \} = 2(1+t) \{ 2k + (1-t) \}
-\end{align}
-
-\noindent
-次に $k$ を動かす．$-1 \le y \le 1$ から，
-\begin{align}
-  \dfrac{t-1}{2} \le k \le \dfrac{t+1}{2}
-\end{align}
-で考えれば良い．$y = 2k - t \implies k = \dfrac{y+t}{2}$ だから $0 \le k \le 1$ とあわせて，以下のようになる．
-
-\medskip
-
-\noindent
-① $\dfrac{t-1}{2} \le k \le 0$
-
-$\dfrac{t-1}{2} \le \dfrac{y+t}{2} \le 0 \implies -1 \le y \le -t$ の時，$2^\circ$ から
-\begin{align}
-  z^2 = 2(1+t)(y+1) \quad \cdots \star_1
-\end{align}
-
-\noindent
-② $0 \le k \le \dfrac{t+1}{2}$
-
-$0 \le \dfrac{y+t}{2} \le \dfrac{t+1}{2} \implies -t \le y \le 1$ の時，$1^\circ$ から
-\begin{align}
-  z^2 = 2(1-t)(1-y) \quad \cdots \star_2
-\end{align}
-
-\noindent
-以上を図示すると右図斜線部のようになるから，この面積を$S(t)$とすると
-\begin{align}
-  S(t) &= \left( \dfrac{1}{6 \cdot 2(1+t)} + \dfrac{1}{6 \cdot 2(1-t)} \right) \left( 2 \sqrt{2(1-t^2)} \right)^3 \quad (\star_1, \star_2 \text{より}) \\
-  &= \dfrac{1}{12} \left( \dfrac{1}{1+t} + \dfrac{1}{1-t} \right) \cdot 8 \cdot 2\sqrt{2} (1-t^2) \sqrt{1-t^2} \\
-  &= \dfrac{8}{3} \sqrt{2} \sqrt{1-t^2}
-\end{align}
-$t=1$ の時も $S(1) = 0$ となるのでこの式で良い．よって
-\begin{align}
-  S(t) = \dfrac{8}{3} \sqrt{2} \sqrt{1-t^2} \hfill \text{固}
-\end{align}
-
+% TODO: 3d-tikzの概要図
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \draw[->] (-1.5,0) -- (1.5,0) node[right] {$y$};
-    \draw[->] (0,-0.3) -- (0,1.8) node[above] {$z$};
-    \node[below left] at (0,0) {$O$};
+  \begin{tikzpicture}[
+      % 見下ろし角を深めにとった3D射影
+      x={(-1.1cm, -0.6cm)},
+      y={(1.3cm, -0.3cm)},
+      z={(0cm, 1.8cm)},
+      scale=1.75, >=stealth, every node/.style={font=\small}
+    ]
 
-    \draw[thick, domain=-1:0, samples=50] plot (\x, {sqrt(2*(1+0.5)*(\x+1))});
-    \draw[thick, domain=0:1, samples=50] plot (\x, {sqrt(2*(1-0.5)*(1-\x))});
+    % ============================================================
+    % 1. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!70!black] (-1.4, 0, 0) -- (1.6, 0, 0) node[below left] {$x$};
+    \draw[->, thick, gray!70!black] (0, -1.4, 0) -- (0, 1.6, 0) node[below right] {$y$};
+    \draw[->, thick, gray!70!black] (0, 0, -1.5) -- (0, 0, 1.6) node[above] {$z$};
+    \node[below left=2pt] at (0, 0, 0) {$O$};
 
-    \draw[dashed] (-1,0) node[below] {$-1$} -- (-1,0);
-    \draw[dashed] (1,0) node[below] {$1$} -- (1,0);
-    \draw[dashed] (-0.5,0) node[below] {$-t$} -- (-0.5, {sqrt(2*(1.5)*0.5)});
+    % ============================================================
+    % 2. xy 平面上の正方形 ABCD (z = 0)
+    % ============================================================
+    \coordinate (A) at (-1,  1, 0);
+    \coordinate (B) at ( 1,  1, 0);
+    \coordinate (C) at ( 1, -1, 0);
+    \coordinate (D) at (-1, -1, 0);
 
-    \node at (-0.7, 0.7) {$\star_1$};
-    \node at (0.6, 0.7) {$\star_2$};
+    % 正方形の床面
+    \fill[gray!12] (A) -- (B) -- (C) -- (D) -- cycle;
+    \draw[line width=1.1pt, gray!35!black] (A) -- (B) -- (C) -- (D) -- cycle;
+
+    \node[above=2pt] at (A) {$A(-1,1)$};
+    \node[right=2pt, font=\normalsize\bfseries] at (B) {$B(1,1)$};
+    \node[below=2pt] at (C) {$C(1,-1)$};
+    \node[left=2pt, font=\normalsize\bfseries]  at (D) {$D(-1,-1)$};
+
+    % 対角線 y = x (D から B へ引く)
+    \draw[line width=1.0pt, gray!50, dashed] (-1.3, -1.3, 0) -- (1.3, 1.3, 0)
+    node[above right, font=\footnotesize, gray!60!black] {$y = x$};
+
+    % ============================================================
+    % 4. 代表的な切断面: k = 0.35 における円盤スライス
+    % ============================================================
+    \def\kVal{0.35}
+    \pgfmathsetmacro{\rVal}{sqrt(2.0)*(1.0 - \kVal)}
+
+    \coordinate (Hk) at (\kVal, \kVal, 0);
+    \coordinate (Qk) at ({2*\kVal - 1}, 1, 0);
+    \coordinate (Rk) at (1, {2*\kVal - 1}, 0);
+
+    % 直線 l_k (xy 平面上)
+    \draw[line width=1.3pt, teal!85!black] ($ (Qk)!-0.2!(Rk) $) -- ($ (Qk)!1.2!(Rk) $)
+    node[below right, font=\footnotesize\bfseries] {$\ell_k$};
+
+    % 切断面の円盤 (半透明で直立させて塗りつぶす)
+    \fill[blue!20, opacity=0.75]
+    plot[domain=0:360, samples=50, smooth, variable=\t]
+    ({\kVal + \rVal*cos(\t)*0.7071}, {\kVal - \rVal*cos(\t)*0.7071}, {\rVal*sin(\t)}) -- cycle;
+
+    % 円盤の輪郭線
+    \draw[line width=1.5pt, blue!90!black]
+    plot[domain=0:360, samples=50, smooth, variable=\t]
+    ({\kVal + \rVal*cos(\t)*0.7071}, {\kVal - \rVal*cos(\t)*0.7071}, {\rVal*sin(\t)});
+
+    % 円盤の中心 H_k と直径 Q_k R_k
+    \draw[thick, gray!50!black, dashed] (Qk) -- (Rk);
+    \fill[teal!85!black] (Hk) circle (1.3pt) node[below=2pt, font=\footnotesize\bfseries] {$H_k$};
+    \fill[black] (Qk) circle (1.2pt) node[above left=1pt, font=\scriptsize] {$Q_k$};
+    \fill[black] (Rk) circle (1.2pt) node[below right=1pt, font=\scriptsize] {$R_k$};
+
+    % 半径の矢印
+    \coordinate (TopSlice) at (\kVal, \kVal, \rVal);
+    \draw[->, thick, red!85!black] (Hk) -- (TopSlice)
+    node[midway, right=1pt, font=\scriptsize\bfseries] {$\sqrt{2}(1-|k|)$};
+    \fill[red!85!black] (TopSlice) circle (1.2pt);
+
+    % 両極の頂点 B, D を強調
+    \fill[blue!90!black] (B) circle (1.6pt);
+    \fill[blue!90!black] (D) circle (1.6pt);
+
+    % ============================================================
+    % 3. B, D から側面に沿って伸びる放射状の稜線（経線・リブ線）
+    % 各 k に対して表面の点:
+    % x = k + (1 - |k|)*cos(theta)
+    % y = k - (1 - |k|)*cos(theta)
+    % z = sqrt(2) * (1 - |k|)*sin(theta)
+    % ============================================================
+
+    % (1) 真上の尾根線 (theta = 90°: z が最大となる背骨の線)
+    \draw[line width=1.3pt, blue!75!black, domain=-1:1, samples=60, smooth, variable=\k]
+    plot ({\k}, {\k}, {1.4142*(1.0 - abs(\k))});
+
+    % (2) 斜め上の稜線 (theta = 45°, 135°)
+    % cos(45°) = 0.7071, sin(45°) = 0.7071 => z = 1.4142 * 0.7071 * (1-|k|) = 1.0*(1-|k|)
+    \draw[line width=0.9pt, blue!60!black, opacity=0.85, domain=-1:1, samples=60, smooth, variable=\k]
+    plot ({\k + 0.7071*(1.0 - abs(\k))}, {\k - 0.7071*(1.0 - abs(\k))}, {1.0*(1.0 - abs(\k))});
+
+    \draw[line width=0.9pt, blue!60!black, opacity=0.85, domain=-1:1, samples=60, smooth, variable=\k]
+    plot ({\k - 0.7071*(1.0 - abs(\k))}, {\k + 0.7071*(1.0 - abs(\k))}, {1.0*(1.0 - abs(\k))});
+
+    % (3) 真下の尾根線 (theta = -90°: z が最小となる腹の線)
+    \draw[line width=1.1pt, dashed, blue!50!black, domain=-1:1, samples=50, smooth, variable=\k]
+    plot ({\k}, {\k}, {-1.4142*(1.0 - abs(\k))});
+
+    % (4) 斜め下の稜線 (theta = -45°, -135°)
+    \draw[line width=0.8pt, dashed, blue!40!black, opacity=0.7, domain=-1:1, samples=40, smooth, variable=\k]
+    plot ({\k + 0.7071*(1.0 - abs(\k))}, {\k - 0.7071*(1.0 - abs(\k))}, {-1.0*(1.0 - abs(\k))});
+
+    \draw[line width=0.8pt, dashed, blue!40!black, opacity=0.7, domain=-1:1, samples=40, smooth, variable=\k]
+    plot ({\k - 0.7071*(1.0 - abs(\k))}, {\k + 0.7071*(1.0 - abs(\k))}, {-1.0*(1.0 - abs(\k))});
+
+    % 赤道面 (z = 0: 正方形の対角線の外側に膨らむ水平輪郭)
+    % D(-1,-1) -> A(-1,1) -> B(1,1) および D(-1,-1) -> C(1,-1) -> B(1,1) は
+    % 実は正方形の辺そのもの (theta = 0, 180° のとき x+y の境界に一致)
+
+    % 立体 V1 を形成する複数の代表円 (k = -0.6, -0.3, 0, 0.3, 0.6)
+    % 各円の中心 H_k = (k, k, 0), 半径 R = sqrt(2)*(1-|k|)
+    % 円の法線は (1, 1, 0), 円の張る平面は (1, -1, 0)/sqrt(2) と (0, 0, 1)
+    \foreach \k in {-0.6, -0.3, 0.0, 0.3, 0.6} {
+      \pgfmathsetmacro{\rVal}{sqrt(2.0)*(1.0 - abs(\k))}
+      \draw[blue!75!black, opacity=0.3, line width=0.8pt]
+      plot[domain=0:360, samples=40, smooth, variable=\t]
+      ({\k + \rVal*cos(\t)*0.7071}, {\k - \rVal*cos(\t)*0.7071}, {\rVal*sin(\t)});
+    }
+
+    % 中央 k=0 の円 (最大円: 半径 sqrt(2)) を強調
+    \draw[line width=1.4pt, blue!90!black]
+    plot[domain=0:360, samples=50, smooth, variable=\t]
+    ({1.4142*cos(\t)*0.7071}, {-1.4142*cos(\t)*0.7071}, {1.4142*sin(\t)});
+
   \end{tikzpicture}
-  \caption{切断面の$z^2$の場合分け（$\star_1$，$\star_2$）}
+  \caption{立体 $V_1$ の外殻（$B, D$ からの放射状稜線）と切断面円盤スライス}
+  \label{fig:solid_v1_3d_with_ribs}
 \end{figure}
 
-\bigskip
+\paragraph{(1)}
 
-\noindent
+% TODO: xy平面で，ABCD, x+y=2k, Q_k, R_k, x=t, k
+% TODO: xy平面で，ABCD, x+y=2k, Q_k, R_k, x=t, k (左) 0 <= k, (右) k <= 0
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.6, >=stealth, every node/.style={font=\small}]
+
+    % =========================================================================
+    % 左図: 0 <= k <= 1 (k = 0.4 の例)
+    % =========================================================================
+    \begin{scope}[shift={(-2.8, 0)}]
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-1.4, 0) -- (1.5, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -1.4) -- (0, 1.5) node[above] {$y$};
+      \node[below left=2pt] at (0, 0) {$O$};
+
+      % 正方形 ABCD
+      \draw[line width=1.2pt, gray!30!black] (-1, 1) rectangle (1, -1);
+      \node[above left]  at (-1, 1)  {$A$};
+      \node[above right] at ( 1, 1)  {$B$};
+      \node[below right] at ( 1, -1) {$C$};
+      \node[below left]  at (-1, -1) {$D$};
+
+      % 対角線 y = x
+      \draw[dashed, gray!55] (-1.2, -1.2) -- (1.2, 1.2) node[above right, font=\scriptsize] {$y=x$};
+
+      % k = 0.4
+      \def\kVal{0.4}
+      \coordinate (H) at (\kVal, \kVal);
+      \coordinate (Q) at ({2*\kVal - 1}, 1);
+      \coordinate (R) at (1, {2*\kVal - 1});
+
+      % 直線 l_k: x + y = 2k (傾き -1)
+      \draw[line width=1.3pt, teal!85!black] ($ (Q) + (-0.25, 0.25) $) -- ($ (R) + (0.25, -0.25) $)
+      node[right, font=\footnotesize\bfseries] {$\ell_k$};
+
+      % 切断線 x = t (例: t = 0.2)
+      \def\tVal{0.2}
+      \draw[line width=1.1pt, red!85!black, dashdotted] (\tVal, -1.2) -- (\tVal, 1.3)
+      node[above, font=\footnotesize\bfseries] {$x = t$};
+
+      % 点プロット
+      \fill[teal!85!black] (H) circle (1.4pt) node[below left=1pt] {$H_k(k, k)$};
+      \fill[black] (Q) circle (1.3pt) node[above=2pt] {$Q_k$};
+      \fill[black] (R) circle (1.3pt) node[right=2pt] {$R_k$};
+
+      % 長さ |H_k Q_k|
+      \draw[<->, gray!60!black, thin] ($ (H) + (0.05, 0.05) $) -- ($ (R) + (0.05, 0.05) $)
+      node[midway, above right=1pt, font=\tiny] {$\sqrt{2}(1-k)$};
+
+      \node[below=12pt, font=\small\bfseries] at (0, -1.3) {(a) $0 \le k \le 1$ ($AB, CB$ と交差)};
+    \end{scope}
+
+    % =========================================================================
+    % 右図: -1 <= k <= 0 (k = -0.4 の例)
+    % =========================================================================
+    \begin{scope}[shift={(2.8, 0)}]
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-1.4, 0) -- (1.5, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -1.4) -- (0, 1.5) node[above] {$y$};
+      \node[below left=2pt] at (0, 0) {$O$};
+
+      % 正方形 ABCD
+      \draw[line width=1.2pt, gray!30!black] (-1, 1) rectangle (1, -1);
+      \node[above left]  at (-1, 1)  {$A$};
+      \node[above right] at ( 1, 1)  {$B$};
+      \node[below right] at ( 1, -1) {$C$};
+      \node[below left]  at (-1, -1) {$D$};
+
+      % 対角線 y = x
+      \draw[dashed, gray!55] (-1.2, -1.2) -- (1.2, 1.2) node[above right, font=\scriptsize] {$y=x$};
+
+      % k = -0.4
+      \def\kValNeg{-0.4}
+      \coordinate (Hn) at (\kValNeg, \kValNeg);
+      \coordinate (Qn) at (-1, {2*\kValNeg + 1});
+      \coordinate (Rn) at ({2*\kValNeg + 1}, -1);
+
+      % 直線 l_k: x + y = 2k
+      \draw[line width=1.3pt, teal!85!black] ($ (Qn) + (-0.25, 0.25) $) -- ($ (Rn) + (0.25, -0.25) $)
+      node[right, font=\footnotesize\bfseries] {$\ell_k$};
+
+      % 点プロット
+      \fill[teal!85!black] (Hn) circle (1.4pt) node[above right=1pt] {$H_k(k, k)$};
+      \fill[black] (Qn) circle (1.3pt) node[left=2pt] {$Q_k$};
+      \fill[black] (Rn) circle (1.3pt) node[below=2pt] {$R_k$};
+
+      % 長さ |H_k Q_k|
+      \draw[<->, gray!60!black, thin] ($ (Hn) + (-0.05, -0.05) $) -- ($ (Qn) + (-0.05, -0.05) $)
+      node[midway, below left=1pt, font=\tiny] {$\sqrt{2}(1-|k|)$};
+
+      \node[below=12pt, font=\small\bfseries] at (0, -1.3) {(b) $-1 \le k \le 0$ ($AD, CD$ と交差)};
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{$xy$ 平面における正方形 $ABCD$，直線 $\ell_k$，交点 $Q_k, R_k$，および直線 $x=t$}
+  \label{fig:xy_plane_slices_lk}
+\end{figure}
+
+$V_1$ の表面上の点 $P(x,y,z)$ とする．
+直線$BD$の方程式は$y=x$であることに注意して，これに垂直な直線
+\begin{align}
+  \ell_k: x+y = 2k \quad (-1 \le k \le 1)
+\end{align}
+での立体$V_1$の切断面を考える．対称性から$0 \le k$に絞って考えて良い．
+四角形$ABCD$とこの直線は$0 \le k$の時辺$AB, CB$と$k \le 0$の時辺$AD,CD$と，それぞれ交わるからこれらを$Q_k,R_k$とすると
+\begin{align}
+  \begin{cases}
+    0 \le k \le 1 \text{の時}:  Q_k(2k-1,1, 0), \quad R_k(1,2k-1,0) \\
+    -1 \le k \le 0 \text{の時}: Q_k(-1, 2k+1,0), \quad R_k(2k+1,1,0)
+  \end{cases} \label{eq:1}
+\end{align}
+である．
+
+$H_k(k,k,0)$とおくと，いずれの場合も
+\begin{align}
+  |H_kQ_k|=|H_kR_k|= \sqrt{2}(1-|k|) \label{eq:2}
+\end{align}
+だから，$\ell_k$での切断面は$H_k$を中心とした半径$\sqrt{2}(1-|k|)$の円である．
+
+% TODO: \ell_kでの切断面（円）
+% TODO: \ell_kでの切断面（円）
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
+
+    \coordinate (Hk) at (0, 0);
+    \def\R{1.6} % 半径 sqrt(2)*(1-|k|)
+
+    % 断面の座標軸: 横軸 e_2 方向 (1, -1, 0)/sqrt(2), 縦軸 e_3 方向 (0, 0, 1)
+    \draw[->, thick, gray!80!black] (-\R - 0.4, 0) -- (\R + 0.5, 0)
+    node[right] {$\vec{e}_2 = \frac{\sqrt{2}}{2}
+      \begin{pmatrix} 1 \\ -1 \\ 0
+    \end{pmatrix}$};
+    \draw[->, thick, gray!80!black] (0, -\R - 0.3) -- (0, \R + 0.4)
+    node[above] {$\vec{e}_3 =
+      \begin{pmatrix} 0 \\ 0 \\ 1
+    \end{pmatrix}$};
+    \node[below left=2pt] at (Hk) {$H_k$};
+
+    % 円盤の塗りつぶしと外周円
+    \fill[blue!10, opacity=0.5] (Hk) circle (\R);
+    \draw[line width=1.5pt, blue!85!black] (Hk) circle (\R);
+
+    % 端点 Q_k, R_k
+    \coordinate (Qk) at (-\R, 0);
+    \coordinate (Rk) at (\R, 0);
+    \fill[black] (Qk) circle (1.3pt) node[below left] {$Q_k$};
+    \fill[black] (Rk) circle (1.3pt) node[below right] {$R_k$};
+
+    % 円周上の点 P (θ ≈ 40°)
+    \def\thetaVal{40}
+    \coordinate (P) at ({\R*cos(\thetaVal)}, {\R*sin(\thetaVal)});
+    \draw[line width=1.2pt, red!85!black] (Hk) -- (P)
+    node[midway, above left=1pt, font=\footnotesize] {$\sqrt{2}(1-|k|)$};
+    \fill[red!85!black] (P) circle (1.4pt) node[above right=1pt, font=\footnotesize\bfseries] {$P(x, y, z)$};
+
+    % 角度 θ
+    \draw[->, thick, red!85!black] (0.45, 0) arc (0:\thetaVal:0.45);
+    \node[red!90!black, font=\scriptsize\bfseries] at (20:0.6) {$\theta$};
+
+    % 投影破線 (成分分解)
+    \draw[dashed, gray!60] (P) -- ({\R*cos(\thetaVal)}, 0)
+    node[below=2pt, font=\scriptsize] {$\sqrt{2}(1-|k|)\cos\theta$};
+    \draw[dashed, gray!60] (P) -- (0, {\R*sin(\thetaVal)})
+    node[left=2pt, font=\scriptsize] {$z_t = \sqrt{2}(1-|k|)\sin\theta$};
+
+  \end{tikzpicture}
+  \caption{$\ell_k$ に垂直な断面における円と点 $P$ のパラメータ表示}
+  \label{fig:lk_circular_cross_section}
+\end{figure}
+
+従ってこの座標は，$\vec{e}_1=
+\begin{pmatrix} 1,1,0
+\end{pmatrix}, \vec{e}_2=\dfrac{\sqrt{2}}{2}
+\begin{pmatrix} 1,-1,0
+\end{pmatrix}, \vec{e}_3=
+\begin{pmatrix} 0,0,1
+\end{pmatrix}$とおくとこの断面上の点$P$は
+\begin{align}
+  \overrightarrow{OP}
+  = k
+  \begin{pmatrix} 1,1,0
+  \end{pmatrix}
+  + \sqrt{2}(1-|k|) \cos\theta \dfrac{\sqrt{2}}{2}
+  \begin{pmatrix} 1,-1,0
+  \end{pmatrix}
+  + \sqrt{2}(1-|k|) \sin\theta
+  \begin{pmatrix} 0,0,1
+  \end{pmatrix} \label{eq:3}
+\end{align}
+と書ける．この$x$座標が$t$の時, $y=y_t,z=z_t$とすると
+\begin{align}
+  \begin{cases}
+    k + \sqrt{2}(1-|k|) \dfrac{\sqrt{2}}{2} \cos\theta = t \\
+    k - \sqrt{2}(1-|k|) \dfrac{\sqrt{2}}{2} \cos\theta = y_t \\
+    \sqrt{2}(1-|k|) \sin\theta = z_t
+  \end{cases}
+\end{align}
+だから，まず第一，第二式から
+\begin{align}
+  y_t = 2k - t \label{eq:4}
+\end{align}
+である．ついで第一式と第三式から
+\begin{align}
+  2(k-t)^2 + z_t^2 = 2(1-|k|)^2 \\
+  \therefore
+  z_t^2
+  & = 2(1-|k|)^2 - 2(k-t)^2 \\
+  & = 2k^2 - 4|k|+2 - 2(k^2+t^2-2kt) \\
+  & = 2\left[2(tk-|k|) + (1-t^2)\right] \label{eq:5}
+\end{align}
+である．\cref{eq:4}から$k=\dfrac{t+y_t}{2}$だから代入して
+\begin{align}
+  z_t^2 = 2\left[(t(t+y_t)-|t+y_t|) + (1-t^2)\right] \label{eq:6}
+\end{align}
+である．$y_t$の値に応じて絶対値を外して
+\begin{align}
+  z^2
+  &=
+  \begin{cases}
+    2\left[(t(t+y_t)-(t+y_t)) + (1-t^2)\right] & \left(0 \le t+y_t \right) \\
+    2\left[(t(t+y_t)+(t+y_t)) + (1-t^2)\right] & \left(0 \ge t+y_t \right)
+  \end{cases} \\
+  &=
+  \begin{cases}
+    2(t-1)\left[(t+y_t)-(1+t)\right] & \left(0 \le t+y_t \right) \\
+    2(t+1)\left[(t+y_t) + (1-t)\right] & \left(0 \ge t+y_t \right)
+  \end{cases} \\
+  &=
+  \begin{cases}
+    2(t-1)(y_t-1) & \left(-t \le y_t \le 1 \right) \\
+    2(t+1)(y_t+1) & \left(-1 \le y_t \le -t  \right)
+  \end{cases} \label{eq:7}
+\end{align}
+である．ただし最終行で$z_t$の存在条件から右辺が$0$以上であることに注意して$y_t$に制限をかけた．
+この切り口を図示すると下図の斜線部となる．
+
+% TODO: 断面の図
+% TODO: 断面の図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.5cm, y=1.8cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 定数: 例として t = 0.4
+    % 分割点 y = -t = -0.4
+    % 最大高さ z_max = sqrt(2*(1 - t^2)) = sqrt(2*(1 - 0.16)) = sqrt(1.68) ≈ 1.296
+    % ============================================================
+    \def\tVal{0.4}
+    \pgfmathsetmacro{\ySep}{-\tVal} % -0.4
+    \pgfmathsetmacro{\zMax}{sqrt(2.0*(1.0 - \tVal*\tVal))} % ≈ 1.296
+
+    % ============================================================
+    % 2. 断面領域全体の斜線ハッチング (上下対称)
+    % ============================================================
+    \fill[pattern=north east lines, pattern color=blue!75, opacity=0.7]
+    plot[domain=-1:\ySep, samples=40, smooth, variable=\y]
+    ({\y}, {sqrt(2.0*(1.0 + \tVal)*(\y + 1.0))})
+    -- plot[domain=\ySep:1, samples=40, smooth, variable=\y]
+    ({\y}, {sqrt(2.0*(1.0 - \tVal)*(1.0 - \y))})
+    -- plot[domain=1:\ySep, samples=40, smooth, variable=\y]
+    ({\y}, {-sqrt(2.0*(1.0 - \tVal)*(1.0 - \y))})
+    -- plot[domain=\ySep:-1, samples=40, smooth, variable=\y]
+    ({\y}, {-sqrt(2.0*(1.0 + \tVal)*(\y + 1.0))})
+    -- cycle;
+
+    % ============================================================
+    % 3. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-1.35, 0) -- (1.35, 0) node[right] {$y$};
+    \draw[->, thick, gray!80!black] (0, -\zMax - 0.35) -- (0, \zMax + 0.4) node[above] {$z$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % ============================================================
+    % 4. 境界放物線 (実線)
+    % ============================================================
+    % 左側: ★_1 (z^2 = 2(t+1)(y+1))
+    \draw[line width=1.4pt, teal!85!black, domain=-1:\ySep, samples=50, smooth, variable=\y]
+    plot ({\y}, {sqrt(2.0*(1.0 + \tVal)*(\y + 1.0))});
+    \draw[line width=1.4pt, teal!85!black, domain=-1:\ySep, samples=50, smooth, variable=\y]
+    plot ({\y}, {-sqrt(2.0*(1.0 + \tVal)*(\y + 1.0))});
+
+    % 右側: ★_2 (z^2 = 2(t-1)(y-1))
+    \draw[line width=1.4pt, blue!85!black, domain=\ySep:1, samples=50, smooth, variable=\y]
+    plot ({\y}, {sqrt(2.0*(1.0 - \tVal)*(1.0 - \y))});
+    \draw[line width=1.4pt, blue!85!black, domain=\ySep:1, samples=50, smooth, variable=\y]
+    plot ({\y}, {-sqrt(2.0*(1.0 - \tVal)*(1.0 - \y))});
+
+    % ============================================================
+    % 5. 境界・特徴点・補助線
+    % ============================================================
+    % 分割境界線 y = -t
+    \draw[dashed, red!85!black, line width=1.1pt] (\ySep, -\zMax) -- (\ySep, \zMax);
+    \node[below=2pt, font=\scriptsize, red!90!black] at (\ySep, 0) {$-t$};
+
+    % 端点 y = -1, 1
+    \fill[black] (-1, 0) circle (1.2pt) node[below=2pt, font=\scriptsize] {$-1$};
+    \fill[black] ( 1, 0) circle (1.2pt) node[below=2pt, font=\scriptsize] {$1$};
+
+    % 最高点 (-t, sqrt(2(1-t^2)))
+    \draw[dotted, gray!60] (\ySep, \zMax) -- (0, \zMax)
+    node[right=2pt, font=\scriptsize] {$\sqrt{2(1-t^2)}$};
+    \draw[dotted, gray!60] (\ySep, -\zMax) -- (0, -\zMax)
+    node[right=2pt, font=\scriptsize] {$-\sqrt{2(1-t^2)}$};
+
+    % 放物線のラベル
+    \node[teal!90!black, font=\footnotesize\bfseries] at (-0.72, 0.75)
+    {$\star_1: z^2 = 2(t+1)(y+1)$};
+    \node[blue!90!black, font=\footnotesize\bfseries] at (0.55, 0.75)
+    {$\star_2: z^2 = 2(t-1)(y-1)$};
+
+    % 積分幅 (y_+ - y_-)
+    \def\zSlice{0.6}
+    \pgfmathsetmacro{\yMinus}{\zSlice*\zSlice / (2.0*(1.0 + \tVal)) - 1.0}
+    \pgfmathsetmacro{\yPlus}{\zSlice*\zSlice / (2.0*(\tVal - 1.0)) + 1.0}
+    \draw[<->, line width=1.2pt, red!85!black] (\yMinus, \zSlice) -- (\yPlus, \zSlice)
+    node[midway, above=1pt, font=\tiny\bfseries] {$y_+ - y_-$};
+
+  \end{tikzpicture}
+  \caption{$x=t$ による切断面 $S(t)$}
+  \label{fig:cross_section_st_parabolas}
+\end{figure}
+
+この面積を$S(t)$とする．
+対称性より$0 \le z$の部分の面積の$2$倍だから$z$方向に積分して，$0 \le t < 1$に注意して
+\begin{align}
+  \dfrac{1}{2} S(t)
+  &= \int_{0}^{\sqrt{2(1-t^2)}} (y_{+}-y_{-}) dz \\
+  &= \int_{0}^{\sqrt{2(1-t^2)}} \left[\left\{\dfrac{z^2}{2(t-1)}+1\right\} - \left\{\dfrac{z^2}{2(t+1)}-1\right\} \right] dz \\
+  &= \int_{0}^{\sqrt{2(1-t^2)}} \left[\left\{\dfrac{1}{2(t-1)}-\dfrac{1}{2(t+1)}\right\}z^2 + 2 \right] dz \\
+  &= \left[\dfrac{1}{3}\left\{\dfrac{1}{2(t-1)}-\dfrac{1}{2(t+1)}\right\}z^3 + 2z \right]_{0}^{\sqrt{2(1-t^2)}} \\
+  &= \dfrac{1}{6}\dfrac{2\sqrt{2(1-t^2)}^3}{(t-1)(t+1)} + 2\sqrt{2(1-t^2)} \\
+  &= - \dfrac{2}{3}\sqrt{2(1-t^2)} + 2\sqrt{2(1-t^2)} \\
+  &= \dfrac{4}{3}\sqrt{2(1-t^2)} \\
+  \therefore
+  S(t) = \dfrac{8}{3} \sqrt{2} \sqrt{1-t^2} \label{eq:8}
+\end{align}
+である．
+
 \paragraph{(2)}
 
-対称性から，求める体積 $V$, $V'$ のうち $0 \le x$ のものを $V'$ として，
+対称性から，求める体積を $V$, $V$ のうち $0 \le x$ のものを $V'$ として，
 \begin{align}
-  V = 2 V' \quad \cdots ③
+  V = 2 V' \label{eq:9}
 \end{align}
-とできる．$V_2$ を $x=t$ で切った時の切断面は，$y$ と $z$ 軸に関して対称だから，共通部分は右図のようになる．この面積 $T(t)$ は
+である．
+
+% TODO: 共通部分の図
+% TODO: 共通部分の図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.5cm, y=2.0cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 定数: t = 0.4
+    % z_0 = sqrt(2*(1 - t)) = sqrt(2*0.6) = sqrt(1.2) ≈ 1.0954
+    % ============================================================
+    \def\tVal{0.4}
+    \pgfmathsetmacro{\zZero}{sqrt(2.0*(1.0 - \tVal))} % ≈ 1.0954
+    \pgfmathsetmacro{\zMax}{sqrt(2.0*(1.0 - \tVal*\tVal))} % ≈ 1.296
+
+    % ============================================================
+    % 2. 共通部分 T(t) の塗りつぶし (-y_+ <= y <= y_+)
+    % y_+(z) = z^2 / (2(t-1)) + 1
+    % ============================================================
+    \fill[pattern=north east lines, pattern color=purple!75, opacity=0.8]
+    plot[domain=-\zZero:\zZero, samples=50, smooth, variable=\z]
+    ({\z*\z / (2.0*(\tVal - 1.0)) + 1.0}, {\z})
+    -- plot[domain=\zZero:-\zZero, samples=50, smooth, variable=\z]
+    ({-(\z*\z / (2.0*(\tVal - 1.0)) + 1.0)}, {\z})
+    -- cycle;
+
+    % ============================================================
+    % 3. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-1.3, 0) -- (1.3, 0) node[right] {$y$};
+    \draw[->, thick, gray!80!black] (0, -\zMax - 0.25) -- (0, \zMax + 0.3) node[above] {$z$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % ============================================================
+    % 4. V1 と V2 の外郭線 (点線・破線)
+    % ============================================================
+    % V1 の輪郭 (薄い青破線)
+    \draw[dashed, blue!60, line width=0.9pt, domain=-1:-\tVal, samples=30, variable=\y]
+    plot ({\y}, {sqrt(2.0*(1.0 + \tVal)*(\y + 1.0))});
+    \draw[dashed, blue!60, line width=0.9pt, domain=-\tVal:1, samples=30, variable=\y]
+    plot ({\y}, {sqrt(2.0*(1.0 - \tVal)*(1.0 - \y))});
+
+    % V2 の輪郭 (薄い緑破線: y 軸反転)
+    \draw[dashed, teal!60, line width=0.9pt, domain=\tVal:1, samples=30, variable=\y]
+    plot ({\y}, {sqrt(2.0*(1.0 + \tVal)*(1.0 - \y))});
+    \draw[dashed, teal!60, line width=0.9pt, domain=-1:\tVal, samples=30, variable=\y]
+    plot ({\y}, {sqrt(2.0*(1.0 - \tVal)*(\y + 1.0))});
+
+    % ============================================================
+    % 5. 共通部分の境界 (太い実線)
+    % ============================================================
+    % 右側境界: y = y_+
+    \draw[line width=1.5pt, purple!85!black, domain=-\zZero:\zZero, samples=60, variable=\z]
+    plot ({\z*\z / (2.0*(\tVal - 1.0)) + 1.0}, {\z});
+    % 左側境界: y = -y_+
+    \draw[line width=1.5pt, purple!85!black, domain=-\zZero:\zZero, samples=60, variable=\z]
+    plot ({-(\z*\z / (2.0*(\tVal - 1.0)) + 1.0)}, {\z});
+
+    % ============================================================
+    % 6. 特徴点・目盛り
+    % ============================================================
+    \fill[black] ( 1, 0) circle (1.2pt) node[below=2pt, font=\scriptsize] {$1$};
+    \fill[black] (-1, 0) circle (1.2pt) node[below=2pt, font=\scriptsize] {$-1$};
+
+    \fill[purple!85!black] (0,  \zZero) circle (1.3pt)
+    node[above right=1pt, font=\scriptsize, purple!90!black] {$\sqrt{2(1-t)}$};
+    \fill[purple!85!black] (0, -\zZero) circle (1.3pt)
+    node[below right=1pt, font=\scriptsize, purple!90!black] {$-\sqrt{2(1-t)}$};
+
+    % 共通部分の面積ラベル T(t)
+    \node[purple!90!black, font=\large\bfseries] at (0, 0.45) {$T(t)$};
+
+    % 積分幅の矢印
+    \def\zCut{0.45}
+    \pgfmathsetmacro{\yW}{\zCut*\zCut / (2.0*(\tVal - 1.0)) + 1.0}
+    \draw[<->, line width=1.2pt, red!85!black] (-\yW, -\zCut) -- (\yW, -\zCut)
+    node[midway, below=1pt, font=\tiny\bfseries] {$2y_+$};
+
+  \end{tikzpicture}
+  \caption{$x=t$ における共通部分 $V_1 \cap V_2$ の断面 $T(t)$（紫斜線部）}
+  \label{fig:cross_section_intersection_tt}
+\end{figure}
+
+ここで$V_2$を$x=t$で切った時の切断面は$V_1$の切断面を$z$軸に関して折り返したものだから，共通部分は上図のようになる．
+
+この面積 $T(t)$ は対称性より$0 \le z$で$y_+$を積分したものの二倍だから$t \neq 1$の時
 \begin{align}
-  T(t) &= 2 \cdot \dfrac{1}{6 \cdot 2(1-t)} \left( 2\sqrt{2(1-t)} \right)^3 \\
-  &= \dfrac{1}{6} \cdot 8 \sqrt{2} \sqrt{1-t} = \dfrac{8}{3} \sqrt{2} \sqrt{1-t}
+  \dfrac{1}{2}T(t)
+  &= \int_{0}^{\sqrt{2(1-t)}} y_{+} dz \\
+  &= \int_{0}^{\sqrt{2(1-t)}} \left\{\dfrac{z^2}{2(t-1)}+1\right\} dz \\
+  &= \left[\dfrac{z^3}{6(t-1)}+z\right]_{0}^{\sqrt{2(1-t)}} \\
+  &= \dfrac{(\sqrt{2(1-t)})^3}{6(t-1)} + \sqrt{2(1-t)} \\
+  &= \dfrac{\sqrt{2(1-t)}}{3} + \sqrt{2(1-t)} \\
+  &= \dfrac{4}{3}\sqrt{2(1-t)} \\
+  \therefore
+  T(t)
+  &= \dfrac{8}{3}\sqrt{2(1-t)}
 \end{align}
-だから，
+であり，$t=1$の時の$T(1)=0$もこの表現で良い．
+従って，これを$[0,1]$で積分して
+\cref{eq:9}より
 \begin{align}
   V' &= \int_0^1 T(t) dt \\
   &= \dfrac{8}{3}\sqrt{2} \int_0^1 \sqrt{1-t} \, dt \\
   &= \dfrac{8}{3}\sqrt{2} \left[ -\dfrac{2}{3} (1-t)^{\frac{3}{2}} \right]_0^1 \\
   &= \dfrac{16}{9} \sqrt{2}
 \end{align}
-となり，③から
+となり，\cref{eq:9}からから求める体積は
 \begin{align}
-  V = \dfrac{32}{9}\sqrt{2} \hfill \text{固}
+  V = \dfrac{32}{9}\sqrt{2}
 \end{align}
 である．
+
+% TODO: 別解として普通にx軸方向に積分する例
+
+% 以下はoriginalの手書き原稿の導出
+% \noindent
+% $1^\circ \; k \ge 0$
+% \begin{align}
+%   (t-k)^2 + (2k-t-k)^2 + z^2 &= 2(1-k)^2 \\
+%   z^2 &= 2\{ (1-k)^2 - (t-k)^2 \} = 2(1-t) \{ -2k + (1+t) \}
+% \end{align}
+
+% \noindent
+% $2^\circ \; k \le 0$
+% \begin{align}
+%   (t-k)^2 + (2k-t-k)^2 + z^2 &= 2(1+k)^2 \\
+%   z^2 &= 2\{ (1+k)^2 - (t-k)^2 \} = 2(1+t) \{ 2k + (1-t) \}
+% \end{align}
+
+% \noindent
+% 次に $k$ を動かす．$-1 \le y \le 1$ から，
+% \begin{align}
+%   \dfrac{t-1}{2} \le k \le \dfrac{t+1}{2}
+% \end{align}
+% で考えれば良い．$y = 2k - t \implies k = \dfrac{y+t}{2}$ だから $0 \le k \le 1$ とあわせて，以下のようになる．
+
+% \medskip
+
+% \noindent
+% ① $\dfrac{t-1}{2} \le k \le 0$
+
+% $\dfrac{t-1}{2} \le \dfrac{y+t}{2} \le 0 \implies -1 \le y \le -t$ の時，$2^\circ$ から
+% \begin{align}
+%   z^2 = 2(1+t)(y+1) \quad \cdots \star_1
+% \end{align}
+
+% \noindent
+% ② $0 \le k \le \dfrac{t+1}{2}$
+
+% $0 \le \dfrac{y+t}{2} \le \dfrac{t+1}{2} \implies -t \le y \le 1$ の時，$1^\circ$ から
+% \begin{align}
+%   z^2 = 2(1-t)(1-y) \quad \cdots \star_2
+% \end{align}
 
 \end{document}

@@ -1,26 +1,108 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
 {\bf [解]}
 
 \paragraph{(1)}
 
+% TODO: ABCの図
+% TODO: ABCの図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 定数・厳密パラメータ
+    % a = sqrt(7)/7 ≈ 0.3780
+    % b = 2*sqrt(7)/7 ≈ 0.7559
+    % c = 4*sqrt(7)/7 ≈ 1.5119
+    % 見やすさのため全体を拡大スケール (k = 1.8)
+    % ============================================================
+    \def\kScale{1.8}
+    \pgfmathsetmacro{\aLen}{\kScale * sqrt(7.0)/7.0}       % a: P -> A
+    \pgfmathsetmacro{\bLen}{\kScale * 2.0*sqrt(7.0)/7.0}   % b: P -> B
+    \pgfmathsetmacro{\cLen}{\kScale * 4.0*sqrt(7.0)/7.0}   % c: P -> C
+
+    \coordinate (P) at (0, 0);
+    % A は x 軸正の向き
+    \coordinate (A) at (\aLen, 0);
+    % B は角度 -120° (時計回りに 2pi/3)
+    \coordinate (B) at ({-0.5*\bLen}, {-0.8660*\bLen});
+    % C は角度 +120° (反時計回りに 2pi/3)
+    \coordinate (C) at ({-0.5*\cLen}, {0.8660*\cLen});
+
+    % ============================================================
+    % 2. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-1.0, 0) -- (\aLen + 0.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, {-0.866*\bLen - 0.25}) -- (0, {0.866*\cLen + 0.25}) node[above] {$y$};
+    \node[below left=2pt] at (P) {$P$};
+
+    % ============================================================
+    % 3. 三角形 ABC の描画 (直角三角形: ∠CAB = 90°)
+    % ============================================================
+    \fill[blue!10, opacity=0.4] (A) -- (B) -- (C) -- cycle;
+    \draw[line width=1.4pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+
+    % 直角記号 ∠CAB = 90°
+    \coordinate (sqAB) at ($ (A)!0.16!(B) $);
+    \coordinate (sqAC) at ($ (A)!0.16!(C) $);
+    \draw[thin, gray!70!black]
+    (sqAB) -- ($ (sqAB) + (sqAC) - (A) $) -- (sqAC);
+
+    % ============================================================
+    % 4. ベクトル PA, PB, PC (有向線分)
+    % ============================================================
+    \draw[->, line width=1.3pt, red!85!black] (P) -- (A)
+    node[midway, below=2pt, font=\footnotesize\bfseries] {$a$};
+    \draw[->, line width=1.3pt, red!85!black] (P) -- (B)
+    node[midway, left=2pt, font=\footnotesize\bfseries] {$b$};
+    \draw[->, line width=1.3pt, red!85!black] (P) -- (C)
+    node[midway, above left=1pt, font=\footnotesize\bfseries] {$c$};
+
+    % ============================================================
+    % 5. 角度の円弧 (α = β = 2π/3 = 120°)
+    % ============================================================
+    % β = 120° (P から x 軸基準で上回り)
+    \draw[->, thick, teal!85!black] (0.28, 0) arc (0:120:0.28);
+    \node[teal!90!black, font=\footnotesize\bfseries] at (60:0.38) {$\beta$};
+
+    % α = 120° (P から x 軸基準で下回り)
+    \draw[->, thick, teal!85!black] (0.24, 0) arc (0:-120:0.24);
+    \node[teal!90!black, font=\footnotesize\bfseries] at (-60:0.34) {$\alpha$};
+
+    % 残りの中心角 ∠BPC = 120°
+    \draw[thick, dashed, gray!60] (-120:0.2) arc (-120:-240:0.2);
+
+    % ============================================================
+    % 6. 頂点プロットとラベル
+    % ============================================================
+    \fill[black] (P) circle (1.2pt);
+    \fill[black] (A) circle (1.3pt) node[above right=1pt, font=\normalsize\bfseries] {$A$};
+    \fill[black] (B) circle (1.3pt) node[below left=1pt, font=\normalsize\bfseries] {$B$};
+    \fill[black] (C) circle (1.3pt) node[above left=1pt, font=\normalsize\bfseries] {$C$};
+
+    % 辺長のラベル (|AB|=1, |AC|=sqrt(3))
+    \node[font=\footnotesize, gray!30!black, right=2pt] at ($(A)!0.5!(B)$) {$|AB|=1$};
+    \node[font=\footnotesize, gray!30!black, above=2pt] at ($(A)!0.5!(C)$) {$|AC|=\sqrt{3}$};
+
+  \end{tikzpicture}
+  \caption{点 $P$ を原点とする直角三角形 $ABC$（$\angle CAB = \dfrac{\pi}{2}$）と等角配分（$\alpha = \beta = \dfrac{2}{3}\pi$）}
+  \label{fig:fermat_point_triangle_abc}
+\end{figure}
+
 $\angle APB = \alpha, \angle APC = \beta$ とおく．
-
-右図のように，$P$ を原点とし，$A$ を $x$ 軸正の方向とする座標をとる．この時，$C$ が $y \ge 0$ にくるようにする．
-
-($P$ が $\triangle ABC$ の内部) この時，$\vec{PA}, \vec{PB}, \vec{PC}$ に平行な単位ベクトルを各々 $\vec{a}, \vec{b}, \vec{c}$ として，
+上図のように $P$ を原点とし $A$ を $x$ 軸正の方向とする座標をとる．
+$P$ が $\triangle ABC$ の内部にあるから，$C$ が $y \ge 0$ にくるようにする．
+この時 $\vec{PA}, \vec{PB}, \vec{PC}$ に平行な単位ベクトルを各々 $\vec{a}, \vec{b}, \vec{c}$ として，パラメータ$\alpha,\beta$を用いて
 \begin{align}
   \vec{a} =
   \begin{pmatrix} 1 \\ 0
   \end{pmatrix}, \\
   \quad \vec{b} =
   \begin{pmatrix} \cos(-\alpha) \\ \sin(-\alpha)
+  \end{pmatrix} =
+  \begin{pmatrix} \cos(\alpha) \\ -\sin(\alpha)
   \end{pmatrix}, \\
   \quad \vec{c} =
   \begin{pmatrix} \cos\beta \\ \sin\beta
@@ -31,43 +113,19 @@ $\angle APB = \alpha, \angle APC = \beta$ とおく．
   \begin{cases}
     1 + \cos\alpha + \cos\beta = 0 \\
     \sin\alpha = \sin\beta
-  \end{cases}
-  \quad \cdots \textcircled{1}
+  \end{cases} \label{eq:1}
 \end{align}
-$\cos^2\alpha + \sin^2\alpha = 1$ から
+である．$\cos^2\alpha + \sin^2\alpha = 1$ に代入して
 \begin{align}
-  2 + 2\cos\beta = 1 \quad \therefore \cos\beta = -\dfrac{1}{2}
+  2 + 2\cos\beta = 1 \quad \therefore \cos\beta = -\dfrac{1}{2} \label{eq:2}
 \end{align}
-$0 \le \beta \le \pi$ から $\beta = \dfrac{2}{3}\pi$ で，①から $\alpha = \dfrac{2}{3}\pi$ が従う．よって，
+である．
+$0 \le \beta \le \pi$ から $\beta = \dfrac{2}{3}\pi$ で，\cref{eq:1}から $\alpha = \dfrac{2}{3}\pi$ が従う．よって，
 \begin{align}
-  \angle APB = \dfrac{2}{3}\pi, \quad \angle APC = \dfrac{2}{3}\pi \hfill \text{固}
+  \angle APB = \dfrac{2}{3}\pi, \quad \angle APC = \dfrac{2}{3}\pi
 \end{align}
+である．
 
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \draw[->] (-1.5,0) -- (1.8,0) node[right] {$x$};
-    \draw[->] (0,-1.5) -- (0,1.8) node[above] {$y$};
-    \node[below left] at (0,0) {$P$};
-
-    \coordinate (A) at (1.2, 0);
-    \coordinate (B) at ({-1.2*cos(60)}, {-1.2*sin(60)});
-    \coordinate (C) at ({-1.5*cos(60)}, {1.5*sin(60)});
-
-    \draw[thick] (A) -- (B) -- (C) -- cycle;
-    \draw[dashed, ->] (0,0) -- (A) node[above right] {$A$};
-    \draw[dashed, ->] (0,0) -- (B) node[below left] {$B$};
-    \draw[dashed, ->] (0,0) -- (C) node[above left] {$C$};
-
-    \draw (0.4,0) arc (0:120:0.4);
-    \node at (60:0.55) {$\beta$};
-    \draw (0.3,0) arc (0:-120:0.3);
-    \node at (-60:0.45) {$\alpha$};
-  \end{tikzpicture}
-  \caption{点$P$と三角形$ABC$の頂点への単位ベクトル}
-\end{figure}
-
-\noindent
 \paragraph{(2)}
 
 $|\vec{PA}| = a, |\vec{PB}| = b, |\vec{PC}| = c$ とすると，
@@ -86,12 +144,13 @@ $|\vec{PA}| = a, |\vec{PB}| = b, |\vec{PC}| = c$ とすると，
 \begin{align}
   \vec{AB} =
   \begin{pmatrix} -\dfrac{1}{2}b - a \\ -\dfrac{\sqrt{3}}{2}b
-  \end{pmatrix}, \\
+  \end{pmatrix},
   \quad \vec{AC} =
   \begin{pmatrix} -\dfrac{1}{2}c - a \\ \dfrac{\sqrt{3}}{2}c
-  \end{pmatrix}
+  \end{pmatrix} \label{eq:3}
 \end{align}
-だから，$\angle CAB = \dfrac{\pi}{2}, AB = 1, AC = \sqrt{3}$ から，
+である．
+$\angle CAB = \dfrac{\pi}{2}$より$\vec{AC}\cdot \vec{AB} = 0$であり，また $|AB| = 1, |AC| = \sqrt{3}$ だから\cref{eq:3}を代入して
 \begin{align}
   \begin{cases}
     (-\dfrac{1}{2}b - a)(-\dfrac{1}{2}c - a) - \dfrac{3}{4}bc = 0 \\
@@ -100,17 +159,51 @@ $|\vec{PA}| = a, |\vec{PB}| = b, |\vec{PC}| = c$ とすると，
   \end{cases}
   \iff
   \begin{cases}
+    a^2 + \dfrac{1}{2}(ac + ab - bc) = 0 \\
     a^2 + b^2 + ab = 1 \\
-    a^2 + c^2 + ac = 3 \\
-    a^2 + \dfrac{1}{2}(ac + ab - bc) = 0
-  \end{cases}
+    a^2 + c^2 + ac = 3
+  \end{cases} \label{eq:4}
 \end{align}
-これをといて，
+である．第一式から$c\neq a$の時
 \begin{align}
-  a = \dfrac{\sqrt{7}}{7}, \quad b = \dfrac{2\sqrt{7}}{7}, \\
-  \quad c = \dfrac{4\sqrt{7}}{7} \hfill \text{固}
+  b = \dfrac{a(2a+c)}{c-a} \label{eq:5}
 \end{align}
-
-\bigskip
+だから第二式に代入して
+\begin{align}
+  a^2 + \dfrac{a^2(2a+c)^2}{(c-a)^2} + \dfrac{a^2(2a+c)}{c-a} = 1 \\
+  a^2(c-a)^2 + a^2(2a+c)^2 + a^2(2a+c)(c-a) = (c-a)^2 \\
+  a^2\left[ 3a^2 + 3ac + 3c^2 \right] = (c-a)^2 \label{eq:6}
+\end{align}
+である．\cref{eq:4}の第三式を代入して
+\begin{align}
+  9a^2 = (c-a)^2 \quad
+  \therefore
+  3a = \pm(c-a) \quad
+  \therefore
+  c= 4a, -2a
+\end{align}
+を得る．$a,c>0$より
+\begin{align}
+  c=4a \label{eq:7}
+\end{align}
+であるから\cref{eq:5}に代入して
+\begin{align}
+  b = \dfrac{6a^2}{3a} = 2a \label{eq:8}
+\end{align}
+である．これを\cref{eq:4}の第二式に代入して
+\begin{align}
+  7a^2 = 1 \quad \therefore a = \dfrac{\sqrt{7}}{7}
+\end{align}
+だから\cref{eq:7,eq:8}より
+\begin{align}
+  b = \dfrac{2\sqrt{7}}{7}, c = \dfrac{4\sqrt{7}}{7}
+\end{align}
+である．まとめて
+\begin{align}
+  a = \dfrac{\sqrt{7}}{7}, \quad
+  b = \dfrac{2\sqrt{7}}{7}, \quad
+  c = \dfrac{4\sqrt{7}}{7}
+\end{align}
+である．
 
 \end{document}
