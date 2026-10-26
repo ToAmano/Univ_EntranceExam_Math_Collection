@@ -259,15 +259,22 @@ def _convert_all_list_envs(text):
     再帰的に処理する）。"""
     out = []
     pos = 0
+    previous_was_list = False
     while True:
         m = _LIST_ENV_TOKEN_RE.search(text, pos)
         if not m or m.group(1) != 'begin':
             out.append(text[pos:])
             break
-        out.append(text[pos:m.start()])
+        between = text[pos:m.start()]
+        out.append(between)
+        if previous_was_list and not between.strip():
+            # CommonMark joins adjacent ordered lists despite both starting
+            # with 1. An invisible HTML block keeps their numbering separate.
+            out.append('\n\n<!-- -->\n\n')
         body_start, body_end, end_pos = _find_balanced_list_env(text, m.start())
         out.append(_render_list_items(text[body_start:body_end], 0))
         pos = end_pos
+        previous_was_list = True
     return ''.join(out)
 
 

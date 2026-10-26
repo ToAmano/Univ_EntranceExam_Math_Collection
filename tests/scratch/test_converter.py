@@ -74,6 +74,20 @@ class TestConverter(unittest.TestCase):
         self.assertIn('<span id="eq:1"></span>\n\n$$\n\\begin{align}', processed)
         self.assertIn('$$\n\n        following text', processed)
 
+    def test_adjacent_enumerate_environments_remain_separate_lists(self):
+        latex = r'''
+        \begin{enumerate}
+        \item definition one
+        \item definition two
+        \end{enumerate}
+        \begin{enumerate}
+        \item question one
+        \item question two
+        \end{enumerate}
+        '''
+        processed = self.convert(latex)
+        self.assertRegex(processed, r'2\.  definition two\s+<!--.*?-->\s+1\.  question one')
+
     def test_tikz_is_replaced_with_html_image(self):
         latex = r'''
         問題文です。
