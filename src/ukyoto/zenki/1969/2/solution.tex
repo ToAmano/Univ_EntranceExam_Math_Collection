@@ -24,51 +24,50 @@
 \]
 ①，②から，題意は示された．
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=1.5]
-      % Circle center O
-      \coordinate (O) at (0,0);
-      \draw[thick] (O) circle (2cm);
-      \node[above left] at (O) {$O$};
-      \fill (O) circle (1.5pt);
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.05, >=stealth,
+      circleline/.style={gray!70, thin},
+      chord/.style={blue!75!black, thick},
+    auxiliary/.style={teal!70!black, thick}]
+    \coordinate (O) at (0,0);
+    \coordinate (C) at (-2,0);
+    \coordinate (D) at (2,0);
+    % A, B are on the circle of radius 2. P is the exact chord intersection.
+    \coordinate (A) at (0.5,-1.936492);
+    \coordinate (B) at (1.3,1.519868);
+    \path[name path=diameter] (C) -- (D);
+    \path[name path=chordAB] (A) -- (B);
+    \path[name intersections={of=diameter and chordAB, by=P}];
 
-      % Diameter CD
-      \coordinate (C) at (-2,0);
-      \coordinate (D) at (2,0);
-      \draw[thick] (C) -- (D);
-      \node[left] at (C) {$C$};
-      \node[right] at (D) {$D$};
+    \draw[circleline] (O) circle (2);
+    \draw[circleline, thick] (C) -- (D);
+    \draw[chord] (C) -- (A) -- (D);
+    \draw[auxiliary] (C) -- (B) -- (D);
+    \draw[chord] (A) -- (B);
 
-      % Points A and B on circle
-      \coordinate (A) at (1,-1.732);
-      \coordinate (B) at (1.2,1.6);
-      \node[below right] at (A) {$A$};
-      \node[above right] at (B) {$B$};
+    \fill[gray!75] (O) circle (1.2pt);
+    \fill[blue!75!black] (A) circle (1.5pt);
+    \fill[teal!70!black] (B) circle (1.5pt);
+    \fill[red!75!black] (P) circle (1.6pt);
+    \node[above] at (O) {$O$};
+    \node[left] at (C) {$C$};
+    \node[right] at (D) {$D$};
+    \node[below] at (A) {$A$};
+    \node[above] at (B) {$B$};
+    \node[above left] at (P) {$P$};
 
-      % Chords and triangles
-      \draw[thick] (C) -- (A) -- (D);
-      \draw[thick] (C) -- (B) -- (D);
-
-      % Intersection P of CD and AB
-      \coordinate (P) at (1.1,0);
-      \draw[thick] (A) -- (B);
-      \node[below left] at (P) {$P$};
-      \fill (P) circle (1.5pt);
-
-      % Angles
-      \node at (-1.3, -0.2) {$\alpha$};
-      \node at (-1.3, 0.2) {$\beta$};
-      \node at (0.9, -0.3) {$\theta$};
-      \node at (1.5, -0.4) {$\pi-\alpha-\beta$};
-
-      % Right angle marks
-      \draw (A) -- ++(-0.15,0.26) -- ++(0.26,0.15);
-      \draw (B) -- ++(-0.24,-0.18) -- ++(0.18,-0.24);
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+    \pic[draw=gray!70, angle radius=3.5mm] {right angle=C--A--D};
+    \pic[draw=gray!70, angle radius=3.5mm] {right angle=C--B--D};
+    \node[below right] at (-1.65,-0.13) {$\alpha$};
+    \node[above right] at (-1.65,0.13) {$\beta$};
+    \node[below left] at (P) {$\theta$};
+    \draw[gray!70, thin] (1.83,-0.12) -- (2.08,-0.42);
+    \node[below right] at (2.08,-0.42) {$\pi-\alpha-\beta$};
+  \end{tikzpicture}
+  \caption{直径 $CD$ と弦 $AB$ の交点 $P$，および証明で使う角。}
+  \label{fig:1969_2_chords}
+\end{figure}
 
 \newpage
 
