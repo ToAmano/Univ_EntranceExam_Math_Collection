@@ -8,84 +8,125 @@
 
 ［解］
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=1.0]
-      \draw (0,0) circle (1.5);
-      \coordinate (P) at (0,1.5);
-      \coordinate (Q) at (-1.3,-0.75);
-      \coordinate (R) at (1.3,-0.75);
-      \coordinate (S) at (1.4,0.5);
-      \draw (P) node[above] {$P$} -- (Q) node[below left] {$Q$} -- (R) node[below right] {$R$} -- cycle;
-      \draw (S) node[right] {$S$} -- (R);
-      \draw (-1.8, 0.8) -- (0.5, 0.8);
-      \node at (-0.8, 0.95) {$A$};
-      \node at (-0.2, 0.95) {$B$};
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=2.2cm, every node/.style={font=\small}]
+    % P is on the unit circle; Q and R are the second intersections of PA, PB.
+    \pgfmathsetmacro{\px}{cos(100)}
+    \pgfmathsetmacro{\py}{sin(100)}
+    \pgfmathsetmacro{\qt}{2*(1-\px*(-0.55)-\py*0.45)/((\px+0.55)^2+(\py-0.45)^2)}
+    \pgfmathsetmacro{\rt}{2*(1-\px*0.15-\py*0.45)/((\px-0.15)^2+(\py-0.45)^2)}
+    \pgfmathsetmacro{\qx}{\px+\qt*(-0.55-\px)}
+    \pgfmathsetmacro{\qy}{\py+\qt*(0.45-\py)}
+    \pgfmathsetmacro{\rx}{\px+\rt*(0.15-\px)}
+    \pgfmathsetmacro{\ry}{\py+\rt*(0.45-\py)}
+    \coordinate (A) at (-0.55, 0.45);
+    \coordinate (B) at (0.15, 0.45);
+    \coordinate (P) at (\px, \py);
+    \coordinate (Q) at (\qx, \qy);
+    \coordinate (R) at (\rx, \ry);
+    \coordinate (S) at (-\qx, \qy);
+    \draw[thick, gray!75!black] (0,0) circle (1);
+    \draw[line width=1.2pt, blue!85!black] (P) -- (Q);
+    \draw[line width=1.2pt, blue!85!black] (P) -- (R);
+    \draw[thick, teal!80!black] (Q) -- (S);
+    \draw[thick, red!80!black] (S) -- (R);
+    \draw[thick, gray!80!black] (A) -- (B);
+    \fill (P) circle (1.3pt) node[above=2pt] {$P$};
+    \fill (Q) circle (1.3pt) node[below left=2pt] {$Q$};
+    \fill (R) circle (1.3pt) node[below right=2pt] {$R$};
+    \fill (S) circle (1.3pt) node[right=2pt] {$S$};
+    \fill (A) circle (1.1pt) node[above left=2pt] {$A$};
+    \fill (B) circle (1.1pt) node[above right=2pt] {$B$};
+  \end{tikzpicture}
+  \caption{円周上の $P,Q,R,S$ と，$AB\parallel QS$ の配置}
+  \label{fig:1962_3_configuration}
+\end{figure}
 
 $SR$ と $AB$ の交点を $C$ とおく．$P$ の位置によって，以下の2通りの位置関係がありうる．
 
-だから，直線 $SR$ は $P$ の位置によらず，定点 $C$ を通る図．
+以下，直線 $SR$ が $P$ の位置によらず定点 $C$ を通ることを示す．
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=0.9]
-      \draw (0,0) circle (1.5);
-      \coordinate (P) at (-0.4,1.45);
-      \coordinate (A) at (-1.3,0.75);
-      \coordinate (B) at (-0.2,0.75);
-      \coordinate (C) at (0.8,0.75);
-      \coordinate (Q) at (-1.4,-0.5);
-      \coordinate (S) at (-0.3,-1.46);
-      \coordinate (R) at (1.2,-0.9);
-      \draw (-1.8,0.75) -- (1.8,0.75);
-      \draw (P) node[above] {$P$};
-      \draw (A) node[above left] {$A$};
-      \draw (B) node[above right] {$B$};
-      \draw (C) node[above] {$C$};
-      \draw (Q) node[below left] {$Q$};
-      \draw (S) node[below] {$S$};
-      \draw (R) node[below right] {$R$};
-      \draw (P) -- (A) -- (S);
-      \draw (P) -- (R);
-      \draw (Q) -- (S);
-      \draw (S) -- (R) -- (C);
-      \node at (0,-1.9) {$1^\circ$ 線分 $QS$ と $PR$ が交わらない};
-    \end{tikzpicture}
-  \end{figure}
-  \qquad
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=0.9]
-      \draw (0,0) circle (1.5);
-      \coordinate (P) at (0,1.5);
-      \coordinate (A) at (-1.2,0.9);
-      \coordinate (B) at (-0.4,0.9);
-      \coordinate (C) at (1.2,0.9);
-      \coordinate (Q) at (-1.45,-0.3);
-      \coordinate (S) at (1.4,-0.5);
-      \coordinate (R) at (0.5,-1.4);
-      \draw (-1.8,0.9) -- (1.8,0.9);
-      \draw (P) node[above] {$P$};
-      \draw (A) node[above left] {$A$};
-      \draw (B) node[above right] {$B$};
-      \draw (C) node[above] {$C$};
-      \draw (Q) node[left] {$Q$};
-      \draw (S) node[right] {$S$};
-      \draw (R) node[below right] {$R$};
-      \draw (P) -- (R);
-      \draw (Q) -- (S);
-      \draw (S) -- (R) -- (C);
-      \node at (0,-1.9) {$2^\circ$ 線分 $QS$ と $PR$ が交わる};
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.8cm, y=1.8cm, every node/.style={font=\footnotesize}]
+    % The two choices of P keep the fixed interior points A,B unchanged.
+    \foreach \pangle/\panelshift/\caseid in {113/0/1, 80/3.8/2} {
+      \begin{scope}[shift={(\panelshift,0)}]
+        \pgfmathsetmacro{\px}{cos(\pangle)}
+        \pgfmathsetmacro{\py}{sin(\pangle)}
+        \pgfmathsetmacro{\qt}{2*(1-\px*(-0.55)-\py*0.45)/((\px+0.55)^2+(\py-0.45)^2)}
+        \pgfmathsetmacro{\rt}{2*(1-\px*0.15-\py*0.45)/((\px-0.15)^2+(\py-0.45)^2)}
+        \pgfmathsetmacro{\qx}{\px+\qt*(-0.55-\px)}
+        \pgfmathsetmacro{\qy}{\py+\qt*(0.45-\py)}
+        \pgfmathsetmacro{\rx}{\px+\rt*(0.15-\px)}
+        \pgfmathsetmacro{\ry}{\py+\rt*(0.45-\py)}
+        \pgfmathsetmacro{\dx}{\px+(\qy-\py)/(\ry-\py)*(\rx-\px)}
+        \coordinate (A) at (-0.55, 0.45);
+        \coordinate (B) at (0.15, 0.45);
+        \coordinate (C) at (1.25714286, 0.45);
+        \coordinate (P) at (\px, \py);
+        \coordinate (Q) at (\qx, \qy);
+        \coordinate (R) at (\rx, \ry);
+        \coordinate (S) at (-\qx, \qy);
+        \coordinate (D) at (\dx, \qy);
+        \draw[thick, gray!75!black] (0,0) circle (1);
+        \draw[gray!70!black] (-1.15,0.45) -- (1.48,0.45);
+        \draw[line width=1.2pt, blue!85!black] (P) -- (Q);
+        \draw[line width=1.2pt, blue!85!black] (P) -- (R);
+        \draw[thick, teal!85!black] (Q) -- (S);
+        \draw[thick, red!80!black] (R) -- (C);
+        \draw[thick, blue!85!black] (A) -- (B);
+        \ifnum\caseid=1
+        \draw[dashed, blue!70!black] (R) -- (D);
+        \draw[dashed, teal!70!black] (S) -- (D);
+        \fi
+        \fill (P) circle (1.3pt) node[above=2pt] {$P$};
+        \fill (Q) circle (1.3pt) node[below left=2pt] {$Q$};
+        \fill (R) circle (1.3pt) node[above right=2pt] {$R$};
+        \fill (S) circle (1.3pt) node[below right=2pt] {$S$};
+        \fill (A) circle (1.1pt) node[above left=2pt] {$A$};
+        \fill (B) circle (1.1pt) node[above right=2pt] {$B$};
+        \fill[red!80!black] (C) circle (1.3pt) node[above right=2pt] {$C$};
+        \fill[teal!85!black] (D) circle (1.2pt) node[below=2pt] {$D$};
+        \ifnum\caseid=1
+        \node[font=\small] at (0,-1.4) {$1^\circ$：$PR$ と $QS$ は交わらない};
+        \else
+        \node[font=\small] at (0,-1.4) {$2^\circ$：$PR$ と $QS$ は交わる};
+        \fi
+      \end{scope}
+    }
+  \end{tikzpicture}
+  \caption{$P$ の位置による二つの場合．破線は線分の延長を示す}
+  \label{fig:1962_3_cases}
+\end{figure}
 
-$1^\circ$ の時，$PR$ と $QS$ の交点を $D$ とすると，内接四角形の対角の和が $\pi$ であることから角度が図のようになり（$\because AB \mathbin{/\!/} QS$），
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.5cm, y=2.5cm, every node/.style={font=\small}]
+    % A,B,C are collinear; P,B,R are collinear in the valid P=100-degree case.
+    \coordinate (A) at (-0.55, 0.45);
+    \coordinate (B) at (0.15, 0.45);
+    \coordinate (C) at (1.25714286, 0.45);
+    \coordinate (P) at (-0.17364818, 0.98480775);
+    \coordinate (R) at (0.79188387, -0.61067172);
+    \draw[thick, gray!80!black] (A) -- (C);
+    \draw[line width=1.2pt, blue!85!black] (P) -- (A);
+    \draw[line width=1.2pt, teal!85!black] (C) -- (R);
+    \draw[line width=1.2pt, red!80!black] (P) -- (R);
+    \fill (A) circle (1.2pt) node[below left=2pt] {$A$};
+    \fill (B) circle (1.2pt) node[above right=2pt] {$B$};
+    \fill (C) circle (1.2pt) node[above right=2pt] {$C$};
+    \fill (P) circle (1.3pt) node[above=2pt] {$P$};
+    \fill (R) circle (1.3pt) node[below=2pt] {$R$};
+    \node[red!80!black, left=3pt] at ($(P)!0.53!(B)$) {$x$};
+    \node[red!80!black, left=3pt] at ($(B)!0.53!(R)$) {$y$};
+  \end{tikzpicture}
+  \caption{相似な三角形 $PAB$ と $CRB$，および $PB=x,BR=y$}
+  \label{fig:1962_3_similar_triangles}
+\end{figure}
+
+$1^\circ$ の時，直線 $PR$ と直線 $QS$ の交点を $D$ とすると，内接四角形の対角の和が $\pi$ であることから角度が図のようになり（$\because AB \mathbin{/\!/} QS$），
 \[
   \triangle PAB \sim \triangle CRB
 \]
@@ -101,24 +142,6 @@ $PB = x, BR = y$ とおくと
   BC = \dfrac{xy}{AB} \quad \dots \text{①}
 \]
 である．
-
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=0.9]
-      \coordinate (P) at (0,1.5);
-      \coordinate (A) at (-1,0.5);
-      \coordinate (B) at (-0.3,0.5);
-      \coordinate (C) at (1.2,0);
-      \coordinate (R) at (0.7,-1);
-      \draw (P) node[above] {$P$} -- (A) node[left] {$A$} -- (C) node[right] {$C$};
-      \draw (P) -- (B) node[above right] {$B$} -- (R) node[below right] {$R$} -- (C);
-      \draw (A) -- (B);
-      \node at (-0.4, 1.1) {$x$};
-      \node at (0.4, -0.2) {$y$};
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
 
 一方，直線 $BC$ と円の交点を $E, F$ として方べきの定理から
 \[

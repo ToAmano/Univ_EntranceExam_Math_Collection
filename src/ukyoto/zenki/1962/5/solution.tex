@@ -8,29 +8,37 @@
 
 ［解］(1)
 \begin{align}
-  f(x) &= \sqrt{2} a \pi x + c \cos \pi x + \sin \pi x \\
-  &= \sqrt{2} a t + c \cos t + \sin t \quad (t = \pi x) \equiv g(t)
+  f(x) &= \sqrt{2} a \pi x + \cos \pi x + \sin \pi x \\
+  &= \sqrt{2} a t + \cos t + \sin t \quad (t = \pi x) \equiv g(t)
 \end{align}
 とすると
 \[
-  g'(t) = \sqrt{2} a + c \cos t - \sin t
+  g'(t) = \sqrt{2} a + \cos t - \sin t
 \]
-だから $t_0$ の前後で $g'(t)$ の符号が変化するような $t_0$ の存在条件は，右図から
+だから $t_0$ の前後で $g'(t)$ の符号が変化するような $t_0$ の存在条件は，図から
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=0.8]
-      \draw[->] (-0.5,0) -- (3.5,0) node[right] {$t$};
-      \draw[->] (0,-2) -- (0,2) node[above] {$y$};
-      \draw[domain=0:3.14, samples=50, smooth, thick] plot (\x, {1.414*sin(\x r - 0.785 r)});
-      \draw[dashed] (0, 1.414) node[left] {$\sqrt{2}$} -- (3.14, 1.414);
-      \draw[dashed] (0, -1.414) node[left] {$-\sqrt{2}$} -- (3.14, -1.414);
-      \node[below] at (0.785, 0) {$\pi/4$};
-      \node[right] at (3, 1) {$y = \sin t - c \cos t$};
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.1cm, y=1.3cm, >=stealth,
+    every node/.style={font=\small}]
+    \draw[->, thick, gray!80!black] (-0.3,0) -- (6.65,0) node[right] {$t$};
+    \draw[->, thick, gray!80!black] (0,-1.75) -- (0,1.8) node[above] {$y$};
+    \draw[dashed, gray!65] (0,1.4142) -- (6.3,1.4142);
+    \draw[dashed, gray!65] (0,-1.4142) -- (6.3,-1.4142);
+    \draw[dashed, orange!85!black] (0,0.7071) -- (6.3,0.7071);
+    \draw[line width=1.4pt, blue!85!black, domain=0:6.283,
+    samples=130, smooth] plot (\x, {sin(\x r)-cos(\x r)});
+    \node[left=3pt, font=\footnotesize] at (0,1.4142) {$\sqrt2$};
+    \node[left=3pt, font=\footnotesize] at (0,-1.4142) {$-\sqrt2$};
+    \node[right=3pt, orange!85!black, font=\footnotesize]
+    at (6.3,0.7071) {$\sqrt2a$（例）};
+    \node[below=3pt, font=\footnotesize] at (0.7854,0) {$\pi/4$};
+    \node[above right=3pt, blue!85!black, font=\footnotesize]
+    at (3.5,1.1) {$y=\sin t-\cos t$};
+  \end{tikzpicture}
+  \caption{$\sin t-\cos t$ の値域と直線 $y=\sqrt2a$ の位置}
+  \label{fig:1962_5_range}
+\end{figure}
 
 \[
   -\sqrt{2} < \sqrt{2} a < \sqrt{2}
@@ -41,28 +49,35 @@
 
 \paragraph{(2)}
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=0.8]
-      \draw[->] (-0.5,0) -- (4.5,0) node[right] {$t$};
-      \draw[->] (0,-1.5) -- (0,2.5) node[above] {$g'(t)$};
-      \draw[domain=0:4, samples=50, smooth, thick] plot (\x, {cos(\x r * 1.5) + 0.8});
-      \draw[dashed] (0, 1.8) node[left] {$\sqrt{2}a + 1$} -- (4, 1.8);
-      \draw[dashed] (0, 0.8) node[left] {$\sqrt{2}a$} -- (4, 0.8);
-      \draw[dashed] (0, -0.2) node[left] {$\sqrt{2}(a-1)$} -- (4, -0.2);
-      \fill (1.05, 0) circle (2pt);
-      \fill (3.14, 0) circle (2pt);
-      \node at (2, -1) {（オブラス）};
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=0.9cm, y=1.1cm, >=stealth,
+    every node/.style={font=\small}]
+    % Example a=1/2; descending zeros repeat after 2pi.
+    \draw[->, thick, gray!80!black] (-0.2,0) -- (9.1,0) node[right] {$t$};
+    \draw[->, thick, gray!80!black] (0,-1.0) -- (0,2.5) node[above] {$g'(t)$};
+    \draw[dashed, gray!65] (0,2.1213) -- (8.8,2.1213);
+    \draw[dashed, gray!65] (0,0.7071) -- (8.8,0.7071);
+    \draw[dashed, gray!65] (0,-0.7071) -- (8.8,-0.7071);
+    \draw[line width=1.4pt, blue!85!black, domain=0:8.8,
+    samples=180, smooth] plot (\x, {0.7071+cos(\x r)-sin(\x r)});
+    \fill[red!80!black] (1.309,0) circle (1.5pt);
+    \fill[red!80!black] (7.592,0) circle (1.5pt);
+    \node[below=3pt, font=\footnotesize] at (1.309,0) {$t_0$};
+    \node[below=3pt, font=\footnotesize] at (7.592,0) {$t_0+2\pi$};
+    \node[left=3pt, font=\footnotesize] at (0,2.1213) {$\sqrt2(a+1)$};
+    \node[left=3pt, font=\footnotesize] at (0,0.7071) {$\sqrt2a$};
+    \node[left=3pt, font=\footnotesize] at (0,-0.7071) {$\sqrt2(a-1)$};
+  \end{tikzpicture}
+  \caption{$g'(t)$ が正から負へ変わる点は周期 $2\pi$ ごとに現れる}
+  \label{fig:1962_5_derivative}
+\end{figure}
 
 $g'(t)$ が周期 $2\pi$ の周期関数であることから，$0 \le t < 2\pi$ で $g'(t)$ の符号が $t_0$ の前後で正から負になるような $t_0$ があって，$t = t_0 + 2n\pi \, (n \in \mathbb{Z})$ においては $g(t)$ は極大になる．
 
 従って，極大となる点の座標を $(X, Y)$ とすると $t = \pi x$ から
 \[
-  X = \dfrac{t_0}{\pi} + 2n, \quad Y = \sqrt{2} a \left( \dfrac{t_0}{\pi} + 2n \right) + c \cos t_0 + \sin t_0
+  X = \dfrac{t_0}{\pi} + 2n, \quad Y = \sqrt{2} a \left( \dfrac{t_0}{\pi} + 2n \right) + \cos t_0 + \sin t_0
 \]
 従って，たしかに $(X, Y)$ は直線上にあり（$n$ を消せばわかる），その $X$ 座標の間隔が $2$ だから，等間隔である．
 
