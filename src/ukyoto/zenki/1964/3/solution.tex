@@ -7,33 +7,33 @@
 \end{flushright}
 
 [解]
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=1.2]
-      \coordinate (A) at (1.5, 2.5);
-      \coordinate (B) at (0, 0);
-      \coordinate (C) at (4, 0);
-      \coordinate (L) at (1.333, 0);
-      \coordinate (M) at (2.666, 0);
-      \coordinate (P) at (2.75, 1.25);
-      \draw (A) -- (B) -- (C) -- cycle;
-      \draw (A) -- (L);
-      \draw (A) -- (M);
-      \coordinate (Q) at (intersection of B--P and A--L);
-      \coordinate (R) at (intersection of B--P and A--M);
-      \draw (B) -- (P);
-      \node[above] at (A) {$A$};
-      \node[below left] at (B) {$B$};
-      \node[below right] at (C) {$C$};
-      \node[below] at (L) {$L$};
-      \node[below] at (M) {$M$};
-      \node[above right] at (P) {$P$};
-      \node[left] at (Q) {$Q$};
-      \node[above right] at (R) {$R$};
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.25cm, y=1.1cm, every node/.style={font=\small}]
+    % P is on AC with AP/AC=0.65; L and M trisect BC.
+    \coordinate (A) at (1.2,2.7);
+    \coordinate (B) at (0,0);
+    \coordinate (C) at (4.5,0);
+    \coordinate (L) at (1.5,0);
+    \coordinate (M) at (3,0);
+    \coordinate (P) at (3.345,0.945);
+    \coordinate (Q) at (intersection of B--P and A--L);
+    \coordinate (R) at (intersection of B--P and A--M);
+    \draw[line width=1.3pt, blue!85!black] (A)--(B)--(C)--cycle;
+    \draw[thin, teal!75!black] (A)--(L) (A)--(M);
+    \draw[line width=1.3pt, red!75!black] (B)--(P);
+    \fill (A) circle(1.3pt) node[above=2pt] {$A$};
+    \fill (B) circle(1.3pt) node[below left=2pt] {$B$};
+    \fill (C) circle(1.3pt) node[below right=2pt] {$C$};
+    \fill (L) circle(1.3pt) node[below=2pt] {$L$};
+    \fill (M) circle(1.3pt) node[below=2pt] {$M$};
+    \fill[red!75!black] (P) circle(1.5pt) node[above right=2pt] {$P$};
+    \fill[red!75!black] (Q) circle(1.5pt) node[above left=2pt] {$Q$};
+    \fill[red!75!black] (R) circle(1.5pt) node[below right=2pt] {$R$};
+  \end{tikzpicture}
+  \caption{$BC$ の三等分点 $L,M$ と $BP$ 上の点 $Q,R$}
+  \label{fig:1964_3_triangle}
+\end{figure}
 
 (イ) $\vec{AP} = p \vec{c}$ と定めると $\vec{a}, \vec{c}$ では次の通り．
 $\vec{a}, \vec{c}$ を用いて表して
@@ -51,22 +51,31 @@ $\vec{a}, \vec{c}$ を用いて表して
   \end{aligned}
 \]
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=1.5]
-      \draw[->] (0,0) -- (1.5,0) node[right] {$p$};
-      \draw[->] (0,0) -- (0,3.5) node[above] {$y$};
-      \draw[domain=0:1,samples=50] plot (\x, {\x+2}) node[right] {$y=p+2$};
-      \draw[domain=0:1,samples=50] plot (\x, {3*\x}) node[right] {$y=3p$};
-      \draw[domain=0:1,samples=50] plot (\x, {\x*(2*\x+1)}) node[right] {$y=p(2p+1)$};
-      \draw[dashed] (1,0) -- (1,3);
-      \node[below] at (1,0) {$1$};
-      \node[left] at (0,2) {$2$};
-      \node[left] at (0,3) {$3$};
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=5cm, y=1cm, every node/.style={font=\small}]
+    \draw[->, thick, gray!80!black] (-0.04,0)--(1.13,0) node[right] {$p$};
+    \draw[->, thick, gray!80!black] (0,-0.12)--(0,3.4) node[above] {$y$};
+    \draw[dashed, gray!65] (1,0)--(1,3.1);
+    \draw[line width=1.3pt, blue!85!black] (0,2)--(1,3);
+    \draw[line width=1.3pt, teal!75!black] (0,0)--(1,3);
+    \draw[line width=1.3pt, orange!85!black, domain=0:1,
+    samples=60, smooth] plot (\x,{\x*(2*\x+1)});
+    \fill[red!80!black] (1,3) circle(1.4pt);
+    \node[below left=2pt, font=\footnotesize] at (0,0) {$0$};
+    \node[below=2pt, font=\footnotesize] at (1,0) {$1$};
+    \node[left=2pt, font=\footnotesize] at (0,2) {$2$};
+    \node[above right=2pt, font=\footnotesize] at (1,3) {$(1,3)$};
+    \draw[line width=1.3pt, blue!85!black] (1.12,2.65)--(1.25,2.65);
+    \node[right, font=\footnotesize] at (1.25,2.65) {$p+2$};
+    \draw[line width=1.3pt, teal!75!black] (1.12,2.25)--(1.25,2.25);
+    \node[right, font=\footnotesize] at (1.25,2.25) {$3p$};
+    \draw[line width=1.3pt, orange!85!black] (1.12,1.85)--(1.25,1.85);
+    \node[right, font=\footnotesize] at (1.25,1.85) {$p(2p+1)$};
+  \end{tikzpicture}
+  \caption{$0\le p\le1$ における三つの線分長の比の大小}
+  \label{fig:1964_3_ratios}
+\end{figure}
 
 これと右のグラフから $0 \leqq p \leqq 1$ のとき
 \[
