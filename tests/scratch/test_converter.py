@@ -46,6 +46,34 @@ class TestConverter(unittest.TestCase):
                     latex = '$a ' + '\\' * count + macro + '$'
                     self.assertIn(latex, self.convert(latex))
 
+    def test_display_math_in_list_keeps_its_boundaries(self):
+        latex = r'''
+        \begin{align}u&=0\end{align}
+        \begin{enumerate}
+        \item first
+        \begin{align}a&=1\end{align}
+        \item second
+        \begin{align}b&=2\end{align}
+        \end{enumerate}
+        after the list
+        \begin{align}v&=3\end{align}
+        '''
+        processed = self.convert(latex)
+        self.assertIn('1.  first\n\n    $$\n    \\begin{align}', processed)
+        self.assertIn('2.  second\n\n    $$\n    \\begin{align}', processed)
+        self.assertIn('    \\end{align}\n    $$\n\n2.', processed)
+        self.assertIn('after the list', processed)
+
+    def test_labeled_display_math_keeps_dollar_delimiters_on_own_lines(self):
+        latex = r'''
+        \begin{align}x&=1\label{eq:1}\end{align}
+        following text
+        \begin{align}y&=2\end{align}
+        '''
+        processed = self.convert(latex)
+        self.assertIn('<span id="eq:1"></span>\n\n$$\n\\begin{align}', processed)
+        self.assertIn('$$\n\n        following text', processed)
+
     def test_tikz_is_replaced_with_html_image(self):
         latex = r'''
         問題文です。

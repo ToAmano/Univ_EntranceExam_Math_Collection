@@ -117,6 +117,10 @@ def _split_top_level_list_items(body):
 
 
 _DOLLAR_DOLLAR_RE = re.compile(r'\$\$')
+_MATH_BLOCK_RE = re.compile(
+    r'^([ \t]*)\$\$[ \t]*\n((?:(?!^[ \t]*\$\$[ \t]*$)[^\n]*\n)*)\1\$\$[ \t]*(?=\n|$)',
+    flags=re.MULTILINE,
+)
 
 
 def _next_begin_list_env(text, pos):
@@ -1139,18 +1143,17 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     # 直前に自前の <span id="..."> アンカーを差し込み、\label 自体は数式内
     # から除去する。
     def _promote_math_labels(text):
-        block_re = re.compile(r'\$\$\n.*?\n\$\$\n', re.DOTALL)
-
         def process_block(m):
             block = m.group(0)
             labels = re.findall(r'\\label\{([^}]+)\}', block)
             if not labels:
                 return block
             block_clean = re.sub(r'\\label\{[^}]+\}', '', block)
-            anchors = ''.join(f'<span id="{lbl}"></span>' for lbl in labels)
-            return anchors + block_clean
+            indent = m.group(1)
+            anchors = ''.join(f'{indent}<span id="{lbl}"></span>\n' for lbl in labels)
+            return anchors + '\n' + block_clean
 
-        return block_re.sub(process_block, text)
+        return _MATH_BLOCK_RE.sub(process_block, text)
 
     md_content = _promote_math_labels(md_content)
 
@@ -1228,7 +1231,7 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     # 数式ブロック $$ ... $$ の中のネストされた不要な $ や \displaystyle の除去
     # --------------------------------------------------------------------------
     def clean_math_block_dollars(match):
-        block_content = match.group(1)
+        indent, block_content = match.group(1, 2)
         # $$...$$ ブロックの中身全体が丸ごと $...$（または $\displaystyle ...$）で
         # 包まれている場合にのみ、その外枠だけを取り除く。以前は [^$]+ で
         # ブロック内のどこにある $...$ にもマッチしていたため、
@@ -1237,10 +1240,16 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         # （titech zenki 1977/3 で発覚）。
         stripped = block_content.strip()
         m = re.fullmatch(r'\$\s*(?:\\displaystyle\s*)?(.+?)\s*\$', stripped, flags=re.DOTALL)
-        block_clean = m.group(1) if m else block_content
-        return f"\n$$\n{block_clean.strip()}\n$$\n"
+        if m:
+            block_clean = indent + m.group(1).strip()
+        else:
+            block_clean = block_content.rstrip('\n')
+        return f"{indent}$$\n{block_clean}\n{indent}$$"
 
-    md_content = re.sub(r'\$\$\n(.*?)\n\$\$', clean_math_block_dollars, md_content, flags=re.DOTALL)
+    # A list item indents both $$ delimiters. Match only a pair at the same
+    # indentation, and stop if another delimiter appears first; otherwise a
+    # later top-level block can absorb the remainder of the list as TeX.
+    md_content = _MATH_BLOCK_RE.sub(clean_math_block_dollars, md_content)
 
     # 連続する空行を縮小
     md_content = re.sub(r'\n{3,}', '\n\n', md_content).strip()
