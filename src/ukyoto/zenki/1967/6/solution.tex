@@ -57,38 +57,55 @@
     \]
 \end{enumerate}
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=2.0]
-      \draw[->] (-0.2,0) -- (1.5,0) node[right]{$x$};
-      \draw[->] (0,-0.2) -- (0,2.2) node[above]{$y$};
-      \node[below left] at (0,0) {$O$};
-
-      \draw (0.5,0.03) -- (0.5,-0.03) node[below]{$1/2$};
-      \draw (1.0,0.03) -- (1.0,-0.03) node[below]{$1$};
-
-      \draw (0.03,1.0) -- (-0.03,1.0) node[left]{$1$};
-      \draw (0.03,1.414) -- (-0.03,1.414) node[left]{$\sqrt{2}$};
-      \draw (0.03,1.785) -- (-0.03,1.785) node[left]{$1+\pi/4$};
-
-      \draw[dashed] (0.5,0) -- (0.5, 1.785);
-      \draw[dashed] (1.0,0) -- (1.0, 1.0);
-      \draw[dashed] (0,1.785) -- (0.5, 1.785);
-
-      \draw[thick, domain=0.25:1.0, smooth] plot (\x, {0.785398/\x - 0.785398 + 1});
-      \node[right] at (0.9, 1.2) {$y_1$};
-
-      \draw[thick, domain=0:1.0, smooth] plot (\x, {1.41421*cos(45*\x)});
-      \node[below left] at (0.8, 1.0) {$y_2$};
-
-      \draw[thick] (0,1.785) -- (0.5, 1.785);
-
-      % Shading
-      \fill[gray!30, opacity=0.5] (0,1.414) -- plot[domain=0:0.5, smooth] (\x, {1.41421*cos(45*\x)}) -- (0.5, 1.785) -- (0, 1.785) -- cycle;
-      \fill[gray!30, opacity=0.5] (0.5, 1.156) -- plot[domain=0.5:1.0, smooth] (\x, {1.41421*cos(45*\x)}) -- (1.0, 1.0) -- plot[domain=1.0:0.5, smooth] (\x, {0.785398/\x - 0.785398 + 1}) -- cycle;
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=5.2cm, y=2.2cm,
+    every node/.style={font=\small}]
+    % The shaded area follows the two integrals in the handwritten solution.
+    \fill[blue!17] (0,1.785398)
+    -- (0.5,1.785398)
+    -- plot[domain=0.5:0, samples=60]
+    (\x,{1.414214*cos(45*\x)}) -- cycle;
+    \fill[teal!17] (0.5,1.785398)
+    -- plot[domain=0.5:1, samples=70]
+    (\x,{0.785398/\x-0.785398+1})
+    -- plot[domain=1:0.5, samples=70]
+    (\x,{1.414214*cos(45*\x)}) -- cycle;
+    \draw[->, thick, gray!80!black] (-0.07,0)--(1.42,0)
+    node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.1)--(0,2.14)
+    node[above] {$y$};
+    \draw[dashed, gray!65] (0.5,0)--(0.5,1.785398);
+    \draw[dashed, gray!65] (1,0)--(1,1);
+    \draw[thin, orange!80!black, dashed] (0,1.785398)
+    -- (1.32,{1.785398-0.785398*1.32});
+    \draw[line width=1.3pt, blue!85!black]
+    (0,1.785398)--(0.5,1.785398);
+    \draw[line width=1.3pt, blue!85!black,
+    domain=0.5:1.25, samples=80, smooth]
+    plot (\x,{0.785398/\x-0.785398+1});
+    \draw[line width=1.3pt, teal!75!black,
+    domain=0:1.32, samples=80, smooth]
+    plot (\x,{1.414214*cos(45*\x)});
+    \fill[red!80!black] (0.5,1.785398) circle(1.3pt);
+    \fill[red!80!black] (1,1) circle(1.3pt);
+    \node[below left=2pt, font=\footnotesize] at (0,0) {$O$};
+    \node[below=2pt, font=\footnotesize] at (0.5,0) {$\frac12$};
+    \node[below=2pt, font=\footnotesize] at (1,0) {$1$};
+    \node[left=3pt, font=\footnotesize] at (0,1) {$1$};
+    \node[left=3pt, font=\footnotesize] at (0,1.414214)
+    {$\sqrt2$};
+    \node[left=3pt, font=\footnotesize] at (0,1.785398)
+    {$1+\frac\pi4$};
+    \node[blue!85!black, font=\footnotesize] at (0.8,1.69)
+    {$y_1$};
+    \node[teal!75!black, font=\footnotesize] at (1.18,1.02)
+    {$y_2$};
+    \node[orange!80!black, font=\footnotesize] at (1.24,0.63)
+    {$y_3$};
+  \end{tikzpicture}
+  \caption{$x=\frac12$ で上側の境界が切り替わる面積領域}
+  \label{fig:1967_6_area}
+\end{figure}
 
 \end{document}
