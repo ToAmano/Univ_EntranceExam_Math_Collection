@@ -1,79 +1,246 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} $\alpha < \beta \dots$ ①として良い．$PQ^2 = PR^2$ だから，
+% TODO: 問題設定の概要図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=5, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. パラメータ設定 (例: p = 0.6, q = -0.0768)
+    % alpha ≈ -0.11, beta ≈ 0.71 (alpha < beta, |PQ| = |PR|)
+    % P = (0.5, 0.25)
+    % ============================================================
+    \def\alVal{-0.114}
+    \def\beVal{0.714}
+
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (0.5, 0.25);
+    \coordinate (Q) at (\beVal, {\beVal*\beVal});
+    \coordinate (R) at (\alVal, {\alVal*\alVal});
+
+    % 重心 G = (1/3*(alpha + beta + 0.5), 1/3*(alpha^2 + beta^2 + 0.25))
+    \coordinate (G) at ({(\alVal + \beVal + 0.5)/3.0}, {(\alVal*\alVal + \beVal*\beVal + 0.25)/3.0});
+
+    % ============================================================
+    % 2. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-0.8, 0) -- (1.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 1.4) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % ============================================================
+    % 3. 放物線 y = x^2
+    % ============================================================
+    \draw[line width=1.3pt, gray!40!black, domain=-0.7:1.1, samples=60, smooth]
+    plot (\x, {\x*\x});
+    \node[gray!50!black, font=\footnotesize\bfseries, above right] at (0.95, 0.9) {$y = x^2$};
+
+    % ============================================================
+    % 4. 三角形 PQR の描画 (等脚二等辺三角形 |PQ| = |PR|)
+    % ============================================================
+    \fill[blue!10, opacity=0.6] (P) -- (Q) -- (R) -- cycle;
+
+    % 等辺 PQ, PR を赤太線で強調
+    \draw[line width=1.4pt, red!85!black] (P) -- (Q);
+    \draw[line width=1.4pt, red!85!black] (P) -- (R);
+    % 底辺 QR
+    \draw[line width=1.1pt, blue!85!black] (Q) -- (R);
+
+    % 等長マーク (|PQ| = |PR|)
+    \draw[thick, red!85!black] ($ (P)!0.48!(Q) + (0.02, -0.04) $) -- ($ (P)!0.52!(Q) + (-0.02, 0.04) $);
+    \draw[thick, red!85!black] ($ (P)!0.48!(R) + (0.02, 0.04) $) -- ($ (P)!0.52!(R) + (-0.02, -0.04) $);
+
+    % 中線 PG の補助線 (重心へ向かう)
+    \draw[dashed, gray!55, line width=0.8pt] (P) -- ($ (Q)!0.5!(R) $);
+
+    % ============================================================
+    % 5. 点プロットとラベル
+    % ============================================================
+    \fill[black] (P) circle (0.5pt) node[right=2pt, font=\footnotesize\bfseries] {$P\left(\frac{1}{2}, \frac{1}{4}\right)$};
+    \fill[blue!85!black] (Q) circle (0.5pt) node[above right=1pt] {$Q(\beta, \beta^2)$};
+    \fill[blue!85!black] (R) circle (0.5pt) node[above left=1pt] {$R(\alpha, \alpha^2)$};
+    \fill[teal!85!black] (G) circle (0.5pt) node[below=2pt, font=\footnotesize\bfseries, teal!90!black] {$G(X, Y)$};
+
+    % 座標の投影点線
+    \draw[dotted, gray!60] (0.5, 0) -- (P) -- (0, 0.25);
+    \node[below=2pt, font=\scriptsize] at (0.5, 0) {$\frac{1}{2}$};
+    \node[left=2pt, font=\scriptsize]  at (0, 0.25) {$\frac{1}{4}$};
+
+  \end{tikzpicture}
+  \caption{放物線 $y=x^2$，二等辺三角形 $\triangle PQR$（$|PQ|=|PR|$），および重心 $G$}
+  \label{fig:problem_geometric_setup}
+\end{figure}
+
+対称性から$\alpha < \beta \dots$ として良い．
+題意より$|PQ|^2 = |PR|^2$ だから，
 \begin{align}
-  (\beta - \dfrac{1}{2})^2 + (\beta^2 - \dfrac{1}{4})^2 &= (\alpha - \dfrac{1}{2})^2 + (\alpha^2 - \dfrac{1}{4})^2 \\
-  \beta^2 - \beta + \beta^4 - \dfrac{1}{2}\beta^2 &= \alpha^2 - \alpha + \alpha^4 - \dfrac{1}{2}\alpha^2 \\
-  \beta^4 + \dfrac{1}{2}\beta^2 - \beta &= \alpha^4 + \dfrac{1}{2}\alpha^2 - \alpha \\
-  (\beta^2 + \alpha^2)(\beta^2 - \alpha^2) + \dfrac{1}{2}(\beta^2 - \alpha^2) - (\beta - \alpha) &= 0
+  & (\beta - \dfrac{1}{2})^2 + (\beta^2 - \dfrac{1}{4})^2 = (\alpha - \dfrac{1}{2})^2 + (\alpha^2 - \dfrac{1}{4})^2 \\
+  & \beta^2 - \beta + \beta^4 - \dfrac{1}{2}\beta^2 = \alpha^2 - \alpha + \alpha^4 - \dfrac{1}{2}\alpha^2 \\
+  & \beta^4 + \dfrac{1}{2}\beta^2 - \beta = \alpha^4 + \dfrac{1}{2}\alpha^2 - \alpha \\
+  & (\beta^2 + \alpha^2)(\beta^2 - \alpha^2) + \dfrac{1}{2}(\beta^2 - \alpha^2) - (\beta - \alpha) = 0 \label{eq:1}
 \end{align}
-$\alpha \neq \beta$ から
+である．$\alpha \neq \beta$ から両辺を$\beta-\alpha$で割って
 \begin{align}
-  (\beta^2 + \alpha^2)(\beta + \alpha) + \dfrac{1}{2}(\beta + \alpha) - 1 = 0 \quad \cdots \text{①}
+  (\beta^2 + \alpha^2)(\beta + \alpha) + \dfrac{1}{2}(\beta + \alpha) - 1 = 0 \label{eq:2}
 \end{align}
-ここで，$p = \alpha + \beta, \ q = \alpha \beta$ とすると，$\alpha, \beta$ の実数条件から，
+である．
+
+ここで$p = \alpha + \beta, \ q = \alpha \beta$ とすると，$\alpha, \beta$ が相異なる実数だから，これらを解に持つ二次方程式$x^2-px+q=0$の判別式$D$が正であって，
 \begin{align}
-  p^2 - 4q > 0 \quad \cdots \text{②}
+  D = p^2 - 4q > 0 \label{eq:3}
 \end{align}
-である．①に代入して
+である．\cref{eq:2}を$\alpha,\beta$で表すと
 \begin{align}
-  (p^2 - 2q)p + \dfrac{1}{2}p = 1 \quad \cdots \text{③}
+  (p^2 - 2q)p + \dfrac{1}{2}p = 1 \label{eq:4}
 \end{align}
-次に，$G$ について
+である．$p=0$は解でないから両辺$p\neq 0$で割って
 \begin{align}
-  X &= \dfrac{\alpha+\beta+\dfrac{1}{2}}{3} = \dfrac{1}{3}(p+\dfrac{1}{2}) \quad \cdots * \\
-  Y &= \dfrac{\alpha^2+\beta^2+\dfrac{1}{4}}{3} = \dfrac{1}{3}(p^2-2q+\dfrac{1}{4})
+  q = \dfrac{1}{2} \left( p^2 - \dfrac{1}{p} + \dfrac{1}{2} \right) \label{eq:5}
 \end{align}
-である．③において，$p=0$ とすると $0=1$ となり矛盾，つまり $p \neq 0 \dots$ ④ であるから
+である．\cref{eq:3}に代入して$q$を消去すると
 \begin{align}
-  q = \dfrac{1}{2} \left( p^2 - \dfrac{1}{p} + \dfrac{1}{2} \right)
+  & p^2 - 2 \left( \dfrac{1}{2}(p^2 - \dfrac{1}{p} + \dfrac{1}{2}) \right) > 0 \\
+  \therefore
+  & -p(p-1)(p^2+p+2) > 0
 \end{align}
-となる．②，*に代入して，
+である．ここで$p^2+p+2 = (p+\dfrac{1}{2})^2 + \dfrac{7}{4} > 0$ に注意して
+\begin{align}
+  0 < p < 1 \label{eq:6}
+\end{align}
+である．\cref{eq:5,eq:6}を図示すると下図のようになる．
+
+% TODO: (p,q)の領域
+% TODO: (p,q)の領域
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=4.0cm, y=2.0cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-0.2, 0) -- (1.35, 0) node[right] {$p$};
+    \draw[->, thick, gray!80!black] (0, -2.6) -- (0, 0.7) node[above] {$q$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % ============================================================
+    % 2. 判別式 D > 0 の領域 (q < 1/4 * p^2) の薄いハッチング
+    % ============================================================
+    \fill[pattern=north east lines, pattern color=gray!40, opacity=0.4]
+    (0, 0) -- plot[domain=0:1.2, samples=40, smooth] (\x, {0.25*\x*\x})
+    -- (1.2, -2.5) -- (0, -2.5) -- cycle;
+
+    % 境界放物線 q = 1/4 * p^2 (破線: D = 0)
+    \draw[dashed, gray!60, line width=1.0pt, domain=0:1.25, samples=50, smooth]
+    plot (\x, {0.25*\x*\x});
+    \node[gray!70!black, font=\footnotesize, above left] at (1.2, {0.25*1.2*1.2}) {$q = \frac{1}{4}p^2$};
+
+    % ============================================================
+    % 3. 曲線 q = 1/2 * (p^2 - 1/p + 1/2) (0 < p < 1)
+    % ============================================================
+    % p の描画範囲: 0.18 から 1.0 (p -> 0 で -inf)
+    \draw[line width=1.5pt, blue!85!black, domain=0.19:1.0, samples=60, smooth]
+    plot (\x, {0.5*(\x*\x - 1.0/\x + 0.5)});
+    \node[blue!90!black, font=\footnotesize\bfseries, below right]
+    at (0.4, -0.6) {$q = \frac{1}{2}\left(p^2 - \frac{1}{p} + \frac{1}{2}\right)$};
+
+    % ============================================================
+    % 4. 特徴点・補助線・境界端点
+    % ============================================================
+    % 端点 p = 1: q(1) = 1/4 (境界 D = 0 上の点: 白丸)
+    \draw[dashed, gray!55] (1, 0) -- (1, 0.25) -- (0, 0.25);
+    \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
+    \node[left=2pt, font=\scriptsize]  at (0, 0.25) {$\frac{1}{4}$};
+
+    \fill[white] (1, 0.25) circle (1.8pt);
+    \draw[thick, black] (1, 0.25) circle (1.8pt);
+
+    % p = 1 の境界補助破線
+    \draw[dotted, gray!60, line width=0.8pt] (1, -2.5) -- (1, 0.25);
+
+  \end{tikzpicture}
+  \caption{条件を満たすパラメータ $(p, q)$ の軌跡（青実線）}
+  \label{fig:pq_parameter_locus}
+\end{figure}
+
+次に$\triangle PQR$の重心 $G(X,Y)$ について
 \begin{align}
   \begin{cases}
-    p^2 - 2 \left( \dfrac{1}{2}(p^2 - \dfrac{1}{p} + \dfrac{1}{2}) \right) > 0 \\
-    Y = \dfrac{1}{3} \left( p^2 - p^2 + \dfrac{1}{p} - \dfrac{1}{2} + \dfrac{1}{4} \right) = \dfrac{1}{3}(\dfrac{1}{p} - \dfrac{1}{4})
-  \end{cases}
+    X = \dfrac{\alpha+\beta+\dfrac{1}{2}}{3} = \dfrac{1}{3}(p+\dfrac{1}{2})  \\
+    Y = \dfrac{\alpha^2+\beta^2+\dfrac{1}{4}}{3} = \dfrac{1}{3}(p^2-2q+\dfrac{1}{4})
+  \end{cases} \label{eq:7}
 \end{align}
+である．\cref{eq:5}を代入して
 \begin{align}
-  \begin{cases}
-    -p(p-1)(p^2+p+2) > 0 \\
-    X = \dfrac{1}{3}(p+\dfrac{1}{2}) \implies p = 3X - \dfrac{1}{2} \ (\text{※式展開の都合で } X = \dfrac{1}{3}(\dfrac{1}{p}-\dfrac{1}{4}) \text{ は下段の } Y \text{ の計算})
-  \end{cases}
+  Y & = \dfrac{1}{3} \left( p^2 - p^2 + \dfrac{1}{p} - \dfrac{1}{2} + \dfrac{1}{4} \right) \\
+  & = \dfrac{1}{3}(\dfrac{1}{p} - \dfrac{1}{4}) \label{eq:8}
 \end{align}
-（※原稿の記述： $Y = \dfrac{1}{3}(\dfrac{1}{p}-\dfrac{1}{4})$, $X = \dfrac{1}{3}(p+\dfrac{1}{2})$ ）
-から，$p^2+p+2 = (p+\dfrac{1}{2})^2 + \dfrac{7}{4} > 0$ に注意して $0 < p < 1$ である．*から $p = 3X - \dfrac{1}{2}$ だから，
+である．\cref{eq:5}から
 \begin{align}
+  p = 3X - \dfrac{1}{2} \label{eq:9}
+\end{align}
+だから\cref{eq:6,eq:8}に代入して
+\begin{align}
+  &
   \begin{cases}
     0 < 3X - \dfrac{1}{2} < 1 \\
     Y = \dfrac{1}{3} \left( \dfrac{1}{3X-\dfrac{1}{2}} - \dfrac{1}{4} \right)
-  \end{cases}
-\end{align}
-\begin{align}
+  \end{cases} \\
+  \therefore
+  &
   \begin{cases}
     \dfrac{1}{6} < X < \dfrac{1}{2} \\
     Y = \dfrac{1}{3} \left( \dfrac{2}{6X-1} - \dfrac{1}{4} \right)
   \end{cases}
 \end{align}
+であり，図示すると下図の太線部（端点は含まず）となる．
 
+% TODO: (X,Y)の領域
+% TODO: (X,Y)の領域
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=2]
-    \draw[->] (-0.2, 0) -- (1.5, 0) node[below] {$x$};
-    \draw[->] (0, -0.2) -- (0, 1.5) node[left] {$y$};
-    \draw[domain=0.25:0.5, thick] plot (\x, {1/3*(2/(6*\x-1) - 1/4)}) node[right] {$Y = \frac{1}{3}(\frac{2}{6X-1} - \frac{1}{4})$};
-    \draw[dashed] (1/6, 0) -- (1/6, 1.5);
-    \node at (1/6, -0.1) {$1/6$};
-    \node at (1/2, -0.1) {$1/2$};
-    \draw[dashed] (0, 1/4) -- (1/2, 1/4);
-    \node at (-0.1, 1/4) {$1/4$};
+  \begin{tikzpicture}[x=8.5cm, y=3.0cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-0.05, 0) -- (0.68, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -0.15) -- (0, 1.6) node[above] {$Y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % ============================================================
+    % 2. 漸近線 X = 1/6 ≈ 0.1667
+    % ============================================================
+    \def\xAsympt{0.16667}
+    \draw[dashed, red!80!black, line width=1.1pt] (\xAsympt, -0.1) -- (\xAsympt, 1.5)
+    node[above, font=\footnotesize] {漸近線 $X = \frac{1}{6}$};
+    \node[below=2pt, font=\scriptsize, red!90!black] at (\xAsympt, 0) {$\frac{1}{6}$};
+
+    % ============================================================
+    % 3. 軌跡の曲線 Y = 1/3 * ( 2/(6X - 1) - 1/4 ) (1/6 < X < 1/2)
+    % ============================================================
+    % X: 0.22 〜 0.50 (X -> 1/6 で +inf)
+    \draw[line width=1.6pt, blue!85!black, domain=0.21:0.5, samples=70, smooth]
+    plot (\x, {(1.0/3.0)*(2.0/(6.0*\x - 1.0) - 0.25)});
+    \node[blue!90!black, font=\footnotesize\bfseries, above right]
+    at (0.28, 0.75) {$Y = \frac{1}{3}\left(\frac{2}{6X-1} - \frac{1}{4}\right)$};
+
+    % ============================================================
+    % 4. 特徴点・端点 (1/2, 1/4)
+    % ============================================================
+    % X = 1/2, Y = 1/4 (白丸: 端点を含まない)
+    \draw[dashed, gray!55] (0.5, 0) -- (0.5, 0.25) -- (0, 0.25);
+    \node[below=2pt, font=\scriptsize] at (0.5, 0) {$\frac{1}{2}$};
+    \node[left=2pt, font=\scriptsize]  at (0, 0.25) {$\frac{1}{4}$};
+
+    \fill[white] (0.5, 0.25) circle (1.8pt);
+    \draw[thick, black] (0.5, 0.25) circle (1.8pt);
+
   \end{tikzpicture}
-  \caption{点$G$の軌跡$Y=\dfrac{1}{3}\left(\dfrac{2}{6X-1}-\dfrac{1}{4}\right)$のグラフ}
+  \caption{重心 $G(X, Y)$ の軌跡（太線部，端点は含まず）}
+  \label{fig:centroid_G_locus}
 \end{figure}
 
 \end{document}

@@ -1,104 +1,604 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
 
 \paragraph{(1)}
 
-$x>0$ から，$f(t) = x(t + \dfrac{y}{2x})^2 - \dfrac{y^2}{4x}$ である．
-$-\dfrac{y}{2x} \le 0$ の時，$\min f(t) = f(0)$, $\max f(t) = f(1)$
-$0 \le -\dfrac{y}{2x} \le \dfrac{1}{2}$ の時，$\min f(t) = f(-\dfrac{y}{2x})$, $\max f(t) = f(1)$
-$\dfrac{1}{2} \le -\dfrac{y}{2x} \le 1$ の時，$\min f(t) = f(-\dfrac{y}{2x})$, $\max f(t) = f(0)$
-$1 \le -\dfrac{y}{2x}$ の時，$\min f(t) = f(1)$, $\max f(t) = f(0)$
-となり，$f(0)=0$, $f(1)=x+y$, $f(-\dfrac{y}{2x}) = -\dfrac{y^2}{4x}$ だから，$x>0$ より，
-$-\dfrac{y}{2x} \le 0$ の時，$x+y$
-$0 \le -\dfrac{y}{2x} \le \dfrac{1}{2}$ の時，$x+y + \dfrac{y^2}{4x}$
-$\dfrac{1}{2} \le -\dfrac{y}{2x} \le 1$ の時，$\dfrac{y^2}{4x}$
-$1 \le -\dfrac{y}{2x}$ の時，$-(x+y)$
+% TODO: 軸と端点の4つの場合分け
+% TODO: 軸と端点の4つの場合分け
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.9, >=stealth, every node/.style={font=\scriptsize}]
+
+    % =========================================================================
+    % パターン 1: 軸 <= 0 (例: 軸 = -0.3)
+    % =========================================================================
+    \begin{scope}[shift={(0, 0)}]
+      \draw[->, thick, gray!70] (-0.6, 0) -- (1.6, 0) node[right] {$t$};
+      \draw[->, thick, gray!70] (0, -0.4) -- (0, 1.8);
+      % 定義域 0 <= t <= 1
+      \fill[blue!10, opacity=0.6] (0, -0.2) rectangle (1, 1.6);
+      \draw[thick, gray!40!black] (0, 0) -- (0, -0.08) node[below] {$0$};
+      \draw[thick, gray!40!black] (1, 0) -- (1, -0.08) node[below] {$1$};
+
+      % 軸 t = -0.3
+      \draw[dashed, red!85!black] (-0.3, -0.3) -- (-0.3, 1.6) node[above] {軸};
+      % 放物線
+      \draw[line width=1.2pt, blue!85!black, domain=-0.4:1.2, samples=40]
+      plot (\x, {1.2*(\x + 0.3)^2});
+
+      \fill[red!85!black] (0, {1.2*0.3^2}) circle (1.5pt) node[right=1pt] {$\min$};
+      \fill[blue!85!black] (1, {1.2*1.3^2}) circle (1.5pt) node[left=1pt] {$\max$};
+
+      \node[below=14pt, font=\footnotesize\bfseries] at (0.5, -0.2)
+      {(i) $-\frac{y}{2x} \le 0$};
+    \end{scope}
+
+    % =========================================================================
+    % パターン 2: 0 <= 軸 <= 1/2 (例: 軸 = 0.3)
+    % =========================================================================
+    \begin{scope}[shift={(3.4, 0)}]
+      \draw[->, thick, gray!70] (-0.4, 0) -- (1.6, 0) node[right] {$t$};
+      \draw[->, thick, gray!70] (0, -0.4) -- (0, 1.8);
+      \fill[blue!10, opacity=0.6] (0, -0.2) rectangle (1, 1.6);
+      \draw[thick, gray!40!black] (0, 0) -- (0, -0.08) node[below] {$0$};
+      \draw[thick, gray!40!black] (1, 0) -- (1, -0.08) node[below] {$1$};
+
+      % 軸 t = 0.3
+      \draw[dashed, red!85!black] (0.3, -0.3) -- (0.3, 1.6) node[above] {軸};
+      \draw[line width=1.2pt, blue!85!black, domain=-0.1:1.2, samples=40]
+      plot (\x, {2.0*(\x - 0.3)^2 + 0.1});
+
+      \fill[red!85!black] (0.3, 0.1) circle (1.5pt) node[below=2pt] {$\min$};
+      \fill[blue!85!black] (1, {2.0*0.7^2 + 0.1}) circle (1.5pt) node[left=1pt] {$\max$};
+
+      \node[below=14pt, font=\footnotesize\bfseries] at (0.5, -0.2)
+      {(ii) $0 \le -\frac{y}{2x} \le \frac{1}{2}$};
+    \end{scope}
+
+    % =========================================================================
+    % パターン 3: 1/2 <= 軸 <= 1 (例: 軸 = 0.7)
+    % =========================================================================
+    \begin{scope}[shift={(6.8, 0)}]
+      \draw[->, thick, gray!70] (-0.4, 0) -- (1.6, 0) node[right] {$t$};
+      \draw[->, thick, gray!70] (0, -0.4) -- (0, 1.8);
+      \fill[blue!10, opacity=0.6] (0, -0.2) rectangle (1, 1.6);
+      \draw[thick, gray!40!black] (0, 0) -- (0, -0.08) node[below] {$0$};
+      \draw[thick, gray!40!black] (1, 0) -- (1, -0.08) node[below] {$1$};
+
+      % 軸 t = 0.7
+      \draw[dashed, red!85!black] (0.7, -0.3) -- (0.7, 1.6) node[above] {軸};
+      \draw[line width=1.2pt, blue!85!black, domain=-0.2:1.1, samples=40]
+      plot (\x, {2.0*(\x - 0.7)^2 + 0.1});
+
+      \fill[red!85!black] (0.7, 0.1) circle (1.5pt) node[below=2pt] {$\min$};
+      \fill[blue!85!black] (0, {2.0*0.7^2 + 0.1}) circle (1.5pt) node[right=1pt] {$\max$};
+
+      \node[below=14pt, font=\footnotesize\bfseries] at (0.5, -0.2)
+      {(iii) $\frac{1}{2} \le -\frac{y}{2x} \le 1$};
+    \end{scope}
+
+    % =========================================================================
+    % パターン 4: 1 <= 軸 (例: 軸 = 1.3)
+    % =========================================================================
+    \begin{scope}[shift={(10.2, 0)}]
+      \draw[->, thick, gray!70] (-0.4, 0) -- (1.8, 0) node[right] {$t$};
+      \draw[->, thick, gray!70] (0, -0.4) -- (0, 1.8);
+      \fill[blue!10, opacity=0.6] (0, -0.2) rectangle (1, 1.6);
+      \draw[thick, gray!40!black] (0, 0) -- (0, -0.08) node[below] {$0$};
+      \draw[thick, gray!40!black] (1, 0) -- (1, -0.08) node[below] {$1$};
+
+      % 軸 t = 1.3
+      \draw[dashed, red!85!black] (1.3, -0.3) -- (1.3, 1.6) node[above] {軸};
+      \draw[line width=1.2pt, blue!85!black, domain=-0.2:1.4, samples=40]
+      plot (\x, {1.2*(\x - 1.3)^2});
+
+      \fill[red!85!black] (1, {1.2*0.3^2}) circle (1.5pt) node[below left=1pt] {$\min$};
+      \fill[blue!85!black] (0, {1.2*1.3^2}) circle (1.5pt) node[right=1pt] {$\max$};
+
+      \node[below=14pt, font=\footnotesize\bfseries] at (0.5, -0.2)
+      {(iv) $1 \le -\frac{y}{2x}$};
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{軸 $t = -\dfrac{y}{2x}$ の位置による $0 \le t \le 1$ での最大値・最小値の4つの場合分け}
+  \label{fig:four_cases_quadratic_axis}
+\end{figure}
+
+$x>0$ から$f(t)$は二次式であり
+\begin{align}
+  f(t) = x(t + \dfrac{y}{2x})^2 - \dfrac{y^2}{4x}
+\end{align}
+である．従ってこの$0 \le t \le 1$での最大最小値は軸$t=-\dfrac{y}{2x}$と端点の位置関係で以下のようになる．
+\begin{align}
+  \begin{cases}
+    -\dfrac{y}{2x} \le 0 \text{の時}: \min f(t) = f(0), \max f(t) = f(1) \\
+    0 \le -\dfrac{y}{2x} \le \dfrac{1}{2} \text{の時}: \min f(t) = f(-\dfrac{y}{2x}), \max f(t) = f(1) \\
+    \dfrac{1}{2} \le -\dfrac{y}{2x} \le 1 \text{の時}: \min f(t) = f(-\dfrac{y}{2x}), \max f(t) = f(0) \\
+    1 \le -\dfrac{y}{2x} \text{の時}: \min f(t) = f(1), \max f(t) = f(0)
+  \end{cases} \label{eq:1}
+\end{align}
+さらに$f(0)=0$, $f(1)=x+y$, $f(-\dfrac{y}{2x}) = -\dfrac{y^2}{4x}$ だから，$x>0$ より，$\max f-\min f$ の値は
+\begin{align}
+  \begin{cases}
+    y \ge 0 \text{の時}: x+y \\
+    -x \le y \le 0 \text{の時}: x+y + \dfrac{y^2}{4x} \\
+    -2x \le y \le -x \text{の時}: \dfrac{y^2}{4x} \\
+    y \le -2x  \text{の時}: -(x+y)
+  \end{cases} \label{eq:2}
+\end{align}
+である．
 
 \paragraph{(2)}
 
-$f(t)$ の値域の幅が1以下ならば必要十分である．(1)から，
-$\cdot y \ge 0$ の時，$x+y \le 1$
-$\cdot -x \le y \le 0$ の時，$x+y + \dfrac{y^2}{4x} \le 1 \quad (-2x-2\sqrt{x} \le y \le -2x+2\sqrt{x})$
-$\cdot -2x \le y \le -x$ の時，$\dfrac{y^2}{4x} \le 1$
-$\cdot y \le -2x$ の時，$-(x+y) \le 1$
-これを図示して，下図斜線部（境界は，$y$軸以外含む）
+題意の不等式を変形して
+\begin{align}
+  -z \le f(t) \le 1-z
+\end{align}
+だから，これが$0 \le t \le 1$なる任意の$t$で成立するには，$f(t)$ の値域の幅が$1$以下ならば必要十分である．すなわち
+\begin{align}
+  \max f(t) - \min f(t) \le 1 \label{eq:3}
+\end{align}
+ならば良い．\cref{eq:2}よりこの条件は
+\begin{align}
+  &
+  \begin{cases}
+    y \ge 0 \text{の時}: x+y \le 1 \\
+    -x \le y \le 0 \text{の時}: x+y + \dfrac{y^2}{4x} \le 1 \\
+    -2x \le y \le -x \text{の時}: \dfrac{y^2}{4x} \le 1 \\
+    y \le -2x \text{の時}: -(x+y) \le 1
+  \end{cases} \\
+  \therefore
+  &
+  \begin{cases}
+    y \ge 0 \text{の時}: x+y \le 1 \\
+    -x \le y \le 0 \text{の時}: -2x-2\sqrt{x} \le y \le -2x+2\sqrt{x} \\
+    -2x \le y \le -x \text{の時}: y^2 \le 4x \\
+    y \le -2x \text{の時}: x+y \ge -1
+  \end{cases}
+\end{align}
+である．これを図示すると下図斜線部（境界は，$y$軸以外含む）となる．
 
+% TODO: 4つの領域にまず分けた図の図示
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.2]
-    \draw[->] (-0.5, 0) -- (4, 0) node[below] {$x$};
-    \draw[->] (0, -3) -- (0, 1.5) node[left] {$y$};
-    \draw (0,1) -- (1,0) node[right] {$x+y=1$};
-    \draw (0,0) -- (3,-3) node[right] {$y=-x$};
-    \draw (0,0) -- (1.5,-3) node[right] {$y=-2x$};
-    \draw (0,-1) -- (2,-3) node[right] {$y=-(x+1)$};
-    \draw[domain=0.01:2.25] plot (\x, {-2*sqrt(\x)}) node[right] {$x=\frac{1}{4}y^2$};
-    \fill[pattern=north west lines, opacity=0.5]
-    (0,1) -- (1,0)
-    -- plot[domain=1:2.25] (\x, {-2*\x+2*sqrt(\x)})
-    -- plot[domain=2.25:0.25] (\x, {-2*sqrt(\x)})
-    -- (0,-1) -- cycle;
+  \begin{tikzpicture}[x=1.8cm, y=1.5cm, >=stealth, every node/.style={font=\small}]
+
+    % 座標軸 (x > 0)
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (3.2, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -2.8) -- (0, 1.6) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 境界線
+    % (1) y = 0 (x 軸正方向)
+    % (2) y = -x
+    \draw[line width=1.2pt, teal!85!black] (0, 0) -- (2.6, -2.6)
+    node[right, font=\footnotesize\bfseries] {$y = -x$};
+    % (3) y = -2x
+    \draw[line width=1.2pt, purple!85!black] (0, 0) -- (1.35, -2.7)
+    node[below right, font=\footnotesize\bfseries] {$y = -2x$};
+
+    % 各領域の薄い色分け
+    \fill[blue!8, opacity=0.7] (0, 0) -- (3.0, 0) -- (3.0, 1.4) -- (0, 1.4) -- cycle;
+    \fill[teal!8, opacity=0.7] (0, 0) -- (2.8, 0) -- (2.8, -2.8) -- cycle;
+    \fill[purple!8, opacity=0.7] (0, 0) -- (2.6, -2.6) -- (1.3, -2.6) -- cycle;
+    \fill[red!8, opacity=0.7] (0, 0) -- (1.3, -2.6) -- (0, -2.6) -- cycle;
+
+    % 領域ラベル
+    \node[blue!90!black, font=\normalsize\bfseries] at (1.5, 0.7) {領域 I : $y \ge 0$};
+    \node[teal!90!black, font=\normalsize\bfseries] at (1.8, -0.8) {領域 II : $-x \le y \le 0$};
+    \node[purple!90!black, font=\normalsize\bfseries] at (1.6, -2.0) {領域 III : $-2x \le y \le -x$};
+    \node[red!90!black, font=\normalsize\bfseries] at (0.45, -1.8) {領域 IV : $y \le -2x$};
+
   \end{tikzpicture}
-  \caption{条件を満たす$(x,y)$の範囲（斜線部）}
+  \caption{$(x, y)$ 平面における軸の位置による 4 つの領域分割}
+  \label{fig:xy_plane_four_sector_division}
 \end{figure}
 
-$(-2x+2\sqrt{x})' = -2 + \dfrac{1}{\sqrt{x}}$ だから，$0 < x \le \dfrac{1}{4}$ で増加し，$\dfrac{1}{4} \le x$ で減少する．
+% TODO: upgrade
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.3, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 領域の斜線塗りつぶし
+    % ============================================================
+    \fill[pattern=north west lines, pattern color=blue!75, opacity=0.7]
+    (0, 1) -- (1, 0)
+    -- plot[domain=1:4, samples=50, smooth, variable=\x] ({\x}, {-2*\x + 2*sqrt(\x)})
+    -- plot[domain=4:1.0, samples=40, smooth, variable=\x] ({\x}, {-2*sqrt(\x)})
+    -- (0, -1) -- cycle;
+
+    % ============================================================
+    % 2. 座標軸 (x > 0 なので y 軸は白丸・破線で除外を明示)
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (4.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -4.5) -- (0, 1.8) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % y 軸境界 (x=0) は含まない (破線表示)
+    \draw[line width=1.2pt, gray!70!black, dashed] (4,0) -- (4, -4) -- (0,-4);
+    \draw[line width=1.2pt, red!70!black, dashed] (0, -1) -- (0, 1);
+    \fill[white] (0, 1) circle (1.8pt);
+    \draw[thick, red!70!black] (0, 1) circle (1.8pt) node[left=2pt, font=\scriptsize] {$1$};
+    \fill[white] (0, -1) circle (1.8pt);
+    \draw[thick, red!70!black] (0, -1) circle (1.8pt) node[left=2pt, font=\scriptsize] {$-1$};
+
+    % ============================================================
+    % 3. セクターの境界補助線 y = -x, y = -2x
+    % ============================================================
+    \draw[dashed, gray!45, line width=0.8pt] (0, 0) -- (2.6, -2.6)
+    node[right, font=\tiny, gray!60!black] {$y = -x$};
+    \draw[dashed, gray!45, line width=0.8pt] (0, 0) -- (1.5, -3.0)
+    node[below, font=\tiny, gray!60!black] {$y = -2x$};
+
+    % ============================================================
+    % 4. 領域の境界曲線 (実線: 境界を含む)
+    % ============================================================
+    % (1) x + y = 1 (0 < x <= 1)
+    \draw[line width=1.4pt, blue!85!black] (0, 1) -- (1, 0)
+    node[midway, above right=1pt, font=\footnotesize\bfseries] {$x+y=1$};
+
+    % (2) y = -2x + 2\sqrt{x} (1 <= x <= 9/4 = 2.25)
+    \draw[line width=1.4pt, teal!85!black, domain=1:4, samples=50, smooth, variable=\x]
+    plot ({\x}, {-2*\x + 2*sqrt(\x)});
+    \node[teal!90!black, font=\footnotesize\bfseries, above right] at (1.8, -1.2)
+    {$y = -2x + 2\sqrt{x}$};
+
+    % (3) y = -2\sqrt{x} (1 <= x <= 2.25)
+    \draw[line width=1.4pt, purple!85!black, domain=1:4, samples=40, smooth, variable=\x]
+    plot ({\x}, {-2*sqrt(\x)});
+    \node[purple!90!black, font=\footnotesize\bfseries, below=3pt] at (1.7, -2.5)
+    {$y = -2\sqrt{x} \iff x = \frac{1}{4}y^2$};
+
+    % (4) y = -(x + 1) (0 < x <= 1)
+    \draw[line width=1.4pt, orange!85!black] (0, -1) -- (1, -2)
+    node[midway, below left=1pt, font=\footnotesize\bfseries] {$y = -(x+1)$};
+
+    % ============================================================
+    % 5. 接続点・特徴点のプロット
+    % ============================================================
+    \fill[black] (1, 0) circle (1.3pt) node[below=2pt, font=\scriptsize] {$(1, 0)$};
+    \fill[black] (2.25, -2.25) circle (1.3pt)
+    node[right=2pt, font=\scriptsize] {$\left(\frac{9}{4}, -\frac{9}{4}\right)$};
+    \fill[black] (1, -2) circle (1.3pt)
+    node[below left=1pt, font=\scriptsize] {$(1, -2)$};
+
+    % 領域ラベル
+    \node[blue!90!black, font=\normalsize\bfseries] at (0.6, -0.4) {領域 $D$};
+
+  \end{tikzpicture}
+  \caption{条件 $\max f(t) - \min f(t) \le 1$ を満たす $(x, y)$ の存在範囲（斜線部，$y$ 軸上を除く）}
+  \label{fig:valid_xy_region_upgraded}
+\end{figure}
 
 \paragraph{(3)}
 
-$-f(t) \le z \le 1-f(t)$ が $0 \le t \le 1$ の全ての $t$ で成立するのは，$\max f(t) = M_t$, $\min f(t) = m_t$ ( $0 \le t \le 1$ )として，
+与えられた不等式
 \begin{align}
-  -z \le m_t \land M_t \le 1-z
+  -z \le f(t) \le 1-z
 \end{align}
-の時である．(1)から，
-$y \ge 0$ の時，$-z \le 0 \land x+y \le 1-z$
-$-x \le y \le 0$ の時，$-z \le -\dfrac{y^2}{4x} \land x+y \le 1-z$
-$-2x \le y \le -x$ の時，$-z \le -\dfrac{y^2}{4x} \land 0 \le 1-z$
-$y \le -2x$ の時，$-z \le x+y \land 0 \le 1-z$
+が $0 \le t \le 1$ の全ての $t$ で成立するのは，
+$0 \le t \le 1$での$\max f(t) = M_t$, $\min f(t) = m_t$ として，
+\begin{align}
+  -z \le m_t \land M_t \le 1-z \label{eq:4}
+\end{align}
+の時である．\cref{eq:1}よりこのような条件は
+\begin{align}
+  &
+  \begin{cases}
+    y \ge 0 \text{の時}: -z \le 0 \land x+y \le 1-z \\
+    -x \le y \le 0 \text{の時}: -z \le -\dfrac{y^2}{4x} \land x+y \le 1-z \\
+    -2x \le y \le -x \text{の時}: -z \le -\dfrac{y^2}{4x} \land 0 \le 1-z \\
+    y \le -2x \text{の時}: -z \le x+y \land 0 \le 1-z
+  \end{cases} \\
+  \therefore
+  &
+  \begin{cases}
+    y \ge 0 \text{の時}: 0 \le z \land x+y+z \le 1 \\
+    -x \le y \le 0 \text{の時}: \dfrac{y^2}{4x} \le z \land x+y+z \le 1 \\
+    -2x \le y \le -x \text{の時}: \dfrac{y^2}{4x} \le  z \le 1 \\
+    y \le -2x \text{の時}: -(x+y) \le z \le 1
+  \end{cases} \label{eq:5}
+\end{align}
+である．これと題意より
+\begin{align}
+  0 \le x \le 1 \label{eq:6}
+\end{align}
+である．
 
-したがって，$0 \le z \le 1$ であり，$z$ での立体の断面は下図
+また，$x=0$ の時の条件は
+\begin{align}
+  0 \le z \le 1 \land 0 \le y+z \le 1 \label{eq:7}
+\end{align}
+である．
+
+したがって$0 \le z \le 1$ であり，$z$ での立体の断面は下図のようになる．
+
+% TODO: upgrade (手書きスケッチ通りの断面図: 左 0<z<=1, 右 z=0)
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=2]
-    \draw[->] (-0.5, 0) -- (1.5, 0) node[below] {$x$};
-    \draw[->] (0, -1.5) -- (0, 1.5) node[left] {$y$};
-    \draw (0, 1) -- (1, 0) node[right] {$x+y=1-z$};
-    \draw (0, 0) -- (1, -1) node[right] {$x+y=-z$};
-    \draw[domain=0.01:1] plot (\x, {-2*sqrt(0.5*\x)}) node[right] {$x=\frac{y^2}{4z}$};
-    \draw[dashed] (0.5, -1) -- (0.5, 0);
-    \node at (0.5, 0.1) {$z$};
-    \node at (1, 0.1) {$1-z$};
+  \begin{tikzpicture}[x=2.6cm, y=2.0cm, >=stealth, every node/.style={font=\small}]
+
+    % =========================================================================
+    % 左図: 0 < z <= 1 (例として z = 0.36, sqrt(z) = 0.6)
+    % 1-z = 0.64, -z = -0.36, -2z = -0.72, -2*sqrt(z) = -1.2
+    % =========================================================================
+    \begin{scope}[shift={(0, 0)}]
+      \def\zVal{0.36}
+      \def\sqrtZ{0.6}
+      \pgfmathsetmacro{\yTop}{1.0 - \zVal}       % 0.64
+      \pgfmathsetmacro{\yEz}{-\zVal}             % -0.36
+      \pgfmathsetmacro{\yGz}{-2.0*\zVal}         % -0.72
+      \pgfmathsetmacro{\yBot}{-2.0*\sqrtZ}       % -1.2
+      \pgfmathsetmacro{\xG}{\zVal}               % 0.36
+
+      \coordinate (O)     at (0, 0);
+      \coordinate (A)     at (0, \yTop);
+      \coordinate (Ptop1) at (1.0, \yEz);        % x=1 と x+y=1-z の交点 (1, -z)
+      \coordinate (Pbot1) at (1.0, \yBot);       % x=1 と 放物線の交点 (1, -2*sqrt(z))
+      \coordinate (G)     at (\xG, \yGz);        % (z, -2z)
+      \coordinate (E)     at (0, \yEz);          % (0, -z)
+
+      % ------------------------------------------------------------
+      % 断面領域の斜線塗りつぶし (手書きスケッチ通り)
+      % ------------------------------------------------------------
+      \fill[pattern=north east lines, pattern color=blue!75, opacity=0.75]
+      (A) -- (Ptop1) -- (Pbot1)
+      -- plot[domain=\yBot:\yGz, samples=30, smooth, variable=\y] ({\y*\y / (4.0*\zVal)}, {\y})
+      -- (G) -- (E) -- cycle;
+
+      % ------------------------------------------------------------
+      % 座標軸
+      % ------------------------------------------------------------
+      \draw[->, thick, gray!80!black] (-0.3, 0) -- (1.45, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, \yBot - 0.3) -- (0, \yTop + 0.35) node[above] {$y$};
+      \node[below left=2pt] at (O) {$0$};
+
+      % ============================================================
+      % 3. セクターの境界補助線 y = -x, y = -2x
+      % ============================================================
+      \draw[dashed, gray!45, line width=0.8pt] (0, 0) -- (1.5, -1.5)
+      node[right, font=\tiny, gray!60!black] {$y = -x$};
+      \draw[dashed, gray!45, line width=0.8pt] (0, 0) -- (1.2, -2.4)
+      node[below, font=\tiny, gray!60!black] {$y = -2x$};
+
+      % ------------------------------------------------------------
+      % 境界線 (実線強調)
+      % ------------------------------------------------------------
+      % 上側: x + y = 1 - z
+      \draw[line width=1.3pt, blue!85!black] (A) -- (Ptop1);
+      \draw[dashed, gray!50] (Ptop1) -- ($ (A)!1.25!(Ptop1) $);
+      \node[above right=1pt, font=\scriptsize\bfseries] at (0.35, 0.4) {$x+y=1-z$};
+
+      % 右側: 垂直な直線 x = 1 (Ptop1 から Pbot1 へ下りる)
+      \draw[line width=1.3pt, blue!85!black] (Ptop1) -- (Pbot1);
+
+      % 下側: 放物線 x = y^2 / 4z
+      \draw[line width=1.3pt, blue!85!black, domain=\yGz:\yBot, samples=40, smooth, variable=\y]
+      plot ({\y*\y / (4.0*\zVal)}, {\y});
+      \draw[dashed, gray!45, domain=0:\yGz, samples=20, smooth, variable=\y]
+      plot ({\y*\y / (4.0*\zVal)}, {\y});
+
+      % 左下: 直線 x + y = -z
+      \draw[line width=1.3pt, blue!85!black] (E) -- (G);
+
+      % 左側: y 軸上の境界
+      \draw[line width=1.3pt, blue!85!black] (E) -- (A);
+
+      % ------------------------------------------------------------
+      % 補助破線と枠組み (スケッチの引き出し線・点線)
+      % ------------------------------------------------------------
+      % x = 1 の縦破線 (x軸から下端まで)
+      \draw[dashed, gray!60] (1.0, 0) -- (Ptop1);
+      \draw[dashed, gray!60] (Pbot1) -- (1.0, \yBot - 0.15);
+      \node[above=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+
+      % x = 1 - z の目盛り
+      \node[below=2pt, font=\scriptsize] at (\yTop, 0) {$1-z$};
+      \draw[dashed, black] (\yTop, 0) -- (\yTop, 0.08);
+
+      % x = z の位置
+      \draw[dashed, black] (\xG, 0) -- (G);
+      \node[above=2pt, font=\scriptsize] at (\xG, 0) {$z$};
+
+      % y 軸目盛り
+      \fill[black] (A) circle (1.2pt);
+      \node[above left=1pt, font=\scriptsize] at (0, \yTop) {$1-z$};
+
+      \fill[black] (E) circle (1.2pt);
+      \node[left=2pt, font=\scriptsize] at (0, \yEz) {$-z$};
+
+      \draw[dashed, black] (0, \yGz) -- (G);
+      \node[left=2pt, font=\scriptsize] at (0, \yGz) {$-2z$};
+
+      \draw[dashed, black] (0, \yBot) -- (Pbot1);
+      \node[left=2pt, font=\scriptsize] at (0, \yBot) {$-2\sqrt{z}$};
+
+      % 特徴点
+      \fill[black] (Pbot1) circle (1.3pt);
+      \fill[black] (G) circle (1.2pt);
+
+      % ラベル引き出し
+      \node[below left=1pt, font=\scriptsize] at (0.35, -1.0) {$x+y=-z$};
+      \node[below right=1pt, font=\scriptsize] at (0.9, -1.0) {$x=\frac{y^2}{4z}$};
+
+      % 図タイトル
+      \node[below=18pt, font=\small\bfseries] at (0.5, \yBot) {$(0 < z \le 1)$};
+    \end{scope}
+
+    % =========================================================================
+    % 右図: z = 0 (三角形領域)
+    % =========================================================================
+    \begin{scope}[shift={(2.8, 0)}]
+      \coordinate (O2) at (0, 0);
+      \coordinate (A2) at (0, 1.0);
+      \coordinate (B2) at (1.0, 0);
+
+      % 塗りつぶし (直角二等辺三角形)
+      \fill[pattern=north east lines, pattern color=blue!75, opacity=0.75]
+      (O2) -- (A2) -- (B2) -- cycle;
+
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-0.3, 0) -- (1.45, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -1.5) -- (0, 1.35) node[above] {$y$};
+      \node[below left=2pt] at (O2) {$0$};
+
+      % 直線 x + y = 1 (実線)
+      \draw[line width=1.3pt, blue!85!black] (A2) -- (B2);
+      \draw[line width=1.3pt, blue!85!black] (O2) -- (A2);
+      \draw[line width=1.3pt, blue!85!black] (O2) -- (B2);
+
+      % 破線による参考枠（スケッチの薄い補助線）
+      \draw[dashed, gray!50] (1.0, 0) -- (1.0, -1.0) -- (0, -1.0);
+      \draw[dashed, gray!45] (A2) -- (1.1, -0.1);
+      \draw[dashed, gray!45] (O2) -- (0.9, -0.9);
+
+      % 目盛り
+      \fill[black] (A2) circle (1.3pt) node[left=2pt, font=\scriptsize] {$1$};
+      \fill[black] (B2) circle (1.3pt) node[below=2pt, font=\scriptsize] {$1$};
+      \node[left=2pt, font=\scriptsize, gray!60!black] at (0, -1.0) {$-1$};
+
+      % 図タイトル
+      \node[below=18pt, font=\small\bfseries] at (0.5, -1.2) {$(z = 0)$};
+    \end{scope}
+
   \end{tikzpicture}
-  \caption{高さ$z$における立体の断面}
+  \caption{高さ $z$ における立体の断面形状（左：$0 < z \le 1$，右：$z = 0$）}
+  \label{fig:cross_section_z_constant_sketch_reproduced}
 \end{figure}
-($0 < z \le 1$) \quad ($z=0$)
-ただし，$z=0$ の時，条件は $0 \le x \le 1 \land 0 \le y+x \le 1$ であることに注意した．この面積 $S(z)$ は，
-$S(z) = (\text{台形}) - (\text{三角形}) - (\text{放物線領域})$
-であり，($0 < z \le 1$ の時)
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=3.0cm, y=2.2cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 定数・幾何パラメータ設定 (例: z = 0.36, sqrt(z) = 0.6)
+    % ============================================================
+    \def\zVal{0.36}
+    \def\sqrtZ{0.6}
+    \pgfmathsetmacro{\yA}{1.0 - \zVal}       % 1 - z = 0.64
+    \pgfmathsetmacro{\yE}{-\zVal}             % -z = -0.36
+    \pgfmathsetmacro{\yF}{-2.0*\zVal}         % -2z = -0.72
+    \pgfmathsetmacro{\yD}{-2.0*\sqrtZ}        % -2*sqrt(z) = -1.2
+    \pgfmathsetmacro{\xG}{\zVal}              % z = 0.36
+
+    % 各頂点座標
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (0, \yA);
+    \coordinate (B) at (1.0, \yE);
+    \coordinate (C) at (1.0, \yD);
+    \coordinate (D) at (0, \yD);
+    \coordinate (E) at (0, \yE);
+    \coordinate (F) at (0, \yF);
+    \coordinate (G) at (\xG, \yF);
+
+    % ============================================================
+    % 2. 断面領域 S(z) の斜線ハッチング
+    % ============================================================
+    \fill[pattern=north east lines, pattern color=blue!75, opacity=0.75]
+    (A) -- (B) -- (C)
+    -- plot[domain=\yD:\yF, samples=30, smooth, variable=\y] ({\y*\y / (4.0*\zVal)}, {\y})
+    -- (G) -- (E) -- cycle;
+
+    % ============================================================
+    % 3. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (1.45, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, \yD - 0.35) -- (0, \yA + 0.35) node[above] {$y$};
+    \node[below left=2pt] at (O) {$0$};
+
+    % ============================================================
+    % 4. 補助線と外枠（台形 ABCD、三角形 EFG の境界破線）
+    % ============================================================
+    % 台形 ABCD の外枠線
+    \draw[dashed, gray!55, line width=0.9pt] (D) -- (C);
+    \draw[dashed, gray!55, line width=0.9pt] (F) -- (G);
+
+    % x = 1 の垂線
+    \draw[dashed, gray!50] (1.0, 0) -- (B);
+    \node[above=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+
+    % ============================================================
+    % 5. 断面 S(z) の実線境界
+    % ============================================================
+    % 上辺 AB (x + y = 1 - z)
+    \draw[line width=1.4pt, blue!85!black] (A) -- (B);
+    \node[above right=1pt, font=\scriptsize\bfseries] at (0.35, 0.4) {$x+y=1-z$};
+
+    % 右辺 BC (垂直な線分 x = 1)
+    \draw[line width=1.4pt, blue!85!black] (B) -- (C);
+
+    % 下辺 放物線弧 CG
+    \draw[line width=1.4pt, blue!85!black, domain=\yF:\yD, samples=40, smooth, variable=\y]
+    plot ({\y*\y / (4.0*\zVal)}, {\y});
+    \node[below right=1pt, font=\scriptsize] at (0.75, -1.0) {$x=\frac{y^2}{4z}$};
+
+    % 左下辺 EG (x + y = -z)
+    \draw[line width=1.4pt, blue!85!black] (E) -- (G);
+    \node[below left=1pt, font=\scriptsize] at (0.3, -0.65) {$x+y=-z$};
+
+    % 左辺 EA (y 軸上)
+    \draw[line width=1.4pt, blue!85!black] (E) -- (A);
+
+    % 直角記号 (三角形 EFG: ∠EFG = 90°)
+    \draw[thin, gray!70!black]
+    (0, \yF + 0.1) -- (\xG*0.25, \yF + 0.1) -- (\xG*0.25, \yF);
+
+    % ============================================================
+    % 6. 頂点プロットとラベル (A, B, C, D, E, F, G)
+    % ============================================================
+    % 台形 ABCD の 4 頂点
+    \fill[black] (A) circle (1.3pt) node[left=2pt, font=\footnotesize\bfseries] {$A(1-z)$};
+    \fill[black] (B) circle (1.3pt) node[right=2pt, font=\footnotesize\bfseries] {$B$};
+    \fill[black] (C) circle (1.3pt) node[right=2pt, font=\footnotesize\bfseries] {$C$};
+    \fill[black] (D) circle (1.2pt) node[left=2pt, font=\footnotesize\bfseries] {$D(-2\sqrt{z})$};
+
+    % 三角形 EFG の 3 頂点
+    \fill[black] (E) circle (1.2pt) node[left=2pt, font=\footnotesize\bfseries] {$E(-z)$};
+    \fill[black] (F) circle (1.2pt) node[left=2pt, font=\footnotesize\bfseries] {$F(-2z)$};
+    \fill[red!85!black] (G) circle (1.4pt)
+    node[above right=1pt, font=\footnotesize\bfseries, red!90!black] {$G(z, -2z)$};
+
+    % 面積ラベル S(z)
+    \node[blue!90!black, font=\large\bfseries] at (0.55, -0.45) {$S(z)$};
+
+  \end{tikzpicture}
+  \caption{高さ $z$ における断面 $S(z)$ }
+  \label{fig:cross_section_Sz_labeled_points}
+\end{figure}
+
+この面積 $S(z)$ は$0 < \le 1$の時
 \begin{align}
-  (\text{台形}) &= \dfrac{1}{2} \{ (2\sqrt{z}-z) + (2\sqrt{z}+1-z) \} = \dfrac{1}{2}(4\sqrt{z}-2z+1) \\
-  (\text{三角形}) &= \dfrac{1}{2} \cdot z \cdot z = \dfrac{1}{2}z^2 \\
-  (\text{放物線領域}) &= \int_{-2\sqrt{z}}^{-2z} \dfrac{y^2}{4z} dy \\
+  S(z) = (\text{台形}ABCD) - (\text{三角形}EFG) - (\text{放物線領域}CDGF) \label{eq:8}
+\end{align}
+であり，各項の面積を個別に計算すると
+\begin{align}
+  (\text{台形}ABCD)
+  &= \dfrac{1}{2}(|BC|+|DA|)|CD| \\
+  &= \dfrac{1}{2} \{ (2\sqrt{z}-z) + (2\sqrt{z}+1-z) \} = \dfrac{1}{2}(4\sqrt{z}-2z+1) \\
+  (\text{三角形}EFG)
+  &= \dfrac{1}{2}|EG||FG| \\
+  &= \dfrac{1}{2} \cdot z \cdot z = \dfrac{1}{2}z^2 \\
+  (\text{放物線領域}CDGF)
+  &= \int_{-2\sqrt{z}}^{-2z} \dfrac{y^2}{4z} dy \\
   &= \dfrac{1}{12z} \left[ y^3 \right]_{-2\sqrt{z}}^{-2z} \\
   &= \dfrac{2}{3z} (z\sqrt{z}-z^3) \\
   &= \dfrac{2}{3} (\sqrt{z}-z^2)
 \end{align}
-これらを代入して
+だから\cref{eq:8}に代入して
 \begin{align}
-  S(z) &= 2\sqrt{z} - z + \dfrac{1}{2} - \dfrac{1}{2}z^2 - \dfrac{2}{3}\sqrt{z} + \dfrac{2}{3}z^2 \\
+  S(z)
+  &= 2\sqrt{z} - z + \dfrac{1}{2} - \dfrac{1}{2}z^2 - \dfrac{2}{3}\sqrt{z} + \dfrac{2}{3}z^2 \\
   &= \dfrac{1}{6}z^2 - z + \dfrac{4}{3}\sqrt{z} + \dfrac{1}{2}
 \end{align}
-これは $z=0$ でも成立するから，
+である．これは $z=0$ でも成立するから求める体積は
 \begin{align}
   V &= \int_0^1 S(z) dz \\
   &= \left[ \dfrac{1}{18}z^3 - \dfrac{1}{2}z^2 + \dfrac{2}{3} \cdot \dfrac{2}{3} z^{\frac{3}{2}} + \dfrac{1}{2}z \right]_0^1 \\
   &= \dfrac{17}{18}
 \end{align}
+である．
 
 \end{document}

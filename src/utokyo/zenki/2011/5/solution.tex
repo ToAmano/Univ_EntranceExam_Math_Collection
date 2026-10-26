@@ -1,76 +1,258 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} $p, q \in \mathbb{N}$,
+与えられた条件
 \begin{align}
-  -q \le b \le 0 \le a \le p, \quad b \le c \le a, \quad a, b, c \in \mathbb{Z} \quad \cdots \text{①}
+  \begin{cases}
+    p, q \in \mathbb{N} \\
+    -q \le b \le 0 \le a \le p \\
+    b \le c \le a \\
+    a, b, c \in \mathbb{Z}
+  \end{cases} \label{eq:1}
 \end{align}
+について考える．
 
 \paragraph{(1)}
 
-まず前者についてかんがえる．
-\begin{align}
-  W([a, b; c]) = p - q - (a+b) = -q \quad \therefore p = (a+b)
-\end{align}
-$b \le 0, \ a \le p$ から，このようになるには $(a, b) = (p, 0)$ が必要で，①からこの時，
-$c = 0, 1, \dots, p$ とすれば十分．よって，$p+1$ コある．
+% TODO: (a,b)平面で\cref{eq:1}を図示，一旦cは無視
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.5cm, y=2.0cm, >=stealth, every node/.style={font=\small}]
 
-次に後者について，
+    % ============================================================
+    % 1. 定数設定 (例: p = 1.6, q = 1.2)
+    % ============================================================
+    \def\pVal{1.6}
+    \def\qVal{1.2}
+
+    \coordinate (O) at (0, 0);
+    \coordinate (Amax) at (\pVal, 0);
+    \coordinate (Bmin) at (0, -\qVal);
+    \coordinate (Corner) at (\pVal, -\qVal);
+
+    % ============================================================
+    % 2. 領域 (0 <= a <= p, -q <= b <= 0) の斜線ハッチング
+    % ============================================================
+    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.7]
+    (O) -- (Amax) -- (Corner) -- (Bmin) -- cycle;
+
+    % ============================================================
+    % 3. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (\pVal + 0.5, 0) node[right] {$a$};
+    \draw[->, thick, gray!80!black] (0, -\qVal - 0.4) -- (0, 0.6) node[above] {$b$};
+    \node[above left=2pt] at (O) {$O$};
+
+    % ============================================================
+    % 4. 領域の境界線 (長方形)
+    % ============================================================
+    \draw[line width=1.4pt, blue!85!black] (O) -- (Amax) -- (Corner) -- (Bmin) -- cycle;
+
+    % 目盛りラベル
+    \node[above=2pt, font=\scriptsize] at (Amax) {$p$};
+    \node[left=2pt, font=\scriptsize] at (Bmin) {$-q$};
+
+    % ============================================================
+    % 5. (1) の直線 a + b = p および a + b = -q
+    % ============================================================
+    % 直線 a + b = p (点 (p, 0) を通り傾き -1)
+    \draw[dashed, red!85!black, line width=1.1pt]
+    ($ (Amax) + (-0.5, 0.5) $) -- ($ (Amax) + (0.3, -0.3) $)
+    node[right, font=\scriptsize\bfseries] {$a+b = p$};
+    \fill[red!85!black] (Amax) circle (1.5pt)
+    node[below right=2pt, font=\scriptsize\bfseries, red!90!black] {$(p, 0)$};
+
+    % 直線 a + b = -q (点 (0, -q) を通り傾き -1)
+    \draw[dashed, teal!85!black, line width=1.1pt]
+    ($ (Bmin) + (-0.3, 0.3) $) -- ($ (Bmin) + (0.5, -0.5) $)
+    node[below right, font=\scriptsize\bfseries] {$a+b = -q$};
+    \fill[teal!85!black] (Bmin) circle (1.5pt)
+    node[above left=2pt, font=\scriptsize\bfseries, teal!90!black] {$(0, -q)$};
+
+  \end{tikzpicture}
+  \caption{$(a, b)$ 平面における基本領域（青斜線部）と極値をとる点 $(p, 0), (0, -q)$}
+  \label{fig:ab_plane_basic_domain}
+\end{figure}
+
+\subparagraph{$w([a, b; c])=-q$について}
+
+まず前者の条件についてかんがえる．
+与えられた条件は
 \begin{align}
-  W([a, b; c]) = p - q - (a+b) = p \quad \therefore -q = (a+b)
+  w([a, b; c]) = p - q - (a+b) = -q \quad \therefore p = (a+b) \label{eq:2}
 \end{align}
-$-q \le b, \ 0 \le a$ から，$(a, b) = (0, -q)$ が必要で，①から $c = 0, -1, \dots, -q$ とすれば
-十分で，$q+1$ コある．
+である．\cref{eq:1}から$b \le 0, a \le p$だから，\cref{eq:2}を満たすには
+$(a, b) = (p, 0)$ が必要で，\cref{eq:1}から$c = 0, 1, \dots, p$ とすれば十分である．
+よって，求める個数は$p+1$ 個である．
+
+\subparagraph{$w([a, b; c])=p$について}
+
+次に後者の条件についてかんがえる．
+与えられた条件は
+\begin{align}
+  W([a, b; c]) = p - q - (a+b) = p \quad \therefore -q = (a+b) \label{eq:3}
+\end{align}
+である．\cref{eq:1}から $-q \le b, \ 0 \le a$ だから，\cref{eq:3}を満たすには
+$(a, b) = (0, -q)$ が必要で，\cref{eq:1}から $c = 0, -1, \dots, -q$ とすれば十分である．
+よって求める個数は$q+1$ 個である．
+\casesend
+
+以上から
+\begin{align}
+  \begin{cases}
+    w([a, b; c])=-q: p+1\text{個} \\
+    w([a, b; c])=p: q+1\text{個}
+  \end{cases}
+\end{align}
+である．
 
 \paragraph{(2)}
 
 $p = q$ の時，$s \in \mathbb{Z}$ に対して
 \begin{align}
-  W([a, b; c]) = -(a+b) = -p + s \quad \therefore a+b = p-s
+  W([a, b; c]) = -(a+b) = -p + s \quad \therefore a+b = p-s \label{eq:4}
 \end{align}
-①から，$-p \le a+b \le p$ だから，$0 \le s \le 2p$ である．この時は，$b = p-s-a$ から，
-$-p \le p-s-a \le 0 \iff p-s \le a \le 2p-s$ の時のみ，各 $a$ に対して $b$ がただ1つ対応する．
-よって，$s$ によって以下のようになる．
+である．\cref{eq:1}より $-p \le a+b \le p$ だから，
+\begin{align}
+  -p \le p-s \le p \quad \therefore 0 \le s \le 2p \label{eq:5}
+\end{align}
+である．\cref{eq:4}から$b = p-s-a$ だから\cref{eq:1}に代入して
+\begin{align}
+  -p \le p-s-a \le 0 \iff p-s \le a \le 2p-s \label{eq:6}
+\end{align}
+の時のみ，各 $a$ に対して $b$ がただ1つ対応する．
+\cref{eq:1}より
+\begin{align}
+  0 \le a \le p \label{eq:7}
+\end{align}
+でもあるから，\cref{eq:6,eq:7}を満たす$a$について，
+\cref{eq:5}の範囲で$s$を動かして検討する．
 
-(i) $0 \le s \le p$ の時
-$p-s \le a \le p$ で，各 $(a,b)$ に対し，$c$ は
+% TODO: \cref{eq:6,eq:7}について$s$の大きさで場合分け（sa平面に図示）
+% TODO: \cref{eq:6,eq:7}について$s$の大きさで場合分け（sa平面に図示）
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.4cm, y=2.4cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 座標定義 (p = 1.0 とする)
+    % ============================================================
+    \def\pVal{1.0}
+
+    \coordinate (O)       at (0, 0);
+    \coordinate (P_s)     at (\pVal, 0);       % (p, 0)
+    \coordinate (TwoP_s)  at ({2*\pVal}, 0);   % (2p, 0)
+    \coordinate (P_a)     at (0, \pVal);       % (0, p)
+    \coordinate (TwoP_a)  at (0, {2*\pVal});   % (0, 2p)
+    \coordinate (Mid)     at (\pVal, \pVal);   % (p, p)
+
+    % ============================================================
+    % 2. 満たすべき領域 (斜線ハッチング: スケッチ通り)
+    % 0 <= s <= p では: p - s <= a <= p
+    % p <= s <= 2p では: 0 <= a <= 2p - s
+    % ============================================================
+    \fill[pattern=north east lines, pattern color=blue!75, opacity=0.75]
+    (P_a) -- (Mid) -- (P_s) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!75, opacity=0.75]
+    (Mid) -- (TwoP_s) -- (P_s) -- cycle;
+
+    % ============================================================
+    % 3. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-0.2, 0) -- ({2*\pVal + 0.4}, 0) node[below] {$s$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, {2*\pVal + 0.3}) node[left] {$a$};
+    \node[below left=2pt] at (O) {$0$};
+
+    % ============================================================
+    % 4. 境界線と直線群（スケッチ通り）
+    % ============================================================
+    % a = 2p - s (点線〜実線)
+    \draw[dashed, gray!60, line width=0.9pt] (TwoP_a) -- (Mid);
+    \draw[line width=1.3pt, blue!85!black] (Mid) -- (TwoP_s)
+    node[midway, above right=1pt, font=\footnotesize\bfseries] {$a = 2p - s$};
+
+    % a = p - s (実線)
+    \draw[line width=1.3pt, blue!85!black] (P_a) -- (P_s);
+
+    % a = p (水平線: (0, p) から (p, p) まで実線、その先は破線)
+    \draw[line width=1.3pt, blue!85!black] (P_a) -- (Mid);
+    \draw[dashed, gray!50] (Mid) -- ({2*\pVal + 0.1}, \pVal);
+
+    % 場合分けの境界線 s = p (縦の破線: (p, 0) から (p, p))
+    \draw[dashed, red!85!black, line width=1.1pt] (P_s) -- (Mid);
+
+    % ============================================================
+    % 5. 軸の目盛り・点プロット
+    % ============================================================
+    \node[below=3pt, font=\normalsize] at (P_s) {$p$};
+    \node[below=3pt, font=\normalsize] at (TwoP_s) {$2p$};
+    \node[left=3pt, font=\normalsize]  at (P_a) {$p$};
+
+    % 式のラベル（手書きスケッチの引き出し線風）
+    \node[below=14pt, font=\footnotesize\bfseries] at (0.5, 0.45) {$a = p - s$};
+
+    % 場合分けの領域ラベル (i), (ii)
+    \node[font=\footnotesize\bfseries, blue!90!black] at (0.4, 0.75) {(i)};
+    \node[font=\footnotesize\bfseries, blue!90!black] at (1.2, 0.4)  {(ii)};
+
+  \end{tikzpicture}
+  \caption{$(s, a)$ 平面における条件の領域（斜線部）と $s = p$ による場合分け}
+  \label{fig:sa_plane_cases_sketch}
+\end{figure}
+
+\subparagraph{(i) $0 \le s \le p$ の時}
+
+この時は\cref{eq:6,eq:7}は
+\begin{align}
+  p-s \le a \le p
+\end{align}
+となる．各 $(a,b)$ に対し，$c$ は
 \begin{align}
   a - b + 1 = a - (p-s-a) + 1 = 2a + (1+s-p) \text{ 通り}
 \end{align}
 あるから，全部で
 \begin{align}
-  \sum_{a=p-s}^{p} \{ 2a + (1+s-p) \} &= \dfrac{1}{2} \cdot 2 \cdot (2p-s)(s+1) + (1+s-p)(s+1) \\
-  &= (p+1)(s+1)
+  \sum_{a=p-s}^{p} \{ 2a + (1+s-p) \}
+  &= \dfrac{1}{2} \cdot 2 \cdot (2p-s)(s+1) + (1+s-p)(s+1) \\
+  &= (p+1)(s+1) \label{eq:8}
 \end{align}
+通りである．
 
-(ii) $p \le s \le 2p$ の時
-$0 \le a \le 2p-s$ で (i) と同様に
+\subparagraph{(ii) $p \le s \le 2p$ の時}
+
+この時は\cref{eq:6,eq:7}は
 \begin{align}
-  \sum_{a=0}^{2p-s} \{ 2a + (1+s-p) \} &= \dfrac{1}{2} \cdot 2 \cdot (2p-s)(2p-s+1) \\
-  &\quad + (1+s-p)(2p-s+1) \\
-  &= (p+1)(2p-s+1)
+  0 \le a \le 2p-s
 \end{align}
+となる．(i)と同様に，全ての場合の数は
+\begin{align}
+  \sum_{a=0}^{2p-s} \{ 2a + (1+s-p) \}
+  &= \dfrac{1}{2} \cdot 2 \cdot (2p-s)(2p-s+1) + (1+s-p)(2p-s+1) \\
+  &= (p+1)(2p-s+1) \label{eq:9}
+\end{align}
+である．
+\casesend
 
-以上まとめて，
+以上\cref{eq:8,eq:9}をまとめて，求める数は
 \begin{align}
   \begin{cases}
     (p+1)(s+1) & (0 \le s \le p) \\
     (p+1)(2p-s+1) & (p \le s \le 2p) \\
     0 & (\text{otherwise})
-  \end{cases}
+  \end{cases} \label{eq:10}
 \end{align}
+である．
 
 \paragraph{(3)}
 
-$s$ について和をとれば良く，$p \ge 1$ なら
+\cref{eq:10}を$s$ について和をとれば良く，$p \ge 1$ から
 \begin{align}
   &\sum_{s=0}^{p-1} (p+1)(s+1) + \sum_{s=p}^{2p} (p+1)(2p-s+1) \\
   &= (p+1) \sum_{s=1}^{p} s + (p+1) \sum_{s=1}^{p+1} s \\
   &= (p+1) \left[ \dfrac{1}{2}p(p+1) + \dfrac{1}{2}(p+1)(p+2) \right] = (p+1)^3
 \end{align}
+である．
 
 \end{document}
