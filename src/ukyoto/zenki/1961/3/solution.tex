@@ -7,43 +7,53 @@
 \end{flushright}
 
 {\bf [解]}
-$M$ を原点，$AB$ を $x$ 軸，$MP$ を $y$ 軸とする右のような座標をとる（対称性から $Q$ が第 1 象限にあるとしてよい）．
+$M$ を原点，$AB$ を $x$ 軸，$MP$ を $y$ 軸とする図のような座標をとる（対称性から $Q$ が第 1 象限にあるとしてよい）．
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=1.5, >=stealth]
-      \draw[->] (-2.5,0) -- (2.5,0) node[right] {$x$};
-      \draw[->] (0,-0.5) -- (0,2.5) node[above] {$y$};
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.5cm, y=1.5cm, >=stealth, every node/.style={font=\small}]
+    % 手書き図と同じく r>a とし，\angle APB を鈍角にする．
+    \def\rVal{2.2}
+    \def\aVal{1.7}
+    \def\thetaVal{40}
+    \coordinate (M) at (0, 0);
+    \coordinate (A) at (-\rVal, 0);
+    \coordinate (B) at (\rVal, 0);
+    \coordinate (P) at (0, \aVal);
+    \coordinate (Q) at ({\aVal*sin(\thetaVal)}, {\aVal*cos(\thetaVal)});
 
-      \coordinate (M) at (0,0);
-      \coordinate (A) at (-1.8,0);
-      \coordinate (B) at (1.8,0);
-      \coordinate (P) at (0,2.0);
-      \coordinate (Q) at (1.0, 1.4);
+    % 手書きの配置：AB は x 軸，MP は y 軸，Q は MQ=MP の円弧上．
+    \draw[->, thick, gray!80!black] (-2.6, 0) -- (2.75, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 2.1) node[above] {$y$};
+    \draw[line width=1.3pt, blue!85!black] (A) -- (P) -- (B);
+    \draw[thick, dashed, teal!75!black] (A) -- (Q);
+    \draw[line width=1.2pt, teal!85!black] (Q) -- (B);
+    \draw[thick, dashed, red!75!black] (M) -- (Q);
 
-      \draw[line width=0.8pt] (A) -- (P) -- (B) -- cycle;
-      \draw[line width=0.8pt] (A) -- (Q) -- (B);
+    \pic[draw=blue!85!black, "$\alpha$", angle radius=0.43cm,
+    angle eccentricity=1.45, pic text options={font=\footnotesize}]
+    {angle=A--P--B};
+    \pic[draw=teal!85!black, angle radius=0.32cm]
+    {angle=A--Q--B};
+    \pic[draw=red!80!black, "$\theta$", angle radius=0.43cm,
+    angle eccentricity=1.55, pic text options={font=\footnotesize}]
+    {angle=Q--M--P};
 
-      \node[below left] at (M) {$M$};
-      \node[below] at (A) {$A$};
-      \node[below] at (B) {$B$};
-      \node[above] at (P) {$P$};
-      \node[above right] at (Q) {$Q$};
-
-      \node[below] at (0.9,0) {$r$};
-
-      \fill (M) circle (1.2pt);
-      \fill (A) circle (1.5pt);
-      \fill (B) circle (1.5pt);
-      \fill (P) circle (1.5pt);
-      \fill (Q) circle (1.5pt);
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+    \fill (A) circle (1.3pt) node[below=2pt] {$A$};
+    \fill (B) circle (1.3pt) node[below=2pt] {$B$};
+    \fill (M) circle (1.3pt) node[below left=2pt] {$M$};
+    \fill[blue!85!black] (P) circle (1.4pt) node[above right=2pt] {$P$};
+    \fill[teal!85!black] (Q) circle (1.4pt) node[above right=2pt] {$Q$};
+    \node[right=10pt, font=\footnotesize, teal!85!black] at (Q) {$\beta$};
+    \node[below=2pt, font=\footnotesize] at ($(M)!0.5!(B)$) {$r$};
+    \node[left=3pt, font=\footnotesize] at ($(M)!0.55!(P)$) {$a$};
+  \end{tikzpicture}
+  \caption{$M$ を原点とする配置と角 $\alpha,\beta,\theta$}
+  \label{fig:1961_3_configuration}
+\end{figure}
 
 \[
-  Q\left(a \sin\left(\dfrac{\pi}{2}-\theta\right), a \cos\left(\dfrac{\pi}{2}-\theta\right)\right) = Q(a \sin\theta, a \cos\theta)
+  Q\left(a \cos\left(\dfrac{\pi}{2}-\theta\right), a \sin\left(\dfrac{\pi}{2}-\theta\right)\right) = Q(a \sin\theta, a \cos\theta)
 \]
 
 \begin{enumerate}[(1)]
