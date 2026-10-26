@@ -12,7 +12,7 @@ ID_RE = re.compile(r'^' + ID + r'$')
 PATH_RE = re.compile(r'(?<![\w])(' + ID + r')(?![0-9])(?=/|\b)')
 MARKER_RE = re.compile(r'<!--\s*(math-audit-question|solution-figure-loss|original-problem-figure-audit):\s*(' + ID + r')\s*-->')
 JP_RE = re.compile(r'(東京工業大学|東京大学|京都大学|東工大|東大|京大)\s*(前期|後期)\s*([0-9]{4})(?:年\s*第\s*([1-9][0-9]*)\s*問|[-/－]([1-9][0-9]*))')
-EN_RE = re.compile(r'\b(utokyo|ukyoto|titech)[/ _-]+(zenki|kouki)[/ _:-]+([0-9]{4})[-/ ]+([1-9][0-9]*)\b')
+EN_RE = re.compile(r'\b(utokyo|ukyoto|titech)[/ _-]+(zenki|kouki)[/ _:-]+([0-9]{4})[-/ ]+([1-9][0-9]?)\b')
 UNIVERSITIES = {'東京工業大学': 'titech', '東工大': 'titech', '東京大学': 'utokyo', '東大': 'utokyo', '京都大学': 'ukyoto', '京大': 'ukyoto'}
 GLOBAL_RE = re.compile(r'^\[(?:fix/|feat/|converter/|converter\]|分割済|後続課題)|まとめ|索引|Backlog', re.I)
 PREFIXES = ('problem:', 'univ:', 'exam:', 'year:', 'kind:')

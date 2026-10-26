@@ -176,6 +176,17 @@ def test_stale_labels_on_multiple_questions_are_rejected():
         assert not result['problems'] and result['rejected']
 
 
+def test_report_year_range_does_not_count_as_another_question():
+    labels=['problem:ukyoto/kouki/1999/5','univ:ukyoto','exam:kouki','year:1999']
+    i=issue(title='[監査] 京大後期1999年第5問',
+            body='`src/ukyoto/kouki/1999/5/solution.tex` and '
+                 '`docs/audit/reports/2026-10-25-ukyoto-kouki-1998-2000/diagnostic/1999-5.pdf`',
+            labels=labels)
+    result=build_index([i])
+    assert not result['rejected']
+    assert len(result['problems']['ukyoto/kouki/1999/5'])==1
+
+
 def test_initial_fetch_failure_is_recorded(root):
     plan=build_plan([issue()],root,'a/b');progress=[]
     class FailedReadClient(FakeClient):
