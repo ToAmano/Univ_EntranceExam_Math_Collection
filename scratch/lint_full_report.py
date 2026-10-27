@@ -27,6 +27,7 @@ RULE_LABELS = [
     ("\\int の上下限", "\\frac/\\dfrac 添字位置"),
     ("分数は（添字位置を除き）", "\\frac/\\dfrac 添字位置"),
     ("\\caption{} がない", "\\caption 欠落"),
+    ("ベクトル", "\\vec/\\overrightarrow 表記"),
 ]
 
 

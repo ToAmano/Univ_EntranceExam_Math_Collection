@@ -153,7 +153,7 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 * **`lint-tex.yml`**（`src/**/*.tex` を含む push / PR）: `scratch/lint_latex_style.py` で 8.3.6 節のルール（機械的に判定可能なもののみ）を **差分に入った `solution.tex` のみ** に対してチェックする。`problem.tex`（原題の問題文）はCIの対象外——著者が書く解答文とは性質が違い、`\caption` 必須などの一部ルールがそもそも馴染まないため。TeX Live 不要の軽量ジョブ。既存コーパスには本ルール導入以前からの違反が大量にあるため（2026年時点で約6800件）、リポジトリ全体を対象にはせず、変更・新規追加された `solution.tex` のみを厳格化する「ratchet」方式を採用している。ローカルでの単体実行は `python3 scratch/lint_latex_style.py [対象ファイル...]`（引数なしならリポジトリ全体を `problem.tex` も含めてスキャンし集計のみ表示。`problem.tex` も個別に指定すれば手動でチェック可能）。
   * **`% lint-skip: 理由`** をファイル中のどこか（通常は1行目）に書いておくと、そのファイルの lint チェックを丸ごとスキップできる（`--no-verify` でのコミットを都度要求する代わりの避難ハッチ）。理由コメントは省略不可——空だとマーカーとして認識されない。旧jarticle形式のまま未移行（Issue #593）のように「直す予定はあるが対応は別作業」と分かっているファイルに使う想定で、個別のバグ修正時に無関係な既存違反でブロックされるのを避けられる。乱用すると ratchet の意味が薄れるため、本当に別issueで追跡済みの既知の問題にのみ使うこと。
 * **`lint-tex-full.yml`**（毎週月曜 00:00 UTC の `schedule` / 手動実行）: `scratch/lint_full_report.py` でリポジトリ全体の `solution.tex`（`lint-tex.yml` と同じスコープ）を走査し、ルール別・書籍別の内訳を Markdown レポートとして生成、`LaTeX Lint Backlog Report` という固定タイトルの Issue を検索して見つかれば本文を更新、無ければ新規作成する（PR ごとに Issue を乱発しない）。違反があってもジョブ自体は失敗しない非ブロッキングの可視化用ワークフローで、`lint-tex.yml`（差分のみを強制）とは役割が異なる。
-ローカルの独自 lint は `--fix` で句読点（`。`/`、` → `．`/`，`）と分数の `\frac` / `\dfrac` を機械修正できる。添字・TikZ 内では `\frac`、それ以外では `\dfrac` とする。コメント、URL・参照先・ファイルパス、verbatim 系のコード、マクロ定義は自動修正から除外し、`lint-skip` も尊重する。裸引数、式番号、図表構造、ラベル等は修正しない。既存 lint の検査範囲は変わらないため、保護した箇所の指摘が残ることもある。
+ローカルの独自 lint は `--fix` で句読点（`。`/`、` → `．`/`，`）、分数の `\frac` / `\dfrac`（添字・TikZ 内では `\frac`、それ以外では `\dfrac`）、ベクトルの `\vec` / `\overrightarrow` 表記（添字・プライムの外出しを含む）を機械修正できる。コメント、URL・参照先・ファイルパス、verbatim 系のコード、マクロ定義は自動修正から除外し、`lint-skip` も尊重する。裸引数、図表構造等は修正しない。既存 lint の検査範囲は変わらないため、保護した箇所の指摘が残ることもある。
 
 ```bash
 # 差分だけ表示（変更候補または lint エラーがあれば終了コード1）
@@ -190,7 +190,7 @@ python3 scratch/lint_latex_style.py --fix src/utokyo/zenki/2000/1/solution.tex
 1. **構成確認**: `pdfinfo {year}/handwritten.pdf` でページ数を確認する。表紙1ページ＋大問ごとに1ページが基本だが、**大問の数は年度によって4〜6問程度で変動する**。`scratch/tmp_download/08_titech/{year}/{year}_{q}.tex` の実在数が、その年度の実際の大問数の手がかりになる（`{year}_6.tex` があれば第6問が存在する、等）。
 2. **全体レンダリング**: `pdftoppm -png -r 200 {year}/handwritten.pdf {tmpdir}/hw{year}` 程度の解像度でまず全ページを概観する。
 3. **`problem.tex` との突き合わせ**: 各大問の `problem.tex`（既存）を読み、手書き解答がどの設問に対応するか確認してから読み進める。
-4. **既存 `handwritten_tex.tex` への書き起こし**: 大問ごとに `\section*{第N問}` 見出しで区切り、解答冒頭に `{\bf [解]}` を置く（`\begin{proof}[解]...\end{proof}` は使わない。8.3.6参照）。ファイル冒頭は `\documentclass[../../../../main.tex]{subfiles}` + `\begin{document}`、末尾は `\end{document}`。図は TikZ で再現する（8.3参照）。
+4. **既存 `handwritten_tex.tex` への書き起こし**: 大問ごとに `\section*{第N問}` 見出しで区切り、解答冒頭に `{\bf [解答]}` を置く（`\begin{proof}[解]...\end{proof}` は使わない。8.3.6参照）。ファイル冒頭は `\documentclass[../../../../main.tex]{subfiles}` + `\begin{document}`、末尾は `\end{document}`。図は TikZ で再現する（8.3参照）。
 5. **分割**: `python3 scratch/split_handwritten_tex.py {univ}` で `{year}/{q}/solution.tex` に自動分割する。**既存の `solution.tex` は上書きされない**（既存優先でスキップされる。過去に別形式で解答が存在する年度・設問はそのまま残る）。
 6. **`problem.tex` の欠落補完**: `scratch/batch_import_all_problems.py` は `range(1,6)` のバグにより第6問を取り込まないため、第6問が存在する年度は `scratch/tmp_download/08_titech/{year}/{year}_6.tex` 等から手動インポートが必要になることがある。
 7. **単体コンパイル確認**: プリアンブル一式（`scratch/generate_main_tex.py` の `PREAMBLE` と同一内容）＋対象年度の大問だけを `\subfile` するテスト用 `test{year}.tex` を作り、`latexmk -lualatex -interaction=nonstopmode -halt-on-error test{year}.tex` でエラーが出ないことを確認する。TikZ 図がある場合は `pdftoppm` で PNG 化し、元のスキャンと見比べて図の忠実性も目視確認する。
@@ -215,13 +215,13 @@ python3 scratch/lint_latex_style.py --fix src/utokyo/zenki/2000/1/solution.tex
 
 ### 8.3.5 複数解法がある場合は全て文字起こしする
 
-* 原稿に`[解1]`（または単に`[解]`）に続けて`[解2]`のような**別解が書かれている場合、省略・要約せず全て`handwritten_tex.tex`に書き起こす**こと。片方だけ書いて「もう一方は同様」のように済ませてはいけない。
-* 別解は`\bigskip\noindent{\bf [解2]}`のような見出しを立てて、通し番号の式ラベル（①②…）を含めて完全に再現する。
+* 原稿に`[解1]`（または単に`[解]`）に続けて`[解2]`のような**別解が書かれている場合、省略・要約せず全て`handwritten_tex.tex`に書き起こす**こと。片方だけ書いて「もう一方は同様」のように済ませてはいけない。TeX の見出しは [AGENTS.md](AGENTS.md) の規約に合わせる。
+* 別解は`\bigskip\noindent{\bf [別解]}`のような見出しを立てる。別解が複数あるときは`[別解1]`、`[別解2]`、…と番号を付ける。通し番号の式ラベル（①②…）を含めて完全に再現する。
 * 判読が難しい別解ほど省略したくなるが、そここそ本来の解答の価値がある部分であることが多い。時間がかかっても該当ページを高解像度で読み直し、8.2節の手順で最後まで読み切ること。
 
 ### 8.3.6 LaTeX フォーマットの注意事項
 
-このうち機械的に判定可能なもの（`align*` 禁止，句読点，`\dfrac`/`\sqrt` の裸引数禁止，`\frac`/`\dfrac` の添字位置ルール，`tikzpicture` のネスト，`\caption` 必須，`\documentclass` の相対パス）は `lint-tex.yml`（6節）が変更ファイルに対して自動チェックする。大カッコのサイズ判断や，`enumerate`/`itemize` が小問ラベリング目的か場合分け目的かの判別（後者は許容される）など目視確認が必要なものは対象外。
+このうち機械的に判定可能なもの（`align*` 禁止，句読点，`\dfrac`/`\sqrt` の裸引数禁止，`\frac`/`\dfrac` の添字位置ルール，ベクトルの `\vec`/`\overrightarrow` 使い分け，`tikzpicture` のネスト，`\caption` 必須，`\documentclass` の相対パス）は `lint-tex.yml`（6節）が変更ファイルに対して自動チェックする。大カッコのサイズ判断や，`enumerate`/`itemize` が小問ラベリング目的か場合分け目的かの判別（後者は許容される）など目視確認が必要なものは対象外。
 
 * **数式環境は `align` を利用する（`align*` は使わない）**。単発の数式でも `\[...\]` や `equation` ではなく `align` を使い、複数行にまたがる変形は `&=` で位置を揃える。
 * **「`&=` で繋いで最後の結果だけに意味がある」変形は `split` でまとめて式番号を1つにすることを検討する**。`align` は既定で行ごとに番号が付くため，途中式ごとに番号が振られるのを避けたい場合は `\begin{align}\begin{split} ... \end{split}\end{align}` のように `split` で包む。ただし `split` は1行につき `&` を1つしか使えないため，1行に複数の位置揃えが必要な変形では無理に `split`化せず，通常の `align`（行ごとに番号）のままでよい。
@@ -231,12 +231,13 @@ python3 scratch/lint_latex_style.py --fix src/utokyo/zenki/2000/1/solution.tex
 * **図を挿入する際は必ず `\caption{}` を付ける**。`\begin{figure}...\end{figure}` の中に `\caption{...}` を含め、何を表す図かを一言で示す。
 * **表（`table`）にも同様に必ず `\caption{}` を付ける**。`\begin{table}...\end{table}` の中に `\caption{...}` を含め、何を表す表かを一言で示す（増減表なら「$f(x)$ の増減表」等）。ただし `\shadowbox{...}` で囲む凡例的な `tabular`（`table` 化の対象外）は対象外。
 * **句読点は全角の「．」「，」を使う**（「。」「、」は使わない）。既存の人手作成 `solution.tex` もこの慣習に従っている。
-* **解答冒頭は `{\bf [解]}` とする**（`\begin{proof}[解]...\end{proof}` は使わない）。
+* **解答冒頭は `{\bf [解答]}` とする**（`\begin{proof}[解]...\end{proof}` は使わない）。別解・解説の見出しも [AGENTS.md](AGENTS.md) の規約に従う。
 * **分数は `\frac` ではなく `\dfrac` を使う**。`align` 環境内でも `\frac` はディスプレイスタイルでも小さく組まれてしまうことがあるため、常に `\dfrac` で統一する。
   * **例外: 上付き・下付き（添字）の位置に分数が入る場合は `\dfrac` ではなく通常の `\frac` を使う**。これは `\int` の上下限や評価記号 `[...]_a^b` に限らず，`x^{\dfrac{1}{m}}` のような単なる変数の指数も含め，`_{...}` / `^{...}` のあらゆる添字位置に一般的に当てはまる（添字位置では文字が自動的に縮小されるため，フル displaystyle の `\dfrac` を使うと縦に間延びして見にくい）。例: `\int_{\dfrac{a}{b}}^{b}` → `\int_{\frac{a}{b}}^{b}`，`\Bigl[F(x)\Bigr]_{\dfrac{a}{b}}^{b}` → `\Bigl[F(x)\Bigr]_{\frac{a}{b}}^{b}`，`x^{\dfrac{1}{m}}` → `x^{\frac{1}{m}}`。添字位置以外（被積分関数本体や，独立した式としての分数）では引き続き `\dfrac` を使う。
   * **例外: `tikzpicture` 内の node ラベルでも `\dfrac` ではなく `\frac` を使う**。図中のラベルは多くが `font=\small` 等で縮小表示されるため，添字位置と同じ理由で `\dfrac` だと間延びする。
 * **`cases` などのネスト環境の中では数式に `\displaystyle` を用いる**。`cases`（`dcases` ではなく）環境内は既定でテキストスタイルになり分数などが小さく組まれるため，`\begin{cases}\displaystyle ...\end{cases}` のように明示する。
 * **`\dfrac` と `\sqrt` の引数は必ず `{}` で囲む**。`\sqrt2` ではなく `\sqrt{2}` のように書く（`\dfrac12` のような省略形も同様に禁止で、`\dfrac{1}{2}` と書く）。
+* **ベクトルは1文字なら `\vec`、2文字以上なら `\overrightarrow` を使う**（[AGENTS.md](AGENTS.md) 参照）。例えば `\vec{a}`、`\vec{0}`、`\vec{\ell}` に対して `\overrightarrow{AB}`、`\overrightarrow{OP}`、`\overrightarrow{P_1P_2}` と使い分ける。添字やプライム付きの1文字ベクトルは `\vec{a}_1`、`\vec{e}_k`、`\vec{b}'` のように添字・プライムを `\vec{...}` の外に出す（`\vec{a_1}` や `\overrightarrow{a_1}` は不可）。
 * **辺の長さは `\overline{AB}` ではなく `|AB|`（絶対値記号ではさむ）で書く**。手書き原稿が `\overline{}` を使っていても，転記時に `|...|` に直す。
 * **大きい括弧は素の `[ ]` `( )` のまま使わず，`\Bigl[ \Bigr]` / `\Bigl( \Bigr)` 等でサイズを明示する**。中身が分数や指数で背が高くなると素の括弧は窮屈に見えるため。既存ソースでは `\Bigl`系が`\bigl`系よりも多用されている（`\Bigl`系325件 対 `\bigl`系158件，`\biggl`系は0件）ので，特にサイズ判断に迷う場合は `\Bigl[ \Bigr]` を既定として使う。`\left[ \right]` の自動サイズ調整は式ごとに高さがまちまちになりやすいため，複数式でサイズを揃えたい場面では避ける。
 * **1行目は `\documentclass[../../main.tex]{subfiles}` とする**（`src/{univ}/{cat}/{year}/{q}/solution.tex` から `src/{univ}/{cat}/main.tex` までは2階層上がるだけなので `../../` が正しい。`../../../../` ではない）。

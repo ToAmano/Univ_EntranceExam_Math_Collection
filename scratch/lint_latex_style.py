@@ -462,10 +462,127 @@ def check_left_right_balance(text):
     return errors
 
 
-def fix_text(raw):
-    """Apply only punctuation and fraction-style fixes; preserve opaque TeX regions."""
-    if LINT_SKIP_RE.search(raw):
-        return raw
+VEC_CMD_RE = re.compile(r'\\(vec|overrightarrow)(?![a-zA-Z])')
+VEC_SINGLE_BASE_RE = re.compile(r'^(?:[a-zA-Z0-9]|\\[a-zA-Z]+)$')
+VEC_SINGLE_WITH_MOD_RE = re.compile(
+    r'^(?P<base>[a-zA-Z0-9]|\\[a-zA-Z]+)'
+    r'(?P<mod>(?:\s*(?:\'+|[_^]\s*(?:\{[^{}]*\}|\\[a-zA-Z]+|[a-zA-Z0-9])))+)$'
+)
+VEC_FONT_WRAP_RE = re.compile(r'^\\(?:text|mathrm|mathbf|mathit|mathsf|mathtt)\s*\{')
+
+
+def _unwrap_vec_font(arg):
+    s = arg.strip()
+    while True:
+        m = VEC_FONT_WRAP_RE.match(s)
+        if not m:
+            break
+        brace_idx = s.find('{')
+        inner, end_idx = extract_braced(s, brace_idx)
+        if end_idx == len(s):
+            s = inner.strip()
+        else:
+            break
+    return s
+
+
+def check_vector_notation(text):
+    """ベクトルの表記ルール（AGENTS.md / AGENT.md 8.3.6）をチェックする。
+    - 1文字のベクトルは \\vec{a}（\\overrightarrow{a} は不可）
+    - 2文字以上のベクトルは \\overrightarrow{AB}（\\vec{AB} は不可）
+    - 1文字ベクトルの添字・プライムは \\vec{a}_1, \\vec{b}' のように外に出す
+      （\\vec{a_1}, \\overrightarrow{a_1} 等は不可）
+    """
+    errors = []
+    n = len(text)
+    for m in VEC_CMD_RE.finditer(text):
+        cmd = m.group(1)
+        i = m.end()
+        while i < n and text[i].isspace():
+            i += 1
+        if i >= n or text[i] != '{':
+            # 裸の \vec a や \vec\ell は1文字対象なので許容
+            continue
+        arg, _ = extract_braced(text, i)
+        unwrapped = _unwrap_vec_font(arg)
+        if not unwrapped:
+            continue
+        lineno = line_of(text, m.start())
+        if VEC_SINGLE_BASE_RE.match(unwrapped):
+            if cmd == 'overrightarrow':
+                errors.append((
+                    lineno,
+                    f"1文字のベクトルには \\overrightarrow ではなく \\vec を使う"
+                    f"（\\overrightarrow{{{arg}}} → \\vec{{{arg}}}）",
+                ))
+        else:
+            mod_m = VEC_SINGLE_WITH_MOD_RE.match(unwrapped)
+            if mod_m:
+                base = mod_m.group('base')
+                mod = re.sub(r'\s+', '', mod_m.group('mod'))
+                if cmd == 'vec':
+                    errors.append((
+                        lineno,
+                        f"1文字ベクトルの添字・プライムは \\vec の外に出す"
+                        f"（\\vec{{{arg}}} → \\vec{{{base}}}{mod}）",
+                    ))
+                else:
+                    errors.append((
+                        lineno,
+                        f"1文字ベクトルの添字・プライムは \\overrightarrow ではなく \\vec を使い外に出す"
+                        f"（\\overrightarrow{{{arg}}} → \\vec{{{base}}}{mod}）",
+                    ))
+            else:
+                if cmd == 'vec':
+                    errors.append((
+                        lineno,
+                        f"2文字以上のベクトルには \\vec ではなく \\overrightarrow を使う"
+                        f"（\\vec{{{arg}}} → \\overrightarrow{{{arg}}}）",
+                    ))
+    return errors
+
+
+def _find_vector_edits(text):
+    edits = []
+    n = len(text)
+    for m in VEC_CMD_RE.finditer(text):
+        cmd = m.group(1)
+        i = m.end()
+        while i < n and text[i].isspace():
+            i += 1
+        if i >= n or text[i] != '{':
+            continue
+        arg, end = extract_braced(text, i)
+        unwrapped = _unwrap_vec_font(arg)
+        if not unwrapped:
+            continue
+        if VEC_SINGLE_BASE_RE.match(unwrapped):
+            if cmd == 'overrightarrow':
+                edits.append((m.start(), m.end(), r'\vec'))
+        else:
+            mod_m = VEC_SINGLE_WITH_MOD_RE.match(unwrapped)
+            if mod_m:
+                if arg.strip() != unwrapped:
+                    continue
+                before = text[:m.start()].rstrip()
+                if before and before[-1] in ('_', '^'):
+                    continue
+                after = text[end:].lstrip()
+                base = mod_m.group('base')
+                mod = re.sub(r'\s+', '', mod_m.group('mod'))
+                if after:
+                    if after[0] == '_' and '_' in mod:
+                        continue
+                    if after[0] in ('^', "'") and ('^' in mod or "'" in mod):
+                        continue
+                edits.append((m.start(), end, f"\\vec{{{base}}}{mod}"))
+            else:
+                if cmd == 'vec':
+                    edits.append((m.start(), m.end(), r'\overrightarrow'))
+    return edits
+
+
+def _mask_protected_regions(raw):
     masked = list(strip_comments(raw))
 
     def protect(start, end):
@@ -521,7 +638,14 @@ def fix_text(raw):
         protect(m.start(), end)
         pos = end
 
-    text = ''.join(masked)
+    return ''.join(masked)
+
+
+def fix_text(raw):
+    """Apply punctuation, fraction-style, vector-notation, and equation-label fixes; preserve opaque TeX regions."""
+    if LINT_SKIP_RE.search(raw):
+        return raw
+    text = _mask_protected_regions(raw)
     edits = [(m.start(), m.end(), {'。': '．', '、': '，'}[m.group()])
              for m in re.finditer('[。、]', text)]
     spans = find_frac_exempt_spans(text)
@@ -532,6 +656,11 @@ def fix_text(raw):
             edits.append((m.start(), m.end(), replacement))
     for start, end, replacement in sorted(edits, reverse=True):
         raw = raw[:start] + replacement + raw[end:]
+
+    vec_edits = _find_vector_edits(_mask_protected_regions(raw))
+    for start, end, replacement in sorted(vec_edits, reverse=True):
+        raw = raw[:start] + replacement + raw[end:]
+
     try:
         raw = tex_references.normalize_equation_labels(raw)
     except tex_references.AmbiguousLabelError:
@@ -572,6 +701,7 @@ def lint_file(path):
     errors += reference_errors
     errors += check_frac_subscript_rule(text)
     errors += check_left_right_balance(text)
+    errors += check_vector_notation(text)
     warnings = check_overline_warning(text)
     warnings += check_long_align_lines(text)
     return errors, warnings, None
