@@ -274,7 +274,7 @@ TRANSPARENT_NESTING_ENVS = ('center', 'subcaptionblock', 'minipage')
 
 def check_env_nesting(text, target_env, required_ancestor, error_msg,
                        allow_subcaptionblock=True, allow_math_exempt=False,
-                       exempt_spans=()):
+                       exempt_spans=(), exempt_ancestors=()):
     """target_env が required_ancestor の直下、または
     TRANSPARENT_NESTING_ENVS（center/subcaptionblock/minipage）を何重に
     挟んだ先の required_ancestor の下にネストされているかを、環境の
@@ -282,7 +282,8 @@ def check_env_nesting(text, target_env, required_ancestor, error_msg,
     tikzpicture・tabular 両方のネストチェックがこれを呼ぶ（別々に実装すると
     2箇所が食い違うバグの元）。
     exempt_spans は find_command_arg_spans 等で求めた (start,end) の
-    一覧で、その範囲内にある target_env は無条件で許容する。"""
+    一覧で、その範囲内にある target_env は無条件で許容する。
+    exempt_ancestors に指定した環境内の target_env も許容する。"""
     transparent = TRANSPARENT_NESTING_ENVS if allow_subcaptionblock else \
         tuple(e for e in TRANSPARENT_NESTING_ENVS if e != 'subcaptionblock')
     errors = []
@@ -293,6 +294,7 @@ def check_env_nesting(text, target_env, required_ancestor, error_msg,
             if begin_name == target_env:
                 pos = m.start()
                 ok = any(s <= pos < e for s, e in exempt_spans)
+                ok = ok or any(env in exempt_ancestors for env in stack)
                 if not ok:
                     i = len(stack) - 1
                     while i >= 0 and stack[i] in transparent:
@@ -334,13 +336,14 @@ def check_tabular_nesting(text):
     （\\centering コマンド利用時は center 環境自体が無いので table 直下でよい）。
     tikzpicture と異なり、align 等の数式内にインライン記号として tabular を
     使う慣習は無いため math_exempt は許可しない。ただし \\shadowbox{...} で
-    表全体を枠囲みにする用法（年度サマリファイルの凡例など）は table 化の
-    対象外として除外する。"""
+    表全体を枠囲みにする用法（年度サマリファイルの凡例など）と、
+    tikzpicture 内の図中ノードに置く表は table 化の対象外として除外する。"""
     return check_env_nesting(
         text, 'tabular', 'table',
         "tabular は table（直下、center/subcaptionblockを挟んで）の中にネストする",
         allow_subcaptionblock=True, allow_math_exempt=False,
-        exempt_spans=find_command_arg_spans(text, 'shadowbox'))
+        exempt_spans=find_command_arg_spans(text, 'shadowbox'),
+        exempt_ancestors=('tikzpicture',))
 
 
 def find_tikzpicture_spans(text):

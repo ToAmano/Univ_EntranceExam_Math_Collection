@@ -130,3 +130,27 @@ def test_legacy_style_skip_does_not_hide_broken_references(tmp_path):
     assert any('old' in message and '形式' in message for _, message in errors)
     assert any('missing' in message and '未定義' in message for _, message in errors)
     assert not any('align* は使わない' in message for _, message in errors)
+
+
+def test_tabular_inside_tikzpicture_is_not_required_to_have_table():
+    source = r'''
+\begin{figure}
+  \begin{tikzpicture}
+    \node {\begin{tabular}{c}A\\B\end{tabular}};
+  \end{tikzpicture}
+  \caption{State diagram}
+\end{figure}
+'''
+    assert lint.check_tabular_nesting(source) == []
+
+
+def test_tabular_outside_tikzpicture_still_requires_table():
+    source = r'''
+\begin{figure}
+  \begin{tikzpicture}\node {A};\end{tikzpicture}
+  \begin{tabular}{c}B\end{tabular}
+\end{figure}
+'''
+    errors = lint.check_tabular_nesting(source)
+    assert len(errors) == 1
+    assert errors[0][0] == 4
