@@ -1,4 +1,3 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
@@ -31,6 +30,35 @@ $k\in\mathbb{Z}_{\ge1}$とする．
 \end{align}
 から，$\ell_k$は$(0,1)$を通る．$\blacksquare$
 
+\begin{figure}[htb]
+  \centering
+  % k=1 の場合を描き，横軸の座標は x/\pi とする。
+  \begin{tikzpicture}[x=2.45cm, y=1.15cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (P) at (2.931135,-0.976689);
+    \draw[->, thick, gray!80!black] (-0.1,0) -- (3.2,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-1.28) -- (0,1.35) node[above] {$y$};
+    \draw[teal!80!black, line width=1.15pt]
+    plot[domain=0:3.06, samples=100]
+    (\x,{(1-(pi*\x)^2)/(1+(pi*\x)^2)});
+    \draw[blue!85!black, line width=1.4pt]
+    plot[domain=2:3, samples=80] (\x,{cos(180*\x)});
+    \draw[orange!85!black, line width=1.15pt]
+    (0,1) -- (3.06,{1-2*9.20843355*pi*3.06/(9.20843355^2+1)});
+    \draw[dashed, gray!65] (2,1) -- (2,0);
+    \fill (0,1) circle (1.4pt) node[above right=2pt] {$(0,1)$};
+    \fill[red!85!black] (P) circle (1.6pt);
+    \node[above right=3pt, red!85!black, fill=white, inner sep=1pt]
+    at (P) {$\alpha_1$};
+    \node[above, blue!85!black] at (2.25,0.69) {$C_1$};
+    \node[below, teal!80!black] at (1.9,-0.94) {$C_2$};
+    \node[above, orange!85!black] at (1.35,0.04) {$\ell_1$};
+    \node[below=3pt] at (2,0) {$2\pi$};
+    \node[above right=2pt] at (3,0) {$3\pi$};
+  \end{tikzpicture}
+  \caption{$k=1$のときの2曲線の共有点と接線の配置例}
+\end{figure}
+
 \textbf{(2)} $h(x)=g(x)-\dfrac{1-x^2}{1+x^2}$とおく．
 \begin{align}
   h(x)&=-\dfrac{2\alpha_k}{\alpha_k^2+1}x+1-\dfrac{1-x^2}{1+x^2}\\
@@ -58,6 +86,7 @@ $2k\pi\le x,\alpha_k\le(2k+1)\pi$（$k\ge1$）では$x>0$，$\alpha_kx-1>0$だ�
       \hline
       $Y$ & $1$ & $\nearrow$ & & $\searrow$ & $-1$ \\
     \end{tabular}
+    \caption{接線の切片$Y(t)$の増減表}
   \end{table}
 \end{center}
 
