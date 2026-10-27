@@ -21,18 +21,22 @@
     \]
     と書ける. この時, $\alpha \le m \le \alpha + 1$, $\beta \le n \le \beta + 1$ をみたす $m, n \in \mathbb{Z}$ が必ず存在するから, $(m, n)$ は正方形内部にある. 従って, 常に少なくとも1つの格子点を含む.
 
-    \begin{center}
-      \begin{figure}[htb]
-        \centering
-        \begin{tikzpicture}[scale=0.8]
-          \draw[step=1cm,gray!40,very thin] (-0.5,-0.5) grid (3.5,3.5);
-          \draw[thick] (0.7,0.7) rectangle (1.7,1.7);
-          \foreach \x in {0,1,2,3}
-          \foreach \y in {0,1,2,3}
-          \fill (\x,\y) circle (2pt);
-        \end{tikzpicture}
-      \end{figure}
-    \end{center}
+    \begin{figure}[htb]
+      \centering
+      \begin{tikzpicture}[scale=0.95]
+        \draw[step=1cm, gray!45, thin] (-0.3,-0.3) grid (2.3,2.3);
+        \fill[blue!10] (1.47,0.48) rectangle (2.47,1.48);
+        \draw[blue!75!black, very thick] (1.47,0.48) rectangle (2.47,1.48);
+        \foreach \x in {0,1,2} {
+          \foreach \y in {0,1,2} {
+            \fill[gray!75] (\x,\y) circle (1.6pt);
+          }
+        }
+        \fill[red!75!black] (2,1) circle (2.2pt);
+      \end{tikzpicture}
+      \caption{座標軸に平行な一辺 $1$ の正方形は格子点を含む。}
+      \label{fig:1971_1_axis_aligned_square}
+    \end{figure}
 
   \item[(ii)] 1辺の長さ $\sqrt{2}$ の時.
 
@@ -40,33 +44,39 @@
 
     又, 1辺1の正方形の4頂点となるような4格子点をもってくる. その内部 $A$ 内の任意の点は少なくとも1つの格子点からの距離が $\dfrac{\sqrt{2}}{2}$ 以下だから (対角線の長さ $\sqrt{2}$), $\ast$ より, 辺の長さ $\sqrt{2}$ の正方形は少なくとも1つの格子点を持つ.
 
-    \begin{center}
-      \begin{figure}[htb]
-        \centering
-        \begin{tikzpicture}[scale=1.5]
-          % Square of side \sqrt{2} containing circle of radius 1/2
-          \begin{scope}[shift={(0,0)}]
-            \draw[thick] (-0.707,-0.707) rectangle (0.707,0.707);
-            \draw (0,0) circle (0.5);
-            \fill (0,0) circle (1.5pt);
-            \draw[<->] (0,0) -- (0.5,0) node[midway,above,font=\small]{$\frac{1}{2}$};
-            \node at (0.9,0.7) {\small 1辺 $\sqrt{2}$};
+    \begin{figure}[htb]
+      \centering
+      \begin{tikzpicture}[scale=1.5, >=stealth]
+        \begin{scope}
+          % Every orientation contains the same inscribed circle.
+          \begin{scope}[rotate=18]
+            \fill[blue!8] (-0.7071,-0.7071) rectangle (0.7071,0.7071);
+            \draw[blue!75!black, very thick] (-0.7071,-0.7071) rectangle (0.7071,0.7071);
           \end{scope}
+          \draw[teal!75!black, thick] (0,0) circle (0.7071);
+          \fill[red!75!black] (0,0) circle (1.6pt);
+          \node[below] at (0,-0.92) {一辺 $\sqrt{2}$};
+        \end{scope}
 
-          % Grid square of side 1 with region A
-          \begin{scope}[shift={(3.5,-0.5)}]
-            \draw[thick] (0,0) node[below left]{} -- (1,0) node[below right]{} -- (1,1) node[above right]{} -- (0,1) node[above left]{} -- cycle;
-            \fill (0,0) circle (1.5pt);
-            \fill (1,0) circle (1.5pt);
-            \fill (1,1) circle (1.5pt);
-            \fill (0,1) circle (1.5pt);
-            \node at (0.5,0.5) {$A$};
-            \node[right] at (1,0.5) {\small $\frac{\sqrt{2}}{2}$};
-            \draw[dashed] (0.5,0.5) -- (1,1);
-          \end{scope}
-        \end{tikzpicture}
-      \end{figure}
-    \end{center}
+        \begin{scope}[shift={(3.05,-0.5)}]
+          \fill[gray!8] (0,0) rectangle (1,1);
+          \draw[gray!75, thick] (0,0) rectangle (1,1);
+          \foreach \x in {0,1} {
+            \foreach \y in {0,1} {
+              \fill[blue!75!black] (\x,\y) circle (1.7pt);
+            }
+          }
+          \coordinate (A) at (0.5,0.5);
+          \fill[red!75!black] (A) circle (1.6pt);
+          \draw[red!75!black, dashed] (A) -- (1,1);
+          \node[below left] at (A) {$A$};
+          \node[right] at (0.77,0.76) {$\frac{\sqrt{2}}{2}$};
+          \node[below] at (0.5,-0.18) {単位正方形};
+        \end{scope}
+      \end{tikzpicture}
+      \caption{一辺 $\sqrt{2}$ の正方形の内接円と，単位正方形の中心から頂点までの距離。}
+      \label{fig:1971_1_inscribed_circle}
+    \end{figure}
 
     \noindent
     [\textbf{別}] (i)をつかうとお手軽. 径1の円に外接する座標軸に平行な辺を持つ正方形をもってきてもOK.
