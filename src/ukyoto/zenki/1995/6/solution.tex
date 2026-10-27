@@ -13,28 +13,33 @@
   &= \pi f(h)^2 \cdots \text{\textcircled{2}}
 \end{align}
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}
-      \draw[->] (-2.5, 0) -- (2.5, 0) node[right] {$x$};
-      \draw[->] (0, -0.5) -- (0, 3.5) node[above] {$y$};
-
-      \draw[domain=0:2.8, variable=\y, smooth] plot ({0.7*exp(\y/3)}, \y) node[right] {$x=f(y)$};
-      \draw[domain=0:2.8, variable=\y, smooth] plot ({-0.7*exp(\y/3)}, \y);
-
-      \draw (0,0) ellipse (0.7 and 0.15);
-      \node[below right] at (0.7,0) {$a$};
-
-      \draw (0, 1.8) ellipse ({0.7*exp(1.8/3)} and 0.25);
-      \fill[pattern=horizontal lines, pattern color=gray!80] (0, 1.8) ellipse ({0.7*exp(1.8/3)} and 0.25);
-
-      \draw[<-] (0, 1.8) -- (0.8, 1.8) node[right] {$h$};
-      \draw[<-] (0, 1.0) -- (0.5, 1.0) node[right] {$h'$};
-      \draw[dashed] ({-0.7*exp(1.0/3)}, 1.0) -- ({0.7*exp(1.0/3)}, 1.0);
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.15,>=stealth]
+    % 図示用に a=0.7，容器の高さ h=2.4，水深 h'=1.25 とする。
+    \fill[teal!13]
+    plot[domain=0:1.25,samples=40] ({-0.7*exp(\x/2)},\x)
+    -- plot[domain=1.25:0,samples=40] ({0.7*exp(\x/2)},\x) -- cycle;
+    \draw[->,gray!75] (-3.1,0)--(3.1,0) node[right] {$x$};
+    \draw[->,gray!75] (0,-0.35)--(0,2.9) node[above] {$y$};
+    \draw[blue!75!black,very thick,domain=0:2.4,samples=80]
+    plot ({0.7*exp(\x/2)},\x)
+    plot ({-0.7*exp(\x/2)},\x);
+    \draw[blue!75!black,thick] (0,2.4) ellipse[x radius=2.324,y radius=0.22];
+    \draw[dashed,gray!65] (0,0) ellipse[x radius=0.7,y radius=0.12];
+    \draw[blue!75!black,thick] (0.7,0)
+    arc[start angle=0,end angle=180,x radius=0.7,y radius=0.12];
+    \fill[teal!19] (0,1.25) ellipse[x radius=1.307,y radius=0.17];
+    \draw[teal!70!black,thick] (0,1.25) ellipse[x radius=1.307,y radius=0.17];
+    \draw[<->,gray!75] (-2.72,0)--(-2.72,2.4)
+    node[midway,left] {$h$};
+    \draw[<->,teal!70!black] (2.65,0)--(2.65,1.25)
+    node[midway,right] {$h'$};
+    \node[below right] at (0.7,0) {$a$};
+    \node[blue!75!black,right] at (2.15,1.85) {$x=f(y)$};
+  \end{tikzpicture}
+  \caption{底面半径 $a$，高さ $h$ の容器と時刻 $t$ の水深 $h'$}
+\end{figure}
 
 \textcircled{2} と $f(y) > 0$ から
 \[
