@@ -17,18 +17,31 @@ $f(x)=x^3+3ax^2+3bx$とおき，$A:y=f(x)$，$B:y=c$とする．$f'(x)=3x^2+6ax+
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.3, >=stealth]
-    \draw[->] (-3.6,0) -- (3.6,0) node[right] {\scriptsize $x$};
-    \draw[->] (0,-2.2) -- (0,2.6) node[above] {\scriptsize $y$};
-    \draw[thick, domain=-3.3:3.3, smooth, variable=\x] plot ({\x},{(\x*\x*\x-3*\x)/6});
-    \draw[gray] (-3.3,0.4) -- (3.3,0.4) node[right] {\scriptsize $B:y=c$};
-    \node[above] at (2.2,1.9) {\scriptsize $A:y=f(x)$};
-    \foreach \p/\lab/\posn in {-2.8/{$\frac{3\alpha-\beta}{2}$}/below, -1.7/{$\alpha$}/below, 0/{$\frac{\alpha+\beta}{2}$}/below, 1.7/{$\beta$}/below, 2.8/{$\frac{3\beta-\alpha}{2}$}/below} {
-      \draw[gray, dashed] (\p,-1.6) -- (\p,1.9);
-      \node[\posn] at (\p,-1.7) {\scriptsize \lab};
-    }
+  % 図示用の具体例 a=0, b=-1, c=0.4．極値は alpha=-1, beta=1．
+  \begin{tikzpicture}[x=1.65cm, y=0.82cm, >=stealth, every node/.style={font=\small}]
+    \begin{scope}
+      \clip (-2.32,-3.1) rectangle (2.38,3.15);
+      \draw[line width=1.4pt, blue!85!black, domain=-2.3:2.3, samples=120]
+      plot (\x,{\x*\x*\x-3*\x});
+    \end{scope}
+    \draw[orange!85!black, line width=1.1pt] (-2.25,0.4) -- (2.3,0.4)
+    node[right] {$B:y=c$};
+    \foreach \p in {-2,-1,1,2}
+    \draw[dashed, gray!60] (\p,-2.45) -- (\p,2.45);
+    \draw[->, thick, gray!80!black] (-2.35,0) -- (2.43,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-3.1) -- (0,3.2) node[above] {$y$};
+    \fill[blue!85!black] (-1,2) circle (1.4pt) (1,-2) circle (1.4pt);
+    \node[above=3pt, blue!85!black, font=\footnotesize] at (-1,2) {極大};
+    \node[below=3pt, blue!85!black, font=\footnotesize] at (1,-2) {極小};
+    \node[above left=2pt, blue!85!black] at (2.08,2.53) {$A:y=f(x)$};
+    \node[below=11pt, font=\footnotesize] at (-2,0) {$\frac{3\alpha-\beta}{2}$};
+    \node[below=3pt, font=\footnotesize] at (-1,0) {$\alpha$};
+    \node[below=12pt, fill=white, inner sep=1pt, font=\footnotesize]
+    at (0,0) {$\frac{\alpha+\beta}{2}$};
+    \node[below=3pt, font=\footnotesize] at (1,0) {$\beta$};
+    \node[below=11pt, font=\footnotesize] at (2,0) {$\frac{3\beta-\alpha}{2}$};
   \end{tikzpicture}
-  \caption{$y=f(x)$と$y=c$のグラフ概形}
+  \caption{$y=f(x)$と$y=c$の3交点および極値の位置関係（$a=0$, $b=-1$, $c=0.4$の例）}
 \end{figure}
 
 $f$は$x<\alpha$で増加，$\alpha<x<\beta$で減少，$x>\beta$で増加し，$x=\alpha$で極大，$x=\beta$で極小となる．$A,B$が相異なる3交点を持つとき，$c$は極小値と極大値の間にあるから，3交点の$x$座標を$x_1<x_2<x_3$とすると$x_1<\alpha<x_2<\beta<x_3$である．
