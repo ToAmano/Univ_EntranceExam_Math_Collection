@@ -1,4 +1,3 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
@@ -25,20 +24,28 @@ $$ T(n) \ge \sum_{k=1}^n \dfrac{k^2}{k^2+1} = \sum_{k=1}^n \left( 1 - \dfrac{1}{
 ここで，$y = \dfrac{1}{x^2+1}$ のグラフから，面積比較して，
 $$ \sum_{k=1}^n \dfrac{1}{k^2+1} \le \dfrac{1}{2} + \int_1^n \dfrac{1}{x^2+1} dx $$
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}
-      \draw[->] (-1,0) -- (4,0) node[right]{$x$};
-      \draw[->] (0,-0.5) -- (0,2) node[above]{$y$};
-      \draw[domain=0:3, smooth] plot (\x, {1.5/(\x*\x+1)});
-      \draw (0,1.5) node[left]{$1$};
-      \node at (1.5, 1) {$y = \frac{1}{x^2+1}$};
-      \draw (2,0) rectangle (2.5, {1.5/(2*2+1)});
-      \draw (2,0) node[below]{$n$};
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[htb]
+  \centering
+  % n=5 の場合．各長方形は右端 x=k における関数値を高さに持つ．
+  \begin{tikzpicture}[x=1.05cm, y=3cm, >=stealth, every node/.style={font=\small}]
+    \foreach \k in {2,...,5} {
+      \pgfmathsetmacro{\h}{1/(\k*\k+1)}
+      \fill[teal!15] (\k-1,0) rectangle (\k,\h);
+      \draw[teal!70!black, thin] (\k-1,0) rectangle (\k,\h);
+    }
+    \draw[->, thick, gray!80!black] (-0.2,0) -- (5.9,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.08) -- (0,1.13) node[above] {$y$};
+    \draw[line width=1.4pt, blue!85!black, domain=0:5.5, samples=100] plot (\x,{1/(\x*\x+1)});
+    \foreach \k in {1,2} {
+      \draw[gray!70] (\k,0.02) -- (\k,-0.02);
+      \node[below=3pt, font=\footnotesize] at (\k,0) {$\k$};
+    }
+    \node[left=2pt, font=\footnotesize] at (0,1) {$1$};
+    \node[above right=2pt, blue!85!black] at (1.3,0.37) {$y=\frac{1}{x^2+1}$};
+    \node[below=3pt, font=\footnotesize] at (5,0) {$n=5$};
+  \end{tikzpicture}
+  \caption{減少する関数と右端を高さにとった長方形の面積比較（図は$n=5$）}
+\end{figure}
 
 $\tan \alpha_n = n$ なる $\alpha_n$ を定めると $(0 \le \alpha_n < \pi/2)$
 $$ \sum_{k=1}^n \dfrac{1}{k^2+1} \le \dfrac{1}{2} + \alpha_n - \pi/4 $$
