@@ -2,44 +2,55 @@
 \begin{document}
 
 \noindent
-{\bf [解1]} 以下 $t = \cos\theta, s = \sin\theta$ とする. $P$ の座標は $P(at, bs, c+1)$ とおける. この $P$ からの光が与える影は, 四角形であり, $A(a,b), B(a,-b), C(-a,b), D(-a,-b)$ とおき, $PA, PB, \dots, PD$ と $xy$ 平面の交点を $A', B', C', D'$ とおく. 四角形 $A'B'C'D'$ になる. 相似から $K = A, B, C, D$ に対して
-\[
-  \vec{PK'} = (c+1)\vec{PK}
-\]
-となり,
-\[
-  \vec{PA'} = (c+1)
+{\bf [解]}
+
+% TODO: 3d-tikzによる概要図
+
+点光源の座標は
+\begin{align}
+  P(a\cos\theta,b\sin\theta,c+1)
+\end{align}
+と書ける．
+
+また，$A(a,b), B(a,-b), C(-a,b), D(-a,-b)$ とおく．
+点$P$を固定した時，$PA, PB, PC, PD$と$xy$ 平面の交点を $A_{\theta}, B_{\theta}, C_{\theta}, D_{\theta}$ とおく．
+点 $P$ が四角形$ABCD$に遮られてできる影は四角形 $A_{\theta}B_{\theta}C_{\theta}D_{\theta}$ になる.
+
+相似から $K = A, B, C, D$ に対して
+\begin{align}
+  \vec{PK'} = (c+1)\vec{PK} \label{eq:1}
+\end{align}
+だから具体的な座標を代入して
+\begin{align}
+  \vec{PA_{\theta}} = (c+1)
   \begin{pmatrix} a - at \\ b - bs \\ c - (c+1)
   \end{pmatrix} = (c+1)
   \begin{pmatrix} a(1-t) \\ b(1-s) \\ -1
   \end{pmatrix}
-\]
-\[
-  \vec{PB'} = (c+1)
+\end{align}
+および
+\begin{align}
+  \vec{PB_{\theta}} = (c+1)
   \begin{pmatrix} a(1-t) \\ -b(1+s) \\ -1
-  \end{pmatrix}, \quad \vec{PC'} = (c+1)
+  \end{pmatrix}, \quad
+  \vec{PC_{\theta}} = (c+1)
   \begin{pmatrix} -a(1+t) \\ b(1-s) \\ -1
-  \end{pmatrix}, \quad \vec{PD'} = (c+1)
+  \end{pmatrix}, \quad
+  \vec{PD_{\theta}} = (c+1)
   \begin{pmatrix} -a(1+t) \\ -b(1+s) \\ -1
   \end{pmatrix}
-\]
-となり
-\[
-  A'\big( a(c+1) - act, b(c+1) - bcs, 0 \big), \quad C'\big( -a(c+1) - act, b(c+1) - bcs, 0 \big)
-\]
-\[
-  B'\big( a(c+1) - act, -b(c+1) - bcs, 0 \big), \quad D'\big( -a(c+1) - act, -b(c+1) - bcs, 0 \big)
-\]
-だから, $\theta$ を固定した時の影は右図斜線部. ただし $E(-act, -bcs, 0)$ とした. $\theta$ をうごかすと, $E$ は, 楕円
-\[
-  \dfrac{x^2}{a^2} + \dfrac{y^2}{b^2} = c^2, \quad z=0
-\]
-の上をきれ目なく動くから, 影の通過領域は右下図斜線部. この面積 $T$ は，楕円，中央の長方形，周囲の長方形に分けて，
-\begin{align}
-  T & = abc^2 \pi + 4ab(c+1)^2 + 2 \cdot ac \cdot 2b(c+1) + 2 \cdot bc \cdot 2a(c+1) \\
-  & = \big( \pi c^2 + 4(c+1)(3c+1) \big) ab
 \end{align}
+となり，各$K_{\theta}$の座標は
+\begin{align}
+  A_{\theta}\big( a(c+1) - act, b(c+1) - bcs, 0 \big), \quad
+  C_{\theta}\big( -a(c+1) - act, b(c+1) - bcs, 0 \big) \\
+  B_{\theta}\big( a(c+1) - act, -b(c+1) - bcs, 0 \big), \quad
+  D_{\theta}\big( -a(c+1) - act, -b(c+1) - bcs, 0 \big)
+\end{align}
+である．
 
+% TODO: 四角形A_tB_tC_tD_tの図
+% TODO
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}[scale=0.8, >=stealth]
@@ -96,6 +107,15 @@
   \label{fig:1}
 \end{figure}
 
+従って $\theta$ を固定した時の影は上図図斜線部になる．
+ここで四角形の中身を $E_{\theta}(-act, -bcs, 0)$ とした.
+$\theta$ をうごかすと, $E$ は, 楕円
+\begin{align}
+  \dfrac{x^2}{a^2} + \dfrac{y^2}{b^2} = c^2, \quad z=0
+\end{align}
+の上をくまなく動くから, 影の通過領域は下図斜線部となる.
+
+% TODO: 影が通過する領域
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}[scale=0.75, >=stealth]
@@ -139,34 +159,43 @@
   \label{fig:2}
 \end{figure}
 
-\bigskip
+この面積 $T$ は，四隅の楕円，中央の長方形，周囲の長方形に分けて，
+\begin{align}
+  T & = abc^2 \pi + 4ab(c+1)^2 + 2 \cdot ac \cdot 2b(c+1) + 2 \cdot bc \cdot 2a(c+1) \\
+  & = \big( \pi c^2 + 4(c+1)(3c+1) \big) ab
+\end{align}
+である．
 
-\noindent
-{\bf [解2]} ($\theta$ において $P$ の座標を仮定した後)
+{\bf [別解]}
 
-\noindent
-点 $Q(X, Y, 0)$ が領域内の点だとすると, 直線 $PQ$ と長方形の板が共有点を持つ.
-\[
+$P$の座標を設定した後は，点$Q$が領域内の点だとして$PQ$が板と共有点を持つ条件を考えても良い．
+
+領域内の点を $Q(X, Y, 0)$ とおくと
+\begin{align}
   \vec{PQ} =
   \begin{pmatrix} X \\ Y \\ 0
   \end{pmatrix} -
   \begin{pmatrix} at \\ bs \\ c+1
   \end{pmatrix}
-\]
+\end{align}
 だから, $PQ$ 上の点 $R$ は,
-\[
+\begin{align}
   \vec{OR} =
   \begin{pmatrix} X \\ Y \\ 0
-  \end{pmatrix} + d
+  \end{pmatrix} + \alpha
   \begin{pmatrix} -X + at \\ -Y + bs \\ c+1
   \end{pmatrix}
-\]
-で表されるから, $z=c$ の時, $d = \dfrac{c}{c+1}$ ($\equiv d_0$) として,
-\[
+\end{align}
+で表される．$R$は$z=c$だからこれを代入すると
+\begin{align}
+  \alpha = \dfrac{c}{c+1} \equiv \alpha_0
+\end{align}
+として，$R$の座標は
+\begin{align}
   R\Big( (1-d_0)X + a d_0 t, (1-d_0)Y + b d_0 s, c \Big)
-\]
-である. これが長方形内部なら良いので, $1-d_0 = \dfrac{1}{c+1}$, $a, b > 0$ に注意して,
-\[
+\end{align}
+である. これが長方形内部なら良いので, $1-d_0 = \dfrac{1}{c+1}$, $a, b > 0$ に注意して求める条件は
+\begin{align}
   \begin{cases}
     \left| \dfrac{1}{c+1} X + a d_0 t \right| \le a \\[10pt]
     \left| \dfrac{1}{c+1} Y + b d_0 s \right| \le b
@@ -176,10 +205,11 @@
     -a d_0 t - a \le \dfrac{1}{c+1} X \le -a d_0 t + a \\[10pt]
     -b d_0 s - b \le \dfrac{1}{c+1} Y \le -b d_0 s + b
   \end{cases}
-  \quad \dots \phi
-\]
-$\phi$ を図示すると, 右図斜線部である. ただし, $x = \dfrac{X}{c+1}, y = \dfrac{Y}{c+1}$ とした. したがって $\phi$ を動かせば [解1] と同様の領域をえがくことが出来る.
+\end{align}
+である．これは$\theta$を固定した時，下図のような長方形になる．
+よって$\theta$を動かせば[解答]と同様の領域を描ける．
 
+% TODO: upgrade
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}[scale=0.7, >=stealth]

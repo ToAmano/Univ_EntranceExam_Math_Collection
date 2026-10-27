@@ -1,75 +1,133 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-{\bf [解1]}
+{\bf [解]}
 
 \paragraph{(1)}
-数学的帰納法で示す．$n=1$のときは$p_1(x)=x$，$q_1(x)=1$とすればよい．
 
-$n=k$での成立を仮定する（$k\in\mathbb{N}$）．加法定理より，
+与えられた関係式
+\begin{align}
+  \begin{cases}
+    \sin n\theta=p_n(\tan\theta)\cos^n\theta \\
+    \cos n\theta=q_n(\tan\theta)\cos^n\theta
+  \end{cases} \label{eq:1}
+\end{align}
+を満たす$p_n(x),q_n(x)$を数学的帰納法で示す．
+
+$n=1$のとき，\cref{eq:1}は
+\begin{align}
+  \begin{cases}
+    \sin \theta = p_1(\tan\theta)\cos\theta \\
+    \cos \theta = q_1(\tan\theta)\cos\theta
+  \end{cases}
+\end{align}
+だから，
+\begin{align}
+  p_1(x)=x, q_1(x)=1 \label{eq:2}
+\end{align}
+とすれば良い．
+
+そこで$n=k \ (k\in\mathbb{N})$での成立を仮定して$n=k+1$での成立を示す．
+加法定理より，
 \begin{align}
   \sin(k+1)\theta
   &=\sin k\theta\cos\theta+\cos k\theta\sin\theta\\
-  &=p_k(\tan\theta)\cos^{k+1}\theta
-  +q_k(\tan\theta)\cos^k\theta\sin\theta\\
-  &=\bigl\{p_k(\tan\theta)+\tan\theta\,q_k(\tan\theta)\bigr\}
-  \cos^{k+1}\theta,\\
+  &=p_k(\tan\theta)\cos^{k+1}\theta +q_k(\tan\theta)\cos^k\theta\sin\theta\\
+  &=\bigl\{p_k(\tan\theta)+\tan\theta\,q_k(\tan\theta)\bigr\} \cos^{k+1}\theta \\
   \cos(k+1)\theta
   &=\cos k\theta\cos\theta-\sin k\theta\sin\theta\\
-  &=\bigl\{q_k(\tan\theta)-\tan\theta\,p_k(\tan\theta)\bigr\}
-  \cos^{k+1}\theta.
+  &=\bigl\{q_k(\tan\theta)-\tan\theta\,p_k(\tan\theta)\bigr\}\cos^{k+1}\theta
 \end{align}
-したがって，
+だから，
 \begin{align}
-  p_{k+1}(x)&=p_k(x)+xq_k(x),\nonumber\\
-  q_{k+1}(x)&=q_k(x)-xp_k(x)\label{eq:1}
+  \begin{cases}
+    p_{k+1}(x)=p_k(x)+xq_k(x)\\
+    q_{k+1}(x)=q_k(x)-xp_k(x)
+  \end{cases} \label{eq:3}
 \end{align}
-とすれば$n=k+1$でも成立する．よって帰納法により題意は示された．
+とすれば$n=k+1$でも成立する．
+よって数学的帰納法により題意は示された．
 
 \paragraph{(2)}
-$k=1$として，$p_2(x)=2x$，$q_2(x)=1-x^2$だから，
+
+題意の関係式
 \begin{align}
-  p_2'(x)=2=2q_1(x),\qquad q_2'(x)=-2x=-2p_1(x)
+  \begin{cases}
+    {p_n}'(x)=nq_{n-1}(x) \\
+    {q_n}'(x)=-np_{n-1}(x)
+  \end{cases} \label{eq:4}
 \end{align}
-となり，$n=2$では題意が成立する．$n=k$での成立を仮定する（$k\geqq2$）．\eqref{eq:1}より，
+を数学的帰納法で示す．
+
+\cref{eq:3}で$k=1$として，両辺を$x$で微分すると
+\begin{align}
+  \begin{cases}
+    p'_2(x) = p'_1(x) + q_1(x) + xq'_1(x) \\
+    q'_2(x) = q'_1(x) - p_1(x) - xp'_1(x)
+  \end{cases} \label{eq:5}
+\end{align}
+であり，\cref{eq:2}を代入すると
+\begin{align}
+  \begin{cases}
+    p'_2(x) = 1 + 1 + 0 = 2  \\
+    q'_2(x) = 0 - x - x = -2x
+  \end{cases}
+  \therefore
+  \begin{cases}
+    p'_2(x) = 2q_1(x)  \\
+    q'_2(x) = -2p_1(x)
+  \end{cases}
+\end{align}
+である．よって$n=2$では\cref{eq:4}は成立する．
+
+そこで$n=k \ (k\geqq 2)$での成立を仮定する．
+\cref{eq:3}の両辺を$x$で微分して
 \begin{align}
   p_{k+1}'(x)
   &=p_k'(x)+q_k(x)+xq_k'(x)\\
   &=k\bigl(q_{k-1}(x)-xp_{k-1}(x)\bigr)+q_k(x)\\
-  &=(k+1)q_k(x),\\
+  &=(k+1)q_k(x) \quad (\because\text{\cref{eq:3}}),\\
   q_{k+1}'(x)
   &=q_k'(x)-p_k(x)-xp_k'(x)\\
   &=-k\bigl(p_{k-1}(x)+xq_{k-1}(x)\bigr)-p_k(x)\\
-  &=-(k+1)p_k(x).
+  &=-(k+1)p_k(x) \quad (\because\text{\cref{eq:3}})
 \end{align}
-したがって$n=k+1$でも成立する．よって帰納法により題意は示された．
+である．したがって$n=k+1$でも\cref{eq:3}は成立する．
+よって帰納法により題意は示された．
 
-\bigskip\noindent
-{\bf [解2]}
+{\bf [別解]}
 
 \paragraph{(2)}
-$h_n(x)=q_n(x)+ip_n(x)$とおく．$h_1(x)=1+ix$であり，\eqref{eq:1}から
+
+$h_n(x)=q_n(x)+ip_n(x)$とおくと\cref{eq:2}より$h_1(x)=1+ix$である．
+\cref{eq:2}から
 \begin{align}
   h_{n+1}(x)
-  &=\bigl(q_n(x)-xp_n(x)\bigr)
-  +i\bigl(p_n(x)+xq_n(x)\bigr)\\
-  &=(1+ix)h_n(x).
+  &=\bigl(q_n(x)-xp_n(x)\bigr) +i\bigl(p_n(x)+xq_n(x)\bigr)\\
+  &=(1+ix)h_n(x)
 \end{align}
-くり返し用いて，$h_n(x)=(1+ix)^n$を得る．したがって，
+だから，くり返し用いて，
 \begin{align}
-  p_n(x)&=\operatorname{Im}h_n(x)
-  =\dfrac{(1+ix)^n-(1-ix)^n}{2i},\\
-  q_n(x)&=\operatorname{Re}h_n(x)
-  =\dfrac{(1+ix)^n+(1-ix)^n}{2}.
+  h_n(x)=(1+ix)^n
 \end{align}
-両辺を微分して，
+を得る．したがって，
+\begin{align}
+  p_n(x)
+  &=\Im h_n(x)
+  =\dfrac{(1+ix)^n-(1-ix)^n}{2i},\\
+  q_n(x)
+  &=\Re h_n(x)
+  =\dfrac{(1+ix)^n+(1-ix)^n}{2}
+\end{align}
+となる．
+両辺を$x$で微分して，
 \begin{align}
   p_n'(x)
   &=\dfrac{n}{2}\bigl\{(1+ix)^{n-1}+(1-ix)^{n-1}\bigr\}
   =nq_{n-1}(x),\\
   q_n'(x)
   &=\dfrac{ni}{2}\bigl\{(1+ix)^{n-1}-(1-ix)^{n-1}\bigr\}
-  =-np_{n-1}(x).
+  =-np_{n-1}(x)
 \end{align}
 を得る．
 
