@@ -21,18 +21,44 @@ $1<a<2$より負号の場合は$b<0$となるので不適．したがって
   b=\dfrac{a+\sqrt{12-3a^2}}{2}.
 \end{align}
 \begin{figure}[H]
-  \begin{center}
-    \begin{tikzpicture}[scale=1.6]
-      \coordinate (O) at (0,0);\coordinate (B) at (210:1);\coordinate (C) at (330:1);\coordinate (A) at (95:1);
-      \draw (A)--(B) node[midway,left]{$a$}--(C) node[midway,below]{$\sqrt{3}$}--(A) node[midway,right]{$b$};
-      \draw[dashed] (O)--(B) (O)--(C);\node[above right] at (O){O};\node[above] at (A){A};\node[left] at (B){B};\node[right] at (C){C};
-      \begin{scope}[xshift=3.3cm]
-        \draw (0,0) circle (1);\draw (95:1)--(210:1)--(330:1)--cycle;\draw[dashed] (270:1)--(210:1) (270:1)--(330:1);
-        \node[above] at (95:1){A};\node[below] at (270:1){$\mathrm{A}'$};\node[left] at (210:1){B};\node[right] at (330:1){C};\fill (0,0) circle (.5pt) node[right]{O};
-      \end{scope}
-    \end{tikzpicture}
-  \end{center}
-  \caption{三角形ABCの外心と円周角}
+  \centering
+  \begin{tikzpicture}[scale=1.55, >=stealth, every node/.style={font=\small}]
+    % 左：鋭角三角形，右：短い弧 BC 上の A' では角 BA'C が鈍角となる．
+    \begin{scope}
+      \coordinate (O) at (0,0);
+      \coordinate (A) at (95:1.15);
+      \coordinate (B) at (210:1.15);
+      \coordinate (C) at (330:1.15);
+      \fill[blue!12] (A)--(B)--(C)--cycle;
+      \draw[dashed, gray!65, line width=0.9pt] (O)--(B) (O)--(C);
+      \draw[blue!85!black, line width=1.3pt] (A)--(B)
+      node[midway, left=3pt] {$a$}
+      --(C) node[midway, below=3pt] {$\sqrt{3}$}
+      --(A) node[midway, right=3pt] {$b$};
+      \fill[red!85!black] (O) circle (1.3pt) node[above right=2pt] {$O$};
+      \foreach \point/\position in {A/above,B/below left,C/below right} {
+        \fill[blue!85!black] (\point) circle (1.3pt) node[\position=2pt] {$\point$};
+      }
+    \end{scope}
+    \begin{scope}[xshift=4.4cm]
+      \coordinate (O2) at (0,0);
+      \coordinate (A2) at (250:1.15);
+      \coordinate (B2) at (140:1.15);
+      \coordinate (C2) at (20:1.15);
+      \coordinate (Aprime) at (80:1.15);
+      \draw[gray!65, line width=0.9pt] (O2) circle (1.15);
+      \fill[blue!12] (A2)--(B2)--(C2)--cycle;
+      \draw[blue!85!black, line width=1.3pt] (A2)--(B2)--(C2)--cycle;
+      \draw[dashed, teal!85!black, line width=1pt] (B2)--(Aprime)--(C2);
+      \draw[dashed, gray!65, line width=0.8pt] (O2)--(B2) (O2)--(C2);
+      \fill[red!85!black] (O2) circle (1.3pt) node[below=2pt] {$O$};
+      \foreach \point/\position/\name in {
+      A2/below/$A$, B2/above left/$B$, C2/right/$C$, Aprime/above/$A'$} {
+        \fill[blue!85!black] (\point) circle (1.3pt) node[\position=2pt] {\name};
+      }
+    \end{scope}
+  \end{tikzpicture}
+  \caption{鋭角三角形$ABC$の外心$O$と円周角の位置関係}
 \end{figure}
 
 \end{document}
