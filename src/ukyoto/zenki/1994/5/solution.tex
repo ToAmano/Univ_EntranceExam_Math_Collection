@@ -10,36 +10,39 @@
 
 \paragraph{(1)}
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=1]
-      \node at (0, 2.5) {$n$回目};
-      \node at (3, 2.5) {$n+1$回目};
-
-      \node (an) at (0, 1.5) {$a_n$};
-      \node (bn) at (0, 0.5) {$b_n$};
-      \node (cn) at (0, -0.5) {$c_n$};
-
-      \node (an1) at (3, 1.5) {$a_{n+1}$};
-      \node (bn1) at (3, 0.5) {$b_{n+1}$};
-      \node (cn1) at (3, -0.5) {$c_{n+1}$};
-
-      \draw[->] (an) -- (bn1) node[midway, above left] {$\frac{1}{3}$};
-      \draw[->] (an) -- (cn1) node[midway, above left] {$\frac{2}{3}$};
-
-      \draw[->] (bn) -- (an1) node[midway, below] {$\frac{1}{3}$};
-      \draw[->] (bn) -- (bn1) node[midway, above] {$\frac{2}{3}$};
-
-      \draw[->] (cn) -- (an1) node[midway, below right] {$\frac{2}{3}$};
-      \draw[->] (cn) -- (cn1) node[midway, below] {$\frac{1}{3}$};
-
-      \node at (-1.5, 1.5) {Aが赤};
-      \node at (-1.5, 0.5) {Bが赤};
-      \node at (-1.5, -0.5) {Cが赤};
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[x=1.2cm,y=1cm,>=stealth,
+    every node/.style={font=\small}]
+    \node[gray!75] at (0,3.55) {$n$ 回目};
+    \node[gray!75] at (3,3.55) {$n+1$ 回目};
+    \begin{scope}[yshift=2.3cm]
+      \node[draw=blue!75!black,rounded corners,fill=blue!7] (a0) at (0,0) {$a_n$};
+      \node[draw=teal!70!black,rounded corners,fill=teal!7] (ab) at (3,0.55) {$b_{n+1}$};
+      \node[draw=orange!85!black,rounded corners,fill=orange!7] (ac) at (3,-0.55) {$c_{n+1}$};
+      \draw[->,blue!75!black,thick] (a0.east)--(ab.west) node[midway,above] {$1/3$};
+      \draw[->,blue!75!black,thick] (a0.east)--(ac.west) node[midway,below] {$2/3$};
+      \node[left] at (-0.42,0) {A が赤};
+    \end{scope}
+    \begin{scope}
+      \node[draw=teal!70!black,rounded corners,fill=teal!7] (b0) at (0,0) {$b_n$};
+      \node[draw=blue!75!black,rounded corners,fill=blue!7] (ba) at (3,0.55) {$a_{n+1}$};
+      \node[draw=teal!70!black,rounded corners,fill=teal!7] (bb) at (3,-0.55) {$b_{n+1}$};
+      \draw[->,teal!70!black,thick] (b0.east)--(ba.west) node[midway,above] {$1/3$};
+      \draw[->,teal!70!black,thick] (b0.east)--(bb.west) node[midway,below] {$2/3$};
+      \node[left] at (-0.42,0) {B が赤};
+    \end{scope}
+    \begin{scope}[yshift=-2.3cm]
+      \node[draw=orange!85!black,rounded corners,fill=orange!7] (c0) at (0,0) {$c_n$};
+      \node[draw=blue!75!black,rounded corners,fill=blue!7] (ca) at (3,0.55) {$a_{n+1}$};
+      \node[draw=orange!85!black,rounded corners,fill=orange!7] (cc) at (3,-0.55) {$c_{n+1}$};
+      \draw[->,orange!85!black,thick] (c0.east)--(ca.west) node[midway,above] {$2/3$};
+      \draw[->,orange!85!black,thick] (c0.east)--(cc.west) node[midway,below] {$1/3$};
+      \node[left] at (-0.42,0) {C が赤};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{赤い札を持つ人の，1回の交換による状態遷移}
+\end{figure}
 
 上図から
 \begin{align}
