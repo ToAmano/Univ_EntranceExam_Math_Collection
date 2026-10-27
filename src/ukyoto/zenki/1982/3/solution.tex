@@ -8,38 +8,51 @@
 
 [解] 原点$O$とし，点$X$の位置ベクトルを$\vec{x}$とする．
 
-\begin{minipage}{0.5\textwidth}
-  $$
+\[
   \begin{cases}
     \vec{a}_{n+1} = (\vec{b}_n + \vec{c}_n + \vec{d}_n) / 3 \\
     \vec{b}_{n+1} = (\vec{a}_n + \vec{c}_n + \vec{d}_n) / 3 \\
     \vec{c}_{n+1} = (\vec{a}_n + \vec{b}_n + \vec{d}_n) / 3 \quad \cdots \text{(1)} \\
     \vec{d}_{n+1} = (\vec{a}_n + \vec{b}_n + \vec{c}_n) / 3
-  \end{cases} $$
-  帰納的に
-  $\vec{a}_n + \vec{b}_n + \vec{c}_n + \vec{d}_n = \vec{a} + \vec{b} + \vec{c} + \vec{d} \cdots \text{(2)}$
-\end{minipage}
-\begin{minipage}{0.4\textwidth}
-  \begin{center}
-    \begin{figure}[htb]
-      \centering
-      \begin{tikzpicture}[scale=0.8]
-        \coordinate (A) at (0,0);
-        \coordinate (B) at (4,-0.2);
-        \coordinate (C) at (2.5,3);
-        \coordinate (D) at (1.5,1.5);
-        \draw (A) node[left] {$A$} -- (B) node[right] {$B$} -- (C) node[above] {$C$} -- cycle;
-        \draw[dashed] (A) -- (D) node[above right] {$D$};
-        \draw[dashed] (B) -- (D);
-        \draw[dashed] (C) -- (D);
-        \fill (2.5, 1.5) circle (1.5pt) node[right] {$A_1$};
-        \fill (1, 1) circle (1.5pt) node[left] {$B_1$};
-        \fill (2, 0.5) circle (1.5pt) node[below] {$C_1$};
-        \fill (2.8, 1) circle (1.5pt) node[right] {$D_1$};
-      \end{tikzpicture}
-    \end{figure}
-  \end{center}
-\end{minipage}
+  \end{cases}
+\]
+帰納的に
+$\vec{a}_n + \vec{b}_n + \vec{c}_n + \vec{d}_n = \vec{a} + \vec{b} + \vec{c} + \vec{d} \cdots \text{(2)}$
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.35cm, y=1.35cm,
+    every node/.style={font=\small}]
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (4,0);
+    \coordinate (C) at (3,3);
+    \coordinate (D) at (1,1.5);
+    % Each A_1,...,D_1 is the centroid of the opposite face.
+    \coordinate (Aone) at (2.66667,1.5);
+    \coordinate (Bone) at (1.33333,1.5);
+    \coordinate (Cone) at (1.66667,0.5);
+    \coordinate (Done) at (2.33333,1);
+    \coordinate (P) at (2,1.125);
+    \draw[dashed, gray!60] (D) -- (A) (D) -- (B) (D) -- (C);
+    \draw[line width=1.2pt, blue!85!black]
+    (A) -- (B) -- (C) -- cycle;
+    \foreach \U/\V in {A/Aone,B/Bone,C/Cone,D/Done} {
+      \draw[dashed, teal!75!black] (\U) -- (\V);
+      \fill[teal!75!black] (\V) circle (1.5pt);
+    }
+    \fill[red!85!black] (P) circle (1.8pt);
+    \node[below left=2pt] at (A) {$A$};
+    \node[below right=2pt] at (B) {$B$};
+    \node[above=2pt] at (C) {$C$};
+    \node[above left=2pt] at (D) {$D$};
+    \node[above right=2pt, teal!75!black] at (Aone) {$A_1$};
+    \node[left=2pt, teal!75!black] at (Bone) {$B_1$};
+    \node[below=2pt, teal!75!black] at (Cone) {$C_1$};
+    \node[right=2pt, teal!75!black] at (Done) {$D_1$};
+    \node[below left=2pt, red!85!black] at (P) {$P$};
+  \end{tikzpicture}
+  \caption{各面の重心へ引いた4本の線分の共通点 $P$}
+\end{figure}
 
 \paragraph{(1)}
 
