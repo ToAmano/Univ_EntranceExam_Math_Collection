@@ -1,22 +1,303 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解]}
 
-{\bf [解]} 対称性から，$y \ge 0$ で考える．以下
-$C: x = 0, \ z = \sin \theta \text{ を表す．} y = S \ (0 \le \theta \le \pi/2)$
-で，$D_1$ を切断すると $z = a, \ |x| \le c$ となる
-から，この部分を $y$ 軸まわりに回した時の
-根元形は右下図のようになる．このうち，
-$x \ge 0$ をみたす部分の面積 $S(\theta)$ は
+% TODO: 3d-tikzでのD_1,D_2の様子 (スケッチ上図の完全再現)
+% TODO: 3d-tikzでのD_1,D_2の様子 (回転軸補正 & y=s 切断平面追加版)
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[
+      x={(-0.85cm, -0.45cm)},
+      y={(1.35cm, -0.15cm)},
+      z={(0cm, 1.65cm)},
+      scale=1.45, >=stealth, every node/.style={font=\small}
+    ]
+
+    % パラメータ設定
+    \def\a{1.3}       % 円盤の高さ a
+    \def\sVal{0.45}   % 切断面 y = s (0 < s < 1)
+    \pgfmathsetmacro{\cVal}{sqrt(1.0 - \sVal*\sVal)} % 弦の半長 c = sqrt(1 - s^2) ≈ 0.893
+
+    % ============================================================
+    % 1. 座標軸 (奥側)
+    % ============================================================
+    \draw[thick, gray!70!black] (0, 0, -2.1) -- (0, 0, 0);
+    \draw[dashed, gray!50] (0, -1.8, 0) -- (0, 0, 0);
+    \draw[->, thick, gray!70!black] (0, 0, 0) -- (0, 2.3, 0) node[below right] {$y$};
+    \draw[->, thick, gray!70!black] (0, 0, 0) -- (0, 0, 2.3) node[above] {$z$};
+    \node[below left=2pt] at (0, 0, 0) {$O$};
+
+    % ============================================================
+    % 2. 円柱の骨格母線 (破線)
+    % ============================================================
+    \draw[dashed, gray!45, line width=0.8pt] (1, 0, -\a) -- (1, 0, \a);
+    \draw[dashed, gray!45, line width=0.8pt] (-1, 0, -\a) -- (-1, 0, \a);
+    \draw[dashed, gray!45, line width=0.8pt] (0, 1, -\a) -- (0, 1, \a);
+    \draw[dashed, gray!45, line width=0.8pt] (0, -1, -\a) -- (0, -1, \a);
+
+    % ============================================================
+    % 3. 平面 y = s (半透明の薄いオレンジ塗り)
+    % ============================================================
+    \fill[orange!20, opacity=0.55]
+    (-1.25, \sVal, -\a - 0.25) -- (1.25, \sVal, -\a - 0.25)
+    -- (1.25, \sVal, \a + 0.35) -- (-1.25, \sVal, \a + 0.35) -- cycle;
+    \draw[dashed, orange!80!black, line width=0.8pt]
+    (-1.25, \sVal, -\a - 0.25) -- (1.25, \sVal, -\a - 0.25)
+    -- (1.25, \sVal, \a + 0.35) -- (-1.25, \sVal, \a + 0.35) -- cycle;
+    \node[orange!90!black, font=\footnotesize\bfseries, above]
+    at (1.1, \sVal, \a + 0.35) {平面 $y = s$};
+
+    % y 軸上の目盛り s
+    \fill[black] (0, \sVal, 0) circle (1.1pt) node[below=2pt, font=\scriptsize] {$s$};
+
+    % ============================================================
+    % 4. 下の円盤 D_2: z = -a
+    % ============================================================
+    \fill[blue!10, opacity=0.6, domain=0:360, samples=60, variable=\t]
+    plot ({cos(\t)}, {sin(\t)}, {-\a});
+    \draw[line width=1.3pt, blue!85!black, domain=0:360, samples=60, variable=\t]
+    plot ({cos(\t)}, {sin(\t)}, {-\a});
+    \fill[black] (0, 0, -\a) circle (1.2pt) node[below right=1pt, font=\scriptsize] {$-a$};
+    \node[right=2pt, font=\footnotesize\bfseries, blue!90!black] at (0.8, 0.7, -\a) {$D_2$};
+
+    % D_2 と平面 y = s の交線（太い赤線）
+    \draw[line width=2.0pt, red!85!black]
+    (-\cVal, \sVal, -\a) -- (\cVal, \sVal, -\a);
+    \fill[red!85!black] (-\cVal, \sVal, -\a) circle (1.2pt);
+    \fill[red!85!black] (\cVal, \sVal, -\a)  circle (1.2pt);
+
+    % ============================================================
+    % 5. 上の円盤 D_1: z = a
+    % ============================================================
+    \fill[blue!10, opacity=0.6, domain=0:360, samples=60, variable=\t]
+    plot ({cos(\t)}, {sin(\t)}, {\a});
+    \draw[line width=1.3pt, blue!85!black, domain=0:360, samples=60, variable=\t]
+    plot ({cos(\t)}, {sin(\t)}, {\a});
+    \fill[black] (0, 0, \a) circle (1.2pt) node[above left=1pt, font=\scriptsize] {$a$};
+    \node[right=2pt, font=\footnotesize\bfseries, blue!90!black] at (0.8, 0.7, \a) {$D_1$};
+
+    % D_1 と平面 y = s の交線（太い赤線）
+    \draw[line width=2.0pt, red!85!black]
+    (-\cVal, \sVal, \a) -- (\cVal, \sVal, \a);
+    \fill[red!85!black] (-\cVal, \sVal, \a) circle (1.2pt);
+    \fill[red!85!black] (\cVal, \sVal, \a)  circle (1.2pt);
+    \node[red!90!black, font=\scriptsize\bfseries, right=2pt]
+    at (\cVal, \sVal, \a) {交線 $[-c, c]$};
+
+    % ============================================================
+    % 6. 座標軸 (手前側 x 軸)
+    % ============================================================
+    \draw[->, thick, gray!70!black] (0, 0, 0) -- (2.0, 0, 0) node[below left] {$x$};
+
+    % ============================================================
+    % 7. y 軸まわりの回転矢印 (y 軸の先端付近を z軸から x軸方向へ回す)
+    % ============================================================
+    % y 軸上の位置 y = 2.0 で、z 軸側 (t = 80°) から x 軸側 (t = 0°) へ回す
+    \def\yArrowPos{2.05}
+    \def\rRot{0.45}
+
+    \draw[->, line width=1.4pt, red!85!black, domain=85:5, samples=30, smooth, variable=\t]
+    plot ({\rRot*sin(\t)}, \yArrowPos, {\rRot*cos(\t)});
+
+    % 回転軸のラベル (y 軸の矢印の先に配置)
+    \node[red!90!black, font=\footnotesize\bfseries, above right=2pt]
+    at ({0.4*sin(50)}, \yArrowPos, {0.4*cos(50)}) {回転軸 $y$};
+
+  \end{tikzpicture}
+  \caption{空間内の2つの円盤 $D_1, D_2$，平面 $y=s$ による切断線分（赤線），および $y$ 軸まわりの回転}
+  \label{fig:two_disks_3d_overview_fixed}
+\end{figure}
+
+与えられた円盤
+\begin{align}
+  \begin{cases}
+    D_1: x^2+y^2 \le 1, z = a \\
+    D_2: x^2+y^2 \le 1, z = -a
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．以下簡単のため$c=\cos\theta,s=\sin\theta$と書く．
+
+\paragraph{(1)}
+
+% TODO: y = sでの2円盤の切断面（それぞれ線分）
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=2.2cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 定数設定 (スケッチの比率に合わせた幾何パラメータ)
+    % a = 1.0 (円盤の高さ)
+    % c = 0.9 (y = s での弦の半長 c = cos theta)
+    % 外半径 R = sqrt(a^2 + c^2) = sqrt(1.0 + 0.81) = 1.345
+    % ============================================================
+    \def\a{1.0}
+    \def\cVal{0.9}
+    \pgfmathsetmacro{\RVal}{sqrt(\a*\a + \cVal*\cVal)} % ≈ 1.345
+
+    % ============================================================
+    % 3. 座標軸 (切断面 y = s 内の xz 座標系)
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-1.6, 0) -- (1.75, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.6) -- (0, 1.7) node[above] {$z$};
+    \node[below left=2pt] at (0, 0) {$O$};
+    \node[above right=1pt, font=\footnotesize\bfseries, gray!70!black] at (0.9, 1.45) {$y = s$};
+
+    % ============================================================
+    % 4. 境界線の描画
+    % ============================================================
+
+    % 円盤の切断線分 [-c, c] (z = a および z = -a)
+    \draw[line width=1.3pt, gray!30!black] (-\cVal, \a) -- (\cVal, \a);
+    \draw[line width=1.3pt, gray!30!black] (-\cVal, -\a) -- (\cVal, -\a);
+
+    % 左側の境界垂直線 x = -c (破線)
+    \draw[dashed, gray!60, line width=0.8pt] (-\cVal, -\a) -- (-\cVal, \a);
+    \draw[dashed, gray!60, line width=0.8pt] (\cVal, -\a) -- (\cVal, \a);
+
+    % ============================================================
+    % 5. 動径線・補助破線 (スケッチ通り)
+    % ============================================================
+    \draw[dashed, gray!45] (0, 0) -- (\cVal, \a);
+    \draw[dashed, gray!45] (0, 0) -- (\cVal, -\a);
+    \draw[dashed, gray!45] (0, 0) -- (-\cVal, \a);
+    \draw[dashed, gray!45] (0, 0) -- (-\cVal, -\a);
+
+    % ============================================================
+    % 6. 目盛り・寸法ラベル (スケッチ完全準拠)
+    % ============================================================
+    % 特徴点のプロット
+    \fill[black] (\cVal, \a) circle (1.2pt);
+    \fill[black] (\cVal, -\a) circle (1.2pt);
+    \fill[black] (-\cVal, \a) circle (1.2pt);
+    \fill[black] (-\cVal, -\a) circle (1.2pt);
+
+    \node[above=2pt, font=\scriptsize] at (0, \a) {$a$};
+    \node[below=2pt, font=\scriptsize] at (0, -\a) {$-a$};
+    \node[below=2pt, font=\scriptsize] at (\cVal, 0) {$c$};
+    \node[below=2pt, font=\scriptsize] at (-\cVal, 0) {$-c$};
+
+  \end{tikzpicture}
+  \caption{平面 $y=s$ における円盤の切断線分}
+\end{figure}
+
+% TODO: y=sでの切断面 (スケッチ下図の完全再現)
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=2.2cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 定数設定 (スケッチの比率に合わせた幾何パラメータ)
+    % a = 1.0 (円盤の高さ)
+    % c = 0.9 (y = s での弦の半長 c = cos theta)
+    % 外半径 R = sqrt(a^2 + c^2) = sqrt(1.0 + 0.81) = 1.345
+    % ============================================================
+    \def\a{1.0}
+    \def\cVal{0.9}
+    \pgfmathsetmacro{\RVal}{sqrt(\a*\a + \cVal*\cVal)} % ≈ 1.345
+
+    % ============================================================
+    % 2. 領域の塗りつぶし (ハッチング)
+    % ============================================================
+    % 右側 (x >= 0): 半円環 S(theta) (斜線ハッチング)
+    \fill[pattern=north east lines, pattern color=blue!75, opacity=0.7]
+    (0, \a) arc (90:-90:\a) -- (0, -\RVal) arc (-90:90:\RVal) -- cycle;
+
+    % 左側 (x <= 0): T(theta) (手書きスケッチ通りの縦線ハッチング)
+    % 上部: y = s における D1 の線分 [-c, 0] と外側円弧の間
+    \fill[pattern=vertical lines, pattern color=teal!80, opacity=0.7]
+    (-\cVal, \a) -- (0, \a) arc (90:{180 - asin(\a/\RVal)}:\RVal) -- cycle;
+    % 下部: D2 の線分 [-c, 0] と外側円弧の間
+    \fill[pattern=vertical lines, pattern color=teal!80, opacity=0.7]
+    (-\cVal, -\a) -- (0, -\a) arc (-90:{-180 + asin(\a/\RVal)}:\RVal) -- cycle;
+
+    % ============================================================
+    % 3. 座標軸 (切断面 y = s 内の xz 座標系)
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-1.6, 0) -- (1.75, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.6) -- (0, 1.7) node[above] {$z$};
+    \node[below left=2pt] at (0, 0) {$O$};
+    \node[above right=1pt, font=\footnotesize\bfseries, gray!70!black] at (0.9, 1.45) {$y = s$};
+
+    % ============================================================
+    % 4. 境界線の描画
+    % ============================================================
+    % 右半面の外円弧 (半径 R = sqrt(a^2+c^2))
+    \draw[line width=1.4pt, blue!85!black] (0, \RVal) arc (90:-90:\RVal);
+    % 右半面の内円弧 (半径 a)
+    \draw[line width=1.3pt, blue!85!black] (0, \a) arc (90:-90:\a);
+
+    % 左半面の外円弧
+    \draw[line width=1.4pt, teal!85!black]
+    (0, \RVal) arc (90:{180 - asin(\a/\RVal)}:\RVal);
+    \draw[line width=1.4pt, teal!85!black]
+    (0, -\RVal) arc (-90:{-180 + asin(\a/\RVal)}:\RVal);
+
+    % 円盤の切断線分 [-c, c] (z = a および z = -a)
+    \draw[line width=1.3pt, gray!30!black] (-\cVal, \a) -- (\cVal, \a);
+    \draw[line width=1.3pt, gray!30!black] (-\cVal, -\a) -- (\cVal, -\a);
+
+    % 左側の境界垂直線 x = -c (破線)
+    \draw[dashed, gray!60, line width=0.8pt] (-\cVal, -\a) -- (-\cVal, \a);
+
+    % ============================================================
+    % 5. 動径線・補助破線 (スケッチ通り)
+    % ============================================================
+    \draw[dashed, gray!45] (0, 0) -- (\cVal, \a);
+    \draw[dashed, gray!45] (0, 0) -- (\cVal, -\a);
+    \draw[dashed, gray!45] (0, 0) -- (-\cVal, \a);
+    \draw[dashed, gray!45] (0, 0) -- (-\cVal, -\a);
+
+    % ============================================================
+    % 6. 目盛り・寸法ラベル (スケッチ完全準拠)
+    % ============================================================
+    % 特徴点のプロット
+    \fill[black] (\cVal, \a) circle (1.2pt);
+    \fill[black] (\cVal, -\a) circle (1.2pt);
+    \fill[black] (-\cVal, \a) circle (1.2pt);
+    \fill[black] (-\cVal, -\a) circle (1.2pt);
+
+    \node[above=2pt, font=\scriptsize] at (0, \a) {$a$};
+    \node[below=2pt, font=\scriptsize] at (0, -\a) {$-a$};
+    \node[below=2pt, font=\scriptsize] at (\cVal, 0) {$c$};
+    \node[below=2pt, font=\scriptsize] at (-\cVal, 0) {$-c$};
+
+    % 外半径・内半径の引き出し線 (スケッチの指示矢印)
+    \draw[<-, gray!30!black, line width=0.7pt]
+    ({0.5*\RVal*cos(20)}, {0.5*\RVal*sin(20)}) ++({0.5*\RVal*cos(20)}, {0.5*\RVal*sin(20)})
+    to[out=30, in=180] (1.35, 0.45) node[right, font=\footnotesize\bfseries] {$\sqrt{a^2+c^2}$};
+
+    \draw[<-, gray!30!black, line width=0.7pt]
+    (\a, 0) to[out=-30, in=180] (1.2, -0.25) node[right, font=\footnotesize\bfseries] {$a$};
+
+    % 領域ラベル
+    \node[blue!90!black, font=\normalsize\bfseries] at (0.9, -0.7) {$S(\theta)$};
+
+  \end{tikzpicture}
+  \caption{平面 $y=s$ における切断面（$x \ge 0$ の半円環 $S(\theta)$）}
+  \label{fig:cross_section_ys_Stheta}
+\end{figure}
+
+対称性から$y \ge 0$で考えよう．
+$y = s \ (0 \le \theta \le \pi/2)$で切断すると\cref{eq:1}は
+\begin{align}
+  \begin{cases}
+    D_1: -c \le x \le c, z = a \\
+    D_2: -c \le x \le c, z = -a
+  \end{cases} \label{eq:2}
+\end{align}
+という二本の線分であり，
+この部分を $y$ 軸まわりに回した時の概形は上図のようになる．
+
+特に $x \ge 0$ をみたす部分の面積 $S(\theta)$ は
+半径$\sqrt{a^2+c^2}$と$a$の二つの円の間のドーナツ型の部分の面積だから
 \begin{align}
   S(\theta) = \dfrac{1}{2}\pi \left[ (a^2+c^2) - a^2 \right] = \dfrac{1}{2}\pi c^2
 \end{align}
-だから，対称性から
+だから，対称性から求める体積$W(a)$は
 \begin{align}
-  \dfrac{1}{2} W(a) &= \int_{0}^{s} S(\theta) ds \\
+  \dfrac{1}{2} W(a)
+  &= \int_{0}^{s} S(\theta) ds \\
   &= \int_{0}^{\pi/2} \dfrac{1}{2}\pi c^2 \dfrac{ds}{d\theta} d\theta \\
   &= \dfrac{1}{2}\pi \int_{0}^{\pi/2} c^3 d\theta \\
   &= \dfrac{1}{2}\pi \int_{0}^{\pi/2} \left( \dfrac{3}{4}c + \dfrac{1}{4}c \cos 3\theta \right) d\theta \\
@@ -25,81 +306,136 @@ $x \ge 0$ をみたす部分の面積 $S(\theta)$ は
 \end{align}
 となって，
 \begin{align}
-  W(a) = \dfrac{2}{3}\pi \quad \text{\#\!}
+  W(a) = \dfrac{2}{3}\pi \label{eq:3}
 \end{align}
-
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}
-    \draw[->] (-2,0) -- (2,0) node[right] {$y$};
-    \draw[->] (0,-2) -- (0,2) node[above] {$z$};
-    \draw[->] (1,-1) -- (-1,1) node[left] {$x$};
-    \draw (0,1) ellipse (1 and 0.3);
-    \draw (0,-1) ellipse (1 and 0.3);
-    \node at (1.2,1) {$D_1$};
-    \node at (1.2,-1) {$D_2$};
-    \node at (-1.2,0.8) {$a$};
-    \node at (-1.2,-1.2) {$-a$};
-  \end{tikzpicture}
-  \begin{tikzpicture}
-    \draw[->] (-2,0) -- (2,0) node[right] {$x$};
-    \draw[->] (0,-1) -- (0,2) node[above] {$z$};
-    \draw (1.5,0) arc (0:180:1.5);
-    \draw (1.2,0) arc (0:180:1.2);
-    \node at (1.7,1) {$\sqrt{a^2+c^2}$};
-    \node at (1.4,-0.2) {$a$};
-    \node at (-1.4,-0.2) {$-c$};
-    \node at (0,1.8) {$y=s$};
-  \end{tikzpicture}
-  \caption{立体と2つの円板$D_1,D_2$（左），及び$y=s$における切断面（右）}
-\end{figure}
+である．
 
 \paragraph{(2)}
 
-$E$ のうち $x \le 0$ のものの $y=s$ における切断面の面積 $T(\theta)$ は，右上図から，
+% TODO: 再びy=sでの切断面，x<0にフォーカス
+% TODO: 再びy=sでの切断面，x<0にフォーカス
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.8cm, y=2.4cm, >=stealth, every node/.style={font=\small}]
+
+    % パラメータ
+    \def\a{1.0}
+    \def\cVal{0.9}
+    \pgfmathsetmacro{\RVal}{sqrt(\a*\a + \cVal*\cVal)} % ≈ 1.345
+
+    % ============================================================
+    % 1. 領域 T(theta) の縦線ハッチング (手書きスケッチ通り)
+    % 上部: z = a から z = sqrt(R^2 - x^2)
+    % 下部: z = -sqrt(R^2 - x^2) から z = -a
+    % ============================================================
+    \fill[pattern=vertical lines, pattern color=teal!85!black, opacity=0.75]
+    (-\cVal, \a) -- (0, \a) -- (0, \RVal)
+    arc (90:{180 - asin(\a/\RVal)}:\RVal) -- cycle;
+
+    \fill[pattern=vertical lines, pattern color=teal!85!black, opacity=0.75]
+    (-\cVal, -\a) -- (0, -\a) -- (0, -\RVal)
+    arc (-90:{-180 + asin(\a/\RVal)}:\RVal) -- cycle;
+
+    % ============================================================
+    % 2. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-1.55, 0) -- (0.4, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.6) -- (0, 1.6) node[above] {$z$};
+    \node[below right=2pt] at (0, 0) {$O$};
+
+    % ============================================================
+    % 3. 境界線
+    % ============================================================
+    % 外円弧 z = ±sqrt(a^2 + c^2 - x^2)
+    \draw[line width=1.5pt, teal!85!black, domain={-\cVal}:0, samples=50, smooth, variable=\x]
+    plot ({\x}, {sqrt(\RVal*\RVal - \x*\x)});
+    \draw[line width=1.5pt, teal!85!black, domain={-\cVal}:0, samples=50, smooth, variable=\x]
+    plot ({\x}, {-sqrt(\RVal*\RVal - \x*\x)});
+
+    \node[teal!90!black, font=\footnotesize\bfseries, above left] at (-0.45, 1.25)
+    {$z = \sqrt{a^2+c^2-x^2}$};
+
+    % 円盤の線分 z = ±a
+    \draw[line width=1.4pt, gray!30!black] (-\cVal, \a) -- (0, \a);
+    \draw[line width=1.4pt, gray!30!black] (-\cVal, -\a) -- (0, -\a);
+    \node[above=1pt, font=\scriptsize] at (-0.45, \a) {$z = a$};
+    \node[below=1pt, font=\scriptsize] at (-0.45, -\a) {$z = -a$};
+
+    % 端点 x = -c の垂直破線
+    \draw[dashed, gray!60, line width=0.9pt] (-\cVal, -\a) -- (-\cVal, \a);
+
+    % ============================================================
+    % 4. 目盛りと点プロット
+    % ============================================================
+    \fill[black] (-\cVal, \a) circle (1.3pt) node[left=2pt, font=\scriptsize] {$( -c, a )$};
+    \fill[black] (-\cVal, -\a) circle (1.3pt) node[left=2pt, font=\scriptsize] {$( -c, -a )$};
+    \fill[black] (0, \a) circle (1.2pt) node[right=2pt, font=\scriptsize] {$a$};
+    \fill[black] (0, -\a) circle (1.2pt) node[right=2pt, font=\scriptsize] {$-a$};
+    \fill[black] (0, \RVal) circle (1.2pt) node[right=2pt, font=\scriptsize] {$\sqrt{a^2+c^2}$};
+
+    \node[below=2pt, font=\scriptsize] at (-\cVal, 0) {$-c$};
+
+    % 積分微小幅 dx のインジケータ
+    \draw[<->, red!85!black, line width=1.0pt] (-0.5, \a) -- (-0.5, {sqrt(\RVal*\RVal - 0.25)})
+    node[midway, left=1pt, font=\scriptsize\bfseries] {高さ};
+
+    % 領域ラベル T(theta)
+    \node[teal!95!black, font=\large\bfseries] at (-0.5, 0.55) {$\frac{1}{2}T(\theta)$};
+    \node[teal!95!black, font=\large\bfseries] at (-0.5, -0.55) {$\frac{1}{2}T(\theta)$};
+
+  \end{tikzpicture}
+  \caption{$x \le 0$ における切断面の領域 $T(\theta)$（上下の縦線部）}
+  \label{fig:cross_section_Ttheta_x_neg}
+\end{figure}
+
+$E$ のうち $x \le 0$ のものの $y=s$ における切断面の面積 $T(\theta)$ は，
 \begin{align}
-  T(\theta) &= 2 \int_{-c}^{0} \left[ \sqrt{a^2+c^2-x^2} - a \right] dx \\
-  &= 2 \int_{0}^{c} \sqrt{a^2+c^2-x^2} dx - 2ac \quad \cdots (1)
+  T(\theta)
+  &= 2 \int_{-c}^{0} \left[ \sqrt{a^2+c^2-x^2} - a \right] dx \\
+  &= 2 \int_{0}^{c} \sqrt{a^2+c^2-x^2} dx - 2ac \label{eq:4}
 \end{align}
-であり，
+であり，これを$y$について積分すれば$V(a)$のうち$x \le 0$の部分になるから
 \begin{align}
-  V(a) = W(a) + 2 \int_{0}^{1} T(\theta) ds \quad \cdots (2)
+  V(a) = W(a) + 2 \int_{0}^{1} T(\theta) ds \label{eq:5}
 \end{align}
-となる．ここで，$[0,c]$ において，$0 \le x^2 \le c^2$ だから，
+となる．以下$a\to\infty$の極限を考えるので，\cref{eq:5}の第二項の
+$a\to\infty$での極限値を考えれば良い．
+
+ここで，$[0,c]$ において，$0 \le x^2 \le c^2$ だから，
 \begin{align}
   \sqrt{a^2} \le \sqrt{a^2+c^2-x^2} \le \sqrt{a^2+c^2}
 \end{align}
-同区間で積分して，$a>0$ から
+同区間$[0,c]$で積分して，$a>0$ から$\sqrt{a^2}=a$なので
 \begin{align}
-  \int_{0}^{c} a dx \le \int_{0}^{c} \sqrt{a^2+c^2-x^2} dx \le \int_{0}^{c} \sqrt{a^2+c^2} dx
+  & \int_{0}^{c} a dx \le \int_{0}^{c} \sqrt{a^2+c^2-x^2} dx \le \int_{0}^{c} \sqrt{a^2+c^2} dx \\
+  \therefore
+  & ac \le \int_{0}^{c} \sqrt{a^2+c^2-x^2} dx \le c\sqrt{a^2+c^2}
 \end{align}
+だから，\cref{eq:4}より
 \begin{align}
-  ac \le \int_{0}^{c} \sqrt{a^2+c^2-x^2} dx \le c\sqrt{a^2+c^2} \quad \cdots (3)
+  0 \le T(\theta) \le 2c \left[ \sqrt{a^2+c^2} - a \right] \label{eq:6}
 \end{align}
-だから，(1)から，
+である．これを$[0,1]$ で積分して，
 \begin{align}
-  0 \le T(\theta) \le 2c \left[ \sqrt{a^2+c^2} - a \right]
+  0 \le \int_{0}^{1} T(\theta) dy \le 2 \int_{0}^{1} c \left(\sqrt{a^2+c^2} - a \right) c dy \label{eq:7}
 \end{align}
-である．$[0,1]$ で積分して，
+である．$y=s$より$\dfrac{dy}{d\theta}=c$だから置換積分によって
 \begin{align}
-  0 \le \int_{0}^{s} T(\theta) d\theta \le 2 \int_{0}^{\pi/2} \left( c\sqrt{a^2+c^2} - ac \right) c d\theta \quad \cdots (5)
+  0 \le \int_{0}^{1} T(\theta) dy \le 2 \int_{0}^{\pi/2} c^2\left( \sqrt{a^2+c^2} - a \right) d\theta \le 2(\sqrt{a^2+1} - a) \int_{0}^{pi/2} c^2 d\theta
 \end{align}
-ここで，(5)の右辺について $0 \le c^2 \le 1$ から，$c^2(\sqrt{a^2+c^2} - a) \le c^2(\sqrt{a^2+1} - a)$ に注意して，
+である．ここで最後の不等号は$\sqrt{a^2+c^2} - a \le \sqrt{a^2+1} -a$より従う．
+再右辺に$\dfrac{\sqrt{a^2+1} + a}{\sqrt{a^2+1} + a}$をかけて
 \begin{align}
-  \int_{0}^{\pi/2} c^2(\sqrt{a^2+c^2} - a) d\theta \le (\sqrt{a^2+1} - a) \int_{0}^{\pi/2} c^2 d\theta = \cdots (6)
+  0 \le \int_{0}^{1} T(\theta) dy \le 2\dfrac{1}{\sqrt{a^2+1} + a} \int_{0}^{pi/2} c^2 d\theta
 \end{align}
-(6)を(5)に代入して，$A = \int_{0}^{\pi/2} c^2 d\theta$ として，
+である．$a\to\infty$で右辺は$0$に収束するから挟み撃ちの定理より
 \begin{align}
-  0 \le \int_{0}^{1} T(\theta) d\theta \le 2 \dfrac{1}{\sqrt{a^2+1} + a} A \quad \cdots (7)
+  \lim_{a\to\infty} \int_{0}^{1} T(\theta) dy = 0
 \end{align}
-$A$ は $a$ に関係ない定数由，(7)の右辺は $a \to \infty$ で $0$ に収束する．これと(2)から，
-はさみうちにより
+であり，\cref{eq:5}に代入して(1)の結果と合わせて，求める極限値は
 \begin{align}
-  \int_{0}^{1} T(\theta) d\theta \to 0 \quad (a \to \infty)
+  \lim_{a\to\infty} V(a) = \lim_{a\to\infty} W(a) = \dfrac{2}{3}\pi
 \end{align}
-だから，(1)，(2)から $a \to \infty$ の時，
-\begin{align}
-  V(a) \longrightarrow W(a) = \dfrac{2}{3}\pi \quad \text{\#\!}
-\end{align}
+である．
 
 \end{document}
