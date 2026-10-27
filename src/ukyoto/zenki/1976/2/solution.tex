@@ -64,31 +64,30 @@ $0 \le \cos^2\theta \le 1$ だから，①がみたされるのは
 \begin{pmatrix} \cos \pi/6 \\ \sin \pi/6
 \end{pmatrix}$ とおける. なす角が $120^\circ, 150^\circ$ の時の2ベクトルの比は (2)の $60^\circ, 30^\circ$ の場合に等しく, $90^\circ$ の時は鏡であることから，下図のようにとればこれらは集合 $S$ になる. (ただし片方のベクトルのなす角 $30^\circ$)
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=1.5]
-      \draw[->] (-2.5,0) -- (2.5,0) node[right] {$x$};
-      \draw[->] (0,-2.2) -- (0,2.2) node[above] {$y$};
-      \draw[dashed, gray] (0,0) circle (1);
-      \draw[dashed, gray] (0,0) circle (1.732);
-
-      % Rays / Vectors
-      \draw[->, thick] (0,0) -- (1,0) node[below right] {$\vec{a}$};
-      \draw[->, thick] (0,0) -- (1.5, 0.866) node[above right] {$\vec{b}$};
-      \draw[->, thick] (0,0) -- (0.5, 0.866) node[above] {$\vec{b}-\vec{a}$};
-      \draw[->, thick] (0,0) -- (-1.5, 1.732) node[above left] {$-3\vec{a}+2\vec{b}$};
-      \draw[->, thick] (0,0) -- (-0.5, 0.866) node[above left] {$-2\vec{a}+\vec{b}$};
-      \draw[->, thick] (0,0) -- (-1.5, 0.866) node[left] {$-3\vec{a}+\vec{b}$};
-      \draw[->, thick] (0,0) -- (-1,0) node[below left] {$-\vec{a}$};
-      \draw[->, thick] (0,0) -- (-1.5, -0.866) node[below left] {$-\vec{b}$};
-      \draw[->, thick] (0,0) -- (-0.5, -0.866) node[below] {$\vec{a}-\vec{b}$};
-      \draw[->, thick] (0,0) -- (1.5, -1.732) node[below right] {$3\vec{a}-2\vec{b}$};
-      \draw[->, thick] (0,0) -- (0.5, -0.866) node[below right] {$2\vec{a}-\vec{b}$};
-      \draw[->, thick] (0,0) -- (1.5, -0.866) node[right] {$3\vec{a}-\vec{b}$};
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.9cm, y=1.9cm, >=stealth,
+    every node/.style={font=\small}]
+    % a=(1,0), b=(3/2,sqrt(3)/2); the 12 vectors alternate in length.
+    \coordinate (O) at (0,0);
+    \draw[dashed, gray!55] (O) circle[radius=1];
+    \draw[dashed, gray!55] (O) circle[radius={sqrt(3)}];
+    \draw[->, thick, gray!80!black] (-2.15,0) -- (2.2,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-2.15) -- (0,2.2) node[above] {$y$};
+    \foreach \ang/\rad in {60/1,90/1.73205,120/1,150/1.73205,
+      180/1,210/1.73205,240/1,270/1.73205,
+    300/1,330/1.73205} {
+      \draw[->, line width=1.1pt, teal!75!black] (O)
+      -- ({\rad*cos(\ang)},{\rad*sin(\ang)});
+    }
+    \draw[->, line width=1.5pt, red!85!black] (O) -- (1,0)
+    node[below right=2pt] {$\vec a$};
+    \draw[->, line width=1.5pt, blue!85!black] (O)
+    -- (1.5,{sqrt(3)/2}) node[above right=2pt] {$\vec b$};
+    \fill[gray!80!black] (O) circle (1.2pt);
+  \end{tikzpicture}
+  \caption{長さ $1$ と $\sqrt3$ のベクトルが $30^\circ$ ごとに並ぶ集合 $S$}
+\end{figure}
 
 これらを $\vec{a}, \vec{b}$ で表すと，$\vec{a}, \vec{b}$ から反時計回りに順に
 \[
