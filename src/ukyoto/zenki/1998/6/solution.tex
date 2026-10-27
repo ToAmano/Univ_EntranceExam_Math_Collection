@@ -8,28 +8,33 @@
 
 [解] $0 < a < 1 \cdots \text{①}$ より，グラフは右図．$f(x) = \log(x-a)$ とする．
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=1]
-      \draw[->] (-0.5, 0) -- (4, 0) node[right] {$x$};
-      \draw[->] (0, -2) -- (0, 2) node[above] {$y$};
-      \draw[dashed] (0.5, -2) -- (0.5, 2);
-      \node[below left] at (0.5, 0) {$a$};
-      \draw[domain=0.6:3.5, smooth, variable=\x] plot ({\x}, {ln(\x-0.5)});
-      \node[below] at (1.5, 0) {$a+1$};
-      \node[below] at (1, 0) {$1$};
-      \node[below] at (3, 0) {$3$};
-      \draw (3, 0) -- (3, {ln(2.5)});
-      \draw (1, 0) -- (1, {ln(0.5)});
-      \fill[pattern=north east lines] (1.5, 0) -- plot[domain=1.5:3] ({\x}, {ln(\x-0.5)}) -- (3,0) -- cycle;
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[x=1.5cm,y=1.25cm,every node/.style={font=\small}]
+    % a=0.4 の配置例．曲線は x=a+1 で x 軸を横切る．
+    \fill[orange!17] (1,0)--plot[domain=1:1.4,samples=50]
+    (\x,{ln(\x-0.4)})--cycle;
+    \fill[teal!17] (1.4,0)--plot[domain=1.4:3,samples=80]
+    (\x,{ln(\x-0.4)})--(3,0)--cycle;
+    \draw[->,gray!75!black] (-0.12,0)--(3.48,0) node[right] {$x$};
+    \draw[->,gray!75!black] (0,-2.15)--(0,1.50) node[above] {$y$};
+    \draw[gray!65,dashed] (0.4,-2.05)--(0.4,1.4);
+    \draw[blue!75!black,very thick,domain=0.54:3.25,samples=90]
+    plot (\x,{ln(\x-0.4)});
+    \draw[gray!70,dashed] (1,0)--(1,{ln(0.6)})
+    (3,0)--(3,{ln(2.6)});
+    \node[below] at (0.4,0) {$a$};
+    \node[above] at (1,0) {$1$};
+    \node[below right=2pt] at (1.4,0) {$a+1$};
+    \node[below] at (3,0) {$3$};
+    \node[blue!75!black,above left] at (2.8,1.02) {$y=\log(x-a)$};
+  \end{tikzpicture}
+  \caption{$x=1$から$x=3$までの曲線$y=\log(x-a)$と$x$軸で囲まれる部分}
+\end{figure}
+
+\paragraph{(1)}
 
 \begin{align}
-  \paragraph{(1)}
-
   \quad V(a) &= \int_1^3 \pi \{ f(x) \}^2 dx \\
   &= \pi \int_{1-a}^{3-a} (\log x)^2 dx \quad \cdots \text{②} \\
   &= \pi \left[ x(\log x)^2 - 2x(\log x - 1) \right]_{1-a}^{3-a} \\
