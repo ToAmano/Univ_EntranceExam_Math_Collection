@@ -48,22 +48,50 @@
 \end{align}
 で定めて，$DR\perp OP$かつ$DR\perp OQ$なる$\alpha$の存在条件をもとめれば良い．
 \begin{figure}[H]
-  \begin{center}
-    \begin{tikzpicture}[x={(-.65cm,-.38cm)},y={(.9cm,0cm)},z={(0cm,.65cm)}]
-      \coordinate (O) at (0,0,0);\coordinate (A) at (3,0,0);
-      \coordinate (B) at (3,2,0);\coordinate (C) at (0,2,0);
-      \coordinate (D) at (0,0,4);\coordinate (E) at (3,0,4);
-      \coordinate (F) at (3,2,4);\coordinate (G) at (0,2,4);
-      \draw (A)--(B)--(C)--(G)--(F)--(E)--(A);
-      \draw (E)--(D)--(G);\draw[dashed] (A)--(O)--(C) (O)--(D) (B)--(F);
-      \coordinate (P) at (3,0,1.5);\coordinate (Q) at (0,2,2.5);\coordinate (R) at (1.4,1.0667,0);
-      \draw[dashed] (O)--(P)--(Q)--cycle;\draw (A)--(C) (D)--(R);
-      \foreach \p/\pos in {O/left,A/below left,B/below,C/below right,D/above,E/left,F/right,G/right,P/left,Q/right,R/below} {
-        \fill (\p) circle (1pt) node[\pos] {$\p$};
-      }
-    \end{tikzpicture}
-  \end{center}
-  \caption{直方体と点$P,Q,R$の位置（模式図）}
+  \centering
+  \begin{tikzpicture}[x={(-0.6cm,-0.6cm)}, y={(1.2cm,-0.25cm)}, z={(0cm,0.76cm)},
+    >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0,0,0);
+    \coordinate (A) at (3,0,0);
+    \coordinate (B) at (3,2,0);
+    \coordinate (C) at (0,2,0);
+    \coordinate (D) at (0,0,4);
+    \coordinate (E) at (3,0,4);
+    \coordinate (F) at (3,2,4);
+    \coordinate (G) at (0,2,4);
+    % 9s/16 = 1-4t = 1/2 とした，条件を満たす配置例．
+    \coordinate (P) at (3,0,1.125);
+    \coordinate (Q) at (0,2,0.5);
+    \coordinate (R) at (1.5,1,0);
+
+    % 奥に隠れる稜線と，平面 OPQ を先に描く．
+    \draw[dashed, gray!60, line width=0.8pt] (O)--(A) (O)--(C) (O)--(D) (B)--(F);
+    \fill[teal!15, opacity=0.65] (O)--(P)--(Q)--cycle;
+    \draw[dashed, teal!80!black, line width=1pt] (O)--(P)--(Q)--cycle;
+
+    % 直方体の手前の稜線．
+    \draw[blue!85!black, line width=1.25pt]
+    (A)--(B)--(C)--(G)--(F)--(E)--(A) (E)--(D)--(G);
+    \draw[blue!85!black, line width=1.25pt] (F)--(B);
+
+    % 条件に現れる線分 AC と，D からの垂線の方向．
+    \draw[teal!85!black, line width=1.25pt] (A)--(C);
+    \draw[red!85!black, line width=1.45pt] (D)--(R);
+
+    \draw[->, gray!80!black, line width=0.9pt] (A)--(3.65,0,0) node[below left] {$x$};
+    \draw[->, gray!80!black, line width=0.9pt] (C)--(0,2.55,0) node[right] {$y$};
+    \draw[->, gray!80!black, line width=0.9pt] (D)--(0,0,4.55) node[above] {$z$};
+
+    \foreach \point/\position in {
+      O/left,A/below left,B/below,C/below right,D/above left,
+    E/left,F/below right,G/above right} {
+      \fill[blue!85!black] (\point) circle (1.25pt) node[\position=2pt] {$\point$};
+    }
+    \foreach \point/\position in {P/left,Q/right,R/below} {
+      \fill[red!85!black] (\point) circle (1.45pt) node[\position=2pt] {$\point$};
+    }
+  \end{tikzpicture}
+  \caption{直方体と点$P,Q,R$，平面$OPQ$の位置（模式図）}
 \end{figure}
 \begin{align}
   \overrightarrow{DR}=
