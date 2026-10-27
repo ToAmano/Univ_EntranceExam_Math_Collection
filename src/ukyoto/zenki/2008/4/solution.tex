@@ -17,17 +17,33 @@ $g(x)=0$は必ず2異実根を持ち，
 $-\sqrt{2}\leqq\alpha<\beta\leqq\sqrt{2}$となるから，
 $x\leqq\alpha$，$\beta\leqq x$に分けて考える．
 \begin{figure}[H]
-  \begin{center}
-    \begin{tikzpicture}[scale=.85]
-      \draw[->] (-2,0)--(2,0) node[right] {$x$};\draw[->] (0,-2.3)--(0,2.2) node[above] {$y$};
-      \draw[dashed,domain=-1.8:1.8,samples=81] plot(\x,{\x*\x-2});
-      \draw[thick,domain=-1.8:1.8,samples=81] plot(\x,{abs(\x*\x-2)});
-      \draw[dashed,domain=-1.5:1.5,samples=81] plot(\x,{2*\x*\x+.7*\x-1});
-      \draw[domain=-1.5:1.5,samples=81] plot(\x,{abs(2*\x*\x+.7*\x-1)});
-      \node[below] at (-1.414,0) {$-\sqrt{2}$};\node[below] at (1.414,0) {$\sqrt{2}$};
-    \end{tikzpicture}
-  \end{center}
-  \caption{$f,g$と絶対値をとったグラフの配置（$|a|<3\sqrt{2}/2$）}
+  \centering
+  \begin{tikzpicture}[x=1.35cm,y=.95cm,>=stealth,
+    every node/.style={font=\small}]
+    % 配置例として a=0.7 を選ぶ。
+    \begin{scope}
+      \clip (-1.75,-2.1) rectangle (1.75,3.1);
+      \draw[dashed,gray!60,domain=-1.75:1.75,samples=90]
+      plot (\x,{\x*\x-2});
+      \draw[dashed,gray!60,domain=-1.75:1.75,samples=90]
+      plot (\x,{2*\x*\x+.7*\x-1});
+      \draw[blue!85!black,line width=1.4pt,domain=-1.75:1.75,samples=110]
+      plot (\x,{abs(\x*\x-2)});
+      \draw[teal!80!black,line width=1.25pt,domain=-1.75:1.75,samples=110]
+      plot (\x,{abs(2*\x*\x+.7*\x-1)});
+    \end{scope}
+    \draw[->,thick,gray!80!black] (-1.85,0)--(1.9,0) node[right] {$x$};
+    \draw[->,thick,gray!80!black] (0,-2.2)--(0,3.2) node[above] {$y$};
+    \foreach \sgn in {-1,1} {
+      \pgfmathsetmacro{\t}{(-.7+\sgn*sqrt(36.49))/6}
+      \fill[red!85!black] (\t,{abs(\t*\t-2)}) circle (1.5pt);
+    }
+    \node[blue!85!black,fill=white,inner sep=1pt] at (-.2,2.4) {$|f(x)|$};
+    \node[teal!80!black,fill=white,inner sep=1pt] at (1.28,1.4) {$|g(x)|$};
+    \node[below=3pt] at (-1.414,0) {$-\sqrt{2}$};
+    \node[below=3pt] at (1.414,0) {$\sqrt{2}$};
+  \end{tikzpicture}
+  \caption{$a=0.7$での$f,g$（灰色破線）と$|f|,|g|$の配置}
 \end{figure}
 \subparagraph{(a) $|x|\geqq\sqrt{2}$の時}
 \begin{align}
@@ -49,51 +65,92 @@ $|f(x)|=|g(x)|\Longleftrightarrow f(x)=g(x)$であり，(a)からグラフの対
   |a|>2\text{の時 }2\text{つ}.
 \end{align}
 \begin{figure}[H]
-  \begin{center}
-    \begin{tikzpicture}[x=.8cm,y=.65cm]
-      \foreach \v/\dx/\lab in {1.8/0/{$|a|<2$},2/4/{$|a|=2$},2.1/8/{$|a|>2$}} {
-        \begin{scope}[xshift=\dx cm]
-          \draw[->] (-2,0)--(1,0) node[right] {$x$};
-          \draw[domain=-1.9:.6,samples=61] plot(\x,{\x*\x-2});
-          \draw[domain=-1.9:.6,samples=61] plot(\x,{2*\x*\x+\v*\x-1});
-          \node at (-.5,2) {\lab};
+  \centering
+  \begin{tikzpicture}[x=.95cm,y=.65cm,>=stealth,
+    every node/.style={font=\small}]
+    \foreach \v/\dx/\lab in {1.8/0/{$a=1.8$},2/3.1/{$a=2$},2.1/6.2/{$a=2.1$}} {
+      \begin{scope}[xshift=\dx cm]
+        \begin{scope}
+          \clip (-1.85,-2.2) rectangle (.65,2.0);
+          \draw[blue!85!black,line width=1.2pt,domain=-1.85:.65,samples=70]
+          plot (\x,{\x*\x-2});
+          \draw[teal!80!black,line width=1.2pt,domain=-1.85:.65,samples=70]
+          plot (\x,{2*\x*\x+\v*\x-1});
         \end{scope}
+        \draw[->,gray!80!black] (-1.9,0)--(.72,0) node[right] {$x$};
+        \node[above] at (-.6,2.0) {\lab};
+      \end{scope}
+    }
+    \begin{scope}[xshift=3.1cm]
+      \fill[red!85!black] (-1,-1) circle (1.5pt);
+    \end{scope}
+    \begin{scope}[xshift=6.2cm]
+      \foreach \sgn in {-1,1} {
+        \pgfmathsetmacro{\t}{(-2.1+\sgn*sqrt(.41))/2}
+        \fill[red!85!black] (\t,{\t*\t-2}) circle (1.5pt);
       }
-    \end{tikzpicture}
-  \end{center}
-  \caption{$\alpha<x<\beta$での共有点数の変化}
+    \end{scope}
+  \end{tikzpicture}
+  \caption{$\alpha<x<\beta$における$f$（青）と$g$（緑）の共有点数の変化}
 \end{figure}
 
 \subparagraph{(ii) $\dfrac{3\sqrt{2}}{2}<a$の時}
 $\alpha<-\sqrt{2}<\beta<\sqrt{2}$となるから，2次係数に注意してグラフは下図のようになり，4個ある．
 \begin{figure}[H]
-  \begin{center}
-    \begin{tikzpicture}[scale=.8]
-      \draw[->] (-2.3,0)--(2,0) node[right] {$x$};\draw[->] (0,-2.2)--(0,3) node[above] {$y$};
-      \draw[dashed,domain=-1.9:1.9,samples=101] plot(\x,{\x*\x-2});
-      \draw[thick,domain=-1.9:1.9,samples=101] plot(\x,{abs(\x*\x-2)});
-      \draw[dashed,domain=-1.9:1,samples=101] plot(\x,{2*\x*\x+2.5*\x-1});
-      \draw[domain=-1.9:1,samples=101] plot(\x,{abs(2*\x*\x+2.5*\x-1)});
-      \node[below] at (-1.25,0) {$-\sqrt{2}$};\node[below] at (1.414,0) {$\sqrt{2}$};
-    \end{tikzpicture}
-  \end{center}
-  \caption{$a>3\sqrt{2}/2$のときの共有点}
+  \centering
+  \begin{tikzpicture}[x=1.3cm,y=.9cm,>=stealth,
+    every node/.style={font=\small}]
+    % a=2.5 では x=-2,-3/2,-1/2,2/3 が共有点の x 座標。
+    \begin{scope}
+      \clip (-2.28,-2.1) rectangle (1.65,3.25);
+      \draw[dashed,gray!60,domain=-2.28:1.65,samples=100]
+      plot (\x,{\x*\x-2});
+      \draw[dashed,gray!60,domain=-2.28:1.65,samples=100]
+      plot (\x,{2*\x*\x+2.5*\x-1});
+      \draw[blue!85!black,line width=1.4pt,domain=-2.28:1.65,samples=110]
+      plot (\x,{abs(\x*\x-2)});
+      \draw[teal!80!black,line width=1.3pt,domain=-2.28:1.65,samples=110]
+      plot (\x,{abs(2*\x*\x+2.5*\x-1)});
+    \end{scope}
+    \draw[->,thick,gray!80!black] (-2.4,0)--(1.8,0) node[right] {$x$};
+    \draw[->,thick,gray!80!black] (0,-2.2)--(0,3.4) node[above] {$y$};
+    \foreach \t in {-2,-1.5,-.5,.666667}
+    \fill[red!85!black] (\t,{abs(\t*\t-2)}) circle (1.5pt);
+    \node[below=3pt] at (-1.414,0) {$-\sqrt{2}$};
+    \node[below=3pt] at (1.414,0) {$\sqrt{2}$};
+    \node[blue!85!black,fill=white,inner sep=1pt] at (-.25,2.35) {$|f|$};
+    \node[teal!80!black,fill=white,inner sep=1pt] at (1.18,2.35) {$|g|$};
+  \end{tikzpicture}
+  \caption{$a=2.5>3\sqrt{2}/2$のときの4つの共有点}
 \end{figure}
 
 \subparagraph{(iii) $a=\dfrac{3\sqrt{2}}{2}$の時}
 $g(x)=2x^2+\dfrac{3\sqrt{2}}{2}x-1$で，グラフは下図で解は3つ．
 \begin{figure}[H]
-  \begin{center}
-    \begin{tikzpicture}[scale=.8]
-      \draw[->] (-2,0)--(2,0) node[right] {$x$};\draw[->] (0,-2.2)--(0,3) node[above] {$y$};
-      \draw[dashed,domain=-1.8:1.8,samples=101] plot(\x,{\x*\x-2});
-      \draw[thick,domain=-1.8:1.8,samples=101] plot(\x,{abs(\x*\x-2)});
-      \draw[dashed,domain=-1.8:1.2,samples=101] plot(\x,{2*\x*\x+1.5*sqrt(2)*\x-1});
-      \draw[domain=-1.8:1.2,samples=101] plot(\x,{abs(2*\x*\x+1.5*sqrt(2)*\x-1)});
-      \node[below left] at (-1.414,0) {$-\sqrt{2}$};\node[below] at (1.414,0) {$\sqrt{2}$};
-    \end{tikzpicture}
-  \end{center}
-  \caption{$a=3\sqrt{2}/2$のときの共有点}
+  \centering
+  \begin{tikzpicture}[x=1.3cm,y=.9cm,>=stealth,
+    every node/.style={font=\small}]
+    \begin{scope}
+      \clip (-1.9,-2.1) rectangle (1.65,3.25);
+      \draw[dashed,gray!60,domain=-1.9:1.65,samples=100]
+      plot (\x,{\x*\x-2});
+      \draw[dashed,gray!60,domain=-1.9:1.65,samples=100]
+      plot (\x,{2*\x*\x+1.5*sqrt(2)*\x-1});
+      \draw[blue!85!black,line width=1.4pt,domain=-1.9:1.65,samples=110]
+      plot (\x,{abs(\x*\x-2)});
+      \draw[teal!80!black,line width=1.3pt,domain=-1.9:1.65,samples=110]
+      plot (\x,{abs(2*\x*\x+1.5*sqrt(2)*\x-1)});
+    \end{scope}
+    \draw[->,thick,gray!80!black] (-2,0)--(1.8,0) node[right] {$x$};
+    \draw[->,thick,gray!80!black] (0,-2.2)--(0,3.4) node[above] {$y$};
+    \foreach \t in {-1.414214,-.707107,.707107}
+    \fill[red!85!black] (\t,{abs(\t*\t-2)}) circle (1.5pt);
+    \node[below left=3pt] at (-1.414,0) {$-\sqrt{2}$};
+    \node[below=3pt] at (1.414,0) {$\sqrt{2}$};
+    \node[blue!85!black,fill=white,inner sep=1pt] at (-.2,2.35) {$|f|$};
+    \node[teal!80!black,fill=white,inner sep=1pt] at (1.1,2.35) {$|g|$};
+  \end{tikzpicture}
+  \caption{$a=3\sqrt{2}/2$のときの3つの共有点}
 \end{figure}
 対称性から$a\leqq-\dfrac{3\sqrt{2}}{2}$についても同様だから，
 \begin{align}
@@ -115,18 +172,29 @@ $g(x)=2x^2+\dfrac{3\sqrt{2}}{2}x-1$で，グラフは下図で解は3つ．
 \end{align}
 グラフから解は分かる．
 \begin{figure}[H]
-  \begin{center}
-    \begin{tikzpicture}[x=.9cm,y=.55cm]
-      \draw[->] (-2.6,0)--(2.6,0) node[right] {$x$};\draw[->] (0,-4)--(0,4) node[above] {$y$};
-      \begin{scope}
-        \clip (-2.5,-3.8) rectangle (2.5,3.8);
-        \foreach \lo/\hi in {-2.4/-.28,.28/2.4} {
-          \draw[thick,domain=\lo:\hi,samples=81] plot(\x,{-\x-1/\x});
-          \draw[domain=\lo:\hi,samples=81] plot(\x,{-3*\x+3/\x});
-        }
-      \end{scope}
-    \end{tikzpicture}
-  \end{center}
+  \centering
+  \begin{tikzpicture}[x=1.05cm,y=.62cm,>=stealth,
+    every node/.style={font=\small}]
+    \begin{scope}
+      \clip (-2.5,-3.8) rectangle (2.5,3.8);
+      \foreach \lo/\hi in {-2.4/-.22,.22/2.4} {
+        \draw[blue!85!black,line width=1.4pt,domain=\lo:\hi,samples=90]
+        plot (\x,{-\x-1/\x});
+        \draw[teal!80!black,line width=1.3pt,domain=\lo:\hi,samples=90]
+        plot (\x,{-3*\x+3/\x});
+      }
+    \end{scope}
+    \draw[->,thick,gray!80!black] (-2.65,0)--(2.7,0) node[right] {$x$};
+    \draw[->,thick,gray!80!black] (0,-4)--(0,4) node[above] {$a$};
+    \foreach \sgn in {-1,1} {
+      \pgfmathsetmacro{\t}{\sgn*sqrt(2)}
+      \fill[red!85!black] (\t,{-\t-1/\t}) circle (1.5pt);
+    }
+    \node[blue!85!black,fill=white,inner sep=1pt] at (-1.6,3.35)
+    {$a=-x-1/x$};
+    \node[teal!80!black,fill=white,inner sep=1pt] at (1.45,3.35)
+    {$a=-3x+3/x$};
+  \end{tikzpicture}
   \caption{別解における$a=-x-1/x$，$a=-3x+3/x$のグラフ}
 \end{figure}
 
