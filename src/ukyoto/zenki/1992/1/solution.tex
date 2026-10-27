@@ -11,7 +11,7 @@
   \pi : \dfrac{x}{a} + \dfrac{y}{b} + \dfrac{z}{c} = 0 \cdots \textcircled{2}
 \end{equation*}
 
-\textcircled{2}の表式から，$\pi$は3点$(0,0,0)$，$(a,-b,0)$，$(0,b,-c)$を通る平面で，切り口は右のような六角形になる．従って，
+\textcircled{2}の表式から，$\pi$は3点$(0,0,0)$，$(a,-b,0)$，$(0,b,-c)$を通る平面で，切り口は下図のような六角形になる．従って，
 $AD, AF, DE, BC, BF, CE$
 との交点
 \begin{align}
@@ -23,37 +23,41 @@ $AD, AF, DE, BC, BF, CE$
   CE &: y=0, x=z+1 \text{ より交点 } \left(\dfrac{-a}{a+c}, 0, \dfrac{c}{a+c}\right)
 \end{align}
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=2]
-      % Draw coordinate axes
-      \draw[->] (-1.5,0) -- (1.5,0) node[right] {$y$};
-      \draw[->] (0,-1.5) -- (0,1.5) node[above] {$z$};
-      \draw[->] (1,1) -- (-1,-1) node[below left] {$x$};
-      % Draw octahedron vertices
-      \coordinate (A) at (-0.5,-0.5); % x=1
-      \coordinate (C) at (0.5,0.5);   % x=-1
-      \coordinate (B) at (1,0);       % y=1
-      \coordinate (D) at (-1,0);      % y=-1
-      \coordinate (E) at (0,1);       % z=1
-      \coordinate (F) at (0,-1);      % z=-1
-
-      % Draw edges
-      \draw (A) node[below] {$A$} -- (B) node[right] {$B$} -- (C) node[above] {$C$} -- (D) node[left] {$D$} -- cycle;
-      \draw (E) node[above right] {$E$} -- (A);
-      \draw (E) -- (B);
-      \draw (E) -- (C);
-      \draw (E) -- (D);
-      \draw (F) node[below right] {$F$} -- (A);
-      \draw (F) -- (B);
-      \draw (F) -- (C);
-      \draw (F) -- (D);
-
-      % Draw plane cutting it
-      \draw[thick] (-0.75,-0.25) -- (0,-0.5) -- (0.5,-0.25) -- (0.75,0.25) -- (0,0.5) -- (-0.5,0.25) -- cycle;
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.45,>=stealth]
+    % a=b=c=1 の場合。各辺との交点はその中点になる。
+    \coordinate (A) at (-1.5,-1);
+    \coordinate (B) at (1.7,0.15);
+    \coordinate (C) at (1.5,1);
+    \coordinate (D) at (-1.7,-0.15);
+    \coordinate (E) at (0,1.8);
+    \coordinate (F) at (0,-1.8);
+    \coordinate (O) at (0,0);
+    \coordinate (AD) at (-1.6,-0.575);
+    \coordinate (DE) at (-0.85,0.825);
+    \coordinate (CE) at (0.75,1.4);
+    \coordinate (BC) at (1.6,0.575);
+    \coordinate (BF) at (0.85,-0.825);
+    \coordinate (AF) at (-0.75,-1.4);
+    \draw[dashed,gray!60] (C)--(D) (C)--(F) (D)--(F);
+    \draw[blue!75!black,thick] (A)--(B)--(C)--(E)--(A)--(D)--(E)--(B)--(F)--(A);
+    \fill[teal!25,opacity=0.75] (AD)--(DE)--(CE)--(BC)--(BF)--(AF)--cycle;
+    \draw[teal!70!black,very thick] (AD)--(DE)--(CE)--(BC)--(BF)--(AF)--cycle;
+    \draw[->,gray!65] (O)--(-2,-1.33) node[below] {$x$};
+    \draw[->,gray!65] (O)--(2.25,0.2) node[right] {$y$};
+    \draw[->,gray!65] (O)--(0,2.25) node[above] {$z$};
+    \foreach \V in {AD,DE,CE,BC,BF,AF}
+    \fill[teal!70!black] (\V) circle (1.2pt);
+    \node[below left] at (A) {$A$};
+    \node[right] at (B) {$B$};
+    \node[above right] at (C) {$C$};
+    \node[left] at (D) {$D$};
+    \node[above left] at (E) {$E$};
+    \node[below right] at (F) {$F$};
+    \node[below right] at (O) {$O$};
+  \end{tikzpicture}
+  \caption{正八面体を平面 $\pi$ で切った六角形（図は $a=b=c=1$）}
+\end{figure}
 
 \end{document}
