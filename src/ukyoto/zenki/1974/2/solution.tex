@@ -6,21 +6,33 @@
   \footnotesize\textit{【自動文字起こし・要確認】}
 \end{flushright}
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=0.25]
-      \draw[thick] (-10,0) arc (180:360:10);
-      \draw[thick] (-10,0) -- (10,0);
-      \draw[dashed] (0,0) -- (10,0);
-      \node[above] at (5,0) {$10\text{ cm}$};
-      \draw[dashed] (-8,-6) -- (8,-6);
-      \draw[dashed] (0,0) -- (0,-10);
-      \draw[<-] (8,-6) -- (12,-4) node[right] {$\sqrt{20h-h^2}$};
-      \draw[<->] (0,-10) -- (0,-6) node[midway,right] {$h$};
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=0.33cm, y=0.33cm, >=stealth,
+    every node/.style={font=\small}]
+    % Illustration with h=4 cm: the water-surface radius is 8 cm.
+    \coordinate (O) at (0,0);
+    \coordinate (Bottom) at (0,-10);
+    \coordinate (Surface) at (0,-6);
+    \fill[blue!13] (0,-6) ellipse (8 and 1.15);
+    \draw[dashed, gray!65] (-10,0) arc[start angle=180,end angle=0,
+    x radius=10,y radius=1.5];
+    \draw[line width=1.3pt, blue!85!black]
+    plot[domain=180:360,samples=100] ({10*cos(\x)},{10*sin(\x)});
+    \draw[line width=1.1pt, blue!85!black] (-10,0)
+    arc[start angle=180,end angle=360,x radius=10,y radius=1.5];
+    \draw[teal!75!black, line width=1pt] (0,-6) ellipse (8 and 1.15);
+    \draw[dashed, gray!70] (O) -- (Surface) -- (8,-6);
+    \draw[<->, red!80!black, thick] (0.9,-10) -- (0.9,-6)
+    node[midway,right=3pt] {$h$};
+    \draw[->, gray!80!black] (O) -- (9.7,0)
+    node[midway,above=3pt] {$10\,\mathrm{cm}$};
+    \draw[<-, teal!75!black] (8,-6) -- (11,-4.4)
+    node[right] {$\sqrt{20h-h^2}$};
+    \fill[blue!85!black] (Bottom) circle (1.4pt);
+  \end{tikzpicture}
+  \caption{半球形の容器と水深 $h$ のときの水面の半径}
+\end{figure}
 
 \noindent
 [\textbf{解}] 時刻 $t$ での水面の面積 $S$, 水深を $h$ とすると, 水の流出速度 $k$ として
