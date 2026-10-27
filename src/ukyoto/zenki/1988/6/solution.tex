@@ -28,18 +28,49 @@
 \]
 である．以下 $f(x) = \dfrac{10}{x} - 2$ とおく．
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[scale=0.5]
-      \draw[->] (-1, 0) -- (7, 0) node[right] {$x$};
-      \draw[->] (0, -3) -- (0, 9) node[above] {$y$};
-      \draw[domain=1:6, smooth, variable=\x] plot ({\x}, {10/\x - 2});
-      \draw[dashed] (1, 0) -- (1, 8) -- (0, 8) node[left] {$8$};
-      \node[below] at (5, 0) {$5$};
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[x=0.75cm,y=0.43cm,>=stealth]
+    \draw[->,gray!75] (-0.25,0)--(7.4,0) node[right] {$x$};
+    \draw[->,gray!75] (0,-2.5)--(0,9.4) node[above] {$y$};
+    \draw[dashed,gray!60] (0,-2)--(7.2,-2);
+    \draw[blue!75!black,very thick,domain=0.93:7.2,samples=80]
+    plot (\x,{10/\x-2});
+    \draw[dashed,gray!60] (1,0)--(1,8)--(0,8);
+    \fill[red!75!black] (1,8) circle (1.5pt) (5,0) circle (1.5pt);
+    \node[above right] at (1,8) {$(1,8)$};
+    \node[above right] at (5,0) {$(5,0)$};
+    \node[left] at (0,-2) {$-2$};
+    \node[blue!75!black,right] at (2.6,3.3) {$y=\dfrac{10}{x}-2$};
+  \end{tikzpicture}
+  \caption{回転させる曲線 $y=10/x-2$ とその漸近線}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  % 回転体の水面を h=3 の例で示す。
+  \begin{tikzpicture}[x=0.48cm,y=0.49cm,>=stealth]
+    \fill[teal!13] (-5,0)--(-4,0.5)--(-3.333,1)--(-2.857,1.5)
+    --(-2.5,2)--(-2.222,2.5)--(-2,3)--(2,3)
+    --(2.222,2.5)--(2.5,2)--(2.857,1.5)
+    --(3.333,1)--(4,0.5)--(5,0)--cycle;
+    \draw[dashed,gray!60] (0,0)--(0,8.5);
+    \draw[blue!75!black,very thick,domain=0:8,samples=80]
+    plot ({-10/(\x+2)},{\x});
+    \draw[blue!75!black,very thick,domain=0:8,samples=80]
+    plot ({10/(\x+2)},{\x});
+    \draw[dashed,blue!65!black] (0,8) ellipse[x radius=1,y radius=0.17];
+    \draw[blue!75!black,thick] (-1,8) arc[start angle=180,end angle=360,x radius=1,y radius=0.17];
+    \draw[dashed,blue!65!black] (-5,0) arc[start angle=180,end angle=360,x radius=5,y radius=0.32];
+    \draw[blue!75!black,thick] (5,0) arc[start angle=0,end angle=180,x radius=5,y radius=0.32];
+    \fill[teal!17] (0,3) ellipse[x radius=2,y radius=0.17];
+    \draw[teal!70!black,thick] (0,3) ellipse[x radius=2,y radius=0.17];
+    \draw[<->,gray!75] (5.55,0)--(5.55,3) node[midway,right] {$h$};
+    \node[blue!75!black,right] at (2.5,5.2) {$x=\dfrac{10}{y+2}$};
+    \node[above] at (0,8.2) {$y=8$};
+  \end{tikzpicture}
+  \caption{$y$ 軸のまわりの回転体と高さ $h$ の水面（図は $h=3$）}
+\end{figure}
 
 \paragraph{(1)}
 
