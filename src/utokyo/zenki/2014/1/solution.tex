@@ -5,8 +5,98 @@
 
 \paragraph{(1)}
 
-右のように空間座標をとる．
-四角形 $OPQR$ は平行四辺形である．
+% TODO: 3d-tikz 立方体と四角形，座標軸
+\begin{figure}[htb]
+  \centering
+  % theta: z軸からの倒し角 (65度〜70度が見下ろしに最適)
+  % phi: xy平面内での回転角 (110度〜125度で手前にx, 右にyが来る)
+  \tdplotsetmaincoords{65}{30}
+
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.4, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 定数
+    % ============================================================
+    \def\aVal{0.3333} % tan(alpha) = 1/3
+    \def\bVal{0.5}    % tan(beta) = 1/2
+
+    \coordinate (O)   at (0, 0, 0);
+    \coordinate (X1)  at (1, 0, 0);
+    \coordinate (Y1)  at (0, 1, 0);
+    \coordinate (XY1) at (1, 1, 0);
+
+    \coordinate (P) at (1, 0, \aVal);
+    \coordinate (Q) at (0, 1, \bVal);
+    \coordinate (R) at (1, 1, {\aVal + \bVal});
+
+    \coordinate (Z1)   at (0, 0, 1);
+    \coordinate (XZ1)  at (1, 0, 1);
+    \coordinate (YZ1)  at (0, 1, 1);
+    \coordinate (XYZ1) at (1, 1, 1);
+
+    % ============================================================
+    % 2. 座標軸 (奥側)
+    % ============================================================
+    \draw[->, thick, gray!70!black] (0, 0, 0) -- (0, 0, 1.3) node[above] {$z$};
+
+    % ============================================================
+    % 3. 平行四辺形 OPQR
+    % ============================================================
+    \fill[pattern=north east lines, pattern color=blue!75, opacity=0.7]
+    (O) -- (P) -- (R) -- (Q) -- cycle;
+
+    % ============================================================
+    % 4. 単位立方体の骨格
+    % ============================================================
+    \draw[thick, black] (O) -- (X1);
+    \draw[thick, black] (O) -- (Y1);
+    \draw[thick, black] (X1) -- (XY1) -- (Y1);
+
+    \draw[thick, black] (X1) -- (XZ1);
+    \draw[thick, black] (Y1) -- (YZ1);
+    \draw[thick, black] (XY1) -- (XYZ1);
+    \draw[thick, black] (Z1) -- (XZ1) -- (XYZ1) -- (YZ1) -- cycle;
+
+    % 四角形の実線
+    \draw[line width=1.4pt, blue!85!black] (O) -- (P) -- (R) -- (Q) -- cycle;
+    \draw[dashed, gray!60] (P) -- (X1);
+    \draw[dashed, gray!60] (Q) -- (Y1);
+    \draw[dashed, gray!60] (R) -- (XY1);
+
+    % ============================================================
+    % 5. 座標軸 (手前側)
+    % ============================================================
+    \draw[->, thick, gray!70!black] (X1) -- (1.4, 0, 0) node[below left] {$x$};
+    \draw[->, thick, gray!70!black] (Y1) -- (0, 1.45, 0) node[below right] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % ============================================================
+    % 6. 角 alpha, beta の円弧 (tikz-3dplot の描画機能)
+    % ============================================================
+    % xz 平面 (phi = 0) での回転
+    \tdplotsetthetaplanecoords{0}
+    \tdplotdrawarc[tdplot_rotated_coords, ->, thick, red!85!black]{(0,0,0)}{0.45}{0}{18.43}{anchor=north east, font=\footnotesize\bfseries}{$\alpha$}
+
+    % yz 平面 (phi = 90) での回転
+    \tdplotsetthetaplanecoords{90}
+    \tdplotdrawarc[tdplot_rotated_coords, ->, thick, teal!85!black]{(0,0,0)}{0.45}{0}{26.57}{anchor=west, font=\footnotesize\bfseries}{$\beta$}
+
+    % ============================================================
+    % 7. 点プロット
+    % ============================================================
+    \fill[black] (O) circle (1.2pt);
+    \fill[blue!85!black] (P) circle (1.3pt) node[left=2pt] {$P(1, 0, \tan\alpha)$};
+    \fill[blue!85!black] (Q) circle (1.3pt) node[right=2pt] {$Q(0, 1, \tan\beta)$};
+    \fill[blue!85!black] (R) circle (1.3pt) node[above=2pt] {$R$};
+
+    \node[blue!90!black, font=\normalsize\bfseries] at (0.5, 0.5, 0.45) {$S$};
+
+  \end{tikzpicture}
+  \caption{\texttt{tikz-3dplot} による視点指定（$\theta=65^\circ, \phi=115^\circ$）}
+\end{figure}
+
+上図のように空間座標をとる．
+$\vec{OP},\vec{OQ}$は
 \begin{align}
   \vec{OP} =
   \begin{pmatrix} 1 \\ 0 \\ \tan\alpha
@@ -15,46 +105,65 @@
   \begin{pmatrix} 0 \\ 1 \\ \tan\beta
   \end{pmatrix}
 \end{align}
-だから，
+となる．
+四角形 $OPQR$ は平行四辺形だから，その面積は
 \begin{align}
-  S &= \sqrt{|\vec{OP}|^2 |\vec{OQ}|^2 - (\vec{OP} \cdot \vec{OQ})^2} \\
+  S
+  &= \sqrt{|\vec{OP}|^2 |\vec{OQ}|^2 - (\vec{OP} \cdot \vec{OQ})^2} \\
   &= \sqrt{(1 + \tan^2\alpha)(1 + \tan^2\beta) - (\tan\alpha \cdot \tan\beta)^2} \\
-  &= \sqrt{1 + \tan^2\alpha + \tan^2\beta}
+  &= \sqrt{1 + \tan^2\alpha + \tan^2\beta} \label{eq:1}
 \end{align}
+となる．
 
 \paragraph{(2)}
 
 $a = \tan\alpha, \, b = \tan\beta$ とおく．$\alpha + \beta = \dfrac{\pi}{4}$ より，
+加法定理から
 \begin{align}
-  \tan\dfrac{\pi}{4} = \tan(\alpha + \beta) = \dfrac{a + b}{1 - ab} = 1 \quad \cdots \text{①}
+  &\tan\dfrac{\pi}{4} = \tan(\alpha + \beta) = \dfrac{a + b}{1 - ab} = 1 \\
+  \therefore
+  & a + b = 1 - ab \label{eq:2}
 \end{align}
-また，(1) 及び $S = \dfrac{7}{6}$ から，
+である．\cref{eq:1}を$a+b, ab$で書き直すと
 \begin{align}
-  \left(\dfrac{7}{6}\right)^2 = 1 + a^2 + b^2 = 1 + (a+b)^2 - 2ab \quad \cdots \text{②}
+  S^2 = 1 + a^2 + b^2 = 1 + (a+b)^2 - 2ab \label{eq:3}
 \end{align}
-
-①より $ab = 1 - (a+b)$ だから，これを②に代入して，
+である．題意より$S = \dfrac{7}{6}$ を代入して\cref{eq:2}から$ab$を消去すると
 \begin{align}
-  \dfrac{49}{36} &= 1 + (a+b)^2 - 2 + 2(a+b) \\
-  (a+b)^2 + 2(a+b) - \dfrac{85}{36} &= 0
+  & \left(\dfrac{7}{6}\right)^2 = 1 + (a+b)^2 - 2ab \\
+  & \dfrac{13}{36} = (a+b)^2 - 2 + 2(a+b) \\
+  & (a+b)^2 + 2(a+b) - \dfrac{85}{36} = 0 \\
+  \therefore
+  & a+b = -1 \pm \sqrt{1 + \dfrac{85}{36}} = -1 \pm \dfrac{11}{6}
 \end{align}
-これを $a+b$ について解くと，
+である．
+$0 \leqq \alpha, \beta < \dfrac{\pi}{2}$ より $a,b>0$だから複号正を採用して，
 \begin{align}
-  a+b = -1 \pm \sqrt{1 + \dfrac{85}{36}} = -1 \pm \dfrac{11}{6}
+  a+b = \dfrac{5}{6}　\label{eq:4}
 \end{align}
-$0 \leqq \alpha < \dfrac{\pi}{2}, \, 0 \leqq \beta < \dfrac{\pi}{2}$ より $a + b \geqq 0$ だから，複号正を採用して，
+となる．\cref{eq:2}に代入して
 \begin{align}
-  a+b = \dfrac{5}{6}
+  ab = 1 - (a+b) = \dfrac{1}{6}
 \end{align}
-
-①から $ab = 1 - \dfrac{5}{6} = \dfrac{1}{6}$ だから，$a, b$ は次の2次方程式
+だから，$a, b$ は次の2次方程式
 \begin{align}
   x^2 - \dfrac{5}{6}x + \dfrac{1}{6} = 0
 \end{align}
 の2解であり，これを解くと $x = \dfrac{1}{2}, \, \dfrac{1}{3}$ となる．
-$\alpha \leqq \beta$ から $a \leqq b$（$0 \leqq x < \dfrac{\pi}{2}$ で $\tan x$ は単調増加）だから，
+
+$\alpha \leqq \beta$ の時は $a \leqq b$（$0 \leqq x < \dfrac{\pi}{2}$ で $\tan x$ は単調増加）だから，
 \begin{align}
-  \tan\alpha = a = \dfrac{1}{3}
+  \tan\alpha = a = \dfrac{1}{3} \label{eq:5}
 \end{align}
+である．
+
+以上\cref{eq:4,eq:5}をまとめて
+\begin{align}
+  \begin{cases}
+    \tan\alpha + \tan\beta = \dfrac{5}{6} \\
+    \tan\alpha = \dfrac{1}{3}
+  \end{cases}
+\end{align}
+である．
 
 \end{document}

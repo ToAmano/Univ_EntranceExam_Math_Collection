@@ -1,111 +1,368 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
+
+% TODO: 概要図
+% TODO: 概要図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-3.0, 0) -- (3.0, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 4.0) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 半直線 OP (y = sqrt(3)x, x >= 0) と OQ (y = -sqrt(3)x, x <= 0)
+    \draw[line width=1.1pt, gray!40!black] (0, 0) -- (2.3, {2.3*sqrt(3)})
+    node[above right, font=\footnotesize] {$y = \sqrt{3}x$};
+    \draw[line width=1.1pt, gray!40!black] (0, 0) -- (-2.3, {2.3*sqrt(3)})
+    node[above left, font=\footnotesize] {$y = -\sqrt{3}x$};
+
+    % 角 60°, 120° の補助円弧
+    \draw[->, gray!60] (0.6, 0) arc (0:60:0.6);
+    \node[gray!70!black, font=\scriptsize] at (30:0.8) {$60^\circ$};
+
+    % 点 P (例: alpha = 1.6 => x = 1.6, y = 1.6*sqrt(3) ≈ 2.77)
+    % 点 Q (beta = -1.4 => x = -1.4, y = 1.4*sqrt(3) ≈ 2.42)
+    % alpha - beta = 1.6 - (-1.4) = 3.0 (条件を満たす)
+    \def\al{1.6}
+    \def\be{-1.4}
+    \coordinate (P) at (\al, {\al*sqrt(3)});
+    \coordinate (Q) at (\be, {-\be*sqrt(3)});
+
+    % 動径 OP, OQ の強調
+    \draw[line width=1.5pt, blue!85!black] (0, 0) -- (P)
+    node[midway, below right=1pt, font=\footnotesize\bfseries] {$|OP|=2\alpha$};
+    \draw[line width=1.5pt, teal!85!black] (0, 0) -- (Q)
+    node[midway, below left=1pt, font=\footnotesize\bfseries] {$|OQ|=-2\beta$};
+
+    % 直線 (線分) PQ
+    \draw[line width=1.4pt, red!85!black] ($ (Q)!-0.2!(P) $) -- ($ (P)!-0.2!(Q) $)
+    node[above right, font=\footnotesize\bfseries] {直線 $PQ$};
+    \draw[line width=1.8pt, red!70!black] (P) -- (Q);
+
+    % 点プロット
+    \fill[blue!90!black] (P) circle (1.5pt) node[right=2pt] {$P(\alpha, \sqrt{3}\alpha)$};
+    \fill[teal!90!black] (Q) circle (1.5pt) node[left=2pt] {$Q(\beta, -\sqrt{3}\beta)$};
+
+  \end{tikzpicture}
+  \caption{半直線上の点 $P, Q$ と直線 $PQ$ の配置概要図}
+  \label{fig:line_pq_overview}
+\end{figure}
+
 $P(\alpha,\sqrt{3}\alpha)$，$Q(\beta,-\sqrt{3}\beta)$とする．この時，
 \begin{align}
-  0\le\alpha\le2,\quad-2\le\beta\le0\quad\cdots①
+  0\le\alpha\le2,\quad-2\le\beta\le0 \label{eq:1}
 \end{align}
 とする．
 \begin{align}
-  |\overrightarrow{OP}|=2\alpha,\qquad|\overrightarrow{OQ}|=-2\beta
+  |\overrightarrow{OP}|=2\alpha,\qquad|\overrightarrow{OQ}|=-2\beta \label{eq:2}
 \end{align}
-だから題意の条件は
+だから題意の条件$|OP|+|OQ|=6$に代入して
 \begin{align}
-  2(\alpha-\beta)=6\iff\alpha-\beta=3\quad\cdots②
+  2(\alpha-\beta)=6 \iff \alpha-\beta=3 \label{eq:3}
 \end{align}
-である．この時，直線$PQ$の方程式は
+である．
+
+さて直線$PQ$の方程式は
 \begin{align}
-  \ell:\sqrt{3}(\alpha+\beta)(x-\alpha)-(\alpha-\beta)(y-\sqrt{3}\alpha)=0
+  & \sqrt{3}(\alpha+\beta)(x-\alpha)-(\alpha-\beta)(y-\sqrt{3}\alpha)=0
+  \therefore
+  & \sqrt{3}(\alpha+\beta)x-(\alpha-\beta)y-2\sqrt{3}\alpha\beta=0 \label{eq:4}
 \end{align}
-すなわち
+である．
+\cref{eq:3}から$\alpha=\beta+3$だから\cref{eq:1,eq:4}に代入して
 \begin{align}
-  \ell:\sqrt{3}(\alpha+\beta)x-(\alpha-\beta)y-2\sqrt{3}\alpha\beta=0\quad\cdots③
-\end{align}
-である．②から，$\alpha=\beta+3$だから，①③に代入して，
-\begin{align}
+  &
   \begin{cases}
-    0\le\beta+3\le2\ \land\ -2\le\beta\le0\\
+    0\le\beta+3\le2\ \land\ -2\le\beta\le0 \\
     \ell:\sqrt{3}(2\beta+3)x-3y-2\sqrt{3}(\beta+3)\beta=0
-  \end{cases}
+  \end{cases} \\
   \iff
+  &
   \begin{cases}
     -2\le\beta\le-1\\
     y=\dfrac{\sqrt{3}}{3}\left\{(2\beta+3)x-2(\beta+3)\beta\right\}=:f(\beta)
-  \end{cases}\quad\cdots④
+  \end{cases} \label{eq:5}
 \end{align}
+である．
 
-まず，④の（$\beta$を動かした時の）動く範囲を求める．
+$\beta$を動かした時の\cref{eq:5}の動く範囲のうち，半直線$OP,OQ$より上側の領域が$D$である．
+\cref{eq:5}を$\beta$について平方完成すると
 \begin{align}
-  f(\beta)&=\dfrac{\sqrt{3}}{3}\left(-2\beta^2+(2x-6)\beta+3x\right)\\
-  &=-\dfrac{2\sqrt{3}}{3}\left[\left(\beta-\dfrac{x-3}{2}\right)^2-\dfrac{x^2+9}{4}\right]
+  f(\beta)
+  &=\dfrac{\sqrt{3}}{3}\left(-2\beta^2+(2x-6)\beta+3x\right)\\
+  &=-\dfrac{2\sqrt{3}}{3}\left[\left(\beta-\dfrac{x-3}{2}\right)^2-\dfrac{x^2+9}{4}\right] \label{eq:6}
 \end{align}
+であり，これは上に凸な放物線で頂点が$\beta=\dfrac{x-3}{2}$である．
 
-であり，$\beta$の2次関数として上に凸で，頂点は$\beta=\dfrac{x-3}{2}$である．
-
-$0\le x\le1$の時，$\beta$は制限なく$-2\le\beta\le-1$を動き，頂点$\dfrac{x-3}{2}\in[-1.5,-1]\subset[-2,-1]$だから，最大値は$f\left(\dfrac{x-3}{2}\right)$，最小値は$f(-1)$，$f(-2)$のうち小さい方である．
-\begin{align}
-  f(-1)=\dfrac{\sqrt{3}}{3}(x+4),\qquad f(-2)=\dfrac{\sqrt{3}}{3}(-x+4), \\
-  \qquad f\left(\dfrac{x-3}{2}\right)=\dfrac{2\sqrt{3}}{3}\cdot\dfrac{x^2+9}{4} \\
-  \qquad =\dfrac{\sqrt{3}}{6}(x^2+9)
-\end{align}
-$0\le x\le1$では$f(-1)\ge f(-2)$だから，最小値は$f(-2)=\dfrac{\sqrt{3}}{3}(4-x)$．
-
-$1\le x\le2$の時，線分$PQ$が$x$座標$x$を通るには$\beta\le x\le\alpha=\beta+3$が必要，つまり$x-3\le\beta\le x$．①の$-2\le\beta\le-1$とあわせて，$\beta$の動く範囲は$x-3\le\beta\le-1$である．頂点$\dfrac{x-3}{2}$はこの時$\ge x-3$かつ（$x\ge1$だから）$\ge-1$なので，範囲$[x-3,-1]$の外側（右）にあり，$f$は$[x-3,-1]$上単調増加．よって最大値は$f(-1)=\dfrac{\sqrt{3}}{3}(x+4)$，最小値は
-\begin{align}
-  f(x-3)&=\dfrac{\sqrt{3}}{3}\left(-2(x-3)^2+(2x-6)(x-3)+3x\right) \\
-  &=\dfrac{\sqrt{3}}{3}\left(-2(x-3)^2+2(x-3)^2+3x\right) \\
-  &=\sqrt{3}x
-\end{align}
-
-以上から，$0\le s\le2$のとき，
-\begin{align}
-  0\le s\le1\text{の時，}&\ \dfrac{\sqrt{3}}{3}(4-s)\le t\le\dfrac{\sqrt{3}}{6}(s^2+9)\\
-  1\le s\le2\text{の時，}&\ \sqrt{3}s\le t\le\dfrac{\sqrt{3}}{3}(s+4)
-\end{align}
-
-（$s=1$で両者は$t=\sqrt{3}$から$t=\dfrac{5\sqrt{3}}{3}$まで連続的につながる．）
-
-\paragraph{(2)}
-
-問題の設定は$x\to-x$（$P$と$Q$の役割の入れ替え）について対称だから，$D$は$y$軸対称である．よって，$-2\le s\le-1$，$-1\le s\le0$の場合は上の不等式で$s$を$|s|$に置き換えたものになる．まとめると，$D$は
-\begin{align}
-  |x|\le1\text{の範囲では}&\ \dfrac{\sqrt{3}}{3}(4-|x|)\le y\le\dfrac{\sqrt{3}}{6}(x^2+9),\\
-  1\le|x|\le2\text{の範囲では}&\ \sqrt{3}|x|\le y\le\dfrac{\sqrt{3}}{3}(|x|+4)
-\end{align}
-で表され（境界を含む），図示すると次のようになる．
-
+% TODO: x-\betaで頂点と，-2 \le b \le -1について示した図
+% TODO: x-\betaで頂点と，-2 \le b \le -1について示した図
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.7, >=stealth, declare function={
-        ftop(\x)=(\x<=1)*(sqrt(3)/6*(\x*\x+9)) + (\x>1)*(sqrt(3)/3*(\x+4));
-        fbot(\x)=(\x<=1)*(sqrt(3)/3*(4-\x)) + (\x>1)*(sqrt(3)*\x);
-    }]
-    \draw[->] (-2.6,0) -- (2.6,0) node[right] {$x$};
-    \draw[->] (0,-0.3) -- (0,3.9) node[above] {$y$};
-    \fill[gray!20] plot[domain=-2:2,samples=60] (\x,{ftop(abs(\x))}) -- plot[domain=2:-2,samples=60] (\x,{fbot(abs(\x))}) -- cycle;
-    \draw[thick] plot[domain=-2:2,samples=60] (\x,{ftop(abs(\x))});
-    \draw[thick] plot[domain=-2:2,samples=60] (\x,{fbot(abs(\x))});
-    \draw[dashed,gray] (-2,0) -- (-2,{2*sqrt(3)}) (2,0) -- (2,{2*sqrt(3)}) (-1,0) -- (-1,{5*sqrt(3)/3}) (1,0) -- (1,{5*sqrt(3)/3});
-    \node[below] at (-2,0) {$-2$};
-    \node[below] at (-1,0) {$-1$};
-    \node[below] at (1,0) {$1$};
-    \node[below] at (2,0) {$2$};
-    \node[left] at (0,{4*sqrt(3)/3}) {$\frac{4\sqrt{3}}{3}$};
-    \node[left] at (0,{3*sqrt(3)/2}) {$\frac{3\sqrt{3}}{2}$};
-    \fill (0,{4*sqrt(3)/3}) circle (0.5pt);
-    \fill (-1,{sqrt(3)}) circle (0.5pt);
-    \fill (1,{sqrt(3)}) circle (0.5pt);
-    \fill (-2,{2*sqrt(3)}) circle (0.5pt);
-    \fill (2,{2*sqrt(3)}) circle (0.5pt);
-    \node[above right] at (2,{2*sqrt(3)}) {\scriptsize$2\sqrt{3}$};
-    \node[above left] at (-2,{2*sqrt(3)}) {\scriptsize$2\sqrt{3}$};
+  \begin{tikzpicture}[x=1.8cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
+
+    % 座標軸: 横軸 x, 縦軸 beta
+    \draw[->, thick, gray!80!black] (-2.8, 0) -- (2.8, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -2.8) -- (0, 0.6) node[above] {$\beta$};
+    \node[above left=2pt] at (0, 0) {$O$};
+
+    % 定義域帯 -2 <= beta <= -1 の色塗り
+    \fill[blue!8, opacity=0.8] (-2.6, -2) rectangle (2.6, -1);
+    \draw[dashed, blue!85!black, line width=1.0pt] (-2.6, -1) -- (2.6, -1) node[right, font=\scriptsize] {$\beta = -1$};
+    \draw[dashed, blue!85!black, line width=1.0pt] (-2.6, -2) -- (2.6, -2) node[right, font=\scriptsize] {$\beta = -2$};
+    \node[left=2pt, font=\scriptsize] at (0, -1) {$-1$};
+    \node[left=2pt, font=\scriptsize] at (0, -2) {$-2$};
+
+    % 頂点の直線 beta = (x - 3)/2
+    \draw[line width=1.4pt, red!85!black] (-2.2, -2.6) -- (2.2, -0.4)
+    node[above right, font=\footnotesize\bfseries] {$\beta = \frac{x-3}{2}$（頂点）};
+
+    % 境界点 x = -1 (beta = -2) と x = 1 (beta = -1)
+    \coordinate (Pleft) at (-1, -2);
+    \coordinate (Pright) at (1, -1);
+
+    \draw[dotted, gray!60, line width=0.9pt] (-1, 0) -- (Pleft);
+    \draw[dotted, gray!60, line width=0.9pt] (1, 0) -- (Pright);
+    \node[above=2pt, font=\scriptsize] at (-1, 0) {$-1$};
+    \node[above=2pt, font=\scriptsize] at (1, 0) {$1$};
+
+    \fill[red!85!black] (Pleft) circle (1.5pt);
+    \fill[red!85!black] (Pright) circle (1.5pt);
+
+    % 場合分けの区間表示
+    \node[below=4pt, font=\scriptsize\bfseries] at (-1.8, 0) {$x \le -1$};
+    \node[below=4pt, font=\scriptsize\bfseries] at (0, 0) {$-1 \le x \le 1$};
+    \node[below=4pt, font=\scriptsize\bfseries] at (1.8, 0) {$1 \le x$};
+
   \end{tikzpicture}
-  \caption{$D$の図示（斜線部，境界を含む）}
+  \caption{頂点 $\beta = \dfrac{x-3}{2}$ と $\beta$ の定義域 $[-2, -1]$ の位置関係}
+  \label{fig:vertex_position_vs_x}
 \end{figure}
+
+% TODO: 4つのパターンでとりうる範囲を場合分けした図
+% TODO: 4つのパターンでとりうる範囲を場合分けした図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.88, >=stealth, every node/.style={font=\scriptsize}]
+
+    % =========================================================================
+    % パターン 1: x <= -1 (頂点 <= -2: 単調減少)
+    % =========================================================================
+    \begin{scope}[shift={(0, 0)}]
+      \draw[->, thick, gray!70] (-2.7, 0) -- (-0.5, 0) node[right] {$\beta$};
+      \draw[->, thick, gray!70] (-2.5, -0.3) -- (-2.5, 2.2);
+
+      % 区間 [-2, -1] の帯
+      \fill[blue!10, opacity=0.7] (-2, 0) rectangle (-1, 2.0);
+      \draw[thick, gray!40!black] (-2, 0) -- (-2, -0.08) node[below] {$-2$};
+      \draw[thick, gray!40!black] (-1, 0) -- (-1, -0.08) node[below] {$-1$};
+
+      % 放物線 (頂点 = -2.3)
+      \draw[dashed, red!85!black] (-2.3, 0) -- (-2.3, 2.0) node[above] {頂点};
+      \draw[line width=1.3pt, blue!85!black, domain=-2.4:-0.8, samples=40]
+      plot (\x, {-1.5*(\x + 2.3)^2 + 2.0});
+
+      \fill[red!85!black] (-2, {-1.5*0.3^2 + 2.0}) circle (1.5pt) node[above right=1pt] {$\max=f(-2)$};
+      \fill[blue!85!black] (-1, {-1.5*1.3^2 + 2.0}) circle (1.5pt) node[below left=1pt] {$\min=f(-1)$};
+
+      \node[below=14pt, font=\footnotesize\bfseries] at (-1.5, 0) {(i) $x \le -1$};
+    \end{scope}
+
+    % =========================================================================
+    % パターン 2: -1 <= x <= 0 (頂点が [-2, -1.5]: 最大は頂点, 最小は f(-1))
+    % =========================================================================
+    \begin{scope}[shift={(3.6, 0)}]
+      \draw[->, thick, gray!70] (-2.5, 0) -- (-0.5, 0) node[right] {$\beta$};
+      \draw[->, thick, gray!70] (-2.3, -0.3) -- (-2.3, 2.2);
+
+      \fill[blue!10, opacity=0.7] (-2, 0) rectangle (-1, 2.0);
+      \draw[thick, gray!40!black] (-2, 0) -- (-2, -0.08) node[below] {$-2$};
+      \draw[thick, gray!40!black] (-1, 0) -- (-1, -0.08) node[below] {$-1$};
+
+      % 頂点 = -1.75
+      \draw[dashed, red!85!black] (-1.75, 0) -- (-1.75, 2.0) node[above] {頂点};
+      \draw[line width=1.3pt, blue!85!black, domain=-2.2:-0.8, samples=40]
+      plot (\x, {-2.2*(\x + 1.75)^2 + 1.9});
+
+      \fill[red!85!black] (-1.75, 1.9) circle (1.5pt) node[above] {$\max$};
+      \fill[blue!85!black] (-1, {-2.2*0.75^2 + 1.9}) circle (1.5pt) node[below left=1pt] {$\min=f(-1)$};
+
+      \node[below=14pt, font=\footnotesize\bfseries] at (-1.5, 0) {(ii) $-1 \le x \le 0$};
+    \end{scope}
+
+    % =========================================================================
+    % パターン 3: 0 <= x <= 1 (頂点が [-1.5, -1]: 最大は頂点, 最小は f(-2))
+    % =========================================================================
+    \begin{scope}[shift={(7.2, 0)}]
+      \draw[->, thick, gray!70] (-2.5, 0) -- (-0.5, 0) node[right] {$\beta$};
+      \draw[->, thick, gray!70] (-2.3, -0.3) -- (-2.3, 2.2);
+
+      \fill[blue!10, opacity=0.7] (-2, 0) rectangle (-1, 2.0);
+      \draw[thick, gray!40!black] (-2, 0) -- (-2, -0.08) node[below] {$-2$};
+      \draw[thick, gray!40!black] (-1, 0) -- (-1, -0.08) node[below] {$-1$};
+
+      % 頂点 = -1.25
+      \draw[dashed, red!85!black] (-1.25, 0) -- (-1.25, 2.0) node[above] {頂点};
+      \draw[line width=1.3pt, blue!85!black, domain=-2.2:-0.8, samples=40]
+      plot (\x, {-2.2*(\x + 1.25)^2 + 1.9});
+
+      \fill[red!85!black] (-1.25, 1.9) circle (1.5pt) node[above] {$\max$};
+      \fill[blue!85!black] (-2, {-2.2*0.75^2 + 1.9}) circle (1.5pt) node[below right=1pt] {$\min=f(-2)$};
+
+      \node[below=14pt, font=\footnotesize\bfseries] at (-1.5, 0) {(iii) $0 \le x \le 1$};
+    \end{scope}
+
+    % =========================================================================
+    % パターン 4: 1 <= x (頂点 >= -1: 単調増加)
+    % =========================================================================
+    \begin{scope}[shift={(10.8, 0)}]
+      \draw[->, thick, gray!70] (-2.5, 0) -- (-0.3, 0) node[right] {$\beta$};
+      \draw[->, thick, gray!70] (-2.3, -0.3) -- (-2.3, 2.2);
+
+      \fill[blue!10, opacity=0.7] (-2, 0) rectangle (-1, 2.0);
+      \draw[thick, gray!40!black] (-2, 0) -- (-2, -0.08) node[below] {$-2$};
+      \draw[thick, gray!40!black] (-1, 0) -- (-1, -0.08) node[below] {$-1$};
+
+      % 頂点 = -0.7
+      \draw[dashed, red!85!black] (-0.7, 0) -- (-0.7, 2.0) node[above] {頂点};
+      \draw[line width=1.3pt, blue!85!black, domain=-2.2:-0.6, samples=40]
+      plot (\x, {-1.5*(\x + 0.7)^2 + 2.0});
+
+      \fill[red!85!black] (-1, {-1.5*0.3^2 + 2.0}) circle (1.5pt) node[above left=1pt] {$\max=f(-1)$};
+      \fill[blue!85!black] (-2, {-1.5*1.3^2 + 2.0}) circle (1.5pt) node[below right=1pt] {$\min=f(-2)$};
+
+      \node[below=14pt, font=\footnotesize\bfseries] at (-1.5, 0) {(iv) $1 \le x$};
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{頂点 $\beta = \dfrac{x-3}{2}$ の位置による $f(\beta)$ の最大・最小の4つの場合分け}
+  \label{fig:four_cases_f_beta}
+\end{figure}
+
+\cref{eq:5}の範囲での$f(\beta)$のとりうる値は従って，
+\begin{align}
+  \begin{cases}
+    x \le -1 \text{の時}: f(-1) \le y \le f(-2) \\
+    -1 \le x \le 0 \text{の時}: f(-1) \le y \le f\left(\dfrac{x-3}{2}\right) \\
+    0 \le x \le -1 \text{の時}: f(-2) \le y \le f\left(\dfrac{x-3}{2}\right) \\
+    1 \le x \text{の時}: f(-2) \le y \le f(-1)
+  \end{cases} \label{eq:7}
+\end{align}
+である．これと
+\begin{align}
+  \begin{cases}
+    f(-1)=\dfrac{\sqrt{3}}{3}(x+4), \\
+    f(-2)=\dfrac{\sqrt{3}}{3}(-x+4), \\
+    f\left(\dfrac{x-3}{2}\right)=\dfrac{2\sqrt{3}}{3}\cdot\dfrac{x^2+9}{4} = \dfrac{\sqrt{3}}{6}(x^2+9)
+  \end{cases}
+\end{align}
+から，領域$D$を図示すると下図のようになる．
+ただし，直線$OP: y = \sqrt{3}x$, $OQ: y = -\sqrt{3}x$はそれぞれ
+$(1,\sqrt{3}), (-1,\sqrt{3})$で$y=f(-2), y=f(-1)$と交わる．
+
+% TODO: Dの図示
+% TODO: Dの図示
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=1.5cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 領域 D の斜線塗りつぶし
+    % ============================================================
+    \fill[pattern=north east lines, pattern color=blue!75, opacity=0.75]
+    (-2, {2*sqrt(3)})
+    -- (-1, {5*sqrt(3)/3})
+    -- plot[domain=-1:1, samples=50, smooth, variable=\x] ({\x}, {sqrt(3)/6*(\x*\x + 9)})
+    -- (2, {2*sqrt(3)})
+    -- (1, {sqrt(3)})
+    -- (0, {4*sqrt(3)/3})
+    -- (-1, {sqrt(3)})
+    -- cycle;
+
+    % ============================================================
+    % 2. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-2.7, 0) -- (2.7, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 4.0) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % ============================================================
+    % 3. 上側境界線
+    % ============================================================
+    % 中央: 放物線 y = sqrt(3)/6 * (x^2 + 9) (-1 <= x <= 1)
+    \draw[line width=1.5pt, blue!85!black, domain=-1:1, samples=50, smooth, variable=\x]
+    plot ({\x}, {sqrt(3)/6*(\x*\x + 9)});
+    \node[blue!90!black, font=\footnotesize\bfseries, above] at (0, {3*sqrt(3)/2 + 0.05})
+    {$y = \frac{\sqrt{3}}{6}(x^2+9)$};
+
+    % 右上: 直線 y = f(-1) = sqrt(3)/3 * (x + 4) (1 <= x <= 2)
+    \draw[line width=1.5pt, blue!85!black] (1, {5*sqrt(3)/3}) -- (2, {2*sqrt(3)})
+    node[midway, above right=1pt, font=\scriptsize\bfseries] {$y = f(-1)$};
+
+    % 左上: 直線 y = f(-2) = sqrt(3)/3 * (-x + 4) (-2 <= x <= -1)
+    \draw[line width=1.5pt, blue!85!black] (-2, {2*sqrt(3)}) -- (-1, {5*sqrt(3)/3})
+    node[midway, above left=1pt, font=\scriptsize\bfseries] {$y = f(-2)$};
+
+    % ============================================================
+    % 4. 下側境界線
+    % ============================================================
+    % 中央下: 直線 y = sqrt(3)/3 * (4 - |x|) (-1 <= x <= 1)
+    \draw[line width=1.4pt, teal!85!black] (-1, {sqrt(3)}) -- (0, {4*sqrt(3)/3}) -- (1, {sqrt(3)});
+    \node[teal!90!black, font=\scriptsize\bfseries, above] at (0.45, 1.95) {$y = \frac{\sqrt{3}}{3}(4-x)$};
+
+    % 左右下: 半直線 y = sqrt(3)|x|
+    \draw[line width=1.4pt, gray!40!black] (1, {sqrt(3)}) -- (2, {2*sqrt(3)})
+    node[midway, below right=1pt, font=\scriptsize] {$y = \sqrt{3}x$};
+    \draw[line width=1.4pt, gray!40!black] (-1, {sqrt(3)}) -- (-2, {2*sqrt(3)})
+    node[midway, below left=1pt, font=\scriptsize] {$y = -\sqrt{3}x$};
+
+    % 原点からの半直線の延長点線
+    \draw[dashed, gray!45] (0, 0) -- (1, {sqrt(3)});
+    \draw[dashed, gray!45] (0, 0) -- (-1, {sqrt(3)});
+
+    % ============================================================
+    % 5. 投影破線と目盛り
+    % ============================================================
+    \draw[dashed, gray!55] (-2, 0) -- (-2, {2*sqrt(3)}) (2, 0) -- (2, {2*sqrt(3)});
+    \draw[dashed, gray!55] (-1, 0) -- (-1, {5*sqrt(3)/3}) (1, 0) -- (1, {5*sqrt(3)/3});
+    \draw[dashed, gray!55] (0, {4*sqrt(3)/3}) -- (0, {3*sqrt(3)/2});
+
+    \node[below=2pt, font=\scriptsize] at (-2, 0) {$-2$};
+    \node[below=2pt, font=\scriptsize] at (-1, 0) {$-1$};
+    \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
+    \node[below=2pt, font=\scriptsize] at (2, 0) {$2$};
+
+    \node[left=2pt, font=\scriptsize] at (0, {4*sqrt(3)/3}) {$\frac{4\sqrt{3}}{3}$};
+    \node[left=2pt, font=\scriptsize] at (0, {3*sqrt(3)/2}) {$\frac{3\sqrt{3}}{2}$};
+
+    % 特徴点のプロット
+    \fill[black] (0, {3*sqrt(3)/2}) circle (1.2pt);
+    \fill[black] (0, {4*sqrt(3)/3}) circle (1.2pt);
+    \fill[black] (-1, {sqrt(3)}) circle (1.2pt);
+    \fill[black] (1, {sqrt(3)}) circle (1.2pt);
+    \fill[black] (-1, {5*sqrt(3)/3}) circle (1.2pt);
+    \fill[black] (1, {5*sqrt(3)/3}) circle (1.2pt);
+    \fill[black] (-2, {2*sqrt(3)}) circle (1.2pt) node[above left=1pt, font=\scriptsize] {$(-2, 2\sqrt{3})$};
+    \fill[black] (2, {2*sqrt(3)}) circle (1.2pt) node[above right=1pt, font=\scriptsize] {$(2, 2\sqrt{3})$};
+
+    % 領域ラベル D
+    \node[blue!90!black, font=\large\bfseries] at (0, 2.45) {$D$};
+
+  \end{tikzpicture}
+  \caption{線分 $PQ$ の通過領域 $D$（斜線部，境界を含む）}
+  \label{fig:region_D_envelope}
+\end{figure}
+
+これらをまとめると
+\begin{align}
+  \begin{cases}
+    0\le s\le1\text{の時，}\ \dfrac{\sqrt{3}}{3}(4-s)\le t\le\dfrac{\sqrt{3}}{6}(s^2+9)\\
+    1\le s\le2\text{の時，}\ \sqrt{3}s\le t\le\dfrac{\sqrt{3}}{3}(s+4)
+  \end{cases}
+\end{align}
+である．
 
 \end{document}

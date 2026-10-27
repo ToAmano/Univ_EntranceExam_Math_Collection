@@ -1,79 +1,191 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
+
+与えられた放物線
+\begin{align}
+  \begin{cases}
+    C_1:y=-x^2+1 \\
+    C_2:y={(x-u)}^2+u
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．
+
+% TODO: 概要図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=3, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 定数・厳密パラメータ (u = 0 の例)
+    % C1: y = -x^2 + 1
+    % C2: y = x^2 (頂点 (0,0))
+    % 交点: 2x^2 - 1 = 0 => x = ±1/sqrt(2) ≈ ±0.7071, y = 1/2 = 0.5
+    % ============================================================
+    \def\uVal{0.0}
+    \def\xInter{0.7071} % 1/sqrt(2)
+    \def\yInter{0.5}
+
+    \coordinate (O)  at (0, 0);
+    \coordinate (P1) at (-\xInter, \yInter);
+    \coordinate (P2) at (\xInter, \yInter);
+
+    % ============================================================
+    % 2. 三角形 OP1P2 (x1*y2 - x2*y1 に対応する幾何領域) の薄い塗りつぶし
+    % ============================================================
+    \fill[blue!12, opacity=0.8] (O) -- (P1) -- (P2) -- cycle;
+
+    % ============================================================
+    % 3. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-1.6, 0) -- (1.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 1.6) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % ============================================================
+    % 4. 2つの放物線 C1, C2
+    % ============================================================
+    % C1: y = -x^2 + 1 (上に凸)
+    \draw[line width=1.4pt, blue!85!black, domain=-1.25:1.25, samples=60, smooth]
+    plot (\x, {-(\x)*(\x) + 1.0});
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (0.7, 0.9)
+    {$C_1: y = -x^2 + 1$};
+
+    % C2: y = (x-u)^2 + u (下に凸, 例として u=0: y = x^2)
+    \draw[line width=1.4pt, teal!85!black, domain=-1.15:1.15, samples=60, smooth]
+    plot (\x, {(\x - \uVal)*(\x - \uVal) + \uVal});
+    \node[teal!90!black, font=\footnotesize\bfseries, below right] at (0.85, 0.4)
+    {$C_2: y = (x-u)^2 + u$};
+
+    % ============================================================
+    % 5. 交点・動径・三角形の境界線
+    % ============================================================
+    % 三角形 OP1P2 の境界線
+    \draw[line width=1.1pt, red!85!black] (O) -- (P1) -- (P2) -- cycle;
+
+    % 交点 P1(x1, y1), P2(x2, y2)
+    \fill[black] (P1) circle (1pt) node[above left=1pt] {$P(x_1, y_1)$};
+    \fill[black] (P2) circle (1pt) node[above right=1pt] {$Q(x_2, y_2)$};
+
+    % 座標投影線
+    \draw[dashed, gray!60] (P1) -- (-\xInter, 0) node[below=2pt, font=\scriptsize] {$x_1$};
+    \draw[dashed, gray!60] (P2) -- (\xInter, 0) node[below=2pt, font=\scriptsize] {$x_2$};
+    \draw[dashed, gray!60] (P1) -- (0, \yInter) node[above left=1pt, font=\scriptsize] {$y_1=y_2$};
+
+    % C1 の頂点 (0, 1)
+    \fill[black] (0, 1) circle (1pt) node[above left=1pt, font=\scriptsize] {$1$};
+
+    % C2 の頂点 (u, u) の例示
+    \fill[teal!85!black] (\uVal, \uVal) circle (1pt)
+    node[below=2pt, font=\scriptsize, teal!90!black] {頂点 $(u, u)$};
+
+  \end{tikzpicture}
+  \caption{放物線 $C_1, C_2$ の共有点 $P, Q$ と原点 $O$}
+  \label{fig:parabolas_intersection_geometry}
+\end{figure}
 
 \paragraph{(1)}
 
 $C_1$と$C_2$が共有点を持つ時，$y$を消去した
 \begin{align}
-  -x^2+1&=(x-u)^2+u\\
-  2x^2-2ux+u^2+u-1&=0\quad\cdots①
+  & -x^2+1=(x-u)^2+u\\
+  \therefore
+  & 2x^2-2ux+u^2+u-1=0 \label{eq:2}
 \end{align}
-が実解を持つ．判別式を$D$として，$D/4\ge0$だから，
+が実解を持つ．判別式を$D$として $D/4\ge0$ だから，
 \begin{align}
   D/4=u^2-2(u^2+u-1)\ge0\iff-u^2-2u+2\ge0\iff-1-\sqrt{3}\le u\le-1+\sqrt{3}
 \end{align}
-となり，$(a,b)=(-1-\sqrt{3},-1+\sqrt{3})$．
+となり，求める値は
+\begin{align}
+  (a,b)=(-1-\sqrt{3},-1+\sqrt{3})
+\end{align}
+である．
 
 \paragraph{(2)}
 
-①の2解を$x_1,x_2$とする．対称性から$x_1\le x_2$としてよい．
+与えられた式を$f(u)$として
 \begin{align}
-  y_k=-x_k^2+1\quad(k=1,2)
+  f(u) = 2|x_1y_2-x_2y_1| \label{eq:3}
 \end{align}
-より，与式を$f(u)$として，
+を求める．
+
+$x_1,x_2$は\cref{eq:2}の$2$実数解である．
+対称性から$x_1\le x_2$としてよい．
+
+$(x_k,y_k)$は$C_1$上の点でもあるから
 \begin{align}
-  \dfrac{1}{2}f(u)&=\left|x_1(1-x_2^2)-x_2(1-x_1^2)\right|\\
+  y_k=-x_k^2+1\quad(k=1,2) \label{eq:4}
+\end{align}
+なので\cref{eq:3}に代入して
+\begin{align}
+  \dfrac{1}{2}f(u)
+  &=\left|x_1(1-x_2^2)-x_2(1-x_1^2)\right|\\
   &=\left|x_1-x_1x_2^2-x_2+x_1^2x_2\right|\\
   &=\left|(x_1-x_2)+(x_1-x_2)x_1x_2\right|\\
-  &=|x_2-x_1||1+x_1x_2|\quad\cdots②
+  &=|x_2-x_1||1+x_1x_2| \\
+  \therefore
+  f(u) &= 2|x_2-x_1||1+x_1x_2| \label{eq:5}
 \end{align}
+である．
 
-ここで，$x_1\le x_2$だから，①の解と係数の関係より
+ここで，$x_1\le x_2$だから，\cref{eq:2}の解と係数の関係および解の公式より
 \begin{align}
-  x_2-x_1=\sqrt{-u^2-2u+2}
+  \begin{cases}
+    x_2-x_1=\sqrt{-u^2-2u+2} \\
+    x_1x_2=\dfrac{1}{2}(u^2+u-1)
+  \end{cases}
 \end{align}
-であり，また$x_1x_2=\dfrac{1}{2}(u^2+u-1)$だから，以上を②に代入して，
+である．\cref{eq:5}に代入して
 \begin{align}
-  f(u)&=2\sqrt{-u^2-2u+2}\left(1+\dfrac{u^2+u-1}{2}\right)\\
-  &=\sqrt{-u^2-2u+2}\,(u^2+u+1)
+  f(u)
+  &=2\sqrt{-u^2-2u+2}\left(1+\dfrac{u^2+u-1}{2}\right)\\
+  &=\sqrt{-u^2-2u+2}\,(u^2+u+1) \label{eq:6}
 \end{align}
-
-（$u^2+u+1$の判別式は$1-4<0$だから常に正で，絶対値記号を外せる．）
+である．
 
 \paragraph{(3)}
 
-$t=u+1$とおく．
+$t=u+1$とおいて\cref{eq:6}に代入して
 \begin{align}
-  f(u)&=\sqrt{-(t-1)^2+3}\,\left((t-1)^2+(t-1)+1\right)\\
+  f(u)
+  &=\sqrt{-(t-1)^2+3}\,\left((t-1)^2+(t-1)+1\right)\\
   &=\sqrt{-t^2+3}\,(t^2-t+1)
 \end{align}
-であるから，(1)より，
+であるから，(1)の$(a,b)$の値を用いて求める定積分は
 \begin{align}
-  I&=\int_{-\sqrt{3}}^{\sqrt{3}}\sqrt{-t^2+3}\,(t^2-t+1)\,dt \\
-  &=2\int_0^{\sqrt{3}}\sqrt{-t^2+3}\,(t^2+1)\,dt\quad\cdots③
+  I
+  &=\int_{a}^{b}f(u)\, du \\
+  &=\int_{a+1}^{b+1}f(t)\, dt  \quad (t=u+1) \\
+  &=\int_{-\sqrt{3}}^{\sqrt{3}}\sqrt{-t^2+3}\,(t^2-t+1)\,dt \\
+  &=2\int_0^{\sqrt{3}}\sqrt{-t^2+3}\,(t^2+1)\,dt \label{eq:7}
 \end{align}
-である（奇関数の項$-t\sqrt{-t^2+3}$の積分は$0$になることを用いた）．各項を計算する．まず第一項は，$t=\sqrt{3}\sin\theta$とおく．$\dfrac{dt}{d\theta}=\sqrt{3}\cos\theta$だから，
+である．ただし奇関数の積分が$0$になることを用いた．
+以下各項を計算する．
+
+まず第一項は$t=\sqrt{3}\sin\theta$とおくと$\dfrac{dt}{d\theta}=\sqrt{3}\cos\theta$だから，
 \begin{align}
-  \int_0^{\sqrt{3}}t^2\sqrt{-t^2+3}\,dt&=\int_0^{\pi/2}3\sin^2\theta\cdot\sqrt{3}\cos\theta\cdot\sqrt{3}\cos\theta\,d\theta\\
+  (\text{第一項})
+  &= \int_0^{\sqrt{3}}t^2\sqrt{-t^2+3}\,dt \\
+  &=\int_0^{\pi/2}3\sin^2\theta\cdot\sqrt{3}\cos\theta\cdot\sqrt{3}\cos\theta\,d\theta\\
   &=9\int_0^{\pi/2}\dfrac{1}{4}\sin^22\theta\,d\theta\\
   &=\dfrac{9}{4}\cdot\dfrac{1}{2}\left[\theta-\dfrac{1}{4}\sin4\theta\right]_0^{\pi/2} \\
   &=\dfrac{9}{16}\pi
 \end{align}
+である．
 
-次項は，半径$\sqrt{3}$の四分円の面積に等しく，
+第二項は，半径$\sqrt{3}$の四分円の面積に等しく，
 \begin{align}
-  \int_0^{\sqrt{3}}\sqrt{-t^2+3}\,dt=\dfrac{1}{4}\pi(\sqrt{3})^2=\dfrac{3}{4}\pi
+  (\text{第二項})
+  &=\int_0^{\sqrt{3}}\sqrt{-t^2+3}\,dt=\dfrac{1}{4}\pi(\sqrt{3})^2=\dfrac{3}{4}\pi
 \end{align}
+である．
 
-以上を③に代入して
+以上を\cref{eq:7}に代入して
 \begin{align}
   I=2\left(\dfrac{9}{16}\pi+\dfrac{3}{4}\pi\right)=\dfrac{21}{8}\pi
 \end{align}
+である．
 
 \end{document}

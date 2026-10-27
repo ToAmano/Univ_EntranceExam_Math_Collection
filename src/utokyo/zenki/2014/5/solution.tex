@@ -1,64 +1,108 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
+
+与えられた漸化式
+\begin{align}
+  \begin{cases}
+    a_1=r, a_2=r+1 \\
+    a_{n+2}=a_{n+1}(a_n+1) \\
+    b_{n} \equiv a_{n} \pmod p
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．
+
 \paragraph{(1)}
 
-合同式の法を$p$とすると，$a_n\equiv b_n$である．漸化式から
+合同式の法を$p$とすると\cref{eq:1}の第二式に第三式を代入して
 \begin{align}
-  b_{n+2}\equiv b_{n+1}(b_n+1)\quad\cdots①
+  & a_{n+2} \equiv a_{n+1}(a_n+1) \\
+  \therefore
+  & b_{n+2} \equiv b_{n+1}(b_n+1) \label{eq:2}
 \end{align}
-だから，題意は示された．$\blacksquare$
+だから題意は示された．$\blacksquare$
 
 \paragraph{(2)}
 
-$b_1=2$，$b_2=3$であるから，①より，
+$(r,p)=(2,17)$だから$b_1=2$，$b_2=3$である．
+以下\cref{eq:2}を繰り返し用いて
 \begin{align}
-  b_3\equiv3\cdot3=9,\quad b_4\equiv9\cdot4=36\equiv2,\quad b_5\equiv2\cdot10\equiv3\pmod{17}
+  b_3\equiv3\cdot3=9,\quad
+  b_4\equiv9\cdot4=36\equiv 2,\quad
+  b_5\equiv2\cdot10\equiv3 \pmod{17}
 \end{align}
 だから，以降$\{2,3,9\}$のくり返しとなるから，
 \begin{align}
   b_1=b_4=b_7=b_{10}=2,\qquad b_2=b_5=b_8=3,\qquad b_3=b_6=b_9=9
 \end{align}
+である．
 
 \paragraph{(3)}
 
-背理法で示す．$b_n\ne b_m$と仮定する．この時，$0\le b_n<b_m\le p-1$としてよい．条件から
+題意を背理法で示す．すなわち，$b_n\ne b_m$と仮定して題意の条件
 \begin{align}
-  b_{n+2}&\equiv b_{n+1}(b_n+1)\\
-  b_{m+2}&\equiv b_{m+1}(b_m+1)
+  b_{n+2} \equiv b_{m+2}, \quad
+  b_{n+1} \equiv b_{m+1}, \quad
+  b_{n+1} > 0 \label{eq:3}
 \end{align}
-が成り立つ．$r=b_m-b_n$とおくと，$r\in\mathbb N$かつ$1\le r\le p-1$であり，$b_{n+1}=b_{m+1}$，$b_{n+2}=b_{m+2}$を用いて上の2式を辺々引いて，
+が成立するかどうかを調べる．
+
+対称性から$0\le b_n<b_m\le p-1$としてよい．漸化式\cref{eq:2}および条件\cref{eq:3}から
 \begin{align}
-  0\equiv b_{n+1}\cdot r\pmod p
+  \begin{cases}
+    b_{n+2} \equiv b_{n+1}(b_n+1)\\
+    b_{m+2} \equiv b_{m+1}(b_m+1) \equiv b_{n+1}(b_m+1) \\
+  \end{cases}
 \end{align}
-となる．しかし，$1\le b_{n+1}\le p-1$，$1\le r\le p-1$であり$p$は素数だから，これは矛盾．よって$b_n=b_m$である．$\blacksquare$
+が成り立つ．辺々引き算して
+\begin{align}
+  b_{n+2}-b_{m+2} \equiv b_{n+1}\left(b_n-b_m\right), \quad
+  \therefore
+  0 \equiv b_{n+1}\left(b_n-b_m\right) \quad (\because\text{\cref{eq:3}}) \label{eq:4}
+\end{align}
+である．ここで\cref{eq:3}より
+\begin{align}
+  1 \le b_{n+1} \le p-1
+\end{align}
+であり，また仮定の$b_n \neq b_m$より
+\begin{align}
+  1 \le b_{n}-b_{m} \le p-1
+\end{align}
+である．$p$が素数であることと合わせて\cref{eq:3}は成立せずに矛盾する．
+以上より背理法により$b_n=b_m$である．$\blacksquare$
 
 \paragraph{(4)}
 
-題意が成立する時，任意の$n\in\mathbb N_{\ge2}$に対して，$b_n\ne0$が成立する．さらに，この時，$b_n$（$n\ge2$）は$1,2,\ldots,p-1$の高々$p-1$個の値しかとらないことから，連続する2項$b_n,b_{n+1}$のならびは高々$(p-1)^2$通りしか存在せず，
+題意より任意の$n\in\mathbb N_{\ge2}$に対して，
+\begin{align}
+  b_n \neq 0 \label{eq:5}
+\end{align}
+である．
+さらにこの時，$b_n$（$n\ge2$）は$1,2,\ldots,p-1$の高々$p-1$個の値しかとらないことから，連続する2項$b_n,b_{n+1}$のならびは高々$(p-1)^2$通りしか存在せず，鳩の巣原理から
 \begin{align}
   b_{n+2}=b_{m+2}>0,\quad b_{n+1}=b_{m+1}>0
 \end{align}
-を満たす異なる$n,m\in\mathbb N_{\ge2}$がある（$n<m$とする）．この時(3)から$b_n=b_m$となり，再び$b_{n+1}=b_{m+1}>0$，$b_n=b_m>0$に(3)を適用して，$b_{n-1}=b_{m-1}$となる．これをくり返して，$n<m$より，
+を満たす異なる$n,m\in\mathbb N_{\ge2}$がある（$n<m$とする）．
+
+この時(3)から$b_n=b_m$となり，再び$b_{n+1}=b_{m+1}>0$，$b_n=b_m>0$に(3)を適用して，$b_{n-1}=b_{m-1}$となる．これをくり返して，$n<m$より，
 \begin{align}
   b_1=b_{m+1-n}>0\quad(\because b_n>0)
 \end{align}
 となるから，$b_1\ne0$，つまり$a_1$は$p$で割り切れない．$\blacksquare$
 
-\bigskip
-\noindent{\bf [解2]}
+{\bf [別解]}
 \paragraph{(4)}
 
 [解]と同様に，
 \begin{align}
-  b_t=b_s,\qquad b_{t+1}=b_{s+1}\qquad(s<t,\ s,t\in\mathbb N_{\ge2})
+  b_t=b_s,\qquad b_{t+1}=b_{s+1}\qquad(s<t,\ s,t\in\mathbb N)
 \end{align}
-を満たす$s,t$がある．このうち，$s$が最小であるものについて考えると，$a_2,a_3,\ldots$が$p$で割り切れないことから，$b_s\ne0$，したがって$b_t=b_s\ne0$である．$s>1$と仮定すると，$b_{s-1},b_{t-1}$が定義され，$b_s=b_t>0$かつ$b_{s+1}=b_{t+1}$だから，(3)より$b_{s-1}=b_{t-1}$となり，$s-1<t-1$は$s$の最小性に反する．したがって$s=1$で，
+を満たす$s,t$について考える．ここで[解]では$n \ge 2$のもののみを考えていたが，あえて$N=1$を許容することでも証明できるのでやってみよう．
+
+$s$が最小であるものについて考えると，$t \ge 2$であり，$a_2,a_3,\ldots$が$p$で割り切れないことから$b_t\ne0$，したがって$b_t=b_s\ne0$である．
+
+$s>1$と仮定すると，$b_{s-1},b_{t-1}$が定義され，$b_s=b_t>0$かつ$b_{s+1}=b_{t+1}$だから，(3)より$b_{s-1}=b_{t-1}$となり，$s-1<t-1$は$s$の最小性に反する．したがって$s=1$で，
 \begin{align}
   b_1=b_s=b_t\ne0
 \end{align}
