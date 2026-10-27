@@ -15,27 +15,34 @@
   Xx - Yy = 1 \cdots \text{②}
 \]
 
-\begin{center}
-  \begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}
-      \draw[->] (-1,0) -- (3,0) node[right] {$x$};
-      \draw[->] (0,-2) -- (0,2) node[above] {$y$};
-      \draw[domain=-1.5:1.5, samples=50, variable=\t] plot ({cosh(\t)}, {sinh(\t)});
-      \coordinate (P) at (0, 1.5);
-      \node[right] at (P) {$P$};
-      \fill (P) circle (1.5pt);
-      \coordinate (A) at ({sqrt(1+(-1/1.5)^2)}, {-1/1.5});
-      \node[right] at (A) {$A$};
-      \fill (A) circle (1.5pt);
-      \coordinate (C) at (0, {-1/1.5});
-      \node[left] at (C) {$C$};
-      \fill (C) circle (1.5pt);
-      \draw (P) -- (A) -- (1.8, -1.74);
-      \draw (C) -- (A);
-    \end{tikzpicture}
-  \end{figure}
-\end{center}
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[x=1.45cm,y=1.15cm,>=stealth]
+    % p=3/2 の場合。Y=-1/p=-2/3，X=\sqrt{1+1/p^2}=\sqrt{13}/3。
+    \coordinate (P) at (0,1.5);
+    \coordinate (A) at (1.20185,-0.66667);
+    \coordinate (B) at (-1.20185,-0.66667);
+    \coordinate (C) at (0,-0.66667);
+    \fill[blue!7] (P)--(B)--(A)--cycle;
+    \fill[teal!18] (P)--(C)--(A)--cycle;
+    \draw[blue!75!black,very thick,domain=-1.9:1.9,samples=100]
+    plot ({sqrt(1+\x*\x)},\x)
+    plot ({-sqrt(1+\x*\x)},\x);
+    \draw[orange!85!black,very thick] (B)--(P)--(A);
+    \draw[blue!75!black,thick] (B)--(A);
+    \draw[->,gray!75] (-2.35,0)--(2.35,0) node[right] {$x$};
+    \draw[->,gray!75] (0,-1.8)--(0,2.25) node[above] {$y$};
+    \draw[dashed,gray!70] (P)--(C);
+    \fill[orange!85!black] (P) circle (1.4pt);
+    \fill[blue!75!black] (A) circle (1.4pt) (B) circle (1.4pt);
+    \fill[teal!70!black] (C) circle (1.4pt);
+    \node[above right] at (P) {$P(0,p)$};
+    \node[below right] at (A) {$A(X,Y)$};
+    \node[below left] at (B) {$B$};
+    \node[below left] at (C) {$C$};
+  \end{tikzpicture}
+  \caption{双曲線への2本の接線と三角形 $PAB$．青緑の部分が $\triangle PAC$（図は $p=3/2$）}
+\end{figure}
 
 これが $P$ をとおる時，
 \[
