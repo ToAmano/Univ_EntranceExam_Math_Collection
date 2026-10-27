@@ -20,6 +20,48 @@ $$
 $$
 を示せば良いが，$0 \le \alpha < \beta \le \pi/2$及び右図の面積を比較して，
 
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[x=2.2cm,y=2.0cm,every node/.style={font=\scriptsize}]
+    % 左は [alpha,beta]、右は [pi-beta,pi-alpha] の面積．
+    \begin{scope}
+      \fill[teal!17] plot[domain=0.4:1.15,samples=60]
+      (\x,{sin(\x r)}) -- (1.15,0)--(0.4,0)--cycle;
+      \draw[->,gray!75!black] (-0.10,0)--(1.78,0) node[right] {$x$};
+      \draw[->,gray!75!black] (0,-0.08)--(0,1.20) node[above] {$y$};
+      \draw[blue!75!black,very thick,domain=0:1.57,samples=70]
+      plot (\x,{sin(\x r)});
+      \draw[orange!80!black,thick,dashed] (0.4,{sin(0.4 r)})
+      -- (1.15,{sin(1.15 r)});
+      \draw[gray!60,dashed] (0.4,0)--(0.4,{sin(0.4 r)})
+      (1.15,0)--(1.15,{sin(1.15 r)});
+      \node[below] at (0.4,0) {$\alpha$};
+      \node[below] at (1.15,0) {$\beta$};
+      \node[below] at (1.57,0) {$\pi/2$};
+      \node[left] at (0,1) {$1$};
+      \node[teal!70!black] at (0.8,0.27) {$\int_\alpha^\beta\sin x\,dx$};
+    \end{scope}
+    \begin{scope}[shift={(3.1,0)}]
+      \fill[teal!17] plot[domain=0.42:1.17,samples=60]
+      (\x,{cos(\x r)}) -- (1.17,0)--(0.42,0)--cycle;
+      \draw[->,gray!75!black] (-0.10,0)--(1.78,0) node[right] {$x$};
+      \draw[->,gray!75!black] (0,-0.08)--(0,1.20) node[above] {$y$};
+      \draw[blue!75!black,very thick,domain=0:1.57,samples=70]
+      plot (\x,{cos(\x r)});
+      \draw[orange!80!black,thick,dashed] (0.42,{cos(0.42 r)})
+      -- (1.17,{cos(1.17 r)});
+      \draw[gray!60,dashed] (0.42,0)--(0.42,{cos(0.42 r)})
+      (1.17,0)--(1.17,{cos(1.17 r)});
+      \node[below] at (0.42,0) {$\pi-\beta$};
+      \node[below] at (1.17,0) {$\pi-\alpha$};
+      \node[below] at (0,0) {$\pi/2$};
+      \node[teal!70!black] at (0.8,0.24)
+      {$\int_{\pi-\beta}^{\pi-\alpha}\sin x\,dx$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{左右の曲線下の面積と，弦の下の台形の比較}
+\end{figure}
+
 示すべきことは明らかである．
 
 \paragraph{(2)}
