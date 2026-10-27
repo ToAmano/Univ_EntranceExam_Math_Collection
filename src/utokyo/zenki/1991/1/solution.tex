@@ -3,7 +3,95 @@
 
 {\bf[解]}
 
+% TODO: 四面体の概要図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.6cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
+
+    % 平面 (床) の敷物
+    \fill[gray!10] (-2.2, -1.2) -- (2.5, -1.2) -- (3.5, 2.2) -- (-1.2, 2.2) -- cycle;
+    \draw[gray!50, line width=0.8pt] (-2.2, -1.2) -- (2.5, -1.2) -- (3.5, 2.2) -- (-1.2, 2.2) -- cycle;
+    \node[gray!70!black, font=\footnotesize, above right] at (-2.1, -1.1) {平面（床）};
+
+    % 正四面体の底面頂点 A, B, C (反時計回り)
+    \coordinate (A) at (-1.0, -0.4);
+    \coordinate (B) at (1.2, -0.6);
+    \coordinate (C) at (0.3, 1.2);
+    % 上の頂点 D
+    \coordinate (D) at (0.1, 2.3);
+
+    % 底面 ABC (最初の面 T_0) の塗りつぶし
+    \fill[blue!20, opacity=0.8] (A) -- (B) -- (C) -- cycle;
+    \draw[line width=1.4pt, blue!90!black] (A) -- (B) -- (C) -- cycle;
+
+    % 側面の稜線
+    \draw[line width=1.2pt, gray!30!black] (A) -- (D);
+    \draw[line width=1.2pt, gray!30!black] (B) -- (D);
+    \draw[line width=1.2pt, dashed, gray!50!black] (C) -- (D);
+
+    % 底面ラベル T_0
+    \node[blue!95!black, font=\normalsize\bfseries] at (0.15, 0.1) {$T_0$ (底面)};
+
+    % 倒す操作の矢印（辺 AB を軸として手前に倒す例）
+    \draw[line width=1.5pt, red!85!black, ->] (0.2, 2.1)
+    to[out=-20, in=70] (1.6, 0.4);
+    \node[red!90!black, font=\footnotesize\bfseries, right] at (1.4, 1.0)
+    {辺 $AB$ を軸に倒す（確率 $\frac{1}{3}$）};
+
+    % 倒す軸となる 3 辺の矢印インジケータ
+    \node[font=\tiny\bfseries, red!80!black, below] at ($ (A)!0.5!(B) $) {軸 1};
+    \node[font=\tiny\bfseries, red!80!black, right] at ($ (B)!0.5!(C) $) {軸 2};
+    \node[font=\tiny\bfseries, red!80!black, left]  at ($ (A)!0.5!(C) $) {軸 3};
+
+    % 頂点ラベル
+    \fill[black] (A) circle (1.2pt) node[below left] {$A$};
+    \fill[black] (B) circle (1.2pt) node[below right] {$B$};
+    \fill[black] (C) circle (1.2pt) node[above right] {$C$};
+    \fill[black] (D) circle (1.2pt) node[above] {$D$};
+
+  \end{tikzpicture}
+  \caption{正四面体と3辺のいずれかを軸として倒す操作}
+  \label{fig:tetrahedron_tumble_overview}
+\end{figure}
+
 % TODO: 遷移の様子の図
+% TODO: 遷移の様子の図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[
+      x=4.0cm, y=2.0cm, >=stealth,
+      state/.style={draw=blue!85!black, fill=white, rounded corners=5pt, line width=1.2pt, inner sep=8pt, font=\normalsize\bfseries, align=center},
+      prob/.style={font=\footnotesize\bfseries, fill=white, inner sep=2.5pt}
+    ]
+
+    % 2つの状態ノード
+    \node[state] (S0) at (0, 0) {
+      最初の面 $T_0$ が底面\\[3pt]
+      \textmd{\small（確率 $p_n$）}
+    };
+
+    \node[state, draw=gray!70!black] (S1) at (1.5, 0) {
+      他の 3 面のいずれかが底面\\[3pt]
+      \textmd{\small（確率 $1 - p_n$）}
+    };
+
+    % 遷移矢印
+    % S0 -> S1 (どの辺で倒しても必ず他の面になる)
+    \draw[->, line width=1.3pt, gray!60!black] (S0.north) to[bend left=30]
+    node[prob, above] {確率 $1$ （3辺のどれを軸にしても面 $T_0$ ではなくなる）} (S1.north);
+
+    % S1 -> S0 (面 T_0 と共有する 1 辺を軸にする場合)
+    \draw[->, line width=1.4pt, red!85!black] (S1.south) to[bend left=30]
+    node[below, red!90!black] {確率 $\frac{1}{3}$ （面 $T_0$ との共有辺を軸に倒す）} (S0.south);
+
+    % S1 -> S1 (他の 2 辺を軸にする自己ループ)
+    \draw[->, line width=1.1pt, gray!60] (S1.east) to[out=-30, in=30, looseness=3.5]
+    node[prob, right] {確率 $\frac{2}{3}$} (S1.east);
+
+  \end{tikzpicture}
+  \caption{底面の状態推移と確率漸化式}
+  \label{fig:tetrahedron_state_transition}
+\end{figure}
 
 題意の確率$p_n$とおくと上図から
 \begin{align}

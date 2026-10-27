@@ -27,6 +27,83 @@
 題意の方程式の解は $y = g(x)$ と $y = p$ の共有点の $x$ 座標に等しい．
 
 % TODO: y=g(x), y=pの図のupgrade
+% TODO: y=g(x), y=pの図のupgrade
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.8cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-2.5, 0) -- (2.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -2.6) -- (0, 2.7) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % ============================================================
+    % 2. 曲線 y = g(x) = x^3 - 3x
+    % ============================================================
+    \draw[line width=1.5pt, blue!85!black, domain=-2.15:2.15, samples=70, smooth]
+    plot (\x, {\x*\x*\x - 3.0*\x});
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (1.5, 1.8)
+    {$y = g(x) = x^3 - 3x$};
+
+    % ============================================================
+    % 3. 極値の補助破線と目盛り
+    % ============================================================
+    % 極大点 (-1, 2)
+    \draw[dashed, gray!55, line width=0.8pt] (-1, 0) -- (-1, 2) -- (0, 2);
+    \fill[black] (-1, 2) circle (1.3pt);
+    \node[below=2pt, font=\scriptsize] at (-1, 0) {$-1$};
+    \node[left=2pt, font=\scriptsize]  at (0, 2) {$2$};
+
+    % 極小点 (1, -2)
+    \draw[dashed, gray!55, line width=0.8pt] (1, 0) -- (1, -2) -- (0, -2);
+    \fill[black] (1, -2) circle (1.3pt);
+    \node[above=2pt, font=\scriptsize] at (1, 0) {$1$};
+    \node[right=2pt, font=\scriptsize] at (0, -2) {$-2$};
+
+    % x軸との交点 -sqrt(3), sqrt(3)
+    \node[above left=1pt, font=\tiny, gray!60!black] at (-1.732, 0) {$-\sqrt{3}$};
+    \node[below right=1pt, font=\tiny, gray!60!black] at (1.732, 0) {$\sqrt{3}$};
+
+    % ============================================================
+    % 4. 直線 y = p (例: p = 1.0) と 3実解 alpha, beta, gamma
+    % x^3 - 3x - 1 = 0 の解: alpha ≈ -1.532, beta ≈ -0.347, gamma ≈ 1.879
+    % ============================================================
+    \def\pVal{1.0}
+    \def\xAlpha{-1.532}
+    \def\xBeta{-0.347}
+    \def\xGamma{1.879}
+
+    \draw[line width=1.2pt, red!85!black] (-2.3, \pVal) -- (2.3, \pVal)
+    node[right, font=\footnotesize\bfseries] {$y = p \quad (0 < p < 2)$};
+
+    % 交点プロットと座標投影
+    \fill[red!85!black] (\xAlpha, \pVal) circle (1.4pt);
+    \fill[red!85!black] (\xBeta, \pVal) circle (1.4pt);
+    \fill[red!85!black] (\xGamma, \pVal) circle (1.4pt);
+
+    \draw[dotted, red!70!black, line width=0.8pt] (\xAlpha, 0) -- (\xAlpha, \pVal);
+    \draw[dotted, red!70!black, line width=0.8pt] (\xBeta, 0) -- (\xBeta, \pVal);
+    \draw[dotted, red!70!black, line width=0.8pt] (\xGamma, 0) -- (\xGamma, \pVal);
+
+    \node[below=2pt, font=\scriptsize\bfseries, red!90!black] at (\xAlpha, 0) {$\alpha$};
+    \node[below=2pt, font=\scriptsize\bfseries, red!90!black] at (\xBeta, 0)  {$\beta$};
+    \node[below=2pt, font=\scriptsize\bfseries, red!90!black] at (\xGamma, 0) {$\gamma$};
+    \node[left=2pt, font=\scriptsize, red!90!black] at (0, \pVal) {$p$};
+
+    % 解の存在区間注釈
+    \node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=3.5pt, font=\footnotesize, align=left]
+    at (-0.6, -1.8) {
+      $0 < p < 2$ のとき 3 つの実数解：\\[2pt]
+      $\alpha < -1 < \beta < 0 < 1 < \gamma$
+    };
+
+  \end{tikzpicture}
+  \caption{$y = g(x) = x^3 - 3x$ と直線 $y = p$ の交点 $\alpha, \beta, \gamma$}
+  \label{fig:gx_px_intersections}
+\end{figure}
+
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[scale=0.65, >=stealth]
@@ -169,8 +246,22 @@ $y=f(p)$の挙動を調べるため，$f'(p), f''(p)$を求める．
 極限は$f(p) \to +\infty \ (p \to +\infty)$ であるから増減表は以下のようになる．
 
 % TODO: 増減表
+% TODO: 増減表 (p > 2)
+\begin{table}[htb]
+  \centering
+  \caption{$f(p)$ の増減表（$p > 2$）}
+  \label{tab:variation_p_gt_2}
+  \begin{tabular}{c|ccc}
+    $p$ & $(2)$ & $\cdots$ & $(+\infty)$ \\ \hline
+    $f'(p)$ & & $+$ & \\ \hline
+    $f''(p)$ & & $-$ & \\ \hline
+    $f(p)$ & $(4)$ & $
+    \begin{array}{c} \nearrow \\ \text{\scriptsize (上に凸)}
+    \end{array}$ & $(+\infty)$
+  \end{tabular}
+\end{table}
 
-\subparagraph{$1^\circ \ 0 \le p \le 2$ の時}
+\subparagraph{$2^\circ \ 0 \le p \le 2$ の時}
 
 $\beta = -(\alpha+\gamma)$より
 \begin{align}
@@ -192,7 +283,7 @@ $\beta = -(\alpha+\gamma)$より
   \begin{cases}
     1 = (-3\beta^2+3)\dfrac{d\beta}{dp} \\
     f'(p) = 2\beta\dfrac{d\beta}{dp}
-  \end{cases}
+  \end{cases} \\
   \therefore
   &
   \begin{cases}
@@ -242,44 +333,93 @@ $\beta = -(\alpha+\gamma)$より
 これと$f(0)=-3,\lim_{p\to 2}f(p)=-2$より増減表は以下のようになる．
 
 % TODO: 増減表
+% TODO: 増減表 (0 <= p <= 2)
+\begin{table}[htb]
+  \centering
+  \caption{$f(p)$ の増減表（$0 \le p \le 2$）}
+  \label{tab:variation_0_le_p_le_2}
+  \begin{tabular}{c|cccc}
+    $p$ & $0$ & $\cdots$ & $(2)$ & \\ \hline
+    $f'(p)$ & & $+$ & &  \\ \hline
+    $f''(p)$ & & $+$ & & \\ \hline
+    $f(p)$ & $-3$ & $
+    \begin{array}{c} \nearrow \\ \text{\scriptsize (下に凸)}
+    \end{array}$ & $(-2)$ &
+  \end{tabular}
+\end{table}
 
 \casesend
 以上から$y=f(p)$のグラフの概形は下図のようになる．
 
 % TODO: upgrade
+% TODO: upgrade
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.8, >=stealth]
-    \draw[->] (-3.5, 0) -- (3.5, 0) node[right] {$p$};
-    \draw[->] (0, -3.5) -- (0, 4.5) node[above] {$y$};
+  \begin{tikzpicture}[x=1.6cm, y=1.0cm, >=stealth, every node/.style={font=\small}]
 
-    \fill (0, -3) circle (2pt) node[below right] {$-3$};
+    % ============================================================
+    % 1. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-3.8, 0) -- (3.8, 0) node[right] {$p$};
+    \draw[->, thick, gray!80!black] (0, -3.7) -- (0, 5.8) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
 
-    \draw[thick, domain=0:2, smooth] plot (\x, {0.25*\x*\x - 3});
-    \draw[thick, domain=-2:0, smooth] plot (\x, {0.25*\x*\x - 3});
+    % ============================================================
+    % 2. 最小値点 (0, -3)
+    % ============================================================
+    \fill[black] (0, -3) circle (1.4pt) node[below right=1pt, font=\scriptsize\bfseries] {$-3$};
 
-    \draw[dotted] (2, 0) -- (2, -2) -- (0, -2);
-    \draw[dotted] (-2, 0) -- (-2, -2) -- (0, -2);
-    \fill (2, -2) circle (2pt);
-    \fill (-2, -2) circle (2pt);
+    % ============================================================
+    % 3. 区間 -2 < p < 2: 下に凸な曲線 (パラメータ表示 beta)
+    % p = beta^3 - 3*beta, y = beta^2 - 3 (-1 < beta < 1)
+    % ============================================================
+    \draw[line width=1.5pt, blue!85!black, domain=-0.98:0.98, samples=70, smooth, variable=\b]
+    plot ({\b*\b*\b - 3.0*\b}, {\b*\b - 3.0});
+    \node[blue!90!black, font=\footnotesize\bfseries, below] at (1.0, -2.5)
+    {$y = \beta^2 - 3$};
 
-    \node[above] at (2, 0) {$2$};
-    \node[above] at (-2, 0) {$-2$};
-    \node[right] at (0, -2) {$-2$};
+    % ============================================================
+    % 4. p = ±2 における値 f(±2) = -2 (孤立値/境界値)
+    % ============================================================
+    \draw[dashed, gray!55] (-2, 0) -- (-2, -2) -- (2, -2) -- (2, 0);
+    \draw[dashed, gray!55] (0, -2) -- (2, -2);
+    \node[below=2pt, font=\scriptsize] at (-2, 0) {$-2$};
+    \node[below=2pt, font=\scriptsize] at (2, 0)  {$2$};
+    \node[left=2pt, font=\scriptsize]  at (0, -2) {$-2$};
 
-    \draw[thick, domain=2:3.2, smooth] plot (\x, {-2 + 3*sqrt(\x - 2)});
-    \draw[thick, domain=-3.2:-2, smooth] plot (\x, {-2 + 3*sqrt(-\x - 2)});
+    \fill[black] (-2, -2) circle (1.5pt);
+    \fill[black] (2, -2)  circle (1.5pt);
 
-    \draw[dotted] (-3.5, 4) -- (3.5, 4);
-    \node[left] at (0, 4) {$4$};
-    \draw[dotted] (2, 0) -- (2, 4);
-    \draw[dotted] (-2, 0) -- (-2, 4);
-    \draw[fill=white] (2, 4) circle (2pt);
-    \draw[fill=white] (-2, 4) circle (2pt);
+    % ============================================================
+    % 5. |p| > 2: 上に凸な曲線 (パラメータ表示 alpha)
+    % p = alpha^3 - 3*alpha, y = alpha^2 (|alpha| > 2)
+    % ============================================================
+    % 右側: p > 2 (alpha: 2.01 -> 2.35, p: 2.06 -> 5.92)
+    \draw[line width=1.5pt, teal!85!black, domain=2.001:2.32, samples=50, smooth, variable=\a]
+    plot ({\a*\a*\a - 3.0*\a}, {\a*\a});
 
-    \node[below right] at (0,0) {$0$};
+    % 左側: p < -2 (alpha: -2.015 -> -2.32)
+    \draw[line width=1.5pt, teal!85!black, domain=-2.32:-2.001, samples=50, smooth, variable=\a]
+    plot ({\a*\a*\a - 3.0*\a}, {\a*\a});
+
+    \node[teal!90!black, font=\footnotesize\bfseries, above right] at (2.2, 4.8)
+    {$y = \alpha^2$};
+
+    % ============================================================
+    % 6. |p| -> 2+ の極限点 (±2, 4) (白丸: 値は含まない)
+    % ============================================================
+    \draw[dotted, gray!60, line width=0.8pt] (-2, 0) -- (-2, 4) -- (2, 4) -- (2, 0);
+    \draw[dotted, gray!60, line width=0.8pt] (0, 4) -- (2, 4);
+    \node[left=2pt, font=\scriptsize] at (0, 4) {$4$};
+
+    \fill[white] (-2, 4) circle (1.8pt);
+    \draw[thick, black] (-2, 4) circle (1.8pt);
+    \fill[white] (2, 4)  circle (1.8pt);
+    \draw[thick, black] (2, 4)  circle (1.8pt);
+
   \end{tikzpicture}
-  \caption{$y=f(p)$ のグラフ}
+  \caption{$y = f(p)$ のグラフ（偶関数，$p = \pm 2$ で不連続）}
+  \label{fig:fp_complete_graph}
 \end{figure}
 
 \end{document}

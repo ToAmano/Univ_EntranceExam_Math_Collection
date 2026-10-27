@@ -3,6 +3,96 @@
 
 {\bf[解]}
 
+% TODO: 概要図
+% TODO: 概要図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.8cm, y=1.8cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 定数設定
+    % 直線: 2x - 5y + a = 0 <=> y = (2/5)x + a/5
+    % 格子点 (m, n) に対して 2m - 5n = k (整数)
+    % 直線と格子点の距離 d = |2m - 5n + a| / sqrt(29)
+    % 最小半径 r_min = 1 / (2*sqrt(29)) ≈ 0.0928
+    % ============================================================
+    \def\rMin{0.0928}
+    % 図の可読性のため、半径 r を視覚的にわかりやすくスケール（表示用 rVal ≈ 0.18）
+    \def\rPlot{0.18}
+
+    % ============================================================
+    % 2. 背景グリッドと格子点 (m, n)
+    % ============================================================
+    \draw[step=1.0, gray!25, thin] (-0.8, -0.6) grid (3.6, 2.2);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.8, 0) -- (3.8, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.6) -- (0, 2.4) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % ============================================================
+    % 3. 平行な基準直線群 2x - 5y + k = 0 (k: 整数)
+    % ============================================================
+    % k = 0: y = 2/5 x
+    \draw[dashed, gray!50, line width=0.8pt, domain=-0.5:3.5]
+    plot (\x, {0.4*\x});
+    % k = -1: 2x - 5y - 1 = 0 => y = 2/5 x - 1/5
+    \draw[dashed, gray!50, line width=0.8pt, domain=-0.5:3.5]
+    plot (\x, {0.4*\x - 0.2});
+
+    % ============================================================
+    % 4. 最悪のケースの直線（2本の基準直線の中央: 2m-5n+a = 1/2）
+    % 2x - 5y - 0.5 = 0 => y = 0.4x - 0.1
+    % ============================================================
+    \draw[line width=1.5pt, red!85!black, domain=-0.5:3.5]
+    plot (\x, {0.4*\x - 0.1})
+    node[right, font=\footnotesize\bfseries] {$2x - 5y + a = 0$};
+
+    % ============================================================
+    % 5. 格子点を中心とする円群（代表的な点）
+    % ============================================================
+    \foreach \m in {0, 1, 2, 3} {
+      \foreach \n in {0, 1, 2} {
+        % 格子点
+        \fill[black] (\m, \n) circle (1.2pt);
+        % 半径 r の円（薄い青塗り＋枠線）
+        \fill[blue!15, opacity=0.6] (\m, \n) circle (\rPlot);
+        \draw[line width=0.9pt, blue!85!black] (\m, \n) circle (\rPlot);
+      }
+    }
+
+    % ============================================================
+    % 6. 最寄りの格子点からの垂線（距離 ell）
+    % 例: 点 (0, 0) [2m-5n=0, 距離 d=0.5/sqrt(29)]
+    % および点 (3, 1) [2m-5n=1, 距離 d=0.5/sqrt(29)]
+    % ============================================================
+    % (0, 0) から直線 2x - 5y - 0.5 = 0 への垂足:
+    % (x, y) = 0.5/29 * (2, -5) ≈ (0.0345, -0.0862)
+    \coordinate (Foot0) at (0.0345, -0.0862);
+    \draw[<->, thick, teal!90!black] (0, 0) -- (Foot0)
+    node[midway, left=1pt, font=\scriptsize\bfseries] {$\ell$};
+
+    % (3, 1) からの垂線
+    \coordinate (Foot1) at ({3 - 0.0345}, {1 + 0.0862});
+    \draw[<->, thick, teal!90!black] (3, 1) -- (Foot1)
+    node[midway, right=1pt, font=\scriptsize\bfseries] {$\ell$};
+
+    % 格子点の目盛りラベル
+    \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
+    \node[below=2pt, font=\scriptsize] at (2, 0) {$2$};
+    \node[below=2pt, font=\scriptsize] at (3, 0) {$3$};
+    \node[left=2pt, font=\scriptsize]  at (0, 1) {$1$};
+    \node[left=2pt, font=\scriptsize]  at (0, 2) {$2$};
+
+    % 半径 r の指示矢印
+    \draw[->, thick, blue!90!black] (1, 1) -- ({1 + \rPlot*cos(45)}, {1 + \rPlot*sin(45)})
+    node[above right=-1pt, font=\scriptsize\bfseries] {$r$};
+
+  \end{tikzpicture}
+  \caption{格子点を中心とする円群と直線 $2x - 5y + a = 0$ の位置関係}
+  \label{fig:lattice_circles_and_line}
+\end{figure}
+
 $a$を実数として，題意の直線は
 \begin{align}
   2x-5y+a=0 \label{eq:1}
