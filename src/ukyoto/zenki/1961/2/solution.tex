@@ -1,10 +1,5 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
-
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
 
 {\bf [解]}
 \begin{figure}[htb]
@@ -26,56 +21,81 @@
     \draw[dashed, teal!70!black] (A) -- (D);
     \pic[draw=teal!75!black, angle radius=0.48cm] {angle=D--A--B};
     \pic[draw=teal!75!black, angle radius=0.57cm] {angle=C--A--D};
-    \fill (A) circle (1.3pt) node[below left=2pt] {$A$};
-    \fill (B) circle (1.3pt) node[right=4pt] {$B(\alpha,\alpha\tan\theta)$};
-    \fill (C) circle (1.3pt) node[below right=2pt] {$C(\beta,-\beta\tan\theta)$};
-    \fill (D) circle (1.3pt) node[above right=2pt] {$D$};
-    \fill[red!80!black] (P) circle (1.4pt) node[above right=2pt] {$P(p,q)$};
-    \node[below, font=\footnotesize] at (0.5, -1.2) {$x=\frac12$};
+    \node[circle, fill, inner sep=1.3pt] at (A) {}; \node[below left=2pt] at (A) {$A$};
+    \node[circle, fill, inner sep=1.3pt] at (B) {}; \node[right=4pt] at (B) {$B(\alpha,\alpha\tan\theta)$};
+    \node[circle, fill, inner sep=1.3pt] at (C) {}; \node[below right=2pt] at (C) {$C(\beta,-\beta\tan\theta)$};
+    \node[circle, fill, inner sep=1.3pt] at (D) {}; \node[above right=2pt] at (D) {$D$};
+    \node[circle, fill=red!80!black, inner sep=1.4pt] at (P) {}; \node[red!80!black, above right=2pt] at (P) {$P(p,q)$};
+    \node[below, font=\footnotesize] at (0.5, -1.2) {$x=\frac{1}{2}$};
   \end{tikzpicture}
   \caption{$AD$ を角の二等分線とし，$P$ を接線と $BC$ の交点とする座標配置}
   \label{fig:1961_2_coordinates}
 \end{figure}
 
-$AD=1$ として一般性を失わない．A を原点とし，AD を $x$ 軸とする上図のような座標平面をとり
-\[
-  B(\alpha, \alpha \tan \theta) \quad \left(0 < \theta < \dfrac{\pi}{2}\right)
-\]
-\[
-  C(\beta, -\beta \tan \theta)
-\]
-とおく ($\alpha \neq \beta$, $\alpha, \beta > 0$)．
+$AD=1$ として一般性を失わない．A を原点とし，AD を $x$ 軸とする上図のような座標平面をとり，
 \begin{align}
-  BC: &(\beta + \alpha)\tan \theta \cdot (x - \alpha) + (\beta - \alpha)(y - \alpha \tan \theta) = 0 \\
-  &(\beta + \alpha)\tan \theta \cdot x + (\beta - \alpha)y - 2\alpha\beta \tan \theta = 0 \quad \dots \text{①}
+  B(\alpha, \alpha \tan \theta) \quad
+  C(\beta, -\beta \tan \theta) \quad
+  \left(0 < \theta < \dfrac{\pi}{2}, \alpha \neq \beta, \alpha, \beta > 0\right) \label{eq:1}
 \end{align}
-これが $D(1,0)$ を通るので
-\[
-  (\beta + \alpha)\tan \theta = 2\alpha\beta \tan \theta
-\]
-$\tan \theta \neq 0$ より
-\[
-  \alpha + \beta = 2\alpha\beta \quad \dots \text{②}
-\]
+とおく．
 
-$\triangle ABC$ の外心 $O'(X,Y)$ とすると，$O'A = O'B = O'C$ から
+直線$BC$の方程式は
 \begin{align}
-  X &= \dfrac{1}{4}(\tau^2 + 1)(\alpha + \beta) \quad \dots \text{③} \quad (\tau = \tan \theta) \\
-  Y &= \dfrac{1}{4\tau}(\tau^2 + 1)(\alpha - \beta) \quad \dots \text{④}
+  BC:
+  &(\beta + \alpha)\tan \theta \cdot (x - \alpha) + (\beta - \alpha)(y - \alpha \tan \theta) = 0 \\
+  &(\beta + \alpha)\tan \theta \cdot x + (\beta - \alpha)y - 2\alpha\beta \tan \theta = 0 \label{eq:2}
 \end{align}
-となり，外接円は $C: (x-X)^2 + (y-Y)^2 = X^2 + Y^2$ だから点 A での接線 $l$ は
+である．題意よりこれが $D(1,0)$ を通るので
+\begin{align}
+  (\beta + \alpha)\tan \theta = 2\alpha\beta \tan \theta
+\end{align}
+で，\cref{eq:1}より $\tan \theta \neq 0$ で両辺わって
+\begin{align}
+  \alpha + \beta = 2\alpha\beta \label{eq:3}
+\end{align}
+を得る．
+
+$\triangle ABC$ の外心 $O'(X,Y)$ とすると，外心の定義から$|O'A| = |O'B| = |O'C|$ であり，\cref{eq:1}より
+\begin{align}
+  X^2 + Y^2 = (X-\alpha)^2 + (Y-\alpha \tan \theta)^2 = (X-\beta)^2 + (Y+\beta \tan \theta)^2
+\end{align}
+である．各辺から$X^2+Y^2$を引くと
+\begin{align}
+  \begin{cases}
+    -2\alpha X - 2\alpha\tan\theta Y +\alpha^2(1+\tan^2\theta) = 0 \\
+    -2\beta  X + 2\beta\tan\theta  Y +\beta^2(1+\tan^2\theta) = 0
+  \end{cases} \label{eq:4}
+\end{align}
+である．第一式に$\beta$をかけたものと第二式に$\alpha$をかけたものを辺々足し引きして
+\begin{align}
+  &
+  \begin{cases}
+    -4\alpha\beta X + \alpha\beta(1+\tan^2\theta)(\alpha+\beta) = 0 \\
+    -4 \alpha\beta\tan\theta Y + \alpha\beta(1+\tan^2\theta)(\alpha-\beta) = 0
+  \end{cases} \\
+  \therefore
+  &
+  \begin{cases}
+    X = \dfrac{1}{4} (\tan^2\theta + 1)(\alpha + \beta) \\
+    Y = \dfrac{1}{4} (\tan^2\theta + 1)(\alpha - \beta)
+  \end{cases} \label{eq:5}
+\end{align}
+を得る．ただし$\alpha\beta \neq 0$であることを用いた．
+
+従って外接円は $C: (x-X)^2 + (y-Y)^2 = X^2 + Y^2$ となり，
+点 A での接線 $l$ は
 \begin{align}
   l: &Xx + Yy = 0 \\
-  &(\alpha + \beta)\tau x + (\alpha - \beta)y = 0 \quad \dots \text{⑤}
+  \therefore
+  l: &(\alpha + \beta)\tan\theta x + (\alpha - \beta)y = 0 \label{eq:6}
 \end{align}
+である．これと線分$BC$との交点$P(p,q)$ は\cref{eq:2}より
+\begin{align}
+  p = \dfrac{1}{2}, \quad q = \dfrac{\alpha + \beta}{\beta - \alpha} \dfrac{\tan\theta}{2}
+\end{align}
+よって P は定直線 $x = \dfrac{1}{2}$ 上にあるから題意は示された．
 
-よって ①, ⑤ から BC と $l$ の交点 $P(p,q)$ は
-\[
-  p = \dfrac{1}{2}, \quad q = \dfrac{\alpha + \beta}{\beta - \alpha} \dfrac{\tau}{2}
-\]
-よって P は定直線 $x = \dfrac{1}{2}$ 上にあるから示された．
-
-\bigskip
 {\bf [別解]}
 \begin{figure}[htb]
   \centering
@@ -93,11 +113,11 @@ $\triangle ABC$ の外心 $O'(X,Y)$ とすると，$O'A = O'B = O'C$ から
     \draw[dashed, red!70!black] (P) -- (D);
     \pic[draw=teal!75!black, angle radius=0.42cm] {angle=D--A--B};
     \pic[draw=teal!75!black, angle radius=0.51cm] {angle=C--A--D};
-    \fill (A) circle (1.3pt) node[left=2pt] {$A$};
-    \fill (B) circle (1.3pt) node[right=3pt] {$B$};
-    \fill (C) circle (1.3pt) node[below right=2pt] {$C$};
-    \fill (D) circle (1.3pt) node[above right=2pt] {$D$};
-    \fill[red!80!black] (P) circle (1.4pt) node[above=2pt] {$P$};
+    \node[circle, fill, inner sep=1.3pt] at (A) {}; \node[left=2pt] at (A) {$A$};
+    \node[circle, fill, inner sep=1.3pt] at (B) {}; \node[right=3pt] at (B) {$B$};
+    \node[circle, fill, inner sep=1.3pt] at (C) {}; \node[below right=2pt] at (C) {$C$};
+    \node[circle, fill, inner sep=1.3pt] at (D) {}; \node[above right=2pt] at (D) {$D$};
+    \node[circle, fill=red!80!black, inner sep=1.4pt] at (P) {}; \node[red!80!black, above=2pt] at (P) {$P$};
     \node[red!80!black, font=\footnotesize, left=3pt] at ($(A)!0.55!(P)$) {$\alpha$};
     \node[blue!85!black, font=\footnotesize, above=3pt] at ($(A)!0.55!(B)$) {$\beta$};
     \node[teal!80!black, font=\footnotesize, right=3pt] at ($(P)!0.5!(B)$) {$\gamma$};
@@ -106,21 +126,37 @@ $\triangle ABC$ の外心 $O'(X,Y)$ とすると，$O'A = O'B = O'C$ から
   \label{fig:1961_2_synthetic}
 \end{figure}
 
-$AP = \alpha$, $AB = \beta$, $BP = \gamma$ とおく．
-$\triangle ABP \sim \triangle CAP$ より
-\[
-  AC = \dfrac{\alpha}{\gamma}\beta \quad \dots \text{①}
-\]
-又，$\alpha^2 = \gamma \cdot PC$ から
-\[
-  PC = \dfrac{\alpha^2}{\gamma} \quad \dots \text{②}
-\]
+$|AP| = \alpha$, $|AB| = \beta$, $|BP| = \gamma$ とおく．
+接弦定理より$\angle PAB = \angle PCA \quad (\angle CAP)$だから$\triangle ABP \sim \triangle CAP$ であり，
+\begin{align}
+  |AC| = \dfrac{\alpha}{\gamma}\beta \label{eq:7}
+\end{align}
+および，
+\begin{align}
+  \alpha^2 = \gamma \cdot |PC| \quad
+  \therefore
+  PC = \dfrac{\alpha^2}{\gamma} \label{eq:8}
+\end{align}
+を得る．
+
+また，$\angle BAC$を線分$AD$が二等分するから，
+\begin{align}
+  |BD| : |DC| = |AB| : |AC|
+\end{align}
+が成り立ち，
+\begin{align}
+  |BD|
+  &= |BC| \cdot \dfrac{|AB|}{|AB|+|AC|} \\
+  &= (|PC|-|PB|) \dfrac{|AB|}{|AB|+|AC|} \\
+  & = \left(\dfrac{\alpha^2}{\gamma} - \gamma\right) \dfrac{\beta}{\beta + \dfrac{\alpha}{\gamma}\beta} \quad (\because\text{\cref{eq:7,eq:8}})\\
+  &= \alpha - \gamma
+\end{align}
+となる．
 従って
-\[
-  BD = BC \cdot \dfrac{AB}{AB+AC} = \left(\dfrac{\alpha^2}{\gamma} - \gamma\right) \dfrac{\beta}{\beta + \dfrac{\alpha}{\gamma}\beta} = \alpha - \gamma
-\]
-から $DP = PB + BD = \gamma + (\alpha - \gamma) = \alpha$ だから $\triangle APD$ は 2 等辺三角形．
-よって P は AD の垂直2等分線上にある．
+\begin{align}
+  |DP| = |PB| + |BD| = \gamma + (\alpha - \gamma) = \alpha
+\end{align}
+だから$\triangle APD$ は 2 等辺三角形であり，P は AD の垂直2等分線上にある．
 
 \newpage
 

@@ -1,30 +1,131 @@
-OB\documentclass[../../main.tex]{subfiles}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-(i) (イ) 全て \quad (ロ) 少なくとも \quad (ハ) ない
 
-\bigskip
-(ii) まず A が A' に一致するように平行移動する．
+\paragraph{(i)}
+(イ) 全て \quad (ロ) 少なくとも \quad (ハ) ない
+
+\paragraph{(ii)}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.08cm, y=1.08cm, >=stealth, every node/.style={font=\small}]
+    % (1) 平行移動: A を A' に重ねる
+    \begin{scope}[shift={(0, 0)}]
+      \coordinate (A)  at (-1.25, -0.65);
+      \coordinate (B)  at (-0.30, -1.27);
+      \coordinate (C)  at (-1.46, -2.08);
+      \coordinate (Ap) at (0, 1.15);
+      \coordinate (B1) at (0.95, 0.53);
+      \coordinate (C1) at (-0.21, -0.28);
+      \coordinate (Bp) at (-0.45, 0);
+      \coordinate (Cp) at (1.0, 0);
+
+      \draw[dashed, gray!60] (-0.95, 0) -- (1.4, 0);
+      \draw[thick, dashed, gray!70!black] (A) -- (B) -- (C) -- cycle;
+      \draw[line width=1.1pt, teal!80!black] (Ap) -- (B1) -- (C1) -- cycle;
+      \draw[line width=1.2pt, blue!85!black] (Ap) -- (Bp) -- (Cp) -- cycle;
+      \draw[->, thick, red!80!black] (A) -- (Ap);
+
+      \node[circle, fill=gray!70!black, inner sep=1.2pt] at (A) {};
+      \node[above left=1pt, font=\footnotesize] at (A) {$A$};
+      \node[right=1pt, font=\footnotesize] at (B) {$B$};
+      \node[below left=1pt, font=\footnotesize] at (C) {$C$};
+
+      \node[circle, fill=red!85!black, inner sep=1.3pt] at (Ap) {};
+      \node[above=2pt, font=\footnotesize] at (Ap) {$A\,(A')$};
+      \node[above right=1pt, font=\footnotesize, teal!80!black] at (B1) {$B$};
+      \node[below=1pt, font=\footnotesize, teal!80!black] at (C1) {$C$};
+      \node[below=2pt, font=\footnotesize, blue!85!black, fill=white, inner sep=1pt] at (Bp) {$B'$};
+      \node[below right=1pt, font=\footnotesize, blue!85!black] at (Cp) {$C'$};
+
+      \node[font=\footnotesize, below] at (-0.1, -2.35) {① 平行移動（$A \to A'$）};
+    \end{scope}
+
+    % (2) 回転移動: A' を中心に BC を直線 B'C' 上に重ねる
+    \begin{scope}[shift={(4.4, 0)}]
+      \coordinate (Ap) at (0, 1.15);
+      \coordinate (B1) at (0.95, 0.53);
+      \coordinate (C1) at (-0.21, -0.28);
+      \coordinate (B2) at (0.45, 0);
+      \coordinate (C2) at (-1.0, 0);
+      \coordinate (Bp) at (-0.45, 0);
+      \coordinate (Cp) at (1.0, 0);
+
+      \draw[dashed, gray!70] (-1.45, 0) -- (1.45, 0);
+      \draw[thick, dashed, gray!70!black] (Ap) -- (B1) -- (C1) -- cycle;
+      \draw[line width=1.1pt, teal!80!black] (Ap) -- (B2) -- (C2) -- cycle;
+      \draw[line width=1.2pt, blue!85!black] (Ap) -- (Bp) -- (Cp) -- cycle;
+      \draw[->, thick, red!80!black] (B1) to[bend left=18] (B2);
+      \draw[->, thick, red!80!black] (C1) to[bend left=28] (C2);
+
+      \node[circle, fill=red!85!black, inner sep=1.3pt] at (Ap) {};
+      \node[above=2pt, font=\footnotesize] at (Ap) {$A\,(A')$};
+      \node[above right=1pt, font=\footnotesize, gray!70!black] at (B1) {$B$};
+      \node[below right=1pt, font=\footnotesize, gray!70!black] at (C1) {$C$};
+      \node[below=2pt, font=\footnotesize, teal!80!black] at (C2) {$C$};
+      \node[below=2pt, font=\footnotesize, blue!85!black, fill=white, inner sep=1pt] at (Bp) {$B'$};
+      \node[below=2pt, font=\footnotesize, teal!80!black] at (B2) {$B$};
+      \node[below=2pt, font=\footnotesize, blue!85!black] at (Cp) {$C'$};
+
+      \node[font=\footnotesize, below] at (0, -2.35) {② $A$ のまわりの回転移動};
+    \end{scope}
+
+    % (3) 線対称移動: A を通り BC に垂直な直線を軸に折り返す
+    \begin{scope}[shift={(8.8, 0)}]
+      \coordinate (Ap) at (0, 1.15);
+      \coordinate (B2) at (0.45, 0);
+      \coordinate (C2) at (-1.0, 0);
+      \coordinate (Bp) at (-0.45, 0);
+      \coordinate (Cp) at (1.0, 0);
+
+      \draw[dashed, gray!70] (-1.45, 0) -- (1.45, 0);
+      \draw[thick, dashdotted, red!80!black] (0, -1.05) -- (0, 1.75) node[right, font=\footnotesize] {対称軸};
+      \draw[gray!80!black] (0, 0.16) -- (0.16, 0.16) -- (0.16, 0);
+      \draw[thick, dashed, teal!80!black] (Ap) -- (B2) -- (C2) -- cycle;
+      \draw[line width=1.2pt, blue!85!black] (Ap) -- (Bp) -- (Cp) -- cycle;
+
+      \node[circle, fill=red!85!black, inner sep=1.3pt] at (Ap) {};
+      \node[above left=2pt, font=\footnotesize] at (Ap) {$A\,(A')$};
+      \node[below=2pt, font=\footnotesize, teal!80!black] at (C2) {$C$};
+      \node[below=2pt, font=\footnotesize, blue!85!black] at (Bp) {$B'$};
+      \node[below=2pt, font=\footnotesize, teal!80!black] at (B2) {$B$};
+      \node[below=2pt, font=\footnotesize, blue!85!black] at (Cp) {$C'$};
+
+      \draw[<->, thick, red!80!black] (-0.98, -0.45) to[bend right=28] (0.98, -0.45);
+      \draw[<->, thick, red!80!black] (-0.43, -0.42) to[bend right=25] (0.43, -0.42);
+
+      \node[font=\footnotesize, below] at (0, -2.35) {③ 垂線を軸とする線対称移動};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{$\triangle ABC$ を $\triangle A'B'C'$ に重ねる移動の手順}
+  \label{fig:1961_1_triangle_motions}
+\end{figure}
+
+まず A が A' に一致するように平行移動する．
 次に，A を中心に BC が B'C' と同一線上にあるように回転移動する．これで $\triangle ABC$ と $\triangle A'B'C'$ が一致しなければ，A を通り BC に垂直な直線を軸に線対称移動する．
 
-\bigskip
-(iii) 完全に一致するとすると，任意の $x, h$ に対し
+\paragraph{(iii)}
+
+背理法で題意を示す．
+完全に一致するとすると任意の $x$ に対して
 \begin{align}
   f(x+h) = f(x)
 \end{align}
-が成立する．
+が成立する．$f(x)=x^4+ax^3+bx^2+cx+d$を代入して
 \begin{align}
   &(x+h)^4 + a(x+h)^3 + b(x+h)^2 + c(x+h) + d \\
   &= x^4 + ax^3 + bx^2 + cx + d \\
-  \iff &(4h x^3 + 6h^2 x^2 + 4h^3 x + h^4) + a(3h x^2 + 3h^2 x + h^3) + b(2hx + h^2) + ch = 0
+  \iff
+  &(4h x^3 + 6h^2 x^2 + 4h^3 x + h^4) + a(3h x^2 + 3h^2 x + h^3) + b(2hx + h^2) + ch = 0 \\
+  \iff
+  &4hx^3 + (6h^2+3ah)x^2 + (4h^3+3ah^2+2bh)x + (h^4+ah^3+bh^2+ch) = 0
 \end{align}
-$3$ 次の項を比較して $4h = 0$ だが $h \neq 0$ に反し矛盾．
-よって示された．
+となる．これが任意の$x$で成立する，すなわち$x$についての恒等式になるから，
+$3$ 次の項を比較して $4h = 0 \therefore h=0$ となる．
+しかしこれは $h \neq 0$ に反し矛盾する．
+よって背理法によって題意は示された．
 
 \newpage
 

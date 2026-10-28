@@ -1,41 +1,84 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.5cm, y=1.0cm, >=stealth, every node/.style={font=\small}]
+    % 数直線（座標軸）
+    \draw[->, thick, gray!80!black] (-0.5, 0) -- (6.2, 0) node[right] {$x$};
+    \draw[thick, gray!80!black] (0, 0.08) -- (0, -0.08) node[below=2pt] {$0$（出発点）};
+    \draw[dashed, gray!60] (1.6, 2.2) -- (1.6, 0) node[below=2pt, gray!80!black] {$l$};
+    \draw[dashed, gray!60] (2.4, 1.2) -- (2.4, 0) node[below=2pt, gray!80!black] {$v\left(t-\frac{l}{a}\right)$};
+    \draw[dashed, gray!60] (3.6, 1.2) -- (3.6, 0) node[below=2pt, gray!80!black] {$at$};
+    \draw[dashed, gray!60] (5.2, 2.2) -- (5.2, 0) node[below=2pt, gray!80!black] {$at_0$};
+
+    % t = l/a (B の出発時)
+    \node[left=6pt, font=\footnotesize] at (-0.2, 2.2) {時刻 $t = \frac{l}{a}$：};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (0, 2.2) {};
+    \node[above=2pt, font=\footnotesize, teal!85!black] at (0, 2.2) {$B$};
+    \draw[->, thick, teal!85!black] (0.12, 2.2) -- (0.75, 2.2) node[midway, above=1pt, font=\scriptsize] {$v$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (1.6, 2.2) {};
+    \node[above=2pt, font=\footnotesize, blue!85!black] at (1.6, 2.2) {$A$};
+    \draw[->, thick, blue!85!black] (1.72, 2.2) -- (2.2, 2.2) node[midway, above=1pt, font=\scriptsize] {$a$};
+
+    % 一般の時刻 t
+    \node[left=6pt, font=\footnotesize] at (-0.2, 1.2) {時刻 $t$：};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (2.4, 1.2) {};
+    \node[above=2pt, font=\footnotesize, teal!85!black] at (2.4, 1.2) {$B$};
+    \draw[->, thick, teal!85!black] (2.52, 1.2) -- (3.15, 1.2) node[midway, above=1pt, font=\scriptsize] {$v$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (3.6, 1.2) {};
+    \node[above=2pt, font=\footnotesize, blue!85!black] at (3.6, 1.2) {$A$};
+    \draw[->, thick, blue!85!black] (3.72, 1.2) -- (4.2, 1.2) node[midway, above=1pt, font=\scriptsize] {$a$};
+
+    % 追いつく時刻 t = t_0
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (5.2, 2.2) {};
+    \node[above=2pt, font=\footnotesize, red!85!black] at (5.2, 2.2) {追いつく位置（$t=t_0$）};
+  \end{tikzpicture}
+  \caption{A と B の移動と位置関係}
+  \label{fig:1961_4_ab_motion}
+\end{figure}
+
+題意より，$B$は時刻$\dfrac{l}{a}$にAを追いかけて出発する．
 出発点の座標を $0$ とすると時刻 $t$ での A, B の座標は各々
 \begin{align}
-  A \dots a t
+  A(at), \quad
+  B\left(v\left(t - \dfrac{l}{a}\right)\right) \quad
+  \left(t \ge \dfrac{l}{a}, v > a\right) \label{eq:1}
 \end{align}
+とおける．B が A に追いつく時刻 $t_0$ はこれらの座標が等しい時だから，
 \begin{align}
-  B \dots v\left(t - \dfrac{l}{a}\right) \quad \left(t \ge \dfrac{l}{a}, v > a\right)
+  & at_0 = v\left(t_0 - \dfrac{l}{a}\right) \\
+  \therefore
+  & t_0 = \dfrac{l/a}{1 - a/v} = \dfrac{lv}{a(v-a)} \label{eq:2}
 \end{align}
-とおける．B が A に追いつく時刻 $t_0$ は
-\begin{align}
-  t_0 = \dfrac{l/a}{1 - \dfrac{a}{v}} = \dfrac{l v}{a(v-a)}
-\end{align}
-である．したがって，B のひろう $f(v)$ は
+である．したがって，B の疲労を $f(v)$ とすると題意より
 \begin{align}
   f(v) &= v^2 \left(t_0 - \dfrac{l}{a}\right) \\
-  &= \dfrac{v^2}{v-a} l = l \left(v + a + \dfrac{a^2}{v-a}\right)
+  &= \dfrac{v^2}{v-a} l \quad (\because(\text{\cref{eq:2}}))\\
+  &= l \left(v + a + \dfrac{a^2}{v-a}\right) \label{eq:3}
 \end{align}
+となる．$v$で微分して
 \begin{align}
   \dfrac{f'(v)}{l} = 1 - \dfrac{a^2}{(v-a)^2} = \dfrac{v(v-2a)}{(v-a)^2}
 \end{align}
-以下表を考える．
+だから，$f(v)$の増減表は以下のようになる．
 
-\begin{align}
-  \begin{array}{c|c*3{c}}
-    v & a & \dots & 2a & \dots \\ \hline
-    f' & & - & 0 & + \\ \hline
-    f & & \searrow & & \nearrow
-  \end{array}
-\end{align}
+\begin{table}[htb]
+  \centering
+  \caption{$f(v)$ の増減表}
+  \label{tab:1961_4_fv_variation}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabular}{c|cccc}
+    \hline
+    $v$ & $a$ & $\dots$ & $2a$ & $\dots$ \\ \hline
+    $f'$ & & $-$ & $0$ & $+$ \\ \hline
+    $f$ & & $\searrow$ & & $\nearrow$ \\ \hline
+  \end{tabular}
+\end{table}
 
-よって $v = 2a$ の時，疲労が最小．
+よって $v = 2a$ の時に疲労が最小となる．
 
 \newpage
 

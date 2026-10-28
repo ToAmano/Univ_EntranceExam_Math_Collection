@@ -1,14 +1,7 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解]}
-$M$ を原点，$AB$ を $x$ 軸，$MP$ を $y$ 軸とする図のような座標をとる（対称性から $Q$ が第 1 象限にあるとしてよい）．
-
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=1.5cm, y=1.5cm, >=stealth, every node/.style={font=\small}]
@@ -39,11 +32,11 @@ $M$ を原点，$AB$ を $x$ 軸，$MP$ を $y$ 軸とする図のような座�
     angle eccentricity=1.55, pic text options={font=\footnotesize}]
     {angle=Q--M--P};
 
-    \fill (A) circle (1.3pt) node[below=2pt] {$A$};
-    \fill (B) circle (1.3pt) node[below=2pt] {$B$};
-    \fill (M) circle (1.3pt) node[below left=2pt] {$M$};
-    \fill[blue!85!black] (P) circle (1.4pt) node[above right=2pt] {$P$};
-    \fill[teal!85!black] (Q) circle (1.4pt) node[above right=2pt] {$Q$};
+    \node[circle, fill, inner sep=1.3pt] at (A) {}; \node[below=2pt] at (A) {$A$};
+    \node[circle, fill, inner sep=1.3pt] at (B) {}; \node[below=2pt] at (B) {$B$};
+    \node[circle, fill, inner sep=1.3pt] at (M) {}; \node[below left=2pt] at (M) {$M$};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (P) {}; \node[blue!85!black, above right=2pt] at (P) {$P$};
+    \node[circle, fill=teal!85!black, inner sep=1.4pt] at (Q) {}; \node[teal!85!black, above right=2pt] at (Q) {$Q$};
     \node[right=10pt, font=\footnotesize, teal!85!black] at (Q) {$\beta$};
     \node[below=2pt, font=\footnotesize] at ($(M)!0.5!(B)$) {$r$};
     \node[left=3pt, font=\footnotesize] at ($(M)!0.55!(P)$) {$a$};
@@ -52,32 +45,70 @@ $M$ を原点，$AB$ を $x$ 軸，$MP$ を $y$ 軸とする図のような座�
   \label{fig:1961_3_configuration}
 \end{figure}
 
-\[
-  Q\left(a \cos\left(\dfrac{\pi}{2}-\theta\right), a \sin\left(\dfrac{\pi}{2}-\theta\right)\right) = Q(a \sin\theta, a \cos\theta)
-\]
+$M$ を原点，$AB$ を $x$ 軸，$MP$ を $y$ 軸とする図のような座標をとる．
+すると$A(-r,0), B(r,0), P(0,a)$となる．
+対称性から $Q$ が第 1 象限にあるとしてよく，
+題意より$\angle PMQ=\theta$だからその座標は
+\begin{align}
+  Q\left(a \cos\left(\dfrac{\pi}{2}-\theta\right), a \sin\left(\dfrac{\pi}{2}-\theta\right)\right)
+  = Q(a \sin\theta, a \cos\theta)
+\end{align}
+となる．
 
-\begin{enumerate}[(1)]
-  \item $\tan \dfrac{\alpha}{2} = t$ とおくと $t = \dfrac{r}{a}$ だから
-    \[
-      \tan \alpha = \dfrac{2t}{1-t^2} = \dfrac{2(r/a)}{1-(r/a)^2} = \dfrac{2ra}{a^2-r^2}
-    \]
+\paragraph{(1)}
 
-  \item $\vec{QA} =
-    \begin{pmatrix} -r - a \sin\theta \\ -a \cos\theta
-    \end{pmatrix}$, $\vec{QB} =
-    \begin{pmatrix} r - a \sin\theta \\ -a \cos\theta
-    \end{pmatrix}$ から
-    \begin{align}
-      \tan \beta &= \dfrac{|\vec{QA} \cdot \vec{QB} \cdot \sin\beta|}{\vec{QA} \cdot \vec{QB}} \\
-      &= \dfrac{|(-r - a s)(-a c) - (r - a s)(-a c)|}{(r - a s)(-r - a s) + a^2 c^2} \quad (c = \cos\theta, s = \sin\theta) \\
-      &= \dfrac{|2 r a c|}{a^2 - r^2} = \dfrac{2 r a c}{a^2 - r^2} \quad (\because 2 r a c > 0)
-    \end{align}
-    だから
-    \[
-      \tan \alpha \cdot c = \dfrac{2 r a c}{a^2 - r^2} = \tan \beta
-    \]
-    である．
-\end{enumerate}
+$\triangle APM$に注目すると，$|AM|=r,|PM|=a,\angle APM=\dfrac{\alpha}{2}$だから，
+\begin{align}
+  \tan\dfrac{\alpha}{2} = \dfrac{r}{a}
+\end{align}
+なので，$\tan$の倍角公式から
+\begin{align}
+  \tan \alpha
+  = \dfrac{2\tan(\alpha/2)}{1-\tan^2(\alpha/2)}
+  = \dfrac{2(r/a)}{1-(r/a)^2}
+  = \dfrac{2ra}{a^2-r^2} \label{eq:1}
+\end{align}
+である．
+
+\paragraph{(2)}
+
+$\tan\beta$を計算する．
+\begin{align}
+  \tan \beta
+  &= \dfrac{\sin\beta}{\cos\beta} \\
+  &= \dfrac{|QA||QB| \sin\beta|}{|QA||QB|\cos\beta} \\
+  &= \dfrac{2\triangle ABQ}{\overrightarrow{QA}\cdot\overrightarrow{QB}} \label{eq:2}
+\end{align}
+だから，この分母分子を計算すれば良い．
+
+$\overrightarrow{QA} =
+\begin{pmatrix} -r - a \sin\theta \\ -a \cos\theta
+\end{pmatrix}$, $\overrightarrow{QB} =
+\begin{pmatrix} r - a \sin\theta \\ -a \cos\theta
+\end{pmatrix}$
+だから，個別に評価すると
+\begin{align}
+  \overrightarrow{QA}\cdot\overrightarrow{QB}
+  = (r - a s)(-r - a s) + a^2 c^2
+  = a^2-r^2 \label{eq:3}
+\end{align}
+および，$Q$から$x$軸に下ろした垂足を$H$として
+\begin{align}
+  2\triangle ABQ = |AB||QH| = 2r\cdot a\cos\theta = 2ra\cos\theta \label{eq:4}
+\end{align}
+である．\cref{eq:3,eq:4}を\cref{eq:2}に代入して
+\begin{align}
+  \tan \beta = \dfrac{2ra\cos\theta}{a^2 - r^2}  \label{eq:5}
+\end{align}
+である．一方\cref{eq:1}から$\tan\alpha\cos\theta$を計算すると
+\begin{align}
+  \tan\alpha\cos\theta = \dfrac{2ra\cos\theta}{a^2-r^2} \label{eq:6}
+\end{align}
+である．\cref{eq:5,eq:6}より
+\begin{align}
+  \tan \alpha \cos\theta = \tan \beta
+\end{align}
+だから題意は示された．
 
 \newpage
 
