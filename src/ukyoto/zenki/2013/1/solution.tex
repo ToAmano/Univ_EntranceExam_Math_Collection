@@ -40,31 +40,34 @@
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.9, >=stealth]
+  \begin{tikzpicture}[scale=1.0, >=stealth,
+    every node/.style={font=\small}]
     \coordinate (A) at (4,3);
     \coordinate (B) at (0,3);
     \coordinate (C) at (-1,0);
     \coordinate (D) at (3,0);
     \coordinate (E) at (2,3);
-    \coordinate (F) at (-0.67,1);
+    \coordinate (F) at (-0.666667,1);
     \coordinate (G) at (2,0);
-    \coordinate (P) at (-0.18,0.82);
-    \coordinate (Q) at (-0.84,0.47);
-    \draw (A) -- (B) -- (C) -- (D) -- cycle;
-    \draw[dashed] (C) -- (E);
-    \draw[dashed] (F) -- (G);
-    \draw[dashed] (A) -- (Q);
-    \node[above right] at (A) {$A$};
-    \node[above left] at (B) {$B$};
-    \node[below left] at (C) {$C$};
-    \node[below right] at (D) {$D$};
-    \node[above] at (E) {$E$};
-    \node[left] at (F) {$F$};
-    \node[below] at (G) {$G$};
-    \node[above right] at (P) {$P$};
-    \node[below left] at (Q) {$Q$};
-    \fill (P) circle (1pt);
-    \fill (Q) circle (1pt);
+    % P=CE∩FG，Q=AP∩BC を本文の係数比較に合わせて配置．
+    \coordinate (P) at (-0.181818,0.818182);
+    \coordinate (Q) at (-0.842105,0.473684);
+    \fill[blue!10] (A)--(B)--(C)--(D)--cycle;
+    \draw[blue!85!black, line width=1.35pt]
+    (A)--(B)--(C)--(D)--cycle;
+    \draw[teal!85!black, line width=1.2pt] (C)--(E);
+    \draw[orange!90!black, line width=1.2pt] (F)--(G);
+    \draw[red!85!black, line width=1.2pt] (A)--(Q);
+    \foreach \point/\position in {
+      A/above right,B/above left,C/below left,D/below right,
+    E/above,F/left,G/below} {
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (\point) {};
+      \node[\position=2pt] at (\point) {$\point$};
+    }
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (P) {};
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (Q) {};
+    \node[above right=2pt, red!85!black] at (P) {$P$};
+    \node[below left=2pt, red!85!black] at (Q) {$Q$};
   \end{tikzpicture}
   \caption{平行四辺形$ABCD$と点$E$，$F$，$G$，$P$，$Q$の位置関係}
 \end{figure}

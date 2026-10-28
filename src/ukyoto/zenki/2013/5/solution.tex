@@ -25,28 +25,86 @@ $C_1:y=\sqrt{3}\log(x+1)$，$C_2:y=\sqrt{3}\log(1-x)$である．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.9, >=stealth]
-    \draw[->] (-3.2,0) -- (3.2,0) node[right] {$x$};
-    \draw[->] (0,-0.3) -- (0,6) node[above] {$y$};
-    \draw[domain=-0.95:2.6, samples=100, smooth] plot (\x, {sqrt(3)*ln(\x+1)}) node[right] {$C_1$};
-    \draw[domain=-2.6:0.95, samples=100, smooth] plot (\x, {sqrt(3)*ln(1-\x)}) node[left] {$C_2$};
-    \draw (0,5.196) circle (4);
-    \fill (0,5.196) circle (1pt) node[above] {$P$};
-    \fill (2,1.903) circle (1pt) node[right] {$A$};
-    \fill (-2,1.903) circle (1pt) node[left] {$B$};
-    \fill (0,0) circle (1pt) node[below right] {$O$};
-    \draw[dashed] (0,5.196) -- (2,1.903);
-    \draw[dashed] (0,5.196) -- (-2,1.903);
-    \begin{scope}
-      \clip (-2,0) rectangle (2,2.2);
-      \clip (0,5.196) circle (4);
-      \fill[gray!25] (-2.2,-0.2) rectangle (2.2,2.2);
-    \end{scope}
+  \begin{tikzpicture}[scale=0.85, >=stealth,
+    every node/.style={font=\small}]
+    \pgfmathsetmacro{\yContact}{sqrt(3)*ln(3)}
+    \pgfmathsetmacro{\aValue}{\yContact+2*sqrt(3)}
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (2,\yContact);
+    \coordinate (B) at (-2,\yContact);
+    \coordinate (P) at (0,\aValue);
+    % C の下側の弧と C_1,C_2 に囲まれる領域を塗る．
+    \fill[blue!18, opacity=0.8] (B)
+    -- plot[domain=-2:0, samples=45] (\x,{sqrt(3)*ln(1-\x)})
+    -- plot[domain=0:2, samples=45] (\x,{sqrt(3)*ln(1+\x)})
+    -- plot[domain=2:-2, samples=65] (\x,{\aValue-sqrt(16-\x*\x)})
+    -- cycle;
+    \draw[->, gray!80!black, line width=0.9pt]
+    (-2.85,0)--(2.85,0) node[right] {$x$};
+    \draw[->, gray!80!black, line width=0.9pt]
+    (0,-0.3)--(0,6.1) node[above] {$y$};
+    \draw[blue!85!black, line width=1.3pt]
+    plot[domain=0:2.55, samples=75] (\x,{sqrt(3)*ln(1+\x)})
+    plot[domain=-2.55:0, samples=75] (\x,{sqrt(3)*ln(1-\x)});
+    \draw[teal!85!black, line width=1.35pt]
+    plot[domain=-2.55:2.55, samples=85]
+    (\x,{\aValue-sqrt(16-\x*\x)});
+    \draw[dashed, gray!65, line width=0.9pt]
+    (P)--(A) (P)--(B) (A)--(2,0) (B)--(-2,0);
+    \foreach \point/\position in {A/right,B/left,P/above right,O/below right} {
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (\point) {};
+      \node[\position=2pt] at (\point) {$\point$};
+    }
+    \node[blue!85!black, above right=2pt, font=\footnotesize]
+    at (2.28,2.04) {$C_1$};
+    \node[blue!85!black, above left=2pt, font=\footnotesize]
+    at (-2.28,2.04) {$C_2$};
+    \node[teal!85!black, above right=3pt, font=\footnotesize]
+    at (0.75,1.44) {$C$};
   \end{tikzpicture}
-  \caption{円$C$と曲線$C_1$，$C_2$で囲まれた部分（斜線部）}
+  \caption{円$C$の下側の弧と曲線$C_1,C_2$に囲まれる領域}
 \end{figure}
 
 求める面積を$S$とする．対称性から
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.72, >=stealth,
+    every node/.style={font=\small}]
+    \begin{scope}
+      \fill[blue!17] (0,0)--(2,0)--(2,1.2)--(0,2.5)--cycle;
+      \draw[blue!85!black, line width=1.2pt]
+      (0,0)--(2,0)--(2,1.2)--(0,2.5)--cycle;
+      \node[below left=2pt] at (0,0) {$O$};
+      \node[above left=2pt] at (0,2.5) {$P$};
+      \node[right=2pt] at (2,1.2) {$A$};
+      \node[below, font=\footnotesize] at (1,-0.35) {台形};
+    \end{scope}
+    \begin{scope}[xshift=3.9cm]
+      \fill[teal!17] (0,0)
+      -- plot[domain=0:2, samples=45] (\x,{ln(1+\x)})
+      -- (2,0)--cycle;
+      \draw[->, gray!80!black, line width=0.8pt] (0,0)--(2.25,0);
+      \draw[teal!85!black, line width=1.2pt]
+      plot[domain=0:2, samples=45] (\x,{ln(1+\x)});
+      \draw[dashed, gray!60] (2,0)--(2,{ln(3)});
+      \node[above right=2pt] at (1.8,{ln(2.8)}) {$C_1$};
+      \node[below, font=\footnotesize] at (1,-0.35) {曲線下};
+    \end{scope}
+    \begin{scope}[xshift=7.7cm]
+      \coordinate (Pc) at (0,2.5);
+      \coordinate (L) at (0,0);
+      \coordinate (Ac) at (1.25,0.33494);
+      \fill[orange!20] (Pc)--(L)
+      arc[start angle=-90, end angle=-60, radius=2.5]--cycle;
+      \draw[orange!90!black, line width=1.2pt] (Pc)--(L)
+      arc[start angle=-90, end angle=-60, radius=2.5]--cycle;
+      \node[above left=2pt] at (Pc) {$P$};
+      \node[right=2pt] at (Ac) {$A$};
+      \node[below, font=\footnotesize] at (0.65,-0.35) {扇形};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{面積$S/2$の計算に用いる台形・曲線下の領域・扇形}
+\end{figure}
 \begin{align}
   \dfrac{1}{2}S=(\text{台形}OAP)-(\text{$C_1$と$x$軸，$x=2$で囲まれた部分})-(\text{中心$P$，半径$r$，中心角$\pi/6$の扇形})\quad\cdots③
 \end{align}
