@@ -1,4 +1,3 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
@@ -49,18 +48,17 @@ $\{\ \}$の中身を$f(s)$とおく．
 \end{align}
 から，下表を得る．
 
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \begin{tabular}{c|ccccccc}
-      $s$ & $-1$ & & $-\dfrac{1}{2}$ & & $\dfrac{1}{2}$ & & $1$ \\
-      \hline
-      $f'$ & & $+$ & $0$ & $-$ & $0$ & $+$ & \\
-      \hline
-      $f$ & & $\nearrow$ & & $\searrow$ & & $\nearrow$ & \\
-    \end{tabular}
-  \end{table}
-\end{center}
+\begin{table}[htb]
+  \centering
+  \begin{tabular}{c|ccccccc}
+    $s$ & $-1$ & & $-\dfrac{1}{2}$ & & $\dfrac{1}{2}$ & & $1$ \\
+    \hline
+    $f'$ & & $+$ & $0$ & $-$ & $0$ & $+$ & \\
+    \hline
+    $f$ & & $\nearrow$ & & $\searrow$ & & $\nearrow$ & \\
+  \end{tabular}
+  \caption{$f(s)=4s^3-3s+26$の増減}
+\end{table}
 
 ここで，
 \begin{align}
@@ -87,6 +85,30 @@ $\{\ \}$の中身を$f(s)$とおく．
   t^3-4t^2+5t=\alpha
 \end{align}
 の3実解．$f(t)=t^3-4t^2+5t$のグラフを考えると，$f'(t)=3t^2-8t+5=(3t-5)(t-1)$から，$t=1$で極大値$f(1)=2$，$t=5/3$で極小値$f(5/3)=\dfrac{50}{27}$をとるから，3実解をもつ条件は
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=3.0cm, y=3.2cm, >=stealth,
+    every node/.style={font=\small}]
+    % 極値差が小さいため，手書き図と同様に極値付近を拡大して示す．
+    \draw[->, gray!80!black, line width=0.9pt]
+    (0.48,1.53)--(2.22,1.53) node[right] {$t$};
+    \draw[->, gray!80!black, line width=0.9pt]
+    (0.5,1.5)--(0.5,2.28) node[above] {$y$};
+    \draw[blue!85!black, line width=1.4pt]
+    plot[domain=0.58:2.13, samples=90] (\x,{\x*\x*\x-4*\x*\x+5*\x});
+    \draw[dashed, gray!60, line width=0.8pt]
+    (1,1.53)--(1,2) (0.5,2)--(1,2)
+    (1.666667,1.53)--(1.666667,1.851852)
+    (0.5,1.851852)--(1.666667,1.851852);
+    \fill[red!85!black] (1,2) circle (1.4pt);
+    \fill[red!85!black] (1.666667,1.851852) circle (1.4pt);
+    \node[below=2pt] at (1,1.53) {$1$};
+    \node[below=2pt] at (1.666667,1.53) {$\frac{5}{3}$};
+    \node[left=2pt, font=\footnotesize] at (0.5,2) {$2$};
+    \node[left=2pt, font=\footnotesize] at (0.5,1.851852) {$\frac{50}{27}$};
+  \end{tikzpicture}
+  \caption{$f(t)=t^3-4t^2+5t$の極大値と極小値}
+\end{figure}
 \begin{align}
   \dfrac{50}{27}\le\alpha\le2
 \end{align}

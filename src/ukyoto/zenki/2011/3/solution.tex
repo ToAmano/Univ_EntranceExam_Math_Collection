@@ -15,20 +15,42 @@
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.75, >=stealth]
-    \draw[->] (-4.2,0) -- (4.2,0) node[right] {$x$};
-    \draw[->] (0,-2.6) -- (0,4.5) node[above] {$y$};
-    \draw[domain=-4:-2, smooth, thick] plot (\x,{0.75*\x*\x-5});
-    \draw[domain=-2:2, smooth, thick] plot (\x,{-0.75*\x*\x+1});
-    \draw[domain=2:4, smooth, thick] plot (\x,{0.75*\x*\x-5});
-    \draw[domain=-2.4:3.6, smooth] plot (\x,{\x}) node[right] {$y=x$};
-    \node[below] at (-2,-2) {$-2$};
-    \node[below] at (2,0) {$2$};
-    \fill (-2,-2) circle (1pt);
-    \fill (0.667,0.667) circle (1pt);
-    \fill (3.333,3.333) circle (1pt);
+  \begin{tikzpicture}[x=0.92cm, y=0.72cm, >=stealth,
+    every node/.style={font=\small}]
+    \def\middleRoot{0.666667}
+    \def\rightRoot{3.333333}
+    % 手書き図の二つの斜線領域を，境界曲線の式から塗る．
+    \fill[blue!17, opacity=0.75] (-2,-2)
+    -- plot[domain=-2:\middleRoot, samples=65] (\x,{1-0.75*\x*\x})
+    -- plot[domain=\middleRoot:-2, samples=30] (\x,\x)--cycle;
+    \fill[teal!17, opacity=0.75] (\middleRoot,\middleRoot)
+    -- plot[domain=\middleRoot:2, samples=40] (\x,{1-0.75*\x*\x})
+    -- plot[domain=2:\rightRoot, samples=40] (\x,{0.75*\x*\x-5})
+    -- plot[domain=\rightRoot:\middleRoot, samples=40] (\x,\x)--cycle;
+    \draw[->, gray!80!black, line width=0.9pt]
+    (-3.35,0)--(3.75,0) node[right] {$x$};
+    \draw[->, gray!80!black, line width=0.9pt]
+    (0,-2.35)--(0,4.1) node[above] {$y$};
+    \draw[blue!85!black, line width=1.35pt]
+    plot[domain=-3.1:-2, samples=30] (\x,{0.75*\x*\x-5})
+    plot[domain=-2:2, samples=80] (\x,{1-0.75*\x*\x})
+    plot[domain=2:3.45, samples=40] (\x,{0.75*\x*\x-5});
+    \draw[teal!85!black, line width=1.25pt]
+    plot[domain=-2.3:3.55, samples=2] (\x,\x);
+    \draw[dashed, gray!60, line width=0.8pt]
+    (\middleRoot,0)--(\middleRoot,\middleRoot)
+    (\rightRoot,0)--(\rightRoot,\rightRoot);
+    \foreach \point in {(-2,-2),(\middleRoot,\middleRoot),(\rightRoot,\rightRoot)} {
+      \fill[red!85!black] \point circle (1.35pt);
+    }
+    \node[below left=2pt] at (-2,0) {$-2$};
+    \node[below=2pt] at (\middleRoot,0) {$\frac{2}{3}$};
+    \node[below=2pt] at (2,0) {$2$};
+    \node[below=2pt] at (\rightRoot,0) {$\frac{10}{3}$};
+    \node[teal!85!black, above left=2pt, font=\footnotesize]
+    at (2.7,2.7) {$y=x$};
   \end{tikzpicture}
-  \caption{$y=x$と$y=\left|\dfrac{3}{4}x^2-3\right|-2$で囲まれる部分（斜線部）}
+  \caption{$y=x$と$y=\left|\dfrac{3}{4}x^2-3\right|-2$で囲まれる二つの領域}
 \end{figure}
 
 \begin{align}
