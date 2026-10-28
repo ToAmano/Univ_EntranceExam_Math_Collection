@@ -38,20 +38,27 @@ $f(x)=\dfrac{ax+b}{x^2+x+1}$とする．$y=f(x)$とおけば，与式は
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.15, >=stealth]
-    \begin{axis}[
-        axis lines=middle,
-        xlabel={$a$}, ylabel={$b$},
-        xmin=-2.3, xmax=2.3, ymin=-1.6, ymax=1.6,
-        xtick={-1.7320508,1.7320508}, xticklabels={$-\sqrt{3}$,$\sqrt{3}$},
-        ytick=\empty,
-        clip=false,
-        domain=-1.7320508:1.7320508, samples=100, smooth,
-      ]
-      \addplot[name path=upper, thick] {(-x^2+2*x+3)/4};
-      \addplot[name path=lower, thick] {(x^2+2*x-3)/4};
-      \addplot[gray!25] fill between[of=upper and lower];
-    \end{axis}
+  \begin{tikzpicture}[x=1.4cm, y=1.4cm, >=stealth,
+    every node/.style={font=\small}]
+    \pgfmathsetmacro{\edge}{sqrt(3)}
+    \fill[blue!17]
+    plot[domain=-\edge:\edge, samples=65] (\x,{(-\x*\x+2*\x+3)/4})
+    -- plot[domain=\edge:-\edge, samples=65] (\x,{(\x*\x+2*\x-3)/4})
+    -- cycle;
+    \draw[->, gray!80!black, thick] (-2.3,0)--(2.35,0) node[right] {$a$};
+    \draw[->, gray!80!black, thick] (0,-1.65)--(0,1.65) node[above] {$b$};
+    \draw[blue!85!black, line width=1.3pt]
+    plot[domain=-\edge:\edge, samples=65] (\x,{(-\x*\x+2*\x+3)/4});
+    \draw[teal!85!black, line width=1.3pt]
+    plot[domain=-\edge:\edge, samples=65] (\x,{(\x*\x+2*\x-3)/4});
+    \foreach \x/\label in {-1.732/-\sqrt{3},1.732/\sqrt{3}} {
+      \draw[gray!80!black] (\x,0.04)--(\x,-0.04);
+      \node[below=3pt] at (\x,0) {$\label$};
+    }
+    \node[blue!85!black, right=2pt, font=\footnotesize] at (0.25,1.36)
+    {$b=\frac{-a^2+2a+3}{4}$};
+    \node[teal!85!black, right=2pt, font=\footnotesize] at (-1.8,-1.4)
+    {$b=\frac{a^2+2a-3}{4}$};
   \end{tikzpicture}
   \caption{条件②を満たす$(a,b)$の範囲（斜線部）}
 \end{figure}

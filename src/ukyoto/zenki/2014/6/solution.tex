@@ -19,6 +19,40 @@ $C_2:x^2+y^2=r^2\ (x,y>0)$とする．まず$C_1$，$C_2$が2点で交わる条�
   r\sin\alpha=\dfrac{1}{r\cos\alpha}\quad\cdots③
 \end{align}
 
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.25cm, y=1.25cm, >=stealth,
+    every node/.style={font=\small}]
+    % 解で得られる r=2, α=15° を用いて配置する．
+    \coordinate (O) at (0,0);
+    \coordinate (A) at ({2*cos(15)},{2*sin(15)});
+    \coordinate (B) at ({2*cos(75)},{2*sin(75)});
+    \coordinate (C) at ({4*cos(15)},0);
+    \fill[blue!17] (A) arc[start angle=15,end angle=75,radius=2]
+    -- plot[domain={2*cos(75)}:{2*cos(15)},samples=70] (\x,{1/\x})
+    -- cycle;
+    \draw[->, thick, gray!80!black] (-0.15,0)--(4.4,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.15)--(0,2.55) node[above] {$y$};
+    \draw[blue!85!black, line width=1.3pt]
+    (2,0) arc[start angle=0,end angle=90,radius=2];
+    \draw[teal!85!black, line width=1.3pt]
+    plot[domain=0.42:4.12,samples=90] (\x,{1/\x});
+    \draw[dashed, gray!65] (O)--(A) (O)--(B);
+    \draw[orange!90!black, line width=1.1pt] (A)--(C);
+    \foreach \point/\position in {A/above right,B/above left} {
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (\point) {};
+      \node[\position=2pt] at (\point) {$\point$};
+    }
+    \node[below left=2pt] at (O) {$O$};
+    \node[below=2pt] at (C) {$C$};
+    \node[blue!85!black, above right=2pt] at (1.23,1.58) {$C_2$};
+    \node[teal!85!black, above right=2pt] at (2.55,0.39) {$C_1$};
+    \node[orange!90!black, below=2pt] at (3.05,0) {$\ell$};
+    \node[font=\footnotesize, above right=2pt] at (0.57,0.16) {$\alpha$};
+  \end{tikzpicture}
+  \caption{円弧$C_2$と曲線$C_1$の交点，接線$\ell$と求める領域}
+\end{figure}
+
 $A$における接線$\ell$の傾きは$-\dfrac{1}{r^2\cos^2\alpha}$である．$\angle OAC=\pi/6$（$C$は$\ell$と$x$軸の交点）という条件のもとで角の関係を整理し，$\tan\alpha=t$とおくと
 \begin{align}
   \dfrac{\sqrt{3}}{3}=\dfrac{t+r^2t+1}{r^2-t^2-t}\quad\cdots④
@@ -59,6 +93,33 @@ $t>0$から複号正を採用して，
   S=(\text{扇形}OAB\text{の面積})-(\text{$C_1$と線分}AB\text{に囲まれた部分の面積})\quad\cdots⑦
 \end{align}
 であり，
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.65cm, y=1.45cm, >=stealth,
+    every node/.style={font=\small}]
+    \begin{scope}
+      \fill[blue!18] (0,0)--({2*cos(15)},{2*sin(15)})
+      arc[start angle=15,end angle=75,radius=2]--cycle;
+      \draw[blue!85!black, line width=1.2pt]
+      (0,0)--({2*cos(15)},{2*sin(15)})
+      arc[start angle=15,end angle=75,radius=2]--cycle;
+      \node[below left=2pt] at (0,0) {$O$};
+      \node[below, font=\footnotesize] at (1, -0.25) {扇形$OAB$};
+    \end{scope}
+    \begin{scope}[xshift=5.2cm]
+      \fill[teal!18] ({2*cos(75)},0)
+      -- plot[domain={2*cos(75)}:{2*cos(15)},samples=65] (\x,{1/\x})
+      -- ({2*cos(15)},0)--cycle;
+      \draw[->, gray!80!black, thick] (0,0)--(2.25,0) node[right] {$x$};
+      \draw[teal!85!black, line width=1.2pt]
+      plot[domain={2*cos(75)}:{2*cos(15)},samples=65] (\x,{1/\x});
+      \draw[dashed, gray!65] ({2*cos(75)},0)--({2*cos(75)},{2*sin(75)})
+      ({2*cos(15)},0)--({2*cos(15)},{2*sin(15)});
+      \node[below=3pt, font=\footnotesize] at (1.2,-0.25) {$C_1$の下側};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{面積計算に用いる扇形と曲線下の領域}
+\end{figure}
 \begin{align}
   \text{扇形}OAB&=\dfrac{1}{2}r^2\left(\dfrac{\pi}{2}-\dfrac{\pi}{6}\right)=\dfrac{2}{3}\pi，\\
   \text{$C_1$と線分}AB\text{に囲まれた部分}&=\int_{\sin\alpha}^{\cos\alpha}\dfrac{1}{x}\,dx=\log\dfrac{1}{t}
