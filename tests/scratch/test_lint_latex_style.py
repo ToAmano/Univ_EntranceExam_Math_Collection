@@ -213,3 +213,132 @@ def test_vector_notation_rule(tmp_path):
     )
     assert lint.fix_text(src_to_fix) == expected_fixed
 
+
+def test_tikz_point_circle_rule(tmp_path):
+    # 図形としての円（座標単位の circle (1), circle (\r), circle[radius=1], 4pt以上の玉など）は許容
+    valid_tikz = r'''
+\begin{tikzpicture}[xscale=1.4, yscale=0.25]
+  \draw (0, 0) circle (1);
+  \draw[thick, blue!80!black] (O) circle (\r);
+  \fill[gray!20] (0, 0) circle (1.5);
+  \draw (0, 0) circle[radius=1];
+  \fill[red!80!black] (0.5, 0.45) circle (7pt) node[white] {赤};
+  \node[circle, fill, inner sep=1.5pt] at (P) {};
+  \node[circle, draw=blue!80!black, thick, fill=white, inner sep=1.8pt] at (A) {};
+\end{tikzpicture}
+'''
+    assert lint.check_tikz_point_circle(valid_tikz) == []
+    assert lint.fix_text(valid_tikz) == valid_tikz
+
+    # 点を打つ目的の circle（半径 <= 3.5pt）はエラーとして検出され、fix_text で \node[circle, ...] に変換される
+    invalid_tikz = r'''
+\begin{tikzpicture}[xscale=1.4, yscale=0.25]
+  \draw (0, 0) circle (1);
+  \fill (-3, -18) circle (2pt);
+  \fill[black] (1, -2) circle (1.5pt);
+  \fill[red!85!black] (P) circle (1.4pt) node[above right=2pt] {$P(p,q)$};
+  \draw[thick, blue!80!black, fill=white] (A) circle (1.8pt);
+  \fill[red!75!black] (P1) circle (1.5pt) (P2) circle (1.5pt);
+\end{tikzpicture}
+'''
+    errors = lint.check_tikz_point_circle(invalid_tikz)
+    assert len(errors) == 6
+
+    fixed = lint.fix_text(invalid_tikz)
+    assert lint.check_tikz_point_circle(fixed) == []
+    assert r'\draw (0, 0) circle (1);' in fixed
+    assert r'\node[circle, fill, inner sep=2pt] at (-3, -18) {};' in fixed
+    assert r'\node[circle, fill, inner sep=1.5pt] at (1, -2) {};' in fixed
+    assert (
+        r'\node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {}; '
+        r'\node[red!85!black, above right=2pt] at (P) {$P(p,q)$};'
+    ) in fixed
+    assert r'\node[circle, draw, thick, blue!80!black, fill=white, inner sep=1.8pt] at (A) {};' in fixed
+    assert (
+        r'\node[circle, fill=red!75!black, inner sep=1.5pt] at (P1) {}; '
+        r'\node[circle, fill=red!75!black, inner sep=1.5pt] at (P2) {};'
+    ) in fixed
+
+
+def test_display_math_brackets_rule(tmp_path):
+    # 改行幅指定 \\[2pt] は \[ として誤検知しないこと
+    valid = (
+        '\\begin{align}\n'
+        '  a &= b \\\\[2pt]\n'
+        '  &= c\n'
+        '\\end{align}\n'
+    )
+    assert lint.check_display_math_brackets(valid) == []
+    assert lint.fix_text(valid) == valid
+
+    # 単一行 \[ ... \]、複数行 \[ ... \]、\[ \begin{aligned} ... \end{aligned} \] の検出と自動修正
+    src = (
+        '  \\[ f(x) = x^2 \\]\n'
+        '\\[\n'
+        '  g(x) = x + 1\n'
+        '\\]\n'
+        '\\[\n'
+        '  \\begin{aligned}\n'
+        '    h(x) &= f(x) + g(x) \\\\\n'
+        '    &= x^2 + x + 1\n'
+        '  \\end{aligned}\n'
+        '\\]\n'
+    )
+    errors = lint.check_display_math_brackets(src)
+    assert len(errors) == 6  # \[ と \] が3組で6件
+
+    fixed = lint.fix_text(src)
+    assert lint.check_display_math_brackets(fixed) == []
+    expected = (
+        '  \\begin{align}\n'
+        '    f(x) = x^2\n'
+        '  \\end{align}\n'
+        '\\begin{align}\n'
+        '  g(x) = x + 1\n'
+        '\\end{align}\n'
+        '\\begin{align}\n'
+        '    h(x) &= f(x) + g(x) \\\\\n'
+        '    &= x^2 + x + 1\n'
+        '\\end{align}\n'
+    )
+    assert fixed == expected
+
+
+def test_solution_headings_rule():
+    # 1解法 + 1別解 + 解説（文中参照の [解]では は誤検知しない）
+    src_two = (
+        '[\\textbf{解}] 最初の解法．\n'
+        '\\noindent{\\bf [解2]}\n'
+        '[解]では座標を用いたが，ここでは幾何的に示す．\n'
+        '\\noindent{\\bf [注]}\n'
+        '補足説明．\n'
+    )
+    errors = lint.check_solution_headings(src_two)
+    assert len(errors) == 3
+    fixed_two = lint.fix_text(src_two)
+    assert lint.check_solution_headings(fixed_two) == []
+    assert fixed_two == (
+        '{\\bf [解答]} 最初の解法．\n'
+        '\\noindent{\\bf [別解]}\n'
+        '[解]では座標を用いたが，ここでは幾何的に示す．\n'
+        '\\noindent{\\bf [解説]}\n'
+        '補足説明．\n'
+    )
+
+    # 1解法 + 複数別解（[別解1], [別解2]）および全角括弧［解］直後のスペース挿入
+    src_three = (
+        '［解1］解法1．\n'
+        '[解2] 解法2．\n'
+        '[解3] 解法3．\n'
+    )
+    fixed_three = lint.fix_text(src_three)
+    assert lint.check_solution_headings(fixed_three) == []
+    assert fixed_three == (
+        '{\\bf [解答]} 解法1．\n'
+        '{\\bf [別解1]} 解法2．\n'
+        '{\\bf [別解2]} 解法3．\n'
+    )
+
+
+
+

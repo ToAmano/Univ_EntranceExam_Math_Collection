@@ -17,6 +17,14 @@ TeX 原稿でベクトルを表すときは、矢印の下に入る文字数に�
 - 2文字以上（始点と終点を並べた表記等）：`\overrightarrow`（例：`\overrightarrow{AB}`、`\overrightarrow{OP}`、`\overrightarrow{P_1P_2}`）
 - 添字やプライムが付く1文字ベクトルは、矢印を文字本体にだけかけるため添字・プライムを `\vec{...}` の外に出す（例：`\vec{a}_1`、`\vec{e}_k`、`\vec{b}'` と書き、`\vec{a_1}` や `\overrightarrow{a_1}` とは書かない）。
 
+# TikZ における点の描画
+
+`tikzpicture` 環境内で座標上の点（黒丸・色付き強調点・白抜き端点など）を打つときは、`xscale` と `yscale` が異なる図で `circle` パスが伸縮して楕円に潰れるのを防ぐため、`circle` ではなく `\node[circle, ...]` を使う。
+
+- 塗りつぶし点：`\node[circle, fill, inner sep=1.2pt] at (P) {};`（色付きなら `fill=red!85!black` 等）
+- 白抜き端点（開区間端点等）：`\node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (P) {};`
+- 図形としての円・円板を描く場合（`\draw (0,0) circle (1);`、`\draw (O) circle (\r);` 等）は従来通り `circle` を使う。
+
 # 京大前期の作図：東大前期の TikZ 図を再現する
 
 京大前期の `problem.tex`・`solution.tex` に図を起こすときは、東大前期の図の**情報の整理方**を手本にする。原稿にある点・線・領域・前後関係と、問題や解答に必要な数学的条件を先に確定する。色や装飾のために形状、位置関係、開閉端点を変えない。問題図は出題図の内容を、解答図は解法の説明をそれぞれ再現する。
@@ -44,7 +52,7 @@ TeX 原稿でベクトルを表すときは、矢印の下に入る文字数に�
     \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 1.6) node[above] {$y$};
     \draw[line width=1.4pt, blue!85!black] (O) -- (P);
     \draw[dashed, gray!60] (P) -- (1, 0);
-    \fill[red!85!black] (P) circle (1.4pt);
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {};
     \node[above right=2pt, font=\footnotesize] at (P) {$P$};
   \end{tikzpicture}
   \caption{図が表す内容を一言で記す}

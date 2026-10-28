@@ -95,6 +95,68 @@ def check_align_star(text):
     return errors
 
 
+DISPLAY_BRACKET_TOKEN_RE = re.compile(r'(?<!\\)(?:\\\\)*(\\\[|\\\])')
+DISPLAY_BRACKET_BLOCK_RE = re.compile(
+    r'(?<!\\)(?P<pre_open>(?:\\\\)*)\\\[(?P<body>.*?)(?<!\\)(?P<pre_close>(?:\\\\)*)\\\]',
+    re.DOTALL,
+)
+ALIGNED_WRAP_RE = re.compile(
+    r'^\s*\\begin\{aligned\}[ \t]*\r?\n?(?P<inner>.*?)\r?\n?[ \t]*\\end\{aligned\}\s*$',
+    re.DOTALL,
+)
+
+
+def check_display_math_brackets(text):
+    """ディスプレイ数式の \\[ ... \\] を検出し、align 環境の使用を促す。
+    改行オプション \\\\[2pt] 等（バックスラッシュ2個）は誤検知しない。"""
+    errors = []
+    for m in DISPLAY_BRACKET_TOKEN_RE.finditer(text):
+        tok = m.group(1)
+        errors.append((
+            line_of(text, m.start(1)),
+            f"{tok} は使わない（align 環境を使う）",
+        ))
+    return errors
+
+
+def _find_display_math_bracket_edits(text, raw):
+    edits = []
+    nl = '\r\n' if '\r\n' in raw else '\n'
+    for m in DISPLAY_BRACKET_BLOCK_RE.finditer(text):
+        open_start = m.start() + len(m.group('pre_open'))
+        open_end = open_start + 2  # len(r'\[')
+        close_end = m.end()
+        close_start = close_end - 2  # len(r'\]')
+        masked_body = text[open_end:close_start]
+        raw_body = raw[open_end:close_start]
+
+        line_start = text.rfind('\n', 0, open_start) + 1
+        indent_m = re.match(r'[ \t]*', text[line_start:open_start])
+        indent = indent_m.group(0) if indent_m else ''
+
+        m_aligned = ALIGNED_WRAP_RE.match(masked_body)
+        if m_aligned:
+            inner_start, inner_end = m_aligned.span('inner')
+            inner_raw = raw_body[inner_start:inner_end]
+            replacement = f"\\begin{{align}}{nl}{inner_raw}{nl}{indent}\\end{{align}}"
+            edits.append((open_start, close_end, replacement))
+            continue
+
+        if '\n' not in raw_body:
+            replacement = f"\\begin{{align}}{nl}{indent}  {raw_body.strip()}{nl}{indent}\\end{{align}}"
+            edits.append((open_start, close_end, replacement))
+            continue
+
+        body_out = raw_body
+        if not body_out.startswith(('\n', '\r\n')):
+            body_out = f"{nl}{indent}  " + body_out.lstrip(' \t')
+        if not body_out.rstrip(' \t').endswith(('\n', '\r\n')):
+            body_out = body_out.rstrip(' \t') + f"{nl}{indent}"
+        replacement = f"\\begin{{align}}{body_out}\\end{{align}}"
+        edits.append((open_start, close_end, replacement))
+    return edits
+
+
 def check_punctuation(text):
     errors = []
     for m in re.finditer(r'[。、]', text):
@@ -112,7 +174,7 @@ def check_punctuation(text):
 def check_proof_env(text):
     """\\begin{proof}[解] / \\begin{proof}[別解] のように、解答冒頭の見出し
     として proof 環境が使われているケースだけを検出する（AGENT.md 8.3.6
-    の趣旨は「解答冒頭を {\\bf [解]} にする」ことであり、\\begin{lemma}...
+    の趣旨は「解答冒頭を {\\bf [解答]} にする」ことであり、\\begin{lemma}...
     \\end{lemma} に対する本物の \\begin{proof}...\\end{proof}（補題の証明）
     はそもそも対象外）。ラベル無しの素の \\begin{proof} まで拾うと
     utokyo/kouki/2005/2 のような正当な用法を誤検知するため、[...] 引数の
@@ -121,6 +183,85 @@ def check_proof_env(text):
     for m in re.finditer(r'\\begin\{proof\}\[', text):
         errors.append((line_of(text, m.start()), "\\begin{proof}[...] は解答冒頭に使わない（{\\bf [...]} を使う）"))
     return errors
+
+
+SOLUTION_HEADING_LINE_RE = re.compile(
+    r'^(?P<prefix>[ \t]*(?:\\(?:smallskip|medskip|bigskip)\s*)*(?:\\noindent\s*)?)'
+    r'(?P<token>'
+    r'\{\\bf\s*[\[［]\s*(?P<k1>解答|解|別解|解説|注)\s*(?P<n1>[0-9０-９]*)\s*[\]］]\s*\}'
+    r'|\\textbf\{\s*[\[［]\s*(?P<k2>解答|解|別解|解説|注)\s*(?P<n2>[0-9０-９]*)\s*[\]］]\s*\}'
+    r'|[\[［]\s*\\textbf\{\s*(?P<k3>解答|解|別解|解説|注)\s*(?P<n3>[0-9０-９]*)\s*\}\s*[\]］]'
+    r'|[\[［]\s*\{\\bf\s*(?P<k4>解答|解|別解|解説|注)\s*(?P<n4>[0-9０-９]*)\s*\}\s*[\]］]'
+    r'|［\s*(?P<k5>解答|解|別解|解説)\s*(?P<n5>[0-9０-９]*)\s*］'
+    r'|\[\s*(?P<k6>解答|解|別解|解説)\s*(?P<n6>[0-9０-９]*)\s*\](?=[ \t\r\n%]|$)'
+    r')',
+    re.MULTILINE,
+)
+CURRICULUM_SECTION_RE = re.compile(r'\\paragraph\{[^}]*課程[^}]*\}|\\section\*?\{')
+
+
+def _iter_solution_heading_targets(text):
+    all_matches = list(SOLUTION_HEADING_LINE_RE.finditer(text))
+    if not all_matches:
+        return []
+    split_points = [0] + [m.start() for m in CURRICULUM_SECTION_RE.finditer(text)] + [len(text) + 1]
+    results = []
+    for sec_start, sec_end in zip(split_points[:-1], split_points[1:]):
+        sec_matches = [m for m in all_matches if sec_start <= m.start() < sec_end]
+        if not sec_matches:
+            continue
+        sol_indices = [
+            idx for idx, m in enumerate(sec_matches)
+            if (m.group('k1') or m.group('k2') or m.group('k3')
+                or m.group('k4') or m.group('k5') or m.group('k6')) in ('解答', '解', '別解')
+        ]
+        num_sols = len(sol_indices)
+        sol_rank = {idx: rank for rank, idx in enumerate(sol_indices)}
+        for idx, m in enumerate(sec_matches):
+            kind = (m.group('k1') or m.group('k2') or m.group('k3')
+                    or m.group('k4') or m.group('k5') or m.group('k6'))
+            tok = m.group('token')
+            if kind in ('解説', '注'):
+                target = r'{\bf [解説]}'
+            else:
+                rank = sol_rank[idx]
+                if rank == 0:
+                    target = r'{\bf [解答]}'
+                elif num_sols == 2:
+                    target = r'{\bf [別解]}'
+                else:
+                    target = f'{{\\bf [別解{rank}]}}'
+            results.append((m.start('token'), m.end('token'), tok, target))
+    return results
+
+
+def check_solution_headings(text):
+    """解答関連の見出し（AGENTS.md「解答見出しの表記」）をチェックする。
+    - 最初の解法: {\\bf [解答]}
+    - 別解が1つ: {\\bf [別解]}
+    - 別解が複数: {\\bf [別解1]}, {\\bf [別解2]}, ...
+    - 解法の後の説明: {\\bf [解説]}
+    """
+    errors = []
+    for start, _, tok, target in _iter_solution_heading_targets(text):
+        if tok != target:
+            errors.append((
+                line_of(text, start),
+                f"解答見出しは {target} に統一する（{tok} → {target}）",
+            ))
+    return errors
+
+
+def _find_solution_heading_edits(text, raw):
+    edits = []
+    for start, end, tok, target in _iter_solution_heading_targets(text):
+        if end < len(raw) and raw[end] not in (' ', '\t', '\r', '\n'):
+            replacement = target + ' '
+        else:
+            replacement = target
+        if raw[start:end] != replacement:
+            edits.append((start, end, replacement))
+    return edits
 
 
 def check_duplicate_labels(text):
@@ -661,11 +802,239 @@ def fix_text(raw):
     for start, end, replacement in sorted(vec_edits, reverse=True):
         raw = raw[:start] + replacement + raw[end:]
 
+    tikz_circle_edits = _find_tikz_point_circle_edits(_mask_protected_regions(raw))
+    for start, end, replacement in sorted(tikz_circle_edits, reverse=True):
+        raw = raw[:start] + replacement + raw[end:]
+
+    bracket_edits = _find_display_math_bracket_edits(_mask_protected_regions(raw), raw)
+    for start, end, replacement in sorted(bracket_edits, reverse=True):
+        raw = raw[:start] + replacement + raw[end:]
+
+    heading_edits = _find_solution_heading_edits(_mask_protected_regions(raw), raw)
+    for start, end, replacement in sorted(heading_edits, reverse=True):
+        raw = raw[:start] + replacement + raw[end:]
+
     try:
         raw = tex_references.normalize_equation_labels(raw)
     except tex_references.AmbiguousLabelError:
         pass  # Keep duplicate definitions visible to the linter for manual repair.
     return raw
+
+
+TIKZ_POINT_CIRCLE_MAX_PT = 3.5
+TIKZ_PT_CIRCLE_RE = re.compile(
+    r'\bcircle\s*(?:\(\s*([0-9.]+)\s*pt\s*\)|\[\s*radius\s*=\s*([0-9.]+)\s*pt\s*\])'
+)
+TIKZ_STYLE_KEYWORDS = {
+    'thick', 'very thick', 'ultra thick', 'thin', 'very thin', 'ultra thin',
+    'semithick', 'solid', 'dashed', 'dotted', 'fill', 'draw', 'tdplot_screen_coords',
+}
+TIKZ_POS_KEYWORDS = {
+    'above', 'below', 'left', 'right',
+    'above left', 'above right', 'below left', 'below right', 'center',
+}
+
+
+def _extract_paren(text, start):
+    """text[start] == '(' 前提。ネストした () と {} を考慮して (中身, 終了直後index) を返す。"""
+    depth_p = 0
+    depth_b = 0
+    i = start
+    n = len(text)
+    while i < n:
+        c = text[i]
+        if c == '\\' and i + 1 < n:
+            i += 2
+            continue
+        if c == '{':
+            depth_b += 1
+        elif c == '}':
+            depth_b = max(0, depth_b - 1)
+        elif depth_b == 0:
+            if c == '(':
+                depth_p += 1
+            elif c == ')':
+                depth_p -= 1
+                if depth_p == 0:
+                    return text[start + 1:i], i + 1
+        i += 1
+    return text[start + 1:], n
+
+
+def _extract_bracket(text, start):
+    """text[start] == '[' 前提。ネストした [] と {} を考慮して (中身, 終了直後index) を返す。"""
+    depth_k = 0
+    depth_b = 0
+    i = start
+    n = len(text)
+    while i < n:
+        c = text[i]
+        if c == '\\' and i + 1 < n:
+            i += 2
+            continue
+        if c == '{':
+            depth_b += 1
+        elif c == '}':
+            depth_b = max(0, depth_b - 1)
+        elif depth_b == 0:
+            if c == '[':
+                depth_k += 1
+            elif c == ']':
+                depth_k -= 1
+                if depth_k == 0:
+                    return text[start + 1:i], i + 1
+        i += 1
+    return text[start + 1:], n
+
+
+def _is_bare_tikz_color(tok):
+    return (
+        bool(tok)
+        and '=' not in tok
+        and tok not in TIKZ_STYLE_KEYWORDS
+        and tok not in TIKZ_POS_KEYWORDS
+    )
+
+
+def check_tikz_point_circle(text):
+    """tikzpicture 内で点を打つ目的の circle（半径が 3.5pt 以下の pt 指定）を検出し、
+    \\node[circle, ...] の使用を促す。図形としての円（座標単位の circle (1), circle (\\r) 等）は除外する。"""
+    errors = []
+    for env_start, env_end in find_tikzpicture_spans(text):
+        body = text[env_start:env_end]
+        for m in TIKZ_PT_CIRCLE_RE.finditer(body):
+            rad_str = m.group(1) or m.group(2)
+            rad_val = float(rad_str)
+            if 0 < rad_val <= TIKZ_POINT_CIRCLE_MAX_PT:
+                pos = env_start + m.start()
+                errors.append((
+                    line_of(text, pos),
+                    f"tikzpicture 内で点を打つときは circle ではなく \\node[circle, ...] を使う（{m.group(0)}）",
+                ))
+    return errors
+
+
+def _convert_point_circle_stmt(stmt):
+    m_cmd = re.match(r'^\\(fill|draw|filldraw)\b', stmt)
+    if not m_cmd:
+        return None
+    cmd = m_cmd.group(1)
+    i = m_cmd.end()
+    n = len(stmt) - 1  # Exclude trailing ';'
+    while i < n and stmt[i].isspace():
+        i += 1
+    opts = ''
+    if i < n and stmt[i] == '[':
+        opts, i = _extract_bracket(stmt, i)
+    opts_list = [o.strip() for o in opts.split(',') if o.strip()]
+    inherited_colors = [o for o in opts_list if _is_bare_tikz_color(o) and o != 'black']
+    inherited_color = inherited_colors[-1] if inherited_colors else None
+
+    items = []
+    while i < n:
+        while i < n and stmt[i].isspace():
+            i += 1
+        if i >= n:
+            break
+        if stmt[i] == '(':
+            coord, i = _extract_paren(stmt, i)
+            coord_str = f'({coord})'
+        elif stmt[i] == '\\':
+            m_mac = re.match(r'\\[a-zA-Z]+', stmt[i:])
+            if not m_mac:
+                return None
+            coord_str = m_mac.group(0)
+            i += len(coord_str)
+        else:
+            return None
+        while i < n and stmt[i].isspace():
+            i += 1
+        m_cir = TIKZ_PT_CIRCLE_RE.match(stmt[i:])
+        if not m_cir:
+            return None
+        rad_str = m_cir.group(1) or m_cir.group(2)
+        if not (0 < float(rad_str) <= TIKZ_POINT_CIRCLE_MAX_PT):
+            return None
+        i += m_cir.end()
+        nodes = []
+        while True:
+            while i < n and stmt[i].isspace():
+                i += 1
+            if stmt[i:i + 4] == 'node' and (i + 4 == n or not stmt[i + 4].isalpha()):
+                i += 4
+                n_opts = None
+                n_name = None
+                while i < n and stmt[i].isspace():
+                    i += 1
+                if i < n and stmt[i] == '[':
+                    n_opts, i = _extract_bracket(stmt, i)
+                while i < n and stmt[i].isspace():
+                    i += 1
+                if i < n and stmt[i] == '(':
+                    n_name, i = _extract_paren(stmt, i)
+                while i < n and stmt[i].isspace():
+                    i += 1
+                if i < n and stmt[i] == '[':
+                    n_opts2, i = _extract_bracket(stmt, i)
+                    n_opts = f'{n_opts}, {n_opts2}' if n_opts else n_opts2
+                while i < n and stmt[i].isspace():
+                    i += 1
+                if i < n and stmt[i] == '{':
+                    n_text, i = extract_braced(stmt, i)
+                    nodes.append((n_opts, n_name, n_text))
+                else:
+                    return None
+            else:
+                break
+        items.append((coord_str, rad_str, nodes))
+    if not items:
+        return None
+
+    out_parts = []
+    for coord_str, rad_str, nodes in items:
+        if cmd in ('fill', 'filldraw'):
+            if not opts_list or opts_list == ['black']:
+                c_opts = ['circle', 'fill']
+            elif len(opts_list) == 1 and _is_bare_tikz_color(opts_list[0]):
+                c_opts = ['circle', f'fill={opts_list[0]}']
+            else:
+                has_fill = any(o == 'fill' or o.startswith('fill=') for o in opts_list)
+                has_draw = any(o == 'draw' or o.startswith('draw=') for o in opts_list)
+                c_opts = ['circle']
+                if not has_fill:
+                    c_opts.append('fill')
+                if cmd == 'filldraw' and not has_draw:
+                    c_opts.append('draw')
+                c_opts.extend(opts_list)
+        else:  # draw
+            has_draw = any(o == 'draw' or o.startswith('draw=') for o in opts_list)
+            c_opts = ['circle'] + ([] if has_draw else ['draw']) + opts_list
+        c_opts.append(f'inner sep={rad_str}pt')
+        c_opts_str = ', '.join(c_opts)
+        out_parts.append(f'\\node[{c_opts_str}] at {coord_str} {{}};')
+        for n_opts, n_name, n_text in nodes:
+            n_opts_list = [o.strip() for o in (n_opts or '').split(',') if o.strip()]
+            if inherited_color and not any(_is_bare_tikz_color(o) for o in n_opts_list):
+                n_opts_list = [inherited_color] + n_opts_list
+            n_opts_str = ', '.join(n_opts_list)
+            opt_s = f'[{n_opts_str}]' if n_opts_str else ''
+            name_s = f' ({n_name})' if n_name else ''
+            out_parts.append(f'\\node{opt_s}{name_s} at {coord_str} {{{n_text}}};')
+    return ' '.join(out_parts)
+
+
+def _find_tikz_point_circle_edits(text):
+    edits = []
+    for env_start, env_end in find_tikzpicture_spans(text):
+        body = text[env_start:env_end]
+        for m_stmt in re.finditer(r'\\(fill|draw|filldraw)\b[^;]*;', body):
+            stmt = m_stmt.group(0)
+            if not TIKZ_PT_CIRCLE_RE.search(stmt):
+                continue
+            replacement = _convert_point_circle_stmt(stmt)
+            if replacement is not None:
+                edits.append((env_start + m_stmt.start(), env_start + m_stmt.end(), replacement))
+    return edits
 
 
 def check_local_references(text, problem_text):
@@ -690,6 +1059,7 @@ def lint_file(path):
         return reference_errors, [], skip_m.group(1).strip()
     errors = []
     errors += check_align_star(text)
+    errors += check_display_math_brackets(text)
     errors += check_punctuation(text)
     errors += check_bare_args(text)
     errors += check_figure_caption(text)
@@ -698,10 +1068,13 @@ def lint_file(path):
     errors += check_tabular_nesting(text)
     errors += check_documentclass(text)
     errors += check_proof_env(text)
+    if path.name == 'solution.tex':
+        errors += check_solution_headings(text)
     errors += reference_errors
     errors += check_frac_subscript_rule(text)
     errors += check_left_right_balance(text)
     errors += check_vector_notation(text)
+    errors += check_tikz_point_circle(text)
     warnings = check_overline_warning(text)
     warnings += check_long_align_lines(text)
     return errors, warnings, None

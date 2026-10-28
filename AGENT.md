@@ -153,7 +153,7 @@ latexmk -lualatex -interaction=nonstopmode main.tex
 * **`lint-tex.yml`**（`src/**/*.tex` を含む push / PR）: `scratch/lint_latex_style.py` で 8.3.6 節のルール（機械的に判定可能なもののみ）を **差分に入った `solution.tex` のみ** に対してチェックする。`problem.tex`（原題の問題文）はCIの対象外——著者が書く解答文とは性質が違い、`\caption` 必須などの一部ルールがそもそも馴染まないため。TeX Live 不要の軽量ジョブ。既存コーパスには本ルール導入以前からの違反が大量にあるため（2026年時点で約6800件）、リポジトリ全体を対象にはせず、変更・新規追加された `solution.tex` のみを厳格化する「ratchet」方式を採用している。ローカルでの単体実行は `python3 scratch/lint_latex_style.py [対象ファイル...]`（引数なしならリポジトリ全体を `problem.tex` も含めてスキャンし集計のみ表示。`problem.tex` も個別に指定すれば手動でチェック可能）。
   * **`% lint-skip: 理由`** をファイル中のどこか（通常は1行目）に書いておくと、そのファイルの lint チェックを丸ごとスキップできる（`--no-verify` でのコミットを都度要求する代わりの避難ハッチ）。理由コメントは省略不可——空だとマーカーとして認識されない。旧jarticle形式のまま未移行（Issue #593）のように「直す予定はあるが対応は別作業」と分かっているファイルに使う想定で、個別のバグ修正時に無関係な既存違反でブロックされるのを避けられる。乱用すると ratchet の意味が薄れるため、本当に別issueで追跡済みの既知の問題にのみ使うこと。
 * **`lint-tex-full.yml`**（毎週月曜 00:00 UTC の `schedule` / 手動実行）: `scratch/lint_full_report.py` でリポジトリ全体の `solution.tex`（`lint-tex.yml` と同じスコープ）を走査し、ルール別・書籍別の内訳を Markdown レポートとして生成、`LaTeX Lint Backlog Report` という固定タイトルの Issue を検索して見つかれば本文を更新、無ければ新規作成する（PR ごとに Issue を乱発しない）。違反があってもジョブ自体は失敗しない非ブロッキングの可視化用ワークフローで、`lint-tex.yml`（差分のみを強制）とは役割が異なる。
-ローカルの独自 lint は `--fix` で句読点（`。`/`、` → `．`/`，`）、分数の `\frac` / `\dfrac`（添字・TikZ 内では `\frac`、それ以外では `\dfrac`）、ベクトルの `\vec` / `\overrightarrow` 表記（添字・プライムの外出しを含む）を機械修正できる。コメント、URL・参照先・ファイルパス、verbatim 系のコード、マクロ定義は自動修正から除外し、`lint-skip` も尊重する。裸引数、図表構造等は修正しない。既存 lint の検査範囲は変わらないため、保護した箇所の指摘が残ることもある。
+ローカルの独自 lint は `--fix` で句読点（`。`/`、` → `．`/`，`）、分数の `\frac` / `\dfrac`（添字・TikZ 内では `\frac`、それ以外では `\dfrac`）、ディスプレイ数式の `\[ ... \]` → `align` 環境、ベクトルの `\vec` / `\overrightarrow` 表記（添字・プライムの外出しを含む）、`tikzpicture` 内の点描画 `circle (...pt)` → `\node[circle, ...]` を機械修正できる。コメント、URL・参照先・ファイルパス、verbatim 系のコード、マクロ定義は自動修正から除外し、`lint-skip` も尊重する。裸引数、図表構造等は修正しない。既存 lint の検査範囲は変わらないため、保護した箇所の指摘が残ることもある。
 
 ```bash
 # 差分だけ表示（変更候補または lint エラーがあれば終了コード1）
@@ -221,7 +221,7 @@ python3 scratch/lint_latex_style.py --fix src/utokyo/zenki/2000/1/solution.tex
 
 ### 8.3.6 LaTeX フォーマットの注意事項
 
-このうち機械的に判定可能なもの（`align*` 禁止，句読点，`\dfrac`/`\sqrt` の裸引数禁止，`\frac`/`\dfrac` の添字位置ルール，ベクトルの `\vec`/`\overrightarrow` 使い分け，`tikzpicture` のネスト，`\caption` 必須，`\documentclass` の相対パス）は `lint-tex.yml`（6節）が変更ファイルに対して自動チェックする。大カッコのサイズ判断や，`enumerate`/`itemize` が小問ラベリング目的か場合分け目的かの判別（後者は許容される）など目視確認が必要なものは対象外。
+このうち機械的に判定可能なもの（`align*` および `\[...\]` 禁止，句読点，`\dfrac`/`\sqrt` の裸引数禁止，`\frac`/`\dfrac` の添字位置ルール，ベクトルの `\vec`/`\overrightarrow` 使い分け，`tikzpicture` のネスト，TikZ の点描画における `\node[circle, ...]` 使用，`\caption` 必須，`\documentclass` の相対パス）は `lint-tex.yml`（6節）が変更ファイルに対して自動チェックする。大カッコのサイズ判断や，`enumerate`/`itemize` が小問ラベリング目的か場合分け目的かの判別（後者は許容される）など目視確認が必要なものは対象外。
 
 * **数式環境は `align` を利用する（`align*` は使わない）**。単発の数式でも `\[...\]` や `equation` ではなく `align` を使い、複数行にまたがる変形は `&=` で位置を揃える。
 * **「`&=` で繋いで最後の結果だけに意味がある」変形は `split` でまとめて式番号を1つにすることを検討する**。`align` は既定で行ごとに番号が付くため，途中式ごとに番号が振られるのを避けたい場合は `\begin{align}\begin{split} ... \end{split}\end{align}` のように `split` で包む。ただし `split` は1行につき `&` を1つしか使えないため，1行に複数の位置揃えが必要な変形では無理に `split`化せず，通常の `align`（行ごとに番号）のままでよい。
@@ -238,6 +238,7 @@ python3 scratch/lint_latex_style.py --fix src/utokyo/zenki/2000/1/solution.tex
 * **`cases` などのネスト環境の中では数式に `\displaystyle` を用いる**。`cases`（`dcases` ではなく）環境内は既定でテキストスタイルになり分数などが小さく組まれるため，`\begin{cases}\displaystyle ...\end{cases}` のように明示する。
 * **`\dfrac` と `\sqrt` の引数は必ず `{}` で囲む**。`\sqrt2` ではなく `\sqrt{2}` のように書く（`\dfrac12` のような省略形も同様に禁止で、`\dfrac{1}{2}` と書く）。
 * **ベクトルは1文字なら `\vec`、2文字以上なら `\overrightarrow` を使う**（[AGENTS.md](AGENTS.md) 参照）。例えば `\vec{a}`、`\vec{0}`、`\vec{\ell}` に対して `\overrightarrow{AB}`、`\overrightarrow{OP}`、`\overrightarrow{P_1P_2}` と使い分ける。添字やプライム付きの1文字ベクトルは `\vec{a}_1`、`\vec{e}_k`、`\vec{b}'` のように添字・プライムを `\vec{...}` の外に出す（`\vec{a_1}` や `\overrightarrow{a_1}` は不可）。
+* **`tikzpicture` 内で点を打つときは `circle` ではなく `\node[circle, ...]` を使う**（[AGENTS.md](AGENTS.md) および 8.4.2.2 節参照）。`xscale` と `yscale` が異なる図で `\fill (P) circle (1.5pt);` 等を使うと楕円に潰れてしまうため、`\node[circle, fill, inner sep=1.2pt] at (P) {};` や `\node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (P) {};` のように `\node` で描く。図形としての円を描く場合（`\draw (0,0) circle (1);` 等）は従来通り `circle` を使う。
 * **辺の長さは `\overline{AB}` ではなく `|AB|`（絶対値記号ではさむ）で書く**。手書き原稿が `\overline{}` を使っていても，転記時に `|...|` に直す。
 * **大きい括弧は素の `[ ]` `( )` のまま使わず，`\Bigl[ \Bigr]` / `\Bigl( \Bigr)` 等でサイズを明示する**。中身が分数や指数で背が高くなると素の括弧は窮屈に見えるため。既存ソースでは `\Bigl`系が`\bigl`系よりも多用されている（`\Bigl`系325件 対 `\bigl`系158件，`\biggl`系は0件）ので，特にサイズ判断に迷う場合は `\Bigl[ \Bigr]` を既定として使う。`\left[ \right]` の自動サイズ調整は式ごとに高さがまちまちになりやすいため，複数式でサイズを揃えたい場面では避ける。
 * **1行目は `\documentclass[../../main.tex]{subfiles}` とする**（`src/{univ}/{cat}/{year}/{q}/solution.tex` から `src/{univ}/{cat}/main.tex` までは2階層上がるだけなので `../../` が正しい。`../../../../` ではない）。
@@ -281,14 +282,14 @@ python3 scratch/lint_latex_style.py --fix src/utokyo/zenki/2000/1/solution.tex
 
 #### 8.4.2.2 点・ノードの表現
 
-* **一般プロット点 / 座標上の点**:
-* 黒塗り小丸: `\fill (coord) circle (0.5pt);`（重要点は `0.6pt ～ 0.8pt`）
-* 色付き強調点: `\fill[red!85!black] (coord) circle (0.7pt);`
+* **一般プロット点 / 座標上の点**（`xscale`/`yscale` で楕円に潰れないよう `circle` パスではなく `\node[circle, ...]` を使う）:
+* 黒塗り小丸: `\node[circle, fill, inner sep=1.2pt] at (coord) {};`
+* 色付き強調点: `\node[circle, fill=red!85!black, inner sep=1.4pt] at (coord) {};`
 * **確率過程・木構造（世代木）のノード**:
-* **必ず白抜きの丸**を使用: `\draw[thick, fill=white] (coord) circle (2.5pt);`
+* **必ず白抜きの丸**を使用: `\node[circle, draw, thick, fill=white, inner sep=2.0pt] at (coord) {};`
 * 省略表現: 実線 $\rightarrow$ 中間白丸 $\rightarrow$ `\node at (...) {$\cdots$};` $\rightarrow$ 破線（`thick, dashed`） $\rightarrow$ 終端白丸
 * **白丸（端点・定義域外境界）**:
-* `\draw[fill=white, draw=blue!85!black, thick] (coord) circle (0.6pt);`
+* `\node[circle, fill=white, draw=blue!85!black, thick, inner sep=1.4pt] at (coord) {};`
 
 #### 8.4.2.3 ラベル・注釈ボックス
 

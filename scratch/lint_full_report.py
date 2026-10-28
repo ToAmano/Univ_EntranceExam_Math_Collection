@@ -19,15 +19,18 @@ from lint_latex_style import lint_file, REPO_ROOT, SRC_DIR  # noqa: E402
 
 RULE_LABELS = [
     ("align* は使わない", "align* 禁止"),
+    ("は使わない（align 環境を使う）", "\\[...\\] 禁止"),
     ("句読点は全角", "句読点"),
     ("の引数は必ず", "\\sqrt/\\frac/\\dfrac 裸引数"),
     ("tikzpicture は figure", "tikzpicture ネスト"),
     ("\\documentclass", "\\documentclass 不正"),
     ("\\begin{proof}", "\\begin{proof} 使用"),
+    ("解答見出しは", "解答見出し表記"),
     ("\\int の上下限", "\\frac/\\dfrac 添字位置"),
     ("分数は（添字位置を除き）", "\\frac/\\dfrac 添字位置"),
     ("\\caption{} がない", "\\caption 欠落"),
     ("ベクトル", "\\vec/\\overrightarrow 表記"),
+    ("点を打つときは circle", "TikZ 点の circle 使用"),
 ]
 
 
