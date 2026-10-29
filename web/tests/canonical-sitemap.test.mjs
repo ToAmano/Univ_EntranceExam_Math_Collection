@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { matchingSolutionSlug, solutionSlugsFromMarkdown, includeInSitemap } from '../src/lib/canonical-sitemap.mjs';
+import { matchingSolutionSlug, solutionSlugsFromMarkdown, includeInSitemap, createSitemapSerializer } from '../src/lib/canonical-sitemap.mjs';
 
 const root = 'https://toamano.github.io/Univ_EntranceExam_Math_Collection/';
 
@@ -38,4 +38,26 @@ test('new or removed solution markdown changes the next build without manual URL
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test('sitemap serializer attaches valid lastmod Date to each item', () => {
+  const dummyData = {
+    slugDateMap: new Map([['utokyo-zenki-2000-1-solution', new Date('2026-05-01T00:00:00Z')]]),
+    yearDateMap: new Map([['utokyo-zenki-2000', new Date('2026-05-01T00:00:00Z')]]),
+    catDateMap: new Map([['utokyo/zenki', new Date('2026-05-01T00:00:00Z')]]),
+    latestDate: new Date('2026-04-01T00:00:00Z'),
+  };
+  const serialize = createSitemapSerializer(dummyData);
+
+  const solItem = serialize({ url: root + 'solutions/utokyo-zenki-2000-1-solution/' });
+  assert.equal(solItem.lastmod.toISOString(), '2026-05-01T00:00:00.000Z');
+
+  const sumItem = serialize({ url: root + 'solutions/utokyo-zenki-2000-0-summary/' });
+  assert.equal(sumItem.lastmod.toISOString(), '2026-05-01T00:00:00.000Z');
+
+  const catItem = serialize({ url: root + 'category/utokyo/zenki/' });
+  assert.equal(catItem.lastmod.toISOString(), '2026-05-01T00:00:00.000Z');
+
+  const rootItem = serialize({ url: root });
+  assert.equal(rootItem.lastmod.toISOString(), '2026-04-01T00:00:00.000Z');
 });
