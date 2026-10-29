@@ -5,7 +5,7 @@ import Layout from '../../layouts/Layout.astro';
 import ProblemIssues from '../../components/ProblemIssues.astro';
 import { readIssueIndex, problemIssues } from '../../lib/issues.mjs';
 import { matchingSolutionSlug } from '../../lib/canonical-sitemap.mjs';
-import { markdownToPlainText, buildQAPageJsonLd, buildBreadcrumbListJsonLd } from '../../utils/seo';
+import { buildBreadcrumbListJsonLd } from '../../utils/seo';
 
 export async function getStaticPaths() {
 	const solutions = await getCollection('solutions');
@@ -24,7 +24,6 @@ const { Content } = await entry.render();
 // 解答の直前に埋め込む（tex_to_md.py側の変換や個別ページ自体は変えず、
 // このページの描画時にだけ両者を合成する）。
 let ProblemContent: typeof Content | null = null;
-let problemEntryForJsonLd: (typeof allSolutions)[number] | null = null;
 if ((entry.data.type || 'solution') === 'solution') {
 	const problemEntry = allSolutions.find(
 		(item) =>
@@ -37,7 +36,6 @@ if ((entry.data.type || 'solution') === 'solution') {
 	if (problemEntry) {
 		const rendered = await problemEntry.render();
 		ProblemContent = rendered.Content;
-		problemEntryForJsonLd = problemEntry;
 	}
 }
 
@@ -174,22 +172,10 @@ const reportIssueUrl = `https://github.com/ToAmano/Univ_EntranceExam_Math_Collec
 const counterPath = `${baseUrl}/solutions/${entry.slug}/`;
 const counterUrl = `https://toamano.goatcounter.com/counter${counterPath}.svg?no_branding=1`;
 
-// 解答ページ(かつ対応する問題文が見つかった場合)のみ、QAPage構造化データ(JSON-LD)を
-// 埋め込む。問題文ページ(-problem)はcanonicalで解答ページに評価を譲っているため
-// ここでは構造化データを付与しない。
+// 過去問とその解説は投稿型のQ&Aページではないため、QAPageは付けない。
+// パンくずリストのみ構造化データとして出力する。
 const pageUrlForJsonLd = new URL(`${baseUrl}/solutions/${entry.slug}/`, Astro.site).href;
 const jsonLdItems: Record<string, unknown>[] = [];
-if (entryType === 'solution' && problemEntryForJsonLd) {
-	jsonLdItems.push(
-		buildQAPageJsonLd({
-			url: pageUrlForJsonLd,
-			questionName: `${univName} ${catName} ${year}年 ${questionLabel}`,
-			questionText: markdownToPlainText(problemEntryForJsonLd.body),
-			answerText: markdownToPlainText(entry.body),
-		})
-	);
-}
-
 // パンくずリストの構造化データ。画面上のパンくずナビ(下の<nav aria-label="Breadcrumb">)と
 // 同じ階層(トップ > 大学・区分 > 年度/問題)を表す。
 jsonLdItems.push(
@@ -197,7 +183,7 @@ jsonLdItems.push(
 		{ name: 'トップ', url: new URL(`${baseUrl}/`, Astro.site).href },
 		{
 			name: `${univName} ${catName}`,
-			url: new URL(`${baseUrl}/category/${entry.data.university.replace(/^sample_/, '')}/${entry.data.category}`, Astro.site).href,
+			url: new URL(`${baseUrl}/category/${entry.data.university.replace(/^sample_/, '')}/${entry.data.category}/`, Astro.site).href,
 		},
 		{ name: `${year}年 ${questionLabel}`, url: pageUrlForJsonLd },
 	])
@@ -216,7 +202,7 @@ jsonLdItems.push(
 			</li>
 			<li><span style="color: var(--text-subtle);">/</span></li>
 			<li>
-				<a href={`${baseUrl}/category/${entry.data.university.replace(/^sample_/, '')}/${entry.data.category}`} style="color: var(--primary); text-decoration: none;">
+				<a href={`${baseUrl}/category/${entry.data.university.replace(/^sample_/, '')}/${entry.data.category}/`} style="color: var(--primary); text-decoration: none;">
 					{univName} {catName}
 				</a>
 			</li>

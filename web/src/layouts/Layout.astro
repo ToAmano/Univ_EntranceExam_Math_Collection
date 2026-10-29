@@ -11,7 +11,7 @@ interface Props {
 	// 重複コンテンツ評価分散を避けるため正規URLを明示的に上書きするためのもの。
 	// 省略時は自分自身のURLを正規URLとする(従来通り)。
 	canonicalUrl?: string;
-	// 構造化データ(JSON-LD)。QAPage・BreadcrumbList等を複数渡せるよう配列も許容する。
+	// 構造化データ(JSON-LD)。BreadcrumbList等を複数渡せるよう配列も許容する。
 	// 該当ページが無ければ省略可。
 	jsonLd?: Record<string, unknown> | Record<string, unknown>[] | null;
 }
@@ -26,11 +26,11 @@ const {
 } = Astro.props;
 const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
-const canonicalHref = canonicalUrl === Astro.url.href && Astro.url.pathname === baseUrl ? `${canonicalUrl}/` : canonicalUrl;
+const canonicalHref = canonicalUrl.endsWith('/') ? canonicalUrl : `${canonicalUrl}/`;
 const fullTitle = `${title} | Math Solutions`;
 // OGP の og:url は「このURLが共有された」という実際のページを指すべきなので、
 // canonicalUrl(SEO上の正規URL)とは独立に、常に実際のページURLを使う。
-const pageUrl = Astro.url.href;
+const pageUrl = Astro.url.href.endsWith('/') ? Astro.url.href : `${Astro.url.href}/`;
 const ogImageUrl = new URL(`${baseUrl}${ogImagePath ?? '/ogp-default.png'}`, Astro.site).href;
 ---
 <!doctype html>
