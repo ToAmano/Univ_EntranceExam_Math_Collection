@@ -1,70 +1,193 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $-\dfrac{\pi}{2} \leqq x \leqq \dfrac{\pi}{2}$ で考える．以下 $C = \cos t, S = \sin t$ とする．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.3cm, y=1.3cm, >=stealth,
+    every node/.style={font=\small}]
+    % ========================================================
+    % Panel 1: 長方形 A
+    % ========================================================
+    \begin{scope}[shift={(0, 0)}]
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-1.9, 0) -- (1.9, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 1.4) node[above] {$y$};
+      \node[below left=2pt] at (0, 0) {$O$};
 
-まずAについて，面積が最大になるのは，明らかに4頂点が $(\pm t, 0), (\pm t, \cos t)$ で与えられる時で ($0 < t < \pi/2$) この時
-\[
-  A = 2t C \quad (0 < t < \pi/2)
-\]
-である．
-\[
-  \dfrac{dA}{dt} = 2(C - t S) = 2C (1 - t \tan t)
-\]
-より，下表をとる．($t_0$ は $t_0 \tan t_0 = 1$ を満たす)
+      % 曲線 y = cos x
+      \draw[domain=-1.5708:1.5708, samples=50, smooth, line width=1.0pt, gray!70!black]
+      plot (\x, {cos(\x r)});
 
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \begin{tabular}{c|c|c|c|c|c}
-      $t$ & 0 & $\cdots$ & $t_0$ & $\cdots$ & $\pi/2$ \\
-      \hline
-      $A'$ & & $+$ & 0 & $-$ & \\
-      \hline
-      $A$ & & $\nearrow$ & & $\searrow$ &
-    \end{tabular}
-  \end{table}
-\end{center}
+      % 長方形 A (t_0 \approx 0.8603, cos(t_0) \approx 0.6522)
+      \fill[blue!15] (-0.8603, 0) rectangle (0.8603, 0.6522);
+      \draw[line width=1.1pt, blue!85!black]
+      (-0.8603, 0) -- (-0.8603, 0.6522) -- (0.8603, 0.6522) -- (0.8603, 0);
 
-$\left( \dfrac{\pi}{4} \cdot \tan \dfrac{\pi}{4} < 1 \text{ より } \dfrac{\pi}{4} < t_0 \text{ である．} \quad \cdots (*) \right)$
+      % 頂点
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (-0.8603, 0.6522) {};
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (0.8603, 0.6522) {};
 
-したがって
-\[
-  A = 2 t_0 \cos t_0 = 2 \dfrac{\cos^2 t_0}{\sin t_0} \quad \cdots \text{①}
-\]
+      % ラベル
+      \node[font=\bfseries, blue!85!black] at (0, 0.3) {$A$};
+      \node[below=2pt, font=\scriptsize] at (-0.8603, 0) {$-t_0$};
+      \node[below=2pt, font=\scriptsize] at (0.8603, 0) {$t_0$};
+      \node[below=2pt, font=\scriptsize] at (-1.5708, 0) {$-\frac{\pi}{2}$};
+      \node[below=2pt, font=\scriptsize] at (1.5708, 0) {$\frac{\pi}{2}$};
+      \node[left=2pt, font=\scriptsize] at (0, 1) {$1$};
+      \node[below=14pt, font=\small] at (0, 0) {(a) 長方形 $A$};
+    \end{scope}
+
+    % ========================================================
+    % Panel 2: 三角形 B
+    % ========================================================
+    \begin{scope}[shift={(4.5, 0)}]
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-1.9, 0) -- (1.9, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 1.4) node[above] {$y$};
+      \node[below left=2pt] at (0, 0) {$O$};
+
+      % 曲線 y = cos x
+      \draw[domain=-1.5708:1.5708, samples=50, smooth, line width=1.0pt, gray!70!black]
+      plot (\x, {cos(\x r)});
+
+      % 三角形 B
+      \fill[teal!15] (-1.5708, 0) -- (1.5708, 0) -- (0, 1) -- cycle;
+      \draw[line width=1.1pt, teal!85!black] (-1.5708, 0) -- (0, 1) -- (1.5708, 0);
+
+      % 頂点
+      \node[circle, fill=teal!85!black, inner sep=1.2pt] at (0, 1) {};
+      \node[circle, fill=teal!85!black, inner sep=1.2pt] at (-1.5708, 0) {};
+      \node[circle, fill=teal!85!black, inner sep=1.2pt] at (1.5708, 0) {};
+
+      % ラベル
+      \node[font=\bfseries, teal!85!black] at (0, 0.35) {$B$};
+      \node[left=2pt, font=\scriptsize] at (0, 1) {$1$};
+      \node[below=2pt, font=\scriptsize] at (-1.5708, 0) {$-\frac{\pi}{2}$};
+      \node[below=2pt, font=\scriptsize] at (1.5708, 0) {$\frac{\pi}{2}$};
+      \node[below=14pt, font=\small] at (0, 0) {(b) 三角形 $B$};
+    \end{scope}
+
+    % ========================================================
+    % Panel 3: 半円 C
+    % ========================================================
+    \begin{scope}[shift={(9.0, 0)}]
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-1.9, 0) -- (1.9, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 1.4) node[above] {$y$};
+      \node[below left=2pt] at (0, 0) {$O$};
+
+      % 曲線 y = cos x
+      \draw[domain=-1.5708:1.5708, samples=50, smooth, line width=1.0pt, gray!70!black]
+      plot (\x, {cos(\x r)});
+
+      % 半円 C: 半径 1
+      \fill[orange!15] (-1, 0) arc (180:0:1) -- cycle;
+      \draw[line width=1.1pt, orange!85!black] (-1, 0) arc (180:0:1);
+
+      % 頂点・端点
+      \node[circle, fill=orange!85!black, inner sep=1.2pt] at (0, 1) {};
+      \node[circle, fill=orange!85!black, inner sep=1.2pt] at (-1, 0) {};
+      \node[circle, fill=orange!85!black, inner sep=1.2pt] at (1, 0) {};
+
+      % ラベル
+      \node[font=\bfseries, orange!85!black] at (0, 0.35) {$C$};
+      \node[left=2pt, font=\scriptsize] at (0, 1) {$1$};
+      \node[below=2pt, font=\scriptsize] at (-1, 0) {$-1$};
+      \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
+      \node[below=2pt, font=\scriptsize] at (-1.5708, 0) {$-\frac{\pi}{2}$};
+      \node[below=2pt, font=\scriptsize] at (1.5708, 0) {$\frac{\pi}{2}$};
+      \node[below=14pt, font=\small] at (0, 0) {(c) 半円 $C$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{図形 $S$ に含まれる長方形 $A$，三角形 $B$，半円 $C$}
+  \label{fig:shapes_ABC}
+\end{figure}
+
+$-\dfrac{\pi}{2} \leqq x \leqq \dfrac{\pi}{2}$ で考える．
+まず$A,B,C$の面積を個別に考えて，最後にそれらの大小を比較する．
+
+\subparagraph{長方形$A$について}
+
+長方形$A$の面積が最大になるのは，$4$頂点のうち$y > 0$の二つが$y=\cos t$上にある時で，
+$4$頂点は$(\pm t, 0), (\pm t, \cos t)$と書ける ($0 < t < \pi/2$) ．
+この時面積は
+\begin{align}
+  A = 2t \cos t \quad (0 < t < \pi/2) \label{eq:1}
+\end{align}
+である．$t$で微分すると
+\begin{align}
+  \dfrac{dA}{dt} = 2(\cos t - t \sin t) = 2\cos t (1 - t \tan t)
+\end{align}
+より，$t_0 \tan t_0 = 1$なる$t_0 \ (0<t_0<\pi/2)$を取って，$A$の増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$A$の増減表}
+  \begin{tabular}{c|c|c|c|c|c|c|c}
+    $t$ & 0 & $\cdots$ & $\pi/4$ & $\cdots$ & $t_0$ & $\cdots$ & $\pi/2$ \\
+    \hline
+    $A'$ & & $+$ & $+$ & $+$ & 0 & $-$ & \\
+    \hline
+    $A$ & & $\nearrow$ & & $\nearrow$ & 極大 & $\searrow$ &
+  \end{tabular}
+\end{table}
+
+ここで$\dfrac{\pi}{4} \cdot \tan \dfrac{\pi}{4} < 1$ より $\dfrac{\pi}{4} < t_0$である．
+\cref{eq:1}で$t=t_0$として求める最大値は
+\begin{align}
+  \max A = 2 t_0 \cos t_0 = 2 \dfrac{\cos^2 t_0}{\sin t_0} \label{eq:2}
+\end{align}
 となる．
 
-次にBについて，$C'' = -\cos t \leqq 0 \ (-\dfrac{\pi}{2} \leqq t \leqq \dfrac{\pi}{2})$ より $y=\cos x$ のグラフは上に凸なので，Bは3頂点が $(\pm \pi/2, 0), (1, 0)$ の時の $\triangle$ の面積で，
-\[
-  B = \dfrac{1}{2}\pi \quad \cdots \text{②}
-\]
+\subparagraph{三角形$B$について}
 
-最後にCについて，中心は原点である．半径 $r$ とすると，対称性から $0 \leqq t \leqq \pi/2$ で
-\[
-  t^2 + \cos^2 t \geqq r^2 \quad \cdots \text{③}
-\]
-となれば良い．この左辺を $f(t)$ とする．
-\[
-  f'(t) = 2t - 2C \cdot S = 2t - \sin 2t \geqq 0 \quad (\because 0 \leqq t \leqq \pi/2 \text{ で } t \geqq \sin t)
-\]
-より，$f$ は単調増加だから，③を満たす $\max r$ は $r = \sqrt{0 + \cos 0} = 1$ となり，
-\[
-  C = \dfrac{1}{2} \cdot 1^2 \cdot \pi = \dfrac{1}{2}\pi \quad \cdots \text{④}
-\]
+次にBについて，$(\cos t)'' = -\cos t \leqq 0 \ (-\dfrac{\pi}{2} \leqq t \leqq \dfrac{\pi}{2})$ より $y=\cos x$ のグラフは上に凸なので，Bは3頂点が $(\pm \pi/2, 0), (0, 1)$ の時の $\triangle$ の面積で，
+\begin{align}
+  \max B = \dfrac{1}{2}\pi \label{eq:3}
+\end{align}
 である．
 
-以上これらの大小を比べる．(*)及び①からAが区間内で単調減少であることから
-\[
-  A < 2 \dfrac{\cos^2 \dfrac{\pi}{4}}{\sin \dfrac{\pi}{4}} = \sqrt{2} < \dfrac{1}{2}\pi \quad (\because 8 < \pi^2 \text{ より } 2\sqrt{2} < \pi)
-\]
-だから②, ④とあわせて
-\[
-  A < B = C \quad (\cdots \text{以下，原稿がここで途切れている})
-\]
+\subparagraph{円$C$について}
+
+最後にCについて中心は原点である．半径 $r$ とすると円の方程式は
+\begin{align}
+  x^2 + y^2 = r^2
+\end{align}
+である．これが$y=\cos t$の下側にあれば良いから，
+対称性から $0 \leqq t \leqq \pi/2$ で
+\begin{align}
+  t^2 + \cos^2 t \geqq r^2 \label{eq:4}
+\end{align}
+となれば良い．この左辺を $f(t)$ とすると，一階微分は
+\begin{align}
+  f'(t)
+  = 2t - 2\cos t\sin t
+  = 2t - \sin 2t \geqq 0 \quad (\because 0 \leqq t \leqq \pi/2 \text{ で } t \geqq \sin t)
+\end{align}
+より，$f$ は単調増加だから，\cref{eq:4}を満たす $\max r$ は $t=0$の時の$r = \sqrt{0 + \cos 0} = 1$ となる．この時の$C$の面積は
+\begin{align}
+  C = \dfrac{1}{2}\pi r^2 = \dfrac{1}{2} \cdot 1^2 \cdot \pi = \dfrac{1}{2}\pi \label{eq:5}
+\end{align}
+である．
+\casesend
+
+以上\cref{eq:2,eq:3,eq:5}をまとめて
+\begin{align}
+  A = 2\dfrac{\cos^2 t_0}{\sin t_0},
+  \quad
+  B = C = \dfrac{\pi}{2}
+\end{align}
+である．そこで$A$と$\pi/2$の大小を比較すれば良いが，$A$の増減表から$\pi/4 < t_0$であることと$A$の表式が$t_0$について単調減少であることから，
+\begin{align}
+  A(t_0) < A(\pi/4) = \sqrt{2} < \dfrac{\pi}{2}
+  \quad (\because 8 < \pi^2 \text{ より } 2\sqrt{2} < \pi)
+\end{align}
+である．以上から
+\begin{align}
+  A < B = C
+\end{align}
+である．
 
 \end{document}

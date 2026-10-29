@@ -1,24 +1,67 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $P(a, b)$ とし，2接点 $Q(\alpha, \alpha^2), R(\beta, \beta^2)$ とおく．ただし $\alpha < \beta \cdots$ ①とする．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.8cm, y=1.2cm, >=stealth,
+    every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.2, 0) -- (2.4, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.2) -- (0, 3.5) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
 
-$Q, R$ における接線は，各々
+    % 放物線 y = x^2
+    \draw[line width=1.4pt, blue!85!black, domain=-1.1:1.9, samples=80, smooth]
+    plot (\x, {\x*\x}) node[above right] {$y = x^2$};
+
+    % 接点 Q, R および 交点 P
+    % a = 2/3, b = -3/4, alpha ≈ -0.426, beta ≈ 1.760
+    \pgfmathsetmacro{\qa}{-0.426}
+    \pgfmathsetmacro{\qb}{\qa*\qa}
+    \pgfmathsetmacro{\ra}{1.760}
+    \pgfmathsetmacro{\rb}{\ra*\ra}
+    \coordinate (P) at (2/3, -3/4);
+    \coordinate (Q) at (\qa, \qb);
+    \coordinate (R) at (\ra, \rb);
+
+    % 接線
+    \draw[line width=1.0pt, orange!85!black] ($(P)!-0.3!(Q)$) -- ($(P)!1.4!(Q)$)
+    node[above left, font=\footnotesize] {接線 $y=2\alpha x - \alpha^2$};
+    \draw[line width=1.0pt, teal!75!black] ($(P)!-0.3!(R)$) -- ($(P)!1.1!(R)$)
+    node[right, font=\footnotesize] {接線 $y=2\beta x - \beta^2$};
+
+    % 角の表示（Pにおける交角）
+    \pic[draw=red!80!black, thick, angle radius=0.45cm, angle eccentricity=1.35,
+    "$\theta$" font=\footnotesize] {angle=R--P--Q};
+
+    % 点の描画
+    \node[circle, fill=orange!85!black, inner sep=1.4pt] at (Q) {};
+    \node[below left=2pt, font=\footnotesize] at (Q) {$Q(\alpha, \alpha^2)$};
+    \node[circle, fill=teal!75!black, inner sep=1.4pt] at (R) {};
+    \node[above left=2pt, font=\footnotesize] at (R) {$R(\beta, \beta^2)$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {};
+    \node[below right=2pt, xshift=2pt, font=\footnotesize] at (P) {$P(a, b)$};
+  \end{tikzpicture}
+  \caption{放物線 $y=x^2$ と点 $P(a,b)$ から引いた2本の接線}
+  \label{fig:1964_4_tangent_summary}
+\end{figure}
+
+$P(a, b)$ とし，$y=x^2$に引いた接線の2接点を $Q(\alpha, \alpha^2), R(\beta, \beta^2)$ とおく．ただし $\alpha < \beta$ とする．
+
+$(x^2)'=2x$より $Q, R$ における接線は，
 \begin{align}
   \begin{cases}
     y = 2\alpha x - \alpha^2 \\
     y = 2\beta x - \beta^2
-  \end{cases}
+  \end{cases} \label{eq:1}
 \end{align}
-だから，これらの交点が $P$ であり，
+だから，これらの交点が $P$ であり，連立して
 \begin{align}
-  a = \dfrac{\alpha+\beta}{2}, \quad b = \alpha\beta \quad \cdots \text{②}
+  a = \dfrac{\alpha+\beta}{2}, \quad b = \alpha\beta \label{eq:2}
 \end{align}
-となる．したがって，
+となる．したがって $\overrightarrow{PQ},\overrightarrow{PR}$ は
 \begin{align}
   \overrightarrow{PQ} &=
   \begin{pmatrix} \alpha-a \\ \alpha^2-b
@@ -33,40 +76,103 @@ $Q, R$ における接線は，各々
   \begin{pmatrix} \dfrac{-\alpha+\beta}{2} \\ \beta(\beta-\alpha)
   \end{pmatrix} = (\beta-\alpha)
   \begin{pmatrix} \dfrac{1}{2} \\ \beta
-  \end{pmatrix}
+  \end{pmatrix} \label{eq:3}
 \end{align}
-である．2接線のなす角 $\theta$ として，$\theta = \pi/3$ or $2\pi/3$ だから，
+である．
+
+さて，2接線のなす角 $\theta$ として 題意より$\theta = \pi/3$ or $2\pi/3$ だから，
 \begin{align}
-  \tan\theta = \pm \tan\pi/3 = \pm \sqrt{3} \quad \cdots \text{③}
+  \tan\theta = \pm \tan\pi/3 = \pm \sqrt{3} \label{eq:4}
 \end{align}
-となる．一方，
+となる．一方で
 \begin{align}
-  \tan\theta = \dfrac{\sin\theta}{\cos\theta} = \dfrac{|\overrightarrow{PQ}||\overrightarrow{PR}|\sin\theta}{|\overrightarrow{PQ}||\overrightarrow{PR}|\cos\theta} = \dfrac{2 \Delta PQR}{\overrightarrow{PQ}\cdot\overrightarrow{PR}} \quad (\because |\overrightarrow{PQ}||\overrightarrow{PR}| \neq 0)
+  \tan\theta &= \dfrac{\sin\theta}{\cos\theta} \\
+  &= \dfrac{|\overrightarrow{PQ}||\overrightarrow{PR}|\sin\theta}{|\overrightarrow{PQ}||\overrightarrow{PR}|\cos\theta} \\
+  &= \dfrac{2 \Delta PQR}{\overrightarrow{PQ}\cdot\overrightarrow{PR}} \quad (\because |\overrightarrow{PQ}||\overrightarrow{PR}| \neq 0)
 \end{align}
-だから，(*)から
+だから，\cref{eq:3}を代入して
 \begin{align}
-  \tan\theta = \dfrac{|\dfrac{1}{2}\alpha - \dfrac{1}{2}\beta|}{-\dfrac{1}{4} - \alpha\beta} = \dfrac{-\dfrac{1}{2}(\beta-\alpha)}{\dfrac{1}{4} + \alpha\beta} \quad (\because \text{①}) \quad \cdots \text{④}
+  \tan\theta &= \dfrac{\left|\dfrac{1}{2}\alpha - \dfrac{1}{2}\beta\right|}{-\dfrac{1}{4} - \alpha\beta} \\
+  &= \dfrac{-\dfrac{1}{2}(\beta-\alpha)}{\dfrac{1}{4} + \alpha\beta} \quad (\because \alpha<\beta) \label{eq:5}
 \end{align}
-となる．②から $\alpha, \beta$ が $x$ の2次方程式 $x^2 - 2ax + b = 0$ の2実解であることから，
+となる．\cref{eq:4,eq:5}より
 \begin{align}
-  \beta-\alpha = 2\sqrt{a^2-b} \quad (a^2-b \geqq 0)
+  \pm \sqrt{3} = \dfrac{-\dfrac{1}{2}(\beta-\alpha)}{\dfrac{1}{4} + \alpha\beta} \label{eq:6}
 \end{align}
-に注意して，②, ④から，
+である．
+
+ここで\cref{eq:2}から $\alpha, \beta$ が $x$ の2次方程式 $x^2 - 2ax + b = 0$ の2実解であることから，
+\begin{align}
+  \beta-\alpha = 2\sqrt{a^2-b} \quad (a^2-b \geqq 0) \label{eq:7}
+\end{align}
+であり，\cref{eq:2,eq:7}を\cref{eq:6}に代入して
 \begin{align}
   \pm \sqrt{3} = \dfrac{-\sqrt{a^2-b}}{\dfrac{1}{4}+b}
 \end{align}
-2乗して良く，
+である．両辺二乗して良く，
 \begin{align}
-  3\left(b + \dfrac{1}{4}\right)^2 = a^2 - b \iff a^2 - 3\left(b + \dfrac{5}{12}\right)^2 = \dfrac{1}{9} \quad \cdots \text{⑥}
+  3\left(b + \dfrac{1}{4}\right)^2 = a^2 - b
+  \iff
+  a^2 - 3\left(b + \dfrac{5}{12}\right)^2 = \dfrac{1}{9} \label{eq:8}
 \end{align}
-以上から求める軌跡は $a^2 - b \geqq 0 \land \text{⑥}$ だが，①の時 $a^2 - b \geqq 0$ は満たされるので，求めるものは
+である．この時\cref{eq:7}の条件$a^2-b \geqq 0$も満たされるので，求める軌跡は
 \begin{align}
   x^2 - 3\left(y + \dfrac{5}{12}\right)^2 = \dfrac{1}{9}
 \end{align}
+である．
 
-\medskip
-{\bf [別解]} 2接線の傾き $\theta_\alpha, \theta_\beta$ とする．これら正負で以下のようになる．
-([解答]を流用，$ -\dfrac{\pi}{2} < \theta_\alpha, \theta_\beta < \dfrac{\pi}{2} $)
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.0cm, y=1.5cm, >=stealth,
+    every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-2.2, 0) -- (2.2, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.8) -- (0, 2.2) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 放物線 y = x^2 (接線が2本引ける境界 y < x^2)
+    \draw[line width=1.0pt, gray!60, dashed, domain=-1.4:1.4, samples=60, smooth]
+    plot (\x, {\x*\x}) node[above] {$y = x^2$};
+
+    % 漸近線 y = \pm (1/\sqrt{3})x - 5/12
+    \draw[dash pattern=on 2pt off 2pt, gray!60] (-2.0, {-2.0/sqrt(3) - 5/12}) -- (2.0, {2.0/sqrt(3) - 5/12});
+    \draw[dash pattern=on 2pt off 2pt, gray!60] (-2.0, {2.0/sqrt(3) - 5/12}) -- (2.0, {-2.0/sqrt(3) - 5/12});
+
+    % 双曲線 (右分枝)
+    \draw[line width=1.4pt, blue!85!black, domain=1/3:1.9, samples=60, smooth]
+    plot (\x, {-5/12 + sqrt((\x*\x - 1/9)/3)});
+    \draw[line width=1.4pt, blue!85!black, domain=1/3:1.9, samples=60, smooth]
+    plot (\x, {-5/12 - sqrt((\x*\x - 1/9)/3)});
+
+    % 双曲線 (左分枝)
+    \draw[line width=1.4pt, blue!85!black, domain=-1.9:-1/3, samples=60, smooth]
+    plot (\x, {-5/12 + sqrt((\x*\x - 1/9)/3)});
+    \draw[line width=1.4pt, blue!85!black, domain=-1.9:-1/3, samples=60, smooth]
+    plot (\x, {-5/12 - sqrt((\x*\x - 1/9)/3)});
+
+    % 頂点と中心
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (1/3, -5/12) {};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (-1/3, -5/12) {};
+    \node[circle, fill=gray!70!black, inner sep=1.0pt] at (0, -5/12) {};
+    \node[left=2pt, font=\footnotesize, gray!80!black] at (0, -5/12) {$-\frac{5}{12}$};
+    \node[below right=2pt, font=\footnotesize] at (1/3, -5/12) {$\left(\frac{1}{3}, -\frac{5}{12}\right)$};
+    \node[below left=2pt, font=\footnotesize] at (-1/3, -5/12) {$\left(-\frac{1}{3}, -\frac{5}{12}\right)$};
+
+    % ラベル
+    \node[blue!85!black, font=\footnotesize] at (1.4, 0.9) {$x^2 - 3\left(y + \frac{5}{12}\right)^2 = \frac{1}{9}$};
+  \end{tikzpicture}
+  \caption{点 $P$ の軌跡（双曲線）と放物線 $y=x^2$}
+  \label{fig:1964_4_locus}
+\end{figure}
+
+{\bf [別解]}
+
+2接線の接点を$(\alpha,\alpha^2),(\beta,\beta^2)$，その傾きを $\theta_\alpha, \theta_\beta$ とする．これらの正負で以下の3パターンがあり得る．
+ただし
+\begin{align}
+  -\dfrac{\pi}{2} < \theta_\alpha, \theta_\beta < \dfrac{\pi}{2} \label{eq:9}
+\end{align}
+とする．
 
 \begin{figure}[htb]
   \centering
@@ -110,18 +216,22 @@ $Q, R$ における接線は，各々
 \begin{align}
   \tan\theta = \pm \tan(\theta_\beta - \theta_\alpha)
 \end{align}
-となる．$\theta = \dfrac{\pi}{3}, \dfrac{2\pi}{3}$ だから，
+となる．$\theta = \dfrac{\pi}{3}, \dfrac{2\pi}{3}$ だから
 \begin{align}
-  \pm \sqrt{3} = \pm \tan(\theta_\beta - \theta_\alpha) \quad \cdots \text{P}
+  \pm \sqrt{3} = \pm \tan(\theta_\beta - \theta_\alpha) \label{eq:10}
 \end{align}
-ここで $\tan\theta_\alpha = 2\alpha$, $\tan\theta_\beta = 2\beta$ より
+を得る．
+
+ここで$(x^2)'=2x$だから $\tan\theta_\alpha = 2\alpha$, $\tan\theta_\beta = 2\beta$ より
 \begin{align}
   \tan(\theta_\beta - \theta_\alpha) = \dfrac{2(\beta-\alpha)}{1+4\alpha\beta}
 \end{align}
-だから，①より
+だから，\cref{eq:10}に代入して
 \begin{align}
-  \pm \sqrt{3} = \pm \dfrac{2(\beta-\alpha)}{1+4\alpha\beta} \iff 3 = \dfrac{4(\beta-\alpha)^2}{(1+4\alpha\beta)^2} \quad (\text{Pに合流})
+  \pm \sqrt{3} = \pm \dfrac{2(\beta-\alpha)}{1+4\alpha\beta}
+  \iff
+  3 = \dfrac{4(\beta-\alpha)^2}{(1+4\alpha\beta)^2}
 \end{align}
-(以下略)
+となる．以下は[解答]と合流する．
 
 \end{document}
