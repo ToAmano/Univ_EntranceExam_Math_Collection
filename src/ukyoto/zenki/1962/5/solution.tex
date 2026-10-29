@@ -1,21 +1,32 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-［解］(1)
+\paragraph{(イ)}
+
+与えられた関数
 \begin{align}
-  f(x) &= \sqrt{2} a \pi x + \cos \pi x + \sin \pi x \\
-  &= \sqrt{2} a t + \cos t + \sin t \quad (t = \pi x) \equiv g(t)
+  f(x) = \sqrt{2} a \pi x + \cos \pi x + \sin \pi x
 \end{align}
-とすると
-\[
-  g'(t) = \sqrt{2} a + \cos t - \sin t
-\]
-だから $t_0$ の前後で $g'(t)$ の符号が変化するような $t_0$ の存在条件は，図から
+において$t=\pi x$と置換して
+\begin{align}
+  g(t) = \sqrt{2} a t + \cos t + \sin t
+\end{align}
+とすると一階微分は
+\begin{align}
+  g'(t)
+  & = \sqrt{2} a + \cos t - \sin t \\
+  & = \sqrt{2} a - \sqrt{2}\sin\left(t - \dfrac{\pi}{4}\right)
+\end{align}
+だから，$g'(t)=0$は
+\begin{align}
+  \begin{cases}
+    y = \sqrt{2} a \\
+    y = h(t) = \sqrt{2}\sin\left(t - \dfrac{\pi}{4}\right)
+  \end{cases}
+\end{align}
+の二つの曲線の交点である．
 
 \begin{figure}[htb]
   \centering
@@ -28,26 +39,27 @@
     \draw[dashed, orange!85!black] (0,0.7071) -- (6.3,0.7071);
     \draw[line width=1.4pt, blue!85!black, domain=0:6.283,
     samples=130, smooth] plot (\x, {sin(\x r)-cos(\x r)});
-    \node[left=3pt, font=\footnotesize] at (0,1.4142) {$\sqrt2$};
-    \node[left=3pt, font=\footnotesize] at (0,-1.4142) {$-\sqrt2$};
+    \node[left=3pt, font=\footnotesize] at (0,1.4142) {$\sqrt{2}$};
+    \node[left=3pt, font=\footnotesize] at (0,-1.4142) {$-\sqrt{2}$};
     \node[right=3pt, orange!85!black, font=\footnotesize]
-    at (6.3,0.7071) {$\sqrt2a$（例）};
+    at (6.3,0.7071) {$\sqrt{2a}$（例）};
     \node[below=3pt, font=\footnotesize] at (0.7854,0) {$\pi/4$};
     \node[above right=3pt, blue!85!black, font=\footnotesize]
     at (3.5,1.1) {$y=\sin t-\cos t$};
   \end{tikzpicture}
-  \caption{$\sin t-\cos t$ の値域と直線 $y=\sqrt2a$ の位置}
+  \caption{$\sin t-\cos t$ の値域と直線 $y=\sqrt{2a}$ の位置}
   \label{fig:1962_5_range}
 \end{figure}
 
-\[
+従って上図から，$t_0$ の前後で $g'(t)$ の符号が変化するような $t_0$ の存在条件は
+\begin{align}
   -\sqrt{2} < \sqrt{2} a < \sqrt{2}
-\]
-\[
-  \therefore 0 < a < 1 \quad (\because a > 0)
-\]
+  \therefore
+  0 < a < 1 \quad (\because a > 0)
+\end{align}
+である．
 
-\paragraph{(2)}
+\paragraph{(ロ)}
 
 \begin{figure}[htb]
   \centering
@@ -61,13 +73,13 @@
     \draw[dashed, gray!65] (0,-0.7071) -- (8.8,-0.7071);
     \draw[line width=1.4pt, blue!85!black, domain=0:8.8,
     samples=180, smooth] plot (\x, {0.7071+cos(\x r)-sin(\x r)});
-    \fill[red!80!black] (1.309,0) circle (1.5pt);
-    \fill[red!80!black] (7.592,0) circle (1.5pt);
+    \node[circle, fill=red!80!black, inner sep=1.5pt] at (1.309,0) {};
+    \node[circle, fill=red!80!black, inner sep=1.5pt] at (7.592,0) {};
     \node[below=3pt, font=\footnotesize] at (1.309,0) {$t_0$};
     \node[below=3pt, font=\footnotesize] at (7.592,0) {$t_0+2\pi$};
-    \node[left=3pt, font=\footnotesize] at (0,2.1213) {$\sqrt2(a+1)$};
-    \node[left=3pt, font=\footnotesize] at (0,0.7071) {$\sqrt2a$};
-    \node[left=3pt, font=\footnotesize] at (0,-0.7071) {$\sqrt2(a-1)$};
+    \node[left=3pt, font=\footnotesize] at (0,2.1213) {$\sqrt{2(a+1)}$};
+    \node[left=3pt, font=\footnotesize] at (0,0.7071) {$\sqrt{2a}$};
+    \node[left=3pt, font=\footnotesize] at (0,-0.7071) {$\sqrt{2(a-1)}$};
   \end{tikzpicture}
   \caption{$g'(t)$ が正から負へ変わる点は周期 $2\pi$ ごとに現れる}
   \label{fig:1962_5_derivative}
@@ -76,10 +88,15 @@
 $g'(t)$ が周期 $2\pi$ の周期関数であることから，$0 \le t < 2\pi$ で $g'(t)$ の符号が $t_0$ の前後で正から負になるような $t_0$ があって，$t = t_0 + 2n\pi \, (n \in \mathbb{Z})$ においては $g(t)$ は極大になる．
 
 従って，極大となる点の座標を $(X, Y)$ とすると $t = \pi x$ から
-\[
+\begin{align}
   X = \dfrac{t_0}{\pi} + 2n, \quad Y = \sqrt{2} a \left( \dfrac{t_0}{\pi} + 2n \right) + \cos t_0 + \sin t_0
-\]
-従って，たしかに $(X, Y)$ は直線上にあり（$n$ を消せばわかる），その $X$ 座標の間隔が $2$ だから，等間隔である．
+\end{align}
+となる．$n$を消去して
+\begin{align}
+  Y = \sqrt{2}aX + \cos t_0 + \sin t_0
+\end{align}
+だから，たしかに $(X, Y)$ は直線上にあり，その $X$ 座標の間隔が $2$ だから等間隔である．
+よって題意は示された．
 
 \newpage
 

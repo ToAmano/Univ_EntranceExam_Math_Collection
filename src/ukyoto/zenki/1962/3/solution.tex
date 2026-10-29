@@ -1,12 +1,7 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-［解］
+{\bf [解答]}
 
 \begin{figure}[htb]
   \centering
@@ -32,24 +27,23 @@
     \draw[thick, teal!80!black] (Q) -- (S);
     \draw[thick, red!80!black] (S) -- (R);
     \draw[thick, gray!80!black] (A) -- (B);
-    \fill (P) circle (1.3pt) node[above=2pt] {$P$};
-    \fill (Q) circle (1.3pt) node[below left=2pt] {$Q$};
-    \fill (R) circle (1.3pt) node[below right=2pt] {$R$};
-    \fill (S) circle (1.3pt) node[right=2pt] {$S$};
-    \fill (A) circle (1.1pt) node[above left=2pt] {$A$};
-    \fill (B) circle (1.1pt) node[above right=2pt] {$B$};
+    \node[circle, fill, inner sep=1.3pt] at (P) {}; \node[above=2pt] at (P) {$P$};
+    \node[circle, fill, inner sep=1.3pt] at (Q) {}; \node[below left=2pt] at (Q) {$Q$};
+    \node[circle, fill, inner sep=1.3pt] at (R) {}; \node[below right=2pt] at (R) {$R$};
+    \node[circle, fill, inner sep=1.3pt] at (S) {}; \node[right=2pt] at (S) {$S$};
+    \node[circle, fill, inner sep=1.1pt] at (A) {}; \node[above left=2pt] at (A) {$A$};
+    \node[circle, fill, inner sep=1.1pt] at (B) {}; \node[above right=2pt] at (B) {$B$};
   \end{tikzpicture}
   \caption{円周上の $P,Q,R,S$ と，$AB\parallel QS$ の配置}
   \label{fig:1962_3_configuration}
 \end{figure}
 
-$SR$ と $AB$ の交点を $C$ とおく．$P$ の位置によって，以下の2通りの位置関係がありうる．
-
-以下，直線 $SR$ が $P$ の位置によらず定点 $C$ を通ることを示す．
+$SR$ と $AB$ の交点を $C$，$QS$と$PR$の交点を $D$ とおく．
+$P$ の位置によって以下のように，$D$ が線分$PR,QS$の内側にくるかどうかで2通りの位置関係がありうる．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=1.8cm, y=1.8cm, every node/.style={font=\footnotesize}]
+  \begin{tikzpicture}[x=1.95cm, y=1.95cm, every node/.style={font=\footnotesize}]
     % The two choices of P keep the fixed interior points A,B unchanged.
     \foreach \pangle/\panelshift/\caseid in {113/0/1, 80/3.8/2} {
       \begin{scope}[shift={(\panelshift,0)}]
@@ -80,26 +74,97 @@ $SR$ と $AB$ の交点を $C$ とおく．$P$ の位置によって，以下の
         \ifnum\caseid=1
         \draw[dashed, blue!70!black] (R) -- (D);
         \draw[dashed, teal!70!black] (S) -- (D);
+        % 角度マーク (1°: ○, ×, △)
+        \node[font=\tiny] at ($(P)+(0.03,-0.22)$) {$\circ$};
+        \node[font=\tiny] at ($(S)+(0.09,0.06)$) {$\circ$};
+        \node[font=\tiny] at ($(C)+(-0.22,-0.10)$) {$\circ$};
+        \node[font=\tiny] at ($(A)+(0.15,0.09)$) {$\times$};
+        \node[font=\tiny] at ($(Q)+(0.16,0.10)$) {$\times$};
+        \node[font=\tiny] at ($(R)+(-0.02,0.20)$) {$\times$};
+        \node[font=\tiny] at ($(B)+(-0.20,0.09)$) {$\triangle$};
+        \node[font=\tiny] at ($(B)+(0.18,-0.09)$) {$\triangle$};
+        \node[font=\tiny] at ($(D)+(-0.18,0.05)$) {$\triangle$};
+        \else
+        % 角度マーク (2°: ○, ×, △)
+        \node[font=\tiny] at ($(P)+(-0.08,-0.22)$) {$\circ$};
+        \node[font=\tiny] at ($(S)+(-0.18,-0.10)$) {$\circ$};
+        \node[font=\tiny] at ($(C)+(-0.20,-0.10)$) {$\circ$};
+        \node[font=\tiny] at ($(A)+(0.24,0.09)$) {$\times$};
+        \node[font=\tiny] at ($(Q)+(0.24,0.09)$) {$\times$};
+        \node[font=\tiny] at ($(R)+(0.08,0.24)$) {$\times$};
+        \node[font=\tiny] at ($(B)+(-0.12,0.09)$) {$\triangle$};
+        \node[font=\tiny] at ($(B)+(0.14,-0.09)$) {$\triangle$};
+        \node[font=\tiny] at ($(D)+(0.13,-0.09)$) {$\triangle$};
         \fi
-        \fill (P) circle (1.3pt) node[above=2pt] {$P$};
-        \fill (Q) circle (1.3pt) node[below left=2pt] {$Q$};
-        \fill (R) circle (1.3pt) node[above right=2pt] {$R$};
-        \fill (S) circle (1.3pt) node[below right=2pt] {$S$};
-        \fill (A) circle (1.1pt) node[above left=2pt] {$A$};
-        \fill (B) circle (1.1pt) node[above right=2pt] {$B$};
-        \fill[red!80!black] (C) circle (1.3pt) node[above right=2pt] {$C$};
-        \fill[teal!85!black] (D) circle (1.2pt) node[below=2pt] {$D$};
+        \node[circle, fill, inner sep=1.3pt] at (P) {}; \node[above=2pt] at (P) {$P$};
+        \node[circle, fill, inner sep=1.3pt] at (Q) {}; \node[below left=2pt] at (Q) {$Q$};
+        \node[circle, fill, inner sep=1.3pt] at (R) {};
         \ifnum\caseid=1
+        \node[left=2pt] at (R) {$R$};
+        \node[circle, fill, inner sep=1.3pt] at (S) {}; \node[below=2pt] at (S) {$S$};
+        \else
+        \node[below=2pt] at (R) {$R$};
+        \node[circle, fill, inner sep=1.3pt] at (S) {}; \node[right=2pt] at (S) {$S$};
+        \fi
+        \node[circle, fill, inner sep=1.1pt] at (A) {}; \node[above left=2pt] at (A) {$A$};
+        \node[circle, fill, inner sep=1.1pt] at (B) {}; \node[above right=2pt] at (B) {$B$};
+        \node[circle, fill=red!80!black, inner sep=1.3pt] at (C) {}; \node[red!80!black, above right=2pt] at (C) {$C$};
+        \node[circle, fill=teal!85!black, inner sep=1.2pt] at (D) {};
+        \ifnum\caseid=1
+        \node[teal!85!black, below right=1pt] at (D) {$D$};
         \node[font=\small] at (0,-1.4) {$1^\circ$：$PR$ と $QS$ は交わらない};
         \else
+        \node[teal!85!black, below left=1pt] at (D) {$D$};
         \node[font=\small] at (0,-1.4) {$2^\circ$：$PR$ と $QS$ は交わる};
         \fi
       \end{scope}
     }
   \end{tikzpicture}
-  \caption{$P$ の位置による二つの場合．破線は線分の延長を示す}
+  \caption{$P$ の位置による二つの場合と等しい角の対応（$\circ,\times,\triangle$）}
   \label{fig:1962_3_cases}
 \end{figure}
+
+以下，それぞれの場合において，直線 $SR$ が $P$ の位置によらず定点 $C$ を通ることを示す．
+
+\subparagraph{$1^\circ$ の時}
+
+円に内接する四角形$PQSR$の対角の和が $\pi$ であること，$AC$と$QS$が平行であることから
+\begin{align}
+  \begin{cases}
+    \angle APB = \angle RSD = \angle BCR = \circ \\
+    \angle PAB = \angle PQS = \angle BRC = \times \\
+    \angle PBA = \angle RDS = \angle CBR = \triangle
+  \end{cases}
+\end{align}
+となり，
+\begin{align}
+  \triangle PAB \sim \triangle CRB
+\end{align}
+が従う．
+
+\subparagraph{$2^\circ$ の時}
+
+この時は円周角の定理と$AC$と$QS$が平行であることから
+\begin{align}
+  \begin{cases}
+    \angle APB = \angle RSD = \angle RCB \\
+    \angle PAB = \angle PQD = \angle SRD \\
+    \angle PBA = \angle RDS = \angle RBC
+  \end{cases}
+\end{align}
+となり，
+\begin{align}
+  \triangle PAB \sim \triangle CRB
+\end{align}
+が従う．
+\casesend
+
+以上 $1^\circ, 2^\circ$ からいずれの場合も $\triangle PAB \sim \triangle CRB$ であり，
+相似より
+\begin{align}
+  |BC| = \dfrac{|PB||BR|}{|AB|} \label{eq:1}
+\end{align}
+である．
 
 \begin{figure}[htb]
   \centering
@@ -114,43 +179,78 @@ $SR$ と $AB$ の交点を $C$ とおく．$P$ の位置によって，以下の
     \draw[line width=1.2pt, blue!85!black] (P) -- (A);
     \draw[line width=1.2pt, teal!85!black] (C) -- (R);
     \draw[line width=1.2pt, red!80!black] (P) -- (R);
-    \fill (A) circle (1.2pt) node[below left=2pt] {$A$};
-    \fill (B) circle (1.2pt) node[above right=2pt] {$B$};
-    \fill (C) circle (1.2pt) node[above right=2pt] {$C$};
-    \fill (P) circle (1.3pt) node[above=2pt] {$P$};
-    \fill (R) circle (1.3pt) node[below=2pt] {$R$};
-    \node[red!80!black, left=3pt] at ($(P)!0.53!(B)$) {$x$};
-    \node[red!80!black, left=3pt] at ($(B)!0.53!(R)$) {$y$};
+    \node[circle, fill, inner sep=1.2pt] at (A) {}; \node[below left=2pt] at (A) {$A$};
+    \node[circle, fill, inner sep=1.2pt] at (B) {}; \node[above right=2pt] at (B) {$B$};
+    \node[circle, fill, inner sep=1.2pt] at (C) {}; \node[above right=2pt] at (C) {$C$};
+    \node[circle, fill, inner sep=1.3pt] at (P) {}; \node[above=2pt] at (P) {$P$};
+    \node[circle, fill, inner sep=1.3pt] at (R) {}; \node[below=2pt] at (R) {$R$};
+    \node[red!80!black, left=3pt] at ($(P)!0.53!(B)$) {$|PB|$};
+    \node[red!80!black, left=3pt] at ($(B)!0.53!(R)$) {$|BR|$};
   \end{tikzpicture}
-  \caption{相似な三角形 $PAB$ と $CRB$，および $PB=x,BR=y$}
+  \caption{相似な三角形 $PAB$ と $CRB$}
   \label{fig:1962_3_similar_triangles}
 \end{figure}
 
-$1^\circ$ の時，直線 $PR$ と直線 $QS$ の交点を $D$ とすると，内接四角形の対角の和が $\pi$ であることから角度が図のようになり（$\because AB \mathbin{/\!/} QS$），
-\[
-  \triangle PAB \sim \triangle CRB
-\]
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.1cm, y=2.1cm, every node/.style={font=\small}]
+    % 円 x^2+y^2=1 と直線 AB (y=0.45) の交点 E, F: x = \pm\sqrt{1-0.45^2} \approx \pm 0.8930
+    \coordinate (E) at (-0.8930, 0.45);
+    \coordinate (A) at (-0.55, 0.45);
+    \coordinate (B) at (0.15, 0.45);
+    \coordinate (F) at (0.8930, 0.45);
+    \coordinate (C) at (1.2571, 0.45);
+    \coordinate (P) at (-0.1736, 0.9848);
+    \coordinate (R) at (0.7919, -0.6107);
 
-$2^\circ$ の時，同じく $D$ ととると円周角の定理から $\angle QPR = \angle QSR$ であることから角度が図のようになり（$\because AB \mathbin{/\!/} QS$），
-\[
-  \triangle PAB \sim \triangle CRB
-\]
+    \draw[thick, gray!75!black] (0, 0) circle (1);
+    \draw[dashed, gray!65!black] (F) -- (C);
+    \draw[line width=1.3pt, teal!85!black] (E) -- (F);
+    \draw[line width=1.3pt, blue!85!black] (P) -- (R);
 
-以上 $1^\circ, 2^\circ$ から，いずれの場合も $\triangle PAB \sim \triangle CRB$ であり，
-$PB = x, BR = y$ とおくと
-\[
-  BC = \dfrac{xy}{AB} \quad \dots \text{①}
-\]
-である．
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (E) {};
+    \node[above left=2pt, teal!85!black] at (E) {$E$};
+    \node[circle, fill, inner sep=1.1pt] at (A) {};
+    \node[below=2pt] at (A) {$A$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (B) {};
+    \node[above right=2pt, red!85!black] at (B) {$B$};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (F) {};
+    \node[above right=2pt, teal!85!black] at (F) {$F$};
+    \node[circle, fill, inner sep=1.2pt] at (C) {};
+    \node[right=2pt] at (C) {$C$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (P) {};
+    \node[above=2pt, blue!85!black] at (P) {$P$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (R) {};
+    \node[below right=2pt, blue!85!black] at (R) {$R$};
+  \end{tikzpicture}
+  \caption{点 $B$ で交わる2弦 $PR, EF$ と方べきの定理}
+  \label{fig:1962_3_power_of_point}
+\end{figure}
 
 一方，直線 $BC$ と円の交点を $E, F$ として方べきの定理から
-\[
-  x \cdot y = BF \cdot BE \quad \dots \text{②}
-\]
-①, ②から
-\[
-  BC = \dfrac{BF \cdot BE}{AB} = \text{const} \quad (P \text{ の位置によらない})
-\]
+\begin{align}
+  |PB||BR| = |BF||BE| \label{eq:2}
+\end{align}
+である．
+\cref{eq:1,eq:2}から
+\begin{align}
+  |BC| = \dfrac{|BF||BE|}{|AB|}
+\end{align}
+となる．この右辺は$P$によらない一定値だから，$|BC|$も一定であり，従って点$C$は$P$によらない定点である．
+
+{\bf [解説]}
+
+本問で用いた円の基本性質を確認しておく．
+\begin{itemize}
+  \item {\bf 円に内接する四角形の対角の和：}
+    円に内接する四角形 $PQSR$ において，弧 $QSR$ に対する中心角を $2\theta_1$，弧 $QPR$ に対する中心角を $2\theta_2$ とすると，一周の角より $2\theta_1 + 2\theta_2 = 2\pi$ である．円周角の定理から $\angle QPR = \theta_1$，$\angle QSR = \theta_2$ であるため，対角の和は $\angle QPR + \angle QSR = \theta_1 + \theta_2 = \pi$ となる．
+  \item {\bf 方べきの定理：}
+    円の2弦 $PR, EF$ が点 $B$ で交わるとき，$\triangle PBE$ と $\triangle FBR$ に注目する．弧 $ER$ に対する円周角より $\angle BPE = \angle BFR$，対頂角より $\angle PBE = \angle FBR$ であるから，$\triangle PBE \sim \triangle FBR$ が成り立つ．したがって対応する辺の比から
+    \begin{align}
+      |PB| : |FB| = |BE| : |BR| \iff |PB||BR| = |BF||BE|
+    \end{align}
+    が得られる．
+\end{itemize}
 
 \newpage
 

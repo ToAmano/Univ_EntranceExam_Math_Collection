@@ -1,17 +1,17 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-［解1］座標平面で，$A(0, a)$, $B(b, 0)$, $C(c, 0)$ ($a>0, b>0, c<0$) として良い．$PQ$ の中点の軌跡を考える．まず，$P, Q$ が $AC, BC$ 上を動く時，
-\[
+座標平面で，$A(0, a)$, $B(b, 0)$, $C(c, 0)$ ($a>0, b>0, c<0$) として良い．
+$PQ$ の中点 $R$ の軌跡を考える．
+対称性から，まず$P, Q$ が $AC, BC$ 上を動く時を考える．
+この時$P,Q$の座標はパラメータ$t,s$を用いて
+\begin{align}
   P(ct, a(1-t)), \quad Q(s, 0) \quad (0 \le t \le 1, c \le s \le b)
-\]
+\end{align}
 とおける．$PQ$ の中点 $R(X, Y)$ とすると
-\[
+\begin{align}
   \begin{pmatrix} X \\ Y
   \end{pmatrix} = \dfrac{1}{2}
   \begin{pmatrix} ct \\ a(1-t)
@@ -24,8 +24,15 @@
   \end{pmatrix} + \dfrac{1}{2}
   \begin{pmatrix} 0 \\ a
   \end{pmatrix}
-\]
-だから，$R$ の軌跡は後掲の図の色付き部分のようである（境界含む）．
+\end{align}
+となる．これは$(0,a/2)$を始点とし，
+$
+\begin{pmatrix} 1 \\ 0
+\end{pmatrix}$と
+$
+\begin{pmatrix} c \\ -a
+\end{pmatrix}$の張る平行四辺形内の領域（境界含む）を動く．
+これを図示すると下図のようになる．
 
 \begin{figure}[htb]
   \centering
@@ -36,20 +43,21 @@
     \draw[->, thick, gray!80!black] (-2.25, 0) -- (2.75, 0) node[right] {$x$};
     \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 2.4) node[above] {$y$};
     \draw[line width=1.3pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
-    \fill (A) circle (1.3pt) node[above right=2pt] {$A(0,a)$};
-    \fill (B) circle (1.3pt) node[below right=2pt] {$B(b,0)$};
-    \fill (C) circle (1.3pt) node[below left=2pt] {$C(c,0)$};
+    \node[circle, fill, inner sep=1.3pt] at (A) {}; \node[above right=2pt] at (A) {$A(0,a)$};
+    \node[circle, fill, inner sep=1.3pt] at (B) {}; \node[below right=2pt] at (B) {$B(b,0)$};
+    \node[circle, fill, inner sep=1.3pt] at (C) {}; \node[below left=2pt] at (C) {$C(c,0)$};
     \node[below right=2pt, font=\footnotesize] at (0,0) {$O$};
   \end{tikzpicture}
   \caption{頂点 $A,B,C$ の座標を定めた三角形}
   \label{fig:1962_1_coordinates}
 \end{figure}
 
-$PQ$ が
-$
-\begin{cases} 1^\circ \quad AC, AB \text{ 上の時} \\ 2^\circ \quad AB, BC \text{ 上の時}
-\end{cases}$
-も，対称性から $R$ の軌跡は以下のようになる（境界含む）．
+そのほかの場合，
+\begin{itemize}
+  \item $1^\circ \quad $ $P,Q$が $AC, AB$ 上の時 \\
+  \item $2^\circ \quad $ $P,Q$が $AB, BC$ 上の時
+\end{itemize}
+の$R$の軌跡は対称性から以下のようになる（境界含む）．
 
 \begin{figure}[htb]
   \centering
@@ -89,7 +97,8 @@ $
   \label{fig:1962_1_pair_regions}
 \end{figure}
 
-以上まとめて，$AB, BC, CA$ の中点を $\alpha, \beta, \gamma$ として，以下のようになる．
+$M$に応じて引ける線分は以上の$3$つの場合で尽くされるから，$M$が与えられた時，$M$を含む領域の数が対応する$M$の個数となる．
+以上まとめて，$AB, BC, CA$ の中点を $\alpha, \beta, \gamma$ として，三角形$ABC$内の領域と引ける線分の数の対応は以下のようになる．
 
 \begin{figure}[htb]
   \centering
@@ -124,15 +133,62 @@ $
   \label{fig:1962_1_counts}
 \end{figure}
 
-［解2］（解1の最後の図を用いる）
+{\bf [別解]}
 
-$\triangle A\alpha\gamma, \triangle B\beta\alpha, \triangle C\gamma\beta$（辺 $\beta\alpha, \gamma\alpha, \gamma\beta$ をのぞく）の周及び内部を $T_1$，
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=0.84cm, y=0.84cm, every node/.style={font=\footnotesize}]
+    \foreach \dx/\title/\kind in {0/{$T_1$（周囲の3三角形，破線除く）}/1, 5.2/{$T_2$（中点を結ぶ3辺）}/2, 10.4/{$T_3$（中央の三角形の内部）}/3} {
+      \begin{scope}[shift={(\dx,0)}]
+        \coordinate (A) at (0, 2.2);
+        \coordinate (B) at (-1.9, 0);
+        \coordinate (C) at (1.9, 0);
+        \coordinate (alpha) at ($(A)!0.5!(B)$);
+        \coordinate (beta) at ($(B)!0.5!(C)$);
+        \coordinate (gamma) at ($(C)!0.5!(A)$);
 
-辺 $\beta\alpha, \gamma\alpha, \gamma\beta$ を $T_2$，
+        \ifnum\kind=1
+        \fill[blue!16] (A) -- (alpha) -- (gamma) -- cycle;
+        \fill[blue!16] (B) -- (beta) -- (alpha) -- cycle;
+        \fill[blue!16] (C) -- (gamma) -- (beta) -- cycle;
+        \draw[line width=1.2pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+        \draw[thick, dashed, gray!70!black] (alpha) -- (beta) -- (gamma) -- cycle;
+        \fi
+        \ifnum\kind=2
+        \draw[thick, gray!65!black] (A) -- (B) -- (C) -- cycle;
+        \draw[line width=1.5pt, red!80!black] (alpha) -- (beta) -- (gamma) -- cycle;
+        \node[circle, fill=red!80!black, inner sep=1.2pt] at (alpha) {};
+        \node[circle, fill=red!80!black, inner sep=1.2pt] at (beta) {};
+        \node[circle, fill=red!80!black, inner sep=1.2pt] at (gamma) {};
+        \fi
+        \ifnum\kind=3
+        \fill[teal!22] (alpha) -- (beta) -- (gamma) -- cycle;
+        \draw[thick, gray!65!black] (A) -- (B) -- (C) -- cycle;
+        \draw[thick, dashed, teal!85!black] (alpha) -- (beta) -- (gamma) -- cycle;
+        \fi
 
-$\triangle \alpha\beta\gamma$ の内部を $T_3$
+        \node[above=1pt] at (A) {$A$};
+        \node[below left=1pt] at (B) {$B$};
+        \node[below right=1pt] at (C) {$C$};
+        \node[left=1pt] at (alpha) {$\alpha$};
+        \node[below=1pt] at (beta) {$\beta$};
+        \node[right=1pt] at (gamma) {$\gamma$};
+        \node[below=14pt, font=\footnotesize] at (0, 0) {\title};
+      \end{scope}
+    }
+  \end{tikzpicture}
+  \caption{$\triangle ABC$ の3つの領域 $T_1, T_2, T_3$ への分割}
+  \label{fig:1962_1_t123_regions}
+\end{figure}
 
-とする．$M$ が各々の領域をうごく時の線本数をしらべる．まず $T_3$ について．
+最初から答えが推測できれば，[解答]の最後の図から出発して証明することもできる．
+$\triangle ABC$内を上図のような$3$つの領域に分割する．
+
+\begin{itemize}
+  \item $\triangle A\alpha\gamma, \triangle B\beta\alpha, \triangle C\gamma\beta$（辺 $\beta\alpha, \gamma\alpha, \gamma\beta$ をのぞく）の周及び内部を $T_1$ \\
+  \item 辺 $\beta\alpha, \gamma\alpha, \gamma\beta$ を $T_2$ \\
+  \item $\triangle \alpha\beta\gamma$ の内部を $T_3$
+\end{itemize}
 
 \begin{figure}[htb]
   \centering
@@ -150,33 +206,39 @@ $\triangle \alpha\beta\gamma$ の内部を $T_3$
     \draw[dashed, gray!75!black] (A) -- (Ap);
     \draw[dashed, gray!75!black] (B) -- (Bp);
     \draw[dashed, gray!75!black] (C) -- (Cp);
+    \draw[dotted, thick, teal!85!black] (Ap) -- (Bp) -- (Cp) -- cycle;
     \draw[line width=1.3pt, red!80!black] (P) -- (Q);
-    \fill (A) circle (1.3pt) node[above=2pt] {$A$};
-    \fill (B) circle (1.3pt) node[below left=2pt] {$B$};
-    \fill (C) circle (1.3pt) node[below right=2pt] {$C$};
-    \fill (Ap) circle (1.1pt) node[below=2pt] {$A'$};
-    \fill (Bp) circle (1.1pt) node[above right=2pt] {$B'$};
-    \fill (Cp) circle (1.1pt) node[above left=2pt] {$C'$};
-    \fill[red!80!black] (P) circle (1.4pt) node[left=3pt] {$P$};
-    \fill[red!80!black] (Q) circle (1.4pt) node[below=2pt] {$Q$};
-    \fill[red!80!black] (M) circle (1.5pt) node[right=3pt] {$M$};
+    \node[circle, fill, inner sep=1.3pt] at (A) {}; \node[above=2pt] at (A) {$A$};
+    \node[circle, fill, inner sep=1.3pt] at (B) {}; \node[below left=2pt] at (B) {$B$};
+    \node[circle, fill, inner sep=1.3pt] at (C) {}; \node[below right=2pt] at (C) {$C$};
+    \node[circle, fill, inner sep=1.1pt] at (Ap) {}; \node[below=2pt] at (Ap) {$A'$};
+    \node[circle, fill, inner sep=1.1pt] at (Bp) {}; \node[above right=2pt] at (Bp) {$B'$};
+    \node[circle, fill, inner sep=1.1pt] at (Cp) {}; \node[above left=2pt] at (Cp) {$C'$};
+    \node[circle, fill=red!80!black, inner sep=1.4pt] at (P) {}; \node[red!80!black, left=3pt] at (P) {$P$};
+    \node[circle, fill=red!80!black, inner sep=1.4pt] at (Q) {}; \node[red!80!black, below=2pt] at (Q) {$Q$};
+    \node[circle, fill=red!80!black, inner sep=1.5pt] at (M) {}; \node[red!80!black, right=3pt] at (M) {$M$};
   \end{tikzpicture}
   \caption{中央の領域にある $M$ を通る線分 $PQ$ と各頂点から $M$ への直線}
   \label{fig:1962_1_central_segment}
 \end{figure}
 
-$AM$ と $BC$，$BM$ と $AC$，$CM$ と $AB$ の交点を各々 $A', B', C'$ とする．$P \in A$ から，$Q$ を $A'$ から，反時計回りに $PQ$ が $M$ を通るようにうごかす．（$P$ は $A \to C' \to B \to A'$，$Q$ は $A' \to C \to B' \to A$）
+$M$ が各々の領域をうごく時の線本数をしらべる．まず $T_3$ について考える．
+$AM$ と $BC$，$BM$ と $AC$，$CM$ と $AB$ の交点を各々 $A', B', C'$ とする．
+$P$ を $A$ から，$Q$ を $A'$ から，反時計回りに $PQ$ が $M$ を通るようにうごかす．
+すると$P$ は $A \to C' \to B \to A'$，$Q$ は $A' \to C \to B' \to A$と動く．
 
-\[
+この時，$M$は$AA'$の中点より$A'$側に，$CC'$の中点より$C'$側にあるから
+\begin{align}
   |MA| - |MA'| > 0, \quad |MC'| - |MC| < 0
-\]
-から，$P$ が $A \to C'$ とうごく時，
-\[
+\end{align}
+が成り立つ．
+$P$ が $A \to C'$ とうごく時，
+\begin{align}
   |MP| - |MQ|
-\]
-はレンゾクな値をとりながら正 $\to$ 負と変化するので，$|MP| - |MQ| = 0$ となる $(P, Q)$ の組が少なくとも1つ存在する．このような組が2つ以上あると仮定すると，これらを $(P_1, Q_1), (P_2, Q_2)$ として，この4点は平行四辺形をなすが，$AB \mathbin{/\!/} BC$ 等より矛盾．よって $|MP| - |MQ| = 0$ となる $(P, Q)$ がただ1つ存在する．同様に $P$ が $C' \to B, B \to A'$ と動く時にも1つずつ，計3つある．
+\end{align}
+は連続な値をとりながら正 $\to$ 負と変化するので，$|MP| - |MQ| = 0$ となる $(P, Q)$ の組が少なくとも1つ存在する．このような組が2つ以上あると仮定すると，これらを $(P_1, Q_1), (P_2, Q_2)$ として，この4点は平行四辺形をなすが，$AB \mathbin{/\!/} BC$ より矛盾する．よって $|MP| - |MQ| = 0$ となる $(P, Q)$ がただ1つ存在する．同様に $P$ が $C' \to B, B \to A'$ と動く時にも1つずつ，計3つある．
 
-同様に $T_2$ のときは2つ，$T_1$ のときは1つあるので，［解1］のようになる．
+同様に $T_2$ のときは2つ，$T_1$ のときは1つあるので，[解答]のようになる．
 
 \newpage
 
