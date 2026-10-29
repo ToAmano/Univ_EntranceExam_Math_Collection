@@ -1,13 +1,9 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-\noindent
-{\bf [解答]} 内接円の半径 $r$, 外接円の半径 $R$ とおく．まず $\triangle ABC$ において内心 $O$ とし，図のように角度をおく ($\alpha+\beta+\gamma = \pi/2$) と
+% TODO: OからAB,BC,CAに下ろした垂線の足をH_ab,H_bc,H_caとする．
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=1.25cm, y=1.2cm, every node/.style={font=\small}]
@@ -27,13 +23,11 @@
       \draw[thick, teal!75!black] (O) circle[radius=0.937];
       \draw[dashed, red!75!black] (O)--(0,0);
       \draw[dashed, orange!80!black] (Oc)--(C);
-      \fill (A) circle(1.3pt) node[above=2pt] {$A$};
-      \fill (B) circle(1.3pt) node[below left=2pt] {$B$};
-      \fill (C) circle(1.3pt) node[below right=2pt] {$C$};
-      \fill[teal!80!black] (O) circle(1.3pt)
-      node[above right=2pt] {$O$};
-      \fill[orange!80!black] (Oc) circle(1.1pt)
-      node[below left=2pt, font=\footnotesize] {$O'$};
+      \node[circle, fill, inner sep=1.3pt] at (A) {}; \node[above=2pt] at (A) {$A$};
+      \node[circle, fill, inner sep=1.3pt] at (B) {}; \node[below left=2pt] at (B) {$B$};
+      \node[circle, fill, inner sep=1.3pt] at (C) {}; \node[below right=2pt] at (C) {$C$};
+      \node[circle, fill=teal!80!black, inner sep=1.3pt] at (O) {}; \node[teal!80!black, above right=2pt] at (O) {$O$};
+      \node[circle, fill=orange!80!black, inner sep=1.1pt] at (Oc) {}; \node[orange!80!black, below left=2pt, font=\footnotesize] at (Oc) {$O'$};
       \node[red!80!black, font=\footnotesize] at (0.23,0.42) {$r$};
       \node[orange!80!black, font=\footnotesize] at (1.24,0.43) {$R$};
       \node[font=\footnotesize] at (-0.25,1.9) {$\alpha$};
@@ -48,11 +42,10 @@
       \draw[line width=1.3pt, blue!85!black] (D)--(E)--(F)--cycle;
       \draw[dashed, gray!65] (D)--(Oi) (E)--(Oi) (F)--(Oi);
       \draw[thick, teal!75!black] (Oi) circle[radius=0.937];
-      \fill (D) circle(1.3pt) node[above=2pt] {$D$};
-      \fill (E) circle(1.3pt) node[below left=2pt] {$E$};
-      \fill (F) circle(1.3pt) node[below right=2pt] {$F$};
-      \fill[teal!80!black] (Oi) circle(1.3pt)
-      node[above right=2pt] {$O''$};
+      \node[circle, fill, inner sep=1.3pt] at (D) {}; \node[above=2pt] at (D) {$D$};
+      \node[circle, fill, inner sep=1.3pt] at (E) {}; \node[below left=2pt] at (E) {$E$};
+      \node[circle, fill, inner sep=1.3pt] at (F) {}; \node[below right=2pt] at (F) {$F$};
+      \node[circle, fill=teal!80!black, inner sep=1.3pt] at (Oi) {}; \node[teal!80!black, above right=2pt] at (Oi) {$O''$};
       \node[font=\footnotesize] at (-0.25,1.9) {$\alpha'$};
       \node[font=\footnotesize] at (-1.55,0.28) {$\beta'$};
       \node[font=\footnotesize] at (1.55,0.28) {$\gamma'$};
@@ -62,41 +55,88 @@
   \label{fig:1963_2_triangles}
 \end{figure}
 
-\[
-  AB = \dfrac{r}{\tan \alpha} + \dfrac{r}{\tan \beta}
-\]
-だから正弦定理から
-\[
-  \dfrac{r}{\sin 2\gamma} \left( \dfrac{1}{\tan \alpha} + \dfrac{1}{\tan \beta} \right) = 2R
-\]
-$A = \sin \alpha \sin \beta \sin \gamma$ とおくと
-\[
-  \dfrac{r \sin(\alpha+\beta)}{2A \cos \gamma} = 2R
-\]
-$\alpha+\beta+\gamma = \pi/2$ から $\sin(\alpha+\beta) = \sin(\pi/2-\gamma) = \cos \gamma$ だから
-\[
-  A = \dfrac{r}{4R} \quad \dots \text{①}
-\]
-である．同様に $\triangle DEF$ において図のように角をおくと ($O''$ は $\triangle DEF$ の内心)
-\[
-  \sin \alpha' \sin \beta' \sin \gamma' = \dfrac{r}{4R} \quad \dots \text{②}
-\]
-である．$\{\alpha, \beta, \gamma\} = \{\alpha', \beta', \gamma'\}$ ならば $\triangle ABC$ と $\triangle DEF$ は合同である $\dots$ ③．以下，
+$\triangle ABC, \triangle DEF$の内接円の半径 $r$, 外接円の半径 $R$ とおく．
+$\triangle ABC$ において内心 $O$ とし，図のように角度を
 \begin{align}
-  f(x, y) &= \sin x \sin y \sin(\pi/2 - x - y) \\
-  &= \sin x \sin y \cos(x+y) \quad (0 < x, y, \ x+y < \pi/2)
+  \begin{cases}
+    \angle OAB = \alpha, \angle OBC = \beta, \angle OCA = \gamma \\
+    \alpha+\beta+\gamma = \dfrac{\pi}{2}
+  \end{cases} \label{eq:1}
 \end{align}
-のとりうる値を考える．もし，異なる2組の $(x,y)$ に対し $f(x,y)$ が同じ値をとるなら，①, ②から $\triangle ABC$ と $\triangle DEF$ は合同とは限らない $\dots$ ④
+とおく．
+また内心$O$から辺$AB,BC,CA$に下ろした垂線の足を$H_{ab},H_{bc},H_{ca}$とおく．
 
-\[
+全く同様に$\triangle DEF$ において内心 $O'$ とし，図のように角度を
+\begin{align}
+  \begin{cases}
+    \angle O'A'B' = \alpha', \angle O'B'C' = \beta', \angle O'C'A' = \gamma' \\
+    \alpha'+\beta'+\gamma' = \dfrac{\pi}{2}
+  \end{cases} \label{eq:2}
+\end{align}
+とプライムをつけて表す．$\{\alpha, \beta, \gamma\} = \{\alpha', \beta', \gamma'\}$，すなわち$\{\alpha, \beta\} = \{\alpha', \beta'\}$ ならば $\triangle ABC$ と $\triangle DEF$ は合同である．
+
+まず$\triangle ABC$について考える．
+辺$AB$の長さは
+\begin{align}
+  |AB| = |AH_{ab}| + |BH_{ab}| = \dfrac{r}{\tan \alpha} + \dfrac{r}{\tan \beta}
+\end{align}
+だから正弦定理から
+\begin{align}
+  \dfrac{|AB|}{\sin \angle ACB} = 2R
+  \quad \therefore
+  \dfrac{r}{\sin 2\gamma} \left( \dfrac{1}{\tan \alpha} + \dfrac{1}{\tan \beta} \right) = 2R
+\end{align}
+となる．整理して
+\begin{align}
+  \dfrac{r}{\sin 2\gamma} \left( \dfrac{\cos \alpha}{\sin \alpha} + \dfrac{\cos \beta }{\sin \beta} \right) = \dfrac{2R}{r} \\
+  & \dfrac{\cos\alpha\sin\beta + \cos\beta\sin\alpha }{\sin 2\gamma \sin \alpha \sin \beta } = \dfrac{2R}{r} \\
+  & \dfrac{\sin(\alpha+\beta)}{2 \sin\gamma\cos\gamma \sin \alpha \sin \beta } = \dfrac{2R}{r} \\
+  & \dfrac{\sin(\alpha+\beta)}{\cos\gamma}\dfrac{1}{\sin\gamma \sin \alpha \sin \beta } = \dfrac{4R}{r}
+\end{align}
+であり，\cref{eq:1}より$\sin(\alpha+\beta) = \sin(\pi/2-\gamma) = \cos \gamma$ だから
+\begin{align}
+  \sin\gamma \sin \alpha \sin \beta = \dfrac{r}{4R} \label{eq:3}
+\end{align}
+である．全く同様に$\triangle DEF$ について
+\begin{align}
+  \sin \alpha' \sin \beta' \sin \gamma' = \dfrac{r}{4R} \label{eq:4}
+\end{align}
+が成り立つ．\cref{eq:3,eq:4}が成り立つ時に$\{\alpha, \beta\} = \{\alpha', \beta'\}$ が成り立つかを調べる．\cref{eq:1}より$\gamma=\dfrac{\pi}{2}-\alpha-\beta$などを代入して
+\begin{align}
+  \sin \alpha \sin \beta \sin\left(\dfrac{\pi}{2}-\alpha-\beta\right)
+  =\sin \alpha' \sin \beta' \sin\left(\dfrac{\pi}{2}-\alpha'-\beta'\right)
+  =\dfrac{r}{4R}
+\end{align}
+だから，
+\begin{align}
+  f(x, y)
+  &= \sin x \sin y \sin(\pi/2 - x - y) \\
+  &= \sin x \sin y \cos(x+y) \quad (0 < x, y, \ x+y < \pi/2) \label{eq:5}
+\end{align}
+とおくと，
+\begin{align}
+  f(\alpha,\beta) = f(\alpha',\beta') = \dfrac{r}{4R} \label{eq:6}
+\end{align}
+である．
+そこで$f(x,y)$のとりうる値を考える．もし，異なる2組の $(x,y)$ に対し $f(x,y)$ が同じ値をとるなら，$\triangle ABC$ と $\triangle DEF$ は合同とは限らない．
+
+積和の公式から
+\begin{align}
   f(x,y) = \dfrac{1}{2} \sin y \{ \sin(2x+y) - \sin y \}
-\]
-まず $y$ を固定して考える．$0 < x < \pi/2$ から $y < 2x+y < \pi-y$, $0 < y < \pi/2$ に注意して右辺 $g(y)$ とおくと
-\[
-  0 < g(y) \le \dfrac{1}{2} \sin y (1 - \sin y) \quad \dots *
-\]
-次に $t = \sin y \ (0 < t < 1)$ とおいて，$y$ をうごかすことにより $S = g(y)$ のとりうる領域は図の色付き部分である（境界は，斜線部のみ含む）．
+\end{align}
+である．
 
+% TODO: fig: y < 2x+y < \pi-y, 0 < y < \pi/2の様子を円周上の範囲を使って視覚的に示す
+
+まず $y$ を固定して考える．$0 < x < \pi/2$ から $y < 2x+y < \pi-y$, $0 < y < \pi/2$ に注意して$2x+y=\pi/2$なる$x$が必ずあるから
+\begin{align}
+  0 < f(x,y) \le \dfrac{1}{2} \sin y (1 - \sin y) \label{eq:7}
+\end{align}
+となる．
+
+次に $t = \sin y \ (0 < t < 1)$ とおいて，$y$ をうごかすことにより $S = \max_{x} f(x,y)$ のとりうる領域は図の色付き部分である（境界は，斜線部のみ含む）．
+
+% TODO: y = r/4Rを追加
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=7cm, y=18cm, >=stealth,
@@ -112,29 +152,30 @@ $\alpha+\beta+\gamma = \pi/2$ から $\sin(\alpha+\beta) = \sin(\pi/2-\gamma) = 
     \draw[line width=1.4pt, blue!85!black, domain=0:1,
     samples=100, smooth] plot (\x,{0.5*\x*(1-\x)});
     \draw[dashed, gray!65] (0.5,0)--(0.5,0.125)--(0,0.125);
-    \fill[red!80!black] (0.5,0.125) circle(1.4pt);
-    \draw[thick, blue!85!black, fill=white] (0,0) circle(1.3pt);
-    \draw[thick, blue!85!black, fill=white] (1,0) circle(1.3pt);
+    \node[circle, fill=red!80!black, inner sep=1.4pt] at (0.5,0.125) {};
+    \node[circle, draw, thick, blue!85!black, fill=white, inner sep=1.3pt] at (0,0) {};
+    \node[circle, draw, thick, blue!85!black, fill=white, inner sep=1.3pt] at (1,0) {};
     \node[below left=2pt, font=\footnotesize] at (0,0) {$0$};
-    \node[below=2pt, font=\footnotesize] at (0.5,0) {$\frac12$};
+    \node[below=2pt, font=\footnotesize] at (0.5,0) {$\frac{1}{2}$};
     \node[below=2pt, font=\footnotesize] at (1,0) {$1$};
-    \node[left=3pt, font=\footnotesize] at (0,0.125) {$\frac18$};
+    \node[left=3pt, font=\footnotesize] at (0,0.125) {$\frac{1}{8}$};
     \node[blue!85!black, font=\footnotesize] at (0.55,0.057)
-    {$0<S\le\frac12t(1-t)$};
+    {$0<S\le\frac{t(1-t)}{2}$};
   \end{tikzpicture}
   \caption{$t=\sin y$ に対する $S=f(x,y)$ の値域．$t=0,1$ と $S=0$ は含まない}
   \label{fig:1963_2_range}
 \end{figure}
 
-\noindent
-今，①, ②を満たす文字の存在は保障されていることから③, ④より
-\[
-  0 < \dfrac{r}{4R} < \dfrac{1}{8} \text{ の時，合同とは限らない}
-\]
-\[
-  \dfrac{r}{4R} = \dfrac{1}{8} \text{ の時，合同}
-\]
-($\because 0 < y < \pi/2$ から $t = 1/2 \iff y = \pi/6$, で，等号が成立することから $2x+\pi/6 = \pi/2 \iff x = \pi/6$)
+特に境界$S=t(1-t)/2$においては$0<y<\pi/2より$t$に対して$yが一つ対応し，それに応じて$2x+y=\pi/2$から$x$が一意に定まる．特に$t=1/2$の時は$y=x=\pi/6$が唯一対応する．
+
+従ってこの領域と$y=\dfrac{r}{4R}$の交点を考えて，
+\begin{align}
+  \begin{cases}
+    0 < \dfrac{r}{4R} < \dfrac{1}{8} \text{ の時，合同とは限らない} \\
+    \dfrac{r}{4R} = \dfrac{1}{8} \text{ の時，合同}
+  \end{cases}
+\end{align}
+である．
 
 \newpage
 
