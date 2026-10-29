@@ -80,7 +80,7 @@
 | 1973年 | 第6問 | finish | finish | あり | 完了 |
 | 1974年 | 第1問 | finish | finish | あり | 完了 |
 | 1974年 | 第2問 | finish | finish | あり | 完了 |
-| 1974年 | 第3問 | finish | 文字起こし済 | あり | 未完成 |
+| 1974年 | 第3問 | finish | finish | あり | 完了 |
 | 1974年 | 第4問 | finish | finish | あり | 完了 |
 | 1974年 | 第5問 | finish | finish | あり | 完了 |
 | 1974年 | 第6問 | finish | finish | あり | 完了 |
