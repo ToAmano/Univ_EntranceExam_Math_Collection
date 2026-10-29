@@ -3,7 +3,6 @@
 
 {\bf [解答]}
 
-% TODO: OからAB,BC,CAに下ろした垂線の足をH_ab,H_bc,H_caとする．
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=1.25cm, y=1.2cm, every node/.style={font=\small}]
@@ -14,27 +13,36 @@
       \coordinate (C) at (2,0);
       \coordinate (O) at (0,0.937);
       \coordinate (Oc) at (0,0.3667);
+      \coordinate (Hab) at ($(A)!(O)!(B)$);
+      \coordinate (Hbc) at (0,0);
+      \coordinate (Hca) at ($(A)!(O)!(C)$);
       \begin{scope}
-        \clip (-2.2,-0.05) rectangle (2.2,2.65);
+        \clip (-2.35,-0.32) rectangle (2.35,2.65);
         \draw[gray!60, thick] (Oc) circle[radius=2.033];
       \end{scope}
       \draw[line width=1.3pt, blue!85!black] (A)--(B)--(C)--cycle;
       \draw[dashed, gray!65] (A)--(O) (B)--(O) (C)--(O);
       \draw[thick, teal!75!black] (O) circle[radius=0.937];
-      \draw[dashed, red!75!black] (O)--(0,0);
-      \draw[dashed, orange!80!black] (Oc)--(C);
+      \draw[dashed, red!75!black] (O)--(Hab) (O)--(Hbc) (O)--(Hca);
+      % \draw[dashed, orange!80!black] (Oc)--(C);
       \node[circle, fill, inner sep=1.3pt] at (A) {}; \node[above=2pt] at (A) {$A$};
       \node[circle, fill, inner sep=1.3pt] at (B) {}; \node[below left=2pt] at (B) {$B$};
       \node[circle, fill, inner sep=1.3pt] at (C) {}; \node[below right=2pt] at (C) {$C$};
+      \node[circle, fill=red!80!black, inner sep=1.1pt] at (Hab) {};
+      \node[above left=1pt, font=\footnotesize, red!80!black] at (Hab) {$H_{ab}$};
+      \node[circle, fill=red!80!black, inner sep=1.1pt] at (Hbc) {};
+      \node[below=2pt, font=\footnotesize, red!80!black] at (Hbc) {$H_{bc}$};
+      \node[circle, fill=red!80!black, inner sep=1.1pt] at (Hca) {};
+      \node[above right=1pt, font=\footnotesize, red!80!black] at (Hca) {$H_{ca}$};
       \node[circle, fill=teal!80!black, inner sep=1.3pt] at (O) {}; \node[teal!80!black, above right=2pt] at (O) {$O$};
-      \node[circle, fill=orange!80!black, inner sep=1.1pt] at (Oc) {}; \node[orange!80!black, below left=2pt, font=\footnotesize] at (Oc) {$O'$};
-      \node[red!80!black, font=\footnotesize] at (0.23,0.42) {$r$};
+      % \node[circle, fill=orange!80!black, inner sep=1.1pt] at (Oc) {}; \node[orange!80!black, left=3pt, font=\footnotesize] at (Oc) {$O'$};
+      \node[red!80!black, font=\footnotesize] at (0.18,0.46) {$r$};
       \node[orange!80!black, font=\footnotesize] at (1.24,0.43) {$R$};
       \node[font=\footnotesize] at (-0.25,1.9) {$\alpha$};
       \node[font=\footnotesize] at (-1.55,0.28) {$\beta$};
       \node[font=\footnotesize] at (1.55,0.28) {$\gamma$};
     \end{scope}
-    \begin{scope}[shift={(5.1,0)}]
+    \begin{scope}[shift={(5.3,0)}]
       \coordinate (D) at (0,2.4);
       \coordinate (E) at (-2,0);
       \coordinate (F) at (2,0);
@@ -45,13 +53,13 @@
       \node[circle, fill, inner sep=1.3pt] at (D) {}; \node[above=2pt] at (D) {$D$};
       \node[circle, fill, inner sep=1.3pt] at (E) {}; \node[below left=2pt] at (E) {$E$};
       \node[circle, fill, inner sep=1.3pt] at (F) {}; \node[below right=2pt] at (F) {$F$};
-      \node[circle, fill=teal!80!black, inner sep=1.3pt] at (Oi) {}; \node[teal!80!black, above right=2pt] at (Oi) {$O''$};
+      \node[circle, fill=teal!80!black, inner sep=1.3pt] at (Oi) {}; \node[teal!80!black, above right=2pt] at (Oi) {$O'$};
       \node[font=\footnotesize] at (-0.25,1.9) {$\alpha'$};
       \node[font=\footnotesize] at (-1.55,0.28) {$\beta'$};
       \node[font=\footnotesize] at (1.55,0.28) {$\gamma'$};
     \end{scope}
   \end{tikzpicture}
-  \caption{二つの三角形の内心と半角 $\alpha,\beta,\gamma$，$\alpha',\beta',\gamma'$}
+  \caption{二つの三角形の内心と垂線の足 $H_{ab},H_{bc},H_{ca}$ および半角 $\alpha,\beta,\gamma$，$\alpha',\beta',\gamma'$}
   \label{fig:1963_2_triangles}
 \end{figure}
 
@@ -88,7 +96,7 @@ $\triangle ABC$ において内心 $O$ とし，図のように角度を
 \end{align}
 となる．整理して
 \begin{align}
-  \dfrac{r}{\sin 2\gamma} \left( \dfrac{\cos \alpha}{\sin \alpha} + \dfrac{\cos \beta }{\sin \beta} \right) = \dfrac{2R}{r} \\
+  & \dfrac{r}{\sin 2\gamma} \left( \dfrac{\cos \alpha}{\sin \alpha} + \dfrac{\cos \beta }{\sin \beta} \right) = \dfrac{2R}{r} \\
   & \dfrac{\cos\alpha\sin\beta + \cos\beta\sin\alpha }{\sin 2\gamma \sin \alpha \sin \beta } = \dfrac{2R}{r} \\
   & \dfrac{\sin(\alpha+\beta)}{2 \sin\gamma\cos\gamma \sin \alpha \sin \beta } = \dfrac{2R}{r} \\
   & \dfrac{\sin(\alpha+\beta)}{\cos\gamma}\dfrac{1}{\sin\gamma \sin \alpha \sin \beta } = \dfrac{4R}{r}
@@ -126,7 +134,63 @@ $\triangle ABC$ において内心 $O$ とし，図のように角度を
 \end{align}
 である．
 
-% TODO: fig: y < 2x+y < \pi-y, 0 < y < \pi/2の様子を円周上の範囲を使って視覚的に示す
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.1cm, y=2.1cm, >=stealth, every node/.style={font=\small}]
+    % Illustrative angle y = 32 deg (0 < y < pi/2)
+    \pgfmathsetmacro{\angy}{32}
+    \pgfmathsetmacro{\cy}{cos(\angy)}
+    \pgfmathsetmacro{\sy}{sin(\angy)}
+    \coordinate (O) at (0, 0);
+    \coordinate (Py) at (\cy, \sy);
+    \coordinate (Ppiy) at (-\cy, \sy);
+    \coordinate (Ptop) at (0, 1);
+
+    % 扇形の淡い塗り (y < 2x+y < pi-y)
+    \fill[blue!12] (O) -- (Py) arc[start angle=\angy, end angle={180-\angy}, radius=1] -- cycle;
+
+    % 座標軸と単位円
+    \draw[->, thick, gray!80!black] (-1.35, 0) -- (1.45, 0) node[right] {$u$};
+    \draw[->, thick, gray!80!black] (0, -0.35) -- (0, 1.35) node[above] {$v$};
+    \draw[thick, gray!60] (1, 0) arc[start angle=0, end angle=180, radius=1];
+    \draw[dashed, gray!45] (-1, 0) arc[start angle=180, end angle=360, radius=1];
+
+    % 動径と高さ sin y の破線
+    \draw[dashed, teal!80!black] (O) -- (Py);
+    \draw[dashed, teal!80!black] (O) -- (Ppiy);
+    \draw[dashed, teal!80!black] (Ppiy) -- (Py);
+    \draw[dashed, red!75!black] (-0.28, 1) -- (Ptop);
+
+    % 角度 y の弧
+    \draw[thin, teal!80!black] (0.36, 0) arc[start angle=0, end angle=\angy, radius=0.36];
+    \node[font=\footnotesize, teal!80!black] at (0.48, 0.14) {$y$};
+
+    % 円周上の範囲 y < 2x+y < pi-y (太い青弧 + 両端白抜き)
+    \draw[line width=2.0pt, blue!85!black] (Py) arc[start angle=\angy, end angle={180-\angy}, radius=1];
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.5pt] at (Py) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.5pt] at (Ppiy) {};
+
+    % 最大点 2x+y = pi/2
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (Ptop) {};
+    \node[above right=2pt, font=\footnotesize, red!85!black] at (Ptop) {$\frac{\pi}{2}\ (\sin(2x+y)=1)$};
+
+    % sin(2x+y) の範囲を y 軸上に強調
+    \draw[line width=1.8pt, red!80!black] (0, \sy) -- (0, 1);
+    \node[circle, draw=teal!80!black, thick, fill=white, inner sep=1.3pt] at (0, \sy) {};
+
+    % ラベル
+    \node[above right=2pt, font=\footnotesize, teal!85!black] at (Py) {$y$};
+    \node[above left=2pt, font=\footnotesize, teal!85!black] at (Ppiy) {$\pi-y$};
+    \node[above right=2pt, font=\footnotesize, blue!85!black] at (0.52, 0.88) {$y < 2x+y < \pi-y$};
+    \node[below left=1pt, font=\footnotesize, teal!85!black, fill=white, inner sep=1pt] at (-0.04, \sy) {$\sin y$};
+    \node[above left=2pt, font=\footnotesize, red!85!black] at (Ptop) {$1$};
+    \node[below right=1pt, font=\footnotesize] at (1, 0) {$1$};
+    \node[below left=1pt, font=\footnotesize] at (-1, 0) {$-1$};
+    \node[below left=1pt, font=\footnotesize] at (O) {$O$};
+  \end{tikzpicture}
+  \caption{$0<y<\dfrac{\pi}{2}$ を固定したときの $y < 2x+y < \pi-y$ の単位円周上の範囲と $\sin y < \sin(2x+y) \le 1$}
+  \label{fig:1963_2_unit_circle}
+\end{figure}
 
 まず $y$ を固定して考える．$0 < x < \pi/2$ から $y < 2x+y < \pi-y$, $0 < y < \pi/2$ に注意して$2x+y=\pi/2$なる$x$が必ずあるから
 \begin{align}
@@ -136,7 +200,6 @@ $\triangle ABC$ において内心 $O$ とし，図のように角度を
 
 次に $t = \sin y \ (0 < t < 1)$ とおいて，$y$ をうごかすことにより $S = \max_{x} f(x,y)$ のとりうる領域は図の色付き部分である（境界は，斜線部のみ含む）．
 
-% TODO: y = r/4Rを追加
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=7cm, y=18cm, >=stealth,
@@ -152,6 +215,11 @@ $\triangle ABC$ において内心 $O$ とし，図のように角度を
     \draw[line width=1.4pt, blue!85!black, domain=0:1,
     samples=100, smooth] plot (\x,{0.5*\x*(1-\x)});
     \draw[dashed, gray!65] (0.5,0)--(0.5,0.125)--(0,0.125);
+    % S = r/(4R) の直線 (0 < r/(4R) < 1/8 の例: S = 0.08)
+    \draw[line width=1.1pt, red!80!black] (-0.03,0.08) -- (1.05,0.08)
+    node[right, font=\footnotesize] {$S=\frac{r}{4R}$};
+    \node[circle, fill=red!80!black, inner sep=1.3pt] at ({0.5-sqrt(0.09)},0.08) {};
+    \node[circle, fill=red!80!black, inner sep=1.3pt] at ({0.5+sqrt(0.09)},0.08) {};
     \node[circle, fill=red!80!black, inner sep=1.4pt] at (0.5,0.125) {};
     \node[circle, draw, thick, blue!85!black, fill=white, inner sep=1.3pt] at (0,0) {};
     \node[circle, draw, thick, blue!85!black, fill=white, inner sep=1.3pt] at (1,0) {};
@@ -159,10 +227,11 @@ $\triangle ABC$ において内心 $O$ とし，図のように角度を
     \node[below=2pt, font=\footnotesize] at (0.5,0) {$\frac{1}{2}$};
     \node[below=2pt, font=\footnotesize] at (1,0) {$1$};
     \node[left=3pt, font=\footnotesize] at (0,0.125) {$\frac{1}{8}$};
-    \node[blue!85!black, font=\footnotesize] at (0.55,0.057)
+    \node[left=3pt, font=\footnotesize, red!80!black] at (-0.03,0.08) {$\frac{r}{4R}$};
+    \node[blue!85!black, font=\footnotesize] at (0.55,0.042)
     {$0<S\le\frac{t(1-t)}{2}$};
   \end{tikzpicture}
-  \caption{$t=\sin y$ に対する $S=f(x,y)$ の値域．$t=0,1$ と $S=0$ は含まない}
+  \caption{$t=\sin y$ に対する $S=f(x,y)$ の値域と直線 $S=\dfrac{r}{4R}$ の共有点}
   \label{fig:1963_2_range}
 \end{figure}
 
