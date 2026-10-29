@@ -1,77 +1,129 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-下の図は線分ABの投影図であり，その各部の寸法は図の通りである．
+{\bf [解答]}
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=0.8]
-    % Projection 1 (Triangle)
-    \draw[thick] (0,3) -- (1.5,3) -- (1.5,4.5) -- cycle;
-    \draw[dashed] (0,3) -- (1.5,3);
-    \fill (0,3) circle (1.5pt);
-    \fill (1.5,4.5) circle (1.5pt);
+  \begin{tikzpicture}[
+      x={(-0.75cm,-0.45cm)},
+      y={(1.0cm,-0.10cm)},
+      z={(0cm,1.15cm)},
+      scale=1.55,
+      >=stealth,
+      every node/.style={font=\small}
+    ]
+    % 座標系: B(0,0,0), A'(1,0,0), A(1,0,1), C(X,Y,0)
+    \coordinate (B) at (0, 0, 0);
+    \coordinate (Ap) at (1.45, 0, 0);
+    \coordinate (A) at (1.45, 0, 1.45);
+    \coordinate (C) at (0.25, 1.85, 0);
 
-    % Projection 2 (2D Axes)
-    \begin{scope}[shift={(0,0)}]
-      \draw[->] (-0.5,0) -- (3,0) node[right] {$x$};
-      \draw[->] (0,-0.5) -- (0,3) node[above] {$y$};
-      \draw[thick] (0,1.5) node[left] {$B'$} -- (1.5,2.5) node[above right] {$A'$};
-      \draw[dashed] (1.5,2.5) -- (1.5,0) node[below] {$A$};
-      \draw[dashed] (0,1.5) -- (0,0);
-      \node[below left] at (0,0) {$B$};
-    \end{scope}
+    % 平画面上の三角形 B A' C の淡い塗り
+    \fill[teal!12] (B) -- (Ap) -- (C) -- cycle;
+    % 空間内の三角形 A B C の淡い塗り
+    \fill[blue!12, fill opacity=0.75] (B) -- (A) -- (C) -- cycle;
 
-    % Projection 3 (3D Axes)
-    \begin{scope}[shift={(1,-3)}]
-      \draw[->] (0,0) -- (3,0) node[right] {$y$};
-      \draw[->] (0,0) -- (0,2.5) node[above] {$z$};
-      \draw[->] (0,0) -- (-1.5,-1.5) node[below left] {$x$};
-      \draw[thick] (-0.5,0.5) node[left] {$B$} -- (1.2,1.8) node[above] {$A$};
-      \draw[dashed] (1.2,1.8) -- (1.2,0.8) node[right] {$A'$};
-      \draw[dashed] (-0.5,0.5) -- (0.8,-0.8) node[below] {$C$};
-      \draw[dashed] (1.2,0.8) -- (0.8,-0.8);
-      \node at (0.3,-0.2) {$1$};
-    \end{scope}
+    % 座標軸
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (2.35, 0, 0) node[below left] {$x$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 2.45, 0) node[right] {$y$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 0, 2.05) node[above] {$z$};
+
+    % 補助線（垂線 AA'，平面上の線分 A'C, BC）
+    \draw[dashed, gray!75!black, thick] (A) -- (Ap)
+    node[midway, left=2pt, font=\footnotesize, black] {$1$};
+    \draw[dashed, teal!80!black, thick] (Ap) -- (C);
+    \draw[dashed, gray!70!black] (B) -- (C);
+
+    % 直角記号 (AA' ⊥ BA')
+    \draw[gray!75!black] ($(Ap)!0.14cm!(B)$)
+    -- ($($(Ap)!0.14cm!(B)$)+(0,0,0.14)$)
+    -- ($(Ap)+(0,0,0.14)$);
+
+    % 主線分 AB, AC
+    \draw[line width=1.4pt, blue!85!black] (B) -- (A);
+    \draw[line width=1.4pt, red!80!black] (A) -- (C);
+
+    % 角度の弧と注記
+    \draw[thin, blue!85!black] ($(A)!0.28!(B)$) to[bend right=18] ($(A)!0.25!(C)$);
+    \node[font=\footnotesize, blue!85!black, fill=blue!8, inner sep=0.5pt] at ($(A)!0.42!($(B)!0.48!(C)$)$) {$\frac{\pi}{3}$};
+    \draw[thin, teal!85!black] ($(C)!0.28!(Ap)$) to[bend left=18] ($(C)!0.25!(A)$);
+    \node[font=\footnotesize, teal!85!black, fill=teal!8, inner sep=0.5pt] at ($(C)!0.48!($(Ap)!0.42!(A)$)$) {$\frac{\pi}{6}$};
+    \node[font=\footnotesize] at (0.72, -0.20, 0) {$1$};
+
+    % 点とラベル
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B) {};
+    \draw[thin, gray!70!black] (B) -- (0, 0.48, 0.48)
+    node[above right=-1pt, font=\footnotesize, black] {$B(0,0,0)$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {};
+    \node[above=2pt, font=\footnotesize, blue!85!black] at (A) {$A$};
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (Ap) {};
+    \node[below right=1pt, font=\footnotesize] at (Ap) {$A'$};
+    \node[circle, fill=red!80!black, inner sep=1.4pt] at (C) {};
+    \node[below right=2pt, font=\footnotesize, red!80!black] at (C) {$C(X,Y,0)$};
   \end{tikzpicture}
-  \caption{線分 $AB$ の投影図（正面図・平面図・側面図）}
+  \caption{3次元空間における線分 $AB$ と平画面（$xy$ 平面）上の跡 $C$}
+  \label{fig:1974_3_3d}
 \end{figure}
 
-{\bf [解]} $C(X, Y, 0)$ とおく．
+題意より$A(1,0,1), B(0,0,0)$であり，$C$は$xy$平面上にあるから$C(X,Y,0)$とおく．
+すると
 \begin{align}
   \overrightarrow{AB} &=
   \begin{pmatrix} 1 \\ 0 \\ -1
-  \end{pmatrix}, \\
+  \end{pmatrix}, \quad
   \overrightarrow{AC} &=
   \begin{pmatrix} X+1 \\ Y \\ -1
-  \end{pmatrix} \quad \cdots \text{(*)}
+  \end{pmatrix} \label{eq:1}
 \end{align}
-まず，$\angle ACA' = \pi/6$，$|AA'| = 1$ から $|AC| = 2$ である．したがって
+となる．
+
+題意より$\angle ACA' = \pi/6, |AA'| = 1$ から
+\begin{align}
+  |AC| = \dfrac{|AA'|}{\cos(\pi/6)} = 2
+\end{align}
+だから，\cref{eq:1}の座標を代入して
 \begin{align}
   4 = (X+1)^2 + Y^2 + 1
+  \therefore
+  (X+1)^2 + Y^2 = 3 \label{eq:2}
 \end{align}
+である．
+
+次に題意より $\angle BAC = \dfrac{\pi}{3}$ だから，
 \begin{align}
-  \therefore (X+1)^2 + Y^2 = 3 \quad \cdots \text{①}
+  \overrightarrow{AB} \cdot \overrightarrow{AC}
+  = |\overrightarrow{AB}||\overrightarrow{AC}|\cos\angle BAC
+  = \dfrac{1}{2} \cdot \sqrt{2} \cdot 2 = \sqrt{2}
 \end{align}
-又 $\angle BAC = \dfrac{\pi}{3}$ だから，
+である．\cref{eq:1}を代入して
 \begin{align}
-  \overrightarrow{AB} \cdot \overrightarrow{AC} = \dfrac{1}{2} \cdot \sqrt{2} \cdot 2 = \sqrt{2}
+  X + 1 + 1 = \sqrt{2}
+  \quad \therefore
+  X = \sqrt{2} - 2 \label{eq:3}
 \end{align}
-である．(*)を代入して
-\begin{align}
-  X + 1 + 1 = \sqrt{2} \quad \therefore X = \sqrt{2} - 2 \quad \cdots \text{②}
-\end{align}
-①から，
+である．\cref{eq:2}に代入して
 \begin{align}
   Y = \pm 2^{\frac{3}{4}}
 \end{align}
-だから
+だから求める座標は
 \begin{align}
   C\left(\sqrt{2}-2, \pm 2^{\frac{3}{4}}, 0\right)
 \end{align}
+である．
+
+{\bf [解説]}
+
+本問で用いられている図や用語は，\textbf{画法幾何学（図法幾何学，モンジュの正投影図法）}に基づくものである．
+
+\begin{itemize}
+  \item {\bf 平画面・立画面・基線：} 空間内に互いに直交する水平な平面（\textbf{平画面}）と鉛直な平面（\textbf{立画面}）をとり，その交線を\textbf{基線} $XY$ とする．空間内の点 $P$ から平画面に下ろした垂線の足を\textbf{平面図} $p$，立画面に下ろした垂線の足を\textbf{立面図} $p'$ と呼び，立画面を基線 $XY$ のまわりに $90^\circ$ 回転して平画面と同一平面上に展開したものが問題の投影図である．
+  \item {\bf 投影図の寸法と3次元座標の対応：} 展開図において，基線 $XY$ から立面図 $p'$ までの距離は「点 $P$ の平画面からの高さ（$z$ 座標）」を表し，基線 $XY$ から平面図 $p$ までの距離は「点 $P$ の立画面からの奥行」を表す．
+    \begin{itemize}
+      \item 点 $B$ の立面図 $b'$ は基線 $XY$ 上にあるため，点 $B$ の平画面からの高さは $0$ であり，$B$ は平画面上の点 $b$ と一致する（$B(0,0,0)$）．
+      \item 点 $A$ の平面図 $a$（解答中の $A'$）は $b$ から $ab$ 方向（$x$ 軸方向）に距離 $1$ の位置にあり，立面図 $a'$ は基線 $XY$ から高さ $1$ の位置にあるため，点 $A$ は平画面上の点 $A'$ から真上に高さ $|AA'|=1$ だけ上がった点となる．
+    \end{itemize}
+  \item {\bf 平画面上の跡（あと）：} 空間内の直線が平画面（$z=0$）と交わる点を，その直線の「平画面上の跡」という．また「平画面に対する傾きが $30^\circ$」とは，直線 $AC$ とその平画面への正射影 $A'C$ のなす角が $30^\circ$（$\angle ACA'=30^\circ$，すなわち鉛直垂線 $AA'$ とのなす角が $\angle CAA'=60^\circ$）であることを意味する．
+\end{itemize}
 
 \end{document}
