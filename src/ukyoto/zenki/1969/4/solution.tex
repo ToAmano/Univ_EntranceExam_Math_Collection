@@ -1,44 +1,61 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-\noindent
-{\bf [解答]} $A$からの流出速度を $v$，水の単位体積あたりの重さを $w$ とすると，
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2,>=stealth, every node/.style={font=\small}]
+    % Tank A (elevated)
+    \fill[blue!15] (0.05, 1.25) rectangle (1.95, 2.8);
+    \draw[thick, gray!80!black] (0, 3.2) -- (0, 1.2) -- (2.0, 1.2) -- (2.0, 1.4);
+    \draw[thick, gray!80!black] (2.0, 1.8) -- (2.0, 3.2);
+    \draw[blue!60!black, thin] (0.05, 2.8) -- (1.95, 2.8);
+    \node at (1.0, 2.1) {水槽 $A$};
 
-\begin{enumerate}
-  \item[ア] 時刻 $k$ における総水溶液は $vk$
-  \item[イ] その重さは
-    \[
-      \begin{aligned}
-        w \int_0^k (1+ae^{-bt}) v \, dt &= \left[ t - \dfrac{a}{b} e^{-bt} \right]_0^k v w \\
-        &= vw \left[ \left( k - \dfrac{a}{b} e^{-bk} \right) - \left( -\dfrac{a}{b} \right) \right] \\
-        &= vw \left( k + \dfrac{a}{b} - \dfrac{a}{b} e^{-bk} \right)
-      \end{aligned}
-    \]
-\end{enumerate}
+    % Inflow of water into A
+    \draw[->, very thick, cyan!80!black] (1.0, 3.8) -- (1.0, 3.0);
+    \node[above] at (1.0, 3.8) {水};
 
-だから，求める比重は
-\[
-  \dfrac{vw \left( k + \dfrac{a}{b}(1 - e^{-bk}) \right)}{vk} \cdot \dfrac{1}{w} = 1 + \dfrac{a}{bk} (1 - e^{-bk})
-\]
+    % Pipe from A flowing down into B
+    \draw[thick, gray!80!black] (2.0, 1.8) -- (3.5, 1.8) -- (3.5, 1.4);
+    \draw[thick, gray!80!black] (2.0, 1.4) -- (3.1, 1.4) -- (3.1, 1.4);
+    \draw[->, thick, blue!85!black] (2.1, 1.6) -- (3.1, 1.6);
+    \draw[->, thick, blue!85!black] (3.3, 1.7) -- (3.3, 1.1);
+    \node[above=2pt, font=\footnotesize, align=center] at (2.7, 1.85) {流速 $v$\\比重 $1+ae^{-bt}$};
 
-\begin{center}
-  \small
-  \begin{table}[htb]
-    \centering
-    \begin{tabular}{|p{0.9\textwidth}|}
-      \hline
-      \textbf{補足メモ}: \\
-      「比重\dots{}水に対する相対重さ」という解釈で良いのかな \\
-      $\Rightarrow \dfrac{(\text{重さ})}{(\text{総量})}$ が単位あたり重さ，これと水の重さでくらべる \\
-      \hline
-    \end{tabular}
-  \end{table}
-\end{center}
+    % Tank B (lower)
+    \fill[teal!15] (2.55, 0.05) rectangle (4.55, 0.9);
+    \draw[thick, gray!80!black] (2.5, 1.6) -- (2.5, 0) -- (4.6, 0) -- (4.6, 1.6);
+    \draw[teal!60!black, thin] (2.55, 0.9) -- (4.55, 0.9);
+    \node at (3.55, 0.5) {水槽 $B$};
+  \end{tikzpicture}
+  \caption{水槽 $A$ から水槽 $B$ への水溶液流出の概要図}
+  \label{fig:1969_4_tanks}
+\end{figure}
+
+比重は液体の単位体積あたりの重さの，純粋な水のそれに対する比率である．
+そこで水の水溶液の単位体積あたりの重さを $w$ とすると，時刻$t$で$B$へ流出する水溶液の単位体積あたりの重さは$w(1+ae^{-bt})$である．
+
+$A$からの流出速度を $v$とすると，時刻$t$における$B$の水溶液の体積$V(t)$は
+\begin{align}
+  V(t) = vt \label{eq:1}
+\end{align}
+であり，その重さ$W(t)$は
+\begin{align}
+  W(t)
+  & = w \int_0^t (1+ae^{-bt}) v \, dt \\
+  & = \left[ t - \dfrac{a}{b} e^{-bt} \right]_0^t v w \\
+  &= vw \left[ \left( t - \dfrac{a}{b} e^{-bt} \right) - \left( -\dfrac{a}{b} \right) \right] \\
+  &= vw \left( t + \dfrac{a}{b} - \dfrac{a}{b} e^{-bt} \right) \label{eq:2}
+\end{align}
+である．よって$t=k$における比重は
+\begin{align}
+  \dfrac{W(k)}{wV(k)}
+  = \dfrac{vw \left( k + \dfrac{a}{b}(1 - e^{-bk}) \right)}{vk} \cdot \dfrac{1}{w}
+  = 1 + \dfrac{a}{bk} (1 - e^{-bk})
+\end{align}
+である．
 
 \newpage
 

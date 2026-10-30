@@ -1,33 +1,21 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-\noindent
-{\bf [解答]} $X = \sqrt{x}, Y = \sqrt{y}$ とおくと，
-\[
-  X \geqq 0, \quad Y \geqq 0, \quad X^2 + Y^2 \geqq 1 \quad \dots \text{①}
-\]
-の時，$g(X, Y) = X + aY$ の $\min$ をもとめればよい．$k = X + aY \dots \text{②}$ とおいて，$Y$-$X$ 平面で ①, ②が交点を持つ条件をもとめればよい．
-
-\begin{enumerate}
-  \item[$1^\circ$] $0 < a \leqq 1$ の時
-
-    ②が $(Y, X) = (1, 0)$ を通る時で，$\min k = a$
-  \item[$2^\circ$] $a \geqq 1$ の時
-
-    ②が $(Y, X) = (0, 1)$ を通る時で，$\min k = 1$
-\end{enumerate}
-
-\noindent
-従って，
-\[
-  \min f(x, y) = \min \{a, 1\}
-\]
-である．
+$X = \sqrt{x}, Y = \sqrt{y}$ と座標変換すると，題意の$(x,y)$に関する条件は
+\begin{align}
+  X \geqq 0, \quad Y \geqq 0, \quad X^2 + Y^2 \geqq 1 \label{eq:1}
+\end{align}
+である．この時に
+\begin{align}
+  g(X, Y) = X + aY \label{eq:2}
+\end{align}
+の最小値をもとめればよい．そこで
+\begin{align}
+  k = X + aY \label{eq:3}
+\end{align}
+とおいて$Y$-$X$ 平面で\cref{eq:1,eq:3}が交点を持つ最小の$X$切片$k$の条件をもとめればよい．
 
 \begin{figure}[htb]
   \centering
@@ -47,8 +35,8 @@
     % Supporting lines for representative a<1 and a>1.
     \draw[teal!75!black, thick, dashed] (0,0.65) -- (1,0);
     \draw[orange!85!black, thick, dashed] (0,1) -- (0.714286,0);
-    \fill[teal!75!black] (Ymin) circle (1.5pt);
-    \fill[orange!85!black] (Xmin) circle (1.5pt);
+    \node[circle, fill=teal!75!black, inner sep=1.5pt] at (Ymin) {};
+    \node[circle, fill=orange!85!black, inner sep=1.5pt] at (Xmin) {};
     \node[below left] at (O) {$O$};
     \node[below] at (Ymin) {$Y=1$};
     \node[left] at (Xmin) {$X=1$};
@@ -56,32 +44,129 @@
     \node[orange!85!black, right] at (0.02,1.08) {$a>1$};
     \node[blue!75!black] at (1.02,1.05) {$X^2+Y^2\geqq1$};
   \end{tikzpicture}
-  \caption{可行領域と，$X+aY$ の最小値を与える端点。破線は $a<1$ と $a>1$ の例。}
+  \caption{可行領域と，$X+aY$ の最小値を与える端点．破線は $a<1$ と $a>1$ の例．}
   \label{fig:1969_6_feasible_region}
 \end{figure}
 
-\vspace{1em}
-\noindent
-[\textbf{解} \quad 一応，上が一番早い気がしただけで本流もある]
+\cref{eq:3}の傾き$a$に応じて場合分けする．
 
-\vspace{0.5em}
-\noindent
-$f(x, y) = \sqrt{x} + a\sqrt{y}$ において $x$ を固定する．$a > 0$ に注意して
-\[
-  \begin{aligned}
-    \min f(x, y) &= \sqrt{x} + a\sqrt{1-x} \quad (0 \leqq x \leqq 1) \quad \dots \text{①} \\
-    \min f(x, y) &= \sqrt{x} \quad (1 \leqq x) \quad \dots \text{②}
-  \end{aligned}
-\]
-①の時，$x$ をうごかして，$\min f(x, y) = \min \{a, 1\}$
+\subparagraph{$1^\circ$ $0 < a \leqq 1$ の時}
 
-②の時 \quad $\prime\prime$ \quad $\min f(x, y) = 1$
+$X$切片が最小になるのは\cref{eq:3}が $(Y, X) = (1, 0)$ を通る時で，
+\begin{align}
+  \min k = a \label{eq:4}
+\end{align}
+となる．
 
-\vspace{0.5em}
-\noindent
-したがって
-\[
+\subparagraph{$2^\circ$ $a \geqq 1$ の時}
+
+$X$切片が最小になるのは\cref{eq:3}が $(Y, X) = (0, 1)$ を通る時で，
+\begin{align}
+  \min k = 1 \label{eq:5}
+\end{align}
+となる．
+\casesend
+
+従って，\cref{eq:4,eq:5}から求める条件は
+\begin{align}
   \min f(x, y) = \min \{a, 1\}
-\]
+\end{align}
+である．
+
+{\bf [別解]}
+
+$f(x, y) = \sqrt{x} + a\sqrt{y}$ において $x$ を固定する．$a > 0$ に注意して$y$を動かして最小値を求めると
+\begin{align}
+  \min f(x,y) &=
+  \begin{cases}
+    \sqrt{x} + a\sqrt{1-x} & (0 \leqq x \leqq 1)  \\
+    \sqrt{x} & (1 \leqq x)
+  \end{cases}
+\end{align}
+である．それぞれの場合で$x$を動かす．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[>=stealth, scale=1.3, every node/.style={font=\small}]
+    % Scope 1: 0 < a <= 1
+    \begin{scope}[shift={(0,0)}]
+      \draw[->, thick, gray!80!black] (-0.3, 0) -- (2.6, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 2.2) node[above] {$y$};
+      \node[below left] at (0, 0) {$O$};
+      \node[above, font=\footnotesize] at (1.1, 2.0) {($0 < a \leqq 1$ の場合)};
+
+      % Curve for 0 <= x <= 1 (a = 0.6)
+      \draw[line width=1.2pt, blue!85!black, domain=0:1, samples=60]
+      plot (\x, {sqrt(\x) + 0.6*sqrt(1-\x)});
+
+      % Curve for 1 <= x <= 2.2
+      \draw[line width=1.2pt, blue!85!black, domain=1:2.2, samples=40]
+      plot (\x, {sqrt(\x)});
+
+      % Reference lines and points
+      \draw[dashed, gray!60] (1, 0) -- (1, 1) -- (0, 1);
+      \node[below] at (1, 0) {$1$};
+      \node[left] at (0, 1) {$1$};
+      \node[left] at (0, 0.6) {$a$};
+
+      % Points
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (0, 0.6) {};
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (1, 1) {};
+      \node[above right=1pt, red!85!black, font=\footnotesize] at (0, 0.6) {最小値 $a$};
+    \end{scope}
+
+    % Scope 2: a >= 1
+    \begin{scope}[shift={(4.5,0)}]
+      \draw[->, thick, gray!80!black] (-0.3, 0) -- (2.6, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 2.2) node[above] {$y$};
+      \node[below left] at (0, 0) {$O$};
+      \node[above, font=\footnotesize] at (1.1, 2.0) {($a \geqq 1$ の場合)};
+
+      % Curve for 0 <= x <= 1 (a = 1.35)
+      \draw[line width=1.2pt, blue!85!black, domain=0:1, samples=60]
+      plot (\x, {sqrt(\x) + 1.35*sqrt(1-\x)});
+
+      % Curve for 1 <= x <= 2.2
+      \draw[line width=1.2pt, blue!85!black, domain=1:2.2, samples=40]
+      plot (\x, {sqrt(\x)});
+
+      % Reference lines and points
+      \draw[dashed, gray!60] (1, 0) -- (1, 1) -- (0, 1);
+      \node[below] at (1, 0) {$1$};
+      \node[left] at (0, 1) {$1$};
+      \node[left] at (0, 1.35) {$a$};
+
+      % Points
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (0, 1.35) {};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (1, 1) {};
+      \node[above right=1pt, red!85!black, font=\footnotesize] at (1, 1) {最小値 $1$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{$y = \min_y f(x, y)$ の $x$ に対する概形}
+  \label{fig:1969_6_min_graph}
+\end{figure}
+
+\subparagraph{$1^{\circ}$ $0 \leqq x \leqq 1$の時}
+
+$x$ を動かすと，端点$x=0,1$で最小になって
+\begin{align}
+  \min f(x,y) = \min \{a, 1\}
+\end{align}
+である．
+
+\subparagraph{$2^{\circ}$ $1 \leqq x$の時}
+
+$x$を動かすと$x=1$の時に最小になって
+\begin{align}
+  \min f(x,y) = 1
+\end{align}
+である．
+\casesend
+
+以上から求める最小値は
+\begin{align}
+  \min f(x, y) = \min \{a, 1\}
+\end{align}
+である．
 
 \end{document}
