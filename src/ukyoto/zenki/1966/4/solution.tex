@@ -1,17 +1,11 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
-{\bf [解答]} 右図のような座標平面を考える．
+{\bf [解答]}
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=1.4cm, y=1.4cm,
+  \begin{tikzpicture}[x=1.4cm, y=1.4cm, >=stealth,
     every node/.style={font=\small}]
     % Illustrative positions for a=1.8 and theta=50 degrees.
     \coordinate (A) at (0,0);
@@ -26,44 +20,61 @@
     \draw[thin, teal!55] (B) circle[radius=1];
     \draw[dashed, gray!65] (A)--(P) (B)--(Q);
     \draw[line width=1.1pt, red!75!black] (P)--(Q);
-    \fill (A) circle(1.3pt) node[below left=2pt] {$A$};
-    \fill (B) circle(1.3pt) node[above right=2pt] {$B$};
-    \fill[blue!85!black] (P) circle(1.5pt)
-    node[above left=2pt] {$P$};
-    \fill[teal!75!black] (Q) circle(1.5pt)
-    node[below right=2pt] {$Q$};
+
+    % 回転角 2theta と -theta
+    \draw[->, teal!75!black, thick] (0.35, 0) arc[start angle=0, end angle=100, radius=0.35];
+    \node[teal!75!black, font=\footnotesize, above right=1pt] at (50:0.35) {$2\theta$};
+
+    \draw[dashed, gray!60] (B) -- ++(0.6, 0);
+    \draw[->, teal!75!black, thick] ($(B)+(0.35,0)$) arc[start angle=0, end angle=-50, radius=0.35];
+    \node[teal!75!black, font=\footnotesize, below right=1pt] at ($(B)+(-25:0.35)$) {$-\theta$};
+
+    \node[circle, fill, inner sep=1.3pt] at (A) {}; \node[below left=2pt] at (A) {$A$};
+    \node[circle, fill, inner sep=1.3pt] at (B) {}; \node[above right=2pt] at (B) {$B$};
+    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (P) {}; \node[blue!85!black, above left=2pt] at (P) {$P$};
+    \node[circle, fill=teal!75!black, inner sep=1.5pt] at (Q) {}; \node[teal!75!black, below right=2pt] at (Q) {$Q$};
     \node[below=3pt] at (0.9,0) {$a$};
   \end{tikzpicture}
   \caption{座標の取り方と二つの単位円上の点 $P,Q$}
   \label{fig:1966_4_positions}
 \end{figure}
 
-\noindent
-すると $0 \le \theta < 2\pi$ として
-\[
-  \vec{AP} =
+上図のように，$A(0,0)$を原点として$AB$を$x$軸とするような座標平面を考える．
+すると$B(a,0)$であり，$P,Q$はそれぞれ$A,B$を中心とする半径$1$上の円上を動く．
+題意からこれらの座標は
+\begin{align}
+  \overrightarrow{AP} =
   \begin{pmatrix} \cos 2\theta \\ \sin 2\theta
   \end{pmatrix}, \quad
-  \vec{AQ} =
+  \overrightarrow{AQ} =
   \begin{pmatrix} a \\ 0
   \end{pmatrix} +
   \begin{pmatrix} \cos(-\theta) \\ \sin(-\theta)
   \end{pmatrix}
-\]
-とおけるから
-\[
-  \vec{PQ} =
-  \begin{pmatrix} a + \cos\theta - \cos 2\theta \\ -\sin\theta - \sin 2\theta
-  \end{pmatrix}
-\]
-$|\vec{PQ}| \ge 0$ から，$|\vec{PQ}|^2$ が最大の時，$|\vec{PQ}|$ も最大．以下 $\cos\theta = c, \sin\theta = s$ と略記して，
-\begin{align}
-  |\vec{PQ}|^2 &= \{ a + c - (2c^2 - 1) \}^2 + (-s - 2cs)^2 \\
-  &= (-2c^2 + c + a + 1)^2 + s^2(1 + 2c)^2 \\
-  &= 4c^4 - 4c^3 - (4a + 3)c^2 + 2(a + 1)c + (a + 1)^2 + (1 - c^2)(4c^2 + 4c + 1) \\
-  &= -4ac^2 + 2(a - 1)c + (a^2 + 2a + 2) \equiv f(c)
 \end{align}
-以下 $f(c)$ の最大値を求める．$a > 0$ に注意して，軸の大きさで場合分けする．
+とおけるから
+\begin{align}
+  \overrightarrow{PQ} =
+  \begin{pmatrix} a + \cos\theta - \cos 2\theta \\ -\sin\theta - \sin 2\theta
+  \end{pmatrix} \label{eq:1}
+\end{align}
+である．
+
+$|\overrightarrow{PQ}| \ge 0$ から，$|\overrightarrow{PQ}|^2$ が最大の時に$|\overrightarrow{PQ}|$ も最大になる．具体的に計算すると
+\begin{align}
+  |\overrightarrow{PQ}|^2
+  &= \{ a + \cos\theta - \cos 2\theta \}^2 + (-\sin\theta - \sin 2\theta)^2 \\
+  &= \{ a + \cos\theta - (2\cos^2\theta - 1) \}^2 + (-\sin\theta - 2\cos\theta\sin\theta)^2 \\
+  &= (-2\cos^2\theta + \cos\theta + a + 1)^2 + \sin^2\theta(1 + 2\cos\theta)^2 \\
+  &= 4\cos^4\theta - 4\cos^3\theta - (4a + 3)\cos^2\theta + 2(a + 1)\cos\theta + (a + 1)^2 + (1 - \cos^2\theta)(4\cos^2\theta + 4\cos\theta + 1) \\
+  &= -4a\cos^2\theta + 2(a - 1)\cos\theta + (a^2 + 2a + 2)
+\end{align}
+となる．これを$f(\cos\theta)$とおいて：
+\begin{align}
+  f(c) = -4ac^2 + 2(a - 1)c + (a^2 + 2a + 2)
+\end{align}
+最大値を求めれば良い．
+$a>0$より$f(c)$は下に凸な二次式だから，軸$c=\dfrac{a-1}{4a}$と両端点$c=\pm 1$の大きさで場合分けする．
 
 \begin{figure}[htb]
   \centering
@@ -80,37 +91,112 @@ $|\vec{PQ}| \ge 0$ から，$|\vec{PQ}|^2$ が最大の時，$|\vec{PQ}|$ も最
     domain=0.14:2.3, samples=120, smooth]
     plot (\x,{0.25-0.25/\x});
     \draw[dashed, gray!65] (0.2,0)--(0.2,-1);
-    \fill[red!80!black] (0.2,-1) circle(1.5pt);
-    \fill[teal!75!black] (1,0) circle(1.5pt);
+    \node[circle, fill=red!80!black, inner sep=1.5pt] at (0.2,-1) {};
+    \node[circle, fill=teal!75!black, inner sep=1.5pt] at (1,0) {};
     \node[left=2pt, font=\footnotesize] at (0,-1) {$-1$};
-    \node[left=2pt, font=\footnotesize] at (0,0.25) {$\frac14$};
-    \node[above left=2pt, font=\footnotesize] at (0.2,0)
-    {$\frac15$};
+    \node[left=2pt, font=\footnotesize] at (0,0.25) {$\frac{1}{4}$};
+    \node[above left=2pt, font=\footnotesize] at (0.2,0) {$\frac{1}{5}$};
     \node[below=2pt, font=\footnotesize] at (1,0) {$1$};
     \node[blue!85!black, font=\footnotesize] at (1.55,-0.24)
-    {$c=\dfrac{a-1}{4a}$};
+    {$c=\frac{a-1}{4a}$};
   \end{tikzpicture}
   \caption{$f(c)$ の軸と $-1\le c\le1$ の位置関係}
   \label{fig:1966_4_axis_position}
 \end{figure}
 
-\begin{enumerate}
-  \item[$1^\circ$] $0 < a \le \dfrac{1}{5}$ の時
-    \[
-      \max f(c) = f(-1) = (a - 2)^2
-    \]
-  \item[$2^\circ$] $\dfrac{1}{5} \le a$ の時
-    \[
-      \max f(c) = f\left(\dfrac{a-1}{4a}\right) = a^2 + \dfrac{9}{4}a + \dfrac{3}{2} + \dfrac{1}{4a}
-    \]
-\end{enumerate}
-以上から，
-\[
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.3cm, y=0.8cm, >=stealth,
+    every node/.style={font=\small}]
+    % Panel 1: 0 < a <= 1/5 (axis c <= -1)
+    \begin{scope}[shift={(0,0)}]
+      \draw[->, thick, gray!80!black] (-1.9, 0) -- (1.5, 0) node[right] {$c$};
+      \draw[->, thick, gray!80!black] (0, -1.5) -- (0, 3.2) node[right=1pt] {$y$};
+      \node[below left=2pt] at (0,0) {$O$};
+
+      % 軸
+      \draw[dashed, gray!70] (-1.4, -1.2) -- (-1.4, 2.9);
+      \node[above=1pt, font=\footnotesize, gray!80!black] at (-1.4, 2.8) {軸 $c=\frac{a-1}{4a}$};
+
+      % 放物線
+      \draw[thin, blue!40, domain=-1.8:-1.0] plot (\x, {-0.65*(\x+1.4)*(\x+1.4) + 2.5});
+      \draw[line width=1.3pt, blue!85!black, domain=-1.0:1.0] plot (\x, {-0.65*(\x+1.4)*(\x+1.4) + 2.5});
+      \draw[thin, blue!40, domain=1.0:1.3] plot (\x, {-0.65*(\x+1.4)*(\x+1.4) + 2.5});
+
+      % 端点 -1 と 1
+      \draw[dashed, gray!60] (-1, 0) -- (-1, 2.396);
+      \draw[dashed, gray!60] (1, 0) -- (1, -1.244);
+
+      \node[circle, fill=red!85!black, inner sep=1.5pt] at (-1, 2.396) {};
+      \node[above right=1pt, red!85!black, font=\footnotesize] at (-1, 2.396) {最大};
+      \node[circle, fill, inner sep=1.2pt] at (1, -1.244) {};
+
+      \node[below=2pt, font=\footnotesize] at (-1, 0) {$-1$};
+      \node[above=2pt, font=\footnotesize] at (1, 0) {$1$};
+      \node[font=\footnotesize] at (-0.2, -2.2) {$(1^\circ)\ 0 < a \le \frac{1}{5}$ のとき};
+    \end{scope}
+
+    % Panel 2: a >= 1/5 (axis in [-1, 1])
+    \begin{scope}[shift={(4.8,0)}]
+      \draw[->, thick, gray!80!black] (-1.6, 0) -- (1.6, 0) node[right] {$c$};
+      \draw[->, thick, gray!80!black] (0, -1.5) -- (0, 3.2) node[right=1pt] {$y$};
+      \node[below left=2pt] at (0,0) {$O$};
+
+      % 軸
+      \draw[dashed, gray!70] (-0.4, -1.2) -- (-0.4, 2.9);
+      \node[above left=1pt, font=\footnotesize, gray!80!black] at (-0.4, 2.8) {軸 $c=\frac{a-1}{4a}$};
+
+      % 放物線
+      \draw[thin, blue!40, domain=-1.4:-1.0] plot (\x, {-0.85*(\x+0.4)*(\x+0.4) + 2.5});
+      \draw[line width=1.3pt, blue!85!black, domain=-1.0:1.0] plot (\x, {-0.85*(\x+0.4)*(\x+0.4) + 2.5});
+      \draw[thin, blue!40, domain=1.0:1.3] plot (\x, {-0.85*(\x+0.4)*(\x+0.4) + 2.5});
+
+      % 端点 -1 と 1
+      \draw[dashed, gray!60] (-1, 0) -- (-1, 2.194);
+      \draw[dashed, gray!60] (1, 0) -- (1, 0.834);
+
+      \node[circle, fill=red!85!black, inner sep=1.5pt] at (-0.4, 2.5) {};
+      \node[above=2pt, red!85!black, font=\footnotesize] at (-0.4, 2.5) {最大};
+
+      \node[circle, fill, inner sep=1.2pt] at (-1, 2.194) {};
+      \node[circle, fill, inner sep=1.2pt] at (1, 0.834) {};
+
+      \node[below=2pt, font=\footnotesize] at (-1, 0) {$-1$};
+      \node[below=2pt, font=\footnotesize] at (1, 0) {$1$};
+      \node[font=\footnotesize] at (0, -2.2) {$(2^\circ)\ \frac{1}{5} \le a$ のとき};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{場合分けに応じた $f(c)$ のグラフと最大値の位置}
+  \label{fig:1966_4_cases}
+\end{figure}
+
+\subparagraph{$1^\circ$ $0 < a \le \dfrac{1}{5}$ の時}
+
+この時は$f(c)$は$c=-1 \therefore \theta=\pi$の時に最大となり，
+その最大値は
+\begin{align}
+  \max f(c) = f(-1) = (a - 2)^2
+\end{align}
+である．
+
+\subparagraph{$2^\circ$ $\dfrac{1}{5} \le a$ の時}
+
+この時は$f(c)$は軸$c=\dfrac{a-1}{4a}$の時に最大となり，
+その最大値は
+\begin{align}
+  \max f(c) = f\left(\dfrac{a-1}{4a}\right) = a^2 + \dfrac{9}{4}a + \dfrac{3}{2} + \dfrac{1}{4a}
+\end{align}
+である．
+\casesend
+
+以上をまとめて求める最大値は
+\begin{align}
   \begin{cases}
     0 < a \le \dfrac{1}{5} \text{の時} & 2 - a \\
     \dfrac{1}{5} \le a \text{の時} & \sqrt{a^2 + \dfrac{9}{4}a + \dfrac{3}{2} + \dfrac{1}{4a}}
   \end{cases}
-\]
+\end{align}
+である．
 
 \newpage
 
