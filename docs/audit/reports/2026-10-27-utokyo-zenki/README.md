@@ -820,3 +820,9 @@
 MathJaxの典型的なエラーメッセージも316ページで探した。結果は [web-math-error-report.json](web-math-error-report.json)。該当した3問は、1977年第6問の凹凸表（[#1047](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1047)へ追記）、1978年第5問の二重添字（[#1246](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1246)を作成）、2005年第3問の増減表（[#1194](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1194)へ追記）である。
 
 生TeXが見つかった初期年度のうち、問題別の指摘Issueがなかった旧形式14問は [#1247](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1247)〜[#1260](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1260) に分けた。各問の行には対応Issueを記載した。共通の形式移行は引き続き [#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593) で管理する。
+
+## 公開Webの問題ページ検査（2026-10-29）
+
+`utokyo-zenki-YYYY-Q-problem/` の316ページを取得し、`problem.tex` の `tikzpicture` 数と公開HTMLの図数を問題ごとに照合した。結果は [web-problem-page-report.json](web-problem-page-report.json) に保存した。**316ページすべてがHTTP 200**、原稿の**35図が対応する問題ページに各1点ずつ存在**し、図の画像URLもすべてHTTP 200だった。本文に生のTeX命令や典型的なMathJaxエラー文字列は検出しなかった。これは既存TikZ図のWeb変換と画像配信の検査であり、手書き原稿にあってTeXにない図の検出や、図の数学的正確さの判定とは異なる。
+
+35図をブラウザーで読み込み、画像の自然幅と表示寸法、本文枠からのはみ出しを調べた。画像の読み込み失敗とはみ出しは0件。1963年第5問・1979年第2問・1999年第3問・2009年第6問・2012年第2問・2014年第1問は画面でも目視した。1979年第2問は円錐の母線が球を横切り、`K`・`D` の配置も逆になることを [#1054](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1054) に追記。1999年第3問の共有頂点ラベルと線の重なりは [#1160](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1160)、2009年第6問の図中文字の小ささは [#1219](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1219) に追記した。残る問題図の全件目視と、問題本文の全画面幅での確認は継続する。
