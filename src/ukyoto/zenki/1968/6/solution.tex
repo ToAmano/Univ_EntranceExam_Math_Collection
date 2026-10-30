@@ -1,57 +1,72 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-\noindent
-{\bf [解答]} $0 < x < 1 \dots \text{①}$
-
+与えられた方程式
 \begin{align}
-  \dfrac{1}{x} \int_0^x \dfrac{1}{\sqrt{1-t}} \, dt = \dfrac{1}{\sqrt{1-y}} \quad \dots \text{②}
+  \dfrac{1}{x} \int_0^x \dfrac{1}{\sqrt{1-t}} \, dt = \dfrac{1}{\sqrt{1-y}}
+  \quad (0<x<1) \label{eq:1}
 \end{align}
-
+について考える．
+左辺の積分を計算して
 \begin{align}
-  \dfrac{1}{x} \int_0^x \dfrac{1}{\sqrt{1-t}} \, dt = \dfrac{1}{x} \left[ -2(1-t)^{\frac{1}{2}} \right]_0^x = \dfrac{-2}{x} \left(\sqrt{1-x} - 1\right)
+  (\text{左辺})
+  &=  \dfrac{1}{x} \int_0^x \dfrac{1}{\sqrt{1-t}} \, dt \\
+  &= \dfrac{1}{x} \left[ -2(1-t)^{\frac{1}{2}} \right]_0^x \\
+  &= \dfrac{-2}{x} \left(\sqrt{1-x} - 1\right)
 \end{align}
-
-を②に代入
-
+だから，これを\cref{eq:1}に代入して
 \begin{align}
   \dfrac{2}{x} \left(1 - \sqrt{1-x}\right) = \dfrac{1}{\sqrt{1-y}}
 \end{align}
-
-①では両辺正だから2乗して
-
+である．両辺正だから2乗して
 \begin{align}
   \dfrac{4}{x^2} \left(1 - \sqrt{1-x}\right)^2 = \dfrac{1}{1-y}
 \end{align}
-
-同じく逆数をとって
-
+である．\cref{eq:1}の区間では左辺は$0$でないから逆数をとって
 \begin{align}
-  \dfrac{x^2}{4\left(1 - \sqrt{1-x}\right)^2} = 1 - y
+  & \dfrac{x^2}{4\left(1 - \sqrt{1-x}\right)^2} = 1 - y \\
+  \therefore
+  &y = 1 - \dfrac{x^2}{4\left(1 - \sqrt{1-x}\right)^2} \equiv f(x) \label{eq:2}
 \end{align}
+である．よって$f(x)$が増加関数であることと，$x\to 1$での極限を求めれば良い．
 
-\begin{align}
-  \therefore y = 1 - \dfrac{x^2}{4\left(1 - \sqrt{1-x}\right)^2} \equiv f(x) \quad \dots \text{③}
-\end{align}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=4.0cm, y=3.0cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
 
-さて,
+    \draw[->, thick, gray!80!black] (-0.15, 0) -- (1.25, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.15) -- (0, 1.05) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    \draw[line width=1.3pt, blue!85!black, domain=0.01:0.99, samples=80, smooth]
+    plot (\x, {1 - 0.25*(1 + sqrt(1-\x))^2});
+    \node[above left=2pt, blue!85!black] at (0.85, 0.65) {$y=f(x)$};
+
+    \draw[dashed, gray!60] (1, 0) node[below] {$1$} -- (1, 0.75) -- (0, 0.75) node[left] {$\frac{3}{4}$};
+
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (0, 0) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (1, 0.75) {};
+  \end{tikzpicture}
+  \caption{$y = f(x)$ のグラフ（$0 < x < 1$）}
+  \label{fig:1968_6_graph}
+\end{figure}
+
+まず単調増加性について，一階微分を計算すると
 \begin{align}
-  4 f'(x) &= -\dfrac{2x\left(1-\sqrt{1-x}\right)^2 - x^2 \cdot 2\left(1-\sqrt{1-x}\right) \dfrac{-1}{2\sqrt{1-x}}}{\left(1-\sqrt{1-x}\right)^4} \\
+  4 f'(x)
+  &= -\dfrac{2x\left(1-\sqrt{1-x}\right)^2 - x^2 \cdot 2\left(1-\sqrt{1-x}\right) \dfrac{-1}{2\sqrt{1-x}}}{\left(1-\sqrt{1-x}\right)^4} \\
   &= \dfrac{-2x}{\left(1-\sqrt{1-x}\right)^3} \left[ \left(1-\sqrt{1-x}\right) - \dfrac{x}{2\sqrt{1-x}} \right] \\
   &= \dfrac{-x}{\left(1-\sqrt{1-x}\right)^3 \sqrt{1-x}} \left[ 2\sqrt{1-x} - (2-x) \right] \\
   &= \dfrac{1}{\left(1-\sqrt{1-x}\right)^3 \sqrt{1-x}} \dfrac{x^3}{2\sqrt{1-x} + (2-x)} > 0 \quad (\because 0 < x < 1)
 \end{align}
-
-から, $y$ は $x$ の単調増加であり, 又, ③の表すから
-
+だから $y=f(x)$ は $x$ の単調増加であり, また\cref{eq:2}で$x\to 1$として
 \begin{align}
-  y \longrightarrow \dfrac{3}{4} \quad (x \to 1)
+  \lim_{x\to 1-0} y = \lim_{x\to 1-0}f(x) = \dfrac{3}{4}
 \end{align}
-
 である.
 
 \end{document}
