@@ -1,61 +1,100 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-\noindent
-{\bf [解答]} $y_1 = f(x) = \dfrac{\pi}{4}\dfrac{1}{x} - \dfrac{\pi}{4} + 1$, $y_2 = g(x) = \sqrt{2}\cos \dfrac{\pi}{4}x$ とおく．
+\begin{align}
+  \begin{cases}
+    y_1 = f(x) = \dfrac{\pi}{4}\dfrac{1}{x} - \dfrac{\pi}{4} + 1 \\
+    y_2 = g(x) = \sqrt{2}\cos \dfrac{\pi}{4}x
+  \end{cases} \label{eq:1}
+\end{align}
+とする．
 
-\begin{enumerate}
-  \item[(1)] $y_1 - y_3 = \dfrac{\pi}{4}\dfrac{1}{x} - \dfrac{\pi}{4} + 1 - \dfrac{\pi}{4} + \dfrac{\pi}{4}x - 1 = \dfrac{\pi}{4}\left(x + \dfrac{1}{x} - 2\right)$ であり, $0 < x \le 1$ では
-    AM-GMから
-    \[
-      y_1 - y_3 \ge \dfrac{\pi}{4}(2-2) = 0
-    \]
-    等号成立は $x=1$ $\dots \text{①}$
+\paragraph{(1)}
 
-    $y_3 - y_2 = \dfrac{\pi}{4}(1-x) + 1 - \sqrt{2}\cos\dfrac{\pi}{4}x$
-    \[
-      = \dfrac{\pi}{4}(1-x) + \sqrt{2}\left(\cos\dfrac{\pi}{4} - \cos\dfrac{\pi}{4}x\right)
-    \]
-    これは $x=1$ で等号成立． $0 < x < 1$ の時, 平均値の定理から
-    \[
-      \cos\dfrac{\pi}{4} - \cos\dfrac{\pi}{4}x = (1-x) \cdot \left(-\dfrac{\pi}{4}\right) \sin\dfrac{\pi}{4}c \quad (0 < c < 1)
-    \]
-    をみたす $c$ があるので
-    \[
-      y_3 - y_2 = \dfrac{\pi}{4}(1-x)\left[ 1 - \sqrt{2}\sin\dfrac{\pi}{4}c \right] > 0 \quad (\because \sqrt{2}\sin\dfrac{\pi}{4}c < 1)
-    \]
-    だから, ②とあわせて
-    \[
-      y_3 \ge y_2 \quad (\text{等号成立は } x=1) \quad \dots \text{②}
-    \]
-    ①, ②から, $0 < x < 1$ では $y_1 > y_2$ となり, 交点を持たず, $x=1$ での $(1,1)$ のみである．(終)
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=5.0cm, y=3.0cm, >=stealth,
+    every node/.style={font=\small}]
+    % 曲線と接線
+    \begin{scope}
+      \clip (-0.1, -0.2) rectangle (1.4, 2.2);
 
-  \item[(2)] 右図から, もとめる面積 $S$ として
-    \[
-      \begin{aligned}
-        S &= \int_0^{1/2} \left(1 + \dfrac{\pi}{4} - \sqrt{2}\cos\dfrac{\pi}{4}x\right) dx + \int_{1/2}^1 (f(x) - g(x)) dx \\
-        &= \int_0^{1/2} \left(1 + \dfrac{\pi}{4}\right) dx + \int_{1/2}^1 f(x) dx - \int_0^1 g(x) dx \quad \dots \text{③}
-      \end{aligned}
-    \]
-    ここで,
-    \begin{itemize}
-      \item $\int_0^{1/2} \left(1 + \dfrac{\pi}{4}\right) dx = \dfrac{1}{2}\left(1 + \dfrac{\pi}{4}\right)$
-      \item $\int_{1/2}^1 f(x) dx = \left[ \dfrac{\pi}{4}\log x + \left(1-\dfrac{\pi}{4}\right)x \right]_{1/2}^1 = \dfrac{\pi}{4}\log 2 + \dfrac{1}{2}\left(1-\dfrac{\pi}{4}\right)$
-      \item $\int_0^1 g(x) dx = \sqrt{2} \dfrac{4}{\pi} \left[ \sin\dfrac{\pi}{4}x \right]_0^1 = \dfrac{4}{\pi}$
-    \end{itemize}
-    を③に代入して
-    \[
-      \begin{aligned}
-        S &= \dfrac{1}{2}\left(1+\dfrac{\pi}{4}\right) + \dfrac{\pi}{8}\log 2 + \dfrac{1}{2}\left(1-\dfrac{\pi}{4}\right) + \dfrac{4}{\pi} \\
-        &= 1 + \dfrac{4}{\pi} + \dfrac{\pi}{8}\log 2
-      \end{aligned}
-    \]
-\end{enumerate}
+      % y1（双曲線・青）
+      \draw[line width=1.3pt, blue!85!black, domain=0.25:1.35, samples=100, smooth]
+      plot (\x, {0.785398163*(1/\x - 1) + 1});
+
+      % y2（余弦曲線・青緑）
+      \draw[line width=1.3pt, teal!85!black, domain=0.0:1.35, samples=100, smooth]
+      plot (\x, {1.41421356*cos(deg(0.785398163*\x))});
+
+      % y3（共通接線・橙）
+      \draw[line width=1.1pt, orange!90!black, domain=0.0:1.35]
+      plot (\x, {0.785398163*(1 - \x) + 1});
+    \end{scope}
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.08, 0) -- (1.45, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.15) -- (0, 2.25) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 接点 (1, 1)
+    \coordinate (P) at (1, 1);
+    \draw[dashed, gray!60] (1, 0) -- (P) -- (0, 1);
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (P) {};
+    \node[above right=3pt, red!85!black, font=\footnotesize] at (P) {$(1, 1)$};
+
+    % 軸の目盛り
+    \node[below=2pt, font=\footnotesize] at (1, 0) {$1$};
+    \node[left=2pt, font=\footnotesize] at (0, 1) {$1$};
+    \node[left=2pt, font=\footnotesize] at (0, 1.414) {$\sqrt{2}$};
+    \draw[gray!60] (-0.02, 1.414) -- (0.02, 1.414);
+    \node[left=2pt, font=\footnotesize] at (0, 1.785) {$1+\frac{\pi}{4}$};
+    \draw[gray!60] (-0.02, 1.785) -- (0.02, 1.785);
+
+    % ラベル
+    \node[blue!85!black, above right=1pt, font=\footnotesize] at (0.42, 1.95) {$y = y_1$};
+    \node[teal!85!black, below right=2pt, font=\footnotesize] at (1.3, 0.45) {$y = y_2$};
+    \node[orange!90!black, font=\footnotesize, fill=white, inner sep=1pt] at (0.4, 1.52) {$y = y_3$ (共通接線)};
+  \end{tikzpicture}
+  \caption{$y_1$（双曲線），$y_2$（余弦曲線）および共通接線 $y_3$ のグラフ}
+  \label{fig:1967_6_curves}
+\end{figure}
+
+与えられた関数
+\begin{align}
+  y_3 = h(x) = \dfrac{\pi}{4}\left(1-x\right) + 1 \label{eq:2}
+\end{align}
+について考える．$y_1-y_3$ と $y_3-y_2$ をそれぞれ計算する．
+
+まず$y_1-y_3$について，
+\begin{align}
+  y_1 - y_3
+  &= \dfrac{\pi}{4}\dfrac{1}{x} - \dfrac{\pi}{4} + 1 - \dfrac{\pi}{4} + \dfrac{\pi}{4}x - 1 \\
+  &= \dfrac{\pi}{4}\left(x + \dfrac{1}{x} - 2\right)
+\end{align}
+であり，$0 < x \le 1$ ではAM-GM不等式から$x+\dfrac{1}{x} \ge 2$だから
+\begin{align}
+  y_1 - y_3 \ge \dfrac{\pi}{4}(2-2) = 0 \label{eq:3}
+\end{align}
+となる．等号成立は $x=1$ の時である．
+
+次に$y_3-y_2$について，
+\begin{align}
+  y_3 - y_2
+  & = \dfrac{\pi}{4}(1-x) + 1 - \sqrt{2}\cos\dfrac{\pi}{4}x \\
+  & = \dfrac{\pi}{4}(1-x) + \sqrt{2}\left(\cos\dfrac{\pi}{4} - \cos\dfrac{\pi}{4}x\right)
+\end{align}
+だが，各項について$0 < x \le 1$では$1-x \ge 0, \cos\dfrac{\pi}{4} - \cos\dfrac{\pi}{4}x \ge 0$であり，等号成立は$x=1$の時だから
+\begin{align}
+  y_3 \ge y_2 \quad (\text{等号成立は } x=1) \label{eq:4}
+\end{align}
+である．
+
+\cref{eq:3,eq:4}から$0<x<1$では$y_2 < y_3 < y_1 \therefore y_2 < y_1 $となって交点は持たず，交点は$x=1$の時の$(1,1)$のみである．
+
+\paragraph{(2)}
 
 \begin{figure}[htb]
   \centering
@@ -87,25 +126,57 @@
     \draw[line width=1.3pt, teal!75!black,
     domain=0:1.32, samples=80, smooth]
     plot (\x,{1.414214*cos(45*\x)});
-    \fill[red!80!black] (0.5,1.785398) circle(1.3pt);
-    \fill[red!80!black] (1,1) circle(1.3pt);
+    \node[circle, fill=red!80!black, inner sep=1.3pt] at (0.5,1.785398) {};
+    \node[circle, fill=red!80!black, inner sep=1.3pt] at (1,1) {};
     \node[below left=2pt, font=\footnotesize] at (0,0) {$O$};
-    \node[below=2pt, font=\footnotesize] at (0.5,0) {$\frac12$};
+    \node[below=2pt, font=\footnotesize] at (0.5,0) {$\frac{1}{2}$};
     \node[below=2pt, font=\footnotesize] at (1,0) {$1$};
     \node[left=3pt, font=\footnotesize] at (0,1) {$1$};
     \node[left=3pt, font=\footnotesize] at (0,1.414214)
-    {$\sqrt2$};
+    {$\sqrt{2}$};
     \node[left=3pt, font=\footnotesize] at (0,1.785398)
-    {$1+\frac\pi4$};
+    {$1+\frac{\pi}{4}$};
     \node[blue!85!black, font=\footnotesize] at (0.8,1.69)
     {$y_1$};
-    \node[teal!75!black, font=\footnotesize] at (1.18,1.02)
+    \node[teal!75!black, font=\footnotesize] at (1.18,0.8)
     {$y_2$};
-    \node[orange!80!black, font=\footnotesize] at (1.24,0.63)
-    {$y_3$};
   \end{tikzpicture}
-  \caption{$x=\frac12$ で上側の境界が切り替わる面積領域}
+  \caption{$x=\dfrac{1}{2}$ で上側の境界が切り替わる面積領域$S$}
   \label{fig:1967_6_area}
 \end{figure}
+
+上図から, もとめる面積 $S$ として
+\begin{align}
+  S
+  &= \int_0^{1/2} \left(1 + \dfrac{\pi}{4} - g(x) \right) dx + \int_{1/2}^1 (f(x) - g(x)) dx \\
+  &= \int_0^{1/2} \left(1 + \dfrac{\pi}{4}\right) dx + \int_{1/2}^1 f(x) dx - \int_0^1 g(x) dx \label{eq:5}
+\end{align}
+である．各項個別に計算すると
+\begin{align}
+  (\text{第一項})
+  & = \int_0^{1/2} \left(1 + \dfrac{\pi}{4}\right) dx \\
+  & = \dfrac{1}{2}\left(1 + \dfrac{\pi}{4}\right)
+\end{align}
+\begin{align}
+  (\text{第二項})
+  & = \int_{1/2}^1 f(x) dx \\
+  & = \left[ \dfrac{\pi}{4}\log x + \left(1-\dfrac{\pi}{4}\right)x \right]_{1/2}^1 \\
+  & = \dfrac{\pi}{4}\log 2 + \dfrac{1}{2}\left(1-\dfrac{\pi}{4}\right)
+\end{align}
+\begin{align}
+  (\text{第三項})
+  & =  \int_0^1 g(x) dx \\
+  & = \sqrt{2} \dfrac{4}{\pi} \left[ \sin\dfrac{\pi}{4}x \right]_0^1 \\
+  & = \dfrac{4}{\pi}
+\end{align}
+である．
+
+これらを\cref{eq:5}に代入して，求める面積は
+\begin{align}
+  S
+  &= \dfrac{1}{2}\left(1+\dfrac{\pi}{4}\right) + \dfrac{\pi}{8}\log 2 + \dfrac{1}{2}\left(1-\dfrac{\pi}{4}\right) + \dfrac{4}{\pi} \\
+  &= 1 + \dfrac{4}{\pi} + \dfrac{\pi}{8}\log 2
+\end{align}
+である．
 
 \end{document}
