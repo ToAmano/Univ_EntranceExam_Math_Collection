@@ -19,6 +19,8 @@ from lint_latex_style import lint_file, REPO_ROOT, SRC_DIR  # noqa: E402
 
 RULE_LABELS = [
     ("align* は使わない", "align* 禁止"),
+    ("equation* は使わない", "equation* 禁止"),
+    ("equation は使わない", "equation 禁止"),
     ("は使わない（align 環境を使う）", "\\[...\\] 禁止"),
     ("句読点は全角", "句読点"),
     ("の引数は必ず", "\\sqrt/\\frac/\\dfrac 裸引数"),

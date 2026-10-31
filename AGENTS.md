@@ -17,6 +17,13 @@ TeX 原稿でベクトルを表すときは、矢印の下に入る文字数に�
 - 2文字以上（始点と終点を並べた表記等）：`\overrightarrow`（例：`\overrightarrow{AB}`、`\overrightarrow{OP}`、`\overrightarrow{P_1P_2}`）
 - 添字やプライムが付く1文字ベクトルは、矢印を文字本体にだけかけるため添字・プライムを `\vec{...}` の外に出す（例：`\vec{a}_1`、`\vec{e}_k`、`\vec{b}'` と書き、`\vec{a_1}` や `\overrightarrow{a_1}` とは書かない）。
 
+# 数式環境の表記
+
+ディスプレイ数式環境は原則として `align` に統一し、`equation`、`equation*`、`align*` および `\[ ... \]` は使用しない。
+
+- 1行だけの数式であっても `equation` や `\[ ... \]` ではなく `align` を使う（記法を統一し、式変形を追加する際の手戻りを防ぐため）。
+- 複数行にわたる変形で途中の式番号を省きたい場合は、途中の行に `\notag` を付けるか、`split` 環境（`\begin{align}\begin{split} ... \end{split}\end{align}`）を併用して式番号を1つにまとめる。
+
 # TikZ における点の描画
 
 `tikzpicture` 環境内で座標上の点（黒丸・色付き強調点・白抜き端点など）を打つときは、`xscale` と `yscale` が異なる図で `circle` パスが伸縮して楕円に潰れるのを防ぐため、`circle` ではなく `\node[circle, ...]` を使う。

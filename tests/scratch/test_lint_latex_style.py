@@ -109,9 +109,45 @@ def test_equation_fix_updates_refs_but_leaves_ambiguous_duplicates(tmp_path):
 
 def test_math_environment_rejects_untyped_label(tmp_path):
     source = tmp_path / 'solution.tex'
-    source.write_text(r'\begin{equation}x=1\label{1}\end{equation} \cref{1}', encoding='utf-8')
+    source.write_text(r'\begin{align}x=1\label{1}\end{align} \cref{1}', encoding='utf-8')
     errors, _, _ = lint.lint_file(source)
     assert any('eq:1' in message and '形式' in message for _, message in errors)
+
+
+def test_equation_environment_rejected_and_fixed(tmp_path):
+    source = r'''
+\begin{equation}
+  x = 1 \label{eq:1}
+\end{equation}
+\begin{equation*}
+  y = 2
+\end{equation*}
+% コメント内の \begin{equation} は無視
+'''
+    errors = lint.check_equation_env(lint.strip_comments(source))
+    assert len(errors) == 4
+    assert any('equation は使わない' in msg for _, msg in errors)
+    assert any('equation* は使わない' in msg for _, msg in errors)
+
+    fixed = lint.fix_text(source)
+    assert r'\begin{align}' in fixed
+    assert r'\end{align}' in fixed
+    assert r'\begin{equation}' not in lint.strip_comments(fixed)
+    assert r'\begin{equation*}' not in fixed
+    assert r'% コメント内の \begin{equation} は無視' in fixed
+    assert lint.check_equation_env(lint.strip_comments(fixed)) == []
+    assert lint.fix_text(fixed) == fixed
+
+    # CLI --fix でも正しく修正されること
+    doc = tmp_path / 'solution.tex'
+    doc.write_text('\\documentclass[../../main.tex]{subfiles}\n\\begin{document}\n\\begin{equation}x=1\\label{eq:1}\\end{equation}\n\\end{document}\n', encoding='utf-8')
+    errs, _, _ = lint.lint_file(doc)
+    assert any('equation は使わない' in msg for _, msg in errs)
+    res = subprocess.run([sys.executable, lint.__file__, '--fix', str(doc)], capture_output=True, text=True)
+    assert res.returncode == 0
+    assert r'\begin{align}' in doc.read_text(encoding='utf-8')
+    errs_after, _, _ = lint.lint_file(doc)
+    assert not any('equation は使わない' in msg for _, msg in errs_after)
 
 
 def test_same_label_in_problem_and_solution_is_duplicate(tmp_path):

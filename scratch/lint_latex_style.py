@@ -95,6 +95,23 @@ def check_align_star(text):
     return errors
 
 
+def check_equation_env(text):
+    errors = []
+    for m in re.finditer(r'\\(begin|end)\{\s*(equation\*?)\s*\}', text):
+        env = m.group(2)
+        errors.append((line_of(text, m.start()), f"{env} は使わない（align を使う）"))
+    return errors
+
+
+def _find_equation_env_edits(text):
+    edits = []
+    for m in re.finditer(r'\\begin\{\s*equation\*?\s*\}', text):
+        edits.append((m.start(), m.end(), r'\begin{align}'))
+    for m in re.finditer(r'\\end\{\s*equation\*?\s*\}', text):
+        edits.append((m.start(), m.end(), r'\end{align}'))
+    return edits
+
+
 DISPLAY_BRACKET_TOKEN_RE = re.compile(r'(?<!\\)(?:\\\\)*(\\\[|\\\])')
 DISPLAY_BRACKET_BLOCK_RE = re.compile(
     r'(?<!\\)(?P<pre_open>(?:\\\\)*)\\\[(?P<body>.*?)(?<!\\)(?P<pre_close>(?:\\\\)*)\\\]',
@@ -810,6 +827,10 @@ def fix_text(raw):
     for start, end, replacement in sorted(bracket_edits, reverse=True):
         raw = raw[:start] + replacement + raw[end:]
 
+    eq_edits = _find_equation_env_edits(_mask_protected_regions(raw))
+    for start, end, replacement in sorted(eq_edits, reverse=True):
+        raw = raw[:start] + replacement + raw[end:]
+
     heading_edits = _find_solution_heading_edits(_mask_protected_regions(raw), raw)
     for start, end, replacement in sorted(heading_edits, reverse=True):
         raw = raw[:start] + replacement + raw[end:]
@@ -1059,6 +1080,7 @@ def lint_file(path):
         return reference_errors, [], skip_m.group(1).strip()
     errors = []
     errors += check_align_star(text)
+    errors += check_equation_env(text)
     errors += check_display_math_brackets(text)
     errors += check_punctuation(text)
     errors += check_bare_args(text)
