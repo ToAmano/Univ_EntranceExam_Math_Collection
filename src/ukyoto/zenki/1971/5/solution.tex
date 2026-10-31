@@ -1,16 +1,7 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
 {\bf [解答]}
-
-\noindent
-正 $n$ 角形の一辺の長さを $l_n$ とおくと, $l_n = 2 r \sin \dfrac{\pi}{n}$ である $\dots$ ①
 
 \begin{figure}[htb]
   \centering
@@ -46,12 +37,12 @@
     ({\Ltwo*cos(\ang)},{\R+\Ltwo*sin(\ang)});
     \draw[sector] plot[domain=22.5:67.5, samples=40, variable=\ang]
     ({-\R*cos(45)+\Lthree*cos(\ang)},{\R*sin(45)+\Lthree*sin(\ang)});
-    \fill[gray!70] (O) circle (1.2pt);
+    \node[circle, fill=gray!70, inner sep=1.2pt] at (O) {};
     \foreach \i in {1,2,3,4,8} {
-      \fill[blue!75!black] (A\i) circle (1.4pt);
+      \node[circle, fill=blue!75!black, inner sep=1.4pt] at (A\i) {};
     }
     \foreach \i in {1,2,3} {
-      \fill[orange!85!black] (B\i) circle (1.5pt);
+      \node[circle, fill=orange!85!black, inner sep=1.5pt] at (B\i) {};
     }
     \node[left] at (O) {$O$};
     \node[below right] at (A1) {$A_1=B_0$};
@@ -69,85 +60,84 @@
       \coordinate (V) at (45:2);
       \coordinate (W) at ($(U)!0.5!(V)$);
       \draw[radius] (Q) -- (U) node[midway, below] {$r$};
-      \draw[radius] (Q) -- (V);
+      \draw[radius] (Q) -- (V) node[midway, above left] {$r$};
       \draw[teal!75!black, thick] (U) -- (V)
       node[midway, right] {$l_n$};
       \draw[gray!60, dashed] (Q) -- (W);
       \pic[draw=gray!70, angle radius=3.2mm] {right angle=Q--W--U};
-      \node[font=\scriptsize] at (0.9,0.53) {$\frac{\pi}{n}$};
+      \draw[gray!70] (0.7,0) arc (0:22.5:0.7);
+      \node[font=\scriptsize] at (11.25:0.95) {$\frac{\pi}{n}$};
+      \draw[gray!70] (22.5:0.7) arc (22.5:45:0.7);
+      \node[font=\scriptsize] at (33.75:0.95) {$\frac{\pi}{n}$};
+      \node[circle, fill=gray!70, inner sep=1.2pt] at (Q) {};
+      \node[circle, fill=blue!75!black, inner sep=1.4pt] at (U) {};
+      \node[circle, fill=blue!75!black, inner sep=1.4pt] at (V) {};
       \node[below left] at (Q) {$O$};
+      \node[below right] at (U) {$A_1$};
+      \node[above right] at (V) {$A_2$};
     \end{scope}
   \end{tikzpicture}
-  \caption{正八角形で示した扇形の作り方と，一辺 $l_n=2r\sin(\pi/n)$ の関係。}
+  \caption{正八角形で示した扇形の作り方と，正 $n$ 角形を中心から分けた一つの三角形 $\triangle OA_1A_2$．}
   \label{fig:1971_5_sector_construction}
 \end{figure}
 
-\noindent
+正 $n$ 角形の一辺の長さを $l_n$ とおくと, 上図で$\triangle OA_1A_2$に着目して
+\begin{align}
+  l_n = 2 r \sin \dfrac{\pi}{n} \label{eq:1}
+\end{align}
+である．
+
+また，正 $n$ 角形の面積 $S$ は, 上図の三角形$OA_1A_2$の面積の $n$ 倍で,
+\begin{align}
+  \dfrac{S}{n} &= \dfrac{1}{2} \cdot r^2 \cdot \sin \dfrac{2\pi}{n} \\
+  \therefore
+  S &= \dfrac{1}{2} n r^2 \sin \dfrac{2\pi}{n}  \label{eq:2}
+\end{align}
+である．
+
 題意から扇形 $A_{k+2} A_{k+1} B_k$ ($k \ge 0, B_0 = A_1$) の半径を $r_k$ とすると
-\[
+\begin{align}
   \begin{cases}
-    r_0 = 1 \cdot l_n \\
+    r_0 = l_n \\
     r_{k+1} = r_k + l_n
   \end{cases}
-\]
-から, 等差数列の公式より, $r_k = (k+1) l_n$ であり, 中心角は $\dfrac{2\pi}{n}$ だから, 扇形 $A_{k+2} A_{k+1} B_k$ の面積 $T_k$ は
-\[
-  T_k = \dfrac{1}{2} \cdot \dfrac{2\pi}{n} \cdot r_k^2 = \dfrac{\pi}{n} l_n^2 (k+1)^2
-\]
+\end{align}
+だから，等差数列の公式より
+\begin{align}
+  r_k = (k+1) l_n \label{eq:3}
+\end{align}
+である．
+扇形 $A_{k+2} A_{k+1} B_k$の中心角は $\dfrac{2\pi}{n}$ だから, 扇形 $A_{k+2} A_{k+1} B_k$ の面積 $T_k$ は
+\begin{align}
+  T_k = \dfrac{1}{2} \cdot \dfrac{2\pi}{n} \cdot r_k^2 = \dfrac{\pi}{n} l_n^2 (k+1)^2 \label{eq:4}
+\end{align}
+である．
 
-\noindent
-よって, 扇形の面積の総和 $T$ は
-\[
-  T = \sum_{k=0}^{n-1} \dfrac{\pi}{n} l_n^2 (k+1)^2
-\]
-\[
-  = \sum_{k=1}^n \dfrac{\pi}{n} l_n^2 k^2
-\]
-\[
-  = \dfrac{1}{6} \pi (n+1)(2n+1) l_n^2 \quad \dots \text{②}
-\]
+よって$n$個の扇形の面積の総和 $T$ はこれを$k=0,1,\cdots,n-1$で足し合わせて
+\begin{align}
+  T
+  &= \sum_{k=0}^{n-1} \dfrac{\pi}{n} l_n^2 (k+1)^2  \\
+  &= \sum_{k=1}^n \dfrac{\pi}{n} l_n^2 k^2 \\
+  &= \dfrac{1}{6} \pi (n+1)(2n+1) l_n^2 \\
+  &= \dfrac{1}{6} \pi (n+1)(2n+1) \left[2 r \sin \dfrac{\pi}{n}\right]^2 \quad (\because\text{\cref{eq:1}}) \\
+  &= \dfrac{2}{3} \pi r^2 (n+1)(2n+1)\sin^2 \dfrac{\pi}{n} \label{eq:5}
+\end{align}
+である．
 
-\noindent
-一方, 正 $n$ 角形の面積 $S$ は, 下図の三角形の面積の $n$ 倍で,
-
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}[scale=1.05, >=stealth]
-    % A 50-degree angle illustrates the central angle 2 pi/n.
-    \coordinate (O) at (0,0);
-    \coordinate (A) at (2,0);
-    \coordinate (B) at (50:2);
-    \fill[blue!9] (O) -- (A) -- (B) -- cycle;
-    \draw[blue!75!black, thick] (O) -- (A) node[midway, below] {$r$};
-    \draw[blue!75!black, thick] (O) -- (B) node[midway, left] {$r$};
-    \draw[teal!75!black, thick] (A) -- (B) node[midway, right] {$l_n$};
-    \pic[draw=gray!70, angle radius=5mm] {angle=A--O--B};
-    \node at (0.66,0.27) {$\frac{2\pi}{n}$};
-    \node[below left] at (O) {$O$};
-  \end{tikzpicture}
-  \caption{正 $n$ 角形を中心から分けた一つの三角形。}
-  \label{fig:1971_5_polygon_triangle}
-\end{figure}
-
-\[
-  \dfrac{S}{n} = \dfrac{1}{2} \cdot r^2 \cdot \sin \dfrac{2\pi}{n}
-\]
-\[
-  S = \dfrac{1}{2} n r^2 \sin \dfrac{2\pi}{n} \quad \dots \text{③}
-\]
-
-\vspace{1em}
-\noindent
-①, ②, ③から
-\[
-  S_n = S + T = \dfrac{1}{2} n r^2 \sin \dfrac{2\pi}{n} + \dfrac{\pi}{6} (n+1)(2n+1) r^2 \cdot 4 \sin^2 \dfrac{\pi}{n}
-\]
-\[
-  = \dfrac{1}{2} r^2 \cdot \dfrac{\sin \dfrac{2\pi}{n}}{\dfrac{2\pi}{n}} \cdot 2\pi + \dfrac{2\pi}{3} r^2 \left( \dfrac{\sin \dfrac{\pi}{n}}{\dfrac{\pi}{n}} \right)^2 \pi^2 \left( 1 + \dfrac{1}{n} \right) \left( 2 + \dfrac{1}{n} \right)
-\]
-\[
-  \to \pi r^2 + \dfrac{4}{3} \pi^3 r^2 \quad \left( n \to \infty, \text{この時 } \dfrac{2\pi}{n}, \dfrac{\pi}{n} \to 0 \right)
-\]
+\cref{eq:5,eq:2}の和が求める面積$S_n$で，
+\begin{align}
+  S_n
+  & = S + T
+  = \dfrac{1}{2} n r^2 \sin \dfrac{2\pi}{n} + \dfrac{2\pi r^2}{3} (n+1)(2n+1) \sin^2 \dfrac{\pi}{n}
+  & = \dfrac{1}{2} r^2 \cdot \dfrac{\sin \dfrac{2\pi}{n}}{\dfrac{2\pi}{n}} \cdot 2\pi
+  + \dfrac{2\pi}{3} r^2 \left( \dfrac{\sin \dfrac{\pi}{n}}{\dfrac{\pi}{n}} \right)^2 \pi^2 \left( 1 + \dfrac{1}{n} \right) \left( 2 + \dfrac{1}{n} \right) \\
+  &\xrightarrow{n\to\infty} \pi r^2 + \dfrac{4}{3} \pi^3 r^2 \quad \left(\dfrac{2\pi}{n}, \dfrac{\pi}{n} \to 0 \right)
+\end{align}
+より求める極限値は
+\begin{align}
+  \lim_{n\to\infty} S_n = \pi r^2 + \dfrac{4}{3} \pi^3 r^2
+\end{align}
+である．
 
 \newpage
 
