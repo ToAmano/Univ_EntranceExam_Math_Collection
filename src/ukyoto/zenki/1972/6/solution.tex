@@ -1,22 +1,66 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-\noindent
-{\bf [解答]} まず, $A = \sum_{k=1}^n a_k$ とおいて, $E = \dfrac{1}{n} A$ である $\cdots$ ①. 次に $F$ について, 取り出した2枚を区別して考える. 1枚目の数 $X$, 2枚目の数 $Y$ とおくと
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.3cm, y=1.3cm, >=stealth,
+      card/.style={draw=blue!80!black, line width=1.1pt, fill=blue!6, rounded corners=3pt, minimum width=1.0cm, minimum height=1.4cm, font=\normalsize},
+    pick/.style={draw=orange!90!black, line width=1.2pt, fill=orange!10, rounded corners=3pt, minimum width=1.0cm, minimum height=1.4cm, font=\normalsize}]
+    % カードの並び
+    \node[card] (C1) at (0, 0) {$a_1$};
+    \node[card] (C2) at (1.1, 0) {$a_2$};
+    \node[card] (C3) at (2.2, 0) {$a_3$};
+    \node[font=\large] at (3.15, 0) {$\dots$};
+    \node[card] (Ck) at (4.1, 0) {$a_k$};
+    \node[font=\large] at (5.05, 0) {$\dots$};
+    \node[card] (Cn) at (6.0, 0) {$a_n$};
+
+    % カード全体を示す枠線
+    \draw[thick, gray!60] (-0.5, -0.85) -- (-0.5, -0.95) -- (6.5, -0.95) -- (6.5, -0.85);
+    \node[below=2pt, font=\small] at (3.0, -0.95) {$n$ 枚のカード（合計 $\sum_{i=1}^n a_i$）};
+
+    % 1枚目と2枚目の取り出し
+    \node[pick] (X) at (1.5, -2.2) {$X$};
+    \node[pick] (Y) at (4.5, -2.2) {$Y$};
+
+    \draw[->, thick, orange!85!black] (Ck.south) to[out=-90, in=90] node[left=2pt, font=\footnotesize] {1枚目（確率 $\frac{1}{n}$）} (X.north);
+    \draw[->, thick, orange!85!black] (5.5, -0.7) to[out=-90, in=90] node[right=2pt, font=\footnotesize] {2枚目（残り $n-1$ 枚から）} (Y.north);
+
+    \node[below=3pt, font=\small] at (X.south) {$E(X) = E$};
+    \node[below=3pt, font=\small] at (Y.south) {$E(Y) = E$};
+  \end{tikzpicture}
+  \caption{$n$ 枚のカードと，非復元抽出による2枚のカード $X, Y$ の取り出し．}
+  \label{fig:1972_6_cards}
+\end{figure}
+
+まず$E$について，これは$a_1,\cdots,a_n$の平均に等しいから
 \begin{align}
-  F = E(X+Y) = E(X) + E(Y)
+  E = \dfrac{1}{n}\sum_{k=1}^n a_k \label{eq:1}
 \end{align}
-である. 明らかに $E(X) = E \cdots$ ② である. 以下 $E(Y)$ について
+である．
+
+次に$F$については取り出した2枚を区別して考える.
+1枚目の数 $X$, 2枚目の数 $Y$ とおくと期待値は
 \begin{align}
-  E(Y) = \dfrac{1}{n} \cdot \left( \sum_{k=1}^n \dfrac{A - a_k}{n-1} \right) = \dfrac{1}{n} \cdot \dfrac{n-1}{n-1} A = \dfrac{1}{n} A \quad \cdots \text{③}
+  F = E(X+Y) = E(X) + E(Y) \label{eq:2}
 \end{align}
-①, ②, ③から
+である. $1$枚目の期待値は$E$に等しく
 \begin{align}
-  F = \dfrac{1}{n} A + \dfrac{1}{n} A = 2E \quad \text{答}
+  E(X) = E  \label{eq:3}
 \end{align}
+である．次に$2$枚目の期待値は，$1$枚目に引いたカード以外の$n-1$枚から引くから
+\begin{align}
+  E(Y)
+  & = \dfrac{1}{n} \left( \sum_{k=1}^n \dfrac{(\sum_{i=1}^n a_i) - a_k}{n-1} \right) \\
+  & = \dfrac{1}{n} \left( \dfrac{n}{n-1}\sum_{i=1}^n a_i - \dfrac{1}{n-1} \sum_{k=1}^n a_k \right) \\
+  & = \dfrac{1}{n} \dfrac{n-1}{n-1} \sum_{k=1}^n a_k = \dfrac{1}{n} \sum_{k=1}^n a_k = E \label{eq:4}
+\end{align}
+である．\cref{eq:2,eq:3,eq:4}から
+\begin{align}
+  F = E + E = 2E
+\end{align}
+となって題意は示された．
 
 \end{document}
