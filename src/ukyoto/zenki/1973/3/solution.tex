@@ -1,55 +1,7 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
-{\bf [解答]} $O$ を原点とし，$B$ が $x$ 軸上，$A$ が第一象限になるよう $xy$ 平面をおく．
-この時 $|\vec{a}| = a$, $|\vec{b}| = b$ とすると，$\angle AOB = \dfrac{\pi}{3}$ より，
-\[
-  \vec{b} = b
-  \begin{pmatrix} 1 \\ 0
-  \end{pmatrix}, \quad \vec{a} = \dfrac{a}{2}
-  \begin{pmatrix} 1 \\ \sqrt{3}
-  \end{pmatrix}
-\]
-とおける．$AB$ の中点を $M$ とする．
-\[
-  \vec{AB} =
-  \begin{pmatrix} b - \dfrac{1}{2}a \\ -\dfrac{\sqrt{3}}{2}a
-  \end{pmatrix}
-\]
-だから，$|MC| = \dfrac{\sqrt{3}}{2}|AB|$, $MC \perp AB$, $C$ が $O$ と反対側であることをあわせて，
-\[
-  \vec{MC} = \dfrac{\sqrt{3}}{2}
-  \begin{pmatrix} \dfrac{\sqrt{3}}{2}a \\ b - \dfrac{1}{2}a
-  \end{pmatrix}
-\]
-となり，
-\begin{align}
-  \vec{c} &= \vec{OM} + \vec{MC} \\
-  &= a
-  \begin{pmatrix} 1 \\ 0
-  \end{pmatrix} + \dfrac{1}{2}b
-  \begin{pmatrix} 1 \\ \sqrt{3}
-  \end{pmatrix} \quad \dots \text{①}
-\end{align}
-一方，
-\[
-  \dfrac{b}{a}\vec{a} + \dfrac{a}{b}\vec{b} = b \cdot \dfrac{1}{2}
-  \begin{pmatrix} 1 \\ \sqrt{3}
-  \end{pmatrix} + a
-  \begin{pmatrix} 1 \\ 0
-  \end{pmatrix} \quad \dots \text{②}
-\]
-①, ②から
-\[
-  \vec{c} = \dfrac{b}{a}\vec{a} + \dfrac{a}{b}\vec{b}
-\]
-となる．
+{\bf [解答]}
 
 \begin{figure}[htb]
   \centering
@@ -70,8 +22,8 @@
     \draw[red!80!black, thick] (0.44,0) arc[start angle=0,end angle=60,radius=0.44];
     \node[red!80!black, right] at (0.45,0.28) {$\pi/3$};
 
-    \foreach \P in {O,A,B,C} {\fill[blue!85!black] (\P) circle (1.4pt);}
-    \fill[red!80!black] (M) circle (1.4pt);
+    \foreach \P in {O,A,B,C} {\node[circle, fill=blue!85!black, inner sep=1.4pt] at (\P) {};}
+    \node[circle, fill=red!80!black, inner sep=1.4pt] at (M) {};
     \node[below left=2pt] at (O) {$O$};
     \node[above left=2pt] at (A) {$A$};
     \node[below=3pt] at (B) {$B$};
@@ -81,27 +33,93 @@
   \caption{$AB$ の中点 $M$ と，$O$ と反対側にある正三角形 $ABC$ の頂点 $C$}
 \end{figure}
 
-\noindent
-{\bf [別解]} $\vec{a}, \vec{b}$ に平行な単位ベクトルを $\vec{x}, \vec{y}$ とすると，これらは1次独立で，又 $\vec{x} \cdot \vec{y} = \dfrac{1}{2}$ となる．さらに
-\[
-  \vec{c} = \alpha \vec{x} + \beta \vec{y}
-\]
-とおける．
+$O$ を原点とし，$B$ が $x$ 軸上，$A$ が第一象限になるよう $xy$ 平面をおく．
+この時 $|\vec{a}| = a$, $|\vec{b}| = b$ とする．
+題意より$\angle AOB = \dfrac{\pi}{3}$ だから
 \begin{align}
-  \vec{AB} &= |\vec{b}|\vec{y} - |\vec{a}|\vec{x} \\
-  \vec{AC} &= (\alpha - |\vec{a}|)\vec{x} + \beta \vec{y} \\
-  \vec{BC} &= \alpha \vec{x} + (\beta - |\vec{b}|)\vec{y}
+  \vec{b} = b
+  \begin{pmatrix} 1 \\ 0
+  \end{pmatrix}, \quad \vec{a} = \dfrac{a}{2}
+  \begin{pmatrix} 1 \\ \sqrt{3}
+  \end{pmatrix} \label{eq:1}
 \end{align}
-これらの大きさ2乗が全て等しいので，$k \ge 0$ として
-\[
+とおける．$AB$ の中点を $M$ とすると
+\begin{align}
+  \overrightarrow{AB} =
+  \begin{pmatrix} b - \dfrac{1}{2}a \\ -\dfrac{\sqrt{3}}{2}a
+  \end{pmatrix}
+\end{align}
+だから，$|MC| = \dfrac{\sqrt{3}}{2}|AB|$, $MC \perp AB$, $C$ が $O$ と反対側であることをあわせて，
+\begin{align}
+  \overrightarrow{MC} = \dfrac{\sqrt{3}}{2}
+  \begin{pmatrix} \dfrac{\sqrt{3}}{2}a \\ b - \dfrac{1}{2}a
+  \end{pmatrix} \label{eq:2}
+\end{align}
+となる．従って$\vec{c}$は\cref{eq:1,eq:2}より
+\begin{align}
+  \vec{c} &= \overrightarrow{OM} + \overrightarrow{MC}
+  = \dfrac{1}{2}\vec{a}+\dfrac{1}{2}\vec{b} +  \overrightarrow{MC} \\
+  &=\dfrac{1}{2}
+  \begin{pmatrix} b + \dfrac{a}{2} \\ \dfrac{\sqrt{3}a}{2}
+  \end{pmatrix}
+  +
+  \dfrac{\sqrt{3}}{2}
+  \begin{pmatrix} \dfrac{\sqrt{3}}{2}a \\ b - \dfrac{1}{2}a
+  \end{pmatrix} \\
+  &= a
+  \begin{pmatrix} 1 \\ 0
+  \end{pmatrix} + \dfrac{b}{2}
+  \begin{pmatrix} 1 \\ \sqrt{3}
+  \end{pmatrix} \label{eq:3}
+\end{align}
+である．
+
+一方，題意で与えられたベクトルは
+\begin{align}
+  \dfrac{b}{a}\vec{a} + \dfrac{a}{b}\vec{b} = \dfrac{b}{2}
+  \begin{pmatrix} 1 \\ \sqrt{3}
+  \end{pmatrix} + a
+  \begin{pmatrix} 1 \\ 0
+  \end{pmatrix} \label{eq:4}
+\end{align}
+である．
+
+\cref{eq:3,eq:4}から
+\begin{align}
+  \vec{c} = \dfrac{b}{a}\vec{a} + \dfrac{a}{b}\vec{b}
+\end{align}
+となる．よって題意は示された．
+
+{\bf [別解]}
+
+$\vec{a}, \vec{b}$ に平行な単位ベクトルを $\vec{x}, \vec{y}$ とすると，これらは1次独立でなす角度が$\dfrac{\pi}{3}$だから
+\begin{align}
+  \vec{x} \cdot \vec{y} = \dfrac{1}{2} \label{eq:5}
+\end{align}
+となる．
+
+そこで$\vec{c}$をパラメータ$\alpha,\beta$で
+\begin{align}
+  \vec{c} = \alpha \vec{x} + \beta \vec{y}
+\end{align}
+とおく．正三角形$ABC$の各辺について
+\begin{align}
+  \begin{cases}
+    \overrightarrow{AB} = |\vec{b}|\vec{y} - |\vec{a}|\vec{x} \\
+    \overrightarrow{AC} = (\alpha - |\vec{a}|)\vec{x} + \beta \vec{y} \\
+    \overrightarrow{BC} = \alpha \vec{x} + (\beta - |\vec{b}|)\vec{y}
+  \end{cases}
+\end{align}
+であり，これらの大きさ2乗が全て等しいので，$k \ge 0$ として
+\begin{align}
   \begin{cases}
     |\vec{b}|^2 + |\vec{a}|^2 - |\vec{a}||\vec{b}| = k \\
     (\alpha - |\vec{a}|)^2 + \beta^2 + \beta(\alpha - |\vec{a}|) = k \\
     \alpha^2 + (\beta - |\vec{b}|)^2 + \alpha(\beta - |\vec{b}|) = k
   \end{cases}
-  \quad \dots (*)
-\]
-$(\alpha, \beta) = (|\vec{b}|, |\vec{a}|)$ とすると，(*)は成立する．又，$\vec{x}, \vec{y}$ は1次独立であることから，コレ以外の解には他ならず，
+\end{align}
+である．$(\alpha, \beta) = (|\vec{b}|, |\vec{a}|)$ とするとこの方程式はは成立する．
+また $\vec{x}, \vec{y}$ は1次独立であることから，これが解には他ならず，よって
 \begin{align}
   \vec{c} &= |\vec{b}|\vec{x} + |\vec{a}|\vec{y} \\
   &= |\vec{b}|\dfrac{\vec{a}}{|\vec{a}|} + |\vec{a}|\dfrac{\vec{b}}{|\vec{b}|}
