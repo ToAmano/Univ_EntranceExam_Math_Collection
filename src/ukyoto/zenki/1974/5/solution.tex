@@ -1,74 +1,149 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-\noindent
-{\bf [解答]} (i) $\dfrac{a}{\sqrt{m}} + \dfrac{b}{m}$ は $m$ について単調減少で ($\because m, a, b > 0$)
-$m \to \infty$ で $0$ に収束し, $m=1$ で $a+b$ をとるから,
-
-\bigskip
-\noindent
-$1^\circ$ $a+b < 1$ の時,
+与えられた不等式
 \begin{align}
-  4m < n^2 < 4m + \dfrac{a}{\sqrt{m}} + \dfrac{b}{m} < 4m+1
+  4m<n^2<4m+\dfrac{a}{\sqrt{m}}+\dfrac{b}{m} \quad (m,a,b>0) \label{eq:1}
 \end{align}
-となり, これが解答を持つとすると $4m$ と $4m+1$ の間に整数が存在することになり, 矛盾. よってこの時与不等式は解なし.
-
-\bigskip
-\noindent
-$2^\circ$ $a+b \ge 1$ の時,
+について，簡単のため
 \begin{align}
-  \dfrac{a}{\sqrt{m_0}} + \dfrac{b}{m_0} \ge 1 > \dfrac{a}{\sqrt{m_0+1}} + \dfrac{b}{m_0+1}
+  f(m) = \dfrac{a}{\sqrt{m}}+\dfrac{b}{m} \label{eq:2}
 \end{align}
-をみたす $m_0 \in \mathbb{N}$ が存在する. $m \ge m_0+1$ の時, $1^\circ$ と同じく与不等式は解なし. したがって解答があるのは $1 \le m \le m_0$ の時. さらにこの時,
+とおいて，
+\begin{align}
+  4m < n^2 < 4m + f(m) \label{eq:3}
+\end{align}
+について考える．
+$f(m)$は$m,a,b>0$より $m$ について単調減少であり，$f(1)=a+b,\lim_{m\to\infty}f(m)=0$だから
+$y=f(m)$のグラフは以下のようになる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=0.9cm, y=1.2cm, >=stealth,
+    every node/.style={font=\small}]
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (7.5, 0) node[right] {$m$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 3.8) node[above] {$y$};
+
+    \draw[dashed, orange!85!black, line width=0.9pt] (-0.2, 1) -- (7.2, 1)
+    node[right, font=\footnotesize, orange!85!black] {$y=1$};
+
+    \draw[line width=1.4pt, blue!85!black, domain=0.85:7.2, samples=100]
+    plot (\x, {1.2/sqrt(\x) + 1.8/\x});
+    \node[above right=2pt, blue!85!black] at (4.5, 1.2/2.12 + 1.8/4.5) {$y=f(m)$};
+
+    \coordinate (P1) at (1, 3.0);
+    \coordinate (Pm0) at (4, 1.05);
+    \coordinate (Pm0p1) at (5, 0.89);
+
+    \draw[dashed, gray!60] (P1) -- (1, 0) node[below, font=\footnotesize] {$1$};
+    \draw[dashed, gray!60] (P1) -- (0, 3.0) node[left, font=\footnotesize] {$a+b$};
+
+    \draw[dashed, gray!60] (Pm0) -- (4, 0) node[below, font=\footnotesize] {$m_0$};
+    \draw[dashed, gray!60] (Pm0p1) -- (5, 0) node[below, font=\footnotesize] {$m_0+1$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (P1) {};
+    \node[circle, fill=teal!75!black, inner sep=1.5pt] at (Pm0) {};
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (Pm0p1) {};
+
+    \node[above right=2pt, font=\scriptsize, teal!75!black] at (Pm0) {$f(m_0) \ge 1$};
+    \node[below left=2pt, font=\scriptsize, red!85!black] at (Pm0p1) {$f(m_0+1) < 1$};
+
+    \node[below left=2pt, font=\footnotesize] at (0, 0) {$O$};
+  \end{tikzpicture}
+  \caption{$y=f(m)$ の単調減少性と $y=1$ との交差関係．$m \ge m_0+1$ では $f(m)<1$ となる．}
+  \label{fig:1974_5_fm_graph}
+\end{figure}
+
+\paragraph{(イ)}
+
+\cref{eq:3}は$f(m)$の単調減少性より
+\begin{align}
+  4m < n^2 < 4m + f(m) \le 4m + f(1) =4m+(a+b)
+\end{align}
+となるから，$f(1)=a+b$の値に応じて場合分けする．
+
+\subparagraph{$1^\circ$ $f(1)<1$ つまり $a+b < 1$ の時}
+
+この時\cref{eq:3}は
+\begin{align}
+  4m < n^2 < 4m + f(m) \le 4m + f(1) < 4m+1
+  \quad\therefore
+  4m < n^2 < 4m+1
+\end{align}
+となり, これが解を持つとすると $4m$ と $4m+1$ の間に整数が存在することになり矛盾する.
+よってこの時不等式\cref{eq:3}は解なしである．
+
+\subparagraph{$2^\circ$ $f(1)\ge 1$ つまり $a+b \ge 1$ の時}
+
+この時，$f(m)$の単調減少性と$\lim_{m\to\infty}f(m)=0$から，
+\begin{align}
+  f(m_0+1) < 1 \le f(m_0)
+  %  \dfrac{a}{\sqrt{m_0}} + \dfrac{b}{m_0} \ge 1 > \dfrac{a}{\sqrt{m_0+1}} + \dfrac{b}{m_0+1}
+\end{align}
+をみたす $m_0 \in \mathbb{N}$ が存在する.
+$m \ge m_0+1$ の時は $1^\circ$ と同じく不等式\cref{eq:3}は解なしである.
+したがって解答があるのは $1 \le m \le m_0$ の時である．この時,
 \begin{align}
   4m < N < 4m + \dfrac{a}{\sqrt{m}} + \dfrac{b}{m}
 \end{align}
-をみたす $N \in \mathbb{N}$ は $\left[ \dfrac{a}{\sqrt{m}} + \dfrac{b}{m} \right]$ であるから, 全ての $N$ に $n \in \mathbb{Z}$ が 2つずつ対応していたとしても, $n$ は $2 \left[ \dfrac{a}{\sqrt{m}} + \dfrac{b}{m} \right]$ 個である. 以上から, 解は多くとも
+をみたす $N \in \mathbb{N}$ は $\left[ \dfrac{a}{\sqrt{m}} + \dfrac{b}{m} \right]$ 個であるから, 全ての $N$ に $n \in \mathbb{Z}$ が $n=\pm\sqrt{N}$で2つずつ対応していたとしても, $n$ は $2 \left[ \dfrac{a}{\sqrt{m}} + \dfrac{b}{m} \right]$ 個である. 以上から, 解は多くとも
 \begin{align}
   \sum_{m=1}^{m_0} 2 \left[ \dfrac{a}{\sqrt{m}} + \dfrac{b}{m} \right]
 \end{align}
 であり, これは有限の値をとる.
+\casesend
 
-\noindent
-以上 $1^\circ, 2^\circ$ から示された. $\quad /\!/$
+以上 $1^\circ, 2^\circ$ から題意は示された.
 
-\bigskip
-\noindent
-(ロ) $4m < n^2 < 4m + \dfrac{8}{\sqrt{m}} + \dfrac{9}{m}$ ($m \ge 9$). $\quad \cdots \text{①}$
+\subparagraph{(ロ)}
 
-\noindent
-$f(x) = \dfrac{8}{\sqrt{x}} + \dfrac{9}{x}$ とおく. $f'(x) = -\dfrac{4}{x\sqrt{x}} - \dfrac{9}{x^2} = -\dfrac{1}{x^2}(4\sqrt{x}+9)$ は $x \ge 9$ の時負の値をとるから, $x \ge 9$ で $f(x)$ は単調減少. これと $f(9) = \dfrac{11}{3}$ だから, $m \ge 9$ の時, $f(m) \le \dfrac{11}{3}$ である. 従って ①をみたす $n^2$ は
+\cref{eq:3}に$a=8,b=9$を代入すると
+\begin{align}
+  \begin{cases}
+    4m < n^2 < 4m + f(m) \quad (m \ge 9)\\
+    f(m) = \dfrac{8}{\sqrt{m}} + \dfrac{9}{m}
+  \end{cases} \label{eq:4}
+\end{align}
+である．$f(m)$は単調減少だから，$m \ge 9$において
+\begin{align}
+  f(m) \le f(9) = \dfrac{11}{3} = 3.6\cdots
+\end{align}
+である．よって\cref{eq:4}を満たす$n^2 \in\mathbb{Z}$は
 \begin{align}
   n^2 = 4m+1, \, 4m+2, \, 4m+3
 \end{align}
-に限られる. ここで, $\bmod 4$ で考えると, $n^2 \equiv 0, 1$ だから, 適するものは $n^2 = 4m+1$ に限られる.
+に限られる. $\bmod 4$ で考えると$n^2 \equiv 0, 1$ だから適するものは $n^2 = 4m+1$ に限られる.
+よって題意は示された．
 
-\bigskip
-\noindent
-(ハ) $n>0$ の時を考えれば良く, この時 (ロ)から $n = \sqrt{4m+1}$, つまり $n$ が最大の時 $m$ が最大である. まず, $n^2 = 4m+1$ が解であるには
+\subparagraph{(ハ)}
+
+$n<0$なる$n$が解ならば$-n(>0)$も解だから，$n>0$で考えれば良い．
+この時(ロ)から解は $n = \sqrt{4m+1}$ である．
+つまり $n$ が最大の時 $m$ が最大であるから最大となる$m$を求める.
+
+まず $n^2 = 4m+1$ が解であるには\cref{eq:4}より$f(m)>1$が必要で，
 \begin{align}
-  1 < \dfrac{8}{\sqrt{m}} + \dfrac{9}{m}
+  & 1 < \dfrac{8}{\sqrt{m}} + \dfrac{9}{m} \\
+  \therefore
+  & (m-9)^2 < 64m \quad (\because m \ge 9)
 \end{align}
+が必要である. これを解いて $m\ge 9$ では
 \begin{align}
-  \Leftrightarrow (m-9)^2 < 64m \quad (\because m \ge 9)
+  9 \le m \le 80
 \end{align}
-が必要. これを解いて, $19 \le m \le 80$ とあわせて
+となる．この時$4m+1$は
 \begin{align}
-  9 \le m \le 80 \quad \cdots \text{②}
+  37 \le 4m+1 \le 321 \label{eq:5}
 \end{align}
-だから
-\begin{align}
-  0 < 37 \le 4m+1 \le 321 \quad \cdots \text{③}
-\end{align}
-であり, $36 < 37 \le 49$ から $6 < \sqrt{37} < 7$, $289 < 321 < 324$ から $17 < \sqrt{321} < 18$
-なので, ③の両辺 $\sqrt{}$ をとって, $n \in \mathbb{N}$ から
+であり, $6^2 < 37 < 7^2$ から $6 < \sqrt{37} < 7$,
+$17^2=289 < 321 < 324=18^2$ から $17 < \sqrt{321} < 18$なので,
+\cref{eq:5}の両辺平方根をとって, $n \in \mathbb{N}_{>0}$ から
 \begin{align}
   7 \le n \le 17
 \end{align}
-従って $n=17$ をみたす $m$ があれば, これが求める値で, $n^2 = 4m+1$ を解いて計算すると $(n, m) = (17, 72)$ が求めるものである. $\quad /\!/$
+である．従って $n=17$ をみたす $m$ があればこれが求める値で,
+$n^2 = 289 = 4m+1$ を解いて計算すると $(n, m) = (17, 72)$ が求める最大値である.
 
 \end{document}

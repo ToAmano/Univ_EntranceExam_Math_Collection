@@ -1,94 +1,189 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-\noindent
-{\bf [解答]} $f_q(x) = x^4 - 6p^2 x^2 - 8q^3 x$ とおく. ($p > 0, q \ge 0$)
+与えられた関数を
+\begin{align}
+  f_q(x) = x^4 - 6p^2 x^2 - 8q^3 x \quad (p > 0, q \ge 0) \label{eq:1}
+\end{align}
+とおく．一階微分すると
+\begin{align}
+  f_q'(x) = 4x^3 - 12p^2 x - 8q^3 \label{eq:2}
+\end{align}
+だから，$q=0$の時の$f_q(x)$の増減表は以下のようになり,
+$A$ の $x$ 座標は $-\sqrt{3}p \; (\equiv x_0)$ である.
 
-$f_q'(x) = 4x^3 - 12p^2 x - 8q^3$ だから, $q=0$ の時, 下表を得る
+\begin{table}[htb]
+  \centering
+  \caption{$f_0(x)$の増減表($q=0$の時)}
+  \begin{tabular}{c|c|c|c|c|c|c|c}
+    $x$ & $\dots$ & $-\sqrt{3}p$ & $\dots$ & $0$ & $\dots$ & $\sqrt{3}p$ & $\dots$ \\ \hline
+    $f'$ & $-$ & $0$ & $+$ & $0$ & $-$ & $0$ & $+$ \\ \hline
+    $f$ & $\searrow$ & & $\nearrow$ & & $\searrow$ & & $\nearrow$
+  \end{tabular}
+\end{table}
 
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \begin{tabular}{c|c|c|c|c|c|c|c}
-      $x$ & $\dots$ & $-\sqrt{3}p$ & $\dots$ & $0$ & $\dots$ & $\sqrt{3}p$ & $\dots$ \\ \hline
-      $f'$ & $-$ & $0$ & $+$ & $0$ & $-$ & $0$ & $+$ \\ \hline
-      $f$ & $\searrow$ & & $\nearrow$ & & $\searrow$ & & $\nearrow$
-    \end{tabular}
-  \end{table}
-\end{center}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.45cm, y=0.28cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (A) at ({-sqrt(3)}, -9);
+    \coordinate (MinR) at ({sqrt(3)}, -9);
+    \coordinate (MaxO) at (0, 0);
 
-\noindent
-従って, $A$ の $x$ 座標は $-\sqrt{3}p \; (\equiv x_0)$ である. 又, $f_q''(x) = 12(x^2 - p^2)$ から下表を得る
+    \draw[->, thick, gray!80!black] (-2.5, 0) -- (2.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -11) -- (0, 3) node[above] {$y$};
 
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \begin{tabular}{c|c|c|c|c|c}
-      $x$ & $\dots$ & $-p$ & $\dots$ & $p$ & $\dots$ \\ \hline
-      $f''$ & $+$ & $0$ & $-$ & $0$ & $+$ \\ \hline
-      $f'$ & $\nearrow$ & 8($p^3-q^3$) & $\searrow$ & 負 & $\nearrow$
-    \end{tabular}
-  \end{table}
-\end{center}
+    \draw[dashed, gray!60] (A) -- ({-sqrt(3)}, 0);
+    \draw[dashed, gray!60] (MinR) -- ({sqrt(3)}, 0);
+    \draw[dashed, gray!60] (A) -- (0, -9);
 
-\noindent
-従って $q$ の値により下表をえる
+    \draw[line width=1.4pt, blue!85!black, domain=-2.45:2.45, samples=120]
+    plot (\x, {\x*\x*\x*\x - 6*\x*\x});
 
-\bigskip
-\noindent
-$1^\circ$ $p > q$ の時
+    \node[circle, fill=red!85!black, inner sep=1.8pt] at (A) {};
+    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (MinR) {};
+    \node[circle, fill=teal!75!black, inner sep=1.5pt] at (MaxO) {};
 
-$f_q'(-p) > 0$ から, $f_q'(x) = 0$ となる $x$ が 3つある ($\alpha < \beta < \gamma$ とする)
+    \node[below left=2pt, red!85!black] at (A) {$A$};
+    \node[above=3pt, font=\footnotesize] at ({-sqrt(3)}, 0) {$-\sqrt{3}p$};
+    \node[above=3pt, font=\footnotesize] at ({sqrt(3)}, 0) {$\sqrt{3}p$};
+    \node[right=3pt, font=\footnotesize] at (0, -9) {$-9p^4$};
+    \node[above right=2pt, font=\footnotesize] at (0, 0) {$O$};
+  \end{tikzpicture}
+  \caption{$q=0$ のときの $y=f_0(x)$ のグラフと小球の初期位置 $A$．}
+  \label{fig:1974_3_q0}
+\end{figure}
 
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \begin{tabular}{c|c|c|c|c|c|c|c}
-      $x$ & $\dots$ & $\alpha$ & $\dots$ & $\beta$ & $\dots$ & $\gamma$ & $\dots$ \\ \hline
-      $f'$ & $-$ & $0$ & $+$ & $0$ & $-$ & $0$ & $+$ \\ \hline
-      $f$ & $\searrow$ & & $\nearrow$ & & $\searrow$ & & $\nearrow$
-    \end{tabular}
-  \end{table}
-\end{center}
+次に二階微分を計算すると
+\begin{align}
+  f_q''(x) = 12(x^2 - p^2) = 12(x-p)(x+p) \label{eq:3}
+\end{align}
+だから，$f'_q(x)$の増減表は以下のようになる．
 
-\noindent
-この時 $A$ が右のくぼみに落ちるのは, $\beta \le -\sqrt{3}p \le \gamma$ の時である. $\quad \cdots \text{①}$
+\begin{table}[htb]
+  \centering
+  \caption{$f'_q(x)$の増減表}
+  \begin{tabular}{c|c|c|c|c|c}
+    $x$ & $\dots$ & $-p$ & $\dots$ & $p$ & $\dots$ \\ \hline
+    $f''$ & $+$ & $0$ & $-$ & $0$ & $+$ \\ \hline
+    $f'$ & $\nearrow$ & $8(p^3-q^3)$ & $\searrow$ & 負 & $\nearrow$
+  \end{tabular}
+\end{table}
 
-\noindent
-しかし, 本から $-p < \beta$ であり, 又 $p > 0$ から $-\sqrt{3}p < -p$ だから ①がみたされることはなく, 矛盾.
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=0.75cm, y=0.35cm, >=stealth,
+    every node/.style={font=\small}]
 
-\bigskip
-\noindent
-$2^\circ$ $p \le q$ の時
+    % (左) p > q
+    \begin{scope}[shift={(0, 0)}]
+      \draw[->, thick, gray!80!black] (-2.2, 0) -- (2.6, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -4.5) -- (0, 3.5) node[above] {$y$};
+      \draw[line width=1.2pt, blue!85!black, domain=-2.0:2.1, samples=80]
+      plot (\x, {\x*\x*\x - 3*\x - 1});
+      \draw[dashed, gray!60] (-1, 0) -- (-1, 1);
+      \node[circle, fill=teal!75!black, inner sep=1.2pt] at (-1, 1) {};
+      \node[below=2pt, font=\scriptsize] at (-1, 0) {$-p$};
+      \node[below=2pt, font=\scriptsize] at (1, 0) {$p$};
+      \node[above left=1pt, font=\tiny, teal!75!black] at (-1, 1) {$>0$};
+      \node[below=14pt, align=center, font=\footnotesize] at (0.2, -4.5)
+      {(1) $p>q$\\3実解 $\alpha<\beta<\gamma$};
+    \end{scope}
 
-$f_q'(-p) \le 0$ から, $f_q'(x) = 0$ となる $x$ が唯一存在する ($\alpha$ とする)
+    % (中) p = q
+    \begin{scope}[shift={(5.2, 0)}]
+      \draw[->, thick, gray!80!black] (-2.2, 0) -- (2.6, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -5.5) -- (0, 2.5) node[above] {$y$};
+      \draw[line width=1.2pt, blue!85!black, domain=-2.0:2.35, samples=80]
+      plot (\x, {\x*\x*\x - 3*\x - 2});
+      \node[circle, fill=teal!75!black, inner sep=1.4pt] at (-1, 0) {};
+      \node[circle, fill=blue!85!black, inner sep=1.4pt] at (2, 0) {};
+      \node[above=2pt, font=\scriptsize] at (-1, 0) {$-p$};
+      \node[below=2pt, font=\scriptsize] at (2, 0) {$2p$};
+      \node[below=14pt, align=center, font=\footnotesize] at (0.2, -4.5)
+      {(2) $p=q$\\$x=-p$ で接する (重解)};
+    \end{scope}
 
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \begin{tabular}{c|c|c|c}
-      $x$ & $\dots$ & $\alpha$ & $\dots$ \\ \hline
-      $f'$ & $-$ & $0$ & $+$ \\ \hline
-      $f$ & $\searrow$ & & $\nearrow$
-    \end{tabular}
-  \end{table}
-\end{center}
+    % (右) p < q
+    \begin{scope}[shift={(10.4, 0)}]
+      \draw[->, thick, gray!80!black] (-2.2, 0) -- (2.6, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -6.5) -- (0, 1.5) node[above] {$y$};
+      \draw[line width=1.2pt, blue!85!black, domain=-1.9:2.45, samples=80]
+      plot (\x, {\x*\x*\x - 3*\x - 3.5});
+      \draw[dashed, gray!60] (-1, 0) -- (-1, -1.5);
+      \node[circle, fill=teal!75!black, inner sep=1.2pt] at (-1, -1.5) {};
+      \node[above=2pt, font=\scriptsize] at (-1, 0) {$-p$};
+      \node[below=1pt, font=\tiny, teal!75!black] at (-1, -1.5) {$<0$};
+      \node[below=14pt, align=center, font=\footnotesize] at (0.2, -4.5)
+      {(3) $p<q$\\単一実解のみ};
+    \end{scope}
 
-\noindent
-よって, $A$ が右のくぼみに落ちるのは $-\sqrt{3}p \le \alpha$ つまり $f_q'(-\sqrt{3}p) \le 0$ の時,
-\[
-  f_q'(-\sqrt{3}p) = -8q^3 \le 0 \quad \therefore q \ge 0
-\]
-したがって, $0 < p$ から $p \le q$ の時, $A$ が右のくぼみにおちる.
+  \end{tikzpicture}
+  \caption{$p$ と $q$ の大小に応じた導関数 $y=f'_q(x)$ の極大値 $8(p^3-q^3)$ の符号と零点の個数．}
+  \label{fig:1974_3_derivative_cases}
+\end{figure}
 
-\noindent
-以上 $1^\circ, 2^\circ$ から求める $\min q = p$ である.
+従って，$f'_q(x)=0$となる$x$の数は，$f'_q(-p)=8(p^3-q^3)$の正負に応じて変化する．
+それぞれの場合を個別に検討する．
 
+\subparagraph{$1^\circ$ $f'_q(-p)>0$ つまり $p > q$ の時}
+
+$f_q'(-p) > 0$ から $f_q'(x) = 0$ となる $x$ が 3つあるので，これを$\alpha < \beta < \gamma$ とすると，$f_q(x)$の増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$f_q(x)$の増減表($p>q$の時)}
+  \begin{tabular}{c|c|c|c|c|c|c|c}
+    $x$ & $\dots$ & $\alpha$ & $\dots$ & $\beta$ & $\dots$ & $\gamma$ & $\dots$ \\ \hline
+    $f'$ & $-$ & $0$ & $+$ & $0$ & $-$ & $0$ & $+$ \\ \hline
+    $f$ & $\searrow$ & & $\nearrow$ & & $\searrow$ & & $\nearrow$
+  \end{tabular}
+\end{table}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.45cm, y=0.22cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (A) at ({-sqrt(3)}, {-9 + 1.728*sqrt(3)});
+    \draw[->, thick, gray!80!black] (-2.5, 0) -- (2.8, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -14) -- (0, 4) node[above] {$y$};
+
+    \draw[dashed, gray!60] (A) -- ({-sqrt(3)}, 0);
+
+    \draw[line width=1.4pt, blue!85!black, domain=-2.35:2.6, samples=120]
+    plot (\x, {\x*\x*\x*\x - 6*\x*\x - 1.728*\x});
+
+    \node[circle, fill=red!85!black, inner sep=1.8pt] at (A) {};
+    \node[above left=2pt, red!85!black] at (A) {$A$};
+    \node[above=3pt, font=\footnotesize] at ({-sqrt(3)}, 0) {$-\sqrt{3}p$};
+    \node[above right=2pt, font=\footnotesize] at (0, 0) {$O$};
+
+    \node[below=3pt, font=\footnotesize, teal!75!black] at (-1.65, -7.5) {$\alpha$ (左の窪み)};
+    \node[above=3pt, font=\footnotesize, teal!75!black] at (-0.15, 0.2) {$\beta$ (中央の山)};
+    \node[below=3pt, font=\footnotesize, teal!75!black] at (1.8, -12) {$\gamma$ (右の窪み)};
+  \end{tikzpicture}
+  \caption{$p>q$ のときの $y=f_q(x)$ のグラフ．左右に2つの窪みがあり，$A$ は左の窪みにとどまる．}
+  \label{fig:1974_3_pq_greater}
+\end{figure}
+
+この時$y=f_q(x)$のグラフは左右の窪みを持つから$A$は左の窪みに止まり続ける．
+
+\subparagraph{$2^\circ$ $f_q(-p)=0$ つまり $p = q$ の時}
+
+$f_q'(-p) = 0$ から $f_q'(x) = 0$ となる $x$ が 2つあるので，これを$\alpha<\beta$とする．
+ただし$x=\alpha$は重解である．すると，$f_q(x)$の増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$f_q(x)$の増減表($p=q$の時)}
+  \begin{tabular}{c|c|c|c|c|c}
+    $x$ & $\dots$ & $-p$ & $\dots$ & $2p$ & $\dots$ \\ \hline
+    $f'$ & $-$ & $0$ & $-$ & $0$ & $+$ \\ \hline
+    $f$ & $\searrow$ & & $\searrow$ & 極小 & $\nearrow$
+  \end{tabular}
+\end{table}
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=1.45cm, y=0.19cm, >=stealth,
@@ -102,19 +197,43 @@ $f_q'(-p) \le 0$ から, $f_q'(x) = 0$ となる $x$ が唯一存在する ($\al
     \draw[dashed, gray!65] (A) -- ({-sqrt(3)},0);
     \draw[line width=1.4pt, blue!85!black, domain=-2.2:2.95, samples=140]
     plot (\x,{\x*\x*\x*\x-6*\x*\x-8*\x});
-    \fill[red!85!black] (A) circle (1.6pt);
-    \fill[teal!75!black] (I) circle (1.6pt);
-    \fill[blue!85!black] (Min) circle (1.6pt);
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (A) {};
+    \node[circle, fill=teal!75!black, inner sep=1.6pt] at (I) {};
+    \node[circle, fill=blue!85!black, inner sep=1.6pt] at (Min) {};
     \node[above left=2pt, red!85!black] at (A) {$A$};
-    \node[below=3pt, font=\footnotesize] at ({-sqrt(3)},0) {$-\sqrt3p$};
+    \node[below=3pt, font=\footnotesize] at ({-sqrt(3)},0) {$-\sqrt{3}p$};
     \node[above=3pt, font=\footnotesize] at (-1,0) {$-p$};
     \node[above=3pt, font=\footnotesize] at (2,0) {$2p$};
     \node[above right=2pt, font=\footnotesize] at (0,0) {$O$};
   \end{tikzpicture}
-  \caption{$q=p$ の境界で，$x=-p$ に水平な変曲点が現れる}
+  \caption{$q=p$ の時の$y=f_q(x)$のグラフ．$x=-p$ に水平な変曲点が現れる．}
 \end{figure}
-\noindent
-$\left[\text{この時, } f'(x) = 4(x^3 - 3p^2 x - 2p^3) = 4(x+p)^2 (x-2p) \text{ となり,}\right]$ $\Rightarrow$ 予想通り!
+
+従ってこの時は$y=f_q(x)$の左側の窪みがちょうど消滅する．この点での傾きは$0$だから$A$は止まり続ける．
+
+\subparagraph{$3^\circ$ $f_q(-p)<0$ つまり $p < q$ の時}
+
+$f_q'(-p) < 0$ から $f_q'(x) = 0$ となる $x$ が唯一存在するのでこれを$\alpha$ とする．
+すると，$f_q(x)$の増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$f_q(x)$の増減表($p<q$の時)}
+  \begin{tabular}{c|c|c|c}
+    $x$ & $\dots$ & $\alpha$ & $\dots$ \\ \hline
+    $f'$ & $-$ & $0$ & $+$ \\ \hline
+    $f$ & $\searrow$ & & $\nearrow$
+  \end{tabular}
+\end{table}
+
+よってこの時は窪みが一つになる．$A$が右側の窪みに落ちるためには当初の窪みの位置$x_0=-\sqrt{3}p$よりもこの窪み$x=\alpha$が右側にないといけないから，$-\sqrt{3}p \le \alpha$ つまり $f_q'(-\sqrt{3}p) \le 0$ が成り立つ：
+\begin{align}
+  f_q'(-\sqrt{3}p) = -8q^3 \le 0 \quad \therefore q \ge 0
+\end{align}
+これは題意により常に成り立つ．したがって $p < q$ の時に $A$ が右のくぼみにおちる.
+\casesend
+
+以上 $1^\circ, 2^\circ, 3^{\circ}$ から求める$q$の閾値は $ q = p$ である．
 
 \newpage
 
