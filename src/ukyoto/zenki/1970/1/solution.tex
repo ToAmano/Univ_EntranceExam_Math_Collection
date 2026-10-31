@@ -1,23 +1,68 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-\noindent
-{\bf [解答]} 題意から $y = f'(a)(x-a) + f(a)$ が $(c,0)$ を通る.
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.8cm, y=1.5cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (C) at (1, 0);
+    \coordinate (A) at (3, 0);
+    \coordinate (P) at (3, 1.5);
+    \coordinate (Fa) at (0, 1.5);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (4.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 2.6) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 補助線
+    \draw[dashed, gray!60] (Fa) -- (P) -- (A);
+
+    % 接線
+    \draw[line width=1.0pt, teal!75!black] (0.5, -0.375) -- (4.2, 2.4)
+    node[below right, font=\footnotesize] {接線};
+
+    % 曲線 y = f(x)
+    \draw[line width=1.2pt, blue!85!black, domain=0.8:4.0, samples=80, smooth]
+    plot (\x, {0.2*(\x-3)*(\x-3) + 0.75*\x - 0.75})
+    node[above left] {$y=f(x)$};
+
+    % 点
+    \node[circle, fill=teal!75!black, inner sep=1.4pt] at (C) {};
+    \node[circle, fill=red!75!black, inner sep=1.4pt] at (P) {};
+
+    % ラベル
+    \node[below=2pt] at (C) {$c$};
+    \node[below=2pt] at (A) {$a$};
+    \node[left=2pt] at (Fa) {$f(a)$};
+    \node[above left=2pt] at (P) {$P(a, f(a))$};
+  \end{tikzpicture}
+  \caption{曲線 $y=f(x)$ と点 $P(a, f(a))$ における接線}
+  \label{fig:1970_1_tangent}
+\end{figure}
+
+$y=f(x)$の$x=a$における接線は
 \begin{align}
-  0 = f'(a)(c-a) + f(a) \quad \dots \text{①}
+  y = f'(a)(x-a) + f(a) \label{eq:1}
 \end{align}
-又, $g(x)$ の定義から
+だから，これが$(c,0)$を通ることにより，
+\begin{align}
+  0 = f'(a)(c-a) + f(a) \label{eq:2}
+\end{align}
+である．
+
+また $g(x)$ の定義から一階微分は
 \begin{align}
   g'(x) = \dfrac{f'(x)(x-c) - f(x)}{(x-c)^2}
 \end{align}
-だから
+だから，$x=a$を代入して
 \begin{align}
-  g'(a) = \dfrac{f'(a)(a-c) - f(a)}{(a-c)^2} = 0 \quad (\because \text{①}) \quad \mathbin{/\mkern-5mu/}
+  g'(a) = \dfrac{f'(a)(a-c) - f(a)}{(a-c)^2} = 0 \quad (\because \text{\cref{eq:2}})
 \end{align}
+である．
 
 \newpage
 

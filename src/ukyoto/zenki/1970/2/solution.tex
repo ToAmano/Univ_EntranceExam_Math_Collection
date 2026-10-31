@@ -1,52 +1,132 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-\noindent
-{\bf [解答]} $n=2$ の時 $\left(\dfrac{3}{2}\right)^2 = \dfrac{9}{4} > 2 = 2!$ から成立. $n=k$ での成立を仮定する時
+当たられた不等式
 \begin{align}
-  f_k(x) = (k+1)\log \dfrac{k+1}{2} - \sum_{i=1}^k \log i
+  \left(\dfrac{n+1}{2}\right)^n > n! \label{eq:1}
 \end{align}
-とした時 $f_k(x) > 0$ である ($\because$ 与の同値).
+を数学的帰納法により示す．両辺正だから自然対数をとって
 \begin{align}
-  f_{k+1}(x) &= (k+2)\log \dfrac{k+2}{2} - \sum_{i=1}^{k+1} \log i \\
-  &= f_k(x) + \underbrace{(k+2)\log\dfrac{k+2}{2} - (k+1)\log\dfrac{k+1}{2} - \log(k+1)}_{g(k)} \quad \dots \text{①}
+  f(n) = n\log \dfrac{n+1}{2} - \sum_{i=1}^n \log i > 0 \label{eq:2}
 \end{align}
+を示しても良い．
 
-\noindent
-ここで, $g(k) > 0$ を示す ($k \in \mathbb{R}$).
-\begin{align}
-  g'(k) &= \log\dfrac{k+2}{2} + \dfrac{k+1}{k+2} - \left[ \log\dfrac{k+1}{2} + \dfrac{k}{k+1} \right] - \dfrac{1}{k+1} \\
-  &= \log\dfrac{k+2}{2} - \log\dfrac{k+1}{2} - \dfrac{1}{k+2} \\
-  g''(k) &= \dfrac{1}{k+2} - \dfrac{1}{k+1} + \dfrac{1}{(k+2)^2} \\
-  &= \dfrac{-1}{(k+1)(k+2)^2} < 0
-\end{align}
-より $g'(k)$ は単調減少. これと $g'(k) = \log\dfrac{k+2}{k+1} - \dfrac{1}{k+2} \to 0$ ($k \to \infty$) から $g'(k) > 0$ だから, $g(k)$ は単調増加であり, $k \ge 1$ の時
-\begin{align}
-  g(1) = 2\log\dfrac{3}{2} - \log 2 = 2\log 3 - 3\log 2 = \log\dfrac{9}{8} > 0
-\end{align}
-だから $g(k) > 0 \dots \text{②}$.
-②と仮定から, ①より, $f_{k+1}(x) > 0$ となり $n=k+1$ でも成立.
+$n=2$ の時\cref{eq:1}は $\left(\dfrac{3}{2}\right)^2 = \dfrac{9}{4} > 2 = 2!$ から成立する.
 
-\noindent
-以上より示された.
-
-\bigskip
-
-\noindent
-[\textbf{別 - もっと直接的に示す}]
+そこで$n=k \ (k \ge 2)$ での成立を仮定して$n=k+1$について検討する．
+$f(k+1)$を計算すると
 \begin{align}
-  \left(\dfrac{k+2}{2}\right)^{k+1} - (k+1)! &= \dfrac{k+2}{2} \left(\dfrac{k+2}{k+1}\right)^k \left(\dfrac{k+1}{2}\right)^k - (k+1) \cdot k! \\
-  &\ge \left[ \dfrac{k+2}{2} \left(\dfrac{k+2}{k+1}\right)^k - (k+1) \right] k! \quad (\text{カテイ})
+  f(k+1)
+  &= (k+1)\log \dfrac{k+2}{2} - \sum_{i=1}^{k+1} \log i \\
+  &= f(k) + (k+1)\log\dfrac{k+2}{2} - k\log\dfrac{k+1}{2} - \log(k+1) \label{eq:3}
 \end{align}
-ここで, $k \ge 2$ のとき, 2項定理から
+だから，
+\begin{align}
+  g(k) = (k+1)\log\dfrac{k+2}{2} - k\log\dfrac{k+1}{2} - \log(k+1) \label{eq:4}
+\end{align}
+とおくと
+\begin{align}
+  f(k+1) = f(k) + g(k) \label{eq:5}
+\end{align}
+である．ここで$x>0$なる実数に対して$g(x)>0$を示そう．
+一階微分を計算すると
+\begin{align}
+  g'(x)
+  &= \log\dfrac{x+2}{2} + \dfrac{x+1}{x+2} - \left[ \log\dfrac{x+1}{2} + \dfrac{x}{x+1} \right] - \dfrac{1}{x+1} \\
+  &= \log\dfrac{x+2}{2} - \log\dfrac{x+1}{2} - \dfrac{1}{x+2} \\
+  &= \log \dfrac{x+2}{x+1} - \dfrac{1}{x+2}
+\end{align}
+であり，再度微分して
+\begin{align}
+  g''(x)
+  &= \dfrac{1}{x+2} - \dfrac{1}{x+1} + \dfrac{1}{(x+2)^2} \\
+  &= \dfrac{-1}{(x+1)(x+2)^2} < 0
+\end{align}
+より $g'(k)$ は単調減少である. これと $\lim_{n\to\infty} g'(x) = 0$より
+$g'(x) > 0$ だから, $g(k)$ は単調増加である． よって $x \ge 1$ の時
+\begin{align}
+  g(x) \ge g(1) = 2\log\dfrac{3}{2} - \log 2 = 2\log 3 - 3\log 2 = \log\dfrac{9}{8} > 0
+\end{align}
+だから$k \ge 2$なる整数に対して $g(k) > 0$である．
+
+\begin{table}[htb]
+  \centering
+  \caption{$g(x)$ の増減表 ($x \geqq 0$)}
+  \label{tab:1970_2_g_variation}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{c|c|c|c|c|c}
+    \hline
+    $x$ & $0$ & $\dots$ & $1$ & $\dots$ & $(\to\infty)$ \\ \hline
+    $g'(x)$ & $\left(\log 2 - \dfrac{1}{2}\right)$ & $+$ & $\log\dfrac{3}{2} - \dfrac{1}{3}$ & $+$ & $(0)$ \\ \hline
+    $g''(x)$ & $\left(-\dfrac{1}{4}\right)$ & $-$ & $-\dfrac{1}{18}$ & $-$ & $(0)$ \\ \hline
+    $g(x)$ & $0$ & $\nearrow$ & $\log\dfrac{9}{8}$ & $\nearrow$ & $(1-\log 2)$ \\ \hline
+  \end{tabular}
+\end{table}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.4cm, y=8.0cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+
+    % 漸近線 y = 1 - log 2 (≈ 0.3069)
+    \pgfmathsetmacro{\asymp}{1.0 - ln(2)}
+    \pgfmathsetmacro{\gOne}{ln(9.0/8.0)}
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (5.2, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.04) -- (0, 0.42) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 漸近線
+    \draw[dashed, red!75!black, line width=0.9pt] (0, \asymp) -- (4.9, \asymp)
+    node[right, font=\footnotesize] {$y = 1 - \log 2$};
+    \node[left=2pt, red!75!black, font=\footnotesize] at (0, \asymp) {$1 - \log 2$};
+
+    % 補助線 x = 1, y = g(1)
+    \draw[dashed, gray!60] (1, 0) -- (1, \gOne) -- (0, \gOne);
+    \node[below=2pt] at (1, 0) {$1$};
+    \node[left=2pt, font=\footnotesize] at (0, \gOne) {$\log\frac{9}{8}$};
+
+    % 曲線 y = g(x) = (x+1)*ln((x+2)/(x+1)) - ln 2
+    \draw[line width=1.2pt, blue!85!black, domain=0:4.6, samples=100, smooth]
+    plot (\x, {(\x + 1.0)*ln((\x + 2.0)/(\x + 1.0)) - ln(2)})
+    node[below right=2pt, font=\footnotesize] {$y = g(x)$};
+
+    % 代表点
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (0, 0) {};
+    \node[circle, fill=red!75!black, inner sep=1.4pt] at (1, \gOne) {};
+    \node[above left=1pt, font=\footnotesize] at (1, \gOne) {$\left(1, \log\frac{9}{8}\right)$};
+  \end{tikzpicture}
+  \caption{$y=g(x)$ のグラフと漸近線 $y = 1 - \log 2$}
+  \label{fig:1970_2_g_graph}
+\end{figure}
+
+\cref{eq:5}と仮定から，$f(k+1)>0$となって$n=k+1$でも\cref{eq:1}は成立する．
+
+以上より数学的帰納法により題意は示された.
+
+{\bf [別解]}
+
+解答では$n=k+1$の時，対数をとった不等式を示したが，直接\cref{eq:1}を使う方針も考えられる．
+\begin{align}
+  \left(\dfrac{k+2}{2}\right)^{k+1} - (k+1)!
+  &= \dfrac{k+2}{2} \left(\dfrac{k+2}{k+1}\right)^k \left(\dfrac{k+1}{2}\right)^k - (k+1) \cdot k! \\
+  &\ge \left[ \dfrac{k+2}{2} \left(\dfrac{k+2}{k+1}\right)^k - (k+1) \right] k! \quad (\because\text{仮定})
+\end{align}
+だが，$k \ge 2$ のときには2項定理から第一項を展開できて
 \begin{align}
   \left(\dfrac{k+2}{k+1}\right)^k = \left(1 + \dfrac{1}{k+1}\right)^k \ge 1 + \dfrac{k}{k+1} = \dfrac{2k+1}{k+1}
 \end{align}
-これから $> 0$ がわかるので OK!! \hfill $\mathbin{/\mkern-5mu/}$
+だから，
+\begin{align}
+  \left[ \dfrac{k+2}{2} \left(\dfrac{k+2}{k+1}\right)^k - (k+1) \right] k!
+  \ge \left[ \dfrac{(k+2)(2k+1)-(k+1)^2}{2(k+1)} \right] k! \\
+  = \left[ \dfrac{k^2+3k+1}{2(k+1)} \right] k! > 0
+\end{align}
+である．よって$n=k+1$でも題意は成立する．
 
 \newpage
 
