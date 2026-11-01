@@ -1,38 +1,103 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $y=a\left(x+\dfrac{b}{2a}\right)^2 - \dfrac{b^2}{4a}$ の頂点 $\left(-\dfrac{b}{2a}, -\dfrac{b^2}{4a}\right)$ が
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.8cm, y=0.75cm, >=stealth,
+    every node/.style={font=\small}]
+
+    % --- 1. 定数・座標 ---
+    % b = 2.5, a = -0.8125
+    \def\a{-0.8125}
+    \def\b{2.5}
+    \pgfmathsetmacro{\xV}{-\b / (2 * \a)}       % 1.538
+    \pgfmathsetmacro{\yV}{-\b * \b / (4 * \a)}  % 1.923
+    \pgfmathsetmacro{\xR}{-\b / \a}             % 3.077
+
+    \coordinate (O) at (0, 0);
+    \coordinate (V) at (\xV, \yV);
+    \coordinate (R) at (\xR, 0);
+    \coordinate (LineX) at (2.5, 0);
+    \coordinate (LineY) at (0, 5);
+
+    % --- 2. 面積 S の塗り ---
+    \fill[blue!12, domain=0:\xR, samples=60]
+    plot (\x, {\a*\x*\x + \b*\x}) -- (O) -- cycle;
+    \node[blue!85!black, font=\normalsize] at (0.5*\xV, 0.45*\yV) {$S$};
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.4, 0) -- (3.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.6) -- (0, 5.5) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % --- 4. 直線 y = -2x + 5 ---
+    \draw[line width=1.1pt, teal!75!black, domain=-0.2:2.8, samples=2]
+    plot (\x, {-2*\x + 5});
+    \node[teal!85!black, font=\footnotesize, above right] at (0.2, 4.6) {$y = -2x + 5$};
+
+    % --- 5. 放物線 y = ax^2 + bx ---
+    \draw[line width=1.4pt, blue!85!black, domain=-0.2:3.3, samples=70]
+    plot (\x, {\a*\x*\x + \b*\x});
+    \node[blue!85!black, font=\footnotesize, above right] at (2.2, 1.8) {$y = ax^2 + bx$};
+
+    % --- 6. 頂点 V の投影線とラベル ---
+    \draw[dashed, gray!60] (\xV, 0) -- (V) -- (0, \yV);
+    \node[below=2pt, font=\footnotesize] at (\xV, 0) {$-\frac{b}{2a}$};
+    \node[left=2pt, font=\footnotesize] at (0, \yV) {$-\frac{b^2}{4a}$};
+
+    % x切片
+    \node[below=2pt, font=\footnotesize] at (\xR, 0) {$-\frac{b}{a}$};
+
+    % 直線の切片
+    \node[left=2pt, font=\footnotesize] at (LineY) {$5$};
+    \node[below=2pt, font=\footnotesize] at (LineX) {$\frac{5}{2}$};
+
+    % --- 7. 頂点 V プロット ---
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (V) {};
+    \node[above right=2pt, red!85!black, font=\footnotesize] at (V) {頂点};
+
+  \end{tikzpicture}
+  \caption{放物線 $y = ax^2 + bx$ と直線 $y = -2x + 5$，および囲まれた面積 $S$}
+  \label{fig:parabola_and_line}
+\end{figure}
+
+与えられた放物線を平方完成すると
+\begin{align}
+  y = ax^2 + bx = a\left(x+\dfrac{b}{2a}\right)^2 - \dfrac{b^2}{4a} \label{eq:1}
+\end{align}
+である．この頂点$\left(-\dfrac{b}{2a}, -\dfrac{b^2}{4a}\right)$ が
 $y=-2x+5$ 上にあるので，
 \begin{align}
-  -\dfrac{b^2}{4a} &= \dfrac{b}{a} + 5 \\
-  \therefore \quad a &= -\dfrac{1}{5} \left( \dfrac{1}{4} b^2 + b \right) \cdots\text{①}
+  & -\dfrac{b^2}{4a} = \dfrac{b}{a} + 5 \notag \\
+  \therefore
+  &\quad a = -\dfrac{1}{5} \left( \dfrac{1}{4} b^2 + b \right) \label{eq:2}
 \end{align}
-又，題意の面積 $S$ として ① から
+である．
+
+題意の面積 $S$ とすると
 \begin{align}
-  S &= \int_{0}^{-\frac{b}{a}} (ax^2 + bx) \,dx \\
-  &= -\dfrac{a}{6} \left(-\dfrac{b}{a}\right)^3 = \dfrac{1}{6} \dfrac{b^3}{a^2} \\
-  &= \dfrac{1}{6} \dfrac{b^3}{\dfrac{1}{25} b^2\left(\dfrac{1}{4}b+1\right)^2} = \dfrac{25}{6} \dfrac{b}{\left(\dfrac{1}{4}b+1\right)^2} \\
+  S = \int_{0}^{-\frac{b}{a}} (ax^2 + bx) \,dx
+  = -\dfrac{a}{6} \left(-\dfrac{b}{a}\right)^3
+  = \dfrac{1}{6} \dfrac{b^3}{a^2}
+\end{align}
+だから，\cref{eq:2}を代入して
+\begin{align}
+  S
+  &= \dfrac{1}{6} \dfrac{b^3}{\dfrac{1}{25} b^2\left(\dfrac{1}{4}b+1\right)^2} \\
+  &= \dfrac{25}{6} \dfrac{b}{\left(\dfrac{1}{4}b+1\right)^2} \\
   &= \dfrac{25}{6} \dfrac{1}{\dfrac{1}{16}b + \dfrac{1}{2} + \dfrac{1}{b}} \\
   &\leqq \dfrac{25}{6} \dfrac{1}{\dfrac{1}{2} + 2\sqrt{\dfrac{1}{16}b \cdot \dfrac{1}{b}}} = \dfrac{25}{6}
 \end{align}
-($\because b>0$ から AM-GM)
+である．ただし$b>0$からAM-GM不等式を用いた．
+等号成立は $\dfrac{b}{16} = \dfrac{1}{b} \iff b=4$ のときである．
 
-等号成立は $\dfrac{b}{16} = \dfrac{1}{b} \iff b=4$ のとき ($\because b>0$)
-
-\begin{center}
-  \fbox{
-    \begin{minipage}{0.8\textwidth}
-      この時， $y=-\dfrac{8}{5}x^2+4x$ となり
-      \begin{align}
-        S = \dfrac{8}{5} \cdot \dfrac{1}{6} \left(\dfrac{5}{2}\right)^3 = \dfrac{4}{3} \dfrac{25}{8} = \dfrac{25}{6}
-      \end{align}
-      $\Rightarrow$ 一致
-    \end{minipage}
-  }
-\end{center}
+{\bf [解説]}
+$b=4$の時 $y=-\dfrac{8}{5}x^2+4x$ となり
+\begin{align}
+  S = \dfrac{8}{5} \cdot \dfrac{1}{6} \left(\dfrac{5}{2}\right)^3 = \dfrac{4}{3} \dfrac{25}{8} = \dfrac{25}{6}
+\end{align}
+で解答と一致する．これで検算になる．
 
 \end{document}

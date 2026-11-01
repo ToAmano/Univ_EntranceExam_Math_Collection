@@ -1,16 +1,15 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $\dfrac{1}{2}$ の確率で1点増し，$\dfrac{1}{2}$ の確率で1点減る．
-
+題意より$\dfrac{1}{2}$ の確率で1点増し，$\dfrac{1}{2}$ の確率で1点減る．
 $n$ 回目までに奇数の目が出た回数 $X(n)$ ，$n$ 回目までに偶数の目が出た回数 $Y(n)$ とおくと $n \le 5$ の時，常に
-\[ X(n)+2 > Y(n) \quad (\because X(n)+Y(n)=n) \]
-がみたされていれば良い ($n=5$ では等号が成立しても良い)．このような場合の数は，下の図で，格子の上を通って $A$ から各終点まで行く最短経路のうち $Y=X+2$ を通らないものと1対1対応している．
+\begin{align}
+  X(n)+2 > Y(n) \quad (\because X(n)+Y(n)=n) \label{eq:1}
+\end{align}
+がみたされていれば良い ($n=5$ では等号が成立しても良い)．
+このような場合の数は，下の図で，格子の上を通って $A$ から各終点まで行く最短経路のうち $Y=X+2$ を通らないものと1対1対応している．
 
 \begin{figure}[htb]
   \centering
@@ -24,10 +23,10 @@ $n$ 回目までに奇数の目が出た回数 $X(n)$ ，$n$ 回目までに偶�
     \draw[line width=1.3pt, red!80!black] (0,2) -- (3,5);
     \node[above right=2pt, red!80!black] at (2.4,4.4)
     {$Y=X+2$};
-    \fill[blue!85!black] (0,0) circle (1.5pt);
+    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (0,0) {};
     \node[below left=2pt] at (0,0) {$A$};
     \foreach \x/\y/\score in {5/0/7,4/1/5,3/2/3,2/3/1} {
-      \fill[teal!75!black] (\x,\y) circle (2pt);
+      \node[circle, fill=teal!75!black, inner sep=2pt] at (\x,\y) {};
       \node[above right=2pt, teal!75!black] at (\x,\y)
       {\score 点};
     }
@@ -35,17 +34,21 @@ $n$ 回目までに奇数の目が出た回数 $X(n)$ ，$n$ 回目までに偶�
   \caption{境界 $Y=X+2$ を通らずに達する5回後の4つの得点}
 \end{figure}
 
-7点 $\cdots$ 1通り
-
-5点 $\cdots$ 5通り
-
-3点 $\cdots$ 9通り
-
-1点 $\cdots$ 5通り
-
-だから，
-5回振ることのできる確率は $\dfrac{20}{2^5} = \dfrac{5}{8}$ 終
-
-得点の期待値は $\dfrac{1}{2^5} (7+25+27+5) = \underline{2 \text{点}}$ 終
+従ってそれぞれの場合の数を数えると
+\begin{itemize}
+  \item 7点 $\cdots$ 1通り \\
+  \item 5点 $\cdots$ 5通り \\
+  \item 3点 $\cdots$ 9通り \\
+  \item 1点 $\cdots$ 5通り
+\end{itemize}
+だから，5回振ることのできる確率は
+\begin{align}
+  \dfrac{20}{2^5} = \dfrac{5}{8}
+\end{align}
+であり，得点の期待値は
+\begin{align}
+  \dfrac{1}{2^5} (7+25+27+5) = 2 \text{点}
+\end{align}
+である．
 
 \end{document}
