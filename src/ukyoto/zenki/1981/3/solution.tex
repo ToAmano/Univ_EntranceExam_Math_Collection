@@ -1,57 +1,109 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $f(x) = k(x^{m+1}-1) - (x^m-1)$ とおく．$f(x) \ge 0$ が $0 < x$ の任意の$x$で成り立つ$k$の条件をしらべる
 \begin{align}
-  f'(x) &= k(m+1)x^m - mx^{m-1} \\
+  f(x) = k(x^{m+1}-1) - (x^m-1) \label{eq:1}
+\end{align}
+とおいて，$f(x) \ge 0$ が $0 < x$ の任意の$x$で成り立つ$k$の条件をしらべる．
+\begin{align}
+  f'(x)
+  &= k(m+1)x^m - mx^{m-1} \\
   &= \{k(m+1)x - m\} x^{m-1}
 \end{align}
-から，下表を得る
+から$f(x)$の増減表は以下のようになる．
 
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \caption{$f(x)$ の増減表}
-    \begin{tabular}{|c|c|c|c|c|}
-      \hline
-      $x$ & $0$ & $\cdots$ & $\dfrac{m}{k(m+1)}$ & $\cdots$ \\ \hline
-      $f'$ & & $-$ & $0$ & $+$ \\ \hline
-      $f$ & & $\searrow$ & & $\nearrow$ \\ \hline
-    \end{tabular}
-  \end{table}
-\end{center}
+\begin{table}[htb]
+  \centering
+  \caption{$f(x)$ の増減表}
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    $x$ & $0$ & $\cdots$ & $\dfrac{m}{k(m+1)}$ & $\cdots$ \\ \hline
+    $f'$ & & $-$ & $0$ & $+$ \\ \hline
+    $f$ & & $\searrow$ & & $\nearrow$ \\ \hline
+  \end{tabular}
+\end{table}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.8cm, y=1.2cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (3.2, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 2.5) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 関数 y = f(x) の概形
+    \draw[line width=1.4pt, blue!85!black, domain=0.35:2.6, samples=60]
+    plot (\x, {0.9*(\x - 1.5)*(\x - 1.5) + 0.4});
+    \node[blue!85!black, font=\footnotesize, right] at (2.5, 1.6) {$y = f(x)$};
+
+    % 最小値の投影線
+    \coordinate (M) at (1.5, 0.4);
+    \draw[dashed, gray!60] (1.5, 0) -- (M) -- (0, 0.4);
+    \node[below=2pt, font=\footnotesize] at (1.5, 0) {$\frac{m}{k(m+1)}$};
+    \node[left=2pt, font=\footnotesize] at (0, 0.4) {$f\left(\frac{m}{k(m+1)}\right)$};
+
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (M) {};
+    \node[above=3pt, red!85!black, font=\footnotesize] at (M) {極小かつ最小};
+  \end{tikzpicture}
+  \caption{増減表に基づく関数 $y=f(x)$ の概形と最小値}
+  \label{fig:fx_graph}
+\end{figure}
 
 よって，
 \begin{align}
-  f(x) &\ge f\left(\dfrac{m}{k(m+1)}\right) = k \left[ \left\{\dfrac{m}{k(m+1)}\right\}^{m+1} - 1 \right] - \left[ \left\{\dfrac{m}{k(m+1)}\right\}^m - 1 \right] \\
-  &= \left\{\dfrac{m}{k(m+1)}\right\}^m \left( \dfrac{m}{m+1} - 1 \right) + (1-k) \cdots \text{①}
+  f(x)
+  &\ge f\left(\dfrac{m}{k(m+1)}\right) \\
+  &= k \left[ \left\{\dfrac{m}{k(m+1)}\right\}^{m+1} - 1 \right] - \left[ \left\{\dfrac{m}{k(m+1)}\right\}^m - 1 \right] \\
+  &= \left\{\dfrac{m}{k(m+1)}\right\}^m \left( \dfrac{m}{m+1} - 1 \right) + (1-k) \label{eq:2}
 \end{align}
-
-$x \to \infty$ とすれば，$k > 0$ が必要なので，$t = \dfrac{1}{k}$ とおいて，①を$g(t)$とすると
+である．
+$x \to \infty$ とすれば$f(x)>0$には$k > 0$ が必要なので，$t = \dfrac{1}{k}$ とおいて\cref{eq:2}の右辺を$g(t)$とすると
 \begin{align}
-  g(t) = - \dfrac{m^m}{(m+1)^{m+1}} t^m + 1 - \dfrac{1}{t}
+  \begin{cases}
+    g(t) = - \dfrac{m^m}{(m+1)^{m+1}} t^m + 1 - \dfrac{1}{t} \\
+    g'(t) = - \dfrac{m^{m+1}}{(m+1)^{m+1}} t^{m-1} + \dfrac{1}{t^2}
+  \end{cases}
 \end{align}
-\begin{align}
-  g'(t) = - \dfrac{m^{m+1}}{(m+1)^{m+1}} t^{m-1} + \dfrac{1}{t^2}
-\end{align}
-より，下表をえる
+である．よって$g(t)$の増減表は以下のようになる．
 
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \caption{$g(t)$ の増減表}
-    \begin{tabular}{|c|c|c|c|c|}
-      \hline
-      $t$ & $0$ & $\cdots$ & $\dfrac{m+1}{m}$ & $\cdots$ \\ \hline
-      $g'$ & & $+$ & $0$ & $-$ \\ \hline
-      $g$ & & $\nearrow$ & & $\searrow$ \\ \hline
-    \end{tabular}
-  \end{table}
-\end{center}
+\begin{table}[htb]
+  \centering
+  \caption{$g(t)$ の増減表}
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    $t$ & $0$ & $\cdots$ & $\dfrac{m+1}{m}$ & $\cdots$ \\ \hline
+    $g'$ & & $+$ & $0$ & $-$ \\ \hline
+    $g$ & & $\nearrow$ & $0$ & $\searrow$ \\ \hline
+  \end{tabular}
+\end{table}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.8cm, y=1.2cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (3.2, 0) node[right] {$t$};
+    \draw[->, thick, gray!80!black] (0, -2.5) -- (0, 1.0) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 曲線 y = g(t) （m=1 の形状：t=(m+1)/m=2 で軸に接する）
+    \draw[line width=1.4pt, teal!75!black, domain=0.42:3.0, samples=70]
+    plot (\x, {-0.25*\x + 1 - 1/\x});
+    \node[teal!85!black, font=\footnotesize, above right] at (2.4, -0.6) {$y = g(t)$};
+
+    % 最大値の点
+    \node[below=3pt, font=\footnotesize] at (2, 0) {$\frac{m+1}{m}$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (2, 0) {};
+    \node[above=3pt, red!85!black, font=\footnotesize] at (2, 0) {最大値 $0$};
+  \end{tikzpicture}
+  \caption{関数 $y=g(t)$ の概形（$t=\dfrac{m+1}{m}$ で最大値 $0$ をとる）}
+  \label{fig:gt_graph}
+\end{figure}
 
 これから
 \begin{align}

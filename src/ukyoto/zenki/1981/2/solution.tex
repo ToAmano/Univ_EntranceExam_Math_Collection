@@ -1,54 +1,97 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-{\bf [解答]} 点$X$に対し $\overrightarrow{OX} = \vec{x}$とすると
-$\vec{a}, \vec{b}, \vec{c}$ は1次独立であり $\cdots \text{①}$
-\begin{align}
-  \vec{p}_1 &= k\vec{a} \\
-  \vec{p}_2 &= l\vec{a} + (1-l)\vec{b} \\
-  \vec{p}_3 &= (1-m)\vec{b} + m\vec{c} \\
-  \vec{p}_4 &= n\vec{c}
-\end{align}
+{\bf [解答]}
 
 \paragraph{(1)}
 
-$\overrightarrow{P_1P_2} = \overrightarrow{P_4P_3}$ だから
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.45cm, y=1.45cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (-1.8,1.9);
+    \coordinate (B) at (0.8,3.0);
+    \coordinate (C) at (2.2,0.8);
+
+    % 分割比 k=0.55
+    \coordinate (P1) at ($(O)!0.55!(A)$);
+    \coordinate (P2) at ($(A)!0.45!(B)$);
+    \coordinate (P3) at ($(B)!0.55!(C)$);
+    \coordinate (P4) at ($(C)!0.45!(O)$);
+
+    % 奥の稜線
+    \draw[dashed, gray!60] (O) -- (B);
+    \draw[dashed, gray!60] (A) -- (C);
+
+    % 四面体の主輪郭
+    \draw[line width=1.1pt, gray!80!black] (O) -- (A) -- (B) -- (C) -- (O);
+
+    % 四角形 P1 P2 P3 P4
+    \draw[line width=1.4pt, teal!75!black]
+    (P1) -- (P2) -- (P3) -- (P4) -- cycle;
+
+    % 頂点・分点のプロット
+    \foreach \pt in {O, A, B, C} {
+      \node[circle, fill=black, inner sep=1.4pt] at (\pt) {};
+    }
+    \foreach \pt in {P1, P2, P3, P4} {
+      \node[circle, fill=teal!75!black, inner sep=1.5pt] at (\pt) {};
+    }
+
+    % ラベル
+    \node[below left=2pt] at (O) {$O$};
+    \node[left=2pt] at (A) {$A$};
+    \node[above=2pt] at (B) {$B$};
+    \node[right=2pt] at (C) {$C$};
+
+    \node[left=2pt, teal!75!black] at (P1) {$P_1$};
+    \node[above left=2pt, teal!75!black] at (P2) {$P_2$};
+    \node[above right=2pt, teal!75!black] at (P3) {$P_3$};
+    \node[below right=2pt, teal!75!black] at (P4) {$P_4$};
+
+    % 内分比の注釈
+    \node[font=\footnotesize, left] at ($(O)!0.28!(P1)$) {$k$};
+    \node[font=\footnotesize, left] at ($(P1)!0.5!(A)$) {$1-k$};
+
+    \node[font=\footnotesize, above left] at ($(A)!0.5!(P2)$) {$1-l$};
+    \node[font=\footnotesize, above] at ($(P2)!0.5!(B)$) {$l$};
+
+    \node[font=\footnotesize, above right] at ($(B)!0.5!(P3)$) {$m$};
+    \node[font=\footnotesize, right] at ($(P3)!0.5!(C)$) {$1-m$};
+
+    \node[font=\footnotesize, below] at ($(C)!0.5!(P4)$) {$1-n$};
+    \node[font=\footnotesize, below left] at ($(P4)!0.5!(O)$) {$n$};
+  \end{tikzpicture}
+  \caption{空間の4点 $O, A, B, C$ と各辺上の分点 $P_1, P_2, P_3, P_4$}
+  \label{fig:tetrahedron_division_ratio}
+\end{figure}
+
+点$X$に対し $\overrightarrow{OX} = \vec{x}$とすると
+$\vec{a}, \vec{b}, \vec{c}$ は1次独立である．
+題意より
 \begin{align}
-  (l-k)\vec{a} + (1-l)\vec{b} = (1-m)\vec{b} + (m-n)\vec{c}
+  \begin{cases}
+    \vec{p}_1 = k\vec{a} \\
+    \vec{p}_2 = l\vec{a} + (1-l)\vec{b} \\
+    \vec{p}_3 = (1-m)\vec{b} + m\vec{c} \\
+    \vec{p}_4 = n\vec{c}
+  \end{cases} \label{eq:1}
 \end{align}
-①から
+である．$\square P_1P_2P_3P_4$が平行四辺形だから$\overrightarrow{P_1P_2} = \overrightarrow{P_4P_3}$ なので，\cref{eq:1}より
 \begin{align}
-  l-k=0, \quad m-n=0, \quad 1-l=1-m
+  & (l-k)\vec{a} + (1-l)\vec{b} = (1-m)\vec{b} + (m-n)\vec{c} \\
+  & l-k=0, \quad m-n=0, \quad 1-l=1-m \\
+  \therefore
+  & k = l = m = n \quad \text{(答)}
 \end{align}
-\begin{align}
-  \therefore k = l = m = n \quad \text{(答)}
-\end{align}
+である．
 
 \paragraph{(2)}
 
-(1)から $k = l = m = n \equiv \alpha$ とおく．
-対角線の交点は，$P_1P_3$の中点だから，この点$X$として
-\begin{align}
-  \vec{x} = \dfrac{1}{2} \left( \alpha\vec{a} + (1-\alpha)\vec{b} + \alpha\vec{c} \right) \cdots \text{②}
-\end{align}
-一方，$OB, AC$の中点$Y, Z$とすると
-\begin{align}
-  \vec{y} = \dfrac{1}{2}\vec{b}, \quad \vec{z} = \dfrac{1}{2}(\vec{a}+\vec{c})
-\end{align}
-だから，線分$YZ$上の点$W$は
-\begin{align}
-  \vec{w} = \dfrac{1}{2} \{t(\vec{a}+\vec{c}) + (1-t)\vec{b}\} \quad (0 \le t \le 1)
-\end{align}
-の形でかける．$t = \alpha$ とすると ($0 < \alpha < 1$) ②から $\vec{w} = \vec{x}$ となるから，
-題意は示された．(証明終)
-
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=1.45cm, y=1.45cm,
+  \begin{tikzpicture}[x=1.45cm, y=1.45cm, >=stealth,
     every node/.style={font=\small}]
     % For this example k=l=m=n=0.6; all P_i divide their edges equally.
     \coordinate (O) at (0,0);
@@ -60,18 +103,32 @@ $\overrightarrow{P_1P_2} = \overrightarrow{P_4P_3}$ だから
     \coordinate (Pthree) at (1.48,1.68);
     \coordinate (Pfour) at (1.2,0.48);
     \coordinate (X) at (0.23,1.38);
+
+    % 中点 Y (OBの中点), Z (ACの中点)
+    \coordinate (Y) at ($(O)!0.5!(B)$);
+    \coordinate (Z) at ($(A)!0.5!(C)$);
+
     \draw[dashed, gray!60] (O) -- (B);
     \draw[dashed, gray!60] (A) -- (C);
     \draw[line width=1.2pt, blue!85!black]
     (O) -- (A) -- (B) -- (C) -- (O);
+
+    % 中点を結ぶ線分 YZ
+    \draw[line width=1.5pt, orange!85!black] (Y) -- (Z);
+
+    % 平行四辺形 P1 P2 P3 P4
     \draw[line width=1.4pt, teal!75!black]
     (Pone) -- (Ptwo) -- (Pthree) -- (Pfour) -- cycle;
     \draw[dashed, red!70!black] (Pone) -- (Pthree);
     \draw[dashed, red!70!black] (Ptwo) -- (Pfour);
+
     \foreach \T in {Pone,Ptwo,Pthree,Pfour} {
       \node[circle, fill=teal!75!black, inner sep=1.6pt] at (\T) {};
     }
+    \node[circle, fill=orange!90!black, inner sep=1.6pt] at (Y) {};
+    \node[circle, fill=orange!90!black, inner sep=1.6pt] at (Z) {};
     \node[circle, fill=red!85!black, inner sep=1.8pt] at (X) {};
+
     \node[below=2pt] at (O) {$O$};
     \node[left=2pt] at (A) {$A$};
     \node[above=2pt] at (B) {$B$};
@@ -80,9 +137,33 @@ $\overrightarrow{P_1P_2} = \overrightarrow{P_4P_3}$ だから
     \node[above left=2pt, teal!75!black] at (Ptwo) {$P_2$};
     \node[above right=2pt, teal!75!black] at (Pthree) {$P_3$};
     \node[below right=2pt, teal!75!black] at (Pfour) {$P_4$};
-    \node[above=3pt, red!85!black] at (X) {$X$};
+
+    \node[above right=2pt, orange!90!black] at (Y) {$Y$};
+    \node[left=2pt, orange!90!black] at (Z) {$Z$};
+    \node[below left=2pt, red!85!black] at (X) {$X$};
   \end{tikzpicture}
-  \caption{四面体の4辺を同じ比で分ける平行四辺形 $P_1P_2P_3P_4$}
+  \caption{平行四辺形の対角線の交点 $X$ が中点を結ぶ線分 $YZ$ 上にある様子}
+  \label{fig:diagonal_intersection_on_midpoint_segment}
 \end{figure}
+
+(1)から $k = l = m = n \equiv \alpha$ とおく．
+対角線の交点は $P_1P_3$の中点だから，この点$X$として
+\begin{align}
+  \vec{x}
+  = \dfrac{1}{2}(\vec{p}_1+\vec{p}_3)
+  = \dfrac{1}{2} \left( \alpha\vec{a} + (1-\alpha)\vec{b} + \alpha\vec{c} \right) \label{eq:2}
+\end{align}
+である．
+
+一方で$OB, AC$の中点$Y, Z$とすると
+\begin{align}
+  \vec{y} = \dfrac{1}{2}\vec{b}, \quad
+  \vec{z} = \dfrac{1}{2}(\vec{a}+\vec{c})
+\end{align}
+だから線分$YZ$上の点$W$はパラメータ$t$を用いて
+\begin{align}
+  \vec{w} = \dfrac{1}{2} \{t(\vec{a}+\vec{c}) + (1-t)\vec{b}\} \quad (0 \le t \le 1) \label{eq:3}
+\end{align}
+の形でかける．$t = \alpha$ とすると ($0 < \alpha < 1$) \cref{eq:2}から $\vec{w} = \vec{x}$ となるから題意は示された．
 
 \end{document}
