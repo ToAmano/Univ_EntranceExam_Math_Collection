@@ -1,28 +1,181 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $k \ge 0$である.
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[x=1.3cm, y=1.3cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (1,1);
+    \coordinate (B) at (4,4);
+    \coordinate (C0) at (2.5,2.5);
+
+    \draw[->, thick, gray!80!black] (-0.3,0) -- (4.6,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.3) -- (0,4.6) node[above] {$y$};
+
+    % Square [a, b] x [a, b]
+    \draw[dashed, gray!45] (1,0) -- (1,4) -- (4,4) -- (4,0);
+    \draw[dashed, gray!45] (0,1) -- (4,1);
+    \draw[dashed, gray!45] (0,4) -- (1,4);
+
+    % Line y = x
+    \draw[line width=1.1pt, teal!75!black] (0.5,0.5) -- (4.3,4.3)
+    node[above right] {$y=x$};
+
+    % Curve y = f(x)
+    \draw[line width=1.4pt, blue!85!black, domain=1:4, samples=40]
+    plot (\x, {0.4*(\x-2.5) + 2.5}) node[right] {$y=f(x)$};
+
+    % Fixed point c_0
+    \draw[dashed, red!70!black] (2.5,0) -- (C0) -- (0,2.5);
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (C0) {};
+    \node[above left=2pt, red!85!black] at (C0) {$(c_0, c_0)$};
+
+    % Axis ticks
+    \node[below=2pt] at (1,0) {$a$};
+    \node[below=2pt] at (4,0) {$b$};
+    \node[below=2pt, red!85!black] at (2.5,0) {$c_0$};
+    \node[left=2pt] at (0,1) {$a$};
+    \node[left=2pt] at (0,4) {$b$};
+    \node[left=2pt, red!85!black] at (0,2.5) {$c_0$};
+    \node[below left=2pt] at (O) {$O$};
+  \end{tikzpicture}
+  \caption{関数 $y=f(x)$ と直線 $y=x$ および不動点 $c_0$}
+  \label{fig:fixed_point_overview}
+\end{figure}
+
 \paragraph{(1)}
 
-$F(x) = f(x) - x$ とおくと, $F'(x) = f'(x) - 1 < 0 \ (\because (\text{ハ}))$ から, $F(x)$は
-単調減少. これと $F(a) = f(a) - a \ge a - a = 0, \ F(b) = f(b) - b \le 0$
-から, $F(x) = 0$をみたす$x$が $[a,b]$の中に唯1つ存在し, これが
-$C_0$に他ならない. (終)
+$F(x) = f(x) - x$ とおくと条件(ハ)から$[a,b]$で
+\begin{align}
+  F'(x) = f'(x) - 1 < 0
+\end{align}
+である．よって$F(x)$は$[a,b]$で単調減少である．また条件(ロ)から
+\begin{align}
+  F(a) = f(a) - a \ge a - a = 0, \ F(b) = f(b) - b \le 0
+\end{align}
+から，$F(x) = 0$をみたす$x$が $[a,b]$の中に唯1つ存在し，これが$c_0$に他ならない．
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[x=1.3cm, y=1.3cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0,0);
+
+    \draw[->, thick, gray!80!black] (-0.3,0) -- (4.6,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-1.6) -- (0,1.8) node[above] {$y$};
+
+    % F(x) = f(x) - x = -0.6*(x-2.5)
+    \draw[line width=1.4pt, blue!85!black, domain=1:4, samples=40]
+    plot (\x, {-0.6*(\x-2.5)}) node[right] {$y=F(x)$};
+
+    % Root c_0
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (2.5,0) {};
+    \node[above right=2pt, red!85!black] at (2.5,0) {$c_0$};
+
+    % Projections for a and b
+    \draw[dashed, gray!60] (1,0) -- (1,0.9) -- (0,0.9) node[left=2pt] {$F(a) \ge 0$};
+    \draw[dashed, gray!60] (4,0) -- (4,-0.9) -- (0,-0.9) node[left=2pt] {$F(b) \le 0$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (1,0.9) {};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (4,-0.9) {};
+
+    \node[below=2pt] at (1,0) {$a$};
+    \node[above=2pt] at (4,0) {$b$};
+    \node[below left=2pt] at (O) {$O$};
+  \end{tikzpicture}
+  \caption{単調減少関数 $y=F(x)=f(x)-x$ のグラフと唯一の零点 $c_0$}
+  \label{fig:fx_minus_x}
+\end{figure}
 
 \paragraph{(2)}
 
-平均値の定理から $d_n \neq C_0$のとき,
-$$ f(d_n) - f(C_0) = f'(p) (d_n - C_0) $$
-をみたす $f'(p)$がある. (ハ)から $|f'(p)| \le k$ だから, 両辺
-絶対値をとってセイリして,
-$$ |d_{n+1} - C_0| \le k |d_n - C_0| \quad (\because f(d_n) = d_{n+1}, f(C_0) = C_0) $$
-くり返し用いて
-$$ |d_n - C_0| \le k^n |d_0 - C_0| $$
-又, $d_n = C_0$の時, 明らかに成立.
-以上から示された. (終)
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[x=1.3cm, y=1.3cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0,0);
+    \coordinate (C0) at (2.5,2.5);
+
+    \draw[->, thick, gray!80!black] (-0.3,0) -- (4.6,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.3) -- (0,4.6) node[above] {$y$};
+
+    % Square [a, b] x [a, b]
+    \draw[dashed, gray!40] (1,0) -- (1,4) -- (4,4) -- (4,0);
+    \draw[dashed, gray!40] (0,1) -- (4,1);
+    \draw[dashed, gray!40] (0,4) -- (1,4);
+
+    % Line y = x
+    \draw[line width=1.1pt, teal!75!black] (0.5,0.5) -- (4.3,4.3)
+    node[above right] {$y=x$};
+
+    % Curve y = f(x)
+    \draw[line width=1.4pt, blue!85!black, domain=1:4, samples=40]
+    plot (\x, {0.4*(\x-2.5) + 2.5}) node[right] {$y=f(x)$};
+
+    % Fixed point (c_0, c_0)
+    \draw[dashed, red!70!black] (2.5,0) -- (C0);
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (C0) {};
+    \node[above left=2pt, red!85!black] at (C0) {$(c_0, c_0)$};
+
+    % Cobweb iteration starting at d_0 = 1.0
+    % d_0 = 1.0
+    % d_1 = 0.4*(1.0-2.5) + 2.5 = 1.90
+    % d_2 = 0.4*(1.90-2.5) + 2.5 = 2.26
+    % d_3 = 0.4*(2.26-2.5) + 2.5 = 2.404
+    \coordinate (P0) at (1.0,0);
+    \coordinate (P1) at (1.0,1.90);
+    \coordinate (P1x) at (1.90,1.90);
+    \coordinate (P2) at (1.90,2.26);
+    \coordinate (P2x) at (2.26,2.26);
+    \coordinate (P3) at (2.26,2.404);
+    \coordinate (P3x) at (2.404,2.404);
+
+    \draw[line width=1.2pt, red!85!black, ->] (P0) -- (P1);
+    \draw[line width=1.2pt, red!85!black, ->] (P1) -- (P1x);
+    \draw[line width=1.2pt, red!85!black, ->] (P1x) -- (P2);
+    \draw[line width=1.2pt, red!85!black, ->] (P2) -- (P2x);
+    \draw[line width=1.2pt, red!85!black, ->] (P2x) -- (P3);
+    \draw[line width=1.2pt, red!85!black, ->] (P3) -- (P3x);
+
+    % Ticks on x-axis
+    \draw[dashed, gray!60] (P1x) -- (1.90,0);
+    \draw[dashed, gray!60] (P2x) -- (2.26,0);
+
+    \node[circle, fill=red!85!black, inner sep=1.3pt] at (P0) {};
+    \node[below=2pt] at (P0) {$a=d_0$};
+    \node[below=2pt] at (1.90,0) {$d_1$};
+    \node[below=2pt, font=\scriptsize] at (2.26,0) {$d_2$};
+    \node[below=2pt, red!85!black] at (2.5,0) {$c_0$};
+
+    \node[below=2pt] at (4,0) {$b$};
+    \node[below left=2pt] at (O) {$O$};
+  \end{tikzpicture}
+  \caption{数列 $d_{n+1}=f(d_n)$ が不動点 $c_0$ へ収束する様子（ウェブ図）}
+  \label{fig:cobweb_plot}
+\end{figure}
+
+与えられた不等式
+\begin{align}
+  |d_n-c_0| \leqq k^n|d_0-c_0| \quad (n=1,2,\cdots)  \label{eq:1}
+\end{align}
+について考える．$d_n = c_0$の時は$f(c_0)=c_0$より\cref{eq:1}は成立するから，以下$d_n \neq c_0$とする．
+
+平均値の定理から
+\begin{align}
+  f(d_n) - f(c_0) = f'(p) (d_n - c_0)
+\end{align}
+をみたす $p$が$d_n, c_0$の間に存在する．
+条件(ハ)から $|f'(p)| \le k$ だから, 両辺絶対値をとって整理して
+\begin{align}
+  |d_{n+1} - c_0| \le k |d_n - c_0| \quad (\because f(d_n) = d_{n+1}, f(c_0) = c_0)
+\end{align}
+だから，くり返し用いて
+\begin{align}
+  |d_n - c_0| \le k^n |d_0 - c_0|
+\end{align}
+である．以上より\cref{eq:1}が成立し，題意は示された．
 
 \end{document}
