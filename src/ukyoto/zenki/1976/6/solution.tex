@@ -1,47 +1,129 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$U_1 \dots 4n$ 個の赤 と $n$ 個の白
 
-$U_2 \dots 2n$ 個の赤 と $3n$ 個の白
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=3.8cm, y=1.0cm, >=stealth,
+    every node/.style={font=\small}]
+    % Root: Selection of urn
+    \node[draw=gray!70, fill=gray!5, thick, rounded corners=3pt, inner sep=5pt] (start) at (-1.1, 0) {
+      \textbf{袋の選択}
+    };
 
-誤った判断を下すのは，「$U_1$ が手渡されて $U_2$ と判断する $\dots A$」か「$U_2$ が手渡されて $U_1$ と判断する $\dots B$」のいずれか.
+    % Urns U1 and U2
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=3pt, inner sep=5pt] (u1) at (0, 1.6) {
+      \begin{tabular}{c}
+        \textbf{袋 $U_1$} \\
+        \footnotesize 赤 $4n$ 個，白 $n$ 個
+      \end{tabular}
+    };
+    \node[draw=teal!75!black, fill=teal!5, thick, rounded corners=3pt, inner sep=5pt] (u2) at (0, -1.6) {
+      \begin{tabular}{c}
+        \textbf{袋 $U_2$} \\
+        \footnotesize 赤 $2n$ 個，白 $3n$ 個
+      \end{tabular}
+    };
 
-\medskip
-1° Aの時
+    \draw[->, line width=1.1pt, blue!85!black] (start) -- (u1)
+    node[midway, above left=1pt, font=\footnotesize] {確率 $\frac{2}{3}$};
+    \draw[->, line width=1.1pt, teal!75!black] (start) -- (u2)
+    node[midway, below left=1pt, font=\footnotesize] {確率 $\frac{1}{3}$};
 
-$U_1$ から $(\text{赤}, \text{白}) = (1, 2), (0, 3)$ をとり出した時で 確率は
+    % Outcomes from U1
+    \node[draw=gray!60, fill=gray!5, rounded corners=3pt, inner sep=4pt] (u1_ok) at (1.15, 2.3) {
+      \begin{tabular}{c}
+        赤 $\ge 2$ 個 \\
+        \footnotesize 判断: $U_1$ (正解)
+      \end{tabular}
+    };
+    \node[draw=red!85!black, fill=red!8, very thick, rounded corners=3pt, inner sep=5pt] (u1_err) at (1.15, 0.9) {
+      \begin{tabular}{c}
+        赤 $\le 1$ 個 \\
+        \bfseries 判断: $U_2$ (誤り $A$)
+      \end{tabular}
+    };
+    \draw[->, thick, gray!70] (u1.east) -- (u1_ok.west);
+    \draw[->, line width=1.3pt, red!85!black] (u1.east) -- (u1_err.west)
+    node[midway, above right=1pt, font=\footnotesize, red!85!black] {確率 $a_n$};
+
+    % Outcomes from U2
+    \node[draw=red!85!black, fill=red!8, very thick, rounded corners=3pt, inner sep=5pt] (u2_err) at (1.15, -0.9) {
+      \begin{tabular}{c}
+        赤 $\ge 2$ 個 \\
+        \bfseries 判断: $U_1$ (誤り $B$)
+      \end{tabular}
+    };
+    \node[draw=gray!60, fill=gray!5, rounded corners=3pt, inner sep=4pt] (u2_ok) at (1.15, -2.3) {
+      \begin{tabular}{c}
+        赤 $\le 1$ 個 \\
+        \footnotesize 判断: $U_2$ (正解)
+      \end{tabular}
+    };
+    \draw[->, line width=1.3pt, red!85!black] (u2.east) -- (u2_err.west)
+    node[midway, below right=1pt, font=\footnotesize, red!85!black] {確率 $b_n$};
+    \draw[->, thick, gray!70] (u2.east) -- (u2_ok.west);
+  \end{tikzpicture}
+  \caption{袋の選択と取り出した玉に基づく判断フロー（誤りの事象 $A, B$）．}
+  \label{fig:urn_decision_tree}
+\end{figure}
+
+題意の袋はそれぞれ
+\begin{itemize}
+  \item $U_1 \dots 4n$ 個の赤 と $n$ 個の白 \\
+  \item $U_2 \dots 2n$ 個の赤 と $3n$ 個の白
+\end{itemize}
+である．
+
+観測者が誤った判断を下すのは，
+\begin{itemize}
+  \item A: $U_1$ が手渡されて $U_2$ と判断する (確率$a_n$) \\
+  \item B: $U_2$ が手渡されて $U_1$ と判断する (確率$b_n$)
+\end{itemize}
+のいずれかである．従って求める確率$p_n$は
 \begin{align}
-  \dfrac{2}{3} \times \dfrac{_{4n}\mathrm{C}_1 \cdot _n\mathrm{C}_2 + _n\mathrm{C}_3}{_{5n}\mathrm{C}_3}
+  p_n = a_n + b_n \label{eq:1}
 \end{align}
-(すべての玉を区別し，そのうちから3つをとり出す $_{5n}\mathrm{C}_3$ 通りが同様に確からしい)
+である．以下$a_n,b_n$を個別に考える．
 
-\medskip
-2° Bの時
+\subparagraph{$1^{\circ}$ $A$の時}
 
-$U_2$ から $(\text{赤}, \text{白}) = (3, 0), (2, 1)$ をとり出した時で 確率は
+$U_1$ から $(\text{赤}, \text{白}) = (1, 2), (0, 3)$個の球をとり出した時である．
+全ての玉を区別して考えると，3つをとり出す ${}_{5n}\mathrm{C}_3$ 通りが同様に確からしいから，こうなる確率は，$U_1$が手渡される確率$\dfrac{2}{3}$であることと合わせて
 \begin{align}
-  \dfrac{1}{3} \times \dfrac{_{2n}\mathrm{C}_3 + _{2n}\mathrm{C}_2 \cdot _{3n}\mathrm{C}_1}{_{5n}\mathrm{C}_3}
+  a_n
+  & =  \dfrac{2}{3} \times \dfrac{_{4n}\mathrm{C}_1 \cdot _n\mathrm{C}_2 + _n\mathrm{C}_3}{{}_{5n}\mathrm{C}_3} \\
+  & = \dfrac{2}{3 {}_{5n}\mathrm{C}_3}\left[\dfrac{1}{2}4n^2(n-1)+\dfrac{1}{6}n(n-1)(n-2)\right] \\
+  & = \dfrac{2}{3 {}_{5n}\mathrm{C}_3}\dfrac{1}{6}n(n-1)(13n-2) \\
+  & = \dfrac{1}{9 {}_{5n}\mathrm{C}_3}n(n-1)(13n-2) \label{eq:2}
 \end{align}
+である．
 
-\medskip
-以上から
+\subparagraph{$2^{\circ}$ $B$の時}
+
+$U_2$ から $(\text{赤}, \text{白}) = (3, 0), (2, 1)$個の球をとり出した時である．
+全ての玉を区別して考えると，3つをとり出す ${}_{5n}\mathrm{C}_3$ 通りが同様に確からしいから，こうなる確率は，$U_2$が手渡される確率$\dfrac{1}{3}$であることと合わせて
 \begin{align}
-  P_n = \dfrac{1}{3 \cdot _{5n}\mathrm{C}_3} \left[ 2 \cdot _{4n}\mathrm{C}_1 \cdot _n\mathrm{C}_2 + 2 \cdot _n\mathrm{C}_3 + _{2n}\mathrm{C}_3 + _{2n}\mathrm{C}_2 \cdot _{3n}\mathrm{C}_1 \right]
+  b_n
+  & = \dfrac{1}{3} \times \dfrac{_{2n}\mathrm{C}_3 + _{2n}\mathrm{C}_2 \cdot _{3n}\mathrm{C}_1}{{}_{5n}\mathrm{C}_3} \\
+  & = \dfrac{1}{3{}_{5n}\mathrm{C}_3} \left[\dfrac{1}{6}2n(2n-1)(2n-2) + \dfrac{1}{2}6n^2(2n-1)\right] \\
+  & = \dfrac{1}{3{}_{5n}\mathrm{C}_3} \dfrac{1}{3}n(2n-1)(11n-2) \\
+  & = \dfrac{1}{9{}_{5n}\mathrm{C}_3} n(2n-1)(11n-2) \label{eq:3}
 \end{align}
+である．
+\casesend
+
+\cref{eq:2,eq:3}を\cref{eq:1}に代入して
 \begin{align}
-  = \dfrac{6}{15n(5n-1)(5n-2)} \cdot \dfrac{1}{6} \left[ 24 n^2(n-1) + n(n-1)(n-2) + 2n(2n-1)(2n-2) + 18n^2(2n-1) \right]
+  p_n
+  &= \dfrac{1}{9 {}_{5n}\mathrm{C}_3}\left[ n(n-1)(13n-2) + n(2n-1)(11n-2) \right] \\
+  &= \dfrac{2}{3}\dfrac{n(n-1)(13n-2) + n(2n-1)(11n-2)}{5n(5n-1)(5n-2)} \\
+  &= \dfrac{2}{3}\dfrac{(1-1/n)(13-2/n) + (2-1/n)(11-2/n)}{5(5-1/n)(5-2/n)} \\
+  &\xrightarrow{n\to\infty}
+  \dfrac{2}{3}\dfrac{1\cdot 13 + 2\cdot 11}{5\cdot 5\cdot 5} \\
+  &= \dfrac{70}{3\cdot 125} = \dfrac{14}{75}
 \end{align}
-\begin{align}
-  = \dfrac{1}{15} \cdot \dfrac{1}{(5 - \dfrac{1}{n})(5 - \dfrac{2}{n})} \left[ 24\left(1 - \dfrac{1}{n}\right) + \left(1 - \dfrac{1}{n}\right)\left(1 - \dfrac{2}{n}\right) + 2\left(2 - \dfrac{1}{n}\right)\left(2 - \dfrac{2}{n}\right) + 18\left(2 - \dfrac{1}{n}\right) \right]
-\end{align}
-\begin{align}
-  \longrightarrow \dfrac{1}{15} \cdot \dfrac{1}{25} [ 24 + 1 + 8 + 36 ] = \dfrac{69}{375} \quad (n \to \infty)
-\end{align}
+が求める極限値である．
 
 \end{document}

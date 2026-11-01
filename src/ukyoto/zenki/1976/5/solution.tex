@@ -1,92 +1,160 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-(i) $f'(x)$ が存在
 
-(イ) $x \le 0$ の時 $f(x) = 0$, $1 \le x$ の時 $f(x) = 1$
+題意より$f'(x)$ が存在して$x \le 0$ の時 $f(x) = 0$, $1 \le x$ の時 $f(x) = 1$だから，
+$y=f(x)$の概形は下図のようになる．
 
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=1.65cm, y=2.3cm, >=stealth,
     every node/.style={font=\small}]
     % A smooth step f and a representative g(x)=1+0.18x with a=1.
-    \begin{scope}
-      \draw[->, thick, gray!80!black] (-0.8,0) -- (1.85,0) node[right] {$x$};
-      \draw[->, thick, gray!80!black] (0,-0.2) -- (0,1.5) node[above] {$y$};
-      \draw[dashed, gray!65] (1,0) -- (1,1);
-      \draw[dashed, gray!65] (0,1) -- (1,1);
-      \draw[line width=1.4pt, blue!85!black] (-0.7,0) -- (0,0);
-      \draw[line width=1.4pt, blue!85!black, domain=0:1, samples=60]
-      plot (\x,{3*\x*\x-2*\x*\x*\x});
-      \draw[line width=1.4pt, blue!85!black] (1,1) -- (1.7,1);
-      \node[below=3pt, font=\footnotesize] at (1,0) {$1$};
-      \node[left=3pt, font=\footnotesize] at (0,1) {$1$};
-      \node[above right=2pt, blue!85!black] at (1.15,1) {$f(x)$};
-    \end{scope}
-    \begin{scope}[xshift=7.1cm]
-      \draw[->, thick, gray!80!black] (-1.6,0) -- (1.65,0) node[right] {$x$};
-      \draw[->, thick, gray!80!black] (0,-0.2) -- (0,1.55) node[above] {$y$};
-      \draw[dashed, gray!65] (-1,0) -- (-1,0.82);
-      \draw[dashed, gray!65] (1,0) -- (1,1.18);
-      \draw[line width=1.4pt, teal!75!black, domain=-1.5:-1, samples=15]
-      plot (\x,{1+0.18*\x});
-      \draw[line width=1.4pt, teal!75!black, domain=-1:0, samples=50]
-      plot (\x,{(1+0.18*\x)*(3*\x*\x+2*\x*\x*\x)});
-      \draw[line width=1.4pt, teal!75!black, domain=0:1, samples=50]
-      plot (\x,{(1+0.18*\x)*(3*\x*\x-2*\x*\x*\x)});
-      \draw[line width=1.4pt, teal!75!black, domain=1:1.5, samples=15]
-      plot (\x,{1+0.18*\x});
-      \node[below=3pt, font=\footnotesize] at (-1,0) {$-a$};
-      \node[below=3pt, font=\footnotesize] at (1,0) {$a$};
-      \node[above left=2pt, font=\footnotesize] at (-1,0.82) {$g(-a)$};
-      \node[above right=2pt, font=\footnotesize] at (1,1.18) {$g(a)$};
-      \node[below left=3pt, teal!75!black] at (0,0) {$h(x)$};
-    \end{scope}
+    \draw[->, thick, gray!80!black] (-0.8,0) -- (1.85,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.2) -- (0,1.5) node[above] {$y$};
+    \draw[dashed, gray!65] (1,0) -- (1,1);
+    \draw[dashed, gray!65] (0,1) -- (1,1);
+    \draw[line width=1.4pt, blue!85!black] (-0.7,0) -- (0,0);
+    \draw[line width=1.4pt, blue!85!black, domain=0:1, samples=60]
+    plot (\x,{3*\x*\x-2*\x*\x*\x});
+    \draw[line width=1.4pt, blue!85!black] (1,1) -- (1.7,1);
+    \node[below=3pt, font=\footnotesize] at (1,0) {$1$};
+    \node[left=3pt, font=\footnotesize] at (0,1) {$1$};
+    \node[above right=2pt, blue!85!black] at (1.15,1) {$f(x)$};
   \end{tikzpicture}
-  \caption{滑らかな切替関数 $f$（左）と，原点付近だけを変形した $h$ の概形（右）}
+  \caption{滑らかな関数 $f$}
 \end{figure}
 
-(i) $h(x) =
-\begin{cases} g(x) f\left(\dfrac{x}{a}\right) & (0 \le x) \\ g(x) f\left(-\dfrac{x}{a}\right) & (x \le 0)
-\end{cases}$ が (イ), (ニ) を満たすことを示す. まず (ロ) から $h(0) = 0$ となって (ハ) を満たす. 次に (ニ) について,
-$a < x$ の時 $f\left(\dfrac{x}{a}\right) = 1$ から $h(x) = g(x)$
-$x < -a$ の時 $f\left(-\dfrac{x}{a}\right) = 1$ から $h(x) = g(x)$
-となって (ニ) も満たす. 又 $g, f$ 共に微分可能だから $h(x)$ も $x \ne 0$ では微分可能である. ここで (イ) から $f'(0) = 0$ だから
-\[
-  \lim_{x \to +0} \dfrac{h(x) - h(0)}{x} = \left. \left( g(x) f\left(\dfrac{x}{a}\right) \right)' \right|_{x=0} = \left. \left( g'(x) f\left(\dfrac{x}{a}\right) + \dfrac{1}{a} g(x) f'\left(\dfrac{x}{a}\right) \right) \right|_{x=0} = 0
-\]
-\[
-  \lim_{x \to -0} \dfrac{h(x) - h(0)}{x} = \left. \left( g(x) f\left(-\dfrac{x}{a}\right) \right)' \right|_{x=0} = \left. \left( g'(x) f\left(-\dfrac{x}{a}\right) - \dfrac{1}{a} g(x) f'\left(-\dfrac{x}{a}\right) \right) \right|_{x=0} = 0
-\]
-となって左右極限が一致し，$x=0$ でも $h(x)$ は微分可能. 以上からこの $h(x)$ は題意を満たす.
-\[
+\paragraph{(i)}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.65cm, y=2.3cm, >=stealth,
+    every node/.style={font=\small}]
+    \draw[->, thick, gray!80!black] (-1.6,0) -- (1.65,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.2) -- (0,1.55) node[above] {$y$};
+    \draw[dashed, gray!65] (-1,0) -- (-1,0.82);
+    \draw[dashed, gray!65] (1,0) -- (1,1.18);
+    % Original g(x) drawn dashed across the domain
+    \draw[dashed, line width=1.1pt, gray!70, domain=-1.5:1.5, samples=30]
+    plot (\x,{1+0.18*\x}) node[above right=1pt, gray!80!black] {$g(x)$};
+    \draw[line width=1.4pt, teal!75!black, domain=-1.5:-1, samples=15]
+    plot (\x,{1+0.18*\x});
+    \draw[line width=1.4pt, teal!75!black, domain=-1:0, samples=50]
+    plot (\x,{(1+0.18*\x)*(3*\x*\x+2*\x*\x*\x)});
+    \draw[line width=1.4pt, teal!75!black, domain=0:1, samples=50]
+    plot (\x,{(1+0.18*\x)*(3*\x*\x-2*\x*\x*\x)});
+    \draw[line width=1.4pt, teal!75!black, domain=1:1.5, samples=15]
+    plot (\x,{1+0.18*\x});
+    \node[below=3pt, font=\footnotesize] at (-1,0) {$-a$};
+    \node[below=3pt, font=\footnotesize] at (1,0) {$a$};
+    \node[above left=2pt, font=\footnotesize] at (-1,0.82) {$g(-a)$};
+    \node[above right=2pt, font=\footnotesize] at (1,1.18) {$g(a)$};
+    \node[circle, fill=teal!75!black, inner sep=1.4pt] at (0,0) {};
+    \node[below left=3pt, teal!75!black] at (0,0) {$h(x)$};
+  \end{tikzpicture}
+  \caption{$g(x)$ と，原点付近だけを変形した $h(x)$ の概形．}
+  \label{fig:hx_curve}
+\end{figure}
+
+\begin{align}
   h(x) =
-  \begin{cases} g(x) f\left(\dfrac{x}{a}\right) & (0 \le x) \\ g(x) f\left(-\dfrac{x}{a}\right) & (x \le 0)
+  \begin{cases}
+    g(x) f\left(\dfrac{x}{a}\right) & (0 \le x) \\
+    g(x) f\left(-\dfrac{x}{a}\right) & (x \le 0)
   \end{cases}
-\]
+\end{align}
+が条件 (イ), (ニ) を満たすことを示す. まず (ロ) から $h(0) = 0$ となって (ハ) を満たす.次に (ニ) について,
+\begin{itemize}
+  \item $a < x$ の時 $f\left(\dfrac{x}{a}\right) = 1$ から $h(x) = g(x)$ \\1
+  \item $x < -a$ の時 $f\left(-\dfrac{x}{a}\right) = 1$ から $h(x) = g(x)$
+\end{itemize}
+となって (ニ) も満たす. また $g, f$ 共に微分可能だから $h(x)$ も $x \ne 0$ では微分可能である. $x=0$では (イ) から $f'(0) = 0$ だから左右極限は
+\begin{align}
+  & \lim_{x \to +0} \dfrac{h(x) - h(0)}{x} = \left. \left( g(x) f\left(\dfrac{x}{a}\right) \right)' \right|_{x=0} = \left. \left( g'(x) f\left(\dfrac{x}{a}\right) + \dfrac{1}{a} g(x) f'\left(\dfrac{x}{a}\right) \right) \right|_{x=0} = 0 \\
+  & \lim_{x \to -0} \dfrac{h(x) - h(0)}{x} = \left. \left( g(x) f\left(-\dfrac{x}{a}\right) \right)' \right|_{x=0} = \left. \left( g'(x) f\left(-\dfrac{x}{a}\right) - \dfrac{1}{a} g(x) f'\left(-\dfrac{x}{a}\right) \right) \right|_{x=0} = 0
+\end{align}
+となって左右極限が一致し，$x=0$ でも $h(x)$ は微分可能である．以上からこの $h(x)$ は題意を満たす．
+\begin{align}
+  h(x) =
+  \begin{cases}
+    g(x) f\left(\dfrac{x}{a}\right) & (0 \le x) \\
+    g(x) f\left(-\dfrac{x}{a}\right) & (x \le 0)
+  \end{cases}
+\end{align}
 
-\medskip
-(ii) $f(x) =
-\begin{cases} 0 & (x \le 0) \\ 2x^2 & (0 \le x \le 1/2) \\ -2(x-1)^2 + 1 & (1/2 \le x \le 1) \\ 1 & (1 \le x)
-\end{cases}$ が (イ) を満たすことをしめす. この関数は全区間で連続である. 又 $x \ne 0, 1/2, 1$ では微分可能.
+\paragraph{(ii)}
 
-まず，$g(x) = 2x^2$, $h(x) = -2(x-1)^2 + 1$ とおく. $g'(x) = 4x, h'(x) = -4(x-1)$ であり，
-\[
-  \lim_{x \to +0} f'(x) = g'(0) = 0 = \lim_{x \to -0} f'(x)
-\]
-\[
-  \lim_{x \to \frac{1}{2} - 0} f'(x) = h'\left(\dfrac{1}{2}\right) = 2 = g'\left(\dfrac{1}{2}\right) = \lim_{x \to \frac{1}{2} + 0} f'(x)
-\]
-\[
-  \lim_{x \to 1 - 0} f'(x) = h'(1) = 0 = \lim_{x \to 1 + 0} f'(x)
-\]
-から，$f(x)$ は $x = 0, 1/2, 1$ でも微分可能. 以上から示された.
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.5cm, y=2.5cm, >=stealth,
+    every node/.style={font=\small}]
+    % Coordinate axes
+    \draw[->, thick, gray!80!black] (-0.4,0) -- (1.6,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.2) -- (0,1.4) node[above] {$y$};
+    \node[below left=2pt] at (0,0) {$O$};
+
+    % Projections for connection points
+    \draw[dashed, gray!60] (0.5,0) -- (0.5,0.5) -- (0,0.5);
+    \draw[dashed, gray!60] (1,0) -- (1,1) -- (0,1);
+
+    % Piecewise curve f(x)
+    % x <= 0: 0
+    \draw[line width=1.4pt, blue!85!black] (-0.35,0) -- (0,0);
+    % 0 <= x <= 1/2: 2x^2
+    \draw[line width=1.4pt, blue!85!black, domain=0:0.5, samples=50]
+    plot (\x,{2*\x*\x});
+    % 1/2 <= x <= 1: -2(x-1)^2 + 1
+    \draw[line width=1.4pt, blue!85!black, domain=0.5:1, samples=50]
+    plot (\x,{-2*(\x-1)*(\x-1)+1});
+    % x >= 1: 1
+    \draw[line width=1.4pt, blue!85!black] (1,1) -- (1.5,1)
+    node[above right=1pt, blue!85!black] {$y=f(x)$};
+
+    % Key points
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (0,0) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (0.5,0.5) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (1,1) {};
+
+    % Labels
+    \node[below=3pt, font=\footnotesize] at (0.5,0) {$\frac{1}{2}$};
+    \node[below=3pt, font=\footnotesize] at (1,0) {$1$};
+    \node[left=3pt, font=\footnotesize] at (0,0.5) {$\frac{1}{2}$};
+    \node[left=3pt, font=\footnotesize] at (0,1) {$1$};
+    \node[above left=1pt, red!85!black, font=\footnotesize] at (0.5,0.5) {$\left(\frac{1}{2}, \frac{1}{2}\right)$};
+  \end{tikzpicture}
+  \caption{条件 (ロ) を満たす微分可能な関数 $f(x)$ の概形．}
+  \label{fig:piecewise_f}
+\end{figure}
+
+(ロ)を満たす関数
+\begin{align}
+  f(x) =
+  \begin{cases}
+    0 & (x \le 0) \\
+    2x^2 & (0 \le x \le 1/2) \\
+    -2(x-1)^2 + 1 & (1/2 \le x \le 1) \\
+    1 & (1 \le x)
+  \end{cases}
+\end{align}
+が (イ) を満たすことをしめす. この関数は全区間で連続であり， $x \ne 0, 1/2, 1$ では微分可能であるから，$x=0, \dfrac{1}{2}, 1$での微分可能性を示せば良い．
+
+簡単のため
+\begin{align}
+  \begin{cases}
+    p(x) = 2x^2 \\
+    q(x) = -2(x-1)^2 + 1
+  \end{cases}
+\end{align}
+とおくと，$p'(x) = 4x, q'(x) = -4(x-1)$ だから
+\begin{align}
+  & \lim_{x \to +0} f'(x) = p'(0) = 0 = \lim_{x \to -0} f'(x) \\
+  & \lim_{x \to \frac{1}{2} - 0} f'(x) = q'\left(\dfrac{1}{2}\right) = 2 = p'\left(\dfrac{1}{2}\right) = \lim_{x \to \frac{1}{2} + 0} f'(x) \\
+  & \lim_{x \to 1 - 0} f'(x) = q'(1) = 0 = \lim_{x \to 1 + 0} f'(x)
+\end{align}
+から，$f(x)$ は $x = 0, 1/2, 1$ でも微分可能である．
+以上から(イ)は示された．
 
 \newpage
 

@@ -1,61 +1,102 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$a_n > 0$
-\[
-  a_n^3 + 3 a_n^2 - \left(9 + \dfrac{1}{n}\right) a_n + 5 < 0 \quad \cdots \text{①}
-\]
-①を変形して
-\[
-  (a_n - 1)^2 < \dfrac{1}{n} \dfrac{a_n}{a_n + 5} \quad (\because a_n > 0) \quad \cdots \text{②}
-\]
-又，$f_n(x) = x^3 + 3x^2 - \left(9 + \dfrac{1}{n}\right) x + 5$ とおくと
-\[
-  f_n'(x) = 3x^2 + 6x - \left(9 + \dfrac{1}{n}\right)
-\]
-より，$f_n'(x) = 0$ の2根 $\alpha, \beta \ (\alpha < \beta)$ として下表を与える.
 
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \begin{tabular}{c|ccccc}
-      $x$ & $\dots$ & $\alpha$ & $\dots$ & $\beta$ & $\dots$ \\ \hline
-      $f_n'$ & $+$ & $0$ & $-$ & $0$ & $+$ \\ \hline
-      $f_n$ & $\nearrow$ & & $\searrow$ & & $\nearrow$
-    \end{tabular}
-  \end{table}
-\end{center}
+与えられた関係式
+\begin{align}
+  \begin{cases}
+    a_n^3 + 3 a_n^2 - \left(9 + \dfrac{1}{n}\right) a_n + 5 < 0 \\
+    a_n > 0
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．(ii)を先に示す．
+
+\subparagraph{(ii)}
+
+\cref{eq:1}の左辺を
+\begin{align}
+  f_n(x) = x^3 + 3x^2 - \left(9 + \dfrac{1}{n}\right) x + 5
+\end{align}
+とおくと，両辺を$x$で微分して
+\begin{align}
+  f_n'(x) = 3x^2 + 6x - \left(9 + \dfrac{1}{n}\right)
+\end{align}
+となる．すると
+\begin{align}
+  f_n'(0) = - \left(9 + \dfrac{1}{n}\right) < 0
+\end{align}
+より$f_n'(x)=0$は二つの実数解 $\alpha, \beta \ (\alpha < 0 < \beta)$ を持つ．
+よって増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$f_n(x)$ の増減表．}
+  \begin{tabular}{c|ccccccc}
+    $x$ & $\dots$ & $\alpha$ & $\dots$ & $0$ & $\dots$ & $\beta$ & $\dots$ \\ \hline
+    $f_n'$ & $+$ & $0$ & $-$ & $-$ & $-$ & $0$ & $+$ \\ \hline
+    $f_n$ & $\nearrow$ & & $\searrow$ & $5$ & $\searrow$ & & $\nearrow$
+  \end{tabular}
+\end{table}
+
+また，$f_n(1)=-\dfrac{1}{n}<0$ および $f_n(5/3)=\dfrac{5}{27}\left(16-\dfrac{9}{n}\right)>0$ より，$x>0$ における $y=f_n(x)$ のグラフは以下のようになる．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=1.15cm, y=0.16cm, >=stealth,
+  \begin{tikzpicture}[x=2.8cm, y=0.8cm, >=stealth,
     every node/.style={font=\small}]
-    % n=1 illustrates the sign pattern of the family f_n.
-    \pgfmathsetmacro{\leftcrit}{-1-sqrt(4+1/3)}
+    % Representative n=1: f_1(x) = x^3 + 3x^2 - 10x + 5
     \pgfmathsetmacro{\rightcrit}{-1+sqrt(4+1/3)}
-    \draw[->, thick, gray!80!black] (-3.9,0) -- (2.25,0) node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0,-2.5) -- (0,39) node[above] {$y$};
-    \draw[line width=1.4pt, blue!85!black, domain=-3.7:1.9, samples=130]
-    plot (\x,{\x*\x*\x+3*\x*\x-10*\x+5});
-    \draw[dashed, gray!65] (\rightcrit,0)
-    -- (\rightcrit,{\rightcrit*\rightcrit*\rightcrit+3*\rightcrit*\rightcrit-10*\rightcrit+5});
-    \fill[red!85!black]
-    (\rightcrit,{\rightcrit*\rightcrit*\rightcrit+3*\rightcrit*\rightcrit-10*\rightcrit+5}) circle (1.7pt);
-    \node[below=4pt, font=\footnotesize] at (\leftcrit,0) {$\alpha$};
-    \node[below=4pt, font=\footnotesize] at (\rightcrit,0) {$\beta$};
+    \pgfmathsetmacro{\ycrit}{\rightcrit*\rightcrit*\rightcrit+3*\rightcrit*\rightcrit-10*\rightcrit+5}
+
+    % Coordinate axes
+    \draw[->, thick, gray!80!black] (-0.3,0) -- (2.2,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-2.0) -- (0,6.2) node[above] {$y$};
+    \node[below left=2pt] at (0,0) {$O$};
+
+    % Curve for x >= 0
+    \draw[line width=1.4pt, blue!85!black, domain=-0.1:2.0, samples=100]
+    plot (\x,{\x*\x*\x+3*\x*\x-10*\x+5}) node[above right=1pt] {$y=f_n(x)$};
+
+    % y-intercept (0, 5)
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (0,5) {};
+    \node[left=2pt] at (0,5) {$5$};
+
+    % Local minimum beta
+    \draw[dashed, gray!60] (\rightcrit,0) -- (\rightcrit,\ycrit);
+    \node[circle, fill=teal!75!black, inner sep=1.4pt] at (\rightcrit,\ycrit) {};
+    \node[below=2pt, font=\footnotesize, teal!75!black] at (\rightcrit,0) {$\beta$};
+
+    % Point x = 1 (f(1) = -1/n < 0)
+    \draw[dashed, gray!60] (1,0) -- (1,-1) -- (0,-1);
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (1,-1) {};
+    \node[above=2pt, font=\footnotesize] at (1,0) {$1$};
+    \node[left=2pt, red!85!black, font=\footnotesize] at (0,-1) {$-\frac{1}{n}$};
+    \node[below right=1pt, red!85!black, font=\footnotesize] at (1,-1) {$\left(1, -\frac{1}{n}\right)$};
+
+    % Point x = 5/3 (f(5/3) > 0)
+    \draw[dashed, gray!60] (1.667,0) -- (1.667,1.296) -- (0,1.296);
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (1.667,1.296) {};
+    \node[below=2pt, font=\footnotesize] at (1.667,0) {$\frac{5}{3}$};
+    \node[above right=1pt, red!85!black, font=\footnotesize] at (1.667,1.296) {$\left(\frac{5}{3}, f_n\left(\frac{5}{3}\right)\right)$};
   \end{tikzpicture}
-  \caption{$f_n$ の概形（図示には $n=1$ を使用）}
+  \caption{$x>0$ における $y=f_n(x)$ の概形と $x=1, \dfrac{5}{3}$ での値．}
+  \label{fig:fn_curve}
 \end{figure}
 
-従ってグラフは右上図のようになる. から，$\beta < x$ では $x$ は単調増加, $0 < x < \beta$ では $x$ は単調減少である. よって明らかに $0 < a_n < \dfrac{5}{3}$.
+従って$f_n(a_n)<0$が成り立つ$a_n>0$は
+\begin{align}
+  0 < a_n < \dfrac{5}{3} \label{eq:2}
+\end{align}
+を満たす．
 
-$y = \dfrac{x}{x+5}$ のグラフを考えてこの時
+ここで\cref{eq:1}を変形して
+\begin{align}
+  & (a_n-1)^2(a_n+5) - \dfrac{a_n}{n} < 0 \\
+  \therefore
+  & (a_n - 1)^2 < \dfrac{1}{n} \dfrac{a_n}{a_n + 5} \quad (\because a_n > 0) \label{eq:3}
+\end{align}
+である．
 
 \begin{figure}[htb]
   \centering
@@ -68,25 +109,31 @@ $y = \dfrac{x}{x+5}$ のグラフを考えてこの時
     \draw[->, thick, gray!80!black] (0,-5) -- (0,1.2) node[above] {$y$};
     \draw[line width=1.4pt, blue!85!black, domain=-4.15:4.4, samples=130]
     plot (\x,{\x/(\x+5)});
-    \fill[red!85!black] ({5/3},0.25) circle (1.6pt);
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at ({5/3},0.25) {};
     \node[below=3pt, font=\footnotesize] at (-5,0) {$-5$};
-    \node[below=3pt, font=\footnotesize] at ({5/3},0) {$\frac53$};
-    \node[left=3pt, font=\footnotesize] at (0,0.25) {$\frac14$};
+    \node[below=3pt, font=\footnotesize] at ({5/3},0) {$\frac{5}{3}$};
+    \node[left=3pt, font=\footnotesize] at (0,0.25) {$\frac{1}{4}$};
   \end{tikzpicture}
   \caption{$y=x/(x+5)$ と $x=5/3$ での値 $1/4$}
 \end{figure}
 
-\[
-  0 < \dfrac{1}{n} \dfrac{a_n}{a_n + 5} < \dfrac{1}{n} \cdot \dfrac{1}{4}
-\]
-だから②より
-\[
-  (a_n - 1)^2 < \dfrac{1}{4n}
-\]
-したがってはさみうちの原理から
-\[
-  a_n \to 1 \quad (n \to \infty)
-\]
+上図の$y = \dfrac{x}{x+5} = 1 - \dfrac{5}{x+5}$ のグラフは$0<x$で単調増加だから，\cref{eq:2}と合わせて\cref{eq:3}の右辺を上から評価して
+\begin{align}
+  0 < \dfrac{1}{n} \dfrac{a_n}{a_n + 5} < \dfrac{1}{n} \dfrac{5/3}{5/3+5} = \dfrac{1}{n} \cdot \dfrac{1}{4}
+\end{align}
+だから\cref{eq:3}に代入して
+\begin{align}
+  (a_n - 1)^2 < \dfrac{1}{4n} \label{eq:4}
+\end{align}
+である．
+
+\paragraph{(i)}
+
+\cref{eq:4}の右辺は$n\to\infty$で$0$に収束するからはさみうちの原理から
+\begin{align}
+  \lim_{n\to\infty} a_n = 1
+\end{align}
+である．
 
 \newpage
 
