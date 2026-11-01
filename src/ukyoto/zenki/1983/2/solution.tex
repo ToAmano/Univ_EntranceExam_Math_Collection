@@ -1,31 +1,80 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
 
-$BC : \dfrac{x}{b} + \dfrac{y}{c} = 1$
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.25cm, y=1.25cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (3,0);
+    \coordinate (C) at (0,2);
+    \coordinate (P) at (1.5,1);
+    \coordinate (Q) at (1.5,-2.25);
+    \coordinate (R) at (-0.66667,1);
 
-$l : b(x-b) - cy = 0$
+    \draw[->, thick, gray!80!black] (-1.35,0) -- (3.65,0)
+    node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-2.75) -- (0,2.55)
+    node[above] {$y$};
 
-$m : bx - c(y-c) = 0$
+    % Right triangle ABC and half-lines l, m
+    \draw[line width=1.3pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+    \draw[line width=1.1pt, teal!75!black] (B) -- (1.2,-2.7)
+    node[right=2pt] {$l$};
+    \draw[line width=1.1pt, teal!75!black] (C) -- (-1.1,0.35)
+    node[above=2pt] {$m$};
 
-だから，$P(bX, cY)$ とおくと ($X+Y=1$)
+    % Perpendiculars from P to AB and AC, extending to Q and R
+    \draw[dashed, gray!60] (P) -- (Q);
+    \draw[dashed, gray!60] (P) -- (R);
 
-$Q\left(bX, \dfrac{b^2}{c}(X-1)\right), R\left(\dfrac{c^2}{b}(Y-1), cY\right)$
+    % Right-angle marks
+    \draw[gray!70!black] (0.22,0) -- (0.22,0.22) -- (0,0.22);
+    \draw[gray!70!black] (1.3,0) -- (1.3,0.2) -- (1.5,0.2);
+    \draw[gray!70!black] (0,0.8) -- (0.2,0.8) -- (0.2,1);
+    \coordinate (B_C) at ($(B)!0.22cm!(C)$);
+    \coordinate (B_l) at ($(B)!0.22cm!(Q)$);
+    \draw[gray!70!black] (B_C) -- ($(B_C)+(B_l)-(B)$) -- (B_l);
+    \coordinate (C_B) at ($(C)!0.22cm!(B)$);
+    \coordinate (C_m) at ($(C)!0.22cm!(R)$);
+    \draw[gray!70!black] (C_B) -- ($(C_B)+(C_m)-(C)$) -- (C_m);
 
-だから $X+Y=1$ から
+    % Vertices and points
+    \foreach \T in {A,B,C,P,Q,R} {
+      \node[circle, fill=blue!85!black, inner sep=1.5pt] at (\T) {};
+    }
+    \node[below left=2pt] at (A) {$A$};
+    \node[below right=2pt] at (B) {$B$};
+    \node[above left=2pt] at (C) {$C$};
+    \node[above right=2pt] at (P) {$P$};
+    \node[below right=2pt] at (Q) {$Q$};
+    \node[above left=2pt] at (R) {$R$};
+  \end{tikzpicture}
+  \caption{直角三角形 $ABC$ と半直線 $l, m$ および点 $P, Q, R$ の概要}
+  \label{fig:overview_setup}
+\end{figure}
+
+$A$を原点，$B(b,0), C(0,c) \ (b,c>0)$なる座標軸をとると題意より
 \begin{align}
-  \overrightarrow{AQ} =
-  \begin{pmatrix} bX \\ -\dfrac{b^2}{c}Y
-  \end{pmatrix}, \overrightarrow{AR} =
-  \begin{pmatrix} -\dfrac{c^2}{b}X \\ cY
-  \end{pmatrix}
+  \begin{cases}
+    BC : \dfrac{x}{b} + \dfrac{y}{c} = 1 \\
+    l : b(x-b) - cy = 0 \\
+    m : bx - c(y-c) = 0
+  \end{cases} \label{eq:1}
 \end{align}
-となり，$\overrightarrow{AQ} \parallel \overrightarrow{AR}$ だから，$Q, R, A$ は一直線上にある (図)
+である．そこで $P(bX, cY)$ とおくと ($X+Y=1$)，
+\begin{align}
+  Q\left(bX, \dfrac{b^2}{c}(X-1)\right), \quad
+  R\left(\dfrac{c^2}{b}(Y-1), cY\right) \\
+  \therefore
+  Q\left(bX, -\dfrac{b^2}{c}Y\right), \quad
+  R\left(-\dfrac{c^2}{b}X, cY\right) \quad (\because X+Y=1) \label{eq:2}
+\end{align}
+である．
+
+\paragraph{(1)}
 
 \begin{figure}[htb]
   \centering
@@ -60,19 +109,21 @@ $Q\left(bX, \dfrac{b^2}{c}(X-1)\right), R\left(\dfrac{c^2}{b}(Y-1), cY\right)$
     \node[right=2pt, teal!75!black] at (2.3,-1.2) {$l$};
     \node[above=2pt, teal!75!black] at (-0.35,1.48) {$m$};
   \end{tikzpicture}
-  \caption{垂線の足 $Q,R$ と頂点 $A$ の一直線上の配置例}
+  \caption{垂線の足 $Q,R$ と頂点 $A$}
 \end{figure}
 
-\paragraph{(2)}
+\cref{eq:2}より
+\begin{align}
+  \overrightarrow{AQ} =
+  \begin{pmatrix} bX \\ -\dfrac{b^2}{c}Y
+  \end{pmatrix},
+  \overrightarrow{AR} =
+  \begin{pmatrix} -\dfrac{c^2}{b}X \\ cY
+  \end{pmatrix} = -\dfrac{c^2}{b^2}\overrightarrow{AQ}
+\end{align}
+となり，$\overrightarrow{AQ} \parallel \overrightarrow{AR}$ だから，$Q, R, A$ は一直線上にある．
 
-図のように定めると，題意の時
-\begin{align}
-  \dfrac{1}{2} (\alpha + \gamma) \cdot h = 2 \cdot \dfrac{1}{2} \beta h
-\end{align}
-\begin{align}
-  \alpha + \gamma = 2\beta \quad \cdots \text{①}
-\end{align}
-である．
+\paragraph{(2)}
 
 \begin{figure}[htb]
   \centering
@@ -106,30 +157,42 @@ $Q\left(bX, \dfrac{b^2}{c}(X-1)\right), R\left(\dfrac{c^2}{b}(Y-1), cY\right)$
   \caption{平行な2辺 $RC,QB$ と中線 $AP$ の長さの関係}
 \end{figure}
 
-\begin{itemize}
-  \item[$1^\circ$] $\text{RQ} \not\parallel \text{BC}$ の時
+図のように$A$と$BC$の距離を$\beta$とし，各長さを
+\begin{align}
+  |RC|= \alpha, |BC|=h, |BQ|=\gamma
+\end{align}
+とすると，題意より
+\begin{align}
+  & \square BCRQ = 2\triangle ABC \\
+  & \dfrac{1}{2} (\alpha + \gamma) \cdot h = 2 \cdot \dfrac{1}{2} \beta h \\
+  \therefore
+  & \alpha + \gamma = 2\beta \label{eq:3}
+\end{align}
+である．
 
-    ①なら AはRQの中点であり（ $\because$
+\subparagraph{$1^\circ$ $\text{RQ} \not\parallel \text{BC}$ の時}
 
-    $|AQ|^2 = |AR|^2$
+この時は\cref{eq:3}よりAはRQの中点であり，\cref{eq:2}より
+\begin{align}
+  & |AQ|^2 = |AR|^2 \\
+  \iff
+  & b^2 X^2 + \dfrac{b^4}{c^2} Y^2 = c^2 Y^2 + \dfrac{c^4}{b^2} X^2 \\
+  \iff
+  & \dfrac{b^4 - c^4}{c^2} Y^2 = \dfrac{c^4 - b^4}{b^2} X^2 \\
+  \iff
+  & \dfrac{Y^2}{c^2} = -\dfrac{X^2}{b^2} \quad (\because b \neq c)
+\end{align}
+となるが，$b, c, X, Y \in \mathbb{R}$より$X=Y=0$である．しかしこれは$X+Y=1$ に矛盾する．よってこの時\cref{eq:3}のようにはならない．
 
-    $\iff b^2 X^2 + \dfrac{b^4}{c^2} Y^2 = c^2 Y^2 + \dfrac{c^4}{b^2} X^2$
+\subparagraph{$2^\circ$ $\text{RQ} \parallel \text{BC}$ の時}
 
-    $\iff \dfrac{b^4 - c^4}{c^2} Y^2 = \dfrac{c^4 - b^4}{b^2} X^2$
+AはRQ上の任意の点で\cref{eq:3}をみたす．そこで\cref{eq:2}から
+\begin{align}
+  X = \dfrac{b^2}{b^2+c^2} \quad (0 < \dfrac{b^2}{b^2+c^2} < 1)
+\end{align}
+とすれば$\overrightarrow{AQ} \parallel \overrightarrow{BC}$ となって適する．
+\casesend
 
-    $\iff \dfrac{Y^2}{c^2} = -\dfrac{X^2}{b^2} \quad (\because b \neq c)$
-
-    となり，$b, c, X, Y \in \mathbb{R}$, $X+Y=1$ に矛盾．よってこの時①のようにはならない
-
-  \item[$2^\circ$] $\text{RQ} \parallel \text{BC}$ の時
-
-    AはRQ上の任意の点で①をみたす（ $\because X = \dfrac{b^2}{b^2+c^2} \quad (0 < \dfrac{b^2}{b^2+c^2} < 1)$ となれば，$\overrightarrow{AQ} \parallel \overrightarrow{BC}$ となって適する）
-
-    以上から①のようになるのは $\text{RQ} \parallel \text{BC}$ の時で，この時，題意から
-
-    $\square \text{BCRQ} \text{は長方形}$
-
-    である．
-\end{itemize}
+以上から\cref{eq:3}のようになるのは $\text{RQ} \parallel \text{BC}$ の時で，この時，題意から$\square \text{BCRQ}$は長方形である．
 
 \end{document}

@@ -1,10 +1,6 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
 
 \paragraph{(1)}
@@ -13,17 +9,18 @@
   \centering
   \begin{tikzpicture}[x=1.25cm, y=1.25cm,
     every node/.style={font=\small}]
-    % Symmetric case a=b=c: all three feet are side midpoints.
-    \coordinate (A) at (-2,0);
-    \coordinate (B) at (2,0);
-    \coordinate (C) at (0,3.46);
-    \coordinate (R) at (0,0);
-    \coordinate (P) at (1,1.73);
-    \coordinate (Q) at (-1,1.73);
-    \draw[line width=1.3pt, blue!85!black]
-    (A) -- (B) -- (C) -- cycle;
-    \draw[line width=1.3pt, teal!75!black]
-    (Q) -- (P) -- (R) -- cycle;
+    % Scalene triangle ABC with asymmetric feet P, Q, R
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (4.5,0);
+    \coordinate (C) at (1.5,3.2);
+    \coordinate (R) at (1.575,0);
+    \coordinate (P) at (2.25,2.4);
+    \coordinate (Q) at (0.9,1.92);
+
+    \fill[teal!15] (Q) -- (P) -- (R) -- cycle;
+    \draw[line width=1.3pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+    \draw[line width=1.3pt, teal!75!black] (Q) -- (P) -- (R) -- cycle;
+
     \foreach \T in {P,Q,R} {
       \node[circle, fill=teal!75!black, inner sep=1.5pt] at (\T) {};
     }
@@ -31,11 +28,13 @@
     \node[below right=2pt] at (B) {$B$};
     \node[above=2pt] at (C) {$C$};
     \node[below=2pt, teal!75!black] at (R) {$R$};
-    \node[right=2pt, teal!75!black] at (P) {$P$};
+    \node[above right=2pt, teal!75!black] at (P) {$P$};
     \node[left=2pt, teal!75!black] at (Q) {$Q$};
   \end{tikzpicture}
-  \caption{$\triangle ABC$ の各辺上にある垂足 $P,Q,R$（対称な例）}
+  \caption{$\triangle ABC$ の各辺上にある垂足 $P,Q,R$}
+  \label{fig:scalene_pqr}
 \end{figure}
+
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=1.2cm, y=1.2cm,
@@ -48,12 +47,34 @@
     \coordinate (P) at (1.6,2.65);
     \coordinate (Q) at (3.3,1.15);
     \coordinate (R) at (1.7,1.5);
+
+    % Perpendiculars from O to P, Q, R (dashed)
+    \draw[dashed, teal!75!black] (O) -- (P);
+    \draw[dashed, teal!75!black] (O) -- (Q);
+    \draw[dashed, teal!75!black] (O) -- (R);
+
+    % Right-angle marks
+    \coordinate (P_O) at ($(P)!0.22cm!(O)$);
+    \coordinate (P_B) at ($(P)!0.22cm!(B)$);
+    \draw[gray!70!black] (P_O) -- ($(P_O)+(P_B)-(P)$) -- (P_B);
+
+    \coordinate (Q_O) at ($(Q)!0.22cm!(O)$);
+    \coordinate (Q_A) at ($(Q)!0.22cm!(A)$);
+    \draw[gray!70!black] (Q_O) -- ($(Q_O)+(Q_A)-(Q)$) -- (Q_A);
+
+    \coordinate (R_O) at ($(R)!0.22cm!(O)$);
+    \coordinate (R_B) at ($(R)!0.22cm!(B)$);
+    \draw[gray!70!black] (R_O) -- ($(R_O)+(R_B)-(R)$) -- (R_B);
+
+    \draw[gray!70!black] (0.25,0) -- (0.25,0.25) -- (0,0.25);
+
     \draw[dashed, gray!65] (O) -- (C);
     \draw[line width=1.2pt, blue!85!black]
     (O) -- (A) -- (C) -- (B) -- (O);
     \draw[line width=1.2pt, blue!85!black] (A) -- (B);
     \draw[line width=1.3pt, teal!75!black]
     (P) -- (Q) -- (R) -- cycle;
+
     \foreach \T in {P,Q,R} {
       \node[circle, fill=teal!75!black, inner sep=1.5pt] at (\T) {};
     }
@@ -68,52 +89,107 @@
     \node[left=3pt] at (0,1.5) {$b$};
     \node[below right=2pt, gray!80!black] at (1.1,0.79) {$c$};
   \end{tikzpicture}
-  \caption{互いに直交する $OA,OB,OC$ と三角形 $PQR$ の位置関係}
+  \caption{互いに直交する $OA,OB,OC$ と垂線 $OP,OQ,OR$}
+  \label{fig:spatial_tetrahedron}
 \end{figure}
 
-底面を各々$\triangle ABC, \triangle PQR$とみると，高さ一定だから
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.3cm, y=1.3cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (3.5,0);
+    \coordinate (C) at (0,2.2);
+    \coordinate (Q) at (0.991,1.577);
+
+    % Right triangle OAC
+    \draw[line width=1.3pt, blue!85!black] (O) -- (A) -- (C) -- cycle;
+    % Perpendicular OQ
+    \draw[line width=1.1pt, teal!75!black] (O) -- (Q);
+
+    % Right angle at O
+    \draw[gray!70!black] (0.25,0) -- (0.25,0.25) -- (0,0.25);
+    % Right angle at Q
+    \coordinate (Q_O) at ($(Q)!0.22cm!(O)$);
+    \coordinate (Q_A) at ($(Q)!0.22cm!(A)$);
+    \draw[gray!70!black] (Q_O) -- ($(Q_O)+(Q_A)-(Q)$) -- (Q_A);
+
+    % Nodes
+    \foreach \T in {O,A,C,Q} {
+      \node[circle, fill=blue!85!black, inner sep=1.5pt] at (\T) {};
+    }
+    \node[below left=2pt] at (O) {$O$};
+    \node[below right=2pt] at (A) {$A$};
+    \node[above left=2pt] at (C) {$C$};
+    \node[above right=2pt, teal!75!black] at (Q) {$Q$};
+
+    % Side length labels
+    \node[below=3pt] at (1.75,0) {$a$};
+    \node[left=3pt] at (0,1.1) {$c$};
+    \node[above right=2pt, font=\footnotesize, gray!80!black] at (2.25,0.8) {$\sqrt{a^2+c^2}$};
+  \end{tikzpicture}
+  \caption{直角三角形 $OAC$ における垂線 $OQ$ と相似 $\triangle QAO \sim \triangle OAC$}
+  \label{fig:similarity_oac}
+\end{figure}
+
+四面体$OPQR, OABC$は底面を各々$\triangle ABC, \triangle PQR$とみると，高さがどちらも同じだから
 \begin{align}
-  V_{OPQR} : V_{OABC} = \triangle PQR : \triangle ABC \quad \cdots \text{①}
+  V_{OPQR} : V_{OABC} = \triangle PQR : \triangle ABC \label{eq:1}
 \end{align}
-である．三角形の相似から
+である．$\triangle OAC, QAO$の相似から
 \begin{align}
-  |AQ| : |AO| = a : \sqrt{a^2+c^2} \therefore |AQ| = \dfrac{a^2}{\sqrt{a^2+c^2}}
+  |AQ| : |AO| = a : \sqrt{a^2+c^2}
+  \therefore
+  |AQ| = \dfrac{a|AO|}{\sqrt{a^2+c^2}} = \dfrac{a^2}{\sqrt{a^2+c^2}} \label{eq:2}
 \end{align}
-同様にして
+であり，同様にして
 \begin{align}
-  |AR| = \dfrac{a^2}{\sqrt{a^2+b^2}}, \quad |BP| = \dfrac{b^2}{\sqrt{b^2+c^2}}
+  |AR| = \dfrac{a^2}{\sqrt{a^2+b^2}}, \quad |BP| = \dfrac{b^2}{\sqrt{b^2+c^2}} \label{eq:3}
 \end{align}
-だから $\triangle ABC$の面積を1として
+を得る．
+
+従って $\triangle ABC$の面積を1とすると
 \begin{align}
-  \triangle ARQ &= \dfrac{a^2}{a^2+b^2} \cdot \dfrac{a^2}{a^2+c^2} \\
-  \triangle BPR &= \dfrac{b^2}{a^2+b^2} \cdot \dfrac{b^2}{b^2+c^2} \\
-  \triangle PCQ &= \dfrac{c^2}{b^2+c^2} \cdot \dfrac{c^2}{a^2+c^2}
+  \begin{cases}
+    \triangle ARQ = \dfrac{|AR|}{|AB|}\dfrac{|AQ|}{|AC|}\triangle ABC
+    = \dfrac{a^2}{a^2+b^2} \cdot \dfrac{a^2}{a^2+c^2} \\
+    \triangle BPR =  \dfrac{|BP|}{|BC|}\dfrac{|BR|}{|BA|}\triangle ABC
+    = \dfrac{b^2}{a^2+b^2} \cdot \dfrac{b^2}{b^2+c^2} \\
+    \triangle PCQ = \dfrac{|CP|}{|CB|}\dfrac{|CQ|}{|AC|}\triangle ABC
+    = \dfrac{c^2}{b^2+c^2} \cdot \dfrac{c^2}{a^2+c^2}
+  \end{cases}
 \end{align}
 だから
 \begin{align}
-  \triangle PQR &= 1 - \dfrac{a^4(b^2+c^2) + b^4(c^2+a^2) + c^4(a^2+b^2)}{(a^2+b^2)(b^2+c^2)(c^2+a^2)} \\
+  \triangle PQR
+  &= \triangle ABC - \triangle ARQ - \triangle BPR - \triangle PCQ \\
+  &= 1 - \dfrac{a^4(b^2+c^2) + b^4(c^2+a^2) + c^4(a^2+b^2)}{(a^2+b^2)(b^2+c^2)(c^2+a^2)} \\
   &= \dfrac{2a^2b^2c^2}{(a^2+b^2)(b^2+c^2)(c^2+a^2)}
 \end{align}
-より ①から
+となり，\cref{eq:1}に代入して求める体積比は
 \begin{align}
-  V_{OPQR} : V_{OABC} = 2a^2b^2c^2 : (b^2+c^2)(c^2+a^2)(a^2+b^2)
+  V_{OPQR} : V_{OABC} = 2a^2b^2c^2 : (b^2+c^2)(c^2+a^2)(a^2+b^2) \label{eq:4}
 \end{align}
+である．
 
 \paragraph{(2)}
 
-(1)から
+\cref{eq:4}より
 \begin{align}
-  \dfrac{2a^2b^2c^2}{(b^2+c^2)(c^2+a^2)(a^2+b^2)} \le \dfrac{1}{4}
+  & \dfrac{2a^2b^2c^2}{(b^2+c^2)(c^2+a^2)(a^2+b^2)} \le \dfrac{1}{4} \\
+  \therefore
+  & 8ABC \le (B+C)(C+A)(A+B) \label{eq:5}
 \end{align}
-\begin{align}
-  8ABC \le (B+C)(C+A)(A+B) \quad \cdots \text{②}
-\end{align}
-($A=a^2, B=b^2, C=c^2$ とおいた)
+を示せばよい．ただし$A=a^2, B=b^2, C=c^2$ とおいた．
 
-を示せばよい．A,B,CからAM-GMより
+$A,B,C >0$からAM-GM不等式
 \begin{align}
-  B+C \ge 2\sqrt{BC} > 0
+  \begin{cases}
+    B+C \ge 2\sqrt{BC} > 0 \\
+    C+A \ge 2\sqrt{CA} > 0 \\
+    A+B \ge 2\sqrt{AB} > 0
+  \end{cases}
 \end{align}
-などとした3式をかけあわせると ②は示される(終)
+を辺々掛け合わせると\cref{eq:5}になる．よって題意は示された．
 
 \end{document}

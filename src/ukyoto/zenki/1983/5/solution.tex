@@ -1,99 +1,105 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-{\bf [解答]} 到達時刻 $t_0$ とする．右のように点 P, Q を定める．
-\begin{align}
-  ||OP|| = |t-a|, \quad ||OQ|| = |t_0-b|, \quad ||PQ|| = \sqrt{2}(t_0-t)
-\end{align}
-だから，$\triangle OPQ$ にピタゴラスの定理を用いて，
-\begin{align}
-  2(t_0-t)^2 = (t-a)^2 + (t_0-b)^2 \quad \cdots \text{①}
-\end{align}
+{\bf [解答]}
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=1.4cm, y=1.4cm, >=stealth,
+  \begin{tikzpicture}[x=1.5cm, y=1.5cm, >=stealth,
     every node/.style={font=\small}]
-    % Example: a=1, b=2, t=2, t_0=3; OP=OQ=1 and PQ=sqrt(2).
     \coordinate (O) at (0,0);
-    \coordinate (Pzero) at (-1,0);
-    \coordinate (Qzero) at (0,-2);
-    \coordinate (P) at (1,0);
-    \coordinate (Q) at (0,1);
-    \draw[->, thick, gray!80!black] (-1.45,0) -- (1.85,0)
-    node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0,-2.35) -- (0,1.7)
-    node[above] {$y$};
-    \draw[line width=1.2pt, blue!85!black, ->]
-    (Pzero) -- (P);
-    \draw[line width=1.2pt, blue!85!black, ->]
-    (Qzero) -- (Q);
-    \draw[line width=1.4pt, red!85!black, ->] (P) -- (Q);
-    \draw[gray!75!black] (0.16,0) -- (0.16,0.16) -- (0,0.16);
-    \node[circle, fill=red!85!black, inner sep=1.6pt] at (P) {};
-    \node[circle, fill=red!85!black, inner sep=1.6pt] at (Q) {};
-    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (Pzero) {};
-    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (Qzero) {};
+    \coordinate (Pzero) at (-1.3,0);
+    \coordinate (Pt) at (1.1,0);
+    \coordinate (Qzero) at (0,-1.8);
+    \coordinate (Qt) at (0,-0.6);
+    \coordinate (Qt0) at (0,1.2);
+
+    % Coordinate axes
+    \draw[->, thick, gray!80!black] (-1.7,0) -- (1.8,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-2.1) -- (0,1.7) node[above] {$y$};
+
+    % Movement paths
+    \draw[line width=1.2pt, blue!85!black, ->] (Pzero) -- (Pt);
+    \draw[line width=1.2pt, blue!85!black, ->] (Qzero) -- (Qt0);
+    \draw[line width=1.4pt, red!85!black, ->] (Pt) -- (Qt0);
+
+    % Right angle at O
+    \draw[gray!75!black] (0.18,0) -- (0.18,0.18) -- (0,0.18);
+
+    % Points
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (Pzero) {};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (Qzero) {};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (Qt) {};
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (Pt) {};
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (Qt0) {};
+
+    % Labels
     \node[below left=2pt] at (O) {$O$};
-    \node[below right=2pt] at (P) {$P$};
-    \node[above left=2pt] at (Q) {$Q$};
-    \node[below=3pt] at (Pzero) {$-a$};
-    \node[left=3pt] at (Qzero) {$-b$};
-    \node[below=2pt] at (0.55,0) {$t-a$};
-    \node[left=3pt] at (0,0.55) {$t_0-b$};
-    \node[above right=2pt, red!85!black] at (0.54,0.5)
-    {$\sqrt{2}(t_0-t)$};
+    \node[below=3pt] at (Pzero) {$P_0(-a, 0)$};
+    \node[left=3pt] at (Qzero) {$Q_0(0, -b)$};
+    \node[left=3pt] at (Qt) {$Q_t(0, t-b)$};
+    \node[below=3pt] at (Pt) {$P_t(t-a, 0)$};
+    \node[left=3pt] at (Qt0) {$P_{t_0}=Q_{t_0}(0, t_0-b)$};
+    \node[above right=1pt, red!85!black] at ($(Pt)!0.5!(Qt0)$) {$\sqrt{2}(t_0-t)$};
   \end{tikzpicture}
   \caption{$P$ の折り返し点と $Q$ の到達点が作る直角三角形}
 \end{figure}
 
-$S = t_0 - t$ とすると，$S$ を min にする $t$ をもとめれば良い．①に代入して
+到達時刻を $t_0$ とする．上図のように切り替え時刻$t$での点 P, Q を$P_t(t-a,0),Q_t(0,t-b)$，
+到達時刻$t_0$での点$P,Q$を$P_{t_0}=Q_{t_0}(0,t_0-b)$とおくと点$P$の$[t,t_0]$での速さが$\sqrt{2}$だから
 \begin{align}
-  2 S^2 &= (t-a)^2 + (S + t - b)^2 \\
-  &= S^2 + 2(t-b)S + (t-b)^2 + (t-a)^2
+  |P_tQ_{t_0}| = \sqrt{2}(t_0-t)
 \end{align}
+である．そこで$\triangle OP_tQ_{t_0}$に三平方の定理を用いて
 \begin{align}
-  \therefore S^2 - 2(t-b)S - (t-a)^2 - (t-b)^2 = 0
+  & |P_tQ_{t_0}|^2 = |OP_t|^2 + |OQ_{t_0}|^2 \\
+  \therefore
+  & 2(t_0-t)^2 = (t-a)^2 + (t_0-b)^2 \label{eq:1}
 \end{align}
+である．
+
+さて，$s = t_0 - t$ とすると$s$ を最小にする $t$ をもとめれば良い．\cref{eq:1}に代入して$t_0$を消去すると
 \begin{align}
-  \therefore S = t-b + \sqrt{2(t-b)^2 + (t-a)^2} \quad (\because S > 0)
+  2 s^2
+  &= (t-a)^2 + (s + t - b)^2 \\
+  &= s^2 + 2(t-b)s + (t-b)^2 + (t-a)^2 \\
+  & s^2 - 2(t-b)s - (t-a)^2 - (t-b)^2 = 0
+  \therefore
+  & s = t-b + \sqrt{2(t-b)^2 + (t-a)^2} \quad (\because s > 0) \label{eq:2}
 \end{align}
-であるから，両辺 $t$ で微分して，
+だから両辺 $t$ で微分して，
 \begin{align}
-  \dfrac{dS}{dt} = 1 + \dfrac{2(t-b) + (t-a)}{\sqrt{2(t-b)^2 + (t-a)^2}}
+  \dfrac{ds}{dt} = 1 + \dfrac{2(t-b) + (t-a)}{\sqrt{2(t-b)^2 + (t-a)^2}} \label{eq:3}
 \end{align}
-だから，
+を得る．そこでこの符号を考える．
 \begin{align}
-  \dfrac{dS}{dt} \ge 0 \iff \sqrt{2(t-b)^2 + (t-a)^2} \ge -2(t-b) - (t-a)
+  \dfrac{ds}{dt} \ge 0 \iff \sqrt{2(t-b)^2 + (t-a)^2} \ge -2(t-b) - (t-a)
 \end{align}
-$-2(t-b) - (t-a) \ge 0 \iff t \le \dfrac{a+2b}{3}$ のもとで2乗して解く（$t \ge \dfrac{a+2b}{3}$ のときは常に $\dfrac{dS}{dt} \ge 0$ ）
+これは$-2(t-b) - (t-a) \ge 0 \iff t \le \dfrac{a+2b}{3}$ のもとで2乗して良い．$t \ge \dfrac{a+2b}{3}$ のときは常に $\dfrac{ds}{dt} \ge 0$ である:
 \begin{align}
   2(t-b)^2 + (t-a)^2 &\ge 4(t-b)^2 + (t-a)^2 + 4(t-a)(t-b) \\
-  \iff 0 &\ge 2(t-b)^2 + 4(t-b)(t-a) \\
+  \iff
+  0 &\ge 2(t-b)^2 + 4(t-b)(t-a) \\
   &= 2(t-b) \{ 3t - (2a+b) \} \\
-  \iff \dfrac{2a+b}{3} &\le t \le b \quad (\because 0 < a < b)
+  \iff
+  \dfrac{2a+b}{3} &\le t \le b \quad (\because 0 < a < b)
 \end{align}
-だから，下表をうる．
+だから，$s$の増減表は以下のようになる．
 
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \caption{$S(t)$ の増減表}
-    \begin{tabular}{|c|c|c|c|c|c|}
-      \hline
-      $t$ & $0$ & $\cdots$ & $\dfrac{2a+b}{3}$ & $\cdots$ & $b$ \\
-      \hline
-      $S'$ & & $-$ & $0$ & $+$ & \\
-      \hline
-      $S$ & & $\searrow$ & & $\nearrow$ & \\
-      \hline
-    \end{tabular}
-  \end{table}
-\end{center}
-したがって，もとめるのは $t = \dfrac{2a+b}{3}$ である．
+\begin{table}[htb]
+  \centering
+  \caption{$s(t)$ の増減表}
+  \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    $t$ & $0$ & $\cdots$ & $\dfrac{2a+b}{3}$ & $\cdots$ & $b$ \\
+    \hline
+    $s'$ & & $-$ & $0$ & $+$ & \\
+    \hline
+    $s$ & & $\searrow$ & & $\nearrow$ & \\
+    \hline
+  \end{tabular}
+\end{table}
+
+したがって$s$が最小になるのは $t = \dfrac{2a+b}{3}$ の時である．
 
 \end{document}
