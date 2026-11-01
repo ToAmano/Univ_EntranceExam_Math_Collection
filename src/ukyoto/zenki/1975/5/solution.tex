@@ -1,62 +1,180 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
 {\bf [解答]}
+
+与えられた数列
 \begin{align}
   \begin{cases}
-    2 \le a_1 \le a_2 \le \dots \le a_n \quad \dots \text{①} \\
+    2 \le a_1 \le a_2 \le \dots \le a_n  \\
     S = n-2 - \displaystyle\sum_{i=1}^n \dfrac{1}{a_i} > 0
-  \end{cases}
+  \end{cases} \label{eq:1}
 \end{align}
+について考える．
 
 \paragraph{(1)}
-$n=3$ の時
+
+$n=3$ の時\cref{eq:1}より
 \begin{align}
-  S = 1 - \left( \dfrac{1}{a_1} + \dfrac{1}{a_2} + \dfrac{1}{a_3} \right)
+  S = 1 - \left( \dfrac{1}{a_1} + \dfrac{1}{a_2} + \dfrac{1}{a_3} \right) > 0 \label{eq:2}
 \end{align}
-だから，$S > 0$ をみたすうち，逆数和を max にするような $a$ の組をもとめれば良いが，$S$ は $2 \le x$ で単調減少なことから，$S$ ちいさくして考える．
+だから $S > 0$ をみたすうちで逆数和を最大にするような $(a_1,a_2,a_3)$ の組をもとめれば良い．
+$\dfrac{1}{x}$ は $2 \le x$ で単調減少なことからしらみつぶしで考える．
 
-\begin{enumerate}
-  \item[$1^\circ$] $a_1 = 2$ の時
+\subparagraph{$1^\circ$ $a_1 = 2$ の時}
 
-    $\dfrac{1}{a_2} + \dfrac{1}{a_3} < \dfrac{1}{2}$ をみたすうち逆数和を max にする $a_2, a_3$ をかんがえる．$a_2, a_3 \ge 2$ から，$(a_2-2)(a_3-2) > 4$ だから，
-    \begin{align}
-      (a_2, a_3) = (3, 7), (4, 5) \text{ 又は } a_2 \ge 5
-    \end{align}
-    なので，もとめる組は $(a_1, a_2, a_3) = (2, 3, 7)$．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=0.95cm, y=0.95cm, >=stealth,
+    every node/.style={font=\small}]
+    % Coordinate axes
+    \draw[->, thick, gray!80!black] (1.5, 1.5) -- (8.0, 1.5) node[right] {$a_2$};
+    \draw[->, thick, gray!80!black] (1.5, 1.5) -- (1.5, 9.0) node[above] {$a_3$};
 
-  \item[$2^\circ$] $a_1 = 3$ の時
+    % Asymptotes
+    \draw[dashed, gray!50] (2, 1.5) -- (2, 8.8) node[above, font=\scriptsize] {$a_2=2$};
+    \draw[dashed, gray!50] (1.5, 2) -- (7.8, 2) node[right, font=\scriptsize] {$a_3=2$};
 
-    $\dfrac{1}{a_2} + \dfrac{1}{a_3} < \dfrac{1}{3} \iff (a_2-3)(a_3-3) > 9$ をみたす逆数和を max にする $a_2, a_3$ をもとめる．$(a_2, a_3) = (4, 13), (5, 8), (6, 7)$ or $a_2 \ge 7$ で，明らかに $1^\circ$ の時より和が小さい．
-\end{enumerate}
-以上から，もとめるのは $(a_1, a_2, a_3) = (2, 3, 7)$．
+    % Shaded feasible region: a_3 >= a_2 and (a_2-2)(a_3-2) > 4
+    \begin{scope}
+      \clip (2, 2) -- (2, 8.8) -- (7.8, 8.8) -- (7.8, 7.8) -- cycle;
+      \fill[teal!15] (2.58, 8.8) -- plot[domain=2.58:4, samples=40] (\x, {2 + 4/(\x - 2)})
+      -- (7.8, 7.8) -- (7.8, 8.8) -- cycle;
+    \end{scope}
+
+    % Boundary lines
+    \draw[line width=1.2pt, gray!70] (2, 2) -- (8.0, 8.0) node[above right=1pt, font=\footnotesize] {$a_3 = a_2$};
+    \draw[dashed, line width=1.2pt, teal!75!black, domain=2.58:7.5, samples=60]
+    plot (\x, {2 + 4/(\x - 2)});
+    \node[right=2pt, teal!75!black, font=\scriptsize] at (7.5, {2 + 4/5.5}) {$(a_2-2)(a_3-2)=4$};
+
+    % Boundary excluded points (open circles)
+    \node[circle, draw=teal!75!black, thick, fill=white, inner sep=1.3pt] at (3, 6) {};
+    \node[circle, draw=teal!75!black, thick, fill=white, inner sep=1.3pt] at (4, 4) {};
+    \node[below right=1pt, font=\scriptsize, gray!80!black] at (4, 4) {$(4,4)$};
+
+    % Candidate points in region
+    % (3, 7) - Optimal
+    \draw[dashed, gray!50] (3, 1.5) -- (3, 7) -- (1.5, 7);
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (3, 7) {};
+    \node[above right=1pt, red!85!black, font=\footnotesize] at (3, 7) {$(3, 7)$ (最大)};
+
+    % (4, 5)
+    \draw[dashed, gray!50] (4, 1.5) -- (4, 5) -- (1.5, 5);
+    \node[circle, fill=teal!75!black, inner sep=1.4pt] at (4, 5) {};
+    \node[above right=1pt, teal!75!black, font=\footnotesize] at (4, 5) {$(4, 5)$};
+
+    % (5, 5)
+    \draw[dashed, gray!50] (5, 1.5) -- (5, 5) -- (1.5, 5);
+    \node[circle, fill=teal!75!black, inner sep=1.4pt] at (5, 5) {};
+    \node[below right=1pt, teal!75!black, font=\footnotesize] at (5, 5) {$(5, 5)$};
+
+    % Axis ticks
+    \foreach \x in {2, 3, 4, 5, 6, 7} {
+      \node[below=2pt, font=\scriptsize] at (\x, 1.5) {$\x$};
+    }
+    \foreach \y in {2, 3, 4, 5, 6, 7, 8} {
+      \node[left=2pt, font=\scriptsize] at (1.5, \y) {$\y$};
+    }
+  \end{tikzpicture}
+  \caption{$a_1=2$ における条件 $(a_2-2)(a_3-2)>4$ と $a_3 \ge a_2$ の領域および候補点．}
+  \label{fig:hyperbola_region}
+\end{figure}
+
+$a_1=2$を\cref{eq:2}に代入して
+\begin{align}
+  \dfrac{1}{a_2} + \dfrac{1}{a_3} < \dfrac{1}{2} \label{eq:3}
+\end{align}
+を満たすうちで左辺を最大にする$a_2,a_3$を求めれば良い．
+\cref{eq:1}より$a_3 \ge a_2 \ge 2$ だから，\cref{eq:3}の両辺に$a_2a_3$をかけて
+\begin{align}
+  (a_2-2)(a_3-2) > 4 \label{eq:4}
+\end{align}
+だから$a_2=3,4,\cdots$として順に代入すると
+\begin{align}
+  (a_2, a_3) = (3, 7), (4, 5) \text{ 又は } a_2 \ge 5
+\end{align}
+なので，これらの逆数和を計算すると
+\begin{align}
+  \begin{cases}
+    \dfrac{1}{3}+\dfrac{1}{7} = \dfrac{10}{21} \\
+    \dfrac{1}{4}+\dfrac{1}{5} = \dfrac{9}{20} \\
+    \dfrac{1}{a_2}+\dfrac{1}{a_3} \le \dfrac{1}{5}+\dfrac{1}{5}=\dfrac{2}{5}  & (a_2 \ge 5 \text{の時})
+  \end{cases}
+\end{align}
+だから，このうち最大のものを選んで，
+\begin{align}
+  (a_1, a_2, a_3) = (2, 3, 7) \label{eq:5}
+\end{align}
+である．この時$S$の値は
+\begin{align}
+  S =  1 - \left( \dfrac{1}{2} + \dfrac{1}{3} + \dfrac{1}{7} \right) = \dfrac{1}{42} \label{eq:6}
+\end{align}
+である．
+
+\subparagraph{$2^\circ$ $a_1 \ge 3$ の時}
+
+$a_1 \ge 3$の時は\cref{eq:2}に代入して
+\begin{align}
+  \dfrac{1}{a_2} + \dfrac{1}{a_3} < 1-\dfrac{1}{a_3} \le \dfrac{2}{3}
+\end{align}
+だから，これを満たす逆数和が最小の$(a_2,a_3)$の組は$(a_2,a_3)=(3,4)$である．
+この時$a_1=3$で，$S$は
+\begin{align}
+  S = 1 - \left( \dfrac{1}{3} + \dfrac{1}{3} + \dfrac{1}{4} \right) = \dfrac{1}{12}
+\end{align}
+となり，これは$a_1=2$の時の最小値\cref{eq:6}よりも大きい．よって$a_1 \ge 3$の時は$a_1=2$の時より$S$を小さくできない．
+\casesend
+
+以上の場合分けと\cref{eq:6}からもとめるのは
+\begin{align}
+  (a_1, a_2, a_3) = (2, 3, 7)
+\end{align}
+である．
 
 \paragraph{(2)}
-$n \ge 5$ の時，$a_i = 2\ (i=1, 2, \dots, n)$ とすることになり
-\begin{align}
-  S = n-2 - \dfrac{n}{2} = \dfrac{1}{2}(n-4) > 0
-\end{align}
-となって $S$ は最小値をとる．$n$ をうごかした時，これは明らかに $n=5$ で最小値をとる！以下 $n \le 4$ として考える．$n=1$ の時 $S$ は明らかに負だから不適．よって $n=4$ をしらべる．$\dfrac{1}{x}$ が $2 \le x$ で単調増加なことと $2 = a_1 = a_2 = a_3 = a_4$ の時 $S=0$ であることから，$a_1 = a_2 = a_3 = 2, a_4 = 3$ の時 $\min S = 2 - \left(\dfrac{1}{2} + \dfrac{1}{2} + \dfrac{1}{2} + \dfrac{1}{3}\right) = \dfrac{1}{6}\ (>0)$ をとる．
 
-\noindent
+$n \ge 5$ の時を考えると，\cref{eq:1}において
+\begin{align}
+  S
+  & =  n-2 - \sum_{i=1}^n \dfrac{1}{a_i} \\
+  &\ge n-2 - \sum_{i=1}^n \dfrac{1}{2} \\
+  & =  n-2 - \dfrac{n}{2} = \dfrac{1}{2}(n-4) > 0 \label{eq:7}
+\end{align}
+となって $S$ は $a_i = 2\ (i=1, 2, \dots, n)$ とすることで最小値をとる．
+\cref{eq:7}において$n$ をうごかした時は $n=5$ で最小値をとる．従って$n \ge 5$の時の$S$の最小値は
+\begin{align}
+  S = \dfrac{1}{2}(5-4) = \dfrac{1}{2} \label{eq:8}
+\end{align}
+である．
+
+そこで以下 $n \le 4$ として考える．$n=1,2$ の時は
+\begin{align}
+  \begin{cases}
+    S = -1-\dfrac{1}{a_1}< 0 & (n=1) \\
+    S = -\dfrac{1}{a_1}-\dfrac{1}{a_2}< 0 & (n=2)
+  \end{cases}
+\end{align}
+だから不適である．$n=3$の時は(1)で調べたので，残り$n=4$の時を考える．
+$\dfrac{1}{x}$ が $2 \le x$ で単調増加なことと $2 = a_1 = a_2 = a_3 = a_4=2$ の時 $S=0$ であることから，$S$を最小にするのは$a_1 = a_2 = a_3 = 2, a_4 = 3$ の時の
+\begin{align}
+  \min S = 2 - \left(\dfrac{1}{2} + \dfrac{1}{2} + \dfrac{1}{2} + \dfrac{1}{3}\right) = \dfrac{1}{6}\ (>0) \label{eq:9}
+\end{align}
+である．
+
 以上から，
 \begin{align}
   \begin{cases}
     n \ge 5 \text{ の時 } n=5, a_i=2 \text{ で } \min S = \dfrac{1}{2} \\
-    n = 4 \text{ 〃 } a_1=a_2=a_3=2, a_4=3 \text{ で } \min S = \dfrac{1}{6} \\
-    n = 3 \text{ 〃 } (a_1, a_2, a_3)=(2,3,7) \text{ で } \min S = \dfrac{1}{42}
+    n = 4 \text{ の時 } a_1=a_2=a_3=2, a_4=3 \text{ で } \min S = \dfrac{1}{6} \\
+    n = 3 \text{ の時 } (a_1, a_2, a_3)=(2,3,7) \text{ で } \min S = \dfrac{1}{42}
   \end{cases}
 \end{align}
-よって，$S$ を min にするのは
+となり，$S$ を最小にするのは
 \begin{align}
   n=3, \quad (a_1, a_2, a_3) = (2, 3, 7)
 \end{align}
-の時．
+の時である．
 
 \newpage
 

@@ -1,24 +1,16 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-\noindent
-{\bf [解答]} $A$ を原点，$B(2,0), C(0,2)$ とする $xy$ 平面で考える．又，$O(t,t)\ (0 < t)$ とおき題意の円を $T$ とおく．
-\[
-  T : (x-t)^2 + (y-t)^2 = 1
-\]
-\[
-  BC : x+y = 2
-\]
+{\bf [解答]}
 
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=2.25cm, y=2.25cm, >=stealth,
     every node/.style={font=\small}]
+    % Coordinate axes
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (2.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 2.5) node[above] {$y$};
+
     % Representative t=0.8 in the admissible range sqrt(2)/2 <= t < 1.
     \coordinate (A) at (0,0);
     \coordinate (B) at (2,0);
@@ -29,29 +21,55 @@
     \draw[line width=1.2pt, teal!75!black] (O) circle[radius=1];
     \draw[dashed, gray!70] (O) -- (H);
     \draw[gray!75] (0,0.13) -- (0.13,0.13) -- (0.13,0);
-    \foreach \P in {A,B,C} {\fill[blue!85!black] (\P) circle (1.4pt);}
-    \fill[red!85!black] (O) circle (1.5pt);
-    \fill[red!85!black] (H) circle (1.4pt);
+    \foreach \P in {A,B,C} {\node[circle, fill=blue!85!black, inner sep=1.4pt] at (\P) {};}
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (O) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (H) {};
     \node[below left=2pt] at (A) {$A$};
     \node[below right=2pt] at (B) {$B(2,0)$};
     \node[above left=2pt] at (C) {$C(0,2)$};
     \node[below right=2pt, red!85!black] at (O) {$O(t,t)$};
     \node[above right=2pt, red!85!black] at (H) {$H$};
   \end{tikzpicture}
-  \caption{三角形 $ABC$ と中心 $O(t,t)$，半径1の円 $T$}
+  \caption{三角形 $ABC$ と中心 $O(t,t)$，半径1の円 $T$．}
 \end{figure}
 
+$A$ を原点，$B(2,0), C(0,2)$ とする $xy$ 平面で考える．
+又題意の円$T$の中心を$O(t,t)\ (0 < t)$ とおく．すると直線$BC$，円$T$の方程式は
+\begin{align}
+  \begin{cases}
+    T : (x-t)^2 + (y-t)^2 = 1 \\
+    BC : x+y = 2
+  \end{cases} \label{eq:1}
+\end{align}
+となる．
+
 \paragraph{(i)}
-$T$ と $x$ 軸の交点は $x^2 - 2tx + 2t^2 - 1 = 0$ の2実解
 
-$T$ と $y$ 軸の交点は $y^2 - 2ty + 2t^2 - 1 = 0$ の2実解
-
-$T$ と $BC$ の交点は $2x^2 - 4x + 2t^2 - 4t + 3 = 0$ の2実解
-
-だからこれらが $0 \le x \le 2, 0 \le y \le 2$ に2実解を持つ条件を考えて，
-
+円$T$と各辺の交点は，それぞれの方程式を連立した解で与えられるから，
+\begin{itemize}
+  \item $T$ と $AB$ ($x$軸) の交点は $f(x)=x^2 - 2tx + 2t^2 - 1 = 0$ の2実解 \\
+  \item $T$ と $AC$ ($y$軸) の交点は $f(y)=y^2 - 2ty + 2t^2 - 1 = 0$ の2実解 \\
+  \item $T$ と $BC$ の交点は $g(x)=2x^2 - 4x + 2t^2 - 4t + 3 = 0$ の2実解
+\end{itemize}
+である．
+よってこれらが $0 \le x \le 2, 0 \le y \le 2$ に2実解を持つ条件を考えれば良い．
+$T$ と $AB$，$T$ と $AC$の交点は$x,y$を入れ替えただけで全く同じだから，前者だけ考える．
+すると求める条件は
 \begin{align}
   &
+  \begin{cases}
+    \text{軸}: 0 < t < 2 \\
+    \text{端}: f(0) \ge 0, \ f(2) \ge 0 \\
+    \text{判}: t^2 - (2t^2 - 1) > 0
+  \end{cases}
+  \quad \wedge \quad
+  \begin{cases}
+    \text{軸}: 0 < 1 < 2 \\
+    \text{端}: g(0) \ge 0, \ g(2) \ge 0 \\
+    \text{判}: 4 - 2(2t^2 - 4t + 3) > 0
+  \end{cases}
+  \\
+  &\iff
   \begin{cases}
     \text{軸}: 0 < t < 2 \\
     \text{端}: 2t^2 - 1 \ge 0, \ 2t^2 - 4t + 3 \ge 0 \\
@@ -67,20 +85,78 @@ $T$ と $BC$ の交点は $2x^2 - 4x + 2t^2 - 4t + 3 = 0$ の2実解
   &\iff
   \begin{cases}
     0 < t < 2 \\
-    \dfrac{\sqrt{2}}{2} \le t < 1
-  \end{cases}
-  \quad \wedge \quad
-  2 - \sqrt{2} < t < 2 + \sqrt{2} \\
+    \dfrac{\sqrt{2}}{2} \le t < 1 \\
+    2 - \sqrt{2} < t < 2 + \sqrt{2} \\
+  \end{cases} \\
   &\iff \dfrac{\sqrt{2}}{2} \le t < 1
 \end{align}
-よって，$x = 1/t$ だから，$1 \le x < \sqrt{2}$．
+である．$|OA|=x$とおくと$x=\sqrt{2}t$だから求める条件は
+\begin{align}
+  1 \le x < \sqrt{2}
+\end{align}
+である．
 
 \paragraph{(ii)}
-(i)の時，$T$ の中心と $x, y$ 軸，$BC$ との距離は各々
-\[
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.0cm, y=2.0cm, >=stealth,
+    every node/.style={font=\small}]
+    % Coordinate axes
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (2.4, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 2.4) node[above] {$y$};
+
+    \coordinate (A) at (0, 0);
+    \coordinate (B) at (2, 0);
+    \coordinate (C) at (0, 2);
+    % Representative t=0.8
+    \coordinate (O) at (0.8, 0.8);
+    \coordinate (H) at (1, 1);
+
+    % Common area S shaded
+    \begin{scope}
+      \clip (A) -- (B) -- (C) -- cycle;
+      \fill[teal!25] (O) circle[radius=1];
+    \end{scope}
+
+    % Triangle ABC
+    \draw[line width=1.4pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+
+    % Circle T
+    \draw[line width=1.2pt, teal!75!black] (O) circle[radius=1];
+
+    % Distances to the three sides
+    \draw[dashed, gray!70] (O) -- (0.8, 0)
+    node[midway, left=1pt, font=\footnotesize] {$t$};
+    \draw[dashed, gray!70] (O) -- (0, 0.8)
+    node[midway, below=1pt, font=\footnotesize] {$t$};
+    \draw[dashed, gray!70] (O) -- (H)
+    node[midway, above left=1pt, font=\footnotesize] {$|\sqrt{2}-\sqrt{2}t|$};
+
+    % Points
+    \foreach \P in {A, B, C} {
+      \node[circle, fill=blue!85!black, inner sep=1.4pt] at (\P) {};
+    }
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (O) {};
+    \node[circle, fill=red!85!black, inner sep=1.3pt] at (H) {};
+
+    % Labels
+    \node[below left=2pt] at (A) {$A$};
+    \node[below right=2pt] at (B) {$B(2,0)$};
+    \node[above left=2pt] at (C) {$C(0,2)$};
+    \node[above right=2pt, red!85!black] at (O) {$O(t,t)$};
+    \node[above right=2pt, red!85!black] at (H) {$H$};
+    \node[font=\large, teal!85!black] at (0.6, 0.6) {$S$};
+  \end{tikzpicture}
+  \caption{$\triangle ABC$ と円 $T$ の共通部分（面積 $S$）．}
+  \label{fig:common_area_s}
+\end{figure}
+
+上図のように，求める面積$S$は円$T$の面積$\pi$から$AB,BC,CA$で切り取られる弓形の面積を取り除けば良い．$T$ の中心と $x, y$ 軸，$BC$ との距離は各々
+\begin{align}
   t, \quad t, \quad |\sqrt{2} - \sqrt{2}t|
-\]
-だから，$F(t)$ が右図斜線部の面積を表すことから，
+\end{align}
+である．
 
 \begin{figure}[htb]
   \centering
@@ -105,30 +181,33 @@ $T$ と $BC$ の交点は $2x^2 - 4x + 2t^2 - 4t + 3 = 0$ の2実解
   \caption{単位円で直線 $x=t$ の右側にある円弓形の面積 $F(t)$}
 \end{figure}
 
-\[
-  S = \pi - 2F\left(\dfrac{1}{x}\right) - F(\sqrt{2} - x)
-\]
+ここで$F(t)$ が上図斜線部の面積を表すことから，3つの弓形の面積は$F\left(\dfrac{1}{x}\right), F(\sqrt{2} - x)$なので求める面積$S$は
+\begin{align}
+  S = \pi - 2F\left(\dfrac{1}{x}\right) - F(\sqrt{2} - x) \label{eq:2}
+\end{align}
+である．
 
 \paragraph{(iii)}
-(ii)から
+
+\cref{eq:2}の両辺を$x$で微分して
 \begin{align}
-  \dfrac{dS}{dx} &= +4 \sqrt{1 - \dfrac{1}{x^2}} \cdot \dfrac{1}{x^2} - 2\sqrt{1 - (\sqrt{2}-x)^2} \\
+  \dfrac{dS}{dx}
+  &= +4 \sqrt{1 - \dfrac{1}{x^2}} \cdot \dfrac{1}{x^2} - 2\sqrt{1 - (\sqrt{2}-x)^2} \\
   &= 2 \left[ \sqrt{2 - x^2} - \sqrt{1 - (\sqrt{2}-x)^2} \right] \\
   &= 2 \dfrac{-2\sqrt{2}x + 3}{\sqrt{2-x^2} + \sqrt{1 - (\sqrt{2}-x)^2}}
 \end{align}
-から下表を得る．
+から$S$の増減表は以下のようになる．
 
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \begin{tabular}{c|c|c|c|c|c}
-      $x$ & $1$ & $\dots$ & $\dfrac{3}{4}\sqrt{2}$ & $\dots$ & $\sqrt{2}$ \\ \hline
-      $S'$ & & $+$ & $0$ & $-$ & \\ \hline
-      $S$ & & $\nearrow$ & & $\searrow$ &
-    \end{tabular}
-  \end{table}
-\end{center}
+\begin{table}[htb]
+  \centering
+  \caption{$S$の増減表}
+  \begin{tabular}{c|c|c|c|c|c}
+    $x$ & $1$ & $\dots$ & $\dfrac{3}{4}\sqrt{2}$ & $\dots$ & $\sqrt{2}$ \\ \hline
+    $S'$ & & $+$ & $0$ & $-$ & \\ \hline
+    $S$ & & $\nearrow$ & & $\searrow$ &
+  \end{tabular}
+\end{table}
 
-よって，$x = \dfrac{3}{4}\sqrt{2}$ で $S$ は最大．
+よって，$x = \dfrac{3}{4}\sqrt{2}$ で $S$ は最大となる．
 
 \end{document}
