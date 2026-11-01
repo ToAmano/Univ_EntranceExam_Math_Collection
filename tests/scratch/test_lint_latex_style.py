@@ -368,6 +368,76 @@ def test_display_math_brackets_rule(tmp_path):
     assert fixed == expected
 
 
+def test_display_math_dollars_rule(tmp_path):
+    # インライン数式 $...$ やエスケープ \$ は誤検知しないこと
+    valid = (
+        'これは $x = 1$ と $y = 2$ の例であり，\\$100 である．\n'
+        '$\\Longleftrightarrow$$y=f(p)$ もインライン数式同士なので誤検知しない．\n'
+        '\\begin{align}\n'
+        '  a &= b\n'
+        '\\end{align}\n'
+    )
+    assert lint.check_display_math_dollars(valid) == []
+    assert lint.fix_text(valid) == valid
+
+    # コメントアウト内の $$ は誤検知しないこと
+    comment_src = '% $$ x = 1 $$\n'
+    assert lint.check_display_math_dollars(comment_src) == []
+
+    # 単一行 $$ ... $$、連続行 $$ ... $$、複数行 $$ ... $$、$$ \begin{aligned} ... \end{aligned} $$ の検出と自動修正
+    src = (
+        '  $$ f(x) = x^2 $$\n'
+        '$$ a = 1 $$\n'
+        '$$ b = 2 $$\n'
+        '$$\n'
+        '  g(x) = x + 1\n'
+        '$$\n'
+        '$$\n'
+        '  \\begin{aligned}\n'
+        '    h(x) &= f(x) + g(x) \\\\\n'
+        '    &= x^2 + x + 1\n'
+        '  \\end{aligned}\n'
+        '$$\n'
+    )
+    errors = lint.check_display_math_dollars(src)
+    assert len(errors) == 10  # 5組の $$ ... $$ で10件
+
+    fixed = lint.fix_text(src)
+    assert lint.check_display_math_dollars(fixed) == []
+    expected = (
+        '  \\begin{align}\n'
+        '    f(x) = x^2\n'
+        '  \\end{align}\n'
+        '\\begin{align}\n'
+        '  a = 1\n'
+        '\\end{align}\n'
+        '\\begin{align}\n'
+        '  b = 2\n'
+        '\\end{align}\n'
+        '\\begin{align}\n'
+        '  g(x) = x + 1\n'
+        '\\end{align}\n'
+        '\\begin{align}\n'
+        '    h(x) &= f(x) + g(x) \\\\\n'
+        '    &= x^2 + x + 1\n'
+        '\\end{align}\n'
+    )
+    assert fixed == expected
+
+    # 文中埋め込みの $$ ... $$
+    inline_display = '前$$ x = 1 $$後\n'
+    assert len(lint.check_display_math_dollars(inline_display)) == 2
+    fixed_inline = lint.fix_text(inline_display)
+    expected_inline = (
+        '前\n'
+        '\\begin{align}\n'
+        '  x = 1\n'
+        '\\end{align}\n'
+        '後\n'
+    )
+    assert fixed_inline == expected_inline
+
+
 def test_solution_headings_rule():
     # 1解法 + 1別解 + 解説（文中参照の [解]では は誤検知しない）
     src_two = (

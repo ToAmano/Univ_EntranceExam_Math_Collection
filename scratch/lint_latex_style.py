@@ -162,6 +162,118 @@ def check_display_math_brackets(text):
     return errors
 
 
+def find_display_math_dollars(text):
+    """Scan text for display math $$ ... $$ while respecting inline $...$ and escaped \\$.
+    Returns:
+      blocks: list of (open_start, open_end, close_start, close_end, masked_body)
+      tokens: list of token start indices
+    """
+    i = 0
+    n = len(text)
+    blocks = []
+    tokens = []
+    while i < n:
+        if text[i] == '\\':
+            i += 2
+            continue
+        if text[i] == '$':
+            if i + 1 < n and text[i + 1] == '$':
+                open_start = i
+                open_end = i + 2
+                tokens.append(open_start)
+                j = open_end
+                close_start = -1
+                while j < n:
+                    if text[j] == '\\':
+                        j += 2
+                        continue
+                    if text[j] == '$':
+                        if j + 1 < n and text[j + 1] == '$':
+                            close_start = j
+                            close_end = j + 2
+                            tokens.append(close_start)
+                            blocks.append((open_start, open_end, close_start, close_end, text[open_end:close_start]))
+                            i = close_end
+                            break
+                        else:
+                            j += 1
+                    else:
+                        j += 1
+                if close_start == -1:
+                    break
+            else:
+                j = i + 1
+                while j < n:
+                    if text[j] == '\\':
+                        j += 2
+                        continue
+                    if text[j] == '$':
+                        i = j + 1
+                        break
+                    j += 1
+                else:
+                    break
+        else:
+            i += 1
+    return blocks, tokens
+
+
+def check_display_math_dollars(text):
+    """ディスプレイ数式の $$ ... $$ を検出し、align 環境の使用を促す。"""
+    errors = []
+    text_no_comments = strip_comments(text)
+    _, tokens = find_display_math_dollars(text_no_comments)
+    for pos in tokens:
+        errors.append((
+            line_of(text, pos),
+            "$$ は使わない（align 環境を使う）",
+        ))
+    return errors
+
+
+def _find_display_math_dollar_edits(text, raw):
+    edits = []
+    nl = '\r\n' if '\r\n' in raw else '\n'
+    blocks, _ = find_display_math_dollars(text)
+    for open_start, open_end, close_start, close_end, masked_body in blocks:
+        raw_body = raw[open_end:close_start]
+
+        line_start = text.rfind('\n', 0, open_start) + 1
+        indent_m = re.match(r'[ \t]*', text[line_start:open_start])
+        indent = indent_m.group(0) if indent_m else ''
+
+        pre_text = text[line_start:open_start].strip()
+        line_end = text.find('\n', close_end)
+        if line_end == -1:
+            line_end = len(text)
+        post_text = text[close_end:line_end].strip()
+
+        prefix = f"{nl}{indent}" if pre_text else ""
+        suffix = f"{nl}{indent}" if post_text else ""
+
+        m_aligned = ALIGNED_WRAP_RE.match(masked_body)
+        if m_aligned:
+            inner_start, inner_end = m_aligned.span('inner')
+            inner_raw = raw_body[inner_start:inner_end]
+            replacement = f"{prefix}\\begin{{align}}{nl}{inner_raw}{nl}{indent}\\end{{align}}{suffix}"
+            edits.append((open_start, close_end, replacement))
+            continue
+
+        if '\n' not in raw_body:
+            replacement = f"{prefix}\\begin{{align}}{nl}{indent}  {raw_body.strip()}{nl}{indent}\\end{{align}}{suffix}"
+            edits.append((open_start, close_end, replacement))
+            continue
+
+        body_out = raw_body
+        if not body_out.startswith(('\n', '\r\n')):
+            body_out = f"{nl}{indent}  " + body_out.lstrip(' \t')
+        if not body_out.rstrip(' \t').endswith(('\n', '\r\n')):
+            body_out = body_out.rstrip(' \t') + f"{nl}{indent}"
+        replacement = f"{prefix}\\begin{{align}}{body_out}\\end{{align}}{suffix}"
+        edits.append((open_start, close_end, replacement))
+    return edits
+
+
 def _find_display_math_bracket_edits(text, raw):
     edits = []
     nl = '\r\n' if '\r\n' in raw else '\n'
@@ -941,6 +1053,10 @@ def fix_text(raw):
     for start, end, replacement in sorted(bracket_edits, reverse=True):
         raw = raw[:start] + replacement + raw[end:]
 
+    dollar_edits = _find_display_math_dollar_edits(_mask_protected_regions(raw), raw)
+    for start, end, replacement in sorted(dollar_edits, reverse=True):
+        raw = raw[:start] + replacement + raw[end:]
+
     eq_edits = _find_equation_env_edits(_mask_protected_regions(raw))
     for start, end, replacement in sorted(eq_edits, reverse=True):
         raw = raw[:start] + replacement + raw[end:]
@@ -1171,6 +1287,7 @@ def lint_file(path):
     errors += check_align_star(text)
     errors += check_equation_env(text)
     errors += check_display_math_brackets(text)
+    errors += check_display_math_dollars(text)
     errors += check_punctuation(text)
     errors += check_bare_args(text)
     errors += check_figure_caption(text)
