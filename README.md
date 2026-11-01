@@ -1,6 +1,6 @@
 # 東大・京大・東工大 数学過去問解答ライブラリ
 
-東大、京大、東工大の理系数学の過去問解答（手書きPDFおよびTeXによる解答）を公開・管理するリポジトリです．高校生時代に作成した手書き解答をベースにTeXに綺麗化しています．
+東大，京大，東工大の理系数学の過去問解答（手書きPDFおよびTeXによる解答）を公開・管理するリポジトリです．高校生時代に作成した手書き解答をベースにTeXに綺麗化しています．
 
 ## 公開サイト (GitHub Pages)
 最新の解答は以下のサイトでご覧いただけます．
@@ -21,14 +21,14 @@
 ---
 
 ### 1. LaTeX ➔ Markdown / TikZ-SVG の一括変換
-`src/` 配下の全TeXファイルからMarkdownおよびTikZのSVG画像を出力します。
+`src/` 配下の全TeXファイルからMarkdownおよびTikZのSVG画像を出力します．
 
 ```bash
 # リポジトリルートにて実行
 python3 scratch/tex_to_md.py
 ```
 
-※生成された Markdown ファイルは `web/src/content/solutions/` に、TikZ SVG 画像は `web/public/images/tikz/` 以下の階層ディレクトリに自動配置されます。
+※生成された Markdown ファイルは `web/src/content/solutions/` に，TikZ SVG 画像は `web/public/images/tikz/` 以下の階層ディレクトリに自動配置されます．
 
 ---
 
@@ -40,12 +40,12 @@ npm install
 npm run dev
 ```
 
-ブラウザで `http://localhost:4321/` を開くと、ポータル画面（`index.astro`）および数式・図形付きの解答ページを確認できます。
+ブラウザで `http://localhost:4321/` を開くと，ポータル画面（`index.astro`）および数式・図形付きの解答ページを確認できます．
 
 ---
 
 ### 3. Webサイトのプロダクションビルド (`npm run build`)
-GitHub Pages デプロイ用の静的 HTML bundle (`dist/`) を生成・動作検証します。
+GitHub Pages デプロイ用の静的 HTML bundle (`dist/`) を生成・動作検証します．
 
 ```bash
 cd web
@@ -56,8 +56,8 @@ npm run preview   # ビルド成果物 (dist/) のローカルプレビュー
 ---
 
 ### 4. 過去問解答集 PDF マスターの一括ビルド (LuaLaTeX)
-大学・区分（`titech`/`utokyo`/`ukyoto` × `kouki`/`zenki`）ごとに `src/{univ}/{cat}/main.tex` があり、
-その区分の全年度・全問題を1冊のPDFにまとめてビルドできます。
+大学・区分（`titech`/`utokyo`/`ukyoto` × `kouki`/`zenki`）ごとに `src/{univ}/{cat}/main.tex` があり，
+その区分の全年度・全問題を1冊のPDFにまとめてビルドできます．
 
 ```bash
 # main.tex を最新のソースから再生成（問題・解答が増減したら再実行）
@@ -72,18 +72,36 @@ cd src/titech/kouki
 latexmk -lualatex main.tex
 ```
 
-CIでは `.github/workflows/build-pdf.yml` がタグpush時に6区分すべてを自動ビルドし、
-`utokyo_zenki.pdf` のような名前でGitHub Releaseに添付します。
+CIでは `.github/workflows/build-pdf.yml` がタグpush時に6区分すべてを自動ビルドし，
+`utokyo_zenki.pdf` のような名前でGitHub Releaseに添付します．
 
 ---
 
 ## ライセンス (License)
 
-本リポジトリは、コンテンツとプログラムコードでデュアルライセンスを採用しています。詳細な規定は [LICENSE](LICENSE) をご参照ください。
+本リポジトリは，コンテンツとプログラムコードでデュアルライセンスを採用しています．詳細な規定は [LICENSE](LICENSE) をご参照ください．
 
 * **解答解説文章・TeXソース・TikZ画像 (コンテンツ)**: 
   **[CC BY-NC-SA 4.0 (Creative Commons 表示-非営利-継承 4.0 国際)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja)**
-  * クレジット表示を行い、非営利目的に限って自由にご利用・学習・共有・改変いただけます。
+  * クレジット表示を行い，非営利目的に限って自由にご利用・学習・共有・改変いただけます．
 * **プログラムコード (`web/`, `scratch/`, 設定ファイル)**: 
   **[MIT License](LICENSE)**
-  * 商用・非営利問わず自由に利用・改変いただけます。
+  * 商用・非営利問わず自由に利用・改変いただけます．
+
+---
+
+## 参考サイト・関連アーカイブ (References)
+
+Web上で閲覧・利用可能な大学入試数学の過去問アーカイブおよび解説サイトの一覧です．
+
+* **[大学入試数学問題アーカイブ (server-test.net)](https://server-test.net/math/)**: 1960年代以降の国公立大・東工大などの数学入試問題を60年以上にわたり網羅するデータベース．
+* **[Math For You](https://math4u.site/)**: 旧帝大および主要国公立大学の理系・文系数学過去問解答（PDF）を長年蓄積するアーカイブ．
+* **[電数図書館](https://densu.jp/)**: 主要国公立大の理系・文系数学の過去問ライブラリー．
+* **[kamelink (数学入試問題を楽しもう)](https://kamelink.com/)**: 大学入試数学の過去問を単元別・テーマ別のタグで体系的に分類・検索できるサイト．
+* **[東進 過去問データベース](https://www.toshin-kakomon.com/)**: 主要国公私立大学の過去問・解答（要無料会員登録）．
+* **[ちょぴん先生の数学部屋](https://chopinmath.com/)**: 東大・京大・東工大・旧帝大などの過去問について，発想の着眼点や思考プロセスを丁寧に解説するブログ．
+* **[受験の月](https://examist.jp/)**: 高校数学・入試数学の解法パターン（定石）の体系化や，記述答案の採点基準・論証の急所を整理したサイト．
+* **[青空学園数学科](https://aozoragakuen.sakura.ne.jp/)**: 入試問題を素材に，数学の本質や厳密な論証の精神を探究する研究サイト．
+* **[球面倶楽部零八式markIISR](https://spherical-harmonics.hateblo.jp/entry/Top_of_Bekkan)**: 東大・京大をはじめとする難関大数学の過去問（昭和のオールド問〜最新年）を広く網羅し，背景の数学的構造やスマートな別解（「大人の解法」）を深く考察するブログ．
+* **[Art of Problem Solving (AoPS) Community](https://artofproblemsolving.com/community)**: 世界中の数学ファンや競技数学者が，東大・京大等の入試問題（英訳）や別解を議論するフォーラム．
+
