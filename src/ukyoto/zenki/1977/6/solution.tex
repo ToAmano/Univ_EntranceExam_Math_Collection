@@ -1,59 +1,108 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-\noindent
-{\bf [解答]} (1) (2) (3) に代入して
-\begin{equation}
-  \begin{cases}
-    -f''(x) \ge f(x) & \dots \text{①} \\
-    f'(0) = 0 & \dots \text{②} \\
-    0 \le x \le a \implies f(x) > 0 & \dots \text{③}
-  \end{cases}
-\end{equation}
+(1) を (2) (3) に代入して
+\begin{align}
+  & -f''(x) \ge f(x) \label{eq:1} \\
+  & f'(0) = 0  \label{eq:2} \\
+  & 0 \le x \le a \implies f(x) > 0  \label{eq:3}
+\end{align}
+である．
 
 \paragraph{(i)}
-$0 \le t \le a$ の時，①, ③から
+
+$0 \le t \le a$ の時\cref{eq:1,eq:3}から
 \begin{align}
   -f''(t) > 0
 \end{align}
-$[0, x]\ (0 \le x \le a)$ で積分して
+だから，これを$[0, x]\ (0 \le x \le a)$ で積分して
 \begin{align}
-  f'(0) - f'(x) > 0 \iff 0 > f'(x) \quad (\because \text{②}) \quad \dots \text{④}
+  \int_{0}^{x}f''(t)dt = f'(0) - f'(x) = - f'(x) > 0
+  \therefore
+  f'(x) < 0 \quad (\because \text{\cref{eq:2}}) \label{eq:4}
 \end{align}
-だから $x = a$ として
+だから $x = a$ として(1)の条件から$f'(a)=g(a)$だから
 \begin{align}
-  0 > f'(a) \iff 0 < g(a)
+  f'(a) < 0 \iff 0 < g(a)
 \end{align}
+となり題意は示された．
 
 \paragraph{(ii)}
-$a \le y \le a + \dfrac{f(a)}{-f'(a)}$ で常に $f(y) > 0$ ($f(0) > 0$ と仮定する)．③とあわせて
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=1.8cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (1.0, 0);
+    \coordinate (P) at (1.0, 1.5);
+    \coordinate (Y0) at (2.0, 0);
+    \coordinate (XT) at (2.5, 0);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (3.0, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 2.4) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 垂線・補助線
+    \draw[dashed, gray!70] (A) -- (P);
+    \draw[dashed, gray!70] (0, 1.5) -- (P);
+    \node[left=2pt, font=\footnotesize] at (0, 1.5) {$f(a)$};
+
+    % 曲線 y = f(x)
+    \draw[line width=1.3pt, blue!85!black] plot[domain=0:2.15, samples=50] (\x, {2.0 - 0.5*\x*\x});
+    \node[above=2pt, blue!85!black] at (0.3, 1.95) {$y = f(x)$};
+
+    % 接線
+    \draw[line width=1.0pt, teal!80!black] plot[domain=0.4:2.7, samples=10] (\x, {2.5 - \x});
+    \node[above right=2pt, teal!85!black, font=\footnotesize] at (1.8, 0.7) {接線};
+
+    % 主要点
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (P) {};
+    \node[above right=2pt] at (P) {$(a, f(a))$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (A) {};
+    \node[below=3pt] at (A) {$a$};
+
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (Y0) {};
+    \node[below=3pt, red!85!black] at (Y0) {$y$};
+
+    \node[circle, fill=teal!80!black, inner sep=1.4pt] at (XT) {};
+    \node[below=3pt, teal!85!black, font=\footnotesize] at (XT) {$a + \frac{f(a)}{g(a)}$};
+  \end{tikzpicture}
+  \caption{$x=a$ における接線と零点 $y$ の位置関係．}
+  \label{fig:1977_6_tangent}
+\end{figure}
+
+題意を背理法で示す．(3)より$f(a)>0$だから，
+$a \le y \le a - \dfrac{f(a)}{f'(a)}$ で常に $f(y) > 0$ と仮定する．
+\cref{eq:3}から$0 \le y \le a$でも$f(y)>0$だから，
 \begin{align}
-  \text{「 } 0 \le x \le a - \dfrac{f(a)}{f'(a)} \text{ で常に } f(x) > 0 \text{ 」} \quad \dots \text{⑤}
+  0 \le y \le a - \dfrac{f(a)}{f'(a)} \label{eq:5}
 \end{align}
-である．①から，同区間で
+で常に$f(y)>0$となる．よって\cref{eq:1}の区間では
 \begin{align}
-  f''(t) < 0 \quad \therefore f(t) \text{ は単調減少} \quad \dots \text{⑥}
+  f''(y) < 0
 \end{align}
-となり，④から，$f'(t) \le 0$ つまり $f(t)$ は単調減少である．ここで $f(x)$ には平均値の定理が適用できて，
+となり，$f'(y)$は単調減少である．これと\cref{eq:2}より
 \begin{align}
-  f\left(a - \dfrac{f(a)}{f'(a)}\right) - f(0) = -\dfrac{f(a)}{f'(a)} f'(c) \quad \left(a < c < a - \dfrac{f(c)}{f'(c)}\right)
+  f'(y) \le 0 \label{eq:6}
+\end{align}
+となり，$f(y)$は単調減少である．
+
+ここで $f(x)$ には平均値の定理が適用できて，
+\begin{align}
+  f\left(a - \dfrac{f(a)}{f'(a)}\right) - f(0) = -\dfrac{f(a)}{f'(a)} f'(c) \quad
+  \left(a < c < a - \dfrac{f(a)}{f'(a)}\right)
 \end{align}
 なる $c$ が存在する．変形して
 \begin{align}
-  f\left(a - \dfrac{f(a)}{f'(a)}\right) = \dfrac{f(a)}{f'(a)} \{ f'(a) - f'(c) \} \quad \dots \text{⑦}
+  f\left(a - \dfrac{f(a)}{f'(a)}\right) = \dfrac{f(a)}{f'(a)} \{ f'(a) - f'(c) \} \label{eq:7}
 \end{align}
-ここで，⑤, ⑥から
-\begin{align}
-  f\left(a - \dfrac{f(a)}{f'(a)}\right) > 0, \quad f(a) > 0, \quad f'(a) < 0
-\end{align}
-だから ⑦より
-\begin{align}
-  f'(a) - f'(c) < 0 \iff f'(a) < f'(c)
-\end{align}
-しかし，これは ⑥及び $a < c$ に反し矛盾．以上から $a \le y \le a - \dfrac{f(a)}{f'(a)}$ に $f(y) = 0$ なる $y$ がある．
+である．右辺について，$\dfrac{f(a)}{f'(a)}<0$と，$f'(x)$が単調減少だから$f'(a)>f'(c)$だから右辺は負である．一方で左辺は仮定より正である．よって矛盾する．
+
+以上から $a \le y \le a - \dfrac{f(a)}{f'(a)}$ に $f(y) = 0$ なる $y$ がある．
 
 \end{document}

@@ -1,66 +1,56 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-\noindent
-{\bf [解答]} (1) $a$ 以外の2辺の長さを $x, y$ とする．この時，$x + y = m$ に注意する．
-
-\noindent
-$S = \dfrac{1}{2}(x+y+a) = \dfrac{1}{2}(m+a)$ としてヘロンの公式から，面積 $T$ として
-\begin{align}
-  T &= \sqrt{S(S-x)(S-y)(S-a)} \\
-  &\le \sqrt{S(S-a)} \cdot \dfrac{(S-x)+(S-y)}{2} \quad (\because S-x, S-y > 0 \text{ から AM-GM}) \\
-  &= \sqrt{S(S-a)} \cdot \dfrac{2S-m}{2}
-\end{align}
-等号成立は $S-x = S-y \therefore x=y=\dfrac{m}{2}$ の時．つまり，この時三角形は2等辺三角形である．
-
-\bigskip
-\noindent
-{\bf [別解]} $\angle BAC + \angle BDC = \theta$ とする．
+\paragraph{(1)}
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=1.45cm, y=1.45cm, >=stealth,
+  \begin{tikzpicture}[x=1.6cm, y=1.6cm, >=stealth,
     every node/.style={font=\small}]
-    \coordinate (A) at (0,1.55);
-    \coordinate (B) at (1.35,0.15);
-    \coordinate (C) at (-1.25,0.15);
-    \coordinate (D) at (-0.1,-1.1);
-    \draw[line width=1.4pt, blue!85!black] (A) -- (B) -- (D) -- (C) -- cycle;
-    \foreach \P in {A,B,C,D} {\fill[blue!85!black] (\P) circle (1.4pt);}
+    \coordinate (B) at (1.5, 0);
+    \coordinate (C) at (-1.5, 0);
+    \coordinate (A) at (-0.4, 1.7);
+
+    \draw[line width=1.4pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (A) {};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (B) {};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (C) {};
+
     \node[above=3pt] at (A) {$A$};
     \node[right=3pt] at (B) {$B$};
     \node[left=3pt] at (C) {$C$};
-    \node[below=3pt] at (D) {$D$};
-    \node[above right=3pt] at (0.68,0.85) {$x$};
-    \node[above left=3pt] at (-0.62,0.85) {$y$};
-    \node[below right=3pt] at (0.62,-0.48) {$z$};
-    \node[below left=3pt] at (-0.68,-0.48) {$w$};
+
+    \node[above right=2pt] at ($(A)!0.5!(B)$) {$x$};
+    \node[above left=2pt] at ($(A)!0.5!(C)$) {$y$};
+    \node[below=3pt, red!85!black] at ($(B)!0.5!(C)$) {$a$};
   \end{tikzpicture}
-  \caption{四角形 $ABCD$ の4辺 $x,y,z,w$}
+  \caption{底辺 $BC=a$ と2辺 $AB=x, AC=y$ をもつ三角形 $ABC$．}
+  \label{fig:1977_5_triangle}
 \end{figure}
 
-\noindent
-ブレードシュナイダーの公式から，$S = \dfrac{1}{2}(x+y+z+w) = \dfrac{1}{2}m$ として
+$a$ 以外の2辺の長さを $x, y$ とすると題意より
 \begin{align}
-  T &= \sqrt{(S-x)(S-y)(S-z)(S-w) - xyzw \cos^2 \dfrac{\theta}{2}} \\
-  &\le \sqrt{ \left\{ \dfrac{(S-x)+(S-y)+(S-z)+(S-w)}{4} \right\}^4 } \quad (\because \text{AM-GM 及び } xyzw \cos^2 \dfrac{\theta}{2} \ge 0) \\
-  &= \dfrac{m^2}{16}
+  x + y = m \label{eq:1}
 \end{align}
-等号成立は $x=y=z=w$ かつ $\theta=\pi$，つまり $\square ABCD$ が正方形の時．
+である．ここで
+\begin{align}
+  s = \dfrac{1}{2}(x+y+a) = \dfrac{1}{2}(m+a) \label{eq:2}
+\end{align}
+とおくと，ヘロンの公式から三角形の面積 $T$ は
+\begin{align}
+  T
+  &= \sqrt{s(s-x)(s-y)(s-a)} \\
+  &\le \sqrt{s(s-a)} \cdot \dfrac{(s-x)+(s-y)}{2} \quad (\because S-x, S-y > 0 \text{ から AM-GM}) \\
+  &= \sqrt{s(s-a)} \cdot \dfrac{2s-m}{2} \\
+  &= a\sqrt{s(s-a)} = \text{const.}
+\end{align}
+となる．等号成立は $s-x = s-y \therefore x=y=\dfrac{m}{2}$ の時で，この時三角形は2等辺三角形である．よって題意は示された．
 
-\bigskip
-\noindent
 \paragraph{(2)}
 
-四角形 $ABCD$ とし，4辺の長さを $x, y, z, w$ とする．この時，$m$ を定数 ($>0$) として
-\[
-  x + y + z + w = m \quad \dots \text{①}
-\]
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=1.45cm, y=1.45cm, >=stealth,
@@ -71,7 +61,7 @@ $S = \dfrac{1}{2}(x+y+a) = \dfrac{1}{2}(m+a)$ としてヘロンの公式から�
     \coordinate (D) at (-0.42,-1.12);
     \draw[line width=1.4pt, blue!85!black] (A) -- (B) -- (D) -- (C) -- cycle;
     \draw[dashed, gray!70] (C) -- (B);
-    \foreach \P in {A,B,C,D} {\fill[blue!85!black] (\P) circle (1.4pt);}
+    \foreach \P in {A,B,C,D} {\node[circle, fill=blue!85!black, inner sep=1.4pt] at (\P) {};}
     \node[above=3pt] at (A) {$A$};
     \node[right=3pt] at (B) {$B$};
     \node[left=3pt] at (C) {$C$};
@@ -84,7 +74,17 @@ $S = \dfrac{1}{2}(x+y+a) = \dfrac{1}{2}(m+a)$ としてヘロンの公式から�
   \end{tikzpicture}
   \caption{対角線 $BC=a$ で分けた三角形 $ABC$ と $BCD$}
 \end{figure}
-となる．$|BC| = a\ (>0)$, $x+y = k\ (k > a)$ と固定すると，$\triangle ABC$, $\triangle BCD$ は $x=y, z=w$ の時 面積最大である．この面積を $S(k)$ とする．右下図から ($E$ は $BC$ の中点)
+
+四角形 $ABCD$ とし，4辺の長さを $x, y, z, w$ とすると題意より $m$ を定数 ($>0$) として
+\begin{align}
+  x + y + z + w = m \label{eq:3}
+\end{align}
+となる．$|BC| = a\ (>0)$, $x+y = k\ (k > a)$ と固定すると$z+w=m-k$で一定である．
+この時(1)より$\triangle ABC$, $\triangle BCD$ は $x=y, z=w$ で面積最大である．この面積を $S(k)$ とする．三角形$ABC, BCD$の存在条件から
+\begin{align}
+  0 < a < \dfrac{m}{2} \label{eq:4}
+\end{align}
+である．
 
 \begin{figure}[htb]
   \centering
@@ -99,8 +99,8 @@ $S = \dfrac{1}{2}(x+y+a) = \dfrac{1}{2}(m+a)$ としてヘロンの公式から�
     \draw[dashed, gray!70] (C) -- (B);
     \draw[dashed, gray!70] (A) -- (D);
     \draw[gray!70] (0,0.13) -- (0.13,0.13) -- (0.13,0);
-    \foreach \P in {A,B,C,D} {\fill[blue!85!black] (\P) circle (1.4pt);}
-    \fill[red!85!black] (E) circle (1.4pt);
+    \foreach \P in {A,B,C,D} {\node[circle, fill=blue!85!black, inner sep=1.4pt] at (\P) {};}
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (E) {};
     \node[above=3pt] at (A) {$A$};
     \node[right=3pt] at (B) {$B$};
     \node[left=3pt] at (C) {$C$};
@@ -116,30 +116,71 @@ $S = \dfrac{1}{2}(x+y+a) = \dfrac{1}{2}(m+a)$ としてヘロンの公式から�
   \caption{$x=y=k/2$，$z=w=(m-k)/2$ のときの高さ $AE$ と $ED$}
 \end{figure}
 
+上図で$E$ は $BC$ の中点とすると，$\triangle AEB, \triangle CDE$に三平方の定理を用いて
 \begin{align}
-  S(k) &= \dfrac{1}{2} a (|AE| + |ED|) \\
+  \begin{cases}
+    |AE| = \sqrt{|AB|^2-|BE|^2} = \sqrt{\left(\dfrac{k}{2}\right)^2 - \left(\dfrac{a}{2}\right)^2} \\
+    |ED| = \sqrt{|CD|^2-|CE|^2} = \sqrt{\left(\dfrac{m-k}{2}\right)^2 - \left(\dfrac{a}{2}\right)^2}
+  \end{cases}
+\end{align}
+である．よって$S(k)$は
+\begin{align}
+  S(k)
+  &= \dfrac{1}{2} |BC| (|AE| + |ED|) \\
+  &= \dfrac{1}{2} a (|AE| + |ED|) \\
   &= \dfrac{1}{2} a \left\{ \sqrt{\left(\dfrac{k}{2}\right)^2 - \left(\dfrac{a}{2}\right)^2} + \sqrt{\left(\dfrac{m-k}{2}\right)^2 - \left(\dfrac{a}{2}\right)^2} \right\} \\
   &\le \dfrac{1}{2} a \sqrt{(1+1) \left\{ \left(\dfrac{k}{2}\right)^2 - \left(\dfrac{a}{2}\right)^2 + \left(\dfrac{m-k}{2}\right)^2 - \left(\dfrac{a}{2}\right)^2 \right\}} \quad (\because \text{コーシー・シュワルツ, 等号成立は } k = \dfrac{1}{2}m) \\
   &= \dfrac{1}{2} a \sqrt{k^2 - mk + \dfrac{1}{2}m^2 - a^2} \\
   &= \dfrac{1}{2} a \sqrt{\left(k - \dfrac{1}{2}m\right)^2 + \dfrac{1}{4}m^2 - a^2} \\
-  &\le \dfrac{1}{2} a \sqrt{\dfrac{1}{4}m^2 - a^2} \quad (\text{等号成立は } k = \dfrac{1}{2}m)
+  &\le \dfrac{1}{2} a \sqrt{\dfrac{1}{4}m^2 - a^2} \quad (\text{等号成立は } k = \dfrac{1}{2}m) \label{eq:5}
 \end{align}
-だから，$a$ を固定した時，$k = \dfrac{1}{2}m$ で $S(k)$ は $\max \dfrac{1}{2} a \sqrt{\dfrac{1}{4}m^2 - a^2}$ をとる．($\dfrac{1}{2}m > a$ は満たしている)
+となる．従って$a$ を固定した時は$k = \dfrac{1}{2}m$ で $S(k)$ は最大値 $\dfrac{1}{2} a \sqrt{\dfrac{1}{4}m^2 - a^2}$ をとる．
 
-\noindent
-次に $a$ を動かす．($0 < a < \dfrac{1}{2}m$)
+次に $a$ を$0 < a < \dfrac{1}{2}m$で動かす．\cref{eq:5}を変形して
 \begin{align}
-  S(k) &= \dfrac{1}{2} \sqrt{ -a^4 + \dfrac{1}{4}m^2 a^2 } \\
+  S(k)
+  &= \dfrac{1}{2} \sqrt{ -a^4 + \dfrac{1}{4}m^2 a^2 } \\
   &= \dfrac{1}{2} \sqrt{ -\left(a^2 - \dfrac{1}{8}m^2\right)^2 + \dfrac{1}{64}m^4 } \\
   &\le \dfrac{1}{16} m^2 \quad (\text{等号成立は } a = \dfrac{\sqrt{2}}{4}m \text{ のとき})
 \end{align}
-したがって $S(k)$ は $a = \dfrac{\sqrt{2}}{4}m \ (0 < \dfrac{\sqrt{2}}{4}m < \dfrac{1}{2}m)$ で $\max$．
+となる．したがって $S(k)$ は $a = \dfrac{\sqrt{2}}{4}m$ で最大となる．この$a$は$0<a<\dfrac{m}{2}$を満たし十分である．
 
-\noindent
-この時，$x = y = z = w = \dfrac{1}{4}m, a = \dfrac{\sqrt{2}}{4}m$ で，たしかに $\square ABCD$ は正方形である．
+この時 $x = y = z = w = \dfrac{1}{4}m, a = \dfrac{\sqrt{2}}{4}m$ で，たしかに $\square ABCD$ は正方形である．よって題意は示された．
 
-\noindent
-以上から示された．
+{\bf [別解]}
+
+\paragraph{(2)}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.45cm, y=1.45cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (A) at (0,1.55);
+    \coordinate (B) at (1.35,0.15);
+    \coordinate (C) at (-1.25,0.15);
+    \coordinate (D) at (-0.1,-1.1);
+    \draw[line width=1.4pt, blue!85!black] (A) -- (B) -- (D) -- (C) -- cycle;
+    \foreach \P in {A,B,C,D} {\node[circle, fill=blue!85!black, inner sep=1.4pt] at (\P) {};}
+    \node[above=3pt] at (A) {$A$};
+    \node[right=3pt] at (B) {$B$};
+    \node[left=3pt] at (C) {$C$};
+    \node[below=3pt] at (D) {$D$};
+    \node[above right=3pt] at (0.68,0.85) {$x$};
+    \node[above left=3pt] at (-0.62,0.85) {$y$};
+    \node[below right=3pt] at (0.62,-0.48) {$z$};
+    \node[below left=3pt] at (-0.68,-0.48) {$w$};
+  \end{tikzpicture}
+  \caption{四角形 $ABCD$ の4辺 $x,y,z,w$}
+\end{figure}
+
+$\angle BAC + \angle BDC = \theta$ とする．
+ブレードシュナイダーの公式から，$S = \dfrac{1}{2}(x+y+z+w) = \dfrac{1}{2}m$ として
+\begin{align}
+  T &= \sqrt{(S-x)(S-y)(S-z)(S-w) - xyzw \cos^2 \dfrac{\theta}{2}} \\
+  &\le \sqrt{ \left\{ \dfrac{(S-x)+(S-y)+(S-z)+(S-w)}{4} \right\}^4 } \quad (\because \text{AM-GM 及び } xyzw \cos^2 \dfrac{\theta}{2} \ge 0) \\
+  &= \dfrac{m^2}{16}
+\end{align}
+等号成立は $x=y=z=w$ かつ $\theta=\pi$，つまり $\square ABCD$ が正方形の時である．
 
 \newpage
 

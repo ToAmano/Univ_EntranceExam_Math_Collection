@@ -1,28 +1,72 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-\noindent
-{\bf [解答]} $a > 0$．$f(x) = x[a - (1+a^4)x^2]$ から，$y = f(x)$ と $x$ 軸の交点のうち，$x$ 座標正のもののそれを $c = \sqrt{\dfrac{a}{1+a^4}}$ である．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.0cm, y=1.5cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (C) at (2.45, 0);
+
+    % 領域 S_a の塗りつぶし（淡い色＋薄い斜線）
+    \fill[teal!15] (0, 0) -- plot[domain=0:2.449, samples=50] (\x, {1.8*\x - 0.3*\x*\x*\x}) -- (2.449, 0) -- cycle;
+    \fill[pattern=north east lines, pattern color=teal!50] (0, 0) -- plot[domain=0:2.449, samples=50] (\x, {1.8*\x - 0.3*\x*\x*\x}) -- (2.449, 0) -- cycle;
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.4, 0) -- (3.0, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.6) -- (0, 2.2) node[above] {$y$};
+    \node[below left=3pt] at (O) {$O$};
+
+    % 曲線 y = f(x)
+    \draw[line width=1.3pt, blue!85!black] plot[domain=-0.15:2.65, samples=60] (\x, {1.8*\x - 0.3*\x*\x*\x});
+    \node[above right=1pt, blue!85!black] at (2.0, 1.4) {$y = f(x)$};
+
+    % 交点 c
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (C) {};
+    \node[below left=2pt, red!85!black] at (C) {$c$};
+
+    % 領域ラベル（白地ノードで斜線に埋もれないようにする）
+    \node[fill=white, text=teal!85!black, inner sep=2pt, rounded corners=2pt, font=\normalsize] at (1.1, 0.7) {$S_a$};
+  \end{tikzpicture}
+  \caption{$y=f(x)$ の概形と積分領域 $S_a$．}
+  \label{fig:1977_2_sa}
+\end{figure}
+
+与えられた関数
 \begin{align}
-  S_a &= -a^4 \int_0^c x^3 dx + a \int_0^c x dx - \int_0^c x^3 dx \\
-  \dfrac{d}{da} S_a &= -a^4 c^3 c' - 4a^3 \int_0^c x^3 dx + \int_0^c x dx + a c c' - c^3 c' \\
-  &= -(a^4+1)c^3 c' + a c c' + \dfrac{1}{2}c^2 - a^3 c^4 \quad \dots \text{①}
+  f(x) = x[a - (1+a^4)x^2] \quad (a>0) \label{eq:1}
 \end{align}
-又，$a - (a^4+1)c^2 = 0$ だから
+について，$y = f(x)$ と $x$ 軸の交点のうち $x$ 座標正のものは
 \begin{align}
-  \dfrac{dS_a}{da} &= c^2 \left( \dfrac{1}{2} - \dfrac{a^4}{1+a^4} \right) \\
+  c = \sqrt{\dfrac{a}{1+a^4}} \label{eq:2}
+\end{align}
+である．よって求める積分は
+\begin{align}
+  S_a
+  &= \int_{0}^{c} f(x) dx \\
+  &= -a^4 \int_0^c x^3 dx + a \int_0^c x dx - \int_0^c x^3 dx  \label{eq:3}
+\end{align}
+である．両辺を$a$で微分して，$c'=\dfrac{dc}{da}$とすると
+\begin{align}
+  \dfrac{d}{da} S_a
+  &= -a^4 c^3 c' - 4a^3 \int_0^c x^3 dx + \int_0^c x dx + a c c' - c^3 c' \\
+  &= -(a^4+1)c^3 c' + a c c' + \dfrac{1}{2}c^2 - a^3 c^4  \\
+  &= \left[-(a^4+1)c^2 + a \right] cc' + c^2\left(\dfrac{1}{2}-a^3c^2\right)
+\end{align}
+である．\cref{eq:2}より $(a^4+1)c^2 = a$ だから代入すると第1・2項がキャンセルして
+\begin{align}
+  \dfrac{dS_a}{da}
+  &= c^2 \left( \dfrac{1}{2} - \dfrac{a^4}{1+a^4} \right) \\
   &= \dfrac{-c^2}{2(1+a^4)} (a^2+1)(a^2-1)
 \end{align}
-より下表を得る．
+より，$S$の増減表は以下のようになる．
 
 \begin{center}
   \begin{table}[htb]
     \centering
+    \caption{$S(a)$の増減表}
     \begin{tabular}{c|ccccc}
       $a$ & $0$ & $\dots$ & $1$ & $\dots$ \\ \hline
       $S'$ & & $+$ & $0$ & $-$ \\ \hline
@@ -31,8 +75,7 @@
   \end{table}
 \end{center}
 
-\noindent
-よって $S_a$ を最大にする $a$ は $a = 1$．
+よって $S_a$ を最大にする $a$ は $a = 1$である．
 
 \newpage
 
