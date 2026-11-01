@@ -1,12 +1,50 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} 点$X$に対し, $\overrightarrow{OX} = \vec{x}$と定めると, $|\vec{a}_k| = \text{const} \ (k=1 \sim 6)$
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=2.2cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (Aone) at (75:1);
+    \coordinate (Atwo) at (-20:1);
+    \coordinate (Athree) at (200:1);
+    \coordinate (Afour) at (40:1);
+    \coordinate (Afive) at (160:1);
+    \coordinate (Asix) at (240:1);
+
+    % 定円
+    \draw[line width=1.1pt, gray!80!black] (O) circle (1);
+
+    % 中心 O
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (O) {};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 各点と動径（破線）
+    \foreach \P in {Aone, Atwo, Athree, Afour, Afive, Asix} {
+      \draw[dashed, gray!50] (O) -- (\P);
+      \node[circle, fill=blue!85!black, inner sep=1.4pt] at (\P) {};
+    }
+
+    \node[above right=2pt] at (Aone) {$A_1$};
+    \node[below right=2pt] at (Atwo) {$A_2$};
+    \node[below left=2pt] at (Athree) {$A_3$};
+    \node[above right=2pt] at (Afour) {$A_4$};
+    \node[left=3pt] at (Afive) {$A_5$};
+    \node[below left=2pt] at (Asix) {$A_6$};
+  \end{tikzpicture}
+  \caption{円周上の6定点 $A_1, \dots, A_6$ と中心 $O$}
+\end{figure}
+
+点$X$に対して $\overrightarrow{OX} = \vec{x}$と定めると題意より
+\begin{align}
+  |\vec{a}_k| = \text{const.} \ (k=1 \sim 6) \label{eq:1}
+\end{align}
+である．
+
+\paragraph{(i)}
 
 \begin{figure}[htb]
   \centering
@@ -26,9 +64,9 @@
     \draw[dashed, gray!70] (Aone) -- (E);
     \draw[line width=1.1pt, teal!75!black] (Atwo) -- (F);
     \foreach \P in {Aone,Atwo,Athree} {
-      \fill[blue!85!black] (\P) circle (1.4pt);
+      \node[circle, fill=blue!85!black, inner sep=1.4pt] at (\P) {};
     }
-    \fill[red!85!black] (H) circle (1.7pt);
+    \node[circle, fill=red!85!black, inner sep=1.7pt] at (H) {};
     \node[above right=2pt] at (Aone) {$A_1$};
     \node[below right=2pt] at (Atwo) {$A_2$};
     \node[below left=2pt] at (Athree) {$A_3$};
@@ -37,33 +75,109 @@
   \caption{円周上の3点と三角形の垂心 $H$}
 \end{figure}
 
-(i)
+垂心とは，各頂点から対辺へおろした垂線の上にある点のことをいうから，
+\begin{align}
+  \overrightarrow{A_2H} \cdot \overrightarrow{A_1A_3} = 0
+\end{align}
+と添え字を入れ替えた関係式が成り立つ．実際に計算すると
 \begin{align}
   &\overrightarrow{A_2H} \cdot \overrightarrow{A_1A_3} \\
   &= (\vec{a}_1+\vec{a}_3) \cdot (\vec{a}_3-\vec{a}_1) \\
-  &= |\vec{a}_3|^2 - |\vec{a}_1|^2 = 0
+  &= |\vec{a}_3|^2 - |\vec{a}_1|^2 = 0 \quad (\because\text{\cref{eq:1}})
 \end{align}
-より $A_2H \perp A_1A_3$
+より $A_2H \perp A_1A_3$である．同様にして各頂点と$H$を通る直線とその対辺が直交するから$H$は垂心である．
 
-同様にして, 各頂点と$H$を通る直線と, その対辺が直交するから$H$は垂心である 終
+\paragraph{(ii)}
 
-(ii) 選んだ3点$A_a, A_b, A_c$, のこりの3点$A_D, A_E, A_F$とする
-(集合$\{A, B, \cdots, F\} = \{1, 2, 3, \cdots, 6\}$). (i)から$\triangle A_aA_bA_c$の垂心$H$は
-\begin{equation}
-  \vec{h} = \vec{a}_a + \vec{a}_b + \vec{a}_c \label{eq:1}
-\end{equation}
-又, $\triangle A_DA_EA_F$の重心$G$として
-\begin{equation}
-  \vec{g} = \dfrac{1}{3} (\vec{a}_D + \vec{a}_E + \vec{a}_F) \label{eq:2}
-\end{equation}
-\eqref{eq:1}, \eqref{eq:2}から$G, H$を通る直線上の点$X$は, $t \in \mathbb{R}$として
-\[
-  \vec{x} = \dfrac{1}{3} (\vec{a}_D + \vec{a}_E + \vec{a}_F) + \dfrac{t}{3} (3\vec{a}_a + 3\vec{a}_b + 3\vec{a}_c - \vec{a}_D - \vec{a}_E - \vec{a}_F)
-\]
-と表せる. $t = \dfrac{1}{4}$として
-\[
-  \vec{x} = \dfrac{1}{4} (\vec{a}_a + \cdots + \vec{a}_F) = \dfrac{1}{4} \sum_{k=1}^6 \vec{a}_k
-\]
-これは3点のえらび方によらないから, 題意は示された 終
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.4cm, y=2.4cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (Aone) at (75:1);
+    \coordinate (Atwo) at (-20:1);
+    \coordinate (Athree) at (200:1);
+    \coordinate (Afour) at (40:1);
+    \coordinate (Afive) at (160:1);
+    \coordinate (Asix) at (240:1);
+
+    % 垂心 H = A1 + A2 + A3
+    \coordinate (H) at (0.25882, 0.28189);
+    % 重心 G = (A4 + A5 + A6) / 3
+    \coordinate (G) at (-0.22455, 0.03959);
+    % 定点 X_0 = (3G + H) / 4
+    \coordinate (X0) at (-0.10371, 0.10017);
+
+    % 定円
+    \draw[line width=1.0pt, gray!60] (O) circle (1);
+
+    % 三角形 A1A2A3（淡い青塗り）
+    \fill[blue!8] (Aone) -- (Atwo) -- (Athree) -- cycle;
+    \draw[line width=1.2pt, blue!85!black] (Aone) -- (Atwo) -- (Athree) -- cycle;
+
+    % 三角形 A4A5A6（淡い緑塗り）
+    \fill[teal!8] (Afour) -- (Afive) -- (Asix) -- cycle;
+    \draw[line width=1.2pt, teal!75!black] (Afour) -- (Afive) -- (Asix) -- cycle;
+
+    % 直線 GH
+    \draw[dashed, orange!80!black, line width=0.9pt] ($(G)!-0.3!(H)$) -- ($(H)!0.3!(G)$);
+    \draw[line width=1.4pt, orange!85!black] (G) -- (H);
+
+    % 中心 O
+    \node[circle, fill=gray!70!black, inner sep=1.1pt] at (O) {};
+    \node[below=2pt, font=\footnotesize, gray!70!black] at (O) {$O$};
+
+    % 点 A1~A6
+    \foreach \P in {Aone, Atwo, Athree} {
+      \node[circle, fill=blue!85!black, inner sep=1.4pt] at (\P) {};
+    }
+    \foreach \P in {Afour, Afive, Asix} {
+      \node[circle, fill=teal!75!black, inner sep=1.4pt] at (\P) {};
+    }
+
+    % 点 H, G, X_0
+    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (H) {};
+    \node[circle, fill=teal!75!black, inner sep=1.5pt] at (G) {};
+    \node[circle, fill=red!85!black, inner sep=1.8pt] at (X0) {};
+
+    % ラベル
+    \node[above right=2pt, blue!85!black] at (Aone) {$A_1$};
+    \node[below right=2pt, blue!85!black] at (Atwo) {$A_2$};
+    \node[below left=2pt, blue!85!black] at (Athree) {$A_3$};
+    \node[above right=2pt, teal!75!black] at (Afour) {$A_4$};
+    \node[left=3pt, teal!75!black] at (Afive) {$A_5$};
+    \node[below left=2pt, teal!75!black] at (Asix) {$A_6$};
+
+    \node[above right=2pt, blue!85!black] at (H) {$H$};
+    \node[below left=2pt, teal!75!black] at (G) {$G$};
+    \node[above=3pt, red!85!black] at (X0) {$X_0$};
+  \end{tikzpicture}
+  \caption{$\triangle A_1A_2A_3$の垂心 $H$ と $\triangle A_4A_5A_6$の重心 $G$ を結ぶ直線上の定点 $X_0$}
+\end{figure}
+
+選んだ3点を$A_a, A_b, A_c$, のこりの3点を$A_D, A_E, A_F$とする．
+(i)から$\triangle A_aA_bA_c$の垂心$H$は
+\begin{align}
+  \vec{h} = \vec{a}_a + \vec{a}_b + \vec{a}_c \label{eq:2}
+\end{align}
+である．
+
+また$\triangle A_DA_EA_F$の重心$G$として
+\begin{align}
+  \vec{g} = \dfrac{1}{3} (\vec{a}_D + \vec{a}_E + \vec{a}_F) \label{eq:3}
+\end{align}
+である．
+
+\cref{eq:2,eq:3}から$G, H$を通る直線上の点$X$は, $t \in \mathbb{R}$として
+\begin{align}
+  \vec{x}
+  & = \vec{g} + t(\vec{h}-\vec{g}) \\
+  & = \dfrac{1}{3} (\vec{a}_D + \vec{a}_E + \vec{a}_F) + \dfrac{t}{3} (3\vec{a}_a + 3\vec{a}_b + 3\vec{a}_c - \vec{a}_D - \vec{a}_E - \vec{a}_F)
+\end{align}
+と表せる. $t = \dfrac{1}{4}$とした点$X_0$は
+\begin{align}
+  \vec{x}_0 = \dfrac{1}{4} (\vec{a}_a + \cdots + \vec{a}_F) = \dfrac{1}{4} \sum_{k=1}^6 \vec{a}_k
+\end{align}
+となり，3点のえらび方によらないから, これが題意の定点である．
 
 \end{document}
