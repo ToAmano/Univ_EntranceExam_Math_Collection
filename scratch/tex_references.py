@@ -110,3 +110,15 @@ def namespace_references(source, prefix):
                 for part in argument.split(','))
         changes.append((start, end, replacement))
     return replace_arguments(source, changes)
+
+
+def normalize_reference_commands(source):
+    """Rewrite \\ref and \\eqref to \\cref without modifying comments or verbatim text."""
+    masked = visible_text(source)
+    changes = []
+    for match in COMMAND_RE.finditer(masked):
+        command = match.group(1)
+        if command in ('ref', 'eqref'):
+            changes.append((match.start(), match.start(2), r'\cref{'))
+    return replace_arguments(source, changes)
+

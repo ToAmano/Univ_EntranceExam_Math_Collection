@@ -98,13 +98,41 @@ def test_equation_labels_must_be_local_numbered_and_references_defined(tmp_path)
 def test_equation_fix_updates_refs_but_leaves_ambiguous_duplicates(tmp_path):
     source = r'\label{2004-2:eq:3} \cref{2004-2:eq:3} \label{eq:7} \eqref{eq:7}'
     fixed = lint.fix_text(source)
-    assert fixed == r'\label{eq:1} \cref{eq:1} \label{eq:2} \eqref{eq:2}'
+    assert fixed == r'\label{eq:1} \cref{eq:1} \label{eq:2} \cref{eq:2}'
     duplicate = r'\label{eq:1} \label{eq:1} \cref{eq:1}'
     assert lint.fix_text(duplicate) == duplicate
     path = tmp_path / 'solution.tex'
     path.write_text(duplicate, encoding='utf-8')
     errors, _, _ = lint.lint_file(path)
     assert any('重複' in message for _, message in errors)
+
+
+def test_reference_commands_rule(tmp_path):
+    source = tmp_path / 'solution.tex'
+    source.write_text(
+        r'\documentclass[../../main.tex]{subfiles}' + '\n'
+        r'\begin{document}' + '\n'
+        r'{\bf [解答]}' + '\n'
+        r'\begin{align} x = 1 \label{eq:1} \end{align}' + '\n'
+        r'\begin{figure}\begin{tikzpicture}\node {A};\end{tikzpicture}\caption{T}\label{fig:1}\end{figure}' + '\n'
+        r'式\eqref{eq:1}と図\ref{fig:1}より，また\cref{eq:1}より．' + '\n'
+        r'\end{document}' + '\n',
+        encoding='utf-8')
+    errors, _, _ = lint.lint_file(source)
+    messages = [msg for _, msg in errors]
+    assert any(r'\eqref' in msg and r'\cref' in msg for msg in messages)
+    assert any(r'\ref' in msg and r'\cref' in msg for msg in messages)
+    assert not any(r'未定義' in msg for msg in messages)
+
+    fixed = lint.fix_text(source.read_text(encoding='utf-8'))
+    assert r'\eqref' not in fixed
+    assert r'\ref{' not in fixed
+    assert r'式\cref{eq:1}と図\cref{fig:1}より，また\cref{eq:1}より．' in fixed
+
+    source.write_text(fixed, encoding='utf-8')
+    clean_errors, _, _ = lint.lint_file(source)
+    assert not any('参照には' in msg for _, msg in clean_errors)
+
 
 
 def test_math_environment_rejects_untyped_label(tmp_path):

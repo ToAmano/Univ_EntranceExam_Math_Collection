@@ -345,6 +345,16 @@ def check_equation_references(text, problem_text=''):
     return errors
 
 
+def check_reference_commands(text):
+    r"""\eqref や \ref は使用せず \cref に統一する。"""
+    errors = []
+    for command, argument, start, _ in tex_references.commands(text):
+        if command in ('ref', 'eqref'):
+            line = line_of(text, start)
+            errors.append((line, f"参照には \\{command} ではなく \\cref を使う（\\{command}{{{argument}}}）"))
+    return errors
+
+
 def check_documentclass(text):
     """kouki 系の problem.tex は \\begin{document} を持たない中身だけの
     フラグメントで、solution.tex 側から \\input{problem.tex} される設計
@@ -899,7 +909,7 @@ def _mask_protected_regions(raw):
 
 
 def fix_text(raw):
-    """Apply punctuation, bare-argument wrapping, fraction-style, vector-notation, and equation-label fixes; preserve opaque TeX regions."""
+    """Apply punctuation, bare-argument wrapping, fraction-style, vector-notation, reference-command, and equation-label fixes; preserve opaque TeX regions."""
     if LINT_SKIP_RE.search(raw):
         return raw
 
@@ -939,6 +949,7 @@ def fix_text(raw):
     for start, end, replacement in sorted(heading_edits, reverse=True):
         raw = raw[:start] + replacement + raw[end:]
 
+    raw = tex_references.normalize_reference_commands(raw)
     try:
         raw = tex_references.normalize_equation_labels(raw)
     except tex_references.AmbiguousLabelError:
@@ -1175,6 +1186,7 @@ def lint_file(path):
     errors += check_left_right_balance(text)
     errors += check_vector_notation(text)
     errors += check_tikz_point_circle(text)
+    errors += check_reference_commands(text)
     warnings = check_overline_warning(text)
     warnings += check_long_align_lines(text)
     return errors, warnings, None
