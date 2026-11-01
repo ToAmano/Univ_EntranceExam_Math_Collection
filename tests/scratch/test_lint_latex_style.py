@@ -38,8 +38,8 @@ def test_protected_regions_and_skip():
 
 
 def test_structural_errors_are_not_fixed():
-    source = r'\begin{align*}\sqrt x+\frac12+\left(x\end{align*}\label{a}\label{a}'
-    assert lint.fix_text(source) == source.replace(r'\frac12', r'\dfrac12')
+    source = r'\begin{align*}\left(x\end{align*}\label{a}\label{a}\dfrac(1-a)(1-b)'
+    assert lint.fix_text(source) == source
 
 
 def test_cli_diff_fix_and_remaining_errors(tmp_path):
@@ -55,9 +55,9 @@ def test_cli_diff_fix_and_remaining_errors(tmp_path):
     assert run('--fix').returncode == 0
     assert source.read_text() == '本文．\n'
     assert run('--fix').returncode == 0
-    source.write_text(r'\sqrt x。', encoding='utf-8')
+    source.write_text(r'\dfrac(1-a)(1-b)。', encoding='utf-8')
     assert run('--fix').returncode == 1
-    assert source.read_text() == r'\sqrt x．'
+    assert source.read_text() == r'\dfrac(1-a)(1-b)．'
 
 
 def test_fix_requires_explicit_targets():
@@ -374,6 +374,48 @@ def test_solution_headings_rule():
         '{\\bf [別解1]} 解法2．\n'
         '{\\bf [別解2]} 解法3．\n'
     )
+
+
+def test_bare_arguments_fix_and_lint():
+    # \sqrt bare arguments
+    assert lint.fix_text(r'$\sqrt2$') == r'$\sqrt{2}$'
+    assert lint.fix_text(r'$\sqrt 2$') == r'$\sqrt{2}$'
+    assert lint.fix_text(r'$\sqrt2a$') == r'$\sqrt{2}a$'
+    assert lint.fix_text(r'$\sqrt[3]2$') == r'$\sqrt[3]{2}$'
+    assert lint.fix_text(r'$\sqrt[3]{2}$') == r'$\sqrt[3]{2}$'
+    assert lint.fix_text(r'$\sqrt[3] 2$') == r'$\sqrt[3]{2}$'
+    assert lint.fix_text(r'$\sqrt\pi$') == r'$\sqrt{\pi}$'
+    assert lint.fix_text(r'$\sqrt\beta$') == r'$\sqrt{\beta}$'
+
+    # \frac / \dfrac bare arguments (display math -> \dfrac)
+    assert lint.fix_text(r'\begin{align}\frac12\end{align}') == r'\begin{align}\dfrac{1}{2}\end{align}'
+    assert lint.fix_text(r'\begin{align}\frac 1 2\end{align}') == r'\begin{align}\dfrac{1}{2}\end{align}'
+    assert lint.fix_text(r'\begin{align}\frac 1{2}\end{align}') == r'\begin{align}\dfrac{1}{2}\end{align}'
+    assert lint.fix_text(r'\begin{align}\frac{1} 2\end{align}') == r'\begin{align}\dfrac{1}{2}\end{align}'
+    assert lint.fix_text(r'\begin{align}\frac\pi2\end{align}') == r'\begin{align}\dfrac{\pi}{2}\end{align}'
+    assert lint.fix_text(r'\begin{align}\frac1\pi\end{align}') == r'\begin{align}\dfrac{1}{\pi}\end{align}'
+    assert lint.fix_text(r'\begin{align}\frac\alpha\beta\end{align}') == r'\begin{align}\dfrac{\alpha}{\beta}\end{align}'
+
+    # Exempt spans (inline exponent remains \frac)
+    assert lint.fix_text(r'$x^{\frac12}$') == r'$x^{\frac{1}{2}}$'
+    assert lint.fix_text(r'$x^{\dfrac12}$') == r'$x^{\frac{1}{2}}$'
+
+    # Nested bare arguments
+    assert lint.fix_text(r'\begin{align}\frac1{\sqrt2}\end{align}') == r'\begin{align}\dfrac{1}{\sqrt{2}}\end{align}'
+    assert lint.fix_text(r'$\sqrt{\frac12}$') == r'$\sqrt{\dfrac{1}{2}}$'
+
+    # Invalid parentheses / syntax are left untouched
+    assert lint.fix_text(r'\frac1(x+1)') == r'\dfrac1(x+1)'  # 2nd arg invalid -> not bare-fixed
+    assert lint.fix_text(r'\dfrac(1-a)(1-b)') == r'\dfrac(1-a)(1-b)'
+
+    # Protected regions are untouched
+    assert lint.fix_text('% \\sqrt2\n') == '% \\sqrt2\n'
+    assert lint.fix_text(r'\verb|\sqrt2|') == r'\verb|\sqrt2|'
+
+    # Fixed text has no bare arg errors
+    fixed_sample = lint.fix_text(r'$\sqrt2+\sqrt3+\sqrt\pi+\frac12$')
+    assert lint.check_bare_args(fixed_sample) == []
+
 
 
 

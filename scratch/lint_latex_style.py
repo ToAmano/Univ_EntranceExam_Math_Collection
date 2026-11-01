@@ -88,6 +88,32 @@ def extract_braced(text, start):
     return text[start + 1:], n
 
 
+def _extract_bracket(text, start):
+    """text[start] == '[' 前提。ネストした [] と {} を考慮して (中身, 終了直後index) を返す。"""
+    depth_k = 0
+    depth_b = 0
+    i = start
+    n = len(text)
+    while i < n:
+        c = text[i]
+        if c == '\\' and i + 1 < n:
+            i += 2
+            continue
+        if c == '{':
+            depth_b += 1
+        elif c == '}':
+            depth_b = max(0, depth_b - 1)
+        elif depth_b == 0:
+            if c == '[':
+                depth_k += 1
+            elif c == ']':
+                depth_k -= 1
+                if depth_k == 0:
+                    return text[start + 1:i], i + 1
+        i += 1
+    return text[start + 1:], n
+
+
 def check_align_star(text):
     errors = []
     for m in re.finditer(r'\\(begin|end)\{align\*\}', text):
@@ -374,6 +400,79 @@ def check_bare_args(text):
                 errors.append((line_of(text, m.start()),
                                 f"\\{cmd} の引数は必ず {{}} で囲む（裸引数が見つかった）"))
     return errors
+
+
+BARE_ARG_CMD_RE = re.compile(r'\\(sqrt|frac|dfrac)(?![a-zA-Z])')
+BARE_ARG_CS_BLOCKLIST = {
+    'begin', 'end',
+    'frac', 'dfrac', 'tfrac', 'cfrac', 'sqrt',
+    'text', 'mathrm', 'mathbf', 'bm', 'boldsymbol',
+    'mathit', 'mathsf', 'mathtt', 'mathbb', 'mathcal', 'mathfrak',
+    'left', 'right', 'bigl', 'bigr', 'Bigl', 'Bigr', 'biggl', 'biggr', 'Biggl', 'Biggr',
+    'big', 'Big', 'bigg', 'Bigg',
+    'overline', 'underline', 'overbrace', 'underbrace',
+    'vec', 'overrightarrow', 'dot', 'ddot', 'hat', 'tilde', 'bar', 'acute', 'grave', 'check', 'breve',
+    'not',
+    'displaystyle', 'textstyle', 'scriptstyle', 'scriptscriptstyle',
+    'quad', 'qquad', 'hspace', 'vspace',
+    'label', 'ref', 'cref', 'eqref', 'cite',
+}
+
+
+def _find_bare_argument_edits(text, raw):
+    """\\sqrt, \\frac, \\dfrac の引数で {} で囲まれていない裸引数を検出し、
+    {} で囲む置換エディット (start, end, replacement) のリストを返す。
+    不正な引数形式（() 等）が含まれる場合は巻き込み防止のため置換しない。"""
+    edits = []
+    n = len(text)
+    for m in BARE_ARG_CMD_RE.finditer(text):
+        cmd = m.group(1)
+        j = m.end()
+        if cmd == 'sqrt':
+            k = j
+            while k < n and text[k] in ' \t':
+                k += 1
+            if k < n and text[k] == '[':
+                _, j = _extract_bracket(text, k)
+        nargs = 1 if cmd == 'sqrt' else 2
+        pos = j
+        cmd_edits = []
+        valid = True
+        for _ in range(nargs):
+            pre_start = pos
+            while pos < n and text[pos] in ' \t':
+                pos += 1
+            if pos >= n:
+                valid = False
+                break
+            if text[pos] == '{':
+                _, pos = extract_braced(text, pos)
+            elif text[pos] == '\\':
+                k = pos + 1
+                if k < n and text[k].isalpha():
+                    while k < n and text[k].isalpha():
+                        k += 1
+                    cs = text[pos + 1:k]
+                    if cs in BARE_ARG_CS_BLOCKLIST:
+                        valid = False
+                        break
+                    start_idx = pre_start if all(c in ' \t' for c in raw[pre_start:pos]) else pos
+                    cmd_edits.append((start_idx, k, f'{{{raw[pos:k]}}}'))
+                    pos = k
+                else:
+                    valid = False
+                    break
+            elif text[pos].isalnum():
+                start_idx = pre_start if all(c in ' \t' for c in raw[pre_start:pos]) else pos
+                cmd_edits.append((start_idx, pos + 1, f'{{{raw[pos]}}}'))
+                pos += 1
+            else:
+                valid = False
+                break
+        if valid and cmd_edits:
+            cmd_edits.reverse()
+            edits.extend(cmd_edits)
+    return edits
 
 
 def check_env_caption(text, env_name, error_msg):
@@ -800,9 +899,14 @@ def _mask_protected_regions(raw):
 
 
 def fix_text(raw):
-    """Apply punctuation, fraction-style, vector-notation, and equation-label fixes; preserve opaque TeX regions."""
+    """Apply punctuation, bare-argument wrapping, fraction-style, vector-notation, and equation-label fixes; preserve opaque TeX regions."""
     if LINT_SKIP_RE.search(raw):
         return raw
+
+    bare_edits = _find_bare_argument_edits(_mask_protected_regions(raw), raw)
+    for start, end, replacement in sorted(bare_edits, reverse=True):
+        raw = raw[:start] + replacement + raw[end:]
+
     text = _mask_protected_regions(raw)
     edits = [(m.start(), m.end(), {'。': '．', '、': '，'}[m.group()])
              for m in re.finditer('[。、]', text)]
@@ -877,32 +981,6 @@ def _extract_paren(text, start):
             elif c == ')':
                 depth_p -= 1
                 if depth_p == 0:
-                    return text[start + 1:i], i + 1
-        i += 1
-    return text[start + 1:], n
-
-
-def _extract_bracket(text, start):
-    """text[start] == '[' 前提。ネストした [] と {} を考慮して (中身, 終了直後index) を返す。"""
-    depth_k = 0
-    depth_b = 0
-    i = start
-    n = len(text)
-    while i < n:
-        c = text[i]
-        if c == '\\' and i + 1 < n:
-            i += 2
-            continue
-        if c == '{':
-            depth_b += 1
-        elif c == '}':
-            depth_b = max(0, depth_b - 1)
-        elif depth_b == 0:
-            if c == '[':
-                depth_k += 1
-            elif c == ']':
-                depth_k -= 1
-                if depth_k == 0:
                     return text[start + 1:i], i + 1
         i += 1
     return text[start + 1:], n
