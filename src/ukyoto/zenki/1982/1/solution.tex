@@ -1,29 +1,54 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $f(x) = x^3 + ax$, $P$の$x$座標を$t$とすると, $f'(t) = 3t^2 + a$から接線$l$は
-$$ l: y = g(x) = (3t^2 + a)x - 2t^3 $$
+\paragraph{(1)}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=2.2cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0,0);
+    \draw[->, thick, gray!80!black] (-1.5,0) -- (1.5,0)
+    node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-1.5) -- (0,1.35)
+    node[above] {$y$};
+    \draw[line width=1.4pt, blue!85!black,
+    domain=-1.4:1.35, samples=100]
+    plot (\x,{\x*\x*\x-\x});
+    \draw[line width=1.2pt, orange!85!black,
+    domain=-1.4:1.35, samples=2]
+    plot (\x,{-0.25*\x-0.25});
+    \draw[dashed, gray!65] (0.5,0) -- (0.5,-0.375);
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (-1,0) {};
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (0.5,-0.375) {};
+    \node[below left=2pt, red!85!black] at (-1,0) {$Q$};
+    \node[below right=2pt, red!85!black] at (0.5,-0.375) {$P$};
+    \node[above=3pt] at (0.5,0) {$t$};
+    \node[above left=3pt] at (-1,0) {$-2t$};
+    \node[above left=2pt, blue!85!black] at (1.2,0.8) {$C$};
+    \node[below left=2pt, orange!85!black] at (1.3,-0.575) {$l$};
+    \node[below left=2pt] at (O) {$O$};
+  \end{tikzpicture}
+  \caption{曲線 $C$ と点 $P$ における接線 $l$ および交点 $Q$ の概要}
+\end{figure}
+
+与えられた曲線を
+\begin{align}
+  C: y = f(x) = x^3 + ax \label{eq:1}
+\end{align}
+とおく．$P$の$x$座標を$t (\neq 0)$とすると, $f'(t) = 3t^2 + a$から$P$での$C$の接線$l$は
+\begin{align}
+  l: y = g(x) = (3t^2 + a)x - 2t^3
+\end{align}
 だから
-$$ f(x) - g(x) = x^3 - 3t^2x + 2t^3 = (x-t)^2(x+2t) $$
-より, $x = -2t$ ($x \neq t$, $\because t \neq 0$) を$x$座標とする点$Q$で交わる \dots (1)
+\begin{align}
+  f(x) - g(x) = x^3 - 3t^2x + 2t^3 = (x-t)^2(x+2t) \label{eq:2}
+\end{align}
+となる．従って $x = -2t$ ($x \neq t$, $\because t \neq 0$) を$x$座標とする点$Q$で交わる．
 
 \paragraph{(2)}
-
-$x \le 0$の部分の面積$S_1$, $x \ge 0$ " $S_2$とする．$y = f(x)$は原点対称性だから$t>0$の時 $S_1 : S_2 = A : B$ なら$t<0$の時$S_1 : S_2 = B : A$である \dots (1)
-よって, $t>0$の時のみ考える．
-
-$$ S_1 = \int_{-2t}^0 \{ f(x) - g(x) \} dx $$
-$$ = \int_{-2t}^0 \{ (x+2t) - 3t \}^2 (x+2t) dx $$
-$$ = \left[ \dfrac{1}{4} (x+2t)^4 - 2t(x+2t)^3 + \dfrac{9t^2}{2} (x+2t)^2 \right]_{-2t}^0 $$
-$$ = \left( \dfrac{16}{4} - 16 + 18 \right) t^4 = 6t^4 \cdots \text{(2)} $$
-
-$$ S_2 = \int_0^t \{ f(x) - g(x) \} dx = \int_0^t (x-t)^2 (x+2t) dx $$
-$$ = \left[ \dfrac{1}{4} (x-t)^4 + t (x-t)^3 \right]_0^t $$
-$$ = -\dfrac{1}{4} t^4 + t^4 = \dfrac{3}{4} t^4 \cdots \text{(3)} $$
 
 \begin{figure}[htb]
   \centering
@@ -57,10 +82,49 @@ $$ = -\dfrac{1}{4} t^4 + t^4 = \dfrac{3}{4} t^4 \cdots \text{(3)} $$
     \draw[->, thin, teal!75!black] (0.72,0.04) -- (0.23,-0.27);
     \node[above right=2pt, teal!75!black] at (0.72,0.04) {$S_2$};
   \end{tikzpicture}
-  \caption{曲線 $y=f(x)$ と接線の間の面積 $S_1,S_2$（$t=1/2$ の例）}
+  \caption{曲線 $y=f(x)$ と接線の間の面積 $S_1,S_2$}
 \end{figure}
 
-(2), (3), $t \neq 0$ から, $t>0$の時, $S_1 : S_2 = 8 : 1$
-$t<0$ " $S_1 : S_2 = 1 : 8 \quad (\because \text{(1)})$
+$x \le 0$の部分の面積$S_1$, $x \ge 0$の部分の面積$S_2$とする．
+$y = f(x)$は原点対称性だから$t>0$の時 $S_1 : S_2 = A : B$ なら$t<0$の時$S_1 : S_2 = B : A$である．よって$t>0$の時のみ考える．
+
+具体的に計算すると
+\begin{align}
+  S_1
+  &= \int_{-2t}^0 \{ f(x) - g(x) \} dx \\
+  &= \int_{-2t}^0 \{ (x+2t) - 3t \}^2 (x+2t) dx \\
+  &= \left[ \dfrac{1}{4} (x+2t)^4 - 2t(x+2t)^3 + \dfrac{9t^2}{2} (x+2t)^2 \right]_{-2t}^0 \\
+  &= \left( \dfrac{16}{4} - 16 + 18 \right) t^4 = 6t^4 \label{eq:3}
+\end{align}
+および
+\begin{align}
+  S_1+S_2
+  &= \int_{-2t}^{t} \{ f(x) - g(x) \} dx \\
+  &= \int_{-2t}^{t}  (x - t)^2 (x+2t) dx \\
+  &= \dfrac{(3t)^42!1!}{4!} = \dfrac{27t^4}{4} \label{eq:4}
+\end{align}
+より\cref{eq:3}を代入して
+\begin{align}
+  S_2 = \dfrac{27t^4}{4}-6t^4 = \dfrac{3}{4}t^4
+\end{align}
+である．以上から
+\begin{align}
+  \begin{cases}
+    t>0 \text{の時}: S_1 : S_2 = 8 : 1 \\
+    t<0 \text{の時}: S_1 : S_2 = 1 : 8
+  \end{cases}
+\end{align}
+である．
+
+{\bf [別解]}
+
+(2)の$S_2$は直接積分すると以下のように検算できる．
+\begin{align}
+  S_2
+  &= \int_0^t \{ f(x) - g(x) \} dx \\
+  &= \int_0^t (x-t)^2 (x+2t) dx \\
+  &= \left[ \dfrac{1}{4} (x-t)^4 + t (x-t)^3 \right]_0^t \\
+  &= -\dfrac{1}{4} t^4 + t^4 = \dfrac{3}{4} t^4
+\end{align}
 
 \end{document}
