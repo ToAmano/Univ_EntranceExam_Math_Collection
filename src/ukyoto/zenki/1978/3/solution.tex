@@ -1,14 +1,8 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} (1) $P(t, 4-t^2)$ とおく. ($-4 \le t \le 1$)
-$\triangle PAB = \dfrac{1}{2} |AB| \cdot (P \text{と} AB \text{のキョリ})$
-だから, $P$ と $AB$ のキョリ $l$ が最大の時, $\triangle PAB$ の面積も最大.
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=1.15cm, y=0.36cm, >=stealth,
@@ -16,26 +10,66 @@ $\triangle PAB = \dfrac{1}{2} |AB| \cdot (P \text{と} AB \text{のキョリ})$
     \coordinate (A) at (1,3);
     \coordinate (B) at (-4,-12);
     \coordinate (P) at (-1.5,1.75);
-    \coordinate (H) at (0.375,1.125);
+    \coordinate (H) at ($(A)!(P)!(B)$);
     \draw[->, thick, gray!80!black] (-4.5,0) -- (1.8,0) node[right] {$x$};
     \draw[->, thick, gray!80!black] (0,-13.3) -- (0,5) node[above] {$y$};
     \draw[line width=1.4pt, blue!85!black, domain=-4.1:1.45, samples=100]
     plot (\x,{4-\x*\x});
     \draw[line width=1.2pt, teal!75!black] (-4.25,-12.75) -- (1.45,4.35);
     \draw[dashed, red!75!black] (P) -- (H);
-    \foreach \X in {A,B} {\fill[blue!85!black] (\X) circle (1.6pt);}
-    \fill[red!85!black] (P) circle (1.7pt);
-    \fill[red!85!black] (H) circle (1.5pt);
+    \foreach \X in {A,B} {\node[circle, fill=blue!85!black, inner sep=1.6pt] at (\X) {};}
+    \node[circle, fill=red!85!black, inner sep=1.7pt] at (P) {};
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (H) {};
     \node[above right=2pt] at (A) {$A$};
     \node[below left=2pt] at (B) {$B$};
     \node[above left=2pt, red!85!black] at (P) {$P$};
     \node[below right=2pt, red!85!black] at (H) {$H$};
   \end{tikzpicture}
-  \caption{放物線 $y=4-x^2$ 上の点 $P$ から直線 $AB:y=3x$ までの距離 $PH$}
+  \caption{放物線 $y=4-x^2$ 上の点 $P$ から直線 $AB:y=3x$ までの距離 $PH$．}
 \end{figure}
-\[ l = \dfrac{|3t - (4-t^2)|}{\sqrt{9+1}} = \dfrac{|t^2 + 3t - 4|}{\sqrt{10}} = \dfrac{\sqrt{10}}{10} \left| \left(t+\dfrac{3}{2}\right)^2 - \dfrac{25}{4} \right| \]
-より, $\max l = \dfrac{\sqrt{10}}{10} \cdot \dfrac{25}{4}$ ($t = -\dfrac{3}{2}$ の時) だから
-もとめる $P(p, q)$ は $P\left(-\dfrac{3}{2}, \dfrac{7}{4}\right)$ \qed
+
+与えられた関数
+\begin{align}
+  \begin{cases}
+    y = 4-x^2 \\
+    y = 3x
+  \end{cases}
+\end{align}
+の交点の$x$座標はこれらを連立した二次方程式の解で
+\begin{align}
+  x^2 + 3x - 4 = 0 \quad
+  \therefore
+  (x+4)(x-1) = 0 \quad
+  \therefore
+  x = 1, -4
+\end{align}
+となる．よって交点は$A(1,3), B(-4,-12)$である．
+
+\paragraph{(1)}
+
+曲線$y=4-x^2$上の点を$P(t, 4-t^2) \ (-4 \le t \le 1)$ とおく．
+$P$から直線$AB$におろした垂線の足を$H$とすると，
+\begin{align}
+  \triangle PAB = \dfrac{1}{2} |AB||PH| \label{eq:1}
+\end{align}
+だから，$P$ と $AB$ の距離 $|PH|$ が最大の時に$\triangle PAB$ の面積も最大になる．
+
+\begin{align}
+  |PH|
+  = \dfrac{|3t - (4-t^2)|}{\sqrt{9+1}}
+  = \dfrac{|t^2 + 3t - 4|}{\sqrt{10}}
+  = \dfrac{\sqrt{10}}{10} \left| \left(t+\dfrac{3}{2}\right)^2 - \dfrac{25}{4} \right|
+\end{align}
+より，これは$t=-\dfrac{3}{2}$の時に最大値
+\begin{align}
+  \max |PH| = \dfrac{\sqrt{10}}{10} \cdot \dfrac{25}{4} = \dfrac{5\sqrt{10}}{8}
+\end{align}
+をとる．この時の$P(p,q)$の座標は$P\left(-\dfrac{3}{2}, \dfrac{7}{4}\right)$である．よって
+\begin{align}
+  p = -\dfrac{3}{2}
+\end{align}
+である．
+
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=1.1cm, y=0.52cm, >=stealth,
@@ -45,30 +79,68 @@ $\triangle PAB = \dfrac{1}{2} |AB| \cdot (P \text{と} AB \text{のキョリ})$
     \draw[line width=1.4pt, blue!85!black, domain=-4:1, samples=100]
     plot (\x,{(\x+1.5)*(\x+1.5)-6.25});
     \draw[dashed, gray!65] (-1.5,0) -- (-1.5,-6.25);
-    \fill[red!85!black] (-1.5,-6.25) circle (1.7pt);
+    \node[circle, fill=red!85!black, inner sep=1.7pt] at (-1.5,-6.25) {};
     \node[above=3pt, font=\footnotesize] at (-4,0) {$-4$};
     \node[above=3pt, font=\footnotesize] at (1,0) {$1$};
-    \node[above=3pt, font=\footnotesize] at (-1.5,0) {$-\frac32$};
+    \node[above=3pt, font=\footnotesize] at (-1.5,0) {$-\frac{3}{2}$};
     \node[below right=3pt, font=\footnotesize] at (-1.5,-6.25)
     {$-\frac{25}{4}$};
   \end{tikzpicture}
-  \caption{$t^2+3t-4$ は $t=-3/2$ で最小となり，距離が最大となる}
+  \caption{$t^2+3t-4$ は $t=-3/2$ で最小となり，$|PH|$が最大となる}
 \end{figure}
 
 \paragraph{(2)}
 
-題意の直線は $y = 3x + \alpha$ とおける ($\alpha \in \mathbb{R}$). これと放物線の交点の $x$ 座標は
-\[ x^2 + 3x + \alpha - 4 = 0 \]
-の2解であり, $x = \dfrac{1}{2}\left(-3 \pm \sqrt{25 - 4\alpha}\right)$ だから, $CD$ の中点 $M$ の
-$x$ 座標は $x = -\dfrac{3}{2}$ となる. したがって(1)から, 線分 $CD$ は $x = p$ で
-2等分される. \qed
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.15cm, y=0.36cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (A) at (1,3);
+    \coordinate (B) at (-4,-12);
+    \coordinate (P) at (-1.5,1.75);
+    \coordinate (C) at (0,4);
+    \coordinate (D) at (-3,-5);
+    \coordinate (M) at (-1.5,-0.5);
+
+    \draw[->, thick, gray!80!black] (-4.5,0) -- (1.8,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-13.3) -- (0,5.5) node[above] {$y$};
+
+    % 放物線
+    \draw[line width=1.4pt, blue!85!black, domain=-4.1:1.45, samples=100]
+    plot (\x,{4-\x*\x});
+
+    % 直線 AB
+    \draw[line width=1.0pt, gray!60, dashed] (-4.25,-12.75) -- (1.45,4.35) node[right, font=\footnotesize] {$y=3x$};
+
+    % 直線 CD（平行線）
+    \draw[line width=1.2pt, teal!75!black] (-3.5,-6.5) -- (0.5,5.5) node[above right=1pt, teal!85!black, font=\footnotesize] {$CD: y=3x+\alpha$};
+
+    % 二等分線 x = p
+    \draw[dashed, red!75!black, line width=0.9pt] (-1.5,-8) -- (-1.5,4.5) node[above, font=\footnotesize] {$x=p$};
+
+    % 点の描画
+    \foreach \X in {A,B,C,D} {\node[circle, fill=blue!85!black, inner sep=1.5pt] at (\X) {};}
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (P) {};
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (M) {};
+
+    \node[above right=2pt] at (A) {$A$};
+    \node[below left=2pt] at (B) {$B$};
+    \node[above left=3pt] at (C) {$C$};
+    \node[left=3pt] at (D) {$D$};
+    \node[above left=2pt, red!85!black] at (P) {$P$};
+    \node[below right=2pt, red!85!black] at (M) {$M$};
+  \end{tikzpicture}
+  \caption{直線 $x=p$ による線分 $CD$ の二等分．}
+  \label{fig:1978_3_cd}
+\end{figure}
+
+題意の直線は$AB$と傾きが同じだから $y = 3x + \alpha$ とおける ($\alpha \in \mathbb{R}$). これと放物線$y=4-x^2$の交点の $x$ 座標は
+\begin{align}
+  x^2 + 3x + \alpha - 4 = 0
+\end{align}
+の2解であり, $x = \dfrac{1}{2}\left(-3 \pm \sqrt{25 - 4\alpha}\right)$ だから, $CD$ の中点 $M$ の$x$ 座標は $x = -\dfrac{3}{2}$ となる. したがって(1)から, 線分 $CD$ は $x = p$ で2等分される. よって題意は示された．
 
 \paragraph{(3)}
-
-右図のように面積をおく ($S = S_1 + S_2$)
-\[ S = \int_{-4}^{1} (4 - x^2 - 3x) dx = \dfrac{1}{6} 5^3 \]
-\[ S_1 = \int_{-4}^{-\frac{3}{2}} (4 - x^2 - 3x) dx = -\dfrac{1}{3}\left(\dfrac{5}{2}\right)^3 + \dfrac{5}{2}\left(\dfrac{5}{2}\right)^2 = \dfrac{1}{12} 5^3 \]
-よって $S_1 = S_2$ となるから示された \qed
 
 \begin{figure}[htb]
   \centering
@@ -84,11 +156,29 @@ $x$ 座標は $x = -\dfrac{3}{2}$ となる. したがって(1)から, 線分 $C
     plot (\x,{4-\x*\x});
     \draw[line width=1.2pt, teal!75!black] (-4.15,-12.45) -- (1.4,4.2);
     \draw[dashed, red!75!black] (-1.5,-4.5) -- (-1.5,1.75);
-    \node[below=3pt, font=\footnotesize] at (-1.5,0) {$-\frac32$};
+    \node[below=3pt, font=\footnotesize] at (-1.5,0) {$-\frac{3}{2}$};
     \node[teal!75!black] at (-2.9,-5.5) {$S_1$};
     \node[orange!85!black] at (-0.45,1.8) {$S_2$};
   \end{tikzpicture}
   \caption{直線 $x=-3/2$ で分けた2領域 $S_1$ と $S_2$}
 \end{figure}
+
+上図のように，$S$のうち$x \le p, p \le x$の部分の面積をそれぞれ$S_1, S_2$とおく．
+まず全体の面積$S$は
+\begin{align}
+  S = \int_{-4}^{1} (4 - x^2 - 3x) dx = \dfrac{1}{6} 5^3 \label{eq:2}
+\end{align}
+であり，$S_1$は
+\begin{align}
+  S_1
+  & = \int_{-4}^{-\frac{3}{2}} (4 - x^2 - 3x) dx  \\
+  & = -\dfrac{1}{3}\left(\dfrac{5}{2}\right)^3 + \dfrac{5}{2}\left(\dfrac{5}{2}\right)^2 \\
+  & = \dfrac{1}{12} 5^3 \label{eq:3}
+\end{align}
+である．よって\cref{eq:2,eq:3}より
+\begin{align}
+  S_2 = S-S_1 = \dfrac{1}{6} 5^3 - \dfrac{1}{12} 5^3 = \dfrac{1}{12} 5^3
+\end{align}
+だから$S_1 = S_2$ となる．
 
 \end{document}

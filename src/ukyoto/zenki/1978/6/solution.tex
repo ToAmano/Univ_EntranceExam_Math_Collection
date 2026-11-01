@@ -1,74 +1,166 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} (i) $\cos(m+n)x = \cos mx \cos nx - \sin mx \sin nx$ (複合同順) の辺々引いて,
-$\dfrac{1}{2} \{ \cos(m-n)x - \cos(m+n)x \} = \sin mx \sin nx$ \qed
-したがって,
-\[ I_{m,n} = \dfrac{1}{2} \int_{-\pi}^{\pi} \{ \cos(m-n)x - \cos(m+n)x \} dx \]
-\[ =
+\paragraph{(i)}
+
+加法定理より
+\begin{align}
+  \cos(m+n)x = \cos mx \cos nx - \sin mx \sin nx \quad (\text{複合同順})
+\end{align}
+だから，辺々引いて
+\begin{align}
+  \dfrac{1}{2} \{ \cos(m-n)x - \cos(m+n)x \} = \sin mx \sin nx
+\end{align}
+である．これで前半の等式が示された．
+
+次にこの両辺を$[-\pi,\pi]$で積分して
+\begin{align}
+  I_{m,n}
+  &= \dfrac{1}{2} \int_{-\pi}^{\pi} \{ \cos(m-n)x - \cos(m+n)x \} dx \\
+  &=
   \begin{cases} 0 & (m \neq n) \\ \pi & (m = n)
-\end{cases} \quad \text{\qed} \]
+  \end{cases} \\
+  &= \pi \delta_{m,n} \label{eq:1}
+\end{align}
+である．ただし，$\delta_{m,n}$は$m=n$の時に$1$，それ以外の時に$0$をとるものとする．
 
-(ii) 被積分関数を $g_k(x)$ とおく.
-\[ g_k(x) = \sin^2 kx - 2(a \sin mx + b \sin nx) \sin kx + (a \sin mx + b \sin nx)^2 \]
-\[ = \sin^2 kx + a^2 \sin^2 mx + b^2 \sin^2 nx + 2ab \sin mx \sin nx - 2(a \sin mx + b \sin nx) \sin kx \]
-から, (i) より
-\[ f(0) = \pi(a^2+b^2) + 2ab I_{m,n} \]
-\[ f(k) = \pi(a^2+b^2+1) + 2ab I_{m,n} - 2a I_{m,k} - 2b I_{n,k} \quad (k \ge 1) \]
-$5 C_0 = 5 C_5 = 1, 5 C_1 = 5 C_4 = 5, 5 C_2 = 5 C_3 = 10$ だから,
-\[ E = \left(\dfrac{1}{2}\right)^5 \left[ \pi(32a^2 + 32b^2 + 31) + 64ab I_{m,n} - 2a \sum_{k=0}^{5} {}_5C_k I_{m,k} - 2b \sum_{k=0}^{5} {}_5C_k I_{n,k} \right] \]
-ここで, $m, n \in \mathbb{N}$ 及び $0 \le k \le 5$ から,
-$\sum_{k=0}^{5} {}_5C_k I_{m,k} =
-\begin{cases} {}_5C_m \cdot \pi & (1 \le m \le 5 \text{ の時}) \\ 0 & (6 \le m \text{ の時})
-\end{cases}$
-である. 又, $m$ の部を $A$ とおく.
+\paragraph{(ii)}
 
-$1^\circ \ m=n \text{ の時}$
-$I_{m,n} = \pi$ だから,
-$E = \dfrac{1}{32} [ 32(a+b)^2 + 31 ] \pi \quad (6 \le m)$
-$E = \dfrac{1}{32} [ 32(a+b)^2 - 2(a+b) {}_5C_m + 31 ] \pi \quad (1 \le m \le 5)$
-である. $6 \le m$ の時, $a+b=0$ で $\min E = \dfrac{31}{32}\pi$ をとる.
-$1 \le m \le 5$ の時, $a+b = \dfrac{{}_5C_m}{32}$ で $\min E = \dfrac{\pi}{32} \left( 31 - \dfrac{({}_5C_m)^2}{32} \right)$ をとる. ③から
-$m=2$ 又は $3$ の時, $\min E$ は最小値 $\dfrac{223}{256}\pi$ をとる.
+与えられた定積分
+\begin{align}
+  f(k) = \int_{-\pi}^\pi{(\sin kx - a \sin mx - b \sin nx)}^2 dx
+\end{align}
+の被積分関数を $g_k(x)$ とおくと，
+\begin{align}
+  g_k(x)
+  & = \sin^2 kx - 2(a \sin mx + b \sin nx) \sin kx + (a \sin mx + b \sin nx)^2\\
+  & = \sin^2 kx + a^2 \sin^2 mx + b^2 \sin^2 nx + 2ab \sin mx \sin nx - 2(a \sin mx + b \sin nx) \sin kx
+\end{align}
+である．よってこれを積分して$I_{m,n}$を用いると
+\begin{align}
+  f(k) = \pi(a^2+b^2) + I_{k,k}+ 2ab I_{m,n} - 2a I_{m,k} - 2b I_{n,k} \label{eq:2}
+\end{align}
+である．ただし，ここで$I_{m,n}$を$m,n \ge 0$に拡張して
+\begin{align}
+  I_{m,n} = 0 \quad (m=0 \ \text{or} \ n=0)
+\end{align}
+であることを用いた．
 
-$2^\circ \ m \neq n$
-$I_{m,n} = 0$ から $A = \pi [32(a^2+b^2)+31]$ である. 対称性から $m < n$ として良い.
-$2^5 \cdot E$ の値は以下のようになる.
+次に，二項係数の性質から
+\begin{align}
+  p(k)=\dfrac{5!}{k! (5-k)!} {\left( \dfrac{1}{2} \right)}^5  = {}_{5}C_{k}\left( \dfrac{1}{2} \right)^5
+\end{align}
+だから，$\sum_{k=0}^{5} {}_{5}C_{k}=2^5$に注意して\cref{eq:2}を代入して
+\begin{align}
+  E
+  & = \left( \dfrac{1}{2} \right)^5 \sum_{k=0}^{5} {}_{5}C_{k} f(k) \\
+  &= \left( \dfrac{1}{2} \right)^5 \left[\pi(a^2+b^2)+2ab I_{m,n}\right]\sum_{k=0}^{5} {}_{5}C_{k}
+  + \left( \dfrac{1}{2} \right)^5 \sum_{k=0}^{5} {}_{5}C_{k}\left[I_{k,k}- 2a I_{m,k} - 2b I_{n,k}\right] \\
+  &= \left[\pi(a^2+b^2)+2ab\pi \delta_{m,n} \right]
+  + \left( \dfrac{1}{2} \right)^5 \sum_{k=0}^{5} {}_{5}C_{k}\left[I_{k,k}- 2a I_{m,k} - 2b I_{n,k}\right] \quad (\because \sum_{k=0}^{5} {}_{5}C_{k}=2^5) \label{eq:3}
+\end{align}
+を得る．ここで$I_{k,k}=\pi\delta_{0,k}$だから，第二項は
+\begin{align}
+  \sum_{k=0}^{5} {}_{5}C_{k} I_{k,k}
+  = \pi \sum_{k=0}^{5} {}_{5}C_{k} \delta_{0,k}
+  = \pi \left[ \sum_{k=0}^{5} {}_{5}C_{k} - {}_{5}C_{0}\right]
+  = \pi 2^5 - \pi
+  = 31\pi
+\end{align}
+となる．\cref{eq:3}に代入して
+\begin{align}
+  E
+  &= \pi \left[a^2+b^2+2ab\delta_{m,n} \right] + \dfrac{31}{32}\pi
+  - \left( \dfrac{1}{2} \right)^5 \sum_{k=0}^{5} {}_{5}C_{k}\left[2a I_{m,k} + 2b I_{n,k}\right] \label{eq:4}
+\end{align}
+である．さらに $m \in \mathbb{N}$ 及び $0 \le k \le 5$から
+\begin{align}
+  \sum_{k=0}^{5} {}_5C_k I_{m,k}
+  =
+  \begin{cases}
+    {}_5C_m \cdot \pi & (1 \le m \le 5 \text{ の時}) \\
+    0 & (6 \le m \text{ の時})
+  \end{cases}
+\end{align}
+だから，$m \ge 6$の時${}_5C_m=0$とすれば
+\begin{align}
+  \sum_{k=0}^{5} {}_5C_k I_{m,k} = \pi {}_5C_m
+\end{align}
+と統一的に扱えて，\cref{eq:4}に代入して
+\begin{align}
+  E
+  &= \pi\left[a^2+b^2+2ab \delta_{m,n}\right] + \dfrac{31}{32}\pi
+  - \pi \left( \dfrac{1}{2} \right)^5 \left[2a {}_5C_m + 2b {}_5C_n \right] \label{eq:5}
+\end{align}
+である．以下$m=n$かどうかで場合分けしてさらに変形する．
 
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \begin{tabular}{|c|c|c|}
-      \hline
-      $n \backslash m$ & $1 \le m \le 5$ & $6 \le m$ \\
-      \hline
-      $1 \le n \le 5$ & $A - 2\pi(a \cdot {}_5C_m + b \cdot {}_5C_n)$ (⑦) & \\
-      \hline
-      $6 \le n$ & $A - 2\pi \cdot a \cdot {}_5C_m$ (ウ) & $A$ (エ) \\
-      \hline
-    \end{tabular}
-  \end{table}
-\end{center}
+\subparagraph{$1^\circ \ m=n$ の時}
 
-まず, ⑦の時. $a, b \le 0$ ならば $E$ は $a, b$ の単調減少関数だから ($\because {}_5C_k > 0$)
-$a=b=0$ で $\min E = \dfrac{31}{32}\pi$ をとる. $a, b > 0$ の時, $m < n$ だから $(m,n) = (2,3)$ で
-$2^5 \dfrac{1}{\pi} E = 32(a^2+b^2) + 31 - 20(a+b)$
-$= 32\left(a - \dfrac{5}{16}\right)^2 + 32\left(b - \dfrac{5}{16}\right)^2 + 31 - \dfrac{25}{4}$
-$\ge \dfrac{99}{4}$ （等号成立は $a=b=\dfrac{5}{16}$）
-から, $a=b=\dfrac{5}{16}$ で $\min E = \dfrac{99}{128}\pi$ をとる.
+\cref{eq:5}で$m=n$として
+\begin{align}
+  E
+  &= \pi\left[a^2+b^2+2ab+\dfrac{31}{32} - 2\left( \dfrac{1}{2} \right)^5 {}_5C_m(a+b) \right] \\
+  &= \pi\left[(a+b)^2 - 2\dfrac{{}_5C_m}{32}(a+b) + \dfrac{31}{32} \right] \\
+  &= \pi\left[\left(a+b-\dfrac{{}_5C_m}{32}\right)^2 - \left(\dfrac{{}_5C_m}{32}\right)^2 + \dfrac{31}{32}\right]
+\end{align}
+だから，これは$a+b$に関する二次式で，$a,b$が実数全体を動く時，
+\begin{align}
+  a + b = \dfrac{{}_5C_m}{32} \label{eq:6}
+\end{align}
+で最小値
+\begin{align}
+  \min E = \pi\left[- \left(\dfrac{{}_5C_m}{32}\right)^2 + \dfrac{31}{32} \right]
+\end{align}
+をとり，$m$を動かすと$m=2,3$の時に二項係数は最大値${}_5C_m=10$をとるから，この時
+\begin{align}
+  \min E
+  & = \pi\left[- \left(\dfrac{10}{32}\right)^2 + \dfrac{31}{32} \right] \\
+  & = \pi\left[- \left(\dfrac{5}{16}\right)^2 + \dfrac{31}{32} \right] \\
+  & = \dfrac{223}{256}\pi \label{eq:7}
+\end{align}
+をとる．
 
-次に(ウ)の時, $a \le 0$ ならば同様に $\min E = \dfrac{31}{32}\pi$. $a > 0$ の時, $m=2, 3$ で,
-$2^5 \dfrac{1}{\pi} E = 32(a^2+b^2) + 31 - 20a$
-$\ge 31 - \dfrac{25}{8} = \dfrac{223}{8}$ （等号成立は $a=\dfrac{5}{16}, b=0$）
+\subparagraph{$2^\circ \ m \neq n$の時}
 
-(エ)の時は $a=b=0$ で $\min E = \dfrac{31}{32}\pi$ である.
+\cref{eq:5}で$m \neq n$の時は
+\begin{align}
+  E
+  &= \pi\left[a^2+b^2\right] + \dfrac{31}{32}\pi
+  - \pi \left( \dfrac{1}{2} \right)^5 \left[2a {}_5C_m + 2b {}_5C_n \right] \\
+  &= \pi\left[a^2 - \dfrac{2{}_5C_m}{32}a + b^2 - \dfrac{2{}_5C_n}{32}b \right] + \dfrac{31}{32}\pi  \\
+  &= \pi\left[\left(a-\dfrac{{}_5C_m}{32}\right)^2 + \left(b-\dfrac{{}_5C_n}{32}\right)^2 - \left(\dfrac{{}_5C_m}{32}\right)^2 - \left(\dfrac{{}_5C_n}{32}\right)^2\right]
+  + \dfrac{31}{32}\pi  \label{eq:8}
+\end{align}
+これは$a,b$それぞれについて二次で，$a,b$を実数全体で動かすと
+\begin{align}
+  a = \dfrac{{}_5C_m}{32},
+  \quad
+  b = \dfrac{{}_5C_n}{32} \label{eq:9}
+\end{align}
+の時に最小値
+\begin{align}
+  \min E = \pi\left[- \left(\dfrac{{}_5C_m}{32}\right)^2 - \left(\dfrac{{}_5C_n}{32}\right)^2 + \dfrac{31}{32} \right]
+\end{align}
+をとる．これは$1^{\circ}$と同じく，$(m,n)=(2,3), (3,2)$の時に最小値
+\begin{align}
+  \min E
+  & = \pi\left[- \left(\dfrac{10}{32}\right)^2 - \left(\dfrac{10}{32}\right)^2 + \dfrac{31}{32} \right] \\
+  & = \pi\left[- 2\left(\dfrac{5}{16}\right)^2 + \dfrac{31}{32} \right] \\
+  & = \dfrac{99}{128}\pi
+\end{align}
+をとる．この時は\cref{eq:9}より
+\begin{align}
+  a = b = \dfrac{5}{16}
+\end{align}
+である．
+\casesend
 
-以上から, $2^\circ$ の⑦の時, 且つ $m \neq n$ で, 対称性から
-$(m,n,a,b) = \left(3, 2, \dfrac{5}{16}, \dfrac{5}{16}\right), \left(2, 3, \dfrac{5}{16}, \dfrac{5}{16}\right)$ \qed
+以上から$E$が最小となるのは$2^{\circ}$の時で，
+\begin{align}
+  (m,n,a,b) = \left(3, 2, \dfrac{5}{16}, \dfrac{5}{16}\right), \left(2, 3, \dfrac{5}{16}, \dfrac{5}{16}\right)
+\end{align}
+となる．
 
 \end{document}

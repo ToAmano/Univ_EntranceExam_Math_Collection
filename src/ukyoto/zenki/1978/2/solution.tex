@@ -1,28 +1,7 @@
-% lint-skip: 未完成ステータス（figure/table caption 未対応，人手チェック時に解消予定）
-\documentclass[../../main.tex]{subfiles}
+OB\documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-{\bf [解答]} 点Xに対し, $\overrightarrow{OX} = \vec{x}$ とおく. $\vec{a}$ と $\vec{b}$ は一次独立.
-\[ \vec{g} = \dfrac{1}{3}(\vec{a} + \vec{b}) \]
-\[ \vec{p} = h\vec{a} \]
-\[ \vec{q} = k\vec{b} \]
-従って, 直線PQ上の点Xは, $t \in \mathbb{R}$ として
-\[ \vec{x} = t h\vec{a} + (1-t) k\vec{b} \]
-とおける. これがGを通るので,
-\[ th = (1-t)k = \dfrac{1}{3} \]
-をみたす $t \in \mathbb{R}$ が存在するから, ($h, k \neq 0$ が必要で)
-\[ \dfrac{1}{h} + \dfrac{1}{k} = 3 \quad \cdots (i) \]
-さらに, $T = hkS \cdots$ ① である. $\alpha = h+k$ とおく. (i)をみたす
-$(h, k) (0 < h, k \le 1)$ は右図太線部.
-従って, (i)から $hk = \dfrac{1}{3}(h+k) = \dfrac{1}{3}\alpha$ に注意して, 図でこれらが交点を持つ条件から
-\[ \dfrac{1}{3}\left(\dfrac{2}{3} + \dfrac{2}{3}\right) \le \dfrac{1}{3}\alpha \le \dfrac{1}{3}\left(1 + \dfrac{1}{2}\right) \]
-\[ \dfrac{4}{9} \le \dfrac{1}{3}\alpha \le \dfrac{1}{2} \]
-①に代入して
-\[ \dfrac{4}{9}S \le T \le \dfrac{1}{2}S \quad \text{\qed} \]
+{\bf [解答]}
 
 \begin{figure}[htb]
   \centering
@@ -36,9 +15,9 @@ $(h, k) (0 < h, k \le 1)$ は右図太線部.
     \coordinate (Q) at ({8/3},0);
     \coordinate (G) at ({7/3},{2/3});
     \draw[line width=1.4pt, blue!85!black] (O) -- (A) -- (B) -- cycle;
-    \draw[line width=1.2pt, teal!75!black] (P) -- (Q);
-    \foreach \X in {O,A,B,P,Q} {\fill[blue!85!black] (\X) circle (1.4pt);}
-    \fill[red!85!black] (G) circle (1.7pt);
+    \draw[line width=1.2pt, teal!75!black] ($(P)!-0.35!(Q)$) -- ($(Q)!-0.35!(P)$);
+    \foreach \X in {O,A,B,P,Q} {\node[circle, fill=blue!85!black, inner sep=1.4pt] at (\X) {};}
+    \node[circle, fill=red!85!black, inner sep=1.7pt] at (G) {};
     \node[below left=2pt] at (O) {$O$};
     \node[above=2pt] at (A) {$A$};
     \node[right=2pt] at (B) {$B$};
@@ -46,8 +25,52 @@ $(h, k) (0 < h, k \le 1)$ は右図太線部.
     \node[below=3pt] at (Q) {$Q$};
     \node[above right=2pt, red!85!black] at (G) {$G$};
   \end{tikzpicture}
-  \caption{重心 $G$ を通る線分 $PQ$ の一例（$h=k=2/3$）}
+  \caption{重心 $G$ を通る直線 $PQ$ の一例．}
 \end{figure}
+
+\paragraph{(1)}
+
+点Xに対し $\overrightarrow{OX} = \vec{x}$ とおく.
+$O,A,B$が三角形を成すから$\vec{a}$ と $\vec{b}$ は一次独立である．$G, P, Q$の位置ベクトルは題意より
+\begin{align}
+  \begin{cases}
+    \vec{g} = \dfrac{1}{3}(\vec{a} + \vec{b}) \\
+    \vec{p} = h\vec{a} \\
+    \vec{q} = k\vec{b}
+  \end{cases} \label{eq:1}
+\end{align}
+である．
+
+従って直線$PQ$上の点$X$は $t \in \mathbb{R}$ として
+\begin{align}
+  \vec{x} = t\vec{p} + (1-t)\vec{q} = t h\vec{a} + (1-t) k\vec{b}
+\end{align}
+とおける. これが重心$G$を通るので,\cref{eq:1}で係数比較して
+\begin{align}
+  th = (1-t)k = \dfrac{1}{3}
+\end{align}
+となる．$h,k \neq 0$だから
+\begin{align}
+  t = \dfrac{1}{3h}, 1-t=\dfrac{1}{3k}
+\end{align}
+となり，辺々足して
+\begin{align}
+  \dfrac{1}{h} + \dfrac{1}{k} = 3 \label{eq:2}
+\end{align}
+となる．
+
+\paragraph{(2)}
+
+\cref{eq:1}より，$\triangle OAB, \triangle OPQ$の面積比は$1:hk$だから
+\begin{align}
+  T = hkS \label{eq:3}
+\end{align}
+である．\cref{eq:2}より$h+k=3hk$だから代入して
+\begin{align}
+  h+k = \dfrac{3T}{S} \label{eq:4}
+\end{align}
+である．よって\cref{eq:3,eq:4}が$hk$平面上に共有点をもてば良い．
+$0<h,k\le 1$と合わせて$hk$平面に図示すると以下のようになる．
 
 \begin{figure}[htb]
   \centering
@@ -63,18 +86,27 @@ $(h, k) (0 < h, k \le 1)$ は右図太線部.
     \draw[dashed, gray!60] (0.5,0) -- (0.5,1) -- (0,1);
     \draw[dashed, gray!60] (1,0) -- (1,0.5) -- (0,0.5);
     \draw[dashed, gray!60] ({2/3},0) -- ({2/3},{2/3}) -- (0,{2/3});
-    \foreach \P in {{(0.5,1)},{(1,0.5)}} {\fill[red!85!black] \P circle (1.7pt);}
-    \fill[red!85!black] ({2/3},{2/3}) circle (1.7pt);
-    \node[below=3pt, font=\footnotesize] at (0.5,0) {$\frac12$};
-    \node[below=3pt, font=\footnotesize] at ({2/3},0) {$\frac23$};
+    \foreach \P in {{(0.5,1)},{(1,0.5)}} {\node[circle, fill=red!85!black, inner sep=1.7pt] at \P {};}
+    \node[circle, fill=red!85!black, inner sep=1.7pt] at ({2/3},{2/3}) {};
+    \node[below=3pt, font=\footnotesize] at (0.5,0) {$\frac{1}{2}$};
+    \node[below=3pt, font=\footnotesize] at ({2/3},0) {$\frac{2}{3}$};
     \node[below=3pt, font=\footnotesize] at (1,0) {$1$};
-    \node[left=3pt, font=\footnotesize] at (0,0.5) {$\frac12$};
-    \node[left=3pt, font=\footnotesize] at (0,{2/3}) {$\frac23$};
+    \node[left=3pt, font=\footnotesize] at (0,0.5) {$\frac{1}{2}$};
+    \node[left=3pt, font=\footnotesize] at (0,{2/3}) {$\frac{2}{3}$};
     \node[left=3pt, font=\footnotesize] at (0,1) {$1$};
     \node[above right=3pt, blue!85!black] at (0.78,0.59)
-    {$k=\dfrac{h}{3h-1}$};
+    {$k=\frac{h}{3h-1}$};
   \end{tikzpicture}
   \caption{条件 $1/h+1/k=3$ を満たす $0<h,k\le1$ の範囲}
 \end{figure}
+
+よってこれらが共有点を持つ条件は
+\begin{align}
+  & \dfrac{2}{3} + \dfrac{2}{3} \le \dfrac{3T}{S} \le 1 + \dfrac{1}{2} \\
+  & \dfrac{4}{3} \le \dfrac{3T}{S} \le \dfrac{3}{2} \\
+  \therefore
+  & \dfrac{4}{9}S \le T \le \dfrac{1}{2}S
+\end{align}
+となり，題意の不等式は示された．
 
 \end{document}
