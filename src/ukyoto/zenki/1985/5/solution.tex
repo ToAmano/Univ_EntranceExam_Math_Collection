@@ -1,40 +1,108 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} 2枚の硬貨A, Bとし，表の出る確率が各々 $a, b$ だとする．
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=stealth, scale=0.95, every node/.style={font=\small}]
 
-確率変数 $X_1, X_2$ を以下のように定める．
+    % --- 列見出し ---
+    \node[font=\bfseries, gray!40!black] at (0, 3.8) {硬貨 A};
+    \node[font=\bfseries, gray!40!black] at (2.4, 3.8) {硬貨 B};
+    \node[font=\bfseries, gray!40!black] at (4.8, 3.8) {表の枚数 $X$};
+    \node[font=\bfseries, gray!40!black] at (8.0, 3.8) {確率 $P(X)$};
+
+    % --- 開始ノード ---
+    \node[draw=gray!60, fill=gray!10, rounded corners=3pt, inner sep=4pt, font=\footnotesize\bfseries] (start) at (-1.8, 1.45) {2枚投げる};
+
+    % --- 硬貨 A の分岐ノード ---
+    \node[draw=blue!85!black, fill=blue!8, thick, rounded corners=3pt, inner sep=4pt] (A_head) at (0, 2.5) {
+      \textbf{表} ($X_A=1$)
+    };
+    \node[draw=blue!85!black, fill=blue!8, thick, rounded corners=3pt, inner sep=4pt] (A_tail) at (0, 0.4) {
+      \textbf{裏} ($X_A=0$)
+    };
+
+    % 開始 -> 硬貨A の矢印
+    \draw[->, thick, gray!70!black] (start.east) -- (A_head.west) node[midway, above left, font=\scriptsize] {確率 $a$};
+    \draw[->, thick, gray!70!black] (start.east) -- (A_tail.west) node[midway, below left, font=\scriptsize] {確率 $1-a$};
+
+    % --- 硬貨 B の分岐ノード (上側: Aが表) ---
+    \node[draw=teal!85!black, fill=teal!8, rounded corners=3pt, inner sep=3.5pt] (B_hh) at (2.4, 3.0) {\textbf{表} ($X_B=1$)};
+    \node[draw=teal!85!black, fill=teal!8, rounded corners=3pt, inner sep=3.5pt] (B_ht) at (2.4, 2.0) {\textbf{裏} ($X_B=0$)};
+
+    \draw[->, thick, gray!70!black] (A_head.east) -- (B_hh.west) node[pos=0.35, above=1pt, font=\scriptsize] {$b$};
+    \draw[->, thick, gray!70!black] (A_head.east) -- (B_ht.west) node[pos=0.35, below left=-1pt, font=\scriptsize] {$1-b$};
+
+    % --- 硬貨 B の分岐ノード (下側: Aが裏) ---
+    \node[draw=teal!85!black, fill=teal!8, rounded corners=3pt, inner sep=3.5pt] (B_th) at (2.4, 0.9) {\textbf{表} ($X_B=1$)};
+    \node[draw=teal!85!black, fill=teal!8, rounded corners=3pt, inner sep=3.5pt] (B_tt) at (2.4, -0.1) {\textbf{裏} ($X_B=0$)};
+
+    \draw[->, thick, gray!70!black] (A_tail.east) -- (B_th.west) node[pos=0.35, above=1pt, font=\scriptsize] {$b$};
+    \draw[->, thick, gray!70!black] (A_tail.east) -- (B_tt.west) node[pos=0.35, below left=-1pt, font=\scriptsize] {$1-b$};
+
+    % --- 結果ノード (X) ---
+    \node[draw=red!80!black, fill=red!6, thick, circle, inner sep=2pt] (X2) at (4.8, 3.0) {$X=2$};
+    \node[draw=blue!80!black, fill=blue!6, thick, circle, inner sep=2pt] (X1_a) at (4.8, 2.0) {$X=1$};
+    \node[draw=blue!80!black, fill=blue!6, thick, circle, inner sep=2pt] (X1_b) at (4.8, 0.9) {$X=1$};
+    \node[draw=gray!80!black, fill=gray!6, thick, circle, inner sep=2pt] (X0) at (4.8, -0.1) {$X=0$};
+
+    \draw[->, thick, gray!50] (B_hh.east) -- (X2.west);
+    \draw[->, thick, gray!50] (B_ht.east) -- (X1_a.west);
+    \draw[->, thick, gray!50] (B_th.east) -- (X1_b.west);
+    \draw[->, thick, gray!50] (B_tt.east) -- (X0.west);
+
+    % --- 各経路の確率 ---
+    \node[right=2pt, font=\footnotesize] (p2) at (5.7, 3.0) {$ab$};
+    \node[right=2pt, font=\footnotesize] (p1a) at (5.7, 2.0) {$a(1-b)$};
+    \node[right=2pt, font=\footnotesize] (p1b) at (5.7, 0.9) {$(1-a)b$};
+    \node[right=2pt, font=\footnotesize] (p0) at (5.7, -0.1) {$(1-a)(1-b)$};
+
+    % --- まとめ確率 ---
+    \node[right=16pt, font=\small, red!85!black] at (p2.east) {$\implies P(X=2) = ab$};
+
+    \draw[thick, gray!60] (7.2, 2.15) -- (7.35, 2.15) -- (7.35, 1.45) -- (7.5, 1.45) -- (7.35, 1.45) -- (7.35, 0.75) -- (7.2, 0.75);
+    \node[right=6pt, font=\small, blue!85!black] at (7.5, 1.45) {$\implies P(X=1) = a(1-b) + (1-a)b$};
+
+    \node[right=16pt, font=\small, gray!30!black] at (p0.east) {$\implies P(X=0) = (1-a)(1-b)$};
+
+  \end{tikzpicture}
+  \caption{2枚の硬貨 A，B を投げたときの表の枚数 $X$ と各事象の確率の樹形図}
+  \label{fig:coin_tree}
+\end{figure}
+
+2枚の硬貨A, Bとし，表の出る確率が各々 $a, b$ だとする．
+確率変数 $X_A, X_B$ を以下のように定める．
 \begin{align}
-  X_1 =
-  \begin{cases} 0 & (A\text{がウラ}) \\ 1 & (A\text{が表})
-  \end{cases} \quad X_2 =
-  \begin{cases} 0 & (B\text{がウラ}) \\ 1 & (B\text{が表})
+  X_A =
+  \begin{cases} 0 & (A\text{が裏}) \\ 1 & (A\text{が表})
+  \end{cases} \quad
+  X_B =
+  \begin{cases} 0 & (B\text{が裏}) \\ 1 & (B\text{が表})
   \end{cases}
 \end{align}
-すると，$X = X_1 + X_2$ で，$X_1, X_2$ は独立だから，
+すると，$X = X_A + X_B$ で，$X_A, X_B$ は独立だから，
 \begin{align}
   \begin{cases}
-    P(X=0) = P(X_1=0) \cdot P(X_2=0) \\
-    P(X=1) = P(X_1=0) \cdot P(X_2=1) + P(X_1=1) \cdot P(X_2=0) \\
-    P(X=2) = P(X_1=1) \cdot P(X_2=1)
-  \end{cases} \quad \cdots \text{①}
+    P(X=0) = P(X_A=0) \cdot P(X_B=0) \\
+    P(X=1) = P(X_A=0) \cdot P(X_B=1) + P(X_A=1) \cdot P(X_B=0) \\
+    P(X=2) = P(X_A=1) \cdot P(X_B=1)
+  \end{cases} \label{eq:1}
 \end{align}
-である．$P(X_1=0) = 1-a, P(X_1=1) = a$ などを①に代入して
+である．$P(X_A=0) = 1-a, P(X_A=1) = a$ などを代入して
 \begin{align}
   \begin{cases}
     P(X=0) = (1-a)(1-b) \\
     P(X=1) = (1-a)b + (1-b)a \\
     P(X=2) = ab
-  \end{cases} \quad \cdots \text{②}
+  \end{cases} \label{eq:2}
 \end{align}
+である．
 
 \paragraph{(1)}
 
-$P(X=k) = {}_2\mathrm{C}_k \cdot p^k (1-p)^{2-k}$ の時，②に代入して，
+$P(X=k) = {}_2\mathrm{C}_k \cdot p^k (1-p)^{2-k}$ の時，\cref{eq:2}に代入して，
 \begin{align}
   \begin{cases}
     (1-p)^2 = (1-a)(1-b) = 1 + ab - (a+b) \\
@@ -51,23 +119,24 @@ $\alpha = a+b, \beta = ab$ として，
   \end{cases}
 \end{align}
 第3式を1, 2式に代入して
-
-$\alpha = p^2 - p(p-2) = 2p$
-
-$\alpha = 2p(1-p) + 2\beta = 2p$
-
-から，$a, b$ は $x$ の2次式 $x^2 - 2px + p^2 = 0$ の2解で，$(a, b) = (p, p) \quad \text{//} $
+\begin{align}
+  \begin{cases}
+    \alpha = p^2 - p(p-2) = 2p \\
+    \alpha = 2p(1-p) + 2p^2 = 2p
+  \end{cases}
+\end{align}
+だから$a, b$ は $x$ の2次式 $x^2 - 2px + p^2 = 0$ の2解で，$(a, b) = (p, p)$とすれば良い．
 
 \paragraph{(2)}
 
-$P(X=k) = \dfrac{1}{3}$ の時，②に代入して
+$P(X=k) = \dfrac{1}{3}$ の時，\cref{eq:2}に代入して同様に$\alpha=a+b,\beta=ab$として
 \begin{align}
   \dfrac{1}{3} = 1 + \beta - \alpha = \alpha - 2\beta = \beta
 \end{align}
-よって，$(\alpha, \beta) = \left(1, \dfrac{1}{3}\right)$ だから，$a, b$ は $t$ の2次式 $t^2 - t + \dfrac{1}{3} = 0$ の2解だが，この判別式を $D$ として
+である．これを解くと$(\alpha, \beta) = \left(1, \dfrac{1}{3}\right)$ だから，$a, b$ は $t$ の2次式 $t^2 - t + \dfrac{1}{3} = 0$ の2解だが，この判別式を $D$ として
 \begin{align}
   D = 1 - \dfrac{4}{3} = -\dfrac{1}{3} < 0
 \end{align}
-から，$a, b \in \mathbb{R}$ に反し矛盾．よって $(a, b)$ は存在しない．$\text{//} $
+から，$a, b \in \mathbb{R}$ に反し矛盾する．よって $(a, b)$ は存在しない．
 
 \end{document}

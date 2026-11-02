@@ -1,54 +1,206 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
 
 \paragraph{(1)}
 
-①の中心 $(0,0,0)$ と②のキョリは
+\begin{figure}[htbp]
+  \centering
+  \tdplotsetmaincoords{70}{115}
+  \begin{tikzpicture}[scale=1.35, >=stealth, every node/.style={font=\small}]
+
+    \def\Rval{2.0} % 球の半径
+    \def\dval{1.1} % 原点から平面への距離
+    \pgfmathsetmacro{\rval}{sqrt(\Rval*\Rval - \dval*\dval)} % 交円の半径
+
+    % 1. 球面 A 本体のシェーディングと輪郭（スクリーン座標）
+    \coordinate (O_scr) at (0, 0);
+    \shadedraw[ball color=blue!12, opacity=0.35, draw=gray!75!black, line width=1.1pt] (O_scr) circle (\Rval);
+
+    % 2. 3D座標系内の要素
+    \begin{scope}[tdplot_main_coords]
+      % 円の中心 H
+      \pgfmathsetmacro{\hx}{\dval / 1.732}
+      \pgfmathsetmacro{\hy}{\dval / 1.732}
+      \pgfmathsetmacro{\hz}{\dval / 1.732}
+      \coordinate (H3) at (\hx, \hy, \hz);
+      \coordinate (O3) at (0, 0, 0);
+
+      % 座標軸 (奥側)
+      \draw[dashed, gray!45] (O3) -- (1.0, 0, 0);
+      \draw[dashed, gray!45] (O3) -- (0, 1.0, 0);
+      \draw[dashed, gray!45] (O3) -- (0, 0, 1.0);
+
+      % 赤道（xy 平面の大円）
+      \draw[gray!55, dashed] plot[domain=0:180, samples=40] ({\Rval*cos(\x)}, {\Rval*sin(\x)}, 0);
+      \draw[gray!55] plot[domain=180:360, samples=40] ({\Rval*cos(\x)}, {\Rval*sin(\x)}, 0);
+
+      % 平面 B の基底ベクトル (単位長)
+      \def\pw{2.1}
+      \coordinate (P1) at ({\hx + \pw*0.7071 + \pw*0.4082}, {\hy - \pw*0.7071 + \pw*0.4082}, {\hz - \pw*0.8165});
+      \coordinate (P2) at ({\hx - \pw*0.7071 + \pw*0.4082}, {\hy + \pw*0.7071 + \pw*0.4082}, {\hz - \pw*0.8165});
+      \coordinate (P3) at ({\hx - \pw*0.7071 - \pw*0.4082}, {\hy + \pw*0.7071 - \pw*0.4082}, {\hz + \pw*0.8165});
+      \coordinate (P4) at ({\hx + \pw*0.7071 - \pw*0.4082}, {\hy - \pw*0.7071 - \pw*0.4082}, {\hz + \pw*0.8165});
+
+      % 平面 B の半透明塗り
+      \fill[teal!20, opacity=0.45] (P1) -- (P2) -- (P3) -- (P4) -- cycle;
+      \draw[teal!80!black, thick] (P1) -- (P2) -- (P3) -- (P4) -- cycle;
+      \node[teal!90!black, font=\footnotesize\bfseries, above right] at (P2) {平面 $B$};
+
+      % 交円 D
+      \draw[line width=1.4pt, blue!85!black, domain=0:360, samples=60]
+      plot ({ \hx + \rval*cos(\x)*0.7071 + \rval*sin(\x)*0.4082 },
+        { \hy - \rval*cos(\x)*0.7071 + \rval*sin(\x)*0.4082 },
+      { \hz - \rval*sin(\x)*0.8165 });
+      \node[blue!85!black, font=\footnotesize\bfseries, left] at ($(H3) + (-1.1, 1.1, 0)$) {円 $D$};
+
+      % 垂線 OH
+      \draw[dashed, red!85!black, thick] (O3) -- (H3) node[midway, left=1pt, font=\footnotesize] {$l$};
+
+      % 交円上の2点 P, Q (P: 60度, Q: 150度)
+      \pgfmathsetmacro{\px}{\hx + \rval*cos(60)*0.7071 + \rval*sin(60)*0.4082}
+      \pgfmathsetmacro{\py}{\hy - \rval*cos(60)*0.7071 + \rval*sin(60)*0.4082}
+      \pgfmathsetmacro{\pz}{\hz - \rval*sin(60)*0.8165}
+      \coordinate (Ppt) at (\px, \py, \pz);
+
+      \pgfmathsetmacro{\qx}{\hx + \rval*cos(150)*0.7071 + \rval*sin(150)*0.4082}
+      \pgfmathsetmacro{\qy}{\hy - \rval*cos(150)*0.7071 + \rval*sin(150)*0.4082}
+      \pgfmathsetmacro{\qz}{\hz - \rval*sin(150)*0.8165}
+      \coordinate (Qpt) at (\qx, \qy, \qz);
+
+      \draw[line width=1.2pt, orange!85!black] (Ppt) -- (Qpt);
+      \node[circle, fill=orange!85!black, inner sep=1.2pt] at (Ppt) {};
+      \node[circle, fill=orange!85!black, inner sep=1.2pt] at (Qpt) {};
+      \node[right=2pt, font=\footnotesize] at (Ppt) {$P$};
+      \node[above=2pt, font=\footnotesize] at (Qpt) {$Q$};
+
+      % 点 O, H
+      \node[circle, fill=black, inner sep=1.2pt] at (O3) {};
+      \node[below left=1pt] at (O3) {$O$};
+      \node[circle, fill=red!85!black, inner sep=1.2pt] at (H3) {};
+      \node[above=2pt, font=\footnotesize] at (H3) {$H$};
+
+      % 座標軸 (手前側)
+      \draw[->, thick, gray!80!black] (1.0, 0, 0) -- (2.8, 0, 0) node[below left] {$x$};
+      \draw[->, thick, gray!80!black] (0, 1.0, 0) -- (0, 2.8, 0) node[right] {$y$};
+      \draw[->, thick, gray!80!black] (0, 0, 1.0) -- (0, 0, 2.7) node[above] {$z$};
+    \end{scope}
+
+    % 球面 A のラベル
+    \node[gray!70!black, font=\footnotesize] at (-1.5, 1.4) {球面 $A$};
+
+  \end{tikzpicture}
+  \caption{球面 $A$ と平面 $B$ の交円 $D$ の様子}
+  \label{fig:sphere_plane_3d}
+\end{figure}
+
+与えられた球面$A$と平面$B$
+\begin{align}
+  \begin{cases}
+    A: x^2+y^2+z^2=\dfrac{1}{3}(r^2+2) \\
+    B: x+y+z=r
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．$A$の中心 $(0,0,0)$ と平面$B$の距離$l$は，点と平面の距離公式より
 \begin{align}
   l = \dfrac{r}{\sqrt{1+1+1}} = \dfrac{\sqrt{3}}{3}r
 \end{align}
-だから，$D$ は半径 $\sqrt{\dfrac{1}{3}(r^2+2) - \left(\dfrac{\sqrt{3}}{3}r\right)^2} = \sqrt{\dfrac{2}{3}}$ の円である．よって，
+だから，$D$ は半径
+\begin{align}
+  \sqrt{\dfrac{1}{3}(r^2+2) - \left(\dfrac{\sqrt{3}}{3}r\right)^2} = \sqrt{\dfrac{2}{3}}
+\end{align}
+の円である．よってこの円の中の点$P,Q$について
 \begin{align}
   |PQ| \le (D\text{の直径}) = 2\sqrt{\dfrac{2}{3}} \quad \blacksquare
 \end{align}
+となり題意は示された．
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+    % 中心 O, 半径 R
+    \def\R{2.4}
+    \def\d{1.3} % OH = l = sqrt(3)/3 * r
+    \pgfmathsetmacro{\rho}{sqrt(\R*\R - \d*\d)}
+
+    \coordinate (O) at (0, 0);
+    \coordinate (H) at (\d, 0);
+    \coordinate (P) at (\d, \rho);
+    \coordinate (Q) at (\d, -\rho);
+
+    % 球面の断面（円）
+    \draw[line width=1.2pt, gray!70!black] (O) circle (\R);
+    \node[gray!70!black, font=\footnotesize] at (-1.7, 1.7) {球面 $A$ の大円};
+
+    % 平面 B の断面（直線）
+    \draw[line width=1.1pt, teal!80!black] (\d, -2.4) -- (\d, 2.4) node[above, font=\footnotesize] {平面 $B$};
+
+    % 交円 D の直径 PQ
+    \draw[line width=1.8pt, blue!85!black] (P) -- (Q);
+    \node[right=2pt, blue!85!black, font=\footnotesize] at (\d, 0.7) {交円 $D$ の直径};
+
+    % 直角三角形 OHP
+    \draw[dashed, red!85!black, thick] (O) -- (H)
+    node[midway, below, font=\footnotesize] {$l = \frac{\sqrt{3}}{3}r$};
+    \draw[dashed, blue!85!black, thick] (O) -- (P)
+    node[midway, above left, font=\footnotesize] {$R = \sqrt{\frac{r^2+2}{3}}$};
+    \draw[dashed, gray!60, thick] (H) -- (P)
+    node[midway, right=2pt, font=\footnotesize] {$\sqrt{\frac{2}{3}}$};
+
+    % 直角マーク at H
+    \draw[gray!60, thin] (\d-0.18, 0) -- (\d-0.18, 0.18) -- (\d, 0.18);
+
+    % 点
+    \node[circle, fill=black, inner sep=1.3pt] at (O) {};
+    \node[left=2pt] at (O) {$O$};
+
+    \node[circle, fill=red!85!black, inner sep=1.3pt] at (H) {};
+    \node[below left=2pt, font=\footnotesize] at (H) {$H$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (P) {};
+    \node[above right=2pt, font=\footnotesize] at (P) {$P$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Q) {};
+    \node[below right=2pt, font=\footnotesize] at (Q) {$Q$};
+
+    % ピタゴラスの補足説明ボックス
+    \node[draw=blue!70!black, fill=blue!5, rounded corners=2pt, inner sep=4pt, font=\scriptsize, align=left]
+    at (-0.8, -1.2) {
+      $
+      \begin{aligned}
+        HP &= \sqrt{OP^2 - OH^2} \\
+        &= \sqrt{\frac{r^2+2}{3} - \left(\frac{\sqrt{3}}{3}r\right)^2} = \sqrt{\frac{2}{3}}
+      \end{aligned}$
+    };
+  \end{tikzpicture}
+  \caption{$O$ から平面 $B$ へ下ろした垂線を含む断面とピタゴラスの定理による交円の半径の導出}
+  \label{fig:cross_section_pythagoras}
+\end{figure}
 
 \paragraph{(2)}
 
-$x, y, z \in \mathbb{Z}$ から，$\dfrac{1}{3}(r^2+2) \in \mathbb{Z}$ が必要である．合同式の法を$3$として，
+\cref{eq:1}で第二式を第一式に代入して$r$を消すと
 \begin{align}
-  \begin{cases}
-    r \equiv 0 \text{ の時 } & r^2 + 2 \equiv 2 \\
-    r \equiv \pm 1 \text{ の時 } & r^2 + 2 \equiv 0
-  \end{cases}
+  &x^2 + y^2 + z^2 = \dfrac{1}{3} \left\{ (x+y+z)^2 + 2 \right\} \\
+  \therefore
+  &(x-y)^2 + (y-z)^2 + (z-x)^2 = 2
 \end{align}
-だから，$r \equiv \pm 1$ が必要である． $\quad \cdots \text{①}$
-
-③を①に代入して $r$ を消す．
-
-$x^2 + y^2 + z^2 = \dfrac{1}{3} \left\{ (x+y+z)^2 + 2 \right\}$
-
-$\therefore (x-y)^2 + (y-z)^2 + (z-x)^2 = 2 \quad \cdots \text{②}$
-
-$x, y, z \in \mathbb{Z}$ だから，$(x-y)^2, (y-z)^2, (z-x)^2$ のうち2つが1，のこり1つが0である．
-
-$\left\{ (x-y)^2, (y-z)^2, (z-x)^2 \right\} = \{1, 1, 0\}, \{1, 0, 1\}, \{0, 1, 1\}$
-
-対称性から $x \le y \le z$ とすると，（$\cdots \text{③}$） これをみたすのは
-
-$(x, y, z) = (x, x+1, x+1), (x, x, x+1)$
-
-のみである．したがって，条件①及び③から，$k \in \mathbb{Z}$ として
+である．$x, y, z \in \mathbb{Z}$ だから，$(x-y)^2, (y-z)^2, (z-x)^2$ のうち2つが1，のこり1つが0である．すなわち
+\begin{align}
+  \left\{ (x-y)^2, (y-z)^2, (z-x)^2 \right\} = \{1, 1, 0\}, \{1, 0, 1\}, \{0, 1, 1\}
+\end{align}
+である．対称性から $x \le y \le z$ とするとこれをみたすのは
+\begin{align}
+  (x, y, z) = (x, x+1, x+1), (x, x, x+1)
+\end{align}
+のみである．従ってこれらを入れ替えたものも考えて，$k \in \mathbb{Z}$ として
 \begin{align}
   \begin{cases}
     r = 3k+2 \text{ の時 } & (x, y, z) = (k, k+1, k+1), (k+1, k, k+1), (k+1, k+1, k) \\
     r = 3k+1 \text{ の時 } & (x, y, z) = (k, k, k+1), (k, k+1, k), (k+1, k, k)
   \end{cases}
 \end{align}
+である．
 
 \end{document}
