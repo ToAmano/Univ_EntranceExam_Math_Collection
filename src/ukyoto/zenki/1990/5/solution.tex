@@ -1,55 +1,116 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
 \paragraph{(1)}
 
-$N=5$の時
-$i=j=0$での成立が必要だが
+$N=5,6$について確率変数$X,Y$が独立な時に成立する式
 \begin{align}
-  &P(X=0 \land Y=0) = \dfrac{1}{36} \\
-  &P(X=0) = \dfrac{1}{6} \quad (N=6\text{の時の図}) \\
-  &P(Y=0) = \dfrac{7}{36}
+  P(X \land Y) = P(X)P(Y) \label{eq:1}
 \end{align}
-から $P(X=0 \land Y=0) = P(X=0)P(Y=0)$ は不成立，よって$X, Y$は独立ではない．
+が成立するか個別に検討する．
 
-$2^{\circ} \ N=6$の時
-確率変数$X, Y$に対し，まず$P(X=k)=P(Y=k)=\dfrac{1}{6} \quad (k=0 \sim 5)$であり
+\subparagraph{$1^{\circ}$ $N=5$の時}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.15,>=stealth,every node/.style={font=\small}]
+    \def\R{1.3}
+    \foreach \k in {0,...,4} {
+      \coordinate (V\k) at ({90 - \k*72}:\R);
+    }
+    \draw[blue!75!black,thick] (V0) -- (V1) -- (V2) -- (V3) -- (V4) -- cycle;
+    \draw[->,orange!85!black,line width=1.0pt] (70:{\R+0.4}) arc[start angle=70,end angle=20,radius={\R+0.4}] node[midway,above right=1pt,font=\scriptsize] {時計回り};
+    \foreach \k in {0,...,4} {
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (V\k) {};
+    }
+    \node[above=2pt] at (V0) {$0$ \scriptsize(目: $5$)};
+    \node[right=2pt] at (V1) {$1$ \scriptsize(目: $1, 6$)};
+    \node[below right=2pt] at (V2) {$2$ \scriptsize(目: $2$)};
+    \node[below left=2pt] at (V3) {$3$ \scriptsize(目: $3$)};
+    \node[left=2pt] at (V4) {$4$ \scriptsize(目: $4$)};
+    \node[circle,draw=red!85!black,thick,inner sep=3.2pt] at (V0) {};
+  \end{tikzpicture}
+  \caption{$N=5$ のときの頂点と出目の対応}
+  \label{fig:pentagon_n5}
+\end{figure}
+
+$i=j=0$での成立が必要である．$X=0 \land Y=0$となるのは$1,2$回目とも$5$の目を出した時で
 \begin{align}
-  P(X=i \land Y=j) = \dfrac{1}{36} \quad \left( \text{$X=i$になるし(確率$1/6$)，$Y=j$となる目が出る(確率$1/6$)} \right)
+  P(X=0 \land Y=0) = \dfrac{1}{36}
 \end{align}
-から，任意の$i, j$に対し $P(X=i \land Y=j) = P(X=i)P(Y=j)$ が成立するので，$X$と$Y$は独立．
+である．一方$X=0$となるのは$5$の目を出した時で
+\begin{align}
+  P(X=0) = \dfrac{1}{6}
+\end{align}
+である．$Y=0$となるのは，$1,2$回目に出る目の和が$5$または$10$の時だから
+\begin{align}
+  P(Y=0) = \dfrac{7}{36}
+\end{align}
+である．以上から $P(X=0 \land Y=0) = P(X=0)P(Y=0)$ は不成立で$X, Y$は独立ではない．
+
+\subparagraph{$2^{\circ}$ $N=6$の時}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.15,>=stealth,every node/.style={font=\small}]
+    \def\R{1.3}
+    \foreach \k in {0,...,5} {
+      \coordinate (V\k) at ({90 - \k*60}:\R);
+    }
+    \draw[blue!75!black,thick] (V0) -- (V1) -- (V2) -- (V3) -- (V4) -- (V5) -- cycle;
+    \draw[->,orange!85!black,line width=1.0pt] (75:{\R+0.4}) arc[start angle=75,end angle=15,radius={\R+0.4}] node[midway,above right=1pt,font=\scriptsize] {時計回り};
+    \foreach \k in {0,...,5} {
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (V\k) {};
+    }
+    \node[above=2pt] at (V0) {$0$ \scriptsize(目: $6$)};
+    \node[above right=1pt] at (V1) {$1$ \scriptsize(目: $1$)};
+    \node[below right=1pt] at (V2) {$2$ \scriptsize(目: $2$)};
+    \node[below=2pt] at (V3) {$3$ \scriptsize(目: $3$)};
+    \node[below left=1pt] at (V4) {$4$ \scriptsize(目: $4$)};
+    \node[above left=1pt] at (V5) {$5$ \scriptsize(目: $5$)};
+    \node[circle,draw=red!85!black,thick,inner sep=3.2pt] at (V0) {};
+  \end{tikzpicture}
+  \caption{$N=6$ のときの頂点と出目の対応}
+  \label{fig:hexagon_n6}
+\end{figure}
+
+確率変数$X, Y$に対して$P(X=k)=P(Y=k)=\dfrac{1}{6} \quad (k=0 \sim 5)$であり，また任意の$i,j$について$(X,Y)=(i,j)$となるのは常に一通りだから
+\begin{align}
+  P(X=i \land Y=j) = \dfrac{1}{36}
+\end{align}
+である．よって任意の$i, j$に対し $P(X=i \land Y=j) = P(X=i)P(Y=j)$ が成立するので，$X$と$Y$は独立である．
 
 \paragraph{(2)}
 
-$i=j=0$での成立が必要である．
-$1^{\circ} \ N=3$の時
+$N=5,6$について(1)で調べたので，残りの$N \ge 3$について個別に検討する．
+
+\subparagraph{$1^{\circ} \ N=3$の時}
+
 $P(X=k)=P(Y=k)=\dfrac{1}{3} \quad (k=0 \sim 2)$ であり (1)と同じく，
-$P(X=i \land Y=j) = \dfrac{1}{9}$ だから，$X, Y$は独立．
+$P(X=i \land Y=j) = \dfrac{1}{9}$ だから，$X, Y$は独立である．
 
-$2^{\circ} \ N=4$の時，
-$P(X=0) = \dfrac{1}{6}, \quad P(Y=0) = \dfrac{9}{36}, \quad P(X=0 \land Y=0) = \dfrac{1}{36}$ から
-$X, Y$は非独立．
+\subparagraph{$2^{\circ} \ N=4$の時}
 
-$3^{\circ} \ 7 \le N$の時
-2週まわって6にいくことはないので，1回目に出た目を$A$，2回目を$B$とすると，$Y=6$となるのは $A+B=6$ の5通り．
+$i=j=0$での成立が必要である．$P(X=0) = \dfrac{1}{6}, \quad P(Y=0) = \dfrac{9}{36}, \quad P(X=0 \land Y=0) = \dfrac{1}{36}$ から$X, Y$は非独立である．
+
+\subparagraph{$3^{\circ} \ 7 \le N$の時}
+
+この時は2周まわって6にいくことはないので，1回目に出た目を$A$，2回目を$B$とすると，$Y=6$となるのは $A+B=6$ の5通りである．従って
 \begin{align}
   P(Y=6) = \dfrac{5}{36}
 \end{align}
-又，$P(X=6)=\dfrac{1}{6}, \quad P(X=6 \land Y=6)=0$ だから
+であり，また$P(X=6)=\dfrac{1}{6}, \quad P(X=6 \land Y=6)=0$ だから
 \begin{align}
   P(X=6)P(Y=6) \neq P(X=6 \land Y=6)
 \end{align}
 となり，$X$と$Y$は独立ではない．
+\casesend
 
 以上から，$X, Y$が独立なのは
 \begin{align}
   N=3, 6
 \end{align}
-の時．
+の時である．
 
 \end{document}

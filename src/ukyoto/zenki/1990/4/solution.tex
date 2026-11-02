@@ -1,114 +1,195 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-{\bf [解答]} まず，半径$r$について $0 < r < \dfrac{1}{2}$ が必要である． $\cdots$ ①
+{\bf [解答]}
 
 \begin{figure}[htbp]
   \centering
-  \begin{minipage}{0.45\linewidth}
+  \begin{minipage}{0.48\linewidth}
     \centering
-    \begin{tikzpicture}[scale=1.45]
-      % 寸法比を見やすくするため r=1/5 の配置を描く。
-      \fill[blue!5] (0,0) circle (1.5);
-      \draw[blue!75!black,very thick] (0,0) circle (1.5);
-      \fill[white] (0,0) circle (0.9);
-      \draw[blue!75!black,thick] (0,0) circle (0.9);
-      \fill[teal!18] (1.2,0) circle (0.3);
-      \draw[teal!70!black,very thick] (1.2,0) circle (0.3);
-      \node[circle, fill, inner sep=1pt] at (0,0) {}; \node[below left] at (0,0) {$O$};
-      \node[circle, fill=teal!70!black, inner sep=1pt] at (1.2,0) {}; \node[teal!70!black, below] at (1.2,0) {$O_1$};
-      \draw[dashed,gray!70] (0,0)--(1.5,0);
-      \node[above] at (0.45,0.25) {$1-2r$};
-      \node[above] at (1.2,0.1) {$r$};
-      \node[right] at (1.5,-0.15) {$1$};
+    \begin{tikzpicture}[scale=1.45,every node/.style={font=\scriptsize}]
+      % 寸法比: 外円 R=1.5, 内円 R_in=0.9, 小円 r=0.3, 中心距離 d=1.2
+      % 2\theta = 2*arcsin(0.3/1.2) = 28.955 deg
+      \def\Rout{1.5}
+      \def\Rin{0.9}
+      \def\rc{0.3}
+      \def\d{1.2}
+      \def\twoTheta{28.955}
+
+      % ドーナツ領域の背景
+      \fill[blue!5] (0,0) circle (\Rout);
+      \fill[white] (0,0) circle (\Rin);
+      \draw[blue!75!black,very thick] (0,0) circle (\Rout);
+      \draw[blue!75!black,thick] (0,0) circle (\Rin);
+
+      % 中心 O
+      \node[circle, fill, inner sep=1pt] at (0,0) {};
+      \node[above left] at (0,0) {$O$};
+
+      % 半径寸法は左下（-135度方向）
+      \draw[dashed,gray!70] (0,0) -- ({-135}:{\Rout});
+      \draw[->,line width=0.6pt,gray!80!black] (0,0) -- ({-135}:{\Rin}) node[midway,above,sloped] {$1-2r$};
+      \draw[<->,line width=0.6pt,gray!80!black] ({-135}:{\Rin}) -- ({-135}:{\Rout}) node[midway,above,sloped] {$2r$};
+      \node[circle, fill=gray!80!black, inner sep=0.8pt] at ({-135}:{\Rin}) {};
+      \node[circle, fill=gray!80!black, inner sep=0.8pt] at ({-135}:{\Rout}) {};
+
+      % 外円半径 1 を左側（-180度）
+      \draw[dashed,gray!50] (0,0) -- (-\Rout,0);
+      \draw[->,line width=0.6pt,gray!80!black] (0,0) -- (-\Rout,0) node[midway,below] {$1$};
+
+      % 中心線の破線
+      \draw[dashed,gray!60] (0,0) -- ({\d+\rc}, 0);
+      \draw[dashed,gray!60] (0,0) -- ({(\d+\rc)*cos(\twoTheta)}, {(\d+\rc)*sin(\twoTheta)});
+
+      % 挟角 2\theta の円弧
+      \draw[orange!85!black,thick] (0.5,0) arc[start angle=0,end angle=\twoTheta,radius=0.5];
+      \node[orange!85!black,right] at ({0.52*cos(\twoTheta*0.5)},{0.52*sin(\twoTheta*0.5)}) {$2\theta$};
+
+      % 小円 C_1, C_2, C_3
+      \foreach \k in {1, 2, 3} {
+        \pgfmathsetmacro{\ang}{(\k-1)*\twoTheta}
+        \coordinate (Oc\k) at ({\d*cos(\ang)}, {\d*sin(\ang)});
+        \fill[teal!18] (Oc\k) circle (\rc);
+        \draw[teal!70!black,thick] (Oc\k) circle (\rc);
+        \node[circle, fill=teal!70!black, inner sep=0.9pt] at (Oc\k) {};
+      }
+
+      % 小円 C_1 内のラベルと半径
+      \node[teal!85!black,below=1pt] at (Oc1) {$O_1$};
+      \draw[->,line width=0.7pt,teal!85!black] (Oc1) -- ++(-45:\rc) node[midway,above=1pt] {$r$};
+
+      % 円名ラベル（外周の外側に配置）
+      \node[teal!85!black,right=2pt] at (\Rout,0) {$C_1$};
+      \node[teal!85!black,right=2pt] at ({\Rout*cos(\twoTheta)},{\Rout*sin(\twoTheta)}) {$C_2$};
+      \node[teal!85!black,above right=1pt] at ({\Rout*cos(2*\twoTheta)},{\Rout*sin(2*\twoTheta)}) {$C_3$};
+
+      % 半径rの円が並ぶ様子の点線
+      \draw[loosely dotted,thick,gray!60] ({2*\twoTheta+15}:{\d}) arc[start angle={2*\twoTheta+15},end angle=135,radius=\d];
     \end{tikzpicture}
+    \par\smallskip\footnotesize (a) ドーナツ領域と接して並ぶ円 $C_i$
   \end{minipage}\hfill
-  \begin{minipage}{0.50\linewidth}
+  \begin{minipage}{0.48\linewidth}
     \centering
-    \begin{tikzpicture}[scale=1.55]
+    \begin{tikzpicture}[scale=1.55,every node/.style={font=\scriptsize}]
       % Oから半径rの円への接線と半径が直交する。
       \coordinate (O) at (0,0);
       \coordinate (C) at (2.4,0);
       \coordinate (T) at (2.25,0.58095);
       \draw[teal!70!black,very thick] (C) circle (0.6);
       \draw[blue!75!black,very thick] (O)--(T)--(C)--cycle;
-      \draw[orange!85!black,thick] (0.52,0) arc[start angle=0,end angle=14.48,radius=0.52];
+      \draw[orange!85!black,thick] (0.6,0) arc[start angle=0,end angle=14.48,radius=0.6];
+      \node[orange!85!black,right] at (0.62,0.08) {$\theta$};
+
+      % 直角記号
       \draw[gray!70] (2.25,0.58095)--(2.14,0.552)--(2.169,0.44);
+
+      % 点とラベル
       \node[circle, fill, inner sep=1pt] at (O) {}; \node[left] at (O) {$O$};
       \node[circle, fill, inner sep=1pt] at (C) {}; \node[below] at (C) {$O_1$};
-      \node[circle, fill, inner sep=1pt] at (T) {}; \node[above left] at (T) {$T$};
-      \node[below] at (1.17,0) {$1-r$};
-      \node[right] at (2.42,0.32) {$r$};
-      \node[orange!85!black,above] at (0.87,0.11) {$\theta$};
+      \node[circle, fill=red!85!black, inner sep=1.1pt] at (T) {};
+      \node[above=2pt,red!85!black] at (T) {$T_1$};
+      \node[below] at (1.2,0) {$1-r$};
+      \node[right=2pt] at ($(C)!0.5!(T)$) {$r$};
     \end{tikzpicture}
+    \par\smallskip\footnotesize (b) 接線で作る直角三角形 $\triangle O T_1 O_1$
   \end{minipage}
   \caption{外円・内円と半径 $r$ の円の配置，および接線で作る直角三角形}
+  \label{fig:circles_annulus}
 \end{figure}
 
-\paragraph{(1)}
-
-上図のように半径$r$の円を順に$C_1, C_2, \cdots$とし，その中心を$O_1, O_2, \cdots$とする．又，図のように$\theta$をおくと
+まず$1>1-2r$より内側の円の半径が$1-2r$，外側の円の半径が$1$である．
+内側の円の半径が$0$以上だから
 \begin{align}
-  \sin \theta = \dfrac{r}{1-r} \quad \cdots \text{②}
-\end{align}
-である．又，円が$n$コあることから$\theta$について
-\begin{align}
-  2n\theta &\le 2\pi \\
-  \therefore \quad \theta &\le \dfrac{\pi}{n} \quad \cdots \text{③}
-\end{align}
-$n \ge 2$から $\dfrac{\pi}{n} \le \dfrac{\pi}{2}$ であり $0 \le \theta \le \pi/2$ で $\sin \theta$ が単調増加することから，②③より
-\begin{align}
-  \dfrac{r}{1-r} \le \sin \dfrac{\pi}{n}
-\end{align}
-$r$についてといて，①とあわせて
-\begin{align}
-  0 < r \le \dfrac{\sin \dfrac{\pi}{n}}{1+\sin \dfrac{\pi}{n}}
-\end{align}
-
-\paragraph{(2)}
-
-$n+2$コの円の面積の総和$S_n(r)$とおくと
-\begin{align}
-  \dfrac{S_n(r)}{\pi} &= 1 + (1-2r)^2 + nr^2 \equiv f_n(r) \\
-  f_n'(r) &= 2nr + 8r - 4 \\
-  &= 2 \{(n+4)r - 2\} \quad \cdots \text{④}
+  0 < r < \dfrac{1}{2} \label{eq:1}
 \end{align}
 である．
 
-[補題]
+\paragraph{(1)}
+
+半径$1-2r,1$のドーナツ状の領域に半径$r$の円を入れていく時，上図のように半径$r$の円を順に$C_1, C_2, \cdots, C_n$とし，その中心を$O_1, O_2, \cdots, O_n$とする．$C_1$から始めて$C_1, C_2,C_3,\cdots, C_n$がお互い接するように配置するのがもっとも効率が良いため以下この場合を考える．$C_n$と$C_1$は接する必要はないが，お互い重なる場合は不適である．
+
+上図のように，$O$から$C_i$に引いた接線の接点を$T_i$とし，$\angle T_iOO_i=\theta$とおくと，
+\begin{align}
+  \sin \theta = \dfrac{r}{1-r} \label{eq:2}
+\end{align}
+である．円が$n$個あることから全ての円が見込む角度$2n\theta$が$2\pi$以下でないとならず，
+\begin{align}
+  2n\theta \le 2\pi
+  \quad\therefore
+  \theta &\le \dfrac{\pi}{n} \label{eq:3}
+\end{align}
+である．
+$n \ge 2$から $\dfrac{\pi}{n} \le \dfrac{\pi}{2}$ であり $0 \le \theta \le \pi/2$ で $\sin \theta$ が単調増加することから，\cref{eq:2,eq:3}より
+\begin{align}
+  & \dfrac{r}{1-r} \le \sin \dfrac{\pi}{n} \\
+  \therefore
+  & 0 < r \le \dfrac{\sin \dfrac{\pi}{n}}{1+\sin \dfrac{\pi}{n}} \label{eq:4}
+\end{align}
+である．これは\cref{eq:1}を満たして十分である．
+
+\paragraph{(2)}
+
+$n+2$個の円の面積の総和$S_n(r)$とおくと
+\begin{align}
+  \dfrac{S_n(r)}{\pi} &= 1 + (1-2r)^2 + nr^2  \label{eq:5}
+\end{align}
+だから，両辺$r$で微分して
+\begin{align}
+  \dfrac{S'_n(r)}{\pi} &= 2 \{(n+4)r - 2\} \label{eq:6}
+\end{align}
+である．よって$S'_n(r)=0$は唯一の零点を$r=\dfrac{2}{n+4}$に持つ．
+これと\cref{eq:4}の上端$r_0= \dfrac{\sin \dfrac{\pi}{n}}{1+\sin \dfrac{\pi}{n}}$を比較する．
+\begin{align}
+  f(n) & = r_0 - \dfrac{2}{n+4} \\
+  & = \dfrac{\sin \dfrac{\pi}{n}}{1+\sin \dfrac{\pi}{n}} - \dfrac{2}{n+4} \\
+  & =   1 - \dfrac{1}{1+\sin \dfrac{\pi}{n}} - \dfrac{2}{n+4}
+\end{align}
+とおくと，$0 \le x \le \dfrac{\pi}{2}$で$\dfrac{2}{\pi}x \le \sin x$だから第二項を評価して
+\begin{align}
+  f(n) & \ge 1 - \dfrac{1}{1+(2/\pi)(\pi/n)} - \dfrac{2}{n+4} \\
+  & = 1 - \dfrac{1}{1+2/n} - \dfrac{2}{n+4} \\
+  & = \dfrac{2}{n+2} - \dfrac{2}{n+4} \\
+  & = \dfrac{4}{(n+2)(n+4)} > 0
+\end{align}
+だから，$r_0 > \dfrac{2}{n+4}$となり，常に$S'_n(r)$の零点は\cref{eq:4}の区間内にある．
+従って$S_n(r)$の増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$S_n(r)$ の増減表}
+  \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    $r$ & $0$ & $\cdots$ & $\dfrac{2}{n+4}$ & $\cdots$ & $\dfrac{\sin \dfrac{\pi}{n}}{1+\sin \dfrac{\pi}{n}}$ \\
+    \hline
+    $S'$ & & $-$ & $0$ & $+$ & \\
+    \hline
+    $S$ & & $\searrow$ & & $\nearrow$ & \\
+    \hline
+  \end{tabular}
+\end{table}
+
+よって$S_n(r)$を最小にする$r$は
+\begin{align}
+  r = \dfrac{2}{n+4}
+\end{align}
+である．
+
+{\bf [解説]}
+
+零点については，以下のように愚直に微分してもすぐ計算できる．
 \begin{align}
   g(x) = \dfrac{\sin x}{1+\sin x}, \quad h(x) = \dfrac{2x}{\pi+4x} \text{について} \left(0 < x \le \dfrac{\pi}{2}\right)
 \end{align}
+とおいて
 \begin{align}
   g(x) > h(x)
 \end{align}
+を示せば良い．
 $g(x) = 1 - \dfrac{1}{1+\sin x}, \quad h(x) = \dfrac{1}{2} - \dfrac{\pi}{2(\pi+4x)}$ より
 $F(x) = g(x) - h(x)$ とおくと
 \begin{align}
   F'(x) = - \dfrac{\cos x}{(1+\sin x)^2} + \dfrac{\pi}{2} \dfrac{-4}{(4x+\pi)^2} \le 0 \quad \left(\because 0 < x \le \dfrac{\pi}{2}\right)
 \end{align}
-より $F(x)$ は単調減少．これと $F(\pi/2) = \dfrac{1}{2} > 0$ から $F(x) > 0$ なので補題は示された．
-
-[補題] から下表をえる
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \caption{$S(r)$ の増減表}
-    \begin{tabular}{|c|c|c|c|c|c|}
-      \hline
-      $r$ & $0$ & $\cdots$ & $\dfrac{2}{n+4}$ & $\cdots$ & $\dfrac{\sin \dfrac{\pi}{n}}{1+\sin \dfrac{\pi}{n}}$ \\
-      \hline
-      $S'$ & & $-$ & $0$ & $+$ & \\
-      \hline
-      $S$ & & $\searrow$ & & $\nearrow$ & \\
-      \hline
-    \end{tabular}
-  \end{table}
-\end{center}
-よってもとめる$r$は $r = \dfrac{2}{n+4}$ である．
+より $F(x)$ は単調減少である．これと $F(\pi/2) = \dfrac{1}{2} > 0$ から $F(x) > 0$ なので示された．
 
 \end{document}
