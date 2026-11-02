@@ -34,7 +34,11 @@ LINT_SKIP_RE = re.compile(r'%\s*lint-skip\s*:\s*(\S.*)')
 
 FRAC_CMD_RE = re.compile(r'\\(d?frac)(?![a-zA-Z])')
 
-ALIGN_LINE_LENGTH_LIMIT = 100
+# align 内の1行の推定表示幅（文字数換算）の上限。
+# 10.5pt / 本文組版幅（約420〜440pt）では約75〜80文字が1行の収容限界に相当する。
+# \dfrac や \label などの TeX コマンドは実際の横幅よりコード長が肥大化しやすいため、
+# estimate_math_visual_length で推定表示幅に換算した上で判定する。
+ALIGN_LINE_LENGTH_LIMIT = 80
 ALIGN_LINE_MIN_EQUALS = 2
 
 
@@ -791,24 +795,130 @@ def check_overline_warning(text):
     return warnings
 
 
+MATH_VISUAL_LABEL_RE = re.compile(r'\\label\{[^}]*\}')
+MATH_VISUAL_INVIS_RE = re.compile(
+    r'\\(?:notag|nonumber|displaystyle|textstyle|scriptstyle|scriptscriptstyle)(?![a-zA-Z])'
+)
+MATH_VISUAL_DELIM_RE = re.compile(
+    r'\\(?:left|right)\.|\\(?:left|right|Biggl|Biggr|biggl|biggr|Bigl|Bigr|bigl|bigr|Bigg|bigg|Big|big)[lrg]?(?![a-zA-Z])'
+)
+MATH_VISUAL_FRAC_RE = re.compile(r'\\(?:d|c)?frac(?![a-zA-Z])')
+MATH_VISUAL_ACCENT_RE = re.compile(r'\\(?:overrightarrow|overline|underline|vec)(?![a-zA-Z])')
+MATH_VISUAL_SQRT_RE = re.compile(r'\\sqrt(?:\[[^\]]*\])?\{([^}]*)\}')
+MATH_VISUAL_QQUAD_RE = re.compile(r'\\qquad(?![a-zA-Z])')
+MATH_VISUAL_QUAD_RE = re.compile(r'\\quad(?![a-zA-Z])')
+MATH_VISUAL_THIN_RE = re.compile(r'\\[,;:! ]')
+MATH_VISUAL_FN_RE = re.compile(
+    r'\\(sin|cos|tan|cot|sec|csc|log|ln|lim|exp|det|min|max|sup|inf|gcd|deg|dim|hom|ker|arg|Pr|arcsin|arccos|arctan)(?![a-zA-Z])'
+)
+MATH_VISUAL_CMD_RE = re.compile(r'\\[a-zA-Z]+')
+
+
+def estimate_math_visual_length(line):
+    """align 等の数式行について、TeX コマンドの冗長性を除いた
+    レンダリング後の推定表示横幅（文字数相当）を概算する。
+    - % コメントや改行・配置記号（\\\\, &）を除去
+    - \\label や \\notag などの非表示メタデータを除去
+    - \\left / \\right / \\Bigl などの括弧サイズ修飾子を除去
+    - \\dfrac{A}{B} などの分数は縦積みを考慮し max(幅(A), 幅(B)) + 1 で換算
+    - \\overrightarrow{AB} や \\vec{a} は内容の幅で換算
+    - \\sqrt{x} は 1 + 幅(x) で換算
+    - \\alpha, \\times, \\cdot などの TeX 記号コマンドは 1 文字換算
+    - \\sin, \\cos などの標準関数名はアルファベット文字数換算
+    """
+    s = re.sub(r'(?<!\\)%.*$', '', line).strip()
+    if not s:
+        return 0
+
+    s = re.sub(r'\\\\$', '', s).strip()
+    s = s.replace('&', '')
+
+    s = MATH_VISUAL_LABEL_RE.sub('', s)
+    s = MATH_VISUAL_INVIS_RE.sub('', s)
+    s = MATH_VISUAL_DELIM_RE.sub('', s)
+
+    # 分数 (\dfrac, \frac, \cfrac) を内側・先頭から順に抽出して推定幅プレースホルダーに置換
+    res = []
+    i = 0
+    n = len(s)
+    while i < n:
+        m = MATH_VISUAL_FRAC_RE.search(s, i)
+        if not m:
+            res.append(s[i:])
+            break
+        res.append(s[i:m.start()])
+        p1 = s.find('{', m.end())
+        if p1 == -1 or s[m.end():p1].strip():
+            res.append(s[m.start():m.end()])
+            i = m.end()
+            continue
+        num, p2 = extract_braced(s, p1)
+        p3 = s.find('{', p2)
+        if p3 == -1 or s[p2:p3].strip():
+            res.append(s[m.start():p2])
+            i = p2
+            continue
+        den, p4 = extract_braced(s, p3)
+        w_num = estimate_math_visual_length(num)
+        w_den = estimate_math_visual_length(den)
+        w_frac = max(w_num, w_den) + 1
+        res.append('x' * w_frac)
+        i = p4
+    s = ''.join(res)
+
+    # ベクトル・上線等の上乗せ記号 (\overrightarrow{AB} -> AB, \vec{a} -> a)
+    res = []
+    i = 0
+    n = len(s)
+    while i < n:
+        m = MATH_VISUAL_ACCENT_RE.search(s, i)
+        if not m:
+            res.append(s[i:])
+            break
+        res.append(s[i:m.start()])
+        p1 = s.find('{', m.end())
+        if p1 == -1 or s[m.end():p1].strip():
+            res.append(s[m.start():m.end()])
+            i = m.end()
+            continue
+        inner, p2 = extract_braced(s, p1)
+        res.append(inner)
+        i = p2
+    s = ''.join(res)
+
+    s = MATH_VISUAL_SQRT_RE.sub(r'x\1', s)
+    s = MATH_VISUAL_QQUAD_RE.sub('    ', s)
+    s = MATH_VISUAL_QUAD_RE.sub('  ', s)
+    s = MATH_VISUAL_THIN_RE.sub(' ', s)
+    s = MATH_VISUAL_FN_RE.sub(r'\1', s)
+    s = MATH_VISUAL_CMD_RE.sub('x', s)
+
+    s = s.replace('{', '').replace('}', '')
+    s = re.sub(r'\s+', ' ', s).strip()
+    return len(s)
+
+
 def check_long_align_lines(text):
-    """align/align* 環境内で、1行が長く（ALIGN_LINE_LENGTH_LIMIT 超）かつ
+    """align/align* 環境内で、1行の推定表示幅が長く（ALIGN_LINE_LENGTH_LIMIT 超）かつ
     '=' を複数個（ALIGN_LINE_MIN_EQUALS 個以上）含む行を警告する。
     AI文字起こしの結果、a=b=c=d=... のように = で全部つないだ1行になって
     いることが多く、\\\\ と &= で複数行に分けた方が読みやすい。ただし
     どこで区切るのが数式的に自然かは機械的には判断できない（\\left(...\\right)
     や \\substack{} 内の = まで割ってしまうと壊れる）ため、ここでは検出のみ
-    行い、実際の改行挿入はエラーではなく警告として目視判断に委ねる。"""
+    行い、実際の改行挿入はエラーではなく警告として目視判断に委ねる。
+    \\dfrac や \\label などの TeX コマンドでコード文字数が多くても紙面上の横幅が
+    短い行を誤検知しないよう、estimate_math_visual_length で推定表示幅に換算して判定する。"""
     warnings = []
     for env_m in re.finditer(r'\\begin\{align\*?\}(.*?)\\end\{align\*?\}', text, re.DOTALL):
         body_start = env_m.start(1)
         body = env_m.group(1)
         offset = 0
         for line in body.split('\n'):
-            if len(line) > ALIGN_LINE_LENGTH_LIMIT and line.count('=') >= ALIGN_LINE_MIN_EQUALS:
+            vis_len = estimate_math_visual_length(line)
+            if vis_len > ALIGN_LINE_LENGTH_LIMIT and line.count('=') >= ALIGN_LINE_MIN_EQUALS:
                 pos = body_start + offset
                 warnings.append((line_of(text, pos),
-                                  f"align 内の行が長く（{len(line)}文字）'=' が{line.count('=')}個ある。"
+                                  f"align 内の行が長く（推定表示幅{vis_len}文字、元{len(line)}文字）'=' が{line.count('=')}個ある。"
                                   "\\\\ と &= で複数行に分けた方が読みやすい可能性がある"))
             offset += len(line) + 1
     return warnings

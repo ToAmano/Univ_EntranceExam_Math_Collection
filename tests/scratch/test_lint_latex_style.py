@@ -515,6 +515,54 @@ def test_bare_arguments_fix_and_lint():
     assert lint.check_bare_args(fixed_sample) == []
 
 
+def test_estimate_math_visual_length_and_long_align_lines():
+    # 1. Basic fractions and vertical stacking
+    assert lint.estimate_math_visual_length(r'\dfrac{1}{2}') == 2
+    assert lint.estimate_math_visual_length(r'\dfrac{\sqrt{2}}{2}') == 3
+    assert lint.estimate_math_visual_length(r'\dfrac{a+b}{c+d}') == 4
+    assert lint.estimate_math_visual_length(r'\dfrac{1}{\dfrac{2}{3}}') == 3
+
+    # 2. Invisible metadata commands
+    assert lint.estimate_math_visual_length(r'\label{eq:foo}') == 0
+    assert lint.estimate_math_visual_length(r'\notag') == 0
+    assert lint.estimate_math_visual_length(r'\displaystyle') == 0
+
+    # 3. Accents and vector notation
+    assert lint.estimate_math_visual_length(r'\overrightarrow{AB}') == 2
+    assert lint.estimate_math_visual_length(r'\vec{a}') == 1
+
+    # 4. Long code with \dfrac that has small visual width should not trigger warning
+    # (116 raw characters, but ~48 visual width)
+    sample_compact = (
+        '\\begin{align}\n'
+        r'  g(x) = \dfrac{\sin x}{1+\sin x}, \quad h(x) = \dfrac{2x}{\pi+4x} \text{について} \left(0 < x \le \dfrac{\pi}{2}\right)' + '\n'
+        '\\end{align}\n'
+    )
+    assert lint.check_long_align_lines(sample_compact) == []
+
+    # 5. Genuinely long visual line with >= 2 equals should trigger warning
+    sample_long = (
+        '\\begin{align}\n'
+        r'k^5 = k^2(-ak-b) = -ak^3 - bk^2 = -a(-ak-b) - bk^2 = -bk^2 + a^2 k + ab + cdefg = hijklmn' + '\n'
+        '\\end{align}\n'
+    )
+    warnings = lint.check_long_align_lines(sample_long)
+    assert len(warnings) == 1
+    line_no, msg = warnings[0]
+    assert line_no == 2
+    assert '推定表示幅' in msg
+    assert '読みやすい可能性がある' in msg
+
+    # 6. Long line with only 1 equal should not trigger warning
+    sample_one_eq = (
+        '\\begin{align}\n'
+        r'A + B + C + D + E + F + G + H + I + J + K + L + M + N + O + P = Q + R + S + T + U + V + W' + '\n'
+        '\\end{align}\n'
+    )
+    assert lint.check_long_align_lines(sample_one_eq) == []
+
+
+
 
 
 
