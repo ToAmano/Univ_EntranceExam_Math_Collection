@@ -1,53 +1,184 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} 高さ $y$ の時の表面の面積 $S$，円錐の半径を $r$ とすると
 \begin{figure}[htbp]
   \centering
-  % 水位 y=2 の場合を図示する。全高10に対し水面の半径は4r/5。
-  \begin{tikzpicture}[scale=0.95,>=stealth,line join=round]
-    \coordinate (T) at (0,4.5);
-    \fill[teal!15] (-2.5,0)--(-2,0.9)--(2,0.9)--(2.5,0)--cycle;
-    \draw[dashed,gray!65] (0,0)--(T);
-    \draw[blue!75!black,very thick] (-2.5,0)--(T)--(2.5,0);
-    \draw[dashed,blue!60!black] (0,0) ellipse[x radius=2.5,y radius=0.3];
-    \draw[blue!75!black,thick] (2.5,0) arc[start angle=0,end angle=180,x radius=2.5,y radius=0.3];
-    \fill[teal!18] (0,0.9) ellipse[x radius=2,y radius=0.22];
-    \draw[teal!70!black,thick] (0,0.9) ellipse[x radius=2,y radius=0.22];
-    \draw[<->,gray!75] (2.95,0)--(2.95,4.5) node[midway,right] {$10$};
-    \draw[<->,gray!75] (-2.95,0)--(-2.95,0.9) node[midway,left] {$y$};
-    \draw[<->,gray!65] (2.4,0.9)--(2.4,4.5) node[midway,right] {$10-y$};
-    \node[below] at (1.1,0) {$r$};
-    \node[above,font=\scriptsize] at (0,1.65) {$\frac{r(10-y)}{10}$};
-  \end{tikzpicture}
-  \caption{底面を下にした円錐形タンクと水面の半径（図は $y=2$）}
+  \begin{minipage}[b]{0.44\linewidth}
+    \centering
+    \begin{tikzpicture}[scale=0.72,>=stealth,every node/.style={font=\scriptsize}]
+      \def\H{4.5}
+      \def\R{2.4}
+      \def\asp{0.22}
+      \def\hw{1.35}
+      \def\Rw{1.68}
+      \pgfmathsetmacro{\xL}{-(\R+0.6)}
+      \pgfmathsetmacro{\xR}{\R+0.6}
+      \pgfmathsetmacro{\xRtwo}{\R+1.35}
+
+      % 1. Water volume in frustum
+      \fill[teal!12]
+      (-\R, 0) arc[start angle=180, end angle=360, x radius=\R, y radius={\R*\asp}]
+      -- (\Rw, \hw) arc[start angle=0, end angle=180, x radius=\Rw, y radius={\Rw*\asp}]
+      -- cycle;
+
+      % 2. Water surface disc
+      \fill[teal!25] (0, \hw) ellipse [x radius=\Rw, y radius={\Rw*\asp}];
+
+      % 3. Central axis
+      \draw[dashed,gray!65,thick] (0, 0) -- (0, \H);
+
+      % 4. Base circle: back dashed, front solid
+      \draw[dashed,gray!60,thick] (\R, 0) arc[start angle=0, end angle=180, x radius=\R, y radius={\R*\asp}];
+      \draw[line width=1.2pt,blue!85!black] (-\R, 0) arc[start angle=180, end angle=360, x radius=\R, y radius={\R*\asp}];
+
+      % 5. Water surface ellipse
+      \draw[dashed,teal!70!black] (\Rw, \hw) arc[start angle=0, end angle=180, x radius=\Rw, y radius={\Rw*\asp}];
+      \draw[line width=1.1pt,teal!75!black] (-\Rw, \hw) arc[start angle=180, end angle=360, x radius=\Rw, y radius={\Rw*\asp}];
+
+      % 6. Side contours of the cone
+      \draw[line width=1.3pt,blue!85!black] (-\R, 0) -- (0, \H) -- (\R, 0);
+
+      % 7. Apex point
+      \node[circle,fill=blue!85!black,inner sep=1.0pt] at (0, \H) {};
+      \node[above=1pt] at (0, \H) {$V$};
+
+      % 8. Radii
+      \draw[->,line width=0.9pt,gray!80!black] (0, 0) -- (\R, 0) node[midway,below=1pt] {$r$};
+      \node[circle,fill=gray!80!black,inner sep=0.9pt] at (0, 0) {};
+
+      \draw[->,line width=1.0pt,red!85!black] (0, \hw) -- (\Rw, \hw);
+      \node[circle,fill=red!85!black,inner sep=1.0pt] at (0, \hw) {};
+      \node[circle,fill=red!85!black,inner sep=1.0pt] at (\Rw, \hw) {};
+      \draw[<-,thick,red!85!black] ({0.6*\Rw}, \hw) -- ++(0.6, 0.6) node[right] {$\frac{r(10-y)}{10}$};
+
+      % 9. Height dimensions
+      \draw[<->,thick,gray!75] (\xL, 0) -- (\xL, \hw) node[midway,left] {$y$};
+      \draw[dashed,gray!50] (-\R, 0) -- (\xL, 0);
+      \draw[dashed,gray!50] (-\Rw, \hw) -- (\xL, \hw);
+
+      \draw[<->,thick,gray!75] (\xR, \hw) -- (\xR, \H) node[midway,right] {$10-y$};
+      \draw[dashed,gray!50] (\Rw, \hw) -- (\xR, \hw);
+      \draw[dashed,gray!50] (0, \H) -- (\xR, \H);
+
+      \draw[<->,thick,gray!75] (\xRtwo, 0) -- (\xRtwo, \H) node[midway,right] {$10$};
+      \draw[dashed,gray!50] (\R, 0) -- (\xRtwo, 0);
+      \draw[dashed,gray!50] (0, \H) -- (\xRtwo, \H);
+    \end{tikzpicture}
+    \par\smallskip\footnotesize (a) 円錐形タンクと水面
+  \end{minipage}\hfill
+  \begin{minipage}[b]{0.54\linewidth}
+    \centering
+    \begin{tikzpicture}[scale=0.72,>=stealth,every node/.style={font=\scriptsize}]
+      \def\H{4.5}
+      \def\R{2.6}
+      \def\hw{1.35}
+      \pgfmathsetmacro{\Rw}{\R*(1 - \hw/\H)}
+      \pgfmathsetmacro{\xL}{-(\R+0.6)}
+
+      % Coordinates
+      \coordinate (V) at (0, \H);
+      \coordinate (O) at (0, 0);
+      \coordinate (A) at (-\R, 0);
+      \coordinate (B) at (\R, 0);
+      \coordinate (Op) at (0, \hw);
+      \coordinate (Ap) at (-\Rw, \hw);
+      \coordinate (Bp) at (\Rw, \hw);
+
+      % Water region (trapezoid)
+      \fill[teal!15] (A) -- (Ap) -- (Bp) -- (B) -- cycle;
+      \fill[pattern=north east lines,pattern color=teal!60,opacity=0.6] (A) -- (Ap) -- (Bp) -- (B) -- cycle;
+
+      % Water level line
+      \draw[line width=1.2pt,teal!80!black] (Ap) -- (Bp);
+
+      % Triangle outline
+      \draw[line width=1.3pt,blue!85!black] (A) -- (V) -- (B) -- cycle;
+
+      % Central axis
+      \draw[dashed,line width=1.0pt,gray!70] (V) -- (O);
+
+      % Right angle marks
+      \draw[gray!70] (0, 0.22) -- (0.22, 0.22) -- (0.22, 0);
+      \draw[gray!70] (0, {\hw+0.22}) -- (0.22, {\hw+0.22}) -- (0.22, \hw);
+
+      % Points
+      \node[circle,fill=blue!85!black,inner sep=1.0pt] at (V) {};
+      \node[circle,fill=gray!80!black,inner sep=1.0pt] at (O) {};
+      \node[circle,fill=red!85!black,inner sep=1.1pt] at (Op) {};
+      \node[circle,fill=red!85!black,inner sep=1.1pt] at (Bp) {};
+      \node[circle,fill=blue!85!black,inner sep=1.0pt] at (B) {};
+
+      % Point labels
+      \node[above=1pt] at (V) {$V$};
+      \node[below left=1pt] at (O) {$O$};
+      \node[below=1pt] at (A) {$A$};
+      \node[below=1pt] at (B) {$B$};
+      \node[above left=1pt,red!85!black] at (Op) {$O'$};
+      \node[right=2pt,red!85!black] at (Bp) {$B'$};
+
+      % Dimension: Base radius r
+      \draw[<->,thick,gray!80!black] (0, -0.45) -- (\R, -0.45) node[midway,below] {$r$};
+      \draw[dashed,gray!50] (O) -- (0, -0.45);
+      \draw[dashed,gray!50] (B) -- (\R, -0.45);
+
+      % Dimension: Water surface radius
+      \draw[->,line width=1.0pt,red!85!black] (Op) -- (Bp);
+
+      % Vertical dimensions on left
+      \draw[<->,thick,gray!75] (\xL, 0) -- (\xL, \hw) node[midway,left] {$y$};
+      \draw[dashed,gray!50] (A) -- (\xL, 0);
+      \draw[dashed,gray!50] (Ap) -- (\xL, \hw);
+
+      \draw[<->,thick,gray!75] (\xL, \hw) -- (\xL, \H) node[midway,left] {$10-y$};
+      \draw[dashed,gray!50] (V) -- (\xL, \H);
+
+      % Similarity annotation
+      \node[right,font=\scriptsize] at ({\Rw+0.35}, {\H*0.5}) {
+        $
+        \begin{aligned}
+          & \triangle V O' B' \sim \triangle V O B \\
+          & \frac{O'B'}{OB} = \frac{VO'}{VO} = \frac{10-y}{10} \\
+          & \therefore O'B' = \frac{r(10-y)}{10}
+        \end{aligned}$
+      };
+    \end{tikzpicture}
+    \par\smallskip\footnotesize (b) 中心軸を含む縦断面と相似比
+  \end{minipage}
+  \caption{底面を下にした円錐形タンクと中心軸縦断面}
+  \label{fig:cone_tank}
 \end{figure}
+
+高さ $y$ の時の表面の面積 $S$，円錐の半径を $r$ とすると題意より
 \begin{align}
-  10 - y = S \dfrac{dy}{dt} \cdots \text{①}
+  10 - y = S \dfrac{dy}{dt} \label{eq:1}
 \end{align}
-$\therefore S = \pi \left( \dfrac{r(10-y)}{10} \right)^2$ を代入してセイリ
+である．ここで$S$は半径$\dfrac{r(10-y)}{10}$の円の面積だから
+\begin{align}
+  S = \pi \left( \dfrac{r(10-y)}{10} \right)^2 \label{eq:2}
+\end{align}
+である．\cref{eq:2}を\cref{eq:1}に代入して
 \begin{align}
   dt = \dfrac{\pi r^2}{100}(10-y)dy
 \end{align}
-両辺積分して
+だから両辺積分して
 \begin{align}
-  t = \dfrac{\pi r^2}{100}\left(10y - \dfrac{1}{2}y^2\right) + C
+  t = \dfrac{\pi r^2}{100}\left(10y - \dfrac{1}{2}y^2\right) + C \quad (C:\text{積分定数})
 \end{align}
-$t=0$ で $y=0$ から $C=0$．$(t, y) = (540, 2), y=10$ を各々代入
+$t=0$ で $y=0$ から $C=0$が従う．タンクがいっぱいになる時刻$t$分とすると，
+題意より$(t, y) = (540, 2), (t,10)$ を各々代入して
 \begin{align}
-  \begin{cases} 540 = \dfrac{\pi r^2}{100} \cdot 18 \\ t = \dfrac{\pi r^2}{100} \cdot 50
+  \begin{cases}
+    540 = \dfrac{\pi r^2}{100} \cdot 18 \\
+    t = \dfrac{\pi r^2}{100} \cdot 50
   \end{cases}
 \end{align}
-辺々わって
+を得る．辺々わって
 \begin{align}
   \dfrac{t}{540} = \dfrac{50}{18} \cdot 54
-\end{align}
-\begin{align}
-  \therefore t = 1500
+  \therefore
+  t = 1500
 \end{align}
 だから，タンクがいっぱいになるのは，あと
 \begin{align}
