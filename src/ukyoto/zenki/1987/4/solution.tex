@@ -1,67 +1,102 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
 \paragraph{(1)}
 
-$f'(x) = 3x^2+2ax+b$ から，3次関数では接点と接線が一対一対応するので，$f'(x)=m$となる$x$の数にひとしい．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.6cm, y=1.1cm, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-2.4, 0) -- (2.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -2.6) -- (0, 2.6) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
 
-$f'(x)-m=0 \ \cdots$ \textcircled{1} の判別式$D$として
+    % 3次曲線 y = x^3 - 1.5x
+    \draw[line width=1.4pt, blue!85!black, domain=-1.8:1.8, samples=70]
+    plot (\x, {\x*\x*\x - 1.5*\x})
+    node[above right=1pt, font=\small] {$y = f(x)$};
+
+    % 接線 l_1: y = 1.5x + 2 (傾き m)
+    \draw[line width=1.1pt, orange!85!black, domain=-2.3:1.4]
+    plot (\x, {1.5*\x + 2})
+    node[above left, font=\footnotesize] {$l_1$ (傾き $m$)};
+
+    % 接線 l_2: y = 1.5x - 2 (傾き m)
+    \draw[line width=1.1pt, teal!85!black, domain=-1.4:2.3]
+    plot (\x, {1.5*\x - 2})
+    node[below right, font=\footnotesize] {$l_2$ (傾き $m$)};
+
+    % 接点 P_1, P_2
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (-1, 0.5) {};
+    \node[above left=1pt, font=\footnotesize] at (-1, 0.5) {$P_1$};
+
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (1, -0.5) {};
+    \node[below right=1pt, font=\footnotesize] at (1, -0.5) {$P_2$};
+
+    % 垂線 (点線)
+    \draw[dashed, gray!60] (-1, 0) -- (-1, 0.5);
+    \node[below=2pt, font=\footnotesize] at (-1, 0) {$p_1$};
+    \draw[dashed, gray!60] (1, 0) -- (1, -0.5);
+    \node[above=2pt, font=\footnotesize] at (1, 0) {$p_2$};
+  \end{tikzpicture}
+  \caption{$y=f(x)$ と傾き $m$ の2本の接線 $l_1, l_2$（接点 $P_1, P_2$）の概要図}
+  \label{fig:cubic_tangents}
+\end{figure}
+
+与えられた関数
 \begin{align}
-  &
-  \begin{cases}
-    D>0 \iff a^2-3(b-m)>0 & \text{の時 } 2\text{コ} \\
-    D=0 \iff a^2-3(b-m)=0 & \qquad 1\text{コ} \\
-    D<0 \iff a^2-3(b-m)<0 & \qquad 0\text{コ}
-  \end{cases} \quad \text{\#\ \ }
+  f(x) = x^3 + ax^2 + bx + c \label{eq:1}
 \end{align}
+について考える．一階微分は
+\begin{align}
+  f'(x) = 3x^2+2ax+b
+\end{align}
+である．3次関数では接点と接線が一対一対応するので，$f'(x)=m$となる$x$の数を求めれば良い．よって$f'(x)-m=0$ の判別式$D$として求める個数は
+\begin{align}
+  \begin{cases}
+    D>0 \iff a^2-3(b-m)>0 \text{の時 } 2\text{個} \\
+    D=0 \iff a^2-3(b-m)=0 \text{の時 } 1\text{個} \\
+    D<0 \iff a^2-3(b-m)<0 \text{の時 } 0\text{個}
+  \end{cases}
+\end{align}
+である．
 
 \paragraph{(2)}
 
-$P_1, P_2$の$x$座標 $\alpha, \beta$ とおく ($\alpha < \beta$としてよい)．と，これらは\textcircled{1}の2実数解である．
-
-$l_1 : y=l_1(x), l_2 : y=l_2(x)$; $Q_1, Q_2$の$x$座標$q_1, q_2$として
+$P_1, P_2$の$x$座標を $p_1, p_2$ とおく ($p_1 < p_2$としてよい)とこれらは(1)より
 \begin{align}
-  f(x) - l_1(x) &= (x-\alpha)^2 (x-q_1) \quad \cdots \text{\textcircled{2}} \\
-  f(x) - l_2(x) &= (x-\beta)^2 (x-q_2) \quad \cdots \text{\textcircled{3}}
+  f'(x)-m = 0 \quad \therefore 3x^2+2ax+b-m = 0 \label{eq:2}
 \end{align}
-$f(x)$は3次，$l_1(x), l_2(x)$は1次だから，2次の係数を比較して
-\begin{align}
-  & a = -2\alpha - q_1 = -2\beta - q_2 \\
-  & \text{（$a = -\dfrac{3}{2}(\alpha+\beta)$ だから辺々たして代入）} \\
-  & -3(\alpha+\beta) = -2(\alpha+\beta) - (q_1+q_2) \\
-  & \alpha+\beta = q_1+q_2 \\
-  & \therefore |\alpha-q_1| = |q_2-\beta|
-\end{align}
-だから，$P_1, Q_1$の$x$座標の差と $P_2, Q_2$のそれが等しく，さらに$P_1Q_1, P_2Q_2$の傾きも等しいので，$|P_1Q_1| = |P_2Q_2|$ \quad $\blacksquare$
+の異なる二つの実数解である．
 
-\vspace{1ex}
-{\bf [別解]} [例の対称性を用いる]
-
-$P_1(x_1, f(x_1)), P_2(x_2, f(x_2))$ の中点$M(p,q)$とすると
+$l_1 : y=l_1(x), l_2 : y=l_2(x)$，$Q_1, Q_2$の$x$座標$q_1, q_2$とすると題意より
 \begin{align}
   \begin{cases}
-    p = \dfrac{x_1+x_2}{2} \\
-    q = \dfrac{f(x_1)+f(x_2)}{2}
-  \end{cases}
+    f(x) - l_1(x) = (x-p_1)^2 (x-q_1)  \\
+    f(x) - l_2(x) = (x-p_2)^2 (x-q_2)
+  \end{cases} \label{eq:3}
 \end{align}
-解と係数の関係から
+である．$f(x)$は3次，$l_1(x), l_2(x)$は1次だから2次の係数を比較して
 \begin{align}
-  q &= \dfrac{1}{2}(x_1^3+x_2^3) + \dfrac{a}{2}(x_1^2+x_2^2) + \dfrac{b}{2}(x_1+x_2) + c \\
-  &= \dfrac{2}{27}a^3 - \dfrac{ab}{3} + c \\
-  f(p) &= \left(\dfrac{x_1+x_2}{2}\right)^3 + \dfrac{a}{2}\left(\dfrac{x_1+x_2}{2}\right)^2 + b\left(\dfrac{x_1+x_2}{2}\right) + c = \dfrac{2}{27}a^3 - \dfrac{ab}{3} + c = q
+  a = -2p_1 - q_1 = -2p_2 - q_2 \label{eq:4}
 \end{align}
-より，$M$は曲線上の点．次に$M$が原点になるように$f(x)$を平行移動すると
+である．一方で\cref{eq:2}で解と係数の関係より
 \begin{align}
-  Y = X^3 + \left(b-\dfrac{a^2}{3}\right)X
+  a = -\dfrac{3}{2}(p_1+p_2) \label{eq:5}
 \end{align}
-これは奇関数だから原点対称．よって$M$に関する対称性により$P_2, Q_2$を$P_1, Q_1$に重ねあわせることができるから
+だから，\cref{eq:4}を辺々たして\cref{eq:5}を代入すると
+\begin{align}
+  & 2a = -2(p_1+p_2) - (q_1+q_2) \\
+  & -3(p_1+p_2) = -2(p_1+p_2) - (q_1+q_2) \\
+  & p_1+p_2 = q_1+q_2 \\
+  \therefore
+  & |p_1-q_1| = |q_2-p_2|
+\end{align}
+を得る．
+従って$P_1, Q_1$の$x$座標の差と $P_2, Q_2$のそれが等しく，さらに$P_1Q_1, P_2Q_2$の傾きも等しいので，$|P_1Q_1| = |P_2Q_2|$ である．\quad $\blacksquare$
 
-$|P_1Q_1| = |P_2Q_2|$ \quad $\blacksquare$
+{\bf [別解]}
 
 \begin{figure}[htbp]
   \centering
@@ -87,7 +122,38 @@ $|P_1Q_1| = |P_2Q_2|$ \quad $\blacksquare$
     \node[circle, fill=red!75!black, inner sep=1.5pt] at (0,0) {};
     \node[below left] at (0,0) {$M$};
   \end{tikzpicture}
-  \caption{平行な2本の接線と曲線の交点．図は $f(x)=x^3-2x$, $m=1$}
+  \caption{平行な2本の接線と曲線の交点．}
 \end{figure}
+
+$P_1(p_1, f(p_1)), P_2(p_2, f(p_2))$ の中点$M(p,q)$とすると
+\begin{align}
+  \begin{cases}
+    p = \dfrac{p_1+p_2}{2} \\
+    q = \dfrac{f(p_1)+f(p_2)}{2}
+  \end{cases}
+\end{align}
+\cref{eq:2}において解と係数の関係から
+\begin{align}
+  a = -\dfrac{3}{2}(p_1+p_2),
+  \quad
+  b = 3p_1p_2
+\end{align}
+だから
+\begin{align}
+  q &= \dfrac{1}{2}(p_1^3+p_2^3) + \dfrac{a}{2}(p_1^2+p_2^2) + \dfrac{b}{2}(p_1+p_2) + c \\
+  &= \dfrac{2}{27}a^3 - \dfrac{ab}{3} + c
+\end{align}
+および
+\begin{align}
+  f(p)
+  &= \left(\dfrac{p_1+p_2}{2}\right)^3 + \dfrac{a}{2}\left(\dfrac{p_1+p_2}{2}\right)^2 + b\left(\dfrac{p_1+p_2}{2}\right) + c \\
+  & = \dfrac{2}{27}a^3 - \dfrac{ab}{3} + c \\
+  & = q
+\end{align}
+より，$M$は曲線上の点である．次に$M$が原点になるように$f(x)$を平行移動すると
+\begin{align}
+  Y = X^3 + \left(b-\dfrac{a^2}{3}\right)X
+\end{align}
+であり，これは奇関数だから原点対称である．よって$M$に関する対称性により$P_2, Q_2$を$P_1, Q_1$に重ねあわせることができるから$|P_1Q_1| = |P_2Q_2|$である． \quad $\blacksquare$
 
 \end{document}

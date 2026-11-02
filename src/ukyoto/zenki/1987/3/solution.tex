@@ -1,154 +1,235 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $c = \cos\theta \ (-1 \le c \le 1)$ とおくと
+与えられた不等式
 \begin{align}
-  (\text{与式}) \iff a(2c^2-1) + bc - 1 < 0 \quad \cdots \text{\textcircled{1}}
+  a\cos 2\theta + b\cos\theta < 1 \label{eq:1}
 \end{align}
-\textcircled{1}の左辺$f(c)$とおき，$f(c)<0$ となる条件をしらべる．
-
-$f'(c) = 2ac+b$ である．
-
-$1^\circ \ a=0$の時，$f(c)$は高々一次関数だから
+について，倍角公式より
 \begin{align}
-  &f(1) < 0 \land f(-1) < 0 \\
-  \iff & -1 < b < 1
+  & a(2\cos^2\theta - 1) + b\cos\theta - 1 < 0 \\
+  \therefore
+  & f(\cos\theta) = 2a\cos^2\theta + b\cos\theta - (a+1) < 0 \label{eq:2}
 \end{align}
+とかける．そこで$f(x)<0 \ (-1 \le x \le 1)$となる条件を調べる．$a$の大きさで$f(x)$の挙動が変わるため場合分けして考える．
 
-$2^\circ \ a>0$の時
+\subparagraph{$1^\circ \ a=0$の時}
 
-$f(c)$の軸 $c = -\dfrac{b}{4a}$ によらず，$f(c)$は $c = \pm 1$で最大で
+この時は\cref{eq:2}より
 \begin{align}
-  &f(1) < 0 \land f(-1) < 0 \\
-  \iff & a+b-1 < 0 \land a-b-1 < 0
+  f(x) = bx - 1
 \end{align}
-
-$3^\circ \ a<0$の時
+でこれは高々$1$次式だから，$[-1,1]$で$f(x)<0$となる条件は両端点で$f(x)<0$であることで，
 \begin{align}
-  &\text{\textcircled{ア}} \ -1 \le -\dfrac{b}{4a} \le 1 \text{の時} \quad f(-\dfrac{b}{4a}) < 0 \iff \dfrac{(a+\dfrac{1}{2})^2}{1/4} + \dfrac{b^2}{2} < 1 \quad \cdots \text{A} \\
-  &\text{\textcircled{イ}} \ -\dfrac{b}{4a} \le -1 \text{の時} \quad f(-1) < 0 \\
-  &\text{\textcircled{ウ}} \ -\dfrac{b}{4a} \ge 1 \text{の時} \quad f(1) < 0
+  f(1) < 0 \land f(-1) < 0  \iff  -1 < b < 1 \label{eq:3}
 \end{align}
+である．
 
-以上まとめて
-\begin{itemize}
-  \item $a \ge 0 \land a-1 < b < 1-a$
-  \item $4a \le b \le -4a \land a < 0 \land \dfrac{(a+\dfrac{1}{2})^2}{1/4} + \dfrac{b^2}{2} < 1$
-  \item $4a \ge b \land a < 0 \land a-1 < b$
-  \item $-4a \le b \land a < 0 \land b < -a+1$
-\end{itemize}
+\subparagraph{$2^\circ \ 0<a$の時}
 
-これを図示して下図(境界含まず)
+この場合は$f(x)$は下に凸の放物線だから，$[-1,1]$での最大値は端点でとる．
+従って$f(x)<0$を満たすには端点で$f(x)<0$ならばよく，
+\begin{align}
+  f(1) < 0 \land f(-1) < 0
+  \iff  a+b-1 < 0 \land a-b-1 < 0 \label{eq:4}
+\end{align}
+である．
+
+\subparagraph{$3^\circ \ a<0$の時}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.2cm, y=1.2cm, >=stealth, every node/.style={font=\footnotesize}]
+    % Panel (i)
+    \begin{scope}[shift={(0,0)}]
+      \draw[->, thick, gray!80!black] (-1.8, 0) -- (1.5, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -2.1) -- (0, 0.6) node[above] {$y$};
+      \node[below left=1pt] at (0, 0) {$O$};
+      % 区間 [-1, 1]
+      \draw[line width=1.5pt, teal!80!black] (-1, 0) -- (1, 0);
+      \draw[dashed, gray!60] (-1, 0) -- (-1, -0.272);
+      \draw[dashed, gray!60] (1, 0) -- (1, -1.9);
+      \node[above=1pt] at (-1, 0) {$-1$};
+      \node[above=1pt] at (1, 0) {$1$};
+
+      % 軸
+      \draw[dashed, red!80!black, thick] (-1.3, -2.0) -- (-1.3, 0.4);
+      \node[above, red!80!black, font=\scriptsize] at (-1.3, 0.4) {$x=-\frac{b}{4a}$};
+
+      % 放物線 y = -0.8*(x+1.3)^2 - 0.2
+      \draw[line width=1.3pt, blue!85!black, domain=-1.7:0.1, samples=50]
+      plot (\x, {-0.8*(\x + 1.3)*(\x + 1.3) - 0.2});
+
+      % x = -1 での最大値
+      \node[circle, fill=red!85!black, inner sep=1.3pt] at (-1, -0.272) {};
+      \node[below right=-1pt, red!85!black, font=\scriptsize] at (-1, -0.272) {$f(-1)$};
+
+      \node[below=4pt, font=\small\bfseries] at (0, -2.1) {(i) $-\frac{b}{4a} < -1$};
+    \end{scope}
+
+    % Panel (ii)
+    \begin{scope}[shift={(4.4,0)}]
+      \draw[->, thick, gray!80!black] (-1.5, 0) -- (1.5, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -2.1) -- (0, 0.6) node[above] {$y$};
+      \node[below left=1pt] at (0, 0) {$O$};
+      % 区間 [-1, 1]
+      \draw[line width=1.5pt, teal!80!black] (-1, 0) -- (1, 0);
+      \draw[dashed, gray!60] (-1, 0) -- (-1, -1.546);
+      \draw[dashed, gray!60] (1, 0) -- (1, -0.826);
+      \node[above=1pt] at (-1, 0) {$-1$};
+      \node[above=1pt] at (1, 0) {$1$};
+
+      % 軸
+      \draw[dashed, red!80!black, thick] (0.2, -2.0) -- (0.2, 0.4);
+      \node[above right=-2pt, red!80!black, font=\scriptsize] at (0.2, 0.4) {$x=-\frac{b}{4a}$};
+
+      % 放物線 y = -0.9*(x-0.2)^2 - 0.25
+      \draw[line width=1.3pt, blue!85!black, domain=-1.1:1.5, samples=50]
+      plot (\x, {-0.9*(\x - 0.2)*(\x - 0.2) - 0.25});
+
+      % 頂点での最大値
+      \node[circle, fill=red!85!black, inner sep=1.3pt] at (0.2, -0.25) {};
+      \node[below, red!85!black, font=\scriptsize] at (0.2, -0.25) {$f(-\frac{b}{4a})$};
+
+      \node[below=4pt, font=\small\bfseries] at (0, -2.1) {(ii) $-1 \le -\frac{b}{4a} \le 1$};
+    \end{scope}
+
+    % Panel (iii)
+    \begin{scope}[shift={(8.8,0)}]
+      \draw[->, thick, gray!80!black] (-1.5, 0) -- (1.8, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -2.1) -- (0, 0.6) node[above] {$y$};
+      \node[below left=1pt] at (0, 0) {$O$};
+      % 区間 [-1, 1]
+      \draw[line width=1.5pt, teal!80!black] (-1, 0) -- (1, 0);
+      \draw[dashed, gray!60] (-1, 0) -- (-1, -1.9);
+      \draw[dashed, gray!60] (1, 0) -- (1, -0.272);
+      \node[above=1pt] at (-1, 0) {$-1$};
+      \node[above=1pt] at (1, 0) {$1$};
+
+      % 軸
+      \draw[dashed, red!80!black, thick] (1.3, -2.0) -- (1.3, 0.4);
+      \node[above, red!80!black, font=\scriptsize] at (1.3, 0.4) {$x=-\frac{b}{4a}$};
+
+      % 放物線 y = -0.8*(x-1.3)^2 - 0.2
+      \draw[line width=1.3pt, blue!85!black, domain=-0.1:1.7, samples=50]
+      plot (\x, {-0.8*(\x - 1.3)*(\x - 1.3) - 0.2});
+
+      % x = 1 での最大値
+      \node[circle, fill=red!85!black, inner sep=1.3pt] at (1, -0.272) {};
+      \node[below left=-1pt, red!85!black, font=\scriptsize] at (1, -0.272) {$f(1)$};
+
+      \node[below=4pt, font=\small\bfseries] at (0, -2.1) {(iii) $-\frac{b}{4a} > 1$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{$a<0$ における軸 $x=-\dfrac{b}{4a}$ の位置と放物線 $y=f(x)$ の挙動（3通り）}
+  \label{fig:parabola_cases}
+\end{figure}
+
+この場合は$f(x)$は上に凸の放物線だから，軸$x=\dfrac{-b}{4a}$と端点の位置関係によって条件は
+\begin{align}
+  &
+  \begin{cases}
+    -1 \le -\dfrac{b}{4a} \le 1 \text{の時} \quad f(-\dfrac{b}{4a}) < 0 \\
+    -\dfrac{b}{4a} \le -1 \text{の時} \quad f(-1) < 0 \\
+    -\dfrac{b}{4a} \ge 1 \text{の時} \quad f(1) < 0
+  \end{cases} \\
+  \therefore
+  &
+  \begin{cases}
+    -1 \le -\dfrac{b}{4a} \le 1 \text{の時} \quad \dfrac{(a+\dfrac{1}{2})^2}{1/4} + \dfrac{b^2}{2} < 1  \\
+    -\dfrac{b}{4a} \le -1 \text{の時} \quad a-b-1 < 0 \\
+    -\dfrac{b}{4a} \ge 1 \text{の時} \quad a+b-1 < 0
+  \end{cases} \label{eq:5}
+\end{align}
+である．
+\casesend
+
+以上\cref{eq:3,eq:4,eq:5}をまとめて
+\begin{align}
+  \begin{cases}
+    a \ge 0 \land a-1 < b < 1-a \\
+    4a \le b \le -4a \land a < 0 \land \dfrac{(a+\dfrac{1}{2})^2}{1/4} + \dfrac{b^2}{2} < 1 \\
+    4a \ge b \land a < 0 \land a-1 < b \\
+    -4a \le b \land a < 0 \land b < -a+1
+  \end{cases}
+\end{align}
+である．これを図示して下図(境界含まず)である．
 
 \begin{figure}[htbp]
   \centering
-  \begin{tikzpicture}[x=3.1cm,y=1.55cm,>=stealth]
-    % 楕円と直線は a=-1/3, b=±4/3 で接する。全境界を除く。
-    \fill[blue!12] (-1,0)
-    -- (-0.9833,0.3621)
-    -- (-0.9667,0.5077)
-    -- (-0.9500,0.6164)
-    -- (-0.9333,0.7055)
-    -- (-0.9167,0.7817)
-    -- (-0.9000,0.8485)
-    -- (-0.8833,0.9080)
-    -- (-0.8667,0.9615)
-    -- (-0.8500,1.0100)
-    -- (-0.8333,1.0541)
-    -- (-0.8167,1.0944)
-    -- (-0.8000,1.1314)
-    -- (-0.7833,1.1652)
-    -- (-0.7667,1.1963)
-    -- (-0.7500,1.2247)
-    -- (-0.7333,1.2508)
-    -- (-0.7167,1.2745)
-    -- (-0.7000,1.2961)
-    -- (-0.6833,1.3157)
-    -- (-0.6667,1.3333)
-    -- (-0.6500,1.3491)
-    -- (-0.6333,1.3630)
-    -- (-0.6167,1.3752)
-    -- (-0.6000,1.3856)
-    -- (-0.5833,1.3944)
-    -- (-0.5667,1.4016)
-    -- (-0.5500,1.4071)
-    -- (-0.5333,1.4111)
-    -- (-0.5167,1.4134)
-    -- (-0.5000,1.4142)
-    -- (-0.4833,1.4134)
-    -- (-0.4667,1.4111)
-    -- (-0.4500,1.4071)
-    -- (-0.4333,1.4016)
-    -- (-0.4167,1.3944)
-    -- (-0.4000,1.3856)
-    -- (-0.3833,1.3752)
-    -- (-0.3667,1.3630)
-    -- (-0.3500,1.3491)
-    -- (-0.3333,1.3333)
-    -- (1,0) -- (-0.3333,-1.3333)
-    -- (-0.3500,-1.3491)
-    -- (-0.3667,-1.3630)
-    -- (-0.3833,-1.3752)
-    -- (-0.4000,-1.3856)
-    -- (-0.4167,-1.3944)
-    -- (-0.4333,-1.4016)
-    -- (-0.4500,-1.4071)
-    -- (-0.4667,-1.4111)
-    -- (-0.4833,-1.4134)
-    -- (-0.5000,-1.4142)
-    -- (-0.5167,-1.4134)
-    -- (-0.5333,-1.4111)
-    -- (-0.5500,-1.4071)
-    -- (-0.5667,-1.4016)
-    -- (-0.5833,-1.3944)
-    -- (-0.6000,-1.3856)
-    -- (-0.6167,-1.3752)
-    -- (-0.6333,-1.3630)
-    -- (-0.6500,-1.3491)
-    -- (-0.6667,-1.3333)
-    -- (-0.6833,-1.3157)
-    -- (-0.7000,-1.2961)
-    -- (-0.7167,-1.2745)
-    -- (-0.7333,-1.2508)
-    -- (-0.7500,-1.2247)
-    -- (-0.7667,-1.1963)
-    -- (-0.7833,-1.1652)
-    -- (-0.8000,-1.1314)
-    -- (-0.8167,-1.0944)
-    -- (-0.8333,-1.0541)
-    -- (-0.8500,-1.0100)
-    -- (-0.8667,-0.9615)
-    -- (-0.8833,-0.9080)
-    -- (-0.9000,-0.8485)
-    -- (-0.9167,-0.7817)
-    -- (-0.9333,-0.7055)
-    -- (-0.9500,-0.6164)
-    -- (-0.9667,-0.5077)
-    -- (-0.9833,-0.3621)
-    -- (-1.0000,-0.0000)
+  \begin{tikzpicture}[x=3.0cm, y=1.5cm, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.4, 0) -- (1.4, 0) node[right] {$a$};
+    \draw[->, thick, gray!80!black] (0, -2.4) -- (0, 2.4) node[above] {$b$};
+    \node[below right=2pt] at (0, 0) {$O$};
+
+    % 領域の塗りつぶし（淡い青 + 斜線ハッチング）
+    \fill[blue!10]
+    plot[domain=-1:-0.33333, samples=50] (\x, {sqrt(max(0, 2*(1 - 4*(\x+0.5)*(\x+0.5))))})
+    -- (1, 0)
+    -- plot[domain=-0.33333:-1, samples=50] (\x, {-sqrt(max(0, 2*(1 - 4*(\x+0.5)*(\x+0.5))))})
     -- cycle;
-    \draw[->,gray!75] (-1.15,0)--(1.18,0) node[right] {$a$};
-    \draw[->,gray!75] (0,-1.7)--(0,1.7) node[above] {$b$};
-    \draw[blue!75!black,thick,dashed,domain=-1:-0.33333,samples=70]
-    plot (\x,{sqrt(max(0,2*(1-4*(\x+0.5)*(\x+0.5))))});
-    \draw[blue!75!black,thick,dashed,domain=-1:-0.33333,samples=70]
-    plot (\x,{-sqrt(max(0,2*(1-4*(\x+0.5)*(\x+0.5))))});
-    \draw[orange!85!black,thick,dashed] (-0.33333,1.33333)--(1,0)--(-0.33333,-1.33333);
-    \foreach \x/\lab in {-1/-1,-0.5/-\frac{1}{2},-0.33333/-\frac{1}{3},1/1}
-    \node[below] at (\x,0) {$\lab$};
-    \node[right] at (0,1.33333) {$\frac{4}{3}$};
-    \node[right] at (0,-1.33333) {$-\frac{4}{3}$};
-    \node[blue!75!black,left] at (-0.78,1.44) {$4(a+\frac{1}{2})^2+\frac{b^2}{2}=1$};
-    \node[orange!85!black,right] at (0.56,0.76) {$b=1-a$};
-    \node[orange!85!black,right] at (0.56,-0.77) {$b=a-1$};
-    \foreach \x/\y in {-1/0,-0.33333/1.33333,-0.33333/-1.33333,1/0}
-    \node[circle, fill=white, draw=blue!75!black, thick, inner sep=1.2pt] at (\x,\y) {};
+    \fill[pattern=north east lines, pattern color=blue!45]
+    plot[domain=-1:-0.33333, samples=50] (\x, {sqrt(max(0, 2*(1 - 4*(\x+0.5)*(\x+0.5))))})
+    -- (1, 0)
+    -- plot[domain=-0.33333:-1, samples=50] (\x, {-sqrt(max(0, 2*(1 - 4*(\x+0.5)*(\x+0.5))))})
+    -- cycle;
+
+    % 楕円全体（点線）
+    \draw[dashed, teal!80!black, line width=1.0pt] (-0.5, 0) ellipse [x radius=0.5, y radius=1.4142];
+
+    % 直線 b = 1 - a, b = a - 1 全体（点線）
+    \draw[dashed, orange!85!black, line width=1.0pt] (-0.6, 1.6) -- (1.2, -0.2);
+    \node[orange!85!black, font=\footnotesize, above right=1pt] at (0.4, 0.6) {$b = 1-a$};
+    \draw[dashed, orange!85!black, line width=1.0pt] (-0.6, -1.6) -- (1.2, 0.2);
+    \node[orange!85!black, font=\footnotesize, below right=1pt] at (0.4, -0.6) {$b = a-1$};
+
+    % 分岐境界線 b = 4a, b = -4a（細い点線）
+    \draw[densely dotted, gray!60, line width=0.8pt] (-0.55, 2.2) -- (0.1, -0.4)
+    node[below right, font=\scriptsize] {$b = -4a$};
+    \draw[densely dotted, gray!60, line width=0.8pt] (-0.55, -2.2) -- (0.1, 0.4)
+    node[above right, font=\scriptsize] {$b = 4a$};
+
+    % 領域の境界線（破線強調、境界は含まない）
+    \draw[line width=1.4pt, blue!85!black, dashed]
+    plot[domain=-1:-0.33333, samples=50] (\x, {sqrt(max(0, 2*(1 - 4*(\x+0.5)*(\x+0.5))))});
+    \draw[line width=1.4pt, blue!85!black, dashed]
+    plot[domain=-1:-0.33333, samples=50] (\x, {-sqrt(max(0, 2*(1 - 4*(\x+0.5)*(\x+0.5))))});
+    \draw[line width=1.4pt, blue!85!black, dashed]
+    (-0.33333, 1.33333) -- (1, 0) -- (-0.33333, -1.33333);
+
+    % 大事な点からの垂線（点線）
+    % 接点 (-1/3, 4/3) から a軸、b軸へ
+    \draw[densely dotted, gray!70, thick] (-0.33333, 1.33333) -- (-0.33333, 0);
+    \draw[densely dotted, gray!70, thick] (-0.33333, 1.33333) -- (0, 1.33333);
+    % 接点 (-1/3, -4/3) から a軸、b軸へ
+    \draw[densely dotted, gray!70, thick] (-0.33333, -1.33333) -- (-0.33333, 0);
+    \draw[densely dotted, gray!70, thick] (-0.33333, -1.33333) -- (0, -1.33333);
+
+    % 軸目盛りラベル
+    \node[below left=1pt, font=\footnotesize] at (-1, 0) {$-1$};
+    \node[below=2pt, font=\footnotesize] at (-0.52, 0) {$-\frac{1}{2}$};
+    \node[below right=1pt, font=\footnotesize] at (-0.33333, 0) {$-\frac{1}{3}$};
+    \node[below=2pt, font=\footnotesize] at (1, 0) {$1$};
+
+    \node[right=2pt, font=\footnotesize] at (0, 1.33333) {$\frac{4}{3}$};
+    \node[left=2pt, font=\footnotesize] at (0, 1) {$1$};
+    \node[left=2pt, font=\footnotesize] at (0, -1) {$-1$};
+    \node[right=2pt, font=\footnotesize] at (0, -1.33333) {$-\frac{4}{3}$};
+
+    % 楕円の方程式ラベル
+    \node[teal!80!black, font=\footnotesize] at (-0.95, 1.6)
+    {$\frac{(a+1/2)^2}{1/4} + \frac{b^2}{2} = 1$};
+
+    % 端点（白抜きノード）
+    \foreach \x/\y in {-1/0, -0.33333/1.33333, -0.33333/-1.33333, 1/0}
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (\x,\y) {};
+
   \end{tikzpicture}
-  \caption{条件を満たす $(a,b)$ の領域．境界は含まない}
+  \caption{条件を満たす点 $(a,b)$ の領域（境界は含まない）}
+  \label{fig:ab_region}
 \end{figure}
 
 \end{document}

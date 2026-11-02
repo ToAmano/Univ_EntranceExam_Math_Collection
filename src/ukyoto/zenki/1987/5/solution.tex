@@ -1,56 +1,215 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} (1) $T: ax+y+z+a-2=0$ とする．$T$の法線ベクトルの1つに$\vec{n} =
+\paragraph{(1)}
+
+与えられた平面
+\begin{align}
+  T: ax+y+z+a-2=0
+\end{align}
+とする．$T$の法線ベクトルの1つに$\vec{n} =
 \begin{pmatrix} a \\ 1 \\ 1
-\end{pmatrix}$がある．題意の点$P$とすると，$OP \perp T$ だから，$k \in \mathbb{R}$として
+\end{pmatrix}$がある．題意の点$P$とすると $OP \perp T$ だから，$k \in \mathbb{R}$として
 \begin{align}
-  \overrightarrow{OP} = k\vec{n} \quad \cdots \text{\textcircled{1}}
+  \overrightarrow{OP} = k\vec{n} \label{eq:1}
 \end{align}
-とかける．これが$T$上の点だから，
+とかける．これが$T$上の点だから，\cref{eq:1}に代入して
 \begin{align}
-  a(ka) + (k) + (k) + a-2 &= 0 \qquad \therefore k = \dfrac{2-a}{a^2+2}
+  a(ka) + k + k + a-2 &= 0 \qquad \therefore k = \dfrac{2-a}{a^2+2}
 \end{align}
-となって \textcircled{1}から
+である．従って\cref{eq:1}より点$P$の座標は
 \begin{align}
-  P\left( \dfrac{(2-a)a}{a^2+2}, \dfrac{2-a}{a^2+2}, \dfrac{2-a}{a^2+2} \right) \quad \text{\#\ \ }
+  P\left( \dfrac{(2-a)a}{a^2+2}, \dfrac{2-a}{a^2+2}, \dfrac{2-a}{a^2+2} \right)
 \end{align}
+である．
 
 \paragraph{(2)}
 
-平面と点のキョリ公式から
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+    % パラメータ
+    \def\R{2.4}       % 球の半径
+    \def\d{1.38}      % OP の距離 (d = sqrt(3)/3 * 2.4 ≈ 1.38)
+    \def\ang{50}      % OP の方向角
+    \pgfmathsetmacro{\rCut}{sqrt(\R*\R - \d*\d)} % 切断円の半径 ≈ 1.963
+    \pgfmathsetmacro{\bCut}{\rCut * 0.35}        % 投影による短軸半径
+
+    % 半径比から端点の偏角: cos(del) = d / R
+    \pgfmathsetmacro{\delAng}{acos(\d / \R)}     % ≈ 54.9度
+    \pgfmathsetmacro{\angA}{\ang - \delAng}      % ≈ -4.9度
+    \pgfmathsetmacro{\angB}{\ang + \delAng}      % ≈ 104.9度
+
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at ({\d*cos(\ang)}, {\d*sin(\ang)});
+    \coordinate (A) at ({\R*cos(\angA)}, {\R*sin(\angA)});
+    \coordinate (B) at ({\R*cos(\angB)}, {\R*sin(\angB)});
+
+    % 1. 球欠 V(a) の塗りつぶし (淡い青 + 斜線ハッチング)
+    % 境界: AからBへの球弧 + BからAへの楕円弧
+    \fill[blue!15]
+    (A) arc[start angle=\angA, end angle=\angB, radius=\R]
+    -- (P) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!45]
+    (A) arc[start angle=\angA, end angle=\angB, radius=\R]
+    -- (P) -- cycle;
+
+    % 2. 切断平面 T の広がり (半透明の平行四辺形)
+    \coordinate (T1) at ($ (P) + ({\ang+90}:2.0) - ({\ang}:1.0) $);
+    \coordinate (T2) at ($ (P) + ({\ang+90}:2.0) + ({\ang}:1.3) $);
+    \coordinate (T3) at ($ (P) - ({\ang+90}:2.0) + ({\ang}:1.3) $);
+    \coordinate (T4) at ($ (P) - ({\ang+90}:2.0) - ({\ang}:1.0) $);
+
+    \fill[teal!15, opacity=0.45] (T1) -- (T2) -- (T3) -- (T4) -- cycle;
+    \draw[teal!80!black, thick] (T1) -- (T2) -- (T3) -- (T4) -- cycle;
+    \node[teal!80!black, above=1pt, font=\footnotesize\bfseries] at (T2) {平面 $T$};
+
+    % 3. 切断面の円 (楕円)
+    % 奥側 (点線) と 手前側 (実線)
+    \draw[dashed, blue!85!black, line width=1.1pt]
+    (P) ellipse [x radius=\bCut, y radius=\rCut, rotate=\ang];
+    \draw[line width=1.3pt, blue!85!black]
+    (A) arc[start angle=\angA, end angle=\angB, radius=\R];
+
+    % 4. 球の輪郭
+    \draw[line width=1.3pt, gray!40!black] (O) circle (\R);
+    % 赤道 (点線と実線)
+    \draw[dashed, gray!50] (\R, 0) arc[start angle=0, end angle=180, x radius=\R, y radius=0.65];
+    \draw[gray!60] (-\R, 0) arc[start angle=180, end angle=360, x radius=\R, y radius=0.65];
+
+    % 5. 線分 OP (法線方向)
+    \draw[line width=1.4pt, red!85!black] (O) -- (P)
+    node[midway, below right=-2pt, font=\footnotesize] {$|OP|=f(a)$};
+    \draw[dashed, red!85!black] (P) -- ($ (P) + ({\ang}:1.1) $);
+
+    % 直角記号 at P
+    \draw[red!85!black, thin]
+    ($(P) + ({\ang+180}:0.2)$) --
+    ($(P) + ({\ang+180}:0.2) + ({\ang-90}:0.2)$) --
+    ($(P) + ({\ang-90}:0.2)$);
+
+    % 6. 点 O, P
+    \node[circle, fill=gray!85!black, inner sep=1.4pt] at (O) {};
+    \node[below left=1pt, font=\footnotesize] at (O) {$O$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {};
+    \node[above left=1pt, red!85!black, font=\footnotesize] at (P) {$P$};
+
+    % 半径の矢印
+    \draw[dashed, gray!70] (O) -- ({-\R*cos(35)}, {-\R*sin(35)})
+    node[midway, below right=-2pt, font=\scriptsize] {$R=3$};
+
+    % 球欠 V(a) の注釈
+    \node[blue!85!black, font=\small\bfseries] (vlab) at ($(P) + ({\ang}:1.6)$) {球欠 $V(a)$};
+    \draw[->, blue!85!black, thick] (vlab) -- ($(P) + ({\ang}:0.75)$);
+
+  \end{tikzpicture}
+  \caption{球 $x^2+y^2+z^2 \le 9$ と平面 $T$ による切断および球欠 $V(a)$}
+  \label{fig:sphere_cut_3d}
+\end{figure}
+
+平面と点の距離公式から
 \begin{align}
-  |OP| &= \dfrac{|a-2|}{\sqrt{a^2+1+1}} = \dfrac{|a-2|}{\sqrt{a^2+2}} \quad (\equiv f(a) \text{とする})
+  |OP| &= \dfrac{|a-2|}{\sqrt{a^2+1+1}} = \dfrac{|a-2|}{\sqrt{a^2+2}} \equiv f(a)
 \end{align}
 である．まず $\left\{ f(a) \right\}^2 = \dfrac{(a-2)^2}{a^2+2}$ の値域をもとめる．
+$a$で微分すると
 \begin{align}
-  \left\{ f(a)^2 \right\}' &= \dfrac{2(a-2)(a^2+2) - 2a(a-2)^2}{(a^2+2)^2} = \dfrac{2(a-2)(2a+2)}{(a^2+2)^2}
+  \left\{ f(a)^2 \right\}'
+  &= \dfrac{2(a-2)(a^2+2) - 2a(a-2)^2}{(a^2+2)^2}
+  = \dfrac{2(a-2)(2a+2)}{(a^2+2)^2}
 \end{align}
-から増減表をうる．
+から増減表は以下のようになる．
 
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \caption{$f^2$ の増減表}
-    \begin{tabular}{|c|c|c|c|c|c|}
-      \hline
-      $a$ & $\cdots$ & $-1$ & $\cdots$ & $2$ & $\cdots$ \\ \hline
-      $f'$ & $+$ & $0$ & $-$ & $0$ & $+$ \\ \hline
-      $f^2$ & $\nearrow$ & $3$ & $\searrow$ & $0$ & $\nearrow$ \\ \hline
-    \end{tabular}
-  \end{table}
-\end{center}
+\begin{table}[htb]
+  \centering
+  \caption{$f^2$ の増減表}
+  \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    $a$ & $\cdots$ & $-1$ & $\cdots$ & $2$ & $\cdots$ & $\infty$ \\ \hline
+    $(f^2)'$ & $+$ & $0$ & $-$ & $0$ & $+$ & \\ \hline
+    $f^2$ & $\nearrow$ & $3$ & $\searrow$ & $0$ & $\nearrow$ & 1 \\ \hline
+  \end{tabular}
+\end{table}
 
-したがって，$0 \le f(a)$とあわせて，$\max f(a) = \sqrt{3}$である．$V(a) \text{が}\min \iff f(a) \text{が}\max$ だから
+したがって$0 \le f(a)$とあわせて$\max f(a) = f(-1) = \sqrt{3}$である．
 
-$a=-1$の時，
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.3cm, y=1.3cm, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-3.4, 0) -- (3.6, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -3.4) -- (0, 3.4) node[above] {$Y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 円 X^2 + Y^2 = 9
+    \draw[line width=1.3pt, gray!40!black] (0, 0) circle (3);
+
+    % 切断位置 X = sqrt(3) ≈ 1.732
+    \def\fa{1.732}
+    \pgfmathsetmacro{\yCut}{sqrt(9 - \fa*\fa)} % ≈ 2.449
+
+    % 斜線部 V(a) の領域 (X >= f(a))
+    \fill[blue!10]
+    (\fa, {-\yCut}) -- (\fa, {\yCut})
+    arc[start angle={asin(\yCut/3)}, end angle={-asin(\yCut/3)}, radius=3]
+    -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!45]
+    (\fa, {-\yCut}) -- (\fa, {\yCut})
+    arc[start angle={asin(\yCut/3)}, end angle={-asin(\yCut/3)}, radius=3]
+    -- cycle;
+
+    % 切断線 X = f(a)
+    \draw[line width=1.2pt, teal!80!black] (\fa, -2.9) -- (\fa, 2.9)
+    node[above, font=\footnotesize] {平面 $T$ ($X=f(a)$)};
+
+    % 円の弧（球欠部分）を青太線で強調
+    \draw[line width=1.5pt, blue!85!black]
+    (\fa, {\yCut}) arc[start angle={asin(\yCut/3)}, end angle={-asin(\yCut/3)}, radius=3];
+    \draw[line width=1.5pt, blue!85!black] (\fa, {-\yCut}) -- (\fa, {\yCut});
+
+    % 点 P
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (\fa, 0) {};
+    \node[below left=1pt, red!85!black, font=\footnotesize] at (\fa, 0) {$P$};
+
+    % 直角記号
+    \draw[gray!70] (\fa-0.25, 0) -- (\fa-0.25, 0.25) -- (\fa, 0.25);
+
+    % 距離 f(a) の表示
+    \draw[<->, red!85!black, thick] (0, -0.6) -- (\fa, -0.6)
+    node[midway, below, font=\footnotesize] {$f(a)$};
+    \draw[dashed, gray!60] (\fa, 0) -- (\fa, -0.7);
+    \draw[dashed, gray!60] (0, 0) -- (0, -0.7);
+
+    % 軸目盛り
+    \node[below right=1pt, font=\footnotesize] at (3, 0) {$3$};
+    \node[below left=1pt, font=\footnotesize] at (-3, 0) {$-3$};
+    \node[above left=1pt, font=\footnotesize] at (0, 3) {$3$};
+    \node[below left=1pt, font=\footnotesize] at (0, -3) {$-3$};
+
+    % 回転矢印 around X-axis
+    \draw[->, thick, orange!90!black]
+    (3.3, 0.4) arc[start angle=90, end angle=300, x radius=0.25, y radius=0.5];
+    \node[above right, orange!90!black, font=\scriptsize] at (3.3, 0.4) {回転};
+
+    % 領域ラベル
+    \node[blue!85!black, font=\small\bfseries] at (2.4, 1.0) {$V(a)$};
+
+    % 円の方程式
+    \node[gray!40!black, font=\footnotesize, above left] at (-2.1, 2.1) {$X^2+Y^2=9$};
+  \end{tikzpicture}
+  \caption{$OP$ を含む平面で切断した断面図と球欠 $V(a)$（斜線部を $X$ 軸周りに回転）}
+  \label{fig:sphere_section}
+\end{figure}
+
+$V(a)$は上図の斜線部の領域を$X$軸周りに回転した部分の体積だから，$f(a)$が最大の時に最小である．従って求める最小値は$a=-1$の時，
 \begin{align}
-  \min V(a) &= \pi \int_{\sqrt{3}}^3 (9-x^2)dx = \pi \left[ 9x - \dfrac{1}{3}x^3 \right]_{\sqrt{3}}^3 = \pi (18 - 8\sqrt{3}) \quad \text{\#\ \ }
+  \min V(a)
+  &= \pi \int_{\sqrt{3}}^3 (9-x^2)dx
+  = \pi \left[ 9x - \dfrac{1}{3}x^3 \right]_{\sqrt{3}}^3
+  = \pi (18 - 8\sqrt{3})
 \end{align}
-をとる．
+である．
 
 \end{document}
