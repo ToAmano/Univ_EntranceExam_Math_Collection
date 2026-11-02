@@ -113,6 +113,35 @@ class TestConverter(unittest.TestCase):
         self.assertNotIn(r'\begin{tikzpicture}', processed)
         self.assertNotIn(r'\includegraphics', processed)
 
+    def test_pifont_ding_converted_in_prose(self):
+        latex = r'下の3条件\ding{"AC}，\ding{"AD}，\ding{"AE}を仮定する．'
+        processed = self.convert(latex)
+        self.assertIn('下の3条件①，②，③を仮定する．', processed)
+
+    def test_pifont_ding_converted_in_item_label(self):
+        latex = r'''
+        \begin{enumerate}
+          \item [\ding{"AC}] $a<0$
+          \item [\ding{"AD}] $b>0$
+        \end{enumerate}
+        '''
+        processed = self.convert(latex)
+        self.assertIn('1.  **①**　$a<0$', processed)
+        self.assertIn('2.  **②**　$b>0$', processed)
+
+    def test_pifont_ding_decimal_and_variants(self):
+        # 172 -> ①, 182 -> ❶, 51 -> ✓, curly quotes, lowercase hex
+        latex = r'\ding{172} \ding{“AC”} \ding{"ac} \ding{182} \ding{51}'
+        processed = self.convert(latex)
+        self.assertIn('① ① ① ❶ ✓', processed)
+
+    def test_pifont_ding_in_standalone_list_render(self):
+        # Direct call to _render_list_items also converts \ding in labels
+        body = r'\item[\ding{"AC}] 第一条件' + '\n' + r'\item[\ding{"AD}] 第二条件'
+        rendered = tex_to_md._render_list_items(body, 0)
+        self.assertIn('1.  **①**　第一条件', rendered)
+        self.assertIn('2.  **②**　第二条件', rendered)
+
 
 if __name__ == '__main__':
     unittest.main()

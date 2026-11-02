@@ -40,6 +40,70 @@ def load_topic_tags():
     return data or {}
 
 
+# pifont (Zapf Dingbats) の丸数字・記号と Unicode の対応表
+_PIFONT_DINGBATS = {
+    # 172-181 (0xAC-0xB5): ①-⑩ (serif/sans-serif circled digits)
+    172: '①', 173: '②', 174: '③', 175: '④', 176: '⑤',
+    177: '⑥', 178: '⑦', 179: '⑧', 180: '⑨', 181: '⑩',
+    # 182-191 (0xB6-0xBF): ❶-❿ (white-on-black circled digits)
+    182: '❶', 183: '❷', 184: '❸', 185: '❹', 186: '❺',
+    187: '❻', 188: '❼', 189: '❽', 190: '❾', 191: '❿',
+    # 192-201 (0xC0-0xC9): ①-⑩ (sans-serif circled digits)
+    192: '①', 193: '②', 194: '③', 195: '④', 196: '⑤',
+    197: '⑥', 198: '⑦', 199: '⑧', 200: '⑨', 201: '⑩',
+    # 202-211 (0xCA-0xD3): ❶-❿ (sans-serif white-on-black circled digits)
+    202: '❶', 203: '❷', 204: '❸', 205: '❹', 206: '❺',
+    207: '❻', 208: '❼', 209: '❽', 210: '❾', 211: '❿',
+    # 51-56: チェックマーク・バツ印
+    51: '✓', 52: '✔', 55: '✗', 56: '✘',
+}
+
+_DING_RE = re.compile(r'\\ding\s*\{([^}]+)\}(?:\{\})?')
+
+
+def _parse_dingbat_code(arg: str):
+    """\\ding{...} の引数文字列を解釈して整数文字コードを返す。
+    TeX 16進記法 (\"AC, “AC, 0xAC)、TeX 8進記法 ('254)、10進記法 (172) に対応。
+    """
+    s = arg.strip()
+    if not s:
+        return None
+    # 16進プレフィックス: "AC, “AC, ”AC, 0xAC, 0XAC
+    if s.startswith(('"', '“', '”', '0x', '0X')):
+        clean = re.sub(r'^(?:"|“|”|0x|0X)+', '', s)
+        clean = re.sub(r'["“”\s]+$', '', clean)
+        try:
+            return int(clean, 16)
+        except ValueError:
+            return None
+    # 8進プレフィックス: '254
+    if s.startswith("'"):
+        clean = s.lstrip("'").rstrip("' ")
+        try:
+            return int(clean, 8)
+        except ValueError:
+            return None
+    # 10進数
+    if s.isdigit():
+        return int(s, 10)
+    # プレフィックスなしの 16進数（AC, AD など）
+    try:
+        return int(s, 16)
+    except ValueError:
+        return None
+
+
+def convert_pifont_dingbats(text: str) -> str:
+    """pifont パッケージの \\ding{"AC} 等の文字コード指定を Unicode 文字（①, ②等）に変換する。"""
+    def _replace(match):
+        code = _parse_dingbat_code(match.group(1))
+        if code is not None and code in _PIFONT_DINGBATS:
+            return _PIFONT_DINGBATS[code]
+        return match.group(0)
+
+    return _DING_RE.sub(_replace, text)
+
+
 def _extract_braced(text, start):
     """text[start] は '{' である前提。対応する閉じ '}' までを中括弧の
     ネストを数えながら走査し、(全体の文字列, 閉じ括弧直後のインデックス) を返す。
@@ -219,12 +283,13 @@ def _render_list_items(body, depth):
                     # 残す（実例: utokyo zenki 1981/6, 2009/3 等）。
                     label_m = re.match(r'^\s*\[([^\]]*)\]\s*', val.lstrip('\n'))
                     if label_m:
-                        label_text = label_m.group(1).strip()
+                        raw_label = label_m.group(1).strip()
+                        if raw_label.startswith('{') and raw_label.endswith('}'):
+                            raw_label = raw_label[1:-1].strip()
+                        label_text = convert_pifont_dingbats(raw_label)
                         rest = val.lstrip('\n')[label_m.end():]
-                        # \ding{"AC} 等の pifont 丸数字コードは、太字化しても
-                        # 生の LaTeX コマンド文字列がそのまま表示されるだけで
-                        # 改善にならない（① ② への変換は別タスクで対応予定）。
-                        # この場合のみ、旧来通り黙って取り除く。
+                        # 未対応の \ding 等、解決できなかった生のコマンド文字列は
+                        # 太字化しても改善にならないため、黙って取り除く。
                         if not label_text or label_text.startswith('\\ding'):
                             val = rest
                         else:
@@ -693,6 +758,9 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         clean_lines.append(line_clean)
     raw_tex = "\n".join(clean_lines)
 
+    # pifont パッケージの \ding{...} を Unicode 文字（①, ②等）に変換
+    raw_tex = convert_pifont_dingbats(raw_tex)
+
     # \cref/\eqref の表示番号を、ラベル名にある数字ではなく実際の自動採番位置
     # から求めるための対応表。後段の replace_ref_links で使用する。
     eq_numbers = compute_eq_numbers(raw_tex)
@@ -768,6 +836,11 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         # 1990年サマリーの解答表で "2-3" という意味不明な行が公開ページに
         # 表示されていた）。\hline 同様に見た目に影響しないため単純に除去する。
         tab_clean = re.sub(r'\\cline\{[^}]*\}', '', tab_clean)
+        # 増減表の凹凸矢印マクロを Pandoc 変換用に安全な数式矢印へ展開
+        tab_clean = tab_clean.replace(r'\carrowDecreaseConvex', r'$\searrow$')
+        tab_clean = tab_clean.replace(r'\carrowDecreaseConcave', r'$\searrow$')
+        tab_clean = tab_clean.replace(r'\carrowIncreaseConvex', r'$\nearrow$')
+        tab_clean = tab_clean.replace(r'\carrowIncreaseConcave', r'$\nearrow$')
         # 数式（$...$）内の "|" は Pandoc の GFM テーブル書き出し時にエスケープされず
         # 列区切りと誤認されてしまう（実例: $|\vec a|=1$ のような絶対値記号を含む
         # セルが崩れる）。"\|" へのエスケープは MathJax 上では別記号（二重バー／
