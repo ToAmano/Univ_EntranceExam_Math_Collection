@@ -1,85 +1,51 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-{\bf [解答]} $D(0, \dfrac{\sqrt{3}}{3}), E(-\dfrac{1}{2}, -\dfrac{\sqrt{3}}{6}), F(\dfrac{1}{2}, -\dfrac{\sqrt{3}}{6})$とおく．
-$P, Q$の速さを秒速$1$とし，まず時刻$t$を$0 \le t \le 1$としてかんがえる．時刻$t$では$P$は$AB$を$t : 1-t$に，$Q$は$EF$を$t : 1-t$に内分するので
-\begin{align}
-  \overrightarrow{OP} &= (1-t)
-  \begin{pmatrix} 0 \\ \sqrt{3}/3 \\ 1
-  \end{pmatrix} + t
-  \begin{pmatrix} -1/2 \\ -\sqrt{3}/6 \\ 1
-  \end{pmatrix} =
-  \begin{pmatrix} 0 \\ \sqrt{3}/3 \\ 1
-  \end{pmatrix} + t
-  \begin{pmatrix} -1/2 \\ -\sqrt{3}/2 \\ 0
-  \end{pmatrix} \\
-  \overrightarrow{OQ} &= (1-t)
-  \begin{pmatrix} -1/2 \\ -\sqrt{3}/6 \\ 0
-  \end{pmatrix} + t
-  \begin{pmatrix} 1/2 \\ -\sqrt{3}/6 \\ 0
-  \end{pmatrix} =
-  \begin{pmatrix} -1/2 \\ -\sqrt{3}/6 \\ 0
-  \end{pmatrix} + t
-  \begin{pmatrix} 1 \\ 0 \\ 0
-  \end{pmatrix}
-\end{align}
-となり，$z=a$ と$PQ$の交点は$PQ$の$1-a : a$に内分点で，この点を$R$として
-\begin{align}
-  \overrightarrow{OR} &= a \overrightarrow{OP} + (1-a) \overrightarrow{OQ} \\
-  &= a
-  \begin{pmatrix} 0 \\ \sqrt{3}/3 \\ 1
-  \end{pmatrix} + (1-a)
-  \begin{pmatrix} -1/2 \\ -\sqrt{3}/6 \\ 0
-  \end{pmatrix} + \dfrac{at}{2}
-  \begin{pmatrix} -1 \\ -\sqrt{3} \\ 0
-  \end{pmatrix} + (1-a)t
-  \begin{pmatrix} 1 \\ 0 \\ 0
-  \end{pmatrix} \\
-  &=
-  \begin{pmatrix} \dfrac{a-1}{2} \\ \dfrac{\sqrt{3}}{6}(3a-1) \\ a
-  \end{pmatrix} + \dfrac{t}{2}
-  \begin{pmatrix} 2-3a \\ -\sqrt{3}a \\ 0
-  \end{pmatrix} \quad (0 \le t \le 1)
-\end{align}
-
-だから図示して右図太線部．対称性から，
-もとめる切り口は右下図のような一辺 $\sqrt{3a^2-3a+1}$ の正三角形
+{\bf [解答]}
 
 \begin{figure}[htbp]
   \centering
-  % x 軸を右，y 軸を左下，z 軸を上に投影した三角柱。
-  % 表示した切り口は a=1/2，P と Q は t=2/5 の位置。
-  \begin{tikzpicture}[scale=1.12,>=stealth,line join=round]
+  \begin{tikzpicture}[scale=1.15,>=stealth,line join=round]
     \coordinate (A) at (-0.577,1.838);
     \coordinate (B) at (-1.061,2.531);
     \coordinate (C) at (1.639,2.531);
     \coordinate (D) at (-0.577,-0.462);
     \coordinate (E) at (-1.061,0.231);
     \coordinate (F) at (1.639,0.231);
-    \coordinate (P) at (-0.771,2.115);
-    \coordinate (Q) at (0.019,0.231);
-    \coordinate (R) at (-0.376,1.173);
-    \fill[teal!14] (-0.819,1.035)--(0.289,1.381)--(0.531,1.035)--cycle;
+    \coordinate (P) at (-0.819,2.185);
+    \coordinate (Q) at (0.289,0.231);
+
+    % 座標軸
     \draw[->,gray!70] (0,0)--(2.15,0) node[right] {$x$};
     \draw[->,gray!70] (0,0)--(-1.12,-0.9) node[below left] {$y$};
     \draw[->,gray!70] (0,0)--(0,3.08) node[above] {$z$};
-    \draw[dashed,gray!65] (D)--(E) (D)--(F) (A)--(D);
-    \draw[blue!75!black,thick] (A)--(B)--(C)--cycle
-    (B)--(E)--(F)--(C);
-    \draw[teal!70!black,very thick] (-0.819,1.035)--(0.289,1.381)--(0.531,1.035)--cycle;
-    \draw[red!75!black,thick] (P)--(Q);
-    \foreach \name/\pos in {A/left,B/above left,C/above right,D/below,E/left,F/right}
-    \node[\pos] at (\name) {$\name$};
-    \node[circle, fill=red!75!black, inner sep=1.5pt] at (P) {}; \node[circle, fill=red!75!black, inner sep=1.5pt] at (Q) {};
-    \node[right,red!75!black] at (P) {$P$};
-    \node[below right,red!75!black] at (Q) {$Q$};
-    \node[right,teal!70!black] at (0.72,1.43) {$z=a$};
+
+    % 三角柱の辺：奥の辺 EF は破線，手前・輪郭の辺は実線
+    \draw[dashed,gray!65] (E)--(F);
+    \draw[blue!75!black,thick] (D)--(E) (D)--(F) (A)--(D) (B)--(E) (C)--(F);
+    \draw[blue!75!black,thick] (A)--(B)--(C)--cycle;
+
+    % AB および EF 上の移動方向を示す矢印
+    \draw[->,>=stealth,red!75!black,thick] ($(A)!0.15!(B)$) -- ($(A)!0.35!(B)$);
+    \draw[->,>=stealth,red!75!black,thick] ($(E)!0.15!(F)$) -- ($(E)!0.35!(F)$);
+
+    % 線分 PQ
+    \draw[red!75!black,very thick] (P)--(Q);
+    \node[circle, fill=red!75!black, inner sep=1.4pt] at (P) {};
+    \node[circle, fill=red!75!black, inner sep=1.4pt] at (Q) {};
+
+    % 頂点・点のラベル
+    \node[left=3pt] at (A) {$A$};
+    \node[above left] at (B) {$B$};
+    \node[above right] at (C) {$C$};
+    \node[below] at (D) {$D$};
+    \node[left] at (E) {$E$};
+    \node[right] at (F) {$F$};
+    \node[above right=1pt,red!75!black] at (P) {$P$};
+    \node[below=2pt,red!75!black] at (Q) {$Q$};
   \end{tikzpicture}
-  \caption{動く線分 $PQ$ と高さ $z=a$ の切り口}
+  \caption{三角柱 $ABC-DEF$ と動点 $P, Q$}
+  \label{fig:prism_pq}
 \end{figure}
 
 \begin{figure}[htbp]
@@ -104,6 +70,65 @@ $P, Q$の速さを秒速$1$とし，まず時刻$t$を$0 \le t \le 1$として�
   \caption{底面 $DEF$ の座標}
 \end{figure}
 
+題意より$D(0, \dfrac{\sqrt{3}}{3},0), E(-\dfrac{1}{2}, -\dfrac{\sqrt{3}}{6},0), F(\dfrac{1}{2}, -\dfrac{\sqrt{3}}{6},0)$とおくと，$A(0, \dfrac{\sqrt{3}}{3},1), B(-\dfrac{1}{2}, -\dfrac{\sqrt{3}}{6},1), C(\dfrac{1}{2}, -\dfrac{\sqrt{3}}{6},1)$である．
+
+\paragraph{(1)}
+
+$P, Q$の速さを秒速$1$としてまず時刻$t$を$0 \le t \le 1$としてかんがえる．
+この時時刻$t$では$P$は$AB$を$t : 1-t$に，$Q$は$EF$を$t : 1-t$に内分するので
+\begin{align}
+  \overrightarrow{OP} &= (1-t)
+  \begin{pmatrix} 0 \\ \sqrt{3}/3 \\ 1
+  \end{pmatrix} + t
+  \begin{pmatrix} -1/2 \\ -\sqrt{3}/6 \\ 1
+  \end{pmatrix} =
+  \begin{pmatrix} 0 \\ \sqrt{3}/3 \\ 1
+  \end{pmatrix} + t
+  \begin{pmatrix} -1/2 \\ -\sqrt{3}/2 \\ 0
+  \end{pmatrix} \\
+  \overrightarrow{OQ} &= (1-t)
+  \begin{pmatrix} -1/2 \\ -\sqrt{3}/6 \\ 0
+  \end{pmatrix} + t
+  \begin{pmatrix} 1/2 \\ -\sqrt{3}/6 \\ 0
+  \end{pmatrix} =
+  \begin{pmatrix} -1/2 \\ -\sqrt{3}/6 \\ 0
+  \end{pmatrix} + t
+  \begin{pmatrix} 1 \\ 0 \\ 0
+  \end{pmatrix}
+\end{align}
+となり，$z=a$ と$PQ$の交点は$PQ$の$1-a : a$内分点で，この点を$R$として
+\begin{align}
+  \overrightarrow{OR} &= a \overrightarrow{OP} + (1-a) \overrightarrow{OQ} \\
+  &= a
+  \begin{pmatrix} 0 \\ \sqrt{3}/3 \\ 1
+  \end{pmatrix} + (1-a)
+  \begin{pmatrix} -1/2 \\ -\sqrt{3}/6 \\ 0
+  \end{pmatrix} + \dfrac{at}{2}
+  \begin{pmatrix} -1 \\ -\sqrt{3} \\ 0
+  \end{pmatrix} + (1-a)t
+  \begin{pmatrix} 1 \\ 0 \\ 0
+  \end{pmatrix} \\
+  &=
+  \begin{pmatrix} \dfrac{a-1}{2} \\ \dfrac{\sqrt{3}}{6}(3a-1) \\ a
+  \end{pmatrix} + \dfrac{t}{2}
+  \begin{pmatrix} 2-3a \\ -\sqrt{3}a \\ 0
+  \end{pmatrix} \quad (0 \le t \le 1)
+\end{align}
+である．これは$t$を動かすと直線を表し，$t=0,1$の時にそれぞれ
+\begin{align}
+  \overrightarrow{OR}(t=0) =  a
+  \begin{pmatrix} 0 \\ \sqrt{3}/3 \\ 1
+  \end{pmatrix} + (1-a)
+  \begin{pmatrix} -1/2 \\ -\sqrt{3}/6 \\ 0
+  \end{pmatrix}  \\
+  \overrightarrow{OR}(t=1) =  a
+  \begin{pmatrix} -1/2 \\ -\sqrt{3}/6 \\ 1
+  \end{pmatrix} + (1-a)
+  \begin{pmatrix} 1/2 \\ -\sqrt{3}/6 \\ 0
+  \end{pmatrix}
+\end{align}
+だから，$z=a$の切断面で下図のように点$A_a,B_a,C_a$を定めると，$A_aB_a$の$1-a:a$内分点と$B_aC_a$の$1-a:a$内分点を結ぶ直線上を動く．
+
 \begin{figure}[htbp]
   \centering
   % a=2/5 のとき，最初の辺に対応する切り口の線分。
@@ -118,15 +143,22 @@ $P, Q$の速さを秒速$1$とし，まず時刻$t$を$0 \le t \le 1$として�
     \draw[dashed,blue!65!black] (D)--(E)--(F)--cycle;
     \draw[red!75!black,very thick] (Rzero)--(Rone);
     \node[circle, fill=red!75!black, inner sep=1.5pt] at (Rzero) {}; \node[circle, fill=red!75!black, inner sep=1.5pt] at (Rone) {};
-    \node[above] at (D) {$D$};
-    \node[below left] at (E) {$E$};
-    \node[below right] at (F) {$F$};
+    \node[above] at (D) {$A_a$};
+    \node[below left] at (E) {$B_a$};
+    \node[below right] at (F) {$C_a$};
     \node[left] at (Rzero) {$R_0$};
     \node[below] at (Rone) {$R_1$};
+    \node[above left,font=\footnotesize] at ($(D)!0.5!(Rzero)$) {$1-a$};
+    \node[below left,font=\footnotesize] at ($(Rzero)!0.5!(E)$) {$a$};
+    \node[below,font=\footnotesize] at ($(E)!0.5!(Rone)$) {$1-a$};
+    \node[below,font=\footnotesize] at ($(Rone)!0.5!(F)$) {$a$};
     \node[above right] at (0.2,0.35) {$z=a$};
   \end{tikzpicture}
-  \caption{$P$ が $AB$ 上，$Q$ が $EF$ 上にあるときの切り口の辺}
+  \caption{$P$ が $AB$ 上，$Q$ が $EF$ 上にあるときの$z=a$での切り口の辺}
 \end{figure}
+
+対称性から$P,Q$が他の辺上にある時も考えれば，$z=a$での切り口は下図のような
+一辺 $\sqrt{3a^2-3a+1}$ の正三角形になる．
 
 \begin{figure}[htbp]
   \centering
@@ -143,27 +175,66 @@ $P, Q$の速さを秒速$1$とし，まず時刻$t$を$0 \le t \le 1$として�
     \draw[->,gray!70] (0,-0.46)--(0,0.73) node[above] {$y$};
     \draw[dashed,blue!65!black] (D)--(E)--(F)--cycle;
     \draw[teal!70!black,very thick] (Rzero)--(Rone)--(Rtwo)--cycle;
-    \node[above] at (D) {$D$};
-    \node[below left] at (E) {$E$};
-    \node[below right] at (F) {$F$};
+    \node[above] at (D) {$A_a$};
+    \node[below left] at (E) {$B_a$};
+    \node[below right] at (F) {$C_a$};
     \node[left] at (Rzero) {$R_0$};
     \node[below] at (Rone) {$R_1$};
     \node[right] at (Rtwo) {$R_2$};
   \end{tikzpicture}
-  \caption{切り口の正三角形 $R_0R_1R_2$（図は $a=2/5$）}
+  \caption{切り口の正三角形 $R_0R_1R_2$}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  % x 軸を右，y 軸を左下，z 軸を上に投影した三角柱。
+  % 表示した切り口は a=1/2，P と Q は t=2/5 の位置。
+  \begin{tikzpicture}[scale=1.12,>=stealth,line join=round]
+    \coordinate (A) at (-0.577,1.838);
+    \coordinate (B) at (-1.061,2.531);
+    \coordinate (C) at (1.639,2.531);
+    \coordinate (D) at (-0.577,-0.462);
+    \coordinate (E) at (-1.061,0.231);
+    \coordinate (F) at (1.639,0.231);
+    \coordinate (P) at (-0.771,2.115);
+    \coordinate (Q) at (0.019,0.231);
+    \coordinate (R) at (-0.376,1.173);
+    \fill[teal!14] (-0.819,1.035)--(0.289,1.381)--(0.531,1.035)--cycle;
+    \draw[->,gray!70] (0,0)--(2.15,0) node[right] {$x$};
+    \draw[->,gray!70] (0,0)--(-1.12,-0.9) node[below left] {$y$};
+    \draw[->,gray!70] (0,0)--(0,3.08) node[above] {$z$};
+    \draw[dashed,gray!65] (E)--(F);
+    \draw[blue!75!black,thick] (D)--(E) (D)--(F) (A)--(D) (B)--(E) (C)--(F);
+    \draw[blue!75!black,thick] (A)--(B)--(C)--cycle;
+    \draw[teal!70!black,very thick] (-0.819,1.035)--(0.289,1.381)--(0.531,1.035)--cycle;
+    \draw[red!75!black,thick] (P)--(Q);
+    \node[below left=1pt] at (A) {$A$};
+    \node[above left] at (B) {$B$};
+    \node[above right] at (C) {$C$};
+    \node[below] at (D) {$D$};
+    \node[left] at (E) {$E$};
+    \node[right] at (F) {$F$};
+    \node[circle, fill=red!75!black, inner sep=1.5pt] at (P) {}; \node[circle, fill=red!75!black, inner sep=1.5pt] at (Q) {};
+    \node[right=2pt,red!75!black] at (P) {$P$};
+    \node[below=2pt,red!75!black] at (Q) {$Q$};
+    \node[right,teal!70!black] at (0.72,1.43) {$z=a$};
+  \end{tikzpicture}
+  \caption{動く線分 $PQ$ と高さ $z=a$ の切り口}
 \end{figure}
 
 \paragraph{(2)}
 
-$z=a$ での切り口の面積$S(a)$は
+(1)の結果から，$z=a$ での切り口の面積$S(a)$は
+一辺 $\sqrt{3a^2-3a+1}$ の正三角形の面積で，
 \begin{align}
   S(a) = \dfrac{\sqrt{3}}{4} (3a^2-3a+1)
 \end{align}
-だから
+である．従って求める体積はこれを$a=0$から$a=1$まで積分して
 \begin{align}
   V &= \int_0^1 S(a) da \\
   &= \dfrac{\sqrt{3}}{4} \left[ a^3 - \dfrac{3}{2}a^2 + a \right]_0^1 \\
   &= \dfrac{\sqrt{3}}{8}
 \end{align}
+である．
 
 \end{document}
