@@ -1,84 +1,123 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} 題意から
-\begin{align}
-  AQ : QB = PA : PB \cdots \text{①}
-\end{align}
-である．
 \begin{figure}[H]
   \centering
-  \begin{tikzpicture}[x=1.5cm,y=0.8cm,>=stealth]
+  \begin{tikzpicture}[x=1.8cm, y=1.0cm, >=stealth, every node/.style={font=\small}]
     \coordinate (A) at (-1,0);
     \coordinate (B) at (1,0);
     % t=1/2 の例。角の二等分線から Q=(0.1459...,0)。
     \coordinate (P) at (0.5,1.5);
     \coordinate (Q) at (0.1459,0);
-    \draw[->,gray!75] (-1.5,0)--(1.5,0) node[right] {$x$};
-    \draw[->,gray!75] (0,-0.3)--(0,3.4) node[above] {$y$};
+
+    % 1. 塗りを先に置く (座標軸が塗りつぶされないようにする)
     \fill[teal!12] (A)--(P)--(B)--cycle;
-    \draw[blue!75!black,very thick,domain=-1.08:1.08,samples=90]
+
+    % 2. 座標軸
+    \draw[->, thick, gray!75!black] (-1.5,0)--(1.6,0) node[right, text=black] {$x$};
+    \draw[->, thick, gray!75!black] (0,-0.4)--(0,3.5) node[above, text=black] {$y$};
+
+    % 3. 放物線
+    \draw[blue!75!black, line width=1.3pt, domain=-1.08:1.08, samples=90]
     plot (\x,{2*\x*\x+1});
-    \draw[blue!75!black,thick] (A)--(P)--(B);
-    \draw[orange!85!black,very thick] (P)--(Q);
-    \node[circle, fill=orange!85!black, inner sep=1.4pt] at (P) {}; \node[circle, fill=orange!85!black, inner sep=1.4pt] at (Q) {};
-    \node[below] at (A) {$A(-1,0)$};
-    \node[below] at (B) {$B(1,0)$};
-    \node[below] at (Q) {$Q$};
-    \node[above right] at (P) {$P(t,2t^2+1)$};
+
+    % 4. 三角形の辺と二等分線
+    \draw[blue!75!black, thick] (A)--(P)--(B);
+    \draw[orange!85!black, line width=1.2pt] (P)--(Q);
+
+    % 5. 角の二等分線のマーク (◯マーク)
+    \pic[draw=gray!70!black, "$\circ$"{font=\small, text=black}, angle radius=26pt, angle eccentricity=0.65] {angle = A--P--Q};
+    \pic[draw=gray!70!black, "$\circ$"{font=\small, text=black}, angle radius=26pt, angle eccentricity=0.65] {angle = Q--P--B};
+
+    % 6. 各点プロット
+    \node[circle, fill, inner sep=1.2pt] at (0,0) {};
+    \node[below left=1pt] at (0,0) {$O$};
+
+    \node[circle, fill=blue!75!black, inner sep=1.3pt] at (A) {};
+    \node[below=2pt] at (A) {$A(-1,0)$};
+
+    \node[circle, fill=blue!75!black, inner sep=1.3pt] at (B) {};
+    \node[below=2pt] at (B) {$B(1,0)$};
+
+    \node[circle, fill=orange!85!black, inner sep=1.4pt] at (Q) {};
+    \node[below=2pt, orange!85!black] at (Q) {$Q$};
+
+    \node[circle, fill=orange!85!black, inner sep=1.4pt] at (P) {};
+    \node[above right=2pt, blue!85!black] at (P) {$P(t,2t^2+1)$};
   \end{tikzpicture}
-  \caption{放物線上の点 $P$ と，$AB$ 上の角の二等分線の交点 $Q$（図は $t=1/2$）}
+  \caption{放物線上の点 $P$ と，$AB$ 上の角の二等分線の交点 $Q$}
 \end{figure}
 
+題意から
 \begin{align}
-  |AP|^2 = (t+1)^2 + (2t^2+1)^2
+  |AQ| : |QB| = |PA| : |PB| \label{eq:1}
 \end{align}
-\begin{align}
-  |PB|^2 = (t-1)^2 + (2t^2+1)^2
-\end{align}
-より，①から
-\begin{align}
-  \left(\dfrac{QB}{AQ}\right)^2 = \dfrac{|PB|^2}{|AP|^2} = \dfrac{(t-1)^2 + (2t^2+1)^2}{(t+1)^2 + (2t^2+1)^2} = f(t)
-\end{align}
-$\dfrac{QB}{AQ} > 0$ から，$f(t)$が最大，最小値をとる時，$\dfrac{QB}{AQ}$も最大，最小値をとる．
+である．
 
-$f'(t)$の符号は，以下の式と同じ
+また$A(-1,0), B(1,0), P(t,2t^2+1)$より
 \begin{align}
-  g(t) &= \{2(t-1) + 2(2t^2+1) \cdot 4t\}\{(t+1)^2 + (2t^2+1)^2\} \\
-  &\quad - \{2(t+1) + 2(2t^2+1) \cdot 4t\}\{(t-1)^2 + (2t^2+1)^2\} \\
-  &= -4(2t^2+1)^2 + 8t(2t^2+1) \cdot 4t + 2(t-1)(t+1)^2 - 2(t+1)(t-1)^2 \\
-  &= -4(2t^2+1) [ (2t^2+1) - 8t^2 ] + 2(t-1)(t+1) \cdot 2 \\
-  &= 4( 12t^4 + 5t^2 - 2 ) = 4(3t^2+2)(4t^2-1)
+  \begin{cases}
+    |AP|^2 = (t+1)^2 + (2t^2+1)^2 \\
+    |PB|^2 = (t-1)^2 + (2t^2+1)^2
+  \end{cases} \label{eq:2}
 \end{align}
-従って，下表をえる
-
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \caption{$f(t)$ の増減表}
-    \begin{tabular}{|c|c|c|c|c|c|}
-      \hline
-      $t$ & $\cdots$ & $-\dfrac{1}{2}$ & $\cdots$ & $\dfrac{1}{2}$ & $\cdots$ \\
-      \hline
-      $f'$ & $+$ & $0$ & $-$ & $0$ & $+$ \\
-      \hline
-      $f$ & $\nearrow$ & $\dfrac{9}{5}$ & $\searrow$ & $\dfrac{5}{9}$ & $\nearrow$ \\
-      \hline
-    \end{tabular}
-  \end{table}
-\end{center}
-
-これと $f(t) = \dfrac{\left(2 + \dfrac{1}{t^2}\right)^2 + \dfrac{1}{t^2} \left(1 - \dfrac{1}{t}\right)^2}{\left(2 + \dfrac{1}{t^2}\right)^2 + \dfrac{1}{t^2} \left(1 + \dfrac{1}{t}\right)^2} \to 1 \ (t \to \pm\infty)$ から
-
+である．\cref{eq:1,eq:2}より題意の比率$\dfrac{|QB|}{|AQ|}$の二乗は
 \begin{align}
-  \max \dfrac{QB}{AQ} = \sqrt{\dfrac{9}{5}} = \dfrac{3\sqrt{5}}{5}
+  \left(\dfrac{QB}{AQ}\right)^2
+  = \dfrac{|PB|^2}{|AP|^2}
+  = \dfrac{(t-1)^2 + (2t^2+1)^2}{(t+1)^2 + (2t^2+1)^2} \equiv f(t)
 \end{align}
+である．$\dfrac{QB}{AQ} > 0$ から，$f(t)$が最大・最小値をとる時，$\dfrac{QB}{AQ}$も最大・最小値をとる．
+
+$f(t)$の式を変形すると
 \begin{align}
-  \min \dfrac{QB}{AQ} = \sqrt{\dfrac{5}{9}} = \dfrac{\sqrt{5}}{3}
+  f(t)
+  & = \dfrac{(t+1)^2 - 4t + (2t^2+1)^2}{(t+1)^2 + (2t^2+1)^2} \\
+  & = 1 - \dfrac{4t}{(t+1)^2 + (2t^2+1)^2}
 \end{align}
+だから一階微分は
+\begin{align}
+  f'(t)
+  &= -\dfrac{4\left[(t+1)^2 + (2t^2+1)^2\right]-4t\left\{2(t+1)+8t(2t^2+1)\right\}}{\left[(t+1)^2 + (2t^2+1)^2\right]^2}
+\end{align}
+である．分母は正だから$f'(t)$の符号は分子の符号と等しく，これを$g(t)$とおくと
+\begin{align}
+  g(t)
+  &= -4\left[(t+1)^2 + (2t^2+1)^2-t\left\{2(t+1)+8t(2t^2+1)\right\}\right] \\
+  &= -4\left[(t+1)(-t+1) + (2t^2+1)(-6t^2+1)\right] \\
+  &= -4\left[1-t^2 -12t^4-4t^2+1 \right] \\
+  &= -4\left[-12t^4-5t^2+2 \right] \\
+  &= 4(3t^2+2)(4t^2-1)
+\end{align}
+である．従って$f(t)$の増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$f(t)$ の増減表}
+  \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    $t$ & $(-\infty)$ & $\cdots$ & $-\dfrac{1}{2}$ & $\cdots$ & $\dfrac{1}{2}$ & $\cdots$ & $(\infty)$ \\
+    \hline
+    $f'$ & & $+$ & $0$ & $-$ & $0$ & $+$ & \\
+    \hline
+    $f$ & $(1)$ & $\nearrow$ & $\dfrac{9}{5}$ & $\searrow$ & $\dfrac{5}{9}$ & $\nearrow$ & $(1)$ \\
+    \hline
+  \end{tabular}
+\end{table}
+
+左右の無限遠の極限は
+\begin{align}
+  f(t) = \dfrac{\left(2 + \dfrac{1}{t^2}\right)^2 + \dfrac{1}{t^2} \left(1 - \dfrac{1}{t}\right)^2}{\left(2 + \dfrac{1}{t^2}\right)^2 + \dfrac{1}{t^2} \left(1 + \dfrac{1}{t}\right)^2} \xrightarrow{t\to\pm \infty} 1
+\end{align}
+だから，求める最大値と最小値は$t=\mp\dfrac{1}{2}$の時の
+\begin{align}
+  \begin{cases}
+    \max \dfrac{QB}{AQ} = \sqrt{f(-1/2)} = \sqrt{\dfrac{9}{5}} = \dfrac{3\sqrt{5}}{5} \\
+    \min \dfrac{QB}{AQ} = \sqrt{f(1/2)} = \sqrt{\dfrac{5}{9}} = \dfrac{\sqrt{5}}{3}
+  \end{cases}
+\end{align}
+である．
 
 \end{document}

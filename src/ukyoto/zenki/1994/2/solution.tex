@@ -1,59 +1,74 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $n \in \mathbb{Z}_{\ge 0}$ である
+与えられた数列
+\begin{align}
+  \begin{cases}
+    a_{n+2}=a_{n+1}+a_n, a_0=1,a_1=2 \\
+    b_n \equiv a_n \pmod 3 \quad (b_n=0,1,2) \\
+    c_n=b_0+\cdots+b_n
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．以下$n \in \mathbb{Z}_{\ge 0}$ とする．
+
 \paragraph{(1)}
 
-漸化式から，法を3として $a_{n+2} \equiv a_{n+1} + a_n$ だから，
+\cref{eq:1}の漸化式から法を3として $a_{n+2} \equiv a_{n+1} + a_n$ だから，
 \begin{align}
   &b_0 = 1,\ b_1 = 2,\ b_2 = 0,\ b_3 = 2,\ b_4 = 2,\ b_5 = 1,\ b_6 = 0, \\
   &b_7 = 1,\ b_8 = 1,\ b_9 = 2
 \end{align}
+である．
 
 \paragraph{(2)}
 
-$C_n$ の定義から
+$c_n$ の定義から
 \begin{align}
-  C_{n+8} - C_n = \underbrace{b_{n+1} + b_{n+2} + b_{n+3} + b_{n+4} + b_{n+5} + b_{n+6} + b_{n+7} + b_{n+8}}_{A}
+  c_{n+8} - c_n = \sum_{k=1}^{8}b_{n+k} \label{eq:2}
 \end{align}
-又，(1)から $\{b_n\}$ は $\{1, 2, 0, 2, 2, 1, 0, 1\}$ の周期数列だから，
-$A$ の中にはこれらの要素が1つずつ入っているので，
+である．
+(1)から $\{b_n\}$ は $\{1, 2, 0, 2, 2, 1, 0, 1\}$ の周期数列だから，
+\cref{eq:2}の右辺には$n$にかかわらずこれらの要素が1つずつ入っているので，
 \begin{align}
-  A = \sum_{k=1}^8 b_k = C_8
+  \sum_{k=1}^{8}b_{n+k} = \sum_{k=0}^7 b_k = c_7
 \end{align}
-だから
+だから\cref{eq:2}に代入して
 \begin{align}
-  C_{n+8} = C_n + C_8 \quad \square
+  c_{n+8} = c_n + c_7 \quad \square \label{eq:3}
 \end{align}
+である．
 
 \paragraph{(3)}
 
-$C_8 = 9$ より $C_{n+8} = C_n + 9$ である．以下，題意を帰納的に示す．
-
-$1^\circ\ n=0\sim 7$ の時，
+(1)より$c_7 = 9$ だから\cref{eq:3}は
 \begin{align}
-  1 \le C_0 = 1 \le \dfrac{3}{2} && 5 \le C_4 = 7 \le 9 \\
-  2 \le C_1 = 3 \le \dfrac{9}{2} && 6 \le C_5 = 8 \le \dfrac{21}{2} \\
-  3 \le C_2 = 3 \le 6 && 7 \le C_6 = 8 \le 12 \\
-  4 \le C_3 = 5 \le \dfrac{15}{2} && 8 \le C_7 = 9 \le 15
+  c_{n+8} = c_n + 9 \label{eq:4}
 \end{align}
-より成立．
-
-$2^\circ\ n=8k, 8k+1, \cdots, 8k+7$ ($k \in \mathbb{Z}_{\ge 0}$) での成立を仮定
-
-漸化式と仮定より
+である．以下，題意の不等式
 \begin{align}
-  n+1+9 \le C_{n+8} \le \dfrac{3}{2}(n+1)+9
+  n+1 \le c_n \le \dfrac{3}{2}(n+1) \label{eq:5}
 \end{align}
-\begin{align}
-  n+9 \le C_{n+8} \le \dfrac{3}{2}(n+7) \le \dfrac{3}{2}(n+9)
-\end{align}
-より $n$ で成立するなら $n+8$ でも成立するから，$n=8(k+1)\sim 8(k+1)+7$ でも成立
+を数学的帰納法で示す．
 
-以上から示された \quad $\square$
+まず$n=0\sim 7$ の時，具体的に$c_0$から$c_7$を計算すると
+\begin{align}
+  1 \le c_0 = 1 \le \dfrac{3}{2}  && 5 \le c_4 = 7 \le 9 \\
+  2 \le c_1 = 3 \le \dfrac{9}{2}  && 6 \le c_5 = 8 \le \dfrac{21}{2} \\
+  3 \le c_2 = 3 \le 6             && 7 \le c_6 = 8 \le 12 \\
+  4 \le c_3 = 5 \le \dfrac{15}{2} && 8 \le c_7 = 9 \le 15
+\end{align}
+より\cref{eq:5}は成立する．
+
+そこで$n=8k, 8k+1, \cdots, 8k+7$ ($k \in \mathbb{Z}_{\ge 0}$) での成立を仮定すると，\cref{eq:5}の両辺に$9$を足して\cref{eq:4}より
+\begin{align}
+  & n+1+9 \le c_{n+8} \le \dfrac{3}{2}(n+1)+9 \\
+  \therefore
+  & n+9 \le c_{n+8} \le \dfrac{3}{2}(n+7) \le \dfrac{3}{2}(n+9)
+\end{align}
+より $n$ で成立するなら $n+8$ でも成立するから，$n=8(k+1)\sim 8(k+1)+7$ でも成立する．
+
+以上から数学的帰納法により\cref{eq:5}は示された． \quad $\square$
 
 \end{document}

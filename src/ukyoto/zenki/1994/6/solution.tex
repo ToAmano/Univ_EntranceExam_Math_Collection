@@ -1,39 +1,162 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $P(\theta) = (x(\theta), y(\theta))$ とおく．又，以下 $\sin\theta = S, \cos\theta = C$ とする
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-3.6,0) -- (2.3,0) node[right, text=black] {$x$};
+    \draw[->, thick, gray!80!black] (0,-3.2) -- (0,3.4) node[above, text=black] {$y$};
+    \node[below left=2pt] at (0,0) {$O$};
+
+    % 全体曲線
+    \draw[line width=1.4pt, blue!85!black, domain=0:360, samples=180, smooth]
+    plot ({2*cos(\x) - cos(2*\x)}, {2*sin(\x) - sin(2*\x)});
+
+    % 部分弧 (0 <= theta <= theta_n, theta_n = 50度)
+    \draw[line width=2.4pt, red!85!black, domain=0:50, samples=40, smooth]
+    plot ({2*cos(\x) - cos(2*\x)}, {2*sin(\x) - sin(2*\x)});
+
+    % P(0)
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (1,0) {};
+    \node[above left=1pt, font=\footnotesize] at (1,0) {$P(0) = (1,0)$};
+
+    % P(theta_n)
+    \pgfmathsetmacro{\px}{2*cos(50) - cos(100)}
+    \pgfmathsetmacro{\py}{2*sin(50) - sin(100)}
+    \coordinate (Pn) at (\px,\py);
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (Pn) {};
+    \node[above right=3pt, red!85!black, font=\footnotesize] at (Pn) {$P(\theta_n)$};
+
+    % 弧の長さの説明（弧の下方から引き出し線）
+    \draw[<-, thick, red!85!black] (1.3, 0.25) to[out=-40, in=180] ++(0.6, -0.4)
+    node[right, font=\footnotesize, red!85!black] {長さ $\frac{L}{n}$};
+
+    % 全長 L
+    \node[blue!85!black, font=\footnotesize] at (-2.2, 2.0) {全長 $L = 16$};
+  \end{tikzpicture}
+  \caption{曲線 $C$ の概要と部分弧（$0 \leqq \theta \leqq \theta_n$）}
+  \label{fig:cardioid_overview}
+\end{figure}
+
+$P(\theta) = (x(\theta), y(\theta))$ とおき，題意の軌跡
+\begin{align}
+  \begin{cases}
+    x(\theta) = 2\cos\theta -\cos 2\theta \\
+    y(\theta) = 2\sin\theta -\sin 2\theta
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．
+
 \paragraph{(1)}
 
-$x'(\theta) = -2S + 2\sin 2\theta, \ y'(\theta) = 2C - 2\cos 2\theta$ より
+\cref{eq:1}の両辺を$\theta$で微分すると
+\begin{align}
+  \begin{cases}
+    x'(\theta) = -2\sin\theta + 2\sin 2\theta \\
+    y'(\theta) = 2\cos\theta - 2\cos 2\theta
+  \end{cases}
+\end{align}
+だから，増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$\theta \in [0, \pi]$ における増減表}
+  \label{tab:cardioid_variation}
+  \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    $\theta$ & $0$ & $\cdots$ & $\dfrac{\pi}{3}$ & $\cdots$ & $\dfrac{2\pi}{3}$ & $\cdots$ & $\pi$ \\
+    \hline
+    $x'$ & $0$ & $+$ & $0$ & $-$ & $-$ & $-$ & $0$ \\
+    \hline
+    $x$ & $1$ & $\nearrow$ & $\dfrac{3}{2}$ & $\nwarrow$ & $-\dfrac{1}{2}$ & $\swarrow$ & $-3$ \\
+    \hline
+    $y'$ & $0$ & $+$ & $+$ & $+$ & $0$ & $-$ & $-$ \\
+    \hline
+    $y$ & $0$ & $\nearrow$ & $\dfrac{\sqrt{3}}{2}$ & $\nearrow$ & $\dfrac{3\sqrt{3}}{2}$ & $\searrow$ & $0$ \\
+    \hline
+    $(x,y)$ & & $\nearrow$ & & $\nwarrow$ & & $\swarrow$ & \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-3.8,0) -- (2.4,0) node[right, text=black] {$x$};
+    \draw[->, thick, gray!80!black] (0,-3.2) -- (0,4.0) node[above, text=black] {$y$};
+    \node[below left=2pt] at (0,0) {$O$};
+
+    % 曲線（上半部は実線、下半部は破線）
+    \draw[line width=1.4pt, blue!85!black, domain=0:180, samples=120, smooth]
+    plot ({2*cos(\x) - cos(2*\x)}, {2*sin(\x) - sin(2*\x)});
+    \draw[line width=1.2pt, blue!85!black, dashed, domain=180:360, samples=120, smooth]
+    plot ({2*cos(\x) - cos(2*\x)}, {2*sin(\x) - sin(2*\x)});
+
+    % 進行方向矢印
+    \draw[->, >=stealth, teal!70!black, line width=1.1pt] (1.35, 0.3) -- ++(0.12, 0.2);
+    \draw[->, >=stealth, teal!70!black, line width=1.1pt] (0.8, 1.8) -- ++(-0.2, 0.15);
+    \draw[->, >=stealth, teal!70!black, line width=1.1pt] (-2.0, 1.6) -- ++(-0.18, -0.16);
+
+    % 特異点・主要点
+    % theta=0, 2pi
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (1,0) {};
+    \node[above=3pt, font=\footnotesize] at (1,0) {$(1,0)$};
+    \node[below right=2pt, font=\scriptsize, gray!75!black] at (1,0) {$(\theta=0, 2\pi)$};
+
+    % theta=pi/3
+    \coordinate (P1) at (1.5, {sqrt(3)/2});
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (P1) {};
+    \node[right=3pt, align=left, font=\footnotesize] at (P1) {$\left(\frac{3}{2},\frac{\sqrt{3}}{2}\right)$ \\ {\scriptsize \textcolor{gray!75!black}{$(\theta=\frac{\pi}{3})$}}};
+
+    % theta=2pi/3
+    \coordinate (P2) at (-0.5, {3*sqrt(3)/2});
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (P2) {};
+    \node[above left=2pt, align=center, font=\footnotesize] at (P2) {$\left(-\frac{1}{2},\frac{3\sqrt{3}}{2}\right)$ \\ {\scriptsize \textcolor{gray!75!black}{$(\theta=\frac{2\pi}{3})$}}};
+
+    % theta=pi
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (-3,0) {};
+    \node[above left=2pt, align=right, font=\footnotesize] at (-3,0) {$(-3,0)$ \\ {\scriptsize \textcolor{gray!75!black}{$(\theta=\pi)$}}};
+
+    % 対称性の説明
+    \node[font=\footnotesize, gray!75!black] at (-1.5, -1.2) {$x$ 軸に関して対称};
+  \end{tikzpicture}
+  \caption{点 $P(\theta)$ の描く軌跡（破線部は $\pi < \theta \leqq 2\pi$）}
+  \label{fig:cardioid_trajectory}
+\end{figure}
+
+従って曲線の全長は
 \begin{align}
   L &= \int_0^{2\pi} \sqrt{\{x'(\theta)\}^2 + \{y'(\theta)\}^2} d\theta \\
   &= 2 \int_0^{2\pi} \sqrt{2 - 2\cos\theta} \ d\theta \\
   &= 2 \int_0^{2\pi} 2 \left| \sin\dfrac{\theta}{2} \right| d\theta \\
-  &= 4 \int_0^\pi |\sin t| \cdot 2\ dt \quad \left(t = \dfrac{\theta}{2}\right) \\
+  &= 4 \int_0^\pi |\sin t| \cdot 2\ dt \quad \left(t = \dfrac{\theta}{2}\right) \label{eq:2}\\
   &= 8 \big[ -\cos t \big]_0^\pi = 16
 \end{align}
+である．
 
 \paragraph{(2)}
 
-(1)から
+\cref{eq:2}から，題意の条件は
 \begin{align}
-  8 \int_0^{\frac{1}{2}\theta_n} |\sin t| dt = \dfrac{16}{n}
+  8 \int_0^{\frac{1}{2}\theta_n} |\sin t| dt = \dfrac{L}{n} = \dfrac{16}{n}
 \end{align}
-$0 < \dfrac{1}{2}\theta_n < \pi$ から
+である．$0 < \dfrac{1}{2}\theta_n < \pi$ から絶対値を外して
 \begin{align}
-  8 \left( 1 - \cos\dfrac{\theta_n}{2} \right) = \dfrac{16}{n}
+  & 8 \left( 1 - \cos\dfrac{\theta_n}{2} \right) = \dfrac{16}{n} \\
+  \therefore
+  & n = \dfrac{2}{1 - \cos\dfrac{\theta_n}{2}} = \dfrac{1}{\sin^2\dfrac{\theta_n}{4}}
 \end{align}
+である． $\sin\dfrac{\theta_n}{4} > 0$ から両辺平方根をとって$\theta_n$をかけると
 \begin{align}
-  \therefore n = \dfrac{2}{1 - \cos\dfrac{\theta_n}{2}} = \dfrac{1}{\sin^2\dfrac{\theta_n}{4}}
+  \sqrt{n}\ \theta_n
+  = \dfrac{\theta_n}{\sin\dfrac{\theta_n}{4}}
+  = \dfrac{\dfrac{1}{4}\theta_n}{\sin\dfrac{1}{4}\theta_n} \cdot 4
+  \xrightarrow{n\to\infty} 4
 \end{align}
-だから $\sin\dfrac{\theta_n}{4} > 0$ から
-\begin{align}
-  \sqrt{n}\ \theta_n = \dfrac{\theta_n}{\sin\dfrac{\theta_n}{4}} = \dfrac{\dfrac{1}{4}\theta_n}{\sin\dfrac{1}{4}\theta_n} \cdot 4 \to 4
-\end{align}
-$(n \to \infty \text{ で } \theta_n \to 0)$
+である．ただし，$n \to \infty$ で $\theta_n \to 0$であることを用いた．
 
 \end{document}

@@ -1,11 +1,9 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $\dfrac{1}{3}$ の確率でAとBが，$\dfrac{2}{3}$ の確率でAとCが札を交換する
+題意より$\dfrac{1}{3}$ の確率でAとBが，$\dfrac{2}{3}$ の確率でAとCが札を交換する．
 
 \paragraph{(1)}
 
@@ -43,45 +41,47 @@
   \caption{赤い札を持つ人の，1回の交換による状態遷移}
 \end{figure}
 
-上図から
+上の遷移図から求める漸化式は
 \begin{align}
-  a_{n+1} &= \dfrac{1}{3} b_n + \dfrac{2}{3} c_n \\
-  b_{n+1} &= \dfrac{1}{3} a_n + \dfrac{2}{3} b_n \\
-  c_{n+1} &= \dfrac{2}{3} a_n + \dfrac{1}{3} c_n
+  \begin{cases}
+    a_{n+1} = \dfrac{1}{3} b_n + \dfrac{2}{3} c_n \\
+    b_{n+1} = \dfrac{1}{3} a_n + \dfrac{2}{3} b_n \\
+    c_{n+1} = \dfrac{2}{3} a_n + \dfrac{1}{3} c_n
+  \end{cases} \label{eq:1}
 \end{align}
+である．
 
 \paragraph{(2)}
 
-$a_n + b_n + c_n = 1$ から $c_n$ を消去し(1)に代入して
+$a_n + b_n + c_n = 1$ から $c_n$ を消去して\cref{eq:1}に代入して
 \begin{align}
-  a_{n+1} = \dfrac{1}{3}(-2a_n - b_n + 2) \tag{①}
+  \begin{cases}
+    a_{n+1} = \dfrac{1}{3}(-2a_n - b_n + 2) \\
+    b_{n+1} = \dfrac{1}{3}a_n + \dfrac{2}{3}b_n
+  \end{cases} \label{eq:2}
 \end{align}
+である．第一式から$b_n = -3a_{n+1} - 2a_n + 2$だから，これを第二式に代入して
 \begin{align}
-  b_{n+1} = \dfrac{1}{3}a_n + \dfrac{2}{3}b_n \tag{②}
+  & -3a_{n+2} - 2a_{n+1} + 2 = \dfrac{1}{3}a_n + \dfrac{2}{3}(-3a_{n+1} - 2a_n + 2) \\
+  & 9a_{n+2} = 3a_n + 2 \\
+  & a_{n+2} - \dfrac{1}{3} = \dfrac{1}{3} \left(a_n - \dfrac{1}{3}\right)
 \end{align}
-①から $b_n = -3a_{n+1} - 2a_n + 2$ を②に代入
-\begin{align}
-  -3a_{n+2} - 2a_{n+1} + 2 = \dfrac{1}{3}a_n + \dfrac{2}{3}(-3a_{n+1} - 2a_n + 2)
-\end{align}
-\begin{align}
-  9a_{n+2} = 3a_n + 2
-\end{align}
-\begin{align}
-  a_{n+2} - \dfrac{1}{3} = \dfrac{1}{3} \left(a_n - \dfrac{1}{3}\right)
-\end{align}
+である．
 
-これと $a_0 = 1, a_1 = 0$ から，等比数列の公式から
+これと $a_0 = 1, a_1 = 0$ から等比数列の公式より
 \begin{align}
-  a_{2k} = \left(\dfrac{1}{3}\right)^k \dfrac{2}{3} + \dfrac{1}{3}
-\end{align}
-\begin{align}
-  a_{2k+1} = \left(\dfrac{1}{3}\right)^k \left(-\dfrac{1}{3}\right) + \dfrac{1}{3}
-\end{align}
-だから
-\begin{align}
-  a_n =
-  \begin{cases} \dfrac{1}{3}\left[2\left(\dfrac{1}{3}\right)^{\frac{n}{2}} + 1\right] & (n \in \text{even}) \\ \dfrac{1}{3}\left[-\left(\dfrac{1}{3}\right)^{\frac{n-1}{2}} + 1\right] & (n \in \text{odd})
+  \begin{cases}
+    a_{2k} = \left(\dfrac{1}{3}\right)^k \dfrac{2}{3} + \dfrac{1}{3} \\
+    a_{2k+1} = \left(\dfrac{1}{3}\right)^k \left(-\dfrac{1}{3}\right) + \dfrac{1}{3}
   \end{cases}
 \end{align}
+だから$k$を$n$で書き換えて
+\begin{align}
+  a_n =
+  \begin{cases}
+    \dfrac{1}{3}\left[2\left(\dfrac{1}{3}\right)^{\frac{n}{2}} + 1\right] & (n \in \text{even}) \\ \dfrac{1}{3}\left[-\left(\dfrac{1}{3}\right)^{\frac{n-1}{2}} + 1\right] & (n \in \text{odd})
+  \end{cases}
+\end{align}
+である．
 
 \end{document}

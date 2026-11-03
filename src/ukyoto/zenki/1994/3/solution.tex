@@ -1,95 +1,272 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} 正四面体の一辺の長さを1として良い．座標空間において，
+\begin{figure}[htbp]
+  \centering
+  \tdplotsetmaincoords{65}{120}
+  \begin{tikzpicture}[tdplot_main_coords, scale=4.2, >=stealth, every node/.style={font=\small}]
+    % 座標の定義
+    \coordinate (O) at (0, 0, 0);
+    \coordinate (A) at (0, 0, {sqrt(6)/3});
+    \coordinate (B) at ({sqrt(3)/3}, 0, 0);
+    \coordinate (C) at ({-sqrt(3)/6}, 0.5, 0);
+    \coordinate (D) at ({-sqrt(3)/6}, -0.5, 0);
+    \coordinate (H) at ({-sqrt(3)/6}, 0, 0);
+
+    % s = 0.25, t = 0.65
+    \coordinate (E) at ({0.25*sqrt(3)/3}, 0, {0.75*sqrt(6)/3});
+    \coordinate (F) at ({-0.65*sqrt(3)/6}, {0.65*0.5}, {0.35*sqrt(6)/3});
+    \coordinate (G) at ({-0.65*sqrt(3)/6}, {-0.65*0.5}, {0.35*sqrt(6)/3});
+    \coordinate (M) at ({-0.65*sqrt(3)/6}, 0, {0.35*sqrt(6)/3});
+
+    % 平面EFGとxy平面の交線上の点
+    \pgfmathsetmacro{\xN}{-0.478}
+    \pgfmathsetmacro{\yPC}{0.609}
+    \coordinate (N) at (\xN, 0, 0);
+    \coordinate (PC) at (\xN, \yPC, 0);
+    \coordinate (PD) at (\xN, -\yPC, 0);
+
+    % 1. 底面 BCD の淡い塗り
+    \fill[blue!10, opacity=0.4] (B) -- (C) -- (D) -- cycle;
+
+    % 2. 断面 EFG の塗り
+    \fill[teal!25, opacity=0.7] (E) -- (F) -- (G) -- cycle;
+
+    % 3. 平面EFGのxy平面への延長部分 (台形 FG-PD-PC)
+    \fill[teal!12, opacity=0.45] (F) -- (PC) -- (PD) -- (G) -- cycle;
+
+    % 4. 座標軸
+    \draw[->, thick, gray!75!black] (-0.8, 0, 0) -- (0.9, 0, 0) node[right, text=black] {$x$};
+    \draw[->, thick, gray!75!black] (0, -0.8, 0) -- (0, 0.9, 0) node[above right, text=black] {$y$};
+    \draw[->, thick, gray!75!black] (0, 0, -0.15) -- (0, 0, 1.15) node[above, text=black] {$z$};
+    \node[below left=1pt] at (O) {$O$};
+
+    % 5. 奥側の辺 (破線)
+    \draw[dashed, gray!60, thick] (C) -- (D);
+    \draw[dashed, gray!60, thick] (B) -- (D);
+    \draw[dashed, gray!60, thick] (A) -- (D);
+    \draw[dashed, gray!60, thick] (A) -- (H);
+    \draw[dashed, teal!65, thick] (E) -- (G);
+    \draw[dashed, teal!65, thick] (F) -- (G);
+    \draw[dashed, teal!65, thick] (G) -- (PD);
+
+    % 延長交線 PC--PD (xy平面上)
+    \draw[line width=1.1pt, orange!85!black, dashed] (PC) -- (PD);
+
+    % 6. 手前側の辺 (実線)
+    \draw[line width=1.3pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+    \draw[line width=1.3pt, teal!85!black] (E) -- (F);
+    \draw[line width=1.1pt, teal!70!black] (F) -- (PC);
+    \draw[line width=1.1pt, orange!85!black] (E) -- (N);
+    \draw[dashed, gray!60] (C) -- (PC);
+    \draw[dashed, gray!60] (D) -- (PD);
+
+    % 7. 各点
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (A) {};
+    \node[above right=1pt] at (A) {$A$};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (B) {};
+    \node[below right=2pt] at (B) {$B$};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (C) {};
+    \node[below left=2pt] at (C) {$C$};
+    \node[circle, fill=gray!70!black, inner sep=1.2pt] at (D) {};
+    \node[above right=1pt] at (D) {$D$};
+
+    \node[circle, fill=teal!85!black, inner sep=1.4pt] at (E) {};
+    \node[above left=1pt] at (E) {$E$};
+    \node[circle, fill=teal!85!black, inner sep=1.4pt] at (F) {};
+    \node[above right=1pt] at (F) {$F$};
+    \node[circle, fill=teal!85!black, inner sep=1.4pt] at (G) {};
+    \node[left=2pt] at (G) {$G$};
+
+    \node[circle, fill=orange!85!black, inner sep=1.3pt] at (N) {};
+    \node[below=2pt, orange!85!black] at (N) {$N$};
+
+    \node[circle, fill=orange!85!black, inner sep=1.2pt] at (PC) {};
+    \node[above right=1pt, font=\scriptsize, orange!85!black] at (PC) {$P_C$};
+    \node[circle, fill=orange!85!black, inner sep=1.2pt] at (PD) {};
+    \node[below right=1pt, font=\scriptsize, orange!85!black] at (PD) {$P_D$};
+  \end{tikzpicture}
+  \caption{正四面体 $ABCD$ と平面 $EFG$ の $xy$ 平面との交わり}
+  \label{fig:tetrahedron_3d}
+\end{figure}
+
+正四面体の一辺の長さを1として良い．座標空間において，
 \begin{align}
-  A\left(0, 0, \dfrac{\sqrt{6}}{3}\right),\ B\left(\dfrac{\sqrt{3}}{3}, 0, 0\right)
-\end{align}
-\begin{align}
-  C\left(-\dfrac{\sqrt{3}}{6}, \dfrac{1}{2}, 0\right),\ D\left(-\dfrac{\sqrt{3}}{6}, -\dfrac{1}{2}, 0\right)
+  & A\left(0, 0, \dfrac{\sqrt{6}}{3}\right),\ B\left(\dfrac{\sqrt{3}}{3}, 0, 0\right) \\
+  & C\left(-\dfrac{\sqrt{3}}{6}, \dfrac{1}{2}, 0\right),\ D\left(-\dfrac{\sqrt{3}}{6}, -\dfrac{1}{2}, 0\right)
 \end{align}
 とおける．すると $B, C, D$ を通る円は $z=0, x^2+y^2 = \dfrac{1}{3}$ である．
 
 \begin{figure}[htbp]
   \centering
-  \begin{minipage}{0.47\linewidth}
-    \centering
-    \begin{tikzpicture}[scale=1.1]
-      % s=1/4，t=13/20 の代表図。
-      \coordinate (A) at (0,3);
-      \coordinate (B) at (-2,0);
-      \coordinate (C) at (1.3,-0.4);
-      \coordinate (D) at (2.6,1.2);
-      \coordinate (E) at (-0.5,2.25);
-      \coordinate (F) at (0.845,0.79);
-      \coordinate (G) at (1.69,1.83);
-      \draw[dashed,gray!65] (B)--(D);
-      \fill[blue!7] (A)--(B)--(C)--cycle;
-      \fill[teal!18] (E)--(F)--(G)--cycle;
-      \draw[blue!75!black,very thick] (A)--(B)--(C)--(D)--(A)--(C);
-      \draw[teal!70!black,very thick] (E)--(F)--(G)--cycle;
-      \node[above] at (A) {$A$};
-      \node[left] at (B) {$B$};
-      \node[below] at (C) {$C$};
-      \node[right] at (D) {$D$};
-      \node[left] at (E) {$E$};
-      \node[below right] at (F) {$F$};
-      \node[above right] at (G) {$G$};
-    \end{tikzpicture}
-  \end{minipage}\hfill
-  \begin{minipage}{0.49\linewidth}
-    \centering
-    \begin{tikzpicture}[scale=1.15,>=stealth]
-      % 同じ s,t を xz 平面に射影した断面。
-      \coordinate (A) at (0,2.041);
-      \coordinate (B) at (1.443,0);
-      \coordinate (H) at (-0.722,0);
-      \coordinate (E) at (0.361,1.531);
-      \coordinate (M) at (-0.469,0.714);
-      \coordinate (N) at (-1.196,0);
-      \draw[->,gray!75] (-1.55,0)--(1.8,0) node[right] {$x$};
-      \draw[->,gray!75] (0,-0.2)--(0,2.4) node[above] {$z$};
-      \draw[blue!75!black,very thick] (A)--(H)--(B)--cycle;
-      \draw[teal!70!black,very thick] (N)--(M)--(E);
-      \node[circle, fill=teal!70!black, inner sep=1.4pt] at (E) {}; \node[circle, fill=teal!70!black, inner sep=1.4pt] at (M) {}; \node[circle, fill=teal!70!black, inner sep=1.4pt] at (N) {};
-      \node[above] at (A) {$A$};
-      \node[below right] at (B) {$B$};
-      \node[below right] at (H) {$H$};
-      \node[above right] at (E) {$E$};
-      \node[above left] at (M) {$M$};
-      \node[below] at (N) {$N$};
-    \end{tikzpicture}
-  \end{minipage}
-  \caption{正四面体と切断面，および $xz$ 平面で見た点 $E,M,N,H$}
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+    % 座標
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (0, {sqrt(6)/3*2.5});
+    \coordinate (B) at ({sqrt(3)/3*2.5}, 0);
+    \coordinate (H) at ({-sqrt(3)/6*2.5}, 0);
+
+    % s = 0.25, t = 0.65
+    \coordinate (E) at ($(A)!0.25!(B)$);
+    \coordinate (M) at ($(A)!0.65!(H)$);
+
+    % 直線EMとx軸(BH)の交点N
+    \coordinate (N) at ($(E)!1.875!(M)$);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] ($(N)-(0.5,0)$) -- ($(B)+(0.5,0)$) node[right, text=black] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.3) -- ($(A)+(0,0.6)$) node[above, text=black] {$z$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 三角形 ABH (切断面)
+    \fill[blue!8] (A) -- (H) -- (B) -- cycle;
+    \draw[line width=1.3pt, blue!85!black] (A) -- (H) -- (B) -- cycle;
+
+    % 直線 NEM (切断線の延長)
+    \draw[line width=1.3pt, teal!85!black] (E) -- (M);
+    \draw[line width=1.1pt, orange!85!black] (M) -- (N);
+
+    % 点のプロット
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (A) {};
+    \node[above right=1pt] at (A) {$A$};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (B) {};
+    \node[below=2pt] at (B) {$B$};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (H) {};
+    \node[below=2pt] at (H) {$H$};
+
+    \node[circle, fill=teal!85!black, inner sep=1.4pt] at (E) {};
+    \node[above right=2pt] at (E) {$E$};
+    \node[circle, fill=teal!85!black, inner sep=1.4pt] at (M) {};
+    \node[above left=2pt] at (M) {$M$};
+
+    \node[circle, fill=orange!85!black, inner sep=1.5pt] at (N) {};
+    \node[below=2pt, orange!85!black] at (N) {$N$};
+
+    % --- 長さ・比率の表示 ---
+    % AB上の分割: AE = s, EB = 1-s
+    \draw[<->, >=stealth, gray!70!black] ($(A)+(0.12,0.08)$) -- ($(E)+(0.12,0.08)$)
+    node[midway, above right=-1pt, font=\footnotesize] {$s$};
+    \draw[<->, >=stealth, gray!70!black] ($(E)+(0.12,0.08)$) -- ($(B)+(0.12,0.08)$)
+    node[midway, above right=-1pt, font=\footnotesize] {$1-s$};
+
+    % AH上の分割: AM : MH = t : (1-t)
+    \draw[<->, >=stealth, gray!70!black] ($(A)+(-0.12,0.08)$) -- ($(M)+(-0.12,0.08)$)
+    node[midway, above left=-1pt, font=\footnotesize] {$t$};
+    \draw[<->, >=stealth, gray!70!black] ($(M)+(-0.12,0.08)$) -- ($(H)+(-0.12,0.08)$)
+    node[midway, above left=-1pt, font=\footnotesize] {$1-t$};
+
+    % x軸上の長さ: NH = p
+    \draw[<->, >=stealth, orange!85!black, thick] ($(N)-(0,0.22)$) -- ($(H)-(0,0.22)$)
+    node[midway, below, font=\footnotesize] {$p$};
+
+    % x軸上の長さ: HB = sqrt(3)/2
+    \draw[<->, >=stealth, blue!75!black] ($(H)-(0,0.48)$) -- ($(B)-(0,0.48)$)
+    node[midway, below, font=\footnotesize] {$\frac{\sqrt{3}}{2}$};
+
+    % 補助線
+    \draw[dashed, gray!50] (H) -- ($(H)-(0,0.52)$);
+    \draw[dashed, gray!50] (B) -- ($(B)-(0,0.52)$);
+    \draw[dashed, gray!50] (N) -- ($(N)-(0,0.28)$);
+  \end{tikzpicture}
+  \caption{正四面体の $xz$ 平面での切断面と各部の長さ}
+  \label{fig:tetrahedron_xz}
 \end{figure}
 
-$xz$平面で立体を切断すると左下図で線分$FG$の中点を$M$とし，
-$EM$と$xy$平面の交点を$N$，$AM$と$x$軸の交点を$H$とすると，メネラウスの定理から
+$xz$平面で立体を切断すると上図のようになる．
+線分$FG$の中点を$M$とし，$EM$と$xy$平面の交点を$N$，$AM$と$x$軸の交点を$H$とすると，メネラウスの定理から
 \begin{align}
-  \dfrac{1-s}{s} \cdot \dfrac{NH}{BN} \cdot \dfrac{t}{1-t} = 1
+  & \dfrac{|EA|}{|BE|}\dfrac{|MN|}{|AM|}\dfrac{|NB|}{|HN|} = 1 \\
+  & \dfrac{s}{1-s} \cdot \dfrac{1-t}{t}\cdot \dfrac{|NB|}{|HN|}  = 1 \\
+  \therefore
+  & |BN| = \dfrac{1-s}{s} \dfrac{t}{1-t} |NH|
 \end{align}
+である．$|BN|=|BH|+|HN|=\dfrac{\sqrt{3}}{2}+|NH|$を代入して
 \begin{align}
-  BN = \dfrac{1-s}{s} \dfrac{t}{1-t} NH
+  & \left(\dfrac{\sqrt{3}}{2} + |NH|\right) = \dfrac{1-s}{s} \dfrac{t}{1-t} |NH| \\
+  \therefore
+  & |NH| = \dfrac{\dfrac{\sqrt{3}}{2}}{\dfrac{1-s}{s}\dfrac{t}{1-t} - 1} \quad (>0, t \neq s) \label{eq:1}
 \end{align}
-だから $NH = p$ として，
+である．
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=3.8, >=stealth, every node/.style={font=\small}]
+    % 座標
+    \coordinate (O) at (0,0);
+    \coordinate (B) at ({sqrt(3)/3}, 0);
+    \coordinate (C) at ({-sqrt(3)/6}, 0.5);
+    \coordinate (D) at ({-sqrt(3)/6}, -0.5);
+    \coordinate (H) at ({-sqrt(3)/6}, 0);
+
+    % N = (-0.478, 0)
+    \coordinate (N) at (-0.478, 0);
+    \coordinate (PC) at (-0.478, 0.609);
+    \coordinate (PD) at (-0.478, -0.609);
+
+    % 1. 座標軸
+    \draw[->, thick, gray!80!black] (-0.85, 0) -- (0.85, 0) node[right, text=black] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.85) -- (0, 0.85) node[above, text=black] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 2. 外接円 x^2+y^2 = 1/3, 半径 R = sqrt(3)/3 ≈ 0.577
+    \draw[line width=1.1pt, gray!60] (O) circle ({sqrt(3)/3});
+    \node[gray!70!black, font=\scriptsize] at (0.35, 0.55) {$x^2+y^2=\frac{1}{3}$};
+
+    % 3. 三角形 BCD
+    \fill[blue!8] (B) -- (C) -- (D) -- cycle;
+    \draw[line width=1.3pt, blue!85!black] (B) -- (C) -- (D) -- cycle;
+
+    % 4. 辺 BC, BD の延長線 (EF, EGの延長が交わる線)
+    \draw[dashed, gray!60] (C) -- (PC);
+    \draw[dashed, gray!60] (D) -- (PD);
+
+    % 5. 平面EFGとxy平面の交線 (x = x_N, PC--PD)
+    \draw[line width=1.4pt, orange!85!black] (PC) -- (PD);
+    \node[above=2pt, font=\scriptsize, orange!85!black] at (PC) {$P_C$};
+    \node[below=2pt, font=\scriptsize, orange!85!black] at (PD) {$P_D$};
+
+    % 6. 各点
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (B) {};
+    \node[below right=2pt] at (B) {$B\left(\frac{\sqrt{3}}{3},0\right)$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (C) {};
+    \node[above left=2pt] at (C) {$C$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (D) {};
+    \node[below left=2pt] at (D) {$D$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (H) {};
+    \node[below right=2pt, font=\footnotesize] at (H) {$H$};
+
+    \node[circle, fill=orange!85!black, inner sep=1.5pt] at (N) {};
+    \node[below left=2pt, orange!85!black] at (N) {$N$};
+
+    % 7. 円と交線の交点強調
+    \pgfmathsetmacro{\yCirc}{sqrt(1/3 - 0.478*0.478)}
+    \coordinate (K1) at (-0.478, \yCirc);
+    \coordinate (K2) at (-0.478, -\yCirc);
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (K1) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (K2) {};
+
+    % 説明 (引き出し線で左側に配置)
+    \draw[<-, thick, orange!85!black] (-0.478, 0.4) to[out=160, in=0] ++(-0.15, 0.15)
+    node[left, font=\footnotesize, orange!85!black, align=right] {平面 $EFG$ と\\$xy$ 平面の交線};
+  \end{tikzpicture}
+  \caption{$xy$ 平面での断面（$\triangle BCD$ と外接円，交線）}
+  \label{fig:tetrahedron_xy}
+\end{figure}
+
+さて，$N\left(-\dfrac{\sqrt{3}}{6} - |NH|, 0, 0\right)$ が題意の円の内側にあれば平面$EFG$と題意の円は交点を持つ．この条件は
 \begin{align}
-  \left(\dfrac{\sqrt{3}}{2} + p\right) = \dfrac{1-s}{s} \dfrac{t}{1-t} p
+  & |ON| \le \dfrac{1}{\sqrt{3}} \\
+  & -\dfrac{\sqrt{3}}{6} - |NH| \ge -\dfrac{\sqrt{3}}{3} \\
+  & -\dfrac{\sqrt{3}}{6} - \dfrac{\dfrac{\sqrt{3}}{2}}{\dfrac{1-s}{s}\dfrac{t}{1-t} - 1} \ge -\dfrac{\sqrt{3}}{3} \\
+  & \dfrac{3}{\dfrac{1-s}{s}\dfrac{t}{1-t} - 1} \le 1 \\
+  & 4s(1-t) \le (1-s)t \quad \left(\because \text{\cref{eq:1}}\right)
 \end{align}
-\begin{align}
-  \therefore p = \dfrac{\dfrac{\sqrt{3}}{2}}{\dfrac{1-s}{s}\dfrac{t}{1-t} - 1} \quad (>0)
-\end{align}
-だから，$N\left(-\dfrac{\sqrt{3}}{6} - p, 0, 0\right)$ である．図形の対称性から，条件は
-\begin{align}
-  -\dfrac{\sqrt{3}}{6} - p \ge -\dfrac{\sqrt{3}}{3} \quad (\because ON \le \text{円の半径})
-\end{align}
-\begin{align}
-  \Leftrightarrow 4s(1-t) \le (1-s)t \quad \left(\because p>0 \text{から} \dfrac{1-s}{s}\dfrac{t}{1-t} > 1 \Leftrightarrow t > s\right)
-\end{align}
-これと $0 < t, s < 1$ を図示して，下図（境界は $t = \dfrac{4s}{1+3s}$ のみ含む）
+である．これと $0 < t, s < 1$ を図示して，下図（境界は $t = \dfrac{4s}{1+3s}$ のみ含む）である．
 
 \begin{figure}[H]
   \centering
