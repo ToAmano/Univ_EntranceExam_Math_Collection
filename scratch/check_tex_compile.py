@@ -9,22 +9,23 @@ import subprocess
 from pathlib import Path
 from typing import List, Optional, Union
 
-TARGET_PATTERN = re.compile(r"^src/.+/(solution|problem)\.tex$")
+TARGET_PATTERN = re.compile(r"(?:^|/)src/.+/(solution|problem)\.tex$")
 
 
 def is_target_tex_file(path: Union[str, Path]) -> bool:
     """Return True if path matches src/**/solution.tex or src/**/problem.tex."""
-    normalized = str(path).replace("\\", "/").lstrip("./")
-    return bool(TARGET_PATTERN.match(normalized))
+    normalized = str(path).replace("\\", "/")
+    return bool(TARGET_PATTERN.search(normalized))
 
 
-def filter_target_files(file_paths: List[str], repo_root: Optional[Path] = None) -> List[Path]:
-    """Filter list of string paths to existing target TeX files."""
+def filter_target_files(file_paths: List[Union[str, Path]], repo_root: Optional[Path] = None) -> List[Path]:
+    """Filter list of paths to existing target TeX files."""
     root = (repo_root or Path.cwd()).resolve()
     valid_targets: List[Path] = []
     for p in file_paths:
-        if is_target_tex_file(p):
-            full_path = (root / p).resolve()
+        p_obj = Path(p)
+        full_path = p_obj.resolve() if p_obj.is_absolute() else (root / p).resolve()
+        if is_target_tex_file(full_path):
             if full_path.is_file():
                 valid_targets.append(full_path)
     return list(dict.fromkeys(valid_targets))
@@ -56,6 +57,7 @@ def get_working_tree_changed_files(repo_root: Optional[Path] = None) -> List[str
                 filename = line[3:].strip()
                 if " -> " in filename:
                     filename = filename.split(" -> ")[1].strip()
+                filename = filename.strip('"')
                 files.append(filename)
     return files
 
