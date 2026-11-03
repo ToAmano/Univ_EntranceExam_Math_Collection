@@ -1,71 +1,110 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
+
+与えられた数列
+\begin{align}
+  \begin{cases}
+    a_{n+1}=|2c_n-a_n-2b_n| \\
+    b_{n+1}=|2c_n-2a_n-b_n| \\
+    c_{n+1}=3c_n-2a_n-2b_n \\
+    a_1^2+b_1^2 = c_1^2, a_1,b_1,c_1>0
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．
+
 \paragraph{(1)}
 
-$n=1$では成立しているので，$n=k \in \mathbb{N}$での成立を仮定すると，
+題意を数学的帰納法で示す．
+$n=1$では成立しているので，$n=k \in \mathbb{N}$での成立を仮定する．
+$a_{k+1}^2 + b_{k+1}^2$を\cref{eq:1}を使って変形すると
 \begin{align}
-  a_{k+1}^2 + b_{k+1}^2 &= 4a_k^2 + 4b_k^2 + 9c_k^2 - 2(4a_kb_k - 6a_kc_k - 6b_kc_k) \quad (\because \text{カテイ}) \\
+  a_{k+1}^2 + b_{k+1}^2
+  &= (2c_k-a_k-2b_k)^2 + (2c_k-2a_k-b_k)^2 \\
+  &= 5a_k^2+5b_k^2+8c_k^2 + 2(4a_kb_k - 6a_kc_k - 6b_kc_k) \\
+  &= 4a_k^2+4b_k^2+9c_k^2 + 2(4a_kb_k - 6a_kc_k - 6b_kc_k) \quad (\because\text{仮定})\\
+  &= (3c_k-2a_k-2b_k)^2 \\
   &= c_{k+1}^2
 \end{align}
-より$n=k+1$でも成立．以上から示された．■
+より$n=k+1$でも成立する．以上から示された．
 
 \paragraph{(2)}
 
-まず，$c_n > 0$を帰納的に示す．$n=1$で成立するので，$n=k \in \mathbb{N}$での成立を仮定する．
+まず $c_n > 0$ を帰納的に示す．$n=1$では\cref{eq:1}より成立するので，$n=k \in \mathbb{N}$での成立を仮定する．$c_{k+1}$について
 \begin{align}
-  & c_{k+1} > 0 \Leftrightarrow 3c_k > 2(a_k+b_k) \Leftrightarrow 9c_k^2 > 4(a_k+b_k)^2 \quad (\because \text{両辺0以上}) \\
-  \Leftrightarrow\ & 9(a_k^2+b_k^2) > 4(a_k+b_k)^2 \Leftrightarrow 4(a_k-b_k)^2 + c_k^2 > 0
+  & c_{k+1} > 0
+  \Leftrightarrow
+  3c_k > 2(a_k+b_k)
+  \Leftrightarrow
+  9c_k^2 > 4(a_k+b_k)^2 \quad (\because \text{両辺0以上}) \\
+  \Leftrightarrow\
+  & 9(a_k^2+b_k^2) > 4(a_k+b_k)^2
+  \Leftrightarrow
+  4(a_k-b_k)^2 + c_k^2 > 0
 \end{align}
-だが，カテイより最後の不等式は成立するので，$n=k+1$でも成立．以上から$c_n > 0$である．■
+だが，仮定より最後の不等式は成立するので，$n=k+1$でも成立する．
+以上から$c_n > 0$である．
 
-次に，
+次に $c_{n}, c_{n+1}$ の大小について
 \begin{align}
-  & c_n > c_{n+1} \Leftrightarrow a_n+b_n > c_n \Leftrightarrow (a_n+b_n)^2 > c_n^2 \quad (\because \text{両辺0以上}) \\
-  \Leftrightarrow\ & 2a_nb_n > 0
+  & c_n \ge c_{n+1}
+  \Leftrightarrow
+  a_n+b_n \ge c_n
+  \Leftrightarrow
+  (a_n+b_n)^2 \ge c_n^2 \quad (\because \text{両辺0以上}) \\
+  \Leftrightarrow\
+  & 2a_nb_n \ge 0 \quad (\because a_n^2+b_n^2=c_n^2) \label{eq:2}
 \end{align}
-で，最後の不等式は成立するから，$c_n > c_{n+1}$である．■
+であり，最後の不等式は成立するから $c_n \ge c_{n+1}$ である．
 
 \paragraph{(3)}
 
-(2)から
+\cref{eq:2}から
 \begin{align}
   \begin{cases}
     a_nb_n \neq 0 \implies c_n > c_{n+1} \\
     a_nb_n = 0 \implies c_n = c_{n+1}
   \end{cases}
 \end{align}
-だから，
+だから，$c_m>c_{m+1}=c_{m+2}$の時は
 \begin{align}
-  a_nb_n \neq 0, \quad a_{m+1}b_{m+1} = 0 \quad \cdots \text{\textcircled{1}}
+  a_mb_m \neq 0, \quad a_{m+1}b_{m+1} = 0 \label{eq:3}
 \end{align}
-である．以下 $a = a_m$などと表す．
-\begin{itemize}
-  \item[$1^\circ\ a_{m+1} = 0\text{の時}$]
-    漸化式及び(1)から，
-    \begin{align}
-      \begin{cases} 2c = a+2b \\ c^2 = a^2+b^2
-      \end{cases}
-    \end{align}
-    $a$を消去して，
-    \begin{align}
-      (b-c)(5b-3c) = 0
-    \end{align}
-    $b=c$とすると $a^2+b^2=c^2$より $a=0$で，\textcircled{1}に反する．よって $5b = 3c$で，以上から
-    $a:b:c = 4:3:5$
+である．従って$a_{m+1}, b_{m+1}$のいずれかが$0$である．
 
-  \item[$2^\circ\ b_{m+1} = 0\text{の時}$]
-    $a_n, b_n$の対称性及び$1^\circ$から
-    $a:b:c = 3:4:5$
-\end{itemize}
+\subparagraph{$1^{\circ}$ $a_{m+1}=0$の時}
+
+\cref{eq:1}及び(1)から，
+\begin{align}
+  \begin{cases}
+    2c_m = a_m+2b_m \\
+    c_m^2 = a_m^2+b_m^2
+  \end{cases}
+\end{align}
+である．$a_m$を消去して
+\begin{align}
+  (b_m-c_m)(5b_m-3c_m) = 0
+\end{align}
+である．$b_m=c_m$とすると $a_m^2+b_m^2=c_m^2$より $a_m=0$で\cref{eq:3}に反して矛盾する．よって $5b_m = 3c_m$で以上から
+\begin{align}
+  a_m:b_m:c_m = 4:3:5 \label{eq:4}
+\end{align}
+である．
+
+\subparagraph{$2^\circ\ b_{m+1} = 0$ の時}
+
+$a_n, b_n$の対称性及び$1^\circ$から
+\begin{align}
+  a_m:b_m:c_m = 3:4:5
+\end{align}
+である．
+\casesend
+
 以上から
 \begin{align}
   a_m:b_m:c_m = 3:4:5 \text{ or } 4:3:5
 \end{align}
+である．
 
 \end{document}

@@ -1,44 +1,153 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $\sin\theta = S, \cos\theta = C$ と書く．$\left(0 < \theta < \dfrac{\pi}{2}\right)$
+以下
+\begin{align}
+  0 < \theta < \dfrac{\pi}{2} \label{eq:1}
+\end{align}
+で考える．
 
 \paragraph{(1)}
-$0 < \theta < \dfrac{\pi}{2}$ から $0 < 2\theta < \pi, \quad 0 < 3\theta < \dfrac{3}{2}\pi$ より
-\begin{align}
-  \sin 3\theta &= \sin 2\theta \Leftrightarrow 3\theta = 2\theta,\ 3\theta = \pi - 2\theta \\
-  &\Leftrightarrow \theta = \dfrac{\pi}{5} \quad \left( \because 0 < \theta < \dfrac{\pi}{2} \right)
-\end{align}
 
-\paragraph{(2)}
-$0 < \theta < \dfrac{\pi}{2}$ に注意して
+$0 < \theta < \dfrac{\pi}{2}$ から $0 < 2\theta < \pi, \quad 0 < 3\theta < \dfrac{3}{2}\pi$ より題意を満たす$\theta$は
 \begin{align}
-  (\text{与式}) \Leftrightarrow 4C^2 - 2mC - n - 1 = 0 \quad \cdots
-\end{align}
-よりこれが解を持つ条件は，左辺 $f(C)$ $(0 < C < 1)$，判別式 $D$ として
-$f(0) = -(n+1) < 0$ に注意すると，$f(1) > 0 \Leftrightarrow 3-2m-n > 0$
-である．$m, n$ が非負整数であることから，
-\begin{align}
-  (m, n) = \underset{\text{\textcircled{1}}}{(0, 0)}, \underset{\text{\textcircled{2}}}{(0, 1)}, \underset{\text{\textcircled{3}}}{(0, 2)}, \underset{\text{\textcircled{4}}}{(1, 0)}
+  \sin 3\theta = \sin 2\theta
+  \Leftrightarrow
+  3\theta = 2\theta,\ 3\theta = \pi - 2\theta
+  \Leftrightarrow
+  \theta = \dfrac{\pi}{5} \quad (\because\text{\cref{eq:1}}) \label{eq:2}
 \end{align}
 である．
-\begin{itemize}
-  \item[$1^\circ$の時]
-    $f(C) = 4C^2 - 1 = 0 \quad \therefore C = \dfrac{1}{2} \quad \left(\theta = \dfrac{\pi}{3}\right)$
-  \item[$2^\circ$の時]
-    $f(C) = 4C^2 - 2 = 0 \quad \therefore C = \dfrac{\sqrt{2}}{2} \quad \therefore \theta = \dfrac{\pi}{4}$
-  \item[$3^\circ$の時]
-    $f(C) = 4C^2 - 3 = 0 \quad \therefore C = \dfrac{\sqrt{3}}{2}, \theta = \dfrac{\pi}{6}$
-  \item[$4^\circ$の時]
-    $(\text{与式}) \Leftrightarrow \sin 3\theta = \sin 2\theta$ だから (1) から $\theta = \dfrac{\pi}{5}$
-\end{itemize}
-以上に $0 < C < 1$, $0 < \theta < \dfrac{\pi}{2}$ を用いた．従って解は
+
+\paragraph{(2)}
+
+二倍角，三倍角の公式から
+\begin{align}
+  \begin{cases}
+    \sin 3\theta = 3\sin\theta - 4\sin^3\theta \\
+    \sin 2\theta = 2\sin\theta\cos\theta
+  \end{cases}
+\end{align}
+だから，題意の方程式
+\begin{align}
+  \sin 3\theta = m\sin 2\theta + n\sin\theta  \label{eq:3}
+\end{align}
+に代入して
+\begin{align}
+  & 3\sin\theta - 4\sin^3\theta = 2m\sin\theta\cos\theta + n\sin\theta \\
+  & \sin\theta\left[4\sin^2\theta + 2m\cos\theta - 3 + n\right] = 0
+\end{align}
+を得る．\cref{eq:1}より$\sin \theta \neq 0$で両辺割って
+\begin{align}
+  & 4(1-\cos^2\theta) + 2m\cos\theta - 3 + n = 0 \\
+  \therefore
+  & f(\cos\theta) = 4\cos^2\theta - 2m\cos\theta - n -1 = 0 \label{eq:4}
+\end{align}
+を得る．以下これを満たす$(m,n,\theta)$を求めよう．
+\cref{eq:1}より$0 < \cos\theta < 1$だから，この範囲で$f(\cos\theta)$が解を持つ．
+$f(0)=-1-n<0$だから，この条件は
+\begin{align}
+  f(1)>0 \iff 3> 2m+n  \label{eq:5}
+\end{align}
+である．
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[x=3.8cm, y=1.1cm, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.2, 0) -- (1.35, 0) node[right] {$c$};
+    \draw[->, thick, gray!80!black] (0, -2.0) -- (0, 2.2) node[above] {$y$};
+
+    % 放物線 y = f(c) の描画（f(0) < 0, f(1) > 0）
+    \draw[domain=-0.1:1.15, smooth, samples=60, line width=1.3pt, blue!85!black]
+    plot (\x, {3.2*\x*\x - 0.8*\x - 1.2});
+
+    % 座標定義
+    \coordinate (O) at (0,0);
+    \coordinate (Y0) at (0, -1.2);
+    \coordinate (C1) at (1, 0);
+    \coordinate (Y1) at (1, 1.2);
+    \coordinate (Y1axis) at (0, 1.2);
+    \coordinate (Root) at (0.75, 0);
+
+    % 補助点線
+    \draw[dashed, gray!60, line width=0.7pt] (C1) -- (Y1) -- (Y1axis);
+
+    % 軸目盛り・ラベル
+    \node[below left=2pt] at (O) {$O$};
+    \node[left=2pt, font=\footnotesize] at (Y0) {$-n-1$};
+    \node[below=2pt, font=\footnotesize] at (C1) {$1$};
+    \node[left=2pt, font=\footnotesize] at (Y1axis) {$f(1)>0$};
+
+    % 点の描画
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Y0) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Y1) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (Root) {};
+    \node[below=3pt, red!85!black, font=\footnotesize] at (Root) {$\cos\theta$};
+
+    % 曲線名
+    \node[right=2pt, blue!85!black] at (1.15, 2.0) {$y = f(c)$};
+
+    % 0 < c < 1 の区間（開区間端点）
+    \draw[line width=1.5pt, teal!70!black] (0, 0) -- (1, 0);
+    \node[circle, draw=teal!70!black, thick, fill=white, inner sep=1.3pt] at (0,0) {};
+    \node[circle, draw=teal!70!black, thick, fill=white, inner sep=1.3pt] at (1,0) {};
+  \end{tikzpicture}
+  \caption{$y = f(c)$ の概形と解の存在}
+  \label{fig:fc_graph}
+\end{figure}
+
+$m, n$ が非負整数であることから\cref{eq:5}を満たす組は
+\begin{align}
+  (m, n) = (0, 0), (0, 1), (0, 2), (1, 0) \label{eq:6}
+\end{align}
+であるから個別に検討する．
+
+\subparagraph{$(m, n) = (0, 0)$の時}
+
+\cref{eq:4}より
+\begin{align}
+  f(c) = 4c^2 - 1 = 0
+  \quad \therefore
+  c = \dfrac{1}{2}, \theta = \dfrac{\pi}{3}
+\end{align}
+である．
+
+\subparagraph{$(m,n)=(0,1)$の時}
+
+\cref{eq:4}より
+\begin{align}
+  f(c) = 4c^2-2 = 0
+  \quad \therefore
+  c = \dfrac{\sqrt{2}}{2}, \theta = \dfrac{\pi}{4}
+\end{align}
+である．
+
+\subparagraph{$(m,n)=(0,2)$の時}
+
+\cref{eq:4}より
+\begin{align}
+  f(c) = 4c^2 - 3 = 0
+  \quad \therefore
+  c = \dfrac{\sqrt{3}}{2}, \theta = \dfrac{\pi}{6}
+\end{align}
+である．
+
+\subparagraph{$(m,n)=(1,0)$の時}
+
+この時は\cref{eq:3}は
+\begin{align}
+  \sin 3\theta = \sin 2\theta
+\end{align}
+となるから，\cref{eq:2}から$\theta = \dfrac{\pi}{5}$である．
+\casesend
+
+以上をまとめて，求める解は
 \begin{align}
   (m, n, \theta) = \left(0, 0, \dfrac{\pi}{3}\right), \left(0, 1, \dfrac{\pi}{4}\right), \left(0, 2, \dfrac{\pi}{6}\right), \left(1, 0, \dfrac{\pi}{5}\right)
 \end{align}
+である．
 
 \end{document}

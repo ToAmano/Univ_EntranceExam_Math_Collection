@@ -1,62 +1,116 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $a,b,c>0 \cdots$ \textcircled{1}
+\begin{figure}[htbp]
+  \centering
+  \tdplotsetmaincoords{68}{125}
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.3, >=stealth, every node/.style={font=\small}]
+    % 頂点座標
+    \coordinate (O) at (0,0,0);
+    \coordinate (A) at (1,0,0);
+    \coordinate (B) at (0,1,0);
+    \coordinate (C) at (-1,0,0);
+    \coordinate (D) at (0,-1,0);
+    \coordinate (E) at (0,0,1);
+    \coordinate (F) at (0,0,-1);
+
+    % a=b=c=1 とした交点
+    \coordinate (P1) at (0.5, -0.5, 0);   % on AD
+    \coordinate (P2) at (0.5, 0, -0.5);   % on AF
+    \coordinate (P3) at (0, 0.5, -0.5);   % on BF
+    \coordinate (P4) at (-0.5, 0.5, 0);   % on BC
+    \coordinate (P5) at (-0.5, 0, 0.5);   % on CE
+    \coordinate (P6) at (0, -0.5, 0.5);   % on DE
+
+    % 平面 pi の定点
+    \coordinate (Pt1) at (1, -1, 0);     % (a, -b, 0)
+    \coordinate (Pt2) at (0, 1, -1);     % (0, b, -c)
+
+    % 平面 pi の広がりを表す四角形
+    \coordinate (Pi1) at ( 1.45, -1.75,  0.30);
+    \coordinate (Pi2) at (-0.35, -1.15,  1.50);
+    \coordinate (Pi3) at (-1.45,  1.75, -0.30);
+    \coordinate (Pi4) at ( 0.35,  1.15, -1.50);
+
+    % 負の座標軸（奥側・点線）
+    \draw[dashed, gray!50] (0,0,0) -- (-1.4, 0, 0);
+    \draw[dashed, gray!50] (0,0,0) -- (0, -1.4, 0);
+    \draw[dashed, gray!50] (0,0,0) -- (0, 0, -1.4);
+
+    % 奥の稜線
+    \draw[dashed, black] (C) -- (D);
+    \draw[dashed, black] (C) -- (F);
+    \draw[dashed, black] (D) -- (F);
+
+    % 平面 pi の広がり（淡い面）
+    \fill[teal!10, opacity=0.4] (Pi1) -- (Pi2) -- (Pi3) -- (Pi4) -- cycle;
+    \draw[teal!60!black, dashed, line width=0.8pt] (Pi1) -- (Pi2) -- (Pi3) -- (Pi4) -- cycle;
+    \node[teal!80!black, font=\small\bfseries, above right] at (Pi2) {平面 $\pi$};
+
+    % 切り口の六角形
+    \fill[teal!30, opacity=0.65] (P1) -- (P2) -- (P3) -- (P4) -- (P5) -- (P6) -- cycle;
+    \draw[teal!85!black, line width=1.4pt] (P1) -- (P2) -- (P3) -- (P4) -- (P5) -- (P6) -- cycle;
+
+    % 手前の稜線
+    \draw[blue!80!black, line width=1.1pt] (A) -- (B);
+    \draw[blue!80!black, line width=1.1pt] (A) -- (D);
+    \draw[blue!80!black, line width=1.1pt] (A) -- (E);
+    \draw[blue!80!black, line width=1.1pt] (B) -- (E);
+    \draw[blue!80!black, line width=1.1pt] (A) -- (F);
+    \draw[blue!80!black, line width=1.1pt] (B) -- (F);
+    \draw[blue!80!black, line width=1.1pt] (D) -- (E);
+    \draw[blue!80!black, line width=1.1pt] (B) -- (C);
+    \draw[blue!80!black, line width=1.1pt] (C) -- (E);
+
+    % 定点への補助点線
+    \draw[dotted, red!70!black, line width=0.7pt] (A) -- (Pt1) -- (D);
+    \draw[dotted, red!70!black, line width=0.7pt] (B) -- (Pt2) -- (F);
+
+    % 手前の座標軸
+    \draw[->, thick, gray!80!black] (0,0,0) -- (1.5, 0, 0) node[below left=-1pt] {$x$};
+    \draw[->, thick, gray!80!black] (0,0,0) -- (0, 1.5, 0) node[right] {$y$};
+    \draw[->, thick, gray!80!black] (0,0,0) -- (0, 0, 1.5) node[above] {$z$};
+
+    % 正八面体の頂点
+    \foreach \pt/\lbl/\pos in {A/A/below left, B/B/right, C/C/above right, D/D/above left, E/E/above left, F/F/below right} {
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (\pt) {};
+      \node[\pos, font=\footnotesize] at (\pt) {$\lbl$};
+    }
+
+    % 切り口の交点
+    \foreach \pt in {P1, P2, P3, P4, P5, P6} {
+      \node[circle, fill=teal!80!black, inner sep=1.2pt] at (\pt) {};
+    }
+
+    % 平面 pi 上の3つの定点: O(0,0,0), (a,-b,0), (0,b,-c)
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (O) {};
+    \node[below right=1pt, font=\scriptsize, red!85!black] at (O) {$O(0,0,0)$};
+
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (Pt1) {};
+    \node[below left=2pt, font=\scriptsize, red!85!black] at (Pt1) {$(a,-b,0)$};
+
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (Pt2) {};
+    \node[below right=2pt, font=\scriptsize, red!85!black] at (Pt2) {$(0,b,-c)$};
+
+  \end{tikzpicture}
+  \caption{正八面体を平面 $\pi$ で切った六角形}
+\end{figure}
+
+題意の平面を$\pi$
 \begin{align}
-  \pi : \dfrac{x}{a} + \dfrac{y}{b} + \dfrac{z}{c} = 0 \cdots \textcircled{2}
+  \pi : \dfrac{x}{a} + \dfrac{y}{b} + \dfrac{z}{c} = 0 \quad (a,b,c>0) \label{eq:1}
 \end{align}
-
-\textcircled{2}の表式から，$\pi$は3点$(0,0,0)$，$(a,-b,0)$，$(0,b,-c)$を通る平面で，切り口は下図のような六角形になる．従って，
-$AD, AF, DE, BC, BF, CE$
-との交点
+とする．これは3点$(0,0,0)$，$(a,-b,0)$，$(0,b,-c)$を通る平面で，切り口は上図のような六角形になる．従って，$AD, AF, DE, BC, BF, CE$と$\pi$の交点をそれぞれ計算すると
 \begin{align}
   AD &: z=0, y=x-1 \text{ より交点 } \left(\dfrac{a}{a+b}, \dfrac{-b}{a+b}, 0\right) \\
   AF &: y=0, z=x-1 \text{ より交点 } \left(\dfrac{a}{a+c}, 0, \dfrac{-c}{a+c}\right) \\
   DE &: x=0, z=y+1 \text{ より交点 } \left(0, \dfrac{-b}{b+c}, \dfrac{c}{b+c}\right) \\
   BC &: z=0, y=x+1 \text{ より交点 } \left(\dfrac{-a}{a+b}, \dfrac{b}{a+b}, 0\right) \\
-  BF &: x=0, z=y-1 \text{ より交点 } \left(0, \dfrac{a}{b+c}, \dfrac{-c}{b+c}\right) \\
+  BF &: x=0, z=y-1 \text{ より交点 } \left(0, \dfrac{b}{b+c}, \dfrac{-c}{b+c}\right) \\
   CE &: y=0, x=z+1 \text{ より交点 } \left(\dfrac{-a}{a+c}, 0, \dfrac{c}{a+c}\right)
 \end{align}
-
-\begin{figure}[htbp]
-  \centering
-  \begin{tikzpicture}[scale=1.45,>=stealth]
-    % a=b=c=1 の場合。各辺との交点はその中点になる。
-    \coordinate (A) at (-1.5,-1);
-    \coordinate (B) at (1.7,0.15);
-    \coordinate (C) at (1.5,1);
-    \coordinate (D) at (-1.7,-0.15);
-    \coordinate (E) at (0,1.8);
-    \coordinate (F) at (0,-1.8);
-    \coordinate (O) at (0,0);
-    \coordinate (AD) at (-1.6,-0.575);
-    \coordinate (DE) at (-0.85,0.825);
-    \coordinate (CE) at (0.75,1.4);
-    \coordinate (BC) at (1.6,0.575);
-    \coordinate (BF) at (0.85,-0.825);
-    \coordinate (AF) at (-0.75,-1.4);
-    \draw[dashed,gray!60] (C)--(D) (C)--(F) (D)--(F);
-    \draw[blue!75!black,thick] (A)--(B)--(C)--(E)--(A)--(D)--(E)--(B)--(F)--(A);
-    \fill[teal!25,opacity=0.75] (AD)--(DE)--(CE)--(BC)--(BF)--(AF)--cycle;
-    \draw[teal!70!black,very thick] (AD)--(DE)--(CE)--(BC)--(BF)--(AF)--cycle;
-    \draw[->,gray!65] (O)--(-2,-1.33) node[below] {$x$};
-    \draw[->,gray!65] (O)--(2.25,0.2) node[right] {$y$};
-    \draw[->,gray!65] (O)--(0,2.25) node[above] {$z$};
-    \foreach \V in {AD,DE,CE,BC,BF,AF}
-    \node[circle, fill=teal!70!black, inner sep=1.2pt] at (\V) {};
-    \node[below left] at (A) {$A$};
-    \node[right] at (B) {$B$};
-    \node[above right] at (C) {$C$};
-    \node[left] at (D) {$D$};
-    \node[above left] at (E) {$E$};
-    \node[below right] at (F) {$F$};
-    \node[below right] at (O) {$O$};
-  \end{tikzpicture}
-  \caption{正八面体を平面 $\pi$ で切った六角形（図は $a=b=c=1$）}
-\end{figure}
+となる．
 
 \end{document}

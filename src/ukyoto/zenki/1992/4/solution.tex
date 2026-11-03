@@ -1,33 +1,81 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} (1) $X$が3でわり切れないのは，$n$回とも1, 2, 4, 5のいずれかが出るときだから，排反を考えて，求めるのは
+\paragraph{(1)}
+
+排反事象を考える．
+$X$が3でわり切れないのは，$n$回とも1, 2, 4, 5のいずれかが出るときである．
+従って求める確率は
 \begin{align}
-  1 - \left(\dfrac{4}{6}\right)^n = 1 - \left(\dfrac{2}{3}\right)^n
+  1 - \left(\dfrac{4}{6}\right)^n = 1 - \left(\dfrac{2}{3}\right)^n \label{eq:1}
 \end{align}
+である．
 
 \paragraph{(2)}
-$
-\begin{cases}
-  A \cdots Xが3でわり切れる \\
-  B \cdots Xが2でわり切れる
-\end{cases}$ と事象を定めると，求める確率は
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[x=1cm, y=1cm, >=stealth, every node/.style={font=\small}]
+    % 全体集合 U の枠
+    \draw[line width=1.0pt, gray!70!black, rounded corners=6pt] (-3.8, -2.1) rectangle (3.8, 2.1);
+    \node[font=\bfseries, gray!80!black, below right=3pt] at (-3.8, 2.1) {$U$};
+
+    % 円のパラメータ
+    \def\r{1.6}
+    \coordinate (cA) at (-0.9, 0);
+    \coordinate (cB) at (0.9, 0);
+
+    % 集合 A の塗り
+    \fill[blue!15, opacity=0.6] (cA) circle (\r);
+    % 集合 B の塗り
+    \fill[teal!15, opacity=0.6] (cB) circle (\r);
+
+    % 積集合 A ∩ B の塗り
+    \begin{scope}
+      \clip (cA) circle (\r);
+      \fill[blue!40!teal!35, opacity=0.85] (cB) circle (\r);
+    \end{scope}
+
+    % 円の境界線
+    \draw[line width=1.2pt, blue!85!black] (cA) circle (\r);
+    \draw[line width=1.2pt, teal!85!black] (cB) circle (\r);
+
+    % ラベル
+    \node[blue!90!black, font=\bfseries\normalsize] at (-1.75, 0.25) {$A$};
+    \node[blue!80!black, font=\scriptsize] at (-1.75, -0.25) {$3$の倍数};
+
+    \node[teal!90!black, font=\bfseries\normalsize] at (1.75, 0.25) {$B$};
+    \node[teal!80!black, font=\scriptsize] at (1.75, -0.25) {$2$の倍数};
+
+    \node[purple!75!black, font=\bfseries\normalsize] at (0, 0.25) {$A \cap B$};
+    \node[purple!75!black, font=\scriptsize] at (0, -0.25) {$6$の倍数};
+  \end{tikzpicture}
+  \caption{事象 $A, B$ のベン図と積事象 $A \cap B$}
+  \label{fig:venn_ab}
+\end{figure}
+
+事象を
+\begin{itemize}
+  \item A: $X$が3でわり切れる \\
+  \item B: $X$が2でわり切れる
+\end{itemize}
+と定めると，「$X$が6で割り切れる」事象は$A \cap B$に等しいから，求める確率は
 \begin{align}
-  P(A \cap B) = P(A) + P(B) - P(A \cup B) \quad \cdots \text{\textcircled{1}}
+  P(A \cap B) = P(A) + P(B) - P(A \cup B) \label{eq:2}
 \end{align}
-である．$P(A)$は(1)でもとまっており，$B, A \cup B$も排反を考えて
+である．$P(A)$は\cref{eq:1}であり，$B, A \cup B$も(1)と同様に排反事象を考えて
 \begin{align}
   P(B) &= 1 - \left(\dfrac{3}{6}\right)^n = 1 - \left(\dfrac{1}{2}\right)^n \\
   P(A \cup B) &= 1 - \left(\dfrac{2}{6}\right)^n = 1 - \left(\dfrac{1}{3}\right)^n
 \end{align}
-だから，\textcircled{1}に代入
+だから，\cref{eq:2}に代入して求める確率は
 \begin{align}
-  P(A \cap B) &= 1 - \left(\dfrac{2}{3}\right)^n + 1 - \left(\dfrac{1}{2}\right)^n - \left\{1 - \left(\dfrac{1}{3}\right)^n\right\} \\
+  P(A \cap B)
+  &= 1 - \left(\dfrac{2}{3}\right)^n + 1 - \left(\dfrac{1}{2}\right)^n - \left\{1 - \left(\dfrac{1}{3}\right)^n\right\} \\
   &= 1 + \left(\dfrac{1}{3}\right)^n - \left(\dfrac{1}{2}\right)^n - \left(\dfrac{2}{3}\right)^n
 \end{align}
+である．
 
 \end{document}
