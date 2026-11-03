@@ -1,75 +1,163 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-{\bf [解答]} $A(1,0), X(c,s) \ (c=\cos\theta, s=\sin\theta)$
-$(0 \le \theta < 2\pi)$ とおいて良い．
-点$X$の位置ベクトルを$\vec{x}$と表す．
+{\bf [解答]}
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.25, every node/.style={font=\small}]
+  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
     \coordinate (O) at (0,0);
-    \draw[->,gray!75!black] (-1.45,0) -- (1.48,0) node[right] {$x$};
-    \draw[->,gray!75!black] (0,-1.43) -- (0,1.46) node[above] {$y$};
-    \draw[blue!75!black,very thick] (O) circle (1);
-    \node[below right] at (O) {$O$};
-    \node[left=3pt] at (-1,0) {$-1$};
-    \node[above right] at (1,0) {$A(1,0)$};
+    \coordinate (A) at (1,0);
+    \coordinate (X) at ({cos(50)}, {sin(50)});
+
+    \draw[->, gray!75!black] (-1.45,0) -- (1.55,0) node[right] {$x$};
+    \draw[->, gray!75!black] (0,-1.45) -- (0,1.55) node[above] {$y$};
+    \draw[blue!75!black, very thick] (O) circle (1);
+
+    \node[below right=2pt] at (O) {$O$};
+    \node[below left=2pt] at (-1,0) {$-1$};
     \node[below=3pt] at (0,-1) {$-1$};
     \node[above left=3pt] at (0,1) {$1$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {};
+    \node[above right=2pt] at (A) {$A(1,0)$};
+
+    \draw[dashed, red!80!black] (O) -- (X);
+    \node[circle, fill=red!85!black, inner sep=1.3pt] at (X) {};
+    \node[above right=1pt, red!85!black] at (X) {$X(\cos\theta,\sin\theta)$};
+
+    \draw[->, teal!80!black] (0.35,0) arc[start angle=0, end angle=50, radius=0.35];
+    \node[above right=-2pt, teal!80!black, font=\footnotesize] at (25:0.35) {$\theta$};
   \end{tikzpicture}
-  \caption{単位円$C$と点$A$}
+  \caption{単位円 $C$ と点 $A, X$}
+  \label{fig:unit_circle_A_X}
 \end{figure}
+
+$A(1,0), X(\cos\theta, \sin\theta) \ (0 \le \theta < 2\pi)$ とおいて良い．
+点$X$の位置ベクトルを小文字で$\vec{x}$と表す．
 
 \paragraph{(1)}
 
-$\vec{y} =
-\begin{pmatrix} 1 \\ 0
-\end{pmatrix} - 2
-\begin{pmatrix} 1 \\ 0
-\end{pmatrix} \cdot
-\begin{pmatrix} c \\ s
-\end{pmatrix}
-\begin{pmatrix} c \\ s
-\end{pmatrix}$ \\
-$ =
-\begin{pmatrix} 1 \\ 0
-\end{pmatrix} - 2c
-\begin{pmatrix} c \\ s
-\end{pmatrix}$ \\
-だから
-
-$|\vec{y}|^2 = (1-2c^2)^2 + 4c^2s^2 = 1 \quad \therefore |\vec{y}|=1 \ (\because |\vec{y}| \ge 0)$
-
-より，$|\vec{y}| = 1$ \hfill(終)
+題意の関係式
+\begin{align}
+  \vec{y} = \vec{a}-2(\vec{a}\cdot\vec{x})\vec{x} \label{eq:1}
+\end{align}
+に座標を代入すると
+\begin{align}
+  \vec{y} =
+  \begin{pmatrix} 1 \\ 0
+  \end{pmatrix} - 2
+  \begin{pmatrix} 1 \\ 0
+  \end{pmatrix} \cdot
+  \begin{pmatrix} \cos\theta \\ \sin\theta
+  \end{pmatrix}
+  \begin{pmatrix} \cos\theta \\ \sin\theta
+  \end{pmatrix} \\
+  =
+  \begin{pmatrix} 1 \\ 0
+  \end{pmatrix} - 2\cos\theta
+  \begin{pmatrix} \cos\theta \\ \sin\theta
+  \end{pmatrix} \label{eq:2}
+\end{align}
+だからこのベクトルの大きさは
+\begin{align}
+  |\vec{y}|^2
+  = (1-2\cos^2\theta)^2 + 4\cos^2\theta\sin^2\theta = 1
+  \quad \therefore
+  |\vec{y}|=1 \ (\because |\vec{y}| \ge 0)
+\end{align}
+より $|\vec{y}| = 1$ である．
 
 \paragraph{(2)}
 
-$\vec{y} = -\vec{a}$の時，
+$\vec{y} = -\vec{a}$の時，\cref{eq:2}より
+\begin{align}
+  \begin{pmatrix} 1-2\cos^2\theta \\ -2\cos\theta\sin\theta
+  \end{pmatrix} =
+  \begin{pmatrix} -1 \\ 0
+  \end{pmatrix} \\
+  \therefore \cos\theta=\pm 1, \cos\theta\sin\theta=0
+\end{align}
+だから，$(\cos\theta,\sin\theta)=(\pm 1,0)$となる．
+すなわち $X$は直線$OA$と円の交点のどちらかである．
 
-$
-\begin{pmatrix} 1-2c^2 \\ -2cs
-\end{pmatrix} =
-\begin{pmatrix} -1 \\ 0
-\end{pmatrix}$ \\
-$\therefore c=\pm 1, cs=0$
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (1,0);
+    \coordinate (mA) at (-1,0);
 
-$\therefore (c,s) = (\pm 1, 0)$
+    \draw[->, gray!75!black] (-1.65,0) -- (1.65,0) node[right] {$x$};
+    \draw[->, gray!75!black] (0,-1.45) -- (0,1.45) node[above] {$y$};
+    \draw[blue!75!black, very thick] (O) circle (1);
 
-だから，$X=A$ 又は $A$と$X$を結ぶ直線と円の交点のうち，$A$でない方 \hfill(終)
+    \node[below right=2pt] at (O) {$O$};
+
+    % Point A (X=A)
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (A) {};
+    \node[above right=2pt, blue!85!black] at (A) {$A(1,0)$};
+    \node[below right=2pt, font=\footnotesize, blue!85!black] at (A) {$X = A$};
+
+    % Point -A (X=-A)
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (mA) {};
+    \node[above left=2pt, red!85!black] at (mA) {$-A(-1,0)$};
+    \node[below left=2pt, font=\footnotesize, red!85!black] at (mA) {$X = -A$};
+
+  \end{tikzpicture}
+  \caption{$\vec{y} = -\vec{a}$ を満たす点 $X$ と像 $Y$}
+  \label{fig:summary_X_A_Y}
+\end{figure}
 
 \paragraph{(3)}
 
-$Y(X,Y)$とおく．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (1,0);
+    \def\th{35}
+    \coordinate (X) at ({cos(\th)}, {sin(\th)});
+    \def\angY{250}
+    \coordinate (Y) at ({cos(\angY)}, {sin(\angY)});
 
-$X = 1-2c^2 = -\cos 2\theta$
+    \draw[->, gray!75!black] (-1.45,0) -- (1.55,0) node[right] {$x$};
+    \draw[->, gray!75!black] (0,-1.45) -- (0,1.45) node[above] {$y$};
+    \draw[blue!75!black, very thick] (O) circle (1);
 
-$Y = -2cs = -\sin 2\theta$
+    \node[below right=2pt] at (O) {$O$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (A) {};
+    \node[above right=1pt] at (A) {$A$};
 
-だから，$\theta$が$0 \le \theta < 2\pi$でうごくとき，$Y$は$C$を2回まわる \hfill(終)
+    % Line OX
+    \draw[dashed, red!80!black] (O) -- (X);
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (X) {};
+    \node[above right=1pt, red!85!black] at (X) {$X(\theta)$};
+
+    % Angle theta
+    \draw[->, red!80!black] (0.35,0) arc[start angle=0, end angle=\th, radius=0.35];
+    \node[above right=-2pt, red!80!black, font=\footnotesize] at (\th/2:0.35) {$\theta$};
+
+    % Line OY
+    \draw[dashed, teal!80!black] (O) -- (Y);
+    \node[circle, fill=teal!80!black, inner sep=1.4pt] at (Y) {};
+    \node[below left=1pt, teal!80!black] at (Y) {$Y(\pi + 2\theta)$};
+
+    % Angle for Y
+    \draw[->, teal!80!black] (0.55,0) arc[start angle=0, end angle=\angY, radius=0.55];
+    \node[above left=1pt, teal!80!black, font=\footnotesize] at (125:0.4) {$\pi + 2\theta$};
+  \end{tikzpicture}
+  \caption{点 $X$ の偏角 $\theta$ と点 $Y$ の偏角 $\pi + 2\theta$}
+  \label{fig:relation_X_Y}
+\end{figure}
+
+$Y(X,Y)$とおくと\cref{eq:2}より
+\begin{align}
+  \begin{cases}
+    X = 1-2\cos^2\theta = -\cos 2\theta \\
+    Y = -2\cos\theta \sin\theta = -\sin 2\theta
+  \end{cases}
+\end{align}
+だから $\theta$が$0 \le \theta < 2\pi$でうごくとき $Y$は円$C$を2回まわる．
 
 \end{document}

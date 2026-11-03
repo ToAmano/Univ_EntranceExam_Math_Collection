@@ -1,123 +1,208 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $\alpha$と$l$の交点を$H$とする．$H$は$z=0$上で
-$y = -x$ と $y = x - 1$ の交点で，$H(\dfrac{1}{2}, -\dfrac{1}{2}, 0)$ となる．
-
-したがって，$t \ge \dfrac{1}{2}$ の時，$P$と$B$，$P$と$C$は互いに$\alpha$に
-関して反対側にあり，$PB, PC$は$\alpha$と交点$D, E$を持つ．ここで，$\alpha$を$y$軸だから，右下図で
-相似から，
-
-\begin{figure}[H]
+\begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[every node/.style={font=\scriptsize}]
-    % 左：t=1.4 として座標を斜投影した四面体と切断面．
-    \begin{scope}[shift={(3.6,4.0)},scale=1.15]
-      \coordinate (O) at (0,0);
-      \coordinate (A) at (-0.9,-0.65);
-      \coordinate (B) at (1.25,-0.2);
-      \coordinate (C) at (0,1.4);
-      \coordinate (P) at (-3.01,-0.63);
-      \coordinate (H) at (-1.075,-0.225);
-      \coordinate (D) at (-0.992,-0.426);
-      \coordinate (E) at (-1.075,0.675);
-      \fill[teal!14] (A)--(D)--(E)--cycle;
-      \draw[gray!65,dashed] (O)--(A) (O)--(B) (O)--(C) (O)--(P);
-      \draw[blue!75!black,thick] (A)--(B)--(C)--cycle
-      (P)--(A) (P)--(B) (P)--(C);
-      \draw[teal!75!black,very thick] (A)--(D)--(E)--cycle;
-      \draw[gray!70,dashed] (H)--(E) (H)--(A);
-      \draw[->,gray!70!black] (O)--(-1.36,-0.98) node[below] {$x$};
-      \draw[->,gray!70!black] (O)--(1.62,-0.26) node[above] {$y$};
-      \draw[->,gray!70!black] (O)--(0,1.77) node[above] {$z$};
-      \node[above right] at (O) {$O$};
-      \node[below right=2pt] at (A) {$A$};
-      \node[below right] at (B) {$B$};
-      \node[above right] at (C) {$C$};
-      \node[left] at (P) {$P$};
-      \node[above left=2pt] at (H) {$H$};
-      \node[right=2pt] at (D) {$D$};
-      \node[left] at (E) {$E$};
-      \node[teal!75!black,right] at (-0.45,0.36) {$\alpha$};
+  \tdplotsetmaincoords{65}{70}
+  \begin{tikzpicture}[tdplot_main_coords, scale=3.0, >=stealth, every node/.style={font=\scriptsize}]
+    \coordinate (O) at (0,0,0);
+    \coordinate (A) at (1,0,0);
+    \coordinate (B) at (0,1,0);
+    \coordinate (C) at (0,0,1);
+    \def\t{1.35}
+    \coordinate (P) at (\t,-\t,0);
+    \coordinate (H) at (0.5,-0.5,0);
+    \coordinate (D) at ({\t/(\t+0.5)}, {-0.5/(\t+0.5)}, 0);
+    \coordinate (E) at (0.5,-0.5,{(\t-0.5)/\t});
+
+    % Axes
+    \draw[->, gray!60] (O) -- (1.5,0,0) node[anchor=north east] {$x$};
+    \draw[->, gray!60] (O) -- (0,1.4,0) node[anchor=south west] {$y$};
+    \draw[->, gray!60] (O) -- (0,0,1.35) node[anchor=south] {$z$};
+
+    % Line l: x+y=0, z=0
+    \draw[dashed, gray!50] (-0.4,0.4,0) -- (1.7,-1.7,0) node[anchor=north east] {$l: x+y=0$};
+
+    % Line alpha in z=0: passes through A and H
+    \draw[dashed, teal!60] ($(A)!-0.3!(H)$) -- ($(H)!1.3!(A)$);
+
+    % Shaded section ADE
+    \fill[teal!20, opacity=0.85] (A) -- (D) -- (E) -- cycle;
+    \node[teal!85!black, font=\scriptsize] at ($(A)!0.5!(E) + (0.25,0.1,0.05)$) {切断面 $\alpha$};
+
+    % Dashed internal edges
+    \draw[dashed, gray!50] (O) -- (A) (O) -- (B) (O) -- (C);
+    \draw[dashed, gray!60] (H) -- (E);
+
+    % Solid edges of tetrahedron ABCP
+    \draw[blue!80!black, thick] (A) -- (B) -- (C) -- cycle;
+    \draw[blue!80!black, thick] (P) -- (A) (P) -- (B) (P) -- (C);
+
+    % Highlight section ADE
+    \draw[teal!85!black, line width=1.4pt] (A) -- (D) -- (E) -- cycle;
+
+    % Points
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (O) {};
+    \node[anchor=south east, font=\tiny] at (O) {$O(0,0,0)$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {};
+    \node[below right=1pt, font=\scriptsize] at (A) {$A(1,0,0)$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B) {};
+    \node[anchor=south west] at (B) {$B(0,1,0)$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (C) {};
+    \node[anchor=south] at (C) {$C(0,0,1)$};
+
+    \node[circle, fill=red!85!black, inner sep=1.3pt] at (P) {};
+    \node[anchor=north, red!85!black] at (P) {$P(t,-t,0)$};
+
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (H) {};
+    \node[left=2pt, font=\scriptsize] at (H) {$H(\frac{1}{2},-\frac{1}{2},0)$};
+
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (D) {};
+    \node[anchor=south west, teal!85!black] at (D) {$D$};
+
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (E) {};
+    \node[anchor=south east, teal!85!black] at (E) {$E$};
+  \end{tikzpicture}
+  \caption{四面体 $ABCP$ と平面 $\alpha$ による切断面 $\triangle ADE$}
+  \label{fig:tetrahedron_section_3d}
+\end{figure}
+
+$\alpha$は$l:x+y=0, z=0$と垂直で$A(1,0,0)$を通るので
+\begin{align}
+  \alpha: (x-1)-y = 0 \label{eq:1}
+\end{align}
+である．$\alpha$と$l$の交点を$H$とすると\cref{eq:1}と$x+y=0$を連立して $H(\dfrac{1}{2}, -\dfrac{1}{2}, 0)$ となる．
+
+したがって，$t \ge \dfrac{1}{2}$ の時は$P$と$B$，$P$と$C$は互いに$\alpha$に関して反対側にあり，
+線分$PB, PC$は$\alpha$と交点$D, E$を持つ．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[>=stealth, every node/.style={font=\small}]
+    % Left panel: Vertical plane containing l and z-axis
+    \begin{scope}[shift={(0,0)}, scale=1.3]
+      \coordinate (P) at (-2.4, 0);
+      \coordinate (H) at (-0.9, 0);
+      \coordinate (O) at (0, 0);
+      \coordinate (C) at (0, 1.8);
+      \coordinate (E) at (-0.9, {1.8*(2.4-0.9)/2.4});
+
+      % Triangles
+      \fill[teal!15] (P) -- (H) -- (E) -- cycle;
+      \draw[blue!85!black, thick] (P) -- (C) -- (O) -- cycle;
+      \draw[teal!85!black, line width=1.3pt] (H) -- (E);
+
+      % Right angle marks
+      \draw[gray!70] (O) ++(0, 0.15) -- ++(-0.15, 0) -- ++(0, -0.15);
+      \draw[gray!70] (H) ++(0, 0.15) -- ++(-0.15, 0) -- ++(0, -0.15);
+
+      % Dimension lines
+      \draw[<->, gray!70] (O) ++(0.18, 0) -- ++(0, 1.8) node[midway, right=1pt, font=\footnotesize] {$|OC|=1$};
+      \draw[<->, gray!70] (P) ++(0, -0.22) -- (O |- 0, -0.22) node[midway, below=1pt, font=\footnotesize] {$|OP| \propto t$};
+      \draw[<->, teal!80!black] (P) ++(0, -0.55) -- (H |- 0, -0.55) node[midway, below=1pt, font=\footnotesize] {$|PH| \propto t-\frac{1}{2}$};
+
+      % Labels
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (O) {};
+      \node[below right=1pt] at (O) {$O$};
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (C) {};
+      \node[above=2pt] at (C) {$C$};
+      \node[circle, fill=red!85!black, inner sep=1.2pt] at (P) {};
+      \node[left=2pt, red!85!black] at (P) {$P$};
+      \node[circle, fill=gray!80!black, inner sep=1.2pt] at (H) {};
+      \node[below=2pt] at (H) {$H$};
+      \node[circle, fill=teal!85!black, inner sep=1.2pt] at (E) {};
+      \node[above left=1pt, teal!85!black] at (E) {$E$};
     \end{scope}
-    % 右上：l と z 軸を含む鉛直面．EH は鉛直．
-    \begin{scope}[shift={(8.8,3.8)},scale=1.0]
-      \coordinate (P) at (-2.6,0);
-      \coordinate (H) at (-0.9,0);
+
+    % Right panel: Horizontal plane z=0
+    \begin{scope}[shift={(6.5,0)}, scale=1.3]
       \coordinate (O) at (0,0);
-      \coordinate (C) at (0,1.8);
-      \coordinate (E) at (-0.9,1.18);
-      \draw[blue!75!black,thick] (P)--(C)--(O)--cycle;
-      \draw[teal!75!black,very thick] (H)--(E);
-      \draw[gray!70,dashed] (O)--(0,-0.25);
-      \node[left] at (P) {$P$};
-      \node[below] at (H) {$H$};
-      \node[below right] at (O) {$O$};
-      \node[above] at (C) {$C$};
-      \node[above left] at (E) {$E$};
-      \node[right] at (0,0.9) {$1$};
-    \end{scope}
-    % 右端：z=0 への投影．A,H,D は平面 alpha 上．
-    \begin{scope}[shift={(11.2,3.8)},scale=1.0]
-      \coordinate (O) at (0,0);
-      \coordinate (A) at (1.65,0);
-      \coordinate (B) at (0,1.65);
-      \coordinate (P) at (2.14,-2.14);
-      \coordinate (H) at (0.825,-0.825);
-      \coordinate (D) at (1.19,-0.46);
-      \draw[->,gray!70!black] (-0.25,0)--(2.25,0) node[right] {$x$};
-      \draw[->,gray!70!black] (0,-2.3)--(0,1.9) node[above] {$y$};
-      \draw[gray!70,dashed] (-0.28,0.28)--(1.72,-1.72) node[below] {$l$};
-      \draw[blue!75!black,thick] (B)--(P);
-      \draw[teal!75!black,very thick] (H)--(D)--(A);
-      \draw[teal!75!black,thick] (H)--(A);
-      \node[below left] at (O) {$O$};
-      \node[right] at (A) {$A$};
-      \node[above left] at (B) {$B$};
-      \node[right] at (P) {$P(t,-t)$};
-      \node[below left] at (H) {$H$};
-      \node[above right=2pt] at (D) {$D$};
-      \node[teal!75!black,below right] at (1.12,-0.89) {$\alpha\cap\{z=0\}$};
+      \coordinate (A) at (1.2, 0);
+      \coordinate (B) at (0, 1.2);
+      \coordinate (P) at (1.5, -1.5);
+      \coordinate (H) at (0.6, -0.6);
+      \coordinate (D) at (0.857, -0.343);
+
+      % Axes
+      \draw[->, gray!60] (-0.4,0) -- (1.8,0) node[right] {$x$};
+      \draw[->, gray!60] (0,-1.8) -- (0,1.5) node[above] {$y$};
+
+      % Line l
+      \draw[dashed, gray!60] (-0.3,0.3) -- (1.7,-1.7) node[above right=1pt, font=\scriptsize] {$l: x+y=0$};
+
+      % Parallel segments AB and HP
+      \draw[blue!85!black, thick] (A) -- (B);
+      \draw[red!85!black, thick] (H) -- (P);
+
+      % Line AH through D
+      \draw[teal!85!black, line width=1.3pt] (A) -- (H);
+
+      % Segment BP
+      \draw[purple!80!black, thick] (B) -- (P);
+
+      % Right angles at A and H
+      \draw[gray!70] (A) ++(-0.08, 0.08) -- ++(-0.08, -0.08) -- ++(0.08, -0.08);
+      \draw[gray!70] (H) ++(0.08, -0.08) -- ++(0.08, 0.08) -- ++(-0.08, 0.08);
+
+      % Alternate interior angles arc
+      \draw[orange!90!black, thick] (B) ++(0, -0.35) arc[start angle=-90, end angle=-58, radius=0.35];
+      \node[below=6pt, right=1pt, orange!90!black, font=\scriptsize] at (B) {$\theta$};
+
+      \draw[orange!90!black, thick] (P) ++(0, 0.35) arc[start angle=90, end angle=122, radius=0.35];
+      \node[above=6pt, left=1pt, orange!90!black, font=\scriptsize] at (P) {$\theta$};
+
+      % Points
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (O) {};
+      \node[below left=1pt] at (O) {$O$};
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (A) {};
+      \node[above right=1pt] at (A) {$A$};
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (B) {};
+      \node[above left=1pt] at (B) {$B$};
+      \node[circle, fill=red!85!black, inner sep=1.2pt] at (P) {};
+      \node[below left=1pt, red!85!black] at (P) {$P(t,-t)$};
+      \node[circle, fill=gray!80!black, inner sep=1.2pt] at (H) {};
+      \node[above left=1pt] at (H) {$H$};
+      \node[circle, fill=teal!85!black, inner sep=1.2pt] at (D) {};
+      \node[above right=1pt, teal!85!black] at (D) {$D$};
+
     \end{scope}
   \end{tikzpicture}
-  \caption{四面体$ABCP$の切断面$ADE$と，鉛直面・水平面での位置関係}
+  \caption{鉛直面における相似（左）と水平面 $z=0$ における相似（右）}
+  \label{fig:similarities_vertical_horizontal}
 \end{figure}
+
+$\alpha$は$z$軸と並行だから，$\triangle PEH, \triangle PCO$の相似から
 \begin{align}
-  |EH| = \dfrac{t - \dfrac{1}{2}}{t} \cdots \text{①}
+  |EH| = \dfrac{|PH|}{|OP|}|OC| = \dfrac{t - \dfrac{1}{2}}{t} \label{eq:2}
+\end{align}
+である．同様に$|AD|$について$\triangle ABD, \triangle PHD$の相似から
+\begin{align}
+  |AD|
+  = \dfrac{|BD|}{|AB|+|PH|}|AH|
+  = \dfrac{1}{1 + (t - \dfrac{1}{2})} |AH|
+  = \dfrac{1}{t + \dfrac{1}{2}} \dfrac{\sqrt{2}}{2} \label{eq:3}
+\end{align}
+である．従って四面体$PABC$と平面$\alpha$が交わってできる図形$\triangle ADE$の面積は
+\begin{align}
+  S(t)
+  & = \dfrac{1}{2} |AD||EH| \\
+  & = \dfrac{1}{2} \dfrac{1}{t + \dfrac{1}{2}} \dfrac{\sqrt{2}}{2} \dfrac{t - \dfrac{1}{2}}{t} \quad (\because \text{\cref{eq:2,eq:3}}) \\
+  & = \dfrac{\sqrt{2}}{4} \dfrac{p}{(p + 1)(p + \dfrac{1}{2})} \quad (p = t - \dfrac{1}{2} \ge 0) \\
+  & = \dfrac{\sqrt{2}}{4} \dfrac{1}{p + \dfrac{1}{2p} + \dfrac{3}{2}} \\
+  & \le \dfrac{\sqrt{2}}{4} \dfrac{1}{2\sqrt{\dfrac{1}{2}} + \dfrac{3}{2}} \quad (\because \text{AM-GM}, p > 0) \\
+  & = \dfrac{1}{2}(-4 + 3\sqrt{2})
+\end{align}
+を満たす．等号成立は $p = \dfrac{1}{2p} \therefore p = \dfrac{\sqrt{2}}{2} \ (>0)$の時で，
+この時$t=p+\dfrac{1}{2}=\dfrac{\sqrt{2}+1}{2}$である．
+以上から求める最大値は
+\begin{align}
+  \max S(t) = S(\dfrac{\sqrt{2}+1}{2}) = \dfrac{1}{2}(-4 + 3\sqrt{2})
 \end{align}
 である．
-
-次に$D$にも同様に
-\begin{align}
-  |AD| = \dfrac{1}{1 + (t - \dfrac{1}{2})} |AH|
-\end{align}
-\begin{align}
-  = \dfrac{1}{t + \dfrac{1}{2}} \dfrac{\sqrt{2}}{2} \cdots \text{②}
-\end{align}
-
-したがって，
-\begin{align}
-  S(t) = (\triangle ADE \text{の面積})
-\end{align}
-\begin{align}
-  = \dfrac{1}{2} |AD| \cdot |EH|
-\end{align}
-\begin{align}
-  = \dfrac{1}{2} \dfrac{1}{t + \dfrac{1}{2}} \dfrac{\sqrt{2}}{2} \dfrac{t - \dfrac{1}{2}}{t} \quad (\because \text{①②})
-\end{align}
-\begin{align}
-  = \dfrac{\sqrt{2}}{4} \dfrac{p}{(p + 1)(p + \dfrac{1}{2})} \quad (p = t - \dfrac{1}{2} \ge 0)
-\end{align}
-\begin{align}
-  = \dfrac{\sqrt{2}}{4} \dfrac{1}{p + \dfrac{1}{2p} + \dfrac{3}{2}} \le \dfrac{\sqrt{2}}{4} \dfrac{1}{2\sqrt{\dfrac{1}{2}} + \dfrac{3}{2}} \quad (\because \text{AM-GM}, p > 0)
-\end{align}
-\begin{align}
-  = \dfrac{1}{2}(-4 + 3\sqrt{2})
-\end{align}
-等号成立は $p = \dfrac{1}{2p} \therefore p = \dfrac{\sqrt{2}}{2} \ (>0)$の時である．\hfill(終)
 
 \end{document}

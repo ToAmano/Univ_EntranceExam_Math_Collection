@@ -1,131 +1,155 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} (1) 選んだ頂点 $X_1$ とする．
+\paragraph{(1)}
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.25, every node/.style={font=\small}]
-    \coordinate (A) at (0,1.8);
-    \coordinate (B) at (-1.55,-0.9);
-    \coordinate (C) at (1.55,-0.9);
+  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
     \coordinate (O) at (0,0);
-    \coordinate (Pzero) at (-0.40,-0.20);
+    \coordinate (A) at (0, 1.8);
+    \coordinate (B) at ({-1.8*cos(30)}, {-1.8*sin(30)});
+    \coordinate (C) at ({1.8*cos(30)}, {-1.8*sin(30)});
+    \coordinate (Pzero) at (-0.45,-0.25);
     \coordinate (Pone) at ($(A)!0.5!(Pzero)$);
+
     \fill[blue!6] (A)--(B)--(C)--cycle;
-    \draw[blue!75!black,very thick] (A)--(B)--(C)--cycle;
-    \draw[teal!70!black,thick] (A)--(Pzero);
-    \node[circle, fill=gray!75!black, inner sep=1pt] at (O) {};
+    \draw[blue!75!black, very thick] (A)--(B)--(C)--cycle;
+
+    % Circumcircle (radius 1)
+    \draw[dashed, gray!45] (O) circle (1.8);
+    \draw[dashed, blue!75!black, thick] (O) -- (A)
+    node[midway, right=2pt, font=\footnotesize, blue!85!black] {$|\overrightarrow{OA}|=1$};
+
+    % Line AP_0 and midpoint P_1
+    \draw[teal!70!black, thick] (A)--(Pzero);
+
+    % Dimension line for side length sqrt(3) below BC
+    \draw[<->, gray!25!black, thick] ($(B)+(0,-0.35)$) -- ($(C)+(0,-0.35)$)
+    node[midway, fill=white, inner sep=2pt, font=\footnotesize] {一辺の長さ $\sqrt{3}$};
+    \draw[dashed, gray!50] (B) -- ++(0,-0.4) (C) -- ++(0,-0.4);
+
+    % Points
+    \node[circle, fill=gray!75!black, inner sep=1.2pt] at (O) {};
     \node[circle, fill=teal!70!black, inner sep=1.5pt] at (Pzero) {};
     \node[circle, fill=teal!70!black, inner sep=1.5pt] at (Pone) {};
-    \node[above] at (A) {$A=X_1$};
-    \node[below left] at (B) {$B$};
-    \node[below right] at (C) {$C$};
-    \node[right] at (O) {$O$};
-    \node[below left] at (Pzero) {$P_0$};
-    \node[right] at (Pone) {$P_1$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (A) {};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (B) {};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (C) {};
+
+    \node[above=2pt] at (A) {$A=X_1$};
+    \node[below left=2pt] at (B) {$B$};
+    \node[below right=2pt] at (C) {$C$};
+    \node[below right=1pt] at (O) {$O$};
+    \node[below left=1pt] at (Pzero) {$P_0$};
+    \node[left=2pt] at (Pone) {$P_1$};
   \end{tikzpicture}
-  \caption{選んだ頂点が$A$のとき，$P_1$は$AP_0$の中点}
+  \caption{正三角形 $\triangle ABC$（一辺 $\sqrt{3}$，外接円半径 $1$）と点 $P_1$}
+  \label{fig:equilateral_triangle_P1}
 \end{figure}
 
-$\overrightarrow{OP_1} = \dfrac{1}{2}(\overrightarrow{OP_0} + \overrightarrow{OX_1})$
-
-$|\overrightarrow{OP_1}|^2 = \dfrac{1}{4}\{|\overrightarrow{OP_0}|^2 + |\overrightarrow{OX_1}|^2 + 2\overrightarrow{OP_0} \cdot \overrightarrow{OX_1}\}$
-
-$= \dfrac{1}{4}|\overrightarrow{OP_0}|^2 + 1 + 2\overrightarrow{OP_0} \cdot \overrightarrow{OX_1} \quad (\because |\overrightarrow{OX_1}| = 1)$
-
-より，
+一回目に選んだ頂点 $X_1$ とすると，題意より
 \begin{align}
-  E_1 = \sum_{X_1=A,B,C} |\overrightarrow{OP_1}|^2 \cdot \dfrac{1}{3}
+  \overrightarrow{OP_1} = \dfrac{1}{2}(\overrightarrow{OP_0} + \overrightarrow{OX_1}) \label{eq:1}
 \end{align}
+であり，両辺二乗して
 \begin{align}
-  = \dfrac{1+|\overrightarrow{OP_0}|^2}{4} + \dfrac{2}{3} \cdot \dfrac{1}{4} \overrightarrow{OP_0} \cdot (\overrightarrow{OA} + \overrightarrow{OB} + \overrightarrow{OC}) = \dfrac{1+|\overrightarrow{OP_0}|^2}{4} \quad (\because \overrightarrow{OA} + \overrightarrow{OB} + \overrightarrow{OC} = \vec{0})
-\end{align} \hfill(終)
+  |\overrightarrow{OP_1}|^2
+  & = \dfrac{1}{4}\{|\overrightarrow{OP_0}|^2 + |\overrightarrow{OX_1}|^2 + 2\overrightarrow{OP_0} \cdot \overrightarrow{OX_1}\} \\
+  & = \dfrac{1}{4}\{|\overrightarrow{OP_0}|^2 + 1 + 2\overrightarrow{OP_0} \cdot \overrightarrow{OX_1}\} \quad (\because |\overrightarrow{OX_1}| = 1) \label{eq:2}
+\end{align}
+だから，$X_1=A,B,C$として期待値を計算すれば
+\begin{align}
+  E_1
+  &= \dfrac{1}{3}\sum_{X_1=A,B,C} |\overrightarrow{OP_1}|^2 \\
+  &= \dfrac{1+|\overrightarrow{OP_0}|^2}{4} + \dfrac{2}{3} \cdot \dfrac{1}{4} \overrightarrow{OP_0} \cdot (\overrightarrow{OA} + \overrightarrow{OB} + \overrightarrow{OC}) \\
+  &= \dfrac{1+|\overrightarrow{OP_0}|^2}{4} \quad (\because \overrightarrow{OA} + \overrightarrow{OB} + \overrightarrow{OC} = \vec{0})
+\end{align}
+である．
 
 \paragraph{(2)}
 
-点$X$に対し，$\overrightarrow{OX} = \vec{x}$ とする．題意から，
+点$X$に対して$O$を始点とする位置ベクトルを小文字で$\overrightarrow{OX} = \vec{x}$ と表す．
+題意から，
 \begin{align}
-  \vec{P}_{n+1} = \dfrac{1}{2}(\vec{P}_n + \vec{x}_{n+1})
+  \vec{p}_{n+1} = \dfrac{1}{2}(\vec{p}_n + \vec{x}_{n+1})
 \end{align}
-だから，くり返し用いて，
+だからくり返し用いて，
 \begin{align}
-  \vec{P}_n = \dfrac{1}{2}\vec{x}_n + \dfrac{1}{4}\vec{x}_{n-1} + \cdots + \dfrac{1}{2^n}\vec{x}_1 + \dfrac{1}{2^n}\overrightarrow{OP_0}
+  \vec{P}_n
+  & = \dfrac{1}{2}\vec{x}_n + \dfrac{1}{4}\vec{x}_{n-1} + \cdots + \dfrac{1}{2^n}\vec{x}_1 + \dfrac{1}{2^n}\overrightarrow{OP_0} \\
+  & = \dfrac{1}{2^n}\overrightarrow{OP_0} + \sum_{i=1}^n \dfrac{1}{2^{n+1-i}}\overrightarrow{OX_i} \label{eq:3}
 \end{align}
-\begin{align}
-  = \dfrac{1}{2^n}\overrightarrow{OP_0} + \sum_{i=1}^n \dfrac{1}{2^{n+1-i}}\overrightarrow{OX_i}
-\end{align} \hfill(終)
-
-{\bf [別解]}
-
-\paragraph{(3)}
-
-$E_1 = \dfrac{1}{4} \ (\because (1)) \cdots \text{③}$ である．ここで，$n \ge 2$ の時，
-\begin{align}
-  \vec{P}_n = \dfrac{1}{2} \{ \vec{P}_{n-1} + \vec{x}_n \}
-\end{align}
-\begin{align}
-  |\vec{P}_n|^2 = \dfrac{1}{4}\{ |\vec{P}_{n-1}|^2 + |\vec{x}_n|^2 \} + \dfrac{1}{2}\vec{P}_{n-1} \cdot \vec{x}_n \cdots \text{④}
-\end{align}
-であり，
-\begin{align}
-  E(|\vec{P}_{n-1}|) = E_{n-1}
-\end{align}
-\begin{align}
-  E(|\vec{x}_n|^2) = 1
-\end{align}
-\begin{align}
-  E(\vec{P}_{n-1} \cdot \vec{x}_n) = \dfrac{1}{3}\vec{P}_{n-1} \cdot (\vec{a} + \vec{b} + \vec{c}) = 0
-\end{align}
-を④に代入して
-\begin{align}
-  E_n = \dfrac{1}{4} (E_{n-1} + 1)
-\end{align}
-③とあわせて
-\begin{align}
-  E_n = \dfrac{1}{3}\{1 - \left(\dfrac{1}{4}\right)^n\}
-\end{align} \hfill(終)
+である．
 
 \paragraph{(3)}
 
-$P_0 = O$ の時，
+$P_0 = O$ の時\cref{eq:3}より
 \begin{align}
   \overrightarrow{OP_n} = \sum_{i=1}^n \dfrac{1}{2^{n+1-i}} \overrightarrow{OX_i}
 \end{align}
 だから，$Y_i$ を，$\vec{y}_i = \dfrac{1}{2^{n+1-i}} \vec{x}_i$ となるよう定めると，
 \begin{align}
-  |\vec{P}_n|^2 = |\vec{y}_1 + \vec{y}_2 + \cdots + \vec{y}_n|^2
+  |\vec{P}_n|^2
+  & = |\vec{y}_1 + \vec{y}_2 + \cdots + \vec{y}_n|^2 \\
+  & = \sum_{i=1}^n |\vec{y}_i|^2 + 2 \sum_{i < j} \vec{y}_i \cdot \vec{y}_j \\
+  & = \sum_{i=1}^n \dfrac{1}{4^{n+1-i}} + 2 \sum_{i < j} \vec{y}_i \cdot \vec{y}_j \quad (\because |\vec{x}_i| = 1) \\
+  & = \dfrac{1}{3}\{1 - (1/4)^n\} + 2 \sum_{i < j} \vec{y}_i \cdot \vec{y}_j \label{eq:4}
 \end{align}
-\begin{align}
-  = \sum_{i=1}^n |\vec{y}_i|^2 + 2 \sum_{i < j} \vec{y}_i \cdot \vec{y}_j
-\end{align}
-\begin{align}
-  = \sum_{i=1}^n \dfrac{1}{4^{n+1-i}} + 2 \sum_{i < j} \vec{y}_i \cdot \vec{y}_j \quad (\because |\vec{x}_i| = 1)
-\end{align}
-\begin{align}
-  = \dfrac{1}{3}\{1 - (1/4)^n\} + 2 \sum_{i < j} \vec{y}_i \cdot \vec{y}_j \cdots \text{①}
-\end{align}
-である．ここで，$i \ne j$ に対して，
+である．ここで $i \ne j$ に対して，$\triangle ABC$が一辺$\sqrt{3}$の正三角形だから
 \begin{align}
   \vec{x}_i \cdot \vec{x}_j =
-  \begin{cases} 1 & (X_i = X_j) \\ -1/2 & (X_i \ne X_j)
-  \end{cases} \cdots \text{②}
+  \begin{cases}
+    1 & (X_i = X_j) \\
+    -1/2 & (X_i \ne X_j)
+  \end{cases}
 \end{align}
 だから $\vec{x}_i \cdot \vec{x}_j$ の期待値 $P_{i,j}$ は
 \begin{align}
-  P = \dfrac{1}{3} \cdot 1 + \dfrac{2}{3} \left(-\dfrac{1}{2}\right) = 0
+  P_{i,j} = \dfrac{1}{3} \cdot 1 + \dfrac{2}{3} \left(-\dfrac{1}{2}\right) = 0
 \end{align}
-なので，$\sum_{i < j} \vec{y}_i \cdot \vec{y}_j$ の期待値 $Q$ は，
+である．
+
+従って\cref{eq:4}$の第二項\sum_{i < j} \vec{y}_i \cdot \vec{y}_j$ の期待値 $Q$ は，
 \begin{align}
   Q = \sum_{i < j} \dfrac{1}{2^{n+1-i} \cdot 2^{n+1-j}} \cdot P_{i,j} = 0
 \end{align}
-だから ①より
+だから\cref{eq:4}より求める期待値は
 \begin{align}
   E_n = \dfrac{1}{3}(1 - (1/4)^n) + Q = \dfrac{1}{3} \{ 1 - \left(\dfrac{1}{4}\right)^n \}
-\end{align} \hfill(終)
+\end{align}
+である．
+
+{\bf [別解]}
+
+\paragraph{(3)}
+
+(1)より$E_1 = \dfrac{1}{4}$ である．
+ここで $n \ge 2$ の時，
+\begin{align}
+  \begin{cases}
+    \vec{p}_n = \dfrac{1}{2} \{ \vec{p}_{n-1} + \vec{x}_n \} \\
+    |\vec{p}_n|^2 = \dfrac{1}{4}\{ |\vec{p}_{n-1}|^2 + |\vec{x}_n|^2 \} + \dfrac{1}{2}\vec{p}_{n-1} \cdot \vec{x}_n
+  \end{cases}\label{eq:5}
+\end{align}
+であり，題意より
+\begin{align}
+  \begin{cases}
+    E(|\vec{P}_{n-1}|^2) = E_{n-1} \\
+    E(|\vec{x}_n|^2) = 1 \\
+    E(\vec{P}_{n-1} \cdot \vec{x}_n) = \dfrac{1}{3}\vec{P}_{n-1} \cdot (\vec{a} + \vec{b} + \vec{c}) = 0
+  \end{cases}
+\end{align}
+を\cref{eq:5}に代入して
+\begin{align}
+  E_n = \dfrac{1}{4} (E_{n-1} + 1)
+\end{align}
+だから，初項$E_1=\dfrac{1}{4}$と合わせて
+\begin{align}
+  E_n = \dfrac{1}{3}\{1 - \left(\dfrac{1}{4}\right)^n\}
+\end{align}
+である．
 
 \end{document}

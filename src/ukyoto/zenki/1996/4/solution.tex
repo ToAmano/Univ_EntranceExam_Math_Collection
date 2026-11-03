@@ -1,70 +1,104 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} (1) $k=8$の時， $a_1 = 0, a_2 = 2, a_n = 3 \ (n \ge 3)$
-
-$k=9, \ \ a_1 = 0, a_2 = 3, a_n = 4 \ (n \ge 3)$ \hfill(終)
-
-\paragraph{(2)}
-
-題意を帰納的に示す．まず，$n=1$の時，$a_1=0, a_2 = [\dfrac{k}{3}] \ge 0$，$k \ge 0$ から成立する．以下$n=k \in \mathbb{N}$での成立を仮定する．$[x]$は単調増加だから，
+与えられた数列
 \begin{align}
-  a_{k+1} = \left[ \dfrac{a_k + k}{3} \right] \le \left[ \dfrac{a_{k+1} + k}{3} \right] = a_{k+2} \cdots \text{①}
+  a_n=\left[\dfrac{a_{n-1}+k}{3}\right], \quad a_1=0 \label{eq:1}
 \end{align}
-次に，
-\begin{align}
-  a_{k+1} = \left[ \dfrac{a_k + k}{3} \right] \le \left[ \dfrac{\dfrac{k}{2} - \dfrac{1}{6}}{3} \right] \quad \text{(※修正)}
-\end{align}
-であり，$k \in \text{odd}$の時 $\left[ \dfrac{k}{2} - \dfrac{1}{6} \right] = \left[ \dfrac{k-1}{2} + \dfrac{1}{3} \right] = \dfrac{k-1}{2}$
+について考える．
 
-$k \in \text{even}$の時 $\left[ \dfrac{k}{2} - \dfrac{1}{6} \right] = \dfrac{k}{2} - 1 < \dfrac{k-1}{2}$
+\subparagraph{(1)}
 
-から，
+\cref{eq:1}で$k=8,9$として漸化的に計算すると
 \begin{align}
-  a_{k+1} \le \dfrac{k-1}{2} \cdots \text{②}
-\end{align}
-となる．以上①②から，$n=k+1$でも成立．よって示された \hfill(終)
-
-\paragraph{(3)}
-
-題意を帰納的に示す．$n=N$の時は成立するので，以下$n=N \in \mathbb{N}$としての成立を仮定する．
-\begin{align}
-  a_{N+1} = \left[ \dfrac{a_N + k}{3} \right] = \left[ \dfrac{a_n + k}{3} \right] = a_{n+1} = a_n \quad (\because \text{仮定})
-\end{align}
-から，$n=N+1$でも成立．よって示された \hfill(終)
-
-\paragraph{(4)}
-
-(2)から $0 \le a_n \le \dfrac{k-1}{2}$ で，$a_n \in \mathbb{Z}$ から，$a_n = a_{n+1}$ となる$n$がある．この時，
-\begin{align}
-  a_{n+1} = \left[ \dfrac{a_n + k}{3} \right] = a_n
-\end{align}
-から，
-\begin{align}
-  a_n \le \dfrac{a_n + k}{3} < a_n + 1
-\end{align}
-\begin{align}
-  \dfrac{k-3}{2} < a_n \le \dfrac{k}{2} \cdots \text{③}
+  \begin{cases}
+    k=8\text{の時}: a_1 = 0, a_2 = 2, a_n = 3 \ (n \ge 3) \\
+    k=9\text{の時}: a_1 = 0, a_2 = 3, a_n = 4 \ (n \ge 3)
+  \end{cases}
 \end{align}
 である．
 
-$1^\circ \ k \in \text{odd}$
+\paragraph{(2)}
 
-$a_n \in \mathbb{Z}$ と③から，$a_n = \dfrac{k-1}{2}$ である．
+題意の不等式
+\begin{align}
+  a_n\leqq\dfrac{k-1}{2}, a_n \leqq a_{n+1} \label{eq:2}
+\end{align}
+を数学的帰納法によって示す．
 
-$2^\circ \ k \in \text{even}$
+まず$n=1$の時は$a_1=0, a_2 = [\dfrac{k}{3}] \ge 0$，$k \ge 0$ より成立する．
+そこで以下$n=m \in \mathbb{N}$での成立を仮定する．$[x]$は単調増加だから，$n=m+1$に対して
+\begin{align}
+  a_{m+1}
+  = \left[ \dfrac{a_m + k}{3} \right]
+  \le \left[ \dfrac{a_{m+1} + k}{3} \right]
+  = a_{m+2} \label{eq:3}
+\end{align}
+である．
 
-$a_n \in \mathbb{Z}$ と③，$a_n \le \dfrac{k-1}{2}$ から，$a_n = \dfrac{k-2}{2}$ である．
+次に，
+\begin{align}
+  a_{k+1}
+  = \left[ \dfrac{a_k + k}{3} \right] \le \left[\dfrac{(k-1)/2+k}{3}\right]
+  = \left[ \dfrac{k}{2} - \dfrac{1}{6} \right] \label{eq:4}
+\end{align}
+であり，$k$の偶奇で場合分けすると
+\begin{align}
+  \begin{cases}
+    & k \in \text{odd} \text{の時} \left[ \dfrac{k}{2} - \dfrac{1}{6} \right] = \left[ \dfrac{k-1}{2} + \dfrac{1}{3} \right] = \dfrac{k-1}{2} \\
+    & k \in \text{even}\text{の時} \left[ \dfrac{k}{2} - \dfrac{1}{6} \right] = \dfrac{k}{2} - 1 < \dfrac{k-1}{2}
+  \end{cases}
+\end{align}
+となる．よって
+\begin{align}
+  a_{k+1} \le \dfrac{k-1}{2}
+\end{align}
+となる．
+
+以上から$n=k+1$でも\cref{eq:2}は成立し，数学的帰納法により任意の$n$に対して\cref{eq:2}が成立する．
+
+\paragraph{(3)}
+
+$a_n=a_{n+1}$なら$m \ge n$に対して$a_m=a_n$であることを$m$についての数学的帰納法で証明する．
+$m=n,n+1$の時は成立するので以下$m=k (\ge n+1)$での成立を仮定して$m=k+1$の時を考えると，
+\begin{align}
+  a_{k+1} = \left[ \dfrac{a_k + k}{3} \right] = \left[ \dfrac{a_n + k}{3} \right] = a_{n+1} = a_n \quad (\because\text{仮定})
+\end{align}
+から$m=k+1$でも成立する．よって題意の前半は示された．
+
+そこで以下この時の$a_n$の値を求める．(2)および$a_n \in \mathbb{Z}$から
+\begin{align}
+  a_1 \le a_2 \le \cdots \le a_n \le \cdots \le \dfrac{k-1}{2}
+\end{align}
+である．よって鳩の巣原理から$a_n = a_{n+1}$ となる$n$がある．
+この時\cref{eq:1}
+\begin{align}
+  & a_{n+1} = \left[ \dfrac{a_n + k}{3} \right] = a_n \\
+  & a_n \le \dfrac{a_n + k}{3} < a_n + 1 \\
+  \therefore
+  & \dfrac{k-3}{2} < a_n \le \dfrac{k}{2}  \label{eq:5}
+\end{align}
+である．$k$についての偶奇で場合分けする．
+
+\subparagraph{$1^\circ \ k \in \text{odd}$の時}
+
+$a_n \in \mathbb{Z}$ と\cref{eq:5}から $a_n = \dfrac{k-1}{2}$ である．
+
+\subparagraph{$2^\circ \ k \in \text{even}$の時}
+
+$a_n \in \mathbb{Z}$ と\cref{eq:5}, および$a_n \le \dfrac{k-1}{2}$ から $a_n = \dfrac{k-2}{2}$ である．
+\casesend
 
 以上まとめて，
 \begin{align}
   a_n =
-  \begin{cases} \dfrac{k-1}{2} & (k \in \text{odd}) \\ \dfrac{k}{2} - 1 & (k \in \text{even})
+  \begin{cases}
+    \dfrac{k-1}{2} & (k \in \text{odd}) \\
+    \dfrac{k}{2} - 1 & (k \in \text{even})
   \end{cases}
-\end{align} \hfill(終)
+\end{align}
+である．
 
 \end{document}
