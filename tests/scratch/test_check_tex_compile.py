@@ -250,3 +250,136 @@ def test_compile_single_tex_docker_cmd(tmp_path, monkeypatch):
     assert executed_cmd[ executed_cmd.index("-w") + 1 ] == "/work/src/test_univ/zenki/1990/1"
     assert "paperist/texlive-ja:latest" in executed_cmd
 
+
+def test_cli_empty_args_success(capsys, monkeypatch):
+    monkeypatch.setattr(checker, "get_working_tree_changed_files", lambda repo_root=None: [])
+    ret = checker.main([])
+    captured = capsys.readouterr()
+    assert ret == 0
+    assert "No target tex files to compile." in captured.out
+
+
+def test_cli_valid_file_local_compile():
+    # Test compiling an existing valid solution from the repository
+    valid_file = Path("src/ukyoto/zenki/1996/2/solution.tex")
+    if not valid_file.exists():
+        pytest.skip("Test file src/ukyoto/zenki/1996/2/solution.tex does not exist")
+    ret = checker.main([str(valid_file)])
+    assert ret == 0
+
+
+def test_cli_broken_file_fails(tmp_path):
+    broken_file = tmp_path / "src" / "dummy" / "solution.tex"
+    broken_file.parent.mkdir(parents=True)
+    broken_file.write_text(r"\documentclass{article}\begin{document}\undefinedcommand\end{document}", encoding="utf-8")
+    ret = checker.main([str(broken_file)])
+    assert ret == 1
+
+
+def test_cli_parse_args():
+    args = checker.parse_args(["--changed", "--docker"])
+    assert args.changed is True
+    assert args.docker is True
+    assert args.files == []
+
+    args2 = checker.parse_args(["--base", "main", "--head", "feature", "file1.tex"])
+    assert args2.base == "main"
+    assert args2.head == "feature"
+    assert args2.files == ["file1.tex"]
+
+
+def test_cli_missing_tools(monkeypatch, tmp_path, capsys):
+    target = tmp_path / "src" / "dummy" / "solution.tex"
+    target.parent.mkdir(parents=True)
+    target.write_text("% valid", encoding="utf-8")
+
+    monkeypatch.setattr(checker.shutil, "which", lambda cmd: None)
+    ret = checker.main([str(target)])
+    captured = capsys.readouterr()
+    assert ret == 1
+    assert "Neither 'latexmk' nor 'docker' is available on PATH" in captured.err
+
+
+def test_cli_changed_flag(monkeypatch, tmp_path, capsys):
+    target = tmp_path / "src" / "univ" / "1990" / "1" / "solution.tex"
+    target.parent.mkdir(parents=True)
+    target.write_text("% valid", encoding="utf-8")
+
+    monkeypatch.setattr(checker, "get_working_tree_changed_files", lambda repo_root=None: [str(target)])
+    monkeypatch.setattr(checker, "compile_single_tex", lambda t, repo_root, use_docker=False: (True, "", 0.42))
+
+    ret = checker.main(["--changed"])
+    captured = capsys.readouterr()
+    assert ret == 0
+    assert "[PASS]" in captured.out
+    assert "Summary: 1 checked, 1 passed, 0 failed." in captured.out
+
+
+def test_cli_base_head_flag(monkeypatch, tmp_path, capsys):
+    target = tmp_path / "src" / "univ" / "1990" / "1" / "problem.tex"
+    target.parent.mkdir(parents=True)
+    target.write_text("% valid", encoding="utf-8")
+
+    called_diff = {}
+    def mock_get_git_diff_files(base=None, head=None, repo_root=None):
+        called_diff["base"] = base
+        called_diff["head"] = head
+        return [str(target)]
+
+    monkeypatch.setattr(checker, "get_git_diff_files", mock_get_git_diff_files)
+    monkeypatch.setattr(checker, "compile_single_tex", lambda t, repo_root, use_docker=False: (True, "", 0.5))
+
+    ret = checker.main(["--base", "origin/main", "--head", "my-branch"])
+    captured = capsys.readouterr()
+    assert ret == 0
+    assert called_diff["base"] == "origin/main"
+    assert called_diff["head"] == "my-branch"
+    assert "[PASS]" in captured.out
+
+
+def test_cli_docker_autodetect(monkeypatch, tmp_path, capsys):
+    target = tmp_path / "src" / "univ" / "1990" / "1" / "solution.tex"
+    target.parent.mkdir(parents=True)
+    target.write_text("% valid", encoding="utf-8")
+
+    # latexmk missing, docker present
+    def mock_which(cmd):
+        if cmd == "docker":
+            return "/usr/local/bin/docker"
+        return None
+
+    passed_use_docker = {}
+    def mock_compile(t, repo_root, use_docker=False):
+        passed_use_docker["val"] = use_docker
+        return (True, "", 1.0)
+
+    monkeypatch.setattr(checker.shutil, "which", mock_which)
+    monkeypatch.setattr(checker, "compile_single_tex", mock_compile)
+
+    ret = checker.main([str(target)])
+    captured = capsys.readouterr()
+    assert ret == 0
+    assert passed_use_docker["val"] is True
+    assert "engine=docker" in captured.out
+
+
+def test_cli_failure_output_and_exit_code(monkeypatch, tmp_path, capsys):
+    target = tmp_path / "src" / "univ" / "1990" / "1" / "solution.tex"
+    target.parent.mkdir(parents=True)
+    target.write_text("% broken", encoding="utf-8")
+
+    def mock_compile(t, repo_root, use_docker=False):
+        return (False, "! LaTeX Error: Bad syntax\nl.12 \\foo", 0.8)
+
+    monkeypatch.setattr(checker, "compile_single_tex", mock_compile)
+
+    ret = checker.main([str(target)])
+    captured = capsys.readouterr()
+    assert ret == 1
+    assert "[FAIL]" in captured.err
+    assert "--- Error Details ---" in captured.err
+    assert "! LaTeX Error: Bad syntax" in captured.err
+    assert "Summary: 1 checked, 0 passed, 1 failed." in captured.out
+
+
+

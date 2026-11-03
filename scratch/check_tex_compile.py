@@ -3,11 +3,13 @@
 
 from __future__ import annotations
 
+import argparse
 import contextlib
 import os
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 import time
 from pathlib import Path
@@ -134,7 +136,10 @@ def compile_single_tex(
 
     Returns (success, error_message, elapsed_seconds).
     """
-    rel_path = tex_file.resolve().relative_to(repo_root.resolve())
+    try:
+        rel_path = tex_file.resolve().relative_to(repo_root.resolve())
+    except ValueError:
+        rel_path = tex_file.resolve()
     file_dir = tex_file.parent
     file_name = tex_file.name
 
@@ -147,7 +152,7 @@ def compile_single_tex(
             cmd = [
                 "docker", "run", "--rm",
                 "-v", f"{repo_root.resolve()}:/work",
-                "-w", f"/work/{rel_path.parent}",
+                "-w", f"/work/{rel_path.parent.as_posix()}",
                 "paperist/texlive-ja:latest",
                 "latexmk", "-lualatex",
                 "-interaction=nonstopmode",
@@ -188,4 +193,100 @@ def compile_single_tex(
 
         error_summary = extract_latex_errors(log_content)
         return False, error_summary, elapsed
+
+
+def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Verify LaTeX compilation of modified solution.tex and problem.tex files."
+    )
+    parser.add_argument(
+        "files",
+        nargs="*",
+        help="Specific .tex files to compile. If omitted, files are determined via --changed or --base/--head.",
+    )
+    parser.add_argument(
+        "--changed",
+        action="store_true",
+        help="Check modified/uncommitted target .tex files in git working tree.",
+    )
+    parser.add_argument(
+        "--base",
+        type=str,
+        help="Base git commit SHA for diff check.",
+    )
+    parser.add_argument(
+        "--head",
+        type=str,
+        help="Head git commit SHA for diff check (default: HEAD).",
+    )
+    parser.add_argument(
+        "--docker",
+        action="store_true",
+        help="Force using Docker image paperist/texlive-ja:latest for compilation.",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    args = parse_args(argv)
+    repo_root = Path.cwd().resolve()
+
+    # Determine files to compile
+    if args.files:
+        targets = filter_target_files(args.files, repo_root=repo_root)
+    elif args.changed:
+        changed_raw = get_working_tree_changed_files(repo_root=repo_root)
+        targets = filter_target_files(changed_raw, repo_root=repo_root)
+    elif args.base:
+        head = args.head or "HEAD"
+        diff_raw = get_git_diff_files(base=args.base, head=head, repo_root=repo_root)
+        targets = filter_target_files(diff_raw, repo_root=repo_root)
+    else:
+        # If no arguments provided, check working tree changes
+        changed_raw = get_working_tree_changed_files(repo_root=repo_root)
+        targets = filter_target_files(changed_raw, repo_root=repo_root)
+
+    if not targets:
+        print("No target tex files to compile. Skipping compilation check.")
+        return 0
+
+    # Auto-detect docker if latexmk is missing and docker is available
+    use_docker = args.docker
+    if not use_docker and shutil.which("latexmk") is None:
+        if shutil.which("docker") is not None:
+            use_docker = True
+        else:
+            print("ERROR: Neither 'latexmk' nor 'docker' is available on PATH.", file=sys.stderr)
+            return 1
+
+    print(f"Checking LaTeX compilation for {len(targets)} file(s) (engine={'docker' if use_docker else 'host'})...")
+
+    failed_count = 0
+    for target in targets:
+        try:
+            rel = target.relative_to(repo_root)
+        except ValueError:
+            rel = target
+        success, error_snippet, elapsed = compile_single_tex(
+            target,
+            repo_root=repo_root,
+            use_docker=use_docker,
+        )
+        if success:
+            print(f"[PASS] {rel} ({elapsed:.1f}s)")
+        else:
+            print(f"[FAIL] {rel} ({elapsed:.1f}s)", file=sys.stderr)
+            if error_snippet:
+                print("--- Error Details ---", file=sys.stderr)
+                print(error_snippet, file=sys.stderr)
+                print("---------------------", file=sys.stderr)
+            failed_count += 1
+
+    print(f"\nSummary: {len(targets)} checked, {len(targets) - failed_count} passed, {failed_count} failed.")
+    return 1 if failed_count > 0 else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+
 
