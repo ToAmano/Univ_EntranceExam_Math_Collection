@@ -1,11 +1,8 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $c = \cos t, s = \sin t$とする．題意の接線は $(\cos x)' = -\sin x$より，$y = -s(x-t) + c$だから，これと$x, y$軸との交点$A, B$として，$A(t + \dfrac{c}{s}, 0), B(0, c+st)$である．（$\because$ 接線は$y$軸平行でない）
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}[x=2.6cm,y=2.1cm,every node/.style={font=\small}]
@@ -32,65 +29,156 @@
   \caption{$y=\cos x$の$x=t$における接線と三角形$OAB$}
 \end{figure}
 
+$y=\cos x$の$P(t,\cos t)$における接線は $(\cos x)' = -\sin x$より
+\begin{align}
+  y = -s(x-t) + c \label{eq:1}
+\end{align}
+である．これと$x, y$軸との交点$A, B$として
+\begin{align}
+  A(t + \dfrac{\cos t}{\sin t}, 0), B(0, \cos t+t\sin t) \label{eq:2}
+\end{align}
+である．ただし$0<t<\dfrac{\pi}{2}$から$\sin t \neq 0$であることに注意した．
+
 \paragraph{(1)}
 
-$S(t) = (\triangle OAB\text{の面積}) = \dfrac{1}{2}\left(t + \dfrac{c}{s}\right)(c+st) = \dfrac{1}{2}\left(t + \dfrac{\cos t}{\sin t}\right)(\cos t + \sin t \cdot t)$
+\cref{eq:2}より，求める面積は
+\begin{align}
+  S(t)
+  & = (\triangle OAB\text{の面積}) \\
+  &  = \dfrac{1}{2}\left(t + \dfrac{\cos t}{\sin t}\right)(\cos t + \sin t \cdot t) \label{eq:3}
+\end{align}
+である．
+
 \paragraph{(2)}
 
-$2S(t) = c\left(t+\dfrac{c}{s}\right)$であり，区間内では$t^2$は単調増加，$\dfrac{1}{s^2}$は単調減少だから，$c > 0$とあわせて，$S'(t)$は単調増加である．これと$S'(\dfrac{\pi}{4}) = \dfrac{\sqrt{2}}{4}(\dfrac{\pi}{4}-1) < 0$ ($\because \pi=3.14\dots$)，$S'(1) = \cos 1 (2 - \dfrac{1}{\sin^2 1}) > \cos 1 (2-2) = 0$ ($\because \dfrac{\pi}{4} < 1 < \dfrac{\pi}{2}$から，$\sin 1 > \sin\dfrac{\pi}{4}, \cos 1 > 0$)，及び$S'(t)$が連続であることから，中間値の定理より，$S'(t_0) = 0$（$\dfrac{\pi}{4} < t_0 < 1$）なる$t_0$が存在し，下表をうる．
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \caption{$S(t)$ の増減表}
-    \begin{tabular}{|c|c|c|c|c|c|}
-      \hline
-      $t$ & $0$ & $\cdots$ & $t_0$ & $\cdots$ & $\pi/2$ \\ \hline
-      $S'$ & & $-$ & $0$ & $+$ & \\ \hline
-      $S$ & & $\searrow$ & & $\nearrow$ & \\ \hline
-    \end{tabular}
-  \end{table}
-\end{center}
-したがって，$S(t)$は$t=t_0$でminをとる．以上から示された．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=3.8cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0,0);
+    \def\tzero{0.860}
+    \def\tpi4{0.785}
+    \def\tone{1.0}
+    \def\tpiby2{1.571}
+
+    % Axes
+    \draw[->, gray!75!black] (-0.1,0) -- (1.75,0) node[right] {$t$};
+    \draw[->, gray!75!black] (0,-2.2) -- (0,1.8) node[above] {$y$};
+
+    % Highlight interval [pi/4, 1] on t-axis
+    \fill[teal!15] (\tpi4,-0.08) rectangle (\tone,0.08);
+
+    % Curve y = S'(t) = 0.5 * cos(t) * (1 + t^2 - 1/sin^2(t))
+    \draw[blue!85!black, line width=1.4pt, domain=0.48:1.57, samples=100]
+    plot (\x, {0.5 * cos(\x r) * (1 + \x*\x - 1/(sin(\x r)*sin(\x r)))});
+    \node[right, blue!85!black, font=\footnotesize] at (1.25, 0.45) {$y = S'(t)$};
+
+    % Points and projections
+    % t = pi/4
+    \coordinate (Ppi4) at (\tpi4, {0.5 * cos(\tpi4 r) * (1 + \tpi4*\tpi4 - 1/(sin(\tpi4 r)*sin(\tpi4 r)))});
+    \draw[dashed, gray!60] (\tpi4, 0) -- (Ppi4);
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (Ppi4) {};
+    \node[below=3pt, font=\footnotesize] at (\tpi4, 0) {$\frac{\pi}{4}$};
+    \node[left=3pt, font=\scriptsize, blue!85!black] at (Ppi4) {$S'(\frac{\pi}{4}) < 0$};
+
+    % t = t_0
+    \coordinate (Pt0) at (\tzero, 0);
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (Pt0) {};
+    \node[above=2pt, red!85!black, font=\footnotesize] at (Pt0) {$t_0$};
+
+    % t = 1
+    \coordinate (P1) at (\tone, {0.5 * cos(\tone r) * (1 + \tone*\tone - 1/(sin(\tone r)*sin(\tone r)))});
+    \draw[dashed, gray!60] (\tone, 0) -- (P1);
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (P1) {};
+    \node[below=3pt, font=\footnotesize] at (\tone, 0) {$1$};
+    \node[above=3pt, font=\scriptsize, blue!85!black] at (P1) {$S'(1) > 0$};
+
+    % t = pi/2
+    \node[below=3pt, font=\footnotesize] at (\tpiby2, 0) {$\frac{\pi}{2}$};
+
+    % Signs of S'(t)
+    \node[teal!80!black, font=\footnotesize] at (0.6, -0.6) {$-$};
+    \node[teal!80!black, font=\footnotesize] at (1.1, 0.45) {$+$};
+
+    \node[below left=1pt] at (O) {$O$};
+  \end{tikzpicture}
+  \caption{$y = S'(t)$ のグラフと零点 $t_0$ の様子}
+  \label{fig:derivative_S_prime_graph}
+\end{figure}
+
+\cref{eq:3}を$t$で微分して
+\begin{align}
+  2S'(t) = \cos\theta \left(1+t^2-\dfrac{1}{\sin^2\theta}\right) \label{eq:4}
+\end{align}
+である．区間$(0,\pi/2)$では$t^2$は単調増加，$\dfrac{1}{\sin^2\theta}$は単調減少だから，$\cos\theta > 0$とあわせて $S'(t)$ は単調増加である．これと
+\begin{align}
+  & S'(\dfrac{\pi}{4}) = \dfrac{\sqrt{2}}{4}(\dfrac{\pi}{4}-1) < 0 \\
+  & S'(1) = \cos 1 (2 - \dfrac{1}{\sin^2 1}) > \cos 1 (2-2) = 0 \quad (\because \dfrac{\pi}{4} < 1 < \dfrac{\pi}{2})
+\end{align}
+および及び$S'(t)$が連続であることから中間値の定理より，
+\begin{align}
+  S'(t_0) = 0 (\dfrac{\pi}{4} < t_0 < 1)
+\end{align}
+なる$t_0$が存在して$S(t)$の増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$S(t)$ の増減表}
+  \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    $t$ & $0$ & $\cdots$ & $t_0$ & $\cdots$ & $\pi/2$ \\ \hline
+    $S'$ & & $-$ & $0$ & $+$ & \\ \hline
+    $S$ & & $\searrow$ & & $\nearrow$ & \\ \hline
+  \end{tabular}
+\end{table}
+
+したがって，$S(t)$は$t=t_0$で最小値をとる．以上から示された．
 
 \paragraph{(3)}
 
-$S'(t_0) = 0$及び$\cos t_0 \neq 0$から
+$S'(t_0) = 0$及び$\cos t_0 \neq 0$から\cref{eq:4}より
 \begin{align}
-  1 + {t_0}^2 = \dfrac{1}{\sin^2 t_0} = 1 + \dfrac{1}{\tan^2 t_0} \cdots \text{\textcircled{1}}
+  & 1 + {t_0}^2 = \dfrac{1}{\sin^2 t_0} = 1+\dfrac{1}{\tan^2 t_0} \label{eq:5} \\
+  \therefore
+  & t_0 = \tan t_0 \quad (\because t_0,\tan t_0 > 0) \label{eq:6}
 \end{align}
-である．(1)から
+である．\cref{eq:3}から
 \begin{align}
-  S(t) = ct + \dfrac{1}{2}\left(st^2 + \dfrac{c^2}{s}\right)
+  S(t)
+  &= t\cos t + \dfrac{1}{2}\left(t^2\sin t + \dfrac{\cos^2 t}{\sin t}\right) \\
+  &= t\cos t + \dfrac{1}{2}\left(t^2\sin t + \dfrac{1}{\sin t} - \sin t \right)
 \end{align}
-だから，$c_0 = \cos t_0, s_0 = \sin t_0$として，
+だから $t=t_0$を代入して
 \begin{align}
-  S(t_0) = c_0 t_0 + \dfrac{1}{2}\left( s_0 {t_0}^2 - 1 + \dfrac{1}{s_0} \right)
+  S(t_0)
+  & = c_0 t_0 + \dfrac{1}{2}\left( {t_0}^2\sin t_0  + \dfrac{1}{\sin t_0} - \sin t_0 \right) \\
+  & = c_0 t_0 + \left( \dfrac{1}{\sin t_0} - \sin t_0 \right) \quad (\because \text{\cref{eq:5}}) \\
+  & = c_0 t_0 + \dfrac{\cos^2 t_0}{\sin t_0} \\
+  & = c_0 t_0 + \dfrac{\cos t_0}{\tan t_0} \\
+  & = c_0 t_0 + t_0 \cos t_0 \quad (\because\text{\cref{eq:6}})\\
+  & = 2t_0\cos t_0 \label{eq:7}
 \end{align}
+となる．
+ここで $f(t) = 2 t \cos t$とおくと一階微分は
 \begin{align}
-  = c_0 t_0 + \left( \dfrac{1}{s_0} - s_0 \right) \quad (\because \text{\textcircled{1}}) \cdots \text{\textcircled{2}}
+  f'(t) = 2(\cos t - t\sin t) = 2\cos t(1 - t \tan t)
 \end{align}
-となる．ここで，
+となる．よって\cref{eq:6}に注意して$f(t)$の増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$f(t)$ の増減表}
+  \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    $t$ & $0$ & $\cdots$ & $\pi/4$ & $\cdots$ & $t_0$ & $\cdots$ & $1$ & $\cdots$ & $\pi/2$ \\ \hline
+    $f'$ & $+$ & $+$ & $+$ & $+$ & $0$ & $-$ & $-$ & $-$ & \\ \hline
+    $f$ & & $\nearrow$ & $f(\pi/4)$ & $\nearrow$ & & $\searrow$ & & $\searrow$ & \\ \hline
+  \end{tabular}
+\end{table}
+
+したがって
 \begin{align}
-  \dfrac{1}{s_0} - s_0 = \dfrac{{c_0}^2}{s_0} = c_0 \cdot \dfrac{c_0}{s_0} = c_0 \cdot \dfrac{1}{\tan t_0} = c_0 \cdot t_0 \quad (\because \text{\textcircled{1}}, t_0, \tan t_0 > 0)
+  f(\dfrac{\pi}{4}) < f(t_0) \Leftrightarrow \dfrac{\sqrt{2}}{4}\pi < S(t_0)
 \end{align}
-だから\textcircled{2}に代入して，
-\begin{align}
-  S(t_0) = 2 \cos t_0 \cdot t_0
-\end{align}
-となる．ここで，$f(t) = 2 c \cdot t$とおくと，$f'(t) = 2(c - st) = 2c(1 - t \cdot \tan t)$から下表をうる．
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \caption{$f(t)$ の増減表}
-    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
-      \hline
-      $t$ & $0$ & $\cdots$ & $\pi/4$ & $\cdots$ & $t_0$ & $\cdots$ & $1$ & $\cdots$ & $\pi/2$ \\ \hline
-      $f'$ & $+$ & $+$ & $+$ & $+$ & $0$ & $-$ & $-$ & $-$ & \\ \hline
-      $f$ & & $\nearrow$ & $f(\pi/4)$ & $\nearrow$ & & $\searrow$ & & $\searrow$ & \\ \hline
-    \end{tabular}
-  \end{table}
-\end{center}
-(\textcircled{1}から，$t_0 = \dfrac{1}{\tan t_0}$であり，又，$1 - t \tan t$は区間内で単調増加)
-したがって，$f(\dfrac{\pi}{4}) < f(t_0) \Leftrightarrow \dfrac{\sqrt{2}}{4}\pi < S(t_0)$である．
+である．以上から題意は示された．
 
 \end{document}

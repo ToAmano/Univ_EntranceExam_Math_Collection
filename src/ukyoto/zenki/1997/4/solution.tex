@@ -1,81 +1,140 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} (1) $f(x) = \sin x$とおく．$f'(x) = \cos x, f''(x) = -\sin x$から，$0 \le x \le \pi/2$では$f(x)$は上に凸である．
+\paragraph{(1)}
 
-ここで，左辺第2項は，$t = \pi - x$により，($\dfrac{dt}{dx} = -1$)
+題意の不等式
 \begin{align}
-  \int_\beta^\alpha \sin(\pi-t) dt (-1)
+  \int_\alpha^\beta \sin xdx + \int_{\pi-\beta}^{\pi-\alpha} \sin xdx >
+  (\beta-\alpha)(\sin\alpha+\sin(\pi-\beta))
+  \quad  \left(0\leqq\alpha<\beta\leqq\dfrac{\pi}{2} \right) \label{eq:1}
 \end{align}
+について考える．左辺第二項で$t = \pi - x$と置換すると$\dfrac{dt}{dx} = -1$で
 \begin{align}
-  = \int_\alpha^\beta \sin t dt
+  \int_{\pi-\beta}^{\pi-\alpha} \sin xdx
+  & =  \int_\beta^\alpha \sin(\pi-t) dt (-1) \\
+  & = \int_\alpha^\beta \sin t dt
 \end{align}
-となるから，$\sin(\pi-\beta) = \sin\beta$とあわせて，
+だから，\cref{eq:1}は
 \begin{align}
-  \int_0^\beta \sin t dt > \dfrac{1}{2}(\beta-\alpha)(\sin\alpha + \sin\beta) \cdots \text{\textcircled{1}}
+  \int_0^\beta \sin t dt > \dfrac{1}{2}(\beta-\alpha)(\sin\alpha + \sin\beta) \label{eq:2}
 \end{align}
-を示せば良いが，$0 \le \alpha < \beta \le \pi/2$及び右図の面積を比較して，
+を示せば良い．\cref{eq:2}の左辺，右辺は下図の斜線部の面積である．
 
-\begin{figure}[H]
+\begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=2.2cm,y=2.0cm,every node/.style={font=\scriptsize}]
-    % 左は [alpha,beta]、右は [pi-beta,pi-alpha] の面積．
-    \begin{scope}
-      \fill[teal!17] plot[domain=0.4:1.15,samples=60]
-      (\x,{sin(\x r)}) -- (1.15,0)--(0.4,0)--cycle;
-      \draw[->,gray!75!black] (-0.10,0)--(1.78,0) node[right] {$x$};
-      \draw[->,gray!75!black] (0,-0.08)--(0,1.20) node[above] {$y$};
-      \draw[blue!75!black,very thick,domain=0:1.57,samples=70]
-      plot (\x,{sin(\x r)});
-      \draw[orange!80!black,thick,dashed] (0.4,{sin(0.4 r)})
-      -- (1.15,{sin(1.15 r)});
-      \draw[gray!60,dashed] (0.4,0)--(0.4,{sin(0.4 r)})
-      (1.15,0)--(1.15,{sin(1.15 r)});
-      \node[below] at (0.4,0) {$\alpha$};
-      \node[below] at (1.15,0) {$\beta$};
-      \node[below] at (1.57,0) {$\pi/2$};
-      \node[left] at (0,1) {$1$};
-      \node[teal!70!black] at (0.8,0.27) {$\int_\alpha^\beta\sin x\,dx$};
+  \begin{tikzpicture}[x=1.8cm, y=1.8cm, >=stealth, every node/.style={font=\scriptsize}]
+    \def\a{0.35}
+    \def\b{1.2}
+
+    % Left panel: Trapezoid ABCD
+    \begin{scope}[shift={(0,0)}]
+      % Shaded trapezoid
+      \fill[orange!20] (\a,0) -- (\b,0) -- (\b,{sin(\b r)}) -- (\a,{sin(\a r)}) -- cycle;
+
+      % Axes
+      \draw[->, gray!75!black] (-0.2,0) -- (1.85,0) node[right] {$x$};
+      \draw[->, gray!75!black] (0,-0.15) -- (0,1.35) node[above] {$y$};
+
+      % Curve y = sin x
+      \draw[blue!75!black, very thick, domain=0:1.57, samples=70] plot (\x,{sin(\x r)});
+      \node[above, blue!75!black, font=\scriptsize] at (0.6, 0.72) {$y=\sin x$};
+
+      % Chord CD and vertical sides
+      \draw[orange!85!black, thick] (\a,{sin(\a r)}) -- (\b,{sin(\b r)});
+      \draw[dashed, gray!60] (\a,0) -- (\a,{sin(\a r)}) (\b,0) -- (\b,{sin(\b r)});
+
+      % Vertices
+      \coordinate (A1) at (\a,0);
+      \coordinate (B1) at (\b,0);
+      \coordinate (C1) at (\b,{sin(\b r)});
+      \coordinate (D1) at (\a,{sin(\a r)});
+
+      \node[circle, fill=orange!85!black, inner sep=1.1pt] at (A1) {};
+      \node[circle, fill=orange!85!black, inner sep=1.1pt] at (B1) {};
+      \node[circle, fill=orange!85!black, inner sep=1.1pt] at (C1) {};
+      \node[circle, fill=orange!85!black, inner sep=1.1pt] at (D1) {};
+
+      % Vertex labels
+      \node[below=2pt] at (A1) {$A(\alpha,0)$};
+      \node[below=2pt] at (B1) {$B(\beta,0)$};
+      \node[above right=1pt, font=\tiny] at (C1) {$C(\beta,\sin\beta)$};
+      \node[above left=1pt, font=\tiny] at (D1) {$D(\alpha,\sin\alpha)$};
+
+      % Subtitle / area label
+      \node[orange!90!black, font=\scriptsize] at ({0.5*(\a+\b)}, 0.22) {台形 $ABCD$};
+      \node[below, font=\scriptsize] at ({0.5*(\a+\b)}, -0.32) {(a) 弦の下の台形 $ABCD$};
     \end{scope}
-    \begin{scope}[shift={(3.1,0)}]
-      \fill[teal!17] plot[domain=0.42:1.17,samples=60]
-      (\x,{cos(\x r)}) -- (1.17,0)--(0.42,0)--cycle;
-      \draw[->,gray!75!black] (-0.10,0)--(1.78,0) node[right] {$x$};
-      \draw[->,gray!75!black] (0,-0.08)--(0,1.20) node[above] {$y$};
-      \draw[blue!75!black,very thick,domain=0:1.57,samples=70]
-      plot (\x,{cos(\x r)});
-      \draw[orange!80!black,thick,dashed] (0.42,{cos(0.42 r)})
-      -- (1.17,{cos(1.17 r)});
-      \draw[gray!60,dashed] (0.42,0)--(0.42,{cos(0.42 r)})
-      (1.17,0)--(1.17,{cos(1.17 r)});
-      \node[below] at (0.42,0) {$\pi-\beta$};
-      \node[below] at (1.17,0) {$\pi-\alpha$};
-      \node[below] at (0,0) {$\pi/2$};
-      \node[teal!70!black] at (0.8,0.24)
-      {$\int_{\pi-\beta}^{\pi-\alpha}\sin x\,dx$};
+
+    % Right panel: Region under curve (Integral)
+    \begin{scope}[shift={(4.0,0)}]
+      % Shaded integral region
+      \fill[teal!20] plot[domain=\a:\b,samples=60] (\x,{sin(\x r)}) -- (\b,0) -- (\a,0) -- cycle;
+
+      % Axes
+      \draw[->, gray!75!black] (-0.2,0) -- (1.85,0) node[right] {$x$};
+      \draw[->, gray!75!black] (0,-0.15) -- (0,1.35) node[above] {$y$};
+
+      % Curve y = sin x
+      \draw[blue!75!black, very thick, domain=0:1.57, samples=70] plot (\x,{sin(\x r)});
+      \node[above, blue!75!black, font=\scriptsize] at (0.6, 0.72) {$y=\sin x$};
+
+      % Boundaries
+      \draw[dashed, gray!60] (\a,0) -- (\a,{sin(\a r)}) (\b,0) -- (\b,{sin(\b r)});
+
+      % Vertices
+      \coordinate (A2) at (\a,0);
+      \coordinate (B2) at (\b,0);
+      \coordinate (C2) at (\b,{sin(\b r)});
+      \coordinate (D2) at (\a,{sin(\a r)});
+
+      \node[circle, fill=teal!85!black, inner sep=1.1pt] at (A2) {};
+      \node[circle, fill=teal!85!black, inner sep=1.1pt] at (B2) {};
+      \node[circle, fill=teal!85!black, inner sep=1.1pt] at (C2) {};
+      \node[circle, fill=teal!85!black, inner sep=1.1pt] at (D2) {};
+
+      % Vertex labels
+      \node[below=2pt] at (A2) {$A$};
+      \node[below=2pt] at (B2) {$B$};
+      \node[above right=1pt] at (C2) {$C$};
+      \node[above left=1pt] at (D2) {$D$};
+
+      % Subtitle / area label
+      \node[teal!85!black, font=\scriptsize] at ({0.5*(\a+\b)}, 0.22) {$\displaystyle\int_\alpha^\beta \sin x\,dx$};
+      \node[below, font=\scriptsize] at ({0.5*(\a+\b)}, -0.32) {(b) 曲線下の図形 $ABCD$};
     \end{scope}
   \end{tikzpicture}
-  \caption{左右の曲線下の面積と，弦の下の台形の比較}
+  \caption{台形 $ABCD$（左）と曲線下の図形 $ABCD$（右）の面積の比較}
+  \label{fig:sine_trapezoid_vs_integral}
 \end{figure}
 
-示すべきことは明らかである．
+ここで$y=\sin x$のグラフは$0 \le x \le \pi/2$では$f(x)$は上に凸だから面積について
+\begin{align}
+  (\text{図形ABCD}) > (\text{台形}ABCD)
+\end{align}
+で，これが\cref{eq:2}に他ならない．よって題意は示された．
 
 \paragraph{(2)}
 
-(1)で $(\alpha, \beta) = \left( \dfrac{k\pi}{8}, \dfrac{k+1}{8}\pi \right) \ (k=0,1,2,3)$とすると，これは$0 \le \alpha < \beta \le \dfrac{\pi}{2}$をみたすので，
+\cref{eq:2}で $(\alpha, \beta) = \left( \dfrac{k\pi}{8}, \dfrac{k+1}{8}\pi \right) \ (k=0,1,2,3)$とすると，これは$0 \le \alpha < \beta \le \dfrac{\pi}{2}$をみたすので，
 \begin{align}
   \int_{\frac{k\pi}{8}}^{\frac{k+1}{8}\pi} \sin t dt > \dfrac{1}{2} \cdot \dfrac{\pi}{8} \left( \sin\dfrac{k\pi}{8} + \sin\dfrac{k+1}{8}\pi \right)
 \end{align}
-$k$について足して，$\sin 0 = 0$から，
+だから，$k=0,1,2,3$について足し合わせると
 \begin{align}
-  \int_0^{\frac{\pi}{2}} \sin t dt > \dfrac{\pi}{16} \sum_{k=1}^7 \sin\dfrac{k\pi}{8} \quad (\because \sin(\pi-k) = \sin k)
+  \int_0^{\frac{\pi}{2}} \sin t dt
+  &> \dfrac{\pi}{16} \sum_{k=0}^{3}\left(\sin\dfrac{k\pi}{8} + \sin\dfrac{k+1}{8}\pi\right) \\
+  &= \dfrac{\pi}{16} \sum_{k=0}^{3}\left(\sin\dfrac{k\pi}{8} + \sin\dfrac{8-(k+1)}{8}\pi\right) \quad (\because \sin(\pi-x)=\sin x) \\
+  &= \dfrac{\pi}{16} \sum_{k=0}^{7} \sin\dfrac{k\pi}{8}
 \end{align}
+である．左辺の積分は$1$であり，右辺は$k=0$の項は$0$だから
 \begin{align}
+  1 > \dfrac{\pi}{16} \sum_{k=1}^{7} \sin\dfrac{k\pi}{8}
+  \therefore
   \dfrac{16}{\pi} > \sum_{k=1}^7 \sin\dfrac{k\pi}{8}
 \end{align}
+である．
 
 \end{document}
