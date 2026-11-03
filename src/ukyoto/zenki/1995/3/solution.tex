@@ -1,73 +1,170 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} 3交点の $x$ 座標を，小さい順に $\alpha, \beta, \gamma$ とおく．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.8cm, y=1.2cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (1, 0.2);
 
-又，$f(x) = ax^2 + bx + c$ とする．
+    % Axes
+    \draw[->, thick, gray!80!black] (-1.5, 0) -- (2.2, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.2) -- (0, 3.2) node[above] {$y$};
+    \node[below left=2pt, font=\footnotesize] at (O) {$O$};
+
+    % Curves
+    % C1: y = x^3
+    \draw[line width=1.4pt, blue!85!black, domain=-1.1:1.45, samples=100]
+    plot (\x, {\x*\x*\x}) node[above right=1pt] {$C_1: y=x^3$};
+    % C2: y = 1.5 x^2 - 0.1
+    \draw[line width=1.1pt, teal!80!black, dashed, domain=-1.2:1.45, samples=100]
+    plot (\x, {1.5*\x*\x - 0.1}) node[right] {$C_2: y=ax^2+bx+c$};
+
+    % Tangent points for P(1, 0.2):
+    % alpha ~ -0.237, beta ~ 0.287, gamma ~ 1.450
+    \coordinate (A) at (-0.237, {-0.237*-0.237*-0.237});
+    \coordinate (B) at (0.287, {0.287*0.287*0.287});
+    \coordinate (C) at (1.450, {1.450*1.450*1.450});
+
+    % Tangent lines passing through P(1, 0.2)
+    \draw[densely dashed, red!70!black] ($ (A)!-0.6!(P) $) -- ($ (A)!1.4!(P) $);
+    \draw[densely dashed, red!70!black] ($ (B)!-0.6!(P) $) -- ($ (B)!1.6!(P) $);
+    \draw[densely dashed, red!70!black] ($ (C)!-0.15!(P) $) -- ($ (C)!1.15!(P) $);
+
+    % Projections to x-axis
+    \draw[dotted, gray!60] (A) -- (-0.237, 0) node[above=2pt, font=\footnotesize] {$\alpha$};
+    \draw[dotted, gray!60] (B) -- (0.287, 0) node[below=2pt, font=\footnotesize] {$\beta$};
+    \draw[dotted, gray!60] (C) -- (1.450, 0) node[below=2pt, font=\footnotesize] {$\gamma$};
+
+    % Point P
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {};
+    \node[above right=1pt, red!85!black, font=\footnotesize, fill=white, fill opacity=0.8, text opacity=1, inner sep=1pt] at (P) {$P(p,q)$};
+
+    % Points A, B, C
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (C) {};
+  \end{tikzpicture}
+  \caption{$C_1, C_2$ の交点と $P$ から引いた 3 接線}
+  \label{fig:1995_3_overview}
+\end{figure}
+
+\paragraph{(1)}
+
+与えられた曲線
 \begin{align}
-  x^3 - f(x) = (x-\alpha)(x-\beta)(x-\gamma) \cdots \text{\textcircled{1}}
+  C_1:y=f(x)=x^3,
+  \quad
+  C_2:y=g(x)=ax^2+bx+c \label{eq:1}
 \end{align}
-各点での接線を $l_1, l_2, l_3$ として，これらは
+について考える．
+$C_1,C_2$の3交点の $x$ 座標を小さい順に $\alpha, \beta, \gamma$ とおくと，
+因数定理から
 \begin{align}
-  y = 3k^2 x - 2k^3 \quad (k=\alpha, \beta, \gamma) \cdots \text{\textcircled{2}}
+  f(x)-g(x) = (x-\alpha)(x-\beta)(x-\gamma) \label{eq:2}
 \end{align}
-で表される．\textcircled{2} が $P$ を通ることから
+である．また各点での$C_1$の接線を $l_1, l_2, l_3$ とすると
 \begin{align}
-  2k^3 - 3pk^2 + q = 0 \cdots \text{\textcircled{3}}
+  y = 3k^2 x - 2k^3 \quad (k=\alpha, \beta, \gamma) \label{eq:3}
 \end{align}
-したがって，$\alpha, \beta, \gamma$ は $k$ の3次式 \textcircled{3} の3実解で，\textcircled{1} から
+で表される．\cref{eq:3} が $P(p,q)$ を通ることから
 \begin{align}
-  x^3 - f(x) = x^3 - \dfrac{3}{2}p x^2 + \dfrac{q}{2}
+  h(k) = 2k^3 - 3pk^2 + q = 0 \label{eq:4}
 \end{align}
-係数比較して
+である．したがって $\alpha, \beta, \gamma$ は $k$ の3次式 \cref{eq:4} の3実解である．
+一方で\cref{eq:1}から$f(x)-g(x)=0$の3実解でもあるから，\cref{eq:1,eq:4}が比例係数をのぞいて等しく，
 \begin{align}
-  a = \dfrac{3}{2}p, \quad b = 0, \quad c = -\dfrac{q}{2} \cdots (1)
+  f(x)-g(x) = x^3 - \dfrac{3}{2}p x^2 + \dfrac{q}{2}
 \end{align}
+となる．係数比較して
+\begin{align}
+  a = \dfrac{3}{2}p, \quad b = 0, \quad c = -\dfrac{q}{2} \label{eq:5}
+\end{align}
+である．
 
 \paragraph{(2)}
 
-$p, q$ の条件は $x$ の3次方程式 $x^3 - \dfrac{3}{2}px^2 + \dfrac{q}{2} = 0 \cdots \text{\textcircled{4}}$ が3異実解を持つこと．\textcircled{4} の左辺 $g(x)$ とおく．$g'(x) = 3x^2 - 3px$ から，$p$ によって下のように分かれる
-
-$1^\circ \ p = 0$ の時
-
-$g'(x) \ge 0$ となり，$g(x)$ は単調増加し，\textcircled{4} が3異実解を持つことはない．
-
-$2^\circ \ p > 0$ の時
-
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \caption{$g(x)$ の増減表}
-    \begin{tabular}{|c|c|c|c|c|c|}
-      \hline
-      $x$ & $\cdots$ & $0$ & $\cdots$ & $p$ & $\cdots$ \\
-      \hline
-      $g'$ & $+$ & $0$ & $-$ & $0$ & $+$ \\
-      \hline
-      $g$ & $\nearrow$ & & $\searrow$ & & $\nearrow$ \\
-      \hline
-    \end{tabular}
-  \end{table}
-\end{center}
-上図から，条件は
+$p, q$ の条件は $k$ の3次方程式\cref{eq:4}が3異実解を持つことである．
+一階微分は
 \begin{align}
-  & g(0) > 0 \land g(p) < 0 \\
+  h'(x) = 3x^2 - 3px = 3x(x-p) \label{eq:6}
+\end{align}
+だから$p$が$0$かいなかに応じて$h(x)$の挙動は以下のように変化する．
+
+\subparagraph{$1^\circ \ p = 0$ の時}
+
+\begin{table}[htb]
+  \centering
+  \caption{$h(x)$ の増減表（$p=0$ のとき）}
+  \label{tab:variation_p0}
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    $x$ & $\cdots$ & $0$ & $\cdots$ \\
+    \hline
+    $h'$ & $+$ & $0$ & $+$ \\
+    \hline
+    $h$ & $\nearrow$ & $q$ & $\nearrow$ \\
+    \hline
+  \end{tabular}
+\end{table}
+
+この時\cref{eq:6}より$h'(x) \ge 0$ となるから $h(x)$ は単調増加する．
+よって\cref{eq:4}が3異実解を持つことはない．
+
+\subparagraph{$2^\circ \ p > 0$ の時}
+
+\begin{table}[htb]
+  \centering
+  \caption{$h(x)$ の増減表}
+  \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    $x$ & $\cdots$ & $0$ & $\cdots$ & $p$ & $\cdots$ \\
+    \hline
+    $g'$ & $+$ & $0$ & $-$ & $0$ & $+$ \\
+    \hline
+    $g$ & $\nearrow$ & & $\searrow$ & & $\nearrow$ \\
+    \hline
+  \end{tabular}
+\end{table}
+
+この時\cref{eq:6}より$h(x)$の増減表は上のようになる．
+よって$h(x)=0$が3異実解を持つ条件は
+\begin{align}
+  & h(0) > 0 \land h(p) < 0 \\
   \iff & \dfrac{q}{2} > 0 \land - \dfrac{p^3}{2} + \dfrac{q}{2} < 0 \\
-  \iff & q > 0 \land -p^3 + q < 0
+  \iff & q > 0 \land -p^3 + q < 0 \label{eq:7}
 \end{align}
+である．
 
-$3^\circ \ p < 0$ の時
+\subparagraph{$3^\circ \ p < 0$ の時}
 
-$2^\circ$ と同様に，条件は
+\begin{table}[htb]
+  \centering
+  \caption{$h(x)$ の増減表（$p<0$ のとき）}
+  \label{tab:variation_p_neg}
+  \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    $x$ & $\cdots$ & $p$ & $\cdots$ & $0$ & $\cdots$ \\
+    \hline
+    $h'$ & $+$ & $0$ & $-$ & $0$ & $+$ \\
+    \hline
+    $h$ & $\nearrow$ & & $\searrow$ & & $\nearrow$ \\
+    \hline
+  \end{tabular}
+\end{table}
+
+この時\cref{eq:6}より$h(x)$の増減表は上のようになる．
+よって$h(x)=0$が3異実解を持つ条件は
 \begin{align}
-  g(p) > 0 \land g(0) < 0 \iff q < 0 \land -p^3 + q > 0
+  h(p) > 0 \land h(0) < 0 \iff q < 0 \land -p^3 + q > 0 \label{eq:8}
 \end{align}
+である．
+\casesend
 
-以上まとめて
+以上\cref{eq:7,eq:8}をまとめて
 \begin{align}
   \begin{cases}
     p > 0, \quad 0 < q < p^3 \\
@@ -75,5 +172,41 @@ $2^\circ$ と同様に，条件は
     p < 0, \quad p^3 < q < 0
   \end{cases}
 \end{align}
+である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.8cm, y=1.2cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+
+    % Region shading: p>0, 0<q<p^3
+    \fill[blue!15] (0,0) -- plot[domain=0:1.35, samples=60] (\x, {\x*\x*\x}) -- (1.35,0) -- cycle;
+    \draw[pattern=north east lines, pattern color=blue!40] (0,0) -- plot[domain=0:1.35, samples=60] (\x, {\x*\x*\x}) -- (1.35,0) -- cycle;
+
+    % Region shading: p<0, p^3<q<0
+    \fill[blue!15] (0,0) -- plot[domain=-1.35:0, samples=60] (\x, {\x*\x*\x}) -- (-1.35,0) -- cycle;
+    \draw[pattern=north east lines, pattern color=blue!40] (0,0) -- plot[domain=-1.35:0, samples=60] (\x, {\x*\x*\x}) -- (-1.35,0) -- cycle;
+
+    % Axes
+    \draw[->, thick, gray!80!black] (-1.8, 0) -- (1.8, 0) node[right] {$p$};
+    \draw[->, thick, gray!80!black] (0, -2.6) -- (0, 2.6) node[above] {$q$};
+    \node[below left=2pt, font=\footnotesize] at (O) {$O$};
+
+    % Boundary curve q = p^3 (dashed, since excluded)
+    \draw[dashed, line width=1.2pt, blue!85!black, domain=-1.38:1.38, samples=80]
+    plot (\x, {\x*\x*\x}) node[above right=1pt] {$q = p^3$};
+
+    % Open origin
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (O) {};
+
+    % Explanatory text inside regions
+    \node[font=\footnotesize, blue!85!black, fill=white, fill opacity=0.85, text opacity=1, inner sep=1.5pt, rounded corners=1pt] at (0.85, 0.25) {$0 < q < p^3$};
+    \node[font=\footnotesize, blue!85!black, fill=white, fill opacity=0.85, text opacity=1, inner sep=1.5pt, rounded corners=1pt] at (-0.85, -0.25) {$p^3 < q < 0$};
+    \node[below left=2pt, font=\footnotesize, gray!70!black] at (1.8, -0.4) {※ 境界線を含まない};
+  \end{tikzpicture}
+  \caption{点 $(p,q)$ の満たす領域（斜線部，境界を含まない）}
+  \label{fig:1995_3_region}
+\end{figure}
 
 \end{document}

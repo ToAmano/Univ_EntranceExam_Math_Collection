@@ -1,34 +1,142 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} (1) 題意のようになるのは，1人目がどちらの席にすわるか場合分けして考えて，確率 $P_1$ として
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[>=stealth, font=\small]
+    % 7 seats as rounded rectangles
+    \foreach \i in {1,...,7} {
+      \node[draw=blue!80!black, thick, rounded corners=2pt, minimum width=0.9cm, minimum height=0.7cm]
+      (s\i) at (\i*1.2, 0) {\bfseries \i};
+    }
+    % Weight annotations for 1 and 7 (ends)
+    \node[above=6pt, text=red!80!black, font=\footnotesize] at (s1.north) {重み $p_1$};
+    \node[above=6pt, text=red!80!black, font=\footnotesize] at (s7.north) {重み $p_1$};
+    \node[below=4pt, text=gray!80!black, font=\scriptsize] at (s1.south) {端の席};
+    \node[below=4pt, text=gray!80!black, font=\scriptsize] at (s7.south) {端の席};
+
+    % Weight annotations for 2 to 6 (isolated interior seats)
+    \foreach \i in {2,...,6} {
+      \node[above=6pt, text=blue!85!black, font=\footnotesize] at (s\i.north) {重み $2p_1$};
+    }
+    \draw[<->, gray!60, thick] (s2.south) ++(-0.4, -0.4) -- ++(5.6, 0)
+    node[midway, below=2pt, font=\scriptsize, text=gray!80!black] {両端が空席（内部の席，重み $q_1 = 2p_1$）};
+  \end{tikzpicture}
+  \caption{7つの座席と着席確率の重み（初期状態）}
+  \label{fig:1995_5_overview}
+\end{figure}
+
+\paragraph{(1)}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[>=stealth, font=\small]
+    % Case 1: 1 -> 3
+    \begin{scope}[shift={(0, 1.4)}]
+      \node[left=6pt, font=\footnotesize] at (0.8, 0) {手順 $1 \to 3$:};
+      \foreach \i in {1,...,7} {
+        \node[draw=gray!50, rounded corners=2pt, minimum width=0.8cm, minimum height=0.6cm, fill=white]
+        (c1_\i) at (\i*1.0, 0) {\scriptsize \i};
+      }
+      \node[draw=blue!80!black, fill=blue!20, thick, rounded corners=2pt, minimum width=0.8cm, minimum height=0.6cm] at (c1_1) {\bfseries 1};
+      \node[above=2pt, red!80!black, font=\scriptsize] at (c1_1.north) {1人目 ($p_1$)};
+      \node[draw=teal!80!black, fill=teal!20, thick, rounded corners=2pt, minimum width=0.8cm, minimum height=0.6cm] at (c1_3) {\bfseries 3};
+      \node[above=2pt, teal!80!black, font=\scriptsize] at (c1_3.north) {2人目 ($q_2$)};
+    \end{scope}
+
+    % Case 2: 3 -> 1
+    \begin{scope}[shift={(0, 0)}]
+      \node[left=6pt, font=\footnotesize] at (0.8, 0) {手順 $3 \to 1$:};
+      \foreach \i in {1,...,7} {
+        \node[draw=gray!50, rounded corners=2pt, minimum width=0.8cm, minimum height=0.6cm, fill=white]
+        (c2_\i) at (\i*1.0, 0) {\scriptsize \i};
+      }
+      \node[draw=teal!80!black, fill=teal!20, thick, rounded corners=2pt, minimum width=0.8cm, minimum height=0.6cm] at (c2_1) {\bfseries 1};
+      \node[above=2pt, teal!80!black, font=\scriptsize] at (c2_1.north) {2人目 ($p_2$)};
+      \node[draw=blue!80!black, fill=blue!20, thick, rounded corners=2pt, minimum width=0.8cm, minimum height=0.6cm] at (c2_3) {\bfseries 3};
+      \node[above=2pt, red!80!black, font=\scriptsize] at (c2_3.north) {1人目 ($q_1$)};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{1人目と2人目で1番と3番の席に着席する2通りの順序}
+  \label{fig:1995_5_case1}
+\end{figure}
+
+$i$人目が両端の席および先客が着席している隣の席に次の客が着席する確率を$p_i$,
+両端が空席の席に着席する確率は，隣の席にすでに先客が着席している席または端の席に着席する確率を$q_i$とすると，題意より$q_i=2p_i$である．
+
+1人目が$1$番目の席に座る時(確率$p_1$)，二人目は確率$q_2$で$3$の席に着席する．
+1人目が$3$番目の席に座る時(確率$q_1$)，二人目は確率$p_2$で$1$の席に着席する．
+従って求める確率$A$は
 \begin{align}
-  P_1 = \dfrac{1}{12} \cdot \dfrac{2}{10} + \dfrac{2}{12} \cdot \dfrac{1}{8} = \dfrac{9}{240} = \dfrac{3}{80} \quad \text{（終）}
+  P_1 = p_1q_2 + q_1p_2 \label{eq:1}
 \end{align}
+である．
+
+$p_k,q_k$について，一人目については両端の席(確率$2p_1$)または間の5つの席(確率$5q_1=10p_1$)に必ず着席するから
+\begin{align}
+  2p_1 + 10p_1 = 1 \quad\therefore p_1 = \dfrac{1}{12}, q_1 = \dfrac{1}{6} \label{eq:2}
+\end{align}
+である．二人目については同様に考えて，一人目が両端に座った場合は$2p_1+4q_2=1$より
+\begin{align}
+  (p_2,q_2) = \left(\dfrac{1}{10},\dfrac{2}{10}\right) \label{eq:3}
+\end{align}
+であり，一人目が$3$に座った場合は$4p_1+2q_2=1$より
+\begin{align}
+  (p_2,q_2) = \left(\dfrac{1}{8},\dfrac{2}{8}\right) \label{eq:4}
+\end{align}
+である．
+
+\cref{eq:1,eq:2,eq:3,eq:4}より求める確率は
+\begin{align}
+  A = \dfrac{1}{12} \cdot \dfrac{2}{10} + \dfrac{2}{12} \cdot \dfrac{1}{8} = \dfrac{9}{240} = \dfrac{3}{80}
+\end{align}
+である．
 
 \paragraph{(2)}
 
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[>=stealth, font=\small]
+    % Target state: 2, 4, 6 occupied
+    \foreach \i in {1,...,7} {
+      \node[draw=gray!60, rounded corners=2pt, minimum width=0.85cm, minimum height=0.65cm, fill=white]
+      (t\i) at (\i*1.1, 0) {\scriptsize \i};
+    }
+    \node[draw=blue!85!black, fill=blue!20, thick, rounded corners=2pt, minimum width=0.85cm, minimum height=0.65cm] at (t2) {\bfseries 2};
+    \node[draw=blue!85!black, fill=blue!20, thick, rounded corners=2pt, minimum width=0.85cm, minimum height=0.65cm] at (t4) {\bfseries 4};
+    \node[draw=blue!85!black, fill=blue!20, thick, rounded corners=2pt, minimum width=0.85cm, minimum height=0.65cm] at (t6) {\bfseries 6};
+
+    \node[above=3pt, blue!85!black, font=\footnotesize] at (t2.north) {着席};
+    \node[above=3pt, blue!85!black, font=\footnotesize] at (t4.north) {着席};
+    \node[above=3pt, blue!85!black, font=\footnotesize] at (t6.north) {着席};
+
+    \draw[<->, gray!60, thick] (t1.south) ++(-0.4, -0.4) -- ++(7.4, 0)
+    node[midway, below=2pt, font=\scriptsize, text=gray!80!black]
+    {着席順序は $(2,4,6)$, $(2,6,4)$, $(4,2,6)$ およびその左右対称（計6通り）};
+  \end{tikzpicture}
+  \caption{4人目到着時に2番，4番，6番の席が先客で埋まっている状況}
+  \label{fig:1995_5_case2}
+\end{figure}
+
 席のうまる順番は
 \begin{align}
-  & 1^\circ \ (2, 4, 6) \quad (6, 4, 2) \cdots \text{\textcircled{1}} \\
-  & 2^\circ \ (2, 6, 4) \quad (6, 2, 4) \cdots \text{\textcircled{2}} \\
-  & 3^\circ \ (4, 2, 6) \quad (4, 6, 2) \cdots \text{\textcircled{3}}
+  & 1^\circ \ (2, 4, 6) \quad (6, 4, 2) \label{eq:5}  \\
+  & 2^\circ \ (2, 6, 4) \quad (6, 2, 4) \label{eq:6}  \\
+  & 3^\circ \ (4, 2, 6) \quad (4, 6, 2) \label{eq:7}
 \end{align}
-2と6の対称性から，\textcircled{1}, \textcircled{2}, \textcircled{3} の2つの順番がおこる確率は，いずれも等しく，排反だから，これらのおこる確率の和がもとめる確率 $P_2$ である
-
-\textcircled{1} の時 $\dfrac{2}{12} \cdot \dfrac{2}{9} \cdot \dfrac{2}{6} = \dfrac{1}{81}$
-
-\textcircled{2} の時 $\dfrac{2}{12} \cdot \dfrac{2}{9} \cdot \dfrac{2}{6} = \dfrac{1}{81}$
-
-\textcircled{3} の時 $\dfrac{2}{12} \cdot \dfrac{2}{8} \cdot \dfrac{2}{6} = \dfrac{1}{72}$
-
-より，
+のいずれかである．座席$2,6$の対称性から，\cref{eq:5,eq:6,eq:7}の2つの順番がおこる確率はいずれも等しく排反だから，これらの発生する確率の和がもとめる確率 $B$ である．
+それぞれ個別に計算すると
 \begin{align}
-  P_2 = 2 \left( \dfrac{1}{81} + \dfrac{1}{81} + \dfrac{1}{72} \right) = \dfrac{25}{324} \quad \text{（終）}
+  & \text{\cref{eq:5}の時} \dfrac{2}{12} \cdot \dfrac{2}{9} \cdot \dfrac{2}{6} = \dfrac{1}{81} \\
+  & \text{\cref{eq:6}の時} \dfrac{2}{12} \cdot \dfrac{2}{9} \cdot \dfrac{2}{6} = \dfrac{1}{81} \\
+  & \text{\cref{eq:7}の時} \dfrac{2}{12} \cdot \dfrac{2}{8} \cdot \dfrac{2}{6} = \dfrac{1}{72}
 \end{align}
+だから求める確率は
+\begin{align}
+  B = 2 \left( \dfrac{1}{81} + \dfrac{1}{81} + \dfrac{1}{72} \right) = \dfrac{25}{324}
+\end{align}
+である．
 
 \end{document}

@@ -1,63 +1,106 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $a, b \in \mathbb{N}, a > b \cdots \text{\textcircled{1}}$
-
-$p, d \in \text{prime} \quad p > 2 \cdots \text{\textcircled{2}}$
-
-$A = a^p - b^p$ とおく．
-
-$A = (a - b)(a^{p-1} + \cdots + b^{p-1})$
-
-であり，$a - b \in \mathbb{N}$，$a^{p-1} + \cdots + b^{p-1} \ge 2$（$\because \text{\textcircled{1}}$）から，$A \in \text{prime}$ には $a - b = 1 \iff a = b + 1$ が必要．以下，$A-1 = (b+1)^p - b^p - 1$ が $2p$ でわり切れることを示す．$\cdots \bigstar$
-
-$1^\circ \ A - 1 \equiv 0 \pmod 2$ の証明
-
-$(b+1)^p, (b^p)$ の偶奇は一致するから，$A - 1 \equiv 0 \pmod 2$ （終）
-
-$2^\circ \ A - 1 \equiv 0 \pmod p$ の証明
-
-$r = 1, 2, 3, \cdots, p-1$ の時，
+与えられた条件
 \begin{align}
-  {}_p\mathrm{C}_r = \dfrac{p}{r} {}_{p-1}\mathrm{C}_{r-1} \in \mathbb{Z}
+  a, b \in \mathbb{N}, a > b, p, d \in \text{prime} \quad p > 2 \label{eq:1}
 \end{align}
-において，$r$ は $p$ と互いに素だから，${}_p\mathrm{C}_r$ は $p$ の倍数である．
+について考える．
 
-から
+題意の条件
 \begin{align}
-  A - 1 = {}_p\mathrm{C}_1 b^{p-1} + \cdots + {}_p\mathrm{C}_{p-1} b \equiv 0 \pmod p \quad \text{（終）}
+  & a^p - b^p = d \\
+  & (a - b)(a^{p-1} + \cdots + b^{p-1}) = d \label{eq:2}
 \end{align}
-$1^\circ, 2^\circ, p>2$ から $A-1$ は $2p$ でわりきれる（終）
+が成り立つ時，$d$が$2p$で割って$1$余る，すなわち
+\begin{align}
+  \begin{cases}
+    d - 1 \equiv 0 \pmod 2 \\
+    d - 1 \equiv 0 \pmod p
+  \end{cases} \label{eq:3}
+\end{align}
+であることを示す．
+
+\cref{eq:2}において$d$が素数だから左辺も素数である．
+$a - b \in \mathbb{N}$，$a^{p-1} + \cdots + b^{p-1} \ge 2$（$\because \text{\cref{eq:1}}$）から，$a - b = 1 \iff a = b + 1$ が必要である．\cref{eq:2}に代入すると
+\begin{align}
+  & (b+1)^p - (b^p+1) = d
+\end{align}
+だから\cref{eq:3}は
+\begin{align}
+  \begin{cases}
+    (b+1)^p - (b^p+1) \equiv 0 \pmod 2 \\
+    (b+1)^p - (b^p+1) \equiv 0 \pmod p
+  \end{cases} \label{eq:4}
+\end{align}
+である．これを個別に検討する．
+
+\subparagraph{$1^\circ$ $d-1 \equiv 0 \pmod 2$の証明}
+
+$(b+1)^p, (b^p+1)$ の偶奇は一致するから
+\begin{align}
+  (b+1)^p - (b^p+1) \equiv 0 \pmod 2 \label{eq:5}
+\end{align}
+である．
+
+\subparagraph{$2^\circ$ $d-1 \equiv 0 \pmod p$の証明}
+
+\cref{eq:3}の第1項に二項定理を用いて
+\begin{align}
+  (b+1)^p - (b^p+1) = \sum_{k=0}^{p}{}_pC_{k}b^k - (b^p+1) = \sum_{k=1}^{p-1}{}_pC_{k}b^k \label{eq:6}
+\end{align}
+である．ここで$k = 1, 2, 3, \cdots, p-1$ の時，
+\begin{align}
+  {}_p\mathrm{C}_k = \dfrac{p}{k} {}_{p-1}\mathrm{C}_{k-1} \in \mathbb{Z}
+\end{align}
+において，$p$が素数ゆえ$k$ は $p$ と互いに素だから${}_p\mathrm{C}_r$ は $p$ の倍数である．
+よって\cref{eq:6}の右辺は$p$で割り切れるから，
+\begin{align}
+  (b+1)^p - (b^p+1) \equiv 0 \pmod p \label{eq:7}
+\end{align}
+である．
+\casesend
+
+$1^\circ, 2^\circ, p>2$ から $d-1$ は $2p$ でわりきれる．よって題意は示された．
 
 {\bf [別解]}
 
-（フェルマーの小定理を証明した上で）以下
+特に$2^\circ$はフェルマーの小定理より
+\begin{align}
+  a^p \equiv a \pmod p
+\end{align}
+だから
 \begin{align}
   a^p - b^p \equiv a - b \equiv 1 \pmod p
 \end{align}
+と一瞬で求まる．
 
-\framebox{
-  \begin{minipage}{0.9\textwidth}
-    [フェルマーの小定理の証明の再掲]\\
-    \textcircled{1} ウィルソンを経由
-    \begin{align}
-      a \cdot 2a \cdot 3a \cdots (p-1)a &\equiv 1 \cdot 2 \cdots (p-1) \pmod p \\
-      (p-1)! \cdot a^{p-1} &\equiv (p-1)! \pmod p \\
-      a^{p-1} &\equiv 1 \pmod p
-    \end{align}
+{\bf [解説]}
 
-    \textcircled{2} 帰納法（$n^p \equiv n$）\\
-    (ア) $(m+1)^p \equiv m^p + 1 \pmod p$ を用いる方法と\\
-    (イ) $(x+y)^p \equiv x^p + y^p \pmod p$ から
-    \begin{align}
-      a^p = (1 + \cdots + 1)^p \equiv \cdots \equiv 1 + 1 + \cdots + 1 = a
-    \end{align}
-    とする方法
-  \end{minipage}
-}
+フェルマの小定理の証明をいくつか紹介する．
+まず一番有名なのは$\{a,2a,3a,\cdots,(p-1)a\}$と$\{1,2,\cdots,(p-1)\}$を$p$で割った組が等しくなることを用いて
+\begin{align}
+  & a \cdot 2a \cdot 3a \cdots (p-1)a \equiv 1 \cdot 2 \cdots (p-1) \pmod p \\
+  & (p-1)! \cdot a^{p-1} \equiv (p-1)! \pmod p \\
+  & a^{p-1} \equiv 1 \pmod p
+\end{align}
+とする方法である．
+
+別の手段として$n^p\equiv n$について数学的帰納法を使う方法もある．
+帰納法も二つ有名な変形方法があり，
+\begin{align}
+  (m+1)^p \equiv m^p + 1 \pmod p
+\end{align}
+とする方法と二項定理より
+\begin{align}
+  (x+y)^p \equiv x^p + y^p \pmod p
+\end{align}
+だから
+\begin{align}
+  a^p = (1 + \cdots + 1)^p \equiv \cdots \equiv 1 + 1 + \cdots + 1 = a
+\end{align}
+とする方法がある．
 
 \end{document}
