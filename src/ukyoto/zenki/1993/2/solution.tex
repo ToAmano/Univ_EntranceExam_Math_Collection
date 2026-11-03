@@ -1,40 +1,155 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $C_1, C_2$ の中心を $O_1, O_2$ とする．以下 $C = \cos\theta, S = \sin\theta$ とする．
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
+
+    % パラメータ
+    \def\a{0.45}
+    \def\b{0.35}
+
+    % 座標
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (1, 0);
+    \coordinate (B) at (-1, 0);
+    \coordinate (O1) at (0.55, 0);
+    \coordinate (O2) at (-0.65, 0);
+    \coordinate (P) at (0.4226, 0.9063);
+    \coordinate (Q) at (0.9072, 0.2736);
+    \coordinate (R) at (-0.8021, 0.3152);
+
+    % 塗り（薄い背景）
+    \fill[teal!8] (O1) circle (\a);
+    \fill[orange!8] (O2) circle (\b);
+
+    % 座標軸 / 直径
+    \draw[->, thick, gray!75!black] (-1.25, 0) -- (1.35, 0) node[right, text=black] {$x$};
+    \draw[->, thick, gray!75!black] (0, -1.2) -- (0, 1.25) node[above, text=black] {$y$};
+
+    % 大円 C
+    \draw[line width=1.3pt, blue!85!black] (O) circle (1);
+    \node[blue!85!black, above right] at (45:1) {$C$};
+
+    % 内円 C1
+    \draw[line width=1.1pt, teal!75!black] (O1) circle (\a);
+    \node[teal!75!black, below right=1pt] at (O1) {$O_1$};
+    \node[teal!75!black, below=2pt] at (0.55, -\a) {$C_1$};
+
+    % 内円 C2
+    \draw[line width=1.1pt, orange!80!black] (O2) circle (\b);
+    \node[orange!80!black, below left=1pt] at (O2) {$O_2$};
+    \node[orange!80!black, below=2pt] at (-0.65, -\b) {$C_2$};
+
+    % 接線 PQ, PR
+    \draw[line width=1.2pt, red!75!black] (P) -- (Q);
+    \draw[line width=1.2pt, red!75!black] (P) -- (R);
+
+    % 半径 O1Q, O2R (直角)
+    \draw[dashed, teal!70!black, line width=0.8pt] (O1) -- (Q);
+    \draw[dashed, orange!80!black, line width=0.8pt] (O2) -- (R);
+
+    % 線分 PO1, PO2 (直角三角形の斜辺)
+    \draw[dotted, gray!60!black, line width=0.9pt] (P) -- (O1);
+    \draw[dotted, gray!60!black, line width=0.9pt] (P) -- (O2);
+
+    % 動径 OP
+    \draw[line width=0.9pt, gray!60!black] (O) -- (P);
+
+    % 直角マーク
+    \draw pic[draw=gray!70!black, line width=0.6pt, angle radius=6pt] {right angle = P--Q--O1};
+    \draw pic[draw=gray!70!black, line width=0.6pt, angle radius=6pt] {right angle = P--R--O2};
+
+    % 角度 theta
+    \draw[->, gray!70!black, line width=0.8pt] (0.24, 0) arc (0:65:0.24);
+    \node[gray!85!black, font=\footnotesize] at (32:0.33) {$\theta$};
+
+    % 主要点プロット
+    \node[circle, fill, inner sep=1.2pt] at (O) {};
+    \node[below left=2pt] at (O) {$O$};
+
+    \node[circle, fill, inner sep=1.2pt] at (A) {};
+    \node[below right=2pt] at (A) {$A$};
+
+    \node[circle, fill, inner sep=1.2pt] at (B) {};
+    \node[below left=2pt] at (B) {$B$};
+
+    \node[circle, fill=teal!70!black, inner sep=1.2pt] at (O1) {};
+    \node[circle, fill=orange!80!black, inner sep=1.2pt] at (O2) {};
+
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (P) {};
+    \node[above=2pt, blue!85!black] at (P) {$P$};
+
+    \node[circle, fill=red!75!black, inner sep=1.3pt] at (Q) {};
+    \node[above right=1pt, red!75!black, fill=white, fill opacity=0.8, text opacity=1, inner sep=0.5pt] at (Q) {$Q$};
+
+    \node[circle, fill=red!75!black, inner sep=1.3pt] at (R) {};
+    \node[above left=2pt, red!75!black] at (R) {$R$};
+
+    % 半径の注釈
+    \node[font=\footnotesize, teal!70!black, above=1pt] at ($(O1)!0.5!(Q)$) {$a$};
+    \node[font=\footnotesize, orange!80!black, below left=1pt] at ($(O2)!0.5!(R)$) {$b$};
+
+  \end{tikzpicture}
+  \caption{円 $C$ および $C_1, C_2$ と接線 $PQ, PR$}
+  \label{fig:circles_and_tangents}
+\end{figure}
+
+\paragraph{(1)}
+
+点$O(0,0)$を原点，$A(1,0), B(-1,0)$となる座標系をとる．
+$C_1, C_2$ の中心を $O_1, O_2$ とすると，題意よりこれらの座標は
+$O_1(1-a,0), O_2(-1+b,0)$であり，円$C_1,C_2$の方程式は
 \begin{align}
   \begin{cases}
-    |\text{P}O_1|^2 = (C+(1-a))^2 + S^2 = (a-1)^2+1+2(1-a)C \\
-    |\text{P}O_2|^2 = (C-(1-b))^2 + S^2 = (b-1)^2+1-2(1-b)C
+    C_1: (x-(1-a))^2+y^2 = a^2 \quad (0 < a \le 1)\\
+    C_2: (x-(-1+b))^2+y^2 = b^2 \quad (0 < b \le 1)
+  \end{cases} \label{eq:1}
+\end{align}
+である．
+
+$\angle POA=\theta$の時$P(\cos\theta,\sin\theta)$だから
+\begin{align}
+  \begin{cases}
+    |PO_1|^2 = (\cos\theta+(1-a))^2 + \sin^2\theta = (a-1)^2+1+2(1-a)\cos\theta \\
+    |PO_2|^2 = (\cos\theta-(1-b))^2 + \sin^2\theta = (b-1)^2+1-2(1-b)\cos\theta
   \end{cases}
 \end{align}
-だから $\Delta \text{PQ}O_1, \Delta \text{PR}O_2$ にピタゴラスの定理を用いて，
+である．
+$\triangle PQO_1, \triangle PRO_2$ に三平方の定理を用いて，
 \begin{align}
-  |\text{PQ}|^2 &= |\text{P}O_1|^2 - a^2 = 2(1-a)(1+C) \\
-  |\text{PR}|^2 &= |\text{P}O_2|^2 - b^2 = 2(1-b)(1-C)
+  |PQ|^2 &= |PO_1|^2 - a^2 = 2(1-a)(1+\cos\theta) \\
+  |PR|^2 &= |PO_2|^2 - b^2 = 2(1-b)(1-\cos\theta)
 \end{align}
-だから，$|\text{PQ}|, |\text{PR}| \ge 0$ より，
+だから $|PQ|, |PR| \ge 0$ より平方根をとって
 \begin{align}
-  |\text{PQ}| = \sqrt{2(1-a)(1+C)}, \quad |\text{PR}| = \sqrt{2(1-b)(1-C)}
+  |PQ| = \sqrt{2(1-a)(1+\cos\theta)}, \quad
+  |PR| = \sqrt{2(1-b)(1-\cos\theta)} \label{eq:2}
 \end{align}
-である．コーシー・シュワルツより
+である．
+
+\paragraph{(2)}
+
+\cref{eq:2}の$0 \le \theta < 2\pi$での最大値を考えれば良い．
+コーシー・シュワルツの不等式より
 \begin{align}
-  |\text{PQ}|+|\text{PR}| &\le \sqrt{(1+1)\{2(1-a)(1+C) + 2(1-b)(1-C)\}} \\
-  &= 2\sqrt{2-a-b} \quad \cdots \star
+  |PQ|+|PR|
+  &\le \sqrt{(1+1)\{2(1-a)(1+\cos\theta) + 2(1-b)(1-\cos\theta)\}} \\
+  &= 2\sqrt{2-a-b} \label{eq:3}
 \end{align}
-で，等号成立は，$0 \le a, b < 1$ より，（$\because C_1, C_2$ が $C$ に含まれる）
+で，等号成立は $0 \le a, b < 1$ より
 \begin{align}
-  &\sqrt{2(1-a)(1+C)} = \sqrt{2(1-b)(1-C)} \\
-  \Leftrightarrow\ & (1-a)(1+C) = (1-b)(1-C) \\
-  \Leftrightarrow\ & (2-a-b)C = a-b \quad \cdots \text{①}
+  &\sqrt{2(1-a)(1+\cos\theta)} = \sqrt{2(1-b)(1-\cos\theta)} \\
+  \Leftrightarrow\ & (1-a)(1+\cos\theta) = (1-b)(1-\cos\theta) \\
+  \Leftrightarrow\ & (2-a-b)\cos\theta = a-b \\
+  \Leftrightarrow\ & \cos\theta = \dfrac{a-b}{2-a-b} \label{eq:4}
 \end{align}
-であり，$2-a-b \ge a-b \Leftrightarrow 1 \ge a$ より，①をみたす $C$ （$-1 \le C \le 1$）が必ず存在する．以上から，$\star$より，
+である．$-1 \le \dfrac{a-b}{2-a-b} \le 1$より\cref{eq:4}を満たす$\theta$は必ず存在するから\cref{eq:3}の等号が成立する$\theta$がある．従って求める最大値は
 \begin{align}
   \max\{|\text{PQ}|+|\text{PR}|\} = 2\sqrt{2-a-b}
 \end{align}
+である．
 
 \end{document}

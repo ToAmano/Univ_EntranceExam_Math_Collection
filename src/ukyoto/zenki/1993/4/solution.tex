@@ -1,42 +1,48 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
+
+与えられた数列
+\begin{align}
+  \begin{cases}
+    a_n=\int_0^1{(1+x)}^{-n-1}e^{x^2}dx \\
+    b_n=\int_0^1{(1+x)}^{-n}xe^{x^2}dx
+  \end{cases} \label{eq:1}
+\end{align}
+について考える．
+
 \paragraph{(1)}
 
-$[0, 1]$ では $0 < (1+x)^{-n}, x e^{x^2} \le e$ だから
-
-（$x e^{x^2}$ は単調，$x=1$ とすれば $e$）
+$[0, 1]$ では $0 < (1+x)^{-n}, x e^{x^2} \le e$ だから（$x e^{x^2}$ は単調，$x=1$ とすれば $e$），辺々掛け算して
 \begin{align}
   0 \le (1+x)^{-n} \cdot x e^{x^2} \le e(1+x)^{-n}
 \end{align}
-同じ区間で積分して
+である．同じ区間$[0,1]$で積分して
 \begin{align}
-  0 \le b_n \le e \int_0^1 (1+x)^{-n} dx
+  0 \le b_n \le e \int_0^1 (1+x)^{-n} dx \label{eq:2}
 \end{align}
-右辺を計算する．
+であり，題意の不等式は示された．
+
+\cref{eq:2}の右辺の積分を具体的に計算すると
 \begin{align}
   0 \le b_n &\le e \left[ \dfrac{1}{1-n}(1+x)^{-n+1} \right]_0^1 \\
-  &= \dfrac{e}{1-n} \left[ 2^{1-n} - 1 \right] \to 0 \quad (n \to \infty)
+  &= \dfrac{e}{1-n} \left[ 2^{1-n} - 1 \right] \xrightarrow{n\to\infty} 0
 \end{align}
-はさみうちから $b_n \to 0 \quad (n \to \infty)$
+だから，はさみうちの定理より $\lim_{n \to \infty} b_n = 0$である．
 
 \paragraph{(2)}
+
+\cref{eq:1}において部分積分を行うと
 \begin{align}
-  a_n &= \left[ -\dfrac{1}{n}(1+x)^{-n} e^{x^2} \right]_0^1 + \dfrac{1}{n} \int_0^1 (1+x)^{-n} \cdot 2x \cdot e^{x^2} dx \\
+  a_n
+  &= \left[ -\dfrac{1}{n}(1+x)^{-n} e^{x^2} \right]_0^1 + \dfrac{1}{n} \int_0^1 (1+x)^{-n} \cdot 2x \cdot e^{x^2} dx \\
   &= -\dfrac{1}{n} \left[ e \cdot 2^{-n} - 1 \right] + \dfrac{2}{n} b_n
 \end{align}
-だから
+だから両辺$n$をかけて極限を取ると
 \begin{align}
-  n a_n = \left( 1 - \dfrac{e}{2^n} \right) + 2 b_n \to 1 \quad (n \to \infty) \quad (\because (1))
+  n a_n = \left( 1 - \dfrac{e}{2^n} \right) + 2 b_n \xrightarrow{n\to\infty} 1 \quad (\because (1))
 \end{align}
-より
-\begin{align}
-  n a_n \to 1 \quad (n \to \infty)
-\end{align}
+である．
 
 \end{document}

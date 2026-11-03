@@ -1,27 +1,104 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} 対称性から，$n+1$ 回以上偶数が出る確率を $\alpha$，$n$ 回偶数が出る確率を $\beta$ とすると，
+\begin{figure}[htbp]
+  \centering
+  \usetikzlibrary{decorations.pathreplacing}
+  \begin{tikzpicture}[x=1cm, y=1cm, >=stealth, every node/.style={font=\small}]
+
+    % 座標定義
+    \def\xL{-4.8}
+    \def\xML{-1.1}
+    \def\xMR{1.1}
+    \def\xR{4.8}
+    \def\yTop{0.75}
+    \def\yBot{-0.75}
+
+    % 左ブロック (偶数が 0 ～ n-1 回)
+    \fill[teal!12] (\xL, \yBot) rectangle (\xML, \yTop);
+    \draw[teal!70!black, line width=1.1pt] (\xL, \yBot) rectangle (\xML, \yTop);
+
+    % 中央ブロック (偶数がちょうど n 回)
+    \fill[orange!15] (\xML, \yBot) rectangle (\xMR, \yTop);
+    \draw[orange!70!black, line width=1.1pt] (\xML, \yBot) rectangle (\xMR, \yTop);
+
+    % 右ブロック (偶数が n+1 ～ 2n 回)
+    \fill[blue!12] (\xMR, \yBot) rectangle (\xR, \yTop);
+    \draw[blue!75!black, line width=1.1pt] (\xMR, \yBot) rectangle (\xR, \yTop);
+
+    % ブロック内の文字
+    % 左
+    \node[font=\footnotesize, teal!50!black, align=center] at ({(\xL+\xML)/2}, 0.28) {偶数が $0 \sim n-1$ 回\\{\scriptsize (奇数が $n+1 \sim 2n$ 回)}};
+    \node[font=\large\bfseries, teal!60!black] at ({(\xL+\xML)/2}, -0.32) {$\alpha$};
+
+    % 中央
+    \node[font=\footnotesize, orange!30!black, align=center] at (0, 0.28) {偶数が $n$ 回\\{\scriptsize (偶奇同数)}};
+    \node[font=\large\bfseries, orange!30!black] at (0, -0.32) {$\beta$};
+
+    % 右
+    \node[font=\footnotesize, blue!50!black, align=center] at ({(\xMR+\xR)/2}, 0.28) {偶数が $n+1 \sim 2n$ 回\\{\scriptsize (偶数が奇数より多い)}};
+    \node[font=\large\bfseries, blue!75!black] at ({(\xMR+\xR)/2}, -0.32) {$\alpha$};
+
+    % 上部の対称性矢印
+    \draw[<->, >=stealth, line width=0.8pt, black!60, dashed]
+    ({(\xL+\xML)/2}, \yTop+0.18) to[bend left=16]
+    node[above=2pt, font=\footnotesize, text=black!75] {偶奇の対称性により同確率 $\alpha$}
+    ({(\xMR+\xR)/2}, \yTop+0.18);
+
+    % 最上部：全事象の確率
+    \draw[decorate, decoration={brace, amplitude=6pt}, line width=0.8pt, black!60]
+    (\xL, \yTop+1.2) -- (\xR, \yTop+1.2)
+    node[midway, above=6pt, font=\small, text=black!85] {全事象の確率： $2\alpha + \beta = 1$};
+
+    % 下部：p_n のブレース
+    \draw[decorate, decoration={brace, amplitude=6pt, mirror}, line width=1.1pt, blue!75!black]
+    (\xML, \yBot-0.2) -- (\xR, \yBot-0.2)
+    node[midway, below=8pt, font=\small, text=blue!75!black] {$p_n = \alpha + \beta = \frac{1}{2}(1+\beta)$（偶数が $n$ 回以上出る確率）};
+
+  \end{tikzpicture}
+  \caption{偶数の出現回数による確率の分割と対称性}
+  \label{fig:even_prob_symmetry}
+\end{figure}
+
+$2n$回サイコロを投げた時に $n+1$ 回以上偶数が出る確率を $\alpha$，$n$ 回偶数が出る確率を $\beta$ とすると，対称性から$n+1$回以上奇数が出る確率も $\alpha$だから
 \begin{align}
-  2\alpha + \beta = 1 \quad \cdots \text{①}
+  2\alpha + \beta = 1 \label{eq:1}
 \end{align}
-で，$P_n = \alpha + \beta$ である．$\beta = \dfrac{{}_{2n}\text{C}_n}{2^{2n}}$ だから，①とあわせて，
+が成り立つ．また$p_n$の定義より
 \begin{align}
-  P_n = \dfrac{1}{2}(1+\beta) = \dfrac{1}{2} \left\{ 1 + \dfrac{{}_{2n}\text{C}_n}{4^n} \right\} \quad \cdots \text{②}
+  p_n = \alpha + \beta = \dfrac{1}{2}(1+\beta) \quad (\because\text{\cref{eq:1}}) \label{eq:2}
 \end{align}
-となる．以下，“$\dfrac{{}_{2n}\text{C}_n}{4^n} \ge \dfrac{1}{2n}$ $\cdots$ ③が全ての $n$ で成立すること” $\cdots$ ④を帰納法で示す．
-$n=1$ の時は成立．以下 $n=k \in \mathbb{N}$ での成立を仮定する．
+である．ここで$\beta$は
 \begin{align}
-  \dfrac{{}_{2(k+1)}\text{C}_{k+1}}{4^{k+1}} &= \dfrac{1}{4} \cdot \dfrac{1}{4^k} \cdot \dfrac{(2k+2)!}{(k+1)!(k+1)!} = \dfrac{1}{4} \cdot \dfrac{(2k+2)(2k+1)}{(k+1)^2} \cdot \dfrac{{}_{2k}\text{C}_k}{4^k} \\
-  &\ge \dfrac{1}{2} \cdot \dfrac{2k+1}{k+1} \cdot \dfrac{1}{2k} \ge \dfrac{1}{2(k+1)}
+  \beta = \dfrac{{}_{2n}\text{C}_n}{2^{2n}} \label{eq:3}
 \end{align}
-から，$n=k+1$ でも③は成立．以上から，④は示されたから，②より，
+と書けるから\cref{eq:2}より
 \begin{align}
-  P_n \ge \dfrac{1}{2} + \dfrac{1}{4n}
+  p_n =  \dfrac{1}{2} \left\{ 1 + \dfrac{{}_{2n}\text{C}_n}{4^n} \right\} \label{eq:4}
 \end{align}
+である．
+
+以下，
+\begin{align}
+  \dfrac{{}_{2n}\text{C}_n}{4^n} \ge \dfrac{1}{2n} \label{eq:5}
+\end{align}
+が全ての $n$ で成立することを帰納法で示す．
+
+まず$n=1$ の時は成立するから $n=k \in \mathbb{N}$ での成立を仮定する．
+$n=k+1$の時を考えると
+\begin{align}
+  \dfrac{{}_{2(k+1)}\text{C}_{k+1}}{4^{k+1}}
+  &= \dfrac{1}{4} \cdot \dfrac{1}{4^k} \cdot \dfrac{(2k+2)!}{(k+1)!(k+1)!} \\
+  &= \dfrac{1}{4} \cdot \dfrac{(2k+2)(2k+1)}{(k+1)^2} \cdot \dfrac{{}_{2k}\text{C}_k}{4^k} \\
+  &\ge \dfrac{1}{2} \cdot \dfrac{2k+1}{k+1} \cdot \dfrac{1}{2k} \quad (\because\text{仮定}) \\
+  &\ge \dfrac{1}{2(k+1)}
+\end{align}
+から，$n=k+1$ でも\cref{eq:5}は成立する．以上から帰納的に\cref{eq:5}が成立するから\cref{eq:4}より
+\begin{align}
+  p_n \ge \dfrac{1}{2} + \dfrac{1}{4n}
+\end{align}
+である．よって題意は示された．
 
 \end{document}
