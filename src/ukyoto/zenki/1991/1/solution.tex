@@ -1,47 +1,10 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $C: x^2 + \left(y - \dfrac{2-p}{2}\right)^2 = \left(\dfrac{2+p}{2}\right)^2$
+\paragraph{(1)}
 
-だから，これと $y=1$ の交点の $x$ 座標は
-
-$x = \pm \sqrt{p+1}$ である．従って，$Q(s, t)$
-
-に対し $s > 0$ から
-\begin{align}
-  \begin{cases}
-    \dfrac{s}{2} = \sqrt{p+1} \\
-    \dfrac{t-p}{2} = 1
-  \end{cases}
-\end{align}
-$\Leftrightarrow s = 2\sqrt{p+1}, \ t = 2+p \cdots (1)$
-
-である．よって
-\begin{align}
-  s^2 = 4(p+1) \quad \therefore \ p = \dfrac{s^2}{4} - 1 \quad (p > 0 \text{ から } s > 2)
-\end{align}
-だから代入して
-\begin{align}
-  t = 2 + \dfrac{s^2}{4} - 1 = \dfrac{1}{4}s^2 + 1
-\end{align}
-より，求めるキセキは
-\begin{align}
-  y = \dfrac{1}{4}x^2 + 1 \quad (x > 2)
-\end{align}
-であり，$x = 2\sqrt{p+1}$ での接線は
-\begin{align}
-  l: y = \sqrt{p+1}x - p
-\end{align}
-であり
-\begin{align}
-  PQ: y &= \dfrac{2(p+1)}{2\sqrt{p+1}}x - p \\
-  &= \sqrt{p+1}x - p
-\end{align}
-と一致するから題意は示された．
 \begin{figure}[htbp]
   \centering
   \begin{tikzpicture}[scale=1.05,>=stealth]
@@ -63,7 +26,113 @@ $\Leftrightarrow s = 2\sqrt{p+1}, \ t = 2+p \cdots (1)$
     \node[blue!75!black,left] at (-1.45,1.3) {$C$};
     \node[left] at (0,2) {$2$};
   \end{tikzpicture}
-  \caption{円 $C$ と直線 $PQ$ の位置関係（図は $p=1$）}
+  \caption{円 $C$ と直線 $PQ$ の位置関係}
 \end{figure}
+
+$A(0,2)$と$P(0,-p) \ (p>0)$を直径とする円の方程式は
+\begin{align}
+  C: x^2 + \left(y - \dfrac{2-p}{2}\right)^2 = \left(\dfrac{2+p}{2}\right)^2 \label{eq:1}
+\end{align}
+である．よってこれと $y=1$ の交点の $x$ 座標は$x = \pm \sqrt{p+1}$ である．
+$PQ$の中点がこの交点になる時，$Q(s,t)$の$x$座標が正だから，交点は$(\sqrt{p+1},1)$の方である．この時
+\begin{align}
+  \begin{cases}
+    \dfrac{s}{2} = \sqrt{p+1} \\
+    \dfrac{t-p}{2} = 1
+  \end{cases}
+  \therefore
+  \begin{cases}
+    s = 2\sqrt{p+1} \\
+    t = 2+p
+  \end{cases}  \label{eq:2}
+\end{align}
+である．
+
+\paragraph{(2)}
+
+\cref{eq:2}の第一式の両辺二乗して
+\begin{align}
+  s^2 = 4(p+1) \quad \therefore \ p = \dfrac{s^2}{4} - 1 \quad (p > 0 \text{ から } s > 2)
+\end{align}
+だから\cref{eq:2}の第二式に代入して
+\begin{align}
+  t = 2 + \dfrac{s^2}{4} - 1 = \dfrac{1}{4}s^2 + 1 \label{eq:3}
+\end{align}
+より，求める軌跡は
+\begin{align}
+  y = \dfrac{1}{4}x^2 + 1 \quad (x > 2)
+\end{align}
+である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.15, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-2.0, 0) -- (4.2, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.8) -- (0, 4.6) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % p=1 の代表図
+    % 円 C: 直径 AP, A(0,2), P(0,-1), 中心 (0, 0.5), 半径 1.5
+    \coordinate (A) at (0, 2);
+    \coordinate (P) at (0, -1);
+    \coordinate (Ccenter) at (0, 0.5);
+    % \fill[teal!8] (Ccenter) circle (1.5);
+    \draw[teal!80!black, thick] (Ccenter) circle (1.5);
+    \node[teal!80!black, above left] at (-1.1, 1.5) {$C$};
+
+    % y=1 の破線
+    \draw[dashed, gray!60] (-1.8, 1) -- (3.6, 1) node[right, font=\footnotesize] {$y=1$};
+    \node[left=2pt, font=\footnotesize] at (0, 1) {$1$};
+
+    % 軌跡 y = 1/4 x^2 + 1 (x > 2)
+    \draw[line width=1.4pt, blue!85!black, domain=2:3.6, samples=50]
+    plot (\x, {0.25*\x*\x + 1});
+    \node[blue!85!black, above left=2pt, font=\footnotesize] at (2.5, 2.56) {$y = \frac{1}{4}x^2 + 1$};
+
+    % 端点 (2, 2) は開区間 (x > 2)
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (2, 2) {};
+    \draw[dashed, gray!50] (2, 0) node[below right=-1pt, font=\footnotesize] {$2$} -- (2, 2) -- (0, 2);
+
+    % p=1 の点 Q(2\sqrt{2}, 3) \approx (2.828, 3)
+    % 中点 M(\sqrt{2}, 1) \approx (1.414, 1)
+    \coordinate (M) at (1.4142, 1);
+    \coordinate (Q) at (2.8284, 3);
+
+    % 接線 l (直線 PQ): y = \sqrt{2}x - 1
+    \draw[line width=1.1pt, orange!85!black] (-0.3, -1.424) -- (3.5, 3.95) node[right, font=\footnotesize] {$l$};
+
+    % 補助線
+    \draw[dashed, gray!50] (M) -- (1.4142, 0) node[below left=-1pt, font=\footnotesize] {$\sqrt{p+1}$};
+    \draw[dashed, gray!50] (Q) -- (2.8284, 0) node[below=2pt, font=\footnotesize] {$2\sqrt{p+1}$};
+    \draw[dashed, gray!50] (Q) -- (0, 3) node[left=2pt, font=\footnotesize] {$2+p$};
+
+    % 点の描画
+    \node[circle, fill=red!85!black, inner sep=1.3pt] at (P) {};
+    \node[below left=2pt] at (P) {$P(0,-p)$};
+
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (A) {};
+    \node[left=2pt] at (A) {$A(0,2)$};
+
+    \node[circle, fill=teal!70!black, inner sep=1.3pt] at (M) {};
+    \node[above left=2pt, font=\footnotesize] at (M) {$PQ$の中点};
+
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (Q) {};
+    \node[right=2pt] at (Q) {$Q(s,t)$};
+  \end{tikzpicture}
+  \caption{$Q$ の軌跡 $y=\dfrac{1}{4}x^2+1$ と接線 $PQ$（$p=1$ の場合）}
+  \label{fig:locus_and_tangent}
+\end{figure}
+
+さて，次に$x = 2\sqrt{p+1}$ でのこの曲線の接線は
+\begin{align}
+  l: y = \sqrt{p+1}x - p \label{eq:4}
+\end{align}
+である．一方で直線$PQ$の方程式は
+\begin{align}
+  PQ: y &= \dfrac{2(p+1)}{2\sqrt{p+1}}x - p \\
+  &= \sqrt{p+1}x - p \label{eq:5}
+\end{align}
+であり，\cref{eq:4}と一致するから題意は示された．
 
 \end{document}

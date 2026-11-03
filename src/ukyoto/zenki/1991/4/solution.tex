@@ -1,39 +1,160 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $0 \le a < \pi/4, \ 0 \le b < \pi/4 \cdots$ ①
+以下
+\begin{align}
+  0 \le a < \dfrac{\pi}{4}, \ 0 \le b < \dfrac{\pi}{4} \label{eq:1}
+\end{align}
+で不等式
+\begin{align}
+  \sqrt{\tan a \cdot \tan b} \leqq \tan \left( \dfrac{a+b}{2} \right) \leqq \dfrac{1}{2}(\tan a + \tan b) \label{eq:2}
+\end{align}
+について考える．
 
-[補題1] $0 \le x < \pi/4$ において，$f(x) = \tan x$ は下に凸
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[>=stealth, every node/.style={font=\small}]
+    % --- 左パネル: y = tan x (下に凸) ---
+    \begin{scope}[x=3.8cm, y=2.8cm]
+      \draw[->, thick, gray!80!black] (-0.08, 0) -- (1.05, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -0.08) -- (0, 1.25) node[above] {$y$};
+      \node[below left=2pt] at (0, 0) {$O$};
 
-$f'(x) = \dfrac{1}{\cos^2 x} > 0$, $f''(x) = 2 \dfrac{\tan x}{\cos^2 x} > 0$ から示された．$\square$
+      % x = pi/4 の破線
+      \draw[dashed, gray!60] (0.7854, 0) node[below=2pt, font=\footnotesize] {$\frac{\pi}{4}$} -- (0.7854, 1.0);
+      \draw[dashed, gray!60] (0, 1.0) node[left=2pt, font=\footnotesize] {$1$} -- (0.7854, 1.0);
+      \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.2pt] at (0.7854, 1.0) {};
 
-[補題2] $0 < x < \pi/4$ において $g(x) = \log(\tan x)$ は上に凸
+      % 曲線 y = tan x
+      \draw[line width=1.3pt, blue!85!black, domain=0:0.7854, samples=50]
+      plot (\x, {tan(\x r)});
+      \node[blue!85!black, above left=1pt] at (0.75, 1.05) {$y=\tan x$};
 
-$g'(x) = \dfrac{1}{\cos^2 x \cdot \tan x} > 0$, $g''(x) = - \dfrac{1}{\sin^2 x} + \dfrac{1}{\cos^2 x} = \dfrac{2\sin^2 x - 1}{\sin^2 x \cos^2 x} < 0$
+      % a, b, m の定義
+      \def\xa{0.18}
+      \def\xb{0.68}
+      \def\xm{0.43} % (a+b)/2
+      \def\ya{0.182}
+      \def\yb{0.809}
+      \def\ym{0.459}
+      \def\ysec{0.4955} % (ya+yb)/2
 
-から示された．$\square$
+      % 割線 (弦)
+      \draw[line width=1.0pt, orange!85!black] (\xa, \ya) -- (\xb, \yb);
 
-・[補題1]から凸不等式より右側の不等式は示された．$\square$
+      % 補助線
+      \draw[dashed, gray!50] (\xa, 0) node[below=2pt, font=\footnotesize] {$a$} -- (\xa, \ya);
+      \draw[dashed, gray!50] (\xb, 0) node[below=2pt, font=\footnotesize] {$b$} -- (\xb, \yb);
+      \draw[dashed, gray!60] (\xm, 0) node[below=4pt, font=\footnotesize] {$\frac{a+b}{2}$} -- (\xm, \ysec);
 
-次に左側について
+      % 曲線上の点と割線上の点
+      \node[circle, fill=red!85!black, inner sep=1.2pt] at (\xm, \ym) {};
+      \node[circle, fill=orange!85!black, inner sep=1.2pt] at (\xm, \ysec) {};
 
-$1^\circ \ a>0, b>0$ の時
+      % 点 A, B
+      \node[circle, fill=blue!85!black, inner sep=1.1pt] at (\xa, \ya) {};
+      \node[circle, fill=blue!85!black, inner sep=1.1pt] at (\xb, \yb) {};
 
-両辺 $\log$ をとることができて[補題2]から凸不等式から示された．
+      % ラベル引き出し
+      \node[below right=1pt, font=\scriptsize, red!85!black] at (\xm, \ym) {$\tan\left(\frac{a+b}{2}\right)$};
+      \node[above left=1pt, font=\scriptsize, orange!90!black] at (\xm, \ysec) {$\frac{\tan a+\tan b}{2}$};
 
-$2^\circ \ ab=0$ の時
+      \node[font=\footnotesize\bfseries, gray!30!black] at (0.45, -0.42) {(i) 下に凸性: $\tan\left(\frac{a+b}{2}\right) \leqq \frac{\tan a+\tan b}{2}$};
+    \end{scope}
+
+    % --- 右パネル: y = log(tan x) (上に凸) ---
+    \begin{scope}[shift={(5.5, 2.7)}, x=3.8cm, y=1.25cm]
+      \draw[->, thick, gray!80!black] (-0.08, 0) -- (1.05, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -2.15) -- (0, 0.45) node[above] {$y$};
+      \node[below left=2pt] at (0, 0) {$O$};
+
+      % x = pi/4 の破線
+      \draw[dashed, gray!60] (0.7854, -2.1) -- (0.7854, 0) node[above=2pt, font=\footnotesize] {$\frac{\pi}{4}$};
+      \node[circle, fill=teal!80!black, inner sep=1.2pt] at (0.7854, 0) {};
+
+      % 曲線 y = log(tan x)
+      \draw[line width=1.3pt, teal!80!black, domain=0.12:0.7854, samples=50]
+      plot (\x, {ln(tan(\x r))});
+      \node[teal!80!black, below left=1pt, font=\footnotesize] at (0.24, -1.35) {$y=\log(\tan x)$};
+
+      % a, b, m の定義
+      \def\xa{0.18}
+      \def\xb{0.68}
+      \def\xm{0.43}
+      \def\ya{-1.704}
+      \def\yb{-0.212}
+      \def\ym{-0.779}
+      \def\ysec{-0.958}
+
+      % 割線 (弦)
+      \draw[line width=1.0pt, orange!85!black] (\xa, \ya) -- (\xb, \yb);
+
+      % 補助線
+      \draw[dashed, gray!50] (\xa, 0) node[above=2pt, font=\footnotesize] {$a$} -- (\xa, \ya);
+      \draw[dashed, gray!50] (\xb, 0) node[above=2pt, font=\footnotesize] {$b$} -- (\xb, \yb);
+      \draw[dashed, gray!60] (\xm, 0) node[above=2pt, font=\footnotesize] {$\frac{a+b}{2}$} -- (\xm, \ym);
+
+      % 曲線上の点と割線上の点
+      \node[circle, fill=red!85!black, inner sep=1.2pt] at (\xm, \ym) {};
+      \node[circle, fill=orange!85!black, inner sep=1.2pt] at (\xm, \ysec) {};
+
+      % 点 A, B
+      \node[circle, fill=teal!80!black, inner sep=1.1pt] at (\xa, \ya) {};
+      \node[circle, fill=teal!80!black, inner sep=1.1pt] at (\xb, \yb) {};
+
+      % ラベル
+      \node[left=2pt, font=\scriptsize, red!85!black] at (\xm, \ym) {$\log\tan\left(\frac{a+b}{2}\right)$};
+      \node[right=2pt, font=\scriptsize, orange!90!black] at (\xm, \ysec) {$\frac{\log\tan a+\log\tan b}{2}$};
+
+      \node[font=\footnotesize\bfseries, gray!30!black] at (0.45, -3.1) {(ii) 上に凸性: $\sqrt{\tan a\tan b} \leqq \tan\left(\frac{a+b}{2}\right)$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{$\tan x$ の下に凸性と $\log(\tan x)$ の上に凸性による不等式の関係}
+  \label{fig:convexity}
+\end{figure}
+
+\begin{theorem}[補題1]
+  $0 \le x < \pi/4$ において，$f(x) = \tan x$ は下に凸である．
+\end{theorem}
+
+\begin{proof}
+  $f'(x) = \dfrac{1}{\cos^2 x} > 0$, $f''(x) = 2 \dfrac{\tan x}{\cos^2 x} > 0$ から示された．$\square$
+\end{proof}
+
+\begin{theorem}[補題2]
+  $0 < x < \pi/4$ において $g(x) = \log(\tan x)$ は上に凸である．
+\end{theorem}
+
+\begin{proof}
+  $g'(x) = \dfrac{1}{\cos^2 x \cdot \tan x} > 0$, $g''(x) = - \dfrac{1}{\sin^2 x} + \dfrac{1}{\cos^2 x} = \dfrac{2\sin^2 x - 1}{\sin^2 x \cos^2 x} < 0$から示された．$\square$
+\end{proof}
+
+[補題1]から凸不等式より\cref{eq:2}の右側の不等号は示された．$\square$
+
+次に左側については$a,b$の値で場合分けして考える．
+
+\subparagraph{$1^\circ \ a>0, b>0$ の時}
+
+両辺 $\log$ をとることができて，
+\begin{align}
+  \dfrac{1}{2} \log\left(\tan a \cdot \tan b\right)
+  \leqq \log \tan \left( \dfrac{a+b}{2} \right)
+\end{align}
+だから，[補題2]および凸不等式から示される．
+
+\subparagraph{$2^\circ \ ab=0$ の時}
+
 \begin{align}
   \begin{cases}
     \sqrt{\tan 0 \cdot \tan b} = 0 \\
     \tan\left(\dfrac{0+b}{2}\right) \ge 0
   \end{cases}
 \end{align}
-から明らかに成立
+から明らかに成立する．
+\casesend
 
-より，左側も示された．$\square$
+以上より\cref{eq:2}の左側の不等号も示された．$\square$
 
 \end{document}

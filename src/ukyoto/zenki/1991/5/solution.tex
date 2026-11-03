@@ -1,43 +1,151 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $n$回目の試行前袋に赤玉が $i$ コ入っている確率 $P_{i,n}$ とおく．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[>=stealth, every node/.style={font=\small}]
+    % 試行前の袋
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=4pt, inner sep=6pt, align=center] (start) at (0, 0) {
+      \textbf{試行前（計 $N+3$ 個）}\\[2pt]
+      赤玉：$i$ 個\\
+      白玉：$N+3-i$ 個
+    };
+
+    % 分岐点
+    \coordinate (split) at (3.8, 0);
+    \draw[thick, gray!80!black] (start.east) -- node[above=2pt, font=\footnotesize] {1個取り出す} (split);
+
+    % 上ルート: 赤玉を取り出す
+    \node[draw=red!85!black, fill=red!8, thick, rounded corners=3pt, inner sep=5pt, align=center] (draw_red) at (6.5, 1.3) {
+      \textbf{赤玉を取り出す}\\
+      \footnotesize 確率 $\frac{i}{N+3}$
+    };
+    \draw[->, thick, red!85!black] (split) |- (draw_red.west);
+
+    \node[draw=red!85!black, fill=red!3, thick, rounded corners=4pt, inner sep=6pt, align=center] (end_red) at (11.8, 1.3) {
+      \textbf{白玉を1個補充（計 $N+3$ 個）}\\[2pt]
+      赤玉：\textbf{$i-1$ 個}（1個減少）\\
+      白玉：$N+4-i$ 個
+    };
+    \draw[->, thick, red!85!black] (draw_red.east) -- node[above=2pt, font=\scriptsize] {白玉を1個追加} (end_red.west);
+
+    % 下ルート: 白玉を取り出す
+    \node[draw=teal!85!black, fill=teal!8, thick, rounded corners=3pt, inner sep=5pt, align=center] (draw_white) at (6.5, -1.3) {
+      \textbf{白玉を取り出す}\\
+      \footnotesize 確率 $\frac{N+3-i}{N+3}$
+    };
+    \draw[->, thick, teal!85!black] (split) |- (draw_white.west);
+
+    \node[draw=teal!85!black, fill=teal!3, thick, rounded corners=4pt, inner sep=6pt, align=center] (end_white) at (11.8, -1.3) {
+      \textbf{白玉を1個補充（計 $N+3$ 個）}\\[2pt]
+      赤玉：\textbf{$i$ 個}（変化なし）\\
+      白玉：$N+3-i$ 個
+    };
+    \draw[->, thick, teal!85!black] (draw_white.east) -- node[above=2pt, font=\scriptsize] {白玉を1個追加} (end_white.west);
+
+  \end{tikzpicture}
+  \caption{1回の試行における球の取り出しと補充の概要}
+  \label{fig:game_overview}
+\end{figure}
+
+$n$回目の試行前に袋に赤玉が $i$ 個入っており，かつ試行で白い球を取り出した（試行後も袋に赤玉が$i$個入っている）確率を $Q_{i,n}$ とおく．
+
+\paragraph{(1)}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=7.5cm, y=2.2cm, >=stealth, every node/.style={font=\small}]
+
+    % 列ヘッダー
+    \node[font=\normalsize\bfseries, gray!30!black] at (0, 3.65) {$n$ 回目の試行前};
+    \node[font=\normalsize\bfseries, gray!30!black] at (1, 3.65) {$n+1$ 回目の試行前};
+
+    % 左列: n 回目の状態
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=4pt, inner sep=6pt] (S3_n) at (0, 3) {
+      \textbf{赤玉 3 個}
+    };
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=4pt, inner sep=6pt] (S2_n) at (0, 2) {
+      \textbf{赤玉 2 個}
+    };
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=4pt, inner sep=6pt] (S1_n) at (0, 1) {
+      \textbf{赤玉 1 個}
+    };
+
+    % 右列: n+1 回目の状態
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=4pt, inner sep=6pt] (S3_next) at (1, 3) {
+      \textbf{赤玉 3 個}
+    };
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=4pt, inner sep=6pt] (S2_next) at (1, 2) {
+      \textbf{赤玉 2 個}
+    };
+    \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=4pt, inner sep=6pt] (S1_next) at (1, 1) {
+      \textbf{赤玉 1 個}
+    };
+    \node[draw=gray!70!black, fill=gray!8, thick, rounded corners=4pt, inner sep=6pt] (S0_next) at (1, 0) {
+      \textbf{赤玉 0 個}
+    };
+
+    % 遷移矢印
+    % 3個から
+    \draw[->, line width=1.3pt, teal!80!black] (S3_n.east) -- (S3_next.west)
+    node[pos=0.28, above=2pt, font=\footnotesize] {白玉: $\frac{N}{N+3}$ \ ($Q_{3,n}$)};
+    \draw[->, line width=1.3pt, red!85!black] (S3_n.east) -- (S2_next.west)
+    node[pos=0.68, sloped, above=2pt, font=\footnotesize] {赤玉: $\frac{3}{N+3}$ \ ($P_{3,n}$)};
+
+    % 2個から
+    \draw[->, line width=1.3pt, teal!80!black] (S2_n.east) -- (S2_next.west)
+    node[pos=0.28, above=2pt, font=\footnotesize] {白玉: $\frac{N+1}{N+3}$ \ ($Q_{2,n}$)};
+    \draw[->, line width=1.3pt, red!85!black] (S2_n.east) -- (S1_next.west)
+    node[pos=0.68, sloped, above=2pt, font=\footnotesize] {赤玉: $\frac{2}{N+3}$ \ ($P_{2,n}$)};
+
+    % 1個から
+    \draw[->, line width=1.3pt, teal!80!black] (S1_n.east) -- (S1_next.west)
+    node[pos=0.28, above=2pt, font=\footnotesize] {白玉: $\frac{N+2}{N+3}$ \ ($Q_{1,n}$)};
+    \draw[->, line width=1.3pt, red!85!black] (S1_n.east) -- (S0_next.west)
+    node[pos=0.68, sloped, above=2pt, font=\footnotesize] {赤玉: $\frac{1}{N+3}$ \ ($P_{1,n}$)};
+
+  \end{tikzpicture}
+  \caption{$n$ 回目から $n+1$ 回目への赤玉個数の状態遷移図}
+  \label{fig:state_transition}
+\end{figure}
+
+$n+1$回目の試行前に赤玉が$i$個あるのは，$n$回目の試行前に$i+1$個の赤玉があって一つ赤玉を取り出した場合か，$n$回目の試行前に$i$個の赤玉があって白玉を取り出した場合だから，
 \begin{align}
-  \paragraph{(1)}
-
-  \
   \begin{cases}
-    n+1\text{回目の試行前に赤玉が1コ} \cdots \quad Q_{1,n} + P_{2,n} \\
-    \qquad \qquad \text{〃} \qquad \qquad 2\text{コ} \cdots \quad Q_{2,n} + P_{3,n} \\
-    \qquad \qquad \text{〃} \qquad \qquad 3\text{コ} \cdots \quad Q_{3,n}
-  \end{cases}
+    P_{1,n+1} = \dfrac{1}{N+3}\left[ Q_{1,n} + P_{2,n}\right] \\
+    P_{2,n+1} = \dfrac{2}{N+3}\left[ Q_{2,n} + P_{3,n}\right] \\
+    P_{3,n+1} = \dfrac{3}{N+3} Q_{3,n}
+  \end{cases} \label{eq:1}
 \end{align}
-又
+と書ける．
+
+また，$P_{i,n}$と$Q_{i,n}$について，$n$回目の試行前には$N+3-i$個の白玉と$i$個の赤玉があるから，どちらの球を取り出すかの確率を考えて
 \begin{align}
-  Q_{1,n} = (N+2)P_{1,n} \quad Q_{2,n} = \dfrac{N+1}{2} P_{2,n} \quad Q_{3,n} = \dfrac{N}{3} P_{3,n}
+  Q_{1,n} = (N+2)P_{1,n} \quad Q_{2,n} = \dfrac{N+1}{2} P_{2,n} \quad Q_{3,n} = \dfrac{N}{3} P_{3,n} \label{eq:2}
 \end{align}
-だから
+なる関係がある．\cref{eq:2}を\cref{eq:1}に代入して求める漸化式は
 \begin{align}
   \begin{cases}
     P_{1,n+1} = \dfrac{1}{N+3} ( (N+2) P_{1,n} + P_{2,n} ) \\
     P_{2,n+1} = \dfrac{2}{N+3} ( \dfrac{N+1}{2} P_{2,n} + P_{3,n} ) \\
     P_{3,n+1} = \dfrac{3}{N+3} \cdot \dfrac{N}{3} P_{3,n} = \dfrac{N}{N+3} P_{3,n}
-  \end{cases} \cdots \#
+  \end{cases} \label{eq:3}
 \end{align}
+である．
 
 \paragraph{(2)}
 
-$p_n = P_{1,n} + P_{2,n} + P_{3,n}$ だから(1)より
+$P_n = P_{1,n} + P_{2,n} + P_{3,n}$ だから\cref{eq:3}を辺々足し合わせて
 \begin{align}
-  p_{n+1} = \dfrac{N+2}{N+3} p_n \quad \cdots \text{①}
+  P_{n+1} = \dfrac{N+2}{N+3} P_n \label{eq:4}
 \end{align}
-又，$p_1 = \dfrac{3}{N+3}$ だから，①と等比数列の公式から
+である．また初期条件は$n=1$の時，$N+3$個の中から$3$個の赤玉のどれかを引く確率だから$P_1=\dfrac{3}{N+3}$である．
+よって\cref{eq:4}と等比数列の公式から
 \begin{align}
-  p_n = \left(\dfrac{N+2}{N+3}\right)^{n-1} \dfrac{3}{N+3}
+  P_n = \left(\dfrac{N+2}{N+3}\right)^{n-1} \dfrac{3}{N+3}
 \end{align}
+である．
 
 \end{document}
