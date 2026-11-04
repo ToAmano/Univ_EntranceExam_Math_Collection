@@ -1,78 +1,121 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} 点 $\text{X}$ に対し，$\overrightarrow{\text{OX}} = \vec{x}$ と定めると，
+\begin{figure}[htb]
+  \centering
+  \tdplotsetmaincoords{65}{105}
+  \begin{tikzpicture}[tdplot_main_coords, scale=1.45, >=stealth, every node/.style={font=\small}]
+    % 頂点座標
+    \coordinate (O) at (0.2, 0.2, 3.4);
+    \coordinate (A) at (2.4, -1.1, 0);  % 左手前
+    \coordinate (B) at (1.5, 2.5, 0);   % 中央手前
+    \coordinate (C) at (-2.2, 1.1, 0);  % 右奥
 
-$\vec{a}, \vec{b}, \vec{c}$ は1次独立 $\cdots \text{①}$．題意から
+    % パラメータ p=0.55
+    \coordinate (P) at ($(O)!0.55!(A)$);
+    \coordinate (Q) at ($(B)!0.55!(A)$);
+    \coordinate (R) at ($(B)!0.55!(C)$);
+    \coordinate (S) at ($(O)!0.55!(C)$);
+
+    % 中点 M (ACの中点), N (OBの中点)
+    \coordinate (M) at ($(A)!0.5!(C)$);
+    \coordinate (N) at ($(O)!0.5!(B)$);
+    % H on MN: p M + (1-p) N
+    \coordinate (H) at ($(N)!0.55!(M)$);
+
+    % 平行四辺形 PQRS の面塗り
+    \fill[teal!20, opacity=0.35] (P) -- (Q) -- (R) -- (S) -- cycle;
+
+    % 奥側の稜線 (ACは奥なので破線)
+    \draw[gray!60, dashed, thick] (A) -- (C);
+
+    % 四面体の主稜線 (実線)
+    \draw[line width=1.1pt, blue!85!black] (O) -- (A) -- (B) -- cycle;
+    \draw[line width=1.1pt, blue!85!black] (O) -- (C) -- (B);
+
+    % 平行四辺形の辺
+    % PQ (面OAB上), QR (面ABC上), RS (面OBC上) は表面なので実線
+    \draw[line width=1.3pt, teal!85!black] (P) -- (Q) -- (R) -- (S);
+    % SP は四面体の内部を横断するので破線
+    \draw[line width=1.3pt, teal!85!black, dashed] (S) -- (P);
+
+    % 対角線 PR, QS (内部を通るため細い破線)
+    \draw[dashed, gray!75] (P) -- (R);
+    \draw[dashed, gray!75] (Q) -- (S);
+
+    % 中点を結ぶ線分 MN
+    \draw[line width=1.3pt, orange!85!black] (M) -- (N);
+
+    % 点のプロット
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (O) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (C) {};
+
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (P) {};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (Q) {};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (R) {};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (S) {};
+
+    \node[circle, fill=orange!85!black, inner sep=1.3pt] at (M) {};
+    \node[circle, fill=orange!85!black, inner sep=1.3pt] at (N) {};
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (H) {};
+
+    % ラベル配置
+    \node[above=2pt] at (O) {$O$};
+    \node[below left=2pt] at (A) {$A$};
+    \node[below=2pt] at (B) {$B$};
+    \node[right=2pt] at (C) {$C$};
+
+    \node[left=2pt, teal!85!black] at (P) {$P$};
+    \node[below=2pt, teal!85!black] at (Q) {$Q$};
+    \node[below right=1pt, teal!85!black] at (R) {$R$};
+    \node[above right=1pt, teal!85!black] at (S) {$S$};
+
+    \node[below=2pt, orange!85!black, font=\footnotesize] at (M) {$M$};
+    \node[above left=1pt, orange!85!black, font=\footnotesize] at (N) {$N$};
+    \node[left=3pt, red!85!black] at (H) {$H$};
+  \end{tikzpicture}
+  \caption{平行四辺形$PQRS$の対角線の交点$H$と，$AC$・$OB$の中点を結ぶ線分}
+  \label{fig:tetrahedron_parallelogram}
+\end{figure}
+
+点 $\text{X}$ に対して $\overrightarrow{\text{OX}} = \vec{x}$ と定めると，
+$\vec{a}, \vec{b}, \vec{c}$ は1次独立である．
+題意から
 \begin{align}
   \begin{cases}
     \vec{p} = p\vec{a} \\
     \vec{q} = q\vec{a} + (1-q)\vec{b} \\
     \vec{r} = r\vec{b} + (1-r)\vec{c} \\
     \vec{s} = s\vec{c}
-  \end{cases}
+  \end{cases} (0 < p,q,r,s < 1) \label{eq:1}
 \end{align}
-とおける．$p \sim s$ はいずれも $0 < p,q,r,s < 1$ をみたす実数．
-
-\begin{figure}[H]
-  \centering
-  \begin{tikzpicture}[scale=0.95,every node/.style={font=\small}]
-    % p=q=s=1/2, r=1/2 の例．H は PR と QS の共通中点．
-    \coordinate (O) at (0,3);
-    \coordinate (A) at (-2,0);
-    \coordinate (B) at (2,0);
-    \coordinate (C) at (4,1.5);
-    \coordinate (P) at (-1,1.5);
-    \coordinate (Q) at (0,0);
-    \coordinate (R) at (3,0.75);
-    \coordinate (S) at (2,2.25);
-    \coordinate (M) at (1,0.75);
-    \coordinate (N) at (1,1.5);
-    \coordinate (H) at (1,1.125);
-    \fill[teal!12] (P)--(Q)--(R)--(S)--cycle;
-    \draw[gray!65,dashed] (A)--(C);
-    \draw[blue!75!black,thick] (O)--(A)--(B)--(C)--cycle (O)--(B);
-    \draw[teal!70!black,very thick] (P)--(Q)--(R)--(S)--cycle;
-    \draw[gray!75,dashed] (P)--(R) (Q)--(S);
-    \draw[orange!80!black,thick] (M)--(N);
-    \node[circle, fill=orange!80!black, inner sep=1.1pt] at (M) {}; \node[circle, fill=orange!80!black, inner sep=1.1pt] at (N) {}; \node[circle, fill=orange!80!black, inner sep=1.6pt] at (H) {};
-    \node[above] at (O) {$O$};
-    \node[below left] at (A) {$A$};
-    \node[below] at (B) {$B$};
-    \node[right] at (C) {$C$};
-    \node[left] at (P) {$P$};
-    \node[below] at (Q) {$Q$};
-    \node[right] at (R) {$R$};
-    \node[above] at (S) {$S$};
-    \node[above left=4pt,orange!80!black] at (H) {$H$};
-  \end{tikzpicture}
-  \caption{平行四辺形$PQRS$の対角線の交点$H$と，$AC$・$OB$の中点を結ぶ線分}
-\end{figure}
-
+とおける．従って
 \begin{align}
   \begin{cases}
-    \overrightarrow{\text{PQ}} = (q-p)\vec{a} + (1-q)\vec{b} \equiv \vec{A} \\
-    \overrightarrow{\text{PS}} = -p\vec{a} + s\vec{c} \equiv \vec{B} \\
-    \overrightarrow{\text{PR}} = -p\vec{a} + r\vec{b} + (1-r)\vec{c}
-  \end{cases} \quad \cdots *
+    \overrightarrow{PQ} = (q-p)\vec{a} + (1-q)\vec{b}  \\
+    \overrightarrow{PS} = -p\vec{a} + s\vec{c} \\
+    \overrightarrow{PR} = -p\vec{a} + r\vec{b} + (1-r)\vec{c}
+  \end{cases}  \label{eq:2}
 \end{align}
-\begin{align}
-  \overrightarrow{\text{PH}} = \dfrac{1}{2}\overrightarrow{\text{PR}} = \dfrac{1}{2}(\overrightarrow{\text{PS}} + \overrightarrow{\text{PQ}}) \quad ( \text{HはPR, SQの中点} ) \quad \cdots \text{②}
-\end{align}
-\begin{align}
-  \quad \overrightarrow{\text{PR}} = \vec{A} + \vec{B}
-\end{align}
+である．
 
-$*$を代入して
+平行四辺形$PQRS$の2つの対角線の交点を$H$とすると，
 \begin{align}
-  \quad -p\vec{a} + r\vec{b} + (1-r)\vec{c} = (q-2p)\vec{a} + (1-q)\vec{b} + s\vec{c}
+  \overrightarrow{PH}
+  = \dfrac{1}{2}\overrightarrow{PR}
+  = \dfrac{1}{2}(\overrightarrow{PS} + \overrightarrow{PQ}) \label{eq:3}
 \end{align}
-
-①から
+である．\cref{eq:2}を代入して
+\begin{align}
+  2\overrightarrow{PH}
+  & = -p\vec{a} + r\vec{b} + (1-r)\vec{c} \\
+  & = (q-2p)\vec{a} + (1-q)\vec{b} + s\vec{c}
+\end{align}
+だから，$\vec{a},\vec{b},\vec{c}$が一次独立なことから係数を比較して
 \begin{align}
   \begin{cases}
     -p = q-2p \\
@@ -85,18 +128,23 @@ $*$を代入して
     r = 1-p
   \end{cases}
 \end{align}
-
-②に代入して
+を得る．\cref{eq:3}に代入して
 \begin{align}
-  \quad \vec{h} = \dfrac{1}{2}( p\vec{a} + (1-p)\vec{b} + p\vec{c} ) \quad \cdots \text{③}
+  \overrightarrow{PH} &= \dfrac{1}{2}\left(-p\vec{a} + (1-p)\vec{b} + p \vec{c}\right) \\
+  \therefore
+  \vec{h}
+  &= \overrightarrow{PH} + \vec{p} \\
+  &= \dfrac{-p\vec{a} + (1-p)\vec{b} + p \vec{c}}{2} - \left(p\vec{a}\right) \\
+  &= \dfrac{1}{2}( p\vec{a} + (1-p)\vec{b} + p\vec{c} ) \\
+  &= p\dfrac{\vec{a}+\vec{c}}{2}+(1-p)\dfrac{\vec{b}}{2} \quad (0<p<1) \label{eq:4}
 \end{align}
+を得る．
 
-一方，題意の線分上の点 $\text{X}$ は $\gamma$ に対して $(0 < \gamma < 1)$
+一方で，題意で与えられた線分$AC,OB$のそれぞれの中点を結ぶ線分の点 $\text{X}$ は $\gamma$ に対して $(0 < \gamma < 1)$
 \begin{align}
-  \quad \vec{x} = \gamma \dfrac{\vec{a}+\vec{c}}{2} + (1-\gamma) \dfrac{\vec{b}}{2} \quad \cdots \text{④}
+  \quad \vec{x} = \gamma \dfrac{\vec{a}+\vec{c}}{2} + (1-\gamma) \dfrac{\vec{b}}{2} \label{eq:5}
 \end{align}
-と表せる．$0 < p < 1$ とあわせて，④で $\gamma = p$ としたものが ③だから，たしかに
-
-$\text{H}$ は題意の線分上にある (終)
+と表せる．\cref{eq:4,eq:5}より\cref{eq:5}で $\gamma = p$ としたものが\cref{eq:4}だから，
+たしかに$\text{H}$ は題意の線分上にある．
 
 \end{document}
