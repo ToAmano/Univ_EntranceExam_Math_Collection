@@ -218,18 +218,18 @@
 
 ## 1974年度
 
-手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。手書き全ページと6問の問題・解答TeXを照合し、主要な式・結論を独立検算した。第3問は一時コピーから解答PDF全1ページを生成・表示確認。ほかの5問は旧 `jarticle` 形式のため現行の生成PDFを未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。全問のWeb実表示は未確認。
+手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。手書き全ページと6問の問題・解答TeXを照合し、主要な式・結論を独立検算した。`bd9c248e` で全6問が現行の `subfiles` 形式に移行したため、2026-11-04に現原稿から解答PDFを再生成し、計11ページすべてを表示確認した。公開Webも6問すべてChrome（幅1280px）で末尾まで表示した。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
-| 1 | 2 | 旧形式で未生成 | [#1030](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1030)：第(3)問の最終行が `f_4(n)` のままで、問われた `f_{100}(n)` を答えていない。値の集合 `{0,1,5,6}` は一致 |
-| 2 | 3 | 旧形式で未生成 | 中点の高さを相加相乗平均で最小化する計算と2つの座標は手書き・独立計算と一致。確定指摘なし |
-| 3 | 4 | 全1ページ確認 | [#1031](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1031)：生成した解答図では元の問題図の寸法表示が欠け、自動文字起こしの要確認表示も残る。座標の結論は一致 |
-| 4 | 5 | 旧形式で未生成 | [#1032](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1032)：再掲問題文と `g` の極限式に転記ミスがあり、商の極限の扱いも補足が必要。`a=1` は一致 |
-| 5 | 6 | 旧形式で未生成 | [#1033](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1033)：**第(1)問の横座標の答えが `3cos³θ` となり誤り**。正しくは `4cos³θ`。導関数・弧長の途中計算も不成立。第(2)(3)問の結論は一致 |
-| 6 | 7 | 旧形式で未生成 | [#1034](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1034)：優勝確率と比較式の演算子が転記で変化。3つの設問の結論は手書き・独立計算と一致 |
+| 1 | 2 | 全1ページ確認 | [#1030](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1030)：最終行は `f_{100}(n)` に修正済み。現L39の `n^5-5` は誤記、L54の `f_4{n}` は未修正。値の集合 `{0,1,5,6}` は一致 |
+| 2 | 3 | 全2ページ確認 | 中点の高さを相加相乗平均で最小化する計算と2つの座標は手書き・独立計算と一致。公開図・生成図も表示され、確定指摘なし |
+| 3 | 4 | 全2ページ確認 | [#1031](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1031)：`A(1,0,1), B(0,0,0)` とベクトルの成分が矛盾し、`|AC|=1/cos(π/6)=2` も偽。座標を一貫させると横座標の符号が変わる。手書きも同じ矛盾を含むため、結論は再検証が必要。図の寸法不足は残り、要確認表示は解消 |
+| 4 | 5 | 全1ページ確認 | [#1032](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1032)：再掲問題文はなくなった。現L17の `g` の極限式の分母に `f` が残り、商の極限の扱いも補足が必要。`a=1` は一致 |
+| 5 | 6 | 全2ページ確認 | [#1033](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1033)：横座標・導関数・弧長の係数と図の欠落は修正済み。現L172の `cos²` に引数 `θ` が欠ける。3設問の結論は一致 |
+| 6 | 7 | 全3ページ確認 | [#1034](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1034)：優勝確率と比較式の演算子誤りは現L47・L71に残る。3設問の結論は手書き・独立計算と一致 |
 
-1974年度は旧形式5問の生成PDFと全問のWeb実表示が未確認であり、監査完了とはしない。
+1974年度の公開Webと生成PDFは全問確認した。第3問は原稿・手書きに共通する答えの座標の不整合があり、[#1031](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1031) に詳細を追記した。ほかの既存Issueも移行後の行番号で更新した。修正後の確認と第3問の原題の座標軸に基づく結論の確定は未了。
 
 ## 1975年度
 
