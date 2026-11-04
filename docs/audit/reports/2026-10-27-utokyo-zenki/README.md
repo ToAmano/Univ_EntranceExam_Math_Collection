@@ -299,7 +299,7 @@
 
 ## 1979年度
 
-手書きPDFは全8ページ。物理1ページが表紙、第1〜5問は物理2〜6ページ、第6問は物理7〜8ページ。第1問の手書き解答は空欄で、解答作成Issue [#436](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/436) を維持する。第2〜6問は手書き原稿とTeXを照合し、主要な式・結論を独立検算した。第2〜6問の生成解答PDFは全2・1・2・2・3ページを表示確認。問題図がある第2・6問の問題PDFも各全1ページを表示確認。全問のWeb実表示は未確認。
+手書きPDFは全8ページ。物理1ページが表紙、第1〜5問は物理2〜6ページ、第6問は物理7〜8ページ。第1問の手書き解答は空欄で、解答作成Issue [#436](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/436) を維持する。第2〜6問は手書き原稿とTeXを照合し、主要な式・結論を独立検算した。第2〜6問の生成解答PDFは全2・1・2・2・3ページを表示確認。問題図がある第2・6問の問題PDFも各全1ページを表示確認。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
@@ -310,7 +310,7 @@
 | 5 | 6 | 解答全2ページ確認 | [#1056](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1056)：参照した図が最終答案の後、単独ページに配置。独立積分では `S(t)=t²(2t+3)/{12(t+1)³}`、極限 `1/6` で手書きと一致 |
 | 6 | 7〜8 | 解答全3ページ、問題全1ページ確認 | 複素数の漸化式と相似比の別解を独立検算。`P_6=(a²/(a²+1)², a/(a²+1))` と収束点 `(a²/(a⁴+3a²+1), a(a²+1)/(a⁴+3a²+1))` は手書きと一致。確定指摘なし |
 
-1979年度は第1問の解答自体が未作成であり、全問のWeb実表示も未確認のため、監査完了とはしない。
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1問は問題文の下に解答本文がなく、[#436](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/436) が表示される。第2問の問題・解答図は表示されるが、問題図の形状とラベルは [#1054](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1054) の指摘が残る。第4問の円の式はWebでも1行につながり [#1055](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1055) の指摘と一致する。第5問の図はWebでは参照文の直後に表示され、PDF固有の配置問題 [#1056](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1056) は生じない。第6問は問題・解答図、2つの解法、最終答案まで表示される。第3問も本文と結論は表示されるが、証明の誤り [#1053](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1053) は残る。修正後および他の画面幅は未確認。第1問の解答未作成と既存指摘があるため、監査完了とはしない。
 
 ## 1980年度
 
