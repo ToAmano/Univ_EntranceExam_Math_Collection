@@ -1,43 +1,147 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $2 \le n, \ 0 \le k \le 4, \ n, k \in \mathbb{Z}$ $\cdots$ ①
-$1, 2, \dots, 6$ の中には，5でわって1あまるものが2つ，他が1つずつある．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.3cm, y=1.15cm, >=stealth, every node/.style={font=\small}]
+    % ヘッダーラベル
+    \node[font=\footnotesize\bfseries, gray!40!black] at (-1.05, 0.85) {$5$ で割った余り};
+    \node[font=\footnotesize\bfseries, gray!40!black] at (-1.05, 0) {サイコロの目};
+    \node[font=\footnotesize\bfseries, gray!40!black] at (-1.05, -0.85) {出る確率};
+
+    % 余り 0, 2, 3, 4 (1通りずつ: 確率 1/6)
+    \foreach \rem/\face/\xpos in {0/5/0, 2/2/2, 3/3/3, 4/4/4} {
+      \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=3pt, minimum width=1.8cm, minimum height=0.62cm]
+      (r\rem) at (\xpos, 0.85) {余り $\rem$};
+      \node[draw=gray!70!black, fill=white, thick, rounded corners=2pt, minimum width=1.8cm, minimum height=0.62cm]
+      (f\rem) at (\xpos, 0) {$\face$};
+      \node[font=\small\bfseries, blue!85!black] at (\xpos, -0.85) {$\frac{1}{6}$};
+    }
+
+    % 余り 1 (2通り: 1, 6 -> 確率 2/6 = 1/3)
+    \node[draw=red!85!black, fill=red!8, very thick, rounded corners=3pt, minimum width=1.8cm, minimum height=0.62cm]
+    (r1) at (1, 0.85) {\textbf{余り $1$}};
+    \node[draw=red!85!black, fill=red!5, very thick, rounded corners=2pt, minimum width=1.8cm, minimum height=0.62cm]
+    (f1) at (1, 0) {\textbf{$1,\ 6$（2つ）}};
+    \node[font=\small\bfseries, red!85!black] at (1, -0.85) {$\frac{2}{6} = \frac{1}{3}$};
+  \end{tikzpicture}
+  \caption{サイコロの目 $1 \sim 6$ を $5$ で割った余りの分類と確率}
+  \label{fig:dice_mod5_overview}
+\end{figure}
+
+$1, 2, \dots, 6$ の中には 5でわって1あまるものが2つ，そのほかのあまりが1つずつある．
 
 \paragraph{(1)}
-\begin{align}
-  P_{n+1}(0) &= \dfrac{1}{6} \{ P_n(0) + \dots + P_n(3) \} + \dfrac{1}{3} P_n(4) = \dfrac{1}{6}(1 + P_n(4)) \\
-  P_{n+1}(1) &= \dfrac{1}{6} \{ P_n(1) + \dots + P_n(4) \} + \dfrac{1}{3} P_n(0) = \dfrac{1}{6}(1 + P_n(0)) \\
-  P_{n+1}(2) &= \dfrac{1}{6} \{ P_n(0) + P_n(2) + \dots + P_n(4) \} + \dfrac{1}{3} P_n(1) = \dfrac{1}{6}(1 + P_n(1)) \\
-  P_{n+1}(3) &= \dfrac{1}{6} \{ P_n(0) + P_n(1) + P_n(3) + P_n(4) \} + \dfrac{1}{3} P_n(2) = \dfrac{1}{6}(1 + P_n(2)) \\
-  P_{n+1}(4) &= \dfrac{1}{6} \{ P_n(0) + P_n(1) + P_n(2) + P_n(4) \} + \dfrac{1}{3} P_n(3) = \dfrac{1}{6}(1 + P_n(3))
-\end{align}
 
-\paragraph{(2)}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=6.0cm, y=1.25cm, >=stealth, every node/.style={font=\small}]
+    % 列ヘッダー
+    \node[font=\normalsize\bfseries, gray!30!black] at (0, 2.75) {$n$ 回目};
+    \node[font=\normalsize\bfseries, gray!30!black] at (1, 2.75) {$n+1$ 回目};
 
-$\sum_{k=0}^4 P_n(k) = 1$ だから，$m_n \le P_n(k) \le M_n$ を $k$ について足して
+    % n 回目の状態ノード X_n = 0, 1, 2, 3
+    \foreach \k/\ypos in {0/2.0, 1/1.0, 2/0.0, 3/-1.0} {
+      \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=3pt, minimum width=2.5cm, inner sep=4pt]
+      (prev\k) at (0, \ypos) {$X_n = \k$ ($P_n(\k)$)};
+    }
+    % n 回目の状態ノード X_n = 4 (強調)
+    \node[draw=red!85!black, fill=red!8, very thick, rounded corners=3pt, minimum width=2.5cm, inner sep=4pt]
+    (prev4) at (0, -2.0) {\textbf{$X_n = 4$} ($P_n(4)$)};
+
+    % n+1 回目の状態ノード X_{n+1} = 0
+    \node[draw=teal!85!black, fill=teal!8, very thick, rounded corners=3pt, minimum width=2.8cm, minimum height=1.1cm, inner sep=6pt]
+    (next0) at (1, 0) {\textbf{$X_{n+1} = 0$} ($P_{n+1}(0)$)};
+
+    % 遷移矢印 (X_n = 0, 1, 2, 3 -> X_{n+1} = 0)
+    \draw[->, line width=1.1pt, blue!85!black] (prev0.east) -- ([yshift=10pt]next0.west)
+    node[pos=0.38, above=1pt, sloped, font=\scriptsize] {$T_n = 5$（確率 $\frac{1}{6}$）};
+    \draw[->, line width=1.1pt, blue!85!black] (prev1.east) -- ([yshift=5pt]next0.west)
+    node[pos=0.38, above=1pt, sloped, font=\scriptsize] {$T_n = 4$（確率 $\frac{1}{6}$）};
+    \draw[->, line width=1.1pt, blue!85!black] (prev2.east) -- (next0.west)
+    node[pos=0.38, above=1pt, font=\scriptsize] {$T_n = 3$（確率 $\frac{1}{6}$）};
+    \draw[->, line width=1.1pt, blue!85!black] (prev3.east) -- ([yshift=-5pt]next0.west)
+    node[pos=0.38, below=1pt, sloped, font=\scriptsize] {$T_n = 2$（確率 $\frac{1}{6}$）};
+
+    % 遷移矢印 (X_n = 4 -> X_{n+1} = 0, 2通り)
+    \draw[->, line width=1.4pt, red!85!black] (prev4.east) -- ([yshift=-10pt]next0.west)
+    node[pos=0.38, below=1pt, sloped, font=\scriptsize\bfseries] {$T_n = 1, 6$（確率 $\frac{2}{6}=\frac{1}{3}$）};
+  \end{tikzpicture}
+  \caption{$n$ 回目の各余り $X_n$ から $X_{n+1} = 0$（$P_{n+1}(0)$）への状態遷移図}
+  \label{fig:state_transition_pn0}
+\end{figure}
+
+$n$回目までの数字の合計を$5$で割ったあまりを$X_n (=0,1,\cdots,4)$，$n$回目に出た目を$T_n$とおくと
 \begin{align}
-  5m_n \le 1 \le 5M_n
+  X_{n+1} \equiv X_{n} + T_{n} \pmod 5
 \end{align}
+である．
+
+例えば$P_{n+1}(0)$について考える．$n$回目の時点で$X_n=0,1,2,3$の場合，それぞれ$5,4,3,2$の目が出ればよく，$X_n=4$の場合は$1,6$の二つの目が出れば良いから，
 \begin{align}
-  \therefore m_n \le \dfrac{1}{5} \le M_n \quad (1)
+  P_{n+1}(0) &= \dfrac{1}{6} \{ P_n(0) + \dots + P_n(3) \} + \dfrac{1}{3} P_n(4)
 \end{align}
-又，(1)の式から，
+である．さらに確率の和が$1$であることから
+\begin{align}
+  \sum_{k=0}^{4}P_n(k) = 1 \label{eq:1}
+\end{align}
+だから代入して
+\begin{align}
+  P_{n+1}(0)
+  &= \dfrac{1}{6}\left\{1-P_n(4)\right\} + \dfrac{1}{3} P_n(4) \\
+  &= \dfrac{1}{6}(1 + P_n(4)) \label{eq:2}
+\end{align}
+である．
+
+他の$P_{n+1}(k)$についても同様に考えると，$X_{n}$の値に応じて$X_{n+1}=k$となる$T_n$は1つ($2,3,4,5$)または2つ($1,6$)あるから，$X_n\equiv X_{n+1}-1$の場合だけ二つ対応する目がある．
+従って
+\begin{align}
+  P_{n+1}(k) &= \dfrac{1}{6} \{ 1-P_{n}(k-1) \} + \dfrac{1}{3}P_{n}(k-1) \\
+  &= \dfrac{1}{6}\left(1 + P_{n}(k-1)\right) \label{eq:3}
+\end{align}
+である．ただし$k$は$\pmod 5$で考える．個別に書き下せば
+\begin{align}
+  \begin{cases}
+    P_{n+1}(0)  = \dfrac{1}{6}(1 + P_n(4)) \\
+    P_{n+1}(1)  = \dfrac{1}{6}(1 + P_n(0)) \\
+    P_{n+1}(2)  = \dfrac{1}{6}(1 + P_n(1)) \\
+    P_{n+1}(3)  = \dfrac{1}{6}(1 + P_n(2)) \\
+    P_{n+1}(4)  = \dfrac{1}{6}(1 + P_n(3))
+  \end{cases} \label{eq:4}
+\end{align}
+となる．
+
+\paragraph{(2)-(イ)}
+
+題意より$m_n \le P_n(k) \le M_n$ だから， $k$ について足して
+\begin{align}
+  5m_n \le \sum_{k=0}^{4}P_n(k) \le 5M_n
+\end{align}
+だから，\cref{eq:1}を代入して
+\begin{align}
+  5m_n \le 1 \le 5M_n \\
+  \therefore
+  m_n \le \dfrac{1}{5} \le M_n \label{eq:5}
+\end{align}
+である．
+
+\paragraph{(2)-(ロ)}
+
+\cref{eq:4}から
 \begin{align}
   \dfrac{1}{6}(1 + m_n) \le P_{n+1}(k) \le \dfrac{1}{6}(1 + M_n)
 \end{align}
-だから，
+だから，$k$を$l$で置き換えた式と辺々引けば
 \begin{align}
-  P_{n+1}(k) - P_{n+1}(l) \le \dfrac{1}{6}(M_n - m_n) \quad (2)
+  P_{n+1}(k) - P_{n+1}(l) \le \dfrac{1}{6}(M_n - m_n) \label{eq:6}
 \end{align}
+となる．
 
 \paragraph{(3)}
 
-(2)から，$a_n = M_n - m_n$ として，
+\cref{eq:6}から $a_n = M_n - m_n$ として，
 \begin{align}
   0 \le a_{n+1} \le \dfrac{1}{6} a_n
 \end{align}
@@ -45,13 +149,20 @@ $\sum_{k=0}^4 P_n(k) = 1$ だから，$m_n \le P_n(k) \le M_n$ を $k$ につい
 \begin{align}
   0 \le a_n \le \left(\dfrac{1}{6}\right)^{n-1} a_1
 \end{align}
-はさみうちの定理より，$a_n \to 0 \ (n \to \infty)$ だから (2) (1) より，
+である．この右辺は$n\to\infty$で$0$に収束するから，挟み撃ちの定理より
 \begin{align}
-  M_n, m_n \to \dfrac{1}{5} \ (n \to \infty)
+  \lim_{n\to\infty} a_n = 0
+  \quad \therefore
+  \lim_{n\to\infty} M_n = \lim_{n\to\infty} m_n
 \end{align}
-さらに $m_n \le P_n(k) \le M_n$ だから，はさみうちより
+である．\cref{eq:5}よりこれが成り立つには
 \begin{align}
-  P_n(k) \to \dfrac{1}{5} \ (n \to \infty)
+  \lim_{n\to\infty}M_n= \lim_{n\to\infty} m_n =  \dfrac{1}{5}
 \end{align}
+である．さらに題意より $m_n \le P_n(k) \le M_n$ だから，はさみうちの定理より求める極限値は
+\begin{align}
+  \lim_{n\to\infty} P_n(k) = \dfrac{1}{5}
+\end{align}
+である．
 
 \end{document}

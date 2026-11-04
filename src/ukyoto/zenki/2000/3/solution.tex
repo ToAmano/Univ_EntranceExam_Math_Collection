@@ -1,34 +1,53 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
 \paragraph{(1)}
 
-$\vec{c} =
-\begin{pmatrix} p \\ q \\ r
-\end{pmatrix}$ とおく．($p^2+q^2+r^2=1$, $p,q,r \in \mathbb{R}$)．$|\vec{a}|=|\vec{b}|=|\vec{c}|=1$ から，$\alpha, \beta$ は各々 $\vec{a}$ と $\vec{c}$, $\vec{b}$ と $\vec{c}$ のなす角にひとしい．
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.55, >=stealth, every node/.style={font=\small}]
-    \coordinate (O) at (0,0);
-    \coordinate (A) at (-1.5,-0.48);
-    \coordinate (B) at (0.95,-0.9);
-    \coordinate (C) at (0.7,1.2);
-    \draw[dashed, gray!65] (O) ellipse[x radius=1.65, y radius=1.38];
-    \draw[->, gray!70] (O) -- (-1.9,-0.7) node[below] {$x$};
-    \draw[->, gray!70] (O) -- (1.45,-1.35) node[below] {$y$};
-    \draw[->, gray!70] (O) -- (0,1.7) node[above] {$z$};
-    \draw[->, line width=1.3pt, blue!85!black] (O) -- (A) node[above left] {$\vec a$};
-    \draw[->, line width=1.3pt, teal!75!black] (O) -- (B) node[above right] {$\vec b$};
-    \draw[->, line width=1.3pt, orange!85!black] (O) -- (C) node[right] {$\vec c$};
-    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (O) {}; \node[gray!80!black, below left] at (O) {$O$};
+  \tdplotsetmaincoords{68}{115}
+  \begin{tikzpicture}[tdplot_main_coords, scale=2.2, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0, 0);
+    \coordinate (A) at (1, 0, 0);
+    \coordinate (B) at (0.5, 0.866025, 0);
+    % vec{c} = (p, q, r) on unit sphere: (0.15, 0.62, 0.77)
+    \coordinate (C) at (0.15, 0.62, 0.77);
+
+    % xy 平面上の単位円
+    \tdplotdrawarc[dashed, gray!65, thick]{(O)}{1}{0}{360}{}{}
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.25, 0, 0) -- (1.45, 0, 0) node[below left] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.25, 0) -- (0, 1.45, 0) node[right] {$y$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 0, 1.35) node[above] {$z$};
+
+    % なす角の円弧 (pi/3, alpha, beta)
+    \tdplotdrawarc[gray!75!black, thin]{(O)}{0.42}{0}{60}{below=1pt, font=\scriptsize}{$\frac{\pi}{3}$}
+    \draw[blue!85!black, thin] (0.55, 0, 0) to[bend left=22] (0.082, 0.341, 0.424);
+    \node[blue!85!black, font=\footnotesize] at (0.36, 0.08, 0.36) {$\alpha$};
+    \draw[teal!85!black, thin] (0.24, 0.416, 0) to[bend right=18] (0.072, 0.298, 0.370);
+    \node[teal!85!black, font=\footnotesize] at (0.22, 0.52, 0.25) {$\beta$};
+
+    % 単位ベクトル a, b, c
+    \draw[->, line width=1.4pt, blue!85!black] (O) -- (A) node[above left=1pt] {$\vec{a}$};
+    \draw[->, line width=1.4pt, teal!85!black] (O) -- (B) node[below right=1pt] {$\vec{b}$};
+    \draw[->, line width=1.4pt, red!85!black] (O) -- (C) node[above right=1pt] {$\vec{c}$};
+
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (O) {};
+    \node[above left=1pt, font=\footnotesize] at (0, -0.08, 0) {$O$};
   \end{tikzpicture}
-  \caption{共通の始点をもつ3本の単位ベクトルと角$\alpha,\beta$}
+  \caption{共通の始点をもつ3本の単位ベクトル $\vec{a}, \vec{b}, \vec{c}$ と角 $\alpha, \beta$}
+  \label{fig:unit_vectors_3d}
 \end{figure}
+
+$\vec{c} =
+\begin{pmatrix} p \\ q \\ r
+\end{pmatrix}$ とおくと，$|\vec{c}|=1$より
+\begin{align}
+  p^2+q^2+r^2=1 \label{eq:1}
+\end{align}
+である．$|\vec{a}|=|\vec{b}|=|\vec{c}|=1$ から，$\alpha, \beta$ は各々 $\vec{a}$ と $\vec{c}$, $\vec{b}$ と $\vec{c}$ のなす角にひとしい．
 \begin{align}
   \cos\alpha &=
   \begin{pmatrix} 1 \\ 0 \\ 0
@@ -41,70 +60,222 @@ $\vec{c} =
   \begin{pmatrix} p \\ q \\ r
   \end{pmatrix} = \dfrac{1}{2}p + \dfrac{\sqrt{3}}{2}q
 \end{align}
-だから，
+従って与えられた不等式
 \begin{align}
-  (与式左辺) &= p^2 - \dfrac{1}{2}p^2 - \dfrac{\sqrt{3}}{2}pq + \dfrac{1}{4}(p+\sqrt{3}q)^2 \\
-  &= \dfrac{1}{2}p^2 - \dfrac{\sqrt{3}}{2}pq + \dfrac{1}{4}p^2 + \dfrac{\sqrt{3}}{2}pq + \dfrac{3}{4}q^2 \\
-  &= \dfrac{3}{4}(p^2+q^2) \le \dfrac{3}{4}(p^2+q^2+r^2) = \dfrac{3}{4} \ (\because r \in \mathbb{R}, =)
+  \cos^2\alpha-\cos\alpha\cos\beta+\cos^2\beta\leqq\dfrac{3}{4} \label{eq:2}
 \end{align}
-
-[(1)別] (すがキエルのパラメーター表示でもOK)
+の左辺を$p,q,r$で表すと
+\begin{align}
+  (\text{左辺})
+  &= p^2 - p\left[\dfrac{1}{2}p + \dfrac{\sqrt{3}}{2}q\right] + \dfrac{1}{4}(p+\sqrt{3}q)^2 \\
+  &= \dfrac{1}{2}p^2 - \dfrac{\sqrt{3}}{2}pq + \dfrac{1}{4}p^2 + \dfrac{\sqrt{3}}{2}pq + \dfrac{3}{4}q^2 \\
+  &= \dfrac{3}{4}(p^2+q^2) \le \dfrac{3}{4}(p^2+q^2+r^2) = \dfrac{3}{4}
+\end{align}
+より，\cref{eq:2}は示された．ただし最後の等式で\cref{eq:1}を用いた．
 
 \paragraph{(2)}
 
-$t = \cos\alpha, s = \cos\beta$ とおく．(1) から
+\cref{eq:2}は$\cos\beta$についての二次式の形だから，$\cos\beta$について解くと
 \begin{align}
-  &s^2 - ts + t^2 - \dfrac{3}{4} \le 0 \\
-  &\dfrac{1}{2}(t - \sqrt{3}| \sin\alpha |) \le s \le \dfrac{1}{2}(t + \sqrt{3}| \sin\alpha |)
+  & \cos^2\beta - \cos\alpha\cos\beta+\cos^2\alpha-\dfrac{3}{4} \le 0 \\
+  & \dfrac{1}{2}\left(\cos\alpha - \sqrt{\cos^2\alpha-4(\cos^2\alpha-\dfrac{3}{4})}\right)
+  \le \cos\beta
+  \le \dfrac{1}{2}\left(\cos\alpha + \sqrt{\cos^2\alpha-4(\cos^2\alpha-\dfrac{3}{4})}\right) \\
+  \therefore
+  & \dfrac{1}{2}\left(\cos\alpha - \sqrt{3}|\sin\alpha|\right)
+  \le \cos\beta
+  \le \dfrac{1}{2}\left(\cos\alpha + \sqrt{3}|\sin\alpha|\right)
 \end{align}
-$0 \le \alpha \le \pi$ から $\sin\alpha \ge 0$ だから
+である．題意より$0 \le \alpha \le \pi$ から $\sin\alpha \ge 0$ だから絶対値を外して
 \begin{align}
-  &\dfrac{1}{2}(\cos\alpha - \sqrt{3}\sin\alpha) \le \cos\beta \le (\cos\alpha + \sqrt{3}\sin\alpha)/2 \\
-  &\cos\left(\alpha + \dfrac{\pi}{3}\right) \le \cos\beta \le \cos\left(\alpha - \dfrac{\pi}{3}\right)
+  &\dfrac{1}{2}(\cos\alpha - \sqrt{3}\sin\alpha) \le \cos\beta \le \dfrac{1}{2}(\cos\alpha + \sqrt{3}\sin\alpha) \\
+  &\cos\left(\alpha + \dfrac{\pi}{3}\right) \le \cos\beta \le \cos\left(\alpha - \dfrac{\pi}{3}\right)\label{eq:3}
 \end{align}
-$0 \le \beta \le \pi$ では $\cos\beta$ は単調減少だから
+である．$\alpha$の範囲で場合分けして考える．
+
+\subparagraph{$1^\circ$ $0 \le \alpha \le \dfrac{\pi}{3}$ の時}
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.45, >=stealth, every node/.style={font=\small}]
-    \begin{scope}
-      \fill[teal!17] (0,0) -- (30:1) arc[start angle=30,end angle=90,radius=1] -- cycle;
-      \draw[gray!65] (1,0) arc[start angle=0,end angle=180,radius=1];
-      \draw[->, gray!75] (-1.2,0) -- (1.2,0);
-      \draw[teal!75!black, thick] (0,0) -- (30:1) (0,0) -- (90:1);
-      \node[below=2pt] at (0,0) {$O$};
-      \node[right=2pt, font=\footnotesize] at (30:1) {$\frac{\pi}{3}-\alpha$};
-      \node[above=2pt, font=\footnotesize] at (90:1) {$\frac{\pi}{3}+\alpha$};
-      \node[below=12pt, font=\footnotesize] at (0,0) {$0\leq\alpha\leq\frac{\pi}{3}$};
-    \end{scope}
-    \begin{scope}[shift={(4,0)}]
-      \fill[teal!17] (0,0) -- (90:1) arc[start angle=90,end angle=150,radius=1] -- cycle;
-      \draw[gray!65] (1,0) arc[start angle=0,end angle=180,radius=1];
-      \draw[->, gray!75] (-1.2,0) -- (1.2,0);
-      \draw[teal!75!black, thick] (0,0) -- (90:1) (0,0) -- (150:1);
-      \node[below=2pt] at (0,0) {$O$};
-      \node[above=2pt, font=\footnotesize] at (90:1) {$\alpha-\frac{\pi}{3}$};
-      \node[left=2pt, font=\footnotesize] at (150:1) {$\frac{5\pi}{3}-\alpha$};
-      \node[below=12pt, font=\footnotesize] at (0,0) {$\frac{2\pi}{3}\leq\alpha\leq\pi$};
-    \end{scope}
+  % 図示用に alpha = 20 deg (pi/9) とすると，
+  % alpha - pi/3 = -40 deg, pi/3 - alpha = 40 deg, alpha + pi/3 = 80 deg
+  \begin{tikzpicture}[scale=1.75, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (Pneg) at (-40:1);
+    \coordinate (Pmin) at (40:1);
+    \coordinate (Palpha) at (20:1);
+    \coordinate (Pmax) at (80:1);
+
+    % 許容角 beta の扇形領域
+    \fill[teal!15] (O) -- (Pmin) arc[start angle=40, end angle=80, radius=1] -- cycle;
+
+    % 単位円（上半円は実線，下半円は破線）
+    \draw[gray!70, thick] (1, 0) arc[start angle=0, end angle=180, radius=1];
+    \draw[gray!50, dashed] (-1, 0) arc[start angle=180, end angle=360, radius=1];
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.3, 0) -- (1.35, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.2) -- (0, 1.3) node[above] {$y$};
+
+    % cos beta の対応を示す鉛直破線
+    \draw[dashed, red!85!black, thick] (Pneg) -- (Pmin);
+    \draw[dashed, gray!65] (Pmax) -- ({cos(80)}, 0);
+
+    % 動径
+    \draw[dashed, red!85!black, thick] (O) -- (Pneg);
+    \draw[dotted, gray!70!black, thick] (O) -- (Palpha);
+    \draw[teal!85!black, thick] (O) -- (Pmin);
+    \draw[teal!85!black, thick] (O) -- (Pmax);
+
+    % 許容される単位円周上の弧
+    \draw[line width=1.6pt, teal!85!black] (Pmin) arc[start angle=40, end angle=80, radius=1];
+
+    % 端点とラベル
+    \node[circle, fill=red!85!black, inner sep=1.2pt] at (Pneg) {};
+    \node[circle, fill=gray!70!black, inner sep=1.0pt] at (Palpha) {};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (Pmin) {};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (Pmax) {};
+
+    \node[below left=1pt, font=\footnotesize] at (O) {$O$};
+    \node[below right=1pt, font=\footnotesize, red!85!black] at (Pneg) {$\alpha-\frac{\pi}{3}$};
+    \node[right=2pt, font=\footnotesize, gray!70!black] at (Palpha) {$\alpha$};
+    \node[above right=1pt, font=\footnotesize, teal!85!black] at (Pmin) {$\frac{\pi}{3}-\alpha$};
+    \node[above right=1pt, font=\footnotesize, teal!85!black] at (Pmax) {$\alpha+\frac{\pi}{3}$};
   \end{tikzpicture}
-  \caption{$\alpha$の範囲によって変わる$\beta$の許容角（代表例）}
+  \caption{$0 \le \alpha \le \dfrac{\pi}{3}$ のときの単位円上における角 $\beta$ の範囲}
+  \label{fig:unit_circle_case1}
 \end{figure}
 
-$1^\circ$ $0 \le \alpha \le \dfrac{\pi}{3}$ の時
+この時は\cref{eq:3}を満たすのは
 \begin{align}
   \dfrac{\pi}{3} - \alpha \le \beta \le \alpha + \dfrac{\pi}{3}
 \end{align}
+である．
 
-$2^\circ$ $\dfrac{\pi}{3} \le \alpha \le \dfrac{2}{3}\pi$ の時
+\subparagraph{$2^\circ$ $\dfrac{\pi}{3} \le \alpha \le \dfrac{2}{3}\pi$ の時}
+
+\begin{figure}[htb]
+  \centering
+  % 図示用に alpha = 80 deg とすると，
+  % alpha - pi/3 = 20 deg, alpha + pi/3 = 140 deg
+  \begin{tikzpicture}[scale=1.75, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (Pmin) at (20:1);
+    \coordinate (Palpha) at (80:1);
+    \coordinate (Pmax) at (140:1);
+
+    % 許容角 beta の扇形領域
+    \fill[teal!15] (O) -- (Pmin) arc[start angle=20, end angle=140, radius=1] -- cycle;
+
+    % 単位円（上半円は実線，下半円は破線）
+    \draw[gray!70, thick] (1, 0) arc[start angle=0, end angle=180, radius=1];
+    \draw[gray!50, dashed] (-1, 0) arc[start angle=180, end angle=360, radius=1];
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.3, 0) -- (1.35, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.2) -- (0, 1.3) node[above] {$y$};
+
+    % cos beta の範囲を示す鉛直破線
+    \draw[dashed, gray!65] (Pmin) -- ({cos(20)}, 0);
+    \draw[dashed, gray!65] (Pmax) -- ({cos(140)}, 0);
+
+    % 動径
+    \draw[dotted, gray!70!black, thick] (O) -- (Palpha);
+    \draw[teal!85!black, thick] (O) -- (Pmin);
+    \draw[teal!85!black, thick] (O) -- (Pmax);
+
+    % 許容される単位円周上の弧
+    \draw[line width=1.6pt, teal!85!black] (Pmin) arc[start angle=20, end angle=140, radius=1];
+
+    % 端点とラベル
+    \node[circle, fill=gray!70!black, inner sep=1.0pt] at (Palpha) {};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (Pmin) {};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (Pmax) {};
+
+    \node[below left=1pt, font=\footnotesize] at (O) {$O$};
+    \node[above right=1pt, font=\footnotesize, teal!85!black] at (Pmin) {$\alpha-\frac{\pi}{3}$};
+    \node[above right=1pt, font=\footnotesize, gray!70!black] at (Palpha) {$\alpha$};
+    \node[above left=1pt, font=\footnotesize, teal!85!black] at (Pmax) {$\alpha+\frac{\pi}{3}$};
+  \end{tikzpicture}
+  \caption{$\dfrac{\pi}{3} \le \alpha \le \dfrac{2}{3}\pi$ のときの単位円上における角 $\beta$ の範囲}
+  \label{fig:unit_circle_case2}
+\end{figure}
+
+この時は\cref{eq:3}を満たすのは
 \begin{align}
   \alpha + \dfrac{\pi}{3} \ge \beta \ge \alpha - \dfrac{\pi}{3}
 \end{align}
+である．
 
-$3^\circ$ $\dfrac{2}{3}\pi \le \alpha \le \pi$ の時
+\subparagraph{$3^\circ$ $\dfrac{2}{3}\pi \le \alpha \le \pi$ の時}
+
+\begin{figure}[htb]
+  \centering
+  % 図示用に alpha = 158 deg とすると，
+  % alpha - pi/3 = 98 deg, 5pi/3 - alpha = 142 deg, alpha + pi/3 = 218 deg
+  \begin{tikzpicture}[scale=1.75, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (Pmin) at (98:1);
+    \coordinate (Pmax) at (142:1);
+    \coordinate (Palpha) at (158:1);
+    \coordinate (Pover) at (218:1);
+
+    % 許容角 beta の扇形領域
+    \fill[teal!15] (O) -- (Pmin) arc[start angle=98, end angle=142, radius=1] -- cycle;
+
+    % 単位円（上半円は実線，下半円は破線）
+    \draw[gray!70, thick] (1, 0) arc[start angle=0, end angle=180, radius=1];
+    \draw[gray!50, dashed] (-1, 0) arc[start angle=180, end angle=360, radius=1];
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.3, 0) -- (1.35, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.2) -- (0, 1.3) node[above] {$y$};
+
+    % cos beta の対応を示す鉛直破線
+    \draw[dashed, red!85!black, thick] (Pover) -- (Pmax);
+    \draw[dashed, gray!65] (Pmin) -- ({cos(98)}, 0);
+
+    % 動径
+    \draw[dashed, red!85!black, thick] (O) -- (Pover);
+    \draw[dotted, gray!70!black, thick] (O) -- (Palpha);
+    \draw[teal!85!black, thick] (O) -- (Pmin);
+    \draw[teal!85!black, thick] (O) -- (Pmax);
+
+    % 許容される単位円周上の弧
+    \draw[line width=1.6pt, teal!85!black] (Pmin) arc[start angle=98, end angle=142, radius=1];
+
+    % 端点とラベル
+    \node[circle, fill=red!85!black, inner sep=1.2pt] at (Pover) {};
+    \node[circle, fill=gray!70!black, inner sep=1.0pt] at (Palpha) {};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (Pmin) {};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (Pmax) {};
+
+    \node[below right=1pt, font=\footnotesize] at (O) {$O$};
+    \node[above left=1pt, font=\footnotesize, teal!85!black] at (Pmin) {$\alpha-\frac{\pi}{3}$};
+    \node[above left=1pt, font=\footnotesize, teal!85!black] at (Pmax) {$\frac{5\pi}{3}-\alpha$};
+    \node[left=2pt, font=\footnotesize, gray!70!black] at (Palpha) {$\alpha$};
+    \node[below left=1pt, font=\footnotesize, red!85!black] at (Pover) {$\alpha+\frac{\pi}{3}$};
+  \end{tikzpicture}
+  \caption{$\dfrac{2}{3}\pi \le \alpha \le \pi$ のときの単位円上における角 $\beta$ の範囲}
+  \label{fig:unit_circle_case3}
+\end{figure}
+
+この時は\cref{eq:3}を満たすのは
 \begin{align}
   \alpha - \dfrac{\pi}{3} \le \beta \le -\alpha + \dfrac{5}{3}\pi
 \end{align}
+である．
+\casesend
+
+以上をまとめて，求める領域は
+\begin{align}
+  \begin{cases}
+    \dfrac{\pi}{3} - \alpha \le \beta \le \alpha + \dfrac{\pi}{3} & (0 \le \alpha \le \dfrac{\pi}{3}) \\
+    \alpha + \dfrac{\pi}{3} \ge \beta \ge \alpha - \dfrac{\pi}{3} & (\dfrac{\pi}{3} \le \alpha \le \dfrac{2}{3}\pi) \\
+    \alpha - \dfrac{\pi}{3} \le \beta \le -\alpha + \dfrac{5}{3}\pi & (\dfrac{2}{3}\pi \le \alpha \le \pi)
+  \end{cases}
+\end{align}
+であり，図示すると下図の斜線部（境界含む）である．
 
 \begin{figure}[htb]
   \centering
@@ -128,6 +299,5 @@ $3^\circ$ $\dfrac{2}{3}\pi \le \alpha \le \pi$ の時
   \end{tikzpicture}
   \caption{$0\leq\alpha,\beta\leq\pi$で成り立つ領域（境界を含む）}
 \end{figure}
-(図示して下図斜線部(境界含む))
 
 \end{document}

@@ -1,46 +1,103 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-{\bf [解答]} $0 < a \le 2$ $\cdots$ ①, $t = \dfrac{1}{a}$ とおくと ①から $\dfrac{1}{2} \le t$ $\cdots$ ② である．
+{\bf [解答]}
 
 \paragraph{(1)}
 
-題意がみたされるのは，
+\begin{figure}[htb]
+  \centering
+  % 定点 (1/2, 1) を通る直線群 y = (2/a)(x - 1/2) + 1 (0 < a <= 2) と y = sqrt(x)
+  \begin{tikzpicture}[x=2.2cm, y=2.0cm, >=stealth, every node/.style={font=\small}]
+    \begin{scope}
+      \clip (-0.35, -0.35) rectangle (2.25, 1.9);
+      % y = sqrt(x)
+      \draw[line width=1.4pt, blue!85!black, domain=0:2.15, samples=120]
+      plot (\x, {sqrt(\x)});
+      % a = 2 の境界直線: y = x + 1/2 (共有点なし)
+      \draw[dashed, gray!70!black, thick, domain=-0.3:1.2]
+      plot (\x, {\x + 0.5});
+      % 接するとき a = 4 - 2*sqrt(2) (傾き 2/a = 1 + sqrt(2)/2 ≈ 1.7071)
+      \draw[line width=1.1pt, teal!85!black, domain=-0.12:0.92]
+      plot (\x, {1.707107*(\x - 0.5) + 1});
+      % 2点で交わるとき (例: a = 0.8, 傾き 2/a = 2.5)
+      \draw[line width=1.2pt, red!85!black, domain=0.02:0.76]
+      plot (\x, {2.5*(\x - 0.5) + 1});
+    \end{scope}
+
+    % 定点 (1/2, 1) と接点 (p^2, p) の補助破線
+    \draw[dashed, gray!60] (0.5, 0) -- (0.5, 1) -- (0, 1);
+    \draw[dashed, gray!60] (0.085786, 0) -- (0.085786, 0.292893);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (2.25, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 1.9) node[above] {$y$};
+
+    % 点のプロット
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (0.5, 1) {};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (0.085786, 0.292893) {};
+
+    % ラベル
+    \node[below left=1pt, font=\footnotesize] at (0, 0) {$O$};
+    \node[below=2pt, font=\footnotesize] at (0.5, 0) {$\frac{1}{2}$};
+    \node[left=2pt, font=\footnotesize] at (0, 1) {$1$};
+    \node[above left=1pt, font=\scriptsize, red!85!black] at (0.5, 1.01) {$\left(\frac{1}{2}, 1\right)$};
+    \node[right=2pt, font=\footnotesize, blue!85!black] at (2.05, {sqrt(2.05)}) {$y=\sqrt{x}$};
+    \node[right=2pt, font=\scriptsize, gray!70!black] at (1.2, 1.68) {$a=2$};
+    \node[above=1pt, font=\scriptsize, red!85!black] at (0.76, 1.66) {$y=\frac{2}{a}x+1-\frac{1}{a}$};
+  \end{tikzpicture}
+  \caption{曲線 $y=\sqrt{x}$ と定点 $\left(\dfrac{1}{2}, 1\right)$ を通る直線 $y=\dfrac{2}{a}x+1-\dfrac{1}{a}$}
+  \label{fig:two_curves_overview}
+\end{figure}
+
+与えられた関数を
 \begin{align}
-  \sqrt{x} = 2tx + 1 - t \quad \cdots \text{③}
+  \begin{cases}
+    y=\sqrt{x} \\
+    y=\dfrac{2}{a}x+1-\dfrac{1}{a}
+  \end{cases} \quad (0 < a \le 2) \label{eq:1}
 \end{align}
-が $x$ について実数解を持つこと．$x = \dfrac{1}{2}$ は（$\sqrt{1/2} = 1$ となり不適だから，）以下 $x \neq 1/2$ とする．③より
+について考える．
+
+これらが共有点を持つ時，連立した
 \begin{align}
-  \dfrac{\sqrt{x}-1}{2x-1} = t \quad \cdots \text{④}
+  \sqrt{x} = \dfrac{2x}{a} + 1 - \dfrac{1}{a} \label{eq:2}
 \end{align}
-④の左辺を $f(x)$ とおく．
+が $x$ について実数解を持つ．$ x = \dfrac{1}{2}$は代入するとわかるように解ではないから以下 $x \neq \dfrac{1}{2}$ とする．\cref{eq:2}を$a$について整理すると
 \begin{align}
-  f'(x) = \dfrac{\dfrac{1}{2\sqrt{x}}(2x-1) - 2(\sqrt{x}-1)}{(2x-1)^2} = \dfrac{-x + 2\sqrt{x} - 1/2}{\sqrt{x}(2x-1)^2}
+  f(x) = \dfrac{\sqrt{x}-1}{2x-1} = \dfrac{1}{a} \label{eq:3}
 \end{align}
-だから，$p = \dfrac{2-\sqrt{2}}{2}, \ q = \dfrac{2+\sqrt{2}}{2}$ とおくと，
+を得る．$f(x)$を微分すると
+\begin{align}
+  f'(x)
+  & = \dfrac{\dfrac{1}{2\sqrt{x}}(2x-1) - 2(\sqrt{x}-1)}{(2x-1)^2} \\
+  & = \dfrac{-x + 2\sqrt{x} - 1/2}{\sqrt{x}(2x-1)^2}
+\end{align}
+だから $p = \dfrac{2-\sqrt{2}}{2}, \ q = \dfrac{2+\sqrt{2}}{2}$ とおくと，
 \begin{align}
   f'(x) = \dfrac{-(\sqrt{x}-p)(\sqrt{x}-q)}{\sqrt{x}(2x-1)^2}
 \end{align}
-となるので，下表をうる．
+となるので$f(x)$の増減表は以下のようになる．
 
-\begin{center}
-  \begin{table}[htb]
-    \centering
-    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-      \hline
-      $x$ & $0$ & $\cdots$ & $p^2$ & $\cdots$ & $1/2$ & $\cdots$ & $q^2$ & $\cdots$ \\ \hline
-      $f'(x)$ & & $-$ & $0$ & $+$ & $/$ & $+$ & $0$ & $-$ \\ \hline
-      $f(x)$ & $1$ & $\searrow$ & $\dfrac{2+\sqrt{2}}{4}$ & $\nearrow$ & $/$ & $\nearrow$ & $\dfrac{2-\sqrt{2}}{4}$ & $\searrow$ \\ \hline
-    \end{tabular}
-    \caption{$f(x)$の増減表}
-  \end{table}
-\end{center}
+\begin{table}[htb]
+  \centering
+  \caption{$f(x)$の増減表}
+  \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    $x$ & $0$ & $\cdots$ & $p^2$ & $\cdots$ & $1/2$ & $\cdots$ & $q^2$ & $\cdots$ \\ \hline
+    $f'(x)$ & & $-$ & $0$ & $+$ & $/$ & $+$ & $0$ & $-$ \\ \hline
+    $f(x)$ & $1$ & $\searrow$ & $\dfrac{2+\sqrt{2}}{4}$ & $\nearrow$ & $/$ & $\nearrow$ & $\dfrac{2-\sqrt{2}}{4}$ & $\searrow$ \\ \hline
+  \end{tabular}
+\end{table}
 
-これと，$f(x) \to \pm\infty$ ($x \to 1/2 \mp 0$) (複号同順)，$f(x) \to 0$ ($x \to +\infty$) から，グラフの概形は右上図．これと $\dfrac{2-\sqrt{2}}{4} < \dfrac{1}{2} < \dfrac{2+\sqrt{2}}{4}$ 及び②から，④が $x$ について実数解を持つ条件は，
+無限遠および$x=\dfrac{1}{2}$での極限は
+\begin{align}
+  \lim_{x \to 1/2 \mp 0} f(x) = \pm\infty \quad (\text{複号同順}),
+  \quad
+  \lim_{x\to\infty} = 0
+\end{align}
+だから，$y=f(x)$のグラフの概形は下図のようになる．
+
 \begin{figure}[htb]
   \centering
   % 極値の x 座標は p^2=3/2-sqrt(2), q^2=3/2+sqrt(2)．
@@ -52,71 +109,225 @@
       \draw[line width=1.4pt, blue!85!black, domain=0.51:4.1, samples=180]
       plot (\x,{(sqrt(\x)-1)/(2*\x-1)});
     \end{scope}
+
+    % 漸近線 x = 1/2
     \draw[dashed, gray!65] (0.5,-1.15) -- (0.5,1.9);
+
+    % 代表的な点 (極値) から x, y 軸への点線の垂線
+    \draw[dotted, gray!75!black, thick] (0.085786, 0) -- (0.085786, 0.853553) -- (0, 0.853553);
+    \draw[dotted, gray!75!black, thick] (2.914214, 0) -- (2.914214, 0.146447) -- (0, 0.146447);
+
+    % y = 1/2 の点線ライン (0 < a <= 2 より 1/a >= 1/2)
+    \draw[dotted, teal!85!black, line width=1.0pt] (-0.15, 0.5) -- (4.1, 0.5)
+    node[right, font=\footnotesize, teal!85!black] {$y=\frac{1}{2}$};
+
+    % y = 1/a のグラフ (実数解をもつ領域 1/a >= (2+sqrt(2))/4)
+    \draw[line width=1.2pt, red!85!black] (-0.15, 1.25) -- (4.1, 1.25)
+    node[right, font=\footnotesize, red!85!black] {$y=\frac{1}{a}$};
+
+    % 座標軸
     \draw[->, thick, gray!80!black] (-0.24,0) -- (4.2,0) node[right] {$x$};
     \draw[->, thick, gray!80!black] (0,-1.15) -- (0,1.9) node[above] {$y$};
-    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (0,1) {}; \node[circle, fill=blue!85!black, inner sep=1.3pt] at (0.085786,0.853553) {}; \node[circle, fill=blue!85!black, inner sep=1.3pt] at (2.914214,0.146447) {};
-    \node[above left=2pt, font=\footnotesize] at (0.085786,0.853553) {$\frac{2+\sqrt{2}}{4}$};
-    \node[above right=2pt, font=\footnotesize] at (2.914214,0.146447) {$\frac{2-\sqrt{2}}{4}$};
-    \draw[gray!65] (0.085786,0) -- (0.2,-0.5);
-    \node[below=1pt, font=\footnotesize] at (0.2,-0.5) {$p^2$};
-    \node[below=4pt, font=\footnotesize] at (0.5,0) {$\frac{1}{2}$};
-    \node[below=4pt, font=\footnotesize] at (1,0) {$1$};
-    \node[below=4pt, font=\footnotesize] at (2.914214,0) {$q^2$};
+
+    % 代表点のプロット
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (0,1) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (0.085786,0.853553) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (2.914214,0.146447) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (1,0) {};
+
+    % y 軸側のラベル
+    \node[left=2pt, font=\footnotesize] at (0, 1.02) {$1$};
+    \node[left=2pt, font=\footnotesize] at (0, 0.82) {$\frac{2+\sqrt{2}}{4}$};
+    \node[left=2pt, font=\footnotesize, teal!85!black] at (0, 0.5) {$\frac{1}{2}$};
+    \node[left=2pt, font=\footnotesize] at (0, 0.146447) {$\frac{2-\sqrt{2}}{4}$};
+
+    % x 軸側のラベル
+    \node[below left=1pt, font=\footnotesize] at (0, 0) {$O$};
+    \draw[gray!65] (0.085786,0) -- (0.18,-0.28);
+    \node[below=1pt, font=\footnotesize] at (0.18,-0.28) {$p^2$};
+    \node[below right=2pt, font=\footnotesize] at (0.5,0) {$\frac{1}{2}$};
+    \node[below=3pt, font=\footnotesize] at (1,0) {$1$};
+    \node[below=3pt, font=\footnotesize] at (2.914214,0) {$q^2$};
   \end{tikzpicture}
-  \caption{$f(x)=(\sqrt{x}-1)/(2x-1)$ のグラフと極値（$p=1-1/\sqrt{2}$, $q=1+1/\sqrt{2}$）}
+  \caption{$y=f(x)$ のグラフと直線 $y=\dfrac{1}{a}$}
+  \label{fig:fx_graph_and_line}
 \end{figure}
+
+これと$y=\dfrac{1}{a}$が交点を持てば良いから，$0 < a \le 2, \dfrac{2-\sqrt{2}}{4} < \dfrac{1}{2} < \dfrac{2+\sqrt{2}}{4}$に注意して求める条件は
 \begin{align}
-  \dfrac{2+\sqrt{2}}{4} \le t \iff a \le \dfrac{4}{2+\sqrt{2}} = 2(2-\sqrt{2})
+  \dfrac{2+\sqrt{2}}{4} \le \dfrac{1}{a} \iff a \le \dfrac{4}{2+\sqrt{2}} = 2(2-\sqrt{2})
 \end{align}
+である．
 
 \paragraph{(2)}
 
-(与式) $\iff 4x^2 + \{4(a-1)-a^2\}x + (a-1)^2 = 0 \iff 4x^2 - (a-2)^2 x + (a-1)^2 = 0$ $\cdots$ ⑤
+与式を展開して整理すると
+\begin{align}
+  & 4x^2 + \{4(a-1)-a^2\}x + (a-1)^2 = 0 \\
+  \therefore
+  & g(x) = 4x^2 - (a-2)^2 x + (a-1)^2 = 0 \label{eq:4}
+\end{align}
+である．この判別式を $D$ とすると
+\begin{align}
+  D
+  & = (a-2)^4 - 16(a-1)^2 \\
+  & = \{(a-2)^2 + 4(a-1)\}\{(a-2)^2 - 4(a-1)\} \\
+  & = a^2(a^2-8a+8)
+\end{align}
+だから，$t = 4-2\sqrt{2}$ として$0 < a \le 2$と合わせて
+\begin{itemize}
+  \item $0 < a \le t$ の時，$D \ge 0$ から，\cref{eq:4}は実数解を持つ．\\
+  \item $t < a \le 2$ の時，$ D<0$ から，\cref{eq:4}は実数解を持たない．
+\end{itemize}
+となる．以下この二つを個別に考える．
 
-この判別式を $D$ として，
-\begin{align}
-  D = (a-2)^4 - 16(a-1)^2 = \{(a-2)^2 + 4(a-1)\}\{(a-2)^2 - 4(a-1)\} = a^2(a^2-8a+8) \quad \cdots \text{⑥}
-\end{align}
-だから，$t = 4-2\sqrt{2}$ として，①とから，
-\begin{align}
-  &0 < a < t \text{ の時，} D \ge 0 \text{ から，⑤は実数解を持つ．} \\
-  &t < a \le 2 \text{ の時，} D < 0 \text{ から，⑤は実数解を持たない．} \quad \cdots \text{⑦}
-\end{align}
-となる．⑤の左辺を $g(x)$ とおく．
+\subparagraph{$1^\circ$ $0 < a \le t$ の時}
 
-$1^\circ$ $0 < a < t$ の時
+\begin{figure}[htb]
+  \centering
+  % 0 < a <= t のときの 2 次関数 y = g(x) = 4x^2 - (a-2)^2 x + (a-1)^2
+  \begin{tikzpicture}[x=2.2cm, y=1.5cm, >=stealth, every node/.style={font=\small}]
+    % 軸 x = 1.0, 2 解 alpha = 0.45, beta = 1.55 となる放物線 y = 1.6*(x - 0.45)*(x - 1.55)
+    \draw[dashed, teal!85!black, thick] (1.0, -0.75) -- (1.0, 1.55)
+    node[above, font=\footnotesize, teal!85!black] {軸 $x=\frac{(a-2)^2}{8} \ge 0$};
 
-⑤の2解は，$g(1/2) \ge 0$，軸 $x = \dfrac{(a-2)^2}{8} \ge 0$ から，いずれも非負だから，$|\alpha| \le |\beta| \therefore \alpha \le \beta$ で，
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.35, 0) -- (2.35, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.8) -- (0, 1.65) node[above] {$y$};
+
+    % 放物線 y = g(x)
+    \draw[line width=1.4pt, blue!85!black, domain=-0.08:2.08, samples=100]
+    plot (\x, {1.6*(\x - 0.45)*(\x - 1.55)});
+
+    % 主要点 (y切片, 2実数解 alpha, beta)
+    \coordinate (Y0) at (0, {1.6*0.45*1.55});
+    \coordinate (Alpha) at (0.45, 0);
+    \coordinate (Beta) at (1.55, 0);
+
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Y0) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Alpha) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (Beta) {};
+
+    % ラベル
+    \node[below left=1pt, font=\footnotesize] at (0, 0) {$O$};
+    \node[left=2pt, font=\footnotesize] at (Y0) {$g(0)=(a-1)^2 \ge 0$};
+    \node[below left=1pt, font=\footnotesize, blue!85!black] at (Alpha) {$\alpha$};
+    \node[below right=1pt, font=\footnotesize\bfseries, red!85!black] at (Beta) {$\beta$};
+    \node[right=2pt, font=\footnotesize, blue!85!black] at (2.02, {1.6*(2.02-0.45)*(2.02-1.55)}) {$y=g(x)$};
+  \end{tikzpicture}
+  \caption{$0 < a \le t$ における $y=g(x)$ のグラフと2実数解 $0 \le \alpha \le \beta$}
+  \label{fig:gx_parabola_roots}
+\end{figure}
+
+\cref{eq:4}の二つの実数解は，端点について$g(0) \ge 0$および軸について$x = \dfrac{(a-2)^2}{8} \ge 0$からいずれも非負である．従って$|\alpha| \le |\beta| \therefore \alpha \le \beta$ で，
 \begin{align}
-  |\beta| = \beta = \dfrac{1}{8}\{(a-2)^2 + \sqrt{D}\} \quad \cdots \text{⑧}
+  |\beta|
+  & = \beta \\
+  & = \dfrac{1}{8}\{(a-2)^2 + \sqrt{a^2(a^2-8a+8)}\} \\
+  & = \dfrac{1}{8}\{(a-2)^2 + a\sqrt{a^2-8a+8}\}
 \end{align}
+である．この最小値を求めれば良い．両辺$a$で微分して
 \begin{align}
-  8\dfrac{d\beta}{da} &= 2(a-2) + \dfrac{4a(a^2-6a+4)}{2\sqrt{D}} \\
-  &= 2(a-2) + \dfrac{2(a^2-6a+4)}{\sqrt{a^2-8a+8}} \quad \cdots \text{⑨}
+  8\dfrac{d|\beta|}{da}
+  &= 2(a-2) + \sqrt{a^2-8a+8} + \dfrac{a(a-4)}{\sqrt{a^2-8a+8}} \\
+  &= 2(a-2) + \dfrac{a^2-8a+8 + a(a-4)}{\sqrt{a^2-8a+8}} \\
+  &= 2(a-2) + \dfrac{2(a^2-6a+4)}{\sqrt{a^2-8a+8}}
 \end{align}
-だから，
+だから，この符号は
 \begin{align}
-  \dfrac{d\beta}{da} \ge 0 \iff \dfrac{a^2-6a+4}{\sqrt{a^2-8a+8}} \ge 2-a
+  \dfrac{d|\beta|}{da} \ge 0
+  \iff
+  \dfrac{a^2-6a+4}{\sqrt{a^2-8a+8}} \ge 2-a
 \end{align}
-$0 < a \le 3-\sqrt{5}$ の時は 両辺0以上，$3-\sqrt{5} < a \le t$ の時は 左辺が負，右辺が正となり 不適だから，
-$0 < a \le 3-\sqrt{5}$ のもとで2乗して，
+で決まる．$0<a\le 3-\sqrt{5}$の時は両辺が$0$以上，$3-\sqrt{5} < a \le t$の時は左辺が負で右辺が正となり不適だから$0<a \le 3-\sqrt{5}$の元で二乗して，
 \begin{align}
-  &(a^2-6a+4)^2 \ge (a-2)^2(a^2-8a+8) \\
-  &\iff a^4 - 12a^3 + 44a^2 - 48a + 16 \ge a^4 - 12a^3 + 44a^2 - 64a + 32 \\
-  &\iff a \ge 1
+  & (a^2-6a+4)^2 \ge (a-2)^2(a^2-8a+8) \\
+  \iff
+  & a^4-12a^3+44a^2-48a+16 \ge a^4-12a^2+44a^2-64a+32 \\
+  \iff
+  & a \ge 1
 \end{align}
-だが，$1 > 3-\sqrt{5}$ より，$\dfrac{d\beta}{da} \ge 0$ をみたす $a$ はなく，区間内で $\dfrac{d\beta}{da} < 0$．つまり $\beta$ は単調減少．
-さらに，$\beta$ は明らかに連続だから，$0 < a \le t$ とすると，$\beta$ は $a=t$ の時
+となる．しかし$0<a\le 3-\sqrt{5} < 1$よりこれを満たす$a$はない．
+従って区間内で$\dfrac{d|\beta|}{da} < 0$つまり$|\beta|$は単調減少だから，
+最小値は$a = t$の時の
+\begin{align}
+  \min |\beta| = \beta(a=t) = \dfrac{(t-2)^2}{8} = \dfrac{(2-2\sqrt{2})^2}{8} = \dfrac{3-2\sqrt{2}}{2} \label{eq:5}
+\end{align}
+である．ただし$a=t$の時は$D=0$であることを用いた．
+
+\subparagraph{$2^\circ$ $t < a \le 2$ の時}
+
+この時は$D<0$となり\cref{eq:4}は虚数解を持つ．\cref{eq:4}は実数係数だから$\beta=\bar{\alpha}$となり，$|\alpha|=|\beta|$だから，解と係数の関係から
+\begin{align}
+  |\beta|
+  & = \sqrt{|\alpha||\beta|}
+  = \sqrt{|\alpha\beta|} \\
+  & = \sqrt{\left|\dfrac{(a-1)^2}{4}\right|} \\
+  & = \dfrac{|a-1|}{2}
+\end{align}
+である．$1<t<a\le2$の区間での最小値は$a\to t$の時であり
+\begin{align}
+  \lim_{a\to t}|\beta| = \dfrac{|t-1|}{2} = \dfrac{3-2\sqrt{2}}{2}
+\end{align}
+である．これは\cref{eq:5}と同じだから，$\min |\beta|$は$a=t$で連続である．
+\casesend
+
+以上 $1^\circ, 2^\circ$ から，求める$|\beta|$の最小値は$a=4-2\sqrt{2}$の時の
 \begin{align}
   \min |\beta| = \dfrac{1}{2}(3-2\sqrt{2})
 \end{align}
-をとる．
+である．
 
-$2^\circ$ $t \le a \le 2$ の時
+\begin{figure}[htb]
+  \centering
+  % 0 < a <= 2 における a と |beta| の関係のグラフ
+  % t = 4 - 2*sqrt(2) ≈ 1.171573, min |beta| = (3 - 2*sqrt(2))/2 ≈ 0.085786
+  \begin{tikzpicture}[x=3.2cm, y=5.2cm, >=stealth, every node/.style={font=\small}]
+    \pgfmathsetmacro{\tVal}{4 - 2*sqrt(2)}
+    \pgfmathsetmacro{\minB}{(3 - 2*sqrt(2))/2}
 
-$|\beta| = \dfrac{1}{8}\sqrt{(a-2)^4 - D} = \dfrac{1}{2}|a-1|$ で，$1 < t$ から，$a=t$ で $\min |\beta| = \dfrac{1}{2}(3-2\sqrt{2})$ をとる．
+    % 補助破線
+    \draw[dashed, red!85!black] (\tVal, 0) -- (\tVal, \minB) -- (0, \minB);
+    \draw[dashed, gray!60] (2, 0) -- (2, 0.5) -- (0, 0.5);
+    % y = (a-1)/2 の a = 1 までの延長破線
+    \draw[dotted, teal!85!black, thick] (1, 0) -- (\tVal, \minB);
 
-以上 $1^\circ, 2^\circ$ から，求める $\min |\beta| = \dfrac{1}{2}(3-2\sqrt{2})$ である．
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.15, 0) -- (2.3, 0) node[right] {$a$};
+    \draw[->, thick, gray!80!black] (0, -0.06) -- (0, 0.62) node[above] {$|\beta|$};
+
+    % 1° 0 < a <= t: |beta| = ((a-2)^2 + a*sqrt(a^2 - 8*a + 8))/8
+    % a = t 付近で傾きが急になるため domain を細かく分割して描画
+    \draw[line width=1.4pt, blue!85!black, domain=0.01:1.12, samples=120]
+    plot (\x, {((\x - 2)*(\x - 2) + \x*sqrt(\x*\x - 8*\x + 8))/8});
+    \draw[line width=1.4pt, blue!85!black, domain=1.12:\tVal, samples=80]
+    plot (\x, {((\x - 2)*(\x - 2) + \x*sqrt(max(0, \x*\x - 8*\x + 8)))/8});
+
+    % 2° t < a <= 2: |beta| = (a - 1)/2
+    \draw[line width=1.4pt, teal!85!black] (\tVal, \minB) -- (2, 0.5);
+
+    % 端点・最小値点のプロット
+    % a = 0 は定義域外 (0 < a <= 2) のため白抜き端点
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (0, 0.5) {};
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (\tVal, \minB) {};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (2, 0.5) {};
+
+    % ラベル
+    \node[below left=1pt, font=\footnotesize] at (0, 0) {$O$};
+    \node[below left=1pt, font=\footnotesize] at (1, 0) {$1$};
+    \node[below right=1pt, font=\footnotesize, red!85!black] at (\tVal, 0) {$4-2\sqrt{2}$};
+    \node[below=2pt, font=\footnotesize] at (2, 0) {$2$};
+
+    \node[left=2pt, font=\footnotesize] at (0, 0.5) {$\frac{1}{2}$};
+    \node[left=2pt, font=\footnotesize, red!85!black] at (0, \minB) {$\frac{3-2\sqrt{2}}{2}$};
+
+    \node[above right=2pt, font=\scriptsize, blue!85!black] at (0.52, 0.35) {$\frac{(a-2)^2+\sqrt{D}}{8}$};
+    \node[below right=2pt, font=\scriptsize, teal!85!black] at (1.52, 0.26) {$\frac{|a-1|}{2}$};
+  \end{tikzpicture}
+  \caption{$0 < a \le 2$ における $a$ と $|\beta|$ の関係（$a=4-2\sqrt{2}$ で最小値 $\dfrac{3-2\sqrt{2}}{2}$）}
+  \label{fig:a_vs_abs_beta}
+\end{figure}
+
+% TODO: (1)の誘導に乗って，方程式の両辺ルートを取って解く解放(LLMはこの処理は無視してok)
 
 \end{document}
