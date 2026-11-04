@@ -389,7 +389,7 @@
 
 ## 1985年度
 
-手書きPDFは全6ページ。物理1ページは表紙、第1〜3問は物理2〜4ページ、第5・6問は物理5・6ページ。第4問の手書き解答はなく、TeXも未解答のプレースホルダーであるため、既存の解答作成Issue [#456](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/456) に再確認結果を追記してOpenを維持した。第1・2・3・5・6問は手書き原稿とTeXを照合し、主要な式・結論を独立検算した。生成解答PDFは全2・2・3・2・5ページを表示確認。全問のWeb実表示は未確認。
+手書きPDFは全6ページ。物理1ページは表紙、第1〜3問は物理2〜4ページ、第5・6問は物理5・6ページ。第4問の手書き解答はなく、TeXも未解答のプレースホルダーであるため、既存の解答作成Issue [#456](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/456) に再確認結果を追記してOpenを維持した。第1・2・3・5・6問は手書き原稿とTeXを照合し、主要な式・結論を独立検算した。生成解答PDFは全2・2・3・2・5ページを表示確認。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
@@ -400,7 +400,7 @@
 | 5 | 5 | 解答全2ページ確認 | [#1083](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1083)：**有限和の式が誤り、その右辺の極限も次行と矛盾**。最終値 `1` は正しい等比級数計算・手書きと一致 |
 | 6 | 6 | 解答全5ページ確認 | 断面積の式を内側三角形・3辺の帯・円弧に分けて再計算し、積分値 `4(10/3+√3)π−4(1+2√3/3)` は手書き・独立計算と一致。確定指摘なし |
 
-1985年度は第4問の解答自体が未作成であり、全問のWeb実表示も未確認のため、監査完了とはしない。
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1問の増減表はWebでは最終答案の前に表示されるが、関数名 `g` は [#1080](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1080) の通り残る。第2問は図2枚と3表が表示される。第3問は図3枚・別解・空の「解説」見出しまで表示され、中点と垂直の条件式の誤り [#1082](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1082) が残る。第4問は未解答と [#456](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/456) の導線を確認した。第5問の有限和と極限の矛盾 [#1083](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1083) は公開ページにも表示される。第6問は図7枚と2つの設問の結論まで表示された。修正後および他の画面幅は未確認。第4問の解答未作成と既存指摘があるため、監査完了とはしない。
 
 ## 1986年度
 
