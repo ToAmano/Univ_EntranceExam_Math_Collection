@@ -55,6 +55,8 @@
 
 1963年度は旧形式4問のPDF、Web全問、第4問の原稿細部照合などが未確認であり、監査完了とはしない。
 
+2026-11-04に第1問の公開解答ページをChrome（幅1280px）で全体表示した。`\input{macros}` と `oframed` の開始・終了が文字として表示され、独立した問題欄の後で問題文が重複する。問題別の [#1276](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1276) に原稿行番号と修正方針を記録した。旧形式のままpLaTeXで単体生成を試すと、`solution.tex` L11の `indent.sty` がローカルTeX環境に存在せず停止した。LuaLaTeXと異なるエラーだが、生成PDFの全ページ確認は依然できていない。原稿は変更していない。
+
 ## 1964年度
 
 手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。原稿全ページを表示し、各問のTeX本文と主な式・結論を照合した。6問すべての `solution.tex` が旧 `jarticle` 形式で、一時コピーで各問を LuaLaTeX 実行するといずれも `This file needs format pLaTeX2e` で停止した。形式移行は [#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)。第5問の現存するWeb HTMLには `\input{macros}` と `oframed` 環境が生で残り、この広い影響を #593 に追記した。全問のブラウザー実表示と生成PDF全ページは未確認。
