@@ -80,7 +80,7 @@
 
 ## 1965年度
 
-年度別手書きPDFは3ページ。物理1ページは表紙と第1・3〜6問の**答えの概要メモ**、物理2ページだけに第2問の途中計算と図があり、物理3ページはほぼ空白。したがって第3〜6問は詳細な手書き原稿との逐語照合ができない。第1・2問の生成PDFは各2ページで全ページを表示し、第2問の原稿も拡大照合した。第3〜6問は旧 `jarticle` 形式で、現行LuaLaTeXのPDF生成を保留（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。全問のブラウザー実表示は未確認。
+年度別手書きPDFは3ページ。物理1ページは表紙と第1・3〜6問の**答えの概要メモ**、物理2ページだけに第2問の途中計算と図があり、物理3ページはほぼ空白。したがって第3〜6問は詳細な手書き原稿との逐語照合ができない。第1・2問の生成PDFは各2ページで全ページを表示し、第2問の原稿も拡大照合した。第3〜6問は旧 `jarticle` 形式で、現行LuaLaTeXのPDF生成を保留（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。
 
 | 問 | 手書きの根拠 | PDF | 指摘・確認結果 |
 |---|---|---|---|
@@ -91,7 +91,9 @@
 | 5 | 物理1ページの答えメモのみ | 旧形式で未生成 | [#997](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/997)：未定義命令・変数。接線3本は独立検算で一致 |
 | 6 | 物理1ページの答えメモのみ | 旧形式で未生成 | [#998](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/998)：円錐体積の因子が逆。最終体積 `2π/3` は一致 |
 
-1965年度は第3〜6問の詳細な原資料がなく、PDF・Webも未確認のため監査完了とはしない。
+1965年度は第3〜6問の詳細な原資料と生成PDFがなく、監査完了とはしない。
+
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1問のベン図2点が破損画像として表示されることを [#1245](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1245) と照合した。第2問の図と数式は表示され、既報の変数誤記 [#1000](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1000) 以外の新たな表示不良は確認しなかった。第3問の `indentation` 環境の生表示と図欠落を [#996](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/996)、第4問の解答図欠落と場合分けの生TeX表示を [#1249](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1249)、第5問の `\3` の生表示を [#997](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/997)、第6問の解答図欠落を [#998](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/998) に追記した。第3〜6問は旧形式命令と問題文重複も表示される。修正後と他の画面幅では未確認。
 
 ## 1966年度
 
