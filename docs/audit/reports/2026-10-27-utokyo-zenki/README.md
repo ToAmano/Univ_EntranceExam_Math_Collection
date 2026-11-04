@@ -815,6 +815,8 @@
 
 同じ316ページの `<img>` 参照先も取得し、結果を [web-image-asset-report.json](web-image-asset-report.json) に保存した。外部の閲覧数カウンターを除いた解答図では、**1965年第1問のベン図2点がHTTP 404**であり、[#1245](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1245) に記録した。ほかの解答図の画像URLはHTTP 200だった。この確認は画像ファイルの取得可否であり、内容の正しさや可読性の判定ではない。
 
+2026-11-04に公開中の解答本文を改めて走査し、SVG参照467点を直接取得してXML構造を検査した。結果は [web-solution-svg-integrity-report.json](web-solution-svg-integrity-report.json)。**465点はHTTP 200で、正の `viewBox` 寸法と描画要素を持つ有効なSVG**だった。残る2点は上記の1965年第1問の404であり、新たな欠落・空SVG・XML破損は検出しなかった。SVGの数学的内容、ラベルの重なり、Web縮小時の読みやすさはこの構造検査では判定できない。
+
 本文の生TeX命令を `\` に続く英字列として広く探した結果は [web-raw-commands-report.json](web-raw-commands-report.json) に保存した。84ページで何らかの命令が見つかり、1991年以降の23問では既存の問題別Issueへ行番号つきで追記した。例として1996年第3問の `\triangle`、2003年第2問の `\bf`、2005年第3問の増減表のMathJaxエラー、2014年第1問のcaption内 `\texttt` がある。1990年第4問の `\null` は解答未作成のプレースホルダーに由来し、解答作成Issue [#475](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/475) で管理する。文字列検査は命令の見落としを減らすためのもので、描画品質の全件目視を代替しない。
 
 MathJaxの典型的なエラーメッセージも316ページで探した。結果は [web-math-error-report.json](web-math-error-report.json)。該当した3問は、1977年第6問の凹凸表（[#1047](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1047)へ追記）、1978年第5問の二重添字（[#1246](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1246)を作成）、2005年第3問の増減表（[#1194](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1194)へ追記）である。
