@@ -97,7 +97,7 @@
 
 ## 1966年度
 
-手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。第1〜4問は旧 `jarticle` 形式で現行LuaLaTeXのPDF生成を保留（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。第5問は生成PDF全2ページ、第6問は全3ページを表示確認した。手書き第5・6問にあるのは新課程の解答だけで、旧課程の途中式は原稿照合できないため、独立計算で検証した。全問のブラウザー実表示は未確認。
+手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。第1〜4問は旧 `jarticle` 形式で現行LuaLaTeXのPDF生成を保留（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。第5問は生成PDF全2ページ、第6問は全3ページを表示確認した。手書き第5・6問にあるのは新課程の解答だけで、旧課程の途中式は原稿照合できないため、独立計算で検証した。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
@@ -108,7 +108,9 @@
 | 5 | 6 | 全2ページ確認 | [#1005](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1005)：旧課程の最終答案に負号がなく、許される `a+b` の範囲が変わる。新課程は原稿と一致 |
 | 6 | 7 | 全3ページ確認 | [#1006](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1006)：旧課程の折り返し条件の証明に不成立の等式。最終直線と新課程の確率は一致 |
 
-1966年度は旧形式4問の生成PDF、旧課程2問の手書き詳細原稿、ブラウザー実表示が未確認であり、監査完了とはしない。
+1966年度は旧形式4問の生成PDFと旧課程2問の手書き詳細原稿が未確認であり、監査完了とはしない。
+
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1問の途切れた答案と `indentation` の生表示は [#1001](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1001)、第2問の末尾のコードブロック化は [#1002](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1002)、第3問の説明文の生TeX表示は [#1003](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1003)、第4問の `indentation` の生表示は [#1004](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1004) に追記した。第1〜4問の旧形式命令と問題文重複も残る。第5・6問は新課程・旧課程の解答がともに表示され、既報の結論違い [#1005](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1005) と論証不成立 [#1006](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1006) を画面で確認した。修正後および他の画面幅は未確認。
 
 ## 1967年度
 
