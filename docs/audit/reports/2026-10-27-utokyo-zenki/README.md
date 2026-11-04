@@ -152,7 +152,7 @@
 
 ## 1970年度
 
-問題は4問で、手書きPDF物理1ページが表紙、第1〜4問は物理2〜5ページに各1問。原稿全ページと各問題・解答TeXを照合し、主な式・結論を独立検算した。第1〜3問は旧 `jarticle` 形式で生成PDFを未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。第4問は一時コピーから解答PDF全2ページを生成・表示確認した。全問のWeb実表示は未確認。
+問題は4問で、手書きPDF物理1ページが表紙、第1〜4問は物理2〜5ページに各1問。原稿全ページと各問題・解答TeXを照合し、主な式・結論を独立検算した。第1〜3問は旧 `jarticle` 形式で生成PDFを未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。第4問は一時コピーから解答PDF全2ページを生成・表示確認した。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
@@ -161,7 +161,9 @@
 | 3 | 4 | 旧形式で未生成 | [#1014](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1014)：手書きの関数図が文字 `a` だけに置換され、増減表の命令も壊れている。最小速度 `15/4 m/s` は一致 |
 | 4 | 5 | 全2ページ確認 | [#1015](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1015)：到達領域の答えに `X` の条件がなく結論が広すぎる。生成図では噴出口と軌道の高さが不一致、ラベルも重なる。(1)(2)の結論は一致 |
 
-1970年度は旧形式3問の生成PDFと全問のWeb実表示が未確認であり、監査完了とはしない。
+1970年度は旧形式3問の生成PDFが未確認であり、監査完了とはしない。
+
+2026-11-04に公開解答4ページをChrome（幅1280px）で末尾まで表示した。第1問の合同式周辺の生TeX表示は [#1013](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1013)、第2問の再掲問題文の誤字と重複は [#1016](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1016)、第3問の増減表とグラフ欠落は [#1014](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1014) に追記した。第1〜3問には旧形式命令が残る。第4問の図3点は表示されるが、既報の結論の範囲違いと図の条件不整合は [#1015](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1015) で管理する。修正後および他の画面幅は未確認。
 
 ## 1971年度
 
