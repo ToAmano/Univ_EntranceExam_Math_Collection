@@ -284,7 +284,7 @@
 
 ## 1978年度
 
-手書きPDFは全7ページ。物理1ページが表紙、第1〜6問は物理2〜7ページに各1問。原稿全ページと6問のTeXを照合し、主要な式・結論を独立検算した。第1〜6問の生成解答PDFは全2・2・3・2・1・3ページを表示した。問題図がある第1・6問の問題PDFも各全1ページを表示確認。全問のWeb実表示は未確認。
+手書きPDFは全7ページ。物理1ページが表紙、第1〜6問は物理2〜7ページに各1問。原稿全ページと6問のTeXを照合し、主要な式・結論を独立検算した。第1〜6問の生成解答PDFは全2・2・3・2・1・3ページを表示した。問題図がある第1・6問の問題PDFも各全1ページを表示確認。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
@@ -295,7 +295,7 @@
 | 5 | 6 | 全1ページ確認 | [#1246](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1246)：公開Webで等分点間の長さの式がMathJaxの二重添字エラーになり、式全体が生TeX表示。PDF上の図は良好で、余弦定理と区分求積法による極限 `(-a²+3b²+3c²)/6` は手書きと一致 |
 | 6 | 7 | 解答全3ページ、問題全1ページ確認 | [#1052](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1052)：問題図の接線配置、解答図の開端点、最大面積の証明の根拠を要修正。`f=max{g,h}` と極値 `√3/9`, `4/27` は一致 |
 
-1978年度は全問のWeb実表示が未確認であり、監査完了とはしない。
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1問の問題図の接線・太線領域は [#1049](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1049)、第3問の正の `Y` の境界を含む誤りと面積積分の逆向きは [#1050](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1050)、第6問の接線配置・開端点・最大化の根拠不足は [#1052](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1052) と画面を照合した。第5問の数式は [#1246](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1246) の通りMathJaxエラーになるが、後続の式番号・参照・結論は表示される。第2・4問の本文・図表・結論も表示され、既報の中間式の誤り [#1048](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1048)・[#1051](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1051) 以外に新たな指摘なし。修正後および他の画面幅は未確認。
 
 ## 1979年度
 
