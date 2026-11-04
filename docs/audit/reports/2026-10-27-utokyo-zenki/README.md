@@ -250,7 +250,7 @@
 
 ## 1976年度
 
-手書きPDF物理1ページは表紙、第1問は2ページ、第2問は3–4ページ、第3・4・5問は5・6・7ページ、第6問は8ページ。ただし第3・5問の旧課程と第6問の手書き解答本文は確認できず、その部分は原題と独立計算で検証した。第3〜6問は一時コピーから解答PDFを生成し、全4・4・3・4ページを表示確認。第1・2問は旧 `jarticle` 形式で生成PDFを未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。全問のWeb実表示は未確認。
+手書きPDF物理1ページは表紙、第1問は2ページ、第2問は3–4ページ、第3・4・5問は5・6・7ページ、第6問は8ページ。ただし第3・5問の旧課程と第6問の手書き解答本文は確認できず、その部分は原題と独立計算で検証した。第3〜6問は一時コピーから解答PDFを生成し、全4・4・3・4ページを表示確認。第1・2問は旧 `jarticle` 形式で生成PDFを未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
@@ -258,10 +258,12 @@
 | 2 | 3–4 | 旧形式で未生成 | [#1040](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1040)：**1回以上左折する条件を落とし、到達範囲を境界込みの菱形としている**。頂点などは到達不能で、最終領域が広すぎる |
 | 3 | 5（新課程のみ） | 全4ページ確認 | [#1041](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1041)：第1図の中心間距離と旧課程の円Bまでの距離評価が誤る。新課程の最小・最大距離と旧課程の円弧長は独立計算と一致 |
 | 4 | 6 | 全4ページ確認 | [#1042](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1042)：`f(α)` の微分を負と書きながら正と結論し、別解の代数にも符号誤り。図の上端数値と近接目盛も要修正。軌跡の式は一致 |
-| 5 | 7（新課程のみ） | 全3ページ確認 | 円柱側面の積分 `4π/3+2√3` と、旧課程の面積 `e^{2t}/2−2e^t+2t+3/2` を独立検算。確定指摘なし。旧課程は手書きとの照合不可 |
+| 5 | 7（新課程のみ） | 全3ページ確認 | 円柱側面の積分 `4π/3+2√3` と、旧課程の面積 `e^{2t}/2−2e^t+2t+3/2` を独立検算。数学上の確定指摘なし。Web本文に図の視点指定命令が露出する [#1277](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1277)。旧課程は手書きとの照合不可 |
 | 6 | 8（見出しのみ） | 全4ページ確認 | [#1043](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1043)：旧課程の仮定で `f''` を `f'` とし、二次因子への代入では `2αβ` が欠落。結論は独立計算と一致。手書きとの照合不可 |
 
-1976年度は旧形式2問の生成PDF、全問のWeb実表示、手書きがない課程の原稿照合が未確認であり、監査完了とはしない。
+1976年度は旧形式2問の生成PDFと、手書きがない課程の原稿照合が未確認であり、監査完了とはしない。
+
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1問の解答図と増減表の生TeX、未処理マクロを [#1039](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1039)、第2問の答えとなる領域図2点の欠落を [#1040](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1040)、第4問の微分の符号と図の表示不整合を [#1042](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1042) に追記した。第3問の図3点・式と第6問の図3点・表は表示されるが、既報の証明上の誤りは [#1041](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1041)・[#1043](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1043) に残る。第5問は図2点と結論が表示される一方、視点指定命令が生文字になるため [#1277](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1277) を作成した。修正後および他の画面幅は未確認。
 
 ## 1977年度
 
