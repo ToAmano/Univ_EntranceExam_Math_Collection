@@ -308,7 +308,7 @@
 | 3 | 4 | 解答全2ページ確認 | [#1064](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1064)：端点では法線上の係数 `s=0` なのに `s>0` と断言。領域図が最終答案の後、単独ページに配置。面積 `1/3` は手書き・独立積分と一致 |
 | 4 | 6（5はメモ） | 解答全2ページ確認 | [#1065](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1065)：手書きでは正しい `z²tan²α=x²+y²` が、TeXの式(3)では `z²=·tan²α=x²+y²` と破損。個数と `z` の結論は独立計算と一致 |
 | 5 | 7 | 解答全3ページ、問題全1ページ確認 | [#1066](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1066)：正n角錐の展開図で側面辺が等しくない。手書きは体積の平方に相当する多項式を微分するが、TeXは同じ式を `V'` とする。最終体積と極限は一致 |
-| 6 | 8〜9 | 解答全7ページ確認 | [#1067](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1067)：判別式の不等号、`g/h` の混同、`a=0` の係数比較に複数の矛盾があり、**場合分けの証明を修正する必要がある**。最終的な係数領域と最小化結果 `f(x)=1−x²`, `I=6` は独立検算と一致 |
+| 6 | 8〜9 | 解答全7ページ確認 | [#1067](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1067)：判別式の不等号、`g/h` の混同、`a=0` の係数比較に複数の矛盾があり、**場合分けの証明を修正する必要がある**。公開解答図1の曲線名と横軸ラベルも重なる。最終的な係数領域と最小化結果 `f(x)=1−x²`, `I=6` は独立検算と一致 |
 
 1981年度は全問のWeb実表示が未確認のため、監査完了とはしない。
 
@@ -378,7 +378,7 @@
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
-| 1 | 2 | 解答全2ページ確認 | [#1085](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1085)：図1のcaptionは最大配置と書くが実際の図は最大でない。`S` と `max_b S` の混同、`c/a` の誤記と図2の横軸不整合、図3の点名重なりも指摘。最大値 `1` と達成条件は手書き・独立計算と一致 |
+| 1 | 2 | 解答全2ページ確認 | [#1085](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1085)：図1のcaptionは最大配置と書くが実際の図は最大でない。`S` と `max_b S` の混同、`c/a` の誤記と図2の横軸不整合・右端ラベルの重なり、図3の点名重なりも指摘。最大値 `1` と達成条件は手書き・独立計算と一致 |
 | 2 | 3 | 解答全4ページ確認 | [#1086](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1086)：積分の途中で `sin²θ` を `cos²θ` と誤記。変換後の原点表記と図4の配置も指摘。最終面積 `5π/3−1` は円の重なり面積から独立計算し、手書きと一致 |
 | 3 | 4 | 解答全4ページ確認 | [#1087](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1087)：図1で問題文の `B` を `A` と表示し、長さ `√(17/18)` のベクトルを「単位」と誤記。式参照・見出し・語句も指摘。最終範囲 `0≤|y|≤(1+√17)/6` は独立計算・手書きと一致 |
 | 4 | 5 | 解答全3ページ確認 | [#1088](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1088)：大きい解 `z` を未定義の `Z` と混用し、見出しも旧形式。最小値 `(27+3√15)/11`、最大値 `(11+2√19)/3` は領域の端点関数から独立検算し、手書きと一致 |
@@ -817,7 +817,7 @@
 
 2026-11-04に公開中の解答本文を改めて走査し、SVG参照467点を直接取得してXML構造を検査した。結果は [web-solution-svg-integrity-report.json](web-solution-svg-integrity-report.json)。**465点はHTTP 200で、正の `viewBox` 寸法と描画要素を持つ有効なSVG**だった。残る2点は上記の1965年第1問の404であり、新たな欠落・空SVG・XML破損は検出しなかった。SVGの数学的内容、ラベルの重なり、Web縮小時の読みやすさはこの構造検査では判定できない。
 
-1961〜1978年度の有効な解答SVG **78点**を白背景で描画し、全点を目視した。個別のURLと所見は [web-solution-figure-visual-report.json](web-solution-figure-visual-report.json)。1967年第5問の図2〜4は曲線名と横軸が重なり、[#1275](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1275)に記録した。1977年第3問の図2も境界線名が最小点・横軸付近に重なり、[#1045](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1045)に追記した。既知の1965年第1問の欠落2点は表示できず、[#1245](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1245)のまま。今回の78点はSVG単体の目視であり、公開ページ内の縮尺・余白は未確認。1979年度以降の解答図目視も継続する。
+1961〜1986年度の有効な解答SVG **167点**を白背景で描画し、全点を目視した。個別のURLと所見は [web-solution-figure-visual-report.json](web-solution-figure-visual-report.json)。1967年第5問の図2〜4は曲線名と横軸が重なり、[#1275](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1275)に記録した。1977年第3問の図2も境界線名が最小点・横軸付近に重なり、[#1045](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1045)に追記した。1981年第6問の図1は曲線名と横軸が重なり、[#1067](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1067)に追記した。1985年第3問の図3は既存の[#1082](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1082)で注記の重なりを記録済み。1986年第1問の図2では式・横軸・目盛りが重なり、[#1085](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1085)に追記した。既知の1965年第1問の欠落2点は表示できず、[#1245](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1245)のまま。今回の167点はSVG単体の目視であり、公開ページ内の縮尺・余白は未確認。1987年度以降の解答図目視も継続する。
 
 本文の生TeX命令を `\` に続く英字列として広く探した結果は [web-raw-commands-report.json](web-raw-commands-report.json) に保存した。84ページで何らかの命令が見つかり、1991年以降の23問では既存の問題別Issueへ行番号つきで追記した。例として1996年第3問の `\triangle`、2003年第2問の `\bf`、2005年第3問の増減表のMathJaxエラー、2014年第1問のcaption内 `\texttt` がある。1990年第4問の `\null` は解答未作成のプレースホルダーに由来し、解答作成Issue [#475](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/475) で管理する。文字列検査は命令の見落としを減らすためのもので、描画品質の全件目視を代替しない。
 
