@@ -201,7 +201,7 @@
 
 ## 1973年度
 
-手書きPDF物理1ページは表紙、2ページは空白、第1〜6問は物理3〜8ページに各1問。手書き全ページと6問の問題・解答TeXを照合し、主要な式・結論を独立検算した。6問すべて旧 `jarticle` 形式のため、現行の生成PDFとWeb実表示は未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。
+手書きPDF物理1ページは表紙、2ページは空白、第1〜6問は物理3〜8ページに各1問。手書き全ページと6問の問題・解答TeXを照合し、主要な式・結論を独立検算した。6問すべて旧 `jarticle` 形式のため、現行の生成PDFは未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。
 
 | 問 | 原稿物理ページ | 指摘・確認結果 |
 |---|---:|---|
@@ -212,7 +212,9 @@
 | 5 | 7 | [#1029](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1029)：二次不等式の向きが逆で、積分記法にも余分な `dx`。導関数 `2(t²−1)log t/(1+t²)²` は一致 |
 | 6 | 8 | 放物線の係数と接線勾配 `(2v−u)/u` は手書き・独立計算と一致。確定指摘なし；公開Webの旧形式命令は [#1257](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1257) に記録 |
 
-1973年度は全問の生成PDFとWeb実表示が未確認であり、監査完了とはしない。
+1973年度は全問の生成PDFが未確認であり、監査完了とはしない。
+
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。全6問に旧形式命令と問題文の重複が残る。第1問の `\includegraphics` による解答図欠落と未定義命令の露出を [#1027](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1027)、第3問の `zahyou` 図欠落と場合分けの命令露出を [#1256](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1256)、第4問の2図欠落と面積計算の未処理命令を [#1028](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1028)、第5問の問題文の重複を [#1029](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1029) に追記した。第2・6問の表示不具合は [#1255](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1255)・[#1257](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1257) の既報と一致し、数式と最終答は表示された。修正後および他の画面幅は未確認。
 
 ## 1974年度
 
