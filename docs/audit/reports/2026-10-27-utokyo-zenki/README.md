@@ -419,7 +419,7 @@
 
 ## 1987年度
 
-手書きPDFは全9ページ。物理1ページは表紙、第1問は物理2ページに見出しのみで解答がなく、TeXも未対応プレースホルダー。既存の解答作成Issue [#463](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/463) に再確認結果を追記し、Openを維持した。第2〜6問は物理3〜9ページの手書き原稿、TeX、生成解答PDF全2・3・2・2・2ページを照合し、接線条件・接平面・面積・体積・不等式・確率を独立検算した。全問のWeb実表示は未確認。
+手書きPDFは全9ページ。物理1ページは表紙、第1問は物理2ページに見出しのみで解答がなく、TeXも未対応プレースホルダー。既存の解答作成Issue [#463](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/463) に再確認結果を追記し、Openを維持した。第2〜6問は物理3〜9ページの手書き原稿、TeX、生成解答PDF全2・3・2・2・2ページを照合し、接線条件・接平面・面積・体積・不等式・確率を独立検算した。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
@@ -430,7 +430,7 @@
 | 5 | 7 | 解答全2ページ確認 | [#1094](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1094)：**帰納法で積の非負性を説明する二つの不等号が逆向き**。手書きは正しい向き。別解の交換法と小さい数列の全列挙で結論は確認済み |
 | 6 | 8〜9 | 解答全2ページ確認 | [#1095](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1095)：助詞の重複と旧形式の見出し。`p₃=1/3`, `p₄=11/18`, 極限 `−log 2` は `n=1〜6` の列挙と手書きに一致 |
 
-1987年度は第1問の解答自体が未作成であり、全問のWeb実表示も未確認のため、監査完了とはしない。
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1問は未解答の説明と [#463](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/463) の導線を確認。第2・3問は図・数式・別解の結論まで表示される。第4問ではPDFに出る空の式番号 `(7)` はWebには現れず、体積の計算に式番号 `(7)` が付く。第5問の帰納法における不等号の逆向き [#1094](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1094) はWeb本文にも残る。第6問は図・確率・極限まで表示される。修正後および他の画面幅は未確認。第1問の解答未作成と既存指摘があるため、監査完了とはしない。
 
 ## 1988年度（進行中）
 
