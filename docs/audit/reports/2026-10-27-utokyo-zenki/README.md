@@ -10,6 +10,8 @@
 
 文字起こしが完成していた [#423](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/423)、[#478](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/478)、[#479](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/479) は、対応コミットをコメントしてcloseした。行列・一次変換の解答作成Issue14件と1999年第2問の論証Issue #778は、解答の欠落または未解決の指摘が現存するためopenを維持する。
 
+2026-11-04に全316問を再走査すると、旧 `jarticle` / `oframed` 形式は50問残っていた。旧件数107問を掲げていた [#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593) は、現存する50問の年度・問題番号一覧に更新した。
+
 ## 1961年度
 
 手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。原稿全7ページを通覧し、各問題のTeX本文と結論を照合・独立検算した。一時コピーのPDFは第1・2・3・5・6問で各1ページ生成し、全ページを表示確認。第4問は末尾の余分な `\end{multicols}` によりコンパイル失敗。Web実表示は全問未確認。
