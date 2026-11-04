@@ -344,7 +344,7 @@
 
 ## 1982年度
 
-手書きPDFは全7ページ。物理1ページが表紙、第1〜6問は物理2〜7ページに各1問。第1問の手書き解答は空欄で、`solution.tex` も未解答のコメントのみ。既存の解答作成Issue [#449](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/449) に再確認結果を追記し、Openを維持した。第2〜6問は手書き原稿とTeXを照合し、主要な式・結論を独立検算した。生成解答PDFは全3・3・1・1・1ページを表示確認。第3・4問の問題PDFも各全1ページを表示確認。全問のWeb実表示は未確認。
+手書きPDFは全7ページ。物理1ページが表紙、第1〜6問は物理2〜7ページに各1問。第1問の手書き解答は空欄で、`solution.tex` も未解答のコメントのみ。既存の解答作成Issue [#449](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/449) に再確認結果を追記し、Openを維持した。第2〜6問は手書き原稿とTeXを照合し、主要な式・結論を独立検算した。生成解答PDFは全3・3・1・1・1ページを表示確認。第3・4問の問題PDFも各全1ページを表示確認。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
@@ -355,7 +355,7 @@
 | 5 | 6 | 解答全1ページ確認 | [#1070](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1070)：切断面の記号を `l`/`k`/`y` と混用し、断面図は `k>1/3` で上辺の傾きが逆。体積 `7/4` は独立積分と一致 |
 | 6 | 7 | 解答全1ページ確認 | [#1071](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1071)：`r_n` の漸化式と一般項の添字が誤り、極限記号が式に連結表示。極限 `p,r→1/6, q→2/3` は手書き・独立計算と一致 |
 
-1982年度は第1問の解答自体が未作成であり、全問のWeb実表示も未確認のため、監査完了とはしない。
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1問は解答未作成の表示と [#449](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/449) の導線を確認。第2問は3枚の図と結論、第4問は問題図と計算、第5問は断面図と体積、第6問は極限まで表示される。第3問は問題図・解答図3枚と別解まで表示されるが、問題図の幾何条件違反と本文の誤記 [#1068](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1068) は残る。第5問の断面図 [#1070](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1070) と第6問の極限記号の連結 [#1071](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1071) も公開表示で確認した。修正後および他の画面幅は未確認。第1問の解答未作成と既存指摘があるため、監査完了とはしない。
 
 ## 1983年度
 
