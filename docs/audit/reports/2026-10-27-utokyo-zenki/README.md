@@ -267,7 +267,7 @@
 
 ## 1977年度
 
-手書きPDFは全8ページ。物理1ページが表紙、第1・2問は物理2・3ページ、第3問は物理4〜5ページ、第4〜6問は物理6〜8ページ。第5・6問の手書き原稿には新課程の解法だけがあり、旧課程の詳細は独立検算した。第1問は旧 `jarticle` 形式で、現行方式のPDF・Web表示は未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。第2〜6問の生成PDFは全1・6・2・4・5ページを表示した。第5問の問題PDF全1ページも表示確認。全問のWeb実表示は未確認。
+手書きPDFは全8ページ。物理1ページが表紙、第1・2問は物理2・3ページ、第3問は物理4〜5ページ、第4〜6問は物理6〜8ページ。第5・6問の手書き原稿には新課程の解法だけがあり、旧課程の詳細は独立検算した。第1問は旧 `jarticle` 形式で、現行方式のPDFは未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。第2〜6問の生成PDFは全1・6・2・4・5ページを表示した。第5問の問題PDF全1ページも表示確認。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
@@ -278,7 +278,9 @@
 | 5 | 7（新課程のみ） | 全4ページ確認 | 新課程の行列成分と軌跡 `x²+y²=25` から `(-3,-4)` を除く結論は手書き・独立計算と一致。旧課程の円周角と5弧の構成も独立検算。確定指摘なし。問題PDFの図も確認 |
 | 6 | 8（新課程のみ） | 全5ページ確認 | [#1047](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1047)：旧課程の凹凸表に未定義の `x₀`、新課程の交点存在条件にも説明不足。平面と交点は手書きと一致し、旧課程の変曲点2個／4個も独立検算で一致 |
 
-1977年度は第1問の生成PDF、旧課程2問の手書き詳細原稿、全問のWeb実表示が未確認であり、監査完了とはしない。
+1977年度は第1問の生成PDFと旧課程2問の手書き詳細原稿が未確認であり、監査完了とはしない。
+
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1問の3場合の旧命令・増減表の崩れと解答図欠落を [#1260](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1260)、第2問の「下図」に対応する図の欠落を [#1044](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1044)、第6問の凹凸表の未処理命令と右側へのはみ出しを [#1047](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1047) に追記した。第3問は全9図を含む長い本文を末尾まで確認し、既報の第(1)問の下端を含める誤り [#1045](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1045) が公開ページにも残る。第4問は問題・解答図と体積計算が表示されるが、円弧区間の既報の誤り [#1046](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1046) は残る。第5問は新旧課程とも本文・図・結論を表示できた。修正後および他の画面幅は未確認。
 
 ## 1978年度
 
