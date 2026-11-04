@@ -44,20 +44,22 @@
 
 ## 1963年度
 
-手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。第2問は生成PDF全3ページ、第3問は全2ページを表示確認。第1・4・5・6問の `solution.tex` は旧 `jarticle` 形式で LuaLaTeX の生成が停止する。これらは既存の形式移行Issue [#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593) に列挙されており、PDF・Webの表示確認を保留した。手書き物理2・3・4・6・7ページと対応TeXを拡大照合した。
+手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。第2問は生成PDF全3ページ、第3問は全2ページを表示確認。第1・4・5・6問の `solution.tex` は旧 `jarticle` 形式で LuaLaTeX の生成が停止する。これらは既存の形式移行Issue [#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593) に列挙されており、PDFの表示確認を保留した。手書き物理2・3・4・6・7ページと対応TeXを拡大照合した。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
-| 1 | 2 | 旧形式で生成失敗 | [#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)。手書きとの式・結論照合および独立検算では `4<c<√34` が一致。PDF・Webは未確認 |
+| 1 | 2 | 旧形式で生成失敗 | [#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)。手書きとの式・結論照合および独立検算では `4<c<√34` が一致。PDFは未確認、Webの旧形式命令は [#1276](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1276) |
 | 2 | 3 | 全3ページ確認 | [#987](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/987)：図1の指定長と描画座標が不一致。面積 `4+2π/3` は独立計算で一致 |
 | 3 | 4 | 全2ページ確認 | [#988](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/988)：面積公式の説明に誤り。最終和 `Ha²/[2(a+b)]` は検算で一致 |
 | 4 | 5 | 旧形式で生成失敗 | [#989](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/989)：四面体の体積式で `S` の意味が不一致。最終値は一致 |
 | 5 | 6 | 旧形式で生成失敗 | [#990](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/990)：面積等式・積分指数が原稿から崩れている。最終値は一致 |
 | 6 | 7 | 旧形式で生成失敗 | [#991](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/991)：係数決定の式が崩れている。最終値 `n=3` は一致 |
 
-1963年度は旧形式4問のPDF、Web全問、第4問の原稿細部照合などが未確認であり、監査完了とはしない。
+1963年度は旧形式4問のPDF、第4問の原稿細部照合などが未確認であり、監査完了とはしない。
 
 2026-11-04に第1問の公開解答ページをChrome（幅1280px）で全体表示した。`\input{macros}` と `oframed` の開始・終了が文字として表示され、独立した問題欄の後で問題文が重複する。問題別の [#1276](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1276) に原稿行番号と修正方針を記録した。旧形式のままpLaTeXで単体生成を試すと、`solution.tex` L11の `indent.sty` がローカルTeX環境に存在せず停止した。LuaLaTeXと異なるエラーだが、生成PDFの全ページ確認は依然できていない。原稿は変更していない。
+
+同日、第2〜6問の公開解答ページもChrome（幅1280px）で末尾まで表示した。第2・3問の数式・図は表示され、既報以外の新しい表示不良は確認しなかった。第4問は `\[...\]` の数式2か所が生TeXのブロックになり [#989](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/989) に追記。第5問は解答図 `ut-63-5p2`、`ut-63-5p3` が欠落し、入力命令のみ文字として表示されるため [#990](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/990) に追記。第6問の旧形式命令と既報の係数式表示は [#991](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/991) に追記した。確認した画面幅は1280pxのみであり、修正後および他の画面幅は未確認。
 
 ## 1964年度
 
