@@ -63,7 +63,7 @@
 
 ## 1964年度
 
-手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。原稿全ページを表示し、各問のTeX本文と主な式・結論を照合した。6問すべての `solution.tex` が旧 `jarticle` 形式で、一時コピーで各問を LuaLaTeX 実行するといずれも `This file needs format pLaTeX2e` で停止した。形式移行は [#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)。第5問の現存するWeb HTMLには `\input{macros}` と `oframed` 環境が生で残り、この広い影響を #593 に追記した。全問のブラウザー実表示と生成PDF全ページは未確認。
+手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。原稿全ページを表示し、各問のTeX本文と主な式・結論を照合した。6問すべての `solution.tex` が旧 `jarticle` 形式で、一時コピーで各問を LuaLaTeX 実行するといずれも `This file needs format pLaTeX2e` で停止した。形式移行は [#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)。第5問の現存するWeb HTMLには `\input{macros}` と `oframed` 環境が生で残り、この広い影響を #593 に追記した。生成PDF全ページは未確認。
 
 | 問 | 原稿物理ページ | 独立検算・指摘 |
 |---|---:|---|
@@ -74,7 +74,9 @@
 | 5 | 6 | [#994](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/994)：増減表とWeb本文の表示不良。最小距離と `a=3^{3/4}` は検算で一致 |
 | 6 | 7 | [#993](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/993)：判別式の符号・端点条件が原稿と異なり、現在の証明が不成立。最終の最大・最小の組は独立計算で一致 |
 
-1964年度は全問の生成PDFとブラウザー実表示が未確認であり、監査完了とはしない。
+1964年度は全問の生成PDFなどが未確認であり、監査完了とはしない。
+
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1・2問の旧形式命令と問題文重複は [#1247](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1247)、[#1248](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1248) に記録済み。第2問の説明文がコードブロックになる表示を #1248 に追記した。第3問は既報の手書き図欠落 [#992](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/992) を画面でも確認した。第4問は説明文のコードブロック化と図欠落を [#995](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/995)、第5問は増減表の `\se`・`\ne` の実表示を [#994](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/994)、第6問は末尾の生TeX表示を [#993](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/993) に追記した。全6問とも旧形式命令と問題文重複が残る。確認した画面幅は1280pxのみで、修正後の再確認は未実施。
 
 ## 1965年度
 
