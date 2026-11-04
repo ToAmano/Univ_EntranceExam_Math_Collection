@@ -110,7 +110,7 @@
 | 2 | 3 | 全2ページ確認 | [#1008](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1008)：図の `z` 軸と点Aの座標ラベルが重なる。高度1000mは手書き・独立計算と一致 |
 | 3 | 4 | 旧形式で未生成 | [#1009](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1009)：`c,s` の定義欠落、増減表の命令誤記、再掲問題文の誤字。最大面積 `3√3/4` は一致 |
 | 4 | 5 | 旧形式で未生成 | 手書きの3図に対応する図入力3点は存在。回転・伸縮変換から面積 `2√3π/3` を独立検算。確定指摘なし；公開Webの旧形式命令は [#1250](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1250) に記録 |
-| 5 | 6 | 全3ページ確認 | 新課程の接点・面積 `2√e/3−1` は手書きと一致。旧課程の接点条件から `a=−3,1,3/2` を独立検算。確定指摘なし |
+| 5 | 6 | 全3ページ確認 | 新課程の接点・面積 `2√e/3−1` は手書きと一致。旧課程の接点条件から `a=−3,1,3/2` を独立検算。[#1275](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1275)：公開解答図2〜4で右端の曲線名が横軸・目盛りと重なる |
 | 6 | 7 | 全3ページ確認 | 新課程の完全順列数9から確率 `1/320` は手書きと一致。旧課程の漸化式・極限 `A₀A=4` を独立検算。確定指摘なし |
 
 1967年度は旧形式3問の生成PDF、旧課程2問の手書き詳細原稿、全問のブラウザー実表示が未確認であり、監査完了とはしない。
@@ -245,7 +245,7 @@
 |---|---:|---|---|
 | 1 | 2 | 旧形式で未生成 | 手書きの最小値 `M(1/4)=1/4` は解答TeXの結論と一致。増減と2曲線の交点を独立検算。旧形式の移行・表示確認は未了；公開Webの旧形式命令は [#1260](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1260) に記録 |
 | 2 | 3 | 全1ページ確認 | [#1044](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1044)：本文の「下図」に対応する図がない。有理性の同値関係は独立検算で一致 |
-| 3 | 4〜5（全体は原稿あり） | 全6ページ確認 | [#1045](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1045)：**第(1)問で含まれない下端を含めており、値域の結論が変わる**。領域 `C` の向き、半径と境界の距離、別の領域条件にも誤記。第(2)問の下端は独立計算と一致 |
+| 3 | 4〜5（全体は原稿あり） | 全6ページ確認 | [#1045](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1045)：**第(1)問で含まれない下端を含めており、値域の結論が変わる**。領域 `C` の向き、半径と境界の距離、別の領域条件にも誤記。公開解答図2の境界線名は最小点・横軸付近に重なる。第(2)問の下端は独立計算と一致 |
 | 4 | 6 | 全2ページ確認 | [#1046](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1046)：軌跡の後半2円弧の接続点は `8−a` だが、手書きとTeXの式は `6+a`。図は正しい。体積 `π{12(a−1)²+40/3}` と最小値は独立計算と一致 |
 | 5 | 7（新課程のみ） | 全4ページ確認 | 新課程の行列成分と軌跡 `x²+y²=25` から `(-3,-4)` を除く結論は手書き・独立計算と一致。旧課程の円周角と5弧の構成も独立検算。確定指摘なし。問題PDFの図も確認 |
 | 6 | 8（新課程のみ） | 全5ページ確認 | [#1047](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1047)：旧課程の凹凸表に未定義の `x₀`、新課程の交点存在条件にも説明不足。平面と交点は手書きと一致し、旧課程の変曲点2個／4個も独立検算で一致 |
@@ -816,6 +816,8 @@
 同じ316ページの `<img>` 参照先も取得し、結果を [web-image-asset-report.json](web-image-asset-report.json) に保存した。外部の閲覧数カウンターを除いた解答図では、**1965年第1問のベン図2点がHTTP 404**であり、[#1245](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1245) に記録した。ほかの解答図の画像URLはHTTP 200だった。この確認は画像ファイルの取得可否であり、内容の正しさや可読性の判定ではない。
 
 2026-11-04に公開中の解答本文を改めて走査し、SVG参照467点を直接取得してXML構造を検査した。結果は [web-solution-svg-integrity-report.json](web-solution-svg-integrity-report.json)。**465点はHTTP 200で、正の `viewBox` 寸法と描画要素を持つ有効なSVG**だった。残る2点は上記の1965年第1問の404であり、新たな欠落・空SVG・XML破損は検出しなかった。SVGの数学的内容、ラベルの重なり、Web縮小時の読みやすさはこの構造検査では判定できない。
+
+1961〜1978年度の有効な解答SVG **78点**を白背景で描画し、全点を目視した。個別のURLと所見は [web-solution-figure-visual-report.json](web-solution-figure-visual-report.json)。1967年第5問の図2〜4は曲線名と横軸が重なり、[#1275](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1275)に記録した。1977年第3問の図2も境界線名が最小点・横軸付近に重なり、[#1045](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1045)に追記した。既知の1965年第1問の欠落2点は表示できず、[#1245](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1245)のまま。今回の78点はSVG単体の目視であり、公開ページ内の縮尺・余白は未確認。1979年度以降の解答図目視も継続する。
 
 本文の生TeX命令を `\` に続く英字列として広く探した結果は [web-raw-commands-report.json](web-raw-commands-report.json) に保存した。84ページで何らかの命令が見つかり、1991年以降の23問では既存の問題別Issueへ行番号つきで追記した。例として1996年第3問の `\triangle`、2003年第2問の `\bf`、2005年第3問の増減表のMathJaxエラー、2014年第1問のcaption内 `\texttt` がある。1990年第4問の `\null` は解答未作成のプレースホルダーに由来し、解答作成Issue [#475](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/475) で管理する。文字列検査は命令の見落としを減らすためのもので、描画品質の全件目視を代替しない。
 
