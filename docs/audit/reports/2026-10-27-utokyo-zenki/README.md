@@ -314,7 +314,7 @@
 
 ## 1980年度
 
-手書きPDFは全7ページ。物理1ページが表紙、第1〜6問は物理2〜7ページに各1問。第3問の手書き解答は空欄で、`solution.tex` も未解答のプレースホルダー。既存の解答作成Issue [#442](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/442) に再確認結果を追記し、Openを維持した。第1・2・4・5・6問は手書き原稿とTeXを照合し、主要な式・結論を独立検算した。生成解答PDFは順に全2・2・2・1・3ページを表示確認した。全問のWeb実表示は未確認。
+手書きPDFは全7ページ。物理1ページが表紙、第1〜6問は物理2〜7ページに各1問。第3問の手書き解答は空欄で、`solution.tex` も未解答のプレースホルダー。既存の解答作成Issue [#442](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/442) に再確認結果を追記し、Openを維持した。第1・2・4・5・6問は手書き原稿とTeXを照合し、主要な式・結論を独立検算した。生成解答PDFは順に全2・2・2・1・3ページを表示確認した。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
@@ -325,7 +325,7 @@
 | 5 | 6 | 解答全1ページ確認 | [#1060](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1060)：初期条件の説明で `p₀(1)=1` と誤記。正四面体の模式図も底辺と側辺が異なる座標を使用。漸化式と最終答案は手書きと一致 |
 | 6 | 7 | 解答全3ページ確認 | [#1061](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1061)：辺 `OA` 上の点の `x` 座標に負号があり、直後の等式は成立しない。**証明の修正が必要**。面積の最終式は手書き・独立積分と一致 |
 
-1980年度は第3問の解答自体が未作成であり、全問のWeb実表示も未確認のため、監査完了とはしない。
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1・2・5・6問の図と第4問の増減表は表示され、本文と最終答案も確認できる。第2問は [#1058](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1058) の半径の誤記がWeb本文にも残る一方、PDFで孤立した最終式はWebでは説明の直後に表示される。第3問は未解答の表示と [#442](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/442) の導線を確認した。第6問は [#1061](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1061) の負号と `s=0` を含む定義域がWebにも表示される。第1・4・5問も既報の数式・図の指摘が残る。修正後および他の画面幅は未確認。第3問の解答未作成と既存指摘があるため、監査完了とはしない。
 
 ## 1981年度
 
