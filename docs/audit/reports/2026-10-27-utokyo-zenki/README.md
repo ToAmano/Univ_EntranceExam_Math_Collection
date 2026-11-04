@@ -233,7 +233,7 @@
 
 ## 1975年度
 
-手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。手書き全ページと6問の問題・解答TeXを照合し、主要な式・結論を独立検算した。第1・5・6問は一時コピーから解答PDFを生成し、それぞれ全3・2・2ページを表示確認。第2・3・4問は旧 `jarticle` 形式で生成PDFを未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。全問のWeb実表示は未確認。
+手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。手書き全ページと6問の問題・解答TeXを照合し、主要な式・結論を独立検算した。第1・5・6問は一時コピーから解答PDFを生成し、それぞれ全3・2・2ページを表示確認。第2・3・4問は旧 `jarticle` 形式で生成PDFを未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
@@ -244,7 +244,9 @@
 | 5 | 6 | 全2ページ確認 | [#1037](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1037)：問題図の球の配置が条件に反し、積分区間の向きと記号・解説の等号にも誤り。共通体積と無限和の最終値は手書き・独立計算と一致 |
 | 6 | 7 | 全2ページ確認 | [#1038](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1038)：期待値の計算が後方の別式を参照。遷移確率、期待値 `3−2(5/6)^n`、極限3は一致 |
 
-1975年度は旧形式3問の生成PDFと全問のWeb実表示が未確認であり、監査完了とはしない。
+1975年度は旧形式3問の生成PDFが未確認であり、監査完了とはしない。
+
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1問の冒頭の要確認表示と図の変数逆転を [#1035](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1035)、第3問の図欠落と断続的な生TeX枠を [#1259](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1259)、第4問の一般項の答えの誤りを [#1036](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1036)、第5問の球図・積分表示とラベルの重なりを [#1037](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1037)、第6問の誤った式参照を [#1038](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1038) に追記した。第2問は [#1258](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1258) の旧形式命令露出と問題文の重複以外に新たな表示不具合なし。修正後および他の画面幅は未確認。
 
 ## 1976年度
 
