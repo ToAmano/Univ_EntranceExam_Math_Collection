@@ -184,7 +184,7 @@
 
 ## 1972年度
 
-手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。原稿全ページと6問の問題・解答TeXを照合し、主要な式・結論を独立検算した。第1・5問は旧 `jarticle` 形式で生成PDFを未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。第2・3・4・6問は一時コピーで各2ページの解答PDFを生成し、全ページを表示確認。全問のWeb実表示は未確認。
+手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。原稿全ページと6問の問題・解答TeXを照合し、主要な式・結論を独立検算した。第1・5問は旧 `jarticle` 形式で生成PDFを未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。第2・3・4・6問は一時コピーで各2ページの解答PDFを生成し、全ページを表示確認。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
@@ -195,7 +195,9 @@
 | 5 | 6 | 旧形式で未生成 | [#1024](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1024)：積分下端の `0` が `o` に変化、初期条件 `u(0)=0` も崩れる。`h(x)=−x` は一致 |
 | 6 | 7 | 全2ページ確認 | [#1025](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1025)：表の倍率が逆で `17/32=0.531` も不成立。最適地点と確率 `17/32` は一致 |
 
-1972年度は旧形式2問の生成PDFと全問のWeb実表示が未確認であり、監査完了とはしない。
+1972年度は旧形式2問の生成PDFが未確認であり、監査完了とはしない。
+
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1問の解答図2点欠落と旧形式命令を [#1022](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1022)、第5問の積分マクロ `\dint` の赤い未処理表示を [#1024](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1024) に追記した。第2問の解答図 [#1023](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1023)、第3問の問題・解答図 [#1026](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1026) は表示されるが、既報の幾何学的条件違いがある。第4問は本文・増減表・図が表示され、新たな指摘なし。第6問は問題・解答図と表が表示され、既報の倍率・小数の誤り [#1025](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1025) が画面にも残る。修正後および他の画面幅は未確認。
 
 ## 1973年度
 
