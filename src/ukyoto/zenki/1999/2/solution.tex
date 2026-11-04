@@ -1,11 +1,47 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $A(t, 0), B(-t, 0) \; (t > 0)$ となるよう座標平面をとる．$P(x, y)$ とする．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.1cm, y=1.8cm, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (1.2, 0);
+    \coordinate (B) at (-1.2, 0);
+    \coordinate (P) at (0.45, 1.15);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.75, 0) -- (1.85, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.35) -- (0, 1.55) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 投影線
+    \draw[dashed, gray!60] (0.45, 0) -- (P) -- (0, 1.15);
+    \node[below=2pt, font=\footnotesize] at (0.45, 0) {$x$};
+    \node[left=2pt, font=\footnotesize] at (0, 1.15) {$y$};
+
+    % ベクトル PA, PB
+    \draw[->, line width=1.3pt, blue!85!black] (P) -- (A)
+    node[midway, above right=1pt, font=\footnotesize] {$\overrightarrow{PA}$};
+    \draw[->, line width=1.3pt, teal!80!black] (P) -- (B)
+    node[midway, above left=1pt, font=\footnotesize] {$\overrightarrow{PB}$};
+
+    % 点とラベル
+    \node[circle, fill=black, inner sep=1.3pt] at (A) {};
+    \node[below=3pt, font=\footnotesize] at (A) {$A(t, 0)$};
+
+    \node[circle, fill=black, inner sep=1.3pt] at (B) {};
+    \node[below=3pt, font=\footnotesize] at (B) {$B(-t, 0)$};
+
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {};
+    \node[above=2pt, font=\footnotesize, red!85!black] at (P) {$P(x, y)$};
+  \end{tikzpicture}
+  \caption{座標平面上の2定点 $A(t, 0)$，$B(-t, 0)$ と動点 $P(x, y)$}
+  \label{fig:coord_setup_PAB}
+\end{figure}
+
+$A(t, 0), B(-t, 0) \; (t > 0)$ となるよう座標平面をとって$P(x, y)$ とすると，
 \begin{align}
   \overrightarrow{PA} =
   \begin{pmatrix} t - x \\ -y
@@ -15,20 +51,37 @@
 \end{align}
 だから，
 \begin{align}
-  |\overrightarrow{PA}| = \sqrt{(t - x)^2 + y^2}, \quad |\overrightarrow{PB}| = \sqrt{(t + x)^2 + y^2}, \quad \overrightarrow{PA} \cdot \overrightarrow{PB} = -(t^2 - x^2) + y^2
+  |\overrightarrow{PA}| = \sqrt{(t - x)^2 + y^2},
+  \quad
+  |\overrightarrow{PB}| = \sqrt{(t + x)^2 + y^2},
+  \quad
+  \overrightarrow{PA} \cdot \overrightarrow{PB} = -(t^2 - x^2) + y^2
 \end{align}
-となるので，与式に代入して，
+となるので，題意の式
+\begin{align}
+  |\overrightarrow{PA}||\overrightarrow{PB}|+\overrightarrow{PA}\cdot\overrightarrow{PB}=c
+\end{align}
+に代入して，
 \begin{align}
   & \sqrt{(t - x)^2 + y^2} \sqrt{(t + x)^2 + y^2} = c + t^2 - (x^2 + y^2) \\
-  \iff & \left\{ (t - x)^2 + y^2 \right\} \left\{ (t + x)^2 + y^2 \right\} = \left\{ c + t^2 - (x^2 + y^2) \right\}^2 \\
-  \iff &
-  \begin{cases} \dfrac{x^2}{t^2 + \dfrac{1}{2} c} + \dfrac{y^2}{\dfrac{1}{2} c} = 1 & (\because c > 0, t > 0) \\ c + t^2 \ge x^2 + y^2
+  \iff
+  &
+  \begin{cases}
+    \left\{ (t - x)^2 + y^2 \right\} \left\{ (t + x)^2 + y^2 \right\} = \left\{ c + t^2 - (x^2 + y^2) \right\}^2 \\
+    c+t^2 \ge x^2+y^2
+  \end{cases} \\
+  \iff
+  &
+  \begin{cases}
+    \dfrac{x^2}{t^2 + \dfrac{1}{2} c} + \dfrac{y^2}{\dfrac{1}{2} c} = 1 \quad (\because c > 0, t > 0) \\
+    c + t^2 \ge x^2 + y^2
   \end{cases}
 \end{align}
-で，これを図示すると右図．よって，もとめる軌跡は
+となる．この領域を図示すると下図のようになり，$c + t^2 \ge x^2 + y^2$は常に満たされるから，もとめる軌跡は楕円
 \begin{align}
   \dfrac{x^2}{t^2 + \dfrac{1}{2} c} + \dfrac{y^2}{\dfrac{1}{2} c} = 1
 \end{align}
+である．
 
 \begin{figure}[htb]
   \centering
@@ -48,52 +101,67 @@
   \caption{条件を満たす楕円と，$x^2+y^2\leq t^2+c$ の境界円}
 \end{figure}
 
-{\bf [別解]} $|AB| = 2t, |PA| = a, |PB| = b, \angle APB = \theta$ とする．
-$\triangle ABP$ が一直線上にない時，$\triangle ABP$ に余弦定理を用いて，
-\begin{align}
-  4t^2 = a^2 + b^2 - 2ab \cos \theta \cdots \text{①}
-\end{align}
-これは $A, B, P$ が一直線上の時 ($\theta = 0$) にも成立する．又，与式から，
-\begin{align}
-  ab (1 + \cos \theta) = c
-\end{align}
-\begin{align}
-  \therefore ab \cos \theta = c - ab
-\end{align}
-①及び $-1 \le \cos \theta \le 1$ に代入して，
-\begin{align}
-  & 4t^2 = a^2 + b^2 - 2(c - ab) = (a + b)^2 - 2c \\
-  \iff &
-  \begin{cases} a + b = \sqrt{4t^2 + 2c} & \cdots \text{②} \\ c \le 2ab & (\because a, b, c \ge 0) \cdots \text{③}
-  \end{cases}
-\end{align}
+{\bf [別解]}
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=2.1cm, y=1.7cm, every node/.style={font=\small}]
-    \coordinate (B) at (0,0);
-    \coordinate (A) at (2.3,0);
-    \coordinate (P) at (1.35,1.45);
+  \begin{tikzpicture}[scale=2.0, every node/.style={font=\small}]
+    \coordinate (B) at (0, 0);
+    \coordinate (A) at (2.4, 0);
+    \coordinate (P) at (1.4, 1.25);
+
+    \pic[draw=orange!85!black, thick, angle radius=0.5cm, angle eccentricity=1.45,
+    "$\theta$"{text=orange!85!black}] {angle = B--P--A};
+
     \draw[line width=1.3pt, blue!85!black] (B) -- (P) -- (A) -- cycle;
-    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B) {}; \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {}; \node[circle, fill=blue!85!black, inner sep=1.3pt] at (P) {};
+
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (P) {};
+
     \node[below left=2pt] at (B) {$B$};
     \node[below right=2pt] at (A) {$A$};
     \node[above=2pt] at (P) {$P$};
-    \node[left=3pt] at (0.6,0.72) {$b$};
-    \node[right=3pt] at (1.85,0.72) {$a$};
-    \node[below=7pt] at (1.15,0) {$2t$};
-    \draw[orange!85!black, thick] ($(P)+(-0.17,-0.25)$) arc[start angle=235, end angle=315, radius=0.3];
-    \node[below=5pt, orange!85!black] at (P) {$\theta$};
+    \node[above left=2pt] at ($(B)!0.5!(P)$) {$b$};
+    \node[above right=2pt] at ($(A)!0.5!(P)$) {$a$};
+    \node[below=4pt] at ($(B)!0.5!(A)$) {$2t$};
   \end{tikzpicture}
   \caption{$AB=2t$, $PB=b$, $PA=a$, $\angle APB=\theta$}
 \end{figure}
 
-②が [解答] の座標平面で表すのは，原点を中心，長半径 $\dfrac{1}{2}(a+b) = \sqrt{t^2 + \dfrac{1}{2} c}$, 短半径 $\sqrt{t^2 + \dfrac{1}{2} c - t^2} = \sqrt{\dfrac{1}{2} c}$ の
-楕円: $\dfrac{x^2}{t^2 + \dfrac{1}{2} c} + \dfrac{y^2}{\dfrac{1}{2} c} = 1$ である．この時 $a+b=A$ とすると $\dfrac{A}{2} - t \le a \le \dfrac{A}{2} + t$ で
+$|AB| = 2t, |PA| = a, |PB| = b, \angle APB = \theta$ とする．
+$\triangle ABP$ が一直線上にない時，$\triangle ABP$ に余弦定理を用いて，
+\begin{align}
+  4t^2 = a^2 + b^2 - 2ab \cos \theta \label{eq:1}
+\end{align}
+であり，これは $A, B, P$ が一直線上の時 ($\theta = 0$) にも成立する．
+題意の式から
+\begin{align}
+  ab (1 + \cos \theta) = c
+  \quad\therefore
+  ab \cos \theta = c - ab \label{eq:2}
+\end{align}
+である．\cref{eq:1}および $-1 \le \cos \theta \le 1$ に代入して$\theta$を消去すると
+\begin{align}
+  \begin{cases}
+    4t^2 = a^2 + b^2 - 2(c - ab) = (a + b)^2 - 2c \\
+    0 \le c \le 2ab
+  \end{cases}
+  \iff
+  \begin{cases}
+    a + b = \sqrt{4t^2 + 2c}  \\
+    c \le 2ab
+  \end{cases} \quad (\because a, b, c \ge 0)  \label{eq:3}
+\end{align}
+を得る．
+
+これが [解答] の座標平面で表すのは，原点を中心，長半径 $\dfrac{1}{2}(a+b) = \sqrt{t^2 + \dfrac{1}{2} c}$, 短半径 $\sqrt{t^2 + \dfrac{1}{2} c - t^2} = \sqrt{\dfrac{1}{2} c}$ の
+楕円: $\dfrac{x^2}{t^2 + \dfrac{1}{2} c} + \dfrac{y^2}{\dfrac{1}{2} c} = 1$ である．
+この時 $a+b=A$ とすると $\dfrac{A}{2} - t \le a \le \dfrac{A}{2} + t$ で
 \begin{align}
   ab = a(A - a) \ge \left( \dfrac{A}{2} - t \right) \left( \dfrac{A}{2} + t \right) = \dfrac{A^2}{4} - t^2 = \dfrac{1}{2} c \quad (\text{等号成立は } a = \dfrac{A}{2} \pm t)
 \end{align}
-で，③は常に成立．したがって，もとめる軌跡は
+より\cref{eq:3}の第二式は常に成立する．したがってもとめる軌跡は
 \begin{align}
   \dfrac{x^2}{t^2 + \dfrac{1}{2} c} + \dfrac{y^2}{\dfrac{1}{2} c} = 1
 \end{align}

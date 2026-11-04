@@ -1,29 +1,155 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $P(\alpha, \alpha^2), Q(\beta, \beta^2) \; (\alpha < \beta)$ とおく．題意から $PQ$ の方程式 $y = l(x)$ として
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=1.35cm, >=stealth, every node/.style={font=\small}]
+    % 図示用に alpha = -0.6, beta = 1.3 とする
+    \def\al{-0.6}
+    \def\be{1.3}
+    \pgfmathsetmacro{\yP}{\al*\al}
+    \pgfmathsetmacro{\yQ}{\be*\be}
+    \pgfmathsetmacro{\xR}{(\al + \be)/2}
+    \pgfmathsetmacro{\yR}{(\yP + \yQ)/2}
+
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (\al, \yP);
+    \coordinate (Q) at (\be, \yQ);
+    \coordinate (R) at (\xR, \yR);
+
+    % 囲まれる領域の塗りつぶし
+    \fill[blue!12]
+    (P) -- (Q) --
+    plot[domain=\be:\al, samples=60] (\x, {\x*\x}) -- cycle;
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.55, 0) -- (1.95, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.35) -- (0, 2.35) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 放物線 y = x^2 と線分 PQ
+    \draw[line width=1.4pt, blue!85!black, domain=-1.35:1.48, samples=80]
+    plot (\x, {\x*\x});
+    \node[blue!85!black, left=3pt] at (-1.3, 1.69) {$y = x^2$};
+
+    \draw[line width=1.4pt, teal!85!black] (P) -- (Q)
+    node[pos=0.78, above left=2pt, font=\footnotesize] {$y = l(x)$};
+
+    % 投影線と目盛り
+    \draw[dashed, gray!60] (\al, 0) -- (P);
+    \node[below=2pt, font=\footnotesize] at (\al, 0) {$\alpha$};
+
+    \draw[dashed, gray!60] (\be, 0) -- (Q);
+    \node[below=2pt, font=\footnotesize] at (\be, 0) {$\beta$};
+
+    \draw[dashed, red!70!black] (\xR, 0) -- (R) -- (0, \yR);
+    \node[below=2pt, font=\footnotesize, red!85!black] at (\xR, 0) {$X$};
+    \node[left=2pt, font=\footnotesize, red!85!black] at (0, \yR) {$Y$};
+
+    % 領域面積ラベル
+    \node[font=\footnotesize, blue!85!black] at (0.58, 0.88) {面積 $1$};
+
+    % 点とラベル
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (P) {};
+    \node[left=4pt, font=\footnotesize] at (P) {$P(\alpha, \alpha^2)$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Q) {};
+    \node[right=3pt, font=\footnotesize] at (Q) {$Q(\beta, \beta^2)$};
+
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (R) {};
+    \node[above=3pt, font=\footnotesize, red!85!black, fill=white, inner sep=1pt] at (R) {$R(X, Y)$};
+  \end{tikzpicture}
+  \caption{放物線 $y = x^2$ と線分 $PQ$ が囲む領域および中点 $R(X, Y)$}
+  \label{fig:parabola_chord_overview}
+\end{figure}
+
+$P(\alpha, \alpha^2), Q(\beta, \beta^2) \; (\alpha < \beta)$ とおく．
+題意から$PQ$ の方程式 $y = l(x)$ とすると，$PQ$と放物線が囲む部分の面積について
 \begin{align}
   1 &= \int_{\alpha}^{\beta} (l(x) - x^2) dx \\
   &= \int_{\alpha}^{\beta} -(x - \alpha)(x - \beta) dx \\
-  &= \dfrac{1}{6} (\beta - \alpha)^3
+  &= \dfrac{1}{6} (\beta - \alpha)^3 \\
+  \therefore
+  & \beta - \alpha = \sqrt[3]{6} \label{eq:1}
 \end{align}
-$\therefore \beta - \alpha = \sqrt[3]{6} \cdots \text{①}$
+である．
 
-このもとで，$R(X, Y)$ の軌跡をもとめる．
+このもとで線分$PQ$の中点$R(X, Y)$ の軌跡をもとめる．
 \begin{align}
-  X = \dfrac{\alpha + \beta}{2} , \quad Y = \dfrac{\alpha^2 + \beta^2}{2} \cdots \text{②}
+  X = \dfrac{\alpha + \beta}{2} , \quad Y = \dfrac{\alpha^2 + \beta^2}{2} \label{eq:2}
 \end{align}
-であり，$t = \alpha + \beta, s = \beta - \alpha$ とおくと，$\alpha \beta = \dfrac{1}{4} (t^2 - s^2)$．①で，②に代入して
+であり，$t = \alpha + \beta, s = \beta - \alpha$ とおくと，$\alpha \beta = \dfrac{1}{4} (t^2 - s^2)$だから\cref{eq:1,eq:2}に代入して
 \begin{align}
-  X = \dfrac{1}{2} t , \quad Y = \dfrac{t^2 + s^2}{4} = \dfrac{1}{4} \left( t^2 + 6^{\frac{2}{3}} \right) \cdots \text{③}
+  \begin{cases}
+    s = \sqrt[3]{6} \\
+    X = \dfrac{1}{2} t \\
+    Y = \dfrac{t^2 + s^2}{4} = \dfrac{1}{4} \left( t^2 + 6^{\frac{2}{3}} \right)
+  \end{cases} \label{eq:3}
 \end{align}
-又，$\alpha, \beta$ は $x$ の2次方程式 $x^2 - tx + \dfrac{1}{4}(t^2 - 6^{\frac{2}{3}}) = 0$ の2実数解．この判別式 $D$ として $D = 6^{\frac{2}{3}} > 0$ だから，$\alpha, \beta$ は常に存在する．したがって③より $t$ を消去して，
+である．
+
+また$\alpha, \beta$ は $x$ の2次方程式
+\begin{align}
+  x^2 - tx + \dfrac{1}{4}(t^2 - 6^{\frac{2}{3}}) = 0
+\end{align}
+の2実数解である．この判別式 $D$ として $D = 6^{\frac{2}{3}} > 0$ だから，$\alpha, \beta$ は常に存在する．したがって\cref{eq:3}から $t$ を消去して，
 \begin{align}
   Y = X^2 + \dfrac{1}{4} 6^{\frac{2}{3}}
 \end{align}
+が求める軌跡である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.1cm, y=1.25cm, >=stealth, every node/.style={font=\small}]
+    % c = (1/4) * 6^(2/3) ≈ 0.8255, s = 6^(1/3) ≈ 1.8171
+    \pgfmathsetmacro{\cval}{0.8255}
+    \pgfmathsetmacro{\sval}{1.8171}
+    \def\xR{0.35}
+    \pgfmathsetmacro{\al}{\xR - 0.5*\sval}
+    \pgfmathsetmacro{\be}{\xR + 0.5*\sval}
+    \pgfmathsetmacro{\yP}{\al*\al}
+    \pgfmathsetmacro{\yQ}{\be*\be}
+    \pgfmathsetmacro{\yR}{\xR*\xR + \cval}
+
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (\al, \yP);
+    \coordinate (Q) at (\be, \yQ);
+    \coordinate (R) at (\xR, \yR);
+    \coordinate (V) at (0, \cval);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.55, 0) -- (1.85, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.35) -- (0, 2.55) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 元の放物線 y = x^2 と弦 PQ（参考）
+    \draw[dashed, thick, gray!70, domain=-1.45:1.5, samples=80]
+    plot (\x, {\x*\x});
+    \node[gray!80!black, right=2pt, font=\footnotesize] at (1.42, 2.02) {$y = x^2$};
+
+    \draw[dashed, teal!75!black, thick] (P) -- (Q);
+    \node[circle, fill=teal!75!black, inner sep=1.2pt] at (P) {};
+    \node[left=2pt, font=\footnotesize, teal!75!black] at (P) {$P$};
+    \node[circle, fill=teal!75!black, inner sep=1.2pt] at (Q) {};
+    \node[right=2pt, font=\footnotesize, teal!75!black] at (Q) {$Q$};
+
+    % R の軌跡 y = x^2 + (1/4)*6^(2/3)
+    \draw[line width=1.5pt, blue!85!black, domain=-1.25:1.25, samples=80]
+    plot (\x, {\x*\x + \cval});
+    \node[blue!85!black, above=2pt, font=\footnotesize] at (-1.15, {1.25*1.25 + \cval})
+    {$y = x^2 + \frac{1}{4}6^{\frac{2}{3}}$};
+
+    % 頂点と中点 R
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (V) {};
+    \node[above left=2pt, font=\footnotesize, blue!85!black] at (V) {$\frac{1}{4}6^{\frac{2}{3}}$};
+
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (R) {};
+    \node[above=3pt, font=\footnotesize, red!85!black] at (R) {$R$};
+  \end{tikzpicture}
+  \caption{中点 $R$ が描く軌跡 $y = x^2 + \dfrac{1}{4}6^{\frac{2}{3}}$}
+  \label{fig:midpoint_R_locus}
+\end{figure}
 
 \end{document}
