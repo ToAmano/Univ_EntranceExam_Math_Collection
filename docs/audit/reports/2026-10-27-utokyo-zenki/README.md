@@ -114,7 +114,7 @@
 
 ## 1967年度
 
-手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。全ページを表示し、各問の手書き本文・式・図を現行TeXと照合した。第1・3・4問は旧 `jarticle` 形式で、現行LuaLaTeXのPDF生成を保留（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。第2問は生成PDF全2ページ、第5・6問は各3ページを表示確認した。第5・6問の手書きには新課程の解答のみがあり、旧課程の証明は独立計算で検証した。全問のブラウザー実表示は未確認。
+手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。全ページを表示し、各問の手書き本文・式・図を現行TeXと照合した。第1・3・4問は旧 `jarticle` 形式で、現行LuaLaTeXのPDF生成を保留（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。第2問は生成PDF全2ページ、第5・6問は各3ページを表示確認した。第5・6問の手書きには新課程の解答のみがあり、旧課程の証明は独立計算で検証した。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
@@ -125,7 +125,9 @@
 | 5 | 6 | 全3ページ確認 | 新課程の接点・面積 `2√e/3−1` は手書きと一致。旧課程の接点条件から `a=−3,1,3/2` を独立検算。[#1275](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1275)：公開解答図2〜4で右端の曲線名が横軸・目盛りと重なる |
 | 6 | 7 | 全3ページ確認 | 新課程の完全順列数9から確率 `1/320` は手書きと一致。旧課程の漸化式・極限 `A₀A=4` を独立検算。確定指摘なし |
 
-1967年度は旧形式3問の生成PDF、旧課程2問の手書き詳細原稿、全問のブラウザー実表示が未確認であり、監査完了とはしない。
+1967年度は旧形式3問の生成PDFと旧課程2問の手書き詳細原稿が未確認であり、監査完了とはしない。
+
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1問の旧形式命令と既報の厳密不等号は [#1007](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1007)、第3問の増減表の `\ne`・`\se` と生TeXは [#1009](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1009)、第4問の解答図3点欠落と `minipage` の生表示は [#1250](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1250) に追記した。第1・3・4問では問題文の重複も残る。第2問の図は表示されたが、既報の座標ラベル重なり [#1008](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1008) がある。第5問の図2〜4のラベル重なりは [#1275](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1275) で管理し、第6問の本文・図は表示された。修正後および他の画面幅は未確認。
 
 ## 1968年度
 
