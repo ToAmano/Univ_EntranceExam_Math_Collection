@@ -359,7 +359,7 @@
 
 ## 1983年度
 
-手書きPDFは全7ページ。物理1ページが表紙、第1〜6問は物理2〜7ページに各1問。第1問の手書き解答は空欄で、`solution.tex` も未解答のコメントのみ。既存の解答作成Issue [#450](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/450) に再確認結果を追記し、Openを維持した。第2〜6問は手書き原稿とTeXを照合し、主要な式・結論を独立検算した。生成解答PDFは全1・3・2・2・4ページを表示確認。第3〜5問の問題PDFも各全1ページを表示確認。全問のWeb実表示は未確認。
+手書きPDFは全7ページ。物理1ページが表紙、第1〜6問は物理2〜7ページに各1問。第1問の手書き解答は空欄で、`solution.tex` も未解答のコメントのみ。既存の解答作成Issue [#450](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/450) に再確認結果を追記し、Openを維持した。第2〜6問は手書き原稿とTeXを照合し、主要な式・結論を独立検算した。生成解答PDFは全1・3・2・2・4ページを表示確認。第3〜5問の問題PDFも各全1ページを表示確認。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
@@ -370,7 +370,7 @@
 | 5 | 6 | 解答全2ページ、問題全1ページ確認 | 正四角錐の断面と内接円から `R=πt²(1−t²)/2≤π/8` を検算。手書きと一致し、確定指摘なし |
 | 6 | 7 | 解答全4ページ確認 | [#1075](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1075)：平面 `H` の図示が線のみで、切断面の変数と積分の原始関数の符号にも誤り。体積 `π/2` は手書き・独立計算と一致 |
 
-1983年度は第1問の解答自体が未作成であり、全問のWeb実表示も未確認のため、監査完了とはしない。
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1問は未解答の表示と [#450](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/450) の導線を確認。第2問は初項 `a_1=1` と矛盾する `a_n=2^n` が公開の最終答案にも表示され、[#1072](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1072) の影響が確認できる。第3・4問の問題図は表示されるが、直線 `ℓ` の通過点 [#1073](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1073) と正方形の包含関係 [#1074](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1074) は既報どおり不正確。第5問は問題図と解答図2枚、最終結論まで表示され、新たな指摘なし。第6問も両解法と体積 `π/2` まで表示されるが、切断面の図示と途中式 [#1075](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1075) は残る。修正後および他の画面幅は未確認。第1問の解答未作成と最終答案の誤りがあるため、監査完了とはしない。
 
 ## 1984年度
 
