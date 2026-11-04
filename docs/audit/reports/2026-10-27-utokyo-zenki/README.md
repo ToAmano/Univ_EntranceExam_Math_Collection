@@ -404,7 +404,7 @@
 
 ## 1986年度
 
-手書きPDFは全7ページ。第1〜6問は物理2〜7ページの手書き原稿、TeX、生成解答PDF全2・4・4・3・3・5ページを照合し、面積・法線ベクトル・解の極値・確率・円錐の体積を独立検算した。全問のWeb実表示は未確認。
+手書きPDFは全7ページ。第1〜6問は物理2〜7ページの手書き原稿、TeX、生成解答PDF全2・4・4・3・3・5ページを照合し、面積・法線ベクトル・解の極値・確率・円錐の体積を独立検算した。
 
 | 問 | 原稿物理ページ | PDF | 指摘・確認結果 |
 |---|---:|---|---|
@@ -415,7 +415,7 @@
 | 5 | 6 | 解答全3ページ確認 | [#1089](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1089)：**第1問で除外する履歴の組合せ数を `C(n−1,k−1)` と誤り、次行では `C(n−1,k)` として計算**。第2問の終了時の添字も逆。最終確率式は小さい `n,k` の履歴列挙と一致 |
 | 6 | 7 | 解答全5ページ確認 | [#1090](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1090)：最初の円錐の高さを `DH` と誤記。傾斜角の適用範囲、式参照、用語、見出しも指摘。楕円の半径と半量条件から得る `m=(2^(2/3)−1)/(2^(2/3)+1)` は手書き・独立計算と一致 |
 
-1986年度は全問のWeb実表示が未確認のため、監査完了とはしない。
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。第1問は図1のcaptionと実際の配置が合わず、図2・3のラベルの近接も [#1085](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1085) の通り残る。第2問は4枚の図と別解、第3問は4枚の図と別解まで表示され、途中式と図の指摘 [#1086](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1086)・[#1087](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1087) が残る。第4問の図4枚と極値、第5問の図と確率、第6問の問題図・解答図5枚と2解法も表示される。第5問の組合せ数の誤り [#1089](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1089) と第6問の円錐の高さの誤記 [#1090](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1090) は公開ページにも残る。修正後および他の画面幅は未確認。既存指摘が残るため、監査完了とはしない。
 
 ## 1987年度
 
