@@ -167,7 +167,7 @@
 
 ## 1971年度
 
-手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。原稿全ページと6問の問題・解答TeXを照合し、主要な式と結論を独立検算した。6問すべてが旧 `jarticle` 形式のため、現行LuaLaTeXの生成PDFとWeb実表示は未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。
+手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。原稿全ページと6問の問題・解答TeXを照合し、主要な式と結論を独立検算した。6問すべてが旧 `jarticle` 形式のため、現行LuaLaTeXの生成PDFは未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。
 
 | 問 | 原稿物理ページ | 指摘・確認結果 |
 |---|---:|---|
@@ -178,7 +178,9 @@
 | 5 | 6 | [#1020](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1020)：`Q` の添字と平均平方距離の定数項に誤り。極限 `1+a²+b²` と原点で最小の結論は一致 |
 | 6 | 7 | [#1021](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1021)：両解法の最終式に未定義の `n` が残り、補助数列・和の範囲も不整合。正答 `(2k−1)/3^k` は手書きと独立計算で一致 |
 
-1971年度は全問の生成PDFとWeb実表示が未確認であり、監査完了とはしない。
+1971年度は全問の生成PDFが未確認であり、監査完了とはしない。
+
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。全6問とも旧形式命令と問題文の重複が残る。第1問の定義欠落 [#1017](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1017)、第2問の条件の強めすぎ [#1018](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1018)、第3問の旧形式表示 [#1254](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1254) は既存Issueと画面を照合した。第4問は証明のコードブロック化と増減表の未定義矢印を [#1019](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1019)、第5問は極限・和の旧マクロが赤い未処理命令になる現象を [#1020](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1020) に追記した。第6問は両解法の最終式の自由変数と旧見出しが公開ページにも残る（[#1021](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1021)）。修正後および他の画面幅は未確認。
 
 ## 1972年度
 
