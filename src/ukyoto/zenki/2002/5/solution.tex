@@ -1,68 +1,81 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$f(x)=x^3+3ax^2+3bx$とおき，$A:y=f(x)$，$B:y=c$とする．$f'(x)=3x^2+6ax+3b=3(x^2+2ax+b)$である．$A$，$B$が相異なる3交点を持つには，$f(x)=c$が異なる3実解を持つ，つまり$f$が極大・極小を持ちその間に$c$がある必要がある．そのためには$f'(x)=0$が異なる2実解を持つことが必要で，$x^2+2ax+b=0$の判別式を考えて
+
+与えられた二つの曲線を
 \begin{align}
-  \dfrac{D}{4}=a^2-b>0\iff a^2>b
+  \begin{cases}
+    A: y = f(x) = x^3+3ax^2+3bx \\
+    B: y = c
+  \end{cases} \label{eq:1}
 \end{align}
-が必要．このもとで，$f'(x)=0$の2実解を$\alpha,\beta$（$\alpha<\beta$）とおくと，
+とおく．$f(x)$の一階微分は
 \begin{align}
-  \alpha=-a-\sqrt{a^2-b},\quad\beta=-a+\sqrt{a^2-b}
+  f'(x)=3x^2+6ax+3b=3(x^2+2ax+b) \label{eq:2}
 \end{align}
+である．$A$，$B$が相異なる3交点を持つには，$f(x)=c$が異なる3実解を持つ，つまり$f$が極大・極小を持ちその間に$c$がある必要がある．そのためには$f'(x)=0$が異なる2実解を持つことが必要だから$f'(x)=0$の判別式$D$として
+\begin{align}
+  \dfrac{1}{3}\dfrac{D}{4}=a^2-b>0\iff a^2>b
+\end{align}
+が必要である．
 
 \begin{figure}[htb]
   \centering
-  % 図示用の具体例 a=0, b=-1, c=0.4．極値は alpha=-1, beta=1．
+  % 図示用の具体例 a=0, b=-1, c=0.3．極値は alpha=-1, beta=1．
   \begin{tikzpicture}[x=1.65cm, y=0.82cm, >=stealth, every node/.style={font=\small}]
+    % 極大値 y=f(alpha)=2 と極小値 y=f(beta)=-2 の水平破線，および各特徴点の垂直破線
+    \draw[dashed, gray!65] (-2,2) -- (2,2);
+    \draw[dashed, gray!65] (-2,-2) -- (2,-2);
+    \foreach \p in {-2,-1,0,1,2}
+    \draw[dashed, gray!60] (\p,-2.55) -- (\p,2.35);
     \begin{scope}
-      \clip (-2.32,-3.1) rectangle (2.38,3.15);
-      \draw[line width=1.4pt, blue!85!black, domain=-2.3:2.3, samples=120]
+      \clip (-2.32,-2.55) rectangle (2.38,2.95);
+      \draw[line width=1.4pt, blue!85!black, domain=-2.2:2.2, samples=120]
       plot (\x,{\x*\x*\x-3*\x});
     \end{scope}
-    \draw[orange!85!black, line width=1.1pt] (-2.25,0.4) -- (2.3,0.4)
+    \draw[orange!85!black, line width=1.1pt] (-2.3,0.3) -- (2.35,0.3)
     node[right] {$B:y=c$};
-    \foreach \p in {-2,-1,1,2}
-    \draw[dashed, gray!60] (\p,-2.45) -- (\p,2.45);
-    \draw[->, thick, gray!80!black] (-2.35,0) -- (2.43,0) node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0,-3.1) -- (0,3.2) node[above] {$y$};
-    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (-1,2) {}; \node[circle, fill=blue!85!black, inner sep=1.4pt] at (1,-2) {};
-    \node[above=3pt, blue!85!black, font=\footnotesize] at (-1,2) {極大};
-    \node[below=3pt, blue!85!black, font=\footnotesize] at (1,-2) {極小};
-    \node[above left=2pt, blue!85!black] at (2.08,2.53) {$A:y=f(x)$};
-    \node[below=11pt, font=\footnotesize] at (-2,0) {$\frac{3\alpha-\beta}{2}$};
-    \node[below=3pt, font=\footnotesize] at (-1,0) {$\alpha$};
-    \node[below=12pt, fill=white, inner sep=1pt, font=\footnotesize]
-    at (0,0) {$\frac{\alpha+\beta}{2}$};
-    \node[below=3pt, font=\footnotesize] at (1,0) {$\beta$};
-    \node[below=11pt, font=\footnotesize] at (2,0) {$\frac{3\beta-\alpha}{2}$};
+    \draw[->, thick, gray!80!black] (-2.4,-2.55) -- (2.48,-2.55) node[right] {$x$};
+    % 極大点・極小点・変曲点・等高点
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (-1,2) {};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (1,-2) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (0,0) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (2,2) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (-2,-2) {};
+    \node[above=3pt, text=blue!85!black, font=\footnotesize] at (-1,2) {極大};
+    \node[below=2pt, text=blue!85!black, fill=white, inner sep=1pt, font=\footnotesize] at (1,-2) {極小};
+    \node[above left=2pt, text=blue!85!black] at (2.1,2.45) {$A:y=f(x)$};
+    % x軸方向の座標ラベル
+    \node[anchor=base, font=\footnotesize] at (-2,-3.0) {$\frac{3\alpha-\beta}{2}$};
+    \node[anchor=base, font=\footnotesize] at (-1,-3.0) {$\alpha$};
+    \node[anchor=base, font=\footnotesize] at (0,-3.0) {$\frac{\alpha+\beta}{2}$};
+    \node[anchor=base, font=\footnotesize] at (1,-3.0) {$\beta$};
+    \node[anchor=base, font=\footnotesize] at (2,-3.0) {$\frac{3\beta-\alpha}{2}$};
   \end{tikzpicture}
-  \caption{$y=f(x)$と$y=c$の3交点および極値の位置関係（$a=0$, $b=-1$, $c=0.4$の例）}
+  \caption{$y=f(x)$と$y=c$の3交点および極値の位置関係}
+  \label{fig:cubic_three_intersections}
 \end{figure}
 
-$f$は$x<\alpha$で増加，$\alpha<x<\beta$で減少，$x>\beta$で増加し，$x=\alpha$で極大，$x=\beta$で極小となる．$A,B$が相異なる3交点を持つとき，$c$は極小値と極大値の間にあるから，3交点の$x$座標を$x_1<x_2<x_3$とすると$x_1<\alpha<x_2<\beta<x_3$である．
-
-$d=\sqrt{a^2-b}$とおくと，$\alpha=-a-d$，$\beta=-a+d$である．$u=x+a$とおいて$f$を平行移動すると，
+このもとで，$f'(x)=0$の2実解を$\alpha,\beta$（$\alpha<\beta$）とおくと，
 \begin{align}
-  f(-a+u)-f(-a)=u^3-3d^2u=:h(u)
+  \alpha=-a-\sqrt{a^2-b},\quad\beta=-a+\sqrt{a^2-b} \label{eq:3}
 \end{align}
-となる（実際，展開して確認できる）．$h$は奇関数で，$h'(u)=3(u^2-d^2)$だから，$h$は$u<-d$で増加，$-d<u<d$で減少，$u>d$で増加し，
+である．ここで$y=f(x)$のグラフにおいて
 \begin{align}
-  h(-d)=2d^3,\qquad h(d)=-2d^3,\qquad h(-2d)=-2d^3,\qquad h(2d)=2d^3
+  f(\alpha) = f\left(\dfrac{3\beta-\alpha}{2}\right),
+  \quad
+  f(\beta) = f\left(\dfrac{3\alpha-\beta}{2}\right)
 \end{align}
-である．$k=c-f(-a)$とおくと，$f(x)=c\iff h(u)=k$（$u=x+a$）であり，異なる3実解を持つことから$-2d^3<k<2d^3$である．
-
-$x_1$に対応する$u_1=x_1+a<-d$は$h(u)=k$の$u<-d$における唯一の解であり，$h$はこの範囲で単調増加で$h(-2d)=-2d^3<k$だから，$u_1>-2d$．同様に，$x_3$に対応する$u_3=x_3+a>d$は$h(u)=k$の$u>d$における唯一の解であり，$h(2d)=2d^3>k$だから，$u_3<2d$．また$u_2=x_2+a\in(-d,d)\subset(-2d,2d)$である．
-
-以上から，$u_1,u_2,u_3\in(-2d,2d)$，すなわち
+だから，求める条件は$f(x)=c$の解を$x_1,x_2,x_3$として
 \begin{align}
-  x_1,x_2,x_3\in(-a-2d,-a+2d)=\left(-a-2\sqrt{a^2-b},-a+2\sqrt{a^2-b}\right)
+  \dfrac{3\alpha-\beta}{2} < x_1,x_2,x_3 < \dfrac{3\beta-\alpha}{2}
 \end{align}
-であり，題意は示された．$\blacksquare$
+である．\cref{eq:3}を代入して
+\begin{align}
+  -a - 2\sqrt{a^2-b} < x_1,x_2,x_3 < -a + 2\sqrt{a^2-b}
+\end{align}
+である．よって題意は示された．
 
 \newpage
 

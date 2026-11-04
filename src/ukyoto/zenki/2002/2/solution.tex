@@ -1,147 +1,233 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-対称性から，$A(1,0)$，$B(\cos\alpha,\sin\alpha)$，$C(\cos\beta,\sin\beta)$（$0<\alpha\le\pi$，$\alpha<\beta<2\pi$）としてよい．
-\begin{align}
-  |AB|^2&=(\cos\alpha-1)^2+\sin^2\alpha=2(1-\cos\alpha)=4\sin^2\dfrac{\alpha}{2}\\
-  |BC|^2&=(\cos\beta-\cos\alpha)^2+(\sin\beta-\sin\alpha)^2=2\{1-(\cos\alpha\cos\beta+\sin\alpha\sin\beta)\}=2(1-\cos(\beta-\alpha))\\
-  |CA|^2&=2(1-\cos\beta)=4\sin^2\dfrac{\beta}{2}
-\end{align}
-である．$P=|AB|^2+|BC|^2+|CA|^2$とおく．
 
-\paragraph{(1)}
-\begin{align}
-  P>8&\iff\cos\alpha+\cos\beta+\cos(\beta-\alpha)<-1\\
-  &\iff2\cos\dfrac{\alpha}{2}\cos\left(\beta-\dfrac{\alpha}{2}\right)<-2\cos^2\dfrac{\alpha}{2}\quad\cdots①
-\end{align}
-である．$\alpha=\pi$の時①は$0<0$となって不適だから，$0<\alpha<\pi$である．この時$\cos\dfrac{\alpha}{2}>0$だから，
-\begin{align}
-  ①&\iff\cos\left(\beta-\dfrac{\alpha}{2}\right)<\cos\left(\pi-\dfrac{\alpha}{2}\right)\\
-  &\iff\left(\pi-\dfrac{\alpha}{2}\right)+2n\pi<\beta-\dfrac{\alpha}{2}<\left(\pi+\dfrac{\alpha}{2}\right)+2n\pi\quad(n\in\mathbb Z)\\
-  &\iff\pi+2n\pi<\beta<(\pi+\alpha)+2n\pi
-\end{align}
-
-$0<\beta<2\pi$から，$n=0$で
-\begin{align}
-  ①\iff\pi<\beta<\pi+\alpha\iff\triangle ABC\text{は鋭角三角形}
-\end{align}
-
-よって，示された．
-
-\begin{figure}[htb]
+\begin{figure}[!htb]
   \centering
-  % 図示用に alpha=100°, beta=235° とした鋭角三角形．
-  \begin{tikzpicture}[x=2cm, y=2cm, >=stealth, every node/.style={font=\small}]
+  % 図示用に alpha=70°, beta=215° とした配置例．
+  \begin{tikzpicture}[x=1.75cm, y=1.75cm, >=stealth, every node/.style={font=\small}]
     \coordinate (O) at (0,0);
     \coordinate (A) at (1,0);
-    \coordinate (B) at (100:1);
-    \coordinate (C) at (235:1);
-    \draw[->, thick, gray!80!black] (-1.25,0) -- (1.3,0) node[right] {$\mathrm{Re}$};
-    \draw[->, thick, gray!80!black] (0,-1.25) -- (0,1.28) node[above] {$\mathrm{Im}$};
-    \draw[dashed, gray!65] (O) circle[radius=1];
-    \draw[dashed, gray!65] (O) -- (A) (O) -- (B) (O) -- (C);
+    \coordinate (B) at (70:1);
+    \coordinate (C) at (215:1);
+    \draw[->, thick, gray!80!black] (-1.3,0) -- (1.35,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-1.3) -- (0,1.35) node[above] {$y$};
+    \draw[thick, gray!60] (O) circle[radius=1];
+    \node[above left=2pt, font=\footnotesize, gray!70!black] at (135:1.02) {$x^2+y^2=1$};
+    \draw[dashed, gray!65] (O) -- (B) (O) -- (C);
     \draw[line width=1.4pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
-    \draw[orange!85!black, thick, ->] (0.32,0) arc[start angle=0,end angle=100,radius=0.32];
-    \node[above right=2pt, orange!85!black] at (0.2,0.25) {$\alpha$};
-    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {}; \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B) {}; \node[circle, fill=blue!85!black, inner sep=1.3pt] at (C) {};
-    \node[below right=3pt] at (A) {$A$};
-    \node[above=2pt] at (B) {$B$};
-    \node[below left=2pt] at (C) {$C$};
+    \draw[teal!80!black, thick, ->] (0.26,0) arc[start angle=0, end angle=70, radius=0.26];
+    \node[font=\footnotesize, teal!80!black] at (35:0.38) {$\alpha$};
+    \draw[orange!85!black, thick, ->] (0.42,0) arc[start angle=0, end angle=215, radius=0.42];
+    \node[font=\footnotesize, orange!85!black] at (130:0.54) {$\beta$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (C) {};
+    \node[below right=2pt] at (A) {$A(1,0)$};
+    \node[above right=2pt] at (B) {$B(\cos\alpha,\sin\alpha)$};
+    \node[below left=2pt] at (C) {$C(\cos\beta,\sin\beta)$};
     \node[below left=2pt] at (O) {$O$};
   \end{tikzpicture}
-  \caption{単位円に内接する鋭角三角形$ABC$の配置例}
+  \caption{単位円$x^2+y^2=1$上の3点$A,B,C$}
+  \label{fig:unit_circle_abc}
+\end{figure}
+
+対称性から，$A(1,0)$，$B(\cos\alpha,\sin\alpha)$，$C(\cos\beta,\sin\beta)$（$0<\alpha\le\pi$，$\alpha<\beta<2\pi$）としてよい．すると各辺の長さは
+\begin{align}
+  \begin{cases}
+    |AB|^2=(\cos\alpha-1)^2+\sin^2\alpha=2(1-\cos\alpha)=4\sin^2\dfrac{\alpha}{2}\\
+    |BC|^2=(\cos\beta-\cos\alpha)^2+(\sin\beta-\sin\alpha)^2
+    =2\{1-(\cos\alpha\cos\beta+\sin\alpha\sin\beta)\}
+    =2(1-\cos(\beta-\alpha))\\
+    |CA|^2=2(1-\cos\beta)=4\sin^2\dfrac{\beta}{2}
+  \end{cases} \label{eq:1}
+\end{align}
+である．$P=|AB|^2+|BC|^2+|CA|^2$とおくと
+\begin{align}
+  P
+  & = 4\sin^2\dfrac{\alpha}{2} + 2(1-\cos(\beta-\alpha)) + 4\sin^2\dfrac{\beta}{2} \\
+  & = 2(1-\cos \alpha) + 2(1-\cos(\beta-\alpha)) + 2(1-\cos\beta) \\
+  & = 2\left[3-\cos\alpha-\cos(\beta-\alpha)-\cos\beta\right] \label{eq:2}
+\end{align}
+である．
+
+\paragraph{(1)}
+
+$P>8$の時\cref{eq:2}より
+\begin{align}
+  P>8
+  \iff &
+  \cos\alpha+\cos\beta+\cos(\beta-\alpha)<-1\\
+  \iff &
+  2\cos\dfrac{\alpha}{2}\cos\left(\beta-\dfrac{\alpha}{2}\right)<-2\cos^2\dfrac{\alpha}{2}
+\end{align}
+である．$\alpha=\pi$の時は$0<0$となって不適だから $0<\alpha<\pi$である．
+この時$\cos\dfrac{\alpha}{2}>0$だからさらに変形を続けて
+\begin{align}
+  P>8
+  \iff
+  & \cos\left(\beta-\dfrac{\alpha}{2}\right)<\cos\left(\pi-\dfrac{\alpha}{2}\right)\\
+  \iff
+  & \left(\pi-\dfrac{\alpha}{2}\right)+2n\pi<\beta-\dfrac{\alpha}{2}<\left(\pi+\dfrac{\alpha}{2}\right)+2n\pi\quad(n\in\mathbb Z)\\
+  \iff
+  &\pi+2n\pi<\beta<(\pi+\alpha)+2n\pi \label{eq:3}
+\end{align}
+である．$0<\beta<2\pi$から，$n=0$で
+\begin{align}
+  P > 8 \iff \pi<\beta<\pi+\alpha \iff \triangle ABC\text{は鋭角三角形}
+\end{align}
+である．よって題意は示された．
+
+\begin{figure}[!htb]
+  \centering
+  % 図示用に alpha=70°, beta=215° とした鋭角三角形．
+  \begin{tikzpicture}[x=1.85cm, y=1.85cm, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (1,0);
+    \coordinate (B) at (70:1);
+    \coordinate (Aopp) at (-1,0);
+    \coordinate (Bopp) at (250:1);
+    \coordinate (C) at (215:1);
+    % 鋭角三角形となるCの可動範囲（pi < beta < pi+alpha）の扇形・弧
+    \fill[red!10] (O) -- (180:1) arc[start angle=180, end angle=250, radius=1] -- cycle;
+    \draw[->, thick, gray!80!black] (-1.35,0) -- (1.35,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-1.35) -- (0,1.35) node[above] {$y$};
+    \draw[dashed, gray!65] (O) circle[radius=1];
+    \draw[dashed, gray!65] (A) -- (Aopp) (B) -- (Bopp) (O) -- (C);
+    \draw[line width=2.2pt, red!80!black] (180:1) arc[start angle=180, end angle=250, radius=1];
+    \draw[line width=1.4pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+    \draw[orange!85!black, thick, ->] (0.28,0) arc[start angle=0, end angle=70, radius=0.28];
+    \node[font=\footnotesize, orange!85!black] at (35:0.4) {$\alpha$};
+    \draw[orange!85!black, thick, ->] (-0.34,0) arc[start angle=180, end angle=250, radius=0.34];
+    \node[font=\footnotesize, orange!85!black] at (212:0.48) {$\alpha$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (C) {};
+    \node[circle, draw=red!80!black, thick, fill=white, inner sep=1.4pt] at (Aopp) {};
+    \node[circle, draw=red!80!black, thick, fill=white, inner sep=1.4pt] at (Bopp) {};
+    \node[below right=2pt] at (A) {$A(1,0)$};
+    \node[above right=2pt] at (B) {$B$};
+    \node[left=3pt, red!80!black] at (C) {$C(\cos\beta,\sin\beta)$};
+    \node[above left=2pt, font=\footnotesize, red!80!black] at (Aopp) {$\pi$};
+    \node[below=3pt, font=\footnotesize, red!80!black] at (Bopp) {$\pi+\alpha$};
+    \node[font=\footnotesize, red!80!black, below left=2pt] at (232:1.08) {$\pi<\beta<\pi+\alpha$};
+    \node[above left=1pt] at (O) {$O$};
+  \end{tikzpicture}
+  \caption{$\triangle ABC$が鋭角三角形となる点$C$の範囲（$\pi<\beta<\pi+\alpha$）}
+  \label{fig:acute_triangle_range}
 \end{figure}
 
 \paragraph{(2)}
+
+\cref{eq:2}より
 \begin{align}
-  P\le9\iff-\dfrac{3}{2}\le\cos\alpha+\cos\beta+\cos(\beta-\alpha)\quad\cdots②
+  P\le 9
+  \iff
+  0 \le \cos\alpha+\cos\beta+\cos(\beta-\alpha) + \dfrac{3}{2}
 \end{align}
-である．この右辺を$f(\beta)$とおく．$t=\cos\dfrac{\alpha}{2}$とすると，$0<t<1$で，
+である．この右辺を$f(\alpha)$として簡単のため$t=\cos\dfrac{\alpha}{2}$とすると，$0<t<1$で，
 \begin{align}
-  f(\beta)=2t\cos\left(\beta-\dfrac{\alpha}{2}\right)+2t^2-1\quad\cdots③
+  f(\alpha)
+  &= \left[\cos\beta+\cos(\beta-\alpha)\right]  + \cos\alpha + \dfrac{3}{2}\\
+  &= 2\cos\dfrac{\alpha}{2}\cos\left(\beta-\dfrac{\alpha}{2}\right) + (2t^2-1) + \dfrac{3}{2} \\
+  &= 2t\cos\left(\beta-\dfrac{\alpha}{2}\right)+2t^2+\dfrac{1}{2}
 \end{align}
-であり，これは$\cos(\beta-\alpha/2)$の単調増加関数で，$\beta=\pi+\dfrac{\alpha}{2}$（$\alpha<\beta<2\pi$を満たす）で最小値
+である．これは$\cos(\beta-\alpha/2)$の単調増加関数で，$\beta=\pi+\dfrac{\alpha}{2}$（$\alpha<\beta<2\pi$を満たす）で最小値
 \begin{align}
-  f(\beta)=2t^2-2t-1
+  f(\alpha)=2t^2-2t+\dfrac{1}{2}
 \end{align}
 をとる．次に$t$で平方完成して
 \begin{align}
-  f(\beta)=2\left(t-\dfrac{1}{2}\right)^2-\dfrac{3}{2}
+  f(\alpha)=2\left(t-\dfrac{1}{2}\right)^2 \ge 0
 \end{align}
-だから②は示された．等号成立は$t=\dfrac{1}{2}$かつ$\beta=\pi+\dfrac{\alpha}{2}$の時で，$0<\alpha<\pi$だから$\alpha=\dfrac{2}{3}\pi$，$\beta=\dfrac{4}{3}\pi$
+だから$P \le 9$は示された．等号成立は$t=\dfrac{1}{2}$かつ$\beta=\pi+\dfrac{\alpha}{2}$の時で，$0<\alpha\le\pi$だから$\alpha=\dfrac{2}{3}\pi$，$\beta=\dfrac{4}{3}\pi$，つまり$\triangle ABC$が正三角形の時である．
 
-つまり$\triangle ABC$は正三角形である．
-
-\bigskip
 {\bf [別解]}
-右のおりがく．$\triangle ABC$の外接円の半径は$1$だから，正弦定理から，
-\begin{align}
-  |AB|=2\sin C,\quad|BC|=2\sin A,\quad|CA|=2\sin B
-\end{align}
-たから$P=4(\sin^2A+\sin^2B+\sin^2C)$である．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=2cm, y=2cm, >=stealth, every node/.style={font=\small}]
-    \draw[->, thick, gray!80!black] (-1.3,0) -- (1.3,0) node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0,-1.3) -- (0,1.3) node[above] {$y$};
+  \begin{tikzpicture}[x=2.1cm, y=2.1cm, >=stealth, every node/.style={font=\small}]
+    \draw[->, thick, gray!80!black] (-1.3,0) -- (1.35,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-1.3) -- (0,1.35) node[above] {$y$};
     \draw[dashed, gray!65] (0,0) circle[radius=1];
     \coordinate (A) at (45:1);
     \coordinate (B) at (150:1);
     \coordinate (C) at (300:1);
+    % 頂点 A, B, C の内角マーク
+    % A(45°): AB方向は 180°+(45°+150°)/2 = 187.5°, AC方向は 180°+(45°+300°)/2 - 180° = 262.5°
+    \fill[orange!15] (A) -- ($(A)+(187.5:0.24)$) arc[start angle=187.5, end angle=262.5, radius=0.24] -- cycle;
+    \draw[orange!85!black, thick] ($(A)+(187.5:0.24)$) arc[start angle=187.5, end angle=262.5, radius=0.24];
+    \node[font=\footnotesize, orange!85!black] at ($(A)+(225:0.35)$) {$A$};
+    % B(150°): BC方向は 315°, BA方向は 7.5° (367.5°)
+    \fill[orange!15] (B) -- ($(B)+(-45:0.24)$) arc[start angle=-45, end angle=7.5, radius=0.24] -- cycle;
+    \draw[orange!85!black, thick] ($(B)+(-45:0.24)$) arc[start angle=-45, end angle=7.5, radius=0.24];
+    \node[font=\footnotesize, orange!85!black] at ($(B)+(-18.75:0.36)$) {$B$};
+    % C(300°): CA方向は 82.5°, CB方向は 135°
+    \fill[orange!15] (C) -- ($(C)+(82.5:0.24)$) arc[start angle=82.5, end angle=135, radius=0.24] -- cycle;
+    \draw[orange!85!black, thick] ($(C)+(82.5:0.24)$) arc[start angle=82.5, end angle=135, radius=0.24];
+    \node[font=\footnotesize, orange!85!black] at ($(C)+(108.75:0.36)$) {$C$};
     \draw[line width=1.4pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
-    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {}; \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B) {}; \node[circle, fill=blue!85!black, inner sep=1.3pt] at (C) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (C) {};
     \node[above right=2pt] at (A) {$A$};
     \node[above left=2pt] at (B) {$B$};
     \node[below right=2pt] at (C) {$C$};
-    \node[left=4pt, font=\footnotesize, teal!75!black] at ($(B)!0.5!(C)$) {$2\sin A$};
-    \node[above=2pt, font=\footnotesize, teal!75!black] at ($(A)!0.5!(B)$) {$2\sin C$};
-    \node[below right=3pt, font=\footnotesize, teal!75!black] at ($(C)!0.5!(A)$) {$2\sin B$};
-    \node[above right=3pt] at (0,0) {$O$};
+    \node[below left=2pt, font=\footnotesize, text=teal!75!black] at ($(B)!0.5!(C)$) {$2\sin A$};
+    \node[above=2pt, font=\footnotesize, text=teal!75!black, fill=white, inner sep=1pt] at ($(A)!0.5!(B)$) {$2\sin C$};
+    \node[below right=2pt, font=\footnotesize, text=teal!75!black, fill=white, inner sep=1pt] at ($(C)!0.5!(A)$) {$2\sin B$};
+    \node[below left=2pt] at (0,0) {$O$};
   \end{tikzpicture}
   \caption{正弦定理で各辺の長さを表す単位円内接三角形}
+  \label{fig:sine_rule_unit_circle}
 \end{figure}
 
-\paragraph{(1)}
+上のようにおくと $\triangle ABC$の外接円の半径は$1$だから正弦定理から，
 \begin{align}
-  \dfrac{1}{2}P&=\sin^2A+\sin^2B+\sin^2(\pi-A-B)\\
-  &=\dfrac{1-\cos2A}{2}+\dfrac{1-\cos2B}{2}+\dfrac{1-\cos2(A+B)}{2}
+  |AB|=2\sin C,\quad|BC|=2\sin A,\quad|CA|=2\sin B
 \end{align}
+である．よって$P=4(\sin^2A+\sin^2B+\sin^2C)$である．
+
+\paragraph{(1)}
+
+$C$を消して$P$を計算すると
 \begin{align}
-  \dfrac{1}{2}P&=3-\{\cos2A+\cos2B+\cos2(A+B)\}\\
+  \dfrac{1}{2}P
+  &=2\sin^2A+2\sin^2B+2\sin^2(\pi-A-B)\\
+  &=(1-\cos2A)+(1-\cos2B)+(1-\cos2(A+B)) \\
+  &=3-\{\cos2A+\cos2B+\cos2(A+B)\}\\
   &=3-\{2\cos(A+B)\cos(A-B)+2\cos^2(A+B)-1\}\\
   &=4-2\cos(A+B)\{\cos(A-B)+\cos(A+B)\}\\
   &=4-4\cos(A+B)\cos A\cos B
 \end{align}
-
 だから，
 \begin{align}
   P>8\iff\cos(A+B)\cos A\cos B<0\iff\cos A\cos B\cos C>0
 \end{align}
-（$\because\cos(A+B)=\cos(\pi-C)=-\cos C$）である．$\cos A,\cos B,\cos C$のうち2つが負であるとすると，例えば$B,C$が鈍角となって$B+C>\pi$となり，$0<A$，$A+B+C=\pi$に反するので，$\cos A,\cos B,\cos C>0$となり$\triangle ABC$は鋭角三角形．
+（$\because\cos(A+B)=\cos(\pi-C)=-\cos C$）である．従って$\cos A,\cos B,\cos C$のうち1つまたは$3$つが正である．
+
+$\cos A,\cos B,\cos C$のうち2つが負であるとすると，例えば$B,C$が鈍角となって$B+C>\pi$となり，$0<A$，$A+B+C=\pi$に反するので，$\cos A,\cos B,\cos C>0$となり$\triangle ABC$は鋭角三角形．
 
 \paragraph{(2)}
+
 \begin{align}
   \dfrac{1}{2}P&=3-\{\cos2A+\cos2B+\cos2C\}\\
   &=3-\{2t^2-1+2\cos(A+B)\cos(A-B)\}\quad(t=\cos C)\\
   &=4-\{2t^2-2\cos(A-B)\cdot t\}\quad(\because A+B+C=\pi\text{より}\cos(A+B)=-t)\\
   &=4+\dfrac{1}{2}\cos^2(A-B)-2\left\{t-\dfrac{1}{2}\cos(A-B)\right\}^2
 \end{align}
-
 だから，
 \begin{align}
   P=8+\cos^2(A-B)-4\left\{t-\dfrac{1}{2}\cos(A-B)\right\}^2\le9
 \end{align}
+となる．
 
 等号成立は$\cos(A-B)=\pm1$かつ$t=\dfrac{1}{2}\cos(A-B)$の時で，$-\pi<A-B<\pi$だから
 \begin{align}
   \cos(A-B)=1,\quad t=\dfrac{1}{2}\quad\therefore\ A=B=C=\dfrac{\pi}{3}
 \end{align}
+である．
 
 \newpage
 
