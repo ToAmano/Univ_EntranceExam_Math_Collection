@@ -131,7 +131,7 @@
 
 ## 1968年度
 
-手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。手書き全ページと各問のTeX本文・結論を照合し、主な式を独立検算した。6問すべての解答が旧 `jarticle` 形式で、現行LuaLaTeXでの生成PDFおよびWeb実表示は未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。
+手書きPDF物理1ページは表紙、第1〜6問は物理2〜7ページに各1問。手書き全ページと各問のTeX本文・結論を照合し、主な式を独立検算した。6問すべての解答が旧 `jarticle` 形式で、現行LuaLaTeXでの生成PDFは未確認（[#593](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/593)）。
 
 | 問 | 原稿物理ページ | 指摘・確認結果 |
 |---|---:|---|
@@ -142,7 +142,9 @@
 | 5 | 6 | 奇三次式の係数条件を検算し `P(x)=4x³+x` は手書きと一致。確定指摘なし；公開Webの旧形式命令は [#1252](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1252) に記録 |
 | 6 | 7 | 単調性による不等式、`2^{200}` の桁数・最上位、常用対数の範囲を手書きと照合。確定指摘なし；公開Webの旧形式命令は [#1253](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1253) に記録 |
 
-1968年度は全問の生成PDFとブラウザー実表示が未確認であり、監査完了とはしない。
+1968年度は全問の生成PDFが未確認であり、監査完了とはしない。
+
+2026-11-04に公開解答6ページをChrome（幅1280px）で末尾まで表示した。全6問とも旧形式命令と問題文重複が残る。第1問ではEPSグラフ2点が欠落し `\a` が生表示されるため [#1011](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1011) に追記した。第2問は手書き立体図の欠落 [#1012](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1012) を画面でも確認。第3問は `\a`・`\b` の生表示と場合分けのコードブロック化を [#1010](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1010) に追記した。第4・5問は旧形式命令が主な表示不良で、[#1251](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1251)、[#1252](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1252) で管理。第6問では3つの小問にわたり証明の数式が生TeXブロックとなるため [#1253](https://github.com/ToAmano/Univ_EntranceExam_Math_Collection/issues/1253) に追記した。修正後および他の画面幅は未確認。
 
 ## 1969年度
 
