@@ -1,74 +1,134 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} $P(t, t^3)\ (t \in \mathbb{R})$ とおく．$P$ における接線 $l$ として
-\begin{align}
-  l: y - t^3 = 3t^2(x - t)
-\end{align}
-である．$l$ 上の点 $(X,Y)$ が $L$ 上の点 $(x,y)$ にうつったとすると，
 \begin{figure}[htb]
   \centering
-  % t=0.4 の模式図．接線の傾きは 0.48，回転後の傾きは (0.48+1)/(1-0.48)．
-  \begin{tikzpicture}[x=2.4cm, y=1.5cm, >=stealth, every node/.style={font=\small}]
-    \coordinate (P) at (0.4,0.064);
-    \draw[->, thick, gray!80!black] (-0.9,0) -- (1.4,0) node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0,-1.15) -- (0,1.5) node[above] {$y$};
-    \draw[line width=1.4pt, blue!85!black, domain=-0.85:1.1, samples=90] plot (\x,{\x*\x*\x});
-    \draw[teal!75!black, thick] (-0.2,-0.224) -- (1.12,0.4096) node[right] {$l$};
-    \draw[orange!85!black, thick] (0.08,-0.847) -- (0.86,1.373) node[above] {$L$};
-    \draw[orange!85!black, ->] ($(P)+(25.6:0.32)$) arc[start angle=25.6,end angle=70.6,radius=0.32];
-    \node[above right=5pt, orange!85!black, font=\footnotesize] at (P) {$45^\circ$};
-    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (P) {};
-    \node[below right=3pt] at (P) {$P$};
-    \node[above left=2pt, blue!85!black] at (-0.58,-0.2) {$C:y=x^3$};
+  % t=0.5 の模式図．P(0.5, 0.125)，接線 l の傾きは 0.75 (36.87°)，回転後の直線 L の傾きは 7 (81.87°)．
+  \begin{tikzpicture}[x=2.6cm, y=2.6cm, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0,0);
+    \coordinate (P) at (0.5,0.125);
+    \coordinate (Q) at ($(P)+(36.87:0.78)$);
+    \coordinate (R) at ($(P)+(81.87:0.78)$);
+    % Pからx軸・y軸への垂線（点線）
+    \draw[dashed, gray!65] (P) -- (0.5,0) node[below=2pt, font=\footnotesize, text=black] {$t$};
+    \draw[dashed, gray!65] (P) -- (0,0.125) node[left=2pt, font=\footnotesize, text=black] {$t^3$};
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.75,0) -- (1.35,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.55) -- (0,1.25) node[above] {$y$};
+    % 曲線 C: y = x^3
+    \draw[line width=1.4pt, blue!85!black, domain=-0.72:1.05, samples=90] plot (\x,{\x*\x*\x});
+    % 接線 l と回転後の直線 L
+    \draw[teal!75!black, thick] ($(P)+(216.87:0.65)$) -- ($(P)+(36.87:1.02)$) node[right] {$l$};
+    \draw[orange!85!black, thick] ($(P)+(261.87:0.62)$) -- ($(P)+(81.87:1.1)$) node[above right=1pt] {$L$};
+    % 45° 回転の角マークと (X,Y) -> (x,y) の移動円弧
+    \draw[orange!85!black, thick, ->] ($(P)+(36.87:0.36)$) arc[start angle=36.87, end angle=81.87, radius=0.36];
+    \node[orange!85!black, font=\footnotesize] at ($(P)+(59.37:0.48)$) {$45^\circ$};
+    \draw[dashed, orange!85!black, ->] (Q) arc[start angle=36.87, end angle=81.87, radius=0.78];
+    % 点 P, (X,Y), (x,y) とラベル
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (P) {};
+    \node[circle, fill=teal!75!black, inner sep=1.3pt] at (Q) {};
+    \node[circle, fill=orange!85!black, inner sep=1.3pt] at (R) {};
+    \node[above left=2pt] at (P) {$P$};
+    \node[below right=1pt, font=\footnotesize, text=teal!75!black] at (Q) {$(X,Y)$};
+    \node[right=2pt, font=\footnotesize, text=orange!85!black] at (R) {$(x,y)$};
+    \node[below left=2pt] at (O) {$O$};
+    \node[above left=2pt, blue!85!black] at (-0.52,-0.14) {$C:y=x^3$};
   \end{tikzpicture}
-  \caption{$P$での接線$l$を反時計回りに$45^\circ$回転した直線$L$（図は$t=0.4$）}
+  \caption{$P(t,t^3)$での接線$l$上の点$(X,Y)$を反時計回りに$45^\circ$回転した直線$L$上の点$(x,y)$}
+  \label{fig:tangent_rotation}
 \end{figure}
-\begin{eqnarray*}
-  \{ (X-t) + i(Y-t^3) \} &=& \dfrac{\sqrt{2}}{2}(1-i) \{ (x-t) + i(y-t^3) \} \\
-  &=& \dfrac{\sqrt{2}}{2} \left[ \{ (x-t) + (y-t^3) \} + i \{ (y-t^3) - (x-t) \} \right] \\
-  &=& \dfrac{\sqrt{2}}{2} \left[ (x+y-t-t^3) + i (-x+y+t-t^3) \right]
-\end{eqnarray*}
+
+$P(t, t^3)\ (t \in \mathbb{R})$ とおく．$P$ における接線 $l$ は
+\begin{align}
+  l: y - t^3 = 3t^2(x - t) \label{eq:1}
+\end{align}
+である．$l$ 上の点 $(X,Y)$ が反時計回りに$\dfrac{\pi}{4}$回転して $L$ 上の点 $(x,y)$ にうつったとすると，
+\begin{align}
+  \{ (X-t) + i(Y-t^3) \}
+  &= \dfrac{\sqrt{2}}{2}(1-i) \{ (x-t) + i(y-t^3) \} \\
+  &= \dfrac{\sqrt{2}}{2} \left[ \{ (x-t) + (y-t^3) \} + i \{ (y-t^3) - (x-t) \} \right] \\
+  &= \dfrac{\sqrt{2}}{2} \left[ (x+y-t-t^3) + i (-x+y+t-t^3) \right]
+\end{align}
 から
 \begin{align}
-  X-t = \dfrac{\sqrt{2}}{2}(x+y-t-t^3),\ Y-t^3 = \dfrac{\sqrt{2}}{2}(-x+y+t-t^3)\ (x, y, X, Y, t \in \mathbb{R})
+  \begin{cases}
+    X-t = \dfrac{\sqrt{2}}{2}(x+y-t-t^3) \\
+    Y-t^3 = \dfrac{\sqrt{2}}{2}(-x+y+t-t^3)
+  \end{cases} \label{eq:2}
 \end{align}
-だから
+だから\cref{eq:1}に代入して
 \begin{align}
-  l: -x+y+t-t^3 = 3t^2 (x+y-t-t^3) \cdots \text{\textcircled{1}}
+  L: -x+y+t-t^3 = 3t^2 (x+y-t-t^3) \label{eq:3}
 \end{align}
-これが $y=x^3$ と $3$ 異交点を持つ時，\textcircled{1} に $y=x^3$ を代入した
-\begin{eqnarray*}
-  -x+x^3+t-t^3 &=& 3t^2 (x+x^3-t-t^3) \\
-  (x-t) \{ 3t^2 (x^2+tx+t^2+1) - (x^2+tx+t^2-1) \} &=& 0 \cdots \text{\textcircled{2}}
-\end{eqnarray*}
-が $x$ について $3$ 実数解を持つ．したがって，$\{ \ \}$ 部を $f(x)$ として，$f(x)=0$ が $x \neq t$ に $2$ 異実解を持てば良い．
+である．
+
+\begin{figure}[htb]
+  \centering
+  % t=0.22 の具体例．L の傾きは約 1.340，C: y=x^3 との3交点は x ≈ -1.258, 0.22, 1.038．
+  \begin{tikzpicture}[x=2.1cm, y=1.05cm, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0,0);
+    \coordinate (P) at (0.22,0.01065);
+    \coordinate (I1) at (-1.258,-1.991);
+    \coordinate (I2) at (1.038,1.119);
+    \draw[->, thick, gray!80!black] (-1.55,0) -- (1.55,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-2.35) -- (0,2.15) node[above] {$y$};
+    % 曲線 C: y = x^3
+    \draw[line width=1.4pt, blue!85!black, domain=-1.32:1.25, samples=100] plot (\x,{\x*\x*\x});
+    % 接線 l (参考・破線) と回転後の直線 L
+    \draw[dashed, teal!75!black, thick] (-0.9,-0.152) -- (1.35,0.175) node[right] {$l$};
+    \draw[line width=1.2pt, orange!85!black] (-1.42,-2.208) -- (1.32,1.497) node[above right] {$L$};
+    % 3交点の描画
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (I1) {};
+    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (P) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (I2) {};
+    \node[below right=2pt] at (P) {$P(t,t^3)$};
+    \node[above left=2pt] at (O) {$O$};
+    \node[left=3pt, blue!85!black] at (1.18,1.64) {$C:y=x^3$};
+  \end{tikzpicture}
+  \caption{直線$L$と曲線$C:y=x^3$が相異なる3点で交わる様子}
+  \label{fig:three_intersections}
+\end{figure}
+
+これが $y=x^3$ と $3$ 異交点を持つ時，\cref{eq:3}に $y=x^3$ を代入した
 \begin{align}
-  f(x) = (3t^2-1)x^2 + (3t^3-t)x + (3t^4+2t^2+1)
+  & -x+x^3+t-t^3 = 3t^2 (x+x^3-t-t^3) \\
+  & (x-t) \{ 3t^2 (x^2+tx+t^2+1) - (x^2+tx+t^2-1) \} = 0 \label{eq:4}
 \end{align}
-だから，条件は，$f(x)=0$ の判別式 $D$ として
+が $x$ について $3$ 実数解を持つ．したがって，$\{ \ \}$ 部を $f(x)$ として
+$f(x)=0$ が $x \neq t$ に $2$ 異実解を持てば良い．
 \begin{align}
-  \begin{cases} f(t) \neq 0,\ 3t^2-1 \neq 0 \\ D > 0
-  \end{cases} \cdots *
+  f(x) = (3t^2-1)x^2 + (3t^3-t)x + (3t^4+2t^2+1) \label{eq:5}
+\end{align}
+において，まず二次の係数が非零かつ$f(t) \neq 0$の元で $f(x)=0$ の判別式 $D$ として
+\begin{align}
+  \begin{cases}
+    f(t) \neq 0 \\
+    3t^2-1 \neq 0 \\
+    D > 0
+  \end{cases} \label{eq:6}
 \end{align}
 である．
 \begin{align}
-  f(t) = 9t^4+1 \neq 0 \ (\because t \in \mathbb{R})
+  D
+  &= t^2(3t^2-1)^2 - 4(3t^2-1)(3t^4+2t^2+1) \\
+  &= (3t^2-1) \left[ p(3p-1) - 4(3p^2+2p+1) \right] \ (p=t^2) \\
+  &= -(3p-1)(3p+2)^2
 \end{align}
-\begin{eqnarray*}
-  D &=& t^2(3t^2-1)^2 - 4(3t^2-1)(3t^4+2t^2+1) \\
-  &=& (3t^2-1) \left[ p(3p-1) - 4(3p^2+2p+1) \right] \ (p=t^2) \\
-  &=& -(3p-1)(3p+2)^2
-\end{eqnarray*}
-だから $*$ に代入して，$3p+2>0$ とあわせて
+だから\cref{eq:6}に代入して
 \begin{align}
-  * \iff 3t^2 < 1 \iff -\dfrac{\sqrt{3}}{3} < t < \dfrac{\sqrt{3}}{3}
+  \begin{cases}
+    9p^2-1 \neq 0 \\
+    3p-1 \neq 0 \\
+    -(3p-1)(3p+2)^2 > 0
+  \end{cases}
+  \quad\therefore
+  3t^2 < 1
+  \quad\therefore
+  -\dfrac{\sqrt{3}}{3} < t < \dfrac{\sqrt{3}}{3}
 \end{align}
-だから $P$ のハンイは下図太線部
+である．よって点$P$の動く範囲は下図太線部である．
 
 \begin{figure}[htb]
   \centering

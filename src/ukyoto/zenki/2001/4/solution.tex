@@ -1,96 +1,193 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} 題意の正八面体の一辺を $2$ とし，$P_1$ を始点とするベクトル $\overrightarrow{P_1 P_m}$ の終点を $\nabla$ とする．
+\begin{figure}[htb]
+  \centering
+  % P_1 を頂点とし，ベクトル P_1 P_m (m=2,3,4,5) を法線ベクトルとする4平面が作る四角錐領域 alpha．
+  \begin{tikzpicture}[x={(1.25cm,-0.42cm)}, y={(0.95cm,0.58cm)},
+    z={(0cm,1.25cm)}, >=stealth, every node/.style={font=\small}]
+    \coordinate (P1) at (0,0,1);
+    \coordinate (P2) at (1,0,0);
+    \coordinate (P3) at (0,1,0);
+    \coordinate (P4) at (-1,0,0);
+    \coordinate (P5) at (0,-1,0);
+    \coordinate (P6) at (0,0,-1);
+    % P_1 から上方に広がる4平面で囲まれた領域 alpha（上断面 ABCD）
+    \coordinate (A) at (0.85,0.85,1.85);
+    \coordinate (B) at (-0.85,0.85,1.85);
+    \coordinate (C) at (-0.85,-0.85,1.85);
+    \coordinate (D) at (0.85,-0.85,1.85);
+    % 領域 alpha の淡い塗り
+    \fill[orange!15, opacity=0.85] (P1) -- (D) -- (A) -- cycle;
+    \fill[orange!10, opacity=0.85] (P1) -- (C) -- (D) -- cycle;
+    \fill[orange!20, opacity=0.85] (A) -- (B) -- (C) -- (D) -- cycle;
+    % 正八面体の面と隠れ線・実線
+    \fill[blue!12] (P1) -- (P2) -- (P3) -- cycle;
+    \draw[dashed, gray!65] (P6) -- (P3) (P6) -- (P4) (P3) -- (P4);
+    \draw[line width=1.2pt, blue!85!black]
+    (P1) -- (P2) -- (P3) -- (P1) -- (P4) -- (P5) -- (P1);
+    \draw[line width=1.2pt, blue!85!black]
+    (P2) -- (P5) -- (P4) (P2) -- (P6) -- (P5);
+    % 領域 alpha（四角錐 P_1-ABCD）の稜線
+    \draw[dashed, orange!80!black, thick] (P1) -- (B);
+    \draw[line width=1.2pt, orange!85!black]
+    (P1) -- (A) (P1) -- (C) (P1) -- (D)
+    (A) -- (B) -- (C) -- (D) -- cycle;
+    % 各頂点の描画とラベル
+    \foreach \name in {P2,P3,P4,P5,P6}
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (\name) {};
+    \node[circle, fill=orange!85!black, inner sep=1.4pt] at (P1) {};
+    \node[below left=2pt, text=orange!85!black] at (P1) {$P_1$};
+    \node[right=3pt] at (P2) {$P_2$};
+    \node[above right=2pt] at (P3) {$P_3$};
+    \node[left=3pt] at (P4) {$P_4$};
+    \node[below left=2pt] at (P5) {$P_5$};
+    \node[below=3pt] at (P6) {$P_6$};
+    \node[right=2pt, font=\footnotesize, text=orange!85!black] at (A) {$A$};
+    \node[above=2pt, font=\footnotesize, text=orange!85!black] at (B) {$B$};
+    \node[left=2pt, font=\footnotesize, text=orange!85!black] at (C) {$C$};
+    \node[below right=2pt, font=\footnotesize, text=orange!85!black] at (D) {$D$};
+    \node[text=orange!85!black, font=\small] at (0.05,-0.05,1.55) {$\alpha$};
+  \end{tikzpicture}
+  \caption{正八面体と，$\overrightarrow{P_1 P_m}\ (m=2,3,4,5)$を法線ベクトルとする4平面で囲まれた領域$\alpha$}
+  \label{fig:octahedron_normal_cone}
+\end{figure}
+
+題意の正八面体の一辺を $\sqrt{2}$ とし，$P_1$ を始点とするベクトル $\vec{v}$ の終点を $V$ とする．正八面体の対称性から$k=1$の場合のみ考えれば良い．
+
 任意の $m \ (m=2,\cdots,6)$ に対し
 \begin{align}
   \overrightarrow{P_1 P_m} \cdot \vec{v} \le 0
 \end{align}
-を満たす $\nabla$ の存在範囲は，右図で $\overrightarrow{P_1 P_m}$ を法線ベクトルとする $(m=2,3,4,5)$ 4平面で囲まれた部分（$\alpha$ とおく）である．ところでこの4平面は，右下図のように空間を対称に $4$ 等分割するので，
-（立方体の各面を底面，$P_1$ を頂点とする $6$ つの四角錐は合同）
-対称性から $\nabla$ が $\alpha$ にある場合のみを考えれば良い．
-又，題意から
+を満たす $V$ の存在範囲は，これらの成す角度が$\dfrac{\pi}{2}$より大きいことと同じである．
+すなわち上図で $\overrightarrow{P_1 P_m}$ を法線ベクトルとする $(m=2,3,4,5)$ 4平面で囲まれた部分（$\alpha$ とおく）である．
+
+\begin{figure}[htb]
+  \centering
+  % P_1 を中心とする立方体 ABCD-EFGH を6個の合同な正四角錐に分割したときの領域 alpha (P_1-ABCD)．
+  \begin{tikzpicture}[x={(1.25cm,-0.42cm)}, y={(0.95cm,0.58cm)},
+    z={(0cm,1.25cm)}, >=stealth, every node/.style={font=\small}]
+    \coordinate (P1) at (0,0,0);
+    \coordinate (A) at (1,1,1);
+    \coordinate (B) at (-1,1,1);
+    \coordinate (C) at (-1,-1,1);
+    \coordinate (D) at (1,-1,1);
+    \coordinate (E) at (1,1,-1);
+    \coordinate (F) at (-1,1,-1);
+    \coordinate (G) at (-1,-1,-1);
+    \coordinate (H) at (1,-1,-1);
+    \coordinate (V) at (0.2,-0.15,0.72);
+    % 領域 alpha（上部の正四角錐 P_1-ABCD）の塗り
+    \fill[orange!15, opacity=0.85] (P1) -- (D) -- (A) -- cycle;
+    \fill[orange!12, opacity=0.85] (P1) -- (C) -- (D) -- cycle;
+    \fill[orange!22, opacity=0.85] (A) -- (B) -- (C) -- (D) -- cycle;
+    % 立方体の隠れ線と実線
+    \draw[dashed, gray!60] (B) -- (F) (E) -- (F) -- (G);
+    \draw[gray!75!black, thick]
+    (A) -- (B) -- (C) -- (D) -- cycle
+    (A) -- (E) (C) -- (G) (D) -- (H)
+    (E) -- (H) -- (G);
+    % 中心 P_1 を通る4平面（立方体の対角線）
+    \draw[dashed, teal!75!black] (P1) -- (E) (P1) -- (F) (P1) -- (G) (P1) -- (H);
+    \draw[dashed, orange!80!black, thick] (P1) -- (B);
+    \draw[line width=1.2pt, orange!85!black]
+    (P1) -- (A) (P1) -- (C) (P1) -- (D)
+    (A) -- (B) -- (C) -- (D) -- cycle;
+    % ベクトル v = P_1 V
+    \draw[line width=1.2pt, red!85!black, ->] (P1) -- (V)
+    node[midway, right=2pt, font=\footnotesize, text=red!85!black] {$\vec{v}$};
+    \node[circle, fill=red!85!black, inner sep=1.3pt] at (V) {};
+    \node[above=1pt, font=\footnotesize, text=red!85!black] at (V) {$V$};
+    % 中心 P_1 と立方体の頂点ラベル
+    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (P1) {};
+    \node[below=3pt] at (P1) {$P_1$};
+    \node[above right=2pt] at (A) {$A$};
+    \node[above left=2pt] at (B) {$B$};
+    \node[left=2pt] at (C) {$C$};
+    \node[right=2pt] at (D) {$D$};
+    \node[right=2pt] at (E) {$E$};
+    \node[above left=1pt, font=\footnotesize, text=gray!70!black] at (F) {$F$};
+    \node[below left=2pt] at (G) {$G$};
+    \node[below=2pt] at (H) {$H$};
+    \node[left=3pt, font=\footnotesize] at ($(C)!0.5!(G)$) {$2$};
+    \node[text=orange!85!black] at (-0.35,0.25,0.75) {$\alpha$};
+  \end{tikzpicture}
+  \caption{$P_1$を中心とする立方体の6分割と領域$\alpha$（正四角錐$P_1\text{-}ABCD$）}
+  \label{fig:cube_six_pyramids_alpha}
+\end{figure}
+
+また，題意から
 \begin{align}
   \overrightarrow{P_1 P_m} \cdot \vec{v} \neq 0
 \end{align}
-である．以上から
+であるから，$V$を$\alpha$の内部のみ（境界除く）にすれば
 \begin{align}
   \overrightarrow{P_1 P_m} \cdot \vec{v} < 0
 \end{align}
 となり，題意は示された．
 
+{\bf [別解]}
+
 \begin{figure}[htb]
   \centering
-  % どちらも頂点を座標軸上の ±単位点とした正八面体．右は外接立方体の各面の中心を結ぶ．
+  % 正八面体の中心 O と \overrightarrow{OX} = \vec{v}，最も近い頂点 P_k と他の頂点 P_m の距離比較．
   \begin{tikzpicture}[x={(1.25cm,-0.42cm)}, y={(0.95cm,0.58cm)},
-    z={(0cm,1.35cm)}, >=stealth, every node/.style={font=\small}]
-    \begin{scope}
-      \coordinate (P1) at (0,0,1);
-      \coordinate (P2) at (1,0,0);
-      \coordinate (P3) at (0,1,0);
-      \coordinate (P4) at (-1,0,0);
-      \coordinate (P5) at (0,-1,0);
-      \coordinate (P6) at (0,0,-1);
-      \fill[blue!15] (P1) -- (P2) -- (P3) -- cycle;
-      \draw[dashed, gray!65] (P6) -- (P3) (P6) -- (P4) (P3) -- (P4);
-      \draw[line width=1.2pt, blue!85!black]
-      (P1) -- (P2) -- (P3) -- (P1) -- (P4) -- (P5) -- (P1);
-      \draw[line width=1.2pt, blue!85!black]
-      (P2) -- (P5) -- (P4) (P2) -- (P6) -- (P5);
-      \foreach \name in {P1,P2,P3,P4,P5,P6}
-      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (\name) {};
-      \node[above=3pt] at (P1) {$P_1$};
-      \node[right=3pt] at (P2) {$P_2$};
-      \node[above right=2pt] at (P3) {$P_3$};
-      \node[left=3pt] at (P4) {$P_4$};
-      \node[below left=2pt] at (P5) {$P_5$};
-      \node[below=3pt] at (P6) {$P_6$};
-    \end{scope}
-    \begin{scope}[shift={(6cm,0cm)}]
-      \coordinate (A) at (1,1,1);
-      \coordinate (B) at (-1,1,1);
-      \coordinate (C) at (-1,-1,1);
-      \coordinate (D) at (1,-1,1);
-      \coordinate (E) at (1,1,-1);
-      \coordinate (F) at (-1,1,-1);
-      \coordinate (G) at (-1,-1,-1);
-      \coordinate (H) at (1,-1,-1);
-      \draw[gray!65, thin] (A) -- (B) -- (C) -- (D) -- cycle
-      (A) -- (E) (B) -- (F) (D) -- (H)
-      (E) -- (F) -- (G) -- (H) -- cycle;
-      \draw[dashed, gray!65] (C) -- (G);
-      \coordinate (Q1) at (0,0,1);
-      \coordinate (Q2) at (1,0,0);
-      \coordinate (Q3) at (0,1,0);
-      \coordinate (Q4) at (-1,0,0);
-      \coordinate (Q5) at (0,-1,0);
-      \coordinate (Q6) at (0,0,-1);
-      \fill[teal!15] (Q1) -- (Q2) -- (Q3) -- cycle;
-      \draw[dashed, teal!60!black] (Q6) -- (Q3) (Q6) -- (Q4);
-      \draw[teal!75!black, line width=1.2pt]
-      (Q1) -- (Q2) -- (Q3) -- (Q1) -- (Q4) -- (Q5) -- (Q1)
-      (Q2) -- (Q5) -- (Q4) (Q2) -- (Q6) -- (Q5);
-      \node[circle, fill=orange!85!black, inner sep=1.5pt] at (Q1) {};
-      \node[above right=2pt, orange!85!black] at (Q1) {$P_1$};
-    \end{scope}
+    z={(0cm,1.3cm)}, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0,0,0);
+    \coordinate (P1) at (0,0,1);
+    \coordinate (P2) at (1,0,0);
+    \coordinate (P3) at (0,1,0);
+    \coordinate (P4) at (-1,0,0);
+    \coordinate (P5) at (0,-1,0);
+    \coordinate (P6) at (0,0,-1);
+    \coordinate (X) at (0.32,0.18,0.88);
+    \fill[blue!10] (P1) -- (P2) -- (P3) -- cycle;
+    \draw[dashed, gray!60] (P6) -- (P3) (P6) -- (P4) (P3) -- (P4);
+    \draw[line width=1.1pt, blue!85!black]
+    (P1) -- (P2) -- (P3) -- (P1) -- (P4) -- (P5) -- (P1)
+    (P2) -- (P5) -- (P4) (P2) -- (P6) -- (P5);
+    % 中心 O からの位置ベクトルと点 X からの距離
+    \draw[thick, teal!80!black, ->] (O) -- (P1);
+    \draw[thick, teal!80!black, ->] (O) -- (P2);
+    \draw[line width=1.3pt, red!85!black, ->] (O) -- (X)
+    node[midway, left=2pt, font=\footnotesize, text=red!85!black] {$\vec{v}$};
+    \draw[dashed, orange!85!black, thick] (P1) -- (X);
+    \draw[dashed, orange!85!black, thick] (P2) -- (X);
+    % 各点の描画とラベル
+    \foreach \name in {P3,P4,P5,P6}
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (\name) {};
+    \node[circle, fill=gray!80!black, inner sep=1.3pt] at (O) {};
+    \node[circle, fill=teal!80!black, inner sep=1.4pt] at (P1) {};
+    \node[circle, fill=teal!80!black, inner sep=1.4pt] at (P2) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (X) {};
+    \node[below left=1pt] at (O) {$O$};
+    \node[above=3pt, text=teal!80!black] at (P1) {$P_k\ (P_1)$};
+    \node[right=3pt, text=teal!80!black] at (P2) {$P_m\ (P_2)$};
+    \node[above right=2pt, text=red!85!black] at (X) {$X$};
+    \node[above right=1pt, font=\footnotesize] at (P3) {$P_3$};
+    \node[left=2pt, font=\footnotesize] at (P4) {$P_4$};
+    \node[below left=1pt, font=\footnotesize] at (P5) {$P_5$};
+    \node[below=2pt, font=\footnotesize] at (P6) {$P_6$};
   \end{tikzpicture}
-  \caption{正八面体の頂点と辺（左），各面の中心が正八面体の頂点となる外接立方体（右）}
+  \caption{正八面体の中心$O$に対する$\overrightarrow{OX}=\vec{v}$と，点$X$に最も近い頂点$P_k$}
+  \label{fig:octahedron_closest_vertex}
 \end{figure}
 
-{\bf [別解]} 正八面体の中心を $O$ とし，$\overrightarrow{OX} = \vec{v}$ となる点 $X$ をとる．$P_1, \cdots, P_6$ の中で点 $X$ から最も近い点を $P_k$ とする．$|P_k X| \le |P_m X|$ より
+正八面体の中心を $O$ とし，$\overrightarrow{OX} = \vec{v}$ となる点 $X$ をとる．
+$P_1, \cdots, P_6$ の中で点 $X$ から最も近い点を $P_k$ とする．$|P_k X| \le |P_m X|$ より
 \begin{align}
   |\overrightarrow{OX} - \overrightarrow{OP_k}| \le |\overrightarrow{OX} - \overrightarrow{OP_m}|
 \end{align}
+である．
 各辺 $0$ 以上だから $2$ 乗して
-\begin{eqnarray*}
-  2 (\overrightarrow{OP_m} - \overrightarrow{OP_k}) \cdot \overrightarrow{OX} &\le& |\overrightarrow{OP_m}|^2 - |\overrightarrow{OP_k}|^2 = 0 \\
-  \therefore \overrightarrow{P_k P_m} \cdot \vec{v} &\le& 0
-\end{eqnarray*}
-$\overrightarrow{P_k P_m} \cdot \vec{v} \neq 0$ から
+\begin{align}
+  & 2 (\overrightarrow{OP_m} - \overrightarrow{OP_k}) \cdot \overrightarrow{OX} \le |\overrightarrow{OP_m}|^2 - |\overrightarrow{OP_k}|^2 = 0 \\
+  \therefore
+  & \overrightarrow{P_k P_m} \cdot \vec{v} \le 0
+\end{align}
+となる．$\overrightarrow{P_k P_m} \cdot \vec{v} \neq 0$ から
 \begin{align}
   \overrightarrow{P_k P_m} \cdot \vec{v} < 0
 \end{align}

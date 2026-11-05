@@ -1,75 +1,192 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
+{\bf [解答]}
 
-{\bf [解答]} (1) から $|z_k|^p = 1 \ \therefore |z_k| = 1 \cdots \text{\textcircled{1}}$．又 $z_k \neq 1 \cdots \text{\textcircled{2}}$
-\textcircled{1}，\textcircled{2}から $z_k = \cos\theta + i\sin\theta\ (0 < \theta < 2\pi)$ とおくと，$z_k = e(i\theta_k)\ (0 < \theta_k < 2\pi)$ とおける．(イ)，(ロ)から
-\begin{eqnarray*}
-  \begin{cases} e(p\theta_k) = 1 \\ e(\dfrac{2\pi}{p}\theta_k) = 1
-  \end{cases} \cdots \text{\textcircled{3}}
-\end{eqnarray*}
-したがって，\textcircled{3}を満たす $\{\theta_k\}$ の個数が $a_n$ である．\textcircled{3}の第1式から，適当な自然数 $m_k$ を用いて
+(イ) の両辺絶対値を取って
 \begin{align}
-  \theta_k = \dfrac{2\pi}{p}m_k\ (m_k = 1, 2, \cdots, p-1) \cdots \text{\textcircled{4}}
+  |z_k|^p = 1 \ \therefore |z_k| = 1, \ z_k \neq 1 \label{eq:1}
 \end{align}
-とおける．したがって，$\{\theta_k\}$ の個数は $\{m_k\}$ の数に他ならない．\textcircled{3}の第2式に\textcircled{4}を代入して整理して，
+である．よって
 \begin{align}
-  \dfrac{2\pi}{p} m_k \equiv 0 \pmod p \cdots \text{\textcircled{5}}
+  z_k = e(\theta_k) = \cos\theta_k + i\sin\theta_k \ (0 < \theta < 2\pi) \label{eq:2}
 \end{align}
-又，題意の $n$ を $n \in \mathbb{N}$ に拡張してかんがえる．
+とおける．これを(イ)，(ロ)に代入して
 \begin{align}
-  a_1 = 0,\ a_2 = p-1,\ a_3 = (p-1)(p-2) \cdots (1)
+  \begin{cases}
+    e(p\theta_k) = 1 \\
+    e(\sum_{k=1}^{n}\theta_k) = 1
+  \end{cases} \label{eq:3}
 \end{align}
+である．これを満たす$\{\theta_k\}$ の個数が $a_n$ である．
+
+第1式から自然数 $m_k$ を用いて
+\begin{align}
+  \theta_k = \dfrac{2\pi}{p}m_k\ (m_k = 1, 2, \cdots, p-1) \label{eq:4}
+\end{align}
+とおける．したがって $\{\theta_k\}$ の個数は $\{m_k\}$ の数に他ならない．
+\cref{eq:3}の第二式に代入して
+\begin{align}
+  & \sum_{k=1}^{n} \dfrac{2\pi}{p}m_k = 2t\pi \quad (t\in\mathbb{Z}) \\
+  \therefore
+  & \sum_{k=1}^{n} m_k \equiv 0 \pmod p \label{eq:5}
+\end{align}
+である．
+
+\paragraph{(1)}
+
+$n=2$の時は\cref{eq:5}を満たす$(m_1,m_2)$の組み合わせは
+\begin{align}
+  (m_1,m_2) = (1,p-1), (2,p-2), \cdots, (p-1,1)
+\end{align}
+の$p-1$通りだから
+\begin{align}
+  a_2 = p-1 \label{eq:6}
+\end{align}
+である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1cm, y=1cm, >=stealth, every node/.style={font=\small}]
+    % 上段: m_1 + m_2 + m_3 = p の対応
+    \node[anchor=west, font=\small, text=blue!85!black] at (-0.6, 1.35)
+    {$\bullet\ m_1+m_2+m_3=p\ (1\le m_k\le p-1)$：};
+    \foreach \i/\x in {1/0, 2/1.0, 3/2.0, 4/3.0, 5/4.0, 6/5.8, 7/6.8} {
+      \node[circle, draw=blue!85!black, thick, fill=blue!12, inner sep=3.2pt] at (\x, 0.55) {};
+    }
+    \node at (4.9, 0.55) {$\cdots$};
+    % p-1 個の隙間（候補位置）と2本の仕切り棒
+    \foreach \x in {0.5, 1.5, 2.5, 3.5, 6.3} {
+      \draw[dashed, gray!55] (\x, 0.15) -- (\x, 0.95);
+    }
+    \draw[line width=1.6pt, red!85!black] (1.5, 0.1) -- (1.5, 1.0);
+    \draw[line width=1.6pt, red!85!black] (3.5, 0.1) -- (3.5, 1.0);
+    % 下括弧と個数ラベル
+    \draw[thick, teal!80!black] (-0.22, 0.0) -- (-0.22, -0.12) -- (1.28, -0.12) -- (1.28, 0.0);
+    \node[below=2pt, font=\footnotesize, text=teal!80!black] at (0.53, -0.12) {$m_1$個};
+    \draw[thick, teal!80!black] (1.72, 0.0) -- (1.72, -0.12) -- (3.28, -0.12) -- (3.28, 0.0);
+    \node[below=2pt, font=\footnotesize, text=teal!80!black] at (2.5, -0.12) {$m_2$個};
+    \draw[thick, teal!80!black] (3.72, 0.0) -- (3.72, -0.12) -- (7.02, -0.12) -- (7.02, 0.0);
+    \node[below=2pt, font=\footnotesize, text=teal!80!black] at (5.37, -0.12) {$m_3$個};
+    \node[anchor=west, font=\footnotesize] at (7.45, 0.55)
+    {（全$p$個，$p-1$箇所の隙間に仕切り$2$本：${}_{p-1}\mathrm{C}_2$通り）};
+
+    % 下段: m_1 + m_2 + m_3 = 2p <=> (p-m_1) + (p-m_2) + (p-m_3) = p の対応
+    \begin{scope}[shift={(0,-2.15)}]
+      \node[anchor=west, font=\small, text=blue!85!black] at (-0.6, 1.35)
+      {$\bullet\ m_1+m_2+m_3=2p \iff (p-m_1)+(p-m_2)+(p-m_3)=p\ (1\le p-m_k\le p-1)$：};
+      \foreach \i/\x in {1/0, 2/1.0, 3/2.0, 4/3.0, 5/4.0, 6/5.8, 7/6.8} {
+        \node[circle, draw=blue!85!black, thick, fill=blue!12, inner sep=3.2pt] at (\x, 0.55) {};
+      }
+      \node at (4.9, 0.55) {$\cdots$};
+      \foreach \x in {0.5, 1.5, 2.5, 3.5, 6.3} {
+        \draw[dashed, gray!55] (\x, 0.15) -- (\x, 0.95);
+      }
+      \draw[line width=1.6pt, red!85!black] (0.5, 0.1) -- (0.5, 1.0);
+      \draw[line width=1.6pt, red!85!black] (3.5, 0.1) -- (3.5, 1.0);
+      \draw[thick, orange!85!black] (-0.22, 0.0) -- (-0.22, -0.12) -- (0.28, -0.12) -- (0.28, 0.0);
+      \node[below=2pt, font=\footnotesize, text=orange!85!black] at (0.03, -0.12) {$p-m_1$個};
+      \draw[thick, orange!85!black] (0.72, 0.0) -- (0.72, -0.12) -- (3.28, -0.12) -- (3.28, 0.0);
+      \node[below=2pt, font=\footnotesize, text=orange!85!black] at (2.0, -0.12) {$p-m_2$個};
+      \draw[thick, orange!85!black] (3.72, 0.0) -- (3.72, -0.12) -- (7.02, -0.12) -- (7.02, 0.0);
+      \node[below=2pt, font=\footnotesize, text=orange!85!black] at (5.37, -0.12) {$p-m_3$個};
+      \node[anchor=west, font=\footnotesize] at (7.45, 0.55)
+      {（全$p$個，$p-1$箇所の隙間に仕切り$2$本：${}_{p-1}\mathrm{C}_2$通り）};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{$m_1+m_2+m_3=p,\ 2p$を満たす組$(m_1,m_2,m_3)$の玉と仕切りによる数え上げ}
+  \label{fig:stars_and_bars_counting}
+\end{figure}
+
+同様に考えて$n=3$の時は\cref{eq:5}を満たす$(m_1,m_2,m_3)$の組み合わせは$1 \le m_k \le p-1$より
+\begin{align}
+  m_1+m_2+m_3 = p, 2p
+\end{align}
+だから，これを満たす組を数える．まず
+\begin{align}
+  m_1+m_2+m_3 = p
+\end{align}
+の時は$p$個の玉の間に$2$本の棒を入れる場合の数に等しく
+\begin{align}
+  {}_{p-1}C_{2} = \dfrac{(p-1)(p-2)}{2}
+\end{align}
+である．次に
+\begin{align}
+  m_1+m_2+m_3 = 2p
+  \quad\therefore
+  (p-m_1)+(p-m_2)+(p-m_3) = p
+\end{align}
+において，$1 \le p-m_k \le p-1$だからこの場合の場合の数も同じく
+\begin{align}
+  {}_{p-1}C_{2} = \dfrac{(p-1)(p-2)}{2}
+\end{align}
+だけある．よって
+\begin{align}
+  a_3 = 2\dfrac{(p-1)(p-2)}{2} = (p-1)(p-2) \label{eq:7}
+\end{align}
+である．
+
 \paragraph{(2)}
 
-$S_n = \sum_{k=1}^n m_k$ とおく．$m_k = 1, 2, \cdots, p-1$ から
+$S_n = \sum_{k=1}^n m_k$ とおく．$m_k = 1, 2, \cdots, p-1$ から\cref{eq:5}について
+\begin{itemize}
+  \item $S_n \equiv 0 \pmod p$の時: $S_{n+1} \not\equiv 0$ \\
+  \item $S_n \not\equiv 0 \pmod p$の時: 対応する$m_{n+1}$がただ1つあって$S_{n+1}\equiv 0$となる
+\end{itemize}
+$S_n$のとり方は個別の$m_k$が$p-1$通りの値をとるから合計で$(p-1)^n$通りある．
+よって$S_{n+1} \equiv 0$ となる場合の数は
 \begin{align}
-  \begin{cases} S_n \equiv 0 \pmod p \text{ の時，} S_{n+1} \not\equiv 0 \\ S_n \not\equiv 0 \pmod p \text{ の時，対応する } m_{n+1} \text{ がただ } 1 \text{ つあって，} S_{n+1} \equiv 0 \text{ となる．}
-  \end{cases}
+  a_{n+1} = (p-1)^n - a_n \label{eq:8}
 \end{align}
-$S_n$ の値のとり方は，$(p-1)^n$ 通りだからしたがって，$S_n \equiv 0$ となる場合の数は
-\begin{align}
-  a_{n+1} = (p-1)^n - a_n
-\end{align}
+である．
+
 \paragraph{(3)}
 
-$b_n = \dfrac{a_n}{(p-1)^n}$ とおく．(2)から
-\begin{eqnarray*}
-  b_{n+1} &=& -\dfrac{1}{p-1} b_n + \dfrac{1}{p-1} \\
-  b_{n+1} - \dfrac{1}{p} &=& -\dfrac{1}{p-1} \left(b_n - \dfrac{1}{p}\right)
-\end{eqnarray*}
-$b_1=0$ だから，くり返し用いて，
-\begin{eqnarray*}
-  b_n &=& \left(-\dfrac{1}{p-1}\right)^{n-1} \left(-\dfrac{1}{p}\right) + \dfrac{1}{p} \\
-  a_n &=& \dfrac{1}{p} \left[ (p-1)^n + (-1)^n (p-1) \right]
-\end{eqnarray*}
+$b_n = \dfrac{a_n}{(p-1)^n}$ とおく．\cref{eq:8}に代入して
+\begin{align}
+  & b_{n+1} = -\dfrac{1}{p-1} b_n + \dfrac{1}{p-1} \\
+  & b_{n+1} - \dfrac{1}{p} = -\dfrac{1}{p-1} \left(b_n - \dfrac{1}{p}\right)
+\end{align}
+である．\cref{eq:6}より$b_2=\dfrac{1}{p-1}$だから漸化式を繰り返し用いて
+\begin{align}
+  b_n &= \left(-\dfrac{1}{p-1}\right)^{n-1} \left(-\dfrac{1}{p}\right) + \dfrac{1}{p} \\
+  \therefore
+  a_n &= \dfrac{1}{p} \left[ (p-1)^n + (-1)^n (p-1) \right]
+\end{align}
+である．
 
-{\bf [別解]} (法$p$とする)
+{\bf [別解]}
 \paragraph{(2)}
+漸化式は他の表現方法もあるのでそれを調べよう．$a_{n+2}$ についてかんがえる．
 
-$a_{n+2}$ についてかんがえる．
-$1^\circ\ m_{n+1} + m_{n+2} \equiv 0$ の時
-このような $(m_{n+1}, m_{n+2})$ のくみあわせは $1 \le m_i \le p-1$ から，$m_{n+1}$ を定めればただ $1$ 通りに定まり，$p-1$ 通り．又，$S_{n+2} \equiv 0 \iff S_n \equiv 0$ だから，$m_1 \sim m_n$ の定め方は $a_n$ 通り．あわせて
+\subparagraph{$1^\circ\ m_{n+1} + m_{n+2} \equiv 0$ の時}
+
+このような $(m_{n+1}, m_{n+2})$ のくみあわせは $1 \le m_i \le p-1$ から，$m_{n+1}$ を定めればただ $1$ 通りに定まり$p-1$ 通りである．また$S_{n+2} \equiv 0 \iff S_n \equiv 0$ だから，$m_1 \sim m_n$ の定め方は $a_n$ 通りである．あわせて
 \begin{align}
   (p-1) a_n \text{ 通り}
 \end{align}
-$2^\circ\ m_{n+1} + m_{n+2} \equiv r\ (r=1, 2, \cdots, p-1)$ の時
-$m_{n+1}$ のえらび方は $1, 2, \cdots, p-1$ から $r$ をのぞいた $p-2$ 通り．
+
+\subparagraph{$2^\circ\ m_{n+1} + m_{n+2} \equiv r\ (r=1, 2, \cdots, p-1)$ の時}
+
+$m_{n+1}$ のえらび方は $1, 2, \cdots, p-1$ から $r$ をのぞいた $p-2$ 通りある．
 $m_{n+2}$ は，
-\begin{eqnarray*}
-  m_{n+1} < r \text{ ならば } m_{n+2} &=& r - m_{n+1} \\
-  m_{n+1} > r \text{ ならば } m_{n+2} &=& p + r - m_{n+1}
-\end{eqnarray*}
-と各々 $1$ 通りに定まる．又，$S_{n+2} \equiv 0 \iff S_n + r \equiv 0$ だから，$m_1 \sim m_n$ の定め方は $a_{n+1}$ 通り．あわせて
+\begin{align}
+  \begin{cases}
+    m_{n+1} < r \text{ ならば } m_{n+2} = r - m_{n+1} \\
+    m_{n+1} > r \text{ ならば } m_{n+2} = p + r - m_{n+1}
+  \end{cases}
+\end{align}
+と各々 $1$ 通りに定まる．また$S_{n+2} \equiv 0 \iff S_n + r \equiv 0$ だから，$m_1 \sim m_n$ の定め方は $a_{n+1}$ 通りある．あわせて
 \begin{align}
   (p-2) a_{n+1}
 \end{align}
+通りである．
+\casesend
+
 以上で全ての場合がつくされ，$1^\circ, 2^\circ$ は排反だから
 \begin{align}
   a_{n+2} = (p-2)a_{n+1} + (p-1)a_n
 \end{align}
+である．
 
 \end{document}
