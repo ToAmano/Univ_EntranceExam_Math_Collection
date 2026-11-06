@@ -1,48 +1,131 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$x\le0$の時，$f(x)=-\left(x+\dfrac{1}{2}\right)^2+\dfrac{1}{4}$，$x\ge0$の時，$f(x)=\left(x-\dfrac{1}{2}\right)^2-\dfrac{1}{4}$である．$x\le0$の時，$f'(x)=-2\left(x+\dfrac{1}{2}\right)$だから，$x=-1$の接線は
-\begin{align}
-  y=x+1
-\end{align}
-であるから，$x\ge0$での交点は$x=1+\sqrt{2}$である．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=1.6cm, y=0.8cm, >=stealth,
-    every node/.style={font=\small}]
-    \pgfmathsetmacro{\endx}{1+sqrt(2)}
-    \fill[blue!13] (-1,0) -- (0,1) -- (\endx,{\endx+1})
-    -- plot[domain=\endx:0, samples=80] (\x,{\x*\x-\x})
-    -- plot[domain=0:-1, samples=50] (\x,{-\x*\x-\x}) -- cycle;
-    \draw[->, thick, gray!80!black] (-1.5,0) -- (2.8,0) node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0,-0.55) -- (0,3.8) node[above] {$y$};
-    \draw[blue!85!black, line width=1.4pt]
-    plot[domain=-1.3:0, samples=50] (\x,{-\x*\x-\x})
-    plot[domain=0:2.52, samples=80] (\x,{\x*\x-\x});
-    \draw[teal!80!black, line width=1.2pt] (-1.3,-0.3) -- (2.6,3.6);
-    \node[circle, fill, inner sep=1.3pt] at (-1,0) {}; \node[below=3pt] at (-1,0) {$-1$};
-    \node[circle, fill, inner sep=1.3pt] at (\endx,0) {}; \node[below=3pt] at (\endx,0) {$1+\sqrt{2}$};
-    \node[circle, fill, inner sep=1.3pt] at (\endx,{\endx+1}) {};
-    \node[teal!80!black, fill=white, inner sep=1pt] at (-0.55,1.12) {$y=x+1$};
-    \node[blue!85!black, right] at (1.95,2.1) {$y=f(x)$};
+  \begin{tikzpicture}[x=2.2cm, y=2.2cm, >=stealth, every node/.style={font=\small}]
+    \draw[->, thick, gray!80!black] (-1.8,0) -- (1.8,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.8) -- (0,1.2) node[above] {$y$};
+    \node[above right=2pt, font=\footnotesize] at (0,0) {$O$};
+    % y = -x^2 - x (x <= 0)
+    \draw[line width=1.4pt, blue!85!black, domain=-1.5:0, samples=50]
+    plot (\x, {-\x*\x - \x});
+    % y = x^2 - x (x >= 0)
+    \draw[line width=1.4pt, blue!85!black, domain=0:1.5, samples=50]
+    plot (\x, {\x*\x - \x});
+    % 頂点 (-1/2, 1/4)
+    \draw[dashed, gray!60] (-0.5, 0) -- (-0.5, 0.25) -- (0, 0.25);
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (-0.5, 0.25) {};
+    \node[below=2pt, font=\footnotesize] at (-0.5, 0) {$-\frac{1}{2}$};
+    \node[left=2pt, font=\footnotesize] at (0, 0.25) {$\frac{1}{4}$};
+    % 頂点 (1/2, -1/4)
+    \draw[dashed, gray!60] (0.5, 0) -- (0.5, -0.25) -- (0, -0.25);
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (0.5, -0.25) {};
+    \node[above=2pt, font=\footnotesize] at (0.5, 0) {$\frac{1}{2}$};
+    \node[left=2pt, font=\footnotesize] at (0, -0.25) {$-\frac{1}{4}$};
+    % 零点 -1, 1
+    \node[circle, fill, inner sep=1.2pt] at (-1, 0) {};
+    \node[below left=2pt, font=\footnotesize] at (-1, 0) {$-1$};
+    \node[circle, fill, inner sep=1.2pt] at (1, 0) {};
+    \node[below right=2pt, font=\footnotesize] at (1, 0) {$1$};
+    % 曲線ラベル
+    \node[above left, blue!85!black] at (-1.1, 0.6) {$y=f(x)$};
   \end{tikzpicture}
-  \caption{$y=f(x)$と$x=-1$における接線$y=x+1$で囲まれる部分（着色部）}
+  \caption{$y=f(x)$のグラフの概形}
+  \label{fig:fx_overview}
 \end{figure}
 
-あって，求める面積$S$として
+題意の関数は
 \begin{align}
-  S&=\int_{-1}^0\left\{(x+1)+(x^2+x)\right\}dx+\int_0^{1+\sqrt{2}}\left\{(x+1)-(x^2-x)\right\}dx\\
+  f(x) =
+  \begin{cases}
+    -\left(x+\dfrac{1}{2}\right)^2+\dfrac{1}{4} = -x^2-x & (x \le 0) \\
+    \left(x-\dfrac{1}{2}\right)^2-\dfrac{1}{4}  =  x^2-x & (0 \le x)
+  \end{cases} \label{eq:1}
+\end{align}
+である．
+
+従って$x\le0$の時，
+\begin{align}
+  f'(x)=-2\left(x+\dfrac{1}{2}\right) \label{eq:2}
+\end{align}
+だから，$x=-1$における接線は
+\begin{align}
+  y=x+1
+\end{align}
+となる．この直線と$y=f(x)$の$x\ge0$での交点は$x=1+\sqrt{2}$であり，
+求める面積$S$は下図の斜線部である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.8cm, y=1.1cm, >=stealth,
+    every node/.style={font=\small}]
+    \pgfmathsetmacro{\endx}{1+sqrt(2)}
+    \pgfmathsetmacro{\endy}{2+sqrt(2)}
+
+    % 斜線部
+    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.8]
+    (-1,0) -- (\endx,\endy)
+    -- plot[domain=\endx:0, samples=80] (\x,{\x*\x-\x})
+    -- plot[domain=0:-1, samples=50] (\x,{-\x*\x-\x}) -- cycle;
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.5,0) -- (3.0,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.6) -- (0,4.1) node[above] {$y$};
+    \node[below left=2pt, font=\footnotesize] at (0,0) {$O$};
+
+    % 垂線・補助線
+    % 交点 (1+sqrt(2), 2+sqrt(2)) からの垂線
+    \draw[dashed, gray!60] (0,\endy) -- (\endx,\endy) -- (\endx,0);
+    % 頂点 (-1/2, 1/4) からの垂線
+    \draw[dashed, gray!60] (-0.5,0) -- (-0.5,0.25) -- (0,0.25);
+
+    % 曲線 y = f(x)
+    \draw[line width=1.4pt, blue!85!black]
+    plot[domain=-1.3:0, samples=50] (\x,{-\x*\x-\x})
+    plot[domain=0:2.6, samples=80] (\x,{\x*\x-\x});
+
+    % 直線 y = x + 1
+    \draw[line width=1.2pt, teal!80!black] (-1.3,-0.3) -- (2.6,3.6);
+
+    % 特異点・交点のプロット
+    \node[circle, fill, inner sep=1.2pt] at (-1,0) {};
+    \node[below=2pt, font=\footnotesize] at (-1,0) {$-1$};
+
+    \node[below=2pt, font=\footnotesize] at (-0.5,0) {$-\frac{1}{2}$};
+    \node[left=2pt, font=\footnotesize, fill=white, inner sep=1pt] at (0,0.25) {$\frac{1}{4}$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (-0.5,0.25) {};
+
+    \node[circle, fill, inner sep=1.2pt] at (0,1) {};
+    \node[left=2pt, font=\footnotesize] at (0,1) {$1$};
+
+    \node[circle, fill, inner sep=1.2pt] at (1,0) {};
+    \node[below right=1pt, font=\footnotesize] at (1,0) {$1$};
+
+    \node[below=2pt, font=\footnotesize] at (\endx,0) {$1+\sqrt{2}$};
+    \node[left=2pt, font=\footnotesize] at (0,\endy) {$2+\sqrt{2}$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (\endx,\endy) {};
+
+    % ラベル
+    \node[teal!80!black, fill=white, inner sep=1pt] at (-0.6,1.2) {$y=x+1$};
+    \node[blue!85!black, right] at (2.2,2.6) {$y=f(x)$};
+  \end{tikzpicture}
+  \caption{$y=f(x)$と$x=-1$における接線$y=x+1$で囲まれる部分}
+\end{figure}
+
+よってこの面積は
+\begin{align}
+  S
+  &=\int_{-1}^0\left\{(x+1)-f(x)\right\}dx+\int_0^{1+\sqrt{2}}\left\{(x+1)-f(x)\right\}dx\\
+  &=\int_{-1}^0\left\{(x+1)+(x^2+x)\right\}dx+\int_0^{1+\sqrt{2}}\left\{(x+1)-(x^2-x)\right\}dx\\
   &=\int_{-1}^0(x+1)^2\,dx+\int_0^{1+\sqrt{2}}(-x^2+2x+1)\,dx\\
   &=\dfrac{1}{3}+\Bigl[-\dfrac{1}{3}x^3+x^2+x\Bigr]_0^{1+\sqrt{2}}\\
   &=\dfrac{1}{3}+(1+\sqrt{2})+(1+\sqrt{2})^2-\dfrac{1}{3}(1+\sqrt{2})^3\\
-  &=\dfrac{6+4\sqrt{2}}{3}．
+  &=\dfrac{6+4\sqrt{2}}{3}
 \end{align}
+である．
 
 \newpage
 
