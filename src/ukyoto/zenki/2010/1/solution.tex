@@ -1,29 +1,11 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-% Source: handwritten.pdf 第1問．
 {\bf [解答]}
-点Aを始点とする位置ベクトルを小文字で表す．仮定より
-\begin{align}
-  \boldsymbol{c}\cdot(\boldsymbol{c}-\boldsymbol{b})&=0,\\
-  \boldsymbol{d}\cdot(\boldsymbol{d}-\boldsymbol{b})&=0,\\
-  \boldsymbol{b}\cdot(\boldsymbol{d}-\boldsymbol{c})&=0.
-\end{align}
-$\boldsymbol{m}=\dfrac{\boldsymbol{c}+\boldsymbol{d}}{2}$だから
-\begin{align}
-  \overrightarrow{AM}\cdot\overrightarrow{CD}
-  &=\dfrac{1}{2}(\boldsymbol{c}+\boldsymbol{d})\cdot(\boldsymbol{d}-\boldsymbol{c})\\
-  &=\dfrac{1}{2}(|\boldsymbol{d}|^2-|\boldsymbol{c}|^2)\\
-  &=\dfrac{1}{2}(\boldsymbol{b}\cdot\boldsymbol{d}-\boldsymbol{b}\cdot\boldsymbol{c})=0.
-\end{align}
-よって$AM\perp CD$である．$AB\perp CD$でもあるから，平面ABMは直線CDと垂直である．
+
 \begin{figure}[H]
   \centering
-  \begin{tikzpicture}[scale=1.35, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[scale=1.45, >=stealth, every node/.style={font=\small}]
     % A=(0,0,2), B=(0,0,0), C=(1,0,1), D=(0,1,1) の投影図．
     \coordinate (A) at (1.6,3);
     \coordinate (B) at (0,0);
@@ -36,12 +18,50 @@ $\boldsymbol{m}=\dfrac{\boldsymbol{c}+\boldsymbol{d}}{2}$だから
     \draw[teal!85!black, line width=1.45pt] (C)--(D);
     \draw[red!85!black, line width=1.25pt] (A)--(M);
     \draw[dashed, gray!65, line width=0.8pt] (B)--(M);
+
+    % 直角マーク: CA ⊥ CB
+    \coordinate (c1) at ($(C)!8pt!(A)$);
+    \coordinate (c2) at ($(C)!8pt!(B)$);
+    \draw[blue!85!black, line width=0.65pt] (c1) -- ($ (c1) + (c2) - (C) $) -- (c2);
+
+    % 直角マーク: DA ⊥ DB (奥の破線側)
+    \coordinate (d1) at ($(D)!8pt!(A)$);
+    \coordinate (d2) at ($(D)!8pt!(B)$);
+    \draw[gray!60, line width=0.65pt] (d1) -- ($ (d1) + (d2) - (D) $) -- (d2);
+
+    % 直角マーク: AM ⊥ CD
+    \coordinate (m1) at ($(M)!7.5pt!(A)$);
+    \coordinate (m2) at ($(M)!7.5pt!(C)$);
+    \draw[red!85!black, line width=0.65pt] (m1) -- ($ (m1) + (m2) - (M) $) -- (m2);
+
     \foreach \point/\position in {A/above,B/left,C/below,D/right} {
       \node[circle, fill=blue!85!black, inner sep=1.25pt] at (\point) {}; \node[blue!85!black, \position=2pt] at (\point) {$\point$};
     }
-    \node[circle, fill=red!85!black, inner sep=1.4pt] at (M) {}; \node[red!85!black, below right=2pt] at (M) {$M$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (M) {}; \node[red!85!black, right=3pt] at (M) {$M$};
   \end{tikzpicture}
   \caption{四面体$ABCD$と辺$CD$の中点$M$，平面$ABM$}
+  \label{fig:tetrahedron_abm}
 \end{figure}
+
+点Aを始点とする位置ベクトルを小文字で表す．仮定より
+\begin{align}
+  \begin{cases}
+    \vec{c}\cdot(\vec{c}-\vec{b})=0,\\
+    \vec{d}\cdot(\vec{d}-\vec{b})=0,\\
+    \vec{b}\cdot(\vec{d}-\vec{c})=0
+  \end{cases} \label{eq:1}
+\end{align}
+である．
+
+平面$ABM$と辺$CD$が直交することを示すには，$AB$と$CD$，$AM$と$CD$が垂直であることを示せば必要十分である．\cref{eq:1}より$AB$と$CD$は垂直だから，$AM$と$CD$が垂直，つまり$\overrightarrow{AM}\cdot\overrightarrow{CD}=0$であることを示せば良い．
+
+辺$CD$の中点$M$は$\vec{m}=\dfrac{\vec{c}+\vec{d}}{2}$と書けるから，
+\begin{align}
+  \overrightarrow{AM}\cdot\overrightarrow{CD}
+  &=\dfrac{1}{2}(\vec{c}+\vec{d})\cdot(\vec{d}-\vec{c})\\
+  &=\dfrac{1}{2}(|\vec{d}|^2-|\vec{c}|^2)\\
+  &=\dfrac{1}{2}(\vec{b}\cdot\vec{d}-\vec{b}\cdot\vec{c})=0 \quad (\because\text{\cref{eq:1}})
+\end{align}
+である．従って$AM\perp CD$であり，平面ABMは直線CDと垂直である．
 
 \end{document}

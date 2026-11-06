@@ -1,26 +1,100 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-% Source: handwritten.pdf 第6問．
 {\bf [解答]}
-球および箱をすべて区別して考える．すべての場合の数は$(2n)^n$であり，どの箱にも球が2個以上入らない場合の数は
-\begin{align}{}_{2n}P_n=(2n)(2n-1)\cdots(n+1).
-\end{align}
-したがって
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=stealth, every node/.style={font=\small}]
+    % --- 上段：n 個の球 ---
+    \node[font=\footnotesize, text=gray!80!black, anchor=west] at (-0.6, 2.5) {$n$ 個の球：};
+
+    % 球 1
+    \node[circle, draw=blue!85!black, fill=blue!15, line width=1pt, inner sep=3pt] (b1) at (1.2, 2.5) {$1$};
+    % 球 2
+    \node[circle, draw=blue!85!black, fill=blue!15, line width=1pt, inner sep=3pt] (b2) at (2.4, 2.5) {$2$};
+    % 球 3
+    \node[circle, draw=blue!85!black, fill=blue!15, line width=1pt, inner sep=3pt] (b3) at (3.6, 2.5) {$3$};
+    % 点々
+    \node at (4.7, 2.5) {$\cdots$};
+    % 球 n
+    \node[circle, draw=blue!85!black, fill=blue!15, line width=1pt, inner sep=3pt] (bn) at (5.8, 2.5) {$n$};
+
+    % --- 下段：2n 個の箱 ---
+    \node[font=\footnotesize, text=gray!80!black, anchor=west] at (-0.6, 0.45) {$2n$ 個の箱：};
+
+    % 箱の幅と高さ
+    \def\bw{0.65}
+    \def\bh{0.65}
+
+    % 箱 1
+    \draw[line width=1.1pt, gray!80!black] (1.2-\bw/2, \bh) -- (1.2-\bw/2, 0) -- (1.2+\bw/2, 0) -- (1.2+\bw/2, \bh);
+    \node[below=2pt, font=\footnotesize] at (1.2, 0) {1};
+
+    % 箱 2
+    \draw[line width=1.1pt, gray!80!black] (2.1-\bw/2, \bh) -- (2.1-\bw/2, 0) -- (2.1+\bw/2, 0) -- (2.1+\bw/2, \bh);
+    \node[below=2pt, font=\footnotesize] at (2.1, 0) {2};
+
+    % 箱 3
+    \draw[line width=1.1pt, gray!80!black] (3.0-\bw/2, \bh) -- (3.0-\bw/2, 0) -- (3.0+\bw/2, 0) -- (3.0+\bw/2, \bh);
+    \node[below=2pt, font=\footnotesize] at (3.0, 0) {3};
+
+    % 箱 4
+    \draw[line width=1.1pt, gray!80!black] (3.9-\bw/2, \bh) -- (3.9-\bw/2, 0) -- (3.9+\bw/2, 0) -- (3.9+\bw/2, \bh);
+    \node[below=2pt, font=\footnotesize] at (3.9, 0) {4};
+
+    % 点々
+    \node at (4.9, 0.32) {$\cdots$};
+
+    % 箱 2n
+    \draw[line width=1.1pt, gray!80!black] (5.8-\bw/2, \bh) -- (5.8-\bw/2, 0) -- (5.8+\bw/2, 0) -- (5.8+\bw/2, \bh);
+    \node[below=2pt, font=\footnotesize] at (5.8, 0) {$2n$};
+
+    % 球から箱への矢印と選択肢数の注釈
+    \draw[->, blue!85!black, line width=0.9pt] (b1.south) to[out=-90, in=90] (1.2, \bh+0.05);
+    \node[blue!85!black, font=\scriptsize, right=1pt] at (1.2, 1.55) {$2n$ 通り};
+
+    \draw[->, blue!85!black, line width=0.9pt] (b2.south) to[out=-90, in=90] (3.0, \bh+0.05);
+    \node[blue!85!black, font=\scriptsize, right=1pt] at (2.6, 1.75) {$2n-1$ 通り};
+
+    \draw[->, blue!85!black, line width=0.9pt] (b3.south) to[out=-90, in=90] (3.9, \bh+0.05);
+
+    \draw[->, blue!85!black, line width=0.9pt] (bn.south) to[out=-90, in=90] (5.8, \bh+0.05);
+    \node[blue!85!black, font=\scriptsize, right=1pt] at (5.8, 1.55) {$n+1$ 通り};
+
+    % 各箱に1個以下
+    \node[font=\footnotesize, text=teal!85!black] at (3.3, -0.65)
+    {各箱に入る球は高々1個 $\Longrightarrow$ 順列 ${}_{2n}P_n = (2n)(2n-1)\cdots(n+1)$ 通り};
+  \end{tikzpicture}
+  \caption{$n$個の球を$2n$個の箱に高々1個ずつ配分する場合の数}
+  \label{fig:balls_and_boxes}
+\end{figure}
+
+$n$個の球および$2n$個の箱をすべて区別して考える．
+球が箱に入るすべての場合の数は，それぞれのボールが$2n$個のどの箱に入るかを考えて$(2n)^n$である．
+どの箱にも球が2個以上入らない場合の数は$2n$個の箱から球が入る$n$個の箱を選べば良いから
 \begin{align}
-  p_n&=\prod_{k=n+1}^{2n}\dfrac{k}{2n},\\
-  \log p_n&=\sum_{k=n+1}^{2n}\log\dfrac{k}{2n}.
+  {}_{2n}P_n=(2n)(2n-1)\cdots(n+1) \label{eq:1}
 \end{align}
-区分求積法より
+通りである．
+したがってこのようになる確率は
+\begin{align}
+  p_n
+  &= \dfrac{(2n)(2n-1)\cdots(n+1)}{(2n)^n}
+  = \prod_{k=n+1}^{2n}\dfrac{k}{2n}
+\end{align}
+であり，両辺自然対数をとって
+\begin{align}
+  \log p_n&=\sum_{k=n+1}^{2n}\log\dfrac{k}{2n} \label{eq:2}
+\end{align}
+である．よってこれを$n$で割った値の極限は，区分求積法より
 \begin{align}
   \lim_{n\to\infty}\dfrac{\log p_n}{n}
+  &=\lim_{n\to\infty} \dfrac{2}{2n}\sum_{k=n+1}^{2n}\log\dfrac{k}{2n}
   &=2\int_{1/2}^1\log x\,dx\\
   &=2\left[x(\log x-1)\right]_{1/2}^1\\
-  &=\log2-1.
+  &=\log2-1
 \end{align}
+である．
 
 \end{document}
