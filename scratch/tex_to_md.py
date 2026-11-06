@@ -738,6 +738,81 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs="", figure_layout
     finally:
         shutil.rmtree(temp_dir, ignore_errors=True)
 
+
+_MATH_ENV_NAMES = {
+    'theorem': '定理',
+    'lemma': '補題',
+    'proposition': '命題',
+    'corollary': '系',
+    'definition': '定義',
+    'proof': '証明',
+}
+
+_MATH_ENV_PATTERN = re.compile(
+    r'\\begin\{(?P<env>(?:theorem|lemma|proposition|corollary|definition|proof)\*?)\}'
+    r'(?:\s*\[(?P<opt>[^\]]*)\])?'
+    r'(?P<body>.*?)'
+    r'\\end\{(?P=env)\}',
+    re.DOTALL
+)
+
+_QED_TRAILING_PATTERN = re.compile(
+    r'\s*(?:\$(?:\\square|\\blacksquare|\\qed|\\qedsymbol)\$|\\(?:square|blacksquare|qed|qedsymbol)|[□■])\s*$',
+    re.DOTALL
+)
+
+
+def convert_math_environments(text: str) -> str:
+    """theorem, lemma, proposition, corollary, definition, proof 環境を
+    Web向けのカード風 HTML ブロック (<div class="math-card ...">) に変換する。
+    """
+    def _replace_env(match):
+        raw_env = match.group('env')
+        base_env = raw_env.rstrip('*')
+        opt = match.group('opt')
+        body = match.group('body')
+
+        env_ja = _MATH_ENV_NAMES.get(base_env, base_env)
+        if opt:
+            opt = opt.strip()
+            if any(opt.startswith(prefix) for prefix in ('定理', '補題', '命題', '系', '定義', '証明', '略証', '別証', '解')):
+                header_text = opt
+            else:
+                header_text = f"{env_ja}（{opt}）"
+        else:
+            header_text = env_ja
+
+        is_proof = (base_env == 'proof')
+        clean_body = body.strip()
+        if is_proof:
+            clean_body = _QED_TRAILING_PATTERN.sub('', clean_body).rstrip()
+
+        # トップレベルの \label{...}（数式ブロック外）を抽出してカード手前のアンカーに昇格
+        top_labels = []
+        non_math_chunks = re.split(r'\$\$.*?\$\$|\$.*?\$', clean_body, flags=re.DOTALL)
+        for chunk in non_math_chunks:
+            for lbl in re.findall(r'\\label\{([^}]+)\}', chunk):
+                top_labels.append(lbl)
+                clean_body = re.sub(r'\\label\{' + re.escape(lbl) + r'\}', '', clean_body)
+
+        label_anchors = ''.join(f'<span id="{lbl}"></span>\n' for lbl in top_labels)
+        card_class = f"math-card {base_env}"
+        qed_html = '\n\n<div class="qed-symbol">□</div>' if is_proof else ''
+
+        return (
+            f'\n\n{label_anchors}'
+            f'<div class="{card_class}">\n'
+            f'<div class="math-card-header">{header_text}</div>\n'
+            f'<div class="math-card-body">\n\n'
+            f'{clean_body}'
+            f'{qed_html}\n\n'
+            f'</div>\n'
+            f'</div>\n\n'
+        )
+
+    return _MATH_ENV_PATTERN.sub(_replace_env, text)
+
+
 def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel, output_svg_dir):
     with open(tex_path, 'r', encoding='utf-8') as f:
         raw_tex = f.read()
@@ -1212,6 +1287,9 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         return re.sub(r'\\casesend\b\s*', '', text)
 
     md_content = _wrap_subparagraph_cases(md_content)
+
+    # theorem, lemma, proposition, corollary, definition, proof 環境のカード化
+    md_content = convert_math_environments(md_content)
 
     # --------------------------------------------------------------------------
     # 数式ブロック内 \label{...} の自前アンカー化

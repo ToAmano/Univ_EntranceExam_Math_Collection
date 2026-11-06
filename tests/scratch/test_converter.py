@@ -142,6 +142,49 @@ class TestConverter(unittest.TestCase):
         self.assertIn('1.  **①**　第一条件', rendered)
         self.assertIn('2.  **②**　第二条件', rendered)
 
+    def test_theorem_and_proof_converted_to_cards(self):
+        latex = r'''
+        \begin{theorem}
+          任意の $n \ge 2$ に対し $P(n)$ が成り立つ．
+        \end{theorem}
+        \begin{proof}
+          帰納法により示された．
+        \end{proof}
+        '''
+        processed = self.convert(latex)
+        self.assertIn('<div class="math-card theorem">', processed)
+        self.assertIn('<div class="math-card-header">定理</div>', processed)
+        self.assertIn('任意の $n \\ge 2$ に対し $P(n)$ が成り立つ．', processed)
+        self.assertIn('<div class="math-card proof">', processed)
+        self.assertIn('<div class="math-card-header">証明</div>', processed)
+        self.assertIn('<div class="qed-symbol">□</div>', processed)
+        self.assertNotIn(r'\begin{theorem}', processed)
+        self.assertNotIn(r'\end{theorem}', processed)
+        self.assertNotIn(r'\begin{proof}', processed)
+        self.assertNotIn(r'\end{proof}', processed)
+
+    def test_lemma_with_optional_title(self):
+        latex = r'''
+        \begin{lemma}[補題I]
+          ベクトル等式が成り立つ．
+        \end{lemma}
+        '''
+        processed = self.convert(latex)
+        self.assertIn('<div class="math-card lemma">', processed)
+        self.assertIn('<div class="math-card-header">補題I</div>', processed)
+        self.assertIn('ベクトル等式が成り立つ．', processed)
+
+    def test_proof_strips_explicit_square_and_adds_qed(self):
+        latex = r'''
+        \begin{proof}
+          計算より示された．$\square$
+        \end{proof}
+        '''
+        processed = self.convert(latex)
+        self.assertIn('計算より示された．', processed)
+        self.assertNotIn(r'$\square$', processed)
+        self.assertIn('<div class="qed-symbol">□</div>', processed)
+
 
 if __name__ == '__main__':
     unittest.main()
