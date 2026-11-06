@@ -1,51 +1,7 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-点$X$に対し，$\overrightarrow{OX}=\vec x$とおく．正四面体$OABC$の一辺を$1$として良く，
-\begin{align}
-  \vec p=\alpha\vec a，\quad \vec q=\beta\vec b，\quad \vec r=\gamma\vec c\quad(0<\alpha,\beta,\gamma<1)
-\end{align}
-とおく．$|PQ|=|QR|=|RP|$から
-\begin{align}
-  |\alpha\vec a-\beta\vec b|^2=|\beta\vec b-\gamma\vec c|^2=|\gamma\vec c-\alpha\vec a|^2
-\end{align}
-
-$|\vec a|=|\vec b|=|\vec c|=1$，$\vec a\cdot\vec b=\vec b\cdot\vec c=\vec c\cdot\vec a=\dfrac{1}{2}$だから，$k>0$として
-\begin{align}
-  \alpha^2-\alpha\beta+\beta^2&=k\quad\cdots①\\
-  \beta^2-\beta\gamma+\gamma^2&=k\quad\cdots②\\
-  \gamma^2-\gamma\alpha+\alpha^2&=k\quad\cdots③
-\end{align}
-
-①，②から
-\begin{align}
-  \alpha^2-\alpha\beta&=\gamma^2-\beta\gamma\\
-  (\alpha^2-\gamma^2)-\beta(\alpha-\gamma)&=0\\
-  (\alpha+\gamma-\beta)(\alpha-\gamma)&=0\quad\cdots④
-\end{align}
-
-同様に
-\begin{align}
-  (\alpha+\beta-\gamma)(\alpha-\beta)&=0\quad\cdots⑤\\
-  (-\alpha+\beta+\gamma)(\beta-\gamma)&=0\quad\cdots⑥
-\end{align}
-
-④から，$\alpha=\gamma$または$\beta=\alpha+\gamma$である．
-
-\underline{$1^\circ$ $\alpha=\gamma$}
-
-⑤，⑥から$\beta=\alpha=\gamma$であり，この時$AB\parallel PQ$，$BC\parallel QR$，$CA\parallel RP$が成り立つ（$\because$相似）．
-
-\underline{$2^\circ$ $\beta=\alpha+\gamma$}
-
-⑤に代入して，$(\alpha+\beta-\gamma)(\alpha-\beta)=(2\alpha)(-\gamma)=0$．$\alpha\ne0$だから$\gamma=0$となり，$0<\gamma<1$に矛盾する．
-
-以上から示された．$\blacksquare$
 
 \begin{figure}[htb]
   \centering
@@ -59,23 +15,91 @@ $|\vec a|=|\vec b|=|\vec c|=1$，$\vec a\cdot\vec b=\vec b\cdot\vec c=\vec c\cdo
     \coordinate (P) at ($(O)!0.55!(A)$);
     \coordinate (Q) at ($(O)!0.55!(B)$);
     \coordinate (R) at ($(O)!0.55!(C)$);
-    \fill[blue!12, opacity=0.65] (A)--(B)--(C)--cycle;
-    \draw[dashed, gray!60, line width=0.9pt] (A)--(B);
-    \draw[blue!85!black, line width=1.25pt]
+
+    % 底面 ABC
+    \fill[blue!10, opacity=0.6] (A)--(B)--(C)--cycle;
+    \draw[dashed, gray!60, line width=0.85pt] (A)--(B);
+    \draw[blue!85!black, line width=1.2pt]
     (A)--(C)--(B) (O)--(A) (O)--(B) (O)--(C);
+
+    % 三角形 PQR
     \fill[teal!20, opacity=0.7] (P)--(Q)--(R)--cycle;
     \draw[teal!85!black, line width=1.35pt] (P)--(Q)--(R)--cycle;
+
+    % 頂点ノード
     \foreach \point/\position in {O/above,A/left,B/right,C/below} {
       \node[circle, fill=blue!85!black, inner sep=1.25pt] at (\point) {};
       \node[\position=2pt] at (\point) {$\point$};
     }
-    \foreach \point/\position in {P/left,Q/right,R/left} {
-      \node[circle, fill=red!85!black, inner sep=1.4pt] at (\point) {};
-      \node[\position=2pt, red!85!black] at (\point) {$\point$};
-    }
+    % P, Q, R ノード
+    \node[circle, fill=red!85!black, inner sep=1.35pt] at (P) {};
+    \node[left=2pt, red!85!black] at (P) {$P$};
+    \node[circle, fill=red!85!black, inner sep=1.35pt] at (Q) {};
+    \node[right=2pt, red!85!black] at (Q) {$Q$};
+    \node[circle, fill=red!85!black, inner sep=1.35pt] at (R) {};
+    \node[below left=1pt, red!85!black] at (R) {$R$};
   \end{tikzpicture}
-  \caption{正四面体$OABC$の辺上の点$P,Q,R$と平行な三角形の面}
+  \caption{正四面体$OABC$と辺$OA,OB,OC$上の点$P,Q,R$}
+  \label{fig:tetrahedron}
 \end{figure}
+
+点$X$に対して$\overrightarrow{OX}=\vec x$とおく．正四面体$OABC$の一辺を$1$として良く，
+\begin{align}
+  \begin{cases}
+    |\vec{a}|=|\vec{b}|=|\vec{c}|=1 \\
+    \vec{a}\cdot\vec{b}=\vec{a}\cdot\vec{c}=\vec{b}\cdot\vec{c}=\dfrac{1}{2}
+  \end{cases} \label{eq:1}
+\end{align}
+とする．
+
+題意の点$P,Q,R$は
+\begin{align}
+  \vec p=\alpha\vec a，\quad
+  \vec q=\beta\vec b，\quad
+  \vec r=\gamma\vec c\quad(0<\alpha,\beta,\gamma<1) \label{eq:2}
+\end{align}
+と書ける．
+$\triangle PQR$が正三角形の時$|PQ|=|QR|=|RP|$だから
+\begin{align}
+  |\alpha\vec a-\beta\vec b|^2=|\beta\vec b-\gamma\vec c|^2=|\gamma\vec c-\alpha\vec a|^2
+\end{align}
+を満たす．\cref{eq:1}を代入して$k>0$として
+\begin{align}
+  & \alpha^2-\alpha\beta+\beta^2=k \label{eq:3} \\
+  & \beta^2-\beta\gamma+\gamma^2=k \label{eq:4}\\
+  & \gamma^2-\gamma\alpha+\alpha^2=k \label{eq:5}
+\end{align}
+と書ける．
+
+\cref{eq:3,eq:4}から
+\begin{align}
+  &\alpha^2-\alpha\beta=\gamma^2-\beta\gamma\\
+  &(\alpha^2-\gamma^2)-\beta(\alpha-\gamma)=0\\
+  \therefore
+  &(\alpha+\gamma-\beta)(\alpha-\gamma)=0 \label{eq:6}
+\end{align}
+である．\cref{eq:3,eq:4,eq:5}は$\alpha,\beta,\gamma$に関して対称だから
+\cref{eq:6}で文字を入れ替えた
+\begin{align}
+  & (\alpha+\beta-\gamma)(\alpha-\beta)=0 \label{eq:7} \\
+  & (-\alpha+\beta+\gamma)(\beta-\gamma)=0 \label{eq:8}
+\end{align}
+も成立する．
+
+\cref{eq:6}から$\alpha=\gamma$または$\beta=\alpha+\gamma$だから，
+以下それぞれの場合を個別に考える．
+
+\subparagraph{$1^\circ$ $\alpha=\gamma$}
+
+\cref{eq:7,eq:8}から$\beta=\alpha=\gamma$であり，この時$\triangle OAB, \triangle OPQ$などの相似より
+$AB\parallel PQ$，$BC\parallel QR$，$CA\parallel RP$が成り立つ．
+
+\subparagraph{$2^\circ$ $\beta=\alpha+\gamma$}
+
+\cref{eq:5}に代入して，$(\alpha+\beta-\gamma)(\alpha-\beta)=2\alpha\gamma=0$であるが，$0<\alpha,\gamma<1$に反して矛盾する．
+\casesend
+
+以上から題意は示された．$\blacksquare$
 
 \newpage
 

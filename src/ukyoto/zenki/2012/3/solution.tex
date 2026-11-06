@@ -1,38 +1,54 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$\alpha=x+y$，$\beta=xy$とおくと，題意及び$x,y$の実数条件から，
-\begin{align}
-  \alpha^2-4\beta&\ge0\quad\cdots①\\
-  \alpha^2-\beta&=6\quad\cdots②
-\end{align}
 
-又，与式を$f(\alpha,\beta)$とすると
+実数$(x,y)$が
 \begin{align}
-  f(\alpha,\beta)&=xy(x+y)-(x+y)^2+(x+y)\\
-  &=\beta\alpha-\alpha^2+\alpha\quad\cdots③
+  x^2+xy+y^2=6 \label{eq:1}
 \end{align}
-
-となる．②から$\beta=\alpha^2-6$だから①，③に代入して
+を満たす時の
 \begin{align}
-  \alpha^2-4(\alpha^2-6)&\ge0\\
-  f(\alpha,\beta)&=\alpha^3-\alpha^2-5\alpha
+  f(x,y)
+  &= x^2y+xy^2-x^2-2xy-y^2+x+y \\
+  &= xy(x+y)-(x+y)^2+(x+y) \label{eq:2}
 \end{align}
+のとりうる範囲を考える．
 
-第1式から，$-2\sqrt{2}\le\alpha\le2\sqrt{2}\quad\cdots④$である．
+$\alpha=x+y$，$\beta=xy$とおくとこれらは$t^2-\alpha t+\beta=0$の二つの実数解であり，判別式$D$として
 \begin{align}
-  \dfrac{d}{d\alpha}f=3\alpha^2-2\alpha-5=(3\alpha-5)(\alpha+1)
+  D = \alpha^2-4\beta \ge0 \label{eq:3}
 \end{align}
+が成り立つ．このもとで\cref{eq:1,eq:2}を$\alpha,\beta$で表すと
+\begin{align}
+  & \alpha^2-\beta=6 \label{eq:4} \\
+  & f(\alpha,\beta)=\beta\alpha-\alpha^2+\alpha \label{eq:5}
+\end{align}
+となる．
 
-よって下表を得る．
+\cref{eq:4}から$\beta=\alpha^2-6$だから\cref{eq:3,eq:5}に代入して
+\begin{align}
+  &
+  \begin{cases}
+    \alpha^2-4(\alpha^2-6)\ge0 \\
+    f(\alpha)=(\alpha^2-6)\alpha-\alpha^2-5\alpha
+  \end{cases} \\
+  \therefore
+  &
+  \begin{cases}
+    -2\sqrt{2} \le \alpha \le 2\sqrt{2} \\
+    f(\alpha)=\alpha^3-\alpha^2-5\alpha
+  \end{cases}
+\end{align}
+である．$f(\alpha)$の一階微分を計算すると
+\begin{align}
+  f'(\alpha)=3\alpha^2-2\alpha-5=(3\alpha-5)(\alpha+1)
+\end{align}
+だから，$f(\alpha)$の増減表は以下のようになる．
 
 \begin{table}[htb]
   \centering
+  \caption{$f(\alpha)=\alpha^3-\alpha^2-5\alpha$の$-2\sqrt{2} \le \alpha \le 2\sqrt{2}$での増減表}
   \begin{tabular}{c|ccccccc}
     $\alpha$ & $-2\sqrt{2}$ & & $-1$ & & $5/3$ & & $2\sqrt{2}$ \\
     \hline
@@ -40,13 +56,82 @@ $\alpha=x+y$，$\beta=xy$とおくと，題意及び$x,y$の実数条件から�
     \hline
     $f$ & $-6\sqrt{2}-8$ & $\nearrow$ & $3$ & $\searrow$ & $-\dfrac{175}{27}$ & $\nearrow$ & $6\sqrt{2}-8$ \\
   \end{tabular}
-  \caption{$f(\alpha)=\alpha^3-\alpha^2-5\alpha$の増減}
 \end{table}
 
-よって，$3>6\sqrt{2}-8$及び$-6\sqrt{2}-8<-\dfrac{175}{27}$から
+従って，$3>6\sqrt{2}-8$及び$-6\sqrt{2}-8<-\dfrac{175}{27}$に注意して，$f(\alpha)$のとりうる範囲は
 \begin{align}
-  -2(3\sqrt{2}+4)\le f\le3．
+  -2(3\sqrt{2}+4)\le f(\alpha) \le 3
 \end{align}
+である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.3cm, y=0.25cm, >=stealth,
+    every node/.style={font=\small}]
+    \def\twoSqrtTwo{2.828427}
+    \def\negTwoSqrtTwo{-2.828427}
+    \def\minVal{-16.48528}
+    \def\maxVal{3}
+    \def\endVal{0.48528}
+    \def\localMinVal{-6.48148}
+
+    % 座標軸
+    \draw[->, gray!80!black, line width=0.85pt] (-3.5,0) -- (3.6,0) node[right] {$\alpha$};
+    \draw[->, gray!80!black, line width=0.85pt] (0,-18.5) -- (0,5.5) node[above] {$y$};
+
+    % 原点
+    \node[below left=2pt, font=\footnotesize] at (0,0) {$O$};
+
+    % 補助破線
+    % 最小点 (-2\sqrt{2}, -6\sqrt{2}-8)
+    \draw[dashed, gray!60, line width=0.7pt]
+    (\negTwoSqrtTwo, 0) -- (\negTwoSqrtTwo, \minVal) -- (0, \minVal);
+    % 極大点 (-1, 3)
+    \draw[dashed, gray!60, line width=0.7pt]
+    (-1, 0) -- (-1, 3) -- (0, 3);
+    % 極小点 (5/3, -175/27)
+    \draw[dashed, gray!60, line width=0.7pt]
+    (1.6667, 0) -- (1.6667, \localMinVal) -- (0, \localMinVal);
+    % 端点 (2\sqrt{2}, 6\sqrt{2}-8)
+    \draw[dashed, gray!60, line width=0.7pt]
+    (\twoSqrtTwo, 0) -- (\twoSqrtTwo, \endVal) -- (0, \endVal);
+
+    % 曲線 f(\alpha) = \alpha^3 - \alpha^2 - 5\alpha
+    \draw[blue!85!black, line width=1.35pt]
+    plot[domain=\negTwoSqrtTwo:\twoSqrtTwo, samples=70] (\x, {\x*\x*\x - \x*\x - 5*\x});
+
+    % 端点・極値の点
+    % 最大値 (極大)
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (-1, 3) {};
+    \node[above=2pt, red!85!black, font=\footnotesize] at (-1, 3) {最大値 $3$};
+
+    % 最小値 (左端点)
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (\negTwoSqrtTwo, \minVal) {};
+    \node[below left=1pt, red!85!black, font=\footnotesize] at (\negTwoSqrtTwo, \minVal) {最小値 $-6\sqrt{2}-8$};
+
+    % 極小点
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (1.6667, \localMinVal) {};
+
+    % 右端点
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (\twoSqrtTwo, \endVal) {};
+
+    % 軸目盛りラベル
+    \node[above=2pt, font=\footnotesize] at (-1, 0) {$-1$};
+    \node[above=2pt, font=\footnotesize] at (\negTwoSqrtTwo, 0) {$-2\sqrt{2}$};
+    \node[below=2pt, font=\footnotesize] at (1.6667, 0) {$\frac{5}{3}$};
+    \node[below=2pt, font=\footnotesize] at (\twoSqrtTwo, 0) {$2\sqrt{2}$};
+
+    \node[left=2pt, font=\footnotesize] at (0, 3) {$3$};
+    \node[left=2pt, font=\footnotesize] at (0, \localMinVal) {$-\frac{175}{27}$};
+    \node[right=2pt, font=\footnotesize] at (0, \minVal) {$-6\sqrt{2}-8$};
+    \node[left=2pt, font=\footnotesize] at (0, \endVal) {$6\sqrt{2}-8$};
+
+    % 関数名ラベル
+    \node[blue!85!black, right=2pt, font=\footnotesize] at (2.2, 3.5) {$y=f(\alpha)$};
+  \end{tikzpicture}
+  \caption{$f(\alpha)=\alpha^3-\alpha^2-5\alpha$（$-2\sqrt{2}\le\alpha\le2\sqrt{2}$）のグラフ}
+  \label{fig:f_alpha_graph}
+\end{figure}
 
 \newpage
 

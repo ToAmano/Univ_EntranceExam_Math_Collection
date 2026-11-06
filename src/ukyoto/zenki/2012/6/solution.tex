@@ -1,54 +1,103 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$\dfrac{1+\sqrt{3}}{2}\le Y_{n+1}\le1+\sqrt{3}$となる時，これを整理すると
-\begin{align}
-  \dfrac{1+\sqrt{3}}{2}-X_{n+1}\le\dfrac{1}{Y_n}\le1+\sqrt{3}-X_{n+1}\quad\cdots①
-\end{align}
-となる．$\dfrac{1}{Y_n}>0$から，右側の不等式より，$1+\sqrt{3}-X_{n+1}>0\ \therefore X_{n+1}=1,2$が必要．また，$Y_1=X_1$も条件をみたすことから，$X_1=1,2$．以上あわせて，帰納的に$X_n=1,2$となる．この時，$X_{n+1}$で場合分け．
 
-\underline{$1^\circ$ $X_{n+1}=1$}
+与えられた数列
+\begin{align}
+  Y_1=X_1, \quad Y_k=X_k+\dfrac{1}{Y_{k-1}} \quad (X_k=1,2,\cdots,6) \label{eq:1}
+\end{align}
+が
+\begin{align}
+  \dfrac{1+\sqrt{3}}{2} \leqq Y_n \leqq 1+\sqrt{3} \label{eq:2}
+\end{align}
+を満たす確率$p_n$を考える．両端の値は
+\begin{align}
+  1 < \dfrac{1+\sqrt{3}}{2} < 2 <  1+\sqrt{3} < 3 \label{eq:3}
+\end{align}
+であることに注意する．まず\cref{eq:1}から帰納的に
+\begin{align}
+  Y_k \ge 1 \label{eq:4}
+\end{align}
+である．
 
-①から
+まず$n=1$の時は\cref{eq:1,eq:3}を\cref{eq:2}に代入して
 \begin{align}
-  \dfrac{1+\sqrt{3}}{2}-1\le\dfrac{1}{Y_n}\le1+\sqrt{3}-1
+  X_1 = 2
 \end{align}
+であれば良いから，このようになる確率$p_1$は
 \begin{align}
-  \dfrac{\sqrt{3}}{3}\le Y_n\le1+\sqrt{3}
+  p_1 = \dfrac{1}{6}  \label{eq:5}
 \end{align}
-ならば良い．
+である．
 
-\underline{$2^\circ$ $X_{n+1}=2$}
+そこで$n \ge 2$の場合を考える．\cref{eq:1}を\cref{eq:2}に代入して
+\begin{align}
+  & \dfrac{1+\sqrt{3}}{2} \leqq X_n+\dfrac{1}{Y_{n-1}} \leqq 1+\sqrt{3} \\
+  \therefore
+  & \dfrac{1+\sqrt{3}}{2} - X_n \leqq \dfrac{1}{Y_{n-1}} \leqq 1+\sqrt{3} - X_n \label{eq:6}
+\end{align}
+となる．\cref{eq:4}から
+\begin{align}
+  1+\sqrt{3} - X_n > 0 \quad \therefore X_n = 1, 2 \quad (\because\text{\cref{eq:3}})
+\end{align}
+が必要である．以下$X_n$の値で場合分けして$Y_{n-1}$のとりうる範囲について調べる．
 
-①から
-\begin{align}
-  \dfrac{1+\sqrt{3}}{2}-2\le\dfrac{1}{Y_n}\le1+\sqrt{3}-2
-\end{align}
-\begin{align}
-  \dfrac{1+\sqrt{3}}{2}\le Y_n
-\end{align}
+\subparagraph{$1^{\circ}$ $X_n=1$の時}
 
-だから，①となる時
+\cref{eq:6}に代入して
 \begin{align}
-  &\dfrac{\sqrt{3}}{3}\le Y_n<\dfrac{1+\sqrt{3}}{2}\ \text{の時，}X_{n+1}=1，\\
-  &\dfrac{1+\sqrt{3}}{2}\le Y_n\le1+\sqrt{3}\ \text{の時，}X_{n+1}=1\ \text{or}\ 2，\\
-  &1+\sqrt{3}<Y_n\ \text{の時，}X_{n+1}=2
+  & \dfrac{-1+\sqrt{3}}{2} \leqq \dfrac{1}{Y_{n-1}} \leqq \sqrt{3} \\
+  \therefore
+  & \dfrac{1}{\sqrt{3}} \leqq Y_{n-1} \leqq 1 + \sqrt{3} \label{eq:7}
 \end{align}
-である．ここで，$Y_1\ge1$と$X_n\ge1$より帰納的に$Y_n\ge1$であることから，
-\begin{align}
-  p_{n+1}&=\dfrac{2}{6}p_n+\dfrac{1}{6}(1-p_n)\\
-  &=\dfrac{1}{6}p_n+\dfrac{1}{6}
-\end{align}
+である．
 
-ここで，$p_1=\dfrac{1}{6}$だから，
+\subparagraph{$2^{\circ}$ $X_n=2$の時}
+
+\cref{eq:6}に代入して
 \begin{align}
-  p_n=\dfrac{1}{5}\left\{1-\left(\dfrac{1}{6}\right)^n\right\}．
+  & \dfrac{-3+\sqrt{3}}{2} \leqq \dfrac{1}{Y_{n-1}} \leqq -1 + \sqrt{3} \\
+  \therefore
+  & \dfrac{1+\sqrt{3}}{2} \leqq Y_{n-1} \quad (\because Y_{n-1}>0) \label{eq:8}
 \end{align}
+である．
+\casesend
+
+以上\cref{eq:7,eq:8}から，\cref{eq:6}が実現されるような$X_n,Y_{n-1}$の条件は
+\begin{align}
+  &
+  \begin{cases}
+    \dfrac{1}{\sqrt{3}} \leqq Y_{n-1} \leqq 1 + \sqrt{3} \text{の時}: X_n = 1 \\
+    \dfrac{1+\sqrt{3}}{2} \leqq Y_{n-1} \text{の時}: X_n = 2
+  \end{cases} \\
+  \therefore
+  \begin{cases}
+    \dfrac{\sqrt{3}}{3}\le Y_{n-1}<\dfrac{1+\sqrt{3}}{2}\ \text{の時，}X_{n}=1，\\
+    \dfrac{1+\sqrt{3}}{2}\le Y_{n-1}\le1+\sqrt{3}\ \text{の時，}X_{n}=1\ \text{or}\ 2，\\
+    1+\sqrt{3}<Y_{n-1}\ \text{の時，}X_{n}=2
+  \end{cases}
+\end{align}
+である．\cref{eq:4}からこれで全ての$Y_n$のとりうる値は尽くされているから，それぞれの場合の確率は
+\begin{align}
+  \begin{cases}
+    \dfrac{1+\sqrt{3}}{2}\le Y_{n-1}\le1+\sqrt{3} \ \text{の時}: p_{n-1} \\
+    \dfrac{\sqrt{3}}{3}\le Y_{n-1}<\dfrac{1+\sqrt{3}}{2}, 1+\sqrt{3}<Y_{n-1} \ \text{の時}: 1-p_{n-1}
+  \end{cases}
+\end{align}
+となって$p_{n-1}$と$p_n$の関係は
+\begin{align}
+  p_{n}
+  &=\dfrac{2}{6}p_{n-1}+\dfrac{1}{6}(1-p_{n-1})\\
+  &=\dfrac{1}{6}p_{n-1}+\dfrac{1}{6} \\
+  \therefore
+  p_{n}-\dfrac{1}{5} = \dfrac{1}{6}\left(p_{n-1}-\dfrac{1}{5}\right)
+\end{align}
+となる．\cref{eq:5}のもとでこの漸化式を解いて，求める確率は
+\begin{align}
+  p_n=\dfrac{1}{5}\left\{1-\left(\dfrac{1}{6}\right)^n\right\}
+\end{align}
+である．
 
 \newpage
 
