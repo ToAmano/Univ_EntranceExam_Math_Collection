@@ -1,47 +1,141 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-% Source: handwritten.pdf 第3問．
 {\bf [解答]}
-題意のようになるのは，$n$回目に$n$のカードを引くか，$n$の1つ上におかれているカードを引く時．
 
-\subparagraph{(i) $n$回目に$n$のカードを引く時}
-各回の試行で，引いたカードをより下の位置におくので，
-\begin{align}\dfrac{1}{n}\cdot\dfrac{2}{n}\cdot\dfrac{3}{n}\cdots\dfrac{n-1}{n}.
-\end{align}
-さらに，$n$のカードは1番上に戻るので，
-\begin{align}
-  \dfrac{1}{n}\cdot\dfrac{2}{n}\cdots\dfrac{n-1}{n}\cdot\dfrac{1}{n}
-  =\dfrac{(n-1)!}{n^n}.
-\end{align}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=0.92cm, y=0.95cm, >=stealth, every node/.style={font=\small}]
 
-\subparagraph{(ii) $n$回目に$n$の1つ上におかれたカードを引く時}
-$1$〜$n-1$回目の試行のうち1回だけ，$n$の上にカードをおく．これを$k$回目の試行として，
+    % --- (a) 初期状態と試行操作 ---
+    \begin{scope}[shift={(0,0)}]
+      \node[font=\footnotesize\bfseries, align=center] at (1.1, 4.3) {【初期状態と操作】};
+
+      % カードの山
+      \draw[fill=blue!10, draw=blue!80!black, rounded corners=1.5pt] (0, 2.7) rectangle (2.2, 3.2) node[midway] {1};
+      \draw[fill=blue!5, draw=blue!60!black, rounded corners=1.5pt] (0, 2.1) rectangle (2.2, 2.6) node[midway] {2};
+      \node at (1.1, 1.7) {$\vdots$};
+      \draw[fill=blue!5, draw=blue!60!black, rounded corners=1.5pt] (0, 0.9) rectangle (2.2, 1.4) node[midway, font=\footnotesize] {$n-1$};
+      \draw[fill=orange!25, draw=orange!90!black, line width=1.1pt, rounded corners=1.5pt] (0, 0.2) rectangle (2.2, 0.7) node[midway, font=\bfseries\normalsize, orange!90!black] {$n$};
+
+      % 山の脇の注釈
+      \node[left=3pt, font=\scriptsize, gray!80!black] at (0, 2.95) {上};
+      \node[left=3pt, font=\scriptsize, gray!80!black] at (0, 0.45) {底};
+
+      % 1番上のカードを取り出す
+      \draw[->, line width=1.0pt, blue!85!black] (2.2, 2.95) -- (3.1, 2.95);
+      \node[below=2pt, font=\scriptsize, blue!85!black] at (2.65, 2.95) {引く};
+
+      % もどす先の選択肢（計 n 通り）
+      \draw[->, line width=0.8pt, dashed, gray!70!black] (3.1, 2.95) to[out=90, in=0] (2.3, 3.4)
+      node[above right=1pt, font=\scriptsize, gray!80!black] {山の一番上へ（1通り）};
+      \draw[->, line width=0.8pt, dashed, gray!70!black] (3.1, 2.95) to[out=-90, in=0] (2.3, 0.0)
+      node[below right=1pt, font=\scriptsize, gray!80!black] {いずれかのカードの下へ（$n-1$通り）};
+
+      \node[below=4pt, font=\scriptsize, text=gray!80!black, align=center] at (1.1, -0.4)
+      {計$n$通りの配置先\\（各確率 $\frac{1}{n}$）};
+    \end{scope}
+
+    % --- 区切り線 ---
+    \draw[gray!30, dashed] (5.0, -0.7) -- (5.0, 4.4);
+
+    % --- (b) 場合(i): n回目にカードnを引く ---
+    \begin{scope}[shift={(5.6, 0)}]
+      \node[font=\footnotesize\bfseries, align=center] at (1.1, 4.3) {【(i) カード$n$が最上段へ】};
+
+      % n-1 回終了時: カードnが一番上
+      \draw[fill=orange!25, draw=orange!90!black, line width=1.1pt, rounded corners=1.5pt] (0, 2.5) rectangle (2.2, 3.0) node[midway, font=\bfseries\normalsize, orange!90!black] {$n$};
+      \draw[fill=gray!10, draw=gray!60, rounded corners=1.5pt] (0, 1.8) rectangle (2.2, 2.3);
+      \node at (1.1, 1.4) {$\vdots$};
+      \draw[fill=gray!10, draw=gray!60, rounded corners=1.5pt] (0, 0.5) rectangle (2.2, 1.0);
+    \node[right=3pt, font=\scriptsize, teal!80!black] at (2.2, 1.4) {$\left.\rule{0pt}{1.0cm}\right\} n-1$枚};
+
+    % n回目: カードnを引いて一番上に戻す
+    \draw[->, line width=1.1pt, orange!90!black] (2.2, 2.75) to[out=0, in=0, looseness=2] (1.8, 3.05);
+    \node[right=3pt, font=\scriptsize, orange!90!black, align=left] at (2.9, 2.9) {確率 $\frac{1}{n}$\\で一番上へ};
+
+    \node[below=4pt, font=\scriptsize, text=gray!80!black, align=center] at (1.1, -0.4)
+    {$1\sim n-1$回目は全て$n$の下へ\\$n$回目に$n$を引いて上へ};
+  \end{scope}
+
+  % --- 区切り線 ---
+  \draw[gray!30, dashed] (10.0, -0.7) -- (10.0, 4.4);
+
+  % --- (c) 場合(ii): n回目にカードnの上のカードを引く ---
+  \begin{scope}[shift={(10.6, 0)}]
+    \node[font=\footnotesize\bfseries, align=center] at (1.1, 4.3) {【(ii) カード$n$の上に1枚】};
+
+    % n-1 回終了時: カードnの上に1枚
+    \draw[fill=blue!10, draw=blue!80!black, rounded corners=1.5pt] (0, 2.5) rectangle (2.2, 3.0) node[midway, font=\footnotesize] {上の1枚};
+    \draw[fill=orange!25, draw=orange!90!black, line width=1.1pt, rounded corners=1.5pt] (0, 1.8) rectangle (2.2, 2.3) node[midway, font=\bfseries\normalsize, orange!90!black] {$n$};
+    \node at (1.1, 1.4) {$\vdots$};
+    \draw[fill=gray!10, draw=gray!60, rounded corners=1.5pt] (0, 0.5) rectangle (2.2, 1.0);
+  \node[right=3pt, font=\scriptsize, teal!80!black] at (2.2, 0.9) {$\left.\rule{0pt}{0.7cm}\right\} n-2$枚};
+
+  % n回目: 上のカードを引いてカードnの下へ移動
+  \draw[->, line width=1.1pt, blue!85!black] (2.2, 2.75) to[out=0, in=0, looseness=1.6] (2.2, 1.3);
+  \node[right=3pt, font=\scriptsize, blue!85!black, align=left] at (2.9, 2.1) {確率 $\frac{n-1}{n}$\\で $n$ の下へ};
+
+  \node[below=4pt, font=\scriptsize, text=gray!80!black, align=center] at (1.1, -0.4)
+  {1枚だけ$n$の上に挿入\\$n$回目にそれを$n$の下へ};
+\end{scope}
+
+\end{tikzpicture}
+\caption{カードの移動操作と，$n$回目にカード$n$が山の一番上にくる2つの事象}
+\label{fig:card_pile}
+\end{figure}
+
+題意のように$n$回目の試行の後に番号$n$のカードが一番上にきているのは以下のいずれかである．
+\begin{itemize}
+\item $n$回目に$n$のカードを引いて一番上に戻す．\\
+\item $n$回目に1つ上におかれているカードを引いて，$n$より下に戻す．
+\end{itemize}
+これらは排反な事象だから，それぞれの場合の確率を求めて足し合わせれば良い．
+以下個別に考える．
+
+\subparagraph{$1^{\circ}$ $n$回目に$n$のカードを引く時}
+
+$1$から$n-1$回目の試行で引いたカードを$n$のカードより下の位置におけばよく，この確率は
 \begin{align}
-  \dfrac{1}{n}\cdot\dfrac{2}{n}\cdots\dfrac{k-1}{n}\cdot\dfrac{n-k}{n}
-  \cdot\dfrac{k}{n}\cdots\dfrac{n-2}{n}.
+\dfrac{1}{n}\cdot\dfrac{2}{n}\cdot\dfrac{3}{n}\cdots\dfrac{n-1}{n}
 \end{align}
-さらに，$n$回目に引いたカードは$n$のカードの下におくので，
+である．さらに$n$回目の試行で引いた$n$のカードは1番上に戻るので，この確率は$\dfrac{1}{n}$だから，
+全体での確率は
 \begin{align}
-  \dfrac{1}{n}\cdot\dfrac{2}{n}\cdots\dfrac{k-1}{n}\cdot\dfrac{n-k}{n}
-  \cdot\dfrac{k}{n}\cdots\dfrac{n-2}{n}\cdot\dfrac{n-1}{n}
-  =\dfrac{(n-1)!(n-k)}{n^n}.
+\dfrac{1}{n}\cdot\dfrac{2}{n}\cdots\dfrac{n-1}{n}\cdot\dfrac{1}{n}
+=\dfrac{(n-1)!}{n^n} \label{eq:1}
 \end{align}
-$k$について足して
+である．
+
+\subparagraph{$2^{\circ}$ $n$回目に$n$の1つ上におかれたカードを引く時}
+
+$1$〜$n-1$回目の試行のうち1回だけ，$n$の上にカードをおく．これを$k$回目の試行とすると，
+このような確率は
 \begin{align}
-  \dfrac{(n-1)!}{n^n}\sum_{k=1}^{n-1}(n-k)
-  =\dfrac{(n-1)!}{n^n}\sum_{k=1}^{n-1}k
-  =\dfrac{(n-1)!}{n^n}\cdot\dfrac{1}{2}n(n-1).
+\dfrac{1}{n}\cdot\dfrac{2}{n}\cdots\dfrac{k-1}{n}\cdot\dfrac{n-k}{n}
+\cdot\dfrac{k}{n}\cdots\dfrac{n-2}{n}
 \end{align}
+である．さらに$n$回目に引いたカードは$n$のカードの下におくので，確率は$\dfrac{n-1}{n}$で，
+全体での確率は
+\begin{align}
+\dfrac{1}{n}\cdot\dfrac{2}{n}\cdots\dfrac{k-1}{n}\cdot\dfrac{n-k}{n}
+\cdot\dfrac{k}{n}\cdots\dfrac{n-2}{n}\cdot\dfrac{n-1}{n}
+=\dfrac{(n-1)!(n-k)}{n^n}
+\end{align}
+である．これを$k=1,2,\cdots,n-1$について足し合わせれば$2^{\circ}$の場合の確率は
+\begin{align}
+\dfrac{(n-1)!}{n^n}\sum_{k=1}^{n-1}(n-k)
+=\dfrac{(n-1)!}{n^n}\sum_{k=1}^{n-1}k
+=\dfrac{(n-1)!}{n^n}\cdot\dfrac{1}{2}n(n-1) \label{eq:2}
+\end{align}
+である．
 \casesend
-以上から
+
+以上\cref{eq:1,eq:2}を足し合わせて，求める確率は
 \begin{align}
-  \dfrac{(n-1)!\left\{1+\dfrac{1}{2}n^2-\dfrac{1}{2}n\right\}}{n^n}
-  =\dfrac{(n-1)!(n^2-n+2)}{2n^n}.
+\dfrac{(n-1)!\left\{1+\dfrac{1}{2}n^2-\dfrac{1}{2}n\right\}}{n^n}
+=\dfrac{(n-1)!(n^2-n+2)}{2n^n}
 \end{align}
+である．
 
 \end{document}
