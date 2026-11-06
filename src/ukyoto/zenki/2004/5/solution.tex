@@ -1,42 +1,78 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$C$が$\pm1$を通るので，$C$の中心は$\beta$とおける（純虚数）．
-\begin{align}
-  |1-\beta|^2=|-1-\beta|^2=|\alpha-\beta|^2=A\quad\cdots①
-\end{align}
 
-さらに，$\alpha=k\zeta$（$k\in\mathbb R$）とおける．ただし$|\zeta|=1$．①から
-\begin{align}
-  |\beta|^2-\beta-\bar\beta+1=|\beta|^2-\bar\alpha\beta-\alpha\bar\beta+|\alpha|^2
-\end{align}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.9cm, y=1.9cm, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0,0);
+    \coordinate (One) at (1,0);
+    \coordinate (MOne) at (-1,0);
+    \coordinate (Beta) at (0,0.55);
+    \coordinate (Alpha) at (1.034,1.034);
+    \coordinate (AlphaInv) at (-0.484,-0.484);
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.65,0) -- (1.75,0) node[right] {$\mathrm{Re}$};
+    \draw[->, thick, gray!80!black] (0,-1.0) -- (0,2.15) node[above] {$\mathrm{Im}$};
+    % 円 C (中心 Beta=(0, 0.55), 半径 r = 1.141)
+    \draw[line width=1.3pt, blue!85!black] (Beta) circle[radius=1.141];
+    % 中心 Beta から各点への半径破線
+    \draw[dashed, gray!60] (Beta) -- (One) (Beta) -- (MOne) (Beta) -- (Alpha) (Beta) -- (AlphaInv);
+    % 原点を通る直線（弦）
+    \draw[dashed, teal!75!black, thick] ($(Alpha)+(45:0.35)$) -- ($(AlphaInv)+(225:0.35)$);
+    % 各点
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (One) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (MOne) {};
+    \node[circle, fill=orange!85!black, inner sep=1.3pt] at (Beta) {};
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (O) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (Alpha) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (AlphaInv) {};
+    % ラベル
+    \node[below right=2pt, font=\footnotesize] at (One) {$1$};
+    \node[below left=2pt, font=\footnotesize] at (MOne) {$-1$};
+    \node[left=3pt, orange!85!black] at (Beta) {$\beta$};
+    \node[below right=2pt] at (O) {$O$};
+    \node[above right=2pt, red!85!black] at (Alpha) {$\alpha$};
+    \node[below left=2pt, red!85!black] at (AlphaInv) {$-\frac{1}{\bar{\alpha}}$};
+    \node[above right=3pt, blue!85!black] at (0.9,1.5) {$C$};
+  \end{tikzpicture}
+  \caption{複素数平面上の円$C$と原点を通る弦の両端点$\alpha,\ -\dfrac{1}{\bar{\alpha}}$}
+  \label{fig:complex_circle_inversion}
+\end{figure}
 
-$\beta$は純虚数で，$\beta+\bar\beta=0$より
+$C$が$\pm1$を通るので，$C$の中心は純虚数$\beta$とおける．
+$C$の半径を$r\in\mathbb{R}$とすると$C$の方程式は
 \begin{align}
-  1=k^2-k\bar\zeta\beta-k\zeta\bar\beta\quad\cdots②
+  f(z)= |z-\beta|^2=r^2 \label{eq:1}
 \end{align}
-
-又，
+だから，$z=\pm1, \alpha$を代入して
 \begin{align}
-  \left|-\dfrac{1}{\bar\alpha}-\beta\right|^2=\left|\dfrac{\zeta}{k}+\beta\right|^2=|\beta|^2+\dfrac{1}{k}\zeta\bar\beta+\dfrac{1}{k}\bar\zeta\beta+\dfrac{1}{k^2}
+  |1-\beta|^2=|-1-\beta|^2=|\alpha-\beta|^2=r^2 \label{eq:2}
 \end{align}
-
-一方，②の両辺を$k^2$で割って
+である．二つ目の等号から
 \begin{align}
-  \dfrac{1}{k^2}+\dfrac{1}{k}\bar\zeta\beta+\dfrac{1}{k}\zeta\bar\beta=1
+  |\beta|^2+(\beta+\bar\beta)+1=|\beta|^2-\bar\alpha\beta-\alpha\bar\beta+|\alpha|^2
 \end{align}
-
-だから①に代入して
+だが，$\beta$が準虚数なことより$\beta+\bar\beta=0$だから
 \begin{align}
-  \left|-\dfrac{1}{\bar\alpha}-\beta\right|^2=|\beta|^2+1=A．
+  & |\beta|^2+1=|\beta|^2-\bar\alpha\beta-\alpha\bar\beta+|\alpha|^2 \\
+  \therefore
+  & |\alpha|^2-\bar\alpha\beta-\alpha\bar\beta-1 = 0 \label{eq:3}
 \end{align}
+である．
 
-したがって，$C$は$-\dfrac{1}{\bar\alpha}$も通る．$\blacksquare$
+一方で題意より$z=-\dfrac{1}{\bar\alpha}$とすると
+\begin{align}
+  f(-\dfrac{1}{\bar\alpha})
+  &=\left|-\dfrac{1}{\bar\alpha}-\beta\right|^2 \\
+  &=|\beta|^2+\dfrac{1}{\alpha}\bar\beta+\dfrac{1}{\bar\alpha}\beta+\dfrac{1}{|\alpha|^2} \\
+  &=|\beta|^2+\dfrac{\alpha\bar\beta + \bar\alpha \beta + 1}{|\alpha|^2} \\
+  &=|\beta|^2+\dfrac{|\alpha|^2}{|\alpha|^2} \quad (\because\text{\cref{eq:3}}) \\
+  &=|\beta|^2+1 \\
+  &=r^2 \quad (\because\text{\cref{eq:2}})
+\end{align}
+である．したがって，$C$は$-\dfrac{1}{\bar\alpha}$も通る．$\blacksquare$
 
 \newpage
 

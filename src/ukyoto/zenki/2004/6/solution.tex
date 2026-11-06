@@ -1,20 +1,67 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-全ての操作の後，$N+1$に赤が入っているのは，$N$回目の操作後に赤の入っている箱を$T$として，$N+1$回目で$T$と交換する時である（$T\ne N+1$）．$T\ne N+1$となる確率は，排反を考えて，
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1cm, y=1cm, >=stealth, every node/.style={font=\small}]
+    % (1) 初期状態
+    \node[anchor=west, font=\small, text=blue!85!black] at (-0.5, 4.0)
+    {【初期状態】箱$1\sim N$に白玉，箱$N+1$に赤玉};
+    \foreach \i/\x in {1/0, 2/1.0, 3/2.8, 4/4.2} {
+      \draw[thick, gray!70!black] (\x-0.35, 3.1) -- (\x-0.35, 2.6) -- (\x+0.35, 2.6) -- (\x+0.35, 3.1);
+    }
+    \node[below=2pt, font=\footnotesize] at (0, 2.6) {箱$1$};
+    \node[below=2pt, font=\footnotesize] at (1.0, 2.6) {箱$2$};
+    \node at (1.9, 2.85) {$\cdots$};
+    \node[below=2pt, font=\footnotesize] at (2.8, 2.6) {箱$N$};
+    \node[below=2pt, font=\footnotesize, text=red!85!black] at (4.2, 2.6) {箱$N+1$};
+    % 玉
+    \node[circle, draw=gray!70!black, thick, fill=white, inner sep=2.8pt] at (0, 2.85) {};
+    \node[circle, draw=gray!70!black, thick, fill=white, inner sep=2.8pt] at (1.0, 2.85) {};
+    \node[circle, draw=gray!70!black, thick, fill=white, inner sep=2.8pt] at (2.8, 2.85) {};
+    \node[circle, fill=red!85!black, inner sep=3.2pt] at (4.2, 2.85) {};
+
+    % 下向き矢印（1〜N回の操作）
+    \draw[->, thick, gray!60] (2.1, 2.0) -- (2.1, 1.2)
+    node[midway, right=3pt, font=\footnotesize, text=gray!80!black]
+    {$k=1\sim N$の操作後（確率 $1-\left(\frac{N-1}{N}\right)^N$ で $T\neq N+1$）};
+
+    % (2) N回操作終了時 & N+1回目の交換
+    \node[anchor=west, font=\small, text=blue!85!black] at (-0.5, 0.7)
+    {【$N$回操作後】赤玉が箱$T$（$T\neq N+1$）にあり，最後の操作で箱$N+1$と箱$T$を交換};
+    \foreach \i/\x in {1/0, 2/1.4, 3/2.8, 4/4.2} {
+      \draw[thick, gray!70!black] (\x-0.35, -0.9) -- (\x-0.35, -1.4) -- (\x+0.35, -1.4) -- (\x+0.35, -0.9);
+    }
+    \node[below=2pt, font=\footnotesize] at (0, -1.4) {箱$1$};
+    \node at (0.7, -1.15) {$\cdots$};
+    \node[below=2pt, font=\footnotesize, text=red!85!black] at (1.4, -1.4) {箱$T$};
+    \node at (2.1, -1.15) {$\cdots$};
+    \node[below=2pt, font=\footnotesize] at (2.8, -1.4) {箱$N$};
+    \node[below=2pt, font=\footnotesize] at (4.2, -1.4) {箱$N+1$};
+    % 玉
+    \node[circle, draw=gray!70!black, thick, fill=white, inner sep=2.8pt] at (0, -1.15) {};
+    \node[circle, fill=red!85!black, inner sep=3.2pt] at (1.4, -1.15) {};
+    \node[circle, draw=gray!70!black, thick, fill=white, inner sep=2.8pt] at (2.8, -1.15) {};
+    \node[circle, draw=gray!70!black, thick, fill=white, inner sep=2.8pt] at (4.2, -1.15) {};
+    % 箱T と 箱N+1 の交換矢印
+    \draw[<->, line width=1.3pt, orange!85!black]
+    (1.4, -0.8) to[bend left=26] node[above=2pt, font=\footnotesize] {確率 $\frac{1}{N}$ で交換} (4.2, -0.8);
+  \end{tikzpicture}
+  \caption{玉の交換操作の推移と最終的に箱$N+1$に赤玉が入る条件}
+  \label{fig:ball_exchange_process}
+\end{figure}
+
+全ての操作の後，$N+1$に赤が入っているのは，$N$回目の操作後に赤の入っている箱を$T$として，$N+1$回目で$T$を選ぶ時である（$T\ne N+1$）．$T\ne N+1$となる確率は排反（$N$回の操作で$1$回も$T$が選ばれない）を考えて，
 \begin{align}
   1-\left(\dfrac{N-1}{N}\right)^N
 \end{align}
-
-だからもとめるのは
+である．だからもとめる確率は，$N+1$回目の$T$を選ぶ確率が$\dfrac{1}{N}$であることと合わせて
 \begin{align}
-  \dfrac{1}{N}\left\{1-\left(\dfrac{N-1}{N}\right)^N\right\}．
+  \dfrac{1}{N}\left\{1-\left(\dfrac{N-1}{N}\right)^N\right\}
 \end{align}
+である．
 
 \newpage
 
