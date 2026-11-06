@@ -549,6 +549,16 @@ def figure_layout_parts(figure_code):
     return body, caption, label, sublabels
 
 
+def _run_subprocess(cmd, timeout=60, **kwargs):
+    """Run a subprocess with a timeout to avoid hangs."""
+    try:
+        return subprocess.run(cmd, timeout=timeout, **kwargs)
+    except subprocess.TimeoutExpired as exc:
+        cmd_str = ' '.join(str(c) for c in cmd) if isinstance(cmd, (list, tuple)) else str(cmd)
+        print(f"[tex_to_md] Subprocess timed out after {timeout}s: {cmd_str}")
+        return subprocess.CompletedProcess(cmd, returncode=124, stdout="", stderr=f"Timeout expired after {timeout}s")
+
+
 def _replace_oversized_svg_with_dvisvgm(pdf_path, svg_path):
     """Use dvisvgm for large SVGs only when it produces a smaller valid output file.
 
@@ -567,9 +577,9 @@ def _replace_oversized_svg_with_dvisvgm(pdf_path, svg_path):
     try:
         with tempfile.TemporaryDirectory(prefix='dvisvgm_', dir=os.path.dirname(svg_path) or '.') as temp_dir:
             candidate = os.path.join(temp_dir, 'figure.svg')
-            result = subprocess.run(
+            result = _run_subprocess(
                 [dvisvgm_bin, '--pdf', '--no-fonts', '-o', candidate, pdf_path],
-                capture_output=True, text=True)
+                timeout=60, capture_output=True, text=True)
             if result.returncode != 0 or not os.path.isfile(candidate):
                 print(f'[tex_to_md] dvisvgm failed; keeping large SVG: {svg_path} '
                       f'(exit code {result.returncode}): {(result.stderr or "")[-500:]}')
@@ -667,14 +677,14 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs="", figure_layout
         #    （終了コードだけ／存在だけの片方の確認では不十分）。
         cmd_compile_pdf = ["lualatex", "-interaction=nonstopmode", "-halt-on-error",
                             "-output-directory=" + temp_dir, tex_filename]
-        result = subprocess.run(cmd_compile_pdf, capture_output=True, text=True)
+        result = _run_subprocess(cmd_compile_pdf, timeout=90, capture_output=True, text=True)
 
         if result.returncode != 0 or not os.path.exists(pdf_filename):
             print(f"[tex_to_md] LuaLaTeX failed for {output_svg_path} "
                   f"(exit code {result.returncode}); log before pdfLaTeX fallback:\n{_log_tail(result)}")
             cmd_pdflatex = ["pdflatex", "-interaction=nonstopmode", "-halt-on-error",
                              "-output-directory=" + temp_dir, tex_filename]
-            result = subprocess.run(cmd_pdflatex, capture_output=True, text=True)
+            result = _run_subprocess(cmd_pdflatex, timeout=90, capture_output=True, text=True)
 
         if result.returncode != 0 or not os.path.exists(pdf_filename):
             print(f"[tex_to_md] Failed to produce PDF for TikZ figure at {output_svg_path} "
@@ -688,9 +698,9 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs="", figure_layout
                 print('[tex_to_md] Composite figures require pdfcrop (texlive-extra-utils and Ghostscript).')
                 return False
             cropped_pdf = os.path.join(temp_dir, 'fig-cropped.pdf')
-            cropped = subprocess.run(
+            cropped = _run_subprocess(
                 [pdfcrop_bin, '--hires', '--margins', '2', pdf_filename, cropped_pdf],
-                capture_output=True, text=True)
+                timeout=60, capture_output=True, text=True)
             if cropped.returncode != 0 or not os.path.exists(cropped_pdf):
                 print(f'[tex_to_md] Composite figure cropping failed: {cropped.stderr or cropped.stdout}')
                 return False
@@ -701,7 +711,7 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs="", figure_layout
         pdftocairo_bin = shutil.which("pdftocairo") or "/opt/homebrew/bin/pdftocairo"
         if pdftocairo_bin and os.path.exists(pdftocairo_bin):
             cmd_svg = [pdftocairo_bin, "-svg", pdf_filename, output_svg_path]
-            r = subprocess.run(cmd_svg, capture_output=True, text=True)
+            r = _run_subprocess(cmd_svg, timeout=60, capture_output=True, text=True)
             svg_ok = r.returncode == 0 and os.path.exists(output_svg_path)
             if svg_ok:
                 _replace_oversized_svg_with_dvisvgm(pdf_filename, output_svg_path)
@@ -712,7 +722,7 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs="", figure_layout
         # 3. pdf2svg フォールバック
         if not svg_ok and shutil.which("pdf2svg"):
             cmd_svg = ["pdf2svg", pdf_filename, output_svg_path]
-            r = subprocess.run(cmd_svg, capture_output=True, text=True)
+            r = _run_subprocess(cmd_svg, timeout=60, capture_output=True, text=True)
             svg_ok = r.returncode == 0 and os.path.exists(output_svg_path)
             if not svg_ok:
                 print(f"[tex_to_md] pdf2svg failed for {output_svg_path} "
@@ -721,7 +731,7 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs="", figure_layout
         # 4. dvisvgm フォールバック
         if not svg_ok and shutil.which("dvisvgm"):
             cmd_svg = ["dvisvgm", "--pdf", "--no-fonts", "-o", output_svg_path, pdf_filename]
-            r = subprocess.run(cmd_svg, capture_output=True, text=True)
+            r = _run_subprocess(cmd_svg, timeout=60, capture_output=True, text=True)
             svg_ok = r.returncode == 0 and os.path.exists(output_svg_path)
             if not svg_ok:
                 print(f"[tex_to_md] dvisvgm failed for {output_svg_path} "

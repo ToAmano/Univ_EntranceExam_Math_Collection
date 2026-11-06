@@ -22,6 +22,7 @@ concurrency:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,11 +37,20 @@ jobs:
           python-version: '3.10'
 
       - name: Install Pandoc and TikZ dependencies
+        timeout-minutes: 10
         run: |
-          sudo apt-get update
-          sudo apt-get install -y pandoc poppler-utils mupdf-tools ghostscript librsvg2-bin texlive-extra-utils texlive-latex-base texlive-latex-extra texlive-fonts-recommended texlive-luatex texlive-pictures texlive-science texlive-lang-japanese
+          sudo apt-get update -o Acquire::Retries=3
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            -o Acquire::Retries=3 \
+            -o Acquire::http::Timeout=30 \
+            -o Acquire::https::Timeout=30 \
+            pandoc poppler-utils mupdf-tools ghostscript librsvg2-bin \
+            texlive-extra-utils texlive-latex-base texlive-latex-extra \
+            texlive-fonts-recommended texlive-luatex texlive-pictures \
+            texlive-science texlive-lang-japanese
 
       - name: Run Tex to MD conversion
+        timeout-minutes: 40
         run: |
           python3 -m pip install TexSoup pypandoc pyyaml Pillow
           python3 scratch/tex_to_md.py
@@ -77,6 +87,7 @@ jobs:
         run: cd web && npm test
 
       - name: Build Astro site
+        timeout-minutes: 15
         # ubuntu-latest ランナーの物理メモリ(約7GB)に収まる範囲で V8 のヒープ上限を
         # 引き上げる。ページ数が増えるにつれてデフォルト上限では
         # "JavaScript heap out of memory" で稀に落ちるようになったため
