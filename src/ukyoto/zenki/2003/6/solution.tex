@@ -1,14 +1,8 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$n$チームを$a_k$（$k=1,2,\ldots,n$）とおく．$n-2$勝$1$敗の$2$チームの選び方は${}_n\mathrm C_2=\dfrac{n(n-1)}{2}$通りである．以下，この$2$チームが$a_1,a_2$の時を考える．対称性から，$a_1$が$a_2$に勝つ時を考える．$\cdots①$
 
-この時，考える対戦結果は次のようになる：$a_1$は$a_2$に勝ち，$a_3,\ldots,a_n$のうちある$1$チーム$a_k$（$3\le k\le n$）にのみ負ける．$a_2$は$a_1$に負け，$a_3,\ldots,a_n$には全て勝つ．
 \begin{figure}[htb]
   \centering
   % n=5, k=4 の例．行のチームから列のチームを見た勝敗を記す．
@@ -55,21 +49,34 @@ $n$チームを$a_k$（$k=1,2,\ldots,n$）とおく．$n-2$勝$1$敗の$2$チー
   \caption{対戦結果の模式図（$n=5$, $k=4$；行の○は勝ち，×は負け，?は未確定）}
 \end{figure}
 
-この時，$a_1$は$a_k$にのみ負ける（$3\le k\le n$）．$a_2$は$a_3$〜$a_n$に全て勝つ．したがって，$a_3$〜$a_n$の中で，$a_k$以外は必ず$2$敗する．$a_k$が$2$敗以上する確率は$1-\left(\dfrac{1}{2}\right)^{n-3}$（$\because$排反）だから，のこる確率は
-\begin{align}
-  \left(\dfrac{1}{2}\right)^{2n-3}\left\{1-\left(\dfrac{1}{2}\right)^{n-3}\right\}
-\end{align}
+$n$チームを$a_k$（$k=1,2,\ldots,n$）とおく．$n-2$勝$1$敗の$2$チームの選び方は${}_n\mathrm C_2=\dfrac{n(n-1)}{2}$通りである．以下，この$2$チームが$a_1,a_2$の時を考える．
+対称性から$a_1$が$a_2$に勝つ時を考える．
 
-したがって，$a_1,a_2$が$(n-2)$勝$1$敗となる確率$P$は
+この時，考える対戦結果は次のようになる：$a_1$は$a_2$に勝ち，$a_3,\ldots,a_n$のうちある$1$チーム$a_k$（$3\le k\le n$）にのみ負ける．$a_2$は$a_1$に負け，$a_3,\ldots,a_n$には全て勝つ．よって$a_3,\cdots,a_n$の中で $a_k$以外は必ず$a_1,a_2$に負け，$2$敗する．
+従って「$a_1$が$a_2$に勝ち，$a_k$が$a_1$に勝ち$a_2$には負け，合計$2$敗以上する」確率$A$は
 \begin{align}
-  P&=(n-2)\cdot2\left(\dfrac{1}{2}\right)^{2n-3}\left\{1-\left(\dfrac{1}{2}\right)^{n-3}\right\}\\
+  A = \underbrace{\left(\dfrac{1}{2}\right)^{n-1}}_{a_1\text{の勝敗}}
+  \cdot
+  \underbrace{\left(\dfrac{1}{2}\right)^{n-2}}_{a_2\text{の勝敗}}
+  \cdot
+  \underbrace{\left[1-\left(\dfrac{1}{2}\right)^{n-3}\right]}_{a_k\text{の勝敗}}
+\end{align}
+である．ただし，$a_2$の因子では$a_1$との試合はダブルカウントになるので考えず，$a_k$の因子では$a_1,a_2$以外との$n-3$試合について排反事象（全勝）を考えた．変形して
+\begin{align}
+  A = \left(\dfrac{1}{2}\right)^{2n-3}\left[1-\left(\dfrac{1}{2}\right)^{n-3}\right]
+\end{align}
+だから，$a_2$が$a_1$に勝つ場合と$k$を動かした場合を考えて，「$a_1,a_2$のみが$n-2$勝$1$敗」する確率$P$は
+\begin{align}
+  P
+  &=(n-2)\cdot2\left(\dfrac{1}{2}\right)^{2n-3}\left\{1-\left(\dfrac{1}{2}\right)^{n-3}\right\}\\
   &=(n-2)\left(\dfrac{1}{2}\right)^{2n-4}\left\{1-\left(\dfrac{1}{2}\right)^{n-3}\right\}
 \end{align}
-
-だから，全ての場合について足して，
+である．$n-2$勝$1$敗する$2$チームの選び方は${}_nC_2=\dfrac{n(n-1)}{2}$通りだから，全体の確率$Q$は
 \begin{align}
-  n(n-1)(n-2)\left(\dfrac{1}{2}\right)^{2n-3}\left\{1-\left(\dfrac{1}{2}\right)^{n-3}\right\}．
+  Q &= \dfrac{n(n-1)}{2} P\\
+  &=  n(n-1)(n-2)\left(\dfrac{1}{2}\right)^{2n-3}\left\{1-\left(\dfrac{1}{2}\right)^{n-3}\right\}
 \end{align}
+である．
 
 \newpage
 
