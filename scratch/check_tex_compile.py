@@ -37,6 +37,32 @@ def filter_target_files(file_paths: List[Union[str, Path]], repo_root: Optional[
     return list(dict.fromkeys(valid_targets))
 
 
+def ensure_main_tex_files(targets: List[Path], repo_root: Optional[Path] = None) -> None:
+    """Ensure src/{univ}/{cat}/main.tex exists for every target TeX file."""
+    root = (repo_root or Path.cwd()).resolve()
+    needed_categories = set()
+    for t in targets:
+        try:
+            rel = t.resolve().relative_to(root)
+            parts = rel.parts
+            if len(parts) >= 3 and parts[0] == "src":
+                needed_categories.add((parts[1], parts[2]))
+        except ValueError:
+            pass
+
+    script = root / "scratch" / "generate_main_tex.py"
+    for univ, cat in sorted(needed_categories):
+        main_tex = root / "src" / univ / cat / "main.tex"
+        if not main_tex.is_file():
+            if script.is_file():
+                print(f"Generating missing {univ}/{cat}/main.tex...")
+                subprocess.run(
+                    [sys.executable, str(script), f"{univ}/{cat}"],
+                    cwd=root,
+                    check=True,
+                )
+
+
 def get_git_diff_files(base: Optional[str] = None, head: Optional[str] = None, repo_root: Optional[Path] = None) -> List[str]:
     """Retrieve list of modified/added files using git diff."""
     root = (repo_root or Path.cwd()).resolve()
@@ -249,6 +275,9 @@ def main(argv: Optional[List[str]] = None) -> int:
     if not targets:
         print("No target tex files to compile. Skipping compilation check.")
         return 0
+
+    # Ensure main.tex exists for any university/category target
+    ensure_main_tex_files(targets, repo_root=repo_root)
 
     # Auto-detect docker if latexmk is missing and docker is available
     use_docker = args.docker

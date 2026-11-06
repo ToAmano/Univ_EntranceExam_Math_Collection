@@ -382,4 +382,35 @@ def test_cli_failure_output_and_exit_code(monkeypatch, tmp_path, capsys):
     assert "Summary: 1 checked, 0 passed, 1 failed." in captured.out
 
 
+def test_ensure_main_tex_files(tmp_path, monkeypatch):
+    repo_root = tmp_path
+    target_dir = repo_root / "src" / "test_univ" / "zenki" / "1990" / "1"
+    target_dir.mkdir(parents=True)
+    target = target_dir / "solution.tex"
+    target.write_text("% sol", encoding="utf-8")
+
+    script_dir = repo_root / "scratch"
+    script_dir.mkdir(parents=True)
+    script = script_dir / "generate_main_tex.py"
+
+    # Dummy generator script that creates main.tex
+    script.write_text(
+        "import sys, pathlib\n"
+        "univ, cat = sys.argv[1].split('/')\n"
+        "main_file = pathlib.Path('src') / univ / cat / 'main.tex'\n"
+        "main_file.parent.mkdir(parents=True, exist_ok=True)\n"
+        "main_file.write_text('% generated main.tex')\n",
+        encoding="utf-8",
+    )
+
+    main_tex = repo_root / "src" / "test_univ" / "zenki" / "main.tex"
+    assert not main_tex.exists()
+
+    checker.ensure_main_tex_files([target], repo_root=repo_root)
+
+    assert main_tex.is_file()
+    assert main_tex.read_text(encoding="utf-8") == "% generated main.tex"
+
+
+
 
