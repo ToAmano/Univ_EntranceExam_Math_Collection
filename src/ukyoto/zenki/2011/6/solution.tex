@@ -1,56 +1,126 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$\triangle BCD$の外心を$H$とおく．$H$を通り，$\triangle BCD$に垂直な直線$\ell$上の点を$X$とする．この時，外心の定義から
-\begin{align}
-  |XB|=|XC|=|XD|\quad\cdots①
-\end{align}
-である．$AB$の中点を$E$とし，$E$を通り$AB$に垂直な平面を$\pi$とする．$AB\perp\pi$，$\ell\perp$平面$BCD$から，$\pi$と$\ell$は必ず交点を持ち，これを$P$とすると，
-\begin{align}
-  |AP|=|BP|\quad\cdots②
-\end{align}
-
-①，②から，$P$を中心とし，半径$|AP|$の球面は$A,B,C,D$を全て通るので，題意は示された．$\blacksquare$
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x={(1.5cm,0cm)}, y={(1.4cm,0.9cm)}, z={(0cm,1.3cm)},
-    >=stealth, every node/.style={font=\small}]
-    % B=(0,0,0), C=(2,0,0), D=(1/2,3/2,0)．
-    % H=(1,1/2,0) は底面の外心，P=(1,1/2,87/100) はその法線上にある．
-    \coordinate (A) at (0.2,0.8,2);
-    \coordinate (B) at (0,0,0);
-    \coordinate (C) at (2,0,0);
-    \coordinate (D) at (0.5,1.5,0);
-    \coordinate (E) at (0.1,0.4,1);
-    \coordinate (H) at (1,0.5,0);
-    \coordinate (P) at (1,0.5,0.87);
-    \coordinate (Ltop) at (1,0.5,2.15);
-    \fill[blue!13, opacity=0.65] (B)--(C)--(D)--cycle;
-    \draw[dashed, gray!65, line width=0.85pt] (B)--(D);
-    \draw[blue!85!black, line width=1.3pt]
-    (A)--(B)--(C)--(D)--(A)--(C);
-    \draw[dashed, gray!60, line width=0.8pt]
-    (P)--(A) (P)--(B) (P)--(C) (P)--(D);
-    \draw[dashed, teal!80!black, line width=1pt]
-    (E)--(P) (H)--(Ltop) node[above] {$\ell$};
-    \draw[red!85!black, line width=1.45pt] (H)--(P);
-    \foreach \point/\position in {A/above left,B/left,C/below right,D/right} {
-      \node[circle, fill=blue!85!black, inner sep=1.3pt] at (\point) {}; \node[blue!85!black, \position=2pt] at (\point) {$\point$};
-    }
-    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (E) {}; \node[teal!85!black, left=2pt] at (E) {$E$};
-    \node[circle, fill=red!85!black, inner sep=1.45pt] at (H) {};
-    \node[circle, fill=red!85!black, inner sep=1.45pt] at (P) {};
-    \node[red!85!black, left=5pt] at (H) {$H$};
-    \node[red!85!black, right=3pt] at (P) {$P$};
+  \begin{tikzpicture}[>=stealth, every node/.style={font=\small}]
+    % --- 左図：四面体 ABCD と垂直二等分面・法線 l ---
+    % パラメータの幾何学的整合性：
+    % B(0,0,0), C(2,0,0), D(0.5,1.5,0) の外心は H(1,0.5,0) (HB=HC=HD=sqrt(1.25))
+    % A(0.2,0.8,2) のとき AB の中点は E(0.1,0.4,1) で，AB の垂直二等分面 x + 4y + 10z = 11.7
+    % と法線 l: (1, 0.5, z) の交点は P_1(1, 0.5, 0.87)
+    % P_1 A^2 = P_1 B^2 = P_1 C^2 = P_1 D^2 = 2.0069 で厳密に一致する．
+    \begin{scope}[x={(1.25cm,0cm)}, y={(1.15cm,0.75cm)}, z={(0cm,1.2cm)}]
+      \coordinate (A) at (0.2,0.8,2);
+      \coordinate (B) at (0,0,0);
+      \coordinate (C) at (2,0,0);
+      \coordinate (D) at (0.5,1.5,0);
+      \coordinate (E) at (0.1,0.4,1);
+      \coordinate (H) at (1,0.5,0);
+      \coordinate (P) at (1,0.5,0.87);
+      \coordinate (Ltop) at (1,0.5,2.1);
+
+      \fill[blue!12, opacity=0.6] (B)--(C)--(D)--cycle;
+      \draw[dashed, gray!65, line width=0.8pt] (B)--(D);
+      \draw[blue!85!black, line width=1.3pt] (A)--(B)--(C)--(D)--(A)--(C);
+
+      % 球心 P1 から各頂点への線 (PA=PB=PC=PD)
+      \draw[dashed, gray!60, line width=0.75pt]
+      (P)--(A) (P)--(B) (P)--(C) (P)--(D);
+
+      % 法線 l
+      \draw[dashed, red!85!black, line width=0.9pt] (H)--(P);
+      \draw[red!85!black, line width=1pt] (P)--(Ltop) node[above] {$\ell$};
+
+      % EP1 (垂直二等分面 pi 内の線分)
+      \draw[teal!85!black, line width=1.1pt] (E)--(P);
+
+      % 直角マーク: EP1 ⊥ AB at E
+      \coordinate (e1) at ($(E)!6pt!(A)$);
+      \coordinate (e2) at ($(E)!6pt!(P)$);
+      \draw[teal!85!black, line width=0.6pt] (e1) -- ($ (e1) + (e2) - (E) $) -- (e2);
+
+      % 等長マーク: AE = EB
+      \coordinate (mAE) at ($(A)!0.5!(E)$);
+      \coordinate (mEB) at ($(E)!0.5!(B)$);
+      \draw[gray!70!black, line width=0.7pt] ($(mAE)+(-0.04,0.03)$) -- ($(mAE)+(0.04,-0.03)$);
+      \draw[gray!70!black, line width=0.7pt] ($(mEB)+(-0.04,0.03)$) -- ($(mEB)+(0.04,-0.03)$);
+
+      % 各点
+      \foreach \point/\position in {A/above,B/below left,C/below right,D/right} {
+        \node[circle, fill=blue!85!black, inner sep=1.2pt] at (\point) {};
+        \node[blue!85!black, \position=2pt] at (\point) {$\point$};
+      }
+      \node[circle, fill=teal!85!black, inner sep=1.2pt] at (E) {};
+      \node[teal!85!black, left=2pt] at (E) {$E$};
+      \node[circle, fill=red!85!black, inner sep=1.3pt] at (H) {};
+      \node[red!85!black, below=2pt] at (H) {$H$};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {};
+      \node[red!85!black, right=3pt] at (P) {$P_1$};
+
+      \node[below=10pt, align=center, font=\footnotesize] at (1,0)
+      {(a) 四面体$ABCD$と外接球の中心$P_1$};
+    \end{scope}
+
+    % --- 右図：底面 BCD と外心 H，外接円 ---
+    \begin{scope}[xshift=5.8cm, yshift=0.3cm, scale=1.3]
+      \coordinate (B2) at (0,0);
+      \coordinate (C2) at (2,0);
+      \coordinate (D2) at (0.5,1.5);
+      \coordinate (H2) at (1,0.5);
+
+      % 外接円 (中心 H, 半径 sqrt(1.25) = 1.118)
+      \draw[gray!65, line width=0.85pt] (H2) circle (1.118);
+
+      % 三角形 BCD
+      \fill[blue!12, opacity=0.6] (B2)--(C2)--(D2)--cycle;
+      \draw[blue!85!black, line width=1.3pt] (B2)--(C2)--(D2)--cycle;
+
+      % 外心からの等距離線 HB = HC = HD
+      \draw[dashed, red!85!black, line width=0.9pt]
+      (H2)--(B2) (H2)--(C2) (H2)--(D2);
+
+      % 半径ラベル
+      \node[red!85!black, font=\scriptsize, above left] at ($(H2)!0.5!(B2)$) {$R$};
+      \node[red!85!black, font=\scriptsize, below] at ($(H2)!0.5!(C2)$) {$R$};
+      \node[red!85!black, font=\scriptsize, above right] at ($(H2)!0.5!(D2)$) {$R$};
+
+      % 各頂点と外心 H
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (B2) {};
+      \node[blue!85!black, below left=2pt] at (B2) {$B$};
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (C2) {};
+      \node[blue!85!black, below right=2pt] at (C2) {$C$};
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (D2) {};
+      \node[blue!85!black, above=2pt] at (D2) {$D$};
+
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (H2) {};
+      \node[red!85!black, below=2pt] at (H2) {$H$};
+
+      \node[below=15pt, align=center, font=\footnotesize] at (1,-0.6)
+      {(b) $\triangle BCD$の外接円と外心$H$\\($HB=HC=HD$)};
+    \end{scope}
   \end{tikzpicture}
-  \caption{$\triangle BCD$の外心$H$と法線$\ell$上の外接球の中心$P$}
+  \caption{四面体$ABCD$の外接球の中心$P_1$（左）と底面$\triangle BCD$の外心$H$（右）}
+  \label{fig:circumcenter_and_sphere}
 \end{figure}
+
+$\triangle BCD$の外心を$H$とおく．また，点$X$に対して$\overrightarrow{AX}=\vec{x}$とする．
+$H$を通り，$\triangle BCD$に垂直な直線$\ell$上の点を$P$とする．
+この時，外心の定義から
+\begin{align}
+  |PB|=|PC|=|PD| \label{eq:1}
+\end{align}
+が常に成り立つ．
+
+次に辺$AB$の中点を$E$とし，$E$を通り$AB$に垂直な平面を$\pi$とする．辺$AB$と平面$BCD$は平行ではないから$\pi$と$\ell$は必ず交点を持つから，これを$P_1$とする．すると$\pi$は辺$AB$の垂直二等分面だから
+\begin{align}
+  |AP_1|=|BP_1| \label{eq:2}
+\end{align}
+である．
+
+\cref{eq:1,eq:2}より点$P_1$を中心とした半径$|AP_1|$の球面は$A,B,C,D$を全て通るので，題意は示された．$\blacksquare$
 
 \newpage
 

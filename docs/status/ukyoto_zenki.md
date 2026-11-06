@@ -306,12 +306,12 @@
 | 2010年 | 第4問 | finish | finish | あり | 完成 |
 | 2010年 | 第5問 | finish | finish | あり | 完成 |
 | 2010年 | 第6問 | finish | finish | あり | 完成 |
-| 2011年 | 第1問 | finish | 文字起こし済 | あり | 未完成 |
+| 2011年 | 第1問 | finish | finish | あり | 完成 |
 | 2011年 | 第2問 | finish | unfinish | あり | 未完成 |
-| 2011年 | 第3問 | finish | 文字起こし済 | あり | 未完成 |
-| 2011年 | 第4問 | finish | 文字起こし済 | あり | 未完成 |
-| 2011年 | 第5問 | finish | 文字起こし済 | あり | 未完成 |
-| 2011年 | 第6問 | finish | 文字起こし済 | あり | 未完成 |
+| 2011年 | 第3問 | finish | finish | あり | 完成 |
+| 2011年 | 第4問 | finish | finish | あり | 完成 |
+| 2011年 | 第5問 | finish | finish | あり | 完成 |
+| 2011年 | 第6問 | finish | finish | あり | 完成 |
 | 2012年 | 第1問 | finish | finish | あり | 完成 |
 | 2012年 | 第2問 | finish | finish | あり | 完成 |
 | 2012年 | 第3問 | finish | finish | あり | 完成 |

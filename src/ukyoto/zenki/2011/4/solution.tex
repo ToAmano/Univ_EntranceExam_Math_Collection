@@ -1,57 +1,65 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$\dfrac{1}{2}<a_k<1\quad\cdots①$．$A_n=\displaystyle\prod_{k=1}^n(1-a_k)$，$B_n=\displaystyle\sum_{k=1}^n\dfrac{a_k}{2^{k-1}}$とおく．
 
-\bigskip
-{\bf [補題$P_1$]} $2^n(1-B_n)<1$
-
-\textit{(証明)} ①から，$\dfrac{1}{2^k}<\dfrac{a_k}{2^k}$だから，$k$について足して
+与えられた数列$\{a_k\}$について
 \begin{align}
-  \dfrac{1}{2}\cdot\dfrac{1-(1/2)^n}{1-1/2}<B_n
+  A_n=\displaystyle\prod_{k=1}^n(1-a_k), \quad
+  B_n=\displaystyle\sum_{k=1}^n\dfrac{a_k}{2^{k-1}} \label{eq:1}
 \end{align}
+とおいて，題意の不等式
 \begin{align}
-  1-\left(\dfrac{1}{2}\right)^n<B_n
+  A_n > 1- B_n \quad \left(\dfrac{1}{2}<a_k<1\right) \label{eq:2}
 \end{align}
-だから，
-\begin{align}
-  2^n(1-B_n)<2^n\cdot\left(\dfrac{1}{2}\right)^n=1
-\end{align}
-となり，$P_1$は示された．$\blacksquare$
+を数学的帰納法によって示す．まず以下の補題を示す．
 
-\bigskip
-任意の$n\in\mathbb{N}_{\ge2}$に対し，「$A_n>1-B_n$」$\cdots②$が成立することを帰納的に示す．
+\begin{theorem}[補題]
+  $n \ge 2$に対して$2^n(1-B_n)<1$である．
+\end{theorem}
 
-\underline{$1^\circ$ $n=2$}
+\begin{proof}
+  \cref{eq:2}から $\dfrac{1}{2^k}<\dfrac{a_k}{2^{k-1}}$だから，$k=1,2,\cdots,n$について足し合わせて
+  \begin{align}
+    & \sum_{k=1}^{n}\dfrac{1}{2^k}<\sum_{k=1}^{n}\dfrac{a_k}{2^{k-1}} \\
+    & \dfrac{1}{2}\cdot\dfrac{1-(1/2)^n}{1-1/2}<B_n \\
+    & 1-\left(\dfrac{1}{2}\right)^n<B_n \\
+    \therefore
+    & 2^n(1-B_n)<2^n\cdot\left(\dfrac{1}{2}\right)^n=1
+  \end{align}
+  となり補題は示された．$\blacksquare$
+\end{proof}
 
-◇は，
+以下帰納法で\cref{eq:2}を示す．
+
+まず$n=2$の時，\cref{eq:2}は
 \begin{align}
   (1-a_1)(1-a_2)>1-a_1-\dfrac{1}{2}a_2
 \end{align}
 となる．変形して，
 \begin{align}
-  &\iff-a_2(1-a_1)>-\dfrac{1}{2}a_2\\
-  &\iff a_2\left(\dfrac{1}{2}-a_1\right)<0
+  & -a_2(1-a_1)>-\dfrac{1}{2}a_2 \\
+  \iff
+  & a_2\left(\dfrac{1}{2}-a_1\right)<0
 \end{align}
-で，これは成立するから$n=2$では◇は成立．
+で，これは$\dfrac{1}{2}<a_k<1$から成立する．
 
-\underline{$2^\circ$ $n=k\ge2$での成立仮定}
-
-$A_k>1-B_k$の両辺に$(1-a_{k+1})\ (>0)$をかけて，
+そこで$n=k \ (\ge 2)$での成立を仮定して，$n=k+1$について考える．
+仮定から
 \begin{align}
-  A_{k+1}&>(1-B_k)(1-a_{k+1})\\
+  A_k>1-B_k
+\end{align}
+だから，両辺に$(1-a_{k+1})\ (>0)$をかけると
+\begin{align}
+  A_{k+1}
+  &>(1-B_k)(1-a_{k+1})\\
   &=(1-B_k)-(1-B_k)a_{k+1}\\
-  &>(1-B_k)-\dfrac{a_{k+1}}{2^k}\quad(\because P_1)\\
+  &>(1-B_k)-\dfrac{a_{k+1}}{2^k} \quad (\because\text{補題})\\
   &=1-B_{k+1}
 \end{align}
-から，$n=k+1$でも◇は成立．
+から，$n=k+1$でも\cref{eq:2}は成立する．
 
-以上から②は示された．$\blacksquare$
+以上から数学的帰納法により\cref{eq:2}は示された．$\blacksquare$
 
 \newpage
 

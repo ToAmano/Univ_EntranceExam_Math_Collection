@@ -1,24 +1,197 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-平面$\alpha$の点$X$として
+
+\tdplotsetmaincoords{65}{115}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[tdplot_main_coords, scale=1.2, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0,0,0);
+    \def\R{2.4494897} % sqrt(6)
+    \def\r{0.8164966} % sqrt(6)/3
+
+    % 座標軸
+    \draw[->, gray!80!black, line width=0.85pt] (0,0,0) -- (4.8,0,0) node[pos=1.05] {$x$};
+    \draw[->, gray!80!black, line width=0.85pt] (0,0,0) -- (0,4.8,0) node[pos=1.05] {$y$};
+    \draw[->, gray!80!black, line width=0.85pt] (0,0,0) -- (0,0,4.8) node[pos=1.05] {$z$};
+
+    % 球面 S の奥側の円弧（第1象限の各座標平面上の弧）
+    \draw[blue!45, dashed, line width=0.8pt] plot[domain=0:90, samples=30] ({\R*cos(\x)}, {\R*sin(\x)}, 0);
+    \draw[blue!45, dashed, line width=0.8pt] plot[domain=0:90, samples=30] ({\R*cos(\x)}, 0, {\R*sin(\x)});
+    \draw[blue!45, dashed, line width=0.8pt] plot[domain=0:90, samples=30] (0, {\R*cos(\x)}, {\R*sin(\x)});
+
+    % 球面と軸の交点 (半径 sqrt(6)) の目盛り
+    \node[circle, fill=blue!70!black, inner sep=1pt] at (\R, 0, 0) {};
+    \node[blue!80!black, above left=-1pt, font=\scriptsize] at (\R, 0, 0) {$\sqrt{6}$};
+    \node[circle, fill=blue!70!black, inner sep=1pt] at (0, \R, 0) {};
+    \node[blue!80!black, below=2pt, font=\scriptsize] at (0, \R, 0) {$\sqrt{6}$};
+    \node[circle, fill=blue!70!black, inner sep=1pt] at (0, 0, \R) {};
+    \node[blue!80!black, left=2pt, font=\scriptsize] at (0, 0, \R) {$\sqrt{6}$};
+
+    % 平面 alpha: (4,0,0), (0,4,0), (0,0,4)
+    \coordinate (P1) at (4,0,0);
+    \coordinate (P2) at (0,4,0);
+    \coordinate (P3) at (0,0,4);
+    \fill[teal!10, opacity=0.45] (P1) -- (P2) -- (P3) -- cycle;
+    \draw[teal!80!black, line width=1pt] (P1) -- (P2) -- (P3) -- cycle;
+
+    % 平面と軸の交点 (4) の目盛り
+    \node[circle, fill=teal!80!black, inner sep=1pt] at (P1) {};
+    \node[teal!90!black, below left=-1pt, font=\scriptsize] at (P1) {$4$};
+    \node[circle, fill=teal!80!black, inner sep=1pt] at (P2) {};
+    \node[teal!90!black, below=2pt, font=\scriptsize] at (P2) {$4$};
+    \node[circle, fill=teal!80!black, inner sep=1pt] at (P3) {};
+    \node[teal!90!black, left=2pt, font=\scriptsize] at (P3) {$4$};
+
+    \node[teal!85!black, above right=1pt, font=\footnotesize] at (P2) {$\alpha: x+y+z=4$};
+
+    % 原点 O から中心 A への垂線 (奥側: 破線)
+    \coordinate (A) at (1.333333, 1.333333, 1.333333);
+    \draw[dashed, red!85!black, line width=0.85pt] (O) -- (A);
+
+    % 切断面（平面 alpha 上の円板）
+    \fill[blue!20, opacity=0.7]
+    plot[domain=0:360, samples=60]
+    ({1.333333 + \r*(2/2.44949)*sin(\x)},
+      {1.333333 + \r*((1/1.41421)*cos(\x) - (1/2.44949)*sin(\x))},
+    {1.333333 + \r*((-1/1.41421)*cos(\x) - (1/2.44949)*sin(\x))}) -- cycle;
+
+    % 切断面の境界円
+    \draw[blue!85!black, line width=1.4pt]
+    plot[domain=0:360, samples=60]
+    ({1.333333 + \r*(2/2.44949)*sin(\x)},
+      {1.333333 + \r*((1/1.41421)*cos(\x) - (1/2.44949)*sin(\x))},
+    {1.333333 + \r*((-1/1.41421)*cos(\x) - (1/2.44949)*sin(\x))});
+
+    % 球欠（平面の上に突き出る部分）
+    \coordinate (Apex) at (1.414214, 1.414214, 1.414214);
+
+    % 球欠のドーム曲面（薄い塗り）
+    \fill[blue!35, opacity=0.35]
+    plot[domain=0:360, samples=60]
+    ({1.333333 + \r*(2/2.44949)*sin(\x)},
+      {1.333333 + \r*((1/1.41421)*cos(\x) - (1/2.44949)*sin(\x))},
+    {1.333333 + \r*((-1/1.41421)*cos(\x) - (1/2.44949)*sin(\x))}) -- cycle;
+
+    % 球欠の立体感を出す円弧リブ
+    \draw[blue!75!black, line width=0.85pt]
+    plot[domain=-19.47:19.47, samples=25]
+    ({\R*cos(\x)*(1/1.73205) + \R*sin(\x)*0},
+      {\R*cos(\x)*(1/1.73205) + \R*sin(\x)*(1/1.41421)},
+    {\R*cos(\x)*(1/1.73205) + \R*sin(\x)*(-1/1.41421)});
+
+    \draw[blue!75!black, line width=0.85pt]
+    plot[domain=-19.47:19.47, samples=25]
+    ({\R*cos(\x)*(1/1.73205) + \R*sin(\x)*(2/2.44949)},
+      {\R*cos(\x)*(1/1.73205) + \R*sin(\x)*(-1/2.44949)},
+    {\R*cos(\x)*(1/1.73205) + \R*sin(\x)*(-1/2.44949)});
+
+    % 法線ベクトル n の直線 (A から先へ突き出る)
+    \coordinate (Nend) at (2.25, 2.25, 2.25);
+    \draw[red!85!black, line width=1.2pt, ->] (A) -- (Nend)
+    node[above left=-1pt, font=\footnotesize] {$\vec{n}$};
+
+    % 点 A と原点 O
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (O) {};
+    \node[below left=2pt] at (O) {$O$};
+    \node[circle, fill=red!85!black, inner sep=1.3pt] at (A) {};
+    \node[red!85!black, above=2pt, font=\footnotesize] at (A) {$A$};
+
+    % 切断面と球欠の説明注釈（引き出し線）
+    % 切断面ラベル: 左下側の空きスペース (2.5, 1.2, 0.3)
+    \coordinate (CutLabel) at (2.5, 1.2, 0.3);
+    \draw[->, thin, blue!85!black] (CutLabel)
+    node[below left=-2pt, font=\footnotesize] {切断面（共有点の円）} -- ($(A) + (0.35, 0.1, -0.45)$);
+
+    % 球欠ラベル: 右上側の空きスペース (0.4, 0.4, 2.3)
+    \coordinate (CapLabel) at (0.4, 0.4, 2.3);
+    \draw[->, thin, blue!90!black] (CapLabel)
+    node[above right=-2pt, font=\footnotesize] {球欠（$x+y+z \ge 4$）} -- ($(Apex) + (-0.05, -0.05, 0.05)$);
+  \end{tikzpicture}
+  \caption{球面$S$と平面$\alpha$の切断面および球欠}
+  \label{fig:sphere_and_plane}
+\end{figure}
+
+平面$\alpha$の法線ベクトルは$\vec{n}=
+\begin{pmatrix} 1\\ 1 \\ 1
+\end{pmatrix}$であるから，
+$\alpha$の方程式は
 \begin{align}
   \alpha:x+y+z=4
 \end{align}
-だから，$\alpha$と$O$の間りの距離$L$は
+である．
+$\alpha$と球の中心$O(0,0,0)$の距離$L$は，点と平面の距離公式から
 \begin{align}
-  L=\dfrac{4}{\sqrt{3}}=\dfrac{4\sqrt{3}}{3}<\sqrt{6}
+  L=\dfrac{4}{\sqrt{3}}=\dfrac{4\sqrt{3}}{3}<\sqrt{6} = \text{球の半径}
 \end{align}
-だから，$\alpha$と$S$は共有点を持つ．さらに，共有点の中心$A\left(\dfrac{4}{3},\dfrac{4}{3},\dfrac{4}{3}\right)$，半径$\dfrac{\sqrt{6}}{3}$の円で，この円上の点は，$\alpha$に平行な単位ベクトル$\dfrac{1}{\sqrt{2}}
-\begin{pmatrix}0\\1\\-1
-\end{pmatrix}$，$\dfrac{1}{\sqrt{6}}
-\begin{pmatrix}2\\-1\\-1
-\end{pmatrix}$を用いて，
+だから，$\alpha$と$S$は共有点を持つ．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.8cm, y=1.8cm, >=stealth, every node/.style={font=\small}]
+    \def\R{2.4494897} % sqrt(6)
+    \def\L{2.309401}  % 4/sqrt(3)
+    \def\r{0.8164966} % sqrt(6)/3
+
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (\L,0);
+    \coordinate (P) at (\L,\r);
+    \coordinate (Pneg) at (\L,-\r);
+
+    % 球の断面 (円)
+    \draw[blue!85!black, line width=1.3pt] ({-40}:\R) arc (-40:40:\R);
+    \draw[dashed, gray!50, line width=0.7pt] (0,0) circle (\R);
+
+    % 軸 (法線方向 X 軸と、平面内の径方向 Y 軸)
+    \draw[->, gray!80!black, line width=0.85pt] (-0.3,0) -- (2.8,0) node[right] {$X$ ($\vec{n}$方向)};
+    \draw[->, gray!80!black, line width=0.85pt] (0,-1.4) -- (0,1.5) node[above] {$Y$};
+
+    % 平面 alpha による切断面 (X = L)
+    \draw[teal!85!black, line width=1.2pt] (\L, -1.2) -- (\L, 1.2)
+    node[above, font=\footnotesize] {平面 $\alpha$ ($X=L$)};
+
+    % 共有円の直径部分を太線で強調
+    \draw[red!85!black, line width=1.6pt] (Pneg) -- (P)
+    node[midway, right=2pt, font=\footnotesize] {共有円の直径 $2r$};
+
+    % 三角形 OAP (直角三角形)
+    \draw[dashed, red!85!black, line width=0.9pt] (O) -- (P)
+    node[midway, above left=1pt, font=\footnotesize] {$R=\sqrt{6}$};
+    \draw[blue!85!black, line width=1pt] (O) -- (A)
+    node[midway, below=2pt, font=\footnotesize] {$L=\frac{4}{\sqrt{3}}$};
+
+    % 直角記号 at A
+    \coordinate (a1) at ($ (A)!7pt!(O) $);
+    \coordinate (a2) at ($ (A)!7pt!(P) $);
+    \draw[gray!70!black, line width=0.6pt] (a1) -- ($ (a1) + (a2) - (A) $) -- (a2);
+
+    % 点
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (O) {}; \node[below left=2pt] at (O) {$O$};
+    \node[circle, fill=red!85!black, inner sep=1.3pt] at (A) {}; \node[below right=2pt] at (A) {$A$};
+    \node[circle, fill=red!85!black, inner sep=1.3pt] at (P) {};
+    \node[above right=1pt, font=\footnotesize, red!85!black] at (P) {$r=\frac{\sqrt{6}}{3}$};
+  \end{tikzpicture}
+  \caption{法線$\vec{n}$を含む断面における球面$S$と平面$\alpha$の切断面}
+  \label{fig:cross_section}
+\end{figure}
+
+球$S$の$\alpha$による切断面は中心$A\left(\dfrac{4}{3},\dfrac{4}{3},\dfrac{4}{3}\right)$, 半径
+\begin{align}
+  r = \sqrt{\sqrt{6}^2 - L^2} = \sqrt{6-\dfrac{16}{3}} = \dfrac{\sqrt{6}}{3} \label{eq:1}
+\end{align}
+の円である．この円上の点$X(x,y,z)$は，平面$\alpha$に平行な単位ベクトル
+\begin{align}
+  \vec{a}_1 =
+  \dfrac{1}{\sqrt{2}}
+  \begin{pmatrix}0\\1\\-1
+  \end{pmatrix}, \quad
+  \vec{a}_2 =
+  \dfrac{1}{\sqrt{6}}
+  \begin{pmatrix}2\\-1\\-1
+  \end{pmatrix} \label{eq:2}
+\end{align}
+を用いて
 \begin{align}
   \overrightarrow{OX}=\dfrac{4}{3}
   \begin{pmatrix}1\\1\\1
@@ -28,63 +201,90 @@
     \begin{pmatrix}2\\-1\\-1
   \end{pmatrix}\right]\quad(0\le\theta<2\pi)
 \end{align}
-とかけるから，$X(x,y,z)$として
+とかけるから，
 \begin{align}
-  x&=\dfrac{4}{3}+\dfrac{2}{3}\sin\theta\\
-  y&=\dfrac{4}{3}-\dfrac{\sqrt{3}}{3}\cos\theta-\dfrac{1}{3}\sin\theta\\
-  z&=\dfrac{4}{3}+\dfrac{\sqrt{3}}{3}\cos\theta-\dfrac{1}{3}\sin\theta
+  \begin{cases}
+    x=\dfrac{4}{3}+\dfrac{2}{3}\sin\theta\\
+    y=\dfrac{4}{3}-\dfrac{\sqrt{3}}{3}\cos\theta-\dfrac{1}{3}\sin\theta\\
+    z=\dfrac{4}{3}+\dfrac{\sqrt{3}}{3}\cos\theta-\dfrac{1}{3}\sin\theta
+  \end{cases} \label{eq:3}
 \end{align}
-
-以下$s=\sin\theta$，$c=\cos\theta$とすると
+である．従ってこれらの座標の積$xyz$は
 \begin{align}
-  xyz&=\left(\dfrac{4}{3}+\dfrac{2}{3}s\right)\left\{\left(\dfrac{4}{3}-\dfrac{1}{3}s\right)^2-\dfrac{1}{3}c^2\right\}\\
-  &=\dfrac{2}{3}(2+s)\left\{\dfrac{4}{9}s^2-\dfrac{8}{9}s+\dfrac{13}{9}\right\}\\
-  &=\dfrac{2}{27}(4s^3-3s+26)
+  xyz
+  &=\left(\dfrac{4}{3}+\dfrac{2}{3}\sin\theta\right)
+  \left\{\left(\dfrac{4}{3}-\dfrac{1}{3}\sin\theta\right)^2-\dfrac{1}{3}\cos^2\theta\right\}\\
+  &=\dfrac{2}{3}(2+\sin\theta)\left\{\dfrac{4}{9}\sin^2\theta-\dfrac{8}{9}\sin\theta+\dfrac{13}{9}\right\}\\
+  &=\dfrac{2}{27}(4\sin^3\theta-3\sin\theta+26)
 \end{align}
-
-$\{\ \}$の中身を$f(s)$とおく．
+である．これを$f(\sin\theta)$とすると
 \begin{align}
-  f'(s)=3(4s^2-1)
+  f(x) = \dfrac{2}{27}(4x^3-3x+26)
 \end{align}
-から，下表を得る．
+であって，一階微分は
+\begin{align}
+  f'(x)=3(4x^2-1)
+\end{align}
+となるから$f(x)$の増減表は以下のようになる．
 
 \begin{table}[htb]
   \centering
+  \caption{$f(x)=2(4x^3-3x+26)/27$の$-1 \le x \le 1$における増減表}
   \begin{tabular}{c|ccccccc}
     $s$ & $-1$ & & $-\dfrac{1}{2}$ & & $\dfrac{1}{2}$ & & $1$ \\
     \hline
     $f'$ & & $+$ & $0$ & $-$ & $0$ & $+$ & \\
     \hline
-    $f$ & & $\nearrow$ & & $\searrow$ & & $\nearrow$ & \\
+    $f$ & 25 & $\nearrow$ & 27 & $\searrow$ & 25 & $\nearrow$ & 27 \\
   \end{tabular}
-  \caption{$f(s)=4s^3-3s+26$の増減}
 \end{table}
 
-ここで，
+従って$xyz=f(\sin\theta)$の値域は
 \begin{align}
-  f(-1)=25，\quad f\left(\dfrac{1}{2}\right)=25，\qquad f(1)=27，\quad f\left(-\dfrac{1}{2}\right)=27
+  \dfrac{50}{27}\le xyz \le 2
 \end{align}
+である．
 
-から，もとめる積は
-\begin{align}
-  \dfrac{50}{27}\le xyz\le2．
-\end{align}
-
-\bigskip
 {\bf [別解]}
+
 共有点上の点$(X,Y,Z)$は
 \begin{align}
   X+Y+Z=4，\qquad X^2+Y^2+Z^2=6
 \end{align}
 をみたす．$\alpha=XYZ$とおく．
 \begin{align}
-  YZ+ZX+XY=5
+  & (X+Y+Z)^2 =(X^2+Y^2+Z^2) + 2(YZ+ZX+XY) \\
+  & 4^2 = 6 - 2(YZ+ZX+XY) \\
+  \therefore
+  & YZ+ZX+XY=5 \label{eq:4}
 \end{align}
-から，$X,Y,Z$は$t$の3次式
+だから，$X,Y,Z$は$t$の3次式
 \begin{align}
   t^3-4t^2+5t=\alpha
 \end{align}
-の3実解．$f(t)=t^3-4t^2+5t$のグラフを考えると，$f'(t)=3t^2-8t+5=(3t-5)(t-1)$から，$t=1$で極大値$f(1)=2$，$t=5/3$で極小値$f(5/3)=\dfrac{50}{27}$をとるから，3実解をもつ条件は
+の3つの実数解である．
+
+\begin{table}[htb]
+  \centering
+  \caption{$f(t)$の増減表}
+  \label{tab:f_variation}
+  \begin{tabular}{c|ccccc}
+    \hline
+    $t$ & $\cdots$ & $1$ & $\cdots$ & $\dfrac{5}{3}$ & $\cdots$ \\
+    \hline
+    $f'(t)$ & $+$ & $0$ & $-$ & $0$ & $+$ \\
+    \hline
+    $f(t)$ & $\nearrow$ & $2$ & $\searrow$ & $\dfrac{50}{27}$ & $\nearrow$ \\
+    \hline
+  \end{tabular}
+\end{table}
+
+$f(t)=t^3-4t^2+5t$のグラフを考えると，$f'(t)=3t^2-8t+5=(3t-5)(t-1)$から，$t=1$で極大値$f(1)=2$，$t=5/3$で極小値$f(5/3)=\dfrac{50}{27}$をとるから，3実解をもつ条件は
+\begin{align}
+  \dfrac{50}{27}\le\alpha\le2
+\end{align}
+となる．
+
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=3.0cm, y=3.2cm, >=stealth,
@@ -109,10 +309,6 @@ $\{\ \}$の中身を$f(s)$とおく．
   \end{tikzpicture}
   \caption{$f(t)=t^3-4t^2+5t$の極大値と極小値}
 \end{figure}
-\begin{align}
-  \dfrac{50}{27}\le\alpha\le2
-\end{align}
-となる．
 
 \newpage
 

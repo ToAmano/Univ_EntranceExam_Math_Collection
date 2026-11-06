@@ -1,87 +1,161 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-グラフは下図である．
-\begin{align}
-  \dfrac{3}{4}x^2-5=x\quad&\cdots①\ \text{の2解}\ \alpha,\beta\ (\alpha<\beta)\\
-  -\dfrac{3}{4}x^2+1=x\quad&\cdots②\ \text{の2解}\ \gamma,\delta\ (\gamma<\delta)
-\end{align}
-とおく．もとめる面積を$S$とする．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=0.92cm, y=0.72cm, >=stealth,
+  \begin{tikzpicture}[x=0.95cm, y=0.65cm, >=stealth,
     every node/.style={font=\small}]
     \def\middleRoot{0.666667}
     \def\rightRoot{3.333333}
-    % 手書き図の二つの斜線領域を，境界曲線の式から塗る．
-    \fill[blue!17, opacity=0.75] (-2,-2)
-    -- plot[domain=-2:\middleRoot, samples=65] (\x,{1-0.75*\x*\x})
-    -- plot[domain=\middleRoot:-2, samples=30] (\x,\x)--cycle;
-    \fill[teal!17, opacity=0.75] (\middleRoot,\middleRoot)
-    -- plot[domain=\middleRoot:2, samples=40] (\x,{1-0.75*\x*\x})
-    -- plot[domain=2:\rightRoot, samples=40] (\x,{0.75*\x*\x-5})
-    -- plot[domain=\rightRoot:\middleRoot, samples=40] (\x,\x)--cycle;
-    \draw[->, gray!80!black, line width=0.9pt]
-    (-3.35,0)--(3.75,0) node[right] {$x$};
-    \draw[->, gray!80!black, line width=0.9pt]
-    (0,-2.35)--(0,4.1) node[above] {$y$};
+
+    % 斜線塗りつぶし (2つの領域)
+    \fill[blue!10] (-2,-2)
+    -- plot[domain=-2:\middleRoot, samples=40] (\x,{1-0.75*\x*\x})
+    -- plot[domain=\middleRoot:-2, samples=20] (\x,\x) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!60!black] (-2,-2)
+    -- plot[domain=-2:\middleRoot, samples=40] (\x,{1-0.75*\x*\x})
+    -- plot[domain=\middleRoot:-2, samples=20] (\x,\x) -- cycle;
+
+    \fill[teal!10] (\middleRoot,\middleRoot)
+    -- plot[domain=\middleRoot:2, samples=30] (\x,{1-0.75*\x*\x})
+    -- plot[domain=2:\rightRoot, samples=30] (\x,{0.75*\x*\x-5})
+    -- plot[domain=\rightRoot:\middleRoot, samples=30] (\x,\x) -- cycle;
+    \fill[pattern=north east lines, pattern color=teal!70!black] (\middleRoot,\middleRoot)
+    -- plot[domain=\middleRoot:2, samples=30] (\x,{1-0.75*\x*\x})
+    -- plot[domain=2:\rightRoot, samples=30] (\x,{0.75*\x*\x-5})
+    -- plot[domain=\rightRoot:\middleRoot, samples=30] (\x,\x) -- cycle;
+
+    % 座標軸
+    \draw[->, gray!80!black, line width=0.9pt] (-3.5,0) -- (4.2,0) node[right] {$x$};
+    \draw[->, gray!80!black, line width=0.9pt] (0,-5.6) -- (0,4.2) node[above] {$y$};
+
+    % 点線で示された y=3/4x^2-5 の元のグラフ (x in [-2.2, 2.2])
+    \draw[dashed, gray!65, line width=0.9pt]
+    plot[domain=-2.2:2.2, samples=40] (\x,{0.75*\x*\x-5});
+    \node[gray!70!black, left=2pt, font=\footnotesize] at (0,-5) {$-5$};
+
+    % 実線グラフ: y = |3/4x^2 - 3| - 2
     \draw[blue!85!black, line width=1.35pt]
-    plot[domain=-3.1:-2, samples=30] (\x,{0.75*\x*\x-5})
-    plot[domain=-2:2, samples=80] (\x,{1-0.75*\x*\x})
-    plot[domain=2:3.45, samples=40] (\x,{0.75*\x*\x-5});
+    plot[domain=-3.2:-2, samples=25] (\x,{0.75*\x*\x-5})
+    plot[domain=-2:2, samples=60] (\x,{1-0.75*\x*\x})
+    plot[domain=2:3.6, samples=30] (\x,{0.75*\x*\x-5});
+
+    % 直線 y = x
     \draw[teal!85!black, line width=1.25pt]
-    plot[domain=-2.3:3.55, samples=2] (\x,\x);
-    \draw[dashed, gray!60, line width=0.8pt]
-    (\middleRoot,0)--(\middleRoot,\middleRoot)
-    (\rightRoot,0)--(\rightRoot,\rightRoot);
+    plot[domain=-2.4:3.8, samples=2] (\x,\x)
+    node[above right, font=\footnotesize] {$y=x$};
+
+    % 補助線
+    \draw[dashed, gray!60, line width=0.7pt]
+    (\middleRoot,0) -- (\middleRoot,\middleRoot)
+    (\rightRoot,0) -- (\rightRoot,\rightRoot)
+    (-2,0) -- (-2,-2) -- (0,-2)
+    (2,0) -- (2,-2);
+
+    % 交点
     \foreach \point in {(-2,-2),(\middleRoot,\middleRoot),(\rightRoot,\rightRoot)} {
       \node[circle, fill=red!85!black, inner sep=1.35pt] at \point {};
     }
-    \node[below left=2pt] at (-2,0) {$-2$};
-    \node[below=2pt] at (\middleRoot,0) {$\frac{2}{3}$};
-    \node[below=2pt] at (2,0) {$2$};
-    \node[below=2pt] at (\rightRoot,0) {$\frac{10}{3}$};
-    \node[teal!85!black, above left=2pt, font=\footnotesize]
-    at (2.7,2.7) {$y=x$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (2,-2) {};
+
+    % 座標目盛りラベル
+    \node[above=2pt, font=\footnotesize] at (-2,0) {$-2$};
+    \node[above=2pt, font=\footnotesize] at (\middleRoot,0) {$\frac{2}{3}$};
+    \node[above=2pt, font=\footnotesize] at (2,0) {$2$};
+    \node[below=2pt, font=\footnotesize] at (\rightRoot,0) {$\frac{10}{3}$};
+    \node[left=2pt, font=\footnotesize] at (0,-2) {$-2$};
+    \node[above right=1pt, font=\footnotesize] at (0,1) {$1$};
+
+    % 曲線ラベル
+    \node[blue!85!black, above=2pt, font=\footnotesize] at (-2.5,2.2) {$y=\left|\frac{3}{4}x^2-3\right|-2$};
   \end{tikzpicture}
-  \caption{$y=x$と$y=\left|\dfrac{3}{4}x^2-3\right|-2$で囲まれる二つの領域}
+  \caption{$y=x$と$y=\left|\dfrac{3}{4}x^2-3\right|-2$で囲まれる領域（斜線部）と元の放物線（破線）}
+  \label{fig:area}
 \end{figure}
 
+与えられた曲線
 \begin{align}
-  S=(\text{①を全区間で延長した放物線と直線の間の面積})+2\times(\text{②の放物線と直線の間の面積})\\
-  -2\times(\text{①を延長した放物線と直線の間の，区間}[-2,2]\text{での面積})\quad\cdots③
+  y = x, \quad
+  y = \left|\dfrac{3}{4}x^2-3\right|-2 \label{eq:1}
+\end{align}
+について考える．これらのグラフは上図である．
+
+絶対値を外した方程式の解を
+\begin{align}
+  \begin{cases}
+    \dfrac{3}{4}x^2-5=x \text{の2解}\  \alpha=-2,\beta=\dfrac{10}{3} \ (\alpha<\beta)\\
+    -\dfrac{3}{4}x^2+1=x \text{の2解}\ \gamma=-2,\delta=\dfrac{2}{3} \ (\gamma<\delta)
+  \end{cases} \label{eq:2}
+\end{align}
+とおく．
+
+もとめる面積を$S$とすると，これは以下のように$3$つの放物線と直線の囲む面積から計算できる．
+\begin{align}
+  S &=
+  \left( \text{
+      \begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.35]
+        \fill[blue!15] (-2,-1.2) -- plot[domain=-2:3.33, samples=30] (\x,{0.45*\x*\x - 3.0}) -- (3.33,2.0) -- cycle;
+        \fill[pattern=north east lines, pattern color=blue!70!black]
+        (-2,-1.2) -- plot[domain=-2:3.33, samples=30] (\x,{0.45*\x*\x - 3.0}) -- (3.33,2.0) -- cycle;
+        \draw[teal!85!black, thick] (-2.5,-1.5) -- (3.8,2.28);
+        \draw[blue!85!black, thick] plot[domain=-2.5:3.6, samples=30] (\x,{0.45*\x*\x - 3.0});
+        \node[below left=-1pt, font=\tiny] at (-2,-1.2) {$\alpha$};
+        \node[above right=-1pt, font=\tiny] at (3.33,2.0) {$\beta$};
+        \node[font=\scriptsize] at (0,2) {$S_1$};
+  \end{tikzpicture}} \right)
+  + 2
+  \left( \text{
+      \begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.35]
+        \fill[teal!15] (-2,-1.2) -- plot[domain=-2:0.67, samples=30] (\x,{1.5 - 0.675*\x*\x}) -- (0.67,0.4) -- cycle;
+        \fill[pattern=north east lines, pattern color=teal!70!black]
+        (-2,-1.2) -- plot[domain=-2:0.67, samples=30] (\x,{1.5 - 0.675*\x*\x}) -- (0.67,0.4) -- cycle;
+        \draw[teal!85!black, thick] (-2.4,-1.44) -- (1.5,0.9);
+        \draw[blue!85!black, thick] plot[domain=-2.4:1.2, samples=30] (\x,{1.5 - 0.675*\x*\x});
+        \node[below left=-1pt, font=\tiny] at (-2,-1.2) {$\gamma$};
+        \node[above right=-1pt, font=\tiny] at (0.67,0.4) {$\delta$};
+        \node[font=\scriptsize] at (0,2) {$S_2$};
+  \end{tikzpicture}} \right)
+  - 2
+  \left( \text{
+      \begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.35]
+        \fill[blue!15] (-2,-1) -- plot[domain=-2:2, samples=30] (\x,{0.45*\x*\x - 2.8}) -- (2,-1) -- cycle;
+        \fill[pattern=north east lines, pattern color=blue!70!black]
+        (-2,-1) -- plot[domain=-2:2, samples=30] (\x,{0.45*\x*\x - 2.8}) -- (2,-1) -- cycle;
+        \draw[teal!85!black, thick] (-2.5,-1) -- (2.5,-1);
+        \draw[blue!85!black, thick] plot[domain=-2.3:2.3, samples=30] (\x,{0.45*\x*\x - 2.8});
+        \node[above, font=\tiny] at (-2,-1) {$-2$};
+        \node[above, font=\tiny] at (2,-1) {$2$};
+        \node[font=\scriptsize] at (0,2) {$S_3$};
+  \end{tikzpicture}} \right) \label{eq:3}
 \end{align}
 
-であり，
+各項を個別に計算すると
 \begin{align}
-  &\dfrac{3}{4}\cdot\dfrac{1}{6}(\beta-\alpha)^3=\dfrac{1}{8}(\beta-\alpha)^3，\\
-  &\dfrac{3}{4}\cdot\dfrac{1}{6}(\delta-\gamma)^3=\dfrac{1}{8}(\delta-\gamma)^3，\\
-  &\dfrac{3}{4}\cdot\dfrac{1}{6}(2+2)^3=\dfrac{1}{8}(4)^3
+  S_1 &= \dfrac{3}{4}\cdot\dfrac{1}{6}(\beta-\alpha)^3=\dfrac{1}{8}(\beta-\alpha)^3，\\
+  S_2 &= \dfrac{3}{4}\cdot\dfrac{1}{6}(\delta-\gamma)^3=\dfrac{1}{8}(\delta-\gamma)^3，\\
+  S_3 &= \dfrac{3}{4}\cdot\dfrac{1}{6}(2+2)^3=\dfrac{1}{8}(4)^3
 \end{align}
-
-を③に代入して
+だから，これを\cref{eq:2}に代入して
 \begin{align}
-  S=\dfrac{1}{8}(\beta-\alpha)^3+\dfrac{1}{4}(\delta-\gamma)^3-16\quad\cdots④
+  S=\dfrac{1}{8}(\beta-\alpha)^3+\dfrac{1}{4}(\delta-\gamma)^3-16 \label{eq:4}
 \end{align}
+である．
 
-ここで，①，②から
+ここで\cref{eq:2}から
 \begin{align}
-  \beta-\alpha=\dfrac{10}{3}+2=\dfrac{16}{3}，\qquad\delta-\gamma=\dfrac{2}{3}+2=\dfrac{8}{3}
+  \beta-\alpha=\dfrac{10}{3}+2=\dfrac{16}{3}，\qquad
+  \delta-\gamma=\dfrac{2}{3}+2=\dfrac{8}{3}
 \end{align}
-
-を④に代入して
+だから，\cref{eq:4}に代入して求める面積は
 \begin{align}
   S&=\dfrac{1}{8}\left(\dfrac{16}{3}\right)^3+\dfrac{1}{4}\left(\dfrac{8}{3}\right)^3-16\\
   &=\dfrac{8^3}{3^3}+\dfrac{2\cdot8^2}{3^3}-\dfrac{16\cdot3^3}{3^3}\\
   &=\dfrac{16}{3^3}(32+8-27)\\
-  &=\dfrac{208}{27}．
+  &=\dfrac{208}{27}
 \end{align}
+となる．
 
 \newpage
 

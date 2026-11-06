@@ -1,31 +1,75 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-\textbf{(1)} $Y=X$となる時（$X=1,2,\ldots,8$），$X$以外のカードが$X+1,\ldots,9$だから，求める確率は
-\begin{align}
-  \sum_{X=1}^{8}\left(\dfrac{9-X}{{}_9\mathrm{C}_2}\right)^2=\left(\dfrac{1}{36}\right)^2\sum_{X=1}^8X^2=\left(\dfrac{1}{36}\right)^2\cdot\dfrac{1}{6}\cdot8\cdot9\cdot17=\dfrac{17}{108}．
-\end{align}
 
-\textbf{(2)} 与式を$A$とおく．
-\begin{align}
-  A=\int_0^{1/2}x\sqrt{1-2x^2}\,dx+\int_0^{1/2}\sqrt{1-2x^2}\,dx\quad\cdots①
-\end{align}
-となる．
-\begin{align}
-  \int_0^{1/2}x\sqrt{1-2x^2}\,dx&=-\dfrac{1}{6}\Bigl[(1-2x^2)^{\frac{3}{2}}\Bigr]_0^{1/2}=-\dfrac{1}{6}\left[\left(\dfrac{1}{2}\right)^{\frac{3}{2}}-1\right]\quad\cdots②\\
-  \int_0^{1/2}\sqrt{1-2x^2}\,dx&=\int_0^{\pi/4}\sqrt{1-\sin^2\theta}\cdot\dfrac{1}{\sqrt{2}}\cos\theta\,d\theta\quad\left(x=\dfrac{\sqrt{2}}{2}\sin\theta\right)\\
-  &=\dfrac{\sqrt{2}}{2}\int_0^{\pi/4}\cos^2\theta\,d\theta=\dfrac{\sqrt{2}}{2}\cdot\dfrac{1}{2}\left[\theta+\dfrac{1}{2}\sin2\theta\right]_0^{\pi/4}=\dfrac{\sqrt{2}}{4}\left(\dfrac{\pi}{4}+\dfrac{1}{2}\right)\quad\cdots③
-\end{align}
+\subparagraph{(1)}
 
-②，③を①に代入して
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[>=stealth, every node/.style={font=\small}]
+    % 箱の外枠
+    \draw[thick, gray!70!black, rounded corners=4pt] (-0.3, 0.8) rectangle (8.7, -0.9);
+    \node[above right, font=\footnotesize, text=gray!80!black] at (-0.3, 0.8) {箱の中の9枚のカード};
+
+    % 9枚のカード
+    \foreach \i in {1,...,9} {
+      \node[draw=blue!80!black, fill=blue!10, rounded corners=2pt, minimum width=0.65cm, minimum height=0.85cm, line width=0.8pt] (c\i) at (\i*0.9-0.5, 0) {$\i$};
+    }
+
+    % X の選択と、それより大きいカードの選択の概念
+    \draw[red!85!black, line width=1.2pt, rounded corners=3pt] (3.6-0.37, -0.47) rectangle (3.6+0.37, 0.47);
+    \node[red!85!black, below=8pt, font=\footnotesize] at (3.6, -0.47) {最小値 $X$};
+
+    \draw[teal!85!black, line width=1pt, dashed, rounded corners=3pt] (4.5-0.37, -0.47) rectangle (7.7+0.37, 0.47);
+    \node[teal!85!black, below=8pt, font=\footnotesize] at (6.1, -0.47) {もう1枚：$X+1 \sim 9$ の $(9-X)$ 通り};
+
+    % 1回の試行で最小値が X となる確率
+    \node[below=25pt, align=center, font=\small] at (4.2, -0.9)
+    {2枚のうち小さいほうが $X$ となる確率：$\frac{9-X}{{}_9\mathrm{C}_2} = \frac{9-X}{36}$};
+  \end{tikzpicture}
+  \caption{9枚のカードから2枚引いて最小値が$X$となる組み合わせ}
+  \label{fig:card_draw}
+\end{figure}
+
+$Y=X$となる時（$X=1,2,\ldots,8$），$2$回目に引いた$2$枚の内で$Y$以外のカードが$X+1,\ldots,9$であれば良い．$2$回目に引くカードの組み合わせは${}_9C_2$通りで同様に確からしいから，求める確率$P$は
 \begin{align}
-  A=\dfrac{1}{6}\left[1-\dfrac{\sqrt{2}}{4}\right]+\dfrac{\sqrt{2}}{4}\left(\dfrac{\pi}{4}+\dfrac{1}{2}\right)=\dfrac{\sqrt{2}}{4}\left(\dfrac{\pi}{4}+\dfrac{1}{3}\right)+\dfrac{1}{6}．
+  P
+  &=\sum_{X=1}^{8}\left(\dfrac{9-X}{{}_9\mathrm{C}_2}\right)^2
+  =\left(\dfrac{1}{36}\right)^2\sum_{X=1}^8X^2
+  =\left(\dfrac{1}{36}\right)^2\cdot\dfrac{1}{6}\cdot8\cdot9\cdot17
+  =\dfrac{17}{108}
 \end{align}
+である．
+
+\subparagraph{(2)}
+
+与えられた定積分
+\begin{align}
+  A=\int_0^{1/2}x\sqrt{1-2x^2}\,dx+\int_0^{1/2}\sqrt{1-2x^2}\,dx \label{eq:1}
+\end{align}
+について考える．
+
+各項を個別に計算すると，
+\begin{align}
+  (\text{第1項})
+  &=  \int_0^{1/2}x\sqrt{1-2x^2}\,dx \\
+  &=-\dfrac{1}{6}\Bigl[(1-2x^2)^{\frac{3}{2}}\Bigr]_0^{1/2} \\
+  &=-\dfrac{1}{6}\left[\left(\dfrac{1}{2}\right)^{\frac{3}{2}}-1\right] \\
+  (\text{第2項})
+  &= \int_0^{1/2}\sqrt{1-2x^2}\,dx \\
+  &=\int_0^{\pi/4}\sqrt{1-\sin^2\theta}\cdot\dfrac{1}{\sqrt{2}}\cos\theta\,d\theta\quad\left(x=\dfrac{\sqrt{2}}{2}\sin\theta\right)\\
+  &=\dfrac{\sqrt{2}}{2}\int_0^{\pi/4}\cos^2\theta\,d\theta \\
+  &=\dfrac{\sqrt{2}}{2}\cdot\dfrac{1}{2}\left[\theta+\dfrac{1}{2}\sin2\theta\right]_0^{\pi/4} \\
+  &=\dfrac{\sqrt{2}}{4}\left(\dfrac{\pi}{4}+\dfrac{1}{2}\right)
+\end{align}
+だから，\cref{eq:1}に代入して求める値は
+\begin{align}
+  A
+  =\dfrac{1}{6}\left[1-\dfrac{\sqrt{2}}{4}\right]+\dfrac{\sqrt{2}}{4}\left(\dfrac{\pi}{4}+\dfrac{1}{2}\right)
+  =\dfrac{\sqrt{2}}{4}\left(\dfrac{\pi}{4}+\dfrac{1}{3}\right)+\dfrac{1}{6}
+\end{align}
+である．
 
 \newpage
 
