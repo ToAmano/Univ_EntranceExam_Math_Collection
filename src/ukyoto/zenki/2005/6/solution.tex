@@ -1,32 +1,90 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-左から$k$両目まで見た時，$k$両目が赤である場合の数を$a_k$，青か黄色である場合の数を$b_k$とする．題意から
-\begin{align}
-  a_{k+1}&=a_k+b_k\\
-  b_{k+1}&=2a_k
-\end{align}
-であり，又，$a_1=1$，$b_1=2$となる．※から$b_k$を消して，
-\begin{align}
-  a_{k+2}=a_{k+1}+2a_k，\qquad a_1=1，\ a_2=3
-\end{align}
 
-だから，解いて，
-\begin{align}
-  a_k&=\dfrac{1}{3}\left\{2^{k+1}+(-1)^k\right\}\\
-  b_k&=\dfrac{2}{3}\left\{2^k+(-1)^{k-1}\right\}\quad(k\ge2)
-\end{align}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1cm, y=1cm, >=stealth, every node/.style={font=\small}]
+    % (1) 車両の概要
+    \node[anchor=west, font=\small, text=blue!85!black] at (-0.5, 3.7)
+    {【$n$両編成の車両】隣り合う車両の少なくとも一方が赤色};
+    \foreach \i/\x/\label in {1/0.5/1, 2/1.7/2, 3/4.1/k, 4/5.5/k+1, 5/7.8/n} {
+      \draw[thick, gray!70!black, rounded corners=2pt] (\x-0.45, 2.3) rectangle (\x+0.45, 3.1);
+      \node[font=\footnotesize] at (\x, 2.7) {$\label$};
+      % 車輪
+      \node[circle, fill=gray!60, inner sep=1.4pt] at (\x-0.25, 2.18) {};
+      \node[circle, fill=gray!60, inner sep=1.4pt] at (\x+0.25, 2.18) {};
+    }
+    % 連結器
+    \draw[thick, gray!60] (0.95, 2.7) -- (1.25, 2.7);
+    \draw[thick, gray!60] (2.15, 2.7) -- (2.45, 2.7);
+    \node at (2.9, 2.7) {$\cdots$};
+    \draw[thick, gray!60] (3.35, 2.7) -- (3.65, 2.7);
+    \draw[thick, gray!60] (4.55, 2.7) -- (5.05, 2.7);
+    \draw[thick, gray!60] (5.95, 2.7) -- (6.25, 2.7);
+    \node at (6.65, 2.7) {$\cdots$};
+    \draw[thick, gray!60] (7.05, 2.7) -- (7.35, 2.7);
 
-だから$n\ge2$の時，もとめるのは
+    % (2) 状態遷移図
+    \begin{scope}[shift={(0.6, -0.6)}]
+      \node[font=\normalsize\bfseries, gray!30!black] at (1.0, 2.0) {$k$両目の色};
+      \node[font=\normalsize\bfseries, gray!30!black] at (5.8, 2.0) {$k+1$両目の色};
+
+      \node[draw=red!85!black, fill=red!8, thick, rounded corners=3pt, inner sep=5pt] (Ak) at (1.0, 1.1)
+      {\textbf{赤} ($a_k$)};
+      \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=3pt, inner sep=5pt] (Bk) at (1.0, -0.9)
+      {\textbf{青または黄} ($b_k$)};
+
+      \node[draw=red!85!black, fill=red!8, thick, rounded corners=3pt, inner sep=5pt] (Ak1) at (5.8, 1.1)
+      {\textbf{赤} ($a_{k+1}$)};
+      \node[draw=blue!85!black, fill=blue!5, thick, rounded corners=3pt, inner sep=5pt] (Bk1) at (5.8, -0.9)
+      {\textbf{青または黄} ($b_{k+1}$)};
+
+      % 遷移矢印
+      \draw[->, line width=1.1pt, red!85!black] (Ak.east) -- (Ak1.west)
+      node[midway, above=1pt, font=\footnotesize] {赤 ($1$通り)};
+      \draw[->, line width=1.1pt, orange!85!black] (Ak.east) -- (Bk1.west)
+      node[pos=0.22, above right=1pt, font=\footnotesize] {青・黄 ($2$通り)};
+      \draw[->, line width=1.1pt, teal!85!black] (Bk.east) -- (Ak1.west)
+      node[pos=0.22, below right=1pt, font=\footnotesize] {赤 ($1$通り)};
+      \draw[->, line width=1.1pt, dashed, gray!50] (Bk.east) -- (Bk1.west)
+      node[midway, below=3pt, font=\footnotesize, text=red!70!black] {× (非赤の連続は不可)};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{車両の配置と$k$両目から$k+1$両目への塗り分けの状態遷移}
+  \label{fig:train_coloring_transition}
+\end{figure}
+
+左から$k$両目まで塗る時，$k$両目が赤である場合の数を$a_k$，青か黄色である場合の数を$b_k$とする．$k+1$両目を塗る時，これが赤ならば$k$両目は任意，それ以外なら$k$両目は赤で塗らないといけないから
 \begin{align}
-  a_n+b_n&=\dfrac{1}{3}\left(2^{n+2}+(-1)^n+2(-1)^{n-1}\right)\\
-  &=\dfrac{1}{3}\left(2^{n+2}+(-1)^{n-1}\right)．
+  \begin{cases}
+    a_{k+1}=a_k+b_k\\
+    b_{k+1}=2a_k
+  \end{cases} \label{eq:1}
 \end{align}
+である．また初期条件は
+\begin{align}
+  a_1=1, b_1=2 \label{eq:2}
+\end{align}
+である．\cref{eq:1,eq:2}から$b_k$を消して
+\begin{align}
+  a_{k+2}=a_{k+1}+2a_k，\qquad a_1=1，\ a_2=3 \label{eq:3}
+\end{align}
+だから，漸化式を解いて
+\begin{align}
+  \begin{cases}
+    a_k=\dfrac{1}{3}\left\{2^{k+1}+(-1)^k\right\}\\
+    b_k=\dfrac{2}{3}\left\{2^k+(-1)^{k-1}\right\}
+  \end{cases} \quad(k\ge2) \label{eq:4}
+\end{align}
+となる．従って $n\ge2$の時もとめる場合の数は
+\begin{align}
+  a_n+b_n
+  &=\dfrac{1}{3}\left(2^{n+2}+(-1)^n+2(-1)^{n-1}\right)\\
+  &=\dfrac{1}{3}\left(2^{n+2}+(-1)^{n-1}\right)
+\end{align}
+である．
 
 \newpage
 

@@ -1,58 +1,168 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$L:y=2x\ (0\le x\le1)$である．よって，
-\begin{align}
-  x^2+ax+b=2x\quad(0\le x\le1)
-\end{align}
-が解を持てば良い．$f(x)=x^2+(a-2)x+b$とおく．
 
-\underline{$1^\circ$ 区間内に$1$つ}
+題意の線分
 \begin{align}
-  f(0)f(1)\le0\iff b(a+b-1)\le0
+  L:y=2x\ (0\le x\le1) \label{eq:1}
 \end{align}
+と放物線
+\begin{align}
+  y = x^2+ax+b \label{eq:2}
+\end{align}
+が共有点を持つので，連立した
+\begin{align}
+  f(x) = x^2+(a-2)x+b \quad (0\le x\le1) \label{eq:3}
+\end{align}
+が解を持てば良い．解の個数によって場合分けする．
 
-\underline{$2^\circ$ 区間内に$2$つ（重解含む）}
-\begin{align}
-  \text{判別式：}&(a-2)^2-4b\ge0\\
-  \text{端点：}&f(0)\ge0，\ f(1)\ge0\\
-  \text{軸：}&0\le\dfrac{2-a}{2}\le1
-\end{align}
-\begin{align}
-  \iff\quad b\le\dfrac{1}{4}(a-2)^2，\qquad b\ge0，\ a+b-1\ge0，\qquad0\le a\le2
-\end{align}
+\subparagraph{$1^\circ$ $[0,1]$の区間内に$1$つの解を持つ}
 
-以上を図示して，下図斜線部（境界含む）．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.6cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
+    % Panel 1: f(0) >= 0 >= f(1)
+    \begin{scope}[shift={(0,0)}]
+      \draw[->, thick, gray!80!black] (-0.3,0) -- (1.6,0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0,-0.8) -- (0,1.2) node[above] {$y$};
+      \node[below left=2pt] at (0,0) {$O$};
+      \draw[line width=1.3pt, blue!85!black, domain=-0.2:1.3, samples=50]
+      plot (\x, {1.2*(\x-0.4)*(\x-1.5)});
+      \node[circle, fill, inner sep=1.2pt] at (0, 0.72) {};
+      \node[left=2pt, font=\footnotesize] at (0, 0.72) {$f(0)$};
+      \draw[dashed, gray!60] (1,0) -- (1, -0.36);
+      \node[circle, fill, inner sep=1.2pt] at (1, -0.36) {};
+      \node[below right=1pt, font=\footnotesize] at (1, -0.36) {$f(1)$};
+      \node[above=2pt, font=\footnotesize] at (1,0) {$1$};
+      \node[below=4pt, font=\footnotesize] at (0.65,-0.8) {(i) $f(0)\ge0\ge f(1)$};
+    \end{scope}
+    % Panel 2: f(0) <= 0 <= f(1)
+    \begin{scope}[shift={(3.0,0)}]
+      \draw[->, thick, gray!80!black] (-0.3,0) -- (1.6,0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0,-0.8) -- (0,1.2) node[above] {$y$};
+      \node[above left=2pt] at (0,0) {$O$};
+      \draw[line width=1.3pt, blue!85!black, domain=-0.2:1.3, samples=50]
+      plot (\x, {1.2*(\x+0.5)*(\x-0.6)});
+      \node[circle, fill, inner sep=1.2pt] at (0, -0.36) {};
+      \node[left=2pt, font=\footnotesize] at (0, -0.36) {$f(0)$};
+      \draw[dashed, gray!60] (1,0) -- (1, 0.72);
+      \node[circle, fill, inner sep=1.2pt] at (1, 0.72) {};
+      \node[above right=1pt, font=\footnotesize] at (1, 0.72) {$f(1)$};
+      \node[below=2pt, font=\footnotesize] at (1,0) {$1$};
+      \node[below=4pt, font=\footnotesize] at (0.65,-0.8) {(ii) $f(0)\le0\le f(1)$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{$[0,1]$内に$1$つの解を持つ放物線$y=f(x)$の様子}
+  \label{fig:parabola_one_root}
+\end{figure}
+
+両端での$f(x)$の値が逆であれば良いから，
+\begin{align}
+  f(0)f(1)\le0\iff b(a+b-1)\le0 \label{eq:4}
+\end{align}
+である．
+
+\subparagraph{$2^\circ$ $[0,1]$の区間内に$2$つ（重解含む）}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.6cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
+    % Panel 1: 異なる2解
+    \begin{scope}[shift={(0,0)}]
+      \draw[->, thick, gray!80!black] (-0.3,0) -- (1.6,0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0,-0.6) -- (0,1.4) node[above] {$y$};
+      \node[below left=2pt] at (0,0) {$O$};
+      \draw[line width=1.3pt, blue!85!black, domain=-0.15:1.25, samples=50]
+      plot (\x, {2.8*(\x-0.3)*(\x-0.8)});
+      \node[circle, fill, inner sep=1.2pt] at (0, 0.672) {};
+      \node[left=2pt, font=\footnotesize] at (0, 0.672) {$f(0)$};
+      \draw[dashed, gray!60] (1,0) -- (1, 0.392);
+      \node[circle, fill, inner sep=1.2pt] at (1, 0.392) {};
+      \node[right=2pt, font=\footnotesize] at (1, 0.392) {$f(1)$};
+      \node[below=2pt, font=\footnotesize] at (1,0) {$1$};
+      \draw[dashed, gray!60] (0.55, -0.6) -- (0.55, 1.1) node[above, font=\footnotesize] {軸};
+      \node[below=4pt, font=\footnotesize] at (0.65,-0.6) {(i) 異なる$2$解 ($D>0$)};
+    \end{scope}
+    % Panel 2: 重解
+    \begin{scope}[shift={(3.0,0)}]
+      \draw[->, thick, gray!80!black] (-0.3,0) -- (1.6,0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0,-0.6) -- (0,1.4) node[above] {$y$};
+      \node[below left=2pt] at (0,0) {$O$};
+      \draw[line width=1.3pt, blue!85!black, domain=-0.1:1.2, samples=50]
+      plot (\x, {2.2*(\x-0.55)^2});
+      \node[circle, fill, inner sep=1.2pt] at (0, 0.665) {};
+      \node[left=2pt, font=\footnotesize] at (0, 0.665) {$f(0)$};
+      \draw[dashed, gray!60] (1,0) -- (1, 0.445);
+      \node[circle, fill, inner sep=1.2pt] at (1, 0.445) {};
+      \node[right=2pt, font=\footnotesize] at (1, 0.445) {$f(1)$};
+      \node[below=2pt, font=\footnotesize] at (1,0) {$1$};
+      \node[circle, fill=red!85!black, inner sep=1.3pt] at (0.55, 0) {};
+      \draw[dashed, gray!60] (0.55, 0) -- (0.55, 1.1) node[above, font=\footnotesize] {軸};
+      \node[below=4pt, font=\footnotesize] at (0.65,-0.6) {(ii) 重解 ($D=0$)};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{$[0,1]$内に$2$つの解（重解含む）を持つ放物線$y=f(x)$の様子}
+  \label{fig:parabola_two_roots}
+\end{figure}
+
+この時は判別式，端点，軸の位置を考えて
+\begin{align}
+  \begin{cases}
+    \text{判別式：} (a-2)^2-4b\ge0\\
+    \text{端点：} f(0)\ge0，\ f(1)\ge0\\
+    \text{軸：} 0\le\dfrac{2-a}{2}\le1
+  \end{cases}
+  \iff
+  \begin{cases}
+    b\le\dfrac{1}{4}(a-2)^2 \\
+    b\ge0, a+b-1\ge0 \\
+    0\le a\le2
+  \end{cases} \label{eq:5}
+\end{align}
+である．
+\casesend
+
+以上\cref{eq:4,eq:5}を図示すると下図斜線部（境界含む）である．
 
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=1.3cm, y=0.95cm, >=stealth,
     every node/.style={font=\small}]
-    % a<0 と a>2 では f(0)f(1)\leq0、0\leq a\leq2 では判別式の条件も使う。
-    \fill[blue!13] (-2.2,0) -- (0,0) -- (0,1) -- (-2.2,3.2) -- cycle;
-    \fill[blue!13] (0,1) plot[domain=0:2, samples=80]
-    (\x,{0.25*(\x-2)^2}) -- (2,-1) -- cycle;
-    \fill[blue!13] (2,0) -- (3.2,0) -- (3.2,-2.2) -- (2,-1) -- cycle;
+    % 斜線部（領域の塗り）
+    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.8]
+    (-2.2,0) -- (-2.2,3.2) -- (0,1)
+    plot[domain=0:2, samples=60] (\x,{0.25*(\x-2)^2})
+    -- (3.2,0) -- (3.2,-2.2)
+    -- (1,0) -- (-2.2,0) -- cycle;
+    % 座標軸
     \draw[->, thick, gray!80!black] (-2.35,0) -- (3.45,0) node[right] {$a$};
     \draw[->, thick, gray!80!black] (0,-2.4) -- (0,3.45) node[above] {$b$};
+    % 境界線：直線 b = 1 - a
     \draw[line width=1.25pt, teal!80!black] (-2.2,3.2) -- (3.2,-2.2);
+    % 境界線：放物線 b = (a-2)^2 / 4 (0 <= a <= 2 は実線，それ以外は破線)
     \draw[line width=1.4pt, blue!85!black]
     plot[domain=0:2, samples=80] (\x,{0.25*(\x-2)^2});
+    \draw[dashed, blue!85!black!60]
+    plot[domain=-1.0:0, samples=40] (\x,{0.25*(\x-2)^2});
+    \draw[dashed, blue!85!black!60]
+    plot[domain=2:2.8, samples=40] (\x,{0.25*(\x-2)^2});
+    % 補助線
+    \draw[dashed, gray!60] (2,0) -- (2,-1) -- (0,-1);
+    % 点とラベル
     \node[circle, fill, inner sep=1.2pt] at (0,0) {}; \node[below left=2pt] at (0,0) {$O$};
     \node[circle, fill, inner sep=1.2pt] at (1,0) {}; \node[above right=2pt] at (1,0) {$1$};
     \node[circle, fill, inner sep=1.2pt] at (2,0) {}; \node[above right=2pt] at (2,0) {$2$};
     \node[circle, fill, inner sep=1.2pt] at (0,1) {}; \node[above right=2pt] at (0,1) {$1$};
+    \node[circle, fill, inner sep=1.2pt] at (2,-1) {};
+    \node[left=2pt, font=\footnotesize] at (0,-1) {$-1$};
     \node[blue!85!black, fill=white, inner sep=1pt, above right]
     at (0.4,1.35) {$b=\frac{1}{4}(a-2)^2$};
     \node[teal!80!black, fill=white, inner sep=1pt, below left]
     at (2.5,-1.5) {$b=1-a$};
   \end{tikzpicture}
-  \caption{条件を満たす$(a,b)$の範囲（着色部，境界含む）}
+  \caption{条件を満たす$(a,b)$の範囲（斜線部，境界含む）}
+  \label{fig:ab_region}
 \end{figure}
 
 \newpage
