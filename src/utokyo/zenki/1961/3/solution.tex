@@ -2,11 +2,169 @@
 \begin{document}
 
 {\bf [解答]}
-直円錐の軸を含む平面で切って，下図のように点，図形量を置く．また
+
+\begin{figure}[htb]
+  \centering
+  \tdplotsetmaincoords{65}{110}
+  \begin{tikzpicture}[tdplot_main_coords, scale=1.9, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 定数・幾何パラメータ
+    % ============================================================
+    \def\a{1.7}          % 半球の半径 a
+    \def\tDeg{55}        % 底角 t (度)
+    \def\thV{65}         % 視点仰角 (度)
+    \def\phV{110}        % 視点方位角 (度)
+
+    \pgfmathsetmacro{\sinT}{sin(\tDeg)}
+    \pgfmathsetmacro{\cosT}{cos(\tDeg)}
+    \pgfmathsetmacro{\tanT}{tan(\tDeg)}
+
+    % 円錐の高さ h = a / cos(t), 底面半径 R = a / sin(t)
+    \pgfmathsetmacro{\hVal}{\a / \cosT}
+    \pgfmathsetmacro{\rVal}{\a / \sinT}
+
+    % 接触円の高さ z_T = a * cos(t), 半径 r_T = a * sin(t)
+    \pgfmathsetmacro{\zT}{\a * \cosT}
+    \pgfmathsetmacro{\rT}{\a * \sinT}
+
+    % シルエット接線角 psi0: sin(psi0) = (R/h) * cot(thV)
+    \pgfmathsetmacro{\sinPsi}{(\rVal / \hVal) * (1 / tan(\thV))}
+    \pgfmathsetmacro{\psiZero}{asin(\sinPsi)}
+    % 画面上の左右輪郭母線の底面接点の方位角
+    \pgfmathsetmacro{\uRight}{\phV + \psiZero}
+    \pgfmathsetmacro{\uLeft}{\phV + 180 - \psiZero}
+
+    % 主要点
+    \coordinate (O) at (0, 0, 0);
+    \coordinate (H) at (0, 0, \hVal);
+
+    % 代表断面 OHA (母線 HA) の方位角
+    \def\angA{38}
+    \coordinate (A) at ({\rVal*cos(\angA)}, {\rVal*sin(\angA)}, 0);
+    \coordinate (T) at ({\rT*cos(\angA)}, {\rT*sin(\angA)}, \zT);
+
+    % ============================================================
+    % 2. 断面 OHA の塗り (斜線パターン)
+    % ============================================================
+    \fill[pattern=north east lines, pattern color=teal!35] (O) -- (A) -- (H) -- cycle;
+
+    % ============================================================
+    % 3. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- ({\rVal + 0.6}, 0, 0) node[below left=-1pt] {$x$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, {\rVal + 0.6}, 0) node[above right=-1pt] {$y$};
+    \draw[densely dotted, thick, gray!70!black] (0, 0, 0) -- (H);
+    \draw[->, thick, gray!80!black] (H) -- (0, 0, {\hVal + 0.6}) node[above] {$z$};
+    \node[below left=2pt, font=\footnotesize] at (O) {$O$};
+
+    % ============================================================
+    % 4. 円錐底面 (z = 0, 半径 R) の奥側 (破線)
+    % ============================================================
+    \draw[dashed, thick, gray!60!black]
+    plot[domain=\uRight:\uLeft, samples=60, variable=\u]
+    ({\rVal*cos(\u)}, {\rVal*sin(\u)}, 0);
+
+    % ============================================================
+    % 5. 半球の描画
+    % ============================================================
+    % 半球の赤道 (z = 0, 半径 a)
+    \draw[densely dotted, thick, teal!70!black]
+    plot[domain=0:360, samples=60, variable=\u]
+    ({\a*cos(\u)}, {\a*sin(\u)}, 0);
+
+    % xz 断面 (y = 0) の半円
+    \draw[dashed, teal!65!black]
+    plot[domain=0:180, samples=50, variable=\u]
+    ({\a*cos(\u)}, 0, {\a*sin(\u)});
+    % yz 断面 (x = 0) の半円
+    \draw[dashed, teal!65!black]
+    plot[domain=0:180, samples=50, variable=\u]
+    (0, {\a*cos(\u)}, {\a*sin(\u)});
+
+    % 半球の淡いシェーディング
+    \fill[teal!20, opacity=0.20]
+    plot[domain=0:180, samples=40, variable=\u] ({\a*cos(\u)}, 0, {\a*sin(\u)}) --
+    plot[domain=180:360, samples=40, variable=\u] ({\a*cos(\u)}, {\a*sin(\u)}, 0) -- cycle;
+
+    % ============================================================
+    % 6. 接触円 (水平円 z = z_T, 半径 r_T)
+    % ============================================================
+    \draw[line width=1.1pt, red!80!black, dash pattern=on 4pt off 2pt]
+    plot[domain=0:360, samples=60, variable=\u]
+    ({\rT*cos(\u)}, {\rT*sin(\u)}, \zT);
+    % 接触円ラベル (右端の外側に配置)
+    \node[red!85!black, font=\scriptsize, right=3pt]
+    at ({\rT*cos(\phV)}, {\rT*sin(\phV)}, \zT) {接触円 ($z=a\cos t$)};
+
+    % ============================================================
+    % 7. 円錐側面と輪郭線
+    % ============================================================
+    \coordinate (SilL) at ({\rVal*cos(\uLeft)}, {\rVal*sin(\uLeft)}, 0);
+    \coordinate (SilR) at ({\rVal*cos(\uRight)}, {\rVal*sin(\uRight)}, 0);
+
+    % シルエット母線 (手前・奥の境界)
+    \draw[line width=1.3pt, blue!85!black] (H) -- (SilL);
+    \draw[line width=1.3pt, blue!85!black] (H) -- (SilR);
+
+    % 円錐底面の手前側弧 (実線)
+    \draw[line width=1.3pt, blue!85!black]
+    plot[domain=\uLeft:{\uRight + 360}, samples=70, variable=\u]
+    ({\rVal*cos(\u)}, {\rVal*sin(\u)}, 0);
+
+    % 円錐側面の淡いシェーディング
+    \fill[blue!12, opacity=0.15]
+    (H) -- plot[domain=\uLeft:{\uRight + 360}, samples=50, variable=\u] ({\rVal*cos(\u)}, {\rVal*sin(\u)}, 0) -- cycle;
+
+    % ============================================================
+    % 8. 断面要素 (母線 HA, 半径 OA, 接点半径 OT)
+    % ============================================================
+    % 母線 HA
+    \draw[line width=1.3pt, teal!90!black] (H) -- (A);
+    % 底面半径 OA
+    \draw[thick, dashed, teal!85!black] (O) -- (A);
+    % 接点半径 OT
+    \draw[line width=1.3pt, red!85!black] (O) -- (T)
+    node[midway, above left=-1pt, font=\footnotesize] {$a$};
+
+    % 直角記号 at T (OT ⊥ HA)
+    \pgfmathsetmacro{\lenT}{0.20}
+    \coordinate (TdirO) at ($-{\lenT/\a}*(T)$);
+    \coordinate (TdirH) at (${ \lenT/(\a*\tanT) }*(H) - { \lenT/(\a*\tanT) }*(T)$);
+    \draw[gray!70!black, thick]
+    ($ (T) + (TdirO) $) -- ($ (T) + (TdirO) + (TdirH) $) -- ($ (T) + (TdirH) $);
+
+    % 角 t の弧とラベル (at A)
+    \draw[thick, teal!90!black] ($(A)!0.28!(O)$) to[bend right=15] ($(A)!0.18!(H)$);
+    \node[above left=4pt, font=\footnotesize, teal!90!black] at ($(A)!0.15!(O)$) {$t$};
+
+    % ============================================================
+    % 9. 主要点・ラベル
+    % ============================================================
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (H) {};
+    \node[above right=1pt] at (H) {$H$};
+
+    \node[circle, fill=teal!90!black, inner sep=1.4pt] at (A) {};
+    \node[below right=1pt] at (A) {$A$};
+
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (T) {};
+    \node[above right=2pt, red!85!black, font=\footnotesize] at (T) {$T$};
+
+    % 寸法ラベル
+    \node[left=3pt, font=\footnotesize] at ($(O)!0.65!(H)$) {$h$};
+    \node[below=3pt, font=\footnotesize, teal!90!black] at ($(O)!0.5!(A)$) {$R$};
+
+  \end{tikzpicture}
+  \caption{半球に外接する直円錐の 3D 概要図}
+  \label{fig:cone_hemisphere_3d}
+\end{figure}
+
+直円錐の軸を含む平面で切断した断面図は下図のようになる．
+頂点を$H$，底面の中心を$O$，底面の周辺の一点を$A$として，
 \begin{align}
-  \cos t = c, \quad \sin t = s
+  \angle HAO = t \quad (0<t<\pi/2) \label{eq:1}
 \end{align}
-とおく．ただし$0<t<\pi/2$である．
+と置く．
 
 \begin{figure}[htb]
   \centering
@@ -64,17 +222,21 @@
 
 上図から，
 \begin{align}
-  &|AO|=\dfrac{a}{c}&|AH|=\dfrac{a}{cs} \\
-  &|OH|=\dfrac{a}{c}
+  &|AO|=\dfrac{a}{\cos t }&|AH|=\dfrac{|AO}{\cos t} = \dfrac{a}{\cos t\sin t} \\
+  &|OH|=\dfrac{a}{\cos t}
 \end{align}
 であるから，直円錐の表面積$T$は，
 \begin{align}
   T&=\text{底面積}+\text{側面積} \\
   &=\pi|AO|^2+\pi|AO||AH| \\
-  &=a^2\pi\left(\dfrac{1}{s^2}+\dfrac{1}{cs^2}\right) \\
-  &=a^2\pi\dfrac{1}{c(1-c)}\ge 4a^2\pi &\\
+  &=a^2\pi\left(\dfrac{1}{\sin^2t}+\dfrac{1}{\cos t\sin^2t}\right) \\
+  &=a^2\pi\dfrac{1}{\cos t(1-\cos t)}\ge 4a^2\pi
 \end{align}
-等号成立は$c=1/2$の時，つまり$t=\pi/3$の時である．この時，
+である．ただし最後の不等号で二次関数の性質より
+\begin{align}
+  \cos t(1-\cos t) \le \dfrac{1}{2}\left(1-\dfrac{1}{2}\right) = \dfrac{1}{4}
+\end{align}
+を用いた．等号成立は$\cos t=\dfrac{1}{2}$の時，つまり$t=\dfrac{\pi}{3}$の時である．この時，
 \begin{align}
   |OH|=2a
 \end{align}

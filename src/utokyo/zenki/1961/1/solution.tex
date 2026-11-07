@@ -2,6 +2,88 @@
 \begin{document}
 
 {\bf [解答]}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.0, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+
+    % 半直線の長さ
+    \def\rayLen{3.4}
+    \coordinate (Xdir) at (\rayLen, 0);
+    \coordinate (Zdir) at (30:\rayLen);
+    \coordinate (Ydir) at (60:\rayLen);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (\rayLen + 0.3, 0) node[right] {$x$ ($X$)};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 3.2) node[above] {$y$};
+    \node[below left=2pt, font=\footnotesize] at (O) {$O$};
+
+    % 半直線 OZ, OY
+    \draw[thick, gray!80!black] (O) -- (Zdir) node[above right] {$Z$};
+    \draw[thick, gray!80!black] (O) -- (Ydir) node[above right] {$Y$};
+
+    % 角度マーク (30度ずつ)
+    \draw[gray!70!black] (0.5, 0) arc (0:30:0.5);
+    \node[font=\scriptsize, gray!80!black] at (15:0.68) {$30^\circ$};
+    \draw[gray!70!black] (30:0.45) arc (30:60:0.45);
+    \node[font=\scriptsize, gray!80!black] at (45:0.63) {$30^\circ$};
+
+    % --- 基準点 A, B (t = 0) ---
+    \coordinate (A) at (1, 0);
+    \coordinate (B) at (60:1); % (0.5, \sqrt{3}/2)
+
+    % \triangle AOB (t = 0 での基準三角形)
+    \fill[pattern=north east lines, pattern color=teal!50] (O) -- (A) -- (B) -- cycle;
+    \draw[thick, dashed, teal!85!black] (O) -- (A) -- (B) -- cycle;
+    \node[teal!85!black, font=\footnotesize, fill=white, inner sep=1pt] at (0.52, 0.38) {$\triangle AOB$};
+
+    % --- 動点 P, Q, R (時刻 t = 1 の状態) ---
+    \coordinate (P) at (2, 0);
+    \coordinate (Q) at (1.5, {sqrt(3)/2});
+    \coordinate (R) at (1.5, {1.5*sqrt(3)});
+
+    % \triangle PQR
+    \fill[pattern=north west lines, pattern color=blue!40] (P) -- (Q) -- (R) -- cycle;
+    \draw[line width=1.4pt, blue!85!black] (P) -- (Q) -- (R) -- cycle;
+    \node[blue!85!black, font=\footnotesize, fill=white, inner sep=1pt] at (1.68, 1.85) {$\triangle PQR$};
+
+    % --- 座標軸への点線垂線 ---
+    % 点 B から x 軸
+    \draw[densely dotted, thick, gray!70!black] (B) -- (0.5, 0) node[below=2pt, font=\footnotesize] {$\frac{1}{2}$};
+    % 点 B, Q から y 軸 (y = \sqrt{3}/2 は同一水準)
+    \draw[densely dotted, thick, gray!70!black] (Q) -- (0, {sqrt(3)/2}) node[left=2pt, font=\footnotesize] {$\frac{\sqrt{3}}{2}$};
+    % 点 Q, R から x 軸 (x = 3/2 は同一直線上)
+    \draw[densely dotted, thick, gray!70!black] (R) -- (1.5, 0) node[below=2pt, font=\footnotesize] {$\frac{3}{2}$};
+    % 点 R から y 軸
+    \draw[densely dotted, thick, gray!70!black] (R) -- (0, {1.5*sqrt(3)}) node[left=2pt, font=\footnotesize] {$\frac{3\sqrt{3}}{2}$};
+
+    % 基準点 A, B のプロットとラベル
+    \node[circle, fill=teal!85!black, inner sep=1.4pt] at (A) {};
+    \node[below=2pt, font=\footnotesize] at (A) {$A(1, 0)$};
+    \node[circle, fill=teal!85!black, inner sep=1.4pt] at (B) {};
+    \node[above left=2pt, font=\footnotesize] at (B) {$B$};
+
+    % 動点 P, Q, R のプロットとラベル
+    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (P) {};
+    \node[below=2pt, blue!85!black, font=\footnotesize] at (P) {$P(t+1, 0)$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (Q) {};
+    \node[above left=2pt, blue!85!black, font=\footnotesize] at (Q) {$Q$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (R) {};
+    \node[above left=2pt, blue!85!black, font=\footnotesize] at (R) {$R$};
+
+    % 各半直線上の進行方向と速さを示す矢印
+    \draw[->, thick, red!85!black] (P) -- ++(0.65, 0) node[below=1pt, font=\scriptsize] {毎秒 $1$};
+    \draw[->, thick, red!85!black] (Q) -- ++(30:0.65) node[below right=1pt, font=\scriptsize] {毎秒 $\sqrt{3}$};
+    \draw[->, thick, red!85!black] (R) -- ++(60:0.65) node[above left=1pt, font=\scriptsize] {毎秒 $2$};
+
+  \end{tikzpicture}
+  \caption{座標系の設定と動点 $P, Q, R$ の概要図（$t=1$ での配置例）}
+  \label{fig:pqr_overview}
+\end{figure}
+
 まず，$O$を原点とし，半直線$OX$が$x$軸正方向になるように$xy$座標を定める．このとき$OY$が第$1$象限にあるようにする．さらに動点が時刻$0$に各点を出発したとする．
 すると時刻$t$での動点の位置は以下のように表せる．
 \begin{align}
@@ -25,14 +107,15 @@ $\overrightarrow{PQ}\parallel\overrightarrow{PR}$となればよい．故に$k\i
     \sqrt{3}t+\dfrac{\sqrt{3}}{2}
   \end{pmatrix}
 \end{align}
-このような$k$の存在条件を求めればよい．ゆえに$k$を消去して
+である．このような$k$の存在条件を求めればよい．$k$を消去して
 \begin{align}
   \dfrac{\sqrt{3}}{2}t=&(2-t)(\sqrt{3}t+\dfrac{\sqrt{3}}{2}) \\
   t=&\dfrac{1+\sqrt{5}}{2}
 \end{align}
-よってもとめる値は$t=\dfrac{1+\sqrt{5}}{2}\cdots$(答) である．
+だからもとめる値は$t=\dfrac{1+\sqrt{5}}{2}\cdots$(答) である．
 
 \paragraph{(2)}
+
 $\triangle AOB$の面積は$\dfrac{\sqrt{3}}{4}\,\mathrm{cm^2}$であるから，時刻$t$での
 $\triangle PQR$の面積がこれに等しい時，
 \begin{align}
@@ -43,7 +126,7 @@ $\triangle PQR$の面積がこれに等しい時，
 これを解いて
 \begin{align}
   &\left|t^2-t-1\right|=1 \\
-  &\therefore  t=1,2 \cdots\text{(答)}
+  &\therefore  t=0,1,2 \cdots\text{(答)}
 \end{align}
 となる．
 

@@ -2,54 +2,151 @@
 \begin{document}
 
 {\bf [解答]}
-$\cos x=t$,$\sin x=s$とおくと
+
+\paragraph{(1)}
+
+与えられた関数とその一階微分は
 \begin{align}
-  f'(x)=at-bs+2c\cos 2x
+  f(x) &= a\sin x + b\cos x + c\sin 2x \\
+  f'(x)&=a\cos x-b\sin x+2c\cos 2x \label{eq:1}
 \end{align}
-である．まず，極大値の条件から
-$f\left(\dfrac{\pi}{4}\right)=0$が必要である．これと題意の条件から
+である．極大値の条件から
 \begin{align}
-  &\left\{
-    \begin{array}{l}
-      f'\left(\dfrac{\pi}{4}\right)=0 \\
-      f\left(\dfrac{\pi}{4}\right)=6\sqrt{2} \\
-      \int_{0}{2\pi}f(x)\cos x dx=5\pi
-    \end{array}
-    \right.  \\
-    \Leftrightarrow
-    &\left\{
-      \begin{array}{l}
-        \dfrac{\sqrt{2}}{2}(a-b)=0 \\
-        \dfrac{\sqrt{2}}{2}(a+b)+c=6\sqrt{2} \\
-        b\pi=5\pi
-      \end{array}
-      \right.
-    \end{align}
-    故に$(a,b,c)=(5,5,\sqrt{2})$となる．
-    $f'(x)$に値を代入する．
-    \begin{align}
-      f'(x)&=5t-5s+2\sqrt{2}(t^2-s^2) \\
-      &=(t-s)\left(5+4\sin\left(x+\dfrac{\pi}{4}\right)\right)
-    \end{align}
-    したがって，下表を得る．
+  &f'\left(\dfrac{\pi}{4}\right)=0, \quad f\left(\dfrac{\pi}{4}\right)=6\sqrt{2} \\
+  \therefore
+  &
+  \begin{cases}
+    \dfrac{\sqrt{2}}{2}(a-b)=0 \\
+    \dfrac{\sqrt{2}}{2}(a+b)+c=6\sqrt{2}
+  \end{cases} \label{eq:2}
+\end{align}
+である．次に題意の積分の条件から
+\begin{align}
+  5\pi
+  &= \int_{0}^{2\pi}f(x)\cos x dx \\
+  &= \int_{0}^{2\pi}\left[a\sin x\cos x + b\cos^2 x + c\sin 2x\cos x \right] dx \\
+  &= \int_{0}^{2\pi}\left[\dfrac{a}{2}\sin 2x + \dfrac{b}{2}(1+\cos 2x) + \dfrac{c}{2}(\sin 3x+\sin x) \right] dx  \\
+  &= \left[\dfrac{b}{2} \right]_{0}^{2\pi}
+  = b\pi \\
+  \therefore
+  b = 5 \label{eq:3}
+\end{align}
+である．\cref{eq:2}に代入して
+\begin{align}
+  (a,b,c)=(5,5,\sqrt{2}) \label{eq:4}
+\end{align}
+となる．
 
-    \begin{table}[htb]
-      \centering
-      \caption{$f(x)$ の増減表}
-      \begin{tabular}{c|ccccccc}
-        $x$ & $0$ & $\cdots$ & $\dfrac{\pi}{4}$ & $\cdots$ & $\dfrac{5\pi}{4}$ & $\cdots$ & $2\pi$ \\
-        \hline
-        $f'(x)$ & & $+$ & $0$ & $-$ & $0$ & $+$ & \\
-        \hline
-        $f(x)$ & $5$ & $\nearrow$ & $6\sqrt{2}$ & $\searrow$ & $-4\sqrt{2}$ & $\nearrow$ & $5$
-      \end{tabular}
-    \end{table}
+\paragraph{(2)}
 
-    故に$x=\dfrac{\pi}{4}$で極大となり十分である．以上から
-    \begin{enumerate}[(1)]
-      \item $(a,b,c)=(5,5,\sqrt{2})$
-      \item $\min f(x)=f\left(\dfrac{5\pi}{4}\right)=-4\sqrt{2}$
-    \end{enumerate}
-    となる．$\cdots$(答)
-    \newpage
-    \end{document}
+\cref{eq:4}を\cref{eq:1}に代入して
+\begin{align}
+  f(x) =  5\sin x + 5\cos x + \sqrt{2}\sin 2x
+\end{align}
+および
+\begin{align}
+  f'(x)
+  &=5\cos t-5\sin t +2\sqrt{2}(\cos t^2-\sin^2 t) \\
+  &=(\cos t-\sin t)\left(5+4\sin\left(x+\dfrac{\pi}{4}\right)\right)
+\end{align}
+だから，$f(x)$の増減表は以下のようになる．
+
+\begin{table}[htb]
+  \centering
+  \caption{$f(x)$ の増減表}
+  \begin{tabular}{c|ccccccc}
+    $x$ & $0$ & $\cdots$ & $\dfrac{\pi}{4}$ & $\cdots$ & $\dfrac{5\pi}{4}$ & $\cdots$ & $2\pi$ \\
+    \hline
+    $f'(x)$ & & $+$ & $0$ & $-$ & $0$ & $+$ & \\
+    \hline
+    $f(x)$ & $5$ & $\nearrow$ & $6\sqrt{2}$ & $\searrow$ & $-4\sqrt{2}$ & $\nearrow$ & $5$
+  \end{tabular}
+\end{table}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.3cm, y=0.45cm, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 定数と座標計算
+    % ============================================================
+    \def\xMaxDeg{45}
+    \def\xMinDeg{225}
+
+    \pgfmathsetmacro{\piVal}{pi}
+    \pgfmathsetmacro{\xMax}{\xMaxDeg * \piVal / 180}
+    \pgfmathsetmacro{\xMin}{\xMinDeg * \piVal / 180}
+    \pgfmathsetmacro{\xEnd}{2 * \piVal}
+
+    \pgfmathsetmacro{\yMax}{6 * sqrt(2)}
+    \pgfmathsetmacro{\yMin}{-4 * sqrt(2)}
+
+    \coordinate (O) at (0, 0);
+    \coordinate (P0) at (0, 5);
+    \coordinate (Pmax) at (\xMax, \yMax);
+    \coordinate (Pmin) at (\xMin, \yMin);
+    \coordinate (Pend) at (\xEnd, 5);
+
+    % ============================================================
+    % 2. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-0.4, 0) -- ({\xEnd + 0.6}, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, {\yMin - 1.5}) -- (0, {\yMax + 1.8}) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % ============================================================
+    % 3. 補助点線・座標軸への投影
+    % ============================================================
+    % 極大点 Pmax (pi/4, 6\sqrt{2})
+    \draw[densely dotted, thick, gray!70!black] (\xMax, 0) -- (Pmax);
+    \draw[densely dotted, thick, gray!70!black] (0, \yMax) -- (Pmax);
+    \node[below=2pt, font=\scriptsize] at (\xMax, 0) {$\frac{\pi}{4}$};
+    \node[left=2pt, font=\scriptsize] at (0, \yMax) {$6\sqrt{2}$};
+
+    % 最小点 Pmin (5pi/4, -4\sqrt{2})
+    \draw[densely dotted, thick, gray!70!black] (\xMin, 0) -- (Pmin);
+    \draw[densely dotted, thick, gray!70!black] (0, \yMin) -- (Pmin);
+    \node[above=2pt, font=\scriptsize] at (\xMin, 0) {$\frac{5\pi}{4}$};
+    \node[left=2pt, font=\scriptsize] at (0, \yMin) {$-4\sqrt{2}$};
+
+    % 端点 x = 0, 2\pi (y = 5)
+    \draw[densely dotted, thick, gray!70!black] (P0) -- (Pend) -- (\xEnd, 0);
+    \node[left=2pt, font=\scriptsize] at (P0) {$5$};
+    \node[below=2pt, font=\scriptsize] at (\xEnd, 0) {$2\pi$};
+
+    % 参考点 x = \pi (目盛り)
+    \draw[gray!70!black] (\piVal, 0.15) -- (\piVal, -0.15);
+    \node[below=2pt, font=\scriptsize] at (\piVal, 0) {$\pi$};
+
+    % ============================================================
+    % 4. グラフ曲線 y = f(x)
+    % ============================================================
+    \draw[line width=1.4pt, blue!85!black, samples=120, domain=0:360, variable=\t]
+    plot ({\t * \piVal / 180}, {5*sin(\t) + 5*cos(\t) + sqrt(2)*sin(2*\t)});
+
+    \node[blue!90!black, font=\footnotesize\bfseries, above right]
+    at ({\xMax + 0.4}, {\yMax - 0.7}) {$y = f(x)$};
+
+    % ============================================================
+    % 5. 点プロットとラベル
+    % ============================================================
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (P0) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Pend) {};
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (Pmax) {};
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (Pmin) {};
+
+    \node[above=2pt, font=\footnotesize, red!85!black] at (Pmax) {極大};
+    \node[below=2pt, font=\footnotesize, red!85!black] at (Pmin) {最小};
+
+  \end{tikzpicture}
+  \caption{$y = f(x)$ のグラフ（$0 \leqq x \leqq 2\pi$）}
+  \label{fig:fx_graph}
+\end{figure}
+
+従って$f(x)$は$x=\dfrac{\pi}{4}$で極大となる．これは題意の条件を満たしており十分で，
+\begin{align}
+  \min f(x)=f\left(\dfrac{5\pi}{4}\right)=-4\sqrt{2}
+\end{align}
+となる．$\cdots$(答)
+\newpage
+\end{document}

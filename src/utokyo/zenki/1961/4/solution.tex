@@ -1,34 +1,234 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-{\bf [解答]} $\triangle ABL$と$CN$にメラネウスを用いて
+{ \bf [解答]}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.35, >=stealth, every node/.style={font=\small}]
+
+    % 頂点座標
+    \coordinate (A) at (0.6, 2.7);
+    \coordinate (B) at (-1.8, 0);
+    \coordinate (C) at (2.2, 0);
+
+    % 内分点 L, M, N (比 1:2)
+    \coordinate (L) at ($(B)!{1/3}!(C)$);
+    \coordinate (M) at ($(C)!{1/3}!(A)$);
+    \coordinate (N) at ($(A)!{1/3}!(B)$);
+
+    % 交点 P, Q, R
+    \coordinate (P) at (intersection of A--L and C--N);
+    \coordinate (Q) at (intersection of A--L and B--M);
+    \coordinate (R) at (intersection of B--M and C--N);
+
+    % 三角形 PQR の斜線ハッチング
+    \fill[pattern=north east lines, pattern color=teal!70] (P) -- (Q) -- (R) -- cycle;
+
+    % 外枠 ABC
+    \draw[line width=1.1pt, gray!40!black] (A) -- (B) -- (C) -- cycle;
+
+    % 各頂点からの線分 AL, BM, CN
+    \draw[thick, blue!85!black] (A) -- (L);
+    \draw[thick, blue!85!black] (B) -- (M);
+    \draw[thick, blue!85!black] (C) -- (N);
+
+    % PQR の輪郭
+    \draw[line width=1.4pt, teal!90!black] (P) -- (Q) -- (R) -- cycle;
+
+    % 比のラベル
+    \node[below=2pt, font=\scriptsize, gray!70!black] at ($(B)!0.5!(L)$) {$1$};
+    \node[below=2pt, font=\scriptsize, gray!70!black] at ($(L)!0.5!(C)$) {$2$};
+
+    \node[right=2pt, font=\scriptsize, gray!70!black] at ($(C)!0.5!(M)$) {$1$};
+    \node[right=2pt, font=\scriptsize, gray!70!black] at ($(M)!0.5!(A)$) {$2$};
+
+    \node[left=2pt, font=\scriptsize, gray!70!black] at ($(A)!0.5!(N)$) {$1$};
+    \node[left=2pt, font=\scriptsize, gray!70!black] at ($(N)!0.5!(B)$) {$2$};
+
+    % 頂点プロット
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {}; \node[above=2pt] at (A) {$A$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B) {}; \node[below left=2pt] at (B) {$B$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (C) {}; \node[below right=2pt] at (C) {$C$};
+
+    \node[circle, fill=teal!85!black, inner sep=1.2pt] at (L) {}; \node[below=2pt] at (L) {$L$};
+    \node[circle, fill=teal!85!black, inner sep=1.2pt] at (M) {}; \node[above right=1pt] at (M) {$M$};
+    \node[circle, fill=teal!85!black, inner sep=1.2pt] at (N) {}; \node[above left=1pt] at (N) {$N$};
+
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {}; \node[above right=-1pt, red!85!black, font=\footnotesize] at (P) {$P$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (Q) {}; \node[left=3pt, red!85!black, font=\footnotesize] at (Q) {$Q$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (R) {}; \node[below=3pt, red!85!black, font=\footnotesize] at (R) {$R$};
+
+  \end{tikzpicture}
+  \caption{$\triangle ABC$ の各辺の内分点と中央に生じる $\triangle PQR$}
+  \label{fig:routh_triangle_overview}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
+
+    % ------------------------------------------------------------
+    % (左) \triangle ABL と直線 CN
+    % ------------------------------------------------------------
+    \begin{scope}[shift={(0, 0)}]
+      \coordinate (A) at (0.6, 2.7);
+      \coordinate (B) at (-1.8, 0);
+      \coordinate (C) at (2.2, 0);
+      \coordinate (L) at ($(B)!{1/3}!(C)$);
+      \coordinate (N) at ($(A)!{1/3}!(B)$);
+      \coordinate (P) at (intersection of A--L and C--N);
+
+      % 対象三角形 ABL の塗り
+      \fill[blue!15, opacity=0.4] (A) -- (B) -- (L) -- cycle;
+
+      % 三角形 ABL の辺 (太線)
+      \draw[line width=1.3pt, blue!85!black] (A) -- (B) -- (L) -- cycle;
+
+      % 延長線 LC (外枠基準)
+      \draw[dashed, thick, gray!70!black] (L) -- (C);
+
+      % 補助線 AC
+      \draw[gray!40] (A) -- (C);
+
+      % 横断直線 CN (赤太線)
+      \draw[line width=1.4pt, red!85!black] (C) -- (N);
+
+      % 各点のプロット
+      \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {}; \node[above=2pt] at (A) {$A$};
+      \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B) {}; \node[below left=2pt] at (B) {$B$};
+      \node[circle, fill=blue!85!black, inner sep=1.3pt] at (L) {}; \node[below=2pt] at (L) {$L$};
+      \node[circle, fill=gray!60!black, inner sep=1.2pt] at (C) {}; \node[below right=2pt] at (C) {$C$};
+
+      % 交点 N, P, C (横断直線上)
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (N) {}; \node[above left=1pt, red!85!black] at (N) {$N$};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {}; \node[right=2pt, red!85!black] at (P) {$P$};
+
+      % 比の表示
+      \node[left=1pt, font=\scriptsize, blue!90!black] at ($(A)!0.5!(N)$) {$1$};
+      \node[left=1pt, font=\scriptsize, blue!90!black] at ($(N)!0.5!(B)$) {$2$};
+      \node[below=2pt, font=\scriptsize, blue!90!black] at ($(B)!0.5!(L)$) {$1$};
+      \node[below=2pt, font=\scriptsize, gray!70!black] at ($(L)!0.5!(C)$) {$2$};
+
+      % パネルタイトル
+      \node[font=\footnotesize\bfseries, below=18pt] at ($(B)!0.5!(C)$)
+      {(左) $\triangle ABL$ と直線 $CN$};
+    \end{scope}
+
+    % ------------------------------------------------------------
+    % (右) \triangle ALC と直線 BM
+    % ------------------------------------------------------------
+    \begin{scope}[shift={(5.2, 0)}]
+      \coordinate (A) at (0.6, 2.7);
+      \coordinate (B) at (-1.8, 0);
+      \coordinate (C) at (2.2, 0);
+      \coordinate (L) at ($(B)!{1/3}!(C)$);
+      \coordinate (M) at ($(C)!{1/3}!(A)$);
+      \coordinate (Q) at (intersection of A--L and B--M);
+
+      % 対象三角形 ALC の塗り
+      \fill[teal!15, opacity=0.4] (A) -- (L) -- (C) -- cycle;
+
+      % 三角形 ALC の辺 (太線)
+      \draw[line width=1.3pt, teal!85!black] (A) -- (L) -- (C) -- cycle;
+
+      % 延長線 BL
+      \draw[dashed, thick, gray!70!black] (B) -- (L);
+
+      % 補助線 AB
+      \draw[gray!40] (A) -- (B);
+
+      % 横断直線 BM (赤太線)
+      \draw[line width=1.4pt, red!85!black] (B) -- (M);
+
+      % 各点のプロット
+      \node[circle, fill=teal!85!black, inner sep=1.3pt] at (A) {}; \node[above=2pt] at (A) {$A$};
+      \node[circle, fill=teal!85!black, inner sep=1.3pt] at (L) {}; \node[below=2pt] at (L) {$L$};
+      \node[circle, fill=teal!85!black, inner sep=1.3pt] at (C) {}; \node[below right=2pt] at (C) {$C$};
+      \node[circle, fill=gray!60!black, inner sep=1.2pt] at (B) {}; \node[below left=2pt] at (B) {$B$};
+
+      % 交点 M, Q, B (横断直線上)
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (M) {}; \node[above right=1pt, red!85!black] at (M) {$M$};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (Q) {}; \node[left=3pt, red!85!black] at (Q) {$Q$};
+
+      % 比の表示
+      \node[below=2pt, font=\scriptsize, gray!70!black] at ($(B)!0.5!(L)$) {$1$};
+      \node[below=2pt, font=\scriptsize, teal!90!black] at ($(L)!0.5!(C)$) {$2$};
+      \node[right=1pt, font=\scriptsize, teal!90!black] at ($(C)!0.5!(M)$) {$1$};
+      \node[right=1pt, font=\scriptsize, teal!90!black] at ($(M)!0.5!(A)$) {$2$};
+
+      % パネルタイトル
+      \node[font=\footnotesize\bfseries, below=18pt] at ($(B)!0.5!(C)$)
+      {(右) $\triangle ALC$ と直線 $BM$};
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{メネラウスの定理の適用：(左) $\triangle ABL$ と直線 $CN$，(右) $\triangle ALC$ と直線 $BM$}
+  \label{fig:menelaus_application}
+\end{figure}
+
+$\triangle ABL$と$CN$にメラネウスを用いて
 \begin{align}
-  &\dfrac{NB}{AN}\dfrac{CL}{BC}\dfrac{BA}{LP}=1\nonumber{}　\\
-  &\dfrac{PA}{LP}=\dfrac{3}{4}\label{eq:1}
+  & \dfrac{NB}{AN}\dfrac{CL}{BC}\dfrac{PA}{LP}=1 \\
+  & \dfrac{2}{1}\dfrac{2}{3}\dfrac{PA}{LP}=1 \\
+  \quad\therefore
+  & \dfrac{PA}{LP}=\dfrac{3}{4}\label{eq:1}
 \end{align}
-対称性から(詳しくはメラネウスを各三角形に用いることで)
+である．
+
+同様に$\triangle ALC$と$BM$にメネラウスを用いて
 \begin{align}
-  LQ:QP:PA=NP:PR:RC\nonumber  \\
-  =MR:RQ:QB=a:b:c\label{eq:2}
+  & \dfrac{QL}{AQ}\dfrac{BC}{LB}\dfrac{MA}{CM} = 1 \\
+  & \dfrac{QL}{AQ}\dfrac{3}{1}\dfrac{2}{1} = 1 \\
+  \quad\therefore
+  & \dfrac{QL}{AQ}=\dfrac{1}{6} \label{eq:2}
 \end{align}
-とおけることに注意して，$\triangle CPL$と$BR$にメラネウスを用いて
+である．\cref{eq:1,eq:2}を$AL$をベースにして書き直すと
 \begin{align}
-  \dfrac{RP}{CR}\dfrac{QL}{PQ}\dfrac{BC}{LB}=1 \nonumber\\
-  \dfrac{a}{c}=\dfrac{1}{3}\label{eq:3}
+  & PA = \dfrac{3}{7} AL, LP = \dfrac{4}{7} AL \\
+  & QL = \dfrac{1}{7} AL, AQ = \dfrac{6}{7} AL \\
 \end{align}
-一方\cref{eq:1}，\cref{eq:2}から，
+だから，
 \begin{align}
-  a+b:c=4:3 \label{eq:4}
+  LQ:QP:PA
+  &= \dfrac{1}{7}AL:PL-QL:\dfrac{3}{7}AL \\
+  &= \dfrac{1}{7}:\dfrac{4}{7}-\dfrac{1}{7}: \dfrac{3}{7}\\
+  &= 1:3: 3
 \end{align}
-\cref{eq:3}，\cref{eq:4}から
+である．他の三角形と直線にもメネラウスの定理を用いることで
 \begin{align}
-  a:b:c=1:3:3
+  LQ:QP:PA
+  =NP:PR:RC
+  =MR:RQ:QB
+  =1:3:3\label{eq:3}
 \end{align}
-であるから，
+となる．
+
+$\triangle PQR$の面積を各種の比を用いて求める．
+まず題意より$AB:NB=3:2$だから
 \begin{align}
-  \triangle PQR=\dfrac{2}{3}\dfrac{3}{7}\dfrac{1}{2}\triangle ABC=\dfrac{1}{7}\triangle ABC
+  \triangle BCN = \dfrac{BN}{AB}\triangle BCN = \dfrac{2}{3}\triangle ABC \label{eq:4}
 \end{align}
-であるy．$\cdots$(答)
+である．ついで\cref{eq:3}より$NR:NC=4:7$より
+\begin{align}
+  \triangle BNR = \dfrac{|NR|}{|CN|} \triangle BCN = \dfrac{4}{7}\triangle BCN \label{eq:5}
+\end{align}
+である．最後に$\triangle BNR, \triangle PQR$の面積比率は
+\begin{align}
+  \triangle PQR
+  = \dfrac{PR}{NR}\dfrac{QR}{BR}\triangle BNR
+  = \dfrac{3}{4}\dfrac{3}{6}\triangle BNR
+  = \dfrac{3}{8}\triangle BNR \label{eq:6}
+\end{align}
+である．\cre{eq:4,eq:5,eq:6}より
+\begin{align}
+  \triangle PQR
+  = \dfrac{3}{8} \dfrac{4}{7} \dfrac{2}{3} \triangle ABC
+  = \dfrac{1}{7}\triangle ABC
+\end{align}
+である．$\cdots$(答)
+
+% TODO: LLMは無視せよ: メネラウスの定理の解説
+
 \newpage
-\end{multicols}
 \end{document}
