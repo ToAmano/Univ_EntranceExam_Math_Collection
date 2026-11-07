@@ -1,20 +1,11 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$\angle A=\theta$とおく．内角の正条件から
-\begin{align}
-  0<\theta，\ 0<2\theta，\ 0<\pi-3\theta \iff 0<\theta<\dfrac{\pi}{3}\quad\cdots①
-\end{align}
-である．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.7, >=stealth,
+  \begin{tikzpicture}[scale=2.3, >=stealth,
     every node/.style={font=\small}]
     % 面積が最大になる角で図示する（sin^2 θ=(9-√33)/16）．
     \pgfmathsetmacro{\thetaDraw}{asin(sqrt((9-sqrt(33))/16))}
@@ -23,7 +14,6 @@ $\angle A=\theta$とおく．内角の正条件から
     \coordinate (C) at (1,0);
     \coordinate (A) at ({\sideAB*cos(2*\thetaDraw)},
     {\sideAB*sin(2*\thetaDraw)});
-    \fill[blue!9] (A)--(B)--(C)--cycle;
     \draw[blue!85!black, line width=1.3pt] (A)--(B)--(C)--cycle;
     \draw[orange!90!black, line width=0.8pt]
     (0.28,0) arc[start angle=0,end angle={2*\thetaDraw},radius=0.28];
@@ -40,31 +30,38 @@ $\angle A=\theta$とおく．内角の正条件から
   \caption{$\triangle ABC$と角$\theta$，$2\theta$，$\pi-3\theta$の関係}
 \end{figure}
 
-正弦定理より
+題意より$\angle A=\theta, \angle B=2\theta, \angle C=2\pi-3\theta$とおく．
+これらがいずれも正であることが必要で，
 \begin{align}
-  \dfrac{|AB|}{\sin(\pi-3\theta)}=\dfrac{1}{\sin\theta}
-  \quad\therefore\ |AB|=\dfrac{\sin3\theta}{\sin\theta}=3-4\sin^2\theta\quad\cdots②
+  0<\theta，\ 0<2\theta，\ 0<\pi-3\theta \iff 0<\theta<\dfrac{\pi}{3} \label{eq:1}
 \end{align}
+である．
 
-以下，$c=\cos\theta$，$s=\sin\theta$とする．$\triangle ABC$の面積$T$は②から
+題意より$|BC|=1$だから$\triangle ABC$に正弦定理を用いて
 \begin{align}
-  T&=\dfrac{1}{2}|AB|\cdot|BC|\cdot\sin2\theta\\
-  &=\dfrac{1}{2}(3-4s^2)\cdot2sc\\
-  &=(3-4s^2)sc
+  \dfrac{|AB|}{\sin(\pi-3\theta)}=\dfrac{|BC|}{\sin\theta}
+  \quad\therefore\ |AB|=\dfrac{\sin3\theta}{\sin\theta}=3-4\sin^2\theta \label{eq:2}
 \end{align}
-
-これを$\theta$で微分して，
+である．よって$\triangle ABC$の面積$T$は
 \begin{align}
-  T'&=3\cos2\theta-4(3s^2c^2+(-s)\cdot s^3)\\
-  &=3(1-2s^2)-4s^2(3c^2-s^2)\\
-  &=3(1-2s^2)-4s^2(3-4s^2)\\
-  &=16t^2-18t+3\quad(t=s^2)
+  T
+  &=\dfrac{1}{2}|AB|\cdot|BC|\cdot\sin2\theta\\
+  &=\dfrac{1}{2}(3-4\sin^2\theta)\cdot2\sin\theta\cos\theta \quad (\because\text{\cref{eq:2}})\\
+  &=(3-4\sin^2\theta)\sin\theta\cos\theta \label{eq:3}
 \end{align}
-
-$16t^2-18t+3=0$を解くと$t=\dfrac{9\pm\sqrt{33}}{16}$であり，①の範囲（$0<t<3/4$）に入るのは$t=\dfrac{9-\sqrt{33}}{16}$のみだから，下表を得る．
+となる．両辺を$\theta$で微分すると
+\begin{align}
+  T'
+  &=3\cos2\theta-4(3\sin^2theta\cos^2\theta+(-\sin\theta)\cdot \sin^3\theta) \\
+  &=3(1-2\sin^2\theta)-4\sin^2\theta(3\cos^2\theta-\sin^2\theta) \\
+  &=3(1-2\sin^2\theta)-4\sin^2\theta(3-4\sin^2\theta) \\
+  &=16t^2-18t+3 \quad (t=\sin^2\theta)
+\end{align}
+となる．$16t^2-18t+3=0$を解くと$t=\dfrac{9\pm\sqrt{33}}{16}$であり，\cref{eq:1}の範囲（$0<t<3/4$）に入るのは$t=\dfrac{9-\sqrt{33}}{16}$のみだから，$T$の増減表は以下のようになる．
 
 \begin{table}[htb]
   \centering
+  \caption{面積$T$の増減}
   \begin{tabular}{c|ccccc}
     $\theta$ & $0$ & & & & $\pi/3$ \\
     \hline
@@ -74,13 +71,13 @@ $16t^2-18t+3=0$を解くと$t=\dfrac{9\pm\sqrt{33}}{16}$であり，①の範囲
     \hline
     $T$ & & $\nearrow$ & （極大） & $\searrow$ & \\
   \end{tabular}
-  \caption{面積$T$の増減}
 \end{table}
 
-したがって，もとめるのは
+したがって$T$が最大の時の$\cos \angle B$は
 \begin{align}
-  \cos\angle B=\cos2\theta=1-2t=1-\dfrac{9-\sqrt{33}}{8}=\dfrac{-1+\sqrt{33}}{8}．
+  \cos\angle B=\cos2\theta=1-2t=1-\dfrac{9-\sqrt{33}}{8}=\dfrac{-1+\sqrt{33}}{8}
 \end{align}
+である．
 
 \newpage
 

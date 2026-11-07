@@ -1,15 +1,82 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$P(1+2t,\, t,\, -2-t)$，$Q(1+s,\, 2-s,\, -3+s)$，$R(1+u,\, -1+2u,\, u)$とおく．
 
-$Q$，$R$が垂足だから，$\overrightarrow{PQ}\perp m$，$\overrightarrow{PR}\perp n$となる．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
+    % 空間内の3直線 l, m, n と垂線 PQ, PR の概要
+    % 直線 l
+    \coordinate (Lstart) at (-3.8, 2.3);
+    \coordinate (Lend) at (3.5, 3.3);
+    \coordinate (A) at (-2.3, 2.5);
+    \coordinate (P) at (0.6, 2.9);
+    \draw[blue!85!black, line width=1.3pt] (Lstart) -- (Lend) node[right] {$l$};
 
+    % 直線 m (左下奥)
+    \coordinate (Mstart) at (-4.2, -1.8);
+    \coordinate (Mend) at (-0.2, 0.2);
+    \coordinate (B) at (-3.3, -1.35);
+    \coordinate (Q) at (-1.8, -0.6);
+    \draw[teal!80!black, line width=1.3pt] (Mstart) -- (Mend) node[above right] {$m$};
+
+    % 直線 n (右下手前)
+    \coordinate (Nstart) at (-0.2, -2.1);
+    \coordinate (Nend) at (4.5, -0.2);
+    \coordinate (C) at (0.8, -1.7);
+    \coordinate (R) at (2.4, -1.05);
+    \draw[orange!85!black, line width=1.3pt] (Nstart) -- (Nend) node[above right] {$n$};
+
+    % 垂線 PQ, PR
+    \draw[line width=1.2pt, red!85!black, dashed] (P) -- (Q);
+    \draw[line width=1.2pt, red!85!black, dashed] (P) -- (R);
+
+    % 直角マーク Q (PQ と line m の Mstart 方向)
+    \coordinate (qp) at ($(Q)!0.25cm!(P)$);
+    \coordinate (qm) at ($(Q)!0.25cm!(Mstart)$);
+    \draw[gray!70!black, thick] (qp) -- ($(qp)+(qm)-(Q)$) -- (qm);
+
+    % 直角マーク R (PR と line n の Nstart 方向)
+    \coordinate (rp) at ($(R)!0.28cm!(P)$);
+    \coordinate (rn) at ($(R)!0.28cm!(Nstart)$);
+    \draw[gray!70!black, thick] (rp) -- ($(rp)+(rn)-(R)$) -- (rn);
+
+    % 点 A, B, C と方向ベクトル
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (A) {};
+    \node[above left=1pt, blue!85!black, font=\footnotesize] at (A) {$A$};
+    \draw[->, >=stealth, line width=1.1pt, blue!85!black] (A) -- ($(A)+(1.2, 0.16)$) node[above=1pt, font=\footnotesize] {$\vec{u}$};
+
+    \node[circle, fill=teal!80!black, inner sep=1.2pt] at (B) {};
+    \node[below=2pt, teal!80!black, font=\footnotesize] at (B) {$B$};
+    \draw[->, >=stealth, line width=1.1pt, teal!80!black] (B) -- ($(B)+(0.9, 0.45)$) node[above=1pt, font=\footnotesize] {$\vec{v}$};
+
+    \node[circle, fill=orange!85!black, inner sep=1.2pt] at (C) {};
+    \node[below=2pt, orange!85!black, font=\footnotesize] at (C) {$C$};
+    \draw[->, >=stealth, line width=1.1pt, orange!85!black] (C) -- ($(C)+(1.0, 0.4)$) node[above=1pt, font=\footnotesize] {$\vec{w}$};
+
+    % 点 P, Q, R
+    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (P) {};
+    \node[above=3pt, blue!85!black] at (P) {$P(1+2t,\, t,\, -2-t)$};
+
+    \node[circle, fill=teal!80!black, inner sep=1.5pt] at (Q) {};
+    \node[above left=2pt, teal!80!black] at (Q) {$Q$};
+
+    \node[circle, fill=orange!85!black, inner sep=1.5pt] at (R) {};
+    \node[below right=2pt, orange!85!black] at (R) {$R$};
+  \end{tikzpicture}
+  \caption{空間内の3直線$l$，$m$，$n$と垂線$PQ$，$PR$の配置}
+  \label{fig:lines_3d}
+\end{figure}
+
+$P,Q,R$はそれぞれ$l,m,n$上の点だから，$t,s,u$をパラメータとして
+\begin{align}
+  P(1+2t,\, t,\, -2-t), Q(1+s,\, 2-s,\, -3+s), R(1+u,\, -1+2u,\, u) \label{eq:1}
+\end{align}
+とおく．
+
+$Q$，$R$は$P$からおろした垂足だから，$\overrightarrow{PQ}\perp m$，$\overrightarrow{PR}\perp n$となる．
+よってこれらの内積が$0$だから，
 \begin{align}
   \begin{pmatrix} s-2t \\ 2-s-t \\ -1+s+t
   \end{pmatrix}\cdot
@@ -22,26 +89,28 @@ $Q$，$R$が垂足だから，$\overrightarrow{PQ}\perp m$，$\overrightarrow{PR
   \begin{pmatrix}1\\2\\1
   \end{pmatrix}=0
   &\iff (u-2t)+2(-1+2u-t)+(2+u+t)=0\\
-  &\iff 6u-3t=0 \iff u=\dfrac{1}{2}t
+  &\iff 6u-3t=0 \iff u=\dfrac{1}{2}t \\
+  \therefore
+  (s,u)=\left(1,\dfrac{1}{2}t\right) \label{eq:2}
 \end{align}
+である．
 
-だから，$(s,u)=\left(1,\dfrac{1}{2}t\right)$である．
-
+よって\cref{eq:1}より$|PQ|^2, |PR|^2$を計算すると
 \begin{align}
-  |PQ|^2&=(s-2t)^2+(s+(t-2))^2+(s+(t-1))^2\\
+  |PQ|^2
+  &=(s-2t)^2+(s+(t-2))^2+(s+(t-1))^2\\
   &=3s^2-6s+6t^2-6t+5\\
-  &=6t^2-6t+2\quad(s=1\text{を代入})，\\[4pt]
-  |PR|^2&=(u-2t)^2+(2u-(t+1))^2+(u+(t+2))^2\\
+  &=6t^2-6t+2  \quad (\because\text{\cref{eq:2}}) \label{eq:3} \\
+  |PR|^2
+  &=(u-2t)^2+(2u-(t+1))^2+(u+(t+2))^2\\
   &=6u^2-6tu+6t^2+6t+5\\
-  &=\dfrac{9}{2}t^2+6t+5\quad\left(u=\dfrac{1}{2}t\text{を代入}\right)．
+  &=\dfrac{9}{2}t^2+6t+5 \quad (\because\text{\cref{eq:2}}) \label{eq:4}
 \end{align}
-
 だから，$f(t)=|PQ|^2+|PR|^2$とすると
 \begin{align}
-  f(t)=\dfrac{21}{2}t^2+7．
+  f(t)=\dfrac{21}{2}t^2+7
 \end{align}
-
-これは$t=0$で最小値$7$をとる．この時$P(1,0,-2)$である．
+である．これは$t=0$で最小値$7$をとり，この時$P(1,0,-2)$である．
 
 \newpage
 

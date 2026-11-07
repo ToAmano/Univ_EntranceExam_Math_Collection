@@ -1,147 +1,434 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$C_2:x^2+y^2=r^2\ (x,y>0)$とする．まず$C_1$，$C_2$が2点で交わる条件から
-\begin{align}
-  \sqrt{2}<r\quad\cdots①
-\end{align}
-である．2交点$A(r\cos\alpha,r\sin\alpha)$，$B(r\cos\beta,r\sin\beta)$（$0<\alpha<\beta<\pi/2$）とおくと，対称性から
-\begin{align}
-  \beta=\dfrac{\pi}{2}-\alpha\quad\cdots②
-\end{align}
-となる．次に，$C_1$が$A$を通る条件から
-\begin{align}
-  r\sin\alpha=\dfrac{1}{r\cos\alpha}\quad\cdots③
-\end{align}
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=1.25cm, y=1.25cm, >=stealth,
+  \begin{tikzpicture}[x=1.5cm, y=1.5cm, >=stealth,
     every node/.style={font=\small}]
-    % 解で得られる r=2, α=15° を用いて配置する．
-    \coordinate (O) at (0,0);
-    \coordinate (A) at ({2*cos(15)},{2*sin(15)});
-    \coordinate (B) at ({2*cos(75)},{2*sin(75)});
-    \coordinate (C) at ({4*cos(15)},0);
-    \fill[blue!17] (A) arc[start angle=15,end angle=75,radius=2]
-    -- plot[domain={2*cos(75)}:{2*cos(15)},samples=70] (\x,{1/\x})
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.2, 0) -- (4.4, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 3.2) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 求める領域 S を斜線パターンで塗る
+    \fill[pattern=north east lines, pattern color=blue!30]
+    ({2*cos(15)}, {2*sin(15)})
+    arc[start angle=15, end angle=75, radius=2]
+    -- plot[domain={2*cos(75)}:{2*cos(15)}, samples=50] (\x, {1/\x})
     -- cycle;
-    \draw[->, thick, gray!80!black] (-0.15,0)--(4.4,0) node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0,-0.15)--(0,2.55) node[above] {$y$};
-    \draw[blue!85!black, line width=1.3pt]
-    (2,0) arc[start angle=0,end angle=90,radius=2];
-    \draw[teal!85!black, line width=1.3pt]
-    plot[domain=0.42:4.12,samples=90] (\x,{1/\x});
-    \draw[dashed, gray!65] (O)--(A) (O)--(B);
-    \draw[orange!90!black, line width=1.1pt] (A)--(C);
-    \foreach \point/\position in {A/above right,B/above left} {
-      \node[circle, fill=red!85!black, inner sep=1.4pt] at (\point) {};
-      \node[\position=2pt] at (\point) {$\point$};
-    }
-    \node[below left=2pt] at (O) {$O$};
-    \node[below=2pt] at (C) {$C$};
-    \node[blue!85!black, above right=2pt] at (1.23,1.58) {$C_2$};
-    \node[teal!85!black, above right=2pt] at (2.55,0.39) {$C_1$};
-    \node[orange!90!black, below=2pt] at (3.05,0) {$\ell$};
-    \node[font=\footnotesize, above right=2pt] at (0.57,0.16) {$\alpha$};
+
+    % 直線 y = x (対称軸)
+    \draw[dashed, thick, gray!60!black] (0, 0) -- (2.8, 2.8) node[above right=1pt, font=\footnotesize] {$y=x$};
+
+    % 円弧 C_2 (r=2)
+    \draw[line width=1.3pt, blue!85!black]
+    (2.1, 0) arc[start angle=0, end angle=90, radius=2];
+    \node[blue!85!black, font=\footnotesize, above right=2pt] at ({2*cos(55)}, {2*sin(55)}) {$C_2$};
+
+    % 双曲線 C_1: y = 1/x
+    \draw[line width=1.3pt, teal!85!black]
+    plot[domain=0.33:4.0, samples=80] (\x, {1/\x});
+    \node[teal!85!black, font=\footnotesize, right=2pt] at (4.0, 0.25) {$C_1$};
+
+    % 交点 (1, 1) と座標軸への垂線
+    \draw[densely dotted, thick, gray!70!black] (1, 0) -- (1, 1) -- (0, 1);
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (1, 1) {};
+    \node[above left=2pt, font=\footnotesize] at (1, 1) {$(1,1)$};
+    \node[below=3pt, font=\footnotesize] at (1, 0) {$1$};
+    \node[left=3pt, font=\footnotesize] at (0, 1) {$1$};
+
+    % 動径 OA, OB
+    \coordinate (A) at ({2*cos(15)}, {2*sin(15)});
+    \coordinate (B) at ({2*cos(75)}, {2*sin(75)});
+    \draw[thick, gray!70!black] (0, 0) -- (A);
+    \draw[thick, gray!70!black] (0, 0) -- (B);
+
+    % 半径 r のラベル
+    \node[above=1pt, font=\footnotesize] at ($0.45*(A)$) {$r$};
+
+    % 角度マーク α (正の x 軸から OA)
+    \draw[orange!90!black, thick] (0.55, 0) arc[start angle=0, end angle=15, radius=0.55];
+    \node[orange!90!black, font=\footnotesize, right=1pt] at (0.57, 0.08) {$\alpha$};
+
+    % 角度マーク β (正の x 軸から OB)
+    \draw[orange!90!black, thick] (0.38, 0) arc[start angle=0, end angle=75, radius=0.38];
+    \node[orange!90!black, font=\footnotesize, above right=1pt] at ({0.38*cos(45)}, {0.38*sin(45)}) {$\beta$};
+
+    % A における接線 l (普通の接線として両側に伸ばす)
+    \draw[orange!90!black, line width=1.1pt]
+    ($(A) + (-1.2, {1.2*tan(15)})$) -- ($(A) + (1.5, {-1.5*tan(15)})$)
+    node[right, font=\footnotesize] {$\ell$};
+
+    % 交点 A, B
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (A) {};
+    \node[above right=2pt, red!85!black] at (A) {$A$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (B) {};
+    \node[above left=2pt, red!85!black] at (B) {$B$};
   \end{tikzpicture}
-  \caption{円弧$C_2$と曲線$C_1$の交点，接線$\ell$と求める領域}
+  \caption{双曲線$C_1$と円$C_2$の交点および接線$\ell$の配置}
+  \label{fig:hyperbola_circle}
 \end{figure}
 
-$A$における接線$\ell$の傾きは$-\dfrac{1}{r^2\cos^2\alpha}$である．$\angle OAC=\pi/6$（$C$は$\ell$と$x$軸の交点）という条件のもとで角の関係を整理し，$\tan\alpha=t$とおくと
+$C_2$の半径$r$とすると，題意の二曲線は
 \begin{align}
-  \dfrac{\sqrt{3}}{3}=\dfrac{t+r^2t+1}{r^2-t^2-t}\quad\cdots④
+  \begin{cases}
+    C_1: y = \dfrac{1}{x} \quad (x>0) \\
+    C_2: x^2+y^2=r^2 \quad (x,y>0)
+  \end{cases} \label{eq:1}
 \end{align}
-を得る．ここで，③の両辺に$\dfrac{1}{\cos\alpha}$をかけて整理すると
+である．$C_1$上の点$(x,1/x)$と原点の距離はAM-GM不等式より
 \begin{align}
-  r^2t=t^2+1\quad\cdots⑤
+  \sqrt{x^2+1/x^2} \ge \sqrt{2}
 \end{align}
+となり，等号成立は$x=1$の時である．従って$C_1, C_2$が2点で交わる条件はこれよりも半径$r$が大きい時で
+\begin{align}
+  \sqrt{2}<r \label{eq:2}
+\end{align}
+である．
 
-④，⑤から
+このもとで二つの交点$A(r\cos\alpha,r\sin\alpha)$，$B(r\cos\beta,r\sin\beta)$（$0<\alpha<\beta<\pi/2$）とおくと，$C_1,C_2$の$y=x$に関する対称性から
 \begin{align}
-  r^2-t^2-t&=\sqrt{3}(t^2+r^2t+1)\\
-  t^3+\sqrt{3}t^2+(\sqrt{3}r^2+1)t+\sqrt{3}-r^2&=0\\
-  (t+\sqrt{3})(r^2t-1)+(\sqrt{3}r^2+1)t+\sqrt{3}-r^2&=0\\
-  r^2(r^2t-1)+(\sqrt{3}r^2-1)t+(\sqrt{3}r^2+1)t-r^2&=0\\
-  (r^4+2\sqrt{3}r^2)t&=2r^2
+  \beta=\dfrac{\pi}{2}-\alpha \quad \left(0<\alpha<\dfrac{\pi}{4}\right)\label{eq:3}
 \end{align}
-であり，
+となる．$C_1$が$A$を通る条件から
 \begin{align}
-  t=\dfrac{2}{r^2+2\sqrt{3}}
+  r\sin\alpha=\dfrac{1}{r\cos\alpha}
+  \quad\therefore
+  r^2 \tan\alpha = 1+\tan^2 \alpha \label{eq:4}
 \end{align}
+である．ただし二つ目の式では両辺に$\dfrac{1}{\cos\alpha}$をかけた．
 
-であり，⑤を代入して，
-\begin{align}
-  t^2+2\sqrt{3}t-1=0
-\end{align}
-\begin{align}
-  t=-\sqrt{3}\pm2
-\end{align}
-
-$t>0$から複号正を採用して，
-\begin{align}
-  t=2-\sqrt{3}=\tan15^\circ，\quad r=2\quad（①を満たす）\quad\cdots\text{＊}
-\end{align}
-
-だから，$0<\alpha<\pi/4$から$\alpha=15^\circ$，⑥である．題意の面積$S$として
-\begin{align}
-  S=(\text{扇形}OAB\text{の面積})-(\text{$C_1$と線分}AB\text{に囲まれた部分の面積})\quad\cdots⑦
-\end{align}
-であり，
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=1.65cm, y=1.45cm, >=stealth,
+  \begin{tikzpicture}[x=1.9cm, y=1.9cm, >=stealth,
     every node/.style={font=\small}]
-    \begin{scope}
-      \fill[blue!18] (0,0)--({2*cos(15)},{2*sin(15)})
-      arc[start angle=15,end angle=75,radius=2]--cycle;
-      \draw[blue!85!black, line width=1.2pt]
-      (0,0)--({2*cos(15)},{2*sin(15)})
-      arc[start angle=15,end angle=75,radius=2]--cycle;
-      \node[below left=2pt] at (0,0) {$O$};
-      \node[below, font=\footnotesize] at (1, -0.25) {扇形$OAB$};
-    \end{scope}
-    \begin{scope}[xshift=5.2cm]
-      \fill[teal!18] ({2*cos(75)},0)
-      -- plot[domain={2*cos(75)}:{2*cos(15)},samples=65] (\x,{1/\x})
-      -- ({2*cos(15)},0)--cycle;
-      \draw[->, gray!80!black, thick] (0,0)--(2.25,0) node[right] {$x$};
-      \draw[teal!85!black, line width=1.2pt]
-      plot[domain={2*cos(75)}:{2*cos(15)},samples=65] (\x,{1/\x});
-      \draw[dashed, gray!65] ({2*cos(75)},0)--({2*cos(75)},{2*sin(75)})
-      ({2*cos(15)},0)--({2*cos(15)},{2*sin(15)});
-      \node[below=3pt, font=\footnotesize] at (1.2,-0.25) {$C_1$の下側};
-    \end{scope}
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at ({2*cos(15)}, {2*sin(15)});
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (3.8, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 1.8) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 動径 OA とその延長
+    \draw[line width=1.3pt, blue!85!black] (O) -- (A);
+    \draw[dashed, blue!85!black, thick] (A) -- ($(A) + ({1.6*cos(15)}, {1.6*sin(15)})$)
+    node[above right, font=\footnotesize] {$OA$の延長};
+
+    % 双曲線 y=1/x (ラベルは A の左上空きスペースに配置)
+    \draw[line width=1.2pt, teal!85!black] plot[domain=1.2:2.7, samples=40] (\x, {1/\x});
+    \node[teal!85!black, font=\footnotesize, above left=1pt] at (1.25, {1/1.25}) {$y=\frac{1}{x}$};
+
+    % 接線 l (点 A を通り、傾き -tan(15°))
+    \draw[line width=1.3pt, orange!90!black]
+    ($(A) + ({-1.1*cos(-15)}, {-1.1*sin(-15)})$) -- ($(A) + ({1.6*cos(-15)}, {1.6*sin(-15)})$)
+    node[below right, font=\footnotesize] {$\ell$};
+
+    % 点 A を通る水平補助線（右側へ）
+    \draw[densely dotted, thick, gray!70!black] ($(A) + (-0.4, 0)$) -- ($(A) + (1.6, 0)$);
+
+    % O における角度マーク: OA の傾き角 α
+    \draw[blue!85!black, thick] (0.9, 0) arc[start angle=0, end angle=15, radius=0.9];
+    \node[blue!85!black, font=\footnotesize, right=1pt] at ({0.9*cos(7.5)}, {0.9*sin(7.5)}) {$\alpha$};
+
+    % A の右側における角度マーク: 水平線と OA の延長のなす角 α (同位角)
+    \draw[blue!85!black, thick] ($(A) + (0.9, 0)$) arc[start angle=0, end angle=15, radius=0.9];
+    \node[blue!85!black, font=\footnotesize, right=1pt] at ($(A) + ({0.9*cos(7.5)}, {0.9*sin(7.5)})$) {$\alpha$};
+
+    % A の右側における角度マーク: 水平線と接線 l のなす角 α
+    \draw[orange!90!black, thick] ($(A) + ({0.9*cos(-15)}, {0.9*sin(-15)})$) arc[start angle=-15, end angle=0, radius=0.9];
+    \node[orange!90!black, font=\footnotesize, right=1pt] at ($(A) + ({0.9*cos(-7.5)}, {0.9*sin(-7.5)})$) {$\alpha$};
+
+    % 接線 l と動径 OA の延長のなす角 2α = π/6 (外側に大きく描く)
+    \draw[red!85!black, thick] ($(A) + ({1.35*cos(-15)}, {1.35*sin(-15)})$) arc[start angle=-15, end angle=15, radius=1.35];
+    \node[red!85!black, font=\footnotesize, right=2pt] at ($(A) + (1.35, 0)$) {$2\alpha = \frac{\pi}{6}$};
+
+    % 点 A
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (A) {};
+    \node[above=3pt, red!85!black] at (A) {$A$};
   \end{tikzpicture}
-  \caption{面積計算に用いる扇形と曲線下の領域}
+  \caption{動径$OA$と接線$\ell$の傾きおよびなす角の関係}
+  \label{fig:tangent_angle}
 \end{figure}
-\begin{align}
-  \text{扇形}OAB&=\dfrac{1}{2}r^2\left(\dfrac{\pi}{2}-\dfrac{\pi}{6}\right)=\dfrac{2}{3}\pi，\\
-  \text{$C_1$と線分}AB\text{に囲まれた部分}&=\int_{\sin\alpha}^{\cos\alpha}\dfrac{1}{x}\,dx=\log\dfrac{1}{t}
-\end{align}
 
-を代入して，＊，⑦から
+ここで$A$における接線$\ell$の傾きは$\left(\dfrac{1}{x}\right)'=-\dfrac{1}{x^2}$より
 \begin{align}
-  S=\dfrac{2}{3}\pi-\log\dfrac{1}{2-\sqrt{3}}=\dfrac{2}{3}\pi-\log(2+\sqrt{3})．
+  -\dfrac{1}{r^2\cos^2\alpha} = -\tan \alpha \quad (\because\text{\cref{eq:4}})
 \end{align}
+だから，$x$軸と$\vec{\ell}$の成す角度も$\alpha$である．従って題意より
+\begin{align}
+  2\alpha = \dfrac{\pi}{6}
+  \quad\therefore
+  \alpha = \dfrac{\pi}{12} \label{eq:5}
+\end{align}
+である．両辺$\tan$を取って半角公式より
+\begin{align}
+  \tan\alpha
+  = \dfrac{\sin(\pi/6)}{1+\cos(\pi/6)}
+  = \dfrac{1/2}{1+\sqrt{3}/2}
+  = \dfrac{1}{2+\sqrt{3}}
+  = 2-\sqrt{3} \label{eq:6}
+\end{align}
+となる．\cref{eq:4}に代入して
+\begin{align}
+  r^2
+  & = \dfrac{1+t^2}{t}
+  = \dfrac{1+\left(2-\sqrt{3}\right)^2}{2-\sqrt{3}} \\
+  & = \dfrac{8-4\sqrt{3}}{2-\sqrt{3}}
+  = 4 \\
+  \therefore
+  r = 2 \label{eq:7}
+\end{align}
+となり，これは\cref{eq:2}を満たす．
 
-\bigskip
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.35cm, y=1.35cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at ({2*cos(15)}, {2*sin(15)});
+    \coordinate (B) at ({2*cos(75)}, {2*sin(75)});
+    \coordinate (Aprime) at ({2*cos(15)}, 0);
+    \coordinate (Bprime) at ({2*cos(75)}, 0);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.2, 0) -- (2.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 2.6) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 円弧 AB
+    \draw[line width=1.3pt, blue!85!black]
+    (A) arc[start angle=15, end angle=75, radius=2];
+    \node[blue!85!black, above right=1pt, font=\footnotesize] at ({2*cos(60)}, {2*sin(60)}) {$C_2$};
+
+    % 双曲線 AB
+    \draw[line width=1.3pt, teal!85!black]
+    plot[domain=0.4:2.3, samples=60] (\x, {1/\x});
+    \node[teal!85!black, right=2pt, font=\footnotesize] at (2.3, {1/2.3}) {$C_1$};
+
+    % 領域のハッチング
+    \fill[pattern=north east lines, pattern color=blue!30]
+    (A) arc[start angle=15, end angle=75, radius=2]
+    -- plot[domain={2*cos(75)}:{2*cos(15)}, samples=40] (\x, {1/\x})
+    -- cycle;
+
+    % 境界線・補助線
+    \draw[thick, gray!70!black] (O) -- (A);
+    \draw[thick, gray!70!black] (O) -- (B);
+    \draw[densely dotted, thick, gray!70!black] (A) -- (Aprime);
+    \draw[densely dotted, thick, gray!70!black] (B) -- (Bprime);
+
+    % 角 AOA' のマーク (alpha)
+    \draw[orange!90!black, thick] (0.9, 0) arc[start angle=0, end angle=15, radius=0.9];
+    \node[orange!90!black, font=\footnotesize, right=1pt] at ({0.9*cos(7.5)}, {0.9*sin(7.5)}) {$\alpha$};
+
+    % 角 AOB のマーク (pi/3)
+    \draw[red!85!black, thick] ({0.65*cos(15)}, {0.65*sin(15)}) arc[start angle=15, end angle=75, radius=0.65];
+    \node[red!85!black, font=\footnotesize, above right=1pt] at ({0.65*cos(45)}, {0.65*sin(45)}) {$\frac{\pi}{3}$};
+
+    % 点
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (A) {};
+    \node[above right=1pt, red!85!black] at (A) {$A$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (B) {};
+    \node[above left=1pt, red!85!black] at (B) {$B$};
+
+    \node[below=2pt, font=\footnotesize] at (Aprime) {$A'$};
+    \node[below=2pt, font=\footnotesize] at (Bprime) {$B'$};
+  \end{tikzpicture}
+  \caption{面積計算における各点の配置と分割}
+  \label{fig:area_decomposition}
+\end{figure}
+
+次に題意の面積を$S$として
+\begin{align}
+  S =
+  \begin{tikzpicture}[baseline={([yshift=-0.7ex]current bounding box.center)}, scale=0.52]
+    \fill[pattern=north east lines, pattern color=blue!40]
+    (0,0) -- (15:1.6) arc (15:75:1.6) -- cycle;
+    \draw[blue!85!black, thick] (0,0) -- (15:1.6) arc (15:75:1.6) -- cycle;
+    \node[below left=-1pt, font=\tiny] at (0,0) {$O$};
+    \node[right=-1pt, font=\tiny] at (15:1.6) {$A$};
+    \node[above=0pt, font=\tiny] at (75:1.6) {$B$};
+  \end{tikzpicture}
+  \;-\;
+  \begin{tikzpicture}[baseline={([yshift=-0.7ex]current bounding box.center)}, scale=0.52]
+    \fill[pattern=north east lines, pattern color=teal!40]
+    (0,0) -- (0.414, 1.545)
+    -- plot[domain=0.414:1.545, samples=25] (\x, {0.64/\x})
+    -- cycle;
+    \draw[gray!70!black, thick] (0,0) -- (0.414, 1.545);
+    \draw[gray!70!black, thick] (0,0) -- (1.545, 0.414);
+    \draw[teal!85!black, thick] plot[domain=0.414:1.545, samples=25] (\x, {0.64/\x});
+    \node[below left=-1pt, font=\tiny] at (0,0) {$O$};
+    \node[right=-1pt, font=\tiny] at (1.545, 0.414) {$A$};
+    \node[above=0pt, font=\tiny] at (0.414, 1.545) {$B$};
+  \end{tikzpicture} \label{eq:8}
+\end{align}
+であり，各項個別に計算すると
+\begin{align}
+  \begin{tikzpicture}[baseline={([yshift=-0.7ex]current bounding box.center)}, scale=0.52]
+    \fill[pattern=north east lines, pattern color=blue!40]
+    (0,0) -- (15:1.6) arc (15:75:1.6) -- cycle;
+    \draw[blue!85!black, thick] (0,0) -- (15:1.6) arc (15:75:1.6) -- cycle;
+    \node[below left=-1pt, font=\tiny] at (0,0) {$O$};
+    \node[right=-1pt, font=\tiny] at (15:1.6) {$A$};
+    \node[above=0pt, font=\tiny] at (75:1.6) {$B$};
+  \end{tikzpicture}
+  &=\dfrac{1}{2}r^2\dfrac{\pi}{3}=\dfrac{2}{3}\pi，\\
+  \begin{tikzpicture}[baseline={([yshift=-0.7ex]current bounding box.center)}, scale=0.52]
+    \fill[pattern=north east lines, pattern color=teal!40]
+    (0,0) -- (0.414, 1.545)
+    -- plot[domain=0.414:1.545, samples=25] (\x, {0.64/\x})
+    -- cycle;
+    \draw[gray!70!black, thick] (0,0) -- (0.414, 1.545);
+    \draw[gray!70!black, thick] (0,0) -- (1.545, 0.414);
+    \draw[teal!85!black, thick] plot[domain=0.414:1.545, samples=25] (\x, {0.64/\x});
+    \node[below left=-1pt, font=\tiny] at (0,0) {$O$};
+    \node[right=-1pt, font=\tiny] at (1.545, 0.414) {$A$};
+    \node[above=0pt, font=\tiny] at (0.414, 1.545) {$B$};
+  \end{tikzpicture}
+  &=
+  \begin{tikzpicture}[baseline={([yshift=-0.7ex]current bounding box.center)}, scale=0.52]
+    \fill[pattern=north east lines, pattern color=teal!40]
+    (0.414, 0) -- (0.414, 1.545)
+    -- plot[domain=0.414:1.545, samples=25] (\x, {0.64/\x})
+    -- (1.545, 0) -- cycle;
+    \draw[gray!80!black, thick] (0.15, 0) -- (1.8, 0);
+    \draw[gray!70!black, densely dotted, thick] (0.414, 0) -- (0.414, 1.545);
+    \draw[gray!70!black, densely dotted, thick] (1.545, 0) -- (1.545, 0.414);
+    \draw[teal!85!black, thick] plot[domain=0.414:1.545, samples=25] (\x, {0.64/\x});
+    \node[above=0pt, font=\tiny] at (0.414, 1.545) {$B$};
+    \node[above right=-1pt, font=\tiny] at (1.545, 0.414) {$A$};
+    \node[below=0pt, font=\tiny] at (0.414, 0) {$B'$};
+    \node[below=0pt, font=\tiny] at (1.545, 0) {$A'$};
+  \end{tikzpicture}
+  \;+\;
+  \begin{tikzpicture}[baseline={([yshift=-0.7ex]current bounding box.center)}, scale=0.52]
+    \fill[pattern=north east lines, pattern color=orange!40]
+    (0,0) -- (0.414, 1.545) -- (0.414, 0) -- cycle;
+    \draw[gray!80!black, thick] (-0.15, 0) -- (0.65, 0);
+    \draw[orange!85!black, thick] (0,0) -- (0.414, 1.545) -- (0.414, 0) -- cycle;
+    \node[below left=-1pt, font=\tiny] at (0,0) {$O$};
+    \node[above=0pt, font=\tiny] at (0.414, 1.545) {$B$};
+    \node[below=0pt, font=\tiny] at (0.414, 0) {$B'$};
+  \end{tikzpicture}
+  \;-\;
+  \begin{tikzpicture}[baseline={([yshift=-0.7ex]current bounding box.center)}, scale=0.52]
+    \fill[pattern=north east lines, pattern color=orange!40]
+    (0,0) -- (1.545, 0.414) -- (1.545, 0) -- cycle;
+    \draw[gray!80!black, thick] (-0.15, 0) -- (1.8, 0);
+    \draw[orange!85!black, thick] (0,0) -- (1.545, 0.414) -- (1.545, 0) -- cycle;
+    \node[below left=-1pt, font=\tiny] at (0,0) {$O$};
+    \node[above right=-1pt, font=\tiny] at (1.545, 0.414) {$A$};
+    \node[below=0pt, font=\tiny] at (1.545, 0) {$A'$};
+  \end{tikzpicture}
+  \notag\\
+  &=
+  \begin{tikzpicture}[baseline={([yshift=-0.7ex]current bounding box.center)}, scale=0.52]
+    \fill[pattern=north east lines, pattern color=teal!40]
+    (0.414, 0) -- (0.414, 1.545)
+    -- plot[domain=0.414:1.545, samples=25] (\x, {0.64/\x})
+    -- (1.545, 0) -- cycle;
+    \draw[gray!80!black, thick] (0.15, 0) -- (1.8, 0);
+    \draw[gray!70!black, densely dotted, thick] (0.414, 0) -- (0.414, 1.545);
+    \draw[gray!70!black, densely dotted, thick] (1.545, 0) -- (1.545, 0.414);
+    \draw[teal!85!black, thick] plot[domain=0.414:1.545, samples=25] (\x, {0.64/\x});
+    \node[above=0pt, font=\tiny] at (0.414, 1.545) {$B$};
+    \node[above right=-1pt, font=\tiny] at (1.545, 0.414) {$A$};
+    \node[below=0pt, font=\tiny] at (0.414, 0) {$B'$};
+    \node[below=0pt, font=\tiny] at (1.545, 0) {$A'$};
+  \end{tikzpicture}
+  = \int_{\sin\alpha}^{\cos\alpha}\dfrac{1}{x}\,dx = \log\dfrac{1}{t}
+\end{align}
+だから，\cref{eq:8}に代入して\cref{eq:6}を用いて
+\begin{align}
+  S=\dfrac{2}{3}\pi-\log\dfrac{1}{2-\sqrt{3}}=\dfrac{2}{3}\pi-\log(2+\sqrt{3})
+\end{align}
+である．
+
 {\bf [別解]}
-対称性から，$y=x$の方を$\ell$とする．$A\left(p,\dfrac{1}{p}\right)$とする（$0<p<1$）．$A$での接線の傾きは$-\dfrac{1}{p^2}$であり，$\ell$と$x$軸の交点を$C$として，$|OA|=|AC|$となる．（$\because$ $OA$の傾き符号）$\angle AOC>\pi/4$から題意の条件は$\angle OAC=\pi/6$である．この時$\angle AOC=\dfrac{5}{12}\pi$となる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=2.2cm, >=stealth,
+    every node/.style={font=\small}]
+    \pgfmathsetmacro{\pVal}{sqrt(2-sqrt(3))}
+    \pgfmathsetmacro{\invP}{sqrt(2+sqrt(3))}
+    \pgfmathsetmacro{\cVal}{2*\pVal}
+
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (\invP, \pVal);
+    \coordinate (C) at (0, \cVal);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.2, 0) -- (2.4, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 2.4) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 求める領域 S を斜線で塗る
+    \fill[pattern=north east lines, pattern color=blue!30]
+    (\pVal, \invP) arc[start angle=75, end angle=15, radius=2]
+    -- plot[domain=\invP:\pVal, samples=40] (\x, {1/\x})
+    -- cycle;
+
+    % 円弧 C_2
+    \draw[line width=1.3pt, blue!85!black]
+    (2.0, 0) arc[start angle=0, end angle=90, radius=2];
+    \node[blue!85!black, font=\footnotesize, above right=1pt] at ({2*cos(80)}, {2*sin(80)}) {$C_2$};
+
+    % 双曲線 C_1
+    \draw[line width=1.3pt, teal!85!black]
+    plot[domain=0.42:2.2, samples=60] (\x, {1/\x});
+    \node[teal!85!black, font=\footnotesize, right=2pt] at (2.2, {1/2.2}) {$C_1$};
+
+    % 線分 OA
+    \draw[line width=1.2pt, blue!85!black] (O) -- (A);
+
+    % 接線 l (点 A を通り、y 軸上の C(0, 2p) で交わる)
+    \draw[line width=1.2pt, orange!90!black]
+    ($(A) + (0.35, {-0.35*(2-sqrt(3))})$) -- ($(C) + (-0.25, {0.25*(2-sqrt(3))})$)
+    node[above left, font=\footnotesize] {$\ell$};
+
+    % 二等辺三角形 OAC の辺 AC
+    \draw[line width=1.1pt, orange!90!black] (A) -- (C);
+
+    % 頂角 \angle OAC = \pi/6
+    \path pic [draw=red!85!black, line width=0.8pt, "$\frac{\pi}{6}$", angle eccentricity=1.7, angle radius=0.38cm] {angle = C--A--O};
+
+    % 底角 \angle AOC = 5\pi/12
+    \path pic [draw=blue!85!black, line width=0.8pt, "$\frac{5}{12}\pi$", angle eccentricity=1.6, angle radius=0.55cm] {angle = A--O--C};
+
+    % 点 A から座標軸への垂線
+    \draw[densely dotted, thick, gray!70!black] (0, \pVal) -- (A) -- (\invP, 0);
+    \node[left=3pt, font=\footnotesize] at (0, \pVal) {$p$};
+    \node[below=3pt, font=\footnotesize] at (\invP, 0) {$\frac{1}{p}$};
+
+    % 点 A, C
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (A) {};
+    \node[above right=1pt] at (A) {$A\left(\frac{1}{p},\, p\right)$};
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (C) {};
+    \node[left=2pt, font=\footnotesize] at (C) {$C$};
+  \end{tikzpicture}
+  \caption{二等辺三角形$\triangle OAC$を用いた接線と角度の幾何学的解法}
+  \label{fig:solution2_geom}
+\end{figure}
+
+[解答]と同様に$A\left(p,\dfrac{1}{p}\right) \ (1<p)$とする．$A$での接線の傾きは$-\dfrac{1}{p^2}$であり，$OA$の傾きが$\dfrac{1}{p^2}$である．
+従って$\ell$と$y$軸の交点を$C$として|OA|=|AC|$，つまり三角形$OAC$は二等辺三角形である．
+$\angle AOC<\dfrac{\pi}{4}$から題意の条件は$\angle OAC=\dfrac{\pi}{6}$である．
+この時$\angle AOC=\dfrac{5}{12}\pi$となる．
 \begin{align}
-  \tan\dfrac{5}{12}\pi=2+\sqrt{3}
+  \tan\dfrac{7}{12}\pi=2+\sqrt{3}
 \end{align}
 だから，
 \begin{align}
-  \dfrac{1}{p^2}=\tan\dfrac{5}{12}\pi=2+\sqrt{3}\quad\therefore\ p=\sqrt{2-\sqrt{3}}
+  \dfrac{1}{p^2}=\tan\dfrac{7}{12}\pi=2-\sqrt{3}
+  \quad\therefore\
+  p=\sqrt{2+\sqrt{3}}
 \end{align}
-
-以下，$\alpha=\sqrt{2-\sqrt{3}}$，$\beta=\sqrt{2+\sqrt{3}}$とする．
+となる．以下$\alpha=\sqrt{2-\sqrt{3}}$，$\beta=\sqrt{2+\sqrt{3}}$とすると求める面積は
 \begin{align}
   S&=\text{（扇形）}-\text{（$C_1$に囲まれた部分）}\\
   &=\dfrac{1}{2}(\alpha^2+\beta^2)\cdot\dfrac{\pi}{3}-\int_\alpha^\beta\dfrac{1}{x}\,dx\\

@@ -1,66 +1,140 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$f(x)=\dfrac{ax+b}{x^2+x+1}$とする．$y=f(x)$とおけば，与式は
-\begin{align}
-  y^3-2y^2-y+2\ge0
-\end{align}
-すなわち
-\begin{align}
-  (y-1)(y^2-y-2)\ge0 \iff (y-1)(y-2)(y+1)\ge0
-\end{align}
-\begin{align}
-  \therefore\ -1\le y\le1\ \text{または}\ 2\le y\quad\cdots①
-\end{align}
 
-したがって，全ての$x$で①が成立すれば良い．$f(x)\xrightarrow{x\to\pm\infty}0$かつ，$x^2+x+1>0$から$f$が連続であることより，$2\le y$となる$x$がある時，①が全ての$x$で成立することはなく適さない．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.3cm, y=1.2cm, >=stealth,
+    every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-3.2, 0) -- (3.2, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.8) -- (0, 2.7) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
 
-よって，$-1\le y\le1$のみ調べる．
-\begin{align}
-  -(x^2+x+1)\le ax+b\le x^2+x+1
-\end{align}
-\begin{align}
-  -x^2-(a+1)x-1\le b\le x^2+(1-a)x+1\quad\cdots②
-\end{align}
+    % 不適領域 1 < y < 2 の帯状領域を薄い赤で示す
+    \fill[red!10] (-3.1, 1) rectangle (3.1, 2);
+    \draw[dashed, red!70!black, thick] (-3.1, 1) -- (3.1, 1) node[right, font=\footnotesize] {$y=1$};
+    \draw[dashed, red!70!black, thick] (-3.1, 2) -- (3.1, 2) node[right, font=\footnotesize] {$y=2$};
+    \node[red!75!black, font=\footnotesize] at (2.0, 1.5) {不適領域 ($1 < y < 2$)};
 
-②の右辺の最小値は$x=\dfrac{a-1}{2}$の時の$1-\left(\dfrac{1-a}{2}\right)^2=\dfrac{-a^2+2a+3}{4}$，
-左辺の最大値は$x=-\dfrac{a+1}{2}$の時の$\dfrac{(a+1)^2}{4}-1=\dfrac{a^2+2a-3}{4}$だから，全ての$x$で②が成立する条件は，
-\begin{align}
-  \dfrac{a^2+2a-3}{4}\le b\le\dfrac{-a^2+2a+3}{4}．
-\end{align}
+    % 基準線 y = -1
+    \draw[dashed, gray!60!black] (-3.1, -1) -- (3.1, -1) node[right, font=\footnotesize] {$y=-1$};
 
-これを図示して，以下斜線部（境界含む）．
+    % 例としての曲線 y = f(x) (適するケース: -1 <= y <= 1)
+    \draw[line width=1.3pt, blue!85!black]
+    plot[domain=-3.1:3.1, samples=80] (\x, {2.2*\x / (\x*\x + \x + 1)});
+    \node[blue!85!black, above right=1pt, font=\footnotesize] at (0.8, 0.95) {$y=f(x)$ (適)};
+
+    % 矛盾が生じるケースの例 (一部が y >= 2 に達する場合、中間値の定理より 1 < y < 2 を横切る)
+    \draw[line width=1.1pt, teal!80!black, dashdotted]
+    plot[domain=-3.1:3.1, samples=80] (\x, {4.8*\x / (\x*\x + \x + 1)});
+    \node[teal!80!black, above right=1pt, font=\footnotesize] at (0.7, 2.2) {$y=f(x)$ (不適)};
+
+    % 中間値の定理による交差を強調
+    \node[circle, fill=red!85!black, inner sep=1.3pt] at (0.24, 1.0) {};
+    \node[circle, fill=red!85!black, inner sep=1.3pt] at (0.64, 2.0) {};
+  \end{tikzpicture}
+  \caption{関数$y=f(x)$の漸近挙動と値域の条件}
+  \label{fig:fx_overview}
+\end{figure}
+
+与えられた関数
+\begin{align}
+  f(x)=\dfrac{ax+b}{x^2+x+1} \label{eq:1}
+\end{align}
+について考える．$y=f(x)$とおけば題意の不等式は
+\begin{align}
+  & y^3-2y^2-y+2\ge0 \\
+  & (y-1)(y^2-y-2)\ge0 \\
+  & (y-1)(y-2)(y+1)\ge0 \\
+  \therefore\
+  -1\le y\le1\ \text{または}\ 2\le y \label{eq:2}
+\end{align}
+である．従って全ての$x$で\cref{eq:2}が成立すれば良い．$f(x)\xrightarrow{x\to\pm\infty}0$かつ，$x^2+x+1>0$から$f$が連続であることより，$2\le y$となる$x$がある時は\cref{eq:2}が全ての$x$で成立することはなく不適である．
+
+よって，$-1\le y\le1$のみ調べればよい．\cref{eq:1}を代入して
+\begin{align}
+  & -(x^2+x+1)\le ax+b\le x^2+x+1 \\
+  & -x^2-(a+1)x-1\le b\le x^2+(1-a)x+1 \label{eq:3}
+\end{align}
+である．
+
+\cref{eq:3}の右辺の最小値は$x=\dfrac{a-1}{2}$の時の$1-\left(\dfrac{1-a}{2}\right)^2=\dfrac{-a^2+2a+3}{4}$，
+左辺の最大値は$x=-\dfrac{a+1}{2}$の時の$\dfrac{(a+1)^2}{4}-1=\dfrac{a^2+2a-3}{4}$だから，全ての$x$で\cref{eq:3}が成立する条件は，
+\begin{align}
+  \dfrac{a^2+2a-3}{4}\le b\le\dfrac{-a^2+2a+3}{4} \label{eq:4}
+\end{align}
+である．これを図示して下図斜線部（境界含む）である．
 
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=1.4cm, y=1.4cm, >=stealth,
     every node/.style={font=\small}]
     \pgfmathsetmacro{\edge}{sqrt(3)}
-    \fill[blue!17]
-    plot[domain=-\edge:\edge, samples=65] (\x,{(-\x*\x+2*\x+3)/4})
-    -- plot[domain=\edge:-\edge, samples=65] (\x,{(\x*\x+2*\x-3)/4})
+
+    % 境界線に囲まれた領域（斜線パターン）
+    \fill[pattern=north east lines, pattern color=blue!30]
+    plot[domain=-\edge:\edge, samples=70] (\x, {(-\x*\x+2*\x+3)/4})
+    -- plot[domain=\edge:-\edge, samples=70] (\x, {(\x*\x+2*\x-3)/4})
     -- cycle;
-    \draw[->, gray!80!black, thick] (-2.3,0)--(2.35,0) node[right] {$a$};
-    \draw[->, gray!80!black, thick] (0,-1.65)--(0,1.65) node[above] {$b$};
+
+    % 座標軸
+    \draw[->, gray!80!black, thick] (-3.7, 0) -- (3.8, 0) node[right] {$a$};
+    \draw[->, gray!80!black, thick] (0, -2.5) -- (0, 2.5) node[above] {$b$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 放物線 b = (-a^2 + 2a + 3)/4 (上に凸、頂点 (1, 1))
     \draw[blue!85!black, line width=1.3pt]
-    plot[domain=-\edge:\edge, samples=65] (\x,{(-\x*\x+2*\x+3)/4});
+    plot[domain=-\edge:\edge, samples=70] (\x, {(-\x*\x+2*\x+3)/4});
+    \draw[blue!85!black, dashed, line width=1.0pt]
+    plot[domain=-3.4:-\edge, samples=50] (\x, {(-\x*\x+2*\x+3)/4});
+    \draw[blue!85!black, dashed, line width=1.0pt]
+    plot[domain=\edge:3.6, samples=50] (\x, {(-\x*\x+2*\x+3)/4});
+
+    % 放物線 b = (a^2 + 2a - 3)/4 (下に凸、頂点 (-1, -1))
     \draw[teal!85!black, line width=1.3pt]
-    plot[domain=-\edge:\edge, samples=65] (\x,{(\x*\x+2*\x-3)/4});
-    \foreach \x/\label in {-1.732/-\sqrt{3},1.732/\sqrt{3}} {
-      \draw[gray!80!black] (\x,0.04)--(\x,-0.04);
-      \node[below=3pt] at (\x,0) {$\label$};
-    }
-    \node[blue!85!black, right=2pt, font=\footnotesize] at (0.25,1.36)
+    plot[domain=-\edge:\edge, samples=70] (\x, {(\x*\x+2*\x-3)/4});
+    \draw[teal!85!black, dashed, line width=1.0pt]
+    plot[domain=-3.6:-\edge, samples=50] (\x, {(\x*\x+2*\x-3)/4});
+    \draw[teal!85!black, dashed, line width=1.0pt]
+    plot[domain=\edge:3.4, samples=50] (\x, {(\x*\x+2*\x-3)/4});
+
+    % 交点 (\pm\sqrt{3}, \pm\sqrt{3}/2)
+    \draw[densely dotted, thick, gray!70!black] (-\edge, 0) -- (-\edge, {(-3-2*\edge-3)/4}) -- (0, {(-3-2*\edge-3)/4});
+    \draw[densely dotted, thick, gray!70!black] (\edge, 0) -- (\edge, {(-3+2*\edge+3)/4}) -- (0, {(-3+2*\edge+3)/4});
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (-\edge, {-\edge/2}) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (\edge, {\edge/2}) {};
+
+    % 頂点 (1, 1) と (-1, -1)
+    \draw[densely dotted, thick, gray!70!black] (1, 0) -- (1, 1) -- (0, 1);
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (1, 1) {};
+    \draw[densely dotted, thick, gray!70!black] (-1, 0) -- (-1, -1) -- (0, -1);
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (-1, -1) {};
+
+    % 軸上の目盛りラベル
+    \node[below=3pt, font=\footnotesize] at (1, 0) {$1$};
+    \node[left=3pt, font=\footnotesize] at (0, 1) {$1$};
+    \node[above=3pt, font=\footnotesize] at (-1, 0) {$-1$};
+    \node[right=3pt, font=\footnotesize] at (0, -1) {$-1$};
+
+    \node[below=3pt, font=\footnotesize] at (-\edge, 0) {$-\sqrt{3}$};
+    \node[below=3pt, font=\footnotesize] at (\edge, 0) {$\sqrt{3}$};
+    \node[right=3pt, font=\footnotesize] at (0, {-\edge/2}) {$-\frac{\sqrt{3}}{2}$};
+    \node[left=3pt, font=\footnotesize] at (0, {\edge/2}) {$\frac{\sqrt{3}}{2}$};
+
+    % 放物線の a 切片 (\pm 3, 0) と (\pm 1, 0)
+    \node[below=3pt, font=\footnotesize] at (3, 0) {$3$};
+    \node[below=3pt, font=\footnotesize] at (-3, 0) {$-3$};
+
+    % 曲線の式ラベル
+    \node[blue!85!black, font=\footnotesize, above right=1pt] at (1.2, 1.05)
     {$b=\frac{-a^2+2a+3}{4}$};
-    \node[teal!85!black, right=2pt, font=\footnotesize] at (-1.8,-1.4)
+    \node[teal!85!black, font=\footnotesize, below left=1pt] at (-1.2, -1.05)
     {$b=\frac{a^2+2a-3}{4}$};
   \end{tikzpicture}
-  \caption{条件②を満たす$(a,b)$の範囲（斜線部）}
+  \caption{条件\cref{eq:4}を満たす$(a,b)$の範囲（斜線部）}
+  \label{fig:region}
 \end{figure}
 
 \newpage
