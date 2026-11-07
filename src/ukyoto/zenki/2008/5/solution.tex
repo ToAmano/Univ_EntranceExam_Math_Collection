@@ -1,46 +1,95 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-% Source: handwritten.pdf 第5問．
 {\bf [解答]}
-$H$の方程式は$z=y-1$である．
-$y=2\sin\theta$ $(\dfrac{\pi}{6}\leqq\theta\leqq\dfrac{\pi}{2})$で切断する切り口は下図で，
-この面積$S(\theta)$として
-\begin{align}S(\theta)=4\cos\theta(2\sin\theta-1).
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x={(-.55cm,-.32cm)}, y={(0.75cm,0cm)}, z={(0cm,1.8cm)},
+    >=stealth, every node/.style={font=\small}]
+
+    % --- 1. 座標軸 ---
+    \draw[->, thick, gray!80!black] (0,0,0) -- (2.7,0,0) node[below left] {$x$};
+    \draw[->, thick, gray!80!black] (0,-2.5,0) -- (0,2.8,0) node[right] {$y$};
+    \draw[->, thick, gray!80!black] (0,0,0) -- (0,0,1.5) node[above] {$z$};
+    \node[below left=2pt, font=\footnotesize] at (0,0,0) {$O$};
+
+    % --- 2. 円柱の底面 (z = 0) ---
+    % 奥側 (x < 0, 90°〜270°): 破線
+    \draw[dashed, gray!60, line width=0.8pt, domain=90:270, samples=60]
+    plot ({2*cos(\x)}, {2*sin(\x)}, 0);
+    % 手前側 (x >= 0, -90°〜90°): 実線
+    \draw[line width=1.1pt, gray!70!black, domain=-90:90, samples=60]
+    plot ({2*cos(\x)}, {2*sin(\x)}, 0);
+
+    % --- 3. 切断平面 H: z = y - 1 の底面交線 (弦 y = 1, z = 0) ---
+    % 奥側 (x < 0) は破線、手前側 (x >= 0) は内部なので破線
+    \draw[dashed, line width=1.0pt, teal!75!black]
+    ({-sqrt(3)}, 1, 0) -- ({sqrt(3)}, 1, 0);
+    \node[below, font=\footnotesize, teal!75!black] at (0, 1, 0) {$1$};
+
+    % --- 4. 側面の斜線ハッチング (手書き図形の再現) ---
+    % 対象立体 (y >= 1, 0 <= z <= y - 1) の側面円柱壁
+    % 手前側 (x >= 0, θ: 30°〜90°): 縦のハッチング線
+    \foreach \ang in {33, 37, ..., 87} {
+      \draw[teal!75!black, line width=0.6pt]
+      ({2*cos(\ang)}, {2*sin(\ang)}, 0) -- ({2*cos(\ang)}, {2*sin(\ang)}, {2*sin(\ang)-1});
+    }
+
+    % --- 5. 平面 H による切断曲線 (円柱壁との交線 z = 2*sinθ - 1) ---
+    % 奥側 (x < 0, 90°〜150°): 破線
+    \draw[dashed, line width=1.1pt, teal!80!black, domain=90:150, samples=40]
+    plot ({2*cos(\x)}, {2*sin(\x)}, {2*sin(\x)-1});
+    % 手前側 (x >= 0, 30°〜90°): 太い実線
+    \draw[line width=1.3pt, teal!80!black, domain=30:90, samples=40]
+    plot ({2*cos(\x)}, {2*sin(\x)}, {2*sin(\x)-1});
+
+    % --- 6. 円柱の上面 (z = 1) ---
+    % 上面は全体が見えるため実線
+    \draw[line width=1.1pt, blue!85!black, domain=0:360, samples=80]
+    plot ({2*cos(\x)}, {2*sin(\x)}, 1);
+
+    % --- 7. 円柱の母線 (両端の輪郭) ---
+    \draw[line width=1.1pt, blue!85!black] (0, -2, 0) -- (0, -2, 1);
+    \draw[line width=1.1pt, blue!85!black] (0, 2, 0) -- (0, 2, 1);
+
+    % --- 8. 目盛りとラベル ---
+    \node[circle, fill=teal!80!black, inner sep=1.3pt] at (0, 2, 1) {};
+    \node[above right=1pt, teal!80!black] at (0, 2, 1) {$(0,2,1)$};
+    \node[right=2pt, font=\normalsize\bfseries, teal!80!black] at (0, 2.2, 0.6) {$H$};
+
+    \node[circle, fill, inner sep=1.0pt] at (0, 2, 0) {};
+    \node[below right=1pt, font=\footnotesize] at (0, 2, 0) {$2$};
+    \node[circle, fill, inner sep=1.0pt] at (0, -2, 0) {};
+    \node[below left=1pt, font=\footnotesize] at (0, -2, 0) {$-2$};
+    \node[circle, fill, inner sep=1.0pt] at (2, 0, 0) {};
+    \node[below left=1pt, font=\footnotesize] at (2, 0, 0) {$2$};
+
+  \end{tikzpicture}
+  \caption{円柱 $C$ を平面 $H$ で二分したときの，点 $(0,2,0)$ を含む立体（側面斜線部）}
+  \label{fig:cylinder_cut}
+\end{figure}
+
+題意の平面$H$の方程式は
+\begin{align}
+  H: z=y-1 \label{eq:1}
 \end{align}
+である．円柱の方程式は
+\begin{align}
+  C: x^2+y^2 \le 4 \quad (0 \le z \le 1) \label{eq:2}
+\end{align}
+だから，\cref{eq:1}で切り取られるうち$(0,2,0)$を含む部分は$1 \le y \le 2$を満たす．
+そこで $y=2\sin\theta$ $(\dfrac{\pi}{6}\leqq\theta\leqq\dfrac{\pi}{2})$で図形を切断すると，
+\begin{align}
+  \begin{cases}
+    x^2 \le 4-4\sin^2\theta = 4\cos^2\theta  \\
+    0 \le z \le 2\sin\theta-1
+  \end{cases}
+\end{align}
+となり，下図斜線部のような長方形になる．
+
 \begin{figure}[H]
   \centering
-  \begin{tikzpicture}[x={(-.5cm,-.32cm)},y={(.7cm,0cm)},z={(0cm,1.7cm)},
-    >=stealth,every node/.style={font=\small}]
-    % 円柱の奥側と手前側の輪郭を描き分ける。
-    \draw[dashed,gray!65,domain=90:270,samples=70]
-    plot ({2*cos(\x)},{2*sin(\x)},0);
-    \draw[dashed,gray!65,domain=90:270,samples=70]
-    plot ({2*cos(\x)},{2*sin(\x)},1);
-    \fill[blue!17] plot[domain=30:150,samples=70]
-    ({2*cos(\x)},{2*sin(\x)},{2*sin(\x)-1}) -- cycle;
-    \draw[teal!80!black,line width=1.25pt,domain=30:150,samples=70]
-    plot ({2*cos(\x)},{2*sin(\x)},{2*sin(\x)-1});
-    \draw[teal!80!black,line width=1.15pt]
-    ({sqrt(3)},1,0)--({-sqrt(3)},1,0);
-    \draw[blue!85!black,line width=1.1pt,domain=-90:90,samples=70]
-    plot ({2*cos(\x)},{2*sin(\x)},0);
-    \draw[blue!85!black,line width=1.1pt,domain=-90:90,samples=70]
-    plot ({2*cos(\x)},{2*sin(\x)},1);
-    \draw[blue!85!black] (0,-2,0)--(0,-2,1) (0,2,0)--(0,2,1);
-    \draw[->,gray!80!black] (0,0,0)--(2.8,0,0) node[below] {$x$};
-    \draw[->,gray!80!black] (0,-2.5,0)--(0,2.8,0) node[right] {$y$};
-    \draw[->,gray!80!black] (0,0,0)--(0,0,1.5) node[above] {$z$};
-    \node[right,teal!80!black] at (0,2,1.12) {$H$};
-    \node[below] at (0,2,0) {$2$};
-    \node[left] at (0,-2,0) {$-2$};
-    \node[below] at (2,0,0) {$2$};
-  \end{tikzpicture}
-  \qquad
   \begin{tikzpicture}[x=.8cm,y=.8cm,>=stealth,
     every node/.style={font=\small}]
     \fill[blue!17] (-1.6,0) rectangle (1.6,1.1);
@@ -51,21 +100,28 @@ $y=2\sin\theta$ $(\dfrac{\pi}{6}\leqq\theta\leqq\dfrac{\pi}{2})$で切断する�
     \node[below=3pt] at (1.6,0) {$2\cos\theta$};
     \node[above right=2pt] at (0,1.1) {$2\sin\theta-1$};
   \end{tikzpicture}
-  \caption{円柱を平面$H$で分けた部分と$y=2\sin\theta$での切り口}
+  \caption{$y=2\sin\theta$での切り口}
 \end{figure}
-だから，以下$c=\cos\theta$，$s=\sin\theta$として，求める体積$V$は
+
+この面積$S(\theta)$とすると
+\begin{align}
+  S(\theta)=4\cos\theta(2\sin\theta-1)
+\end{align}
+だから，求める体積$V$は
 \begin{align}
   \begin{split}
-    V&=\int_1^2S(\theta)\,d(2s)\\
-    &=\int_{\pi/6}^{\pi/2}S(\theta)\dfrac{d(2s)}{d\theta}\,d\theta\\
-    &=\int_{\pi/6}^{\pi/2}4c(2s-1)\,2c\,d\theta\\
-    &=8\int_{\pi/6}^{\pi/2}(2c^2s-c^2)\,d\theta\\
-    &=8\left[-\dfrac{2}{3}c^3\right]_{\pi/6}^{\pi/2}
+    V
+    &=\int_1^2S(\theta)\,d(2s)\\
+    &=\int_{\pi/6}^{\pi/2}S(\theta)\dfrac{d(2\sin\theta)}{d\theta}\,d\theta\\
+    &=\int_{\pi/6}^{\pi/2}4\cos\theta(2\sin\theta-1)\,2\cos\theta\,d\theta\\
+    &=8\int_{\pi/6}^{\pi/2}(2\cos^2\theta\sin\theta-\cos^2\theta)\,d\theta\\
+    &=8\left[-\dfrac{2}{3}\cos^3\theta\right]_{\pi/6}^{\pi/2}
     -8\cdot\dfrac{1}{2}\left[\theta+\dfrac{1}{2}\sin2\theta\right]_{\pi/6}^{\pi/2}\\
     &=\dfrac{16}{3}\left(\dfrac{\sqrt{3}}{2}\right)^3
     -4\left(\dfrac{\pi}{3}-\dfrac{1}{2}\cdot\dfrac{\sqrt{3}}{2}\right)\\
-    &=3\sqrt{3}-\dfrac{4}{3}\pi.
+    &=3\sqrt{3}-\dfrac{4}{3}\pi
   \end{split}
 \end{align}
+である．
 
 \end{document}

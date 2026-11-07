@@ -1,21 +1,228 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-% Source: handwritten.pdf 第4問．
 {\bf [解答]}
-$f(x)=x^2-2$，$g(x)=2x^2+ax-1$とおく．$g(0)=-1<0$から，$g$の2次係数が正なので
-$g(x)=0$は必ず2異実根を持ち，
-\begin{align}x=\dfrac{-a\pm\sqrt{a^2+8}}{4}
-\end{align}
-である．これを$\alpha,\beta$ $(\alpha<\beta)$とおく．
 
-\subparagraph{(i) $-\dfrac{3\sqrt{2}}{2}<a<\dfrac{3\sqrt{2}}{2}$の時}
-$-\sqrt{2}\leqq\alpha<\beta\leqq\sqrt{2}$となるから，
-$x\leqq\alpha$，$\beta\leqq x$に分けて考える．
+与えられた関数の絶対値の中身を
+\begin{align}
+  \begin{cases}
+    f(x)=x^2-2 \\
+    g(x)=2x^2+ax-1
+  \end{cases} \label{eq:1}
+\end{align}
+とおくと$f(x)=0$は$x=\pm\sqrt{2}$に解を持つ．
+$g(x)=0$については$g(0)=-1<0$および$g$の2次係数が正なので2異実根を持ち，それらは
+\begin{align}
+  x=\dfrac{-a\pm\sqrt{a^2+8}}{4} \equiv \alpha_{\pm} \quad (\text{複合同順}) \label{eq:2}
+\end{align}
+とおく．題意の方程式
+\begin{align}
+  |f(x)| = |g(x)| \label{eq:3}
+\end{align}
+は$a\to -a$の入れ替えに対して$x\to -x$とすれば対称なので，
+$a \ge 0$で考えれば$a <0$の場合は$-a$の時と同じだけ解が存在する．
+そこで以下$a \ge 0$で考える．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.1cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-3.3, 0) -- (3.6, 0) node[right] {$a$};
+    \draw[->, thick, gray!80!black] (0, -2.2) -- (0, 2.2) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 水平線 y = \pm\sqrt{2}
+    \draw[dashed, thick, gray!70!black] (-3.1, 1.414) -- (3.3, 1.414);
+    \node[left=2pt, font=\footnotesize] at (0, 1.414) {$\sqrt{2}$};
+    \draw[dashed, thick, gray!70!black] (-3.1, -1.414) -- (3.3, -1.414);
+    \node[left=2pt, font=\footnotesize] at (0, -1.414) {$-\sqrt{2}$};
+
+    % 曲線 y = \alpha_+(a)
+    \draw[line width=1.3pt, blue!85!black, domain=-3.1:3.3, samples=70]
+    plot (\x, {(- \x + sqrt(\x*\x + 8))/4});
+    \node[blue!85!black, font=\footnotesize, above right=1pt] at (2.2, 0.45) {$y=\alpha_+(a)$};
+
+    % 曲線 y = \alpha_-(a)
+    \draw[line width=1.3pt, teal!85!black, domain=-3.1:3.3, samples=70]
+    plot (\x, {(- \x - sqrt(\x*\x + 8))/4});
+    \node[teal!85!black, font=\footnotesize, below right=1pt] at (1.8, -1.75) {$y=\alpha_-(a)$};
+
+    % 交点 (-\frac{3\sqrt{2}}{2}, \sqrt{2})
+    \pgfmathsetmacro{\critA}{1.5*sqrt(2)}
+    \coordinate (CritL) at ({-\critA}, 1.4142);
+    \draw[densely dotted, thick, gray!70!black] (CritL) -- ({-\critA}, 0);
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (CritL) {};
+    \node[below=3pt, font=\footnotesize] at ({-\critA}, 0) {$-\frac{3\sqrt{2}}{2}$};
+
+    % 交点 (\frac{3\sqrt{2}}{2}, -\sqrt{2})
+    \coordinate (CritR) at (\critA, -1.4142);
+    \draw[densely dotted, thick, gray!70!black] (CritR) -- (\critA, 0);
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (CritR) {};
+    \node[above=3pt, font=\footnotesize] at (\critA, 0) {$\frac{3\sqrt{2}}{2}$};
+
+    % y軸上の切片 \pm\frac{\sqrt{2}}{2}
+    \node[circle, fill=gray!80!black, inner sep=1.1pt] at (0, 0.7071) {};
+    \node[right=2pt, font=\footnotesize] at (0, 0.7071) {$\frac{\sqrt{2}}{2}$};
+    \node[circle, fill=gray!80!black, inner sep=1.1pt] at (0, -0.7071) {};
+    \node[right=2pt, font=\footnotesize] at (0, -0.7071) {$-\frac{\sqrt{2}}{2}$};
+  \end{tikzpicture}
+  \caption{$a$-$y$平面における$y=\alpha_\pm(a)$と$y=\pm\sqrt{2}$のグラフ}
+  \label{fig:alpha_curves}
+\end{figure}
+
+\cref{eq:3}は$\alpha_{\pm}$と$\pm\sqrt{2}$の大きさに応じて解の様子が変わるので以下これによって場合分けする．上図の$y=\alpha_{\pm},y=\pm\sqrt{2}$のグラフより，$a \ge 0$であり得るのは以下のパターンである．
+
+\begin{align}
+  \begin{cases}
+    -\sqrt{2}<\alpha_{-}<\alpha_{+}<\sqrt{2} \quad\therefore -\dfrac{3\sqrt{2}}{2}<a<\dfrac{3\sqrt{2}}{2}\\
+    -\sqrt{2}=\alpha_{-}<\alpha_{+}<\sqrt{2} \quad\therefore a = \dfrac{3\sqrt{2}}{2}\\
+    \alpha_{-}<-\sqrt{2}<\alpha_{+}<\sqrt{2} \quad\therefore \dfrac{3\sqrt{2}}{2} < a
+  \end{cases}
+\end{align}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.3cm, y=0.65cm, >=stealth, every node/.style={font=\footnotesize}]
+    % 境界線 x = -\sqrt{2}, x = \sqrt{2}
+    \draw[dashed, thick, gray!60!black] ({-sqrt(2)}, 0.6) -- ({-sqrt(2)}, -5.5);
+    \node[above, gray!80!black] at ({-sqrt(2)}, 0.6) {$-\sqrt{2}$};
+    \draw[dashed, thick, gray!60!black] ({sqrt(2)}, 0.6) -- ({sqrt(2)}, -5.5);
+    \node[above, gray!80!black] at ({sqrt(2)}, 0.6) {$\sqrt{2}$};
+
+    % 6 パターン
+    % (1) -\sqrt{2} < \alpha_- < \alpha_+ < \sqrt{2}
+    \begin{scope}[yshift=0cm]
+      \draw[->, thick, gray!70!black] (-2.2, 0) -- (2.2, 0);
+      \node[left=3pt] at (-2.2, 0) {(1) $|a|<\frac{3\sqrt{2}}{2}$};
+      \node[circle, fill=teal!85!black, inner sep=1.4pt] at (-0.7, 0) {};
+      \node[below=1pt, teal!85!black] at (-0.7, 0) {$\alpha_-$};
+      \node[circle, fill=blue!85!black, inner sep=1.4pt] at (0.6, 0) {};
+      \node[below=1pt, blue!85!black] at (0.6, 0) {$\alpha_+$};
+    \end{scope}
+
+    % (2) -\sqrt{2} = \alpha_- < \alpha_+ < \sqrt{2}
+    \begin{scope}[yshift=-1cm]
+      \draw[->, thick, gray!70!black] (-2.2, 0) -- (2.2, 0);
+      \node[left=3pt] at (-2.2, 0) {(2) $a=\frac{3\sqrt{2}}{2}$};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at ({-sqrt(2)}, 0) {};
+      \node[below left=1pt, teal!85!black] at ({-sqrt(2)}, 0) {$\alpha_-$};
+      \node[circle, fill=blue!85!black, inner sep=1.4pt] at (0.35, 0) {};
+      \node[below=1pt, blue!85!black] at (0.35, 0) {$\alpha_+$};
+    \end{scope}
+
+    % (3) \alpha_- < -\sqrt{2} < \alpha_+ < \sqrt{2}
+    \begin{scope}[yshift=-2cm]
+      \draw[->, thick, gray!70!black] (-2.2, 0) -- (2.2, 0);
+      \node[left=3pt] at (-2.2, 0) {(3) $a>\frac{3\sqrt{2}}{2}$};
+      \node[circle, fill=teal!85!black, inner sep=1.4pt] at (-1.8, 0) {};
+      \node[below=1pt, teal!85!black] at (-1.8, 0) {$\alpha_-$};
+      \node[circle, fill=blue!85!black, inner sep=1.4pt] at (0.2, 0) {};
+      \node[below=1pt, blue!85!black] at (0.2, 0) {$\alpha_+$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{$\alpha_\pm$ と $\pm\sqrt{2}$ の位置関係における3つのパターン}
+  \label{fig:six_patterns}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=0.95cm, y=0.65cm, >=stealth, every node/.style={font=\small}]
+    % 3つのパネル: (1) 0 <= a < 3\sqrt{2}/2, (2) a = 3\sqrt{2}/2, (3) a > 3\sqrt{2}/2
+
+    % --- Panel 1: a = 0.7 (0 <= a < 3\sqrt{2}/2) ---
+    \begin{scope}[xshift=0cm]
+      \node[above, font=\footnotesize] at (0, 3.3) {(1) $0 \le a < \frac{3\sqrt{2}}{2}$ \ ($a=0.7$)};
+      \begin{scope}
+        \clip (-2.2, -1.8) rectangle (1.8, 3.0);
+        \draw[dashed, gray!60, domain=-2.2:1.8, samples=70]
+        plot (\x, {\x*\x-2});
+        \draw[dashed, gray!60, domain=-2.2:1.8, samples=70]
+        plot (\x, {2*\x*\x + 0.7*\x - 1});
+        \draw[blue!85!black, line width=1.3pt, domain=-2.2:1.8, samples=90]
+        plot (\x, {abs(\x*\x-2)});
+        \draw[teal!80!black, line width=1.2pt, domain=-2.2:1.8, samples=90]
+        plot (\x, {abs(2*\x*\x + 0.7*\x - 1)});
+      \end{scope}
+      \draw[->, thick, gray!80!black] (-2.2, 0) -- (1.9, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -1.8) -- (0, 3.0) node[above right=-2pt, font=\scriptsize] {$y$};
+      % 交点2つ
+      \foreach \sgn in {-1, 1} {
+        \pgfmathsetmacro{\t}{(-0.7 + \sgn*sqrt(0.49 + 36))/6}
+        \node[circle, fill=red!85!black, inner sep=1.3pt] at (\t, {abs(\t*\t-2)}) {};
+      }
+      % 目盛り \pm\sqrt{2}
+      \node[below=2pt, font=\scriptsize] at (-1.414, 0) {$-\sqrt{2}$};
+      \node[below=2pt, font=\scriptsize] at (1.414, 0) {$\sqrt{2}$};
+      % カーブラベル
+      \node[blue!85!black, font=\scriptsize, fill=white, inner sep=1pt] at (-0.3, 2.4) {$|f|$};
+      \node[teal!80!black, font=\scriptsize, fill=white, inner sep=1pt] at (1.2, 1.7) {$|g|$};
+    \end{scope}
+
+    % --- Panel 2: a = 3\sqrt{2}/2 ---
+    \begin{scope}[xshift=4.8cm]
+      \node[above, font=\footnotesize] at (0, 3.3) {(2) $a = \frac{3\sqrt{2}}{2}$};
+      \begin{scope}
+        \clip (-2.2, -1.8) rectangle (1.8, 3.0);
+        \pgfmathsetmacro{\aTwo}{1.5*sqrt(2)}
+        \draw[dashed, gray!60, domain=-2.2:1.8, samples=70]
+        plot (\x, {\x*\x-2});
+        \draw[dashed, gray!60, domain=-2.2:1.8, samples=70]
+        plot (\x, {2*\x*\x + \aTwo*\x - 1});
+        \draw[blue!85!black, line width=1.3pt, domain=-2.2:1.8, samples=90]
+        plot (\x, {abs(\x*\x-2)});
+        \draw[teal!80!black, line width=1.2pt, domain=-2.2:1.8, samples=90]
+        plot (\x, {abs(2*\x*\x + \aTwo*\x - 1)});
+      \end{scope}
+      \draw[->, thick, gray!80!black] (-2.2, 0) -- (1.9, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -1.8) -- (0, 3.0) node[above right=-2pt, font=\scriptsize] {$y$};
+      % 交点3つ
+      \foreach \t in {-1.414214, -0.707107, 0.707107} {
+        \node[circle, fill=red!85!black, inner sep=1.3pt] at (\t, {abs(\t*\t-2)}) {};
+      }
+      % 目盛り \pm\sqrt{2}
+      \node[below left=2pt, font=\scriptsize] at (-1.414, 0) {$-\sqrt{2}$};
+      \node[below=2pt, font=\scriptsize] at (1.414, 0) {$\sqrt{2}$};
+      % カーブラベル
+      \node[blue!85!black, font=\scriptsize, fill=white, inner sep=1pt] at (-0.3, 2.4) {$|f|$};
+      \node[teal!80!black, font=\scriptsize, fill=white, inner sep=1pt] at (1.2, 1.7) {$|g|$};
+    \end{scope}
+
+    % --- Panel 3: a = 2.5 (a > 3\sqrt{2}/2) ---
+    \begin{scope}[xshift=9.6cm]
+      \node[above, font=\footnotesize] at (0, 3.3) {(3) $a > \frac{3\sqrt{2}}{2}$ \ ($a=2.5$)};
+      \begin{scope}
+        \clip (-2.4, -1.8) rectangle (1.8, 3.0);
+        \draw[dashed, gray!60, domain=-2.4:1.8, samples=70]
+        plot (\x, {\x*\x-2});
+        \draw[dashed, gray!60, domain=-2.4:1.8, samples=70]
+        plot (\x, {2*\x*\x + 2.5*\x - 1});
+        \draw[blue!85!black, line width=1.3pt, domain=-2.4:1.8, samples=90]
+        plot (\x, {abs(\x*\x-2)});
+        \draw[teal!80!black, line width=1.2pt, domain=-2.4:1.8, samples=90]
+        plot (\x, {abs(2*\x*\x + 2.5*\x - 1)});
+      \end{scope}
+      \draw[->, thick, gray!80!black] (-2.4, 0) -- (1.9, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -1.8) -- (0, 3.0) node[above right=-2pt, font=\scriptsize] {$y$};
+      % 交点4つ (-2, -1.5, -0.5, 2/3)
+      \foreach \t in {-2, -1.5, -0.5, 0.666667} {
+        \node[circle, fill=red!85!black, inner sep=1.3pt] at (\t, {abs(\t*\t-2)}) {};
+      }
+      % 目盛り \pm\sqrt{2}
+      \node[below=2pt, font=\scriptsize] at (-1.414, 0) {$-\sqrt{2}$};
+      \node[below=2pt, font=\scriptsize] at (1.414, 0) {$\sqrt{2}$};
+      % カーブラベル
+      \node[blue!85!black, font=\scriptsize, fill=white, inner sep=1pt] at (-0.3, 2.4) {$|f|$};
+      \node[teal!80!black, font=\scriptsize, fill=white, inner sep=1pt] at (1.2, 1.7) {$|g|$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{$a \ge 0$ における3つのパターンの方程式 $|f(x)|=|g(x)|$ のグラフ}
+  \label{fig:three_cases_abs}
+\end{figure}
+
+\subparagraph{(i) $-\sqrt{2}<\alpha_{-}<\alpha_{+}<\sqrt{2} \ \therefore 0 \le a<\dfrac{3\sqrt{2}}{2}$の時}
+
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}[x=1.35cm,y=.95cm,>=stealth,
@@ -45,87 +252,125 @@ $x\leqq\alpha$，$\beta\leqq x$に分けて考える．
   \end{tikzpicture}
   \caption{$a=0.7$での$f,g$（灰色破線）と$|f|,|g|$の配置}
 \end{figure}
-\subparagraph{(a) $|x|\geqq\sqrt{2}$の時}
-\begin{align}
-  f(x)=g(x)\ \Longleftrightarrow\ x^2+ax+1=0
-  \ \Longleftrightarrow\ x=\dfrac{-a\pm\sqrt{a^2-4}}{2}.
-\end{align}
-ここで$|a|\leqq\dfrac{3\sqrt{2}}{2}$から
-\begin{align}
-  \dfrac{-a-\sqrt{a^2-4}}{2}>-\sqrt{2},\qquad
-  \dfrac{-a+\sqrt{a^2-4}}{2}<\sqrt{2}
-\end{align}
-なので，$|x|\geqq\sqrt{2}$の区域に解なし．
 
-\subparagraph{(b) $\alpha<x<\beta$の時}
-$|f(x)|=|g(x)|\Longleftrightarrow f(x)=g(x)$であり，(a)からグラフの対応は下図のようになっているので，
+この時は$-\sqrt{2}\leqq\alpha_{-}<\alpha_{+}\leqq\sqrt{2}$となるから，
+$-\sqrt{2} \le x \le \alpha_{-}, \alpha_{+} \le x \le \sqrt{2}$に一つづつ解を持つ．
+残りの区間については$f(x),g(x)$の符号が等しいから，与えられた方程式の解は
 \begin{align}
-  |a|<2\text{の時 }0\text{つ},\qquad
-  |a|=2\text{の時 }1\text{つ},\qquad
-  |a|>2\text{の時 }2\text{つ}.
+  |f(x)|=|g(x)| \iff f(x)=g(x) \iff x^2+ax+1=0 \iff x=\dfrac{-a\pm\sqrt{a^2-4}}{2}\equiv \beta_{\pm} \label{eq:4}
 \end{align}
-\begin{figure}[H]
+となる．これと$\alpha_{\pm},\pm\sqrt{2}$の大きさを比べると
+\begin{itemize}
+  \item $a<2$ の時: $\beta_{\pm}$は虚数となり\cref{eq:4}は解なし．
+  \item $a=2$ の時: $\beta_{\pm}=0$となり，$-\alpha_{-}<\beta_{\pm}<\alpha_{+}$より\cref{eq:4}は解を一つもつ．
+  \item $a>2$の時: $\beta_{\pm}$は二つの異なる実数となり\cref{eq:4}は二つの実数解を持つ．
+\end{itemize}
+
+以上より\cref{eq:3}全体の解の数は
+\begin{itemize}
+  \item $a<2$ の時: 2個
+  \item $a=2$ の時: 3個
+  \item $a>2$の時:  4個
+\end{itemize}
+である．
+
+\begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=.95cm,y=.65cm,>=stealth,
-    every node/.style={font=\small}]
-    \foreach \v/\dx/\lab in {1.8/0/{$a=1.8$},2/3.1/{$a=2$},2.1/6.2/{$a=2.1$}} {
+  \begin{tikzpicture}[x=1.6cm, y=0.8cm, >=stealth, every node/.style={font=\small}]
+    % 3本の数直線
+    % (a) |a| < 2
+    \begin{scope}[yshift=2.2cm]
+      \draw[->, thick, gray!80!black] (-2.2, 0) -- (2.2, 0) node[right] {$x$};
+      \node[above, font=\footnotesize] at (-2.0, 0.4) {【$|a|<2$】 $\beta_\pm$ は虚数（解なし）};
+
+      \draw[thick, gray!70!black] ({-sqrt(2)}, 0.15) -- ({-sqrt(2)}, -0.15) node[below] {$-\sqrt{2}$};
+      \draw[thick, gray!70!black] ({sqrt(2)}, 0.15) -- ({sqrt(2)}, -0.15) node[below] {$\sqrt{2}$};
+
+      \node[circle, fill=teal!85!black, inner sep=1.4pt] at (-0.8, 0) {};
+      \node[above=2pt, teal!85!black] at (-0.8, 0) {$\alpha_-$};
+      \node[circle, fill=blue!85!black, inner sep=1.4pt] at (0.5, 0) {};
+      \node[above=2pt, blue!85!black] at (0.5, 0) {$\alpha_+$};
+    \end{scope}
+
+    % (b) |a| = 2 (a = 2)
+    \begin{scope}[yshift=0cm]
+      \draw[->, thick, gray!80!black] (-2.2, 0) -- (2.2, 0) node[right] {$x$};
+      \node[above, font=\footnotesize] at (-2.0, 0.4) {【$a=2$】 $\beta_+ = \beta_- = -1$ （重解1つ）};
+
+      \draw[thick, gray!70!black] ({-sqrt(2)}, 0.15) -- ({-sqrt(2)}, -0.15) node[below] {$-\sqrt{2}$};
+      \draw[thick, gray!70!black] ({sqrt(2)}, 0.15) -- ({sqrt(2)}, -0.15) node[below] {$\sqrt{2}$};
+
+      \node[circle, fill=teal!85!black, inner sep=1.4pt] at (-1.366, 0) {};
+      \node[above=2pt, teal!85!black] at (-1.366, 0) {$\alpha_-$};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (-1.0, 0) {};
+      \node[above=2pt, red!85!black] at (-1.0, 0) {$\beta_\pm$};
+      \node[circle, fill=blue!85!black, inner sep=1.4pt] at (0.366, 0) {};
+      \node[above=2pt, blue!85!black] at (0.366, 0) {$\alpha_+$};
+    \end{scope}
+
+    % (c) 2 < a < 3\sqrt{2}/2
+    \begin{scope}[yshift=-2.2cm]
+      \draw[->, thick, gray!80!black] (-2.2, 0) -- (2.2, 0) node[right] {$x$};
+      \node[above, font=\footnotesize] at (-2.0, 0.4) {【$2 < a < \frac{3\sqrt{2}}{2}$】 $\beta_- < \beta_+$ （解2つ）};
+
+      \draw[thick, gray!70!black] ({-sqrt(2)}, 0.15) -- ({-sqrt(2)}, -0.15) node[below] {$-\sqrt{2}$};
+      \draw[thick, gray!70!black] ({sqrt(2)}, 0.15) -- ({sqrt(2)}, -0.15) node[below] {$\sqrt{2}$};
+
+      \node[circle, fill=teal!85!black, inner sep=1.4pt] at (-1.38, 0) {};
+      \node[above=2pt, teal!85!black] at (-1.38, 0) {$\alpha_-$};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (-1.22, 0) {};
+      \node[above=2pt, red!85!black] at (-1.22, 0) {$\beta_-$};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (-0.82, 0) {};
+      \node[above=2pt, red!85!black] at (-0.82, 0) {$\beta_+$};
+      \node[circle, fill=blue!85!black, inner sep=1.4pt] at (0.36, 0) {};
+      \node[above=2pt, blue!85!black] at (0.36, 0) {$\alpha_+$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{数直線上の $\pm\sqrt{2}, \alpha_\pm, \beta_\pm$ の配置}
+  \label{fig:number_line_roots}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.1cm, y=0.7cm, >=stealth, every node/.style={font=\small}]
+    \foreach \v/\dx/\lab in {1.8/0/{$|a|<2$}, 2.0/3.2/{$a=2$}, 2.1/6.4/{$2<a<\frac{3\sqrt{2}}{2}$}} {
       \begin{scope}[xshift=\dx cm]
         \begin{scope}
-          \clip (-1.85,-2.2) rectangle (.65,2.0);
-          \draw[blue!85!black,line width=1.2pt,domain=-1.85:.65,samples=70]
-          plot (\x,{\x*\x-2});
-          \draw[teal!80!black,line width=1.2pt,domain=-1.85:.65,samples=70]
-          plot (\x,{2*\x*\x+\v*\x-1});
+          \clip (-1.85, -2.2) rectangle (0.65, 2.0);
+          \draw[blue!85!black, line width=1.2pt, domain=-1.85:0.65, samples=70]
+          plot (\x, {\x*\x-2});
+          \draw[teal!85!black, line width=1.2pt, domain=-1.85:0.65, samples=70]
+          plot (\x, {2*\x*\x+\v*\x-1});
         \end{scope}
-        \draw[->,gray!80!black] (-1.9,0)--(.72,0) node[right] {$x$};
-        \node[above] at (-.6,2.0) {\lab};
+        \draw[->, gray!80!black] (-1.9, 0) -- (0.75, 0) node[right] {$x$};
+        \node[above, font=\footnotesize] at (-0.6, 2.0) {\lab};
       \end{scope}
     }
-    \begin{scope}[xshift=3.1cm]
-      \node[circle, fill=red!85!black, inner sep=1.5pt] at (-1,-1) {};
+    % ラベル f, g を第1パネルに
+    \node[blue!85!black, font=\footnotesize, above right] at (-1.7, 0.8) {$f$};
+    \node[teal!85!black, font=\footnotesize, below right] at (-1.5, -1.2) {$g$};
+
+    % 第2パネルの接点
+    \begin{scope}[xshift=3.2cm]
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (-1, -1) {};
+      \node[below=2pt, red!85!black, font=\footnotesize] at (-1, -1) {$\beta_\pm$};
     \end{scope}
-    \begin{scope}[xshift=6.2cm]
-      \foreach \sgn in {-1,1} {
-        \pgfmathsetmacro{\t}{(-2.1+\sgn*sqrt(.41))/2}
-        \node[circle, fill=red!85!black, inner sep=1.5pt] at (\t,{\t*\t-2}) {};
+
+    % 第3パネルの交点2つ
+    \begin{scope}[xshift=6.4cm]
+      \foreach \sgn/\name/\pos in {-1/\beta_-/left, 1/\beta_+/right} {
+        \pgfmathsetmacro{\t}{(-2.1+\sgn*sqrt(0.41))/2}
+        \node[circle, fill=red!85!black, inner sep=1.4pt] at (\t, {\t*\t-2}) {};
+        \node[\pos=2pt, red!85!black, font=\footnotesize] at (\t, {\t*\t-2}) {$\name$};
       }
     \end{scope}
   \end{tikzpicture}
-  \caption{$\alpha<x<\beta$における$f$（青）と$g$（緑）の共有点数の変化}
+  \caption{$\alpha_-<x<\alpha_+$における$f$（青）と$g$（緑）の共有点数の変化}
+  \label{fig:three_cases_fg}
 \end{figure}
 
-\subparagraph{(ii) $\dfrac{3\sqrt{2}}{2}<a$の時}
-$\alpha<-\sqrt{2}<\beta<\sqrt{2}$となるから，2次係数に注意してグラフは下図のようになり，4個ある．
-\begin{figure}[H]
-  \centering
-  \begin{tikzpicture}[x=1.3cm,y=.9cm,>=stealth,
-    every node/.style={font=\small}]
-    % a=2.5 では x=-2,-3/2,-1/2,2/3 が共有点の x 座標。
-    \begin{scope}
-      \clip (-2.28,-2.1) rectangle (1.65,3.25);
-      \draw[dashed,gray!60,domain=-2.28:1.65,samples=100]
-      plot (\x,{\x*\x-2});
-      \draw[dashed,gray!60,domain=-2.28:1.65,samples=100]
-      plot (\x,{2*\x*\x+2.5*\x-1});
-      \draw[blue!85!black,line width=1.4pt,domain=-2.28:1.65,samples=110]
-      plot (\x,{abs(\x*\x-2)});
-      \draw[teal!80!black,line width=1.3pt,domain=-2.28:1.65,samples=110]
-      plot (\x,{abs(2*\x*\x+2.5*\x-1)});
-    \end{scope}
-    \draw[->,thick,gray!80!black] (-2.4,0)--(1.8,0) node[right] {$x$};
-    \draw[->,thick,gray!80!black] (0,-2.2)--(0,3.4) node[above] {$y$};
-    \foreach \t in {-2,-1.5,-.5,.666667}
-    \node[circle, fill=red!85!black, inner sep=1.5pt] at (\t,{abs(\t*\t-2)}) {};
-    \node[below=3pt] at (-1.414,0) {$-\sqrt{2}$};
-    \node[below=3pt] at (1.414,0) {$\sqrt{2}$};
-    \node[blue!85!black,fill=white,inner sep=1pt] at (-.25,2.35) {$|f|$};
-    \node[teal!80!black,fill=white,inner sep=1pt] at (1.18,2.35) {$|g|$};
-  \end{tikzpicture}
-  \caption{$a=2.5>3\sqrt{2}/2$のときの4つの共有点}
-\end{figure}
+\subparagraph{(ii) $-\sqrt{2}=\alpha_{-}<\alpha_{+}<\sqrt{2}$ つまり $a=\dfrac{3\sqrt{2}}{2}$の時}
 
-\subparagraph{(iii) $a=\dfrac{3\sqrt{2}}{2}$の時}
-$g(x)=2x^2+\dfrac{3\sqrt{2}}{2}x-1$で，グラフは下図で解は3つ．
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}[x=1.3cm,y=.9cm,>=stealth,
@@ -152,50 +397,142 @@ $g(x)=2x^2+\dfrac{3\sqrt{2}}{2}x-1$で，グラフは下図で解は3つ．
   \end{tikzpicture}
   \caption{$a=3\sqrt{2}/2$のときの3つの共有点}
 \end{figure}
-対称性から$a\leqq-\dfrac{3\sqrt{2}}{2}$についても同様だから，
-\begin{align}
-  \begin{cases}
-    4\text{つ}&a<-\dfrac{3\sqrt{2}}{2},\quad-\dfrac{3\sqrt{2}}{2}<a<-\sqrt{2},\quad
-    \sqrt{2}<a<\dfrac{3\sqrt{2}}{2},\quad\dfrac{3\sqrt{2}}{2}<a,\\
-    3\text{つ}&a=\pm\dfrac{2\sqrt{2}}{3},\quad\pm2,\\
-    2\text{つ}&-\sqrt{2}<a<\sqrt{2}.
-  \end{cases}
-\end{align}
-% 上の最終分類は原稿通り．途中の |a|=2，a=3\sqrt{2}/2 の記述と一致しないので要確認．
 
-{\bf [別解]}
-\begin{align}
-  |f(x)|=|g(x)|&\ \Longleftrightarrow\ 2x^2+ax-1=\pm(x^2-2)\\
-  &\ \Longleftrightarrow\ a=\dfrac{-2x^2+1\pm(x^2-2)}{x}\quad(x=0\text{は解でない}),\\
-  &\ \Longleftrightarrow\ a=-\left(x+\dfrac{1}{x}\right)\quad\text{又は}\quad
-  a=-3x+\dfrac{3}{x}.
-\end{align}
-グラフから解は分かる．
+この時は具体的に$g(x)=2x^2+\dfrac{3\sqrt{2}}{2}x-1$となり，グラフは上図で解は3つである．
+
+\subparagraph{(iii) $\alpha_{-}<-\sqrt{2}<\beta<\sqrt{2}$ つまり $\dfrac{3\sqrt{2}}{2}<a$ の時}
+
 \begin{figure}[H]
   \centering
-  \begin{tikzpicture}[x=1.05cm,y=.62cm,>=stealth,
+  \begin{tikzpicture}[x=1.3cm,y=.9cm,>=stealth,
     every node/.style={font=\small}]
+    % a=2.5 では x=-2,-3/2,-1/2,2/3 が共有点の x 座標。
     \begin{scope}
-      \clip (-2.5,-3.8) rectangle (2.5,3.8);
-      \foreach \lo/\hi in {-2.4/-.22,.22/2.4} {
-        \draw[blue!85!black,line width=1.4pt,domain=\lo:\hi,samples=90]
-        plot (\x,{-\x-1/\x});
-        \draw[teal!80!black,line width=1.3pt,domain=\lo:\hi,samples=90]
-        plot (\x,{-3*\x+3/\x});
+      \clip (-2.28,-2.1) rectangle (1.65,3.25);
+      \draw[dashed,gray!60,domain=-2.28:1.65,samples=100]
+      plot (\x,{\x*\x-2});
+      \draw[dashed,gray!60,domain=-2.28:1.65,samples=100]
+      plot (\x,{2*\x*\x+2.5*\x-1});
+      \draw[blue!85!black,line width=1.4pt,domain=-2.28:1.65,samples=110]
+      plot (\x,{abs(\x*\x-2)});
+      \draw[teal!80!black,line width=1.3pt,domain=-2.28:1.65,samples=110]
+      plot (\x,{abs(2*\x*\x+2.5*\x-1)});
+    \end{scope}
+    \draw[->,thick,gray!80!black] (-2.4,0)--(1.8,0) node[right] {$x$};
+    \draw[->,thick,gray!80!black] (0,-2.2)--(0,3.4) node[above] {$y$};
+    \foreach \t in {-2,-1.5,-.5,.666667}
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (\t,{abs(\t*\t-2)}) {};
+    \node[below=3pt] at (-1.414,0) {$-\sqrt{2}$};
+    \node[below=3pt] at (1.414,0) {$\sqrt{2}$};
+    \node[blue!85!black,fill=white,inner sep=1pt] at (-.25,2.35) {$|f|$};
+    \node[teal!80!black,fill=white,inner sep=1pt] at (1.18,2.35) {$|g|$};
+  \end{tikzpicture}
+  \caption{$a>3\sqrt{2}/2$のときの4つの共有点}
+\end{figure}
+
+この時は2次係数の違いに注意してグラフは上図のようになるから解は4個ある．
+\casesend
+
+対称性から$a<0$についても同様なので，求める解の個数は
+\begin{align}
+  \begin{cases}
+    4\text{つ}&a<-\dfrac{3\sqrt{2}}{2},\quad-\dfrac{3\sqrt{2}}{2}<a<-2,\quad
+    2<a<\dfrac{3\sqrt{2}}{2},\quad\dfrac{3\sqrt{2}}{2}<a,\\
+    3\text{つ}& a=\pm\dfrac{2\sqrt{2}}{3},\quad\pm2,\\
+    2\text{つ}& -2<a<2
+  \end{cases}
+\end{align}
+である．
+
+{\bf [別解]}
+
+与えられた方程式の絶対値を直接外すと，
+\begin{align}
+  |f(x)|=|g(x)|
+  &\ \Longleftrightarrow\ 2x^2+ax-1=\pm(x^2-2)\\
+  &\ \Longleftrightarrow\ a=\dfrac{-2x^2+1\pm(x^2-2)}{x}\quad(x=0\text{は解でない}),\\
+  &\ \Longleftrightarrow\ a=-\left(x+\dfrac{1}{x}\right)\quad\text{又は}\quad
+  a=-3x+\dfrac{3}{x}
+\end{align}
+である．よって$xy$平面において，$y=a$と$y=-\left(x+\dfrac{1}{x}\right), -3x+\dfrac{3}{x}$のグラフの交点の数が解の個数である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.35cm, y=0.85cm, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+
+    % グラフ描画
+    \begin{scope}
+      \clip (-2.8, -4.2) rectangle (2.8, 4.2);
+      \foreach \lo/\hi in {-2.7/-0.24, 0.24/2.7} {
+        \draw[blue!85!black, line width=1.4pt, domain=\lo:\hi, samples=80]
+        plot (\x, {-\x - 1/\x});
+        \draw[teal!80!black, line width=1.3pt, domain=\lo:\hi, samples=80]
+        plot (\x, {-3*\x + 3/\x});
       }
     \end{scope}
-    \draw[->,thick,gray!80!black] (-2.65,0)--(2.7,0) node[right] {$x$};
-    \draw[->,thick,gray!80!black] (0,-4)--(0,4) node[above] {$a$};
-    \foreach \sgn in {-1,1} {
-      \pgfmathsetmacro{\t}{\sgn*sqrt(2)}
-      \node[circle, fill=red!85!black, inner sep=1.5pt] at (\t,{-\t-1/\t}) {};
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-2.9, 0) -- (3.0, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -4.3) -- (0, 4.4) node[above] {$y$};
+    \node[below left=2pt, font=\footnotesize] at (O) {$O$};
+
+    % --- 極値 (y = -x - 1/x) ---
+    % 極小値: (-1, 2)
+    \coordinate (MinPt) at (-1, 2);
+    \draw[densely dotted, thick, gray!70!black] (MinPt) -- (-1, 0) node[below right=1pt, font=\footnotesize] {$-1$};
+    \draw[densely dotted, thick, gray!70!black] (MinPt) -- (0, 2) node[right=2pt, font=\footnotesize] {$2$};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (MinPt) {};
+
+    % 極大値: (1, -2)
+    \coordinate (MaxPt) at (1, -2);
+    \draw[densely dotted, thick, gray!70!black] (MaxPt) -- (1, 0) node[below left=1pt, font=\footnotesize] {$1$};
+    \draw[densely dotted, thick, gray!70!black] (MaxPt) -- (0, -2) node[left=2pt, font=\footnotesize] {$-2$};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (MaxPt) {};
+
+    % --- 2曲線の交点 ---
+    % 交点 (-\sqrt{2}, 3\sqrt{2}/2)
+    \pgfmathsetmacro{\sqTwo}{sqrt(2)}
+    \pgfmathsetmacro{\valCrit}{1.5*sqrt(2)}
+    \coordinate (CritL) at ({-\sqTwo}, \valCrit);
+    \draw[densely dotted, thick, gray!70!black] (CritL) -- ({-\sqTwo}, 0) node[below left=1pt, font=\footnotesize] {$-\sqrt{2}$};
+    \draw[densely dotted, thick, gray!70!black] (CritL) -- (0, \valCrit) node[left=2pt, fill=white, inner sep=1pt, font=\footnotesize] {$\frac{3\sqrt{2}}{2}$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (CritL) {};
+
+    % 交点 (\sqrt{2}, -3\sqrt{2}/2)
+    \coordinate (CritR) at (\sqTwo, {-\valCrit});
+    \draw[densely dotted, thick, gray!70!black] (CritR) -- (\sqTwo, 0) node[below right=1pt, font=\footnotesize] {$\sqrt{2}$};
+    \draw[densely dotted, thick, gray!70!black] (CritR) -- (0, {-\valCrit}) node[right=2pt, fill=white, inner sep=1pt, font=\footnotesize] {$-\frac{3\sqrt{2}}{2}$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (CritR) {};
+
+    % --- 直線 y = a (例: a = 3.0) ---
+    \pgfmathsetmacro{\aVal}{3.0}
+    \draw[dashed, line width=1.1pt, red!85!black] (-2.8, \aVal) -- (2.8, \aVal) node[right, font=\footnotesize, red!85!black] {$y=a$};
+    \node[above right=1pt, font=\footnotesize, red!85!black] at (0, \aVal) {$a$};
+    % y=a と曲線の4つの交点に赤丸
+    \foreach \t in {-2.618, -1.618, -0.382, 0.618} {
+      \node[circle, fill=red!85!black, inner sep=1.2pt] at (\t, \aVal) {};
     }
-    \node[blue!85!black,fill=white,inner sep=1pt] at (-1.6,3.35)
-    {$a=-x-1/x$};
-    \node[teal!80!black,fill=white,inner sep=1pt] at (1.45,3.35)
-    {$a=-3x+3/x$};
+
+    % カーブラベル
+    \node[blue!85!black, fill=white, inner sep=1pt, font=\footnotesize] at (-1.7, 3.65)
+    {$y=-x-\frac{1}{x}$};
+    \node[teal!80!black, fill=white, inner sep=1pt, font=\footnotesize] at (1.5, 3.65)
+    {$y=-3x+\frac{3}{x}$};
   \end{tikzpicture}
-  \caption{別解における$a=-x-1/x$，$a=-3x+3/x$のグラフ}
+  \caption{別解における $y=-x-\dfrac{1}{x}$ と $y=-3x+\dfrac{3}{x}$ および直線 $y=a$ のグラフ}
+  \label{fig:alt_sol_hyperbolas}
 \end{figure}
+
+上図より解の個数は
+\begin{align}
+  \begin{cases}
+    4\text{つ}&a<-\dfrac{3\sqrt{2}}{2},\quad-\dfrac{3\sqrt{2}}{2}<a<-2,\quad
+    2<a<\dfrac{3\sqrt{2}}{2},\quad\dfrac{3\sqrt{2}}{2}<a,\\
+    3\text{つ}& a=\pm\dfrac{2\sqrt{2}}{3},\quad\pm2,\\
+    2\text{つ}& -2<a<2
+  \end{cases}
+\end{align}
+である．
 
 \end{document}

@@ -1,82 +1,167 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-% Source: handwritten.pdf 第6問．
 {\bf [解答]}
-地球の半径を1として良い．経路$R_1$は，半径$\cos\dfrac{\pi}{3}=\dfrac{1}{2}$の円周のうち
-中心角$\dfrac{\pi}{3}$の扇形の弧長で，
-\begin{align}R_1=\theta r=\dfrac{1}{2}\cdot\dfrac{1}{3}\pi=\dfrac{1}{6}\pi.\label{eq:1}
-\end{align}
-\begin{figure}[H]
+
+\begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=1.35cm,y=1.35cm,>=stealth,
-    every node/.style={font=\small}]
-    \coordinate (O) at (0,0);
-    \coordinate (A) at (-.95,.75);
-    \coordinate (B) at (.95,.75);
-    \draw[gray!65,dashed] (1.3,0)
-    arc[start angle=0,end angle=180,x radius=1.3,y radius=.3];
-    \draw[gray!70] (-1.3,0)
-    arc[start angle=180,end angle=360,x radius=1.3,y radius=.3];
-    \draw[blue!85!black,line width=1.1pt] (O) circle (1.3);
-    \draw[gray!65,dashed] (A) .. controls (-.5,.97) and (.5,.97) .. (B);
-    \draw[gray!60,dashed] (O)--(A) (O)--(B);
-    \draw[teal!80!black,line width=1.4pt]
-    (A) .. controls (-.5,.53) and (.5,.53) .. (B);
-    \draw[blue!85!black,line width=1.5pt]
-    (A) .. controls (-.5,1.19) and (.5,1.19) .. (B);
-    \draw[->,gray!80!black] (0,-1.4)--(0,1.55) node[above] {$z$};
-    \draw[->,gray!80!black] (O)--(1.6,0) node[right] {$y$};
-    \draw[->,gray!80!black] (O)--(-.9,-.85) node[below] {$x$};
-    \node[circle, fill=red!85!black, inner sep=1.5pt] at (A) {}; \node[red!85!black, above=3pt, fill=white, inner sep=1pt] at (A) {$A$};
-    \node[circle, fill=red!85!black, inner sep=1.5pt] at (B) {}; \node[red!85!black, right=2pt] at (B) {$B$};
-    \node[below right=2pt] at (O) {$O$};
-    \node[blue!85!black,above left=2pt] at (-.73,1.18) {$R_2$};
-    \node[teal!80!black,right] at (.83,.52) {$R_1$};
-    \node at (.13,.27) {$\theta$};
-    \begin{scope}[shift={(2.35,-.3)}]
-      \draw[teal!80!black,line width=1.1pt]
-      (0,0)--(.5,0)--(0,.866)--cycle;
-      \node[below] at (.25,0) {$\frac{1}{2}$};
-      \node[left] at (0,.43) {$\frac{\sqrt{3}}{2}$};
-      \node[right] at (.31,.48) {$1$};
-      \node[above left,fill=white,inner sep=1pt] at (.5,0) {$60^\circ$};
+  \tdplotsetmaincoords{68}{110}
+  \begin{tikzpicture}[>=stealth, every node/.style={font=\small}]
+
+    % --- 左側: 3D 地球モデル ---
+    \begin{scope}[tdplot_main_coords, scale=2.2]
+      \coordinate (O) at (0, 0, 0);
+
+      % 半径 R = 1.0
+      % 赤道面 (z = 0) の円 (奥側破線, 手前側実線)
+      \draw[dashed, gray!50, line width=0.8pt, domain=90:270, samples=60]
+      plot ({cos(\x)}, {sin(\x)}, 0);
+      \draw[gray!65, line width=0.9pt, domain=-90:90, samples=60]
+      plot ({cos(\x)}, {sin(\x)}, 0);
+
+      % 座標軸
+      \draw[->, thick, gray!80!black] (0, 0, 0) -- (1.4, 0, 0) node[below left] {$x$};
+      \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 1.4, 0) node[right] {$y$};
+      \draw[->, thick, gray!80!black] (0, 0, -0.2) -- (0, 0, 1.45) node[above] {$z$};
+      \node[below left=2pt, font=\footnotesize] at (0, 0, 0) {$O$};
+
+      % 緯線 z = sin(60°) = sqrt(3)/2 ≈ 0.866, 半径 r = cos(60°) = 0.5
+      \def\zLat{0.866}
+      \def\rLat{0.5}
+      \coordinate (C_lat) at (0, 0, \zLat);
+
+      % 緯線の円
+      \draw[gray!60, dashed, line width=0.8pt, domain=90:270, samples=40]
+      plot ({\rLat*cos(\x)}, {\rLat*sin(\x)}, \zLat);
+      \draw[gray!70, line width=0.9pt, domain=-90:90, samples=40]
+      plot ({\rLat*cos(\x)}, {\rLat*sin(\x)}, \zLat);
+
+      % 地点 A: 経度 0°, 緯度 60° -> (0.5, 0, sqrt(3)/2)
+      \coordinate (A) at (\rLat, 0, \zLat);
+      % 地点 B: 経度 60°, 緯度 60° -> (0.5*cos(60°), 0.5*sin(60°), sqrt(3)/2) = (0.25, 0.433, 0.866)
+      \coordinate (B) at ({\rLat*cos(60)}, {\rLat*sin(60)}, \zLat);
+
+      % xy平面への正射影点
+      \coordinate (A_xy) at (\rLat, 0, 0);
+      \coordinate (B_xy) at ({\rLat*cos(60)}, {\rLat*sin(60)}, 0);
+
+      % A, B から xy 平面への垂線 (TODO 対応)
+      \draw[dashed, line width=0.9pt, gray!60!black] (A) -- (A_xy);
+      \draw[dashed, line width=0.9pt, gray!60!black] (B) -- (B_xy);
+
+      % A, B から z 軸への垂線 (TODO 対応)
+      \draw[dashed, line width=0.9pt, gray!60!black] (A) -- (C_lat);
+      \draw[dashed, line width=0.9pt, gray!60!black] (B) -- (C_lat);
+
+      % xy 平面上の動径と経度差 60°
+      \draw[dotted, line width=0.8pt, gray!70] (O) -- (A_xy);
+      \draw[dotted, line width=0.8pt, gray!70] (O) -- (B_xy);
+
+      % O から A, B へのベクトル (大円半径 1)
+      \draw[line width=1.1pt, gray!70!black] (O) -- (A);
+      \draw[line width=1.1pt, gray!70!black] (O) -- (B);
+
+      % 経路 R1: 同一緯度上の弧 (太い青緑線, 経度 0° から 60°)
+      \draw[line width=1.4pt, teal!85!black, domain=0:60, samples=30]
+      plot ({\rLat*cos(\x)}, {\rLat*sin(\x)}, \zLat);
+      \node[teal!85!black, right=2pt, font=\footnotesize] at ({\rLat*cos(30)}, {\rLat*sin(30)}, \zLat) {$R_1$};
+
+      % 経路 R2: 大円上の弧 (太い橙色線)
+      \draw[line width=1.5pt, orange!90!black] (A) to[bend left=12] (B);
+      \node[orange!90!black, above=2pt, font=\footnotesize] at ($(A)!0.5!(B) + (0, 0, 0.08)$) {$R_2$};
+
+      % 角度ラベル θ (角 AOB)
+      \node[font=\footnotesize] at ($(O)!0.35!($(A)!0.5!(B)$)$) {$\theta$};
+
+      % z 軸上の高さ目盛り
+      \node[left=2pt, font=\scriptsize] at (C_lat) {$\frac{\sqrt{3}}{2}$};
+
+      % 経度差 60° ラベル (xy平面上)
+      \node[font=\scriptsize, teal!80!black] at ($(O)!0.5!($(A_xy)!0.5!(B_xy)$)$) {$60^\circ$};
+
+      % 頂点ノード
+      \node[circle, fill=red!85!black, inner sep=1.5pt] at (A) {};
+      \node[above left=1pt, red!85!black] at (A) {$A$};
+      \node[circle, fill=red!85!black, inner sep=1.5pt] at (B) {};
+      \node[above right=1pt, red!85!black] at (B) {$B$};
+
+      \node[circle, fill=gray!70, inner sep=1.0pt] at (A_xy) {};
+      \node[circle, fill=gray!70, inner sep=1.0pt] at (B_xy) {};
+      \node[circle, fill=gray!70, inner sep=1.0pt] at (C_lat) {};
     \end{scope}
+
+    % 球面の輪郭 (2D 外枠)
+    \draw[line width=1.1pt, blue!85!black] (0, 0.48) circle (2.2cm);
+
+    % --- 右側: 緯度 60° の直角三角形 ---
+    \begin{scope}[shift={(3.4, 0.2)}, scale=1.4]
+      \coordinate (p0) at (0, 0);
+      \coordinate (p1) at (0.5, 0);
+      \coordinate (p2) at (0, 0.866);
+
+      \fill[teal!12] (p0) -- (p1) -- (p2) -- cycle;
+      \draw[line width=1.1pt, teal!80!black] (p0) -- (p1) -- (p2) -- cycle;
+
+      \node[below, font=\footnotesize] at (0.25, 0) {$\frac{1}{2}$};
+      \node[left, font=\footnotesize] at (0, 0.433) {$\frac{\sqrt{3}}{2}$};
+      \node[above right, font=\footnotesize] at (0.25, 0.433) {$1$};
+      \node[above left, font=\scriptsize] at (0.5, 0) {$60^\circ$};
+      \draw (0, 0.12) -- (0.12, 0.12) -- (0.12, 0);
+    \end{scope}
+
   \end{tikzpicture}
-  \caption{同一緯度の経路$R_1$と大円上の経路$R_2$の模式図}
+  \caption{地球（単位球面）上の飛行経路 $R_1, R_2$ と座標設定}
+  \label{fig:flight_paths}
 \end{figure}
-一方，$R_2$について，地球の中心を$O$として右のような座標をとれば
+
+地球の半径を1として良く，原点を$O(0,0,0)$とする空間座標中の単位円
+\begin{align}
+  x^2+y^2+z^2=1
+\end{align}
+とする．二点を$A(\cos\dfrac{\pi}{3},0,\sin\dfrac{\pi}{3}), B(\cos\dfrac{\pi}{3}\cos\dfrac{\pi}{3}, \cos\dfrac{\pi}{3}\sin\dfrac{\pi}{3},\sin\dfrac{\pi}{3})$とおく．
+
+すると経路$R_1$は半径$\cos\dfrac{\pi}{3}=\dfrac{1}{2}$の円周のうち
+中心角$\dfrac{\pi}{3}$の扇形の弧長で，
+\begin{align}
+  R_1= \dfrac{1}{2}\cdot\dfrac{\pi}{3}=\dfrac{1}{6}\pi \label{eq:1}
+\end{align}
+である．
+
+一方で$R_2$について，
 \begin{align}
   \overrightarrow{OA}=\dfrac{1}{2}
   \begin{pmatrix}1\\0\\\sqrt{3}
   \end{pmatrix},\qquad
   \overrightarrow{OB}=
   \begin{pmatrix}\dfrac{1}{4}\\\dfrac{\sqrt{3}}{4}\\\dfrac{\sqrt{3}}{2}
-  \end{pmatrix}.
+  \end{pmatrix}
 \end{align}
 だから，$\angle AOB=\theta$として
 \begin{align}
-  \cos\theta=\dfrac{\overrightarrow{OA}\cdot\overrightarrow{OB}}{|\overrightarrow{OA}|\,|\overrightarrow{OB}|}
+  \cos\theta
+  =\dfrac{\overrightarrow{OA}\cdot\overrightarrow{OB}}{|\overrightarrow{OA}|\,|\overrightarrow{OB}|}
   =\dfrac{1}{2}
   \begin{pmatrix}1\\0\\\sqrt{3}
   \end{pmatrix}\cdot
   \dfrac{1}{4}
   \begin{pmatrix}1\\\sqrt{3}\\2\sqrt{3}
   \end{pmatrix}
-  =\dfrac{7}{8}=0.875.
+  =\dfrac{7}{8}=0.875
 \end{align}
-三角関数表から，
-\begin{align}28.5^\circ<\theta<29.0^\circ.\label{eq:2}
+であり，三角関数表から，
+\begin{align}
+  28.5^\circ<\theta<29.0^\circ \label{eq:2}
 \end{align}
-\begin{align}R_2=\theta r=\theta.\label{eq:3}
+と評価できる．このもとで弧長$R_2$は半径$1$，角度$\theta$の扇形部分で
+\begin{align}
+  R_2=\theta \label{eq:3}
 \end{align}
+となる．
+
 したがって，\cref{eq:1,eq:3}より
-\begin{align}\dfrac{R_2}{R_1}<\dfrac{29}{30}=0.96\cdots<0.97,\qquad R_2<0.97R_1
+\begin{align}
+  \dfrac{R_2}{R_1}<\dfrac{29}{30}=0.96\cdots<0.97,\qquad R_2<0.97R_1
 \end{align}
-が示された．
+だから題意は示された．
 
 \end{document}
