@@ -1,47 +1,65 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-% Source: handwritten.pdf 第2問．
 {\bf [解答]}
-\begin{align}0<x,y,\qquad y\ne x.\label{eq:1}
-\end{align}
-$b_n=\dfrac{a_n}{y^n}$によって$\{b_n\}$を定めると，$b_1=0$で，
-\begin{align}b_{n+1}=\dfrac{x}{y}b_n+1.
-\end{align}
-\cref{eq:1}から
+
+与えられた数列
 \begin{align}
-  b_{n+1}-\dfrac{y}{y-x}=\dfrac{x}{y}\left(b_n-\dfrac{y}{y-x}\right).
+  \begin{cases}
+    0<x,y,\qquad y\ne x \\
+    a_{n+1} = xa_{n} + y^{n+1}
+  \end{cases} \label{eq:1}
 \end{align}
-くり返し用いて
+について考える．
+$y \neq 0$より$b_n=\dfrac{a_n}{y^n}$によって$\{b_n\}$を定めると，\cref{eq:1}より
 \begin{align}
-  b_n=\left(\dfrac{x}{y}\right)^{n-1}\left(-\dfrac{y}{y-x}\right)+\dfrac{y}{y-x},
+  \begin{cases}
+    b_{n+1}=\dfrac{x}{y}b_n+1 \\
+    b_1 = 0
+  \end{cases} \label{eq:2}
 \end{align}
+である．変形して
 \begin{align}
-  a_n=\dfrac{y}{y-x}\left(y^n-x^{n-1}y\right)
-  =\dfrac{y^2}{y-x}\left(y^{n-1}-x^{n-1}\right).
+  b_{n+1}-\dfrac{y}{y-x}=\dfrac{x}{y}\left(b_n-\dfrac{y}{y-x}\right)
 \end{align}
-これが収束する条件は，\cref{eq:1}から，$y^{n-1}-x^{n-1}$が収束する条件と等しい．
+だから漸化式をくり返し用いて
+\begin{align}
+  b_n=\left(\dfrac{x}{y}\right)^{n-1}\left(-\dfrac{y}{y-x}\right)+\dfrac{y}{y-x}
+\end{align}
+であり，$a_n=y^nb_n$より
+\begin{align}
+  a_n
+  &=\dfrac{y}{y-x}\left(y^n-x^{n-1}y\right) \\
+  &=\dfrac{y^2}{y-x}\left(y^{n-1}-x^{n-1}\right)
+\end{align}
+である．これが収束する条件は \cref{eq:1}から $y^{n-1}-x^{n-1}$ が収束する条件と等しい．
+
 \subparagraph{(i) $y>x>0$のとき}
+
+この時は
 \begin{align}
   y^{n-1}-x^{n-1}=y^{n-1}\left\{1-\left(\dfrac{x}{y}\right)^{n-1}\right\}
 \end{align}
 が収束するには，$0<y\leqq1$が条件である．
+
 \subparagraph{(ii) $x>y>0$のとき}
-同じく，$0<x\leqq1$が条件である．
+
+(i)と同じく$0<x\leqq1$が条件である．
 \casesend
-以上まとめて
-\begin{align}0<x<y\leqq1\quad\text{又は}\quad0<y<x\leqq1.
+
+以上まとめて求める条件は
+\begin{align}
+  0<x<y\leqq1\quad\text{又は}\quad0<y<x\leqq1
 \end{align}
-だから，図示して図の着色部．境界は$x=1$，$y=1$は含み，$x=0$，$y=0$は含まず，$y=x$は含まない．
-\begin{figure}[H]
+だから図示して図の斜線部である．
+境界は線分 $x = 1 (0 < y < 1)$ および $y = 1 (0 < x < 1)$ を含み，
+端点および直線 $y = x$ は含まない．
+
+\begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=3.5cm, y=3.5cm, >=stealth,
     every node/.style={font=\small}]
-    \fill[blue!15] (0,0) rectangle (1,1);
+    \fill[pattern=north east lines, pattern color=blue!30] (0,0) rectangle (1,1);
     \draw[->, thick, gray!80!black] (-0.18,0) -- (1.32,0) node[right] {$x$};
     \draw[->, thick, gray!80!black] (0,-0.18) -- (0,1.32) node[above] {$y$};
     \draw[line width=1.4pt, blue!85!black] (0,1) -- (1,1) -- (1,0);
@@ -56,6 +74,7 @@ $b_n=\dfrac{a_n}{y^n}$によって$\{b_n\}$を定めると，$b_1=0$で，
     \node[teal!80!black, above left] at (0.5,0.5) {$y=x$};
   \end{tikzpicture}
   \caption{数列が有限の値に収束する$(x,y)$の範囲}
+  \label{fig:convergence_region}
 \end{figure}
 
 \end{document}

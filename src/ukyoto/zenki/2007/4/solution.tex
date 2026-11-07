@@ -1,57 +1,170 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-% Source: handwritten.pdf 第4問．
 {\bf [解答]}
-$O$を始点とする点$X$の位置ベクトルを$\vec{x}$と表す．題意から
-\begin{align}|\vec{a}|=|\vec{b}|=|\vec{c}|.\label{eq:1}
-\end{align}
-そして
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (0, 2);
+    \coordinate (B) at ({-sqrt(3)}, -1);
+    \coordinate (C) at ({sqrt(3)}, -1);
+
+    \coordinate (P) at ($(A)!0.4!(B)$);
+    \coordinate (Q) at ($(B)!0.4!(C)$);
+    \coordinate (R) at ($(C)!0.4!(A)$);
+
+    % 外接円
+    \draw[thick, gray!80!black] (O) circle (2);
+
+    % 三角形 ABC
+    \draw[line width=1.4pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+
+    % 三角形 PQR の外接円
+    \draw[densely dashed, thick, teal!70!black] (O) circle ({sqrt(1.12)});
+
+    % 三角形 PQR
+    \draw[line width=1.2pt, orange!90!black] (P) -- (Q) -- (R) -- cycle;
+
+    % 外心 O と各点への線分
+    \draw[densely dotted, thick, gray!70!black] (O) -- (A);
+    \draw[densely dotted, thick, gray!70!black] (O) -- (B);
+    \draw[densely dotted, thick, gray!70!black] (O) -- (C);
+    \draw[densely dotted, thick, orange!80!black] (O) -- (P);
+    \draw[densely dotted, thick, orange!80!black] (O) -- (Q);
+    \draw[densely dotted, thick, orange!80!black] (O) -- (R);
+
+    % 点の描画
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (A) {};
+    \node[above=2pt] at (A) {$A$};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (B) {};
+    \node[below left=2pt] at (B) {$B$};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (C) {};
+    \node[below right=2pt] at (C) {$C$};
+
+    \node[circle, fill=orange!90!black, inner sep=1.4pt] at (P) {};
+    \node[left=2pt, orange!90!black] at (P) {$P$};
+    \node[circle, fill=orange!90!black, inner sep=1.4pt] at (Q) {};
+    \node[below=2pt, orange!90!black] at (Q) {$Q$};
+    \node[circle, fill=orange!90!black, inner sep=1.4pt] at (R) {};
+    \node[right=2pt, orange!90!black] at (R) {$R$};
+
+    \node[circle, fill=black, inner sep=1.2pt] at (O) {};
+    \node[below left=2pt, font=\footnotesize] at (O) {$O$};
+  \end{tikzpicture}
+  \caption{$\triangle ABC$とその内分点からなる$\triangle PQR$および外心$O$}
+  \label{fig:triangle_overview}
+\end{figure}
+
+$\triangle ABC$の外心$O$を始点とする点$X$の位置ベクトルを$\vec{x}$と表す．
+外接円の半径を$1$としても一般性を失わない．この時
 \begin{align}
-  \vec{p}=\dfrac{1}{5}(2\vec{b}+3\vec{a}),\quad
-  \vec{q}=\dfrac{1}{5}(2\vec{c}+3\vec{b}),\quad
-  \vec{r}=\dfrac{1}{5}(2\vec{a}+3\vec{c}).\label{eq:2}
+  |\vec{a}|=|\vec{b}|=|\vec{c}|=1 \label{eq:1}
 \end{align}
-$\triangle PQR$の外心が$O$のとき，$|\vec{p}|=|\vec{q}|=|\vec{r}|$となる．
-$\triangle ABC$の外接円の半径を1とする．2乗して
-$|\vec{p}|^2=|\vec{q}|^2=|\vec{r}|^2=k$とおくと，\cref{eq:1}から，$k>0$で
+である．$P,Q,R$はそれぞれ$AB,BC,CA$を$2:3$に内分するから
 \begin{align}
   \begin{cases}
-    25k=4+9+12\vec{a}\cdot\vec{b},\\
-    25k=13+12\vec{b}\cdot\vec{c},\\
-    25k=13+12\vec{c}\cdot\vec{a}.
-  \end{cases}
+    \vec{p}=\dfrac{1}{5}(2\vec{b}+3\vec{a}) \\
+    \vec{q}=\dfrac{1}{5}(2\vec{c}+3\vec{b}) \\
+    \vec{r}=\dfrac{1}{5}(2\vec{a}+3\vec{c})
+  \end{cases} \label{eq:2}
 \end{align}
-したがって
+である．
+
+$\triangle PQR$の外心が$O$のとき，外接円の半径を$k$として $|\vec{p}|=|\vec{q}|=|\vec{r}|=k$となる．2乗して$|\vec{p}|^2=|\vec{q}|^2=|\vec{r}|^2=k^2$だから\cref{eq:1,eq:2}を代入して
 \begin{align}
-  \vec{a}\cdot\vec{b}=\vec{b}\cdot\vec{c}=\vec{c}\cdot\vec{a}=\dfrac{25k-13}{12}.
+  &
+  \begin{cases}
+    25k^2=4+9+12\vec{a}\cdot\vec{b} \\
+    25k^2=13+12\vec{b}\cdot\vec{c} \\
+    25k^2=13+12\vec{c}\cdot\vec{a}
+  \end{cases} \\
+  \therefore
+  & \vec{a}\cdot\vec{b}=\vec{b}\cdot\vec{c}=\vec{c}\cdot\vec{a}=\dfrac{25k^2-13}{12}
   \label{eq:3}
 \end{align}
-ここで対称性から$O$を原点とする座標平面で$A(1,0)$，
-$B(\cos\alpha,\sin\alpha)$，$C(\cos\beta,\sin\beta)$とおく．
-$0<\alpha<\beta<2\pi$であり，\cref{eq:3}から
-\begin{align}\cos\alpha=\cos\beta=\cos(\beta-\alpha).
+である．この時
+\begin{align}
+  &
+  \begin{cases}
+    |AB|^2 = |\vec{b}-\vec{a}|^2 = 2 - 2\vec{a}\cdot\vec{b} = 2 - \dfrac{25k^2-13}{6} \\
+    |BC|^2 = |\vec{c}-\vec{b}|^2 = 2 - 2\vec{b}\cdot\vec{c} = 2 - \dfrac{25k^2-13}{6} \\
+    |CA|^2 = |\vec{a}-\vec{c}|^2 = 2 - 2\vec{c}\cdot\vec{a} = 2 - \dfrac{25k^2-13}{6}
+  \end{cases} \\
+  \therefore
+  & |AB|=|BC|=|CA|
 \end{align}
-$0<\alpha<\beta<2\pi$から，左側の等号から$\beta=2\pi-\alpha$とかける．
-\begin{align}0<\alpha<2\pi-\alpha<2\pi,\qquad0<\alpha<\pi.\label{eq:4}
+だから，$\triangle ABC$は正三角形である．
+
+{\bf [別解]}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.0, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (1, 0);
+    \coordinate (B) at ({-0.5}, {sqrt(3)/2});
+    \coordinate (C) at ({-0.5}, {-sqrt(3)/2});
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.4, 0) -- (1.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.3) -- (0, 1.4) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 単位円
+    \draw[thick, gray!80!black] (O) circle (1);
+
+    % 三角形 ABC
+    \draw[line width=1.4pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+
+    % 動径 OB, OC
+    \draw[thick, gray!70!black] (O) -- (B);
+    \draw[thick, gray!70!black] (O) -- (C);
+
+    % x=-1/2 垂線
+    \draw[densely dotted, thick, gray!70!black] (B) -- (-0.5, 0) -- (C);
+    \node[below right=2pt, font=\footnotesize] at (-0.5, 0) {$-\frac{1}{2}$};
+
+    % 角度アルファ
+    \draw[orange!90!black, thick] (0.35, 0) arc[start angle=0, end angle=120, radius=0.35];
+    \node[orange!90!black, font=\footnotesize, above right=1pt] at ({0.35*cos(60)}, {0.35*sin(60)}) {$\alpha=\frac{2\pi}{3}$};
+
+    % 角度ベータ
+    \draw[teal!85!black, thick] (0.22, 0) arc[start angle=0, end angle=240, radius=0.22];
+    \node[teal!85!black, font=\footnotesize, below left=1pt] at ({0.22*cos(170)}, {0.22*sin(170)}) {$\beta=\frac{4\pi}{3}$};
+
+    % 各頂点
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (A) {};
+    \node[above right=1pt] at (A) {$A(1,0)$};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (B) {};
+    \node[above left=1pt] at (B) {$B(\cos\alpha,\sin\alpha)$};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (C) {};
+    \node[below left=1pt] at (C) {$C(\cos\beta,\sin\beta)$};
+  \end{tikzpicture}
+  \caption{単位円上の点$A, B, C$と偏角$\alpha, \beta$の配置}
+  \label{fig:unit_circle_points}
+\end{figure}
+
+\cref{eq:3}以下，座標平面でも解ける．$O$を原点とする座標平面で
+$A(1,0), B(\cos\alpha,\sin\alpha), C(\cos\beta,\sin\beta)$とおく．
+ただし$0<\alpha<\beta<2\pi$とする．\cref{eq:3}から
+\begin{align}
+  \cos\alpha=\cos\beta=\cos(\beta-\alpha)
+\end{align}
+を得る．
+$0<\alpha<\beta<2\pi$に注意して左側の等号から$\beta=2\pi-\alpha$とかける．
+\begin{align}
+  0<\alpha<2\pi-\alpha<2\pi,\qquad0<\alpha<\pi \label{eq:4}
 \end{align}
 したがって右側の等号から
 \begin{align}
-  \cos\alpha=\cos(2\pi-2\alpha)=\cos2\alpha=2\cos^2\alpha-1,\\
-  (2\cos\alpha+1)(\cos\alpha-1)=0.
+  & \cos\alpha=\cos(2\pi-2\alpha)=\cos2\alpha=2\cos^2\alpha-1 \\
+  & (2\cos\alpha+1)(\cos\alpha-1)=0 \\
+  \therefore
+  & \cos\alpha = - \dfrac{1}{2}, \alpha = \dfrac{2\pi}{3}
 \end{align}
-\cref{eq:4}から$\alpha=\dfrac{2\pi}{3}$，$\beta=2\pi-\alpha=\dfrac{4\pi}{3}$．
-したがって$\triangle ABC$は正三角形．
-
-{\bf [別解]}
-\cref{eq:3}以外に，\cref{eq:2}から
-\begin{align}|AB|^2=|\vec{b}-\vec{a}|^2
-\end{align}
-などとして，$\vec{a}\cdot\vec{b}=\vec{b}\cdot\vec{c}=\vec{c}\cdot\vec{a}$から
-$|AB|=|BC|=|CA|$となる．この方が早い．
+である．この時\cref{eq:4}から$\beta=2\pi-\alpha=\dfrac{4\pi}{3}$である．
+したがって$\triangle ABC$は正三角形である．
 
 \end{document}

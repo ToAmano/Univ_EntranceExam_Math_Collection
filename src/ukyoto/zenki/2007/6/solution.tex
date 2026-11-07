@@ -1,54 +1,91 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
-% Source: handwritten.pdf 第6問．
 {\bf [解答]}
-\begin{align}f(0)=0,\qquad f'(0)=1\label{eq:1}
-\end{align}
-である．任意の$a,b\in\mathbb{R}$に対し
-\begin{align}
-  f(a+b)=\dfrac{f(a)+f(b)}{1+f(a)f(b)},\label{eq:2}\\
-  1+f(a)f(b)\ne0.\label{eq:3}
-\end{align}
-\cref{eq:2}で$b=-a$とすると，\cref{eq:1}から
-\begin{align}f(a)+f(-a)=0.
-\end{align}
-だから\cref{eq:3}で$b=-a$として
-\begin{align}1+f(a)f(-a)=1-\{f(a)\}^2\ne0,
-\end{align}
-\begin{align}f(a)\ne\pm1.
-\end{align}
-これが任意の$a\in\mathbb{R}$で成り立つので，$f$が連続かつ$f(0)=0$から
-$-1<f(x)<1$である．
 
-さて，\cref{eq:2}から
+与えられた関数
+\begin{align}
+  & f(a+b)=\dfrac{f(a)+f(b)}{1+f(a)f(b)} \label{eq:1}\\
+  & 1+f(a)f(b)\ne0 \label{eq:2} \\
+  & f(0)=0,\qquad f'(0)=1 \label{eq:3}
+\end{align}
+について考える．
+
+\paragraph{(1)}
+
+\cref{eq:1}で$b=-a$とすると，\cref{eq:3}から
+\begin{align}
+  f(a)+f(-a)=0 \quad \therefore f(-a) = -f(a) \label{eq:4}
+\end{align}
+である．
+\cref{eq:2}で$b=-a$として
+\begin{align}
+  1+f(a)f(-a)=1-\{f(a)\}^2 \ne 0 \quad \therefore f(a) \neq \pm 1 \label{eq:5}
+\end{align}
+である．
+これが任意の$a\in\mathbb{R}$で成り立つので，$f$が連続かつ$f(0)=0$であることと合わせて
+\begin{align}
+  -1<f(x)<1
+\end{align}
+である．
+
+\paragraph{(2)}
+
+題意を示すために$f'(x),f''(x)$を計算する．
+\cref{eq:1}で$a=x,b=h$として
 \begin{align}
   \begin{split}
     \dfrac{f(x+h)-f(x)}{h}
     &=\dfrac{1}{h}\left\{\dfrac{f(x)+f(h)}{1+f(x)f(h)}-f(x)\right\}\\
     &=\dfrac{f(h)}{h}\dfrac{1-\{f(x)\}^2}{1+f(x)f(h)}\\
-    &\longrightarrow\{1-\{f(x)\}^2\}f'(0)=f'(x)\quad(h\to0).
+    &\xrightarrow{h\to 0} \{1-\{f(x)\}^2\}f'(0) \\
+    &= 1-\{f(x)\}^2 \quad (\because\text{\cref{eq:3}})
   \end{split}
 \end{align}
-\cref{eq:1}から
-\begin{align}f'(x)=1-\{f(x)\}^2.\label{eq:4}
-\end{align}
-したがって$y=f(x)$として，\cref{eq:4}をあわせて微分方程式
-\begin{align}\dfrac{1}{1-y^2}\,dy=dx
-\end{align}
-が成り立つ．これをといて，$-1<y<1$から
-\begin{align}\log\dfrac{1+y}{1-y}=2x+C.
-\end{align}
-$x=0$で$y=0$であることから，$C=1$であり，
-% 原稿には「+C」「C=1」とある．ここは原稿内で不整合だが，後続式に合わせて黙って訂正しない．
+でこれが$f'(x)$に等しいから
 \begin{align}
-  \dfrac{1+y}{1-y}=e^{2x},\qquad y=\dfrac{e^{2x}-1}{e^{2x}+1}.
+  f'(x)=1-\{f(x)\}^2 \label{eq:6}
 \end{align}
-逆に，このとき\cref{eq:1,eq:3}はみたし，\cref{eq:2}については
+である．この右辺は微分可能だから両辺$x$で微分して
+\begin{align}
+  f''(x) = -2f(x)f'(x) \label{eq:7}
+\end{align}
+である．
+
+(1)から$0\le \{f(x)\}^2<1$だから$f'(x)> 0$つまり$f(x)$は単調増加である．
+これと\cref{eq:3}より$0<x$では$f(x)>0$となる．よって\cref{eq:7}より$f''(x)<0$となり，$f(x)$は上に凸である．
+
+\begin{table}[htb]
+  \centering
+  \caption{$f(x)$ の増減・凹凸表（$x \geqq 0$）}
+  \label{tab:variation}
+  \begin{tabular}{c|ccc}
+    \hline
+    $x$ & $0$ & $\cdots$ \\ \hline
+    $f'(x)$ & $1$ & $+$ \\ \hline
+    $f''(x)$ & $0$ & $-$ \\ \hline
+    $f(x)$ & $0$ & \carrowIncreaseConcave \\ \hline
+  \end{tabular}
+\end{table}
+
+{\bf [別解]}
+
+少し遠回りだが，\cref{eq:6}以下微分方程式を解いて直接$f(x)$をとくアプローチもある．
+\cref{eq:6}で$y=f(x)$として，(1)から$1-y^2 \neq 0$だから
+\begin{align}
+  \dfrac{1}{1-y^2}\,dy=dx
+\end{align}
+が成り立つ．これをといて$-1<y<1$から
+\begin{align}
+  \log\dfrac{1+y}{1-y}=2x+C
+\end{align}
+となる．\cref{eq:3}より$x=0$で$y=0$だから$C=0$であり，
+\begin{align}
+  \dfrac{1+y}{1-y}=e^{2x}
+  \qquad\therefore
+  y=\dfrac{e^{2x}-1}{e^{2x}+1}
+\end{align}
+である．逆にこの時\cref{eq:2,eq:3}は満たされ，\cref{eq:2}については
 \begin{align}
   \begin{split}
     \dfrac{f(a)+f(b)}{1+f(a)f(b)}
@@ -56,12 +93,15 @@ $x=0$で$y=0$であることから，$C=1$であり，
     &=\dfrac{2(e^{2a+2b}-1)}{2(e^{2a+2b}+1)}=f(a+b)
   \end{split}
 \end{align}
-から成立し十分．以上から
-\begin{align}f(x)=\dfrac{e^{2x}-1}{e^{2x}+1}
+から成立して十分である．
+以上から
+\begin{align}
+  f(x)=\dfrac{e^{2x}-1}{e^{2x}+1}
 \end{align}
 であり，
-\begin{align}f''(x)=\{1-\{f(x)\}^2\}'=-2f(x)f'(x).
+\begin{align}
+  f''(x)=\{1-\{f(x)\}^2\}'=-2f(x)f'(x)
 \end{align}
-これは$x>0$で$f(x)>0$，$f'(x)>0$から$f''(x)<0$となり，したがって上に凸である．
+は$x>0$で$f(x)>0, f'(x)>0$から$f''(x)<0$となり上に凸である．
 
 \end{document}
