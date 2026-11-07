@@ -1,26 +1,63 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$x$にある石に対し試行を行い，後の座標を$f(x)$とすると
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.6cm, y=1.2cm, >=stealth,
+    every node/.style={font=\small}]
+    % Number line
+    \draw[->, thick, gray!80!black] (-3.4, 0) -- (3.6, 0);
+
+    % Ticks and symmetry centers
+    \draw[thick, gray!70!black] (0, -0.1) -- (0, 0.1);
+    \draw[thick, gray!70!black] (1, -0.1) -- (1, 0.1);
+    \node[below=3pt] at (0, 0) {$0$};
+    \node[below=3pt] at (1, 0) {$1$};
+    \node[circle, fill, inner sep=1.3pt] at (0, 0) {};
+    \node[circle, fill, inner sep=1.3pt] at (1, 0) {};
+
+    % Initial position x (representative x = 2.4)
+    \coordinate (X) at (2.4, 0);
+    \coordinate (Xheads) at (-2.4, 0);
+    \coordinate (Xtails) at (-0.4, 0);
+
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (X) {};
+    \node[below=3pt, red!85!black] at (X) {$x$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (Xheads) {};
+    \node[below=3pt, blue!85!black] at (Xheads) {$-x$};
+
+    \node[circle, fill=teal!85!black, inner sep=1.4pt] at (Xtails) {};
+    \node[below=3pt, teal!85!black] at (Xtails) {$2-x$};
+
+    % Curved arrows for 1-step trials
+    \draw[->, line width=1.2pt, blue!85!black]
+    (2.4, 0.25) to[out=135, in=45]
+    node[above, font=\footnotesize] {表（確率 $\frac{1}{2}$）：原点に関して対称}
+    (-2.4, 0.25);
+
+    \draw[->, line width=1.2pt, teal!85!black]
+    (2.4, -0.35) to[out=-140, in=-40]
+    node[below, font=\footnotesize] {裏（確率 $\frac{1}{2}$）：点 $1$ に関して対称}
+    (-0.4, -0.35);
+  \end{tikzpicture}
+  \caption{硬貨の表裏による数直線上の対称移動}
+  \label{fig:trial_overview}
+\end{figure}
+
+題意より，座標$x$にある石に対し試行を行ったあとの座標を$f(x)$とすると
 \begin{align}
   f(x)=
-  \begin{cases}-x&(\text{確率}\dfrac{1}{2})\\2-x&(\text{確率}\dfrac{1}{2})
-  \end{cases}
+  \begin{cases}
+    -x&(\text{確率}\dfrac{1}{2})\\
+    2-x&(\text{確率}\dfrac{1}{2})
+  \end{cases} \label{eq:1}
 \end{align}
 である．
 
-\textbf{(1)} 2回試行を繰り返すと，以下のようになる．
-\begin{itemize}
-  \item $x\to-x\to x$（確率$\dfrac{1}{2}\cdot\dfrac{1}{2}=\dfrac{1}{4}$）
-  \item $x\to-x\to2+x$（確率$\dfrac{1}{4}$）
-  \item $x\to2-x\to x-2$（確率$\dfrac{1}{4}$）
-  \item $x\to2-x\to x$（確率$\dfrac{1}{4}$）
-\end{itemize}
+\paragraph{(1)}
 
 \begin{figure}[htb]
   \centering
@@ -52,18 +89,37 @@ $x$にある石に対し試行を行い，後の座標を$f(x)$とすると
   \caption{2回の試行による石の位置と各分岐の確率}
 \end{figure}
 
-よって，もとめる石置率$P=2\cdot\dfrac{1}{4}=\dfrac{1}{2}$．
+2回試行を繰り返すと上図のようになるから，
+\begin{itemize}
+  \item $x\to-x\to x$（確率$\dfrac{1}{2}\cdot\dfrac{1}{2}=\dfrac{1}{4}$）
+  \item $x\to-x\to2+x$（確率$\dfrac{1}{4}$）
+  \item $x\to2-x\to x-2$（確率$\dfrac{1}{4}$）
+  \item $x\to2-x\to x$（確率$\dfrac{1}{4}$）
+\end{itemize}
+である．よって元の位置$x$に戻る確率は
+\begin{align}
+  P=2\cdot\dfrac{1}{4}=\dfrac{1}{2}
+\end{align}
+である．
 
-\textbf{(2)} $2k$回目の試行の後（$k\in\mathbb{N}$）の石の位置を$a_k$とすると，(1)から，
+\paragraph{(2)}
+
+初項は$a_0=0$である．
+$2k$回目の試行の後（$k\in\mathbb{N}$）の石の位置を$a_k$とすると，(1)から，
 \begin{align}
   a_{k+1}=
-  \begin{cases}a_k&(\text{確率}\dfrac{1}{2})\\a_k+2&(\text{確率}\dfrac{1}{4})\\a_k-2&(\text{確率}\dfrac{1}{4})
+  \begin{cases}
+    a_k&(\text{確率}\dfrac{1}{2})\\
+    a_k+2&(\text{確率}\dfrac{1}{4})\\
+    a_k-2&(\text{確率}\dfrac{1}{4})
   \end{cases}
 \end{align}
-となる．$a_{k+1}=a_k-2$となる試行が1回でも行われた場合，$\max a_n=2(n-1)-2=2n-4$となるから，$a_n=2n-2$は不適である．同様に考えて，$a_n=2n-2$となるのは，$a_{k+1}=a_k$が$1$回，$a_{k+1}=a_k+2$が$n-1$回行われた時であり，もとめる確率は
+となる．すなわち，硬貨を$2$回なげる度に石の座標は$0,\pm 2$だけ変化する．
+従って最大でも$a_n = 2n$である．題意のように$a_n=2n-2$となるのは$+2$の移動を$n-1$回，$+0$の移動を$1$回した時だから，このようになる確率は何階目で$+0$の移動が発生したかを考えて
 \begin{align}
-  P={}_n\mathrm{C}_1\left(\dfrac{1}{2}\right)\left(\dfrac{1}{4}\right)^{n-1}=n\left(\dfrac{1}{2}\right)^{2n-1}．
+  P={}_n\mathrm{C}_1\left(\dfrac{1}{2}\right)\left(\dfrac{1}{4}\right)^{n-1}=n\left(\dfrac{1}{2}\right)^{2n-1}
 \end{align}
+である．
 
 \newpage
 

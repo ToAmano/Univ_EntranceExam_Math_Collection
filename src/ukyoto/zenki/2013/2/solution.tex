@@ -1,27 +1,67 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\begin{flushright}
-  \footnotesize\textit{【自動文字起こし・要確認】}
-\end{flushright}
-
 {\bf [解答]}
-$N\in\mathbb{N}_{\ge2}$とする．$A_M=\displaystyle\sum_{n=1}^Ma_n$とする．$N=2$の時，$a_1=1$，$a_k=0\ (k\ge2)$から，
+
+与えられた数列
 \begin{align}
-  \max A_M=1\le2^3-2-5=1
+  a_1 &= 2^{N}-3 \quad (N\in\mathbb{N}_{\ge2}) \label{eq:1}\\
+  a_{n+1}
+  &=
+  \begin{cases}
+    \dfrac{a_n}{2} & (a_n\in\text{even}) \\
+    \dfrac{a_n-1}{2} & (a_n\in\text{odd})
+  \end{cases} \label{eq:2}
 \end{align}
-となり成立する．以下$N\ge3$とする．帰納的に，
+について考える．この$M$項の和を
 \begin{align}
-  a_1=2^N-3，\quad a_2=2^{N-1}-2，\quad a_k=2^{N+1-k}-1\ (k=3,\ldots,N)，\quad a_k=0\ (N+1\le k)
+  A_M= \sum_{n=1}^Ma_n \label{eq:3}
 \end{align}
-となるから，$M=N$の時に題意が成立すれば良い（$a_n\ge0$から，$A_M\le A_N$）．
+とおき，題意の不等式
 \begin{align}
-  A_N&=(2^N-3)+(2^{N-1}-2)+\sum_{k=3}^N(2^{N+1-k}-1)\\
+  A_M \le 2^{N+1}-N-5 \label{eq:4}
+\end{align}
+を示す．
+
+まず\cref{eq:2}より数列$a_n$は単調減少であり，一度$a_n=0$となればそれより大きい$n$に対して常に$a_n=0$である．
+具体的に計算すると，$N=2$の時は
+\begin{align}
+  a_1 = 1, a_k = 0 \quad (k \ge 2=N) \label{eq:5}
+\end{align}
+であり，$N \ge 3$の時は
+\begin{align}
+  a_1 = 2^N-3, a_2 = 2^{N-1}-2, a_k=2^{N+1-k}-1 (k=3,\cdots,N), a_k = 0 (N+1 \le k) \label{eq:6}
+\end{align}
+となる．よっていずれの場合も，$A_M$は単調増加で $M \ge N$ の時に最大値$A_N$をとるから，
+\begin{align}
+  A_N \le 2^{N+1}-N-5 \label{eq:7}
+\end{align}
+を示せば十分である．
+
+\subparagraph{$1^{\circ}$ $N=2$の時}
+
+\cref{eq:5}を\cref{eq:3}に代入して
+\begin{align}
+  A_N = 1
+\end{align}
+だから\cref{eq:7}は
+\begin{align}
+  A_N = 1 \le 2^{2+1}-2-5 = 1
+\end{align}
+より成立する．
+
+\subparagraph{$2^{\circ}$ $N \ge 3$の時}
+
+\cref{eq:6}を\cref{eq:3}に代入して
+\begin{align}
+  A_N
+  &=(2^N-3)+(2^{N-1}-2)+\sum_{k=3}^N(2^{N+1-k}-1)\\
   &=3\cdot2^{N-1}-5+\sum_{k=1}^{N-2}2^k-(N-2)\\
   &=3\cdot2^{N-1}-N-3+2\cdot\dfrac{2^{N-2}-1}{2-1}\\
   &=2^{N+1}-N-5
 \end{align}
-だから，成立．
+だから，\cref{eq:7}は成立する．
+\casesend
 
 以上から題意は示された．$\blacksquare$
 
