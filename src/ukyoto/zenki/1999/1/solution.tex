@@ -19,8 +19,11 @@
     \coordinate (Q) at (\be, \yQ);
     \coordinate (R) at (\xR, \yR);
 
-    % 囲まれる領域の塗りつぶし
+    % 囲まれる領域の塗りつぶし（淡いベタ塗り＋斜線パターン）
     \fill[blue!12]
+    (P) -- (Q) --
+    plot[domain=\be:\al, samples=60] (\x, {\x*\x}) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!40]
     (P) -- (Q) --
     plot[domain=\be:\al, samples=60] (\x, {\x*\x}) -- cycle;
 
@@ -38,13 +41,13 @@
     node[pos=0.78, above left=2pt, font=\footnotesize] {$y = l(x)$};
 
     % 投影線と目盛り
-    \draw[dashed, gray!60] (\al, 0) -- (P);
+    \draw[densely dotted, thick, gray!70!black] (\al, 0) -- (P);
     \node[below=2pt, font=\footnotesize] at (\al, 0) {$\alpha$};
 
-    \draw[dashed, gray!60] (\be, 0) -- (Q);
+    \draw[densely dotted, thick, gray!70!black] (\be, 0) -- (Q);
     \node[below=2pt, font=\footnotesize] at (\be, 0) {$\beta$};
 
-    \draw[dashed, red!70!black] (\xR, 0) -- (R) -- (0, \yR);
+    \draw[densely dotted, thick, red!70!black] (\xR, 0) -- (R) -- (0, \yR);
     \node[below=2pt, font=\footnotesize, red!85!black] at (\xR, 0) {$X$};
     \node[left=2pt, font=\footnotesize, red!85!black] at (0, \yR) {$Y$};
 
@@ -125,7 +128,7 @@ $P(\alpha, \alpha^2), Q(\beta, \beta^2) \; (\alpha < \beta)$ とおく．
     \node[below left=2pt] at (O) {$O$};
 
     % 元の放物線 y = x^2 と弦 PQ（参考）
-    \draw[dashed, thick, gray!70, domain=-1.45:1.5, samples=80]
+    \draw[dashed, thick, gray!70!black, domain=-1.45:1.5, samples=80]
     plot (\x, {\x*\x});
     \node[gray!80!black, right=2pt, font=\footnotesize] at (1.42, 2.02) {$y = x^2$};
 
