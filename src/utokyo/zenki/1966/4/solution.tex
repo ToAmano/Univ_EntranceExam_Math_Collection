@@ -3,7 +3,48 @@
 
 {\bf [解答]}
 
-% TODO: y=x/9, y=sin \pi x/6のグラフ
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=0.62cm, y=1.8cm, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    % 最大の解 x_0 ≈ 4.8945, y_0 = x_0 / 9 ≈ 0.5438
+    \coordinate (Pmax) at (4.8945, 0.5438);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.8, 0) -- (13.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.25) -- (0, 1.75) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 補助点線 (y = 1, y = -1 および代表点 x = 3, 6, 9, 12)
+    \draw[densely dotted, thick, gray!70!black] (0, 1) node[left=2pt, font=\scriptsize] {$1$} -- (12.8, 1);
+    \draw[densely dotted, thick, gray!70!black] (0, -1) node[left=2pt, font=\scriptsize] {$-1$} -- (9, -1);
+    \draw[densely dotted, thick, gray!70!black] (3, 0) node[below=2pt, font=\scriptsize] {$3$} -- (3, 1);
+    \draw[densely dotted, thick, gray!70!black] (6, 0) node[below=2pt, font=\scriptsize] {$6$} -- (6, {6/9});
+    \draw[densely dotted, thick, gray!70!black] (9, -1) -- (9, 1);
+    \node[below right=1pt, font=\scriptsize, fill=white, inner sep=1pt] at (9, 0) {$9$};
+    \draw[densely dotted, thick, gray!70!black] (12, 0) node[below=2pt, font=\scriptsize] {$12$} -- (12, {12/9});
+
+    % y = sin(\pi x / 6) と y = x / 9
+    \draw[line width=1.4pt, blue!85!black, domain=-1.5:13.0, samples=140, smooth]
+    plot (\x, {sin(30*\x)});
+    \node[above right=1pt, font=\footnotesize, blue!85!black] at (3.05, 1.0) {$y=\sin\frac{\pi x}{6}$};
+
+    \draw[line width=1.4pt, teal!85!black] (-1.5, {-1.5/9}) -- (13.0, {13.0/9})
+    node[right, font=\footnotesize] {$y=\frac{x}{9}$};
+
+    % 代表点・最大の根の強調
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (3, 1) {};
+    \node[circle, fill=teal!85!black, inner sep=1.2pt] at (9, 1) {};
+    \node[circle, fill=teal!85!black, inner sep=1.2pt] at (12, {12/9}) {};
+
+    \draw[densely dotted, thick, red!85!black] (Pmax) -- (4.8945, 0);
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (Pmax) {};
+    \draw[<-, thick, red!85!black] (Pmax) to[bend left=20] (6.4, 1.25)
+    node[right, font=\scriptsize, red!85!black, fill=white, inner sep=1.5pt] {最大の根（$4.5<x<5$）};
+  \end{tikzpicture}
+  \caption{$y=\dfrac{x}{9}$ と $y=\sin\dfrac{\pi x}{6}$ のグラフと最大の共有点}
+  \label{fig:line_and_sin_intersections}
+\end{figure}
 
 与えられた関数を
 \begin{align}
@@ -39,7 +80,18 @@
 以上から$6 \le x $の時は$f(x)=0$の解はない．
 そこで$x < 6$で考える．
 
-% TODO: y=f(x)の[3,6]での増減表
+\begin{table}[htb]
+  \centering
+  \caption{区間 $[3, 6]$ における $f(x)$ の増減表}
+  \label{tab:fx_3_6}
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    $x$ & $3$ & $\cdots$ & $6$ \\ \hline
+    $\cos\dfrac{\pi x}{6}$ & $0$ & $-$ & $-1$ \\ \hline
+    $f'(x)$ & & $+$ & \\ \hline
+    $f(x)$ & $-\dfrac{2}{3}$ & $\nearrow$ & $\dfrac{2}{3}$ \\ \hline
+  \end{tabular}
+\end{table}
 
 この時は\cref{eq:2}より$f(x)$の増減表は上表のようになる．
 よって$f(x)$は$3\le x\le6$で単調増加であり，

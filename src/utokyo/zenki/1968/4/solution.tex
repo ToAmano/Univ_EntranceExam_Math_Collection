@@ -3,7 +3,86 @@
 
 {\bf [解答]}
 
-% TODO: 3d-tikzの概要図
+\begin{figure}[htb]
+  \centering
+  \tdplotsetmaincoords{70}{115}
+  \begin{tikzpicture}[tdplot_main_coords, scale=1.55, >=stealth, every node/.style={font=\small}]
+    \def\tVal{0.55}
+    \pgfmathsetmacro{\yP}{1 - \tVal*\tVal}
+    \pgfmathsetmacro{\Rt}{sqrt(1 + \yP*\yP)}
+    \pgfmathsetmacro{\Rzero}{sqrt(2)}
+
+    \coordinate (O) at (0, 0, 0);
+    \coordinate (L0) at (1, 0, 0);
+    \coordinate (Ht) at (0, 0, \tVal);
+    \coordinate (Q) at (1, 0, \tVal);
+    \coordinate (P) at (0, \yP, \tVal);
+
+    % 1. 奥側の輪郭（破線: 下底 z=-1 と赤道 z=0 の奥半分）
+    \draw[dashed, thick, gray!70!black, domain=115:295, samples=45, smooth]
+    plot ({1 + cos(\x)}, {sin(\x)}, -1);
+    \draw[dashed, thick, gray!70!black, domain=115:295, samples=45, smooth]
+    plot ({1 + \Rzero*cos(\x)}, {\Rzero*sin(\x)}, 0);
+
+    % 2. z = t における水平断面（円板）
+    \fill[orange!15, opacity=0.55]
+    plot[domain=0:360, samples=72, smooth] ({1 + \Rt*cos(\x)}, {\Rt*sin(\x)}, \tVal) -- cycle;
+    \fill[pattern=north east lines, pattern color=orange!80!black]
+    plot[domain=0:360, samples=72, smooth] ({1 + \Rt*cos(\x)}, {\Rt*sin(\x)}, \tVal) -- cycle;
+    \draw[thick, orange!85!black, domain=0:360, samples=72, smooth]
+    plot ({1 + \Rt*cos(\x)}, {\Rt*sin(\x)}, \tVal);
+
+    % 3. 座標軸と回転軸 \ell
+    \draw[->, thick, gray!80!black] (-0.6, 0, 0) -- (2.55, 0, 0) node[below left=1pt] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.45, 0) -- (0, 2.55, 0) node[right] {$y$};
+    \draw[->, thick, gray!80!black] (0, 0, -1.45) -- (0, 0, 1.65) node[above] {$z$};
+
+    \draw[line width=1.1pt, red!85!black, dash pattern=on 5pt off 2pt on 1.2pt off 2pt]
+    (1, 0, -1.4) -- (1, 0, 1.55) node[above, font=\footnotesize] {$\ell$};
+
+    % 4. z = t 平面上の直角三角形 Ht-Q-P と半径 PQ
+    \draw[densely dotted, thick, gray!70!black] (Ht) -- (Q);
+    \draw[densely dotted, thick, gray!70!black] (Ht) -- (P);
+    \draw[line width=1.3pt, red!85!black] (Q) -- (P);
+
+    % 5. yz 平面内の母線 y = 1 - z^2 (-1 <= z <= 1)
+    \draw[line width=1.4pt, teal!85!black, domain=-1:1, samples=60, smooth]
+    plot (0, {1 - \x*\x}, \x);
+
+    % 6. 上底 z=1・手前輪郭・側面シルエット
+    \fill[blue!12, opacity=0.28]
+    plot[domain=0:360, samples=72, smooth] ({1 + cos(\x)}, {sin(\x)}, 1) -- cycle;
+    \draw[line width=1.2pt, blue!85!black, domain=0:360, samples=72, smooth]
+    plot ({1 + cos(\x)}, {sin(\x)}, 1);
+    \draw[line width=1.1pt, blue!85!black, domain=-65:115, samples=45, smooth]
+    plot ({1 + \Rzero*cos(\x)}, {\Rzero*sin(\x)}, 0);
+    \draw[line width=1.2pt, blue!85!black, domain=-65:115, samples=45, smooth]
+    plot ({1 + cos(\x)}, {sin(\x)}, -1);
+
+    % 左右の包絡シルエット (方位角 115°, 295°)
+    \draw[line width=1.3pt, blue!85!black, domain=-1:1, samples=50, smooth]
+    plot ({1 + sqrt(1 + pow(1 - \x*\x, 2))*cos(115)}, {sqrt(1 + pow(1 - \x*\x, 2))*sin(115)}, \x);
+    \draw[line width=1.3pt, blue!85!black, domain=-1:1, samples=50, smooth]
+    plot ({1 + sqrt(1 + pow(1 - \x*\x, 2))*cos(295)}, {sqrt(1 + pow(1 - \x*\x, 2))*sin(295)}, \x);
+
+    % 7. 点と座標ラベル（最前面）
+    \node[below right=2pt, font=\scriptsize, fill=white, inner sep=1.5pt] at (O) {$O$};
+    \node[teal!85!black, font=\scriptsize, below right=2pt, fill=white, inner sep=1pt] at (0, 1.05, -0.45) {$y=1-z^2$};
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (L0) {};
+    \node[below right=1pt, font=\scriptsize, fill=white, inner sep=1pt] at (L0) {$(1,0,0)$};
+    \node[circle, fill=teal!85!black, inner sep=1.2pt] at (0, 1, 0) {};
+    \node[above right=1pt, font=\scriptsize, fill=white, inner sep=1pt] at (0, 1, 0) {$1$};
+    \node[above right=1pt, font=\scriptsize, fill=white, inner sep=1pt] at (0, 0, 1) {$1$};
+    \node[below right=1pt, font=\scriptsize, fill=white, inner sep=1pt] at (0, 0, -1) {$-1$};
+
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (Q) {};
+    \node[below left=1pt, font=\scriptsize, red!85!black, fill=white, inner sep=1pt] at (Q) {$Q$};
+    \node[circle, fill=teal!85!black, inner sep=1.4pt] at (P) {};
+    \node[above right=1pt, font=\scriptsize, teal!85!black, fill=white, inner sep=1pt] at (P) {$P$};
+  \end{tikzpicture}
+  \caption{放物線 $y=1-z^2$（$x=0$）を直線 $\ell$ のまわりに回転して得られる立体と平面 $z=t$ による断面}
+  \label{fig:solid_of_revolution_3d}
+\end{figure}
 
 題意の立体の体積$V$とする．このうち$0\le z$の部分の体積$V'$とすると，対称性から
 \begin{align}
@@ -17,7 +96,47 @@ $Q(1,0,t)$との距離は
 \end{align}
 である．これを$f(t)$とおく．
 
-% TODO: z=tでの断面図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.45, >=stealth, every node/.style={font=\small}]
+    \def\tVal{0.55}
+    \pgfmathsetmacro{\yP}{1 - \tVal*\tVal}
+    \pgfmathsetmacro{\Rt}{sqrt(1 + \yP*\yP)}
+
+    \coordinate (H) at (0, 0);
+    \coordinate (Q) at (1, 0);
+    \coordinate (P) at (0, \yP);
+
+    % 断面円板のハッチング
+    \fill[pattern=north east lines, pattern color=blue!55] (Q) circle (\Rt);
+
+    % 平面 z = t 上の x, y 方向軸
+    \draw[->, thick, gray!80!black] (-0.65, 0) -- (2.55, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.45) -- (0, 1.55) node[above] {$y$};
+
+    % 直角マークと直角三角形 HQP
+    \draw[thick, gray!70!black] (0.14, 0) -- (0.14, 0.14) -- (0, 0.14);
+    \draw[line width=1.2pt, gray!75!black] (H) -- (Q);
+    \draw[line width=1.2pt, teal!85!black] (H) -- (P);
+
+    % 断面円の輪郭と半径 PQ
+    \draw[line width=1.4pt, blue!85!black] (Q) circle (\Rt);
+    \draw[line width=1.4pt, red!85!black] (Q) -- (P)
+    node[midway, above right=2pt, font=\scriptsize, red!85!black, fill=white, inner sep=1pt] {$\sqrt{1+(1-t^2)^2}$};
+
+    % 点とラベル（輪郭より手前に描画）
+    \node[below left=2pt, font=\scriptsize, fill=white, inner sep=1pt] at (-0.18, -0.02) {$(0,0,t)$};
+    \node[below=2pt, font=\scriptsize, fill=white, inner sep=1pt] at (0.5, 0) {$1$};
+    \node[right=2pt, font=\scriptsize, fill=white, inner sep=1pt] at (0, {0.42*\yP}) {$1-t^2$};
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (H) {};
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (Q) {};
+    \node[below right=2pt, font=\scriptsize, red!85!black, fill=white, inner sep=1pt] at (Q) {$Q(1,0,t)$};
+    \node[circle, fill=teal!85!black, inner sep=1.5pt] at (P) {};
+    \node[above left=2pt, font=\scriptsize, teal!85!black, fill=white, inner sep=1pt] at (P) {$P(0,1-t^2,t)$};
+  \end{tikzpicture}
+  \caption{平面 $z=t$（$0\le t\le 1$）における断面（中心 $Q(1,0,t)$，半径 $|PQ|$ の円）}
+  \label{fig:cross_section_zt}
+\end{figure}
 
 断面は$Q$を中心とした半径$|PQ|$の円である．故に求める体積は
 \begin{align}
