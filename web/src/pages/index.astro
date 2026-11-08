@@ -3,10 +3,27 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import { getMergedNews } from '../lib/news';
 import { countRealQuestions } from '../lib/solutions';
+import { TOPIC_TAGS } from '../lib/tags';
 
 const allSolutions = await getCollection('solutions');
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 const recentNews = (await getMergedNews()).slice(0, 5);
+
+// Count solutions per topic tag
+const tagCounts = new Map<string, number>();
+for (const tag of TOPIC_TAGS) tagCounts.set(tag, 0);
+for (const item of allSolutions) {
+	if (item.data.type !== 'solution') continue;
+	for (const tag of item.data.tags ?? []) {
+		tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+	}
+}
+
+const topicsData = TOPIC_TAGS.map((tag) => ({
+	name: tag,
+	count: tagCounts.get(tag) ?? 0,
+	url: `${baseUrl}/tags/${encodeURIComponent(tag)}/`,
+}));
 
 // Target 6 categories configuration
 const CATEGORIES_CONFIG = [
@@ -145,6 +162,28 @@ const categoriesData = CATEGORIES_CONFIG.map((cfg) => {
 							<span class="enter-text">問題一覧を見る</span>
 							<span class="arrow">➔</span>
 						</div>
+					</a>
+				))}
+			</div>
+		</section>
+
+		<!-- Topics / Field Section -->
+		<section class="topics-section">
+			<div class="section-header" style="display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+				<div>
+					<h2>分野・テーマから探す</h2>
+					<p>出題分野・単元ごとに大学横断で過去問を検索・演習できます</p>
+				</div>
+				<a href={`${baseUrl}/tags/`} class="see-all-link">
+					すべての分野一覧（全{TOPIC_TAGS.length}分野） →
+				</a>
+			</div>
+
+			<div class="topic-grid">
+				{topicsData.map((topic) => (
+					<a href={topic.url} class="topic-card glass">
+						<span class="topic-name">{topic.name}</span>
+						<span class="topic-badge">{topic.count}問</span>
 					</a>
 				))}
 			</div>
@@ -327,6 +366,69 @@ const categoriesData = CATEGORIES_CONFIG.map((cfg) => {
 	}
 	.arrow {
 		transition: transform 0.2s;
+	}
+
+	.see-all-link {
+		color: var(--primary);
+		text-decoration: none;
+		font-size: 0.9rem;
+		font-weight: 600;
+		white-space: nowrap;
+		transition: all 0.2s;
+	}
+	.see-all-link:hover {
+		text-decoration: underline;
+		filter: brightness(1.2);
+	}
+
+	.topics-section {
+		margin-bottom: 4rem;
+	}
+
+	.topic-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: 0.9rem;
+	}
+
+	.topic-card {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1rem 1.25rem;
+		border-radius: 14px;
+		text-decoration: none;
+		color: var(--text-main);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		background: rgba(255, 255, 255, 0.03);
+		transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.topic-card:hover {
+		transform: translateY(-3px);
+		border-color: rgba(96, 165, 250, 0.4);
+		background: rgba(96, 165, 250, 0.08);
+		box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.4);
+	}
+
+	.topic-name {
+		font-size: 0.95rem;
+		font-weight: 600;
+	}
+
+	.topic-badge {
+		font-size: 0.78rem;
+		font-weight: 700;
+		color: #60a5fa;
+		background: rgba(96, 165, 250, 0.12);
+		border: 1px solid rgba(96, 165, 250, 0.25);
+		padding: 0.2rem 0.6rem;
+		border-radius: 999px;
+	}
+
+	.topic-card:hover .topic-badge {
+		background: #60a5fa;
+		color: #0f172a;
 	}
 
 	@media (max-width: 640px) {

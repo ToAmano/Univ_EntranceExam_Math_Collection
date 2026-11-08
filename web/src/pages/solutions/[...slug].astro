@@ -24,19 +24,17 @@ const { Content } = await entry.render();
 // 解答の直前に埋め込む（tex_to_md.py側の変換や個別ページ自体は変えず、
 // このページの描画時にだけ両者を合成する）。
 let ProblemContent: typeof Content | null = null;
-if ((entry.data.type || 'solution') === 'solution') {
-	const problemEntry = allSolutions.find(
-		(item) =>
-			item.data.university === entry.data.university &&
-			item.data.category === entry.data.category &&
-			item.data.year === entry.data.year &&
-			item.data.question === entry.data.question &&
-			(item.data.type || '') === 'problem'
-	);
-	if (problemEntry) {
-		const rendered = await problemEntry.render();
-		ProblemContent = rendered.Content;
-	}
+const problemEntry = allSolutions.find(
+	(item) =>
+		item.data.university === entry.data.university &&
+		item.data.category === entry.data.category &&
+		item.data.year === entry.data.year &&
+		item.data.question === entry.data.question &&
+		(item.data.type || '') === 'problem'
+);
+if ((entry.data.type || 'solution') === 'solution' && problemEntry) {
+	const rendered = await problemEntry.render();
+	ProblemContent = rendered.Content;
 }
 
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
