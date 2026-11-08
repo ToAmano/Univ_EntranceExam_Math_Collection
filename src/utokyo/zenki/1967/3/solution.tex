@@ -1,74 +1,119 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1967$年$3$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  辺の長さ$2$の正方形$A$が，その中心を円$x^2+y^2=1$の周上におきながら，かつその辺を座標
-  軸に平行に保ち真柄動く．一方，同じ大きさの正方形$B$が固定されていて，辺が座標軸に平行
-  でありその中心が点$(1,2)$にある．このとき，二つの正方形$A$，$B$の共通部分の面積の最大値
-  を求めよ．
 
-  注．正方形の中心とは，その二つの対角線の交点をいう．
-\end{oframed}
+{\bf [解答]}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}\1 ただし$0\le\theta<2\pi$とする．$A$の中心$(c,s)$とすると，$A$の周及び内部の点は不等式
-  \begin{align}
-    \left\{
-      \begin{array}{l}
-        c-1\le x\le c+1 \\
-        s-1\le y\le s+1
-      \end{array}
-      \right.\label{eq:1}
-    \end{align}
-    となる．一方$B$の周及び内部は，不等式
-    \begin{align}
-      \left\{
-        \begin{array}{l}
-          0\le x\le2 \\
-          1\le y\le3
-        \end{array}
-        \right.\label{eq:2}
-      \end{align}
-      で表される．\eqref{eq:1}，\eqref{eq:2}が共通部分を持つための条件は$s\ge0$つまり$0\le\theta\le\pi$で，このもとで共通部分は
-      \begin{align}
-        \left\{
-          \begin{array}{l}
-            0\le x\le c+1\\
-            1\le y\le s+1
-          \end{array}
-          \right.\label{eq:3}
-        \end{align}
-        で表される長方形である．故にこの面積$S(\theta)$は
-        \begin{align}
-          S(\theta)=s(c+1)
-        \end{align}
-        である．このとき$S'(\theta)=(2c-1)(c+1)$より下表を得る．
-        \begin{align}
-          \begin{array}{|c|c|c|c|c|c|} \hline
-            \theta & 0 &     &\pi/3 &      & \pi \\ \hline
-            c        & 1 &     &  1/2 &      & -1  \\ \hline
-            S'       &    &+   &0     &  -   & 0   \\ \hline
-            S        &    &\ne&       & \se&      \\ \hline
-          \end{array}
-        \end{align}
-        従って$\max S(\theta)=S(\pi/3)=\dfrac{3\sqrt{3}}{4}$である．$\cdots$(答)
-        \newpage
-      \end{multicols}
-      \end{document}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+
+    % 固定正方形 B: [0, 2] x [1, 3], 中心 (1, 2)
+    \coordinate (B_BL) at (0, 1);
+    \coordinate (B_BR) at (2, 1);
+    \coordinate (B_TR) at (2, 3);
+    \coordinate (B_TL) at (0, 3);
+    \coordinate (C_B) at (1, 2);
+
+    % 動く正方形 A (最大値 theta = pi/3 の位置)
+    % 中心 P(cos 60°, sin 60°) = (0.5, 0.866)
+    \def\cVal{0.5}
+    \def\sVal{0.8660}
+    \coordinate (P) at (\cVal, \sVal);
+    \coordinate (A_BL) at ({\cVal - 1}, {\sVal - 1});
+    \coordinate (A_BR) at ({\cVal + 1}, {\sVal - 1});
+    \coordinate (A_TR) at ({\cVal + 1}, {\sVal + 1});
+    \coordinate (A_TL) at ({\cVal - 1}, {\sVal + 1});
+
+    % 共通部分の斜線ハッチング: [0, cos theta + 1] x [1, sin theta + 1]
+    \fill[pattern=north east lines, pattern color=blue!50]
+    (0, 1) -- ({\cVal + 1}, 1) -- ({\cVal + 1}, {\sVal + 1}) -- (0, {\sVal + 1}) -- cycle;
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.8, 0) -- (2.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.4) -- (0, 3.4) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 単位円 x^2 + y^2 = 1
+    \draw[line width=1.0pt, gray!60!black, dashed] (O) circle (1);
+    \node[below left, font=\footnotesize, gray!70!black] at (-1, 0) {$-1$};
+    \node[below, font=\footnotesize, gray!70!black] at (1, 0) {$1$};
+
+    % 正方形 B の輪郭
+    \draw[line width=1.1pt, gray!85!black] (B_BL) -- (B_BR) -- (B_TR) -- (B_TL) -- cycle;
+    \node[above right, font=\footnotesize, gray!85!black] at (B_TR) {正方形 $B$};
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (C_B) {};
+    \node[right=2pt, font=\footnotesize] at (C_B) {$(1, 2)$};
+
+    % 正方形 A の輪郭
+    \draw[line width=1.2pt, blue!85!black] (A_BL) -- (A_BR) -- (A_TR) -- (A_TL) -- cycle;
+    \node[above left, font=\footnotesize, blue!85!black] at (A_TL) {正方形 $A$};
+
+    % 共通部分の輪郭線
+    \draw[line width=1.3pt, red!85!black]
+    (0, 1) -- ({\cVal + 1}, 1) -- ({\cVal + 1}, {\sVal + 1}) -- (0, {\sVal + 1}) -- cycle;
+    \node[red!85!black, font=\footnotesize] at (0.75, 1.45) {$S(\theta)$};
+
+    % 中心 P と動径 OP
+    \draw[line width=1.0pt, blue!85!black] (O) -- (P);
+    \draw[->, gray!70!black] (0.35, 0) arc (0:60:0.35);
+    \node[font=\footnotesize, gray!80!black] at (25:0.5) {$\theta$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (P) {};
+    \node[below right=-1pt, font=\footnotesize, blue!85!black] at (P) {$P(\cos\theta,\sin\theta)$};
+
+    % 軸への点線投影
+    \draw[densely dotted, thick, gray!70!black] ({\cVal + 1}, 0) -- ({\cVal + 1}, {\sVal + 1});
+    \node[below=2pt, font=\footnotesize] at ({\cVal + 1}, 0) {$\cos\theta+1$};
+
+    \draw[densely dotted, thick, gray!70!black] (0, 1) -- (B_BL);
+    \node[left=2pt, font=\footnotesize] at (0, 1) {$1$};
+
+    \draw[densely dotted, thick, gray!70!black] (0, {\sVal + 1}) -- ({\cVal + 1}, {\sVal + 1});
+    \node[left=2pt, font=\footnotesize] at (0, {\sVal + 1}) {$\sin\theta+1$};
+  \end{tikzpicture}
+  \caption{正方形 $A$ と固定正方形 $B$ の共通部分 $S(\theta)$}
+  \label{fig:squares_intersection}
+\end{figure}
+
+$A$の中心$(c,s) \ (0\le\theta<2\pi)$とすると，$A$の周及び内部の点は不等式
+\begin{align}
+  \begin{cases}
+    \cos\theta-1\le x\le \cos\theta+1 \\
+    \sin\theta-1\le y\le \sin\theta+1
+  \end{cases} \label{eq:1}
+\end{align}
+となる．一方$B$の周及び内部は不等式
+\begin{align}
+  \begin{cases}
+    0\le x\le2 \\
+    1\le y\le3
+  \end{cases}\label{eq:2}
+\end{align}
+で表される．\cref{eq:1,eq:2}が共通部分を持つための条件は$\sin\theta\ge0$つまり$0\le\theta\le\pi$の時で，このもとで共通部分は
+\begin{align}
+  \begin{cases}
+    0\le x\le \cos\theta+1\\
+    1\le y\le \sin\theta+1
+  \end{cases}\label{eq:3}
+\end{align}
+で表される長方形である．故にこの面積$S(\theta)$は
+\begin{align}
+  S(\theta)=\sin\theta(\cos\theta+1)
+\end{align}
+である．このとき $S'(\theta)=(2\cos\theta-1)(\cos\theta+1)$ であるから，\cref{tab:s_theta_increments}の増減表を得る．
+
+\begin{table}[htb]
+  \centering
+  \caption{$S(\theta)$ の増減表}
+  \label{tab:s_theta_increments}
+  \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    $\theta$ & $0$ & $\cdots$ & $\dfrac{\pi}{3}$ & $\cdots$ & $\pi$ \\ \hline
+    $\cos\theta$ & $1$ & $\cdots$ & $\dfrac{1}{2}$ & $\cdots$ & $-1$ \\ \hline
+    $S'(\theta)$ & & $+$ & $0$ & $-$ & $0$ \\ \hline
+    $S(\theta)$ & $0$ & $\nearrow$ & $\dfrac{3\sqrt{3}}{4}$ & $\searrow$ & $0$ \\ \hline
+  \end{tabular}
+\end{table}
+従って$\max S(\theta)=S(\pi/3)=\dfrac{3\sqrt{3}}{4}$である．$\cdots$(答)
+\newpage
+\end{document}
