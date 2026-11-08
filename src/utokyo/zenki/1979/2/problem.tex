@@ -14,20 +14,36 @@
 
 \begin{figure}[htbp]
   \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \coordinate (P) at (0, -1.8);
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+    \def\R{1.0}
+    \def\zH{-0.6}
+    \pgfmathsetmacro{\zP}{-1.0 / 0.6}
+    \def\rH{0.8}
+    \def\bH{0.20}
 
-    \draw[thick] (P) -- (-1.2, 1.8);
-    \draw[thick] (P) -- (1.2, 1.8);
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (0, \zP);
+    \coordinate (Q_L) at (-\rH, \zH);
+    \coordinate (Q_R) at (\rH, \zH);
 
-    \draw[thick] (0, 0.6) circle (1.0);
+    % 円錐の母線
+    \draw[thick] (P) -- ($ (P)!1.55!(Q_L) $);
+    \draw[thick] (P) -- ($ (P)!1.55!(Q_R) $);
 
-    \draw[thick] (0, 0.0) ellipse (0.8 and 0.25);
+    % 球
+    \draw[thick] (O) circle (\R);
+
+    % 平面 \alpha の接円
+    \draw[thick, dashed, gray!70] (Q_R) arc (0:180:{\rH} and {\bH});
+    \draw[thick] (Q_L) arc (180:360:{\rH} and {\bH});
 
     \node[below] at (P) {$P$};
-    \node at (0, 0.3) {$K$};
-    \node at (0, -0.8) {$D$};
+    \node at (0, -0.8) {$K$};
+    \node at (0, -1.25) {$D$};
+    \node[right=2pt] at (Q_R) {$\alpha$};
   \end{tikzpicture}
+  \caption{問題の図}
+  \label{fig:problem}
 \end{figure}
 
 \end{document}

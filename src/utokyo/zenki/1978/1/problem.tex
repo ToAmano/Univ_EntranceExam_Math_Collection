@@ -14,31 +14,47 @@ $Q$ を中心とし $QA_3$ を半径とする円周と円 $P$ の交点のうち
 
 \begin{figure}[htbp]
   \centering
-  \begin{tikzpicture}[scale=2, >=stealth]
-    \coordinate (O) at (0,0);
-    \draw[thick] (O) circle (1.5);
-    \node[below left=2pt] at (O) {$O$};
+  \begin{tikzpicture}[scale=3, >=stealth, every node/.style={font=\small}]
+    \def\R{1.0}
+    \pgfmathsetmacro{\rVal}{2.0*sqrt(3) - 3.0}
+    \pgfmathsetmacro{\dVal}{4.0 - 2.0*sqrt(3)}
 
-    \foreach \i/\ang in {1/90, 2/150, 3/210, 4/270, 5/330, 6/30} {
-      \coordinate (A\i) at (\ang:1.5);
-      \draw[thin] (O) -- (A\i);
+    \coordinate (O)  at (0, 0);
+    \coordinate (A1) at (0, \R);                          % 90°
+    \coordinate (A2) at ({cos(150)}, {sin(150)});        % 150°
+    \coordinate (A3) at ({cos(210)}, {sin(210)});        % 210°
+    \coordinate (A4) at (0, -\R);                         % 270°
+    \coordinate (A5) at ({cos(330)}, {sin(330)});        % 330°
+    \coordinate (A6) at ({cos(30)}, {sin(30)});          % 30°
+
+    \coordinate (P)  at (0, \dVal);
+    \coordinate (B)  at (0, {\dVal - \rVal});
+    \coordinate (Q)  at ({\rVal*cos(210)}, {\rVal*sin(210)});
+    \coordinate (C)  at ({\rVal*cos(210)}, {\dVal + \rVal*sin(210)});
+
+    % 円 O と 6等分の半径
+    \draw[thick] (O) circle (\R);
+    \foreach \i in {1,...,6} {
+      \draw[thin, gray!80!black] (O) -- (A\i);
     }
 
-    \coordinate (P) at (0, 1.0);
-    \draw[thick] (P) circle (0.5);
-    \node[circle, fill, inner sep=1pt] at (P) {}; \node[right] at (P) {$P$};
+    % 円 P
+    \draw[thick] (P) circle (\rVal);
 
-    \coordinate (B) at (0, 0.5);
-    \node[above right] at (B) {$B$};
+    % 円 Q の一部（弧 A3 C を含む円弧）
+    \draw[thick] ([shift=(210:\dVal)]Q) arc (210:70:\dVal);
 
-    \coordinate (Q) at (210:0.5);
-    \node[circle, fill, inner sep=1pt] at (Q) {}; \node[below left] at (Q) {$Q$};
-    \draw[thick] (Q) circle (1.0);
+    % 太線で囲まれた領域の輪郭線
+    \draw[line width=1.8pt] (A1) arc (90:210:\R);
+    \draw[line width=1.8pt] ([shift=(210:\dVal)]Q) arc (210:90:\dVal);
+    \draw[line width=1.8pt] ([shift=(-150:\rVal)]P) arc (-150:90:\rVal);
 
-    \coordinate (C) at (-0.433, 0.75);
-    \node[circle, fill, inner sep=1pt] at (C) {}; \node[above left] at (C) {$C$};
-
-    \draw[line width=1.8pt] (150:1.5) arc (150:210:1.5);
+    % 点のプロットとラベル
+    \node[circle, fill, inner sep=1.2pt] at (O) {}; \node[below left=2pt] at (O) {$O$};
+    \node[circle, fill, inner sep=1.2pt] at (P) {}; \node[right=2pt] at (P) {$P$};
+    \node[circle, fill, inner sep=1.2pt] at (B) {}; \node[above right=1pt] at (B) {$B$};
+    \node[circle, fill, inner sep=1.2pt] at (Q) {}; \node[below left=2pt] at (Q) {$Q$};
+    \node[circle, fill, inner sep=1.2pt] at (C) {}; \node[above left=2pt] at (C) {$C$};
 
     \node[above] at (A1) {$A_1$};
     \node[above left] at (A2) {$A_2$};
@@ -47,6 +63,8 @@ $Q$ を中心とし $QA_3$ を半径とする円周と円 $P$ の交点のうち
     \node[below right] at (A5) {$A_5$};
     \node[above right] at (A6) {$A_6$};
   \end{tikzpicture}
+  \caption{問題の図}
+  \label{fig:problem}
 \end{figure}
 
 \end{document}
