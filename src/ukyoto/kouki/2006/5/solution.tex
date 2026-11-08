@@ -18,10 +18,12 @@
       % Define cone parameters
       \def\R{2} % Radius of the base
       \def\H{4} % Height of the cone
-      % Draw water level (example)
-      \def\hwater{1.5} % Height of the water from the bottom of the cone
-      \def\rwater{(\R/\H)*(\H-\hwater)} % Radius of the water surface
-      \draw[blue, fill=blue!20, opacity=0.7] (0,0,-\hwater) circle (\rwater); % Water surface
+      % 水面（頂点からの高さ h）
+      \def\hwater{2} % Height of the water from the apex of the cone
+      \pgfmathsetmacro{\zwater}{-\H + \hwater}
+      \pgfmathsetmacro{\rwater}{(\R/\H)*\hwater} % Radius of the water surface
+      \draw[draw=blue!85!black, fill=blue!20, fill opacity=0.7] (0,0,\zwater) circle (\rwater); % Water surface
+      \draw[densely dotted, thick, gray!70!black] (-\rwater,0,\zwater) -- (\rwater,0,\zwater);
 
       % Draw the cone (upside down)
       \draw[thick] (0,0,-\H) -- (\R,0,0) arc (0:360:\R) -- cycle; % Cone surface
@@ -31,17 +33,30 @@
       \draw[thick] (0,0,-\H) -- (0,-\R,0);
       \draw[thick,dashed] (0,0,-\H) -- (-\R,0,0);
 
-      % Draw the axis
-      \draw[dashed] (0,0,0) -- (0,0,-\H);
+      % 軸
+      \draw[dashed, gray!80!black] (0,0,0) -- (0,0,-\H);
 
-      % Label R
-      \draw[<->] (0,0,0) -- node[below] {$R$} (0,-\R,0);
+      % 頂点 O
+      \node[below left, font=\small] at (0,0,-\H) {$\mathrm{O}$};
+      \node[circle, fill=gray!80!black, inner sep=1.2pt] at (0,0,-\H) {};
 
-      % Label H
-      \draw[<->] (0.2,0,0) -- node[right] {$H$} (0.2,0,-\H);
+      % 半径 R（上面の円盤）
+      \node[circle, fill=gray!80!black, inner sep=1.0pt] at (0,0,0) {};
+      \draw[<->, thick] (0,0,0) -- node[below, font=\small] {$R$} (0,-\R,0);
+      \draw[densely dotted, thick, gray!70!black] (-\R,0,0) -- (\R,0,0);
 
-      % Label h (height of water from the bottom of the cone, which is the top of the image)
-      \draw[<->] (0.5,0,-\hwater) -- node[right] {$h$} (0.5,0,0);
+      % 円錐の外側に高さを表示するための補助線
+      % \draw[densely dotted, thick, gray!70!black] (-\R,0,0) -- (-2.8,0,0);
+
+      % Label h (頂点Oからの水面の高さ，外側)
+      \draw[densely dotted, thick, gray!70!black] (0,0,\zwater) -- (0,1.6,\zwater);
+      \draw[densely dotted, thick, gray!70!black] (0,0,-\H) -- (0,1.6,-\H);
+      \draw[<->, thick, blue!85!black] (0,1.6,-\H) -- node[right, font=\small] {$h$} (0,1.6,\zwater);
+
+      % Label H (全体の高さ，さらに外側)
+      \draw[densely dotted, thick, gray!70!black] (0,0,-\H) -- (0,2.8,-\H);
+      \draw[densely dotted, thick, gray!70!black] (0,0,0) -- (0,2.8,0);
+      \draw[<->, thick, gray!80!black] (0,2.8,-\H) -- node[right, font=\small] {$H$} (0,2.8,0);
 
     \end{tikzpicture}
     \caption{円錐}
