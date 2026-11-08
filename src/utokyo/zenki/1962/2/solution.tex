@@ -2,7 +2,7 @@
 \begin{document}
 
 {\bf [解答]}
-題意の三角形$ABC$は下図のようになる．
+題意の三角形$ABC$は\cref{fig:triangle_abc}のようになる．
 
 \begin{figure}[htb]
   \centering
@@ -67,6 +67,7 @@
 
   \end{tikzpicture}
   \caption{三角形 $ABC$ と各点 $Q, S, R, P, T$ の位置関係}
+  \label{fig:triangle_abc}
 \end{figure}
 
 与えられた条件
@@ -78,12 +79,79 @@
 \end{align}
 を一つづつ考えていこう．
 
-まず\cref{eq:1}より，$\angle BPQ = \dfrac{\pi}{2}$だから，$\angle PBQ = \dfrac{\pi}{4}$と合わせて
+まず\cref{eq:1}より，\cref{fig:triangle_bpq}のように$\angle BPQ = \dfrac{\pi}{2}$だから，$\angle PBQ = \dfrac{\pi}{4}$と合わせて
 \begin{align}
   \angle \mathrm{BQP} = \dfrac{\pi}{4} \label{eq:5}
 \end{align}
 となる．
-% TODO :: この部分を強調した絵
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
+    \coordinate (B) at (0, 0);
+    \coordinate (A_dir) at (-3.2, 0);
+    \coordinate (C_dir) at ({-2.2/sqrt(2)}, {2.2/sqrt(2)});
+    \coordinate (X_dir) at ({-2.2/sqrt(2)}, {-2.2/sqrt(2)});
+
+    \coordinate (P) at ({-1.0/sqrt(2)}, {-1.0/sqrt(2)});
+    \coordinate (Q) at (-1.414, 0);
+
+    % 直線 BC, 半直線 BX, 辺 BA
+    \draw[thick, gray!80!black] (B) -- (C_dir) node[above left] {$C$};
+    \draw[->, thick, teal!85!black] (B) -- (X_dir) node[below left] {$X$};
+    \draw[line width=1.1pt, blue!85!black] (B) -- (A_dir) node[left] {$A$};
+
+    % 三角形 BPQ
+    \draw[line width=1.3pt, red!85!black] (B) -- (P) node[midway, below right, font=\footnotesize] {$x$};
+    \draw[line width=1.3pt, red!85!black] (P) -- (Q) node[midway, below left=1pt, font=\footnotesize] {$x$};
+    \draw[line width=1.3pt, blue!85!black] (B) -- (Q);
+    \node[above=2pt, font=\footnotesize, blue!85!black] at ($(B)!0.65!(Q)$) {$\sqrt{2}x$};
+
+    % 平行補助線 (PQ // BC)
+    \draw[dashed, red!60] (P) -- ++({0.3/sqrt(2)}, {-0.3/sqrt(2)});
+    \draw[dashed, red!60] (Q) -- ++({-0.3/sqrt(2)}, {0.3/sqrt(2)});
+
+    % 直角マーク
+    % 角 B (\angle CBX = 90°)
+    \pgfmathsetmacro{\sqB}{0.18}
+    \draw[thick, gray!70!black]
+    ({-\sqB/sqrt(2)}, {\sqB/sqrt(2)}) --
+    ({-2*\sqB/sqrt(2)}, 0) --
+    ({-\sqB/sqrt(2)}, {-\sqB/sqrt(2)});
+
+    % 角 P (\angle BPQ = 90°)
+    \pgfmathsetmacro{\sqP}{0.16}
+    \draw[thick, red!85!black]
+    ($(P) + ({-\sqP/sqrt(2)}, {\sqP/sqrt(2)})$) --
+    ($(P) + ({-\sqP/sqrt(2) + \sqP/sqrt(2)}, {\sqP/sqrt(2) + \sqP/sqrt(2)})$) --
+    ($(P) + ({\sqP/sqrt(2)}, {\sqP/sqrt(2)})$);
+
+    % 角度の弧とラベル
+    % \angle CBA = 45°
+    \draw[thick, gray!70!black] (B) +(180:0.45) arc (180:135:0.45);
+    \node[font=\footnotesize, gray!70!black] at ($(B)+(157.5:0.7)$) {$45^\circ$};
+
+    % \angle PBQ = 45°
+    \draw[thick, red!85!black] (B) +(180:0.7) arc (180:225:0.7);
+    \node[font=\footnotesize, red!85!black] at ($(B)+(202.5:0.95)$) {$45^\circ$};
+
+    % \angle BQP = 45°
+    \draw[thick, red!85!black] (Q) +(0:0.45) arc (0:-45:0.45);
+    \node[font=\footnotesize, red!85!black] at ($(Q)+(-22.5:0.7)$) {$45^\circ$};
+
+    % 頂点プロットとラベル
+    \node[circle, fill, inner sep=1.2pt] at (B) {};
+    \node[above right=1pt] at (B) {$B$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (Q) {};
+    \node[above=2pt, font=\small, text=blue!85!black] at (Q) {$Q$};
+
+    \node[circle, fill=red!85!black, inner sep=1.2pt] at (P) {};
+    \node[below=2pt, font=\small, text=red!85!black] at (P) {$P$};
+  \end{tikzpicture}
+  \caption{頂点 $B$ 付近の拡大図（直角二等辺三角形 $\triangle BPQ$）}
+  \label{fig:triangle_bpq}
+\end{figure}
 
 これを\cref{eq:2}に代入すると
 \begin{align}
@@ -110,7 +178,7 @@
   \therefore
   \angle CST = \dfrac{\pi}{4} \label{eq:8}
 \end{align}
-となる．\cref{eq:5,eq:6,eq:7,eq:8}を反映すると三角形$ABC$は下図のようになる．
+となる．\cref{eq:5,eq:6,eq:7,eq:8}を反映すると三角形$ABC$は\cref{fig:triangle_abc_angles}のようになる．
 
 \begin{figure}[htb]
   \centering
@@ -224,11 +292,12 @@
     % \node[left=3pt, font=\footnotesize] at ($(A)!0.5!(S)$) {$\beta = 2-\sqrt{2}y$};
 
   \end{tikzpicture}
-  \caption{三角形 $ABC$ と各点 $Q, S, R, P, T$ の位置関係}
+  \caption{求めた角度を反映した三角形 $ABC$ と垂線 $RH, RH'$}
+  \label{fig:triangle_abc_angles}
 \end{figure}
 
 さて，以下三角形の三辺$|AB|,|BC|,|CA|$を二通りで表すことで$x,y$の間の関係式を導く．
-図のように$\mathrm{R}$ から $\mathrm{AC}, \mathrm{AB}$ に下ろした垂足を $\mathrm{H}, \mathrm{H'}$ とおく．
+\cref{fig:triangle_abc_angles}のように$\mathrm{R}$ から $\mathrm{AC}, \mathrm{AB}$ に下ろした垂足を $\mathrm{H}, \mathrm{H'}$ とおく．
 $|\mathrm{AB}| = 2$ だから，
 \begin{align}
   \begin{cases}
