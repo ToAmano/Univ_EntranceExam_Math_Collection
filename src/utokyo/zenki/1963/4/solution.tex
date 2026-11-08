@@ -86,7 +86,97 @@
   \label{fig:tetrahedron_prism}
 \end{figure}
 
-% TODO: 左にAHPP'の相似を示す切断面，右にABC, PQを示す正三角形
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[>=stealth, every node/.style={font=\small}]
+    % --- Panel 1: 切断面 ABH における相似 ---
+    \begin{scope}[shift={(0,0)}]
+      \coordinate (H) at (0, 0);
+      \coordinate (A) at (0, 2.6);
+      \coordinate (B) at (1.84, 0);
+
+      % 比率 r = x/a = 0.6
+      \def\rRatio{0.6}
+      \coordinate (P) at ($ (A)!\rRatio!(B) $);
+      \coordinate (Pp) at ($ (H)!\rRatio!(B) $);
+
+      % 直角記号
+      \draw[gray!70!black] (0, 0.2) -- (0.2, 0.2) -- (0.2, 0);
+      \draw[gray!70!black] ($ (Pp) + (0, 0.2) $) -- ($ (Pp) + (0.2, 0.2) $) -- ($ (Pp) + (0.2, 0) $);
+
+      % 三角形 ABH の辺
+      \draw[line width=1.1pt, gray!85!black] (A) -- (H) -- (B) -- cycle;
+
+      % 垂線 PP'
+      \draw[line width=1.2pt, blue!85!black] (P) -- (Pp);
+
+      % 点
+      \node[circle, fill, inner sep=1.2pt] at (A) {};
+      \node[above=2pt] at (A) {$A$};
+      \node[circle, fill, inner sep=1.2pt] at (H) {};
+      \node[below left=1pt] at (H) {$H$};
+      \node[circle, fill, inner sep=1.2pt] at (B) {};
+      \node[below right=1pt] at (B) {$B$};
+
+      \node[circle, fill=blue!85!black, inner sep=1.3pt] at (P) {};
+      \node[above right=1pt, blue!85!black] at (P) {$P$};
+      \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Pp) {};
+      \node[below=2pt, blue!85!black] at (Pp) {$P'$};
+
+      % 寸法表示
+      \node[left=2pt] at ($ (A)!0.5!(H) $) {$|AH|$};
+      \node[right=2pt, blue!85!black] at ($ (P)!0.5!(Pp) $) {$|PP'|$};
+      \node[above right=1pt] at ($ (A)!0.5!(P) $) {$x$};
+      \node[above right=1pt] at ($ (P)!0.5!(B) $) {$a-x$};
+
+      \node[below=0.8cm] at (0.9, 0) {(a) 切断面 $\triangle ABH$（$\triangle BPP' \sim \triangle BAH$）};
+    \end{scope}
+
+    % --- Panel 2: 側面正三角形 ABC と PQ ---
+    \begin{scope}[shift={(4.5, 0)}]
+      \coordinate (B2) at (0, 0);
+      \coordinate (C2) at (2.6, 0);
+      \coordinate (A2) at (1.3, 2.25);
+
+      \def\rRatio{0.6}
+      \coordinate (P2) at ($ (A2)!\rRatio!(B2) $);
+      \coordinate (Q2) at ($ (A2)!\rRatio!(C2) $);
+
+      % 三角形 APQ の薄いハッチング
+      \fill[pattern=north east lines, pattern color=blue!30]
+      (A2) -- (P2) -- (Q2) -- cycle;
+
+      % 正三角形 ABC
+      \draw[line width=1.1pt, gray!85!black] (A2) -- (B2) -- (C2) -- cycle;
+
+      % 線分 PQ
+      \draw[line width=1.2pt, blue!85!black] (P2) -- (Q2);
+
+      % 点
+      \node[circle, fill, inner sep=1.2pt] at (A2) {};
+      \node[above=2pt] at (A2) {$A$};
+      \node[circle, fill, inner sep=1.2pt] at (B2) {};
+      \node[below left=1pt] at (B2) {$B$};
+      \node[circle, fill, inner sep=1.2pt] at (C2) {};
+      \node[below right=1pt] at (C2) {$C$};
+
+      \node[circle, fill=blue!85!black, inner sep=1.3pt] at (P2) {};
+      \node[left=2pt, blue!85!black] at (P2) {$P$};
+      \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Q2) {};
+      \node[right=2pt, blue!85!black] at (Q2) {$Q$};
+
+      % 寸法表示
+      \node[left=1pt] at ($ (A2)!0.5!(P2) $) {$x$};
+      \node[right=1pt] at ($ (A2)!0.5!(Q2) $) {$x$};
+      \node[below=1pt, blue!85!black] at ($ (P2)!0.5!(Q2) $) {$x$};
+      \node[below=2pt] at ($ (B2)!0.5!(C2) $) {$a$};
+
+      \node[below=0.8cm] at (1.3, 0) {(b) 正三角形 $\triangle ABC$ と線分 $PQ$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{切断面における相似と正三角形の各部}
+  \label{fig:cross_section_and_equilateral}
+\end{figure}
 
 $A$から平面$BCD$に下ろした垂足$H$とする．$ABCD$が正四面体だから
 $|AH|=\dfrac{\sqrt{6}}{3}a$である．
