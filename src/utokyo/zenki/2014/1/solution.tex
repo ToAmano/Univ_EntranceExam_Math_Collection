@@ -26,8 +26,8 @@
     \coordinate (XY1) at (1, 1, 0);
 
     \coordinate (P) at (1, 0, \aVal);
-    \coordinate (Q) at (0, 1, \bVal);
-    \coordinate (R) at (1, 1, {\aVal + \bVal});
+    \coordinate (Q) at (1, 1, {\aVal + \bVal});
+    \coordinate (R) at (0, 1, \bVal);
 
     \coordinate (Z1)   at (0, 0, 1);
     \coordinate (XZ1)  at (1, 0, 1);
@@ -43,7 +43,7 @@
     % 3. 平行四辺形 OPQR
     % ============================================================
     \fill[pattern=north east lines, pattern color=blue!75, opacity=0.7]
-    (O) -- (P) -- (R) -- (Q) -- cycle;
+    (O) -- (P) -- (Q) -- (R) -- cycle;
 
     % ============================================================
     % 4. 単位立方体の骨格
@@ -58,10 +58,10 @@
     \draw[thick, black] (Z1) -- (XZ1) -- (XYZ1) -- (YZ1) -- cycle;
 
     % 四角形の実線
-    \draw[line width=1.4pt, blue!85!black] (O) -- (P) -- (R) -- (Q) -- cycle;
+    \draw[line width=1.4pt, blue!85!black] (O) -- (P) -- (Q) -- (R) -- cycle;
     \draw[dashed, gray!60] (P) -- (X1);
-    \draw[dashed, gray!60] (Q) -- (Y1);
-    \draw[dashed, gray!60] (R) -- (XY1);
+    \draw[dashed, gray!60] (Q) -- (XY1);
+    \draw[dashed, gray!60] (R) -- (Y1);
 
     % ============================================================
     % 5. 座標軸 (手前側)
@@ -86,22 +86,22 @@
     % ============================================================
     \node[circle, fill, inner sep=1.2pt] at (O) {};
     \node[circle, fill=blue!85!black, inner sep=1.3pt] at (P) {}; \node[blue!85!black, left=2pt] at (P) {$P(1, 0, \tan\alpha)$};
-    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Q) {}; \node[blue!85!black, right=2pt] at (Q) {$Q(0, 1, \tan\beta)$};
-    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (R) {}; \node[blue!85!black, above=2pt] at (R) {$R$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Q) {}; \node[blue!85!black, above=2pt] at (Q) {$Q$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (R) {}; \node[blue!85!black, right=2pt] at (R) {$R(0, 1, \tan\beta)$};
 
     \node[blue!90!black, font=\normalsize\bfseries] at (0.5, 0.5, 0.45) {$S$};
 
   \end{tikzpicture}
-  \caption{\texttt{tikz-3dplot} による視点指定（$\theta=65^\circ, \phi=115^\circ$）}
+  \caption{四角柱$OABC-DEFG$と四角形$OPQR$の様子}
 \end{figure}
 
 上図のように空間座標をとる．
-$\overrightarrow{OP},\overrightarrow{OQ}$は
+$\overrightarrow{OP},\overrightarrow{OR}$は
 \begin{align}
   \overrightarrow{OP} =
   \begin{pmatrix} 1 \\ 0 \\ \tan\alpha
   \end{pmatrix}, \\
-  \quad \overrightarrow{OQ} =
+  \quad \overrightarrow{OR} =
   \begin{pmatrix} 0 \\ 1 \\ \tan\beta
   \end{pmatrix}
 \end{align}
@@ -109,7 +109,7 @@ $\overrightarrow{OP},\overrightarrow{OQ}$は
 四角形 $OPQR$ は平行四辺形だから，その面積は
 \begin{align}
   S
-  &= \sqrt{|\overrightarrow{OP}|^2 |\overrightarrow{OQ}|^2 - (\overrightarrow{OP} \cdot \overrightarrow{OQ})^2} \\
+  &= \sqrt{|\overrightarrow{OP}|^2 |\overrightarrow{OR}|^2 - (\overrightarrow{OP} \cdot \overrightarrow{OR})^2} \\
   &= \sqrt{(1 + \tan^2\alpha)(1 + \tan^2\beta) - (\tan\alpha \cdot \tan\beta)^2} \\
   &= \sqrt{1 + \tan^2\alpha + \tan^2\beta} \label{eq:1}
 \end{align}
