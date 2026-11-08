@@ -1,82 +1,156 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage[dvips]{graphicx}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1968$年$3$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  $\a$，$\b$は与えられた実数とするう．$x$の二次式$f(x)=ax^2+bx+c$の係数$a$，$b$，$c$が，
-  $a+b+c=0$なる関係式を満たしながら動く時，座標$(f(\a),f(\b))$を持つ点の全体は，平面上のどんな集合になるか．
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]} $p=f(\a)$，$q=f(\b)$とし，$A(p,q)$とおけば，$A$の動く範囲を求めればよい．
-  $c=-a-b$だから，
-  \[f(x)=a(x^2-1)+b(x-1)=(x-1)\{a(x+1)+b\}\]
-  である．従って，$\a$，$\b$が$1$か否かで場合分けする．
-  \begin{indentation}{2\zw}{0pt}
-    \noindent\underline{(1)$\a=\b=1$の時}
+{\bf [解答]}
 
-    $p=q=0$ゆえ$A(0,0)$である．
-    \\
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[>=stealth, every node/.style={font=\small}]
+    % ----------------------------------------------------
+    % Panel 1 (左): (f(\alpha), f(\beta)) の概要図
+    % ----------------------------------------------------
+    \begin{scope}[shift={(0, 0)}]
+      % 領域ハッチング（除外される直線以外の全平面を象徴的に示す領域）
+      \fill[pattern=north east lines, pattern color=blue!25] (-2.2, -1.9) rectangle (2.2, 1.9);
 
-    \underline{(2)$\a=1,\b\not=1$の時}
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-2.4, 0) -- (2.6, 0) node[right] {$p$};
+      \draw[->, thick, gray!80!black] (0, -2.1) -- (0, 2.3) node[above] {$q$};
 
-    $p=0$，$q$は任意の実数をとるので，$A$は直線$y=0$上を動く．
-    \\
+      % 除外される直線 q = \frac{\beta-1}{\alpha-1} p （a=0 に対応）
+      \def\mSlope{0.65}
+      \draw[line width=2.8pt, white] (-2.2, {-2.2*\mSlope}) -- (2.2, {2.2*\mSlope});
+      \draw[line width=1.1pt, dashed, red!85!black] (-2.2, {-2.2*\mSlope}) -- (2.2, {2.2*\mSlope})
+      node[pos=0.75, below right=1pt, font=\scriptsize, fill=white, inner sep=1pt] {$q = \frac{\beta-1}{\alpha-1}p$};
 
-    \underline{(3)$\a\not=1,\b=0$の時}
+      % 原点記号（第2象限に配置して直線との重なりを回避）
+      \node[above left=2pt] at (0, 0) {$O$};
 
-    (2)と同様に，$A$は直線$x=0$上を動く．
-    \\
+      % 代表点 A(p, q)
+      \coordinate (A) at (1.1, 1.25);
+      \draw[densely dotted, thick, gray!70!black] (A) -- (1.1, 0) node[below=1pt, font=\footnotesize] {$p$};
+      \draw[densely dotted, thick, gray!70!black] (A) -- (0, 1.25) node[left=1pt, font=\footnotesize] {$q$};
+      \node[circle, fill=blue!85!black, inner sep=1.4pt] at (A) {};
+      \node[above=2pt, blue!85!black, font=\footnotesize] at (A) {$A(f(\alpha), f(\beta))$};
 
-    \underline{(4)$\a\not=1,\b\not=1$の時}
+      \node[below, font=\footnotesize] at (0, -2.1) {$(f(\alpha), f(\beta))$ の動く範囲（$\alpha\neq\beta$）};
+    \end{scope}
 
-    $p=(\a-1)\{a(\a+1)+b\}$を$b$についてといて，
-    \begin{align}
-      b=\dfrac{p}{\a-1}-a(\a+1) \tag{$\because \a\not=1$}
-    \end{align}
-    である．これを$q=(\b-1)\{a(\b+1)+b\}$に代入して
-    \begin{align}
-      q&=(\b-1)\left\{a(\b+1)+\dfrac{p}{\a-1}-a(\a+1)\right\} \\
-      &=\dfrac{\b-1}{\a-1}p+(\b-1)(\b-\a)a
-    \end{align}
-    である．故に$\a=\b$なら$q=p$となり，$\a\not=\b$なら$p\not=q$であるから，
-    \begin{align}
-      \begin{cases}
-        \a=\b\text{の時}&y=x \\
-        \a\not=\b\text{の時}&y\not=x
-      \end{cases}
-    \end{align}
-    となる．
-  \end{indentation}
+    % ----------------------------------------------------
+    % Panel 2 (右): y = f(x) のグラフ
+    % ----------------------------------------------------
+    \begin{scope}[shift={(6.0, 0)}]
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-1.8, 0) -- (2.3, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -1.9) -- (0, 2.2) node[above] {$y$};
+      \node[above right=2pt] at (0, 0) {$O$};
 
-  以上をまとめて，
-  \begin{align}
-    \begin{cases}
-      \a=\b=1\text{の時}&(0,0) \\
-      \a=1\land\b\not=1\text{の時}&y=0 \\
-      \a\not=1\land\b=1\text{の時}&x=0 \\
-      \a\not=1\land\b\not=1\land\a=\b\text{の時}&y=x \\
-      \a\not=1\land\b\not=1\land\a\not=\b\text{の時}&y\not=x
-    \end{cases}
-  \end{align}
-  である．$\cdots$(答)
-  \newpage
-\end{multicols}
+      % f(x) = 0.75*(x-1)*(x+1.2)
+      \draw[line width=1.2pt, blue!85!black, domain=-1.6:1.95, samples=70, smooth]
+      plot (\x, {0.75*(\x - 1.0)*(\x + 1.2)})
+      node[right, font=\footnotesize] {$y=f(x)$};
+
+      % 定点 (1, 0)
+      \coordinate (Fix) at (1.0, 0);
+      \node[circle, fill=gray!80!black, inner sep=1.3pt] at (Fix) {};
+      \node[below=2pt, font=\footnotesize] at (Fix) {$1$};
+
+      % 代表値 \alpha = -0.9, \beta = 1.6
+      \def\alphaVal{-0.9}
+      \pgfmathsetmacro{\fAlpha}{0.75*(\alphaVal - 1.0)*(\alphaVal + 1.2)}
+      \coordinate (Palpha) at (\alphaVal, \fAlpha);
+
+      \def\betaVal{1.6}
+      \pgfmathsetmacro{\fBeta}{0.75*(\betaVal - 1.0)*(\betaVal + 1.2)}
+      \coordinate (Pbeta) at (\betaVal, \fBeta);
+
+      % 投影点線とラベル
+      \draw[densely dotted, thick, gray!70!black] (\alphaVal, 0) node[above=1pt, font=\footnotesize] {$\alpha$}
+      -- (Palpha) -- (0, \fAlpha);
+      \node[above left=1pt, font=\footnotesize] at (0, \fAlpha) {$f(\alpha)$};
+      \draw[densely dotted, thick, gray!70!black] (\betaVal, 0) node[below=1pt, font=\footnotesize] {$\beta$}
+      -- (Pbeta) -- (0, \fBeta) node[left=2pt, font=\footnotesize] {$f(\beta)$};
+
+      \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Palpha) {};
+      \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Pbeta) {};
+
+      \node[below, font=\footnotesize] at (0.2, -2.1) {$f(1)=0$ を満たす $y=f(x)$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{$(f(\alpha), f(\beta))$ の動く範囲（左：破線を除く全平面）と定点 $(1,0)$ を通る $y=f(x)$ の概形（右）}
+  \label{fig:locus_and_parabola}
+\end{figure}
+
+$p=f(\alpha), q=f(\beta)$とし，$A(p,q)$とおけば，$A$の動く範囲を求めればよい．
+$c=-a-b$だから与えられた関数$f(x)$は
+\begin{align}
+  f(x)=a(x^2-1)+b(x-1)=(x-1)\{a(x+1)+b\} \quad (a\neq 0) \label{eq:1}
+\end{align}
+である．ただし題意より$f(x)$が二次式だから，$a \neq 0$である．
+従って
+\begin{align}
+  \begin{cases}
+    p = f(\alpha) = (\alpha-1)((\alpha+1)a + b) \\
+    q = f(\beta) = (\beta-1)((\beta+1)a + b)
+  \end{cases}
+\end{align}
+である．このとりうる値は$\alpha,\beta=1$かどうかで変化する．
+$\alpha$について考えると，
+\begin{align}
+  p &=
+  \begin{cases}
+    (\alpha-1)((\alpha+1)a + b) & (\alpha \neq 1)\\
+    0 & (\alpha=1)
+  \end{cases}
+\end{align}
+である．$\alpha \neq 0$の時は$p$は$\alpha$の一次以下の式であり，
+$a,b$が任意の値を動く時任意の実数をとる．
+対称性から$\beta$についても同様だから，$\alpha, \beta$が$1$か否かで場合分けする．
+
+\subparagraph{(i)$\alpha=\beta=1$の時}
+
+$p=q=0$ゆえ$A(0,0)$である．
+
+\subparagraph{(ii)$\alpha=1,\beta\not=1$の時}
+
+$p=0$，$q$は任意の実数をとるので，$A$は直線$x=0$上を動く．
+
+\subparagraph{(iii)$\alpha\not=1,\beta=1$の時}
+
+(ii)と同様に$q=0$，$p$は任意の実数をとるので，$A$は直線$y=0$上を動く．
+
+\subparagraph{(iv)$\alpha\not=1,\beta\not=1$の時}
+
+$p=(\alpha-1)\{a(\alpha+1)+b\}$を$b$についてといて，
+\begin{align}
+  b=\dfrac{p}{\alpha-1}-a(\alpha+1) \tag{$\because \alpha\not=1$}
+\end{align}
+である．これを$q=(\beta-1)\{a(\beta+1)+b\}$に代入して
+\begin{align}
+  q&=(\beta-1)\left\{a(\beta+1)+\dfrac{p}{\alpha-1}-a(\alpha+1)\right\} \\
+  &=\dfrac{\beta-1}{\alpha-1}p+(\beta-1)(\beta-\alpha)a
+\end{align}
+である．$a$が$a\neq 0$で任意の値を動く時の$(p,q)$の範囲を考えれば良い．
+これは$\alpha=\beta$なら$q=p$となり，$\alpha\not=\beta$なら$p\not=\dfrac{\beta-1}{\alpha-1}q$であるから，
+\begin{align}
+  \begin{cases}
+    \alpha=\beta\text{の時}&y=x \\
+    \alpha\not=\beta\text{の時}&y\neq \dfrac{\beta-1}{\alpha-1}q
+  \end{cases}
+\end{align}
+となる．
+\casesend
+
+以上をまとめて，
+\begin{align}
+  \begin{cases}
+    \alpha=\beta=1\text{の時}&(0,0) \\
+    \alpha=1\land\beta\not=1\text{の時}&x=0 \\
+    \alpha\not=1\land\beta=1\text{の時}&y=0 \\
+    \alpha\not=1\land\beta\not=1\land\alpha=\beta\text{の時}&y=x \\
+    \alpha\not=1\land\beta\not=1\land\alpha\not=\beta\text{の時}&y\neq \dfrac{\beta-1}{\alpha-1}q
+  \end{cases}
+\end{align}
+である．$\cdots$(答)
+\newpage
 \end{document}
