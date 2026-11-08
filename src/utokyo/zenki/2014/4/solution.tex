@@ -12,8 +12,6 @@
 \end{align}
 について考える．
 
-% TODO: 概要図
-% TODO: 概要図
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[scale=4, >=stealth, every node/.style={font=\small}]
@@ -120,7 +118,6 @@ $0<x_{n+1}=f(x_n)$を上から評価すると
 
 \paragraph{(3)}
 
-% TODO: y=f(x), y=xの交点の様子
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[scale=4, >=stealth, every node/.style={font=\small}]
@@ -235,7 +232,6 @@ $g(x)=f(x)-x$とおくと，$0<x<1$かつ$g(x)=0$なる$x$があることを示�
   \end{tabular}
 \end{table}
 
-% TODO: y=h(x)のグラフ
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[scale=6, >=stealth, every node/.style={font=\small}]
@@ -245,12 +241,12 @@ $g(x)=f(x)-x$とおくと，$0<x<1$かつ$g(x)=0$なる$x$があることを示�
     % h(x) = -q*x^2 - p*x + 1 - exp(-q*x)
     % h'(x) = -2*q*x - p + q*exp(-q*x)
     % h'(0) = 0.9 - 0.25 = 0.65 > 0
-    % alpha ≈ 0.35 付近で極大
+    % alpha ≈ 0.2576 付近で極大
     % ============================================================
     \def\pVal{0.25}
     \def\qVal{0.9}
-    \def\alVal{0.34} % h'(alpha) = 0 となる点
-    \pgfmathsetmacro{\hMax}{-\qVal*\alVal*\alVal - \pVal*\alVal + 1.0 - exp(-\qVal*\alVal)} % ≈ 0.075
+    \def\alVal{0.2576} % h'(alpha) = 0 となる点 (厳密には 0.257635...)
+    \pgfmathsetmacro{\hMax}{-\qVal*\alVal*\alVal - \pVal*\alVal + 1.0 - exp(-\qVal*\alVal)} % ≈ 0.0828
 
     % ============================================================
     % 2. 座標軸
@@ -264,13 +260,13 @@ $g(x)=f(x)-x$とおくと，$0<x<1$かつ$g(x)=0$なる$x$があることを示�
     % ============================================================
     \draw[line width=1.6pt, teal!85!black, domain=0:1.05, samples=70, smooth]
     plot (\x, {-\qVal*\x*\x - \pVal*\x + 1.0 - exp(-\qVal*\x)});
-    \node[teal!90!black, font=\footnotesize\bfseries, above right] at (0.18, 0.12)
+    \node[teal!90!black, font=\footnotesize\bfseries, below left=2pt] at (0.65, -0.12)
     {$y = h(x)$};
 
     % 参考曲線 y = g(x) = f(x) - x (h(x) の上側にあることを示す薄い破線)
     \draw[dashed, blue!75!black, line width=1.0pt, domain=0:1.05, samples=70, smooth]
     plot (\x, {(1.0 - \pVal)*\x + (1.0 - \x)*(1.0 - exp(-\qVal*\x)) - \x});
-    \node[blue!85!black, font=\scriptsize, above] at (0.45, 0.16)
+    \node[blue!85!black, font=\scriptsize, above right=1pt] at (0.45, 0.08)
     {$y = g(x) \ge h(x)$};
 
     % ============================================================
@@ -278,18 +274,18 @@ $g(x)=f(x)-x$とおくと，$0<x<1$かつ$g(x)=0$なる$x$があることを示�
     % ============================================================
     \coordinate (Peak) at (\alVal, \hMax);
     \draw[dashed, red!85!black, line width=0.8pt] (\alVal, 0) -- (Peak) -- (0, \hMax);
-    \node[circle, fill=red!85!black, inner sep=1pt] at (Peak) {};
+    \node[circle, fill=red!85!black, inner sep=1.2pt] at (Peak) {};
     \node[below=2pt, font=\footnotesize\bfseries, red!90!black] at (\alVal, 0) {$\alpha$};
     \node[left=2pt, font=\scriptsize, red!90!black] at (0, \hMax) {$h(\alpha) > 0$};
 
     % 接線（傾き 0）
     \draw[line width=1.0pt, red!70!black]
-    ($ (Peak) + (-0.12, 0) $) -- ($ (Peak) + (0.12, 0) $);
+    ($ (Peak) + (-0.10, 0) $) -- ($ (Peak) + (0.10, 0) $);
 
     % 端点 x = 1 での負の値 h(1)
     \pgfmathsetmacro{\hOne}{-\qVal - \pVal + 1.0 - exp(-\qVal)}
-    \node[circle, fill, inner sep=1pt] at (1, \hOne) {};
-    \draw[dotted, gray!60] (1, 0) -- (1, \hOne) -- (0, \hOne);
+    \node[circle, fill, inner sep=1.2pt] at (1, \hOne) {};
+    \draw[dotted, thick, gray!70!black] (1, 0) -- (1, \hOne) -- (0, \hOne);
     \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
     \node[left=2pt, font=\scriptsize] at (0, \hOne) {$h(1) < 0$};
 

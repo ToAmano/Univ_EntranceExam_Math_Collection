@@ -2,7 +2,7 @@
 \begin{document}
 
 \noindent
-{\bf [解答]} $l$ が $x$ 軸に一致し，$P(0, \sqrt{3}+1)$ となるように $xy$ 平面をおくと下図のようになる．
+{\bf [解答]} $l$ が $x$ 軸に一致し，$P(0, \sqrt{3}+1)$ となるように $xy$ 平面をおくと\cref{fig:link_pqrs}のようになる．
 
 \begin{figure}[htb]
   \centering
@@ -10,56 +10,50 @@
 
     % --- 1. 数値パラメータ（実寸準拠） ---
     % P(0, \sqrt{3}+1) \approx (0, 2.732)
-    \def\yP{2.732}
-    \def\lenPQ{3.414} % 2 + \sqrt{2}
-    \def\lenQR{0.586} % 2 - \sqrt{2}
-    \def\lenRS{0.732} % \sqrt{3} - 1
+    \def\yP{2.73205}
+    \def\lenPQ{3.41421} % 2 + \sqrt{2}
+    \def\lenQR{0.58579} % 2 - \sqrt{2}
+    \def\lenRS{0.73205} % \sqrt{3} - 1
 
-    % 配置角の例:
-    % P から Q へは斜め右下（例えば -55° 方向）
-    % Q から R へはさらに斜め右（例えば 20° 方向）
+    % 配置角: y_P + lenPQ*sin(-40) + lenQR*sin(19.404) = \sqrt{3}-1 = lenRS
     \coordinate (O) at (0, 0);
     \coordinate (P) at (0, \yP);
-    \coordinate (Q) at ($ (P) + (-55:\lenPQ) $);
-    \coordinate (R) at ($ (Q) + (25:\lenQR) $);
+    \coordinate (Q) at ($ (P) + (-40:\lenPQ) $);
+    \coordinate (R) at ($ (Q) + (19.404:\lenQR) $);
     % S は R から x 軸 (y=0) への垂足
     \coordinate (S) at (R |- 0,0);
-    % \coordinate (S) at ({$(R)+(0,0)$ |- 0,0});
 
     % --- 2. 座標軸 (直線 l = x 軸) ---
-    \draw[->, thick] (-0.8, 0) -- (4.2, 0) node[right] {$x\ (l)$};
-    \draw[->, thick] (0, -0.6) -- (0, 3.4) node[above] {$y$};
-    \node[below left] at (O) {$O$};
+    \draw[->, thick, gray!80!black] (-0.8, 0) -- (4.2, 0) node[right] {$x\ (l)$};
+    \draw[->, thick, gray!80!black] (0, -0.6) -- (0, 3.4) node[above] {$y$};
+    \node[below left, font=\footnotesize] at (O) {$\mathrm{O}$};
 
     % --- 3. リンク機構 P - Q - R の描画 ---
     % 線分 PQ
-    \draw[very thick, blue!80!black] (P) -- (Q);
+    \draw[very thick, blue!85!black] (P) -- (Q);
     % 線分 QR
-    \draw[very thick, red!80!black] (Q) -- (R);
+    \draw[very thick, red!85!black] (Q) -- (R);
     % 線分 RS (距離: R から x 軸への垂線)
-    \draw[thick, dashed, gray!80!black] (R) -- (S);
-
-    % --- 4. 直角記号 (S における垂直) ---
-    % \draw[thick, gray!80!black] ($ (S) + (0, 0.15) $) -- ($ (S) + (0.15, 0.15) $) -- ($ (S) + (0.15, 0) $);
+    \draw[densely dotted, thick, gray!70!black] (R) -- (S);
 
     % --- 5. 点のプロットとラベル ---
-    \node[circle, fill, inner sep=1.5pt] at (P) {}; \node[left=2pt] at (P) {$P(0,\, \sqrt{3}+1)$};
-    \node[circle, fill=blue!80!black, inner sep=1.5pt] at (Q) {}; \node[blue!80!black, below left=1pt] at (Q) {$Q$};
-    \node[circle, fill=red!80!black, inner sep=1.5pt] at (R) {}; \node[red!80!black, above right=1pt] at (R) {$R$};
-    \node[circle, fill, inner sep=1.5pt] at (S) {}; \node[below=2pt] at (S) {$S$};
+    \node[circle, fill, inner sep=1.4pt] at (P) {}; \node[left=2pt, font=\footnotesize] at (P) {$P(0,\, \sqrt{3}+1)$};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (Q) {}; \node[blue!85!black, below left=1pt, font=\footnotesize] at (Q) {$Q$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (R) {}; \node[red!85!black, above right=1pt, font=\footnotesize] at (R) {$R$};
+    \node[circle, fill, inner sep=1.4pt] at (S) {}; \node[below=2pt, font=\footnotesize] at (S) {$S$};
 
     % --- 6. 各線分の長さラベル ---
     % PQ の長さ
-    \node[blue!80!black, fill=white, inner sep=1.5pt, font=\footnotesize]
+    \node[blue!85!black, fill=white, inner sep=1.5pt, font=\footnotesize]
     at ($ (P)!0.48!(Q) + (-0.35, 0) $) {$2+\sqrt{2}$};
 
     % QR の長さ (短いので引出線で見やすく配置)
-    \draw[->, thick, red!80!black] ($ (Q)!0.5!(R) + (0.05, -0.5) $) -- ($ (Q)!0.5!(R) + (0.05, -0.05) $);
-    \node[red!80!black, below, font=\footnotesize] at ($ (Q)!0.5!(R) + (0.10, -0.55) $) {$2-\sqrt{2}$};
+    \draw[->, thick, red!85!black] ($ (Q)!0.5!(R) + (0.05, -0.45) $) -- ($ (Q)!0.5!(R) + (0.05, -0.05) $);
+    \node[red!85!black, below, font=\footnotesize] at ($ (Q)!0.5!(R) + (0.10, -0.45) $) {$2-\sqrt{2}$};
 
     % RS の長さ (距離)
-    \draw[->, thick, gray!90!black] ($ (R)!0.5!(S) + (0.5, 0.1) $) -- ($ (R)!0.5!(S) + (0.05, 0.05) $);
-    \node[gray!80!black, right, font=\footnotesize] at ($ (R)!0.5!(S) + (0.5, 0.1) $) {$\sqrt{3}-1$};
+    \draw[->, thick, gray!70!black] ($ (R)!0.5!(S) + (0.5, 0) $) -- ($ (R)!0.5!(S) + (0.05, 0) $);
+    \node[gray!80!black, right, font=\footnotesize] at ($ (R)!0.5!(S) + (0.5, 0) $) {$\sqrt{3}-1$};
 
   \end{tikzpicture}
   \caption{点 $P, Q, R, S$ の位置関係と各線分の長さ}

@@ -155,72 +155,64 @@ $z = k \in \mathbb{Z}$ と固定すると，
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.6, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[scale=1.3, >=stealth, every node/.style={font=\small}]
 
-    % --- 1. 定数・幾何パラメータ ---
-    % 一辺 p (例: p = 3.6)
-    \def\pVal{3.6}
-    \def\kVal{1.4}
-    \pgfmathsetmacro{\yOnLine}{\pVal - \kVal} % 2.2
+    % --- 1. 定数・幾何パラメータ (p = 4, k = 1 の整数例) ---
+    \def\pVal{4}
+    \def\kVal{1}
 
     \coordinate (O)     at (0, 0);
     \coordinate (Pt_pY) at (0, \pVal);
     \coordinate (Pt_pX) at (\pVal, 0);
     \coordinate (Pt_kX) at (\kVal, 0);
-    \coordinate (Pt_kLine) at (\kVal, \yOnLine);
+    \coordinate (Pt_kLine) at (\kVal, {\pVal - \kVal});
 
     % --- 2. 座標軸 ---
-    \draw[->, thick, gray!80!black] (-0.4, 0) -- (4.4, 0) node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 4.4) node[above] {$y$};
+    \draw[->, thick, gray!80!black] (-0.5, 0) -- (4.8, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.5) -- (0, 4.8) node[above] {$y$};
     \node[below left=2pt] at (O) {$O$};
 
     % --- 3. 直角二等辺三角形の境界線 ---
     % 斜辺 x + y = p
     \draw[very thick, red!85!black] (Pt_pY) -- (Pt_pX);
     \node[red!90!black, font=\footnotesize\bfseries, above right]
-    at ($ (Pt_pY)!0.45!(Pt_pX) $) {$x + y = p$};
+    at ($ (Pt_pY)!0.4!(Pt_pX) $) {$x + y = p$};
 
     % 軸上の境界
-    \draw[thick, gray!70] (0, 0) -- (0, \pVal);
-    \draw[thick, gray!70] (0, 0) -- (\pVal, 0);
+    \draw[thick, gray!70!black] (0, 0) -- (0, \pVal);
+    \draw[thick, gray!70!black] (0, 0) -- (\pVal, 0);
 
-    % --- 4. 斜辺上の除外点（白抜き丸）---
-    % 斜辺上の格子点は除外されるため白抜き丸で明示
-    \node[circle, draw, thick, red!85!black, fill=white, inner sep=2.2pt] at (Pt_pY) {};
-    \node[circle, draw, thick, red!85!black, fill=white, inner sep=2.2pt] at (Pt_pX) {};
-    \node[circle, draw, thick, red!85!black, fill=white, inner sep=2.2pt] at (Pt_kLine) {};
+    % --- 4. 内部・直角辺上の整数格子点の描画 ---
+    \foreach \x in {0, ..., 3} {
+      \pgfmathtruncatemacro{\maxY}{\pVal - 1 - \x}
+      \foreach \y in {0, ..., \maxY} {
+        \ifnum\x=\kVal
+        \node[circle, fill=teal!85!black, inner sep=1.4pt] at (\x, \y) {};
+        \else
+        \node[circle, fill, inner sep=1.3pt] at (\x, \y) {};
+        \fi
+      }
+    }
 
-    % その他の斜辺上のサンプル点（白抜き丸）
-    \node[circle, draw, thick, red!85!black, fill=white, inner sep=1.8pt] at (0.6, {\pVal - 0.6}) {};
-    \node[circle, draw, thick, red!85!black, fill=white, inner sep=1.8pt] at (2.8, {\pVal - 2.8}) {};
+    % --- 5. 斜辺上の除外点（白抜き丸）---
+    \foreach \x in {0, ..., \pVal} {
+      \node[circle, draw=red!85!black, thick, fill=white, inner sep=1.4pt] at (\x, {\pVal - \x}) {};
+    }
 
-    % --- 5. x = 0 における格子点 (p 個) ---
-    % 含まれる点: (0, 0), (0, 1), ..., (0, p-1)
-    \node[circle, fill, inner sep=1.8pt] at (0, 0) {};
-    \node[circle, fill, inner sep=1.8pt] at (0, 1.0) {};
-    \node[circle, fill, inner sep=1.8pt] at (0, {\pVal - 0.5}) {};
-    \node[left=3pt, font=\scriptsize] at (0, {\pVal - 0.5}) {$p-1$};
-    \node[left=3pt, font=\scriptsize] at (Pt_pY) {$p$};
-
-    % --- 6. 任意の位置 x = k における格子点数のカウント ---
-    % 垂直破線
+    % --- 6. 列 x = k における格子点数のカウント ---
     \draw[dashed, teal!85!black, thick] (Pt_kX) -- (Pt_kLine);
-    \node[circle, fill, inner sep=1.8pt] at (Pt_kX) {};
-    \node[below=2pt, font=\scriptsize] at (Pt_kX) {$k$};
+    \node[below=2pt, font=\scriptsize, teal!85!black] at (Pt_kX) {$k$};
 
-    % 含まれる格子点の例 (黒丸)
-    \node[circle, fill=teal!85!black, inner sep=1.8pt] at (\kVal, 0.6) {};
-    \node[circle, fill=teal!85!black, inner sep=1.8pt] at (\kVal, 1.2) {};
-    \node[circle, fill=teal!85!black, inner sep=1.8pt] at (\kVal, {\yOnLine - 0.5}) {};
-
-    % 手書きの波括弧（引き出し線）
+    % 引き出し注釈
     \draw[->, thick, teal!90!black]
-    ($ (\kVal, 0.9) + (-0.3, 0) $) to[out=180, in=90]
+    ($ (\kVal, 1.0) + (-0.25, 0) $) to[out=180, in=90]
     (0.6, -0.6) node[below=1pt, font=\footnotesize\bfseries, align=left]
     {$p - k$ 個の格子点\\ \scriptsize ($y = 0, 1, \dots, p-k-1$)};
 
-    % 目盛り p
-    \node[below=2pt, font=\scriptsize] at (Pt_pX) {$p$};
+    % 目盛り
+    \node[left=3pt, font=\scriptsize] at (0, 3) {$p-1$};
+    \node[left=3pt, font=\scriptsize] at (0, 4) {$p$};
+    \node[below=2pt, font=\scriptsize] at (4, 0) {$p$};
 
   \end{tikzpicture}
   \caption{直角二等辺三角形の周および内部（斜辺を除く）にある格子点の数え方}
@@ -232,7 +224,7 @@ $z = k \in \mathbb{Z}$ と固定すると，
 \begin{align}
   1 + 2 + \dots + p &= \dfrac{1}{2} p (p + 1)
 \end{align}
-である．よって，$\triangle ABH, DEF, BCD, FGH$ の周及び内部(斜辺除く)にある格子点はあわせて
+である（$p=0$ のときは三角形が退化して格子点の数は $0$ 個となり，$\dfrac{1}{2}\cdot 0 \cdot (0+1) = 0$ よりこの公式は $p=0$ の場合（すなわち $k = \pm n$ の端点）も含めてそのまま成り立つ）．よって，$\triangle ABH, DEF, BCD, FGH$ の周及び内部(斜辺除く)にある格子点はあわせて
 \begin{align}
   2\cdot\dfrac{(n-k)(n+1-k)}{2} + 2\cdot\dfrac{(n+k)(n+k+1)}{2}
   = (n+k)(n+k+1) + (n-k)(n+1-k) \label{eq:4}

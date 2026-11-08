@@ -43,7 +43,7 @@ $xy$座標平面上に正三角形$ABC$を$A(0,0), B(1,0), C\left(\dfrac{1}{2},\
     \node[left=2pt, font=\scriptsize, gray!80!black] at (0, 2*\hVal) {$\sqrt{3}$};
 
     % --- 4. 頂点ラベル（折り返し鏡像対称）---
-    % y = 0 の線上: 0=A, 1=B, 2=A, 3=B, 4=A, 5=B
+    % y = 0 の線上: 0=A, 1=B, 2=C, 3=A, 4=B, 5=C
     \node[below=2pt, font=\scriptsize] at (0, 0) {$A$};
     \node[below=2pt, font=\scriptsize] at (1, 0) {$B$};
     \node[below=2pt, font=\scriptsize] at (2, 0) {$C$};
@@ -58,7 +58,7 @@ $xy$座標平面上に正三角形$ABC$を$A(0,0), B(1,0), C\left(\dfrac{1}{2},\
     \node[below=2pt, font=\scriptsize] at (3.5, \hVal) {$C$};
     \node[below=2pt, font=\scriptsize] at (4.5, \hVal) {$A$};
 
-    % y = 2h の線上: 0=B, 1=A, 2=B, 3=A, 4=B, 5=A
+    % y = 2h の線上: 0=A, 1=B, 2=C, 3=A, 4=B, 5=C
     \node[above=2pt, font=\scriptsize] at (0, 2*\hVal) {$A$};
     \node[above=2pt, font=\scriptsize] at (1, 2*\hVal) {$B$};
     \node[above=2pt, font=\scriptsize] at (2, 2*\hVal) {$C$};
@@ -214,26 +214,19 @@ $\tan\theta=\dfrac{\sqrt{3}}{4}$の時，$xy$平面上で光線が $l : y = \dfr
     \node[red!90!black, font=\footnotesize\bfseries, above left] at (4.0, {0.6*\hVal})
     {$l: y = \frac{\sqrt{3}}{6k+2}x$};
 
-    % --- 5. 格子線との交点（反射点）のプロット ---
-    % (i) 0 < t < 4 の交点 (7 点)
-    % x = 0.8, 1.14, 1.6, 2.28, 2.4, 3.2, 3.43 など
-    \foreach \coord in {
-      (0.8, 0.173), (1.143, 0.247), (1.6, 0.346), (2.286, 0.495),
-      (2.4, 0.520), (3.2, 0.693), (3.428, 0.742)
-    } {
-      \node[circle, fill=teal!85!black, inner sep=1.2pt] at \coord {};
+    % --- 5. 格子線との交点（反射点）のプロット (k = 1) ---
+    % (i) 0 < t < 4 の交点 (7 点: 8i/9 および 8i/7)
+    \foreach \x in {8/9, 8/7, 16/9, 16/7, 24/9, 24/7, 32/9} {
+      \node[circle, fill=teal!85!black, inner sep=1.2pt] at ({\x}, {\x*\hVal/4.0}) {};
     }
 
     % (ii) t = 4 での交点 (水平線 y = hVal と交差: 1 点)
     \node[circle, fill=orange!95!black, inner sep=1.6pt] at (4.0, \hVal) {};
     \node[above=2pt, font=\scriptsize, orange!95!black] at (4.0, \hVal) {$t = 3k+1$};
 
-    % (iii) 4 < t < 8 の交点 (7 点)
-    \foreach \coord in {
-      (4.571, 0.990), (4.8, 1.039), (5.6, 1.212), (5.714, 1.237),
-      (6.4, 1.386), (6.857, 1.485), (7.2, 1.559)
-    } {
-      \node[circle, fill=teal!85!black, inner sep=1.2pt] at \coord {};
+    % (iii) 4 < t < 8 の交点 (7 点: 8 - 32/9, 8 - 24/7, ...)
+    \foreach \x in {40/9, 32/7, 48/9, 40/7, 56/9, 48/7, 64/9} {
+      \node[circle, fill=teal!85!black, inner sep=1.2pt] at ({\x}, {\x*\hVal/4.0}) {};
     }
 
     % --- 6. 最終到達頂点 (8, sqrt(3)) ---
@@ -243,13 +236,13 @@ $\tan\theta=\dfrac{\sqrt{3}}{4}$の時，$xy$平面上で光線が $l : y = \dfr
     {到達頂点 $C$};
 
     % 目盛り
-    \node[below=2pt, font=\scriptsize] at (4, 0) {$3k+1$};
-    \node[below=2pt, font=\scriptsize] at (8, 0) {$6k+2$};
+    \node[below=2pt, font=\scriptsize] at (4, 0) {$3k+1 \ (=4)$};
+    \node[below=2pt, font=\scriptsize] at (8, 0) {$6k+2 \ (=8)$};
     \node[left=2pt, font=\scriptsize]  at (0, \hVal) {$\frac{\sqrt{3}}{2}$};
     \node[left=2pt, font=\scriptsize]  at (0, 2*\hVal) {$\sqrt{3}$};
 
   \end{tikzpicture}
-  \caption{(2) $\tan\theta = \dfrac{\sqrt{3}}{6k+2}$ のときの光線 $l$ の様子}
+  \caption{(2) $\tan\theta = \dfrac{\sqrt{3}}{6k+2}$ のときの光線 $l$ の様子（$k=1$ の例）}
   \label{fig:reflection_counting_model}
 \end{figure}
 

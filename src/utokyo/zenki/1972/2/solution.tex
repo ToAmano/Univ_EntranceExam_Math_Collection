@@ -5,28 +5,24 @@
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[scale=2.6, >=stealth, every node/.style={font=\small}]
 
-    % --- 1. 座標定義 (例として theta = 120°, |b| = 1.6, |c| = 1.6) ---
+    % --- 1. 座標定義 (\theta = 120°, |b| = 1, |c| = 1 の解の例) ---
     \coordinate (A) at (0, 0);
 
-    % AB の偏角 -115°, AC の偏角 -55° (なす角 theta = 60° ではなく鈍角にするため、
-    % AB を -120°、AC を -40° に設定 -> なす角 80°〜120° 程度が見やすい)
-    % ここでは手描き図に合わせて AB: -125°, AC: -45° (なす角 80° 程度で描くか、解の 120° に準拠)
-    % 解の条件: theta は鈍角 (例えば 110°)
-    \def\angB{-135}
-    \def\angC{-25}
-    \def\lenB{1.8}
-    \def\lenC{1.8}
+    \def\angB{-150}
+    \def\angC{-30}
+    \def\lenB{1}
+    \def\lenC{1}
 
     \coordinate (B) at (\angB:\lenB);
     \coordinate (C) at (\angC:\lenC);
 
-    % 直線 k: A を通り AC に垂直 (偏角 angC + 90° = 65°)
+    % 直線 k: A を通り AC に垂直 (偏角 angC + 90° = 60°)
     \def\angK{\angC + 90}
     \coordinate (K_dir) at (\angK:1);
 
-    % 直線 h: A を通り AB に垂直 (偏角 angB + 90° = -45° または -35°)
+    % 直線 h: A を通り AB に垂直 (偏角 angB + 90° = -60°)
     \def\angH{\angB + 90}
     \coordinate (H_dir) at (\angH:1);
 
@@ -42,9 +38,9 @@
 
     % --- 3. 直線 k と h の描画 ---
     \draw[thick, dashed, gray!80!black]
-    ($ (A) - 2.4*(K_dir) $) -- ($ (A) + 2.4*(K_dir) $) node[above right] {$k$};
+    ($ (A) - 1.6*(K_dir) $) -- ($ (A) + 1.6*(K_dir) $) node[above right] {$k$};
     \draw[thick, dashed, gray!80!black]
-    ($ (A) - 2.2*(H_dir) $) -- ($ (A) + 2.2*(H_dir) $) node[below right] {$h$};
+    ($ (A) - 1.6*(H_dir) $) -- ($ (A) + 1.6*(H_dir) $) node[below right] {$h$};
 
     % --- 4. 三角形の辺 AB, AC ---
     \draw[very thick] (B) -- (A) -- (C);
@@ -60,23 +56,23 @@
 
     % --- 6. 直角記号 ---
     % (1) 点 A における k \perp AC
-    \coordinate (unitAC) at ($ (A)!0.15!(C) $);
-    \coordinate (unitK)  at ($ (A)!0.15!($ (A) + (K_dir) $) $);
+    \coordinate (unitAC) at ($ (A)!0.18!(C) $);
+    \coordinate (unitK)  at ($ (A)!0.18!($ (A) + (K_dir) $) $);
     \draw[thick] (unitAC) -- ($ (unitAC) + (unitK) $) -- (unitK);
 
     % (2) 点 A における h \perp AB
-    \coordinate (unitAB) at ($ (A)!0.15!(B) $);
-    \coordinate (unitH)  at ($ (A)!0.15!($ (A) - (H_dir) $) $);
+    \coordinate (unitAB) at ($ (A)!0.18!(B) $);
+    \coordinate (unitH)  at ($ (A)!0.18!($ (A) - (H_dir) $) $);
     \draw[thick] (unitAB) -- ($ (unitAB) + (unitH) $) -- (unitH);
 
     % (3) 点 P における垂足直角記号 (BP \perp k)
-    \coordinate (uP_B) at ($ (P)!0.15!(B) $);
-    \coordinate (uP_K) at ($ (P)!0.15!(A) $);
+    \coordinate (uP_B) at ($ (P)!0.18!(B) $);
+    \coordinate (uP_K) at ($ (P)!0.18!(A) $);
     \draw[thick, blue!80!black] (uP_B) -- ($ (uP_B) + (uP_K) - (P) $) -- (uP_K);
 
     % (4) 点 Q における垂足直角記号 (CQ \perp h)
-    \coordinate (uQ_C) at ($ (Q)!0.15!(C) $);
-    \coordinate (uQ_H) at ($ (Q)!0.15!(A) $);
+    \coordinate (uQ_C) at ($ (Q)!0.18!(C) $);
+    \coordinate (uQ_H) at ($ (Q)!0.18!(A) $);
     \draw[thick, blue!80!black] (uQ_C) -- ($ (uQ_C) + (uQ_H) - (Q) $) -- (uQ_H);
 
     % --- 7. 頂点・点プロットとラベル ---
@@ -85,10 +81,10 @@
     \node[circle, fill, inner sep=1.4pt] at (C) {}; \node[below right] at (C) {$C$};
     \node[circle, fill=blue!80!black, inner sep=1.2pt] at (P) {}; \node[blue!80!black, below left=2pt] at (P) {$P$};
     \node[circle, fill=blue!80!black, inner sep=1.2pt] at (Q) {}; \node[blue!80!black, below right=2pt] at (Q) {$Q$};
-    \node[circle, fill=red!80!black, inner sep=1.3pt] at (Bprime) {}; \node[red!80!black, above left] at (Bprime) {$B'$};
+    \node[circle, fill=red!80!black, inner sep=1.3pt] at (Bprime) {}; \node[red!80!black, below=3pt] at (Bprime) {$B'$};
 
   \end{tikzpicture}
-  \caption{直線 $k \perp AC$，$h \perp AB$ および各頂点からの垂線と対称点 $B'$}
+  \caption{直線 $k \perp AC$，$h \perp AB$ および各頂点からの垂線と対称点 $B'$（$\theta = \dfrac{2}{3}\pi$ の例）}
   \label{fig:triangle_perpendicular_reflections}
 \end{figure}
 

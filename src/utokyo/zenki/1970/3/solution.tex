@@ -1,63 +1,71 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\usepackage[dvips]{graphicx}
-\usepackage{color}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1970$年$3$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  $25\,\ \mathrm{m}$隔てて二地点$P$，$Q$がある．いま$A$，$B$二人がそれぞれ$P$$Q$に立ち，同時に向かい合って走り出す．
-  走り出してから$t$秒後の$A$，$B$の速度を，$P$から$Q$に向かう方向を正の向きとしてそれぞれ$u \,\ \mathrm{(m/s)}$，
-  $v\,\ \mathrm{(m/s)}$とすれば，$u$は一定で，$v=3t^2/4-3t$である．
 
-  このとき，$B$が$Q$に帰るまでに$A$が$B$に出会うかまたは追いつくためには，$u$が少なくともどれほどの大きさでなければ
-  ならないか．
-\end{oframed}
+{\bf [解答]}
+$A$，$B$の$P$からの距離をそれぞれ$A(t)$，$B(t)$とすると，
+\begin{align}
+  A(t)=\int_0^t u\,dt+A(0)=ut \\
+  B(t)=\int_0^t v\,dt+B(0)=\dfrac{1}{4}t^3-\dfrac{3}{2}t^2+25
+\end{align}
+である．$B(t)\le25\iff0\le t\le6$であるから，$A$が$B$に追いつくには，$y=A(t)$と$y=B(t)$が$0<t<6$で少なくとも一回交わればよい．$y$を消去して
+\begin{align}
+  &A(t)=B(t) \nonumber \\
+  \iff &u=\dfrac{1}{4}t^2-\dfrac{3}{2}t+\dfrac{25}{t}\equiv f(t) \label{eq:1}
+\end{align}
+である．
+\begin{align}
+  f'(t)=\dfrac{1}{2}t-\dfrac{3}{2}-\dfrac{25}{t^2}=\dfrac{(t-5)(t^2+2t+10)}{2t^2}
+\end{align}
+から，\cref{tab:variation_ft}を得る．
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}$A$$B$の$P$からの距離をそれぞれ$A(t)$，$B(t)$とすると，
-  \begin{align}
-    A(t)=\int_0^tudt+A(0)=ut \\
-    B(t)=\int_0^tvdt+B(0)=\dfrac{1}{4}t^3-\dfrac{3}{2}t^2+25
-  \end{align}
-  である.$B(t)\le25\Longleftrightarrow0\le t\le6$であるから，$A$が$B$に追いつくには，$y=A(t)$と$y=B(t)$が$0<t<6$で少なくとも一回
-  交わればよい．$y$を消去して
-  \begin{align}
-    &A(t)=B(t) \nonumber \\
-    \Longleftrightarrow &u=\dfrac{1}{4}t^2-\dfrac{3}{2}t+\dfrac{25}{t}\equiv f(t)\label{eq:1}
-  \end{align}
-  である．
-  \[f'(t)=\dfrac{1}{2}t-\dfrac{3}{2}-\dfrac{25}{t^2}=\dfrac{(t-5)(t^2+2t+10)}{2t^2}\]
-  から，下表を得る．
-  \begin{align}
-    \begin{array}{|c|c|c|c|c|c|}\hline
-      t  & 0 &     & 5     &     &6  \\ \hline
-      f' &    & -   & 0     &+    &    \\  \hline
-      f  &    &\se&15/4 &\ne &25/6  \\ \hline
-    \end{array}
-  \end{align}
-  よって，$f(t)\to\infty(t\to0)$と合わせて，グラフは下図．
-  \begin{center}
-    \scalebox{1}{a}
-  \end{center}
-  従って\eqref{eq:1}が$0<t<6$に解を持つ条件は
-  \[\dfrac{15}{4}\le u\]
-  であるから，求める最小値は$15/4 \,\ \mathrm{(m/s)}$である．$\cdots$(答)
-  \newpage
-\end{multicols}
+\begin{table}[htb]
+  \centering
+  \caption{$f(t)$ の増減表}
+  \label{tab:variation_ft}
+  \begin{tabular}{c|c|c|c|c|c}
+    $t$  & $0$ & $\dots$ & $5$ & $\dots$ & $6$ \\ \hline
+    $f'$ &     & $-$     & $0$ & $+$     &     \\ \hline
+    $f$  &     & $\searrow$ & $\dfrac{15}{4}$ & $\nearrow$ & $\dfrac{25}{6}$
+  \end{tabular}
+\end{table}
+
+よって，$f(t)\to\infty\ (t\to+0)$と合わせて，グラフは\cref{fig:graph_ft}のようになる．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=0.9cm, y=0.9cm, >=stealth,
+    every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.5, 0) -- (7.0, 0) node[right] {$t$};
+    \draw[->, thick, gray!80!black] (0, -0.5) -- (0, 5.5) node[above] {$y$};
+    \node[below left, font=\footnotesize] at (0, 0) {$\mathrm{O}$};
+
+    % y = f(t) の曲線
+    \draw[line width=1.2pt, blue!85!black, domain=1.8:6.2, samples=60]
+    plot (\x, {0.25*\x*\x - 1.5*\x + 25/\x});
+
+    % 最小値の点
+    \draw[densely dotted, thick, gray!70!black] (5, 0) node[below, font=\footnotesize] {$5$}
+    -- (5, 3.75)
+    -- (0, 3.75) node[left, font=\footnotesize] {$\frac{15}{4}$};
+    \draw[densely dotted, thick, gray!70!black] (6, 0) node[below, font=\footnotesize] {$6$}
+    -- (6, 4.167)
+    -- (0, 4.167) node[left, font=\footnotesize] {$\frac{25}{6}$};
+
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (5, 3.75) {};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (6, 4.167) {};
+
+    % ラベル
+    \node[right, font=\footnotesize, blue!85!black] at (3.5, 4.8) {$y=f(t)$};
+  \end{tikzpicture}
+  \caption{$y=f(t)$ の概形}
+  \label{fig:graph_ft}
+\end{figure}
+
+従って\cref{eq:1}が$0<t<6$に解を持つ条件は
+\begin{align}
+  \dfrac{15}{4}\le u
+\end{align}
+であるから，求める最小値は$\dfrac{15}{4}\ \mathrm{m/s}$である．$\cdots$(答)
+
 \end{document}

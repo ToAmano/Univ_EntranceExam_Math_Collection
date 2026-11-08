@@ -2,38 +2,99 @@
 \begin{document}
 
 {\bf [解答]}
-\begin{enumerate}[(1)]
-  \item $h(x)=6\sin(x/6)$とおく．
-    \begin{align}
-      h'(x)=\cos(x/6)
-    \end{align}
-    だから，$P$ ，$Q$における接線$l_p$，$l_q$は，
-    \begin{align}
-      \begin{cases}
-        l_p&:y=\dfrac{1}{2}(x-2\pi)+3\sqrt{3}\equiv f(x) \\
-        l_q&:y=-(x-6\pi)\equiv g(x)
-      \end{cases}
-    \end{align}
-    だから，$R$はこれらの交点で，
-    \begin{align}
-      R(14\pi/3-2\sqrt{3},4\pi/3+2\sqrt{3})
-    \end{align}
-    である．$\cdots$(答)
 
-  \item グラフの概形は下図である．ただし，
-    \begin{align}
-      t=14\pi/3-2\sqrt{3}
-    \end{align}
-    である．
-    \begin{center}
-      \scalebox{1}{\input{ut-62-6p}}
-    \end{center}
-    従って，求める面積$S$として，
-    \begin{align}
-      S&=\int_{2\pi}^tfdx+\int_t^{6\pi}gdx-\int_{2\pi}^{6\pi}hdx \nonumber\\
-      &=\dfrac{8}{3}\pi^2+8\sqrt{3}\pi-63\nonumber
-    \end{align}
-    である．$\cdots$(答)
-\end{enumerate}
+% TODO: 概要図
+
+\paragraph{(1)}
+$h(x)=6\sin(x/6)$とおく．
+\begin{align}
+  h'(x)=\cos(x/6)
+\end{align}
+だから，$P$ ，$Q$における接線$l_p$，$l_q$は，
+\begin{align}
+  \begin{cases}
+    l_p&:y=\dfrac{1}{2}(x-2\pi)+3\sqrt{3}\equiv f(x) \\
+    l_q&:y=-(x-6\pi)\equiv g(x)
+  \end{cases}
+\end{align}
+だから，$R$はこれらの交点で，
+\begin{align}
+  R(14\pi/3-2\sqrt{3},4\pi/3+2\sqrt{3})
+\end{align}
+である．$\cdots$(答)
+
+\paragraph{(2)}
+グラフの概形は\cref{fig:utokyo_1962_6}のようになる．ただし，
+\begin{align}
+  t=14\pi/3-2\sqrt{3}
+\end{align}
+である．
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=0.42cm, y=0.55cm, >=stealth,
+    every node/.style={font=\small}]
+    \def\piVal{3.14159265}
+    \def\twoPi{6.283185}
+    \def\sixPi{18.849556}
+    \def\tVal{11.19688}
+    \def\yR{7.65267}
+    \def\yP{5.19615}
+
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (\twoPi, \yP);
+    \coordinate (R) at (\tVal, \yR);
+    \coordinate (Q) at (\sixPi, 0);
+
+    % 斜線領域
+    \fill[pattern=north east lines, pattern color=blue!40]
+    (P) -- (R) -- (Q)
+    -- plot[domain=\sixPi:\twoPi, samples=60] (\x, {6*sin(\x*180/(\piVal*6))})
+    -- cycle;
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.8, 0) -- (20.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.8) -- (0, 9.0) node[above] {$y$};
+    \node[below left, font=\footnotesize] at (O) {$\mathrm{O}$};
+
+    % 曲線 y = 6 sin(x/6)
+    \draw[line width=1.2pt, blue!85!black, domain=0:20.0, samples=80]
+    plot (\x, {6*sin(\x*180/(\piVal*6))});
+
+    % 接線 lp, lq
+    \draw[line width=1.0pt, red!85!black]
+    (\twoPi - 2.5, {\yP - 2.5*0.5}) -- (\tVal + 0.8, {\yR + 0.8*0.5})
+    node[above left, font=\footnotesize] {$l_p$};
+    \draw[line width=1.0pt, teal!85!black]
+    (\tVal - 0.8, {\yR + 0.8}) -- (\sixPi + 1.2, {-1.2})
+    node[below right, font=\footnotesize] {$l_q$};
+
+    % 垂線
+    \draw[densely dotted, thick, gray!70!black] (\twoPi, 0) node[below, font=\footnotesize] {$2\pi$}
+    -- (P)
+    -- (0, \yP) node[left, font=\footnotesize] {$3\sqrt{3}$};
+    \draw[densely dotted, thick, gray!70!black] (\tVal, 0) node[below, font=\footnotesize] {$t$}
+    -- (R);
+    \node[below, font=\footnotesize] at (\sixPi, 0) {$6\pi$};
+
+    % 代表点
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (P) {};
+    \node[above left=1pt, font=\footnotesize] at (P) {$P$};
+    \node[circle, fill=red!85!black, inner sep=1.3pt] at (R) {};
+    \node[above right=1pt, font=\footnotesize] at (R) {$R$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Q) {};
+    \node[above right=2pt, font=\footnotesize] at (Q) {$Q$};
+
+    % 曲線ラベル
+    \node[above, font=\footnotesize, blue!85!black] at (3.5*\piVal, 6.0) {$y=6\sin\frac{x}{6}$};
+  \end{tikzpicture}
+  \caption{$y=6\sin(x/6)$ と接線 $l_p, l_q$ および囲まれた領域}
+  \label{fig:utokyo_1962_6}
+\end{figure}
+従って，求める面積$S$として，
+\begin{align}
+  S&=\int_{2\pi}^tfdx+\int_t^{6\pi}gdx-\int_{2\pi}^{6\pi}hdx \nonumber\\
+  &=\dfrac{8}{3}\pi^2+8\sqrt{3}\pi-63\nonumber
+\end{align}
+である．$\cdots$(答)
 \newpage
 \end{document}

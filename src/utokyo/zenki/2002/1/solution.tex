@@ -34,13 +34,13 @@
 \begin{align}
   f(s) = 2\sqrt{3}s^2 - s - 2\sqrt{3} \label{eq:4}
 \end{align}
-$(s)$が正となる条件を調べよう．
+$f(s)$が正となる条件を調べよう．
 $y=f(s)$のグラフは下図のようになる．
 
 % y=f(x)のグラフ
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=2.8cm, y=0.85cm, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[x=3.5cm, y=0.85cm, >=stealth, every node/.style={font=\small}]
 
     % --- 1. 定数・厳密パラメータ ---
     % sqrt(3) ≈ 1.73205
@@ -76,7 +76,7 @@ $y=f(s)$のグラフは下図のようになる．
     % 全体曲線
     \draw[line width=1.6pt, blue!85!black, domain=-1.2:1.35, samples=90]
     plot (\x, {2.0*\sqThree*\x*\x - \x - 2.0*\sqThree});
-    \node[blue!90!black, font=\footnotesize\bfseries, right] at (1.25, 2.0)
+    \node[blue!90!black, font=\footnotesize\bfseries, right] at (1.15, 2.1)
     {$y = f(s) = 2\sqrt{3}s^2 - s - 2\sqrt{3}$};
 
     % 条件を満たす部分 (f(s) > 0 かつ -1 <= s < -sqrt(3)/2) の太線強調
@@ -87,8 +87,7 @@ $y=f(s)$のグラフは下図のようになる．
     % s = -1 における点 (-1, 1)
     \draw[dashed, gray!60] (-1.0, 0) -- (Pt_neg1) -- (0, 1.0);
     \node[circle, fill=red!85!black, inner sep=1.3pt] at (Pt_neg1) {};
-    \node[above left=1pt, font=\scriptsize, red!90!black] at (Pt_neg1) {$(-1, 1)$};
-    \node[below=2pt, font=\scriptsize] at (-1.0, 0) {$-1$};
+    \node[above=2pt, font=\scriptsize, red!90!black] at (Pt_neg1) {$(-1, 1)$};
     \node[left=2pt, font=\scriptsize]  at (0, 1.0) {$1$};
 
     % s = 1 における点 (1, -1)
@@ -98,10 +97,6 @@ $y=f(s)$のグラフは下図のようになる．
     \node[above=2pt, font=\scriptsize] at (1.0, 0) {$1$};
     \node[left=2pt, font=\scriptsize]  at (0, -1.0) {$-1$};
 
-    % 零点 s = -sqrt(3)/2 (開点: 白抜き丸)
-    \node[circle, draw, thick, red!85!black, fill=white, inner sep=1.5pt] at (R_left) {};
-    \node[below=4pt, font=\scriptsize\bfseries, red!90!black] at (R_left) {$-\frac{\sqrt{3}}{2}$};
-
     % 零点 s = 2*sqrt(3)/3 (定義域外: 実点)
     \node[circle, fill=gray!70, inner sep=1.2pt] at (R_right) {};
     \node[below right=1pt, font=\scriptsize, gray!80!black] at (R_right) {$\frac{2\sqrt{3}}{3} > 1$};
@@ -110,9 +105,18 @@ $y=f(s)$のグラフは下図のようになる．
     \node[circle, fill, inner sep=1.0pt] at (0, {-2.0*\sqThree}) {};
     \node[right=2pt, font=\scriptsize, gray!80!black] at (0, {-2.0*\sqThree}) {$-2\sqrt{3}$};
 
-    % --- 7. 条件を満たす s の区間の矢印表示 ---
-    \draw[<->, line width=1.4pt, red!85!black] (-1.0, -0.45) -- (\sRootLeft, -0.45)
-    node[midway, below=1pt, font=\scriptsize\bfseries] {$-1 \le s < -\frac{\sqrt{3}}{2}$};
+    % --- 7. 条件を満たす s の区間表示（軸上を太線強調・開閉端点を明示）---
+    \draw[line width=2.8pt, red!85!black] (-1.0, 0) -- (\sRootLeft, 0);
+    % s = -1 は閉端点（塗りつぶし丸）
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (-1.0, 0) {};
+    \node[below left=2pt, font=\scriptsize] at (-1.0, 0) {$-1$};
+    % s = -sqrt(3)/2 は開端点（白抜き丸）
+    \node[circle, draw=red!85!black, thick, fill=white, inner sep=1.5pt] at (R_left) {};
+    \node[below right=2pt, font=\scriptsize\bfseries, red!90!black] at (R_left) {$-\frac{\sqrt{3}}{2}$};
+
+    % 引き出し注記で区間を明示
+    \draw[<-, thin, red!85!black] ({-0.933}, -0.1) to[out=-100, in=0] (-1.05, -0.85)
+    node[left, font=\scriptsize\bfseries, align=right] {解の範囲\\[2pt]$-1 \leqq s < -\frac{\sqrt{3}}{2}$};
 
   \end{tikzpicture}
   \caption{$y = f(s) = 2\sqrt{3}s^2 - s - 2\sqrt{3}$ のグラフと $f(s) > 0$ を満たす $s$ の範囲}

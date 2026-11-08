@@ -3,129 +3,147 @@
 
 {\bf [解答]}
 
-% TODO: upgrade
-% TODO: upgrade
 \begin{figure}[htb]
   \centering
   % =========================================================================
-  % 左図: 正三角形の3分割領域 P, Q, R
+  % 左図: 正三角形の9分割と下向きの3部屋 P, Q, R
   % =========================================================================
-  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[scale=1.3, >=stealth, every node/.style={font=\small}]
+    \def\h{0.8660254}
 
-    % 正三角形の頂点 (一辺の長さを 2*sqrt(3), 外接円半径 2)
-    % A: 上頂点 (0, 2), B: 左下 (-sqrt(3), -1), C: 右下 (sqrt(3), -1)
-    \coordinate (A) at (0, 2);
-    \coordinate (B) at (-1.732, -1);
-    \coordinate (C) at (1.732, -1);
-    \coordinate (G) at (0, 0); % 重心
+    % 下向きの3部屋 P, Q, R の斜線パターン
+    % P (上側下向き)
+    \fill[blue!10] (1.0, 2*\h) -- (2.0, 2*\h) -- (1.5, \h) -- cycle;
+    \path[pattern=north east lines, pattern color=blue!60]
+    (1.0, 2*\h) -- (2.0, 2*\h) -- (1.5, \h) -- cycle;
 
-    % 各辺の中点
-    \coordinate (M_BC) at (0, -1);
-    \coordinate (M_CA) at (0.866, 0.5);
-    \coordinate (M_AB) at (-0.866, 0.5);
+    % Q (右側下向き)
+    \fill[red!10] (1.5, \h) -- (2.5, \h) -- (2.0, 0) -- cycle;
+    \path[pattern=north west lines, pattern color=red!60]
+    (1.5, \h) -- (2.5, \h) -- (2.0, 0) -- cycle;
 
-    % ------------------------------------------------------------
-    % 3つの領域 P, Q, R の塗り分け
-    % P: 上側頂点 A を含む凧形 (A - M_CA - G - M_AB)
-    % Q: 右下頂点 C を含む凧形 (C - M_BC - G - M_CA)
-    % R: 左下頂点 B を含む凧形 (B - M_AB - G - M_BC)
-    % ------------------------------------------------------------
-    \fill[blue!15, opacity=0.7] (A) -- (M_CA) -- (G) -- (M_AB) -- cycle;
-    \fill[red!15, opacity=0.7]  (C) -- (M_BC) -- (G) -- (M_CA) -- cycle;
-    \fill[teal!15, opacity=0.7] (B) -- (M_AB) -- (G) -- (M_BC) -- cycle;
+    % R (左側下向き)
+    \fill[teal!10] (0.5, \h) -- (1.5, \h) -- (1.0, 0) -- cycle;
+    \path[pattern=vertical lines, pattern color=teal!60]
+    (0.5, \h) -- (1.5, \h) -- (1.0, 0) -- cycle;
 
-    % 正三角形の外枠
-    \draw[line width=1.4pt, gray!20!black] (A) -- (B) -- (C) -- cycle;
+    % 外枠の正三角形
+    \draw[line width=1.4pt, gray!80!black] (0, 0) -- (3, 0) -- (1.5, 3*\h) -- cycle;
 
-    % 中線・境界線 (各頂点から対辺の中点へ)
-    \draw[thick, gray!50!black] (A) -- (M_BC);
-    \draw[thick, gray!50!black] (B) -- (M_CA);
-    \draw[thick, gray!50!black] (C) -- (M_AB);
+    % 内部の分割線
+    \draw[thick, gray!70!black] (0.5, \h) -- (2.5, \h);
+    \draw[thick, gray!70!black] (1.0, 2*\h) -- (2.0, 2*\h);
+    \draw[thick, gray!70!black] (1.0, 0) -- (2.0, 2*\h);
+    \draw[thick, gray!70!black] (2.0, 0) -- (2.5, \h);
+    \draw[thick, gray!70!black] (2.0, 0) -- (1.0, 2*\h);
+    \draw[thick, gray!70!black] (1.0, 0) -- (0.5, \h);
 
-    % 重心 G
-    \node[circle, fill, inner sep=1.2pt] at (G) {};
+    % 下向き3部屋の境界強調
+    \draw[line width=1.2pt, blue!85!black] (1.0, 2*\h) -- (2.0, 2*\h) -- (1.5, \h) -- cycle;
+    \draw[line width=1.2pt, red!85!black]  (1.5, \h) -- (2.5, \h) -- (2.0, 0) -- cycle;
+    \draw[line width=1.2pt, teal!85!black] (0.5, \h) -- (1.5, \h) -- (1.0, 0) -- cycle;
 
-    % 領域ラベル
-    \node[blue!90!black, font=\large\bfseries] at (0, 0.75) {$P$};
-    \node[red!90!black, font=\large\bfseries]  at (0.6, -0.45) {$Q$};
-    \node[teal!90!black, font=\large\bfseries] at (-0.6, -0.45) {$R$};
+    % 部屋ラベル
+    \node[draw=blue!85!black, fill=white, circle, inner sep=2pt, font=\normalsize\bfseries, text=blue!90!black]
+    at (1.5, 1.667*\h) {$P$};
+    \node[draw=red!85!black, fill=white, circle, inner sep=2pt, font=\normalsize\bfseries, text=red!90!black]
+    at (2.0, 0.667*\h) {$Q$};
+    \node[draw=teal!85!black, fill=white, circle, inner sep=2pt, font=\normalsize\bfseries, text=teal!90!black]
+    at (1.0, 0.667*\h) {$R$};
 
     % 図タイトル
-    \node[below=14pt, font=\footnotesize\bfseries] at (0, -1.0) {(a) 正三角形の対称な 3 領域};
-
+    \node[below=8pt, font=\footnotesize\bfseries] at (1.5, 0) {(a) 9部屋の分割と下向きの3部屋 $P, Q, R$};
   \end{tikzpicture}
   \qquad\quad
   % =========================================================================
   % 右図: 2ステップごとの状態遷移図 (P, Q, R)
   % =========================================================================
-  \begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[scale=1.3, >=stealth, every node/.style={font=\small}]
 
-    % 状態ノード (円形ノードで配置)
-    \node[draw=blue!85!black, fill=blue!8, circle, line width=1.2pt, inner sep=4pt, font=\normalsize\bfseries]
-    (P) at (0, 1.4) {$P$};
-    \node[draw=red!85!black, fill=red!8, circle, line width=1.2pt, inner sep=4pt, font=\normalsize\bfseries]
-    (Q) at (1.8, -0.8) {$Q$};
-    \node[draw=teal!85!black, fill=teal!8, circle, line width=1.2pt, inner sep=4pt, font=\normalsize\bfseries]
-    (R) at (-1.8, -0.8) {$R$};
+    % 状態ノード
+    \node[draw=blue!85!black, fill=blue!10, circle, line width=1.2pt, inner sep=3.5pt, font=\normalsize\bfseries, text=blue!90!black]
+    (P) at (0, 1.5) {$P$};
+    \node[draw=red!85!black, fill=red!10, circle, line width=1.2pt, inner sep=3.5pt, font=\normalsize\bfseries, text=red!90!black]
+    (Q) at (1.5, -0.6) {$Q$};
+    \node[draw=teal!85!black, fill=teal!10, circle, line width=1.2pt, inner sep=3.5pt, font=\normalsize\bfseries, text=teal!90!black]
+    (R) at (-1.5, -0.6) {$R$};
 
-    % 遷移矢印 (Q への流入を中心に描画)
-    % P -> Q (確率 1/6)
-    \draw[->, line width=1.2pt, blue!85!black] (P) -- (Q)
-    node[midway, above right=1pt, font=\footnotesize\bfseries] {$\frac{1}{6}$};
+    % P <-> Q (各 1/6)
+    \draw[->, line width=1.1pt, blue!85!black] (P) to[bend left=16]
+    node[midway, above right=1pt, font=\footnotesize] {$\frac{1}{6}$} (Q);
+    \draw[->, line width=1.1pt, red!85!black]  (Q) to[bend left=16]
+    node[midway, below left=1pt, font=\footnotesize] {$\frac{1}{6}$} (P);
 
-    % R -> Q (確率 1/6)
-    \draw[->, line width=1.2pt, teal!85!black] (R) -- (Q)
-    node[midway, below=2pt, font=\footnotesize\bfseries] {$\frac{1}{6}$};
+    % Q <-> R (各 1/6)
+    \draw[->, line width=1.1pt, red!85!black]  (Q) to[bend left=16]
+    node[midway, below=2pt, font=\footnotesize] {$\frac{1}{6}$} (R);
+    \draw[->, line width=1.1pt, teal!85!black] (R) to[bend left=16]
+    node[midway, above=2pt, font=\footnotesize] {$\frac{1}{6}$} (Q);
 
-    % Q -> Q (自己ループ, 確率 2/3)
-    \draw[->, line width=1.2pt, red!85!black] (Q) to[out=-25, in=45, looseness=4.5]
-    node[right=2pt, font=\footnotesize\bfseries] {$\frac{2}{3}$} (Q);
+    % R <-> P (各 1/6)
+    \draw[->, line width=1.1pt, teal!85!black] (R) to[bend left=16]
+    node[midway, above left=1pt, font=\footnotesize] {$\frac{1}{6}$} (P);
+    \draw[->, line width=1.1pt, blue!85!black] (P) to[bend left=16]
+    node[midway, below right=1pt, font=\footnotesize] {$\frac{1}{6}$} (R);
 
-    % 対称性の補助（破線で他の同等な遷移を示唆）
-    \draw[->, dashed, line width=0.9pt, gray!50] (P) -- (R)
-    node[midway, above left=1pt, font=\scriptsize] {$\frac{1}{6}$};
-    \draw[->, dashed, line width=0.9pt, gray!50] (R) to[out=135, in=-155, looseness=4.5]
-    node[left=2pt, font=\scriptsize] {$\frac{2}{3}$} (R);
-    \draw[->, dashed, line width=0.9pt, gray!50] (P) to[out=120, in=60, looseness=4.5]
-    node[above=2pt, font=\scriptsize] {$\frac{2}{3}$} (P);
+    % 自己ループ (各 2/3)
+    \draw[->, line width=1.1pt, blue!85!black] (P) to[out=120, in=60, looseness=4.5]
+    node[above=2pt, font=\footnotesize] {$\frac{2}{3}$} (P);
+    \draw[->, line width=1.1pt, red!85!black]  (Q) to[out=-20, in=40, looseness=4.5]
+    node[right=2pt, font=\footnotesize] {$\frac{2}{3}$} (Q);
+    \draw[->, line width=1.1pt, teal!85!black] (R) to[out=140, in=-160, looseness=4.5]
+    node[left=2pt, font=\footnotesize] {$\frac{2}{3}$} (R);
 
     % 図タイトル
-    \node[below=14pt, font=\footnotesize\bfseries] at (0, -1.0) {(b) $2$ 秒ごとの状態遷移確率};
-
+    \node[below=14pt, font=\footnotesize\bfseries] at (0, -0.6) {(b) $2$ 秒ごとの状態遷移確率};
   \end{tikzpicture}
-  \caption{正三角形内の対称な領域分割と球の状態遷移図}
+  \caption{正三角形の9分割と2秒ごとの状態遷移図}
   \label{fig:triangle_markov_transition_upgrade}
 \end{figure}
 
-上図のように$R$ を定める．
-$k \in \mathbb{N}$ とすると球は $2k$ 秒後にのみ $P, Q, R$ にある．
-対称性から，$2k$ 秒後に球が $P, Q, R$ にある確率は $a_k, b_k, b_k$ とおける．
-題意から以下の漸化式をうる．
+問題の図のように正三角形を9個の小三角形の部屋に分割すると，下向きの部屋は3個，上向きの部屋は6個存在する．
+下向きの3部屋のうち $P, Q$ でない残りの1部屋を上図(a)のように $R$ とする．
+各部屋の辺を共有する隣の部屋は，下向きの部屋に対しては必ず上向きの部屋であり，上向きの部屋に対しては必ず下向きの部屋である．
+したがって，部屋の遷移は下向きの部屋群 $\{P, Q, R\}$ と上向きの部屋群の間の二部グラフをなし，球は1秒ごとに下向きの部屋と上向きの部屋を交互に行き来する．
+球は最初（$0$秒後）に下向きの部屋 $P$ にあるから，奇数秒後には必ず上向きの部屋にあり，偶数秒後には必ず下向きの部屋 $P, Q, R$ のいずれかにある．
+ゆえに，$n$ が奇数のとき，球が $Q$ にある確率は $0$ である．
+
+次に，下向きの部屋から2秒後の移動を考える．部屋 $P$ から出発した場合，
+\begin{itemize}
+  \item 上端の上向きの部屋へ移動した場合（確率 $\dfrac{1}{3}$）：その部屋に隣接する部屋は $P$ のみであるから，次は確率 $1$ で $P$ に戻る（寄与 $\dfrac{1}{3} \times 1 = \dfrac{1}{3}$）．
+  \item 左下または右下の上向きの部屋へ移動した場合（各確率 $\dfrac{1}{3}$）：それぞれの部屋には下向きの2部屋が隣接しているため，次は等確率 $\dfrac{1}{2}$ で $P$ または $R$（あるいは $P$ または $Q$）へ移動する（各寄与 $\dfrac{1}{3} \times \dfrac{1}{2} = \dfrac{1}{6}$）．
+\end{itemize}
+したがって，2秒後に同じ部屋にとどまる確率は $\dfrac{1}{3} + \dfrac{1}{6} + \dfrac{1}{6} = \dfrac{2}{3}$，他の特定の部屋へ移る確率はそれぞれ $\dfrac{1}{6}$ である．
+正三角形の対称性から，部屋 $Q, R$ から出発した場合の2秒後の遷移確率も同様である（上図(b)）．
+
+$k$ を $0$ 以上の整数とし，$2k$ 秒後に球が $P, Q, R$ にある確率をそれぞれ $a_k, b_k, c_k$ とおく．
+初期状態は $a_0 = 1, b_0 = 0, c_0 = 0$ であり，問題の対称性から常に $c_k = b_k$ が成り立つ．
+2秒ごとの遷移より，次の漸化式を得る：
 \begin{align}
   b_{k+1} = \dfrac{2}{3} b_k + \dfrac{1}{6} b_k + \dfrac{1}{6} a_k \label{eq:1}
 \end{align}
-ここで，$2k$ 秒後には球は$P, Q, R$のいずれかにあるから
+ここで，$2k$ 秒後には球は必ず $P, Q, R$ のいずれかにあるから
 \begin{align}
   a_k + 2b_k = 1 \label{eq:2}
 \end{align}
-である．\cref{eq:1}に代入して$a_k$ を消去すると
+である．\cref{eq:2}より $a_k = 1 - 2b_k$ を\cref{eq:1}に代入して整理すると
 \begin{align}
-  & b_{k+1} = \dfrac{1}{2} b_k + \dfrac{1}{6} \\
-  & b_{k+1} - \dfrac{1}{3} = \dfrac{1}{2} \left( b_k - \dfrac{1}{3} \right)
+  b_{k+1} &= \dfrac{1}{2} b_k + \dfrac{1}{6} \notag \\
+  b_{k+1} - \dfrac{1}{3} &= \dfrac{1}{2} \left( b_k - \dfrac{1}{3} \right)
 \end{align}
-である．初期条件は$b_0 = 0$ だから，漸化式を繰り返し用いて
+となる．数列 $\left\{ b_k - \dfrac{1}{3} \right\}$ は初項 $b_0 - \dfrac{1}{3} = -\dfrac{1}{3}$，公比 $\dfrac{1}{2}$ の等比数列であるから
 \begin{align}
-  b_k = -\dfrac{1}{3}\left(\dfrac{1}{2}\right)^k + \dfrac{1}{3}
-\end{align}
-だから，もとめる確率は
-\begin{align}
-  \begin{cases}
-    0 & (n \in \text{odd}) \\
-    \dfrac{1}{3} \left( 1 - \left(\dfrac{1}{2}\right)^{\frac{n}{2}} \right) & (n \in \text{even})
-  \end{cases}
+  b_k - \dfrac{1}{3} = -\dfrac{1}{3}\left(\dfrac{1}{2}\right)^k \iff b_k = \dfrac{1}{3}\left(1 - \left(\dfrac{1}{2}\right)^k\right)
 \end{align}
 である．
 
-\bigskip
+以上より，求める確率は
+\begin{align}
+  \begin{cases}
+    0 & (n \text{ が奇数のとき}) \\
+    \dfrac{1}{3} \left( 1 - \left(\dfrac{1}{2}\right)^{\frac{n}{2}} \right) & (n \text{ が偶数のとき})
+  \end{cases}
+\end{align}
+である．
 
 \end{document}
