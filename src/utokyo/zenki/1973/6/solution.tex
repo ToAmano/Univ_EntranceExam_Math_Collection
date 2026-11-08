@@ -3,7 +3,42 @@
 
 {\bf [解答]}
 
-% TODO: 概要図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.5cm, y=3.0cm, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.7, 0) -- (2.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.6) -- (0, 1.2) node[above] {$y$};
+    \node[below left=1pt, font=\footnotesize] at (0, 0) {$O$};
+
+    % 原点での接線 y = x
+    \draw[thick, dashed, teal!85!black, domain=-0.4:1.1] plot (\x, {\x})
+    node[above left=1pt, font=\footnotesize, text=teal!85!black] {$y = x$};
+
+    % 放物線 y = ax^2 + x (a = -0.5)
+    \draw[line width=1.3pt, blue!85!black, domain=-0.4:2.3, samples=80]
+    plot (\x, {-0.5*\x*\x + \x})
+    node[below right=2pt, font=\footnotesize, text=blue!85!black] {$y = ax^2 + x$};
+
+    % 代表点 (u, v): u = 1.4, v = -0.5*(1.4)^2 + 1.4 = 0.42
+    \coordinate (P) at (1.4, 0.42);
+    % 接線の傾き f'(u) = 2*(-0.5)*1.4 + 1 = -0.4
+    % 接線: y - 0.42 = -0.4*(x - 1.4) => y = -0.4*x + 0.98
+    \draw[line width=1.1pt, red!85!black, domain=0.4:2.3]
+    plot (\x, {-0.4*\x + 0.98})
+    node[right, font=\footnotesize, text=red!85!black] {接線};
+
+    % 垂線 (u, v) -> x軸, y軸
+    \draw[densely dotted, thick, gray!70!black] (P) -- (1.4, 0) node[below, font=\footnotesize] {$u$};
+    \draw[densely dotted, thick, gray!70!black] (P) -- (0, 0.42) node[left, font=\footnotesize] {$v$};
+
+    % 点 P(u, v)
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {};
+    \node[above right=2pt, font=\footnotesize, text=red!85!black, fill=white, inner sep=0.8pt] at (P) {$(u, v)$};
+  \end{tikzpicture}
+  \caption{放物線 $y = ax^2 + x$ と点 $(u, v)$ における接線}
+  \label{fig:parabola_tangent}
+\end{figure}
 
 題意の放物線を$y=f(x)=ax^2+bx$とおく$(\because f(0)=0)$．ただし$a\not=0$である．
 $f'(0)=1$だから$b=1$である．故に
