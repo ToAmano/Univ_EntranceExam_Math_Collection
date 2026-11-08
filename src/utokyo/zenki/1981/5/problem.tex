@@ -33,13 +33,21 @@ $n\geqq3$ とし，
     \end{scope}
 
     \begin{scope}[shift={(2.5, 0)}]
+      \def\rBase{0.8}
+      \def\rApex{2.2}
       \foreach \i in {1,...,5} {
-        \coordinate (B\i) at ({90+72*(\i-1)}:0.8);
-        \coordinate (V\i) at ({90+72*(\i-1)}:2.3);
+        \coordinate (B\i) at ({90+72*(\i-1)}:\rBase);
+        \coordinate (V\i) at ({90+72*(\i-1)+36}:\rApex);
       }
-      \draw[dashed] (B1) -- (B2) -- (B3) -- (B4) -- (B5) -- cycle;
+      % 頂点を通る円（半径 1 に対応する円）
+      \draw[dotted, thick, gray!70!black] (0, 0) circle (\rApex);
+      \draw[dashed, thick, gray!70!black] (B1) -- (B2) -- (B3) -- (B4) -- (B5) -- cycle;
 
-      \draw[thick] (B1) -- (V1) -- (B2) -- (V2) -- (B3) -- (V3) -- (B4) -- (V4) -- (B5) -- (V5) -- cycle;
+      \draw[very thick, blue!85!black] (B1) -- (V1) -- (B2) -- (V2) -- (B3) -- (V3) -- (B4) -- (V4) -- (B5) -- (V5) -- cycle;
+      \foreach \i in {1,...,5} {
+        \node[circle, fill=blue!85!black, inner sep=1.0pt] at (B\i) {};
+        \node[circle, fill=red!85!black, inner sep=1.0pt] at (V\i) {};
+      }
     \end{scope}
   \end{tikzpicture}
 \end{figure}

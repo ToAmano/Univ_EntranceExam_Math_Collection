@@ -10,18 +10,32 @@ $xy$ 平面上に投ぜられた円板 $C$ の影を $S$ とする．
 
 \begin{figure}[htbp]
   \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \draw[->] (0,0) -- (1.5, -1.2) node[below right] {$x$};
-    \draw[->] (0,0) -- (2.5, 0) node[right] {$y$};
-    \draw[->] (0,0) -- (0, 2.5) node[above] {$z$};
-    \node[below left] at (0,0) {$O$};
+  \tdplotsetmaincoords{70}{55}
+  \begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+    \begin{scope}[tdplot_main_coords]
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-1.5,0,0) -- (1.5,0,0) node[below left=1pt] {$x$};
+      \draw[->, thick, gray!80!black] (0,-0.5,0) -- (0,3.2,0) node[right] {$y$};
+      \draw[->, thick, gray!80!black] (0,0,-0.3) -- (0,0,3.2) node[above] {$z$};
+      \node[below right=3pt] at (0,0,0) {$O$};
 
-    \coordinate (P) at (0, 2.1);
-    \node[circle, fill, inner sep=1.5pt] at (P) {}; \node[left] at (P) {$P$};
+      % 円板 C（平面 y=z 内，中心 (0,√2/2,√2/2)，半径1，原点 O で x 軸に接する）
+      \fill[pattern=north east lines, pattern color=blue!65, opacity=0.7]
+      plot[domain=0:360, samples=60, variable=\t]
+      ({cos(\t)}, {0.7071+0.7071*sin(\t)}, {0.7071+0.7071*sin(\t)});
+      \draw[very thick, blue!85!black]
+      plot[domain=0:360, samples=80, variable=\t]
+      ({cos(\t)}, {0.7071+0.7071*sin(\t)}, {0.7071+0.7071*sin(\t)});
+      \node[blue!90!black, above=2pt] at (0, 1.4142, 1.4142) {$C$};
 
-    \begin{scope}[rotate around={35:(0.8, 0.8)}]
-      \draw[thick] (0.8, 0.8) ellipse (0.9 and 0.5);
-      \node at (0.8, 0.8) {$C$};
+      % 点光源 P
+      \coordinate (P) at (0, 0, 2.8284);
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {};
+      \node[above left=1pt, red!85!black] at (P) {$P(0,0,2\sqrt{2})$};
+
+      % 光線
+      \draw[dashed, red!70!black] (P) -- (0, 0, 0);
+      \draw[dashed, red!70!black] (P) -- (0, 1.4142, 1.4142);
     \end{scope}
   \end{tikzpicture}
 \end{figure}

@@ -14,33 +14,52 @@
 
 \begin{figure}[htbp]
   \centering
-  \begin{tikzpicture}[scale=1.5, >=stealth]
-    \draw[thick] (-0.5, 0) -- (4.2, 1.4) node[right] {$\ell$};
+  \begin{tikzpicture}[x=1.8cm, y=1.8cm, >=stealth, every node/.style={font=\small}]
+    \draw[thick, gray!80!black] (-0.3, 0) -- (3.8, 0) node[right] {$\ell$};
 
-    \coordinate (O1) at (0.6, 1.35);
-    \draw[thick] (O1) circle (1.2);
-    \node[circle, fill, inner sep=1pt] at (O1) {};
-    \draw[->] (O1) -- +(60:1.2) node[midway, right] {$R$};
-    \node[above left] at (-0.3, 1.8) {$C$};
+    % 定数 R=1.2, R'=0.8
+    \def\R{1.2}
+    \def\Rp{0.8}
+    % x 座標: C の中心を (0.8, R) とする
+    \def\xC{0.8}
+    \pgfmathsetmacro{\xCp}{\xC + 2.0 * sqrt(\R * \Rp)}
+    \pgfmathsetmacro{\rOne}{1.0 / pow(1.0/sqrt(\R) + 1.0/sqrt(\Rp), 2)}
+    \pgfmathsetmacro{\xCone}{\xC + 2.0 * sqrt(\R * \rOne)}
+    \pgfmathsetmacro{\rTwo}{1.0 / pow(2.0/sqrt(\R) + 1.0/sqrt(\Rp), 2)}
+    \pgfmathsetmacro{\xCtwo}{\xC + 2.0 * sqrt(\R * \rTwo)}
+    \pgfmathsetmacro{\rThree}{1.0 / pow(3.0/sqrt(\R) + 1.0/sqrt(\Rp), 2)}
+    \pgfmathsetmacro{\xCthree}{\xC + 2.0 * sqrt(\R * \rThree)}
 
-    \coordinate (O2) at (2.4, 1.55);
-    \draw[thick] (O2) circle (0.8);
-    \node[circle, fill, inner sep=1pt] at (O2) {};
-    \draw[->] (O2) -- +(40:0.8) node[midway, above] {$R'$};
-    \node[above right] at (3.1, 2.0) {$C'$};
+    \coordinate (O) at (\xC, \R);
+    \coordinate (Op) at (\xCp, \Rp);
+    \coordinate (C1) at (\xCone, \rOne);
+    \coordinate (C2) at (\xCtwo, \rTwo);
+    \coordinate (C3) at (\xCthree, \rThree);
 
-    \coordinate (C1) at (2.2, 0.95);
-    \draw (C1) circle (0.35);
-    \node[below right] at (2.3, 0.8) {$C_1$};
+    % 円 C
+    \draw[line width=1.1pt, blue!85!black] (O) circle (\R);
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (O) {};
+    \draw[->, thick, blue!85!black] (O) -- +(120:\R) node[midway, above left] {$R$};
+    \node[above=2pt, blue!85!black] at (\xC, {2*\R}) {$C$};
 
-    \coordinate (C2) at (1.8, 0.77);
-    \draw (C2) circle (0.2);
-    \node[below] at (1.8, 0.55) {$C_2$};
+    % 円 C'
+    \draw[line width=1.1pt, orange!85!black] (Op) circle (\Rp);
+    \node[circle, fill=orange!85!black, inner sep=1.2pt] at (Op) {};
+    \draw[->, thick, orange!85!black] (Op) -- +(60:\Rp) node[midway, above right] {$R'$};
+    \node[above=2pt, orange!85!black] at (\xCp, {2*\Rp}) {$C'$};
 
-    \coordinate (C3) at (1.52, 0.66);
-    \draw (C3) circle (0.12);
-    \node[below] at (1.5, 0.5) {$C_3$};
+    % 小円 C1, C2, C3
+    \draw[line width=0.9pt, red!85!black] (C1) circle (\rOne);
+    \node[below=2pt, red!85!black, font=\footnotesize] at (\xCone, 0) {$C_1$};
+
+    \draw[line width=0.8pt, teal!85!black] (C2) circle (\rTwo);
+    \node[above right=1pt, teal!85!black, font=\scriptsize] at (\xCtwo, {2*\rTwo}) {$C_2$};
+
+    \draw[line width=0.7pt, purple!85!black] (C3) circle (\rThree);
+    \node[above left=1pt, purple!85!black, font=\scriptsize] at (\xCthree, {2*\rThree}) {$C_3$};
   \end{tikzpicture}
+  \caption{共通接線 $\ell$ に接する円群}
+  \label{fig:problem_circles}
 \end{figure}
 
 \end{document}
