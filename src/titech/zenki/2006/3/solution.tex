@@ -108,7 +108,7 @@ $B,C$の中心$O_B,O_C$は単位円上にあるので偏角を$\theta,\alpha$と
       % 1. 左図: alpha < pi の場合 (例: theta = 120度, alpha = 60度)
       % ========================================================
       \begin{scope}[shift={(0, 0)}]
-        \node[above, font=\bfseries] at (0.5, 2.3) {$\alpha < \pi$};
+        \node[above, font=\bfseries] at (0.6, 2.35) {$\alpha < \pi$};
 
         \def\tL{120}
         \def\aL{60}
@@ -126,12 +126,12 @@ $B,C$の中心$O_B,O_C$は単位円上にあるので偏角を$\theta,\alpha$と
         \end{scope}
 
         % 座標軸
-        \draw[->, thick, gray!80] (-1.8, 0) -- (2.3, 0) node[right, black] {$x$};
-        \draw[->, thick, gray!80] (0, -1.6) -- (0, 2.3) node[above, black] {$y$};
+        \draw[->, thick, gray!80!black] (-1.8, 0) -- (2.3, 0) node[right, black] {$x$};
+        \draw[->, thick, gray!80!black] (0, -1.6) -- (0, 2.1) node[above, black] {$y$};
         \node[below left, font=\scriptsize] at (P) {$P(0,0)$};
 
         % 中心の軌跡（単位円）
-        \draw[dashed, gray!50] (P) circle (1.0);
+        \draw[dashed, gray!70!black] (P) circle (1.0);
 
         % 3つの円
         \draw[thick, blue!80!black] (OA) circle (1.0);
@@ -156,15 +156,15 @@ $B,C$の中心$O_B,O_C$は単位円上にあるので偏角を$\theta,\alpha$と
         \node[circle, fill=green!60!black, inner sep=1.2pt] at (OC) {}; \node[green!60!black, above right, font=\scriptsize] at (OC) {$O_C$};
         \node[circle, fill, inner sep=1.2pt] at (P) {};
 
-        % 注記
-        \node[red!80!black, font=\scriptsize, align=center] at (0.35, 0.95) {3円の重複\\(共有点あり)};
+        % 注記（円弧・角度表示と重ならないよう引き出し線で配置）
+        \draw[<-, >=stealth, red!80!black, semithick] (0.35, 0.65) -- (1.0, 1.3) node[above right=-2pt, red!80!black, font=\scriptsize, align=center] {3円の重複\\(共有点あり)};
       \end{scope}
 
       % ========================================================
       % 2. 右図: alpha > theta + pi の場合 (例: theta = 50度, alpha = 270度 > 230度)
       % ========================================================
       \begin{scope}[shift={(4.8, 0)}]
-        \node[above, font=\bfseries] at (0.5, 2.3) {$\alpha > \theta + \pi$};
+        \node[above, font=\bfseries] at (0.6, 2.35) {$\alpha > \theta + \pi$};
 
         \def\tR{50}
         \def\aR{270}
@@ -182,12 +182,12 @@ $B,C$の中心$O_B,O_C$は単位円上にあるので偏角を$\theta,\alpha$と
         \end{scope}
 
         % 座標軸
-        \draw[->, thick, gray!80] (-1.8, 0) -- (2.3, 0) node[right, black] {$x$};
-        \draw[->, thick, gray!80] (0, -2.1) -- (0, 2.1) node[above, black] {$y$};
+        \draw[->, thick, gray!80!black] (-1.8, 0) -- (2.3, 0) node[right, black] {$x$};
+        \draw[->, thick, gray!80!black] (0, -2.1) -- (0, 2.1) node[above, black] {$y$};
         \node[above left, font=\scriptsize] at (PR) {$P(0,0)$};
 
         % 中心の軌跡（単位円）
-        \draw[dashed, gray!50] (PR) circle (1.0);
+        \draw[dashed, gray!70!black] (PR) circle (1.0);
 
         % 限界線 theta + pi (破線)
         \draw[dashed, purple!80!black, thick] (PR) -- ({cos(\tR+180)}, {sin(\tR+180)})
@@ -216,8 +216,8 @@ $B,C$の中心$O_B,O_C$は単位円上にあるので偏角を$\theta,\alpha$と
         \node[circle, fill=green!60!black, inner sep=1.2pt] at (OCR) {}; \node[green!60!black, below right, font=\scriptsize] at (OCR) {$O_C$};
         \node[circle, fill, inner sep=1.2pt] at (PR) {};
 
-        % 注記
-        \node[red!80!black, font=\scriptsize, align=center] at (0.8, 0.45) {3円の重複\\(共有点あり)};
+        % 注記（角度表示・中心プロットから離し、引き出し線で配置）
+        \draw[<-, >=stealth, red!80!black, semithick] (0.45, -0.25) -- (1.2, -0.8) node[below right=-2pt, red!80!black, font=\scriptsize, align=center] {3円の重複\\(共有点あり)};
       \end{scope}
 
     \end{tikzpicture}
@@ -433,7 +433,9 @@ $O_A,O_B,O_C$の偏角はそれぞれ$0,\theta,\alpha$（$0\le\theta\le\pi\le\al
 
 $\sin\dfrac{\theta}{2} \ge 0$および上図から，$\alpha-\dfrac{\theta}{2} = \pi$の時に$S$は最大となり
 \begin{align}
-  \max S &=2\sin\dfrac{\theta}{2}+\sin\theta\equiv g(\theta)\qquad(0\le\theta\le\pi)
+  \max S
+  &= 2\pi + 2\sin\dfrac{\theta}{2}+\sin\theta
+  \equiv f(\theta)\qquad(0\le\theta\le\pi)
 \end{align}
 をとる．これを$f(\theta)$とおいて，次に$\theta$を動かす．
 一階微分は
@@ -445,11 +447,22 @@ $\sin\dfrac{\theta}{2} \ge 0$および上図から，$\alpha-\dfrac{\theta}{2} =
 \end{align}
 だから$f(\theta)$の増減表は以下のようになる．
 
+\begin{table}[H]
+  \centering
+  \caption{$f(\theta)$ の増減表}
+  \label{tab:f_theta}
+  \begin{tabular}{c|ccccc}
+    $\theta$ & $0$ & $\cdots$ & $\dfrac{2\pi}{3}$ & $\cdots$ & $\pi$ \\ \hline
+    $f'(\theta)$ & & $+$ & $0$ & $-$ & \\ \hline
+    $f(\theta)$ & & $\nearrow$ & 極大 & $\searrow$ &
+  \end{tabular}
+\end{table}
+
 従って$f(\theta)$は$\theta = \dfrac{2\pi}{3}$で最大値をとり，その値は
 \begin{align}
   \max S
-  &= f\left(\dfrac{2\pi}{3}\right) \\
-  &= 2\pi + \dfrac{3\sqrt{3}}{2}
+  &= f\left(\dfrac{2\pi}{3}\right)
+  = 2\pi + \dfrac{3\sqrt{3}}{2}
 \end{align}
 である．
 
