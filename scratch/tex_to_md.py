@@ -21,12 +21,12 @@ TYPE_JA = {"problem": "問題", "solution": "解答解説"}
 def build_title(uni, category, year, q_num, type_str):
     """Web側の解答ページ見出し（web/src/pages/solutions/[...slug].astro の
     pageTitle フォールバック）と表記を揃えた、自然な日本語タイトルを組み立てる。"""
-    if q_num == "0" or type_str == "summary":
-        return f"{year}年 全体サマリ"
     univ_ja = UNIV_JA.get(uni, uni)
     cat_ja = CATEGORY_JA.get(category, category)
+    if q_num == "0" or type_str == "summary":
+        return f"{univ_ja} {cat_ja} {year}年 数学 全体サマリ"
     type_ja = TYPE_JA.get(type_str, type_str)
-    return f"{univ_ja} {cat_ja} {year}年 第{q_num}問 ({type_ja})"
+    return f"{univ_ja} {cat_ja} {year}年 数学 第{q_num}問 ({type_ja})"
 
 
 def load_topic_tags():

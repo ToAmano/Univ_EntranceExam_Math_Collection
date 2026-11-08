@@ -145,7 +145,11 @@ const prevYearEntry = pickEntryForYear(prevYearNum);
 const nextYearEntry = pickEntryForYear(nextYearNum);
 
 // Page Title
-const pageTitle = entry.data.title || `${univName} ${catName} ${year}年 ${questionLabel} (${typeLabel})`;
+const pageTitle =
+	entry.data.title ||
+	(entryType === 'summary'
+		? `${univName} ${catName} ${year}年 数学 全体サマリ`
+		: `${univName} ${catName} ${year}年 数学 ${questionLabel} (${typeLabel})`);
 
 // 「この解答を報告する」リンク: GitHub の new issue 画面に、ページ情報と
 // 該当ソースファイルのパスをあらかじめ入力した状態で開く。bug ラベルを
@@ -188,9 +192,15 @@ jsonLdItems.push(
 		{ name: `${year}年 ${questionLabel}`, url: pageUrlForJsonLd },
 	])
 );
+const pageDescription =
+	entryType === 'summary'
+		? `${univName} ${catName} ${year}年 数学の出題テーマ・難易度・配点などの全体サマリ。`
+		: entryType === 'problem'
+			? `${univName} ${catName} ${year}年 数学 ${questionLabel}の過去問問題文。`
+			: `${univName} ${catName} ${year}年 数学 ${questionLabel}の過去問解答解説。`;
 ---
 
-<Layout title={pageTitle} description={`${univName} ${catName} ${year}年 ${questionLabel}の過去問解答解説。`} ogType="article" ogImagePath={ogImagePath} canonicalUrl={canonicalOverrideUrl} jsonLd={jsonLdItems}>
+<Layout title={pageTitle} description={pageDescription} ogType="article" ogImagePath={ogImagePath} canonicalUrl={canonicalOverrideUrl} jsonLd={jsonLdItems}>
 	<!-- Breadcrumb Navigation -->
 	<nav aria-label="Breadcrumb" style="margin-bottom: 2rem;">
 		<ol class="breadcrumb" style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; list-style: none; padding: 0; margin: 0; font-size: 0.9rem; color: var(--text-muted);">
