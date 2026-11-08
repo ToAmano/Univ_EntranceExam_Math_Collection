@@ -1,29 +1,4 @@
 \documentclass[../../main.tex]{subfiles}
-% \documentclass[a4paper,10pt]{ltjsarticle}
-\usepackage{luatexja}
-\usepackage[hiragino-pron]{luatexja-preset}
-
-\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
-\setlength{\textwidth}{54\zw}
-\setlength{\textheight}{73\zw}
-
-\usepackage{amsmath,amssymb,ascmac}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{cleveref}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usetikzlibrary{math}
-% \usepackage{indent}
-\usepackage{cases}
-\usepackage{float}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
 \begin{document}
 \rhead{東京大学後期$2005$年$1$番}
 \setcounter{equation}{0}
@@ -41,6 +16,7 @@
     \begin{tikzpicture}
       \begin{axis}[
           axis lines=middle, % Draw axes through the origin
+          axis line style={->, thick, gray!80!black},
           % Set custom limits for the plotting area
           xmin=-1.2, xmax=1.2,
           ymin=-0.1, ymax=1.2,
@@ -69,8 +45,8 @@
         % These values are chosen to visually represent the points as in the diagram.
         \pgfmathsetmacro{\Ssmall}{sin(\thetaVal/2)} % S = sin(30 deg) = 0.5
         \pgfmathsetmacro{\Csmall}{cos(\thetaVal/2)} % C = cos(30 deg) approx 0.866
-        \pgfmathsetmacro{\parama}{0.5} % Example value for parameter 'a'
-        \pgfmathsetmacro{\paramb}{0.7} % Example value for parameter 'b'
+        \pgfmathsetmacro{\parama}{0.8} % Example value for parameter 'a'
+        \pgfmathsetmacro{\paramb}{\Ssmall/\parama} % ab = S ensures triangle area is bisected
 
         \coordinate (B) at ({1-\paramb}, 0); % B(1-b, 0)
         \coordinate (A) at ({1-\parama*\Ssmall}, {\parama*\Csmall}); % A(1-aS, aC)
@@ -190,6 +166,7 @@
 
       \begin{axis}[
           axis lines=middle, % Draw axes through the origin
+          axis line style={->, thick, gray!80!black},
           xlabel=$a$, % Label for the x-axis
           ylabel=$b$, % Label for the y-axis
           xlabel style={at={(axis description cs:1,0)},anchor=north west}, % Position x-label
@@ -201,40 +178,31 @@
           clip=false,
         ]
 
-        % % Draw the axes manually with custom arrow tips (Stealth)
-        % \draw[->, >=Stealth] (axis cs:0,0) -- (axis cs:\pgfkeysvalueof{/pgfplots/xmax},0) node[anchor=north west] {$a$};
-        % \draw[->, >=Stealth] (axis cs:0,0) -- (axis cs:0,\pgfkeysvalueof{/pgfplots/ymax}) node[anchor=south east] {$b$};
-
         % Plot the full hyperbola (thin gray line)
-        \addplot[domain=0.4:1.8, samples=100, smooth, gray!60] {\Svalue/x}
+        \addplot[domain=0.4:1.8, samples=100, smooth, gray!70!black] {\Svalue/x}
         node[pos=0.8, above right, black] {$ab=S$}; % Label the hyperbola
 
         % Plot the bold segment of the hyperbola: from a=1 to a=2S
-        \addplot[domain=\Svalue:\twoS, samples=100, line width=1.2pt, black] {\Svalue/x};
+        \addplot[domain=\Svalue:\twoS, samples=100, line width=1.2pt, blue!85!black] {\Svalue/x};
 
         % Plot the auxiliary line b=a (dashed gray line)
-        \addplot[domain=0:\pgfkeysvalueof{/pgfplots/xmax}, dashed, black] {x};
-        \addplot[domain=0.4:2, dashed, black] {1.7-x};
+        \addplot[domain=0:\pgfkeysvalueof{/pgfplots/xmax}, densely dotted, gray!70!black] {x};
+        \addplot[domain=0.4:2, dashed, red!85!black] {1.7-x};
 
         % --- Mark specific points with filled circles and draw dashed lines to axes ---
         % Point (sqrt(S), sqrt(S)) - Intersection of b=a and ab=S
-        \node[circle, fill, inner sep=2pt] at (axis cs:\sqrtS, \sqrtS) {};
-        \draw[dashed, gray] (axis cs:\sqrtS,0) -- (axis cs:\sqrtS, \sqrtS) -- (axis cs:0,\sqrtS);
-
-        % % Point (1, bAtOne) = (1, S) - Start of the bold segment
-        % \fill (axis cs:1, \bAtOne) circle (2pt);
-        % \draw[dashed, gray] (axis cs:1,0) -- (axis cs:1, \bAtOne);
-        % \draw[dashed, gray] (axis cs:0, \bAtOne) -- (axis cs:1, \bAtOne);
+        \node[circle, fill=blue!85!black, inner sep=2pt] at (axis cs:\sqrtS, \sqrtS) {};
+        \draw[densely dotted, thick, gray!70!black] (axis cs:\sqrtS,0) -- (axis cs:\sqrtS, \sqrtS) -- (axis cs:0,\sqrtS);
 
         % Point (2S, bAtTwoS) = (2S, 1/2) - End of the bold segment
-        \node[circle, fill, inner sep=2pt] at (axis cs:\twoS, \bAtTwoS) {};
-        \draw[dashed, gray] (axis cs:\twoS,0) -- (axis cs:\twoS, \bAtTwoS);
-        \draw[dashed, gray] (axis cs:0,\bAtTwoS) -- (axis cs:\twoS, \bAtTwoS);
+        \node[circle, fill=blue!85!black, inner sep=2pt] at (axis cs:\twoS, \bAtTwoS) {};
+        \draw[densely dotted, thick, gray!70!black] (axis cs:\twoS,0) -- (axis cs:\twoS, \bAtTwoS);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:0,\bAtTwoS) -- (axis cs:\twoS, \bAtTwoS);
 
         % Point (aAtOneB, 1) = (S, 1) - Corresponding to b=1
-        \node[circle, fill, inner sep=2pt] at (axis cs:\aAtOneB, 1) {};
-        \draw[dashed, gray] (axis cs:\aAtOneB,0) -- (axis cs:\aAtOneB, 1);
-        \draw[dashed, gray] (axis cs:0,1) -- (axis cs:\aAtOneB, 1);
+        \node[circle, fill=blue!85!black, inner sep=2pt] at (axis cs:\aAtOneB, 1) {};
+        \draw[densely dotted, thick, gray!70!black] (axis cs:\aAtOneB,0) -- (axis cs:\aAtOneB, 1);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:0,1) -- (axis cs:\aAtOneB, 1);
 
         % --- Labels for axis ticks and the origin ---
         % Origin label
@@ -291,6 +259,7 @@
 
       \begin{axis}[
           axis lines=middle, % Draw axes through the origin
+          axis line style={->, thick, gray!80!black},
           xlabel=$a$, % Label for the x-axis
           ylabel=$b$, % Label for the y-axis
           xlabel style={at={(axis description cs:1,0)},anchor=north west}, % Position x-label
@@ -302,34 +271,29 @@
           clip=false,
         ]
         % Plot the full hyperbola (thin gray line)
-        \addplot[domain=0.15:1.2, samples=100, smooth, gray!60] {\Svalue/x}
+        \addplot[domain=0.15:1.2, samples=100, smooth, gray!70!black] {\Svalue/x}
         node[pos=0.8, above right,black] {$ab=S$}; % Label the hyperbola
 
         % Plot the bold segment of the hyperbola: from a=1 to a=2S
-        \addplot[domain=\Svalue:\twoS, samples=50, line width=1.2pt, black] {\Svalue/x};
+        \addplot[domain=\Svalue:\twoS, samples=50, line width=1.2pt, blue!85!black] {\Svalue/x};
 
         % Plot the auxiliary line b=a (dashed gray line)
-        \addplot[domain=0:\pgfkeysvalueof{/pgfplots/xmax}, dashed, gray] {x};
+        \addplot[domain=0:\pgfkeysvalueof{/pgfplots/xmax}, densely dotted, gray!70!black] {x};
 
         % --- Mark specific points with filled circles and draw dashed lines to axes ---
         % Point (sqrt(S), sqrt(S)) - Intersection of b=a and ab=S
-        \node[circle, fill, inner sep=2pt] at (axis cs:\sqrtS, \sqrtS) {};
-        \draw[dashed, gray] (axis cs:\sqrtS,0) -- (axis cs:\sqrtS, \sqrtS) -- (axis cs:0,\sqrtS);
-
-        % % Point (1, bAtOne) = (1, S) - Start of the bold segment
-        % \fill (axis cs:1, \bAtOne) circle (2pt);
-        % \draw[dashed, gray] (axis cs:1,0) -- (axis cs:1, \bAtOne);
-        % \draw[dashed, gray] (axis cs:0, \bAtOne) -- (axis cs:1, \bAtOne);
+        \node[circle, fill=blue!85!black, inner sep=2pt] at (axis cs:\sqrtS, \sqrtS) {};
+        \draw[densely dotted, thick, gray!70!black] (axis cs:\sqrtS,0) -- (axis cs:\sqrtS, \sqrtS) -- (axis cs:0,\sqrtS);
 
         % Point (2S, bAtTwoS) = (2S, 1/2) - End of the bold segment
-        \node[circle, fill, inner sep=2pt] at (axis cs:\twoS, \bAtTwoS) {};
-        \draw[dashed, gray] (axis cs:\twoS,0) -- (axis cs:\twoS, \bAtTwoS);
-        \draw[dashed, gray] (axis cs:0,\bAtTwoS) -- (axis cs:\twoS, \bAtTwoS);
+        \node[circle, fill=blue!85!black, inner sep=2pt] at (axis cs:\twoS, \bAtTwoS) {};
+        \draw[densely dotted, thick, gray!70!black] (axis cs:\twoS,0) -- (axis cs:\twoS, \bAtTwoS);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:0,\bAtTwoS) -- (axis cs:\twoS, \bAtTwoS);
 
         % Point (aAtOneB, 1) = (S, 1) - Corresponding to b=1
-        \node[circle, fill, inner sep=2pt] at (axis cs:\aAtOneB, 1) {};
-        \draw[dashed, gray] (axis cs:\aAtOneB,0) -- (axis cs:\aAtOneB, 1);
-        \draw[dashed, gray] (axis cs:0,1) -- (axis cs:\aAtOneB, 1);
+        \node[circle, fill=blue!85!black, inner sep=2pt] at (axis cs:\aAtOneB, 1) {};
+        \draw[densely dotted, thick, gray!70!black] (axis cs:\aAtOneB,0) -- (axis cs:\aAtOneB, 1);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:0,1) -- (axis cs:\aAtOneB, 1);
 
         % --- Labels for axis ticks and the origin ---
         % Origin label
@@ -456,6 +420,7 @@
 
       \begin{axis}[
           axis lines=middle, % Draw axes through the origin
+          axis line style={->, thick, gray!80!black},
           xmin=0, xmax=4, % Range for theta in degrees (slightly beyond pi=180 degrees)
           ymin=0, ymax=0.8, % Range for f(theta), slightly beyond 0.5
           xlabel=$\theta$, % Label for the x-axis
@@ -466,20 +431,20 @@
           clip=false,
         ]
 
-        % % Plot the first segment of the function: 0 <= theta < 2*alpha (using hfunc)
-        \addplot[domain=0:\thetaTransDeg, samples=100, smooth, black] {2*(sin(deg(x)/2))^2 + 1/4};
-        \addplot[domain=\thetaTransDeg:pi, samples=100, smooth, black] {2*sin(deg(x)/2) - 2*(sin(deg(x)/2))^2};
+        % Plot the first segment of the function: 0 <= theta < 2*alpha (using hfunc)
+        \addplot[domain=0:\thetaTransDeg, samples=100, smooth, thick, blue!85!black] {2*(sin(deg(x)/2))^2 + 1/4};
+        \addplot[domain=\thetaTransDeg:pi, samples=100, smooth, thick, blue!85!black] {2*sin(deg(x)/2) - 2*(sin(deg(x)/2))^2};
 
-        % Mark specific points with filled circles as shown in the image
-        \node[circle, fill, inner sep=1.5pt] at (axis cs:0, 1/4) {}; % Point (0, 1/4)
-        \node[circle, fill, inner sep=1.5pt] at (axis cs:\thetaTransDeg, 3/8) {}; % Point (2*alpha, 3/8) - Transition point
-        \node[circle, fill, inner sep=1.5pt] at (axis cs:pi/3, 1/2) {}; % Point (pi/3, 1/2) - Maximum point (pi/3 = 60 degrees)
-        \node[circle, fill, inner sep=1.5pt] at (axis cs:pi, 0) {}; % Point (pi, 0) - End point (pi = 180 degrees)
+        % Open and closed points according to domain 0 < theta < pi
+        \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (axis cs:0, 1/4) {}; % Point (0, 1/4) (open)
+        \node[circle, fill=blue!85!black, inner sep=1.4pt] at (axis cs:\thetaTransDeg, 3/8) {}; % Point (2*alpha, 3/8) - Transition point
+        \node[circle, fill=red!85!black, inner sep=1.4pt] at (axis cs:pi/3, 1/2) {}; % Point (pi/3, 1/2) - Maximum point
+        \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (axis cs:pi, 0) {}; % Point (pi, 0) (open)
 
         % Draw dashed lines from points to axes for visual reference
-        \draw[dashed, gray] (axis cs:0, 1/4) -- (axis cs:-0.05, 1/4); % From (0, 1/4) to y-axis
-        \draw[dashed, gray] (axis cs:\thetaTransDeg, 0) -- (axis cs:\thetaTransDeg, 3/8) -- (axis cs:0, 3/8); % From (2*alpha, 3/8) to both axes
-        \draw[dashed, gray] (axis cs:pi/3, 0) -- (axis cs:pi/3, 1/2) -- (axis cs:0, 1/2); % From (pi/3, 1/2) to both axes
+        \draw[densely dotted, thick, gray!70!black] (axis cs:0, 1/4) -- (axis cs:-0.05, 1/4); % From (0, 1/4) to y-axis
+        \draw[densely dotted, thick, gray!70!black] (axis cs:\thetaTransDeg, 0) -- (axis cs:\thetaTransDeg, 3/8) -- (axis cs:0, 3/8); % From (2*alpha, 3/8) to both axes
+        \draw[densely dotted, thick, gray!70!black] (axis cs:pi/3, 0) -- (axis cs:pi/3, 1/2) -- (axis cs:0, 1/2); % From (pi/3, 1/2) to both axes
 
         % --- Labels for axis ticks and the origin ---
         % Origin label
@@ -530,26 +495,21 @@
   $y = A + \dfrac{S^2}{A}$ のグラフは下図から $4S^2$ と $S$ の大小によって
   場合分け．
 
-  \begin{figure}[htb]
+  \begin{figure}[H]
     \centering
     \begin{tikzpicture}[scale=0.8]
-      % Placeholder for the graph of y = A + S^2/A
-      \draw[->] (0,0) -- (5,0) node[right] {$A$};
-      \draw[->] (0,0) -- (0,5) node[above] {$y$};
+      \draw[->, thick, gray!80!black] (0,0) -- (5,0) node[right] {$A$};
+      \draw[->, thick, gray!80!black] (0,0) -- (0,5) node[above] {$y$};
 
-      % Example curve for y = A + S^2/A (e.g., S=1)
-      \draw[domain=0.5:4.5] plot(\x, {\x + 1/\x});
+      % Example curve for y = A + S^2/A (taking S=1)
+      \draw[thick, blue!85!black, domain=0.4:4.5, samples=60] plot(\x, {\x + 1/\x});
+      \node[above left, blue!85!black] at (3.5, 3.8) {$y=A+\frac{S^2}{A}$};
 
-      % Points and labels from the image
-      \node at (1,0) {$S$};
-      \node at (2.5,0) {$2S$};
-      \node at (0,1) {$S^2$};
-      \node at (0,2.5) {$2S$};
-
-      \draw[dashed] (1,0) -- (1,2) node[above left] {$y=A+\frac{S^2}{A}$};
-      \draw[dashed] (2.5,0) -- (2.5,4); % Placeholder height
-      \node[circle, draw, fill, inner sep=1.5pt] at (1,2) {}; % Minimum point (S, 2S)
-      \node[circle, draw, fill, inner sep=1.5pt] at (2.5, 4) {}; % Point (2S, 2S + S^2/4S^2) = (2S, 2S + 1/4)
+      % Points and labels
+      \draw[densely dotted, thick, gray!70!black] (1,0) node[below] {$S$} -- (1,2) -- (0,2) node[left] {$2S$};
+      \draw[densely dotted, thick, gray!70!black] (2.5,0) node[below] {$4S^2$} -- (2.5,2.9) -- (0,2.9) node[left] {$4S^2+\frac{1}{4}$};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (1,2) {}; % Minimum point (S, 2S)
+      \node[circle, fill=blue!85!black, inner sep=1.4pt] at (2.5, 2.9) {}; % Point (4S^2, 4S^2 + 1/4)
     \end{tikzpicture}
     \caption{$y = A + \dfrac{S^2}{A}$のグラフの概形}
   \end{figure}

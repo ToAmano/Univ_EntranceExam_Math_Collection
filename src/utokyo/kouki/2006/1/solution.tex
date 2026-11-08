@@ -1,29 +1,4 @@
 \documentclass[../../main.tex]{subfiles}
-% \documentclass[a4paper,10pt]{ltjsarticle}
-\usepackage{luatexja}
-\usepackage[hiragino-pron]{luatexja-preset}
-
-\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
-\setlength{\textwidth}{54\zw}
-\setlength{\textheight}{73\zw}
-
-\usepackage{amsmath,amssymb,ascmac}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{cleveref}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usetikzlibrary{math}
-% \usepackage{indent}
-\usepackage{cases}
-\usepackage{float}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
 \begin{document}
 \rhead{東京大学後期$2006$年$1$番}
 \setcounter{equation}{0}
@@ -129,6 +104,7 @@
           xlabel={$x$},
           ylabel={$y$},
           axis lines=middle,
+          axis line style={->, thick, gray!80!black},
           grid=none,
           xtick={-1},
           ytick={1,6},
@@ -144,7 +120,7 @@
 
         % 媒介変数表示の曲線
         \addplot[
-          blue,
+          blue!85!black,
           thick,
           smooth,
           samples=200,
@@ -152,12 +128,14 @@
           domain=-2.2:0.8,
         ] ( {2*t+t^2}, {t+2*t^2} );
 
+        % 特徴的な点
+        \addplot[mark=*, mark size=1.5pt, mark options={fill=black}] coordinates {(0,6)} node[right, font=\tiny] {$(0,6)$};
         % 頂点 t= -2/5 -> (-16/25, -2/25)
-        \addplot[mark=*, mark options={fill=black}] coordinates {(-16/25,-2/25)} node[pin={[font=\tiny] -90:{$t=-\frac{2}{5}$}}] {};
-        \draw[dashed] (axis cs:0, 1) -- (axis cs:-1, 1) -- (axis cs:-1, 0);
+        \addplot[mark=*, mark size=1.5pt, mark options={fill=red!85!black}] coordinates {(-16/25,-2/25)} node[pin={[font=\tiny] -90:{$t=-\frac{2}{5}$}}] {};
+        \draw[densely dotted, thick, gray!70!black] (axis cs:0, 1) -- (axis cs:-1, 1) -- (axis cs:-1, 0);
         % 軸
-        \addplot[black, densely dotted, domain=-2:2.5] {2*(x+16/25)-2/25};
-        \addplot[black, densely dotted, domain=-2:2.5] {-1/2*(x+16/25)-2/25};
+        \addplot[gray!70!black, densely dotted, domain=-2:2.5] {2*(x+16/25)-2/25};
+        \addplot[gray!70!black, densely dotted, domain=-2:2.5] {-1/2*(x+16/25)-2/25};
 
         \addlegendentry{$C$}
       \end{axis}
@@ -173,6 +151,7 @@
           xlabel={$x$},
           ylabel={$y$},
           axis lines=middle,
+          axis line style={->, thick, gray!80!black},
           grid=none,
           xtick={-1,-3/4,-7/16},
           ytick={-1/8,1},
@@ -189,7 +168,7 @@
 
         % 媒介変数表示の曲線
         \addplot[
-          blue,
+          blue!85!black,
           thick,
           smooth,
           samples=200,
@@ -199,32 +178,29 @@
 
         % 特徴的な点とその座標
         % t=0 -> (0,0)
-        \addplot[mark=*, mark options={fill=black}] coordinates {(0,0)} node[above right, font=\tiny] {$t=0$};
+        \addplot[mark=*, mark size=1.5pt, mark options={fill=black}] coordinates {(0,0)} node[above right, font=\tiny] {$t=0$};
 
         % yの極値 (y'(t) = 1+4t = 0 -> t=-1/4)
         % x(-1/4) = 2(-1/4)+(-1/4)^2 = -1/2+1/16 = -7/16
         % y(-1/4) = -1/4+2(-1/4)^2 = -1/4+2/16 = -1/4+1/8 = -1/8
-        \addplot[mark=*, mark options={fill=black}] coordinates {(-7/16,-1/8)} node[pin={[font=\tiny] -70:{$t=-\frac{1}{4}$}}] {};
-        \draw[densely dotted]  (axis cs:0, -1/8) -- (axis cs:-7/16, -1/8) -- (axis cs:-7/16, 0);
+        \addplot[mark=*, mark size=1.5pt, mark options={fill=black}] coordinates {(-7/16,-1/8)} node[pin={[font=\tiny, pin distance=0.7cm] -45:{$t=-\frac{1}{4}$}}] {};
+        \draw[densely dotted, thick, gray!70!black]  (axis cs:0, -1/8) -- (axis cs:-7/16, -1/8) -- (axis cs:-7/16, 0);
 
         % xの極値 (x'(t) = 2+2t = 0 -> t=-1)
         % x(-1) = 2(-1)+(-1)^2 = -2+1 = -1
         % y(-1) = -1+2(-1)^2 = -1+2 = 1
-        \addplot[mark=*, mark options={fill=black}] coordinates {(-1,1)} node[above left, font=\tiny] {$t=-1$};
-        \draw[dashed] (axis cs:0, 1) -- (axis cs:-1, 1) -- (axis cs:-1, 0);
+        \addplot[mark=*, mark size=1.5pt, mark options={fill=black}] coordinates {(-1,1)} node[above left, font=\tiny] {$t=-1$};
+        \draw[densely dotted, thick, gray!70!black] (axis cs:0, 1) -- (axis cs:-1, 1) -- (axis cs:-1, 0);
 
         % t=-1/2 -> (-3/4, 0)
-        \addplot[mark=*, mark options={fill=black}] coordinates {(-3/4,0)} node[pin={[font=\tiny] 90:{$t=-\frac{1}{2}$}}] {};
-
-        % t=-2 -> (0,6)
-        \addplot[mark=*, mark options={fill=black}] coordinates {(0,6)} node[right, font=\tiny] {$t=-2$};
+        \addplot[mark=*, mark size=1.5pt, mark options={fill=black}] coordinates {(-3/4,0)} node[pin={[font=\tiny, pin distance=0.6cm] 110:{$t=-\frac{1}{2}$}}] {};
 
         % 頂点 t= -2/5 -> (-16/25, -2/25)
-        \addplot[mark=*, mark options={fill=black}] coordinates {(-16/25,-2/25)} node[pin={[font=\tiny] -90:{$t=-\frac{2}{5}$}}] {};
+        \addplot[mark=*, mark size=1.5pt, mark options={fill=red!85!black}] coordinates {(-16/25,-2/25)} node[pin={[font=\tiny, pin distance=0.8cm] -120:{$t=-\frac{2}{5}$}}] {};
 
         % 軸
-        \addplot[black, densely dotted, domain=-1.5:1.5] {2*(x+16/25)-2/25};
-        \addplot[black, densely dotted, domain=-1.5:1.5] {-1/2*(x+16/25)-2/25};
+        \addplot[gray!70!black, densely dotted, domain=-1.5:1.5] {2*(x+16/25)-2/25};
+        \addplot[gray!70!black, densely dotted, domain=-1.5:1.5] {-1/2*(x+16/25)-2/25};
 
         \addlegendentry{$C$}
       \end{axis}

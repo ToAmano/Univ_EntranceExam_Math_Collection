@@ -170,9 +170,9 @@
 
       \begin{axis}[
           % --- グラフの全体設定 ---
-          width=10cm, height=10cm,
+          width=8.5cm, height=8cm,
           axis lines=middle, % 軸を中央に配置
-          axis line style={->},
+          axis line style={->, gray!80!black, thick},
           xlabel={$\alpha$},
           ylabel={$\beta$},
           % 軸の範囲
@@ -189,37 +189,36 @@
 
         % --- 境界線となる関数をプロット ---
         % 放物線 β = α²/4
-        \addplot[domain=0:4.2, thin, black] {0.25*x^2}
-        node[pos=0.9, anchor=south east] {$\beta = \frac{1}{4}\alpha^2$};
+        \addplot[domain=0:4.2, thin, blue!70!black] {0.25*x^2}
+        node[pos=0.9, anchor=south east, font=\footnotesize] {$\beta = \frac{1}{4}\alpha^2$};
 
         % 直線 β = 2α-4
-        \addplot[domain=1.5:4.5, thin, black] {2*x-4}
-        node[pos=0.9, anchor=west] {$\beta = 2\alpha-4$};
+        \addplot[domain=1.5:4.5, thin, gray!60!black] {2*x-4}
+        node[pos=0.9, anchor=west, font=\footnotesize] {$\beta = 2\alpha-4$};
 
         % --- メインの曲線群を描画 ---
-        % 強調表示する曲線 β = (α²-4)/(2(1+c))
-        \addplot[domain=2:3.2, thin, black] {(x^2-4)/(2*(1+\cval))}
-        node[pos=0.15, anchor=north] {$\beta = \frac{\alpha^2-4}{2(1+\cos\theta)}$};
+        % 曲線 β = (α²-4)/(2(1+c))
+        \addplot[domain=2:3.2, thin, gray!60!black] {(x^2-4)/(2*(1+\cval))}
+        node[pos=0.15, anchor=north, font=\footnotesize] {$\beta = \frac{\alpha^2-4}{2(1+\cos\theta)}$};
 
         % --- 特定の区間を太線で強調表示 ---
-        \addplot[domain=2:\alphaEnd, ultra thick, black] {(x^2-4)/(2*(1+\cval))};
+        \addplot[domain=2:\alphaEnd, line width=1.5pt, red!85!black] {(x^2-4)/(2*(1+\cval))};
 
         % --- 点と補助線の描画 ---
         % 終点から軸への破線
-        \draw[dashed, gray] (axis cs:0, \betaEnd) -- (axis cs:\alphaEnd, \betaEnd);
-        \draw[dashed, gray] (axis cs:\alphaEnd, 0) -- (axis cs:\alphaEnd, \betaEnd);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:0, \betaEnd) -- (axis cs:\alphaEnd, \betaEnd);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:\alphaEnd, 0) -- (axis cs:\alphaEnd, \betaEnd);
 
         % 始点と終点のマーカー
-        \addplot[only marks, mark=o, mark size=3pt, thick, black, fill=white] coordinates {(2,0)};
-        \addplot[only marks, mark=*, mark size=3pt, black] coordinates {(\alphaEnd, \betaEnd)};
+        \addplot[only marks, mark=o, mark size=2.5pt, thick, red!85!black, fill=white] coordinates {(2,0)};
+        \addplot[only marks, mark=*, mark size=2.5pt, red!85!black] coordinates {(\alphaEnd, \betaEnd)};
 
         % --- 図中のラベルを手動で配置 ---
-        % 元の図のy軸にあるラベルを再現
-        % (数学的にはこの式の値はα座標ですが、図の見た目を忠実に再現)
-        \node[left] at (axis cs:0, \betaEnd) {$2\sqrt{\frac{2}{1-c}}$};
-        \node[below] at (axis cs:2, 0) {$2$};
+        \node[left, font=\footnotesize] at (axis cs:0, \betaEnd) {$\frac{2}{1-\cos\theta}$};
+        \node[below, font=\footnotesize] at (axis cs:\alphaEnd, 0) {$2\sqrt{\frac{2}{1-\cos\theta}}$};
+        \node[below, font=\footnotesize] at (axis cs:2, 0) {$2$};
 
-        \draw[dashed] (4,0) -- (4,4) -- (0,4);
+        \draw[densely dotted, gray!60!black] (4,0) -- (4,4) -- (0,4);
       \end{axis}
     \end{tikzpicture}
     \caption{$\alpha,\beta$の存在領域}
@@ -315,9 +314,9 @@
 
       \begin{axis}[
           % --- グラフの全体設定 ---
-          width=12cm, height=8cm,
+          width=8.5cm, height=6cm,
           axis lines=middle,
-          axis line style={->},
+          axis line style={->, thick, gray!80!black},
           xlabel={$\theta$},
           ylabel={$S$},
           % x軸とy軸の範囲
@@ -334,10 +333,10 @@
 
         % --- 2つの関数をプロット ---
         % g(θ) = sin(θ)(1-2cos(θ))/(1-cos(θ))
-        \addplot[name path=g, domain=90:180, blue] {sin(x)*(1-2*cos(x))/(1-cos(x))};
+        \addplot[name path=g, domain=90:180, samples=60, blue!85!black, thick] {sin(x)*(1-2*cos(x))/(1-cos(x))};
 
         % h(θ) = -sin(2θ)
-        \addplot[name path=h, domain=90:180, red] {-sin(2*x)};
+        \addplot[name path=h, domain=90:180, samples=60, red!85!black, thick] {-sin(2*x)};
 
         % --- 2関数の間の領域を塗りつぶし ---
         % 'split'を使い、大小関係が入れ替わる点で自動的にスタイルを分割
@@ -347,24 +346,24 @@
           % 最初のセグメント（π/2 < θ < 3π/4）のスタイル
           every segment no 0/.style={
             pattern=vertical lines, % 垂直の斜線
-            pattern color=gray
+            pattern color=gray!60!black
           },
           % 2番目のセグメント（3π/4 < θ < π）のスタイル
           every segment no 1/.style={
             pattern=north east lines, % 右上がりの斜線
-            pattern color=gray
+            pattern color=gray!60!black
           }
         ];
 
         % --- 特定の点をプロット ---
         % 開いた円
-        \addplot[only marks, mark=o, mark size=2.5pt, black, thick] coordinates {(90,1) (90,0) (180,0)};
+        \addplot[only marks, mark=o, mark size=2.5pt, draw=blue!85!black, fill=white, thick] coordinates {(90,1) (90,0) (180,0)};
         % 閉じた円
-        \addplot[only marks, mark=*, mark size=2.5pt, black] coordinates {(135,1)};
-        \addplot[only marks, mark=*, mark size=2.5pt, black] coordinates {(\thZero,\gMax)};
+        \addplot[only marks, mark=*, mark size=2pt, fill=blue!85!black] coordinates {(135,1)};
+        \addplot[only marks, mark=*, mark size=2pt, fill=red!85!black] coordinates {(\thZero,\gMax)};
 
-        \draw[dashed] (135,0) -- (135,1) -- (85,1);
-        \draw[dashed] (\thZero,0) -- (\thZero,\gMax) -- (85,\gMax);
+        \draw[densely dotted, thick, gray!70!black] (135,0) -- (135,1) -- (85,1);
+        \draw[densely dotted, thick, gray!70!black] (\thZero,0) -- (\thZero,\gMax) -- (85,\gMax);
 
       \end{axis}
     \end{tikzpicture}

@@ -1,29 +1,4 @@
 \documentclass[../../main.tex]{subfiles}
-% \documentclass[a4paper,10pt]{ltjsarticle}
-\usepackage{luatexja}
-\usepackage[hiragino-pron]{luatexja-preset}
-
-\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
-\setlength{\textwidth}{54\zw}
-\setlength{\textheight}{73\zw}
-
-\usepackage{amsmath,amssymb,ascmac}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{cleveref}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usetikzlibrary{math}
-% \usepackage{indent}
-\usepackage{cases}
-\usepackage{float}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
 \begin{document}
 \rhead{東京大学後期$2001$年$1$番}
 \setcounter{equation}{0}
@@ -106,6 +81,10 @@
   とおくと，\cref{eq:1}に注意して$S_n,f(n)$の示す面積は\cref{2001-1:fig:2}の斜線部である．
   以下$n \ge 3$として考える．
 
+  \pgfmathdeclarefunction{gfunc}{1}{%
+    \pgfmathparse{#1/sqrt((#1)^2-1)}%
+  }
+
   \begin{figure}[H]
     \centering
     \begin{tikzpicture}
@@ -113,30 +92,31 @@
           xmin=0, xmax=60,
           ymin=0, ymax=2.0,
           axis lines=middle,
+          axis line style={->, thick, gray!80!black},
           xlabel=$x$,
           ylabel=$y$,
           xtick={1,3,50},
           xticklabels={1,3,$n$},
           ytick={1},
           grid=none,
-          samples=500,
+          samples=200,
           no markers,
           clip=false,
         ]
 
         % Draw the function y=x/sqrt(x^2-1)
-        \addplot[thick, smooth, blue,domain=2.5:60,samples=500] {1+1/(x-1)} node[above, pos=0.5, yshift=5mm, black] {$y=\frac{x}{\sqrt{x^2-1}}$};
-        \addplot[draw=none, domain=3:50, name path=A] {1+1/(x-1)} ;
+        \addplot[thick, smooth, blue!85!black,domain=1.16:60,samples=200] {gfunc(x)} node[above, pos=0.5, yshift=5mm, black] {$y=\frac{x}{\sqrt{x^2-1}}$};
+        \addplot[draw=none, domain=3:50, samples=100, name path=A] {gfunc(x)} ;
         \addplot[draw=none, domain=3:50, name path=line]{0};
         % Draw the vertical line at x=1
-        \draw[dashed, red] (axis cs:1, 0) -- (axis cs:1, 2);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:1, 0) -- (axis cs:1, 2);
         % Draw the horizontal line at y=1
-        \draw[dashed, red] (axis cs:0, 1) -- (axis cs:50, 1);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:0, 1) -- (axis cs:50, 1);
         % Add a label for the origin
         \node[below left] at (axis cs:0, 0) {$O$};
-        \draw[dashed, red] (axis cs:50, 0) -- (axis cs:50, 1);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:50, 0) -- (axis cs:50, 1);
 
-        \addplot[fill=gray, opacity=0.6] fill between [of=A and line];
+        \addplot[pattern=north east lines, pattern color=gray!60!black] fill between [of=A and line];
       \end{axis}
     \end{tikzpicture}
     \caption{$S_n$の面積を図示したもの．}
@@ -145,45 +125,46 @@
 
   \begin{figure}[H]
     \centering
-    \pgfmathsetmacro\maxx{15}
+    \pgfmathsetmacro\maxx{12}
     \pgfmathsetmacro\maxn{10}
     \begin{tikzpicture}
       \begin{axis}[
-          xmin=0, xmax=15,
-          ymin=0, ymax=15.0,
+          xmin=0, xmax=\maxx,
+          ymin=0, ymax=2.0,
           axis lines=middle,
+          axis line style={->, thick, gray!80!black},
           xlabel=$x$,
           ylabel=$y$,
           xtick={1,3,\maxn},
           xticklabels={1,3,$n$},
           ytick={1},
           grid=none,
-          samples=500,
+          samples=200,
           no markers,
           clip=false,
         ]
 
         % Draw the function y=x/sqrt(x^2-1)
-        \addplot[thick, smooth, blue,domain=1.9:\maxx,samples=500] {1+1/(0.1*(x-1))} node[above, pos=0.5, yshift=5mm, black] {$y=\frac{x}{\sqrt{x^2-1}}$};
-        \addplot[draw=none, domain=3:\maxn, name path=A] {1+1/(0.1*(x-1))} ;
+        \addplot[thick, smooth, blue!85!black,domain=1.16:\maxx,samples=200] {gfunc(x)} node[above, pos=0.5, yshift=5mm, black] {$y=\frac{x}{\sqrt{x^2-1}}$};
+        \addplot[draw=none, domain=3:\maxn, name path=A] {gfunc(x)} ;
         \addplot[draw=none, domain=3:\maxn, name path=line]{0};
         % Draw the vertical line at x=1
-        \draw[dashed, red] (axis cs:1, 0) -- (axis cs:1, 2);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:1, 0) -- (axis cs:1, 2);
         % Draw the horizontal line at y=1
-        \draw[dashed, red] (axis cs:0, 1) -- (axis cs:\maxn, 1);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:0, 1) -- (axis cs:\maxn, 1);
         % Add a label for the origin
         \node[below left] at (axis cs:0, 0) {$O$};
-        \draw[dashed, red] (axis cs:\maxn, 0) -- (axis cs:\maxn, 1);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:\maxn, 0) -- (axis cs:\maxn, 1);
 
-        \addplot[fill=gray, opacity=0.3] fill between [of=A and line];
+        \addplot[pattern=north west lines, pattern color=gray!40!white] fill between [of=A and line];
 
-        \draw [pattern=north east lines] (2-1,0) rectangle (2,{1+1/(0.1*(2-1))});
-        \draw [pattern=north east lines] (3-1,0) rectangle (3,{1+1/(0.1*(3-1))});
-        \draw [pattern=north east lines] (4-1,0) rectangle (4,{1+1/(0.1*(4-1))});
+        \draw [pattern=north east lines, pattern color=blue!85!black] (2-1,0) rectangle (2,{gfunc(2)});
+        \draw [pattern=north east lines, pattern color=blue!85!black] (3-1,0) rectangle (3,{gfunc(3)});
+        \draw [pattern=north east lines, pattern color=blue!85!black] (4-1,0) rectangle (4,{gfunc(4)});
 
-        \draw [pattern=north east lines] (\maxn-2-1,0) rectangle (\maxn-2,{1+1/(0.1*(8-1))});
-        \draw [pattern=north east lines] (\maxn-1-1,0) rectangle (\maxn-1,{1+1/(0.1*(9-1))});
-        \draw [pattern=north east lines] (\maxn-1,0) rectangle   (\maxn,{1+1/(0.1*(10-1))});
+        \draw [pattern=north east lines, pattern color=blue!85!black] (\maxn-3,0) rectangle (\maxn-2,{gfunc(\maxn-2)});
+        \draw [pattern=north east lines, pattern color=blue!85!black] (\maxn-2,0) rectangle (\maxn-1,{gfunc(\maxn-1)});
+        \draw [pattern=north east lines, pattern color=blue!85!black] (\maxn-1,0) rectangle   (\maxn,{gfunc(\maxn)});
 
       \end{axis}
     \end{tikzpicture}
@@ -199,48 +180,49 @@
 
   \begin{figure}[H]
     \centering
-    \pgfmathsetmacro\maxx{15}
+    \pgfmathsetmacro\maxx{12}
     \pgfmathsetmacro\maxn{10}
     \begin{tikzpicture}
       \begin{axis}[
-          xmin=0, xmax=15,
-          ymin=0, ymax=15.0,
+          xmin=0, xmax=\maxx,
+          ymin=0, ymax=2.0,
           axis lines=middle,
+          axis line style={->, thick, gray!80!black},
           xlabel=$x$,
           ylabel=$y$,
           xtick={1,2,3,\maxn},
           xticklabels={1,2,3,$n$},
           ytick={1},
           grid=none,
-          samples=500,
+          samples=200,
           no markers,
           clip=false,
         ]
 
         % Draw the function y=x/sqrt(x^2-1)
-        \addplot[thick, smooth, blue,domain=1.9:\maxx,samples=500] {1+1/(0.1*(x-1))} node[above, pos=0.5, yshift=10mm, black] {$y=\frac{x}{\sqrt{x^2-1}}$};
-        \addplot[draw=none, domain=3:\maxn, name path=A] {1+1/(0.1*(x-1))} ;
+        \addplot[thick, smooth, blue!85!black,domain=1.16:\maxx,samples=200] {gfunc(x)} node[above, pos=0.5, yshift=5mm, black] {$y=\frac{x}{\sqrt{x^2-1}}$};
+        \addplot[draw=none, domain=3:\maxn, name path=A] {gfunc(x)} ;
         \addplot[draw=none, domain=3:\maxn, name path=line]{0};
         % Draw the vertical line at x=1
-        \draw[dashed, red] (axis cs:1, 0) -- (axis cs:1, 2);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:1, 0) -- (axis cs:1, 2);
         % Draw the horizontal line at y=1
-        \draw[dashed, red] (axis cs:0, 1) -- (axis cs:\maxn, 1);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:0, 1) -- (axis cs:\maxn, 1);
         % Add a label for the origin
         \node[below left] at (axis cs:0, 0) {$O$};
-        \draw[dashed, red] (axis cs:\maxn, 0) -- (axis cs:\maxn, 1);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:\maxn, 0) -- (axis cs:\maxn, 1);
 
-        \addplot[fill=gray, opacity=0.3] fill between [of=A and line];
+        \addplot[pattern=north west lines, pattern color=gray!40!white] fill between [of=A and line];
 
-        \draw [pattern=north east lines,opacity=0.5] (2,0) rectangle (2+1,{1+1/(0.1*(2-1))});
-        \draw [fill=gray, opacity=0.3] (2,{1+1/(0.1*(2-1))}) -- (3,{1+1/(0.1*(2-1))}) -- (3,{1+1/(0.1*(3-1))}) -- cycle;
-        \draw [pattern=north east lines,opacity=0.5] (3,0) rectangle (3+1,{1+1/(0.1*(3-1))});
-        \draw [fill=gray, opacity=0.3] (3,{1+1/(0.1*(3-1))}) -- (4,{1+1/(0.1*(3-1))}) -- (4,{1+1/(0.1*(4-1))}) -- cycle;
-        \draw [pattern=north east lines,opacity=0.5] (4,0) rectangle (4+1,{1+1/(0.1*(4-1))});
-        \draw [fill=gray, opacity=0.3] (4,{1+1/(0.1*(4-1))}) -- (5,{1+1/(0.1*(4-1))}) -- (5,{1+1/(0.1*(5-1))}) -- cycle;
+        \draw [pattern=north east lines, pattern color=blue!85!black] (2,0) rectangle (2+1,{gfunc(2)});
+        \draw [fill=gray!40] (2,{gfunc(2)}) -- (3,{gfunc(2)}) -- (3,{gfunc(3)}) -- cycle;
+        \draw [pattern=north east lines, pattern color=blue!85!black] (3,0) rectangle (3+1,{gfunc(3)});
+        \draw [fill=gray!40] (3,{gfunc(3)}) -- (4,{gfunc(3)}) -- (4,{gfunc(4)}) -- cycle;
+        \draw [pattern=north east lines, pattern color=blue!85!black] (4,0) rectangle (4+1,{gfunc(4)});
+        \draw [fill=gray!40] (4,{gfunc(4)}) -- (5,{gfunc(4)}) -- (5,{gfunc(5)}) -- cycle;
 
-        \draw [pattern=north east lines,opacity=0.5] (\maxn-2,0) rectangle (\maxn-1,{1+1/(0.1*(8-1))});
-        \draw [pattern=north east lines,opacity=0.5] (\maxn-1,0) rectangle (\maxn,{1+1/(0.1*(9-1))});
-        \draw [pattern=north east lines,opacity=0.5] (\maxn,0)   rectangle (\maxn+1,{1+1/(0.1*(10-1))});
+        \draw [pattern=north east lines, pattern color=blue!85!black] (\maxn-2,0) rectangle (\maxn-1,{gfunc(\maxn-2)});
+        \draw [pattern=north east lines, pattern color=blue!85!black] (\maxn-1,0) rectangle (\maxn,{gfunc(\maxn-1)});
+        \draw [pattern=north east lines, pattern color=blue!85!black] (\maxn,0)   rectangle (\maxn+1,{gfunc(\maxn)});
 
       \end{axis}
     \end{tikzpicture}

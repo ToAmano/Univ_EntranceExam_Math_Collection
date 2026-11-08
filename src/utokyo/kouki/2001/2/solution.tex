@@ -14,17 +14,13 @@
 
   \begin{figure}[H]
     \centering
-    \tikzset{
-      % axis/.style={very thick, ->, >=stealth'},
-      dashed_line/.style={dashed, thin},
-    }
-    \begin{tikzpicture}
-      \draw [thick, ->] (-0.5, 0) -- (4.5, 0) node [right] {$x$};
-      \draw [thick, ->] (0, -0.5) -- (0, 4.5) node [above] {$y$};
+    \begin{tikzpicture}[scale=0.7]
+      \draw [thick, ->, gray!80!black] (-0.5, 0) -- (4.5, 0) node [right] {$x$};
+      \draw [thick, ->, gray!80!black] (0, -0.5) -- (0, 4.5) node [above] {$y$};
       \foreach \i in {0,...,4} {
         % Horizontal lines
-        \draw (-0.3, {\i}) -- (4.3, {\i});
-        \draw ({\i}, -0.3) -- ({\i}, 4.3);
+        \draw[gray!70!black] (-0.3, {\i}) -- (4.3, {\i});
+        \draw[gray!70!black] ({\i}, -0.3) -- ({\i}, 4.3);
 
       }
       \coordinate (A) at (1,0);
@@ -229,23 +225,23 @@
 
   \begin{figure}[H]
     \centering
-    \begin{tikzpicture}
+    \begin{tikzpicture}[scale=0.7]
       \clip (-0.4,-0.4) rectangle (8,4.5);
-      \draw [thick, ->] (-0.5, 0) -- (4, 0) node [right] {$x$};
-      \draw [thick, ->] (0, -0.5) -- (0, 4) node [above] {$y$};
+      \draw [thick, ->, gray!80!black] (-0.5, 0) -- (4, 0) node [right] {$x$};
+      \draw [thick, ->, gray!80!black] (0, -0.5) -- (0, 4) node [above] {$y$};
       \foreach \i in {-2,...,5} {
-        \draw[circle] ({2*\i}, 0 ) circle (1);
-        \draw[circle] ({2*\i}, {2*sqrt(3)} ) circle (1);
-        \draw[circle] ({2*\i+1}, {sqrt(3)} ) circle (1);
+        \draw ({2*\i}, 0 ) circle (1);
+        \draw ({2*\i}, {2*sqrt(3)} ) circle (1);
+        \draw ({2*\i+1}, {sqrt(3)} ) circle (1);
       }
       \draw[thick, <->] (5,{sqrt(3)}) -- (5,{sqrt(3)+1}) node[midway, right] {$\sqrt{2}+1$};
     \end{tikzpicture}
-    \caption{座標平面に半径$\sqrt{2}+1$の円を敷き詰めた様子．}
+    \caption{座標平面に半径$\sqrt{2}+1$の円を敷き詰めた様子（模式図）．}
     \label{2001-2:fig:4}
   \end{figure}
 
   (1)と同様に一つの円の中心が原点となるように座標平面をおく．
-  この円と隣り合う円のうち，一部が第一章限にある二つの円の中心までの位置ベクトルを$\vec{a},\vec{b}$とすると
+  この円と隣り合う円のうち，一部が第一象限にある二つの円の中心までの位置ベクトルを$\vec{a},\vec{b}$とすると
   \begin{align}
     \vec{a} = \mqty(2(\sqrt{2}+1) \\ 0), \quad \vec{b} = (\sqrt{2}+1)\mqty(1 \\ \sqrt{3})
   \end{align}
@@ -420,6 +416,7 @@
 
       \begin{axis}[
           axis lines=middle,
+          axis line style={->, thick, gray!80!black},
           xlabel=$x$,
           ylabel=$y$,
           xmin=0, xmax=\xmax,
@@ -441,28 +438,21 @@
 
         % --- 扇形の描画と塗りつぶし ---
         \draw[
-          draw=black,
+          draw=blue!85!black,
           thick
         ] (O) -- (P0) arc (0:60:{\r}) -- cycle;
 
-        % % \filldrawで扇形全体を薄い色で塗りつぶし
-        % \filldraw[
-        %   draw=black,
-        %   fill=blue!10,
-        %   thick
-        % ] (O) -- (P0) arc (0:60:{\r}) -- cycle;
-
         % --- 補助線の描画 ---
-        \draw[gray] (O) -- (P15);
-        \draw[gray] (O) -- (P45);
+        \draw[thick, gray!70!black] (O) -- (P15);
+        \draw[thick, gray!70!black] (O) -- (P45);
 
         % --- 弓形部分の塗りつぶし ---
         % 15度から45度の部分を斜線で塗りつぶし
         \fill[
           pattern=north east lines,
-          pattern color=gray
+          pattern color=gray!60!black
         ] (P15) -- (P45) arc (45:15:{\r}) -- cycle;
-        \draw (P15) -- (P45); % 弦を描画
+        \draw[thick, blue!85!black] (P15) -- (P45); % 弦を描画
 
         % --- ラベルの追加 ---
         % 角度のラベル
@@ -472,14 +462,14 @@
 
         % 軸上の点のラベル
         \node[below] at (P0) {$2+\sqrt{2}$};
-        \node[left] at (axis cs:0, {\r*sin(60)}) {$\sqrt{3}(\sqrt{2}+1)$}; % y座標の正確な値
+        \node[left] at (axis cs:0, {\r*sin(60)}) {$\frac{\sqrt{3}(2+\sqrt{2})}{2}$};
         \node[below left] at (O) {O};
-        \draw[dashed] (axis cs:0, {\r*sin(60)}) -- (axis cs:{\r*cos(60)}, {\r*sin(60)});
+        \draw[densely dotted, thick, gray!70!black] (axis cs:0, {\r*sin(60)}) -- (axis cs:{\r*cos(60)}, {\r*sin(60)});
         \node[circle, fill, inner sep=1.5pt] at (axis cs:{\r*cos(60)}, {\r*sin(60)}) {};
 
         \node[below] at (axis cs:{\r*cos(45)}, 0) {$\sqrt{2}+1$};
         \node[left] at (axis cs:0,{\r*sin(45)}) {$\sqrt{2}+1$};
-        \draw[dashed] (axis cs:0, {\r*sin(45)}) -- (axis cs:{\r*cos(45)}, {\r*sin(45)}) -- (axis cs:{\r*cos(45)}, 0);
+        \draw[densely dotted, thick, gray!70!black] (axis cs:0, {\r*sin(45)}) -- (axis cs:{\r*cos(45)}, {\r*sin(45)}) -- (axis cs:{\r*cos(45)}, 0);
         \node[circle, fill, inner sep=1.5pt] at (axis cs:{\r*cos(45)}, {\r*sin(45)}) {};
       \end{axis}
     \end{tikzpicture}

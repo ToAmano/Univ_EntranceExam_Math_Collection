@@ -82,30 +82,36 @@
   % 以下は画像内の図をTikZで再現したものです。
   \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[scale=1.2]
-      % 曲線
-      \draw[thick] (0.5, 0.8) .. controls (1.5, 1.2) and (2.5, 2.2) .. (3.2, 3.2);
+    \begin{tikzpicture}[x=1.8cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-0.4, 0) -- (3.6, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 3.6) node[above] {$y$};
+      \node[below left=2pt] at (0, 0) {$O$};
 
-      % 軸と区間
-      \draw[->] (0,0) -- (4,0) node[below] {$x$};
-      \draw[->] (0,0) -- (0,3.5) node[left] {$y$};
-      \draw[dashed] (1,0) node[below] {$a$} -- (1, 1.05);
-      \draw[dashed] (2.8,0) node[below] {$b$} -- (2.8, 2.65);
-      \draw[dashed] (0, 1.05) -- (1, 1.05);
-      \draw[dashed] (0, 2.65) -- (2.8, 2.65);
+      % 下に凸な関数 f(x) = 0.25*x^2 + 0.8
+      \draw[line width=1.3pt, blue!85!black, domain=0.4:3.3, samples=60]
+      plot (\x, {0.25*\x*\x + 0.8});
+      \node[blue!85!black, above left=1pt, font=\small] at (3.2, 3.3) {$y=f(x)$};
 
-      % ax, ay ラベル
-      \draw[<->] (1,-0.5) -- (2.8,-0.5) node[midway, below] {$a_x$};
-      \draw[<->] (-0.5,1.05) -- (-0.5,2.65) node[midway, left] {$a_y$};
+      % 代表点 a = 1, b = 2.8
+      \coordinate (A) at (1, {0.25*1*1 + 0.8});       % (1, 1.05)
+      \coordinate (B) at (2.8, {0.25*2.8*2.8 + 0.8}); % (2.8, 2.76)
 
-      % 割線と補助線
-      \draw (1, 1.05) -- (2.8, 2.65);
+      % 軸への垂線 (点線)
+      \draw[densely dotted, thick, gray!70!black] (1, 0) node[below=2pt] {$a$} -- (A) -- (0, {0.25*1*1 + 0.8}) node[left=2pt] {$f(a)$};
+      \draw[densely dotted, thick, gray!70!black] (2.8, 0) node[below=2pt] {$b$} -- (B) -- (0, {0.25*2.8*2.8 + 0.8}) node[left=2pt] {$f(b)$};
 
-      \node[] at (1.9,2.2) {$\Delta$};
-      \node[] at (2.8,3.5) {$y=f(x)$};
-      \node[circle, fill, inner sep=1.5pt] at (1, 1.05) {};
-      \node[circle, fill, inner sep=1.5pt] at (2.8, 2.65) {};
+      % 割線 (直線 AB)
+      \draw[line width=1.1pt, orange!85!black] (A) -- (B);
 
+      % 直角三角形の補助線
+      \draw[densely dotted, gray!60!black] (A) -- (2.8, {0.25*1*1 + 0.8}) -- (B);
+      \node[font=\footnotesize, gray!80!black, below] at (1.9, {0.25*1*1 + 0.8}) {$b-a$};
+      \node[font=\footnotesize, gray!80!black, right] at (2.8, {(1.05 + 2.76)/2}) {$f(b)-f(a)$};
+
+      % 各点
+      \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {};
+      \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B) {};
     \end{tikzpicture}
     \caption{関数$y=f(x)$の平均変化率の定義}
     \label{2001-3:fig:1}
