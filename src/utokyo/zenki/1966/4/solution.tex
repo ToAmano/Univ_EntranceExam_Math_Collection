@@ -1,44 +1,53 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1966$年$4$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  $x$に関する方程式$\dfrac{x}{9}-\sin\dfrac{\pi x}{6}=0$の最大の根に，もっとも近い整数を求めよ．
-\end{oframed}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}$f(x)=\dfrac{x}{9}-\sin{\pi x}{6}$とおく．まず$6\le x$の時$f(x)=0$の解が存在しないことを示す．
-  \begin{indentation}{2\zw}{0pt}
-    \noindent\underline{(ii)$6\le x\le12$の時}
+{\bf [解答]}
 
-    $\sin\dfrac{\pi x}{6}\le0<\dfrac{1}{9}x$より明らか．\\
+% TODO: y=x/9, y=sin \pi x/6のグラフ
 
-    \underline{(ii)$12\le x$の時}
+与えられた関数を
+\begin{align}
+  f(x)=\dfrac{x}{9}-\sin\dfrac{\pi x}{6} \label{eq:1}
+\end{align}
+とおくと，一階微分は
+\begin{align}
+  f'(x)
+  & = \dfrac{1}{9} - \dfrac{\pi}{6}\cos\dfrac{\pi x}{6} \\
+  & = \dfrac{6}{\pi}\left[\dfrac{\pi}{54}-\cos\dfrac{\pi x}{6}\right] \label{eq:2}
+\end{align}
+である．
 
-    $\dfrac{1}{4}x>1\ge\sin\dfrac{\pi x}{6}$より明らか．
-  \end{indentation}
-  以上から示された．$\Box$
+まず$6\le x$の時$f(x)=0$の解が存在しないことを示す．
 
-  さらに$f(x)$は$3\le x\le6$で単調減少であり($f(x)$は単調減少な関数の和)
-  \[f(4.5)=\dfrac{\sqrt{2}-1}{2}>0 , f(5)=\dfrac{-1}{18}<0\]
-  より，
-  中間値の定理から$4.5<x<5$に最大の解を持つ．よって求める整数は$5$である．$\cdots$(答)
-  \newpage
-\end{multicols}
+\subparagraph{(i)$6\le x\le12$の時}
+
+この時は\cref{eq:1}の第1,2項について
+\begin{align}
+  \sin\dfrac{\pi x}{6}\le0<\dfrac{1}{9}x
+\end{align}
+だから，$f(x)>0$である．よって解はない．
+
+\subparagraph{(ii)$12\le x$の時}
+
+この時は$\sin$の最大値が$1$であることより
+\begin{align}
+  \dfrac{x}{9} \ge \dfrac{12}{9} > 1 \ge \sin\dfrac{\pi x}{6}
+\end{align}
+だから$f(x)>0$である．よって解はない．
+\casesend
+
+以上から$6 \le x $の時は$f(x)=0$の解はない．
+そこで$x < 6$で考える．
+
+% TODO: y=f(x)の[3,6]での増減表
+
+この時は\cref{eq:2}より$f(x)$の増減表は上表のようになる．
+よって$f(x)$は$3\le x\le6$で単調増加であり，
+\begin{align}
+  f(4.5)=\dfrac{1-\sqrt{2}}{2}<0, \quad
+  f(5)=\dfrac{1}{18}>0
+\end{align}
+である．よって中間値の定理から$4.5<x<5$に最大の解を持つ．
+よって求める整数は$5$である．$\cdots$(答)
+\newpage
 \end{document}
