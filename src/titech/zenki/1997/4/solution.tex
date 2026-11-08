@@ -76,14 +76,14 @@
     % C = (0,0), B = (1,0), A = (0, sqrt(3))
     \coordinate (C) at (0, 0);
     \coordinate (B) at (1, 0);
-    \coordinate (A) at (0, 1.732);
+    \coordinate (A) at (0, {sqrt(3)});
 
     % 正三角形 EDF の座標 (一辺 x, 角度 \theta)
     % D は BC 上, F は CA 上, E は AB 上
-    % 例として \theta \approx 30° の配置
-    \coordinate (D) at (0.6, 0);
-    \coordinate (F) at (0, 0.346); % CD = x cos\theta, CF = x sin\theta
-    \coordinate (E) at (0.43, 0.987);
+    % 最小面積をとる配置: x = sqrt(3/7)
+    \coordinate (D) at ({3/7}, 0);
+    \coordinate (F) at (0, {2*sqrt(3)/7});
+    \coordinate (E) at ({9/14}, {5*sqrt(3)/14});
 
     % 1. 直角三角形 ABC
     \draw[very thick, blue!80!black] (A) -- (B) -- (C) -- cycle;
@@ -96,33 +96,30 @@
     \draw[thick, red!80!black] (E) -- (D) -- (F) -- cycle;
 
     % 辺の長さ x のラベル (正三角形 EDF)
-    \node[red!80!black, font=\scriptsize, right] at (0.32, 0.2) {$x$};
+    \node[red!80!black, font=\scriptsize, above right] at ($(D)!0.45!(F)$) {$x$};
 
     % 3. 角のアークとラベル
     % 角 B = \pi/3 (60°)
-    \draw[thick, gray!80!black] (0.8, 0) arc[start angle=180, end angle=120, radius=0.2];
-    \node[font=\scriptsize] at (0.72, 0.1) {$\frac{\pi}{3}$};
+    \draw[thick, gray!80!black] ($(B)+(-0.2, 0)$) arc[start angle=180, end angle=120, radius=0.2];
+    \node[font=\scriptsize] at ($(B)+(-0.28, 0.1)$) {$\frac{\pi}{3}$};
 
     % 角 FDC = \theta
-    \draw[thick, red!80!black] (0.45, 0) arc[start angle=180, end angle=150, radius=0.15];
-    \node[red!80!black, font=\scriptsize] at (0.38, 0.07) {$\theta$};
-
-    % 角 EDB = \pi - \pi/3 - \theta = 2\pi/3 - \theta
-    % (図が煩雑にならないよう必要に応じて表示)
+    \draw[thick, red!80!black] ($(D)+(-0.15, 0)$) arc[start angle=180, end angle={180-49.1}, radius=0.15];
+    \node[red!80!black, font=\scriptsize] at ($(D)+(-0.22, 0.08)$) {$\theta$};
 
     % 4. 各辺の長さ表記 (AB=2, BC=1, CA=\sqrt{3})
-    \node[left, font=\scriptsize] at (0, 0.866) {$\sqrt{3}$};
-    \node[below, font=\scriptsize] at (0.5, 0) {$1$};
-    \node[above right, font=\scriptsize] at (0.5, 0.866) {$2$};
+    \node[left, font=\scriptsize] at (0, {sqrt(3)/2}) {$\sqrt{3}$};
+    \draw[|<->|, gray!70!black] (0, -0.22) -- (1, -0.22) node[midway, fill=white, inner sep=1pt, font=\scriptsize] {$1$};
+    \node[above right, font=\scriptsize] at (0.5, {sqrt(3)/2}) {$2$};
 
     % 5. 頂点プロットとラベル
-    \node[circle, fill, inner sep=0.8pt] at (A) {}; \node[above left] at (A) {$A$};
-    \node[circle, fill, inner sep=0.8pt] at (B) {}; \node[below right] at (B) {$B$};
-    \node[circle, fill, inner sep=0.8pt] at (C) {}; \node[below left] at (C) {$C$};
+    \node[circle, fill, inner sep=1.2pt] at (A) {}; \node[above left] at (A) {$A$};
+    \node[circle, fill, inner sep=1.2pt] at (B) {}; \node[below right] at (B) {$B$};
+    \node[circle, fill, inner sep=1.2pt] at (C) {}; \node[below left] at (C) {$C$};
 
-    \node[circle, fill=red!80!black, inner sep=0.8pt] at (D) {}; \node[red!80!black, below] at (D) {$D$};
-    \node[circle, fill=red!80!black, inner sep=0.8pt] at (E) {}; \node[red!80!black, above right] at (E) {$E$};
-    \node[circle, fill=red!80!black, inner sep=0.8pt] at (F) {}; \node[red!80!black, left] at (F) {$F$};
+    \node[circle, fill=red!80!black, inner sep=1.2pt] at (D) {}; \node[red!80!black, below] at (D) {$D$};
+    \node[circle, fill=red!80!black, inner sep=1.2pt] at (E) {}; \node[red!80!black, above right] at (E) {$E$};
+    \node[circle, fill=red!80!black, inner sep=1.2pt] at (F) {}; \node[red!80!black, left] at (F) {$F$};
 
   \end{tikzpicture}
   \caption{直角三角形 $ABC$ と内接する正三角形 $EDF$}
