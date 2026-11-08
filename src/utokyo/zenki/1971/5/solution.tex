@@ -3,7 +3,58 @@
 
 {\bf [解答]}
 
-% TODO: 概要図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.85, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (1.85, 1.35);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.45, 0) -- (2.25, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.35) -- (0, 1.75) node[above] {$y$};
+    \node[below left=1pt, font=\footnotesize] at (O) {$O$};
+    \node[below left=1pt, font=\footnotesize] at (-1, 0) {$-1$};
+    \node[above left=1pt, font=\footnotesize] at (0, 1) {$1$};
+    \node[below left=1pt, font=\footnotesize] at (0, -1) {$-1$};
+
+    % 点 P からの垂線
+    \draw[densely dotted, thick, gray!70!black] (P) -- (1.85, 0) node[below=1pt, font=\footnotesize] {$a$};
+    \draw[densely dotted, thick, gray!70!black] (P) -- (0, 1.35) node[left=1pt, font=\footnotesize] {$b$};
+
+    % 単位円 x^2 + y^2 = 1（例示として n = 9 等分）
+    \draw[line width=1.3pt, blue!85!black] (O) circle (1);
+
+    % P と各分点 Q_m を結ぶ補助線（k = 4 以外）
+    \foreach \m in {0,1,2,3,5,6,7,8} {
+      \coordinate (Qm\m) at ({40*\m}:1);
+      \draw[dashed, teal!75!black] (P) -- (Qm\m);
+    }
+
+    % 代表点 Q_k（例示 k = 4, 160°）の動径・偏角と線分 PQ_k
+    \coordinate (Qk) at (160:1);
+    \draw[thick, blue!85!black] (O) -- (Qk);
+    \draw[->, thick, blue!85!black] (0.28, 0) arc[start angle=0, end angle=160, radius=0.28];
+    \node[text=blue!85!black, fill=white, inner sep=0.8pt, font=\scriptsize] at (115:0.45) {$\frac{2\pi}{n}k$};
+    \draw[line width=1.4pt, red!85!black] (P) -- (Qk);
+
+    % 円周上の n 等分点
+    \foreach \m in {0,1,2,3,5,6,7,8} {
+      \node[circle, fill=blue!85!black, inner sep=1.3pt] at ({40*\m}:1) {};
+    }
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (Qk) {};
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (P) {};
+
+    % ラベル
+    \node[below right=1pt, font=\footnotesize, blue!85!black] at (1, 0) {$Q_0(1,0)$};
+    \node[text=blue!85!black, fill=white, inner sep=0.8pt, font=\footnotesize] at (38:1.22) {$Q_1$};
+    \node[text=blue!85!black, fill=white, inner sep=0.8pt, font=\footnotesize] at (78:1.17) {$Q_2$};
+    \node[above left=1pt, font=\footnotesize, red!85!black] at (Qk) {$Q_k\left(\cos\frac{2\pi}{n}k,\sin\frac{2\pi}{n}k\right)$};
+    \node[below right=1pt, font=\footnotesize, blue!85!black] at (320:1) {$Q_{n-1}$};
+    \node[above right=2pt, font=\footnotesize, red!85!black] at (P) {$P(a,b)$};
+  \end{tikzpicture}
+  \caption{単位円周を $n$ 等分する点列 $Q_0, Q_1, \dots, Q_{n-1}$ と点 $P(a,b)$}
+  \label{fig:unit_circle_equally_spaced_points}
+\end{figure}
 
 $k=0,1,\cdots,n-1$に対して$L_k=|PQ_k|^2$とおくと，
 \begin{align}
