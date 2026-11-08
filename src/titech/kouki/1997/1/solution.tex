@@ -19,9 +19,10 @@
   この概形は\cref{1997-1:fig:2}である．
 
   \begin{figure}[H]
-    \begin{tikzpicture}{scale=2.0}
+    \begin{tikzpicture}
       \begin{axis}[
           axis lines=middle,
+          axis line style={thick, gray!80!black},
           xlabel=$x$,
           ylabel=$y$,
           xmin=-2.5, xmax=2.5,
@@ -30,19 +31,20 @@
           ytick={\empty},
           tick style={draw=none},
           no markers,
-          clip=false % Allows drawing outside the axis limits if needed
+          clip=false
         ]
 
         % Define the functions
-        \addplot[name path=C1, thick, domain=-1.2:1.2] {x^2};
-        \draw (axis cs:0.5,0.25) -- (axis cs:-1, 1);
+        \addplot[name path=C1, thick, blue!85!black, domain=-1.2:1.2] {x^2};
+        \draw[thick] (axis cs:0.5,0.25) -- (axis cs:-1, 1);
         \node[right] at (axis cs:0.5,0.25) {$Q$};
         \node[left] at (axis cs:-1,1) {$P$};
-        \node[circle, fill, inner sep=1pt] at (axis cs:0.5,0.25) {};
-        \node[circle, fill, inner sep=1pt] at (axis cs:-1,1) {};
+        \node[circle, fill, inner sep=1.2pt] at (axis cs:0.5,0.25) {};
+        \node[circle, fill, inner sep=1.2pt] at (axis cs:-1,1) {};
 
-        % Labels for C1 and C2
-        \node at (axis cs:1.2, 0.5) {$C_1$};
+        % Labels for C1
+        \node[blue!85!black] at (axis cs:1.2, 0.5) {$C_1$};
+        \node[below left] at (axis cs:0, 0) {$O$};
 
       \end{axis}
     \end{tikzpicture}
@@ -88,9 +90,10 @@
   以上より，求める面積$S_{a}$は\cref{1997-1:fig:1}の斜線部である．
 
   \begin{figure}[H]
-    \begin{tikzpicture}{scale=2.0}
+    \begin{tikzpicture}
       \begin{axis}[
           axis lines=middle,
+          axis line style={thick, gray!80!black},
           xlabel=$x$,
           ylabel=$y$,
           xmin=-2.5, xmax=2.5,
@@ -99,31 +102,36 @@
           ytick={\empty},
           tick style={draw=none},
           no markers,
-          clip=false % Allows drawing outside the axis limits if needed
+          clip=false
         ]
 
         % Define the functions
-        \addplot[name path=C1, blue, thick, domain=-1.2:1.2] {x^2};
-        \addplot[name path=C2, red, thick, domain=-1.2:1.2] {x^2 + 1/(4*(1+4*x^2))};
+        \addplot[name path=C1, blue!85!black, thick, domain=-1.25:1.25] {x^2};
+        \addplot[name path=C2, red!85!black, thick, domain=-1.25:1.25] {x^2 + 1/(4*(1+4*x^2))};
 
-        % Draw the vertical lines at x=-2 and x=2
-        \draw[dashed] (axis cs:-1,0) -- (axis cs:-1, {(-1)^2 + 1/(4*(1+4*(-1)^2))});
-        \draw[dashed] (axis cs:1,0) -- (axis cs:1, {1^2 + 1/(4*(1+4*1^2))});
+        % 積分領域 -a <= x <= a (図示用に a=1 と設定) を斜線ハッチングで塗る
+        % \addplot[gray!15] fill between[of=C2 and C1, soft clip={domain=-1:1}];
+        \addplot[pattern=north east lines, pattern color=gray!60] fill between[of=C2 and C1, soft clip={domain=-1:1}];
 
-        % Fill the region between C1 and C2 from x=-2 to x=2
-        \addplot[gray!50, fill opacity=0.5] fill between[of=C2 and C1];
+        % x = -a, a (a=1) における境界線
+        \draw[densely dotted, thick, gray!70!black] (axis cs:-1,0) -- (axis cs:-1, {(-1)^2 + 1/(4*(1+4*(-1)^2))});
+        \draw[densely dotted, thick, gray!70!black] (axis cs:1,0) -- (axis cs:1, {1^2 + 1/(4*(1+4*1^2))});
 
         % Labels for C1 and C2
-        \node[blue] at (axis cs:1.2, 0.5) {$C_1$};
-        \node[red] at  (axis cs:1, 1.5) {$C_2$};
+        \node[blue!85!black] at (axis cs:1.2, 0.5) {$C_1$};
+        \node[red!85!black] at  (axis cs:1, 1.5) {$C_2$};
 
-        % Labels for -a and a, which are now -2 and 2
-        \node[below] at (axis cs:-1, 0) {$-a$};
-        \node[below] at (axis cs:1, 0) {$a$};
+        % Labels for -a, a, and O
+        \node[below, font=\small] at (axis cs:-1, 0) {$-a$};
+        \node[below, font=\small] at (axis cs:1, 0) {$a$};
+        \node[below left, font=\small] at (axis cs:0, 0) {$O$};
+
+        % Label at (0,1/4)
+        \node[above right, font=\small] at (0,0.25) {$\frac{1}{4}$};
 
       \end{axis}
     \end{tikzpicture}
-    \caption{$C_1$と$C_2$の概形}
+    \caption{$C_1$と$C_2$の概形（斜線部は積分領域 $-a \le x \le a$）}
     \label{1997-1:fig:1}
   \end{figure}
 

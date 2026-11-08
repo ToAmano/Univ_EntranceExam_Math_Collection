@@ -49,51 +49,51 @@
     \pgfmathsetmacro{\tUpperLargePlus}{15 + 0.5 * sqrt(1250)} % 15 + (25/2)*sqrt(2) approx 32.675
 
     \begin{tikzpicture}[
-        xscale=0.1, % Adjust x-axis scale for width
-        % yscale=0.005, % Original value causing error
-        yscale=0.01,
+        xscale=0.15,
+        yscale=0.012,
+        >=stealth,
       ]
       % Define t-range for plotting
-      \def\tmin{-3}
-      \def\tmax{33}
-      \def\ymin{-10}
+      \def\tmin{-5}
+      \def\tmax{36}
+      \def\ymin{-20}
       \def\ymax{250}
 
       % Axes
-      \draw[->] (\tmin, 0) -- (\tmax, 0) node[right] {$t$};
-      \draw[->] (0, \ymin) -- (0, \ymax) node[above] {$y$};
+      \draw[->, thick, gray!80!black] (\tmin, 0) -- (\tmax+2, 0) node[right] {$t$};
+      \draw[->, thick, gray!80!black] (0, \ymin) -- (0, \ymax) node[above] {$y$};
 
       % Label the origin
-      \node at (0,0) [below right] {$0$};
+      \node at (0,0) [below right=1pt, font=\small] {$O$};
+
+      % Boundary dashed lines for y=125 and y=175
+      \draw[dashed, gray!70!black] (\tmin, \yBoundaryLower) node[left, font=\scriptsize] {$125$} -- (\tmax, \yBoundaryLower) node[right, font=\scriptsize] {$y=125$};
+      \draw[dashed, gray!70!black] (\tmin, \yBoundaryUpper) node[left, font=\scriptsize] {$175$} -- (\tmax, \yBoundaryUpper) node[right, font=\scriptsize] {$y=175$};
 
       % Plot the function y = 2t^2 - 60t
-      \draw[blue, thick, domain=\tmin:\tmax, samples=100] plot (\x, {2*\x*\x - 60*\x});
+      \draw[blue!85!black, thick, domain=-3.5:33.5, samples=120] plot (\x, {2*\x*\x - 60*\x});
+      \node[blue!85!black, font=\small] at (15, 60) {$y = 2t^2 - 60t$};
 
-      % % Mark Vertex
-      \fill[red] (-2, 128) circle (5pt);
-      \fill[red] (32, 128) circle (5pt);
-      % \draw[dashed, gray] (\tVertex, 0) -- (\tVertex, \yVertex);
-      % \node at (\tVertex, 0) [below] {$15$};
-      % \node at (0, \yVertex) [left] {$-450$};
+      % Highlight the parts of the parabola where 125 <= y < 175
+      \draw[red!85!black, line width=1.5pt, domain=\tLowerLargeMinus:\tLowerSmallMinus, samples=50] plot (\x, {2*\x*\x - 60*\x});
+      \draw[red!85!black, line width=1.5pt, domain=\tUpperSmallPlus:\tUpperLargePlus, samples=50] plot (\x, {2*\x*\x - 60*\x});
 
-      % % Vertical lines and points for t=-2 and t=32 (where y=128)
-      % % These are the integer solutions mentioned in the problem description for the given y range.
-      \draw[dashed, gray] (-2, 0) -- (-2, \yAtIntPoints);
-      \node at (-2, 0) [below] {$-2$};
-      \draw[dashed, gray] (32, 0) -- (32, \yAtIntPoints);
-      \node at (32, 0) [below] {$32$};
-      \draw[dashed, gray] (0, \yAtIntPoints) -- (32, \yAtIntPoints);
-      \node at (0, \yAtIntPoints) [right] {$128$};
+      % Horizontal connection between integer points at y=128
+      \draw[densely dotted, thick, red!70!black] (-2, \yAtIntPoints) -- (32, \yAtIntPoints);
+      \node[above right=1pt, font=\scriptsize, red!85!black] at (0, \yAtIntPoints) {$128$};
 
-      % % Dashed lines from the approximate intersection points to the t-axis
-      % % For y=125
-      \draw[dashed, gray] (\tmin, \yBoundaryLower) -- (\tmax, \yBoundaryLower);
-      % % For y=175
-      \draw[dashed, gray] (\tmin, \yBoundaryUpper) -- (\tmax, \yBoundaryUpper);
+      % Vertical drop lines to t-axis
+      \draw[densely dotted, thick, gray!70!black] (-2, 0) -- (-2, \yAtIntPoints);
+      \node at (-2, 0) [below left=1pt, font=\small] {$-2$};
+      \draw[densely dotted, thick, gray!70!black] (32, 0) -- (32, \yAtIntPoints);
+      \node at (32, 0) [below=1pt, font=\small] {$32$};
 
-      % % Highlight the parts of the parabola where 125 <= y < 175
-      \draw[red, ultra thick, domain=\tLowerLargeMinus:\tLowerSmallMinus, samples=50] plot (\x, {2*\x*\x - 60*\x});
-      \draw[red, ultra thick, domain=\tUpperSmallPlus:\tUpperLargePlus, samples=50] plot (\x, {2*\x*\x - 60*\x});
+      % Mark integer points (-2, 128) and (32, 128)
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (-2, \yAtIntPoints) {};
+      \node[above left=2pt, font=\scriptsize, red!85!black] at (-2, \yAtIntPoints) {$(-2, 128)$};
+
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (32, \yAtIntPoints) {};
+      \node[above right=2pt, font=\scriptsize, red!85!black] at (32, \yAtIntPoints) {$(32, 128)$};
     \end{tikzpicture}
     \caption{二次関数 $y = 2t^2 - 60t$ のグラフ}
     \label{1990-1:fig:1}
