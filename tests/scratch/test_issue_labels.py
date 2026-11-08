@@ -194,3 +194,38 @@ def test_initial_fetch_failure_is_recorded(root):
     with pytest.raises(RuntimeError):
         apply_plan(plan,FailedReadClient([]),root,lambda r:progress.append(copy.deepcopy(r)))
     assert progress[-1]['error']=='HTTP 502 on refresh'
+
+
+def test_build_index_exports_unmapped_without_guessing_from_title():
+    mapped_labels = ['problem:titech/zenki/1985/3', 'univ:titech', 'exam:zenki', 'year:1985', 'kind:proof']
+    mapped = issue(number=10, title='[監査] 東工大前期1985-3', labels=mapped_labels)
+    cat_wide = dict(
+        issue(number=20, title='京大前期のTikZ図改修', body='', labels=['univ:ukyoto', 'exam:zenki', 'kind:figure']),
+        state='OPEN',
+    )
+    general_closed = issue(number=5, title='utokyo zenki: 未移行まとめ', body='', labels=['enhancement'])
+    general_open = dict(
+        issue(number=30, title='東大前期・後期 PDF整理', body='', labels=['univ:utokyo', 'univ:ukyoto', 'kind:unknown']),
+        state='OPEN',
+    )
+
+    result = build_index([mapped, general_closed, general_open, cat_wide], 'a/b')
+
+    assert list(result['problems'].keys()) == ['titech/zenki/1985/3']
+    assert result['rejected'] == []
+    assert [r['number'] for r in result['unmapped']] == [20, 30, 5]
+    assert result['unmapped'][0] == dict(
+        number=20,
+        title='京大前期のTikZ図改修',
+        state='open',
+        url='https://github.com/a/b/issues/20',
+        updated_at='2026-10-21T00:00:00Z',
+        kinds=['figure'],
+        univ='ukyoto',
+        exam='zenki',
+    )
+    assert result['unmapped'][1]['univ'] is None
+    assert result['unmapped'][1]['exam'] is None
+    assert result['unmapped'][1]['kinds'] == []
+    assert result['unmapped'][2]['state'] == 'closed'
+    assert result['unmapped'][2]['univ'] is None

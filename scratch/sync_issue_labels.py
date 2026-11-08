@@ -214,7 +214,7 @@ def main(argv=None):
     if args.export:
         data = build_index(issues, args.repo)
         write_json(args.export, data)
-        print(f'Exported {len(data["problems"])} problems; rejected {len(data["rejected"])} issues')
+        print(f'Exported {len(data["problems"])} problems, {len(data["unmapped"])} unmapped; rejected {len(data["rejected"])} issues')
         return 1 if data['rejected'] else 0
     overrides = json.loads(args.overrides.read_text(encoding='utf-8')) if args.overrides else {}
     plan = build_plan(issues, args.root, args.repo, overrides)

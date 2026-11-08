@@ -7,6 +7,8 @@ from datetime import datetime, timezone
 
 DEFAULT_REPO = 'ToAmano/Univ_EntranceExam_Math_Collection'
 KINDS = {'proof', 'figure', 'reference', 'transcription', 'style'}
+VALID_UNIVS = {'utokyo', 'ukyoto', 'titech'}
+VALID_EXAMS = {'zenki', 'kouki'}
 ID = r'(?:utokyo|ukyoto|titech)/(?:zenki|kouki)/[0-9]{4}/[1-9][0-9]*'
 ID_RE = re.compile(r'^' + ID + r'$')
 PATH_RE = re.compile(r'(?<![\w])(' + ID + r')(?![0-9])(?=/|\b)')
@@ -135,10 +137,24 @@ def build_plan(issues, root, repo=DEFAULT_REPO, overrides=None):
 
 
 def build_index(issues, repo=DEFAULT_REPO):
-    problems, rejected = defaultdict(list), []
+    problems, unmapped, rejected = defaultdict(list), [], []
     for issue in issues:
         labels = names(issue)
         if not any(n.startswith('problem:') for n in labels):
+            univs = [n[5:] for n in labels if n.startswith('univ:') and n[5:] in VALID_UNIVS]
+            exams = [n[5:] for n in labels if n.startswith('exam:') and n[5:] in VALID_EXAMS]
+            all_univs = [n for n in labels if n.startswith('univ:')]
+            all_exams = [n for n in labels if n.startswith('exam:')]
+            unmapped.append(dict(
+                number=issue['number'],
+                title=issue['title'],
+                state=issue['state'].lower(),
+                url=issue['url'],
+                updated_at=issue.get('updatedAt'),
+                kinds=sorted(n[5:] for n in labels if n.startswith('kind:') and n[5:] in KINDS),
+                univ=univs[0] if len(univs) == 1 and len(all_univs) == 1 else None,
+                exam=exams[0] if len(exams) == 1 and len(all_exams) == 1 else None,
+            ))
             continue
         pid, error = validate_labels(labels)
         title, body = issue.get('title', ''), issue.get('body') or ''
@@ -155,5 +171,6 @@ def build_index(issues, repo=DEFAULT_REPO):
                                   kinds=sorted(n[5:] for n in labels if n.startswith('kind:'))))
     for rows in problems.values():
         rows.sort(key=lambda r: (r['state'] != 'open', r['number']))
+    unmapped.sort(key=lambda r: (r['state'] != 'open', r['number']))
     return dict(schema_version=1, repo=repo, generated_at=now(),
-                problems=dict(sorted(problems.items())), rejected=rejected)
+                problems=dict(sorted(problems.items())), unmapped=unmapped, rejected=rejected)

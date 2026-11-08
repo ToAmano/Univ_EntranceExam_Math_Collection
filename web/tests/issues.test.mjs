@@ -58,3 +58,34 @@ test('invalid or rejected mappings are unavailable rather than silently empty', 
     withSnapshot(s, index => assert.equal(problemIssues(index, data).available, false));
   }
 });
+
+test('readIssueIndex supports optional unmapped list and validates its entries', () => {
+  withSnapshot(snapshot(), index => {
+    assert.equal(index.available, true);
+    assert.deepEqual(index.unmapped, []);
+  });
+
+  const withUnmapped = {
+    ...snapshot(),
+    unmapped: [
+      { ...row(50, 'open'), updated_at: '2026-11-01T00:00:00Z', kinds: ['figure'], univ: 'ukyoto', exam: 'zenki' },
+      { ...row(51, 'closed'), updated_at: null, kinds: [], univ: null, exam: null },
+    ],
+  };
+  withSnapshot(withUnmapped, index => {
+    assert.equal(index.available, true);
+    assert.equal(index.unmapped.length, 2);
+    assert.equal(index.unmapped[0].univ, 'ukyoto');
+  });
+
+  for (const bad of [
+    s => { s.unmapped = 'not-an-array'; },
+    s => { s.unmapped = [{ ...row(9), url: 'https://evil.example/issues/9', kinds: [], univ: null, exam: null }]; },
+    s => { s.unmapped = [{ ...row(9), kinds: [], univ: 'waseda', exam: null }]; },
+    s => { s.unmapped = [{ ...row(9), kinds: ['invalid'], univ: null, exam: null }]; },
+  ]) {
+    const s = snapshot();
+    bad(s);
+    withSnapshot(s, index => assert.equal(index.available, false));
+  }
+});

@@ -1,0 +1,375 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { readIssueIndex } from '../../lib/issues.mjs';
+import { buildArchiveSummary, buildIssueStats } from '../../lib/issue-stats.mjs';
+import { TOPIC_TAGS } from '../../lib/tags';
+import { buildBreadcrumbListJsonLd } from '../../utils/seo';
+
+const allSolutions = await getCollection('solutions');
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const archive = buildArchiveSummary(allSolutions);
+const issueIndex = readIssueIndex();
+const issueStats = buildIssueStats(issueIndex, allSolutions, baseUrl);
+
+const breadcrumbJsonLd = buildBreadcrumbListJsonLd([
+	{ name: 'トップ', url: new URL(`${baseUrl}/`, Astro.site).href },
+	{ name: '統計', url: new URL(`${baseUrl}/stats/`, Astro.site).href },
+]);
+
+const yearRangeLabel =
+	archive.minYear && archive.maxYear ? `${archive.minYear}–${archive.maxYear}` : '—';
+---
+
+<Layout
+	title="統計・データ"
+	description="大学入試数学アーカイブ（東大・京大・東工大）の収録規模、分野タグ分類、およびGitHub Issueに基づく校閲・整備ステータスの統計ポータル。"
+	jsonLd={breadcrumbJsonLd}
+>
+	<div class="stats-hub">
+		<nav class="breadcrumb" aria-label="パンくずリスト">
+			<a href={`${baseUrl}/`}>トップ</a>
+			<span class="sep" aria-hidden="true">/</span>
+			<span class="current">統計</span>
+		</nav>
+
+		<header class="hub-header">
+			<h1>アーカイブ <span class="gradient-text">統計・データ</span></h1>
+			<p class="hub-desc">
+				収録過去問の規模・出題分野・校閲ステータスに関する統計データ一覧です。
+			</p>
+		</header>
+
+		<section aria-label="アーカイブ基本指標" class="kpi-grid">
+			<div class="glass kpi-card">
+				<div class="kpi-label">総収録問題数</div>
+				<div class="kpi-value primary">
+					{archive.totalQuestions.toLocaleString('ja-JP')}
+					<span class="kpi-unit">問</span>
+				</div>
+				<div class="kpi-sub">
+					東大 {archive.byUniversity.utokyo} / 京大 {archive.byUniversity.ukyoto} / 東工大 {archive.byUniversity.titech}
+				</div>
+			</div>
+
+			<div class="glass kpi-card">
+				<div class="kpi-label">収録対象年度</div>
+				<div class="kpi-value year-range">{yearRangeLabel}</div>
+				<div class="kpi-sub">
+					前期 {archive.zenkiYearCount}年分 ・ 後期 {archive.koukiYearCount}年分
+				</div>
+			</div>
+
+			<div class="glass kpi-card">
+				<div class="kpi-label">分類トピック</div>
+				<div class="kpi-value emerald">
+					{TOPIC_TAGS.length}
+					<span class="kpi-unit">分野</span>
+				</div>
+				<div class="kpi-sub">整数・微積・空間図形・確率 ほか</div>
+			</div>
+
+			<div class="glass kpi-card">
+				<div class="kpi-label">Issue 消化率</div>
+				{issueStats.available && issueStats.totals.completionRate !== null ? (
+					<>
+						<div class="kpi-value amber">{issueStats.totals.completionRate.toFixed(1)}%</div>
+						<div class="kpi-sub">
+							Closed {issueStats.totals.closed.toLocaleString('ja-JP')} / 残 Open {issueStats.totals.open.toLocaleString('ja-JP')}
+						</div>
+					</>
+				) : (
+					<>
+						<div class="kpi-value muted">未取得</div>
+						<div class="kpi-sub">ビルド時スナップショット未生成</div>
+					</>
+				)}
+			</div>
+		</section>
+
+		<section class="portal-section" aria-labelledby="portal-heading">
+			<h2 id="portal-heading" class="section-title">統計ページ一覧</h2>
+
+			<div class="portal-grid">
+				<a href={`${baseUrl}/stats/issues/`} class="glass portal-card portal-issues">
+					<div class="portal-top">
+						<span class="portal-badge badge-amber">🛠️ 品質・整備データ</span>
+						<h3>収録・校閲ステータス（Issue 統計）</h3>
+						<p>
+							大学・試験区分別の Open / Closed Issue 内訳（論証・文字起こし・図表など）と、全対象年度の「年度×大問ステータスマップ」を確認できます。
+						</p>
+					</div>
+					<div class="portal-footer">
+						<span class="portal-meta">
+							{issueStats.available
+								? `現在 ${issueStats.totals.open.toLocaleString('ja-JP')} Open / ${issueStats.totals.closed.toLocaleString('ja-JP')} Closed`
+								: 'GitHub Issues 連携'}
+						</span>
+						<span class="portal-cta">Issue 統計を開く <span class="arrow">→</span></span>
+					</div>
+				</a>
+
+				<a href={`${baseUrl}/tags/`} class="glass portal-card portal-tags">
+					<div class="portal-top">
+						<span class="portal-badge badge-emerald">🏷️ 出題テーマ分類</span>
+						<h3>分野タグ別 収録問題一覧</h3>
+						<p>
+							整数・微分・積分・空間図形・確率など {TOPIC_TAGS.length} の統制分野タグごとに、3大学の収録問題数と過去問リストを横断して探せます。
+						</p>
+					</div>
+					<div class="portal-footer">
+						<span class="portal-meta">全 {TOPIC_TAGS.length} 分野タグ</span>
+						<span class="portal-cta emerald-cta">分野一覧を開く <span class="arrow">→</span></span>
+					</div>
+				</a>
+			</div>
+		</section>
+	</div>
+</Layout>
+
+<style>
+	.stats-hub {
+		max-width: 1060px;
+		margin: 0 auto;
+		padding: 1rem 0.5rem 3rem;
+	}
+
+	.breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.9rem;
+		color: var(--text-muted);
+		margin-bottom: 1.75rem;
+	}
+	.breadcrumb a {
+		color: var(--primary);
+	}
+	.breadcrumb a:hover {
+		text-decoration: underline;
+	}
+	.breadcrumb .current {
+		color: var(--text-main);
+		font-weight: 600;
+	}
+
+	.hub-header {
+		margin-bottom: 2rem;
+	}
+	.hub-header h1 {
+		font-size: clamp(1.8rem, 4vw, 2.5rem);
+		font-weight: 800;
+		line-height: 1.25;
+		margin: 0 0 0.5rem;
+	}
+	.gradient-text {
+		background: linear-gradient(135deg, #60a5fa 0%, #34d399 50%, #a78bfa 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+	.hub-desc {
+		color: var(--text-muted);
+		font-size: 1rem;
+		margin: 0;
+	}
+
+	.kpi-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1rem;
+		margin-bottom: 2.5rem;
+	}
+	.kpi-card {
+		padding: 1.25rem 1.35rem;
+		min-width: 0;
+	}
+	.kpi-label {
+		font-size: 0.82rem;
+		color: var(--text-muted);
+		font-weight: 500;
+	}
+	.kpi-value {
+		font-size: 1.95rem;
+		font-weight: 800;
+		font-variant-numeric: tabular-nums;
+		line-height: 1.2;
+		margin-top: 0.3rem;
+	}
+	.kpi-value.primary {
+		color: var(--primary);
+	}
+	.kpi-value.emerald {
+		color: var(--secondary);
+	}
+	.kpi-value.amber {
+		color: #fbbf24;
+	}
+	.kpi-value.muted {
+		color: var(--text-muted);
+		font-size: 1.45rem;
+		padding-top: 0.25rem;
+	}
+	.kpi-value.year-range {
+		color: var(--text-main);
+		font-size: 1.65rem;
+		padding-top: 0.18rem;
+	}
+	.kpi-unit {
+		font-size: 0.95rem;
+		font-weight: 600;
+		margin-left: 0.15rem;
+	}
+	.kpi-sub {
+		font-size: 0.78rem;
+		color: var(--text-subtle);
+		margin-top: 0.35rem;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.section-title {
+		font-size: 1.35rem;
+		font-weight: 700;
+		margin: 0 0 1.1rem;
+		color: var(--text-main);
+	}
+
+	.portal-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.25rem;
+	}
+	.portal-card {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 1.25rem;
+		padding: 1.6rem 1.75rem;
+		border-radius: 18px;
+		text-decoration: none;
+		color: inherit;
+		transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+	}
+	.portal-issues {
+		background: linear-gradient(135deg, rgba(96, 165, 250, 0.13), rgba(15, 23, 42, 0.82));
+		border-color: rgba(96, 165, 250, 0.32);
+	}
+	.portal-tags {
+		background: linear-gradient(135deg, rgba(52, 211, 153, 0.11), rgba(15, 23, 42, 0.82));
+		border-color: rgba(52, 211, 153, 0.28);
+	}
+	.portal-card:hover {
+		transform: translateY(-4px);
+		border-color: rgba(96, 165, 250, 0.55);
+		box-shadow: var(--shadow-glow), 0 14px 36px rgba(0, 0, 0, 0.45);
+		color: inherit;
+	}
+	.portal-tags:hover {
+		border-color: rgba(52, 211, 153, 0.55);
+	}
+
+	.portal-badge {
+		display: inline-block;
+		font-size: 0.76rem;
+		font-weight: 700;
+		padding: 0.24rem 0.65rem;
+		border-radius: 999px;
+	}
+	.badge-amber {
+		background: rgba(251, 191, 36, 0.16);
+		color: #fde68a;
+		border: 1px solid rgba(251, 191, 36, 0.4);
+	}
+	.badge-emerald {
+		background: rgba(52, 211, 153, 0.16);
+		color: #a7f3d0;
+		border: 1px solid rgba(52, 211, 153, 0.35);
+	}
+
+	.portal-top h3 {
+		font-size: 1.25rem;
+		font-weight: 800;
+		margin: 0.7rem 0 0.45rem;
+		color: var(--text-main);
+	}
+	.portal-top p {
+		margin: 0;
+		font-size: 0.92rem;
+		color: var(--text-muted);
+		line-height: 1.65;
+	}
+
+	.portal-footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+		padding-top: 0.9rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+		font-size: 0.85rem;
+	}
+	.portal-meta {
+		color: var(--text-subtle);
+		font-variant-numeric: tabular-nums;
+	}
+	.portal-cta {
+		font-weight: 700;
+		color: var(--primary);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+	}
+	.portal-cta.emerald-cta {
+		color: var(--secondary);
+	}
+	.arrow {
+		transition: transform 0.2s ease;
+	}
+	.portal-card:hover .arrow {
+		transform: translateX(4px);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.portal-card,
+		.arrow {
+			transition: none;
+		}
+		.portal-card:hover {
+			transform: none;
+		}
+		.portal-card:hover .arrow {
+			transform: none;
+		}
+	}
+
+	@media (max-width: 860px) {
+		.kpi-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+		.portal-grid {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	@media (max-width: 640px) {
+		.stats-hub {
+			padding: 0.5rem 0.25rem 2rem;
+		}
+		.kpi-grid {
+			gap: 0.7rem;
+		}
+		.kpi-card {
+			padding: 0.9rem 0.95rem;
+		}
+		.kpi-value {
+			font-size: 1.45rem;
+		}
+		.kpi-value.year-range {
+			font-size: 1.32rem;
+		}
+		.portal-card {
+			padding: 1.2rem 1.25rem;
+		}
+	}
+</style>

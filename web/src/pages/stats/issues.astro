@@ -1,0 +1,1425 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { readIssueIndex } from '../../lib/issues.mjs';
+import { buildIssueStats, KIND_META } from '../../lib/issue-stats.mjs';
+import { buildBreadcrumbListJsonLd } from '../../utils/seo';
+
+const allSolutions = await getCollection('solutions');
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const issueIndex = readIssueIndex();
+const stats = buildIssueStats(issueIndex, allSolutions, baseUrl);
+
+const checkedAt = stats.generatedAt
+	? new Date(stats.generatedAt).toLocaleString('ja-JP', {
+			timeZone: 'Asia/Tokyo',
+			year: 'numeric',
+			month: '2-digit',
+			day: '2-digit',
+			hour: '2-digit',
+			minute: '2-digit',
+		})
+	: null;
+
+const breadcrumbJsonLd = buildBreadcrumbListJsonLd([
+	{ name: 'トップ', url: new URL(`${baseUrl}/`, Astro.site).href },
+	{ name: '統計', url: new URL(`${baseUrl}/stats/`, Astro.site).href },
+	{ name: 'Issue 統計', url: new URL(`${baseUrl}/stats/issues/`, Astro.site).href },
+]);
+
+// Tab strip order grouped by university (東大前・後 → 京大前・後 → 東工大前・後)
+const TAB_ORDER = [
+	'utokyo-zenki',
+	'utokyo-kouki',
+	'ukyoto-zenki',
+	'ukyoto-kouki',
+	'titech-zenki',
+	'titech-kouki',
+];
+const orderedTabs = TAB_ORDER.map((id) => stats.categories.find((c) => c.id === id)!).filter(Boolean);
+
+const sortedKinds = [...KIND_META].sort(
+	(a, b) => stats.totals.openByKind[b.key] - stats.totals.openByKind[a.key]
+);
+const topTwoKinds = sortedKinds
+	.slice(0, 2)
+	.map((k) => `${k.label} ${stats.totals.openByKind[k.key]}`)
+	.join(' / ');
+const restKindsSummary = [
+	...sortedKinds
+		.slice(2)
+		.filter((k) => stats.totals.openByKind[k.key] > 0)
+		.map((k) => `${k.label} ${stats.totals.openByKind[k.key]}`),
+	...(stats.totals.openByKind.unclassified > 0
+		? [`未分類 ${stats.totals.openByKind.unclassified}`]
+		: []),
+].join(' ・ ');
+
+function cellStateClass(openCount: number, recorded: boolean): string {
+	if (openCount >= 2) return 'c-w2';
+	if (openCount === 1) return 'c-w1';
+	return recorded ? 'c-ok' : 'c-na';
+}
+---
+
+<Layout
+	title="収録・校閲ステータス（Issue 統計）"
+	description="東京大学・京都大学・東京工業大学の過去問アーカイブにおけるGitHub Issue消化状況、種別内訳、および全年度の年度×大問ステータスマップ。"
+	jsonLd={breadcrumbJsonLd}
+>
+	<div class="issues-stats-page" data-issues-stats-root>
+		<nav class="breadcrumb" aria-label="パンくずリスト">
+			<a href={`${baseUrl}/`}>トップ</a>
+			<span class="sep" aria-hidden="true">/</span>
+			<a href={`${baseUrl}/stats/`}>統計</a>
+			<span class="sep" aria-hidden="true">/</span>
+			<span class="current">Issue 統計</span>
+		</nav>
+
+		<header class="page-hero">
+			<div>
+				<h1>
+					収録・校閲ステータス <span class="gradient-text">Issue 統計</span>
+				</h1>
+				<p class="hero-sub">
+					GitHub Issues に基づく大学・試験区分別の残タスクと消化進捗（ビルド時スナップショット集計）
+				</p>
+			</div>
+			{checkedAt && (
+				<div class="stamp-pill">
+					最終集計: <time datetime={stats.generatedAt!}>{checkedAt} JST</time>
+				</div>
+			)}
+		</header>
+
+		{!stats.available && (
+			<div class="notice glass" role="status">
+				<p>
+					ビルド時の Issue スナップショット（<code>issues-by-problem.json</code>）が未取得のため、件数は 0 件として表示されています。最新の状況は{' '}
+					<a href={stats.repoIssuesUrl} target="_blank" rel="noopener noreferrer">
+						GitHub Issues ↗
+					</a>{' '}
+					で直接確認できます。
+				</p>
+			</div>
+		)}
+
+		<!-- ===== SECTION A: KPI + 6 CATEGORY CARDS ===== -->
+		<section aria-label="全体サマリー指標" class="kpi-row">
+			<div class="glass kpi-card">
+				<div class="kpi-lbl">残 Open Issue 総数</div>
+				<div class="kpi-num amber">
+					{stats.available ? stats.totals.open.toLocaleString('ja-JP') : '—'}
+				</div>
+				<div class="kpi-note">
+					{stats.available
+						? `問題・区分別 ${stats.totals.problemOpen.toLocaleString('ja-JP')} / 横断・全体 ${stats.totals.generalOpen.toLocaleString('ja-JP')}`
+						: 'スナップショット未取得'}
+				</div>
+			</div>
+
+			<div class="glass kpi-card">
+				<div class="kpi-lbl">解決済み (Closed)</div>
+				<div class="kpi-num emerald">
+					{stats.available ? stats.totals.closed.toLocaleString('ja-JP') : '—'}
+				</div>
+				<div class="kpi-note">
+					{stats.available && stats.totals.completionRate !== null
+						? `全体消化率 ${stats.totals.completionRate.toFixed(1)}% (${stats.totals.closed.toLocaleString('ja-JP')} / ${stats.totals.all.toLocaleString('ja-JP')})`
+						: '—'}
+				</div>
+			</div>
+
+			<div class="glass kpi-card">
+				<div class="kpi-lbl">種別 (kind) 内訳（Open）</div>
+				<div class="kpi-num kind-headline">
+					{stats.available ? topTwoKinds : '—'}
+				</div>
+				<div class="kpi-note">
+					{stats.available ? restKindsSummary || '他種別 0' : '—'}
+				</div>
+			</div>
+
+			<div class="glass kpi-card kpi-clickable">
+				<div class="kpi-lbl">横断・Web/CI Issue</div>
+				<div class="kpi-num violet">
+					{stats.available ? stats.general.openCount.toLocaleString('ja-JP') : '—'}
+				</div>
+				<div class="kpi-note accent-link">クリックで下部一覧を表示 ↓</div>
+				<button
+					type="button"
+					class="card-stretch-btn"
+					data-jump-cat="general"
+					aria-label="横断・全体 Issue の一覧を下部で表示"
+				></button>
+			</div>
+		</section>
+
+		<section aria-labelledby="cat-summary-heading" class="cat-summary-section">
+			<div class="sec-heading">
+				<h2 id="cat-summary-heading">大学・試験区分別サマリー</h2>
+				<span>カードを選択すると下の年度別ステータスマップが切り替わります</span>
+			</div>
+
+			<div class="grid-6">
+				{stats.categories.map((cat, idx) => {
+					const rate = cat.completionRate ?? 0;
+					const nonZeroKinds = KIND_META.filter((km) => cat.openByKind[km.key] > 0);
+					return (
+						<article
+							class:list={['univ-card', 'glass', { 'active-cat': idx === 0 }]}
+							data-cat-card={cat.id}
+							style={`background: ${cat.gradient}; border-color: ${cat.border};`}
+						>
+							<div class="uc-top">
+								<h3 class="uc-title" style={`color: ${cat.textAccent};`}>
+									{cat.univName} {cat.category === 'zenki' ? '前期' : '後期'}
+								</h3>
+								<div class="uc-open">
+									{stats.available ? cat.openCount.toLocaleString('ja-JP') : '—'}{' '}
+									<small>open</small>
+								</div>
+							</div>
+
+							<div class="uc-prog-meta">
+								<span>
+									{cat.completionRate !== null ? `消化率 ${cat.completionRate.toFixed(1)}%` : '消化率 —'}
+								</span>
+								<span>Closed {stats.available ? cat.closedCount.toLocaleString('ja-JP') : '—'}</span>
+							</div>
+							<div class="uc-bar" aria-hidden="true">
+								<div class="uc-bar-fill" style={`width: ${rate}%; background: ${cat.color};`}></div>
+							</div>
+
+							<div class="uc-kinds">
+								{nonZeroKinds.length > 0 ? (
+									nonZeroKinds.map((km) => (
+										<span class="kpill">
+											{km.label} {cat.openByKind[km.key]}
+										</span>
+									))
+								) : (
+									<span class="kpill muted-pill">Open 種別なし</span>
+								)}
+								{cat.openByKind.unclassified > 0 && (
+									<span class="kpill">未分類 {cat.openByKind.unclassified}</span>
+								)}
+							</div>
+
+							<div class="uc-foot">
+								<a
+									href={cat.githubSearchUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="gh-ext-link"
+								>
+									GitHub検索 ↗
+								</a>
+								<span class="jump-txt">年度マップを見る ↓</span>
+							</div>
+
+							<button
+								type="button"
+								class="card-stretch-btn"
+								data-jump-cat={cat.id}
+								aria-label={`${cat.univName} ${cat.catName} の年度マップを表示`}
+							></button>
+						</article>
+					);
+				})}
+			</div>
+		</section>
+
+		<!-- ===== SECTION C: INTERACTIVE CATEGORY EXPLORER ===== -->
+		<section aria-labelledby="explorer-heading" class="explorer-section" id="explorer">
+			<div class="sec-heading">
+				<h2 id="explorer-heading">年度×大問ステータス＆Open Issue 一覧</h2>
+				<span>大問セルをクリックすると右の一覧を特定の問題で絞り込めます</span>
+			</div>
+
+			<div class="glass explorer-shell">
+				<div class="cat-tabs" role="tablist" aria-label="表示区分の切り替え">
+					{orderedTabs.map((cat, idx) => (
+						<button
+							type="button"
+							role="tab"
+							id={`tab-${cat.id}`}
+							aria-controls={`panel-${cat.id}`}
+							aria-selected={idx === 0 ? 'true' : 'false'}
+							tabindex={idx === 0 ? 0 : -1}
+							class:list={['ctab', { active: idx === 0 }]}
+							data-tab={cat.id}
+						>
+							{cat.shortLabel} ({stats.available ? cat.openCount : '—'})
+						</button>
+					))}
+					<button
+						type="button"
+						role="tab"
+						id="tab-general"
+						aria-controls="panel-general"
+						aria-selected="false"
+						tabindex={-1}
+						class="ctab"
+						data-tab="general"
+					>
+						横断・全体 ({stats.available ? stats.general.openCount : '—'})
+					</button>
+				</div>
+
+				<div class="filter-bar" data-filter-bar>
+					<div class="kind-filters" role="group" aria-label="指摘種別フィルタ">
+						<span class="filter-label">種別:</span>
+						<button type="button" class="fbtn active" data-kind-btn="all">すべて</button>
+						<button type="button" class="fbtn" data-kind-btn="proof">proof (論証)</button>
+						<button type="button" class="fbtn" data-kind-btn="transcription">transcription (文字起こし)</button>
+						<button type="button" class="fbtn" data-kind-btn="figure">figure (図表)</button>
+						<button type="button" class="fbtn" data-kind-btn="other">その他 (ref / style / 未分類)</button>
+					</div>
+
+					<label class="year-toggle">
+						<input type="checkbox" data-only-open-years />
+						<span>Open がある年度のみ表示</span>
+					</label>
+				</div>
+
+				<!-- 6 Category Panels -->
+				{orderedTabs.map((cat, idx) => {
+					const maxCols = Math.max(
+						1,
+						...cat.decades.flatMap((d) => d.years.map((y) => y.questions.length))
+					);
+					return (
+						<div
+							role="tabpanel"
+							id={`panel-${cat.id}`}
+							aria-labelledby={`tab-${cat.id}`}
+							class="explorer-grid"
+							data-cat-panel={cat.id}
+							hidden={idx !== 0}
+						>
+							<!-- Left: All-Year x Question Heatmap -->
+							<div class="sub-panel matrix-panel">
+								<div class="sub-panel-head">
+									<strong>
+										{cat.univName} {cat.category === 'zenki' ? '前期' : '後期'} マトリクス
+									</strong>
+									<div class="legend-inline" aria-label="セル凡例">
+										<span><i class="lg-box lg-ok"></i>0件</span>
+										<span><i class="lg-box lg-w1"></i>1件</span>
+										<span><i class="lg-box lg-w2"></i>2件+</span>
+										<span><i class="lg-box lg-na"></i>未収録</span>
+									</div>
+								</div>
+
+								{cat.decades.length === 0 ? (
+									<p class="empty-msg">収録データがありません。</p>
+								) : (
+									cat.decades.map((decade) => (
+										<div class="decade-group" data-decade-group>
+											<div class="decade-label">{decade.label}</div>
+											<div class="matrix-rows" style={`--cat-cols: ${maxCols};`}>
+												{decade.years.map((yr) => (
+													<div class="m-row" data-year-row={yr.year}>
+														<span class="m-year">{yr.year}</span>
+														{yr.questions.map((q) => {
+															const stClass = cellStateClass(q.openCount, q.recorded);
+															const statusText =
+																q.openCount > 0
+																	? `Open Issue ${q.openCount}件`
+																	: q.recorded
+																		? 'Open Issue 0件（収録済）'
+																		: '未収録';
+															return (
+																<button
+																	type="button"
+																	class={`m-cell ${stClass}`}
+																	data-cell
+																	data-prob-key={q.problemKey}
+																	data-prob-label={`${yr.year}年 第${q.question}問`}
+																	data-recorded={q.recorded ? '1' : '0'}
+																	data-page-href={q.pageHref || ''}
+																	data-page-label={q.pageLabel || ''}
+																	data-open-all={q.openByFilter.all}
+																	data-open-proof={q.openByFilter.proof}
+																	data-open-transcription={q.openByFilter.transcription}
+																	data-open-figure={q.openByFilter.figure}
+																	data-open-other={q.openByFilter.other}
+																	title={`${yr.year}年 第${q.question}問 — ${statusText}`}
+																	aria-label={`${yr.year}年 第${q.question}問 (${statusText})`}
+																>
+																	{q.question}
+																</button>
+															);
+														})}
+													</div>
+												))}
+											</div>
+										</div>
+									))
+								)}
+								<p class="empty-msg" data-no-years-msg hidden>
+									現在のフィルタ条件で Open Issue がある年度はありません。
+								</p>
+							</div>
+
+							<!-- Right: Sticky Matching Open Issue List -->
+							<div class="sub-panel list-panel">
+								<div class="sub-panel-head">
+									<strong data-list-heading data-default-heading={`${cat.shortLabel} の Open Issue`}>
+										{cat.shortLabel} の Open Issue（<span data-visible-count>{cat.openIssues.length}</span>件）
+									</strong>
+									<button type="button" class="reset-btn" data-cell-reset hidden>
+										絞り込み解除 ×
+									</button>
+								</div>
+
+								<div class="selected-cell-bar" data-cell-bar hidden>
+									<span data-cell-bar-text></span>
+									<a href="#" class="cell-page-link" data-cell-page-link hidden></a>
+								</div>
+
+								<div class="issue-list" data-issue-list>
+									{cat.openIssues.map((iss) => (
+										<div
+											class:list={['iss-item', { 'cat-wide-item': iss.scope === 'category' }]}
+											data-issue-item
+											data-scope={iss.scope}
+											data-prob-key={iss.problemKey || ''}
+											data-filter-groups={iss.filterGroups.join(' ')}
+										>
+											<div class="iss-top">
+												<span
+													class:list={[
+														'prob-badge',
+														{ 'badge-cat-wide': iss.scope === 'category' },
+													]}
+												>
+													{iss.badge}
+												</span>
+												<div class="iss-kinds">
+													{iss.kinds.length > 0 ? (
+														iss.kinds.map((k) => <span class="kpill">{k}</span>)
+													) : (
+														<span class="kpill muted-pill">未分類</span>
+													)}
+												</div>
+											</div>
+
+											<div class="iss-title">
+												<a href={iss.url} target="_blank" rel="noopener noreferrer" class="iss-gh-link">
+													<span class="iss-num">#{iss.number}</span>
+													{iss.title} ↗
+												</a>
+											</div>
+
+											<div class="iss-actions">
+												<span class="iss-date">
+													{iss.updatedDate ? `更新: ${iss.updatedDate}` : ''}
+												</span>
+												<div class="iss-links">
+													{iss.pageHref && iss.pageLabel && (
+														<a href={iss.pageHref}>{iss.pageLabel}</a>
+													)}
+												</div>
+											</div>
+										</div>
+									))}
+								</div>
+
+								<p class="empty-msg" data-empty-msg hidden={cat.openIssues.length > 0}>
+									条件に一致する Open Issue はありません。
+								</p>
+							</div>
+						</div>
+					);
+				})}
+
+				<!-- 7th Tab Panel: General / Repository-Wide Issues -->
+				<div
+					role="tabpanel"
+					id="panel-general"
+					aria-labelledby="tab-general"
+					class="general-panel-wrap"
+					data-cat-panel="general"
+					hidden
+				>
+					<div class="sub-panel">
+						<div class="sub-panel-head">
+							<strong>
+								リポジトリ横断・複数問題まとめ・Web/CI Open Issue（{stats.general.openCount}件）
+							</strong>
+							<a
+								href={stats.general.githubSearchUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="gh-ext-link"
+							>
+								GitHubで検索（Closed {stats.general.closedCount}件除く） ↗
+							</a>
+						</div>
+
+						{stats.general.openIssues.length > 0 ? (
+							<div class="issue-list general-list">
+								{stats.general.openIssues.map((iss) => (
+									<div class="iss-item cat-wide-item">
+										<div class="iss-top">
+											<span class="prob-badge badge-cat-wide">横断・全体</span>
+											<div class="iss-kinds">
+												{iss.kinds.map((k) => (
+													<span class="kpill">{k}</span>
+												))}
+											</div>
+										</div>
+										<div class="iss-title">
+											<a href={iss.url} target="_blank" rel="noopener noreferrer" class="iss-gh-link">
+												<span class="iss-num">#{iss.number}</span>
+												{iss.title} ↗
+											</a>
+										</div>
+										{iss.updatedDate && (
+											<div class="iss-actions">
+												<span class="iss-date">更新: {iss.updatedDate}</span>
+											</div>
+										)}
+									</div>
+								))}
+							</div>
+						) : (
+							<p class="empty-msg">現在 Open 状態の横断・全体 Issue はありません。</p>
+						)}
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</Layout>
+
+<script>
+	function initIssuesExplorer() {
+		const root = document.querySelector('[data-issues-stats-root]');
+		if (!root || root.hasAttribute('data-initialized')) return;
+		root.setAttribute('data-initialized', 'true');
+
+		let activeCat = 'utokyo-zenki';
+		let activeKind = 'all';
+		let onlyOpenYears = false;
+		let selectedCellKey: string | null = null;
+
+		const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-tab]'));
+		const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-cat-panel]'));
+		const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-cat-card]'));
+		const filterBar = root.querySelector<HTMLElement>('[data-filter-bar]');
+		const kindBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-kind-btn]'));
+		const openYearsCheckbox = root.querySelector<HTMLInputElement>('[data-only-open-years]');
+		const explorerAnchor = document.getElementById('explorer');
+
+		const validCatIds = new Set(tabs.map((t) => t.dataset.tab!));
+
+		function computeCellClass(count: number, recorded: boolean): string {
+			if (count >= 2) return 'c-w2';
+			if (count === 1) return 'c-w1';
+			return recorded ? 'c-ok' : 'c-na';
+		}
+
+		function refreshActivePanel() {
+			const panel = root!.querySelector<HTMLElement>(`[data-cat-panel="${activeCat}"]`);
+			if (!panel || activeCat === 'general') return;
+
+			// 1. Update matrix cells & year/decade visibility
+			let anyYearVisible = false;
+			panel.querySelectorAll<HTMLElement>('[data-decade-group]').forEach((decadeEl) => {
+				let decadeHasVisibleYear = false;
+				decadeEl.querySelectorAll<HTMLElement>('[data-year-row]').forEach((rowEl) => {
+					let rowOpenSum = 0;
+					rowEl.querySelectorAll<HTMLButtonElement>('[data-cell]').forEach((cell) => {
+						const count = Number(cell.dataset[`open${activeKind[0].toUpperCase()}${activeKind.slice(1)}`] ?? '0');
+						const recorded = cell.dataset.recorded === '1';
+						rowOpenSum += count;
+						cell.classList.remove('c-ok', 'c-w1', 'c-w2', 'c-na');
+						cell.classList.add(computeCellClass(count, recorded));
+						cell.classList.toggle('selected-cell', cell.dataset.probKey === selectedCellKey);
+					});
+					const showRow = !onlyOpenYears || rowOpenSum > 0;
+					rowEl.hidden = !showRow;
+					if (showRow) {
+						decadeHasVisibleYear = true;
+						anyYearVisible = true;
+					}
+				});
+				decadeEl.hidden = !decadeHasVisibleYear;
+			});
+
+			const noYearsMsg = panel.querySelector<HTMLElement>('[data-no-years-msg]');
+			if (noYearsMsg) noYearsMsg.hidden = anyYearVisible || panel.querySelectorAll('[data-decade-group]').length === 0;
+
+			// 2. Update selected cell banner & reset button
+			const resetBtn = panel.querySelector<HTMLButtonElement>('[data-cell-reset]');
+			const cellBar = panel.querySelector<HTMLElement>('[data-cell-bar]');
+			const cellBarText = panel.querySelector<HTMLElement>('[data-cell-bar-text]');
+			const cellPageLink = panel.querySelector<HTMLAnchorElement>('[data-cell-page-link]');
+			const headingEl = panel.querySelector<HTMLElement>('[data-list-heading]');
+
+			if (selectedCellKey) {
+				const selCell = panel.querySelector<HTMLButtonElement>(`[data-cell][data-prob-key="${selectedCellKey}"]`);
+				if (resetBtn) resetBtn.hidden = false;
+				if (cellBar && selCell) {
+					cellBar.hidden = false;
+					if (cellBarText) {
+						cellBarText.textContent = `${selCell.dataset.probLabel} で絞り込み中`;
+					}
+					if (cellPageLink) {
+						const href = selCell.dataset.pageHref || '';
+						const label = selCell.dataset.pageLabel || '';
+						if (href && label) {
+							cellPageLink.href = href;
+							cellPageLink.textContent = label;
+							cellPageLink.hidden = false;
+						} else {
+							cellPageLink.hidden = true;
+						}
+					}
+				}
+			} else {
+				if (resetBtn) resetBtn.hidden = true;
+				if (cellBar) cellBar.hidden = true;
+			}
+
+			// 3. Filter issue items
+			let visibleIssues = 0;
+			panel.querySelectorAll<HTMLElement>('[data-issue-item]').forEach((item) => {
+				const groups = (item.dataset.filterGroups || '').split(' ').filter(Boolean);
+				const matchKind = activeKind === 'all' || groups.includes(activeKind);
+				const matchCell = !selectedCellKey || item.dataset.probKey === selectedCellKey;
+				const show = matchKind && matchCell;
+				item.hidden = !show;
+				if (show) visibleIssues += 1;
+			});
+
+			if (headingEl) {
+				const baseHeading = headingEl.dataset.defaultHeading || 'Open Issue';
+				const prefix = selectedCellKey ? `${selectedCellKey.replace('/', '年 第')}問 の Open Issue` : baseHeading;
+				headingEl.textContent = `${prefix}（${visibleIssues}件）`;
+			}
+
+			const emptyMsg = panel.querySelector<HTMLElement>('[data-empty-msg]');
+			if (emptyMsg) emptyMsg.hidden = visibleIssues > 0;
+		}
+
+		function activateCategory(catId: string, options: { scroll?: boolean; updateHash?: boolean } = {}) {
+			if (!validCatIds.has(catId)) return;
+			activeCat = catId;
+			selectedCellKey = null;
+
+			tabs.forEach((tab) => {
+				const isCurrent = tab.dataset.tab === catId;
+				tab.classList.toggle('active', isCurrent);
+				tab.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
+				tab.tabIndex = isCurrent ? 0 : -1;
+			});
+
+			panels.forEach((panel) => {
+				panel.hidden = panel.dataset.catPanel !== catId;
+			});
+
+			cards.forEach((card) => {
+				card.classList.toggle('active-cat', card.dataset.catCard === catId);
+			});
+
+			if (filterBar) {
+				filterBar.hidden = catId === 'general';
+			}
+
+			refreshActivePanel();
+
+			if (options.updateHash) {
+				history.replaceState(null, '', `#${catId}`);
+			}
+			if (options.scroll && explorerAnchor) {
+				const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+				explorerAnchor.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+			}
+		}
+
+		// Card jump buttons
+		root.querySelectorAll<HTMLButtonElement>('[data-jump-cat]').forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const target = btn.dataset.jumpCat;
+				if (target) activateCategory(target, { scroll: true, updateHash: true });
+			});
+		});
+
+		// Tab clicks + keyboard left/right navigation
+		tabs.forEach((tab, idx) => {
+			tab.addEventListener('click', () => {
+				if (tab.dataset.tab) activateCategory(tab.dataset.tab, { updateHash: true });
+			});
+			tab.addEventListener('keydown', (e) => {
+				if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+				e.preventDefault();
+				const nextIdx = e.key === 'ArrowRight' ? (idx + 1) % tabs.length : (idx - 1 + tabs.length) % tabs.length;
+				const nextTab = tabs[nextIdx];
+				nextTab.focus();
+				if (nextTab.dataset.tab) activateCategory(nextTab.dataset.tab, { updateHash: true });
+			});
+		});
+
+		// Kind filter buttons
+		kindBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				activeKind = btn.dataset.kindBtn || 'all';
+				kindBtns.forEach((b) => b.classList.toggle('active', b === btn));
+				refreshActivePanel();
+			});
+		});
+
+		// Year toggle
+		if (openYearsCheckbox) {
+			openYearsCheckbox.addEventListener('change', () => {
+				onlyOpenYears = openYearsCheckbox.checked;
+				refreshActivePanel();
+			});
+		}
+
+		// Matrix cell clicks & reset clicks (event delegation per panel)
+		panels.forEach((panel) => {
+			panel.addEventListener('click', (e) => {
+				const target = e.target as HTMLElement | null;
+				if (!target) return;
+				const cell = target.closest<HTMLButtonElement>('[data-cell]');
+				if (cell) {
+					const key = cell.dataset.probKey || null;
+					selectedCellKey = selectedCellKey === key ? null : key;
+					refreshActivePanel();
+					return;
+				}
+				if (target.closest('[data-cell-reset]')) {
+					selectedCellKey = null;
+					refreshActivePanel();
+				}
+			});
+		});
+
+		// Initial URL hash support (e.g. /stats/issues/#ukyoto-zenki or #general)
+		const initialHash = window.location.hash.replace(/^#/, '');
+		if (initialHash && validCatIds.has(initialHash)) {
+			activateCategory(initialHash, { scroll: false, updateHash: false });
+		} else {
+			refreshActivePanel();
+		}
+	}
+
+	document.addEventListener('astro:page-load', initIssuesExplorer);
+</script>
+
+<style>
+	.issues-stats-page {
+		max-width: 1120px;
+		margin: 0 auto;
+		padding: 0.75rem 0.25rem 3.5rem;
+	}
+
+	.breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.9rem;
+		color: var(--text-muted);
+		margin-bottom: 1.5rem;
+	}
+	.breadcrumb a {
+		color: var(--primary);
+	}
+	.breadcrumb a:hover {
+		text-decoration: underline;
+	}
+	.breadcrumb .current {
+		color: var(--text-main);
+		font-weight: 600;
+	}
+
+	.page-hero {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		flex-wrap: wrap;
+		gap: 1rem;
+		margin-bottom: 1.75rem;
+	}
+	.page-hero h1 {
+		font-size: clamp(1.65rem, 3.8vw, 2.35rem);
+		font-weight: 800;
+		line-height: 1.25;
+		margin: 0;
+	}
+	.gradient-text {
+		background: linear-gradient(135deg, #60a5fa 0%, #34d399 50%, #a78bfa 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+	.hero-sub {
+		color: var(--text-muted);
+		font-size: 0.95rem;
+		margin: 0.35rem 0 0;
+	}
+	.stamp-pill {
+		font-size: 0.8rem;
+		color: #cbd5e1;
+		background: rgba(15, 23, 42, 0.75);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		padding: 0.4rem 0.85rem;
+		border-radius: 999px;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.notice {
+		margin-bottom: 1.75rem;
+		padding: 0.95rem 1.25rem;
+		border-left: 3px solid #fbbf24;
+		border-radius: 12px;
+	}
+	.notice p {
+		margin: 0;
+		font-size: 0.9rem;
+		color: var(--text-muted);
+	}
+
+	/* Section A: KPIs */
+	.kpi-row {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 0.9rem;
+		margin-bottom: 2rem;
+	}
+	.kpi-card {
+		padding: 1.05rem 1.2rem;
+		position: relative;
+		min-width: 0;
+	}
+	.kpi-clickable {
+		transition: transform 0.2s ease, border-color 0.2s ease;
+	}
+	.kpi-clickable:hover {
+		transform: translateY(-2px);
+		border-color: var(--glass-hover-border);
+	}
+	.kpi-lbl {
+		font-size: 0.78rem;
+		color: var(--text-muted);
+	}
+	.kpi-num {
+		font-size: 1.8rem;
+		font-weight: 800;
+		font-variant-numeric: tabular-nums;
+		line-height: 1.2;
+		margin-top: 0.25rem;
+	}
+	.kpi-num.amber {
+		color: #fbbf24;
+	}
+	.kpi-num.emerald {
+		color: var(--secondary);
+	}
+	.kpi-num.violet {
+		color: var(--accent);
+	}
+	.kpi-num.kind-headline {
+		color: var(--primary);
+		font-size: 1.25rem;
+		padding-top: 0.35rem;
+	}
+	.kpi-note {
+		font-size: 0.75rem;
+		color: var(--text-subtle);
+		margin-top: 0.3rem;
+		font-variant-numeric: tabular-nums;
+	}
+	.kpi-note.accent-link {
+		color: var(--primary);
+		font-weight: 600;
+	}
+
+	/* Stretched accessible button overlay */
+	.card-stretch-btn {
+		position: static;
+		background: none;
+		border: 0;
+		padding: 0;
+		margin: 0;
+		cursor: pointer;
+	}
+	.card-stretch-btn::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		z-index: 1;
+	}
+	.card-stretch-btn:focus-visible::after {
+		outline: 2px solid var(--primary);
+		outline-offset: 2px;
+	}
+
+	.sec-heading {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		flex-wrap: wrap;
+		gap: 0.5rem 1rem;
+		margin-bottom: 1rem;
+	}
+	.sec-heading h2 {
+		font-size: 1.3rem;
+		font-weight: 700;
+		margin: 0;
+		color: var(--text-main);
+	}
+	.sec-heading span {
+		font-size: 0.84rem;
+		color: var(--text-muted);
+	}
+
+	/* 6 Category Cards */
+	.cat-summary-section {
+		margin-bottom: 2.5rem;
+	}
+	.grid-6 {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.univ-card {
+		position: relative;
+		min-width: 0;
+		padding: 1.15rem 1.25rem;
+		border-radius: 16px;
+		display: flex;
+		flex-direction: column;
+		transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+	}
+	.univ-card:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+	}
+	.univ-card.active-cat {
+		box-shadow: 0 0 0 2px var(--primary), 0 12px 28px rgba(96, 165, 250, 0.2);
+	}
+	.uc-top {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0.5rem;
+		margin-bottom: 0.45rem;
+	}
+	.uc-title {
+		margin: 0;
+		font-size: 1rem;
+		font-weight: 700;
+	}
+	.uc-open {
+		font-size: 1.35rem;
+		font-weight: 800;
+		font-variant-numeric: tabular-nums;
+	}
+	.uc-open small {
+		font-size: 0.75rem;
+		font-weight: 500;
+		color: var(--text-muted);
+	}
+	.uc-prog-meta {
+		display: flex;
+		justify-content: space-between;
+		font-size: 0.74rem;
+		color: var(--text-muted);
+		font-variant-numeric: tabular-nums;
+		margin-bottom: 0.35rem;
+	}
+	.uc-bar {
+		height: 6px;
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.09);
+		overflow: hidden;
+		margin-bottom: 0.7rem;
+	}
+	.uc-bar-fill {
+		height: 100%;
+		border-radius: 999px;
+	}
+	.uc-kinds {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem;
+		margin-bottom: 0.75rem;
+		flex: 1;
+		align-content: flex-start;
+	}
+	.kpill {
+		font-size: 0.7rem;
+		padding: 0.16rem 0.5rem;
+		border-radius: 5px;
+		background: rgba(255, 255, 255, 0.08);
+		color: #e2e8f0;
+		font-variant-numeric: tabular-nums;
+	}
+	.kpill.muted-pill {
+		color: var(--text-subtle);
+	}
+	.uc-foot {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-top: 0.55rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.07);
+		font-size: 0.78rem;
+	}
+	.gh-ext-link {
+		position: relative;
+		z-index: 2;
+		color: var(--text-muted);
+		font-size: 0.78rem;
+	}
+	.gh-ext-link:hover {
+		color: var(--primary);
+		text-decoration: underline;
+	}
+	.jump-txt {
+		color: var(--primary);
+		font-weight: 600;
+	}
+
+	/* Section C: Below-the-fold Explorer */
+	.explorer-section {
+		scroll-margin-top: 5.5rem;
+	}
+	.explorer-shell {
+		padding: 1.35rem;
+		content-visibility: auto;
+		contain-intrinsic-size: auto none auto 640px;
+	}
+
+	.cat-tabs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+		padding-bottom: 1rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		margin-bottom: 1rem;
+	}
+	.ctab {
+		font-family: inherit;
+		font-size: 0.84rem;
+		padding: 0.48rem 0.9rem;
+		border-radius: 8px;
+		background: rgba(30, 41, 59, 0.55);
+		border: 1px solid rgba(255, 255, 255, 0.09);
+		color: #cbd5e1;
+		cursor: pointer;
+		font-variant-numeric: tabular-nums;
+		transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+	}
+	.ctab:hover {
+		border-color: rgba(96, 165, 250, 0.45);
+		color: #fff;
+	}
+	.ctab.active {
+		background: rgba(96, 165, 250, 0.2);
+		border-color: var(--primary);
+		color: #fff;
+		font-weight: 700;
+	}
+
+	.filter-bar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-bottom: 1.15rem;
+	}
+	.filter-bar[hidden] {
+		display: none;
+	}
+	.kind-filters {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		align-items: center;
+	}
+	.filter-label {
+		font-size: 0.78rem;
+		color: var(--text-subtle);
+		margin-right: 0.15rem;
+	}
+	.fbtn {
+		font-family: inherit;
+		font-size: 0.76rem;
+		padding: 0.32rem 0.7rem;
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		color: var(--text-muted);
+		cursor: pointer;
+		transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+	}
+	.fbtn:hover {
+		border-color: rgba(52, 211, 153, 0.4);
+		color: var(--text-main);
+	}
+	.fbtn.active {
+		background: rgba(52, 211, 153, 0.18);
+		border-color: rgba(52, 211, 153, 0.55);
+		color: #d1fae5;
+		font-weight: 600;
+	}
+
+	.year-toggle {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		font-size: 0.82rem;
+		color: #cbd5e1;
+		cursor: pointer;
+		user-select: none;
+	}
+	.year-toggle input {
+		accent-color: var(--primary);
+		width: 1rem;
+		height: 1rem;
+		cursor: pointer;
+	}
+
+	.explorer-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+		gap: 1.15rem;
+		align-items: start;
+	}
+	.explorer-grid[hidden],
+	.general-panel-wrap[hidden] {
+		display: none;
+	}
+
+	.sub-panel {
+		background: rgba(7, 9, 14, 0.5);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 12px;
+		padding: 1.05rem 1.15rem;
+		min-width: 0;
+	}
+	.list-panel {
+		position: sticky;
+		top: 5.5rem;
+	}
+	.sub-panel-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-bottom: 0.75rem;
+		font-size: 0.88rem;
+	}
+
+	.legend-inline {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+		font-size: 0.72rem;
+		color: var(--text-muted);
+	}
+	.lg-box {
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+		border-radius: 2px;
+		margin-right: 3px;
+		vertical-align: -1px;
+	}
+	.lg-ok {
+		background: rgba(16, 185, 129, 0.45);
+		border: 1px solid rgba(16, 185, 129, 0.75);
+	}
+	.lg-w1 {
+		background: rgba(251, 191, 36, 0.5);
+		border: 1px solid rgba(251, 191, 36, 0.8);
+	}
+	.lg-w2 {
+		background: rgba(239, 68, 68, 0.55);
+		border: 1px solid rgba(239, 68, 68, 0.85);
+	}
+	.lg-na {
+		background: rgba(255, 255, 255, 0.04);
+		border: 1px dashed rgba(255, 255, 255, 0.25);
+	}
+
+	.decade-group {
+		margin-bottom: 0.75rem;
+	}
+	.decade-group:last-child {
+		margin-bottom: 0;
+	}
+	.decade-label {
+		font-size: 0.72rem;
+		font-weight: 700;
+		color: var(--text-subtle);
+		letter-spacing: 0.04em;
+		margin: 0.5rem 0 0.35rem;
+	}
+	.matrix-rows {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+	.m-row {
+		display: grid;
+		grid-template-columns: 44px repeat(var(--cat-cols, 6), minmax(26px, 1fr));
+		gap: 4px;
+		align-items: center;
+	}
+	.m-row[hidden] {
+		display: none;
+	}
+	.m-year {
+		font-size: 0.76rem;
+		color: var(--text-muted);
+		font-variant-numeric: tabular-nums;
+	}
+	.m-cell {
+		font-family: inherit;
+		min-height: 26px;
+		border-radius: 5px;
+		font-size: 0.74rem;
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		font-variant-numeric: tabular-nums;
+		padding: 0;
+		transition: transform 0.1s ease, box-shadow 0.1s ease;
+	}
+	.m-cell:hover {
+		transform: scale(1.06);
+	}
+	.m-cell.selected-cell {
+		box-shadow: 0 0 0 2px #ffffff;
+	}
+	.c-ok {
+		background: rgba(16, 185, 129, 0.2);
+		border: 1px solid rgba(16, 185, 129, 0.45);
+		color: #6ee7b7;
+	}
+	.c-w1 {
+		background: rgba(251, 191, 36, 0.22);
+		border: 1px solid rgba(251, 191, 36, 0.58);
+		color: #fde68a;
+	}
+	.c-w2 {
+		background: rgba(239, 68, 68, 0.28);
+		border: 1px solid rgba(239, 68, 68, 0.65);
+		color: #fecdd3;
+	}
+	.c-na {
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px dashed rgba(255, 255, 255, 0.14);
+		color: #64748b;
+	}
+
+	/* Right-Pane Issue List */
+	.reset-btn {
+		font-family: inherit;
+		background: rgba(96, 165, 250, 0.14);
+		border: 1px solid rgba(96, 165, 250, 0.35);
+		color: var(--primary);
+		font-size: 0.75rem;
+		font-weight: 600;
+		padding: 0.22rem 0.6rem;
+		border-radius: 6px;
+		cursor: pointer;
+	}
+	.reset-btn:hover {
+		background: rgba(96, 165, 250, 0.24);
+	}
+
+	.selected-cell-bar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		padding: 0.55rem 0.75rem;
+		margin-bottom: 0.75rem;
+		border-radius: 8px;
+		background: rgba(96, 165, 250, 0.1);
+		border: 1px solid rgba(96, 165, 250, 0.28);
+		font-size: 0.8rem;
+		color: #dbeafe;
+	}
+	.selected-cell-bar[hidden] {
+		display: none;
+	}
+	.cell-page-link {
+		font-weight: 700;
+		font-size: 0.8rem;
+		color: var(--primary);
+	}
+	.cell-page-link:hover {
+		text-decoration: underline;
+	}
+
+	.issue-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+		max-height: 70vh;
+		overflow-y: auto;
+		padding-right: 0.25rem;
+	}
+	.general-list {
+		max-height: none;
+	}
+	.iss-item {
+		padding: 0.75rem 0.9rem;
+		border-radius: 9px;
+		background: rgba(30, 41, 59, 0.48);
+		border: 1px solid rgba(255, 255, 255, 0.07);
+		border-left: 3px solid #fbbf24;
+	}
+	.iss-item.cat-wide-item {
+		border-left-color: var(--accent);
+	}
+	.iss-item[hidden] {
+		display: none;
+	}
+	.iss-top {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin-bottom: 0.35rem;
+	}
+	.prob-badge {
+		font-size: 0.72rem;
+		font-weight: 700;
+		padding: 0.12rem 0.5rem;
+		border-radius: 5px;
+		background: rgba(96, 165, 250, 0.15);
+		color: #93c5fd;
+		border: 1px solid rgba(96, 165, 250, 0.3);
+		font-variant-numeric: tabular-nums;
+	}
+	.prob-badge.badge-cat-wide {
+		background: rgba(167, 139, 250, 0.16);
+		color: #ddd6fe;
+		border-color: rgba(167, 139, 250, 0.35);
+	}
+	.iss-kinds {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.3rem;
+	}
+	.iss-title {
+		font-size: 0.86rem;
+		line-height: 1.5;
+		overflow-wrap: anywhere;
+	}
+	.iss-gh-link {
+		color: #f1f5f9;
+	}
+	.iss-gh-link:hover {
+		color: var(--primary);
+	}
+	.iss-num {
+		color: var(--text-muted);
+		font-variant-numeric: tabular-nums;
+		margin-right: 0.35rem;
+	}
+	.iss-actions {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 0.4rem;
+		font-size: 0.75rem;
+	}
+	.iss-date {
+		color: var(--text-subtle);
+		font-variant-numeric: tabular-nums;
+	}
+	.iss-links {
+		display: flex;
+		gap: 0.85rem;
+		font-weight: 600;
+	}
+
+	.empty-msg {
+		margin: 0.75rem 0;
+		font-size: 0.88rem;
+		color: var(--text-muted);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.kpi-clickable,
+		.univ-card,
+		.m-cell {
+			transition: none;
+		}
+		.kpi-clickable:hover,
+		.univ-card:hover,
+		.m-cell:hover {
+			transform: none;
+		}
+	}
+
+	@media (max-width: 900px) {
+		.kpi-row {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+		.grid-6 {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+		.explorer-grid {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.list-panel {
+			position: static;
+		}
+		.issue-list {
+			max-height: 460px;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.issues-stats-page {
+			padding: 0.5rem 0.25rem 2.5rem;
+		}
+		.kpi-row {
+			gap: 0.7rem;
+		}
+		.kpi-card {
+			padding: 0.9rem 0.95rem;
+		}
+		.grid-6 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.explorer-shell {
+			padding: 0.95rem;
+		}
+		.sub-panel {
+			padding: 0.85rem;
+		}
+		.m-cell {
+			min-height: 30px;
+		}
+		.kpi-num {
+			font-size: 1.45rem;
+		}
+		.kpi-num.kind-headline {
+			font-size: 1.02rem;
+			padding-top: 0.2rem;
+		}
+	}
+</style>

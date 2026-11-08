@@ -1,9 +1,22 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-const REPO = 'ToAmano/Univ_EntranceExam_Math_Collection';
-const REPO_URL = `https://github.com/${REPO}`;
+export const REPO = 'ToAmano/Univ_EntranceExam_Math_Collection';
+export const REPO_URL = `https://github.com/${REPO}`;
 const PROBLEM_ID = /^(utokyo|ukyoto|titech)\/(zenki|kouki)\/[0-9]{4}\/[1-9][0-9]*$/;
+const VALID_UNIVS = new Set(['utokyo', 'ukyoto', 'titech']);
+const VALID_EXAMS = new Set(['zenki', 'kouki']);
+const VALID_KINDS = new Set(['proof', 'figure', 'reference', 'transcription', 'style']);
+
+function isValidIssueCore(issue) {
+  if (!issue || typeof issue !== 'object') return false;
+  if (!Number.isSafeInteger(issue.number) || issue.number < 1 || typeof issue.title !== 'string') return false;
+  if (!['open', 'closed'].includes(issue.state) || issue.url !== `${REPO_URL}/issues/${issue.number}`) return false;
+  if (issue.kinds !== undefined) {
+    if (!Array.isArray(issue.kinds) || issue.kinds.some(k => typeof k !== 'string' || !VALID_KINDS.has(k))) return false;
+  }
+  return true;
+}
 
 /** Read once per build, never once per page or from a visitor's browser. */
 export function readIssueIndex(file = resolve('src/data/issues-by-problem.json')) {
@@ -16,15 +29,20 @@ export function readIssueIndex(file = resolve('src/data/issues-by-problem.json')
     for (const [id, issues] of Object.entries(index.problems)) {
       if (!PROBLEM_ID.test(id) || !Array.isArray(issues)) throw new Error('Invalid problem mapping');
       for (const issue of issues) {
-        if (!Number.isSafeInteger(issue.number) || issue.number < 1 || typeof issue.title !== 'string' ||
-            !['open', 'closed'].includes(issue.state) || issue.url !== `${REPO_URL}/issues/${issue.number}`)
-          throw new Error('Invalid issue entry');
+        if (!isValidIssueCore(issue)) throw new Error('Invalid issue entry');
       }
     }
-    return { available: true, generatedAt: index.generated_at, problems: index.problems };
+    const unmapped = index.unmapped ?? [];
+    if (!Array.isArray(unmapped)) throw new Error('Invalid unmapped list');
+    for (const issue of unmapped) {
+      if (!isValidIssueCore(issue)) throw new Error('Invalid unmapped issue entry');
+      if (issue.univ !== null && issue.univ !== undefined && !VALID_UNIVS.has(issue.univ)) throw new Error('Invalid unmapped univ');
+      if (issue.exam !== null && issue.exam !== undefined && !VALID_EXAMS.has(issue.exam)) throw new Error('Invalid unmapped exam');
+    }
+    return { available: true, generatedAt: index.generated_at, problems: index.problems, unmapped };
   } catch (error) {
     console.warn(`[issues] Snapshot unavailable: ${error.message}`);
-    return { available: false, generatedAt: null, problems: {} };
+    return { available: false, generatedAt: null, problems: {}, unmapped: [] };
   }
 }
 
