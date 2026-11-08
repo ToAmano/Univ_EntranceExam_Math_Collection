@@ -1,75 +1,216 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-{\bf [解答]} \1 $O$を原点とし，水平線を$x$軸とする下図のような座標系で考える．
+{\bf [解答]}
 
-\begin{minipage}{0.5\hsize}
-  \begin{center}
-    \scalebox{.4}{\input{ut-62-3p1}}
-  \end{center}
-\end{minipage}
-\begin{minipage}{0.5\hsize}
-  \begin{center}
-    \scalebox{.5}{\input{ut-62-3p2}}
-  \end{center}
-\end{minipage}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[>=stealth, every node/.style={font=\small}]
+    % ========================================================
+    % Panel 1: 座標系と折れ線 OAB
+    % ========================================================
+    \begin{scope}[shift={(0, 0)}]
+      % 座標パラメータ
+      % tan \alpha = 1/2, \alpha \approx 26.565^\circ
+      % tan \theta = 3,   \theta \approx 71.565^\circ, \beta = 45^\circ
+      \pgfmathsetmacro{\R}{2.2}
+      \pgfmathsetmacro{\alphaAng}{atan(0.5)}            % 26.565
+      \pgfmathsetmacro{\thetaAng}{atan(3.0)}            % 71.565
+      \pgfmathsetmacro{\betaAng}{\thetaAng - \alphaAng} % 45.0
 
+      \coordinate (O) at (0, 0);
+      % A: x = cos\theta (左向き正), y = -sin\theta (下向き)
+      \coordinate (A) at ({-\R*cos(\thetaAng)}, {-\R*sin(\thetaAng)});
+      % H: 直線 g 上の垂足, OH = R*cos\beta
+      \pgfmathsetmacro{\lenOH}{\R*cos(\betaAng)}
+      \coordinate (H) at ({-\lenOH*cos(\alphaAng)}, {-\lenOH*sin(\alphaAng)});
+      % B: 直線 g 上, OB = 2*OH
+      \coordinate (B) at ({-2*\lenOH*cos(\alphaAng)}, {-2*\lenOH*sin(\alphaAng)});
+      % G: AH の中点
+      \coordinate (G) at ($(A)!0.5!(H)$);
+
+      % 直線 g (原点 O を通り，B の先まで伸びる)
+      \coordinate (gEndPos) at ({1.6*cos(\alphaAng)}, {1.6*sin(\alphaAng)});
+      \coordinate (gEndNeg) at ({-3.5*cos(\alphaAng)}, {-3.5*sin(\alphaAng)});
+      \draw[thick, teal!75!black] (gEndNeg) -- (gEndPos)
+      node[above right, font=\small, text=teal!75!black] {$g$};
+
+      % 座標軸 (左向き正の x 軸，上向き正の y 軸)
+      \draw[thick, gray!80!black] (1.4, 0) -- (0, 0);
+      \draw[->, thick, gray!80!black] (0, 0) -- (-3.4, 0) node[left] {$x$};
+      \draw[->, thick, gray!80!black] (0, -2.4) -- (0, 1.2) node[above] {$y$};
+
+      % 棒 OA, AB
+      \draw[line width=1.4pt, blue!85!black] (O) -- (A) -- (B);
+
+      % 垂線 AH
+      \draw[densely dashed, thick, gray!70!black] (A) -- (H);
+
+      % 垂足 H の直角マーク (HB と HA の間)
+      \pgfmathsetmacro{\sq}{0.18}
+      \coordinate (uH) at ({-cos(\alphaAng)}, {-sin(\alphaAng)}); % H -> B 方向
+      \coordinate (vH) at ({sin(\alphaAng)}, {-cos(\alphaAng)});  % H -> A 方向
+      \draw[thick, gray!70!black]
+      ($(H) + \sq*(uH)$) -- ($(H) + \sq*(uH) + \sq*(vH)$) -- ($(H) + \sq*(vH)$);
+
+      % 角度の弧
+      % 第1象限の \alpha
+      \draw[gray!60!black] (0, 0) +(0:0.7) arc (0:\alphaAng:0.7);
+      \node[font=\footnotesize, gray!60!black] at ($(0, 0)+(0.5*\alphaAng:0.95)$) {$\alpha$};
+
+      % 第3象限の \alpha (負の x 軸から直線 g まで)
+      \draw[gray!60!black] (0, 0) +(180:0.5) arc (180:{180+\alphaAng}:0.5);
+      \node[font=\footnotesize, gray!60!black] at ($(0, 0)+({180+0.5*\alphaAng}:0.75)$) {$\alpha$};
+
+      % \beta (直線 g から棒 OA まで)
+      \draw[blue!75!black] (0, 0) +({180+\alphaAng}:0.65) arc ({180+\alphaAng}:{180+\thetaAng}:0.65);
+      \node[font=\footnotesize, blue!75!black] at ($(0, 0)+({180+\alphaAng+0.5*\betaAng}:0.48)$) {$\beta$};
+
+      % \theta (負の x 軸から棒 OA まで)
+      \draw[gray!70!black] (0, 0) +(180:1.1) arc (180:{180+\thetaAng}:1.1);
+      \node[font=\footnotesize, gray!70!black] at ($(0, 0)+({180+0.5*\thetaAng}:1.3)$) {$\theta$};
+
+      % 点のプロット
+      \node[circle, fill, inner sep=1.2pt] at (O) {};
+      \node[above right=1pt, font=\footnotesize] at (O) {$O$};
+
+      \node[circle, fill, inner sep=1.2pt] at (A) {};
+      \node[below=2pt, font=\footnotesize] at (A) {$A$};
+
+      \node[circle, fill, inner sep=1.2pt] at (B) {};
+      \node[above left=1pt, font=\footnotesize] at (B) {$B$};
+
+      \node[circle, fill, inner sep=1.2pt] at (H) {};
+      \node[above left=1pt, font=\footnotesize] at (H) {$H$};
+
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (G) {};
+      \node[below left=1pt, font=\footnotesize, text=red!85!black] at (G) {$G$};
+    \end{scope}
+
+    % ========================================================
+    % Panel 2: \triangle OAB の幾何学的関係
+    % ========================================================
+    \begin{scope}[shift={(5.6, -0.5)}]
+      \pgfmathsetmacro{\L}{2.1}
+      \pgfmathsetmacro{\bAng}{45.0}
+      \pgfmathsetmacro{\dOH}{\L*cos(\bAng)}
+      \pgfmathsetmacro{\hAH}{\L*sin(\bAng)}
+
+      \coordinate (H2) at (0, 0);
+      \coordinate (O2) at (\dOH, 0);
+      \coordinate (B2) at (-\dOH, 0);
+      \coordinate (A2) at (0, -\hAH);
+      \coordinate (G2) at ($(H2)!0.5!(A2)$);
+
+      % 直線 g (底辺 BO)
+      \draw[thick, gray!80!black] ($(B2)+(-0.3, 0)$) -- ($(O2)+(0.3, 0)$);
+
+      % 棒 OA, AB
+      \draw[line width=1.4pt, blue!85!black] (O2) -- (A2) -- (B2);
+
+      % 垂線 AH
+      \draw[densely dashed, thick, gray!70!black] (A2) -- (H2);
+
+      % 直角マーク (H2)
+      \pgfmathsetmacro{\sqt}{0.18}
+      \draw[thick, gray!70!black]
+      (\sqt, 0) -- (\sqt, -\sqt) -- (0, -\sqt);
+
+      % 辺長 1
+      \node[below right=2pt, font=\footnotesize] at ($(O2)!0.5!(A2)$) {$1$};
+      \node[below left=2pt, font=\footnotesize] at ($(B2)!0.5!(A2)$) {$1$};
+
+      % OH = cos\beta
+      \node[above=2pt, font=\footnotesize] at ($(H2)!0.5!(O2)$) {$\cos\beta$};
+
+      % 等長マーク (HG = GA)
+      \coordinate (mHG) at ($(H2)!0.5!(G2)$);
+      \coordinate (mGA) at ($(G2)!0.5!(A2)$);
+      \draw[thick, gray!70!black] ($(mHG)+(-0.1, 0.03)$) -- ($(mHG)+(0.1, 0.03)$);
+      \draw[thick, gray!70!black] ($(mHG)+(-0.1, -0.03)$) -- ($(mHG)+(0.1, -0.03)$);
+      \draw[thick, gray!70!black] ($(mGA)+(-0.1, 0.03)$) -- ($(mGA)+(0.1, 0.03)$);
+      \draw[thick, gray!70!black] ($(mGA)+(-0.1, -0.03)$) -- ($(mGA)+(0.1, -0.03)$);
+
+      % 角 \beta
+      \draw[blue!75!black] (O2) +(180:0.6) arc (180:{180+\bAng}:0.6);
+      \node[font=\footnotesize, blue!75!black] at ($(O2)+({180+0.5*\bAng}:0.85)$) {$\beta$};
+
+      % 点のプロット
+      \node[circle, fill, inner sep=1.2pt] at (O2) {};
+      \node[above right=1pt, font=\footnotesize] at (O2) {$O$};
+
+      \node[circle, fill, inner sep=1.2pt] at (B2) {};
+      \node[above left=1pt, font=\footnotesize] at (B2) {$B$};
+
+      \node[circle, fill, inner sep=1.2pt] at (H2) {};
+      \node[above=2pt, font=\footnotesize] at (H2) {$H$};
+
+      \node[circle, fill, inner sep=1.2pt] at (A2) {};
+      \node[below=2pt, font=\footnotesize] at (A2) {$A$};
+
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (G2) {};
+      \node[right=3pt, font=\footnotesize, text=red!85!black] at (G2) {$G$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{折れ線 $OAB$ の座標系設定と重心 $G$（$AH$ の中点）}
+  \label{fig:oab_coordinates}
+\end{figure}
+
+$O$を原点とし，水平線を$x$軸とする\cref{fig:oab_coordinates}のような座標系で考える．
 $OA=1$として考えて一般性を失わない．また$G$が最低のときを考えるので，$A$は$g$の下側にあるとしてよい．
-簡単のため$\beta=\theta-\alpha$とおく．$A$から$g$に下ろした垂足$H$とすると，$OA=AB$ゆえ，$G$は$AH$の中点である．
+簡単のため$\beta=\theta-\alpha$とおく．$A$から$g$に下ろした垂足を$H$とすると，$OA=AB$ゆえ，$G$は$AH$の中点である．
 $OH=\cos\beta$ゆえ，
 \begin{align}
-  &A(\cos(-\theta),\sin(-\theta)) \\
-  &H(\cos\beta\cos(-\alpha),\cos\beta\sin(-\beta))
+  A(\cos(-\theta),\sin(-\theta)), \quad
+  H(\cos\beta\cos(-\alpha),\cos\beta\sin(-\alpha))
 \end{align}
 となるから，
 \begin{align}
-  \overrightarrow{OG}&=\overrightarrow{OH}+\dfrac{1}{2}\overrightarrow{HA} \\
-  &=\dfrac{1}{2}\overrightarrow{OH}+\dfrac{1}{2}\overrightarrow{OA} \\
-  &=\dfrac{1}{2}\cos\beta
-  \begin{pmatrix}\cos\alpha\\-\sin\alpha
-  \end{pmatrix}+\dfrac{1}{2}
-  \begin{pmatrix}c\\-s
-  \end{pmatrix}
+  \begin{split}
+    \overrightarrow{OG}&=\overrightarrow{OH}+\dfrac{1}{2}\overrightarrow{HA} \\
+    &=\dfrac{1}{2}\overrightarrow{OH}+\dfrac{1}{2}\overrightarrow{OA} \\
+    &=\dfrac{1}{2}\cos\beta
+    \begin{pmatrix}\cos\alpha\\-\sin\alpha
+    \end{pmatrix}+\dfrac{1}{2}
+    \begin{pmatrix}c\\-s
+    \end{pmatrix}
+  \end{split}
 \end{align}
 である．この$y$座標$Y$として
 \begin{align}
   Y=\dfrac{-1}{2}(\sin\alpha\cos\beta+s)
 \end{align}
-だから，これが最小になる時の$\tan\theta$を求めればよい．
+だから，これが最小になる時の$\tan\theta$を求めればよい．$\alpha+\beta=\theta$に注意して
 \begin{align}
-  \alpha+\beta=\theta
-\end{align}
-に注意して
-\begin{align}
-  -2Y&=\dfrac{1}{2}(\sin(\alpha+\beta)+\sin(\alpha-\beta))+s \\
-  &=\dfrac{3}{2}s+\dfrac{1}{2}\sin(2\alpha-\theta)\atag\label{eq:1}
+  \begin{split}
+    -2Y&=\dfrac{1}{2}(\sin(\alpha+\beta)+\sin(\alpha-\beta))+s \\
+    &=\dfrac{3}{2}s+\dfrac{1}{2}\sin(2\alpha-\theta) \label{eq:1}
+  \end{split}
 \end{align}
 題意から$\tan\alpha=1/2$であるから
 \begin{align}
-  \sin2\alpha=\dfrac{2\tan\alpha}{1+\tan^2\alpha}=\dfrac{4}{5} \\
+  \sin2\alpha=\dfrac{2\tan\alpha}{1+\tan^2\alpha}=\dfrac{4}{5}, \quad
   \cos2\alpha=\dfrac{1-\tan^2\alpha}{1+\tan^2\alpha}=\dfrac{3}{5}
 \end{align}
 が従う．\cref{eq:1}に代入して
 \begin{align}
-  Y&=\dfrac{-1}{4}[3s+c\sin2\alpha -s\cos2\alpha ] \\
-  &=\dfrac{-1}{4}[3s+\dfrac{4}{5} c-\dfrac{3}{5} s] \\
-  &=\dfrac{-1}{5}(3s+c) \\
-  &\ge \dfrac{-1}{5}\sqrt{3^2+1}&(\because \text{コーシー})
+  \begin{split}
+    Y&=\dfrac{-1}{4}[3s+c\sin2\alpha -s\cos2\alpha ] \\
+    &=\dfrac{-1}{4}[3s+\dfrac{4}{5} c-\dfrac{3}{5} s] \\
+    &=\dfrac{-1}{5}(3s+c) \\
+    &\ge \dfrac{-1}{5}\sqrt{3^2+1}
+  \end{split}
 \end{align}
-統合成立条件は
+である．ただし最後の不等号はコーシーシュワルツの不等式による．
+等号成立条件は
 \begin{align}
-  &
   \begin{pmatrix}c\\s
   \end{pmatrix}\parallel
   \begin{pmatrix}1\\3
-  \end{pmatrix} \\
-  &s-3c=0
+  \end{pmatrix}
+  \iff s-3c=0
 \end{align}
-の時で，この時
-\begin{align}
-  \tan\theta=3
-\end{align}
-である．$\cdots$(答)
+の時で，この時 $\tan\theta=3$ である．$\cdots$(答)
 
 \newpage
 \end{document}
