@@ -5,26 +5,27 @@
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=1.5cm, y=1.5cm, >=stealth,
+  \begin{tikzpicture}[x=1.8cm, y=1.2cm, >=stealth,
     every node/.style={font=\small}]
-    \coordinate (O) at (0,0);
-    \coordinate (Pzero) at (-1.3,0);
-    \coordinate (Pt) at (1.1,0);
-    \coordinate (Qzero) at (0,-1.8);
-    \coordinate (Qt) at (0,-0.6);
-    \coordinate (Qt0) at (0,1.2);
+    % 整合するパラメータ例: a = 1, b = 4, 最適時刻 t = 2, t_0 = 3
+    \coordinate (O) at (0, 0);
+    \coordinate (Pzero) at (-1, 0);
+    \coordinate (Pt) at (1, 0);
+    \coordinate (Qzero) at (0, -4);
+    \coordinate (Qt) at (0, -2);
+    \coordinate (Qt0) at (0, -1);
 
     % Coordinate axes
-    \draw[->, thick, gray!80!black] (-1.7,0) -- (1.8,0) node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0,-2.1) -- (0,1.7) node[above] {$y$};
+    \draw[->, thick, gray!80!black] (-1.5, 0) -- (1.8, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -4.5) -- (0, 0.8) node[above] {$y$};
 
     % Movement paths
     \draw[line width=1.2pt, blue!85!black, ->] (Pzero) -- (Pt);
-    \draw[line width=1.2pt, blue!85!black, ->] (Qzero) -- (Qt0);
+    \draw[line width=1.2pt, blue!85!black, ->] (Qzero) -- (0, 0.3);
     \draw[line width=1.4pt, red!85!black, ->] (Pt) -- (Qt0);
 
-    % Right angle at O
-    \draw[gray!75!black] (0.18,0) -- (0.18,0.18) -- (0,0.18);
+    % Right angle at O (第4象限)
+    \draw[thick, gray!70!black] (0.2, 0) -- (0.2, -0.3) -- (0, -0.3);
 
     % Points
     \node[circle, fill=blue!85!black, inner sep=1.4pt] at (Pzero) {};
@@ -34,15 +35,16 @@
     \node[circle, fill=red!85!black, inner sep=1.6pt] at (Qt0) {};
 
     % Labels
-    \node[below left=2pt] at (O) {$O$};
+    \node[above left=2pt] at (O) {$O$};
     \node[below=3pt] at (Pzero) {$P_0(-a, 0)$};
+    \node[above=3pt] at (Pt) {$P_t(t-a, 0)$};
     \node[left=3pt] at (Qzero) {$Q_0(0, -b)$};
     \node[left=3pt] at (Qt) {$Q_t(0, t-b)$};
-    \node[below=3pt] at (Pt) {$P_t(t-a, 0)$};
     \node[left=3pt] at (Qt0) {$P_{t_0}=Q_{t_0}(0, t_0-b)$};
-    \node[above right=1pt, red!85!black] at ($(Pt)!0.5!(Qt0)$) {$\sqrt{2}(t_0-t)$};
+    \node[below right=2pt, red!85!black] at ($(Pt)!0.5!(Qt0)$) {$\sqrt{2}(t_0-t)$};
   \end{tikzpicture}
   \caption{$P$ の折り返し点と $Q$ の到達点が作る直角三角形}
+  \label{fig:1983_5_triangle}
 \end{figure}
 
 到達時刻を $t_0$ とする．上図のように切り替え時刻$t$での点 P, Q を$P_t(t-a,0),Q_t(0,t-b)$，
@@ -63,7 +65,7 @@
   2 s^2
   &= (t-a)^2 + (s + t - b)^2 \\
   &= s^2 + 2(t-b)s + (t-b)^2 + (t-a)^2 \\
-  & s^2 - 2(t-b)s - (t-a)^2 - (t-b)^2 = 0
+  & s^2 - 2(t-b)s - (t-a)^2 - (t-b)^2 = 0 \\
   \therefore
   & s = t-b + \sqrt{2(t-b)^2 + (t-a)^2} \quad (\because s > 0) \label{eq:2}
 \end{align}

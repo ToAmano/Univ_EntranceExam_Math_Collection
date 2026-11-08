@@ -3,6 +3,24 @@
 
 {\bf [解答]}
 
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[x=1.2cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
+    \coordinate (A) at (0, 2);
+    \coordinate (B) at (2.3, 0);
+    \coordinate (C) at (-1.8, 0);
+    \draw[->, thick, gray!80!black] (-2.25, 0) -- (2.75, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 2.4) node[above] {$y$};
+    \draw[line width=1.3pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+    \node[circle, fill, inner sep=1.2pt] at (A) {}; \node[above right=2pt] at (A) {$A(0,a)$};
+    \node[circle, fill, inner sep=1.2pt] at (B) {}; \node[below right=2pt] at (B) {$B(b,0)$};
+    \node[circle, fill, inner sep=1.2pt] at (C) {}; \node[below left=2pt] at (C) {$C(c,0)$};
+    \node[below right=2pt, font=\footnotesize] at (0,0) {$O$};
+  \end{tikzpicture}
+  \caption{頂点 $A,B,C$ の座標を定めた三角形}
+  \label{fig:1962_1_coordinates}
+\end{figure}
+
 座標平面で，$A(0, a)$, $B(b, 0)$, $C(c, 0)$ ($a>0, b>0, c<0$) として良い．
 $PQ$ の中点 $R$ の軌跡を考える．
 対称性から，まず$P, Q$ が $AC, BC$ 上を動く時を考える．
@@ -32,40 +50,21 @@ $
 $
 \begin{pmatrix} c \\ -a
 \end{pmatrix}$の張る平行四辺形内の領域（境界含む）を動く．
-これを図示すると下図のようになる．
-
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}[x=1.2cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
-    \coordinate (A) at (0, 2);
-    \coordinate (B) at (2.3, 0);
-    \coordinate (C) at (-1.8, 0);
-    \draw[->, thick, gray!80!black] (-2.25, 0) -- (2.75, 0) node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 2.4) node[above] {$y$};
-    \draw[line width=1.3pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
-    \node[circle, fill, inner sep=1.3pt] at (A) {}; \node[above right=2pt] at (A) {$A(0,a)$};
-    \node[circle, fill, inner sep=1.3pt] at (B) {}; \node[below right=2pt] at (B) {$B(b,0)$};
-    \node[circle, fill, inner sep=1.3pt] at (C) {}; \node[below left=2pt] at (C) {$C(c,0)$};
-    \node[below right=2pt, font=\footnotesize] at (0,0) {$O$};
-  \end{tikzpicture}
-  \caption{頂点 $A,B,C$ の座標を定めた三角形}
-  \label{fig:1962_1_coordinates}
-\end{figure}
 
 そのほかの場合，
 \begin{itemize}
   \item $1^\circ \quad $ $P,Q$が $AC, AB$ 上の時 \\
   \item $2^\circ \quad $ $P,Q$が $AB, BC$ 上の時
 \end{itemize}
-の$R$の軌跡は対称性から以下のようになる（境界含む）．
+の$R$の軌跡は対称性から以下のように行四辺形内の領域（境界含む）となる．
 
-\begin{figure}[htb]
+\begin{figure}[H]
   \centering
-  \begin{tikzpicture}[x=0.84cm, y=0.84cm, >=stealth,
+  \begin{tikzpicture}[x=0.68cm, y=0.68cm, >=stealth,
     every node/.style={font=\footnotesize}]
     % Each shaded locus is the Minkowski midpoint set of the two named sides.
     \foreach \dx/\panelname/\kind in
-    {0/{AC,BC}/1, 5.2/{AC,AB}/2, 10.4/{AB,BC}/3} {
+    {0/{AC,BC}/1, 4.8/{AC,AB}/2, 9.6/{AB,BC}/3} {
       \begin{scope}[shift={(\dx,0)}]
         \coordinate (A) at (0, 2);
         \coordinate (B) at (2.3, 0);
@@ -74,18 +73,21 @@ $
         \coordinate (ACmid) at ($(A)!0.5!(C)$);
         \coordinate (BCmid) at ($(B)!0.5!(C)$);
         \ifnum\kind=1
-        \fill[teal!20] (C) -- (ACmid) -- (ABmid) -- (BCmid) -- cycle;
+        \fill[teal!15] (C) -- (ACmid) -- (ABmid) -- (BCmid) -- cycle;
+        \fill[pattern=north east lines, pattern color=teal!60] (C) -- (ACmid) -- (ABmid) -- (BCmid) -- cycle;
         \else
         \ifnum\kind=2
-        \fill[blue!18] (A) -- (ACmid) -- (ABmid) -- cycle;
+        \fill[blue!15] (A) -- (ACmid) -- (BCmid) -- (ABmid) -- cycle;
+        \fill[pattern=north east lines, pattern color=blue!60] (A) -- (ACmid) -- (BCmid) -- (ABmid) -- cycle;
         \else
-        \fill[orange!22] (ACmid) -- (ABmid) -- (B) -- (BCmid) -- cycle;
+        \fill[orange!18] (ACmid) -- (ABmid) -- (B) -- (BCmid) -- cycle;
+        \fill[pattern=north east lines, pattern color=orange!60] (ACmid) -- (ABmid) -- (B) -- (BCmid) -- cycle;
         \fi
         \fi
         \draw[->, gray!75!black] (-2.1, 0) -- (2.6, 0) node[right] {$x$};
         \draw[->, gray!75!black] (0, -0.25) -- (0, 2.35) node[above] {$y$};
         \draw[thick, blue!85!black] (A) -- (B) -- (C) -- cycle;
-        \draw[dashed, gray!70!black] (ACmid) -- (ABmid);
+        \draw[dashed, gray!70!black] (ABmid) -- (BCmid) -- (ACmid) -- cycle;
         \node[above=2pt] at (A) {$A$};
         \node[below right=1pt] at (B) {$B$};
         \node[below left=1pt] at (C) {$C$};
@@ -100,9 +102,9 @@ $
 $M$に応じて引ける線分は以上の$3$つの場合で尽くされるから，$M$が与えられた時，$M$を含む領域の数が対応する$M$の個数となる．
 以上まとめて，$AB, BC, CA$ の中点を $\alpha, \beta, \gamma$ として，三角形$ABC$内の領域と引ける線分の数の対応は以下のようになる．
 
-\begin{figure}[htb]
+\begin{figure}[H]
   \centering
-  \begin{tikzpicture}[x=1.4cm, y=1.4cm, every node/.style={font=\small}]
+  \begin{tikzpicture}[x=1.2cm, y=1.2cm, every node/.style={font=\small}]
     \coordinate (A) at (0, 2.5);
     \coordinate (B) at (-2.2, 0);
     \coordinate (C) at (2.2, 0);
@@ -135,10 +137,10 @@ $M$に応じて引ける線分は以上の$3$つの場合で尽くされるか�
 
 {\bf [別解]}
 
-\begin{figure}[htb]
+\begin{figure}[H]
   \centering
-  \begin{tikzpicture}[x=0.84cm, y=0.84cm, every node/.style={font=\footnotesize}]
-    \foreach \dx/\title/\kind in {0/{$T_1$（周囲の3三角形，破線除く）}/1, 5.2/{$T_2$（中点を結ぶ3辺）}/2, 10.4/{$T_3$（中央の三角形の内部）}/3} {
+  \begin{tikzpicture}[x=0.75cm, y=0.75cm, every node/.style={font=\footnotesize}]
+    \foreach \dx/\title/\kind in {0/{$T_1$（周囲の3三角形，破線除く）}/1, 4.8/{$T_2$（中点を結ぶ3辺）}/2, 9.6/{$T_3$（中央の三角形の内部）}/3} {
       \begin{scope}[shift={(\dx,0)}]
         \coordinate (A) at (0, 2.2);
         \coordinate (B) at (-1.9, 0);
@@ -190,9 +192,9 @@ $\triangle ABC$内を上図のような$3$つの領域に分割する．
   \item $\triangle \alpha\beta\gamma$ の内部を $T_3$
 \end{itemize}
 
-\begin{figure}[htb]
+\begin{figure}[H]
   \centering
-  \begin{tikzpicture}[x=1.35cm, y=1.35cm, every node/.style={font=\small}]
+  \begin{tikzpicture}[x=1.05cm, y=1.05cm, every node/.style={font=\small}]
     \coordinate (A) at (0, 2.5);
     \coordinate (B) at (-2.5, 0);
     \coordinate (C) at (2.5, 0);
@@ -208,15 +210,15 @@ $\triangle ABC$内を上図のような$3$つの領域に分割する．
     \draw[dashed, gray!75!black] (C) -- (Cp);
     \draw[dotted, thick, teal!85!black] (Ap) -- (Bp) -- (Cp) -- cycle;
     \draw[line width=1.3pt, red!80!black] (P) -- (Q);
-    \node[circle, fill, inner sep=1.3pt] at (A) {}; \node[above=2pt] at (A) {$A$};
-    \node[circle, fill, inner sep=1.3pt] at (B) {}; \node[below left=2pt] at (B) {$B$};
-    \node[circle, fill, inner sep=1.3pt] at (C) {}; \node[below right=2pt] at (C) {$C$};
+    \node[circle, fill, inner sep=1.2pt] at (A) {}; \node[above=2pt] at (A) {$A$};
+    \node[circle, fill, inner sep=1.2pt] at (B) {}; \node[below left=2pt] at (B) {$B$};
+    \node[circle, fill, inner sep=1.2pt] at (C) {}; \node[below right=2pt] at (C) {$C$};
     \node[circle, fill, inner sep=1.1pt] at (Ap) {}; \node[below=2pt] at (Ap) {$A'$};
     \node[circle, fill, inner sep=1.1pt] at (Bp) {}; \node[above right=2pt] at (Bp) {$B'$};
     \node[circle, fill, inner sep=1.1pt] at (Cp) {}; \node[above left=2pt] at (Cp) {$C'$};
-    \node[circle, fill=red!80!black, inner sep=1.4pt] at (P) {}; \node[red!80!black, left=3pt] at (P) {$P$};
-    \node[circle, fill=red!80!black, inner sep=1.4pt] at (Q) {}; \node[red!80!black, below=2pt] at (Q) {$Q$};
-    \node[circle, fill=red!80!black, inner sep=1.5pt] at (M) {}; \node[red!80!black, right=3pt] at (M) {$M$};
+    \node[circle, fill=red!80!black, inner sep=1.3pt] at (P) {}; \node[red!80!black, left=3pt] at (P) {$P$};
+    \node[circle, fill=red!80!black, inner sep=1.3pt] at (Q) {}; \node[red!80!black, below=2pt] at (Q) {$Q$};
+    \node[circle, fill=red!80!black, inner sep=1.4pt] at (M) {}; \node[red!80!black, right=3pt] at (M) {$M$};
   \end{tikzpicture}
   \caption{中央の領域にある $M$ を通る線分 $PQ$ と各頂点から $M$ への直線}
   \label{fig:1962_1_central_segment}
