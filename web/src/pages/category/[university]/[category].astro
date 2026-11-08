@@ -98,9 +98,17 @@ const yearGroups: YearGroup[] = Array.from(yearGroupsMap.entries()).map(([year, 
 });
 
 yearGroups.sort((a, b) => b.year.localeCompare(a.year));
+const SHORT_UNIVERSITY_NAMES: Record<string, string> = {
+	utokyo: '東大',
+	titech: '東工大',
+	ukyoto: '京大',
+};
+const shortUnivName = SHORT_UNIVERSITY_NAMES[university] || '';
+const univWithShort = shortUnivName ? `${univName}（${shortUnivName}）` : univName;
+const categoryDescription = `${univWithShort} ${catName}の過去問・詳細解答解説アーカイブ。全${countRealQuestions(solutions)}問の過去問、年度別全体サマリを収録。`;
 ---
 
-<Layout title={`${univName} ${catName} | Math Solutions`}>
+<Layout title={`${univName} ${catName} | Math Solutions`} description={categoryDescription}>
 	<div class="category-page">
 		<nav class="breadcrumb">
 			<a href={`${baseUrl}/`}>トップ</a>

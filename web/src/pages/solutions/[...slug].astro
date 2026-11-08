@@ -192,12 +192,42 @@ jsonLdItems.push(
 		{ name: `${year}年 ${questionLabel}`, url: pageUrlForJsonLd },
 	])
 );
+const SHORT_UNIVERSITY_NAMES: Record<string, string> = {
+	sample_utokyo: '東大',
+	sample_titech: '東工大',
+	sample_ukyoto: '京大',
+	utokyo: '東大',
+	titech: '東工大',
+	ukyoto: '京大',
+};
+const shortUnivName = SHORT_UNIVERSITY_NAMES[entry.data.university] || '';
+const univWithShort = shortUnivName ? `${univName}（${shortUnivName}）` : univName;
+
+function extractExcerpt(text: string | undefined, maxLength = 110): string {
+	if (!text) return '';
+	const cleaned = text
+		.replace(/^---[\s\S]*?---/, '')
+		.replace(/!\[.*?\]\(.*?\)/g, '')
+		.replace(/\[(.*?)\]\(.*?\)/g, '$1')
+		.replace(/[#*`_~]/g, '')
+		.replace(/\$+/g, '')
+		.replace(/\\(text|mathrm|mathbf)\{([^}]+)\}/g, '$2')
+		.replace(/\\[a-zA-Z]+/g, ' ')
+		.replace(/\s+/g, ' ')
+		.trim();
+	if (cleaned.length <= maxLength) return cleaned;
+	return cleaned.slice(0, maxLength) + '…';
+}
+
+const problemExcerpt = extractExcerpt(problemEntry?.body || entry.body);
+const excerptPart = problemExcerpt ? ` 問題文：${problemExcerpt}` : '';
+
 const pageDescription =
 	entryType === 'summary'
-		? `${univName} ${catName} ${year}年 数学の出題テーマ・難易度・配点などの全体サマリ。`
+		? `${univWithShort} ${catName} ${year}年 数学の出題テーマ・難易度・配点などの全体サマリ。`
 		: entryType === 'problem'
-			? `${univName} ${catName} ${year}年 数学 ${questionLabel}の過去問問題文。`
-			: `${univName} ${catName} ${year}年 数学 ${questionLabel}の過去問解答解説。`;
+			? `${univWithShort} ${catName} ${year}年 数学 ${questionLabel}の過去問問題文。${excerptPart}`
+			: `${univWithShort} ${catName} ${year}年 数学 ${questionLabel}の過去問解答解説。${excerptPart}`;
 ---
 
 <Layout title={pageTitle} description={pageDescription} ogType="article" ogImagePath={ogImagePath} canonicalUrl={canonicalOverrideUrl} jsonLd={jsonLdItems}>
@@ -327,8 +357,6 @@ const pageDescription =
 		</div>
 	)}
 
-	<ProblemIssues info={issueInfo} />
-
 	<!-- Content Article Card -->
 	<article class="glass solution-article">
 		<header class="solution-article-header">
@@ -352,6 +380,8 @@ const pageDescription =
 			<Content />
 		</div>
 	</article>
+
+	<ProblemIssues info={issueInfo} />
 
 	<!-- Report an issue -->
 	<div class="report-issue-bar glass">
