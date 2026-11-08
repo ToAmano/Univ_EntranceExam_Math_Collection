@@ -3,19 +3,6 @@
 
 {\bf [解答]}
 
-積和の公式より被積分関数は
-\begin{align}
-  \sin\alpha x \sin\beta x = -\dfrac{1}{2} \{ \cos(\alpha+\beta)x - \cos(\alpha-\beta)x \}
-\end{align}
-であり，$\alpha+\beta \neq 0, \alpha-\beta \neq 0$ から与えられた定積分（以下$I$とする）は
-\begin{align}
-  I
-  &= \int_0^1 \sin\alpha x \cdot \sin\beta x \, dx \\
-  &= -\dfrac{1}{2} \left[ \dfrac{1}{\alpha+\beta}\sin(\alpha+\beta)x - \dfrac{1}{\alpha-\beta}\sin(\alpha-\beta)x \right]_0^1 \\
-  &= -\dfrac{1}{2} \left( \dfrac{1}{\alpha+\beta}\sin(\alpha+\beta) - \dfrac{1}{\alpha-\beta}\sin(\alpha-\beta) \right) \label{eq:1}
-\end{align}
-である．
-
 \begin{figure}[htb]
   \begin{center}
     \begin{tikzpicture}[scale=1.1, >=stealth]
@@ -37,7 +24,7 @@
       % -------------------------------------------------------------
       % 1. 区間 (-pi/2, pi/2)
       \draw[thick, blue!80!black, domain=-0.4:1.35, samples=100]
-      plot (\x, {tan(\x r)});[O]
+      plot (\x, {tan(\x r)});
 
       % 2. 区間 (pi/2, 3pi/2)
       \draw[thick, blue!80!black, domain=2.0:4.62, samples=100]
@@ -70,11 +57,11 @@
       \node[circle, fill=purple, inner sep=1.8pt] at (Alpha) {}; \node[purple, above left, font=\small] at (Alpha) {$\alpha$};
       \draw[dotted, gray!80] (1.165, 0) node[below, font=\small, black] {$\alpha$} -- (Alpha);
 
-      % 3. 第2の解 beta (約 4.493 rad, y = 8.986)
-      \coordinate (Beta) at (4.5, 9);
+      % 3. 第2の解 beta (約 4.604 rad, y = 9.208)
+      \coordinate (Beta) at (4.604, 9.208);
       % 描画エリアに収まる範囲で破線と交点ラベルを表示
-      \node[circle, fill=purple, inner sep=1.8pt] at (4.6, 9.2) {};
-      \draw[dotted, gray!80] (4.493, 0) node[below, font=\small, black] {$\beta$} -- (4.493, 7.0);
+      \node[circle, fill=purple, inner sep=1.8pt] at (Beta) {}; \node[purple, above left, font=\small] at (Beta) {$\beta$};
+      \draw[dotted, gray!80] (4.604, 0) node[below, font=\small, black] {$\beta$} -- (Beta);
 
       % -------------------------------------------------------------
       % 目盛り・ラベル等
@@ -90,6 +77,19 @@
   \caption{方程式 $\tan x = 2x$ の正の実数解 $\alpha, \beta$}
 \end{figure}
 
+積和の公式より被積分関数は
+\begin{align}
+  \sin\alpha x \sin\beta x = -\dfrac{1}{2} \{ \cos(\alpha+\beta)x - \cos(\alpha-\beta)x \}
+\end{align}
+であり，$\alpha+\beta \neq 0, \alpha-\beta \neq 0$ から与えられた定積分（以下$I$とする）は
+\begin{align}
+  I
+  &= \int_0^1 \sin\alpha x \cdot \sin\beta x \, dx \\
+  &= -\dfrac{1}{2} \left[ \dfrac{1}{\alpha+\beta}\sin(\alpha+\beta)x - \dfrac{1}{\alpha-\beta}\sin(\alpha-\beta)x \right]_0^1 \\
+  &= -\dfrac{1}{2} \left( \dfrac{1}{\alpha+\beta}\sin(\alpha+\beta) - \dfrac{1}{\alpha-\beta}\sin(\alpha-\beta) \right) \label{eq:1}
+\end{align}
+である．
+
 ここで題意の条件$\tan x = 2x$が満たされる時，
 \begin{align}
   \cos x = \pm \dfrac{1}{\sqrt{1+\tan^2 x}} = \pm \dfrac{1}{\sqrt{1+4x^2}} \label{eq:2}
@@ -100,7 +100,7 @@
 \end{align}
 である．
 ここで題意より$\alpha > 0$だから$\tan\alpha = \dfrac{\sin \alpha}{\cos \alpha} > 0$である．つまり$\sin\alpha$と $\cos \alpha$ の符号は一致する（$\beta$も同様）から
-\cref{eq:3}の複合は$\cos, sin$ともに同じ方をとる．従って
+\cref{eq:3}の複合は$\cos, \sin$ともに同じ方をとる．従って
 \begin{align}
   \sin(\alpha+\beta) &= \sin\alpha\cos\beta + \sin\beta\cos\alpha = \dfrac{A}{\sqrt{(1+4\alpha^2)(1+4\beta^2)}} \\
   \sin(\alpha-\beta) &= \sin\alpha\cos\beta - \sin\beta\cos\alpha = \dfrac{B}{\sqrt{(1+4\alpha^2)(1+4\beta^2)}}
@@ -134,13 +134,13 @@
 \begin{align}
   \begin{cases}
     y''(x) + \lambda^2 y(x) = 0 \quad (0 < x < 1) \\[3pt]
-    y(0) = 0, \quad y'(1) - 2y(1) = 0
+    y(0) = 0, \quad y'(1) - \dfrac{1}{2}y(1) = 0
   \end{cases} \label{eq:4}
 \end{align}
 $y(0) = 0$ より微分方程式の一般解は $y(x) = C \sin\lambda x$（$C$ は定数）と表される．
-これを 2 つ目の境界条件 $y'(1) - 2y(1) = 0$ に代入すると
+これを 2 つ目の境界条件 $y'(1) - \dfrac{1}{2}y(1) = 0$ に代入すると
 \begin{align}
-  \lambda \cos\lambda - 2\sin\lambda = 0 \iff \tan\lambda = \dfrac{1}{2}\lambda
+  \lambda \cos\lambda - 2\sin\lambda = 0 \iff \tan\lambda = 2\lambda
 \end{align}
 が得られる．すなわち$\alpha, \beta$ はこの境界値問題の固有値 $\lambda$ であり，$\sin\alpha x, \sin\beta x$ は対応する固有関数である．
 
@@ -160,9 +160,9 @@ $y(0) = 0$ より微分方程式の一般解は $y(x) = C \sin\lambda x$（$C$ �
   &= \alpha \cos\alpha \sin\beta - \beta \cos\beta \sin\alpha
 \end{align}
 である．
-ここで境界条件 $\sin\alpha = 2\alpha\cos\alpha, \, \sin\beta = 2\beta\cos\beta$ を代入して
+ここで境界条件 $\sin\alpha = \dfrac{1}{2}\alpha\cos\alpha, \, \sin\beta = \dfrac{1}{2}\beta\cos\beta$ を代入して
 \begin{align}
-  \text{右辺} = \alpha \cos\alpha (2\beta\cos\beta) - \beta \cos\beta (2\alpha\cos\alpha) = 0
+  \text{右辺} = \alpha \cos\alpha (\dfrac{1}{2}\beta\cos\beta) - \beta \cos\beta (\dfrac{1}{2}\alpha\cos\alpha) = 0
 \end{align}
 となる．$\alpha^2 \neq \beta^2$ より直ちに
 \begin{align}
