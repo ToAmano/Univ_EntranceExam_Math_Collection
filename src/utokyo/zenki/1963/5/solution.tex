@@ -3,16 +3,66 @@
 
 {\bf [解答]}
 
-% TODO: xy平面上に置かれたABCDなどの概要図
-
 まず一辺の長さ$\sqrt{2}$として考え，最後に全体を$\dfrac{a}{\sqrt{2}}$倍させてスケールさせることで答えを導く．
 
 このとき，$A(1,0)$，$B(0,-1)$，$C(-1,0)$となるような座標を定める．すると，$AD:x+y=1$であるから，$Q(1-t,t) \ (0\le t \le 1)$と置ける．すると$P$は直線$TQ$上の点だから$P(x,t)$とおける．
 
-% TODO: 手書きpdfの
-% \begin{center}
-%  \scalebox{1}{\input{ut-63-5p2}}
-% \end{center}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.6, 0) -- (1.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.5) -- (0, 1.5) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 正方形 ABCD の頂点
+    \coordinate (A) at (1, 0);
+    \coordinate (B) at (0, -1);
+    \coordinate (C) at (-1, 0);
+    \coordinate (D) at (0, 1);
+
+    % 正方形の枠
+    \draw[line width=1.1pt, gray!85!black] (A) -- (B) -- (C) -- (D) -- cycle;
+
+    % 代表パラメータ t=0.6, x=-0.3
+    \def\tVal{0.6}
+    \def\xVal{-0.3}
+    \coordinate (Q) at ({1 - \tVal}, \tVal);
+    \coordinate (P) at (\xVal, \tVal);
+    \coordinate (T) at (\xVal, 0);
+    \coordinate (R) at (\xVal, {-\xVal - 1});
+
+    % 領域 CRT と AQPT のハッチング
+    % \fill[pattern=north east lines, pattern color=blue!40] (C) -- (\xVal, 0) -- (R) -- cycle;
+    \fill[pattern=north west lines, pattern color=orange!40] (A) -- (Q) -- (P) -- (T) -- (R) -- (B) -- cycle;
+
+    % 折れ線 TPU (Q-P-R)
+    \draw[line width=1.2pt, blue!85!black] (Q) -- (P) -- (R);
+    \draw[dashed, blue!70!black] (P) -- ++(-0.4, 0);
+    \draw[dashed, blue!70!black] (R) -- ++(0, -0.3);
+
+    % 点ノード
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (A) {};
+    \node[above right=1pt] at (A) {$A(1,0)$};
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (B) {};
+    \node[below right=1pt] at (B) {$B(0,-1)$};
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (C) {};
+    \node[above left=1pt] at (C) {$C(-1,0)$};
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (D) {};
+    \node[above left=1pt] at (D) {$D(0,1)$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Q) {};
+    \node[above right=1pt, blue!85!black] at (Q) {$Q(1-t, t)$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (P) {};
+    \node[above left=1pt, blue!85!black] at (P) {$P(x, t)$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (T) {};
+    \node[below left=1pt, blue!85!black] at (T) {$T$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (R) {};
+    \node[below left=1pt, blue!85!black] at (R) {$R$};
+  \end{tikzpicture}
+  \caption{正方形 $ABCD$ と折れ線による面積二等分の配置}
+  \label{fig:square_split}
+\end{figure}
 
 $0\le x$の時，明らかに折れ線は正方形の面積を二等分しないから
 \begin{align}
@@ -35,10 +85,50 @@ $P$は$(0,1)$を通るので，複号正をとって
 \end{align}
 である．よってグラフの概形は下図である．
 
-% TODO: 手書きpdfの作図
-% \begin{center}
-%   \scalebox{1}{\input{ut-63-5p3}}
-% \end{center}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.4, 0) -- (1.4, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 1.4) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 通過領域のハッチング: x = -(\sqrt{t}-1)^2 から x = 1-t (0 <= t <= 1)
+    \fill[pattern=north east lines, pattern color=blue!50]
+    plot[domain=0:1, samples=60] ({-pow(sqrt(\x) - 1, 2)}, \x)
+    -- plot[domain=1:0, samples=10] ({1 - \x}, \x)
+    -- cycle;
+
+    % 境界線 AD: x = 1 - y
+    \draw[line width=1.2pt, gray!85!black] (0, 1) -- (1, 0)
+    node[pos=0.6, above right, font=\footnotesize] {$x+y=1$};
+
+    % 点 P の軌跡: x = -(\sqrt{y}-1)^2
+    \draw[line width=1.3pt, blue!85!black, domain=0:1, samples=60, smooth]
+    plot ({-pow(sqrt(\x) - 1, 2)}, \x);
+    \node[blue!85!black, font=\footnotesize] at (-0.7, 0.45) {$x=-(\sqrt{y}-1)^2$};
+
+    % 代表的な線分 PQ
+    \def\tRep{0.49}
+    \coordinate (Prep) at ({-pow(sqrt(\tRep) - 1, 2)}, \tRep);
+    \coordinate (Qrep) at ({1 - \tRep}, \tRep);
+    \draw[line width=1.4pt, orange!90!black] (Prep) -- (Qrep);
+    \node[circle, fill=orange!90!black, inner sep=1.2pt] at (Prep) {};
+    \node[left=1pt, orange!90!black, font=\footnotesize] at (Prep) {$P$};
+    \node[circle, fill=orange!90!black, inner sep=1.2pt] at (Qrep) {};
+    \node[right=1pt, orange!90!black, font=\footnotesize] at (Qrep) {$Q$};
+
+    % 境界点
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (1, 0) {};
+    \node[below=2pt] at (1, 0) {$1$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (-1, 0) {};
+    \node[below=2pt] at (-1, 0) {$-1$};
+    \node[circle, fill=gray!80!black, inner sep=1.2pt] at (0, 1) {};
+    \node[above left=1pt] at (0, 1) {$1$};
+  \end{tikzpicture}
+  \caption{線分 $PQ$ の通過する部分（斜線部）}
+  \label{fig:swept_region_pq}
+\end{figure}
 
 求める面積$S$は
 \begin{align}

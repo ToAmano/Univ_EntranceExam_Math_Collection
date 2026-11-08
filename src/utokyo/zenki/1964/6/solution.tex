@@ -3,7 +3,7 @@
 
 {\bf [解答]}
 
-% TODO: 概要図
+% TODO: y=f(x)のグラフ
 
 条件(1)から，
 \begin{align}
@@ -45,5 +45,49 @@
   &=\dfrac{-1}{6}a+\dfrac{7}{4}\tag{$\because\cref{eq:1}$}
 \end{align}
 となり，$h(a)$は$a$の単調減少関数である．故に\cref{eq:1,eq:3}より，$(a,b)=(3,0)$で最小，$(a,b)=(-6,9)$で最大となる．$\cdots$(答)
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=0.8cm, y=0.55cm, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-7.2, 0) -- (4.5, 0) node[right] {$a$};
+    \draw[->, thick, gray!80!black] (0, -1.0) -- (0, 10.5) node[above] {$b$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 許容領域のハッチング: b >= a^2/4 または (b >= 0 かつ a >= 0)
+    \fill[pattern=north east lines, pattern color=blue!35]
+    plot[domain=-6.2:4.0, samples=60] (\x, {0.25*(\x)^2})
+    -- (4.0, 10.0) -- (-6.2, 10.0) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!35]
+    (0, 0) -- (4.0, 0) -- (4.0, 4.0) -- plot[domain=4.0:0, samples=30] (\x, {0.25*(\x)^2}) -- cycle;
+
+    % 放物線 b = a^2 / 4 (D = 0)
+    \draw[line width=1.1pt, blue!85!black, domain=-6.2:4.0, samples=60]
+    plot (\x, {0.25*(\x)^2}) node[above left, font=\footnotesize] {$b=\frac{1}{4}a^2$};
+
+    % 直線 a + b = 3
+    \draw[line width=1.0pt, gray!60!black, dashed, domain=-6.8:4.2]
+    plot (\x, {3 - \x}) node[above right, font=\footnotesize] {$a+b=3$};
+
+    % 条件を満たす線分 [-6, 3] を太線で強調
+    \draw[line width=1.8pt, red!85!black] (-6, 9) -- (3, 0);
+
+    % 端点と交点
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (-6, 9) {};
+    \node[above right=1pt, red!85!black] at (-6, 9) {$(-6,9)$ [最大]};
+    \draw[densely dotted, thick, gray!70!black] (-6, 0) -- (-6, 9) -- (0, 9);
+    \node[below=2pt] at (-6, 0) {$-6$};
+    \node[right=2pt] at (0, 9) {$9$};
+
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (3, 0) {};
+    \node[above right=1pt, red!85!black] at (3, 0) {$(3,0)$ [最小]};
+
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (2, 1) {};
+    \node[above right=1pt, font=\footnotesize] at (2, 1) {$(2,1)$};
+  \end{tikzpicture}
+  \caption{$(a,b)$ 平面における許容領域（斜線部）と線分 $a+b=3$ 上の変域}
+  \label{fig:ab_plane_region}
+\end{figure}
+
 \newpage
 \end{document}

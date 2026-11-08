@@ -1,47 +1,114 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1964$年$3$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  点$V$を頂点とし，正方形$ABCD$を底面とする四角錐$V\cdot ABCD$があって，その$4$側面
-  はいずれも底辺$20 \,\mathrm{cm}$，高さ$40\,\mathrm{cm}$の二等辺三角形である．
 
-  辺$VA$上に$VP:PA=3:1$なる点$P$をとり，$3$点$P$，$B$，$C$を通る平面でこの四角錐を切る
-  とき，切り口の面積を求めよ．
-\end{oframed}
+{\bf [解答]}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}辺$VD$上に$VQ:QD=3:1$なる点$Q$をとると，切り口は台形$PBCQ$となる．相似から
-  $PQ=\dfrac{3}{4}AB=15 \,\mathrm{cm}$である．また$AD$，$BC$の中点を$M$，$N$として
-  $\triangle VMN$で立体を切断すると右のようになる．ただし$R$は$PQ$の中点である．
-  ここで$\triangle VMN$に余弦定理を用いて
-  \[\cos \angle RMN=\dfrac{1}{4}\]
-  だから，$\triangle MNR$に余弦定理を用いて
-  \[RN=\sqrt{(10)^2+(20)^2-100}=20 \,\mathrm{cm}\]
-  である．対称性から$RN$は台形の高さであるから，求める面積は
-  \begin{align}
-    \dfrac{1}{2}|RN|(|PQ|+|BC|)&=\dfrac{1}{2}20(15+20) \\
-    &=350 \,\mathrm{cm^2}
-  \end{align}
-  である．$\cdots$(答)
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[>=stealth, every node/.style={font=\small}]
+    % --- Panel 1: 四角錐と切断面 ---
+    \begin{scope}[shift={(0,0)}]
+      % 頂点座標
+      \coordinate (V) at (0.3, 3.2);
+      \coordinate (A) at (-1.8, -0.6);
+      \coordinate (B) at (0.8, -0.9);
+      \coordinate (C) at (2.4, 0.1);
+      \coordinate (D) at (-0.2, 0.4);
 
-  図が欲しい
-  \newpage
-\end{multicols}
+      % 中点 M, N
+      \coordinate (M) at ($ (A)!0.5!(D) $);
+      \coordinate (N) at ($ (B)!0.5!(C) $);
+
+      % 分点 P, Q, R
+      \coordinate (P) at ($ (V)!0.75!(A) $);
+      \coordinate (Q) at ($ (V)!0.75!(D) $);
+      \coordinate (R) at ($ (P)!0.5!(Q) $);
+
+      % 切断面 PBCQ のハッチング
+      \fill[pattern=north east lines, pattern color=blue!45]
+      (P) -- (B) -- (C) -- (Q) -- cycle;
+
+      % 奥の隠れ線
+      \draw[thick, dashed, gray!70!black] (A) -- (D) -- (C);
+      \draw[thick, dashed, gray!70!black] (V) -- (D);
+      \draw[dashed, gray!70!black] (M) -- (N);
+      \draw[dashed, gray!70!black] (V) -- (M);
+
+      % 手前の稜線
+      \draw[line width=1.1pt, gray!85!black] (V) -- (A) -- (B) -- (C) -- (V);
+      \draw[line width=1.1pt, gray!85!black] (V) -- (B);
+
+      % 切断面の輪郭線
+      \draw[line width=1.2pt, blue!85!black] (P) -- (B) -- (C);
+      \draw[line width=1.2pt, blue!85!black, dashed] (C) -- (Q) -- (P);
+      \draw[line width=1.1pt, red!85!black, dashed] (R) -- (N);
+
+      % 頂点ノード
+      \node[above=2pt] at (V) {$V$};
+      \node[below left=1pt] at (A) {$A$};
+      \node[below=2pt] at (B) {$B$};
+      \node[right=2pt] at (C) {$C$};
+      \node[above right=1pt, gray!70!black] at (D) {$D$};
+      \node[left=2pt, blue!85!black] at (P) {$P$};
+      \node[above right=1pt, blue!85!black] at (Q) {$Q$};
+      \node[below left=1pt, gray!80!black] at (M) {$M$};
+      \node[below right=1pt, gray!80!black] at (N) {$N$};
+      \node[above left=1pt, red!85!black] at (R) {$R$};
+
+      \node[below=1.2cm] at (0.3, 0) {(a) 四角錐と切断面 $PBCQ$};
+    \end{scope}
+
+    % --- Panel 2: 切断三角形 VMN ---
+    \begin{scope}[shift={(5.2, 0)}]
+      \coordinate (M2) at (0, -0.6);
+      \coordinate (N2) at (3.0, -0.6);
+      \coordinate (V2) at (1.5, 3.2);
+      \coordinate (R2) at ($ (V2)!0.75!(M2) $);
+
+      \draw[line width=1.1pt, gray!85!black] (M2) -- (V2) -- (N2) -- cycle;
+      \draw[line width=1.3pt, red!85!black] (R2) -- (N2);
+
+      % 点
+      \node[circle, fill=gray!80!black, inner sep=1.2pt] at (M2) {};
+      \node[below left=1pt] at (M2) {$M$};
+      \node[circle, fill=gray!80!black, inner sep=1.2pt] at (N2) {};
+      \node[below right=1pt] at (N2) {$N$};
+      \node[circle, fill=gray!80!black, inner sep=1.2pt] at (V2) {};
+      \node[above=2pt] at (V2) {$V$};
+      \node[circle, fill=red!85!black, inner sep=1.2pt] at (R2) {};
+      \node[above left=1pt, red!85!black] at (R2) {$R$};
+
+      % 寸法表示
+      \node[below=2pt] at ($ (M2)!0.5!(N2) $) {$20$};
+      \node[above right=1pt] at ($ (V2)!0.5!(N2) $) {$40$};
+      \node[above left=1pt] at ($ (V2)!0.5!(R2) $) {$30$};
+      \node[below left=1pt] at ($ (R2)!0.5!(M2) $) {$10$};
+      \node[above=2pt, red!85!black] at ($ (R2)!0.5!(N2) $) {$20$};
+
+      \node[below=1.2cm] at (1.5, 0) {(b) 切断面 $\triangle VMN$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{四角錐の切断と $\triangle VMN$ の断面}
+  \label{fig:pyramid_cross_section}
+\end{figure}
+
+辺$VD$上に$VQ:QD=3:1$なる点$Q$をとると，切り口は台形$PBCQ$となる．相似から
+$PQ=\dfrac{3}{4}AB=15 \,\mathrm{cm}$である．また$AD$，$BC$の中点を$M$，$N$として
+$\triangle VMN$で立体を切断すると右のようになる．ただし$R$は$PQ$の中点である．
+ここで$\triangle VMN$に余弦定理を用いて
+\begin{align}
+  \cos \angle RMN=\dfrac{1}{4}
+\end{align}
+だから，$\triangle MNR$に余弦定理を用いて
+\begin{align}
+  RN=\sqrt{(10)^2+(20)^2-100}=20 \,\mathrm{cm}
+\end{align}
+である．対称性から$RN$は台形の高さであるから，求める面積は
+\begin{align}
+  \dfrac{1}{2}|RN|(|PQ|+|BC|)&=\dfrac{1}{2}20(15+20) \\
+  &=350 \,\mathrm{cm^2}
+\end{align}
+である．$\cdots$(答)
+
+\newpage
 \end{document}

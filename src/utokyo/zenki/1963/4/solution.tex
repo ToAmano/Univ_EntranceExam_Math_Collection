@@ -4,7 +4,89 @@
 {\bf [解答]}
 \paragraph{(1)}
 
-% TODO: 3d-tikzによる概要図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+    % 頂点座標
+    \coordinate (A) at (0, 3.0);
+    \coordinate (B) at (-2.0, -0.2);
+    \coordinate (C) at (-0.3, -1.0);
+    \coordinate (D) at (2.0, -0.2);
+
+    % 底面 BCD の重心 H
+    \coordinate (H) at (-0.1, -0.47);
+
+    % 奥の稜線 BD
+    \draw[thick, dashed, gray!70!black] (B) -- (D);
+
+    % 底面の稜線 BC, CD
+    \draw[line width=1.1pt, gray!85!black] (B) -- (C) -- (D);
+
+    % 垂線 AH
+    \draw[densely dotted, line width=1.0pt, gray!70!black] (A) -- (H);
+    \node[circle, fill=gray!80!black, inner sep=1.1pt] at (H) {};
+    \node[below=2pt, font=\footnotesize] at (H) {$H$};
+
+    % AP = AQ = AR = x (比率 0.6)
+    \def\rRatio{0.6}
+    \coordinate (P) at ($ (A)!\rRatio!(B) $);
+    \coordinate (Q) at ($ (A)!\rRatio!(C) $);
+    \coordinate (R) at ($ (A)!\rRatio!(D) $);
+
+    % 垂足 P', Q', R' (P - P' は AH と平行)
+    \coordinate (Pp) at ($ (H)!\rRatio!(B) $);
+    \coordinate (Qp) at ($ (H)!\rRatio!(C) $);
+    \coordinate (Rp) at ($ (H)!\rRatio!(D) $);
+
+    % 三角柱 PQR の上面ハッチング
+    \fill[pattern=north east lines, pattern color=blue!45] (P) -- (Q) -- (R) -- cycle;
+
+    % 柱の側面投影線
+    \draw[thick, dashed, blue!70!black] (P) -- (Pp);
+    \draw[line width=1.1pt, blue!85!black] (Q) -- (Qp);
+    \draw[line width=1.1pt, blue!85!black] (R) -- (Rp);
+
+    % 底面 P'Q'R' の稜線
+    \draw[thick, dashed, blue!70!black] (Pp) -- (Rp);
+    \draw[line width=1.1pt, blue!85!black] (Pp) -- (Qp) -- (Rp);
+
+    % 手前の稜線 AB, AC, AD
+    \draw[line width=1.1pt, gray!85!black] (A) -- (B);
+    \draw[line width=1.1pt, gray!85!black] (A) -- (C);
+    \draw[line width=1.1pt, gray!85!black] (A) -- (D);
+
+    % 三角柱上面 PQR
+    \draw[line width=1.2pt, blue!85!black] (P) -- (Q) -- (R) -- cycle;
+
+    % 各点ノード
+    \node[above=2pt] at (A) {$A$};
+    \node[left=2pt] at (B) {$B$};
+    \node[below left=1pt] at (C) {$C$};
+    \node[right=2pt] at (D) {$D$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (P) {};
+    \node[left=2pt, blue!85!black] at (P) {$P$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (Q) {};
+    \node[left=2pt, blue!85!black] at (Q) {$Q$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (R) {};
+    \node[right=2pt, blue!85!black] at (R) {$R$};
+
+    \node[circle, fill=blue!70!black, inner sep=1.0pt] at (Pp) {};
+    \node[below left=-1pt, font=\footnotesize, blue!70!black] at (Pp) {$P'$};
+    \node[circle, fill=blue!85!black, inner sep=1.0pt] at (Qp) {};
+    \node[below=2pt, font=\footnotesize, blue!85!black] at (Qp) {$Q'$};
+    \node[circle, fill=blue!85!black, inner sep=1.0pt] at (Rp) {};
+    \node[below right=-1pt, font=\footnotesize, blue!85!black] at (Rp) {$R'$};
+
+    % 寸法 x の表示
+    \draw[<->, font=\footnotesize] ($ (A) + (-0.25, 0) $) -- ($ (P) + (-0.25, 0) $)
+    node[midway, left] {$x$};
+  \end{tikzpicture}
+  \caption{正四面体 $ABCD$ と内接する三角柱 $PQR-P'Q'R'$}
+  \label{fig:tetrahedron_prism}
+\end{figure}
+
+% TODO: 左にAHPP'の相似を示す切断面，右にABC, PQを示す正三角形
 
 $A$から平面$BCD$に下ろした垂足$H$とする．$ABCD$が正四面体だから
 $|AH|=\dfrac{\sqrt{6}}{3}a$である．

@@ -3,8 +3,6 @@
 
 {\bf [解答]}
 
-% TODO: 座標系の概要図
-
 $O$を原点とし，$B$を$x$軸正方向，$C$を$y$軸正方向とする座標系を考える．$P(0,(1+k)t)$とおく．
 すると，まず$0\le(1+k)t\le1$より
 \begin{align}
@@ -24,10 +22,82 @@ $O$を原点とし，$B$を$x$軸正方向，$C$を$y$軸正方向とする座�
 \end{align}
 グラフの概形は下図のようである．
 
-% TODO: 作図
-%  \begin{center}
-%    \scalebox{.5}{\input{ut-65-4p2}}
-%  \end{center}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.4, 0) -- (1.4, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 1.4) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 半円
+    \draw[line width=1.2pt, blue!85!black] (1, 0) arc (0:180:1);
+
+    % パラメータ例
+    \def\tVal{0.45}
+    \def\kVal{0.8}
+    \pgfmathsetmacro{\yP}{(1 + \kVal) * \tVal}
+    \pgfmathsetmacro{\xS}{sqrt(1 - \tVal * \tVal)}
+
+    \coordinate (P) at (0, \yP);
+    \coordinate (Q) at (0, \tVal);
+    \coordinate (R) at (-\xS, \tVal);
+    \coordinate (S) at (\xS, \tVal);
+
+    % 四辺形 ROSP のハッチング
+    \fill[pattern=north east lines, pattern color=blue!40]
+    (R) -- (0, 0) -- (S) -- (P) -- cycle;
+
+    % 四辺形 ROSP の輪郭
+    \draw[line width=1.2pt, blue!85!black] (R) -- (0, 0) -- (S) -- (P) -- cycle;
+    \draw[dashed, gray!70!black] (R) -- (S);
+
+    % 頂点ノード
+    \node[below=2pt] at (-1, 0) {$A(-1,0)$};
+    \node[below=2pt] at (1, 0) {$B(1,0)$};
+    \node[above right=1pt] at (0, 1) {$C(0,1)$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (P) {};
+    \node[left=2pt, blue!85!black] at (P) {$P$};
+    \node[circle, fill=blue!85!black, inner sep=1.1pt] at (Q) {};
+    \node[below right=1pt, blue!85!black, font=\footnotesize] at (Q) {$Q(0,t)$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (R) {};
+    \node[above left=1pt, blue!85!black] at (R) {$R$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (S) {};
+    \node[above right=1pt, blue!85!black] at (S) {$S$};
+  \end{tikzpicture}
+  \caption{座標系における半円と四辺形 $ROSP$}
+  \label{fig:semicircle_rosp}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=4.0cm, y=5.0cm, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.1, 0) -- (1.1, 0) node[right] {$u=t^2$};
+    \draw[->, thick, gray!80!black] (0, -0.05) -- (0, 0.35) node[above] {$g(u)$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 放物線 g(u) = -u^2 + u
+    \draw[line width=1.2pt, blue!85!black, domain=0:1.0, samples=60]
+    plot (\x, {-(\x)^2 + \x});
+
+    % 頂点 (1/2, 1/4)
+    \draw[densely dotted, thick, gray!70!black] (0.5, 0) -- (0.5, 0.25) -- (0, 0.25);
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (0.5, 0.25) {};
+    \node[below=2pt] at (0.5, 0) {$\frac{1}{2}$};
+    \node[left=2pt] at (0, 0.25) {$\frac{1}{4}$};
+
+    % 境界点 u = 1/(1+k)^2 の破線
+    \draw[dashed, red!85!black, thick] (0.35, 0) -- (0.35, {-0.35*0.35 + 0.35});
+    \node[circle, fill=red!85!black, inner sep=1.2pt] at (0.35, {-0.35*0.35 + 0.35}) {};
+    \node[below=2pt, red!85!black, font=\footnotesize] at (0.35, 0) {$\frac{1}{(1+k)^2}$};
+
+    \node[below=2pt] at (1, 0) {$1$};
+  \end{tikzpicture}
+  \caption{$g(u) = -u^2 + u$ のグラフと定義域の上限 $\dfrac{1}{(1+k)^2}$}
+  \label{fig:quadratic_gu}
+\end{figure}
 
 従って$k$の値によってこの最大値は以下のようになる．
 
@@ -38,7 +108,6 @@ $t^2=1/(1+k)^2$の時，つまり$P=C$の時$f(t)$は最大である．
 \subparagraph{(ii)$1/2\le1/(1+k)^2\therefore-1+\sqrt{2}\ge k$の時}
 
 $t^2=1/2$つまり$t=1/\sqrt{2}$，$P$の$y$座標が$(k+1)/\sqrt{2}$の時，$f(t)$は最大である．
-\casesend
 
 以上から，求める$P$の位置は，
 \begin{align}

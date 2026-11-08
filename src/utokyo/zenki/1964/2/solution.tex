@@ -3,10 +3,53 @@
 
 {\bf [解答]}
 
-% TODO: 概要図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=0.9cm, y=0.55cm, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-7.2, 0) -- (3.8, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.6) -- (0, 10.0) node[above] {$y$};
+    \node[below right=2pt] at (0, 0) {$O$};
+
+    % 放物線 C_1: y = x^2
+    \draw[line width=1.2pt, blue!85!black, domain=-3.1:3.1, samples=60]
+    plot (\x, {(\x)^2}) node[above right] {$C_1: y=x^2$};
+
+    % 放物線 C_2: y = 3(x+4)^2 + 2
+    \draw[line width=1.2pt, orange!85!black, domain=-5.6:-2.4, samples=60]
+    plot (\x, {3*(\x + 4)^2 + 2}) node[above left] {$C_2: y=3x^2+24x+50$};
+
+    % 点 P(-6, 3)
+    \coordinate (P) at (-6, 3);
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {};
+    \node[above left=1pt, red!85!black] at (P) {$P(-6,3)$};
+
+    % 相似の中心からの直線 1: P -> B_0(-4, 2) -> A_0(0, 0)
+    \coordinate (B0) at (-4, 2);
+    \coordinate (A0) at (0, 0);
+    \draw[line width=1.0pt, dashed, gray!70!black] (P) -- (A0);
+    \node[circle, fill=orange!85!black, inner sep=1.2pt] at (B0) {};
+    \node[below=2pt, font=\footnotesize] at (B0) {$B_0(-4,2)$};
+
+    % 相似の中心からの直線 2: P -> B_1(-3, 5) -> A_1(3, 9)
+    \coordinate (B1) at (-3, 5);
+    \coordinate (A1) at (3, 9);
+    \draw[line width=1.0pt, dashed, gray!70!black] (P) -- (A1);
+    \node[circle, fill=orange!85!black, inner sep=1.2pt] at (B1) {};
+    \node[left=2pt, font=\footnotesize] at (B1) {$B$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (A1) {};
+    \node[above right=1pt, font=\footnotesize] at (A1) {$A(3,9)$};
+
+    % 内分比の注記
+    \node[above=1pt, font=\scriptsize, gray!80!black] at ($ (A1)!0.33!(B1) $) {$m=2$};
+    \node[above=1pt, font=\scriptsize, gray!80!black] at ($ (B1)!0.5!(P) $) {$n=1$};
+  \end{tikzpicture}
+  \caption{放物線 $C_1, C_2$ と相似の中心 $P(-6,3)$ による内分関係}
+  \label{fig:homothety_parabolas}
+\end{figure}
 
 題意より$t\in\mathbb{R}$に対して$A(t,t^2)$と置ける． 題意の条件から$s\in\mathbb{R}$に対して$B(s,3s^2+24s+50)$とおいてよい．このとき内分点に関する条件から
-\begin{numcases}
+\begin{numcases}{}
   \dfrac{nt+m\alpha}{m+n}=s \label{3}\\
   \dfrac{nt^2+m\beta}{m+n}=3s^2+24s+50 \label{4}
 \end{numcases}

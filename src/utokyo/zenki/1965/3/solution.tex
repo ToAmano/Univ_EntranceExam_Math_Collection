@@ -3,8 +3,6 @@
 
 {\bf [解答]}
 
-% TODO: 概要図
-
 題意の接点を$P(t,1/t)$とする．ただし$t>0$とする．このとき$(1/x)'=-1/x^2$だから
 \begin{align}
   l:y=\dfrac{-1}{t^2}(x-t)+\dfrac{1}{t} \\
@@ -14,15 +12,61 @@
 \begin{align}
   2\le 2t \quad \therefore 1 \le t \label{eq:1}
 \end{align}
-となる．題意の面積を$S(t)$とすると，$t$の値で場合分けして以下のようになる．
+となる．$1 \le t$ のもとで $x=2 \le 2t$ より，区間 $[1, 2]$ において $f(x) \ge 0$ である．
 
-% TODO: グラフ
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.0cm, y=1.8cm, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (3.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, 2.0) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
 
-グラフが上図のようになるので
+    % 接線パラメータ t = 1.5 (最大時)
+    \def\tVal{1.5}
+    \pgfmathsetmacro{\xQ}{2.0 * \tVal} % 3.0
+    \pgfmathsetmacro{\yOne}{-1.0/(\tVal*\tVal) * 1.0 + 2.0/\tVal} % 8/9 \approx 0.889
+    \pgfmathsetmacro{\yTwo}{-1.0/(\tVal*\tVal) * 2.0 + 2.0/\tVal} % 4/9 \approx 0.444
+
+    % 囲まれる台形領域 S(t) のハッチング (1 <= x <= 2)
+    \fill[pattern=north east lines, pattern color=blue!45]
+    (1, 0) -- (1, \yOne) -- (2, \yTwo) -- (2, 0) -- cycle;
+
+    % 双曲線 xy = 1
+    \draw[line width=1.2pt, blue!85!black, domain=0.55:3.4, samples=60]
+    plot (\x, {1.0 / \x}) node[above right] {$xy=1$};
+
+    % 接線 l: y = -1/t^2 x + 2/t
+    \draw[line width=1.2pt, orange!85!black, domain=0:3.3]
+    plot (\x, {-1.0/(\tVal*\tVal)*\x + 2.0/\tVal}) node[above right] {$l$};
+
+    % 境界直線 x=1, x=2 (点線)
+    \draw[densely dotted, thick, gray!70!black] (1, 0) -- (1, 1.4);
+    \draw[densely dotted, thick, gray!70!black] (2, 0) -- (2, 1.0);
+    \node[below=2pt] at (1, 0) {$1$};
+    \node[below=2pt] at (2, 0) {$2$};
+
+    % 接点 P(t, 1/t)
+    \coordinate (P) at (\tVal, {1.0/\tVal});
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (P) {};
+    \node[above right=1pt] at (P) {$P\left(t, \frac{1}{t}\right)$};
+
+    % 交点 Q(2t, 0)
+    \node[circle, fill=orange!85!black, inner sep=1.2pt] at (\xQ, 0) {};
+    \node[below=2pt, orange!85!black] at (\xQ, 0) {$Q(2t, 0)$};
+
+    % 領域ラベル S(t)
+    \node[font=\footnotesize, blue!90!black] at (1.5, 0.3) {$S(t)$};
+  \end{tikzpicture}
+  \caption{双曲線 $xy=1$ の接線 $l$ と囲まれる台形領域 $S(t)$}
+  \label{fig:hyperbola_tangent_trapezoid}
+\end{figure}
+
+グラフが上図のようになるので題意の面積を$S(t)$とすると，
 \begin{align}
   S(t)&=\int_1^2f(x)dx \\
   &=\left[\dfrac{-1}{2t^2}x^2+\dfrac{2}{t}x\right]_1^2  \\
-  &=\dfrac{-3}{2t^2}+\dfrac{2}{t}　　\\
+  &=\dfrac{-3}{2t^2}+\dfrac{2}{t} \\
   &=\dfrac{-3}{2}\left(\dfrac{1}{t}-\dfrac{2}{3}\right)^2+\dfrac{2}{3}
 \end{align}
 となる．この時は$0<\dfrac{1}{t}\le1$だから$\dfrac{1}{t}=\dfrac{2}{3}$で最大値$\dfrac{2}{3}$をとる．
@@ -30,24 +74,7 @@
 \begin{align}
   \max S(t)=S\left(\dfrac{3}{2}\right)=\dfrac{2}{3}
 \end{align}
-である．
-
-% \subparagraph{(i)$1\le2t\le2$つまり$1/2\le t\le 1$の時}
-
-% % TODO: グラフ
-
-% グラフが上図のようになるので
-% \begin{align}
-%   S(t)&=\int_1^{2t}f(x)dx  \\
-%   &=\left[\dfrac{-1}{2t^2}x^2+\dfrac{2}{t}x\right]_1^{2t} \\
-%   &=\dfrac{-1}{2t^2}(4t^2-1)+\dfrac{2}{t}(2t-1)  \\
-%   &=2-\dfrac{2}{t}+\dfrac{1}{2t^2}　　\\
-%   &=\dfrac{1}{2}(s-2)^2
-% \end{align}
-% となる．ただし$s=1/t$として，$1\le s\le2$である．この時の最大値は，
-% $s=1$のときの$\dfrac{1}{2}$である．
-
-% \subparagraph{(ii)$2\le2t$つまり$1\le t$の時}
+である．$\cdots$(答)
 
 \newpage
 \end{document}

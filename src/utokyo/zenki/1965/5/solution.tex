@@ -3,7 +3,51 @@
 
 {\bf [解答]}
 
-% TODO: 概要図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.0cm, y=0.8cm, >=stealth,
+    every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (3.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -3.2) -- (0, 3.4) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 曲線 y = 3 sin 2x + cos 3x
+    \draw[line width=1.4pt, blue!85!black, domain=0:3.14159, samples=120, smooth]
+    plot (\x, {3*sin(2*\x r) + cos(3*\x r)});
+    \node[blue!85!black, above right] at (1.6, 2.3) {$y=3\sin 2x+\cos 3x$};
+
+    % 端点 (白抜き)
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (0, 1) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (3.14159, -1) {};
+    \draw[densely dotted, thick, gray!70!black] (3.14159, 0) node[above=2pt] {$\pi$} -- (3.14159, -1);
+
+    % 接点座標
+    % x1 = pi/3 = 1.0472, y1 = 3*sqrt(3)/2 - 1 = 1.5981
+    % x2 = pi/2 = 1.5708, y2 = 0
+    % x3 = 2*pi/3 = 2.0944, y3 = 1 - 3*sqrt(3)/2 = -1.5981
+    \coordinate (P1) at (1.0472, 1.5981);
+    \coordinate (P2) at (1.5708, 0);
+    \coordinate (P3) at (2.0944, -1.5981);
+
+    % 3本の接線 (傾き -3)
+    \draw[thick, red!85!black] (0.65, {1.5981 - 3*(0.65 - 1.0472)}) -- (1.45, {1.5981 - 3*(1.45 - 1.0472)});
+    \draw[thick, red!85!black] (1.15, {-3*(1.15 - 1.5708)}) -- (1.95, {-3*(1.95 - 1.5708)});
+    \draw[thick, red!85!black] (1.70, {-1.5981 - 3*(1.70 - 2.0944)}) -- (2.50, {-1.5981 - 3*(2.50 - 2.0944)});
+
+    % 垂線とラベル
+    \draw[densely dotted, thick, gray!70!black] (P1) -- (1.0472, 0) node[below=2pt] {$\frac{\pi}{3}$};
+    \draw[densely dotted, thick, gray!70!black] (P3) -- (2.0944, 0) node[above=2pt] {$\frac{2\pi}{3}$};
+    \node[below=3pt] at (P2) {$\frac{\pi}{2}$};
+
+    % 接点
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P1) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P2) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P3) {};
+  \end{tikzpicture}
+  \caption{曲線 $y=3\sin 2x+\cos 3x$ と傾き $-3$ の3本の接線}
+  \label{fig:curve_and_tangents}
+\end{figure}
 
 題意の曲線$y=f(x)$とすると，倍角公式，三倍角の公式より
 \begin{align}
@@ -14,7 +58,7 @@
 である．題意の直線の傾きは$-3$だから，$f'(x)=-3$となる$x$での接線を求めればよい．
 \cref{eq:1}から
 \begin{align}
-  & f'(x)=-3
+  f'(x)=-3
   \Longleftrightarrow
   & 4\sin^3x-4\sin^2x-3\sin x+2=-1 \\
   \Longleftrightarrow

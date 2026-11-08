@@ -3,11 +3,58 @@
 
 {\bf [解答]}
 
-% TODO: 概要図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.4, >=stealth, every node/.style={font=\small}]
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-3.2, 0) -- (3.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -2.5) -- (0, 2.8) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 双曲線 xy = 1 (第1象限および第3象限)
+    \draw[line width=1.2pt, blue!85!black, domain=0.38:3.2, samples=70]
+    plot (\x, {1.0 / \x}) node[right] {$xy=1$};
+    \draw[line width=1.2pt, blue!85!black, domain=-3.2:-0.38, samples=70]
+    plot (\x, {1.0 / \x});
+
+    % 代表点 P (第1象限) と Q (第3象限)
+    % a = 3^{3/4} \approx 2.28, c = 3^{-1/4} \approx 0.76
+    \def\aX{2.28}
+    \def\aY{0.439}
+    \def\cX{-0.76}
+    \def\cY{-1.316}
+
+    \coordinate (P) at (\aX, \aY);
+    \coordinate (Q) at (\cX, \cY);
+
+    % 線分 QP
+    \draw[line width=1.3pt, red!85!black] (Q) -- (P);
+
+    % 水平補助線と角度 30^\circ
+    \draw[dashed, gray!70!black] (Q) -- ++(1.8, 0);
+    \draw[->, thick, orange!85!black] ($(Q) + (0.8, 0)$) arc (0:30:0.8);
+    \node[orange!85!black, font=\footnotesize] at ($(Q) + (15:1.1)$) {$30^\circ$};
+
+    % 点ノード
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (P) {};
+    \node[above right=1pt] at (P) {$P\left(a, \frac{1}{a}\right)$};
+
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Q) {};
+    \node[below left=1pt] at (Q) {$Q\left(-c, -\frac{1}{c}\right)$};
+
+    % 投影点線
+    \draw[densely dotted, thick, gray!70!black] (P) -- (\aX, 0) node[below] {$a$};
+    \draw[densely dotted, thick, gray!70!black] (P) -- (0, \aY) node[left] {$\frac{1}{a}$};
+    \draw[densely dotted, thick, gray!70!black] (Q) -- (\cX, 0) node[above] {$-c$};
+    \draw[densely dotted, thick, gray!70!black] (Q) -- (0, \cY) node[right] {$-\frac{1}{c}$};
+  \end{tikzpicture}
+  \caption{双曲線 $xy=1$ 上の定点 $P$ と動点 $Q$ および線分 $QP$}
+  \label{fig:hyperbola_qp}
+\end{figure}
 
 題意から
 \begin{align}
-  a>0, quad
+  a>0, \quad
   b=\dfrac{1}{a}
 \end{align}
 である．また$c>0$として$\left(-c,\dfrac{-1}{c}\right)$とおける．
@@ -22,12 +69,11 @@ $|QP|^2=(c+a)^2+\left(\dfrac{1}{c}+\dfrac{1}{a}\right)^2$であるからこれ�
 \end{align}
 となる．ただし$p=\sqrt[3]{a}$である．故に下表を得る．
 
-% TODO: table環境化
 \begin{align}
   \begin{array}{|c|c|c|c|} \hline
     c  &   &  1/p   &      \\ \hline
     f'  & - &   0     & +     \\ \hline
-    f  &\se&         &\ne  \\ \hline
+    f  &\searrow&         &\nearrow  \\ \hline
   \end{array}
 \end{align}
 従って
