@@ -348,32 +348,42 @@ def _split_top_level_rows(content):
     \\begin{cases}/\\begin{split}/\\begin{pmatrix} などネストした環境内部の \\\\ は
     その環境自身の行区切りであって、外側の align にとっての行区切りではない
     ため、ネスト深度を数えて無視する（split の中身は丸ごと 1 行として扱われる）。
+    また波括弧 {...} 内部の \\\\ も TeX のグループ内であるため外側の行区切りから除外する。
     """
     begin_re = re.compile(r'\\begin\{[a-zA-Z*]+\}')
     end_re = re.compile(r'\\end\{[a-zA-Z*]+\}')
     rows = []
     buf = []
-    depth = 0
+    env_depth = 0
+    brace_depth = 0
     i = 0
     n = len(content)
     while i < n:
-        m = begin_re.match(content, i)
-        if m:
-            depth += 1
-            buf.append(m.group(0))
-            i = m.end()
-            continue
-        m = end_re.match(content, i)
-        if m:
-            depth -= 1
-            buf.append(m.group(0))
-            i = m.end()
-            continue
-        if content[i:i + 2] == '\\\\' and depth == 0:
-            rows.append(''.join(buf))
-            buf = []
+        if content[i] == '\\' and i + 1 < n:
+            m = begin_re.match(content, i)
+            if m:
+                env_depth += 1
+                buf.append(m.group(0))
+                i = m.end()
+                continue
+            m = end_re.match(content, i)
+            if m:
+                env_depth = max(0, env_depth - 1)
+                buf.append(m.group(0))
+                i = m.end()
+                continue
+            if content[i:i + 2] == '\\\\' and env_depth == 0 and brace_depth == 0:
+                rows.append(''.join(buf))
+                buf = []
+                i += 2
+                continue
+            buf.append(content[i:i + 2])
             i += 2
             continue
+        if content[i] == '{':
+            brace_depth += 1
+        elif content[i] == '}':
+            brace_depth = max(0, brace_depth - 1)
         buf.append(content[i])
         i += 1
     if ''.join(buf).strip():
@@ -417,20 +427,25 @@ def compute_eq_numbers(raw_tex):
     一切表示されない。ここでカウンタを進めてしまうと、同じファイル内で後に
     続く本物の align ブロックの番号が実際の表示より大きくずれてしまう。
     """
+    # physics パッケージ \mqty マクロの展開（行区切り \\ を内部環境に変換するため）
+    tex_clean = re.sub(r'\\mqty\((.*?)\)', r'\\begin{pmatrix}\1\\end{pmatrix}', raw_tex, flags=re.DOTALL)
+    tex_clean = re.sub(r'\\mqty\[(.*?)\]', r'\\begin{bmatrix}\1\\end{bmatrix}', tex_clean, flags=re.DOTALL)
+    tex_clean = re.sub(r'\\mqty\{(.*?)\}', r'\\begin{matrix}\1\\end{matrix}', tex_clean, flags=re.DOTALL)
+
     numbers = {}
     counter = 0
     pos = 0
     while True:
-        m = _EQ_NUMBER_ENV_RE.search(raw_tex, pos)
+        m = _EQ_NUMBER_ENV_RE.search(tex_clean, pos)
         if not m:
             break
         env, star = m.group(1), m.group(2)
         end_re = re.compile(r'\\end\{' + re.escape(env + star) + r'\}')
-        end_m = end_re.search(raw_tex, m.end())
+        end_m = end_re.search(tex_clean, m.end())
         if not end_m:
             pos = m.end()
             continue
-        block = raw_tex[m.end():end_m.start()]
+        block = tex_clean[m.end():end_m.start()]
         pos = end_m.end()
 
         if star:
@@ -440,7 +455,7 @@ def compute_eq_numbers(raw_tex):
         for row in rows:
             if not row.strip():
                 continue
-            has_notag = '\\notag' in row
+            has_notag = bool(re.search(r'\\(notag|nonumber)(?![a-zA-Z])', row))
             labels = _EQ_NUMBER_LABEL_RE.findall(row)
             if not has_notag:
                 counter += 1

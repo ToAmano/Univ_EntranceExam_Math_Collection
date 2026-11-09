@@ -42,3 +42,30 @@ def test_multiple_mixed_references_use_actual_numbers_and_anchors(tmp_path, fall
         assert ',' not in target
         assert f'id="{target}"' in md
     assert r'\cref{' not in md and r'\ref{' not in md
+
+
+def test_compute_eq_numbers_handles_nonumber_and_mqty():
+    latex = r'''
+    \begin{align}
+      a &= 1 \label{eq:1}
+    \end{align}
+    \begin{align}
+      \mqty(x \\ y) \cdot \mqty(u \\ v) = 0
+    \end{align}
+    \begin{align}
+      b &= 2 \nonumber \\
+      c &= 3 \label{eq:2}
+    \end{align}
+    \begin{align}
+      d &= 4 \notag \\
+      e &= 5 \nonumber \\
+      f &= 6 \label{eq:3}
+    \end{align}
+    '''
+    nums = converter.compute_eq_numbers(latex)
+    assert nums == {
+        'eq:1': 1,
+        'eq:2': 3,  # eq:1 is 1, mqty align is 2, b is nonumber, c is 3
+        'eq:3': 4,  # d is notag, e is nonumber, f is 4
+    }
+
