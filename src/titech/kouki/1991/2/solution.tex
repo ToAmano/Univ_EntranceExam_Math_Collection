@@ -62,7 +62,7 @@
     0     &\le \alpha \le \pi/6 \label{eq:1}\\
     \pi/6 &\le \alpha \le \pi/4 \label{eq:2}
   \end{numcases}
-  の2つの場合分けで考える．\cref{eq:1} の場合は，$\theta$ が最大となるとき $l, m$ は A または B を通る．したがって，$\min \angle \mathrm{OP}(\alpha)\mathrm{B}$, $\min \angle \mathrm{OP}(\alpha)\mathrm{A}$ のうち，小さい方が最大の $\theta$ を与える．一方で\cref{eq:2} の場合は，$\theta$ が最大となるとき $l, m$ は B または D を通る．したがって，$\min \angle \mathrm{OP}(\alpha)\mathrm{B}$, $\min \angle \mathrm{OP}(\alpha)\mathrm{C}$ のうち，小さい方が最大の $\theta$ を与える．これらの場合をそれぞれ図に示す．
+  の2つの場合分けで考える．\cref{eq:1} の場合は，$\theta$ が最大となるとき $l, m$ は A または B を通る．したがって，$\min \angle \mathrm{OP}(\alpha)\mathrm{B}$, $\min \angle \mathrm{OP}(\alpha)\mathrm{A}$ のうち，小さい方が最大の $\theta$ を与える．一方で\cref{eq:2} の場合は，$\theta$ が最大となるとき $l, m$ は B または D を通る．したがって，$\min \angle \mathrm{OP}(\alpha)\mathrm{B}$, $\min \angle \mathrm{OP}(\alpha)\mathrm{D}$ のうち，小さい方が最大の $\theta$ を与える．これらの場合をそれぞれ図に示す．
 
   これらの条件を数式に起こすと
   \begin{numcases}{\max\theta = \\}
@@ -177,41 +177,44 @@
 
   \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[xscale=1.3]
-      % Axes
-      \draw[->] (0,0) -- (5.5,0) node[below] {$x$};
-      \draw[->] (0,0) -- (0,5.5) node[left] {$y$};
+    \begin{tikzpicture}[x=2.4cm, y=4.2cm, >=stealth, every node/.style={font=\small}]
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-0.3, 0) -- (3.6, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -0.1) -- (0, 1.45) node[above] {$y$};
+      \node[below left=2pt] at (0, 0) {$O$};
 
-      % Origin label
-      \node at (0,0) [below left] {0};
+      % 曲線 y = f(x) = (x + 2/x) / 4
+      \draw[line width=1.3pt, blue!85!black, domain=0.45:3.4, samples=80]
+      plot (\x, {(\x + 2/\x)/4});
+      \node[blue!85!black, above right=1pt, font=\small] at (3.1, 0.98) {$y=f(x)$};
 
-      % Plot of f(x) = x + 2/x
-      \draw[thick, blue, domain=0.5:5, samples=100] plot (\x, {\x + 2/\x});
+      % 極小点 (sqrt(2), sqrt(2)/2)
+      \def\xmin{1.4142}
+      \def\ymin{0.7071}
+      \draw[densely dotted, thick, gray!70!black] (\xmin, 0) node[below=2pt] {$\sqrt{2}$} -- (\xmin, \ymin) -- (0, \ymin) node[left=2pt] {$\frac{\sqrt{2}}{2}$};
+      \node[circle, fill=red!85!black, inner sep=1.2pt] at (\xmin, \ymin) {};
 
-      % Minima point
-      \draw[dashed] ({sqrt(2)}, 0) -- ({sqrt(2)}, {2*sqrt(2)});
-      \draw[dashed] (0, {2*sqrt(2)}) -- ({sqrt(2)}, {2*sqrt(2)});
+      % y = sqrt(3)/2 の水平線 (x = sqrt(3)-1 と x = sqrt(3)+1 で交わる)
+      \def\xone{0.7321} % sqrt(3) - 1
+      \def\xtwo{2.7321} % sqrt(3) + 1
+      \def\yval{0.8660} % sqrt(3) / 2
+      \draw[densely dotted, thick, gray!70!black] (0, \yval) node[left=2pt] {$\frac{\sqrt{3}}{2}$} -- (\xtwo, \yval);
+      \draw[densely dotted, thick, gray!70!black] (\xone, \yval) -- (\xone, 0) node[below=2pt] {$\sqrt{3}-1$};
+      \draw[densely dotted, thick, gray!70!black] (\xtwo, \yval) -- (\xtwo, 0) node[below=2pt] {$\sqrt{3}+1$};
+      \node[circle, fill=blue!85!black, inner sep=1.1pt] at (\xone, \yval) {};
+      \node[circle, fill=blue!85!black, inner sep=1.1pt] at (\xtwo, \yval) {};
 
-      % Labels for x-axis points from the image
-      \node at ({sqrt(2)},0) [below] {$\sqrt{2}$}; % x_min = sqrt(2)
+      % x = sqrt(8 - 2*sqrt(3))
+      \def\xthree{2.1298}
+      \def\ythree{0.7672} % f(x3)
+      \draw[densely dotted, gray!60!black] (\xthree, 0) node[below=2pt, font=\scriptsize] {$\sqrt{8-2\sqrt{3}}$} -- (\xthree, \ythree);
+      \node[circle, fill=gray!70!black, inner sep=1.0pt] at (\xthree, \ythree) {};
 
-      % Label for y-axis points from the image
-      \node at (0, {2*sqrt(2)}) [left] {$2\sqrt{2}$}; % y_min = 2*sqrt(2)
-      \node at (0, {2*sqrt(3)}) [left] {$\sqrt{3}/2$}; % This seems like 3/2, but f(x) min is 2sqrt(2) approx 2.828, so 3/2 is below min.
-
-      % Specific labels from the image (very hard to read and precisely place without context)
-      % I will approximate their positions.
-      \node at ({sqrt(3)-1},0) [below] {$\sqrt{3}-1$};
-      \node at ({sqrt(8-2*sqrt(3))},-0.5) [below] {$\sqrt{8-2\sqrt{3}}$};
-      \node at ({sqrt(6)},0) [above] {$\sqrt{6}$};
-      \node at ({sqrt(3)+1},0) [below] {$\sqrt{3}+1$};
-      \draw[dashed] (0, {2*sqrt(3)}) -- ({sqrt(3)+1}, {2*sqrt(3)});
-
-      % Drawing dashed lines for the approximated specific x-values
-      \draw[dashed] ({sqrt(3)-1},0) -- ({sqrt(3)-1},{2*sqrt(3)});
-      \draw[dashed] ({sqrt(8-2*sqrt(3))},-0.5) -- ({sqrt(8-2*sqrt(3))},3.06883);
-      \draw[dashed] ({sqrt(6)},0) -- ({sqrt(6)},{sqrt(6)*4/3});
-      \draw[dashed] ({sqrt(3)+1},0) -- ({sqrt(3)+1},{2*sqrt(3)});
+      % x = sqrt(6) (千鳥配置で少し下へ)
+      \def\xfour{2.4495}
+      \def\yfour{0.8165} % sqrt(6)/3
+      \draw[densely dotted, gray!60!black] (\xfour, \yfour) -- (\xfour, -0.05) node[below=1pt, font=\scriptsize] {$\sqrt{6}$};
+      \node[circle, fill=gray!70!black, inner sep=1.0pt] at (\xfour, \yfour) {};
     \end{tikzpicture}
     \caption{$f(x)$の概形}
   \end{figure}
@@ -229,8 +232,8 @@
   だから，$f(x)$のグラフの増減から，
   \begin{align}
     \begin{dcases}
-      \max \left(\cos \angle \mathrm{APO}\right) = \dfrac{\sqrt{3}}{2} & \mathrm{PA} = \sqrt{3}-1         \\
-      \max \left(\cos \angle \mathrm{BPO}\right) =  \beta             & \mathrm{PB} = \sqrt{8-2\sqrt{3}}
+      \max \left(\cos \angle \mathrm{APO}\right) = \dfrac{\sqrt{3}}{2} & (\mathrm{PA} = \sqrt{3}-1)         \\
+      \max \left(\cos \angle \mathrm{BPO}\right) =  \beta             & (\mathrm{PB} = \sqrt{8-2\sqrt{3}})
     \end{dcases}
   \end{align}
   となる．ここで$\beta=f(\sqrt{8-2\sqrt{3}})$とおいた．$f(x)$のグラフの概形より$\sqrt{3}/2>\beta$だから，このときの$\max \theta$は\cref{eq:3}より$\cos \angle \mathrm{APO} = \dfrac{\sqrt{3}}{2}$すなわち$\max \theta=\pi/6$である．
@@ -248,11 +251,11 @@
   だから，$f(x)$のグラフの増減から，
   \begin{align}
     \begin{dcases}
-      \max \left(\cos \angle \mathrm{DPO}\right) = \dfrac{\sqrt{3}}{2} & \mathrm{PD} = \sqrt{3}+1 \\
-      \max \left(\cos \angle \mathrm{BPO}\right) = \dfrac{\sqrt{6}}{3} & \mathrm{PB} = \sqrt{6}
+      \max \left(\cos \angle \mathrm{DPO}\right) = \dfrac{\sqrt{3}}{2} & (\mathrm{PD} = \sqrt{3}+1) \\
+      \max \left(\cos \angle \mathrm{BPO}\right) = \dfrac{\sqrt{6}}{3} & (\mathrm{PB} = \sqrt{6})
     \end{dcases}
   \end{align}
-  となる．$\sqrt{3}/2>\sqrt{6}{3}$より，したがってこのときの$\max \theta$は\cref{eq:4}より$cos \angle \mathrm{DPO} = \dfrac{\sqrt{3}}{2}$すなわち$\max \theta=\pi/6$である．
+  となる．$\dfrac{\sqrt{3}}{2}>\dfrac{\sqrt{6}}{3}$より，したがってこのときの$\max \theta$は\cref{eq:4}より$cos \angle \mathrm{DPO} = \dfrac{\sqrt{3}}{2}$すなわち$\max \theta=\pi/6$である．
 
   \vspace{10pt}
   以上(i),(ii)から，どちらの場合も$\max \theta = \pi/6$である．したがって，求める最大値は$\displaystyle \max\theta = \dfrac{\pi}{6}$である．$\cdots$(答)
