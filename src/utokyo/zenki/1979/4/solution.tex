@@ -7,7 +7,7 @@ $O$を原点とする座標平面で考える．対称性から$P(1,0)$として
 $O$を原点とする半径$1$の円を$C_1$，$P$を中心とする半径$2/\sqrt{3}$の円を$C_2$とすると，これらの方程式は
 \begin{align}
   \begin{cases}
-    C_1:x^2+y^2=1
+    C_1:x^2+y^2=1 \\
     C_2:(x-1)^2+y^2=\dfrac{4}{3}
   \end{cases} \label{eq:1}
 \end{align}
@@ -27,8 +27,7 @@ $\angle OPQ=\theta$とおくと，$Q$，$R$の座標は
 \begin{align}
   \begin{cases}
     Q&=\Bigl(1-\dfrac{2}{\sqrt{3}}\cos\theta，\dfrac{2}{\sqrt{3}}\sin\theta\Bigr)，\\
-    R&=\Bigl(1-\dfrac{2}{\sqrt{3}}\cos(\theta-\pi/3)，
-    \dfrac{2}{\sqrt{3}}\sin(\theta-\pi/3)\Bigr)
+    R&=\Bigl(1-\dfrac{2}{\sqrt{3}}\cos(\theta-\pi/3), \dfrac{2}{\sqrt{3}}\sin(\theta-\pi/3)\Bigr)
   \end{cases} \label{eq:4}
 \end{align}
 となる．これらの様子を下図に示す．
@@ -48,10 +47,10 @@ $\angle OPQ=\theta$とおくと，$Q$，$R$の座標は
     \pgfmathsetmacro{\angA}{180.0 - \alphaDeg}   % A の偏角 ≈ 125.2644°
     \pgfmathsetmacro{\angB}{180.0 + \alphaDeg}   % B の偏角 ≈ 234.7356°
 
-    % 一般の \theta (例: \theta = 46° と設定，許容範囲 -\alpha+60° <= \theta <= \alpha を満たす)
-    \def\thetaDeg{46.0}
-    \pgfmathsetmacro{\angQ}{180.0 - \thetaDeg}                 % Q の偏角 (P基準): 134°
-    \pgfmathsetmacro{\angR}{180.0 - (\thetaDeg - 60.0)}        % R の偏角 (P基準): 194°
+    % 一般の \theta (代表例として最小値を与える \theta = 30° = pi/6 と設定)
+    \def\thetaDeg{30.0}
+    \pgfmathsetmacro{\angQ}{180.0 - \thetaDeg}                 % Q の偏角 (P基準): 150°
+    \pgfmathsetmacro{\angR}{180.0 - (\thetaDeg - 60.0)}        % R の偏角 (P基準): 210°
 
     % 主要座標の定義
     \coordinate (O) at (0, 0);
@@ -64,7 +63,7 @@ $\angle OPQ=\theta$とおくと，$Q$，$R$の座標は
     \coordinate (R) at ($ (P) + (\angR:\Rtwo) $);
 
     % --- 2. 単位円 C_1 内部に存在する許容弧 AB の強調 ---
-    \draw[line width=1.8pt, teal!80!black]
+    \draw[line width=2.0pt, teal!85!black]
     ([shift=(\angA:\Rtwo)]P) arc (\angA:\angB:\Rtwo);
 
     % --- 3. 円 C_1, C_2 の全体描画 ---
@@ -73,16 +72,16 @@ $\angle OPQ=\theta$とおくと，$Q$，$R$の座標は
     \node[gray!75!black, font=\footnotesize, above left] at (-0.75, 0.75) {$C_1: x^2+y^2=1$};
 
     % 円 C_2 (C_1 外部は薄い破線で表示)
-    \draw[thick, dashed, teal!50]
+    \draw[thick, dashed, teal!60!black]
     ([shift=(\angB:\Rtwo)]P) arc (\angB:{360+\angA}:\Rtwo);
     \node[teal!85!black, font=\footnotesize, right] at ($ (P) + (35:\Rtwo) $) {$C_2: (x-1)^2+y^2=\frac{4}{3}$};
 
     % --- 4. 座標軸 ---
-    \draw[->, thick] (-1.35, 0) -- (2.45, 0) node[right] {$x$};
-    \draw[->, thick] (0, -1.35) -- (0, 1.35) node[above] {$y$};
+    \draw[->, thick, gray!80!black] (-1.35, 0) -- (2.45, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.35) -- (0, 1.35) node[above] {$y$};
     \node[below left=2pt] at (O) {$O$};
 
-    % --- 5. 正三角形 PQR（一般の \theta のとき）---
+    % --- 5. 正三角形 PQR（\theta = \pi/6 のとき）---
     \fill[blue!15, opacity=0.7] (P) -- (Q) -- (R) -- cycle;
     \draw[very thick, blue!85!black] (P) -- (Q) -- (R) -- cycle;
 
@@ -96,8 +95,8 @@ $\angle OPQ=\theta$とおくと，$Q$，$R$の座標は
 
     % --- 6. 角度 \alpha, \theta の表示 ---
     % 線分 PA, PB
-    \draw[thick, gray!70] (P) -- (A);
-    \draw[thick, gray!70] (P) -- (B);
+    \draw[thick, gray!70!black] (P) -- (A);
+    \draw[thick, gray!70!black] (P) -- (B);
 
     % \angle APO = \alpha (P を中心とする負の x 軸からの限界角)
     \draw[thin, purple!80!black] ($ (P) + (180:0.52) $) arc (180:\angA:0.52);
@@ -108,22 +107,22 @@ $\angle OPQ=\theta$とおくと，$Q$，$R$の座標は
     \node[orange!90!black, font=\tiny] at ($ (P) + ({180 - 0.5*\thetaDeg}:0.78) $) {$\theta$};
 
     % --- 7. 交点 A, B の座標射影補助線 ---
-    \draw[dotted, gray!70] (A) -- (1.0/3.0, 0) -- (B);
-    \draw[dotted, gray!70] (A) -- (0, {2.0*sqrt(2)/3.0});
-    \node[circle, fill, inner sep=0.5pt] at (1.0/3.0, 0) {};
+    \draw[densely dotted, thick, gray!70!black] (A) -- (1.0/3.0, 0) -- (B);
+    \draw[densely dotted, thick, gray!70!black] (A) -- (0, {2.0*sqrt(2)/3.0});
+    \node[circle, fill, inner sep=0.8pt] at (1.0/3.0, 0) {};
     \node[below=2pt, font=\scriptsize] at (1.0/3.0, 0) {$\frac{1}{3}$};
     \node[left=2pt, font=\tiny] at (0, {2.0*sqrt(2)/3.0}) {$\frac{2\sqrt{2}}{3}$};
 
     % --- 8. 主要点のプロットとラベル ---
-    \node[circle, fill, inner sep=0.7pt] at (P) {}; \node[below right=1pt] at (P) {$P(1,0)$};
-    \node[circle, fill, inner sep=0.7pt] at (A) {}; \node[above=2pt] at (A) {$A\Bigl(\frac{1}{3}, \frac{2\sqrt{2}}{3}\Bigr)$};
-    \node[circle, fill, inner sep=0.7pt] at (B) {}; \node[below=2pt] at (B) {$B$};
-    \node[circle, fill=blue!85!black, inner sep=0.7pt] at (Q) {}; \node[blue!85!black, above left=1pt] at (Q) {$Q$};
-    \node[circle, fill=blue!85!black, inner sep=0.7pt] at (R) {}; \node[blue!85!black, below left=1pt] at (R) {$R$};
-    \node[circle, fill, inner sep=0.6pt] at (O) {};
+    \node[circle, fill, inner sep=1.0pt] at (P) {}; \node[below right=1pt] at (P) {$P(1,0)$};
+    \node[circle, fill, inner sep=1.0pt] at (A) {}; \node[above=3pt] at (A) {$A\Bigl(\frac{1}{3}, \frac{2\sqrt{2}}{3}\Bigr)$};
+    \node[circle, fill, inner sep=1.0pt] at (B) {}; \node[below=3pt] at (B) {$B$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (Q) {}; \node[blue!85!black, above left=1pt] at (Q) {$Q$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (R) {}; \node[blue!85!black, below left=1pt] at (R) {$R$};
+    \node[circle, fill, inner sep=1.0pt] at (O) {};
 
   \end{tikzpicture}
-  \caption{円 $C_1, C_2$ の許容弧 $AB$ と一般の角 $\theta$ における正三角形 $PQR$}
+  \caption{円 $C_1, C_2$ の許容弧 $AB$ と代表角 $\theta = \dfrac{\pi}{6}$ における正三角形 $PQR$}
   \label{fig:circle_C1_C2_general_theta}
 \end{figure}
 
