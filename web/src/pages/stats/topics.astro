@@ -1,0 +1,390 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { TOPIC_TAGS } from '../../lib/tags';
+import { buildBreadcrumbListJsonLd } from '../../utils/seo';
+import TopicDistributionChart from '../../components/TopicDistributionChart.astro';
+
+const allSolutions = await getCollection('solutions');
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// タグ付与問題と件数集計
+const solutionItems = allSolutions.filter((s) => s.data.type === 'solution');
+const taggedSolutions = solutionItems.filter((s) => (s.data.tags ?? []).length > 0);
+const taggedCount = taggedSolutions.length;
+
+const tagCounts = new Map<string, number>();
+for (const tag of TOPIC_TAGS) tagCounts.set(tag, 0);
+
+for (const s of taggedSolutions) {
+	for (const tag of s.data.tags ?? []) {
+		if (tagCounts.has(tag)) {
+			tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+		}
+	}
+}
+
+let totalOccurrences = 0;
+for (const count of tagCounts.values()) {
+	totalOccurrences += count;
+}
+
+// 最多分野の算出
+let maxTopic = '';
+let maxCount = 0;
+for (const [tag, count] of tagCounts.entries()) {
+	if (count > maxCount) {
+		maxCount = count;
+		maxTopic = tag;
+	}
+}
+const maxRatio = totalOccurrences > 0 ? ((maxCount / totalOccurrences) * 100).toFixed(1) : '0';
+
+const breadcrumbJsonLd = buildBreadcrumbListJsonLd([
+	{ name: 'トップ', url: new URL(`${baseUrl}/`, Astro.site).href },
+	{ name: '統計', url: new URL(`${baseUrl}/stats/`, Astro.site).href },
+	{ name: '分野別出題比率', url: new URL(`${baseUrl}/stats/topics/`, Astro.site).href },
+]);
+---
+
+<Layout
+	title="分野別 出題比率・統計データ"
+	description="大学入試数学アーカイブにおける全15分野の出題割合・構成比チャート。東大・京大・東工大の過去問における出題傾向と分布を可視化。"
+	jsonLd={breadcrumbJsonLd}
+>
+	<div class="topics-stats-page">
+		<nav class="breadcrumb" aria-label="パンくずリスト">
+			<a href={`${baseUrl}/`}>トップ</a>
+			<span class="sep" aria-hidden="true">/</span>
+			<a href={`${baseUrl}/stats/`}>統計</a>
+			<span class="sep" aria-hidden="true">/</span>
+			<span class="current">分野別出題比率</span>
+		</nav>
+
+		<header class="page-header">
+			<div class="header-content">
+				<h1>分野別 <span class="gradient-text">出題比率・統計</span></h1>
+				<p class="header-desc">
+					高校数学の全15分野（統制語彙タグ）に基づく過去問の出題構成比と頻度を分析した統計データです。
+				</p>
+			</div>
+			<div class="header-actions">
+				<a href={`${baseUrl}/stats/issues/`} class="header-link-btn">
+					Issue 統計を見る →
+				</a>
+			</div>
+		</header>
+
+		<!-- 指標カード -->
+		<section aria-label="分野統計基本指標" class="stats-summary-grid">
+			<div class="glass summary-card">
+				<div class="summary-label">分類トピック</div>
+				<div class="summary-val primary">
+					{TOPIC_TAGS.length}
+					<span class="summary-unit">分野</span>
+				</div>
+				<div class="summary-sub">全統制語彙タグ</div>
+			</div>
+
+			<div class="glass summary-card">
+				<div class="summary-label">タグ付与問題数</div>
+				<div class="summary-val emerald">
+					{taggedCount.toLocaleString('ja-JP')}
+					<span class="summary-unit">問</span>
+				</div>
+				<div class="summary-sub">全収録 {solutionItems.length} 問中（東工大先行）</div>
+			</div>
+
+			<div class="glass summary-card">
+				<div class="summary-label">延べタグ出現数</div>
+				<div class="summary-val amber">
+					{totalOccurrences.toLocaleString('ja-JP')}
+					<span class="summary-unit">件</span>
+				</div>
+				<div class="summary-sub">1問あたり平均 {(totalOccurrences / (taggedCount || 1)).toFixed(2)} 分野</div>
+			</div>
+
+			<div class="glass summary-card">
+				<div class="summary-label">最多出題分野</div>
+				<div class="summary-val rose">
+					{maxTopic}
+				</div>
+				<div class="summary-sub">
+					{maxCount}問（全体の {maxRatio}%）
+				</div>
+			</div>
+		</section>
+
+		<!-- メイングラフチャート -->
+		<section aria-label="出題分野の分布・比率チャート" class="chart-section">
+			<TopicDistributionChart solutions={allSolutions} baseUrl={baseUrl} />
+		</section>
+
+		<!-- 分野タグ一覧グリッドセクション -->
+		<section class="tags-directory-section" aria-labelledby="tags-directory-heading">
+			<div class="section-title-row">
+				<h2 id="tags-directory-heading" class="sec-title">分野タグ一覧・個別アーカイブ</h2>
+				<span class="sec-sub">各分野のタグをクリックすると、その分野の過去問リストへジャンプできます</span>
+			</div>
+
+			<div class="tag-cards-grid">
+				{TOPIC_TAGS.map((tag) => {
+					const count = tagCounts.get(tag) ?? 0;
+					const share = totalOccurrences > 0 ? ((count / totalOccurrences) * 100).toFixed(1) : '0';
+					return (
+						<a href={`${baseUrl}/tags/${encodeURIComponent(tag)}/`} class="glass tag-card">
+							<div class="tag-card-main">
+								<span class="tag-name">{tag}</span>
+								<span class="tag-share">{share}%</span>
+							</div>
+							<div class="tag-card-footer">
+								<span class="tag-count">{count}問 収録</span>
+								<span class="tag-arrow">→</span>
+							</div>
+						</a>
+					);
+				})}
+			</div>
+		</section>
+	</div>
+</Layout>
+
+<style>
+	.topics-stats-page {
+		max-width: 1060px;
+		margin: 0 auto;
+		padding: 1rem 0.5rem 3.5rem;
+	}
+
+	.breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.9rem;
+		color: var(--text-muted);
+		margin-bottom: 1.75rem;
+	}
+	.breadcrumb a {
+		color: var(--primary);
+		text-decoration: none;
+	}
+	.breadcrumb a:hover {
+		text-decoration: underline;
+	}
+	.breadcrumb .current {
+		color: var(--text-main);
+		font-weight: 600;
+	}
+
+	.page-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		gap: 1.5rem;
+		flex-wrap: wrap;
+		margin-bottom: 2rem;
+	}
+	.header-content h1 {
+		font-size: clamp(1.8rem, 4vw, 2.5rem);
+		font-weight: 800;
+		line-height: 1.25;
+		margin: 0 0 0.5rem;
+	}
+	.gradient-text {
+		background: linear-gradient(135deg, #60a5fa 0%, #34d399 50%, #a78bfa 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+	.header-desc {
+		color: var(--text-muted);
+		font-size: 1rem;
+		margin: 0;
+		max-width: 640px;
+		line-height: 1.6;
+	}
+	.header-link-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		font-size: 0.88rem;
+		font-weight: 700;
+		padding: 0.6rem 1.1rem;
+		border-radius: 10px;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		color: var(--primary);
+		text-decoration: none;
+		transition: all 0.2s ease;
+		white-space: nowrap;
+	}
+	.header-link-btn:hover {
+		background: rgba(96, 165, 250, 0.12);
+		border-color: rgba(96, 165, 250, 0.35);
+		transform: translateY(-2px);
+	}
+
+	/* サマリー指標グリッド */
+	.stats-summary-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1rem;
+		margin-bottom: 2.25rem;
+	}
+	.summary-card {
+		padding: 1.15rem 1.25rem;
+		min-width: 0;
+	}
+	.summary-label {
+		font-size: 0.82rem;
+		color: var(--text-muted);
+		font-weight: 500;
+	}
+	.summary-val {
+		font-size: 1.85rem;
+		font-weight: 800;
+		font-variant-numeric: tabular-nums;
+		line-height: 1.2;
+		margin-top: 0.25rem;
+	}
+	.summary-val.primary {
+		color: var(--primary);
+	}
+	.summary-val.emerald {
+		color: var(--secondary);
+	}
+	.summary-val.amber {
+		color: #fbbf24;
+	}
+	.summary-val.rose {
+		color: #fb7185;
+		font-size: 1.55rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.summary-unit {
+		font-size: 0.95rem;
+		font-weight: 600;
+		margin-left: 0.15rem;
+	}
+	.summary-sub {
+		font-size: 0.76rem;
+		color: var(--text-subtle);
+		margin-top: 0.3rem;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.chart-section {
+		margin-bottom: 2.5rem;
+	}
+
+	/* 分野タググリッド */
+	.tags-directory-section {
+		margin-top: 2rem;
+	}
+	.section-title-row {
+		margin-bottom: 1.2rem;
+	}
+	.sec-title {
+		font-size: 1.35rem;
+		font-weight: 700;
+		margin: 0 0 0.3rem;
+		color: var(--text-main);
+	}
+	.sec-sub {
+		font-size: 0.85rem;
+		color: var(--text-muted);
+	}
+
+	.tag-cards-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+		gap: 0.85rem;
+	}
+	.tag-card {
+		padding: 1rem 1.1rem;
+		border-radius: 12px;
+		text-decoration: none;
+		color: inherit;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 0.8rem;
+		background: rgba(30, 41, 59, 0.35);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+	.tag-card:hover {
+		transform: translateY(-3px);
+		border-color: rgba(96, 165, 250, 0.4);
+		background: rgba(30, 41, 59, 0.6);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+	}
+	.tag-card-main {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0.5rem;
+	}
+	.tag-name {
+		font-weight: 700;
+		font-size: 0.95rem;
+		color: var(--text-main);
+	}
+	.tag-share {
+		font-size: 0.8rem;
+		font-weight: 600;
+		color: var(--primary);
+		font-variant-numeric: tabular-nums;
+	}
+	.tag-card-footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 0.78rem;
+		color: var(--text-subtle);
+		border-top: 1px solid rgba(255, 255, 255, 0.05);
+		padding-top: 0.5rem;
+	}
+	.tag-count {
+		font-variant-numeric: tabular-nums;
+	}
+	.tag-arrow {
+		transition: transform 0.2s ease;
+	}
+	.tag-card:hover .tag-arrow {
+		transform: translateX(3px);
+		color: var(--primary);
+	}
+
+	@media (max-width: 860px) {
+		.stats-summary-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 640px) {
+		.topics-stats-page {
+			padding: 0.5rem 0.25rem 2.5rem;
+		}
+		.stats-summary-grid {
+			gap: 0.7rem;
+		}
+		.summary-card {
+			padding: 0.9rem 0.95rem;
+		}
+		.summary-val {
+			font-size: 1.45rem;
+		}
+		.summary-val.rose {
+			font-size: 1.25rem;
+		}
+		.tag-cards-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 0.6rem;
+		}
+		.tag-card {
+			padding: 0.85rem 0.9rem;
+		}
+	}
+</style>

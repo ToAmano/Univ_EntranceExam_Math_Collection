@@ -1,0 +1,1240 @@
+---
+import { TOPIC_TAGS } from '../lib/tags';
+
+export interface Props {
+	solutions: any[];
+	baseUrl: string;
+}
+
+const { solutions, baseUrl } = Astro.props;
+
+// 6区分メタデータ定義
+const CATEGORIES = [
+	{ id: 'all', label: '全体', univ: 'all', short: '全体' },
+	{ id: 'utokyo-zenki', label: '東大 前期', univ: 'utokyo', short: '東大前' },
+	{ id: 'utokyo-kouki', label: '東大 後期', univ: 'utokyo', short: '東大後' },
+	{ id: 'ukyoto-zenki', label: '京大 前期', univ: 'ukyoto', short: '京大前' },
+	{ id: 'ukyoto-kouki', label: '京大 後期', univ: 'ukyoto', short: '京大後' },
+	{ id: 'titech-zenki', label: '東工大 前期', univ: 'titech', short: '東工前' },
+	{ id: 'titech-kouki', label: '東工大 後期', univ: 'titech', short: '東工後' },
+] as const;
+
+// 15分野の識別カラー
+const TOPIC_COLORS: Record<string, { color: string; border: string; bg: string }> = {
+	'積分': { color: '#3b82f6', border: '#60a5fa', bg: 'rgba(59, 130, 246, 0.16)' },
+	'方程式・不等式': { color: '#8b5cf6', border: '#a78bfa', bg: 'rgba(139, 92, 246, 0.16)' },
+	'微分': { color: '#06b6d4', border: '#22d3ee', bg: 'rgba(6, 182, 212, 0.16)' },
+	'数列': { color: '#10b981', border: '#34d399', bg: 'rgba(16, 185, 129, 0.16)' },
+	'極限': { color: '#0284c7', border: '#38bdf8', bg: 'rgba(2, 132, 199, 0.16)' },
+	'整数': { color: '#a855f7', border: '#c084fc', bg: 'rgba(168, 85, 247, 0.16)' },
+	'三角関数': { color: '#f59e0b', border: '#fbbf24', bg: 'rgba(245, 158, 11, 0.16)' },
+	'平面図形': { color: '#ec4899', border: '#f472b6', bg: 'rgba(236, 72, 153, 0.16)' },
+	'図形と方程式': { color: '#f97316', border: '#fb923c', bg: 'rgba(249, 115, 22, 0.15)' },
+	'場合の数・確率': { color: '#14b8a6', border: '#2dd4bf', bg: 'rgba(20, 184, 166, 0.16)' },
+	'空間図形': { color: '#f43f5e', border: '#fb7185', bg: 'rgba(244, 63, 94, 0.16)' },
+	'指数・対数': { color: '#eab308', border: '#fde047', bg: 'rgba(234, 179, 8, 0.16)' },
+	'行列・一次変換': { color: '#6366f1', border: '#818cf8', bg: 'rgba(99, 102, 241, 0.16)' },
+	'ベクトル': { color: '#84cc16', border: '#a3e635', bg: 'rgba(132, 204, 22, 0.16)' },
+	'複素数平面': { color: '#d946ef', border: '#e879f9', bg: 'rgba(217, 70, 239, 0.16)' },
+};
+
+// 幾何定数
+const radius = 100;
+const strokeWidth = 34;
+const circumference = 2 * Math.PI * radius; // 628.318...
+const gapLength = 2.5;
+
+// 各カテゴリーごとの集計データオブジェクトを作成
+const categoryStats: Record<string, any> = {};
+
+for (const cat of CATEGORIES) {
+	categoryStats[cat.id] = {
+		id: cat.id,
+		label: cat.label,
+		totalQuestions: 0,
+		taggedQuestions: 0,
+		totalOccurrences: 0,
+		tagCounts: {} as Record<string, number>,
+	};
+	for (const tag of TOPIC_TAGS) {
+		categoryStats[cat.id].tagCounts[tag] = 0;
+	}
+}
+
+// solutions を走査して全区分を集計
+const solutionItems = solutions.filter((s) => s.data.type === 'solution');
+
+for (const s of solutionItems) {
+	// ファイル名または slug から区分判定
+	const slug = s.slug || '';
+	let catId: string | null = null;
+	if (slug.startsWith('utokyo-zenki')) catId = 'utokyo-zenki';
+	else if (slug.startsWith('utokyo-kouki')) catId = 'utokyo-kouki';
+	else if (slug.startsWith('ukyoto-zenki')) catId = 'ukyoto-zenki';
+	else if (slug.startsWith('ukyoto-kouki')) catId = 'ukyoto-kouki';
+	else if (slug.startsWith('titech-zenki')) catId = 'titech-zenki';
+	else if (slug.startsWith('titech-kouki')) catId = 'titech-kouki';
+
+	categoryStats['all'].totalQuestions++;
+	if (catId && categoryStats[catId]) {
+		categoryStats[catId].totalQuestions++;
+	}
+
+	const tags = s.data.tags ?? [];
+	if (tags.length > 0) {
+		categoryStats['all'].taggedQuestions++;
+		if (catId && categoryStats[catId]) {
+			categoryStats[catId].taggedQuestions++;
+		}
+
+		for (const tag of tags) {
+			if (categoryStats['all'].tagCounts[tag] !== undefined) {
+				categoryStats['all'].tagCounts[tag]++;
+				categoryStats['all'].totalOccurrences++;
+			}
+			if (catId && categoryStats[catId]?.tagCounts[tag] !== undefined) {
+				categoryStats[catId].tagCounts[tag]++;
+				categoryStats[catId].totalOccurrences++;
+			}
+		}
+	}
+}
+
+// 各区分ごとのランキング・ドーナツセグメントの事前計算
+const categoryDataset: Record<string, any> = {};
+
+for (const cat of CATEGORIES) {
+	const cData = categoryStats[cat.id];
+	const hasTags = cData.taggedQuestions > 0;
+
+	const ranked = TOPIC_TAGS.map((tag) => {
+		const count = cData.tagCounts[tag] ?? 0;
+		const share = cData.totalOccurrences > 0 ? (count / cData.totalOccurrences) * 100 : 0;
+		const rate = cData.taggedQuestions > 0 ? (count / cData.taggedQuestions) * 100 : 0;
+		return {
+			tag,
+			count,
+			share,
+			rate,
+			color: TOPIC_COLORS[tag]?.color ?? '#60a5fa',
+			border: TOPIC_COLORS[tag]?.border ?? '#93c5fd',
+		};
+	}).sort((a, b) => b.count - a.count);
+
+	let accumulatedOffset = 0;
+	const segments = ranked.map((item) => {
+		const rawLength = (item.share / 100) * circumference;
+		const dashLength = item.count > 0 ? Math.max(0, rawLength - gapLength) : 0;
+		const dashOffset = -accumulatedOffset;
+		if (item.count > 0) {
+			accumulatedOffset += rawLength;
+		}
+		return {
+			tag: item.tag,
+			count: item.count,
+			share: item.share,
+			rate: item.rate,
+			color: item.color,
+			dashLength,
+			dashOffset,
+		};
+	});
+
+	categoryDataset[cat.id] = {
+		id: cat.id,
+		label: cat.label,
+		hasTags,
+		totalQuestions: cData.totalQuestions,
+		taggedQuestions: cData.taggedQuestions,
+		totalOccurrences: cData.totalOccurrences,
+		ranked,
+		segments,
+	};
+}
+
+// 初期表示は「全体（all）」
+const initialCat = categoryDataset['all'];
+---
+
+<div class="topic-chart-card glass" data-topic-chart-root>
+	<!-- 上部ヘッダーと区分切り替えタブ -->
+	<div class="chart-top-bar">
+		<div class="header-main">
+			<div class="badge-row">
+				<span class="chart-pill badge-primary">📊 出題分野の分布・比率</span>
+				<span class="chart-pill badge-meta" data-cat-meta-pill>
+					{initialCat.label} : タグ付与 {initialCat.taggedQuestions}問 / 延べ {initialCat.totalOccurrences}件
+				</span>
+			</div>
+			<h2 class="chart-title">全体・区分別 分野の割合</h2>
+			<p class="chart-desc">
+				高校数学の全15分野の出題シェアを可視化しています。上部タブで「大学・試験区分」を切り替えて出題傾向を比較できます。
+			</p>
+		</div>
+
+		<!-- 表示モード切り替え（シェア % ⇔ 出題率 %） -->
+		<div class="mode-toggle-group" role="radiogroup" aria-label="グラフ数値の表示形式">
+			<button
+				type="button"
+				class="mode-btn active"
+				data-mode="share"
+				role="radio"
+				aria-checked="true"
+			>
+				構成比（シェア %）
+			</button>
+			<button
+				type="button"
+				class="mode-btn"
+				data-mode="rate"
+				role="radio"
+				aria-checked="false"
+			>
+				出題率（問題比 %）
+			</button>
+		</div>
+	</div>
+
+	<!-- 大学・試験区分タブストリップ（全体 ＋ 6区分） -->
+	<div class="cat-tab-strip" role="tablist" aria-label="大学・試験区分の切り替え">
+		{CATEGORIES.map((cat, idx) => {
+			const ds = categoryDataset[cat.id];
+			return (
+				<button
+					type="button"
+					role="tab"
+					class:list={['cat-tab-btn', { active: idx === 0 }]}
+					data-cat-tab={cat.id}
+					aria-selected={idx === 0 ? 'true' : 'false'}
+				>
+					<span class="tab-label">{cat.label}</span>
+					{ds.hasTags ? (
+						<span class="tab-badge has-data">{ds.taggedQuestions}問</span>
+					) : (
+						<span class="tab-badge no-data">準備中</span>
+					)}
+				</button>
+			);
+		})}
+	</div>
+
+	<!-- メインチャート描画領域 -->
+	<div class="chart-body" data-chart-body>
+		<!-- グラフ表示コンテナ（データあり時） -->
+		<div class="chart-content" data-chart-active-view>
+			<!-- 左側：SVG インタラクティブ・ドーナツチャート -->
+			<div class="donut-container">
+				<div class="donut-wrapper">
+					<svg
+						viewBox="0 0 280 280"
+						class="donut-svg"
+						aria-label="分野別構成比ドーナツグラフ"
+						role="img"
+					>
+						<!-- 背景トラック -->
+						<circle
+							cx="140"
+							cy="140"
+							r={radius}
+							fill="transparent"
+							stroke="rgba(255, 255, 255, 0.05)"
+							stroke-width={strokeWidth}
+						/>
+
+						<!-- 各分野のセグメント群 -->
+						<g data-segments-container>
+							{initialCat.segments.map((seg: any) => (
+								<circle
+									class="donut-segment"
+									cx="140"
+									cy="140"
+									r={radius}
+									fill="transparent"
+									stroke={seg.color}
+									stroke-width={strokeWidth}
+									stroke-dasharray={`${seg.dashLength} ${circumference - seg.dashLength}`}
+									stroke-dashoffset={seg.dashOffset}
+									stroke-linecap="round"
+									transform="rotate(-90 140 140)"
+									data-topic-seg={seg.tag}
+									data-count={seg.count}
+									data-share={seg.share.toFixed(1)}
+									data-rate={seg.rate.toFixed(1)}
+									data-color={seg.color}
+									tabindex="0"
+									role="button"
+									aria-label={`${seg.tag}: ${seg.count}問 (${seg.share.toFixed(1)}%)`}
+								/>
+							))}
+						</g>
+					</svg>
+
+					<!-- ドーナツ中央ラベル -->
+					<div class="donut-center" data-donut-center>
+						<div class="center-meta" data-center-meta>{initialCat.label}</div>
+						<div class="center-title" data-center-title>出題分野</div>
+						<div class="center-value" data-center-value>
+							<span class="val-num" data-val-num>{initialCat.totalOccurrences}</span>
+							<span class="val-unit" data-val-unit>延べ件数</span>
+						</div>
+						<div class="center-sub" data-center-sub>タグ付与 {initialCat.taggedQuestions} 問中</div>
+					</div>
+				</div>
+
+				<div class="donut-hint">
+					<span class="hint-icon">💡</span> スライスまたは右のバーに触れると詳細を表示
+				</div>
+			</div>
+
+			<!-- 右側：ランク別プログレスバー一覧 -->
+			<div class="ranked-list-container">
+				<div class="list-head">
+					<span class="lh-rank">順位</span>
+					<span class="lh-name">分野名</span>
+					<span class="lh-bar">分布グラフ</span>
+					<span class="lh-stat" data-lh-stat>構成比</span>
+					<span class="lh-count">出題数</span>
+				</div>
+
+				<div class="ranked-list" role="list" data-ranked-list>
+					{initialCat.ranked.map((item: any, idx: number) => {
+						const href = `${baseUrl}/tags/${encodeURIComponent(item.tag)}/`;
+						return (
+							<a
+								href={href}
+								class="ranked-item"
+								data-topic-item={item.tag}
+								data-count={item.count}
+								data-share={item.share.toFixed(1)}
+								data-rate={item.rate.toFixed(1)}
+								data-color={item.color}
+								role="listitem"
+								title={`${item.tag}の過去問一覧を開く`}
+							>
+								<span class="rank-badge" class:list={[{ 'top-3': idx < 3 && item.count > 0 }]}>
+									{idx + 1}
+								</span>
+
+								<div class="item-name-cell">
+									<span class="color-dot" style={`background: ${item.color};`}></span>
+									<span class="item-tag">{item.tag}</span>
+								</div>
+
+								<div class="item-bar-cell">
+									<div class="bar-track">
+										<div
+											class="bar-fill"
+											style={`width: ${item.share}%; background: linear-gradient(90deg, ${item.color}, ${item.border});`}
+											data-bar-fill
+										></div>
+									</div>
+								</div>
+
+								<div class="item-stat-cell" data-item-stat>
+									<span class="stat-num">{item.share.toFixed(1)}</span>
+									<span class="stat-unit">%</span>
+								</div>
+
+								<div class="item-count-cell">
+									<span class="count-num">{item.count}</span>
+									<span class="count-unit">問</span>
+								</div>
+
+								<span class="item-arrow">→</span>
+							</a>
+						);
+					})}
+				</div>
+			</div>
+		</div>
+
+		<!-- タグ未付与区分のプレースホルダー案内カード -->
+		<div class="no-data-card" data-no-data-card style="display: none;">
+			<div class="no-data-icon">🏷️</div>
+			<h3 class="no-data-title" data-no-data-title>タグ付与データを準備中です</h3>
+			<p class="no-data-desc" data-no-data-desc>
+				この区分の過去問への統制語彙タグ付与は現在順次拡大・整備中です。タグ付け完了後に自動で構成比グラフと出題ランキングが表示されます。
+			</p>
+			<div class="no-data-meta" data-no-data-meta>
+				収録過去問数: — 問
+			</div>
+		</div>
+	</div>
+
+	<!-- フッター注釈 -->
+	<div class="chart-footer">
+		<div class="footer-note">
+			<span class="note-icon">ℹ️</span>
+			<span data-footer-note-text>
+				現在、東京工業大学（前期269問・後期43問）で全問に統制語彙タグが付与されています（東大・京大は現在順次拡大中）。総合問題など1問に複数分野が含まれる場合は複数タグが計上されます。
+			</span>
+		</div>
+		<a href={`${baseUrl}/tags/`} class="tags-portal-link">
+			全分野タグ一覧を見る <span class="arrow">→</span>
+		</a>
+	</div>
+</div>
+
+<!-- クライアント用事前計算データ埋め込み -->
+<script define:vars={{ categoryDataset, circumference, gapLength, baseUrl }}>
+	window.__TOPIC_CHART_DATASET__ = categoryDataset;
+	window.__TOPIC_CIRCUMFERENCE__ = circumference;
+	window.__TOPIC_GAP_LENGTH__ = gapLength;
+	window.__TOPIC_BASE_URL__ = baseUrl;
+</script>
+
+<script>
+	function setupTopicChartWithTabs() {
+		const root = document.querySelector('[data-topic-chart-root]');
+		if (!root) return;
+
+		const dataset = (window as any).__TOPIC_CHART_DATASET__;
+		const circumference = (window as any).__TOPIC_CIRCUMFERENCE__ || 628.318;
+		const baseUrl = (window as any).__TOPIC_BASE_URL__ || '';
+
+		if (!dataset) return;
+
+		const catTabs = root.querySelectorAll<HTMLButtonElement>('[data-cat-tab]');
+		const modeBtns = root.querySelectorAll<HTMLButtonElement>('.mode-btn');
+		const metaPill = root.querySelector<HTMLElement>('[data-cat-meta-pill]');
+		const chartActiveView = root.querySelector<HTMLElement>('[data-chart-active-view]');
+		const noDataCard = root.querySelector<HTMLElement>('[data-no-data-card]');
+		const noDataTitle = root.querySelector<HTMLElement>('[data-no-data-title]');
+		const noDataMeta = root.querySelector<HTMLElement>('[data-no-data-meta]');
+
+		const segmentsContainer = root.querySelector<SVGGElement>('[data-segments-container]');
+		const rankedListContainer = root.querySelector<HTMLElement>('[data-ranked-list]');
+		const statHeader = root.querySelector<HTMLElement>('[data-lh-stat]');
+
+		const centerMeta = root.querySelector<HTMLElement>('[data-center-meta]');
+		const centerTitle = root.querySelector<HTMLElement>('[data-center-title]');
+		const centerValue = root.querySelector<HTMLElement>('[data-center-value]');
+		const centerSub = root.querySelector<HTMLElement>('[data-center-sub]');
+
+		let currentCatId = 'all';
+		let currentMode: 'share' | 'rate' = 'share';
+
+		// インタラクションイベントのバインド
+		function bindInteractions() {
+			const donutSegments = root.querySelectorAll<SVGCircleElement>('[data-topic-seg]');
+			const listItems = root.querySelectorAll<HTMLElement>('[data-topic-item]');
+
+			const defaultMeta = dataset[currentCatId]?.label || '全体';
+			const defaultTitle = '出題分野';
+			const defaultValNum = dataset[currentCatId]?.totalOccurrences || 0;
+			const defaultTagged = dataset[currentCatId]?.taggedQuestions || 0;
+
+			function highlight(topic: string | null) {
+				if (!topic) {
+					donutSegments.forEach((s) => s.classList.remove('dimmed', 'highlighted'));
+					listItems.forEach((it) => it.classList.remove('dimmed', 'highlighted'));
+					if (centerMeta) centerMeta.textContent = defaultMeta;
+					if (centerTitle) {
+						centerTitle.textContent = defaultTitle;
+						centerTitle.style.color = '';
+					}
+					if (centerValue) {
+						centerValue.innerHTML = `<span class="val-num">${defaultValNum}</span><span class="val-unit">延べ件数</span>`;
+					}
+					if (centerSub) centerSub.textContent = `タグ付与 ${defaultTagged} 問中`;
+					return;
+				}
+
+				let targetData: any = null;
+				donutSegments.forEach((s) => {
+					const match = s.dataset.topicSeg === topic;
+					s.classList.toggle('highlighted', match);
+					s.classList.toggle('dimmed', !match);
+					if (match) {
+						targetData = {
+							count: s.dataset.count || '0',
+							share: s.dataset.share || '0',
+							rate: s.dataset.rate || '0',
+							color: s.dataset.color || '#60a5fa',
+						};
+					}
+				});
+
+				listItems.forEach((it) => {
+					const match = it.dataset.topicItem === topic;
+					it.classList.toggle('highlighted', match);
+					it.classList.toggle('dimmed', !match);
+					if (match && !targetData) {
+						targetData = {
+							count: it.dataset.count || '0',
+							share: it.dataset.share || '0',
+							rate: it.dataset.rate || '0',
+							color: it.dataset.color || '#60a5fa',
+						};
+					}
+				});
+
+				if (targetData) {
+					const val = currentMode === 'share' ? targetData.share : targetData.rate;
+					const unit = currentMode === 'share' ? '%（シェア）' : '%（出題率）';
+					if (centerMeta) centerMeta.textContent = '分野詳細';
+					if (centerTitle) {
+						centerTitle.textContent = topic;
+						centerTitle.style.color = targetData.color;
+					}
+					if (centerValue) {
+						centerValue.innerHTML = `<span class="val-num" style="color: ${targetData.color};">${val}</span><span class="val-unit">${unit}</span>`;
+					}
+					if (centerSub) centerSub.textContent = `収録過去問 ${targetData.count} 問`;
+				}
+			}
+
+			donutSegments.forEach((s) => {
+				const topic = s.dataset.topicSeg;
+				if (!topic) return;
+				s.addEventListener('mouseenter', () => highlight(topic));
+				s.addEventListener('focus', () => highlight(topic));
+				s.addEventListener('mouseleave', () => highlight(null));
+				s.addEventListener('blur', () => highlight(null));
+				s.addEventListener('click', () => {
+					const matching = root.querySelector<HTMLAnchorElement>(`[data-topic-item="${topic}"]`);
+					if (matching) matching.click();
+				});
+			});
+
+			listItems.forEach((it) => {
+				const topic = it.dataset.topicItem;
+				if (!topic) return;
+				it.addEventListener('mouseenter', () => highlight(topic));
+				it.addEventListener('focus', () => highlight(topic));
+				it.addEventListener('mouseleave', () => highlight(null));
+				it.addEventListener('blur', () => highlight(null));
+			});
+		}
+
+		// カテゴリー切り替え描画
+		function renderCategory(catId: string) {
+			currentCatId = catId;
+			const data = dataset[catId];
+			if (!data) return;
+
+			// タブのアクティブ化
+			catTabs.forEach((tab) => {
+				const isActive = tab.dataset.catTab === catId;
+				tab.classList.toggle('active', isActive);
+				tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+			});
+
+			// ヘッダーメタピルの更新
+			if (metaPill) {
+				metaPill.textContent = data.hasTags
+					? `${data.label} : タグ付与 ${data.taggedQuestions.toLocaleString('ja-JP')}問 / 延べ ${data.totalOccurrences.toLocaleString('ja-JP')}件`
+					: `${data.label} : 収録 ${data.totalQuestions.toLocaleString('ja-JP')}問（タグ準備中）`;
+			}
+
+			// データ有無による表示切り替え
+			if (!data.hasTags) {
+				if (chartActiveView) chartActiveView.style.display = 'none';
+				if (noDataCard) {
+					noDataCard.style.display = 'flex';
+					if (noDataTitle) noDataTitle.textContent = `${data.label} のタグ付与データを準備中です`;
+					if (noDataMeta) noDataMeta.textContent = `総収録問題数: ${data.totalQuestions} 問（東大・京大は順次拡大中）`;
+				}
+				return;
+			}
+
+			if (chartActiveView) chartActiveView.style.display = 'grid';
+			if (noDataCard) noDataCard.style.display = 'none';
+
+			// ドーナツ中央ラベルのリセット
+			if (centerMeta) centerMeta.textContent = data.label;
+			if (centerTitle) {
+				centerTitle.textContent = '出題分野';
+				centerTitle.style.color = '';
+			}
+			if (centerValue) {
+				centerValue.innerHTML = `<span class="val-num">${data.totalOccurrences}</span><span class="val-unit">延べ件数</span>`;
+			}
+			if (centerSub) centerSub.textContent = `タグ付与 ${data.taggedQuestions} 問中`;
+
+			// ドーナツ SVG セグメントの再構築
+			if (segmentsContainer) {
+				segmentsContainer.innerHTML = data.segments
+					.map((seg: any) => {
+						if (seg.count <= 0) return '';
+						return `<circle
+							class="donut-segment"
+							cx="140"
+							cy="140"
+							r="${radius}"
+							fill="transparent"
+							stroke="${seg.color}"
+							stroke-width="${strokeWidth}"
+							stroke-dasharray="${seg.dashLength} ${circumference - seg.dashLength}"
+							stroke-dashoffset="${seg.dashOffset}"
+							stroke-linecap="round"
+							transform="rotate(-90 140 140)"
+							data-topic-seg="${seg.tag}"
+							data-count="${seg.count}"
+							data-share="${seg.share.toFixed(1)}"
+							data-rate="${seg.rate.toFixed(1)}"
+							data-color="${seg.color}"
+							tabindex="0"
+							role="button"
+							aria-label="${seg.tag}: ${seg.count}問 (${seg.share.toFixed(1)}%)"
+						/>`;
+					})
+					.join('');
+			}
+
+			// リストの再構築
+			if (rankedListContainer) {
+				rankedListContainer.innerHTML = data.ranked
+					.map((item: any, idx: number) => {
+						const href = `${baseUrl}/tags/${encodeURIComponent(item.tag)}/`;
+						const displayVal = currentMode === 'share' ? item.share.toFixed(1) : item.rate.toFixed(1);
+						const barWidth = currentMode === 'share' ? item.share : item.rate;
+						const top3Class = idx < 3 && item.count > 0 ? 'top-3' : '';
+
+						return `
+							<a
+								href="${href}"
+								class="ranked-item"
+								data-topic-item="${item.tag}"
+								data-count="${item.count}"
+								data-share="${item.share.toFixed(1)}"
+								data-rate="${item.rate.toFixed(1)}"
+								data-color="${item.color}"
+								role="listitem"
+								title="${item.tag}の過去問一覧を開く"
+							>
+								<span class="rank-badge ${top3Class}">
+									${idx + 1}
+								</span>
+
+								<div class="item-name-cell">
+									<span class="color-dot" style="background: ${item.color};"></span>
+									<span class="item-tag">${item.tag}</span>
+								</div>
+
+								<div class="item-bar-cell">
+									<div class="bar-track">
+										<div
+											class="bar-fill"
+											style="width: ${barWidth}%; background: linear-gradient(90deg, ${item.color}, ${item.border});"
+											data-bar-fill
+										></div>
+									</div>
+								</div>
+
+								<div class="item-stat-cell" data-item-stat>
+									<span class="stat-num">${displayVal}</span>
+									<span class="stat-unit">%</span>
+								</div>
+
+								<div class="item-count-cell">
+									<span class="count-num">${item.count}</span>
+									<span class="count-unit">問</span>
+								</div>
+
+								<span class="item-arrow">→</span>
+							</a>
+						`;
+					})
+					.join('');
+			}
+
+			bindInteractions();
+		}
+
+		// タブクリックイベント
+		catTabs.forEach((tab) => {
+			tab.addEventListener('click', () => {
+				const catId = tab.dataset.catTab;
+				if (catId && catId !== currentCatId) {
+					renderCategory(catId);
+				}
+			});
+		});
+
+		// モード切り替え（シェア % ⇔ 出題率 %）
+		modeBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const mode = btn.dataset.mode as 'share' | 'rate';
+				if (!mode || mode === currentMode) return;
+
+				currentMode = mode;
+				modeBtns.forEach((b) => {
+					const isActive = b === btn;
+					b.classList.toggle('active', isActive);
+					b.setAttribute('aria-checked', isActive ? 'true' : 'false');
+				});
+
+				if (statHeader) {
+					statHeader.textContent = currentMode === 'share' ? '構成比' : '出題率';
+				}
+
+				// リスト内バーと数値の更新
+				const items = root.querySelectorAll<HTMLElement>('[data-topic-item]');
+				items.forEach((item) => {
+					const share = item.dataset.share || '0';
+					const rate = item.dataset.rate || '0';
+					const val = currentMode === 'share' ? share : rate;
+
+					const bar = item.querySelector<HTMLElement>('[data-bar-fill]');
+					if (bar) {
+						bar.style.width = `${Math.min(100, Math.max(0, parseFloat(val)))}%`;
+					}
+
+					const statEl = item.querySelector<HTMLElement>('[data-item-stat]');
+					if (statEl) {
+						statEl.innerHTML = `<span class="stat-num">${val}</span><span class="stat-unit">%</span>`;
+					}
+				});
+			});
+		});
+
+		// 初回バインド
+		bindInteractions();
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', setupTopicChartWithTabs);
+	} else {
+		setupTopicChartWithTabs();
+	}
+	document.addEventListener('astro:page-load', setupTopicChartWithTabs);
+</script>
+
+<style>
+	.topic-chart-card {
+		padding: 2rem 2.25rem;
+		border-radius: 22px;
+		margin-bottom: 2.5rem;
+		background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.45);
+	}
+
+	.chart-top-bar {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 1.5rem;
+		flex-wrap: wrap;
+		margin-bottom: 1.5rem;
+		padding-bottom: 1.25rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.badge-row {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		flex-wrap: wrap;
+		margin-bottom: 0.6rem;
+	}
+	.chart-pill {
+		display: inline-block;
+		font-size: 0.78rem;
+		font-weight: 700;
+		padding: 0.25rem 0.7rem;
+		border-radius: 999px;
+	}
+	.badge-primary {
+		background: rgba(96, 165, 250, 0.18);
+		color: #93c5fd;
+		border: 1px solid rgba(96, 165, 250, 0.35);
+	}
+	.badge-meta {
+		background: rgba(255, 255, 255, 0.06);
+		color: var(--text-muted);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.chart-title {
+		font-size: 1.5rem;
+		font-weight: 800;
+		margin: 0 0 0.4rem;
+		color: var(--text-main);
+	}
+	.chart-desc {
+		font-size: 0.92rem;
+		color: var(--text-muted);
+		margin: 0;
+		max-width: 640px;
+		line-height: 1.6;
+	}
+
+	/* 表示モード切り替えトグル */
+	.mode-toggle-group {
+		display: inline-flex;
+		padding: 0.25rem;
+		background: rgba(15, 23, 42, 0.6);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 10px;
+		gap: 0.25rem;
+		align-self: center;
+	}
+	.mode-btn {
+		background: transparent;
+		border: none;
+		color: var(--text-muted);
+		font-size: 0.82rem;
+		font-weight: 600;
+		padding: 0.45rem 0.85rem;
+		border-radius: 8px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		white-space: nowrap;
+	}
+	.mode-btn:hover {
+		color: var(--text-main);
+	}
+	.mode-btn.active {
+		background: var(--primary);
+		color: #ffffff;
+		box-shadow: 0 2px 8px rgba(96, 165, 250, 0.35);
+	}
+
+	/* 大学・試験区分タブストリップ */
+	.cat-tab-strip {
+		display: flex;
+		gap: 0.5rem;
+		overflow-x: auto;
+		padding-bottom: 0.75rem;
+		margin-bottom: 1.75rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+		scrollbar-width: thin;
+	}
+	.cat-tab-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.55rem 0.95rem;
+		border-radius: 10px;
+		background: rgba(255, 255, 255, 0.04);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		color: var(--text-muted);
+		font-size: 0.85rem;
+		font-weight: 700;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		white-space: nowrap;
+	}
+	.cat-tab-btn:hover {
+		background: rgba(255, 255, 255, 0.08);
+		color: var(--text-main);
+		border-color: rgba(255, 255, 255, 0.18);
+	}
+	.cat-tab-btn.active {
+		background: rgba(96, 165, 250, 0.16);
+		color: #93c5fd;
+		border-color: rgba(96, 165, 250, 0.45);
+		box-shadow: 0 2px 10px rgba(96, 165, 250, 0.2);
+	}
+	.tab-badge {
+		font-size: 0.72rem;
+		font-weight: 600;
+		padding: 0.15rem 0.45rem;
+		border-radius: 999px;
+	}
+	.tab-badge.has-data {
+		background: rgba(52, 211, 153, 0.2);
+		color: #a7f3d0;
+	}
+	.tab-badge.no-data {
+		background: rgba(255, 255, 255, 0.08);
+		color: var(--text-subtle);
+	}
+
+	/* チャート本体 */
+	.chart-content {
+		display: grid;
+		grid-template-columns: 320px 1fr;
+		gap: 2.5rem;
+		align-items: center;
+	}
+
+	/* ドーナツコンテナ */
+	.donut-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+	.donut-wrapper {
+		position: relative;
+		width: 280px;
+		height: 280px;
+	}
+	.donut-svg {
+		width: 100%;
+		height: 100%;
+		overflow: visible;
+	}
+
+	.donut-segment {
+		cursor: pointer;
+		transition: stroke-width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+			opacity 0.25s ease,
+			filter 0.25s ease;
+		outline: none;
+	}
+	.donut-segment:hover,
+	.donut-segment.highlighted {
+		stroke-width: 42px;
+		filter: drop-shadow(0 0 8px currentColor);
+		opacity: 1 !important;
+	}
+	.donut-segment.dimmed {
+		opacity: 0.25;
+	}
+
+	/* ドーナツ中央ラベル */
+	.donut-center {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		text-align: center;
+		pointer-events: none;
+		width: 160px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+	.center-meta {
+		font-size: 0.74rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--text-subtle);
+		margin-bottom: 0.15rem;
+	}
+	.center-title {
+		font-size: 1.35rem;
+		font-weight: 800;
+		color: var(--text-main);
+		line-height: 1.2;
+		margin-bottom: 0.2rem;
+		transition: color 0.2s ease;
+		max-width: 150px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.center-value {
+		font-variant-numeric: tabular-nums;
+		line-height: 1.15;
+	}
+	.val-num {
+		font-size: 1.65rem;
+		font-weight: 800;
+		color: var(--primary);
+	}
+	.val-unit {
+		font-size: 0.78rem;
+		color: var(--text-muted);
+		margin-left: 0.25rem;
+	}
+	.center-sub {
+		font-size: 0.72rem;
+		color: var(--text-subtle);
+		margin-top: 0.2rem;
+	}
+
+	.donut-hint {
+		margin-top: 1rem;
+		font-size: 0.78rem;
+		color: var(--text-subtle);
+		text-align: center;
+	}
+	.hint-icon {
+		margin-right: 0.2rem;
+	}
+
+	/* ランク別プログレスバー一覧 */
+	.ranked-list-container {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	.list-head {
+		display: grid;
+		grid-template-columns: 32px 140px 1fr 64px 56px 20px;
+		gap: 0.75rem;
+		align-items: center;
+		padding: 0.4rem 0.8rem;
+		font-size: 0.76rem;
+		color: var(--text-subtle);
+		font-weight: 700;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+		margin-bottom: 0.4rem;
+	}
+	.lh-stat,
+	.lh-count {
+		text-align: right;
+	}
+
+	.ranked-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		max-height: 440px;
+		overflow-y: auto;
+		padding-right: 0.4rem;
+		scrollbar-width: thin;
+		scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+	}
+	.ranked-list::-webkit-scrollbar {
+		width: 6px;
+	}
+	.ranked-list::-webkit-scrollbar-thumb {
+		background: rgba(255, 255, 255, 0.15);
+		border-radius: 999px;
+	}
+
+	.ranked-item {
+		display: grid;
+		grid-template-columns: 32px 140px 1fr 64px 56px 20px;
+		gap: 0.75rem;
+		align-items: center;
+		padding: 0.55rem 0.8rem;
+		border-radius: 10px;
+		text-decoration: none;
+		color: inherit;
+		background: rgba(255, 255, 255, 0.02);
+		border: 1px solid transparent;
+		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+	.ranked-item:hover,
+	.ranked-item.highlighted {
+		background: rgba(255, 255, 255, 0.08);
+		border-color: rgba(255, 255, 255, 0.18);
+		transform: translateX(3px);
+	}
+	.ranked-item.dimmed {
+		opacity: 0.35;
+	}
+
+	.rank-badge {
+		font-size: 0.76rem;
+		font-weight: 700;
+		color: var(--text-muted);
+		width: 22px;
+		height: 22px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 6px;
+		background: rgba(255, 255, 255, 0.05);
+	}
+	.rank-badge.top-3 {
+		background: rgba(251, 191, 36, 0.18);
+		color: #fde68a;
+		border: 1px solid rgba(251, 191, 36, 0.35);
+	}
+
+	.item-name-cell {
+		display: flex;
+		align-items: center;
+		gap: 0.55rem;
+		min-width: 0;
+	}
+	.color-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		flex-shrink: 0;
+	}
+	.item-tag {
+		font-weight: 700;
+		font-size: 0.9rem;
+		color: var(--text-main);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.item-bar-cell {
+		min-width: 0;
+	}
+	.bar-track {
+		width: 100%;
+		height: 7px;
+		background: rgba(255, 255, 255, 0.06);
+		border-radius: 999px;
+		overflow: hidden;
+	}
+	.bar-fill {
+		height: 100%;
+		border-radius: 999px;
+		transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.item-stat-cell {
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+		white-space: nowrap;
+	}
+	.stat-num {
+		font-weight: 700;
+		font-size: 0.92rem;
+		color: var(--text-main);
+	}
+	.stat-unit {
+		font-size: 0.74rem;
+		color: var(--text-muted);
+		margin-left: 0.15rem;
+	}
+
+	.item-count-cell {
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+		white-space: nowrap;
+	}
+	.count-num {
+		font-weight: 600;
+		font-size: 0.88rem;
+		color: var(--text-muted);
+	}
+	.count-unit {
+		font-size: 0.74rem;
+		color: var(--text-subtle);
+		margin-left: 0.1rem;
+	}
+
+	.item-arrow {
+		color: var(--text-subtle);
+		font-size: 0.85rem;
+		transition: transform 0.2s ease, color 0.2s ease;
+	}
+	.ranked-item:hover .item-arrow {
+		transform: translateX(3px);
+		color: var(--primary);
+	}
+
+	/* データなしプレースホルダーカード */
+	.no-data-card {
+		padding: 3.5rem 2rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		background: rgba(15, 23, 42, 0.4);
+		border: 1px dashed rgba(255, 255, 255, 0.12);
+		border-radius: 16px;
+	}
+	.no-data-icon {
+		font-size: 2.5rem;
+		margin-bottom: 0.8rem;
+	}
+	.no-data-title {
+		font-size: 1.25rem;
+		font-weight: 800;
+		color: var(--text-main);
+		margin: 0 0 0.5rem;
+	}
+	.no-data-desc {
+		font-size: 0.92rem;
+		color: var(--text-muted);
+		max-width: 540px;
+		line-height: 1.6;
+		margin: 0 0 1rem;
+	}
+	.no-data-meta {
+		font-size: 0.82rem;
+		color: var(--primary);
+		background: rgba(96, 165, 250, 0.1);
+		padding: 0.3rem 0.8rem;
+		border-radius: 999px;
+		border: 1px solid rgba(96, 165, 250, 0.25);
+	}
+
+	/* フッター注釈 */
+	.chart-footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+		margin-top: 1.75rem;
+		padding-top: 1.25rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+		font-size: 0.82rem;
+	}
+	.footer-note {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.5rem;
+		color: var(--text-subtle);
+		line-height: 1.5;
+		max-width: 650px;
+	}
+	.note-icon {
+		flex-shrink: 0;
+	}
+	.tags-portal-link {
+		font-weight: 700;
+		color: var(--secondary);
+		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		white-space: nowrap;
+	}
+	.tags-portal-link:hover {
+		text-decoration: underline;
+	}
+	.tags-portal-link .arrow {
+		transition: transform 0.2s ease;
+	}
+	.tags-portal-link:hover .arrow {
+		transform: translateX(4px);
+	}
+
+	/* レスポンシブ対応 */
+	@media (max-width: 900px) {
+		.chart-content {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+		.donut-container {
+			margin: 0 auto;
+		}
+		.ranked-list {
+			max-height: 380px;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.topic-chart-card {
+			padding: 1.25rem 1rem;
+			border-radius: 16px;
+		}
+		.chart-top-bar {
+			flex-direction: column;
+			gap: 1rem;
+		}
+		.mode-toggle-group {
+			width: 100%;
+			justify-content: center;
+		}
+		.donut-wrapper {
+			width: 240px;
+			height: 240px;
+		}
+		.list-head,
+		.ranked-item {
+			grid-template-columns: 24px 110px 1fr 50px 42px;
+			gap: 0.4rem;
+			padding: 0.45rem 0.5rem;
+		}
+		.item-arrow {
+			display: none;
+		}
+		.chart-footer {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+	}
+</style>
