@@ -15,7 +15,7 @@
   \paragraph{(1)}
   $S_1, S_2, S_3$ は, $\triangle \text{OPQ}$ の $xy$ 平面, $yz$ 平面, $zx$ 平面への正射影の面積である.
   そこで, $\triangle \text{OPQ}$ を含む平面の単位法線ベクトルを $\vec{m} =
-  \begin{pmatrix} X \\ X \\ Z
+  \begin{pmatrix} X \\ Y \\ Z
   \end{pmatrix}$ とする.
   $xy, yz, zx$ 平面の 単位法線ベクトル,
   \begin{align}
@@ -95,12 +95,12 @@
     \caption{三角形OPQと，その$xy$平面への正射影OP'Q'}
   \end{figure}
 
-  正射影の性質より, $S_k = S \cos \theta_k$ ($k=1,2,3$) だから,
+  正射影の性質より, $S_k = S |\cos \theta_k|$ ($k=1,2,3$) だから,
   \begin{align}
     S_1^2 + S_2^2 + S_3^2
     & = S^2 (\cos^2 \theta_1 + \cos^2 \theta_2 + \cos^2 \theta_3) \\
     & = S^2(X^2+Y^2+Z^2)                                          \\
-    & = S^2 \left|\vec{m}\right|                                  \\
+    & = S^2 \left|\vec{m}\right|^2                                \\
     & = S^2
   \end{align}
   である.ただし3行目で$\vec{m}$が単位法線ベクトルだから$|\vec{m}|=1$であることを用いた．
@@ -150,21 +150,17 @@
         ] ( {cos(x)*cos(y)}, {sin(x)*cos(y)}, {sin(y)} );
 
         % 原点からの点線のパスを描画
-        \addplot3[dashed, thick, gray] coordinates {(0,0,0) (0.577,0.577,0.577)};
+        \addplot3[densely dotted, thick, gray!70!black] coordinates {(0,0,0) (0.577,0.577,0.577)};
 
-        % 特定の点を描画 (S/√3, S/√3, S/√3)
-        % ここではS=1として単位球上の点を描画
-        \addplot3[only marks, mark=*, mark size=2pt, blue] coordinates {(0.577, 0.577, 0.577)};
-
-        % 点のラベル
-        \node[right, align=left] at (axis cs:0.577, 0.577, 0.577) {
-          $(\frac{S}{\sqrt{3}}S,\frac{S}{\sqrt{3}}S,\frac{S}{\sqrt{3}}S)$
-        };
+        % 特定の点 (S/√3, S/√3, S/√3) を描画
+        \node[circle, fill=red!85!black, inner sep=1.4pt,
+        pin={[pin distance=1.1cm, red!85!black, font=\footnotesize]45:{$\left(\frac{S}{\sqrt{3}}, \frac{S}{\sqrt{3}}, \frac{S}{\sqrt{3}}\right)$}}]
+        at (axis cs:0.577, 0.577, 0.577) {};
 
         % S1, S2, S3軸の'S'ラベル
-        \node[below left] at (axis cs:1,0,0) {$S$};
-        \node[below right] at (axis cs:0,1,0) {$S$};
-        \node[left] at (axis cs:0,0,1) {$S$};
+        \node[below left=2pt, font=\footnotesize] at (axis cs:1,0,0) {$S$};
+        \node[below right=2pt, font=\footnotesize] at (axis cs:0,1,0) {$S$};
+        \node[left=2pt, font=\footnotesize] at (axis cs:0,0,1) {$S$};
 
       \end{axis}
     \end{tikzpicture}
@@ -196,7 +192,7 @@
   \begin{align}
     S_1+S_2+S_3 \le \sqrt{3}\sqrt{S_1^2+S_2^2+S_3^2} = \sqrt{3}S
   \end{align}
-  であり，等号成立は$S_1=S_2=S_3=1/\sqrt{3}$のときである．
+  であり，等号成立は$S_1=S_2=S_3=\dfrac{S}{\sqrt{3}}$のときである．
 
   下側の評価は境界が等号成立になるため，不等式で一発で求めに行くのは難しい．
   というのもたいていの不等式の等号成立条件は全ての変数が等しいときだからである．
@@ -204,7 +200,7 @@
   別案として対称式を利用する方法もある．
   \begin{align}
     (S_1+S_2+S_3)^2
-    & = S_1^2+S_2^2+S_3^3 + 2(S_1S_2+S_2S_3+S_3S_1) \\
+    & = S_1^2+S_2^2+S_3^2 + 2(S_1S_2+S_2S_3+S_3S_1) \\
     & = S^2 + 2(S_1S_2+S_2S_3+S_3S_1)
   \end{align}
   であり，これを下から評価する．$S_1,S_2,S_3\ge 0$だから
