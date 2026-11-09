@@ -44,8 +44,8 @@ $f(\alpha)$は\cref{eq:3}より
 \begin{align}
   \dfrac{d}{dt} f(\alpha)
   &= \dfrac{d\alpha}{dt}\dfrac{f(\alpha)}{d\alpha} \\
-  &= \dfrac{-\alpha}{\sqrt{t^2+1}}\dfrac{1}{\alpha^2} \\
-  &= \dfrac{-1}{\alpha\sqrt{t^2+1}}
+  &= \dfrac{-\alpha}{\sqrt{t^2+1}}\dfrac{-2}{\alpha^3} \\
+  &= \dfrac{2}{\alpha^2\sqrt{t^2+1}}
 \end{align}
 である．\cref{eq:3}より$0<t<1$では$\alpha>0$だから，$\dfrac{d}{dt} f(\alpha)>0$である．
 従って$f(\alpha)$の増減表は以下のようになる．
@@ -65,7 +65,7 @@ $f(\alpha)$は\cref{eq:3}より
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[xscale=1.5, yscale=0.9, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[xscale=3, yscale=0.9, >=stealth, every node/.style={font=\small}]
 
     % --- 1. 定数定義 ---
     % t = 1: alpha = sqrt(2) - 1 ≈ 0.4142, f(alpha) = 2 / (sqrt(2)-1) = 2(sqrt(2)+1) = 3 + 2*sqrt(2) ≈ 4.8284
@@ -80,28 +80,27 @@ $f(\alpha)$は\cref{eq:3}より
     \coordinate (B) at (\xMin, \yMax);
 
     % --- 2. 座標軸 ---
-    \draw[->, thick] (-0.08, 0) -- (1.2, 0) node[right] {$\alpha$};
-    \draw[->, thick] (0, -0.4) -- (0, 7) node[above] {$f(\alpha)$};
+    \draw[->, thick, gray!80!black] (-0.08, 0) -- (1.2, 0) node[right] {$\alpha$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 7) node[above] {$f(\alpha)$};
     \node[below left=2pt] at (0, 0) {$O$};
 
     % --- 3. 補助線（点線） ---
-    \draw[dashed, gray!70] (\xMax, 0) -- (A) -- (0, \yMin);
-    \draw[dashed, gray!70] (\xMin, 0) -- (B) -- (0, \yMax);
+    \draw[densely dotted, thick, gray!70!black] (\xMax, 0) -- (A) -- (0, \yMin);
+    \draw[densely dotted, thick, gray!70!black] (\xMin, 0) -- (B) -- (0, \yMax);
 
-    % --- 4. 厳密な軌跡曲線 Y = 2 / X の描画 ---
+    % --- 4. 厳密な軌跡曲線 Y = 1 / X^2 の描画 ---
     \draw[very thick, blue!80!black, domain=\xMin:\xMax, samples=80]
     plot (\x, {1.0 / (\x)^2});
 
     % 進行方向矢印 (t が 0 -> 1 で alpha は 1 -> sqrt(2)-1 へ減少)
     \draw[->, very thick, blue!80!black]
-    (0.72, {2.0 / 0.72}) -- (0.68, {2.0 / 0.68});
-    % \node[blue!80!black, above right, font=\footnotesize] at (0.7, {2.0 / 0.7}) {$t$ 増加方向};
+    (0.72, {1.0 / 0.72^2}) -- (0.68, {1.0 / 0.68^2});
 
     % --- 5. 軸目盛りラベル ---
     \node[below=2pt] at (\xMax, 0) {$1$};
-    \node[left=2pt]  at (0, \yMin) {$2$};
+    \node[left=2pt]  at (0, \yMin) {$1$};
     \node[below=2pt] at (\xMin, 0) {$\sqrt{2}-1$};
-    \node[left=2pt]  at (0, \yMax) {$2(\sqrt{2}+1)$};
+    \node[left=2pt]  at (0, \yMax) {$3+2\sqrt{2}$};
 
     % --- 6. 端点（除外点のため白丸） ---
     \node[circle, draw, thick, blue!80!black, fill=white, inner sep=1.8pt] at (A) {};
@@ -153,7 +152,7 @@ $f(\alpha)$は\cref{eq:3}より
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[xscale=1.5, yscale=0.9, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[xscale=3, yscale=0.9, >=stealth, every node/.style={font=\small}]
 
     % --- 1. 定数定義 ---
     % 分岐点: t = 1/sqrt(3) ≈ 0.57735, beta = 1/sqrt(3), f(beta) = 2 / (1 - 1/3) = 3
@@ -167,13 +166,13 @@ $f(\alpha)$は\cref{eq:3}より
     \coordinate (Pend)  at (\xMin, \yMax);
 
     % --- 2. 座標軸 ---
-    \draw[->, thick] (-0.08, 0) -- (0.9, 0) node[right] {$\beta$};
-    \draw[->, thick] (0, -0.4) -- (0, 7) node[above] {$f(\beta)$};
+    \draw[->, thick, gray!80!black] (-0.08, 0) -- (0.9, 0) node[right] {$\beta$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 7) node[above] {$f(\beta)$};
     \node[below left=2pt] at (0, 0) {$O$};
 
     % --- 3. 補助線（点線） ---
-    \draw[dashed, gray!70] (\xJoin, 0) -- (Pjoin) -- (0, \yJoin);
-    \draw[dashed, gray!70] (\xMin, 0) -- (Pend) -- (0, \yMax);
+    \draw[densely dotted, thick, gray!70!black] (\xJoin, 0) -- (Pjoin) -- (0, \yJoin);
+    \draw[densely dotted, thick, gray!70!black] (\xMin, 0) -- (Pend) -- (0, \yMax);
 
     % --- 4. 2つの枝の厳密な曲線プロット ---
     % (i) 0 < t <= 1/sqrt(3): beta = t, f(beta) = 2 / (1 - beta^2)
@@ -190,12 +189,15 @@ $f(\alpha)$は\cref{eq:3}より
     \node[teal!80!black, above right, font=\footnotesize] at (0.43, 3.8)
     {$f(\beta) = \frac{1}{\beta^2}$};
 
-    % --- 5. 目盛りラベル ---
-    \node[below=2pt] at (\xJoin, 0) {$\frac{1}{\sqrt{3}}$};
-    \node[below=2pt] at (\xMin, 0) {$\sqrt{2}-1$};
+    % --- 5. 目盛りラベル (互い違いに配置して重なりを解消) ---
+    \draw[gray!70!black] (\xMin, -0.05) -- (\xMin, 0.05);
+    \node[below=2pt, font=\scriptsize] at (\xMin, 0) {$\sqrt{2}-1$};
+    \draw[gray!70!black] (\xJoin, -0.05) -- (\xJoin, 0.05);
+    \node[below=11pt, font=\scriptsize] at (\xJoin, 0) {$\frac{1}{\sqrt{3}}$};
+    \draw[densely dotted, gray!60] (\xJoin, 0) -- (\xJoin, -0.3);
     \node[left=2pt]  at (0, 2.0) {$2$};
     \node[left=2pt]  at (0, \yJoin) {$3$};
-    \node[left=2pt]  at (0, \yMax) {$(\sqrt{2}+1)^2$};
+    \node[left=2pt]  at (0, \yMax) {$3+2\sqrt{2}$};
 
     % --- 6. 端点と接続点のプロット ---
     % t -> 0 の端点 (0, 2): 除外されるため白丸
@@ -235,19 +237,23 @@ $f(\alpha)$は\cref{eq:3}より
   \begin{cases}
     \alpha = -t + \gamma \\
     \alpha' = -\dfrac{\alpha}{\gamma}
-  \end{cases}
+  \end{cases} \label{eq:11}
 \end{align}
 だから，まず$\alpha' = -\dfrac{\alpha}{\gamma}$を\cref{eq:9}に代入して
 \begin{align}
   g(\alpha)
-  & = \alpha^3 - t\dfrac{\alpha^3}{\gamma} + \alpha + \dfrac{t\alpha}{\gamma} + \dfrac{2t^2 \alpha^2}{\gamma} \\
-  & = \alpha\left(\alpha^2 - \dfrac{t\alpha^2}{\gamma} + 1 + \dfrac{t}{\gamma} + \dfrac{2t^2\alpha}{\gamma} \right) \\
+  & = \alpha^3 - t\dfrac{\alpha^3}{\gamma} + \alpha + \dfrac{t\alpha}{\gamma} - \dfrac{2t^2 \alpha^2}{\gamma} \\
+  & = \alpha\left(\alpha^2 - \dfrac{t\alpha^2}{\gamma} + 1 + \dfrac{t}{\gamma} - \dfrac{2t^2\alpha}{\gamma} \right) \\
   & = \alpha \left[\alpha^2\left(1-\dfrac{t}{\gamma}\right)+1+\dfrac{t}{\gamma}(1-2t\alpha)\right] \\
   & = \dfrac{\alpha}{\gamma} \left[\alpha^2\left(\gamma-t\right)+\gamma+t(1-2t\alpha)\right] \\
   & = \dfrac{\alpha}{\gamma} \left[\alpha^3+\gamma+t(1-2t\alpha)\right] \quad (\because \text{\cref{eq:3}})\\
   & = \dfrac{\alpha}{\gamma} \left[\alpha\left(\alpha^2-2t^2\right)+\gamma+t\right] \\
+  & = \dfrac{\alpha}{\gamma} \left[\alpha\left((-t + \gamma)^2-2t^2\right)+\gamma+t\right] \quad (\because\text{\cref{eq:11}})\\
+  & = \dfrac{\alpha}{\gamma} \left[\alpha\left(t^2+\gamma^2-2t\gamma-2t^2\right)+\gamma+t\right] \quad (\because\text{\cref{eq:11}})\\
+  & = \dfrac{\alpha}{\gamma} \left[\alpha\left(-t^2+\gamma^2-2t\gamma\right)+\gamma+t\right]  \\
+  & = \dfrac{\alpha}{\gamma} \left[\alpha\left(-t^2+(t^2+1)-2t\gamma\right)+\gamma+t\right] \quad (\because\text{\cref{eq:10}})\\
   & = \dfrac{\alpha}{\gamma} \left[\alpha\left(1-2t\gamma\right)+\gamma+t\right] \\
-  & = \dfrac{\alpha}{\gamma} \left[\left(-t+\gamma\right)\left(1-2t\gamma\right)+\gamma+t\right] \\
+  & = \dfrac{\alpha}{\gamma} \left[\left(-t+\gamma\right)\left(1-2t\gamma\right)+\gamma+t\right] \quad (\because\text{\cref{eq:11}}) \\
   & = \dfrac{\alpha}{\gamma} \left[\left(2t^2\gamma-2t\gamma^2+\gamma-t\right)+\gamma+t\right] \\
   & = \dfrac{\alpha}{\gamma} \left[2\gamma\left(t^2-2t\gamma+1\right)\right] \\
   & = 2\alpha \Bigl( t^2 - t\sqrt{t^2+1} + 1 \Bigr)
