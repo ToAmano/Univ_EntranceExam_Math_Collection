@@ -19,67 +19,69 @@
     \begin{tikzpicture}
       \begin{axis}[
           axis lines=center,
+          axis line style={gray!80!black, thick},
           xlabel=$x$,
           ylabel=$y$,
           zlabel=$z$,
-          xlabel style={at={(axis cs:1.2,0,0)}, anchor=west}, % S1軸ラベルの位置を調整
-          ylabel style={at={(axis cs:0,1.2,0)}, anchor=south}, % S2軸ラベルの位置を調整
-          zlabel style={at={(axis cs:0,0,1.2)}, anchor=south}, % S3軸ラベルの位置を調整
-          xmin=0, xmax=4,
-          ymin=0, ymax=4,
+          xlabel style={at={(axis cs:3.5,0,0)}, anchor=north east, font=\small},
+          ylabel style={at={(axis cs:0,3.5,0)}, anchor=north west, font=\small},
+          zlabel style={at={(axis cs:0,0,4.2)}, anchor=south, font=\small},
+          xmin=-3, xmax=3.5,
+          ymin=-2.5, ymax=3.5,
           zmin=0, zmax=4,
-          xtick=\empty, ytick=\empty, ztick=\empty, % 目盛りを非表示
-          view={120}{30}, % 視点を調整
-          axis equal image, % 軸のスケールを等しくする
-          clip=false, % ラベルがクリップされないように
+          xtick=\empty, ytick=\empty, ztick=\empty,
+          view={125}{22},
+          axis equal image,
+          clip=false,
         ]
-        % 点光源 (a,0,3) の描画
-        % a の具体的な値がないため、ここでは仮に a=2 とします。
-        \coordinate (LightSource) at (2,0,4); % 例として a=2
-        \coordinate (ShadowCenterProjection) at (-2,0,0);
 
-        % 影の形状を示す楕円をxy平面に描画 (これはあくまで概念的なものです)
-        \draw[fill=gray!20, thick,opacity = 0.4] (ShadowCenterProjection) ellipse (1.5cm and 1cm); % 仮の楕円
-        \node at (ShadowCenterProjection) [below right] {P(X,Y,0)};
-
-        \node[circle, fill, inner sep=2pt] at (LightSource) {}; \node[above right] at (LightSource) {$C(a,0,3)$};
-
-        % 原点からの点線のパスを描画
-        %\addplot3[dashed, thick, gray] coordinates {(0,0,0) (0.577,0.577,0.577)};
-
-        % 特定の点を描画 (S/√3, S/√3, S/√3)
-        % ここではS=1として単位球上の点を描画
-        %\addplot3[only marks, mark=*, mark size=2pt, blue] coordinates {(0.577, 0.577, 0.577)};
-        % xy平面の描画
-        % \fill[blue!10, opacity=0.5] (-3,-3,0) rectangle (3,3,0);
-        \draw[thick] (-3,-3,0) -- (3,-3,0) -- (3,3,0) -- (-3,3,0) -- cycle;
-        % 軸の描画 (オプション)
-        \draw[->] (0,0,0) -- (4,0,0) node[anchor=north east]{$x$};
-        \draw[->] (0,0,0) -- (0,4,0) node[anchor=north west]{$y$};
-        \draw[->] (0,0,0) -- (0,0,4) node[anchor=south]{$z$};
-        % 単位球の一部 (x, y, z > 0) を描画
+        % xy 平面上の影 S (楕円領域、斜線ハッチング)
         \addplot3[
-          %surf,
-          domain=0:360, domain y=0:360,
-          opacity=0.7, % 透明度を設定
-          samples=20, samples y=20,
-          % z buffer=sort, % 描画順序を正しくする
-          % shader=flat, % シェーディングスタイル
-          % mesh/color=gray!30, % 球の色
-        ] ( {cos(x)*cos(y)}, {sin(x)*cos(y)}, {sin(y)+1} );
+          pattern=north east lines,
+          pattern color=gray!60,
+          draw=gray!80!black,
+          thick,
+          domain=0:360,
+          samples=40,
+        ] ( {-0.75 + 1.6*cos(x)}, {1.1*sin(x)}, {0} );
+        \node[gray!80!black, font=\small] at (axis cs:-2.2, -0.8, 0) {$S$};
 
-        % 影P(X,Y,0)の描画 (これは計算結果によって変わるため、ここでは概念的な線を描きます)
-        % 点光源から球を通り、xy平面に落ちる光線を描く
-        % 影の形状は楕円になることが示唆されているため、その中心と一部を描画
-        % ここでは、点光源から球の中心を通る線を引いて、xy平面との交点を影の中心と仮定します。
-        \draw[dashed, gray] (LightSource) -- (0,0,1); % 点光源から球の中心へ
-        \path (LightSource) -- (0,0,1) coordinate[pos=1.5] (ShadowCenterProjection); % 影の中心の投影 (Z=0まで延長)
-        \draw[dashed, gray] (0,0,1) -- (ShadowCenterProjection);
-        \node[circle, fill, inner sep=1.5pt] at (ShadowCenterProjection) {}; \node[below left] at (ShadowCenterProjection) {(X,Y,0)};
+        % 球 (中心 (0,0,1), 半径 1)
+        \addplot3[
+          surf,
+          domain=0:360, domain y=-90:90,
+          opacity=0.35,
+          samples=25, samples y=20,
+          colormap/cool,
+        ] ( {cos(y)*cos(x)}, {cos(y)*sin(x)}, {sin(y)+1} );
+
+        % 球の中心 O'(0,0,1)
+        \coordinate (Center) at (axis cs:0,0,1);
+        \node[circle, fill=gray!80!black, inner sep=1.2pt] at (Center) {};
+        \node[above left=2pt, font=\footnotesize] at (Center) {$O'(0,0,1)$};
+
+        % 点光源 C(a,0,3) (a=1.5 の例)
+        \coordinate (LightSource) at (axis cs:1.5,0,3);
+        \node[circle, fill=red!85!black, inner sep=1.4pt] at (LightSource) {};
+        \node[above right=2pt, red!85!black, font=\footnotesize] at (LightSource) {$C(a,0,3)$};
+
+        % 影の点 P(X,Y,0)
+        \coordinate (ShadowPoint) at (axis cs:-1.2, 0.4, 0);
+        \node[circle, fill=blue!85!black, inner sep=1.4pt] at (ShadowPoint) {};
+        \node[right=3pt, blue!85!black, font=\footnotesize] at (ShadowPoint) {$P(X,Y,0)$};
+
+        % 線分 CP (光線)
+        \draw[line width=1.1pt, blue!80!black] (LightSource) -- (ShadowPoint);
+
+        % 光源 C から x 軸への垂線
+        \draw[densely dotted, thick, gray!70!black] (LightSource) -- (axis cs:1.5,0,0) node[below=2pt, font=\footnotesize] {$a$};
+
+        % 原点 O
+        \node[below left=2pt, font=\small] at (axis cs:0,0,0) {$O$};
 
       \end{axis}
     \end{tikzpicture}
-    \caption{球と点光源の様子}
+    \caption{球と点光源および影の領域$S$（$a=1.5$ の例）}
     \label{2009-1:fig:1}
   \end{figure}
 
@@ -104,7 +106,7 @@
   \end{align}
   とおいて，式変形を続けると
   \begin{align}
-    |O'Q|^2= & A\left(t+\dfrac{B}{A}\right)+a^2+4-\dfrac{B^2}{A}
+    |O'Q(t)|^2= & A\left(t+\dfrac{B}{A}\right)^2+a^2+4-\dfrac{B^2}{A}
   \end{align}
   だから，$t = - B/A$ の時最小値$a^2+4-B^2/A$をとる．
   よって条件は
@@ -114,9 +116,9 @@
     \Leftrightarrow & a^2+3 - \dfrac{\{a(X-a)-6\}^2}{(X-a)^2+Y^2+9} \le 0          \\
     \Leftrightarrow & (a^2+3) \{(X-a)^2+Y^2+9\} - \{a(X-a)-6\}^2 \le 0            \\
     \Leftrightarrow & (a^2+3)(X-a)^2+(a^2+3)Y^2+9(a^2+3)                          \\
-    & - \{a^2(X-a)^2-12a(X-a)+36\} \le 0                          \\
+    & - \{a^2(X-a)^2-12a(X-a)+36\} \le 0   \\
     \Leftrightarrow & 3(X-a)^2+(a^2+3)Y^2+12a(X-a)+9a^2-9 \le 0                   \\
-    \Leftrightarrow & 3\left[(X-a)+2a\right]^2+(a^2+3)Y^2+12a(X-a)-3(a^2+3) \le 0 \\
+    \Leftrightarrow & 3\left[(X-a)+2a\right]^2+(a^2+3)Y^2-3(a^2+3) \le 0 \\
     \Leftrightarrow & \dfrac{(X+a)^2}{a^2+3} + \dfrac{Y^2}{3} \le 1
   \end{align}
   という楕円となり，これが求めるべき条件である．従って答えは
@@ -207,8 +209,8 @@
   であるから，
   \begin{align}
     \overrightarrow{O'H}
-    & = \overrightarrow{CH}-\overrightarrow{CO}                                              \\
-    & = \dfrac{\overrightarrow{CP}\cdot\overrightarrow{CO'}}{|\overrightarrow{CP}|^2}\overrightarrow{CP} - \overrightarrow{CO}
+    & = \overrightarrow{CH}-\overrightarrow{CO'} \\
+    & = \dfrac{\overrightarrow{CP}\cdot\overrightarrow{CO'}}{|\overrightarrow{CP}|^2}\overrightarrow{CP} - \overrightarrow{CO'}
   \end{align}
   となる．各ベクトルは
   \begin{align}
@@ -229,7 +231,7 @@
   \begin{align}
     & \left|\overrightarrow{O'H}\right|^2                                                                          \\
     & = \left(\dfrac{-B}{A}(X-a)+a\right)^2+\left(\dfrac{-B}{A}Y\right)^2 + \left(\dfrac{3B}{A}+2\right)^2 \\
-    & = \dfrac{1}{A^2}\left(-B(X-a)+aA\right)^2+\dfrac{B^2Y^2}{A^2} + \dfrac{1}{A^2}\left(3B+2A\right)^2   \\
+    & = \dfrac{1}{A^2}\left(-B(X-a)+aA\right)^2+\dfrac{B^2Y^2}{A^2} + \dfrac{1}{A^2}\left(3B+2A\right)^2
   \end{align}
   を得る．さらに整理すると
   \begin{align}
