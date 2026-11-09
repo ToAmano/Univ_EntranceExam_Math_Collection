@@ -116,10 +116,20 @@ for (const cat of CATEGORIES) {
 			count,
 			share,
 			rate,
+			relShare: 0,
+			relRate: 0,
 			color: TOPIC_COLORS[tag]?.color ?? '#60a5fa',
 			border: TOPIC_COLORS[tag]?.border ?? '#93c5fd',
 		};
 	}).sort((a, b) => b.count - a.count);
+
+	// 最大値を基準とした相対幅（1位を100%として視覚的に分布を明確化）
+	const maxShare = ranked[0]?.share || 1;
+	const maxRate = ranked[0]?.rate || 1;
+	for (const item of ranked) {
+		item.relShare = maxShare > 0 ? (item.share / maxShare) * 100 : 0;
+		item.relRate = maxRate > 0 ? (item.rate / maxRate) * 100 : 0;
+	}
 
 	let accumulatedOffset = 0;
 	const segments = ranked.map((item) => {
@@ -254,7 +264,7 @@ const initialCat = categoryDataset['all'];
 									stroke-width={strokeWidth}
 									stroke-dasharray={`${seg.dashLength} ${circumference - seg.dashLength}`}
 									stroke-dashoffset={seg.dashOffset}
-									stroke-linecap="round"
+									stroke-linecap="butt"
 									transform="rotate(-90 140 140)"
 									data-topic-seg={seg.tag}
 									data-count={seg.count}
@@ -307,6 +317,8 @@ const initialCat = categoryDataset['all'];
 								data-count={item.count}
 								data-share={item.share.toFixed(1)}
 								data-rate={item.rate.toFixed(1)}
+								data-rel-share={item.relShare.toFixed(1)}
+								data-rel-rate={item.relRate.toFixed(1)}
 								data-color={item.color}
 								role="listitem"
 								title={`${item.tag}の過去問一覧を開く`}
@@ -324,7 +336,7 @@ const initialCat = categoryDataset['all'];
 									<div class="bar-track">
 										<div
 											class="bar-fill"
-											style={`width: ${item.share}%; background: linear-gradient(90deg, ${item.color}, ${item.border});`}
+											style={`width: ${item.relShare}%; background: linear-gradient(90deg, ${item.color}, ${item.border});`}
 											data-bar-fill
 										></div>
 									</div>
@@ -569,7 +581,7 @@ const initialCat = categoryDataset['all'];
 							stroke-width="${strokeWidth}"
 							stroke-dasharray="${seg.dashLength} ${circumference - seg.dashLength}"
 							stroke-dashoffset="${seg.dashOffset}"
-							stroke-linecap="round"
+							stroke-linecap="butt"
 							transform="rotate(-90 140 140)"
 							data-topic-seg="${seg.tag}"
 							data-count="${seg.count}"
@@ -590,7 +602,7 @@ const initialCat = categoryDataset['all'];
 					.map((item: any, idx: number) => {
 						const href = `${baseUrl}/tags/${encodeURIComponent(item.tag)}/`;
 						const displayVal = currentMode === 'share' ? item.share.toFixed(1) : item.rate.toFixed(1);
-						const barWidth = currentMode === 'share' ? item.share : item.rate;
+						const barWidth = currentMode === 'share' ? item.relShare : item.relRate;
 						const top3Class = idx < 3 && item.count > 0 ? 'top-3' : '';
 
 						return `
@@ -601,6 +613,8 @@ const initialCat = categoryDataset['all'];
 								data-count="${item.count}"
 								data-share="${item.share.toFixed(1)}"
 								data-rate="${item.rate.toFixed(1)}"
+								data-rel-share="${item.relShare.toFixed(1)}"
+								data-rel-rate="${item.relRate.toFixed(1)}"
 								data-color="${item.color}"
 								role="listitem"
 								title="${item.tag}の過去問一覧を開く"
@@ -676,11 +690,15 @@ const initialCat = categoryDataset['all'];
 				items.forEach((item) => {
 					const share = item.dataset.share || '0';
 					const rate = item.dataset.rate || '0';
+					const relShare = item.dataset.relShare || '0';
+					const relRate = item.dataset.relRate || '0';
+
 					const val = currentMode === 'share' ? share : rate;
+					const barVal = currentMode === 'share' ? relShare : relRate;
 
 					const bar = item.querySelector<HTMLElement>('[data-bar-fill]');
 					if (bar) {
-						bar.style.width = `${Math.min(100, Math.max(0, parseFloat(val)))}%`;
+						bar.style.width = `${Math.min(100, Math.max(0, parseFloat(barVal)))}%`;
 					}
 
 					const statEl = item.querySelector<HTMLElement>('[data-item-stat]');
@@ -703,7 +721,7 @@ const initialCat = categoryDataset['all'];
 	document.addEventListener('astro:page-load', setupTopicChartWithTabs);
 </script>
 
-<style>
+<style is:global>
 	.topic-chart-card {
 		padding: 2rem 2.25rem;
 		border-radius: 22px;
