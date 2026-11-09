@@ -5,24 +5,21 @@
 
 \paragraph{(1)}
 
-% TODO: グラフの概要図
-%\begin{center}
-%  \scalebox{0.7}{\input{ut-91-6p}}
-%\end{center}
-% TODO: グラフの概要図
+% グラフの概要図
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=2.4cm, y=2.0cm, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[x=2.2cm, y=1.0cm, >=stealth, every node/.style={font=\small}]
 
     % ============================================================
     % 1. 定数・幾何パラメータ設定
-    % 例として f(t) = 1.6 / sqrt(t) (単調減少な正の関数)
-    % x = 0.8, 2x = 1.6
+    % 条件を満たす厳密解 f(t) = (64/15) * t^(-5)
+    % x = 1.0, 2x = 2.0 のとき S(1) = 1
     % ============================================================
-    \def\xVal{0.8}
-    \def\twoX{1.6}
-    \pgfmathsetmacro{\fxVal}{1.6 / sqrt(\xVal)}    % ≈ 1.789
-    \pgfmathsetmacro{\fTwoX}{1.6 / sqrt(\twoX)}   % ≈ 1.265
+    \def\xVal{1.0}
+    \def\twoX{2.0}
+    \pgfmathsetmacro{\cFactor}{64.0 / 15.0}              % ≈ 4.267
+    \pgfmathsetmacro{\fxVal}{\cFactor / pow(\xVal, 5)}   % ≈ 4.267
+    \pgfmathsetmacro{\fTwoX}{\cFactor / pow(\twoX, 5)}  % ≈ 0.133
 
     \coordinate (O)  at (0, 0);
     \coordinate (Px) at (\xVal, 0);
@@ -33,30 +30,30 @@
     % ============================================================
     % 2. 面積 S(x) の斜線塗りつぶし (x から 2x までの曲線下)
     % ============================================================
-    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.7]
+    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.75]
     (\xVal, 0) -- (P)
-    -- plot[domain=\xVal:\twoX, samples=50, smooth, variable=\t] ({\t}, {1.6 / sqrt(\t)})
+    -- plot[domain=\xVal:\twoX, samples=60, smooth, variable=\t] ({\t}, {\cFactor / pow(\t, 5)})
     -- (\twoX, 0) -- cycle;
 
     % ============================================================
-    % 3. 動径 OP, OQ で挟まれる領域の補助塗り (3S(x) の構成要素)
+    % 3. 動径 OP, OQ で挟まれる三角形 (3S(x) の幾何的等式: 3S = S + △OPP_x - △OQQ_x)
     % ============================================================
-    \fill[red!10, opacity=0.5] (O) -- (P) -- (Px) -- cycle;
-    \fill[teal!10, opacity=0.5] (O) -- (Q) -- (Qx) -- cycle;
+    \fill[pattern=north west lines, pattern color=red!60, opacity=0.6] (O) -- (P) -- (Px) -- cycle;
+    \fill[pattern=crosshatch dots, pattern color=teal!70, opacity=0.6] (O) -- (Q) -- (Qx) -- cycle;
 
     % ============================================================
     % 4. 座標軸
     % ============================================================
     \draw[->, thick, gray!80!black] (-0.2, 0) -- (\twoX + 0.6, 0) node[right] {$t$};
-    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, \fxVal + 0.5) node[above] {$y$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, \fxVal + 0.7) node[above] {$y$};
     \node[below left=2pt] at (O) {$O$};
 
     % ============================================================
     % 5. 曲線 y = f(t) (単調減少)
     % ============================================================
-    \draw[line width=1.6pt, blue!85!black, domain=0.45:2.1, samples=60, smooth, variable=\t]
-    plot ({\t}, {1.6 / sqrt(\t)});
-    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (1.8, 1.2)
+    \draw[line width=1.6pt, blue!85!black, domain=0.92:2.35, samples=70, smooth, variable=\t]
+    plot ({\t}, {\cFactor / pow(\t, 5)});
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (1.5, 0.9)
     {$y = f(t)$};
 
     % ============================================================
@@ -67,12 +64,12 @@
     \draw[line width=1.2pt, teal!85!black] (O) -- (Q);
 
     % 垂線 (P -> Px, Q -> Qx)
-    \draw[dashed, gray!60, line width=0.9pt] (P) -- (Px);
-    \draw[dashed, gray!60, line width=0.9pt] (Q) -- (Qx);
+    \draw[densely dotted, thick, gray!70!black] (P) -- (Px);
+    \draw[densely dotted, thick, gray!70!black] (Q) -- (Qx);
 
     % y 軸への投影破線
-    \draw[dotted, gray!55] (P) -- (0, \fxVal) node[left=2pt, font=\scriptsize] {$f(x)$};
-    \draw[dotted, gray!55] (Q) -- (0, \fTwoX) node[left=2pt, font=\scriptsize] {$f(2x)$};
+    \draw[densely dotted, thick, gray!70!black] (P) -- (0, \fxVal) node[left=2pt, font=\scriptsize] {$f(x)$};
+    \draw[densely dotted, thick, gray!70!black] (Q) -- (0, \fTwoX) node[left=2pt, font=\scriptsize] {$f(2x)$};
 
     % ============================================================
     % 7. 点プロットと目盛りラベル
@@ -84,7 +81,7 @@
     \node[below=2pt, font=\small\bfseries] at (Qx) {$2x$};
 
     % 面積 S(x) のラベル
-    \node[blue!95!black, font=\large\bfseries] at (1.2, 0.6) {$S(x)$};
+    \node[blue!95!black, font=\large\bfseries] at (1.35, 1.4) {$S(x)$};
 
   \end{tikzpicture}
   \caption{単調減少関数 $y = f(t)$，面積 $S(x)$ および各領域}
@@ -119,7 +116,7 @@
 \end{align}
 である．$0<x$で$0<f(x)$だから\cref{eq:1}より$y>0$となるので，変形して
 \begin{align}
-  \dfrac{-4x}{dx}=\dfrac{y}{dy}
+  \dfrac{-4dx}{x}=\dfrac{dy}{y}
 \end{align}
 である．積分して題意の条件$S(1)=1$より，
 \begin{align}
@@ -150,8 +147,8 @@ $b_n(x)=2^nf(2^nx)$とおくと，初期条件$b_0=f(x)$である．
 \end{align}
 である．$b_n(x)$が階差数列だから，$n\ge1$のとき
 \begin{align}
-  & b_n(x)=b_0(x)-\sum_{k=0}^{n-1}2^{2-4n}x^{-5} \\
-  & b_n(x)=f(x)-4x^{-5}\dfrac{1-2^{-4n}}{1-2^4} \\
+  & b_n(x)=b_0(x)-\sum_{k=0}^{n-1}2^{2-4k}x^{-5} \\
+  & b_n(x)=f(x)-4x^{-5}\dfrac{1-2^{-4n}}{1-2^{-4}} \\
   \therefore
   & \lim_{n\to\infty}b_n = f(x)-\dfrac{64}{15}x^{-5}=a(x) \label{eq:6}
 \end{align}
@@ -168,14 +165,14 @@ $b_n(x)=2^nf(2^nx)$とおくと，初期条件$b_0=f(x)$である．
 
 \paragraph{(3)}
 
-$f(x)>0$だから$a(x)>0$である．これと(2)の積分計算から，被積分関数$a(x)$が恒等的に$0$である．
+$f(x)>0$だから$a(x) \ge 0$である．これと(2)の積分計算から被積分関数$a(x)$が恒等的に$0$である．
 従って\cref{eq:6}から
 \begin{align}
   f(x)-\dfrac{64}{15}x^{-5} = 0 \quad \therefore
   f(x) = \dfrac{64}{15}x^{-5}
 \end{align}
 である．
-これは$x>0$で定義された，連続な単調減少関数であり十分である．
+これは$x>0$で定義された連続な単調減少関数であり，$S(x)$に関する面積条件も満たすから十分である．
 以上から，
 \begin{align}
   f(x)=\dfrac{64}{15}x^{-5}
