@@ -99,7 +99,87 @@
   \end{align}
   ただし$f(x)$は単調増加で積分区間内で絶対値の中身は一回だけ符号が入れ替わるとする．下図のような状況をイメージしてほしい．
 
-  % TODO: 状況を説明する図（左: I(x), 右 J(x)）
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=stealth, scale=0.85, every node/.style={font=\small}]
+      % 左: I(x)
+      \begin{scope}[shift={(0,0)}]
+        \draw[->, thick, gray!80!black] (-0.3,0) -- (3.8,0) node[right] {$t$};
+        \draw[->, thick, gray!80!black] (0,-0.3) -- (0,3.4) node[above] {$y$};
+        \node[below left, font=\footnotesize] at (0,0) {$O$};
+
+        \def\xval{1.4}
+
+        % S1: t in [0.5, 1.8], y in [0.3 t^2 + 0.43, 1.4]
+        \fill[pattern=north east lines, pattern color=blue!70!black]
+        (0.5,\xval) -- (1.8,\xval) --
+        plot[domain=1.8:0.5, samples=25] (\x, {0.3*\x*\x + 0.428}) -- cycle;
+
+        % S2: t in [1.8, 3.0], y in [1.4, 0.3 t^2 + 0.43]
+        \fill[pattern=north east lines, pattern color=red!70!black]
+        (1.8,\xval) -- (3.0,\xval) -- (3.0, {0.3*9.0 + 0.428}) --
+        plot[domain=3.0:1.8, samples=25] (\x, {0.3*\x*\x + 0.428}) -- cycle;
+
+        % 直線 y = x
+        \draw[dashed, thick, gray!70!black] (0,\xval) -- (3.4,\xval) node[right, font=\footnotesize] {$y=x$};
+
+        % 曲線 y = f(t)
+        \draw[very thick, blue!85!black] plot[domain=0.3:3.1, samples=40] (\x, {0.3*\x*\x + 0.428})
+        node[above left, font=\footnotesize] {$y=f(t)$};
+
+        % 垂線
+        \draw[densely dotted, thick, gray!70!black] (0.5, {0.3*0.25+0.428}) -- (0.5,0) node[below, font=\footnotesize] {$a$};
+        \draw[densely dotted, thick, gray!70!black] (1.8,\xval) -- (1.8,0) node[below, font=\footnotesize] {$\alpha$};
+        \draw[densely dotted, thick, gray!70!black] (3.0, {0.3*9.0+0.428}) -- (3.0,0) node[below, font=\footnotesize] {$b$};
+        \draw[densely dotted, thick, gray!70!black] (1.8,\xval) -- (0,\xval) node[left, font=\footnotesize] {$x$};
+
+        \node[circle, fill=blue!85!black, inner sep=1.3pt] at (1.8,\xval) {};
+
+        \node[font=\footnotesize, blue!90!black, fill=white, fill opacity=0.85, text opacity=1, inner sep=1.2pt] at (1.1,1.1) {$S_1$};
+        \node[font=\footnotesize, red!90!black, fill=white, fill opacity=0.85, text opacity=1, inner sep=1.2pt] at (2.5,1.9) {$S_2$};
+        \node[below, font=\small] at (1.8,-0.6) {(a) $I(x) = S_1 + S_2$};
+      \end{scope}
+
+      % 右: J(x)
+      \begin{scope}[shift={(4.5,0)}]
+        \draw[->, thick, gray!80!black] (-0.3,0) -- (3.8,0) node[right] {$t$};
+        \draw[->, thick, gray!80!black] (0,-0.3) -- (0,3.4) node[above] {$y$};
+        \node[below left, font=\footnotesize] at (0,0) {$O$};
+
+        \def\slope{0.75}
+
+        % S1: t in [0.6, 2.0], y in [0.375 t^2, 0.75 t]
+        \fill[pattern=north east lines, pattern color=blue!70!black]
+        (0.6,{0.75*0.6}) -- (2.0,{0.75*2.0}) --
+        plot[domain=2.0:0.6, samples=25] (\x, {0.375*\x*\x}) -- cycle;
+
+        % S2: t in [2.0, 2.9], y in [0.75 t, 0.375 t^2]
+        \fill[pattern=north east lines, pattern color=red!70!black]
+        (2.0,{0.75*2.0}) -- (2.9,{0.75*2.9}) -- (2.9,{0.375*2.9*2.9}) --
+        plot[domain=2.9:2.0, samples=25] (\x, {0.375*\x*\x}) -- cycle;
+
+        % 直線 y = xt
+        \draw[dashed, thick, gray!70!black] (0,0) -- (3.4,{0.75*3.4}) node[right, font=\footnotesize] {$y=xt$};
+
+        % 曲線 y = f(t)
+        \draw[very thick, teal!85!black] plot[domain=0.4:3.0, samples=40] (\x, {0.375*\x*\x})
+        node[above left, font=\footnotesize] {$y=f(t)$};
+
+        % 垂線
+        \draw[densely dotted, thick, gray!70!black] (0.6,{0.75*0.6}) -- (0.6,0) node[below, font=\footnotesize] {$a$};
+        \draw[densely dotted, thick, gray!70!black] (2.0,{0.75*2.0}) -- (2.0,0) node[below, font=\footnotesize] {$\beta$};
+        \draw[densely dotted, thick, gray!70!black] (2.9,{0.375*2.9*2.9}) -- (2.9,0) node[below, font=\footnotesize] {$b$};
+
+        \node[circle, fill=teal!85!black, inner sep=1.3pt] at (2.0,{0.75*2.0}) {};
+
+        \node[font=\footnotesize, blue!90!black, fill=white, fill opacity=0.85, text opacity=1, inner sep=1.2pt] at (1.2,0.72) {$S_1$};
+        \node[font=\footnotesize, red!90!black, fill=white, fill opacity=0.85, text opacity=1, inner sep=1.2pt] at (2.45,2.1) {$S_2$};
+        \node[below, font=\small] at (1.8,-0.6) {(b) $J(x) = S_1 + S_2$};
+      \end{scope}
+    \end{tikzpicture}
+    \caption{$I(x)$ と $J(x)$ の積分領域の図形的状況}
+    \label{fig:intro_I_J}
+  \end{figure}
 
   これらはもう答えがどうなるかというところまで簡単にわかってしまうので以下一つづつ解説しよう．
   まずこれらの場合はいずれも，本問と同様のロジックで$a<x<b$で最小値を取る．従ってその区間で考える．
@@ -135,7 +215,88 @@
   このように関数$f$の具体的な形がわからなくても，定積分の最小値を与える$x$は求まる，というわけである．
   具体的な関数の計算を避けることで，計算ミスを避けながら素早く解くことができる．
 
-  % TODO: 図形的に解釈した図（左:I, 右: J）
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=stealth, scale=0.85, every node/.style={font=\small}]
+      % 左: I の最小条件 (alpha = (a+b)/2)
+      \begin{scope}[shift={(0,0)}]
+        \draw[->, thick, gray!80!black] (-0.3,0) -- (3.8,0) node[right] {$t$};
+        \draw[->, thick, gray!80!black] (0,-0.3) -- (0,3.4) node[above] {$y$};
+        \node[below left, font=\footnotesize] at (0,0) {$O$};
+
+        \def\xval{1.3}
+        \def\dx{0.32}
+
+        % 微小変化の帯: y=x から y=x+dx
+        \fill[pattern=north east lines, pattern color=blue!70!black]
+        (0.6,\xval) rectangle (2.0,{\xval+\dx});
+        \fill[pattern=north west lines, pattern color=red!70!black]
+        (2.0,\xval) rectangle (3.4,{\xval+\dx});
+
+        % 直線 y = x と y = x + dx
+        \draw[thick, gray!70!black] (0,\xval) -- (3.5,\xval) node[below right, font=\scriptsize] {$y=x$};
+        \draw[dashed, thick, gray!60!black] (0,{\xval+\dx}) -- (3.5,{\xval+\dx}) node[above right, font=\scriptsize] {$y=x+\Delta x$};
+
+        % 曲線 y = f(t)
+        \draw[very thick, blue!85!black] plot[domain=0.3:3.4, samples=30] (\x, {0.18*(\x-2.0)*(\x-2.0)*(\x-2.0) + 0.45*(\x-2.0) + \xval})
+        node[above left, font=\footnotesize] {$y=f(t)$};
+
+        % 垂線
+        \draw[densely dotted, thick, gray!70!black] (0.6,{\xval+\dx}) -- (0.6,0) node[below, font=\footnotesize] {$a$};
+        \draw[densely dotted, thick, gray!70!black] (2.0,\xval) -- (2.0,0) node[below, font=\footnotesize] {$\alpha$};
+        \draw[densely dotted, thick, gray!70!black] (3.4,{\xval+\dx}) -- (3.4,0) node[below, font=\footnotesize] {$b$};
+
+        \node[circle, fill=blue!85!black, inner sep=1.3pt] at (2.0,\xval) {};
+
+        % 区間の長さの等しさ (両矢印)
+        \draw[<->, thick, purple!80!black] (0.6, 0.4) -- (2.0, 0.4) node[midway, above, font=\scriptsize] {$\alpha - a$};
+        \draw[<->, thick, purple!80!black] (2.0, 0.4) -- (3.4, 0.4) node[midway, above, font=\scriptsize] {$b - \alpha$};
+
+        \node[font=\scriptsize, blue!90!black, fill=white, fill opacity=0.85, text opacity=1, inner sep=1pt] at (1.3,{\xval+0.5*\dx}) {$+\Delta S_1$};
+        \node[font=\scriptsize, red!90!black, fill=white, fill opacity=0.85, text opacity=1, inner sep=1pt] at (2.7,{\xval+0.5*\dx}) {$-\Delta S_2$};
+
+        \node[below, font=\small, align=center] at (1.8,-0.6) {(a) $I(x)$ の最小時\\ $\alpha = \frac{a+b}{2}$（中点）};
+      \end{scope}
+
+      % 右: J の最小条件 (beta = sqrt((a^2+b^2)/2))
+      \begin{scope}[shift={(4.5,0)}]
+        \draw[->, thick, gray!80!black] (-0.3,0) -- (3.8,0) node[right] {$t$};
+        \draw[->, thick, gray!80!black] (0,-0.3) -- (0,3.4) node[above] {$y$};
+        \node[below left, font=\footnotesize] at (0,0) {$O$};
+
+        \def\slope{0.75}
+        \def\dslope{0.20}
+
+        % 変化分のくさび形
+        \fill[pattern=north east lines, pattern color=blue!70!black]
+        (0.8,{\slope*0.8}) -- (0.8,{(\slope+\dslope)*0.8}) -- (2.0,{\slope*2.0}) -- cycle;
+        \fill[pattern=north west lines, pattern color=red!70!black]
+        (2.0,{\slope*2.0}) -- (2.8,{(\slope+\dslope)*2.8}) -- (2.8,{\slope*2.8}) -- cycle;
+
+        % 直線 y = xt と y = (x+dx)t
+        \draw[thick, gray!70!black] (0,0) -- (3.3,{\slope*3.3}) node[below right, font=\scriptsize] {$y=xt$};
+        \draw[dashed, thick, gray!60!black] (0,0) -- (3.3,{(\slope+\dslope)*3.3}) node[above right, font=\scriptsize] {$y=(x+\Delta x)t$};
+
+        % 曲線 y = f(t) = 0.375 t^2
+        \draw[very thick, teal!85!black] plot[domain=0.5:2.9, samples=30] (\x, {0.375*\x*\x})
+        node[above left, font=\footnotesize] {$y=f(t)$};
+
+        % 垂線
+        \draw[densely dotted, thick, gray!70!black] (0.8,{(\slope+\dslope)*0.8}) -- (0.8,0) node[below, font=\footnotesize] {$a$};
+        \draw[densely dotted, thick, gray!70!black] (2.0,{\slope*2.0}) -- (2.0,0) node[below, font=\footnotesize] {$\beta$};
+        \draw[densely dotted, thick, gray!70!black] (2.8,{(\slope+\dslope)*2.8}) -- (2.8,0) node[below, font=\footnotesize] {$b$};
+
+        \node[circle, fill=teal!85!black, inner sep=1.3pt] at (2.0,{\slope*2.0}) {};
+
+        \node[above, font=\scriptsize, blue!90!black, fill=white, fill opacity=0.85, text opacity=1, inner sep=1pt] at (1.3, 1.25) {$+\Delta S_1$};
+        \node[font=\scriptsize, red!90!black, fill=white, fill opacity=0.85, text opacity=1, inner sep=1pt] at (2.45, 2.12) {$-\Delta S_2$};
+
+        \node[below, font=\small, align=center] at (1.8,-0.6) {(b) $J(x)$ の最小時\\ $\beta = \sqrt{\frac{a^2+b^2}{2}}$（二乗平均）};
+      \end{scope}
+    \end{tikzpicture}
+    \caption{$I(x)$ と $J(x)$ が最小となる条件の図形的解釈}
+    \label{fig:optimal_I_J}
+  \end{figure}
 
   さて，翻ってこの問題では，上の$I(x)$や$J(x)$とは異なり，原始関数$G(t,x)$を直接求めることで最小値を求めた．
   この問題の構造をより明確に理解するため，極力原始関数を求めずに抽象的なまま式展開を進めよう．
@@ -176,7 +337,61 @@
   これは図形的に考えると，$q(t)$の$0\le t\le 1$の面積をちょうど半分に分割するような$x$がいくつか，ということに他ならない．
   かくして$I(x)$や$J(x)$と同様に，図形的な解釈にまで持ち込むことができるわけである．
 
-  % TODO: 図形的な解釈の図
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=stealth, scale=0.85, every node/.style={font=\small}, x=5.5cm, y=3.8cm]
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-0.12,0) -- (1.25,0) node[right] {$t$};
+      \draw[->, thick, gray!80!black] (0,-0.12) -- (0,1.25) node[above] {$y$};
+      \node[below left, font=\footnotesize] at (0,0) {$O$};
+
+      \def\xval{0.4142}
+
+      % S1 領域: t in [0, xval]
+      \fill[pattern=north east lines, pattern color=blue!70!black]
+      (0,0) -- (0,1.0) --
+      plot[domain=0:\xval, samples=30] (\x, {1/(\x+1)}) --
+      (\xval,0) -- cycle;
+
+      % S2 領域: t in [xval, 1]
+      \fill[pattern=north west lines, pattern color=teal!70!black]
+      (\xval,0) -- (\xval, {1/(\xval+1)}) --
+      plot[domain=\xval:1, samples=30] (\x, {1/(\x+1)}) --
+      (1,0) -- cycle;
+
+      % 曲線 y = q(t) = 1/(t+1)
+      \draw[very thick, blue!85!black] plot[domain=0:1.15, samples=40] (\x, {1/(\x+1)})
+      node[above right, font=\footnotesize] {$y = q(t) = \frac{1}{t+1}$};
+
+      % 境界・代表点
+      \draw[densely dotted, thick, gray!70!black] (\xval, {1/(\xval+1)}) -- (\xval,0)
+      node[below=2pt, font=\footnotesize] {$x = \sqrt{2}-1$};
+      \draw[densely dotted, thick, gray!70!black] (1, 0.5) -- (1,0)
+      node[below=2pt, font=\footnotesize] {$1$};
+
+      \node[left, font=\footnotesize] at (0,1.0) {$1$};
+      \draw[densely dotted, thick, gray!70!black] (\xval, {1/(\xval+1)}) -- (0, {1/(\xval+1)})
+      node[left, font=\footnotesize] {$\frac{1}{\sqrt{2}}$};
+      \draw[densely dotted, thick, gray!70!black] (1, 0.5) -- (0, 0.5)
+      node[left, font=\footnotesize] {$\frac{1}{2}$};
+
+      \node[circle, fill=blue!85!black, inner sep=1.3pt] at (0,1.0) {};
+      \node[circle, fill=blue!85!black, inner sep=1.3pt] at (\xval, {1/(\xval+1)}) {};
+      \node[circle, fill=blue!85!black, inner sep=1.3pt] at (1,0.5) {};
+
+      % 面積ラベル (白抜き背景で重なりを回避)
+      \node[blue!90!black, font=\small, fill=white, fill opacity=0.88, text opacity=1, inner sep=2pt, rounded corners=2pt] at (0.2, 0.35)
+      {$S_1 = \frac{1}{2}\log 2$};
+      \node[teal!90!black, font=\small, fill=white, fill opacity=0.88, text opacity=1, inner sep=2pt, rounded corners=2pt] at (0.7, 0.28)
+      {$S_2 = \frac{1}{2}\log 2$};
+
+      % 下部注記
+      \node[below, font=\small, align=center] at (0.5,-0.2)
+      {$Q(x) = \frac{Q(0)+Q(1)}{2} \iff S_1 = S_2$};
+    \end{tikzpicture}
+    \caption{$q(t) = \dfrac{1}{t+1}$ の下側面積の二等分}
+    \label{fig:bisect_area_q}
+  \end{figure}
 
   残念ながら$q(t)=1/(t+1)$なので図形的に解釈できたからと言って解けるわけではないものの，この手の問題の背景を掴むことができる．
   また，\cref{eq:6}までわかれば$Q(x) = \log (x+1)$から容易に$x=\sqrt{2}-1$を導くことができる．
