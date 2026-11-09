@@ -246,20 +246,20 @@ const initialCat = categoryDataset['all'];
 							cx="140"
 							cy="140"
 							r={radius}
-							fill="transparent"
+							fill="none"
 							stroke="rgba(255, 255, 255, 0.05)"
 							stroke-width={strokeWidth}
 						/>
 
 						<!-- 各分野のセグメント群 -->
 						<g data-segments-container>
-							{initialCat.segments.map((seg: any) => (
+							{initialCat.segments.filter((seg: any) => seg.count > 0).map((seg: any) => (
 								<circle
 									class="donut-segment"
 									cx="140"
 									cy="140"
 									r={radius}
-									fill="transparent"
+									fill="none"
 									stroke={seg.color}
 									stroke-width={strokeWidth}
 									stroke-dasharray={`${seg.dashLength} ${circumference - seg.dashLength}`}
@@ -576,7 +576,7 @@ const initialCat = categoryDataset['all'];
 							cx="140"
 							cy="140"
 							r="${radius}"
-							fill="transparent"
+							fill="none"
 							stroke="${seg.color}"
 							stroke-width="${strokeWidth}"
 							stroke-dasharray="${seg.dashLength} ${circumference - seg.dashLength}"
@@ -891,6 +891,7 @@ const initialCat = categoryDataset['all'];
 
 	.donut-segment {
 		cursor: pointer;
+		pointer-events: stroke;
 		transition: stroke-width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
 			opacity 0.25s ease,
 			filter 0.25s ease;
