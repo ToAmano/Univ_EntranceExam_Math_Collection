@@ -1,5 +1,5 @@
 \documentclass[../../main.tex]{subfiles}
-
+\usepackage{bclogo}
 \begin{document}
 \rhead{東工大後期$2011$年$1$番}
 \setcounter{equation}{0}
@@ -19,41 +19,47 @@
     \tdplotsetmaincoords{70}{120}
 
     \begin{tikzpicture}[
-        scale=2.0,
+        scale=2.2,
         tdplot_main_coords,
-        point/.style={circle,fill=gray,inner sep=0pt,minimum size=2pt},
-        label/.style={anchor=north west}
+        >=stealth,
+        every node/.style={font=\small}
       ]
 
-      % Origin
+      % 座標設定 (t > 1 の模式図として t=1.5 を想定)
       \coordinate (O) at (0,0,0);
-      \node [point] at (O) {};
-      \node [anchor=south west] at (O) {O};
+      \coordinate (A) at (1.5,0,0);
+      \coordinate (B) at (0,1.2,0);
+      \coordinate (C) at (0,0,1.2);
 
-      % Points A, B, C (assuming t=1)
-      \coordinate (A) at (2,0,0);
-      \coordinate (B) at (0,1,0);
-      \coordinate (C) at (0,0,1);
+      % 座標軸
+      \draw[->, thick, gray!80!black] (O) -- (2.3,0,0) node[anchor=north east]{$x$};
+      \draw[->, thick, gray!80!black] (O) -- (0,1.8,0) node[anchor=north west]{$y$};
+      \draw[->, thick, gray!80!black] (O) -- (0,0,1.8) node[anchor=south]{$z$};
 
-      % Axes
-      \draw [-Stealth,thick] (O) -> ++(2.5,0,0) node [label] {x};
-      \draw [-Stealth,thick] (O) -> ++(0,2.5,0) node [label] {y};
-      \draw [-Stealth,thick] (O) -> ++(0,0,2.5) node [label] {z};
+      % 奥の稜線（破線）
+      \draw[densely dashed, thick, blue!80!black] (O) -- (A);
+      \draw[densely dashed, thick, blue!80!black] (O) -- (B);
+      \draw[densely dashed, thick, blue!80!black] (O) -- (C);
 
-      % Draw the tetrahedron
-      \draw [thick] (O) -- (A) node [midway, below] {};
-      \draw [thick] (O) -- (B) node [midway, left] {};
-      \draw [thick] (O) -- (C) node [midway, above] {};
-      \draw [thick] (A) -- (B) node [midway, below right] {};
-      \draw [thick] (B) -- (C) node [midway, above left] {};
-      \draw [thick] (C) -- (A) node [midway, right] {};
+      % 面 ABC の塗り
+      \fill[cyan!20, opacity=0.4] (A) -- (B) -- (C) -- cycle;
 
-      % % Label the points
-      \node [label=below] at (A) {A(t,0,0)};
-      \node [label=right] at (B) {B(0,1,0)};
-      \node [label=above right] at (C) {C(0,0,1)};
+      % 手前の稜線（実線）
+      \draw[line width=1.2pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+
+      % 各頂点
+      \node[circle, fill=gray!80!black, inner sep=1.2pt] at (O) {};
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (A) {};
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (B) {};
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (C) {};
+
+      % 頂点ラベル
+      \node[below left=2pt] at (O) {$O$};
+      \node[below right=2pt, font=\footnotesize] at (A) {$A(t,0,0)$};
+      \node[right=2pt, font=\footnotesize] at (B) {$B(0,1,0)$};
+      \node[above right=2pt, font=\footnotesize] at (C) {$C(0,0,1)$};
     \end{tikzpicture}
-    \caption{四面体$OABC$の様子}
+    \caption{四面体$OABC$の様子（$t>1$ の模式図）}
     \label{2011-1:fig:1}
   \end{figure}
 
@@ -68,17 +74,18 @@
   \end{align}
   と表せる．
 
-  次に，内接円の半径$r$，中心$P$とすると，
+  次に，内接球の半径$r$，中心$P$とすると，
   \begin{align}
     V
-    & = \triangle \mathrm{POAB} + \triangle \mathrm{POBC} + \triangle \mathrm{POAC} +  \triangle \mathrm{PABC} \label{eq:2}
+    & = \bctetraedre \mathrm{POAB} + \bctetraedre \mathrm{POBC}
+    + \bctetraedre \mathrm{POAC} +  \bctetraedre \mathrm{PABC} \label{eq:2}
   \end{align}
   と，$4$つの四面体の体積の和として表せる．底面の三角形の面積はそれぞれ
   \begin{align}
-    \triangle \mathrm{OBC} & = \dfrac{1}{2}                                                          \\
-    \triangle \mathrm{OAC} & = \dfrac{t}{2}                                                          \\
-    \triangle \mathrm{OAB} & = \dfrac{t}{2}                                                          \\
-    \triangle \mathrm{ABC} & = \dfrac{1}{2}\sqrt{|\overrightarrow{AB}|^2|\overrightarrow{AC}|^2-(\overrightarrow{AB}\cdot\overrightarrow{AC})^2} \\
+    \bctetraedre \mathrm{OBC} & = \dfrac{1}{2}                                                          \\
+    \bctetraedre \mathrm{OAC} & = \dfrac{t}{2}                                                          \\
+    \bctetraedre \mathrm{OAB} & = \dfrac{t}{2}                                                          \\
+    \bctetraedre \mathrm{ABC} & = \dfrac{1}{2}\sqrt{|\overrightarrow{AB}|^2|\overrightarrow{AC}|^2-(\overrightarrow{AB}\cdot\overrightarrow{AC})^2} \\
     & = \dfrac{1}{2}\sqrt{(t^2+1)^2-t^4}                                      \\
     & = \dfrac{1}{2}\sqrt{2t^2+1}
   \end{align}
