@@ -9,28 +9,30 @@
   \tdplotsetmaincoords{70}{115}
   \begin{tikzpicture}[tdplot_main_coords, scale=2.4, >=stealth, every node/.style={font=\small}]
 
-    % --- 1. Koordinada dagiti uppat a vertex (Tetrahedron) ---
-    % A0 ti tuktok (apex), A1, A2, A3 ti base
-    \coordinate (A0) at (0, 0, 1.6);
-    \coordinate (A1) at ({1.3*cos(210)}, {1.3*sin(210)}, 0);
-    \coordinate (A2) at ({1.3*cos(330)}, {1.3*sin(330)}, 0);
-    \coordinate (A3) at ({1.3*cos(90)},  {1.3*sin(90)},  0);
+    % --- 1. 正四面体の頂点座標 (底面半径 R, 高さ H = sqrt(2) * R で厳密に正四面体) ---
+    \pgfmathsetmacro{\radR}{1.3}
+    \pgfmathsetmacro{\hTetra}{sqrt(2.0)*\radR} % ≈ 1.838
 
-    % --- 2. Kolor ti rabaw (Faces shading) ---
-    % Rabaw iti likud: A1-A2-A3 (base)
+    \coordinate (A0) at (0, 0, \hTetra);
+    \coordinate (A1) at ({\radR*cos(210)}, {\radR*sin(210)}, 0);
+    \coordinate (A2) at ({\radR*cos(330)}, {\radR*sin(330)}, 0);
+    \coordinate (A3) at ({\radR*cos(90)},  {\radR*sin(90)},  0);
+
+    % --- 2. 面の塗りつぶし ---
+    % 底面 A1-A2-A3
     \fill[blue!5, opacity=0.6] (A1) -- (A2) -- (A3) -- cycle;
-    % Rabaw iti sanguanan: A0-A1-A2
+    % 手前面 A0-A1-A2
     \fill[blue!15, opacity=0.6] (A0) -- (A1) -- (A2) -- cycle;
-    % Rabaw iti kanigid: A0-A1-A3
+    % 側面 A0-A1-A3
     \fill[blue!10, opacity=0.4] (A0) -- (A1) -- (A3) -- cycle;
 
-    % --- 3. Dagiti igid (Edges) ---
-    % Nailemmeng nga igid iti likud (dashed lines)
-    \draw[thick, dashed, gray!70] (A1) -- (A3);
-    \draw[thick, dashed, gray!70] (A2) -- (A1);
-    \draw[thick, dashed, gray!70] (A0) -- (A1);
+    % --- 3. 稜線 ---
+    % 奥側の隠れ線 (破線)
+    \draw[thick, dashed, gray!70!black] (A1) -- (A3);
+    \draw[thick, dashed, gray!70!black] (A2) -- (A1);
+    \draw[thick, dashed, gray!70!black] (A0) -- (A1);
 
-    % Nalitnaw nga igid iti sanguanan (solid lines)
+    % 手前の実線
     \draw[very thick, black] (A0) -- (A2) -- (A3) -- cycle;
 
     % --- 4. Dagiti pana ti transision (Probability 1/3) ---
@@ -97,7 +99,7 @@
   p_i(n)=\left(\dfrac{-1}{3}\right)^n\left(p_i(0)-\dfrac{1}{4}\right)+\dfrac{1}{4}
 \end{align}
 である．
-初期条件は\cref{eq:2}より$p_1(0)=0$，$p_0(1)=1$だから代入して
+初期条件は\cref{eq:2}より$p_1(0)=0$，$p_1(0)=1$だから代入して
 \begin{align}
   \begin{cases}
     p_0(n)=\dfrac{3}{4}\left(\dfrac{-1}{3}\right)^n+\dfrac{1}{4} \\
