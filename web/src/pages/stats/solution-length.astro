@@ -1,0 +1,1228 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { readSolutionMetrics, getCategoryMeta, buildProblemUrl } from '../../lib/solution-metrics.mjs';
+import { buildBreadcrumbListJsonLd } from '../../utils/seo';
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const metricsRes = readSolutionMetrics();
+const metrics = metricsRes.data;
+
+const checkedAt = metrics?.generated_at
+	? new Date(metrics.generated_at).toLocaleString('ja-JP', {
+			timeZone: 'Asia/Tokyo',
+			year: 'numeric',
+			month: '2-digit',
+			day: '2-digit',
+			hour: '2-digit',
+			minute: '2-digit',
+		})
+	: null;
+
+const breadcrumbJsonLd = buildBreadcrumbListJsonLd([
+	{ name: 'トップ', url: new URL(`${baseUrl}/`, Astro.site).href },
+	{ name: '統計', url: new URL(`${baseUrl}/stats/`, Astro.site).href },
+	{ name: '解答行数の分布', url: new URL(`${baseUrl}/stats/solution-length/`, Astro.site).href },
+]);
+
+const CATEGORY_TABS = [
+	{ id: 'overall', label: '全体', shortLabel: '全体' },
+	{ id: 'utokyo_zenki', label: '東大前期', shortLabel: '東大前' },
+	{ id: 'utokyo_kouki', label: '東大後期', shortLabel: '東大後' },
+	{ id: 'ukyoto_zenki', label: '京大前期', shortLabel: '京大前' },
+	{ id: 'ukyoto_kouki', label: '京大後期', shortLabel: '京大後' },
+	{ id: 'titech_zenki', label: '東工大前期', shortLabel: '東工前' },
+	{ id: 'titech_kouki', label: '東工大後期', shortLabel: '東工後' },
+];
+
+function getUnivLabel(univ: string): string {
+	switch (univ) {
+		case 'utokyo':
+			return '東京大学';
+		case 'ukyoto':
+			return '京都大学';
+		case 'titech':
+			return '東京工業大学';
+		default:
+			return univ;
+	}
+}
+
+function getExamLabel(exam: string): string {
+	return exam === 'zenki' ? '前期' : '後期';
+}
+---
+
+<Layout
+	title="解答行数の分布・記述量統計 | 大学入試数学アーカイブ"
+	description="東京大学・京都大学・東京工業大学の数学入試問題における解答記述量（行数）の統計・分布ヒストグラム・箱ひげ図・最長最短ランキング・分野別および年代推移の多角的可視化。"
+>
+	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+
+	<div class="metrics-page">
+		<nav class="breadcrumb" aria-label="パンくずリスト">
+			<a href={`${baseUrl}/`}>トップ</a>
+			<span class="sep" aria-hidden="true">&rsaquo;</span>
+			<a href={`${baseUrl}/stats/`}>統計</a>
+			<span class="sep" aria-hidden="true">&rsaquo;</span>
+			<span class="current" aria-current="page">解答行数の分布</span>
+		</nav>
+
+		<header class="page-hero">
+			<div class="hero-text">
+				<div class="hero-badge">DATA & ANALYTICS</div>
+				<h1>解答行数の分布・記述量統計</h1>
+				<p class="hero-lead">
+					手書き原稿から抽出した主解答（<code>\begin&#123;tikzpicture&#125;</code> 図やコメント行を除く実質行数）の分布・難易度・時代変遷を多角的に分析しています。
+				</p>
+			</div>
+			{checkedAt && (
+				<div class="hero-meta">
+					<span class="meta-label">最終集計</span>
+					<time class="meta-time">{checkedAt}</time>
+				</div>
+			)}
+		</header>
+
+		{!metrics ? (
+			<div class="empty-state glass">
+				<p>統計データ（<code>solution-metrics.json</code>）がまだ生成されていません。</p>
+				<p>CI または <code>python3 scratch/generate_solution_metrics.py</code> を実行してください。</p>
+			</div>
+		) : (
+			<>
+				<!-- KPI Summary Cards -->
+				<section class="kpi-section" aria-label="主要指標">
+					<div class="kpi-grid">
+						<div class="glass kpi-card highlight">
+							<span class="kpi-label">全体 平均行数</span>
+							<div class="kpi-value-row">
+								<span class="kpi-value">{metrics.overall.mean}</span>
+								<span class="kpi-unit">行</span>
+							</div>
+							<span class="kpi-sub">Q1: {metrics.overall.q1}行 〜 Q3: {metrics.overall.q3}行</span>
+						</div>
+
+						<div class="glass kpi-card">
+							<span class="kpi-label">中央値（標準的な解答）</span>
+							<div class="kpi-value-row">
+								<span class="kpi-value">{metrics.overall.median}</span>
+								<span class="kpi-unit">行</span>
+							</div>
+							<span class="kpi-sub">半数の解答が {metrics.overall.median} 行以内に収容</span>
+						</div>
+
+						<div class="glass kpi-card">
+							<span class="kpi-label">最長解答（最大値）</span>
+							<div class="kpi-value-row">
+								<span class="kpi-value red-val">{metrics.overall.max}</span>
+								<span class="kpi-unit">行</span>
+							</div>
+							{metrics.rankings.longest[0] && (
+								<a
+									href={buildProblemUrl(baseUrl, metrics.rankings.longest[0])}
+									class="kpi-link"
+								>
+									{getUnivLabel(metrics.rankings.longest[0].univ)} {metrics.rankings.longest[0].year}年 第{metrics.rankings.longest[0].question}問 &rarr;
+								</a>
+							)}
+						</div>
+
+						<div class="glass kpi-card">
+							<span class="kpi-label">最短解答（最小値）</span>
+							<div class="kpi-value-row">
+								<span class="kpi-value green-val">{metrics.overall.min}</span>
+								<span class="kpi-unit">行</span>
+							</div>
+							{metrics.rankings.shortest[0] && (
+								<a
+									href={buildProblemUrl(baseUrl, metrics.rankings.shortest[0])}
+									class="kpi-link green-link"
+								>
+									{getUnivLabel(metrics.rankings.shortest[0].univ)} {metrics.rankings.shortest[0].year}年 第{metrics.rankings.shortest[0].question}問 &rarr;
+								</a>
+							)}
+						</div>
+
+						<div class="glass kpi-card muted-card">
+							<span class="kpi-label">集計対象問題数</span>
+							<div class="kpi-value-row">
+								<span class="kpi-value">{metrics.overall.valid_solutions}</span>
+								<span class="kpi-unit">問</span>
+							</div>
+							<span class="kpi-sub">未収録・白紙 {metrics.overall.pending_solutions}問を除く全問</span>
+						</div>
+					</div>
+				</section>
+
+				<!-- Dimension 1: Distribution Histogram & Box Plot -->
+				<section class="panel-section" aria-label="行数分布と箱ひげ図">
+					<div class="section-header">
+						<h2>1. 解答行数の分布ヒストグラム ＆ 箱ひげ図</h2>
+						<p class="section-desc">
+							タブで大学・入試区分を切り替えて、記述量の偏りや広がりを比較できます。
+						</p>
+					</div>
+
+					<div class="tab-strip" role="tablist">
+						{CATEGORY_TABS.map((tab, idx) => (
+							<button
+								type="button"
+								role="tab"
+								class:list={['tab-button', { active: idx === 0 }]}
+								data-category={tab.id}
+								aria-selected={idx === 0 ? 'true' : 'false'}
+							>
+								{tab.label}
+							</button>
+						))}
+					</div>
+
+					{CATEGORY_TABS.map((tab, idx) => {
+						const catData = tab.id === 'overall' ? metrics.overall : metrics.categories[tab.id];
+						if (!catData) return null;
+						const maxHistCount = Math.max(...catData.histogram.map((h: any) => h.count), 1);
+
+						return (
+							<div
+								class:list={['category-panel', { active: idx === 0 }]}
+								id={`cat-panel-${tab.id}`}
+								role="tabpanel"
+							>
+								<!-- Summary mini badges -->
+								<div class="cat-summary-bar glass">
+									<div class="cat-stat-item">
+										<span class="stat-lbl">平均</span>
+										<span class="stat-val">{catData.mean} 行</span>
+									</div>
+									<div class="cat-stat-item">
+										<span class="stat-lbl">中央値</span>
+										<span class="stat-val">{catData.median} 行</span>
+									</div>
+									<div class="cat-stat-item">
+										<span class="stat-lbl">四分位範囲 (Q1〜Q3)</span>
+										<span class="stat-val">{catData.q1} 〜 {catData.q3} 行</span>
+									</div>
+									<div class="cat-stat-item">
+										<span class="stat-lbl">最小 〜 最大</span>
+										<span class="stat-val">{catData.min} 〜 {catData.max} 行</span>
+									</div>
+									<div class="cat-stat-item">
+										<span class="stat-lbl">有効問題数</span>
+										<span class="stat-val">{catData.count} 問</span>
+									</div>
+								</div>
+
+								<!-- SVG Histogram -->
+								<div class="chart-container glass">
+									<h3 class="chart-title">度数分布（ヒストグラム）</h3>
+									<div class="svg-wrap">
+										<svg
+											viewBox="0 0 800 280"
+											class="histogram-svg"
+											role="img"
+											aria-label={`${tab.label}の解答行数ヒストグラム`}
+										>
+											<!-- Background Grid -->
+											<line x1="60" y1="30" x2="760" y2="30" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="4" />
+											<line x1="60" y1="85" x2="760" y2="85" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="4" />
+											<line x1="60" y1="140" x2="760" y2="140" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="4" />
+											<line x1="60" y1="195" x2="760" y2="195" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="4" />
+											<line x1="60" y1="230" x2="760" y2="230" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" />
+
+											<!-- Y axis labels -->
+											<text x="50" y="35" text-anchor="end" font-size="11" fill="#94a3b8">{maxHistCount}</text>
+											<text x="50" y="145" text-anchor="end" font-size="11" fill="#94a3b8">{Math.round(maxHistCount / 2)}</text>
+											<text x="50" y="235" text-anchor="end" font-size="11" fill="#94a3b8">0</text>
+
+											<!-- Bars -->
+											{catData.histogram.map((bin: any, bIdx: number) => {
+												const barW = 70;
+												const gap = 16;
+												const x = 70 + bIdx * (barW + gap);
+												const barH = (bin.count / maxHistCount) * 190;
+												const y = 230 - barH;
+
+												return (
+													<g class="hist-bar-group" tab-index="0">
+														<rect
+															x={x}
+															y={y}
+															width={barW}
+															height={barH}
+															rx="4"
+															class="hist-rect"
+														/>
+														{bin.count > 0 && (
+															<text
+																x={x + barW / 2}
+																y={y - 6}
+																text-anchor="middle"
+																font-size="11"
+																font-weight="600"
+																fill="#e2e8f0"
+															>
+																{bin.count}
+															</text>
+														)}
+														<text
+															x={x + barW / 2}
+															y="250"
+															text-anchor="middle"
+															font-size="11"
+															fill="#cbd5e1"
+														>
+															{bin.bin}
+														</text>
+														<text
+															x={x + barW / 2}
+															y="266"
+															text-anchor="middle"
+															font-size="10"
+															fill="#64748b"
+														>
+															{bin.pct}%
+														</text>
+													</g>
+												);
+											})}
+										</svg>
+									</div>
+								</div>
+
+								<!-- SVG Box Plot -->
+								<div class="chart-container glass">
+									<h3 class="chart-title">五数要約（箱ひげ図）</h3>
+									<div class="svg-wrap">
+										<svg
+											viewBox="0 0 800 130"
+											class="boxplot-svg"
+											role="img"
+											aria-label={`${tab.label}の解答行数箱ひげ図`}
+										>
+											{(() => {
+												const scaleX = (val: number) => 60 + (val / 300) * 700;
+												const xMin = scaleX(catData.min);
+												const xQ1 = scaleX(catData.q1);
+												const xMed = scaleX(catData.median);
+												const xQ3 = scaleX(catData.q3);
+												const xMax = scaleX(catData.max);
+												const yBox = 40;
+												const hBox = 36;
+												const yMid = yBox + hBox / 2;
+
+												return (
+													<>
+														<!-- Axis scale -->
+														<line x1="60" y1="100" x2="760" y2="100" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" />
+														{[0, 50, 100, 150, 200, 250, 300].map((tick) => (
+															<g>
+																<line x1={scaleX(tick)} y1="100" x2={scaleX(tick)} y2="105" stroke="rgba(255, 255, 255, 0.2)" />
+																<text x={scaleX(tick)} y="118" text-anchor="middle" font-size="10" fill="#94a3b8">{tick}行</text>
+															</g>
+														))}
+
+														<!-- Whiskers -->
+														<line x1={xMin} y1={yMid} x2={xQ1} y2={yMid} stroke="#94a3b8" stroke-width="2" />
+														<line x1={xQ3} y1={yMid} x2={xMax} y2={yMid} stroke="#94a3b8" stroke-width="2" />
+														<!-- Min tick -->
+														<line x1={xMin} y1={yMid - 10} x2={xMin} y2={yMid + 10} stroke="#94a3b8" stroke-width="2" />
+														<!-- Max tick -->
+														<line x1={xMax} y1={yMid - 10} x2={xMax} y2={yMid + 10} stroke="#94a3b8" stroke-width="2" />
+
+														<!-- IQR Box -->
+														<rect
+															x={xQ1}
+															y={yBox}
+															width={xQ3 - xQ1}
+															height={hBox}
+															rx="4"
+															class="box-rect"
+														/>
+														<!-- Median Line -->
+														<line x1={xMed} y1={yBox} x2={xMed} y2={yBox + hBox} stroke="#ef4444" stroke-width="3" />
+
+														<!-- Labels -->
+														<text x={xMin} y={yBox - 8} text-anchor="middle" font-size="10" fill="#94a3b8">最小 {catData.min}</text>
+														<text x={xQ1} y={yBox - 8} text-anchor="middle" font-size="10" fill="#94a3b8">Q1 {catData.q1}</text>
+														<text x={xMed} y={yBox + hBox + 16} text-anchor="middle" font-size="11" font-weight="700" fill="#f87171">中央値 {catData.median}</text>
+														<text x={xQ3} y={yBox - 8} text-anchor="middle" font-size="10" fill="#94a3b8">Q3 {catData.q3}</text>
+														<text x={xMax} y={yBox - 8} text-anchor="middle" font-size="10" fill="#94a3b8">最大 {catData.max}</text>
+													</>
+												);
+											})()}
+										</svg>
+									</div>
+								</div>
+							</div>
+						);
+					})}
+				</section>
+
+				<!-- Dimension 2: Longest & Shortest Rankings -->
+				<section class="panel-section" aria-label="最長・最短解答ランキング">
+					<div class="section-header">
+						<h2>2. 最長・最短解答 TOP 10 ランキング</h2>
+						<p class="section-desc">
+							膨大な論証を要する重量級問題と、鮮やかに解ける短文超簡潔解答の対比です。問題名をクリックすると該当の解答・問題ページへ直接遷移できます。
+						</p>
+					</div>
+
+					<div class="rankings-grid">
+						<!-- Longest Column -->
+						<div class="ranking-column glass">
+							<div class="column-header longest-header">
+								<span class="icon" aria-hidden="true">📜</span>
+								<h3>最長解答 TOP 10（記述の重量級）</h3>
+							</div>
+							<div class="ranking-list">
+								{metrics.rankings.longest.map((item: any, idx: number) => {
+									return (
+										<div class="ranking-card">
+											<div class="rank-badge longest-badge">#{idx + 1}</div>
+											<div class="rank-info">
+												<div class="rank-title-row">
+													<a href={buildProblemUrl(baseUrl, item)} class="rank-problem-link">
+														{item.year}年 {getUnivLabel(item.univ)} {getExamLabel(item.exam)} 第{item.question}問
+													</a>
+													<span class="rank-lines-pill longest-pill">{item.lines} 行</span>
+												</div>
+												{item.tags && item.tags.length > 0 && (
+													<div class="tag-row">
+														{item.tags.map((tag: string) => (
+															<span class="mini-tag">{tag}</span>
+														))}
+													</div>
+												)}
+											</div>
+										</div>
+									);
+								})}
+							</div>
+						</div>
+
+						<!-- Shortest Column -->
+						<div class="ranking-column glass">
+							<div class="column-header shortest-header">
+								<span class="icon" aria-hidden="true">⚡</span>
+								<h3>最短解答 TOP 10（鮮やかな簡潔解）</h3>
+							</div>
+							<div class="ranking-list">
+								{metrics.rankings.shortest.map((item: any, idx: number) => {
+									return (
+										<div class="ranking-card">
+											<div class="rank-badge shortest-badge">#{idx + 1}</div>
+											<div class="rank-info">
+												<div class="rank-title-row">
+													<a href={buildProblemUrl(baseUrl, item)} class="rank-problem-link">
+														{item.year}年 {getUnivLabel(item.univ)} {getExamLabel(item.exam)} 第{item.question}問
+													</a>
+													<span class="rank-lines-pill shortest-pill">{item.lines} 行</span>
+												</div>
+												{item.tags && item.tags.length > 0 && (
+													<div class="tag-row">
+														{item.tags.map((tag: string) => (
+															<span class="mini-tag">{tag}</span>
+														))}
+													</div>
+												)}
+											</div>
+										</div>
+									);
+								})}
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Dimension 3: Mathematical Field Comparison -->
+				<section class="panel-section" aria-label="数学分野別の記述量比較">
+					<div class="section-header">
+						<h2>3. 数学分野（Topic）別の記述量比較</h2>
+						<p class="section-desc">
+							各分野タグ（<code>data/topic_tags.yaml</code> 準拠）ごとの平均行数・中央値・問題数です。タブで大学・入試区分を切り替えて、分野ごとの記述量の違いを比較できます。
+						</p>
+					</div>
+
+					<div class="tab-strip" role="tablist" aria-label="分野別記述量のカテゴリ選択">
+						{CATEGORY_TABS.map((tab, idx) => (
+							<button
+								type="button"
+								role="tab"
+								class:list={['field-tab-button', { active: idx === 0 }]}
+								data-field-category={tab.id}
+								aria-selected={idx === 0 ? 'true' : 'false'}
+							>
+								{tab.label}
+							</button>
+						))}
+					</div>
+
+					{CATEGORY_TABS.map((tab, idx) => {
+						const fields = tab.id === 'overall'
+							? metrics.by_field
+							: (metrics.categories[tab.id]?.by_field || []);
+						const maxMean = fields && fields.length > 0
+							? Math.max(...fields.map((f: any) => f.mean), 60)
+							: 90;
+
+						return (
+							<div
+								class:list={['field-category-panel', { active: idx === 0 }]}
+								id={`field-panel-${tab.id}`}
+								role="tabpanel"
+							>
+								<div class="table-container glass">
+									{!fields || fields.length === 0 ? (
+										<div class="empty-panel-msg">
+											該当する分野タグのデータがありません。
+										</div>
+									) : (
+										<table class="data-table">
+											<thead>
+												<tr>
+													<th>分野タグ</th>
+													<th class="num-col">問題数</th>
+													<th class="num-col">平均行数</th>
+													<th class="num-col">中央値</th>
+													<th>平均記述量バー（相対比較）</th>
+													<th class="num-col">最小 〜 最大</th>
+												</tr>
+											</thead>
+											<tbody>
+												{fields.map((f: any) => {
+													const barWidthPct = Math.min(Math.round((f.mean / maxMean) * 100), 100);
+													return (
+														<tr>
+															<td>
+																<span class="field-pill">{f.tag}</span>
+															</td>
+															<td class="num-col font-mono text-muted">{f.count}問</td>
+															<td class="num-col font-mono font-bold">{f.mean}行</td>
+															<td class="num-col font-mono text-muted">{f.median}行</td>
+															<td>
+																<div class="bar-track">
+																	<div class="bar-fill" style={`width: ${barWidthPct}%;`}></div>
+																</div>
+															</td>
+															<td class="num-col font-mono text-xs text-muted">{f.min} 〜 {f.max}行</td>
+														</tr>
+													);
+												})}
+											</tbody>
+										</table>
+									)}
+								</div>
+							</div>
+						);
+					})}
+				</section>
+
+				<!-- Dimension 4: Historical Era Trends -->
+				<section class="panel-section" aria-label="年代別の推移">
+					<div class="section-header">
+						<h2>4. 年代別の推移（1960年代 〜 2010年代）</h2>
+						<p class="section-desc">
+							指導要領改訂や出題傾向の変化に伴う、各大学・年代ごとの平均解答行数の推移です。
+						</p>
+					</div>
+
+					<div class="chart-container glass">
+						<div class="era-legend">
+							<span class="legend-item"><span class="legend-dot overall-dot"></span> 全体平均</span>
+							<span class="legend-item"><span class="legend-dot utokyo-dot"></span> 東京大学</span>
+							<span class="legend-item"><span class="legend-dot ukyoto-dot"></span> 京都大学</span>
+							<span class="legend-item"><span class="legend-dot titech-dot"></span> 東京工業大学</span>
+						</div>
+
+						<div class="svg-wrap">
+							<svg
+								viewBox="0 0 800 280"
+								class="era-svg"
+								role="img"
+								aria-label="年代別解答行数推移グラフ"
+							>
+								<!-- Grid Lines -->
+								<line x1="60" y1="30" x2="760" y2="30" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="4" />
+								<line x1="60" y1="85" x2="760" y2="85" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="4" />
+								<line x1="60" y1="140" x2="760" y2="140" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="4" />
+								<line x1="60" y1="195" x2="760" y2="195" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="4" />
+								<line x1="60" y1="230" x2="760" y2="230" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" />
+
+								<!-- Y axis labels (0 to 100 lines) -->
+								<text x="50" y="35" text-anchor="end" font-size="11" fill="#94a3b8">100行</text>
+								<text x="50" y="85" text-anchor="end" font-size="11" fill="#94a3b8">75行</text>
+								<text x="50" y="140" text-anchor="end" font-size="11" fill="#94a3b8">50行</text>
+								<text x="50" y="195" text-anchor="end" font-size="11" fill="#94a3b8">25行</text>
+								<text x="50" y="235" text-anchor="end" font-size="11" fill="#94a3b8">0行</text>
+
+								{(() => {
+									const eraScaleX = (idx: number) => 110 + idx * 125;
+									const eraScaleY = (val: number | null) => {
+										if (val === null) return 230;
+										return 230 - (val / 100) * 200;
+									};
+
+									const overallPoints = metrics.by_era.map((e: any, i: number) => `${eraScaleX(i)},${eraScaleY(e.mean)}`).join(' ');
+									const utokyoPoints = metrics.by_era.map((e: any, i: number) => `${eraScaleX(i)},${eraScaleY(e.utokyo)}`).join(' ');
+									const ukyotoPoints = metrics.by_era.map((e: any, i: number) => `${eraScaleX(i)},${eraScaleY(e.ukyoto)}`).join(' ');
+									const titechPoints = metrics.by_era.map((e: any, i: number) => `${eraScaleX(i)},${eraScaleY(e.titech)}`).join(' ');
+
+									return (
+										<>
+											<!-- Polyline paths -->
+											<polyline points={utokyoPoints} fill="none" stroke="#60a5fa" stroke-width="2.5" />
+											<polyline points={ukyotoPoints} fill="none" stroke="#34d399" stroke-width="2.5" />
+											<polyline points={titechPoints} fill="none" stroke="#fbbf24" stroke-width="2.5" />
+											<polyline points={overallPoints} fill="none" stroke="#f8fafc" stroke-width="3" stroke-dasharray="6,4" />
+
+											<!-- Dots and X Axis Labels -->
+											{metrics.by_era.map((e: any, i: number) => {
+												const cx = eraScaleX(i);
+												return (
+													<g>
+														<text x={cx} y="252" text-anchor="middle" font-size="11" font-weight="600" fill="#e2e8f0">
+															{e.era}
+														</text>
+														<text x={cx} y="268" text-anchor="middle" font-size="10" fill="#94a3b8">
+															({e.count}問)
+														</text>
+
+														<!-- Overall dot -->
+														<circle cx={cx} cy={eraScaleY(e.mean)} r="4" fill="#f8fafc" />
+														<text x={cx} y={eraScaleY(e.mean) - 8} text-anchor="middle" font-size="10" font-weight="700" fill="#f8fafc">
+															{e.mean}
+														</text>
+
+														<!-- Univ dots -->
+														{e.utokyo && <circle cx={cx} cy={eraScaleY(e.utokyo)} r="3" fill="#60a5fa" />}
+														{e.ukyoto && <circle cx={cx} cy={eraScaleY(e.ukyoto)} r="3" fill="#34d399" />}
+														{e.titech && <circle cx={cx} cy={eraScaleY(e.titech)} r="3" fill="#fbbf24" />}
+													</g>
+												);
+											})}
+										</>
+									);
+								})()}
+							</svg>
+						</div>
+					</div>
+				</section>
+
+				<!-- Methodology & Notes -->
+				<section class="panel-section methodology-section" aria-label="集計方法と注記">
+					<div class="section-header">
+						<h2>5. 集計基準・行数算出仕様</h2>
+					</div>
+					<div class="methodology-card glass">
+						<ul>
+							<li>
+								<strong>主解答の抽出:</strong> TeX 原稿内の <code>&#123;\bf [解答]&#125;</code>（または <code>\begin&#123;document&#125;</code>）から、次の見出し（<code>[別解]</code>、<code>[解説]</code>）または <code>\end&#123;document&#125;</code> の直前までのブロックを行数の対象としています。
+							</li>
+							<li>
+								<strong>除外対象:</strong> <code>\begin&#123;tikzpicture&#125; ... \end&#123;tikzpicture&#125;</code> の描画コード、空行、コメント行（<code>% ...</code>）、および改ページ・書式マクロ（<code>\newpage</code>, <code>\casesend</code>, <code>\vspace</code>, <code>\rhead</code> 等）は行数カウントから完全に除外しています。
+							</li>
+							<li>
+								<strong>未収録・白紙問題の除外:</strong> 手書き原稿が空欄、白紙、未対応注釈のみ、または <code>$\cdots$(答)</code> などの答えのみで途中論証のない問題（計 {metrics.overall.pending_solutions}問）は、統計の歪みを防ぐため自動検出して分布・平均値計算から除外しています。
+							</li>
+							<li>
+								<strong>自動更新:</strong> GitHub Actions のデプロイパイプラインにより、TeX ソースコードの更新に合わせて自動的に再走査・再集計されます。
+							</li>
+						</ul>
+					</div>
+				</section>
+			</>
+		)}
+	</div>
+
+	<script>
+		function setupCategoryTabs() {
+			const buttons = document.querySelectorAll<HTMLButtonElement>('.tab-button');
+			const panels = document.querySelectorAll<HTMLElement>('.category-panel');
+
+			buttons.forEach((btn) => {
+				btn.addEventListener('click', () => {
+					const targetCat = btn.getAttribute('data-category');
+					if (!targetCat) return;
+
+					buttons.forEach((b) => {
+						const isActive = b === btn;
+						b.classList.toggle('active', isActive);
+						b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+					});
+
+					panels.forEach((p) => {
+						const isTarget = p.id === `cat-panel-${targetCat}`;
+						p.classList.toggle('active', isTarget);
+					});
+				});
+			});
+		}
+
+		function setupFieldTabs() {
+			const buttons = document.querySelectorAll<HTMLButtonElement>('.field-tab-button');
+			const panels = document.querySelectorAll<HTMLElement>('.field-category-panel');
+
+			buttons.forEach((btn) => {
+				btn.addEventListener('click', () => {
+					const targetCat = btn.getAttribute('data-field-category');
+					if (!targetCat) return;
+
+					buttons.forEach((b) => {
+						const isActive = b === btn;
+						b.classList.toggle('active', isActive);
+						b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+					});
+
+					panels.forEach((p) => {
+						const isTarget = p.id === `field-panel-${targetCat}`;
+						p.classList.toggle('active', isTarget);
+					});
+				});
+			});
+		}
+
+		function initTabs() {
+			setupCategoryTabs();
+			setupFieldTabs();
+		}
+
+		initTabs();
+		document.addEventListener('astro:page-load', initTabs);
+	</script>
+</Layout>
+
+<style>
+	.metrics-page {
+		max-width: 1120px;
+		margin: 0 auto;
+		padding: 0.75rem 0.25rem 3.5rem;
+	}
+
+	.breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.9rem;
+		color: var(--text-muted);
+		margin-bottom: 1.5rem;
+	}
+	.breadcrumb a {
+		color: var(--primary);
+	}
+	.breadcrumb a:hover {
+		text-decoration: underline;
+	}
+	.breadcrumb .current {
+		color: var(--text-main);
+		font-weight: 600;
+	}
+
+	.page-hero {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		flex-wrap: wrap;
+		gap: 1.25rem;
+		margin-bottom: 2rem;
+		padding-bottom: 1.5rem;
+		border-bottom: 1px solid var(--border-color);
+	}
+	.hero-text {
+		max-width: 720px;
+	}
+	.hero-badge {
+		display: inline-block;
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		padding: 0.2rem 0.6rem;
+		border-radius: 9999px;
+		background: rgba(99, 102, 241, 0.2);
+		color: #a5b4fc;
+		border: 1px solid rgba(99, 102, 241, 0.4);
+		margin-bottom: 0.5rem;
+	}
+	.page-hero h1 {
+		font-size: 1.95rem;
+		font-weight: 800;
+		line-height: 1.25;
+		color: var(--text-main);
+		margin: 0 0 0.5rem;
+	}
+	.hero-lead {
+		font-size: 0.95rem;
+		line-height: 1.6;
+		color: var(--text-muted);
+		margin: 0;
+	}
+	.hero-lead code {
+		font-size: 0.85em;
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid var(--border-color);
+		padding: 0.1em 0.3em;
+		border-radius: 4px;
+	}
+	.hero-meta {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		font-size: 0.82rem;
+		color: var(--text-muted);
+	}
+	.meta-time {
+		font-family: var(--font-mono, monospace);
+		font-weight: 600;
+		color: var(--text-main);
+	}
+
+	/* KPI Grid */
+	.kpi-section {
+		margin-bottom: 2.5rem;
+	}
+	.kpi-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+		gap: 1rem;
+	}
+	.kpi-card {
+		padding: 1.1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+	.kpi-card.highlight {
+		border-color: rgba(96, 165, 250, 0.45);
+		background: linear-gradient(135deg, rgba(37, 99, 235, 0.18) 0%, rgba(15, 23, 42, 0.8) 100%);
+	}
+	.kpi-card.muted-card {
+		background: rgba(15, 23, 42, 0.5);
+	}
+	.kpi-label {
+		font-size: 0.82rem;
+		font-weight: 600;
+		color: var(--text-muted);
+	}
+	.kpi-value-row {
+		display: flex;
+		align-items: baseline;
+		gap: 0.25rem;
+	}
+	.kpi-value {
+		font-size: 2.1rem;
+		font-weight: 800;
+		font-family: var(--font-mono, monospace);
+		color: var(--text-main);
+		line-height: 1;
+	}
+	.red-val {
+		color: #f87171;
+	}
+	.green-val {
+		color: #4ade80;
+	}
+	.kpi-unit {
+		font-size: 0.85rem;
+		color: var(--text-muted);
+		font-weight: 600;
+	}
+	.kpi-sub {
+		font-size: 0.78rem;
+		color: var(--text-subtle);
+		line-height: 1.4;
+	}
+	.kpi-link {
+		font-size: 0.8rem;
+		color: #60a5fa;
+		text-decoration: none;
+		font-weight: 600;
+		margin-top: 0.1rem;
+	}
+	.kpi-link:hover {
+		text-decoration: underline;
+	}
+	.kpi-link.green-link {
+		color: #4ade80;
+	}
+
+	/* Panel Sections */
+	.panel-section {
+		margin-bottom: 3.5rem;
+	}
+	.section-header {
+		margin-bottom: 1.25rem;
+	}
+	.section-header h2 {
+		font-size: 1.4rem;
+		font-weight: 700;
+		color: var(--text-main);
+		margin: 0 0 0.4rem;
+	}
+	.section-desc {
+		font-size: 0.9rem;
+		color: var(--text-muted);
+		margin: 0;
+	}
+
+	/* Tab Strip */
+	.tab-strip {
+		display: flex;
+		gap: 0.4rem;
+		flex-wrap: wrap;
+		border-bottom: 1px solid var(--border-color);
+		margin-bottom: 1.5rem;
+		padding-bottom: 0.4rem;
+	}
+	.tab-button,
+	.field-tab-button {
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 8px;
+		padding: 0.5rem 0.85rem;
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: var(--text-muted);
+		cursor: pointer;
+		transition: all 0.15s ease;
+	}
+	.tab-button:hover,
+	.field-tab-button:hover {
+		color: var(--text-main);
+		background: rgba(255, 255, 255, 0.08);
+	}
+	.tab-button.active,
+	.field-tab-button.active {
+		color: #60a5fa;
+		background: rgba(37, 99, 235, 0.22);
+		border-color: rgba(96, 165, 250, 0.5);
+	}
+
+	/* Category Panel */
+	.category-panel,
+	.field-category-panel {
+		display: none;
+	}
+	.category-panel.active,
+	.field-category-panel.active {
+		display: block;
+	}
+
+	.empty-panel-msg {
+		padding: 2.5rem 1.5rem;
+		text-align: center;
+		color: var(--text-muted);
+		font-size: 0.9rem;
+	}
+
+	.cat-summary-bar {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.5rem;
+		border-radius: 12px;
+		padding: 0.85rem 1.25rem;
+		margin-bottom: 1.5rem;
+	}
+	.cat-stat-item {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+	.stat-lbl {
+		font-size: 0.75rem;
+		font-weight: 600;
+		color: var(--text-muted);
+	}
+	.stat-val {
+		font-size: 1.05rem;
+		font-weight: 700;
+		font-family: var(--font-mono, monospace);
+		color: var(--text-main);
+	}
+
+	/* Chart Container */
+	.chart-container {
+		border-radius: 14px;
+		padding: 1.25rem;
+		margin-bottom: 1.5rem;
+	}
+	.chart-title {
+		font-size: 1rem;
+		font-weight: 700;
+		color: var(--text-main);
+		margin: 0 0 1rem;
+	}
+	.svg-wrap {
+		width: 100%;
+		overflow-x: auto;
+	}
+	.histogram-svg,
+	.boxplot-svg,
+	.era-svg {
+		width: 100%;
+		min-width: 580px;
+		height: auto;
+		display: block;
+	}
+
+	/* SVG Hist Bar styling */
+	.hist-rect {
+		fill: #3b82f6;
+		transition: fill 0.15s ease;
+	}
+	.hist-bar-group:hover .hist-rect {
+		fill: #60a5fa;
+	}
+	.box-rect {
+		fill: rgba(59, 130, 246, 0.25);
+		stroke: #60a5fa;
+		stroke-width: 1.5;
+	}
+
+	/* Rankings Section */
+	.rankings-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+		gap: 1.5rem;
+	}
+	.ranking-column {
+		border-radius: 14px;
+		overflow: hidden;
+	}
+	.column-header {
+		padding: 1rem 1.25rem;
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		border-bottom: 1px solid var(--border-color);
+	}
+	.longest-header {
+		background: rgba(239, 68, 68, 0.12);
+		border-bottom-color: rgba(239, 68, 68, 0.25);
+	}
+	.shortest-header {
+		background: rgba(16, 185, 129, 0.12);
+		border-bottom-color: rgba(16, 185, 129, 0.25);
+	}
+	.column-header h3 {
+		font-size: 1.05rem;
+		font-weight: 700;
+		margin: 0;
+		color: var(--text-main);
+	}
+	.ranking-list {
+		padding: 0.5rem 0.75rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+	.ranking-card {
+		display: flex;
+		align-items: center;
+		gap: 0.85rem;
+		padding: 0.65rem 0.75rem;
+		border-radius: 8px;
+		transition: background 0.15s ease;
+	}
+	.ranking-card:hover {
+		background: rgba(255, 255, 255, 0.04);
+	}
+	.rank-badge {
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 0.85rem;
+		font-weight: 800;
+		font-family: var(--font-mono, monospace);
+		flex-shrink: 0;
+	}
+	.longest-badge {
+		background: rgba(239, 68, 68, 0.2);
+		color: #fca5a5;
+		border: 1px solid rgba(239, 68, 68, 0.35);
+	}
+	.shortest-badge {
+		background: rgba(16, 185, 129, 0.2);
+		color: #86efac;
+		border: 1px solid rgba(16, 185, 129, 0.35);
+	}
+	.rank-info {
+		flex: 1;
+		min-width: 0;
+	}
+	.rank-title-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0.5rem;
+		margin-bottom: 0.2rem;
+	}
+	.rank-problem-link {
+		font-size: 0.92rem;
+		font-weight: 600;
+		color: #60a5fa;
+		text-decoration: none;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.rank-problem-link:hover {
+		text-decoration: underline;
+	}
+	.rank-lines-pill {
+		font-size: 0.8rem;
+		font-weight: 700;
+		font-family: var(--font-mono, monospace);
+		padding: 0.15rem 0.5rem;
+		border-radius: 9999px;
+		white-space: nowrap;
+	}
+	.longest-pill {
+		background: rgba(239, 68, 68, 0.2);
+		color: #fca5a5;
+		border: 1px solid rgba(239, 68, 68, 0.3);
+	}
+	.shortest-pill {
+		background: rgba(16, 185, 129, 0.2);
+		color: #86efac;
+		border: 1px solid rgba(16, 185, 129, 0.3);
+	}
+	.tag-row {
+		display: flex;
+		gap: 0.35rem;
+		flex-wrap: wrap;
+	}
+	.mini-tag {
+		font-size: 0.72rem;
+		background: rgba(255, 255, 255, 0.06);
+		color: var(--text-muted);
+		padding: 0.1rem 0.4rem;
+		border-radius: 4px;
+	}
+
+	/* Field Table */
+	.table-container {
+		border-radius: 14px;
+		overflow-x: auto;
+	}
+	.data-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.9rem;
+	}
+	.data-table th,
+	.data-table td {
+		padding: 0.75rem 1rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+		text-align: left;
+	}
+	.data-table th {
+		background: rgba(15, 23, 42, 0.85);
+		font-weight: 600;
+		color: var(--text-muted);
+		font-size: 0.8rem;
+	}
+	.data-table tbody tr:hover {
+		background: rgba(255, 255, 255, 0.03);
+	}
+	.num-col {
+		text-align: right !important;
+		white-space: nowrap;
+	}
+	.field-pill {
+		font-weight: 600;
+		color: var(--text-main);
+	}
+	.bar-track {
+		width: 100%;
+		min-width: 120px;
+		height: 10px;
+		background: rgba(255, 255, 255, 0.08);
+		border-radius: 9999px;
+		overflow: hidden;
+	}
+	.bar-fill {
+		height: 100%;
+		background: linear-gradient(90deg, #3b82f6, #60a5fa);
+		border-radius: 9999px;
+	}
+
+	/* Era Trend Legend */
+	.era-legend {
+		display: flex;
+		gap: 1.5rem;
+		flex-wrap: wrap;
+		margin-bottom: 1rem;
+		font-size: 0.85rem;
+	}
+	.legend-item {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		color: var(--text-muted);
+	}
+	.legend-dot {
+		width: 12px;
+		height: 12px;
+		border-radius: 50%;
+	}
+	.overall-dot {
+		background: #f8fafc;
+	}
+	.utokyo-dot {
+		background: #60a5fa;
+	}
+	.ukyoto-dot {
+		background: #34d399;
+	}
+	.titech-dot {
+		background: #fbbf24;
+	}
+
+	/* Methodology Card */
+	.methodology-card {
+		border-radius: 14px;
+		padding: 1.25rem 1.5rem;
+	}
+	.methodology-card ul {
+		margin: 0;
+		padding-left: 1.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.65rem;
+		font-size: 0.88rem;
+		line-height: 1.6;
+		color: var(--text-muted);
+	}
+	.methodology-card li strong {
+		color: var(--text-main);
+	}
+	.methodology-card code {
+		font-size: 0.85em;
+		background: rgba(255, 255, 255, 0.08);
+		border: 1px solid var(--border-color);
+		padding: 0.1em 0.3em;
+		border-radius: 4px;
+	}
+
+	.empty-state {
+		padding: 2rem;
+		text-align: center;
+		border-radius: 14px;
+		color: var(--text-muted);
+	}
+
+	/* Responsive */
+	@media (max-width: 640px) {
+		.page-hero h1 {
+			font-size: 1.5rem;
+		}
+		.hero-meta {
+			align-items: flex-start;
+		}
+		.rankings-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
