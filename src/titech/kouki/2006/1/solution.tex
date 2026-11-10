@@ -213,7 +213,7 @@
         \pgfmathsetmacro{\alpha}{1/sqrt(2*\aval)};
         \pgfmathsetmacro{\beta}{1/sqrt(2*\bval)};
         \addplot[only marks, mark=*, mark size=2pt] coordinates {(\alpha, \beta)};
-        \node[below left] at (axis cs:\alpha, \beta) {Q};
+        \node[above] at (axis cs:\alpha, \beta) {Q};
       \end{axis}
     \end{tikzpicture}
     \caption{$C$および$C'$の概形}
@@ -274,7 +274,7 @@
         % The x-domain for this curve is from 0 to 1/sqrt(a) (where y=0)
         \addplot[name path=A, domain=0:sqrt(1/\aval)-0.2, samples=100, red, thick] plot (\x, {\aval*x*x/sqrt(\bval*(1-\aval*x*x))});
         \addplot[domain=0:sqrt(1/\aval), samples=100, blue, thick] plot (\x, {sqrt((1-\aval*\x*\x)/\bval)});
-        \node[below right] at (axis cs:1.2,1.2) {C}; % Label for curve C
+        \node[below right,font=\small] at (axis cs:1.2,1.1) {$ax^2+bx^2=1$}; % Label for curve C
 
         % Plot the line lt: y = tx
         % Determine an x-coordinate for point P to ensure the line is drawn appropriately.
@@ -300,7 +300,7 @@
         \pgfmathsetmacro{\alphaa}{1/sqrt(2*\aval)};
         \pgfmathsetmacro{\betaa}{1/sqrt(2*\bval)};
         \addplot[only marks, mark=*, mark size=2pt] coordinates {(\alphaa, \betaa)};
-        \node[below left] at (axis cs:\alphaa, \betaa) {Q};
+        \node[above] at (axis cs:\alphaa, \betaa) {Q};
         \draw[name path = B, dashed, black, thick] (axis cs:0,\betaa) -- (axis cs:\alphaa,\betaa);
         \addplot[pattern=north west lines] fill between [of=A and B, soft clip={domain=0:\alphaa}];
         \node[left] at (axis cs:0,\betaa) {$\beta$};
@@ -356,12 +356,13 @@
 
   答案上工夫できる点があるとすれば，以下のような楕円が出てくるときに使える手法は検討の余地がある．
 
+  % TODO: 変換後の座標の図
+
   一つ目の方法として，この手の楕円が登場するときのテクニックである
   \begin{align}
-    \begin{dcases}
-      x' = \dfrac{x}{\sqrt{a}} \\
-      y' = \dfrac{y}{\sqrt{b}}
-    \end{dcases}
+    x' = \sqrt{a}x,
+    \quad
+    y' = \sqrt{b}y
   \end{align}
   なる変数変換が考えられる．
   これを使うと楕円を円
@@ -369,16 +370,16 @@
     (x')^2+(y')^2=1
   \end{align}
   に変換できる．
-  すると，$P(X,tX)$は$P(X/\sqrt{a},tX/\sqrt{b})$に変換され，
-  この座標系での$PP'$の長さ
+  同時に直線$y=tx$は$y'=t\sqrt{\dfrac{b}{a}}x'$に変換される．
+  この座標上で$P(x', t\sqrt{\dfrac{b}{a}}x')$を取ってこの座標系での$PP'$の長さ
   \begin{align}
-    PP' = \dfrac{t\sqrt{a}x'}{\sqrt{b}} + \sqrt{1-(x')^2}
+    PP' = t\sqrt{\dfrac{b}{a}}x' + \sqrt{1-(x')^2}
   \end{align}
   が最大の時，元の座標系での$PP'$の最大である．
   残念ながらこの方法は今回問題を簡単にはしてくれない．
 
   二つ目の方法として，楕円上の点をパラメータ表示することも考えられる．
-  すなわちパラメータ$\theta\, -\pi/2 \ge \theta \ge 0$を用いて
+  すなわちパラメータ$\theta \, (-\pi/2 \le \theta \le 0)$を用いて
   $P'(\cos\theta/\sqrt{a},\sin\theta/\sqrt{b})$とおくと
   $P(\cos\theta/\sqrt{a},t\cos\theta/\sqrt{a})$であって
   \begin{align}
@@ -391,34 +392,34 @@
     & = \dfrac{t}{\sqrt{a}}\cos\theta + \dfrac{1}{\sqrt{b}}\sin\theta     \\
     & = \sqrt{\dfrac{t^2}{a}+\dfrac{1}{b}}\sin\left(\theta + \beta\right)
   \end{align}
-  なる$\beta$が存在する．ただし$0 \ge \beta \ge \pi/2$および
+  なる$\beta$が存在する．ただし$0 \le \beta \le \pi/2$および
   \begin{align}
     \begin{dcases}
-      \cos\beta = \dfrac{\dfrac{1}{\sqrt{b}}}{\sqrt{\dfrac{t^2}{a}+\dfrac{1}{b}}} = \dfrac{a}{bt^2+a} \\
-      \sin\beta = \dfrac{\dfrac{t}{\sqrt{a}}}{\sqrt{\dfrac{t^2}{a}+\dfrac{1}{b}}} = \dfrac{bt^2}{bt^2+a}
+      \cos\beta = \dfrac{\dfrac{1}{\sqrt{b}}}{\sqrt{\dfrac{t^2}{a}+\dfrac{1}{b}}} = \sqrt{\dfrac{a}{bt^2+a}} \\
+      \sin\beta = \dfrac{\dfrac{t}{\sqrt{a}}}{\sqrt{\dfrac{t^2}{a}+\dfrac{1}{b}}} = \sqrt{\dfrac{bt^2}{bt^2+a}}
     \end{dcases}
   \end{align}
   である．
 
-  したがって$0 \ge \theta \ge \pi/2$の範囲でのこの最大値は$\theta + \beta = \pi/2$の時で
+  したがって$0 \le \theta \le \pi/2$の範囲でのこの最大値は$\theta + \beta = \pi/2$の時で
   \begin{align}
-    \max g(\theta) =  \sqrt{\dfrac{bt^2+a}{ab}}
+    \max g(\theta) = \sqrt{\dfrac{t^2}{a}+\dfrac{1}{b}} = \sqrt{\dfrac{bt^2+a}{ab}}
   \end{align}
   であり，したがってこの時の$P(X,Y)$の座標は
   \begin{align}
     X
-    & = \cos\theta/\sqrt{a}        \\
-    & = \cos(\pi/2-\beta)/\sqrt{a} \\
-    & = \sin\beta/\sqrt{a}         \\
-    & = \dfrac{bt^2}{abt^2+a^2}
+    & = \dfrac{\cos\theta}{\sqrt{a}}        \\
+    & = \dfrac{\cos(\pi/2-\beta)}{\sqrt{a}} \\
+    & = \dfrac{\sin\beta}{\sqrt{a}}         \\
+    & = \sqrt{\dfrac{bt^2}{abt^2+a^2}}
   \end{align}
   および
   \begin{align}
     Y
-    & =  \sin\theta/\sqrt{b}        \\
-    & =  \sin(\pi/2-\beta)/\sqrt{b} \\
-    & =  \cos\beta/\sqrt{b}         \\
-    & =  \dfrac{a}{b^2t^2+ab}
+    & =  \dfrac{\sin\theta}{\sqrt{b}}        \\
+    & =  \dfrac{\sin(\pi/2-\beta)}{\sqrt{b}} \\
+    & =  \dfrac{\cos\beta}{\sqrt{b}}         \\
+    & =  \sqrt{\dfrac{a}{b^2t^2+ab}}
   \end{align}
   であり，解答に合流する．
   このパラメータの置き方だと$g$の微分が不要なので多少楽である．
