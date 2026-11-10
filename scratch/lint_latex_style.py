@@ -133,6 +133,41 @@ def check_equation_env(text):
     return errors
 
 
+# \end{align} の直前の改行 \\（\\[2pt] 等を含む）は中身のない行を作り、
+# PDF に空の式番号が出る（Issue #1414）。間に \label/\notag だけがある場合も
+# 中身のない行なので検出する。
+TRAILING_ALIGN_BREAK_RE = re.compile(
+    r'(?<!\\)\\\\(?:\s*\[[^\]]*\])?'
+    r'(?P<tail>(?:\s|\\(?:notag|nonumber)(?![a-zA-Z])|\\label\{[^}]*\})*)'
+    r'\\end\{align\}')
+
+
+def check_trailing_align_break(text):
+    errors = []
+    for m in TRAILING_ALIGN_BREAK_RE.finditer(text):
+        errors.append((
+            line_of(text, m.start()),
+            "\\end{align} の直前に改行 \\\\ がある（空の式番号が出る）",
+        ))
+    return errors
+
+
+def _find_trailing_align_break_edits(text, raw):
+    """間が空白・コメントだけの場合に限り、末尾の \\\\ を削除する。
+    \\label を挟む場合に削除するとラベルが前の行へ移り番号の意味が変わるため、
+    手動修正に任せる。"""
+    stripped = strip_comments(raw)
+    edits = []
+    for m in TRAILING_ALIGN_BREAK_RE.finditer(stripped):
+        if m.group('tail').strip() or text[m.start()] == ' ':
+            continue
+        start = m.start()
+        while start > 0 and stripped[start - 1] in ' \t':
+            start -= 1
+        edits.append((start, m.start('tail'), ''))
+    return edits
+
+
 def _find_equation_env_edits(text):
     edits = []
     for m in re.finditer(r'\\begin\{\s*equation\*?\s*\}', text):
@@ -1171,6 +1206,10 @@ def fix_text(raw):
     for start, end, replacement in sorted(eq_edits, reverse=True):
         raw = raw[:start] + replacement + raw[end:]
 
+    break_edits = _find_trailing_align_break_edits(_mask_protected_regions(raw), raw)
+    for start, end, replacement in sorted(break_edits, reverse=True):
+        raw = raw[:start] + replacement + raw[end:]
+
     heading_edits = _find_solution_heading_edits(_mask_protected_regions(raw), raw)
     for start, end, replacement in sorted(heading_edits, reverse=True):
         raw = raw[:start] + replacement + raw[end:]
@@ -1396,6 +1435,7 @@ def lint_file(path):
     errors = []
     errors += check_align_star(text)
     errors += check_equation_env(text)
+    errors += check_trailing_align_break(text)
     errors += check_display_math_brackets(text)
     errors += check_display_math_dollars(text)
     errors += check_punctuation(text)

@@ -142,6 +142,39 @@ def test_math_environment_rejects_untyped_label(tmp_path):
     assert any('eq:1' in message and '形式' in message for _, message in errors)
 
 
+def test_trailing_break_before_end_align_rejected_and_fixed():
+    # Issue #1414: \end{align} 直前の \\ は空の式番号を作る
+    source = r'''
+\begin{align}
+  x &= 1 \\
+  y &= 2 \\
+\end{align}
+\begin{align}
+  z = 3 \\[2pt] % コメント
+\end{align}
+\begin{align}
+  a = 1 \\
+  \label{eq:9}
+\end{align}
+\begin{align}
+  b = 1 \\
+  c = 2
+\end{align}
+'''
+    errors = lint.check_trailing_align_break(lint.strip_comments(source))
+    assert [line for line, _ in errors] == [4, 7, 10]
+
+    fixed = lint.fix_text(source)
+    assert r'y &= 2' + '\n' + r'\end{align}' in fixed
+    assert r'z = 3 % コメント' in fixed
+    # \label を挟む場合は番号の意味が変わるため自動修正しない
+    assert r'a = 1 \\' in fixed
+    # 行の途中の \\ は変更しない
+    assert r'b = 1 \\' in fixed
+    assert [line for line, _ in lint.check_trailing_align_break(lint.strip_comments(fixed))] == [10]
+    assert lint.fix_text(fixed) == fixed
+
+
 def test_equation_environment_rejected_and_fixed(tmp_path):
     source = r'''
 \begin{equation}
