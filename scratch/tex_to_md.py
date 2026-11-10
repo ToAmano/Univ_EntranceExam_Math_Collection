@@ -264,8 +264,7 @@ def _render_list_items(body, depth):
     items = _split_top_level_list_items(body)[1:]  # 先頭要素は最初の \item より前の空文字列
     indent = '    ' * depth
     content_indent = '    ' * (depth + 1)
-    res = []
-    count = 1
+    rendered = []
     for raw in items:
         raw = raw.strip('\n')
         if not raw.strip():
@@ -273,6 +272,7 @@ def _render_list_items(body, depth):
         pieces = _extract_block_pieces(raw, depth)
         chunks = []
         started = False
+        has_label = False
         for kind, val in pieces:
             if kind == 'text':
                 val = val.strip('\n')
@@ -294,6 +294,7 @@ def _render_list_items(body, depth):
                             val = rest
                         else:
                             val = f'**{label_text}**　{rest}'
+                            has_label = True
                     else:
                         val = val.lstrip('\n')
                 if not val.strip():
@@ -313,8 +314,20 @@ def _render_list_items(body, depth):
         text_block = '\n\n'.join(c for c in chunks if c.strip())
         if not text_block:
             continue
-        res.append(f"{indent}{count}.  {text_block}")
-        count += 1
+        rendered.append((text_block, has_label))
+
+    # 全項目が \item[(1)] や \item[$1^\circ$] のような独自ラベルを持つ場合、
+    # 番号付きリストにするとラベルと自動番号が「1. 1°」のように二重に出る
+    # (Issue #1304, #1305)。番号なしリストにし、行頭記号は .labeled-list の
+    # CSS で消す。マーカー `-   ` は `N.  ` と同じ4桁幅なので、ネストした
+    # ブロックの字下げはそのまま使える。
+    labeled = bool(rendered) and all(has_label for _, has_label in rendered)
+    if labeled:
+        res = [f"{indent}-   {text_block}" for text_block, _ in rendered]
+        return (f'\n\n{indent}<div class="labeled-list">\n\n'
+                + "\n\n".join(res)
+                + f'\n\n{indent}</div>\n\n')
+    res = [f"{indent}{count}.  {text_block}" for count, (text_block, _) in enumerate(rendered, 1)]
     return "\n\n" + "\n\n".join(res) + "\n\n"
 
 

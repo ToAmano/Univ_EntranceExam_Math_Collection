@@ -126,8 +126,8 @@ class TestConverter(unittest.TestCase):
         \end{enumerate}
         '''
         processed = self.convert(latex)
-        self.assertIn('1.  **①**　$a<0$', processed)
-        self.assertIn('2.  **②**　$b>0$', processed)
+        self.assertIn('-   **①**　$a<0$', processed)
+        self.assertIn('-   **②**　$b>0$', processed)
 
     def test_pifont_ding_decimal_and_variants(self):
         # 172 -> ①, 182 -> ❶, 51 -> ✓, curly quotes, lowercase hex
@@ -139,8 +139,23 @@ class TestConverter(unittest.TestCase):
         # Direct call to _render_list_items also converts \ding in labels
         body = r'\item[\ding{"AC}] 第一条件' + '\n' + r'\item[\ding{"AD}] 第二条件'
         rendered = tex_to_md._render_list_items(body, 0)
-        self.assertIn('1.  **①**　第一条件', rendered)
-        self.assertIn('2.  **②**　第二条件', rendered)
+        self.assertIn('<div class="labeled-list">', rendered)
+        self.assertIn('-   **①**　第一条件', rendered)
+        self.assertIn('-   **②**　第二条件', rendered)
+
+    def test_labeled_items_do_not_get_auto_numbers(self):
+        # Issue #1304, #1305: \item[$1^\circ$] 等の独自ラベルと自動番号が二重にならない
+        body = r'\item[$1^\circ$] 3辺とも違う' + '\n' + r'\item[$2^\circ$] 2等辺'
+        rendered = tex_to_md._render_list_items(body, 0)
+        self.assertIn('-   **$1^\\circ$**　3辺とも違う', rendered)
+        self.assertNotIn('1.  ', rendered)
+
+    def test_unlabeled_items_keep_auto_numbers(self):
+        body = r'\item 第一' + '\n' + r'\item 第二'
+        rendered = tex_to_md._render_list_items(body, 0)
+        self.assertIn('1.  第一', rendered)
+        self.assertIn('2.  第二', rendered)
+        self.assertNotIn('labeled-list', rendered)
 
     def test_theorem_and_proof_converted_to_cards(self):
         latex = r'''
