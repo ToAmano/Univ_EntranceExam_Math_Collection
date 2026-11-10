@@ -19,17 +19,20 @@
     t^n
     = & \{1+(t-1)\}^n                                  \\
     = & 1 + (t-1) + \dfrac{n(n-1)}{2!}(t-1)^2+\cdots    \\
-    & +\dfrac{n(n-1)\cdots(n-k+1)}{k!}(t-1)^k +\cdots \\
-    > & \dfrac{n(n-1)\cdots(n-k+1)}{k!}(t-1)^k
+    & +\dfrac{n(n-1)\cdots(n-k+1)(n-k)}{(k+1)!}(t-1)^{k+1} +\cdots \\
+    > & \dfrac{n(n-1)\cdots(n-k+1)(n-k)}{(k+1)!}(t-1)^{k+1}
   \end{align}
   だから，$n > 0$ の時
   \begin{align}
-    0 < n^k \cdot r^n = \dfrac{n^k}{t^n} < \dfrac{n^k}{\dfrac{n(n-1)\cdots(n-k+1)}{k!}(t-1)^k} \nonumber \\
+    0 < n^k \cdot r^n = \dfrac{n^k}{t^n}
+    < \dfrac{n^k}{\dfrac{n(n-1)\cdots(n-k)}{(k+1)!}(t-1)^{k+1}} \nonumber \\
     = \dfrac{n^k}{n(n-1)\cdots(n-k)}\dfrac{(k+1)!}{(t-1)^{k+1}}\label{eq:1}
   \end{align}
   であり，
   \begin{align}
-    \dfrac{n^k }{n(n-1)\cdots(n-k+1)} = \dfrac{1}{\left(1-\dfrac{1}{n}\right)\cdots\left(1-\dfrac{k-1}{n}\right) } \xrightarrow{n\to\infty} 0
+    \dfrac{n^k }{n(n-1)\cdots(n-k)}
+    & = \dfrac{1}{\left(1-\dfrac{1}{n}\right)\cdots\left(1-\dfrac{k-1}{n}\right)(n-k) }  \\
+    & \xrightarrow{n\to\infty} 0
   \end{align}
   となるから，\cref{eq:1}の右辺は$0$に収束する．したがってはさみうちの定理から，
   \begin{align}
@@ -51,12 +54,12 @@
   である．
   まず$r=1$の時
   \begin{align}
-    S_m = \sum_{k=1}^m k = \dfrac{m(m+1)}{2} \xrightarrow[m\to\infty] 1 \\
-    T_n = \dfrac{1}{2}\sum_{k=1}^n k(k+1) = \dfrac{n(n+1)(n+2)}{6} \xrightarrow[n\to\infty] 1
+    & S_m = \sum_{k=1}^m k = \dfrac{m(m+1)}{2} \xrightarrow{m\to\infty} \infty \\
+    & T_n = \dfrac{1}{2}\sum_{k=1}^n k(k+1) = \dfrac{n(n+1)(n+2)}{6} \xrightarrow{n\to\infty} \infty
   \end{align}
-  である．
+  となって両者発散する．
 
-  以下$r\neq 1$として考える．
+  そこで以下$r\neq 1$として考える．
   先に$S_m$から考える．
   $S_m - rS_m$を計算すると
   \begin{align}
@@ -75,8 +78,10 @@
   \begin{align}
     \lim_{m\to\infty}S_m =
     \begin{dcases}
-      \infty            & (|r| \ge 1) \\
-      \dfrac{r}{(1-r)^2} & (|r| < 1)
+      \infty            & (r \ge 1) \\
+      \dfrac{r}{(1-r)^2} & (|r| < 1) \\
+      \text{振動}        & (r = -1) \\
+      \text{振動発散}    & (r<-1)
     \end{dcases}\label{eq:2}
   \end{align}
   となる．$\cdots$(答)
@@ -84,18 +89,19 @@
   \vspace{10pt}
   次に，$T_n$を考える．
   $T_n-rT_n$を計算すると
+  % TODO: 2column PDFではみ出る
   \begin{align}
     T_n -rT_n
     & = \dfrac{1}{2}\sum_{k=1}^n k(k+1) \cdot r^k - \dfrac{1}{2}\sum_{k=1}^n k(k+1) \cdot r^{k+1}                       \\
     & = \dfrac{1}{2}\sum_{k=1}^n k(k+1) \cdot r^k - \dfrac{1}{2}\sum_{k=2}^{n+1} (k-1)k \cdot r^{k}                     \\
-    & = \dfrac{1}{2}\sum_{k=1}^n k(k+1) \cdot r^k - \dfrac{1}{2}\sum_{k=1}^{n} (k-1)k \cdot r^{k} - \dfrac{n(n+1)}{2}r^n \\
-    & = \dfrac{1}{2}\sum_{k=1}^n \left[k(k+1)- (k-1)k \right] \cdot r^k - \dfrac{n(n+1)}{2}r^n                          \\
-    & = \sum_{k=1}^n k \cdot r^k - \dfrac{n(n+1)}{2}r^n                                                                \\
-    & = S_n - \dfrac{n(n+1)}{2}r^n
+    & = \dfrac{1}{2}\sum_{k=1}^n k(k+1) \cdot r^k - \dfrac{1}{2}\sum_{k=1}^{n} (k-1)k \cdot r^{k} - \dfrac{n(n+1)}{2}r^{n+1} \\
+    & = \dfrac{1}{2}\sum_{k=1}^n \left[k(k+1)- (k-1)k \right] \cdot r^k - \dfrac{n(n+1)}{2}r^{n+1}                          \\
+    & = \sum_{k=1}^n k \cdot r^k - \dfrac{n(n+1)}{2}r^{n+1}                                                                \\
+    & = S_n - \dfrac{n(n+1)}{2}r^{n+1}
   \end{align}
   だから，
   \begin{align}
-    T_n = \dfrac{1}{1-r}\left[ S_n - \dfrac{n(n+1)}{2}r^n  \right]
+    T_n = \dfrac{1}{1-r}\left[ S_n - \dfrac{n(n+1)}{2}r^{n+1}  \right]
   \end{align}
   である．(1)から，二項目は$|r|<1$の時$n\to\infty$で$0$に収束する．
   従って，$|r|<1$の時は\cref{eq:2}から
@@ -108,8 +114,10 @@
   \begin{align}
     \lim_{n\to\infty}T_n =
     \begin{dcases}
-      \infty            & (|r|\ge 1) \\
+      \infty            &  (r\ge 1) \\
       \dfrac{r}{(1-r)^3} & (|r| < 1)
+      \text{振動}        & (r = -1) \\
+      \text{振動発散}    & (r<-1)
     \end{dcases}
   \end{align}
   が求める極限値である．$\cdots$(答)
