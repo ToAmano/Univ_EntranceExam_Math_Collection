@@ -6,12 +6,12 @@
 $OB = OC = OD = 4$ より，$B, C, D$ は，$O$ を中心とする半径4の球面 $S$ 上に存在する．
 まず$\triangle BCD$ を固定して，$A$ を動かす時，
 明らかに $\overrightarrow{OA}$ が $\triangle BCD$ の法線方向に平行で，
-かつ $\triangle BCD$ と $A$ が $O$ に関して反対側にある時に四面体 $ABCD$ の体積は最大である．
+かつ $\triangle BCD$ と $A$ が $O$ に関して反対側にある時($A'$とおく)に四面体 $ABCD$ の体積は最大である．
 
 \begin{figure}[htb]
   \centering
   % 俯角 65°，方位角 115°
-  \tdplotsetmaincoords{65}{115}
+  \tdplotsetmaincoords{65}{100}
   \begin{tikzpicture}[tdplot_main_coords, scale=0.85, >=stealth, every node/.style={font=\small}]
 
     % --- 1. 定数・座標パラメータ ---
@@ -22,7 +22,7 @@ $OB = OC = OD = 4$ より，$B, C, D$ は，$O$ を中心とする半径4の球�
     \coordinate (O)  at (0, 0, 0);
     \coordinate (H)  at (0, 0, -2.0);      % 底面への垂線の足 (高さ h = 2)
     \coordinate (Ap) at (0, 0, 1.0);       % 最大高さを与える A' (OH の反対向き)
-    \coordinate (A)  at (0.75, 0.45, 0.5); % 一般の位置にある A (|OA| = 1)
+    \coordinate (A)  at ({0.8*cos(30)}, {0.8*sin(30)}, 0.6); % 一般の位置にある A (|OA| = 1)
 
     % 底面 BCD (z = -2 平面上の円周上)
     \coordinate (B) at ({\baseRadius*cos(210)}, {\baseRadius*sin(210)}, -2.0);
@@ -94,14 +94,15 @@ $OB = OC = OD = 4$ より，$B, C, D$ は，$O$ を中心とする半径4の球�
   \label{fig:tetrahedron_max_height_3d}
 \end{figure}
 
-$O$ から $\triangle BCD$ に下ろした垂足を $H$，長さを$|OH| = h$ とすると$0 \le h < 4$である．
-四面体 $ABCD$ の体積 $V$ の$A$をこの点で固定した時の最大値は，
+この時$O$ から $\triangle BCD$ に下ろした垂足を $H$，長さを$|OH| = h$ とすると$0 \le h < 4$であり，四面体 $ABCD$ の体積 $V$ の底面を固定して$A$を動かした時の最大値は，
 \begin{align}
-  V = \dfrac{1}{3} \triangle BCD \cdot |AH| \label{eq:1}
+  V = \dfrac{1}{3} \triangle BCD \cdot |A'H| \label{eq:1}
 \end{align}
-で与えられる．この時
+で与えられる．
+
+ここで$|A'H|$は
 \begin{align}
-  |AH| = |AO| + |OH| = 1 + h \label{eq:2}
+  |A'H| = |A'O| + |OH| = 1 + h \label{eq:2}
 \end{align}
 だから，次に $\triangle BCD$ の面積の最大値をかんがえる．
 $\triangle OBH$などに三平方の定理を用いることで
@@ -161,7 +162,7 @@ $\triangle OBH$などに三平方の定理を用いることで
     \node[circle, fill, inner sep=0.6pt] at (Hp) {}; \node[below=2pt] at (Hp) {$H'$};
 
   \end{tikzpicture}
-  \caption{底面 $\triangle BCD$ を含む平面での切断面（外接円と二等辺三角形の配置）[cite: 7]}
+  \caption{底面 $\triangle BCD$ を含む平面での切断面（外接円と二等辺三角形の配置）}
   \label{fig:base_triangle_circumcircle}
 \end{figure}
 
