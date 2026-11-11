@@ -65,11 +65,51 @@
   \end{align}
   であり，$y=f(x)$のグラフの概形は下図である．
 
-  % TODO: y=f(x)のグラフ
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[x=0.85cm, y=0.26cm, >=stealth, every node/.style={font=\small}]
+      % 図示用に n=2 とする: f(x)=x^2+x-8, 正の根 (-1+sqrt(33))/2 ≈ 2.37 (n < 根 < n+1/2)
+      \def\nval{2}
+      \pgfmathsetmacro{\rootP}{(-(\nval-1)+sqrt(9*\nval*\nval-2*\nval+1))/2}
+      \pgfmathsetmacro{\rootM}{(-(\nval-1)-sqrt(9*\nval*\nval-2*\nval+1))/2}
+      \pgfmathsetmacro{\fNext}{(\nval+1)^2+(\nval-1)*(\nval+1)-2*\nval*\nval}
 
-  よって，求める$l$は
+      % f(l)>0 となる範囲 (正の根より右)
+      \draw[line width=2.2pt, red!85!black, ->] (\rootP, 0) -- (3.6, 0);
+
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-4.2, 0) -- (3.8, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -9.6) -- (0, 7) node[above] {$y$};
+      \node[below left=1pt] at (0, 0) {$O$};
+
+      % y = f(x)
+      \draw[line width=1.4pt, blue!85!black, domain=-4.1:3.25, samples=80]
+      plot (\x, {\x*\x+(\nval-1)*\x-2*\nval*\nval});
+      \node[blue!85!black, left=2pt] at (-3.4, -2.0) {$y=f(x)$};
+
+      % y 切片 -2n^2
+      \node[circle, fill, inner sep=1.2pt] at (0, -2*\nval*\nval) {};
+      \node[below right=1pt] at (0, -2*\nval*\nval) {$-2n^2$};
+
+      % 2根
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (\rootM, 0) {};
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (\rootP, 0) {};
+      \draw[thin, blue!85!black] (\rootP, 0) -- (1.9, 3.8) node[above=0pt, font=\footnotesize, blue!85!black] {$\displaystyle\frac{-(n-1)+\sqrt{D}}{2}$};
+
+      % n と n+1
+      \draw[thick, gray!80!black] (\nval, -0.3) -- (\nval, 0.3) node[above=0pt] {$n$};
+      \draw[densely dotted, thick, gray!70!black] (\nval+1, \fNext) -- (\nval+1, 0);
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (\nval+1, 0) {};
+      \node[below=2pt, red!85!black] at (\nval+1, 0) {$n+1$};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (\nval+1, \fNext) {};
+    \end{tikzpicture}
+    \caption{$y=f(x)$ の概形（赤線は $f(x)>0$ となる正の範囲）}
+    \label{1990-6:fig:1}
+  \end{figure}
+
+  よって，求める$\ell$は
   \begin{align}
-    \dfrac{-(n-1)+\sqrt{D}}{2} < l
+    \dfrac{-(n-1)+\sqrt{D}}{2} < \ell
   \end{align}
   を満たす最小の整数である．ここで$n$は自然数だから
   \begin{align}
@@ -91,7 +131,6 @@
 
   \vspace{10pt}
   {\bf [解説]}
-  % TODO :: y = f(x)のグラフのpgfplots
 
   \newpage
 \end{multicols}
