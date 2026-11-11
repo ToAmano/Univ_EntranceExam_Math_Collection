@@ -22,53 +22,53 @@
 
   \begin{figure}[H]
     \centering
-    \begin{tikzpicture}
-      % Define the circumradius
-      \def\R{3}
-      \def\r{1.5}
-
-      % 1. Draw the circumcircle (outer circle)
-      \draw (0,0) circle (\R);
-
-      % Define vertices of the inscribed triangle (example: approximate an equilateral triangle)
-      % You can adjust these coordinates for different triangle shapes
+    \begin{tikzpicture}[x=2.5cm, y=2.5cm, >=stealth, every node/.style={font=\small}]
+      % 外接円の半径 R=1．A,B,C は中心角 115°,205°,335° の点（一般の三角形の例）
+      % 内心 I と内接円の半径 r はこの配置から計算した値 (I=(aA+bB+cC)/(a+b+c))
       \coordinate (O) at (0, 0);
-      \coordinate (A) at (0, \R);
-      \coordinate (B) at ({-\R*sin(60)}, {-\R*cos(60)}); % Approximately (-2.598, -1.5)
-      \coordinate (C) at ({\R*sin(60)}, {-\R*cos(60)});  % Approximately (2.598, -1.5)
+      \coordinate (A) at (115:1);
+      \coordinate (B) at (205:1);
+      \coordinate (C) at (335:1);
+      \coordinate (I) at (-0.2326, 0.0491);
+      \def\rin{0.4717}
+      \coordinate (Hc) at ($(A)!(I)!(B)$);
+      \coordinate (Ha) at ($(B)!(I)!(C)$);
+      \coordinate (Hb) at ($(C)!(I)!(A)$);
 
-      % 2. Draw the inscribed triangle ABC
-      \draw (A) -- (B) -- (C) -- cycle;
-      \draw[dashed] (O) -- (A);
-      \draw[dashed] (O) -- (B);
-      \draw[dashed] (O) -- (C);
+      % 外接円と内接円
+      \draw[thick, blue!85!black] (O) circle (1);
+      \draw[thick, teal!85!black] (I) circle (\rin);
 
-      % Label vertices
-      \node[above] at (A) {A};
-      \node[left] at (B) {B};
-      \node[right] at (C) {C};
-      \node[circle, fill, inner sep=1.5pt] at (0,0) {};
+      % 三角形 ABC
+      \draw[line width=1.2pt] (A) -- (B) -- (C) -- cycle;
 
-      % Label sides
-      \node[below] at ( $(B)!0.5!(C)$ ) {$a$};
-      \node[right, xshift=2mm] at ( $(A)!0.5!(C)$ ) {$b$};
-      \node[left, xshift=-2mm] at ( $(A)!0.5!(B)$ ) {$c$};
+      % 内心から各辺への垂線（長さ r）
+      \draw[densely dashed, thick, teal!85!black] (I) -- (Hc);
+      \draw[densely dashed, thick, teal!85!black] (I) -- (Ha);
+      \draw[densely dashed, thick, teal!85!black] (I) -- (Hb);
+      \node[teal!85!black, right=1pt, font=\footnotesize] at ($(I)!0.5!(Ha)$) {$r$};
 
-      % Label angles (example positions)
-      \pic [draw, "$\alpha$", angle eccentricity=1.5] {angle = B--A--C};
-      \pic [draw, "$\beta$", angle eccentricity=1.5] {angle = C--B--A};
-      \pic [draw, "$\gamma$", angle eccentricity=1.5] {angle = A--C--B};
+      % 角
+      \pic[draw, "$\alpha$", angle eccentricity=1.6, angle radius=0.45cm] {angle = B--A--C};
+      \pic[draw, "$\beta$", angle eccentricity=1.6, angle radius=0.45cm] {angle = C--B--A};
+      \pic[draw, "$\gamma$", angle eccentricity=1.6, angle radius=0.45cm] {angle = A--C--B};
 
-      % 1. Draw the circumcircle (inner circle)
-      \draw (0,0) circle (\r);
-      \draw[dashed] (0,0) -- ( $(A)!0.5!(C)$ );
-      \draw[dashed] (0,0) -- ( $(B)!0.5!(C)$ );
-      \draw[dashed] (0,0) -- ( $(A)!0.5!(B)$ );
+      % 辺の長さ
+      \node[below=1pt] at ($(B)!0.6!(C)$) {$a$};
+      \node[above right=0pt] at ($(C)!0.5!(A)$) {$b$};
+      \node[left=1pt] at ($(A)!0.5!(B)$) {$c$};
 
+      % 点とラベル
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (O) {};
+      \node[below right=0pt, blue!85!black] at (O) {$O$};
+      \node[circle, fill=teal!85!black, inner sep=1.2pt] at (I) {};
+      \node[below left=0pt, teal!85!black] at (I) {$I$};
+      \node[above left=1pt] at (A) {$A$};
+      \node[left=1pt] at (B) {$B$};
+      \node[right=1pt] at (C) {$C$};
     \end{tikzpicture}
-    \caption{$\triangle ABC$の様子．}
+    \caption{$\triangle ABC$ と外接円（中心 $O$，半径 $R$）・内接円（中心 $I$，半径 $r$）}
     \label{2006-4:fig:1}
-    % TODO :: 図の改善
   \end{figure}
 
   $\triangle ABC$に正弦定理を用いて，外接円の半径$R=1$として
@@ -88,10 +88,10 @@
   \end{align}
   である．
 
-  次に，内接円の半径 $r$ ，中心Oとおくと
+  次に，内接円の半径 $r$ ，中心$I$とおくと
   \begin{align}
     S
-    & = \triangle OAB + \triangle OBC + \triangle OCA                             \\
+    & = \triangle IAB + \triangle IBC + \triangle ICA \\
     & =\dfrac{1}{2} r \left(2R \sin \alpha + 2R \sin \beta + 2R \sin \gamma\right) \\
     & =r \left(\sin \alpha + \sin \beta + \sin \gamma\right) \label{eq:4}
   \end{align}
@@ -139,7 +139,7 @@
   で最大値を取る．（\cref{eq:6}を満たしていることに注意．）
   その最大値$f(x)$とおくと，
   \begin{align}
-    & f(x) \equiv \max f(x, y) = 2\sin \dfrac{x}{2} \left[1-\sin\dfrac{x}{2}\right] & 0 < x < \pi
+    & f(x) \equiv \max f(x, y) = 2\sin \dfrac{x}{2} \left[1-\sin\dfrac{x}{2}\right] & (0 < x < \pi)
   \end{align}
   である．
   次に$x$を動かすと，
@@ -168,7 +168,55 @@
   解答は，もっとも技巧がいらない代わりに計算量が多い方法で解いた．
   この問題はさまざまな解き方があるのでここでいくつか解説して行く．
 
-  おそらく一番簡潔（だが実際の答案では使えない）なのは，初等幾何におけるオイラーの定理（またはオイラーの不等式）を用いると一発で求まる．
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[x=2.5cm, y=2.5cm, >=stealth, every node/.style={font=\small}]
+      % 図1と同じ三角形（R=1）．I は内心，r=0.4717，d=|OI|=0.2377
+      % P,Q は直線 OI と外接円の交点（P は I 側），M は AI の延長と外接円の交点（弧 BC の中点），
+      % D は M の対蹠点，N は I から AB に下ろした垂線の足
+      \coordinate (O) at (0, 0);
+      \coordinate (A) at (115:1);
+      \coordinate (B) at (205:1);
+      \coordinate (C) at (335:1);
+      \coordinate (I) at (-0.2326, 0.0491);
+      \def\rin{0.4717}
+      \coordinate (P) at (-0.9784, 0.2067);
+      \coordinate (Q) at (0.9784, -0.2067);
+      \coordinate (M) at (270:1);
+      \coordinate (D) at (90:1);
+      \coordinate (N) at ($(A)!(I)!(B)$);
+
+      \draw[thick, blue!85!black] (O) circle (1);
+      \draw[thick, teal!85!black] (I) circle (\rin);
+      \draw[line width=1.2pt] (A) -- (B) -- (C) -- cycle;
+
+      % 直径 PQ（O, I を通る）と直径 DM
+      \draw[densely dashed, thick, gray!70!black] (P) -- (Q);
+      \draw[densely dashed, thick, gray!70!black] (D) -- (M);
+      % 角の二等分線 AI とその延長 IM
+      \draw[thick, orange!85!black] (A) -- (M);
+      % 相似な直角三角形 ANI と DBM
+      \draw[thick, red!85!black] (I) -- (N);
+      \draw[densely dashed, thick, red!85!black] (D) -- (B) -- (M);
+      \draw[densely dashed, thick, gray!70!black] (B) -- (I);
+      \pic[draw, red!85!black, angle radius=0.2cm] {right angle = A--N--I};
+      \pic[draw, red!85!black, angle radius=0.2cm] {right angle = D--B--M};
+
+      % 点とラベル
+      \foreach \p/\pos in {A/above left, B/left, C/right, P/left, Q/right, M/below, D/above, N/above left} {
+        \node[circle, fill, inner sep=1.1pt] at (\p) {};
+        \node[\pos=1pt] at (\p) {$\p$};
+      }
+      \node[circle, fill=blue!85!black, inner sep=1.1pt] at (O) {};
+      \node[below right=0pt, blue!85!black] at (O) {$O$};
+      \node[circle, fill=teal!85!black, inner sep=1.1pt] at (I) {};
+      \node[above right=0pt, teal!85!black] at (I) {$I$};
+    \end{tikzpicture}
+    \caption{オイラーの定理の証明に用いる点（$P,Q$ は直線 $OI$ と外接円の交点，$M$ は $AI$ の延長と外接円の交点，$DM$ は直径，$N$ は $I$ から $AB$ への垂線の足）}
+    \label{2006-4:fig:2}
+  \end{figure}
+
+  おそらく一番簡潔なのは，初等幾何におけるオイラーの定理（またはオイラーの不等式）を用いると一発で求まる．
   オイラーの定理とは，三角形の内接円の半径を $r$，外接円の半径を $R$ とおくとき，
   外心 $O$ と内心 $I$ との距離 $d$ は以下の式で表される．
   \begin{align}
@@ -176,25 +224,120 @@
   \end{align}
   従って，左辺が$0$以上なので$R-2r\ge 0 \iff r \le R/2=1/2$である．
 
-  % TODO :: https://manabitimes.jp/math/580
+  % https://manabitimes.jp/math/580
   ここでこのオイラーの定理の証明を与えておこう．
+  上図のように各点をおくと，まず外心と内心の定義から
+  \begin{align}
+    PI\cdot IQ = (|PO|-|OI|)\cdot (|QO|+|OI|) = (R-d)(R+d) \label{eq:7}
+  \end{align}
+  である．さらに方べきの定理を$PQ,AM$に用いて
+  \begin{align}
+    PI \cdot IQ = AI \cdot IM \label{eq:8}
+  \end{align}
+  である．
 
-  $(R-d)(R+d) = PI \cdot IQ = AI \cdot IM = AI \cdot BM = DM \cdot NI \cdot 2Rr$
-  より示された日
-  \textcircled{1} ではなく
-  \textcircled{2} は
+  % 左に方べき，右にtriangle IBMの二等辺三角形の図
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[x=1.65cm, y=1.65cm, >=stealth, every node/.style={font=\footnotesize}]
+      % 図2と同じ配置（R=1）
+      \coordinate (O) at (0, 0);
+      \coordinate (A) at (115:1);
+      \coordinate (B) at (205:1);
+      \coordinate (C) at (335:1);
+      \coordinate (I) at (-0.2326, 0.0491);
+      \coordinate (P) at (-0.9784, 0.2067);
+      \coordinate (Q) at (0.9784, -0.2067);
+      \coordinate (M) at (270:1);
+
+      % 左：方べきの定理（弦 PQ と AM が I で交わる）
+      \begin{scope}
+        \draw[thick, blue!85!black] (O) circle (1);
+        \draw[gray!70!black] (A) -- (B) -- (C) -- cycle;
+        \draw[line width=1.3pt, teal!85!black] (P) -- (Q);
+        \draw[line width=1.3pt, orange!85!black] (A) -- (M);
+        \foreach \p/\pos in {A/above left, P/left, Q/right, M/below, B/left, C/right} {
+          \node[circle, fill, inner sep=1pt] at (\p) {};
+          \node[\pos=1pt] at (\p) {$\p$};
+        }
+        \node[circle, fill=red!85!black, inner sep=1.2pt] at (I) {};
+        \node[above right=0pt, red!85!black] at (I) {$I$};
+        \node[below=3pt, font=\small] at (0, -1.15) {$PI\cdot IQ=AI\cdot IM$};
+      \end{scope}
+
+      % 右：二等辺三角形 IBM
+      \begin{scope}
+        \coordinate (O2) at ($(O)+(2.7,0)$);
+        \coordinate (A2) at ($(A)+(2.7,0)$);
+        \coordinate (B2) at ($(B)+(2.7,0)$);
+        \coordinate (C2) at ($(C)+(2.7,0)$);
+        \coordinate (I2) at ($(I)+(2.7,0)$);
+        \coordinate (M2) at ($(M)+(2.7,0)$);
+        \draw[thick, blue!85!black] (O2) circle (1);
+        \draw[gray!70!black] (A2) -- (B2) -- (C2) -- cycle;
+        \draw[gray!70!black] (A2) -- (M2);
+        \fill[pattern=north east lines, pattern color=red!70!black] (I2) -- (B2) -- (M2) -- cycle;
+        \draw[line width=1.3pt, red!85!black] (I2) -- (B2) -- (M2) -- cycle;
+        \pic[draw, red!85!black, angle radius=0.3cm] {angle = B2--I2--M2};
+        \pic[draw, red!85!black, angle radius=0.3cm] {angle = M2--B2--I2};
+        \node[circle, fill, inner sep=1pt] at (A2) {}; \node[above left=1pt] at (A2) {$A$};
+        \node[circle, fill, inner sep=1pt] at (B2) {}; \node[left=1pt] at (B2) {$B$};
+        \node[circle, fill, inner sep=1pt] at (C2) {}; \node[right=1pt] at (C2) {$C$};
+        \node[circle, fill, inner sep=1pt] at (M2) {}; \node[below=1pt] at (M2) {$M$};
+        \node[circle, fill=red!85!black, inner sep=1.2pt] at (I2) {}; \node[above right=0pt, red!85!black] at (I2) {$I$};
+        \node[below=3pt, font=\small] at ($(O2)+(0,-1.15)$) {$\angle BIM=\angle IBM$};
+      \end{scope}
+    \end{tikzpicture}
+    \caption{左：弦 $PQ$, $AM$ に対する方べきの定理．右：$\angle BIM=\angle IBM$ より $\triangle IBM$ は $BM=IM$ の二等辺三角形}
+    \label{2006-4:fig:3}
+  \end{figure}
+
+  次に，三角形$IBM$について
   \begin{align}
-    \angle BIM = \angle BAI + \angle ABI
-  \end{align}
-  \begin{align}
+    \angle BIM
+    = \angle BAI + \angle ABI
     = \angle MAC + \angle IBC
-  \end{align}
-  \begin{align}
     = \angle IBM
   \end{align}
-  だから二等辺三角形
-  \textcircled{3} は $\triangle ANI \sim \triangle DBM$ (2角相等)
-  $\Rightarrow$ これから $R \ge 2r$ は明らか!!
+  だから$BM=IM$なる二等辺三角形である．よって
+  \begin{align}
+    AI \cdot IM = AI \cdot BM \label{eq:9}
+  \end{align}
+  である．
+
+  最後に$\triangle ANI,\triangle DBM$に注目すると，円周角の定理より
+  \begin{align}
+    \angle NAI = \angle BDM
+  \end{align}
+  である．内心の性質より
+  \begin{align}
+    \angle ANI = \dfrac{\pi}{2}
+  \end{align}
+  であり，円周角の定理より
+  \begin{align}
+    \angle DBM = \dfrac{\pi}{2}
+  \end{align}
+  だから
+  \begin{align}
+    \angle ANI = \angle DBM
+  \end{align}
+  である．以上から二角相等より
+  \begin{align}
+    \triangle ANI \sim \triangle DBM
+  \end{align}
+  であって相似から
+  \begin{align}
+    AI \cdot BM = DM \cdot NI \label{eq:10}
+  \end{align}
+  である．\cref{eq:7,eq:8,eq:9,eq:10}をまとめて
+  \begin{align}
+    (R-d)(R+d)
+    = PI \cdot IQ
+    = AI \cdot IM \\
+    = AI \cdot BM
+    = DM \cdot NI = 2Rr
+  \end{align}
+  より示された．
 
   次に，イェンゼンの不等式を用いた方法を紹介する．
   \cref{eq:5}以降，回答では文字消去をして解いていったが，
