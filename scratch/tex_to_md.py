@@ -127,6 +127,53 @@ def _extract_braced(text, start):
     return text[start:], n
 
 
+def _math_spans(text):
+    """$...$ と $$...$$ の範囲 (開始, 終了) を返す。\\$ はエスケープとして無視する。"""
+    spans = []
+    i = 0
+    n = len(text)
+    start = None
+    display = False
+    while i < n:
+        c = text[i]
+        if c == '\\':
+            i += 2
+            continue
+        if c == '$':
+            is_double = text.startswith('$$', i)
+            if start is None:
+                start, display = i, is_double
+            elif display == is_double:
+                i += 2 if is_double else 1
+                spans.append((start, i))
+                start = None
+                continue
+            i += 2 if is_double else 1
+            continue
+        i += 1
+    return spans
+
+
+def _convert_text_command(text, command, wrap):
+    """数式の外にある \\command{...} を、ネストした {} を含めて切り出し
+    wrap(中身) に置き換える。数式中のものは MathJax が描画するので残す。"""
+    pattern = re.compile(r'\\' + command + r'\s*\{')
+    spans = _math_spans(text)
+    out = []
+    i = 0
+    for m in pattern.finditer(text):
+        if m.start() < i or any(a <= m.start() < b for a, b in spans):
+            continue
+        braced, end = _extract_braced(text, m.end() - 1)
+        if not braced.endswith('}'):
+            continue
+        out.append(text[i:m.start()])
+        out.append(wrap(braced[1:-1]))
+        i = end
+    out.append(text[i:])
+    return ''.join(out)
+
+
 _LIST_ENVS = ('enumerate', 'description', 'itemize')
 _LIST_ENV_TOKEN_RE = re.compile(r'\\(begin|end)\{(' + '|'.join(_LIST_ENVS) + r')\}')
 _ITEM_RE = re.compile(r'\\item\b\s*')
@@ -1258,8 +1305,12 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         r'|\\textbf\{\\?\[([^\]]*)\\?\]\}',
         _convert_bf_heading, md_content)
 
-    # \textbf の Markdown 化
-    md_content = re.sub(r'\\textbf\{([^{}]+)\}', r'**\1**', md_content)
+    # \textbf の Markdown 化。\textbf{$1^{\circ}$ 2回} のように中身に {} を含む
+    # 場合分け見出しが生の TeX のまま漏れていたため (Issue #971)、中括弧の対応を
+    # 数えて切り出す。数式中の \textbf は MathJax に任せる。
+    # \underline{...} も Markdown に無いので <u> にする。
+    md_content = _convert_text_command(md_content, 'underline', lambda s: f'<u>{s}</u>')
+    md_content = _convert_text_command(md_content, 'textbf', lambda s: f'**{s}**')
     # **AAAA****BBBB** や **AAAA** **BBBB** の自動結合 (**AAAABBBB**)
     md_content = re.sub(r'\*\*([^*]+)\*\*\s*\*\*([^*]+)\*\*', r'**\1\2**', md_content)
 

@@ -150,6 +150,22 @@ class TestConverter(unittest.TestCase):
         self.assertIn('-   **$1^\\circ$**　3辺とも違う', rendered)
         self.assertNotIn('1.  ', rendered)
 
+    def test_textbf_with_nested_braces_becomes_bold(self):
+        # Issue #971: 中身に {} を含む \textbf が生の TeX のまま残っていた
+        processed = self.convert(r'\textbf{$1^{\circ}$ 2回} と \textbf{$P=\dfrac{1}{8}\pi$の時}')
+        self.assertIn(r'**$1^{\circ}$ 2回**', processed)
+        self.assertIn(r'**$P=\dfrac{1}{8}\pi$の時**', processed)
+        self.assertNotIn(r'\textbf', processed)
+
+    def test_textbf_inside_math_is_left_for_mathjax(self):
+        processed = self.convert(r'$\textbf{v}_{1}$ と本文')
+        self.assertIn(r'$\textbf{v}_{1}$', processed)
+
+    def test_underline_outside_math_becomes_html(self):
+        processed = self.convert(r'\underline{\textbf{$0 \le t \le \dfrac{1}{3}$ の場合}}')
+        self.assertIn(r'<u>**$0 \le t \le \dfrac{1}{3}$ の場合**</u>', processed)
+        self.assertNotIn(r'\underline', processed)
+
     def test_unlabeled_items_keep_auto_numbers(self):
         body = r'\item 第一' + '\n' + r'\item 第二'
         rendered = tex_to_md._render_list_items(body, 0)

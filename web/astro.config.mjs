@@ -27,6 +27,8 @@ export default defineConfig({
           inlineMath: [['$', '$'], ['\\(', '\\)']],
           macros: {
             mqty: ['\\begin{pmatrix}#1\\end{pmatrix}', 1],
+            // physics パッケージの微分記号 (\dd x)。PDF は physics.sty が定義する。
+            dd: '{\\mathrm{d}}',
           },
         },
         options: {
