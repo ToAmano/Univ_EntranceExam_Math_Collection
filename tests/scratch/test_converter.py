@@ -166,6 +166,20 @@ class TestConverter(unittest.TestCase):
         self.assertIn(r'<u>**$0 \le t \le \dfrac{1}{3}$ の場合**</u>', processed)
         self.assertNotIn(r'\underline', processed)
 
+    def test_quote_environment_becomes_blockquote(self):
+        # Issue #898: \begin{quote} が問題文に生の TeX のまま表示されていた
+        processed = self.convert('さらに，\n\\begin{quote}\n  「玉を$1$つ取り出す．」\n\\end{quote}\nという操作')
+        self.assertIn('> 「玉を$1$つ取り出す．」', processed)
+        self.assertNotIn(r'\begin{quote}', processed)
+        self.assertNotIn(r'\end{quote}', processed)
+
+    def test_quote_inside_list_item_keeps_indent(self):
+        latex = ('\\begin{enumerate}\n  \\item 条件\n    \\begin{quote}\n      「$a_n$ が等しい」\n'
+                 '    \\end{quote}\n    を満たす $a_1$\n  \\item 次の問\n\\end{enumerate}')
+        processed = self.convert(latex)
+        self.assertIn('    > 「$a_n$ が等しい」', processed)
+        self.assertIn('2.  次の問', processed)
+
     def test_unlabeled_items_keep_auto_numbers(self):
         body = r'\item 第一' + '\n' + r'\item 第二'
         rendered = tex_to_md._render_list_items(body, 0)

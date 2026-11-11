@@ -1321,6 +1321,15 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     # 1981/6, 1968/6, 1994/6, 2011/6 等）。
     md_content = _convert_all_list_envs(md_content)
 
+    # \begin{quote}...\end{quote} は Markdown の引用にする。生のまま残ると
+    # 問題文に \begin{quote} が文字列として表示される (Issue #898)。
+    # リスト項目内の quote は項目の字下げを保たないとリストから抜ける。
+    md_content = re.sub(
+        r'^([ \t]*)\\begin\{quote\}\s*(.*?)\s*\\end\{quote\}',
+        lambda m: '\n' + '\n'.join(
+            m.group(1) + '> ' + line.strip() for line in m.group(2).split('\n')) + '\n',
+        md_content, flags=re.DOTALL | re.MULTILINE)
+
     # ディスプレイ数式 \[ ... \] の \begin{align*} ... \end{align*} への統一
     md_content = re.sub(r'\\\[\s*(.*?)\s*\\\]', r'\n$$\n\\begin{align*}\n\1\n\\end{align*}\n$$\n', md_content, flags=re.DOTALL)
 
