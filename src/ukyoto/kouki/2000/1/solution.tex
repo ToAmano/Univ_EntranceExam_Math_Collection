@@ -30,26 +30,20 @@
           xmin=-1, xmax=5,
           ymin=-1, ymax=5,
           axis lines=none, % Hide axes for a cleaner look as in the image
-          clip=true,
-        ]
+        clip=true]
 
         % Define points alpha and beta
         \coordinate (alpha) at (3,1);
         \coordinate (beta) at (1,4);
 
-        % Draw the line connecting alpha and beta, extending beyond them
-        \draw (beta) -- (alpha); % Draw line segment first
-
-        % Extend the line from alpha in the direction of (alpha - beta)
-        % And from beta in the direction of (beta - alpha)
-        \draw ($(alpha)!-2cm!(beta)$) -- ($(beta)!-2cm!(alpha)$); % Extend the line
+        % Draw the boundary line (dashed, boundary not included)
+        \draw[thick, dashed, blue!85!black] ($(alpha)!-2cm!(beta)$) -- ($(beta)!-2cm!(alpha)$);
 
         % Define points to form a polygon that covers the "left" side
-        % Extend the line in both directions
         \coordinate (p1) at ($(beta)!-2cm!(alpha)$); % Point on extended line towards top-left
         \coordinate (p2) at ($(alpha)!-2cm!(beta)$); % Point on extended line towards bottom-right
 
-        \draw[pattern=north west lines, pattern color=lightgray]
+        \draw[pattern=north west lines, pattern color=gray!70!black]
         ($(beta)!-3cm!(alpha)$) -- % Extend from beta towards top-left
         ($(beta)!-3cm!(alpha) + (-20,0)$) -- % Further left and up
         ($(alpha)!-3cm!(beta) + (-20,0)$) -- % Further left and down
@@ -68,7 +62,7 @@
         \node[right,fill=white] at (0.5,1.5) {$y$};
       \end{axis}
     \end{tikzpicture}
-    \caption{点$z$の存在する領域は，$\alpha$ から $\beta$ を見て左側}
+    \caption{点$z$の存在する領域は，$\alpha$ から $\beta$ を見て左側の半平面（境界線は除く）}
   \end{figure}
 
   \vspace{10pt}
