@@ -10,6 +10,7 @@ from scratch.generate_solution_metrics import (
     is_placeholder,
     parse_topic_tags_content,
     compute_metrics,
+    split_solution_variants,
 )
 
 
@@ -138,6 +139,52 @@ utokyo/zenki/1981/6: [空間図形, 積分]
         utokyo_tags = [f["tag"] for f in res["categories"]["utokyo_zenki"]["by_field"]]
         self.assertIn("空間図形", utokyo_tags)
         self.assertIn("整数", utokyo_tags)
+
+    def test_split_solution_variants(self):
+        source = r"""\begin{document}
+\paragraph{【新課程】}
+{\bf [解答]}
+New solution.
+\paragraph{【旧課程】}
+{\bf [解答]}
+Old solution.
+\end{document}"""
+        sections = split_solution_variants(source)
+        self.assertEqual([name for name, _ in sections], ["new", "old"])
+        self.assertEqual(extract_solution_lines(sections[0][1]), ["New solution."])
+        self.assertEqual(extract_solution_lines(sections[1][1]), ["Old solution."])
+        self.assertEqual(split_solution_variants(r"\paragraph{【甲（第2問）・乙（第1問）共通】} 解答")[0][0], "common")
+
+    def test_annual_volume_separates_exam_and_variant(self):
+        def record(univ, exam, year, question, lines, variant="common"):
+            return {"id": f"{univ}/{exam}/{year}/{question}", "univ": univ,
+                    "exam": exam, "year": year, "question": question,
+                    "lines": lines, "variant": variant, "is_placeholder": False}
+
+        records = [
+            record("utokyo", "zenki", 2007, "1", 10),
+            record("utokyo", "kouki", 2007, "1", 20),
+            record("ukyoto", "zenki", 2007, "1", 30),
+            record("ukyoto", "zenki", 2007, "2", 40, "ko"),
+            record("ukyoto", "zenki", 2007, "3", 50, "otsu"),
+        ]
+        by_year = compute_metrics(records, {})["by_year"]
+        lookup = {(r["category"], r["year"], r["variant"]): r for r in by_year}
+        self.assertEqual(lookup[("utokyo_zenki", 2007, "common")]["total_lines"], 10)
+        self.assertEqual(lookup[("utokyo_kouki", 2007, "common")]["total_lines"], 20)
+        self.assertEqual(lookup[("ukyoto_zenki", 2007, "ko")]["total_lines"], 70)
+        self.assertEqual(lookup[("ukyoto_zenki", 2007, "otsu")]["total_lines"], 80)
+        era = next(item for item in compute_metrics(records, {})["by_era"] if item["era"] == "2000年代")
+        self.assertEqual(era["utokyo_zenki"], 10)
+        self.assertEqual(era["utokyo_kouki"], 20)
+
+    def test_yearly_unanswered_track_is_visible(self):
+        records = [{"id": "ukyoto/zenki/2009/1", "univ": "ukyoto", "exam": "zenki",
+                    "year": 2009, "question": "1", "lines": 24, "variant": "otsu",
+                    "is_placeholder": False}]
+        by_year = compute_metrics(records, {})["by_year"]
+        self.assertEqual([(r["variant"], r["count"], r["mean"]) for r in by_year],
+                         [("ko", 0, None), ("otsu", 1, 24.0)])
 
 
 if __name__ == "__main__":

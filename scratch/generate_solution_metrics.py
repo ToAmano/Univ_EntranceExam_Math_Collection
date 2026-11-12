@@ -69,6 +69,34 @@ IGNORE_LINE_MACROS = re.compile(
     r")$"
 )
 
+VARIANT_HEADING = re.compile(r"\\paragraph\{【([^】]+)】\}")
+
+
+def split_solution_variants(text: str) -> list[tuple[str, str]]:
+    """Split a solution at explicit curriculum or Kyoto track headings."""
+    matches = []
+    for match in VARIANT_HEADING.finditer(text):
+        heading = match.group(1)
+        if heading == "新課程":
+            variant = "new"
+        elif heading == "旧課程":
+            variant = "old"
+        elif "甲" in heading and "乙" in heading and "共通" in heading:
+            variant = "common"
+        elif heading == "甲":
+            variant = "ko"
+        elif heading == "乙":
+            variant = "otsu"
+        else:
+            continue
+        matches.append((match.start(), variant))
+    if not matches:
+        return [("common", text)]
+    return [
+        (variant, text[start : matches[i + 1][0] if i + 1 < len(matches) else len(text)])
+        for i, (start, variant) in enumerate(matches)
+    ]
+
 
 def extract_solution_lines(text: str) -> list[str]:
     """Extract substantive lines from the primary solution block."""
@@ -295,6 +323,29 @@ def compute_metrics(
     for cat_key in categories:
         by_field_by_category[cat_key] = categories[cat_key]["by_field"]
 
+    # Annual totals keep entrance exam sessions and curriculum/track variants separate.
+    year_groups: dict[tuple[str, str, int], list[dict[str, Any]]] = {}
+    for record in valid_records:
+        year_groups.setdefault((record["univ"], record["exam"], record["year"]), []).append(record)
+
+    by_year = []
+    for (univ, exam, year), group in sorted(year_groups.items()):
+        variants = {r.get("variant", "common") for r in group}
+        if variants & {"new", "old"}:
+            tracks = ("new", "old")
+        elif variants & {"ko", "otsu"}:
+            tracks = ("ko", "otsu")
+        else:
+            tracks = ("common",)
+        for variant in tracks:
+            included = [r for r in group if r.get("variant", "common") in ("common", variant)]
+            total = sum(r["lines"] for r in included)
+            by_year.append({
+                "category": f"{univ}_{exam}", "year": year, "variant": variant,
+                "count": len(included), "total_lines": total,
+                "mean": round(total / len(included), 1) if included else None,
+            })
+
     # Historical Era Trends (by decade: 1960s, 1970s, 1980s, 1990s, 2000s, 2010s)
     decades = [
         (1960, 1969, "1960年代"),
@@ -313,8 +364,8 @@ def compute_metrics(
         if not era_records:
             continue
 
-        def avg_for_univ(univ_name: str) -> float | None:
-            sub = [r["lines"] for r in era_records if r["univ"] == univ_name]
+        def avg_for_category(univ_name: str, exam_name: str) -> float | None:
+            sub = [r["lines"] for r in era_records if r["univ"] == univ_name and r["exam"] == exam_name]
             return round(sum(sub) / len(sub), 1) if sub else None
 
         all_era_lines = [r["lines"] for r in era_records]
@@ -326,9 +377,12 @@ def compute_metrics(
                 "count": len(era_records),
                 "mean": round(sum(all_era_lines) / len(all_era_lines), 1),
                 "median": round(_calc_percentile(sorted(all_era_lines), 0.5), 1),
-                "utokyo": avg_for_univ("utokyo"),
-                "ukyoto": avg_for_univ("ukyoto"),
-                "titech": avg_for_univ("titech"),
+                "utokyo_zenki": avg_for_category("utokyo", "zenki"),
+                "utokyo_kouki": avg_for_category("utokyo", "kouki"),
+                "ukyoto_zenki": avg_for_category("ukyoto", "zenki"),
+                "ukyoto_kouki": avg_for_category("ukyoto", "kouki"),
+                "titech_zenki": avg_for_category("titech", "zenki"),
+                "titech_kouki": avg_for_category("titech", "kouki"),
             }
         )
 
@@ -344,6 +398,7 @@ def compute_metrics(
         "by_field": overall_by_field,
         "by_field_by_category": by_field_by_category,
         "by_era": by_era,
+        "by_year": by_year,
     }
 
 
@@ -369,20 +424,20 @@ def main() -> None:
         with open(path, encoding="utf-8") as f:
             text = f.read()
 
-        lines = extract_solution_lines(text)
-        is_ph = is_placeholder(lines)
+        for variant, section in split_solution_variants(text):
+            lines = extract_solution_lines(section)
+            is_ph = is_placeholder(lines)
 
-        records.append(
-            {
+            records.append({
                 "id": f"{univ}/{exam}/{year}/{q_str}",
                 "univ": univ,
                 "exam": exam,
                 "year": year,
                 "question": q_str,
                 "lines": len(lines),
+                "variant": variant,
                 "is_placeholder": is_ph,
-            }
-        )
+            })
 
     metrics = compute_metrics(records, topic_tags)
 
