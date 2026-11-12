@@ -11,7 +11,7 @@
   {\bf [解答]}
   三角形ABCにおいて
   \begin{align}
-    & \angle ADB = \theta & \left( \dfrac{\pi}{3} < \theta < \dfrac{\pi}{2} \right) \label{eq:1}
+    & \angle ADB = \theta & \left( \dfrac{\pi}{3} < \theta < \dfrac{2\pi}{3} \right) \label{eq:1}
   \end{align}
   とおく．
   C から直線 BD に下ろした垂線 H とおく．
@@ -56,7 +56,6 @@
       % Mark angle ADB as theta
       \pic [draw, angle eccentricity=2.0, angle radius=0.5cm, "$\theta-\frac{\pi}{3}$"] {angle = C--B--D}; % Angle DBC is theta
       \pic [draw, angle eccentricity=1.5, angle radius=0.5cm, "$\theta$"] {angle = A--D--B}; % Angle DBC is theta
-      % \pic [draw, angle eccentricity=1.2, angle radius=0.5cm, "$\theta$"] {angle = C--D--H}; % Angle CDH is also theta if angles are aligned
 
       \fill (D) circle (0.05);
       \fill (H) circle (0.05);
@@ -65,6 +64,46 @@
     \end{tikzpicture}
     \caption{三角形ABCと点D, Hの様子}
     \label{2003-2:fig:1}
+  \end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[x={(1cm,0cm)}, y={(0.55cm,0.75cm)}, z={(0cm,1cm)},
+      scale=0.95, >=stealth, every node/.style={font=\small}]
+      % 一辺4の正三角形 ABC で D が AC を 3:7 に内分する例．直線 BD を横軸，面 ABD を床面 z=0 とする．
+      % 面 BCD を BD で折って面 ABD に垂直に立てると，C は H の真上に来る．
+      \coordinate (B)  at (0,0,0);
+      \coordinate (D)  at (3.5553,0,0);
+      \coordinate (A)  at (3.8253,1.1692,0);
+      \coordinate (H)  at (2.9252,0,0);        % C から直線 BD への垂線の足
+      \coordinate (C0) at (2.9252,-2.7282,0);  % 折る前の C
+      \coordinate (C)  at (2.9252,0,2.7282);   % 折った後の C（|CH| は不変）
+      % 床面（三角形 ABD）
+      \fill[pattern=north east lines, pattern color=blue!45!black] (A) -- (B) -- (D) -- cycle;
+      % 折る前の三角形 BCD（参考）
+      \draw[densely dotted, thick, gray!70!black] (B) -- (C0) -- (D);
+      \draw[densely dotted, thick, gray!70!black] (C0) -- (H);
+      \draw[->, gray!70!black] ($(C0)+(-0.35,0,0)$) to[bend left=45]
+      node[pos=0.2, left, font=\footnotesize] {折る} ($(C)!0.55!(H)+(-0.3,0,0)$);
+      % 垂線 CH と直角の印（CH ⟂ BD，CH ⟂ 床面）
+      \draw[thick, red!85!black] (C) -- (H);
+      \draw[red!85!black] (H) ++(-0.25,0,0) -- ++(0,0,0.25) -- ++(0.25,0,0);
+      % 四面体 ABCD（辺 AB は手前の面 BCD に隠れる）
+      \draw[line width=1.3pt, blue!85!black] (B) -- (D) -- (A);
+      \draw[line width=1.3pt, blue!85!black, densely dashed] (A) -- (B);
+      \draw[line width=1.3pt, teal!85!black] (C) -- (B) (C) -- (D) (C) -- (A);
+      \foreach \p in {A, B, D, H, C, C0} {
+        \node[circle, fill=black, inner sep=1.2pt] at (\p) {};
+      }
+      \node[right=1pt] at (A) {$\mathrm{A}$};
+      \node[left=1pt] at (B) {$\mathrm{B}$};
+      \node[below right=1pt] at (D) {$\mathrm{D}$};
+      \node[above right=1pt] at (H) {$\mathrm{H}$};
+      \node[above=1pt] at (C) {$\mathrm{C}$};
+      \node[below=1pt, gray!70!black] at (C0) {$\mathrm{C}$（折る前）};
+    \end{tikzpicture}
+    \caption{面BCDをBDで折り，面ABDに垂直に立てた時の四面体ABCD（$CH$は面ABDに垂直）}
+    \label{2003-2:fig:2}
   \end{figure}
 
   四面体 $ABCD$ の体積が最大の時
@@ -87,17 +126,18 @@
   \end{align}
   である．
 
-  次にBDは，三角形ABDに正弦定理を用いて
-  \begin{align}
-    AD = \dfrac{\sin(\pi-\theta)}{\sin\theta}
+  次にADは，三角形ABDに正弦定理を用いて
+  \begin{align}a
+    & \dfrac{|AD|}{\sin \angle ABD } = \dfrac{|AB|}{\sin \angle ADB} \\
+    & |AD| = \dfrac{\sin\left(\dfrac{2\pi}{3}-\theta\right)}{\sin\theta}
   \end{align}
   である．
 
   最後にCH については，三角形BCHを考えて
   \begin{align}
-    CH
+    |CH|
     & = |BC|\sin \angle HBC  \\
-    & = \sin(\theta - \pi/3)
+    & = \sin\left(\theta - \dfrac{\pi}{3}\right)
   \end{align}
   である．
 
@@ -105,7 +145,7 @@
   \begin{align}
     V(\theta)
     & = \dfrac{\sqrt{3}}{12}|CH||AD||AB|                                                      \\
-    & = \dfrac{\sqrt{3}}{12} \dfrac{\sin(\pi-\theta)}{\sin\theta} \sin(\theta - \dfrac{\pi}{3})
+    & = \dfrac{\sqrt{3}}{12} \dfrac{\sin\left(\dfrac{2\pi}{3}-\theta\right)}{\sin\theta} \sin(\theta - \dfrac{\pi}{3})
   \end{align}
   である．
   積和公式を用いてさらに変形して
@@ -130,8 +170,8 @@
   求める最大値は
   \begin{align}
     \max V
-    & = V(\pi/2)            \\
-    & = \dfrac{\sqrt{3}}{48}
+    & = V\left(\dfrac{\pi}{2}\right)
+    = \dfrac{\sqrt{3}}{48}
   \end{align}
   である．$\cdots$(答)
 
