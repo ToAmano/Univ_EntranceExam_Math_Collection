@@ -10,7 +10,46 @@
 \begin{multicols}{2}
   {\bf [解答]}
 
-  % TODO: y=a^x, y=axのグラフ
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[y=0.3cm, >=stealth, every node/.style={font=\small}]
+      % 左：a=3/2 の例．1<x<beta (beta≒4.94) で a^x < ax となり条件を満たさない．
+      \begin{scope}[x=0.55cm]
+        \pgfmathsetmacro{\bt}{4.939}
+        \fill[pattern=north east lines, pattern color=red!75!black]
+        plot[domain=1:\bt, samples=60] (\x, {1.5*\x})
+        -- plot[domain=\bt:1, samples=60] (\x, {1.5^\x}) -- cycle;
+        \draw[->, thick, gray!80!black] (-0.4, 0) -- (6.0, 0) node[right] {$x$};
+        \draw[->, thick, gray!80!black] (0, -0.8) -- (0, 10.2) node[above] {$y$};
+        \draw[line width=1.4pt, blue!85!black, domain=-0.4:5.6, samples=80]
+        plot (\x, {1.5^\x}) node[above left] {$y=a^x$};
+        \draw[line width=1.4pt, teal!80!black, domain=-0.3:5.6]
+        plot (\x, {1.5*\x}) node[right] {$y=ax$};
+        \draw[densely dotted, thick, gray!70!black] (1, 1.5) -- (1, 0) node[below] {$1$};
+        \draw[densely dotted, thick, gray!70!black] (\bt, {1.5*\bt}) -- (\bt, 0) node[below] {$\beta$};
+        \node[circle, fill=red!85!black, inner sep=1.4pt] at (1, 1.5) {};
+        \node[circle, fill=red!85!black, inner sep=1.4pt] at (\bt, {1.5*\bt}) {};
+        \node[below left=1pt, font=\footnotesize] at (0, 0) {$O$};
+        \node[below=16pt, font=\footnotesize] at (2.8, 0) {(i) $a=\frac{3}{2}$ のとき};
+      \end{scope}
+      % 右：a=e のとき x=1 で接し，全ての x>0 で a^x >= ax．
+      \begin{scope}[x=1.0cm, xshift=4.6cm]
+        \draw[->, thick, gray!80!black] (-0.3, 0) -- (2.2, 0) node[right] {$x$};
+        \draw[->, thick, gray!80!black] (0, -0.8) -- (0, 10.2) node[above] {$y$};
+        \draw[line width=1.4pt, blue!85!black, domain=-0.3:2.2, samples=80]
+        plot (\x, {exp(\x)}) node[left] {$y=a^x$};
+        \draw[line width=1.4pt, teal!80!black, domain=-0.15:2.2]
+        plot (\x, {exp(1)*\x}) node[below right=-1pt] {$y=ax$};
+        \draw[densely dotted, thick, gray!70!black] (1, {exp(1)}) -- (1, 0) node[below] {$1$};
+        \draw[densely dotted, thick, gray!70!black] (1, {exp(1)}) -- (0, {exp(1)}) node[left] {$e$};
+        \node[circle, fill=red!85!black, inner sep=1.4pt] at (1, {exp(1)}) {};
+        \node[below left=1pt, font=\footnotesize] at (0, 0) {$O$};
+        \node[below=16pt, font=\footnotesize] at (1, 0) {(ii) $a=e$ のとき};
+      \end{scope}
+    \end{tikzpicture}
+    \caption{$y=a^x$と$y=ax$のグラフ（斜線部では$a^x<ax$）}
+    \label{1993-4:fig:1}
+  \end{figure}
 
   $f(x) = a^x - ax$ とおく．$x>0$ に対し $f(x)\ge 0$ となるための条件を求めれば良い．
   ただし，題意より
