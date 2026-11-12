@@ -9,17 +9,22 @@
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=1.0, >=stealth]
-    \draw[->] (-0.5,0) -- (4.0,0) node[right] {$x$};
-    \draw[->] (0,-0.5) -- (0,3.0) node[above] {$y$};
-    \node[below left] at (0,0) {$O$};
+  \begin{tikzpicture}[x=1.5cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
+    \draw[->, thick, gray!80!black] (-0.5, 0) -- (3.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 2.5) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
 
-    \node[left] at (0,1.8) {$a-h$};
-    \node[circle, fill, inner sep=1.5pt] at (0,2.3) {}; \node[left] at (0,2.3) {噴出口};
-    \draw[->,thick] (0,1.8) -- (0.8,1.8);
-    \draw[domain=0:3.2,samples=100,smooth,thick] plot (\x, {1.8 - 0.15*(\x)^2});
+    \coordinate (P) at (0, 1.8);
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (P) {};
+    \node[left=3pt] at (P) {$a-h$ (噴出口)};
+    \draw[->, line width=1.0pt, blue!85!black] (P) -- +(0.7, 0) node[above, font=\footnotesize] {$v_0$};
+    \draw[domain=0:3.0, samples=100, smooth, line width=1.2pt, blue!85!black]
+    plot (\x, {1.8 - 0.2*(\x)^2});
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (3.0, 0) {};
+    \node[below=2pt] at (3.0, 0) {$2\sqrt{h(a-h)}$};
   \end{tikzpicture}
   \caption{噴出口から放物線状に落下する水の軌道}
+  \label{fig:water_jet_trajectory}
 \end{figure}
 
 時刻$t=0$で噴出口からでた水の時刻$t$における水の座標$(X,Y)$を考える．
@@ -59,8 +64,8 @@ $\sqrt{2gh} \neq 0$ から，\cref{eq:1}で $t$ をけして\cref{eq:2}に代入
     \pgfmathsetmacro{\xReach}{2.0 * sqrt(\h * (\a - \h))}
 
     % --- 2. 座標軸 ---
-    \draw[->, thick] (-0.5, 0) -- (3.0, 0) node[right] {$X$};
-    \draw[->, thick] (0, -0.4) -- (0, 2.3) node[above] {$Y$};
+    \draw[->, thick, gray!80!black] (-0.5, 0) -- (3.0, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 2.3) node[above] {$Y$};
     \node[below left=2pt] at (0, 0) {$O$};
 
     % --- 3. 放物線 Y = - 1/(4h) X^2 + a - h の描画 ---
@@ -69,9 +74,9 @@ $\sqrt{2gh} \neq 0$ から，\cref{eq:1}で $t$ をけして\cref{eq:2}に代入
     plot (\x, {-(1.0 / (4.0 * \h)) * (\x)^2 + \yPeak});
 
     % 数学的な放物線全体の対称性を示す点線 (X < 0 および床面通過後)
-    \draw[thick, dashed, blue!40, domain=-1.2:0, samples=40]
+    \draw[thick, dashed, blue!60!black, domain=-1.2:0, samples=40]
     plot (\x, {-(1.0 / (4.0 * \h)) * (\x)^2 + \yPeak});
-    \draw[thick, dashed, blue!40, domain=\xReach:2.6, samples=20]
+    \draw[thick, dashed, blue!60!black, domain=\xReach:2.6, samples=20]
     plot (\x, {-(1.0 / (4.0 * \h)) * (\x)^2 + \yPeak});
 
     % --- 4. 頂点・切片のプロットとラベル ---
@@ -133,9 +138,9 @@ $Y$を微分すると
   \end{tabular}
 \end{table}
 
-これと $0 < Y$ から，
+これと $0 \le Y, 0 \le X$ から，
 \begin{align}
-  0 < Y \leqq a - X
+  0 \leqq Y \leqq a - X \quad (0\leqq X \leqq a)
 \end{align}
 が求める領域である．
 
@@ -152,8 +157,8 @@ $Y$を微分すると
     (0, 0) -- (\a, 0) -- (0, \a) -- cycle;
 
     % --- 3. 座標軸 ---
-    \draw[->, thick] (-0.4, 0) -- (3.0, 0) node[right] {$X$};
-    \draw[->, thick] (0, -0.4) -- (0, 3.0) node[above] {$Y$};
+    \draw[->, thick, gray!80!black] (-0.4, 0) -- (3.0, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 3.0) node[above] {$Y$};
     \node[below left=2pt] at (0, 0) {$O$};
 
     % --- 4. 包絡線 (境界線) Y = a - X ---
@@ -174,18 +179,14 @@ $Y$を微分すると
     \pgfmathsetmacro{\hMid}{0.5 * \a}
     \draw[very thick, blue!90!black, domain=0:\a, samples=50]
     plot (\x, {-(1.0 / (4.0 * \hMid)) * (\x)^2 + (\a - \hMid)})
-    node[pos=0.6, below left=1pt, font=\scriptsize] {$h = \frac{a}{2}$};
+    node[pos=0.45, above right=1pt, font=\scriptsize] {$h = \frac{a}{2}$};
 
     % --- 6. 境界点と目盛り ---
     \node[circle, fill, inner sep=1.2pt] at (0, \a) {}; \node[left=2pt] at (0, \a) {$a$};
     \node[circle, fill, inner sep=1.2pt] at (\a, 0) {}; \node[below=2pt] at (\a, 0) {$a$};
 
-    % 領域ラベル
-    %\node[fill=white, inner sep=2pt, font=\normalsize\bfseries, blue!80!black]
-    %  at (0.7, 0.7) {$0 < Y \leqq a - X$};
-
   \end{tikzpicture}
-  \caption{さまざまな $h$ に対する流出軌道群と通過領域（斜線部）}
+  \caption{さまざまな $h$ に対する流出軌道群と通過領域（境界含む）}
   \label{fig:water_envelope_region}
 \end{figure}
 
