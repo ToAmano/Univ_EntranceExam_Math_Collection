@@ -1,29 +1,4 @@
 \documentclass[../../main.tex]{subfiles}
-% \documentclass[a4paper,10pt]{ltjsarticle}
-\usepackage{luatexja}
-\usepackage[hiragino-pron]{luatexja-preset}
-
-\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
-\setlength{\textwidth}{54\zw}
-\setlength{\textheight}{73\zw}
-
-\usepackage{amsmath,amssymb,ascmac}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{cleveref}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usetikzlibrary{math}
-% \usepackage{indent}
-\usepackage{cases}
-\usepackage{float}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
 \begin{document}
 \rhead{京都大学後期$2002$年$2$番}
 \setcounter{equation}{0}
@@ -47,13 +22,6 @@
           ytick={-2,2}, % Mark the ellipse's y-intercepts
           grid=none, % No grid for a cleaner look
           clip=false, % Allow labels/arrows to go outside
-          % Add coordinate labels for the ellipse intercepts
-          % after end axis/.code={
-          %         \node[below left] at (axis cs:1,0) {$1$};
-          %         \node[below right] at (axis cs:-1,0) {$-1$};
-          %         \node[left] at (axis cs:0,2) {$2$};
-          %         \node[left] at (axis cs:0,-2) {$-2$};
-          %     }
         ]
 
         % Plot the ellipse: x^2 + y^2/4 = 1  => y = +- 2*sqrt(1-x^2)
@@ -62,12 +30,12 @@
         \node[above right, blue] at (axis cs:0.7, 1.5) {$C_1$}; % Label for the ellipse
 
         % Plot the circle: (x-a)^2 + y^2 = b
-        % We'll use a=0.5 and b=1.25 for illustration to get 4 intersection points
+        % a=0.5, b=3.0 で4交点を持つ例を示す (2.25 < b < 4.333)
         \def\myA{0.5} % value for 'a'
-        \def\myB{1.25} % value for 'b' (radius^2)
+        \def\myB{3.0} % value for 'b' (radius^2)
         \addplot[domain=\myA-sqrt(\myB):\myA+sqrt(\myB), samples=100, red, thick] {sqrt(\myB-(x-\myA)^2)};
         \addplot[domain=\myA-sqrt(\myB):\myA+sqrt(\myB), samples=100, red, thick] {-sqrt(\myB-(x-\myA)^2)};
-        \node[above left, red] at (axis cs:1.7, 0.7) {$C_2$}; % Label for the circle
+        \node[above right, red] at (axis cs:1.8, 1.0) {$C_2$}; % Label for the circle
 
         % Add points for the center of the circle for clarity
         \node[circle, fill=red, inner sep=1.5pt] at (axis cs:\myA,0) {};
@@ -94,15 +62,17 @@
   が $C_1$の$x$の範囲である$-1< x< 1$ に2異解を持てば良い.
   $x=\pm 1$の時は交点が$4$つにならず二つになるから不適である．
 
+  % TODO :: 二次関数の軸の様子を簡単なグラフにしたい
+
   \cref{eq:3}を展開して
   \begin{align}
-    & -3x^2 - 2ax + a^2 - 4 - b = 0 \\
+    & -3x^2 - 2ax + a^2 + 4 - b = 0 \\
     \therefore
-    & 3x^2 + 2ax - a^2 + 4 + b = 0
+    & 3x^2 + 2ax - a^2 - 4 + b = 0
   \end{align}
   だから，左辺を$f(x)$
   \begin{align}
-    f(x) = 3x^2 + 2ax - a^2 + 4 + b
+    f(x) = 3x^2 + 2ax - a^2 - 4 + b
   \end{align}
   とおいて，$f(x)=0$の判別式を$D$として
   $f(x)=0$が$-1<x<1$に2異解を持つための条件は以下の通り．
@@ -184,7 +154,6 @@
 
   $\cdots$(答)
   {\bf [解説]}
-  % TODO :: 二次関数の軸の様子を簡単なグラフにしたい
 
   \newpage
 \end{multicols}
