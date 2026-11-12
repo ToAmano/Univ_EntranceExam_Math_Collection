@@ -10,9 +10,31 @@
 \begin{multicols}{2}
   {\bf [解答]}
 
-  % TODO: 状況を説明する概要図
-
-  % TODO: k, k+1についての遷移図
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=stealth,every node/.style={font=\small}]
+      \node[draw=blue!85!black,rounded corners=2pt,align=center,
+      minimum width=3.4cm,minimum height=1.0cm] (before) at (0,0)
+      {$k$回目直前\\青$B_k$・赤$R_k$・黄$Y_k$};
+      \node[draw=teal!85!black,rounded corners=2pt,align=center,
+      minimum width=3.4cm,minimum height=1.0cm] (after) at (0,-2.3)
+      {$k$回目終了\\合計$a+b+c+k$枚};
+      \draw[->,very thick,blue!85!black] (before) -- (after)
+      node[midway,right] {引いた色を1枚増やす};
+      \node[draw=orange!90!black,rounded corners=2pt,align=center,
+      minimum width=3.5cm] (added) at (0,-4.4)
+      {$k+1$回目に直前の追加カードを引く};
+      \node[draw=gray!80!black,rounded corners=2pt,align=center,
+      minimum width=3.5cm] (old) at (0,-6.3)
+      {$k+1$回目にそれ以外を引く};
+      \draw[->,thick,orange!90!black] (after) -- (added)
+      node[midway,right] {$\frac{1}{a+b+c+k}$};
+      \draw[->,thick,gray!70!black] (after.west)
+      to[out=200,in=160] node[left] {$\frac{a+b+c+k-1}{a+b+c+k}$} (old.west);
+    \end{tikzpicture}
+    \caption{カードの追加と$k+1$回目の分岐}
+    \label{1997-5:fig:1}
+  \end{figure}
 
   初期状態で青のカード$a$枚，赤のカード$b$枚，黄のカードが$c$枚であるとする．
   この時，$k$回目に青のカードをとり出す確率を$Q_k$とする．
