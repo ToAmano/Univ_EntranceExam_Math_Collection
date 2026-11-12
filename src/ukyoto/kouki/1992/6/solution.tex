@@ -10,7 +10,55 @@
 \begin{multicols}{2}
   {\bf [解答]}
 
-  % TODO: 3d-tikzの概要図
+  \begin{figure}[H]
+    \centering
+    % tdplot の視点 (65,105) と同じ投影ベクトル．A=(1,1,1) が O と重ならず，O-C だけが隠れ線になる．
+    % （Web 変換は図ごとの tdplotsetmaincoords を区別しないため，投影ベクトルを直接与える）
+    \begin{tikzpicture}[x={(-0.2588cm,-0.4082cm)}, y={(0.9659cm,-0.1094cm)}, z={(0.0000cm,0.9063cm)}, scale=1.9, >=stealth,
+      every node/.style={font=\small}]
+      \pgfmathsetmacro{\gold}{(1+sqrt(5))/2}
+      \pgfmathsetmacro{\ig}{1/\gold}
+      \coordinate (O) at (0,0,0);
+      \coordinate (A) at (1,1,1);
+      \coordinate (B) at (-\ig,\gold,0);
+      \coordinate (C) at (-\gold,0,\ig);
+      \coordinate (D) at (0,-\ig,\gold);
+      \coordinate (A0) at (1,1,0); % A の xy 平面への正射影
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-1.9,0,0) -- (1.7,0,0) node[below left=-1pt] {$x$};
+      \draw[->, thick, gray!80!black] (0,-1.1,0) -- (0,2.3,0) node[right] {$y$};
+      \draw[->, thick, gray!80!black] (0,0,-0.3) -- (0,0,2.2) node[above] {$z$};
+      % 各頂点から座標軸への点線
+      \begin{scope}[densely dotted, thick, gray!70!black]
+        \draw (A) -- (A0) (A0) -- (1,0,0) (A0) -- (0,1,0) (A) -- (0,1,1) -- (0,0,1);
+        \draw (B) -- (-\ig,0,0) (B) -- (0,\gold,0);
+        \draw (C) -- (-\gold,0,0) (C) -- (0,0,\ig);
+        \draw (D) -- (0,-\ig,0) (D) -- (0,0,\gold);
+      \end{scope}
+      % 軸上の座標
+      \begin{scope}[font=\footnotesize, inner sep=1.5pt]
+        \node[below right] at (1,0,0) {$1$};
+        \node[below right] at (-\ig,0,0) {$-\frac{1}{a}$};
+        \node[above right, xshift=2pt, fill=white, inner sep=0.5pt] at (-\gold,0,0) {$-a$};
+        \node[below] at (0,1,0) {$1$};
+        \node[below] at (0,\gold,0) {$a$};
+        \node[below] at (0,-\ig,0) {$-\frac{1}{a}$};
+        \node[left] at (0,0,\ig) {$\frac{1}{a}$};
+        \node[left, fill=white, inner sep=0.5pt] at (0,0,1) {$1$};
+        \node[right] at (0,0,\gold) {$a$};
+      \end{scope}
+      % 四角錐 O-ABCD（O-C は隠れ線）
+      \draw[densely dashed, thick, teal!85!black] (O) -- (C);
+      \draw[very thick, teal!85!black] (O) -- (A) (O) -- (B) (O) -- (D);
+      \draw[very thick, blue!85!black] (A) -- (B) -- (C) -- (D) -- cycle;
+      \foreach \p/\pos in {O/below left, A/above right, B/below right, C/above right, D/above left}{
+        \node[circle, fill=blue!85!black, inner sep=1.2pt] at (\p) {};
+        \node[\pos=2pt] at (\p) {$\p$};
+      }
+    \end{tikzpicture}
+    \caption{四角錐$O$-$ABCD$と各頂点の座標}
+    \label{1992-6:fig:pyramid}
+  \end{figure}
 
   A$(1,1,1)$, B$(-\dfrac{1}{a},a,0)$, C$(-a,0,\dfrac{1}{a})$, D$(0,\dfrac{-1}{a},a)$である．
 
