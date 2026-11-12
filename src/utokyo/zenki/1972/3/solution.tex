@@ -113,7 +113,77 @@ $C, C_{n}, C_{n+1}$ を図示すると下図のようになる．
   \label{fig:three_touching_circles_all_feet}
 \end{figure}
 
-% TODO: 左からOO_nP_n,OO_{n+1}P_{n+1},O_nO_{n+1}Q_{n+1}の3つのtriangleと辺の長さを示す
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.6, >=stealth, every node/.style={font=\small}]
+    % 上図と同じ R=1.5, r_n=1 とし，r_{n+1} は 1/sqrt(r_{n+1}) = 1/sqrt(R) + 1/sqrt(r_n) から計算
+    \def\R{1.5}
+    \def\rn{1.0}
+    \pgfmathsetmacro{\rnOne}{1.0 / pow(1.0/sqrt(\R) + 1.0/sqrt(\rn), 2)}
+    % 各三角形の縦の辺と横の辺
+    \pgfmathsetmacro{\aI}{\R - \rn}
+    \pgfmathsetmacro{\bI}{2*sqrt(\R*\rn)}
+    \pgfmathsetmacro{\aII}{\R - \rnOne}
+    \pgfmathsetmacro{\bII}{2*sqrt(\R*\rnOne)}
+    \pgfmathsetmacro{\aIII}{\rn - \rnOne}
+    \pgfmathsetmacro{\bIII}{2*sqrt(\rn*\rnOne)}
+    \pgfmathsetmacro{\xII}{\bI + 1.0}
+    \pgfmathsetmacro{\xIII}{\xII + \bII + 1.6}
+
+    % (i) 三角形 O O_n P_n（P_n で直角）
+    \begin{scope}
+      \coordinate (O) at (0, \aI);
+      \coordinate (P) at (0, 0);
+      \coordinate (Q) at (\bI, 0);
+      \draw[thick, teal!80!black] (O) -- (P) -- (Q) -- cycle;
+      \draw[teal!80!black] (0.12, 0) -- (0.12, 0.12) -- (0, 0.12);
+      \node[left=1pt, font=\footnotesize] at ($(O)!0.5!(P)$) {$R-r_n$};
+      \node[below=1pt, font=\footnotesize] at ($(P)!0.5!(Q)$) {$2\sqrt{Rr_n}$};
+      \node[above right=0pt, font=\footnotesize] at ($(O)!0.5!(Q)$) {$R+r_n$};
+      \foreach \p in {O, P, Q} \node[circle, fill=teal!80!black, inner sep=1.1pt] at (\p) {};
+      \node[above left=0pt] at (O) {$O$};
+      \node[below left=0pt] at (P) {$P_n$};
+      \node[right=1pt] at (Q) {$O_n$};
+      \node[font=\footnotesize] at ({\bI/2}, -0.62) {(i) $\triangle OO_nP_n$};
+    \end{scope}
+
+    % (ii) 三角形 O O_{n+1} P_{n+1}（P_{n+1} で直角）
+    \begin{scope}[shift={(\xII, 0)}]
+      \coordinate (O) at (0, \aII);
+      \coordinate (P) at (0, 0);
+      \coordinate (Q) at (\bII, 0);
+      \draw[thick, purple!80!black] (O) -- (P) -- (Q) -- cycle;
+      \draw[purple!80!black] (0.12, 0) -- (0.12, 0.12) -- (0, 0.12);
+      \node[left=1pt, font=\footnotesize] at ($(O)!0.5!(P)$) {$R-r_{n+1}$};
+      \node[below=1pt, font=\footnotesize] at ($(P)!0.5!(Q)$) {$2\sqrt{Rr_{n+1}}$};
+      \node[above right=0pt, font=\footnotesize] at ($(O)!0.5!(Q)$) {$R+r_{n+1}$};
+      \foreach \p in {O, P, Q} \node[circle, fill=purple!80!black, inner sep=1.1pt] at (\p) {};
+      \node[above left=0pt] at (O) {$O$};
+      \node[below left=0pt] at (P) {$P_{n+1}$};
+      \node[right=1pt] at (Q) {$O_{n+1}$};
+      \node[font=\footnotesize] at ({\bII/2}, -0.62) {(ii) $\triangle OO_{n+1}P_{n+1}$};
+    \end{scope}
+
+    % (iii) 三角形 O_n O_{n+1} Q_{n+1}（Q_{n+1} で直角）
+    \begin{scope}[shift={(\xIII, 0)}]
+      \coordinate (O) at (\bIII, \aIII);
+      \coordinate (P) at (\bIII, 0);
+      \coordinate (Q) at (0, 0);
+      \draw[thick, purple!80!black] (O) -- (P) -- (Q) -- cycle;
+      \draw[purple!80!black] ({\bIII-0.12}, 0) -- ({\bIII-0.12}, 0.12) -- (\bIII, 0.12);
+      \node[right=1pt, font=\footnotesize] at ($(O)!0.5!(P)$) {$r_n-r_{n+1}$};
+      \node[below=1pt, font=\footnotesize] at ($(P)!0.5!(Q)$) {$2\sqrt{r_nr_{n+1}}$};
+      \node[above left=0pt, font=\footnotesize] at ($(O)!0.5!(Q)$) {$r_n+r_{n+1}$};
+      \foreach \p in {O, P, Q} \node[circle, fill=purple!80!black, inner sep=1.1pt] at (\p) {};
+      \node[above right=0pt] at (O) {$O_n$};
+      \node[below right=0pt] at (P) {$Q_{n+1}$};
+      \node[left=1pt] at (Q) {$O_{n+1}$};
+      \node[font=\footnotesize] at ({\bIII/2}, -0.62) {(iii) $\triangle O_nO_{n+1}Q_{n+1}$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{ピタゴラスの定理を用いる3つの直角三角形（横の辺はそれぞれ $|HH_n|$，$|HH_{n+1}|$，$|H_{n+1}H_n|$ に等しい）}
+  \label{fig:three_right_triangles}
+\end{figure}
 
 ピタゴラスの定理を用いて$|HH_n|$ を2通りで表す．
 三角形$OO_nP_n$に着目すると
@@ -155,7 +225,7 @@ $C, C_{n}, C_{n+1}$ を図示すると下図のようになる．
 
 よって求める極限値は
 \begin{align}
-  n^2 r_n = \dfrac{1}{\Bigl(\sqrt{1/R} + \dfrac{1}{n}\sqrt{1/R}\Bigr)^2} \to R \quad (n \to +\infty)
+  n^2 r_n = \dfrac{1}{\Bigl(\sqrt{1/R} + \dfrac{1}{n}\sqrt{1/R'}\Bigr)^2} \to R \quad (n \to +\infty)
 \end{align}
 である．
 
