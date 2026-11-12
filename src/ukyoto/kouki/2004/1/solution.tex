@@ -1,29 +1,4 @@
 \documentclass[../../main.tex]{subfiles}
-% \documentclass[a4paper,10pt]{ltjsarticle}
-\usepackage{luatexja}
-\usepackage[hiragino-pron]{luatexja-preset}
-
-\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
-\setlength{\textwidth}{54\zw}
-\setlength{\textheight}{73\zw}
-
-\usepackage{amsmath,amssymb,ascmac}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{cleveref}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usetikzlibrary{math}
-% \usepackage{indent}
-\usepackage{cases}
-\usepackage{float}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
 \begin{document}
 \rhead{京都大学後期$2004$年$1$番}
 \setcounter{equation}{0}
@@ -33,12 +8,62 @@
 \setlength{\columnseprule}{0.4pt}
 \begin{multicols}{2}
   {\bf [解答]}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=stealth, every node/.style={font=\small}]
+      % 左：y = f(x)．x=1 で 1 をとり，x>1 では 0（(1,0) は含まない）．
+      \begin{scope}[x=1.1cm, y=1.5cm]
+        \draw[->, thick, gray!80!black] (-0.2,0) -- (2.2,0) node[right] {$x$};
+        \draw[->, thick, gray!80!black] (0,-0.2) -- (0,1.45) node[above] {$y$};
+        \draw[line width=1.4pt, blue!85!black] (0,0) -- (1,1);
+        \draw[line width=1.4pt, blue!85!black] (1,0) -- (2.05,0);
+        \draw[densely dotted, thick, gray!70!black] (1,1) -- (1,0) node[below, text=black] {$1$};
+        \draw[densely dotted, thick, gray!70!black] (1,1) -- (0,1) node[left, text=black] {$1$};
+        \node[circle, fill=blue!85!black, inner sep=1.3pt] at (1,1) {};
+        \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (1,0) {};
+        \node[below left=1pt, font=\footnotesize] at (0,0) {$O$};
+        \node[blue!85!black, above=2pt] at (1.6,0) {$y=f(x)$};
+      \end{scope}
+      % 右：y = g_n(x) = 4nx(1-x)（図は n=2 の例）．y=1 との交点が alpha, beta．
+      \begin{scope}[xshift=3.7cm, x=3.0cm, y=0.62cm]
+        \pgfmathsetmacro{\nn}{2}
+        \pgfmathsetmacro{\al}{(1-sqrt(1-1/\nn))/2}
+        \pgfmathsetmacro{\be}{(1+sqrt(1-1/\nn))/2}
+        \fill[pattern=north east lines, pattern color=red!75!black]
+        (0,0) -- plot[domain=0:\al, samples=30] (\x, {4*\nn*\x*(1-\x)}) -- (\al,0) -- cycle;
+        \fill[pattern=north east lines, pattern color=red!75!black]
+        (\be,0) -- plot[domain=\be:1, samples=30] (\x, {4*\nn*\x*(1-\x)}) -- (1,0) -- cycle;
+        \draw[->, thick, gray!80!black] (-0.08,0) -- (1.18,0) node[right] {$x$};
+        \draw[->, thick, gray!80!black] (0,-0.3) -- (0,2.75) node[above] {$y$};
+        \draw[densely dashed, thick, gray!70!black] (0,1) -- (1.1,1) node[right] {$y=1$};
+        \draw[line width=1.4pt, blue!85!black, domain=0:1, samples=80]
+        plot (\x, {4*\nn*\x*(1-\x)});
+        \node[blue!85!black, above right=1pt] at (0.62,{4*\nn*0.62*0.38}) {$y=g_n(x)$};
+        \draw[densely dotted, thick, gray!70!black] (0.5,\nn) -- (0.5,0) node[below, text=black] {$\frac{1}{2}$};
+        \draw[densely dotted, thick, gray!70!black] (0.5,\nn) -- (0,\nn) node[left, text=black] {$n$};
+        \draw[densely dotted, thick, gray!70!black] (\al,1) -- (\al,0) node[below, text=black] {$\alpha$};
+        \draw[densely dotted, thick, gray!70!black] (\be,1) -- (\be,0) node[below, text=black] {$\beta$};
+        \node[left] at (0,1) {$1$};
+        \node[below] at (1,0) {$1$};
+        \node[below left=1pt, font=\footnotesize] at (0,0) {$O$};
+        \foreach \p in {(\al,1), (\be,1), (0.5,\nn)} {
+          \node[circle, fill=red!85!black, inner sep=1.3pt] at \p {};
+        }
+      \end{scope}
+    \end{tikzpicture}
+    \caption{左：$y=f(x)$のグラフ，右：$y=g_n(x)$のグラフ．斜線部は$f(g_n(x))=g_n(x)$となる部分}
+    \label{2004-1:fig:1}
+  \end{figure}
+
   新しく
   \begin{align}
-    g_n(x) & = 4nx(1-x) \\
-    j(x)   & = 4x(1-x)
+    \begin{cases}
+      g_n(x) = 4nx(1-x) \\
+      j(x)   = 4x(1-x)
+    \end{cases}
   \end{align}
-  とおくと，$y=g_n(x)$ のグラフはのようになる．
+  とおくと，$y=g_n(x)$ のグラフは上図のようになる．
 
   新しく実数$0< \alpha,\beta<1$を
   \begin{align}
@@ -108,6 +133,57 @@
   となる．従って，\cref{eq:4}に代入すると
   \begin{align}
     \lim_{n\to\infty}h(n) = 4\cdot\dfrac{1}{16} = \dfrac{1}{4}
+  \end{align}
+  が求める極限値である．$\cdots$(答)
+
+  \vspace{10pt}
+  {\bf [別解]}
+  解答と同様に，グラフおよび$f(x)$の定義から
+  \begin{align}
+    h(n) = n \int_0^\alpha g_n(x) \, dx + n \int_\beta^1 g_n(x) \, dx
+  \end{align}
+  である．ここで
+  \begin{align}
+    G_n(x) = -\dfrac{4n}{3}x^3 + 2nx^2
+  \end{align}
+  とおくと，$G_n'(x) = g_n(x)$ だから
+  \begin{align}
+    h(n) = n\left(G_n(\alpha) - G_n(0) + G_n(1) - G_n(\beta)\right) \label{eq:5}
+  \end{align}
+  である．又，
+  \begin{align}
+    G_n(1) = \dfrac{2}{3}n, \quad G_n(0) = 0 \label{eq:6}
+  \end{align}
+  である．
+
+  ここで，$\alpha,\beta$は$4nx^2-4nx+1=0$の二つの解だから，その定義から
+  \begin{align}
+    \alpha+\beta     & = 1                                                    \\
+    \alpha\beta      & = \dfrac{1}{4n}                                        \\
+    \beta - \alpha   & = \dfrac{\sqrt{4n^2-4n}}{2n} = \dfrac{\sqrt{n^2-n}}{n}
+  \end{align}
+  である．従って，$\alpha^2+\alpha\beta+\beta^2 = (\alpha+\beta)^2-\alpha\beta$に注意して
+  \begin{align}
+    G_n(\alpha) - G_n(\beta)
+    & = 2n(\alpha^2-\beta^2) - \dfrac{4n}{3}(\alpha^3-\beta^3)                                        \\
+    & = (\alpha-\beta)\left[ 2n(\alpha+\beta) - \dfrac{4n}{3}(\alpha^2+\alpha\beta+\beta^2) \right] \\
+    & = -\dfrac{\sqrt{n^2-n}}{n}\left\{ 2n - \dfrac{4n}{3}\left(1-\dfrac{1}{4n}\right) \right\}      \\
+    & = -\dfrac{\sqrt{n^2-n}}{n}\left( \dfrac{2}{3}n + \dfrac{1}{3} \right) \label{eq:7}
+  \end{align}
+  となる．
+
+  \cref{eq:6,eq:7}を\cref{eq:5}に代入して
+  \begin{align}
+    h(n)
+    & = n\left[ \dfrac{2}{3}n - \dfrac{\sqrt{n^2-n}}{3n}(2n+1) \right]                        \\
+    & = \dfrac{1}{3}\left[ 2n^2 - \sqrt{n^2-n}\,(2n+1) \right]                                \\
+    & = \dfrac{1}{3} \cdot \dfrac{4n^4 - (n^2-n)(4n^2+4n+1)}{2n^2 + \sqrt{n^2-n}\,(2n+1)} \\
+    & = \dfrac{1}{3} \cdot \dfrac{3n^2+n}{2n^2 + \sqrt{n^2-n}\,(2n+1)}                    \\
+    & = \dfrac{1}{3} \cdot \dfrac{3+\dfrac{1}{n}}{2 + \sqrt{1-\dfrac{1}{n}}\left(2+\dfrac{1}{n}\right)}
+  \end{align}
+  だから，
+  \begin{align}
+    \lim_{n\to\infty} h(n) = \dfrac{1}{3} \cdot \dfrac{3}{2+2} = \dfrac{1}{4}
   \end{align}
   が求める極限値である．$\cdots$(答)
 
