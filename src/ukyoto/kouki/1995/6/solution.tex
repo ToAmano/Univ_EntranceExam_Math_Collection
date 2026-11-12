@@ -1,29 +1,4 @@
 \documentclass[../../main.tex]{subfiles}
-% \documentclass[a4paper,10pt]{ltjsarticle}
-\usepackage{luatexja}
-\usepackage[hiragino-pron]{luatexja-preset}
-
-\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
-\setlength{\textwidth}{54\zw}
-\setlength{\textheight}{73\zw}
-
-\usepackage{amsmath,amssymb,ascmac}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{cleveref}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usetikzlibrary{math}
-% \usepackage{indent}
-\usepackage{cases}
-\usepackage{float}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
 \begin{document}
 \rhead{京都大学後期$1995$年$6$番}
 \setcounter{equation}{0}
@@ -36,88 +11,42 @@
   \paragraph{(1)}
 
   \begin{figure}[H]
-    \begin{tikzpicture}
-      \begin{axis}[
-          axis lines=middle,
-          xlabel=$x$,
-          ylabel=$y$,
-          xmin=0, xmax=5,
-          ymin=0, ymax=4.5,
-          xtick={0, 4}, % Only show 0 and 4 on x-axis
-          ytick={0, 2}, % Only show 0 and 2 on y-axis
-          xticklabel style={below}, % Position x-axis labels
-          yticklabel style={left}, % Position y-axis labels
-          xlabel style={at={(current axis.right of origin)}, anchor=west},
-          ylabel style={at={(current axis.above origin)}, anchor=south},
-          grid=none,
-          tick style={draw=none}, % Hide the tick marks themselves, just keep labels
-          declare function={
-            a_val=1.5; % Define 'a' for the x-intercept of the tangent, adjust as needed
-          }
-        ]
-
-        % Plot the function y = 1/x
-        \addplot[
-          domain=0.2:5, % Adjust domain to prevent issues near x=0
-          samples=100,
-          thick,
-          blue, % You can change the color
-        ] {1/x};
-        \node[above right] at (axis cs:2, 1) {$y=\frac{1}{x}$}; % Label for the curve
-
-        % Plot the line passing through Q(0,2) and R(4,0)
-        \addplot[
-          domain=0:4, % From x=0 to x=4
-          thick,
-          red, % You can change the color
-        ] {2 - 0.5*x}; % Equation of the line: y = -0.5x + 2
-
-        % Mark point Q(0,2)
-        \node[circle, fill, inner sep=1.5pt, label={above left:$Q$}] at (axis cs:0,2) {};
-        \node[left] at (axis cs:0,2) {$2$}; % Label '2' on y-axis
-
-        % Mark point R(4,0)
-        \node[circle, fill, inner sep=1.5pt, label={below right:$R$}] at (axis cs:4,0) {};
-        \node[below] at (axis cs:4,0) {$4$}; % Label '4' on x-axis
-
-        % The tangent line (represented by the image with A, B, M)
-        % We need to find the specific 'a' value from the first document.
-        % From the first document, A = 2t. The tangent is y = -1/t^2 x + 2/t.
-        % If the tangent passes through A(a,0), then 0 = -1/t^2 * a + 2/t => a = 2t.
-        % So the tangent is y = -4/a^2 x + 4/a.
-        % Let's pick an 'a' value that visually matches the image, e.g., a=1.5 or 1.6
-        \addplot[
-          domain=0:a_val, % x-range for the tangent line
-          thick,
-          purple, % Color for the tangent line
-        ] {-4/(a_val^2) * x + 4/a_val};
-
-        % Mark point A (x-intercept of the tangent)
-        \node[circle, fill, inner sep=1.5pt, label={below:$A$}] at (axis cs:a_val,0) {};
-        \node[below left] at (axis cs:a_val,0) {$a$}; % Label 'a' on x-axis
-
-        % Mark point B (y-intercept of the tangent)
-        \pgfmathparse{4/a_val}
-        \let\yintercept\pgfmathresult
-        \node[circle, fill, inner sep=1.5pt, label={left:$B$}] at (axis cs:0,\yintercept) {};
-        \node[left] at (axis cs:0,\yintercept) {$\frac{4}{a}$}; % Label '4/a' on y-axis
-
-        % Intersection point M between the hyperbola and the tangent
-        % The tangent point is (t, 1/t). Since a=2t, t=a/2.
-        % So the tangent point M is (a/2, 2/a).
-        \pgfmathparse{a_val/2}
-        \let\xM\pgfmathresult
-        \pgfmathparse{2/a_val}
-        \let\yM\pgfmathresult
-        \node[circle, fill, inner sep=1.5pt, label={above right:$M$}] at (axis cs:\xM,\yM) {};
-
-        % Dashed lines from M to axes
-        \draw[dashed, gray] (axis cs:\xM,0) -- (axis cs:\xM,\yM);
-        \draw[dashed, gray] (axis cs:0,\yM) -- (axis cs:\xM,\yM);
-
-      \end{axis}
+    \centering
+    \begin{tikzpicture}[x=1.1cm,y=1.25cm,>=stealth,
+      every node/.style={font=\small}]
+      % a=3/2 の例．M は L_a と RQ の交点で，接点とは異なる．
+      \pgfmathsetmacro{\aval}{1.5}
+      \pgfmathsetmacro{\xm}{4*\aval*(2-\aval)/(8-\aval*\aval)}
+      \pgfmathsetmacro{\ym}{4*(4-\aval)/(8-\aval*\aval)}
+      \coordinate (O) at (0,0);
+      \coordinate (Q) at (0,2);
+      \coordinate (R) at (4,0);
+      \coordinate (A) at (\aval,0);
+      \coordinate (B) at (0,{4/\aval});
+      \coordinate (M) at (\xm,\ym);
+      \fill[pattern=north east lines,pattern color=blue!60]
+      (O) -- (A) -- (M) -- (Q) -- cycle;
+      \draw[->,thick,gray!80!black] (-0.15,0) -- (4.55,0) node[right] {$x$};
+      \draw[->,thick,gray!80!black] (0,-0.15) -- (0,3.25) node[above] {$y$};
+      \draw[very thick,blue!85!black,domain=0.35:4.3,samples=80]
+      plot (\x,{1/\x});
+      \draw[very thick,red!85!black] (Q) -- (R);
+      \draw[very thick,teal!85!black] (B) -- (A);
+      \draw[densely dotted,thick,gray!70!black]
+      (M) -- (\xm,0) (M) -- (0,\ym);
+      \foreach \p/\pos in {O/below left,R/below,A/below,B/above left,M/above right}{
+        \node[circle,fill=blue!85!black,inner sep=1.2pt] at (\p) {};
+        \node[\pos=2pt] at (\p) {$\p$};
+      }
+      \node[circle,fill=blue!85!black,inner sep=1.2pt] at (Q) {};
+      \node[above left=2pt] at (Q) {$Q$};
+      \node[below] at (\xm,0) {$x_0$};
+      \node[left=10pt] at (0,\ym) {$y_0$};
+      \node[blue!85!black,below right] at (2.5,0.4) {$y=1/x$};
+      \node[red!85!black,above right] at (3.0,0.5) {$RQ$};
+      \node[teal!85!black,right] at (1.0,1.0) {$L_a$};
     \end{tikzpicture}
-    \caption{題意の状況}
+    \caption{直線$RQ$と接線$L_a$の交点$M$．斜線部が$T$}
     \label{1995-6:fig:1}
   \end{figure}
 
@@ -136,7 +65,6 @@
   \cref{eq:1}に代入して
   \begin{align}
     L_a : y
-    & = f_{a}                       \\
     & = -\dfrac{4}{a^2}x+\dfrac{4}{a}
   \end{align}
   である．
@@ -148,11 +76,13 @@
   と表せるから，RQと$L_a$の交点の$x$座標$x_0$は
   \begin{align}
     & -\dfrac{4}{a^2}x_0+\dfrac{4}{a} = -\dfrac{1}{2}x_0+2 \\
-    & (\dfrac{1}{2}-\dfrac{4}{a^2})x = 2-\dfrac{4}{a}
+    \therefore
+    & (\dfrac{1}{2}-\dfrac{4}{a^2})x_0 = 2-\dfrac{4}{a}
   \end{align}
   の解である．$a \neq 2\sqrt{2}$のもとでこれを解いて
   \begin{align}
-    x_0 & = \dfrac{2-4/a}{1/2-4/a^2}                    \\
+    x_0
+    & = \dfrac{2-4/a}{1/2-4/a^2}                    \\
     & = \dfrac{4a(a-2)}{a^2-8}  \label{eq:3}
   \end{align}
   を得る．この時$y$座標は
@@ -207,6 +137,8 @@
   \end{align}
   である．
 
+  % TODO: y = t + 1/t (1<t<3)のグラフ
+
   以下$T$の値域を求めることで$r$の値域を求める．
   図および \cref{eq:3,eq:4}から
   \begin{align}
@@ -215,11 +147,23 @@
     & = \dfrac{1}{2}a y_0 + \dfrac{1}{2} \cdot 2 x_0 \\
     & = \dfrac{2 x_0 + ay_0 }{2}                    \\
     & = \dfrac{4a(3a-8)}{2(a^2-8)}                  \\
-    & = 2\left[3 + \dfrac{8(-3+a)}{8-a^2}\right]
+    & = 2\left[3 + \dfrac{8(-3+a)}{8-a^2}\right] \quad (0<a<2)
   \end{align}
-  である．
-  分母は$a$について単調減少，分子は$a$について単調増加だから，
-  全体として$T$は$a$について単調増加であり，$0<a<2$のもとで
+  である．ここで$t=3-a \ (1<t<3)$とおくと
+  \begin{align}
+    T
+    &= 2\left[3 + \dfrac{8t}{8-(3-t)^2}\right] \\
+    &= 2\left[3 + \dfrac{8t}{-t^2+6t-1}\right] \\
+    &= 2\left[3 + \dfrac{8}{6 - \left(t+\dfrac{1}{t}\right)}\right]
+  \end{align}
+  となる．$1<t<3$ではグラフの形を考えると$t+\dfrac{1}{t}$が単調増加だから，
+  分母は
+  \begin{align}
+    & 2 < t+\dfrac{1}{t} < \dfrac{10}{3} \\
+    \therefore
+    & \dfrac{8}{3} < 6 - \left(t+\dfrac{1}{t}\right) < 4
+  \end{align}
+  となって，全体として$T$は$t$に関して単調減少（つまり$a$について単調増加）で，$0<a<2$のもとで
   \begin{align}
     & \lim_{a\to 0}T <T <\lim_{a\to 2} T \\
     & 0<T<2
@@ -275,7 +219,6 @@
 
   \vspace{10pt}
   {\bf [解説]}
-  % TODO :: 図1の綺麗化
 
   \newpage
 \end{multicols}
