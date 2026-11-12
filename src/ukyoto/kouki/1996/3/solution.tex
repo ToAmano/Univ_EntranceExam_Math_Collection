@@ -65,9 +65,9 @@
   \end{align}
   を満たす．
   同じく題意より，$P_{k+1}$は$Q_k$を$m$すなわち$\theta=\pi/3$について対称な点なので，
-  これは偏角を考えると$\overline{q_k}$を$2\pi/3$回転させたもので，大きさを考えると$Q_k$と同一なので
+  これは偏角を考えると$\overline{q_k}$を$\dfrac{2\pi}{3}$回転させたもので，大きさを考えると$Q_k$と同一なので
   \begin{align}
-    p_{k+1} = e\left(\dfrac{\pi}{3}\right) \overline{q_k} \label{eq:2}
+    p_{k+1} = e\left(\dfrac{2\pi}{3}\right) \overline{q_k} \label{eq:2}
   \end{align}
   である．ただし
   \begin{align}
@@ -93,13 +93,15 @@
   $P_k, Q_k$ の偏角を $\alpha_k, \beta_k$ ($0 \le \alpha_k, \beta_k < 2\pi$) とおく．
   $P_k, Q_k$は半径$1$の円上にあるから
   \begin{align}
-    p_k & = e(\alpha_k) \\
-    q_k & = e(\beta_k)
+    \begin{cases}
+      p_k = e(\alpha_k) \\
+      q_k = e(\beta_k)
+    \end{cases}
   \end{align}
   である．
   \cref{eq:2}の両辺$\arg$をとって，
   \begin{align}
-    \alpha_{k+1} = \alpha_k + \dfrac{2\pi}{3} \label{eq:3}
+    \alpha_{k+1} \equiv \alpha_k + \dfrac{2\pi}{3} \pmod{2\pi} \label{eq:3}
   \end{align}
   である．
 
@@ -129,8 +131,8 @@
   と $\alpha_1$ を用いて表せる．
 
   ここで $A_k = |\sin(\alpha_1 + \dfrac{k\pi}{3})|$ とおく．
-  $0 \le \alpha_1 \le \dfrac{\pi}{3}$ の場合を調べれば，$\dfrac{i \pi}{3} \le \alpha_1 \le \dfrac{(i+1)\pi}{3}$ ($i=2,3,4,5$) の時には，
-  $\alpha_1' = \alpha_1 - \dfrac{i\pi}{3}$ とおけば元の
+  $0 \le \alpha_1 \le \dfrac{\pi}{3}$ の場合を調べれば，$\dfrac{t \pi}{3} \le \alpha_1 \le \dfrac{(t+1)\pi}{3}$ ($t=1,2,3,4,5$) の時には，
+  $\alpha_1' = \alpha_1 - \dfrac{t\pi}{3}$ とおけば元の
   $0 \le \alpha_1' \le \dfrac{\pi}{3}$ の場合に帰着するので，
   この場合を調べれば十分である．この時
   \begin{align}
@@ -155,7 +157,7 @@
     & = 8\sin(\alpha_1 + \dfrac{\pi}{3})                                                                       \\
     & \le 8
   \end{align}
-  と評価できる．等号が成立するのは$\alpha_1=\pi/6$の時である．
+  と評価できる．等号が成立するのは$\alpha_1=\dfrac{\pi}{6}$の時である．
   従って，求める最大値は
   \begin{align}
     \max L = 8
@@ -163,7 +165,47 @@
   である．$\cdots$(答)
 
   {\bf [解説]}
-  (2)の最大値のとき，P，Qの作る図形は正六角形となり，この一周の長さは確かに$8$である．
+  (2)の最大値のとき，P，Qの作る図形は下図のようになり，各点が$\dfrac{\pi}{6}$ずつの位置に配置される．この一周の長さは確かに$8$である．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.9, >=stealth, every node/.style={font=\small}]
+      % 最大値をとる alpha_1 = pi/6 の場合．P_k, Q_k の偏角（度）
+      \coordinate (O)  at (0,0);
+      \coordinate (P1) at (30:1);
+      \coordinate (Q1) at (-30:1);
+      \coordinate (P2) at (150:1);
+      \coordinate (Q2) at (-150:1);
+      \coordinate (P3) at (-90:1);
+      \coordinate (Q3) at (90:1);
+      % 単位円と直線 l, m
+      \draw[densely dashed, thick, gray!70!black] (O) circle (1);
+      \draw[thick, gray!80!black] (-1.45,0) -- (1.45,0) node[right] {$l$};
+      \draw[thick, gray!80!black] (240:1.45) -- (60:1.45) node[above right=-1pt] {$m$};
+      \draw[gray!80!black] (0.28,0) arc (0:60:0.28);
+      \node[font=\scriptsize] at (30:0.42) {$60^\circ$};
+      % 折れ線 P1 Q1 P2 Q2 P3 Q3 P4(=P1)
+      \draw[line width=1.4pt, red!85!black, line join=round]
+      (P1) -- (Q1) -- (P2) -- (Q2) -- (P3) -- (Q3) -- cycle;
+      % 各線分の長さ
+      \node[left=1pt, red!85!black] at ($(P1)!0.3!(Q1)$) {$1$};
+      \node[above=1pt, red!85!black] at ($(Q1)!0.72!(P2)$) {$2$};
+      \node[right=1pt, red!85!black] at ($(P2)!0.3!(Q2)$) {$1$};
+      \node[below left=0pt, red!85!black] at ($(Q2)!0.75!(P3)$) {$1$};
+      \node[left=1pt, red!85!black] at ($(P3)!0.25!(Q3)$) {$2$};
+      \node[above right=0pt, red!85!black] at ($(Q3)!0.25!(P1)$) {$1$};
+      % 点
+      \foreach \p/\pos/\lab in {P1/above right/P_1=P_4, Q1/below right/Q_1, P2/above left/P_2,
+      Q2/below left/Q_2, P3/below/P_3, Q3/above left/Q_3} {
+        \node[circle, fill=blue!85!black, inner sep=1.3pt] at (\p) {};
+        \node[\pos=1pt] at (\p) {$\lab$};
+      }
+      \node[circle, fill=black, inner sep=1pt] at (O) {};
+      \node[below right=1pt, font=\footnotesize] at (O) {$O$};
+    \end{tikzpicture}
+    \caption{$\alpha_1=\dfrac{\pi}{6}$で$L$が最大となる時の折れ線$P_1Q_1P_2Q_2P_3Q_3P_4$（$P_4=P_1$）}
+    \label{1996-3:fig:2}
+  \end{figure}
 
   \newpage
 \end{multicols}
