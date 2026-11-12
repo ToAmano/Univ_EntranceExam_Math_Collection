@@ -20,14 +20,18 @@
   \end{align}
   である．
 
-  % TODO: 球が全然球に見えない．．．
   \begin{figure}[H]
     \centering
     \tdplotsetmaincoords{70}{115} % 視点の角度を設定
 
     \begin{tikzpicture}[tdplot_main_coords, scale=1.8]
-      % 球を描画
-      \shade[ball color=blue!10!white, opacity=0.7] (0,0,0) circle (1);
+      % 球の輪郭は画面座標で円にする（xy 平面の円を投影すると楕円になる）．
+      \begin{scope}[tdplot_screen_coords]
+        \shade[ball color=blue!15!white, opacity=0.5] (0,0) circle (1);
+        \draw[very thick, blue!85!black] (0,0) circle (1);
+        \draw[densely dashed, gray!70!black] (-1,0) arc[start angle=180,end angle=360,x radius=1,y radius=0.28];
+        \draw[gray!70!black] (1,0) arc[start angle=0,end angle=180,x radius=1,y radius=0.28];
+      \end{scope}
 
       % 球の中心
       \coordinate (O) at (0,0,0);
