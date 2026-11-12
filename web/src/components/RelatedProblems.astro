@@ -1,0 +1,59 @@
+---
+import { univName, catName } from '../lib/labels';
+
+interface RelatedItem {
+  id: string;
+  slug: string;
+  relation: 'same' | 'related';
+}
+interface RelatedGroup {
+  id: string;
+  name: string;
+  items: RelatedItem[];
+}
+interface Props {
+  groups: RelatedGroup[];
+  baseUrl: string;
+}
+const { groups, baseUrl } = Astro.props;
+
+function labelFor(id: string): string {
+  const [university, category, year, question] = id.split('/');
+  return `${univName(university)} ${catName(category)} ${year}年 第${question}問`;
+}
+---
+
+{groups.length > 0 && (
+  <section class="related-problems glass" aria-labelledby="related-problems-heading">
+    <h2 id="related-problems-heading">類題・関連問題</h2>
+    {groups.map((group) => (
+      <div class="related-group">
+        <h3>{group.name}</h3>
+        <ul>
+          {group.items.map((item) => (
+            <li>
+              <a href={`${baseUrl}/solutions/${item.slug}/`}>
+                <span>{labelFor(item.id)}</span>
+                {item.relation === 'related' && <span class="related-label">関連</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </section>
+)}
+
+<style>
+  .related-problems {
+    margin-bottom: 1.5rem;
+    padding: 1.25rem 1.5rem;
+  }
+  h2 { margin: 0 0 1rem; font-size: 1.2rem; color: var(--text-main); }
+  .related-group + .related-group { margin-top: 1.25rem; }
+  h3 { margin: 0 0 0.6rem; font-size: 1rem; color: var(--text-muted); }
+  ul { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 0.6rem; }
+  a { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; padding: 0.65rem 0.8rem; border: 1px solid rgba(148, 163, 184, 0.25); border-radius: 8px; color: var(--primary); text-decoration: none; line-height: 1.45; }
+  a:hover, a:focus-visible { border-color: var(--primary); background: rgba(96, 165, 250, 0.08); }
+  .related-label { flex: none; color: var(--text-muted); border: 1px solid rgba(148, 163, 184, 0.35); border-radius: 999px; padding: 0.1rem 0.45rem; font-size: 0.75rem; }
+</style>

@@ -3,7 +3,9 @@ import { getCollection } from 'astro:content';
 import { existsSync } from 'node:fs';
 import Layout from '../../layouts/Layout.astro';
 import ProblemIssues from '../../components/ProblemIssues.astro';
+import RelatedProblems from '../../components/RelatedProblems.astro';
 import { readIssueIndex, problemIssues } from '../../lib/issues.mjs';
+import { readProblemGroups, relatedProblemGroups } from '../../lib/related-problems.mjs';
 import { matchingSolutionSlug } from '../../lib/canonical-sitemap.mjs';
 import { buildBreadcrumbListJsonLd } from '../../utils/seo';
 
@@ -67,6 +69,9 @@ const catName = CATEGORY_NAMES[entry.data.category] || entry.data.category;
 const year = entry.data.year;
 const questionNum = entry.data.question;
 const entryType = entry.data.type || (questionNum === '0' ? 'summary' : 'solution');
+const relatedGroups = entryType === 'solution'
+	? relatedProblemGroups(readProblemGroups(), `${entry.data.university}/${entry.data.category}/${year}/${questionNum}`, allSolutions)
+	: [];
 const ogpCard = `ogp/problems/${entry.data.university}-${entry.data.category}-${year}-${questionNum}.png`;
 const ogImagePath = entryType !== 'summary' && existsSync(`public/${ogpCard}`) ? `/${ogpCard}` : undefined;
 
@@ -378,6 +383,8 @@ const pageDescription =
 			<Content />
 		</div>
 	</article>
+
+	<RelatedProblems groups={relatedGroups} baseUrl={baseUrl} />
 
 	<ProblemIssues info={issueInfo} />
 
