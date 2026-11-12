@@ -20,30 +20,44 @@
   \end{align}
   である．
 
+  % TODO: 球が全然球に見えない．．．
   \begin{figure}[H]
     \centering
-    \tdplotsetmaincoords{0}{0} % 視点の角度を設定
+    \tdplotsetmaincoords{70}{115} % 視点の角度を設定
 
-    \begin{tikzpicture}[tdplot_main_coords]
+    \begin{tikzpicture}[tdplot_main_coords, scale=1.8]
       % 球を描画
-      \shade[ball color=blue!10!white, opacity=0.8] (0,0,0) circle (1);
+      \shade[ball color=blue!10!white, opacity=0.7] (0,0,0) circle (1);
 
       % 球の中心
       \coordinate (O) at (0,0,0);
 
-      % 点A, B, C, Dを球面上に配置
-      % 適当な座標を選ぶ
-      \coordinate (A) at (0.8, 0.6, 0);
-      \coordinate (B) at (-0.5, 0.5, 0.707);
-      \coordinate (C) at (0.3, -0.9, 0.2);
-      \coordinate (D) at (-0.7, -0.4, -0.5);
+      % 単位球面上かつ A+B+C+D=0 を満たす正四面体の頂点
+      \pgfmathsetmacro{\invs}{1/sqrt(3)}
+      \coordinate (A) at ({\invs}, {\invs}, {\invs});
+      \coordinate (B) at ({\invs}, {-\invs}, {-\invs});
+      \coordinate (C) at ({-\invs}, {\invs}, {-\invs});
+      \coordinate (D) at ({-\invs}, {-\invs}, {\invs});
+
+      % 正四面体の辺
+      \draw[densely dashed, gray!70!black] (B) -- (C);
+      \draw[thick, blue!85!black] (A) -- (B);
+      \draw[thick, blue!85!black] (A) -- (C);
+      \draw[thick, blue!85!black] (A) -- (D);
+      \draw[thick, blue!85!black] (B) -- (D);
+      \draw[thick, blue!85!black] (C) -- (D);
 
       % 点を描画
-      \foreach \point/\lbl in {A/A, B/B, C/C, D/D} {
-        \node[circle, draw, fill=black, inner sep=1.5pt] at (\point) {}; \node[above right] at (\point) {\lbl};
-      }
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (A) {};
+      \node[above=2pt, font=\small] at (A) {$A$};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (B) {};
+      \node[below right=1pt, font=\small] at (B) {$B$};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (C) {};
+      \node[above left=1pt, font=\small] at (C) {$C$};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (D) {};
+      \node[below left=1pt, font=\small] at (D) {$D$};
     \end{tikzpicture}
-    \caption{球面上に点ABCDが配置されている様子}
+    \caption{球面上に点$A,B,C,D$が配置されている様子（$\vec{a}+\vec{b}+\vec{c}+\vec{d}=\vec{0}$）}
     \label{1997-3:fig:1}
   \end{figure}
 
@@ -144,7 +158,7 @@
   \vspace{10pt}
   {\bf [解説]}
 
-  % TODO :: これ，もっと強くA=-C, B=-Dが言えないのか？
+  % TODO :: これ，もっと強くA=-C, B=-Dが言えないのか？ -> 言えない
 
   % 又, AC と B'D' の交点の位置ベクトルを $\vec{x}$ は $t, s \in \mathbb{R}$ として
   % $t\vec{a} + (1-t)\vec{c} = -s\vec{b}' - (1-s)\vec{d}' = \vec{x}$
