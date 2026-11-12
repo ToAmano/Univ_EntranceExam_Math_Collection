@@ -34,6 +34,24 @@ const CATEGORY_TABS = [
 	{ id: 'titech_kouki', label: '東工大後期', shortLabel: '東工後' },
 ];
 
+const ERA_CATEGORIES = [
+	{ id: 'utokyo_zenki', label: '東大前期', color: '#60a5fa', dash: '' },
+	{ id: 'utokyo_kouki', label: '東大後期', color: '#1d4ed8', dash: '5,4' },
+	{ id: 'ukyoto_zenki', label: '京大前期', color: '#34d399', dash: '' },
+	{ id: 'ukyoto_kouki', label: '京大後期', color: '#047857', dash: '5,4' },
+	{ id: 'titech_zenki', label: '東工大前期', color: '#fbbf24', dash: '' },
+	{ id: 'titech_kouki', label: '東工大後期', color: '#b45309', dash: '5,4' },
+];
+
+const ERA_Y_MAX = metrics?.by_era?.length
+	? Math.max(100, Math.ceil(Math.max(...metrics.by_era.flatMap((era: any) =>
+		[era.mean, ...ERA_CATEGORIES.map((cat) => era[cat.id] || 0)])) / 25) * 25)
+	: 100;
+
+const VARIANT_LABELS: Record<string, string> = {
+	common: '共通', new: '新課程', old: '旧課程', ko: '甲', otsu: '乙',
+};
+
 function getUnivLabel(univ: string): string {
 	switch (univ) {
 		case 'utokyo':
@@ -72,7 +90,7 @@ function getExamLabel(exam: string): string {
 				<div class="hero-badge">DATA & ANALYTICS</div>
 				<h1>解答行数の分布・記述量統計</h1>
 				<p class="hero-lead">
-					手書き原稿から抽出した主解答（<code>\begin&#123;tikzpicture&#125;</code> 図やコメント行を除く実質行数）の分布・難易度・時代変遷を多角的に分析しています。
+					TeX原稿から抽出した主解答（<code>\begin&#123;tikzpicture&#125;</code> 図やコメント行を除く実質行数）の分布と時代変遷を示しています。
 				</p>
 			</div>
 			{checkedAt && (
@@ -122,7 +140,7 @@ function getExamLabel(exam: string): string {
 									href={buildProblemUrl(baseUrl, metrics.rankings.longest[0])}
 									class="kpi-link"
 								>
-									{getUnivLabel(metrics.rankings.longest[0].univ)} {metrics.rankings.longest[0].year}年 第{metrics.rankings.longest[0].question}問 &rarr;
+									{getUnivLabel(metrics.rankings.longest[0].univ)} {metrics.rankings.longest[0].year}年 第{metrics.rankings.longest[0].question}問{metrics.rankings.longest[0].variant !== 'common' ? `（${VARIANT_LABELS[metrics.rankings.longest[0].variant]}）` : ''} &rarr;
 								</a>
 							)}
 						</div>
@@ -138,18 +156,18 @@ function getExamLabel(exam: string): string {
 									href={buildProblemUrl(baseUrl, metrics.rankings.shortest[0])}
 									class="kpi-link green-link"
 								>
-									{getUnivLabel(metrics.rankings.shortest[0].univ)} {metrics.rankings.shortest[0].year}年 第{metrics.rankings.shortest[0].question}問 &rarr;
+									{getUnivLabel(metrics.rankings.shortest[0].univ)} {metrics.rankings.shortest[0].year}年 第{metrics.rankings.shortest[0].question}問{metrics.rankings.shortest[0].variant !== 'common' ? `（${VARIANT_LABELS[metrics.rankings.shortest[0].variant]}）` : ''} &rarr;
 								</a>
 							)}
 						</div>
 
 						<div class="glass kpi-card muted-card">
-							<span class="kpi-label">集計対象問題数</span>
+							<span class="kpi-label">集計対象解答数</span>
 							<div class="kpi-value-row">
 								<span class="kpi-value">{metrics.overall.valid_solutions}</span>
-								<span class="kpi-unit">問</span>
+								<span class="kpi-unit">解答</span>
 							</div>
-							<span class="kpi-sub">未収録・白紙 {metrics.overall.pending_solutions}問を除く全問</span>
+							<span class="kpi-sub">未収録・白紙 {metrics.overall.pending_solutions}ファイルを除く。新旧課程は別解答として数えます。</span>
 						</div>
 					</div>
 				</section>
@@ -207,8 +225,8 @@ function getExamLabel(exam: string): string {
 										<span class="stat-val">{catData.min} 〜 {catData.max} 行</span>
 									</div>
 									<div class="cat-stat-item">
-										<span class="stat-lbl">有効問題数</span>
-										<span class="stat-val">{catData.count} 問</span>
+										<span class="stat-lbl">有効解答数</span>
+										<span class="stat-val">{catData.count} 解答</span>
 									</div>
 								</div>
 
@@ -382,7 +400,7 @@ function getExamLabel(exam: string): string {
 											<div class="rank-info">
 												<div class="rank-title-row">
 													<a href={buildProblemUrl(baseUrl, item)} class="rank-problem-link">
-														{item.year}年 {getUnivLabel(item.univ)} {getExamLabel(item.exam)} 第{item.question}問
+														{item.year}年 {getUnivLabel(item.univ)} {getExamLabel(item.exam)} 第{item.question}問{item.variant !== 'common' ? `（${VARIANT_LABELS[item.variant]}）` : ''}
 													</a>
 													<span class="rank-lines-pill longest-pill">{item.lines} 行</span>
 												</div>
@@ -414,7 +432,7 @@ function getExamLabel(exam: string): string {
 											<div class="rank-info">
 												<div class="rank-title-row">
 													<a href={buildProblemUrl(baseUrl, item)} class="rank-problem-link">
-														{item.year}年 {getUnivLabel(item.univ)} {getExamLabel(item.exam)} 第{item.question}問
+														{item.year}年 {getUnivLabel(item.univ)} {getExamLabel(item.exam)} 第{item.question}問{item.variant !== 'common' ? `（${VARIANT_LABELS[item.variant]}）` : ''}
 													</a>
 													<span class="rank-lines-pill shortest-pill">{item.lines} 行</span>
 												</div>
@@ -439,7 +457,7 @@ function getExamLabel(exam: string): string {
 					<div class="section-header">
 						<h2>3. 数学分野（Topic）別の記述量比較</h2>
 						<p class="section-desc">
-							各分野タグ（<code>data/topic_tags.yaml</code> 準拠）ごとの平均行数・中央値・問題数です。タブで大学・入試区分を切り替えて、分野ごとの記述量の違いを比較できます。
+							各分野タグ（<code>data/topic_tags.yaml</code> 準拠）ごとの平均行数・中央値・解答数です。タブで大学・入試区分を切り替えて、分野ごとの記述量の違いを比較できます。
 						</p>
 					</div>
 
@@ -481,7 +499,7 @@ function getExamLabel(exam: string): string {
 											<thead>
 												<tr>
 													<th>分野タグ</th>
-													<th class="num-col">問題数</th>
+											<th class="num-col">解答数</th>
 													<th class="num-col">平均行数</th>
 													<th class="num-col">中央値</th>
 													<th>平均記述量バー（相対比較）</th>
@@ -496,7 +514,7 @@ function getExamLabel(exam: string): string {
 															<td>
 																<span class="field-pill">{f.tag}</span>
 															</td>
-															<td class="num-col font-mono text-muted">{f.count}問</td>
+																<td class="num-col font-mono text-muted">{f.count}解答</td>
 															<td class="num-col font-mono font-bold">{f.mean}行</td>
 															<td class="num-col font-mono text-muted">{f.median}行</td>
 															<td>
@@ -522,16 +540,16 @@ function getExamLabel(exam: string): string {
 					<div class="section-header">
 						<h2>4. 年代別の推移（1960年代 〜 2010年代）</h2>
 						<p class="section-desc">
-							指導要領改訂や出題傾向の変化に伴う、各大学・年代ごとの平均解答行数の推移です。
+							各大学の前期・後期を分けた年代別の平均解答行数です。後期は破線で示します。
 						</p>
 					</div>
 
 					<div class="chart-container glass">
 						<div class="era-legend">
 							<span class="legend-item"><span class="legend-dot overall-dot"></span> 全体平均</span>
-							<span class="legend-item"><span class="legend-dot utokyo-dot"></span> 東京大学</span>
-							<span class="legend-item"><span class="legend-dot ukyoto-dot"></span> 京都大学</span>
-							<span class="legend-item"><span class="legend-dot titech-dot"></span> 東京工業大学</span>
+							{ERA_CATEGORIES.map((cat) => (
+								<span class="legend-item"><span class="legend-dot" style={`background:${cat.color}`}></span> {cat.label}</span>
+							))}
 						</div>
 
 						<div class="svg-wrap">
@@ -543,36 +561,36 @@ function getExamLabel(exam: string): string {
 							>
 								<!-- Grid Lines -->
 								<line x1="60" y1="30" x2="760" y2="30" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="4" />
-								<line x1="60" y1="85" x2="760" y2="85" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="4" />
-								<line x1="60" y1="140" x2="760" y2="140" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="4" />
-								<line x1="60" y1="195" x2="760" y2="195" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="4" />
+								<line x1="60" y1="80" x2="760" y2="80" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="4" />
+								<line x1="60" y1="130" x2="760" y2="130" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="4" />
+								<line x1="60" y1="180" x2="760" y2="180" stroke="rgba(255, 255, 255, 0.08)" stroke-dasharray="4" />
 								<line x1="60" y1="230" x2="760" y2="230" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" />
 
-								<!-- Y axis labels (0 to 100 lines) -->
-								<text x="50" y="35" text-anchor="end" font-size="11" fill="#94a3b8">100行</text>
-								<text x="50" y="85" text-anchor="end" font-size="11" fill="#94a3b8">75行</text>
-								<text x="50" y="140" text-anchor="end" font-size="11" fill="#94a3b8">50行</text>
-								<text x="50" y="195" text-anchor="end" font-size="11" fill="#94a3b8">25行</text>
+								<!-- Y axis labels -->
+								<text x="50" y="35" text-anchor="end" font-size="11" fill="#94a3b8">{ERA_Y_MAX}行</text>
+								<text x="50" y="85" text-anchor="end" font-size="11" fill="#94a3b8">{ERA_Y_MAX * 0.75}行</text>
+								<text x="50" y="135" text-anchor="end" font-size="11" fill="#94a3b8">{ERA_Y_MAX * 0.5}行</text>
+								<text x="50" y="185" text-anchor="end" font-size="11" fill="#94a3b8">{ERA_Y_MAX * 0.25}行</text>
 								<text x="50" y="235" text-anchor="end" font-size="11" fill="#94a3b8">0行</text>
 
 								{(() => {
 									const eraScaleX = (idx: number) => 110 + idx * 125;
 									const eraScaleY = (val: number | null) => {
 										if (val === null) return 230;
-										return 230 - (val / 100) * 200;
+										return 230 - (val / ERA_Y_MAX) * 200;
 									};
 
 									const overallPoints = metrics.by_era.map((e: any, i: number) => `${eraScaleX(i)},${eraScaleY(e.mean)}`).join(' ');
-									const utokyoPoints = metrics.by_era.map((e: any, i: number) => `${eraScaleX(i)},${eraScaleY(e.utokyo)}`).join(' ');
-									const ukyotoPoints = metrics.by_era.map((e: any, i: number) => `${eraScaleX(i)},${eraScaleY(e.ukyoto)}`).join(' ');
-									const titechPoints = metrics.by_era.map((e: any, i: number) => `${eraScaleX(i)},${eraScaleY(e.titech)}`).join(' ');
 
 									return (
 										<>
 											<!-- Polyline paths -->
-											<polyline points={utokyoPoints} fill="none" stroke="#60a5fa" stroke-width="2.5" />
-											<polyline points={ukyotoPoints} fill="none" stroke="#34d399" stroke-width="2.5" />
-											<polyline points={titechPoints} fill="none" stroke="#fbbf24" stroke-width="2.5" />
+											{ERA_CATEGORIES.map((cat) => (
+												<polyline
+													points={metrics.by_era.map((e: any, i: number) => e[cat.id] == null ? null : `${eraScaleX(i)},${eraScaleY(e[cat.id])}`).filter(Boolean).join(' ')}
+													fill="none" stroke={cat.color} stroke-width="2.5" stroke-dasharray={cat.dash || undefined}
+												/>
+											))}
 											<polyline points={overallPoints} fill="none" stroke="#f8fafc" stroke-width="3" stroke-dasharray="6,4" />
 
 											<!-- Dots and X Axis Labels -->
@@ -584,7 +602,7 @@ function getExamLabel(exam: string): string {
 															{e.era}
 														</text>
 														<text x={cx} y="268" text-anchor="middle" font-size="10" fill="#94a3b8">
-															({e.count}問)
+															({e.count}解答)
 														</text>
 
 														<!-- Overall dot -->
@@ -594,9 +612,9 @@ function getExamLabel(exam: string): string {
 														</text>
 
 														<!-- Univ dots -->
-														{e.utokyo && <circle cx={cx} cy={eraScaleY(e.utokyo)} r="3" fill="#60a5fa" />}
-														{e.ukyoto && <circle cx={cx} cy={eraScaleY(e.ukyoto)} r="3" fill="#34d399" />}
-														{e.titech && <circle cx={cx} cy={eraScaleY(e.titech)} r="3" fill="#fbbf24" />}
+														{ERA_CATEGORIES.map((cat) => e[cat.id] == null ? null : (
+															<circle cx={cx} cy={eraScaleY(e[cat.id])} r="3" fill={cat.color} />
+														))}
 													</g>
 												);
 											})}
@@ -606,6 +624,29 @@ function getExamLabel(exam: string): string {
 							</svg>
 						</div>
 					</div>
+
+					<div class="section-header">
+						<h3>年度ごとの解答ボリューム</h3>
+						<p class="section-desc">前期・後期と、新旧課程・甲乙を分けて集計しています。共通問題の解答は該当する両区分に含めます。収録済み解答だけの合計であり、各試験の全問が揃っていることを示す値ではありません。</p>
+					</div>
+					{ERA_CATEGORIES.map((cat) => {
+						const years = (metrics.by_year || []).filter((item: any) => item.category === cat.id);
+						return (
+							<details class="glass yearly-details">
+								<summary>{cat.label}（{years.length}区分）</summary>
+								<div class="table-container">
+									<table class="data-table">
+										<thead><tr><th>年度</th><th>区分</th><th class="num-col">解答数</th><th class="num-col">合計行数</th><th class="num-col">平均行数</th></tr></thead>
+										<tbody>
+											{years.map((item: any) => (
+												<tr><td>{item.year}年</td><td>{VARIANT_LABELS[item.variant] || item.variant}</td><td class="num-col">{item.count}問</td><td class="num-col">{item.total_lines}行</td><td class="num-col">{item.mean == null ? '—' : `${item.mean}行`}</td></tr>
+											))}
+										</tbody>
+									</table>
+								</div>
+							</details>
+						);
+					})}
 				</section>
 
 				<!-- Methodology & Notes -->
@@ -622,7 +663,10 @@ function getExamLabel(exam: string): string {
 								<strong>除外対象:</strong> <code>\begin&#123;tikzpicture&#125; ... \end&#123;tikzpicture&#125;</code> の描画コード、空行、コメント行（<code>% ...</code>）、および改ページ・書式マクロ（<code>\newpage</code>, <code>\casesend</code>, <code>\vspace</code>, <code>\rhead</code> 等）は行数カウントから完全に除外しています。
 							</li>
 							<li>
-								<strong>未収録・白紙問題の除外:</strong> 手書き原稿が空欄、白紙、未対応注釈のみ、または <code>$\cdots$(答)</code> などの答えのみで途中論証のない問題（計 {metrics.overall.pending_solutions}問）は、統計の歪みを防ぐため自動検出して分布・平均値計算から除外しています。
+												<strong>未収録・白紙問題の除外:</strong> 手書き原稿が空欄、白紙、未対応注釈のみ、または <code>$\cdots$(答)</code> などの答えのみで途中論証のないファイル（計 {metrics.overall.pending_solutions}件）は、統計の歪みを防ぐため自動検出して分布・平均値計算から除外しています。
+							</li>
+							<li>
+								<strong>区分別・年度別集計:</strong> 解答原稿の <code>新課程</code>・<code>旧課程</code>・<code>甲</code>・<code>乙</code> 見出しで区分し、共通解答は双方の合計に含めています。解答が未収録の区分は0問として示します。
 							</li>
 							<li>
 								<strong>自動更新:</strong> GitHub Actions のデプロイパイプラインにより、TeX ソースコードの更新に合わせて自動的に再走査・再集計されます。
@@ -1102,6 +1146,17 @@ function getExamLabel(exam: string): string {
 	}
 
 	/* Field Table */
+	.yearly-details {
+		margin-top: 0.75rem;
+		padding: 0.75rem 1rem;
+	}
+	.yearly-details summary {
+		cursor: pointer;
+		font-weight: 600;
+	}
+	.yearly-details .table-container {
+		margin-top: 0.75rem;
+	}
 	.table-container {
 		border-radius: 14px;
 		overflow-x: auto;
