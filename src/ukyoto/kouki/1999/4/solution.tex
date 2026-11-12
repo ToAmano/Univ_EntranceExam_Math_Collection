@@ -32,10 +32,38 @@
 \setlength{\columnseprule}{0.4pt}
 \begin{multicols}{2}
   {\bf [解答]}
-  $\triangle ABC$の$3$辺の長さを$a,b,c$とする ($a,b,c > 0$)．
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.85, every node/.style={font=\small}]
+      % 図1と同じ例 a^2=14.24, b^2=9.76, c^2=16 （a=BC, b=CA, c=AB）
+      \pgfmathsetmacro{\ra}{sqrt(14.24)}
+      \pgfmathsetmacro{\rb}{sqrt(9.76)}
+      \pgfmathsetmacro{\angC}{acos((14.24+9.76-16)/(2*\ra*\rb))}
+      \coordinate (C) at (0,0);
+      \coordinate (B) at (\ra,0);
+      \coordinate (A) at (\angC:\rb);
+      % 余弦定理で用いる角 ACB
+      \draw[thick, gray!70!black] ($(C)!0.55cm!(B)$) arc[start angle=0, end angle=\angC, radius=0.55cm];
+      \draw[line width=1.3pt, red!85!black] (B) -- (C);
+      \draw[line width=1.3pt, blue!85!black] (C) -- (A);
+      \draw[line width=1.3pt, teal!85!black] (A) -- (B);
+      \node[red!85!black, below=1pt] at ($(B)!0.5!(C)$) {$a$};
+      \node[blue!85!black, left=1pt] at ($(C)!0.5!(A)$) {$b$};
+      \node[teal!85!black, above right=0pt] at ($(A)!0.5!(B)$) {$c$};
+      \foreach \p/\pos in {A/above, B/below right, C/below left} {
+        \node[circle, fill=black, inner sep=1.2pt] at (\p) {};
+        \node[\pos=1pt] at (\p) {$\mathrm{\p}$};
+      }
+    \end{tikzpicture}
+    \caption{鋭角三角形$\mathrm{ABC}$（$a=\mathrm{BC}$，$b=\mathrm{CA}$，$c=\mathrm{AB}$）}
+    \label{1999-4:fig:triangle}
+  \end{figure}
+
+  $\triangle ABC$の$3$辺の長さを$|BC|=a,|CA|=b,|AB|=c$とする ($a,b,c > 0$)．
   $\triangle ABC$が鋭角三角形だから，余弦定理より
   \begin{align}
-    c^2 = a^2+b^2 - 2ab\cos\angle\mathrm{ABC} < a^2+b^2
+    c^2 = a^2+b^2 - 2ab\cos\angle\mathrm{ACB} < a^2+b^2
   \end{align}
   のような式が成り立つから，
   \begin{align}
