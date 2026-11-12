@@ -41,6 +41,6 @@ test('related members can navigate to core questions, while unknown questions ge
 
 test('the site reads the curated catalog with its stable IDs and display names', () => {
   const catalog = readProblemGroups();
-  assert.equal(catalog.find(group => group.id === 'chebyshev_polynomials')?.name, 'チェビシフ多項式');
+  assert.equal(catalog.find(group => group.id === 'chebyshev_polynomials')?.name, 'チェビシェフ多項式');
   assert.ok(catalog.find(group => group.id === 'oscillatory_integrals')?.related.includes('titech/zenki/1994/3'));
 });
