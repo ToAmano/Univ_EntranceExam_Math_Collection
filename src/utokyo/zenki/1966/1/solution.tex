@@ -1,67 +1,89 @@
-% lint-skip: 旧jarticle形式のまま未移行 (Issue #593)
-\documentclass[a4j]{jarticle}
-\usepackage{amsmath}
-\usepackage{ascmac}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{indent}
-\usepackage{cases}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
-\rhead{東京大学前期$1966$年$1$番}
+\documentclass[../../main.tex]{subfiles}
 \begin{document}
-\input{macros}
-\begin{oframed}
-  ある鉄道の旅客運賃計算規則は以下のとおりであり，それによると，距離が$319\,\mathrm{km}$
-  ，$349\,\mathrm{km}$のときの運賃は，それぞれ$970$円，$1010$円となる．下記の文中の
-  $a$，$b$はともに$0.1$の整数倍の数である．
 
-  旅客運賃は，距離が$300\,\mathrm{km}$以下の分に対しては$1\,\mathrm{km}$につき$a$円，
-  $300\,\mathrm{km}$を超過した分に対しては$1\,\mathrm{km}$につき$b$円として計算し，
-  その結果において，$10$円未満の端数は$10$円に切り上げるものとする．
-\end{oframed}
+{\bf [解答]}
 
-\setlength{\columnseprule}{0.4pt}
-\begin{multicols}{2}
-  {\bf[解]}$p,q\in\mathbb{N}$とする．$a=0.1p$，$b=0.1q$とおく．距離$x$の時の運賃を$f(x)$とする．
-  \begin{align}
-    \left\{
-      \begin{array}{l}
-        f(319)=970 \\
-        f(349)=1010
-      \end{array}
-      \right.
-    \end{align}
-    となる．後半の文章から
-    \begin{align}
-      &\left\{
-        \begin{array}{l}
-          960<300a+19b\le970 \\
-          1000<300a+49n\le1010
-        \end{array}
-        \right.\\
-        \Longleftrightarrow
-        &\left\{
-          \begin{array}{l}
-            960<30p+1.9q\le970 \\
-            1000<30p+4.9q\le1010
-          \end{array}
-          \right.
-        \end{align}
-        辺々引いて
-        \[30<3q<50\]
-        故に$q\in\mathbb{N}$と合わせて$q=11,12,\cdots,16$である．以下$A=f(349)-f(319)$とおく．$A=40$
-        となることが必要である．
-        \begin{indentation}{2\zw}{0pt}
-          \noindent\underline{(i)$q=11$}
-        \end{indentation}
+題意より$a = 0.1\alpha$，$b = 0.1\beta$ とおく（$\alpha, \beta \in \mathbb{N}$）．距離 $x\,\mathrm{km}$ のときの運賃を $f(x)$ 円とすると，
+\begin{align}
+  \begin{cases}
+    f(319) = 970 \\
+    f(349) = 1010
+  \end{cases} \label{eq:1}
+\end{align}
+である．題意の運賃計算規則から，
+\begin{itemize}
+  \item $f(319)$ は $300a + 19b = 30\alpha + 1.9\beta$ の10円未満の端数を切り上げたもの
+  \item $f(349)$ は $300a + 49b = 30\alpha + 4.9\beta$ の10円未満の端数を切り上げたもの
+\end{itemize}
+であるから，
+\begin{align}
+  \begin{cases}
+    960 < 30\alpha + 1.9\beta \le 970 \\
+    1000 < 30\alpha + 4.9\beta \le 1010
+  \end{cases} \label{eq:2}
+\end{align}
+が成り立つ．\cref{eq:2}の辺々を引くと，
+\begin{align}
+  30 < 3\beta < 50 \quad \therefore 10 < \beta < \dfrac{50}{3} = 16.6\dots
+\end{align}
+となる．$\beta \in \mathbb{N}$ より，$\beta$ の候補は
+\begin{align}
+  \beta = 11, 12, 13, 14, 15, 16
+\end{align}
+である．ここで実運賃の差を $A = f(349) - f(319)$ とおくと，\cref{eq:1}より $A = 1010 - 970 = 40$ となる．各 $\beta$ がこの条件を満たすか調べる．
 
-        \newpage
-      \end{multicols}
-      \end{document}
+\subparagraph{$1^\circ$ $\beta = 11$ のとき}
+$1.9\beta = 20.9$ より切り上げは $30$ 円，$4.9\beta = 53.9$ より切り上げは $60$ 円となるから，
+\begin{align}
+  A = 60 - 30 = 30 \ne 40
+\end{align}
+となり不適．
+
+\subparagraph{$2^\circ$ $\beta = 12$ のとき}
+
+$1.9\beta = 22.8$ より切り上げは $30$ 円，$4.9\beta = 58.8$ より切り上げは $60$ 円となるから，
+\begin{align}
+  A = 60 - 30 = 30 \ne 40
+\end{align}
+となり不適．
+
+\subparagraph{$3^\circ$ $\beta = 13$ のとき}
+
+$1.9\beta = 24.7$ より切り上げは $30$ 円，$4.9\beta = 63.7$ より切り上げは $70$ 円となり $A = 70 - 30 = 40$ を満たす．しかし，\cref{eq:1}より
+\begin{align}
+  970 = 30\alpha + 30 \quad \therefore \alpha = \dfrac{94}{3} \notin \mathbb{N}
+\end{align}
+となり不適．
+
+\subparagraph{$4^\circ$ $\beta = 14$ のとき}
+
+$1.9\beta = 26.6$ より切り上げは $30$ 円，$4.9\beta = 68.6$ より切り上げは $70$ 円となり $A = 70 - 30 = 40$ を満たすが，$3^\circ$ と同様に\cref{eq:1}より
+\begin{align}
+  970 = 30\alpha + 30 \quad \therefore \alpha = \dfrac{94}{3} \notin \mathbb{N}
+\end{align}
+となり不適．
+
+\subparagraph{$5^\circ$ $\beta = 15$ のとき}
+
+$1.9\beta = 28.5$ より切り上げは $30$ 円，$4.9\beta = 73.5$ より切り上げは $80$ 円となるから，
+\begin{align}
+  A = 80 - 30 = 50 \ne 40
+\end{align}
+となり不適．
+
+\subparagraph{$6^\circ$ $\beta = 16$ のとき}
+$1.9\beta = 30.4$ より切り上げは $40$ 円，$4.9\beta = 78.4$ より切り上げは $80$ 円となり，$A = 80 - 40 = 40$ を満たす．\cref{eq:1}に代入すると，
+\begin{align}
+  970 = 30\alpha + 40 \quad \therefore \alpha = 31 \in \mathbb{N}
+\end{align}
+を得る．このとき $f(349) = 30 \times 31 + 80 = 1010$ も満たし，適する．
+\casesend
+
+以上より，$(\alpha, \beta) = (31, 16)$，すなわち
+\begin{align}
+  a = 3.1, \quad b = 1.6 \tag{答}
+\end{align}
+である．
+
+\newpage
+\end{document}
