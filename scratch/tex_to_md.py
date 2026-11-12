@@ -984,7 +984,9 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     # 不要なレイアウトマクロの削除
     raw_tex = re.sub(r'\\rhead\{[^}]*\}', '', raw_tex)
     raw_tex = re.sub(r'\\setcounter\{[^}]*\}\{[^}]*\}', '', raw_tex)
-    raw_tex = re.sub(r'\\begin\{oframed\}\s*\\input\{[^}]+\}\s*\\end\{oframed\}', '', raw_tex)
+    # 解答ページの先頭で読み込んでいる問題文は、問題ページ（problem.tex から生成）と重複するので除く。
+    # 移行前の \input{problem.tex} と、現行の \subfile{problem} の両方に対応する（#1472）。
+    raw_tex = re.sub(r'\\begin\{oframed\}\s*\\(?:input|subfile)\{[^}]+\}\s*\\end\{oframed\}', '', raw_tex)
     raw_tex = re.sub(r'\\setlength\{[^}]*\}\{[^}]*\}', '', raw_tex)
     raw_tex = re.sub(r'\\begin\{multicols\}\{\d+\}', '', raw_tex)
     raw_tex = re.sub(r'\\end\{multicols\}', '', raw_tex)

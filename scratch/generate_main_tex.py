@@ -1,6 +1,13 @@
 """
 大学/区分（例: titech/kouki）ごとに 1 つの main.tex を生成する。
 
+- 現行の形（#1472）：problem.tex は独立した subfiles 文書で、solution.tex の先頭が
+  \\begin{oframed}\\subfile{problem}\\end{oframed} で問題文を読み込む。
+  この場合は solution.tex を \\subfile するだけで問題文＋解答が両方載る
+  （problem.tex も \\subfile すると問題文が2回出るので入れない）。
+
+以下は移行前の形。移行が済んでいないファイルが残っていても動くように対応を残している。
+
 - kouki 系（problem.tex が中身のみのフラグメントで、solution.tex 側の
   \\begin{oframed}\\input{problem.tex}\\end{oframed} で問題文を埋め込む構成）は
   solution.tex を \\subfile するだけで問題文＋解答が両方載る。
@@ -107,6 +114,17 @@ PREAMBLE = r"""\documentclass[a4paper,10pt]{ltjsarticle}
 """
 
 
+EMBED_PROBLEM_RE = re.compile(r'\\subfile\{problem(?:\.tex)?\}')
+
+
+def embeds_problem(path):
+    """solution.tex が \\subfile{problem} で問題文を読み込んでいるか。"""
+    if not os.path.isfile(path):
+        return False
+    with open(path, encoding="utf-8", errors="ignore") as f:
+        return bool(EMBED_PROBLEM_RE.search(f.read()))
+
+
 def is_subfiles(path):
     if not os.path.isfile(path):
         return False
@@ -172,6 +190,12 @@ def generate_category(univ, cat):
                 # kouki 形式: solution.tex が内部で problem.tex を \input している
                 year_body.append(f"\\rhead{{{label}}}")
                 year_body.append(f"\\subfile{{{rel_solution}}}")
+                included += 1
+            elif is_subfiles(problem) and embeds_problem(solution):
+                # 現行の形: solution.tex が \subfile{problem} で問題文を読み込む
+                year_body.append(f"\\rhead{{{label}}}")
+                year_body.append(f"\\subfile{{{rel_solution}}}")
+                year_body.append("\\clearpage")
                 included += 1
             elif is_subfiles(problem):
                 # zenki 形式: problem.tex 自体が独立した subfiles 文書

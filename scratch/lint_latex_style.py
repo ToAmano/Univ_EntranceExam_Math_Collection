@@ -507,10 +507,8 @@ def check_reference_commands(text):
 
 
 def check_documentclass(text):
-    """kouki 系の problem.tex は \\begin{document} を持たない中身だけの
-    フラグメントで、solution.tex 側から \\input{problem.tex} される設計
-    （scratch/generate_main_tex.py 冒頭のコメント参照）。\\begin{document}
-    が無いファイルは documentclass も無くて正しいので対象外とする。"""
+    """\\begin{document} を持つ文書は \\documentclass[../../main.tex]{subfiles} にする。
+    problem.tex が \\begin{document} を持つこと自体は check_problem_is_document で検査する（#1472）。"""
     errors = []
     if '\\begin{document}' not in text:
         return errors
@@ -1412,6 +1410,40 @@ def _find_tikz_point_circle_edits(text):
     return edits
 
 
+EMBED_PROBLEM_RE = re.compile(r'\\begin\{oframed\}\s*\\subfile\{problem\}\s*\\end\{oframed\}')
+
+
+def check_problem_embedded(text):
+    """solution.tex は先頭で問題文を枠付きで読み込む（#1472）。
+    \\begin{oframed}\\subfile{problem}\\end{oframed} が [解答] の見出しより前にあること。"""
+    m = EMBED_PROBLEM_RE.search(text)
+    heading = re.search(r'\\bf\s*\[解答\]', text)
+    if not m:
+        return [(1, "solution.tex の先頭で \\begin{oframed}\\subfile{problem}\\end{oframed} を使って問題文を読み込む")]
+    if heading and heading.start() < m.start():
+        return [(line_of(text, m.start()), "問題文の読み込み（\\subfile{problem}）は [解答] の見出しより前に置く")]
+    return []
+
+
+def check_problem_is_document(text):
+    """problem.tex は solution.tex から \\subfile で読み込む独立した subfiles 文書にする（#1472）。
+    以前の後期の problem.tex は \\begin{document} を持たない中身だけの断片だった。"""
+    if '\\begin{document}' not in text:
+        return [(1, "problem.tex は \\documentclass[../../main.tex]{subfiles} と \\begin{document} を持つ文書にする")]
+    return []
+
+
+def check_problem_figure_float(text):
+    """problem.tex は solution.tex の枠（oframed）の中に読み込まれ、枠の中では浮動体を使えないので、
+    figure は [H] にする（#1472）。"""
+    errors = []
+    for m in re.finditer(r'\\begin\{figure\}(\[[^\]]*\])?', text):
+        if m.group(1) != '[H]':
+            errors.append((line_of(text, m.start()),
+                           "problem.tex の figure は [H] にする（solution.tex の枠の中では浮動体を使えない）"))
+    return errors
+
+
 def check_local_references(text, problem_text):
     errors = check_duplicate_labels(text)
     problem_labels = {name for command, name, _, _ in tex_references.commands(problem_text)
@@ -1448,6 +1480,11 @@ def lint_file(path):
     errors += check_proof_env(text)
     if path.name == 'solution.tex':
         errors += check_solution_headings(text)
+        if path.parent.name != '0' and path.with_name('problem.tex').exists():
+            errors += check_problem_embedded(text)
+    if path.name == 'problem.tex':
+        errors += check_problem_is_document(text)
+        errors += check_problem_figure_float(text)
     errors += reference_errors
     errors += check_frac_subscript_rule(text)
     errors += check_left_right_balance(text)
