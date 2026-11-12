@@ -547,6 +547,11 @@ def extract_global_macro_defs(raw_tex):
     （実例: utokyo 後期1990年第3問の \\recursiveTriangleQTwo）。
     """
     outer_text = re.sub(r'\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}', '', raw_tex, flags=re.DOTALL)
+    # figure 環境の中で呼んだ \tdplotsetmaincoords はその図だけの視点（TeX でも
+    # figure のグループ内に局所化される）。全図共通のプリアンブルへ持ち上げると
+    # 最後に呼んだ視点が全ての図に効いてしまうので、ここでは除外し、
+    # figure_tdplot_views() で図ごとに渡す。
+    outer_text = _FIGURE_ENV_RE.sub(lambda m: _TDPLOT_VIEW_RE.sub('', m.group(0)), outer_text)
 
     newcommand_defs = []
     masked = list(outer_text)
@@ -577,6 +582,53 @@ def extract_global_macro_defs(raw_tex):
             seen.add(snippet)
             ordered.append(snippet)
     return "\n".join(ordered)
+
+
+_TDPLOT_VIEW_RE = re.compile(r'\\tdplotsetmaincoords\s*\{[^{}]*\}\s*\{[^{}]*\}')
+_FIGURE_ENV_RE = re.compile(r'\\begin\{figure\}.*?\\end\{figure\}', re.DOTALL)
+_TIKZ_ENV_RE = re.compile(r'\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}', re.DOTALL)
+# compile_tikz_to_svg() のプリアンブルが呼ぶ既定の視点（generate_main_tex.py と同じ）
+_TDPLOT_DEFAULT_VIEW = r'\tdplotsetmaincoords{70}{110}'
+
+
+def figure_tdplot_views(raw_tex):
+    """figure 環境ごとに、その図で有効な \\tdplotsetmaincoords の呼び出しを返す。
+
+    TeX では figure 環境がグループになるため、figure の中（最初の tikzpicture より前）
+    で呼んだ視点はその図だけに効き、figure の外で呼んだ視点はそれ以降の図すべてに効く。
+    図を単体でコンパイルするときも同じ規則で視点を決め、図ごとに渡す。
+    以前は全ての呼び出しをプリアンブルにまとめていたため、ファイル内で最後に呼んだ
+    視点が全ての図に適用されていた（実例: 京大後期1992年第6問の SVG で視点がずれた）。
+
+    戻り値は文書順の figure ごとのリスト（_FIGURE_ENV_RE の一致順）。
+    ファイルが \\tdplotsetmaincoords を使わない場合は空リストを返す。
+    複数の tikzpicture を並べる figure（複合図）では、2枚目以降の視点は
+    figure_layout_parts() が保持する本文側の呼び出しがそのまま効く。
+    """
+    if not _TDPLOT_VIEW_RE.search(raw_tex):
+        return []
+    tikz_spans = [(m.start(), m.end()) for m in _TIKZ_ENV_RE.finditer(raw_tex)]
+    fig_spans = [(m.start(), m.end()) for m in _FIGURE_ENV_RE.finditer(raw_tex)]
+    calls = [m for m in _TDPLOT_VIEW_RE.finditer(raw_tex)
+             if not any(a <= m.start() < b for a, b in tikz_spans)]
+    views = []
+    for fig_start, fig_end in fig_spans:
+        first_tikz = next((a for a, _ in tikz_spans if fig_start <= a < fig_end), fig_end)
+        view = _TDPLOT_DEFAULT_VIEW
+        for m in calls:
+            pos = m.start()
+            outside_figures = not any(a <= pos < b for a, b in fig_spans)
+            if (pos < fig_start and outside_figures) or (fig_start <= pos < first_tikz):
+                view = m.group(0)
+        views.append(view)
+    return views
+
+
+def _macro_defs_for_figure(macro_defs, fig_views, index):
+    """図ごとの視点をプリアンブルの末尾に足す（後の呼び出しが既定値を上書きする）。"""
+    if 0 <= index < len(fig_views):
+        return f"{macro_defs}\n{fig_views[index]}" if macro_defs else fig_views[index]
+    return macro_defs
 
 
 class FigureCompilationError(RuntimeError):
@@ -1045,6 +1097,10 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     tab_count = 1
     tab_map = {}
 
+    # 3D 図の視点（\tdplotsetmaincoords）は図ごとに決まるので、figure の順に求めておく。
+    # TexSoup 経路・フォールバック経路とも、文書中の figure の順番でこのリストを引く。
+    fig_views = figure_tdplot_views(raw_tex)
+
     try:
         # TikZ can use commands such as \label as local loop variables.
         # Parsing their contents as document commands corrupts braces and may
@@ -1085,7 +1141,11 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
 
         # 5. figure 環境の SVG ビルドと HTML <figure> ノード置換
         figs = list(soup.find_all('figure'))
-        for fig in figs:
+        # TexSoup が figure を取りこぼした場合は対応が崩れるので、視点を渡さない
+        # （従来どおりプリアンブルの既定値・全体の呼び出しで描画する）。
+        soup_fig_views = fig_views if len(fig_views) == len(figs) else []
+        for fig_index, fig in enumerate(figs):
+            fig_macro_defs = _macro_defs_for_figure(macro_defs, soup_fig_views, fig_index)
             composite = len(list(fig.find_all('tikzpicture'))) > 1
             layout_body, layout_caption, layout_label, sublabels = figure_layout_parts(str(fig)) if composite else ('', '', '', [])
             caption_node = fig.find('caption')
@@ -1109,10 +1169,10 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
                 svg_dest_path = os.path.join(output_svg_dir, svg_filename)
                 os.makedirs(output_svg_dir, exist_ok=True)
                 if composite:
-                    if not compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs, figure_layout=True):
+                    if not compile_tikz_to_svg(tikz_code, svg_dest_path, fig_macro_defs, figure_layout=True):
                         raise FigureCompilationError(f'Composite figure compilation failed: {svg_dest_path}')
                 else:
-                    compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs)
+                    compile_tikz_to_svg(tikz_code, svg_dest_path, fig_macro_defs)
 
                 web_img_src = f"{public_img_dir_rel}/{svg_filename}"
                 caption_label = f"図 {fig_count}" + (f": {caption_text}" if caption_text else "")
@@ -1174,6 +1234,9 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         def replace_figure_fallback(match):
             nonlocal fig_count
             fig_content = match.group(0)
+            # この figure が文書中で何番目か（fig_views と同じ数え方）
+            fig_index = len(_FIGURE_ENV_RE.findall(match.string[:match.start()]))
+            fig_macro_defs = _macro_defs_for_figure(macro_defs, fig_views, fig_index)
             composite = len(re.findall(r'\\begin\{tikzpicture\}', fig_content)) > 1
             layout_body, layout_caption, layout_label, sublabels = figure_layout_parts(fig_content) if composite else ('', '', '', [])
             m_tikz = re.search(r'\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}', fig_content, re.DOTALL)
@@ -1194,10 +1257,10 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
                 svg_dest_path = os.path.join(output_svg_dir, svg_filename)
                 os.makedirs(output_svg_dir, exist_ok=True)
                 if composite:
-                    if not compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs, figure_layout=True):
+                    if not compile_tikz_to_svg(tikz_code, svg_dest_path, fig_macro_defs, figure_layout=True):
                         raise FigureCompilationError(f'Composite figure compilation failed: {svg_dest_path}')
                 else:
-                    compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs)
+                    compile_tikz_to_svg(tikz_code, svg_dest_path, fig_macro_defs)
 
                 web_img_src = f"{public_img_dir_rel}/{svg_filename}"
                 caption_label = f"図 {fig_count}" + (f": {cap_text}" if cap_text else "")
