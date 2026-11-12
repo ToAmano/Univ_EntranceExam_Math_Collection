@@ -37,7 +37,7 @@
 % \quad \left( y = \dfrac{1}{x}, y'' = \dfrac{2}{x^3} \text{ より } y = \dfrac{1}{x} \text{ は下に凸} \right)
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=4.0cm, y=3.0cm, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[x=4.0cm, y=4.5cm, >=stealth, every node/.style={font=\small}]
 
     % ============================================================
     % 1. 定数・厳密パラメータ
@@ -47,15 +47,15 @@
     \pgfmathsetmacro{\kpOne}{\kVal + 1.0}     % 2.0
     \pgfmathsetmacro{\kMid}{\kVal + 0.5}      % 1.5
 
-    \def\C{2.0} % スケール定数 (y = C / x)
-    \pgfmathsetmacro{\yL}{\C / \kVal}         % 2.0
-    \pgfmathsetmacro{\yR}{\C / \kpOne}        % 1.0
-    \pgfmathsetmacro{\yMid}{\C / \kMid}       % 1.3333
+    \def\C{1.0} % y = 1 / x
+    \pgfmathsetmacro{\yL}{\C / \kVal}         % 1.0
+    \pgfmathsetmacro{\yR}{\C / \kpOne}        % 0.5
+    \pgfmathsetmacro{\yMid}{\C / \kMid}       % 0.6667
 
     % 中点での接線の傾きと切片
-    \pgfmathsetmacro{\slope}{-\C / (\kMid * \kMid)} % -2.0 / 2.25 ≈ -0.8889
-    \pgfmathsetmacro{\yTanL}{\slope * (\kVal - \kMid) + \yMid}   % ≈ 1.7778
-    \pgfmathsetmacro{\yTanR}{\slope * (\kpOne - \kMid) + \yMid}  % ≈ 0.8889
+    \pgfmathsetmacro{\slope}{-\C / (\kMid * \kMid)} % -1.0 / 2.25 ≈ -0.4444
+    \pgfmathsetmacro{\yTanL}{\slope * (\kVal - \kMid) + \yMid}   % ≈ 0.8889
+    \pgfmathsetmacro{\yTanR}{\slope * (\kpOne - \kMid) + \yMid}  % ≈ 0.4444
 
     \coordinate (O)     at (0, 0);
     \coordinate (X_L)   at (\kVal, 0);
@@ -73,7 +73,7 @@
     % 2. 座標軸
     % ============================================================
     \draw[->, thick, gray!80!black] (-0.1, 0) -- (2.3, 0) node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0, -0.15) -- (0, 2.3) node[above] {$y$};
+    \draw[->, thick, gray!80!black] (0, -0.1) -- (0, 1.25) node[above] {$y$};
     \node[below left=2pt] at (O) {$O$};
 
     % ============================================================
@@ -81,22 +81,22 @@
     % ============================================================
     \draw[thick, gray!70!black] (X_L) -- (P_L);
     \draw[thick, gray!70!black] (X_R) -- (P_R);
-    \draw[dotted, gray!60] (X_M) -- (P_M);
+    \draw[densely dotted, thick, gray!70!black] (X_M) -- (P_M);
 
     \node[below=2pt] at (X_L) {$k$};
     \node[below=2pt] at (X_R) {$k+1$};
     \node[below=2pt, font=\scriptsize] at (X_M) {$k+\frac{1}{2}$};
 
     % y 軸への投影
-    \draw[dashed, gray!50] (P_L) -- (0, \yL) node[left=2pt, font=\scriptsize] {$\frac{1}{k}$};
-    \draw[dashed, gray!50] (P_R) -- (0, \yR) node[left=2pt, font=\scriptsize] {$\frac{1}{k+1}$};
+    \draw[densely dotted, thick, gray!70!black] (P_L) -- (0, \yL) node[left=2pt, font=\scriptsize] {$\frac{1}{k}$};
+    \draw[densely dotted, thick, gray!70!black] (P_R) -- (0, \yR) node[left=2pt, font=\scriptsize] {$\frac{1}{k+1}$};
 
     % ============================================================
     % 4. 曲線 y = 1/x (下に凸)
     % ============================================================
     \draw[line width=1.5pt, blue!85!black, domain=0.85:2.2, samples=70, smooth]
     plot (\x, {\C / \x});
-    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (2.05, 1.05) {$y = \frac{1}{x}$};
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (2.05, 0.55) {$y = \frac{1}{x}$};
 
     % ============================================================
     % 5. 弦（上側台形の上底・下底）と 接線（下側台形）
@@ -151,11 +151,11 @@
   < \log\dfrac{m}{n}
   < \dfrac{1}{2}\sum_{k=n}^{m-1}\left(\dfrac{1}{k} + \dfrac{1}{k+1}\right)
 \end{align}
-である．和の区間を$[m+1,n]$に合わせて
+である．和の区間を$[n+1,m]$に合わせて
 \begin{align}
   & \sum_{k=n+1}^{m} \dfrac{1}{k} + \sum_{k=n+1}^{m} \dfrac{1}{2k^2}
   < \log\dfrac{m}{n}
-  < \sum_{k=n+1}^{m}\dfrac{1}{k} + \dfrac{1}{2}\left[\dfrac{1}{n} - \dfrac{1}{m-1}\right] \\
+  < \sum_{k=n+1}^{m}\dfrac{1}{k} + \dfrac{1}{2}\left[\dfrac{1}{n} - \dfrac{1}{m}\right] \\
   \therefore
   & \sum_{k=n+1}^{m} \dfrac{1}{2k^2}
   < \log\dfrac{m}{n} - \sum_{k=n+1}^{m} \dfrac{1}{k}
