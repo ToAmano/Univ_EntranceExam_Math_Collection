@@ -32,9 +32,10 @@
     \coordinate (P2) at (\xInter, \yInter);
 
     % ============================================================
-    % 2. 三角形 OP1P2 (x1*y2 - x2*y1 に対応する幾何領域) の薄い塗りつぶし
+    % 2. 三角形 OP1P2 (x1*y2 - x2*y1 に対応する幾何領域)
     % ============================================================
-    \fill[blue!12, opacity=0.8] (O) -- (P1) -- (P2) -- cycle;
+    \fill[blue!15] (O) -- (P1) -- (P2) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!50] (O) -- (P1) -- (P2) -- cycle;
 
     % ============================================================
     % 3. 座標軸
@@ -65,22 +66,26 @@
     \draw[line width=1.1pt, red!85!black] (O) -- (P1) -- (P2) -- cycle;
 
     % 交点 P1(x1, y1), P2(x2, y2)
-    \node[circle, fill, inner sep=1pt] at (P1) {}; \node[above left=1pt] at (P1) {$P(x_1, y_1)$};
-    \node[circle, fill, inner sep=1pt] at (P2) {}; \node[above right=1pt] at (P2) {$Q(x_2, y_2)$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P1) {};
+    \node[above left=2pt] at (P1) {$P_1(x_1, y_1)$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P2) {};
+    \node[above right=2pt] at (P2) {$P_2(x_2, y_2)$};
 
     % 座標投影線
-    \draw[dashed, gray!60] (P1) -- (-\xInter, 0) node[below=2pt, font=\scriptsize] {$x_1$};
-    \draw[dashed, gray!60] (P2) -- (\xInter, 0) node[below=2pt, font=\scriptsize] {$x_2$};
-    \draw[dashed, gray!60] (P1) -- (0, \yInter) node[above left=1pt, font=\scriptsize] {$y_1=y_2$};
+    \draw[densely dotted, thick, gray!70!black] (P1) -- (-\xInter, 0) node[below=2pt, font=\scriptsize] {$x_1$};
+    \draw[densely dotted, thick, gray!70!black] (P2) -- (\xInter, 0) node[below=2pt, font=\scriptsize] {$x_2$};
+    \draw[densely dotted, thick, gray!70!black] (P1) -- (0, \yInter) node[above left=1pt, font=\scriptsize] {$y_1=y_2$};
 
     % C1 の頂点 (0, 1)
-    \node[circle, fill, inner sep=1pt] at (0, 1) {}; \node[above left=1pt, font=\scriptsize] at (0, 1) {$1$};
+    \node[circle, fill, inner sep=1.2pt] at (0, 1) {};
+    \node[above left=1pt, font=\scriptsize] at (0, 1) {$1$};
 
-    % C2 の頂点 (u, u) の例示
-    \node[circle, fill=teal!85!black, inner sep=1pt] at (\uVal, \uVal) {}; \node[below=2pt, font=\scriptsize, teal!90!black] at (\uVal, \uVal) {頂点 $(u, u)$};
+    % C2 の頂点 (u, u) の例示 (u=0 のとき原点 O と一致)
+    \node[circle, fill=teal!85!black, inner sep=1.2pt] at (\uVal, \uVal) {};
+    \node[below right=2pt, font=\scriptsize, teal!90!black] at (\uVal, \uVal) {$C_2$頂点 $(u, u)$};
 
   \end{tikzpicture}
-  \caption{放物線 $C_1, C_2$ の共有点 $P, Q$ と原点 $O$}
+  \caption{放物線 $C_1, C_2$ の共有点 $P_1, P_2$ と原点 $O$（$u=0$ の場合）}
   \label{fig:parabolas_intersection_geometry}
 \end{figure}
 
@@ -148,7 +153,7 @@ $(x_k,y_k)$は$C_1$上の点でもあるから
 
 $t=u+1$とおいて\cref{eq:6}に代入して
 \begin{align}
-  f(u)
+  f(u=t-1)
   &=\sqrt{-(t-1)^2+3}\,\left((t-1)^2+(t-1)+1\right)\\
   &=\sqrt{-t^2+3}\,(t^2-t+1)
 \end{align}
