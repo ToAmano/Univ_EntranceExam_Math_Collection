@@ -47,120 +47,71 @@
   \end{align}
   となる$x,y,z \in \mathbb{R}^+$が存在する．
   従って，これら$x,y,z$を$3$辺の長さとする直方体が存在する．
-  この時図のように四面体$ABCD$をとると各面が相似になっているから題意は示された．$\cdots$(答)
+  この時図のように四面体$ABCD$をとると各面が辺の長さ$a,b,c$の三角形で合同になっているから題意は示された．$\cdots$(答)
 
   \begin{figure}[H]
     \centering
-    \tdplotsetmaincoords{70}{120} % Adjust viewing angle to match the provided image
+    \begin{tikzpicture}[x={(-0.62cm,-0.5cm)}, y={(1.05cm,0cm)}, z={(0cm,1.05cm)},
+      every node/.style={font=\small}]
+      % 直方体の辺 x,y,z（図示用の値）．a^2=x^2+y^2, b^2=x^2+z^2, c^2=y^2+z^2
+      % x=2, y=3.2, z=2.4 のとき a^2=14.24, b^2=9.76, c^2=16 で鋭角三角形になる
+      \def\X{2}
+      \def\Y{3.2}
+      \def\Z{2.4}
+      % 斜投影で手前は x 大・上は z 大・右は y 大．原点 O が隠れた頂点
+      \coordinate (O)   at (0,0,0);
+      \coordinate (Px)  at (\X,0,0);
+      \coordinate (Py)  at (0,\Y,0);
+      \coordinate (Pz)  at (0,0,\Z);
+      \coordinate (Pxy) at (\X,\Y,0);
+      \coordinate (Pxz) at (\X,0,\Z);
+      \coordinate (Pyz) at (0,\Y,\Z);
+      \coordinate (A)   at (\X,\Y,\Z);
+      \coordinate (B)   at (Pz);
+      \coordinate (C)   at (Py);
+      \coordinate (D)   at (Px);
 
-    \begin{tikzpicture}[tdplot_main_coords]
-      % Define the dimensions of the cuboid
-      % We use arbitrary lengths for visualization purposes,
-      % as the problem asks for a reproduction of the figure,
-      % not a precise drawing with calculated lengths from a,b,c.
-      \pgfmathsetmacro{\Lx}{6} % length along x-axis
-      \pgfmathsetmacro{\Ly}{4} % length along y-axis
-      \pgfmathsetmacro{\Lz}{5} % length along z-axis
+      % 直方体：隠れた稜線（O に接する3本）は破線
+      \draw[densely dashed, gray!70!black] (O) -- (Px);
+      \draw[densely dashed, gray!70!black] (O) -- (Py);
+      \draw[densely dashed, gray!70!black] (O) -- (Pz);
+      \draw[thick, gray!80!black] (Px) -- (Pxy) -- (Py) -- (Pyz) -- (Pz) -- (Pxz) -- cycle;
+      \draw[thick, gray!80!black] (Pxz) -- (A) -- (Pyz);
+      \draw[thick, gray!80!black] (A) -- (Pxy);
 
-      % Define the vertices of the cuboid
-      % (x,y,z) coordinates
-      \coordinate (O) at (0,0,0);
-      \coordinate (X) at (\Lx,0,0);
-      \coordinate (Y) at (0,\Ly,0);
-      \coordinate (Z) at (0,0,\Lz);
-      \coordinate (XY) at (\Lx,\Ly,0);
-      \coordinate (XZ) at (\Lx,0,\Lz);
-      \coordinate (YZ) at (0,\Ly,\Lz);
-      \coordinate (XYZ) at (\Lx,\Ly,\Lz);
+      % 四面体 ABCD：向かい合う辺は同じ長さ（同色）．裏面上の辺は破線
+      \draw[line width=1.3pt, red!85!black] (A) -- (B);
+      \draw[line width=1.3pt, red!85!black, dashed] (C) -- (D);
+      \draw[line width=1.3pt, blue!85!black] (A) -- (C);
+      \draw[line width=1.3pt, blue!85!black, dashed] (B) -- (D);
+      \draw[line width=1.3pt, teal!85!black] (A) -- (D);
+      \draw[line width=1.3pt, teal!85!black, dashed] (B) -- (C);
 
-      % Draw the cuboid
-      % Back face (hidden lines)
-      \draw[dashed] (O) -- (X);
-      \draw[dashed] (O) -- (Y);
-      \draw[dashed] (O) -- (Z);
-      \draw[dashed] (X) -- (XZ);
-      \draw[dashed] (Y) -- (YZ);
-      \draw[dashed] (Z) -- (XZ); % This should be (Z) -- (YZ) and (XZ) -- (XYZ) for the back top edge
+      % 四面体の辺の長さ
+      \node[red!85!black, above=1pt] at ($(A)!0.5!(B)$) {$a$};
+      \node[red!85!black, below=1pt] at ($(C)!0.62!(D)$) {$a$};
+      \node[blue!85!black, right=1pt] at ($(A)!0.45!(C)$) {$b$};
+      \node[blue!85!black, left=1pt] at ($(B)!0.55!(D)$) {$b$};
+      \node[teal!85!black, left=1pt] at ($(A)!0.42!(D)$) {$c$};
+      \node[teal!85!black, below left=0pt] at ($(B)!0.42!(C)$) {$c$};
 
-      % Corrected hidden lines
-      \draw[dashed] (O) -- (X);
-      \draw[dashed] (O) -- (Y);
-      \draw[dashed] (O) -- (Z);
-      \draw[dashed] (X) -- (XZ);
-      \draw[dashed] (Y) -- (YZ);
-      \draw[dashed] (Z) -- (YZ); % Back left top edge
-      \draw[dashed] (XZ) -- (XYZ); % Back right top edge
-      \draw[dashed] (YZ) -- (XYZ); % Back left top edge
+      % 直方体の辺の長さ
+      \node[below left=0pt] at ($(Pxy)!0.5!(Py)$) {$x$};
+      \node[below=1pt] at ($(Px)!0.5!(Pxy)$) {$y$};
+      \node[right=1pt] at ($(Pxy)!0.5!(A)$) {$z$};
 
-      % Visible lines (front faces)
-      \draw (XY) -- (X) -- (XZ); % Right face
-      \draw (XY) -- (Y) -- (YZ); % Front face
-      \draw (XY) -- (XYZ); % Front top edge
-
-      % Corrected visible lines
-      \draw (XY) -- (X); % Front right bottom edge
-      \draw (XY) -- (Y); % Front left bottom edge
-      \draw (XY) -- (XYZ); % Front top edge (connects to A)
-      \draw (X) -- (XZ); % Right front vertical edge
-      \draw (Y) -- (YZ); % Left front vertical edge
-      \draw (XZ) -- (XYZ); % Right top back edge
-      \draw (YZ) -- (XYZ); % Left top back edge
-
-      % Draw the four vertices of the tetrahedron A, B, C, D
-      \coordinate (A) at (XYZ);
-      \coordinate (B) at (Z);
-      \coordinate (C) at (Y);
-      \coordinate (D) at (X);
-
-      % Draw the edges of the tetrahedron
-      \draw[line width=0.8pt] (A) -- (B); % AB
-      \draw[line width=0.8pt] (A) -- (C); % AC
-      \draw[line width=0.8pt] (A) -- (D); % AD
-      \draw[line width=0.8pt] (B) -- (C); % BC
-      \draw[line width=0.8pt] (B) -- (D); % BD
-      \draw[line width=0.8pt] (C) -- (D); % CD
-
-      % Add labels for the vertices
-      \node at ($(A)+(0.2,0.2,0)$) {\bfseries A};
-      \node at ($(B)+(-0.2,-0.2,0)$) {\bfseries B}; % Adjusted for better placement for B
-      \node at ($(C)+(-0.2,-0.2,0)$) {\bfseries C};
-      \node at ($(D)+(0.2,-0.2,0)$) {\bfseries D};
-
-      % Let's place these labels visually as in the input image.
-      % The 'x' label seems to be on the left edge, approximately at the middle height.
-      \node at ($(O)!0.5!(YZ) + (-0.3,0,0)$) {$x$}; % Left vertical edge
-
-      % The 'y' label seems to be on the back top edge, near B.
-      \node at ($(B)!0.5!(YZ) + (0,0.3,0)$) {$y$}; % Back top edge
-
-      % The 'z' label is inside, a vertical dashed line.
-      % This 'z' represents the height of the B vertex from the base.
-      % Let's draw a dashed line from B to the plane (0,0,0)-(Lx,Ly,0)
-      % The point directly below B is (0,0,0) in our current setup for B=(0,0,Lz)
-      % So it's the Z axis.
-      \draw[dashed] (B) -- (O); % This is the Z axis itself
-      \node at ($(B)!0.5!(O) + (0.1,0.1,0)$) {$z$};
-
-      % Add labels for tetrahedron edge lengths (a, b, c)
-      % AD = a
-      \node at ($(A)!0.5!(D) + (0.2,0,0)$) {$a$};
-      % AC = b
-      \node at ($(A)!0.5!(C) + (0.1,0.2,0)$) {$b$};
-      % AB = c
-      \node at ($(A)!0.5!(B) + (-0.2,0.2,0)$) {$c$};
-      % CD = c
-      \node at ($(C)!0.5!(D) + (0,-0.2,0)$) {$c$};
-      \node at ($(B)!0.5!(D) + (0,-0.2,0.1)$) {$b$}; % BD
-      \node at ($(B)!0.5!(C) + (-0.1,-0.1,0.1)$) {$a$}; % BC
-
+      % 頂点
+      \foreach \p/\pos in {A/above right, B/above left, C/right, D/below left} {
+        \node[circle, fill, inner sep=1.3pt] at (\p) {};
+        \node[\pos=1pt] at (\p) {$\mathrm{\p}$};
+      }
     \end{tikzpicture}
-    \caption{題意を満たす直方体と四面体}
+    \caption{題意を満たす直方体と四面体（向かい合う辺の長さが等しい）}
     \label{1999-4:fig:1}
   \end{figure}
 
   \vspace{10pt}
   {\bf [解説]}
-  % TODO :: 図のブラッシュアップ
 
   \newpage
 \end{multicols}
