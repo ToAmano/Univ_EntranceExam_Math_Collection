@@ -1,29 +1,4 @@
 \documentclass[../../main.tex]{subfiles}
-% \documentclass[a4paper,10pt]{ltjsarticle}
-\usepackage{luatexja}
-\usepackage[hiragino-pron]{luatexja-preset}
-
-\usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
-\setlength{\textwidth}{54\zw}
-\setlength{\textheight}{73\zw}
-
-\usepackage{amsmath,amssymb,ascmac}
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{cleveref}
-\usepackage{framed}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usetikzlibrary{math}
-% \usepackage{indent}
-\usepackage{cases}
-\usepackage{float}
-\allowdisplaybreaks
-\pagestyle{fancy}
-\lhead{}
-\chead{}
 \begin{document}
 \rhead{京都大学後期$1995$年$5$番}
 \setcounter{equation}{0}
@@ -43,7 +18,7 @@
       \node (A01) at (0,0.5) {A \quad 0,1};
       \node (B1) at (0,-0.5) {B \quad 1};
       \node (A1) at (3,0.5) {A \quad 0};
-      \node (B01) at (3,-0.5) {B \quad 1,1};
+      \node (B01) at (3,-0.5) {B \quad なし};
 
       % \draw[->] (A01) -- node[above] {$\frac{1}{2}$} (A1);
       \draw[->] (A01) -- node[below] {$\frac{1}{2}$} (B01);
@@ -179,7 +154,7 @@
 
     \end{tikzpicture}
     \caption{最初にBが$0$以外を引いた場合，Bは一枚カードを捨てられる．
-    次のAのターンでも確実にAがカードを捨て，Aが$n-2$枚，Bが$n-1$枚のカードを持った状態になる．}
+    次のAのターンでも確実にAがカードを捨て，Aが$n-1$枚，Bが$n-2$枚のカードを持った状態になる．}
     \label{1995-5:fig:5}
   \end{figure}
 
@@ -190,7 +165,7 @@
   したがって漸化式は
   \begin{align}
     \begin{dcases}
-      p_n = \dfrac{1}{n+1} p_n + \dfrac{n}{n+1} p_{n-2} \\
+      p_n = \dfrac{1}{n+1} q_n + \dfrac{n}{n+1} p_{n-2} \\
       q_n = \dfrac{1}{n+1} p_n + \dfrac{n}{n+1} q_{n-2}
     \end{dcases} \label{eq:1}
   \end{align}
@@ -201,7 +176,7 @@
   \cref{eq:1}で$n=k+2$として両辺足し算すると
   \begin{align}
     p_{k+2} + q_{k+2}
-    & = \dfrac{p_{k+1}+q_{k+1}}{n+1} + \dfrac{n(p_{n}+q_{n})}{n+1} \\
+    & = \dfrac{p_{k+1}+q_{k+1}}{n+1} + \dfrac{n(p_{k}+q_{k})}{n+1} \\
     & = \dfrac{1}{n+1} + \dfrac{n}{n+1}                            \\
     & = 1
   \end{align}
@@ -240,14 +215,14 @@
   \cref{eq:2}より，
   \begin{align}
     p_{2k}   & = \dfrac{k}{2k+2} \\
-    p_{2k+1} & = \dfrac{k}{2k+1}
+    p_{2k-1} & = \dfrac{k}{2k+1}
   \end{align}
   となる．これを書き直して
   \begin{align}
     p_n =
     \begin{dcases}
       \dfrac{n}{2(n+2)}   & (n \text{ even}) \\
-      \dfrac{n-1}{2(n+1)} & (n \text{ odd})
+      \dfrac{n+1}{2(n+1)} & (n \text{ odd})
     \end{dcases}
   \end{align}
   が求める一般項である．$\cdots$(答)
