@@ -6,7 +6,72 @@
 
 \subparagraph{(1)}
 
-% TODO: 3d-tikzの概要図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x={(-0.5cm,-0.45cm)}, y={(1cm,0cm)}, z={(0cm,1cm)},
+    scale=1.75, >=stealth, every node/.style={font=\small}]
+    % 平面 pi: (1,1,0)+s(1,0,1)+v(0,2,1)，-0.4<=s<=2.6, -0.3<=v<=0.8 の部分を表示
+    % 視線方向 (1,0.5,0.45) から見ると m, n は pi の奥側（-2x-y+2z+3>0）にあり，
+    % pi に隠れる区間 m: -0.612<=u<=0.488, n: 0.128<=t<=1 を破線にする
+    \coordinate (O) at (0,0,0);
+    \coordinate (Pi1) at (0.6,0.4,-0.7);
+    \coordinate (Pi2) at (3.6,0.4,2.3);
+    \coordinate (Pi3) at (3.6,2.6,3.4);
+    \coordinate (Pi4) at (0.6,2.6,0.4);
+    % l 上の点
+    \coordinate (L1) at (1,1,0);
+    \coordinate (L2) at (2,1,1);
+    % m 上の点
+    \coordinate (M1) at (1,1,1);
+    \coordinate (M2) at (1,3,2);
+    % n 上の点と交点
+    \coordinate (Q) at (2,0,1);
+    \coordinate (X1) at (3,1,2);
+    \coordinate (X2) at (1,-1,0);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (O) -- (3.2,0,0) node[below left=-1pt] {$x$};
+    \draw[->, thick, gray!80!black] (O) -- (0,4.2,0) node[right] {$y$};
+    \draw[->, thick, gray!80!black] (O) -- (0,0,3.2) node[above] {$z$};
+    \node[below right=-1pt] at (O) {$O$};
+
+    % m, n の平面の奥側の部分（先に描く）
+    \draw[line width=1.2pt, teal!85!black] (1,-2,-0.5) -- (1,-0.224,0.388);
+    \draw[line width=1.2pt, orange!90!black] (0.5,-1.5,-0.5) -- (2.128,0.128,1.128);
+
+    % 平面 pi（斜線）
+    \fill[white, opacity=0.6] (Pi1) -- (Pi2) -- (Pi3) -- (Pi4) -- cycle;
+    \fill[pattern={Lines[angle=45, distance=5pt, line width=0.4pt]}, pattern color=blue!50!black, opacity=0.45]
+    (Pi1) -- (Pi2) -- (Pi3) -- (Pi4) -- cycle;
+    \draw[thick, blue!60!black] (Pi1) -- (Pi2) -- (Pi3) -- (Pi4) -- cycle;
+    \node[blue!70!black] at (3.1,2.3,2.8) {$\pi$};
+
+    % pi に隠れる部分は破線
+    \draw[line width=1.2pt, teal!85!black, densely dashed] (1,-0.224,0.388) -- (1,1.976,1.488);
+    \draw[line width=1.2pt, orange!90!black, densely dashed] (2.128,0.128,1.128) -- (X1);
+
+    % 手前に見える部分
+    \draw[line width=1.2pt, teal!85!black] (1,1.976,1.488) -- (1,3.8,2.4) node[right] {$m$};
+    \draw[line width=1.2pt, orange!90!black] (X1) -- (3.5,1.5,2.5) node[above=0pt] {$n$};
+    \draw[line width=1.4pt, blue!85!black] (0.3,1,-0.7) -- (3.9,1,2.9) node[left] {$l$};
+
+    % 点
+    \foreach \p in {L1, L2} \node[circle, fill=blue!85!black, inner sep=1.2pt] at (\p) {};
+    \foreach \p in {M1, M2} \node[circle, fill=teal!85!black, inner sep=1.2pt] at (\p) {};
+    \node[circle, fill=orange!90!black, inner sep=1.3pt] at (Q) {};
+    \foreach \p in {X1, X2} \node[circle, fill=red!85!black, inner sep=1.5pt] at (\p) {};
+
+    \node[font=\scriptsize, left=2pt] at (L1) {$(1,1,0)$};
+    \node[font=\scriptsize, right=2pt] at (L2) {$(2,1,1)$};
+    \node[font=\scriptsize, above left=0pt] at (M1) {$(1,1,1)$};
+    \node[font=\scriptsize, below right=0pt] at (M2) {$(1,3,2)$};
+    \node[font=\scriptsize, left=2pt] at (Q) {$(2,0,1)$};
+    \node[font=\scriptsize, red!85!black, left=3pt] at (X1) {$(3,1,2)$};
+    \node[font=\scriptsize, red!85!black, above left=0pt] at (X2) {$(1,-1,0)$};
+  \end{tikzpicture}
+  \caption{直線 $l,m$，$l$ を含み $m$ に平行な平面 $\pi$，および (2) の直線 $n$ と交点（赤）．破線は $\pi$ の奥に隠れる部分}
+  \label{fig:overview_lmn}
+\end{figure}
 
 直線$l$の方向ベクトルを$\vec{l}$，直線$m$の方向ベクトルを$\vec{m}$とすると，
 題意より
