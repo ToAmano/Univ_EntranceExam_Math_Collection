@@ -1,0 +1,127 @@
+---
+import metrics from '../data/reasoning-metrics.json';
+import { groupSolutionsByPosition } from '../lib/reasoning-density.mjs';
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const solutions = metrics.solutions as any[];
+const positions = groupSolutionsByPosition(solutions);
+const maxPositionCount = Math.max(...positions.map((position) => position.items.length));
+const positionOpacity = (count: number) => 0.24 + 0.76 * Math.log1p(count) / Math.log1p(maxPositionCount);
+const sortedEquals = [...solutions].sort((a, b) => b.equalities - a.equalities).slice(0, 8);
+const sortedCases = [...solutions].sort((a, b) => b.case_markers - a.case_markers).slice(0, 8);
+const univLabel: Record<string, string> = { utokyo: '東大', ukyoto: '京大', titech: '東工大' };
+const variantLabel: Record<string, string> = { new: '新課程', old: '旧課程', ko: '甲', otsu: '乙' };
+const problemUrl = (entry: any) => `${baseUrl}/solutions/${entry.univ}-${entry.exam}-${entry.year}-${entry.question}-solution/`;
+const problemLabel = (entry: any) => `${univLabel[entry.univ]}${entry.exam === 'zenki' ? '前期' : '後期'} ${entry.year}年 第${entry.question}問${entry.variant && entry.variant !== 'common' ? `（${variantLabel[entry.variant] || entry.variant}）` : ''}`;
+const plot = { left: 58, right: 747, top: 25, bottom: 331 };
+const xMax = Math.max(100, Math.ceil(Math.max(...solutions.map((s) => s.equalities)) / 10) * 10);
+const yMax = Math.max(6, Math.ceil(Math.max(...solutions.map((s) => s.case_markers)) / 2) * 2);
+const xTickStep = xMax <= 120 ? 20 : Math.ceil(xMax / 6 / 10) * 10;
+const xTicks = Array.from({ length: Math.floor(xMax / xTickStep) + 1 }, (_, i) => i * xTickStep);
+const yTickStep = yMax <= 10 ? 1 : Math.ceil(yMax / 8);
+const yTicks = Array.from({ length: Math.floor(yMax / yTickStep) + 1 }, (_, i) => i * yTickStep);
+const cellWidth = (plot.right - plot.left) / (xMax + 1);
+const cellHeight = (plot.bottom - plot.top) / (yMax + 1);
+const pointX = (v: number) => plot.left + (v + .5) * cellWidth;
+const pointY = (v: number) => plot.bottom - (v + .5) * cellHeight;
+---
+
+<section class="panel-section structure-section" aria-label="数式変形と場合分けの記載量">
+	<div class="section-header">
+		<h2>6. 数式変形と場合分けの記載量</h2>
+		<p>横軸は主解答の表示数式に現れる等号の総数、縦軸は条件を明示した <code>\subparagraph</code>・<code>\underline</code>・<code>\textbf</code>・<code>\item[条件]</code> の見出し数です。両軸とも等間隔です。</p>
+	</div>
+	<div class="chart-container glass">
+		<p class="density-summary"><strong>{solutions.length.toLocaleString('ja-JP')}解答</strong>を<strong>{positions.length}座標</strong>に集約。濃いセルほど解答が多く、最多の座標には<strong>{maxPositionCount}解答</strong>あります。セルを選ぶと内訳を表示します。</p>
+		<div class="plot-wrap">
+			<svg viewBox="0 0 790 390" role="img" aria-label="等号数と場合分け見出し数による解答数の密度マップ">
+				<line x1={plot.left} y1={plot.bottom} x2={plot.right} y2={plot.bottom} class="axis" />
+				<line x1={plot.left} y1={plot.top} x2={plot.left} y2={plot.bottom} class="axis" />
+				{xTicks.map((value) => <g><line x1={pointX(value)} y1={plot.bottom} x2={pointX(value)} y2={plot.bottom + 5} class="axis" /><text x={pointX(value)} y={plot.bottom + 23} text-anchor="middle">{value}</text></g>)}
+				{yTicks.map((value) => <g><line x1={plot.left - 5} y1={pointY(value)} x2={plot.left} y2={pointY(value)} class="axis" /><text x={plot.left - 10} y={pointY(value) + 4} text-anchor="end">{value}</text></g>)}
+				{positions.map((position) => <g class="density-cell" data-position={position.key} tabindex="0" role="button" aria-label={`等号${position.equalities}個、場合分け見出し${position.caseMarkers}個：${position.items.length}解答`}><rect x={pointX(position.equalities) - cellWidth * .43} y={pointY(position.caseMarkers) - cellHeight * .42} width={cellWidth * .86} height={cellHeight * .84} fill="#60a5fa" fill-opacity={positionOpacity(position.items.length)} rx="2"><title>等号 {position.equalities}、場合分け見出し {position.caseMarkers}：{position.items.length}解答</title></rect></g>)}
+				<text x="400" y="382" text-anchor="middle">表示数式中の等号数 →</text>
+				<text x="18" y="185" text-anchor="middle" transform="rotate(-90 18 185)">場合分け見出し数 →</text>
+			</svg>
+		</div>
+		<div class="density-legend" aria-label="セルの濃さは解答数を示す"><span>少ない</span><span class="density-swatch" style={`opacity:${positionOpacity(1)}`}></span><span class="density-swatch" style={`opacity:${positionOpacity(5)}`}></span><span class="density-swatch" style={`opacity:${positionOpacity(20)}`}></span><span class="density-swatch" style={`opacity:${positionOpacity(maxPositionCount)}`}></span><span>多い</span></div>
+		<div id="coordinate-selection" class="coordinate-selection" aria-live="polite"><p>セルを選ぶと、その座標に含まれる問題を表示します。</p></div>
+	</div>
+	<div class="rank-grid">
+		<div class="ranking-column glass"><h3>等号が多い解答</h3><ol>{sortedEquals.map((entry) => <li><a href={problemUrl(entry)}>{problemLabel(entry)}</a><strong>{entry.equalities}</strong></li>)}</ol></div>
+		<div class="ranking-column glass"><h3>場合分け見出しが多い解答</h3><ol>{sortedCases.map((entry) => <li><a href={problemUrl(entry)}>{problemLabel(entry)}</a><strong>{entry.case_markers}</strong></li>)}</ol></div>
+	</div>
+	<p class="method-note">{metrics.solution_count.toLocaleString('ja-JP')}件の掲載主解答を対象にした記載量です。等号には定義や結果の提示も含み、文章中の計算や省略された途中式は数えません。場合分けは条件付きの見出しだけを数え、<code>\paragraph</code>（小問見出し）、<code>cases</code> 環境、本文だけの分岐は拾いません。数学的な難易度や実際の計算時間を表す値ではありません。</p>
+</section>
+
+<script>
+	import metrics from '../data/reasoning-metrics.json';
+	import { groupSolutionsByPosition } from '../lib/reasoning-density.mjs';
+	const groups = new Map(groupSolutionsByPosition(metrics.solutions).map((group) => [group.key, group]));
+	const detail = document.querySelector<HTMLElement>('#coordinate-selection');
+	const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+	const universities: Record<string, string> = { utokyo: '東大', ukyoto: '京大', titech: '東工大' };
+	const variants: Record<string, string> = { new: '新課程', old: '旧課程', ko: '甲', otsu: '乙' };
+	function showPosition(key: string) {
+		const group = groups.get(key);
+		if (!group || !detail) return;
+		detail.replaceChildren();
+		const heading = document.createElement('h3');
+		heading.textContent = `等号 ${group.equalities} 個 × 場合分け見出し ${group.caseMarkers} 個：${group.items.length} 解答`;
+		const list = document.createElement('ul');
+		for (const item of group.items) {
+			const li = document.createElement('li');
+			const link = document.createElement('a');
+			link.href = `${base}/solutions/${item.univ}-${item.exam}-${item.year}-${item.question}-solution/`;
+			const variant = item.variant && item.variant !== 'common' ? `（${variants[item.variant] || item.variant}）` : '';
+			link.textContent = `${universities[item.univ]}${item.exam === 'zenki' ? '前期' : '後期'} ${item.year}年 第${item.question}問${variant}`;
+			li.append(link);
+			list.append(li);
+		}
+		detail.append(heading, list);
+		document.querySelectorAll<SVGGElement>('.density-cell').forEach((cell) => {
+			cell.classList.toggle('selected', cell.dataset.position === key);
+		});
+	}
+	document.querySelectorAll<SVGGElement>('.density-cell').forEach((cell) => {
+		cell.addEventListener('click', () => showPosition(cell.dataset.position || ''));
+		cell.addEventListener('keydown', (event) => {
+			if (event.key === 'Enter' || event.key === ' ') {
+				event.preventDefault();
+				showPosition(cell.dataset.position || '');
+			}
+		});
+	});
+</script>
+
+<style>
+	.panel-section { margin-bottom: 3.5rem; }
+	.section-header { margin-bottom: 1.25rem; }
+	.section-header h2 { font-size: 1.4rem; font-weight: 700; color: var(--text-main); margin: 0 0 .4rem; }
+	.section-header p { font-size: .9rem; color: var(--text-muted); line-height: 1.7; margin: 0; }
+	.chart-container { padding: 1.3rem; }
+	.density-summary { color: var(--text-muted); font-size: .9rem; line-height: 1.7; }
+	.density-summary strong { color: var(--text-main); }
+	.plot-wrap { overflow-x: auto; margin-top: 1.5rem; }
+	.plot-wrap svg { width: 100%; min-width: 600px; height: auto; background: rgba(2, 6, 23, .42); border: 1px solid var(--glass-border); border-radius: 12px; }
+	.plot-wrap .axis { stroke: #94a3b8; stroke-width: 1.4; }
+	.plot-wrap text { fill: var(--text-muted); font-size: 12px; }
+	.density-cell { cursor: pointer; }
+	.density-cell:hover rect, .density-cell:focus rect, .density-cell.selected rect { stroke: var(--text-main); stroke-width: 1.5; fill-opacity: 1; }
+	.density-legend { display: flex; align-items: center; gap: .45rem; color: var(--text-muted); font-size: .8rem; margin: .6rem 0 1rem; }
+	.density-swatch { width: 1.15rem; height: .85rem; background: #60a5fa; border-radius: 2px; }
+	.coordinate-selection { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 10px; padding: 1rem; margin: 1rem 0; }
+	.coordinate-selection p { margin: 0; color: var(--text-muted); }
+	.coordinate-selection h3 { font-size: 1rem; margin: 0 0 .7rem; }
+	.coordinate-selection ul { margin: 0; padding-left: 1.4rem; columns: 2; max-height: 16rem; overflow: auto; }
+	.coordinate-selection li { margin: .2rem 0; break-inside: avoid; }
+	.coordinate-selection a, .rank-grid a { color: var(--primary); }
+	.rank-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1.3rem; }
+	.ranking-column { padding: 1.2rem; }
+	.rank-grid h3 { font-size: 1rem; margin: 0 0 .7rem; }
+	.rank-grid ol { margin: 0; padding-left: 1.5rem; }
+	.rank-grid li { padding: .48rem 0; border-bottom: 1px solid var(--glass-border); }
+	.rank-grid li strong { float: right; font-variant-numeric: tabular-nums; }
+	.method-note { color: var(--text-muted); font-size: .86rem; line-height: 1.7; border-left: 3px solid var(--glass-hover-border); padding-left: .9rem; margin-top: 1.7rem; }
+	@media (max-width: 650px) { .rank-grid { grid-template-columns: 1fr; } .coordinate-selection ul { columns: 1; } }
+</style>

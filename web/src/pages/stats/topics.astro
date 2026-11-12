@@ -4,6 +4,7 @@ import Layout from '../../layouts/Layout.astro';
 import { TOPIC_TAGS } from '../../lib/tags';
 import { buildBreadcrumbListJsonLd } from '../../utils/seo';
 import TopicDistributionChart from '../../components/TopicDistributionChart.astro';
+import ProblemTypeDistribution from '../../components/ProblemTypeDistribution.astro';
 
 const allSolutions = await getCollection('solutions');
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -43,13 +44,13 @@ const maxRatio = totalOccurrences > 0 ? ((maxCount / totalOccurrences) * 100).to
 const breadcrumbJsonLd = buildBreadcrumbListJsonLd([
 	{ name: 'トップ', url: new URL(`${baseUrl}/`, Astro.site).href },
 	{ name: '統計', url: new URL(`${baseUrl}/stats/`, Astro.site).href },
-	{ name: '分野別出題比率', url: new URL(`${baseUrl}/stats/topics/`, Astro.site).href },
+	{ name: '出題分野と問題形式', url: new URL(`${baseUrl}/stats/topics/`, Astro.site).href },
 ]);
 ---
 
 <Layout
-	title="分野別 出題比率・統計データ"
-	description="大学入試数学アーカイブにおける全15分野の出題割合・構成比チャート。東大・京大・東工大の過去問における出題傾向と分布を可視化。"
+	title="出題分野と問題形式の統計データ"
+	description="東大・京大・東工大の過去問について、全15分野の出題割合と証明・求値の要求を大学・日程・年代別に可視化。"
 	jsonLd={breadcrumbJsonLd}
 >
 	<div class="topics-stats-page">
@@ -58,14 +59,14 @@ const breadcrumbJsonLd = buildBreadcrumbListJsonLd([
 			<span class="sep" aria-hidden="true">/</span>
 			<a href={`${baseUrl}/stats/`}>統計</a>
 			<span class="sep" aria-hidden="true">/</span>
-			<span class="current">分野別出題比率</span>
+			<span class="current">出題分野と問題形式</span>
 		</nav>
 
 		<header class="page-header">
 			<div class="header-content">
-				<h1>分野別 <span class="gradient-text">出題比率・統計</span></h1>
+				<h1>出題分野と <span class="gradient-text">問題形式</span></h1>
 				<p class="header-desc">
-					高校数学の全15分野（統制語彙タグ）に基づく過去問の出題構成比と頻度を分析した統計データです。
+					高校数学の全15分野の出題構成比と、問題文が要求する証明・求値の割合を示します。
 				</p>
 			</div>
 			<div class="header-actions">
@@ -119,6 +120,8 @@ const breadcrumbJsonLd = buildBreadcrumbListJsonLd([
 		<section aria-label="出題分野の分布・比率チャート" class="chart-section">
 			<TopicDistributionChart solutions={allSolutions} baseUrl={baseUrl} />
 		</section>
+
+		<ProblemTypeDistribution />
 
 		<!-- 分野タグ一覧グリッドセクション -->
 		<section class="tags-directory-section" aria-labelledby="tags-directory-heading">
@@ -275,7 +278,7 @@ const breadcrumbJsonLd = buildBreadcrumbListJsonLd([
 	}
 
 	.chart-section {
-		margin-bottom: 2.5rem;
+		margin-bottom: 1rem;
 	}
 
 	/* 分野タググリッド */

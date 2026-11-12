@@ -1,0 +1,139 @@
+---
+import metrics from '../data/reasoning-metrics.json';
+
+const categories = [
+	{ id: 'overall', label: '全体' },
+	{ id: 'utokyo_zenki', label: '東大 前期' },
+	{ id: 'utokyo_kouki', label: '東大 後期' },
+	{ id: 'ukyoto_zenki', label: '京大 前期' },
+	{ id: 'ukyoto_kouki', label: '京大 後期' },
+	{ id: 'titech_zenki', label: '東工大 前期' },
+	{ id: 'titech_kouki', label: '東工大 後期' },
+];
+const kinds = [
+	{ id: 'proof', label: '証明あり・求値なし', color: '#a78bfa' },
+	{ id: 'mixed', label: '証明・求値の両方', color: '#60a5fa' },
+	{ id: 'value', label: '求値あり・証明なし', color: '#34d399' },
+	{ id: 'other', label: '図示・その他', color: '#fbbf24' },
+	{ id: 'dual', label: '新旧課程併記', color: '#94a3b8' },
+	{ id: 'unclassified', label: '判定保留', color: '#64748b' },
+];
+const overallEras = Object.values(metrics.problem_eras.overall) as any[];
+const overall = {
+	total: overallEras.reduce((n, era) => n + era.total, 0),
+	classified: overallEras.reduce((n, era) => n + era.classified, 0),
+	proof: overallEras.reduce((n, era) => n + era.proof_including, 0),
+};
+const categoryCounts = Object.fromEntries(categories.map((cat) => [
+	cat.id,
+	Object.values((metrics.problem_eras as any)[cat.id] || {}).reduce((sum: number, era: any) => sum + era.total, 0),
+]));
+---
+
+<section id="problem-types" class="problem-types-section" aria-labelledby="problem-types-heading">
+	<div class="section-heading">
+		<h2 id="problem-types-heading">証明と求値の出題傾向</h2>
+		<p>問題文が何を求めているかを、年代・大学・日程別に比べます。</p>
+	</div>
+	<div class="glass problem-types-card">
+		<p class="lead">問題形式の中央カタログで、証明と求値の要求を分類しています。同じ大問に両方あれば「両方」とします。新旧課程を併記した問題は別に数えます。</p>
+		<div class="summary-row">
+			<div><strong>{overall.total.toLocaleString('ja-JP')}</strong><span>全体の対象問題</span></div>
+			<div><strong>{overall.proof.toLocaleString('ja-JP')}</strong><span>全体で証明を含む問題</span></div>
+			<div><strong>{Math.round(overall.proof / overall.classified * 100)}%</strong><span>判定できた問題に占める割合</span></div>
+		</div>
+		<div class="cat-tab-strip" role="tablist" aria-label="証明と求値の大学・試験区分">
+			{categories.map((cat, idx) => (
+				<button type="button" role="tab" id={`problem-tab-${cat.id}`}
+					class:list={['cat-tab-btn', { active: idx === 0 }]}
+					data-problem-cat-tab={cat.id}
+					aria-controls={`problem-panel-${cat.id}`}
+					aria-selected={idx === 0 ? 'true' : 'false'}
+					tabindex={idx === 0 ? 0 : -1}>
+					<span>{cat.label}</span>
+					<span class="tab-badge">{categoryCounts[cat.id]}問</span>
+				</button>
+			))}
+		</div>
+		<div class="legend">{kinds.map((kind) => <span><i style={`background:${kind.color}`}></i>{kind.label}</span>)}</div>
+		{categories.map((cat) => (
+			<div class="era-panel" id={`problem-panel-${cat.id}`} role="tabpanel"
+				aria-labelledby={`problem-tab-${cat.id}`} data-category={cat.id} hidden={cat.id !== 'overall'}>
+				<div class="era-rows">
+					{Object.entries((metrics.problem_eras as any)[cat.id] || {}).map(([decade, era]: [string, any]) => (
+						<div class="era-row">
+							<span class="era-name">{decade}年代</span>
+							<div class="stack" role="img" aria-label={`${decade}年代：${kinds.map((kind) => `${kind.label}${era.counts[kind.id]}問`).join('、')}`}>
+								{kinds.map((kind) => <span style={`width:${era.counts[kind.id] / era.total * 100}%;background:${kind.color}`} title={`${kind.label} ${era.counts[kind.id]}問`}></span>)}
+							</div>
+							<span class="era-rate">{era.classified ? Math.round(era.proof_including / era.classified * 100) : 0}%</span>
+							<span class="era-count">{era.classified}/{era.total}問</span>
+						</div>
+					))}
+				</div>
+				<p class="axis-note">右端は新旧課程併記と判定保留を除いた問題のうち、証明を含む割合。問数は割合の対象／収録総数です。</p>
+			</div>
+		))}
+		<p class="method-note">カタログの初期値は問題文の動詞から推定した暫定分類です。判定保留と見落としやすい表記を点検し、修正を反映しました。図示だけを求める問題は「図示・その他」に含めます。新旧課程併記と判定保留は証明の割合の分母から除外しています。収録数の少ない年代・日程の差は慎重に読んでください。</p>
+	</div>
+</section>
+
+<script>
+	const root = document.querySelector<HTMLElement>('#problem-types');
+	const tabs = Array.from(root?.querySelectorAll<HTMLButtonElement>('[data-problem-cat-tab]') ?? []);
+	const panels = root?.querySelectorAll<HTMLElement>('.era-panel');
+	function selectCategory(tab: HTMLButtonElement) {
+		const category = tab.dataset.problemCatTab;
+		tabs.forEach((item) => {
+			const active = item === tab;
+			item.classList.toggle('active', active);
+			item.setAttribute('aria-selected', String(active));
+			item.tabIndex = active ? 0 : -1;
+		});
+		panels?.forEach((panel) => { panel.hidden = panel.dataset.category !== category; });
+	}
+	tabs.forEach((tab, index) => {
+		tab.addEventListener('click', () => selectCategory(tab));
+		tab.addEventListener('keydown', (event) => {
+			const next = event.key === 'ArrowRight' ? (index + 1) % tabs.length
+				: event.key === 'ArrowLeft' ? (index - 1 + tabs.length) % tabs.length
+				: event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : -1;
+			if (next < 0) return;
+			event.preventDefault();
+			selectCategory(tabs[next]);
+			tabs[next].focus();
+		});
+	});
+</script>
+
+<style>
+	.problem-types-section { margin: 2.5rem 0 3rem; }
+	.section-heading { margin-bottom: 1.2rem; }
+	.section-heading h2 { font-size: 1.35rem; font-weight: 700; margin: 0 0 .3rem; color: var(--text-main); }
+	.section-heading p { font-size: .85rem; color: var(--text-muted); margin: 0; }
+	.problem-types-card { padding: clamp(1.25rem, 3vw, 2rem); }
+	.lead { color: var(--text-muted); line-height: 1.7; margin-top: 0; }
+	.summary-row { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0; }
+	.summary-row div { flex: 1 1 180px; background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: .2rem; }
+	.summary-row strong { font-size: 1.65rem; color: var(--text-main); }
+	.summary-row span { color: var(--text-muted); font-size: .85rem; }
+	.cat-tab-strip { display: flex; gap: .5rem; overflow-x: auto; padding-bottom: .75rem; margin-bottom: 1.75rem; border-bottom: 1px solid rgba(255,255,255,.06); scrollbar-width: thin; }
+	.cat-tab-btn { display: inline-flex; align-items: center; gap: .45rem; padding: .55rem .95rem; border-radius: 10px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); color: var(--text-muted); font-size: .85rem; font-weight: 700; cursor: pointer; transition: all .2s ease; white-space: nowrap; }
+	.cat-tab-btn:hover { background: rgba(255,255,255,.08); color: var(--text-main); border-color: rgba(255,255,255,.18); }
+	.cat-tab-btn:focus-visible { outline: 2px solid #93c5fd; outline-offset: 2px; }
+	.cat-tab-btn.active { background: rgba(96,165,250,.16); color: #93c5fd; border-color: rgba(96,165,250,.45); box-shadow: 0 2px 10px rgba(96,165,250,.2); }
+	.tab-badge { font-size: .72rem; font-weight: 600; padding: .15rem .45rem; border-radius: 999px; background: rgba(52,211,153,.2); color: #a7f3d0; }
+	.legend { display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; margin: 1.3rem 0; font-size: .84rem; }
+	.legend span { display: inline-flex; align-items: center; gap: .35rem; }
+	.legend i { width: .8rem; height: .8rem; border-radius: 3px; }
+	.era-panel[hidden] { display: none; }
+	.era-row { display: grid; grid-template-columns: 75px minmax(130px, 1fr) 50px 90px; gap: .8rem; align-items: center; margin: .8rem 0; font-size: .88rem; }
+	.era-name { font-weight: 700; white-space: nowrap; }
+	.stack { display: flex; height: 23px; overflow: hidden; border-radius: 5px; background: var(--card-bg); }
+	.stack span { height: 100%; }
+	.era-rate { text-align: right; font-weight: 800; color: var(--primary); }
+	.era-count { text-align: right; color: var(--text-muted); white-space: nowrap; }
+	.axis-note, .method-note { color: var(--text-muted); font-size: .86rem; line-height: 1.7; }
+	.method-note { border-left: 3px solid var(--glass-hover-border); padding-left: .9rem; margin-top: 1.7rem; }
+	@media (max-width: 650px) { .era-row { grid-template-columns: 65px minmax(80px, 1fr) 42px; gap: .4rem; } .era-count { grid-column: 2 / 4; text-align: left; margin-top: -.4rem; font-size: .75rem; } }
+</style>
