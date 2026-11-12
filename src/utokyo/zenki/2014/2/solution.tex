@@ -96,14 +96,14 @@ $1$回目に赤玉を引けば袋の中身は白が$a+2$個，赤玉が$0$個だ
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[
-      x=3.8cm, y=1.8cm, >=stealth,
+      x=4.2cm, y=1.8cm, >=stealth,
       box/.style={draw=blue!85!black, fill=white, rounded corners=4pt, line width=1.0pt, inner sep=6pt, font=\small},
-      prob/.style={font=\footnotesize\bfseries, fill=white, inner sep=2pt}
+      prob/.style={font=\footnotesize, fill=white, inner sep=2pt}
     ]
 
     % 列ヘッダー
-    \node[font=\normalsize\bfseries, gray!70!black] at (0, 1.1) {$n$ 回目終了時の袋の状態};
-    \node[font=\normalsize\bfseries, gray!70!black] at (1.5, 1.1) {$n+1$ 回目の試行};
+    \node[font=\normalsize\bfseries, gray!80!black] at (0, 1.1) {$n$ 回目終了時の袋の状態};
+    \node[font=\normalsize\bfseries, gray!80!black] at (1.6, 1.1) {$n+1$ 回目の試行};
 
     % 状態 [ア]: 白 a, 赤 1 (n回目に白を引いた: 確率 1 - p_n)
     \node[box] (stateA) at (0, 0.2) {
@@ -119,7 +119,7 @@ $1$回目に赤玉を引けば袋の中身は白が$a+2$個，赤玉が$0$個だ
     };
 
     % 状態 [イ]: 白 a, 赤 0 (n回目に赤を引いた: 確率 p_n)
-    \node[box, draw=gray!60] (stateB) at (0, -1.4) {
+    \node[box, draw=gray!75!black] (stateB) at (0, -1.4) {
       \begin{tabular}{c}
         \textbf{状態 [イ]} \ （直前が赤）\\[2pt]
         \begin{tabular}{|c|}
@@ -133,21 +133,21 @@ $1$回目に赤玉を引けば袋の中身は白が$a+2$個，赤玉が$0$個だ
 
     % 次のステップの目標: 赤を引く (p_{n+1})
     \node[draw=red!85!black, rounded corners=4pt, line width=1.2pt, inner sep=6pt, font=\normalsize\bfseries]
-    (nextRed) at (1.5, 0.4) {赤玉を取り出す（$p_{n+1}$）};
+    (nextRed) at (1.6, 0.4) {赤玉を取り出す（$p_{n+1}$）};
 
     % 次のステップ: 白を引く
-    \node[draw=gray!50, rounded corners=3pt, font=\small, text=gray!60!black]
-    (nextWhite) at (1.5, -0.3) {白玉を取り出す};
+    \node[draw=gray!75!black, rounded corners=3pt, font=\small, text=gray!80!black]
+    (nextWhite) at (1.6, -0.4) {白玉を取り出す};
 
     % 状態 [ア] からの遷移
-    \draw[->, line width=1.4pt, red!85!black] (stateA) -- (nextRed)
-    node[midway, above, red!90!black] {確率 $\frac{1}{a+1}$};
-    \draw[->, line width=0.9pt, gray!60] (stateA) -- (nextWhite)
-    node[midway, below left] {確率 $\frac{a}{a+1}$};
+    \draw[->, line width=1.2pt, red!85!black] (stateA.east) -- (nextRed.west)
+    node[midway, prob, above=3pt, text=red!90!black] {確率 $\frac{1}{a+1}$};
+    \draw[->, line width=0.9pt, gray!75!black] (stateA.east) -- (nextWhite.west)
+    node[midway, prob, below=3pt, text=gray!80!black] {確率 $\frac{a}{a+1}$};
 
     % 状態 [イ] からの遷移 (赤玉がないので確率 0)
-    \draw[->, line width=1.0pt, dashed, gray!50] (stateB.east) -- (nextRed.south west)
-    node[midway, below right, gray!60!black] {確率 $0$ （赤玉なし）};
+    \draw[->, line width=0.9pt, dashed, gray!75!black] (stateB.east) -- (nextRed.south west)
+    node[midway, prob, below right=2pt, text=gray!80!black] {確率 $0$ （赤玉なし）};
 
   \end{tikzpicture}
   \caption{一般の $n$ 回目から $n+1$ 回目への状態遷移と確率漸化式の関係}
@@ -194,7 +194,7 @@ $n+1$回目に赤を引くのは，[ア]の場合の時に赤を引く場合だ�
 である．両辺を$m$で割って，$a>0$に注意して求める極限値は
 \begin{align}
   \dfrac{1}{m} A_m
-  & = \dfrac{1}{a+2} - \dfrac{1}{m} \dfrac{a+1}{(a+2)(a+3)} \left\{ 1 - \left(-\dfrac{1}{a+1}\right)^m \right\} \xrightarrow{m\to\infty} \dfrac{1}{a+2}
+  & = \dfrac{1}{a+2} - \dfrac{1}{m} \dfrac{a+1}{(a+2)^2(a+3)} \left\{ 1 - \left(-\dfrac{1}{a+1}\right)^m \right\} \xrightarrow{m\to\infty} \dfrac{1}{a+2}
 \end{align}
 である．
 
