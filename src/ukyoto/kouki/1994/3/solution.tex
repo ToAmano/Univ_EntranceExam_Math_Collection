@@ -14,8 +14,8 @@
     \centering
     \begin{tikzpicture}
       \begin{axis}[
-          xmin=-0.5, xmax=5,
-          ymin=-0.5, ymax=4,
+          xmin=-0.5, xmax=5.5,
+          ymin=-0.5, ymax=5.5,
           axis lines=middle, % Draw axes through the origin
           xlabel=$x$,
           ylabel=$y$,
@@ -65,7 +65,7 @@
 
       \end{axis}
     \end{tikzpicture}
-    \caption{円Cと点PRの様子}
+    \caption{円$C$と点$P,Q$の様子}
     \label{1994-3:fig:1}
   \end{figure}
 
@@ -104,27 +104,23 @@
         \node[above right] at (P) {P}; % Label P
         \node[above right] at (Q) {Q}; % Label Q
 
-        % Points A and B on the circle (tangent points or diametrically opposite)
-        % These coordinates are derived from the problem's solution (B is (8/5, 9/5), A is (2/5, 1/5))
-        \coordinate (A) at (axis cs:0.4,0.2); % A is (0.4, 0.2)
-        \coordinate (B) at (axis cs:1.6,1.8); % B is (1.6, 1.8)
-        % \fill (A) circle (1.5pt); % Draw dot for A
-        \node[circle, fill, inner sep=1.5pt] at (B) {}; % Draw dot for B
-        \node[circle, fill, inner sep=1.5pt] at (P) {}; % Draw dot for B
-        \node[circle, fill, inner sep=1.5pt] at (Q) {}; % Draw dot for B
+        % Tangent point A on circle facing line PQ
+        \coordinate (A) at (axis cs:0.2,0.4);
+        \node[circle, fill, inner sep=1.5pt] at (A) {};
+        \node[circle, fill, inner sep=1.5pt] at (P) {};
+        \node[circle, fill, inner sep=1.5pt] at (Q) {};
 
-        % \node[below] at (A) {A}; % Label A
-        \node[above] at (B) {B}; % Label B
+        \node[below left] at (A) {$A$};
 
-        % Draw the line segment AB, which passes through the center C (diameter)
-        \draw (1,1) -- (B);
-        % Label for the line L (as seen in the original image near the center)
-        \node[above left] at (axis cs:1.2,1.2) {L};
+        % Draw radius to tangent point A
+        \draw (1,1) -- (A);
+        % Label for line L
+        \node[above left] at (axis cs:0.6,0.7) {$L$};
         \draw[dashed] (1,0) -- (1,1) -- (0,1);
 
       \end{axis}
     \end{tikzpicture}
-    \caption{円Cと点PQの様子．線分PQが円の下側に来る場合．}
+    \caption{円$C$と点$P,Q$の様子．線分$PQ$が円の下側に来る場合．}
     \label{1994-3:fig:2}
   \end{figure}
 
@@ -163,8 +159,8 @@
     \centering
     \begin{tikzpicture}
       \begin{axis}[
-          xmin=-0.5, xmax=5,
-          ymin=-0.5, ymax=4,
+          xmin=-0.5, xmax=5.5,
+          ymin=-0.5, ymax=5.5,
           axis lines=middle, % Draw axes through the origin
           xlabel=$x$,
           ylabel=$y$,
@@ -220,6 +216,29 @@
     \end{tikzpicture}
     \caption{円Cと三角形PQRの様子．点Rが線分PQの上側にある場合のみ，Rが第一象限に存在する．}
     \label{1994-3:fig:3}
+  \end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[x=1.1cm,y=1.1cm,>=stealth,
+      every node/.style={font=\small}]
+      \draw[->,thick,gray!80!black] (-0.2,0) -- (4.5,0) node[right] {$X$};
+      \draw[->,thick,gray!80!black] (0,-0.2) -- (0,4.5) node[above] {$Y$};
+      \draw[densely dashed,thick,gray!70!black] (2,0) -- (2,4.4);
+      \draw[densely dashed,thick,gray!70!black] (0,2) -- (4.4,2);
+      \draw[very thick,blue!85!black,domain=0.02:0.98,samples=80]
+      plot (\x,{2*(\x-1)/(\x-2)});
+      \draw[very thick,blue!85!black,domain=2.9:4.35,samples=80]
+      plot (\x,{2*(\x-1)/(\x-2)});
+      \node[below] at (1,0) {$1$};
+      \node[below] at (2,0) {$2$};
+      \node[left] at (0,1) {$1$};
+      \node[left] at (0,2) {$2$};
+      \node[blue!85!black,above right] at (2.95,3.8)
+      {$Y=\frac{2(X-1)}{X-2}$};
+    \end{tikzpicture}
+    \caption{$X,Y>0$を満たす接線条件$XY+2-2X-2Y=0 \ \therefore Y=\dfrac{2(X-1)}{X-2}$の様子}
+    \label{1994-3:fig:4}
   \end{figure}
 
   次に，点Rの座標を$X,Y$を用いて表す．
@@ -291,18 +310,40 @@
     \therefore
     &
     \begin{dcases}
-      \sqrt{3}(a^2+b^2)-4ab-2+2(1-\sqrt{3})(a-b) = 0 \\
+      \sqrt{3}(a^2+b^2)-4ab-2+2(\sqrt{3}-1)(a+b) = 0 \\
       \sqrt{3}b > a                                  \\
       \sqrt{3}a > b
     \end{dcases}
   \end{align}
   が求める関係式である．$\cdots$(答)
 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[x=0.75cm,y=0.75cm,>=stealth,
+      every node/.style={font=\small}]
+      \fill[pattern=north east lines,pattern color=gray!70!black]
+      (0,0) -- (8,4.62) -- (8,8) -- (4.62,8) -- cycle;
+      \draw[->,thick,gray!80!black] (0,0) -- (8.4,0) node[right] {$a$};
+      \draw[->,thick,gray!80!black] (0,0) -- (0,8.4) node[above] {$b$};
+      \draw[densely dashed,thick,gray!70!black] (0,0) -- (8,4.62)
+      node[right] {$b=a/\sqrt{3}$};
+      \draw[densely dashed,thick,gray!70!black] (0,0) -- (4.62,8)
+      node[above] {$b=\sqrt{3}a$};
+      \draw[very thick,blue!85!black,domain=0.02:0.98,samples=80]
+      plot ({(\x+1.732*2*(\x-1)/(\x-2))/2},
+      {(2*(\x-1)/(\x-2)+1.732*\x)/2});
+      \draw[very thick,blue!85!black,domain=2.5:6.5,samples=80]
+      plot ({(\x+1.732*2*(\x-1)/(\x-2))/2},
+      {(2*(\x-1)/(\x-2)+1.732*\x)/2});
+      \node[draw=blue!85!black,fill=white,rounded corners=2pt,
+      font=\footnotesize] at (2.5,5.9) {$X,Y>0$};
+    \end{tikzpicture}
+    \caption{$a,b$平面への写像．曲線上の点が解で，斜線は必要条件を表す}
+    \label{1994-3:fig:5}
+  \end{figure}
+
   \vspace{10pt}
   {\bf [解説]}
-
-  % TODO ::   Y = 2(1+X)/(X-2)の図示
-  % TODO :: 解の領域の図示
 
   \newpage
 \end{multicols}
