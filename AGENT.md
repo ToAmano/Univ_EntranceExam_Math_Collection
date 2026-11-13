@@ -71,7 +71,7 @@ python3 scratch/tex_to_md.py src/titech/zenki/2000/1/problem.tex
 
 **通常の `solution.tex`/`problem.tex` の内容修正（数式・図・文章の訂正）では、以下の軽量フローで十分であり、全件変換・Astro フルビルドは不要**：
 1. `python3 scratch/lint_latex_style.py <対象ファイル>` で対象ファイルのみ lint
-2. `cd <対象ディレクトリ> && latexmk -lualatex -interaction=nonstopmode solution.tex` で単体コンパイル確認（図を直した場合は `pdftoppm` で PNG 化して目視確認。テスト成果物は8.1節8.の通り削除する）
+2. `cd <対象ディレクトリ> && latexmk -lualatex -interaction=nonstopmode solution.tex` で単体コンパイル確認（図を直した場合は `pdftoppm` で PNG 化して目視確認。テスト成果物は [local/transcription.md の L6](skills/math-solution-tex/local/transcription.md) の通り残さない）
 3. 必要なら `python3 scratch/tex_to_md.py <対象ファイルのパス>`（ピンポイントモード）で markdown 側も確認
    * Web 版で TeX がそのまま表示されないかは `python3 scratch/check_web_leaks.py <対象ファイル>` で確かめられる（TikZ はコンパイルしないので数秒。引数なしなら全件で約30秒）。
 4. 全件変換・Astro フルビルドは「コミット直前の最終確認」または下記の「変換処理や変換コードを修正した後」にのみ行う
@@ -183,43 +183,21 @@ python3 scratch/lint_latex_style.py --fix src/utokyo/zenki/2000/1/solution.tex
 
 ---
 
-## 8. 手書き解答の文字起こしワークフロー（詳細手順）
+## 8. 手書き解答の文字起こしワークフロー
 
-`{univ}/{cat}/{year}/handwritten.pdf`（手書き解答のスキャン）を年度ごとに TeX 化する作業の実践手順。年度は**古い順に1年ずつ**処理し、各年度で以下のサイクルを回す。
+`{univ}/{cat}/{year}/handwritten.pdf`（手書き解答のスキャン）を TeX に起こす作業の規約と手順は、スキル `math-solution-tex` に移した。文字起こしをするときは次の2つを読む。
 
-### 8.1 年度ごとの基本サイクル
+* **規約（汎用）**：[skills/math-solution-tex/references/transcription-rules.md](skills/math-solution-tex/references/transcription-rules.md)
+  * §TR1 原稿の解法・表現をそのまま起こす（別の解法に差し替えない，くだけた表現も残す，別解はすべて起こす）
+  * §TR2 着手前に全ページを洗い出す（1つの大問が複数ページにまたがることがある），空欄の確認
+  * §TR3 判読（高解像度での切り出し，計算による読みの検証，`% 判読：` コメント）
+  * §TR4 原稿の誤りは直さず，`% 原稿ママ：` の TeX コメントで示す
+  * §TR5 構成と見出し（既存の TeX 解答が原稿由来でない場合は，原稿の解法を別解として後ろに付ける）
+  * §TR6 図の再現，§TR7 仕上げの確認
+* **このリポジトリ固有の手順**：[skills/math-solution-tex/local/transcription.md](skills/math-solution-tex/local/transcription.md)
+  * 原稿のページ構成，年度ごとの基本サイクル，一時ファイルの置き場所，`split_handwritten_tex.py` による分割，空欄の記録，単体コンパイル，ステータス更新
 
-1. **構成確認**: `pdfinfo {year}/handwritten.pdf` でページ数を確認する。表紙1ページ＋大問ごとに1ページが基本だが、**大問の数は年度によって4〜6問程度で変動する**。`scratch/tmp_download/08_titech/{year}/{year}_{q}.tex` の実在数が、その年度の実際の大問数の手がかりになる（`{year}_6.tex` があれば第6問が存在する、等）。
-2. **全体レンダリング**: `pdftoppm -png -r 200 {year}/handwritten.pdf {tmpdir}/hw{year}` 程度の解像度でまず全ページを概観する。
-3. **`problem.tex` との突き合わせ**: 各大問の `problem.tex`（既存）を読み、手書き解答がどの設問に対応するか確認してから読み進める。
-4. **既存 `handwritten_tex.tex` への書き起こし**: 大問ごとに `\section*{第N問}` 見出しで区切り、解答冒頭に `{\bf [解答]}` を置く（`\begin{proof}[解]...\end{proof}` は使わない。8.3.6参照）。ファイル冒頭は `\documentclass[../../../../main.tex]{subfiles}` + `\begin{document}`、末尾は `\end{document}`。図は TikZ で再現する（8.3参照）。
-5. **分割**: `python3 scratch/split_handwritten_tex.py {univ}` で `{year}/{q}/solution.tex` に自動分割する。**既存の `solution.tex` は上書きされない**（既存優先でスキップされる。過去に別形式で解答が存在する年度・設問はそのまま残る）。
-6. **`problem.tex` の欠落補完**: `scratch/batch_import_all_problems.py` は `range(1,6)` のバグにより第6問を取り込まないため、第6問が存在する年度は `scratch/tmp_download/08_titech/{year}/{year}_6.tex` 等から手動インポートが必要になることがある。
-7. **単体コンパイル確認**: プリアンブル一式（`scratch/generate_main_tex.py` の `PREAMBLE` と同一内容）＋対象年度の大問だけを `\subfile` するテスト用 `test{year}.tex` を作り、`latexmk -lualatex -interaction=nonstopmode -halt-on-error test{year}.tex` でエラーが出ないことを確認する。TikZ 図がある場合は `pdftoppm` で PNG 化し、元のスキャンと見比べて図の忠実性も目視確認する。
-8. **テスト成果物の削除**: `test{year}.{pdf,aux,log,fls,fdb_latexmk,synctex.gz,toc,out,tex}` を必ず削除してから次の年度に進む。
-9. **`main.tex` の再生成**: 複数年度まとめて処理したあとは `python3 scratch/generate_main_tex.py {univ}/{cat}` を実行し、可能なら全体ビルド（第5章参照）でも通しでコンパイル確認する。
-10. **進捗ステータスの更新**: 1問（大問1つ）の文字起こし・自己検証が終わるたびに `python3 scratch/generate_status_markdowns.py` を実行し、`docs/status/{univ}_{cat}.md` を更新する。このスクリプトは新規に検出した解答を `finish` ではなく `文字起こし済` として記録する（`finish` は人間が最終チェックした後に手動で書き換えるためのステータスであり、自動生成では絶対に付与しない。既存ファイルで既に `finish` になっている行はスクリプトが読み取って引き継ぐ）。
-
-### 8.2 判読困難な箇所への対処（クロップ・拡大）
-
-手書き文字が薄い・小さい・類似記号で紛らわしい場合は、以下の手順で段階的に解像度を上げる。
-
-1. 該当ページだけを高解像度（300dpi、必要なら400〜600dpi）で再レンダリングする: `pdftoppm -png -r 300 -f {page} -l {page} {year}/handwritten.pdf {tmpdir}/hw{year}_hires`
-2. Python（PIL）の `Image.crop((left,upper,right,lower))` で該当領域を絞り込み、必要に応じて `resize()` で数倍に拡大してから `Read` ツールで確認する。
-3. それでも数字・記号が曖昧な場合（例: 「8/3」か「6/3」か）は、**独立に代数計算をして値を逆算し**、どちらの読み取りが式全体と整合するかで判定する。単なる目視の勘に頼らないこと。
-4. 手書きの最終結果（答え）は、可能な限り自力で計算し直して照合する。計算が一致しない場合は該当箇所を再度クロップして読み直し、それでも不明な場合は最も妥当な解釈を採用しつつ、致命的な不整合があれば作業ログで明示する。
-
-### 8.3 空欄解答・問題数の変動について
-
-* **原稿自体が空欄のページ**は、無理に埋めずに `% (原稿において第N問の解答は空欄)` という1行コメントのみを残し、本文なしで `\newpage` を置く。これは文字起こし漏れではなく、**当時から解答が存在しなかったことを示す正当な状態**であり、`solution.tex` は生成されるがコメントのみで内容は空になる。
-* 特に**行列（一次変換）の問題は、出題当時の教育課程の都合で解かれていないことがある**。これも同様に空欄が正解であり、無理に解答を創作してはならない。
-* **大問の数は年度によって4問・5問・6問などと変動する**。存在しない設問番号のディレクトリを作る必要はない。
-
-### 8.3.5 複数解法がある場合は全て文字起こしする
-
-* 原稿に`[解1]`（または単に`[解]`）に続けて`[解2]`のような**別解が書かれている場合、省略・要約せず全て`handwritten_tex.tex`に書き起こす**こと。片方だけ書いて「もう一方は同様」のように済ませてはいけない。TeX の見出しは [AGENTS.md](AGENTS.md) の規約に合わせる。
-* 別解は`\bigskip\noindent{\bf [別解]}`のような見出しを立てる。別解が複数あるときは`[別解1]`、`[別解2]`、…と番号を付ける。通し番号の式ラベル（①②…）を含めて完全に再現する。
-* 判読が難しい別解ほど省略したくなるが、そここそ本来の解答の価値がある部分であることが多い。時間がかかっても該当ページを高解像度で読み直し、8.2節の手順で最後まで読み切ること。
+記法（数式環境，分数，見出し，句読点など）は下の 8.3.6 節，図は 8.4 節に従う。
 
 ### 8.3.6 LaTeX フォーマットの注意事項
 
@@ -245,12 +223,6 @@ python3 scratch/lint_latex_style.py --fix src/utokyo/zenki/2000/1/solution.tex
 * **大きい括弧は素の `[ ]` `( )` のまま使わず，`\Bigl[ \Bigr]` / `\Bigl( \Bigr)` 等でサイズを明示する**。中身が分数や指数で背が高くなると素の括弧は窮屈に見えるため。既存ソースでは `\Bigl`系が`\bigl`系よりも多用されている（`\Bigl`系325件 対 `\bigl`系158件，`\biggl`系は0件）ので，特にサイズ判断に迷う場合は `\Bigl[ \Bigr]` を既定として使う。`\left[ \right]` の自動サイズ調整は式ごとに高さがまちまちになりやすいため，複数式でサイズを揃えたい場面では避ける。
 * **1行目は `\documentclass[../../main.tex]{subfiles}` とする**（`src/{univ}/{cat}/{year}/{q}/solution.tex` から `src/{univ}/{cat}/main.tex` までは2階層上がるだけなので `../../` が正しい。`../../../../` ではない）。
 * **小問（(1), (2), ...）は `enumerate` 環境で囲わず，`\paragraph{(1)}` のように見出し化する**。`\begin{enumerate}\item ...\end{enumerate}` は使わない。地の文に `(1) ...` と直接書き進めるのではなく，`\paragraph{(1)}` を単独の行に置き，その次の行から解答本文を続ける（`\paragraph` は Markdown 変換時に `###` 見出しになる）。本文中で既出の小問を後方参照する場合（例:「(1)の結果より」）は，あくまで地の文中の参照であり見出しではないため `\paragraph`化しない。
-
-### 8.3.7 手書きの解法ロジックに忠実に文字起こしする
-
-* **手書き解答が実在する場合，自分で別解を考えて差し替えてはいけない**。最終的な答えが一致していても，手書きと異なる解法・アプローチ（別の座標の置き方，別の補助公式，別の積分変数の選び方など）で独自に解き直すのは文字起こしではなく創作であり，このリポジトリの目的（当時の解答をそのまま尊重する）に反する。解答の構成・式変形の順序・使う補助公式・変数の置き方まで，手書き原稿の流れに沿うこと。計算結果が手元の検算と食い違う場合でも，まず8.2節の手順で読み取りを疑い，安易に自分の解法に差し替えない。
-* **「空欄」と判断する前に，年度単位の `{year}/handwritten.pdf` を必ず確認する**。各設問ディレクトリ直下にある個別PDF（`ut-{YY}-{Q}.pdf` 等）は，設問本文だけを組版したプレースホルダで，実際の手書き解答を含んでいないことがある。該当年度の `handwritten.pdf` を該当ページまで `pdftoppm` 等で確認し，解答が本当に空欄かどうかを確かめてから8.3節の「空欄」運用に進むこと。年度単位の `handwritten.pdf` が見つからない場合のみ，個別PDFや他の手がかりで空欄と判断してよい。
-* 8.2節の「独立に計算して整合性を確認する」手順は，あくまで手書きの**読み取り結果**（判読しづらい数字や記号）を検証するためのものであり，**手書きと異なる解法に置き換える理由にしてはならない**。計算結果の検算と，解法そのものの忠実な再現は別の話である。
 
 ### 8.4 図（TikZ）の再現について
 

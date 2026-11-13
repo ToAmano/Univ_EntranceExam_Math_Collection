@@ -54,7 +54,7 @@
 | B3 | `cases` の中では `\displaystyle` を使う | 8.3.6 | ◯ | notation |
 | B4 | 小問は `\paragraph{(1)}` で見出しにし、`enumerate` で囲まない | 8.3.6 | △（場合分けの `enumerate` は許容されるため） | structure |
 | B5 | 1ページに収めるための圧縮をしない | AGENTS.md・figure §0.3 | × | notation |
-| B6 | 手書き原稿の解法に忠実に文字起こしする | 8.3.7 | × | structure |
+| B6 | 手書き原稿の解法に忠実に文字起こしする | transcription §TR1.1（旧 AGENT.md 8.3.7） | × | transcription |
 | B7 | 2段組の中の figure・table は `[H]` | figure §1.2 | ◯ | figure・table |
 | B8 | 中央寄せは `center` 環境ではなく `\centering` | figure §1.1 | ◯ | figure・table |
 | B9 | `subfigure` を使わず `subcaptionblock` | figure §1.4 | ◯ | figure |
