@@ -26,10 +26,14 @@
     % Draw main triangle
     \draw[thick] (A) -- (B) -- (C) -- cycle;
 
+    % Draw inner triangle A'B'C' with pattern fill
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.7] (A') -- (B') -- (C') -- cycle;
+    \draw[very thick, blue!85!black] (A') -- (B') -- (C') -- cycle;
+
     % Draw lines AP, BQ, CR
-    \draw (A) -- (P);
-    \draw (B) -- (Q);
-    \draw (C) -- (R);
+    \draw[thick, teal!85!black] (A) -- (P);
+    \draw[thick, teal!85!black] (B) -- (Q);
+    \draw[thick, teal!85!black] (C) -- (R);
 
     % Node labels
     \node[above] at (A) {$A$};
@@ -40,9 +44,13 @@
     \node[right] at (Q) {$Q$};
     \node[left] at (R) {$R$};
 
-    \node[above right] at (A') {$A'$};
-    \node[left] at (B') {$B'$};
-    \node[below] at (C') {$C'$};
+    \node[above right=1pt] at (A') {$A'$};
+    \node[left=1pt] at (B') {$B'$};
+    \node[below=1pt] at (C') {$C'$};
+
+    \foreach \pt in {A, B, C, P, Q, R, A', B', C'} {
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (\pt) {};
+    }
 
     % Length labels
     \node[below] at ($(B)!0.5!(P)$) {$x$};
@@ -77,7 +85,7 @@
   \begin{cases}
     |BB'| = |CC'| = |AA'| = p \\
     |PB'| = |QC'| = |RA'| = q \\
-    |AB'| = |BC'| = |CA'| = r \\
+    |A'B'| = |B'C'| = |C'A'| = r \\
     |BP | = |CQ|  = |AR|  = x
   \end{cases}\label{eq:2}
 \end{align}
@@ -194,7 +202,7 @@
   \label{fig:menelaus_decomposition}
 \end{figure}
 
-三角形$BC'R, ABP$，および三角形$APC, BQC$にメネラウスの定理を用いて
+三角形$BC'R$と直線$AA'B'P$，および三角形$APC$と直線$BB'C'Q$にメネラウスの定理を用いて
 \begin{align}
   & \dfrac{B'C'}{BB'} \cdot \dfrac{A'R}{C'A'} \cdot \dfrac{AB}{RA} = 1 \label{eq:3} \\
   & \dfrac{QA}{CQ} \cdot \dfrac{B'P}{AB'} \cdot \dfrac{BC}{PB} = 1 \label{eq:4}
@@ -215,7 +223,7 @@
 
 一方，$\triangle BCQ$ に余弦定理を用いて，
 \begin{align}
-  |BQ|^2    &= |BC|^2+|CQ|^2 - 2|BC|CQ|\cos\angle BCQ \\
+  |BQ|^2    &= |BC|^2+|CQ|^2 - 2|BC||CQ|\cos\angle BCQ \\
   (p+q+r)^2 &= 1 + x^2 - 2x\cos\dfrac{\pi}{3} \\
   \therefore
   p + q + r &= \sqrt{x^2 - x + 1} \label{eq:6}
@@ -224,8 +232,9 @@
 
 \cref{eq:5}を\cref{eq:6}に代入して，
 \begin{align}
-  \Bigl( 1 + x + \dfrac{1-2x}{x} \Bigr) p = \sqrt{x^2 - x + 1}
-  \therefore p = \dfrac{x}{\sqrt{x^2 - x + 1}} \label{eq:7}
+  & \Bigl( 1 + x + \dfrac{1-2x}{x} \Bigr) p = \sqrt{x^2 - x + 1} \\
+  \therefore
+  & p = \dfrac{x}{\sqrt{x^2 - x + 1}} \label{eq:7}
 \end{align}
 となる．従って\cref{eq:5}に代入して
 \begin{align}
