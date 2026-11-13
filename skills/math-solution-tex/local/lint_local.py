@@ -102,7 +102,7 @@ def _iter_solution_heading_targets(text):
 
 
 def check_solution_headings(text):
-    """解答関連の見出し（AGENTS.md「解答見出しの表記」）をチェックする。
+    """解答関連の見出し（local/notation.md LN1）をチェックする。
     - 最初の解法: {\\bf [解答]}
     - 別解が1つ: {\\bf [別解]}
     - 別解が複数: {\\bf [別解1]}, {\\bf [別解2]}, ...

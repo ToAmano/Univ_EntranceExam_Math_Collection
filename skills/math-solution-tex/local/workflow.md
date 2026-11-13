@@ -69,14 +69,16 @@ python3 scratch/check_web_leaks.py <file>    # Web 版で TeX がそのまま出
 
 ## W6. 手本の図（figure 付録 B）
 
-| 用途 | ファイル |
-|---|---|
-| 座標グラフと座標軸への垂線 | `src/utokyo/zenki/2008/4/solution.tex` |
-| 不等式領域と複数パネル | `src/utokyo/zenki/1977/3/solution.tex` |
-| 立体の面・隠れ線 | `src/utokyo/zenki/2008/3/solution.tex` |
-| 状態遷移 | `src/utokyo/zenki/2008/2/solution.tex` |
-| 3D（tikz-3dplot の記法） | `src/titech/zenki/1985/2/solution.tex` |
-| 数式中の図形アイコン（figure §5.3） | `src/titech/zenki/1971/4/solution.tex` |
+2026-11-13 に今の figure-rules と照合し、食い違っていた4件の図を直した（図のブロックだけの変更。差分チェッカーで PASS を確認）。
+
+| 用途 | ファイル | 照合の結果 |
+|---|---|---|
+| 座標グラフと座標軸への垂線 | `src/utokyo/zenki/2008/4/solution.tex` | 垂線を `densely dotted, thick, gray!70!black` に直した（中点 M への補助線は強調の赤の点線） |
+| 不等式領域と複数パネル | `src/utokyo/zenki/1977/3/solution.tex` | 軸を `gray!80!black`、参考線・延長線・補助線を点線（線と同じ濃い色）に直した。図2・図4のラベルの重なりも直した |
+| 立体の面・隠れ線 | `src/utokyo/zenki/2008/3/solution.tex` | 隠れ線を輪郭と同じ色の破線に、平面図の補助線を点線に直した。図1の「軸 $l$」と点 E のラベルの重なりも直した |
+| 状態遷移 | `src/utokyo/zenki/2008/2/solution.tex` | 食い違いなし |
+| 3D（tikz-3dplot の記法） | `src/titech/zenki/1985/2/solution.tex` | 視点を `{65}{115}`、`center` 環境を `\centering`、軸を `gray!80!black` に直した。図1の E・V のラベルの重なりも直した |
+| 数式中の図形アイコン（figure §5.3） | `src/titech/zenki/1971/4/solution.tex` | アイコンは規約どおり。同じファイルのほかの図は `center` 環境と薄い `gray` の破線を使っているので、手本にしない |
 
 ## W7. 記法の規約の置き場所
 

@@ -20,7 +20,7 @@ description: 数学の答案・解答を TeX で書く・手書き原稿から�
 | `references/transcription-rules.md` | 手書き原稿の文字起こし（§TR） | 下書き |
 | `references/notation-rules.md` | 数式・記法（§N1〜N11） | 下書き |
 | `references/figure-rules.md` | TikZ の図（§0〜§12、付録 A〜C。§12 は図だけを直す作業） | 下書き |
-| `references/table-rules.md` | 増減表などの表（§TB） | 作成中（置き方と caption のみ） |
+| `references/table-rules.md` | 表の置き方と増減表（§TB1・§TB2） | 下書き |
 | `scripts/lint_tex.py` | 規約のうち機械で判定できるものの lint と機械的な修正（`--fix`・`--diff`） | あり。標準ライブラリのみ |
 | `scripts/tex_references.py` | ラベル・参照の読み取りと正規化（lint が使う） | あり |
 | `scripts/check_figure_only_diff.py` | 図だけを直したときに、図のブロック以外に差分がないかを調べる（git を使う） | あり。標準ライブラリのみ |
@@ -68,9 +68,9 @@ description: 数学の答案・解答を TeX で書く・手書き原稿から�
 - **図だけを直すよう指示された場合**は、figure §12 に従う。図のブロック以外を一切変えず、図以外に差分がないことを `scripts/check_figure_only_diff.py <file>` で確かめるまで完了にしない（`PASS` が出るまで）。
 
 ### 4. 表
-- **読むもの**：`references/table-rules.md`（作成中。今は §TB1 の置き方と caption だけ）。
-  - `table` の中に入れ、`\caption` を付ける。
-  - 増減表は符号と矢印を対応させ、端点の値も書く（規約は未作成）。
+- **読むもの**：`references/table-rules.md`。
+  - `table` の中に入れ、`\caption` を付ける（§TB1）。
+  - 増減表は符号と矢印を対応させ、端点の値と極限の書き方をそろえる。凹凸は専用の4つの矢印を使い、回した矢印を流用しない（§TB2）。
 
 ### 5. 機械で検査する
 コマンドは `local/workflow.md`（W1〜W3）。
@@ -97,7 +97,6 @@ description: 数学の答案・解答を TeX で書く・手書き原稿から�
 ---
 
 ## 未整備（#1487 で進行中）
-- `table-rules.md` の増減表の節を書く。
 - `scripts/rules.py`（`--phase`・`--sec` で規約の節を引く）を作る。
 - lint の指摘に規約の節番号を付ける。
 - `.claude/skills/` からも読み込めるようにする。

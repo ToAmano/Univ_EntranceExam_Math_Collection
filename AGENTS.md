@@ -1,128 +1,46 @@
-# 解答見出しの表記
+# 数学答案の TeX を書く・直す・文字起こしするとき
 
-TeX 原稿で `\bf` を使う解答関連の見出しは、次の表記に統一する。
+スキル `math-solution-tex`（[skills/math-solution-tex/SKILL.md](skills/math-solution-tex/SKILL.md)）の工程に従う。規約の正本と節番号は次のとおり。下の必須規則は要約で、細部・理由・例外は各節にある。
 
-- 最初の解法：`{\bf [解答]}`
-- 別解が1つ：`{\bf [別解]}`
-- 別解が複数：`{\bf [別解1]}`、`{\bf [別解2]}`、…（最初の解法は番号に含めない）
-- 解法の後の説明：`{\bf [解説]}`
+- 数式・記法：[references/notation-rules.md](skills/math-solution-tex/references/notation-rules.md)（§N）
+- 図（TikZ）：[references/figure-rules.md](skills/math-solution-tex/references/figure-rules.md)（§0〜§12）
+- 表・増減表：[references/table-rules.md](skills/math-solution-tex/references/table-rules.md)（§TB）
+- 手書き原稿の文字起こし：[references/transcription-rules.md](skills/math-solution-tex/references/transcription-rules.md)（§TR）
+- このリポジトリ固有の記法・手順・コマンド・手本の図：[local/](skills/math-solution-tex/local/)（`notation.md`・`transcription.md`・`workflow.md`）
 
-手書き原稿が `[解1]`、`[解2]` など別の見出しを使っていても、解法の本文と順序を保ったまま、TeX の見出しはこの規約に合わせる。既存原稿の一括変更は別作業とし、監査中は原稿を編集せず Issue に記録する。
+# 必須の規則
 
-# ベクトルの表記
+- **見出し**：最初の解法は `{\bf [解答]}`、別解が1つなら `{\bf [別解]}`、複数なら `{\bf [別解1]}`・`{\bf [別解2]}`…、解法の後の説明は `{\bf [解説]}`（local/notation LN1）。
+- **数式環境**：別行立ての数式は1行でも `align`。`equation`・`equation*`・`align*`・`\[ ... \]`・`$$ ... $$` は使わない。途中の番号は `\notag` か `split` でまとめる（§N5）。
+- **分数**：`\dfrac`。添字の位置と TikZ のラベルでは `\frac`。引数は必ず `{}` で囲む（§N6）。
+- **ベクトル**：1文字は `\vec`、2文字以上は `\overrightarrow`。添字・プライムは `\vec{a}_1` のように外に出す（§N8）。
+- **参照**：`\cref` に統一し、`\eqref`・`\ref` は使わない。数式のラベルは `eq:1` 形式の連番（§N10）。
+- **証明・解答の終わり**：数式の外の文末に `\qed`。`$\blacksquare$` などの記号を直接書かない（§N3）。
+- **句読点・余白**：和文の句読点は「．」「，」。本文で `\medskip`・`\vspace`・`\noindent`・数式の外の `\quad` などの余白の命令を使わない（§N4・§N11）。
+- **紙面**：1ページに収めるための圧縮（式を詰める、図を縮める）をしない。作業報告でも「1ページに収めた」と書かない（figure §0.3）。
+- **図**：点は `\node[circle, ...]` で打つ。領域は斜線パターンで塗る。代表点から座標軸へ点線の垂線を下ろす。`gray!30`〜`gray!50` のような薄い灰色を使わない（figure §3〜§6）。
+- **文字起こし**：原稿の解法・表現をそのまま起こし、別の解法に差し替えない。原稿の誤りは直さず `% 原稿ママ：` のコメントで示す（§TR1・§TR4）。
 
-TeX 原稿でベクトルを表すときは、矢印の下に入る文字数に応じて次のコマンドを使い分ける。
+# 図だけを直す指示のとき（厳守）
 
-- 1文字（単一の英数字・ギリシャ文字・`\ell` 等）：`\vec`（例：`\vec{a}`、`\vec{p}`、`\vec{0}`、`\vec{\ell}`）
-- 2文字以上（始点と終点を並べた表記等）：`\overrightarrow`（例：`\overrightarrow{AB}`、`\overrightarrow{OP}`、`\overrightarrow{P_1P_2}`）
-- 添字やプライムが付く1文字ベクトルは、矢印を文字本体にだけかけるため添字・プライムを `\vec{...}` の外に出す（例：`\vec{a}_1`、`\vec{e}_k`、`\vec{b}'` と書き、`\vec{a_1}` や `\overrightarrow{a_1}` とは書かない）。
+図の追加・修正・差し替え（旧式の図や作図の TODO を TikZ にする作業を含む）を指示された場合は、**図のブロック以外の本文・数式・見出し・プリアンブル・相互参照・空行を一切変えない**（figure §12）。
 
-# 数式環境の表記
+- 未移行ファイルの `subfiles` 化、数式環境の書き換え、見出しの統一、`\cref` 化などを「ついでに」行わない。
+- 作業後は `python3 scratch/check_figure_only_diff.py <編集したTeXファイル>` を実行し、`PASS` になるまで完了にしない。`FAIL` なら図以外の変更を元に戻す（使い方は local/workflow W3）。
 
-ディスプレイ数式環境は原則として `align` に統一し、`equation`、`equation*`、`align*`、`\[ ... \]` および `$$ ... $$` は使用しない。
+# 京大前期の図を起こすとき
 
-- 1行だけの数式であっても `equation`、`\[ ... \]`、`$$ ... $$` ではなく `align` を使う（記法を統一し、式変形を追加する際の手戻りを防ぐため）。
-- 複数行にわたる変形で途中の式番号を省きたい場合は、途中の行に `\notag` を付けるか、`split` 環境（`\begin{align}\begin{split} ... \end{split}\end{align}`）を併用して式番号を1つにまとめる。
+東大前期の TikZ 図の情報の整理の仕方を手本にする。原稿にある点・線・領域・前後関係と、問題や解答に必要な数学的条件を先に確定し、色や装飾のために形状・位置関係・開閉端点を変えない（figure §0）。新しい平面図は figure 付録 A の雛形から作る。手本のファイルと、それぞれ規約と食い違う点は local/workflow W6 にある。
 
-# 余白・改行のコマンド
+仕上げに PDF の**全ページ**と Web 用 SVG を表示して目視する。TeX のコンパイルだけで表示確認を済ませない（figure §11、コマンドは local/workflow W4・W5）。
 
-本文では余白や改行のためだけのコマンドを使わない。見出しの前後などの余白は文書側で一律に付ける。
+# 監査のとき
 
-- 使わない：`\medskip`、`\bigskip`、`\smallskip`、`\vspace{...}`、`\hspace{...}`、`\hfill`、`\vfill`、`\noindent`、`\newline`、数式の外の `\quad`・`\qquad`
-- 数式・図・表・TikZ の中（式と注記の間の `\quad`、複数の図を並べる `\hfill` など）と、空欄の下線 `\underline{\hspace{...}}` は対象外。
-- `scratch/lint_latex_style.py` が検査する。
+監査で問題を見つけた場合は、既存の原稿を編集せず Issue に記録する。既存原稿の一括変更（見出しの統一など）は別作業とする。
 
-# 証明・解答の終わり
+# 検査
 
-証明や解答の終わりは、数式の外の文末に `\qed` と書く（例：`よって題意は示された．\qed`）。記号はプリアンブルで黒塗りの ■ に統一してあり、`\qed` が行の右端へ自動で寄せる。
+- lint：`python3 scratch/lint_latex_style.py <file>`（本体はスキルの `scripts/lint_tex.py` と `local/lint_local.py`）
+- 式変形の検算：`python3 skills/math-solution-tex/scripts/check_math_steps.py <file>`
 
-- 使わない：`$\blacksquare$`・`$\Box$`・文末の `$\square$`・`$\qed$`・数式の中の `\qed`（`\hfill \qed` を含む）
-- 別行立ての数式で終わるときは、数式の後の文の末尾に置く（`\end{align}` の次の行の `である．\qed`）。
-- `proof` 環境は末尾に自動で記号を付けるので、`\end{proof}` の直前には書かない。
-- 四角形の `\square ABCD` は対象外。`scratch/lint_latex_style.py` が検査する。
-
-# 相互参照の表記
-
-TeX 原稿で数式・図・表などを参照するときは、`\eqref` や `\ref` ではなく `\cref` に統一する。
-
-- 数式参照：`\cref{eq:1}`（`\eqref{eq:1}` や `\ref{eq:1}` は使用しない）
-- 図・表等の参照：`\cref{fig:1}`、`\cref{tab:1}`
-
-# ページ収まり・レイアウト調整（1ページ収容の調整は不要）
-
-TeX 原稿の作成や修正において、**解答全体を1ページに収めるための調整は一切不要**とする。
-
-- ページを跨ぐことは全く問題なく、無理に1ページに収めるために数式を1行に詰めたり、インライン化したり、図や行間を不自然に圧縮・縮小してはならない。
-- 数式・図の可読性や自然な論理展開を最優先する。
-- 作業報告においても「1ページに収めた」等の言及・アピールは行わない。
-
-# TikZ における点の描画
-
-`tikzpicture` 環境内で座標上の点（黒丸・色付き強調点・白抜き端点など）を打つときは、`xscale` と `yscale` が異なる図で `circle` パスが伸縮して楕円に潰れるのを防ぐため、`circle` ではなく `\node[circle, ...]` を使う。
-
-- 塗りつぶし点：`\node[circle, fill, inner sep=1.2pt] at (P) {};`（色付きなら `fill=red!85!black` 等）
-- 白抜き端点（開区間端点等）：`\node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (P) {};`
-- 図形としての円・円板を描く場合（`\draw (0,0) circle (1);`、`\draw (O) circle (\r);` 等）は従来通り `circle` を使う。
-
-# TikZ における領域・線・色の描画
-
-TikZ で図を描画する際は、視認性と印刷・Web表示の品質を保つため次の3点を厳守する。
-
-1. **領域を塗りつぶすときは斜線（pattern）を使う**：
-   不等式領域や積分区間の面積・図形が囲む領域を塗りつぶすときは、単なる淡いベタ塗りのみではなく、斜線パターン（`pattern=north east lines` や `pattern[pattern color=...]` 等）を使用する。印刷時や異なるディスプレイ環境でも境界と領域が明瞭に識別できるようにする。
-2. **代表点からは極力座標軸に対して点線で垂線を下ろす**：
-   グラフ上の重要点・交点・極値・端点・代表点からは、極力 $x$ 軸や $y$ 軸などの座標軸に対して点線（`densely dotted` や `dotted`）で垂線を下ろし、軸上の座標値（$a, b, x_0$ 等）をラベルとして明示する。
-3. **薄すぎる gray は使わない**：
-   座標軸、補助線、垂線、隠れ線などに `gray!30` や `gray!40` などの薄すぎる灰色は使用しない（ディスプレイや印刷、SVG 化の際にかすれて判読不能になるため）。座標軸には `gray!80!black`、補助線・垂線でも `gray!70!black` や `gray!70` 等、十分なコントラストを持つ濃さを使用する。
-
-# 京大前期の作図：東大前期の TikZ 図を再現する
-
-京大前期の `problem.tex`・`solution.tex` に図を起こすときは、東大前期の図の**情報の整理方**を手本にする。原稿にある点・線・領域・前後関係と、問題や解答に必要な数学的条件を先に確定する。色や装飾のために形状、位置関係、開閉端点を変えない。問題図は出題図の内容を、解答図は解法の説明をそれぞれ再現する。
-
-用途別の参照例：座標グラフと投影線は `src/utokyo/zenki/2008/4/solution.tex`、不等式領域と複数パネルは `src/utokyo/zenki/1977/3/solution.tex`、立体の面・隠れ線は `src/utokyo/zenki/2008/3/solution.tex`、状態遷移は `src/utokyo/zenki/2008/2/solution.tex`。色・線・TikZ ライブラリの詳しい規約は [AGENT.md の 8.4 節](AGENT.md) に従う。以下はそれらの図に共通する作り方であり、全図を同一の縮尺や色数に固定する指定ではない。
-
-1. **何を読ませる図かを決める。** 本文と原稿を照合し、示すべき交点、座標、境界、移動方向、隠れた辺などを列挙する。本文に不要な補助線や注釈を足して主題を埋もれさせない。
-2. **幾何を座標で管理する。** `\coordinate (P) at (...);` で主要点を命名し、派生点は `$(P)!0.5!(Q)$` や `\pgfmathsetmacro` から作る。曲線は正しい式・定義域と適切な `samples` で描く。図示用に具体値を選ぶ場合は、問題の条件と点・線の順序を満たすことを確認し、必要ならコメントに値の意味を残す。
-3. **線の役割を分ける。** 座標軸は落ち着いた灰色の矢印（`gray!80!black`）、主曲線・主輪郭は濃い青系の太線、比較対象は青緑・橙系、結論に直結する点や線だけを赤系で強調する。代表点・交点からは極力座標軸に対して点線（`densely dotted`）で垂線を下ろし、軸上の値を明示する。薄すぎる灰色（`gray!30` や `gray!40`）は絶対に使用せず、補助線でも `gray!70!black` 程度の濃さを使う。同じ対象の線・点・ラベルは同じ色に揃える。
-4. **領域の塗りは斜線パターンを基本とする。** 領域・面積・境界内側を塗るときは、単なる淡いベタ塗りのみではなく斜線（`pattern=north east lines` や `pattern[pattern color=...]` 等）を使用し、境界線や文字が確実に読めるようにする。開区間の端点は白抜き、含む端点は塗りつぶしで描き分ける。立体では奥の稜線を破線、手前の稜線を実線にする。
-5. **描画順とラベル位置を調整する。** 塗り・奥の線を先に、主輪郭・重要線を次に、点とラベルを最後に描く。ラベルは `above right=2pt` などで点や線から離し、近接するラベルは別方向に振る。通常は `font=\small`、目盛りや補助説明は `\scriptsize`～`\footnotesize` を目安にし、強調語だけ太字にする。重なる注釈には白地のノードか引き出し線を使う。
-6. **図ごとに縮尺と視点を選ぶ。** 平面図では `x=...cm, y=...cm` または `scale=...` で縦横比を調整し、文字が潰れない大きさにする。立体図では `tikz-3dplot` または明示的な投影ベクトルを用い、重要な面や垂線が重ならない視点を選ぶ。複数パネルは `scope[shift=...]` で分け、軸・色の意味を揃える。
-
-新規の平面図は、まず次の骨組みから作る。座標や対象の色は図の意味に合わせて変える。
-
-```latex
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}[x=2.2cm, y=1.4cm, >=stealth,
-                      every node/.style={font=\small}]
-    \coordinate (O) at (0, 0);
-    \coordinate (P) at (1, 1);
-    % 領域を描く場合は斜線パターン（pattern）を用い、軸・輪郭より先に置く。
-    \draw[->, thick, gray!80!black] (-0.2, 0) -- (1.6, 0) node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 1.6) node[above] {$y$};
-    \draw[line width=1.4pt, blue!85!black] (O) -- (P);
-    % 代表点からは座標軸へ点線で垂線を下ろす（薄すぎるgrayは不可、十分濃いgrayを使う）
-    \draw[densely dotted, thick, gray!70!black] (P) -- (1, 0) node[below] {$1$};
-    \draw[densely dotted, thick, gray!70!black] (P) -- (0, 1) node[left] {$1$};
-    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {};
-    \node[above right=2pt, font=\footnotesize] at (P) {$P$};
-  \end{tikzpicture}
-  \caption{図が表す内容を一言で記す}
-  \label{fig:descriptive_name}
-\end{figure}
-```
-
-仕上げに PDF の**全ページ**と Web 用 SVG を表示し、数式や座標の整合、線の前後関係、ラベル同士・線との重なり、図や caption の切れ、縮小時の可読性を目視する。TeX のコンパイルだけで表示確認を済ませない。確認コマンドと Web 変換の手順は [AGENT.md の 4 節](AGENT.md) を参照する。監査作業として問題を発見した場合は、既存原稿を自動編集せず Issue に記録する。
-
-# 図のみの作成・修正時の厳格な差分検証（本文変更の禁止）
-
-図の追加・修正・差し替え（旧式図や TODO コメントの TikZ 化など）を指示された場合は、**図ブロック以外の本文・数式・見出し・プリアンブル・相互参照などを一切編集してはならない**。
-
-- 図の修正と同時に、未移行ファイルの `subfiles` 化、数式環境の書き換え（`\[ ... \]` $\to$ `align`）、見出し統一、相互参照の修正（`\cref` 化）、不要な空行調整などを「ついでに」行ってはならない。
-- 作業後は必ず次のチェッカーを実行し、図ブロック以外の差分が一切ないこと（`PASS`）を機械的に検証する。
-  ```bash
-  python3 scratch/check_figure_only_diff.py <編集したTeXファイルパス>
-  ```
-- 万が一 `FAIL`（図以外の変更あり）となった場合は、図以外の変更箇所を直ちに元に戻し、チェッカーが `PASS` するまで作業完了としてはならない。
-
-その他の開発・文字起こし手順は [AGENT.md](AGENT.md) を参照する。
+その他の開発・ビルド・Web 変換の手順は [AGENT.md](AGENT.md) を参照する。
