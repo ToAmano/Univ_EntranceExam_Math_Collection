@@ -1,8 +1,18 @@
+"""図だけの差分チェッカー（skills/math-solution-tex/scripts/check_figure_only_diff.py）のテスト。"""
+import importlib.util
+import sys
+from pathlib import Path
+
 import pytest
-from scratch.check_figure_only_diff import (
-    check_figure_only_diff,
-    is_figure_only_diff,
-)
+
+_PATH = Path(__file__).resolve().parents[2] / 'skills' / 'math-solution-tex' / 'scripts' / 'check_figure_only_diff.py'
+_NAME = '_math_solution_tex_check_figure_only_diff'
+if _NAME not in sys.modules:
+    _spec = importlib.util.spec_from_file_location(_NAME, _PATH)
+    sys.modules[_NAME] = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(sys.modules[_NAME])
+check_figure_only_diff = sys.modules[_NAME].check_figure_only_diff
+is_figure_only_diff = sys.modules[_NAME].is_figure_only_diff
 
 
 def test_pure_figure_replacement():
@@ -133,6 +143,17 @@ def test_todo_to_figure_replacement():
 \end{document}
 """
     assert is_figure_only_diff(old_tex, new_tex) is True
+
+
+@pytest.mark.parametrize("todo", [
+    "% TODO :: 四角錐の図形をtikzで作成",
+    "% TODO: Q, Pに直角マークを入れる",
+    "% TODO :: S1-S4を表すグラフを追加したい",
+])
+def test_figure_todo_variants_are_masked(todo):
+    old_tex = "\\begin{document}\n" + todo + "\n本文。\n\\end{document}\n"
+    new_tex = "\\begin{document}\n\\begin{figure}図\\end{figure}\n本文。\n\\end{document}\n"
+    assert is_figure_only_diff(old_tex, new_tex)
 
 
 def test_text_modification_fails():

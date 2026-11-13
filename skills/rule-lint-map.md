@@ -1,6 +1,7 @@
 # 規約と lint の対応表（作業用）
 
-`scratch/lint_latex_style.py` の検査と、規約の記載場所（AGENTS.md・AGENT.md 8.3.6・figure-rules.md）を突き合わせたもの。
+lint の検査と、規約の記載場所（AGENTS.md・AGENT.md 8.3.6・figure-rules.md）を突き合わせたもの。
+lint の本体は `skills/math-solution-tex/scripts/lint_tex.py`（汎用）と `skills/math-solution-tex/local/lint_local.py`（固有：行き先が structure のもの）。`scratch/lint_latex_style.py` は両者を読み込む入口。
 「行き先」は、スキルの規約ファイルに分けるときの移動先の案。
 
 - notation：数式・記法（`notation-rules.md`）

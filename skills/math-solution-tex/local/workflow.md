@@ -10,8 +10,12 @@
 
 ```bash
 python3 scratch/lint_latex_style.py <file> [...]
+python3 scratch/lint_latex_style.py --diff <file>   # 機械的な修正の差分を見る
+python3 scratch/lint_latex_style.py --fix <file>    # 機械的な修正を書き込む
 ```
 
+- `scratch/lint_latex_style.py` は入口だけで、本体はスキルの `scripts/lint_tex.py`（汎用）と `local/lint_local.py`（このリポジトリ固有の検査）。入口を使わずに `python3 skills/math-solution-tex/scripts/lint_tex.py --rules skills/math-solution-tex/local/lint_local.py <file>` と呼んでも同じ結果になる。
+- 固有の検査：解答の見出し、proof 環境の見出し、`\documentclass[../../main.tex]{subfiles}`、問題文の読み込み（`\subfile{problem}`）、`problem.tex` の形式と `solution.tex` とのラベルの重複。年度のまとめ（`0/`）は余白の命令と `\qed` の検査から外す。
 - 規則の出所と対応は `skills/rule-lint-map.md`。
 - 引数なしならリポジトリ全体を走査して集計だけを表示する。
 - CI（`.github/workflows/lint-tex.yml`）は、変更された `solution.tex` だけを検査する。pre-commit でも `--fix` 付きで動く。
@@ -29,14 +33,16 @@ python3 skills/math-solution-tex/scripts/check_math_steps.py --tier A --json out
 ## W3. 図だけの差分の確認（figure §12）
 
 ```bash
-python3 scratch/check_figure_only_diff.py <file>
-python3 scratch/check_figure_only_diff.py --staged <file>   # ステージした変更と比べる
-python3 scratch/check_figure_only_diff.py --ref <commit> <file>   # 指定した commit と比べる
+python3 scratch/check_figure_only_diff.py <file>              # 作業ツリーのファイルを HEAD と比べる
+python3 scratch/check_figure_only_diff.py --staged            # ステージした .tex をすべて調べる
+python3 scratch/check_figure_only_diff.py --commit <commit>   # その commit で変わった .tex を調べる
+python3 scratch/check_figure_only_diff.py --compare-two old.tex new.tex
 ```
 
-- 既定では `HEAD` と比べる。`PASS` なら図のブロック以外に差分がない。
+- `scratch/check_figure_only_diff.py` は入口だけで、本体はスキルの `scripts/check_figure_only_diff.py`。
+- ファイルを指定した場合、比較の基準はいつも `HEAD`（`--ref` はファイルを指定しないときに、変更されたファイルを探す基準として使われるだけ）。`PASS` なら図のブロック以外に差分がない。
 - `FAIL` なら、表示された差分（図以外の変更）を元に戻し、`PASS` になるまで完了にしない。`AGENTS.md` でも必須にしている。
-- 同じファイルに図以外の未 commit の変更（文字起こしなど）が残っていると、図の作業とは関係なく `FAIL` になる。その場合は先に図以外の変更を commit するか、`--ref` で比較の基準を合わせる。
+- 同じファイルに図以外の未 commit の変更（文字起こしなど）が残っていると、図の作業とは関係なく `FAIL` になる。その場合は先に図以外の変更を commit してから確かめるか、図の変更だけを入れた版を作って `--compare-two` で比べる。
 - 図のブロックとして扱う古い記法：emath の `\begin{zahyou} ... \end{zahyou}`、`\begin{center}\includegraphics...\end{center}`、`figure` の中の `% TODO: 概要図` など。`zahyou` は今のプリアンブルでは未定義でビルドが止まるので、見つけたら TikZ に書き直す。
 
 ## W4. コンパイルと PDF の目視

@@ -21,8 +21,11 @@ description: 数学の答案・解答を TeX で書く・手書き原稿から�
 | `references/notation-rules.md` | 数式・記法（§N） | 下書き（一部の規則はまだ移していない。下の「未整備」） |
 | `references/figure-rules.md` | TikZ の図（§0〜§12、付録 A〜C。§12 は図だけを直す作業） | 下書き |
 | `references/table-rules.md` | 増減表などの表 | 未作成 |
+| `scripts/lint_tex.py` | 規約のうち機械で判定できるものの lint と機械的な修正（`--fix`・`--diff`） | あり。標準ライブラリのみ |
+| `scripts/tex_references.py` | ラベル・参照の読み取りと正規化（lint が使う） | あり |
+| `scripts/check_figure_only_diff.py` | 図だけを直したときに、図のブロック以外に差分がないかを調べる（git を使う） | あり。標準ライブラリのみ |
 | `scripts/check_math_steps.py` | 式変形の自動検算（SymPy） | あり。依存は `scripts/requirements.txt` |
-| `local/` | 利用先（リポジトリ）固有の規約・コマンド・手本 | `local/workflow.md`（検査・確認のコマンド）、`local/transcription.md`（文字起こしの手順） |
+| `local/` | 利用先（リポジトリ）固有の規約・コマンド・手本 | `local/workflow.md`（検査・確認のコマンド）、`local/transcription.md`（文字起こしの手順）、`local/lint_local.py`（固有の lint の検査） |
 
 具体的なコマンドやファイルの場所は `local/` にある。`references/` と `SKILL.md` には利用先に依存することを書かない。
 
@@ -62,7 +65,7 @@ description: 数学の答案・解答を TeX で書く・手書き原稿から�
   - 遷移図：§8、付録 C
   - 概要図：§9
 - 描いたあとは、§10（幾何の整合）と §11（確認手順）を必ず行う。
-- **図だけを直すよう指示された場合**は、figure §12 に従う。図のブロック以外を一切変えず、図以外に差分がないことを機械で確かめるまで完了にしない（チェッカーは `local/workflow.md` の W3）。
+- **図だけを直すよう指示された場合**は、figure §12 に従う。図のブロック以外を一切変えず、図以外に差分がないことを `scripts/check_figure_only_diff.py <file>` で確かめるまで完了にしない（`PASS` が出るまで）。
 
 ### 4. 表
 - **読むもの**：`references/table-rules.md`（未作成）。当面の置き場所は `local/workflow.md` の W7。
@@ -72,7 +75,7 @@ description: 数学の答案・解答を TeX で書く・手書き原稿から�
 ### 5. 機械で検査する
 コマンドは `local/workflow.md`（W1〜W3）。
 
-1. **lint**：記法・図・表の規約のうち機械で判定できるものを調べる。
+1. **lint**：記法・図・表の規約のうち機械で判定できるものを調べる。`scripts/lint_tex.py <file>` で汎用の検査を行い、利用先固有の検査は `--rules <module.py>` で足す（`PROFILE` を定義したモジュール。`local/lint_local.py` が例）。`--diff` で機械的な修正を確かめてから `--fix` で書き込む。
 2. **式変形の検算**：`scripts/check_math_steps.py <file>`
    - 出てくるのは誤りの「候補」。確度 A（数値どうし）は誤りの可能性が高く、確度 B は文字の意味や前提しだいで誤検出もある。
    - 指摘は必ず式と原稿を見て確かめる。検算が通ったことは正しさの証明ではない。
