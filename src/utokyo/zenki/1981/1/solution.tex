@@ -12,7 +12,7 @@
 \begin{align}
   f(n,k)
   &= \dfrac{{}_n\mathrm{C}_{2k} \cdot {}_{2k}\mathrm{C}_2 \cdot {}_{2k-2}\mathrm{C}_2 \cdots {}_4\mathrm{C}_2 \cdot {}_2\mathrm{C}_2}{k!} \\
-  &= \dfrac{\dfrac{n!}{2k!(n-2k)!} \cdot \dfrac{2k(2k-1)}{2} \dfrac{4\cdot 3}{2} \cdots \dfrac{2\cdot 1}{2}}{k!} \\
+  &= \dfrac{\dfrac{n!}{(2k)!(n-2k)!} \cdot \dfrac{2k(2k-1)}{2} \dfrac{4\cdot 3}{2} \cdots \dfrac{2\cdot 1}{2}}{k!} \\
   &= \dfrac{n!}{k!(n-2k)!} \cdot \dfrac{1}{2^k} \quad \text{通り}
 \end{align}
 である．
@@ -27,8 +27,8 @@
 である．
 
 次に$f(n, k) = f(n, 1)$ について考える．
-$n \ge 2$ だから $f(n, 1) \neq 0$ だから，$n \ge 2k$ のもとで考えれば良い．
-\cref{eq:1}から
+$n \ge 2$ だから\cref{eq:1}において $n \ge 2k$ のもとで考えれば良い．
+\cref{eq:1}を$f(n, k) = f(n, 1)$に代入して
 \begin{align}
   f(n, k) = f(n, 1)
   &\iff \dfrac{1}{2^k} \dfrac{n!}{k!(n-2k)!} = \dfrac{1}{2} \dfrac{n!}{(n-2)!} \\
@@ -40,19 +40,35 @@ $n \ge 2$ だから $f(n, 1) \neq 0$ だから，$n \ge 2k$ のもとで考え�
 $(n-2),\cdots,(n+1-2k)$は$\left\{(n-2)-(n+1-2k)+1\right\}!=(2k-2)!$で割り切れる．
 よって$A \in \mathbb{N}$ として，
 \begin{align}
-  (n-2) \cdots (n+1-2k) = A(2k-2)!
+  (n-2) \cdots (n+1-2k) = A(2k-2)! \label{eq:3}
 \end{align}
 とおける．
 \cref{eq:2}に代入して
 \begin{align}
-  2^{k-1} = \dfrac{A(2k-2)!}{k!} = A \cdot (2k-2)(2k-3) \cdots (k+1) \label{eq:3}
+  2^{k-1}
+  & = \dfrac{A(2k-2)!}{k!} \\
+  & =
+  \begin{cases}
+    A \cdot (2k-2)(2k-3) \cdots (k+1)  & (k \ge 3) \\
+    A & (k=2)
+  \end{cases} \label{eq:4}
 \end{align}
 を得る．
-また同様に$(2k-2) \dots (k+1)$ は $(k-2)!$ で割り切れるから，$k \ge 5$ の時 $2^{k-1}$ が $3$ で割り切れることになり不適である．よって$k=2,3,4$のいずれかが必要である．
+同様に$(2k-2) \cdots (k+1)$ は $((2k-2)-(k+1)+1)!=(k-2)!$ で割り切れるから，$k \ge 5$ の時 $2^{k-1}$ が $3$ で割り切れることになり不適である．よって$k=2,3,4$のいずれかが必要である．
 
-\subparagraph{$k=2,4$の時}
+\subparagraph{$k=2$の時}
 
-\cref{eq:3}の右辺に$k+1$が因数としてあるが，$k$が偶数の時$k+1$は奇数になる．
+\cref{eq:4}より$A=2$だから\cref{eq:2}に代入して
+\begin{align}
+  (n-2)(n-3) = 4
+  \quad\therefore
+  n = \dfrac{5\pm\sqrt{17}}{2}
+\end{align}
+を得る．これは$n$が自然数であることに反して矛盾である．
+
+\subparagraph{$k=4$の時}
+
+\cref{eq:4}の右辺に$k+1$が因数としてあるが，$k$が偶数の時$k+1$は奇数になる．
 よって$2^{k-1}$が奇数で割り切れることになり不適である．
 
 \subparagraph{$k=3$の時}
