@@ -24,6 +24,14 @@ TeX 原稿でベクトルを表すときは、矢印の下に入る文字数に�
 - 1行だけの数式であっても `equation`、`\[ ... \]`、`$$ ... $$` ではなく `align` を使う（記法を統一し、式変形を追加する際の手戻りを防ぐため）。
 - 複数行にわたる変形で途中の式番号を省きたい場合は、途中の行に `\notag` を付けるか、`split` 環境（`\begin{align}\begin{split} ... \end{split}\end{align}`）を併用して式番号を1つにまとめる。
 
+# 余白・改行のコマンド
+
+本文では余白や改行のためだけのコマンドを使わない。見出しの前後などの余白は文書側で一律に付ける。
+
+- 使わない：`\medskip`、`\bigskip`、`\smallskip`、`\vspace{...}`、`\hspace{...}`、`\hfill`、`\vfill`、`\noindent`、`\newline`、数式の外の `\quad`・`\qquad`
+- 数式・図・表・TikZ の中（式と注記の間の `\quad`、複数の図を並べる `\hfill` など）と、空欄の下線 `\underline{\hspace{...}}` は対象外。
+- `scratch/lint_latex_style.py` が検査する。
+
 # 相互参照の表記
 
 TeX 原稿で数式・図・表などを参照するときは、`\eqref` や `\ref` ではなく `\cref` に統一する。

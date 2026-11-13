@@ -1425,6 +1425,37 @@ def check_problem_embedded(text):
     return []
 
 
+SPACING_CMD_RE = re.compile(
+    r'\\(?:medskip|bigskip|smallskip|hfill|vfill|noindent|newline)(?![A-Za-z])'
+    r'|\\(?:vspace|hspace)\*?\s*\{[^{}]*\}'
+    r'|\\q?quad(?![A-Za-z])')
+SPACING_PROTECT_RE = re.compile(
+    r'\\begin\{(align\*?|equation\*?|gather\*?|multline\*?|cases|dcases|split|array|tabular|'
+    r'pmatrix|bmatrix|matrix|numcases|subnumcases|figure|table|tikzpicture|minipage|subcaptionblock)\}'
+    r'.*?\\end\{\1\}'
+    r'|\$\$.*?\$\$|(?<!\\)\$(?:\\\$|[^$])+?(?<!\\)\$|\\\[.*?\\\]|\\\(.*?\\\)'
+    r'|\\underline\{(?:[^{}]|\{[^{}]*\})*\}',  # 空欄の下線 \underline{\hspace{..}} は可
+    re.S)
+
+
+def check_spacing_commands(text):
+    """本文で余白・改行のためのコマンド（\\medskip・\\bigskip・\\smallskip・\\vspace・\\hspace・
+    \\hfill・\\noindent・\\newline、数式の外の \\quad・\\qquad）を使わない。
+    見出しの前後などの余白は文書側で一律に付ける。数式・図・表・TikZ の中と、
+    空欄の下線（\\underline{\\hspace{..}}）は対象外。"""
+    start = text.find('\\begin{document}')
+    if start < 0:
+        start = 0
+    protected = [(m.start(), m.end()) for m in SPACING_PROTECT_RE.finditer(text, start)]
+    errors = []
+    for m in SPACING_CMD_RE.finditer(text, start):
+        if any(a <= m.start() < b for a, b in protected):
+            continue
+        errors.append((line_of(text, m.start()),
+                       f"余白・改行のコマンド {m.group(0)} は本文で使わない（数式・図・表の中は可）"))
+    return errors
+
+
 def check_problem_is_document(text):
     """problem.tex は solution.tex から \\subfile で読み込む独立した subfiles 文書にする（#1472）。
     以前の後期の problem.tex は \\begin{document} を持たない中身だけの断片だった。"""
@@ -1478,6 +1509,8 @@ def lint_file(path):
     errors += check_tabular_nesting(text)
     errors += check_documentclass(text)
     errors += check_proof_env(text)
+    if path.name in ('problem.tex', 'solution.tex') and path.parent.name != '0':
+        errors += check_spacing_commands(text)
     if path.name == 'solution.tex':
         errors += check_solution_headings(text)
         if path.parent.name != '0' and path.with_name('problem.tex').exists():

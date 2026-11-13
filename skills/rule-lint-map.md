@@ -34,6 +34,7 @@
 | A20 | `check_proof_env` | 解答の冒頭に `\begin{proof}[解]` を使わない | 8.3.6 | structure |
 | A21 | `check_solution_headings` | `[解答]`・`[別解]`・`[別解1]`・`[解説]` に統一（solution.tex のみ） | AGENTS.md | structure |
 | A22 | `check_documentclass` | 1行目は `\documentclass[../../main.tex]{subfiles}` | 8.3.6 | structure |
+| A23 | `check_spacing_commands` | 本文で余白・改行のコマンド（`\medskip`・`\bigskip`・`\vspace`・`\hspace`・`\hfill`・`\noindent`・数式の外の `\quad` など）を使わない（2026-11-13 追加） | AGENTS.md | notation |
 | W1 | `check_overline_warning`（警告） | 辺の長さは `\overline{AB}` でなく `|AB|` | 8.3.6 | notation |
 | W2 | `check_long_align_lines`（警告） | `align` の1行が長く `=` が複数あるときは改行する | **記載なし** | notation |
 
