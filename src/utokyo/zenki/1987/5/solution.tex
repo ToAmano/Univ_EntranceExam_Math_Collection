@@ -34,13 +34,15 @@
 \end{align}
 を満たすとする．$z_{k+1}$の値に応じて場合分けする．
 
+% TODO: 左に1^{\circ}, 右に2^{\circ}の場合を表す模式図
+
 \subparagraph{$1^{\circ}$ $z_{k+1} = y_{k+1}$ の時}
 
 この時は$(x_1,x_2,\cdots,x_{k}), (y_1,y_2,\cdots,y_{k})$に仮定を適用できるから
 $n=k+1$の\cref{eq:1}の右辺と左辺の差は
 \begin{align}
   (\text{右辺})-(\text{左辺})
-  &\sum_{i=1}^{k+1} (x_i - z_i)^2 - \sum_{i=1}^{k+1} (x_i - y_i)^2 \\
+  &= \sum_{i=1}^{k+1} (x_i - z_i)^2 - \sum_{i=1}^{k+1} (x_i - y_i)^2 \\
   &= \sum_{i=1}^k (x_i - z_i)^2 + (x_{k+1}-y_{k+1})^2 - \sum_{i=1}^k (x_i - y_i)^2 -  (x_{k+1}-y_{k+1})^2 \\
   &= \sum_{i=1}^k (x_i - z_i)^2 - \sum_{i=1}^k (x_i - y_i)^2 \ge 0 \quad (\because \text{仮定})
 \end{align}
@@ -50,13 +52,15 @@ $n=k+1$の\cref{eq:1}の右辺と左辺の差は
 
 $y_{k+1}$ は $z_{k+1}$ 以外のある $z_l$ ($l \le k$) に等しく，
 $z_{k+1}$ は $y_{k+1}$ 以外のある $y_m$ ($m \le k$) に等しい．
-ここで，次のような数列 $\{z'_n\}$ をかんがえる．
+ここで，次のような数列 $\{z'_n\}$ をかんがえる．これは$\{ z_n\}$において$z_{l}$と$z_{k+1}$を入れ変えた数列である．
 
-\begin{itemize}
-  \item $z'_{k+1} = z_l = y_{k+1}$ \\
-  \item $z'_l = z_{k+1} = y_m$ \\
-  \item $j \neq l, k+1$ の時 $z'_j = z_j$
-\end{itemize}
+\begin{align}
+  \begin{cases}
+    z'_{k+1} = z_l = y_{k+1} \\
+    z'_l = z_{k+1} = y_m \\
+    j \neq l, k+1$ の時 $z'_j = z_j
+  \end{cases}
+\end{align}
 
 % \begin{table}[htb]
 %   \centering
@@ -73,18 +77,19 @@ $y_{k+1} = z'_{k+1}$ であり，
 $1 \le n \le k$ の時 $\{z'_n\}$ は $\{y_n\}$ をならびかえたものだから
 仮定から
 \begin{align}
-  \sum_{i=1}^{k} (x_i - z'_i)^2 + (x_{k+1} - z'_{k+1})^2 \ge \sum_{i=1}^{k} (x_i - y_i)^2 + (x_{k+1} - y_{k+1})^2 \\
-  \sum_{i=1}^{k+1} (x_i - z'_i)^2 \ge \sum_{i=1}^{k+1} (x_i - y_i)^2 \label{eq:2}
+  & \sum_{i=1}^{k} (x_i - z'_i)^2 + (x_{k+1} - z'_{k+1})^2 \ge \sum_{i=1}^{k} (x_i - y_i)^2 + (x_{k+1} - y_{k+1})^2 \\
+  \therefore
+  & \sum_{i=1}^{k+1} (x_i - z'_i)^2 \ge \sum_{i=1}^{k+1} (x_i - y_i)^2 \label{eq:2}
 \end{align}
 が成り立つ．
 
-一方で$\{z_n\}$ と $\{z'_n\}$ を比較すると
+一方で$\{z_n\}$ と $\{z'_n\}$ を比較するとこれらは$n=l, k+1$以外では等しいから
 \begin{align}
-  &\sum_{i=1}^{k+1} \Bigl[ (x_i - z_i)^2 - (x_i - z'_i)^2 \Bigr] \\
+  \sum_{i=1}^{k+1} \Bigl[ (x_i - z_i)^2 - (x_i - z'_i)^2 \Bigr]
   &= \Bigl\{ (x_l - z_l)^2 - (x_l - z'_l)^2 \Bigr\} + \Bigl\{ (x_{k+1} - z_{k+1})^2 - (x_{k+1} - z'_{k+1})^2 \Bigr\} \\
   &= \Bigl\{ (x_l - y_{k+1})^2 - (x_l - y_m)^2 \Bigr\} + \Bigl\{ (x_{k+1} - y_m)^2 - (x_{k+1} - y_{k+1})^2 \Bigr\} \\
   &= -2x_l y_{k+1} + 2x_l y_m - 2x_{k+1} y_m + 2x_{k+1} y_{k+1} \\
-  &= 2(x_{k+1} - x_l)(y_{k+1} - y_m) \ge 0 \quad (\because y_m \le y_{k+1}, \, x_l \le x_{k+1}) \\
+  &= 2(x_{k+1} - x_l)(y_{k+1} - y_m) \ge 0 \quad (\because y_m \ge y_{k+1}, \, x_l \ge x_{k+1}) \\
   \therefore
   \sum_{i=1}^{k+1} (x_i - z_i)^2 \ge \sum_{i=1}^{k+1}(x_i - z'_i)^2 \label{eq:3}
 \end{align}
