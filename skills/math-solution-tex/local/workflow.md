@@ -76,7 +76,9 @@ python3 scratch/check_web_leaks.py <file>    # Web 版で TeX がそのまま出
 | 立体の面・隠れ線 | `src/utokyo/zenki/2008/3/solution.tex` |
 | 状態遷移 | `src/utokyo/zenki/2008/2/solution.tex` |
 | 3D（tikz-3dplot の記法） | `src/titech/zenki/1985/2/solution.tex` |
+| 数式中の図形アイコン（figure §5.3） | `src/titech/zenki/1971/4/solution.tex` |
 
-## W7. 記法の規約の置き場所（移行中）
+## W7. 記法の規約の置き場所
 
-`references/notation-rules.md` にまだ移していない記法の規則は、`AGENT.md` 8.3.6 節と `AGENTS.md` にある。表の規約も、`table-rules.md` ができるまでは `AGENT.md` 8.3.6 節の表の項に従う。
+- 汎用の記法は `references/notation-rules.md`、表は `references/table-rules.md`、このリポジトリ固有の記法（見出し、小問、subfiles、problem.tex など）は `local/notation.md`。
+- `AGENT.md` 8.3.6 節は、これらへの案内だけになった。`AGENTS.md` には、主な規則の要約が残っている（食い違う場合は報告する）。

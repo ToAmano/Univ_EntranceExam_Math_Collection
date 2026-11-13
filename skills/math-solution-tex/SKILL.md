@@ -18,14 +18,14 @@ description: 数学の答案・解答を TeX で書く・手書き原稿から�
 | ファイル | 内容 | 状態 |
 |---|---|---|
 | `references/transcription-rules.md` | 手書き原稿の文字起こし（§TR） | 下書き |
-| `references/notation-rules.md` | 数式・記法（§N） | 下書き（一部の規則はまだ移していない。下の「未整備」） |
+| `references/notation-rules.md` | 数式・記法（§N1〜N11） | 下書き |
 | `references/figure-rules.md` | TikZ の図（§0〜§12、付録 A〜C。§12 は図だけを直す作業） | 下書き |
-| `references/table-rules.md` | 増減表などの表 | 未作成 |
+| `references/table-rules.md` | 増減表などの表（§TB） | 作成中（置き方と caption のみ） |
 | `scripts/lint_tex.py` | 規約のうち機械で判定できるものの lint と機械的な修正（`--fix`・`--diff`） | あり。標準ライブラリのみ |
 | `scripts/tex_references.py` | ラベル・参照の読み取りと正規化（lint が使う） | あり |
 | `scripts/check_figure_only_diff.py` | 図だけを直したときに、図のブロック以外に差分がないかを調べる（git を使う） | あり。標準ライブラリのみ |
 | `scripts/check_math_steps.py` | 式変形の自動検算（SymPy） | あり。依存は `scripts/requirements.txt` |
-| `local/` | 利用先（リポジトリ）固有の規約・コマンド・手本 | `local/workflow.md`（検査・確認のコマンド）、`local/transcription.md`（文字起こしの手順）、`local/lint_local.py`（固有の lint の検査） |
+| `local/` | 利用先（リポジトリ）固有の規約・コマンド・手本 | `local/workflow.md`（検査・確認のコマンド）、`local/transcription.md`（文字起こしの手順）、`local/notation.md`（見出し・ファイル構成などの固有の記法）、`local/lint_local.py`（固有の lint の検査） |
 
 具体的なコマンドやファイルの場所は `local/` にある。`references/` と `SKILL.md` には利用先に依存することを書かない。
 
@@ -51,12 +51,12 @@ description: 数学の答案・解答を TeX で書く・手書き原稿から�
 - 図を描くなら、何を読ませる図かを先に決める（figure §0.1）。
 
 ### 2. 書く（数式・記法）
-- **読むもの**：`references/notation-rules.md`。まだ移していない規則の置き場所は `local/workflow.md` の W7。
+- **読むもの**：`references/notation-rules.md`。利用先固有の記法（見出しやファイルの構成）は `local/notation.md`。
 - **主な規則**：
-  - ディスプレイ数式は `align` を使う。番号を1つにまとめるときは `split` を使う。
-  - 場合分けは `dcases` を使う（§N1）。組合せは `{}_nC_k` で書く（§N2）。
-  - 証明・解答の終わりは `\qed` で示す（§N3）。句読点は「．」「，」を使う（§N4）。
-  - 相互参照は `\cref` を使う。
+  - 別行立ての数式は `align`、番号をまとめるときは `split` か `\notag`（§N5）。分数は `\dfrac`、添字の位置は `\frac`（§N6）。
+  - 場合分けは `dcases`（§N1）、組合せは `{}_nC_k`（§N2）、ベクトルは `\vec`/`\overrightarrow`（§N8）、辺の長さは `|AB|`（§N9）。
+  - 証明・解答の終わりは `\qed`（§N3）、句読点は「．」「，」（§N4）、本文で余白の命令を使わない（§N11）。
+  - 参照は `\cref`、数式のラベルは `eq:1` 形式の連番（§N10）。
 
 ### 3. 図
 - **読むもの**：`references/figure-rules.md`。
@@ -68,9 +68,9 @@ description: 数学の答案・解答を TeX で書く・手書き原稿から�
 - **図だけを直すよう指示された場合**は、figure §12 に従う。図のブロック以外を一切変えず、図以外に差分がないことを `scripts/check_figure_only_diff.py <file>` で確かめるまで完了にしない（`PASS` が出るまで）。
 
 ### 4. 表
-- **読むもの**：`references/table-rules.md`（未作成）。当面の置き場所は `local/workflow.md` の W7。
+- **読むもの**：`references/table-rules.md`（作成中。今は §TB1 の置き方と caption だけ）。
   - `table` の中に入れ、`\caption` を付ける。
-  - 増減表は符号と矢印を対応させ、端点の値も書く。
+  - 増減表は符号と矢印を対応させ、端点の値も書く（規約は未作成）。
 
 ### 5. 機械で検査する
 コマンドは `local/workflow.md`（W1〜W3）。
@@ -97,8 +97,7 @@ description: 数学の答案・解答を TeX で書く・手書き原稿から�
 ---
 
 ## 未整備（#1487 で進行中）
-- `notation-rules.md` に既存の規則（`align`、`\dfrac`、`\vec`/`\overrightarrow`、`\cref`、ラベル、括弧など）を移す。
-- `table-rules.md` を作る。
+- `table-rules.md` の増減表の節を書く。
 - `scripts/rules.py`（`--phase`・`--sec` で規約の節を引く）を作る。
-- `local/` に固有の記法の規約（見出し、`subfiles`、`\paragraph` による小問の見出しなど）を分ける。
+- lint の指摘に規約の節番号を付ける。
 - `.claude/skills/` からも読み込めるようにする。

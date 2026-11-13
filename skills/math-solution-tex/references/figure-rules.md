@@ -135,6 +135,10 @@
 
 ### 5.3 数式中の図形アイコン
 - `align` の中で面積の分解を表す小さな図形アイコン（§1.1 の例外）は、`gray!20` 程度のベタ塗りでよい。
+- 書き方：`S(\theta) = (\text{図形1}) + (\text{図形2}) - \cdots` のように、各項を `\left( \text{\begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.8] ... \end{tikzpicture}} \right)` で包む。
+  - `baseline={(0,-0.1)}` で周りの式とベースラインをそろえ、`scale=0.8` 程度の小さなアイコンにする。
+  - 内部は `\fill[gray!20] ... -- cycle;` で塗り、`\draw[thick] ...;` で輪郭を描く。積分区間の端点などの境界の値は `\node[below, font=\tiny] at (...) {$...$};` で小さく添える。
+  - 「この項がどの図形の面積か」を示す補助の記法なので、`figure` にせず、caption や図の番号も付けない。
 
 ### 5.4 くり抜いた領域
 - 円環など内側をくり抜く領域は `even odd rule` で塗る。

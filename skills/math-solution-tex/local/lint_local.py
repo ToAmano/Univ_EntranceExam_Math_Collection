@@ -39,7 +39,7 @@ check_equation_references = lint_tex.check_equation_references
 
 def check_proof_env(text):
     """\\begin{proof}[解] / \\begin{proof}[別解] のように、解答冒頭の見出し
-    として proof 環境が使われているケースだけを検出する（AGENT.md 8.3.6
+    として proof 環境が使われているケースだけを検出する（local/notation.md LN1
     の趣旨は「解答冒頭を {\\bf [解答]} にする」ことであり、\\begin{lemma}...
     \\end{lemma} に対する本物の \\begin{proof}...\\end{proof}（補題の証明）
     はそもそも対象外）。ラベル無しの素の \\begin{proof} まで拾うと

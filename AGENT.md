@@ -201,28 +201,17 @@ python3 scratch/lint_latex_style.py --fix src/utokyo/zenki/2000/1/solution.tex
 
 ### 8.3.6 LaTeX フォーマットの注意事項
 
-このうち機械的に判定可能なもの（`equation`/`equation*` および `align*`，`\[...\]` 禁止，句読点，`\dfrac`/`\sqrt` の裸引数禁止，`\frac`/`\dfrac` の添字位置ルール，ベクトルの `\vec`/`\overrightarrow` 使い分け，`tikzpicture` のネスト，TikZ の点描画における `\node[circle, ...]` 使用，`\caption` 必須，`\documentclass` の相対パス）は `lint-tex.yml`（6節）が変更ファイルに対して自動チェックする。大カッコのサイズ判断や，`enumerate`/`itemize` が小問ラベリング目的か場合分け目的かの判別（後者は許容される）など目視確認が必要なものは対象外。
+記法の規約は、スキル `math-solution-tex` の次のファイルに移した（節番号 § で引ける）。
 
-* **数式環境は `align` を利用する（`align*` は使わない）**。単発の数式でも `\[...\]` や `equation` ではなく `align` を使い、複数行にまたがる変形は `&=` で位置を揃える。
-* **「`&=` で繋いで最後の結果だけに意味がある」変形は `split` でまとめて式番号を1つにすることを検討する**。`align` は既定で行ごとに番号が付くため，途中式ごとに番号が振られるのを避けたい場合は `\begin{align}\begin{split} ... \end{split}\end{align}` のように `split` で包む。ただし `split` は1行につき `&` を1つしか使えないため，1行に複数の位置揃えが必要な変形では無理に `split`化せず，通常の `align`（行ごとに番号）のままでよい。
-* **`tikzpicture` 環境は必ず `figure` → `center` → `tikzpicture` の順にネストする**（`\begin{figure}[h]\centering\begin{tikzpicture}...\end{tikzpicture}\end{figure}` の形）。裸の `tikzpicture` を本文中に直接置かない。
-  * **例外: 図形の面積分解を数式中にピクトグラムとして表す場合は，`align` 環境内に小さな `tikzpicture` を直接埋め込んでよい**。`src/titech/zenki/1971/4/solution.tex` の `S(\theta) = (図形1) + (図形2) - (図形3) = \int ... = ...` の記法に従うこと：各項を `\left( \text{\begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.8] ... \end{tikzpicture}} \right)` のように `\left(\ \text{...}\ \right)` で包み，`baseline={(0,-0.1)}` で周囲のテキストとベースラインを揃え，`scale=0.8` 程度の小さなアイコンにする。図形内部は `\fill[gray!20] ... -- cycle;` で塗りつぶし，`\draw[thick] ...;` で輪郭を描き，境界の値（積分区間の端点など）は `\node[below, font=\tiny] at (...) {$...$};` で小さく添える。これらは「この項がどの図形の面積を表すか」を視覚的に示す補助記法であり，`figure` 環境ではないため `\caption` や図の通し番号は付けない。
-* **`tabular` 環境も同様に必ず `table` → `center` → `tabular` の順にネストする**（`\begin{table}[htb]\centering\begin{tabular}...\end{tabular}\end{table}` の形）。増減表なども `\begin{center}\begin{tabular}...\end{tabular}\end{center}` のように `table` を省略しない（`table` があると `\caption` で「表1: ...」の通し番号が付き，`figure`/`\caption` との扱いが揃う）。ただし `\shadowbox{...}` で表全体を枠囲みにする凡例的な用法（年度サマリファイル等）は対象外。
-* **図を挿入する際は必ず `\caption{}` を付ける**。`\begin{figure}...\end{figure}` の中に `\caption{...}` を含め、何を表す図かを一言で示す。
-* **表（`table`）にも同様に必ず `\caption{}` を付ける**。`\begin{table}...\end{table}` の中に `\caption{...}` を含め、何を表す表かを一言で示す（増減表なら「$f(x)$ の増減表」等）。ただし `\shadowbox{...}` で囲む凡例的な `tabular`（`table` 化の対象外）は対象外。
-* **句読点は全角の「．」「，」を使う**（「。」「、」や、和文に接する半角の「,」「.」は使わない）。既存の人手作成 `solution.tex` もこの慣習に従っている。数式の中の「,」「.」（`$a, b$`、`$1.5$`）はそのままでよい。
-* **解答冒頭は `{\bf [解答]}` とする**（`\begin{proof}[解]...\end{proof}` は使わない）。別解・解説の見出しも [AGENTS.md](AGENTS.md) の規約に従う。
-* **分数は `\frac` ではなく `\dfrac` を使う**。`align` 環境内でも `\frac` はディスプレイスタイルでも小さく組まれてしまうことがあるため、常に `\dfrac` で統一する。
-  * **例外: 上付き・下付き（添字）の位置に分数が入る場合は `\dfrac` ではなく通常の `\frac` を使う**。これは `\int` の上下限や評価記号 `[...]_a^b` に限らず，`x^{\dfrac{1}{m}}` のような単なる変数の指数も含め，`_{...}` / `^{...}` のあらゆる添字位置に一般的に当てはまる（添字位置では文字が自動的に縮小されるため，フル displaystyle の `\dfrac` を使うと縦に間延びして見にくい）。例: `\int_{\dfrac{a}{b}}^{b}` → `\int_{\frac{a}{b}}^{b}`，`\Bigl[F(x)\Bigr]_{\dfrac{a}{b}}^{b}` → `\Bigl[F(x)\Bigr]_{\frac{a}{b}}^{b}`，`x^{\dfrac{1}{m}}` → `x^{\frac{1}{m}}`。添字位置以外（被積分関数本体や，独立した式としての分数）では引き続き `\dfrac` を使う。
-  * **例外: `tikzpicture` 内の node ラベルでも `\dfrac` ではなく `\frac` を使う**。図中のラベルは多くが `font=\small` 等で縮小表示されるため，添字位置と同じ理由で `\dfrac` だと間延びする。
-* **`cases` などのネスト環境の中では数式に `\displaystyle` を用いる**。`cases`（`dcases` ではなく）環境内は既定でテキストスタイルになり分数などが小さく組まれるため，`\begin{cases}\displaystyle ...\end{cases}` のように明示する。
-* **`\dfrac` と `\sqrt` の引数は必ず `{}` で囲む**。`\sqrt2` ではなく `\sqrt{2}` のように書く（`\dfrac12` のような省略形も同様に禁止で、`\dfrac{1}{2}` と書く）。
-* **ベクトルは1文字なら `\vec`、2文字以上なら `\overrightarrow` を使う**（[AGENTS.md](AGENTS.md) 参照）。例えば `\vec{a}`、`\vec{0}`、`\vec{\ell}` に対して `\overrightarrow{AB}`、`\overrightarrow{OP}`、`\overrightarrow{P_1P_2}` と使い分ける。添字やプライム付きの1文字ベクトルは `\vec{a}_1`、`\vec{e}_k`、`\vec{b}'` のように添字・プライムを `\vec{...}` の外に出す（`\vec{a_1}` や `\overrightarrow{a_1}` は不可）。
-* **`tikzpicture` 内で点を打つときは `circle` ではなく `\node[circle, ...]` を使う**（[AGENTS.md](AGENTS.md) および 8.4.2.2 節参照）。`xscale` と `yscale` が異なる図で `\fill (P) circle (1.5pt);` 等を使うと楕円に潰れてしまうため、`\node[circle, fill, inner sep=1.2pt] at (P) {};` や `\node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (P) {};` のように `\node` で描く。図形としての円を描く場合（`\draw (0,0) circle (1);` 等）は従来通り `circle` を使う。
-* **辺の長さは `\overline{AB}` ではなく `|AB|`（絶対値記号ではさむ）で書く**。手書き原稿が `\overline{}` を使っていても，転記時に `|...|` に直す。
-* **大きい括弧は素の `[ ]` `( )` のまま使わず，`\Bigl[ \Bigr]` / `\Bigl( \Bigr)` 等でサイズを明示する**。中身が分数や指数で背が高くなると素の括弧は窮屈に見えるため。既存ソースでは `\Bigl`系が`\bigl`系よりも多用されている（`\Bigl`系325件 対 `\bigl`系158件，`\biggl`系は0件）ので，特にサイズ判断に迷う場合は `\Bigl[ \Bigr]` を既定として使う。`\left[ \right]` の自動サイズ調整は式ごとに高さがまちまちになりやすいため，複数式でサイズを揃えたい場面では避ける。
-* **1行目は `\documentclass[../../main.tex]{subfiles}` とする**（`src/{univ}/{cat}/{year}/{q}/solution.tex` から `src/{univ}/{cat}/main.tex` までは2階層上がるだけなので `../../` が正しい。`../../../../` ではない）。
-* **小問（(1), (2), ...）は `enumerate` 環境で囲わず，`\paragraph{(1)}` のように見出し化する**。`\begin{enumerate}\item ...\end{enumerate}` は使わない。地の文に `(1) ...` と直接書き進めるのではなく，`\paragraph{(1)}` を単独の行に置き，その次の行から解答本文を続ける（`\paragraph` は Markdown 変換時に `###` 見出しになる）。本文中で既出の小問を後方参照する場合（例:「(1)の結果より」）は，あくまで地の文中の参照であり見出しではないため `\paragraph`化しない。
+* **数式・記法（汎用）**：[skills/math-solution-tex/references/notation-rules.md](skills/math-solution-tex/references/notation-rules.md)
+  * §N1 場合分け（`dcases`），§N2 組合せ（`{}_nC_k`），§N3 証明の終わり（`\qed`），§N4 句読点（「．」「，」）
+  * §N5 別行立ての数式（`align`，`split`/`\notag`，最後の行の `\\`，長い行），§N6 分数・根号（`\dfrac`，添字位置と TikZ のラベルは `\frac`，引数の `{}`）
+  * §N7 括弧（`\Bigl`，`\left`/`\right` の対），§N8 ベクトル（`\vec`/`\overrightarrow`），§N9 辺の長さ（`|AB|`），§N10 相互参照とラベル（`\cref`，`eq:1` 形式の連番，重複・未定義），§N11 余白・改行の命令
+* **表**：[skills/math-solution-tex/references/table-rules.md](skills/math-solution-tex/references/table-rules.md)（§TB1 `table` の中に置く，caption）
+* **図**：[skills/math-solution-tex/references/figure-rules.md](skills/math-solution-tex/references/figure-rules.md)（`figure` の中に置く，caption，数式中の図形アイコン，点は `\node[circle]`）
+* **このリポジトリ固有**：[skills/math-solution-tex/local/notation.md](skills/math-solution-tex/local/notation.md)（解答の見出し，小問の `\paragraph`，`\documentclass[../../main.tex]{subfiles}`，問題文の読み込み，`problem.tex` の形式，年度のまとめ・凡例の例外，`% lint-skip:`）
+
+機械的に判定できる規則は `scratch/lint_latex_style.py`（本体はスキルの `scripts/lint_tex.py` と `local/lint_local.py`）が検査する。各節の「lint」に検査の名前を書いてある。大カッコの大きさや，`enumerate` が小問のラベルか場合分けかなど，目視が必要なものは対象外。
 
 ### 8.4 図（TikZ）の再現について
 
