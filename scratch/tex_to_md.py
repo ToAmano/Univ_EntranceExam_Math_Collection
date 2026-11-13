@@ -545,43 +545,119 @@ def extract_global_macro_defs(raw_tex):
     \\newcommand / \\renewcommand は本体が複数行・ネスト中括弧を含みうるため、
     _extract_braced() でブレース対応を追跡しながら抽出する
     （実例: utokyo 後期1990年第3問の \\recursiveTriangleQTwo）。
+    \\pgfmathdeclarefunction・\\tikzset・\\def の本体も同じく中括弧を追跡して拾う
+    （実例: utokyo 後期2001年第1問の \\pgfmathdeclarefunction{gfunc} が拾われず、
+    図2〜4が "Unknown function gfunc" で SVG にならなかった）。
+    定義の範囲の探し方は _global_def_spans() と共通。
     """
-    outer_text = re.sub(r'\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}', '', raw_tex, flags=re.DOTALL)
     # figure 環境の中で呼んだ \tdplotsetmaincoords はその図だけの視点（TeX でも
     # figure のグループ内に局所化される）。全図共通のプリアンブルへ持ち上げると
     # 最後に呼んだ視点が全ての図に効いてしまうので、ここでは除外し、
     # figure_tdplot_views() で図ごとに渡す。
-    outer_text = _FIGURE_ENV_RE.sub(lambda m: _TDPLOT_VIEW_RE.sub('', m.group(0)), outer_text)
-
-    newcommand_defs = []
-    masked = list(outer_text)
-    for m in re.finditer(r'\\(?:newcommand|renewcommand)\s*(?:\{\\[a-zA-Z]+\}|\\[a-zA-Z]+)', outer_text):
-        start = m.start()
-        j = m.end()
-        while True:
-            m_opt = re.match(r'\s*\[[^\]]*\]', outer_text[j:])
-            if not m_opt:
-                break
-            j += m_opt.end()
-        m_ws = re.match(r'\s*', outer_text[j:])
-        j += m_ws.end()
-        if j < len(outer_text) and outer_text[j] == '{':
-            snippet, end = _extract_braced(outer_text, j)
-            newcommand_defs.append((start, outer_text[start:end]))
-            for k in range(start, end):
-                masked[k] = ' '
-    masked_text = ''.join(masked)
-
-    other_defs = [(m.start(), m.group(0))
-                  for m in re.finditer(r'\\(?:def|pgfmathsetmacro|tdplot)[^\n]+', masked_text)]
-
+    fig_spans = [(m.start(), m.end()) for m in _FIGURE_ENV_RE.finditer(raw_tex)]
     seen = set()
     ordered = []
-    for _, snippet in sorted(newcommand_defs + other_defs, key=lambda t: t[0]):
+    for start, end in _global_def_spans(raw_tex):
+        snippet = raw_tex[start:end]
+        if _TDPLOT_VIEW_RE.match(snippet) and any(a <= start < b for a, b in fig_spans):
+            continue
         if snippet not in seen:
             seen.add(snippet)
             ordered.append(snippet)
     return "\n".join(ordered)
+
+
+# 図のための定義コマンド。引数の形ごとに読み取り方を変える（_global_def_spans() 参照）。
+_GLOBAL_DEF_START_RE = re.compile(
+    r'\\(?P<cmd>newcommand|renewcommand|providecommand|pgfmathdeclarefunction|tikzset'
+    r'|pgfmathsetmacro|def|tdplot[A-Za-z]*)(?![A-Za-z])\*?')
+
+
+def _skip_braced_args(text, j, count):
+    """text[j:] から空白をはさんで並ぶ {...} を count 個読み飛ばし、直後の位置を返す。
+    途中で '{' が見つからなければ None を返す。"""
+    for _ in range(count):
+        m_ws = re.match(r'\s*', text[j:])
+        j += m_ws.end()
+        if j >= len(text) or text[j] != '{':
+            return None
+        _, j = _extract_braced(text, j)
+    return j
+
+
+def _global_def_spans(raw_tex):
+    """tikzpicture の外にある、図のための定義（\\newcommand 系・\\pgfmathdeclarefunction・
+    \\tikzset・\\pgfmathsetmacro・\\def・\\tdplot...）の範囲 (開始, 終了) を文書順に返す。
+
+    tikzpicture の中の定義は、その図の tikz_code に含まれるので対象外
+    （ループ変数に依存する定義を外へ出すとエラーになる。extract_global_macro_defs() 参照）。
+    本体は複数行・ネスト中括弧を含みうるため、_extract_braced() で対応を追跡する。
+    """
+    tikz_spans = [(m.start(), m.end()) for m in _TIKZ_ENV_RE.finditer(raw_tex)]
+    spans = []
+    pos = 0
+    while True:
+        m = _GLOBAL_DEF_START_RE.search(raw_tex, pos)
+        if not m:
+            break
+        start, j, cmd = m.start(), m.end(), m.group('cmd')
+        inside = next((b for a, b in tikz_spans if a <= start < b), None)
+        if inside is not None:
+            pos = inside
+            continue
+        end = None
+        if cmd in ('newcommand', 'renewcommand', 'providecommand'):
+            m_name = re.match(r'\s*(?:\{\\[A-Za-z@]+\}|\\[A-Za-z@]+)', raw_tex[j:])
+            if m_name:
+                j += m_name.end()
+                while True:
+                    m_opt = re.match(r'\s*\[[^\]]*\]', raw_tex[j:])
+                    if not m_opt:
+                        break
+                    j += m_opt.end()
+                end = _skip_braced_args(raw_tex, j, 1)
+        elif cmd == 'pgfmathdeclarefunction':
+            end = _skip_braced_args(raw_tex, j, 3)
+        elif cmd == 'tikzset':
+            end = _skip_braced_args(raw_tex, j, 1)
+        elif cmd == 'pgfmathsetmacro':
+            # 名前は {\\a} と \\a の両方の書き方がある（実例: utokyo 後期2001年第1問）
+            m_name = re.match(r'\s*(?:\{\\[A-Za-z@]+\}|\\[A-Za-z@]+)', raw_tex[j:])
+            if m_name:
+                end = _skip_braced_args(raw_tex, j + m_name.end(), 1)
+        elif cmd == 'def':
+            # \def\name#1#2{...}：パラメータ部を読み飛ばして本体の {...} を取る
+            m_name = re.match(r'\s*\\[A-Za-z@]+[^{\n]*', raw_tex[j:])
+            if m_name:
+                end = _skip_braced_args(raw_tex, j + m_name.end(), 1)
+        else:
+            # \tdplotsetmaincoords{..}{..} などは行末まで（従来どおり）
+            end = raw_tex.find('\n', j)
+            end = len(raw_tex) if end < 0 else end
+        if end is None:
+            pos = m.end()
+            continue
+        spans.append((start, end))
+        pos = end
+    return spans
+
+
+def strip_global_macro_defs(raw_tex):
+    """本文（figure・tikzpicture の外）に書かれた図のための定義を取り除く。
+
+    定義は extract_global_macro_defs() で図のコンパイル用に集めてあり、本文に残すと
+    Web ページに TeX のソースがそのまま表示される（#1489。実例: utokyo 後期1990年
+    第3問の \\newcommand{\\drawTriangle}）。figure の中は図ごとの処理に任せる。
+    """
+    fig_spans = [(m.start(), m.end()) for m in _FIGURE_ENV_RE.finditer(raw_tex)]
+    out, last = [], 0
+    for start, end in _global_def_spans(raw_tex):
+        if any(a <= start < b for a, b in fig_spans):
+            continue
+        out.append(raw_tex[last:start])
+        last = end
+    out.append(raw_tex[last:])
+    return ''.join(out)
 
 
 _TDPLOT_VIEW_RE = re.compile(r'\\tdplotsetmaincoords\s*\{[^{}]*\}\s*\{[^{}]*\}')
@@ -962,13 +1038,19 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
 
     # % コメント行の削除
     clean_lines = []
+    # 図のための定義（extract_global_macro_defs）用には、行末の % だけを残した版も作る。
+    # \pgfmathdeclarefunction{f}{1}{% のような行末の % を消すと本体に空白が入り、
+    # pgfplots の曲線やラベルが描かれなくなる（実例: utokyo 後期2001年第1問の gfunc）。
+    def_lines = []
     for line in raw_tex.splitlines():
         line_s = line.strip()
         if line_s.startswith('%'):
             continue
         line_clean = re.sub(r'(?<!\\)%.*', '', line)
         clean_lines.append(line_clean)
+        def_lines.append(re.sub(r'(?<!\\)%.*', '%', line))
     raw_tex = "\n".join(clean_lines)
+    defs_tex = "\n".join(def_lines)
 
     # pifont パッケージの \ding{...} を Unicode 文字（①, ②等）に変換
     raw_tex = convert_pifont_dingbats(raw_tex)
@@ -979,7 +1061,13 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
 
     # 図を単体で（別ドキュメントとして）コンパイルする際に必要な、外部で定義された
     # マクロ／設定だけを拾う（詳細は extract_global_macro_defs() のdocstring参照）。
-    macro_defs = extract_global_macro_defs(raw_tex)
+    macro_defs = extract_global_macro_defs(convert_pifont_dingbats(defs_tex))
+    # 3D 図の視点（\tdplotsetmaincoords）は図ごとに決まるので、figure の順に求めておく。
+    # TexSoup 経路・フォールバック経路とも、文書中の figure の順番でこのリストを引く。
+    # figure の外の呼び出しは次の行で本文から消すので、その前に求める。
+    fig_views = figure_tdplot_views(raw_tex)
+    # 集めた定義は本文に残すと Web にソースが表示されるので取り除く（#1489）。
+    raw_tex = strip_global_macro_defs(raw_tex)
 
     # 不要なレイアウトマクロの削除
     raw_tex = re.sub(r'\\rhead\{[^}]*\}', '', raw_tex)
@@ -1098,10 +1186,6 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     fig_anchors = {}
     tab_count = 1
     tab_map = {}
-
-    # 3D 図の視点（\tdplotsetmaincoords）は図ごとに決まるので、figure の順に求めておく。
-    # TexSoup 経路・フォールバック経路とも、文書中の figure の順番でこのリストを引く。
-    fig_views = figure_tdplot_views(raw_tex)
 
     try:
         # TikZ can use commands such as \label as local loop variables.
