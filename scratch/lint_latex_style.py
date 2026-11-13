@@ -1456,6 +1456,45 @@ def check_spacing_commands(text):
     return errors
 
 
+QED_MATH_RE = re.compile(
+    r'\\begin\{(align\*?|equation\*?|gather\*?|multline\*?|split)\}.*?\\end\{\1\}'
+    r'|\$\$.*?\$\$|(?<!\\)\$(?:\\\$|[^$])+?(?<!\\)\$|\\\[.*?\\\]|\\\(.*?\\\)', re.S)
+QED_FIGURE_RE = re.compile(r'\\begin\{(figure|tikzpicture)\}.*?\\end\{\1\}', re.S)
+# 証明の終わりの記号として使われる書き方（文末の $\square$ も含む。四角形の \square ABCD は対象外）
+QED_SYMBOL_RE = re.compile(r'\\(?:blacksquare|Box)(?![A-Za-z])|\$\s*\\square\s*\$[ \t\u3000]*$', re.M)
+
+
+def check_qed_mark(text):
+    """証明・解答の終わりは、数式の外の文末に \\qed と書く（記号はプリアンブルで ■ に統一）。
+    \\qed は行の右端へ自動で寄せるので \\hfill は要らない。$\\blacksquare$・$\\Box$・
+    文末の $\\square$ や、数式の中の \\qed（右に寄らない）は使わない。
+    proof 環境は末尾に自動で \\qed を付けるので、\\end{proof} の直前にも書かない。
+    図・TikZ の中の記号は対象外。"""
+    start = text.find('\\begin{document}')
+    if start < 0:
+        start = 0
+    figures = [(m.start(), m.end()) for m in QED_FIGURE_RE.finditer(text, start)]
+    maths = [(m.start(), m.end()) for m in QED_MATH_RE.finditer(text, start)]
+
+    def inside(spans, pos):
+        return any(a <= pos < b for a, b in spans)
+
+    errors = []
+    for m in QED_SYMBOL_RE.finditer(text, start):
+        if not inside(figures, m.start()):
+            errors.append((line_of(text, m.start()),
+                           f"証明の終わりは {m.group(0).strip()} ではなく，数式の外の文末に \\qed と書く"))
+    for m in re.finditer(r'\\qed(?![A-Za-z])', text[start:]):
+        pos = start + m.start()
+        if inside(figures, pos):
+            continue
+        if inside(maths, pos):
+            errors.append((line_of(text, pos), "\\qed は数式の中に書かず，数式の後の文末に書く"))
+        elif re.match(r'\s*\\end\{proof\}', text[pos + 4:]):
+            errors.append((line_of(text, pos), "proof 環境は末尾に自動で \\qed を付けるので，\\end{proof} の直前には書かない"))
+    return errors
+
+
 def check_problem_is_document(text):
     """problem.tex は solution.tex から \\subfile で読み込む独立した subfiles 文書にする（#1472）。
     以前の後期の problem.tex は \\begin{document} を持たない中身だけの断片だった。"""
@@ -1511,6 +1550,7 @@ def lint_file(path):
     errors += check_proof_env(text)
     if path.name in ('problem.tex', 'solution.tex') and path.parent.name != '0':
         errors += check_spacing_commands(text)
+        errors += check_qed_mark(text)
     if path.name == 'solution.tex':
         errors += check_solution_headings(text)
         if path.parent.name != '0' and path.with_name('problem.tex').exists():

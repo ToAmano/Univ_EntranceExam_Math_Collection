@@ -44,6 +44,8 @@ PREAMBLE = r"""\documentclass[a4paper,10pt]{ltjsarticle}
 \usepackage{luatexja-ruby}
 \usepackage[truedimen,top=25truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry}
 \usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
+% 証明・解答の終わりは本文の \qed で示す。記号は黒塗りの ■ に統一する。
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
 \usepackage{cases}
 \IfFileExists{physics.sty}{\usepackage{physics}}{}
 \usepackage{array}

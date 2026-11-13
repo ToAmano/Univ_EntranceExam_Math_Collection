@@ -969,6 +969,26 @@ _MATH_ENV_PATTERN = re.compile(
     re.DOTALL
 )
 
+# 証明・解答の終わりの記号。PDF のプリアンブル（generate_main_tex.py の \\qedsymbol）と揃える。
+QED_SYMBOL = '■'
+QED_INLINE_HTML = f'<span class="qed-symbol qed-inline">{QED_SYMBOL}</span>'
+
+
+def convert_text_qed(text):
+    """本文の文末の \\qed を、行の右端に寄せた記号にする（amsthm の \\qed と同じ見た目）。
+    数式の中は対象外（lint で禁止している）。proof 環境の末尾の \\qed は
+    convert_math_environments() がカードの記号に置き換えるので、その後に呼ぶ。"""
+    spans = _math_spans(text)
+    out, last = [], 0
+    for m in re.finditer(r'[ \t]*\\qed(?![A-Za-z])', text):
+        if any(a <= m.start() < b for a, b in spans):
+            continue
+        out.append(text[last:m.start()] + QED_INLINE_HTML)
+        last = m.end()
+    out.append(text[last:])
+    return ''.join(out)
+
+
 _QED_TRAILING_PATTERN = re.compile(
     r'\s*(?:\$(?:\\square|\\blacksquare|\\qed|\\qedsymbol)\$|\\(?:square|blacksquare|qed|qedsymbol)|[□■])\s*$',
     re.DOTALL
@@ -1010,7 +1030,7 @@ def convert_math_environments(text: str) -> str:
 
         label_anchors = ''.join(f'<span id="{lbl}"></span>\n' for lbl in top_labels)
         card_class = f"math-card {base_env}"
-        qed_html = '\n\n<div class="qed-symbol">□</div>' if is_proof else ''
+        qed_html = f'\n\n<div class="qed-symbol">{QED_SYMBOL}</div>' if is_proof else ''
 
         return (
             f'\n\n{label_anchors}'
@@ -1537,6 +1557,8 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
 
     # theorem, lemma, proposition, corollary, definition, proof 環境のカード化
     md_content = convert_math_environments(md_content)
+    # 本文の文末の \qed を右端に寄せた記号にする
+    md_content = convert_text_qed(md_content)
 
     # --------------------------------------------------------------------------
     # 数式ブロック内 \label{...} の自前アンカー化

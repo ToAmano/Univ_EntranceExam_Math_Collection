@@ -474,6 +474,21 @@ const ogImageUrl = new URL(`${baseUrl}${ogImagePath ?? '/ogp-default.png'}`, Ast
 				user-select: none;
 			}
 
+			/* 本文の文末の \qed。amsthm と同じく、段落の最後の行の右端に置く。 */
+			.markdown-body .qed-symbol.qed-inline {
+				float: right;
+				margin-top: 0;
+				margin-left: 1em;
+				line-height: inherit;
+			}
+
+			/* 右に寄せた記号が次の段落・数式に回り込まないようにする */
+			.markdown-body :has(> .qed-inline)::after {
+				content: '';
+				display: block;
+				clear: both;
+			}
+
 			/* 自動文字起こしファイル等の要確認バナー。トップページの
 			   .notice と同じ配色 (#fbbf24) で統一する。 */
 			.markdown-body .editorial-note {

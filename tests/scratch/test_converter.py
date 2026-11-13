@@ -202,7 +202,7 @@ class TestConverter(unittest.TestCase):
         self.assertIn('任意の $n \\ge 2$ に対し $P(n)$ が成り立つ．', processed)
         self.assertIn('<div class="math-card proof">', processed)
         self.assertIn('<div class="math-card-header">証明</div>', processed)
-        self.assertIn('<div class="qed-symbol">□</div>', processed)
+        self.assertIn('<div class="qed-symbol">■</div>', processed)
         self.assertNotIn(r'\begin{theorem}', processed)
         self.assertNotIn(r'\end{theorem}', processed)
         self.assertNotIn(r'\begin{proof}', processed)
@@ -228,7 +228,7 @@ class TestConverter(unittest.TestCase):
         processed = self.convert(latex)
         self.assertIn('計算より示された．', processed)
         self.assertNotIn(r'$\square$', processed)
-        self.assertIn('<div class="qed-symbol">□</div>', processed)
+        self.assertIn('<div class="qed-symbol">■</div>', processed)
 
 
 if __name__ == '__main__':

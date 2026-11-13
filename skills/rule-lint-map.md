@@ -35,6 +35,7 @@
 | A21 | `check_solution_headings` | `[解答]`・`[別解]`・`[別解1]`・`[解説]` に統一（solution.tex のみ） | AGENTS.md | structure |
 | A22 | `check_documentclass` | 1行目は `\documentclass[../../main.tex]{subfiles}` | 8.3.6 | structure |
 | A23 | `check_spacing_commands` | 本文で余白・改行のコマンド（`\medskip`・`\bigskip`・`\vspace`・`\hspace`・`\hfill`・`\noindent`・数式の外の `\quad` など）を使わない（2026-11-13 追加） | AGENTS.md | notation |
+| A24 | `check_qed_mark` | 証明・解答の終わりは数式の外の文末に `\qed`（記号はプリアンブルで ■）。`$\blacksquare$`・`$\Box$`・文末の `$\square$`・数式の中の `\qed`・`\end{proof}` 直前の `\qed` を使わない（2026-11-13 追加） | AGENTS.md・notation §N3.1 | notation |
 | W1 | `check_overline_warning`（警告） | 辺の長さは `\overline{AB}` でなく `|AB|` | 8.3.6 | notation |
 | W2 | `check_long_align_lines`（警告） | `align` の1行が長く `=` が複数あるときは改行する | **記載なし** | notation |
 
