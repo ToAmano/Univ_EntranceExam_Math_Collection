@@ -192,8 +192,8 @@ $X$ を固定して，$Y$ をうごかして\cref{eq:4}の後者について考�
     \end{scope}
 
     % --- 3. 座標軸 (横軸: X, 縦軸: r) ---
-    \draw[->, thick] (-0.2, 0) -- (2.3, 0) node[right] {$X$};
-    \draw[->, thick] (0, -0.2) -- (0, 2.3) node[above] {$r$};
+    \draw[->, thick, gray!80!black] (-0.2, 0) -- (2.3, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 2.3) node[above] {$r$};
     \node[below left=2pt] at (0, 0) {$O$};
 
     % --- 4. 2つの境界線 ---
@@ -202,14 +202,15 @@ $X$ を固定して，$Y$ をうごかして\cref{eq:4}の後者について考�
     node[above right=1pt, font=\footnotesize] {$r = X$};
 
     % (ii) 直線 r = (-sqrt(3)*X + sqrt(3))/2 (0 <= X <= 1)
-    \draw[very thick, teal!85!black, domain=0:1.0] plot (\x, {0.5*(-sqrt(3)*\x + sqrt(3))})
-    node[pos=0.15, above right=1pt,font=\scriptsize] {$r = (-\sqrt{3}X + \sqrt{3})/2$};
+    \draw[very thick, teal!85!black, domain=0:1.0] plot (\x, {0.5*(-sqrt(3)*\x + sqrt(3))});
+    % ラベルは plot の node[pos] だと大きく描かれるため、座標を指定して置く
+    \node[teal!85!black, font=\scriptsize, above right=2pt] at (0.82, {0.5*(-sqrt(3)*0.82 + sqrt(3))}) {$r = (-\sqrt{3}X + \sqrt{3})/2$};
 
     % X >= 1 における下限 r = 0 (X軸上)
-    \draw[thick, dashed, teal!85!black] (1.0, 0) -- (2.1, 0);
+    \draw[densely dotted, thick, teal!85!black] (1.0, 0) -- (2.1, 0);
 
     % --- 5. 最小値の点 (X_min, r_min) ---
-    \draw[dashed, red!80!black] (\xMin, 0) -- (\xMin, \rMin) -- (0, \rMin);
+    \draw[densely dotted, thick, red!85!black] (\xMin, 0) -- (\xMin, \rMin) -- (0, \rMin);
     \node[circle, fill=red!80!black, inner sep=1.2pt] at (\xMin, \rMin) {};
 
     % 軸目盛りラベル
@@ -352,8 +353,8 @@ $P$ が $A \cap B \cap C$ をうごく時，\cref{eq:1}より
     \end{scope}
 
     % --- 3. 座標軸 (横軸: X, 縦軸: r) ---
-    \draw[->, thick] (-0.15, 0) -- (1.3, 0) node[right] {$X$};
-    \draw[->, thick] (0, -0.15) -- (0, 2.0) node[above] {$r$};
+    \draw[->, thick, gray!80!black] (-0.15, 0) -- (1.3, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -0.15) -- (0, 2.0) node[above] {$r$};
     \node[below left=2pt] at (0, 0) {$O$};
 
     % --- 4. 境界直線群の描画 (node を plot から分離して直接座標指定) ---
@@ -363,21 +364,23 @@ $P$ が $A \cap B \cap C$ をうごく時，\cref{eq:1}より
 
     % (ii) 下限を与える折れ線の一部: r = sqrt(3)/3 * (1 - X)
     \draw[very thick, teal!85!black, domain=0:1.0] plot (\x, {sqrt(3)/3.0 * (1.0 - \x)});
-    \node[below left=1pt, font=\scriptsize, teal!85!black]
-    at (0.1, {sqrt(3)/3.0 * (1.0 - 0.1)}) {$r = \frac{\sqrt{3}}{3}(1-X)$};
+    % ラベルは線の外に置き、引き出し線で示す（目盛りのラベルとの重なりを避ける）
+    \node[right, font=\scriptsize, teal!85!black] (lblThird) at (1.05, 0.30) {$r = \frac{\sqrt{3}}{3}(1-X)$};
+    \draw[->, thin, teal!85!black] (lblThird.west) -- (0.78, {sqrt(3)/3.0 * (1.0 - 0.78)});
 
     % (iii) 参考上限線 1: r = sqrt(3)/2 * (1 - X) (Y = 0 における値)
-    \draw[thick, dashed, gray!70, domain=0:1.0] plot (\x, {0.5*sqrt(3) * (1.0 - \x)});
-    \node[above right=1pt, font=\scriptsize, gray!80!black]
-    at (0.45, {0.5*sqrt(3) * (1.0 - 0.45)}) {$r = \frac{\sqrt{3}}{2}(1-X)$};
+    \draw[densely dotted, thick, gray!70!black, domain=0:1.0] plot (\x, {0.5*sqrt(3) * (1.0 - \x)});
+    % ラベルは線の外に置き、引き出し線で示す（オレンジの線との重なりを避ける）
+    \node[right, font=\scriptsize, gray!80!black] (lblHalf) at (1.05, 0.62) {$r = \frac{\sqrt{3}}{2}(1-X)$};
+    \draw[->, thin, gray!70!black] (lblHalf.west) -- (0.66, {0.5*sqrt(3) * (1.0 - 0.66)});
 
     % (iv) 上限線: r = sqrt(3) * (1 - X) (Y = sqrt(3)(1-X) における最大値)
-    \draw[thick, dashed, purple!80!black, domain=0:1.0] plot (\x, {sqrt(3) * (1.0 - \x)});
+    \draw[densely dotted, thick, purple!80!black, domain=0:1.0] plot (\x, {sqrt(3) * (1.0 - \x)});
     \node[above right=1pt, font=\scriptsize, purple!80!black]
     at (0.3, {sqrt(3) * (1.0 - 0.3)}) {$r = \sqrt{3}(1-X)$};
 
     % --- 5. 最小値の点 (X_min, r_min) ---
-    \draw[dashed, red!80!black] (\xMin, 0) -- (\xMin, \rMin) -- (0, \rMin);
+    \draw[densely dotted, thick, red!85!black] (\xMin, 0) -- (\xMin, \rMin) -- (0, \rMin);
     \node[circle, fill=red!80!black, inner sep=1.2pt] at (\xMin, \rMin) {};
 
     % 軸目盛りラベル
@@ -397,7 +400,7 @@ $P$ が $A \cap B \cap C$ をうごく時，\cref{eq:1}より
     \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
     \node[circle, fill, inner sep=0.8pt] at (1, 0) {};
     \node[circle, fill, inner sep=1.0pt] at (1, 1) {};
-    \draw[dotted, gray!70] (1, 0) -- (1, 1) -- (0, 1);
+    \draw[densely dotted, thick, gray!70!black] (1, 0) -- (1, 1) -- (0, 1);
     \node[left=2pt, font=\scriptsize] at (0, 1) {$1$};
 
   \end{tikzpicture}
@@ -483,8 +486,8 @@ $P$ が $A \cap B \cap \overline{C}$ をうごく時，$P(X,Y)$のとりうる�
     \end{scope}
 
     % --- 3. 座標軸 (横軸: X, 縦軸: r) ---
-    \draw[->, thick] (-0.2, 0) -- (2.3, 0) node[right] {$X$};
-    \draw[->, thick] (0, -0.2) -- (0, 2.5) node[above] {$r$};
+    \draw[->, thick, gray!80!black] (-0.2, 0) -- (2.3, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 2.5) node[above] {$r$};
     \node[below left=2pt] at (0, 0) {$O$};
 
     % --- 4. 境界直線群の描画 ---
@@ -492,14 +495,14 @@ $P$ が $A \cap B \cap \overline{C}$ をうごく時，$P(X,Y)$のとりうる�
     \draw[very thick, orange!90!black, domain=0:2.1] plot (\x, {\x});
     \node[above right=1pt, font=\scriptsize, orange!90!black] at (2.1, 2.1) {$r = X$};
 
-    % (ii) 下限を与える境界線の一部: r = -\sqrt{3}X + \sqrt{3} (0 <= X <= 1: 実線, X > 1: 破線)
+    % (ii) 下限を与える境界線の一部: r = -\sqrt{3}X + \sqrt{3} (0 <= X <= 1: 実線, X > 1: 点線)
     \draw[very thick, teal!85!black, domain=0:1.0] plot (\x, {-sqrt(3)*\x + sqrt(3)});
-    \draw[thick, dashed, teal!50, domain=1.0:1.4] plot (\x, {-sqrt(3)*\x + sqrt(3)});
+    \draw[densely dotted, thick, teal!85!black, domain=1.0:1.4] plot (\x, {-sqrt(3)*\x + sqrt(3)});
     \node[below left=1pt, font=\scriptsize, teal!85!black]
     at (0.2, {-sqrt(3)*0.2 + sqrt(3)}) {$r = -\sqrt{3}X + \sqrt{3}$};
 
     % --- 5. 最小値の点 (X_min, r_min) ---
-    \draw[dashed, red!80!black] (\xMin, 0) -- (\xMin, \rMin) -- (0, \rMin);
+    \draw[densely dotted, thick, red!85!black] (\xMin, 0) -- (\xMin, \rMin) -- (0, \rMin);
     \node[circle, fill=red!80!black, inner sep=1.2pt] at (\xMin, \rMin) {};
 
     % 軸目盛りラベル
@@ -576,26 +579,26 @@ $P$ が $\overline{A} \cap B \cap C$ をうごく時，$P(X,Y)$のとりうる�
     \end{scope}
 
     % --- 3. 座標軸 (横軸: X, 縦軸: r) ---
-    \draw[->, thick] (-2.2, 0) -- (0.8, 0) node[right] {$X$};
-    \draw[->, thick] (0, -0.2) -- (0, 3.2) node[above] {$r$};
+    \draw[->, thick, gray!80!black] (-2.2, 0) -- (0.8, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 3.2) node[above] {$r$};
     \node[below left=2pt] at (0, 0) {$O$};
 
     % --- 4. 境界直線群 ---
-    % (i) 下限を与える境界線: r = sqrt(3)/3 * (1 - X) (X <= 0: 実線, X > 0: 破線補助線)
+    % (i) 下限を与える境界線: r = sqrt(3)/3 * (1 - X) (X <= 0: 実線, X > 0: 点線の補助線)
     \draw[very thick, teal!85!black, domain=-1.8:0] plot (\x, {sqrt(3)/3.0 * (1.0 - \x)});
-    \draw[thick, dashed, teal!50, domain=0:0.6] plot (\x, {sqrt(3)/3.0 * (1.0 - \x)})
+    \draw[densely dotted, thick, teal!85!black, domain=0:0.6] plot (\x, {sqrt(3)/3.0 * (1.0 - \x)})
     node[right=1pt, font=\scriptsize, teal!80!black] {$r = \frac{\sqrt{3}}{3}(1-X)$};
 
     % (ii) 参考線 (Y = 0 のときの下限側の値): r = sqrt(3)/2 * (1 - X)
-    \draw[thick, dashed, gray!60, domain=-1.8:0] plot (\x, {0.5*sqrt(3) * (1.0 - \x)});
+    \draw[densely dotted, thick, gray!70!black, domain=-1.8:0] plot (\x, {0.5*sqrt(3) * (1.0 - \x)});
 
     % 直接座標 (-1.0, ...) を指定してノードを置く
     \node[above right=1pt, font=\scriptsize, black]
     at (-1.2, {0.5*sqrt(3)*(1.0 - (-1.0))}) {$r = \frac{\sqrt{3}}{2}(1-X)$};
 
-    % (iii) 上限を与える境界線: r = sqrt(3) * (1 - X) (X <= 0: 実線, X > 0: 破線補助線)
+    % (iii) 上限を与える境界線: r = sqrt(3) * (1 - X) (X <= 0: 実線, X > 0: 点線の補助線)
     \draw[very thick, purple!80!black, domain=-0.85:0] plot (\x, {sqrt(3) * (1.0 - \x)});
-    \draw[thick, dashed, purple!50, domain=0:0.6] plot (\x, {sqrt(3) * (1.0 - \x)})
+    \draw[densely dotted, thick, purple!80!black, domain=0:0.6] plot (\x, {sqrt(3) * (1.0 - \x)})
     node[below right=1pt, font=\scriptsize, purple!80!black] {$r = \sqrt{3}(1-X)$};
 
     % --- 5. 最小値の点 (X = 0, r = sqrt(3)/3) ---
@@ -639,8 +642,8 @@ $P$ が $\overline{A} \cap B \cap C$ をうごく時，$P(X,Y)$のとりうる�
     (1.0, 0) -- (3.0, 0) -- (3.0, {-sqrt(3)*(3.0 - 1.0)}) -- cycle;
 
     % --- 3. 座標軸 ---
-    \draw[->, thick] (-0.5, 0) -- (3.0, 0) node[right] {$X$};
-    \draw[->, thick] (0, -2.5) -- (0, 1.2) node[above] {$Y$};
+    \draw[->, thick, gray!80!black] (-0.5, 0) -- (3.0, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -2.5) -- (0, 1.2) node[above] {$Y$};
     \node[below left=2pt] at (0, 0) {$O$};
 
     % --- 4. 境界直線 ---
@@ -700,8 +703,8 @@ $P$が$A \cap \overline{B} \cap \overline{C}$ をうごく時，$P(X,Y)$のと�
     (0, {sqrt(3)}) -- (-2.2, {sqrt(3)*(1 - (-2.2))}) -- (-2.2, 3.8) -- (0, 3.8) -- cycle;
 
     % --- 3. 座標軸 ---
-    \draw[->, thick] (-2.2, 0) -- (1.5, 0) node[right] {$X$};
-    \draw[->, thick] (0, -0.6) -- (0, 3.8) node[above] {$Y$};
+    \draw[->, thick, gray!80!black] (-2.2, 0) -- (1.5, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -0.6) -- (0, 3.8) node[above] {$Y$};
     \node[below left=2pt] at (0, 0) {$O$};
 
     % --- 4. 境界直線 ---
@@ -723,7 +726,7 @@ $P$が$A \cap \overline{B} \cap \overline{C}$ をうごく時，$P(X,Y)$のと�
     \node[below=2pt, font=\footnotesize] at (1.0, 0) {$1$};
 
     % Y = \sqrt{3} の補助点線（下限値の可視化）
-    \draw[dashed, gray!70] (-2.0, {sqrt(3)}) -- (0, {sqrt(3)});
+    \draw[densely dotted, thick, gray!70!black] (-2.0, {sqrt(3)}) -- (0, {sqrt(3)});
 
     % r(P) の結果注記
     \node[draw=red!80!black, fill=white, rounded corners=2pt, font=\scriptsize, align=center]
@@ -760,8 +763,8 @@ $P$が$\overline{A} \cap B \cap \overline{C}$を動く時，$P(X,Y)$のとりう
     (-2.2, -2.2) rectangle (0, 0);
 
     % --- 3. 座標軸 ---
-    \draw[->, thick] (-2.2, 0) -- (1.8, 0) node[right] {$X$};
-    \draw[->, thick] (0, -2.2) -- (0, 2.2) node[above] {$Y$};
+    \draw[->, thick, gray!80!black] (-2.2, 0) -- (1.8, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -2.2) -- (0, 2.2) node[above] {$Y$};
     \node[above right=2pt] at (0, 0) {$O$};
 
     % --- 4. 境界直線 ---

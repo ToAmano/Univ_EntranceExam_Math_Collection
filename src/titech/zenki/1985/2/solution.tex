@@ -22,73 +22,72 @@ $t$によって切断面の方程式が変化するので，これを
 % 視点の設定 (tdplot_set_coordinates{r}{theta}{phi})
 % 手書きスケッチに近い視点 (右上から見下ろす)
 \begin{figure}[htb]
-  \begin{center}
-    \tdplotsetmaincoords{65}{120}
-    \begin{tikzpicture}[tdplot_main_coords, scale=1.5]
+  \centering
+  \tdplotsetmaincoords{65}{115}
+  \begin{tikzpicture}[tdplot_main_coords, scale=1.5]
 
-      % --- 1. 座標定義 ---
-      % 直方体 V の頂点 (0<=x<=1, 0<=y<=2, 0<=z<=3)
-      % 手書き図の対応:
-      % y=0 上: O(0,0,0), A(0,0,3), B(1,0,3), C(1,0,0)
-      % y=2 上: G(0,2,0), D(0,2,3), E(1,2,3), F(1,2,0)
-      \coordinate (O) at (0,0,0);
-      \coordinate (A) at (0,0,3);
-      \coordinate (B) at (1,0,3);
-      \coordinate (C) at (1,0,0);
-      \coordinate (G) at (0,2,0);
-      \coordinate (D) at (0,2,3);
-      \coordinate (E) at (1,2,3);
-      \coordinate (F) at (1,2,0);
+    % --- 1. 座標定義 ---
+    % 直方体 V の頂点 (0<=x<=1, 0<=y<=2, 0<=z<=3)
+    % 手書き図の対応:
+    % y=0 上: O(0,0,0), A(0,0,3), B(1,0,3), C(1,0,0)
+    % y=2 上: G(0,2,0), D(0,2,3), E(1,2,3), F(1,2,0)
+    \coordinate (O) at (0,0,0);
+    \coordinate (A) at (0,0,3);
+    \coordinate (B) at (1,0,3);
+    \coordinate (C) at (1,0,0);
+    \coordinate (G) at (0,2,0);
+    \coordinate (D) at (0,2,3);
+    \coordinate (E) at (1,2,3);
+    \coordinate (F) at (1,2,0);
 
-      % --- 2. 座標軸の描画 ---
-      \draw[->, thick, gray] (0,0,0) -- (2.0,0,0) node[anchor=north east]{$x$};
-      \draw[->, thick, gray] (0,0,0) -- (0,3.0,0) node[anchor=north west]{$y$};
-      \draw[->, thick, gray] (0,0,0) -- (0,0,4.0) node[anchor=south]{$z$};
+    % --- 2. 座標軸の描画 ---
+    \draw[->, thick, gray!80!black] (0,0,0) -- (2.0,0,0) node[anchor=north east]{$x$};
+    \draw[->, thick, gray!80!black] (0,0,0) -- (0,3.0,0) node[anchor=north west]{$y$};
+    \draw[->, thick, gray!80!black] (0,0,0) -- (0,0,4.0) node[anchor=south]{$z$};
 
-      % --- 3. 切平面 pi(t) と軸の交点 (t = 0.8 の例) ---
-      % x + y/2 + z/3 = t  =>  x-int=t, y-int=2t, z-int=3t
-      \pgfmathsetmacro{\tval}{0.8}
-      \coordinate (Px) at (\tval, 0, 0);
-      \coordinate (Py) at (0, 2*\tval, 0);
-      \coordinate (Pz) at (0, 0, 3*\tval);
+    % --- 3. 切平面 pi(t) と軸の交点 (t = 0.8 の例) ---
+    % x + y/2 + z/3 = t  =>  x-int=t, y-int=2t, z-int=3t
+    \pgfmathsetmacro{\tval}{0.8}
+    \coordinate (Px) at (\tval, 0, 0);
+    \coordinate (Py) at (0, 2*\tval, 0);
+    \coordinate (Pz) at (0, 0, 3*\tval);
 
-      % 切断領域 (三角錐) の塗りつぶし
-      \fill[red!30, opacity=0.6] (Px) -- (Py) -- (Pz) -- cycle;
-      \draw[red!80!black, thick] (Px) -- (Py) -- (Pz) -- cycle;
+    % 切断領域 (三角錐) の塗りつぶし
+    \fill[red!30, opacity=0.6] (Px) -- (Py) -- (Pz) -- cycle;
+    \draw[red!80!black, thick] (Px) -- (Py) -- (Pz) -- cycle;
 
-      % --- 4. 直方体 V の辺の描画 ---
-      % 隠線 (破線)
-      \draw[dashed, thick] (O) -- (C);
-      \draw[dashed, thick] (O) -- (G);
-      \draw[dashed, thick] (O) -- (A);
+    % --- 4. 直方体 V の辺の描画 ---
+    % 隠線 (破線)
+    \draw[dashed, thick] (O) -- (C);
+    \draw[dashed, thick] (O) -- (G);
+    \draw[dashed, thick] (O) -- (A);
 
-      % 実線
-      \draw[thick] (C) -- (B) -- (A);
-      \draw[thick] (G) -- (F) -- (E) -- (D) -- cycle;
-      \draw[thick] (C) -- (F);
-      \draw[thick] (B) -- (E);
-      \draw[thick] (A) -- (D);
+    % 実線
+    \draw[thick] (C) -- (B) -- (A);
+    \draw[thick] (G) -- (F) -- (E) -- (D) -- cycle;
+    \draw[thick] (C) -- (F);
+    \draw[thick] (B) -- (E);
+    \draw[thick] (A) -- (D);
 
-      % --- 5. 目盛りラベル ---
-      \node[anchor=north east] at (C) {$1$};
-      \node[anchor=south west] at (G) {$2$};
-      \node[anchor=west] at (A) {$3$};
+    % --- 5. 目盛りラベル ---
+    \node[anchor=north east] at (C) {$1$};
+    \node[anchor=south west] at (G) {$2$};
+    \node[anchor=west] at (A) {$3$};
 
-      % --- 6. 頂点ラベルと点のプロット ---
-      \node[circle, fill, inner sep=1pt] at (O) {}; \node[anchor=north west] at (O) {$O$};
-      \node[circle, fill, inner sep=1pt] at (A) {}; \node[anchor=south east] at (A) {$A$};
-      \node[circle, fill, inner sep=1pt] at (B) {}; \node[anchor=north west] at (B) {$B$};
-      \node[circle, fill, inner sep=1pt] at (C) {}; \node[anchor=south east] at (C) {$C$};
-      \node[circle, fill, inner sep=1pt] at (D) {}; \node[anchor=south east] at (D) {$D$};
-      \node[circle, fill, inner sep=1pt] at (E) {}; \node[anchor=south west] at (E) {$E$};
-      \node[circle, fill, inner sep=1pt] at (F) {}; \node[anchor=west] at (F) {$F$};
-      \node[circle, fill, inner sep=1pt] at (G) {}; \node[anchor=south east] at (G) {$G$};
+    % --- 6. 頂点ラベルと点のプロット ---
+    \node[circle, fill, inner sep=1pt] at (O) {}; \node[anchor=north west] at (O) {$O$};
+    \node[circle, fill, inner sep=1pt] at (A) {}; \node[anchor=south east] at (A) {$A$};
+    \node[circle, fill, inner sep=1pt] at (B) {}; \node[anchor=north west] at (B) {$B$};
+    \node[circle, fill, inner sep=1pt] at (C) {}; \node[anchor=south east] at (C) {$C$};
+    \node[circle, fill, inner sep=1pt] at (D) {}; \node[anchor=south east] at (D) {$D$};
+    \node[circle, fill, inner sep=1pt] at (E) {}; \node[below right=1pt] at (E) {$E$};
+    \node[circle, fill, inner sep=1pt] at (F) {}; \node[anchor=west] at (F) {$F$};
+    \node[circle, fill, inner sep=1pt] at (G) {}; \node[anchor=south east] at (G) {$G$};
 
-      \node[above right] at (E) {$V$};
+    \node[right=2pt] at ($(E)!0.5!(F)$) {$V$};
 
-    \end{tikzpicture}
-    \caption{直方体Vの様子．}
-  \end{center}
+  \end{tikzpicture}
+  \caption{直方体Vの様子．}
 \end{figure}
 
 \subparagraph{$1^\circ$ $0<t\le1$の時}
@@ -97,67 +96,66 @@ $t$によって切断面の方程式が変化するので，これを
 
 % 視点の設定 (tdplot_set_coordinates{r}{theta}{phi})
 \begin{figure}[htb]
-  \begin{center}
-    \tdplotsetmaincoords{65}{120}
-    \begin{tikzpicture}[tdplot_main_coords, scale=1.5]
+  \centering
+  \tdplotsetmaincoords{65}{115}
+  \begin{tikzpicture}[tdplot_main_coords, scale=1.5]
 
-      % --- 1. 座標定義 ---
-      % 直方体 V の頂点
-      \coordinate (O) at (0,0,0);
-      \coordinate (A) at (0,0,3);
-      \coordinate (B) at (1,0,3);
-      \coordinate (C) at (1,0,0);
-      \coordinate (G) at (0,2,0);
-      \coordinate (D) at (0,2,3);
-      \coordinate (E) at (1,2,3);
-      \coordinate (F) at (1,2,0);
+    % --- 1. 座標定義 ---
+    % 直方体 V の頂点
+    \coordinate (O) at (0,0,0);
+    \coordinate (A) at (0,0,3);
+    \coordinate (B) at (1,0,3);
+    \coordinate (C) at (1,0,0);
+    \coordinate (G) at (0,2,0);
+    \coordinate (D) at (0,2,3);
+    \coordinate (E) at (1,2,3);
+    \coordinate (F) at (1,2,0);
 
-      % --- 2. 座標軸の描画 ---
-      \draw[->, thick, gray] (0,0,0) -- (2.2,0,0) node[anchor=north east]{$x$};
-      \draw[->, thick, gray] (0,0,0) -- (0,3.2,0) node[anchor=north west]{$y$};
-      \draw[->, thick, gray] (0,0,0) -- (0,0,4.2) node[anchor=south]{$z$};
+    % --- 2. 座標軸の描画 ---
+    \draw[->, thick, gray!80!black] (0,0,0) -- (2.2,0,0) node[anchor=north east]{$x$};
+    \draw[->, thick, gray!80!black] (0,0,0) -- (0,3.2,0) node[anchor=north west]{$y$};
+    \draw[->, thick, gray!80!black] (0,0,0) -- (0,0,4.2) node[anchor=south]{$z$};
 
-      % --- 3. 切平面 pi(t) と軸の交点 (0 < t <= 1) ---
-      % x-int = t, y-int = 2t, z-int = 3t
-      \pgfmathsetmacro{\tval}{0.7}
-      \coordinate (Px) at (\tval, 0, 0);       % x軸上の点 (t)
-      \coordinate (Py) at (0, 2*\tval, 0);     % y軸上の点 (2t)
-      \coordinate (Pz) at (0, 0, 3*\tval);     % z軸上の点 (3t)
+    % --- 3. 切平面 pi(t) と軸の交点 (0 < t <= 1) ---
+    % x-int = t, y-int = 2t, z-int = 3t
+    \pgfmathsetmacro{\tval}{0.7}
+    \coordinate (Px) at (\tval, 0, 0);       % x軸上の点 (t)
+    \coordinate (Py) at (0, 2*\tval, 0);     % y軸上の点 (2t)
+    \coordinate (Pz) at (0, 0, 3*\tval);     % z軸上の点 (3t)
 
-      % 切り口 (三角形) の塗りつぶしと境界線
-      \fill[red!25, opacity=0.6] (Px) -- (Py) -- (Pz) -- cycle;
-      \draw[red!80!black, ultra thick] (Px) -- (Py) -- (Pz) -- cycle;
+    % 切り口 (三角形) の塗りつぶしと境界線
+    \fill[red!25, opacity=0.6] (Px) -- (Py) -- (Pz) -- cycle;
+    \draw[red!80!black, ultra thick] (Px) -- (Py) -- (Pz) -- cycle;
 
-      % --- 4. 直方体 V のフレーム描画 ---
-      % 隠線 (破線)
-      \draw[dashed, thick] (O) -- (C);
-      \draw[dashed, thick] (O) -- (G);
-      \draw[dashed, thick] (O) -- (A);
+    % --- 4. 直方体 V のフレーム描画 ---
+    % 隠線 (破線)
+    \draw[dashed, thick] (O) -- (C);
+    \draw[dashed, thick] (O) -- (G);
+    \draw[dashed, thick] (O) -- (A);
 
-      % 外枠 (実線)
-      \draw[thick] (C) -- (B) -- (A);
-      \draw[thick] (G) -- (F) -- (E) -- (D) -- cycle;
-      \draw[thick] (C) -- (F);
-      \draw[thick] (B) -- (E);
-      \draw[thick] (A) -- (D);
+    % 外枠 (実線)
+    \draw[thick] (C) -- (B) -- (A);
+    \draw[thick] (G) -- (F) -- (E) -- (D) -- cycle;
+    \draw[thick] (C) -- (F);
+    \draw[thick] (B) -- (E);
+    \draw[thick] (A) -- (D);
 
-      % --- 5. 交点 (t, 2t, 3t) のプロットとラベル ---
-      \node[circle, fill=red!80!black, inner sep=1.2pt] at (Px) {}; \node[red!80!black, anchor=north west] at (Px) {$t$};
-      \node[circle, fill=red!80!black, inner sep=1.2pt] at (Py) {}; \node[red!80!black, anchor=south west] at (Py) {$2t$};
-      \node[circle, fill=red!80!black, inner sep=1.2pt] at (Pz) {}; \node[red!80!black, anchor=east] at (Pz) {$3t$};
+    % --- 5. 交点 (t, 2t, 3t) のプロットとラベル ---
+    \node[circle, fill=red!80!black, inner sep=1.2pt] at (Px) {}; \node[red!80!black, anchor=north west] at (Px) {$t$};
+    \node[circle, fill=red!80!black, inner sep=1.2pt] at (Py) {}; \node[red!80!black, anchor=south west] at (Py) {$2t$};
+    \node[circle, fill=red!80!black, inner sep=1.2pt] at (Pz) {}; \node[red!80!black, anchor=east] at (Pz) {$3t$};
 
-      % --- 6. 頂点ラベル ---
-      \node[circle, fill, inner sep=1pt] at (O) {}; \node[anchor=north east] at (O) {$O$};
-      \node[circle, fill, inner sep=1pt] at (A) {}; \node[anchor=south east] at (A) {$A$};
-      \node[circle, fill, inner sep=1pt] at (B) {}; \node[anchor=north west] at (B) {$B$};
-      \node[circle, fill, inner sep=1pt] at (C) {}; \node[anchor=south west] at (C) {$C$};
-      \node[circle, fill, inner sep=1pt] at (D) {}; \node[anchor=south east] at (D) {$D$};
-      \node[circle, fill, inner sep=1pt] at (E) {}; \node[anchor=south west] at (E) {$E$};
-      \node[circle, fill, inner sep=1pt] at (F) {}; \node[anchor=west] at (F) {$F$};
-      \node[circle, fill, inner sep=1pt] at (G) {}; \node[anchor=south east] at (G) {$G$};
-    \end{tikzpicture}
-    \caption{$0<t\le 1$の時の切断面}
-  \end{center}
+    % --- 6. 頂点ラベル ---
+    \node[circle, fill, inner sep=1pt] at (O) {}; \node[anchor=north east] at (O) {$O$};
+    \node[circle, fill, inner sep=1pt] at (A) {}; \node[anchor=south east] at (A) {$A$};
+    \node[circle, fill, inner sep=1pt] at (B) {}; \node[anchor=north west] at (B) {$B$};
+    \node[circle, fill, inner sep=1pt] at (C) {}; \node[anchor=south west] at (C) {$C$};
+    \node[circle, fill, inner sep=1pt] at (D) {}; \node[anchor=south east] at (D) {$D$};
+    \node[circle, fill, inner sep=1pt] at (E) {}; \node[below right=1pt] at (E) {$E$};
+    \node[circle, fill, inner sep=1pt] at (F) {}; \node[anchor=west] at (F) {$F$};
+    \node[circle, fill, inner sep=1pt] at (G) {}; \node[anchor=south east] at (G) {$G$};
+  \end{tikzpicture}
+  \caption{$0<t\le 1$の時の切断面}
 \end{figure}
 
 切断された立体のうち点Oを含む三角錐の体積は
@@ -176,90 +174,89 @@ $t$によって切断面の方程式が変化するので，これを
 
 % 視点の設定 (tdplot_set_coordinates{r}{theta}{phi})
 \begin{figure}[htb]
-  \begin{center}
-    \tdplotsetmaincoords{65}{120}
-    \begin{tikzpicture}[tdplot_main_coords, scale=1.5]
+  \centering
+  \tdplotsetmaincoords{65}{115}
+  \begin{tikzpicture}[tdplot_main_coords, scale=1.5]
 
-      % --- 1. 座標定義 ---
-      % 直方体 V の頂点
-      \coordinate (O) at (0,0,0);
-      \coordinate (A) at (0,0,3);
-      \coordinate (B) at (1,0,3);
-      \coordinate (C) at (1,0,0);
-      \coordinate (G) at (0,2,0);
-      \coordinate (D) at (0,2,3);
-      \coordinate (E) at (1,2,3);
-      \coordinate (F) at (1,2,0);
+    % --- 1. 座標定義 ---
+    % 直方体 V の頂点
+    \coordinate (O) at (0,0,0);
+    \coordinate (A) at (0,0,3);
+    \coordinate (B) at (1,0,3);
+    \coordinate (C) at (1,0,0);
+    \coordinate (G) at (0,2,0);
+    \coordinate (D) at (0,2,3);
+    \coordinate (E) at (1,2,3);
+    \coordinate (F) at (1,2,0);
 
-      % パラメータ設定 (1 < t < 1.5 例として t = 1.25)
-      \pgfmathsetmacro{\tval}{1.25}
+    % パラメータ設定 (1 < t < 1.5 例として t = 1.25)
+    \pgfmathsetmacro{\tval}{1.25}
 
-      % 大きな三角錐の頂点 (各軸との交点 t, 2t, 3t)
-      \coordinate (Px) at (\tval, 0, 0);       % x軸上: t
-      \coordinate (Py) at (0, 2*\tval, 0);     % y軸上: 2t
-      \coordinate (Pz) at (0, 0, 3*\tval);     % z軸上: 3t
+    % 大きな三角錐の頂点 (各軸との交点 t, 2t, 3t)
+    \coordinate (Px) at (\tval, 0, 0);       % x軸上: t
+    \coordinate (Py) at (0, 2*\tval, 0);     % y軸上: 2t
+    \coordinate (Pz) at (0, 0, 3*\tval);     % z軸上: 3t
 
-      % 切断六角形の頂点 (直方体の各辺との交点)
-      \coordinate (K_CF) at (1, {2*(\tval-1)}, 0);    % 辺 CF 上
-      \coordinate (K_FG) at ({\tval-1}, 2, 0);        % 辺 FG 上
-      \coordinate (K_GD) at (0, 2, {3*(\tval-1)});    % 辺 GD 上
-      \coordinate (K_DA) at (0, {2*(\tval-1)}, 3);    % 辺 DA 上
-      \coordinate (K_AB) at ({\tval-1}, 0, 3);        % 辺 AB 上
-      \coordinate (K_BC) at (1, 0, {3*(\tval-1)});    % 辺 BC 上
+    % 切断六角形の頂点 (直方体の各辺との交点)
+    \coordinate (K_CF) at (1, {2*(\tval-1)}, 0);    % 辺 CF 上
+    \coordinate (K_FG) at ({\tval-1}, 2, 0);        % 辺 FG 上
+    \coordinate (K_GD) at (0, 2, {3*(\tval-1)});    % 辺 GD 上
+    \coordinate (K_DA) at (0, {2*(\tval-1)}, 3);    % 辺 DA 上
+    \coordinate (K_AB) at ({\tval-1}, 0, 3);        % 辺 AB 上
+    \coordinate (K_BC) at (1, 0, {3*(\tval-1)});    % 辺 BC 上
 
-      % --- 2. 座標軸の描画 ---
-      \draw[->, thick, gray] (0,0,0) -- (2.0,0,0) node[anchor=north east]{$x$};
-      \draw[->, thick, gray] (0,0,0) -- (0,3.2,0) node[anchor=north west]{$y$};
-      \draw[->, thick, gray] (0,0,0) -- (0,0,4.2) node[anchor=south]{$z$};
+    % --- 2. 座標軸の描画 ---
+    \draw[->, thick, gray!80!black] (0,0,0) -- (2.0,0,0) node[anchor=north east]{$x$};
+    \draw[->, thick, gray!80!black] (0,0,0) -- (0,3.2,0) node[anchor=north west]{$y$};
+    \draw[->, thick, gray!80!black] (0,0,0) -- (0,0,4.2) node[anchor=south]{$z$};
 
-      % --- 3. 大きな三角錐の破線外枠 (手書き図の t, 2t, 3t を結ぶ直線) ---
-      \draw[dashed, red!60!black, thin] (Px) -- (Py) -- (Pz) -- cycle;
+    % --- 3. 大きな三角錐の外枠（補助の点線。手書き図の t, 2t, 3t を結ぶ直線） ---
+    \draw[densely dotted, thick, red!80!black] (Px) -- (Py) -- (Pz) -- cycle;
 
-      % --- 4. 切り口 (六角形) の塗りつぶしと境界線 ---
-      \fill[blue!25, opacity=0.6]
-      (K_CF) -- (K_FG) -- (K_GD) -- (K_DA) -- (K_AB) -- (K_BC) -- cycle;
+    % --- 4. 切り口 (六角形) の塗りつぶしと境界線 ---
+    \fill[blue!25, opacity=0.6]
+    (K_CF) -- (K_FG) -- (K_GD) -- (K_DA) -- (K_AB) -- (K_BC) -- cycle;
 
-      \draw[blue!80!black, ultra thick]
-      (K_CF) -- (K_FG) -- (K_GD) -- (K_DA) -- (K_AB) -- (K_BC) -- cycle;
+    \draw[blue!80!black, ultra thick]
+    (K_CF) -- (K_FG) -- (K_GD) -- (K_DA) -- (K_AB) -- (K_BC) -- cycle;
 
-      % --- 5. 直方体 V のフレーム描画 ---
-      % 隠線 (破線)
-      \draw[dashed, thick] (O) -- (C);
-      \draw[dashed, thick] (O) -- (G);
-      \draw[dashed, thick] (O) -- (A);
+    % --- 5. 直方体 V のフレーム描画 ---
+    % 隠線 (破線)
+    \draw[dashed, thick] (O) -- (C);
+    \draw[dashed, thick] (O) -- (G);
+    \draw[dashed, thick] (O) -- (A);
 
-      % 外枠 (実線)
-      \draw[thick] (C) -- (B) -- (A);
-      \draw[thick] (G) -- (F) -- (E) -- (D) -- cycle;
-      \draw[thick] (C) -- (F);
-      \draw[thick] (B) -- (E);
-      \draw[thick] (A) -- (D);
+    % 外枠 (実線)
+    \draw[thick] (C) -- (B) -- (A);
+    \draw[thick] (G) -- (F) -- (E) -- (D) -- cycle;
+    \draw[thick] (C) -- (F);
+    \draw[thick] (B) -- (E);
+    \draw[thick] (A) -- (D);
 
-      % --- 6. 各辺上の切断点 (黒丸) ---
-      \node[circle, fill=blue!80!black, inner sep=1.3pt] at (K_CF) {};
-      \node[circle, fill=blue!80!black, inner sep=1.3pt] at (K_FG) {};
-      \node[circle, fill=blue!80!black, inner sep=1.3pt] at (K_GD) {};
-      \node[circle, fill=blue!80!black, inner sep=1.3pt] at (K_DA) {};
-      \node[circle, fill=blue!80!black, inner sep=1.3pt] at (K_AB) {};
-      \node[circle, fill=blue!80!black, inner sep=1.3pt] at (K_BC) {};
+    % --- 6. 各辺上の切断点 (黒丸) ---
+    \node[circle, fill=blue!80!black, inner sep=1.3pt] at (K_CF) {};
+    \node[circle, fill=blue!80!black, inner sep=1.3pt] at (K_FG) {};
+    \node[circle, fill=blue!80!black, inner sep=1.3pt] at (K_GD) {};
+    \node[circle, fill=blue!80!black, inner sep=1.3pt] at (K_DA) {};
+    \node[circle, fill=blue!80!black, inner sep=1.3pt] at (K_AB) {};
+    \node[circle, fill=blue!80!black, inner sep=1.3pt] at (K_BC) {};
 
-      % --- 7. 交点 (t, 2t, 3t) のプロットとラベル ---
-      \node[circle, fill=red!60!black, inner sep=1pt] at (Px) {}; \node[red!60!black, anchor=north west] at (Px) {$t$};
-      \node[circle, fill=red!60!black, inner sep=1pt] at (Py) {}; \node[red!60!black, anchor=south west] at (Py) {$2t$};
-      \node[circle, fill=red!60!black, inner sep=1pt] at (Pz) {}; \node[red!60!black, anchor=east] at (Pz) {$3t$};
+    % --- 7. 交点 (t, 2t, 3t) のプロットとラベル ---
+    \node[circle, fill=red!60!black, inner sep=1pt] at (Px) {}; \node[red!60!black, anchor=north west] at (Px) {$t$};
+    \node[circle, fill=red!60!black, inner sep=1pt] at (Py) {}; \node[red!60!black, anchor=south west] at (Py) {$2t$};
+    \node[circle, fill=red!60!black, inner sep=1pt] at (Pz) {}; \node[red!60!black, anchor=east] at (Pz) {$3t$};
 
-      % --- 8. 頂点ラベル ---
-      \node[circle, fill, inner sep=1pt] at (O) {}; \node[anchor=north east] at (O) {$O$};
-      \node[circle, fill, inner sep=1pt] at (A) {}; \node[anchor=south east] at (A) {$A$};
-      \node[circle, fill, inner sep=1pt] at (B) {}; \node[anchor=north west] at (B) {$B$};
-      \node[circle, fill, inner sep=1pt] at (C) {}; \node[anchor=south west] at (C) {$C$};
-      \node[circle, fill, inner sep=1pt] at (D) {}; \node[anchor=south east] at (D) {$D$};
-      \node[circle, fill, inner sep=1pt] at (E) {}; \node[anchor=south west] at (E) {$E$};
-      \node[circle, fill, inner sep=1pt] at (F) {}; \node[anchor=west] at (F) {$F$};
-      \node[circle, fill, inner sep=1pt] at (G) {}; \node[anchor=south east] at (G) {$G$};
-    \end{tikzpicture}
-    \caption{$1\le t \le 2$の時の切断面．}
-  \end{center}
+    % --- 8. 頂点ラベル ---
+    \node[circle, fill, inner sep=1pt] at (O) {}; \node[anchor=north east] at (O) {$O$};
+    \node[circle, fill, inner sep=1pt] at (A) {}; \node[anchor=south east] at (A) {$A$};
+    \node[circle, fill, inner sep=1pt] at (B) {}; \node[anchor=north west] at (B) {$B$};
+    \node[circle, fill, inner sep=1pt] at (C) {}; \node[anchor=south west] at (C) {$C$};
+    \node[circle, fill, inner sep=1pt] at (D) {}; \node[anchor=south east] at (D) {$D$};
+    \node[circle, fill, inner sep=1pt] at (E) {}; \node[below right=1pt] at (E) {$E$};
+    \node[circle, fill, inner sep=1pt] at (F) {}; \node[anchor=west] at (F) {$F$};
+    \node[circle, fill, inner sep=1pt] at (G) {}; \node[anchor=south east] at (G) {$G$};
+  \end{tikzpicture}
+  \caption{$1\le t \le 2$の時の切断面．}
 \end{figure}
 
 切断立体のうち原点$O$を含む方の体積は，大きな三角錐からコーナーの三角錐を3つ分切り取ることで求められる．
