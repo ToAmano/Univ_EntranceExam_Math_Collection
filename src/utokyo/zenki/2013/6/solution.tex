@@ -251,7 +251,7 @@ $V_1$ の表面上の点 $P(x,y,z)$ とする．
 \begin{align}
   \begin{cases}
     0 \le k \le 1 \text{の時}:  Q_k(2k-1,1, 0), \quad R_k(1,2k-1,0) \\
-    -1 \le k \le 0 \text{の時}: Q_k(-1, 2k+1,0), \quad R_k(2k+1,1,0)
+    -1 \le k \le 0 \text{の時}: Q_k(-1, 2k+1,0), \quad R_k(2k+1,-1,0)
   \end{cases} \label{eq:1}
 \end{align}
 である．
@@ -412,8 +412,8 @@ $H_k(k,k,0)$とおくと，いずれの場合も
     % ============================================================
     % 3. 座標軸
     % ============================================================
-    \draw[->, thick, gray!80!black] (-1.35, 0) -- (1.35, 0) node[right] {$y$};
-    \draw[->, thick, gray!80!black] (0, -\zMax - 0.35) -- (0, \zMax + 0.4) node[above] {$z$};
+    \draw[->, thick, gray!80!black] (-1.45, 0) -- (1.45, 0) node[right] {$y$};
+    \draw[->, thick, gray!80!black] (0, -\zMax - 0.35) -- (0, \zMax + 0.65) node[above] {$z$};
     \node[below left=2pt] at (0, 0) {$O$};
 
     % ============================================================
@@ -443,16 +443,21 @@ $H_k(k,k,0)$とおくと，いずれの場合も
     \node[circle, fill, inner sep=1.2pt] at ( 1, 0) {}; \node[below=2pt, font=\scriptsize] at ( 1, 0) {$1$};
 
     % 最高点 (-t, sqrt(2(1-t^2)))
-    \draw[dotted, gray!60] (\ySep, \zMax) -- (0, \zMax)
+    \draw[densely dotted, thick, gray!70!black] (\ySep, \zMax) -- (0, \zMax)
     node[right=2pt, font=\scriptsize] {$\sqrt{2(1-t^2)}$};
-    \draw[dotted, gray!60] (\ySep, -\zMax) -- (0, -\zMax)
+    \draw[densely dotted, thick, gray!70!black] (\ySep, -\zMax) -- (0, -\zMax)
     node[right=2pt, font=\scriptsize] {$-\sqrt{2(1-t^2)}$};
+    \node[circle, fill=red!85!black, inner sep=1.2pt] at (\ySep, \zMax) {};
+    \node[circle, fill=red!85!black, inner sep=1.2pt] at (\ySep, -\zMax) {};
 
-    % 放物線のラベル
-    \node[teal!90!black, font=\footnotesize\bfseries] at (-0.72, 0.75)
-    {$\star_1: z^2 = 2(t+1)(y+1)$};
-    \node[blue!90!black, font=\footnotesize\bfseries] at (0.55, 0.75)
-    {$\star_2: z^2 = 2(t-1)(y-1)$};
+    % 放物線のラベル（引き出し線）
+    \node[teal!90!black, font=\footnotesize\bfseries, above left] at (-0.55, 1.45)
+    (lblStar1) {$y_{-}: z^2 = 2(t+1)(y+1)$};
+    \draw[->, thick, teal!85!black] (lblStar1.south) -- (-0.75, 0.95);
+
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (0.2, 1.45)
+    (lblStar2) {$y_{+}: z^2 = 2(t-1)(y-1)$};
+    \draw[->, thick, blue!85!black] (lblStar2.south) -- (0.55, 0.85);
 
     % 積分幅 (y_+ - y_-)
     \def\zSlice{0.6}
@@ -490,8 +495,6 @@ $H_k(k,k,0)$とおくと，いずれの場合も
 \end{align}
 である．
 
-% TODO: 共通部分の図
-% TODO: 共通部分の図
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=2.5cm, y=2.0cm, >=stealth, every node/.style={font=\small}]
@@ -570,17 +573,17 @@ $H_k(k,k,0)$とおくと，いずれの場合も
   \label{fig:cross_section_intersection_tt}
 \end{figure}
 
-ここで$V_2$を$x=t$で切った時の切断面は$V_1$の切断面を$z$軸に関して折り返したものだから，共通部分は上図のようになる．
+ここで$V_2$を$x=t$で切った時の切断面は$V_1$の切断面を$z$軸に関して折り返したものだから，共通部分は上図のように$y,z$軸に関して対称な領域になる．
 
-この面積 $T(t)$ は対称性より$0 \le z$で$y_+$を積分したものの二倍だから$t \neq 1$の時
+よってこの面積 $T(t)$ は対称性より$0 \le z$で$y_+$を積分したものの4倍だから$t \neq 1$の時
 \begin{align}
-  \dfrac{1}{2}T(t)
+  \dfrac{1}{4}T(t)
   &= \int_{0}^{\sqrt{2(1-t)}} y_{+} dz \\
   &= \int_{0}^{\sqrt{2(1-t)}} \left\{\dfrac{z^2}{2(t-1)}+1\right\} dz \\
   &= \left[\dfrac{z^3}{6(t-1)}+z\right]_{0}^{\sqrt{2(1-t)}} \\
   &= \dfrac{(\sqrt{2(1-t)})^3}{6(t-1)} + \sqrt{2(1-t)} \\
-  &= \dfrac{\sqrt{2(1-t)}}{3} + \sqrt{2(1-t)} \\
-  &= \dfrac{4}{3}\sqrt{2(1-t)} \\
+  &= -\dfrac{\sqrt{2(1-t)}}{3} + \sqrt{2(1-t)} \quad (\because t-1<0)\\
+  &= \dfrac{2}{3}\sqrt{2(1-t)} \\
   \therefore
   T(t)
   &= \dfrac{8}{3}\sqrt{2(1-t)}
