@@ -1,0 +1,93 @@
+name: Check Web TeX Leaks
+
+# Web 版で TeX のコマンドがそのまま表示される箇所（漏れ）を検出する（#1489）。
+# 原稿が変わったときはその problem.tex・solution.tex だけを、変換スクリプトや
+# 検査スクリプトが変わったときは全ての原稿を調べる。
+# 対応する Issue がある既知の漏れは警告にとどめ、新しい漏れだけを失敗にする
+# （既知の一覧は scratch/check_web_leaks.py の KNOWN）。
+
+on:
+  pull_request:
+    paths:
+      - 'src/**/*.tex'
+      - 'scratch/tex_to_md.py'
+      - 'scratch/check_web_leaks.py'
+      - 'web/scripts/find-tex-leaks.mjs'
+      - 'web/package-lock.json'
+      - '.github/workflows/web-leaks.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**/*.tex'
+      - 'scratch/tex_to_md.py'
+      - 'scratch/check_web_leaks.py'
+      - 'web/scripts/find-tex-leaks.mjs'
+      - 'web/package-lock.json'
+      - '.github/workflows/web-leaks.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  web-leaks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine files to check
+        id: changed
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+            HEAD="${{ github.event.pull_request.head.sha }}"
+          else
+            BASE="${{ github.event.before }}"
+            HEAD="${{ github.sha }}"
+          fi
+          if ! git cat-file -e "$BASE" 2>/dev/null; then
+            BASE=$(git rev-parse "$HEAD^" 2>/dev/null || echo "$HEAD")
+          fi
+          git diff --diff-filter=ACMR --name-only "$BASE" "$HEAD" > all_changed.txt
+          if grep -qE '^(scratch/tex_to_md\.py|scratch/check_web_leaks\.py|web/scripts/find-tex-leaks\.mjs|web/package-lock\.json|\.github/workflows/web-leaks\.yml)$' all_changed.txt; then
+            echo "mode=all" >> "$GITHUB_OUTPUT"
+            echo "Converter or checker changed: checking every problem.tex / solution.tex."
+          else
+            grep -E '(^|/)(problem|solution)\.tex$' all_changed.txt > changed_files.txt || true
+            echo "mode=changed" >> "$GITHUB_OUTPUT"
+            echo "Changed problem.tex / solution.tex files:"
+            cat changed_files.txt
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'web/package-lock.json'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -o Acquire::Retries=3
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -o Acquire::Retries=3 pandoc
+          python3 -m pip install TexSoup pypandoc pyyaml Pillow
+          cd web && npm ci
+
+      - name: Check Web TeX leaks
+        run: |
+          if [ "${{ steps.changed.outputs.mode }}" = "all" ]; then
+            python3 scratch/check_web_leaks.py
+          elif [ -s changed_files.txt ]; then
+            python3 scratch/check_web_leaks.py $(cat changed_files.txt)
+          else
+            echo "No problem.tex / solution.tex changes to check."
+          fi

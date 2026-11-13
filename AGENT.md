@@ -73,6 +73,7 @@ python3 scratch/tex_to_md.py src/titech/zenki/2000/1/problem.tex
 1. `python3 scratch/lint_latex_style.py <対象ファイル>` で対象ファイルのみ lint
 2. `cd <対象ディレクトリ> && latexmk -lualatex -interaction=nonstopmode solution.tex` で単体コンパイル確認（図を直した場合は `pdftoppm` で PNG 化して目視確認。テスト成果物は8.1節8.の通り削除する）
 3. 必要なら `python3 scratch/tex_to_md.py <対象ファイルのパス>`（ピンポイントモード）で markdown 側も確認
+   * Web 版で TeX がそのまま表示されないかは `python3 scratch/check_web_leaks.py <対象ファイル>` で確かめられる（TikZ はコンパイルしないので数秒。引数なしなら全件で約30秒）。
 4. 全件変換・Astro フルビルドは「コミット直前の最終確認」または下記の「変換処理や変換コードを修正した後」にのみ行う
 
 変換処理や変換コードそのもの（`scratch/tex_to_md.py` 等）を修正した後は、**必ず以下を順番に実行**すること：
@@ -164,6 +165,7 @@ python3 scratch/lint_latex_style.py --fix src/utokyo/zenki/2000/1/solution.tex
 
 `--fix` / `--diff` は対象ファイルの明示指定が必須。一括書き換えを既定動作にはしない。pre-commit では対象の `solution.tex` に `--fix` を実行してから `tex-fmt` を実行する。自動修正された場合は差分確認・`git add`・再commit が必要。CI の `lint-tex.yml` は引き続き検査のみで、原稿を書き換えない。
 
+* **`web-leaks.yml`**（`src/**/*.tex`・`scratch/tex_to_md.py`・検査スクリプトを含む push / PR）: `scratch/check_web_leaks.py` で、Web 版の数式の外に TeX のコマンド（`\begin`・`\label` など）がそのまま表示される箇所を探す（#1489）。原稿の変更なら差分に入った `problem.tex`・`solution.tex` だけを、変換・検査スクリプトの変更なら全原稿を調べる。原稿を `tex_to_md.py` で Markdown にし（TikZ はコンパイルせず空の画像で置き換えるので TeX Live 不要）、`web/scripts/find-tex-leaks.mjs` がサイトと同じ Markdown 処理（remark-math・生 HTML）で HTML にしてから判定するので、`\%` などの Markdown のエスケープや数式の中の `>` を漏れと取り違えない。対応する Issue がある既知の漏れ（`check_web_leaks.py` の `KNOWN`）と `lint-skip` の旧形式の原稿は警告にとどめ、新しい漏れだけを失敗にする。既知の漏れを直したら `KNOWN` から外す。
 * **`pre-commit.yml`**（`**/*.tex` を含む push / PR）: [pre-commit](https://pre-commit.com/) フレームワーク経由で [tex-fmt](https://github.com/WGUNDERWOOD/tex-fmt)（Rust製 LaTeX フォーマッタ）を実行する。設定は `.pre-commit-config.yaml`（対象は `solution.tex`/`problem.tex`/`handwritten_tex.tex` のみ、`generate_main_tex.py` が再生成する `main.tex` は対象外）と `tex-fmt.toml`（2 スペースインデント、`wrap = false` で自動80桁折返しは無効化——`align` 内の改行位置は `scratch/lint_latex_style.py` の長い行警告に従って人間が選ぶ方針のため）。`lint-tex.yml` と異なりリポジトリ全体を対象にした「ratchet でない」強制チェックだが、導入時（2026年9月）に全 `.tex` へ一括適用済みのため全体適用でも問題ない。ローカルでは初回に `pre-commit install` を実行しておけば、以後 `git commit` のたびに変更した `.tex` ファイルが自動整形される（整形が入るとコミットは一旦中断されるので、`git add` し直して再コミットする）。
 
 ---
