@@ -62,6 +62,8 @@ PREAMBLE = r"""\documentclass[a4paper,10pt]{ltjsarticle}
 \usepackage{fancyhdr}
 \usepackage{cleveref}
 \usepackage{bm}
+% \bctetraedre（四面体の記号）など。subfiles では各ファイルのプリアンブルが使われないので共通で読み込む
+\usepackage{bclogo}
 \usepackage{tikz,pgfplots}
 \usepackage{tikz-3dplot}
 \usepackage{scrextend}
