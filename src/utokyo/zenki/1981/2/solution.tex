@@ -30,6 +30,11 @@
     \node[right] at (A3) {$A_3$};
     \node[below] at (A4) {$A_4$};
     \node[left] at (A5) {$A_5$};
+    \node[above left] at (A6) {$A_6$};
+
+    \foreach \i in {1,...,6} {
+      \node[circle, fill=blue!85!black, inner sep=1.2pt] at (A\i) {};
+    }
   \end{tikzpicture}
   \caption{正六角形 $A_1 \dots A_6$ と対角線}
 \end{figure}
@@ -97,14 +102,11 @@
       \fill[orange!20] (B1) -- (B2) -- (B5) -- cycle;
       \draw[very thick, orange!90!black] (B1) -- (B2) -- (B5) -- cycle;
 
-      % 直角マーク (∠A1 A2 A5 = 90°)
-      % A2-A1 方向と A2-A5 方向
-      \coordinate (u) at ($ (B1) - (B2) $);
-      \coordinate (v) at ($ (B5) - (B2) $);
-      \draw[thin, gray!70]
-      ($ (B2) + 0.16*(0, 1) $) --
-      ($ (B2) + 0.16*(0, 1) + 0.16*({-sqrt(3)/2}, -0.5) $) --
-      ($ (B2) + 0.16*({-sqrt(3)/2}, -0.5) $);
+      % 直角マーク (A2 A5 が直径なので ∠A2 A1 A5 = 90°)
+      \draw[thick, gray!70!black]
+      ($ (B1) + ({0.18*cos(-30)}, {0.18*sin(-30)}) $) --
+      ($ (B1) + ({0.18*cos(-30) + 0.18*cos(-120)}, {0.18*sin(-30) + 0.18*sin(-120)}) $) --
+      ($ (B1) + ({0.18*cos(-120)}, {0.18*sin(-120)}) $);
 
       % 頂点プロットとラベル
       \foreach \i/\pos in {1/above, 2/above right, 3/right, 4/below, 5/left, 6/above left} {
@@ -192,8 +194,11 @@ $A_1$を頂点に含み，$\triangle A_1 A_2 A_5$と相似なのは
   E
   &= \dfrac{6}{36} \cdot \dfrac{\sqrt{3}}{4} + \dfrac{12}{36} \cdot \dfrac{\sqrt{3}}{2} + \dfrac{2}{36} \cdot \dfrac{3}{4}\sqrt{3} \\
   &= \dfrac{\sqrt{3}}{36} \Bigl( \dfrac{3}{2} + 6 + \dfrac{3}{2} \Bigr) \\
-  &= \dfrac{3\sqrt{3}}{4}
+  &= \dfrac{\sqrt{3}}{4}
 \end{align}
 である．
+
+% TODO: 別解
+% 6頂点から重複を許して3回選ぶ216通りを考える
 
 \end{document}
