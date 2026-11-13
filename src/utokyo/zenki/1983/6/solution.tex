@@ -23,32 +23,42 @@
     % tdplot の座標タプルは (x, z, y) の順で渡し，回転軸 y が画面の鉛直方向になるようにする
     \begin{scope}[tdplot_main_coords]
       % 底面の円（y=0 における K の輪郭，半径 sqrt(3)/2）
-      \draw[thick, gray!55!black] plot[domain=0:360, samples=80, variable=\t]
+      \draw[thick, gray!70!black] plot[domain=0:360, samples=80, variable=\t]
       ({0.866*cos(\t)}, {0.866*sin(\t)}, {0});
 
       % 正面の断面（z=0 平面: y=3/4-x^2）
-      \draw[thick] plot[domain=-0.866:0.866, samples=60, variable=\x]
+      \draw[very thick, teal!85!black] plot[domain=-0.866:0.866, samples=60, variable=\x]
       ({\x}, {0}, {0.75-\x*\x});
 
       % 側面の断面（x=0 平面: y=3/4-z^2）
-      \draw[thick, gray!40] plot[domain=-0.866:0.866, samples=60, variable=\z]
+      \draw[thick, teal!60!black] plot[domain=-0.866:0.866, samples=60, variable=\z]
       ({0}, {\z}, {0.75-\z*\z});
 
       % 座標軸
-      \draw[->] (-1.3,0,0) -- (1.3,0,0) node[right] {$x$};
-      \draw[->] (0,0,-0.25) -- (0,0,1.0) node[above] {$y$};
-      \draw[->] (0,-1.3,0) -- (0,1.3,0) node[below right=1pt] {$z$};
+      \draw[->, thick, gray!80!black] (-1.3,0,0) -- (1.3,0,0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0,0,-0.25) -- (0,0,1.0) node[above] {$y$};
+      \draw[->, thick, gray!80!black] (0,-1.3,0) -- (0,1.3,0) node[below right=1pt] {$z$};
       \node[below left=1pt] at (0,0,0) {$O$};
 
-      % 平面 H: y=x （z=0 平面内の対角線として図示）
-      \draw[dashed, red!70!black] (-1.05,0,-1.05) -- (1.05,0,1.05) node[above right=1pt] {$H:y=x$};
+      % 平面 H: y=x の領域パッチ
+      \fill[red!15, opacity=0.35]
+      (-0.9, -0.8, -0.9) -- (0.9, -0.8, 0.9) --
+      (0.9, 0.8, 0.9) -- (-0.9, 0.8, -0.9) -- cycle;
+      \draw[dashed, red!70!black]
+      (-0.9, -0.8, -0.9) -- (0.9, -0.8, 0.9) --
+      (0.9, 0.8, 0.9) -- (-0.9, 0.8, -0.9) -- cycle;
+      \node[red!85!black, font=\footnotesize, above right] at (0.9, 0.4, 0.9) {平面 $H: y=x$};
+
+      % K と H の交線 (平面 y=x 上の楕円 (x+1/2)^2 + z^2 = 1)
+      \draw[very thick, red!85!black] plot[domain=0:360, samples=80, variable=\t]
+      ({-0.5 + cos(\t)}, {sin(\t)}, {-0.5 + cos(\t)});
     \end{scope}
   \end{tikzpicture}
-  \caption{放物線$y=\dfrac{3}{4}-x^2$の回転面$K$と，原点を通り回転軸と$45^\circ$をなす平面$H$}
+  \caption{放物線$y=\dfrac{3}{4}-x^2$の回転面$K$と，原点を通り回転軸と$45^\circ$をなす平面$H$およびその交線}
   \label{fig:overview_3d}
 \end{figure}
 
-これらを平面$x=k\, (0\le t)$で切断すると
+これらを平面$x=k\, (0\le k)$で切断すると
 \begin{align}
   \begin{array}{l}
     K:y=\left\{ \dfrac{3}{4}-k^2\right\}-z^2\equiv f(z)\\
@@ -70,19 +80,19 @@
   \centering
   \begin{tikzpicture}[scale=2.6, >=stealth, every node/.style={font=\small}]
     % k=0.2 の場合を代表例として図示（3/4-k^2=0.71, alpha=sqrt(0.71-0.2)=0.714）
-    \draw[->] (-1.0,-0.25) -- (1.0,-0.25) node[right] {$z$};
-    \draw[->] (0,-0.4) -- (0,0.8) node[above] {$y$};
+    \draw[->, thick, gray!80!black] (-1.0,-0.25) -- (1.0,-0.25) node[right] {$z$};
+    \draw[->, thick, gray!80!black] (0,-0.4) -- (0,0.8) node[above] {$y$};
     \node[below left=1pt] at (0,-0.25) {$O$};
 
-    \fill[pattern=north east lines, pattern color=gray!60]
+    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.7]
     plot[domain=-0.714:0.714, samples=80] (\x,{0.71-\x*\x})
     -- (0.714,0.2) -- (-0.714,0.2) -- cycle;
 
-    \draw[thick, domain=-0.9:0.9, samples=80] plot (\x,{0.71-\x*\x});
-    \draw[thick] (-0.9,0.2) -- (0.9,0.2) node[right] {$y=k$};
+    \draw[very thick, teal!85!black, domain=-0.9:0.9, samples=80] plot (\x,{0.71-\x*\x});
+    \draw[very thick, blue!85!black] (-0.9,0.2) -- (0.9,0.2) node[right] {$y=k$};
 
-    \draw[dashed] (-0.714,-0.25) -- (-0.714,0.2);
-    \draw[dashed] (0.714,-0.25) -- (0.714,0.2);
+    \draw[densely dotted, thick, gray!70!black] (-0.714,-0.25) -- (-0.714,0.2);
+    \draw[densely dotted, thick, gray!70!black] (0.714,-0.25) -- (0.714,0.2);
     \node[below] at (-0.714,-0.25) {$-\alpha$};
     \node[below] at (0.714,-0.25) {$\alpha$};
   \end{tikzpicture}
@@ -132,7 +142,7 @@
   &= \int_0^{\pi/2} c^2s^2 d\theta \\
   &= \int_0^{\pi/2} \dfrac{1}{4}\sin^2 2\theta d\theta \\
   &= \int_0^{\pi/2} \dfrac{1}{4}\dfrac{-\cos 4\theta+1}{2} d\theta \\
-  &= \int_0^{\pi/2} \dfrac{1}{8}\left[\dfrac{1}{4}\sin 4\theta+\theta\right]_{0}^{\pi/2} \\
+  &= \int_0^{\pi/2} \dfrac{1}{8}\left[-\dfrac{1}{4}\sin 4\theta+\theta\right]_{0}^{\pi/2} \\
   &= \dfrac{\pi}{16}
 \end{align}
 だから\cref{eq:6}に代入して
