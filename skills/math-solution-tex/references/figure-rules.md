@@ -274,6 +274,20 @@
 4. Web 用の SVG などに変換して公開する場合は、変換後の図も目視する。PDF だけでは視点のずれなど変換側の不具合が分からない。
 
 各手順の具体的なコマンドは `local/workflow.md`。
+
+### 11.1 lint が調べる作図の規則
+lint の指摘には、この規約の節番号が `[§F1.3]` の形で付く（F は figure-rules）。
+
+| 節 | 検査（`scripts/lint_tex.py`） | 扱い |
+|---|---|---|
+| §1.1 `figure` の中に置く | `check_tikz_nesting` | エラー |
+| §1.2 2段組の中は `[H]` | `check_multicols_float` | エラー |
+| §1.3 caption | `check_figure_caption` | エラー |
+| §1.4 `subcaptionblock` を使う | `check_subfigure_env` | エラー |
+| §1.5 作図の TODO は `figure` の中 | `check_figure_todo_placement` | 警告 |
+| §3.2 薄い灰色を線・文字・斜線に使わない | `check_light_gray` | 警告 |
+| §4.1 点は `\node[circle]` | `check_tikz_point_circle`（pt 単位の円）、`check_small_coordinate_circle`（座標単位の小さな円） | エラー・警告 |
+| §7.1 視点は `figure` の中、`tikzpicture` の直前 | `check_tdplot_placement` | エラー |
 5. 見るところ：
    - ラベル同士・ラベルと線の重なり
    - 図・caption の切れ、段からのはみ出し

@@ -16,6 +16,7 @@ python3 scratch/lint_latex_style.py --fix <file>    # 機械的な修正を書�
 
 - `scratch/lint_latex_style.py` は入口だけで、本体はスキルの `scripts/lint_tex.py`（汎用）と `local/lint_local.py`（このリポジトリ固有の検査）。入口を使わずに `python3 skills/math-solution-tex/scripts/lint_tex.py --rules skills/math-solution-tex/local/lint_local.py <file>` と呼んでも同じ結果になる。
 - 固有の検査：解答の見出し、proof 環境の見出し、`\documentclass[../../main.tex]{subfiles}`、問題文の読み込み（`\subfile{problem}`）、`problem.tex` の形式と `solution.tex` とのラベルの重複。年度のまとめ（`0/`）は余白の命令と `\qed` の検査から外す。
+- 指摘の末尾の `[§N5.1]` などは規約の節番号。`python3 skills/math-solution-tex/scripts/rules.py --sec '[§N5.1]'` でその節を表示できる。
 - 規則の出所と対応は `skills/rule-lint-map.md`。
 - 引数なしならリポジトリ全体を走査して集計だけを表示する。
 - CI（`.github/workflows/lint-tex.yml`）は、変更された `solution.tex` だけを検査する。pre-commit でも `--fix` 付きで動く。

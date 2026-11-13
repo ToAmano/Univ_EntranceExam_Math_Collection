@@ -39,9 +39,19 @@ lint の本体は `skills/math-solution-tex/scripts/lint_tex.py`（汎用）と 
 | A24 | `check_qed_mark` | 証明・解答の終わりは数式の外の文末に `\qed`（記号はプリアンブルで ■）。`$\blacksquare$`・`$\Box$`・文末の `$\square$`・数式の中の `\qed`・`\end{proof}` 直前の `\qed` を使わない（2026-11-13 追加） | notation §N3.1 | notation |
 | W1 | `check_overline_warning`（警告） | 辺の長さは `\overline{AB}` でなく `|AB|` | notation §N9.1 | notation |
 | W2 | `check_long_align_lines`（警告） | `align` の1行が長く `=` が複数あるときは改行する | notation §N5.4 | notation |
+| A25 | `check_binom` | `\binom` 系を使わず `{}_nC_k`（2026-11-13 追加） | notation §N2.1 | notation |
+| A26 | `check_subfigure_env` | `subfigure` を使わず `subcaptionblock`（2026-11-13 追加） | figure §1.4 | figure |
+| A27 | `check_multicols_float` | 2段組の中の figure・table は `[H]`（2026-11-13 追加） | figure §1.2 | figure・table |
+| A28 | `check_rotated_arrows` | 凹凸の矢印を `\rotatebox`・`\raisebox` で流用しない（2026-11-13 追加） | table §TB2.4 | table |
+| A29 | `check_tdplot_placement` | `\tdplotsetmaincoords` は figure の中、tikzpicture の直前（2026-11-13 追加） | figure §7.1 | figure |
+| W3 | `check_cases_env`（警告） | 場合分けは `dcases`（2026-11-13 追加。既存1165件のため警告） | notation §N1.1 | notation |
+| W4 | `check_figure_todo_placement`（警告） | 作図の TODO は figure の中（2026-11-13 追加） | figure §1.5 | figure |
+| W5 | `check_light_gray`（警告） | 線・文字・斜線に `gray!50` 以下を使わない（2026-11-13 追加） | figure §3.2 | figure |
+| W6 | `check_small_coordinate_circle`（警告） | 点を座標単位の小さな `circle` で打たない（2026-11-13 追加） | figure §4.1 | figure |
 
 補足
-- A18 が検出するのは pt 単位で 3.5pt 以下の `circle` だけ。座標単位の小さな円（`circle (0.07)`）や `circle (10pt)` は検出できない。
+- A18 が検出するのは pt 単位で 3.5pt 以下の `circle` だけ。座標単位の小さな円（`circle (0.07)`）は W6 が警告する。
+- 2026-11-13 から、lint の指摘の末尾に規約の節番号（`[§N5.1]`、`[§F1.3]`、`[§TB1.2]`、`[§LN1]`）が付く。
 - `% lint-skip:` の印があるファイルは、A13 以外を検査しない（旧 jarticle 形式の未移行ファイル用、#593）。
 
 ## B. 規約にあるが lint が検査していない規則
@@ -56,22 +66,22 @@ lint の本体は `skills/math-solution-tex/scripts/lint_tex.py`（汎用）と 
 | B4 | 小問は `\paragraph{(1)}` で見出しにし、`enumerate` で囲まない | local/notation LN2 | △（場合分けの `enumerate` は許容されるため） | structure |
 | B5 | 1ページに収めるための圧縮をしない | AGENTS.md・figure §0.3 | × | notation |
 | B6 | 手書き原稿の解法に忠実に文字起こしする | transcription §TR1.1（旧 AGENT.md 8.3.7） | × | transcription |
-| B7 | 2段組の中の figure・table は `[H]` | figure §1.2 | ◯ | figure・table |
+| B7 | 2段組の中の figure・table は `[H]` | figure §1.2 | ◯ → 実装済み（A27） | figure・table |
 | B8 | 中央寄せは `center` 環境ではなく `\centering` | figure §1.1 | ◯ | figure・table |
-| B9 | `subfigure` を使わず `subcaptionblock` | figure §1.4 | ◯ | figure |
-| B10 | 図の TODO は figure 環境の中に書く | figure §1.5 | ◯ | figure |
-| B11 | 線・パターンの灰色は `gray!60!black` 以上 | figure §3.2 | ◯ | figure |
+| B9 | `subfigure` を使わず `subcaptionblock` | figure §1.4 | ◯ → 実装済み（A26） | figure |
+| B10 | 図の TODO は figure 環境の中に書く | figure §1.5 | ◯ → 実装済み（W4） | figure |
+| B11 | 線・パターンの灰色は `gray!60!black` 以上 | figure §3.2 | ◯ → 実装済み（W5） | figure |
 | B12 | 座標軸は `gray!80!black` | figure §3.1 | △ | figure |
 | B13 | 破線（`dashed`）は隠れ線専用 | figure §3.1 | △（3D でない図の `dashed` を警告） | figure |
 | B14 | 平面の領域は斜線パターン（ベタ塗りだけにしない） | AGENTS.md・figure §5.1 | △（3D でない図の `\fill` を警告） | figure |
-| B15 | 3D の視点は figure の中、tikzpicture の直前で `\tdplotsetmaincoords` | figure §7.1 | ◯ | figure |
+| B15 | 3D の視点は figure の中、tikzpicture の直前で `\tdplotsetmaincoords` | figure §7.1 | ◯ → 実装済み（A29） | figure |
 | B16 | 遷移図で各状態から出る確率の和が1 | figure §8.5 | △（ラベルが数値なら検算できる） | figure |
 | B17 | 点が線上にある・接する・直角などの幾何の整合 | figure §10 | △（座標を評価する別ツールが要る） | figure |
 | B18 | PDF の全ページと Web 用 SVG を目視する | AGENTS.md・figure §11 | × | figure |
 | B19 | 代表点から座標軸へ垂線を下ろす | AGENTS.md・figure §6.1 | × | figure |
-| B20 | 増減表の凹凸を `\rotatebox` の矢印で書かない | 1977-6 の TODO のみ | ◯ | table |
-| B21 | 場合分けは `dcases` を使い、`cases` を使わない（2026-11-12 採用） | notation §N1.1 | ◯ | notation |
-| B22 | `\binom` 系を使わず `{}_nC_k` で書く（2026-11-12 採用） | notation §N2.1 | ◯ | notation |
+| B20 | 増減表の凹凸を `\rotatebox` の矢印で書かない | table §TB2.4 | ◯ → 実装済み（A28） | table |
+| B21 | 場合分けは `dcases` を使い、`cases` を使わない（2026-11-12 採用） | notation §N1.1 | ◯ → 実装済み（W3） | notation |
+| B22 | `\binom` 系を使わず `{}_nC_k` で書く（2026-11-12 採用） | notation §N2.1 | ◯ → 実装済み（A25） | notation |
 
 ## C. 規約に書き足す必要があるもの
 

@@ -1,4 +1,4 @@
-"""このリポジトリ固有の lint の検査（汎用の検査は scripts/lint_tex.py）。
+r"""このリポジトリ固有の lint の検査（汎用の検査は scripts/lint_tex.py）。
 
 - 解答の見出し（{\bf [解答]}・[別解]・[別解1]・[解説]）と proof 環境の見出し
 - subfiles の \documentclass[../../main.tex]{subfiles}
@@ -36,6 +36,7 @@ line_of = lint_tex.line_of
 strip_comments = lint_tex.strip_comments
 check_duplicate_labels = lint_tex.check_duplicate_labels
 check_equation_references = lint_tex.check_equation_references
+tag = lint_tex.tag
 
 def check_proof_env(text):
     """\\begin{proof}[解] / \\begin{proof}[別解] のように、解答冒頭の見出し
@@ -220,19 +221,19 @@ class RepoProfile(lint_tex.Profile):
         return path.name in ('problem.tex', 'solution.tex') and path.parent.name != '0'
 
     def reference_errors(self, path, text, context):
-        return check_problem_label_conflicts(text, context)
+        return tag(check_problem_label_conflicts(text, context), 'LN3')
 
     def errors(self, path, text):
         errors = []
-        errors += check_documentclass(text)
-        errors += check_proof_env(text)
+        errors += tag(check_documentclass(text), 'LN3')
+        errors += tag(check_proof_env(text), 'LN1')
         if path.name == 'solution.tex':
-            errors += check_solution_headings(text)
+            errors += tag(check_solution_headings(text), 'LN1')
             if path.parent.name != '0' and path.with_name('problem.tex').exists():
-                errors += check_problem_embedded(text)
+                errors += tag(check_problem_embedded(text), 'LN3')
         if path.name == 'problem.tex':
-            errors += check_problem_is_document(text)
-            errors += check_problem_figure_float(text)
+            errors += tag(check_problem_is_document(text), 'LN3')
+            errors += tag(check_problem_figure_float(text), 'LN3')
         return errors
 
     def edit_finders(self):

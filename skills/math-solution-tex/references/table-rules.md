@@ -78,7 +78,7 @@
 - 矢印の向き・凹凸が、符号の行と一致するか。
 - 表の値（極値・端点の値・極限）が、本文で求めた値と一致するか。
 - 列の数と、`tabular` の列の指定が合っているか。
-- lint：なし。`\rotatebox` で回した矢印の検出は今後追加する。
+- lint：`check_rotated_arrows`（§TB2.4。`\rotatebox`・`\raisebox` で回した `\curvearrowright` などを検出）。ほかの照合は目視。
 
 ---
 

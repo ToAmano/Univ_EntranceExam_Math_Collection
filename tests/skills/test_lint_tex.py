@@ -96,3 +96,45 @@ def test_lint_skip_marker(tmp_path):
     errors, warnings, skipped = lint.lint_file(source)
     assert skipped == '旧形式'
     assert errors == [] and warnings == []
+
+
+def _messages(results):
+    return ' '.join(msg for _, msg in results)
+
+
+def test_lint_file_tags_section_numbers(tmp_path):
+    source = tmp_path / 'a.tex'
+    source.write_text(DOC, encoding='utf-8')
+    errors, _, _ = lint.lint_file(source)
+    assert all('[§' in msg for _, msg in errors)
+    assert '\\[ は使わない（align 環境を使う） [§N5.1]' in _messages(errors)
+
+
+def test_check_functions_keep_plain_messages():
+    # 節番号は lint_file で付ける。個々の検査関数の戻り値は変えない
+    assert '[§' not in _messages(lint.check_align_star('\\begin{align*}x\\end{align*}'))
+
+
+def test_new_error_checks():
+    assert lint.check_binom('$\\binom{n}{k}$ と $\\dbinom{6}{2}$') and len(lint.check_binom('$\\dbinom{6}{2}$')) == 1
+    assert lint.check_subfigure_env('\\begin{subfigure}{0.4\\textwidth}\\end{subfigure}')
+    two_col = '\\begin{multicols}{2}\\begin{figure}[htb]\\end{figure}\\begin{table}[H]\\end{table}\\end{multicols}'
+    assert len(lint.check_multicols_float(two_col)) == 1
+    assert lint.check_rotated_arrows('$\\rotatebox[origin=c]{-45}{$\\curvearrowright$}$')
+    assert not lint.check_rotated_arrows('$\\curvearrowright$')
+    good = '\\begin{figure}[htb]\n  \\centering\n  \\tdplotsetmaincoords{65}{115}\n  \\begin{tikzpicture}\\end{tikzpicture}\n\\end{figure}'
+    assert not lint.check_tdplot_placement(good)
+    assert lint.check_tdplot_placement('\\tdplotsetmaincoords{65}{115}\n' + good.replace('\\tdplotsetmaincoords{65}{115}\n', ''))
+
+
+def test_new_warning_checks():
+    assert lint.check_cases_env('\\begin{cases} a \\end{cases}')
+    assert not lint.check_cases_env('\\begin{dcases} a \\end{dcases}')
+    raw = '% TODO: 概要図\n\\begin{figure}\n% TODO: 図を描く\n\\end{figure}\n'
+    assert [line for line, _ in lint.check_figure_todo_placement(raw)] == [1]
+    pic = ('\\begin{tikzpicture}\\draw[dashed, gray!50] (0,0)--(1,1); \\fill[gray!20] (0,0) circle (1);'
+           ' \\draw[fill=gray!20] (0,0)--(1,0); \\node[gray!30!black] at (0,0) {a};'
+           ' \\fill[pattern=north east lines, pattern color=gray!40] (0,0) rectangle (1,1);'
+           ' \\fill (0,0) circle (0.05); \\draw (0,0) circle (1);\\end{tikzpicture}')
+    assert len(lint.check_light_gray(pic)) == 2  # gray!50 の線と gray!40 の斜線（塗りと黒との混色は対象外）
+    assert len(lint.check_small_coordinate_circle(pic)) == 1  # 図形の円 circle (1) は対象外

@@ -7,7 +7,7 @@ description: 数学の答案・解答を TeX で書く・手書き原稿から�
 
 数学の答案・解答を TeX で書くときの規約と、その検査の手順。
 
-- **規約の正本**は `references/` にある。全部を読まず、工程ごとに必要な節（§）だけを読む。
+- **規約の正本**は `references/` にある。全部を読まず、工程ごとに必要な節（§）だけを読む。節は `scripts/rules.py` で引ける（`--phase figure`、`--sec N5.3`、`--grep dcases`）。
 - **機械で調べられることは機械で調べる**（lint、式変形の検算、図だけの差分の確認）。
 - **最後は必ず人の目で見る**。コンパイルが通っただけで完了にしない。PDF の全ページ（Web に出すなら SVG も）を表示して確かめる。
 
@@ -25,6 +25,7 @@ description: 数学の答案・解答を TeX で書く・手書き原稿から�
 | `scripts/tex_references.py` | ラベル・参照の読み取りと正規化（lint が使う） | あり |
 | `scripts/check_figure_only_diff.py` | 図だけを直したときに、図のブロック以外に差分がないかを調べる（git を使う） | あり。標準ライブラリのみ |
 | `scripts/check_math_steps.py` | 式変形の自動検算（SymPy） | あり。依存は `scripts/requirements.txt` |
+| `scripts/rules.py` | 規約から節番号・工程・語句で節を引き出す | あり。標準ライブラリのみ |
 | `local/` | 利用先（リポジトリ）固有の規約・コマンド・手本 | `local/workflow.md`（検査・確認のコマンド）、`local/transcription.md`（文字起こしの手順）、`local/notation.md`（見出し・ファイル構成などの固有の記法）、`local/lint_local.py`（固有の lint の検査） |
 
 具体的なコマンドやファイルの場所は `local/` にある。`references/` と `SKILL.md` には利用先に依存することを書かない。
@@ -36,6 +37,8 @@ description: 数学の答案・解答を TeX で書く・手書き原稿から�
 ## 工程
 
 作業の種類に応じて、該当する工程だけを行う。各工程で「読むもの」の節を先に読んでから手を動かす。
+
+節番号の書き方：`N`＝記法（notation-rules）、`F`＝図（figure-rules。付録は `FA`〜`FC`）、`TB`＝表（table-rules）、`TR`＝文字起こし（transcription-rules）、`LN`・`L`・`W`＝利用先固有（`local/` の notation・transcription・workflow）。各工程の節の一覧は `scripts/rules.py --phase <工程> --list` で表示できる（`transcribe`・`define`・`write`・`figure`・`figure-only`・`table`・`check`・`view`）。
 
 ### 0. 文字起こし（手書き原稿がある場合）
 - **読むもの**：`references/transcription-rules.md`（全体）、`local/transcription.md`
@@ -75,7 +78,7 @@ description: 数学の答案・解答を TeX で書く・手書き原稿から�
 ### 5. 機械で検査する
 コマンドは `local/workflow.md`（W1〜W3）。
 
-1. **lint**：記法・図・表の規約のうち機械で判定できるものを調べる。`scripts/lint_tex.py <file>` で汎用の検査を行い、利用先固有の検査は `--rules <module.py>` で足す（`PROFILE` を定義したモジュール。`local/lint_local.py` が例）。`--diff` で機械的な修正を確かめてから `--fix` で書き込む。
+1. **lint**：記法・図・表の規約のうち機械で判定できるものを調べる。指摘の末尾には規約の節番号（`[§N5.1]`、`[§F1.3]` など）が付くので、`scripts/rules.py --sec '[§N5.1]'` でその節を読んでから直す。`scripts/lint_tex.py <file>` で汎用の検査を行い、利用先固有の検査は `--rules <module.py>` で足す（`PROFILE` を定義したモジュール。`local/lint_local.py` が例）。`--diff` で機械的な修正を確かめてから `--fix` で書き込む。
 2. **式変形の検算**：`scripts/check_math_steps.py <file>`
    - 出てくるのは誤りの「候補」。確度 A（数値どうし）は誤りの可能性が高く、確度 B は文字の意味や前提しだいで誤検出もある。
    - 指摘は必ず式と原稿を見て確かめる。検算が通ったことは正しさの証明ではない。
@@ -97,6 +100,4 @@ description: 数学の答案・解答を TeX で書く・手書き原稿から�
 ---
 
 ## 未整備（#1487 で進行中）
-- `scripts/rules.py`（`--phase`・`--sec` で規約の節を引く）を作る。
-- lint の指摘に規約の節番号を付ける。
 - `.claude/skills/` からも読み込めるようにする。

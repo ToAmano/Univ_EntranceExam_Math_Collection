@@ -1416,6 +1416,137 @@ def check_qed_mark(text):
     return errors
 
 
+# ---------------------------------------------------------------------------
+# 規約に合わせて追加した検査（2026-11-13）
+# ---------------------------------------------------------------------------
+
+def check_cases_env(text):
+    """場合分けは dcases で書く（§N1.1）。既存原稿に多いので警告にする。"""
+    return [(line_of(text, m.start()), "場合分けは cases ではなく dcases を使う（残す場合は中に \\displaystyle を補う）")
+            for m in re.finditer(r'\\begin\{cases\}', text)]
+
+
+def check_binom(text):
+    """組合せは {}_nC_k で書き、\\binom 系は使わない（§N2.1）。"""
+    return [(line_of(text, m.start()), f"{m.group()} は使わず，組合せは {{}}_nC_k の形で書く")
+            for m in re.finditer(r'\\[dt]?binom(?![a-zA-Z])', text)]
+
+
+def check_subfigure_env(text):
+    """複数の図・表を並べるときは subfigure ではなく subcaptionblock を使う（figure §1.4）。"""
+    return [(line_of(text, m.start()), "subfigure は使わず subcaptionblock を使う")
+            for m in re.finditer(r'\\begin\{subfigure\}', text)]
+
+
+def check_multicols_float(text):
+    """2段組（multicols）の中の figure・table は [H] にする（figure §1.2）。段の中の浮動体は消えたりずれたりする。"""
+    errors = []
+    for block in re.finditer(r'\\begin\{multicols\*?\}.*?\\end\{multicols\*?\}', text, re.DOTALL):
+        for m in re.finditer(r'\\begin\{(figure|table)\}(\[[^\]]*\])?', block.group()):
+            if m.group(2) != '[H]':
+                errors.append((line_of(text, block.start() + m.start()),
+                               f"2段組（multicols）の中の {m.group(1)} は [H] にする"))
+    return errors
+
+
+ROTATED_ARROW_RE = re.compile(
+    r'\\(?:rotatebox|raisebox)\s*(?:\[[^\]]*\])?\s*\{[^{}]*\}\s*\{\s*\$?\s*\\(?:curvearrow(?:right|left)|hook(?:right|left)arrow)')
+
+
+def check_rotated_arrows(text):
+    """増減表の凹凸を、既存の矢印を回したりずらしたりして書かない（§TB2.4）。"""
+    return [(line_of(text, m.start()),
+             "凹凸の矢印を \\rotatebox・\\raisebox で流用しない（\\carrowIncreaseConvex などを使う）")
+            for m in ROTATED_ARROW_RE.finditer(text)]
+
+
+def check_tdplot_placement(text):
+    """3D の視点（\\tdplotsetmaincoords）は figure の中、\\begin{tikzpicture} の直前に書く（figure §7.1）。"""
+    errors = []
+    for m in re.finditer(r'\\tdplotsetmaincoords\s*\{[^}]*\}\s*\{[^}]*\}', text):
+        before = text[:m.start()]
+        inside = before.rfind('\\begin{figure}') > before.rfind('\\end{figure}')
+        follows = re.match(r'\s*\\begin\{tikzpicture\}', text[m.end():]) is not None
+        if not (inside and follows):
+            errors.append((line_of(text, m.start()),
+                           "\\tdplotsetmaincoords は figure の中，\\begin{tikzpicture} の直前に書く"))
+    return errors
+
+
+FIGURE_TODO_RE = re.compile(
+    r'^[ \t]*%[ \t]*TODO[ \t]*(?::|：)+[ \t]*.*?(?:図|figure|概形|グラフ|TikZ|作図).*?$', re.MULTILINE | re.IGNORECASE)
+
+
+def check_figure_todo_placement(raw):
+    """作図の TODO は figure の中に書く（figure §1.5）。コメントを読むので、コメントを消す前の本文を渡す。"""
+    warnings = []
+    for m in FIGURE_TODO_RE.finditer(raw):
+        before = raw[:m.start()]
+        if not before.rfind('\\begin{figure}') > before.rfind('\\end{figure}'):
+            warnings.append((line_of(raw, m.start()), "作図の TODO は figure の中に書く（図だけの差分を検証できるように）"))
+    return warnings
+
+
+LIGHT_GRAY_VALUE_RE = re.compile(r'^gray!(\d+)$')
+LIGHT_GRAY_LINE_KEYS = ('draw', 'color', 'text', 'pattern color')
+
+
+def _light_gray_items(opts, command):
+    """TikZ のオプションから、線・文字・斜線パターンに使われた gray!N（N<=50。黒などとの混色は除く）を返す。"""
+    found = []
+    for item in opts.split(','):
+        item = item.strip()
+        key, _, value = item.partition('=')
+        key, value = key.strip(), value.strip()
+        if not value:
+            if command in ('fill', 'filldraw'):
+                continue  # \fill[gray!20] の色は塗りの色
+            value, key = key, ''  # 色だけを書いた項目（\draw[gray!40] など）
+        elif key not in LIGHT_GRAY_LINE_KEYS:
+            continue  # fill などの塗りは対象外
+        m = LIGHT_GRAY_VALUE_RE.match(value)
+        if m and int(m.group(1)) <= 50:
+            found.append(value)
+    return found
+
+
+def check_light_gray(text):
+    """線・文字・斜線パターンに薄い灰色（gray!50 以下）を使わない（figure §3.2）。塗りは対象外。"""
+    warnings = []
+    for span_start, span_end in find_tikzpicture_spans(text):
+        body = text[span_start:span_end]
+        for m in re.finditer(r'\\(draw|node|path|fill|filldraw)\s*\[([^\]]*)\]', body):
+            items = _light_gray_items(m.group(2), m.group(1))
+            if items:
+                warnings.append((line_of(text, span_start + m.start()),
+                                 f"線・文字に薄い灰色 {items[0]} を使わない（gray!60!black 以上の濃さにする）"))
+    return warnings
+
+
+SMALL_COORD_CIRCLE_RE = re.compile(r'\\(?:fill|filldraw|draw)\b[^;]*?\bcircle\s*\(\s*(0?\.\d+|0)\s*\)')
+
+
+def check_small_coordinate_circle(text):
+    """点を座標単位の小さな circle（circle (0.05) など）で打たない（figure §4.1）。図形の円は対象外なので警告にする。"""
+    warnings = []
+    for span_start, span_end in find_tikzpicture_spans(text):
+        body = text[span_start:span_end]
+        for m in SMALL_COORD_CIRCLE_RE.finditer(body):
+            if float(m.group(1)) < 0.15:
+                warnings.append((line_of(text, span_start + m.start()),
+                                 "点は circle パスではなく \\node[circle, ...] で打つ（座標単位の小さな円が見つかった）"))
+    return warnings
+
+
+def tag(results, section):
+    """検査の結果に規約の節番号を付ける（例：[§N5.1]）。"""
+    return [(line, f"{msg} [§{section}]") for line, msg in results]
+
+
+def _tag_equation_references(results):
+    return [(line, f"{msg} [§{'N10.2' if '連番' in msg else 'N10.3'}]") for line, msg in results]
+
+
 class Profile:
     """利用先ごとの検査の設定。既定は汎用の検査だけを行う。
 
@@ -1454,40 +1585,51 @@ class Profile:
 
 
 def lint_file(path, profile=None):
+    """1ファイルを検査し、(エラー, 警告, lint-skip の理由) を返す。
+    指摘の末尾には規約の節番号を付ける（N：notation-rules、F：figure-rules、TB：table-rules、LN：local/notation）。"""
     profile = profile or Profile()
     raw = path.read_text(encoding='utf-8')
     skip_m = LINT_SKIP_RE.search(raw)
     text = strip_comments(raw)
     context = profile.label_context(path)
-    reference_errors = check_duplicate_labels(text)
+    reference_errors = tag(check_duplicate_labels(text), 'N10.4')
     reference_errors += profile.reference_errors(path, text, context)
-    reference_errors += check_equation_references(text, context)
+    reference_errors += _tag_equation_references(check_equation_references(text, context))
     if skip_m:
         return reference_errors, [], skip_m.group(1).strip()
     errors = []
-    errors += check_align_star(text)
-    errors += check_equation_env(text)
-    errors += check_trailing_align_break(text)
-    errors += check_display_math_brackets(text)
-    errors += check_display_math_dollars(text)
-    errors += check_punctuation(text)
-    errors += check_bare_args(text)
-    errors += check_figure_caption(text)
-    errors += check_table_caption(text)
-    errors += check_tikz_nesting(text)
-    errors += check_tabular_nesting(text)
+    errors += tag(check_align_star(text), 'N5.1')
+    errors += tag(check_equation_env(text), 'N5.1')
+    errors += tag(check_trailing_align_break(text), 'N5.3')
+    errors += tag(check_display_math_brackets(text), 'N5.1')
+    errors += tag(check_display_math_dollars(text), 'N5.1')
+    errors += tag(check_punctuation(text), 'N4.1')
+    errors += tag(check_bare_args(text), 'N6.2')
+    errors += tag(check_figure_caption(text), 'F1.3')
+    errors += tag(check_table_caption(text), 'TB1.2')
+    errors += tag(check_tikz_nesting(text), 'F1.1')
+    errors += tag(check_tabular_nesting(text), 'TB1.1')
     if profile.body_rules_apply(path):
-        errors += check_spacing_commands(text)
-        errors += check_qed_mark(text)
+        errors += tag(check_spacing_commands(text), 'N11.1')
+        errors += tag(check_qed_mark(text), 'N3.1')
     errors += profile.errors(path, text)
     errors += reference_errors
-    errors += check_frac_subscript_rule(text)
-    errors += check_left_right_balance(text)
-    errors += check_vector_notation(text)
-    errors += check_tikz_point_circle(text)
-    errors += check_reference_commands(text)
-    warnings = check_overline_warning(text)
-    warnings += check_long_align_lines(text)
+    errors += tag(check_frac_subscript_rule(text), 'N6.1')
+    errors += tag(check_left_right_balance(text), 'N7.2')
+    errors += tag(check_vector_notation(text), 'N8.1')
+    errors += tag(check_tikz_point_circle(text), 'F4.1')
+    errors += tag(check_reference_commands(text), 'N10.1')
+    errors += tag(check_binom(text), 'N2.1')
+    errors += tag(check_subfigure_env(text), 'F1.4')
+    errors += tag(check_multicols_float(text), 'F1.2')
+    errors += tag(check_rotated_arrows(text), 'TB2.4')
+    errors += tag(check_tdplot_placement(text), 'F7.1')
+    warnings = tag(check_overline_warning(text), 'N9.1')
+    warnings += tag(check_long_align_lines(text), 'N5.4')
+    warnings += tag(check_cases_env(text), 'N1.1')
+    warnings += tag(check_figure_todo_placement(raw), 'F1.5')
+    warnings += tag(check_light_gray(text), 'F3.2')
+    warnings += tag(check_small_coordinate_circle(text), 'F4.1')
     return errors, warnings, None
 
 
