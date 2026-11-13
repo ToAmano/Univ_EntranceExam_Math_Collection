@@ -174,6 +174,27 @@ def _convert_text_command(text, command, wrap):
     return ''.join(out)
 
 
+def _convert_bf_groups(text, wrap):
+    """数式の外にある {\\bf ...}・{\\bfseries ...} を、ネストした {} を含めて切り出し
+    wrap(中身) に置き換える。見出しの {\\bf [解答]} などは先に見出しへ変換しておくこと
+    （#1489。実例: 京大前期1962-3 の \\item {\\bf 方べきの定理：}）。"""
+    pattern = re.compile(r'\{\s*\\bf(?:series)?(?![A-Za-z])\s*')
+    spans = _math_spans(text)
+    out = []
+    i = 0
+    for m in pattern.finditer(text):
+        if m.start() < i or any(a <= m.start() < b for a, b in spans):
+            continue
+        braced, end = _extract_braced(text, m.start())
+        if not braced.endswith('}'):
+            continue
+        out.append(text[i:m.start()])
+        out.append(wrap(text[m.end():end - 1].strip()))
+        i = end
+    out.append(text[i:])
+    return ''.join(out)
+
+
 _LIST_ENVS = ('enumerate', 'description', 'itemize')
 _LIST_ENV_TOKEN_RE = re.compile(r'\\(begin|end)\{(' + '|'.join(_LIST_ENVS) + r')\}')
 _ITEM_RE = re.compile(r'\\item\b\s*')
@@ -1480,6 +1501,7 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     # \underline{...} も Markdown に無いので <u> にする。
     md_content = _convert_text_command(md_content, 'underline', lambda s: f'<u>{s}</u>')
     md_content = _convert_text_command(md_content, 'textbf', lambda s: f'**{s}**')
+    md_content = _convert_bf_groups(md_content, lambda s: f'**{s}**')
     # **AAAA****BBBB** や **AAAA** **BBBB** の自動結合 (**AAAABBBB**)
     md_content = re.sub(r'\*\*([^*]+)\*\*\s*\*\*([^*]+)\*\*', r'**\1\2**', md_content)
 

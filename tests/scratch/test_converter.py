@@ -26,6 +26,16 @@ class TestConverter(unittest.TestCase):
             )
             return output.read_text(encoding='utf-8')
 
+    def test_bf_group_becomes_bold_but_heading_and_math_are_kept(self):
+        md = self.convert(
+            '{\\bf [解答]}\n\n\\begin{itemize}\n\\item {\\bf 方べきの定理：} $PA \\cdot PB$ は一定．\n'
+            '\\end{itemize}\n\n{\\bfseries 注意} は $\\{\\bf x\\}$ と書かない．')
+        self.assertIn('## 【解答】', md)
+        self.assertIn('**方べきの定理：**', md)
+        self.assertIn('**注意**', md)
+        self.assertNotIn('{\\bf 方べき', md)
+        self.assertIn('$\\{\\bf x\\}$', md)
+
     def test_math_macros_are_preserved_for_mathjax(self):
         latex = r'ベクトル $\bm{a}$ と $\R,\C,\N,\Z,\Q$'
         self.assertIn(latex, self.convert(latex))
