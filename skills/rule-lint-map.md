@@ -30,7 +30,7 @@
 | A16 | `check_tikz_nesting` | tikzpicture は figure の中（数式中のアイコンは例外） | 8.3.6・figure §1.1 | figure |
 | A17 | `check_tabular_nesting` | tabular は table の中 | 8.3.6 | table |
 | A18 | `check_tikz_point_circle` | 点は `\node[circle]` で打つ | AGENTS.md・figure §4.1 | figure |
-| A19 | `check_punctuation` | 句読点は「．」「，」 | 8.3.6 | structure |
+| A19 | `check_punctuation` | 句読点は「．」「，」。「。」「、」と、和文に接する半角の「,」「.」を検出し `--fix` で直す（半角は 2026-11-13 追加） | 8.3.6・notation §N4.1 | notation |
 | A20 | `check_proof_env` | 解答の冒頭に `\begin{proof}[解]` を使わない | 8.3.6 | structure |
 | A21 | `check_solution_headings` | `[解答]`・`[別解]`・`[別解1]`・`[解説]` に統一（solution.tex のみ） | AGENTS.md | structure |
 | A22 | `check_documentclass` | 1行目は `\documentclass[../../main.tex]{subfiles}` | 8.3.6 | structure |

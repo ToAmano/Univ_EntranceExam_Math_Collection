@@ -351,11 +351,34 @@ def _find_display_math_bracket_edits(text, raw):
     return edits
 
 
+# 和文に接する半角の「,」「.」（「である.」「から,」「以下, 」など）。数式・図・TikZ の中、
+# 「...」のような点の連続、「1.2」のような数字の後の「.」は対象外。
+_JA_CHAR = r'[\u3040-\u30ff\u3400-\u9fff\uff01-\uff60\u3000-\u303f]'
+HALFWIDTH_PUNCT_RE = re.compile(
+    rf'(?<![.0-9])(?:(?<={_JA_CHAR})[,.]|[,.](?={_JA_CHAR}))(?!\.)')
+HALFWIDTH_PUNCT_PROTECT_RE = re.compile(
+    r'\\begin\{(align\*?|equation\*?|gather\*?|multline\*?|figure|tikzpicture)\}.*?\\end\{\1\}'
+    r'|\$\$.*?\$\$|(?<!\\)\$(?:\\\$|[^$])+?(?<!\\)\$|\\\[.*?\\\]|\\\(.*?\\\)', re.S)
+
+
+def _find_halfwidth_punct(masked):
+    """和文に接する半角の「,」「.」の位置を返す（masked はコメント等を空白にした本文）。"""
+    start = masked.find('\\begin{document}')
+    start = 0 if start < 0 else start
+    protected = [(m.start(), m.end()) for m in HALFWIDTH_PUNCT_PROTECT_RE.finditer(masked, start)]
+    return [m for m in HALFWIDTH_PUNCT_RE.finditer(masked, start)
+            if not any(a <= m.start() < b for a, b in protected)]
+
+
 def check_punctuation(text):
     errors = []
     for m in re.finditer(r'[。、]', text):
         errors.append((line_of(text, m.start()),
                         f"句読点は全角「．」「，」を使う（「{m.group()}」が見つかった）"))
+    for m in _find_halfwidth_punct(_mask_protected_regions(text)):
+        full = {',': '，', '.': '．'}[m.group()]
+        errors.append((line_of(text, m.start()),
+                       f"和文の句読点は全角「{full}」を使う（半角の「{m.group()}」が見つかった）"))
     return errors
 
 
@@ -1182,6 +1205,17 @@ def fix_text(raw):
         if m.group() != replacement:
             edits.append((m.start(), m.end(), replacement))
     for start, end, replacement in sorted(edits, reverse=True):
+        raw = raw[:start] + replacement + raw[end:]
+
+    # 和文に接する半角の「,」「.」を全角にする。直後の空白は全角の句読点に含まれるので詰める。
+    masked = _mask_protected_regions(raw)
+    punct_edits = []
+    for m in _find_halfwidth_punct(masked):
+        end = m.end()
+        while end < len(raw) and raw[end] in ' \t':
+            end += 1
+        punct_edits.append((m.start(), end, {',': '，', '.': '．'}[m.group()]))
+    for start, end, replacement in sorted(punct_edits, reverse=True):
         raw = raw[:start] + replacement + raw[end:]
 
     vec_edits = _find_vector_edits(_mask_protected_regions(raw))
