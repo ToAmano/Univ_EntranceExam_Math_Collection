@@ -9,6 +9,7 @@
 \subparagraph{(1)}
 
 \begin{figure}[htb]
+  % TODO: 図はもうちょいわかりやすく
   \centering
   % 俯角 68°，方位角 115° で法線ベクトルと張る平面の直交関係を明瞭に表示
   \tdplotsetmaincoords{68}{115}
@@ -17,32 +18,32 @@
     % --- 1. 座標定義 ---
     \coordinate (O) at (0, 0, 0);
 
-    % 平面 S0 上の基準点 A(0, 1/2, 1)
-    \coordinate (A) at (0, 0.5, 1.0);
+    % 平面 S0 上の基準点 B(0, 1/2, 1)
+    \coordinate (B) at (0, 0.5, 1.0);
 
-    % 平面を張る2ベクトル p = (0, -0.5, -0.5), q = (1, -0.5, 0)
-    % A を始点とした終点
-    \coordinate (P_end) at ($ (A) + (0, -0.5, -0.5) $);
-    \coordinate (Q_end) at ($ (A) + (1.0, -0.5, 0.0) $);
+    % 平面を張る2ベクトル p = BA = (0, -0.5, -0.5), q = BC = (1, -0.5, 0)
+    % B を始点とした終点 A(0, 0, 1/2), C(1, 0, 1)
+    \coordinate (A) at ($ (B) + (0, -0.5, -0.5) $);
+    \coordinate (C) at ($ (B) + (1.0, -0.5, 0.0) $);
 
     % 平面 S0 の平行四辺形パッチの頂点
-    \coordinate (S_c1) at ($ (A) - (0.4, -0.2, 0.0) - (0.0, -0.2, -0.2) $);
-    \coordinate (S_c2) at ($ (A) + (1.2, -0.6, 0.0) - (0.0, -0.2, -0.2) $);
-    \coordinate (S_c3) at ($ (A) + (1.2, -0.6, 0.0) + (0.0, -0.6, -0.6) $);
-    \coordinate (S_c4) at ($ (A) - (0.4, -0.2, 0.0) + (0.0, -0.6, -0.6) $);
+    \coordinate (S_c1) at ($ (B) - (0.4, -0.2, 0.0) - (0.0, -0.2, -0.2) $);
+    \coordinate (S_c2) at ($ (B) + (1.2, -0.6, 0.0) - (0.0, -0.2, -0.2) $);
+    \coordinate (S_c3) at ($ (B) + (1.2, -0.6, 0.0) + (0.0, -0.6, -0.6) $);
+    \coordinate (S_c4) at ($ (B) - (0.4, -0.2, 0.0) + (0.0, -0.6, -0.6) $);
 
     % 単位法線ベクトル n0 = 1/3 (1, 2, -2)
-    \coordinate (N0_end)  at ($ (A) + (1/3, 2/3, -2/3) $);
-    \coordinate (N0m_end) at ($ (A) - (1/3, 2/3, -2/3) $);
+    \coordinate (N0_end)  at ($ (B) + (1/3, 2/3, -2/3) $);
+    \coordinate (N0m_end) at ($ (B) - (1/3, 2/3, -2/3) $);
 
     % 回転軸 l の方向ベクトル (1,0,0) と (0,1,0) を結ぶ直線
     \coordinate (L1) at (1.0, 0.0, 0.0);
     \coordinate (L2) at (0.0, 1.0, 0.0);
 
     % --- 2. 座標軸 ---
-    \draw[->, thick, gray!70] (0, 0, 0) -- (1.5, 0, 0) node[below left=1pt] {$x$};
-    \draw[->, thick, gray!70] (0, 0, 0) -- (0, 1.5, 0) node[right=2pt] {$y$};
-    \draw[->, thick, gray!70] (0, 0, 0) -- (0, 0, 1.4) node[above=2pt] {$z$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (1.5, 0, 0) node[below left=1pt] {$x$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 1.5, 0) node[right=2pt] {$y$};
+    \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 0, 1.4) node[above=2pt] {$z$};
     \node[below left=2pt] at (O) {$O$};
 
     % --- 3. 平面 S0 (半透明パッチ) ---
@@ -51,36 +52,38 @@
     \node[blue!85!black, font=\footnotesize] at ($ (S_c3) + (0.1, 0, 0.1) $) {平面 $S_0$};
 
     % --- 4. 平面を張るベクトル p, q ---
-    \draw[->, thick, teal!85!black] (A) -- (P_end)
+    \draw[->, thick, teal!85!black] (B) -- (A)
     node[midway, below left=1pt, font=\footnotesize] {$\vec{p}$};
-    \draw[->, thick, teal!85!black] (A) -- (Q_end)
+    \draw[->, thick, teal!85!black] (B) -- (C)
     node[midway, above=2pt, font=\footnotesize] {$\vec{q}$};
 
     % --- 5. 法線ベクトル n0 (表裏の 2 方向) ---
     % + 方向: n0 = +1/3 (1, 2, -2)
-    \draw[->, line width=1.6pt, red!85!black] (A) -- (N0_end)
+    \draw[->, line width=1.6pt, red!85!black] (B) -- (N0_end)
     node[above right=1pt] {$\vec{n}_0 = \frac{1}{3}
       \begin{pmatrix}1\\2\\-2
     \end{pmatrix}$};
 
     % - 方向: -n0
-    \draw[->, line width=1.4pt, dashed, red!70!black] (A) -- (N0m_end)
+    \draw[->, line width=1.4pt, dashed, red!70!black] (B) -- (N0m_end)
     node[below left=1pt, font=\footnotesize] {$-\vec{n}_0$};
 
-    % 法線直角マーク (A において法線と p, q のなす角)
-    \draw[thin, gray!70]
-    ($ (A) + 0.1*(1/3, 2/3, -2/3) $) --
-    ($ (A) + 0.1*(1/3, 2/3, -2/3) + 0.1*(1.0, -0.5, 0.0) $) --
-    ($ (A) + 0.1*(1.0, -0.5, 0.0) $);
+    % 法線直角マーク (B において法線と p, q のなす角)
+    \draw[thin, gray!70!black]
+    ($ (B) + 0.1*(1/3, 2/3, -2/3) $) --
+    ($ (B) + 0.1*(1/3, 2/3, -2/3) + 0.1*(1.0, -0.5, 0.0) $) --
+    ($ (B) + 0.1*(1.0, -0.5, 0.0) $);
 
     % --- 6. (2) で用いる回転軸 l の表示 ---
     \draw[thick, dashed, purple!80!black] ($ (L1)!-0.3!(L2) $) -- ($ (L1)!1.3!(L2) $);
-    \node[circle, fill, inner sep=0.6pt] at (L1) {}; \node[below=2pt, font=\scriptsize] at (L1) {$(1,0,0)$};
-    \node[circle, fill, inner sep=0.6pt] at (L2) {}; \node[right=2pt, font=\scriptsize] at (L2) {$(0,1,0)$};
+    \node[circle, fill, inner sep=0.6pt] at (L1) {}; \node[below=2pt, font=\scriptsize] at (L1) {$D(1,0,0)$};
+    \node[circle, fill, inner sep=0.6pt] at (L2) {}; \node[right=2pt, font=\scriptsize] at (L2) {$E(0,1,0)$};
     \node[purple!90!black, font=\footnotesize, above right] at ($ (L1)!1.2!(L2) $) {回転軸 $l$};
 
     % --- 7. 主要点プロット ---
-    \node[circle, fill, inner sep=0.7pt] at (A) {}; \node[below right=1pt, font=\scriptsize] at (A) {$A\left(0, \frac{1}{2}, 1\right)$};
+    \node[circle, fill=blue!85!black, inner sep=0.8pt] at (B) {}; \node[below right=1pt, font=\scriptsize] at (B) {$B\left(0, \frac{1}{2}, 1\right)$};
+    \node[circle, fill=teal!85!black, inner sep=0.8pt] at (A) {}; \node[below left=1pt, font=\scriptsize] at (A) {$A\left(0, 0, \frac{1}{2}\right)$};
+    \node[circle, fill=teal!85!black, inner sep=0.8pt] at (C) {}; \node[above right=1pt, font=\scriptsize] at (C) {$C(1, 0, 1)$};
 
   \end{tikzpicture}
   \caption{平面 $S_0$ を張るベクトル $\vec{p}, \vec{q}$ とその単位法線ベクトル $\vec{n}_0$（および回転軸 $l$）}
@@ -89,12 +92,12 @@
 
 $S_0$は2ベクトル
 \begin{align}
-  \vec{p} =
+  \vec{p} = \overrightarrow{BA} =
   \begin{pmatrix}0-0\\0-\dfrac{1}{2}\\\dfrac{1}{2}-1
   \end{pmatrix} = \dfrac{1}{2}
   \begin{pmatrix}0\\-1\\-1
   \end{pmatrix}, \quad
-  \vec{q} =
+  \vec{q} = \overrightarrow{BC}
   \begin{pmatrix}1-0\\0-\dfrac{1}{2}\\1-1
   \end{pmatrix} = \dfrac{1}{2}
   \begin{pmatrix}2\\-1\\0
@@ -120,8 +123,8 @@ $
 
 \subparagraph{(2)}
 
-% TODO: 綺麗にupgrade
 \begin{figure}[htb]
+  % TODO: 図はもうちょいわかりやすく
   \centering
   \begin{tikzpicture}[scale=2.4, >=stealth, every node/.style={font=\small}]
 
@@ -256,7 +259,7 @@ $\vec{n}_0$と$\vec{l}$のなす角を$\theta$とすると，回転した$\vec{n
   \therefore
   & \cos\theta = \dfrac{\pm1}{3\sqrt{2}} \label{eq:5}
 \end{align}
-である．\cref{eq:5}を\cref{eq:4}に代入して
+である．\cref{eq:5}を\cref{eq:3}に代入して
 \begin{align}
   \vec{n} \cdot \vec{l} = \dfrac{\pm 1}{3} \label{eq:6}
 \end{align}
@@ -463,7 +466,7 @@ $\vec{n}=
   \label{fig:vector_rotation_around_axis}
 \end{figure}
 
-$\vec{n}$を別の方法で表現する別解を示す．$\vec{l}$上に原点$O$をとり，$\vec{n}_0$の終点が表す点を$T$とする．対称性から，\cref{eq:1}で複合正だけ考えれば良い．
+$\vec{n}$を別の方法で表現する別解を示す．$\vec{l}$上に原点$O$をとり，$\vec{n}_0$の終点が表す点を$T$とする．対称性から，\cref{eq:1}で複号正だけ考えれば良い．
 $T$から$\vec{l}$に下ろした垂足を$H$とする．正射影ベクトルの公式より
 \begin{align}
   \overrightarrow{OH}
@@ -490,7 +493,7 @@ $T$から$\vec{l}$に下ろした垂足を$H$とする．正射影ベクトル�
 である．
 
 さて，$\overrightarrow{HT}$，$\vec{l}$に垂直な単位ベクトルの一つに
-$\dfrac{1}{3\sqrt{2}}
+$\sqrt{\dfrac{17}{18}}
 \begin{pmatrix}2\\2\\3
 \end{pmatrix}$
 があるので，$\vec{n}_{0}$を$\vec{l}$の周りに回転してできるベクトル$\vec{n}$の一般形は，パラメータ$\theta$として
