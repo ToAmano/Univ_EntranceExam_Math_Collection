@@ -82,7 +82,7 @@ $n$ 回じゃんけんして同じベンチに座っているのは，ゲーム�
 
 \subparagraph{$n=k$の時}
 
-この時は両者が隣あうためには引き分けがあってはならない．
+この時は両者が同じベンチに到達するには両者合計で$k$回移動する必要があり，引き分けがあってはならない．
 よって$n$ 回とも引き分けがない時であるから，確率は
 \begin{align}
   q = \Bigl(1 - \dfrac{1}{3}\Bigr)^n = \Bigl(\dfrac{2}{3}\Bigr)^n \label{eq:2}
@@ -91,31 +91,31 @@ $n$ 回じゃんけんして同じベンチに座っているのは，ゲーム�
 
 \subparagraph{$n>k$の時}
 
-この時は両者がとなりあうための条件は，2 人の勝ちの合計が $k$ 回かつ，片方が先にゲームに勝たないこと．まず二人の勝ちの合計が$k$回である確率は
+この時は両者が同じベンチに到達するための条件は，2 人の勝ちの合計が $k$ 回かつ，片方が先にゲームに勝たないこと．まず二人の勝ちの合計が$k$回である確率は
 \begin{align}
-  {}_n\text{C}_k \Bigl(\dfrac{2}{3}\Bigr)^k \Bigl(\dfrac{1}{3}\Bigr)^{n-k}
+  {}_n\text{C}_k \Bigl(\dfrac{2}{3}\Bigr)^k \Bigl(\dfrac{1}{3}\Bigr)^{n-k} \label{eq:3}
 \end{align}
 である．ここで$2/3$は勝ち負けが決まる時，$1/3$は引き分けの時である．
 
 次に片方が$n$回目のじゃんけんですでにゲームに勝利している（かつ両者が同じベンチに座っている）のは，
 $n-1$回目のじゃんけんまでに片方が$k$回勝利して，もう片方が$1$回も勝たない，かつ$n$回目も引き分けになっているケースだから
 \begin{align}
-  2 \cdot {}_{n-1}\text{C}_{k-1} \Bigl(\dfrac{1}{3}\Bigr)^k \Bigl(\dfrac{1}{3}\Bigr)^{n-k-1} \cdot \Bigl(\dfrac{1}{3}\Bigr)
+  2 \cdot {}_{n-1}\text{C}_{k} \Bigl(\dfrac{1}{3}\Bigr)^k \Bigl(\dfrac{1}{3}\Bigr)^{n-k-1} \cdot \Bigl(\dfrac{1}{3}\Bigr) \label{eq:4}
 \end{align}
 である．ここで$(1/3)^{k}$は片方が$k$回勝つ確率，$(1/3)^{n-k-1}$は残りの$n-k-1$回引き分ける確率，因子$2$はどちらが勝つかの因子である．
 
-よって求める確率$q$は
+よって求める確率$q$は\cref{eq:3}から\cref{eq:4}を引いたもので
 \begin{align}
   q &= {}_n\text{C}_k \Bigl(\dfrac{2}{3}\Bigr)^k \Bigl(\dfrac{1}{3}\Bigr)^{n-k} - 2 \cdot {}_{n-1}\text{C}_{k-1} \Bigl(\dfrac{1}{3}\Bigr)^k \Bigl(\dfrac{1}{3}\Bigr)^{n-k-1} \cdot \Bigl(\dfrac{1}{3}\Bigr) \\
   &= {}_n\text{C}_k \Bigl(\dfrac{1}{3}\Bigr)^n \cdot 2^k - 2 \Bigl(\dfrac{n-k}{n}\Bigr) {}_n\text{C}_k \Bigl(\dfrac{1}{3}\Bigr)^n \\
-  &= 2 {}_n\text{C}_k \Bigl(\dfrac{1}{3}\Bigr)^n \Bigl( 2^{k-1} - 1 + \dfrac{k}{n} \Bigr) \label{eq:3}
+  &= 2 {}_n\text{C}_k \Bigl(\dfrac{1}{3}\Bigr)^n \Bigl( 2^{k-1} - 1 + \dfrac{k}{n} \Bigr) \label{eq:5}
 \end{align}
 である．
 \casesend
 
-\cref{eq:1,eq:2,eq:3}をまとめて，$n < k$ の時 ${}_n\text{C}_k = 0$，又，$k=1$ の時もこれで良いから，
+\cref{eq:1,eq:2,eq:5}をまとめて，$n < k$ の時 ${}_n\text{C}_k = 0$，又，$k=1$ の時もこれで良いから，
 \begin{align}
-  q = \dfrac{2}{3^n} {}_n\text{C}_k \Bigl( 2^{k-1} - 1 + \dfrac{k}{n} \Bigr) \label{eq:4}
+  q = \dfrac{2}{3^n} {}_n\text{C}_k \Bigl( 2^{k-1} - 1 + \dfrac{k}{n} \Bigr) \label{eq:6}
 \end{align}
 である．
 
@@ -123,42 +123,42 @@ $n-1$回目のじゃんけんまでに片方が$k$回勝利して，もう片方
 
 $x, y$ は，$A, B$ の勝利回数を表す．合計のじゃんけんの回数は$n$回だから
 \begin{align}
-  x + y \le n \label{eq:5}
+  x + y \le n \label{eq:7}
 \end{align}
 である．
 
 また，移動回数は最大でも$k$ 回だから，
 \begin{align}
-  x, y \le k \label{eq:6}
+  x, y \le k \label{eq:8}
 \end{align}
 である．ただし，両者が同時に$x=y=k$となることはない．
 
-以上\cref{eq:5,eq:6}のもとで考える．
+以上\cref{eq:7,eq:8}のもとで考える．
 % $n$ 回じゃんけんをしたということは，$n-1$ 回目までゲームは終了しなかったということである．
 
 まず $x, y \le k-1$ の時，どちらも反対側の端のベンチまでは到達しないから，確率は$n$回中$x$回は$A$が勝利し，$y$回は$B$が勝利し，残りの$n-x-y$回は引き分けなので
 \begin{align}
   P(x, y) &= {}_n\text{C}_x {}_{n-x}\text{C}_y \Bigl(\dfrac{1}{3}\Bigr)^x \Bigl(\dfrac{1}{3}\Bigr)^y \Bigl(\dfrac{1}{3}\Bigr)^{n-x-y} \\
-  &= {}_n\text{C}_x {}_{n-x}\text{C}_y \Bigl(\dfrac{1}{3}\Bigr)^n \label{eq:7}
+  &= {}_n\text{C}_x {}_{n-x}\text{C}_y \Bigl(\dfrac{1}{3}\Bigr)^n \label{eq:9}
 \end{align}
 である．
 
 次に，$x=k$または$y=k$でちょうどゲームが終了する場合を考える．
-まず$A$が勝利して$x =k, y \le k-1$となる場合を考える．この時は，最後にゲームが終了することから，最初の$n-1$回で$x=k-1$となっており，最後の$1$回で$A$が勝利する．任意の$n$に対して$p(x,y)$を$p_n(x,y)$と書くと，この場合の確率$p(x,k)$は$n-1$回目までで$(x,y)=(k-1,y)$となり（確率$p_{n-1}(k-1,y)$），最後の一回で$A$が確率$1/3$で勝つ時だから
+まず$A$が勝利して$x =k, y \le k-1$となる場合を考える．この時は，最後にゲームが終了することから，最初の$n-1$回で$x=k-1$となっており，最後の$1$回で$A$が勝利する．任意の$n$に対して$P(x,y)$を$p_n(x,y)$と書くと，この場合の確率$p(x,k)$は$n-1$回目までで$(x,y)=(k-1,y)$となり（確率$p_{n-1}(k-1,y)$），最後の一回で$A$が確率$1/3$で勝つ時だから
 \begin{align}
   p(x,k)
-  &= p_{n-1}(k-1,x)\cdot \dfrac{1}{3} \\
-  &= {}_{n-1}\text{C}_{k-1} {}_{n-k}\text{C}_{y}\Bigl(\dfrac{1}{3}\Bigr)^n \label{eq:8}
+  &= p_{n-1}(k-1,y)\cdot \dfrac{1}{3} \\
+  &= {}_{n-1}\text{C}_{k-1} \cdot {}_{n-k}\text{C}_{y}\Bigl(\dfrac{1}{3}\Bigr)^n \label{eq:10}
 \end{align}
 である．
 
-逆に$B$が勝利して$x\le k-1,y=k$となるのは，対称性より\cref{eq:8}で$x$と$y$を入れ替えて
+逆に$B$が勝利して$x\le k-1,y=k$となるのは，対称性より\cref{eq:10}で$x$と$y$を入れ替えて
 \begin{align}
-  p(k,y) = {}_{n-1}\text{C}_{k-1} {}_{n-k}\text{C}_{x}\Bigl(\dfrac{1}{3}\Bigr)^n \label{eq:9}
+  p(x,k) = {}_{n-1}\text{C}_{k-1} \cdot {}_{n-k}\text{C}_{x}\Bigl(\dfrac{1}{3}\Bigr)^n \label{eq:11}
 \end{align}
 である．
 
-以上\cref{eq:7,eq:8,eq:9}をまとめて
+以上\cref{eq:9,eq:10,eq:11}をまとめて
 \begin{align}
   P(x, y) =
   \begin{cases}
@@ -166,25 +166,25 @@ $x, y$ は，$A, B$ の勝利回数を表す．合計のじゃんけんの回数
     {}_{n-1}\text{C}_{k-1} {}_{n-k}\text{C}_x \Bigl(\dfrac{1}{3}\Bigr)^n & (x \le k-1, y = k) \\
     {}_{n-1}\text{C}_{k-1} {}_{n-k}\text{C}_y \Bigl(\dfrac{1}{3}\Bigr)^n & (y \le k-1, x = k) \\
     0 & (\text{otherwise})
-  \end{cases} \label{eq:10}
+  \end{cases} \label{eq:12}
 \end{align}
 である．
 
 \paragraph{(3)}
 
 $k=3$および$n \ge 3$の時を考える．
-まだゲームの勝敗が決まらないということは，$A,B$の移動回数を$x,y$としたときに$x,y\le k-1=2$であるということである．(2)の$p(x,y)$は\cref{eq:5}の元で成立するから，$n$の値に応じて以下のように場合分けする．
+まだゲームの勝敗が決まらないということは，$A,B$の移動回数を$x,y$としたときに$x,y\le k-1=2$であるということである．(2)の$p(x,y)$は\cref{eq:7}の元で成立するから，$n$の値に応じて以下のように場合分けする．
 
 \subparagraph{$n \ge 4$の時}
 
-この時は\cref{eq:5}の条件が満たされるから，$x,y \le 2$を満たす$p(x,y)$について足し合わせればゲームの勝敗が決まらない確率が求まるから
+この時は\cref{eq:7}の条件が満たされるから，$x,y \le 2$を満たす$p(x,y)$について足し合わせればゲームの勝敗が決まらない確率が求まるから
 \begin{align}
   P
   &= \sum_{x, y \le 2} P(x, y) \\
   &= P(0,0) + P(1,0) + P(0,1) + P(2,0) + P(1,1) + P(0,2) + P(2,1) + P(1,2) + P(2,2) \\
   &= P(0,0) + 2 P(1,0) + 2 P(2,0) + P(1,1) + 2 P(2,1) + P(2,2) \\
   &= \Bigl(\dfrac{1}{3}\Bigr)^n \Bigl[ 1 + 2n + n(n-1) + n(n-1) + n(n-1)(n-2) + \dfrac{1}{4}n(n-1)(n-2)(n-3) \Bigr] \\
-  &= \Bigl(\dfrac{1}{3}\Bigr)^n \dfrac{1}{4} \Bigl[ n^4 - 2n^3 + 7n^2 + 2n + 4 \Bigr] \label{eq:11}
+  &= \Bigl(\dfrac{1}{3}\Bigr)^n \dfrac{1}{4} \Bigl[ n^4 - 2n^3 + 7n^2 + 2n + 4 \Bigr] \label{eq:13}
 \end{align}
 である．
 
@@ -196,9 +196,9 @@ $k=3$および$n \ge 3$の時を考える．
 \end{align}
 である．よって求める確率はこれを$1$から減じて
 \begin{align}
-  p = 1 - \dfrac{2}{27} = \dfrac{25}{27} \label{eq:12}
+  p = 1 - \dfrac{2}{27} = \dfrac{25}{27} \label{eq:14}
 \end{align}
-である．一方で\cref{eq:11}で$n=3$とすると
+である．一方で\cref{eq:13}で$n=3$とすると
 \begin{align}
   p
   &= \Bigl(\dfrac{1}{3}\Bigr)^3 \dfrac{1}{4} \Bigl[ 3^4 - 2\cdot 3^3 + 7\cdot 3^2 + 2\cdot 3 + 4 \Bigr] \\
@@ -206,10 +206,10 @@ $k=3$および$n \ge 3$の時を考える．
   &= \dfrac{1}{4\cdot 27} \Bigl[ 81 - 54 + 63 + 6 + 4 \Bigr] \\
   &= \dfrac{25}{27}
 \end{align}
-で\cref{eq:12}と一致するから，$n=3$の時も\cref{eq:11}で良い．
+で\cref{eq:14}と一致するから，$n=3$の時も\cref{eq:13}で良い．
 \casesend
 
-以上から求める確率$p$は\cref{eq:11}で
+以上から求める確率$p$は\cref{eq:13}で
 \begin{align}
   p = \Bigl(\dfrac{1}{3}\Bigr)^n \dfrac{1}{4} \Bigl[ n^4 - 2n^3 + 7n^2 + 2n + 4 \Bigr]
 \end{align}
