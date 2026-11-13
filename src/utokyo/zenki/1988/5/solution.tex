@@ -22,9 +22,9 @@
     \coordinate (P) at (1.0, 0, 1.0);
 
     % --- 2. 座標軸 ---
-    \draw[->, thick, gray!70] (-1.8, 0, 0) -- (2.2, 0, 0) node[below right=1pt] {$x$};
-    \draw[->, thick, gray!70] (0, -1.8, 0) -- (0, 2.0, 0) node[right=2pt] {$y$};
-    \draw[->, thick, gray!70] (0, 0, -0.3) -- (0, 0, 2.7) node[above=2pt] {$z$};
+    \draw[->, thick, gray!80!black] (-1.8, 0, 0) -- (2.2, 0, 0) node[below right=1pt] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.8, 0) -- (0, 2.0, 0) node[right=2pt] {$y$};
+    \draw[->, thick, gray!80!black] (0, 0, -0.3) -- (0, 0, 2.7) node[above=2pt] {$z$};
     \node[below left=2pt] at (O) {$O$};
 
     % --- 3. 立体 V の放物面（薄い透過塗りつぶし）---
@@ -65,10 +65,16 @@
     \node[circle, fill=red!85!black, inner sep=0.8pt] at (P) {}; \node[right=3pt, red!90!black, font=\normalsize] at (P) {$P(1,0,1)$};
     \node[circle, fill, inner sep=0.6pt] at (Top) {};
 
-    % --- 6. 点 P における接線/接平面の補助線 (z = -2x + 3) ---
+    % --- 6. 点 P における接平面 (z = -2x + 3) ---
+    % 接平面の領域 (y: -0.8 から 0.8, x: 0.6 から 1.5)
+    \fill[blue!15, opacity=0.35]
+    (0.6, -0.8, 1.8) -- (1.5, -0.8, 0) -- (1.5, 0.8, 0) -- (0.6, 0.8, 1.8) -- cycle;
+    \draw[thick, blue!85!black, dashed]
+    (0.6, -0.8, 1.8) -- (1.5, -0.8, 0) -- (1.5, 0.8, 0) -- (0.6, 0.8, 1.8) -- cycle;
+
     % xz 平面内での接線 (P を通り傾き -2)
-    \draw[thick, blue!85!black] (0.6, 0, 1.8) -- (1.5, 0, 0);
-    \node[circle, fill=blue!85!black, inner sep=0.6pt] at (1.5, 0, 0) {}; \node[below=2pt, font=\scriptsize, blue!90!black] at (1.5, 0, 0) {$\frac{3}{2}$};
+    \draw[very thick, blue!85!black] (0.6, 0, 1.8) -- (1.5, 0, 0);
+    \node[circle, fill=blue!85!black, inner sep=0.8pt] at (1.5, 0, 0) {}; \node[below=2pt, font=\scriptsize, blue!90!black] at (1.5, 0, 0) {$\frac{3}{2}$};
 
     % % --- 7. 注釈ボックス ---
     % \node[draw=teal!85!black, fill=white, rounded corners=2pt, inner sep=3.5pt, font=\footnotesize, align=left]
@@ -81,7 +87,7 @@
     %   };
 
   \end{tikzpicture}
-  \caption{立体 $V$（放物面）と接点 $P(1,0,1)$ および接平面の 3D 見取り図}
+  \caption{立体 $V$（放物面）と接点 $P(1,0,1)$ および接平面}
   \label{fig:paraboloid_tangent_plane}
 \end{figure}
 
@@ -227,22 +233,22 @@ $xy$平面での円$C$と接平面の断面図は以下のようになる．
 \end{figure}
 
 よって円$C$のうち光が当たる部分は$3/2\le x$である．
-$C$の半径$r_{>0}$とし，上図のように$\theta $($0<\theta<\pi/2$)をおく．
+$C$の半径$r \ (>0)$とし，上図のように$\theta $($0<\theta<\pi/2$)をおく．
 題意より，上図で太線の部分の長さが$2\pi$だから
 \begin{align}
   2r\theta=2\pi \label{eq:3}
 \end{align}
 である．また，$r,\theta$の関係は図から
 \begin{align}
-  r\cos t=\dfrac{3}{2} \label{eq:4}
+  r\cos \theta=\dfrac{3}{2} \label{eq:4}
 \end{align}
-である．\cref{eq:1,eq:2}から$r$を消去して
+である．\cref{eq:3,eq:4}から$r$を消去して
 \begin{align}
   \dfrac{2\pi}{3}=\dfrac{\theta}{\cos \theta}
 \end{align}
 である．
 
-この右辺は$0<t<\pi/2$で単調増加な関数の積だから単調増加である．
+この右辺は$0<\theta<\dfrac{\pi}{2}$で単調増加な関数の積だから単調増加である．
 加えて$\theta=\pi/3$が解であることから，これが唯一の解である．
 この時\cref{eq:4}から$r=3$となり，求める影の長さは
 \begin{align}
