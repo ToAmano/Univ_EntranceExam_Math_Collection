@@ -45,15 +45,16 @@
     \fill[blue!20, opacity=0.8] (X0) rectangle (m_pt1);
 
     % --- 3. 座標軸 ---
-    \draw[->, thick] (-0.1, 0) -- (1.25, 0) node[right] {$x$};
-    \draw[->, thick] (0, -0.1) -- (0, 2.1) node[above] {$y$};
+    \draw[->, thick, gray!80!black] (-0.1, 0) -- (1.25, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.1) -- (0, 2.1) node[above] {$y$};
     \node[below left=2pt] at (O) {$O$};
     \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
-    \draw[gray!60] (1.0, -0.03) -- (1.0, 0.03);
+    \draw[gray!70!black] (1.0, -0.03) -- (1.0, 0.03);
 
     % --- 4. 曲線 y = f(x) = \pi x^2 \sin(\pi x^2) の描画 ---
-    \draw[line width=1.6pt, blue!85!black, domain=0:0.98, samples=90]
+    \draw[line width=1.6pt, blue!85!black, domain=0:1.0, samples=100]
     plot (\x, {\funcF(\x)});
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (1.0, 0) {};
     \node[blue!90!black, font=\footnotesize, above right] at (0.8, 1.82) {$y = \pi x^2 \sin(\pi x^2)$};
 
     % --- 5. 上下評価の水平線 y = M(X), y = m(X) ---
@@ -87,7 +88,7 @@
 \end{figure}
 
 $[0,1]$で$f(x)\ge0$に注意する．区間内に$X$，$X+\Delta x$をとり，($\Delta x>0$)
-$0\le x\le X$の範囲での回転体の体積を$V(X)$と書く．また，同区間での$f(x)$の最大小
+$0\le x\le X$の範囲での回転体の体積を$V(X)$と書く．また，$[X,X+\Delta x]$での$f(x)$の最大小
 値をそれぞれ$M(X)$，$m(X)$とおくと，
 \begin{align}
   0\le m(X)\le f(x)\le M(X)
@@ -186,10 +187,11 @@ $0\le x\le X$の範囲での回転体の体積を$V(X)$と書く．また，同�
 
 $[X,X+\Delta x]$の区間で$y=f(x)$を$y$軸周りに回転させた立体の体積は$V(X+\Delta x)-V(X)$である．一方でこの区間で定数関数$y=m(X), y=M(X)$を$y$軸周りに回転させた筒状の体積で上下から評価すると
 \begin{align}
-  \pi\left[(X+\Delta x)^2-X^2\right] m(X)
+  & \pi\left[(X+\Delta x)^2-X^2\right] m(X)
   \le V(X+\Delta x)-V(X) \le
   \pi\left[(X+\Delta x)^2-X^2\right] M(X) \\
-  \pi\left[2X\Delta x +(\Delta x)^2\right] m(X)
+  \therefore
+  & \pi\left[2X\Delta x +(\Delta x)^2\right] m(X)
   \le V(X+\Delta x)-V(X) \le
   \pi\left[2X\Delta x +(\Delta x)^2\right] M(X)
 \end{align}
@@ -201,16 +203,20 @@ $[X,X+\Delta x]$の区間で$y=f(x)$を$y$軸周りに回転させた立体の�
 である．ここで$\Delta x\to0$とすれば
 \begin{align}
   \begin{cases}
-    M(X),m(x)\to f(X) \\
+    M(X),m(X) \to f(X) \\
     \dfrac{V(X+\Delta x)-V(X)}{\Delta x}\to V'(X)
   \end{cases}
 \end{align}
-だから，\cref{eq:1}の両辺は$2\pi Xf(X)$に，真ん中は$V'(X)$に，それぞれ収束する．
+だから，\cref{eq:1}の両辺は$2\pi Xf(X)$に収束する．
 従って挟み撃ちの定理から
 \begin{align}
-  V'(X)=2\pi Xf(X)
+  \lim_{\Delta x\to 0} \dfrac{V(X+\Delta x)-V(X)}{\Delta x}=2\pi Xf(X)
 \end{align}
-となるので，両辺$[0,1]$で積分して$V(0)=0$より，求める立体の体積$V$は
+となる．よって$V(X)$は微分可能で，
+\begin{align}
+  V'(X) = 2\pi Xf(X)
+\end{align}
+である．これを両辺$[0,1]$で積分して$V(0)=0$より，求める立体の体積$V$は
 \begin{align}
   V = 2\pi\int_0^1xf(x)dx
 \end{align}
