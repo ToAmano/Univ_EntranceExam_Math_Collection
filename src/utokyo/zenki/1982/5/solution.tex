@@ -13,7 +13,7 @@
     y \le x \le y+1
   \end{cases} \label{eq:1}
 \end{align}
-において，$y=k\,(0\le l \le 1)$で切断した$xz$平面内で考える．
+において，$y=k\,(0\le k \le 1)$で切断した$xz$平面内で考える．
 するとこの平面内では\cref{eq:1}は
 \begin{align}
   \begin{cases}
@@ -28,13 +28,11 @@
   \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
 
     % --- 1. 定数・座標パラメータの定義 ---
-    % スケッチの比率に合わせた代表値 (例: k = 0.2 付近の見やすい比率)
-    % x 範囲: [k, k+1]
-    % z 範囲: 左端 2k+1, 右端 2-k
-    \def\kVal{1.3}
-    \def\wVal{1.7}
-    \def\zLeft{1.1}
-    \def\zRight{2.2}
+    % 代表例として 0 <= k < 1/3 (k = 0.2 のとき 2k+1 = 1.4, 2-k = 1.8)
+    \def\kVal{0.8}
+    \def\wVal{1.6}
+    \def\zLeft{1.4}
+    \def\zRight{1.8}
 
     \coordinate (O)     at (0, 0);
     \coordinate (Xk)    at (\kVal, 0);
@@ -47,8 +45,8 @@
     (Xk) -- (Pk) -- (Pkone) -- (Xkone) -- cycle;
 
     % --- 3. 座標軸 (xz 平面) ---
-    \draw[->, thick] (-0.3, 0) -- ({\kVal + \wVal + 0.8}, 0) node[right] {$x$};
-    \draw[->, thick] (0, -0.3) -- (0, {\zRight + 0.6}) node[above] {$z$};
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- ({\kVal + \wVal + 0.6}, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.3) -- (0, {\zRight + 0.4}) node[above] {$z$};
     \node[below left=2pt] at (O) {$O$};
 
     % --- 4. 台形の輪郭線 ---
@@ -61,19 +59,19 @@
     \draw[thick, black] (Xk) -- (Xkone);
 
     % 直線 z = f(x) の延長（参考表示）
-    \draw[dashed, blue!50, domain=0.8:3.4]
+    \draw[dashed, blue!60!black, domain=0.4:2.8]
     plot (\x, {\zLeft + (\zRight - \zLeft)/(\wVal)*(\x - \kVal)});
     \node[blue!85!black, font=\footnotesize, above right] at (Pkone) {$z = f(x)$};
 
-    % --- 5. 座標補助線 (破線) ---
+    % --- 5. 座標補助線 (点線) ---
     % z 軸への投影線
-    \draw[dashed, gray!70] (Pk) -- (0, \zLeft);
-    \draw[dashed, gray!70] (Pkone) -- (0, \zRight);
+    \draw[densely dotted, thick, gray!70!black] (Pk) -- (0, \zLeft);
+    \draw[densely dotted, thick, gray!70!black] (Pkone) -- (0, \zRight);
 
     % --- 6. 座標目盛りとラベル ---
     % x 軸上の点
-    \node[circle, fill, inner sep=0.5pt] at (Xk) {}; \node[below=2pt] at (Xk) {$k$};
-    \node[circle, fill, inner sep=0.5pt] at (Xkone) {}; \node[below=2pt] at (Xkone) {$k+1$};
+    \node[circle, fill, inner sep=0.8pt] at (Xk) {}; \node[below=2pt] at (Xk) {$k$};
+    \node[circle, fill, inner sep=0.8pt] at (Xkone) {}; \node[below=2pt] at (Xkone) {$k+1$};
 
     % z 軸上の目盛り
     \draw[gray!80!black] (-0.05, \zLeft) -- (0.05, \zLeft);
@@ -83,21 +81,21 @@
     \node[left=2pt] at (0, \zRight) {$2-k$};
 
     % 頂点のプロット
-    \node[circle, fill, inner sep=0.6pt] at (Pk) {};
-    \node[circle, fill, inner sep=0.6pt] at (Pkone) {};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (Pk) {};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (Pkone) {};
 
     % 断面積 S(k) の注釈
     \node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=2.5pt, font=\footnotesize]
     at ({\kVal + 0.5*\wVal}, {0.45*(\zLeft + \zRight)}) {$S(k)$};
 
   \end{tikzpicture}
-  \caption{平面 $y = k$ による立体の切断面（台形領域）}
+  \caption{平面 $y = k$ による立体の切断面}
   \label{fig:cross_section_yk}
 \end{figure}
 
 したがって，この平面内での題意の立体の断面積$S(k)$は
 \begin{align}
-  S(y)=\dfrac{1}{2}\left\{(2k+1)+(2-k)\right\}=\dfrac{k+3}{2}
+  S(k)=\dfrac{1}{2}\left\{(2k+1)+(2-k)\right\}=\dfrac{k+3}{2}
 \end{align}
 だから，求める体積$V$は
 \begin{align}
