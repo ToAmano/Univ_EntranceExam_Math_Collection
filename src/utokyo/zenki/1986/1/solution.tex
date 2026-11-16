@@ -14,21 +14,21 @@ $C\Bigl(c, \dfrac{1}{c}\Bigr)$ ($c > 0$) での $y = \dfrac{1}{x}$ の接線$\el
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=2, >=stealth]
-    \draw[->] (-0.3,0) -- (2.8,0) node[right] {$x$};
-    \draw[->] (0,-0.3) -- (0,2.8) node[above] {$y$};
+  \begin{tikzpicture}[scale=2, >=stealth, every node/.style={font=\small}]
+    \draw[->, thick, gray!80!black] (-0.3,0) -- (2.8,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.3) -- (0,2.8) node[above] {$y$};
     \node[below left] at (0,0) {$O$};
-    \draw[domain=0.4:2.6, smooth, variable=\x, thick, blue] plot ({\x}, {1/\x});
+    \draw[domain=0.4:2.6, smooth, variable=\x, very thick, blue!85!black] plot ({\x}, {1/\x});
     % Tangent line at c=1: y = -x + 2
-    \draw[thick, red] (-0.2, 2.2) -- (2.2, -0.2);
-    \node[circle, fill, inner sep=1pt] at (1,1) {}; \node[above right] at (1,1) {$C$};
-    \node[circle, fill, inner sep=1pt] at (2,0) {}; \node[below] at (2,0) {$P$};
-    \node[circle, fill, inner sep=1pt] at (0,2) {}; \node[left] at (0,2) {$Q$};
-    \node[circle, fill, inner sep=1pt] at (0.6,0) {}; \node[below] at (0.6,0) {$A$};
-    \node[circle, fill, inner sep=1pt] at (0,1.4) {}; \node[left] at (0,1.4) {$B$};
-    \draw[dashed] (0.6,0) -- (1,1) -- (0,1.4) -- cycle;
+    \draw[thick, red!85!black] (-0.2, 2.2) -- (2.2, -0.2);
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (1,1) {}; \node[above right] at (1,1) {$C$};
+    \node[circle, fill=red!85!black, inner sep=1.2pt] at (2,0) {}; \node[below] at (2,0) {$P$};
+    \node[circle, fill=red!85!black, inner sep=1.2pt] at (0,2) {}; \node[left] at (0,2) {$Q$};
+    \node[circle, fill=teal!85!black, inner sep=1.2pt] at (0.6,0) {}; \node[below] at (0.6,0) {$A$};
+    \node[circle, fill=teal!85!black, inner sep=1.2pt] at (0,1.4) {}; \node[left] at (0,1.4) {$B$};
+    \draw[dashed, thick, teal!85!black] (0.6,0) -- (1,1) -- (0,1.4) -- cycle;
   \end{tikzpicture}
-  \caption{接線と $x,y$ 軸の交点，最大面積を与える $\triangle ABC$ の配置}
+  \caption{接線と $x,y$ 軸の交点，および許容される $\triangle ABC$ の配置の一例}
 \end{figure}
 
 題意の条件より，$\triangle ABC$ が $D$ の内部にあるので，線分$AC, BC$が$xy \le 1$にあるためには$A,B$がそれぞれ$P,Q$よりも原点に近い位置にあれば良いから
@@ -43,7 +43,7 @@ $S$は三角形の面積公式から
 \begin{align}
   S = \dfrac{1}{2} \Bigl| b(c - a) + \dfrac{a}{c} \Bigr| \equiv \dfrac{|f(a,b,c)|}{2}
 \end{align}
-である．$a, c$ を固定して$f(a,b,c)$の最大値を考える．
+である．$a, c$ を固定して$b$のみを動かして$f(a,b,c)$の最大値を考える．
 
 \subparagraph{$1^\circ$ $c - a = 0$ の時}
 
@@ -57,16 +57,16 @@ $S$は三角形の面積公式から
 
 この時は$f(a,b,c)$は $b$ の単調関数なので，\cref{eq:1}より$S$ は 端点 $b = 0$ または $b = \dfrac{2}{c}$ の時に最大となる．よって
 \begin{align}
-  \max S = \max \Bigl\{ \dfrac{1}{2} \dfrac{a}{c}, \,\, \dfrac{1}{2}\Bigl|2 - \dfrac{a}{c}\Bigr| \Bigr\}
+  S = \max \Bigl\{ \dfrac{1}{2} \dfrac{a}{c}, \,\, \dfrac{1}{2}\Bigl|2 - \dfrac{a}{c}\Bigr| \Bigr\}
 \end{align}
 である．\cref{eq:1}より$0\le\dfrac{a}{c}\le 2$だから絶対値を外して
 \begin{align}
-  \max S = \max \Bigl\{ \dfrac{1}{2} \dfrac{a}{c}, \,\, \dfrac{1}{2}\left(2 - \dfrac{a}{c}\right) \Bigr\} \label{eq:3}
+  S = \max \Bigl\{ \dfrac{1}{2} \dfrac{a}{c}, \,\, \dfrac{1}{2}\left(2 - \dfrac{a}{c}\right) \Bigr\} \label{eq:3}
 \end{align}
 である．
 \casesend
 
-以上\cref{eq:2,eq:3}をまとめて
+以上\cref{eq:2,eq:3}をまとめて，$a,c$を固定して$b$を動かした時の$S$の最大値は
 \begin{align}
   S &=
   \begin{cases}
@@ -75,43 +75,44 @@ $S$は三角形の面積公式から
   \end{cases} \label{eq:4}
 \end{align}
 である．
-そこで次に $a,c$ を\cref{eq:1}の範囲，すなわち $0 \le \dfrac{a}{c} \le 2$ で動かす．$y=\dfrac{a}{2c}, y=\dfrac{1}{2}\left(2-\dfrac{c}{a}\right)$を$t=a/c$を横軸にしてグラフに示すと以下のようになる．
+そこで次に $a$ を\cref{eq:1}の範囲，すなわち $0 \le a \le 2c$ で動かす．$y=\dfrac{a}{2c}, y=\dfrac{1}{2}\left(2-\dfrac{a}{c}\right)$のグラフを横軸を $a$ として描くと以下のようになる．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=2, >=stealth]
-    \draw[->] (-0.3,0) -- (2.6,0) node[right] {$a$};
-    \draw[->] (0,-0.3) -- (0,1.5) node[above] {$y$};
+  \begin{tikzpicture}[scale=2, >=stealth, every node/.style={font=\small}]
+    \draw[->, thick, gray!80!black] (-0.3,0) -- (2.6,0) node[right] {$a$};
+    \draw[->, thick, gray!80!black] (0,-0.3) -- (0,1.5) node[above] {$y$};
     \node[below left] at (0,0) {$O$};
-    \draw[thick] (0,0) -- (2,1) node[right] {$\frac{1}{2c}a$};
-    \draw[thick] (0,1) -- (2,0) node[right] {$\frac{1}{2}(2-\frac{a}{c})$};
-    \draw[dashed] (1,0) node[below] {$c$} -- (1,0.5);
-    \draw[dashed] (0,0.5) node[left] {$\frac{1}{2}$} -- (1,0.5);
-    \node[circle, fill, inner sep=1pt] at (1,0.5) {};
-    \draw[dashed] (2,0) node[below] {$2c$} -- (2,1);
-    \draw[dashed] (0,1) node[left] {$1$} -- (2,1);
+    \draw[very thick, blue!85!black] (0,0) -- (2,1) node[right] {$\frac{1}{2c}a$};
+    \draw[very thick, teal!85!black] (0,1) -- (2,0) node[above right] {$\frac{1}{2}(2-\frac{a}{c})$};
+    \draw[densely dotted, thick, gray!70!black] (1,0) node[below] {$c$} -- (1,0.5);
+    \draw[densely dotted, thick, gray!70!black] (0,0.5) node[left] {$\frac{1}{2}$} -- (1,0.5);
+    \node[circle, fill=red!85!black, inner sep=1.2pt] at (1,0.5) {};
+    \draw[densely dotted, thick, gray!70!black] (2,0) node[below] {$2c$} -- (2,1);
+    \draw[densely dotted, thick, gray!70!black] (0,1) node[left] {$1$} -- (2,1);
   \end{tikzpicture}
-  \caption{$S$の最大値を与える$a/c$の様子}
+  \caption{$S$の最大値を与える$a$の様子}
 \end{figure}
 
 従って，グラフより$S$の最大値は$a=0,2c$の時の$\max S=1$である．対応する$b$を\cref{eq:3}から考えて$(a,b)=(0,2/c),(2c,0)$である．この時の$\triangle ABC$の様子は下図のようになる．これはそれぞれ$BC, CA$が$y=1/x$の接線と一致する時である．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=2, >=stealth]
-    \draw[->] (-0.3,0) -- (2.8,0) node[right] {$x$};
-    \draw[->] (0,-0.3) -- (0,2.8) node[above] {$y$};
-    \node[below left] at (0,0) {$O$};
+  \begin{tikzpicture}[scale=2, >=stealth, every node/.style={font=\small}]
     % Shaded Region D
     \begin{scope}
       \clip (0,0) -- (2.5,0) -- (2.5,2.5) -- (0,2.5) -- cycle;
-      \fill[gray!20] (0,0) -- (0,2.5) -- plot[domain=0.4:2.5, smooth] ({\x},{1/\x}) -- (2.5,0) -- cycle;
+      \fill[pattern=north east lines, pattern color=blue!65, opacity=0.7]
+      (0,0) -- (0,2.5) -- plot[domain=0.4:2.5, smooth] ({\x},{1/\x}) -- (2.5,0) -- cycle;
     \end{scope}
-    \draw[domain=0.4:2.5, smooth, variable=\x, thick] plot ({\x}, {1/\x});
-    \node[circle, fill, inner sep=1.5pt] at (1,1) {}; \node[above right] at (1,1) {$C$};
-    \node[circle, fill, inner sep=1.5pt] at (2,0) {}; \node[below] at (2,0) {$A$};
-    \node[circle, fill, inner sep=1.5pt] at (0,0) {}; \node[below left] at (0,0) {$B$};
-    \draw[thick, blue] (2,0) -- (0,0) -- (1,1) -- cycle;
+    \draw[->, thick, gray!80!black] (-0.3,0) -- (2.8,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.3) -- (0,2.8) node[above] {$y$};
+    \node[below left] at (0,0) {$O$};
+    \draw[domain=0.4:2.5, smooth, variable=\x, very thick, blue!85!black] plot ({\x}, {1/\x});
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (1,1) {}; \node[above right] at (1,1) {$C$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (2,0) {}; \node[below] at (2,0) {$A$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (0,0) {}; \node[below left] at (0,0) {$B$};
+    \draw[very thick, red!85!black] (2,0) -- (0,0) -- (1,1) -- cycle;
     \node[left] at (0,2) {$B'$};
     \node[below] at (0,0) {$A'$};
   \end{tikzpicture}
