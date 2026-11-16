@@ -36,21 +36,25 @@
     \begin{tikzpicture}[scale=0.6]
       \draw[->] (-0.5,0) -- (8,0) node[right] {$\alpha$};
       \draw[->] (0,-4) -- (0,4) node[above] {$\beta$};
-      %  \draw[thick] (0,0) -- (3.14,3.14) node[above] {$\beta=\alpha$} -- (6.28,0) node[right] {$\beta=-\alpha+2\pi$} -- (3.14,-3.14) -- (0,0);
-      \draw[thick] (0,0) -- (3.14,3.14) node[above] {} -- (6.28,0) node[right] {} -- (3.14,-3.14) -- (0,0);
+      \draw[thick] (3.14,-3.14) -- (0,0) -- (3.14,3.14); %  node[above] {} -- (6.28,0) node[right] {} -- (3.14,-3.14) -- (0,0);
+      \draw[thick, dotted] (3.14,3.14) node[above] {} -- (6.28,0) node[right] {} -- (3.14,-3.14);
+
       \draw[dotted] (0,3.14) -- (3.14,3.14);
       \draw[dotted] (3.14,3.14) -- (3.14,-3.14);
       \draw[dotted] (0,-3.14) -- (3.14,-3.14);
       % 四角形領域の斜線塗りつぶし (pattern=north east lines)
       \fill[pattern=north east lines, pattern color=gray!60]
       (0,0) -- (3.14,3.14) -- (6.28,0) -- (3.14,-3.14) -- cycle;
+      \node[circle, fill=black, inner sep=1.8pt] at (0,0) {};
+      \node[circle, draw=black, thick, fill=white, inner sep=1.8pt] at (3.14,3.14) {};
+      \node[circle, draw=black, thick, fill=white, inner sep=1.8pt] at (3.14,-3.14) {};
       \node[left] at (0,3.14) {$\pi$};
       \node[left] at (0,-3.14) {$-\pi$};
       \node[above left,fill=white] at (3.14,0) {$\pi$};
       \node[above right] at (6.28,0) {$2\pi$};
     \end{tikzpicture}
   \end{center}
-  \caption{$(\alpha,\beta)$平面における条件の図示}
+  \caption{$(\alpha,\beta)$平面における条件の図示（境界は実線のみ含む）}
 \end{figure}
 
 この領域の$\beta=0$に関する対称性および\cref{eq:4}における$\cos(-\beta) = \cos\beta$から，
@@ -167,7 +171,7 @@
 
 \cref{eq:7}からこの区間では$\beta$の値によらずに$\sin\alpha$を$-1$から$1$の範囲で自由に決定できる．よって\cref{eq:4}を満たす$(\alpha,\beta)$が存在するには
 \begin{align}
-  \dfrac{-1}{2}\le \cos\beta \le \dfrac{1}{2}
+  \dfrac{1}{2}\le \cos\beta \le 1
 \end{align}
 であれば良い．
 この範囲で$|\beta|$が最大なのは $\cos\beta = \dfrac{1}{2} \therefore \beta = \dfrac{\pi}{3}$の時で，この時 $\sin\alpha=1$ ゆえ $\alpha = \dfrac{\pi}{2}$である．
@@ -184,10 +188,16 @@
 \cref{eq:4}に代入して
 \begin{align}
   & \dfrac{1}{2}\sin 2\beta \le \dfrac{1}{2} \le -\dfrac{1}{2}\sin 2\beta \\
+  & \sin 2\beta \le 1 \le -\sin 2\beta \\
   \therefore
-  & \sin 2\beta \le 1 \le -\sin 2\beta
+  & \sin 2\beta \le 1 \land \sin 2\beta \le -1
 \end{align}
-となるが，これを満たす $\beta$ は存在しない．
+となる．これを満たすのは $\sin 2\beta = -1$つまり$\beta=\dfrac{3\pi}{4}$の時である．
+この時\cref{eq:8}で左側の等号が成立するから
+\begin{align}
+  \sin\alpha = -\dfrac{\sqrt{2}}{2}
+\end{align}
+となるが，これを満たす$\alpha$は\cref{eq:5}にはないので不適である．
 \casesend
 
 以上の場合分けおよび$\beta$についての対称性から，$|\beta|$ が最大の時 $(\alpha, \beta) = (\dfrac{\pi}{2}, \pm \dfrac{\pi}{3})$である．
