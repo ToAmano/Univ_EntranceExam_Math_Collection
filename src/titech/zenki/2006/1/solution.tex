@@ -45,7 +45,16 @@ $f(s)=\sin\dfrac{s\pi}{2}-s$とおいて$f(s)\ge0$を示す．
 となる．これはは単調減少であり，$\cos\dfrac{\alpha\pi}{2}=\dfrac{2}{\pi}$をみたす$\alpha\in(0,1)$を境に符号が$+$から$-$に変わる．
 よって$f(s)$の増減表は以下のようになる．
 
-% TODO: 増減表
+\begin{table}[htb]
+  \centering
+  \caption{$f(s)$ の増減表}
+  \begin{tabular}{c|ccccc}
+    \hline
+    $s$ & $0$ & $\cdots$ & $\alpha$ & $\cdots$ & $1$ \\ \hline
+    $f'(s)$ & & $+$ & $0$ & $-$ & \\ \hline
+    $f(s)$ & $0$ & $\nearrow$ & & $\searrow$ & $0$ \\ \hline
+  \end{tabular}
+\end{table}
 
 従って区間$[0,1]$全体で$f(s)\ge0$，すなわち$s\le\sin\dfrac{s\pi}{2}$であり\cref{eq:4}の左側の不等式は示された．
 
@@ -120,7 +129,58 @@ $h(s)=\dfrac{\pi}{2}s-\sin\dfrac{s\pi}{2}$とおいて$h(s) \ge 0$を示す．
 {\bf [解説]}
 
 (2)の途中で出てきた不等式はジョルダンの不等式と呼ばれる．図形的に示すとわかりやすい．
-% TODO :: ジョルダンの不等式の図形
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=4.5cm, y=2.6cm, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (1, 1);
+    \coordinate (B) at (1, {0.5*pi});
+
+    % 代表点 s (s = 0.6)
+    \pgfmathsetmacro{\sRep}{0.6}
+    \coordinate (Srep) at (\sRep, 0);
+    \coordinate (Pchord) at (\sRep, \sRep);
+    \coordinate (Psin) at (\sRep, {sin(90*\sRep)});
+    \coordinate (Ptan) at (\sRep, {0.5*pi*\sRep});
+
+    % 座標軸への補助線
+    \draw[densely dotted, thick, gray!70!black] (1, 0) -- (B) -- (0, {0.5*pi});
+    \draw[densely dotted, thick, gray!70!black] (A) -- (0, 1);
+    \draw[densely dotted, thick, gray!70!black] (Srep) -- (Ptan);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.12, 0) -- (1.25, 0) node[right] {$s$};
+    \draw[->, thick, gray!80!black] (0, -0.12) -- (0, 1.82) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+    \node[below=2pt] at (Srep) {$s$};
+    \node[below=2pt] at (1, 0) {$1$};
+    \node[left=2pt] at (0, 1) {$1$};
+    \node[left=2pt] at (0, {0.5*pi}) {$\frac{\pi}{2}$};
+
+    % 弦 y = s
+    \draw[line width=1.2pt, teal!85!black] (O) -- (A);
+    \node[teal!85!black, below right=2pt] at (0.62, 0.58) {$y = s$（弦）};
+
+    % 接線 y = (pi/2)s
+    \draw[line width=1.2pt, orange!90!black] (O) -- (B);
+    \node[orange!90!black, right=4pt] at (B) {$y = \frac{\pi}{2}s$（原点での接線）};
+
+    % 主曲線 y = sin(s*pi/2)
+    \draw[line width=1.4pt, blue!85!black, domain=0:1, samples=100]
+    plot (\x, {sin(90*\x)});
+    \node[blue!85!black, right=4pt] at (A) {$y = \sin\frac{s\pi}{2}$（上に凸）};
+
+    % 各点ノード
+    \node[circle, fill, inner sep=1.3pt] at (O) {};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (Pchord) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Psin) {};
+    \node[circle, fill=orange!90!black, inner sep=1.3pt] at (Ptan) {};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (A) {};
+    \node[circle, fill=orange!90!black, inner sep=1.4pt] at (B) {};
+  \end{tikzpicture}
+  \caption{ジョルダンの不等式 $s \le \sin\dfrac{s\pi}{2} \le \dfrac{\pi}{2}s \ (0 \le s \le 1)$ の図形的意味}
+  \label{fig:jordan_inequality}
+\end{figure}
 
 \newpage
 
