@@ -292,14 +292,12 @@ const ogImageUrl = new URL(`${baseUrl}${ogImagePath ?? '/ogp-default.png'}`, Ast
 			mjx-container {
 				max-width: 100%;
 				overflow-x: auto;
-				/* MathJax は各 mjx-container 要素に SVG の実寸に合わせた
-				   min-width をインライン style として直接埋め込んでいる
-				   （例: style="min-width: 421px"）。CSS 仕様上 min-width は
-				   max-width より優先されるため、!important で上書きしないと
-				   幅の広い数式でページ全体が横に押し広げられてしまう。
-				   display は MathJax 自身の値（flex 等、行内数式の縦位置合わせに
-				   使っている）に触らない — inline-block に強制すると縦位置が
-				   ずれてしまうことが判明した。 */
+				overflow-y: hidden;
+				/* MathJax は各 mjx-container 要素に実寸に合わせた
+				   min-width をインライン style として直接埋め込む場合がある。
+				   CSS 仕様上 min-width は max-width より優先されるため、
+				   !important で上書きしないと幅の広い数式でページ全体が横に
+				   押し広げられてしまう。display は MathJax 自身の値に触らない。 */
 				min-width: 0 !important;
 			}
 
@@ -308,6 +306,7 @@ const ogImageUrl = new URL(`${baseUrl}${ogImagePath ?? '/ogp-default.png'}`, Ast
 				background: rgba(0, 0, 0, 0.3);
 				border-radius: 12px;
 				overflow-x: auto;
+				overflow-y: hidden;
 				margin: 1.5rem 0;
 			}
 
