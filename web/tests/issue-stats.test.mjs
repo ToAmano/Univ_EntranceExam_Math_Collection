@@ -107,6 +107,52 @@ test('buildIssueStats degrades gracefully when snapshot is unavailable', () => {
   const stats = buildIssueStats({ available: false, generatedAt: null, problems: {}, unmapped: [] }, sampleEntries, '');
   assert.equal(stats.available, false);
   assert.equal(stats.totals.completionRate, null);
+  assert.equal(stats.closedTrendsMeta.hasAnyClosedData, false);
   const utokyoZenki = stats.categories.find(c => c.id === 'utokyo-zenki');
   assert.equal(utokyoZenki.decades.flatMap(d => d.years).length, 2);
+  assert.deepEqual(utokyoZenki.closedTrend.dailySeries, []);
+});
+
+test('buildIssueStats computes JST daily (30d) and full-range cumulative closed issue trends per category', () => {
+  const index = {
+    available: true,
+    generatedAt: '2026-11-19T12:00:00Z', // 2026-11-19 21:00 JST
+    problems: {
+      'utokyo/zenki/1975/1': [
+        // closed_at takes precedence over updated_at; 2026-10-01T16:00Z = 2026-10-02 01:00 JST (outside 30d window)
+        { number: 1, title: 'Old close', state: 'closed', url: `${REPO_URL}/issues/1`, updated_at: '2026-11-18T00:00:00Z', closed_at: '2026-10-01T16:00:00Z', kinds: [] },
+        // 2026-11-18T15:30Z = 2026-11-19 00:30 JST
+        { number: 2, title: 'Midnight JST close', state: 'closed', url: `${REPO_URL}/issues/2`, updated_at: '2026-11-18T15:30:00Z', closed_at: '2026-11-18T15:30:00Z', kinds: [] },
+        { number: 3, title: 'Still open', state: 'open', url: `${REPO_URL}/issues/3`, updated_at: '2026-11-19T00:00:00Z', closed_at: null, kinds: [] },
+      ],
+      'ukyoto/zenki/2001/1': [
+        // fallback to updated_at when closed_at is omitted
+        { number: 4, title: 'Legacy closed', state: 'closed', url: `${REPO_URL}/issues/4`, updated_at: '2026-11-17T05:00:00Z', kinds: [] },
+      ],
+    },
+    unmapped: [
+      { number: 5, title: '京大前期まとめ完了', state: 'closed', url: `${REPO_URL}/issues/5`, updated_at: '2026-11-19T01:00:00Z', closed_at: '2026-11-19T01:00:00Z', kinds: ['figure'], univ: 'ukyoto', exam: 'zenki' },
+    ],
+  };
+
+  const stats = buildIssueStats(index, sampleEntries, '');
+  assert.equal(stats.closedTrendsMeta.recentDays, 30);
+  assert.equal(stats.closedTrendsMeta.cumulativeStartDate, '2026-10-02');
+  assert.equal(stats.closedTrendsMeta.dailyStartDate, '2026-10-21');
+  assert.equal(stats.closedTrendsMeta.endDate, '2026-11-19');
+  assert.equal(stats.closedTrendsMeta.hasAnyClosedData, true);
+
+  const utokyoZenki = stats.categories.find(c => c.id === 'utokyo-zenki');
+  assert.equal(utokyoZenki.closedTrend.dailySeries.length, 30);
+  assert.equal(utokyoZenki.closedTrend.cumulativeSeries.length, 49); // 2026-10-02..2026-11-19 inclusive
+  assert.equal(utokyoZenki.closedTrend.recentTotal, 1);
+  assert.equal(utokyoZenki.closedTrend.cumulativeTotal, 2);
+  assert.equal(utokyoZenki.closedTrend.dailySeries[0].cumulative, 1); // includes pre-window close on 10/02
+  assert.equal(utokyoZenki.closedTrend.dailySeries.at(-1).date, '2026-11-19');
+  assert.equal(utokyoZenki.closedTrend.dailySeries.at(-1).count, 1);
+  assert.equal(utokyoZenki.closedTrend.dailySeries.at(-1).cumulative, 2);
+
+  const ukyotoZenki = stats.categories.find(c => c.id === 'ukyoto-zenki');
+  assert.equal(ukyotoZenki.closedTrend.recentTotal, 2);
+  assert.equal(ukyotoZenki.closedTrend.cumulativeTotal, 2);
 });

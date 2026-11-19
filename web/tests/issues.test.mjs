@@ -68,14 +68,15 @@ test('readIssueIndex supports optional unmapped list and validates its entries',
   const withUnmapped = {
     ...snapshot(),
     unmapped: [
-      { ...row(50, 'open'), updated_at: '2026-11-01T00:00:00Z', kinds: ['figure'], univ: 'ukyoto', exam: 'zenki' },
-      { ...row(51, 'closed'), updated_at: null, kinds: [], univ: null, exam: null },
+      { ...row(50, 'open'), updated_at: '2026-11-01T00:00:00Z', closed_at: null, kinds: ['figure'], univ: 'ukyoto', exam: 'zenki' },
+      { ...row(51, 'closed'), updated_at: null, closed_at: '2026-11-02T15:30:00Z', kinds: [], univ: null, exam: null },
     ],
   };
   withSnapshot(withUnmapped, index => {
     assert.equal(index.available, true);
     assert.equal(index.unmapped.length, 2);
     assert.equal(index.unmapped[0].univ, 'ukyoto');
+    assert.equal(index.unmapped[1].closed_at, '2026-11-02T15:30:00Z');
   });
 
   for (const bad of [
@@ -83,6 +84,7 @@ test('readIssueIndex supports optional unmapped list and validates its entries',
     s => { s.unmapped = [{ ...row(9), url: 'https://evil.example/issues/9', kinds: [], univ: null, exam: null }]; },
     s => { s.unmapped = [{ ...row(9), kinds: [], univ: 'waseda', exam: null }]; },
     s => { s.unmapped = [{ ...row(9), kinds: ['invalid'], univ: null, exam: null }]; },
+    s => { s.unmapped = [{ ...row(9), closed_at: 'not-a-date', kinds: [], univ: null, exam: null }]; },
   ]) {
     const s = snapshot();
     bad(s);

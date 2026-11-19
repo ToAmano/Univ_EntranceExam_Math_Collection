@@ -13,7 +13,7 @@ else:
     from issue_labels import DEFAULT_REPO, build_index, build_plan, classify_issue, fingerprint, names
 
 ROOT = Path(__file__).resolve().parent.parent
-FIELDS = 'number,id,title,body,state,labels,url,updatedAt'
+FIELDS = 'number,id,title,body,state,labels,url,updatedAt,closedAt'
 BATCH_SIZE = 20
 
 
@@ -64,7 +64,7 @@ class GitHub:
                 for n, number in enumerate(batch):
                     declarations.append(f'$n{n}:Int!')
                     variables[f'n{n}'] = number
-                    fields.append(f'i{n}:issue(number:$n{n}){{number id title body state url updatedAt labels(first:100){{totalCount nodes{{name}}}}}}')
+                    fields.append(f'i{n}:issue(number:$n{n}){{number id title body state url updatedAt closedAt labels(first:100){{totalCount nodes{{name}}}}}}')
                 data = self.graphql('query(' + ','.join(declarations) + '){repository(owner:$owner,name:$repo){' + ' '.join(fields) + '}}', variables)
                 for issue in data['repository'].values():
                     if issue is None:

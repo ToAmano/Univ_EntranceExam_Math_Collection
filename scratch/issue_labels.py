@@ -151,6 +151,7 @@ def build_index(issues, repo=DEFAULT_REPO):
                 state=issue['state'].lower(),
                 url=issue['url'],
                 updated_at=issue.get('updatedAt'),
+                closed_at=issue.get('closedAt'),
                 kinds=sorted(n[5:] for n in labels if n.startswith('kind:') and n[5:] in KINDS),
                 univ=univs[0] if len(univs) == 1 and len(all_univs) == 1 else None,
                 exam=exams[0] if len(exams) == 1 and len(all_exams) == 1 else None,
@@ -168,6 +169,7 @@ def build_index(issues, repo=DEFAULT_REPO):
         problems[pid].append(dict(number=issue['number'], title=issue['title'],
                                   state=issue['state'].lower(), url=issue['url'],
                                   updated_at=issue.get('updatedAt'),
+                                  closed_at=issue.get('closedAt'),
                                   kinds=sorted(n[5:] for n in labels if n.startswith('kind:'))))
     for rows in problems.values():
         rows.sort(key=lambda r: (r['state'] != 'open', r['number']))

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import ClosedIssueTrends from '../../components/ClosedIssueTrends.astro';
 import { readIssueIndex } from '../../lib/issues.mjs';
 import { buildIssueStats, KIND_META } from '../../lib/issue-stats.mjs';
 import { buildBreadcrumbListJsonLd } from '../../utils/seo';
@@ -230,6 +231,13 @@ function cellStateClass(openCount: number, recorded: boolean): string {
 				})}
 			</div>
 		</section>
+
+		<!-- ===== SECTION B: CLOSED ISSUE TRENDS (6 CATEGORIES) ===== -->
+		<ClosedIssueTrends
+			categories={stats.categories}
+			meta={stats.closedTrendsMeta}
+			available={stats.available}
+		/>
 
 		<!-- ===== SECTION C: INTERACTIVE CATEGORY EXPLORER ===== -->
 		<section aria-labelledby="explorer-heading" class="explorer-section" id="explorer">

@@ -119,11 +119,43 @@ function calcRate(closed, open) {
   return Math.round((closed / all) * 1000) / 10;
 }
 
+export const RECENT_TREND_DAYS = 30;
+const JST_OFFSET_MS = 9 * 60 * 60 * 1000;
+const DAY_MS = 24 * 60 * 60 * 1000;
+
 function formatShortDate(iso) {
   if (!iso || typeof iso !== 'string') return null;
   const t = Date.parse(iso);
   if (!Number.isFinite(t)) return null;
   return new Date(t).toISOString().slice(0, 10);
+}
+
+function toJstDate(iso) {
+  if (!iso || typeof iso !== 'string') return null;
+  const t = Date.parse(iso);
+  if (!Number.isFinite(t)) return null;
+  return new Date(t + JST_OFFSET_MS).toISOString().slice(0, 10);
+}
+
+function addCalendarDays(ymd, deltaDays) {
+  const [y, m, d] = ymd.split('-').map(Number);
+  return new Date(Date.UTC(y, m - 1, d) + deltaDays * DAY_MS).toISOString().slice(0, 10);
+}
+
+function enumerateDateRange(startYmd, endYmd) {
+  if (!startYmd || !endYmd || startYmd > endYmd) return [];
+  const out = [];
+  let cur = startYmd;
+  while (cur <= endYmd) {
+    out.push(cur);
+    cur = addCalendarDays(cur, 1);
+  }
+  return out;
+}
+
+function formatAxisMd(ymd) {
+  if (!ymd) return '';
+  return `${Number(ymd.slice(5, 7))}/${Number(ymd.slice(8, 10))}`;
 }
 
 const VALID_YEAR_RE = /^[0-9]{4}$/;
@@ -212,10 +244,21 @@ export function buildIssueStats(index, allEntries = [], baseUrl = '') {
 
   let totalProblemOpen = 0;
   let totalProblemClosed = 0;
+  let minClosedYmd = null;
+  let maxClosedYmd = null;
 
   const categories = CATEGORIES.map(cfg => {
     const prefix = `${cfg.university}/${cfg.category}/`;
     const yearMap = new Map();
+    const closedByDate = new Map();
+
+    const recordClosedDate = (iss) => {
+      const ymd = toJstDate(iss.closed_at ?? iss.updated_at);
+      if (!ymd) return;
+      closedByDate.set(ymd, (closedByDate.get(ymd) || 0) + 1);
+      if (minClosedYmd === null || ymd < minClosedYmd) minClosedYmd = ymd;
+      if (maxClosedYmd === null || ymd > maxClosedYmd) maxClosedYmd = ymd;
+    };
 
     const ensureCell = (year, question) => {
       if (!yearMap.has(year)) yearMap.set(year, new Map());
@@ -264,6 +307,7 @@ export function buildIssueStats(index, allEntries = [], baseUrl = '') {
         });
       } else {
         catClosedCount += 1;
+        recordClosedDate(cw);
       }
     }
 
@@ -279,10 +323,12 @@ export function buildIssueStats(index, allEntries = [], baseUrl = '') {
       let yearOpenCount = 0;
       const questions = sortedQs.map(cell => {
         const openList = cell.issues.filter(i => i.state === 'open');
-        const closedCount = cell.issues.length - openList.length;
+        const closedList = cell.issues.filter(i => i.state === 'closed');
+        const closedCount = closedList.length;
         catOpenCount += openList.length;
         catClosedCount += closedCount;
         yearOpenCount += openList.length;
+        for (const closedIss of closedList) recordClosedDate(closedIss);
 
         const recorded = Boolean(cell.catalog?.solutionSlug || cell.catalog?.problemSlug);
         const pageHref = cell.catalog?.solutionSlug
@@ -356,8 +402,60 @@ export function buildIssueStats(index, allEntries = [], baseUrl = '') {
       githubSearchUrl: `${REPO_URL}/issues?${searchQuery}`,
       decades: [...decadeMap.entries()].map(([label, years]) => ({ label, years })),
       openIssues: catOpenIssues,
+      _closedByDate: closedByDate,
     };
   });
+
+  const generatedYmd = toJstDate(index.generatedAt);
+  const trendEndYmd = maxClosedYmd && (!generatedYmd || maxClosedYmd > generatedYmd)
+    ? maxClosedYmd
+    : generatedYmd || maxClosedYmd;
+  const trendDailyStartYmd = trendEndYmd ? addCalendarDays(trendEndYmd, -(RECENT_TREND_DAYS - 1)) : null;
+  const trendGlobalStartYmd = minClosedYmd || trendEndYmd;
+  const dailyDates = trendDailyStartYmd && trendEndYmd
+    ? enumerateDateRange(trendDailyStartYmd, trendEndYmd)
+    : [];
+  const cumulativeDates = trendGlobalStartYmd && trendEndYmd
+    ? enumerateDateRange(trendGlobalStartYmd, trendEndYmd)
+    : [];
+
+  for (const cat of categories) {
+    const byDate = cat._closedByDate;
+    delete cat._closedByDate;
+
+    let preDailySum = 0;
+    if (trendDailyStartYmd) {
+      for (const [ymd, cnt] of byDate.entries()) {
+        if (ymd < trendDailyStartYmd) preDailySum += cnt;
+      }
+    }
+
+    let runningDailyCum = preDailySum;
+    const dailySeries = dailyDates.map(ymd => {
+      const count = byDate.get(ymd) || 0;
+      runningDailyCum += count;
+      return { date: ymd, label: formatAxisMd(ymd), count, cumulative: runningDailyCum };
+    });
+
+    let runningFullCum = 0;
+    const cumulativeSeries = cumulativeDates.map(ymd => {
+      const count = byDate.get(ymd) || 0;
+      runningFullCum += count;
+      return { date: ymd, label: formatAxisMd(ymd), count, cumulative: runningFullCum };
+    });
+
+    const recentTotal = dailySeries.reduce((acc, p) => acc + p.count, 0);
+    const dailyPeak = dailySeries.reduce((acc, p) => Math.max(acc, p.count), 0);
+
+    cat.closedTrend = {
+      hasClosedData: cat.closedCount > 0 && cumulativeSeries.length > 0,
+      recentTotal,
+      dailyPeak,
+      cumulativeTotal: runningFullCum,
+      dailySeries,
+      cumulativeSeries,
+    };
+  }
 
   const totalOpen = totalProblemOpen + generalOpenIssues.length;
   const totalClosed = totalProblemClosed + generalClosedCount;
@@ -371,6 +469,13 @@ export function buildIssueStats(index, allEntries = [], baseUrl = '') {
     available: Boolean(index.available),
     generatedAt: index.generatedAt || null,
     repoIssuesUrl: `${REPO_URL}/issues`,
+    closedTrendsMeta: {
+      recentDays: RECENT_TREND_DAYS,
+      dailyStartDate: trendDailyStartYmd,
+      cumulativeStartDate: trendGlobalStartYmd,
+      endDate: trendEndYmd,
+      hasAnyClosedData: Boolean(index.available) && maxClosedYmd !== null,
+    },
     totals: {
       open: totalOpen,
       closed: totalClosed,

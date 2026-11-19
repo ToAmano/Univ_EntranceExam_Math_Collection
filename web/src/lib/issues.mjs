@@ -12,6 +12,9 @@ function isValidIssueCore(issue) {
   if (!issue || typeof issue !== 'object') return false;
   if (!Number.isSafeInteger(issue.number) || issue.number < 1 || typeof issue.title !== 'string') return false;
   if (!['open', 'closed'].includes(issue.state) || issue.url !== `${REPO_URL}/issues/${issue.number}`) return false;
+  if (issue.closed_at !== undefined && issue.closed_at !== null) {
+    if (typeof issue.closed_at !== 'string' || !Number.isFinite(Date.parse(issue.closed_at))) return false;
+  }
   if (issue.kinds !== undefined) {
     if (!Array.isArray(issue.kinds) || issue.kinds.some(k => typeof k !== 'string' || !VALID_KINDS.has(k))) return false;
   }

@@ -203,7 +203,10 @@ def test_build_index_exports_unmapped_without_guessing_from_title():
         issue(number=20, title='京大前期のTikZ図改修', body='', labels=['univ:ukyoto', 'exam:zenki', 'kind:figure']),
         state='OPEN',
     )
-    general_closed = issue(number=5, title='utokyo zenki: 未移行まとめ', body='', labels=['enhancement'])
+    general_closed = dict(
+        issue(number=5, title='utokyo zenki: 未移行まとめ', body='', labels=['enhancement']),
+        closedAt='2026-10-22T01:02:03Z',
+    )
     general_open = dict(
         issue(number=30, title='東大前期・後期 PDF整理', body='', labels=['univ:utokyo', 'univ:ukyoto', 'kind:unknown']),
         state='OPEN',
@@ -220,6 +223,7 @@ def test_build_index_exports_unmapped_without_guessing_from_title():
         state='open',
         url='https://github.com/a/b/issues/20',
         updated_at='2026-10-21T00:00:00Z',
+        closed_at=None,
         kinds=['figure'],
         univ='ukyoto',
         exam='zenki',
@@ -228,4 +232,6 @@ def test_build_index_exports_unmapped_without_guessing_from_title():
     assert result['unmapped'][1]['exam'] is None
     assert result['unmapped'][1]['kinds'] == []
     assert result['unmapped'][2]['state'] == 'closed'
+    assert result['unmapped'][2]['closed_at'] == '2026-10-22T01:02:03Z'
     assert result['unmapped'][2]['univ'] is None
+    assert result['problems']['titech/zenki/1985/3'][0]['closed_at'] is None
