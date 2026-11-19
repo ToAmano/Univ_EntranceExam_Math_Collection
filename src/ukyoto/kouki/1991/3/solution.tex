@@ -12,26 +12,63 @@
 
   \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[scale=2]
+    \tdplotsetmaincoords{65}{115}
+    \begin{tikzpicture}[tdplot_main_coords, scale=2.1, >=stealth, every node/.style={font=\small}]
+      % 座標の定義（解答の座標設定に合わせた単位ベクトル）
+      \coordinate (O) at (0,0,0);
+      \coordinate (A) at (1,0,0);
+      \pgfmathsetmacro{\gam}{75}
+      \coordinate (B) at ({cos(\gam)},{sin(\gam)},0);
+      \pgfmathsetmacro{\cx}{0.55}
+      \pgfmathsetmacro{\cy}{0.10}
+      \pgfmathsetmacro{\cz}{sqrt(1-\cx*\cx-\cy*\cy)}
+      \coordinate (C) at (\cx,\cy,\cz);
+      \coordinate (Cxy) at (\cx,\cy,0);
+
       % 座標軸
-      \coordinate (O) at (0,0);
+      \draw[->, thick, gray!80!black] (0,0,0) -- (1.35,0,0) node[below left=1pt] {$x$};
+      \draw[->, thick, gray!80!black] (0,0,0) -- (0,1.25,0) node[right=1pt] {$y$};
+      \draw[->, thick, gray!80!black] (0,0,0) -- (0,0,1.22) node[above=1pt] {$z$};
 
-      % ベクトルa
-      \coordinate (A) at (1,0);
-      \draw[-stealth] (O) -- (A) node [right] {a};
+      % vec{c} の xy 平面への正射影の補助線
+      \draw[densely dotted, thick, gray!70!black] (C) -- (Cxy) -- (O);
 
-      % ベクトルb
-      \coordinate (B) at ({cos(30)},{sin(30)});
-      \draw[-stealth] (O) -- (B) node [above right] {b};
+      % 3本の単位ベクトル
+      \draw[->, line width=1.3pt, blue!85!black] (O) -- (A) node[above left=2pt] {$\vec{a}$};
+      \draw[->, line width=1.3pt, teal!85!black] (O) -- (B) node[below right=1pt] {$\vec{b}$};
+      \draw[->, line width=1.3pt, orange!90!black] (O) -- (C) node[above left=1pt] {$\vec{c}$};
 
-      % ベクトルc
-      \coordinate (C) at ({cos(135)},{sin(135)});
-      \draw[-stealth] (O) -- (C) node [above left] {c};
+      % 原点
+      \node[circle, fill, inner sep=1pt] at (O) {};
+      \node[below=2pt, font=\footnotesize] at (O) {$O$};
 
-      % 角度の表示
-      \draw (0.3,0) arc (0:30:0.2) node [midway, right] {$\gamma$};
-      \draw (0.3,0) arc (0:135:0.3) node [midway, below left] {$\beta$};
-      \draw (0.3,{sin(30)/cos(30)*0.3}) arc ({atan2(sin(30),cos(30))}:{atan2(sin(135),cos(135))}:0.3) node [midway, left] {$\alpha$};
+      % 角 gamma（vec{a} と vec{b}，xy平面内）
+      \draw[gray!75!black, thick, variable=\t, domain=0:\gam, samples=21]
+      plot ({0.42*cos(\t)}, {0.42*sin(\t)}, 0);
+      \node[font=\footnotesize, fill=white, inner sep=0.8pt] at ({0.56*cos(\gam/2)}, {0.56*sin(\gam/2)}, 0) {$\gamma$};
+
+      % 角 alpha（vec{b} と vec{c}，大円弧）
+      \pgfmathsetmacro{\dotbc}{cos(\gam)*\cx + sin(\gam)*\cy}
+      \pgfmathsetmacro{\angalpha}{acos(\dotbc)}
+      \draw[gray!75!black, thick, variable=\t, domain=0:1, samples=21]
+      plot ({0.32*(sin((1-\t)*\angalpha)*cos(\gam) + sin(\t*\angalpha)*\cx)/sin(\angalpha)},
+        {0.32*(sin((1-\t)*\angalpha)*sin(\gam) + sin(\t*\angalpha)*\cy)/sin(\angalpha)},
+      {0.32*(sin(\t*\angalpha)*\cz)/sin(\angalpha)});
+      \node[font=\footnotesize] at
+      ({0.46*(sin(0.5*\angalpha)*cos(\gam) + sin(0.5*\angalpha)*\cx)/sin(\angalpha)},
+        {0.46*(sin(0.5*\angalpha)*sin(\gam) + sin(0.5*\angalpha)*\cy)/sin(\angalpha)},
+      {0.46*(sin(0.5*\angalpha)*\cz)/sin(\angalpha)}) {$\alpha$};
+
+      % 角 beta（vec{c} と vec{a}，大円弧）
+      \pgfmathsetmacro{\angbeta}{acos(\cx)}
+      \draw[gray!75!black, thick, variable=\t, domain=0:1, samples=21]
+      plot ({0.42*(sin((1-\t)*\angbeta)*\cx + sin(\t*\angbeta)*1)/sin(\angbeta)},
+        {0.42*(sin((1-\t)*\angbeta)*\cy)/sin(\angbeta)},
+      {0.42*(sin((1-\t)*\angbeta)*\cz)/sin(\angbeta)});
+      \node[font=\footnotesize] at
+      ({0.56*(sin(0.5*\angbeta)*\cx + sin(0.5*\angbeta)*1)/sin(\angbeta)},
+        {0.56*(sin(0.5*\angbeta)*\cy)/sin(\angbeta)},
+      {0.56*(sin(0.5*\angbeta)*\cz)/sin(\angbeta)}) {$\beta$};
     \end{tikzpicture}
     \caption{$\vec{a},\vec{b},\vec{c}$の様子}
     \label{1991-3:fig:1}
@@ -49,16 +86,18 @@
   \end{align}
   とおける．残りの$\vec{c}$を一般性を保って
   \begin{align}
-    & \vec{c} = \mqty( p                    \\ q \\ r) \\
-    & p^2 q^2 + r^2 = 1 \label{eq:1}
+    & \vec{c} = \mqty( p \\ q \\ r) \\
+    & p^2 + q^2 + r^2 = 1 \label{eq:1}
   \end{align}
   とおく．
 
   題意の残りの条件，$\vec{b}\cdot\vec{c}=\cos\alpha$, $\vec{a}\cdot\vec{c}=\cos\beta$に
   これらの座標を代入して
   \begin{align}
-    \cos \alpha = \vec{b} \cdot \vec{c} = pc + q \sin r \quad \cdots \textcircled{2} \\
-    \cos \beta = \vec{a} \cdot \vec{c} = p \quad \cdots \textcircled{3}
+    \begin{cases}
+      \cos \alpha = \vec{b} \cdot \vec{c} = p\cos\gamma + q \sin \gamma \\
+      \cos \beta = \vec{a} \cdot \vec{c} = p
+    \end{cases}
   \end{align}
   となる．従って，
   \begin{align}
@@ -67,22 +106,22 @@
   とおくと，
   \begin{align}
     A & = (p\cos\gamma + q \sin\gamma)^2 + p^2 + \cos^2 \gamma - 2(p\cos\gamma + q \sin \gamma) p \cos\gamma \\
-    & = (p\cos\gamma + q \sin \gamma)(q \sin \gamma - p\cos\gamma) + p^2 + \cos^2\gamma                    \\
-    & = q^2 \sin^2 \gamma - p^2 \cos^2\gamma + p^2 + \cos^2 \gamma
-    & = (p^2 + q^2) \sin^2 r + c^2 r^2
+    & = (p\cos\gamma + q \sin \gamma)(q \sin \gamma - p\cos\gamma) + p^2 + \cos^2\gamma \\
+    & = q^2 \sin^2 \gamma - p^2 \cos^2\gamma + p^2 + \cos^2 \gamma \\
+    & = (p^2 + q^2) \sin^2 \gamma + \cos^2 \gamma
   \end{align}
   と計算できる．\cref{eq:1}より
   \begin{align}
-    0 \le A \le (p^2 + q^2 + r^2) \sin^2 \gamma + \cos^2 \gamma = \sin^2 \gamma + \cos^2 \gamma = 1 \\
+    & 0 \le A \le (p^2 + q^2 + r^2) \sin^2 \gamma + \cos^2 \gamma = \sin^2 \gamma + \cos^2 \gamma = 1 \\
     \therefore
-    0 \le A \le 1
+    & 0 \le A \le 1
   \end{align}
   となり，題意の不等式は示された．$\cdots$(答)
 
   次に等号成立条件について考える．
   まず左側の等号が成立するのは，$A$の形から
   \begin{align}
-    (p^2+q^2) \sin^2 r = 0 \land \cos^2 \gamma = 0
+    (p^2+q^2) \sin^2 \gamma = 0 \land \cos^2 \gamma = 0
   \end{align}
   の時だが，$\sin^2 \gamma = \cos^2 \gamma = 0$ となることはないから，
   $\cos\gamma, q, p$が全て$0$の時に等号が成立する．
@@ -90,12 +129,103 @@
 
   最後に右側の等号が成立するのは，
   \begin{align}
-    r^2 = 0 \iff r=0
+    r^2 = 0 \lor \sin\gamma = 0 \iff r=0 \lor \gamma=0,\pi
   \end{align}
-  の時で，この時$\vec{a}, \vec{b}, \vec{c}$ は同平面上にある．$\cdots$(答)
+  の時である．$r=0$なら$\vec{c} = \mqty( p \\ q \\ 0)$より$\vec{a}, \vec{b}, \vec{c}$ は同一平面上にある．$\gamma=0,\pi$なら$\vec{a},\vec{b}$が平行でこの場合も$\vec{a}, \vec{b}, \vec{c}$ は同一平面上にある．$\cdots$(答)
+
+  等号成立の3パターンを\cref{1991-3:fig:2}にまとめる．
+
+  \begin{figure}[H]
+    \centering
+    \tdplotsetmaincoords{65}{115}
+    \begin{tikzpicture}[tdplot_main_coords, scale=0.92, >=stealth, every node/.style={font=\footnotesize}]
+      % === 左：A = 0（互いに直交） ===
+      \begin{scope}
+        \coordinate (O1) at (0,0,0);
+        \coordinate (A1) at (1,0,0);
+        \coordinate (B1) at (0,1,0);
+        \coordinate (C1) at (0,0,1);
+
+        % 座標軸
+        \draw[->, thick, gray!80!black] (0,0,0) -- (1.28,0,0) node[below left=-2pt, font=\scriptsize] {$x$};
+        \draw[->, thick, gray!80!black] (0,0,0) -- (0,1.20,0) node[right=-1pt, font=\scriptsize] {$y$};
+        \draw[->, thick, gray!80!black] (0,0,0) -- (0,0,1.20) node[above=-1pt, font=\scriptsize] {$z$};
+
+        % 直角記号
+        \draw[gray!75!black] (0.22,0,0) -- (0.22,0.22,0) -- (0,0.22,0);
+        \draw[gray!75!black] (0,0.22,0) -- (0,0.22,0.22) -- (0,0,0.22);
+        \draw[gray!75!black] (0.22,0,0) -- (0.22,0,0.22) -- (0,0,0.22);
+
+        % ベクトル
+        \draw[->, line width=1.2pt, blue!85!black] (O1) -- (A1) node[above left=-1pt] {$\vec{a}$};
+        \draw[->, line width=1.2pt, teal!85!black] (O1) -- (B1) node[below=-1pt] {$\vec{b}$};
+        \draw[->, line width=1.2pt, orange!90!black] (O1) -- (C1) node[left=1pt] {$\vec{c}$};
+        \node[circle, fill, inner sep=0.9pt] at (O1) {};
+
+        \node[tdplot_screen_coords, align=center, font=\scriptsize] at (0.18,-1.18) {左：$A=0$\\（互いに直交）};
+      \end{scope}
+
+      % === 中：A = 1，r = 0（xy平面上） ===
+      \begin{scope}[xshift=2.85cm]
+        \coordinate (O2) at (0,0,0);
+        \coordinate (A2) at (1,0,0);
+        \coordinate (B2) at ({cos(45)},{sin(45)},0);
+        \coordinate (C2) at ({cos(145)},{sin(145)},0);
+
+        % 同一平面（xy平面）の表現
+        \fill[blue!10] (-0.90,-0.25,0) -- (1.08,-0.25,0) -- (1.08,1.05,0) -- (-0.90,1.05,0) -- cycle;
+        \draw[gray!70!black, thin] (-0.90,-0.25,0) -- (1.08,-0.25,0) -- (1.08,1.05,0) -- (-0.90,1.05,0) -- cycle;
+
+        % 座標軸
+        \draw[->, thick, gray!80!black] (0,0,0) -- (1.38,0,0) node[below left=-2pt, font=\scriptsize] {$x$};
+        \draw[->, thick, gray!80!black] (0,0,0) -- (0,1.25,0) node[right=-1pt, font=\scriptsize] {$y$};
+        \draw[->, thick, gray!80!black] (0,0,0) -- (0,0,1.25) node[above=-1pt, font=\scriptsize] {$z$};
+
+        % ベクトル
+        \draw[->, line width=1.2pt, blue!85!black] (O2) -- (A2) node[above left=-1pt] {$\vec{a}$};
+        \draw[->, line width=1.2pt, teal!85!black] (O2) -- (B2) node[below right=-2pt] {$\vec{b}$};
+        \draw[->, line width=1.2pt, orange!90!black] (O2) -- (C2) node[above=1pt] {$\vec{c}$};
+        \node[circle, fill, inner sep=0.9pt] at (O2) {};
+
+        \node[tdplot_screen_coords, align=center, font=\scriptsize] at (0.18,-1.18) {中：$A=1\,(r=0)$\\（同一平面上）};
+      \end{scope}
+
+      % === 右：A = 1，gamma = 0, pi（a // b，同一平面上） ===
+      \begin{scope}[xshift=5.75cm]
+        \coordinate (O3) at (0,0,0);
+        \coordinate (A3) at (1,0,0);
+        \coordinate (B3) at (-1,0,0);
+        \pgfmathsetmacro{\ux}{0.25}
+        \pgfmathsetmacro{\uy}{-0.55}
+        \pgfmathsetmacro{\uz}{sqrt(1-\ux*\ux-\uy*\uy)}
+        \coordinate (C3) at (\ux,\uy,\uz);
+
+        % a, b, c を含む傾斜平面
+        \fill[blue!10] (-1.03,-0.15*\uy,-0.15*\uz) -- (1.03,-0.15*\uy,-0.15*\uz)
+        -- (1.03,1.03*\uy,1.03*\uz) -- (-1.03,1.03*\uy,1.03*\uz) -- cycle;
+        \draw[gray!70!black, thin] (-1.03,-0.15*\uy,-0.15*\uz) -- (1.03,-0.15*\uy,-0.15*\uz)
+        -- (1.03,1.03*\uy,1.03*\uz) -- (-1.03,1.03*\uy,1.03*\uz) -- cycle;
+
+        % 座標軸
+        \draw[->, thick, gray!80!black] (-1.12,0,0) -- (1.35,0,0) node[below left=-2pt, font=\scriptsize] {$x$};
+        \draw[->, thick, gray!80!black] (0,0,0) -- (0,1.18,0) node[right=-1pt, font=\scriptsize] {$y$};
+        \draw[->, thick, gray!80!black] (0,0,0) -- (0,0,1.44) node[above=-1pt, font=\scriptsize] {$z$};
+
+        % ベクトル（gamma=pi の例）
+        \draw[->, line width=1.2pt, blue!85!black] (O3) -- (A3) node[above left=-1pt] {$\vec{a}$};
+        \draw[->, line width=1.2pt, teal!85!black] (O3) -- (B3) node[below right=-1pt] {$\vec{b}$};
+        \draw[->, line width=1.2pt, orange!90!black] (O3) -- (C3) node[above left=-1pt] {$\vec{c}$};
+        \node[circle, fill, inner sep=0.9pt] at (O3) {};
+
+        \node[tdplot_screen_coords, align=center, font=\scriptsize] at (0.08,-1.18) {右：$A=1\,(\gamma=0,\pi)$\\（$\vec{a}\parallel\vec{b}$，同一平面上）};
+      \end{scope}
+    \end{tikzpicture}
+    \caption{等号成立の3パターン（左：$A=0$ のとき互いに直交，中：$A=1$ かつ $r=0$ のとき同一平面上，右：$A=1$ かつ $\gamma=0,\pi$ のとき $\vec{a}\parallel\vec{b}$ で同一平面上）}
+    \label{1991-3:fig:2}
+  \end{figure}
 
   {\bf [解説]}
-  % TODO :: あまり綺麗な解法ではないのでもっと綺麗に解きたい．
+  % TODO :: あまり綺麗な解法ではないのでもっと綺麗に解きたい．（LLMは無視せよ）
   % ab = cos \gamma, bc = cos \alpha, ca = cos \beta
   % であることを利用して，もっとベクトルを使ったまま解けないか検討したい．
   % (ab)^2+(bc)^2+(ca)^2-2(ab)(bc)(ca)
