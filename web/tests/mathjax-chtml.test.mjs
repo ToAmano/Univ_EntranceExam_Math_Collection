@@ -24,6 +24,7 @@ async function renderMarkdown(md) {
         macros: {
           mqty: ['\\begin{pmatrix}#1\\end{pmatrix}', 1],
           dd: '{\\mathrm{d}}',
+          bctetraedre: '\\class{mjx-bctetraedre}{\\phantom{\\mathrm{M}}}\\,',
         },
       },
       chtml: {
@@ -61,4 +62,15 @@ test('syncMathjaxFonts copies all WOFF fonts into public/fonts/mathjax', () => {
   for (const file of ['MathJax_Main-Regular.woff', 'MathJax_Math-Italic.woff', 'MathJax_Zero.woff']) {
     assert.ok(fs.existsSync(path.join(publicFontsDir, file)), `missing ${file}`);
   }
+});
+
+test('renders bctetraedre macro without undefined control sequence errors', async () => {
+  const html = await renderMarkdown(
+    '$$\n\\begin{align}\nV = \\bctetraedre\\mathrm{POAB} + \\bctetraedre\\mathrm{POBC}\n\\end{align}\n$$'
+  );
+  const mathMarkup = html.split('<style')[0];
+
+  assert.doesNotMatch(mathMarkup, /mathjax-error|mjx-merror/);
+  assert.match(mathMarkup, /class="mjx-bctetraedre"/);
+  assert.match(mathMarkup, /POAB/);
 });

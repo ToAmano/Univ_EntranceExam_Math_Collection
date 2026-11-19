@@ -31,6 +31,8 @@ export default defineConfig({
             mqty: ['\\begin{pmatrix}#1\\end{pmatrix}', 1],
             // physics パッケージの微分記号 (\dd x)。PDF は physics.sty が定義する。
             dd: '{\\mathrm{d}}',
+            // bclogo パッケージの四面体記号（東工大後期 2011-1）。Layout.astro 側で SVG マスクとして描画する。
+            bctetraedre: '\\class{mjx-bctetraedre}{\\phantom{\\mathrm{M}}}\\,',
           },
         },
         chtml: {
