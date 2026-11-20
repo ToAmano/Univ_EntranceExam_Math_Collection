@@ -91,7 +91,7 @@
 \end{align}
 であるから，これを満たす$(p,q)$ の存在条件をしらべれば良い．
 
-\cref{eq:3}において\cref{eq:1}から左辺は$0$以上だから，右辺も$0$以上であることが必要である．逆にこの時\cref{eq:3}は楕円の方程式になって必ずこれを満たす$(p,q)$が存在して十分である．以上から求める$(p,q)$ の存在条件は\cref{eq:1}と合わせて
+\cref{eq:3}において\cref{eq:1}から左辺は$0$以上だから，右辺も$0$以上であることが必要である．逆にこの時\cref{eq:3}は楕円の方程式になって（または$r=\dfrac{\sqrt{2}}{2}$の時は$1$点を表す）必ずこれを満たす$(p,q)$が存在して十分である．以上から求める$(p,q)$ の存在条件は\cref{eq:1}と合わせて
 \begin{align}
   1 - \dfrac{1}{2(1-r^2)} \le 0 \iff \dfrac{\sqrt{2}}{2} \le r < 1 \label{eq:4}
 \end{align}
@@ -124,32 +124,31 @@ $r$が(1)の条件を満たしているとして以下話を進める．$\overri
     % 1 - r^2 ≈ 0.2775
     % 2r^2 - 1 ≈ 0.445
     % p0 = 1 / (2*(1-r^2)) ≈ 1.802
-    % 半径 a = sqrt(2r^2-1) / (2*(1-r^2)) ≈ 0.667 / 0.555 ≈ 1.201
-    % 半径 b = sqrt(2)*a ≈ 1.699
-    % 見やすい描画スケールに調整した値:
-    \def\pZero{2.1}   % 中心 p0
-    \def\semiA{1.2}   % p 軸方向半軸 a
-    \def\semiB{1.7}   % q 軸方向半軸 b = sqrt(2)*a
+    % 半軸 a = sqrt(2r^2-1) / (2*(1-r^2)) ≈ 0.667 / 0.555 ≈ 1.201
+    % 半軸 b = sqrt(2)*a ≈ 1.699
+    \def\pZero{1.80}   % 中心 p0 ≈ 1.802
+    \def\semiA{1.20}   % p 軸方向半軸 a ≈ 1.201
+    \def\semiB{1.70}   % q 軸方向半軸 b ≈ 1.699
 
     \coordinate (O)      at (0, 0);
     \coordinate (Center) at (\pZero, 0);
     \coordinate (P_left) at ({\pZero - \semiA}, 0);
     \coordinate (P_right) at ({\pZero + \semiA}, 0);
 
-    % --- 2. 楕円内部のハッチング塗りつぶし ---
-    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.7]
+    % --- 2. 楕円軌跡の輪郭線（等式を満たす境界曲線）---
+    \draw[line width=1.8pt, blue!85!black]
     (Center) ellipse [x radius=\semiA, y radius=\semiB];
-    \draw[very thick, blue!85!black]
-    (Center) ellipse [x radius=\semiA, y radius=\semiB];
+    \node[blue!90!black, font=\footnotesize\bfseries, above right]
+    at ({\pZero + 0.7*\semiA}, {0.7*\semiB}) {軌跡（楕円周）};
 
     % --- 3. 座標軸 ---
-    \draw[->, thick, gray!80!black] (-0.3, 0) -- (4.0, 0) node[right] {$p$};
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (3.8, 0) node[right] {$p$};
     \draw[->, thick, gray!80!black] (0, -2.1) -- (0, 2.2) node[above] {$q$};
     \node[below left=2pt] at (O) {$O$};
 
     % --- 4. 中心および半軸寸法の補助線 ---
     % 垂直対称軸 p = p0
-    \draw[dashed, gray!60] (\pZero, -\semiB - 0.2) -- (\pZero, \semiB + 0.2);
+    \draw[dashed, gray!70!black] (\pZero, -\semiB - 0.2) -- (\pZero, \semiB + 0.2);
 
     % p 軸方向の半長 a
     \draw[<->, thick, teal!85!black] (Center) -- (P_right);
@@ -160,18 +159,18 @@ $r$が(1)の条件を満たしているとして以下話を進める．$\overri
     \node[teal!90!black, font=\scriptsize, right] at ($ (Center)!0.5!(\pZero, \semiB) $) {$\frac{\sqrt{2r^2-1}}{\sqrt{2}(1-r^2)}$};
 
     % --- 5. 範囲端点の境界破線とラベル ---
-    % p 最小点 a
-    \draw[dashed, red!85!black, thick] (P_left) -- ({\pZero - \semiA}, -1.8);
-    \node[below=3pt, font=\scriptsize, red!90!black, align=center] at (P_left)
+    % p 最小点
+    \draw[densely dotted, red!85!black, thick] (P_left) -- ({\pZero - \semiA}, -1.8);
+    \node[below=3pt, font=\scriptsize, red!90!black, align=center] at ({\pZero - \semiA}, -1.8)
     {$p_{\min} = \frac{1-\sqrt{2r^2-1}}{2(1-r^2)}$};
 
-    % p 最大点 b
-    \draw[dashed, red!85!black, thick] (P_right) -- ({\pZero + \semiA}, -1.8);
-    \node[below=3pt, font=\scriptsize, red!90!black, align=center] at (P_right)
+    % p 最大点
+    \draw[densely dotted, red!85!black, thick] (P_right) -- ({\pZero + \semiA}, -1.8);
+    \node[below=3pt, font=\scriptsize, red!90!black, align=center] at ({\pZero + \semiA}, -1.8)
     {$p_{\max} = \frac{1+\sqrt{2r^2-1}}{2(1-r^2)}$};
 
     % 中心 p0
-    \node[above left=2pt, font=\scriptsize, black] at (Center)
+    \node[above=3pt, font=\scriptsize, black] at (Center)
     {$p_0 = \frac{1}{2(1-r^2)}$};
 
     % --- 6. 主要点のプロット ---
@@ -195,7 +194,7 @@ $r$が(1)の条件を満たしているとして以下話を進める．$\overri
   &= \dfrac{2r^2}{1-r^2}(p_{\max}-p_{\min}) \\
   &= \dfrac{2r^2 \cdot 2}{2(1-r^2)^2} \sqrt{2r^2-1}
 \end{align}
-となる．両辺に$1-r^2$をかけて$r\to 1-0$の極限を取ると
+となる．両辺に$(1-r)^2$をかけて$r\to 1-0$の極限を取ると
 \begin{align}
   (1-r)^2 \{ M(r) - m(r) \}
   &= \dfrac{2(1-r)^2 r^2}{(1+r)^2(1-r)^2} \sqrt{2r^2-1} \\
