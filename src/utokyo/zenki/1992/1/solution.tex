@@ -42,17 +42,17 @@
     % --- 4. 曲線 y = \log x の描画 (自然対数) ---
     \draw[line width=1.6pt, black, domain=0.6:3.6, samples=70]
     plot (\x, {ln(\x)});
-    \node[black, font=\footnotesize, above left] at (3.6, {ln(3.6)}) {$y = \log x$};
+    \node[black, font=\footnotesize, right=2pt] at (3.6, {ln(3.6)}) {$y = \log x$};
 
     % --- 5. 境界投影破線 ---
     % D から D'(b, 0) および y 軸への垂線
-    \draw[dashed, gray!60] (D) -- (Dp);
-    \draw[dashed, gray!60] (D) -- (0, \yD);
+    \draw[densely dotted, thick, gray!70!black] (D) -- (Dp);
+    \draw[densely dotted, thick, gray!70!black] (D) -- (0, \yD);
     \node[left=2pt, font=\scriptsize, gray!90!black] at (0, \yD) {$\log b$};
 
     % B から A(a, 0) および y 軸への垂線
-    \draw[dashed, gray!60] (B) -- (A);
-    \draw[dashed, gray!60] (B) -- (0, \yA);
+    \draw[densely dotted, thick, gray!70!black] (B) -- (A);
+    \draw[densely dotted, thick, gray!70!black] (B) -- (0, \yA);
     \node[left=2pt, font=\scriptsize, gray!90!black] at (0, \yA) {$\log a$};
 
     % --- 6. 各主要点のプロットとラベル ---
@@ -95,11 +95,11 @@
     % --- 4. 曲線 y = \log x の描画 ---
     \draw[line width=1.6pt, blue!85!black, domain=0.6:3.6, samples=70]
     plot (\x, {ln(\x)});
-    \node[blue!90!black, font=\footnotesize, above left] at (3.6, {ln(3.6)}) {$y = \log x$};
+    \node[blue!90!black, font=\footnotesize, right=2pt] at (3.6, {ln(3.6)}) {$y = \log x$};
 
     % --- 5. 境界直線 x = a ---
     \draw[very thick, gray!80!black] (A) -- (B);
-    \draw[dashed, gray!60] (B) -- (0, \yA);
+    \draw[densely dotted, thick, gray!70!black] (B) -- (0, \yA);
     \node[left=2pt, font=\scriptsize, gray!90!black] at (0, \yA) {$\log a$};
 
     % --- 6. 目盛りと主要点プロット ---
@@ -118,7 +118,7 @@
 
 題意より面積$S_1$は
 \begin{align}
-  S_1 - \int_1^a \log x \, dx = a(\log a - 1) + 1 \label{eq:1}
+  S_1 = \int_1^a \log x \, dx = a(\log a - 1) + 1 \label{eq:1}
 \end{align}
 で与えられる．
 
@@ -128,7 +128,7 @@ $D(b,\log b)$から$x$軸に下ろした垂足$D'(b,0)$とすると，
 $\square ABCD$ の面積 $S'$ は
 \begin{align}
   S'
-  &= \square ABD D' + \triangle D' C C \\
+  &= \square ABD D' + \triangle D' C D \\
   &= \dfrac{1}{2}\left(|AB|+|DD'|\right)|AD'| + \dfrac{1}{2}|DD'||D'C| \\
   &= \dfrac{1}{2}(\log a + \log b)(a - b) + \dfrac{1}{2} \log b \cdot (b - 1) \label{eq:2}
 \end{align}
@@ -147,15 +147,17 @@ $\square ABCD$ の面積 $S'$ は
   \caption{$S'$ の増減表}
   \begin{tabular}{c|ccccc}
     $b$ & $(1)$ & $\dots$ & $\dfrac{a-1}{\log a}$ & $\dots$ & $a$ \\ \hline
-    $S'$ & & $+$ & $0$ & $-$ & \\ \hline
-    $S$ & & $\nearrow$ & 極大 & $\searrow$ &
+    $S''$ & & $+$ & $0$ & $-$ & \\ \hline
+    $S'$ & & $\nearrow$ & 極大 & $\searrow$ &
   \end{tabular}
 \end{table}
 
-従って求める$S_2$は
+従って求める$S_2$は\cref{eq:2}に$b = \dfrac{a-1}{\log a}$を代入して
 \begin{align}
   S_2
   &= S'\left(b = \dfrac{a-1}{\log a}\right) \\
+  &= \dfrac{a-b}{2}\log a + \dfrac{(a-b)+(b-1)}{2}\log b \\
+  &= \dfrac{a-(a-1)/\log a}{2}\log a + \dfrac{a-1}{2}\log b \\
   &= \dfrac{1}{2}(a \log a - a + 1) + \dfrac{1}{2} \dfrac{a-1}{\log a} \log\Bigl(\dfrac{a-1}{\log a}\Bigr) \label{eq:3}
 \end{align}
 である．
