@@ -24,7 +24,9 @@
     % --- 3. 端点および内部の格子点 ---
     % 端点 P, Q (大きな黒丸)
     \node[circle, fill, inner sep=2.2pt] at (P) {}; \node[below left=2pt] at (P) {始点 $P$};
-    \node[circle, fill, inner sep=2.2pt] at (Q) {}; \node[above right=2pt] at (Q) {終点 $Q$};
+    \node[circle, fill, inner sep=2.2pt] at (Q) {}; \node[above right=2pt, font=\small] at (Q) {終点 $Q = P + 2M
+      \begin{pmatrix}u\\v
+    \end{pmatrix}$};
 
     % 内部の格子点 (1 から 2M-1 = 5)
     \foreach \i in {1,2,4,5} {
@@ -35,9 +37,9 @@
     % 中央の中点 (2M の半分、偶数/2 = 奇数個目の対称中心)
     \coordinate (mid) at ($ (P)!0.5!(Q) $);
     \node[circle, fill=red!85!black, inner sep=2.2pt] at (mid) {};
-    \node[above left=2pt, font=\scriptsize, red!90!black] at (mid) {中点};
+    \node[above left=2pt, font=\scriptsize, red!90!black] at (mid) {中点 ($M$ 番目)};
 
-    % 基本ステップベクトル (u, v) の矢印
+    % 基本ステップベクトル (u, v) の矢印 (gcd(|u|,|v|)=1)
     \draw[->, thick, teal!85!black] ($ (P) + (0, 0.25) $) -- ($ ($ (P)!1/6!(Q) $) + (0, 0.25) $)
     node[midway, above, font=\scriptsize] {$
       \begin{pmatrix}u\\v
@@ -47,15 +49,20 @@
     \draw[decorate, decoration={brace, amplitude=6pt}, thick, gray!80!black]
     ($ (P) + (0.05, -0.2) $) -- ($ (Q) + (-0.05, -0.2) $)
     node[midway, below=12pt, font=\footnotesize, black] {
-      端点を除く格子点数: $2M - 1$ 個
+      端点を除く格子点数: $2M - 1$ 個（奇数個）
     };
 
   \end{tikzpicture}
-  \caption{成分から偶数 $2$ がくくり出せるとき，線分内部の格子点数が奇数個になる構造}
+  \caption{互いに素な方向ベクトル $
+    \begin{pmatrix}u\\v
+    \end{pmatrix}$ の偶数倍 $2M
+    \begin{pmatrix}u\\v
+  \end{pmatrix}$ において，線分内部の格子点数が奇数個となる構造}
   \label{fig:even_vector_odd_lattice_points}
 \end{figure}
 
-$AB, AC$ 上に端点除いて奇数個の格子点がある時，$(a,b), (c,d)$ を互いに素な自然数として
+$AB, AC$ 上に端点除いて奇数個の格子点がある時，$(a,b), (c,d)$ を整数として
+$\gcd(|a|,|b|)=\gcd(|c|,|d|)=1$を満たすとすると，
 \begin{align}
   \vec{b} &= 2k
   \begin{pmatrix} a \\ b
