@@ -29,9 +29,8 @@
 したがってグラフは下図のようになる．
 題意の方程式の解は $y = g(x)$ と $y = p$ の共有点の $x$ 座標に等しい．
 
-% TODO: y=g(x), y=pの図のupgrade
-% TODO: y=g(x), y=pの図のupgrade
 \begin{figure}[htb]
+  % TODO: x=2,x=-2にも縦線を入れて，3次関数と箱の関係をわかるように
   \centering
   \begin{tikzpicture}[x=1.8cm, y=1.2cm, >=stealth, every node/.style={font=\small}]
 
@@ -54,20 +53,20 @@
     % 3. 極値の補助破線と目盛り
     % ============================================================
     % 極大点 (-1, 2)
-    \draw[dashed, gray!55, line width=0.8pt] (-1, 0) -- (-1, 2) -- (0, 2);
+    \draw[densely dotted, thick, gray!70!black] (-1, 0) -- (-1, 2) -- (0, 2);
     \node[circle, fill, inner sep=1.3pt] at (-1, 2) {};
     \node[below=2pt, font=\scriptsize] at (-1, 0) {$-1$};
     \node[left=2pt, font=\scriptsize]  at (0, 2) {$2$};
 
     % 極小点 (1, -2)
-    \draw[dashed, gray!55, line width=0.8pt] (1, 0) -- (1, -2) -- (0, -2);
+    \draw[densely dotted, thick, gray!70!black] (1, 0) -- (1, -2) -- (0, -2);
     \node[circle, fill, inner sep=1.3pt] at (1, -2) {};
     \node[above=2pt, font=\scriptsize] at (1, 0) {$1$};
     \node[right=2pt, font=\scriptsize] at (0, -2) {$-2$};
 
     % x軸との交点 -sqrt(3), sqrt(3)
-    \node[above left=1pt, font=\tiny, gray!60!black] at (-1.732, 0) {$-\sqrt{3}$};
-    \node[below right=1pt, font=\tiny, gray!60!black] at (1.732, 0) {$\sqrt{3}$};
+    \node[above left=1pt, font=\tiny, gray!70!black] at (-1.732, 0) {$-\sqrt{3}$};
+    \node[below left=1pt, font=\tiny, gray!70!black] at (1.732, 0) {$\sqrt{3}$};
 
     % ============================================================
     % 4. 直線 y = p (例: p = 1.0) と 3実解 alpha, beta, gamma
@@ -86,43 +85,18 @@
     \node[circle, fill=red!85!black, inner sep=1.4pt] at (\xBeta, \pVal) {};
     \node[circle, fill=red!85!black, inner sep=1.4pt] at (\xGamma, \pVal) {};
 
-    \draw[dotted, red!70!black, line width=0.8pt] (\xAlpha, 0) -- (\xAlpha, \pVal);
-    \draw[dotted, red!70!black, line width=0.8pt] (\xBeta, 0) -- (\xBeta, \pVal);
-    \draw[dotted, red!70!black, line width=0.8pt] (\xGamma, 0) -- (\xGamma, \pVal);
+    \draw[densely dotted, red!70!black, line width=0.8pt] (\xAlpha, 0) -- (\xAlpha, \pVal);
+    \draw[densely dotted, red!70!black, line width=0.8pt] (\xBeta, 0) -- (\xBeta, \pVal);
+    \draw[densely dotted, red!70!black, line width=0.8pt] (\xGamma, 0) -- (\xGamma, \pVal);
 
     \node[below=2pt, font=\scriptsize\bfseries, red!90!black] at (\xAlpha, 0) {$\alpha$};
     \node[below=2pt, font=\scriptsize\bfseries, red!90!black] at (\xBeta, 0)  {$\beta$};
     \node[below=2pt, font=\scriptsize\bfseries, red!90!black] at (\xGamma, 0) {$\gamma$};
     \node[left=2pt, font=\scriptsize, red!90!black] at (0, \pVal) {$p$};
 
-    % 解の存在区間注釈
-    \node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=3.5pt, font=\footnotesize, align=left]
-    at (-0.6, -1.8) {
-      $0 < p < 2$ のとき 3 つの実数解：\\[2pt]
-      $\alpha < -1 < \beta < 0 < 1 < \gamma$
-    };
-
   \end{tikzpicture}
   \caption{$y = g(x) = x^3 - 3x$ と直線 $y = p$ の交点 $\alpha, \beta, \gamma$}
   \label{fig:gx_px_intersections}
-\end{figure}
-
-\begin{figure}[htb]
-  \centering
-  \begin{tikzpicture}[scale=0.65, >=stealth]
-    \draw[->] (-2.5, 0) -- (2.5, 0) node[right] {$x$};
-    \draw[->] (0, -2.5) -- (0, 2.5) node[above] {$y$};
-    \draw[domain=-2.1:2.1, smooth, variable=\x, thick] plot ({\x}, {\x*\x*\x - 3*\x});
-    \draw[dotted] (-1, 0) -- (-1, 2) -- (0, 2);
-    \draw[dotted] (1, 0) -- (1, -2) -- (0, -2);
-    \node[below left] at (-1, 0) {$-1$};
-    \node[below right] at (1, 0) {$1$};
-    \node[left] at (0, 2) {$2$};
-    \node[right] at (0, -2) {$-2$};
-    \node[below left] at (-2, 0) {$-2$};
-    \node[above right] at (2, 0) {$2$};
-  \end{tikzpicture}
-  \caption{$y=g(x)=x^3-3x$ のグラフ}
 \end{figure}
 
 \paragraph{(1)}
@@ -130,9 +104,9 @@
 $y=g(x)$は奇関数だから$f(p)$は偶関数である．よって$0 \le p$の範囲で考える．
 $p$の値に応じて，$y=g(x)$と$y=p$の解の数・値は以下のように変化する．
 \begin{itemize}
-  \item $0<a<2$の時: $-2<x<2$に$3$つの実数解を持つ．\\
-  \item $a=2$の時: 解は$x=2,-1$である． \\
-  \item $2<a$の時: $2<x$に一つ解を持つ．
+  \item $0\le p<2$の時: $-\sqrt{3}\le x < 2$に$3$つの実数解を持つ．\\
+  \item $p=2$の時: 解は$x=2,-1$である． \\
+  \item $p<a$の時: $2<x$に一つ解を持つ．
 \end{itemize}
 
 \subparagraph{$2<p$の時}
@@ -155,7 +129,7 @@ $p$の値に応じて，$y=g(x)$と$y=p$の解の数・値は以下のように�
 \end{align}
 である．
 
-\subparagraph{$0<p<2$の時}
+\subparagraph{$0\le p<2$の時}
 
 この時は解は 3 つあり，これを $\alpha, \beta, \gamma$ ($\alpha < \beta < \gamma$) とおく．
 これらは$x^3-3x-p=0$の解だから，解と係数の関係より
@@ -178,10 +152,9 @@ $p$の値に応じて，$y=g(x)$と$y=p$の解の数・値は以下のように�
 \begin{align}
   f(p) = s = t^2-3 \label{eq:7}
 \end{align}
-となる．
-$p = 0$ の時 $t = 0$ となるから，この時
+となる．これはもし$t=0$となればその時に最小であるが，$p=0$の時対称性より$\alpha=-\gamma$より$p=0$である．よってこの時
 \begin{align}
-  \min f(p) = -3 \label{eq:8}
+  \min f(p) = f(0) = -3 \label{eq:8}
 \end{align}
 となる．
 \casesend
@@ -212,12 +185,12 @@ $y=f(p)$の挙動を調べるため，$f'(p), f''(p)$を求める．
   \begin{cases}
     f'(p) = 2\alpha\dfrac{d\alpha}{dp} \\
     1 = 3\dfrac{d\alpha}{dp}\left(\alpha^2-1\right)
-  \end{cases} \\
+  \end{cases} \label{eq:10}\\
   &
   \begin{cases}
     f'(p) = 2\alpha\dfrac{d\alpha}{dp} \\
     \dfrac{d\alpha}{dp} = \dfrac{1}{3(\alpha^2-1)}
-  \end{cases} \label{eq:10}
+  \end{cases} \label{eq:11}
 \end{align}
 を得る．$2<\alpha$より第二式において$\dfrac{d\alpha}{dp}>0$だから
 \begin{align}
@@ -248,8 +221,6 @@ $y=f(p)$の挙動を調べるため，$f'(p), f''(p)$を求める．
 を得る．従って$f'(p)>0>f''(p)$だから，$p > 2$ の時は上に凸な単調増加関数である．
 極限は$f(p) \to +\infty \ (p \to +\infty)$ であるから増減表は以下のようになる．
 
-% TODO: 増減表
-% TODO: 増減表 (p > 2)
 \begin{table}[htb]
   \centering
   \caption{$f(p)$ の増減表（$p > 2$）}
@@ -272,57 +243,57 @@ $\beta = -(\alpha+\gamma)$より
 \end{align}
 だから，\cref{eq:6}で$s,t$を消去して
 \begin{align}
-  p = -ts = -t (t^2-3) = -t^3 + 3t = \beta^3 - 3\beta \label{eq:11}
+  p = -ts = -t (t^2-3) = -t^3 + 3t = \beta^3 - 3\beta \label{eq:12}
 \end{align}
 である．同様に\cref{eq:7}にも代入して
 \begin{align}
-  f(p) = \beta^2 -3 \label{eq:12}
+  f(p) = \beta^2 -3 \label{eq:13}
 \end{align}
 である．
 
-\cref{eq:11,eq:12}の両辺$p$で微分して
+\cref{eq:12,eq:13}の両辺$p$で微分して
 \begin{align}
   &
   \begin{cases}
-    1 = (-3\beta^2+3)\dfrac{d\beta}{dp} \\
+    1 = (3\beta^2-3)\dfrac{d\beta}{dp} \\
     f'(p) = 2\beta\dfrac{d\beta}{dp}
-  \end{cases} \\
+  \end{cases} \label{eq:14}\\
   \therefore
   &
   \begin{cases}
-    \dfrac{d\beta}{dp} = \dfrac{1}{3(1-\beta^2)} \\
+    \dfrac{d\beta}{dp} = \dfrac{1}{3(\beta^2-1)} \\
     f'(p) = 2\beta\dfrac{d\beta}{dp}
-  \end{cases} \label{eq:13}
+  \end{cases} \label{eq:15}
 \end{align}
 であり，よって第一式を第二式に代入して
 \begin{align}
-  f'(p) = \dfrac{2\beta}{3(1-\beta^2)} \label{eq:14}
+  f'(p) = \dfrac{2\beta}{3(\beta^2-1)} \label{eq:16}
 \end{align}
 である．図から
 \begin{align}
-  -1 < \beta \le 0 \label{eq:15}
+  -1 < \beta \le 0 \label{eq:17}
 \end{align}
-だから，\cref{eq:14}より
+だから，\cref{eq:16}より
 \begin{align}
-  f'(p) > 0 \label{eq:16}
+  f'(p) > 0 \label{eq:18}
 \end{align}
 である．つまり$f(p)$は単調増加である．
 
-さらに\cref{eq:13}の両辺を$p$で微分して
+さらに\cref{eq:14}の両辺を$p$で微分して
 \begin{align}
   &
   \begin{cases}
-    0 = -6\beta\left(\dfrac{d\beta}{dp}\right)^2 + 3(1-\beta^2) \dfrac{d^2\beta}{dp^2} \\
+    0 = 6\beta\left(\dfrac{d\beta}{dp}\right)^2 + 3(\beta^2-1) \dfrac{d^2\beta}{dp^2} \\
     f''(p) = 2\left(\dfrac{d\beta}{dp}\right)^2 + 2\beta\dfrac{d^2\beta}{dp^2}
   \end{cases} \\
   \therefore
   &
   \begin{cases}
-    \dfrac{d^2\beta}{dp^2} = \dfrac{2\beta}{3(1-\beta^2)}\left(\dfrac{d\beta}{dp}\right)^2 \\
+    \dfrac{d^2\beta}{dp^2} = \dfrac{2\beta}{1-\beta^2}\left(\dfrac{d\beta}{dp}\right)^2 \\
     f''(p) = 2\left(\dfrac{d\beta}{dp}\right)^2 + 2\beta\dfrac{d^2\beta}{dp^2}
   \end{cases}
 \end{align}
-を得る．ここで\cref{eq:15}と第一式から
+を得る．ここで\cref{eq:17}と第一式から
 \begin{align}
   \dfrac{d^2\beta}{dp^2} < 0
 \end{align}
@@ -330,7 +301,7 @@ $\beta = -(\alpha+\gamma)$より
 \begin{align}
   f''(p) >0
 \end{align}
-だ従う．
+が従う．
 
 以上から$f'(p),f''(p)>0$で$0 \le p < 2$ では下に凸な単調増加関数である．
 これと$f(0)=-3,\lim_{p\to 2}f(p)=-2$より増減表は以下のようになる．
