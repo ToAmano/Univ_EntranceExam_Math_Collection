@@ -179,18 +179,20 @@ $z=0$での切り口は下図のようになるから，共通領域があるの
     % 軸目盛り
     \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
     \node[left=2pt, font=\scriptsize]  at (0, 1.0) {$1$};
-    \node[below=2pt, font=\scriptsize, teal!90!black] at (\cVal, 0) {$c = \cos\theta$};
-    \node[left=2pt, font=\scriptsize, teal!90!black]  at (0, \sVal) {$s = \sin\theta$};
-    \draw[dotted, gray!60] (0, \sVal) -- (\cVal, \sVal);
+    \node[below=2pt, font=\scriptsize, teal!90!black] at (\cVal, 0) {$c$};
+    \node[left=2pt, font=\scriptsize, teal!90!black]  at (0, \sVal) {$s$};
+    \draw[densely dotted, thick, gray!70!black] (0, \sVal) -- (\cVal, \sVal);
+    \draw[densely dotted, thick, gray!70!black] (\cVal, 0) -- (\cVal, \sVal);
 
     % 角度 theta の弧
     \draw[thick, purple!85!black] (0.35, 0) arc (0:\angTheta:0.35);
     \node[purple!90!black, font=\scriptsize] at (12:0.45) {$\theta$};
     \draw[thick, dotted, purple!85!black] (0, 0) -- (\cVal, \sVal);
+    \node[teal!90!black, font=\scriptsize, above right=-1pt] at (\cVal, \sVal) {$P(c,s)$};
 
     % 45° の限界点
     \node[below=2pt, font=\scriptsize, gray!80!black] at (\invSqTwo, 0) {$\frac{1}{\sqrt{2}}$};
-    \draw[dotted, gray!60] (\invSqTwo, 0) -- (E_int);
+    \draw[densely dotted, thick, gray!70!black] (\invSqTwo, 0) -- (E_int);
 
   \end{tikzpicture}
   \caption{底面 $z=0$ における切り口とスライス区間 $s \le y \le c$（$0 \le \theta \le \dfrac{\pi}{4}$）}
@@ -218,28 +220,27 @@ $AP$の方程式は
 \end{align}
 であり，下図の斜線部である．
 
-% TODO
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=3cm,y=2cm,>=stealth,every node/.style={font=\small}]
-    \draw[->,thick] (0,0) -- (1.1,0) node[right] {$y$};
-    \draw[->,thick] (0,0) -- (0,0.8) node[above] {$z$};
-    \fill[pattern=north east lines,pattern color=blue!60] (0.35,0) rectangle (0.85,0.45);
-    \draw[very thick,blue!85!black] (0.35,0) rectangle (0.85,0.45);
-    \draw[dashed,gray!60] (0,0.45) -- (0.35,0.45);
-    \node[below] at (0.35,0) {$s$};
-    \node[below] at (0.85,0) {$c$};
-    \node[left] at (0,0.45) {$3(1-c)$};
-    \node[below left] at (0,0) {$O$};
+  \begin{tikzpicture}[x=3cm, y=2cm, >=stealth, every node/.style={font=\small}]
+    \draw[->, thick, gray!80!black] (0, 0) -- (1.1, 0) node[right] {$y$};
+    \draw[->, thick, gray!80!black] (0, 0) -- (0, 0.8) node[above] {$z$};
+    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.75] (0.35, 0) rectangle (0.85, 0.45);
+    \draw[very thick, blue!85!black] (0.35, 0) rectangle (0.85, 0.45);
+    \draw[densely dotted, thick, gray!70!black] (0, 0.45) -- (0.35, 0.45);
+    \node[below=2pt] at (0.35, 0) {$s$};
+    \node[below=2pt] at (0.85, 0) {$c$};
+    \node[left=2pt] at (0, 0.45) {$3(1-c)$};
+    \node[below left=2pt] at (0, 0) {$O$};
   \end{tikzpicture}
-  \caption{および$0\le y\le x$での切断面}
+  \caption{$x=c$ における切断面（$s\le y\le c, 0\le z\le 3(1-c)$）}
 \end{figure}
 
 この面積を$S(\theta)$とすると，
 \begin{align}
   S(\theta)=(c-s)\cdot3(1-c)
 \end{align}
-となるから，求める体積$v'$は
+となるから，求める体積$V'$は
 \begin{align}
   V'
   &=\int_{\frac{\sqrt{2}}{2}}^1 S(\theta)\,dc\\
@@ -287,7 +288,7 @@ $AP$の方程式は
 
 {\bf [別解]}
 
-解答では$0 \le x \le y$まで対称性を使って計算量を減らしている．
+解答では$0 \le y \le x$の対称性を使って計算量を減らしている．
 もう少しゆるく第一象限の体積の$4$倍として求めるとどれくらいの計算量になるのか例示しよう．
 
 $x\ge0$，$y\ge0$の部分の体積を改めて$V'$とすると，
