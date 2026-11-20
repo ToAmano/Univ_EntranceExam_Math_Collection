@@ -241,67 +241,74 @@ $g$の値は以下のようになる．
     \node[below=3pt, font=\scriptsize] at (1, 0) {$1$};
 
     % y 軸の -1/4 の目盛り (手書きスケッチの「-1/4」を反映)
-    \draw[gray!70] (-0.05, -0.25) -- (0.05, -0.25);
+    \draw[gray!70!black] (-0.05, -0.25) -- (0.05, -0.25);
     \node[left=2pt, font=\scriptsize, gray!90!black] at (0, -0.25) {$-\frac{1}{4}$};
 
-    % --- 2. 求める領域のハッチング塗りつぶし (手書き image_8.png の影部分を忠実に再現) ---
+    % --- 2. 求める領域のハッチング塗りつぶし ---
     % 領域 1: -1 < x < 0 の範囲
-    %   上端: y = g(x-1) = 0.25*(x-1)*(x+1)*(x-3)  (境界②)
-    %   下端: y = max( g(2x), g(0) ) = x^3 - x     (境界①)  および y = g(2x/3) = (1/9)x^3 - x (境界④)
-    %   ※ -0.577 < x < 0 では y = (1/9)x^3 - x が上に来るため、そこが下端境界。
-    %   ※ -1 < x < -0.577 では y = x^3 - x が下端境界。
-    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.8]
-    plot[domain=-1:-0.57735, samples=20] (\x, {0.25*(\x-1)*(\x+1)*(\x-3)})
-    -- plot[domain=-0.57735:0, samples=20] (\x, {(1.0/9.0)*\x*\x*\x - \x})
-    -- plot[domain=0:-1, samples=20] (\x, {\x*\x*\x - \x})
+    %   上端: -1 <= x <= -3/5 で y = g(x-1) = 0.25*(x-1)*(x+1)*(x-3)
+    %         -3/5 <= x <= 0 で y = g(2x/3) = (1/9)x^3 - x
+    %   下端: y = g(2x) = g(0) = x^3 - x
+    \fill[pattern=north east lines, pattern color=blue!75!black, opacity=0.75]
+    plot[domain=-1:-0.6, samples=25] (\x, {0.25*(\x-1)*(\x+1)*(\x-3)})
+    -- plot[domain=-0.6:0, samples=25] (\x, {(1.0/9.0)*\x*\x*\x - \x})
+    -- plot[domain=0:-1, samples=30] (\x, {\x*\x*\x - \x})
     -- cycle;
 
-    \fill[pattern=north east lines, pattern color=blue!65, opacity=0.8]
+    % 領域 2: 0 < x < 1 の範囲
+    %   上端: y = g(2x) = g(0) = x^3 - x
+    %   下端: 0 <= x <= 3/5 で y = g(2x/3) = (1/9)x^3 - x
+    %         3/5 <= x <= 1 で y = g(x+1) = 0.25*(x+1)*(x+3)*(x-1)
+    \fill[pattern=north east lines, pattern color=blue!75!black, opacity=0.75]
     (0, 0)
-    -- plot[domain=0:0.57735, samples=20] (\x, {(1.0/9.0)*\x*\x*\x - \x})
-    -- plot[domain=0.57735:1, samples=20] (\x, {0.25*(\x-1)*(\x+1)*(\x+3)})
-    -- plot[domain=1:0, samples=20] (\x, {\x*\x*\x - \x})
+    -- plot[domain=0:0.6, samples=25] (\x, {(1.0/9.0)*\x*\x*\x - \x})
+    -- plot[domain=0.6:1, samples=25] (\x, {0.25*(\x+1)*(\x+3)*(\x-1)})
+    -- plot[domain=1:0, samples=30] (\x, {\x*\x*\x - \x})
     -- cycle;
 
-    % --- 3. 境界曲線のプロットと詳細な数式ラベル ---
+    % --- 3. 境界曲線のプロットと数式ラベル ---
     % ①: y = x^3 - x (破線：境界は含まない)
     \draw[thick, dashed, blue!85!black, domain=-1.25:1.25, samples=70]
     plot (\x, {\x*\x*\x - \x});
     \node[blue!95!black, font=\scriptsize, right=3pt] at (1.1, {1.1^3 - 1.1}) {$y = x^3 - x$};
 
-    % ②: y = 0.25(x-1)(x+1)(x-3) (破線)
-    \draw[thick, red!85!black, dashed, domain=-1.25:1.15, samples=60]
+    % ②: y = 0.25(x-1)(x+1)(x-3) (-1 < x < -3/5 のみ領域に含むため実線、他は破線)
+    \draw[thick, dashed, red!85!black, domain=-1.25:-1.0, samples=20]
+    plot (\x, {0.25*(\x-1)*(\x+1)*(\x-3)});
+    \draw[line width=1.5pt, red!85!black, domain=-1.0:-0.6, samples=25]
+    plot (\x, {0.25*(\x-1)*(\x+1)*(\x-3)});
+    \draw[thick, dashed, red!85!black, domain=-0.6:1.15, samples=60]
     plot (\x, {0.25*(\x-1)*(\x+1)*(\x-3)});
     \node[red!95!black, font=\scriptsize, below=4pt] at (0.9, 1.0) {$y = \frac{1}{4}(x-1)(x+1)(x-3)$};
 
-    % ③: y = 0.25(x+1)(x+3)(x-1) (点線/二点鎖線のように細かい破線)
-    \draw[thick, teal!85!black, dotted, domain=-1.15:1.25, samples=60]
+    % ③: y = 0.25(x+1)(x+3)(x-1) (3/5 < x < 1 のみ領域に含むため実線、他は破線)
+    \draw[thick, dashed, teal!85!black, domain=-1.15:0.6, samples=60]
+    plot (\x, {0.25*(\x+1)*(\x+3)*(\x-1)});
+    \draw[line width=1.5pt, teal!85!black, domain=0.6:1.0, samples=25]
+    plot (\x, {0.25*(\x+1)*(\x+3)*(\x-1)});
+    \draw[thick, dashed, teal!85!black, domain=1.0:1.25, samples=20]
     plot (\x, {0.25*(\x+1)*(\x+3)*(\x-1)});
     \node[teal!95!black, font=\scriptsize, above right=1pt] at (-1.05, -1) {$y = \frac{1}{4}(x+1)(x+3)(x-1)$};
 
-    % ④: y = (1/9)x^3 - x (一点鎖線状の破線)
-    \draw[thick, gray!70!black, dash pattern=on 4pt off 3pt, domain=-1.35:1.35, samples=60]
+    % ④: y = (1/9)x^3 - x (破線：境界は含まない)
+    \draw[thick, gray!70!black, dashed, domain=-1.35:1.35, samples=60]
     plot (\x, {(1.0/9.0)*\x*\x*\x - \x});
-    \node[gray!90!black, font=\scriptsize, above left=1pt] at (1.2, {(1.0/9.0)*1.2^3 - 1.2}) {$y = \frac{1}{9}x^3 - x$};
+    \node[gray!90!black, font=\scriptsize, right=2pt] at (1.35, {(1.0/9.0)*1.35^3 - 1.35}) {$y = \frac{1}{9}x^3 - x$};
 
-    % --- 4. 領域に含まれない除外点 (白抜き丸: draw=black, fill=white で完全に白抜き) ---
-    % 横軸上の端点・原点: (-1,0), (0,0), (1,0)
-    \node[circle, draw, thick, black, fill=white, inner sep=1pt] at (-1, 0) {};
-    \node[circle, draw, thick, black, fill=white, inner sep=1pt] at (0, 0) {};
-    \node[circle, draw, thick, black, fill=white, inner sep=1pt] at (1, 0) {};
+    % --- 4. 領域に含まれない除外点 (白抜き丸: draw=black, fill=white) ---
+    \node[circle, draw, thick, black, fill=white, inner sep=1.3pt] at (-1, 0) {};
+    \node[circle, draw, thick, black, fill=white, inner sep=1.3pt] at (0, 0) {};
+    \node[circle, draw, thick, black, fill=white, inner sep=1.3pt] at (1, 0) {};
 
-    % 左側の極大周辺の主要交点 (x = -1/sqrt(3) ≈ -0.577, y = 0.25*(-1.577)*(-0.577)*(-3.577)? )
-    % 交点として曲線②と④の交点に該当する点
-    \coordinate (P_ex1) at (-0.57735, {0.25*(-1.57735)*(0.42265)*(-3.57735)});
-    \node[circle, draw, thick, black, fill=white, inner sep=1pt] at (P_ex1) {};
+    % 曲線②と④の交点 (-3/5, 72/125) および 曲線③と④の交点 (3/5, -72/125)
+    \coordinate (P_ex1) at (-0.6, {(1.0/9.0)*(-0.6)^3 - (-0.6)});
+    \node[circle, draw, thick, black, fill=white, inner sep=1.3pt] at (P_ex1) {};
 
-    % 右側の極小周辺の主要交点 (x = 1/sqrt(3) ≈ 0.577)
-    % 曲線①と③の交点に該当する点
-    \coordinate (P_ex2) at (0.57735, {0.25*(1.57735)*(3.57735)*(-0.42265)});
-    \node[circle, draw, thick, black, fill=white, inner sep=1pt] at (P_ex2) {};
+    \coordinate (P_ex2) at (0.6, {(1.0/9.0)*(0.6)^3 - (0.6)});
+    \node[circle, draw, thick, black, fill=white, inner sep=1.3pt] at (P_ex2) {};
 
   \end{tikzpicture}
-  \caption{条件を満たす点 $P(X,Y)$ の存在領域（斜線部）．境界線および白抜きの点はすべて含まない．}
+  \caption{条件を満たす点 $P(X,Y)$ の存在領域（斜線部）．境界は実線部のみ含み，破線部および白抜きの点は含まない．}
   \label{fig:xy_swept_region_final}
 \end{figure}
 
