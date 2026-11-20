@@ -31,74 +31,125 @@
 $y = e^x$ のグラフを考える．
 $(y')' = e^x > 0$ よりグラフは下に凸だから，$x = t$ での接線 $y = e^t(x - t) + e^t$ との比較
 \begin{align}
-  e^x &> e^t(x - t) + e^t
+  e^x &> e^t(x - t) + e^t \quad (x \neq t)
 \end{align}
 が成立する．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=2.4cm, y=0.18cm, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[>=stealth, every node/.style={font=\small}]
 
-    % --- 1. 定数・座標パラメータ ---
-    % t = 3, x = pi ≈ 3.14159
-    % e^3 ≈ 20.0855
-    % e^pi ≈ 23.1407
-    % 接線上: y(pi) = e^3 * (pi - 2) ≈ 20.0855 * 1.14159 ≈ 22.93
-    \def\tVal{3.0}
-    \def\piVal{3.14159}
-    \pgfmathsetmacro{\expT}{exp(\tVal)}                    % ≈ 20.086
-    \pgfmathsetmacro{\expPi}{exp(\piVal)}                  % ≈ 23.141
-    \pgfmathsetmacro{\yTanPi}{\expT * (\piVal - 2.0)}      % ≈ 22.930
+    % ============================================================
+    % 【左パネル】全体像 (x in [0, 3.4])
+    % ============================================================
+    \begin{scope}[x=1.35cm, y=0.15cm]
+      \def\tVal{3.0}
+      \def\piVal{3.14159}
+      \pgfmathsetmacro{\expT}{exp(\tVal)}                    % ≈ 20.086
+      \pgfmathsetmacro{\expPi}{exp(\piVal)}                  % ≈ 23.141
 
-    \coordinate (O)       at (0, 0);
-    \coordinate (Pt_t)    at (\tVal, \expT);               % 接点 (3, e^3)
-    \coordinate (Pt_pi)   at (\piVal, \expPi);             % 曲線上の点 (pi, e^pi)
-    \coordinate (Pt_tanPi) at (\piVal, \yTanPi);           % 接線上の点 (pi, e^3(pi-2))
+      \coordinate (O)     at (0, 0);
+      \coordinate (Pt_t)  at (\tVal, \expT);
+      \coordinate (Pt_pi) at (\piVal, \expPi);
 
-    % --- 2. 座標軸 ---
-    \draw[->, thick, gray!80!black] (-0.3, 0) -- (3.65, 0) node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0, -1.5) -- (0, 26.5) node[above] {$y$};
-    \node[below left=2pt] at (O) {$O$};
+      % 座標軸
+      \draw[->, thick, gray!80!black] (-0.3, 0) -- (3.6, 0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (0, -1.5) -- (0, 26.5) node[above] {$y$};
+      \node[below left=2pt] at (O) {$O$};
 
-    % --- 3. 曲線 y = e^x のプロット ---
-    \draw[line width=1.8pt, blue!85!black, domain=0:3.3, samples=80]
-    plot (\x, {exp(\x)});
-    \node[blue!90!black, font=\footnotesize\bfseries, left=2pt] at (3.35, {exp(3.3)})
-    {$y = e^x$};
+      % 曲線 y = e^x
+      \draw[line width=1.6pt, blue!85!black, domain=0:3.35, samples=70]
+      plot (\x, {exp(\x)});
+      \node[blue!90!black, font=\footnotesize\bfseries, left=2pt] at (3.35, {exp(3.35)})
+      {$y = e^x$};
 
-    % --- 4. x = 3 での接線 y = e^3(x - 2) ---
-    % 傾き e^3 ≈ 20.09, x 切片は x = 2
-    \draw[very thick, red!85!black, domain=1.9:3.3]
-    plot (\x, {\expT * (\x - 2.0)});
-    \node[red!90!black, font=\footnotesize, right] at (1.9, {exp(3)*(1.9-2)})
-    {接線: $y = e^3(x - 2)$};
+      % 接線 y = e^3(x - 2)
+      \draw[very thick, red!85!black, domain=1.9:3.35]
+      plot (\x, {\expT * (\x - 2.0)});
+      \node[red!90!black, font=\scriptsize, right] at (1.85, 2.5)
+      {接線: $y = e^3(x - 2)$};
 
-    % --- 5. 投影破線と主要目盛り ---
-    % 接点 (3, e^3)
-    \draw[dashed, gray!60] (\tVal, 0) -- (Pt_t) -- (0, \expT);
-    \node[circle, fill=red!85!black, inner sep=1.2pt] at (Pt_t) {};
-    \node[below=2pt, font=\scriptsize] at (\tVal, 0) {$3$};
-    \node[left=2pt, font=\scriptsize, gray!90!black] at (0, \expT) {$e^3$};
-    \node[above left=1pt, font=\scriptsize, red!90!black] at (Pt_t) {接点 $(3, e^3)$};
+      % 接点 (3, e^3)
+      \draw[densely dotted, thick, gray!70!black] (\tVal, 0) -- (Pt_t) -- (0, \expT);
+      \node[circle, fill=red!85!black, inner sep=1.2pt] at (Pt_t) {};
+      \node[below=2pt, font=\scriptsize] at (\tVal, 0) {$3$};
+      \node[left=2pt, font=\scriptsize, gray!90!black] at (0, \expT) {$e^3$};
 
-    % 接線の x 切片 (2, 0)
-    \node[circle, fill, inner sep=0.8pt] at (2.0, 0) {}; \node[below=2pt, font=\scriptsize] at (2.0, 0) {$2$};
+      % 接線 x 切片 (2, 0)
+      \node[circle, fill, inner sep=0.8pt] at (2.0, 0) {};
+      \node[below=2pt, font=\scriptsize] at (2.0, 0) {$2$};
 
-    % 評価点 x = pi
-    \draw[dashed, teal!85!black, thick] (\piVal, 0) -- (Pt_pi);
-    \node[circle, fill=blue!90!black, inner sep=1.2pt] at (Pt_pi) {};
-    \node[circle, fill=red!85!black, inner sep=1.0pt] at (Pt_tanPi) {};
+      % x = pi の破線
+      \draw[densely dotted, thick, teal!85!black] (\piVal, 0) -- (Pt_pi);
+      \node[circle, fill=blue!90!black, inner sep=1.1pt] at (Pt_pi) {};
+      \node[below=2pt, font=\footnotesize\bfseries, teal!90!black] at (\piVal, 0) {$\pi$};
 
-    \node[below=2pt, font=\footnotesize\bfseries, teal!90!black] at (\piVal, 0) {$\pi$};
-    \node[right=2pt, font=\scriptsize, blue!90!black] at (Pt_pi) {$(\pi, e^\pi)$};
-    \node[below right=-1pt, font=\tiny, red!90!black] at (Pt_tanPi) {$(\pi, e^3(\pi - 2))$};
+      % 拡大枠の点線矩形
+      \draw[dashed, thick, gray!70!black] (2.85, 18.0) rectangle (3.3, 25.5);
+      \node[above, font=\scriptsize\bfseries, gray!80!black] at (3.075, 25.5) {右図で拡大};
+    \end{scope}
 
-    % y 軸上の e^pi の目盛り
-    \draw[dashed, gray!45] (0, \expPi) -- (Pt_pi);
-    \node[left=2pt, font=\scriptsize, blue!90!black] at (0, \expPi) {$e^\pi$};
+    % ============================================================
+    % 【右パネル】x = 3, pi 付近の拡大図
+    % ============================================================
+    \begin{scope}[xshift=6.4cm, x=14.0cm, y=0.85cm]
+      \def\tVal{3.0}
+      \def\piVal{3.14159}
+      \pgfmathsetmacro{\expT}{exp(\tVal)}                    % ≈ 20.086
+      \pgfmathsetmacro{\expPi}{exp(\piVal)}                  % ≈ 23.141
+      \pgfmathsetmacro{\yTanPi}{\expT * (\piVal - 2.0)}      % ≈ 22.930
+
+      \coordinate (Pt_t)    at (\tVal, \expT);
+      \coordinate (Pt_pi)   at (\piVal, \expPi);
+      \coordinate (Pt_tanPi) at (\piVal, \yTanPi);
+
+      % 局所座標軸（枠）
+      \draw[->, thick, gray!80!black] (2.93, 19.0) -- (3.26, 19.0) node[right] {$x$};
+      \draw[->, thick, gray!80!black] (2.95, 18.8) -- (2.95, 25.2) node[above] {$y$};
+
+      % 曲線 y = e^x
+      \draw[line width=1.8pt, blue!85!black, domain=2.95:3.22, samples=60]
+      plot (\x, {exp(\x)});
+      \node[blue!90!black, font=\footnotesize\bfseries, left=2pt] at (3.22, {exp(3.22)})
+      {$y = e^x$};
+
+      % 接線 y = e^3(x - 2)
+      \draw[very thick, red!85!black, domain=2.95:3.22]
+      plot (\x, {\expT * (\x - 2.0)});
+
+      % 接点 (3, e^3)
+      \draw[densely dotted, thick, gray!70!black] (\tVal, 19.0) -- (Pt_t) -- (2.95, \expT);
+      \node[circle, fill=red!85!black, inner sep=1.3pt] at (Pt_t) {};
+      \node[below=2pt, font=\footnotesize] at (\tVal, 19.0) {$3$};
+      \node[left=2pt, font=\scriptsize] at (2.95, \expT) {$e^3$};
+      \node[above left=1pt, font=\scriptsize, red!90!black] at (Pt_t) {接点 $(3, e^3)$};
+
+      % 評価点 x = pi での 2 点
+      \draw[densely dotted, thick, teal!85!black] (\piVal, 19.0) -- (Pt_pi);
+      \draw[densely dotted, thick, gray!70!black] (2.95, \expPi) -- (Pt_pi);
+      \draw[densely dotted, thick, gray!70!black] (2.95, \yTanPi) -- (Pt_tanPi);
+
+      \node[below=2pt, font=\footnotesize\bfseries, teal!90!black] at (\piVal, 19.0) {$\pi$};
+      \node[left=2pt, font=\scriptsize, blue!90!black] at (2.95, \expPi) {$e^\pi$};
+      \node[left=2pt, font=\scriptsize, red!90!black] at (2.95, \yTanPi) {$e^3(\pi - 2)$};
+
+      \node[circle, fill=blue!90!black, inner sep=1.3pt] at (Pt_pi) {};
+      \node[circle, fill=red!85!black, inner sep=1.2pt] at (Pt_tanPi) {};
+
+      % 引き出し線による明確なラベル
+      \draw[<-, thick, blue!85!black] (Pt_pi) -- ++(0.035, 0.9)
+      node[above right=-2pt, font=\scriptsize\bfseries, blue!90!black] {$(\pi, e^\pi)$};
+      \draw[<-, thick, red!85!black] (Pt_tanPi) -- ++(0.04, -0.8)
+      node[below right=-2pt, font=\scriptsize\bfseries, red!90!black] {$(\pi, e^3(\pi - 2))$};
+
+      % 差分ブレース（厳密な大小関係 e^pi > e^3(pi-2)）
+      \draw[decorate, decoration={brace, amplitude=3pt}, thick, teal!90!black]
+      (\piVal + 0.015, \expPi) -- (\piVal + 0.015, \yTanPi)
+      node[midway, right=4pt, font=\tiny\bfseries, teal!90!black] {差 $> 0$};
+    \end{scope}
 
   \end{tikzpicture}
-  \caption{$y=e^x$ の凸性と $x=3$ における接線を用いた $e^\pi > 21$ の評価}
+  \caption{$y=e^x$ の凸性と $x=3$ における接線を用いた $e^\pi > 21$ の評価（右は $x=\pi$ 付近の拡大）}
   \label{fig:exp_convexity_pi_evaluation}
 \end{figure}
 
