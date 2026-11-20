@@ -47,6 +47,8 @@ lint の本体は `skills/math-solution-tex/scripts/lint_tex.py`（汎用）と 
 | A30 | `check_math_brackets` | 数式内の丸括弧 `()` と角括弧 `[]` の対応を合わせる（半開区間は許容） | notation §N7.3 | notation |
 | A31 | `check_math_fullwidth` | 数式内に `\text{...}` 等を介さず全角文字を入れない | notation §N12.1 | notation |
 | A32 | `check_prose_brackets` | 本文（`\text` 等・`\caption` を含む）の `()`・`（）`・`「」`・`『』` の対応を合わせる | notation §N7.4 | notation |
+| A33 | `check_japanese_typos` | 本文の助詞重複・句読点重複・半角カナ・典型誤変換を検出 | notation §N13.1 | notation |
+| W7 | `check_prose_fullwidth_alnum`（警告） | 本文中の全角英数字を警告 | notation §N13.2 | notation |
 | W3 | `check_cases_env`（警告） | 場合分けは `dcases`（2026-11-13 追加。既存1165件のため警告） | notation §N1.1 | notation |
 | W4 | `check_figure_todo_placement`（警告） | 作図の TODO は figure の中（2026-11-13 追加） | figure §1.5 | figure |
 | W5 | `check_light_gray`（警告） | 線・文字・斜線に `gray!50` 以下を使わない（2026-11-13 追加） | figure §3.2 | figure |

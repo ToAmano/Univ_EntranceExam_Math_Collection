@@ -1164,6 +1164,88 @@ def check_prose_brackets(text):
     return errors
 
 
+JAPANESE_DUP_RE = re.compile(
+    r'がが|をを|にに|へへ|からから|よりより|ためため|のでので|であるである|となるとなる'
+    r'|はは(?=[\u4e00-\u9fffァ-ヶ，．\s]|$)'
+    r'|(?<![もこそどお])のの(?=[\u4e00-\u9fffァ-ヶ，．\s]|$)'
+)
+JAPANESE_PUNCT_DUP_RE = re.compile(r'，，|．．|，．|．，|,,|(?<!\.)\.\.(?!\.)')
+HALFWIDTH_KANA_RE = re.compile(r'[\uff61-\uff9f]+')
+FULLWIDTH_ALNUM_RE = re.compile(r'[０-９Ａ-Ｚａ-ｚ]+')
+
+# 誤検知が起きない確定的な誤変換のみを収録する（文脈依存の語は入れない）
+JAPANESE_TYPO_SUGGESTIONS = (
+    ('巣学的', '数学的'),
+    ('数学的帰納方法', '数学的帰納法'),
+    ('単調現象', '単調減少'),
+    ('積分整数', '積分定数'),
+    ('互いに疎', '互いに素'),
+    ('線対象', '線対称'),
+    ('点対象', '点対称'),
+    ('回転対象', '回転対称'),
+    ('対象軸', '対称軸'),
+    ('対象移動', '対称移動'),
+    ('対象性', '対称性'),
+    ('対象点', '対称点'),
+    ('背離法', '背理法'),
+    ('二項定義', '二項定理'),
+    ('剰余定義', '剰余の定理'),
+    ('因数定義', '因数定理'),
+    ('解と計数', '解と係数'),
+    ('計数比較', '係数比較'),
+    ('最大知', '最大値'),
+    ('最小知', '最小値'),
+    ('極大知', '極大値'),
+    ('極小知', '極小値'),
+    ('極限知', '極限値'),
+    ('等号性立', '等号成立'),
+    ('等号成率', '等号成立'),
+    ('正写影', '正射影'),
+    ('逆行例', '逆行列'),
+    ('夾み撃ち', '挟み撃ち'),
+    ('半別式', '判別式'),
+    ('導関す', '導関数'),
+)
+JAPANESE_TYPO_RE = re.compile(
+    '|'.join(re.escape(wrong) for wrong, _ in JAPANESE_TYPO_SUGGESTIONS)
+)
+JAPANESE_TYPO_MAP = dict(JAPANESE_TYPO_SUGGESTIONS)
+PARALLEL_TYPO_RE = re.compile(r'(?:軸|[とにはが])並行')
+
+
+def check_japanese_typos(text):
+    """本文（\\caption や \\text 等を含む）の日本語の誤字・助詞重複・句読点重複・半角カナを検出する。"""
+    prose = _extract_prose_text(text)
+    errors = []
+    for m in JAPANESE_DUP_RE.finditer(prose):
+        errors.append((line_of(text, m.start()), f"日本語の重複「{m.group(0)}」がある"))
+    for m in JAPANESE_PUNCT_DUP_RE.finditer(prose):
+        errors.append((line_of(text, m.start()), f"句読点が重複している（「{m.group(0)}」）"))
+    for m in HALFWIDTH_KANA_RE.finditer(prose):
+        errors.append((line_of(text, m.start()), f"半角カタカナ「{m.group(0)}」は使わない"))
+    for m in JAPANESE_TYPO_RE.finditer(prose):
+        wrong = m.group(0)
+        errors.append((
+            line_of(text, m.start()),
+            f"日本語の誤変換の疑い（「{wrong}」→「{JAPANESE_TYPO_MAP[wrong]}」）",
+        ))
+    for m in PARALLEL_TYPO_RE.finditer(prose):
+        errors.append((
+            line_of(text, m.start()),
+            f"日本語の誤変換の疑い（「{m.group(0)}」→「平行」）",
+        ))
+    return errors
+
+
+def check_prose_fullwidth_alnum(text):
+    """本文中の全角英数字（２次，１対１等）を警告する。"""
+    prose = _extract_prose_text(text)
+    return [
+        (line_of(text, m.start()), f"本文中の英数字は半角を使う（全角「{m.group(0)}」）")
+        for m in FULLWIDTH_ALNUM_RE.finditer(prose)
+    ]
+
+
 VEC_CMD_RE = re.compile(r'\\(vec|overrightarrow)(?![a-zA-Z])')
 VEC_SINGLE_BASE_RE = re.compile(r'^(?:[a-zA-Z0-9]|\\[a-zA-Z]+)$')
 VEC_SINGLE_WITH_MOD_RE = re.compile(
@@ -1878,6 +1960,7 @@ def lint_file(path, profile=None):
     errors += tag(check_math_brackets(text), 'N7.3')
     errors += tag(check_prose_brackets(text), 'N7.4')
     errors += tag(check_math_fullwidth(text), 'N12.1')
+    errors += tag(check_japanese_typos(text), 'N13.1')
     errors += tag(check_vector_notation(text), 'N8.1')
     errors += tag(check_tikz_point_circle(text), 'F4.1')
     errors += tag(check_reference_commands(text), 'N10.1')
@@ -1892,6 +1975,7 @@ def lint_file(path, profile=None):
     warnings += tag(check_figure_todo_placement(raw), 'F1.5')
     warnings += tag(check_light_gray(text), 'F3.2')
     warnings += tag(check_small_coordinate_circle(text), 'F4.1')
+    warnings += tag(check_prose_fullwidth_alnum(text), 'N13.2')
     return errors, warnings, None
 
 

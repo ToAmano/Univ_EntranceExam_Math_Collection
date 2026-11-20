@@ -155,6 +155,16 @@ def test_prose_brackets():
     assert not lint.check_prose_brackets('\\begin{figure}[htb]\\caption{点(1, 2)と「図」（補）}\\begin{tikzpicture}\\draw (0,0)--(1,1);\\end{tikzpicture}\\end{figure}')
 
 
+def test_japanese_typos_and_fullwidth_alnum():
+    assert lint.check_japanese_typos('結果ををくり返し用いて，これはは単調減少である．')
+    assert lint.check_japanese_typos('巣学的帰納法で示し，$y$軸並行となる．')
+    assert lint.check_japanese_typos('原点に関して線対象であり，，半角ｶﾀｶﾅは不可．')
+    assert not lint.check_japanese_typos('これははずせるので，すべてのものの値は調査対象であり，作業を並行して進める．')
+    assert not lint.check_japanese_typos('もちろん，3次関数は点対称である．')
+    assert lint.check_prose_fullwidth_alnum('２次以下であり，１対１に対応する．')
+    assert not lint.check_prose_fullwidth_alnum('2次以下であり，1対1に対応する．')
+
+
 def test_new_warning_checks():
     assert lint.check_cases_env('\\begin{cases} a \\end{cases}')
     assert not lint.check_cases_env('\\begin{dcases} a \\end{dcases}')
