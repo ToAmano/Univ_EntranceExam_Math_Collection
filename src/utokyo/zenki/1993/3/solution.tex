@@ -310,22 +310,24 @@ $A,B,C,D,E$で$xy$平面上の全ての点を網羅する．
     \coordinate (T) at (3, -9);
 
     % --- 2. 領域 C1, C2, C3 の塗りつぶし ---
+    % 上側境界双曲線と屋根 S-L1 (y=(15-x)/2) の交点は (4.5, 5.25)
+    % 下側境界双曲線と屋根 L3-T (y=(-15-x)/2) の交点は (-4.5, -5.25)
     % (i) 領域 C1 (上側: 双曲線の上部)
     \fill[teal!12, opacity=0.7]
-    (-5, 5) -- (S) -- (L1) --
-    plot[domain=5:-5, samples=50] (\x, {sqrt(5*(1 + (\x+5)*(\x+5)/20))}) -- cycle;
+    (-5, 5) -- (S) -- (4.5, 5.25) --
+    plot[domain=4.5:-5, samples=60] (\x, {sqrt(5*(1 + (\x+5)*(\x+5)/20))}) -- cycle;
 
     % (ii) 領域 C2 (下側: 双曲線の下部)
     \fill[orange!12, opacity=0.7]
-    (-5, -5) -- (T) -- (L2) --
-    plot[domain=5:-5, samples=50] (\x, {-sqrt(5*(1 + (\x-5)*(\x-5)/20))}) -- cycle;
+    (5, -5) -- (T) -- (-4.5, -5.25) --
+    plot[domain=-4.5:5, samples=60] (\x, {-sqrt(5*(1 + (\x-5)*(\x-5)/20))}) -- cycle;
 
     % (iii) 領域 C3 (中央部: 2本の双曲線に挟まれた領域)
     \fill[blue!10, opacity=0.6]
-    (-5, -5) -- (-5, 5) --
-    plot[domain=-5:5, samples=50] (\x, {sqrt(5*(1 + (\x+5)*(\x+5)/20))}) --
-    (5, 5) -- (5, -5) --
-    plot[domain=5:-5, samples=50] (\x, {-sqrt(5*(1 + (\x-5)*(\x-5)/20))}) -- cycle;
+    (-4.5, -5.25) -- (-5, -5) -- (-5, {sqrt(5)}) --
+    plot[domain=-5:4.5, samples=60] (\x, {sqrt(5*(1 + (\x+5)*(\x+5)/20))}) --
+    (5, 5) -- (5, {-sqrt(5)}) --
+    plot[domain=5:-4.5, samples=60] (\x, {-sqrt(5*(1 + (\x-5)*(\x-5)/20))}) -- cycle;
 
     % --- 3. 座標軸 ---
     \draw[->, thick, gray!70] (-9, 0) -- (9, 0) node[right] {$x$};
@@ -356,14 +358,14 @@ $A,B,C,D,E$で$xy$平面上の全ての点を網羅する．
     \node[below right=1pt, font=\scriptsize] at (L2) {$L_2(5,-5)$};
 
     % --- 6. 境界双曲線の描画 ---
-    % (i) 焦点 L3, L4 の双曲線 (上側境界)
-    \draw[very thick, teal!85!black, domain=-5:5, samples=70]
+    % (i) 焦点 L3, L4 の双曲線 (上側境界: 領域 C 内の x in [-5, 4.5])
+    \draw[very thick, teal!85!black, domain=-5:4.5, samples=70]
     plot (\x, {sqrt(5*(1 + (\x+5)*(\x+5)/20))});
     \node[teal!95!black, font=\scriptsize, above left] at (2.5, 4.3)
     {$\frac{(x+5)^2}{20} - \frac{y^2}{5} = -1$};
 
-    % (ii) 焦点 L1, L2 の双曲線 (下側境界)
-    \draw[very thick, orange!90!black, domain=-5:5, samples=70]
+    % (ii) 焦点 L1, L2 の双曲線 (下側境界: 領域 C 内の x in [-4.5, 5])
+    \draw[very thick, orange!90!black, domain=-4.5:5, samples=70]
     plot (\x, {-sqrt(5*(1 + (\x-5)*(\x-5)/20))});
     \node[orange!95!black, font=\scriptsize, below right] at (-2.5, -4.3)
     {$\frac{(x-5)^2}{20} - \frac{y^2}{5} = -1$};
