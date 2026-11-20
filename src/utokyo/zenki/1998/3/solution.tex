@@ -14,15 +14,15 @@
   \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
 
     % --- 1. 定数・厳密パラメータ ---
-    % r_n = 0.90, r_{n+1} = 0.40, r_{n+2} ≈ 0.0945
+    % r_n = 0.90, r_{n+1} = 0.40, r_{n+2} = 0.144
     % x_{n+1} = 0.80 とする
     \def\rN{0.90}
     \def\rNOne{0.40}
-    \pgfmathsetmacro{\rNTwo}{pow(1.0/sqrt(\rN) + 1.0/sqrt(\rNOne), -2)} % ≈ 0.0945
+    \pgfmathsetmacro{\rNTwo}{pow(1.0/sqrt(\rN) + 1.0/sqrt(\rNOne), -2)} % = 0.144
 
     \def\xNOne{0.80}
-    \pgfmathsetmacro{\xNTwo}{\xNOne + 2.0*sqrt(\rNOne * \rNTwo)}         % ≈ 1.189
-    \pgfmathsetmacro{\xN}{\xNOne + 2.0*sqrt(\rN * \rNOne)}               % ≈ 2.000
+    \pgfmathsetmacro{\xNTwo}{\xNOne + 2.0*sqrt(\rNOne * \rNTwo)}         % = 1.280
+    \pgfmathsetmacro{\xN}{\xNOne + 2.0*sqrt(\rN * \rNOne)}               % = 2.000
 
     % 円の中心
     \coordinate (O_n)    at (\xN, \rN);
@@ -46,12 +46,12 @@
 
     \fill[teal!12, opacity=0.7] (O_n1) circle (\rNOne);
     \draw[very thick, teal!85!black] (O_n1) circle (\rNOne);
-    \node[teal!90!black, font=\footnotesize\bfseries] at ($(O_n1) + (135:0.25)$) {$C_{n+1}$};
+    \node[teal!90!black, font=\footnotesize\bfseries] at ($(O_n1) + (125:0.19)$) {$C_{n+1}$};
 
     \fill[red!15, opacity=0.8] (O_n2) circle (\rNTwo);
     \draw[very thick, red!85!black] (O_n2) circle (\rNTwo);
-    \draw[<-, thick, red!85!black] ($(O_n2)+(0, \rNTwo)$) -- ++(-0.25, 0.45)
-    node[above left=-2pt, font=\scriptsize\bfseries, red!85!black] {$C_{n+2}$};
+    \draw[<-, thick, red!85!black] ($(O_n2)+(105:\rNTwo)$) -- ++(-0.34, 0.62)
+    node[above, font=\scriptsize\bfseries, red!85!black] {$C_{n+2}$};
 
     % --- 3. 座標軸 ---
     \draw[->, thick, gray!80!black] (0.2, 0) -- (3.2, 0) node[right] {$x$};
@@ -106,8 +106,8 @@
     \pgfmathsetmacro{\rNTwo}{pow(1.0/sqrt(\rN) + 1.0/sqrt(\rNOne), -2)}
 
     \def\xN{0.90}
-    \pgfmathsetmacro{\xNTwo}{\xN + 2.0*sqrt(\rN * \rNTwo)}                 % ≈ 1.483
-    \pgfmathsetmacro{\xNOne}{\xN + 2.0*sqrt(\rN * \rNOne)}                 % ≈ 2.100
+    \pgfmathsetmacro{\xNTwo}{\xN + 2.0*sqrt(\rN * \rNTwo)}                 % = 1.620
+    \pgfmathsetmacro{\xNOne}{\xN + 2.0*sqrt(\rN * \rNOne)}                 % = 2.100
 
     % 円の中心
     \coordinate (O_n)    at (\xN, \rN);
@@ -131,12 +131,12 @@
 
     \fill[teal!12, opacity=0.7] (O_n1) circle (\rNOne);
     \draw[very thick, teal!85!black] (O_n1) circle (\rNOne);
-    \node[teal!90!black, font=\footnotesize\bfseries] at ($(O_n1) + (45:0.25)$) {$C_{n+1}$};
+    \node[teal!90!black, font=\footnotesize\bfseries] at ($(O_n1) + (55:0.19)$) {$C_{n+1}$};
 
     \fill[red!15, opacity=0.8] (O_n2) circle (\rNTwo);
     \draw[very thick, red!85!black] (O_n2) circle (\rNTwo);
-    \draw[<-, thick, red!85!black] ($(O_n2)+(0, \rNTwo)$) -- ++(0.25, 0.45)
-    node[above right=-2pt, font=\scriptsize\bfseries, red!85!black] {$C_{n+2}$};
+    \draw[<-, thick, red!85!black] ($(O_n2)+(75:\rNTwo)$) -- ++(0.32, 0.62)
+    node[above, font=\scriptsize\bfseries, red!85!black] {$C_{n+2}$};
 
     % --- 3. 座標軸 ---
     \draw[->, thick, gray!80!black] (0.0, 0) -- (3.0, 0) node[right] {$x$};
@@ -191,6 +191,7 @@ $\triangle O_n H_n O_{n+2}, \triangle O_{n+1} H_{n+1} O_{n+2}, \triangle O_nO_{n
     (r_{n+2} + r_{n+1})^2 = (x_{n+1} - x_{n+2})^2 + (r_{n+2} - r_{n+1})^2 \\
     (r_{n+1} + r_{n})^2   = (x_{n}-x_{n+1})^2 + (r_{n+1}-r_{n})^2
   \end{cases} \\
+  \therefore
   &
   \begin{cases}
     2\sqrt{r_n r_{n+2}}     = |x_n - x_{n+2}| \\
@@ -329,7 +330,7 @@ $n=0, 1$ の時 $p_0 = 0, p_1 = 1$ となって成立するので， 以下 $n=k
 \end{align}
 なので，$n=1, 2,\cdots,$とくり返し用いて，
 \begin{align}
-  |x_n - \alpha| & < \left(\dfrac{2}{3}\right)^{n-1} |x_1 - \alpha|
+  |x_n - \alpha| & \le \left(\dfrac{2}{3}\right)^{n-1} |x_1 - \alpha|
 \end{align}
 である．$0<\dfrac{2}{3}<1$より右辺は$n\to\infty$で$0$に収束するから，
 はさみうちの定理より
