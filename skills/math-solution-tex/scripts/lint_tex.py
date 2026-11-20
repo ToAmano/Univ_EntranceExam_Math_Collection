@@ -905,6 +905,265 @@ def check_left_right_balance(text):
     return errors
 
 
+MATH_TEXT_CMD_RE = re.compile(
+    r'\\(?:text|mbox|hbox|textbf|textit|textrm|textsf|texttt|textnormal|'
+    r'mathrm|operatorname|tag|intertext|shortintertext|label|ref|cref|Cref|'
+    r'eqref|hspace|vspace|phantom|hphantom|vphantom)\*?\s*\{'
+)
+MATH_NON_MATH_REGION_RE = re.compile(
+    r'\\begin\{(verbatim\*?|Verbatim|lstlisting|minted|tikzpicture)\}'
+    r'|\\verb\*?([^a-zA-Z\s])'
+    r'|\\(?:url|path|href)\b'
+)
+MATH_DISPLAY_ENV_RE = re.compile(
+    r'\\begin\{(align\*?|equation\*?|gather\*?|multline\*?)\}(.*?)\\end\{\1\}',
+    re.S,
+)
+MATH_STAR_CASES_RE = re.compile(
+    r'\\begin\{(d?r?cases\*)\}(.*?)\\end\{\1\}',
+    re.S,
+)
+
+
+def _blank_keep_newlines(buf, start, end):
+    for k in range(start, end):
+        if buf[k] != '\n':
+            buf[k] = ' '
+
+
+def _mask_non_math_regions(raw):
+    """コメント・verbatim・TikZ・URL 等を改行を保ったまま空白化して返す。"""
+    text = strip_comments(raw)
+    out = list(text)
+    pos = 0
+    n = len(text)
+    while pos < n:
+        m = MATH_NON_MATH_REGION_RE.search(''.join(out), pos)
+        if not m:
+            break
+        end = m.end()
+        if m.group(1):
+            env = m.group(1)
+            closing = text.find('\\end{' + env + '}', end)
+            end = n if closing < 0 else closing + len('\\end{' + env + '}')
+        elif m.group(2):
+            closing = text.find(m.group(2), end)
+            end = n if closing < 0 else closing + 1
+        else:
+            while end < n and text[end].isspace():
+                end += 1
+            if end < n and text[end] == '{':
+                _, end = extract_braced(text, end)
+        _blank_keep_newlines(out, m.start(), end)
+        pos = end
+    return ''.join(out)
+
+
+def _iter_math_blocks(raw):
+    """本文中の数式ブロック (body_start_offset, body) を順に列挙する。
+    \\begin{document} より前や TikZ・コメント・verbatim 内の $ は除外し、
+    インライン $...$ 内の \\text{...$...$...} にあるネストした $ は波括弧深さでスキップする。"""
+    text = _mask_non_math_regions(raw)
+    start = text.find('\\begin{document}')
+    start = 0 if start < 0 else start
+    work = list(text)
+    blocks = []
+
+    for m in MATH_DISPLAY_ENV_RE.finditer(text, start):
+        blocks.append((m.start(2), m.group(2)))
+        _blank_keep_newlines(work, m.start(), m.end())
+
+    cur = ''.join(work)
+    for pat in (
+        re.compile(r'\$\$(.*?)\$\$', re.S),
+        re.compile(r'(?<!\\)\\\[(.*?)(?<!\\)\\\]', re.S),
+        re.compile(r'(?<!\\)\\\((.*?)(?<!\\)\\\)', re.S),
+    ):
+        for m in pat.finditer(cur, start):
+            blocks.append((m.start(1), m.group(1)))
+            _blank_keep_newlines(work, m.start(), m.end())
+        cur = ''.join(work)
+
+    i = start
+    n = len(cur)
+    while i < n:
+        if cur[i] == '\\' and i + 1 < n:
+            i += 2
+            continue
+        if cur[i] == '$':
+            j = i + 1
+            depth = 0
+            closed = False
+            while j < n:
+                ch = cur[j]
+                if ch == '\\' and j + 1 < n:
+                    j += 2
+                    continue
+                if ch == '{':
+                    depth += 1
+                elif ch == '}':
+                    depth = max(0, depth - 1)
+                elif ch == '\n' and j + 1 < n and cur[j + 1] == '\n':
+                    break
+                elif ch == '$' and depth == 0:
+                    blocks.append((i + 1, cur[i + 1:j]))
+                    i = j + 1
+                    closed = True
+                    break
+                j += 1
+            if not closed:
+                i += 1
+            continue
+        i += 1
+    return blocks
+
+
+def _strip_math_text_commands(body):
+    """数式ブロック中の \\text{...}, \\mbox{...}, dcases* の2列目等を改行を保って空白化する。"""
+    def blank_star_cases_col2(m):
+        inner = m.group(2)
+        rows = re.split(r'(\\\\(?:[ \t]*\[[^\]\n]*\])?)', inner)
+        rebuilt = []
+        for idx, part in enumerate(rows):
+            if idx % 2 == 1:
+                rebuilt.append(part)
+                continue
+            amp = part.find('&')
+            if amp < 0:
+                rebuilt.append(part)
+            else:
+                rebuilt.append(part[:amp + 1] + ''.join('\n' if c == '\n' else ' ' for c in part[amp + 1:]))
+        return f"\\begin{{{m.group(1)}}}{''.join(rebuilt)}\\end{{{m.group(1)}}}"
+
+    s = MATH_STAR_CASES_RE.sub(blank_star_cases_col2, body)
+    out = []
+    i = 0
+    n = len(s)
+    while i < n:
+        m = MATH_TEXT_CMD_RE.match(s, i)
+        if m:
+            brace_idx = m.end() - 1
+            _, end_idx = extract_braced(s, brace_idx)
+            out.append(''.join('\n' if c == '\n' else ' ' for c in s[i:end_idx]))
+            i = end_idx
+        else:
+            out.append(s[i])
+            i += 1
+    return ''.join(out)
+
+
+def check_math_brackets(text):
+    """数式中の ( ) と [ ] が片側だけ単体で入らないかチェックする（半開区間 (a,b]・[a,b) は許容）。"""
+    errors = []
+    for pos, body in _iter_math_blocks(text):
+        cleaned = _strip_math_text_commands(body)
+        c2 = re.sub(r'\\\\\*?[ \t]*\[[^\]\n]*\]', '', cleaned)
+        c2 = re.sub(r'\\(?:begin|end)\{[^}]*\}(?:\[[^\]\n]*\])?', '', c2)
+        c2 = re.sub(
+            r'\\(?!left\b|right\b|big[lmr]?\b|Big[lmr]?\b|bigg[lmr]?\b|Bigg[lmr]?\b)'
+            r'[a-zA-Z]+\*?\s*\[[^\]\n]*\]',
+            '',
+            c2,
+        )
+        c2 = re.sub(r'\\[()\[\]{}]', '', c2)
+        op, cp = c2.count('('), c2.count(')')
+        ob, cb = c2.count('['), c2.count(']')
+        if (op + ob) != (cp + cb):
+            errors.append((
+                line_of(text, pos),
+                f"数式内のカッコの対応が一致しない（'(' が{op}個, ')' が{cp}個, '[' が{ob}個, ']' が{cb}個）",
+            ))
+    return errors
+
+
+def check_math_fullwidth(text):
+    """数式中に（\\text 等を除いて）全角・非ASCII文字が混入していないかチェックする。"""
+    errors = []
+    for pos, body in _iter_math_blocks(text):
+        cleaned = _strip_math_text_commands(body)
+        m = re.search(r'[^\x00-\x7f]', cleaned)
+        if m:
+            ch = m.group(0)
+            disp = '\\u3000(全角空白)' if ch == '\u3000' else f'「{ch}」'
+            errors.append((
+                line_of(text, pos + m.start()),
+                f"数式内に \\text{{...}} 等を介さず全角文字 {disp} が入っている",
+            ))
+    return errors
+
+
+PROSE_IN_MATH_CMD_RE = re.compile(
+    r'\\(?:text|mbox|hbox|textbf|textit|textrm|textsf|texttt|textnormal|intertext|shortintertext)\*?\s*\{'
+)
+PROSE_NON_TEXT_CMD_RE = re.compile(
+    r'\\(?:label|cref|Cref|ref|eqref|hspace|vspace|subfile|documentclass|includegraphics)\*?(?:\[[^\]\n]*\])?\s*\{'
+)
+
+
+def _extract_prose_text(raw):
+    """数式・TikZ・コメント・verbatim・コマンド引数を除いた本文（\\caption や数式内 \\text 等は残す）を
+    元の行番号を保って返す。"""
+    text = _mask_non_math_regions(raw)
+    prose = list(text)
+    doc_start = text.find('\\begin{document}')
+    if doc_start > 0:
+        _blank_keep_newlines(prose, 0, doc_start)
+
+    for pos, body in _iter_math_blocks(raw):
+        end = pos + len(body)
+        inner_kept = ['\n' if ch == '\n' else ' ' for ch in body]
+        i = 0
+        n = len(body)
+        while i < n:
+            m = PROSE_IN_MATH_CMD_RE.match(body, i)
+            if m:
+                brace_idx = m.end() - 1
+                _, end_idx = extract_braced(body, brace_idx)
+                seg = list(body[brace_idx + 1:end_idx - 1])
+                seg_str = ''.join(seg)
+                for dm in re.finditer(r'(?<!\\)\$(?:\\\$|[^$])+?(?<!\\)\$', seg_str):
+                    _blank_keep_newlines(seg, dm.start(), dm.end())
+                inner_kept[brace_idx + 1:end_idx - 1] = seg
+                i = end_idx
+            else:
+                i += 1
+        prose[pos:end] = inner_kept
+
+    cur = ''.join(prose)
+    for m in re.finditer(r'\\(?:begin|end)\{[^}]*\}(?:\[[^\]\n]*\])?', cur):
+        _blank_keep_newlines(prose, m.start(), m.end())
+    cur = ''.join(prose)
+    for m in PROSE_NON_TEXT_CMD_RE.finditer(cur):
+        _, end_idx = extract_braced(cur, m.end() - 1)
+        _blank_keep_newlines(prose, m.start(), end_idx)
+    return ''.join(prose)
+
+
+def check_prose_brackets(text):
+    """数式外の本文（\\caption や \\text 等を含む）で半角 ()・全角（）・「」・『』の対応をチェックする。"""
+    prose = _extract_prose_text(text)
+    errors = []
+    for open_ch, close_ch in (('(', ')'), ('（', '）'), ('「', '」'), ('『', '』')):
+        stack = []
+        for idx, ch in enumerate(prose):
+            if ch == open_ch:
+                stack.append(idx)
+            elif ch == close_ch:
+                if stack:
+                    stack.pop()
+                else:
+                    errors.append((
+                        line_of(text, idx),
+                        f"対応する「{open_ch}」のない「{close_ch}」がある",
+                    ))
+        for idx in stack:
+            errors.append((
+                line_of(text, idx),
+                f"対応する「{close_ch}」のない「{open_ch}」がある",
+            ))
+    return errors
+
+
 VEC_CMD_RE = re.compile(r'\\(vec|overrightarrow)(?![a-zA-Z])')
 VEC_SINGLE_BASE_RE = re.compile(r'^(?:[a-zA-Z0-9]|\\[a-zA-Z]+)$')
 VEC_SINGLE_WITH_MOD_RE = re.compile(
@@ -1616,6 +1875,9 @@ def lint_file(path, profile=None):
     errors += reference_errors
     errors += tag(check_frac_subscript_rule(text), 'N6.1')
     errors += tag(check_left_right_balance(text), 'N7.2')
+    errors += tag(check_math_brackets(text), 'N7.3')
+    errors += tag(check_prose_brackets(text), 'N7.4')
+    errors += tag(check_math_fullwidth(text), 'N12.1')
     errors += tag(check_vector_notation(text), 'N8.1')
     errors += tag(check_tikz_point_circle(text), 'F4.1')
     errors += tag(check_reference_commands(text), 'N10.1')

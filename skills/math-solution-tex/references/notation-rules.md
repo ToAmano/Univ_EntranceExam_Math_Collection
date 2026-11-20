@@ -99,6 +99,15 @@
 - 1つの `align` の中で、`\left` と `\right` の数を一致させる（片側だけなら `\left.`・`\right.` を使う）。数が合わないと、Web の MathJax では式全体が表示されない。
 - lint：`check_left_right_balance`（`align` のブロック全体で数を比べる）。
 
+### N7.3 丸括弧 `()` と角括弧 `[]` の対応を合わせる
+- 数式（`align`・`equation`・`gather`・`multline`・`$...$` 等、`\text{...}` などのテキスト系引数を除く）の中に、`(` / `)` や `[` / `]` が片側だけ単体・不対で残らないようにする。`{}` と違い単体の `)` などは TeX コンパイルを通ってしまうため lint で検出する。
+- 半開区間 `(a, b]`・`[a, b)` や開区間 `]a, b[` は開き括弧と閉じ括弧の合計が一致するため許容する。改行の余白指定 `\\[5pt]` や `\sqrt[n]{x}`・`\begin{array}[t]` などのオプション引数は対象外。
+- lint：`check_math_brackets`。
+
+### N7.4 本文の括弧・かぎ括弧の対応を合わせる
+- 数式外の本文（`\caption{...}` や数式内の `\text{...}` 等を含む。TikZ・コメント・verbatim を除く）で、半角 `()`、全角 `（）`、かぎ括弧 `「」`・`『』` の開きと閉じを対応させる。片側の欠落や半角・全角の混在（`(...）` 等）を防ぐ。
+- lint：`check_prose_brackets`。
+
 ---
 
 ## N8. ベクトル
@@ -149,6 +158,15 @@
   - 使わない：`\medskip`、`\bigskip`、`\smallskip`、`\vspace{...}`、`\hspace{...}`、`\hfill`、`\vfill`、`\noindent`、`\newline`、数式の外の `\quad`・`\qquad`
 - 数式・図・表・TikZ の中（式と注記の間の `\quad`、図を並べる `\hfill` など）と、空欄の下線 `\underline{\hspace{...}}` は対象外。
 - lint：`check_spacing_commands`。
+
+---
+
+## N12. 数式内の文字
+
+### N12.1 数式の中に（`\text` などを除き）全角文字を入れない
+- 数式（`align`・`equation`・`gather`・`multline`・`$...$` 等）の中に、`\text{...}`・`\mbox{...}`・`\mathrm{...}`・`\intertext{...}` 等を介さず直接全角文字（和文、全角の「，」「．」「（」「）」「　」、丸数字、`×`、`−`、`°` など）を書かない。
+  - テキスト注記は `\text{...}` で囲む。乗算は `\times`、角度は `^\circ`、負号は半角 `-`、数式内のカンマは半角 `,` を使う。
+- lint：`check_math_fullwidth`。
 
 ---
 

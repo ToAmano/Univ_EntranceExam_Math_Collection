@@ -127,6 +127,34 @@ def test_new_error_checks():
     assert lint.check_tdplot_placement('\\tdplotsetmaincoords{65}{115}\n' + good.replace('\\tdplotsetmaincoords{65}{115}\n', ''))
 
 
+def test_math_brackets_and_fullwidth():
+    # 不対の () と [] を検出し、半開区間・\\[5pt]・\\sqrt[3]・\\text 内は許容する
+    assert lint.check_math_brackets('$a + b)$')
+    assert lint.check_math_brackets('\\begin{align}\n  x = \\sqrt{3(4-a^2)})\n\\end{align}')
+    assert lint.check_math_brackets('$\\Bigl[ a + b$')
+    assert not lint.check_math_brackets('$t \\in (1, \\sqrt{2}]$ と $[0, 2\\pi)$')
+    assert not lint.check_math_brackets('\\begin{align}\n  a &= \\sqrt[3]{x} \\\\[5pt]\n  b &= (x+1) + \\text{(注)}\n\\end{align}')
+    assert not lint.check_math_brackets('$\\text{\\raisebox{-2pt}{$\\curvearrowright$}}$')
+
+    # 数式中の \\text 以外の全角・非ASCII文字を検出し、\\text や dcases* 2列目・TikZ は許容する
+    assert lint.check_math_fullwidth('$x + y より$')
+    assert lint.check_math_fullwidth('\\begin{align}\n  a &= 2×3 \\\\\n  b &= 90°\n\\end{align}')
+    assert lint.check_math_fullwidth('\\begin{align}\n  x = 1，\\quad y = 2\n\\end{align}')
+    assert not lint.check_math_fullwidth('\\begin{align}\n  x = 1 \\quad (\\text{ただし，条件 } a > 0, b < 1)\n\\end{align}')
+    assert not lint.check_math_fullwidth('\\begin{align}\n  \\begin{dcases*} x = 1 & ただし $a>0$ \\end{dcases*}\n\\end{align}')
+    assert not lint.check_math_fullwidth('\\begin{figure}[htb]\\begin{tikzpicture}\\node at (0,0) {日本語};\\end{tikzpicture}\\end{figure}')
+
+
+def test_prose_brackets():
+    assert lint.check_prose_brackets('除いた部分($\\triangle P$）である．')
+    assert lint.check_prose_brackets('\\begin{align}\\text{$p$ と $q$ が互いに素」}\\end{align}')
+    assert lint.check_prose_brackets('「『入れ子』が閉じていない．')
+    assert lint.check_prose_brackets('先に閉じた」）後ろで開く（．')
+    assert not lint.check_prose_brackets('「『正しい』引用」と（全角）および(半角)である．')
+    assert not lint.check_prose_brackets('\\begin{align}\\text{「$p$ と $q$ が互いに素」}\\end{align}')
+    assert not lint.check_prose_brackets('\\begin{figure}[htb]\\caption{点(1, 2)と「図」（補）}\\begin{tikzpicture}\\draw (0,0)--(1,1);\\end{tikzpicture}\\end{figure}')
+
+
 def test_new_warning_checks():
     assert lint.check_cases_env('\\begin{cases} a \\end{cases}')
     assert not lint.check_cases_env('\\begin{dcases} a \\end{dcases}')
