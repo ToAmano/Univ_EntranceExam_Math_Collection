@@ -13,49 +13,52 @@
   \tdplotsetmaincoords{68}{115}
   \begin{tikzpicture}[tdplot_main_coords, scale=2.4, >=stealth, every node/.style={font=\small}]
 
-    % --- 1. 定数・座標パラメータ (t = 0.5 の最大時) ---
+    % --- 1. 定数・座標パラメータ (t = 0.5 の例) ---
     % P = (0.5, 0, 0)
-    % A は xy 平面内: 中心 O_A = (0.5, r_A, 0), r_A = (1 - t^2)/2 = 0.375
-    % B は xz 平面内: 中心 O_B = ((t-1)/2 + ..., 0, ...), theta = 0 のとき O_B = (-0.25, 0, 0)?
-    % 一般の配置例として作図
+    % A は xy 平面内: 中心 O_A = (0.5, r_A, 0), r_A = 0.375 (P を通る)
+    % B は xz 平面内: 中心 O_B は P から偏角 angB (xz平面) に距離 r_B 離れた点
+    % |P - O_B| = r_B を厳密に満たし、P を通る
     \def\tVal{0.5}
     \def\rA{0.375}
-    \def\rB{0.45}
+    \def\rB{0.36}
+    \def\angB{55} % xz 平面における P からの方向角
+    \pgfmathsetmacro{\xOB}{\tVal - \rB * cos(\angB)}
+    \pgfmathsetmacro{\zOB}{\rB * sin(\angB)}
 
     \coordinate (O)   at (0, 0, 0);
     \coordinate (P)   at (\tVal, 0, 0);
     \coordinate (O_A) at (\tVal, \rA, 0);
-    \coordinate (O_B) at ({\tVal - 0.35}, 0, 0.38);
+    \coordinate (O_B) at (\xOB, 0, \zOB);
 
     % --- 2. 座標軸 ---
-    \draw[dashed, gray!40] (-1.3, 0, 0) -- (0, 0, 0);
-    \draw[dashed, gray!40] (0, -1.3, 0) -- (0, 0, 0);
-    \draw[dashed, gray!40] (0, 0, -1.2) -- (0, 0, 0);
+    \draw[dashed, gray!70!black] (-1.3, 0, 0) -- (0, 0, 0);
+    \draw[dashed, gray!70!black] (0, -1.3, 0) -- (0, 0, 0);
+    \draw[dashed, gray!70!black] (0, 0, -1.2) -- (0, 0, 0);
 
     \draw[->, thick, gray!80!black] (0, 0, 0) -- (1.7, 0, 0) node[below left=1pt] {$x$};
     \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 1.7, 0) node[right=2pt] {$y$};
     \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 0, 1.6) node[above=2pt] {$z$};
     \node[below left=2pt] at (O) {$O$};
 
-    % --- 3. 単位球の主大円 (xy平面, xz平面, yz平面) ---
+    % --- 3. 単位球の主大円 (xy平面, xz平面) ---
     % xy 平面 (z=0)
-    \draw[dashed, gray!50] plot[domain=0:360, samples=60] ({cos(\x)}, {sin(\x)}, 0);
+    \draw[dashed, gray!70!black] plot[domain=0:360, samples=60] ({cos(\x)}, {sin(\x)}, 0);
     % xz 平面 (y=0)
-    \draw[dashed, gray!50] plot[domain=0:360, samples=60] ({cos(\x)}, 0, {sin(\x)});
+    \draw[dashed, gray!70!black] plot[domain=0:360, samples=60] ({cos(\x)}, 0, {sin(\x)});
 
-    % --- 4. 球 A (xy 平面内, z = 0) ---
-    \fill[teal!15, opacity=0.6]
+    % --- 4. 円板 A (xy 平面内, z = 0) ---
+    \fill[pattern=north east lines, pattern color=teal!70, opacity=0.7]
     plot[domain=0:360, samples=50] ({\tVal + \rA*cos(\x)}, {\rA + \rA*sin(\x)}, 0);
     \draw[very thick, teal!85!black]
     plot[domain=0:360, samples=50] ({\tVal + \rA*cos(\x)}, {\rA + \rA*sin(\x)}, 0);
-    \node[teal!90!black, font=\footnotesize\bfseries, above right] at (\tVal, {\rA*2}, 0) {球 $A$ ($xy$ 平面)};
+    \node[teal!90!black, font=\footnotesize\bfseries, above right] at (\tVal, {\rA*2}, 0) {円板 $A$ ($xy$ 平面)};
 
-    % --- 5. 球 B (xz 平面内, y = 0) ---
-    \fill[blue!15, opacity=0.6]
-    plot[domain=0:360, samples=50] ({\tVal - 0.35 + \rB*cos(\x)}, 0, {0.38 + \rB*sin(\x)});
+    % --- 5. 円板 B (xz 平面内, y = 0) ---
+    \fill[pattern=north west lines, pattern color=blue!70, opacity=0.7]
+    plot[domain=0:360, samples=50] ({\xOB + \rB*cos(\x)}, 0, {\zOB + \rB*sin(\x)});
     \draw[very thick, blue!85!black]
-    plot[domain=0:360, samples=50] ({\tVal - 0.35 + \rB*cos(\x)}, 0, {0.38 + \rB*sin(\x)});
-    \node[blue!90!black, font=\footnotesize\bfseries, above left] at ({\tVal - 0.35}, 0, {0.38 + \rB}) {球 $B$ ($xz$ 平面)};
+    plot[domain=0:360, samples=50] ({\xOB + \rB*cos(\x)}, 0, {\zOB + \rB*sin(\x)});
+    \node[blue!90!black, font=\footnotesize\bfseries, above left] at (\xOB, 0, {\zOB + \rB}) {円板 $B$ ($xz$ 平面)};
 
     % --- 6. 接点 P(t, 0, 0) のプロット ---
     \node[circle, fill=red!85!black, inner sep=1.2pt] at (P) {};
@@ -66,7 +69,7 @@
     \node[circle, fill=blue!85!black, inner sep=0.8pt] at (O_B) {}; \node[blue!85!black, above left=1pt, font=\scriptsize] at (O_B) {$O_B$};
 
   \end{tikzpicture}
-  \caption{単位球内部の球面 $A$（$xy$ 平面），$B$（$xz$ 平面）および共通点 $P(t,0,0)$ の配置}
+  \caption{単位球内部の円板 $A$（$xy$ 平面），$B$（$xz$ 平面）および共通点 $P(t,0,0)$ の配置}
   \label{fig:spheres_ab_3d_setup}
 \end{figure}
 
@@ -111,11 +114,11 @@ $A,B$の中心を $O_A(x_A,y_A,0), O_B(x_B,0,z_B)$，半径を $r_A, r_B$ とお
     \coordinate (T_A) at ({\angOA}:1.0);
 
     % --- 2. 単位円 x^2 + y^2 = 1 ---
-    \draw[thick, gray!50] (O) circle (1.0);
-    \node[gray!70!black, font=\scriptsize, above left] at (135:1.0) {$x^2+y^2=1$};
+    \draw[thick, gray!70!black] (O) circle (1.0);
+    \node[gray!80!black, font=\scriptsize, above left] at (135:1.0) {$x^2+y^2=1$};
 
     % --- 3. 円 A (中心 O_A, 半径 r_A) ---
-    \fill[teal!12, opacity=0.7] (O_A) circle (\rA);
+    \fill[pattern=north east lines, pattern color=teal!70, opacity=0.7] (O_A) circle (\rA);
     \draw[very thick, teal!85!black] (O_A) circle (\rA);
     \node[teal!95!black, font=\footnotesize\bfseries] at ($(O_A) + (45:0.25)$) {円 $A$};
 
@@ -177,10 +180,11 @@ $A,B$の中心を $O_A(x_A,y_A,0), O_B(x_B,0,z_B)$，半径を $r_A, r_B$ とお
 $\theta = \pi$ の時は $r_A = \dfrac{1-t}{2}$ である．
 一方$\theta \neq \pi$ の時は $\triangle OO_A P$ が存在し，これに余弦定理を用いて
 \begin{align}
-  |OO_A|^2 &= |OP|^2 + |PO_A|^2 - 2|OP||PO_A|\cos\theta \\
-  (1 - r_A)^2 &= t^2 + r_A^2 - 2t r_A \cos\theta \\
-  2 r_A (1 - t\cos\theta) &= 1 - t^2 \\
-  r_A = \dfrac{1-t^2}{2(1 - t\cos\theta)}
+  & |OO_A|^2 = |OP|^2 + |PO_A|^2 - 2|OP||PO_A|\cos\theta \\
+  & (1 - r_A)^2 = t^2 + r_A^2 - 2t r_A \cos\theta \\
+  & 2 r_A (1 - t\cos\theta) = 1 - t^2 \\
+  \therefore
+  & r_A = \dfrac{1-t^2}{2(1 - t\cos\theta)}
 \end{align}
 である．これは$\theta = \pi$でも成立する．
 
@@ -214,11 +218,11 @@ $\theta = \pi$ の時は $r_A = \dfrac{1-t}{2}$ である．
     \coordinate (T_B) at ({\angOB}:1.0);
 
     % --- 2. 単位円 x^2 + z^2 = 1 ---
-    \draw[thick, gray!50] (O) circle (1.0);
-    \node[gray!70!black, font=\scriptsize, above left] at (135:1.0) {$x^2+z^2=1$};
+    \draw[thick, gray!70!black] (O) circle (1.0);
+    \node[gray!80!black, font=\scriptsize, above left] at (135:1.0) {$x^2+z^2=1$};
 
     % --- 3. 円 B (中心 O_B, 半径 r_B) ---
-    \fill[blue!12, opacity=0.7] (O_B) circle (\rB);
+    \fill[pattern=north west lines, pattern color=blue!70, opacity=0.7] (O_B) circle (\rB);
     \draw[very thick, blue!85!black] (O_B) circle (\rB);
     \node[blue!90!black, font=\footnotesize\bfseries] at ($(O_B) + (135:0.25)$) {円 $B$};
 
@@ -278,10 +282,11 @@ $\angle O_B PO = \theta$ とおくと\cref{eq:3}より
 
 $\theta = 0$ の時 $r_B = \dfrac{1+t}{2}$ である．$\theta \neq 0$ の時は $\triangle OPO_B$ が存在し，余弦定理から
 \begin{align}
-  |PO_B|^2 &= |OP|^2 + |OO_B|^2 - 2|OP||OO_B|\cos\theta \\
-  (1 - r_B)^2 &= t^2 + r_B^2 - 2t r_B \cos\theta \\
-  2 r_B (1 - t\cos\theta) &= 1 - t^2 \\
-  r_B = \dfrac{1-t^2}{2(1 - t\cos\theta)}
+  & |OO_B|^2 = |OP|^2 + |PO_B|^2 - 2|OP||PO_B|\cos\theta \\
+  & (1 - r_B)^2 = t^2 + r_B^2 - 2t r_B \cos\theta \\
+  & 2 r_B (1 - t\cos\theta) = 1 - t^2 \\
+  \therefore
+  & r_B = \dfrac{1-t^2}{2(1 - t\cos\theta)}
 \end{align}
 である．これは$\theta=0$でも成立する．
 従って$r_B$ は $\theta = 0$ で最大値
@@ -299,7 +304,7 @@ $\theta = 0$ の時 $r_B = \dfrac{1+t}{2}$ である．$\theta \neq 0$ の時は
 \begin{align}
   \max R &= \dfrac{9}{8}
 \end{align}
-をとる．\qed
+をとる．
 
 \newpage
 
