@@ -267,7 +267,7 @@ $|AP|=t$（$0<t<1$）とおくと，切り口の辺の長さは$t$と$1-t$が交
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=4.5, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[scale=5.2, >=stealth, every node/.style={font=\small}]
 
     % --- 1. 定数・厳密パラメータ ---
     % 対角線長 L_diag = (sqrt(3) + 1)/2 ≈ 1.3660
@@ -306,12 +306,12 @@ $|AP|=t$（$0<t<1$）とおくと，切り口の辺の長さは$t$と$1-t$が交
     \coordinate (R) at ($ (Q) + (-165:{\tVal}) $);
     \coordinate (U) at ($ (T) + (15:{\oneMinusT}) $);
 
-    % --- 2. 一辺 1 の穴（参考外枠: 点線）---
+    % --- 2. 一辺 1 の穴（参考外枠: 破線）---
     \coordinate (Center) at ($ (I)!0.5!(K) $);
     \draw[dashed, gray!70!black, thick]
     ($ (Center) + (-0.5, -0.5) $) rectangle ($ (Center) + (0.5, 0.5) $);
-    \node[gray!80!black, font=\scriptsize, above left]
-    at ($ (Center) + (0.5, 0.5) $) {一辺 $1$ の正方形の穴};
+    \node[gray!80!black, font=\scriptsize, right=3pt]
+    at ($ (Center) + (0.5, 0.25) $) {一辺 $1$ の正方形の穴};
 
     % --- 3. 正方形 HIJK ---
     \draw[very thick, gray!80!black] (I) -- (J) -- (K) -- (H) -- cycle;
@@ -324,34 +324,40 @@ $|AP|=t$（$0<t<1$）とおくと，切り口の辺の長さは$t$と$1-t$が交
     \draw[dashed, gray!70!black, thick] (I) -- (K);
 
     % --- 4. 六角形 PQRSTU ---
-    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.75]
+    \fill[pattern=north east lines, pattern color=blue!65!black, opacity=0.55]
     (P) -- (Q) -- (R) -- (S) -- (T) -- (U) -- cycle;
     \draw[very thick, blue!85!black] (P) -- (Q) -- (R) -- (S) -- (T) -- (U) -- cycle;
 
-    % 辺の長さラベル
-    \path (P) -- node[above right=-2pt, font=\scriptsize, teal!90!black] {$1-t$} (Q);
-    \path (Q) -- node[above left=-2pt, font=\scriptsize, teal!90!black] {$t$} (R);
-    \path (R) -- node[left=1pt, font=\scriptsize, teal!90!black] {$1-t$} (S);
-    \path (S) -- node[below left=-2pt, font=\scriptsize, teal!90!black] {$t$} (T);
-    \path (T) -- node[below right=-2pt, font=\scriptsize, teal!90!black] {$1-t$} (U);
-    \path (U) -- node[right=1pt, font=\scriptsize, teal!90!black] {$t$} (P);
+    % 辺の長さラベル（周囲の線と重ならない位置に配置）
+    \path (P) -- node[pos=0.35, above right=1pt, font=\scriptsize, teal!90!black] {$1-t$} (Q);
+    \path (Q) -- node[below=2pt, font=\scriptsize, teal!90!black, fill=white, fill opacity=0.82, text opacity=1, inner sep=1pt] {$t$} (R);
+    \path (R) -- node[right=2pt, font=\scriptsize, teal!90!black, fill=white, fill opacity=0.82, text opacity=1, inner sep=1pt] {$1-t$} (S);
+    \path (S) -- node[above right=0pt, font=\scriptsize, teal!90!black, fill=white, fill opacity=0.82, text opacity=1, inner sep=1pt] {$t$} (T);
+    \path (T) -- node[above=2pt, font=\scriptsize, teal!90!black, fill=white, fill opacity=0.82, text opacity=1, inner sep=1pt] {$1-t$} (U);
+    \path (U) -- node[left=2pt, font=\scriptsize, teal!90!black, fill=white, fill opacity=0.82, text opacity=1, inner sep=1pt] {$t$} (P);
 
     % --- 5. 中点 X, Y と頂点のプロット ---
-    \node[circle, fill=red!85!black, inner sep=0.6pt] at (Y) {}; \node[below left=-1pt, font=\tiny, red!90!black] at (Y) {$Y$};
-    \node[circle, fill=red!85!black, inner sep=0.6pt] at (X) {}; \node[above right=-1pt, font=\tiny, red!90!black] at (X) {$X$};
+    \node[circle, fill=red!85!black, inner sep=0.7pt] at (Y) {}; \node[above right=-1pt, font=\tiny, red!90!black] at (Y) {$Y$};
+    \node[circle, fill=red!85!black, inner sep=0.7pt] at (X) {}; \node[below left=-1pt, font=\tiny, red!90!black] at (X) {$X$};
 
-    \node[circle, fill=blue!90!black, inner sep=0.6pt] at (P) {}; \node[blue!90!black, right=2pt, font=\scriptsize] at (P) {$P$};
-    \node[circle, fill=blue!90!black, inner sep=0.6pt] at (Q) {}; \node[blue!90!black, above=2pt, font=\scriptsize] at (Q) {$Q$};
-    \node[circle, fill=blue!90!black, inner sep=0.6pt] at (R) {}; \node[blue!90!black, above left=1pt, font=\scriptsize] at (R) {$R$};
-    \node[circle, fill=blue!90!black, inner sep=0.6pt] at (S) {}; \node[blue!90!black, left=2pt, font=\scriptsize] at (S) {$S$};
-    \node[circle, fill=blue!90!black, inner sep=0.6pt] at (T) {}; \node[blue!90!black, below=2pt, font=\scriptsize] at (T) {$T$};
-    \node[circle, fill=blue!90!black, inner sep=0.6pt] at (U) {}; \node[blue!90!black, below right=1pt, font=\scriptsize] at (U) {$U$};
+    \node[circle, fill=blue!90!black, inner sep=0.7pt] at (P) {}; \node[blue!90!black, right=2pt, font=\scriptsize] at (P) {$P$};
+    \node[circle, fill=blue!90!black, inner sep=0.7pt] at (Q) {}; \node[blue!90!black, above=2pt, font=\scriptsize] at (Q) {$Q$};
+    \node[circle, fill=blue!90!black, inner sep=0.7pt] at (R) {}; \node[blue!90!black, below right=1pt, font=\scriptsize, fill=white, fill opacity=0.82, text opacity=1, inner sep=1pt] at (R) {$R$};
+    \node[circle, fill=blue!90!black, inner sep=0.7pt] at (S) {}; \node[blue!90!black, left=2pt, font=\scriptsize] at (S) {$S$};
+    \node[circle, fill=blue!90!black, inner sep=0.7pt] at (T) {}; \node[blue!90!black, below=2pt, font=\scriptsize] at (T) {$T$};
+    \node[circle, fill=blue!90!black, inner sep=0.7pt] at (U) {}; \node[blue!90!black, above left=1pt, font=\scriptsize, fill=white, fill opacity=0.82, text opacity=1, inner sep=1pt] at (U) {$U$};
 
-    % --- 6. 寸法補助線とブレース ---
-    % 対角線上の 3 区間
-    \node[teal!90!black, font=\tiny, below left=-2pt] at ($ (K)!0.5!(Y) $) {$|KY|=\frac{1-t}{2}$};
-    \node[teal!90!black, font=\tiny, below left=-2pt] at ($ (Y)!0.5!(X) $) {$|YX|=\frac{\sqrt{3}}{2}$};
-    \node[teal!90!black, font=\tiny, below left=-2pt] at ($ (X)!0.5!(I) $) {$|XI|=\frac{t}{2}$};
+    % --- 6. 対角線上の 3 区間ラベル ---
+    \coordinate (MidKY) at ($ (K)!0.5!(Y) $);
+    \coordinate (MidXI) at ($ (I)!0.5!(X) $);
+    \draw[thin, gray!70!black] (MidKY) -- ($ (K) + (0.09, -0.08) $);
+    \node[teal!90!black, font=\scriptsize, right=1pt] at ($ (K) + (0.09, -0.08) $) {$|KY|=\frac{1-t}{2}$};
+
+    \node[teal!90!black, font=\scriptsize, fill=white, fill opacity=0.9, text opacity=1, inner sep=1.5pt, rounded corners=1pt]
+    at ($ (Y)!0.5!(X) $) {$|YX|=\frac{\sqrt{3}}{2}$};
+
+    \draw[thin, gray!70!black] (MidXI) -- ($ (I) + (-0.06, 0.14) $);
+    \node[teal!90!black, font=\scriptsize, left=1pt] at ($ (I) + (-0.06, 0.14) $) {$|XI|=\frac{t}{2}$};
 
   \end{tikzpicture}
   \caption{正方形 $HIJK$（一辺 $<1$）に対角線対称で内接させた六角形 $PQRSTU$}
