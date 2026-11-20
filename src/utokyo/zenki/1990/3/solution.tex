@@ -182,7 +182,7 @@ $|AP|=t$（$0<t<1$）とおくと，切り口の辺の長さは$t$と$1-t$が交
 \paragraph{(2)}
 
 穴の面と面$BCF$が常に平行になるように正八面体を通過させることを考えると，
-穴の面での立体の切断面は一辺$1$の正三角形（$\triangle BCF, ADE$）か(1)で検討した六角形$PQRSTU$になる．そこでこれら二つが一辺$1$の正方形の内部におさまることを示れば良い．
+穴の面での立体の切断面は一辺$1$の正三角形（$\triangle BCF, ADE$）か(1)で検討した六角形$PQRSTU$になる．そこでこれら二つが一辺$1$の正方形の内部におさまることを示せば良い．
 
 \begin{figure}[htb]
   \centering
@@ -287,30 +287,30 @@ $|AP|=t$（$0<t<1$）とおくと，切り口の辺の長さは$t$と$1-t$が交
 
     % 対角線上の分点:
     % K から I へ向かう単位方向ベクトル: u = (-1/sqrt(2), -1/sqrt(2))
-    % Y: K からの距離 |KY| = t/2
-    % X: I からの距離 |XI| = (1-t)/2
-    \coordinate (Y) at ($ (K) + (-135:{\tVal / 2.0}) $);
-    \coordinate (X) at ($ (I) + (45:{\oneMinusT / 2.0}) $);
+    % Y: K からの距離 |KY| = (1-t)/2
+    % X: I からの距離 |XI| = t/2
+    \coordinate (Y) at ($ (K) + (-135:{\oneMinusT / 2.0}) $);
+    \coordinate (X) at ($ (I) + (45:{\tVal / 2.0}) $);
 
     % 六角形 PQRSTU の頂点座標 (中点 X, Y との相対位置)
-    % 辺 PQ: 中点 Y, 長さ t, 対角線と直交 (傾き 135°)
-    \coordinate (P) at ($ (Y) + (-45:{\tVal / 2.0}) $);
-    \coordinate (Q) at ($ (Y) + (135:{\tVal / 2.0}) $);
+    % 辺 PQ: 中点 Y, 長さ 1-t, 対角線と直交 (傾き 135°)
+    \coordinate (P) at ($ (Y) + (-45:{\oneMinusT / 2.0}) $);
+    \coordinate (Q) at ($ (Y) + (135:{\oneMinusT / 2.0}) $);
 
-    % 辺 ST: 中点 X, 長さ 1-t, 対角線と直交 (傾き 135°)
-    \coordinate (T) at ($ (X) + (-45:{\oneMinusT / 2.0}) $);
-    \coordinate (S) at ($ (X) + (135:{\oneMinusT / 2.0}) $);
+    % 辺 ST: 中点 X, 長さ t, 対角線と直交 (傾き 135°)
+    \coordinate (T) at ($ (X) + (-45:{\tVal / 2.0}) $);
+    \coordinate (S) at ($ (X) + (135:{\tVal / 2.0}) $);
 
     % 頂点 R, U: 正六角形的な 60°/120° 角の接続点
-    % QR は長さ 1-t, UP は長さ 1-t, RS は長さ t, TU は長さ t
-    \coordinate (R) at ($ (Q) + (-165:{\oneMinusT}) $);
-    \coordinate (U) at ($ (T) + (15:{\tVal}) $);
+    % QR は長さ t, UP は長さ t, RS は長さ 1-t, TU は長さ 1-t
+    \coordinate (R) at ($ (Q) + (-165:{\tVal}) $);
+    \coordinate (U) at ($ (T) + (15:{\oneMinusT}) $);
 
     % --- 2. 一辺 1 の穴（参考外枠: 点線）---
     \coordinate (Center) at ($ (I)!0.5!(K) $);
-    \draw[dashed, gray!45, thick]
+    \draw[dashed, gray!70!black, thick]
     ($ (Center) + (-0.5, -0.5) $) rectangle ($ (Center) + (0.5, 0.5) $);
-    \node[gray!65!black, font=\scriptsize, above left]
+    \node[gray!80!black, font=\scriptsize, above left]
     at ($ (Center) + (0.5, 0.5) $) {一辺 $1$ の正方形の穴};
 
     % --- 3. 正方形 HIJK ---
@@ -321,19 +321,20 @@ $|AP|=t$（$0<t<1$）とおくと，切り口の辺の長さは$t$と$1-t$が交
     \node[above left=1pt]  at (H) {$H$};
 
     % 対角線 KI
-    \draw[dashed, gray!60, thick] (I) -- (K);
+    \draw[dashed, gray!70!black, thick] (I) -- (K);
 
     % --- 4. 六角形 PQRSTU ---
-    \fill[blue!15, opacity=0.7] (P) -- (Q) -- (R) -- (S) -- (T) -- (U) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!70, opacity=0.75]
+    (P) -- (Q) -- (R) -- (S) -- (T) -- (U) -- cycle;
     \draw[very thick, blue!85!black] (P) -- (Q) -- (R) -- (S) -- (T) -- (U) -- cycle;
 
     % 辺の長さラベル
-    \path (P) -- node[above right=-2pt, font=\scriptsize, teal!90!black] {$t$} (Q);
-    \path (Q) -- node[above left=-2pt, font=\scriptsize, teal!90!black] {$1-t$} (R);
-    \path (R) -- node[left=1pt, font=\scriptsize, teal!90!black] {$t$} (S);
-    \path (S) -- node[below left=-2pt, font=\scriptsize, teal!90!black] {$1-t$} (T);
-    \path (T) -- node[below right=-2pt, font=\scriptsize, teal!90!black] {$t$} (U);
-    \path (U) -- node[right=1pt, font=\scriptsize, teal!90!black] {$1-t$} (P);
+    \path (P) -- node[above right=-2pt, font=\scriptsize, teal!90!black] {$1-t$} (Q);
+    \path (Q) -- node[above left=-2pt, font=\scriptsize, teal!90!black] {$t$} (R);
+    \path (R) -- node[left=1pt, font=\scriptsize, teal!90!black] {$1-t$} (S);
+    \path (S) -- node[below left=-2pt, font=\scriptsize, teal!90!black] {$t$} (T);
+    \path (T) -- node[below right=-2pt, font=\scriptsize, teal!90!black] {$1-t$} (U);
+    \path (U) -- node[right=1pt, font=\scriptsize, teal!90!black] {$t$} (P);
 
     % --- 5. 中点 X, Y と頂点のプロット ---
     \node[circle, fill=red!85!black, inner sep=0.6pt] at (Y) {}; \node[below left=-1pt, font=\tiny, red!90!black] at (Y) {$Y$};
@@ -348,9 +349,9 @@ $|AP|=t$（$0<t<1$）とおくと，切り口の辺の長さは$t$と$1-t$が交
 
     % --- 6. 寸法補助線とブレース ---
     % 対角線上の 3 区間
-    \node[teal!90!black, font=\tiny, below left=-2pt] at ($ (K)!0.5!(Y) $) {$|KY|=\frac{t}{2}$};
+    \node[teal!90!black, font=\tiny, below left=-2pt] at ($ (K)!0.5!(Y) $) {$|KY|=\frac{1-t}{2}$};
     \node[teal!90!black, font=\tiny, below left=-2pt] at ($ (Y)!0.5!(X) $) {$|YX|=\frac{\sqrt{3}}{2}$};
-    \node[teal!90!black, font=\tiny, below left=-2pt] at ($ (X)!0.5!(I) $) {$|XI|=\frac{1-t}{2}$};
+    \node[teal!90!black, font=\tiny, below left=-2pt] at ($ (X)!0.5!(I) $) {$|XI|=\frac{t}{2}$};
 
   \end{tikzpicture}
   \caption{正方形 $HIJK$（一辺 $<1$）に対角線対称で内接させた六角形 $PQRSTU$}
