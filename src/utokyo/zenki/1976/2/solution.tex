@@ -4,39 +4,332 @@
   \subfile{problem}
 \end{oframed}
 
-{\bf [解答]} $\vec{a}=(1,\sqrt{3})$とおく．まず，$t=0$におけるPの速度を表すベクトルが$\vec{b}=(1,0)$だとして考える．$x$軸正方向の移動量を$x$，$y$軸正方向の移動量を$y$とすると，題意の条件から
+{\bf [解答]} $\vec{a}=(1,\sqrt{3})$とおく．まず，$t=0$におけるPの速度を表すベクトルが$\vec{b}=(2,0)$だとして考える．$x$軸正方向の移動量を$x$，$y$軸正方向の移動量を$y$とすると，題意の条件から
 \begin{align}
-  |x|+|y|\le 2
+  \begin{dcases}
+    |x|+|y|\le 2 \\
+    x \neq \pm 2 \\
+    y \neq \pm 2
+  \end{dcases}
 \end{align}
-である．これを図示して下図斜線部(境界含む)．
+である．これを図示すると下図斜線部(境界含む，白点は含まず)である．
 
-\begin{zahyou}[ul=10mm](-2.5,2.5)(-2.5,2.5)
-  \def\Fx{-1*X+2}
-  \def\Gx{X+2}
-  \def\Hx{-1*X-2}
-  \def\Mx{X-2}
-  \YGurafu\Fx{0}{2}
-  \YGurafu\Gx{-2}{0}
-  \YGurafu\Hx{-2}{0}
-  \YGurafu\Mx{0}{2}
-  \YNurii*\Fx\Mx{0}{2}
-  \YNurii*\Gx\Hx{-2}{0}
-  \Put{(2,0)}[ne]{$2$}
-  \Put{(0,2)}[ne]{$2$}
-  \Put{(-2,0)}[nw]{$-2$}
-  \Put{(0,-2)}[se]{$-2$}
-\end{zahyou}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.0, >=stealth, every node/.style={font=\small}]
+    % |x|+|y| <= 2（境界含む）
+    \fill[pattern=north east lines, pattern color=blue!65] (2, 0) -- (0, 2) -- (-2, 0) -- (0, -2) -- cycle;
+    \draw[->, thick, gray!80!black] (-2.5, 0) -- (2.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -2.5) -- (0, 2.5) node[above] {$y$};
+    \draw[thick, blue!85!black] (2, 0) -- (0, 2) -- (-2, 0) -- (0, -2) -- cycle;
+    \node[above right=1pt] at (2, 0) {$2$};
+    \node[above right=1pt] at (0, 2) {$2$};
+    \node[above left=1pt] at (-2, 0) {$-2$};
+    \node[below right=1pt] at (0, -2) {$-2$};
+    \node[below left=1pt] at (0, 0) {$O$};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (2,0){};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (-2,0){};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (0,2){};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (0,-2){};
+  \end{tikzpicture}
+  \caption{$\vec{b}=(1,0)$の場合の$|x|+|y| \le 2$の領域（境界含む）}
+  \label{fig:region_b}
+\end{figure}
 
-これを$\vec{b}$が$\vec{a}$の方向にくるまで回転した領域が求める領域で，図示して下図斜線部(境界含む)．
-$\cdots$(答)
+これを$\vec{b}$が$\vec{a}$の方向にくるまで回転した領域が求める領域で，図示して下図斜線部(境界含む，白点は含まず)である．$\cdots$(答)
 
-\begin{zahyou}[ul=10mm](-2.5,2.5)(-2.5,2.5)
-  \tenretu*<perl>{%
-  A(1,sqrt(3));B(-sqrt(3),1);C(-1,-sqrt(3));D(sqrt(3),-1)}
-  \Drawline{\A\B\C\D\A}
-  \Put\A[syaei=xy,xlabel=1,ylabel=\sqrt{3}]{}
-  \Nuritubusi*{\A\B\C\D}
-\end{zahyou}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.0, >=stealth, every node/.style={font=\small}]
+    % |x|+|y| <= 2 を vec{b} が vec{a} の方向にくるまで（60 度）回転した正方形（境界含む）
+    \coordinate (A) at (1, {sqrt(3)});
+    \coordinate (B) at ({-sqrt(3)}, 1);
+    \coordinate (C) at (-1, {-sqrt(3)});
+    \coordinate (D) at ({sqrt(3)}, -1);
+    \fill[pattern=north east lines, pattern color=blue!65] (A) -- (B) -- (C) -- (D) -- cycle;
+    \draw[->, thick, gray!80!black] (-2.5, 0) -- (2.5, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -2.5) -- (0, 2.5) node[above] {$y$};
+    \draw[thick, blue!85!black] (A) -- (B) -- (C) -- (D) -- cycle;
+    \draw[densely dotted, thick, gray!70!black] (A) -- (1, 0) node[below right=1pt] {$1$};
+    \draw[densely dotted, thick, gray!70!black] (A) -- (0, {sqrt(3)}) node[left] {$\sqrt{3}$};
+    % \node[circle, fill=blue!85!black, inner sep=1.2pt] at (A) {};
+    \node[below left=1pt] at (0, 0) {$O$};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (A){};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (B){};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (C){};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (D){};
+  \end{tikzpicture}
+  \caption{求める$Q$の存在範囲（境界含む）}
+  \label{fig:region_answer}
+\end{figure}
+
+{\bf [別解1]}
+
+$t=0$における$P$の速度ベクトルが$(2,0)$である場合の$P$のたどりつく領域を，原点中心に$60^\circ$回転させたのがもとめる領域である．
+
+$P$は$1$秒間に合計距離$2$だけ進む．そこで，$x$軸正方向に$\alpha$，負方向に$\beta$，$y$軸正方向に$\gamma$，負方向に$\delta$だけすすむとする．まずは$1$回も左折しない場合と$t=0$で左折する場合も許容して領域を求め，最後に$1$回も左折しない場合を取り除くことにする．すると
+\begin{align}
+  \begin{cases}
+    \alpha+\beta+\gamma+\delta=2 \\
+    \alpha, \beta, \gamma, \delta \ge 0
+  \end{cases}\label{eq:1}
+\end{align}
+を満たす．
+
+たどりつく座標$(X,Y)$とすると
+\begin{align}
+  X=\alpha-\beta, \quad Y=\gamma-\delta
+\end{align}
+である．\cref{eq:1}のもとでの$(X,Y)$の領域を求める．
+\cref{eq:1}を用いて$\delta$を消去すると
+\begin{align}
+  \begin{dcases}
+    X=\alpha-\beta, \quad Y=\alpha+\beta+2\gamma-2 \\
+    \alpha+\beta+\gamma \le 2, \quad \alpha, \beta, \gamma\ge0
+  \end{dcases}
+\end{align}
+すなわち
+\begin{align}
+  \begin{dcases}
+    \begin{pmatrix} X \\ Y
+    \end{pmatrix}
+    = \alpha
+    \begin{pmatrix} 1 \\ 1
+    \end{pmatrix}
+    + \beta
+    \begin{pmatrix} -1 \\ 1
+    \end{pmatrix}
+    +
+    \begin{pmatrix} 0 \\ 2\gamma-2
+    \end{pmatrix} \\
+    \alpha, \beta \ge 0 \\
+    0\le \gamma \le 2-(\alpha+\beta)
+  \end{dcases}
+\end{align}
+と書ける．
+よって$\alpha$，$\beta$を固定して$\gamma$をうごかすと，$(X,Y)$は
+\begin{align}
+  \begin{cases}
+    X=\alpha-\beta \\
+    -2+\alpha+\beta \le Y \le 2-\alpha-\beta \\
+    \alpha, \beta \ge 0
+  \end{cases} \label{eq:2}
+\end{align}
+となる．ただし$\gamma$の存在条件から
+\begin{align}
+  0 \le 2-(\alpha+\beta)
+  \quad\therefore
+  \alpha+\beta \le 2 \label{eq:3}
+\end{align}
+が必要である．これを図示すると下図実線部である．
+
+\begin{figure}[htb]
+  % TODO: 今の図を左に持っていって，右の図にalpha,betaの存在領域を追加
+  \centering
+  \begin{tikzpicture}[x=1.4cm, y=1.1cm, >=stealth, every node/.style={font=\small}]
+    % 例として alpha=0.9, beta=0.4（X=0.5, Y は -0.7 から 0.7）
+    \coordinate (Lo) at (0.5, -0.7);
+    \coordinate (Hi) at (0.5, 0.7);
+    \draw[->, thick, gray!80!black] (-0.8, 0) -- (1.4, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -1.1) -- (0, 1.2) node[above] {$Y$};
+    \node[below left=1pt] at (0, 0) {$O$};
+    \draw[line width=1.6pt, blue!85!black] (Lo) -- (Hi);
+    \draw[densely dotted, thick, gray!70!black] (Hi) -- (0, 0.7) node[left] {$2-(\alpha+\beta)$};
+    \draw[densely dotted, thick, gray!70!black] (Lo) -- (0, -0.7) node[left] {$\alpha+\beta-2$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (Lo) {};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (Hi) {};
+    \node[below right=1pt] at (0.5, 0) {$\alpha-\beta$};
+  \end{tikzpicture}
+  \caption{$\alpha$，$\beta$を固定して$\gamma$を動かしたときの$(X,Y)$の範囲}
+  \label{fig:hw_gamma_segment}
+\end{figure}
+
+次に$\beta$をうごかす．\cref{eq:2}の第一式より$\beta=\alpha-X$だから，これを\cref{eq:2,eq:3}に代入して
+\begin{align}
+  &
+  \begin{dcases}
+    -2+\alpha+(\alpha-X) \le Y \le 2-\alpha-(\alpha-X) \\
+    0\le \alpha-X \le 2-\alpha \\
+    \alpha \ge 0
+  \end{dcases} \\
+  \iff
+  &
+  \begin{dcases}
+    2\alpha-2-X \le Y \le X+2-2\alpha \\
+    2\alpha-2 \le X \le \alpha \\
+    \alpha \ge 0
+  \end{dcases} \label{eq:4}
+\end{align}
+となる．ただし$X$の存在条件より
+\begin{align}
+  2\alpha-2 \le \alpha
+  \quad\therefore
+  \alpha \le 2 \label{eq:5}
+\end{align}
+である．
+
+\begin{figure}[htb]
+  % TODO: 実線と点線，黒丸をしっかり境界に応じて設定
+  \centering
+  \begin{tikzpicture}[scale=0.9, >=stealth, every node/.style={font=\small}]
+    % alpha の動く範囲: X <= alpha <= X/2+1, 0 < alpha
+    \fill[pattern=north east lines, pattern color=blue!65] (-2, 0) -- (0, 0) -- (2, 2) -- cycle;
+    \draw[->, thick, gray!80!black] (-2.6, 0) -- (2.8, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -0.8) -- (0, 2.7) node[above] {$\alpha$};
+    \draw[thick, teal!85!black] (-0.6, -0.6) -- (2.4, 2.4) node[above left=1pt] {$\alpha=X$};
+    \draw[densely dotted, blue!85!black] (-2, 0) -- (2.4, 2.2) node[below right=1pt] {$\alpha=\frac{1}{2}X+1$};
+    \draw[densely dotted, thick, gray!70!black] (-2, 2) -- (2, 2) -- (2, 0) node[below] {$2$};
+    \draw[densely dotted, thick, gray!70!black] (-2, 0) -- (-2, 2);
+    \node[above left=1pt] at (0, 2) {$2$};
+    \node[below] at (-2, 0) {$-2$};
+    \node[below right=1pt] at (0, 0) {$O$};
+    \node[circle, fill, inner sep=1.2pt] at (-2, 0) {};
+  \end{tikzpicture}
+  \caption{$\alpha$の動く範囲}
+  \label{fig:hw_alpha_range}
+\end{figure}
+
+最後に$\alpha$をうごかす．$f(\alpha)=2\alpha-X-2$，$g(\alpha)=-2\alpha+X+2$とおく．
+\cref{eq:4,eq:5}より$0 \le \alpha \le 2$，$X \le \alpha \le \dfrac{1}{2}(X+2)$に注意して
+\begin{align}
+  \begin{dcases}
+    -2 \le X \le 0 \text{の時} & f(0) \le Y \le g(0) \\
+    0 \le X \le 2 \text{の時} & f(X) \le Y \le g(X)
+  \end{dcases}
+\end{align}
+すなわち
+\begin{align}
+  \begin{dcases}
+    -2 \le X \le 0 \text{の時} & -X-2 \le Y \le X+2 \\
+    0 \le X \le 2 \text{の時} &  X-2 \le Y \le -X+2
+  \end{dcases} \label{eq:6}
+\end{align}
+である．
+
+最後に$1$回も左折しない場合のみ到達できるのは$(2,0)$だからこの点は除外する．
+同様に$t=0$で左折する場合のみ到達できるのは他の頂点$(-2,0),(0,\pm 2)$だからこれらの点も除外する．よって\cref{eq:6}から$4$頂点だけのぞいて
+\begin{align}
+  \begin{cases}
+    -2 < X < 0 \text{の時} & -X-2 \le Y \le X+2 \\
+    X = 0 \text{の時} & -2 < Y < 2 \\
+    0 < X < 2 \text{の時} &  X-2 \le Y \le -X+2
+  \end{cases}
+\end{align}
+である．これを図示すると下図斜線部である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.9, >=stealth, every node/.style={font=\small}]
+    \fill[pattern=north east lines, pattern color=blue!65] (2, 0) -- (0, 2) -- (-2, 0) -- (0, -2) -- cycle;
+    \draw[->, thick, gray!80!black] (-2.7, 0) -- (2.8, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -2.7) -- (0, 2.8) node[above] {$Y$};
+    \draw[thick, blue!85!black] (2, 0) -- (0, 2) -- (-2, 0) -- (0, -2) -- cycle;
+    \node[below right=1pt] at (2, 0) {$2$};
+    \node[above left=1pt] at (-2, 0) {$-2$};
+    \node[above right=1pt] at (0, 2) {$2$};
+    \node[below left=1pt] at (0, -2) {$-2$};
+    \node[below left=1pt] at (0, 0) {$O$};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (2,0){};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (-2,0){};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (0,2){};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (0,-2){};
+  \end{tikzpicture}
+  \caption{$t=0$における速度ベクトルが$(2,0)$の場合の到達範囲（境界は白点以外含む）}
+  \label{fig:hw_rhombus}
+\end{figure}
+
+これを$60^\circ$回転させた下図斜線部がもとめる領域（境界は白点以外含む）である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.9, >=stealth, every node/.style={font=\small}]
+    % 菱形 |X|+|Y|<2 を原点中心に 60 度回転した正方形
+    \coordinate (A) at (1, {sqrt(3)});
+    \coordinate (B) at ({-sqrt(3)}, 1);
+    \coordinate (C) at (-1, {-sqrt(3)});
+    \coordinate (D) at ({sqrt(3)}, -1);
+    \fill[pattern=north east lines, pattern color=blue!65] (A) -- (B) -- (C) -- (D) -- cycle;
+    \draw[->, thick, gray!80!black] (-2.7, 0) -- (2.8, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -2.7) -- (0, 2.8) node[above] {$y$};
+    \draw[thick, blue!85!black] (A) -- (B) -- (C) -- (D) -- cycle;
+    \draw[densely dotted, thick, gray!70!black] (A) -- (1, 0) node[below right=1pt] {$1$};
+    \draw[densely dotted, thick, gray!70!black] (A) -- (0, {sqrt(3)}) node[left] {$\sqrt{3}$};
+    \node[below left=1pt] at (0, 0) {$O$};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (A){};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (B){};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (C){};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (D){};
+  \end{tikzpicture}
+  \caption{求める$Q$の存在範囲（境界は白点以外含む）}
+  \label{fig:hw_answer_region}
+\end{figure}
+
+{\bf [別解2]}
+
+[別解1]で文字の消し方を少し工夫することもできる．
+\cref{eq:2,eq:3}以下，
+\begin{align}
+  \alpha+\beta=k \quad (0 \le k \le 2)
+\end{align}
+と固定して\cref{eq:2,eq:3}に代入すると
+\begin{align}
+  \begin{dcases}
+    X=k-2\beta \quad (0 \le \beta \le k) \\
+    -2+k \le Y \le 2-k
+  \end{dcases}
+\end{align}
+である．
+このもとで$\beta$を動かすと以下のようにすると$(X,Y)$は以下の領域を動く．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=0.9, >=stealth, every node/.style={font=\small}]
+    % 例として k=1.2
+    \fill[pattern=north east lines, pattern color=blue!65] (-1.2, -0.8) rectangle (1.2, 0.8);
+    \draw[->, thick, gray!80!black] (-2, 0) -- (2.2, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.5) -- (0, 1.6) node[above] {$y$};
+    \draw[thick, blue!85!black] (-1.2, -0.8) rectangle (1.2, 0.8);
+    \node[above right=1pt] at (0, 0.8) {$2-k$};
+    \node[below right=1pt] at (0, -0.8) {$-2+k$};
+    \node[below right=1pt] at (1.2, 0) {$k$};
+    \node[below left=1pt] at (-1.2, 0) {$-k$};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (1.2, 0.8) {};
+  \end{tikzpicture}
+  \caption{$\alpha+\beta=k$を固定して$\beta$を動かしたときの$(X,Y)$の範囲}
+  \label{fig:hw_fixed_k}
+\end{figure}
+
+次に$k$をうごかすと同じ領域を得る．
+
+{\bf [解説]}
+
+こういう問題はまず問題を数字に落とし込むところから始めたい．
+最初に$x$軸正方向へ進んで一回だけ左折する場合の実験をしてみると，以下のような三角形の領域を動くことになるから，ここから解答を組み立てていける．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[scale=1.2, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (X2) at (2, 0);
+    \coordinate (Y2) at (0, 2);
+    % 実験した到達点の範囲（斜線部）
+    \fill[pattern=north east lines, pattern color=blue!65] (O) -- (X2) -- (Y2) -- cycle;
+    \draw[->, thick, gray!80!black] (-0.5, 0) -- (2.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.5) -- (0, 2.6) node[above] {$y$};
+    \draw[thick, blue!85!black] (X2) -- (Y2);
+    % 右に進んでから左折して上に進む例
+    % 原稿の図には y 軸の左に短い横線と「-」のような印があるが，意味が読み取れないため省略．
+    \draw[very thick, red!85!black] (O) -- (1.3, 0) -- (1.3, 0.7);
+    \node[circle, fill, inner sep=1.2pt] at (O) {};
+    \node[circle, fill=red!85!black, inner sep=1.2pt] at (1.3, 0.7) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (X2) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (Y2) {};
+    \node[below=3pt] at (X2) {$2$};
+    \node[below left=1pt] at (O) {$O$};
+  \end{tikzpicture}
+  \caption{最初に$x$軸正方向へ進む場合の実験}
+  \label{fig:experiment_first_direction}
+\end{figure}
 
 \newpage
 \end{document}
