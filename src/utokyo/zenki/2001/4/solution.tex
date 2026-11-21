@@ -8,11 +8,11 @@
 
 与えられた漸化式
 \begin{align}
-  \begin{cases}
+  \begin{dcases}
     a_1 = 1, a_2 = i \\
     a_{n+2} = a_{n+1} + a_n \\
-    b_n = \dfrac{b_{n+1}}{b_n}
-  \end{cases} \label{eq:1}
+    b_n = \dfrac{a_{n+1}}{a_n}
+  \end{dcases} \label{eq:1}
 \end{align}
 について考える．
 
@@ -51,9 +51,9 @@
 
     % --- 4. 垂直二等分線 (中心 alpha を定める補助線: 点線) ---
     % 線分 b1 b2 の中点 (0.5, 0) はまさに alpha
-    \draw[dashed, gray!50] (B1) -- (B2);
+    \draw[dashed, gray!60!black] (B1) -- (B2);
     % 線分 b1 b3
-    \draw[dashed, gray!50] (B1) -- (B3);
+    \draw[dashed, gray!60!black] (B1) -- (B3);
 
     % 中心 alpha から各点への半径線 (破線)
     \draw[dashed, teal!85!black, thick] (Alpha) -- (B1);
@@ -92,7 +92,7 @@
 
 \cref{eq:1}から $a_3 = 1+i, a_4 = 1+2i$ だから，
 \begin{align}
-  b_1 &= 1, \\
+  b_1 &= i, \\
   b_2 &= \dfrac{i+1}{i} = 1-i \\
   b_3 &= \dfrac{1+2i}{1+i} = \dfrac{3+i}{2}
 \end{align}
@@ -100,11 +100,13 @@
 図から $\alpha=\dfrac{1}{2}$ である．
 この時半径$r$は
 \begin{align}
-  r = |b_1-\alpha| = \sqrt{\left(1 - \dfrac{1}{2}\right)^2 + 1^2} = \dfrac{\sqrt{5}}{2} \label{eq:2}
+  r = |b_1-\alpha| = \sqrt{\left(-\dfrac{1}{2}\right)^2 + 1^2} = \dfrac{\sqrt{5}}{2} \label{eq:2}
 \end{align}
 である．
 
 \paragraph{(2)}
+
+まず\cref{eq:1}から漸化的に $a_n$ の実部と虚部は正であり，よって$ a_n \neq 0$ である．\cref{eq:1}から$b_n \neq 0$が従うことに注意する．
 
 任意の $n \in \mathbb{N}$ に対して $b_n$ は円 $C$ の周上にあることを数学的帰納法で示す．
 (1)から $n=1,2,3$ では成立するから，以下 $n=k$ での成立を仮定し ($k \in \mathbb{N}$)て $n=k+1$ での成立を示す．\cref{eq:1}より
@@ -115,7 +117,7 @@
   = 1 + \dfrac{a_k}{a_{k+1}}
   = 1 + \dfrac{1}{b_k}
 \end{align}
-である．よって$b_n \neq 1$ だから逆に解いて
+である．$b_k \neq 0$より$b_{k+1} \neq 1$ だから逆に解いて
 \begin{align}
   b_k &= \dfrac{1}{b_{k+1}-1} \label{eq:3}
 \end{align}
@@ -127,8 +129,7 @@
   |b_k|^2 - \alpha(b_k + \bar{b}_k) = r^2 - \alpha^2 = \left(\dfrac{\sqrt{5}}{2}\right)^2-\left(\dfrac{1}{2}\right)^2 = 1
 \end{align}
 である．
-ここで\cref{eq:1}から漸化的に $a_n \neq 0$ だから，$b_n \neq 0$ である．よって両辺を
-$|b_k|^2 \quad (\neq 0)$ で割って
+ここで$b_n \neq 0$ より両辺を$|b_k|^2 \quad (\neq 0)$ で割って
 \begin{align}
   & \dfrac{1}{|b_k|^2} + \alpha \left( \dfrac{1}{b_k} + \dfrac{1}{\bar{b}_k} \right) - 1 = 0 \\
   & |b_{k+1}-1|^2 + \alpha( \bar{b}_{k+1}-1 + b_{k+1}-1 ) - 1 = 0 \quad (\because \text{\cref{eq:3}}) \\
