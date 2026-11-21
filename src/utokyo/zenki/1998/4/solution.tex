@@ -8,18 +8,18 @@
 
 与えられた関数
 \begin{align}
-  f(x) = \dfrac{x^2(2 \cdot 3^3 \cdot n - x)}{2^5 \cdot 3^2 \cdot n^2} \label{eq:1}
+  f(x) = \dfrac{x^2(2 \cdot 3^3 \cdot n - x)}{2^5 \cdot 3^3 \cdot n^2} \label{eq:1}
 \end{align}
 について考える．一階微分は
 \begin{align}
-  2^5 \cdot 3^2 \cdot n^2 \cdot f'(x)
-  = 3x(2^2 \cdot 3^2 \cdot n - x) \\
+  2^5 \cdot 3^3 \cdot n^2 \cdot f'(x)
+  = 3x(2^2 \cdot 3^3 \cdot n - x) \\
   = 3x\left(36n-x\right)
 \end{align}
 だから，$0\le x \le 36n$では$f'(x)\ge 0$となり$f(x)$は単調増加であり，グラフの概形は以下のようになる．
 
-% TODO: y=f(x)のグラフ
 \begin{figure}[htb]
+  %  y=f(x)のグラフ
   \centering
   \begin{tikzpicture}[scale=1.6, >=stealth, every node/.style={font=\small}]
 
@@ -87,7 +87,7 @@
     f(k+1) - f(k)  > 1 \text{ なら, } [f(k+1)] \neq [f(k)]
   \end{cases}
   \begin{cases}
-    g(k) \le 0 \text{ なら, } [f(k+1)] = [f(k)], [f(k)] \pm 1 \\
+    g(k) \le 0 \text{ なら, } [f(k+1)] = [f(k)], [f(k)] + 1 \\
     g(k)  >   0 \text{ なら, } [f(k+1)] \neq [f(k)]
   \end{cases} \label{eq:2}
 \end{align}
@@ -99,13 +99,13 @@
 具体的に$f(k+1)-f(k)$を計算すると
 \begin{align}
   f(k+1) - f(k)
-  &= \dfrac{1}{2^5 \cdot 3^2 \cdot n^2} \left[ (k+1)^2(2 \cdot 3^3 \cdot n - k - 1) - k^2(2 \cdot 3^3 \cdot n - k) \right] \\
-  &= \dfrac{1}{2^5 \cdot 3^2 \cdot n^2} \left[ (2k+1)(2 \cdot 3^3 \cdot n - k) - (k+1)^2 \right] \\
-  &= \dfrac{1}{2^5 \cdot 3^2 \cdot n^2} \left[ -3k^2 + 3(2 \cdot 3^2 \cdot n - 1)k + (2 \cdot 3^3 \cdot n - 1) \right]
+  &= \dfrac{1}{2^5 \cdot 3^3 \cdot n^2} \left[ (k+1)^2(2 \cdot 3^3 \cdot n - k - 1) - k^2(2 \cdot 3^3 \cdot n - k) \right] \\
+  &= \dfrac{1}{2^5 \cdot 3^3 \cdot n^2} \left[ (2k+1)(2 \cdot 3^3 \cdot n - k) - (k+1)^2 \right] \\
+  &= \dfrac{1}{2^5 \cdot 3^3 \cdot n^2} \left[ -3k^2 + 3(2^2 \cdot 3^2 \cdot n - 1)k + (2 \cdot 3^3 \cdot n - 1) \right]
 \end{align}
 だから$g(k)$は
 \begin{align}
-  2^5 \cdot 3^2 \cdot n^2 g(k)
+  2^5 \cdot 3^3 \cdot n^2 g(k)
   &= -3k^2 + 3(2^2 \cdot 3^2 \cdot n - 1)k + 2 \cdot 3^3 \cdot n - 1 - 2^5 \cdot 3^2 \cdot n^2
 \end{align}
 である．
@@ -136,8 +136,8 @@
 \end{align}
 となって，$y=g(x)$のグラフは下図のようになる．
 
-% TODO: y=g(x)のグラフ
 \begin{figure}[htb]
+  % y=g(x)のグラフ
   \centering
   \begin{tikzpicture}[scale=1.8, >=stealth, every node/.style={font=\small}]
 
@@ -207,7 +207,7 @@
     % 第1区間: [0, 12n]
     \fill[teal!8, rounded corners=4pt] (-6.7, -0.45) rectangle (-1.7, 0.55);
 
-    % 第2区間: (12n, 24n]
+    % 第2区間: (12n, 24n)
     \fill[red!8, rounded corners=4pt] (-1.1, -0.45) rectangle (2.8, 0.55);
 
     % 第3区間: [24n, 36n]
@@ -226,15 +226,15 @@
 
     % (ii) 第 2 区間
     \node (sec2) at (0.85, 0) {
-      $[f(12n+1)] < \dots < [f(24n)]$
+      $[f(12n+1)] < \dots < [f(24n-1)]$
     };
 
-    % 接続部 (<=)
-    \node[font=\bfseries, blue!85!black] at (3.1, 0) {$\le$};
+    % 接続部 (<)
+    \node[font=\bfseries, red!85!black] at (3.1, 0) {$<$};
 
     % (iii) 第 3 区間
     \node (sec3) at (5.6, 0) {
-      $\dots \le [f(36n)]$
+      $[f(24n)] \le \dots \le [f(36n)]$
     };
 
     % ============================================================
@@ -292,13 +292,13 @@
   \begin{cases}
     k = 0, 1, \dots, 12n-1 \text{ の時, } [f(k+1)] = [f(k)], [f(k)] + 1 \\
     k = 12n, \dots, 24n-1 \text{ の時, }  [f(k+1)] > [f(k)] \\
-    k = 24n, \dots, 36n \text{ の時, }    [f(k+1)] = [f(k)], [f(k)] + 1
+    k = 24n, \dots, 36n-1 \text{ の時, }  [f(k+1)] = [f(k)], [f(k)] + 1
   \end{cases} \\
   \therefore
   &
   \begin{cases}
-    k = 0, 1, \dots, 12n-1 \text{ の時, $[f(k)]$たちは$[f(0)]$から$[f(12n-1)]$の範囲内全ての整数を取る} \\
-    k = 12n, \dots, 24n-1 \text{ の時, $[f(k)]$たちは全て異なる値を取る} \\
+    k = 0, 1, \dots, 12n \text{ の時, $[f(k)]$たちは$[f(0)]$から$[f(12n)]$の範囲内全ての整数を取る} \\
+    k = 12n, \dots, 24n \text{ の時, $[f(k)]$たちは$[f(12n)],\cdots,[f(24n)]$で全て異なる値を取る} \\
     k = 24n, \dots, 36n \text{ の時, $[f(k)]$たちは$[f(24n)]$から$[f(36n)]$の範囲内全ての整数を取る}
   \end{cases}
 \end{align}
@@ -321,7 +321,7 @@ $f(k+1)-f(k)$の評価に平均値の定理を使える．
 \end{align}
 を満たす $a_k$ がある．$f'(a_k)$と$1$の大小を比べると
 \begin{align}
-  & f'(x) = \dfrac{x(2^2 \cdot 3^2 \cdot n - x)}{2^5 \cdot 3^2 \cdot n^2} \le 1
+  & f'(x) = \dfrac{x(2^2 \cdot 3^2 \cdot n - x)}{2^5 \cdot 3^2 \cdot n^2} \le 1 \\
   \iff
   & -x^2 + 2^2 \cdot 3^2 \cdot n \cdot x - 2^5 \cdot 3^2 \cdot n^2 \le 0 \\
   \iff
