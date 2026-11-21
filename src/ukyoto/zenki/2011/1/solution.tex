@@ -12,7 +12,7 @@
   \centering
   \begin{tikzpicture}[>=stealth, every node/.style={font=\small}]
     % 箱の外枠
-    \draw[thick, gray!70!black, rounded corners=4pt] (-0.3, 0.8) rectangle (8.7, -0.9);
+    \draw[thick, gray!70!black, rounded corners=4pt] (-0.3, 0.8) rectangle (8.3, -0.78);
     \node[above right, font=\footnotesize, text=gray!80!black] at (-0.3, 0.8) {箱の中の9枚のカード};
 
     % 9枚のカード
@@ -20,15 +20,19 @@
       \node[draw=blue!80!black, fill=blue!10, rounded corners=2pt, minimum width=0.65cm, minimum height=0.85cm, line width=0.8pt] (c\i) at (\i*0.9-0.5, 0) {$\i$};
     }
 
-    % X の選択と、それより大きいカードの選択の概念
-    \draw[red!85!black, line width=1.2pt, rounded corners=3pt] (3.6-0.37, -0.47) rectangle (3.6+0.37, 0.47);
-    \node[red!85!black, below=8pt, font=\footnotesize] at (3.6, -0.47) {最小値 $X$};
+    % X の選択（例: 4）と、それより大きいカード（5〜9）の選択
+    \draw[red!85!black, line width=1.2pt, rounded corners=3pt]
+    ($ (c4.south west) + (-0.07, -0.07) $) rectangle ($ (c4.north east) + (0.07, 0.07) $);
+    \node[red!85!black, font=\footnotesize] (lblX) at (1.8, -1.25) {最小値 $X$（例：$X=4$）};
+    \draw[->, thin, red!85!black] (lblX.north) -- ($ (c4.south) + (0, -0.08) $);
 
-    \draw[teal!85!black, line width=1pt, dashed, rounded corners=3pt] (4.5-0.37, -0.47) rectangle (7.7+0.37, 0.47);
-    \node[teal!85!black, below=8pt, font=\footnotesize] at (6.1, -0.47) {もう1枚：$X+1 \sim 9$ の $(9-X)$ 通り};
+    \draw[teal!85!black, line width=1pt, dashed, rounded corners=3pt]
+    ($ (c5.south west) + (-0.07, -0.07) $) rectangle ($ (c9.north east) + (0.07, 0.07) $);
+    \node[teal!85!black, font=\footnotesize] (lblRest) at (6.1, -1.25) {もう1枚：$X+1 \sim 9$ の $(9-X)$ 通り};
+    \draw[->, thin, teal!85!black] (lblRest.north) -- ($ (c7.south) + (0, -0.08) $);
 
     % 1回の試行で最小値が X となる確率
-    \node[below=25pt, align=center, font=\small] at (4.2, -0.9)
+    \node[align=center, font=\small] at (4.0, -2.05)
     {2枚のうち小さいほうが $X$ となる確率：$\frac{9-X}{{}_9\mathrm{C}_2} = \frac{9-X}{36}$};
   \end{tikzpicture}
   \caption{9枚のカードから2枚引いて最小値が$X$となる組み合わせ}
