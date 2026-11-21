@@ -6,8 +6,8 @@
 
 {\bf [解答]}
 
-% TODO: ルールを説明する概要図
 \begin{figure}[htb]
+  % ルールを説明する概要図
   \centering
   \begin{tikzpicture}[scale=1.15, >=stealth, every node/.style={font=\small}]
 
@@ -30,17 +30,17 @@
     % 2. 試行と高さの推移例（タイムライン）
     % ============================================================
     % 軸
-    \draw[->, thick, gray!70!black] (0.8, -1.6) -- (8.6, -1.6) node[right, font=\footnotesize] {回数};
-    \draw[->, thick, gray!70!black] (0.8, -1.6) -- (0.8, 2.2) node[above, font=\footnotesize] {高さ};
+    \draw[->, thick, gray!80!black] (0.8, -1.6) -- (8.6, -1.6) node[right, font=\footnotesize] {回数};
+    \draw[->, thick, gray!80!black] (0.8, -1.6) -- (0.8, 2.2) node[above, font=\footnotesize] {高さ};
     \node[below left=2pt] at (0.8, -1.6) {$0$};
 
     % 目盛り
     \foreach \t in {1, 2, 3, 4, 5, 6, 7} {
-      \draw[gray!40] (\t+0.8, -1.6) -- (\t+0.8, 2.0);
+      \draw[dotted, gray!60!black] (\t+0.8, -1.6) -- (\t+0.8, 2.0);
       \node[below=2pt, font=\scriptsize] at (\t+0.8, -1.6) {$\t$};
     }
     \foreach \h in {1, 2, 3} {
-      \draw[gray!30] (0.8, \h*0.8 - 1.6) -- (8.0, \h*0.8 - 1.6);
+      \draw[dotted, gray!60!black] (0.8, \h*0.8 - 1.6) -- (8.0, \h*0.8 - 1.6);
       \node[left=2pt, font=\scriptsize] at (0.8, \h*0.8 - 1.6) {$\h$};
     }
 
@@ -64,14 +64,14 @@
 
     % 折れ線プロット
     \draw[line width=1.4pt, teal!85!black] (H0) -- (H1) -- (H2);
-    \draw[line width=1.3pt, red!85!black, dashed] (H2) -- (H3)
-    node[midway, right=1pt, font=\tiny\bfseries, red!85!black] {裏でリセット};
+    \draw[->, line width=1.3pt, red!85!black, densely dotted] (H2) -- (H3)
+    node[pos=0.35, above right=1pt, fill=white, inner sep=1pt, font=\scriptsize\bfseries, text=red!85!black] {裏でリセット};
     \draw[line width=1.4pt, teal!85!black] (H3) -- (H4) -- (H5) -- (H6) -- (H7);
 
     % プロット点と出目ラベル
     \node[circle, fill=teal!85!black, inner sep=2pt] at (H1) {}; \node[teal!85!black, above left, font=\scriptsize] at (H1) {表};
     \node[circle, fill=teal!85!black, inner sep=2pt] at (H2) {}; \node[teal!85!black, above left, font=\scriptsize] at (H2) {表};
-    \node[circle, fill=red!85!black, inner sep=2.2pt] at (H3) {}; \node[below=2pt, font=\scriptsize, red!90!black] at (H3) {裏};
+    \node[circle, fill=red!85!black, inner sep=2.2pt] at (H3) {}; \node[below=13pt, font=\scriptsize, red!85!black] at (H3) {裏};
     \node[circle, fill=teal!85!black, inner sep=2pt] at (H4) {}; \node[teal!85!black, above left, font=\scriptsize] at (H4) {表};
     \node[circle, fill=teal!85!black, inner sep=2pt] at (H5) {}; \node[teal!85!black, above left, font=\scriptsize] at (H5) {表};
     \node[circle, fill=teal!85!black, inner sep=2pt] at (H6) {}; \node[teal!85!black, above left, font=\scriptsize] at (H6) {表};
@@ -80,7 +80,7 @@
     % 末尾の m 回連続の枠
     \draw[decorate, decoration={brace, amplitude=5pt, mirror}, thick, blue!85!black]
     (4.8, -2.1) -- (7.8, -2.1);
-    \node[below=7pt, font=\scriptsize\bfseries, blue!90!black] at (6.3, -2.1) {末尾で $m$ 回連続して表が出る};
+    \node[below=7pt, font=\scriptsize\bfseries, blue!85!black] at (6.3, -2.1) {末尾で $m$ 回連続して表が出る};
 
   \end{tikzpicture}
   \caption{コイン投げによるブロックの高さ変動ルールの概要}
@@ -152,7 +152,7 @@ $n$ 回投げて ブロックの高さが $m$ となるのは以下の場合で�
     };
 
   \end{tikzpicture}
-  \caption{$n$ 回目の試行終了時にブロックの高さが $m$ となるコインの系列}
+  \caption{$n$ 回目の試行終了時にブロックの高さが $m$ となるコインの系列（$1 \le m \le n-1$ のとき）}
   \label{fig:coin_sequence_representation}
 \end{figure}
 
@@ -296,7 +296,7 @@ $n$ 回投げて ブロックの高さが $m$ となるのは以下の場合で�
 2つのブロックを $A, B$ とおきその高さを $a, b$ で表す．包除原理から，
 \begin{align}
   r_m
-  &= P(a=m \cap b \le m) + P(b=m \cap a \le m) - P(a=b=m)
+  &= P(a=m \cap b \le m) + P(b=m \cap a \le m) - P(a=b=m) \\
   &= 2 p_m q_m - p_m p_m
 \end{align}
 である．$m=n$かどうかで場合分けして(1),(2)の結果を代入する．
