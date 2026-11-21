@@ -94,8 +94,8 @@ PREAMBLE = r"""\documentclass[a4paper,10pt]{ltjsarticle}
 \providecommand{\roundedArrowDL}{\swarrow}
 \providecommand{\roundedArrowUL}{\nwarrow}
 % 増減表用の凹凸矢印記号
-\providecommand{\carrowDecreaseConvex}{\tikz[scale=0.22,baseline=-0.2ex]{\draw[->,>=stealth,thick] (0,1) to[bend left=40] (1.2,0);}}
-\providecommand{\carrowDecreaseConcave}{\tikz[scale=0.22,baseline=-0.2ex]{\draw[->,>=stealth,thick] (0,1) to[bend right=40] (1.2,0);}}
+\providecommand{\carrowDecreaseConvex}{\tikz[scale=0.22,baseline=-0.2ex]{\draw[->,>=stealth,thick] (0,1) to[bend right=40] (1.2,0);}}
+\providecommand{\carrowDecreaseConcave}{\tikz[scale=0.22,baseline=-0.2ex]{\draw[->,>=stealth,thick] (0,1) to[bend left=40] (1.2,0);}}
 \providecommand{\carrowIncreaseConvex}{\tikz[scale=0.22,baseline=-0.2ex]{\draw[->,>=stealth,thick] (0,0) to[bend right=40] (1.2,1);}}
 \providecommand{\carrowIncreaseConcave}{\tikz[scale=0.22,baseline=-0.2ex]{\draw[->,>=stealth,thick] (0,0) to[bend left=40] (1.2,1);}}
 

@@ -37,7 +37,6 @@ KNOWN = {
     **{path: '#1496 年度一覧の表の中の数式' for path in _SUMMARY_TABLES},
     'src/utokyo/zenki/1991/3/solution.tex': '#1496 増減表のセル内の複数行の数式',
     'src/utokyo/zenki/1977/6/solution.tex': '#1497 増減表の凹凸の矢印',
-    'src/utokyo/zenki/2005/3/solution.tex': '#1497 増減表の凹凸の矢印',
     'src/titech/zenki/1981/2/solution.tex': '#1497 増減表の凹凸の矢印',
     'src/utokyo/zenki/1976/2/solution.tex': '旧形式（zahyou 等）の原稿。#1489 の対象外',
     'src/utokyo/kouki/1994/1/problem.tex': '#1500 \\item の直後の別行立て数式が変換で崩れる',

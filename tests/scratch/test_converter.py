@@ -259,6 +259,26 @@ class TestConverter(unittest.TestCase):
         self.assertNotIn(r'$\square$', processed)
         self.assertIn('<div class="qed-symbol">■</div>', processed)
 
+    def test_carrow_macros_in_table_become_inline_svgs(self):
+        latex = r'''
+        \begin{table}[htb]
+          \centering
+          \caption{増減表}
+          \begin{tabular}{c|cccc}
+            \hline
+            $f(x)$ & \carrowIncreaseConvex & \carrowIncreaseConcave & \carrowDecreaseConvex & $\carrowDecreaseConcave$ \\ \hline
+          \end{tabular}
+        \end{table}
+        '''
+        md = self.convert(latex)
+        for label in ('下に凸で増加', '上に凸で増加', '下に凸で減少', '上に凸で減少'):
+            self.assertIn(f'aria-label="{label}"', md)
+        self.assertIn('<svg class="carrow"', md)
+        self.assertNotIn(r'\carrow', md)
+        self.assertNotIn(r'$\searrow$', md)
+        self.assertNotIn(r'$\nearrow$', md)
+        self.assertNotIn('CARROWCELLPLACEHOLDER', md)
+
 
 if __name__ == '__main__':
     unittest.main()

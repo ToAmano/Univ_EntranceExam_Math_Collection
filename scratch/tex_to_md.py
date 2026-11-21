@@ -879,6 +879,10 @@ def compile_tikz_to_svg(tikz_code, output_svg_path, macro_defs="", figure_layout
 \\newcommand{{\\Z}}{{\\mathbb{{Z}}}}
 \\newcommand{{\\Q}}{{\\mathbb{{Q}}}}
 \\providecommand{{\\roundedArrowDR}}{{\\searrow}}
+\\providecommand{{\\carrowDecreaseConvex}}{{\\tikz[scale=0.22,baseline=-0.2ex]{{\\draw[->,>=stealth,thick] (0,1) to[bend right=40] (1.2,0);}}}}
+\\providecommand{{\\carrowDecreaseConcave}}{{\\tikz[scale=0.22,baseline=-0.2ex]{{\\draw[->,>=stealth,thick] (0,1) to[bend left=40] (1.2,0);}}}}
+\\providecommand{{\\carrowIncreaseConvex}}{{\\tikz[scale=0.22,baseline=-0.2ex]{{\\draw[->,>=stealth,thick] (0,0) to[bend right=40] (1.2,1);}}}}
+\\providecommand{{\\carrowIncreaseConcave}}{{\\tikz[scale=0.22,baseline=-0.2ex]{{\\draw[->,>=stealth,thick] (0,0) to[bend left=40] (1.2,1);}}}}
 
 {macro_defs}
 
@@ -1168,6 +1172,40 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         flags=re.DOTALL,
     )
 
+    _CARROW_SVGS = {
+        'carrowIncreaseConvex': (
+            '<svg class="carrow" viewBox="0 0 22 20" width="1.15em" height="1.05em" '
+            'role="img" aria-label="下に凸で増加">'
+            '<path d="M 3 16 Q 14 15 18 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'
+            '<path d="M 13.7 7.6 L 18 4 L 19.0 9.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>'
+            '</svg>'
+        ),
+        'carrowIncreaseConcave': (
+            '<svg class="carrow" viewBox="0 0 22 20" width="1.15em" height="1.05em" '
+            'role="img" aria-label="上に凸で増加">'
+            '<path d="M 3 16 Q 7 5 18 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'
+            '<path d="M 13.0 1.7 L 18 4 L 13.5 7.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>'
+            '</svg>'
+        ),
+        'carrowDecreaseConvex': (
+            '<svg class="carrow" viewBox="0 0 22 20" width="1.15em" height="1.05em" '
+            'role="img" aria-label="下に凸で減少">'
+            '<path d="M 3 4 Q 7 15 18 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'
+            '<path d="M 13.0 18.3 L 18 16 L 13.5 12.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>'
+            '</svg>'
+        ),
+        'carrowDecreaseConcave': (
+            '<svg class="carrow" viewBox="0 0 22 20" width="1.15em" height="1.05em" '
+            'role="img" aria-label="上に凸で減少">'
+            '<path d="M 3 4 Q 14 5 18 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'
+            '<path d="M 13.7 12.4 L 18 16 L 19.0 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>'
+            '</svg>'
+        ),
+    }
+    _CARROW_RE = re.compile(
+        r'(?:\$\s*)?\\(carrow(?:Increase|Decrease)(?:Convex|Concave))(?![A-Za-z])(?:\s*\$)?'
+    )
+
     # 3. tabular 環境の pypandoc による完全自動 Markdown 表変換
     def convert_tabular_block(tab_input):
         tab_str = tab_input.group(0) if hasattr(tab_input, 'group') else str(tab_input)
@@ -1179,11 +1217,16 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         # 1990年サマリーの解答表で "2-3" という意味不明な行が公開ページに
         # 表示されていた）。\hline 同様に見た目に影響しないため単純に除去する。
         tab_clean = re.sub(r'\\cline\{[^}]*\}', '', tab_clean)
-        # 増減表の凹凸矢印マクロを Pandoc 変換用に安全な数式矢印へ展開
-        tab_clean = tab_clean.replace(r'\carrowDecreaseConvex', r'$\searrow$')
-        tab_clean = tab_clean.replace(r'\carrowDecreaseConcave', r'$\searrow$')
-        tab_clean = tab_clean.replace(r'\carrowIncreaseConvex', r'$\nearrow$')
-        tab_clean = tab_clean.replace(r'\carrowIncreaseConcave', r'$\nearrow$')
+        # 増減表の凹凸矢印マクロは Pandoc 変換前にプレースホルダーへ退避し、
+        # Markdown テーブル生成後にインライン SVG へ復元する（Web でも凹凸を描画する）。
+        protected_carrows = {}
+
+        def _protect_carrow(m):
+            token = f'CARROWCELLPLACEHOLDER{len(protected_carrows)}Z'
+            protected_carrows[token] = _CARROW_SVGS[m.group(1)]
+            return token
+
+        tab_clean = _CARROW_RE.sub(_protect_carrow, tab_clean)
         # 数式（$...$）内の "|" は Pandoc の GFM テーブル書き出し時にエスケープされず
         # 列区切りと誤認されてしまう（実例: $|\vec a|=1$ のような絶対値記号を含む
         # セルが崩れる）。"\|" へのエスケープは MathJax 上では別記号（二重バー／
@@ -1227,6 +1270,8 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
                     line_clean = re.sub(r'\$`([^`]+)`\$', r'$\1$', line)
                     for token, math in protected_math.items():
                         line_clean = line_clean.replace(token, math)
+                    for token, svg in protected_carrows.items():
+                        line_clean = line_clean.replace(token, svg)
                     clean_table_lines.append(line_clean)
             if clean_table_lines:
                 return "\n\n" + "\n".join(clean_table_lines).strip() + "\n\n"

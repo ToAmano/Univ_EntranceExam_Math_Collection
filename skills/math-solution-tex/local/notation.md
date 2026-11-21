@@ -39,10 +39,9 @@ lint の検査は `local/lint_local.py`。
 
 ## LN5. 増減表の凹凸の矢印（§TB2.4）
 
-- 4つの命令（`\carrowIncreaseConvex` など）は、`scratch/generate_main_tex.py` のプリアンブルで定義している。
-- **既知の不具合（2026-11-13 確認、#1501）**：今の定義では、減少の2つ（`\carrowDecreaseConvex` と `\carrowDecreaseConcave`）の `bend left`・`bend right` が §TB2.4 と逆で、PDF では凹凸が逆向きに描かれる。使い方（例：`ukyoto/zenki/1968/5` で $f''>0$ の減少区間に `\carrowDecreaseConvex`）は §TB2.4 の意味に合っているので、直すのはプリアンブルの側。
-- Web（`tex_to_md.py`）では、表の中の4つの命令を `$\nearrow$`・`$\searrow$` に置き換えている。増減は読めるが、凹凸は表示されない。
-- `\rotatebox`・`\raisebox` で回した矢印を使っている増減表が残っている（#1497：`utokyo/zenki/1977/6`、`utokyo/zenki/2005/3`、`titech/zenki/1981/2`）。
+- 4つの命令（`\carrowIncreaseConvex` など）は、`scratch/generate_main_tex.py` のプリアンブルおよび `scratch/tex_to_md.py` の SVG 用プリアンブルで定義している。
+- Web（`tex_to_md.py`）では、4つの命令をそれぞれ対応する曲線矢印のインライン `<svg class="carrow">` に変換して表示する。
+- `\rotatebox`・`\raisebox` で回した矢印を使っている増減表が一部に残っている（#1497：`utokyo/zenki/1977/6`、`titech/zenki/1981/2`）。
 
 ## LN6. lint の対象外にする印
 
