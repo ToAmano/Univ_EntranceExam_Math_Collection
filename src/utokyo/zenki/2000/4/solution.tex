@@ -20,8 +20,8 @@
     \coordinate (End2) at (120:1.0); % (-0.5, sqrt(3)/2)
 
     % --- 2. 角度マーク用の動径（点線） ---
-    \draw[dashed, gray!60, thin] (O) -- (End1);
-    \draw[dashed, gray!60, thin] (O) -- (End2);
+    \draw[dotted, thick, gray!70!black] (O) -- (End1);
+    \draw[dotted, thick, gray!70!black] (O) -- (End2);
 
     % 角度 pi/3 の弧 (内側: 半径 0.32)
     \draw[->, thick, purple!80!black] (0.32, 0) arc (0:60:0.32);
@@ -34,66 +34,70 @@
     % --- 3. 衝突可能ゾーン（円弧のハイライト）---
     % pi/3 <= t <= 2pi/3
     \draw[line width=2.8pt, red!85!black] (60:1.0) arc (60:120:1.0);
-    \node[circle, fill=red!85!black, inner sep=0.7pt] at (End1) {};
-    \node[circle, fill=red!85!black, inner sep=0.7pt] at (End2) {};
+    \node[circle, fill=red!85!black, inner sep=1.2pt] at (End1) {};
+    \node[circle, fill=red!85!black, inner sep=1.2pt] at (End2) {};
 
-    % 端点の投影破線
-    \draw[dotted, gray!60] (0.5, 0) -- (End1);
-    \draw[dotted, gray!60] (-0.5, 0) -- (End2);
+    % 端点の投影点線
+    \draw[densely dotted, thick, gray!70!black] (0.5, 0) -- (End1);
+    \draw[densely dotted, thick, gray!70!black] (-0.5, 0) -- (End2);
     \node[below=2pt, font=\scriptsize, gray!80!black] at (0.5, 0) {$\frac{1}{2}$};
     \node[below=2pt, font=\scriptsize, gray!80!black] at (-0.5, 0) {$-\frac{1}{2}$};
 
-    % タイトル表示（上方に十分な余白をとって配置）
-    \node[red!90!black, font=\footnotesize\bfseries, above=6pt] at (0, 1.08)
-    {衝突可能区間 $\left[\frac{\pi}{3}, \frac{2}{3}\pi\right]$};
-    \draw[->, thin, red!70!black] (0, 1.08) -- (0, 1.01);
-
     % --- 4. 単位円 x^2 + y^2 = 1 (上半円) ---
-    \draw[thick, gray!70!black] (1.0, 0) arc (0:180:1.0);
-    \node[gray!75!black, font=\scriptsize, above left] at (-0.85, 0.55) {$x^2+y^2=1$};
+    \draw[thick, gray!75!black] (1.0, 0) arc (0:180:1.0);
+    \node[gray!80!black, font=\scriptsize, above left] at (-0.90, 0.44) {$x^2+y^2=1$};
 
     % --- 5. 座標軸 ---
-    \draw[->, thick, gray!80!black] (-1.35, 0) -- (1.55, 0) node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0, -0.15) -- (0, 1.45) node[above] {$y$};
+    \draw[->, thick, gray!80!black] (-1.45, 0) -- (1.55, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.15) -- (0, 1.48) node[above] {$y$};
     \node[below left=2pt] at (O) {$O$};
 
-    % 軸目盛り
+    % x 軸目盛り
     \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
     \node[below=2pt, font=\scriptsize] at (-1.0, 0) {$-1$};
-    \node[left=2pt, font=\scriptsize, teal!90!black] at (0, 1.0) {$1$};
-    \node[left=2pt, font=\scriptsize, teal!90!black] at (0, \yMin) {$\frac{\sqrt{3}}{2}$};
 
     % --- 6. 水平境界線 y = sqrt(3)/2 と y = 1 ---
-    \draw[dashed, teal!70!black] (-1.15, \yMin) -- (1.25, \yMin)
+    \draw[densely dotted, thick, teal!70!black] (-1.15, \yMin) -- (1.25, \yMin)
     node[right=2pt, font=\scriptsize] {$y = \frac{\sqrt{3}}{2}$};
-    \draw[dashed, teal!70!black] (-1.15, 1.0) -- (1.25, 1.0)
+    \draw[densely dotted, thick, teal!70!black] (-1.15, 1.0) -- (1.25, 1.0)
     node[right=2pt, font=\scriptsize] {$y = 1$};
 
+    % y 軸目盛り（赤弧や境界線と重ならない位置に配置）
+    \node[above left=3pt, xshift=-1pt, font=\scriptsize, teal!90!black, inner sep=0.4pt] at (0, 1.0) {$1$};
+    \node[below left=3pt, xshift=-1pt, font=\scriptsize, teal!90!black, inner sep=0.4pt] at (0, \yMin) {$\frac{\sqrt{3}}{2}$};
+
     % --- 7. 移動する線分 QR (x = 1 - vt) ---
-    % x = -0.2 に配置して P (第1象限) との重なりを解消
-    \def\xPos{-0.2}
-    \coordinate (Q_pt) at (\xPos, 1.0);
-    \coordinate (R_pt) at (\xPos, \yMin);
+    % 問題文定義: Q(1-vt, sqrt(3)/2) が下端，R(1-vt, 1) が上端
+    % 単位円と衝突弧から左に離すため x = -0.68 に配置
+    \def\xPos{-0.68}
+    \coordinate (R_pt) at (\xPos, 1.0);
+    \coordinate (Q_pt) at (\xPos, \yMin);
 
-    \draw[line width=2.4pt, blue!85!black] (R_pt) -- (Q_pt);
-    \node[circle, fill=blue!90!black, inner sep=0.8pt] at (Q_pt) {};
-    \node[circle, fill=blue!90!black, inner sep=0.8pt] at (R_pt) {};
+    \draw[line width=2.4pt, blue!85!black] (Q_pt) -- (R_pt);
+    \node[circle, fill=blue!90!black, inner sep=1.2pt] at (R_pt) {};
+    \node[circle, fill=blue!90!black, inner sep=1.2pt] at (Q_pt) {};
 
-    % ラベル位置を左側に配置
-    \node[left=3pt, font=\scriptsize, blue!90!black] at (Q_pt) {$Q(1-vt, 1)$};
-    \node[left=3pt, font=\scriptsize, blue!90!black] at (R_pt) {$R\left(1-vt, \frac{\sqrt{3}}{2}\right)$};
+    % ラベル位置（R は上側，Q は左下へ引き出し）
+    \node[above=3pt, font=\scriptsize, blue!90!black, fill=white, inner sep=0.8pt] at (R_pt) {$R(1-vt, 1)$};
+    \draw[<-, thin, blue!85!black] (Q_pt) -- (-0.86, 0.72)
+    node[left=1pt, font=\scriptsize, blue!90!black, fill=white, inner sep=0.8pt] {$Q\left(1-vt, \frac{\sqrt{3}}{2}\right)$};
 
-    % 左向き速度矢印
-    \draw[->, thick, blue!85!black] (\xPos - 0.04, 0.93) -- (\xPos - 0.22, 0.93)
-    node[midway, below=1pt, font=\tiny] {速度 $v$};
+    % 左向き速度矢印（水平境界線の間に収める）
+    \draw[->, thick, blue!85!black] (\xPos - 0.04, 0.933) -- (\xPos - 0.22, 0.933)
+    node[left=1pt, font=\scriptsize, fill=white, inner sep=0.5pt] {速度 $v$};
 
-    % --- 8. 動点 P(cos t, sin t) ---
-    % 偏角 65° 付近（第1象限側で線分 QR と明確に分離）
+    % --- 8. 動点 P(cos t, sin t) と衝突可能区間注釈 ---
     \coordinate (P_pt) at (65:1.0);
-    \node[circle, fill=red!85!black, inner sep=1.1pt] at (P_pt) {};
-    \node[above right=1pt, red!95!black, font=\scriptsize\bfseries] at (P_pt) {$P(\cos t, \sin t)$};
+    \node[circle, fill=red!85!black, inner sep=1.3pt] at (P_pt) {};
+    \draw[<-, thin, red!85!black] (P_pt) -- (0.72, 1.12)
+    node[above right=0pt, red!95!black, font=\scriptsize\bfseries, fill=white, inner sep=0.8pt] {$P(\cos t, \sin t)$};
     % 進行方向矢印
-    \draw[->, thick, red!85!black] (58:1.0) arc (58:72:1.0);
+    \draw[->, thick, red!85!black] (57:1.0) arc (57:73:1.0);
+
+    % 衝突可能区間タイトル（y 軸矢印と重ならないよう左側へ離す）
+    \draw[<-, thin, red!75!black] (104:1.01) -- (-0.46, 1.24)
+    node[above=1pt, red!90!black, font=\footnotesize\bfseries, fill=white, inner sep=0.8pt]
+    {衝突可能区間 $\left[\frac{\pi}{3}, \frac{2}{3}\pi\right]$};
 
   \end{tikzpicture}
   \caption{単位円上の動点 $P$ と水平移動する線分 $QR$ の配置}
@@ -147,27 +151,29 @@ $0 \le t \le 2\pi$ で\cref{eq:1}をみたす $t$ がない時を考える．
     \coordinate (P_end1) at (\piOneThird, 0.5);                   % (pi/3, 1/2)
     \coordinate (P_end2) at (\piTwoThird, -0.5);                  % (2pi/3, -1/2)
 
-    % --- 2. 衝突可能区間 [pi/3, 2pi/3] のハイライト背景 ---
-    \fill[red!6, opacity=0.8] (\piOneThird, -1.15) rectangle (\piTwoThird, 1.15);
+    % --- 2. 衝突可能区間 [pi/3, 2pi/3] のハイライト背景（斜線パターン） ---
+    \fill[pattern=north east lines, pattern color=red!60!black]
+    (\piOneThird, -1.15) rectangle (\piTwoThird, 1.15);
 
     % --- 3. 座標軸 ---
-    \draw[->, thick, gray!80!black] (-0.3, 0) -- (2.6, 0) node[right] {$t$};
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (2.7, 0) node[right] {$t$};
     \draw[->, thick, gray!80!black] (0, -1.25) -- (0, 1.35) node[above] {$y$};
     \node[below left=2pt] at (O) {$O$};
 
     % --- 4. 曲線 y = cos t ---
-    % 全体 (薄い実線)
-    \draw[thick, gray!50, domain=0:3, samples=60] plot (\x, {cos(\x r)});
+    % 全体 (濃いめの実線)
+    \draw[thick, gray!70!black, domain=0:2.75, samples=60] plot (\x, {cos(\x r)});
     % 衝突区間 [pi/3, 2pi/3] の部分 (赤太線強調)
     \draw[line width=2.0pt, red!85!black, domain=\piOneThird:\piTwoThird, samples=50]
     plot (\x, {cos(\x r)});
-    \node[red!90!black, font=\footnotesize\bfseries, above right] at (1.5, {cos(1.5 r)}) {$y = \cos t$};
+    \draw[<-, thin, red!85!black] (1.42, {cos(1.42 r)}) -- (1.72, 0.56)
+    node[above right=0pt, red!90!black, font=\footnotesize\bfseries, fill=white, inner sep=0.8pt] {$y = \cos t$};
 
     % --- 5. 境界直線 y = 1 - vt ---
     % (i) (pi/3, 1/2) を通る直線: 傾き -v = - (1/2)/(pi/3) = -3/(2pi) => v = 3/(2pi) ≈ 0.477
     \draw[very thick, teal!85!black, domain=0:2.4]
     plot (\x, {1.0 - (0.5/\piOneThird)*\x});
-    \node[teal!90!black, font=\scriptsize, right] at (2.4, {1.0 - (0.5/\piOneThird)*2.4})
+    \node[teal!90!black, font=\scriptsize, below right=0pt] at (2.4, {1.0 - (0.5/\piOneThird)*2.4})
     {$v = \frac{3}{2\pi}$};
 
     % (ii) (2pi/3, -1/2) を通る直線: 傾き -v = - (3/2)/(2pi/3) = -9/(4pi) => v = 9/(4pi) ≈ 0.716
@@ -176,21 +182,22 @@ $0 \le t \le 2\pi$ で\cref{eq:1}をみたす $t$ がない時を考える．
     \node[purple!90!black, font=\scriptsize, right] at (2.4, {1.0 - (1.5/\piTwoThird)*2.4})
     {$v = \frac{9}{4\pi}$};
 
-    % --- 6. 端点プロットと投影破線 ---
+    % --- 6. 端点プロットと投影点線 ---
     % (0, 1)
-    \node[circle, fill, inner sep=1.2pt] at (P_top) {}; \node[left=2pt] at (P_top) {$1$};
+    \node[circle, fill, inner sep=1.2pt] at (P_top) {};
+    \node[left=2pt, fill=white, inner sep=0.6pt] at (P_top) {$1$};
 
     % 端点 (pi/3, 1/2)
-    \draw[dashed, gray!60] (\piOneThird, 0) -- (P_end1) -- (0, 0.5);
+    \draw[densely dotted, thick, gray!70!black] (\piOneThird, 0) -- (P_end1) -- (0, 0.5);
     \node[circle, fill=red!85!black, inner sep=1.4pt] at (P_end1) {};
-    \node[below=2pt, font=\scriptsize] at (\piOneThird, 0) {$\frac{\pi}{3}$};
-    \node[left=2pt, font=\scriptsize]  at (0, 0.5) {$\frac{1}{2}$};
+    \node[below=2pt, font=\scriptsize, fill=white, inner sep=0.6pt] at (\piOneThird, 0) {$\frac{\pi}{3}$};
+    \node[left=2pt, font=\scriptsize] at (0, 0.5) {$\frac{1}{2}$};
 
     % 端点 (2pi/3, -1/2)
-    \draw[dashed, gray!60] (\piTwoThird, 0) -- (P_end2) -- (0, -0.5);
+    \draw[densely dotted, thick, gray!70!black] (\piTwoThird, 0) -- (P_end2) -- (0, -0.5);
     \node[circle, fill=red!85!black, inner sep=1.4pt] at (P_end2) {};
-    \node[above=2pt, font=\scriptsize] at (\piTwoThird, 0) {$\frac{2}{3}\pi$};
-    \node[left=2pt, font=\scriptsize]  at (0, -0.5) {$-\frac{1}{2}$};
+    \node[above right=2pt, font=\scriptsize, fill=white, inner sep=0.6pt] at (\piTwoThird, 0) {$\frac{2}{3}\pi$};
+    \node[left=2pt, font=\scriptsize] at (0, -0.5) {$-\frac{1}{2}$};
 
   \end{tikzpicture}
   \caption{$ty$ 平面における $y = \cos t$ と直線 $y = 1 - vt$ の位置関係（解を持たない条件）}
@@ -241,23 +248,23 @@ $0 \le t \le 2\pi$ で\cref{eq:1}をみたす $t$ がない時を考える．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=1.1cm, y=1.6cm, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[x=1.0cm, y=1.6cm, >=stealth, every node/.style={font=\small}]
 
-    % --- 1. グリッド線（手書きスケッチの格子破線）---
+    % --- 1. グリッド線（手書きスケッチの格子点線）---
     % 水平グリッド: y = 1, 1/2, 0, -1/2, -1
-    \foreach \y in {-1.0, -0.5, 0.0, 0.5, 1.0} {
-      \draw[dashed, gray!35] (-0.3, \y) -- (14.2, \y);
+    \foreach \y in {-1.0, -0.5, 0.5, 1.0} {
+      \draw[dotted, gray!65!black] (-0.3, \y) -- (15.0, \y);
     }
     % 垂直グリッド: 各周期の主要な t
     % t = pi/3, 2pi/3, 2pi, 2pi+pi/3, 2pi+2pi/3, 4pi, 4pi+pi/3, 4pi+2pi/3
     \foreach \t in {
-      1.047, 2.094, 6.283, 7.330, 8.378, 12.566, 13.614
+      1.047, 2.094, 6.283, 7.330, 8.378, 12.566, 13.614, 14.661
     } {
-      \draw[dashed, gray!30] (\t, -1.15) -- (\t, 1.25);
+      \draw[dotted, gray!65!black] (\t, -1.15) -- (\t, 1.25);
     }
 
     % --- 2. 座標軸 ---
-    \draw[->, thick, gray!80!black] (-0.3, 0) -- (14.6, 0) node[right] {$t$};
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (15.4, 0) node[right] {$t$};
     \draw[->, thick, gray!80!black] (0, -1.25) -- (0, 1.45) node[above] {$P$ ($y$)};
     \node[below left=2pt] at (0, 0) {$O$};
 
@@ -267,8 +274,8 @@ $0 \le t \le 2\pi$ で\cref{eq:1}をみたす $t$ がない時を考える．
     \node[left=2pt, font=\scriptsize] at (0, -0.5) {$-\frac{1}{2}$};
     \node[left=2pt, font=\scriptsize] at (0, -1.0) {$-1$};
 
-    % --- 3. 曲線 y = cos t (全体は薄い破線) ---
-    \draw[dashed, gray!55, thick, domain=0:14.2, samples=160]
+    % --- 3. 曲線 y = cos t (参考曲線) ---
+    \draw[densely dotted, gray!70!black, thick, domain=0:15.0, samples=160]
     plot (\x, {cos(\x r)});
 
     % --- 4. 衝突可能区間 (太線実線と両端の黒丸) ---
@@ -285,25 +292,26 @@ $0 \le t \le 2\pi$ で\cref{eq:1}をみたす $t$ がない時を考える．
     \node[circle, fill, inner sep=1.5pt] at (8.3776, -0.5) {};
 
     % k = 2: [4pi + pi/3, 4pi + 2pi/3] = [13.614, 14.661]
-    \draw[line width=2.2pt, blue!85!black, domain=13.6136:14.2, samples=30]
+    \draw[line width=2.2pt, blue!85!black, domain=13.6136:14.6608, samples=40]
     plot (\x, {cos(\x r)});
     \node[circle, fill, inner sep=1.5pt] at (13.6136, 0.5) {};
+    \node[circle, fill, inner sep=1.5pt] at (14.6608, -0.5) {};
 
     % 周期ラベル
     \node[below=2pt, font=\scriptsize, teal!90!black] at (1.57, -1.15) {$k=0$};
     \node[below=2pt, font=\scriptsize, teal!90!black] at (7.85, -1.15) {$k=1$};
-    \node[below=2pt, font=\scriptsize, teal!90!black] at (13.8, -1.15) {$k=2$};
+    \node[below=2pt, font=\scriptsize, teal!90!black] at (14.14, -1.15) {$k=2$};
 
-    % --- 5. 点 (0, 1) からの直線 y = 1 - vt (手書きの直線群) ---
+    % --- 5. 点 (0, 1) からの直線 y = 1 - vt ---
     % (i) k = 0 の区間を通る直線 (例: v = 0.6)
-    \draw[thick, red!85!black, domain=0:3.6]
+    \draw[thick, red!85!black, domain=0:3.5]
     plot (\x, {1.0 - 0.6*\x});
-    \node[red!90!black, font=\scriptsize, below right] at (3.0, -0.8) {$k=0$ と交差};
+    \node[red!90!black, font=\scriptsize, above right=2pt, fill=white, inner sep=0.8pt] at (2.6, -0.56) {$k=0$ と交差};
 
     % (ii) k = 1 の区間を通る直線 (例: v = 0.16)
-    \draw[thick, dashed, teal!85!black, domain=0:12.5]
+    \draw[thick, teal!85!black, domain=0:12.5]
     plot (\x, {1.0 - 0.16*\x});
-    \node[teal!90!black, font=\scriptsize, above right] at (9.5, -0.5) {$k=1$ と交差};
+    \node[teal!90!black, font=\scriptsize, above right=2pt, fill=white, inner sep=0.8pt] at (9.5, -0.52) {$k=1$ と交差};
 
     \node[circle, fill, inner sep=1.4pt] at (0, 1.0) {};
 
@@ -341,11 +349,11 @@ $0 \le t \le 2\pi$ で\cref{eq:1}をみたす $t$ がない時を考える．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=1.8cm, y=1.5cm, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[x=2.0cm, y=2.0cm, >=stealth, every node/.style={font=\small}]
 
     % --- 1. 座標軸 ---
-    \draw[->, thick, gray!80!black] (-0.3, 0) -- (4.8, 0) node[right] {$k$};
-    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 2.7) node[above] {$v\pi$};
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (4.6, 0) node[right] {$k$};
+    \draw[->, thick, gray!80!black] (0, -0.45) -- (0, 2.65) node[above] {$v\pi$};
     \node[below left=2pt] at (0, 0) {$O$};
 
     % 上端関数: v*pi = 3 / [2*(2k + 2/3)] = 9 / [4*(3k + 1)]
@@ -353,36 +361,43 @@ $0 \le t \le 2\pi$ で\cref{eq:1}をみたす $t$ がない時を考える．
 
     % --- 2. 帯領域のプロット (k >= 0) ---
     % 上端曲線 (赤実線)
-    \draw[line width=1.6pt, red!85!black, domain=0:4.3, samples=80]
+    \draw[line width=1.6pt, red!85!black, domain=0:4.2, samples=80]
     plot (\x, {9.0 / (4.0*(3.0*\x + 1.0))});
-    \node[red!90!black, font=\scriptsize\bfseries, above right] at (1.2, {9.0/(4.0*(3.0*1.2+1.0))})
+    \draw[<-, thin, red!85!black] (1.30, {9.0/(4.0*(3.0*1.30+1.0))}) -- (1.65, 1.25)
+    node[above right=0pt, red!90!black, font=\scriptsize\bfseries, fill=white, inner sep=0.8pt]
     {上端: $v\pi = \frac{3}{2(2k+2/3)}$};
 
     % 下端曲線 (青実線)
-    \draw[line width=1.6pt, blue!85!black, domain=0:4.3, samples=80]
+    \draw[line width=1.6pt, blue!85!black, domain=0:4.2, samples=80]
     plot (\x, {3.0 / (2.0*(6.0*\x + 1.0))});
-    \node[blue!90!black, font=\scriptsize\bfseries, below right] at (2.4, {3.0/(2.0*(6.0*2.4+1.0))})
+    \draw[<-, thin, blue!85!black] (2.45, {3.0/(2.0*(6.0*2.45+1.0))}) -- (2.50, -0.26)
+    node[below=1pt, blue!90!black, font=\scriptsize\bfseries, fill=white, inner sep=0.8pt]
     {下端: $v\pi = \frac{1}{2(2k+1/3)}$};
 
     % --- 3. 各整数点 k = 0, 1, 2 における縦区間（太線バー）---
     % k = 0: [3/2, 9/4] = [1.5, 2.25]
-    \draw[line width=3.0pt, teal!85!black] (0, 1.5) -- (0, 2.25);
-    \node[left=2pt, font=\scriptsize, teal!90!black] at (0, 2.25) {$\frac{9}{4}$};
-    \node[left=2pt, font=\scriptsize, teal!90!black] at (0, 1.5)  {$\frac{3}{2}$};
+    \draw[line width=2.8pt, teal!85!black] (0, 1.5) -- (0, 2.25);
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (0, 2.25) {};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (0, 1.5) {};
+    \node[left=3pt, font=\scriptsize, teal!90!black] at (0, 2.25) {$\frac{9}{4}$};
+    \node[left=3pt, font=\scriptsize, teal!90!black] at (0, 1.5)  {$\frac{3}{2}$};
 
     % k = 1: [3/14, 9/16] ≈ [0.214, 0.563]
-    \draw[line width=3.0pt, teal!85!black] (1, {3.0/14.0}) -- (1, {9.0/16.0});
     \draw[densely dotted, thick, gray!70!black] (1, 0) -- (1, {3.0/14.0});
-    \node[above right=-1pt, font=\scriptsize, teal!90!black] at (1, {9.0/16.0}) {$\frac{9}{16}$};
-    \node[below right=-1pt, font=\scriptsize, teal!90!black] at (1, {3.0/14.0}) {$\frac{3}{14}$};
+    \draw[line width=2.8pt, teal!85!black] (1, {3.0/14.0}) -- (1, {9.0/16.0});
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (1, {9.0/16.0}) {};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (1, {3.0/14.0}) {};
+    \node[above right=2pt, font=\scriptsize, teal!90!black, fill=white, inner sep=0.6pt] at (1, {9.0/16.0}) {$\frac{9}{16}$};
+    \node[right=3pt, font=\scriptsize, teal!90!black, fill=white, inner sep=0.6pt] at (1, {3.0/14.0}) {$\frac{3}{14}$};
 
     % k = 2: [3/26, 9/28] ≈ [0.115, 0.321]
-    \draw[line width=3.0pt, teal!85!black] (2, {3.0/26.0}) -- (2, {9.0/28.0});
     \draw[densely dotted, thick, gray!70!black] (2, 0) -- (2, {3.0/26.0});
-    \node[above right=-1pt, font=\scriptsize, teal!90!black] at (2, {9.0/28.0}) {$\frac{9}{28}$};
+    \draw[line width=2.8pt, teal!85!black] (2, {3.0/26.0}) -- (2, {9.0/28.0});
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (2, {9.0/28.0}) {};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (2, {3.0/26.0}) {};
+    \node[above right=2pt, font=\scriptsize, teal!90!black, fill=white, inner sep=0.6pt] at (2, {9.0/28.0}) {$\frac{9}{28}$};
 
-    % 目盛り
-    \node[below=2pt, font=\scriptsize] at (0, 0) {$0$};
+    % 目盛り（O と重なる 0 は置かない）
     \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
     \node[below=2pt, font=\scriptsize] at (2, 0) {$2$};
     \node[below=2pt, font=\scriptsize] at (3, 0) {$3$};
@@ -409,79 +424,82 @@ $0 \le t \le 2\pi$ で\cref{eq:1}をみたす $t$ がない時を考える．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=3.0, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[x=2.8cm, y=4.6cm, >=stealth, every node/.style={font=\small}]
 
     % --- 1. 定数・幾何パラメータ ---
-    % 交点: k = 11/12 ≈ 0.9167 (y_{1,low} = y_{2,up})
+    % 交点: k = 11/12 ≈ 0.9167 (y_{1,low} = y_{2,up} = 3/13 ≈ 0.2308)
     \def\kCross{0.9167}
     \def\yCross{0.2308}
 
     \coordinate (O)     at (0, 0);
     \coordinate (Cross) at (\kCross, \yCross);
 
-    % --- 2. 帯領域の塗りつぶし ---
-    % (i) k 回目の帯: [y_{1,low}, y_{1,up}] (薄い青)
-    % y_{1,up}  = 2.25 / (3k + 1)
-    % y_{1,low} = 1.5  / (6k + 1)
-    \fill[blue!15, opacity=0.7]
-    plot[domain=0.05:3.6, samples=60] (\x, {2.25 / (3.0*\x + 1.0)})
-    -- plot[domain=3.6:0.05, samples=60] (\x, {1.5 / (6.0*\x + 1.0)})
+    % --- 2. 帯領域の塗りつぶし（斜線パターン）---
+    % (i) k 回目の帯: [y_{1,low}, y_{1,up}]
+    \fill[pattern=north east lines, pattern color=blue!65!black]
+    plot[domain=0.25:3.5, samples=60] (\x, {2.25 / (3.0*\x + 1.0)})
+    -- plot[domain=3.5:0.25, samples=60] (\x, {1.5 / (6.0*\x + 1.0)})
     -- cycle;
 
-    % (ii) k+2 回目の帯: [y_{2,low}, y_{2,up}] (薄い赤/オレンジ)
-    % y_{2,up}  = 4.5 / (6k + 14)
-    % y_{2,low} = 1.5 / (6k + 13)
-    \fill[red!15, opacity=0.7]
-    plot[domain=0.05:3.6, samples=60] (\x, {4.5 / (6.0*\x + 14.0)})
-    -- plot[domain=3.6:0.05, samples=60] (\x, {1.5 / (6.0*\x + 13.0)})
+    % (ii) k+2 回目の帯: [y_{2,low}, y_{2,up}]
+    \fill[pattern=north west lines, pattern color=red!65!black]
+    plot[domain=0.25:3.5, samples=60] (\x, {4.5 / (6.0*\x + 14.0)})
+    -- plot[domain=3.5:0.25, samples=60] (\x, {1.5 / (6.0*\x + 13.0)})
     -- cycle;
 
-    % (iii) 2つの帯が重なる領域: [y_{1,low}, y_{2,up}] (k >= 11/12 で重複, 紫斜線ハッチング)
-    \fill[pattern=north east lines, pattern color=purple!85, opacity=0.7]
-    plot[domain=\kCross:3.6, samples=50] (\x, {4.5 / (6.0*\x + 14.0)})
-    -- plot[domain=3.6:\kCross, samples=50] (\x, {1.5 / (6.0*\x + 1.0)})
+    % (iii) 重なる領域 (k >= 11/12): 紫の強調枠・斜線
+    \fill[pattern=crosshatch, pattern color=purple!75!black]
+    plot[domain=\kCross:3.5, samples=50] (\x, {4.5 / (6.0*\x + 14.0)})
+    -- plot[domain=3.5:\kCross, samples=50] (\x, {1.5 / (6.0*\x + 1.0)})
     -- cycle;
 
     % --- 3. 座標軸 ---
-    \draw[->, thick, gray!80!black] (-0.3, 0) -- (4.0, 0) node[right] {$k$};
-    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 2.5) node[above] {$y$ ($v\pi$)};
+    \draw[->, thick, gray!80!black] (-0.25, 0) -- (3.9, 0) node[right] {$k$};
+    \draw[->, thick, gray!80!black] (0, -0.35) -- (0, 1.50) node[above] {$y$ ($v\pi$)};
     \node[below left=2pt] at (O) {$O$};
 
-    % --- 4. 境界曲線のプロット ---
+    % --- 4. 境界曲線のプロットと引き出しラベル ---
     % k 回目の上端・下端 (青系)
-    \draw[line width=1.4pt, blue!85!black, domain=0.05:3.7, samples=70]
+    \draw[line width=1.4pt, blue!85!black, domain=0.25:3.6, samples=70]
     plot (\x, {2.25 / (3.0*\x + 1.0)});
-    \node[blue!90!black, font=\scriptsize\bfseries, above right] at (1.8, {2.25/(3.0*1.8+1.0)})
+    \draw[<-, thin, blue!85!black] (1.75, {2.25/(3.0*1.75+1.0)}) -- (2.05, 0.78)
+    node[above right=0pt, blue!90!black, font=\scriptsize\bfseries, fill=white, inner sep=0.8pt]
     {$k$ 回目の上端};
 
-    \draw[line width=1.4pt, blue!85!black, domain=0.05:3.7, samples=70]
+    \draw[line width=1.4pt, blue!85!black, domain=0.25:3.6, samples=70]
     plot (\x, {1.5 / (6.0*\x + 1.0)});
-    \node[blue!90!black, font=\scriptsize\bfseries, below right] at (2.4, {1.5/(6.0*2.4+1.0)})
+    \draw[<-, thin, blue!85!black] (2.75, {1.5/(6.0*2.75+1.0)}) -- (2.85, -0.18)
+    node[below=1pt, blue!90!black, font=\scriptsize\bfseries, fill=white, inner sep=0.8pt]
     {$k$ 回目の下端};
 
     % k+2 回目の上端・下端 (赤系)
-    \draw[line width=1.4pt, red!85!black, domain=0.05:3.7, samples=70]
+    \draw[line width=1.4pt, red!85!black, domain=0.25:3.6, samples=70]
     plot (\x, {4.5 / (6.0*\x + 14.0)});
-    \node[red!90!black, font=\scriptsize\bfseries, above right] at (2.4, {4.5/(6.0*2.4+14.0)})
+    \draw[<-, thin, red!85!black] (2.55, {4.5/(6.0*2.55+14.0)}) -- (2.85, 0.50)
+    node[above right=0pt, red!90!black, font=\scriptsize\bfseries, fill=white, inner sep=0.8pt]
     {$k+2$ 回目の上端};
 
-    \draw[line width=1.4pt, red!85!black, domain=0.05:3.7, samples=70]
+    \draw[line width=1.4pt, red!85!black, domain=0.25:3.6, samples=70]
     plot (\x, {1.5 / (6.0*\x + 13.0)});
-    \node[red!90!black, font=\scriptsize\bfseries, below right] at (1.8, {1.5/(6.0*1.8+13.0)})
+    \draw[<-, thin, red!85!black] (1.50, {1.5/(6.0*1.50+13.0)}) -- (1.50, -0.18)
+    node[below=1pt, red!90!black, font=\scriptsize\bfseries, fill=white, inner sep=0.8pt]
     {$k+2$ 回目の下端};
 
-    % --- 5. 交点 (11/12, 3/13) のプロットと投影破線 ---
-    \draw[dashed, gray!60] (\kCross, 0) -- (Cross) -- (0, \yCross);
+    % --- 5. 交点 (11/12, 3/13) のプロットと投影点線 ---
+    \draw[densely dotted, thick, gray!70!black] (\kCross, 0) -- (Cross) -- (0, \yCross);
     \node[circle, fill=purple!90!black, inner sep=1.5pt] at (Cross) {};
-    \node[above=3pt, font=\scriptsize\bfseries, purple!95!black] at (Cross)
+    \draw[<-, thin, purple!90!black] (Cross) -- (1.08, 0.90)
+    node[above=1pt, font=\scriptsize\bfseries, purple!95!black, fill=white, inner sep=0.8pt]
     {交点 $\left(\frac{11}{12}, \frac{3}{13}\right)$};
 
-    \node[below=2pt, font=\scriptsize] at (\kCross, 0) {$\frac{11}{12}$};
-    \node[left=2pt, font=\scriptsize]  at (0, \yCross) {$\frac{3}{13}$};
+    % 11/12 は k=1 と重ならないよう左下に引き出す
+    \draw[<-, thin, gray!70!black] (\kCross, 0) -- (0.55, -0.14)
+    node[below=0pt, font=\scriptsize, fill=white, inner sep=0.6pt] {$\frac{11}{12}$};
+    \node[left=2pt, font=\scriptsize] at (0, \yCross) {$\frac{3}{13}$};
 
-    % --- 6. 整数点 k = 1, 2 での重複バー ---
+    % --- 6. 整数点 k = 1, 2 での基準点線 ---
     \foreach \kval in {1, 2} {
-      \draw[dotted, gray!60] (\kval, 0) -- (\kval, 0.9);
+      \draw[densely dotted, thick, gray!70!black] (\kval, 0) -- (\kval, {2.25/(3.0*\kval+1.0)});
       \node[below=2pt, font=\scriptsize] at (\kval, 0) {$k = \kval$};
     }
 
