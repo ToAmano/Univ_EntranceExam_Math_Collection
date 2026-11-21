@@ -124,23 +124,40 @@ $P$は$1$秒間に合計距離$2$だけ進む．そこで，$x$軸正方向に$\
 が必要である．これを図示すると下図実線部である．
 
 \begin{figure}[htb]
-  % TODO: 今の図を左に持っていって，右の図にalpha,betaの存在領域を追加
   \centering
   \begin{tikzpicture}[x=1.4cm, y=1.1cm, >=stealth, every node/.style={font=\small}]
-    % 例として alpha=0.9, beta=0.4（X=0.5, Y は -0.7 から 0.7）
+    % 左図：例として alpha=0.9, beta=0.4（X=0.5, Y は -0.7 から 0.7）
     \coordinate (Lo) at (0.5, -0.7);
     \coordinate (Hi) at (0.5, 0.7);
     \draw[->, thick, gray!80!black] (-0.8, 0) -- (1.4, 0) node[right] {$X$};
     \draw[->, thick, gray!80!black] (0, -1.1) -- (0, 1.2) node[above] {$Y$};
     \node[below left=1pt] at (0, 0) {$O$};
     \draw[line width=1.6pt, blue!85!black] (Lo) -- (Hi);
-    \draw[densely dotted, thick, gray!70!black] (Hi) -- (0, 0.7) node[left] {$2-(\alpha+\beta)$};
-    \draw[densely dotted, thick, gray!70!black] (Lo) -- (0, -0.7) node[left] {$\alpha+\beta-2$};
-    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (Lo) {};
-    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (Hi) {};
+    \draw[densely dotted, thick, gray!70!black] (Hi) -- (0, 0.7) node[left, black] {$2-(\alpha+\beta)$};
+    \draw[densely dotted, thick, gray!70!black] (Lo) -- (0, -0.7) node[left, black] {$\alpha+\beta-2$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Lo) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Hi) {};
     \node[below right=1pt] at (0.5, 0) {$\alpha-\beta$};
   \end{tikzpicture}
-  \caption{$\alpha$，$\beta$を固定して$\gamma$を動かしたときの$(X,Y)$の範囲}
+  \hspace{0.8cm}
+  \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
+    % 右図：alpha >= 0, beta >= 0, alpha + beta <= 2 の存在領域
+    \coordinate (O) at (0, 0);
+    \coordinate (A2) at (2, 0);
+    \coordinate (B2) at (0, 2);
+    \fill[pattern=north east lines, pattern color=blue!65] (O) -- (A2) -- (B2) -- cycle;
+    \draw[->, thick, gray!80!black] (-0.4, 0) -- (2.5, 0) node[right] {$\alpha$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 2.5) node[above] {$\beta$};
+    \draw[thick, blue!85!black] (O) -- (A2) -- (B2) -- cycle;
+    \node[above right=1pt, blue!85!black, font=\footnotesize] at (1, 1) {$\alpha+\beta=2$};
+    \node[below=2pt] at (A2) {$2$};
+    \node[left=2pt] at (B2) {$2$};
+    \node[below left=1pt] at (O) {$O$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (O) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A2) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B2) {};
+  \end{tikzpicture}
+  \caption{$\alpha$，$\beta$を固定して$\gamma$を動かしたときの$(X,Y)$の範囲（左）と$(\alpha,\beta)$の存在領域（右）}
   \label{fig:hw_gamma_segment}
 \end{figure}
 
@@ -169,23 +186,31 @@ $P$は$1$秒間に合計距離$2$だけ進む．そこで，$x$軸正方向に$\
 である．
 
 \begin{figure}[htb]
-  % TODO: 実線と点線，黒丸をしっかり境界に応じて設定
   \centering
   \begin{tikzpicture}[scale=0.9, >=stealth, every node/.style={font=\small}]
-    % alpha の動く範囲: X <= alpha <= X/2+1, 0 < alpha
+    % alpha の動く範囲: 0 <= alpha <= 2, X <= alpha <= X/2 + 1（すべて境界含む）
     \fill[pattern=north east lines, pattern color=blue!65] (-2, 0) -- (0, 0) -- (2, 2) -- cycle;
     \draw[->, thick, gray!80!black] (-2.6, 0) -- (2.8, 0) node[right] {$X$};
     \draw[->, thick, gray!80!black] (0, -0.8) -- (0, 2.7) node[above] {$\alpha$};
-    \draw[thick, teal!85!black] (-0.6, -0.6) -- (2.4, 2.4) node[above left=1pt] {$\alpha=X$};
-    \draw[densely dotted, blue!85!black] (-2, 0) -- (2.4, 2.2) node[below right=1pt] {$\alpha=\frac{1}{2}X+1$};
-    \draw[densely dotted, thick, gray!70!black] (-2, 2) -- (2, 2) -- (2, 0) node[below] {$2$};
+    % 領域外の延長線（補助点線）
+    \draw[densely dotted, thick, gray!70!black] (-0.6, -0.6) -- (0, 0);
+    \draw[densely dotted, thick, gray!70!black] (2, 2) -- (2.4, 2.4) node[above left=1pt, blue!85!black] {$\alpha=X$};
+    \draw[densely dotted, thick, gray!70!black] (-2.5, -0.25) -- (-2, 0);
+    \draw[densely dotted, thick, gray!70!black] (2, 2) -- (2.5, 2.25) node[below right=1pt, blue!85!black] {$\alpha=\frac{1}{2}X+1$};
+    % 領域の境界（すべて含むので実線）
+    \draw[thick, blue!85!black] (-2, 0) -- (0, 0) -- (2, 2) -- cycle;
+    % 座標軸への垂線（点線）
+    \draw[densely dotted, thick, gray!70!black] (-2, 2) -- (2, 2) -- (2, 0) node[below, black] {$2$};
     \draw[densely dotted, thick, gray!70!black] (-2, 0) -- (-2, 2);
     \node[above left=1pt] at (0, 2) {$2$};
-    \node[below] at (-2, 0) {$-2$};
+    \node[below=2pt] at (-2, 0) {$-2$};
     \node[below right=1pt] at (0, 0) {$O$};
-    \node[circle, fill, inner sep=1.2pt] at (-2, 0) {};
+    % 境界の端点（すべて含むので黒丸/塗りつぶし点）
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (-2, 0) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (0, 0) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (2, 2) {};
   \end{tikzpicture}
-  \caption{$\alpha$の動く範囲}
+  \caption{$\alpha$の動く範囲（境界含む）}
   \label{fig:hw_alpha_range}
 \end{figure}
 
