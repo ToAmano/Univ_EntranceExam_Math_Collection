@@ -20,8 +20,8 @@
     \coordinate (X2)    at (2.0, 0, 0);  % (2, 0, 0)
 
     % --- 2. 座標軸 ---
-    \draw[dashed, gray!40] (-0.8, 0, 0) -- (0, 0, 0);
-    \draw[dashed, gray!40] (0, -0.8, 0) -- (0, 0, 0);
+    \draw[dashed, gray!60!black] (-0.8, 0, 0) -- (0, 0, 0);
+    \draw[dashed, gray!60!black] (0, -0.8, 0) -- (0, 0, 0);
     \draw[->, thick, gray!80!black] (0, 0, 0) -- (2.6, 0, 0) node[below left=1pt] {$x$};
     \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 2.4, 0) node[right=2pt] {$y$};
     \draw[->, thick, gray!80!black] (0, 0, 0) -- (0, 0, 1.6) node[above=2pt] {$z$};
@@ -30,7 +30,7 @@
     % --- 3. 円柱側面全体の薄い斜線（薄い母線・背景ハッチング）---
     % 手前側および外側全体に薄い縦縞を描画 (z=0 から z=1 まで)
     \foreach \ang in {0, 15, ..., 345} {
-      \draw[gray!35, thin]
+      \draw[gray!60!black, thin]
       ({1.0 + cos(\ang)}, {sin(\ang)}, 0) --
       ({1.0 + cos(\ang)}, {sin(\ang)}, 1.0);
     }
@@ -69,8 +69,8 @@
     % 上面円 (z = 1, 中心 (1, 0, 1), 半径 1)
     \draw[thick, gray!75!black]
     plot[domain=0:360, samples=60] ({1.0 + cos(\x)}, {sin(\x)}, 1.0);
-    \draw[dashed, gray!50] (1.0, 0, 1.0) -- (2.0, 0, 1.0);
-    \draw[dashed, gray!50] (1.0, 0, 0) -- (1.0, 0, 1.0);
+    \draw[dashed, gray!60!black] (1.0, 0, 1.0) -- (2.0, 0, 1.0);
+    \draw[dashed, gray!60!black] (1.0, 0, 0) -- (1.0, 0, 1.0);
 
     % 円柱の最外殻母線 (x = 2)
     \draw[thick, gray!75!black] (2.0, 0, 0) -- (2.0, 0, 1.0);
@@ -92,10 +92,10 @@
 
 円錐$A$，円柱$B$の方程式は
 \begin{align}
-  \begin{cases}
-    A: x^2+y^2     \le (1-z)^2 \\
+  \begin{dcases}
+    A: x^2+y^2     \le 4[O](1-z)^2 \\
     B: (x-1)^2+y^2 \le 1
-  \end{cases} \label{eq:1}
+  \end{dcases} \label{eq:1}
 \end{align}
 である．以下，簡単のため$c=\cos\theta, s=\sin\theta$とおく．
 
@@ -103,10 +103,10 @@
 
 \cref{eq:1}の$z=1-c$での切り口は，
 \begin{align}
-  \begin{cases}
+  \begin{dcases}
     x^2+y^2 \le (2c)^2 \\
     (x-1)^2+y^2 \le 1
-  \end{cases} \label{eq:2}
+  \end{dcases} \label{eq:2}
 \end{align}
 である．これを図示すると下図の斜線部となる．
 
@@ -138,9 +138,9 @@
 
     % --- 3. 2つの円の輪郭線 ---
     % 円錐の断面円: x^2 + y^2 = (2c)^2
-    \draw[thick, gray!50] (O) circle (\rCone);
+    \draw[thick, gray!60!black] (O) circle (\rCone);
     % 円柱の断面円: (x - 1)^2 + y^2 = 1
-    \draw[thick, gray!50] (A) circle (1.0);
+    \draw[thick, gray!60!black] (A) circle (1.0);
 
     % 共通部分の境界線（太線強調）
     \draw[very thick, blue!85!black]
@@ -155,7 +155,7 @@
 
     % --- 5. 補助線と直角・角度 ---
     % 弦 P_+ P_-
-    \draw[dashed, gray!60, thick] (P_pos) -- (P_neg);
+    \draw[densely dotted, gray!70!black, thick] (P_pos) -- (P_neg);
 
     % 動径 OP_+ (長さ 2c)
     \draw[very thick, blue!80!black] (O) -- (P_pos);
@@ -170,18 +170,16 @@
     \node[purple!90!black, font=\scriptsize\bfseries] at ({\angTheta/2}:0.48) {$\theta$};
 
     % 角度 pi - 2theta = angle(P_+ A Q)
-    % A(1, 0) から見た P_+ の偏角は 180° - (180° - 2theta) = 2theta ではなく、
-    % A から Q への方向は 180°。P_+ への方向は 180° - (180° - 2theta) = 180° - 70° = 110°
-    \pgfmathsetmacro{\angAP}{180 - (180 - 2*\angTheta)} % 110°
+    \pgfmathsetmacro{\angAP}{180 - (180 - 2*\angTheta)}
     \draw[thick, orange!90!black] ($ (A) + (180:0.3) $) arc (180:\angAP:0.3);
     \node[orange!95!black, font=\tiny\bfseries] at ($ (A) + ({180 - (180-2*\angTheta)/2}:0.5) $) {$\pi-2\theta$};
 
     % --- 6. 頂点プロットとラベル ---
     \node[circle, fill, inner sep=0.8pt] at (O) {};
-    \node[circle, fill, inner sep=0.8pt] at (A) {}; \node[below=2pt] at (A) {$A(1,0)$};
+    \node[circle, fill, inner sep=0.8pt] at (A) {}; \node[below=2pt, font=\scriptsize] at (A) {$A(1,0)$};
     \node[circle, fill=red!85!black, inner sep=1.2pt] at (P_pos) {}; \node[above right=1pt, red!95!black] at (P_pos) {$P_+(2c^2, 2cs)$};
     \node[circle, fill=red!85!black, inner sep=1.2pt] at (P_neg) {}; \node[below right=1pt, red!95!black] at (P_neg) {$P_-(2c^2, -2cs)$};
-    \node[circle, fill=gray!80!black, inner sep=0.8pt] at (Q_mid) {}; \node[gray!80!black, below right=-1pt, font=\scriptsize] at (Q_mid) {$Q$};
+    \node[circle, fill=gray!80!black, inner sep=0.8pt] at (Q_mid) {}; \node[gray!80!black, above left=1pt, font=\scriptsize] at (Q_mid) {$Q$};
 
     % 目盛り
     \node[below=2pt, font=\scriptsize] at (\rCone, 0) {$2c$};
@@ -211,11 +209,12 @@
   \centering
   \begin{tikzpicture}[scale=2.2, >=stealth, every node/.style={font=\small}]
 
+    \def\angT{48}
+
     % ============================================================
     % 【左側】S_1 の半分 (中心 O, 半径 2c, 中心角 theta)
     % ============================================================
     \begin{scope}[xshift=0cm]
-      \def\angT{48}
       \def\radOne{1.8} % 2c
       \pgfmathsetmacro{\xChord}{\radOne * cos(\angT)}
 
@@ -254,12 +253,12 @@
     \end{scope}
 
     % ============================================================
-    % 【右側】S_2 の半分 (中心 A が右側, 半径 1, 中心角 2*theta)
+    % 【右側】S_2 の半分 (中心 A が右側, 半径 1, 中心角 \pi - 2*theta)
     % ============================================================
     \begin{scope}[xshift=3.8cm]
       % 手書きスケッチ通り、頂点(中心)を右側に配置
-      % 頂角 2*theta = 60°
-      \def\angTwoT{60}
+      % 頂角 \pi - 2*theta
+      \pgfmathsetmacro{\angTwoT}{180 - 2*\angT}
       \def\radTwo{1.6} % 半径 1 に対応
       \pgfmathsetmacro{\wBase}{\radTwo * cos(\angTwoT)}
       \pgfmathsetmacro{\hTop}{\radTwo * sin(\angTwoT)}
@@ -292,10 +291,10 @@
       ($ (Foot_pt) + (0.08, 0.08) $) --
       ($ (Foot_pt) + (0, 0.08) $);
 
-      % 角度 2*theta の弧と引き出し線
+      % 角度 \pi - 2*theta の弧と引き出し線
       \draw[thick, black] ($ (A_center) + (180:0.35) $) arc (180:{180 - \angTwoT}:0.35);
       \draw[thin, black] ($ (A_center) + ({180 - \angTwoT/2}:0.35) $) to[out=45, in=180] ++(0.3, 0.15)
-      node[right=1pt, font=\footnotesize\bfseries] {$2\theta$};
+      node[right=1pt, font=\footnotesize\bfseries] {$\pi - 2\theta$};
 
       % 半径ラベル 1
       \node[below=3pt, font=\footnotesize\bfseries] at (Left_pt) {$1$};
@@ -318,15 +317,16 @@
 それぞれ扇形から対応する三角形の面積を引いたもので，各々計算すると，
 \begin{align}
   S_1
-  &=\dfrac{1}{2}2\theta(2c)^2 - \dfrac{1}{2}(2c^2)(cs)
-  &=4c^2\theta-4c^3s
+  =\dfrac{1}{2}2\theta(2c)^2 - \dfrac{1}{2}(2c^2)(4cs)
+  =4c^2\theta-4c^3s
 \end{align}
 および
 \begin{align}
   S_2
   &=\dfrac{1}{2}(2\pi-4\theta)-\dfrac{1}{2}2\sin(\pi-2\theta)\cos(\pi-2\theta) \\
-  &=\pi-2\theta+2cs(1+2c^2) \\
-  &=\pi-2\theta+2cs+4c^3s
+  &=(\pi-2\theta)+\sin 2\theta\cos 2\theta \\
+  &=\pi-2\theta+2cs(2c^2-1) \\
+  &=\pi-2\theta-2cs+4c^3s
 \end{align}
 だから\cref{eq:3}に代入して
 \begin{align}
@@ -348,7 +348,7 @@
 である．各項計算すると
 \begin{align}
   (\text{第一項})
-  &= \int_0^{\pi/2}s\theta d\theta=2\left[-c\theta+s\right]_0^{\pi/2}=1
+  &= \int_0^{\pi/2}s\theta d\theta=2\left[-c\theta+s\right]_0^{\pi/2}=2
 \end{align}
 \begin{align}
   (\text{第二項})
@@ -364,11 +364,11 @@
   (\text{第四項})
   &=\int_0^{\pi/2}cs^2d\theta=\left[\dfrac{1}{3}s^3\right]_0^{\pi/2}=\dfrac{1}{3}
 \end{align}
-だから，これらを\cref{eq:5}に代入して求める体制は
+だから，これらを\cref{eq:5}に代入して求める体積は
 \begin{align}
   V=2-\dfrac{28}{9}+\pi-\dfrac{2}{3}=\pi-\dfrac{16}{9}
 \end{align}
-である．$\cdots$(の答)
+である．$\cdots$(答)
 
 {\bf [別解]}
 
@@ -429,7 +429,7 @@
     % --- 6. 積分境界の目盛りと点プロット ---
     \node[circle, fill, inner sep=1.1pt] at (P_pos) {}; \node[above right=1pt] at (P_pos) {$P_+$};
     \node[circle, fill, inner sep=1.1pt] at (P_neg) {}; \node[below right=1pt] at (P_neg) {$P_-$};
-    \node[circle, fill, inner sep=0.8pt] at (A) {}; \node[below=2pt] at (A) {$A$};
+    \node[circle, fill, inner sep=0.8pt] at (A) {}; \node[above right=1pt, font=\scriptsize] at (A) {$A$};
 
     % x 軸上の境界値
     \node[below=2pt, font=\scriptsize, red!90!black] at (\xP, 0) {$2c^2$};
@@ -437,8 +437,8 @@
     \node[below=2pt, font=\scriptsize] at (2.0, 0) {$2$};
 
     % 領域ラベル
-    \node[blue!90!black, font=\footnotesize\bfseries] at (0.85, -0.3) {$S_1$};
-    \node[teal!90!black, font=\footnotesize\bfseries] at (0.35, -0.3) {$S_2$};
+    \node[blue!90!black, font=\footnotesize\bfseries] at (1.1, -0.35) {$S_1$};
+    \node[teal!90!black, font=\footnotesize\bfseries] at (0.45, -0.35) {$S_2$};
 
   \end{tikzpicture}
   \caption{定積分で求める 2 つの領域 $S_1, S_2$ の積分区間と幾何関係}
