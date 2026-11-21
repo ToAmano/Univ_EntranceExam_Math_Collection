@@ -11,7 +11,7 @@
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=2.8cm, y=2.0cm, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[x=2.8cm, y=3.6cm, >=stealth, every node/.style={font=\small}]
 
     % --- 1. 定数・厳密パラメータ ---
     % a = 1.4, x = 0.6 => a - x = 0.8, a + x = 2.0
@@ -20,18 +20,18 @@
     \pgfmathsetmacro{\amx}{\a - \del} % 0.8
     \pgfmathsetmacro{\apx}{\a + \del} % 2.0
 
-    % 曲線 y = 1.8 / t
-    \def\K{1.8}
-    \pgfmathsetmacro{\yA}{\K / \a}          % 1.8 / 1.4 ≈ 1.2857
-    \pgfmathsetmacro{\slope}{-\K / (\a*\a)} % -1.8 / 1.96 ≈ -0.9184
+    % 曲線 y = 1 / t
+    \def\K{1.0}
+    \pgfmathsetmacro{\yA}{\K / \a}          % 1.0 / 1.4 ≈ 0.7143
+    \pgfmathsetmacro{\slope}{-\K / (\a*\a)} % -1.0 / 1.96 ≈ -0.5102
 
     % 接線 y = slope*(t - a) + yA
     \pgfmathsetmacro{\yD}{\slope*(\amx - \a) + \yA} % t = a-x での接線の高さ
     \pgfmathsetmacro{\yC}{\slope*(\apx - \a) + \yA} % t = a+x での接線の高さ
 
     % 曲線上の点 E, F
-    \pgfmathsetmacro{\yF}{\K / \amx} % 1.8 / 0.8 = 2.25
-    \pgfmathsetmacro{\yE}{\K / \apx} % 1.8 / 2.0 = 0.90
+    \pgfmathsetmacro{\yF}{\K / \amx} % 1.0 / 0.8 = 1.25
+    \pgfmathsetmacro{\yE}{\K / \apx} % 1.0 / 2.0 = 0.50
 
     % 座標の定義
     \coordinate (O)  at (0, 0);
@@ -48,14 +48,14 @@
 
     % --- 2. 座標軸 ---
     \draw[->, thick, gray!80!black] (-0.2, 0) -- (2.6, 0) node[right] {$t$};
-    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 2.7) node[above] {$y$};
+    \draw[->, thick, gray!80!black] (0, -0.1) -- (0, 1.5) node[above] {$y$};
     \node[below left=2pt] at (O) {$O$};
 
     % --- 3. 補助線と垂線 ---
-    \draw[dashed, gray!60] (0, \yA) -- (Mid);
+    \draw[densely dotted, thick, gray!70!black] (0, \yA) -- (Mid);
     \node[left=2pt, font=\scriptsize] at (0, \yA) {$\frac{1}{a}$};
 
-    \draw[dashed, gray!60] (T_a) -- (Mid);
+    \draw[densely dotted, thick, gray!70!black] (T_a) -- (Mid);
     \node[below=2pt] at (T_a) {$a$};
 
     \draw[thick, gray!70!black] (A) -- (F);
@@ -74,7 +74,7 @@
     % --- 5. 点 a での接線（下側の直線） ---
     \draw[line width=1.3pt, red!85!black]
     ($ (D)! -0.2 !(C) $) -- ($ (C)! -0.2 !(D) $);
-    \node[red!90!black, font=\scriptsize\bfseries, above right] at (1.1, 1.7) {点 $a$ での接線};
+    \node[red!90!black, font=\scriptsize\bfseries, above right] at (1.1, 0.95) {点 $a$ での接線};
 
     % --- 6. 弦 FE（上側の線分） ---
     \draw[line width=1.4pt, teal!85!black] (F) -- (E);
@@ -112,7 +112,7 @@ $\ell$と$t=a+x,a-x$との交点をそれぞれ$C,D$, また$A(a-x,0), B(a+x,0)$
 % TODO: 二つの区間での評価
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=3.2cm, y=2.0cm, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[x=3.2cm, y=3.6cm, >=stealth, every node/.style={font=\small}]
 
     % --- 1. 定数・厳密パラメータ ---
     \def\a{1.4}
@@ -122,7 +122,7 @@ $\ell$と$t=a+x,a-x$との交点をそれぞれ$C,D$, また$A(a-x,0), B(a+x,0)$
     \pgfmathsetmacro{\mOne}{\a - 0.5*\del} % 1.1 (第1区間の中点)
     \pgfmathsetmacro{\mTwo}{\a + 0.5*\del} % 1.7 (第2区間の中点)
 
-    \def\K{1.8}
+    \def\K{1.0}
     \pgfmathsetmacro{\yF}{\K / \amx}
     \pgfmathsetmacro{\yM}{\K / \a}
     \pgfmathsetmacro{\yE}{\K / \apx}
@@ -142,12 +142,12 @@ $\ell$と$t=a+x,a-x$との交点をそれぞれ$C,D$, また$A(a-x,0), B(a+x,0)$
 
     % --- 2. 座標軸 ---
     \draw[->, thick, gray!80!black] (-0.15, 0) -- (2.4, 0) node[right] {$t$};
-    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 2.7) node[above] {$y$};
+    \draw[->, thick, gray!80!black] (0, -0.1) -- (0, 1.5) node[above] {$y$};
     \node[below left=2pt] at (O) {$O$};
 
     % --- 3. 垂線と分割境界 ---
     \draw[thick, gray!70!black] (A) -- (F);
-    \draw[thick, dashed, gray!60] (M0) -- (Mid);
+    \draw[thick, densely dotted, gray!70!black] (M0) -- (Mid);
     \draw[thick, gray!70!black] (B) -- (E);
 
     \node[below=2pt] at (A) {$a-x$};
@@ -225,15 +225,15 @@ $\ell$と$t=a+x,a-x$との交点をそれぞれ$C,D$, また$A(a-x,0), B(a+x,0)$
 この問題の肝はうまいこと$a,b$を選んで(1)の評価が題意を示すのに十分正確にすることである．
 積分は$\log \dfrac{a+x}{a-x}$だから，これが$\log 2$に等しいとすると自然に
 \begin{align}
-  \dfrac{a+x}{a-x} = \log 2 \quad \therefore a = 3x
+  \dfrac{a+x}{a-x} = 2 \quad \therefore a = 3x
 \end{align}
 となる．ところがこの問題の罠は，単にこれを用いると評価が緩すぎるということである．
 [解答]では不等式の評価区間を二つに分けることで$a=3x$という自然な設定を用いながらも題意を証明できた．
 
-% TODO: x_1<x_2なるx_1,x_2における(1)の面積比較
 \begin{figure}[htb]
+  % x_1<x_2なるx_1,x_2における(1)の面積比較
   \centering
-  \begin{tikzpicture}[x=3.4cm, y=2.2cm, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[x=3.4cm, y=3.96cm, >=stealth, every node/.style={font=\small}]
 
     % --- 1. 定数・厳密パラメータ ---
     \def\a{1.4}
@@ -245,7 +245,7 @@ $\ell$と$t=a+x,a-x$との交点をそれぞれ$C,D$, また$A(a-x,0), B(a+x,0)$
     \pgfmathsetmacro{\xOneL}{\a - \delOne} % 1.05
     \pgfmathsetmacro{\xOneR}{\a + \delOne} % 1.75
 
-    \def\K{1.8}
+    \def\K{1.0}
     \pgfmathsetmacro{\yA}{\K / \a}
     \pgfmathsetmacro{\slope}{-\K / (\a*\a)}
 
@@ -258,7 +258,7 @@ $\ell$と$t=a+x,a-x$との交点をそれぞれ$C,D$, また$A(a-x,0), B(a+x,0)$
 
     % --- 2. 座標軸 ---
     \draw[->, thick, gray!80!black] (-0.15, 0) -- (2.5, 0) node[right] {$t$};
-    \draw[->, thick, gray!80!black] (0, -0.2) -- (0, 3.2) node[above] {$y$};
+    \draw[->, thick, gray!80!black] (0, -0.1) -- (0, 1.8) node[above] {$y$};
     \node[below left=2pt] at (0, 0) {$O$};
 
     % ============================================================
@@ -328,13 +328,13 @@ $\ell$と$t=a+x,a-x$との交点をそれぞれ$C,D$, また$A(a-x,0), B(a+x,0)$
   \label{fig:error_comparison_x1_x2}
 \end{figure}
 
-別の発想としてよりよい$(a,b)$はないか？という解法が考えられる．
+別の発想としてよりよい$(a,x)$はないか？という解法が考えられる．
 要するに$x=\dfrac{a}{3}$だと台形の幅が大きすぎるのだから，ここがより狭くなるような$x$を選べれば誤差が小さくなるだろうと考えられるから，例えば$\dfrac{a+x}{a-x}=\sqrt{2} \therefore x = (3-2\sqrt{2})a$だと$\log 2$が出てきつつも積分区間が狭くなるだろうと思えば以下のような解法があり得る．
 
 $x = (3 - 2\sqrt{2})a$ とおいて\cref{eq:1}に代入すると
 \begin{align}
-  & 6 - 4\sqrt{2} < \dfrac{1}{2} \log 2 < \dfrac{15}{64} \\
-  & 4(3 - 2\sqrt{2}) < \log 2 < \dfrac{1}{2}
+  & 6 - 4\sqrt{2} < \dfrac{1}{2} \log 2 < \dfrac{\sqrt{2}}{4} \\
+  & 4(3 - 2\sqrt{2}) < \log 2 < \dfrac{\sqrt{2}}{2}
 \end{align}
 である．$1.415 < \sqrt{2} < 1.42$ を示して用いることで，所望の不等式を得る．
 
