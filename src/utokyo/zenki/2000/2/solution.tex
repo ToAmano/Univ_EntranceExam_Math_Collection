@@ -13,13 +13,13 @@
 
     % --- 1. 定数・幾何パラメータ ---
     % 中心 A(1/2, 0), 半径 1/2 の円: |z - 1/2| = 1/2
-    % 円周上の点 P(alpha) と Q(beta) (垂線足 R との十分な間隔を確保)
-    % phi_P = 50°: P ≈ (0.8214, 0.3830)
-    % phi_Q = 110°: Q ≈ (0.3290, 0.4698)
-    \pgfmathsetmacro{\xP}{0.5 + 0.5*cos(50)}
-    \pgfmathsetmacro{\yP}{0.5*sin(50)}
-    \pgfmathsetmacro{\xQ}{0.5 + 0.5*cos(110)}
-    \pgfmathsetmacro{\yQ}{0.5*sin(110)}
+    % 円周上の点 P(alpha) と Q(beta) (垂線足 R および y 軸との十分な間隔を確保)
+    % phi_P = 35°: P ≈ (0.9096, 0.2868)
+    % phi_Q = 100°: Q ≈ (0.4132, 0.4924)
+    \pgfmathsetmacro{\xP}{0.5 + 0.5*cos(35)}
+    \pgfmathsetmacro{\yP}{0.5*sin(35)}
+    \pgfmathsetmacro{\xQ}{0.5 + 0.5*cos(100)}
+    \pgfmathsetmacro{\yQ}{0.5*sin(100)}
 
     \coordinate (O)      at (0, 0);
     \coordinate (Center) at (0.5, 0);
@@ -42,21 +42,21 @@
     % --- 2. 軌跡の円 |z - 1/2| = 1/2 ---
     \fill[blue!6, opacity=0.8] (Center) circle (0.5);
     \draw[thick, dashed, blue!70!black] (Center) circle (0.5);
-    \node[blue!85!black, font=\scriptsize, above right] at (0.55, 0.48)
+    \node[blue!85!black, font=\scriptsize, below right=2pt] at ($ (Center) + (-45:0.5) $)
     {$\left|z - \frac{1}{2}\right| = \frac{1}{2}$};
 
     % --- 3. 座標軸 (複素数平面: 実軸 Re, 虚軸 Im) ---
     \draw[->, thick, gray!80!black] (-0.3, 0) -- (1.45, 0) node[right] {$\text{Re}$};
-    \draw[->, thick, gray!80!black] (0, -0.25) -- (0, 1.15) node[above] {$y$ (Im)};
+    \draw[->, thick, gray!80!black] (0, -0.58) -- (0, 1.15) node[above] {$y$ (Im)};
     \node[below left=2pt] at (O) {$O$};
 
     % --- 4. 直線 l (PQ を通る直線) ---
-    \draw[line width=1.5pt, gray!75!black] ($ (P)!-0.3!(Q) $) -- ($ (P)!1.4!(Q) $)
-    node[above left=-1pt, font=\footnotesize, black] {直線 $l$};
+    \draw[line width=1.5pt, gray!75!black] ($ (P)!-0.35!(Q) $) -- ($ (P)!1.95!(Q) $)
+    node[left=2pt, font=\footnotesize, black] {直線 $l$};
 
     % --- 5. 垂線 OR ---
     \draw[line width=1.8pt, red!85!black] (O) -- (R);
-    \node[red!90!black, font=\scriptsize\bfseries, left=2pt] at ($ (O)!0.5!(R) $) {垂線 $OR$};
+    \node[red!90!black, font=\scriptsize\bfseries, right=2pt] at ($ (O)!0.48!(R) $) {垂線 $OR$};
 
     % --- 6. 直角記号 (OR ⊥ PQ) ---
     \draw[thin, red!80!black]
@@ -65,16 +65,15 @@
     ($ (R) + ({\angPQ - 90}:0.07) $);
 
     % --- 7. 目盛りと主要点のプロット ---
-    \draw[densely dotted, thick, gray!70!black] (Center) -- (0.5, -0.08);
     \node[below=2pt, font=\scriptsize] at (Center) {$\frac{1}{2}$};
-    \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
+    \node[below right=2pt, font=\scriptsize, fill=white, inner sep=0.6pt] at (1.0, 0) {$1$};
     \node[circle, fill, inner sep=0.6pt] at (Center) {};
     \node[circle, fill, inner sep=0.6pt] at (1.0, 0) {};
 
     % 点 P(alpha), Q(beta), R(w)
-    \node[circle, fill, inner sep=1.2pt] at (P) {}; \node[above right=1pt] at (P) {$P(\alpha)$};
-    \node[circle, fill, inner sep=1.2pt] at (Q) {}; \node[above=2pt] at (Q) {$Q(\beta)$};
-    \node[circle, fill=red!85!black, inner sep=1.4pt] at (R) {}; \node[above left=1pt, red!90!black] at (R) {$R(w)$};
+    \node[circle, fill, inner sep=1.2pt] at (P) {}; \node[above right=1.5pt] at (P) {$P(\alpha)$};
+    \node[circle, fill, inner sep=1.2pt] at (Q) {}; \node[above right=1.5pt] at (Q) {$Q(\beta)$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (R) {}; \node[above=2.5pt, red!90!black] at (R) {$R(w)$};
 
   \end{tikzpicture}
   \caption{直線 $PQ$ への原点からの垂線の足 $R(w)$ と円 $\left|z - \dfrac{1}{2}\right| = \dfrac{1}{2}$}
@@ -106,7 +105,7 @@
     % 点プロット
     \node[circle, fill, inner sep=1.4pt] at (P) {}; \node[above right=1pt] at (P) {$P(\alpha)$};
     \node[circle, fill, inner sep=1.4pt] at (Q) {}; \node[above right=1pt] at (Q) {$Q(\beta)$};
-    \node[circle, fill=red!85!black, inner sep=1.4pt] at (R) {}; \node[above left=2pt, red!90!black] at (R) {$R(w)$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (R) {}; \node[above right=2pt, red!90!black] at (R) {$R(w)$};
   \end{tikzpicture}
   \caption{点$P(\alpha),Q(\beta),R(w)$の配置}
 \end{figure}
