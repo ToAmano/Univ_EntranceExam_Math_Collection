@@ -77,6 +77,7 @@ export const CATEGORIES = [
 
 export const KIND_META = [
   { key: 'proof', label: 'proof', jp: '論証・解答' },
+  { key: 'creation', label: 'creation', jp: '解答作成' },
   { key: 'transcription', label: 'transcription', jp: '文字起こし' },
   { key: 'figure', label: 'figure', jp: '図表・TikZ' },
   { key: 'reference', label: 'reference', jp: '相互参照' },
@@ -85,9 +86,18 @@ export const KIND_META = [
 
 const VALID_UNIVS = new Set(['utokyo', 'ukyoto', 'titech']);
 const VALID_CATS = new Set(['zenki', 'kouki']);
+const CREATION_TITLE_RE = /^\s*\[解答作成(?:待ち)?\]/;
+
+export function effectiveKinds(issue) {
+  const raw = issue?.kinds || [];
+  if (raw.includes('creation') || CREATION_TITLE_RE.test(issue?.title || '')) {
+    return ['creation'];
+  }
+  return raw;
+}
 
 function emptyKindCounts() {
-  return { proof: 0, transcription: 0, figure: 0, reference: 0, style: 0, unclassified: 0 };
+  return { proof: 0, creation: 0, transcription: 0, figure: 0, reference: 0, style: 0, unclassified: 0 };
 }
 
 function addKinds(target, kinds = []) {
@@ -106,7 +116,7 @@ function filterGroupsForKinds(kinds = []) {
     groups.add('other');
   } else {
     for (const k of kinds) {
-      if (k === 'proof' || k === 'transcription' || k === 'figure') groups.add(k);
+      if (k === 'proof' || k === 'creation' || k === 'transcription' || k === 'figure') groups.add(k);
       if (k === 'reference' || k === 'style') groups.add('other');
     }
   }
@@ -231,7 +241,7 @@ export function buildIssueStats(index, allEntries = [], baseUrl = '') {
         title: item.title,
         url: item.url,
         updatedDate: formatShortDate(item.updated_at),
-        kinds: item.kinds || [],
+        kinds: effectiveKinds(item),
       });
     } else {
       generalClosedCount += 1;
@@ -286,7 +296,7 @@ export function buildIssueStats(index, allEntries = [], baseUrl = '') {
 
     for (const cw of catWideByKey.get(cfg.id) || []) {
       if (cw.state === 'open') {
-        const ks = cw.kinds || [];
+        const ks = effectiveKinds(cw);
         catOpenCount += 1;
         addKinds(catOpenByKind, ks);
         addKinds(globalOpenByKind, ks);
@@ -343,10 +353,10 @@ export function buildIssueStats(index, allEntries = [], baseUrl = '') {
             : null;
 
         const problemKey = `${year}/${cell.question}`;
-        const cellOpenByFilter = { all: openList.length, proof: 0, transcription: 0, figure: 0, other: 0 };
+        const cellOpenByFilter = { all: openList.length, proof: 0, creation: 0, transcription: 0, figure: 0, other: 0 };
 
         for (const iss of openList) {
-          const ks = iss.kinds || [];
+          const ks = effectiveKinds(iss);
           const groups = filterGroupsForKinds(ks);
           addKinds(catOpenByKind, ks);
           addKinds(globalOpenByKind, ks);

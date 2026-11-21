@@ -74,6 +74,7 @@ test('buildIssueStats aggregates single-problem, category-wide, general, and unr
   assert.deepEqual(y1975.questions[0].openByFilter, {
     all: 2,
     proof: 1,
+    creation: 0,
     transcription: 0,
     figure: 1,
     other: 1,
@@ -155,4 +156,43 @@ test('buildIssueStats computes JST daily (30d) and full-range cumulative closed 
   const ukyotoZenki = stats.categories.find(c => c.id === 'ukyoto-zenki');
   assert.equal(ukyotoZenki.closedTrend.recentTotal, 2);
   assert.equal(ukyotoZenki.closedTrend.cumulativeTotal, 2);
+});
+
+test('buildIssueStats isolates solution creation issues into creation category exclusively', () => {
+  const index = {
+    available: true,
+    generatedAt: '2026-11-21T00:00:00Z',
+    problems: {
+      'utokyo/zenki/1975/1': [
+        { number: 201, title: '[解答作成] 東大前期1975-1：解答を新規作成', state: 'open', url: `${REPO_URL}/issues/201`, updated_at: '2026-11-20T00:00:00Z', kinds: ['proof', 'transcription'] },
+        { number: 202, title: '[監査] 東大前期1975-1：論証修正', state: 'open', url: `${REPO_URL}/issues/202`, updated_at: '2026-11-20T00:00:00Z', kinds: ['proof'] },
+      ],
+      'ukyoto/kouki/1995/1': [
+        { number: 203, title: '京大後期1995-1：新設問の解答', state: 'open', url: `${REPO_URL}/issues/203`, updated_at: '2026-11-20T00:00:00Z', kinds: ['creation'] },
+      ],
+    },
+    unmapped: [],
+  };
+
+  const stats = buildIssueStats(index, sampleEntries, '');
+  assert.equal(stats.totals.openByKind.creation, 2);
+  assert.equal(stats.totals.openByKind.proof, 1);
+  assert.equal(stats.totals.openByKind.transcription, 0);
+
+  const utokyoZenki = stats.categories.find(c => c.id === 'utokyo-zenki');
+  assert.equal(utokyoZenki.openByKind.creation, 1);
+  assert.equal(utokyoZenki.openByKind.proof, 1);
+  assert.equal(utokyoZenki.openByKind.transcription, 0);
+  const y1975 = utokyoZenki.decades.flatMap(d => d.years).find(y => y.year === '1975');
+  assert.deepEqual(y1975.questions[0].openByFilter, {
+    all: 2,
+    proof: 1,
+    creation: 1,
+    transcription: 0,
+    figure: 0,
+    other: 0,
+  });
+  const issue201 = utokyoZenki.openIssues.find(i => i.number === 201);
+  assert.deepEqual(issue201.kinds, ['creation']);
+  assert.deepEqual(issue201.filterGroups, ['creation']);
 });

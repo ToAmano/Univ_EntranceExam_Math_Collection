@@ -6,7 +6,7 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 
 DEFAULT_REPO = 'ToAmano/Univ_EntranceExam_Math_Collection'
-KINDS = {'proof', 'figure', 'reference', 'transcription', 'style'}
+KINDS = {'creation', 'proof', 'figure', 'reference', 'transcription', 'style'}
 VALID_UNIVS = {'utokyo', 'ukyoto', 'titech'}
 VALID_EXAMS = {'zenki', 'kouki'}
 ID = r'(?:utokyo|ukyoto|titech)/(?:zenki|kouki)/[0-9]{4}/[1-9][0-9]*'
@@ -110,6 +110,8 @@ def classify_issue(issue, root, overrides=None):
     if conflicting or any(n[5:] not in KINDS for n in existing if n.startswith('kind:')):
         return finish('review', 'existing managed labels conflict with convention')
     kinds = {n for n in existing if n.startswith('kind:')}
+    if re.match(r'^\s*\[解答作成(?:待ち)?\]', title):
+        kinds.add('kind:creation')
     if '[監査]' in title or any(m[1] == 'math-audit-question' for m in markers):
         kinds.add('kind:proof')
     if re.search(r'TikZ|図監査|図表|図の|図が|図中|caption', title, re.I) or any(m[1] != 'math-audit-question' for m in markers):

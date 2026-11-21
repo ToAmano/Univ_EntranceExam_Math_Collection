@@ -60,13 +60,14 @@ year:1985
 
 | ラベル | 対象 |
 |---|---|
+| `kind:creation` | 解答の新規作成（未収録・手書き解答なし問題の解答執筆） |
 | `kind:proof` | 数式・論証・最終答案・数学的な記述の誤りや検証 |
 | `kind:figure` | 図表の欠落、TikZ、caption、配置、視認性、図表の生成・表示 |
 | `kind:reference` | 式・図・表の番号、label、cref、参照リンク |
 | `kind:transcription` | 元原稿との照合、文字起こしの誤記・欠落、未収録 |
 | `kind:style` | 句読点、字下げ、フォントなど、上記に含まれない書式 |
 
-図表のcaption不足は `kind:figure`、参照先が壊れている問題は `kind:reference` とする。図表の数学的内容も誤っていれば `kind:proof` を併用する。誤記の発生源が不明な数学的指摘に、推測だけで `kind:transcription` は付けない。
+解答を新規に作成するIssue（`[解答作成]` 等）は `kind:creation` を用い、既存解答の補修（`kind:proof` 等）と区別する。図表のcaption不足は `kind:figure`、参照先が壊れている問題は `kind:reference` とする。図表の数学的内容も誤っていれば `kind:proof` を併用する。誤記の発生源が不明な数学的指摘に、推測だけで `kind:transcription` は付けない。
 
 `bug`、`enhancement` など既存ラベルは別の分類軸として保持する。この規約の導入時に削除・置換しない。open/closedや人による確認状況を `kind:*` で表現しない。
 

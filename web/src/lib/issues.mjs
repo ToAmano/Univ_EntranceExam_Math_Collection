@@ -6,7 +6,7 @@ export const REPO_URL = `https://github.com/${REPO}`;
 const PROBLEM_ID = /^(utokyo|ukyoto|titech)\/(zenki|kouki)\/[0-9]{4}\/[1-9][0-9]*$/;
 const VALID_UNIVS = new Set(['utokyo', 'ukyoto', 'titech']);
 const VALID_EXAMS = new Set(['zenki', 'kouki']);
-const VALID_KINDS = new Set(['proof', 'figure', 'reference', 'transcription', 'style']);
+const VALID_KINDS = new Set(['creation', 'proof', 'figure', 'reference', 'transcription', 'style']);
 
 function isValidIssueCore(issue) {
   if (!issue || typeof issue !== 'object') return false;

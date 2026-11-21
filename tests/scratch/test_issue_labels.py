@@ -132,6 +132,15 @@ def test_single_question_web_display_is_eligible(root):
     assert classify_issue(issue(title='[Web表示] 東工大前期1985-3 図の欠落'), root)['status'] == 'candidate'
 
 
+def test_solution_creation_title_adds_kind_creation(root):
+    i = issue(title='[解答作成] 東工大前期1985-3：解答を新規作成', body='')
+    r = classify_issue(i, root)
+    assert r['status'] == 'candidate'
+    assert 'kind:creation' in r['labels']
+    assert 'kind:proof' not in r['labels']
+    assert validate_labels(r['labels']) == ('titech/zenki/1985/3', None)
+
+
 def test_stale_labels_on_aggregate_are_rejected():
     labels=['problem:titech/zenki/1985/3','univ:titech','exam:zenki','year:1985']
     result=build_index([issue(title='全サイトのまとめ',labels=labels)])

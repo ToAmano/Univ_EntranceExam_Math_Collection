@@ -69,7 +69,7 @@ test('readIssueIndex supports optional unmapped list and validates its entries',
     ...snapshot(),
     unmapped: [
       { ...row(50, 'open'), updated_at: '2026-11-01T00:00:00Z', closed_at: null, kinds: ['figure'], univ: 'ukyoto', exam: 'zenki' },
-      { ...row(51, 'closed'), updated_at: null, closed_at: '2026-11-02T15:30:00Z', kinds: [], univ: null, exam: null },
+      { ...row(51, 'closed'), updated_at: null, closed_at: '2026-11-02T15:30:00Z', kinds: ['creation'], univ: null, exam: null },
     ],
   };
   withSnapshot(withUnmapped, index => {
