@@ -1201,6 +1201,21 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
             return '$' + rebuilt + '$'
 
         tab_clean = re.sub(r'\$([^$]*)\$', _protect_math_pipes, tab_clean)
+        # Pandoc can emit an inline math span containing cases/dcases over
+        # several physical lines. The GFM table reader below keeps only lines
+        # starting with '|', which silently drops the rest of that cell.
+        # Hide multiline math from Pandoc, then restore it on one table line.
+        protected_math = {}
+
+        def _protect_multiline_math(m):
+            math = m.group(0)
+            if '\n' not in math:
+                return math
+            token = f'MATHCELLPLACEHOLDER{len(protected_math)}Z'
+            protected_math[token] = re.sub(r'\s*\n\s*', ' ', math)
+            return token
+
+        tab_clean = re.sub(r'\$[^$]*\$', _protect_multiline_math, tab_clean, flags=re.DOTALL)
         # standalone tabular 文脈を構築して Pandoc に入力
         wrapped_tex = f"\\documentclass{{article}}\n\\begin{{document}}\n{tab_clean}\n\\end{{document}}"
         try:
@@ -1210,6 +1225,8 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
                 if line.strip().startswith('|'):
                     # $`math`$ 形式を通常の $math$ に変換
                     line_clean = re.sub(r'\$`([^`]+)`\$', r'$\1$', line)
+                    for token, math in protected_math.items():
+                        line_clean = line_clean.replace(token, math)
                     clean_table_lines.append(line_clean)
             if clean_table_lines:
                 return "\n\n" + "\n".join(clean_table_lines).strip() + "\n\n"

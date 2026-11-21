@@ -40,6 +40,25 @@ class TestConverter(unittest.TestCase):
         latex = r'ベクトル $\bm{a}$ と $\R,\C,\N,\Z,\Q$'
         self.assertIn(latex, self.convert(latex))
 
+    def test_multiline_cases_stays_in_one_table_cell(self):
+        latex = r'''
+        \begin{tabular}{|c|c|p{8cm}|}
+        \hline
+        問題 & 小問 & 答え \\
+        \hline
+        第2問 & (2) & $\displaystyle n(\alpha)=\begin{dcases}
+          1 & 0<\alpha\le 1 \\
+          2 & \alpha>1
+        \end{dcases}$ \\
+        \hline
+        \end{tabular}
+        '''
+        md = self.convert(latex)
+        self.assertIn(r'\begin{dcases}', md)
+        self.assertIn(r'2 & \alpha>1', md)
+        self.assertIn(r'\end{dcases}', md)
+        self.assertEqual(3, len([line for line in md.splitlines() if line.startswith('|')]))
+
     def test_macro_boundaries_are_preserved(self):
         latex = r'$\Rightarrow \Zeta \Quad \R \C \N \Z \Q$'
         self.assertIn(latex, self.convert(latex))
