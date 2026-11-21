@@ -35,7 +35,7 @@
 
     % --- 4. 稜線の描画（奥側の隠れ線を破線に）---
     % 辺 BD（奥側）
-    \draw[dashed, gray!60, thick] (B) -- (D);
+    \draw[dashed, gray!70!black, thick] (B) -- (D);
 
     % 手前の外枠稜線（実線）
     \draw[very thick, black] (B) -- (C);
@@ -55,12 +55,12 @@
     \node[circle, fill, inner sep=1.2pt] at (A) {}; \node[above=2pt, font=\normalsize\bfseries] at (A) {$A$};
 
     % 中点 E のプロット
-    \node[circle, fill=teal!85!black, inner sep=1.0pt] at (E) {}; \node[below right=1pt, font=\scriptsize\bfseries, teal!90!black] at (E) {$E$};
+    \node[circle, fill=teal!85!black, inner sep=1.0pt] at (E) {}; \node[above right=1pt, font=\scriptsize\bfseries, teal!90!black] at (E) {$E$};
 
     % --- 6. 各辺の長さラベル ---
     \node[above left=1pt, font=\footnotesize]  at ($ (A)!0.5!(B) $) {$\sqrt{3}$};
     \node[below=2pt, font=\footnotesize]       at ($ (B)!0.5!(C) $) {$2$};
-    \node[below right=1pt, font=\footnotesize] at ($ (C)!0.5!(D) $) {$2$};
+    \node[below right=2pt, font=\footnotesize] at ($ (C)!0.5!(D) $) {$2$};
     \node[above=2pt, font=\footnotesize, gray!70!black] at ($ (B)!0.6!(D) $) {$2$};
     \node[right=2pt, font=\footnotesize]       at ($ (A)!0.5!(C) $) {$2$};
     \node[above right=1pt, font=\footnotesize] at ($ (A)!0.5!(D) $) {$2$};
@@ -162,8 +162,8 @@
     \node[circle, fill, inner sep=0.8pt] at (R) {};
 
     % --- 6. 寸法ラベル（手書きスケッチの引き出し線・配置を再現）---
-    % 辺 AB の長さ sqrt(3)
-    \node[left=6pt, font=\footnotesize] at (R) {$\sqrt{3}$};
+    % 辺 AB の長さ sqrt(3) (中点 R から上側へ配置して点名との重なりを回避)
+    \node[above left=2pt, font=\footnotesize] at ($ (A)!0.5!(R) $) {$\sqrt{3}$};
 
     % 辺 AE の分割寸法 (2/3 * sqrt(3), 1/3 * sqrt(3))
     \draw[thick] ($ ($ (A)!0.5!(P) $) + (-0.05, -0.03) $) -- ($ ($ (A)!0.5!(P) $) + (0.05, 0.03) $);
@@ -172,10 +172,10 @@
     \node[above right=2pt, font=\footnotesize] at ($ (P)!0.5!(E) $) {$\frac{\sqrt{3}}{3}$};
 
     % 底辺 BE の分割寸法 (引き出し線付き)
-    \draw[thin, gray!70] ($ (B)!0.5!(Q) $) -- ($ ($ (B)!0.5!(Q) $) + (0, -0.22) $);
+    \draw[thin, gray!70!black] ($ (B)!0.5!(Q) $) -- ($ ($ (B)!0.5!(Q) $) + (0, -0.22) $);
     \node[below=1pt, font=\footnotesize] at ($ ($ (B)!0.5!(Q) $) + (0, -0.22) $) {$\frac{2}{3}\sqrt{3}$};
 
-    \draw[thin, gray!70] ($ (Q)!0.5!(E) $) -- ($ ($ (Q)!0.5!(E) $) + (0, -0.22) $);
+    \draw[thin, gray!70!black] ($ (Q)!0.5!(E) $) -- ($ ($ (Q)!0.5!(E) $) + (0, -0.22) $);
     \node[below=1pt, font=\footnotesize] at ($ ($ (Q)!0.5!(E) $) + (0, -0.22) $) {$\frac{\sqrt{3}}{3}$};
 
   \end{tikzpicture}
@@ -183,7 +183,7 @@
   \label{fig:cross_section_abe_sketch_reproduced}
 \end{figure}
 
-$O$ は $\triangle ACD$ の外心$P$を通り $\triangle ACD$ に垂直な直線上かつ $\triangle BCD$ の外心$Q$を通り $\triangle BCD$ に垂直な直線上にある．$\triangle ACD,BCD$は正三角形だから，$\triangle ABE$上にある．よって$O$もこの$\triangle ABE$上にある．さらに$O$から$AB$におろした垂足を$R$とする．
+$O$ は $\triangle ACD$ の外心$P$を通り $\triangle ACD$ に垂直な直線上かつ $\triangle BCD$ の外心$Q$を通り $\triangle BCD$ に垂直な直線上にある．また$\triangle ACD,BCD$は正三角形だから$P,Q$は$\triangle ABE$上にある．よって$O$もこの$\triangle ABE$上にある．さらに$O$から$AB$におろした垂足を$R$とする．
 
 % TODO: triangle ACD, E, P
 \begin{figure}[htb]
@@ -257,7 +257,7 @@ $O$ は $\triangle ACD$ の外心$P$を通り $\triangle ACD$ に垂直な直線
 \begin{align}
   |OR|
   &= \sqrt{|OA|^2 - |AR|^2} \\
-  &= \sqrt{r^2 - \left(\dfrac{3}{2}\right)^2} \\
+  &= \sqrt{r^2 - \left(\dfrac{\sqrt{3}}{2}\right)^2} \\
   &= \sqrt{r^2 - \dfrac{3}{4}} \label{eq:4}
 \end{align}
 \begin{align}
@@ -269,7 +269,7 @@ $O$ は $\triangle ACD$ の外心$P$を通り $\triangle ACD$ に垂直な直線
   & = \sqrt{\left(r^2 - \dfrac{4}{3}\right)+\left(\dfrac{\sqrt{3}}{3}\right)^2} \quad (\because\text{\cref{eq:5}})\\
   &= \sqrt{r^2 - 1} \label{eq:6}
 \end{align}
-である．\cref{eq:3,eq:4,eq:5}から
+である．\cref{eq:3,eq:4,eq:6}から
 \begin{align}
   \dfrac{3}{2} &= \sqrt{r^2 - \dfrac{3}{4}} + \sqrt{r^2 - 1} \label{eq:7}
 \end{align}
