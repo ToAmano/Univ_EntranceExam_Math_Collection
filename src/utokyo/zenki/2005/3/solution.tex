@@ -38,12 +38,12 @@
     $x$    & $\dfrac{1}{2}$ & $\cdots$ & $1$ & $\cdots$ & $(\to\infty)$ \\ \hline
     $f''$  & $-e$           & $-$      & $0$ & $+$      & $(0)$         \\ \hline
     $f'$   & $\dfrac{1}{2}$ & $\searrow$ & $0$ & $\nearrow$ & $\left(\dfrac{1}{2}\right)$ \\ \hline
-    $f(x)$ & $\dfrac{1+e}{4}$ & $\rotatebox[origin=c]{-30}{$\curvearrowright$}$（上に凸で増加） & $1$（変曲点） & $\rotatebox[origin=c]{30}{$\curvearrowright$}$（下に凸で増加） & $(\to\infty)$ \\ \hline
+    $f(x)$ & $\dfrac{1+e}{4}$ & \carrowIncreaseConcave & $1$ & \carrowIncreaseConvex & $(\to\infty)$ \\ \hline
   \end{tabular}
 \end{table}
 
-% TODO: y=f(x)のグラフ
 \begin{figure}[htb]
+  % y=f(x)のグラフ
   \centering
   \begin{tikzpicture}[x=2.2cm, y=2.2cm, >=stealth, every node/.style={font=\small}]
 
@@ -60,11 +60,11 @@
 
     % --- 3. 補助線と直線 ---
     % 直線 y = x (対角線: 不動点探索用)
-    \draw[thick, gray!55, dashed] (0, 0) -- (2.5, 2.5)
+    \draw[thick, gray!70!black, dashed] (0, 0) -- (2.5, 2.5)
     node[above right, font=\footnotesize] {$y = x$};
 
     % 漸近線 y = 1/2 * x
-    \draw[thick, gray!45, dashdotted] (0, 0) -- (3.1, 1.55)
+    \draw[thick, gray!70!black, dashdotted] (0, 0) -- (3.1, 1.55)
     node[right, font=\scriptsize, gray!70!black] {$y = \frac{1}{2}x$};
 
     % --- 4. 曲線 y = f(x) のプロット ---
@@ -81,17 +81,17 @@
 
     % --- 6. 主要点・目盛りプロット ---
     % 不動点 (1, 1)
-    \draw[dashed, red!70!black] (1.0, 0) -- (FixedPt) -- (0, 1.0);
+    \draw[densely dotted, thick, red!70!black] (1.0, 0) -- (FixedPt) -- (0, 1.0);
     \node[circle, fill=red!85!black, inner sep=1.5pt] at (FixedPt) {};
     \node[above left=1pt, font=\footnotesize\bfseries, red!90!black] at (FixedPt) {$(1, 1)$};
     \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
-    \node[left=2pt, font=\scriptsize] at (0, 1.0) {$1$};
+    \node[above left=1pt, font=\scriptsize] at (0, 1.0) {$1$};
 
     % x = 1/2 の境界点
-    \draw[dashed, gray!60] (0.5, 0) -- (HalfPt) -- (0, {0.25*(1.0 + exp(1.0))});
+    \draw[densely dotted, thick, gray!70!black] (0.5, 0) -- (HalfPt) -- (0, {0.25*(1.0 + exp(1.0))});
     \node[circle, fill, inner sep=1.2pt] at (HalfPt) {};
     \node[below=2pt, font=\scriptsize] at (0.5, 0) {$\frac{1}{2}$};
-    \node[left=2pt, font=\scriptsize] at (0, {0.25*(1.0 + exp(1.0))}) {$\frac{1+e}{4}$};
+    \node[below left=1pt, font=\scriptsize] at (0, {0.25*(1.0 + exp(1.0))}) {$\frac{1+e}{4}$};
 
   \end{tikzpicture}
   \caption{$y = f(x)$ のグラフ}
@@ -127,9 +127,10 @@ $f(1)=1$を\cref{eq:1}から辺々引いて
 \begin{align}
   |x_{n+1}-1|=|f'(c)||x_n-1|<\dfrac{1}{2}|x_n-1|
 \end{align}
-である．よってこれをくり返し用いて，
+である．よってこれをくり返し用いて，$n \ge 1$の時
 \begin{align}
-  |x_n-1|<\left(\dfrac{1}{2}\right)^n|x_0-1|\longrightarrow0\quad(n\to\infty)
+  |x_n-1|<\left(\dfrac{1}{2}\right)^n|x_0-1|
+  \xrightarrow{n\to\infty} 0
 \end{align}
 だから，挟み撃ちの定理より
 \begin{align}
@@ -157,11 +158,11 @@ $f(x)=x$の不動点は$x=1$だから，そこに収束することがわかる�
 
     % --- 3. 補助線と直線 ---
     % 直線 y = x (対角線: 不動点探索用)
-    \draw[thick, gray!55, dashed] (0, 0) -- (2.5, 2.5)
+    \draw[thick, gray!70!black, dashed] (0, 0) -- (2.5, 2.5)
     node[above right, font=\footnotesize] {$y = x$};
 
     % 漸近線 y = 1/2 * x
-    \draw[thick, gray!45, dashdotted] (0, 0) -- (3.1, 1.55)
+    \draw[thick, gray!70!black, dashdotted] (0, 0) -- (3.1, 1.55)
     node[right, font=\scriptsize, gray!70!black] {$y = \frac{1}{2}x$};
 
     % --- 4. 曲線 y = f(x) のプロット ---
@@ -187,17 +188,17 @@ $f(x)=x$の不動点は$x=1$だから，そこに収束することがわかる�
 
     % --- 6. 主要点・目盛りプロット ---
     % 不動点 (1, 1)
-    \draw[dashed, red!70!black] (1.0, 0) -- (FixedPt) -- (0, 1.0);
+    \draw[densely dotted, thick, red!70!black] (1.0, 0) -- (FixedPt) -- (0, 1.0);
     \node[circle, fill=red!85!black, inner sep=1.5pt] at (FixedPt) {};
     \node[above left=1pt, font=\footnotesize\bfseries, red!90!black] at (FixedPt) {$(1, 1)$};
     \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
-    \node[left=2pt, font=\scriptsize] at (0, 1.0) {$1$};
+    \node[above left=1pt, font=\scriptsize] at (0, 1.0) {$1$};
 
     % x = 1/2 の境界点
-    \draw[dashed, gray!60] (0.5, 0) -- (HalfPt) -- (0, {0.25*(1.0 + exp(1.0))});
+    \draw[densely dotted, thick, gray!70!black] (0.5, 0) -- (HalfPt) -- (0, {0.25*(1.0 + exp(1.0))});
     \node[circle, fill, inner sep=1.2pt] at (HalfPt) {};
     \node[below=2pt, font=\scriptsize] at (0.5, 0) {$\frac{1}{2}$};
-    \node[left=2pt, font=\scriptsize] at (0, {0.25*(1.0 + exp(1.0))}) {$\frac{1+e}{4}$};
+    \node[below left=1pt, font=\scriptsize] at (0, {0.25*(1.0 + exp(1.0))}) {$\frac{1+e}{4}$};
 
   \end{tikzpicture}
   \caption{$y = f(x)$ のグラフと漸化式 $x_{n+1} = f(x_n)$ の収束の様子}
