@@ -160,7 +160,66 @@ $p,q,r>0$に対して$A(p,0,r), B(p,q,0), C(0,q,r)$とおく．
 
 \paragraph{(1)}
 
-% TODO: L(OAB), Hの図
+\begin{figure}[htb]
+  % L(OAB), Hの図
+  \centering
+  \begin{tikzpicture}[scale=1.5, >=stealth, every node/.style={font=\small}]
+
+    % 基準点 O, A, B, 垂足 H, 頂点 C
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (2.8, -0.35);
+    \coordinate (B) at (1.5, 0.95);
+    \coordinate (H) at ($ 5/9*(A) - 1/3*(B) $);
+    \coordinate (C) at ($ (H) + (0, 2.35) $);
+
+    % 平面 L の有限表現シート
+    \coordinate (PL_BL) at ($ -0.25*(A) - 0.65*(B) $);
+    \coordinate (PL_BR) at ($ -0.25*(A) + 1.25*(B) $);
+    \coordinate (PL_TR) at ($ 1.2*(A) + 1.25*(B) $);
+    \coordinate (PL_TL) at ($ 1.2*(A) - 0.65*(B) $);
+
+    \fill[blue!8, opacity=0.6] (PL_BL) -- (PL_BR) -- (PL_TR) -- (PL_TL) -- cycle;
+    \draw[thick, blue!60!black, densely dotted] (PL_BL) -- (PL_BR) -- (PL_TR) -- (PL_TL) -- cycle;
+    \fill[blue!16, opacity=0.7] (O) -- (A) -- (B) -- cycle;
+    \node[blue!85!black, font=\footnotesize\bfseries, left=4pt] at ($ (PL_TR)!0.22!(PL_TL) $) {平面 $L$};
+
+    % 四面体の残りの稜線
+    \draw[thick, gray!50!black] (A) -- (B);
+    \draw[thick, gray!50!black] (C) -- (A);
+    \draw[thick, gray!50!black] (C) -- (B);
+
+    % 位置ベクトル a, b, c と OH
+    \draw[->, line width=1.2pt, blue!85!black] (O) -- (A);
+    \draw[->, line width=1.2pt, blue!85!black] (O) -- (B);
+    \draw[->, line width=1.2pt, blue!85!black] (O) -- (C);
+    \draw[->, line width=1.2pt, teal!85!black] (O) -- (H);
+
+    % 垂線 CH と直角記号 (C - H - O)
+    \draw[line width=1.5pt, red!85!black] (C) -- (H)
+    node[pos=0.62, right=3pt, font=\footnotesize\bfseries] {$CH \perp L$};
+    \coordinate (sqHC) at ($ (H)!0.10!(C) $);
+    \coordinate (sqHO) at ($ (H)!0.18!(O) $);
+    \draw[thin, red!85!black]
+    (sqHC) -- ($ (sqHC) + (sqHO) - (H) $) -- (sqHO);
+
+    % 点のプロットとラベル
+    \node[circle, fill, inner sep=1.3pt] at (O) {}; \node[left=2pt] at (O) {$O$};
+    \node[circle, fill, inner sep=1.3pt] at (A) {}; \node[right=2pt] at (A) {$A$};
+    \node[circle, fill, inner sep=1.3pt] at (B) {}; \node[above right=1pt] at (B) {$B$};
+    \node[circle, fill, inner sep=1.3pt] at (C) {}; \node[above=2pt] at (C) {$C$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (H) {};
+    \node[below=2pt, red!85!black, font=\footnotesize\bfseries] at (H) {$H$};
+
+    % ベクトルラベル
+    \node[blue!85!black, above=1pt, font=\footnotesize] at ($ (O)!0.6!(A) $) {$\vec{a}$};
+    \node[blue!85!black, above left=1pt, font=\footnotesize] at ($ (O)!0.55!(B) $) {$\vec{b}$};
+    \node[blue!85!black, left=2pt, font=\footnotesize] at ($ (O)!0.55!(C) $) {$\vec{c}$};
+    \node[teal!85!black, below left=1pt, font=\footnotesize] at ($ (O)!0.55!(H) $) {$\alpha\vec{a}+\beta\vec{b}$};
+
+  \end{tikzpicture}
+  \caption{平面 $L$（$O, A, B$ を含む平面）と垂線 $CH$，垂足 $H$}
+  \label{fig:plane_L_perpendicular_H}
+\end{figure}
 
 $H$ は $L$ 上の点だから
 \begin{align}
@@ -254,8 +313,8 @@ $H$ は $L$ 上の点だから
     % ============================================================
     % 直線 PtQtHt (Qt から Ht を越えて少し先まで真っ直ぐ引く)
     \draw[line width=1.3pt, blue!85!black] (Qt) -- (Pt);
-    \draw[line width=1.2pt, blue!85!black, dashed] (Pt) -- ($ (Pt)! 1.45 !(Ht) $)
-    node[right=2pt, font=\scriptsize] {直線 $P_tQ_t$};
+    \draw[line width=1.2pt, blue!85!black, densely dotted] (Pt) -- ($ (Pt)! 1.18 !(Ht) $);
+    \node[blue!85!black, above=2pt, font=\scriptsize] at ($ (Pt)!0.48!(Ht) $) {直線 $P_tQ_t$};
 
     % 切断面三角形 PtQtRt (半透明の塗りつぶし)
     \fill[red!15, opacity=0.4] (Pt) -- (Qt) -- (Rt) -- cycle;
@@ -282,12 +341,12 @@ $H$ は $L$ 上の点だから
     \node[circle, fill, inner sep=1.3pt] at (B) {}; \node[left=2pt] at (B) {$B$};
     \node[circle, fill, inner sep=1.3pt] at (A) {}; \node[right=2pt] at (A) {$A$};
     \node[circle, fill, inner sep=1.3pt] at (C) {}; \node[above right=1pt] at (C) {$C$};
-    \node[circle, fill, inner sep=1.3pt] at (H) {}; \node[below=2pt] at (H) {$H$};
+    \node[circle, fill, inner sep=1.3pt] at (H) {}; \node[above right=1pt] at (H) {$H$};
 
-    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (Pt) {}; \node[blue!85!black, above=2pt] at (Pt) {$P_t$};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (Pt) {}; \node[blue!85!black, above left=1pt] at (Pt) {$P_t$};
     \node[circle, fill=blue!85!black, inner sep=1.4pt] at (Qt) {}; \node[blue!85!black, below left=1pt] at (Qt) {$Q_t$};
     \node[circle, fill=red!85!black, inner sep=1.5pt] at (Rt) {}; \node[red!85!black, above left=2pt, font=\normalsize\bfseries] at (Rt) {$R_t$};
-    \node[circle, fill=teal!85!black, inner sep=1.5pt] at (Ht) {}; \node[teal!85!black, below right=2pt, font=\footnotesize\bfseries] at (Ht) {$H_t$};
+    \node[circle, fill=teal!85!black, inner sep=1.5pt] at (Ht) {}; \node[teal!85!black, below=2pt, font=\footnotesize\bfseries] at (Ht) {$H_t$};
 
   \end{tikzpicture}
   \caption{四面体 $OABC$ と切断面 $\triangle P_tQ_tR_t$}
@@ -414,11 +473,11 @@ $s$が$1$より大きければ$R_t$は線分$OC$上にないので切り口は$C
     \draw[thick, gray!30!black] (O) -- (A) -- (B) -- cycle;
 
     % 内側三角形 OPtQt (相似)
-    \fill[blue!15, opacity=0.6] (O) -- (Pt) -- (Qt) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!60!black, opacity=0.5] (O) -- (Pt) -- (Qt) -- cycle;
     \draw[line width=1.4pt, blue!85!black] (O) -- (Pt) -- (Qt) -- cycle;
 
     % 線分 PtQt と AB の平行性強調
-    \draw[line width=1.6pt, red!85!black] (Pt) -- (Qt) node[midway, above left=1pt] {$|P_tQ_t| = 2t$};
+    \draw[line width=1.6pt, red!85!black] (Pt) -- (Qt) node[midway, right=2pt, font=\footnotesize] {$|P_tQ_t| = 2t$};
     \draw[line width=1.4pt, teal!85!black] (A) -- (B) node[midway, right=2pt] {$|AB| = 2$};
 
     % 頂点プロット
@@ -429,8 +488,8 @@ $s$が$1$より大きければ$R_t$は線分$OC$上にないので切り口は$C
     \node[circle, fill=blue!85!black, inner sep=1.4pt] at (Qt) {}; \node[blue!85!black, below=2pt] at (Qt) {$Q_t(t\vec{b})$};
 
     % 比のラベル
-    \node[font=\scriptsize, gray!70!black] at ($(O)!0.5!(Pt) + (-0.1, 0.15)$) {$t$};
-    \node[font=\scriptsize, gray!70!black] at ($(Pt)!0.5!(A) + (-0.1, 0.15)$) {$1-t$};
+    \node[font=\scriptsize, gray!70!black, above left=1pt] at ($(O)!0.48!(Pt)$) {$t$};
+    \node[font=\scriptsize, gray!70!black, above left=1pt] at ($(Pt)!0.52!(A)$) {$1-t$};
 
   \end{tikzpicture}
   \caption{$\triangle OP_tQ_t \sim \triangle OAB$ の相似関係（比 $t : 1$）}
@@ -461,12 +520,12 @@ $s$が$1$より大きければ$R_t$は線分$OC$上にないので切り口は$C
     \draw[thick, gray!30!black] (O) -- (H) -- (C) -- cycle;
 
     % 内側直角三角形 ORtHt
-    \fill[blue!15, opacity=0.6] (O) -- (Ht) -- (Rt) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!60!black, opacity=0.5] (O) -- (Ht) -- (Rt) -- cycle;
     \draw[line width=1.4pt, blue!85!black] (O) -- (Ht) -- (Rt) -- cycle;
 
     % 高さの線分強調
     \draw[line width=1.5pt, red!85!black] (Rt) -- (Ht)
-    node[midway, left=2pt, font=\footnotesize\bfseries] {$|R_tH_t| = s|CH| = 3\sqrt{6}t$};
+    node[midway, right=2pt, font=\footnotesize\bfseries, align=left] {$|R_tH_t| = s|CH|$\\$= 3\sqrt{6}t$};
     \draw[line width=1.3pt, teal!85!black] (C) -- (H)
     node[midway, right=2pt, font=\footnotesize] {$|CH| = \sqrt{\frac{8}{3}} = \frac{2\sqrt{6}}{3}$};
 
@@ -482,7 +541,7 @@ $s$が$1$より大きければ$R_t$は線分$OC$上にないので切り口は$C
     \node[circle, fill=blue!85!black, inner sep=1.4pt] at (Ht) {}; \node[blue!85!black, below=2pt] at (Ht) {$H_t$};
 
     % 斜辺の比ラベル
-    \node[font=\scriptsize, teal!80!black] at ($(O)!0.5!(Rt) + (-0.1, 0.15)$) {$s = \frac{9}{2}t$};
+    \node[font=\scriptsize, teal!80!black, above left=1pt] at ($(O)!0.5!(Rt)$) {$s = \frac{9}{2}t$};
 
   \end{tikzpicture}
   \caption{$\triangle OR_tH_t \sim \triangle OCH$ の直角三角形相似による高さ $|R_tH_t|$ の導出}
