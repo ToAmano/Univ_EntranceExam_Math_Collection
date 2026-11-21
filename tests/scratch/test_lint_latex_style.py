@@ -595,6 +595,56 @@ def test_estimate_math_visual_length_and_long_align_lines():
     assert lint.check_long_align_lines(sample_one_eq) == []
 
 
+def test_cases_to_dcases_fix():
+    src = (
+        '\\begin{align}\n'
+        '  \\begin{cases}\n'
+        '    x > 0 & (a = 1) \\\\\n'
+        '    x < 0 & (a = -1)\n'
+        '  \\end{cases}\n'
+        '\\end{align}\n'
+        '\\begin{tikzpicture}\\node {$\\begin{cases} x=1 \\\\ y=2 \\end{cases}$};\\end{tikzpicture}\n'
+        '% \\begin{cases} comment \\end{cases}\n'
+        '\\verb|\\begin{cases} verbatim \\end{cases}|\n'
+    )
+    fixed = lint.fix_text(src)
+    assert '\\begin{dcases}' in fixed
+    assert '\\end{dcases}' in fixed
+    assert '\\begin{tikzpicture}\\node {$\\begin{cases} x=1 \\\\ y=2 \\end{cases}$};\\end{tikzpicture}' in fixed
+    assert '% \\begin{cases} comment \\end{cases}' in fixed
+    assert '\\verb|\\begin{cases} verbatim \\end{cases}|' in fixed
+    assert lint.fix_text(fixed) == fixed
+    # Unmatched cases tag is left untouched
+    unmatched = '\\begin{cases}\n  x = 1\n'
+    assert lint.fix_text(unmatched) == unmatched
+
+
+def test_missing_line_break_warnings_via_lint_file(tmp_path):
+    source = tmp_path / 'solution.tex'
+    source.write_text(
+        '\\documentclass[../../main.tex]{subfiles}\n'
+        '\\begin{document}\n'
+        '{\\bf [解答]}\n'
+        '\\begin{align}\n'
+        '  \\begin{dcases}\n'
+        '    x = 1\n'
+        '    y = 2\n'
+        '  \\end{dcases}\n'
+        '\\end{align}\n'
+        '\\begin{align}\n'
+        '  p &= 1\n'
+        '  q &= 2\n'
+        '\\end{align}\n'
+        '\\end{document}\n',
+        encoding='utf-8',
+    )
+    errors, warnings, _ = lint.lint_file(source)
+    assert errors == []
+    msgs = [msg for _, msg in warnings]
+    assert any('cases/dcases' in m and '[§N1.1]' in m for m in msgs)
+    assert any('align' in m and '[§N5.3]' in m for m in msgs)
+
+
 
 
 

@@ -168,6 +168,10 @@ def test_japanese_typos_and_fullwidth_alnum():
 def test_new_warning_checks():
     assert lint.check_cases_env('\\begin{cases} a \\end{cases}')
     assert not lint.check_cases_env('\\begin{dcases} a \\end{dcases}')
+    assert not lint.check_cases_env('\\begin{tikzpicture}\\node {$\\begin{cases} a \\\\ b \\end{cases}$};\\end{tikzpicture}')
+    assert lint.fix_text('\\begin{align}\\begin{cases} a \\\\ b \\end{cases}\\end{align}') == '\\begin{align}\\begin{dcases} a \\\\ b \\end{dcases}\\end{align}'
+    tikz_cases = '\\begin{tikzpicture}\\node {$\\begin{cases} a \\\\ b \\end{cases}$};\\end{tikzpicture}'
+    assert lint.fix_text(tikz_cases) == tikz_cases
     raw = '% TODO: 概要図\n\\begin{figure}\n% TODO: 図を描く\n\\end{figure}\n'
     assert [line for line, _ in lint.check_figure_todo_placement(raw)] == [1]
     pic = ('\\begin{tikzpicture}\\draw[dashed, gray!50] (0,0)--(1,1); \\fill[gray!20] (0,0) circle (1);'
@@ -176,3 +180,15 @@ def test_new_warning_checks():
            ' \\fill (0,0) circle (0.05); \\draw (0,0) circle (1);\\end{tikzpicture}')
     assert len(lint.check_light_gray(pic)) == 2  # gray!50 の線と gray!40 の斜線（塗りと黒との混色は対象外）
     assert len(lint.check_small_coordinate_circle(pic)) == 1  # 図形の円 circle (1) は対象外
+
+
+def test_missing_line_break_warnings():
+    cases_missing = '\\begin{dcases}\n  x = 1\n  y = 2\n\\end{dcases}'
+    assert [line for line, _ in lint.check_cases_missing_break(cases_missing)] == [2]
+    cases_ok = '\\begin{dcases}\n  \\displaystyle\n  x = 1 \\\\\n  y = 2\n\\end{dcases}'
+    assert lint.check_cases_missing_break(cases_ok) == []
+
+    align_missing = '\\begin{align}\n  a &= 1\n  b &= 2\n\\end{align}'
+    assert [line for line, _ in lint.check_align_missing_break(align_missing)] == [2]
+    align_cont = '\\begin{align}\n  a &< b\n  < c \\\\\n  x &= 1 \\\\ \\notag\n  y &= 2\n\\end{align}'
+    assert lint.check_align_missing_break(align_cont) == []

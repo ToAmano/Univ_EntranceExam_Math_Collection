@@ -1480,6 +1480,10 @@ def fix_text(raw, extra_edit_finders=()):
     for start, end, replacement in sorted(eq_edits, reverse=True):
         raw = raw[:start] + replacement + raw[end:]
 
+    cases_edits = _find_cases_env_edits(_mask_protected_regions(raw))
+    for start, end, replacement in sorted(cases_edits, reverse=True):
+        raw = raw[:start] + replacement + raw[end:]
+
     break_edits = _find_trailing_align_break_edits(_mask_protected_regions(raw), raw)
     for start, end, replacement in sorted(break_edits, reverse=True):
         raw = raw[:start] + replacement + raw[end:]
@@ -1761,10 +1765,110 @@ def check_qed_mark(text):
 # 規約に合わせて追加した検査（2026-11-13）
 # ---------------------------------------------------------------------------
 
+def _find_cases_env_edits(text):
+    """tikzpicture 外の対応の取れた cases 環境を dcases に置き換える（§N1.1）。"""
+    tikz_spans = find_tikzpicture_spans(text)
+
+    def in_tikz(pos):
+        return any(a <= pos < b for a, b in tikz_spans)
+
+    stack = []
+    edits = []
+    for m in re.finditer(r'\\(begin|end)\{\s*cases\s*\}', text):
+        pos = m.start()
+        if m.group(1) == 'begin':
+            stack.append((pos, m.end(), in_tikz(pos)))
+        elif stack:
+            open_start, open_end, open_in_tikz = stack.pop()
+            if not open_in_tikz and not in_tikz(pos):
+                edits.append((open_start, open_end, r'\begin{dcases}'))
+                edits.append((pos, m.end(), r'\end{dcases}'))
+    return edits
+
+
 def check_cases_env(text):
-    """場合分けは dcases で書く（§N1.1）。既存原稿に多いので警告にする。"""
+    """場合分けは dcases で書く（§N1.1）。図中（tikzpicture）の注釈箱は対象外とし、既存原稿に多いので警告にする。"""
+    tikz_spans = find_tikzpicture_spans(text)
     return [(line_of(text, m.start()), "場合分けは cases ではなく dcases を使う（残す場合は中に \\displaystyle を補う）")
-            for m in re.finditer(r'\\begin\{cases\}', text)]
+            for m in re.finditer(r'\\begin\{cases\}', text)
+            if not any(a <= m.start() < b for a, b in tikz_spans)]
+
+
+_ENV_LINE_BREAK_END_RE = re.compile(
+    r'\\\\\s*(?:\[[^\]]*\]|\{[^}]*\})?\s*(?:\\(?:label\{[^}]*\}|notag|nonumber)\s*)*$'
+)
+_TRAILING_META_ONLY_RE = re.compile(r'^(?:\\(?:displaystyle|notag|nonumber|therefore|because|label\{[^}]*\})|&|\s)+$')
+_LEADING_CONT_RE = re.compile(
+    r'^(?:&|=|<|>|\\(?:le|ge|leqq|geqq|neq|equiv|iff|implies|Rightarrow|Longleftrightarrow|'
+    r'therefore|because|cdot|times|nonumber|notag|label|q?quad|right|text)(?![a-zA-Z])|'
+    r'\\?[\(\[\)\]\+\-])'
+)
+_TRAILING_CONT_RE = re.compile(
+    r'(?:,\s*(?:\\q?quad)?|\\q?quad|,|\+|-|=|<|>|\\cdot|\\times|'
+    r'\\(?:le|ge|leqq|geqq|equiv|iff|implies|Rightarrow|therefore|because)(?![a-zA-Z])|'
+    r'&|\\(?:left|Big[glr]?|big[glr]?)\S*)\s*$'
+)
+_ALIGN_REL_OP_RE = re.compile(r'(?:=|<(?!<)|>(?!>)|\\(?:le|ge|leqq|geqq|neq|equiv)(?![a-zA-Z]))')
+
+
+def _iter_top_level_env_pairs(text, env_pattern):
+    """Yield (pos, cur_line, next_line) for consecutive top-level non-empty lines inside env_pattern."""
+    for m in re.finditer(rf'\\begin\{{({env_pattern})\}}(.*?)\\end\{{\1\}}', text, re.DOTALL):
+        body_start = m.start(2)
+        depth = 0
+        top_lines = []
+        pos = body_start
+        for raw_line in m.group(2).splitlines(keepends=True):
+            s = raw_line.strip()
+            if s:
+                opens = len(re.findall(r'\\begin\{', s))
+                closes = len(re.findall(r'\\end\{', s))
+                top_lines.append((pos, s, depth == 0 and opens == 0 and closes == 0))
+                depth = max(0, depth + opens - closes)
+            pos += len(raw_line)
+        for i in range(len(top_lines) - 1):
+            cur_pos, cur_s, cur_ok = top_lines[i]
+            _, next_s, next_ok = top_lines[i + 1]
+            if cur_ok and next_ok:
+                yield cur_pos, cur_s, next_s
+
+
+def _has_env_line_break(cur_s, next_s):
+    return bool(_ENV_LINE_BREAK_END_RE.search(cur_s)) or next_s.startswith(r'\\')
+
+
+def check_cases_missing_break(text):
+    """cases/dcases 環境内の行末での改行 \\\\ 忘れを警告する（§N1.1）。"""
+    warnings = []
+    for cur_pos, cur_s, next_s in _iter_top_level_env_pairs(text, r'd?cases\*?'):
+        if _has_env_line_break(cur_s, next_s):
+            continue
+        if _TRAILING_META_ONLY_RE.match(cur_s):
+            continue
+        if _TRAILING_CONT_RE.search(cur_s) or _LEADING_CONT_RE.match(next_s):
+            continue
+        warnings.append((line_of(text, cur_pos), "cases/dcases 環境内の行末に改行 \\\\ が抜けている可能性がある"))
+    return warnings
+
+
+def check_align_missing_break(text):
+    """align 環境内で独立した関係式が \\\\ なしで並んでいる箇所を警告する（§N5.3）。"""
+    warnings = []
+    for cur_pos, cur_s, next_s in _iter_top_level_env_pairs(text, r'align\*?'):
+        if _has_env_line_break(cur_s, next_s):
+            continue
+        if _TRAILING_META_ONLY_RE.match(cur_s) or re.search(r'\\(?:short)?intertext\b', cur_s):
+            continue
+        if _TRAILING_CONT_RE.search(cur_s) or _LEADING_CONT_RE.match(next_s):
+            continue
+        cur_clean = re.sub(r'[_^]\s*\{[^{}]*\}|\\(?:label\{[^}]*\}|notag|nonumber)', '', cur_s)
+        next_clean = re.sub(r'[_^]\s*\{[^{}]*\}|\\(?:label\{[^}]*\}|notag|nonumber)', '', next_s)
+        if _ALIGN_REL_OP_RE.search(cur_clean) and _ALIGN_REL_OP_RE.search(next_clean):
+            warnings.append((
+                line_of(text, cur_pos),
+                "align 環境内の行末に改行 \\\\ が抜けている可能性がある（前後の行がそれぞれ独立した関係式に見える）",
+            ))
+    return warnings
 
 
 def check_binom(text):
@@ -1972,6 +2076,8 @@ def lint_file(path, profile=None):
     warnings = tag(check_overline_warning(text), 'N9.1')
     warnings += tag(check_long_align_lines(text), 'N5.4')
     warnings += tag(check_cases_env(text), 'N1.1')
+    warnings += tag(check_cases_missing_break(text), 'N1.1')
+    warnings += tag(check_align_missing_break(text), 'N5.3')
     warnings += tag(check_figure_todo_placement(raw), 'F1.5')
     warnings += tag(check_light_gray(text), 'F3.2')
     warnings += tag(check_small_coordinate_circle(text), 'F4.1')
