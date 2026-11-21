@@ -28,7 +28,7 @@
     \def\alphaVal{0.5}
     \pgfmathsetmacro{\radR}{sqrt(5.0)/2.0}
 
-    % 3点の複素数座標
+    % 3点の複素数座標と中点
     % b_1 = i = (0, 1)
     % b_2 = 1 - i = (1, -1)
     % b_3 = (3 + i)/2 = (1.5, 0.5)
@@ -37,53 +37,96 @@
     \coordinate (B1)    at (0, 1.0);
     \coordinate (B2)    at (1.0, -1.0);
     \coordinate (B3)    at (1.5, 0.5);
+    \coordinate (M13)   at (0.75, 0.75);
 
-    % --- 2. 円 C の塗りつぶしと境界線 ---
-    \fill[blue!6, opacity=0.8] (Alpha) circle (\radR);
-    \draw[very thick, blue!85!black] (Alpha) circle (\radR);
-    \node[blue!90!black, font=\footnotesize\bfseries, above left] at ($(Alpha) + (130:\radR)$)
-    {$C: \left|z - \frac{1}{2}\right| = \frac{\sqrt{5}}{2}$};
-
-    % --- 3. 座標軸 (複素数平面: 実軸 Re, 虚軸 Im) ---
+    % --- 2. 座標軸 (複素数平面: 実軸 Re, 虚軸 Im) ---
     \draw[->, thick, gray!80!black] (-1.0, 0) -- (2.2, 0) node[right] {$\text{Re}$};
     \draw[->, thick, gray!80!black] (0, -1.5) -- (0, 1.5) node[above] {$\text{Im}$};
     \node[below left=2pt] at (O) {$O$};
 
-    % --- 4. 垂直二等分線 (中心 alpha を定める補助線: 点線) ---
-    % 線分 b1 b2 の中点 (0.5, 0) はまさに alpha
-    \draw[dashed, gray!60!black] (B1) -- (B2);
-    % 線分 b1 b3
-    \draw[dashed, gray!60!black] (B1) -- (B3);
+    % --- 3. 弦 b1 b2, b1 b3 と投影補助線・目盛り ---
+    \draw[densely dotted, thick, gray!70!black] (B1) -- (B2);
+    \draw[densely dotted, thick, gray!70!black] (B1) -- (B3);
 
-    % 中心 alpha から各点への半径線 (破線)
-    \draw[dashed, teal!85!black, thick] (Alpha) -- (B1);
-    \draw[dashed, teal!85!black, thick] (Alpha) -- (B2);
-    \draw[dashed, teal!85!black, thick] (Alpha) -- (B3);
-    \node[teal!90!black, font=\scriptsize, above right=-1pt] at ($(Alpha)!0.5!(B3)$) {$r$};
-
-    % --- 5. 投影破線と目盛り ---
     % b_2(1, -1) の投影
-    \draw[dotted, gray!60] (1.0, 0) -- (B2) -- (0, -1.0);
+    \draw[densely dotted, thick, gray!70!black] (1.0, 0) -- (B2) -- (0, -1.0);
     \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
     \node[left=2pt, font=\scriptsize]  at (0, -1.0) {$-1$};
 
     % b_3(1.5, 0.5) の投影
-    \draw[dotted, gray!60] (1.5, 0) -- (B3) -- (0, 0.5);
+    \draw[densely dotted, thick, gray!70!black] (1.5, 0) -- (B3) -- (0, 0.5);
     \node[below=2pt, font=\scriptsize] at (1.5, 0) {$\frac{3}{2}$};
     \node[left=2pt, font=\scriptsize]  at (0, 0.5) {$\frac{1}{2}$};
 
     % b_1(0, 1) の目盛り
     \node[left=2pt, font=\scriptsize] at (0, 1.0) {$1$};
 
+    % --- 4. b1 b2, b1 b3 の垂直二等分線 (交点が中心 alpha) ---
+    % b1 b2 の垂直二等分線（中点 alpha = (0.5, 0) と点 b3 を通る, 方向 (2, 1)）
+    \draw[dash dot, teal!85!black, thick]
+    ($ (Alpha) + (-0.7, -0.35) $) -- ($ (B3) + (0.28, 0.14) $);
+    % b1 b3 の垂直二等分線（中点 M13 = (0.75, 0.75) と点 alpha を通る, 方向 (1, 3)）
+    \draw[dash dot, teal!85!black, thick]
+    ($ (Alpha) + (-0.25, -0.75) $) -- ($ (M13) + (0.2, 0.6) $);
+
+    % 半径 r の注記（線分 alpha b3 上）
+    \node[teal!85!black, font=\scriptsize, below right=1pt] at ($ (Alpha)!0.5!(B3) $) {$r$};
+
+    % 直角記号（alpha における b1b2 と垂直二等分線）
+    \pgfmathsetmacro{\uOneX}{1.0/sqrt(5.0)}
+    \pgfmathsetmacro{\uOneY}{-2.0/sqrt(5.0)}
+    \pgfmathsetmacro{\nOneX}{2.0/sqrt(5.0)}
+    \pgfmathsetmacro{\nOneY}{1.0/sqrt(5.0)}
+    \draw[thin, teal!85!black]
+    ($ (Alpha) + 0.07*(-\uOneX, -\uOneY) $)
+    -- ($ (Alpha) + 0.07*(-\uOneX + \nOneX, -\uOneY + \nOneY) $)
+    -- ($ (Alpha) + 0.07*(\nOneX, \nOneY) $);
+
+    % 直角記号（M13 における b1b3 と垂直二等分線）
+    \pgfmathsetmacro{\uTwoX}{3.0/sqrt(10.0)}
+    \pgfmathsetmacro{\uTwoY}{-1.0/sqrt(10.0)}
+    \pgfmathsetmacro{\nTwoX}{1.0/sqrt(10.0)}
+    \pgfmathsetmacro{\nTwoY}{3.0/sqrt(10.0)}
+    \draw[thin, teal!85!black]
+    ($ (M13) + 0.07*(\uTwoX, \uTwoY) $)
+    -- ($ (M13) + 0.07*(\uTwoX - \nTwoX, \uTwoY - \nTwoY) $)
+    -- ($ (M13) + 0.07*(-\nTwoX, -\nTwoY) $);
+
+    % 等長記号（b1 b2 の2等分：1本バー）
+    \foreach \p in {0.25, 0.75} {
+      \coordinate (T1) at ($ (B1)!\p!(B2) $);
+      \draw[thin, gray!70!black]
+      ($ (T1) + 0.035*(\nOneX, \nOneY) $) -- ($ (T1) - 0.035*(\nOneX, \nOneY) $);
+    }
+
+    % 等長記号（b1 b3 の2等分：2本バー）
+    \foreach \p in {0.25, 0.75} {
+      \coordinate (T2) at ($ (B1)!\p!(B3) $);
+      \draw[thin, gray!70!black]
+      ($ (T2) - 0.015*(\uTwoX, \uTwoY) + 0.035*(\nTwoX, \nTwoY) $)
+      -- ($ (T2) - 0.015*(\uTwoX, \uTwoY) - 0.035*(\nTwoX, \nTwoY) $);
+      \draw[thin, gray!70!black]
+      ($ (T2) + 0.015*(\uTwoX, \uTwoY) + 0.035*(\nTwoX, \nTwoY) $)
+      -- ($ (T2) + 0.015*(\uTwoX, \uTwoY) - 0.035*(\nTwoX, \nTwoY) $);
+    }
+
+    % --- 5. 円 C の境界線 ---
+    \draw[very thick, blue!85!black] (Alpha) circle (\radR);
+    \node[blue!85!black, font=\footnotesize\bfseries, above left=2pt] at ($(Alpha) + (145:\radR)$)
+    {$C: \left|z - \frac{1}{2}\right| = \frac{\sqrt{5}}{2}$};
+
     % --- 6. 主要点のプロットとラベル ---
     % 中心 alpha = 1/2
-    \node[circle, fill=red!85!black, inner sep=1.2pt] at (Alpha) {};
-    \node[below=3pt, font=\scriptsize\bfseries, red!90!black] at (Alpha) {$\alpha = \frac{1}{2}$};
+    \node[circle, fill=red!85!black, inner sep=1.3pt] at (Alpha) {};
+    \node[above left=2pt, font=\scriptsize\bfseries, red!85!black] at (Alpha) {$\alpha = \frac{1}{2}$};
 
     % 3点 b1, b2, b3
-    \node[circle, fill, inner sep=1.3pt] at (B1) {}; \node[above right=1pt, font=\footnotesize\bfseries] at (B1) {$b_1(i)$};
-    \node[circle, fill, inner sep=1.3pt] at (B2) {}; \node[below right=1pt, font=\footnotesize\bfseries] at (B2) {$b_2(1-i)$};
-    \node[circle, fill, inner sep=1.3pt] at (B3) {}; \node[above right=1pt, font=\footnotesize\bfseries] at (B3) {$b_3\left(\frac{3+i}{2}\right)$};
+    \node[circle, fill, inner sep=1.3pt] at (B1) {};
+    \node[above right=5pt, xshift=-2pt, font=\footnotesize\bfseries] at (B1) {$b_1(i)$};
+    \node[circle, fill, inner sep=1.3pt] at (B2) {};
+    \node[below right=2pt, font=\footnotesize\bfseries] at (B2) {$b_2(1-i)$};
+    \node[circle, fill, inner sep=1.3pt] at (B3) {};
+    \node[above=7pt, xshift=10pt, font=\footnotesize\bfseries] at (B3) {$b_3\left(\frac{3+i}{2}\right)$};
 
   \end{tikzpicture}
   \caption{複素数平面における 3 点 $b_1, b_2, b_3$ とそれらを通る円 $C$}
