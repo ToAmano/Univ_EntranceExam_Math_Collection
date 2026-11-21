@@ -32,7 +32,7 @@
     \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (0,2){};
     \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (0,-2){};
   \end{tikzpicture}
-  \caption{$\vec{b}=(1,0)$の場合の領域（境界は$x+y=2$のみ含む，白点は含まず）}
+  \caption{$\vec{b}=(2,0)$の場合の領域（境界は$x+y=2$のみ含む，白点は含まず）}
   \label{fig:region_b}
 \end{figure}
 
@@ -128,7 +128,7 @@ $P$は$1$秒間に合計距離$2$だけ進む．そこで，$x$軸正方向に$\
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=1.4cm, y=1.1cm, >=stealth, every node/.style={font=\small}]
-    % 左図：例として alpha=0.9, beta=0.4（X=0.5, Y は -0.7 から 0.7）
+    % 左図：例として alpha=0.9, beta=0.4（X=0.5, Y は -0.7 < Y <= 0.7）
     \coordinate (Lo) at (0.5, -0.7);
     \coordinate (Hi) at (0.5, 0.7);
     \draw[->, thick, gray!80!black] (-0.8, 0) -- (1.4, 0) node[right] {$X$};
@@ -137,27 +137,29 @@ $P$は$1$秒間に合計距離$2$だけ進む．そこで，$x$軸正方向に$\
     \draw[line width=1.6pt, blue!85!black] (Lo) -- (Hi);
     \draw[densely dotted, thick, gray!70!black] (Hi) -- (0, 0.7) node[left, black] {$2-(\alpha+\beta)$};
     \draw[densely dotted, thick, gray!70!black] (Lo) -- (0, -0.7) node[left, black] {$\alpha+\beta-2$};
-    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Lo) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (Lo) {};
     \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Hi) {};
     \node[below right=1pt] at (0.5, 0) {$\alpha-\beta$};
   \end{tikzpicture}
   \hspace{0.8cm}
   \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
-    % 右図：alpha >= 0, beta >= 0, alpha + beta <= 2 の存在領域
+    % 右図：alpha > 0, beta >= 0, alpha + beta < 2 の存在領域
     \coordinate (O) at (0, 0);
     \coordinate (A2) at (2, 0);
     \coordinate (B2) at (0, 2);
     \fill[pattern=north east lines, pattern color=blue!65] (O) -- (A2) -- (B2) -- cycle;
     \draw[->, thick, gray!80!black] (-0.4, 0) -- (2.5, 0) node[right] {$\alpha$};
-    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 2.5) node[above] {$\beta$};
-    \draw[thick, blue!85!black] (O) -- (A2) -- (B2) -- cycle;
+    \draw[->, thick, gray!80!black] (0, 2) -- (0, 2.5) node[above] {$\beta$};
+    \draw[thick, gray!80!black] (0, -0.4) -- (0, 0);
+    \draw[densely dotted, thick, blue!85!black] (A2) -- (B2) -- (O);
+    \draw[thick, blue!85!black] (O) -- (A2);
     \node[above right=1pt, blue!85!black, font=\footnotesize] at (1, 1) {$\alpha+\beta=2$};
     \node[below=2pt] at (A2) {$2$};
     \node[left=2pt] at (B2) {$2$};
     \node[below left=1pt] at (O) {$O$};
-    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (O) {};
-    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A2) {};
-    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (B2) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (O) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (A2) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (B2) {};
   \end{tikzpicture}
   \caption{$\alpha$，$\beta$を固定して$\gamma$を動かしたときの$(X,Y)$の範囲（左）と$(\alpha,\beta)$の存在領域（右）}
   \label{fig:hw_gamma_segment}
@@ -190,29 +192,31 @@ $P$は$1$秒間に合計距離$2$だけ進む．そこで，$x$軸正方向に$\
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[scale=0.9, >=stealth, every node/.style={font=\small}]
-    % alpha の動く範囲: 0 <= alpha <= 2, X <= alpha <= X/2 + 1（すべて境界含む）
+    % alpha の動く範囲: 0 < alpha < 2, X <= alpha < X/2 + 1（alpha=X のみ含む）
     \fill[pattern=north east lines, pattern color=blue!65] (-2, 0) -- (0, 0) -- (2, 2) -- cycle;
-    \draw[->, thick, gray!80!black] (-2.6, 0) -- (2.8, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, 0) -- (2.8, 0) node[right] {$X$};
+    \draw[thick, gray!80!black] (-2.6, 0) -- (-2, 0);
     \draw[->, thick, gray!80!black] (0, -0.8) -- (0, 2.7) node[above] {$\alpha$};
     % 領域外の延長線（補助点線）
     \draw[densely dotted, thick, gray!70!black] (-0.6, -0.6) -- (0, 0);
     \draw[densely dotted, thick, gray!70!black] (2, 2) -- (2.4, 2.4) node[above left=1pt, blue!85!black] {$\alpha=X$};
     \draw[densely dotted, thick, gray!70!black] (-2.5, -0.25) -- (-2, 0);
     \draw[densely dotted, thick, gray!70!black] (2, 2) -- (2.5, 2.25) node[below right=1pt, blue!85!black] {$\alpha=\frac{1}{2}X+1$};
-    % 領域の境界（すべて含むので実線）
-    \draw[thick, blue!85!black] (-2, 0) -- (0, 0) -- (2, 2) -- cycle;
+    % 領域の境界（alpha=X のみ実線，残る2辺は含まないので点線）
+    \draw[densely dotted, thick, blue!85!black] (2, 2) -- (-2, 0) -- (0, 0);
+    \draw[thick, blue!85!black] (0, 0) -- (2, 2);
     % 座標軸への垂線（点線）
     \draw[densely dotted, thick, gray!70!black] (-2, 2) -- (2, 2) -- (2, 0) node[below, black] {$2$};
     \draw[densely dotted, thick, gray!70!black] (-2, 0) -- (-2, 2);
     \node[above left=1pt] at (0, 2) {$2$};
     \node[below=2pt] at (-2, 0) {$-2$};
     \node[below right=1pt] at (0, 0) {$O$};
-    % 境界の端点（すべて含むので黒丸/塗りつぶし点）
-    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (-2, 0) {};
-    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (0, 0) {};
-    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (2, 2) {};
+    % 境界の端点（すべて含まないので白点）
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (-2, 0) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (0, 0) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (2, 2) {};
   \end{tikzpicture}
-  \caption{$\alpha$の動く範囲（境界含む）}
+  \caption{$\alpha$の動く範囲（境界は実線のみ含み，白点は含まず）}
   \label{fig:hw_alpha_range}
 \end{figure}
 
@@ -247,7 +251,8 @@ $P$は$1$秒間に合計距離$2$だけ進む．そこで，$x$軸正方向に$\
     \fill[pattern=north east lines, pattern color=blue!65] (2, 0) -- (0, 2) -- (-2, 0) -- (0, -2) -- cycle;
     \draw[->, thick, gray!80!black] (-2.7, 0) -- (2.8, 0) node[right] {$X$};
     \draw[->, thick, gray!80!black] (0, -2.7) -- (0, 2.8) node[above] {$Y$};
-    \draw[thick, blue!85!black] (2, 0) -- (0, 2) -- (-2, 0) -- (0, -2) -- cycle;
+    \draw[densely dotted, thick, blue!85!black] (0, 2) -- (-2, 0) -- (0, -2) -- (2, 0);
+    \draw[thick, blue!85!black] (0, 2) -- (2, 0);
     \node[below right=1pt] at (2, 0) {$2$};
     \node[above left=1pt] at (-2, 0) {$-2$};
     \node[above right=1pt] at (0, 2) {$2$};
@@ -258,16 +263,16 @@ $P$は$1$秒間に合計距離$2$だけ進む．そこで，$x$軸正方向に$\
     \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (0,2){};
     \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (0,-2){};
   \end{tikzpicture}
-  \caption{$t=0$における速度ベクトルが$(2,0)$の場合の到達範囲（境界は白点以外含む）}
+  \caption{$t=0$における速度ベクトルが$(2,0)$の場合の到達範囲（境界は$X+Y=2$のみ含み，白点は含まず）}
   \label{fig:hw_rhombus}
 \end{figure}
 
-これを$60^\circ$回転させた下図斜線部がもとめる領域（境界は白点以外含む）である．
+これを$60^\circ$回転させた下図斜線部がもとめる領域（境界は実線のみ含む）である．
 
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[scale=0.9, >=stealth, every node/.style={font=\small}]
-    % 菱形 |X|+|Y|<2 を原点中心に 60 度回転した正方形
+    % 菱形を原点中心に 60 度回転した正方形（辺 AB のみ含む）
     \coordinate (A) at (1, {sqrt(3)});
     \coordinate (B) at ({-sqrt(3)}, 1);
     \coordinate (C) at (-1, {-sqrt(3)});
@@ -275,7 +280,8 @@ $P$は$1$秒間に合計距離$2$だけ進む．そこで，$x$軸正方向に$\
     \fill[pattern=north east lines, pattern color=blue!65] (A) -- (B) -- (C) -- (D) -- cycle;
     \draw[->, thick, gray!80!black] (-2.7, 0) -- (2.8, 0) node[right] {$x$};
     \draw[->, thick, gray!80!black] (0, -2.7) -- (0, 2.8) node[above] {$y$};
-    \draw[thick, blue!85!black] (A) -- (B) -- (C) -- (D) -- cycle;
+    \draw[densely dotted, thick, blue!85!black] (B) -- (C) -- (D) -- (A);
+    \draw[thick, blue!85!black] (B) -- (A);
     \draw[densely dotted, thick, gray!70!black] (A) -- (1, 0) node[below right=1pt] {$1$};
     \draw[densely dotted, thick, gray!70!black] (A) -- (0, {sqrt(3)}) node[left] {$\sqrt{3}$};
     \node[below left=1pt] at (0, 0) {$O$};
@@ -284,7 +290,7 @@ $P$は$1$秒間に合計距離$2$だけ進む．そこで，$x$軸正方向に$\
     \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (C){};
     \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (D){};
   \end{tikzpicture}
-  \caption{求める$Q$の存在範囲（境界は白点以外含む）}
+  \caption{求める$Q$の存在範囲（境界は実線のみ含み，白点は含まず）}
   \label{fig:hw_answer_region}
 \end{figure}
 
@@ -299,7 +305,7 @@ $P$は$1$秒間に合計距離$2$だけ進む．そこで，$x$軸正方向に$\
 \begin{align}
   \begin{dcases}
     X=k-2\beta \quad (0 \le \beta < k) \\
-    -2+k \le Y < 2-k
+    -2+k < Y \le 2-k
   \end{dcases}
 \end{align}
 である．
@@ -308,18 +314,22 @@ $P$は$1$秒間に合計距離$2$だけ進む．そこで，$x$軸正方向に$\
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[scale=0.9, >=stealth, every node/.style={font=\small}]
-    % 例として k=1.2
+    % 例として k=1.2（-k < X <= k, -2+k < Y <= 2-k）
     \fill[pattern=north east lines, pattern color=blue!65] (-1.2, -0.8) rectangle (1.2, 0.8);
     \draw[->, thick, gray!80!black] (-2, 0) -- (2.2, 0) node[right] {$x$};
     \draw[->, thick, gray!80!black] (0, -1.5) -- (0, 1.6) node[above] {$y$};
-    \draw[thick, blue!85!black] (-1.2, -0.8) rectangle (1.2, 0.8);
+    \draw[densely dotted, thick, blue!85!black] (-1.2, 0.8) -- (-1.2, -0.8) -- (1.2, -0.8);
+    \draw[thick, blue!85!black] (-1.2, 0.8) -- (1.2, 0.8) -- (1.2, -0.8);
     \node[above right=1pt] at (0, 0.8) {$2-k$};
     \node[below right=1pt] at (0, -0.8) {$-2+k$};
     \node[below right=1pt] at (1.2, 0) {$k$};
     \node[below left=1pt] at (-1.2, 0) {$-k$};
-    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (1.2, 0.8) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (1.2, 0.8) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (-1.2, 0.8) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (-1.2, -0.8) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.4pt] at (1.2, -0.8) {};
   \end{tikzpicture}
-  \caption{$\alpha+\beta=k$を固定して$\beta$を動かしたときの$(X,Y)$の範囲}
+  \caption{$\alpha+\beta=k$を固定して$\beta$を動かしたときの$(X,Y)$の範囲（境界は実線と黒点のみ含み，白点は含まず）}
   \label{fig:hw_fixed_k}
 \end{figure}
 
@@ -328,7 +338,7 @@ $P$は$1$秒間に合計距離$2$だけ進む．そこで，$x$軸正方向に$\
 {\bf [解説]}
 
 こういう問題はまず問題を数字に落とし込むところから始めたい．
-最初に$x$軸正方向へ進んで一回だけ左折する場合の実験をしてみると，以下のような三角形の領域を動くことになるから，ここから解答を組み立てていける．
+最初に$x$軸正方向へ進んで一回だけ左折する場合の実験をしてみると，以下のような三角形の領域を動くことになるから，ここから解答を組み立てていける．境界の扱いはちょっとだけ注意が必要で，$t=0$では必ず$(2,0)$の方向に進むことと，必ず一回は左折することから，第一象限だけ境界を含む形になる．
 
 \begin{figure}[htb]
   \centering
