@@ -16,8 +16,8 @@
   k < c+d \le N \text{とならない} \label{eq:3}
 \end{align}
 
-% TODO: cd平面に\cref{eq:2,eq:3}を満たす領域を図示
 \begin{figure}[htb]
+  % cd平面に\cref{eq:2,eq:3}を満たす領域を図示
   \centering
   \begin{tikzpicture}[scale=0.55, >=stealth, every node/.style={font=\small}]
 
@@ -45,7 +45,7 @@
     \node[below left=2pt] at (O) {$O$};
 
     % --- 4. 全事象の枠線 [0, N] x [0, N] ---
-    \draw[thick, gray!60] (0, 0) rectangle (\NVal, \NVal);
+    \draw[thick, gray!70!black] (0, 0) rectangle (\NVal, \NVal);
     \node[above right, font=\footnotesize, gray!70!black] at (\NVal, \NVal) {全事象 $N \times N$};
 
     % --- 5. 境界直線 ---
@@ -54,12 +54,12 @@
     \node[red!90!black, font=\scriptsize\bfseries, above] at (\kVal, \NVal) {$c = k$};
 
     % 直線 c + d = k
-    \draw[very thick, blue!85!black] (0, \kVal) -- (\kVal, 0);
-    \node[blue!90!black, font=\scriptsize\bfseries, below left] at (2.2, 4.0) {$c + d = k$};
+    \draw[very thick, blue!85!black] (0, \kVal) -- (\kVal, 0)
+    node[pos=0.6, above right=1pt, font=\scriptsize\bfseries] {$c + d = k$};
 
     % 直線 c + d = N
-    \draw[very thick, teal!85!black] (0, \NVal) -- (\NVal, 0);
-    \node[teal!90!black, font=\scriptsize\bfseries, above right] at (4.5, 5.8) {$c + d = N$};
+    \draw[very thick, teal!85!black] (0, \NVal) -- (\NVal, 0)
+    node[pos=0.35, below left=1pt, font=\scriptsize\bfseries] {$c + d = N$};
 
     % --- 6. 目盛りと代表スライスの図示 ---
     % 軸目盛り
@@ -67,24 +67,27 @@
     \node[below=2pt, font=\scriptsize] at (\NVal, 0) {$N$};
     \node[left=2pt, font=\scriptsize] at (0, \kVal) {$k$};
     \node[left=2pt, font=\scriptsize] at (0, \NVal) {$N$};
+    \draw[densely dotted, thick, gray!70!black] (0, {\NVal - \kVal}) -- (\kVal, {\NVal - \kVal});
     \node[left=2pt, font=\scriptsize] at (0, {\NVal - \kVal}) {$N-k$};
 
-    % c 固定時の d の取りうる範囲のスライス例 (c = 3)
-    \def\cFix{2.6}
+    % c 固定時の d の取りうる範囲のスライス例 (c = 2.2)
+    \def\cFix{2.2}
     \draw[line width=1.6pt, purple!85!black] (\cFix, 0) -- (\cFix, {\kVal - \cFix});
     \draw[line width=1.6pt, purple!85!black] (\cFix, {\NVal - \cFix}) -- (\cFix, \NVal);
-    \draw[dotted, gray!60] (\cFix, {\kVal - \cFix}) -- (\cFix, {\NVal - \cFix});
+    \draw[densely dotted, thick, gray!70!black] (\cFix, {\kVal - \cFix}) -- (\cFix, {\NVal - \cFix});
     \node[below=2pt, font=\scriptsize, purple!90!black] at (\cFix, 0) {$c$};
 
-    % 矢印による d の個数注記
-    \node[font=\tiny, blue!90!black, left] at (\cFix, {(\kVal - \cFix)/2}) {$k-c$ 個};
-    \node[font=\tiny, teal!90!black, left] at (\cFix, {(\NVal + \NVal - \cFix)/2}) {$c$ 個};
+    % 引出線による d の個数注記 (スライスの左側に配置)
+    \draw[<->, purple!85!black] (\cFix - 0.35, 0) -- (\cFix - 0.35, {\kVal - \cFix})
+    node[midway, left=1pt, font=\scriptsize, purple!90!black] {$k-c$ 個};
+    \draw[<->, purple!85!black] (\cFix - 0.35, {\NVal - \cFix}) -- (\cFix - 0.35, \NVal)
+    node[midway, left=1pt, font=\scriptsize, purple!90!black] {$c$ 個};
 
-    % 領域ラベル
-    \node[draw=blue!85!black, rounded corners=2pt, inner sep=2.5pt, font=\scriptsize\bfseries, blue!90!black]
-    at (1.4, 1.0) {c+d \le k};
-    \node[draw=teal!85!black, rounded corners=2pt, inner sep=2.5pt, font=\scriptsize\bfseries, teal!90!black]
-    at (4.0, 9.0) {$c+d > N$};
+    % 領域ラベル (重なりを避けて白背景ノードで配置)
+    \node[draw=blue!85!black, fill=white, rounded corners=2pt, inner sep=2.5pt, font=\scriptsize\bfseries, blue!90!black]
+    at (3.5, 1.0) {$c+d \le k$};
+    \node[draw=teal!85!black, fill=white, rounded corners=2pt, inner sep=2.5pt, font=\scriptsize\bfseries, teal!90!black]
+    at (4.5, 8.8) {$c+d > N$};
 
   \end{tikzpicture}
   \caption{$cd$ 平面において甲が勝つ条件を満たす領域（$k$ 固定時）}
@@ -98,7 +101,7 @@ $k$を$k=1,2,\cdots, N$で固定すると，
 \end{align}
 の$k$通りである．さらに，$d$は\cref{eq:3}より
 \begin{align}
-  d \le k-c, N-c < d
+  d \le k-c \lor N-c < d
 \end{align}
 の場合だから，$d=1,2,\cdots,k-c,N-c+1,\cdots,N$の$(k-c)+(N-(N-c))=k$通りである．
 
@@ -114,7 +117,7 @@ $k$を$k=1,2,\cdots, N$で固定すると，
 
 \paragraph{(2)}
 
-甲が2回目をひく時，そもそも$a\neq N$であって，$k=a+1,\ldots,N$をとりうる．
+甲が2回目をひく時，勝つ場合にはそもそも$a\neq N$であって，$k=a+1,\ldots,N$をとりうる．
 従って甲が勝つ場合の数は
 \begin{align}
   \sum_{k=a+1}^Nk^2=\dfrac{1}{6}\left[N(N+1)(2N+1)-a(a+1)(2a+1)\right]
