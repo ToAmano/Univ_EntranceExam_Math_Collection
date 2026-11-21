@@ -1,0 +1,132 @@
+---
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import yaml from 'js-yaml';
+import { buildTopicExplorer } from '../lib/topic-explorer.mjs';
+
+export interface Props {
+	solutions: any[];
+	baseUrl: string;
+}
+
+const { solutions, baseUrl } = Astro.props;
+const problemTypes = yaml.load(readFileSync(resolve('..', 'data', 'problem_types.yaml'), 'utf8')) as Record<string, string>;
+const categories = buildTopicExplorer(solutions, problemTypes, baseUrl);
+const KIND_LABELS: Record<string, string> = {
+	proof: '証明', value: '求値・決定', mixed: '証明＋求値',
+	other: '図示・その他', dual: '新旧課程併記', unclassified: '判定保留',
+};
+---
+
+<section class="topic-explorer" id="question-topics" aria-labelledby="question-topics-heading">
+	<div class="section-heading">
+		<h2 id="question-topics-heading">年度・大問別の出題分野</h2>
+		<p>各大問の分野タグと問題形式を確認できます。1問に複数の分野が付く場合はすべて表示します。</p>
+	</div>
+	<div class="glass explorer-shell">
+		<div class="category-tabs" role="tablist" aria-label="大学・日程を選択">
+			{categories.map((category, index) => (
+				<button type="button" role="tab" id={`topic-tab-${category.id}`}
+					aria-controls={`topic-panel-${category.id}`}
+					aria-selected={index === 0 ? 'true' : 'false'} tabindex={index === 0 ? 0 : -1}
+					class:list={['category-tab', { active: index === 0 }]}
+					data-topic-tab={category.id}>{category.label}</button>
+			))}
+		</div>
+		{categories.map((category, index) => (
+			<div role="tabpanel" id={`topic-panel-${category.id}`}
+				aria-labelledby={`topic-tab-${category.id}`}
+				data-topic-panel={category.id} hidden={index !== 0} class="category-panel">
+				{category.decades.map((decade) => (
+					<div class="decade-group">
+						<h3>{decade.decade}年代</h3>
+						{decade.years.map((year) => (
+							<div class="year-row">
+								<div class="year-label">{year.year}年</div>
+								<div class="question-grid">
+									{year.questions.map((question) => (
+										<div class="question-card">
+											<div class="question-head">
+												<strong>第{question.question}問</strong>
+												<span class={`kind kind-${question.kind}`}>{KIND_LABELS[question.kind] ?? question.kind}</span>
+											</div>
+											<div class="tag-list">
+												{question.tags.length ? question.tags.map((tag) => (
+													<a href={`${baseUrl}/tags/${encodeURIComponent(tag)}/`} class="topic-tag">{tag}</a>
+												)) : <span class="no-tag">分野未登録</span>}
+											</div>
+											<div class="question-links">
+												{question.problemHref && <a href={question.problemHref}>問題</a>}
+												<a href={question.solutionHref}>解答・解説 →</a>
+											</div>
+										</div>
+									))}
+								</div>
+							</div>
+						))}
+					</div>
+				))}
+			</div>
+		))}
+	</div>
+</section>
+
+<script>
+	const root = document.querySelector<HTMLElement>('#question-topics');
+	const tabs = Array.from(root?.querySelectorAll<HTMLButtonElement>('[data-topic-tab]') ?? []);
+	const panels = Array.from(root?.querySelectorAll<HTMLElement>('[data-topic-panel]') ?? []);
+	function selectTab(tab: HTMLButtonElement) {
+		tabs.forEach((item) => {
+			const active = item === tab;
+			item.classList.toggle('active', active);
+			item.setAttribute('aria-selected', String(active));
+			item.tabIndex = active ? 0 : -1;
+		});
+		panels.forEach((panel) => { panel.hidden = panel.dataset.topicPanel !== tab.dataset.topicTab; });
+	}
+	tabs.forEach((tab, index) => {
+		tab.addEventListener('click', () => selectTab(tab));
+		tab.addEventListener('keydown', (event) => {
+			const next = event.key === 'ArrowRight' ? (index + 1) % tabs.length
+				: event.key === 'ArrowLeft' ? (index - 1 + tabs.length) % tabs.length
+				: event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : -1;
+			if (next < 0) return;
+			event.preventDefault();
+			selectTab(tabs[next]);
+			tabs[next].focus();
+		});
+	});
+</script>
+
+<style>
+	.topic-explorer { margin: 2.5rem 0 3rem; }
+	.section-heading { margin-bottom: 1.2rem; }
+	.section-heading h2 { font-size: 1.35rem; margin: 0 0 .3rem; }
+	.section-heading p { color: var(--text-muted); font-size: .9rem; margin: 0; line-height: 1.6; }
+	.explorer-shell { padding: clamp(1rem, 2.5vw, 1.6rem); }
+	.category-tabs { display: flex; gap: .45rem; overflow-x: auto; padding-bottom: .8rem; border-bottom: 1px solid var(--border-color, rgba(255,255,255,.12)); }
+	.category-tab { flex: 0 0 auto; border: 1px solid rgba(148,163,184,.28); border-radius: .6rem; background: transparent; color: var(--text-muted); padding: .55rem .8rem; font: inherit; font-size: .85rem; cursor: pointer; }
+	.category-tab.active { color: var(--text-main); background: rgba(96,165,250,.16); border-color: #60a5fa; font-weight: 700; }
+	.category-tab:focus-visible, a:focus-visible { outline: 2px solid #60a5fa; outline-offset: 2px; }
+	.category-panel { padding-top: .4rem; }
+	.category-panel[hidden] { display: none; }
+	.decade-group { margin-top: 1.4rem; }
+	.decade-group h3 { margin: 0 0 .65rem; color: var(--primary); font-size: .98rem; }
+	.year-row { display: grid; grid-template-columns: 4.5rem minmax(0,1fr); gap: .75rem; padding: .7rem 0; border-top: 1px solid rgba(148,163,184,.15); }
+	.year-label { color: var(--text-muted); font-size: .84rem; font-weight: 700; padding-top: .65rem; white-space: nowrap; }
+	.question-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: .55rem; }
+	.question-card { min-width: 0; display: flex; flex-direction: column; gap: .55rem; padding: .65rem .75rem; border: 1px solid rgba(148,163,184,.2); border-radius: .7rem; background: rgba(148,163,184,.06); }
+	.question-head { display: flex; align-items: center; justify-content: space-between; gap: .3rem; font-size: .82rem; }
+	.question-head strong { white-space: nowrap; }
+	.kind { border-radius: 99px; padding: .18rem .42rem; font-size: .68rem; white-space: nowrap; background: rgba(148,163,184,.18); color: var(--text-main); }
+	.kind-proof { background: rgba(167,139,250,.2); color: #c4b5fd; }
+	.kind-value { background: rgba(52,211,153,.18); color: #6ee7b7; }
+	.kind-mixed { background: rgba(96,165,250,.2); color: #93c5fd; }
+	.tag-list { display: flex; flex-wrap: wrap; align-content: flex-start; gap: .25rem; min-height: 1.45rem; }
+	.topic-tag { color: var(--text-main); font-size: .71rem; line-height: 1.4; text-decoration: none; background: rgba(96,165,250,.13); border: 1px solid rgba(96,165,250,.24); border-radius: .3rem; padding: .1rem .35rem; }
+	.topic-tag:hover, .question-links a:hover { text-decoration: underline; }
+	.no-tag { font-size: .75rem; color: var(--text-muted); }
+	.question-links { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .2rem .5rem; margin-top: auto; font-size: .72rem; }
+	.question-links a { color: var(--primary); text-decoration: none; }
+	@media (max-width: 580px) { .year-row { grid-template-columns: 1fr; gap: .35rem; } .year-label { padding: 0; } .question-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); } }
+</style>
