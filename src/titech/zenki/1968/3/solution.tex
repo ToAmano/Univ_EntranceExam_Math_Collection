@@ -45,35 +45,40 @@ $\cos\dfrac{\alpha}{2}, \cos\dfrac{\beta}{2}$の正負に注意して整理す�
 これを図示すると下図斜線部（境界含む）である．
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[scale=1.0]
-      \draw[->] (-0.3,0) -- (7,0) node[right] {$\alpha$};
-      \draw[->] (0,-0.3) -- (0,7) node[above] {$\beta$};
+  \centering
+  \begin{tikzpicture}[scale=0.95, >=stealth, every node/.style={font=\small}]
+    % [0, 2pi]^2 の基準枠
+    \draw[densely dotted, thick, gray!70!black] (0, 0) rectangle ({2*pi}, {2*pi});
 
-      % Shaded triangles
-      \fill[pattern=north east lines, pattern color=gray!60] (0,{pi}) -- ({pi},{pi}) -- ({pi},{2*pi}) -- cycle;
-      \fill[pattern=north east lines, pattern color=gray!60] ({pi},0) -- ({pi},{pi}) -- ({2*pi},{pi}) -- cycle;
+    % 2つの三角形領域（斜線）
+    \fill[pattern=north east lines, pattern color=blue!65] (0, {pi}) -- ({pi}, {pi}) -- ({pi}, {2*pi}) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!65] ({pi}, 0) -- ({pi}, {pi}) -- ({2*pi}, {pi}) -- cycle;
 
-      % Outer boundary of [0, 2pi]^2
-      \draw (0,0) rectangle ({2*pi},{2*pi});
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.4, 0) -- ({2*pi+0.7}, 0) node[right] {$\alpha$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, {2*pi+0.7}) node[above] {$\beta$};
 
-      % Grid lines at pi
-      \draw[] ({pi},0) -- ({pi},{2*pi});
-      \draw[] (0,{pi}) -- ({2*pi},{pi});
+    % 解の境界および直線 alpha=pi, beta=pi 上の線分（すべて含む）
+    \draw[line width=1.4pt, blue!85!black] (0, {pi}) -- ({pi}, {2*pi});
+    \draw[line width=1.4pt, blue!85!black] ({pi}, 0) -- ({2*pi}, {pi});
+    \draw[line width=1.4pt, blue!85!black] ({pi}, 0) -- ({pi}, {2*pi});
+    \draw[line width=1.4pt, blue!85!black] (0, {pi}) -- ({2*pi}, {pi});
 
-      % Diagonals
-      \draw (0,{pi}) -- ({pi},{2*pi});
-      \draw ({pi},0) -- ({2*pi},{pi});
+    % 境界上の端点
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (0, {pi}) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at ({pi}, 0) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at ({pi}, {2*pi}) {};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at ({2*pi}, {pi}) {};
 
-      % Axis labels
-      \node[below left] at (0,0) {$0$};
-      \node[below] at ({pi},0) {$\pi$};
-      \node[below] at ({2*pi},0) {$2\pi$};
-      \node[left] at (0,{pi}) {$\pi$};
-      \node[left] at (0,{2*pi}) {$2\pi$};
-    \end{tikzpicture}
-  \end{center}
-  \caption{\cref{eq:2}を満たす$(\alpha,\beta)$の範囲（斜線部，境界含む）}
+    % 目盛りラベル
+    \node[below left=2pt] at (0, 0) {$0$};
+    \node[below=2pt] at ({pi}, 0) {$\pi$};
+    \node[below=2pt] at ({2*pi}, 0) {$2\pi$};
+    \node[left=2pt] at (0, {pi}) {$\pi$};
+    \node[left=2pt] at (0, {2*pi}) {$2\pi$};
+  \end{tikzpicture}
+  \caption{\cref{eq:2}を満たす$(\alpha,\beta)$の範囲（斜線部と$\alpha=\pi$，$\beta=\pi$の太線部，境界含む）}
+  \label{fig:alpha_beta_region}
 \end{figure}
 
 \end{document}
