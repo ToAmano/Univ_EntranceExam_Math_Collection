@@ -1,6 +1,7 @@
 import { getCollection } from 'astro:content';
 import { univName, catName } from './labels';
 import newsAuto from '../data/news-auto.json';
+import { aggregateAutoNews } from './news-grouping.mjs';
 
 export type NewsItem = {
 	date: string; // "YYYY-MM-DD"
@@ -26,10 +27,26 @@ type AutoEntry = {
 	items: AutoEntryItem[];
 };
 
+type AutoDay = {
+	date: string;
+	items: AutoEntryItem[];
+	lead: AutoEntryItem;
+	groups: Array<{
+		university: string;
+		category: string;
+		year: string;
+		action: 'added' | 'updated';
+		questions: string[];
+	}>;
+};
+
 const ACTION_LABEL: Record<string, string> = {
 	added: '追加しました',
 	updated: '更新しました',
+	mixed: '追加・更新しました',
 };
+
+const autoDays = aggregateAutoNews(newsAuto as AutoEntry[]) as AutoDay[];
 
 function questionListLabel(questions: string[]): string {
 	const nums = questions
@@ -39,25 +56,29 @@ function questionListLabel(questions: string[]): string {
 	return `第${nums.join(',')}問`;
 }
 
-/** 1コミット分のitemsを 大学+区分+年度+action ごとにまとめ、日本語の行に変換する */
-function autoEntryToLines(entry: AutoEntry): string[] {
-	const groups = new Map<string, AutoEntryItem[]>();
-	for (const item of entry.items) {
-		const key = `${item.university}|${item.category}|${item.year}|${item.action}`;
-		const list = groups.get(key) || [];
-		list.push(item);
-		groups.set(key, list);
-	}
-	return Array.from(groups.entries()).map(([key, items]) => {
-		const [university, category, year, action] = key.split('|');
-		const qLabel = questionListLabel(items.map((i) => i.question));
-		return `${univName(university)} ${catName(category)} ${year}年 ${qLabel}の解答を${ACTION_LABEL[action] || '更新しました'}`;
+function detailedAutoNews(): NewsItem[] {
+	return autoDays.flatMap((day) => day.groups.map((group) => ({
+		date: day.date,
+		title: `${univName(group.university)} ${catName(group.category)} ${group.year}年 ${questionListLabel(group.questions)}の解答を${ACTION_LABEL[group.action]}`,
+		source: 'auto' as const,
+	})));
+}
+
+function dailyAutoNews(): NewsItem[] {
+	return autoDays.map((day) => {
+		const first = day.lead;
+		const rest = day.items.length - 1;
+		const actions = new Set(day.items.map((item) => item.action));
+		const action = actions.size > 1 ? 'mixed' : first.action;
+		return {
+			date: day.date,
+			title: `${univName(first.university)} ${catName(first.category)} ${first.year}年 ${questionListLabel([first.question])}${rest ? ` ほか${rest}件` : ''}の解答を${ACTION_LABEL[action]}`,
+			source: 'auto' as const,
+		};
 	});
 }
 
-/** 自動生成ニュース（src/**\/solution.tex の追加・更新）と手動お知らせをマージし、
- * 日付降順で返す。 */
-export async function getMergedNews(): Promise<NewsItem[]> {
+async function mergeWithManual(autoItems: NewsItem[]): Promise<NewsItem[]> {
 	const manual = await getCollection('news');
 	const manualItems: NewsItem[] = manual.map((entry) => ({
 		date: entry.data.date,
@@ -65,13 +86,15 @@ export async function getMergedNews(): Promise<NewsItem[]> {
 		source: 'manual',
 	}));
 
-	const autoItems: NewsItem[] = (newsAuto as AutoEntry[]).flatMap((entry) =>
-		autoEntryToLines(entry).map((title) => ({
-			date: entry.date,
-			title,
-			source: 'auto' as const,
-		}))
-	);
-
 	return [...manualItems, ...autoItems].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+}
+
+/** Full archive: daily groups by university, exam, year and action. */
+export async function getMergedNews(): Promise<NewsItem[]> {
+	return mergeWithManual(detailedAutoNews());
+}
+
+/** Home page: one digest per date, alongside untouched manual announcements. */
+export async function getRecentNews(): Promise<NewsItem[]> {
+	return mergeWithManual(dailyAutoNews());
 }

@@ -4,6 +4,11 @@ import { getMergedNews } from '../lib/news';
 
 const news = await getMergedNews();
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const newsByDate = new Map<string, typeof news>();
+for (const item of news) {
+	if (!newsByDate.has(item.date)) newsByDate.set(item.date, []);
+	newsByDate.get(item.date)!.push(item);
+}
 ---
 
 <Layout title="更新情報" description="解答の追加・更新やサイトの変更履歴の一覧です。">
@@ -17,14 +22,16 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 			<p style="color: var(--text-muted); margin: 0;">解答の追加・更新、サイトの変更履歴です。</p>
 		</header>
 
-		<ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem;">
-			{news.map((item) => (
-				<li class="glass" style="padding: 1rem 1.25rem; border-radius: 12px; display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;">
-					<span style="font-size: 0.85rem; color: var(--text-muted); font-variant-numeric: tabular-nums; flex-shrink: 0;">{item.date}</span>
-					<span style="color: var(--text-main);">{item.title}</span>
-				</li>
+		<div class="news-days">
+			{Array.from(newsByDate, ([date, items], index) => (
+				<details class="glass news-day" open={index < 3}>
+					<summary><span>{date}</span><span class="day-count">{items.length}件</span></summary>
+					<ul>
+						{items.map((item) => <li>{item.title}</li>)}
+					</ul>
+				</details>
 			))}
-		</ul>
+		</div>
 
 		{news.length === 0 && <p style="color: var(--text-muted);">まだ更新情報はありません。</p>}
 	</div>
@@ -36,6 +43,13 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 		margin: 0 auto;
 		padding: 3rem 1.5rem 5rem;
 	}
+	.news-days { display: flex; flex-direction: column; gap: .75rem; }
+	.news-day { overflow: hidden; }
+	.news-day summary { display: flex; align-items: center; gap: .65rem; padding: .8rem 1.2rem; cursor: pointer; font-weight: 700; font-variant-numeric: tabular-nums; }
+	.news-day summary:hover { color: var(--primary); }
+	.day-count { color: var(--text-muted); font-size: .78rem; font-weight: 500; }
+	.news-day ul { margin: 0; padding: 0 1.2rem .8rem; list-style: none; }
+	.news-day li { padding: .55rem 0; border-top: 1px solid var(--glass-border); color: var(--text-main); font-size: .91rem; }
 
 	@media (max-width: 640px) {
 		.container {
