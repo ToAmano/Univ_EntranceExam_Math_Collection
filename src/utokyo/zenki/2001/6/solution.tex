@@ -7,15 +7,15 @@
 {\bf [解答]}
 
 $A, B$ の $n$ 回目の試行後の座標を $a_n, b_n$ とする．
-また$P_n,Q_n,X_n$を，それぞれ$a_n>b_n,a_n=b_n,a_n<b_n$なる場合の数とする．
+また$P_n,X_n, Q_n$を，それぞれ$a_n>b_n,a_n=b_n,a_n<b_n$なる場合の数とする．
 すると全体の場合の数が$2^n$通りだから
 \begin{align}
   P_n+Q_n+X_n = 2^n \label{eq:1}
 \end{align}
 である．
 
-% TODO: それぞれの図
 \begin{figure}[htb]
+  %それぞれの図
   \centering
   \begin{tikzpicture}[scale=1.0, >=stealth, every node/.style={font=\small}]
 
@@ -102,7 +102,7 @@ $A, B$ の $n$ 回目の試行後の座標を $a_n, b_n$ とする．
 
 \paragraph{(1)}
 
-題意から帰納的に任意の $n$ に対して
+題意より，最初$A,B$は原点にあり，コインの表裏の操作を繰り返すと帰納的に任意の $n$ に対して
 \begin{align}
   |a_n - b_n| \le 1
 \end{align}
@@ -140,10 +140,10 @@ $Y_n = \dfrac{X_n}{2^n}$ によって $\{Y_n\}$ を定める．
 $a_n$ の期待値 $E_n(a)$ を求めれば良い．ここで，確率変数 $t_k$ を以下のように定める．
 \begin{align}
   t_k =
-  \begin{cases}
+  \begin{dcases}
     0 & (k \text{回目の試行で } A \text{ が進まない}) \\
     1 & (k \text{回目の試行で } A \text{ が進む})
-  \end{cases}
+  \end{dcases}
 \end{align}
 すると，題意から
 \begin{align}
@@ -152,15 +152,15 @@ $a_n$ の期待値 $E_n(a)$ を求めれば良い．ここで，確率変数 $t_
 である．$k$ 回目で $A$ が進むのは以下の時である：
 \begin{itemize}
   \item コインで表が出る．確率: $\dfrac{1}{2}$ \\
-  \item $a_{k-1} < b_{k-1}$かつコインで裏が出る．確率: $\dfrac{P_{k-1}}{2^{k}}$
+  \item $a_{k-1} < b_{k-1}$かつコインで裏が出る．確率: $\dfrac{Q_{k-1}}{2^{k}}$
 \end{itemize}
 従って
 \begin{align}
-  P(t_k = 1) = \dfrac{1}{2} + \dfrac{P_{k-1}}{2^{k}} \quad (k \ge 2)\label{eq:5}
+  P(t_k = 1) = \dfrac{1}{2} + \dfrac{Q_{k-1}}{2^{k}} \quad (k \ge 2)\label{eq:5}
 \end{align}
 である．$k=1$ の時，$P(t_1=1) = \dfrac{1}{2}$ であるからこれも良い．
 
-ここで(1)及び(2)，対称性から $P_n = Q_n$ であることから，
+ここで(1)及び(2)，コインの表裏と$A,B$に関する対称性から $P_n = Q_n$ であることから，
 \begin{align}
   P_n &= \dfrac{1}{2} (2^n - X_n) = \dfrac{1}{3} (2^n - (-1)^n)
 \end{align}
