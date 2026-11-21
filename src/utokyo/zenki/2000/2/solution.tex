@@ -13,13 +13,13 @@
 
     % --- 1. 定数・幾何パラメータ ---
     % 中心 A(1/2, 0), 半径 1/2 の円: |z - 1/2| = 1/2
-    % 円周上の点 P(alpha) と Q(beta)
-    % phi_P = 65°: P ≈ (0.7113, 0.4532)
-    % phi_Q = 145°: Q ≈ (0.0904, 0.2868)
-    \pgfmathsetmacro{\xP}{0.5 + 0.5*cos(65)}
-    \pgfmathsetmacro{\yP}{0.5*sin(65)}
-    \pgfmathsetmacro{\xQ}{0.5 + 0.5*cos(145)}
-    \pgfmathsetmacro{\yQ}{0.5*sin(145)}
+    % 円周上の点 P(alpha) と Q(beta) (垂線足 R との十分な間隔を確保)
+    % phi_P = 50°: P ≈ (0.8214, 0.3830)
+    % phi_Q = 110°: Q ≈ (0.3290, 0.4698)
+    \pgfmathsetmacro{\xP}{0.5 + 0.5*cos(50)}
+    \pgfmathsetmacro{\yP}{0.5*sin(50)}
+    \pgfmathsetmacro{\xQ}{0.5 + 0.5*cos(110)}
+    \pgfmathsetmacro{\yQ}{0.5*sin(110)}
 
     \coordinate (O)      at (0, 0);
     \coordinate (Center) at (0.5, 0);
@@ -42,7 +42,7 @@
     % --- 2. 軌跡の円 |z - 1/2| = 1/2 ---
     \fill[blue!6, opacity=0.8] (Center) circle (0.5);
     \draw[thick, dashed, blue!70!black] (Center) circle (0.5);
-    \node[blue!85!black, font=\scriptsize, above left] at (0.25, 0.48)
+    \node[blue!85!black, font=\scriptsize, above right] at (0.55, 0.48)
     {$\left|z - \frac{1}{2}\right| = \frac{1}{2}$};
 
     % --- 3. 座標軸 (複素数平面: 実軸 Re, 虚軸 Im) ---
@@ -51,12 +51,12 @@
     \node[below left=2pt] at (O) {$O$};
 
     % --- 4. 直線 l (PQ を通る直線) ---
-    \draw[line width=1.5pt, gray!75!black] ($ (P)!-0.45!(Q) $) -- ($ (P)!1.35!(Q) $)
-    node[above right=-1pt, font=\footnotesize, black] {直線 $l$};
+    \draw[line width=1.5pt, gray!75!black] ($ (P)!-0.3!(Q) $) -- ($ (P)!1.4!(Q) $)
+    node[above left=-1pt, font=\footnotesize, black] {直線 $l$};
 
     % --- 5. 垂線 OR ---
     \draw[line width=1.8pt, red!85!black] (O) -- (R);
-    \node[red!90!black, font=\scriptsize\bfseries, below right] at ($ (O)!0.5!(R) $) {垂線 $OR$};
+    \node[red!90!black, font=\scriptsize\bfseries, left=2pt] at ($ (O)!0.5!(R) $) {垂線 $OR$};
 
     % --- 6. 直角記号 (OR ⊥ PQ) ---
     \draw[thin, red!80!black]
@@ -65,7 +65,7 @@
     ($ (R) + ({\angPQ - 90}:0.07) $);
 
     % --- 7. 目盛りと主要点のプロット ---
-    \draw[dotted, gray!60] (Center) -- (0.5, -0.08);
+    \draw[densely dotted, thick, gray!70!black] (Center) -- (0.5, -0.08);
     \node[below=2pt, font=\scriptsize] at (Center) {$\frac{1}{2}$};
     \node[below=2pt, font=\scriptsize] at (1.0, 0) {$1$};
     \node[circle, fill, inner sep=0.6pt] at (Center) {};
@@ -73,8 +73,8 @@
 
     % 点 P(alpha), Q(beta), R(w)
     \node[circle, fill, inner sep=1.2pt] at (P) {}; \node[above right=1pt] at (P) {$P(\alpha)$};
-    \node[circle, fill, inner sep=1.2pt] at (Q) {}; \node[above left=1pt] at (Q) {$Q(\beta)$};
-    \node[circle, fill=red!85!black, inner sep=1.4pt] at (R) {}; \node[above=2pt, red!90!black] at (R) {$R(w)$};
+    \node[circle, fill, inner sep=1.2pt] at (Q) {}; \node[above=2pt] at (Q) {$Q(\beta)$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (R) {}; \node[above left=1pt, red!90!black] at (R) {$R(w)$};
 
   \end{tikzpicture}
   \caption{直線 $PQ$ への原点からの垂線の足 $R(w)$ と円 $\left|z - \dfrac{1}{2}\right| = \dfrac{1}{2}$}
@@ -83,23 +83,38 @@
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}
-    \draw[->] (-1,0) -- (4,0) node[right] {$x$};
-    \draw[->] (0,-1) -- (0,3) node[above] {$y$};
-    \node at (0,0) [below left] {O};
-    \draw (0.5,2.5) -- (3,0.5);
-    \node at (0.8,2.2) [above right] {$P(\alpha)$};
-    \node[circle, fill, inner sep=1.5pt] at (0.8,2.26) {};
-    \node at (2.5,0.9) [above right] {$Q(\beta)$};
-    \node[circle, fill, inner sep=1.5pt] at (2.5,0.9) {};
-    \draw (0,0) -- (1.5,1.7);
-    \node at (1.5,1.7) [above right] {$R(w)$};
-    \node[circle, fill, inner sep=1.5pt] at (1.5,1.7) {};
-    \draw (1.3,1.55) -- (1.45,1.4) -- (1.6,1.6);
+  \begin{tikzpicture}[scale=1.3, >=stealth, every node/.style={font=\small}]
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (0.8, 2.26);
+    \coordinate (Q) at (2.5, 0.9);
+    % 直線 PQ: 傾き -0.8, 垂線の足 R(1.415, 1.768)
+    \coordinate (R) at (1.415, 1.768);
+
+    \draw[->, thick, gray!80!black] (-0.8, 0) -- (3.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.6) -- (0, 3.0) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % 直線 PQ
+    \draw[line width=1.3pt, blue!85!black] ($ (P)!-0.2!(Q) $) -- ($ (P)!1.25!(Q) $);
+
+    % 垂線 OR
+    \draw[line width=1.4pt, red!85!black] (O) -- (R);
+
+    % 直角記号 (OR ⊥ PQ)
+    \pic [draw, thin, red!80!black, angle radius=0.22cm] {right angle = O--R--Q};
+
+    % 点プロット
+    \node[circle, fill, inner sep=1.4pt] at (P) {}; \node[above right=1pt] at (P) {$P(\alpha)$};
+    \node[circle, fill, inner sep=1.4pt] at (Q) {}; \node[above right=1pt] at (Q) {$Q(\beta)$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (R) {}; \node[above left=2pt, red!90!black] at (R) {$R(w)$};
   \end{tikzpicture}
   \caption{点$P(\alpha),Q(\beta),R(w)$の配置}
 \end{figure}
 
+まず$w=0$の場合を考える．この時は題意より直線$PQ$上に$R$がある．
+必要性については$0=w=\alpha\beta$となるが，$P(\alpha), Q(\beta)$は原点ではないのでこれを満たすことはなく矛盾する．次に十分性については$P(\alpha), Q(\beta)$が円$\left|z-\dfrac{1}{2}\right|=\dfrac{1}{2}$の上にある時，円が原点を通るから$P,Q$が原点以外の時，直線$PQ$が原点を通ることはなく不適である．以上から$w=0$となることはない．
+
+そこで以下$w \neq 0$の場合を考える．
 直線$OR$が直線$PQ$の垂線だからこれら二つは直交する．従って
 \begin{align}
   \dfrac{w}{\alpha - \beta} \text{ は純虚数} \label{eq:1}
@@ -108,27 +123,27 @@
 
 さらに点$R$は $l$ 上だから，$t \in \mathbb{R}$ として
 \begin{align}
-  (w - \beta) = t(\alpha - \beta) \\
-  \therefore
+  (w - \beta) = t(\alpha - \beta)
+  \quad\therefore
   \dfrac{w-\beta}{\alpha-\beta} \in \mathbb{R} \label{eq:2}
 \end{align}
 である．\cref{eq:1,eq:2}から
 \begin{align}
   &
-  \begin{cases}
+  \begin{dcases}
     \left( \dfrac{w}{\alpha-\beta} \right) + \overline{\left( \dfrac{w}{\alpha-\beta} \right)} = 0 \\
     \left( \dfrac{w-\beta}{\alpha-\beta} \right) = \overline{\left( \dfrac{w-\beta}{\alpha-\beta} \right)}
-  \end{cases} \\
+  \end{dcases} \\
   \therefore
   &
-  \begin{cases}
+  \begin{dcases}
     w(\bar{\alpha}-\bar{\beta}) + \bar{w}(\alpha-\beta) = 0  \\
     (w-\beta)(\bar{\alpha}-\bar{\beta}) = (\bar{w}-\bar{\beta})(\alpha-\beta)
-  \end{cases} \label{eq:3}
+  \end{dcases} \label{eq:3}
 \end{align}
 である．
 
-まず $w \neq 0$ だから\cref{eq:3}の第一式より
+$w \neq 0$ だから\cref{eq:3}の第一式より
 \begin{align}
   \bar{\alpha}-\bar{\beta} &= -\dfrac{\bar{w}}{w}(\alpha-\beta)
 \end{align}
@@ -139,6 +154,7 @@
 となる．$\alpha \neq \beta, w \neq 0$ より両辺$\alpha-\beta$で割って
 \begin{align}
   & -(w-\beta)\bar{w} = w(\bar{w}-\bar{\beta}) \\
+  \therefore
   & 2|w|^2 - \bar{\beta}w - \beta\bar{w} = 0  \label{eq:4}
 \end{align}
 である．
@@ -155,44 +171,44 @@
 
 以下$w=\alpha\beta$となる必要十分条件を考える．
 
-\subparagraph{$1^\circ$ 十分性}
+\subparagraph{$1^\circ$ 必要性}
 
 $w = \alpha\beta$ の時，\cref{eq:4,eq:5}に代入して
 \begin{align}
-  \begin{cases}
+  \begin{dcases}
     2|\alpha|^2|\beta|^2 - \alpha|\beta|^2 - \bar{\alpha}|\beta|^2 = 0 \\
     2|\alpha|^2|\beta|^2 - \beta|\alpha|^2 - \bar{\beta}|\alpha|^2 = 0
-  \end{cases}
+  \end{dcases}
 \end{align}
 であり，$\alpha, \beta \neq 0$ だから，
 \begin{align}
-  \begin{cases}
+  \begin{dcases}
     \left|\alpha - \dfrac{1}{2}\right|^2 = \dfrac{1}{4} \\
     \left|\beta - \dfrac{1}{2}\right|^2 = \dfrac{1}{4}
-  \end{cases}
+  \end{dcases}
 \end{align}
 となり，各辺 $0$ 以上だから
 \begin{align}
   \left|\alpha - \dfrac{1}{2}\right| = \dfrac{1}{2},
   \left|\beta - \dfrac{1}{2}\right| = \dfrac{1}{2}
 \end{align}
-より，$P(\alpha), Q(\beta)$ は題意の円周上にある．よって十分である．
+より，$P(\alpha), Q(\beta)$ は題意の円周上にある．よって必要性は示された．
 
-\subparagraph{$2^\circ$ 必要性}
+\subparagraph{$2^\circ$ 十分性}
 
 $\alpha,\beta$が中心$A(1/2)$, 半径$1/2$の円周上にあるから
 \begin{align}
-  \begin{cases}
+  \begin{dcases}
     \left|\alpha - \dfrac{1}{2}\right|^2 = \dfrac{1}{4} \\
     \left|\beta - \dfrac{1}{2}\right|^2 = \dfrac{1}{4}
-  \end{cases}
+  \end{dcases}
 \end{align}
 が成立する．変形すると
 \begin{align}
-  \begin{cases}
+  \begin{dcases}
     \bar{\alpha} = \dfrac{\alpha}{2\alpha-1} \\
     \bar{\beta} = \dfrac{\beta}{2\beta-1}
-  \end{cases} \quad \left(\because \alpha, \beta \neq \dfrac{1}{2}\right) \label{eq:6}
+  \end{dcases} \quad \left(\because \alpha, \beta \neq \dfrac{1}{2}\right) \label{eq:6}
 \end{align}
 である．
 
@@ -210,8 +226,11 @@ $A = \alpha - \beta$ とおく．$\alpha \neq \beta$ より $A \neq 0$ だから
 \begin{align}
   w
   &= \dfrac{\beta\bar{A} - \bar{\beta}A}{2\bar{A}} \\
+  &= \dfrac{\beta}{2} - \dfrac{\bar{\beta}A}{2\bar{A}} \\
   &= \dfrac{\beta}{2} - \dfrac{1}{2} \left( \dfrac{\beta}{2\beta-1} \right) \dfrac{\alpha-\beta}{\dfrac{\alpha}{2\alpha-1} - \dfrac{\beta}{2\beta-1}} \quad (\because \text{\cref{eq:6}}) \\
-  &= \dfrac{\beta}{2} - \dfrac{1}{2} (2\alpha-1)\beta = \alpha\beta
+  &= \dfrac{\beta}{2} - \dfrac{1}{2} \left( \dfrac{\beta}{2\beta-1} \right) \dfrac{(\alpha-\beta)(2\alpha-1)(2\beta-1)}{\alpha(2\beta-1) - \beta(2\alpha-1)} \\
+  &= \dfrac{\beta}{2} - \dfrac{1}{2} \dfrac{\beta(\alpha-\beta)(2\alpha-1)}{\beta-\alpha} \\
+  &= \dfrac{\beta}{2} + \dfrac{1}{2} (2\alpha-1)\beta = \alpha\beta
 \end{align}
 を得る．
 \casesend
