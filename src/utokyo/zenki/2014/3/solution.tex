@@ -8,15 +8,15 @@
 
 与えられた放物線
 \begin{align}
-  \begin{cases}
+  \begin{dcases}
     C_1:y=-x^2+1 \\
     C_2:y={(x-u)}^2+u
-  \end{cases} \label{eq:1}
+  \end{dcases} \label{eq:1}
 \end{align}
 について考える．
 
-% TODO: 概要図
 \begin{figure}[htb]
+  % 概要図
   \centering
   \begin{tikzpicture}[scale=3, >=stealth, every node/.style={font=\small}]
 
@@ -35,12 +35,6 @@
     \coordinate (P2) at (\xInter, \yInter);
 
     % ============================================================
-    % 2. 三角形 OP1P2 (x1*y2 - x2*y1 に対応する幾何領域)
-    % ============================================================
-    \fill[blue!15] (O) -- (P1) -- (P2) -- cycle;
-    \fill[pattern=north east lines, pattern color=blue!50] (O) -- (P1) -- (P2) -- cycle;
-
-    % ============================================================
     % 3. 座標軸
     % ============================================================
     \draw[->, thick, gray!80!black] (-1.6, 0) -- (1.6, 0) node[right] {$x$};
@@ -53,26 +47,24 @@
     % C1: y = -x^2 + 1 (上に凸)
     \draw[line width=1.4pt, blue!85!black, domain=-1.25:1.25, samples=60, smooth]
     plot (\x, {-(\x)*(\x) + 1.0});
-    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (0.7, 0.9)
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (0.9, 0.2)
     {$C_1: y = -x^2 + 1$};
 
     % C2: y = (x-u)^2 + u (下に凸, 例として u=0: y = x^2)
     \draw[line width=1.4pt, teal!85!black, domain=-1.15:1.15, samples=60, smooth]
     plot (\x, {(\x - \uVal)*(\x - \uVal) + \uVal});
-    \node[teal!90!black, font=\footnotesize\bfseries, below right] at (0.85, 0.4)
+    \node[teal!90!black, font=\footnotesize\bfseries, below right] at (1, 1)
     {$C_2: y = (x-u)^2 + u$};
 
     % ============================================================
     % 5. 交点・動径・三角形の境界線
     % ============================================================
-    % 三角形 OP1P2 の境界線
-    \draw[line width=1.1pt, red!85!black] (O) -- (P1) -- (P2) -- cycle;
 
     % 交点 P1(x1, y1), P2(x2, y2)
     \node[circle, fill=red!85!black, inner sep=1.4pt] at (P1) {};
-    \node[above left=2pt] at (P1) {$P_1(x_1, y_1)$};
+    \node[left=2pt] at (P1) {$P_1(x_1, y_1)$};
     \node[circle, fill=red!85!black, inner sep=1.4pt] at (P2) {};
-    \node[above right=2pt] at (P2) {$P_2(x_2, y_2)$};
+    \node[right=2pt] at (P2) {$P_2(x_2, y_2)$};
 
     % 座標投影線
     \draw[densely dotted, thick, gray!70!black] (P1) -- (-\xInter, 0) node[below=2pt, font=\scriptsize] {$x_1$};
@@ -112,11 +104,88 @@ $C_1$と$C_2$が共有点を持つ時，$y$を消去した
 
 \paragraph{(2)}
 
+\begin{figure}[htb]
+  % 概要図
+  \centering
+  \begin{tikzpicture}[scale=3, >=stealth, every node/.style={font=\small}]
+
+    % ============================================================
+    % 1. 定数・厳密パラメータ (u = 0 の例)
+    % C1: y = -x^2 + 1
+    % C2: y = x^2 (頂点 (0,0))
+    % 交点: 2x^2 - 1 = 0 => x = ±1/sqrt(2) ≈ ±0.7071, y = 1/2 = 0.5
+    % ============================================================
+    \def\uVal{0.0}
+    \def\xInter{0.7071} % 1/sqrt(2)
+    \def\yInter{0.5}
+
+    \coordinate (O)  at (0, 0);
+    \coordinate (P1) at (-\xInter, \yInter);
+    \coordinate (P2) at (\xInter, \yInter);
+
+    % ============================================================
+    % 2. 三角形 OP1P2 (x1*y2 - x2*y1 に対応する幾何領域)
+    % ============================================================
+    \fill[blue!15] (O) -- (P1) -- (P2) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!50] (O) -- (P1) -- (P2) -- cycle;
+
+    % ============================================================
+    % 3. 座標軸
+    % ============================================================
+    \draw[->, thick, gray!80!black] (-1.6, 0) -- (1.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.4) -- (0, 1.6) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+
+    % ============================================================
+    % 4. 2つの放物線 C1, C2
+    % ============================================================
+    % C1: y = -x^2 + 1 (上に凸)
+    \draw[line width=1.4pt, blue!85!black, domain=-1.25:1.25, samples=60, smooth]
+    plot (\x, {-(\x)*(\x) + 1.0});
+    \node[blue!90!black, font=\footnotesize\bfseries, above right] at (0.9, 0.2)
+    {$C_1: y = -x^2 + 1$};
+
+    % C2: y = (x-u)^2 + u (下に凸, 例として u=0: y = x^2)
+    \draw[line width=1.4pt, teal!85!black, domain=-1.15:1.15, samples=60, smooth]
+    plot (\x, {(\x - \uVal)*(\x - \uVal) + \uVal});
+    \node[teal!90!black, font=\footnotesize\bfseries, below right] at (1, 1)
+    {$C_2: y = (x-u)^2 + u$};
+
+    % ============================================================
+    % 5. 交点・動径・三角形の境界線
+    % ============================================================
+    % 三角形 OP1P2 の境界線
+    \draw[line width=1.1pt, red!85!black] (O) -- (P1) -- (P2) -- cycle;
+
+    % 交点 P1(x1, y1), P2(x2, y2)
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P1) {};
+    \node[left=2pt] at (P1) {$P_1(x_1, y_1)$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P2) {};
+    \node[right=2pt] at (P2) {$P_2(x_2, y_2)$};
+
+    % 座標投影線
+    \draw[densely dotted, thick, gray!70!black] (P1) -- (-\xInter, 0) node[below=2pt, font=\scriptsize] {$x_1$};
+    \draw[densely dotted, thick, gray!70!black] (P2) -- (\xInter, 0) node[below=2pt, font=\scriptsize] {$x_2$};
+    \draw[densely dotted, thick, gray!70!black] (P1) -- (0, \yInter) node[above left=1pt, font=\scriptsize] {$y_1=y_2$};
+
+    % C1 の頂点 (0, 1)
+    \node[circle, fill, inner sep=1.2pt] at (0, 1) {};
+    \node[above left=1pt, font=\scriptsize] at (0, 1) {$1$};
+
+    % C2 の頂点 (u, u) の例示 (u=0 のとき原点 O と一致)
+    \node[circle, fill=teal!85!black, inner sep=1.2pt] at (\uVal, \uVal) {};
+    \node[below right=2pt, font=\scriptsize, teal!90!black] at (\uVal, \uVal) {$C_2$頂点 $(u, u)$};
+
+  \end{tikzpicture}
+  \caption{放物線 $C_1, C_2$ の共有点 $P_1, P_2$ と原点 $O$（$u=0$ の場合）と三角形$OP_1P_2$の様子．}
+  \label{fig:parabolas_intersection_geometry2}
+\end{figure}
+
 与えられた式を$f(u)$として
 \begin{align}
   f(u) = 2|x_1y_2-x_2y_1| \label{eq:3}
 \end{align}
-を求める．
+を求める．これは三角形$OP_1P_2$の面積の$4$倍である．
 
 $x_1,x_2$は\cref{eq:2}の$2$実数解である．
 対称性から$x_1\le x_2$としてよい．
@@ -139,10 +208,10 @@ $(x_k,y_k)$は$C_1$上の点でもあるから
 
 ここで，$x_1\le x_2$だから，\cref{eq:2}の解と係数の関係および解の公式より
 \begin{align}
-  \begin{cases}
+  \begin{dcases}
     x_2-x_1=\sqrt{-u^2-2u+2} \\
     x_1x_2=\dfrac{1}{2}(u^2+u-1)
-  \end{cases}
+  \end{dcases}
 \end{align}
 である．\cref{eq:5}に代入して
 \begin{align}
@@ -189,7 +258,7 @@ $t=u+1$とおいて\cref{eq:6}に代入して
 \end{align}
 である．
 
-以上を\cref{eq:7}に代入して
+以上を\cref{eq:7}に代入して求める定積分は
 \begin{align}
   I=2\left(\dfrac{9}{16}\pi+\dfrac{3}{4}\pi\right)=\dfrac{21}{8}\pi
 \end{align}
