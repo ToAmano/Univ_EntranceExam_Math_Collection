@@ -63,6 +63,7 @@ IGNORE_LINE_MACROS = re.compile(
     r"\\end\{(?:oframed|multicols)\}|"
     r"\\setlength\{.*?\}\{.*?\}|"
     r"\\input\{.*?\}|"
+    r"\\subfile\{.*?\}|"
     r"\\footnotesize\\textit\{.*?\}|"
     r"\\begin\{flushright\}|"
     r"\\end\{flushright\}"
@@ -116,11 +117,17 @@ def extract_solution_lines(text: str) -> list[str]:
     )
     sol_body = sub[: m_end.start()] if m_end else sub
 
-    # Remove tikzpicture environments
+    # Remove problem-statement oframed wrapper (when [解答] heading is absent) and tikzpicture environments
+    sol_no_oframed = re.sub(
+        r"\\begin\{oframed\}.*?\\end\{oframed\}",
+        "",
+        sol_body,
+        flags=re.DOTALL,
+    )
     sol_no_tikz = re.sub(
         r"\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}",
         "",
-        sol_body,
+        sol_no_oframed,
         flags=re.DOTALL,
     )
 

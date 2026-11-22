@@ -71,6 +71,9 @@ After figure.
         sample = r"""
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
+\begin{oframed}
+  \subfile{problem}
+\end{oframed}
 Direct solution without heading.
 $f(x) = x^2$
 \end{document}
@@ -79,6 +82,46 @@ $f(x) = x^2$
         self.assertEqual(len(lines), 2)
         self.assertEqual(lines[0], "Direct solution without heading.")
         self.assertEqual(lines[1], "$f(x) = x^2$")
+
+    def test_blank_problem_stub_is_placeholder(self):
+        blank_stub = r"""
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+\begin{oframed}
+  \subfile{problem}
+\end{oframed}
+
+\begin{flushright}
+  \footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+% (原稿において第1問の解答は空欄)
+\newpage
+
+\end{document}
+"""
+        lines = extract_solution_lines(blank_stub)
+        self.assertEqual(lines, [])
+        self.assertTrue(is_placeholder(lines))
+
+        matrix_stub = r"""
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+\begin{oframed}
+  \subfile{problem}
+\end{oframed}
+
+\begin{flushright}
+  \footnotesize\textit{【自動文字起こし・要確認】}
+\end{flushright}
+
+(行列)
+
+\end{document}
+"""
+        matrix_lines = extract_solution_lines(matrix_stub)
+        self.assertEqual(matrix_lines, ["(行列)"])
+        self.assertTrue(is_placeholder(matrix_lines))
 
     def test_is_placeholder(self):
         self.assertTrue(is_placeholder([]))
