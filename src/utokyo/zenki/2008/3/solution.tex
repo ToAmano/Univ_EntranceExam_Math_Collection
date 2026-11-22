@@ -8,10 +8,8 @@
 
 \paragraph{(1)}
 
-% TODO: 3D-tikz 正八面体
-% DEFの重心を原点とし，Dがx軸上，BEがx軸と垂直（=y軸に平行）になるように配置する
-% するとDEFの面はz軸と垂直になる
 \begin{figure}[htb]
+  % 3D-tikz 正八面体
   \centering
   \tdplotsetmaincoords{50}{10}
   \begin{tikzpicture}[tdplot_main_coords,scale=3.0,>=stealth, every node/.style={font=\small}]
@@ -102,7 +100,7 @@
   D(r,0,0),E(rc,rs,0),F(rc,-rs,0)
 \end{align}
 とする．
-点$C$について考えると$|BC|=|EC|$から$C$は線分$BE$の二等分面$DG_1G_2 (y=0)$の上にある．
+点$C$について考えると$|BC|=|AC|$から$C$は線分$AB$の二等分面$DG_1G_2 (y=0)$の上にある．
 同様に考えると$A$は平面$EG_1G_2$の，$B$は平面$FG_1G_2$の上にある．従ってその座標はこれらの点の$z$座標を$Z$として
 \begin{align}
   A(-rc,-rs,Z), B(-rc,rs,Z), C(-r,0,Z)
@@ -279,10 +277,10 @@
 
 \paragraph{(2)}
 
-正八面体の6頂点 $A \sim F$ とし，面 ABC，面 DEF の重心を $G_1, G_2$ とする．直線 $G_1 G_2$ を $l$ とおく．$l$ は面 ABC，面 DEF と垂直である．$\overrightarrow{G_1 G_2} = \vec{a}$ とおき，$\overrightarrow{G_1 P} = t \vec{a} \; (0 \le t \le 1)$ なる点 $P$ を含み $l$ に垂直な平面で立体を切断する．この時の断面は右図である．下図のように頂点をおく．
+正八面体の6頂点 $A \sim F$ とし，面 ABC，面 DEF の重心を $G_1, G_2$ とする．直線 $G_1 G_2$ を $l$ とおく．$l$ は面 ABC，面 DEF と垂直である．$\overrightarrow{G_1 G_2} = \vec{a}$ とおき，$\overrightarrow{G_1 P} = t \vec{a} \; (0 \le t \le 1)$ なる点 $P$ を含み $l$ に垂直な平面で立体を切断する．この時の断面は下図で，頂点を図のようにおく．
 
-% TODO: 切断面
 \begin{figure}[htb]
+  %  切断面
   \centering
   \begin{tikzpicture}[scale=3.6, >=stealth, every node/.style={font=\small}]
 
@@ -410,26 +408,31 @@
     to[out=135, in=-30] ($(V_botR) + (0.05, 0.08)$);
 
   \end{tikzpicture}
-  \caption{正三角形から得られる六角形切断面 $LKJIHM$ と辺の比}
+  \caption{一辺$2-t$の正三角形から得られる六角形切断面 $LKJIHM$ と辺の比}
   \label{fig:cross_section_hexagon_sketch_verified}
 \end{figure}
 
 三角形の相似から
 \begin{align}
-  \begin{cases}
+  \begin{dcases}
     |LK| = |MH| = |IJ| = 1-t \\
     |HI| = |KJ| = |LM| = t
-  \end{cases}
+  \end{dcases}
 \end{align}
-となり，これを回転させた面積 $S(t)$ は
+となり$P$から各頂点への距離は等しいから，これを回転させた面積 $S(t)$ は
 \begin{align}
   S(t) = \pi \cdot |PJ|^2 \label{eq:1}
+\end{align}
+である．
+また$P$から$KJ$におろした垂線の足を$X$とすると正三角形の性質から
+\begin{align}
+  |PX| = \dfrac{2-t}{2}\tan\dfrac{\pi}{6} = \dfrac{\sqrt{3}}{6}(2-t)
 \end{align}
 である．$\triangle PXJ$に三平方の定理を用いて
 \begin{align}
   |PJ|^2
   &= |PX|^2+|XJ|^2
-  = \left(\dfrac{1}{2}t\right)^2 + \left\{ \dfrac{\sqrt{3}}{2}(2-t) \right\}^2
+  = \left\{ \dfrac{\sqrt{3}}{6}(2-t) \right\}^2 + \left(\dfrac{1}{2}t\right)^2
   = \dfrac{1}{12}(4t^2 - 4t + 4)
   = \dfrac{1}{3}(t^2 - t + 1)
 \end{align}
@@ -439,8 +442,8 @@
 \end{align}
 である．
 
-% TODO: 四角錐
 \begin{figure}[htb]
+  % 四角錐
   \centering
   \begin{tikzpicture}[x={(1.0cm, -0.2cm)}, y={(0.5cm, 0.4cm)}, z={(0cm, 1.4cm)}, scale=2.0, >=stealth, every node/.style={font=\small}]
 
@@ -509,7 +512,7 @@
 \end{align}
 である．
 
-よって\cref{eq:2,eq:3}を\cref{eq:1}に代入して求める体積 $V$ は
+よって\cref{eq:2,eq:3}を\cref{eq:1}に代入してから$t$について積分して，求める体積 $V$ は
 \begin{align}
   V
   &= \int_0^1 \dfrac{\pi}{3}(t^2 - t + 1) \cdot |\vec{\ell}| \, dt \\
@@ -523,8 +526,8 @@
 
 \paragraph{(2)}
 
-% TODO: 正六角形の中に切断面を配置した図
 \begin{figure}[htb]
+  % 正六角形の中に切断面を配置した図
   \centering
   \begin{tikzpicture}[scale=2.8, >=stealth, every node/.style={font=\small}]
 
@@ -574,8 +577,8 @@
     \draw[line width=1.6pt, purple!85!black] (H_pt) -- (Corn_pt);
 
     % 点プロット
-    \node[circle, fill, inner sep=1.4pt] at (H_pt) {}; \node[below left=2pt] at (H_pt) {$H$};
-    \node[circle, fill, inner sep=1.2pt] at (Corn_pt) {};
+    \node[circle, fill, inner sep=1.4pt] at (H_pt) {}; \node[below left=2pt] at (H_pt) {$Q$};
+    \node[circle, fill, inner sep=1.2pt] at (Corn_pt) {}; \node[below left=2pt] at (Corn_pt) {$R$};
 
     % --- 4. スケッチ通りの角度弧と引き出しラベル ---
     % 角 60° (正六角形の中心角・内角由来)
@@ -590,7 +593,7 @@
     node[below, font=\scriptsize\bfseries] {$\frac{\sqrt{3}}{3}t$} -- ($(H_pt)!0.5!(Corn_pt)$);
 
   \end{tikzpicture}
-  \caption{正六角形の内接切断面と $\triangle PH(\text{頂点})$ における余弦定理（手書きスケッチの再現）}
+  \caption{正六角形の内接切断面と $\triangle PQR$ における余弦定理}
   \label{fig:cross_section_in_hexagon_sketch}
 \end{figure}
 
