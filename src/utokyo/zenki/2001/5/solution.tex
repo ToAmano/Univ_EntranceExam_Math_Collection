@@ -54,14 +54,14 @@
 \end{figure}
 
 $x$ [L] の水が入っているビーカーを $X$ とする．
-ビーカーに入っている水の全質量を $S$ [L]とする．題意より
+ビーカーに入っている水の総量を $S$ [L]とする．題意より
 \begin{align}
   S = 1 \label{eq:1}
 \end{align}
 である．
 
-% 操作の様子
 \begin{figure}[htb]
+  % 操作の様子
   \centering
   \begin{tikzpicture}[scale=1.1, >=stealth, every node/.style={font=\small}]
 
@@ -103,9 +103,9 @@ $x$ [L] の水が入っているビーカーを $X$ とする．
       \node[font=\footnotesize\bfseries, teal!85!black] at (1.6, 2.3) {【操作後】ビーカー数が1個減少};
 
       % 空になって除外されるビーカー
-      \draw[dashed, gray!50, thick] (0.15, 1.7) -- (0.15, 0) -- (1.05, 0) -- (1.05, 1.7);
+      \draw[dashed, gray!60!black, thick] (0.15, 1.7) -- (0.15, 0) -- (1.05, 0) -- (1.05, 1.7);
       \node[below=2pt, font=\scriptsize, gray!60] at (0.6, 0) {空（除外）};
-      \node[font=\tiny, gray!50] at (0.6, 0.8) {除外};
+      \node[font=\tiny, gray!60!black] at (0.6, 0.8) {除外};
 
       % 水が合わさったビーカー (0.2 + 0.35 = 0.55L)
       \drawMiniBeaker{1.8}{0.55}{合流後}{$v_{\min1} + v_{\min2}$}{teal}
@@ -127,20 +127,21 @@ $x$ [L] の水が入っているビーカーを $X$ とする．
 
     % --- ビーカー描画マクロ ---
     \newcommand{\drawFinalBeaker}[5]{
-      \fill[#5!25] ({#1-0.6}, 0) rectangle ({#1+0.6}, {#2*2.2});
+      \fill[#5!20] ({#1-0.6}, 0) rectangle ({#1+0.6}, {#2*2.2});
+      \fill[pattern=north east lines, pattern color=#5!60, opacity=0.7] ({#1-0.6}, 0) rectangle ({#1+0.6}, {#2*2.2});
       \draw[#5!80!black, thick] ({#1-0.6}, {#2*2.2}) -- ({#1+0.6}, {#2*2.2});
       \draw[very thick, gray!75!black] ({#1-0.6}, 2.3) -- ({#1-0.6}, 0) -- ({#1+0.6}, 0) -- ({#1+0.6}, 2.3);
-      \node[below=3pt, font=\footnotesize\bfseries] at ({#1}, 0) {#3};
+      \node[below=3pt, font=\footnotesize\bfseries, align=center] at ({#1}, 0) {#3};
       \node[above=2pt, font=\footnotesize\bfseries, #5!90!black] at ({#1}, {#2*2.2}) {#4};
     }
 
     % --- 1. 残り3つのビーカーの並び ---
     % ビーカー 1: 水量 t (<= x)
-    \drawFinalBeaker{1.2}{0.42}{ビーカー $1$}{$t \le x$}{teal}
+    \drawFinalBeaker{1.2}{0.38}{ビーカー $1$\\[1pt]\scriptsize ($t \le x$)}{$t$}{teal}
     % ビーカー 2: 水量 s (<= x)
-    \drawFinalBeaker{3.2}{0.35}{ビーカー $2$}{$s \le x$}{teal}
+    \drawFinalBeaker{3.2}{0.32}{ビーカー $2$\\[1pt]\scriptsize ($s \le x$)}{$s$}{teal}
     % ビーカー X: 水量 x (< 1/3) (未増量)
-    \drawFinalBeaker{5.2}{0.55}{ビーカー $X$}{$x$}{red}
+    \drawFinalBeaker{5.2}{0.55}{ビーカー $X$\\[1pt]\scriptsize ($x$ 未満)}{$x$}{red}
 
     % --- 2. 上限線 y = x (破線) ---
     \draw[dashed, red!80!black, thick] (0.3, {0.55*2.2}) -- (6.1, {0.55*2.2})
@@ -170,16 +171,16 @@ $x$ [L] の水が入っているビーカーを $X$ とする．
 (a)(b) の過程では，3個以上のビーカーの中から，入っている水の量が少ない順に2個のビーカーが選ばれる．よって，$X$ が選ばれる時，$x$ [L] 以上の水が入っているビーカーが $X$ 以外に1個以上存在する．
 このようなビーカーが $X$ 以外に2個以上存在すると仮定すると
 \begin{align}
-  S \ge 3x > \dfrac{3}{5}
+  S \ge 3x > \dfrac{6}{5}
 \end{align}
 となり，\cref{eq:1}の $S=1$ に矛盾する．
 
 したがって，$x$ [L] 以上の水が入っているビーカーは $X$ 以外に1個である．それを $Y$ とする．以上の議論より $X$ が選ばれる時はビーカーは残り3個であり，その水の量は $y, z, x$ として，
 \begin{align}
-  \begin{cases}
+  \begin{dcases}
     z \le x \le y \\
     S=x+y+z
-  \end{cases}\label{eq:2}
+  \end{dcases}\label{eq:2}
 \end{align}
 と表せる．
 
@@ -209,14 +210,19 @@ $x,y,z$のビーカーがあるところからは以下のような議論も可�
 $Y$ [L] のビーカーは最初からは存在しないので，このビーカーがつくられる時を考える．この時，$t$個のビーカーがあるとし，水量の少ない順に $a_1, a_2, a_3,\cdots,a_t$ とする．又 $t \ge 4$ としても良い．この時，(a)で $a_1$が，(b)で $a_2$ が各々選ばれるとして良い．
 $a_k$ に入っている水量を $b_k$ とすると，$b_1+b_2 = y$ が$x$以上だから
 \begin{align}
-  b_1+b_2 &\ge x \label{eq:3}
+  b_1+b_2 = y \ge x \label{eq:3}
 \end{align}
-であり，$a_3 \sim a_5$ に入っている水量和は $1-2x$ [L] 以下である．ここから $X$ のビーカーをのぞいたビーカーの内水量の和は $1-2x$ [L] 以下だから，$b_1 \le 1-2x, b_2 \le 1-2x$ が必要で
+である．% り，$a_3 \sim a_4$ に入っている水量和は $1-2x$ [L] 以下である．
+$X$ のビーカーおよびこれから作られる$Y$のビーカーをのぞいたビーカーの合計の水量が
+\begin{align}
+  1- (x+y) \le 1-2x
+\end{align}
+である．$b_1,b_2$はこれよりも少ないから$b_1 \le 1-2x, b_2 \le 1-2x$ が必要で
 \begin{align}
   b_1+b_2 &\le 2-4x \label{eq:4}
 \end{align}
 である．
-\cref{eq:1,eq:2}から
+\cref{eq:3,eq:4}から
 \begin{align}
   x \le 2-4x \quad \therefore x \le \dfrac{2}{5}
 \end{align}
