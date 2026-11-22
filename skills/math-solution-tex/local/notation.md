@@ -41,7 +41,6 @@ lint の検査は `local/lint_local.py`。
 
 - 4つの命令（`\carrowIncreaseConvex` など）は、`scratch/generate_main_tex.py` のプリアンブルおよび `scratch/tex_to_md.py` の SVG 用プリアンブルで定義している。
 - Web（`tex_to_md.py`）では、4つの命令をそれぞれ対応する曲線矢印のインライン `<svg class="carrow">` に変換して表示する。
-- `\rotatebox`・`\raisebox` で回した矢印を使っている増減表が一部に残っている（#1497：`utokyo/zenki/1977/6`、`titech/zenki/1981/2`）。
 
 ## LN6. lint の対象外にする印
 
