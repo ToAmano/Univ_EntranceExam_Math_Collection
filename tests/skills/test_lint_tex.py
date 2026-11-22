@@ -115,6 +115,40 @@ def test_check_functions_keep_plain_messages():
     assert '[§' not in _messages(lint.check_align_star('\\begin{align*}x\\end{align*}'))
 
 
+def test_missing_math_command_detects_bare_function_names():
+    source = (
+        r'本文の sin と cos は対象外．'
+        '\n'
+        r'$sin x + cos(t) + log x + lim_{n\to\infty} + max\{x,y\} + sqrt{2} + theta$'
+        '\n'
+        r'\begin{align} tan x + exp(x) + det A \end{align}'
+    )
+    found = sorted(lint.check_missing_math_command(source), key=lambda item: item[0])
+    assert [message.split(' ')[0] for _, message in found] == [
+        'sin', 'cos', 'log', 'lim', 'max', 'sqrt', 'theta', 'tan', 'exp', 'det',
+    ]
+    assert [line for line, _ in found] == [2] * 7 + [3] * 3
+
+
+def test_missing_math_command_ignores_commands_text_and_subscripts():
+    source = (
+        r'$\sin x + \operatorname{cos}(x) + \mathrm{sin} x + '
+        r'\text{log} + r_{max} + r_{min} + asin + sinh + pi$'
+        '\n'
+        r'% $cos x$'
+        '\n'
+        r'\begin{tikzpicture}\node {$tan x$};\end{tikzpicture}'
+    )
+    assert lint.check_missing_math_command(source) == []
+
+
+def test_missing_math_command_is_lint_error(tmp_path):
+    source = tmp_path / 'a.tex'
+    source.write_text(r'\begin{document}$cos x$\end{document}', encoding='utf-8')
+    errors, _, _ = lint.lint_file(source)
+    assert any('cos' in message and '[§N12.2]' in message for _, message in errors)
+
+
 def test_new_error_checks():
     assert lint.check_binom('$\\binom{n}{k}$ と $\\dbinom{6}{2}$') and len(lint.check_binom('$\\dbinom{6}{2}$')) == 1
     assert lint.check_subfigure_env('\\begin{subfigure}{0.4\\textwidth}\\end{subfigure}')

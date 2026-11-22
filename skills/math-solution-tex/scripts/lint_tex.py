@@ -1092,6 +1092,32 @@ def check_math_fullwidth(text):
     return errors
 
 
+MISSING_MATH_COMMAND_RE = re.compile(
+    r'(?<![A-Za-z\\])'
+    r'(arcsin|arccos|arctan|limsup|liminf|sin|cos|tan|cot|sec|csc|'
+    r'log|ln|lim|exp|max|min|sup|inf|det|gcd|sqrt|infty|'
+    r'alpha|beta|gamma|delta|theta|lambda|omega|phi|sigma)'
+    r'(?![A-Za-z])'
+)
+
+
+def check_missing_math_command(text):
+    """数式中の演算子名で先頭のバックスラッシュが欠けている可能性を調べる。"""
+    errors = []
+    for pos, body in _iter_math_blocks(text):
+        cleaned = _strip_math_text_commands(body)
+        for m in MISSING_MATH_COMMAND_RE.finditer(cleaned):
+            name = m.group(1)
+            # r_{max} のような添字中のラベルは演算子ではない。
+            if name in {'max', 'min', 'sup', 'inf'} and cleaned[m.end():m.end() + 1] == '}':
+                continue
+            errors.append((
+                line_of(text, pos + m.start()),
+                f"{name} は数式中で \\{name} と書く（先頭の \\ がない可能性）",
+            ))
+    return errors
+
+
 PROSE_IN_MATH_CMD_RE = re.compile(
     r'\\(?:text|mbox|hbox|textbf|textit|textrm|textsf|texttt|textnormal|intertext|shortintertext)\*?\s*\{'
 )
@@ -2064,6 +2090,7 @@ def lint_file(path, profile=None):
     errors += tag(check_math_brackets(text), 'N7.3')
     errors += tag(check_prose_brackets(text), 'N7.4')
     errors += tag(check_math_fullwidth(text), 'N12.1')
+    errors += tag(check_missing_math_command(text), 'N12.2')
     errors += tag(check_japanese_typos(text), 'N13.1')
     errors += tag(check_vector_notation(text), 'N8.1')
     errors += tag(check_tikz_point_circle(text), 'F4.1')
