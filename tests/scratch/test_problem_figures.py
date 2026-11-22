@@ -7,6 +7,25 @@ from scratch import tex_to_md
 
 
 class TestProblemFigures(unittest.TestCase):
+    def test_local_image_is_copied_and_embedded(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            dest = Path(tmp)
+            (dest / 'diagram.jpg').write_bytes(b'example image')
+            source = dest / 'problem.tex'
+            source.write_text(
+                r'\begin{document}\usepackage[dvipdfm]{graphicx}'
+                r'図を見よ．\includegraphics[width=8cm]{diagram.jpg}\end{document}'
+            )
+            tex_to_md.convert_tex_clean(
+                str(source), str(dest / 'problem.md'), {'type': 'problem'},
+                '/images/example', str(dest / 'images'),
+            )
+            md = (dest / 'problem.md').read_text()
+            self.assertIn('<img src="/images/example/diagram.jpg"', md)
+            self.assertNotIn('\\includegraphics', md)
+            self.assertNotIn('\\usepackage', md)
+            self.assertEqual((dest / 'images/diagram.jpg').read_bytes(), b'example image')
+
     def test_problem_and_solution_figures_survive_either_conversion_order(self):
         # Reusing the image path must not overwrite the other document's diagram.
         for fallback in (False, True):

@@ -4,6 +4,7 @@ import re
 import subprocess
 import shutil
 import tempfile
+from html import escape
 from xml.etree import ElementTree
 import pypandoc
 import yaml
@@ -197,7 +198,7 @@ def _convert_bf_groups(text, wrap):
 
 _LIST_ENVS = ('enumerate', 'description', 'itemize')
 _LIST_ENV_TOKEN_RE = re.compile(r'\\(begin|end)\{(' + '|'.join(_LIST_ENVS) + r')\}')
-_ITEM_RE = re.compile(r'\\item\b\s*')
+_ITEM_RE = re.compile(r'\\item(?![A-Za-z])\s*')
 
 
 def _find_balanced_list_env(text, start):
@@ -1096,6 +1097,24 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         def_lines.append(re.sub(r'(?<!\\)%.*', '%', line))
     raw_tex = "\n".join(clean_lines)
     defs_tex = "\n".join(def_lines)
+
+    # 旧問題文の外部画像を、TikZ 図と同じ公開ディレクトリへ配置する。
+    # TeX の原稿と画像は同じディレクトリに置く。
+    raw_tex = re.sub(r'\\usepackage(?:\[[^\]]*\])?\{graphicx\}', '', raw_tex)
+
+    def replace_included_image(match):
+        filename = match.group(1)
+        if os.path.basename(filename) != filename:
+            raise ValueError(f"Image must be beside TeX source: {filename}")
+        source = os.path.join(os.path.dirname(tex_path), filename)
+        if not os.path.isfile(source):
+            raise FileNotFoundError(source)
+        os.makedirs(output_svg_dir, exist_ok=True)
+        shutil.copy2(source, os.path.join(output_svg_dir, filename))
+        image_url = f"{public_img_dir_rel}/{filename}"
+        return f'\n\n<figure><img src="{escape(image_url, quote=True)}" alt="問題の図" loading="lazy" /></figure>\n\n'
+
+    raw_tex = re.sub(r'\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}', replace_included_image, raw_tex)
 
     # pifont パッケージの \ding{...} を Unicode 文字（①, ②等）に変換
     raw_tex = convert_pifont_dingbats(raw_tex)

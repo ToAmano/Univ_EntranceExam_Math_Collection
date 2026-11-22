@@ -117,6 +117,14 @@ class TestConverter(unittest.TestCase):
         processed = self.convert(latex)
         self.assertRegex(processed, r'2\.  definition two\s+<!--.*?-->\s+1\.  question one')
 
+    def test_item_immediately_followed_by_japanese_text(self):
+        processed = self.convert(
+            r'\begin{enumerate}\item点Aを求めよ．\item点Bを求めよ．\end{enumerate}'
+        )
+        self.assertIn('1.  点Aを求めよ．', processed)
+        self.assertIn('2.  点Bを求めよ．', processed)
+        self.assertNotIn(r'\item', processed)
+
     def test_tikz_is_replaced_with_html_image(self):
         latex = r'''
         問題文です。
