@@ -18,7 +18,7 @@
     % r = 1/sqrt(3) ≈ 0.577,  c = cos(120°) = -0.5, s = sin(120°) ≈ 0.866
     % Z = sqrt(6)/3 ≈ 0.816 (上面と底面の距離)
     \def\rVal{1.0}
-    \def\ZVal{1.8}
+    \pgfmathsetmacro{\ZVal}{sqrt(2.0)}
 
     % 底面 DEF (z = 0)
     % D は x 軸上: (r, 0, 0)
@@ -51,7 +51,6 @@
     % --- 2. 奥側の稜線 (破線) ---
     % 隠れ線は輪郭と同じ色の破線（底面の辺は teal、側面の稜線は gray!20!black）
     \draw[thick, dashed, teal!85!black] (D) -- (E) -- (F);
-    \draw[thick, dashed, gray!20!black] (C) -- (F);
     \draw[thick, dashed, gray!20!black] (B) -- (E);
     \draw[thick, dashed, gray!20!black] (C) -- (E);
 
@@ -73,8 +72,8 @@
     \draw[line width=1.2pt, gray!20!black] (A) -- (F);
 
     % --- 4. 頂点プロットとラベル ---
-    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (D) {}; \node[teal!85!black, right=2pt] at (D) {$D(r, 0, 0)$};
-    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (E) {}; \node[teal!85!black, above right=1pt] at (E) {$E$};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (D) {}; \node[teal!85!black, above right=1pt] at (D) {$D(r, 0, 0)$};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (E) {}; \node[teal!85!black, left=2pt] at (E) {$E$};
     \node[circle, fill=gray!60!black, inner sep=1.3pt] at (F) {}; \node[gray!60!black, below left=1pt] at (F) {$F$};
 
     \node[circle, fill=blue!85!black, inner sep=1.3pt] at (A) {}; \node[blue!85!black, below right=1pt] at (A) {$A$};
@@ -86,7 +85,7 @@
 
     % 平行面の注釈
     \node[blue!90!black, font=\scriptsize] at ($(B)!0.5!(C) + (0, 0.4, 0.2)$) {上面 $\triangle ABC$};
-    \node[teal!90!black, font=\scriptsize] at ($(D)!0.5!(E) + (0.3, 0, -0.3)$) {底面 $\triangle DEF$};
+    \node[teal!90!black, font=\scriptsize] at ($(D)!0.5!(F) + (0.15, -0.35, -0.15)$) {底面 $\triangle DEF$};
 
   \end{tikzpicture}
   \caption{底面 $\triangle DEF$ の重心を原点とする正八面体の 3D 配置}
@@ -137,7 +136,7 @@
     \draw[->, thick, gray!80!black] ($(G2) - (1.4*\rVal, 0, 0)$) -- ($(G2) + (1.4*\rVal, 0, 0)$)
     node[right, font=\footnotesize] {$x$};
     \draw[->, thick, gray!80!black] ($(G2) - (0, 1.2*\rVal, 0)$) -- ($(G2) + (0, 1.2*\rVal, 0)$)
-    node[above right, font=\footnotesize] {$y$};
+    node[above=1pt, font=\footnotesize, fill=white, inner sep=0.8pt] {$y$};
     \draw[->, thick, gray!80!black] ($(G2) - (0, 0, 0.4)$) -- ($(G2) + (0, 0, \ZVal + 0.6)$)
     node[above, font=\footnotesize] {$z$};
 
@@ -152,7 +151,8 @@
     (F) -- (B_bot) -- (B) -- (F_top) -- cycle;
     \draw[thick, purple!75!black, dashed]
     (F) -- (B_bot) -- (B) -- (F_top) -- cycle;
-    \node[purple!90!black, font=\scriptsize\bfseries, above=3pt] at (F_top) {平面 $FG_1G_2$};
+    \draw[->, thin, purple!75!black] ($(C)!0.48!(G2) + (-0.85, -0.5, 0)$)
+    node[left, purple!90!black, font=\scriptsize\bfseries] {平面 $FG_1G_2$} -- ($(F)!0.75!(F_top)$);
 
     % --- 底面・上面の半透明塗りつぶし ---
     \fill[teal!25, opacity=0.35] (D) -- (E) -- (F) -- cycle;
@@ -193,7 +193,7 @@
     % 6. 中心対称軸 l = G1G2 (z 軸上の線分)
     % ============================================================
     \draw[line width=1.5pt, red!90!black, dash pattern=on 4pt off 2pt]
-    (G2) -- (G1) node[midway, left=2pt, font=\footnotesize\bfseries] {軸 $l$};
+    (G2) -- (G1) node[midway, left=3pt, font=\footnotesize\bfseries, fill=white, inner sep=1pt] {軸 $l$};
 
     % ============================================================
     % 7. 正八面体の稜線 (実線強調)
@@ -215,17 +215,17 @@
     % ============================================================
     % 底面頂点 (z = 0)
     \node[circle, fill=teal!85!black, inner sep=1.5pt] at (D) {}; \node[teal!85!black, right=2pt] at (D) {$D$};
-    \node[circle, fill=teal!85!black, inner sep=1.5pt] at (E) {}; \node[teal!85!black, above left=1pt] at (E) {$E$};
+    \node[circle, fill=teal!85!black, inner sep=1.5pt] at (E) {}; \node[teal!85!black, left=2pt] at (E) {$E$};
     \node[circle, fill=gray!60!black, inner sep=1.3pt] at (F) {}; \node[gray!60!black, below left=1pt] at (F) {$F$};
 
     % 上面頂点 (z = ZVal)
     \node[circle, fill=blue!90!black, inner sep=1.8pt] at (C) {}; \node[blue!90!black, left=3pt] at (C) {$C$};
-    \node[circle, fill=blue!90!black, inner sep=1.8pt] at (A) {}; \node[blue!90!black, below right=2pt] at (A) {$A$};
+    \node[circle, fill=blue!90!black, inner sep=1.8pt] at (A) {}; \node[blue!90!black, right=3pt, yshift=3pt] at (A) {$A$};
     \node[circle, fill=blue!90!black, inner sep=1.8pt] at (B) {}; \node[blue!90!black, above=2pt] at (B) {$B$};
 
     % 重心
     \node[circle, fill=red!90!black, inner sep=1.4pt] at (G1) {}; \node[red!90!black, above left=1pt, font=\scriptsize] at (G1) {$G_1$};
-    \node[circle, fill=red!90!black, inner sep=1.4pt] at (G2) {}; \node[red!90!black, below left=1pt, font=\scriptsize] at (G2) {$G_2(O)$};
+    \node[circle, fill=red!90!black, inner sep=1.4pt] at (G2) {}; \node[red!90!black, below left=4pt, font=\scriptsize, fill=white, inner sep=0.8pt] at (G2) {$G_2(O)$};
 
   \end{tikzpicture}
   \caption{正八面体の3D配置と各頂点 $A, B, C$ を含む3つの垂直二等分面}
@@ -289,15 +289,8 @@
     % スケッチでは、六角形の一辺が交互に (1-t) と t になっている。
     % 外側の大きな正三角形の一辺は (1-t) + t + (1-t) = 2 - t (または 1)
     % ここでは見やすくするため t = 0.45 とし、
-    % 中心 P を原点 (0, 0) に置いて各頂点を回転対称に直接配置する。
+    % 中心 P を外側正三角形の重心に配置する。
     % ============================================================
-    % 中心 P
-    \coordinate (P) at (0, 0);
-
-    % 六角形 LKJIHM は 60度刻みの方向性をもつ等角六角形
-    % 水平な上辺 LK, 底辺 IH
-    % 各頂点への距離と角度：
-    % K は右上、L は左上、J は右、I は右下、H は左下、M は左
     \def\tVal{0.45}
     \pgfmathsetmacro{\omt}{1.0 - \tVal} % 1 - t = 0.55
 
@@ -310,6 +303,9 @@
     \pgfmathsetmacro{\wT}{0.5 * \tVal}
     \pgfmathsetmacro{\hHex}{0.866025} % sqrt(3)/2
 
+    % 中心 P (外側正三角形の重心: y = (1 - 2t)/6 * sqrt(3)/2)
+    \coordinate (P) at (0, {(1.0 - 2.0*\tVal)/6.0 * \hHex});
+
     % 頂点座標 (凸六角形 LKJIHM)
     \coordinate (K) at ({\wOmt}, {0.5 * \hHex});
     \coordinate (L) at ({-\wOmt}, {0.5 * \hHex});
@@ -319,20 +315,6 @@
 
     \coordinate (H) at ({-\wOmt - 0.5*\tVal + 0.5*\omt}, {0.5*\hHex - \hHex});
     \coordinate (M) at ({-\wOmt - 0.5*\tVal}, {0.5*\hHex - \tVal*0.866025});
-
-    % --- 辺 KJ の中点 X の定義と垂線 PX ---
-    \coordinate (X) at ($ (K)! 0.5 !(J) $);
-    \draw[densely dotted, thick, red!85!black] (P) -- (X);
-
-    % 直角マーク (P - X - K)
-    \draw[thin, gray!70!black]
-    ($ (X)! 0.08 !(P) $) --
-    ($ (X)! 0.08 !(P) + ($ (X)! 0.08 !(K) $) - (X) $) --
-    ($ (X)! 0.08 !(K) $);
-
-    % 点 X のプロットとラベル
-    \node[circle, fill, inner sep=0.5pt] at (X) {};
-    \node[above right=1pt, font=\footnotesize] at (X) {$X$};
 
     % 外側正三角形の3頂点（切り落とす前の角）
     % 上の角 V_top (LK を延長した交点)
@@ -370,21 +352,22 @@
     \draw[dotted, gray!75, thick] (P) -- (M);
 
     % ============================================================
-    % 5. 辺 KJ への垂線と直角記号
+    % 5. 辺 KJ への垂線 PX と直角記号
     % ============================================================
-    \coordinate (FootKJ) at ($ (K)! 0.5 !(J) $);
-    \draw[densely dotted, thick, red!85!black] (P) -- (FootKJ);
+    \coordinate (X) at ($ (K)! 0.5 !(J) $);
+    \draw[densely dotted, thick, red!85!black] (P) -- (X);
 
-    % 直角マーク (P - FootKJ - K)
+    % 直角マーク (P - X - K)
     \draw[thin, gray!70!black]
-    ($ (FootKJ)! 0.08 !(P) $) --
-    ($ (FootKJ)! 0.08 !(P) + ($ (FootKJ)! 0.08 !(K) $) - (FootKJ) $) --
-    ($ (FootKJ)! 0.08 !(K) $);
+    ($ (X)! 0.08 !(P) $) --
+    ($ (X)! 0.08 !(P) + ($ (X)! 0.08 !(K) $) - (X) $) --
+    ($ (X)! 0.08 !(K) $);
 
     % ============================================================
-    % 6. 頂点プロットとラベル
+    % 6. 頂点・中点プロットとラベル
     % ============================================================
-    \node[circle, fill, inner sep=0.5pt] at (P) {}; \node[below=3pt] at (P) {$P$};
+    \node[circle, fill, inner sep=1.2pt] at (P) {}; \node[below=3pt] at (P) {$P$};
+    \node[circle, fill, inner sep=1.2pt] at (X) {}; \node[above right=1pt, font=\footnotesize] at (X) {$X$};
 
     \node[above left=2pt]  at (L) {$L$};
     \node[above right=2pt] at (K) {$K$};
@@ -401,7 +384,7 @@
     -- ($(K)!0.4!(V_top)$);
 
     % 辺 KJ の長さ t
-    \node[below right=10pt, font=\footnotesize\bfseries] at (FootKJ) {$t$};
+    \node[below right=10pt, font=\footnotesize\bfseries] at (X) {$t$};
 
     % 右下の小正三角形の辺長 1-t (円弧引き出し)
     \draw[->, thin, gray!80!black] ($(V_botR) + (0.35, -0.15)$) node[below right, font=\footnotesize] {$1-t$}
@@ -582,8 +565,8 @@
 
     % --- 4. スケッチ通りの角度弧と引き出しラベル ---
     % 角 60° (正六角形の中心角・内角由来)
-    \draw[thick, gray!20!black] ($ (Corn_pt) + (180:0.22) $) arc (180:120:0.22);
-    \node[font=\scriptsize\bfseries] at ($ (Corn_pt) + (150:0.35) $) {$60^\circ$};
+    \draw[thick, gray!20!black] ($ (Corn_pt) + (180:0.18) $) arc (180:120:0.18);
+    \node[font=\scriptsize\bfseries] at ($ (Corn_pt) + (150:0.28) $) {$60^\circ$};
 
     % 長さ sqrt(3)/3 (P から Corn_pt までの半径)
     \node[teal!90!black, font=\scriptsize\bfseries, right=1pt] at ($(P)!0.45!(Corn_pt)$) {$\frac{\sqrt{3}}{3}$};
