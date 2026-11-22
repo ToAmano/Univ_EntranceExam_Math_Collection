@@ -306,7 +306,7 @@ $r$がこれより大きいか小さいかで場合分けする．
 \begin{figure}[htb]
   % 体積ふたとおりで計算する図
   \centering
-  \tdplotsetmaincoords{70}{125}
+  \tdplotsetmaincoords{70}{135}
   \begin{tikzpicture}[tdplot_main_coords, scale=2.5, >=stealth, every node/.style={font=\small}]
 
     % --- 1. 座標定義 (一辺 l = 1.8) ---
@@ -327,7 +327,7 @@ $r$がこれより大きいか小さいかで場合分けする．
     \coordinate (O) at ({\aL/2}, {\aL/2}, {\aL/2});
 
     % 正四面体の面 A2-A5-A7 の重心 M
-    % M = (A2 + A5 + A7) / 3 = ( (l+0+l)/3, (0+0+l)/3, (l+0+0)/3 ) = (2l/3, l/3, l/3)
+    % M = (A2 + A5 + A7) / 3 = (2l/3, l/3, l/3)
     \coordinate (M) at ({2*\aL/3}, {\aL/3}, {\aL/3});
 
     % --- 2. 立方体の外枠（灰色の補助線）---
@@ -342,7 +342,7 @@ $r$がこれより大きいか小さいかで場合分けする．
     \draw[gray!75!black, thick] (A7) -- (A3);
     \draw[gray!75!black, thick] (A8) -- (A4);
 
-    % Oから
+    % Oから三角錐頂点への補助線
     \draw[gray!70!black, thick, dashed] (O) -- (A2);
     \draw[gray!70!black, thick, dashed] (O) -- (A4);
     \draw[gray!70!black, thick, dashed] (O) -- (A7);
@@ -366,41 +366,41 @@ $r$がこれより大きいか小さいかで場合分けする．
     \draw[line width=1.6pt, red!85!black] (A4) -- (A7);
     \draw[line width=1.6pt, red!85!black] (A2) -- (A4);
 
-    % --- 5. 中心 O から面 A2A5A7 への垂線 r_0 ---
-    % 中心 O から重心 M への垂線
-    \draw[line width=2.0pt, purple!90!black] (O) -- (M);
-    \node[purple!90!black, font=\footnotesize\bfseries, above right=1pt] at ($ (O)!0.5!(M) $) {$r_0$};
-
-    % 重心 M における直角記号 (OM ⊥ 面 A2A5A7)
-    % 面上の2方向ベクトルとして A5A7 と A5A2 を使用
-    \coordinate (dir1) at ($ (A7) - (A5) $);
-    \coordinate (dir2) at ($ (A2) - (A5) $);
-    \draw[thin, gray!70!black]
-    ($ (M) + 0.08*(O) - 0.08*(M) $) --
-    ($ (M) + 0.08*(O) - 0.08*(M) + 0.08*(A2) - 0.08*(M) $) --
-    ($ (M) + 0.08*(A2) - 0.08*(M) $);
-
-    % 重心 M と各頂点を結ぶ補助線（面の分割・高さの理解用）
+    % --- 5. 重心 M と各頂点を結ぶ補助線（面 A2A5A7 の分割）---
     \draw[dashed, teal!70!black] (A2) -- (M);
     \draw[dashed, teal!70!black] (A5) -- (M);
     \draw[dashed, teal!70!black] (A7) -- (M);
 
-    % --- 6. 頂点プロットとラベル ---
-    % 正四面体の 4 頂点
-    \node[circle, fill=red!85!black, inner sep=1.4pt] at (A2) {}; \node[red!85!black, below left=1pt] at (A2) {$A_2$};
-    \node[circle, fill=red!85!black, inner sep=1.4pt] at (A4) {}; \node[red!85!black, above=2pt] at (A4) {$A_4$};
-    \node[circle, fill=red!85!black, inner sep=1.4pt] at (A5) {}; \node[red!85!black, below left=1pt] at (A5) {$A_5$};
-    \node[circle, fill=red!85!black, inner sep=1.4pt] at (A7) {}; \node[red!85!black, below right=1pt] at (A7) {$A_7$};
+    % --- 6. 中心 O から面 A2A5A7 への垂線 r_0 ---
+    \draw[line width=2.0pt, purple!90!black] (O) -- (M);
 
-    % 中心 O と面の重心 M
-    \node[circle, fill=purple!90!black, inner sep=1.5pt] at (O) {}; \node[above left=1pt, purple!95!black] at (O) {$O$};
-    \node[circle, fill=teal!85!black, inner sep=1.2pt] at (M) {}; \node[below right=1pt, font=\scriptsize, teal!90!black] at (M) {$M$};
+    % 重心 M における直角記号 (OM ⊥ 面 A2A5A7)
+    % 単位法線ベクトル MO: (-1,1,1)/sqrt(3), 面内単位ベクトル M->A2: (1,-1,2)/sqrt(6)
+    \def\raLen{0.11}
+    \coordinate (RaU) at ({-\raLen/sqrt(3.0)}, {\raLen/sqrt(3.0)}, {\raLen/sqrt(3.0)});
+    \coordinate (RaV) at ({\raLen/sqrt(6.0)}, {-\raLen/sqrt(6.0)}, {2*\raLen/sqrt(6.0)});
+    \draw[thin, gray!80!black]
+    ($ (M) + (RaU) $) -- ($ (M) + (RaU) + (RaV) $) -- ($ (M) + (RaV) $);
+
+    % --- 7. 頂点プロットとラベル（最前面）---
+    % 正四面体の 4 頂点
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (A2) {}; \node[red!85!black, left=2pt] at (A2) {$A_2$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (A4) {}; \node[red!85!black, above right=1pt] at (A4) {$A_4$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (A5) {}; \node[red!85!black, right=2pt] at (A5) {$A_5$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (A7) {}; \node[red!85!black, below=2pt] at (A7) {$A_7$};
+
+    % 中心 O，面の重心 M，長さ r_0
+    \node[circle, fill=purple!90!black, inner sep=1.5pt] at (O) {};
+    \node[above=2pt, purple!95!black, fill=white, inner sep=0.8pt] at (O) {$O$};
+    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (M) {};
+    \node[below left=2pt, font=\footnotesize, teal!90!black, fill=white, inner sep=0.8pt] at (M) {$M$};
+    \node[purple!90!black, font=\footnotesize\bfseries, below right=1pt, fill=white, inner sep=0.8pt] at ($ (O)!0.48!(M) $) {$r_0$};
 
     % 立方体のその他の頂点
-    \node[circle, fill=gray!70!black, inner sep=0.8pt] at (A1) {}; \node[above left=1pt, font=\tiny, gray!75!black] at (A1) {$A_1$};
+    \node[circle, fill=gray!70!black, inner sep=0.8pt] at (A1) {}; \node[above=2pt, font=\tiny, gray!75!black] at (A1) {$A_1$};
     \node[circle, fill=gray!70!black, inner sep=0.8pt] at (A3) {}; \node[above right=1pt, font=\tiny, gray!75!black] at (A3) {$A_3$};
-    \node[circle, fill=gray!70!black, inner sep=0.8pt] at (A6) {}; \node[below right=1pt, font=\tiny, gray!75!black] at (A6) {$A_6$};
-    \node[circle, fill=gray!70!black, inner sep=0.8pt] at (A8) {}; \node[right=1pt, font=\tiny, gray!75!black] at (A8) {$A_8$};
+    \node[circle, fill=gray!70!black, inner sep=0.8pt] at (A6) {}; \node[below left=1pt, font=\tiny, gray!75!black] at (A6) {$A_6$};
+    \node[circle, fill=gray!70!black, inner sep=0.8pt] at (A8) {}; \node[below right=1pt, font=\tiny, gray!75!black] at (A8) {$A_8$};
 
   \end{tikzpicture}
   \caption{立方体内部の正四面体 $A_2A_4A_5A_7$ と中心 $O$ から面への垂線 $r_0$}
@@ -603,46 +603,143 @@ $r$がこれより大きいか小さいかで場合分けする．
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[scale=2.0, >=stealth, every node/.style={font=\small}]
+  % 左パネル: 3D-tikz による正四面体 A2A4A5A7 に含まれる球面 S と2頂点の可視性
+  \begin{subcaptionblock}{0.48\textwidth}
+    \centering
+    \tdplotsetmaincoords{72}{25}
+    \begin{tikzpicture}[tdplot_main_coords, scale=1.45, >=stealth, every node/.style={font=\small}]
 
-    % --- 1. 定数・座標パラメータ ---
-    \coordinate (O)   at (0, 0);          % 中心
-    \coordinate (A1)  at (0, 1.8);        % 頂点 A1
-    \coordinate (M)   at (0, -0.6);       % 面 A2A4A5 の中心
-    \coordinate (B_L) at (-1.5, -0.6);
-    \coordinate (B_R) at (1.5, -0.6);
+      % --- 1. 中心 O を原点とする立方体 [-1,1]^3 の正四面体 A2A4A5A7 と頂点 A1 ---
+      \coordinate (O)  at (0, 0, 0);
+      \coordinate (A1) at (-1, -1,  1);
+      \coordinate (A2) at ( 1, -1,  1);
+      \coordinate (A4) at (-1,  1,  1);
+      \coordinate (A5) at (-1, -1, -1);
+      \coordinate (A7) at ( 1,  1, -1);
 
-    \def\radR{0.48} % r <= r0 = 0.6
+      % 内接球半径 r0 = 1/sqrt(3) ≈ 0.577，r = 0.45 (<= r0)
+      % P = r * (0, -1, 1)/sqrt(2) -> P·A1 = P·A2 = sqrt(2)*r > r^2（A1, A2 の双方が可視）
+      \pgfmathsetmacro{\radR}{0.45}
+      \coordinate (P) at (0, {-\radR/sqrt(2.0)}, {\radR/sqrt(2.0)});
 
-    % --- 2. 正四面体の断面枠 ---
-    \draw[thick, gray!75!black] (A1) -- (B_L) -- (B_R) -- cycle;
-    \draw[dashed, gray!70!black] (A1) -- (M);
+      % --- 2. 奥側の正四面体稜線（隠れ線）---
+      \draw[dashed, gray!70!black, thick] (A7) -- (A2);
+      \draw[dashed, gray!70!black, thick] (A7) -- (A4);
+      \draw[dashed, gray!70!black, thick] (A7) -- (A5);
 
-    % --- 3. 球面 S (r <= r0) ---
-    \fill[blue!15, opacity=0.7] (O) circle (\radR);
-    \draw[very thick, blue!85!black] (O) circle (\radR);
-    \node[blue!90!black, font=\footnotesize] at (0.2, 0.15) {球面 $S$};
+      % --- 3. 球面 S（半径 r = 0.45 <= r0: 正四面体内部）---
+      \begin{scope}[tdplot_screen_coords]
+        \fill[blue!15, opacity=0.7] (0, 0) circle (\radR);
+        \draw[very thick, blue!85!black] (0, 0) circle (\radR);
+      \end{scope}
 
-    % --- 4. 球面上の点 P とその接平面 ---
-    % 任意の点 P (A_1 と A_2 の双方が見える例)
-    \coordinate (P) at (25:\radR);
-    \draw[line width=1.6pt, red!85!black]
-    ($ (P) + (115:1.4) $) -- ($ (P) + (-65:1.4) $)
-    node[below right=1pt, font=\footnotesize] {接平面};
-    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {}; \node[red!85!black, right=2pt] at (P) {$P$};
+      % --- 4. 正四面体の手前面 A2A4A5 と A1 側の稜線 ---
+      \fill[teal!12, opacity=0.35] (A2) -- (A4) -- (A5) -- cycle;
+      \draw[thick, teal!85!black] (A2) -- (A4) -- (A5) -- cycle;
+      \draw[thick, gray!75!black] (A1) -- (A2);
+      \draw[thick, gray!75!black] (A1) -- (A4);
+      \draw[thick, gray!75!black] (A1) -- (A5);
 
-    % 接平面の外側に見える 2 頂点への視線
-    \draw[very thick, teal!85!black] (P) -- (B_R) node[midway, below right=-1pt, font=\scriptsize] {見える};
-    \draw[very thick, teal!85!black] (P) -- (A1) node[midway, above right=-1pt, font=\scriptsize] {見える};
+      % --- 5. 点 P における接平面（法線 (0,-1,1)/sqrt(2)）---
+      \pgfmathsetmacro{\tpSize}{0.55}
+      \coordinate (T1) at ( \tpSize, {-\radR/sqrt(2.0) + \tpSize/sqrt(2.0)}, {\radR/sqrt(2.0) + \tpSize/sqrt(2.0)});
+      \coordinate (T2) at (-\tpSize, {-\radR/sqrt(2.0) + \tpSize/sqrt(2.0)}, {\radR/sqrt(2.0) + \tpSize/sqrt(2.0)});
+      \coordinate (T3) at (-\tpSize, {-\radR/sqrt(2.0) - \tpSize/sqrt(2.0)}, {\radR/sqrt(2.0) - \tpSize/sqrt(2.0)});
+      \coordinate (T4) at ( \tpSize, {-\radR/sqrt(2.0) - \tpSize/sqrt(2.0)}, {\radR/sqrt(2.0) - \tpSize/sqrt(2.0)});
+      \fill[red!12, opacity=0.45] (T1) -- (T2) -- (T3) -- (T4) -- cycle;
+      \draw[thick, red!85!black] (T1) -- (T2) -- (T3) -- (T4) -- cycle;
 
-    % --- 5. 頂点プロット ---
-    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (A1) {}; \node[teal!85!black, above=2pt] at (A1) {$A_1$};
-    \node[circle, fill=teal!85!black, inner sep=1.3pt] at (B_R) {}; \node[teal!85!black, below right=1pt] at (B_R) {$A_2$};
-    \node[circle, fill, inner sep=1.2pt] at (B_L) {}; \node[below left=1pt] at (B_L) {$A_4$};
-    \node[circle, fill, inner sep=0.8pt] at (O) {}; \node[left=2pt] at (O) {$O$};
+      % --- 6. 点 P から見える 2 頂点 A1, A2 への視線 ---
+      \draw[very thick, teal!85!black] (P) -- (A1) node[pos=0.52, below left=1pt, font=\scriptsize, fill=white, inner sep=0.6pt] {見える};
+      \draw[very thick, teal!85!black] (P) -- (A2) node[pos=0.60, above left=1pt, font=\scriptsize, fill=white, inner sep=0.6pt] {見える};
 
-  \end{tikzpicture}
-  \caption{$0 < r \le \dfrac{\sqrt{3}}{6}\ell$ のとき，常に2点以上の頂点が見える様子}
+      % --- 7. 頂点・中心・点 P ラベル ---
+      \node[circle, fill=teal!85!black, inner sep=1.3pt] at (A1) {};
+      \node[above left=1pt, font=\scriptsize, teal!85!black] at (A1) {$A_1$};
+      \node[circle, fill=teal!85!black, inner sep=1.3pt] at (A2) {};
+      \node[right=2pt, font=\scriptsize, teal!85!black] at (A2) {$A_2$};
+      \node[circle, fill, inner sep=1.1pt] at (A4) {};
+      \node[above=2pt, font=\scriptsize] at (A4) {$A_4$};
+      \node[circle, fill, inner sep=1.1pt] at (A5) {};
+      \node[below left=1pt, font=\scriptsize] at (A5) {$A_5$};
+      \node[circle, fill, inner sep=1.0pt] at (A7) {};
+      \node[below right=1pt, font=\scriptsize] at (A7) {$A_7$};
+
+      \node[circle, fill, inner sep=0.9pt] at (O) {};
+      \node[below=2pt, font=\scriptsize] at (O) {$O$};
+      \node[circle, fill=red!85!black, inner sep=1.3pt] at (P) {};
+      \node[left=2pt, font=\scriptsize, red!85!black] at (P) {$P$};
+
+      \node[blue!90!black, font=\scriptsize, fill=white, inner sep=0.6pt] at (0.15, 0.55, -0.58) {球面 $S$};
+      \node[red!85!black, font=\scriptsize, below left=1pt] at (T3) {接平面};
+    \end{tikzpicture}
+    \caption{正四面体 $A_2A_4A_5A_7$ 内の球面 $S$（立体図）}
+  \end{subcaptionblock}
+  \hfill
+  % 右パネル: 平面 A2A4A5 に平行な視線方向からの側面図
+  \begin{subcaptionblock}{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=1.3, >=stealth, every node/.style={font=\small}]
+
+      % --- 1. 平面 A2A4A5 に平行な視線方向からの正射影（図 7(b) と同配置）---
+      \def\radRzero{0.6}
+      \def\radR{0.45} % 0 < r <= r0
+      \pgfmathsetmacro{\sUnit}{sqrt(2.0)*\radRzero}
+
+      \coordinate (O)    at (0, 0);
+      \coordinate (M)    at (0, \radRzero);
+      \coordinate (A1)   at (0, {3.0*\radRzero});
+      \coordinate (A5)   at ({-2.0*\sUnit}, \radRzero);
+      \coordinate (A24)  at (\sUnit, \radRzero);
+      \coordinate (A68)  at ({-\sUnit}, -\radRzero);
+      \coordinate (A3)   at ({2.0*\sUnit}, -\radRzero);
+      \coordinate (A7)   at (0, {-3.0*\radRzero});
+
+      % --- 2. 立方体の輪郭と正四面体 A2A4A5A7 ---
+      \draw[thick, gray!75!black] (A1) -- (A5) -- (A68) -- (A7) -- (A3) -- (A24) -- cycle;
+      \fill[teal!10, opacity=0.55] (A5) -- (A24) -- (A7) -- cycle;
+      \draw[very thick, teal!85!black] (A5) -- (A24) -- (A7) -- cycle;
+      \draw[densely dotted, thick, gray!70!black] (O) -- (A1);
+
+      % 内接球 r = r0 の参考円と球面 S (r <= r0)
+      \draw[densely dotted, gray!70!black] (O) circle (\radRzero);
+      \fill[blue!15, opacity=0.7] (O) circle (\radR);
+      \draw[very thick, blue!85!black] (O) circle (\radR);
+      \node[blue!90!black, font=\scriptsize] at (-0.12, -0.78) {球面 $S$};
+
+      % --- 3. 球面上の点 P と接平面 ---
+      % x=y 対称面上の点 P（3次元と2次元の内積条件が一致し，A1 と A2,A4 の双方が可視）
+      \coordinate (P) at (25:\radR);
+      \draw[line width=1.6pt, red!85!black]
+      ($ (P) + (115:1.5) $) -- ($ (P) + (-65:1.5) $)
+      node[below right=1pt, font=\scriptsize] {接平面};
+
+      % --- 4. 点 P から見える頂点 A1, A2, A4 への視線 ---
+      \draw[very thick, teal!85!black] (P) -- (A1) node[pos=0.58, above right=1pt, font=\scriptsize] {見える};
+      \draw[very thick, teal!85!black] (P) -- (A24) node[pos=0.72, below right=2pt, font=\scriptsize, fill=white, inner sep=0.5pt] {見える};
+
+      % --- 5. 頂点・中心・点 P ラベル ---
+      \node[circle, fill=teal!85!black, inner sep=1.3pt] at (A1) {};
+      \node[above=2pt, font=\scriptsize, teal!85!black] at (A1) {$A_1$};
+      \node[circle, fill, inner sep=1.1pt] at (A5) {};
+      \node[above left=2pt, font=\scriptsize] at (A5) {$A_5$};
+      \node[circle, fill=teal!85!black, inner sep=1.3pt] at (A24) {};
+      \node[above right=1pt, font=\scriptsize, teal!85!black] at (A24) {$A_2, A_4$};
+      \node[circle, fill, inner sep=1.0pt] at (A68) {};
+      \node[below left=1pt, font=\scriptsize] at (A68) {$A_6, A_8$};
+      \node[circle, fill, inner sep=1.0pt] at (A3) {};
+      \node[below right=1pt, font=\scriptsize] at (A3) {$A_3$};
+      \node[circle, fill, inner sep=1.1pt] at (A7) {};
+      \node[below=2pt, font=\scriptsize] at (A7) {$A_7$};
+      \node[circle, fill, inner sep=0.9pt] at (O) {};
+      \node[below left=1pt, font=\scriptsize] at (O) {$O$};
+      \node[circle, fill=red!85!black, inner sep=1.3pt] at (P) {};
+      \node[right=2pt, font=\scriptsize, red!85!black] at (P) {$P$};
+
+    \end{tikzpicture}
+    \caption{平面 $A_2A_4A_5$ に平行な視線からの側面図}
+  \end{subcaptionblock}
+  \caption{$0 < r \le \dfrac{\sqrt{3}}{6}\ell$ のとき，球面 $S$ は正四面体 $A_2A_4A_5A_7$ に含まれ，常に $2$ 点以上の頂点が見える}
   \label{fig:sphere_smaller_than_r0}
 \end{figure}
 
