@@ -1,0 +1,39 @@
+---
+import type { NewsItem } from '../lib/news';
+import { withNewsBaseUrl } from '../lib/news';
+
+interface Props {
+	item: NewsItem;
+	baseUrl: string;
+}
+
+const { item, baseUrl } = Astro.props;
+const segments = item.segments ?? [{ text: item.title, href: item.href }];
+---
+
+{segments.map((seg) => {
+	if (!seg.href) return seg.text;
+	const href = withNewsBaseUrl(seg.href, baseUrl);
+	const isExternal = /^https?:\/\//.test(href);
+	return (
+		<a
+			class="news-inline-link"
+			href={href}
+			target={isExternal ? '_blank' : undefined}
+			rel={isExternal ? 'noopener noreferrer' : undefined}
+		>{seg.text}</a>
+	);
+})}
+
+<style>
+	.news-inline-link {
+		color: var(--primary);
+		text-decoration: none;
+		text-underline-offset: 3px;
+		transition: filter 0.15s ease;
+	}
+	.news-inline-link:hover {
+		text-decoration: underline;
+		filter: brightness(1.15);
+	}
+</style>

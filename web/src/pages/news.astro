@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import NewsText from '../components/NewsText.astro';
 import { getMergedNews } from '../lib/news';
 
 const news = await getMergedNews();
@@ -24,10 +25,10 @@ for (const item of news) {
 
 		<div class="news-days">
 			{Array.from(newsByDate, ([date, items], index) => (
-				<details class="glass news-day" open={index < 3}>
+				<details class="glass news-day" id={date} open={index < 3}>
 					<summary><span>{date}</span><span class="day-count">{items.length}件</span></summary>
 					<ul>
-						{items.map((item) => <li>{item.title}</li>)}
+						{items.map((item) => <li><NewsText item={item} baseUrl={baseUrl} /></li>)}
 					</ul>
 				</details>
 			))}
@@ -37,6 +38,27 @@ for (const item of news) {
 	</div>
 </Layout>
 
+<script>
+	function openTargetNewsDay() {
+		const rawHash = window.location.hash.replace(/^#/, '');
+		if (!rawHash) return;
+		let id: string;
+		try {
+			id = decodeURIComponent(rawHash);
+		} catch {
+			return;
+		}
+		const target = document.getElementById(id);
+		const details = target?.closest('details.news-day') as HTMLDetailsElement | null;
+		if (!details) return;
+		details.open = true;
+		details.scrollIntoView({ block: 'start' });
+	}
+
+	document.addEventListener('astro:page-load', openTargetNewsDay);
+	window.addEventListener('hashchange', openTargetNewsDay);
+</script>
+
 <style>
 	.container {
 		max-width: 800px;
@@ -44,7 +66,8 @@ for (const item of news) {
 		padding: 3rem 1.5rem 5rem;
 	}
 	.news-days { display: flex; flex-direction: column; gap: .75rem; }
-	.news-day { overflow: hidden; }
+	.news-day { overflow: hidden; scroll-margin-top: 1.5rem; }
+	.news-day:target { border-color: rgba(96, 165, 250, 0.5); }
 	.news-day summary { display: flex; align-items: center; gap: .65rem; padding: .8rem 1.2rem; cursor: pointer; font-weight: 700; font-variant-numeric: tabular-nums; }
 	.news-day summary:hover { color: var(--primary); }
 	.day-count { color: var(--text-muted); font-size: .78rem; font-weight: 500; }
