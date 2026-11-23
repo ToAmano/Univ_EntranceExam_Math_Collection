@@ -13,46 +13,40 @@
 だから，この交点である$P$の座標は$\left(\dfrac{\alpha+\beta}{2},\alpha\beta\right)$である．
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[scale=1.2, >=stealth]
+  \centering
+  \begin{tikzpicture}[scale=1.2, >=stealth, every node/.style={font=\small}]
+    % --- 1. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-2.2, 0) -- (3.1, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -2.8) -- (0, 4.6) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
 
-      % --- 1. 座標軸 ---
-      \draw[->, thick] (-2.2,0) -- (3.2,0) node[right] {$x$};
-      \draw[->, thick] (0,-1.2) -- (0,4.5) node[above] {$y$};
-      \node[below left] at (0,0) {$O$};
+    % --- 2. 放物線 y = x^2 ---
+    \draw[line width=1.4pt, blue!85!black, domain=-2.0:2.1, samples=80, smooth]
+    plot (\x, {\x*\x}) node[above right=1pt] {$y=x^2$};
 
-      % --- 2. 放物線 y = x^2 ---
-      \draw[ultra thick, blue!80!black, domain=-2.0:2.1, samples=100]
-      plot (\x, {\x*\x}) node[above right] {$y=x^2$};
+    % --- 3. 点 Q, R, P, S の設定 (例: alpha = -1, beta = 2) ---
+    \coordinate (Q) at (-1, 1);
+    \coordinate (R) at (2, 4);
+    \coordinate (P) at (0.5, -2);
+    \coordinate (S) at (0.5, 2.5);
 
-      % --- 3. 点 Q, R の設定 (例: alpha = -1, beta = 2) ---
-      \coordinate (Q) at (-1, 1);
-      \coordinate (R) at (2, 4);
+    % --- 4. 2つの接線 ---
+    \draw[thick, teal!85!black, domain=-1.8:1.45] plot (\x, {-2*\x - 1});
+    \draw[thick, teal!85!black, domain=-0.15:2.3] plot (\x, {4*\x - 4});
 
-      % 交点 P ((alpha+beta)/2, alpha*beta) = (0.5, -2) の予定だが、見やすさのため yスケールに合わせて計算
-      \coordinate (P) at (0.5, -2);
+    % --- 5. 線分 QR と中点 S ---
+    \draw[densely dotted, thick, orange!90!black] (Q) -- (R);
+    \node[circle, fill=orange!90!black, inner sep=1.5pt] at (S) {};
+    \node[orange!90!black, below=3pt, xshift=4pt, fill=white, inner sep=1pt] at (S) {$S(X,Y)$};
 
-      % 中点 S ((alpha+beta)/2, (alpha^2+beta^2)/2) = (0.5, 2.5)
-      \coordinate (S) at (0.5, 2.5);
-
-      % --- 4. 2つの接線の描画 ---
-      % 接線 at Q: y = 2*(-1)*x - (-1)^2 = -2x - 1
-      \draw[thick, red!80!black, domain=-1.8:1.5] plot (\x, {-2*\x - 1});
-
-      % 接線 at R: y = 2*(2)*x - (2)^2 = 4x - 4
-      \draw[thick, red!80!black, domain=-0.2:2.3] plot (\x, {4*\x - 4});
-
-      % --- 5. 線分 QR と中点 S ---
-      \draw[thick, dashed, green!50!black] (Q) -- (R);
-      \node[circle, fill=green!50!black, inner sep=2pt] at (S) {}; \node[green!50!black, above left] at (S) {$S(X,Y)$};
-
-      % --- 6. 各点のプロットとラベル ---
-      \node[circle, fill=blue!80!black, inner sep=2pt] at (Q) {}; \node[blue!80!black, left] at (Q) {$Q(\alpha, \alpha^2)$};
-      \node[circle, fill=blue!80!black, inner sep=2pt] at (R) {}; \node[blue!80!black, right] at (R) {$R(\beta, \beta^2)$};
-      \node[circle, fill=red!80!black, inner sep=2pt] at (P) {}; \node[red!80!black, below] at (P) {$P\left(\frac{\alpha+\beta}{2}, \alpha\beta\right)$};
-
-    \end{tikzpicture}
-  \end{center}
+    % --- 6. 各点のプロットとラベル ---
+    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (Q) {};
+    \node[blue!85!black, left=2pt] at (Q) {$Q(\alpha, \alpha^2)$};
+    \node[circle, fill=blue!85!black, inner sep=1.5pt] at (R) {};
+    \node[blue!85!black, right=2pt] at (R) {$R(\beta, \beta^2)$};
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (P) {};
+    \node[red!85!black, right=6pt] at (P) {$P\left(\frac{\alpha+\beta}{2}, \alpha\beta\right)$};
+  \end{tikzpicture}
   \caption{放物線 $y=x^2$ と 2 接線・交点 $P$・中点 $S$ の位置関係}
 \end{figure}
 
@@ -109,83 +103,69 @@ $Y$を変形すると
 求める領域は\cref{eq:4,eq:5}である．これを図示すると下図斜線部である．
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[scale=1.1, >=stealth]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=0.75cm, >=stealth, every node/.style={font=\small}]
+    % --- 1. 領域の塗りつぶし (0 <= X <= 2, max(2X^2-X+1, 2X^2+X-1) <= Y <= 2X^2+1) ---
+    \fill[pattern=north east lines, pattern color=blue!65!black]
+    (0, 1) -- plot[domain=0:2, samples=60] (\x, {2*\x*\x + 1})
+    -- plot[domain=2:1, samples=40] (\x, {2*\x*\x + \x - 1})
+    -- plot[domain=1:0, samples=40] (\x, {2*\x*\x - \x + 1}) -- cycle;
 
-      % --- 1. 座標軸 ---
-      \draw[->, thick] (-2.7,0) -- (2.7,0) node[right] {$X$};
-      \draw[->, thick] (0,-1.2) -- (0,10.2) node[above] {$Y$};
-      \node[below left] at (0,0) {$O$};
+    % --- 2. 座標軸への垂線・補助線 ---
+    \draw[densely dotted, thick, gray!70!black] (2, 0) -- (2, 9) -- (0, 9);
+    \draw[densely dotted, thick, gray!70!black] (1, 0) -- (1, 2) -- (0, 2);
 
-      % --- 2. 領域の塗りつぶし (斜線ハッチング) ---
-      % X >= 0 側: X=0 から 交点 X=2 まで (Y = 2X^2 - X - 1 から Y = 2X^2 + 1)
-      \fill[pattern=north east lines, pattern color=blue!60]
-      (0,1) -- plot[domain=0:2, samples=50] (\x, {2*\x*\x + 1})
-      -- plot[domain=2:1, samples=50] (\x, {2*\x*\x + \x - 1})
-      -- plot[domain=1:0, samples=50] (\x, {2*\x*\x - \x + 1}) -- cycle;
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.75, 0) -- (2.85, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -1.5) -- (0, 10.6) node[above] {$Y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+    \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
+    \node[below=2pt, font=\scriptsize] at (2, 0) {$2$};
+    \node[left=2pt, font=\scriptsize, fill=white, inner sep=0.8pt] at (0, 1) {$1$};
+    \node[left=2pt, font=\scriptsize] at (0, 2) {$2$};
+    \node[left=2pt, font=\scriptsize] at (0, 9) {$9$};
+    \node[left=2pt, font=\scriptsize, fill=white, inner sep=0.8pt] at (0, -1) {$-1$};
 
-      % --- 3. 判別式条件の境界 Y = X^2 (点線・参考境界) ---
-      % 領域の下側に位置し、2直線/放物線の下側境界よりもさらに下を通る
-      \draw[thick, dashed, green!50!black, domain=-2.3:2.3, samples=100]
-      plot (\x, {\x*\x}) node[right] {$Y = X^2$};
+    % --- 4. 判別式条件の参考境界 Y = X^2 ---
+    \draw[densely dotted, thick, teal!85!black, domain=-0.6:2.18, samples=60, smooth]
+    plot (\x, {\x*\x});
+    \node[below right=2pt, teal!85!black] at (2.15, 4.6225) {$Y = X^2$};
 
-      % --- 4. 境界線の描画 ---
-      % (i) 上側境界 Y = 2X^2 + 1 (交点 X = ±2 まで)
-      \draw[ultra thick, blue!80!black, domain=0:2.0, samples=100]
-      plot (\x, {2*\x*\x + 1}) node[above left] {$Y = 2X^2 + 1$};
+    % --- 5. 境界曲線と延長部 ---
+    % (i) 上側境界 Y = 2X^2 + 1 (境界: 0 <= X <= 2)
+    \draw[densely dotted, thick, blue!85!black, domain=-0.55:0, samples=25, smooth]
+    plot (\x, {2*\x*\x + 1});
+    \draw[line width=1.4pt, blue!85!black, domain=0:2, samples=60, smooth]
+    plot (\x, {2*\x*\x + 1});
+    \draw[densely dotted, thick, blue!85!black, domain=2:2.12, samples=15, smooth]
+    plot (\x, {2*\x*\x + 1});
+    \node[above left=2pt, blue!85!black, fill=white, inner sep=1pt] at (1.38, {2*1.38*1.38 + 1}) {$Y = 2X^2 + 1$};
 
-      % (i) 上側境界 Y = 2X^2 + 1 (交点 X = ±2 まで)
-      \draw[blue!80!black, domain=-2.1:0, samples=100]
-      plot (\x, {2*\x*\x + 1});
+    % (ii) 下側左境界 Y = 2X^2 - X + 1 (境界: 0 <= X <= 1)
+    \draw[densely dotted, thick, orange!90!black, domain=-0.5:0, samples=20, smooth]
+    plot (\x, {2*\x*\x - \x + 1});
+    \draw[line width=1.4pt, orange!90!black, domain=0:1, samples=40, smooth]
+    plot (\x, {2*\x*\x - \x + 1});
+    \draw[densely dotted, thick, orange!90!black, domain=1:1.6, samples=25, smooth]
+    plot (\x, {2*\x*\x - \x + 1});
+    \node[below right=2pt, orange!90!black, fill=white, inner sep=1pt] at (1.35, {2*1.35*1.35 - 1.35 + 1}) {$Y = 2X^2 - X + 1$};
 
-      % (i) 上側境界 Y = 2X^2 + 1 (交点 X = ±2 まで)
-      \draw[blue!80!black, domain=2:2.1, samples=100]
-      plot (\x, {2*\x*\x + 1});
+    % (iii) 下側右境界 Y = 2X^2 + X - 1 (境界: 1 <= X <= 2)
+    \draw[densely dotted, thick, red!85!black, domain=-0.6:1, samples=40, smooth]
+    plot (\x, {2*\x*\x + \x - 1});
+    \draw[line width=1.4pt, red!85!black, domain=1:2, samples=40, smooth]
+    plot (\x, {2*\x*\x + \x - 1});
+    \draw[densely dotted, thick, red!85!black, domain=2:2.12, samples=15, smooth]
+    plot (\x, {2*\x*\x + \x - 1});
+    \node[below right=2pt, red!85!black, fill=white, inner sep=1pt] at (1.72, {2*1.72*1.72 + 1.72 - 1}) {$Y = 2X^2 + X - 1$};
 
-      % (ii) 下側境界 (X >= 0): Y = 2X^2 - X - 1
-      \draw[ultra thick, orange!80!black, domain=0:1, samples=100]
-      plot (\x, {2*\x*\x - \x + 1}) node[right, font=\small] {$Y = 2X^2 - X + 1$};
-
-      % (ii) 下側境界 (X >= 0): Y = 2X^2 - X - 1
-      \draw[orange!80!black, domain=-1.5:0, samples=100]
-      plot (\x, {2*\x*\x - \x + 1});
-
-      % (ii) 下側境界 (X >= 0): Y = 2X^2 - X - 1
-      \draw[orange!80!black, domain=-1:2.1, samples=100]
-      plot (\x, {2*\x*\x - \x + 1});
-
-      % (iii) 下側境界 (X < 0): Y = 2X^2 + X - 1
-      \draw[ultra thick, red!80!black, domain=1:2, samples=100]
-      plot (\x, {2*\x*\x + \x - 1}) node[left, font=\small] {$Y = 2X^2 + X - 1$};
-
-      % (iii) 下側境界 (X < 0): Y = 2X^2 + X - 1
-      \draw[red!80!black, domain=-2.1:1, samples=100]
-      plot (\x, {2*\x*\x + \x - 1});
-
-      % (iii) 下側境界 (X < 0): Y = 2X^2 + X - 1
-      \draw[red!80!black, domain=2:2.1, samples=100]
-      plot (\x, {2*\x*\x + \x - 1});
-
-      % --- 5. 交点・重要点のプロットとガイド線 ---
-      % 左右の交点 (2, 9) および (-2, 9)
-      \node[circle, fill, inner sep=2pt] at (2, 9) {};
-      \node[circle, fill, inner sep=2pt] at (-2, 9) {};
-      \node[circle, fill, inner sep=2pt] at (1, 2) {};
-
-      \draw[dashed, gray] (2,0) node[below, font=\small] {$2$} -- (2,9) -- (0,9) node[left, font=\small] {$9$};
-      \draw[dashed, gray] (-2,0) node[below, font=\small] {$-2$} -- (-2,9);
-      \draw[dashed, gray] (1,0) node[below, font=\small] {$1$} -- (1,2) -- (0,2)  node[left, font=\small] {$2$};
-
-      % Y 軸上の点 (0,1) および下側境界の Y 軸片 (0, -1)
-      \node[circle, fill, inner sep=1.5pt] at (0,1) {}; \node[above left, font=\small] at (0,1) {$1$};
-      \node[circle, fill, inner sep=1.5pt] at (0,-1) {}; \node[below left, font=\small] at (0,-1) {$-1$};
-
-      % 下側境界の頂点 (1/4, -9/8) などのガイド
-      \draw[dashed, gray] (0.25,0) node[below, font=\tiny] {$\frac{1}{4}$} -- (0.25, 0.875);
-
-    \end{tikzpicture}
-    \caption{求める領域の図示（斜線部）}
-  \end{center}
+    % --- 6. 特徴点（境界はすべて含む） ---
+    \node[circle, fill, inner sep=1.4pt] at (0, 1) {};
+    \node[circle, fill, inner sep=1.4pt] at (1, 2) {};
+    \node[circle, fill, inner sep=1.4pt] at (2, 9) {};
+    \node[circle, fill, inner sep=1.2pt] at (0, -1) {};
+  \end{tikzpicture}
+  \caption{求める領域の図示（斜線部）}
 \end{figure}
 
 \paragraph{(2)}
@@ -223,7 +203,7 @@ $\beta-\alpha>0$より
   \quad\therefore
   Y' = X'^2 - 1
 \end{align}
-が求める曲線である．
+を得る．すなわち$y=x^2-1$が求める曲線である．
 
 {\bf [解説]}
 
