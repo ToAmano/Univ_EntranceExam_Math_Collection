@@ -1655,6 +1655,10 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     # **AAAA****BBBB** や **AAAA** **BBBB** の自動結合 (**AAAABBBB**)
     md_content = re.sub(r'\*\*([^*]+)\*\*\s*\*\*([^*]+)\*\*', r'**\1\2**', md_content)
 
+    # 箇条書き内のディスプレイ数式も、リスト変換時に継続行として字下げできるよう
+    # 先に $$ ブロックへ変換する。
+    md_content = re.sub(r'\\\[\s*(.*?)\s*\\\]', r'\n$$\n\\begin{align*}\n\1\n\\end{align*}\n$$\n', md_content, flags=re.DOTALL)
+
     # リスト環境 (\begin{enumerate}, \begin{description}, \begin{itemize}) の HTML/Markdown 番号付きリスト変換 (Issue #509)
     # ネストしたリスト環境も _convert_all_list_envs / _render_list_items が
     # 再帰的に処理する（単純な非貪欲正規表現は入れ子の内側の \end で止まって
@@ -1670,9 +1674,6 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
         lambda m: '\n' + '\n'.join(
             m.group(1) + '> ' + line.strip() for line in m.group(2).split('\n')) + '\n',
         md_content, flags=re.DOTALL | re.MULTILINE)
-
-    # ディスプレイ数式 \[ ... \] の \begin{align*} ... \end{align*} への統一
-    md_content = re.sub(r'\\\[\s*(.*?)\s*\\\]', r'\n$$\n\\begin{align*}\n\1\n\\end{align*}\n$$\n', md_content, flags=re.DOTALL)
 
     # 冒頭・単独の空の中括弧 {} や不要記号の除去
     md_content = re.sub(r'^\s*\{\}\s*$', '', md_content, flags=re.MULTILINE)

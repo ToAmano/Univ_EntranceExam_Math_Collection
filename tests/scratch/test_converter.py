@@ -93,6 +93,20 @@ class TestConverter(unittest.TestCase):
         self.assertIn('    \\end{align}\n    $$\n\n2.', processed)
         self.assertIn('after the list', processed)
 
+    def test_bracket_display_math_keeps_following_text_in_list_item(self):
+        latex = ('\\begin{enumerate}\n'
+                 '  \\item 条件を示せ．\n'
+                 '    \\[ a=b \\]\n'
+                 '    および次の条件も示せ．\n'
+                 '    \\[ c=d \\]\n'
+                 '    が成り立つ．\n'
+                 '  \\item 次の問\n'
+                 '\\end{enumerate}')
+        processed = self.convert(latex)
+        self.assertIn('1.  条件を示せ．\n\n    $$', processed)
+        self.assertIn('    および次の条件も示せ．\n\n    $$', processed)
+        self.assertIn('    が成り立つ．\n\n2.  次の問', processed)
+
     def test_labeled_display_math_keeps_dollar_delimiters_on_own_lines(self):
         latex = r'''
         \begin{align}x&=1\label{eq:1}\end{align}
