@@ -1,0 +1,138 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+\begin{oframed}
+  \subfile{problem}
+\end{oframed}
+
+{\bf [解答]}
+
+\paragraph{(1)}
+
+与えられた関数
+\begin{align}
+  f(\theta) = \sin\theta-\theta+\dfrac{\theta^3}{6} \quad (-1 \le \theta \le 1) \label{eq:1}
+\end{align}
+について考える．一階微分は
+\begin{align}
+  f'(\theta)=\cos\theta-1+\dfrac{\theta^2}{2}
+  =\dfrac{\theta^2}{2}-2\sin^2\dfrac{\theta}{2} \label{eq:2}
+\end{align}
+である．ここで$-1 \le \theta \le 1$の時
+\begin{align}
+  & \left|\sin\dfrac{\theta}{2}\right| \le \left|\dfrac{\theta}{2}\right| \\
+  \therefore
+  & \sin^2\dfrac{\theta}{2} \le \dfrac{\theta^2}{4}
+\end{align}
+だから\cref{eq:2}は
+\begin{align}
+  f'(\theta) \ge 0
+\end{align}
+となり$f(\theta)$は$[-1,1]$で単調増加である．従ってこの最大値と最小値は
+\begin{align}
+  \begin{dcases}
+    M = \max f(\theta) = f(1) = \sin1-\dfrac{5}{6} \\
+    m = \min f(\theta) = f(-1)=  \dfrac{5}{6}-\sin1
+  \end{dcases} \label{eq:3}
+\end{align}
+である．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.4cm, y=1.8cm, >=stealth, every node/.style={font=\small}]
+    % f(theta) = sin(theta) - theta + theta^3/6 は奇関数で、M = sin(1) - 5/6 ≒ 0.0081376。
+    % 縦軸は M ≒ 0.0081376 が y=1 に対応するよう拡大して描画。
+    \coordinate (O) at (0, 0);
+    \coordinate (P1) at (1, 1);
+    \coordinate (Pm1) at (-1, -1);
+
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-1.35, 0) -- (1.45, 0) node[right] {$\theta$};
+    \draw[->, thick, gray!80!black] (0, -1.35) -- (0, 1.45) node[above] {$y$};
+    \node[below left=2pt, font=\footnotesize] at (O) {$O$};
+
+    % y = f(theta) のグラフ（縦軸を 1/M 倍に拡大；f(theta)/M ≒ theta^5 * (1.02405 - 0.02405*theta^2)）
+    \draw[line width=1.4pt, blue!85!black, domain=-1:1, samples=80]
+    plot (\x, {(\x*\x*\x*\x*\x)*(1.02405 - 0.02405*(\x*\x))});
+
+    % 端点から座標軸への垂線
+    \draw[densely dotted, thick, gray!70!black] (P1) -- (1, 0) node[below=2pt, font=\footnotesize] {$1$};
+    \draw[densely dotted, thick, gray!70!black] (P1) -- (0, 1) node[left=2pt, font=\footnotesize] {$M$};
+    \draw[densely dotted, thick, gray!70!black] (Pm1) -- (-1, 0) node[above=2pt, font=\footnotesize] {$-1$};
+    \draw[densely dotted, thick, gray!70!black] (Pm1) -- (0, -1) node[right=2pt, font=\footnotesize] {$m$};
+
+    % 端点
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P1) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (Pm1) {};
+  \end{tikzpicture}
+  \caption{$-1\le\theta\le 1$における$y=f(\theta)$の概形}
+\end{figure}
+
+\paragraph{(2)}
+
+与えられた定積分
+\begin{align}
+  I = \int_{0}^{2\pi} \sin(\cos x-x) dx \label{eq:4}
+\end{align}
+について考える．加法定理より
+\begin{align}
+  I = \int_{0}^{2\pi} \left[\sin(\cos x)\cos x - \cos(\cos x)\sin x\right] dx \label{eq:5}
+\end{align}
+だが，第2項で積分区間を$[0,\pi],[\pi,2\pi]$で分割すると
+\begin{align}
+  (\text{第2項})
+  &= \int_{0}^{2\pi}\cos(\cos x)\sin x dx \\
+  &= \int_{0}^{\pi}\cos(\cos x)\sin x dx + \int_{\pi}^{2\pi}\cos(\cos x)\sin x dx \\
+  &= \int_{0}^{\pi}\cos(\cos x)\sin x dx + \int_{\pi}^{0}\cos(\cos t)(-\sin t)(-dt) \quad (t=2\pi-x) \\
+  &= \int_{0}^{\pi}\cos(\cos x)\sin x dx - \int_{0}^{\pi}\cos(\cos x)\sin x dx  \\
+  &=0
+\end{align}
+となり，\cref{eq:5}で第1項だけが残るから
+\begin{align}
+  I = \int_{0}^{2\pi} \sin(\cos x)\cos x dx \label{eq:6}
+\end{align}
+となる．ここに\cref{eq:1}より$\sin \theta = f(\theta) + \theta-\dfrac{\theta^3}{6}$として$\theta=\cos x \ (-1 \le \theta \le 1)$を代入すると
+\begin{align}
+  I
+  &= \int_{0}^{2\pi} \left[f(\cos x) + \cos x - \dfrac{\cos^3x}{6}\right]\cos x dx \\
+  &= \int_{0}^{2\pi} \left[\cos^2x - \dfrac{1}{6}\cos^4x + f(\cos x)\cos x\right]dx \label{eq:7}
+\end{align}
+となる．以下各項個別に計算・評価する．
+まず
+\begin{align}
+  (\text{第1項})
+  &= \int_{0}^{2\pi}\cos^2x dx
+  = \int_{0}^{2\pi}\dfrac{1+\cos 2x}{2} dx
+  = \dfrac{1}{2}\left[x + \dfrac{1}{2}\sin 2x\right]_{0}^{2\pi}
+  = \pi
+\end{align}
+および
+\begin{align}
+  (\text{第2項})
+  &= \int_{0}^{2\pi}\cos^4x dx
+  = \int_{0}^{2\pi}\dfrac{(1+\cos 2x)^2}{4} dx
+  = \int_{0}^{2\pi}\dfrac{1+2\cos 2x + \cos^2 2x}{4} dx
+  = \int_{0}^{2\pi}\dfrac{2+4\cos 2x + (1+\cos 4x)}{8} dx
+  = \dfrac{1}{8}\left[3x+ 2\sin 2x + \dfrac{1}{4}\sin 4x\right]_{0}^{2\pi}
+  = \dfrac{3\pi}{4}
+\end{align}
+である．
+
+第3項については，(1)から$f(x)$が$x$と同符号であることより$f(x)x \ge 0$であって，上から評価すると$m=-M$より$|f(\cos x)| \le M$だから
+\begin{align}
+  0 \le f(\cos x)\cos x = |f(\cos x)||\cos x| \le M|\cos x|
+\end{align}
+である．これを$[0,2\pi]$で積分すると
+\begin{align}
+  & 0 \le (\text{第3項}) \le M \int_{0}^{2\pi} |\cos x| dx \\
+  \therefore
+  & 0 \le (\text{第3項}) \le 4M
+\end{align}
+となる．以上を\cref{eq:7}に代入して
+\begin{align}
+  & \pi+\dfrac{1}{6}\dfrac{3\pi}{4} \le I \le \pi+\dfrac{1}{6}\dfrac{3\pi}{4} + 4M \\
+  \therefore
+  &  \dfrac{7}{8}\pi \le I \le \dfrac{7}{8}\pi + 4M
+\end{align}
+を得る．よって題意の不等式は示された．\qed
+
+\end{document}
