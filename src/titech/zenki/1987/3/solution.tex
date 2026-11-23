@@ -7,9 +7,34 @@
 {\bf [解答]}
 \paragraph{(1)}
 
-\begin{figure}
-  % TODO: triangle ABCとその外接円@座標平面
-  \caption{}
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.1cm, y=2.1cm, >=stealth, every node/.style={font=\small}]
+    % α=80°, β=220° は鋭角三角形条件 (0<α≤π, α<β≤π+α, π≤β<2π) を満たす具体値
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (1, 0);
+    \coordinate (B) at (80:1);
+    \coordinate (C) at (220:1);
+    \draw[->, thick, gray!80!black] (-1.35, 0) -- (1.45, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.35) -- (0, 1.45) node[above] {$y$};
+    \draw[thick, gray!75!black] (O) circle (1);
+    \draw[densely dotted, thick, gray!70!black] (O) -- (B);
+    \draw[densely dotted, thick, gray!70!black] (O) -- (C);
+    \draw[line width=1.3pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+    % 中心角 α, β
+    \draw[->, thin, teal!85!black] (0.20, 0) arc[start angle=0, end angle=80, radius=0.20];
+    \node[font=\footnotesize, fill=white, inner sep=0.8pt] at (40:0.31) {$\alpha$};
+    \draw[->, thin, orange!90!black] (0.34, 0) arc[start angle=0, end angle=220, radius=0.34];
+    \node[font=\footnotesize, fill=white, inner sep=0.8pt] at (165:0.24) {$\beta$};
+    \node[font=\scriptsize, fill=white, inner sep=0.6pt, below right=1.5pt] at (O) {$O$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (A) {};
+    \node[font=\footnotesize, fill=white, inner sep=0.8pt, below right=3pt] at (A) {$A(1,0)$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (B) {};
+    \node[font=\footnotesize, above right=2pt] at (B) {$B(\cos\alpha,\sin\alpha)$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (C) {};
+    \node[font=\footnotesize, below left=2pt] at (C) {$C(\cos\beta,\sin\beta)$};
+  \end{tikzpicture}
+  \caption{単位円に内接する$\triangle ABC$}
 \end{figure}
 
 $\triangle ABC$の外接円の半径1として良い．$\triangle ABC$を
@@ -19,8 +44,44 @@ $\triangle ABC$の外接円の半径1として良い．$\triangle ABC$を
 とおける．まずはこの三角形が鋭角三角形または直角三角形になる条件を考える．
 
 \begin{figure}[htb]
-  % TODO: angle A,B,Cの角度を示す図
-  \caption{}
+  \centering
+  \begin{tikzpicture}[x=2.5cm, y=2.5cm, >=stealth, every node/.style={font=\small}]
+    % α=80°, β=220° として3つの二等辺三角形 ΔOAB, ΔOBC, ΔOCA への分割を示す
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (1, 0);
+    \coordinate (B) at (80:1);
+    \coordinate (C) at (220:1);
+    \draw[thick, gray!70!black] (O) circle (1);
+    \draw[thick, teal!85!black] (O) -- (A) (O) -- (B) (O) -- (C);
+    % 等長記号 (OA = OB = OC = 1)
+    \draw[thick, teal!85!black] ($(O)!0.55!(A)+(0,-0.03)$) -- ($(O)!0.55!(A)+(0,0.03)$);
+    \draw[thick, teal!85!black] ($(O)!0.55!(B)+(-0.030,0.005)$) -- ($(O)!0.55!(B)+(0.030,-0.005)$);
+    \draw[thick, teal!85!black] ($(O)!0.55!(C)+(0.019,-0.023)$) -- ($(O)!0.55!(C)+(-0.019,0.023)$);
+    \draw[line width=1.3pt, blue!85!black] (A) -- (B) -- (C) -- cycle;
+    % 3つの中心角
+    \draw[thin, gray!80!black] (0.14, 0) arc[start angle=0, end angle=80, radius=0.14];
+    \node[font=\scriptsize] at (40:0.25) {$\alpha$};
+    \draw[thin, gray!80!black] (80:0.14) arc[start angle=80, end angle=220, radius=0.14];
+    \node[font=\scriptsize] at (130:0.23) {$\beta-\alpha$};
+    \draw[thin, gray!80!black] (220:0.13) arc[start angle=220, end angle=360, radius=0.13];
+    \node[font=\scriptsize] at (292:0.23) {$2\pi-\beta$};
+    % 各頂点での底角への分割弧
+    \draw[thin, blue!85!black] ($(A)+(180:0.13)$) arc[start angle=180, end angle=130, radius=0.13];
+    \draw[thin, orange!90!black] ($(A)+(180:0.17)$) arc[start angle=180, end angle=200, radius=0.17];
+    \draw[thin, blue!85!black] ($(B)+(260:0.13)$) arc[start angle=260, end angle=310, radius=0.13];
+    \draw[thin, orange!90!black] ($(B)+(260:0.17)$) arc[start angle=260, end angle=240, radius=0.17];
+    \draw[thin, blue!85!black] ($(C)+(40:0.13)$) arc[start angle=40, end angle=60, radius=0.13];
+    \draw[thin, orange!90!black] ($(C)+(40:0.17)$) arc[start angle=40, end angle=20, radius=0.17];
+    \node[circle, fill=black, inner sep=1.2pt] at (O) {};
+    \node[font=\scriptsize, fill=white, inner sep=0.5pt] at (255:0.11) {$O$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (A) {};
+    \node[right=2pt] at (A) {$A$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (B) {};
+    \node[above=2pt] at (B) {$B$};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (C) {};
+    \node[below left=2pt] at (C) {$C$};
+  \end{tikzpicture}
+  \caption{中心角$\alpha$，$\beta$を用いた$\triangle ABC$の各内角}
 \end{figure}
 
 上図より$\triangle ABC$のそれぞれの角は
@@ -83,11 +144,50 @@ $D$の中心を$O'$として$O'\ne O$と仮定する．$\triangle ABC$の外接�
 \end{pmatrix}$だから，これを図示すると下図のようになる．
 
 \begin{figure}[htb]
-  % TODO: 円P,Q,Rと(0,0)での接線ベクトル
-  \caption{}
+  \centering
+  \begin{tikzpicture}[x=1.8cm, y=1.8cm, >=stealth, every node/.style={font=\small}]
+    % α=80°, β=220° に対する3円 P, Q, R と (0,0) での接線ベクトル
+    \coordinate (O) at (0, 0);
+    \coordinate (cP) at (1, 0);
+    \coordinate (cQ) at (80:1);
+    \coordinate (cR) at (220:1);
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-2.25, 0) -- (2.35, 0) node[right] {$X$};
+    \draw[->, thick, gray!80!black] (0, -2.1) -- (0, 2.25) node[above] {$Y$};
+    % 3円 P, Q, R
+    \draw[line width=1.1pt, blue!85!black] (cP) circle (1);
+    \draw[line width=1.1pt, teal!85!black] (cQ) circle (1);
+    \draw[line width=1.1pt, orange!90!black] (cR) circle (1);
+    \node[font=\small, text=blue!85!black] at ($(cP)+(35:1.14)$) {$P$};
+    \node[font=\small, text=teal!85!black] at ($(cQ)+(80:1.14)$) {$Q$};
+    \node[font=\small, text=orange!90!black] at ($(cR)+(220:1.15)$) {$R$};
+    % 中心方向の補助線（α, β）
+    \draw[densely dotted, thick, gray!70!black] (O) -- (cQ);
+    \draw[densely dotted, thick, gray!70!black] (O) -- (cR);
+    % (0,0) における各接線（延長）と方向ベクトル
+    \draw[densely dotted, thick, blue!70!black] (0, -1.2) -- (0, 0);
+    \draw[->, line width=1.3pt, blue!85!black] (O) -- (0, 1.45)
+    node[right=2pt, font=\scriptsize, fill=white, inner sep=1pt] {$
+      \begin{pmatrix}0\\1
+    \end{pmatrix}$};
+    \draw[densely dotted, thick, orange!80!black] (-50:1.15) -- (0, 0);
+    \draw[->, line width=1.3pt, orange!90!black] (O) -- (130:1.45)
+    node[above left=1pt, font=\scriptsize, fill=white, inner sep=1pt] {$
+      \begin{pmatrix}\sin\beta\\-\cos\beta
+    \end{pmatrix}$};
+    \draw[densely dotted, thick, teal!75!black] (-10:1.15) -- (0, 0);
+    \draw[->, line width=1.3pt, teal!85!black] (O) -- (170:1.45)
+    node[above left=1pt, font=\scriptsize, fill=white, inner sep=1pt] {$
+      \begin{pmatrix}-\sin\alpha\\\cos\alpha
+    \end{pmatrix}$};
+    % 共有点 O(0,0)
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (O) {};
+    \node[font=\scriptsize, fill=white, inner sep=0.6pt] at (245:0.18) {$O$};
+  \end{tikzpicture}
+  \caption{3円$P$，$Q$，$R$と$(0,0)$における接線の方向ベクトル}
 \end{figure}
 
-$P$は$Q$の左側，$Q$は$R$の上側，$R$は$P$の左側にあるから，$P,Q,R$の共有点は$O(0,0)$のみ，つまり
+\cref{eq:2}より，$P,Q$，$Q,R$，$R,P$の共有点はそれぞれ原点以外で混じり合うことはないので，$P,Q,R$の共有点は$O(0,0)$のみ，つまり
 \begin{align}
   \text{\cref{eq:3}} \iff (X,Y)=(0,0)
 \end{align}
