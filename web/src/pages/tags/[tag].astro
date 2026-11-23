@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { TOPIC_TAGS } from '../../lib/tags';
+import { isPostHighschoolSolution, POST_HIGHSCHOOL_LABEL } from '../../lib/solution-origins.mjs';
 
 export async function getStaticPaths() {
 	const solutions = await getCollection('solutions');
@@ -37,6 +38,7 @@ interface Row {
 	year: string;
 	question: string;
 	solutionSlug: string;
+	isPostHighschool: boolean;
 }
 
 const rows: Row[] = items.map((item) => ({
@@ -45,6 +47,7 @@ const rows: Row[] = items.map((item) => ({
 	year: item.data.year,
 	question: item.data.question,
 	solutionSlug: item.slug,
+	isPostHighschool: isPostHighschoolSolution(item.data),
 }));
 
 rows.sort((a, b) => {
@@ -88,6 +91,7 @@ rows.sort((a, b) => {
 							<span class="badge badge-cat">{CATEGORY_NAMES[row.category] || row.category}</span>
 							<span class="year-label">{row.year}年</span>
 							<span class="q-label">第{row.question}問</span>
+							{row.isPostHighschool && <span class="tag-origin">{POST_HIGHSCHOOL_LABEL}</span>}
 						</div>
 						<div class="tag-row-actions">
 							<a href={`${baseUrl}/solutions/${row.solutionSlug}/`} class="action-btn solution">問題・解答 ➔</a>
@@ -205,6 +209,15 @@ rows.sort((a, b) => {
 	.q-label {
 		color: var(--text-muted);
 		font-size: 0.9rem;
+	}
+	.tag-origin {
+		background: rgba(14, 116, 144, 0.35);
+		color: #cffafe;
+		border: 1px solid rgba(34, 211, 238, 0.5);
+		padding: 0.15rem 0.55rem;
+		border-radius: 999px;
+		font-size: 0.72rem;
+		font-weight: 700;
 	}
 
 	.tag-row-actions {

@@ -7,6 +7,7 @@ import RelatedProblems from '../../components/RelatedProblems.astro';
 import { readIssueIndex, problemIssues } from '../../lib/issues.mjs';
 import { readProblemGroups, relatedProblemGroups } from '../../lib/related-problems.mjs';
 import { matchingSolutionSlug } from '../../lib/canonical-sitemap.mjs';
+import { isPostHighschoolSolution, POST_HIGHSCHOOL_LABEL } from '../../lib/solution-origins.mjs';
 import { buildBreadcrumbListJsonLd } from '../../utils/seo';
 
 export async function getStaticPaths() {
@@ -313,7 +314,7 @@ const pageDescription =
 			アーカイブ一覧へ戻る
 		</a>
 
-		<div style="display: flex; align-items: center; gap: 0.5rem;">
+		<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
 			<span class={entry.data.university.includes('utokyo') ? 'badge badge-utokyo' : entry.data.university.includes('ukyoto') ? 'badge badge-ukyoto' : 'badge badge-titech'}>
 				{univName} {catName}
 			</span>
@@ -323,6 +324,9 @@ const pageDescription =
 			{entryType === 'summary' && <span class="badge badge-summary">全体サマリ</span>}
 			{entryType === 'problem' && <span class="badge badge-problem">問題文</span>}
 			{entryType === 'solution' && <span class="badge badge-solution">解答解説</span>}
+			{entryType === 'solution' && isPostHighschoolSolution(entry.data) && (
+				<span class="badge badge-post-highschool" title="サイト運営者が高校卒業後に作成した解答です">{POST_HIGHSCHOOL_LABEL}</span>
+			)}
 			<img src={counterUrl} alt="このページの閲覧数" style="height: 20px; border-radius: 4px;" loading="lazy" />
 		</div>
 	</div>

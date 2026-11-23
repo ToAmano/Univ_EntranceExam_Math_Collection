@@ -2,6 +2,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import { SUMMARY_QUESTION_ID, isSummaryItem, countRealQuestions } from '../../../lib/solutions';
+import { isPostHighschoolSolution, POST_HIGHSCHOOL_LABEL } from '../../../lib/solution-origins.mjs';
 
 export async function getStaticPaths() {
 	const solutions = await getCollection('solutions');
@@ -173,16 +174,21 @@ const categoryDescription = `${univWithShort} ${catName}の過去問・詳細解
 								</div>
 							</div>
 							<div class="questions-grid">
-								{yg.questions.map((q) => (
+								{yg.questions.map((q) => {
+									const postHighschool = q.solutionItem ? isPostHighschoolSolution(q.solutionItem.data) : false;
+									return (
 									<div
 										class="question-row"
-										data-search-text={`${yg.year} ${q.questionNum === '0' ? '全体サマリ 0' : `第${q.questionNum}問`}`}
+										data-search-text={`${yg.year} ${q.questionNum === '0' ? '全体サマリ 0' : `第${q.questionNum}問`}${postHighschool ? ` ${POST_HIGHSCHOOL_LABEL} 卒業後` : ''}`}
 									>
 										<div class="q-label">
 											{q.questionNum === '0' ? (
 												<span class="tag-summary">全体サマリ</span>
 											) : (
-												<span class="tag-num">第{q.questionNum}問</span>
+												<>
+													<span class="tag-num">第{q.questionNum}問</span>
+													{postHighschool && <span class="tag-origin">{POST_HIGHSCHOOL_LABEL}</span>}
+												</>
 											)}
 										</div>
 										<div class="q-actions">
@@ -202,7 +208,8 @@ const categoryDescription = `${univWithShort} ${catName}の過去問・詳細解
 											)}
 										</div>
 									</div>
-								))}
+									);
+								})}
 							</div>
 						</section>
 						);
@@ -470,6 +477,21 @@ const categoryDescription = `${univWithShort} ${catName}の過去問・詳細解
 	.tag-num {
 		font-weight: 700;
 		font-size: 1rem;
+	}
+	.q-label {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+	.tag-origin {
+		background: rgba(14, 116, 144, 0.35);
+		color: #cffafe;
+		border: 1px solid rgba(34, 211, 238, 0.5);
+		padding: 0.15rem 0.55rem;
+		border-radius: 999px;
+		font-size: 0.72rem;
+		font-weight: 700;
 	}
 	.q-actions {
 		display: flex;
