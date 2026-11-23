@@ -159,60 +159,47 @@ $P$から$2$本の接線が引けるから$m$の2次方程式\cref{eq:1}が異�
 である．これを図示すると下図斜線部（境界は$A(1/\sqrt{3},0)$以外含む）である．
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[scale=1.6, >=stealth]
-
-      % --- 1. 座標軸 ---
-      \draw[->, thick] (-1.4,0) -- (1.6,0) node[right] {$a$};
-      \draw[->, thick] (0,-1.4) -- (0,1.5) node[above] {$b$};
-      \node[below left] at (0,0) {$O$};
-
-      % --- 2. 求める領域の斜線ハッチング (pattern=north east lines) ---
-      % 円 a^2 + b^2 <= 4/3 (半径 R = 2/sqrt(3) ≒ 1.1547)
-      % かつ 直線 a >= 1/sqrt(3) ≒ 0.5774
-      % 交点: a = 1/sqrt(3) のとき b = ±1
-
-      \begin{scope}
-        % 円の内部にクリップ
-        \clip (0,0) circle (1.1547);
-        % 直線 a >= 1/sqrt(3) より右側をハッチング
-        \fill[pattern=north east lines, pattern color=blue!70]
-        (0.5774, -1.4) rectangle (1.4, 1.4);
-      \end{scope}
-
-      % --- 3. 境界線の描画 ---
-      % (i) 円 a^2 + b^2 = 4/3
-      \draw[thick, blue!80!black] (0,0) circle (1.1547);
-      \node[blue!80!black, above right] at (0.8, 0.8) {$a^2+b^2=\frac{4}{3}$};
-
-      % (ii) 内側の楕円 a^2 + b^2/3 = 1/3 (a=1/sqrt(3), b=1)
-      \draw[thick, dashed, red!80!black] (0,0) ellipse (0.5774 and 1.0);
-
-      % (iii) 境界直線 a = 1/sqrt(3) (実線部)
-      \draw[ultra thick, green!50!black] (0.5774, -1.0) -- (0.5774, 1.0);
-      \draw[dashed, gray] (0.5774, -1.3) -- (0.5774, 1.3);
-      \node[below, font=\small] at (0.5774, 0) {$\frac{1}{\sqrt{3}}$};
-
-      % --- 4. 重要交点のプロットと目盛り ---
-      % 交点 (1/sqrt(3), 1) および (1/sqrt(3), -1)
-      \node[circle, fill, inner sep=1.3pt] at (0.5774, 1.0) {};
-      \node[circle, fill, inner sep=1.3pt] at (0.5774, -1.0) {};
-
-      \draw[dashed, gray] (0, 1.0) node[left, font=\small] {$1$} -- (0.5774, 1.0);
-      \draw[dashed, gray] (0, -1.0) node[left, font=\small] {$-1$} -- (0.5774, -1.0);
-      \draw[dashed, gray] (0.5774, -1.0) -- (0, 0) -- (0.5774, 1.0);
-
-      % --- 【追加部分】 角度 2pi/3 の表示 ---
-      % 交点の角度は +-60度 (pi/3) なので、間の角は 120度 (2pi/3)
-      % \draw[->, thin, gray] ($(0,0)+(Pbot)$); % ダミー（ arc の始点を計算させるため）
-      \draw[->, thin] (0:0.4) arc (0:60:0.4);
-      \node[font=\small, above right, xshift=2pt] at (0,0) {$\frac{\pi}{3}$};
-
-      % 円の x 軸交点 2/sqrt(3) ≒ 1.155
-      \node[below right, font=\small] at (1.1547, 0) {$\frac{2}{\sqrt{3}}$};
-
-    \end{tikzpicture}
-  \end{center}
+  \centering
+  \begin{tikzpicture}[x=1.85cm, y=1.85cm, >=stealth, every node/.style={font=\small}]
+    \pgfmathsetmacro{\invrt}{1/sqrt(3)}
+    \pgfmathsetmacro{\rad}{2/sqrt(3)}
+    % --- 1. 求める領域の斜線ハッチング ---
+    \begin{scope}
+      \clip (0, 0) circle (\rad);
+      \fill[pattern=north east lines, pattern color=blue!60!black] (\invrt, -1.4) rectangle (1.4, 1.4);
+    \end{scope}
+    % --- 2. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-1.45, 0) -- (1.65, 0) node[right] {$a$};
+    \draw[->, thick, gray!80!black] (0, -1.45) -- (0, 1.55) node[above] {$b$};
+    \node[font=\footnotesize, below left=2pt] at (0, 0) {$O$};
+    % --- 3. 補助線（座標軸への垂線・中心からの動径・境界延長） ---
+    \draw[densely dotted, thick, gray!70!black] (0, 1) -- (\invrt, 1) -- (\invrt, 1.32);
+    \draw[densely dotted, thick, gray!70!black] (0, -1) -- (\invrt, -1) -- (\invrt, -1.32);
+    \draw[densely dotted, thick, gray!70!black] (\invrt, -1) -- (0, 0) -- (\invrt, 1);
+    % --- 4. 境界線と参照曲線 ---
+    % 外円 a^2 + b^2 = 4/3（領域の境界となる右弧のみ実線，残りは破線）
+    \draw[dashed, thick, gray!70!black] (60:\rad) arc[start angle=60, end angle=300, radius=\rad];
+    \draw[line width=1.3pt, blue!85!black] (-60:\rad) arc[start angle=-60, end angle=60, radius=\rad];
+    \node[font=\footnotesize, text=blue!85!black, above right=1pt] at (45:\rad) {$a^2+b^2=\frac{4}{3}$};
+    % 内側の楕円 a^2 + b^2/3 = 1/3（領域外の境界のため破線）
+    \draw[dashed, thick, orange!90!black] (0, 0) ellipse[x radius=\invrt, y radius=1];
+    \draw[<-, thin, orange!90!black] ({-\invrt*cos(42)}, {sin(42)}) -- (-0.98, 1.02)
+    node[above left, font=\scriptsize, text=orange!90!black, fill=white, inner sep=0.8pt] {$a^2+\frac{b^2}{3}=\frac{1}{3}$};
+    % 境界直線 a = 1/sqrt(3)（-1 <= b <= 1 の実線部，ただし A(1/sqrt(3), 0) は除く）
+    \draw[line width=1.3pt, blue!85!black] (\invrt, -1) -- (\invrt, 1);
+    % --- 5. 角度表示 ---
+    \draw[->, thin, gray!80!black] (0:0.32) arc[start angle=0, end angle=60, radius=0.32];
+    \node[font=\scriptsize, fill=white, inner sep=0.6pt] at (30:0.44) {$\frac{\pi}{3}$};
+    % --- 6. 端点・除外点と目盛りラベル ---
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (\invrt, 1) {};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (\invrt, -1) {};
+    \node[circle, draw=red!85!black, thick, fill=white, inner sep=1.6pt] at (\invrt, 0) {};
+    \node[font=\scriptsize, text=red!85!black, fill=white, inner sep=0.8pt, above right=2pt] at (\invrt, 0) {$A$};
+    \node[font=\footnotesize, fill=white, inner sep=0.8pt, below left=2pt] at (\invrt, 0) {$\frac{1}{\sqrt{3}}$};
+    \node[font=\footnotesize, fill=white, inner sep=0.8pt, above left=2pt] at (0, 1) {$1$};
+    \node[font=\footnotesize, fill=white, inner sep=0.8pt, below left=2pt] at (0, -1) {$-1$};
+    \node[font=\footnotesize, fill=white, inner sep=0.8pt, below right=2pt] at (\rad, 0) {$\frac{2}{\sqrt{3}}$};
+  \end{tikzpicture}
   \caption{面積 $S$ を求める領域の図示（斜線部・境界は$A(1/\sqrt{3},0)$以外含む）}
 \end{figure}
 
