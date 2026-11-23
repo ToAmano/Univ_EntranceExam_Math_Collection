@@ -110,85 +110,97 @@
 これを図示すると下図の斜線部となる．
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[scale=3, >=stealth, every node/.style={font=\small}]
+  \centering
+  \begin{tikzpicture}[x=3.8cm, y=3.6cm, >=stealth, every node/.style={font=\small}]
+    % 交点の x 座標: 1 \pm \sqrt{3}/2 (y = 1/2 で交わる)
+    \pgfmathsetmacro{\xone}{1 - sqrt(3)/2}
+    \pgfmathsetmacro{\xtwo}{1 + sqrt(3)/2}
 
-      % --- 1. 斜線塗りつぶし (領域 E) ---
+    % --- 1. 斜線塗りつぶし (求める通過領域) ---
+    % [中央領域] 0 < x < 2 における上部領域
+    \fill[pattern=north east lines, pattern color=gray!65!black]
+    (0, 2.05) -- (0, 0)
+    -- plot[domain=0:\xone, samples=30] (\x, {sqrt(\x*(2-\x))})
+    -- plot[domain=\xone:\xtwo, samples=40] (\x, {-(\x-1)*(\x-1) + 1.25})
+    -- plot[domain=\xtwo:2, samples=30] (\x, {sqrt(\x*(2-\x))})
+    -- (2, 2.05) -- cycle;
 
-      % [中央領域] 0 < x < 2 における上部領域
-      % x in (0, 0.134) : 半円 y = sqrt(x(2-x)) より上
-      % x in (0.134, 1.866) : 放物線 y = -(x-1)^2 + 5/4 より上
-      % x in (1.866, 2) : 半円 y = sqrt(x(2-x)) より上
-      \fill[pattern=north east lines, pattern color=black!50]
-      (0, 2.2) -- (0, 0)
-      -- plot[domain=0:0.134, samples=30] (\x, {sqrt(\x*(2-\x))})
-      -- plot[domain=0.134:1.866, samples=30] (\x, { -(\x-1)*(\x-1) + 1.25 })
-      -- plot[domain=1.866:2, samples=30] (\x, {sqrt(\x*(2-\x))})
-      -- (2, 2.2) -- cycle;
+    % [左側領域] x < 0 において放物線より下
+    \fill[pattern=north east lines, pattern color=gray!65!black]
+    (0, -0.95) -- (0, 0.25)
+    -- plot[domain=0:-0.48, samples=30] (\x, {-(\x-1)*(\x-1) + 1.25})
+    -- (-0.48, -0.95) -- cycle;
 
-      % [左側領域] x <= 0 において放物線より下
-      \fill[pattern=north east lines, pattern color=black!50]
-      (0, -1.0) -- (0, 0)
-      -- plot[domain=0:-0.5, samples=30] (\x, { -(\x-1)*(\x-1) + 1.25 })
-      -- cycle;
+    % [右側領域] x > 2 において放物線より下
+    \fill[pattern=north east lines, pattern color=gray!65!black]
+    (2, -0.95) -- (2, 0.25)
+    -- plot[domain=2:2.48, samples=30] (\x, {-(\x-1)*(\x-1) + 1.25})
+    -- (2.48, -0.95) -- cycle;
 
-      % [右側領域] x >= 2 において放物線より下
-      \fill[pattern=north east lines, pattern color=black!50]
-      (2, -1) -- (2, 0)
-      -- plot[domain=2:2.5, samples=30] (\x, { -(\x-1)*(\x-1) + 1.25 })
-      -- cycle;
+    % --- 2. 座標軸への垂線・補助線（点線） ---
+    \draw[densely dotted, thick, gray!70!black] (\xone, 0) -- (\xone, 0.5) -- (0, 0.5);
+    \draw[densely dotted, thick, gray!70!black] (\xtwo, 0) -- (\xtwo, 0.5);
+    \draw[densely dotted, thick, gray!70!black] (1, 0) -- (1, 1.25) -- (0, 1.25);
+    % x = 2 上の領域外（y < 0 および y > 1/4）の参考境界線
+    \draw[densely dotted, thick, gray!70!black] (2, -0.95) -- (2, 0);
+    \draw[densely dotted, thick, gray!70!black] (2, 0.25) -- (2, 2.05);
+    \draw[densely dotted, thick, gray!70!black] (0, -1.0) -- (0, 2.05);
 
-      % --- 2. 補助線（点線） ---
-      % x = 1 - \sqrt{3}/2 および x = 1 + \sqrt{3}/2 の垂線
-      \draw[dashed, gray!70] (0.134, 0) -- (0.134, 0.5) -- (0, 0.5);
-      \draw[dashed, gray!70] (1.866, 0) -- (1.866, 0.5);
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.75, 0) -- (2.75, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, 2.05) -- (0, 2.25) node[above] {$y$};
+    \draw[thick, gray!80!black] (0, -1.1) -- (0, -0.95);
+    \node[below left=2pt, fill=white, inner sep=1.2pt] at (0, 0) {$O$};
 
-      % 放物線・半円の頂点からの補助線
-      \draw[dashed, gray!70] (1, 0) -- (1, 1.25) -- (0, 1.25);
+    % --- 4. 曲線・放物線の描画（境界部分は太実線，領域内・領域外の延長部は点線） ---
+    % 半円 y = sqrt(x(2-x))
+    \draw[line width=1.4pt, blue!85!black, domain=0:\xone, smooth, samples=40]
+    plot (\x, {sqrt(\x*(2-\x))});
+    \draw[densely dotted, thick, blue!85!black, domain=\xone:\xtwo, smooth, samples=50]
+    plot (\x, {sqrt(\x*(2-\x))});
+    \draw[line width=1.4pt, blue!85!black, domain=\xtwo:2, smooth, samples=40]
+    plot (\x, {sqrt(\x*(2-\x))});
+    \node[blue!85!black, fill=white, inner sep=1.5pt] at (1.0, 0.72) {$y=\sqrt{x(2-x)}$};
 
-      % --- 3. 座標軸 ---
-      \draw[->, thick] (-1, 0) -- (3, 0) node[right] {$x$};
-      \draw[->, thick] (0, -1.4) -- (0, 2.5) node[above] {$y$};
-      \node[below left] at (0,0) {$O$};
+    % 放物線 y = -(x-1)^2 + 5/4
+    \draw[line width=1.4pt, red!85!black, domain=-0.48:0, smooth, samples=30]
+    plot (\x, {-(\x-1)*(\x-1) + 1.25});
+    \draw[densely dotted, thick, red!85!black, domain=0:\xone, smooth, samples=25]
+    plot (\x, {-(\x-1)*(\x-1) + 1.25});
+    \draw[line width=1.4pt, red!85!black, domain=\xone:\xtwo, smooth, samples=60]
+    plot (\x, {-(\x-1)*(\x-1) + 1.25});
+    \draw[densely dotted, thick, red!85!black, domain=\xtwo:2, smooth, samples=25]
+    plot (\x, {-(\x-1)*(\x-1) + 1.25});
+    \draw[line width=1.4pt, red!85!black, domain=2:2.48, smooth, samples=30]
+    plot (\x, {-(\x-1)*(\x-1) + 1.25});
+    \node[above right=2pt, red!85!black, fill=white, inner sep=1.5pt] at (1.42, 1.07) {$y=-(x-1)^2+\frac{5}{4}$};
 
-      % --- 4. 曲線・放物線の描画 ---
-      % 半円 y = sqrt(x(2-x))
-      \draw[domain=0:2, smooth, thick, blue!80!black, samples=60]
-      plot (\x, {sqrt(\x*(2-\x))});
-      \node[blue!80!black, font=\small, fill=white, inner sep=1.5pt] at (1.0, 0.7) {$y=\sqrt{x(2-x)}$};
+    % --- 5. x = 0, 2 上の含まれる線分 (0 < y \le 1/4) ---
+    \draw[line width=2.0pt, teal!85!black] (0, 0) -- (0, 0.25);
+    \draw[line width=2.0pt, teal!85!black] (2, 0) -- (2, 0.25);
 
-      % 放物線 y = -(x-1)^2 + 5/4
-      \draw[domain=-0.5:2.5, smooth, thick, red!80!black, samples=60]
-      plot (\x, { -(\x-1)*(\x-1) + 1.25 });
-      \node[above right, red!80!black, font=\small, fill=white, inner sep=1.5pt] at (1.5, 1.05) {$y=-(x-1)^2+\frac{5}{4}$};
+    % --- 6. 軸上の目盛りラベル ---
+    \node[below=3pt, anchor=north west, xshift=-2pt, font=\scriptsize] at (\xone, 0) {$1-\frac{\sqrt{3}}{2}$};
+    \node[below=3pt, anchor=north east, xshift=2pt, font=\scriptsize] at (\xtwo, 0) {$1+\frac{\sqrt{3}}{2}$};
+    \node[below=3pt] at (1, 0) {$1$};
+    \node[below right=2pt, fill=white, inner sep=1.2pt] at (2, 0) {$2$};
 
-      % --- 5. 軸上の目盛りテキスト ---
-      \node[below] at (0.134, 0) {\scriptsize $1-\frac{\sqrt{3}}{2}$};
-      \node[below] at (1.866, 0) {\scriptsize $1+\frac{\sqrt{3}}{2}$};
-      \node[below] at (1, 0) {$1$};
-      \node[below right] at (2, 0) {$2$};
+    \node[left=3pt, teal!85!black, fill=white, inner sep=1pt, font=\scriptsize] at (0, 0.25) {$\frac{1}{4}$};
+    \node[left=3pt, fill=white, inner sep=1pt, font=\scriptsize] at (0, 0.5) {$\frac{1}{2}$};
+    \node[left=3pt, fill=white, inner sep=1pt, font=\scriptsize] at (0, 1.25) {$\frac{5}{4}$};
 
-      \node[left] at (0, 0.5) {$\frac{1}{2}$};
-      \node[left] at (0, 1.25) {$\frac{5}{4}$};
+    % --- 7. 特徴点と端点の開閉 ---
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (1, 1.25) {};
+    \node[circle, fill, inner sep=1.3pt] at (\xone, 0.5) {};
+    \node[circle, fill, inner sep=1.3pt] at (\xtwo, 0.5) {};
 
-      % --- 6. 特徴的な点とプロット（境界除外点の白抜き丸） ---
-      % 放物線の頂点 (1, 5/4)
-      \node[circle, fill=red!80!black, inner sep=1.2pt] at (1, 1.25) {};
-
-      % 交点 (1 \pm \sqrt{3}/2, 1/2)
-      \node[circle, fill, inner sep=1.2pt] at (0.134, 0.5) {};
-      \node[circle, fill, inner sep=1.2pt] at (1.866, 0.5) {};
-
-      % 除外点 x = 0, 2 (白抜き丸)
-      \node[circle, fill, inner sep=1.2pt] at (0,0) {};
-      \node[circle, fill, inner sep=1.2pt] at (2,0) {};
-
-      % 領域のラベル
-      % \node[fill=white, inner sep=1pt, font=\bfseries] at (1, 1.7) {領域};
-
-    \end{tikzpicture}
-  \end{center}
-  \caption{条件を満たす領域の図示（斜線部，境界は $x=0,2$ を除く）}
+    % x = 0, 2 上の上端 (y = 1/4 は含む: 黒丸) と下端 (y = 0 は除く: 白抜き丸)
+    \node[circle, fill=teal!85!black, inner sep=1.6pt] at (0, 0.25) {};
+    \node[circle, fill=teal!85!black, inner sep=1.6pt] at (2, 0.25) {};
+    \node[circle, draw=teal!85!black, thick, fill=white, inner sep=1.6pt] at (0, 0) {};
+    \node[circle, draw=teal!85!black, thick, fill=white, inner sep=1.6pt] at (2, 0) {};
+  \end{tikzpicture}
+  \caption{条件を満たす領域の図示（斜線部．直線 $x=0,2$ 上では $0 < y \le \dfrac{1}{4}$ のみを含み，他の境界曲線はすべて含む）}
 \end{figure}
 
 \newpage
