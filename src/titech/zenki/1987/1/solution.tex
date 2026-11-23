@@ -81,54 +81,55 @@ $p=\beta+\gamma,\ q=\beta\gamma$とおくと，$\beta,\gamma$は$t$の2次式$t^
 下図のようにこれを満たすような$(p,q)$は存在せず，よってこの場合は不適である．
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[scale=1.2, >=stealth]
+  \centering
+  \begin{tikzpicture}[x=1.6cm, y=1.1cm, >=stealth, every node/.style={font=\small}]
+    % --- 1. 定数・座標の設定 (alpha = -0.5 とし、幾何的に整合させる) ---
+    % -1 < alpha < 0 の例として alpha = -0.5:
+    %   p_bound = -alpha = 0.5
+    %   k = -alpha / (1 + alpha) = 1.0
+    %   p_int = -4*alpha / (1 + alpha) = 4.0,  q_int = p_int^2 / 4 = 4.0
+    \pgfmathsetmacro{\al}{-0.5}
+    \pgfmathsetmacro{\pbound}{-\al}
+    \pgfmathsetmacro{\slope}{-\al/(1+\al)}
+    \pgfmathsetmacro{\pint}{-4*\al/(1+\al)}
+    \pgfmathsetmacro{\qint}{0.25*\pint*\pint}
+    \coordinate (Pint) at (\pint, \qint);
 
-      % --- 1. 定数・座標の設定 ---
-      % alpha = -0.5 の例 (1+alpha = 0.5)
-      % 傾き k = -alpha/(1+alpha) = 0.5/0.5 = 1
-      % 交点 p_int = -4*alpha/(1+alpha) = 4
-      % 境界 p_bound = -alpha = 0.5
+    % --- 2. 領域条件: 0 < p < -alpha（斜線パターン） ---
+    \fill[pattern=north east lines, pattern color=red!65!black]
+    (0, 0) rectangle (\pbound, 4.2);
+    \draw[densely dotted, thick, red!85!black] (\pbound, 0) -- (\pbound, 4.2)
+    node[above=2pt, font=\footnotesize] {$p = -\alpha$};
 
-      \draw[->, thick] (-0.5,0) -- (5.2,0) node[right] {$p$};
-      \draw[->, thick] (0,-0.5) -- (0,4.8) node[above] {$q$};
-      \node[below left] at (0,0) {$O$};
+    % --- 3. 座標軸・交点からの垂線 ---
+    \draw[->, thick, gray!80!black] (-0.4, 0) -- (4.9, 0) node[right] {$p$};
+    \draw[->, thick, gray!80!black] (0, -0.45) -- (0, 4.85) node[above] {$q$};
+    \node[below left=2pt] at (0, 0) {$O$};
+    \draw[densely dotted, thick, gray!70!black] (\pint, 0) -- (Pint) -- (0, \qint);
+    \node[below=2pt, font=\scriptsize] at (\pint, 0) {$\frac{-4\alpha}{1+\alpha}$};
 
-      % --- 2. 領域条件: 0 < p < -alpha (不適合を示す対象の帯状領域) ---
-      % p = -alpha の境界（x=0.5）
-      \fill[red!15, opacity=0.7] (0,0) rectangle (1.0,4.2);
-      \draw[dashed, red!80!black, thick] (1.0,0) -- (1.0,4.2)
-      node[above, font=\small] {$p = -\alpha$};
+    % --- 4. 放物線 q = p^2 / 4 と 直線 q = (-alpha/(1+alpha)) p ---
+    \draw[line width=1.4pt, blue!85!black, domain=0:4.25, samples=80, smooth]
+    plot (\x, {0.25*\x*\x});
+    \node[above left=2pt, blue!85!black] at (4.05, {0.25*4.05*4.05}) {$q = \frac{p^2}{4}$};
 
-      % --- 3. 放物線 q = p^2 / 4 の描画 ---
-      % 放物線の下側 (q < p^2/4) が条件の1つ
-      \draw[domain=0:4.2, samples=100, ultra thick, blue!80!black]
-      plot (\x, {0.25*\x*\x}) node[right] {$q = \frac{p^2}{4}$};
+    \draw[line width=1.3pt, teal!85!black, domain=0:4.45]
+    plot (\x, {\slope*\x});
+    \node[right=3pt, teal!85!black] at (4.4, {\slope*4.4}) {$q = \frac{-\alpha}{1+\alpha}p$};
 
-      % --- 4. 直線 q = {-alpha / (1+alpha)} * p の描画 ---
-      % 直線の上側 (q >= ... p) がもう1つの条件
-      \draw[domain=0:4.2, samples=2, ultra thick, green!50!black]
-      plot (\x, {0.9*\x}) node[above right] {$q = \frac{-\alpha}{1+\alpha}p$};
+    % --- 5. 交点と注釈 ---
+    \node[circle, fill, inner sep=1.5pt] at (Pint) {};
 
-      % --- 5. 2曲線の交点 (p = -4*alpha / (1+alpha)) ---
-      % 傾き 0.9 のとき交点は p = 3.6
-      \coordinate (Pint) at (3.6, {0.25*3.6*3.6});
-      \node[circle, fill, inner sep=2pt] at (Pint) {};
-      \draw[dotted, gray] (3.6,0) -- (Pint) -- (0, {0.25*3.6*3.6});
-      \node[below] at (3.6,0) {$\frac{-4\alpha}{1+\alpha}$};
+    % 帯状領域 0 < p < -alpha の注釈（枠外から引き出し線で指す）
+    \node[draw=red!85!black, fill=white, rounded corners=2pt, inner sep=2.5pt,
+    font=\footnotesize, text=red!85!black, align=center] (band) at (1.55, 2.85)
+    {$0 < p < -\alpha$ の範囲};
+    \draw[->, thin, red!85!black] (band.west) -- (0.35, 2.85);
 
-      % --- 6. 条件を満たす領域の存在不可能性を示す強調 ---
-      % 0 < p < -alpha の領域内で「直線の上側」かつ「放物線の下側」となる領域がないことを矢印等で明示
-      \draw[<->, thick, red!80!black] (0.2, 0.18) -- (0.2, 0.01)
-      node[midway, right, font=\tiny] {空集合};
-
-      % 帯状領域の注釈
-      \node[red!80!black, font=\small, align=center] at (0.5, 3.2)
-      {$0 < p < -\alpha$\\[1pt]の範囲};
-
-    \end{tikzpicture}
-    \caption{\cref{eq:12}の領域}
-  \end{center}
+    % 0 < p < -alpha 内で q >= kp かつ q < p^2/4 が空集合であることの注釈
+    \draw[->, thin, red!85!black] (1.35, 0.25) node[right, fill=white, inner sep=1.5pt, font=\footnotesize, text=red!85!black] {条件を満たす領域なし（空集合）} -- (0.38, 0.20);
+  \end{tikzpicture}
+  \caption{\cref{eq:12}の領域}
 \end{figure}
 
 \casesend
