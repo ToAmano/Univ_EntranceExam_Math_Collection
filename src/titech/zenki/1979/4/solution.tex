@@ -41,63 +41,73 @@ $C: y=\log x$，$(\log x)'=\dfrac{1}{x}$ より，$C$ 上 $x=t$ での接線は
 である．
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[scale=2, >=stealth]
-      % パラメータ設定 (a = 1.2, c = 2.6)
-      \pgfmathsetmacro{\a}{1.2}
-      \pgfmathsetmacro{\c}{2.6}
+  \centering
+  \begin{tikzpicture}[x=2.0cm, y=3.0cm, >=stealth, every node/.style={font=\small}]
+    % パラメータ設定 (1 < a < c として a = 1.5, c = 4.2)
+    \pgfmathsetmacro{\a}{1.5}
+    \pgfmathsetmacro{\c}{4.2}
+    \pgfmathsetmacro{\ya}{ln(\a)}
+    \pgfmathsetmacro{\yc}{ln(\c)}
 
-      % 交点 R の実際の計算 (a=1.2, c=2.6)
-      % x_R = a*c*(ln(c)-ln(a))/(c-a) ≒ 1.723
-      % y_R = (c*ln(c)-a*ln(a))/(c-a) ≒ 0.618
-      \pgfmathsetmacro{\xr}{1.723}
-      \pgfmathsetmacro{\yr}{0.618}
+    % 交点 R の座標計算
+    % x_R = a*c*(ln(c)-ln(a))/(c-a) ≒ 2.402
+    % y_R = (c*ln(c)-a*ln(a))/(c-a) - 1 ≒ 1.007
+    \pgfmathsetmacro{\xr}{\a*\c*(\yc-\ya)/(\c-\a)}
+    \pgfmathsetmacro{\yr}{(\c*\yc-\a*\ya)/(\c-\a)-1}
 
-      % 1. 領域 S (曲線 y=log x と x軸, x=a, x=c で囲まれた領域) の塗りつぶし
-      \begin{scope}
-        \fill[pattern=north east lines, pattern color=blue!70!black]
-        (\a, 0) -- plot[domain=\a:\c, samples=50] (\x, {ln(\x)}) -- (\c, 0) -- cycle;
-      \end{scope}
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (\a, \ya);
+    \coordinate (Q) at (\c, \yc);
+    \coordinate (Pp) at (\a, 0);
+    \coordinate (Qp) at (\c, 0);
+    \coordinate (R) at (\xr, \yr);
 
-      % 2. 領域 T (三角形 P'Q'R) の塗りつぶし
-      \begin{scope}
-        \fill[pattern=north west lines, pattern color=red!70!black]
-        (\a, 0) -- (\xr, \yr) -- (\c, 0) -- cycle;
-      \end{scope}
+    % 1. 領域 S (曲線 y=log x, x軸, x=a, x=c で囲まれた領域) の塗りつぶし
+    \fill[pattern=north east lines, pattern color=blue!65!black]
+    (Pp) -- plot[domain=\a:\c, samples=60] (\x, {ln(\x)}) -- (Qp) -- cycle;
 
-      % 3. 座標軸
-      \draw[->] (-0.3,0) -- (4.0,0) node[right] {$x$};
-      \draw[->] (0,-0.8) -- (0,2.0) node[above] {$y$};
-      \node[below left] at (0,0) {$O$};
+    % 2. 領域 T (三角形 P'Q'R) の塗りつぶしと輪郭
+    \fill[pattern=north west lines, pattern color=red!70!black]
+    (Pp) -- (R) -- (Qp) -- cycle;
 
-      % 4. 曲線 C: y = log x
-      \draw[domain=0.3:3.6, smooth, thick] plot (\x, {ln(\x)});
-      \node[above] at (3.5, {ln(3.5)}) {$C: y=\log x$};
+    % 3. 座標軸
+    \draw[->, thick, gray!80!black] (-0.3, 0) -- (4.9, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -0.45) -- (0, 1.85) node[above] {$y$};
+    \node[below left=2pt] at (O) {$O$};
+    \node[below=2pt, font=\scriptsize] at (1, 0) {$1$};
 
-      % 5. 接線 l_a, l_c
-      \draw[thick, blue!80!black, domain=0.4:3.2] plot (\x, {(\x-\a)/\a + ln(\a)});
-      \draw[thick, red!80!black, domain=0.8:3.5] plot (\x, {(\x-\c)/\c + ln(\c)});
+    % 4. 曲線 C: y = log x
+    \draw[line width=1.4pt, blue!85!black, domain=0.68:4.65, samples=80, smooth]
+    plot (\x, {ln(\x)});
+    \node[blue!85!black, below right=1pt] at (4.35, {ln(4.35)}) {$C: y=\log x$};
 
-      \node[blue!80!black, above left, font=\small] at (0.5, { (0.5-\a)/\a + ln(\a) }) {$\ell_a$};
-      \node[red!80!black, above right, font=\small] at (3.3, { (3.3-\c)/\c + ln(\c) }) {$\ell_c$};
+    % 5. 接線 \ell_a, \ell_c
+    \draw[thick, teal!85!black, domain=0.7:3.15] plot (\x, {(\x-\a)/\a + \ya});
+    \draw[thick, teal!85!black, domain=0.85:4.45] plot (\x, {(\x-\c)/\c + \yc});
+    \node[teal!85!black, above left=1pt] at (3.0, {(3.0-\a)/\a + \ya}) {$\ell_a$};
+    \node[teal!85!black, above left=1pt] at (1.1, {(1.1-\c)/\c + \yc}) {$\ell_c$};
 
-      % 6. 補助線 (x=a, x=c の破線)
-      \draw[dashed, gray] (\a, 0) -- (\a, {ln(\a)});
-      \draw[dashed, gray] (\c, 0) -- (\c, {ln(\c)});
+    % 6. 三角形 P'Q'R の斜辺
+    \draw[line width=1.1pt, red!85!black] (Pp) -- (R) -- (Qp);
 
-      % 7. 点のプロットとラベル
-      \node[circle, fill, inner sep=1.2pt] at (\a, 0) {}; \node[below] at (\a, 0) {$P'(a,0)$};
-      \node[circle, fill, inner sep=1.2pt] at (\c, 0) {}; \node[below] at (\c, 0) {$Q'(c,0)$};
-      \node[circle, fill, inner sep=1.2pt] at (\a, {ln(\a)}) {}; \node[above left=-1pt] at (\a, {ln(\a)}) {$P$};
-      \node[circle, fill, inner sep=1.2pt] at (\c, {ln(\c)}) {}; \node[above left=-1pt] at (\c, {ln(\c)}) {$Q$};
-      \node[circle, fill, inner sep=1.2pt] at (\xr, \yr) {}; \node[above=2pt] at (\xr, \yr) {$R$};
+    % 7. 補助線・座標軸への垂線
+    \draw[densely dotted, thick, gray!70!black] (Pp) -- (P);
+    \draw[densely dotted, thick, gray!70!black] (Qp) -- (Q);
+    \draw[densely dotted, thick, red!85!black] (\xr, 0) -- (R) -- (0, \yr);
+    \node[below=2pt, font=\scriptsize, red!85!black] at (\xr, 0) {$x_R$};
+    \node[left=2pt, font=\scriptsize, red!85!black] at (0, \yr) {$y_R$};
 
-      % 8. 領域ラベル (S, T)
-      \node[blue!90!black, fill=white, inner sep=1pt, font=\small] at (1.9, 0.25) {$S$};
-      \node[red!90!black, fill=white, inner sep=1pt, font=\small] at (1.7, 0.45) {$T$};
+    % 8. 点のプロットとラベル
+    \node[circle, fill, inner sep=1.2pt] at (Pp) {}; \node[below=2pt] at (Pp) {$P'(a,0)$};
+    \node[circle, fill, inner sep=1.2pt] at (Qp) {}; \node[below=2pt] at (Qp) {$Q'(c,0)$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (P) {}; \node[above left=2pt] at (P) {$P$};
+    \node[circle, fill=blue!85!black, inner sep=1.3pt] at (Q) {}; \node[above left=2pt] at (Q) {$Q$};
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (R) {}; \node[above=3pt, red!85!black] at (R) {$R$};
 
-    \end{tikzpicture}
-  \end{center}
+    % 9. 領域ラベル (S, T)
+    \node[blue!85!black, fill=white, inner sep=1.5pt] at (3.45, 0.80) {$S$};
+    \node[red!85!black, fill=white, inner sep=1.5pt] at (2.00, 0.35) {$T$};
+  \end{tikzpicture}
   \caption{面積 $S$（積分領域）と 面積 $T$（$\triangle P'Q'R$）}
 \end{figure}
 
@@ -109,7 +119,7 @@ $C: y=\log x$，$(\log x)'=\dfrac{1}{x}$ より，$C$ 上 $x=t$ での接線は
   &=c(\log c-1)-a(\log a-1) \\
   &=c\log c - a\log a -(c-a) \label{eq:2}
 \end{align}
-と書ける．次に$\triangle P'Q'R$の面積$T$は$P'Q'$を底辺を見立てると
+と書ける．次に$\triangle P'Q'R$の面積$T$は$P'Q'$を底辺と見立てると
 \begin{align}
   T=\dfrac{1}{2}(c-a) y_R
 \end{align}
