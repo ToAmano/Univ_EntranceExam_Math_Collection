@@ -79,8 +79,8 @@ test('buildIssueStats aggregates single-problem, category-wide, general, and unr
     figure: 1,
     other: 1,
   });
-  assert.equal(y1975.questions[1].pageHref, '/base/solutions/utokyo-zenki-1975-2-problem/');
-  assert.equal(y1975.questions[1].pageLabel, '問題ページ →');
+  assert.equal(y1975.questions[1].pageHref, '/base/problems/utokyo/zenki/1975/#q2');
+  assert.equal(y1975.questions[1].pageLabel, '問題一覧 →');
 
   const ukyotoZenki = stats.categories.find(c => c.id === 'ukyoto-zenki');
   assert.equal(ukyotoZenki.openCount, 1);

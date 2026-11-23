@@ -8,11 +8,11 @@ const CATEGORIES = [
 ];
 
 export function buildTopicExplorer(entries, problemTypes, baseUrl) {
-	const problemSlugs = new Map();
+	const yearsWithProblems = new Set();
 	for (const entry of entries) {
 		if (entry.data.type === 'problem') {
-			const { university, category, year, question } = entry.data;
-			problemSlugs.set(`${university}/${category}/${year}/${question}`, entry.slug);
+			const { university, category, year } = entry.data;
+			yearsWithProblems.add(`${university}/${category}/${year}`);
 		}
 	}
 	return CATEGORIES.map((category) => {
@@ -26,12 +26,12 @@ export function buildTopicExplorer(entries, problemTypes, baseUrl) {
 			const years = decades.get(decade);
 			if (!years.has(year)) years.set(year, []);
 			const key = `${data.university}/${data.category}/${data.year}/${data.question}`;
-			const problemSlug = problemSlugs.get(key);
+			const yearKey = `${data.university}/${data.category}/${data.year}`;
 			years.get(year).push({
 				question: data.question,
 				tags: data.tags ?? [],
 				kind: problemTypes[key] ?? 'unclassified',
-				problemHref: problemSlug ? `${baseUrl}/solutions/${problemSlug}/` : null,
+				yearProblemsHref: yearsWithProblems.has(yearKey) ? `${baseUrl}/problems/${yearKey}/#q${data.question}` : null,
 				solutionHref: `${baseUrl}/solutions/${entry.slug}/`,
 			});
 		}

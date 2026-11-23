@@ -20,34 +20,52 @@ export async function getStaticPaths() {
 }
 
 const { entry, allSolutions, issueInfo, canonicalSolutionSlug } = Astro.props;
-const { Content } = await entry.render();
-
-// 解答ページでは、同じ大学・日程・年度・問題番号の問題文エントリを見つけて
-// 解答の直前に埋め込む（tex_to_md.py側の変換や個別ページ自体は変えず、
-// このページの描画時にだけ両者を合成する）。
-let ProblemContent: typeof Content | null = null;
-const problemEntry = allSolutions.find(
-	(item) =>
-		item.data.university === entry.data.university &&
-		item.data.category === entry.data.category &&
-		item.data.year === entry.data.year &&
-		item.data.question === entry.data.question &&
-		(item.data.type || '') === 'problem'
-);
-if ((entry.data.type || 'solution') === 'solution' && problemEntry) {
-	const rendered = await problemEntry.render();
-	ProblemContent = rendered.Content;
-}
-
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const isRedirectProblem = entry.data.type === 'problem';
+const uniSlug = entry.data.university.replace(/^sample_/, '');
 
-// 問題文ページ(-problem)は、対応する解答ページ(-solution)に同じ問題文が
-// 内包されているため、検索エンジン向けの重複コンテンツ対策として正規URLを
-// 解答ページ側に向ける（ページ自体は従来通り独立してアクセス可能なまま）。
-let canonicalOverrideUrl: string | undefined;
-if (entry.data.type === 'problem' && canonicalSolutionSlug) {
-	canonicalOverrideUrl = new URL(`${baseUrl}/solutions/${canonicalSolutionSlug}/`, Astro.site).href;
+const matchingSolution = isRedirectProblem
+	? allSolutions.find(
+			(item) =>
+				item.data.university === entry.data.university &&
+				item.data.category === entry.data.category &&
+				item.data.year === entry.data.year &&
+				item.data.question === entry.data.question &&
+				(item.data.type || '') === 'solution'
+		)
+	: undefined;
+
+const redirectTargetHref = matchingSolution
+	? `${baseUrl}/solutions/${matchingSolution.slug}/`
+	: `${baseUrl}/problems/${uniSlug}/${entry.data.category}/${entry.data.year}/#q${entry.data.question}`;
+const redirectAbsoluteUrl = new URL(redirectTargetHref, Astro.site).href;
+
+let Content: any = null;
+let ProblemContent: any = null;
+let problemEntry: typeof entry | undefined;
+if (!isRedirectProblem) {
+	const renderedEntry = await entry.render();
+	Content = renderedEntry.Content;
+	// 解答ページでは、同じ大学・日程・年度・問題番号の問題文エントリを見つけて
+	// 解答の直前に埋め込む（tex_to_md.py側の変換や個別ページ自体は変えず、
+	// このページの描画時にだけ両者を合成する）。
+	problemEntry = allSolutions.find(
+		(item) =>
+			item.data.university === entry.data.university &&
+			item.data.category === entry.data.category &&
+			item.data.year === entry.data.year &&
+			item.data.question === entry.data.question &&
+			(item.data.type || '') === 'problem'
+	);
+	if ((entry.data.type || 'solution') === 'solution' && problemEntry) {
+		const rendered = await problemEntry.render();
+		ProblemContent = rendered.Content;
+	}
 }
+
+const canonicalOverrideUrl: string | undefined = canonicalSolutionSlug
+	? new URL(`${baseUrl}/solutions/${canonicalSolutionSlug}/`, Astro.site).href
+	: undefined;
 
 // Labels mapping
 const UNIVERSITY_NAMES: Record<string, string> = {
@@ -88,31 +106,42 @@ if (entryType === 'summary') typeLabel = '全体サマリ';
 else if (entryType === 'problem') typeLabel = '問題';
 else typeLabel = '解答解説';
 
-// Find related questions in the same university + category + year
+// Find related questions in the same university + category + year (solutions & summary only)
 const sameYearItems = allSolutions
 	.filter(
 		(item) =>
 			item.data.university === entry.data.university &&
 			item.data.category === entry.data.category &&
-			item.data.year === entry.data.year
+			item.data.year === entry.data.year &&
+			(item.data.type || (item.data.question === '0' ? 'summary' : 'solution')) !== 'problem'
 	)
 	.sort((a, b) => {
 		if (a.data.question === '0') return -1;
 		if (b.data.question === '0') return 1;
 		const qA = parseInt(a.data.question, 10);
 		const qB = parseInt(b.data.question, 10);
-		if (qA !== qB) return qA - qB;
-		// If same question, problem before solution
-		return (a.data.type || '').localeCompare(b.data.type || '');
+		return qA - qB;
 	});
 
+const hasYearProblems =
+	!entry.data.university.startsWith('sample_') &&
+	/^\d{4}$/.test(entry.data.year) &&
+	allSolutions.some(
+		(item) =>
+			item.data.university === entry.data.university &&
+			item.data.category === entry.data.category &&
+			item.data.year === entry.data.year &&
+			item.data.type === 'problem'
+	);
+
 // Adjacent-year navigation: same university + category, stepping to the
-// nearest earlier/later year that has any content, preferring the same
-// question number + type if that exact page exists in that year.
+// nearest earlier/later year that has any solution/summary content, preferring
+// the same question number + type if that exact page exists in that year.
 const sameSeries = allSolutions.filter(
 	(item) =>
 		item.data.university === entry.data.university &&
-		item.data.category === entry.data.category
+		item.data.category === entry.data.category &&
+		(item.data.type || (item.data.question === '0' ? 'summary' : 'solution')) !== 'problem'
 );
 const currentYearNum = parseInt(entry.data.year, 10);
 const yearsAvailable = Array.from(new Set(sameSeries.map((item) => parseInt(item.data.year, 10)))).sort(
@@ -233,6 +262,23 @@ const pageDescription =
 			: `${univWithShort} ${catName} ${year}年 数学 ${questionLabel}の過去問解答解説。${excerptPart}`;
 ---
 
+{isRedirectProblem ? (
+	<html lang="ja">
+		<head>
+			<meta charset="UTF-8" />
+			<meta name="robots" content="noindex, follow" />
+			<link rel="canonical" href={redirectAbsoluteUrl} />
+			<meta http-equiv="refresh" content={`0; url=${redirectTargetHref}`} />
+			<title>移動しています... | Math Solutions</title>
+			<script is:inline define:vars={{ redirectTargetHref }}>
+				window.location.replace(redirectTargetHref);
+			</script>
+		</head>
+		<body>
+			<p>このページは移動しました。<a href={redirectTargetHref}>こちらをクリックして移動</a>してください。</p>
+		</body>
+	</html>
+) : (
 <Layout title={pageTitle} description={pageDescription} ogType="article" ogImagePath={ogImagePath} canonicalUrl={canonicalOverrideUrl} jsonLd={jsonLdItems}>
 	<!-- Breadcrumb Navigation -->
 	<nav aria-label="Breadcrumb" style="margin-bottom: 2rem;">
@@ -331,17 +377,24 @@ const pageDescription =
 	)}
 
 	<!-- Year Navigation Bar (回遊ナビゲーション) -->
-	{sameYearItems.length > 1 && (
+	{(sameYearItems.length > 1 || hasYearProblems) && (
 		<div class="glass" style="padding: 1rem 1.25rem; margin-bottom: 2rem; background: rgba(15, 23, 42, 0.5);">
 			<div style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
 				<span>🧭 {year}年度の関連ナビゲーション:</span>
 			</div>
 			<div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+				{hasYearProblems && (
+					<a
+						href={`${baseUrl}/problems/${uniSlug}/${entry.data.category}/${year}/`}
+						style="padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: all 0.2s ease; background: rgba(251, 191, 36, 0.14); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.35);"
+					>
+						📝 問題一覧
+					</a>
+				)}
 				{sameYearItems.map((item) => {
 					const isCurrent = item.slug === entry.slug;
 					const itemQ = item.data.question;
-					const itemType = item.data.type || (itemQ === '0' ? 'summary' : 'solution');
-					let btnText = itemQ === '0' ? '📊 0 (サマリ)' : `第${itemQ}問 (${itemType === 'problem' ? '問題' : '解答'})`;
+					const btnText = itemQ === '0' ? '📊 0 (サマリ)' : `第${itemQ}問`;
 					
 					return (
 						<a
@@ -377,11 +430,32 @@ const pageDescription =
 			</div>
 		)}
 
-		{ProblemContent && <div class="solution-block-label">✏️ 解答解説</div>}
-
-		<div class="markdown-body">
-			<Content />
-		</div>
+		{entryType === 'solution' ? (
+			<details class="solution-toggle" id="solution">
+				<summary class="solution-toggle-summary">
+					<span class="solution-toggle-title">
+						<span aria-hidden="true">✏️</span>
+						<span>解答・解説</span>
+					</span>
+					<span class="solution-toggle-action">
+						<span class="label-closed">表示する</span>
+						<span class="label-open">隠す</span>
+						<svg class="solution-toggle-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+						</svg>
+					</span>
+				</summary>
+				<div class="solution-toggle-body">
+					<div class="markdown-body">
+						<Content />
+					</div>
+				</div>
+			</details>
+		) : (
+			<div class="markdown-body">
+				<Content />
+			</div>
+		)}
 	</article>
 
 	<RelatedProblems groups={relatedGroups} baseUrl={baseUrl} />
@@ -404,6 +478,19 @@ const pageDescription =
 		</a>
 	</div>
 </Layout>
+)}
+
+<script>
+	function openSolutionFromHash() {
+		if (window.location.hash !== '#solution') return;
+		const details = document.getElementById('solution');
+		if (details instanceof HTMLDetailsElement) {
+			details.open = true;
+		}
+	}
+	openSolutionFromHash();
+	document.addEventListener('astro:page-load', openSolutionFromHash);
+</script>
 
 <style is:global>
 	.problem-block {
@@ -427,14 +514,78 @@ const pageDescription =
 		margin: 0;
 	}
 
-	.solution-block-label {
-		font-size: 0.85rem;
-		font-weight: 700;
-		color: var(--primary);
-		letter-spacing: 0.05em;
-		margin: 0 0 1.25rem;
+	.solution-toggle {
+		margin-top: 1.5rem;
 		padding-top: 1.5rem;
 		border-top: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.solution-toggle-summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 0.9rem 1.25rem;
+		border: 1px solid rgba(96, 165, 250, 0.35);
+		border-radius: 10px;
+		cursor: pointer;
+		list-style: none;
+		user-select: none;
+		font-weight: 700;
+		color: var(--primary);
+		background: rgba(96, 165, 250, 0.08);
+		transition: background 0.2s ease, border-color 0.2s ease;
+	}
+
+	.solution-toggle-summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.solution-toggle-summary:hover {
+		background: rgba(96, 165, 250, 0.16);
+		border-color: rgba(96, 165, 250, 0.55);
+	}
+
+	.solution-toggle-title {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.95rem;
+		letter-spacing: 0.03em;
+	}
+
+	.solution-toggle-action {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		font-size: 0.85rem;
+		color: var(--text-muted);
+	}
+
+	.solution-toggle .label-open {
+		display: none;
+	}
+
+	.solution-toggle[open] .label-closed {
+		display: none;
+	}
+
+	.solution-toggle[open] .label-open {
+		display: inline;
+	}
+
+	.solution-toggle-chevron {
+		width: 1.1rem;
+		height: 1.1rem;
+		transition: transform 0.2s ease;
+	}
+
+	.solution-toggle[open] .solution-toggle-chevron {
+		transform: rotate(180deg);
+	}
+
+	.solution-toggle-body {
+		padding: 1.25rem 0 0;
 	}
 
 	.markdown-body h2 {

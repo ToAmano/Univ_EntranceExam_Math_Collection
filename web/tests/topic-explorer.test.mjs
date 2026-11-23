@@ -12,7 +12,7 @@ test('groups each question by category, decade and year with its tags, format an
 	assert.deepEqual(result[0].decades[0].years[0].questions.map((q) => q.question), ['1', '2']);
 	assert.deepEqual(result[0].decades[0].years[0].questions[1], {
 		question: '2', tags: ['数列', '極限'], kind: 'mixed',
-		problemHref: '/site/solutions/utokyo-zenki-2001-2-problem/',
+		yearProblemsHref: '/site/problems/utokyo/zenki/2001/#q2',
 		solutionHref: '/site/solutions/utokyo-zenki-2001-2-solution/',
 	});
 });
@@ -23,7 +23,7 @@ test('shows missing classifications and links to the solution when no problem pa
 	const question = result.find((c) => c.id === 'ukyoto-kouki').decades[0].years[0].questions[0];
 	assert.deepEqual(question.tags, []);
 	assert.equal(question.kind, 'unclassified');
-	assert.equal(question.problemHref, null);
+	assert.equal(question.yearProblemsHref, null);
 	assert.equal(question.solutionHref, '/solutions/x/');
 });
 

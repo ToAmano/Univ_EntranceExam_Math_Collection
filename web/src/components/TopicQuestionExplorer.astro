@@ -75,7 +75,7 @@ const KIND_LABELS: Record<string, string> = {
 																style={background ? `background: ${background};${border ? ` border-color: ${border}99;` : ''}` : undefined}
 																data-question-cell data-year={year.year} data-question={question.question}
 																data-tags={JSON.stringify(question.tags)} data-kind={kindLabel}
-																data-problem-href={question.problemHref ?? ''} data-solution-href={question.solutionHref}
+																data-year-problems-href={question.yearProblemsHref ?? ''} data-solution-href={question.solutionHref}
 																aria-pressed="false"
 																aria-label={`${year.year}年 第${question.question}問：${question.tags.join('、') || '分野未登録'}、${kindLabel}`}>
 																<span class="cell-number">{question.question}</span>
@@ -169,7 +169,7 @@ const KIND_LABELS: Record<string, string> = {
 			tags.append(chip);
 		});
 		links.replaceChildren();
-		for (const [label, href] of [['問題を見る', cell.dataset.problemHref], ['解答・解説を見る →', cell.dataset.solutionHref]]) {
+		for (const [label, href] of [['問題・解答を見る →', cell.dataset.solutionHref], ['年度の問題一覧', cell.dataset.yearProblemsHref]]) {
 			if (!href) continue;
 			const link = document.createElement('a');
 			link.href = href;

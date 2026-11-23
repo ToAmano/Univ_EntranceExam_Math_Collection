@@ -156,11 +156,21 @@ const categoryDescription = `${univWithShort} ${catName}の過去問・詳細解
 				</div>
 
 				<div class="year-sections">
-					{yearGroups.map((yg) => (
+					{yearGroups.map((yg) => {
+						const realQuestionCount = yg.questions.filter((q) => q.questionNum !== SUMMARY_QUESTION_ID).length;
+						const hasProblems = yg.questions.some((q) => Boolean(q.problemItem));
+						return (
 						<section class="year-card glass">
 							<div class="year-header">
 								<h2>{yg.year}年度</h2>
-								<span class="year-count">{yg.questions.filter((q) => q.questionNum !== SUMMARY_QUESTION_ID).length}問</span>
+								<div class="year-header-meta">
+									<span class="year-count">{realQuestionCount}問</span>
+									{hasProblems && (
+										<a href={`${baseUrl}/problems/${university}/${category}/${yg.year}/`} class="action-btn problem">
+											📝 問題一覧（全問） ➔
+										</a>
+									)}
+								</div>
 							</div>
 							<div class="questions-grid">
 								{yg.questions.map((q) => (
@@ -181,14 +191,13 @@ const categoryDescription = `${univWithShort} ${catName}の過去問・詳細解
 													サマリを見る ➔
 												</a>
 											)}
-											{q.problemItem && (
-												<a href={`${baseUrl}/solutions/${q.problemItem.slug}/`} class="action-btn problem">
-													問題 ➔
-												</a>
-											)}
-											{q.solutionItem && (
+											{q.solutionItem ? (
 												<a href={`${baseUrl}/solutions/${q.solutionItem.slug}/`} class="action-btn solution">
-													解答・解説 ➔
+													問題・解答 ➔
+												</a>
+											) : q.problemItem && (
+												<a href={`${baseUrl}/problems/${university}/${category}/${yg.year}/#q${q.questionNum}`} class="action-btn problem">
+													問題を見る（解答準備中） ➔
 												</a>
 											)}
 										</div>
@@ -196,7 +205,8 @@ const categoryDescription = `${univWithShort} ${catName}の過去問・詳細解
 								))}
 							</div>
 						</section>
-					))}
+						);
+					})}
 				</div>
 			</>
 		)}
@@ -413,6 +423,8 @@ const categoryDescription = `${univWithShort} ${catName}の過去問・詳細解
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.75rem;
 		border-bottom: 1px solid var(--glass-border);
 		padding-bottom: 1rem;
 		margin-bottom: 1rem;
@@ -420,6 +432,12 @@ const categoryDescription = `${univWithShort} ${catName}の過去問・詳細解
 	.year-header h2 {
 		margin: 0;
 		font-size: 1.4rem;
+	}
+	.year-header-meta {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		flex-wrap: wrap;
 	}
 	.year-count {
 		font-size: 0.85rem;

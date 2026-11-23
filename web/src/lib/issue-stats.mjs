@@ -344,12 +344,12 @@ export function buildIssueStats(index, allEntries = [], baseUrl = '') {
         const pageHref = cell.catalog?.solutionSlug
           ? `${cleanBase}/solutions/${cell.catalog.solutionSlug}/`
           : cell.catalog?.problemSlug
-            ? `${cleanBase}/solutions/${cell.catalog.problemSlug}/`
+            ? `${cleanBase}/problems/${cfg.university}/${cfg.category}/${year}/#q${cell.question}`
             : null;
         const pageLabel = cell.catalog?.solutionSlug
           ? '解答ページ →'
           : cell.catalog?.problemSlug
-            ? '問題ページ →'
+            ? '問題一覧 →'
             : null;
 
         const problemKey = `${year}/${cell.question}`;

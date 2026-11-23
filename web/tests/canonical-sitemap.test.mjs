@@ -7,24 +7,26 @@ import { matchingSolutionSlug, solutionSlugsFromMarkdown, includeInSitemap, crea
 
 const root = 'https://toamano.github.io/Univ_EntranceExam_Math_Collection/';
 
-test('problem canonical and sitemap use the same solution lookup', () => {
+test('all -problem redirect pages are excluded while solutions and year problem lists stay in the sitemap', () => {
   const solutions = new Set(['utokyo-zenki-2000-1-solution']);
   assert.equal(matchingSolutionSlug('utokyo-zenki-2000-1-problem', solutions), 'utokyo-zenki-2000-1-solution');
   assert.equal(includeInSitemap(root + 'solutions/utokyo-zenki-2000-1-problem/', solutions), false);
   assert.equal(includeInSitemap(root + 'solutions/utokyo-zenki-2000-1-solution/', solutions), true);
   assert.equal(matchingSolutionSlug('utokyo-zenki-2000-2-problem', solutions), null);
-  assert.equal(includeInSitemap(root + 'solutions/utokyo-zenki-2000-2-problem/', solutions), true);
+  assert.equal(includeInSitemap(root + 'solutions/utokyo-zenki-2000-2-problem/', solutions), false);
+  assert.equal(includeInSitemap(root + 'problems/utokyo/zenki/2000/', solutions), true);
 });
 
 test('summaries and other public routes remain in the sitemap', () => {
   const solutions = new Set(['utokyo-zenki-2000-1-solution']);
-  for (const route of ['', 'category/utokyo/zenki/', 'tags/', 'solutions/utokyo-zenki-2000-0-summary/']) {
+  for (const route of ['', 'category/utokyo/zenki/', 'problems/utokyo/zenki/2000/', 'tags/', 'solutions/utokyo-zenki-2000-0-summary/']) {
     assert.equal(includeInSitemap(root + route, solutions), true);
   }
   assert.equal(includeInSitemap(root + 'category/sample_utokyo/zenki/', solutions), false);
+  assert.equal(includeInSitemap(root + 'problems/sample_utokyo/zenki/2000/', solutions), false);
 });
 
-test('new or removed solution markdown changes the next build without manual URL lists', () => {
+test('solutionSlugsFromMarkdown tracks solution markdown files cleanly', () => {
   const dir = mkdtempSync(join(tmpdir(), 'math-sitemap-'));
   try {
     writeFileSync(join(dir, 'utokyo-zenki-2000-1-problem.md'), '');
@@ -34,7 +36,7 @@ test('new or removed solution markdown changes the next build without manual URL
     assert.equal(solutions.has('utokyo-zenki-2000-1-solution'), true);
     assert.equal(includeInSitemap(root + 'solutions/utokyo-zenki-2000-1-problem/', solutions), false);
     rmSync(join(dir, 'utokyo-zenki-2000-1-solution.md'));
-    assert.equal(includeInSitemap(root + 'solutions/utokyo-zenki-2000-1-problem/', solutionSlugsFromMarkdown(dir)), true);
+    assert.equal(solutionSlugsFromMarkdown(dir).size, 0);
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
@@ -54,6 +56,9 @@ test('sitemap serializer attaches valid lastmod Date to each item', () => {
 
   const sumItem = serialize({ url: root + 'solutions/utokyo-zenki-2000-0-summary/' });
   assert.equal(sumItem.lastmod.toISOString(), '2026-05-01T00:00:00.000Z');
+
+  const probYearItem = serialize({ url: root + 'problems/utokyo/zenki/2000/' });
+  assert.equal(probYearItem.lastmod.toISOString(), '2026-05-01T00:00:00.000Z');
 
   const catItem = serialize({ url: root + 'category/utokyo/zenki/' });
   assert.equal(catItem.lastmod.toISOString(), '2026-05-01T00:00:00.000Z');

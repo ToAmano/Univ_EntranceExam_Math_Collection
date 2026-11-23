@@ -12,12 +12,12 @@ export async function getStaticPaths() {
 		);
 		return {
 			params: { tag },
-			props: { tag, items, allSolutions: solutions },
+			props: { tag, items },
 		};
 	});
 }
 
-const { tag, items, allSolutions } = Astro.props;
+const { tag, items } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const UNIVERSITY_NAMES: Record<string, string> = {
@@ -37,27 +37,15 @@ interface Row {
 	year: string;
 	question: string;
 	solutionSlug: string;
-	problemSlug: string | null;
 }
 
-const rows: Row[] = items.map((item) => {
-	const problemEntry = allSolutions.find(
-		(p) =>
-			p.data.type === 'problem' &&
-			p.data.university === item.data.university &&
-			p.data.category === item.data.category &&
-			p.data.year === item.data.year &&
-			p.data.question === item.data.question
-	);
-	return {
-		university: item.data.university,
-		category: item.data.category,
-		year: item.data.year,
-		question: item.data.question,
-		solutionSlug: item.slug,
-		problemSlug: problemEntry ? problemEntry.slug : null,
-	};
-});
+const rows: Row[] = items.map((item) => ({
+	university: item.data.university,
+	category: item.data.category,
+	year: item.data.year,
+	question: item.data.question,
+	solutionSlug: item.slug,
+}));
 
 rows.sort((a, b) => {
 	const yearDiff = parseInt(b.year, 10) - parseInt(a.year, 10);
@@ -102,10 +90,7 @@ rows.sort((a, b) => {
 							<span class="q-label">第{row.question}問</span>
 						</div>
 						<div class="tag-row-actions">
-							{row.problemSlug && (
-								<a href={`${baseUrl}/solutions/${row.problemSlug}/`} class="action-btn problem">問題 ➔</a>
-							)}
-							<a href={`${baseUrl}/solutions/${row.solutionSlug}/`} class="action-btn solution">解答・解説 ➔</a>
+							<a href={`${baseUrl}/solutions/${row.solutionSlug}/`} class="action-btn solution">問題・解答 ➔</a>
 						</div>
 					</div>
 				))}

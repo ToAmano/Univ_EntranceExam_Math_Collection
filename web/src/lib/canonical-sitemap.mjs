@@ -16,13 +16,13 @@ export function matchingSolutionSlug(problemSlug, solutionSlugs) {
   return solutionSlugs.has(candidate) ? candidate : null;
 }
 
-/** Sitemap exclusion uses the same lookup as the problem page canonical. */
-export function includeInSitemap(page, solutionSlugs) {
+/** Problem URLs are redirect stubs now, so exclude all -problem pages from the sitemap. */
+export function includeInSitemap(page, _solutionSlugs) {
   const pathname = new URL(page).pathname;
   if (pathname.split('/').some(segment => segment.startsWith('sample_'))) return false;
   const match = pathname.match(/\/solutions\/([^/]+)\/?$/);
   if (!match) return true;
-  return matchingSolutionSlug(decodeURIComponent(match[1]), solutionSlugs) === null;
+  return !decodeURIComponent(match[1]).endsWith('-problem');
 }
 
 /**
@@ -106,6 +106,18 @@ export function createSitemapSerializer(lastmodData = buildLastmodData()) {
       const sumMatch = slug.match(/^([a-z_]+-[a-z]+-\d{4})-0-summary$/);
       if (sumMatch && yearDateMap.has(sumMatch[1])) {
         item.lastmod = yearDateMap.get(sumMatch[1]);
+        return item;
+      }
+      item.lastmod = latestDate;
+      return item;
+    }
+
+    // Per-year problem list pages: .../problems/{univ}/{cat}/{year}/
+    const probMatch = pathname.match(/\/problems\/([^/]+)\/([^/]+)\/([^/]+)\/?$/);
+    if (probMatch) {
+      const yearKey = `${probMatch[1]}-${probMatch[2]}-${probMatch[3]}`;
+      if (yearDateMap.has(yearKey)) {
+        item.lastmod = yearDateMap.get(yearKey);
         return item;
       }
       item.lastmod = latestDate;

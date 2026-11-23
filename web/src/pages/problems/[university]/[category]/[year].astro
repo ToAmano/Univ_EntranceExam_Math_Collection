@@ -1,0 +1,439 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../../../../layouts/Layout.astro';
+import { SUMMARY_QUESTION_ID } from '../../../../lib/solutions';
+import { buildBreadcrumbListJsonLd } from '../../../../utils/seo';
+
+export async function getStaticPaths() {
+	const allEntries = await getCollection('solutions');
+
+	const yearMap = new Map<string, {
+		university: string;
+		category: string;
+		year: string;
+		problems: CollectionEntry<'solutions'>[];
+		solutionsByQ: Map<string, CollectionEntry<'solutions'>>;
+		summaryEntry: CollectionEntry<'solutions'> | null;
+	}>();
+
+	for (const entry of allEntries) {
+		const { university, category, year, question, type } = entry.data;
+		if (university.startsWith('sample_') || !/^\d{4}$/.test(year)) continue;
+		const key = `${university}/${category}/${year}`;
+		if (!yearMap.has(key)) {
+			yearMap.set(key, {
+				university,
+				category,
+				year,
+				problems: [],
+				solutionsByQ: new Map(),
+				summaryEntry: null,
+			});
+		}
+		const bucket = yearMap.get(key)!;
+		if (question === SUMMARY_QUESTION_ID || type === 'summary') {
+			bucket.summaryEntry = entry;
+		} else if (type === 'problem') {
+			bucket.problems.push(entry);
+		} else if (type === 'solution') {
+			bucket.solutionsByQ.set(question, entry);
+		}
+	}
+
+	const yearsBySeries = new Map<string, string[]>();
+	for (const bucket of yearMap.values()) {
+		if (bucket.problems.length === 0) continue;
+		const seriesKey = `${bucket.university}/${bucket.category}`;
+		if (!yearsBySeries.has(seriesKey)) yearsBySeries.set(seriesKey, []);
+		yearsBySeries.get(seriesKey)!.push(bucket.year);
+	}
+	for (const years of yearsBySeries.values()) {
+		years.sort((a, b) => Number(a) - Number(b));
+	}
+
+	return Array.from(yearMap.values())
+		.filter((bucket) => bucket.problems.length > 0)
+		.map((bucket) => {
+			const seriesYears = yearsBySeries.get(`${bucket.university}/${bucket.category}`) ?? [];
+			const idx = seriesYears.indexOf(bucket.year);
+			const prevYear = idx > 0 ? seriesYears[idx - 1] : null;
+			const nextYear = idx >= 0 && idx < seriesYears.length - 1 ? seriesYears[idx + 1] : null;
+			const sortedProblems = [...bucket.problems].sort((a, b) =>
+				a.data.question.localeCompare(b.data.question, undefined, { numeric: true })
+			);
+			return {
+				params: {
+					university: bucket.university,
+					category: bucket.category,
+					year: bucket.year,
+				},
+				props: {
+					university: bucket.university,
+					category: bucket.category,
+					year: bucket.year,
+					problems: sortedProblems,
+					solutionsByQ: Array.from(bucket.solutionsByQ.entries()),
+					summarySlug: bucket.summaryEntry?.slug ?? null,
+					prevYear,
+					nextYear,
+				},
+			};
+		});
+}
+
+const {
+	university,
+	category,
+	year,
+	problems,
+	solutionsByQ,
+	summarySlug,
+	prevYear,
+	nextYear,
+} = Astro.props;
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const solutionMap = new Map<string, CollectionEntry<'solutions'>>(solutionsByQ);
+
+const UNIVERSITY_NAMES: Record<string, string> = {
+	utokyo: '東京大学',
+	titech: '東京工業大学',
+	ukyoto: '京都大学',
+};
+const SHORT_UNIVERSITY_NAMES: Record<string, string> = {
+	utokyo: '東大',
+	titech: '東工大',
+	ukyoto: '京大',
+};
+const CATEGORY_NAMES: Record<string, string> = {
+	zenki: '前期',
+	kouki: '後期',
+};
+
+const univName = UNIVERSITY_NAMES[university] || university;
+const shortUnivName = SHORT_UNIVERSITY_NAMES[university] || '';
+const univWithShort = shortUnivName ? `${univName}（${shortUnivName}）` : univName;
+const catName = CATEGORY_NAMES[category] || category;
+
+const renderedProblems = await Promise.all(
+	problems.map(async (problemEntry) => {
+		const { Content } = await problemEntry.render();
+		const qNum = problemEntry.data.question;
+		const solutionEntry = solutionMap.get(qNum) ?? null;
+		return {
+			questionNum: qNum,
+			Content,
+			solutionEntry,
+			tags: solutionEntry?.data.tags ?? [],
+		};
+	})
+);
+
+const pageTitle = `${univName} ${catName} ${year}年 数学 問題一覧`;
+const pageDescription = `${univWithShort} ${catName} ${year}年 数学の過去問全${renderedProblems.length}問を一覧で掲載。解答を見ずに通し演習ができ、各問の解答・解説ページへ移動できます。`;
+const pageUrlForJsonLd = new URL(`${baseUrl}/problems/${university}/${category}/${year}/`, Astro.site).href;
+const jsonLd = buildBreadcrumbListJsonLd([
+	{ name: 'トップ', url: new URL(`${baseUrl}/`, Astro.site).href },
+	{ name: `${univName} ${catName}`, url: new URL(`${baseUrl}/category/${university}/${category}/`, Astro.site).href },
+	{ name: `${year}年 問題一覧`, url: pageUrlForJsonLd },
+]);
+---
+
+<Layout title={pageTitle} description={pageDescription} jsonLd={jsonLd}>
+	<div class="year-problems-page">
+		<nav aria-label="Breadcrumb" class="breadcrumb">
+			<a href={`${baseUrl}/`}>トップ</a>
+			<span class="sep">/</span>
+			<a href={`${baseUrl}/category/${university}/${category}/`}>{univName} {catName}</a>
+			<span class="sep">/</span>
+			<span class="current">{year}年 問題一覧</span>
+		</nav>
+
+		<div class="top-controls">
+			<a href={`${baseUrl}/category/${university}/${category}/`} class="glass back-btn">
+				<svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+				{univName} {catName}一覧へ戻る
+			</a>
+
+			<div class="badges">
+				<span class={university.includes('utokyo') ? 'badge badge-utokyo' : university.includes('ukyoto') ? 'badge badge-ukyoto' : 'badge badge-titech'}>
+					{univName} {catName}
+				</span>
+				<span class="badge badge-neutral">{year}年</span>
+				<span class="badge badge-problem">問題一覧（全{renderedProblems.length}問）</span>
+			</div>
+		</div>
+
+		{(prevYear || nextYear) && (
+			<div class="adjacent-years">
+				{prevYear ? (
+					<a href={`${baseUrl}/problems/${university}/${category}/${prevYear}/`} class="glass adj-link prev">
+						<svg style="width: 1.1rem; height: 1.1rem; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+						<span>
+							<span class="adj-eyebrow">前の年度</span>
+							<span class="adj-year">{prevYear}年</span>
+						</span>
+					</a>
+				) : <span style="flex: 1;"></span>}
+				{nextYear ? (
+					<a href={`${baseUrl}/problems/${university}/${category}/${nextYear}/`} class="glass adj-link next">
+						<span>
+							<span class="adj-eyebrow">次の年度</span>
+							<span class="adj-year">{nextYear}年</span>
+						</span>
+						<svg style="width: 1.1rem; height: 1.1rem; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+					</a>
+				) : <span style="flex: 1;"></span>}
+			</div>
+		)}
+
+		<header class="glass page-header">
+			<h1>{univName} {catName} {year}年 問題一覧</h1>
+			<p class="header-desc">
+				全{renderedProblems.length}問の問題文のみをまとめて掲載しています。各問の「解答・解説」ボタンから解答ページ（デフォルトで解答非表示）へ移動できます。
+			</p>
+			<div class="jump-bar">
+				{renderedProblems.map((q) => (
+					<a href={`#q${q.questionNum}`} class="jump-chip">第{q.questionNum}問</a>
+				))}
+				{summarySlug && (
+					<a href={`${baseUrl}/solutions/${summarySlug}/`} class="jump-chip summary">📊 全体サマリ ➔</a>
+				)}
+			</div>
+		</header>
+
+		<div class="problems-stack">
+			{renderedProblems.map((q) => (
+				<section id={`q${q.questionNum}`} class="glass question-card">
+					<div class="question-card-header">
+						<div class="question-title-group">
+							<h2>第{q.questionNum}問</h2>
+							{q.tags.length > 0 && (
+								<div class="tag-chips">
+									{q.tags.map((tag) => (
+										<a href={`${baseUrl}/tags/${encodeURIComponent(tag)}/`} class="tag-chip">#{tag}</a>
+									))}
+								</div>
+							)}
+						</div>
+						<div class="question-actions">
+							{q.solutionEntry ? (
+								<a href={`${baseUrl}/solutions/${q.solutionEntry.slug}/`} class="action-btn solution">
+									解答・解説 ➔
+								</a>
+							) : (
+								<span class="pending-badge">解答準備中</span>
+							)}
+						</div>
+					</div>
+					<div class="problem-block">
+						<div class="markdown-body">
+							<q.Content />
+						</div>
+					</div>
+				</section>
+			))}
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.year-problems-page {
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: 0 0 3rem;
+	}
+	.breadcrumb {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.9rem;
+		color: var(--text-muted);
+		margin-bottom: 1.5rem;
+	}
+	.breadcrumb a { color: var(--primary); text-decoration: none; }
+	.breadcrumb a:hover { text-decoration: underline; }
+	.breadcrumb .current { color: var(--text-main); font-weight: 600; }
+
+	.top-controls {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+	.back-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 1rem;
+		border-radius: 10px;
+		color: var(--text-main);
+		text-decoration: none;
+		font-size: 0.9rem;
+		font-weight: 500;
+	}
+	.badges {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	.badge-neutral {
+		background: rgba(255, 255, 255, 0.1);
+		color: var(--text-main);
+		border: 1px solid rgba(255, 255, 255, 0.15);
+	}
+
+	.adjacent-years {
+		display: flex;
+		align-items: stretch;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+	.adj-link {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.1rem;
+		border-radius: 10px;
+		color: var(--text-main);
+		text-decoration: none;
+		font-size: 0.9rem;
+	}
+	.adj-link.next { justify-content: flex-end; text-align: right; }
+	.adj-eyebrow { display: block; font-size: 0.75rem; color: var(--text-muted); }
+	.adj-year { font-weight: 600; }
+
+	.page-header {
+		padding: 2rem;
+		margin-bottom: 2rem;
+	}
+	.page-header h1 {
+		margin: 0 0 0.6rem;
+		font-size: 1.9rem;
+		font-weight: 800;
+		color: #f8fafc;
+	}
+	.header-desc {
+		margin: 0 0 1.25rem;
+		color: var(--text-muted);
+		font-size: 0.92rem;
+	}
+	.jump-bar {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+	.jump-chip {
+		padding: 0.35rem 0.8rem;
+		border-radius: 8px;
+		background: rgba(30, 41, 59, 0.7);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		color: var(--text-main);
+		text-decoration: none;
+		font-size: 0.85rem;
+		font-weight: 600;
+		transition: all 0.2s ease;
+	}
+	.jump-chip:hover {
+		border-color: var(--primary);
+		color: var(--primary);
+	}
+	.jump-chip.summary {
+		background: rgba(167, 139, 250, 0.14);
+		border-color: rgba(167, 139, 250, 0.35);
+		color: var(--accent);
+	}
+
+	.problems-stack {
+		display: flex;
+		flex-direction: column;
+		gap: 1.75rem;
+	}
+	.question-card {
+		padding: 1.75rem 2rem;
+	}
+	.question-card-header {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		margin-bottom: 1.1rem;
+	}
+	.question-title-group {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem;
+	}
+	.question-title-group h2 {
+		margin: 0;
+		font-size: 1.3rem;
+		font-weight: 800;
+		color: #f8fafc;
+	}
+	.tag-chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+	.tag-chip {
+		padding: 0.2rem 0.6rem;
+		border-radius: 999px;
+		font-size: 0.75rem;
+		font-weight: 600;
+		text-decoration: none;
+		background: rgba(96, 165, 250, 0.12);
+		color: var(--primary);
+		border: 1px solid rgba(96, 165, 250, 0.3);
+	}
+	.action-btn.solution {
+		display: inline-block;
+		padding: 0.45rem 0.9rem;
+		border-radius: 8px;
+		text-decoration: none;
+		font-size: 0.85rem;
+		font-weight: 700;
+		background: rgba(52, 211, 153, 0.15);
+		color: var(--secondary);
+		border: 1px solid rgba(52, 211, 153, 0.35);
+		transition: all 0.2s ease;
+	}
+	.action-btn.solution:hover {
+		transform: translateY(-2px);
+		filter: brightness(1.15);
+	}
+	.pending-badge {
+		display: inline-block;
+		padding: 0.35rem 0.75rem;
+		border-radius: 8px;
+		font-size: 0.8rem;
+		font-weight: 600;
+		color: var(--text-muted);
+		background: rgba(148, 163, 184, 0.12);
+		border: 1px solid rgba(148, 163, 184, 0.25);
+	}
+	.problem-block {
+		padding: 1.35rem 1.5rem;
+		border: 1px solid rgba(251, 191, 36, 0.35);
+		border-left: 4px solid #fbbf24;
+		border-radius: 0 12px 12px 0;
+		background: rgba(251, 191, 36, 0.06);
+	}
+	.problem-block :global(.markdown-body) {
+		margin: 0;
+	}
+
+	@media (max-width: 640px) {
+		.page-header { padding: 1.35rem 1.1rem; }
+		.page-header h1 { font-size: 1.45rem; }
+		.question-card { padding: 1.25rem 0.75rem; }
+		.problem-block { padding: 1rem 0.85rem; }
+	}
+</style>
