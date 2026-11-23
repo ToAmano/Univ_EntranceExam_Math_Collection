@@ -221,33 +221,43 @@ $\angle CAB\le\dfrac{\pi}{2},\ \angle CBA\le\dfrac{\pi}{2}$だから，$\angle A
 であり，制約$x^2+y^2\le4$とあわせて図示して下図斜線部（境界は$x^2+y^2=4$のみ含み，$x$軸は含まず）．
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[scale=1.1, >=stealth]
-      % 座標軸
-      \draw[->] (-2.6,0) -- (2.6,0) node[right] {$x$};
-      \draw[->] (0,-2.6) -- (0,2.6) node[above] {$y$};
-      % 制約 x^2+y^2<=4 (境界含む) と 補助円 x^2+y^2=1 (境界含まず)
-      \draw (0,0) circle (2);
-      \draw[dashed] (0,0) circle (1);
-      % 領域: |x|>1 または x^2+y^2<1 (かつ x^2+y^2<=4)
-      \begin{scope}
-        \clip (0,0) circle (2);
-        \fill[gray!30] (-2.6,-2.6) rectangle (-1,2.6);
-        \fill[gray!30] (1,-2.6) rectangle (2.6,2.6);
-        \fill[gray!30] (0,0) circle (1);
-      \end{scope}
-      \draw[dashed] (-1,-2.6) -- (-1,2.6);
-      \draw[dashed] (1,-2.6) -- (1,2.6);
-      \draw[thick] (-2,0) -- (2,0);
-      \node[below] at (-2,0) {$-2$};
-      \node[below] at (-1,0) {$-1$};
-      \node[below] at (1,0) {$1$};
-      \node[below] at (2,0) {$2$};
-      \node[left] at (0,2) {$2$};
-      \node[left] at (0,1) {$1$};
-      \node[left] at (0,-2) {$-2$};
-    \end{tikzpicture}
-  \end{center}
+  \centering
+  \begin{tikzpicture}[x=1.15cm, y=1.15cm, >=stealth, every node/.style={font=\small}]
+    % 領域の斜線塗り: |x|>1 または x^2+y^2<1 (かつ x^2+y^2<=4)
+    \begin{scope}
+      \clip (0, 0) circle (2);
+      \fill[pattern=north east lines, pattern color=blue!60!black] (-2.1, -2.1) rectangle (-1, 2.1);
+      \fill[pattern=north east lines, pattern color=blue!60!black] (1, -2.1) rectangle (2.1, 2.1);
+      \fill[pattern=north east lines, pattern color=blue!60!black] (0, 0) circle (1);
+    \end{scope}
+    % 座標軸（斜線部の範囲は x 軸除外を示すため破線で上書き）
+    \draw[->, thick, gray!80!black] (-2.6, 0) -- (2.6, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -2.6) -- (0, 2.6) node[above] {$y$};
+    % 境界線: 外円 x^2+y^2=4 は |x|>1 の弧のみ実線（境界含む），他は破線
+    \draw[dashed, thick, gray!70!black] (60:2) arc[start angle=60, end angle=120, radius=2];
+    \draw[dashed, thick, gray!70!black] (240:2) arc[start angle=240, end angle=300, radius=2];
+    \draw[line width=1.3pt, blue!85!black] (-60:2) arc[start angle=-60, end angle=60, radius=2];
+    \draw[line width=1.3pt, blue!85!black] (120:2) arc[start angle=120, end angle=240, radius=2];
+    % 含まない境界: x^2+y^2=1，|x|=1，および斜線域内の x 軸 (y=0)
+    \draw[dashed, thick, blue!85!black] (0, 0) circle (1);
+    \draw[dashed, thick, blue!85!black] (-1, -2.2) -- (-1, 2.2);
+    \draw[dashed, thick, blue!85!black] (1, -2.2) -- (1, 2.2);
+    \draw[white, line width=1.8pt] (-2, 0) -- (2, 0);
+    \draw[dashed, thick, blue!85!black] (-2, 0) -- (2, 0);
+    % 除外する境界上の端点・交点（白抜き点）
+    \foreach \P in {(-2,0), (-1,0), (1,0), (2,0), (60:2), (120:2), (240:2), (300:2)} {
+      \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.3pt] at \P {};
+    }
+    % 軸目盛りラベル（斜線・境界線と重ならない位置に白地マスク付きで配置）
+    \node[font=\footnotesize, fill=white, inner sep=1pt, below left=2pt] at (0, 0) {$O$};
+    \node[font=\footnotesize, fill=white, inner sep=1pt, below left=2pt] at (-2, 0) {$-2$};
+    \node[font=\footnotesize, fill=white, inner sep=1pt, below left=2pt] at (-1, 0) {$-1$};
+    \node[font=\footnotesize, fill=white, inner sep=1pt, below right=2pt] at (1, 0) {$1$};
+    \node[font=\footnotesize, fill=white, inner sep=1pt, below right=2pt] at (2, 0) {$2$};
+    \node[font=\footnotesize, fill=white, inner sep=1pt, above left=2pt] at (0, 1) {$1$};
+    \node[font=\footnotesize, fill=white, inner sep=1pt, above left=2pt] at (0, 2) {$2$};
+    \node[font=\footnotesize, fill=white, inner sep=1pt, below left=2pt] at (0, -2) {$-2$};
+  \end{tikzpicture}
   \caption{条件を満たす領域の図示（斜線部）}
 \end{figure}
 
