@@ -13,7 +13,20 @@
 
 \paragraph{(1)}
 
-\cref{eq:1}から
+まず\cref{eq:1}で$(x,y)=(0,0)$として，
+\begin{align}
+  f(0)(1+f(0))=0 \quad\therefore\ f(0)=0,-1 \label{eq:2}
+\end{align}
+である．次に$(x,y)=(x,0)$とすると
+\begin{align}
+  & f(x) = f(x)+f(0)+f(x)f(0) \\
+  & \left\{f(x)+1\right\}f(0) = 0 \\
+  \therefore
+  & f(0) = 0 \lor f(x) \equiv -1 \label{eq:3}
+\end{align}
+である．\cref{eq:2,eq:3}より，$f(0)=0$または恒等的に$f(x)=-1$かのどちらかである．
+
+さて\cref{eq:1}から
 \begin{align}
   f(x+y)-f(x) = f(y)\left(1+f(x)\right)
 \end{align}
@@ -25,22 +38,24 @@
 \begin{align}
   \lim_{y\to 0} \dfrac{f(x+y)-f(x)}{y} = \lim_{y\to 0}\dfrac{f(y)}{y}(1+f(x))
 \end{align}
-である．ここで右辺の極限について題意より
+である．ここで右辺の極限について\cref{eq:2}および題意より$f'(0)$が存在することより
 \begin{align}
-  \lim_{y\to 0}\dfrac{f(y)}{y} = f'(0)
+  \lim_{y\to 0}\dfrac{f(y)}{y}(1+f(x)) =
+  \begin{dcases}
+    \lim_{y\to 0}\dfrac{f(y)-f(0)}{y}(1+f(x)) =  f'(0)(1+f(x)) & (f(0)=0) \\
+    \lim_{y\to 0}\dfrac{f(y)-f(0)}{y}(1+f(x)) = 0 & (f(x)=-1)
+  \end{dcases}
 \end{align}
 だから代入して
 \begin{align}
-  \lim_{y\to 0} \dfrac{f(x+y)-f(x)}{y} = f'(0)(1+f(x)) \label{eq:2}
+  \lim_{y\to 0} \dfrac{f(x+y)-f(x)}{y} = f'(0)(1+f(x)) \label{eq:4}
 \end{align}
-である．従って左辺の極限値が存在するから，$f(x)$は任意の$x$で微分可能である．
+である．ただし$f(x)=-1$の場合も$1+f(x)=0$よりこれで良いことを用いた．
+従って左辺の極限値が存在するから，$f(x)$は任意の$x$で微分可能である．
 
 \paragraph{(2)}
-まず\cref{eq:1}で$(x,y)=(0,0)$として，
-\begin{align}
-  f(0)(1+f(0))=0 \quad\therefore\ f(0)=0,-1 \label{eq:3}
-\end{align}
-である．\cref{eq:2}より
+
+\cref{eq:4}より
 \begin{align}
   f'(x) = f'(0)(1+f(x))
 \end{align}
@@ -52,20 +67,18 @@
 
 そこで以下$y\neq -1$とする．両辺$1+y$で割って
 \begin{align}
-  \dfrac{dy}{1+y} = f'(0) dx \label{eq:4}
+  \dfrac{dy}{1+y} = f'(0) dx \label{eq:5}
 \end{align}
 である．両辺を積分して
 \begin{align}
-  & \log(1+y)=f'(0)x+C_1 \\
+  & \log |1+y| =f'(0)x+C \\
   \therefore
-  & y=C\cdot e^{f'(0)x}-1 \label{eq:5}
+  & y=e^C \cdot e^{f'(0)x}-1 \label{eq:6}
 \end{align}
-とおける．ただし$C,C_1$は積分定数である．
-\cref{eq:3}に代入して$C=0,1$である．
+とおける．ただし$C$は積分定数である．
+\cref{eq:2}に代入して$C=0$である．
 
-\subparagraph{$1^\circ$ $C=1$の時}
-
-この時\cref{eq:5}より$y=e^{f'(0)x}-1$だから，\cref{eq:1}に代入すると
+この時\cref{eq:6}より$y=e^{f'(0)x}-1$だから，\cref{eq:1}に代入すると
 \begin{align}
   \begin{split}
     (\text{左辺})&=e^{f'(0)(x+y)}-1 \\
@@ -73,11 +86,6 @@
   \end{split}
 \end{align}
 となって恒等的に\cref{eq:1}が成立するから十分である．
-
-\subparagraph{$2^\circ$ $C=0$の時}
-
-この時は\cref{eq:5}より$y=-1$であり先に考えた例外のケースに該当する．この時も\cref{eq:1}は成立するから十分である．
-\casesend
 
 以上から求める$f(x)$は
 \begin{align}
