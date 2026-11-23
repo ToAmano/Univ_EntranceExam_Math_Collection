@@ -685,6 +685,46 @@ def strip_global_macro_defs(raw_tex):
 _TDPLOT_VIEW_RE = re.compile(r'\\tdplotsetmaincoords\s*\{[^{}]*\}\s*\{[^{}]*\}')
 _FIGURE_ENV_RE = re.compile(r'\\begin\{figure\}.*?\\end\{figure\}', re.DOTALL)
 _TIKZ_ENV_RE = re.compile(r'\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}', re.DOTALL)
+_INLINE_TIKZ_RE = re.compile(
+    r'\\mathord\s*\{\s*\\vcenter\s*\{\s*\\hbox\s*\{\s*(?P<t1>\\begin\{tikzpicture\}.*?\\end\{tikzpicture\})\s*\}\s*\}\s*\}'
+    r'|\\text\s*\{\s*(?P<t2>\\begin\{tikzpicture\}.*?\\end\{tikzpicture\})\s*\}'
+    r'|(?P<t3>\\begin\{tikzpicture\}.*?\\end\{tikzpicture\})',
+    re.DOTALL,
+)
+
+
+def _svg_dimensions_em(svg_path):
+    """Return (width_em, height_em) from a generated SVG, or (2.0, 2.0) fallback."""
+    def _to_em(raw):
+        if not raw:
+            return None
+        m = re.match(r'^\s*([0-9]+(?:\.[0-9]+)?)\s*(pt|px|em)?\s*$', str(raw))
+        if not m:
+            return None
+        val = float(m.group(1))
+        unit = m.group(2) or 'pt'
+        if unit == 'em':
+            em = val
+        elif unit == 'px':
+            em = val / 13.333
+        else:
+            em = val / 10.0
+        return max(0.8, round(em, 2))
+
+    try:
+        root = ElementTree.parse(svg_path).getroot()
+        w_em = _to_em(root.attrib.get('width'))
+        h_em = _to_em(root.attrib.get('height'))
+        if (w_em is None or h_em is None) and root.attrib.get('viewBox'):
+            parts = root.attrib['viewBox'].replace(',', ' ').split()
+            if len(parts) == 4:
+                w_em = w_em if w_em is not None else max(0.8, round(float(parts[2]) / 10.0, 2))
+                h_em = h_em if h_em is not None else max(0.8, round(float(parts[3]) / 10.0, 2))
+        if w_em is not None and h_em is not None:
+            return w_em, h_em
+    except Exception:
+        pass
+    return 2.0, 2.0
 # compile_tikz_to_svg() のプリアンブルが呼ぶ既定の視点（generate_main_tex.py と同じ）
 _TDPLOT_DEFAULT_VIEW = r'\tdplotsetmaincoords{70}{110}'
 
@@ -1132,6 +1172,35 @@ def convert_tex_clean(tex_path, output_md_path, frontmatter, public_img_dir_rel,
     fig_views = figure_tdplot_views(raw_tex)
     # 集めた定義は本文に残すと Web にソースが表示されるので取り除く（#1489）。
     raw_tex = strip_global_macro_defs(raw_tex)
+
+    # 数式（align 等）中の図形アイコン（figure 環境外の tikzpicture）を個別 SVG 化し、
+    # MathJax CHTML がレイアウト寸法を計算できるプレースホルダーへ置換する（#586）。
+    figure_spans = [(m.start(), m.end()) for m in _FIGURE_ENV_RE.finditer(raw_tex)]
+    inline_prefix = 'inline_problem_' if frontmatter.get('type') == 'problem' else 'inline_'
+    inline_cache = {}
+    inline_count = 1
+
+    def _replace_inline_tikz(match):
+        nonlocal inline_count
+        start = match.start()
+        if any(a <= start < b for a, b in figure_spans):
+            return match.group(0)
+        tikz_code = match.group('t1') or match.group('t2') or match.group('t3')
+        if tikz_code in inline_cache:
+            web_img_src, w_em, h_em = inline_cache[tikz_code]
+        else:
+            svg_filename = f"{inline_prefix}{inline_count}.svg"
+            svg_dest_path = os.path.join(output_svg_dir, svg_filename)
+            os.makedirs(output_svg_dir, exist_ok=True)
+            if not compile_tikz_to_svg(tikz_code, svg_dest_path, macro_defs):
+                raise FigureCompilationError(f'Inline TikZ compilation failed: {svg_dest_path}')
+            w_em, h_em = _svg_dimensions_em(svg_dest_path)
+            web_img_src = f"{public_img_dir_rel}/{svg_filename}"
+            inline_cache[tikz_code] = (web_img_src, w_em, h_em)
+            inline_count += 1
+        return f"\\class{{mjx-inline-tikz}}{{\\style{{background-image:url({web_img_src});}}{{\\vcenter{{\\hbox{{\\rule{{{w_em}em}}{{{h_em}em}}}}}}}}}}"
+
+    raw_tex = _INLINE_TIKZ_RE.sub(_replace_inline_tikz, raw_tex)
 
     # 不要なレイアウトマクロの削除
     raw_tex = re.sub(r'\\rhead\{[^}]*\}', '', raw_tex)

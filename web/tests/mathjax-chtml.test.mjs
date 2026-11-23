@@ -74,3 +74,16 @@ test('renders bctetraedre macro without undefined control sequence errors', asyn
   assert.match(mathMarkup, /class="mjx-bctetraedre"/);
   assert.match(mathMarkup, /POAB/);
 });
+
+test('renders mjx-inline-tikz placeholders as img tags inside CHTML equations', async () => {
+  const html = await renderMarkdown(
+    '$$\n\\begin{align}\nV = \\left(\\class{mjx-inline-tikz}{\\style{background-image:url(/img/inline_1.svg);}{\\vcenter{\\hbox{\\rule{2.75em}{2.86em}}}}}\\right)\n\\end{align}\n$$'
+  );
+  const mathMarkup = html.split('<style')[0];
+
+  assert.doesNotMatch(mathMarkup, /mathjax-error|mjx-merror/);
+  assert.doesNotMatch(mathMarkup, /background-color:\s*black/);
+  assert.doesNotMatch(mathMarkup, /background-image/);
+  assert.match(mathMarkup, /<img[^>]*src="\/img\/inline_1\.svg"[^>]*class="inline-tikz-icon"/);
+  assert.match(mathMarkup, /<mrow[^>]*class="mjx-inline-tikz"[^>]*><mtext>\[図\]<\/mtext><\/mrow>/);
+});

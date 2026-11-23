@@ -59,6 +59,60 @@ function fromLiteElement(liteElement) {
   return h(liteElement.kind, liteElement.attributes, children);
 }
 
+const INLINE_TIKZ_URL_RE = /background-image:\s*url\(([^)]+)\)\s*;?/i;
+const INLINE_TIKZ_BG_RE = /background-color:\s*[^;]+;?/i;
+
+function replaceInlineTikzIcons(nodes) {
+  for (const root of nodes) {
+    visitParents(root, 'element', function (element) {
+      const classes = Array.isArray(element.properties?.className)
+        ? element.properties.className
+        : emptyClasses;
+      if (!classes.includes('mjx-inline-tikz')) return;
+
+      const style = String(element.properties?.style || '');
+      const urlMatch = style.match(INLINE_TIKZ_URL_RE);
+      if (!urlMatch) return;
+      const src = urlMatch[1].trim().replace(/^['"]|['"]$/g, '');
+      const cleanedStyle = style.replace(INLINE_TIKZ_URL_RE, '').trim();
+      if (cleanedStyle) {
+        element.properties.style = cleanedStyle;
+      } else {
+        delete element.properties.style;
+      }
+
+      if (element.tagName === 'mrow') {
+        element.children = [h('mtext', '[図]')];
+        return SKIP;
+      }
+
+      visitParents(element, 'element', function (child) {
+        if (child.tagName !== 'mjx-mspace') return;
+        const mspaceStyle = String(child.properties?.style || '');
+        const cleanedMspaceStyle = mspaceStyle.replace(INLINE_TIKZ_BG_RE, '').trim();
+        child.properties.style = cleanedMspaceStyle;
+        const wMatch = cleanedMspaceStyle.match(/width:\s*([^;]+)/i);
+        const hMatch = cleanedMspaceStyle.match(/height:\s*([^;]+)/i);
+        const imgStyle = [
+          wMatch ? `width:${wMatch[1].trim()};` : '',
+          hMatch ? `height:${hMatch[1].trim()};` : '',
+        ].join('');
+        child.children = [
+          h('img', {
+            src,
+            alt: '数式中の図',
+            className: ['inline-tikz-icon'],
+            ...(imgStyle ? { style: imgStyle } : {}),
+          }),
+        ];
+        return SKIP;
+      });
+
+      return SKIP;
+    });
+  }
+}
+
 function createChtmlRenderer(options) {
   const texOptions = options.tex || {};
   const chtmlOptions = options.chtml || {};
@@ -86,7 +140,9 @@ function createChtmlRenderer(options) {
     },
     render(value, renderOptions) {
       const liteElement = document.convert(value, renderOptions);
-      return [fromLiteElement(liteElement)];
+      const nodes = [fromLiteElement(liteElement)];
+      replaceInlineTikzIcons(nodes);
+      return nodes;
     },
     styleSheet() {
       const node = fromLiteElement(output.styleSheet(document));

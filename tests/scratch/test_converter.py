@@ -287,6 +287,59 @@ class TestConverter(unittest.TestCase):
         self.assertNotIn(r'$\nearrow$', md)
         self.assertNotIn('CARROWCELLPLACEHOLDER', md)
 
+    def test_inline_tikz_in_align_converted_to_mathjax_placeholders(self):
+        latex = r'''
+        \begin{figure}[htb]
+          \centering
+          \begin{tikzpicture}
+            \draw (0,0) -- (1,1);
+          \end{tikzpicture}
+          \caption{図}
+        \end{figure}
+        \begin{align}
+          V &= \left(\text{
+            \begin{tikzpicture}[scale=0.8]
+              \draw (0,0) -- (1,0) -- (1,1) -- cycle;
+            \end{tikzpicture}
+          }\right) - \mathord{\vcenter{\hbox{
+            \begin{tikzpicture}[scale=0.8]
+              \draw (0,0) rectangle (1,1);
+            \end{tikzpicture}
+          }}} + \begin{tikzpicture}[scale=0.5]
+            \draw (0,0) circle (0.5);
+          \end{tikzpicture}
+        \end{align}
+        '''
+        compiled = []
+
+        def fake_compile(code, out_path, macro_defs='', **opts):
+            compiled.append((Path(out_path).name, code))
+            Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+            Path(out_path).write_text(
+                '<svg xmlns="http://www.w3.org/2000/svg" width="27.5pt" height="28.6pt"/>',
+                encoding='utf-8',
+            )
+            return True
+
+        with tempfile.TemporaryDirectory() as tmp:
+            dest = Path(tmp)
+            source = dest / 'solution.tex'
+            output = dest / 'solution.md'
+            source.write_text(r'\begin{document}' + latex + r'\end{document}', encoding='utf-8')
+            with patch.object(tex_to_md, 'compile_tikz_to_svg', side_effect=fake_compile):
+                tex_to_md.convert_tex_clean(
+                    str(source), str(output), {'type': 'solution'},
+                    '/images/example', str(dest / 'images'),
+                )
+            md = output.read_text(encoding='utf-8')
+
+        self.assertNotIn(r'\begin{tikzpicture}', md)
+        self.assertIn('/images/example/fig_1.svg', md)
+        self.assertIn(r'\class{mjx-inline-tikz}{\style{background-image:url(/images/example/inline_1.svg);}{\vcenter{\hbox{\rule{2.75em}{2.86em}}}}}', md)
+        self.assertIn(r'\class{mjx-inline-tikz}{\style{background-image:url(/images/example/inline_2.svg);}{\vcenter{\hbox{\rule{2.75em}{2.86em}}}}}', md)
+        self.assertIn(r'\class{mjx-inline-tikz}{\style{background-image:url(/images/example/inline_3.svg);}{\vcenter{\hbox{\rule{2.75em}{2.86em}}}}}', md)
+        self.assertEqual([name for name, _ in compiled], ['inline_1.svg', 'inline_2.svg', 'inline_3.svg', 'fig_1.svg'])
+
 
 if __name__ == '__main__':
     unittest.main()
