@@ -6,7 +6,7 @@
 
 {\bf [解答]}
 三角柱の底面（正三角形，1辺1）を$DEF$，対応する上面を$ABC$（$AD=BE=CF=2$，各々垂直な辺）とする．
-断面の直角三角形$PQR$の頂点は辺$BE,AD, CF$上に1つずつあり，対称性からそのうち高さがもっとも低いもの$P$が辺$BE$上にあるとする．各頂点の高さからこの高さPEを引いて（底面方向へ平行移動して）考えればよく，$P=E$なる場合を考えれば良い．
+断面の直角三角形$PQR$の頂点は辺$BE,AD, CF$上に1つずつあり，対称性からそのうち高さがもっとも低いもの$P$が辺$BE$上にあるとする．各頂点の高さからこの高さ$PE$を引いて（底面方向へ平行移動して）考えればよく，$P=E$なる場合を考えれば良い．
 $P=E$，$Q$が辺$AD$上，$R$が辺$CF$上にあるとし，
 \begin{align}
   DQ=x,\qquad FR=x+t \qquad(0\le x\le x+t\le2) \label{eq:1}
@@ -14,85 +14,83 @@ $P=E$，$Q$が辺$AD$上，$R$が辺$CF$上にあるとし，
 とおく，この様子を下図に示す．
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[scale=1.8, >=stealth]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth]
 
-      % --- 1. 底面 DEF の座標 (正三角形, 1辺 1) ---
-      % 斜めから見た投影画面上の座標
-      \coordinate (D) at (0, 0);
-      \coordinate (E) at (1.2, -0.4);
-      \coordinate (F) at (1.8, 0.4);
+    % --- 1. 底面 DEF の座標 (正三角形, 1辺 1) ---
+    % 斜めから見た投影画面上の座標
+    \coordinate (D) at (0, 0);
+    \coordinate (E) at (1.2, -0.4);
+    \coordinate (F) at (1.8, 0.4);
 
-      % 高さは 2 (スケール比に合わせて y 方向に 2.2 離す)
-      \def\H{2.2}
+    % 高さは 2 (スケール比に合わせて y 方向に 2.2 離す)
+    \def\H{2.2}
 
-      % --- 2. 上面 ABC の座標 ---
-      \coordinate (A) at ($(D) + (0, \H)$);
-      \coordinate (B) at ($(E) + (0, \H)$);
-      \coordinate (C) at ($(F) + (0, \H)$);
+    % --- 2. 上面 ABC の座標 ---
+    \coordinate (A) at ($(D) + (0, \H)$);
+    \coordinate (B) at ($(E) + (0, \H)$);
+    \coordinate (C) at ($(F) + (0, \H)$);
 
-      % --- 3. 断面の頂点 P(=E), Q, R の座標 ---
-      % P = E (高さ 0)
-      \coordinate (P) at (E);
+    % --- 3. 断面の頂点 P(=E), Q, R の座標 ---
+    % P = E (高さ 0)
+    \coordinate (P) at (E);
 
-      % Q on AD (高さ DQ = x = 0.6*H 付近の例)
-      \coordinate (Q) at ($(D) + (0, 0.7)$);
+    % Q on AD (高さ DQ = x = 0.6*H 付近の例)
+    \coordinate (Q) at ($(D) + (0, 0.7)$);
 
-      % R on CF (高さ FR = x + t = 1.5 付近の例)
-      \coordinate (R) at ($(F) + (0, 1.6)$);
+    % R on CF (高さ FR = x + t = 1.5 付近の例)
+    \coordinate (R) at ($(F) + (0, 1.6)$);
 
-      % --- 4. 三角柱の稜線描画 ---
-      % 隠れ線 (奥の辺) は破線
-      \draw[dashed, gray] (D) -- (F);
+    % --- 4. 三角柱の稜線描画 ---
+    % 隠れ線 (奥の辺) は破線
+    \draw[dashed, gray!70!black] (D) -- (F);
 
-      % 手前の辺 (実線)
-      \draw[thick] (D) -- (E) -- (F) -- (C);
-      \draw[thick] (A) -- (B) -- (C) -- cycle;
-      \draw[thick] (A) -- (D);
-      \draw[thick] (B) -- (E);
+    % 手前の辺 (実線)
+    \draw[thick] (D) -- (E) -- (F) -- (C);
+    \draw[thick] (A) -- (B) -- (C) -- cycle;
+    \draw[thick] (A) -- (D);
+    \draw[thick] (B) -- (E);
 
-      % --- 5. 断面直角三角形 PQR の描画 ---
-      % 面塗り (半透明)
-      \fill[red!20, opacity=0.6] (P) -- (Q) -- (R) -- cycle;
-      % 枠線
-      \draw[ultra thick, red!80!black] (P) -- (Q) -- (R) -- cycle;
+    % --- 5. 断面直角三角形 PQR の描画 ---
+    % 面塗り (半透明)
+    \fill[red!20, opacity=0.6] (P) -- (Q) -- (R) -- cycle;
+    % 枠線
+    \draw[ultra thick, red!85!black] (P) -- (Q) -- (R) -- cycle;
 
-      % 直角マーク (angle PQR = 90度)
-      % Q から P, R への単位ベクトル方向を使って直角記号を作成
-      \draw[thin, red!80!black]
-      ($(Q)!6pt!(P)$) --
-      ($($(Q)!6pt!(P)$) + ($(Q)!6pt!(R)$) - (Q)$) --
-      ($(Q)!6pt!(R)$);
+    % 直角マーク (angle PQR = 90度)
+    % Q から P, R への単位ベクトル方向を使って直角記号を作成
+    \draw[thin, red!85!black]
+    ($(Q)!6pt!(P)$) --
+    ($($(Q)!6pt!(P)$) + ($(Q)!6pt!(R)$) - (Q)$) --
+    ($(Q)!6pt!(R)$);
 
-      % --- 6. 各点のプロットとラベル ---
-      % 三角柱の頂点
-      \node[circle, fill, inner sep=1.0pt] at (A) {}; \node[above left] at (A) {$A$};
-      \node[circle, fill, inner sep=1.0pt] at (B) {}; \node[above] at (B) {$B$};
-      \node[circle, fill, inner sep=1.0pt] at (C) {}; \node[above right] at (C) {$C$};
-      \node[circle, fill, inner sep=1.0pt] at (D) {}; \node[below left] at (D) {$D$};
-      \node[circle, fill, inner sep=1.0pt] at (E) {}; \node[below] at (E) {$E$};
-      \node[circle, fill, inner sep=1.0pt] at (F) {}; \node[right] at (F) {$F$};
+    % --- 6. 各点のプロットとラベル ---
+    % 三角柱の頂点
+    \node[circle, fill, inner sep=1.0pt] at (A) {}; \node[above left=1pt] at (A) {$A$};
+    \node[circle, fill, inner sep=1.0pt] at (B) {}; \node[above=2pt] at (B) {$B$};
+    \node[circle, fill, inner sep=1.0pt] at (C) {}; \node[above right=1pt] at (C) {$C$};
+    \node[circle, fill, inner sep=1.0pt] at (D) {}; \node[below=2pt] at (D) {$D$};
+    \node[circle, fill, inner sep=1.0pt] at (F) {}; \node[below right=1pt] at (F) {$F$};
 
-      % 断面の頂点
-      \node[circle, fill=red!80!black, inner sep=1.5pt] at (P) {}; \node[red!80!black, below right, font=\small] at (P) {$P(=E)$};
-      \node[circle, fill=red!80!black, inner sep=1.5pt] at (Q) {}; \node[red!80!black, left, font=\small] at (Q) {$Q$};
-      \node[circle, fill=red!80!black, inner sep=1.5pt] at (R) {}; \node[red!80!black, right, font=\small] at (R) {$R$};
+    % 断面の頂点
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (P) {}; \node[red!85!black, below=2pt, font=\small] at (P) {$P(=E)$};
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (Q) {}; \node[red!85!black, above left=1pt, font=\small] at (Q) {$Q$};
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (R) {}; \node[red!85!black, above left=1pt, font=\small] at (R) {$R$};
 
-      % --- 7. 長さ・高さのガイドとラベル ---
-      % 高さ DQ = x
-      \draw[<->, thin, blue!80!black] ($(D)+(-0.15,0)$) -- ($(Q)+(-0.15,0)$)
-      node[midway, left, font=\small] {$x$};
+    % --- 7. 長さ・高さのガイドとラベル ---
+    % 高さ DQ = x
+    \draw[<->, thin, blue!85!black] ($(D)+(-0.20,0)$) -- ($(Q)+(-0.20,0)$)
+    node[midway, left=2pt, font=\small] {$x$};
 
-      % 高さ FR = x + t
-      \draw[<->, thin, blue!80!black] ($(F)+(0.15,0)$) -- ($(R)+(0.15,0)$)
-      node[midway, right, font=\small] {$x+t$};
+    % 高さ FR = x + t
+    \draw[<->, thin, blue!85!black] ($(F)+(0.20,0)$) -- ($(R)+(0.20,0)$)
+    node[midway, right=2pt, font=\small] {$x+t$};
 
-      % 底辺 1 (DE, EF)
-      \node[font=\scriptsize, below left] at ($(D)!0.5!(E)$) {$1$};
-      \node[font=\scriptsize, below right] at ($(E)!0.5!(F)$) {$1$};
+    % 底辺 1 (DE, EF)
+    \node[font=\scriptsize, below left=1pt] at ($(D)!0.5!(E)$) {$1$};
+    \node[font=\scriptsize, below right=1pt] at ($(E)!0.5!(F)$) {$1$};
 
-    \end{tikzpicture}
-  \end{center}
+  \end{tikzpicture}
   \caption{正三角柱と断面の直角三角形 $\triangle PQR$}
 \end{figure}
 
