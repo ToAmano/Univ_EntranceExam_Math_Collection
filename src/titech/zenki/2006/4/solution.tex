@@ -61,77 +61,79 @@
 \paragraph{(2)}
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[scale=1.8, >=stealth]
+  \centering
+  \begin{tikzpicture}[scale=1.8, >=stealth]
 
-      % --- 1. 座標定義 ---
-      % 中央の面を triangle ABC (辺 AB を底辺) とし、
-      % その周りに ACD, BCD, ABD を配置
+    % --- 1. 座標定義 ---
+    % 中央の面を triangle ABC (辺 AB を底辺) とし、
+    % その周りに ACD, BCD, ABD を配置
 
-      % 基準の三角形 ABC: AB = c, BC = a, CA = b (すべて異なる長さ)
-      % ここでは描画例として a=sqrt(5), b=sqrt(6), c=sqrt(3) の比率を模式化
-      \coordinate (A) at (0, 0);
-      \coordinate (B) at (1.732, 0); % AB = c = sqrt(3)
-      \coordinate (C) at (0.866, 2.291); % 頂点C (CA=b, CB=aから計算)
+    % 基準の三角形 ABC: AB = c, BC = a, CA = b (すべて異なる長さ)
+    % ここでは描画例として a=sqrt(5), b=sqrt(6), c=sqrt(3) の比率を模式化
+    \coordinate (A) at (0, 0);
+    \coordinate (B) at (1.732, 0); % AB = c = sqrt(3)
+    \coordinate (C) at (0.866, 2.291); % 頂点C (CA=b, CB=aから計算)
 
-      % 各面を展開した頂点 D の座標 (D1, D2, D3)
-      % 1. AC に関する合同三角形 (三角形 ACD_1 = 三角形 ABC)
-      %    => AD1 = a, CD1 = c
-      \coordinate (D1) at (-0.320, 2.766); % 頂点Cから、ACに関してBと反対側
+    % 各面を展開した頂点 D の座標 (D1, D2, D3)
+    % 1. AC に関する合同三角形 (三角形 ACD_1 = 三角形 ABC)
+    %    => AD1 = a, CD1 = c
+    \coordinate (D1) at (-0.320, 2.766); % 頂点Cから、ACに関してBと反対側
 
-      % 2. BC に関する合同三角形 (三角形 BCD_2 = 三角形 ABC)
-      %    => BD2 = b, CD2 = c
-      \coordinate (D2) at (2.052, 2.766); % 頂点Cから、BCに関してAと反対側
+    % 2. BC に関する合同三角形 (三角形 BCD_2 = 三角形 ABC)
+    %    => BD2 = b, CD2 = c
+    \coordinate (D2) at (2.052, 2.766); % 頂点Cから、BCに関してAと反対側
 
-      % 3. AB に関する合同三角形 (三角形 ABD_3 = 三角形 ABC)
-      %    => AD3 = b, BD3 = a
-      \coordinate (D3) at (0.866, -2.291); % 辺ABに関してCと反対側
+    % 3. AB に関する合同三角形 (三角形 ABD_3 = 三角形 ABC)
+    %    => AD3 = b, BD3 = a
+    \coordinate (D3) at (0.866, -2.291); % 辺ABに関してCと反対側
 
-      % --- 2. 各面（合同な三角形）の塗りつぶし ---
-      % 面の色を少し変えて区別
-      \fill[blue!10] (A) -- (B) -- (C) -- cycle; % 中央 ABC
-      \fill[red!10]  (A) -- (C) -- (D1) -- cycle; % ACD1
-      \fill[green!10] (B) -- (C) -- (D2) -- cycle; % BCD2
-      \fill[yellow!15] (A) -- (B) -- (D3) -- cycle; % ABD3
+    % --- 2. 各面（合同な三角形）の塗りつぶし ---
+    % 面の色を少し変えて区別
+    \fill[blue!10] (A) -- (B) -- (C) -- cycle; % 中央 ABC
+    \fill[red!10]  (A) -- (C) -- (D1) -- cycle; % ACD1
+    \fill[green!10] (B) -- (C) -- (D2) -- cycle; % BCD2
+    \fill[yellow!15] (A) -- (B) -- (D3) -- cycle; % ABD3
 
-      % --- 3. 辺の描画と長さの表示 ---
-      % 中央の面 (実線)
-      \draw[thick] (A) -- (B) node[midway, below] {$c_1$};
-      \draw[thick] (B) -- (C) node[midway, below right, yshift=1pt] {$a_2$};
-      \draw[thick] (C) -- (A) node[midway, below left, yshift=1pt] {$b_1$};
+    % --- 3. 辺の描画と長さの表示 ---
+    % 中央の面 (実線)
+    \draw[thick] (A) -- (B) node[pos=0.64, below=2pt] {$c_1$};
+    \draw[thick] (B) -- (C) node[midway, above right=1pt] {$a_2$};
+    \draw[thick] (C) -- (A) node[midway, above left=1pt] {$b_1$};
 
-      % 周囲の面 (折り目となる中央の辺は実線、外枠は太めの実線で区別)
-      % 面 ACD1
-      \draw[ultra thick] (A) -- (D1) node[midway, above left] {$a_1$};
-      \draw[ultra thick] (C) -- (D1) node[midway, above] {$c_2$};
+    % 周囲の面 (折り目となる中央の辺は実線、外枠は太めの実線で区別)
+    % 面 ACD1
+    \draw[ultra thick] (A) -- (D1) node[midway, above left] {$a_1$};
+    \draw[ultra thick] (C) -- (D1) node[pos=0.35, above=3pt] {$c_2$};
 
-      % 面 BCD2
-      \draw[ultra thick] (B) -- (D2) node[midway, above right] {$b_2$};
-      \draw[ultra thick] (C) -- (D2) node[midway, above] {$c_2$};
+    % 面 BCD2
+    \draw[ultra thick] (B) -- (D2) node[midway, above right] {$b_2$};
+    \draw[ultra thick] (C) -- (D2) node[pos=0.35, above=3pt] {$c_2$};
 
-      % 面 ABD3
-      \draw[ultra thick] (A) -- (D3) node[midway, below left] {$a_1$};
-      \draw[ultra thick] (B) -- (D3) node[midway, below right] {$b_2$};
+    % 面 ABD3
+    \draw[ultra thick] (A) -- (D3) node[midway, below left] {$a_1$};
+    \draw[ultra thick] (B) -- (D3) node[midway, below right] {$b_2$};
 
-      % --- 4. 頂点名とマーク ---
-      % 中央の頂点
-      \node[circle, fill, inner sep=1.0pt] at (A) {}; \node[below left] at (A) {$A$};
-      \node[circle, fill, inner sep=1.0pt] at (B) {}; \node[below right] at (B) {$B$};
-      \node[circle, fill, inner sep=1.0pt] at (C) {}; \node[above, yshift=2pt] at (C) {$C$};
+    % --- 4. 頂点名とマーク ---
+    % 中央の頂点
+    \node[circle, fill, inner sep=1.0pt] at (A) {}; \node[below left] at (A) {$A$};
+    \node[circle, fill, inner sep=1.0pt] at (B) {}; \node[below right] at (B) {$B$};
+    \node[circle, fill, inner sep=1.0pt] at (C) {}; \node[above, yshift=2pt] at (C) {$C$};
 
-      % 展開された頂点 D
-      \node[circle, fill=black!60, inner sep=0.9pt] at (D1) {}; \node[above left, black] at (D1) {$D$};
-      \node[circle, fill=black!60, inner sep=0.9pt] at (D2) {}; \node[above right, black] at (D2) {$D$};
-      \node[circle, fill=black!60, inner sep=0.9pt] at (D3) {}; \node[below, black] at (D3) {$D$};
+    % 展開された頂点 D
+    \node[circle, fill=gray!60!black, inner sep=0.9pt] at (D1) {}; \node[above left, black] at (D1) {$D$};
+    \node[circle, fill=gray!60!black, inner sep=0.9pt] at (D2) {}; \node[above right, black] at (D2) {$D$};
+    \node[circle, fill=gray!60!black, inner sep=0.9pt] at (D3) {}; \node[below, black] at (D3) {$D$};
 
-      % --- 5. 対辺のペアであることを示すマーク (同じ長さ c の辺) ---
-      % AB=CD を示す二重線マーク
-      \draw[thick, double] ($(A)!0.5!(B)$)+(-0.06,-0.12) -- +(-0.06,0.12);
-      \draw[thick, double] ($(C)!0.5!(D1)$)+(-0.06,-0.10) -- +(-0.06,0.14);
-      \draw[thick, double] ($(C)!0.5!(D2)$)+( 0.06,-0.10) -- +( 0.06,0.14);
+    % --- 5. 対辺のペアであることを示すマーク (同じ長さ c の辺) ---
+    % AB=CD を示す二重線マーク（ラベル位置と重ならない位置に配置）
+    \coordinate (Mab) at ($(A)!0.35!(B)$);
+    \draw[thick, double] ($(Mab)!0.10cm!90:(B)$) -- ($(Mab)!0.10cm!-90:(B)$);
+    \coordinate (Mcd1) at ($(C)!0.65!(D1)$);
+    \draw[thick, double] ($(Mcd1)!0.10cm!90:(D1)$) -- ($(Mcd1)!0.10cm!-90:(D1)$);
+    \coordinate (Mcd2) at ($(C)!0.65!(D2)$);
+    \draw[thick, double] ($(Mcd2)!0.10cm!90:(D2)$) -- ($(Mcd2)!0.10cm!-90:(D2)$);
 
-    \end{tikzpicture}
-  \end{center}
+  \end{tikzpicture}
   \caption{四面体の展開図と各辺の長さ}
 \end{figure}
 
@@ -180,97 +182,93 @@ $\triangle ABC$と$\triangle ABD$は辺$AB$（長さ$c_1$）を共有してい�
 とすれば実現できる．
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[
-        scale=2.0,
-        >=stealth,
-        % 3D 投影ベクトルの定義 (x: 斜め手前, y: 右, z: 上)
-        x={(-0.8cm, -0.6cm)},
-        y={(0.8cm, -0.4cm)},
-        z={(0cm, 1.0cm)}
-        %x={(-0.65cm,-0.35cm)},
-        %y={(0.95cm,-0.10cm)},
-        %z={(0cm,1.15cm)}
-      ]
+  \centering
+  \begin{tikzpicture}[
+      scale=2.0,
+      >=stealth,
+      % 3D 投影ベクトルの定義 (x: 斜め手前, y: 右, z: 上)
+      x={(-0.8cm, -0.6cm)},
+      y={(0.8cm, -0.4cm)},
+      z={(0cm, 1.0cm)}
+    ]
 
-      % --- 1. 3辺の長さ (x = sqrt(2) ≒ 1.414, y = 1.0, z = 2.0) ---
-      \pgfmathsetmacro{\lx}{1.414}
-      \pgfmathsetmacro{\ly}{1.0}
-      \pgfmathsetmacro{\lz}{2.0}
+    % --- 1. 3辺の長さ (x = sqrt(2) ≒ 1.414, y = 1.0, z = 2.0) ---
+    \pgfmathsetmacro{\lx}{1.414}
+    \pgfmathsetmacro{\ly}{1.0}
+    \pgfmathsetmacro{\lz}{2.0}
 
-      % --- 2. 直方体の8頂点の定義 ---
-      \coordinate (V000) at (0, 0, 0);       % A
-      \coordinate (Vx00) at (\lx, 0, 0);
-      \coordinate (Vxy0) at (\lx, \ly, 0);   % B
-      \coordinate (V0y0) at (0, \ly, 0);
-      \coordinate (V00z) at (0, 0, \lz);
-      \coordinate (Vx0z) at (\lx, 0, \lz);   % C
-      \coordinate (Vxyz) at (\lx, \ly, \lz);
-      \coordinate (V0yz) at (0, \ly, \lz);   % D
+    % --- 2. 直方体の8頂点の定義 ---
+    \coordinate (V000) at (0, 0, 0);       % A
+    \coordinate (Vx00) at (\lx, 0, 0);
+    \coordinate (Vxy0) at (\lx, \ly, 0);   % B
+    \coordinate (V0y0) at (0, \ly, 0);
+    \coordinate (V00z) at (0, 0, \lz);
+    \coordinate (Vx0z) at (\lx, 0, \lz);   % C
+    \coordinate (Vxyz) at (\lx, \ly, \lz);
+    \coordinate (V0yz) at (0, \ly, \lz);   % D
 
-      % 四面体 ABCD の頂点
-      \coordinate (A) at (V000);
-      \coordinate (B) at (Vxy0);
-      \coordinate (C) at (Vx0z);
-      \coordinate (D) at (V0yz);
+    % 四面体 ABCD の頂点
+    \coordinate (A) at (V000);
+    \coordinate (B) at (Vxy0);
+    \coordinate (C) at (Vx0z);
+    \coordinate (D) at (V0yz);
 
-      % 中点 K(AB), L(BC), N(DA), P(CA)
-      \coordinate (K) at ($(A)!0.5!(B)$);
-      \coordinate (L) at ($(B)!0.5!(C)$);
-      \coordinate (N) at ($(D)!0.5!(A)$);
-      \coordinate (P) at ($(C)!0.5!(A)$);
+    % 中点 K(AB), L(BC), N(DA), P(CA)
+    \coordinate (K) at ($(A)!0.5!(B)$);
+    \coordinate (L) at ($(B)!0.5!(C)$);
+    \coordinate (N) at ($(D)!0.5!(A)$);
+    \coordinate (P) at ($(C)!0.5!(A)$);
 
-      % --- 3. 直方体の枠線 (薄いグレー) ---
-      % 奥側の見えない線（破線）
-      \draw[dashed, gray!60!black, thin] (V000) -- (Vx00);
-      \draw[dashed, gray!60!black, thin] (V000) -- (V0y0);
-      \draw[dashed, gray!60!black, thin] (V000) -- (V00z);
+    % --- 3. 直方体の枠線 (濃いグレー) ---
+    % 奥側の見えない線（破線）
+    \draw[dashed, gray!60!black, thin] (V000) -- (Vx00);
+    \draw[dashed, gray!60!black, thin] (V000) -- (V0y0);
+    \draw[dashed, gray!60!black, thin] (V000) -- (V00z);
 
-      % 手前・外枠の線（実線）
-      \draw[gray!70!black, thin] (Vx00) -- (Vxy0) -- (V0y0);
-      \draw[gray!70!black, thin] (V00z) -- (Vx0z) -- (Vxyz) -- (V0yz) -- cycle;
-      \draw[gray!70!black, thin] (Vx00) -- (Vx0z);
-      \draw[gray!70!black, thin] (Vxy0) -- (Vxyz);
-      \draw[gray!70!black, thin] (V0y0) -- (V0yz);
+    % 手前・外枠の線（実線）
+    \draw[gray!70!black, thin] (Vx00) -- (Vxy0) -- (V0y0);
+    \draw[gray!70!black, thin] (V00z) -- (Vx0z) -- (Vxyz) -- (V0yz) -- cycle;
+    \draw[gray!70!black, thin] (Vx00) -- (Vx0z);
+    \draw[gray!70!black, thin] (Vxy0) -- (Vxyz);
+    \draw[gray!70!black, thin] (V0y0) -- (V0yz);
 
-      % 辺の長さラベル
-      \node[below left, font=\scriptsize, gray!80!black] at ($(Vx00)!0.5!(Vxy0)$) {$x=\sqrt{2}$};
-      \node[below right, font=\scriptsize, gray!80!black] at ($(Vxy0)!0.5!(V0y0)$) {$y=1$};
-      \node[left, font=\scriptsize, gray!80!black] at ($(V00z)!0.5!(V0yz)$) {$z=2$};
+    % 辺の長さラベル（直方体の外側に配置）
+    \node[below left, font=\scriptsize, gray!80!black] at ($(Vx00)!0.5!(Vxy0)$) {$x=\sqrt{2}$};
+    \node[below right, font=\scriptsize, gray!80!black] at ($(Vxy0)!0.5!(V0y0)$) {$y=1$};
+    \node[right=2pt, font=\scriptsize, gray!80!black] at ($(V0y0)!0.5!(V0yz)$) {$z=2$};
 
-      % --- 4. 四面体 PKLN の描画（着色ハイライト） ---
-      \fill[red!25, opacity=0.7] (P) -- (K) -- (L) -- cycle;
-      \fill[red!35, opacity=0.7] (P) -- (L) -- (N) -- cycle;
-      \fill[red!20, opacity=0.7] (P) -- (K) -- (N) -- cycle;
+    % --- 4. 四面体 PKLN の描画（着色ハイライト） ---
+    \fill[red!25, opacity=0.7] (P) -- (K) -- (L) -- cycle;
+    \fill[red!35, opacity=0.7] (P) -- (L) -- (N) -- cycle;
+    \fill[red!20, opacity=0.7] (P) -- (K) -- (N) -- cycle;
 
-      \draw[thick, red!80!black] (P) -- (K) -- (L) -- cycle;
-      \draw[thick, red!80!black] (P) -- (N) -- (L);
-      \draw[thick, red!80!black, dashed] (K) -- (N);
+    \draw[thick, red!80!black] (P) -- (K) -- (L) -- cycle;
+    \draw[thick, red!80!black] (P) -- (N) -- (L);
+    \draw[thick, red!80!black, dashed] (K) -- (N);
 
-      % --- 5. 四面体 ABCD の辺の描画 ---
-      % 奥の線 (破線)
-      \draw[thick, blue!80!black, dashed] (A) -- (B);
-      \draw[thick, blue!80!black, dashed] (A) -- (C);
-      \draw[thick, blue!80!black, dashed] (A) -- (D);
+    % --- 5. 四面体 ABCD の辺の描画 ---
+    % 奥の線 (破線)
+    \draw[thick, blue!80!black, dashed] (A) -- (B);
+    \draw[thick, blue!80!black, dashed] (A) -- (C);
+    \draw[thick, blue!80!black, dashed] (A) -- (D);
 
-      % 手前の線 (太い実線)
-      \draw[ultra thick, blue!90!black] (B) -- (C) -- (D) -- cycle;
+    % 手前の線 (太い実線)
+    \draw[ultra thick, blue!90!black] (B) -- (C) -- (D) -- cycle;
 
-      % --- 6. 各頂点のプロットとラベル ---
-      % 四面体 ABCD
-      \node[circle, fill=blue!90!black, inner sep=1.2pt] at (A) {}; \node[blue!90!black, below right, font=\small] at (A) {$A$};
-      \node[circle, fill=blue!90!black, inner sep=1.2pt] at (B) {}; \node[blue!90!black, below right, font=\small] at (B) {$B$};
-      \node[circle, fill=blue!90!black, inner sep=1.2pt] at (C) {}; \node[blue!90!black, above left, font=\small] at (C) {$C$};
-      \node[circle, fill=blue!90!black, inner sep=1.2pt] at (D) {}; \node[blue!90!black, above right, font=\small] at (D) {$D$};
+    % --- 6. 各頂点のプロットとラベル ---
+    % 四面体 ABCD
+    \node[circle, fill=blue!90!black, inner sep=1.2pt] at (A) {}; \node[blue!90!black, below right=1pt, font=\small, fill=white, inner sep=0.8pt] at (A) {$A$};
+    \node[circle, fill=blue!90!black, inner sep=1.2pt] at (B) {}; \node[blue!90!black, below=2pt, font=\small] at (B) {$B$};
+    \node[circle, fill=blue!90!black, inner sep=1.2pt] at (C) {}; \node[blue!90!black, above left=1pt, font=\small] at (C) {$C$};
+    \node[circle, fill=blue!90!black, inner sep=1.2pt] at (D) {}; \node[blue!90!black, above right=1pt, font=\small] at (D) {$D$};
 
-      % 中点 PKLN
-      \node[circle, fill=red!80!black, inner sep=1.0pt] at (K) {}; \node[red!80!black, below, font=\scriptsize] at (K) {$K$};
-      \node[circle, fill=red!80!black, inner sep=1.0pt] at (L) {}; \node[red!80!black, right, font=\scriptsize] at (L) {$L$};
-      \node[circle, fill=red!80!black, inner sep=1.0pt] at (N) {}; \node[red!80!black, left, font=\scriptsize] at (N) {$N$};
-      \node[circle, fill=red!80!black, inner sep=1.0pt] at (P) {}; \node[red!80!black, above left, font=\scriptsize] at (P) {$P$};
+    % 中点 PKLN
+    \node[circle, fill=red!80!black, inner sep=1.0pt] at (K) {}; \node[red!80!black, left=2pt, font=\scriptsize] at (K) {$K$};
+    \node[circle, fill=red!80!black, inner sep=1.0pt] at (L) {}; \node[red!80!black, left=2pt, font=\scriptsize] at (L) {$L$};
+    \node[circle, fill=red!80!black, inner sep=1.0pt] at (N) {}; \node[red!80!black, above left=1pt, font=\scriptsize] at (N) {$N$};
+    \node[circle, fill=red!80!black, inner sep=1.0pt] at (P) {}; \node[red!80!black, above left=1pt, font=\scriptsize] at (P) {$P$};
 
-    \end{tikzpicture}
-  \end{center}
+  \end{tikzpicture}
   \caption{直方体に埋め込まれた四面体 $ABCD$（青）と四面体 $PKLN$（赤）}
 \end{figure}
 
