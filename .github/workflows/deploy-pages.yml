@@ -37,18 +37,88 @@ jobs:
           python-version: '3.10'
 
       - name: Install Pandoc and TikZ dependencies
-        # TeX Live downloads can exceed 10 minutes when Ubuntu mirrors are slow.
+        # Avoid slow ec2.archive.ubuntu.com mirrors and unneeded TeX/JRE recommends.
         timeout-minutes: 30
         run: |
-          sudo apt-get update -o Acquire::Retries=3
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
-            -o Acquire::Retries=3 \
-            -o Acquire::http::Timeout=30 \
-            -o Acquire::https::Timeout=30 \
-            pandoc poppler-utils mupdf-tools ghostscript librsvg2-bin \
-            texlive-extra-utils texlive-latex-base texlive-latex-extra \
-            texlive-fonts-recommended texlive-luatex texlive-pictures \
-            texlive-science texlive-lang-japanese
+          set -euo pipefail
+          pkgs=(
+            pandoc poppler-utils ghostscript librsvg2-bin dvisvgm lmodern
+            texlive-extra-utils texlive-latex-base texlive-latex-recommended
+            texlive-latex-extra texlive-fonts-recommended texlive-luatex
+            texlive-pictures texlive-science texlive-lang-japanese
+          )
+          apt_opts=(
+            -o Acquire::Retries=3
+            -o Acquire::http::Timeout=30
+            -o Acquire::https::Timeout=30
+            -o Acquire::http::Pipeline-Depth=0
+          )
+
+          install_from_current_mirror() {
+            sudo apt-get update "${apt_opts[@]}" &&
+            sudo timeout 480 env DEBIAN_FRONTEND=noninteractive apt-get install -y \
+              --no-install-recommends --download-only "${apt_opts[@]}" "${pkgs[@]}" &&
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+              --no-install-recommends "${apt_opts[@]}" "${pkgs[@]}"
+          }
+
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            . /etc/os-release
+            orig_mirrors="$(awk '/^https?:\/\//{print $1}' /etc/apt/apt-mirrors.txt || true)"
+            candidates=()
+            # Keep the runner's default mirror first unless it is an ec2 mirror (prone to stalling).
+            while IFS= read -r m; do
+              [ -n "$m" ] && [[ "$m" != *ec2.archive.ubuntu.com* ]] && candidates+=("$m")
+            done <<< "$orig_mirrors"
+
+            # Benchmark reliable mirrors and append any remaining originals as last resort.
+            probe_list=(
+              http://azure.archive.ubuntu.com/ubuntu
+              http://mirrors.edge.kernel.org/ubuntu
+              http://us.archive.ubuntu.com/ubuntu
+              http://archive.ubuntu.com/ubuntu
+            )
+            ranked_probes="$(
+              for m in "${probe_list[@]}"; do
+                spd="$(curl -fsSL --connect-timeout 3 --max-time 5 -o /dev/null -w '%{speed_download}' "${m}/dists/${VERSION_CODENAME}/InRelease" 2>/dev/null)" || spd=0
+                if [ "$spd" != "0" ] && [ "$spd" != "0.000" ]; then
+                  printf '%s %s\n' "$spd" "$m"
+                fi
+              done | sort -rn | awk '{print $2}'
+            )"
+            while IFS= read -r m; do
+              [ -n "$m" ] && candidates+=("$m")
+            done <<< "$ranked_probes"
+            while IFS= read -r m; do
+              [ -n "$m" ] && candidates+=("$m")
+            done <<< "$orig_mirrors"
+
+            # Deduplicate while preserving priority order.
+            unique_candidates=()
+            for m in "${candidates[@]:-}"; do
+              [ -z "$m" ] && continue
+              seen=0
+              for u in "${unique_candidates[@]:-}"; do
+                [ "$u" = "$m" ] && seen=1 && break
+              done
+              [ "$seen" -eq 0 ] && unique_candidates+=("$m")
+            done
+
+            installed=0
+            for m in "${unique_candidates[@]:-}"; do
+              [ -z "$m" ] && continue
+              echo "Trying Ubuntu apt mirror: $m"
+              printf '%s\n' "$m" | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
+              if install_from_current_mirror; then
+                installed=1
+                break
+              fi
+              echo "::warning::apt failed or timed out on mirror $m; trying next mirror..."
+            done
+            [ "$installed" -eq 1 ]
+          else
+            install_from_current_mirror
+          fi
 
       - name: Run Tex to MD conversion
         timeout-minutes: 40
