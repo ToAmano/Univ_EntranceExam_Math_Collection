@@ -84,7 +84,7 @@ $|f'(1)|=4$が成り立つということは(1)より\cref{eq:4}で等号が成�
 [解1]では不等式の性質を使って$x=0,\pm 1$の値のみを使って解いたが，もっとゴリゴリに二次方程式の性質を使って解くこともできるのでその例も示そう．受験だとこういう解答の方が途中で事故りにくいので安全かもしれない．
 
 \paragraph{(1)}
-$a=0$での成立は明らかだから以下対称性から$a>0$とする．$f(x)$は二次方程式だから平方完成すると
+$a=0$での成立は明らかである（$f(x)=bx+c$より$|b|\le 1$となり，$|f'(1)|=|b|\le 1<4$）．また$f(x)$を$-f(x)$に置き換えても条件$|f(x)|\le 1\, (|x|\le 1)$と評価対象$|f'(1)|$は変わらないため，対称性から以下$a>0$としてよい．$f(x)$は二次関数だから平方完成すると
 \begin{align}
   f(x)=a\left(x+\dfrac{b}{2a}\right)^2-\dfrac{b^2}{4a}+c
 \end{align}
@@ -100,7 +100,69 @@ $a=0$での成立は明らかだから以下対称性から$a>0$とする．$f(x
     $\min f$ & $f\left(-\dfrac{b}{2a}\right)=-\dfrac{b^2}{4a}+c$ & $f\left(-\dfrac{b}{2a}\right)=-\dfrac{b^2}{4a}+c$ & $f(\pm 1)$のうち大きくない方
   \end{tabular}
 \end{table}
-% TODO: 3つの場合の二次関数の様子を左，中，右で図示する
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=1.4cm, y=1.3cm, >=stealth, every node/.style={font=\small}]
+    % --- 左：$1^\circ$ (-1 <= 軸 <= 0) ---
+    \begin{scope}[xshift=0cm]
+      \node[font=\footnotesize\bfseries] at (0, 1.65) {$1^\circ\ (-1 \le -\frac{b}{2a} \le 0)$};
+      \draw[->, thick, gray!80!black] (-1.4, 0) -- (1.4, 0) node[right, font=\scriptsize] {$x$};
+      \draw[->, thick, gray!80!black] (0, -1.15) -- (0, 1.15) node[above, font=\scriptsize] {$y$};
+      \draw[densely dotted, thick, gray!70!black] (-1, -1.0) -- (-1, 1.0);
+      \draw[densely dotted, thick, gray!70!black] (1, -1.0) -- (1, 1.0);
+      \draw[densely dotted, thick, gray!70!black] (-0.35, 0) -- (-0.35, -0.85);
+      \draw[line width=1.4pt, blue!85!black, domain=-1.2:1.15, samples=50, smooth]
+      plot (\x, {0.9*(\x+0.35)*(\x+0.35)-0.85});
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (-0.35, -0.85) {};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (1, 0.790) {};
+      \node[below=2pt, font=\scriptsize, fill=white, inner sep=0.8pt] at (-1, 0) {$-1$};
+      \node[below=2pt, font=\scriptsize, fill=white, inner sep=0.8pt] at (1, 0) {$1$};
+      \node[above=2pt, font=\scriptsize] at (-0.35, 0) {$-\frac{b}{2a}$};
+      \node[below=2pt, font=\scriptsize, red!85!black] at (-0.35, -0.85) {$\min$};
+      \node[above left=1pt, font=\scriptsize, red!85!black] at (1, 0.790) {$\max$};
+    \end{scope}
+
+    % --- 中：$2^\circ$ (0 <= 軸 <= 1) ---
+    \begin{scope}[xshift=5.6cm]
+      \node[font=\footnotesize\bfseries] at (0, 1.65) {$2^\circ\ (0 \le -\frac{b}{2a} \le 1)$};
+      \draw[->, thick, gray!80!black] (-1.4, 0) -- (1.4, 0) node[right, font=\scriptsize] {$x$};
+      \draw[->, thick, gray!80!black] (0, -1.15) -- (0, 1.15) node[above, font=\scriptsize] {$y$};
+      \draw[densely dotted, thick, gray!70!black] (-1, -1.0) -- (-1, 1.0);
+      \draw[densely dotted, thick, gray!70!black] (1, -1.0) -- (1, 1.0);
+      \draw[densely dotted, thick, gray!70!black] (0.35, 0) -- (0.35, -0.85);
+      \draw[line width=1.4pt, blue!85!black, domain=-1.15:1.2, samples=50, smooth]
+      plot (\x, {0.9*(\x-0.35)*(\x-0.35)-0.85});
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (0.35, -0.85) {};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (-1, 0.790) {};
+      \node[below=2pt, font=\scriptsize, fill=white, inner sep=0.8pt] at (-1, 0) {$-1$};
+      \node[below=2pt, font=\scriptsize, fill=white, inner sep=0.8pt] at (1, 0) {$1$};
+      \node[above=2pt, font=\scriptsize] at (0.35, 0) {$-\frac{b}{2a}$};
+      \node[below=2pt, font=\scriptsize, red!85!black] at (0.35, -0.85) {$\min$};
+      \node[above right=1pt, font=\scriptsize, red!85!black] at (-1, 0.790) {$\max$};
+    \end{scope}
+
+    % --- 右：$3^\circ$ (軸が区間外) ---
+    \begin{scope}[xshift=11.2cm]
+      \node[font=\footnotesize\bfseries] at (0, 1.65) {$3^\circ\ (\text{その他})$};
+      \draw[->, thick, gray!80!black] (-1.4, 0) -- (1.45, 0) node[right, font=\scriptsize] {$x$};
+      \draw[->, thick, gray!80!black] (0, -1.15) -- (0, 1.15) node[above, font=\scriptsize] {$y$};
+      \draw[densely dotted, thick, gray!70!black] (-1, -1.0) -- (-1, 1.0);
+      \draw[densely dotted, thick, gray!70!black] (1, -1.0) -- (1, 1.0);
+      \draw[densely dotted, thick, gray!70!black] (1.28, 0) -- (1.28, -0.80);
+      \draw[line width=1.4pt, blue!85!black, domain=-1.2:1.5, samples=50, smooth]
+      plot (\x, {0.25*(\x-1.28)*(\x-1.28)-0.80});
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (-1, 0.4996) {};
+      \node[circle, fill=red!85!black, inner sep=1.4pt] at (1, -0.7804) {};
+      \node[below=2pt, font=\scriptsize, fill=white, inner sep=0.8pt] at (-1, 0) {$-1$};
+      \node[below=2pt, font=\scriptsize, fill=white, inner sep=0.8pt] at (1, 0) {$1$};
+      \node[above=2pt, font=\scriptsize] at (1.28, 0) {$-\frac{b}{2a}$};
+      \node[above right=1pt, font=\scriptsize, red!85!black] at (-1, 0.4996) {$\max$};
+      \node[below left=1pt, font=\scriptsize, red!85!black] at (1, -0.7804) {$\min$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{$a>0$ のときの軸の位置による 3 通りの場合分け（$3^\circ$ は $-\dfrac{b}{2a}>1$ の例）}
+\end{figure}
 
 \subparagraph{$1^{\circ}$の時（$-1\le-\dfrac{b}{2a}\le0$）}
 
@@ -123,48 +185,51 @@ $a>0$から$0\le b\le 2a$である．$|f(x)| \le 1$より$-1 \le \min f, \max f 
 である．これと$0\le b\le 2a$を合わせて$(a,b)$平面に図示すると以下の斜線部である．
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[scale=1.2, >=stealth]
+  \centering
+  \begin{tikzpicture}[x=2.0cm, y=1.5cm, >=stealth, every node/.style={font=\small}]
+    % --- 1. 領域の塗りつぶし (0 <= b <= 2a かつ b <= -2a + 2*sqrt(2a), a > 0) ---
+    % b = 2a と b = -2a + 2*sqrt(2a) の交点は (a, b) = (0.5, 1)
+    \fill[pattern=north east lines, pattern color=blue!65!black]
+    (0, 0) -- (0.5, 1) -- plot[domain=0.5:2, samples=60] (\x, {2*sqrt(2*\x) - 2*\x}) -- cycle;
 
-      % --- 1. 座標軸 ---
-      \draw[->, thick] (-0.5,0) -- (3.2,0) node[right] {$a$};
-      \draw[->, thick] (0,-0.5) -- (0,3.2) node[above] {$b$};
-      \node[below left] at (0,0) {$O$};
+    % --- 2. 座標軸への垂線（点線） ---
+    \draw[densely dotted, thick, gray!70!black] (0.5, 0) -- (0.5, 1) -- (0, 1);
 
-      % --- 2. 領域の描画 (ハッチング) ---
-      % 境界1: b = 0
-      % 境界2: b = 2a (直線)
-      % 境界3: 2a + b = 2*sqrt(2a)  <=>  b = 2*sqrt(2a) - 2a (放物線様曲線)
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.35, 0) -- (2.8, 0) node[right] {$a$};
+    \draw[->, thick, gray!80!black] (0, -0.45) -- (0, 2.0) node[above] {$b$};
+    \node[below left=2pt] at (0, 0) {$O$};
 
-      % 領域の塗りつぶし
-      \fill[pattern=north east lines, pattern color=blue!50]
-      (0,0) -- plot[domain=0:2, samples=50] (\x, {2*sqrt(2*\x) - 2*\x}) -- (0,0);
+    % --- 4. 境界線の描画 ---
+    % b = 2a（境界部分は実線、延長は点線）
+    \draw[line width=1.4pt, blue!85!black] (0, 0) -- (0.5, 1);
+    \draw[densely dotted, thick, blue!85!black] (0.5, 1) -- (0.85, 1.7) node[above] {$b = 2a$};
+    % b = 0 上の境界 (0 < a <= 2)
+    \draw[line width=1.4pt, blue!85!black] (0, 0) -- (2, 0);
+    % 2a + b = 2*sqrt(2a)（領域外の 0<=a<=0.5 は点線、境界 0.5<=a<=2 は実線）
+    \draw[densely dotted, thick, blue!85!black, domain=0:0.5, samples=30]
+    plot (\x, {2*sqrt(2*\x) - 2*\x});
+    \draw[line width=1.4pt, blue!85!black, domain=0.5:2, samples=60]
+    plot (\x, {2*sqrt(2*\x) - 2*\x});
+    \node[above right=1pt, blue!85!black, fill=white, inner sep=1pt, font=\footnotesize] at (0.72, {2*sqrt(1.44)-1.44}) {$2a+b = 2\sqrt{2a}$};
 
-      % --- 3. 境界線の描画 ---
-      % b = 2a の直線 (上側の境界)
-      \draw[thick, blue!80!black, domain=0:1.0] plot (\x, {2*\x})
-      node[above] {$b = 2a$};
+    % --- 5. 直線 2a + b = k ---
+    \draw[densely dotted, thick, orange!90!black, domain=0.15:1.18]
+    plot (\x, {2 - 2*\x}) node[below right, font=\footnotesize] {$2a+b=k$};
+    \draw[line width=1.2pt, red!85!black, domain=1.65:2.22]
+    plot (\x, {4 - 2*\x});
+    \node[right=2pt, red!85!black, font=\footnotesize] at (2.15, -0.3) {$2a+b=4$};
 
-      % 2a + b = 2*sqrt(2a) の曲線 (右側の境界)
-      % a=2 で b=0 となり a 軸に接する
-      \draw[ultra thick, blue!80!black, domain=0:2.2, samples=100]
-      plot (\x, {2*sqrt(2*\x) - 2*\x}) node[right, font=\small] {$2a+b = 2\sqrt{2a}$};
-
-      % --- 4. 直線 2a + b = k の描画 ---
-      % (i) 一般の k (k = 2)
-      \draw[dashed, red!60, thick, domain=-0.2:1.3] plot (\x, {2 - 2*\x})
-      node[below right, font=\small] {$2a+b=k$};
-
-      % (ii) 最大値を与える k = 4 (点 (2,0) で領域に接する)
-      %\draw[ultra thick, red!80!black, domain=0.8:2.3] plot (\x, {4 - 2*\x})
-      %  node[above right, red!80!black] {$2a+b=k$};
-
-      % --- 5. 接点 (2,0) のプロットとラベル ---
-      \node[circle, fill=red!80!black, inner sep=2pt] at (2,0) {}; \node[red!80!black, below, font=\small] at (2,0) {$2$};
-
-    \end{tikzpicture}
-    \caption{$(a,b)$のとりうる領域}
-  \end{center}
+    % --- 6. 軸目盛り・特徴点 ---
+    \node[below=2pt, font=\scriptsize] at (0.5, 0) {$\frac{1}{2}$};
+    \node[left=2pt, font=\scriptsize] at (0, 1) {$1$};
+    \node[circle, fill, inner sep=1.2pt] at (0.5, 1) {};
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (2, 0) {};
+    \node[red!85!black, below=2pt] at (2, 0) {$2$};
+    % a = 0 は除く
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.5pt] at (0, 0) {};
+  \end{tikzpicture}
+  \caption{$1^\circ$ における $(a,b)$ のとりうる領域（境界は $a=0$ のみ除く）}
 \end{figure}
 
 $f'(1)=2a+b$のとりうる範囲は直線$2a+b=k$と斜線部の領域の交点だから
@@ -173,9 +238,9 @@ $f'(1)=2a+b$のとりうる範囲は直線$2a+b=k$と斜線部の領域の交点
 \end{align}
 である．右の等号成立は$(a,b)=(2,0)$の時である．
 
-\subparagraph{$2^{\circ}$の時($0\le-\dfrac{b}{2a}\le 1$)}
+\subparagraph{$2^{\circ}$の時（$0\le-\dfrac{b}{2a}\le 1$）}
 
-$a>0$から$0 \le -b \le 2a$である．$|f(x)| \le 1$より$-1 \le \min f, \max f \le 1$であるから
+$a>0$から$0 \le -b \le 2a$すなわち$-2a \le b \le 0$である．$|f(x)| \le 1$より$-1 \le \min f, \max f \le 1$であるから
 \begin{align}
   \begin{dcases}
     -1 \le -\dfrac{b^2}{4a}+c \le 1 \\
@@ -191,9 +256,56 @@ $a>0$から$0 \le -b \le 2a$である．$|f(x)| \le 1$より$-1 \le \min f, \max
   \therefore
   & 2a - 2\sqrt{2a} \le b \le 2a + 2\sqrt{2a}
 \end{align}
-である．これと$0\le b\le 2a$を合わせて$(a,b)$平面に図示すると以下の斜線部である．
+である．これと$-2a \le b \le 0$を合わせて$(a,b)$平面に図示すると以下の斜線部である．
 
-% TODO: 対応する図
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[x=2.0cm, y=1.5cm, >=stealth, every node/.style={font=\small}]
+    % --- 1. 領域の塗りつぶし (-2a <= b <= 0 かつ b >= 2a - 2*sqrt(2a), a > 0) ---
+    % b = -2a と b = 2a - 2*sqrt(2a) の交点は (a, b) = (0.5, -1)
+    \fill[pattern=north east lines, pattern color=blue!65!black]
+    (0, 0) -- (0.5, -1) -- plot[domain=0.5:2, samples=60] (\x, {2*\x - 2*sqrt(2*\x)}) -- cycle;
+
+    % --- 2. 座標軸への垂線（点線） ---
+    \draw[densely dotted, thick, gray!70!black] (0.5, 0) -- (0.5, -1) -- (0, -1);
+
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.35, 0) -- (2.8, 0) node[right] {$a$};
+    \draw[->, thick, gray!80!black] (0, -1.9) -- (0, 0.65) node[above] {$b$};
+    \node[above left=2pt] at (0, 0) {$O$};
+
+    % --- 4. 境界線の描画 ---
+    % b = -2a（境界部分は実線、延長は点線）
+    \draw[line width=1.4pt, blue!85!black] (0, 0) -- (0.5, -1);
+    \draw[densely dotted, thick, blue!85!black] (0.5, -1) -- (0.85, -1.7) node[below] {$b = -2a$};
+    % b = 0 上の境界 (0 < a <= 2)
+    \draw[line width=1.4pt, blue!85!black] (0, 0) -- (2, 0);
+    % 2a - b = 2*sqrt(2a)（領域外の 0<=a<=0.5 は点線、境界 0.5<=a<=2 は実線）
+    \draw[densely dotted, thick, blue!85!black, domain=0:0.5, samples=30]
+    plot (\x, {2*\x - 2*sqrt(2*\x)});
+    \draw[line width=1.4pt, blue!85!black, domain=0.5:2, samples=60]
+    plot (\x, {2*\x - 2*sqrt(2*\x)});
+    \node[below right=2pt, blue!85!black, fill=white, inner sep=1pt, font=\footnotesize] at (1.15, {2.3-2*sqrt(2.3)}) {$2a-b = 2\sqrt{2a}$};
+
+    % --- 5. 直線 2a + b = k ---
+    \draw[densely dotted, thick, orange!90!black, domain=0.45:1.22]
+    plot (\x, {1.6 - 2*\x});
+    \node[above right=1pt, orange!90!black, font=\footnotesize] at (0.48, 0.64) {$2a+b=k$};
+    \draw[line width=1.2pt, red!85!black, domain=1.65:2.25]
+    plot (\x, {4 - 2*\x});
+    \node[right=2pt, red!85!black, font=\footnotesize] at (2.15, -0.3) {$2a+b=4$};
+
+    % --- 6. 軸目盛り・特徴点 ---
+    \node[above=2pt, font=\scriptsize, fill=white, inner sep=0.8pt] at (0.5, 0) {$\frac{1}{2}$};
+    \node[left=2pt, font=\scriptsize] at (0, -1) {$-1$};
+    \node[circle, fill, inner sep=1.2pt] at (0.5, -1) {};
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (2, 0) {};
+    \node[red!85!black, above=2pt] at (2, 0) {$2$};
+    % a = 0 は除く
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.5pt] at (0, 0) {};
+  \end{tikzpicture}
+  \caption{$2^\circ$ における $(a,b)$ のとりうる領域（境界は $a=0$ のみ除く）}
+\end{figure}
 
 $f'(1)=2a+b$のとりうる範囲は直線$2a+b=k$と斜線部の領域の交点だから
 \begin{align}
@@ -223,49 +335,50 @@ $f'(1)=2a+b$のとりうる範囲は直線$2a+b=k$と斜線部の領域の交点
 である．\cref{eq:9,eq:10}を図示すると下図斜線部である（境界は$a=0$のみ含まず）．
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[scale=2, >=stealth]
+  \centering
+  \begin{tikzpicture}[x=2.2cm, y=1.6cm, >=stealth, every node/.style={font=\small}]
+    % --- 1. 領域の描画 (ハッチング) ---
+    % (i) b >= 2a かつ b <= 1 (a > 0)
+    \fill[pattern=north east lines, pattern color=blue!65!black]
+    (0, 0) -- (0.5, 1.0) -- (0, 1.0) -- cycle;
+    % (ii) b <= -2a かつ b >= -1 (a > 0)
+    \fill[pattern=north east lines, pattern color=blue!65!black]
+    (0, 0) -- (0.5, -1.0) -- (0, -1.0) -- cycle;
 
-      % --- 1. 座標軸 ---
-      \draw[->, thick] (-0.5,0) -- (2.2,0) node[right] {$a$};
-      \draw[->, thick] (0,-1.8) -- (0,1.8) node[above] {$b$};
-      \node[below left] at (0,0) {$O$};
+    % --- 2. 帯状領域 -1 <= b <= 1 の補助線 ---
+    \draw[densely dotted, thick, gray!70!black] (0, 1.0) -- (1.45, 1.0) node[right, black] {$b=1$};
+    \draw[densely dotted, thick, gray!70!black] (0, -1.0) -- (1.45, -1.0) node[right, black] {$b=-1$};
+    \draw[densely dotted, thick, gray!70!black] (0.5, -1.0) -- (0.5, 1.0);
 
-      % --- 2. 帯状領域 -1 <= b <= 1 の平行線 ---
-      \draw[dashed, gray] (0, 1.0) node[left, black, font=\small] {$1$} -- (2.0, 1.0)
-      node[right, black, font=\small] {$b=1$};
-      \draw[dashed, gray] (0, -1.0) node[left, black, font=\small] {$-1$} -- (2.0, -1.0)
-      node[right, black, font=\small] {$b=-1$};
-      \draw[dashed, gray] (0.5, 1.0)  -- (0.5, -1.0);
+    % --- 3. 座標軸 ---
+    \draw[->, thick, gray!80!black] (-0.35, 0) -- (2.1, 0) node[right] {$a$};
+    \draw[->, thick, gray!80!black] (0, -1.75) -- (0, 1.85) node[above] {$b$};
+    \node[below left=2pt] at (0, 0) {$O$};
+    \node[left=2pt, font=\scriptsize] at (0, 1.0) {$1$};
+    \node[left=2pt, font=\scriptsize] at (0, -1.0) {$-1$};
+    \node[below=2pt, font=\scriptsize, fill=white, inner sep=1pt] at (0.5, 0) {$\frac{1}{2}$};
 
-      % --- 3. 領域の描画 (ハッチング) ---
-      % (i) b >= 2a かつ b <= 1 (左上の小さな三角形)
-      \fill[pattern=north east lines, pattern color=blue!50]
-      (0,0) -- (0.5,1.0) -- (0,1.0) -- cycle;
+    % --- 4. 境界線 b = ±2a の描画 ---
+    \draw[line width=1.4pt, blue!85!black] (0, 0) -- (0.5, 1.0);
+    \draw[densely dotted, thick, blue!85!black] (0.5, 1.0) -- (0.78, 1.56) node[above left] {$b = 2a$};
+    \draw[line width=1.4pt, blue!85!black] (0, 0) -- (0.5, -1.0);
+    \draw[densely dotted, thick, blue!85!black] (0.5, -1.0) -- (0.78, -1.56) node[below left] {$b = -2a$};
+    % 上下水平境界線 (0 < a <= 0.5)
+    \draw[line width=1.4pt, blue!85!black] (0, 1.0) -- (0.5, 1.0);
+    \draw[line width=1.4pt, blue!85!black] (0, -1.0) -- (0.5, -1.0);
 
-      % (ii) b <= -2a かつ b >= -1 (右下の三角形)
-      \fill[pattern=north east lines, pattern color=blue!50]
-      (0,0) -- (0.5,-1.0) -- (0.0,-1.0) -- cycle;
+    % --- 5. 直線 2a + b = k の描画（(0.5, 1) で最大値 k = 2） ---
+    \draw[line width=1.2pt, red!85!black, domain=0.18:1.3]
+    plot (\x, {2 - 2*\x}) node[below right, red!85!black, font=\footnotesize] {$2a+b=k$};
 
-      % --- 4. 境界線 b = ±2a の描画 ---
-      \draw[thick, blue!80!black, domain=0:0.8] plot (\x, {2*\x})
-      node[above left] {$b = 2a$};
-      \draw[thick, blue!80!black, domain=0:0.8] plot (\x, {-2*\x})
-      node[below left] {$b = -2a$};
-
-      % a=0 (y軸) は除く白抜き丸
-      \node[circle, draw, fill=white, thick, inner sep=1.5pt] at (0,0) {};
-
-      % --- 5. 直線 2a + b = k の描画 ---
-      % (i) 端点 (0.5, 1) を通るとき: 2(0.5)+1 = 2 => k = 2
-      \draw[ultra thick, red!80!black, domain=-0.2:1.2] plot (\x, {2 - 2*\x})
-      node[below right, red!80!black, font=\small] {$2a+b=k$};
-
-      \node[circle, fill=red!80!black, inner sep=1.8pt] at (0.5,1.0) {}; \node[red!80!black, right, font=\small] at (0.5,1.0) {$(0.5, 1)$};
-
-    \end{tikzpicture}
-    \caption{$(a,b)$のとりうる領域}
-  \end{center}
+    % --- 6. 点のプロット（a = 0 上は除く白抜き丸） ---
+    \node[circle, fill=red!85!black, inner sep=1.6pt] at (0.5, 1.0) {};
+    \node[red!85!black, above right=2pt, fill=white, inner sep=1pt, font=\footnotesize] at (0.5, 1.0) {$\left(\frac{1}{2}, 1\right)$};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.5pt] at (0, 0) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.5pt] at (0, 1.0) {};
+    \node[circle, draw=blue!85!black, thick, fill=white, inner sep=1.5pt] at (0, -1.0) {};
+  \end{tikzpicture}
+  \caption{$3^\circ$ における $(a,b)$ のとりうる領域（境界は $a=0$ のみ除く）}
 \end{figure}
 
 従って$f'(1)=2a+b$のとりうる範囲は，直線$2a+b=k$と斜線部の領域の交点を考えて
@@ -278,7 +391,7 @@ $f'(1)=2a+b$のとりうる範囲は直線$2a+b=k$と斜線部の領域の交点
 以上から，$|2a+b|\le4$は成立する．
 
 \paragraph{(2)}
-(1)で等号が成立する場合を考えればよく，$1^{\circ}$と$2^{\circ}$の場合分けの対称性も加味して$(a,b)=(\pm 2,0)$の時である．（以下略）
+(1)で等号が成立する場合を考えればよく，$1^{\circ}$および$2^{\circ}$と$a<0$の対称性（$f \mapsto -f$）も合わせて$(a,b)=(\pm 2,0)$の時である．（以下略）
 
 \newpage
 
