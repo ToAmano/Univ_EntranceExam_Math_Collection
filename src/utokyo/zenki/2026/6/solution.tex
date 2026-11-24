@@ -1,0 +1,164 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+\begin{oframed}
+  \subfile{problem}
+\end{oframed}
+
+{\bf [解答]}
+
+全ての自然数は$3$で割りきれるか，$1$または$2$余るかであるから，任意の正の整数$n$の素因数分解を
+\begin{align}
+  n=3^a\prod_{i=1}^r p_i^{\alpha_i}\prod_{j=1}^s q_j^{\beta_j} \label{eq:1}
+\end{align}
+と書ける．ただし
+\begin{align}
+  p_i\equiv1\pmod{3},
+  \quad
+  q_j\equiv2\pmod{3} \label{eq:2}
+\end{align}
+であり，要素がない時は積記号は$1$とする．
+
+まず$n$のうちで$3$で割り切れない約数の数$f(n)+g(n)$について考えると，
+これは\cref{eq:1}で$p_i,q_j$のみから約数を$A=\prod_{i=1}^r p_i^{\alpha'_i}\prod_{j=1}^s q_j^{\beta'_j}$と構成すれば良い．ただし$\alpha'_i \le \alpha_i, \beta'_i \le \beta_i$である．従ってあり得る組み合わせは各素因数$p_i$の肩の指数を幾つにするかの組み合わせと等しいから
+\begin{align}
+  f(n) + g(n) = \prod_i(\alpha_i+1)\prod_j(\beta_j+1) \label{eq:3}
+\end{align}
+である．
+
+次に$f(n)$について考える．$A$を法$3$の合同式で考えると\cref{eq:2}より
+\begin{align}
+  A & = \prod_{i=1}^r p_i^{\alpha'_i}\prod_{j=1}^s q_j^{\beta'_j}
+  \equiv \prod_{i=1}^r 1^{\alpha'_i} \prod_{j=1}^s (-1)^{\beta'_j}
+  \equiv \prod_{j=1}^s (-1)^{\beta'_j} \pmod{3}
+\end{align}
+だから，これが$A\equiv 1$を満たす時，
+\begin{align}
+  \beta'_1 + \beta'_2 + \cdots + \beta'_s \equiv 0 \pmod{2}  \label{eq:4}
+\end{align}
+であれば良い．従ってこのような約数の数は\cref{eq:4}を満たす組み合わせの数を$P$として
+\begin{align}
+  f(n) = P\prod_i(\alpha_i+1) \label{eq:5}
+\end{align}
+と書ける．$P$は\cref{eq:4}より，奇数の$\beta'_j$の数が偶数個である場合の数に他ならない．
+
+\paragraph{(1)}
+
+$2800=2^4\cdot5^2\cdot7$であるから，\cref{eq:3}は
+\begin{align}
+  f(n) + g(n) = (4+1)(2+1)(1+1) = 30 \label{eq:6}
+\end{align}
+である．次に\cref{eq:4,eq:5}について，$2,5$の指数を$\beta'_1,\beta'_2$とすると
+\begin{align}
+  0 \le \beta'_1 \le 4,
+  \quad
+  0 \le \beta'_2 \le 2
+\end{align}
+だから\cref{eq:4}を満たす組み合わせは
+\begin{itemize}
+  \item $\beta'_1,\beta'_2$ともに偶数の時，$3\cdot2=6$通り
+  \item $\beta'_1,\beta'_2$ともに奇数の時，$2\cdot1=2$通り
+\end{itemize}
+で合計$6+2=8$通りだから\cref{eq:5}より
+\begin{align}
+  f(n) = 8(1+1) = 16
+\end{align}
+である．\cref{eq:6}より$g(n)=14$が従うから
+\begin{align}
+  f(n) = 16,
+  \quad
+  g(n) = 14
+\end{align}
+である．
+
+\paragraph{(2)}
+
+\cref{eq:4,eq:5}と同様に考えると，$g(n)$は
+\begin{align}
+  \beta'_1 + \beta'_2 + \cdots + \beta'_s \equiv 1 \pmod{2}  \label{eq:7}
+\end{align}
+を満たす組み合わせの数を$Q$として
+\begin{align}
+  g(n) = Q\prod_i(\alpha_i+1) \label{eq:8}
+\end{align}
+と表せる．従って$f(n) \ge g(n)$を示すには$P \ge Q$を示せば良い．
+ここで\cref{eq:4,eq:7}において和を$j$項目で打ち切った場合に対応する場合の数を$P_j,Q_j$とする：
+\begin{align}
+  \begin{dcases}
+    P_j: \beta'_1 + \beta'_2 + \cdots + \beta'_j \equiv 0 \pmod{2} \\
+    Q_j: \beta'_1 + \beta'_2 + \cdots + \beta'_j \equiv 1 \pmod{2}
+  \end{dcases}
+\end{align}
+$P_j =Q_j$または$P_j = Q_j+1$が成立することを$j$に関する数学的帰納法で示す．
+まず$j=1$の時は$\beta_1$の偶奇に応じて（$k\in\mathbb{Z}\ge0$として）
+\begin{align}
+  \begin{dcases}
+    P_1 = k+1, Q_1 = k   & (\beta_1 = 2k) \\
+    P_1 = k+1, Q_1 = k+1 & (\beta_1 = 2k+1)
+  \end{dcases} \label{eq:9}
+\end{align}
+より成立する．そこで$j$での$P_j \ge Q_j$の成立を仮定して$j+1$の時を考えると
+\begin{align}
+  &
+  \begin{dcases}
+    P_{j+1} = (k+1)P_{j}+kQ_{j} \\
+    Q_{j+1} = kP_{j}+(k+1)Q_{j}
+  \end{dcases} \quad (b_{j+1}=2k) \\
+  &
+  \begin{dcases}
+    P_{j+1} = (k+1)P_{j}+(k+1)Q_{j} \\
+    Q_{j+1} = (k+1)P_{j}+(k+1)Q_{j}
+  \end{dcases} \quad (b_{j+1}=2k+1)
+\end{align}
+より$j+1$でも題意は成立する．以上より数学的帰納法により$P_j=Q_j, Q_j+1$であり，$j=s$とすれば$P \ge Q$すなわち$f(n) \ge g(n)$であることが示された．\qed
+
+\paragraph{(3)}
+
+\cref{eq:5,eq:8}より
+\begin{align}
+  \begin{dcases}
+    f(n) = P\prod_i(\alpha_i+1) \\
+    g(n) = Q\prod_i(\alpha_i+1)
+  \end{dcases}
+\end{align}
+である．よって$g(n)=15=3\cdot5$の時，$Q$がこの約数だから，$Q=1,3,5,15$のいずれかである．(2)より，$P=Q$または$P=Q+1$だから，あり得る組み合わせは以下の通りである．
+\begin{align}
+  \left(Q,P,\prod_i(\alpha_i+1)\right)
+  = (1,1,15), (1,2,15), (3,3,5), (3,4,5), (5,5,3), (5,6,3), (15,15,1), (15,16,1)
+\end{align}
+このうち$f(n)=PR$が異なる組み合わせとして例えば以下を選択できる．
+\begin{align}
+  \left(Q,P,\prod_i(\alpha_i+1)\right)
+  = (1,1,15), (1,2,15), (3,4,5), (5,6,3), (15,16,1)
+\end{align}
+それぞれ例えば$n$を以下のように選べば実現できる．以下簡単のため$R=\prod_i(\alpha_i+1)$とおく：
+\begin{itemize}
+  \item $(Q,P,R)=(1,1,15)$の時，$n=5\cdot 4^{14}$, $f(n)=PR=15$
+  \item $(Q,P,R)=(1,2,15)$の時，$n=5^2\cdot 4^{14}$, $f(n)=PR=30$
+  \item $(Q,P,R)=(3,4,5)$の時，$n=5^6\cdot 4^4$, $f(n)=PR=20$
+  \item $(Q,P,R)=(5,6,3)$の時，$n=5^9\cdot 4^2$, $f(n)=PR=18$
+  \item $(Q,P,R)=(15,16,1)$の時，$n=5^{30}$, $f(n)=PR=16$
+\end{itemize}
+従ってとりうる$f(n)$の値は
+\begin{align}
+  f(n) = 15,16,18,20,30
+\end{align}
+である．
+
+% TODO: 別解
+% $A=\prod_i(\alpha_i+1)$，$T=\prod_j(\beta_j+1)$とおく．3で割り切れない約数について
+% \begin{align}
+%   f(n)+g(n)=AT,\qquad
+%   f(n)-g(n)=A\prod_{j=1}^s\sum_{h=0}^{\beta_j}(-1)^h
+% \end{align}
+% である．後者は，すべての$\beta_j$が偶数なら$A$であり，奇数の$\beta_j$があれば$0$である
+% 奇数の$\beta_j$があれば$f(n)=g(n)=15$となる．すべての$\beta_j$が偶数なら
+% \begin{align}
+%   15=g(n)=\dfrac{A(T-1)}{2},\qquad f(n)=15+A
+% \end{align}
+% である．よって$A$は$30$の約数であり，$T$が奇数であることから$A$は$15$の約数である．$A=1,3,5,15$に応じて$T=31,11,7,3$となる．いずれも，$q\equiv2\pmod3$である素数の指数をそれぞれ$30,10,6,2$として実現でき，$A$も$p\equiv1\pmod3$である素数の指数で実現できる．したがって
+% \begin{align}
+%   f(n)\in\{15,16,18,20,30\}
+% \end{align}
+% である．\qed
+
+\end{document}
