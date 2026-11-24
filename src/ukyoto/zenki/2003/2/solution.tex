@@ -9,22 +9,36 @@
 \begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=1.65cm, y=1.18cm, >=stealth, every node/.style={font=\small}]
-    \fill[teal!18] (0,0)
-    plot[domain=0:1.5708, samples=80] (\x,{\x*sin(\x r)})
-    -- (0,3.1416) -- cycle;
-    \draw[->, thick, gray!80!black] (-0.15,0) -- (3.5,0) node[right] {$x$};
+    \def\halfPi{1.570796}
+    \def\piVal{3.141593}
+    \coordinate (O) at (0,0);
+    \coordinate (P) at (\halfPi,\halfPi);
+    % 領域 S の斜線パターン（軸・輪郭より先に描く）
+    \fill[pattern=north east lines, pattern color=teal!75!black] (O) --
+    plot[domain=0:\halfPi, samples=80] (\x,{\x*sin(\x r)})
+    -- (0,\piVal) -- cycle;
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-0.2,0) -- (3.5,0) node[right] {$x$};
     \draw[->, thick, gray!80!black] (0,-0.2) -- (0,3.55) node[above] {$y$};
-    \draw[line width=1.4pt, blue!85!black, domain=0:3.1416, samples=120]
+    % 曲線・法線
+    \draw[line width=1.4pt, blue!85!black, domain=0:\piVal, samples=120]
     plot (\x,{\x*sin(\x r)});
-    \draw[line width=1.2pt, orange!85!black] (0,3.1416) -- (3.1416,0);
-    \draw[dashed, gray!65] (1.5708,0) -- (1.5708,1.5708);
-    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (1.5708,1.5708) {};
-    \node[below=3pt, font=\footnotesize] at (1.5708,0) {$\frac{\pi}{2}$};
-    \node[below=3pt, font=\footnotesize] at (3.1416,0) {$\pi$};
-    \node[left=3pt, font=\footnotesize] at (0,3.1416) {$\pi$};
-    \node[above right=2pt, blue!85!black] at (2.15,1.8) {$y=x\sin x$};
-    \node[above right=2pt, orange!85!black] at (0.55,2.59) {$y=\pi-x$};
-    \node[font=\footnotesize, teal!65!black] at (0.55,1.7) {$S$};
+    \draw[line width=1.2pt, orange!90!black] (0,\piVal) -- (\piVal,0);
+    % 補助線（代表点から座標軸への垂線）
+    \draw[densely dotted, thick, gray!70!black]
+    (\halfPi,0) -- (P) -- (0,\halfPi);
+    % 主要点
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {};
+    % 目盛り・曲線ラベル
+    \node[below left=2pt, font=\footnotesize] at (O) {$O$};
+    \node[below=3pt, font=\footnotesize] at (\halfPi,0) {$\frac{\pi}{2}$};
+    \node[below=3pt, font=\footnotesize] at (\piVal,0) {$\pi$};
+    \node[left=3pt, font=\footnotesize] at (0,\halfPi) {$\frac{\pi}{2}$};
+    \node[left=3pt, font=\footnotesize] at (0,\piVal) {$\pi$};
+    \node[above right=2pt, blue!85!black] at (2.15,{2.15*sin(2.15 r)}) {$y=x\sin x$};
+    \node[above right=2pt, orange!90!black] at (0.55,{\piVal-0.55}) {$y=\pi-x$};
+    % 領域ラベル（斜線より後に白地付きで描く）
+    \node[teal!85!black, font=\normalsize, fill=white, inner sep=1.2pt] at (0.45,2.05) {$S$};
   \end{tikzpicture}
   \caption{$y=x\sin x$，$x=\pi/2$での法線，$y$軸で囲まれる領域$S$}
 \end{figure}
