@@ -9,27 +9,30 @@
 \begin{figure}[htb]
   \centering
   % a=1 (e^{1/a}=e) とした y=f(x) の概形と囲まれる面積 S
-  \begin{tikzpicture}[x=1.8cm, y=2.2cm, >=stealth, every node/.style={font=\small}]
+  \begin{tikzpicture}[x=1.9cm, y=4.6cm, >=stealth, every node/.style={font=\small}]
+    \def\eVal{2.718282}
     \coordinate (O) at (0,0);
-    % 領域 S の淡い塗り
-    \fill[teal!15] (1,0) --
-    plot[domain=1:2.718, samples=70] (\x, {(2.718/\x - 1)*ln(\x)/\x})
-    -- (2.718,0) -- cycle;
+    \coordinate (A) at (1,0);
+    \coordinate (B) at (\eVal,0);
+    % 領域 S の斜線パターン（軸・輪郭より先に描く）
+    \fill[pattern=north east lines, pattern color=blue!60!black] (A) --
+    plot[domain=1:\eVal, samples=70] (\x, {(\eVal/\x - 1)*ln(\x)/\x})
+    -- (B) -- cycle;
     % 座標軸
-    \draw[->, thick, gray!80!black] (-0.3,0) -- (3.6,0) node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0,-0.65) -- (0,0.95) node[above] {$y$};
+    \draw[->, thick, gray!80!black] (-0.3,0) -- (3.65,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.62) -- (0,0.48) node[above] {$y$};
     % 曲線 y = f(x)
-    \draw[line width=1.4pt, blue!85!black, domain=0.65:3.45, samples=100]
-    plot (\x, {(2.718/\x - 1)*ln(\x)/\x});
+    \draw[line width=1.4pt, blue!85!black, domain=0.82:3.45, samples=100]
+    plot (\x, {(\eVal/\x - 1)*ln(\x)/\x});
     % 交点 1, e^{1/a}
-    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (1,0) {};
-    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (2.718,0) {};
-    \node[below=3pt, font=\footnotesize] at (1,0) {$1$};
-    \node[below=3pt, font=\footnotesize] at (2.718,0) {$e^{1/a}$};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (A) {};
+    \node[circle, fill=blue!85!black, inner sep=1.4pt] at (B) {};
+    \node[below=3pt, font=\footnotesize] at (A) {$1$};
+    \node[below=3pt, font=\footnotesize] at (B) {$e^{1/a}$};
     \node[below left=2pt] at (O) {$O$};
-    % ラベル
-    \node[teal!75!black, font=\small] at (1.85,0.18) {$S$};
-    \node[above right=2pt, blue!85!black] at (1.8,0.48) {$y=f(x)$};
+    % ラベル（斜線・曲線より後に描く）
+    \node[blue!85!black, font=\normalsize, fill=white, inner sep=1.2pt] at (1.55,0.095) {$S$};
+    \node[above right=2pt, blue!85!black] at (1.95,{(\eVal/1.95 - 1)*ln(1.95)/1.95}) {$y=f(x)$};
   \end{tikzpicture}
   \caption{$y=f(x)$のグラフと$x$軸で囲まれる領域$S$（$1\le x\le e^{1/a}$）}
   \label{fig:fx_area_s}
