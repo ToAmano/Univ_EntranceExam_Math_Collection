@@ -8,25 +8,31 @@
 
 {\bf [解答]}
 
-\begin{figure}[H]
+\begin{figure}[htb]
   \centering
   \begin{tikzpicture}[x=2.2cm, y=1.8cm, >=stealth, every node/.style={font=\small}]
     \def\alphaVal{0.927295}
     \def\halfPi{1.570796}
     \def\piVal{3.141593}
+    \coordinate (O) at (0,0);
+    \coordinate (P) at (\alphaVal,0.8);
+    \coordinate (M) at (\halfPi,1.0);
 
-    % 全体の面積 S (0 <= x <= pi の sin x の下)
-    \fill[blue!8] (0,0) -- plot[domain=0:\piVal, samples=60] (\x,{sin(\x r)}) -- cycle;
+    % 領域の塗り（斜線パターン，軸・輪郭より先に描く）
+    % 全体の面積 S (0 <= x <= pi の y = sin x の下)
+    \fill[pattern=north east lines, pattern color=blue!60!black]
+    (0,0) -- plot[domain=0:\piVal, samples=60] (\x,{sin(\x r)}) -- cycle;
 
-    % 面積 T: 0 <= x <= alpha は sin x, alpha <= x <= pi/2 は a cos x
-    \fill[blue!25] (0,0)
+    % 面積 T: 0 <= x <= alpha は y = sin x, alpha <= x <= pi/2 は y = a cos x
+    \fill[pattern=north west lines, pattern color=teal!80!black]
+    (0,0)
     -- plot[domain=0:\alphaVal, samples=40] (\x,{sin(\x r)})
     -- plot[domain=\alphaVal:\halfPi, samples=40] (\x,{4*cos(\x r)/3})
     -- cycle;
 
     % 座標軸
-    \draw[->, gray!80!black, line width=0.9pt] (-0.15,0) -- (3.5,0) node[right] {$x$};
-    \draw[->, gray!80!black, line width=0.9pt] (0,-0.15) -- (0,1.6) node[above] {$y$};
+    \draw[->, thick, gray!80!black] (-0.15,0) -- (3.5,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-0.15) -- (0,1.65) node[above] {$y$};
 
     % 曲線
     % y = sin x (0 <= x <= pi)
@@ -36,33 +42,29 @@
     \draw[teal!85!black, line width=1.4pt]
     plot[domain=0:\halfPi, samples=50] (\x,{4*cos(\x r)/3});
 
-    % 補助線
-    % x = alpha の縦線
-    \draw[dashed, gray!65, line width=0.8pt]
-    (\alphaVal,0) -- (\alphaVal,0.8);
-    % x = pi/2 の縦線 (ピークまで)
-    \draw[dashed, gray!65, line width=0.8pt]
-    (\halfPi,0) -- (\halfPi,1.0);
+    % 補助線（代表点から座標軸への垂線）
+    \draw[densely dotted, thick, gray!70!black] (\alphaVal,0) -- (P);
+    \draw[densely dotted, thick, gray!70!black] (\halfPi,0) -- (M);
 
     % 交点と主要点
-    \node[circle, fill=red!85!black, inner sep=1.4pt] at (\alphaVal,0.8) {};
-    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (\halfPi,1.0) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (P) {};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (M) {};
 
     % 目盛りラベル
     \node[below=3pt] at (\alphaVal,0) {$\alpha$};
     \node[below=3pt] at (\halfPi,0) {$\frac{\pi}{2}$};
     \node[below=3pt] at (\piVal,0) {$\pi$};
-    \node[below left=2pt] at (0,0) {$O$};
+    \node[below left=2pt] at (O) {$O$};
     \node[left=2pt] at (0,1.0) {$1$};
-    \node[left=2pt] at (0,1.333) {$a$};
+    \node[left=2pt] at (0,{4/3}) {$a$};
 
     % 曲線ラベル
-    \node[blue!85!black, above=2pt, font=\footnotesize] at (2.4,0.7) {$y=\sin x$};
+    \node[blue!85!black, above right=2pt, font=\footnotesize] at (2.4,{sin(2.4 r)}) {$y=\sin x$};
     \node[teal!85!black, above right=1pt, font=\footnotesize] at (0.05,1.35) {$y=a\cos x$};
 
-    % 領域ラベル
-    \node[blue!85!black, font=\normalsize] at (0.55,0.3) {$T$};
-    \node[gray!60!black, font=\small] at (2.3,0.35) {$S$};
+    % 領域ラベル（斜線より後に白地付きで描く）
+    \node[teal!85!black, font=\normalsize, fill=white, inner sep=1.5pt] at (0.58,0.28) {$T$};
+    \node[blue!85!black, font=\normalsize, fill=white, inner sep=1.5pt] at (2.2,0.35) {$S$};
   \end{tikzpicture}
   \caption{曲線$y=\sin x$（$0\leqq x\leqq \pi$の面積$S$），$y=a\cos x$と面積$T$}
   \label{fig:sin_cos_regions}
