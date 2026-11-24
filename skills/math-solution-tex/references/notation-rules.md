@@ -57,7 +57,7 @@
 - 別行立ての数式は、1行だけでも `align` で書く。記法がそろい、あとから式変形を足すときに書き直さずに済む。
 - `equation`・`equation*`・`align*`・`\[ ... \]`・`$$ ... $$` は使わない。
 - 複数行の変形は `&=` で位置をそろえる。
-- lint：`check_align_star`、`check_equation_env`、`check_display_math_brackets`、`check_display_math_dollars`（いずれも `--fix` で `align` に直す）。
+- lint：`check_align_star`、`check_equation_env`、`check_display_math_brackets`、`check_display_math_dollars`（いずれも `--fix` で `align` に直す）、`check_align_ampersand`（`&` ありの `align` 内で `&` が抜けた行を検出）、`check_align_missing_ampersand`（警告。複数行の関係式すべてに `&` がない `align` を検出）。
 
 ### N5.2 途中の式番号をまとめる
 - `&=` でつないで最後の結果だけに意味がある変形は、`split` で包んで式番号を1つにすることを検討する（`\begin{align}\begin{split} ... \end{split}\end{align}`）。または途中の行に `\notag` を付ける。

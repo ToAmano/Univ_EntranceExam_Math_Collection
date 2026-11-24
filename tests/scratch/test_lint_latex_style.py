@@ -645,6 +645,32 @@ def test_missing_line_break_warnings_via_lint_file(tmp_path):
     assert any('align' in m and '[§N5.3]' in m for m in msgs)
 
 
+def test_align_ampersand_rules_via_lint_file(tmp_path):
+    source = tmp_path / 'solution.tex'
+    source.write_text(
+        '\\documentclass[../../main.tex]{subfiles}\n'
+        '\\begin{document}\n'
+        '{\\bf [解答]}\n'
+        '\\begin{align}\n'
+        '  x &= 1 \\\\\n'
+        '  = 2\n'
+        '\\end{align}\n'
+        '\\begin{align}\n'
+        '  p = 1 \\\\\n'
+        '  q = 2\n'
+        '\\end{align}\n'
+        '\\end{document}\n',
+        encoding='utf-8',
+    )
+    errors, warnings, _ = lint.lint_file(source)
+    assert [(ln, m) for ln, m in errors if '§N5.1' in m and '&' in m] == [
+        (6, 'align 環境内で他の行には & があるが，この行に & がない（位置揃えが崩れる） [§N5.1]')
+    ]
+    assert [(ln, m) for ln, m in warnings if '§N5.1' in m and '&' in m] == [
+        (9, 'align 環境内で複数行とも & がないため右揃えになる（&= 等で位置をそろえる） [§N5.1]')
+    ]
+
+
 
 
 

@@ -226,3 +226,46 @@ def test_missing_line_break_warnings():
     assert [line for line, _ in lint.check_align_missing_break(align_missing)] == [2]
     align_cont = '\\begin{align}\n  a &< b\n  < c \\\\\n  x &= 1 \\\\ \\notag\n  y &= 2\n\\end{align}'
     assert lint.check_align_missing_break(align_cont) == []
+
+
+def test_align_ampersand_checks():
+    mixed_missing = (
+        '\\begin{align}\n'
+        '  2(k-t)^2 + z_t^2 = 2(1-|k|)^2 \\\\\n'
+        '  \\therefore z_t^2 &= 2(1-|k|)^2 - 2(k-t)^2 \\\\\n'
+        '  \\therefore S(t) = 2\n'
+        '\\end{align}'
+    )
+    assert [line for line, _ in lint.check_align_ampersand(mixed_missing)] == [2, 4]
+    assert lint.check_align_missing_ampersand(mixed_missing) == []
+
+    all_zero_multi = (
+        '\\begin{align}\n'
+        '  a = 1 \\\\\n'
+        '  b = 2\n'
+        '\\end{align}'
+    )
+    assert lint.check_align_ampersand(all_zero_multi) == []
+    assert [line for line, _ in lint.check_align_missing_ampersand(all_zero_multi)] == [2]
+
+    allowed = (
+        '\\begin{align}\n'
+        '  \\lim_{n\\to\\infty} \\sum_{k=1}^n a_k \\\\\n'
+        '  &= \\int_0^1 f(x)\\,dx + \\mqty(1 & 2 \\\\ 3 & 4) \\\\\n'
+        '  \\intertext{または}\n'
+        '  & \\begin{cases} x=1 \\\\ y=2 \\end{cases}\n'
+        '\\end{align}\n'
+        '\\begin{align}\n'
+        '  \\begin{split}\n'
+        '    p &= 1 \\\\\n'
+        '    &= 2\n'
+        '  \\end{split} \\\\\n'
+        '  q &= 3\n'
+        '\\end{align}\n'
+        '\\begin{align}\n'
+        '  a + b \\\\\n'
+        '  + c = d\n'
+        '\\end{align}'
+    )
+    assert lint.check_align_ampersand(allowed) == []
+    assert lint.check_align_missing_ampersand(allowed) == []

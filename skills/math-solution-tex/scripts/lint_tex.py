@@ -1897,6 +1897,173 @@ def check_align_missing_break(text):
     return warnings
 
 
+_PAREN_MATRIX_MACRO_RE = re.compile(r'\\(?:mqty|qty|pmat|bmat|vmat|dmat|imat|zmat|spmqty)\*?(?![a-zA-Z])')
+_ALIGN_REL_WITH_ARROWS_RE = re.compile(
+    r'(?:=|<(?!<)|>(?!>)|'
+    r'\\(?:le|ge|leqq|geqq|neq|equiv|approx|sim|simeq|propto|iff|implies|'
+    r'Longleftrightarrow|Longrightarrow|longrightarrow|xrightarrow)(?![a-zA-Z]))'
+)
+_ALIGN_LEADING_AMP_REL_RE = re.compile(
+    r'^&\s*(?:=|<(?!<)|>(?!>)|'
+    r'\\(?:le|ge|leqq|geqq|neq|equiv|approx|sim|simeq|propto|iff|implies|'
+    r'Longleftrightarrow|Longrightarrow|longrightarrow|xrightarrow)(?![a-zA-Z]))'
+)
+_ALIGN_INNER_ENV_ONLY_RE = re.compile(
+    r'^\\begin\{(split|d?cases\*?|array|[pbvBV]?matrix|smallmatrix|aligned)\}.*'
+    r'\\end\{\1\}\s*(?:\\label\{[^}]*\}|\\notag|\\nonumber)?\s*$',
+    re.S,
+)
+_ALIGN_SPLIT_OR_ALIGNED_RE = re.compile(r'\\begin\{(?:split|aligned)\}')
+
+
+def _mask_paren_matrix_macros(body):
+    """\\mqty(...) 等の丸括弧行列マクロの中身を文字長・改行を保って空白化する。"""
+    buf = list(body)
+    pos = 0
+    n = len(body)
+    while pos < n:
+        m = _PAREN_MATRIX_MACRO_RE.search(body, pos)
+        if not m:
+            break
+        j = m.end()
+        while j < n and body[j].isspace():
+            j += 1
+        if j < n and body[j] == '(':
+            _, end_idx = _extract_paren(body, j)
+            _blank_keep_newlines(buf, j, end_idx)
+            pos = end_idx
+        else:
+            pos = m.end()
+    return ''.join(buf)
+
+
+def _count_top_level_amps(row_text):
+    """ネスト環境を除いたトップレベルの '&' 個数を数える。"""
+    depth = 0
+    amps = 0
+    for tok in re.finditer(r'\\begin\{[^}]+\}|\\end\{[^}]+\}|(?<!\\)&', row_text):
+        s = tok.group(0)
+        if s.startswith(r'\begin{'):
+            depth += 1
+        elif s.startswith(r'\end{'):
+            depth = max(0, depth - 1)
+        elif depth == 0:
+            amps += 1
+    return amps
+
+
+def _split_align_rows_with_amps(body):
+    """align 本体を \\\\ と \\intertext で区切り、(相対offset, 行テキスト, トップレベル '&' 数) を返す。"""
+    masked = _mask_paren_matrix_macros(body)
+    token_re = re.compile(
+        r'\\begin\{[^}]+\}|\\end\{[^}]+\}|'
+        r'\\(?:short)?intertext\*?\s*\{|'
+        r'(?<!\\)\\\\(?:\s*\[[^\]]*\])?'
+    )
+    depth = 0
+    raw_rows = []
+    start = 0
+    pos = 0
+    n = len(masked)
+    while pos < n:
+        m = token_re.search(masked, pos)
+        if not m:
+            break
+        s = m.group(0)
+        if s.startswith(r'\begin{'):
+            depth += 1
+            pos = m.end()
+        elif s.startswith(r'\end{'):
+            depth = max(0, depth - 1)
+            pos = m.end()
+        elif depth == 0:
+            raw_rows.append((start, masked[start:m.start()]))
+            if s.endswith('{'):
+                _, start = extract_braced(masked, m.end() - 1)
+                pos = start
+            else:
+                start = m.end()
+                pos = start
+        else:
+            pos = m.end()
+    if start < n:
+        raw_rows.append((start, masked[start:]))
+
+    rows = []
+    for rel_start, raw_row in raw_rows:
+        stripped = raw_row.strip()
+        if not stripped or _TRAILING_META_ONLY_RE.match(stripped):
+            continue
+        abs_rel = rel_start + (len(raw_row) - len(raw_row.lstrip()))
+        rows.append((abs_rel, stripped, _count_top_level_amps(raw_row)))
+    return rows
+
+
+def _iter_align_blocks(text):
+    """TikZ・verbatim 等を除いた top-level align / flalign ブロック (body_start, body) を列挙する。"""
+    masked = _mask_non_math_regions(text)
+    for m in re.finditer(r'\\begin\{(align\*?|flalign\*?)\}(.*?)\\end\{\1\}', masked, re.S):
+        yield m.start(2), m.group(2)
+
+
+def _has_top_level_relation(row):
+    """\\text や添字を除いた行内に関係演算子・矢印が含まれるかを返す。"""
+    cleaned = _strip_math_text_commands(row)
+    out = []
+    i = 0
+    n = len(cleaned)
+    while i < n:
+        if cleaned[i] in ('_', '^'):
+            j = i + 1
+            while j < n and cleaned[j].isspace():
+                j += 1
+            if j < n and cleaned[j] == '{':
+                _, i = extract_braced(cleaned, j)
+                continue
+        out.append(cleaned[i])
+        i += 1
+    return bool(_ALIGN_REL_WITH_ARROWS_RE.search(''.join(out)))
+
+
+def check_align_ampersand(text):
+    """同じ align 内に & のある行とない行が混在する場合、& の入れ忘れを検出する（§N5.1）。"""
+    errors = []
+    for body_start, body in _iter_align_blocks(text):
+        rows = _split_align_rows_with_amps(body)
+        if len(rows) <= 1 or not any(amps > 0 for _, _, amps in rows):
+            continue
+        for idx, (rel_offset, row_text, amps) in enumerate(rows):
+            if amps > 0 or _ALIGN_INNER_ENV_ONLY_RE.match(row_text):
+                continue
+            # 先頭行が関係演算子を含まない左辺のみで次行が &= ... で始まる折り返しは許容
+            if idx == 0:
+                _, next_row, next_amps = rows[1]
+                if next_amps > 0 and _ALIGN_LEADING_AMP_REL_RE.match(next_row) and not _has_top_level_relation(row_text):
+                    continue
+            errors.append((
+                line_of(text, body_start + rel_offset),
+                "align 環境内で他の行には & があるが，この行に & がない（位置揃えが崩れる）",
+            ))
+    return errors
+
+
+def check_align_missing_ampersand(text):
+    """複数行の関係式を含む align で、全行に & がないブロックを警告する（§N5.1）。"""
+    warnings = []
+    for body_start, body in _iter_align_blocks(text):
+        if _ALIGN_SPLIT_OR_ALIGNED_RE.search(body):
+            continue
+        rows = _split_align_rows_with_amps(body)
+        if len(rows) <= 1 or any(amps > 0 for _, _, amps in rows):
+            continue
+        if sum(1 for _, row_text, _ in rows if _has_top_level_relation(row_text)) >= 2:
+            warnings.append((
+                line_of(text, body_start + rows[0][0]),
+                "align 環境内で複数行とも & がないため右揃えになる（&= 等で位置をそろえる）",
+            ))
+    return warnings
+
+
 def check_binom(text):
     """組合せは {}_nC_k で書き、\\binom 系は使わない（§N2.1）。"""
     return [(line_of(text, m.start()), f"{m.group()} は使わず，組合せは {{}}_nC_k の形で書く")
@@ -2071,6 +2238,7 @@ def lint_file(path, profile=None):
     errors = []
     errors += tag(check_align_star(text), 'N5.1')
     errors += tag(check_equation_env(text), 'N5.1')
+    errors += tag(check_align_ampersand(text), 'N5.1')
     errors += tag(check_trailing_align_break(text), 'N5.3')
     errors += tag(check_display_math_brackets(text), 'N5.1')
     errors += tag(check_display_math_dollars(text), 'N5.1')
@@ -2102,6 +2270,7 @@ def lint_file(path, profile=None):
     errors += tag(check_tdplot_placement(text), 'F7.1')
     warnings = tag(check_overline_warning(text), 'N9.1')
     warnings += tag(check_long_align_lines(text), 'N5.4')
+    warnings += tag(check_align_missing_ampersand(text), 'N5.1')
     warnings += tag(check_cases_env(text), 'N1.1')
     warnings += tag(check_cases_missing_break(text), 'N1.1')
     warnings += tag(check_align_missing_break(text), 'N5.3')
