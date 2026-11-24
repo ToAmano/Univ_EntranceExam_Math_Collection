@@ -7,122 +7,107 @@
 {\bf [解答]}
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[scale=5.0, >=stealth]
+  \centering
+  \begin{tikzpicture}[scale=5.0, >=stealth, every node/.style={font=\small}]
 
-      % --- 1. パラメータ設定 (theta = 35度 の一般例) ---
-      \def\thetaVal{35}
+    % --- 1. パラメータ設定 (theta = 35度 の一般例) ---
+    \def\thetaVal{35}
 
-      % x = cos(theta) / (sin(theta) + cos(theta) + 1)
-      \pgfmathsetmacro{\xVal}{cos(\thetaVal)/(sin(\thetaVal) + cos(\thetaVal) + 1)}
+    % x = cos(theta) / (sin(theta) + cos(theta) + 1)
+    \pgfmathsetmacro{\xVal}{cos(\thetaVal)/(sin(\thetaVal) + cos(\thetaVal) + 1)}
 
-      % --- 2. 正方形 ABCD の座標 (1辺 1) ---
-      \coordinate (B) at (0, 0);
-      \coordinate (A) at (1, 0);
-      \coordinate (D) at (1, 1);
-      \coordinate (C) at (0, 1);
+    % --- 2. 正方形 ABCD の座標 (1辺 1) ---
+    \coordinate (B) at (0, 0);
+    \coordinate (A) at (1, 0);
+    \coordinate (D) at (1, 1);
+    \coordinate (C) at (0, 1);
 
-      % 各基準点の座標
-      \coordinate (I) at (0, \xVal);
-      \coordinate (H) at (1, 1 - \xVal);
-      \coordinate (O) at (0.5, 0.5);
+    % 各基準点の座標
+    \coordinate (I) at (0, \xVal);
+    \coordinate (H) at (1, 1 - \xVal);
+    \coordinate (O) at (0.5, 0.5);
 
-      % --- 3. 折り返した点の厳密な幾何座標 ---
-      % B' = I + x * (-sin theta, cos theta)
-      \pgfmathsetmacro{\Bpx}{-\xVal * sin(\thetaVal)}
-      \pgfmathsetmacro{\Bpy}{\xVal + \xVal * cos(\thetaVal)}
-      \coordinate (Bprime) at (\Bpx, \Bpy);
+    % --- 3. 折り返した点の厳密な幾何座標 ---
+    % B' = I + x * (-sin theta, cos theta)
+    \pgfmathsetmacro{\Bpx}{-\xVal * sin(\thetaVal)}
+    \pgfmathsetmacro{\Bpy}{\xVal + \xVal * cos(\thetaVal)}
+    \coordinate (Bprime) at (\Bpx, \Bpy);
 
-      % F on BC: y = x + x/cos(theta)
-      \pgfmathsetmacro{\Fy}{\xVal + \xVal / cos(\thetaVal)}
-      \coordinate (F) at (0, \Fy);
+    % F on BC: y = x + x/cos(theta)
+    \pgfmathsetmacro{\Fy}{\xVal + \xVal / cos(\thetaVal)}
+    \coordinate (F) at (0, \Fy);
 
-      % E (直線 A'B' と 辺 CD: y=1 の交点) => x = x*cos(theta)
-      \pgfmathsetmacro{\Ex}{\xVal}
-      \coordinate (E) at (\Ex, 1);
+    % E (直線 A'B' と 辺 CD: y=1 の交点)
+    \pgfmathsetmacro{\Ex}{\xVal}
+    \coordinate (E) at (\Ex, 1);
 
-      % G (直線 A'H と 辺 CD: y=1 の交点) => x = 1 - x*tan(theta)
-      \pgfmathsetmacro{\Gx}{1 - \xVal * tan(\thetaVal)}
-      \coordinate (G) at (\Gx, 1);
+    % G (直線 A'H と 辺 CD: y=1 の交点)
+    \pgfmathsetmacro{\Gx}{1 - \xVal * tan(\thetaVal)}
+    \coordinate (G) at (\Gx, 1);
 
-      % A' = B' + 1 * (cos theta, sin theta)
-      %\pgfmathsetmacro{\Apx}{\Bpx + cos(\thetaVal)}
-      %\pgfmathsetmacro{\Apy}{\Bpy + sin(\thetaVal)}
-      %\coordinate (Aprime) at (\Apx, \Apy);
+    % A' = B' + 1 * (cos theta, sin theta)
+    \pgfmathsetmacro{\Apx}{\Bpx + cos(\thetaVal)}
+    \pgfmathsetmacro{\Apy}{\Bpy + sin(\thetaVal)}
+    \coordinate (Aprime) at (\Apx, \Apy);
 
-      % 直線 B'A' は傾き角 theta 方向（単位ベクトル: (cos theta, sin theta)）
-      % A' = B' + 1 * (cos theta, sin theta)
-      \pgfmathsetmacro{\Apx}{\Bpx + cos(\thetaVal)}
-      \pgfmathsetmacro{\Apy}{\Bpy + sin(\thetaVal)}
-      \coordinate (Aprime) at (\Apx, \Apy);
+    % --- 4. 重なり部分：五角形 P の斜線ハッチング ---
+    \begin{scope}
+      \fill[pattern=north east lines, pattern color=blue!60!black]
+      (I) -- (F) -- (E) -- (G) -- (H) -- cycle;
+    \end{scope}
 
-      % --- 4. 重なり部分：五角形 P の斜線ハッチング ---
-      % 五角形の頂点: I - F - E - G - H
-      \begin{scope}
-        \fill[pattern=north east lines, pattern color=blue!60]
-        (I) -- (F) -- (E) -- (G) -- (H) -- cycle;
-      \end{scope}
+    % --- 5. 正方形 ABCD の枠線 ---
+    \draw[thick] (B) -- (A) -- (D) -- (C) -- cycle;
 
-      % --- 5. 正方形 ABCD の枠線 ---
-      \draw[thick] (B) -- (A) -- (D) -- (C) -- cycle;
+    % --- 6. 折り目 IH ---
+    \draw[line width=1.3pt, red!85!black] (I) -- (H);
 
-      % --- 6. 折り目 IH ---
-      \draw[thick, red!80!black] (I) -- (H);
+    % --- 7. 折り返された部分の線分 ---
+    \draw[thick] (I) -- (Bprime) -- (F);
+    \draw[dashed, thick, gray!70!black] (Bprime) -- (C) -- (Aprime) -- (D);
+    \draw[thick] (Bprime) -- (Aprime) -- (H);
 
-      % --- 7. 折り返された部分の線分 ---
-      % 三角形 I B' F
-      \draw[thick] (I) -- (Bprime) -- (F);
-      \draw[dashed, gray] (Bprime) -- (C) -- (Aprime) -- (D);
+    % 直角マーク (B' における角)
+    \draw[thin, gray!80!black]
+    ($(Bprime)!4pt!(I)$) --
+    ($($(Bprime)!4pt!(I)$) + ($(Bprime)!4pt!(Aprime)$) - (Bprime)$) --
+    ($(Bprime)!4pt!(Aprime)$);
 
-      % 線分 B' - A' - H
-      \draw[thick] (Bprime) -- (Aprime) -- (H);
+    % 対称軸の補助線
+    \draw[densely dotted, thick, gray!70!black] (O) -- (E);
+    \draw[densely dotted, thick, gray!70!black] (O) -- (F);
+    \draw[densely dotted, thick, gray!70!black] (O) -- (G);
 
-      % 直角マーク (B' における角)
-      \draw[thin, gray]
-      ($(Bprime)!4pt!(I)$) --
-      ($($(Bprime)!4pt!(I)$) + ($(Bprime)!4pt!(Aprime)$) - (Bprime)$) --
-      ($(Bprime)!4pt!(Aprime)$);
+    % --- 8. 角度と長さのラベル ---
+    % 角度 theta (角 B'IC)
+    \draw[->, thin, orange!90!black] ($(I) + (90:0.12)$) arc[start angle=90, end angle={90 + \thetaVal}, radius=0.12];
+    \node[orange!90!black, font=\scriptsize, fill=white, inner sep=0.6pt] at ($(I) + ({90 + \thetaVal/2}:0.165)$) {$\theta$};
 
-      % 対称軸の補助線 (O から E, F への破線)
-      \draw[dashed, gray!80] (O) -- (E);
-      \draw[dashed, gray!80] (O) -- (F);
-      \draw[dashed, gray!80] (O) -- (G);
+    % 長さ
+    \node[left=2pt, font=\scriptsize] at ($(B)!0.5!(I)$) {$x$};
+    \node[below left=1pt, font=\scriptsize] at ($(I)!0.5!(Bprime)$) {$x$};
+    \node[right=2pt, font=\scriptsize] at ($(D)!0.5!(H)$) {$x$};
+    \node[right=2pt, font=\scriptsize] at ($(A)!0.5!(H)$) {$1-x$};
+    \node[above left=1pt, font=\scriptsize, fill=white, inner sep=0.6pt] at ($(Bprime)!0.5!(F)$) {$x\tan\theta$};
+    \node[right=3pt, font=\scriptsize, fill=white, inner sep=0.8pt] at ($(I)!0.5!(F)$) {$\frac{x}{\cos\theta}$};
 
-      % --- 8. 角度と長さのラベル ---
-      % 角度 theta (角 B'IC)
-      \draw[->, thin, orange!90!black] ($(I) + (90:0.12)$) arc (90:{90 + \thetaVal}:0.12);
-      \node[orange!90!black, font=\scriptsize] at ($(I) + ({90 + \thetaVal/2}:0.16)$) {$\theta$};
+    % --- 9. 各点のプロットと頂点名 ---
+    \node[circle, fill, inner sep=1.2pt] at (A) {}; \node[below right=2pt] at (A) {$A$};
+    \node[circle, fill, inner sep=1.2pt] at (B) {}; \node[below left=2pt] at (B) {$B$};
+    \node[circle, fill, inner sep=1.2pt] at (C) {}; \node[above left=2pt] at (C) {$C$};
+    \node[circle, fill, inner sep=1.2pt] at (D) {}; \node[above right=2pt] at (D) {$D$};
 
-      % 長さ x (|BI|, |IB'|, |DH|)
-      \node[left, font=\scriptsize] at ($(B)!0.5!(I)$) {$x$};
-      \node[below left, font=\scriptsize] at ($(I)!0.5!(Bprime)$) {$x$};
-      \node[right, font=\scriptsize] at ($(D)!0.5!(H)$) {$x$};
-      \node[right, font=\scriptsize] at ($(A)!0.5!(H)$) {$1-x$};
+    \node[circle, fill, inner sep=1.2pt] at (I) {}; \node[left=2pt] at (I) {$I$};
+    \node[circle, fill, inner sep=1.2pt] at (H) {}; \node[right=2pt] at (H) {$H$};
+    \node[circle, fill, inner sep=1.2pt] at (O) {}; \node[below right=2pt, fill=white, inner sep=0.6pt] at (O) {$O$};
 
-      % 長さ x tan theta (|B'F|)
-      \node[above left, font=\scriptsize] at ($(Bprime)!0.5!(F)$) {$x\tan\theta$};
+    \node[circle, fill, inner sep=1.2pt] at (Bprime) {}; \node[left=2pt] at (Bprime) {$B'$};
+    \node[circle, fill, inner sep=1.2pt] at (Aprime) {}; \node[above=2pt] at (Aprime) {$A'$};
+    \node[circle, fill, inner sep=1.2pt] at (F) {}; \node[left=2pt] at (F) {$F$};
+    \node[circle, fill, inner sep=1.2pt] at (E) {}; \node[above=2pt] at (E) {$E$};
+    \node[circle, fill, inner sep=1.2pt] at (G) {}; \node[above=2pt] at (G) {$G$};
 
-      % 長さ x / cos theta (|IF|)
-      \node[right, font=\scriptsize, xshift=2pt] at ($(I)!0.5!(F)$) {$\frac{x}{\cos\theta}$};
-
-      % --- 9. 各点のプロットと頂点名 ---
-      \node[circle, fill, inner sep=0.8pt] at (A) {}; \node[below right] at (A) {$A$};
-      \node[circle, fill, inner sep=0.8pt] at (B) {}; \node[below left] at (B) {$B$};
-      \node[circle, fill, inner sep=0.8pt] at (C) {}; \node[above left] at (C) {$C$};
-      \node[circle, fill, inner sep=0.8pt] at (D) {}; \node[above right] at (D) {$D$};
-
-      \node[circle, fill, inner sep=0.9pt] at (I) {}; \node[left] at (I) {$I$};
-      \node[circle, fill, inner sep=0.9pt] at (H) {}; \node[right] at (H) {$H$};
-      \node[circle, fill, inner sep=0.9pt] at (O) {}; \node[below right] at (O) {$O$};
-
-      \node[circle, fill, inner sep=0.9pt] at (Bprime) {}; \node[left] at (Bprime) {$B'$};
-      \node[circle, fill, inner sep=0.9pt] at (Aprime) {}; \node[above] at (Aprime) {$A'$};
-      \node[circle, fill, inner sep=0.8pt] at (F) {}; \node[left] at (F) {$F$};
-      \node[circle, fill, inner sep=0.8pt] at (E) {}; \node[above] at (E) {$E$};
-      \node[circle, fill, inner sep=0.8pt] at (G) {}; \node[above] at (G) {$G$};
-
-    \end{tikzpicture}
-  \end{center}
+  \end{tikzpicture}
   \caption{正方形 $ABCD$ を折り目 $IH$ で折り返したときの様子（五角形 $IFEGH$ が重なり部分）}
 \end{figure}
 
@@ -171,74 +156,64 @@ $P$の面積を$T$，$\triangle IB'F$の面積$S_1$，$\triangle EA'G$の面積$
 となる．従って$\triangle FCB'$は二等辺三角形で$CF=B'F$となる．
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[scale=5.0, >=stealth]
+  \centering
+  \begin{tikzpicture}[scale=5.2, >=stealth, every node/.style={font=\small}]
 
-      % --- 1. パラメータ設定 (theta = 35度) ---
-      \def\thetaVal{35}
-      \pgfmathsetmacro{\xVal}{cos(\thetaVal)/(sin(\thetaVal) + cos(\thetaVal) + 1)}
+    % --- 1. パラメータ設定 (theta = 35度) ---
+    \def\thetaVal{35}
+    \pgfmathsetmacro{\xVal}{cos(\thetaVal)/(sin(\thetaVal) + cos(\thetaVal) + 1)}
 
-      % --- 2. 各点の厳密な幾何座標 ---
-      \coordinate (C) at (0, 1);
-      \coordinate (O) at (0.5, 0.5);
+    % --- 2. 各点の厳密な幾何座標 ---
+    \coordinate (C) at (0, 1);
+    \coordinate (O) at (0.5, 0.5);
 
-      % B' = (-x*sin theta, x + x*cos theta)
-      \pgfmathsetmacro{\Bpx}{-\xVal * sin(\thetaVal)}
-      \pgfmathsetmacro{\Bpy}{\xVal + \xVal * cos(\thetaVal)}
-      \coordinate (Bprime) at (\Bpx, \Bpy);
+    % B' = (-x*sin theta, x + x*cos theta)
+    \pgfmathsetmacro{\Bpx}{-\xVal * sin(\thetaVal)}
+    \pgfmathsetmacro{\Bpy}{\xVal + \xVal * cos(\thetaVal)}
+    \coordinate (Bprime) at (\Bpx, \Bpy);
 
-      % F on BC: y = x + x/cos(theta)
-      \pgfmathsetmacro{\Fy}{\xVal + \xVal / cos(\thetaVal)}
-      \coordinate (F) at (0, \Fy);
+    % F on BC: y = x + x/cos(theta)
+    \pgfmathsetmacro{\Fy}{\xVal + \xVal / cos(\thetaVal)}
+    \coordinate (F) at (0, \Fy);
 
-      % --- 3. 着目三角形 OCB' の塗りつぶし ---
-      \fill[orange!15] (O) -- (C) -- (Bprime) -- cycle;
+    % --- 3. 線分の描画 ---
+    % 外枠の二等辺三角形 OCB'
+    \draw[line width=1.3pt, orange!90!black] (C) -- (O) -- (Bprime) -- cycle;
 
-      % --- 4. 線分の描画 ---
-      % 外枠の二等辺三角形 OCB'
-      \draw[ultra thick, orange!80!black] (C) -- (O) -- (Bprime) -- cycle;
+    % 内部の線分 CF と B'F
+    \draw[line width=1.2pt, blue!85!black] (C) -- (F);
+    \draw[line width=1.2pt, blue!85!black] (Bprime) -- (F);
+    \draw[densely dotted, thick, gray!70!black] (Bprime) -- (C);
 
-      % 内部の線分 CF (正方形の辺の一部) と B'F (折り返された辺の一部)
-      \draw[thick, blue!80!black] (C) -- (F);
-      \draw[thick, blue!80!black] (Bprime) -- (F);
-      \draw[dashed, gray!80] (Bprime) -- (C);
+    % --- 4. 角度の表示とラベル ---
+    % (i) 角 OCF = pi/4
+    \draw[->, thin, gray!80!black] ($(C) + (-45:0.13)$) arc[start angle=-45, end angle=-90, radius=0.13];
+    \node[gray!80!black, font=\scriptsize, fill=white, inner sep=0.5pt] at ($(C) + (-67.5:0.185)$) {$\frac{\pi}{4}$};
 
-      % --- 5. 角度の表示とラベル ---
+    % (ii) 角 OB'F = pi/4
+    \pgfmathsetmacro{\angBpO}{atan2(0.5 - \Bpy, 0.5 - \Bpx)}
+    \pgfmathsetmacro{\angBpF}{atan2(\Fy - \Bpy, 0 - \Bpx)}
+    \draw[->, thin, gray!80!black] ($(Bprime) + ({\angBpO}:0.135)$) arc[start angle={\angBpO}, end angle={\angBpF}, radius=0.135];
+    \node[gray!80!black, font=\scriptsize, fill=white, inner sep=0.5pt] at ($(Bprime) + ({\angBpO + 22.5}:0.20)$) {$\frac{\pi}{4}$};
 
-      % (i) 角 OCF = pi/4 (点 C における外側の角)
-      % 線分 CO (ベクトル (0.5, -0.5) => -45度) から 線分 CF (真下 => -90度)
-      \draw[->, thin, gray!80!black] ($(C) + (-45:0.16)$) arc (-45:-90:0.16);
-      \node[gray!80!black, font=\scriptsize] at ($(C) + (-65:0.24)$) {$\frac{\pi}{4}$};
+    % (iii) 等しい内角 角 B'CF と 角 CB'F (二重弧)
+    \pgfmathsetmacro{\angCBp}{atan2(\Bpy - 1, \Bpx - 0)}
+    \draw[double, thick, red!85!black] ($(C) + (-90:0.08)$) arc[start angle=-90, end angle={\angCBp}, radius=0.08];
 
-      % (ii) 角 OB'F = pi/4 (点 B' における外側の角)
-      % ベクトル B'O の方向角と B'F の方向角
-      \pgfmathsetmacro{\angBpO}{atan2(0.5 - \Bpy, 0.5 - \Bpx)}
-      \pgfmathsetmacro{\angBpF}{atan2(\Fy - \Bpy, 0 - \Bpx)}
-      \draw[->, thin, gray!80!black] ($(Bprime) + ({\angBpO}:0.16)$) arc ({\angBpO}:{\angBpF}:0.16);
-      \node[gray!80!black, font=\scriptsize] at ($(Bprime) + ({\angBpO + 22.5}:0.24)$) {$\frac{\pi}{4}$};
+    \pgfmathsetmacro{\angBpC}{atan2(1 - \Bpy, 0 - \Bpx)}
+    \draw[double, thick, red!85!black] ($(Bprime) + ({\angBpF}:0.08)$) arc[start angle={\angBpF}, end angle={\angBpC}, radius=0.08];
 
-      % (iii) 等しい内角 角 B'CF と 角 CB'F (二重弧)
-      % 角 B'CF (点 C)
-      \pgfmathsetmacro{\angCBp}{atan2(\Bpy - 1, \Bpx - 0)}
-      \draw[double, thick, red!80!black] ($(C) + (-90:0.11)$) arc (-90:{\angCBp}:0.11);
+    % --- 5. OC = OB' の等長記号 ---
+    \draw[thick, orange!90!black] ($(O)!0.5!(C) + (-0.018, -0.018)$) -- ($(O)!0.5!(C) + (0.018, 0.018)$);
+    \draw[thick, orange!90!black] ($(O)!0.5!(Bprime) + (-0.018, 0.018)$) -- ($(O)!0.5!(Bprime) + (0.018, -0.018)$);
 
-      % 角 CB'F (点 B')
-      \pgfmathsetmacro{\angBpC}{atan2(1 - \Bpy, 0 - \Bpx)}
-      \draw[double, thick, red!80!black] ($(Bprime) + ({\angBpF}:0.11)$) arc ({\angBpF}:{\angBpC}:0.11);
+    % --- 6. 各点のプロットとラベル ---
+    \node[circle, fill, inner sep=1.2pt] at (C) {}; \node[above=2pt] at (C) {$C$};
+    \node[circle, fill, inner sep=1.2pt] at (O) {}; \node[right=2pt] at (O) {$O$};
+    \node[circle, fill, inner sep=1.2pt] at (Bprime) {}; \node[below left=2pt] at (Bprime) {$B'$};
+    \node[circle, fill, inner sep=1.2pt] at (F) {}; \node[left=2pt] at (F) {$F$};
 
-      % --- 6. 辺長が等しいマーク (OC = OB' および CF = B'F) ---
-      % OC = OB' の二等辺マーク
-      \draw[thick, orange!80!black] ($(O)!0.5!(C) + (-0.02, -0.02)$) -- ($(O)!0.5!(C) + (0.02, 0.02)$);
-      \draw[thick, orange!80!black] ($(O)!0.5!(Bprime) + (-0.02, 0.02)$) -- ($(O)!0.5!(Bprime) + (0.02, -0.02)$);
-
-      % --- 7. 各点のプロットとラベル ---
-      \node[circle, fill, inner sep=0.8pt] at (C) {}; \node[above] at (C) {$C$};
-      \node[circle, fill, inner sep=0.8pt] at (O) {}; \node[right] at (O) {$O$};
-      \node[circle, fill, inner sep=0.8pt] at (Bprime) {}; \node[below left] at (Bprime) {$B'$};
-      \node[circle, fill, inner sep=0.8pt] at (F) {}; \node[right, font=\small] at (F) {$F$};
-
-    \end{tikzpicture}
-  \end{center}
+  \end{tikzpicture}
   \caption{$\triangle OCB'$ に着目した角度関係（$\angle OB'F = \angle OCF = \dfrac{\pi}{4}$ より $\triangle FCB'$ は二等辺三角形）}
 \end{figure}
 
@@ -264,102 +239,90 @@ $\triangle IB'F$の面積$S_1$は$|IB'|=x, |B'F|=x\tan\theta$より
 である．
 
 \begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}[scale=5.2, >=stealth]
+  \centering
+  \begin{tikzpicture}[scale=5.2, >=stealth, every node/.style={font=\small}]
 
-      % --- 1. パラメータ設定 (theta = 35度) ---
-      \def\thetaVal{35}
-      \pgfmathsetmacro{\xVal}{cos(\thetaVal)/(sin(\thetaVal) + cos(\thetaVal) + 1)}
+    % --- 1. パラメータ設定 (theta = 35度) ---
+    \def\thetaVal{35}
+    \pgfmathsetmacro{\xVal}{cos(\thetaVal)/(sin(\thetaVal) + cos(\thetaVal) + 1)}
 
-      % --- 2. 各点の幾何座標 ---
-      \coordinate (B) at (0, 0);
-      \coordinate (A) at (1, 0);
-      \coordinate (D) at (1, 1);
-      \coordinate (C) at (0, 1);
+    % --- 2. 各点の幾何座標 ---
+    \coordinate (B) at (0, 0);
+    \coordinate (A) at (1, 0);
+    \coordinate (D) at (1, 1);
+    \coordinate (C) at (0, 1);
 
-      \coordinate (I) at (0, \xVal);
-      \coordinate (H) at (1, 1 - \xVal);
+    \coordinate (I) at (0, \xVal);
+    \coordinate (H) at (1, 1 - \xVal);
 
-      % B'
-      \pgfmathsetmacro{\Bpx}{-\xVal * sin(\thetaVal)}
-      \pgfmathsetmacro{\Bpy}{\xVal + \xVal * cos(\thetaVal)}
-      \coordinate (Bprime) at (\Bpx, \Bpy);
+    % B'
+    \pgfmathsetmacro{\Bpx}{-\xVal * sin(\thetaVal)}
+    \pgfmathsetmacro{\Bpy}{\xVal + \xVal * cos(\thetaVal)}
+    \coordinate (Bprime) at (\Bpx, \Bpy);
 
-      % A'
-      \pgfmathsetmacro{\Apx}{\Bpx + cos(\thetaVal)}
-      \pgfmathsetmacro{\Apy}{\Bpy + sin(\thetaVal)}
-      \coordinate (Aprime) at (\Apx, \Apy);
+    % A'
+    \pgfmathsetmacro{\Apx}{\Bpx + cos(\thetaVal)}
+    \pgfmathsetmacro{\Apy}{\Bpy + sin(\thetaVal)}
+    \coordinate (Aprime) at (\Apx, \Apy);
 
-      % F on BC (y = x + x/cos theta)
-      \pgfmathsetmacro{\Fy}{\xVal + \xVal / cos(\thetaVal)}
-      \coordinate (F) at (0, \Fy);
+    % F on BC, E on CD, G on CD
+    \pgfmathsetmacro{\Fy}{\xVal + \xVal / cos(\thetaVal)}
+    \coordinate (F) at (0, \Fy);
+    \pgfmathsetmacro{\Ex}{\xVal}
+    \coordinate (E) at (\Ex, 1);
+    \pgfmathsetmacro{\Gx}{1 - \xVal * tan(\thetaVal)}
+    \coordinate (G) at (\Gx, 1);
 
-      % E on CD (x = x*cos theta)
-      \pgfmathsetmacro{\Ex}{\xVal}
-      \coordinate (E) at (\Ex, 1);
+    % --- 3. 正方形の背景枠 ---
+    \draw[thick, gray!70!black] (B) -- (A) -- (D) -- (C) -- cycle;
+    \draw[thick, gray!70!black] (I) -- (H);
 
-      % G on CD (x = 1 - x*tan theta)
-      \pgfmathsetmacro{\Gx}{1 - \xVal * tan(\thetaVal)}
-      \coordinate (G) at (\Gx, 1);
+    % --- 4. 合同な三角形の斜線ハッチングと輪郭 ---
+    % (i) 三角形 IB'F と 三角形 ECF (S1)
+    \fill[pattern=north east lines, pattern color=blue!55!black] (I) -- (Bprime) -- (F) -- cycle;
+    \fill[pattern=north east lines, pattern color=blue!55!black] (E) -- (C) -- (F) -- cycle;
+    \draw[thick, blue!85!black] (I) -- (Bprime) -- (F) -- cycle;
+    \draw[thick, blue!85!black] (E) -- (C) -- (F) -- cycle;
 
-      % --- 3. 正方形の背景枠（薄線） ---
-      \draw[thick, gray!60!black] (B) -- (A) -- (D) -- (C) -- cycle;
-      \draw[thick, gray!60!black] (I) -- (H);
+    % (ii) 三角形 DGH と 三角形 A'GE (S2)
+    \fill[pattern=north west lines, pattern color=orange!70!black] (D) -- (G) -- (H) -- cycle;
+    \fill[pattern=north west lines, pattern color=orange!70!black] (Aprime) -- (G) -- (E) -- cycle;
+    \draw[thick, orange!90!black] (D) -- (G) -- (H) -- cycle;
+    \draw[thick, orange!90!black] (Aprime) -- (G) -- (E) -- cycle;
 
-      % --- 4. 合同な三角形の着色ハイライト ---
-      % (i) 三角形 IB'F と 三角形 ECF (合同: S1)
-      \fill[blue!15] (I) -- (Bprime) -- (F) -- cycle;
-      \fill[blue!15] (E) -- (C) -- (F) -- cycle;
-      \draw[thick, blue!80!black] (I) -- (Bprime) -- (F) -- cycle;
-      \draw[thick, blue!80!black] (E) -- (C) -- (F) -- cycle;
+    % --- 5. 線分 A'B' の 3 分割強調 ---
+    \draw[line width=2.4pt, red!85!black] (Bprime) -- (F);
+    \draw[line width=2.4pt, blue!85!black] (F) -- (E);
+    \draw[line width=2.4pt, teal!85!black] (E) -- (Aprime);
 
-      % (ii) 三角形 DGH と 三角形 A'GE (合同: S2)
-      \fill[orange!20] (D) -- (G) -- (H) -- cycle;
-      \fill[orange!20] (Aprime) -- (G) -- (E) -- cycle;
-      \draw[thick, orange!80!black] (D) -- (G) -- (H) -- cycle;
-      \draw[thick, orange!80!black] (Aprime) -- (G) -- (E) -- cycle;
+    % --- 6. 各分割区間の寸法線とラベル ---
+    % 全長 |A'B'| = 1
+    \draw[densely dotted, thick, gray!70!black] (Bprime) -- ($(Bprime)+(-0.16, 0.23)$);
+    \draw[densely dotted, thick, gray!70!black] (Aprime) -- ($(Aprime)+(-0.16, 0.23)$);
+    \draw[<->, thick, black] ($(Bprime)+(-0.16, 0.23)$) -- ($(Aprime)+(-0.16, 0.23)$)
+    node[midway, above left=2pt, font=\small] {$|A'B'| = 1$};
 
-      % --- 5. 線分 A'B' の分割強調 (3色の太線) ---
-      % B'F = x tan theta
-      \draw[line width=2.5pt, red!80!black] (Bprime) -- (F);
-      % FE = x / cos theta
-      \draw[line width=2.5pt, purple!80!black] (F) -- (E);
-      % EA' = x
-      \draw[line width=2.5pt, green!60!black] (E) -- (Aprime);
+    % 各区間ラベル（線や辺と重ならない位置に白地マスク付きで配置）
+    \node[red!85!black, font=\scriptsize, fill=white, inner sep=0.8pt, above left=2pt] at ($(Bprime)!0.5!(F)$) {$x\tan\theta$};
+    \node[blue!85!black, font=\scriptsize, fill=white, inner sep=0.8pt, below right=2pt] at ($(F)!0.5!(E)$) {$\frac{x}{\cos\theta}$};
+    \node[teal!85!black, font=\scriptsize, fill=white, inner sep=0.8pt, above left=2pt] at ($(E)!0.5!(Aprime)$) {$x$};
 
-      % --- 6. 各分割区間の寸法線とラベル ---
-      % (1) 全長 |A'B'| = 1
-      \draw[<->, thick, black] ($(Bprime)+(-0.06, 0.08)$) -- ($(Aprime)+(-0.06, 0.08)$)
-      node[midway, above left, font=\small] {$|A'B'| = 1$};
+    % 合同による長さの対応ラベル
+    \node[right=2pt, font=\scriptsize, gray!75!black] at ($(D)!0.5!(H)$) {$x$};
+    \node[below left=1pt, font=\scriptsize, gray!75!black] at ($(I)!0.5!(Bprime)$) {$x$};
 
-      % (2) 区間 B'F = x tan theta
-      \node[red!80!black, font=\scriptsize, below right] at ($(Bprime)!0.5!(F) + (0.02, -0.02)$) {$x\tan\theta$};
+    % --- 7. 各点のプロットとラベル ---
+    \node[circle, fill, inner sep=1.2pt] at (Bprime) {}; \node[below left=2pt] at (Bprime) {$B'$};
+    \node[circle, fill, inner sep=1.2pt] at (Aprime) {}; \node[above right=2pt] at (Aprime) {$A'$};
+    \node[circle, fill, inner sep=1.2pt] at (F) {}; \node[left=2pt, fill=white, inner sep=0.6pt] at (F) {$F$};
+    \node[circle, fill, inner sep=1.2pt] at (E) {}; \node[above=2pt, fill=white, inner sep=0.6pt] at (E) {$E$};
+    \node[circle, fill=gray!75!black, inner sep=1.1pt] at (G) {}; \node[gray!75!black, above=2pt, font=\scriptsize] at (G) {$G$};
+    \node[circle, fill=gray!75!black, inner sep=1.1pt] at (C) {}; \node[gray!75!black, left=2pt, font=\scriptsize] at (C) {$C$};
+    \node[circle, fill=gray!75!black, inner sep=1.1pt] at (D) {}; \node[gray!75!black, above right=2pt, font=\scriptsize] at (D) {$D$};
+    \node[circle, fill=gray!75!black, inner sep=1.1pt] at (I) {}; \node[gray!75!black, left=2pt, font=\scriptsize] at (I) {$I$};
+    \node[circle, fill=gray!75!black, inner sep=1.1pt] at (H) {}; \node[gray!75!black, right=2pt, font=\scriptsize] at (H) {$H$};
 
-      % (3) 区間 FE = x / cos theta
-      \node[purple!80!black, font=\scriptsize, above left] at ($(F)!0.5!(E) + (-0.02, 0.02)$) {$\frac{x}{\cos\theta}$};
-
-      % (4) 区間 EA' = x
-      \node[green!50!black, font=\scriptsize, above left] at ($(E)!0.5!(Aprime) + (-0.02, 0.02)$) {$x$};
-
-      % --- 7. 合同による長さの対応マーク ---
-      % |EA'| = |DH| = x
-      \node[right, font=\scriptsize, gray] at ($(D)!0.5!(H)$) {$x$};
-      % |IB'| = x
-      \node[below left, font=\scriptsize, gray] at ($(I)!0.5!(Bprime)$) {$x$};
-
-      % --- 8. 各点のプロットとラベル ---
-      \node[circle, fill, inner sep=0.9pt] at (Bprime) {}; \node[below left] at (Bprime) {$B'$};
-      \node[circle, fill, inner sep=0.9pt] at (Aprime) {}; \node[above right] at (Aprime) {$A'$};
-      \node[circle, fill, inner sep=0.8pt] at (F) {}; \node[left] at (F) {$F$};
-      \node[circle, fill, inner sep=0.8pt] at (E) {}; \node[above] at (E) {$E$};
-      \node[circle, fill=gray, inner sep=0.8pt] at (G) {}; \node[gray, above, font=\scriptsize] at (G) {$G$};
-      \node[circle, fill=gray, inner sep=0.8pt] at (C) {}; \node[gray, above left, font=\scriptsize] at (C) {$C$};
-      \node[circle, fill=gray, inner sep=0.8pt] at (D) {}; \node[gray, above right, font=\scriptsize] at (D) {$D$};
-      \node[circle, fill=gray, inner sep=0.8pt] at (I) {}; \node[gray, left, font=\scriptsize] at (I) {$I$};
-      \node[circle, fill=gray, inner sep=0.8pt] at (H) {}; \node[gray, right, font=\scriptsize] at (H) {$H$};
-
-    \end{tikzpicture}
-  \end{center}
+  \end{tikzpicture}
   \caption{線分 $A'B'$ の 3 分割（$|A'B'| = |B'F| + |FE| + |EA'| = 1$）と合同な直角三角形}
 \end{figure}
 
