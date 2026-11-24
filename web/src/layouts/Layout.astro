@@ -505,7 +505,7 @@ const ogImageUrl = new URL(`${baseUrl}${ogImagePath ?? '/ogp-default.png'}`, Ast
 			}
 
 			/* 数式（align 等）中に埋め込まれた TikZ 図形アイコン（Issue #586） */
-			.markdown-body mjx-container mjx-texatom.mjx-inline-tikz mjx-mspace {
+			.markdown-body mjx-container .mjx-inline-tikz mjx-mspace {
 				overflow: hidden;
 			}
 			.markdown-body mjx-container img.inline-tikz-icon {
@@ -717,9 +717,8 @@ const ogImageUrl = new URL(`${baseUrl}${ogImagePath ?? '/ogp-default.png'}`, Ast
 					margin: 1.1rem 0;
 				}
 
-				/* インライン数式は自動改行できず、幅が足りない時は横スクロール
-				   させるしかない（Issue の議論参照）。せめて発生頻度を下げるため
-				   スマホ幅では少し縮小しておく。 */
+				/* スマホ幅でも分数等を含むインライン数式が見やすいよう少し縮小しておく
+				   （MathJax v4 では演算子位置での自動改行も有効）。 */
 				mjx-container:not([display="true"]) {
 					font-size: 90%;
 				}

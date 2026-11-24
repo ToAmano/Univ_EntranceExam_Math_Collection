@@ -37,6 +37,10 @@ export default defineConfig({
         },
         chtml: {
           fontURL: `${BASE_PATH}/fonts/mathjax`,
+          displayOverflow: 'overflow',
+          linebreaks: {
+            inline: true,
+          },
         },
         options: {
           skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
