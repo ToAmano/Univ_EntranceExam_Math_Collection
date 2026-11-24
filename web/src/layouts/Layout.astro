@@ -310,6 +310,40 @@ const ogImageUrl = new URL(`${baseUrl}${ogImagePath ?? '/ogp-default.png'}`, Ast
 				margin: 1.5rem 0;
 			}
 
+			.math-copy-block {
+				position: relative;
+				margin: 1.5rem 0;
+			}
+
+			.math-copy-block > mjx-container[display="true"] {
+				margin: 0;
+				padding-top: 3rem;
+			}
+
+			.math-copy-button {
+				position: absolute;
+				top: 0.5rem;
+				right: 0.5rem;
+				z-index: 1;
+				min-width: 6.5rem;
+				padding: 0.3rem 0.6rem;
+				border: 1px solid rgba(148, 163, 184, 0.35);
+				border-radius: 6px;
+				background: rgba(30, 41, 59, 0.8);
+				color: var(--text-muted);
+				font: inherit;
+				font-size: 0.75rem;
+				line-height: 1.4;
+				cursor: pointer;
+			}
+
+			.math-copy-button:hover,
+			.math-copy-button:focus-visible {
+				border-color: var(--primary);
+				color: var(--text-main);
+				outline-offset: 2px;
+			}
+
 			/* 共通ハイパーリンク & Markdown内リンクの視認性向上スタイリング */
 			a {
 				color: #60a5fa;
@@ -783,5 +817,30 @@ const ogImageUrl = new URL(`${baseUrl}${ogImagePath ?? '/ogp-default.png'}`, Ast
 				</div>
 			</div>
 		</footer>
+		<script>
+			const copyResetTimers = new WeakMap<HTMLButtonElement, number>();
+			document.addEventListener('click', async (event) => {
+				if (!(event.target instanceof Element)) return;
+				const button = event.target.closest<HTMLButtonElement>('.math-copy-button');
+				if (!button) return;
+				const math = button.parentElement?.querySelector('mjx-container[display="true"] > mjx-math[data-latex]');
+				const tex = math?.getAttribute('data-latex');
+				if (!tex) return;
+
+				let message = 'コピーしました';
+				try {
+					await navigator.clipboard.writeText(tex);
+				} catch {
+					message = 'コピーできませんでした';
+				}
+				button.textContent = message;
+				button.setAttribute('aria-label', message);
+				window.clearTimeout(copyResetTimers.get(button));
+				copyResetTimers.set(button, window.setTimeout(() => {
+					button.textContent = 'TeXをコピー';
+					button.setAttribute('aria-label', '数式のTeXをコピー');
+				}, 2000));
+			});
+		</script>
 	</body>
 </html>

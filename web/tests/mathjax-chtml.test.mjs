@@ -59,6 +59,16 @@ test('renders TeX math as CHTML with AssistiveMML text nodes and self-hosted fon
   assert.match(html, /mjx-assistive-mml\s*\{/);
 });
 
+test('adds a TeX copy control only to display math', async () => {
+  const html = await renderMarkdown('インライン $x+1$ と別行数式\n\n$$\n\\begin{align}x&=1\\end{align}\n$$');
+  const mathMarkup = html.split('<style')[0];
+
+  assert.equal((mathMarkup.match(/class="math-copy-block"/g) ?? []).length, 1);
+  assert.equal((mathMarkup.match(/class="math-copy-button"/g) ?? []).length, 1);
+  assert.match(mathMarkup, /<mjx-container[^>]*display="true"/);
+  assert.match(mathMarkup, /<mjx-math[^>]*data-latex="\\begin\{align\}x&#x26;=1\\end\{align\}"/);
+});
+
 test('marks breakable points for automatic inline math linebreaking in v4', async () => {
   const html = await renderMarkdown(
     '条件 $a_1 + a_2 + a_3 = b_1 + b_2 + b_3$ が成り立つ．'

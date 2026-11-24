@@ -330,6 +330,19 @@ export default function rehypeMathjaxChtml(options) {
         ];
       }
 
+      const mathNode = result[0]?.children?.find(node => node.type === 'element' && node.tagName === 'mjx-math');
+      if (display && mathNode?.properties?.dataLatex) {
+        result = [h('div.math-copy-block', [
+          ...result,
+          h('button.math-copy-button', {
+            type: 'button',
+            'aria-label': '数式のTeXをコピー',
+            'aria-live': 'polite',
+            title: '数式のTeXをコピー',
+          }, 'TeXをコピー'),
+        ])];
+      }
+
       const index = parent.children.indexOf(scope);
       parent.children.splice(index, 1, ...result);
       return SKIP;
