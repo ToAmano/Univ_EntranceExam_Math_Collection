@@ -158,8 +158,8 @@
     \node[above left, gray!70] at (X) {$X(0,a)$};
 
     % 長さ b, a の補助寸法線
-    \draw[<->, gray!50] (0, -0.6) -- (\b, -0.6) node[midway, below, black] {$b$};
-    \draw[<->, gray!50] (-0.6, 0) -- (-0.6, \a) node[midway, left, black] {$a$};
+    \draw[<->, gray!60!black] (0, -0.6) -- (\b, -0.6) node[midway, below, black] {$b$};
+    \draw[<->, gray!60!black] (-0.6, 0) -- (-0.6, \a) node[midway, left, black] {$a$};
 
     % 長方形の外枠
     \draw[thick, gray!60] (W) -- (Z) -- (Y) -- (X) -- cycle;
@@ -233,26 +233,37 @@
 \end{align}
 である．\cref{eq:2,eq:3}より$0<x+r_2<a$だから複合負が正しく，
 \begin{align}
-  x+r_2 = a+b-\sqrt{2ab} \label{eq:9}
+  x+r_2
+  = a+b-\sqrt{2ab}
+  = (\sqrt{b}-\sqrt{a})^2 \label{eq:9}
 \end{align}
-だが，\cref{eq:1}よりこれは常に$[0,a]$の範囲にあるから$x$の値によらず$r_2$は常に存在する．
-
-以上から\cref{eq:7,eq:8}が\cref{eq:3}を満たすような$x$の範囲を求めれば良い．
-\cref{eq:7,eq:8}を\cref{eq:3}に代入して
+となる．以上\cref{eq:7,eq:8,eq:9}をまとめて
 \begin{align}
-  \begin{cases}
+  \begin{dcases}
+    \sqrt{r_1} = -\sqrt{x} + \sqrt{a} \\
+    r_2 = (\sqrt{b}-\sqrt{a})^2 - x \\
+    \sqrt{r_3} = -\sqrt{x} + \sqrt{b}
+  \end{dcases} \label{eq:10}
+\end{align}
+である．これが\cref{eq:3}を満たすような$x$の範囲を求めれば良いから\cref{eq:3}に代入して
+\begin{align}
+  &
+  \begin{dcases}
     0 < -\sqrt{x} + \sqrt{a} < \sqrt{\dfrac{a}{2}} \\
+    0 < (\sqrt{b}-\sqrt{a})^2 - x < \dfrac{a}{2} \\
     0 < -\sqrt{x} + \sqrt{b} < \sqrt{\dfrac{a}{2}}
-  \end{cases} \\
+  \end{dcases} \\
   \therefore
-  \begin{cases}
+  &
+  \begin{dcases}
     \sqrt{a} - \sqrt{\dfrac{a}{2}} < \sqrt{x} <  \sqrt{a}  \\
+    (\sqrt{b}-\sqrt{a})^2 - \dfrac{a}{2} <  x < (\sqrt{b}-\sqrt{a})^2 \\
     \sqrt{b} - \sqrt{\dfrac{a}{2}} < \sqrt{x} < \sqrt{b}
-  \end{cases}
+  \end{dcases}
 \end{align}
 だが，\cref{eq:1,eq:2}より厳しい方の条件を採用して
 \begin{align}
-  \left(\sqrt{b} - \sqrt{\dfrac{a}{2}}\right)^2 < x < \dfrac{a}{2} \label{eq:10}
+  \left(\sqrt{b} - \sqrt{\dfrac{a}{2}}\right)^2 < x < \dfrac{a}{2} \label{eq:11}
 \end{align}
 である．
 
@@ -263,20 +274,21 @@
 \begin{align}
   &(x+r_4)^2 = (x-r_4)^2 + (x-r_4)^2 = 2(x-r_4)^2\\
   & r_4^2-6xr_4 + x^2 = 0 \\
+  \therefore
   & r_4 = \left(3\pm 2\sqrt{2}\right) x
 \end{align}
 だが，このうち\cref{eq:3}を満たすのは複合負の方で
 \begin{align}
-  r_4 = \left(3 - 2\sqrt{2}\right) x \label{eq:11}
+  r_4 = \left(3 - 2\sqrt{2}\right) x \label{eq:12}
 \end{align}
-である．以上\cref{eq:7,eq:8,eq:9,eq:11}をまとめると
+である．以上\cref{eq:7,eq:8,eq:9,eq:12}をまとめると
 \begin{align}
-  \begin{cases}
+  \begin{dcases}
     r_1 = \left(-\sqrt{x} + \sqrt{a}\right)^2 \\
     r_2 = a+b-\sqrt{2ab} - x \\
     r_3 = \left(-\sqrt{x} + \sqrt{b}\right)^2 \\
     r_4 = \left(3 - 2\sqrt{2}\right) x
-  \end{cases} \label{eq:12}
+  \end{dcases} \label{eq:13}
 \end{align}
 だから，以下これらの大小を比較しよう．
 
@@ -292,7 +304,7 @@
 よりこれを$x$の関数とみなすと\cref{eq:2}の範囲では単調減少で，端点$x=\dfrac{a}{2}$で値が$0$だから区間内でこの値も正である．
 従って
 \begin{align}
-  r_1 < r_4 \label{eq:13}
+  r_1 > r_4 \label{eq:14}
 \end{align}
 である．
 
@@ -306,35 +318,43 @@
 \end{align}
 より
 \begin{align}
-  r_3 < r_2 \label{eq:14}
+  r_3 < r_2 \label{eq:15}
 \end{align}
 である．
 
 ついで$r_3$と$r_1$は
 \begin{align}
   r_3-r_1
-  &= \left(-\sqrt{x} + \sqrt{a}\right)^2 - \left(a+b-\sqrt{2ab} - x\right) \\
-  &= 2x - 2\sqrt{ax} + \sqrt{2ab} - b  \\
-  &= 2\left(\sqrt{x}-\dfrac{\sqrt{2b}}{2}\right)\left(\sqrt{x}-\dfrac{2\sqrt{a}-\sqrt{2b}}{2}\right) \\
-  &> 0
+  &=\left(-\sqrt{x} + \sqrt{b}\right)^2 -  \left(-\sqrt{x} + \sqrt{a}\right)^2 \\
+  &= -2\sqrt{bx} + 2\sqrt{ax} + b - a \\
+  &= -2\sqrt{x}(\sqrt{b}-\sqrt{a}) + (\sqrt{b}-\sqrt{a})(\sqrt{b}+\sqrt{a}) \\
+  &= \left[\sqrt{b}+\sqrt{a} - 2\sqrt{x}\right](\sqrt{b}-\sqrt{a})
+\end{align}
+となるが，これは$x$について単調減少で\cref{eq:11}より$x\to\dfrac{a}{2}$で最小となり，
+\begin{align}
+  r_3-r_1
+  & > \left[\sqrt{b}+\sqrt{a} - 2\sqrt{\dfrac{a}{2}}\right](\sqrt{b}-\sqrt{a}) \\
+  & = \left[\sqrt{b}+(1-\sqrt{2})\sqrt{a}\right](\sqrt{b}-\sqrt{a}) \\
+  & > \left[\sqrt{a}+(1-\sqrt{2})\sqrt{a}\right](\sqrt{b}-\sqrt{a}) \quad (\because\text{\cref{eq:1}})\\
+  & > 0
 \end{align}
 より
 \begin{align}
-  r_1 < r_3 \label{eq:15}
+  r_1 < r_3 \label{eq:16}
 \end{align}
 である．
 
-以上\cref{eq:13,eq:14,eq:15}より
+以上\cref{eq:14,eq:15,eq:16}より
 \begin{align}
-  r_4 < r_1 < r_3 < r_2 \label{eq:16}
+  r_4 < r_1 < r_3 < r_2 \label{eq:17}
 \end{align}
 となり，二番目に半径が大きいのは$C_3$だから$B=C_3$である．
 
-よって円と円の面積の和$S(x)$は\cref{eq:12}より
+よって円と円の面積の和$S(x)$は\cref{eq:13}より
 \begin{align}
   S(x)
   &= \pi x^2 + \pi r_3^2 \\
-  &= \pi \left[x^2 + \left(-\sqrt{x} + \sqrt{b}\right)^4 \right] \label{eq:17}
+  &= \pi \left[x^2 + \left(-\sqrt{x} + \sqrt{b}\right)^4 \right] \label{eq:18}
 \end{align}
 である．$X=\sqrt{x}$とおくと
 \begin{align}
@@ -369,13 +389,13 @@
 \end{table}
 
 よって$X=\dfrac{\sqrt{b}}{2}$の時，すなわち$x=\dfrac{b}{4}$で$S$は最小となり，
-この時\cref{eq:12}より
+この時\cref{eq:13}より
 \begin{align}
   r_3
   &=\left(\sqrt{b}-\sqrt{\dfrac{b}{4}}\right)^2 \\
   &=\left(\dfrac{\sqrt{b}}{2}\right)^2=\dfrac{b}{4}
 \end{align}
-だから\cref{eq:17}に代入して求める面積の最小値は
+だから\cref{eq:18}に代入して求める面積の最小値は
 \begin{align}
   \min S=\pi\left\{\left(\dfrac{b}{4}\right)^2+\left(\dfrac{b}{4}\right)^2\right\}=\dfrac{b^2}{8}\pi
 \end{align}
