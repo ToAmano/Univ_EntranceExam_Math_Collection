@@ -12,31 +12,29 @@
     every node/.style={font=\small}]
     \def\middleRoot{0.666667}
     \def\rightRoot{3.333333}
+    \coordinate (O) at (0,0);
+    \coordinate (P1) at (-2,-2);
+    \coordinate (P2) at (\middleRoot,\middleRoot);
+    \coordinate (P3) at (\rightRoot,\rightRoot);
+    \coordinate (V) at (2,-2);
 
-    % 斜線塗りつぶし (2つの領域)
-    \fill[blue!10] (-2,-2)
+    % 斜線塗りつぶし (2つの領域を向きと色で区別，軸・輪郭より先に描く)
+    \fill[pattern=north east lines, pattern color=blue!60!black] (P1)
     -- plot[domain=-2:\middleRoot, samples=40] (\x,{1-0.75*\x*\x})
     -- plot[domain=\middleRoot:-2, samples=20] (\x,\x) -- cycle;
-    \fill[pattern=north east lines, pattern color=blue!60!black] (-2,-2)
-    -- plot[domain=-2:\middleRoot, samples=40] (\x,{1-0.75*\x*\x})
-    -- plot[domain=\middleRoot:-2, samples=20] (\x,\x) -- cycle;
 
-    \fill[teal!10] (\middleRoot,\middleRoot)
-    -- plot[domain=\middleRoot:2, samples=30] (\x,{1-0.75*\x*\x})
-    -- plot[domain=2:\rightRoot, samples=30] (\x,{0.75*\x*\x-5})
-    -- plot[domain=\rightRoot:\middleRoot, samples=30] (\x,\x) -- cycle;
-    \fill[pattern=north east lines, pattern color=teal!70!black] (\middleRoot,\middleRoot)
+    \fill[pattern=north west lines, pattern color=teal!75!black] (P2)
     -- plot[domain=\middleRoot:2, samples=30] (\x,{1-0.75*\x*\x})
     -- plot[domain=2:\rightRoot, samples=30] (\x,{0.75*\x*\x-5})
     -- plot[domain=\rightRoot:\middleRoot, samples=30] (\x,\x) -- cycle;
 
     % 座標軸
-    \draw[->, gray!80!black, line width=0.9pt] (-3.5,0) -- (4.2,0) node[right] {$x$};
-    \draw[->, gray!80!black, line width=0.9pt] (0,-5.6) -- (0,4.2) node[above] {$y$};
+    \draw[->, thick, gray!80!black] (-3.5,0) -- (4.2,0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0,-5.6) -- (0,4.2) node[above] {$y$};
 
-    % 点線で示された y=3/4x^2-5 の元のグラフ (x in [-2.2, 2.2])
-    \draw[dashed, gray!65, line width=0.9pt]
-    plot[domain=-2.2:2.2, samples=40] (\x,{0.75*\x*\x-5});
+    % 点線で示された y=3/4x^2-5 の元のグラフ (参考線)
+    \draw[densely dotted, thick, gray!70!black]
+    plot[domain=-2:2, samples=40] (\x,{0.75*\x*\x-5});
     \node[gray!70!black, left=2pt, font=\footnotesize] at (0,-5) {$-5$};
 
     % 実線グラフ: y = |3/4x^2 - 3| - 2
@@ -50,31 +48,32 @@
     plot[domain=-2.4:3.8, samples=2] (\x,\x)
     node[above right, font=\footnotesize] {$y=x$};
 
-    % 補助線
-    \draw[dashed, gray!60, line width=0.7pt]
-    (\middleRoot,0) -- (\middleRoot,\middleRoot)
-    (\rightRoot,0) -- (\rightRoot,\rightRoot)
-    (-2,0) -- (-2,-2) -- (0,-2)
-    (2,0) -- (2,-2);
+    % 補助線（代表点から座標軸への垂線）
+    \draw[densely dotted, thick, gray!70!black]
+    (\middleRoot,0) -- (P2)
+    (\rightRoot,0) -- (P3)
+    (-2,0) -- (P1) -- (0,-2)
+    (2,0) -- (V) -- (0,-2);
 
-    % 交点
-    \foreach \point in {(-2,-2),(\middleRoot,\middleRoot),(\rightRoot,\rightRoot)} {
-      \node[circle, fill=red!85!black, inner sep=1.35pt] at \point {};
+    % 交点と主要点
+    \foreach \pt in {P1, P2, P3} {
+      \node[circle, fill=red!85!black, inner sep=1.35pt] at (\pt) {};
     }
-    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (2,-2) {};
+    \node[circle, fill=blue!85!black, inner sep=1.2pt] at (V) {};
 
     % 座標目盛りラベル
+    \node[below right=1pt, font=\footnotesize] at (O) {$O$};
     \node[above=2pt, font=\footnotesize] at (-2,0) {$-2$};
-    \node[above=2pt, font=\footnotesize] at (\middleRoot,0) {$\frac{2}{3}$};
-    \node[above=2pt, font=\footnotesize] at (2,0) {$2$};
+    \node[below=2pt, font=\footnotesize] at (\middleRoot,0) {$\frac{2}{3}$};
+    \node[below left=2pt, font=\footnotesize] at (2,0) {$2$};
     \node[below=2pt, font=\footnotesize] at (\rightRoot,0) {$\frac{10}{3}$};
-    \node[left=2pt, font=\footnotesize] at (0,-2) {$-2$};
-    \node[above right=1pt, font=\footnotesize] at (0,1) {$1$};
+    \node[below left=1pt, font=\footnotesize, fill=white, inner sep=1pt] at (0,-2) {$-2$};
+    \node[above left=2pt, font=\footnotesize] at (0,1) {$1$};
 
     % 曲線ラベル
     \node[blue!85!black, above=2pt, font=\footnotesize] at (-2.5,2.2) {$y=\left|\frac{3}{4}x^2-3\right|-2$};
   \end{tikzpicture}
-  \caption{$y=x$と$y=\left|\dfrac{3}{4}x^2-3\right|-2$で囲まれる領域（斜線部）と元の放物線（破線）}
+  \caption{$y=x$と$y=\left|\dfrac{3}{4}x^2-3\right|-2$で囲まれる領域（斜線部）と元の放物線（点線）}
   \label{fig:area}
 \end{figure}
 
@@ -99,38 +98,38 @@
   S &=
   \left( \text{
       \begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.35]
-        \fill[blue!15] (-2,-1.2) -- plot[domain=-2:3.33, samples=30] (\x,{0.45*\x*\x - 3.0}) -- (3.33,2.0) -- cycle;
+        \fill[blue!15] (-2,-1.2) -- plot[domain=-2:{10/3}, samples=30] (\x,{0.45*\x*\x - 3.0}) -- ({10/3},2.0) -- cycle;
         \fill[pattern=north east lines, pattern color=blue!70!black]
-        (-2,-1.2) -- plot[domain=-2:3.33, samples=30] (\x,{0.45*\x*\x - 3.0}) -- (3.33,2.0) -- cycle;
-        \draw[teal!85!black, thick] (-2.5,-1.5) -- (3.8,2.28);
-        \draw[blue!85!black, thick] plot[domain=-2.5:3.6, samples=30] (\x,{0.45*\x*\x - 3.0});
-        \node[below left=-1pt, font=\tiny] at (-2,-1.2) {$\alpha$};
-        \node[above right=-1pt, font=\tiny] at (3.33,2.0) {$\beta$};
-        \node[font=\scriptsize] at (0,2) {$S_1$};
+        (-2,-1.2) -- plot[domain=-2:{10/3}, samples=30] (\x,{0.45*\x*\x - 3.0}) -- ({10/3},2.0) -- cycle;
+        \draw[teal!85!black, thick] (-2.4,-1.44) -- (3.7,2.22);
+        \draw[blue!85!black, thick] plot[domain=-2.45:3.55, samples=30] (\x,{0.45*\x*\x - 3.0});
+        \node[left=2pt, font=\tiny] at (-2,-1.2) {$\alpha$};
+        \node[right=2pt, font=\tiny] at ({10/3},2.0) {$\beta$};
+        \node[font=\scriptsize] at (0.2,1.6) {$S_1$};
   \end{tikzpicture}} \right)
   + 2
   \left( \text{
-      \begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.35]
-        \fill[teal!15] (-2,-1.2) -- plot[domain=-2:0.67, samples=30] (\x,{1.5 - 0.675*\x*\x}) -- (0.67,0.4) -- cycle;
-        \fill[pattern=north east lines, pattern color=teal!70!black]
-        (-2,-1.2) -- plot[domain=-2:0.67, samples=30] (\x,{1.5 - 0.675*\x*\x}) -- (0.67,0.4) -- cycle;
-        \draw[teal!85!black, thick] (-2.4,-1.44) -- (1.5,0.9);
-        \draw[blue!85!black, thick] plot[domain=-2.4:1.2, samples=30] (\x,{1.5 - 0.675*\x*\x});
-        \node[below left=-1pt, font=\tiny] at (-2,-1.2) {$\gamma$};
-        \node[above right=-1pt, font=\tiny] at (0.67,0.4) {$\delta$};
-        \node[font=\scriptsize] at (0,2) {$S_2$};
+      \begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.38]
+        \fill[teal!15] (-2,-2.2) -- plot[domain=-2:{2/3}, samples=30] (\x,{1.1 - 0.825*\x*\x}) -- ({2/3},{2.2/3}) -- cycle;
+        \fill[pattern=north west lines, pattern color=teal!75!black]
+        (-2,-2.2) -- plot[domain=-2:{2/3}, samples=30] (\x,{1.1 - 0.825*\x*\x}) -- ({2/3},{2.2/3}) -- cycle;
+        \draw[teal!85!black, thick] (-2.3,-2.53) -- (1.0,1.1);
+        \draw[blue!85!black, thick] plot[domain=-2.2:1.0, samples=30] (\x,{1.1 - 0.825*\x*\x});
+        \node[above left=1pt, font=\tiny] at (-2,-2.2) {$\gamma$};
+        \node[right=2pt, font=\tiny] at ({2/3},{2.2/3}) {$\delta$};
+        \node[font=\scriptsize] at (-0.1,1.9) {$S_2$};
   \end{tikzpicture}} \right)
   - 2
   \left( \text{
-      \begin{tikzpicture}[baseline={(0,-0.1)}, scale=0.35]
+      \begin{tikzpicture}[baseline={(0,-0.35)}, scale=0.35]
         \fill[blue!15] (-2,-1) -- plot[domain=-2:2, samples=30] (\x,{0.45*\x*\x - 2.8}) -- (2,-1) -- cycle;
         \fill[pattern=north east lines, pattern color=blue!70!black]
         (-2,-1) -- plot[domain=-2:2, samples=30] (\x,{0.45*\x*\x - 2.8}) -- (2,-1) -- cycle;
-        \draw[teal!85!black, thick] (-2.5,-1) -- (2.5,-1);
+        \draw[teal!85!black, thick] (-2.6,-1) -- (2.6,-1);
         \draw[blue!85!black, thick] plot[domain=-2.3:2.3, samples=30] (\x,{0.45*\x*\x - 2.8});
-        \node[above, font=\tiny] at (-2,-1) {$-2$};
-        \node[above, font=\tiny] at (2,-1) {$2$};
-        \node[font=\scriptsize] at (0,2) {$S_3$};
+        \node[below left=1pt, font=\tiny] at (-2,-1) {$-2$};
+        \node[below right=1pt, font=\tiny] at (2,-1) {$2$};
+        \node[font=\scriptsize] at (0,0.2) {$S_3$};
   \end{tikzpicture}} \right) \label{eq:3}
 \end{align}
 
