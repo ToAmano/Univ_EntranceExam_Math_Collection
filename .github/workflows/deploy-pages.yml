@@ -196,6 +196,29 @@ jobs:
           done
           echo "::warning::Timed out waiting for github-pages artifact metadata after 60s; proceeding to deploy-pages"
 
-      - name: Deploy to GitHub Pages
+      # The Pages action queries the artifact service independently of the REST
+      # check above. A newly uploaded artifact can briefly be absent there.
+      # Retry only deployment without uploading the artifact again.
+      - name: Deploy to GitHub Pages (attempt 1)
+        id: deployment_first
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Wait before Pages deployment retry
+        if: steps.deployment_first.outcome == 'failure'
+        run: sleep 15
+
+      - name: Deploy to GitHub Pages (attempt 2)
+        if: steps.deployment_first.outcome == 'failure'
+        id: deployment_second
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Wait before final Pages deployment attempt
+        if: steps.deployment_first.outcome == 'failure' && steps.deployment_second.outcome == 'failure'
+        run: sleep 30
+
+      - name: Deploy to GitHub Pages (attempt 3)
+        if: steps.deployment_first.outcome == 'failure' && steps.deployment_second.outcome == 'failure'
         id: deployment
         uses: actions/deploy-pages@v4
