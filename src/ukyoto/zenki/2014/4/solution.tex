@@ -10,33 +10,40 @@
   \centering
   \begin{tikzpicture}[x=1.3cm, y=1.2cm, >=stealth,
     every node/.style={font=\small}]
-    % 座標軸
-    \draw[->, thick, gray!80!black] (-3.2, 0) -- (3.2, 0) node[right] {$x$};
-    \draw[->, thick, gray!80!black] (0, -1.8) -- (0, 2.7) node[above] {$y$};
-    \node[below left=2pt] at (0, 0) {$O$};
-
-    % 不適領域 1 < y < 2 の帯状領域を薄い赤で示す
-    \fill[red!10] (-3.1, 1) rectangle (3.1, 2);
-    \draw[dashed, red!70!black, thick] (-3.1, 1) -- (3.1, 1) node[right, font=\footnotesize] {$y=1$};
-    \draw[dashed, red!70!black, thick] (-3.1, 2) -- (3.1, 2) node[right, font=\footnotesize] {$y=2$};
-    \node[red!75!black, font=\footnotesize] at (2.0, 1.5) {不適領域 ($1 < y < 2$)};
+    % 不適領域 1 < y < 2 の境界と斜線領域（軸・曲線より先に描画）
+    \fill[red!8] (-3.1, 1) rectangle (3.1, 2);
+    \fill[pattern=north east lines, pattern color=red!60!black] (-3.1, 1) rectangle (3.1, 2);
+    \draw[densely dotted, thick, red!75!black] (-3.1, 1) -- (3.1, 1) node[right, font=\footnotesize] {$y=1$};
+    \draw[densely dotted, thick, red!75!black] (-3.1, 2) -- (3.1, 2) node[right, font=\footnotesize] {$y=2$};
 
     % 基準線 y = -1
-    \draw[dashed, gray!60!black] (-3.1, -1) -- (3.1, -1) node[right, font=\footnotesize] {$y=-1$};
+    \draw[densely dotted, thick, gray!70!black] (-3.1, -1) -- (3.1, -1) node[right, font=\footnotesize] {$y=-1$};
 
-    % 例としての曲線 y = f(x) (適するケース: -1 <= y <= 1)
+    % 座標軸
+    \draw[->, thick, gray!80!black] (-3.2, 0) -- (3.2, 0) node[right] {$x$};
+    \draw[->, thick, gray!80!black] (0, -1.4) -- (0, 2.8) node[above] {$y$};
+    \node[below left=2pt] at (0, 0) {$O$};
+
+    % 適する例: f(x) = (1.5x + 0.8)/(x^2 + x + 1) （すべての x で -1 <= y <= 1）
     \draw[line width=1.3pt, blue!85!black]
-    plot[domain=-3.1:3.1, samples=80] (\x, {2.2*\x / (\x*\x + \x + 1)});
-    \node[blue!85!black, above right=1pt, font=\footnotesize] at (0.8, 0.95) {$y=f(x)$ (適)};
+    plot[domain=-3.1:3.1, samples=100] (\x, {(1.5*\x + 0.8) / (\x*\x + \x + 1)});
+    \node[blue!85!black, font=\footnotesize] (lblValid) at (1.7, -0.52) {$y=f(x)$ (適)};
+    \draw[->, thin, blue!85!black] (lblValid.north west) -- (1.15, 0.72);
 
-    % 矛盾が生じるケースの例 (一部が y >= 2 に達する場合、中間値の定理より 1 < y < 2 を横切る)
-    \draw[line width=1.1pt, teal!80!black, dashdotted]
-    plot[domain=-3.1:3.1, samples=80] (\x, {4.8*\x / (\x*\x + \x + 1)});
-    \node[teal!80!black, above right=1pt, font=\footnotesize] at (0.7, 2.2) {$y=f(x)$ (不適)};
+    % 不適な例: f(x) = 2.4(x + 1)/(x^2 + x + 1) （y >= 2 に達し 1 < y < 2 を横切る）
+    \draw[line width=1.2pt, teal!85!black]
+    plot[domain=-3.1:3.1, samples=100] (\x, {2.4*(\x + 1) / (\x*\x + \x + 1)});
+    \node[teal!85!black, above right=1pt, font=\footnotesize] at (0.35, 2.42) {$y=f(x)$ (不適)};
 
-    % 中間値の定理による交差を強調
-    \node[circle, fill=red!85!black, inner sep=1.3pt] at (0.24, 1.0) {};
-    \node[circle, fill=red!85!black, inner sep=1.3pt] at (0.64, 2.0) {};
+    % 不適領域のラベル（曲線と重ならない左上空き領域に白地付きで配置）
+    \node[red!75!black, font=\footnotesize, fill=white, inner sep=1.5pt]
+    at (-1.75, 1.5) {不適領域 ($1 < y < 2$)};
+
+    % 中間値の定理による交点 (y=2: 2x^2 - 0.4x - 0.4 = 0, y=1: x^2 - 1.4x - 1.4 = 0)
+    \pgfmathsetmacro{\xTwo}{(0.4 + sqrt(0.16 + 3.2)) / 4}
+    \pgfmathsetmacro{\xOne}{(1.4 + sqrt(1.96 + 5.6)) / 2}
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (\xTwo, 2.0) {};
+    \node[circle, fill=red!85!black, inner sep=1.4pt] at (\xOne, 1.0) {};
   \end{tikzpicture}
   \caption{関数$y=f(x)$の漸近挙動と値域の条件}
   \label{fig:fx_overview}
@@ -72,69 +79,76 @@
 
 \begin{figure}[htb]
   \centering
-  \begin{tikzpicture}[x=1.4cm, y=1.4cm, >=stealth,
+  \begin{tikzpicture}[x=1.4cm, y=1.45cm, >=stealth,
     every node/.style={font=\small}]
     \pgfmathsetmacro{\edge}{sqrt(3)}
 
     % 境界線に囲まれた領域（斜線パターン）
-    \fill[pattern=north east lines, pattern color=blue!30]
+    \fill[pattern=north east lines, pattern color=blue!65!black]
     plot[domain=-\edge:\edge, samples=70] (\x, {(-\x*\x+2*\x+3)/4})
     -- plot[domain=\edge:-\edge, samples=70] (\x, {(\x*\x+2*\x-3)/4})
     -- cycle;
 
     % 座標軸
     \draw[->, gray!80!black, thick] (-3.7, 0) -- (3.8, 0) node[right] {$a$};
-    \draw[->, gray!80!black, thick] (0, -2.5) -- (0, 2.5) node[above] {$b$};
+    \draw[->, gray!80!black, thick] (0, -2.2) -- (0, 2.3) node[above] {$b$};
     \node[below left=2pt] at (0, 0) {$O$};
+
+    % 交点・頂点から座標軸への垂線（点線）
+    \draw[densely dotted, thick, gray!70!black] (-\edge, 0) -- (-\edge, {-\edge/2}) -- (0, {-\edge/2});
+    \draw[densely dotted, thick, gray!70!black] (\edge, 0) -- (\edge, {\edge/2}) -- (0, {\edge/2});
+    \draw[densely dotted, thick, gray!70!black] (1, 0) -- (1, 1) -- (0, 1);
+    \draw[densely dotted, thick, gray!70!black] (-1, 0) -- (-1, -1) -- (0, -1);
 
     % 放物線 b = (-a^2 + 2a + 3)/4 (上に凸、頂点 (1, 1))
     \draw[blue!85!black, line width=1.3pt]
     plot[domain=-\edge:\edge, samples=70] (\x, {(-\x*\x+2*\x+3)/4});
-    \draw[blue!85!black, dashed, line width=1.0pt]
-    plot[domain=-3.4:-\edge, samples=50] (\x, {(-\x*\x+2*\x+3)/4});
-    \draw[blue!85!black, dashed, line width=1.0pt]
+    \draw[blue!85!black, densely dotted, line width=1.0pt]
+    plot[domain=-3.1:-\edge, samples=50] (\x, {(-\x*\x+2*\x+3)/4});
+    \draw[blue!85!black, densely dotted, line width=1.0pt]
     plot[domain=\edge:3.6, samples=50] (\x, {(-\x*\x+2*\x+3)/4});
 
     % 放物線 b = (a^2 + 2a - 3)/4 (下に凸、頂点 (-1, -1))
     \draw[teal!85!black, line width=1.3pt]
     plot[domain=-\edge:\edge, samples=70] (\x, {(\x*\x+2*\x-3)/4});
-    \draw[teal!85!black, dashed, line width=1.0pt]
+    \draw[teal!85!black, densely dotted, line width=1.0pt]
     plot[domain=-3.6:-\edge, samples=50] (\x, {(\x*\x+2*\x-3)/4});
-    \draw[teal!85!black, dashed, line width=1.0pt]
-    plot[domain=\edge:3.4, samples=50] (\x, {(\x*\x+2*\x-3)/4});
+    \draw[teal!85!black, densely dotted, line width=1.0pt]
+    plot[domain=\edge:3.1, samples=50] (\x, {(\x*\x+2*\x-3)/4});
 
-    % 交点 (\pm\sqrt{3}, \pm\sqrt{3}/2)
-    \draw[densely dotted, thick, gray!70!black] (-\edge, 0) -- (-\edge, {(-3-2*\edge-3)/4}) -- (0, {(-3-2*\edge-3)/4});
-    \draw[densely dotted, thick, gray!70!black] (\edge, 0) -- (\edge, {(-3+2*\edge+3)/4}) -- (0, {(-3+2*\edge+3)/4});
-    \node[circle, fill=red!85!black, inner sep=1.4pt] at (-\edge, {-\edge/2}) {};
-    \node[circle, fill=red!85!black, inner sep=1.4pt] at (\edge, {\edge/2}) {};
-
-    % 頂点 (1, 1) と (-1, -1)
-    \draw[densely dotted, thick, gray!70!black] (1, 0) -- (1, 1) -- (0, 1);
+    % 頂点 (1, 1), (-1, -1) と交点 (\pm\sqrt{3}, \pm\sqrt{3}/2)
     \node[circle, fill=blue!85!black, inner sep=1.3pt] at (1, 1) {};
-    \draw[densely dotted, thick, gray!70!black] (-1, 0) -- (-1, -1) -- (0, -1);
     \node[circle, fill=teal!85!black, inner sep=1.3pt] at (-1, -1) {};
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (-\edge, {-\edge/2}) {};
+    \node[circle, fill=red!85!black, inner sep=1.5pt] at (\edge, {\edge/2}) {};
 
-    % 軸上の目盛りラベル
+    % 軸上の目盛りラベル（垂線と重ならない反対側へ配置）
     \node[below=3pt, font=\footnotesize] at (1, 0) {$1$};
     \node[left=3pt, font=\footnotesize] at (0, 1) {$1$};
-    \node[above=3pt, font=\footnotesize] at (-1, 0) {$-1$};
+    \node[above left=2pt, font=\footnotesize] at (-1, 0) {$-1$};
     \node[right=3pt, font=\footnotesize] at (0, -1) {$-1$};
 
-    \node[below=3pt, font=\footnotesize] at (-\edge, 0) {$-\sqrt{3}$};
+    \node[above=3pt, font=\footnotesize] at (-\edge, 0) {$-\sqrt{3}$};
     \node[below=3pt, font=\footnotesize] at (\edge, 0) {$\sqrt{3}$};
-    \node[right=3pt, font=\footnotesize] at (0, {-\edge/2}) {$-\frac{\sqrt{3}}{2}$};
-    \node[left=3pt, font=\footnotesize] at (0, {\edge/2}) {$\frac{\sqrt{3}}{2}$};
 
-    % 放物線の a 切片 (\pm 3, 0) と (\pm 1, 0)
-    \node[below=3pt, font=\footnotesize] at (3, 0) {$3$};
-    \node[below=3pt, font=\footnotesize] at (-3, 0) {$-3$};
+    % 放物線の a 切片 (\pm 3, 0)
+    \node[below left=2pt, font=\footnotesize] at (3, 0) {$3$};
+    \node[below left=2pt, font=\footnotesize] at (-3, 0) {$-3$};
 
-    % 曲線の式ラベル
-    \node[blue!85!black, font=\footnotesize, above right=1pt] at (1.2, 1.05)
+    % 交点の座標ラベル（目盛り 1, -1 との重なりを避けて各交点の空き側へ配置）
+    \node[right=5pt, font=\footnotesize, red!85!black, fill=white, inner sep=1pt]
+    at (\edge, {\edge/2}) {$\left(\sqrt{3},\,\frac{\sqrt{3}}{2}\right)$};
+    \node[left=5pt, font=\footnotesize, red!85!black, fill=white, inner sep=1pt]
+    at (-\edge, {-\edge/2}) {$\left(-\sqrt{3},\,-\frac{\sqrt{3}}{2}\right)$};
+
+    % 曲線の式ラベル（交点・点線から離して上下空き領域から引出線で指示）
+    \node[blue!85!black, font=\footnotesize, above] (lblUpper) at (0.95, 1.48)
     {$b=\frac{-a^2+2a+3}{4}$};
-    \node[teal!85!black, font=\footnotesize, below left=1pt] at (-1.2, -1.05)
+    \draw[->, thin, blue!85!black] (lblUpper.south) -- (0.78, 0.99);
+
+    \node[teal!85!black, font=\footnotesize, below] (lblLower) at (-0.95, -1.48)
     {$b=\frac{a^2+2a-3}{4}$};
+    \draw[->, thin, teal!85!black] (lblLower.north) -- (-0.78, -0.99);
   \end{tikzpicture}
   \caption{条件\cref{eq:4}を満たす$(a,b)$の範囲（斜線部）}
   \label{fig:region}
